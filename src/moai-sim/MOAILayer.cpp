@@ -710,6 +710,7 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 	renderMgr.SetCamera ( this->mCamera );
 	renderMgr.SetViewport ( this->mViewport );
 	
+	// TODO: I really don't think we need to do this here
 	gfxDevice.ResetState ();
 
 	// TODO:
@@ -788,7 +789,6 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 	}
 	
 	this->RenderTable ( this->mOverlayTable );
-	gfxDevice.Flush ();
 }
 
 //----------------------------------------------------------------//

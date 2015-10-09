@@ -98,7 +98,7 @@ private:
 	//----------------------------------------------------------------//
 	u32				CountVertices			( const MOAIVertexFormat& format, ZLStream& vtxStream );
 	u32				PushShape				( MOAIVectorShape* shape );
-	void			WriteVertex				( ZLStream& stream, MOAIVertexFormat* format, float x, float y, float z, float xn, float yn, float zn, u32 color, u32 vertexExtraID );
+	void			WriteVertex				( ZLStream& stream, MOAIVertexFormat& format, float x, float y, float z, float xn, float yn, float zn, u32 color, u32 vertexExtraID );
 	
 public:
 	
@@ -133,12 +133,12 @@ public:
 	void				RegisterLuaFuncs			( MOAILuaState& state );
 	void				ReserveVertexExtras			( u32 total, size_t size );
 	void				SetVertexExtra				( u32 idx, void* extra, size_t size );
-	int					Tesselate					( SafeTesselator* tess );
-	int					Tesselate					( MOAIRegion* region );
-	int					Tesselate					( ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexFormat* format );
-	int					Tesselate					( MOAIGfxBuffer* vtxBuffer, MOAIGfxBuffer* idxBuffer, MOAIVertexFormat* format, u32 idxSizeInBytes );
-	void				WriteSkirt					( SafeTesselator* tess, ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexFormat* format, const MOAIVectorStyle& style, const ZLColorVec& fillColor, u32 vertexExtraID );
-	void				WriteTriangles				( SafeTesselator* tess, ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexFormat* format, const MOAIVectorStyle& style, float z, u32 color, u32 vertexExtraID );
+	int					Tesselate					( SafeTesselator& tess );
+	int					Tesselate					( MOAIRegion& region );
+	int					Tesselate					( ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format );
+	int					Tesselate					( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, MOAIVertexFormat& format, u32 idxSizeInBytes );
+	void				WriteSkirt					( SafeTesselator& tess, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, const MOAIVectorStyle& style, const ZLColorVec& fillColor, u32 vertexExtraID );
+	void				WriteTriangles				( SafeTesselator& tess, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, const MOAIVectorStyle& style, float z, u32 color, u32 vertexExtraID );
 };
 
 #endif

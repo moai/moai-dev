@@ -12,6 +12,31 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIStream::_collapse ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIStream, "U" );
+	
+	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, false );
+	
+	int idx = 3;
+	if ( !stream ) {
+		idx = 2;
+		stream = self;
+	}
+	
+	u32 clipBase		= state.GetValue < u32 >( idx++, 0 );
+	u32 clipSize		= state.GetValue < u32 >( idx++, 0 );
+	u32 chunkSize		= state.GetValue < u32 >( idx++, 0 );
+	u32 size			= state.GetValue < u32 >( idx++, ( u32 )( stream->GetLength () - stream->GetCursor ()));
+	bool invert			= state.GetValue < bool >( idx++, false );
+	
+	size_t result = self->Collapse ( *stream, clipBase, clipSize, chunkSize, size, invert );
+	
+	state.Push (( u32 ) result );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIStream::_compact ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	self->Compact ();
@@ -623,6 +648,7 @@ void MOAIStream::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIStream::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "collapse",			_collapse },
 		{ "compact",			_compact },
 		{ "flush",				_flush },
 		{ "getCursor",			_getCursor },

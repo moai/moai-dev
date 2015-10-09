@@ -17,6 +17,19 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAITextStyleState::AffirmGlyph ( u32 c ) {
+
+	assert ( this->mFont );
+	this->mFont->AffirmGlyph ( this->mSize, c );
+}
+
+//----------------------------------------------------------------//
+void MOAITextStyleState::Init ( MOAITextStyleState& style ) {
+
+	*this = style;
+}
+
+//----------------------------------------------------------------//
 MOAITextStyleState::MOAITextStyleState () :
 	mFont ( 0 ),
 	mShader ( 0 ),
@@ -38,6 +51,18 @@ bool MOAITextStyleState::NeedsLayout ( const MOAITextStyleState& compare ) const
 	if ( this->mSize != compare.mSize ) return true;
 	
 	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAITextStyleState::SetFont ( MOAIFont* font ) {
+
+	this->mFont = font;
+}
+
+//----------------------------------------------------------------//
+void MOAITextStyleState::SetShader ( MOAIShader* shader ) {
+
+	this->mShader = shader;
 }
 
 //================================================================//
@@ -233,18 +258,13 @@ int MOAITextStyle::_setSize ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITextStyle::AffirmGlyph ( u32 c ) {
-
-	assert ( this->mFont );
-	this->mFont->AffirmGlyph ( this->mSize, c );
-}
-
-//----------------------------------------------------------------//
-void MOAITextStyle::Init ( MOAITextStyle& style ) {
-
+void MOAITextStyle::Init ( MOAITextStyleState& style ) {
+	
+	// do this first!!
 	this->SetFont ( style.mFont );
-	this->mSize = style.mSize;
-	this->mColor = style.mColor;
+	this->SetShader ( style.mShader );
+	
+	MOAITextStyleState::Init ( style );
 }
 
 //----------------------------------------------------------------//
@@ -322,13 +342,5 @@ void MOAITextStyle::SetShader ( MOAIShader* shader ) {
 		this->LuaRetain ( shader );
 		this->LuaRelease ( this->mShader );
 		this->mShader = shader;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAITextStyle::SetSize ( float size ) {
-
-	if ( this->mSize != size ) {
-		this->mSize = size;
 	}
 }

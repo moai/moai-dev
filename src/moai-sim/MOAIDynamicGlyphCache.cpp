@@ -86,7 +86,7 @@ MOAIImage* MOAIDynamicGlyphCache::GetGlyphImage ( MOAIGlyph& glyph ) {
 }
 
 //----------------------------------------------------------------//
-MOAITextureBase* MOAIDynamicGlyphCache::GetGlyphTexture ( MOAIGlyph& glyph ) {
+MOAISingleTexture* MOAIDynamicGlyphCache::GetGlyphTexture ( MOAIGlyph& glyph ) {
 
 	assert ( glyph.GetPageID () < this->mPages.Size ());
 	return this->mPages [ glyph.GetPageID ()]->mImageTexture;

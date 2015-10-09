@@ -332,12 +332,12 @@ int MOAICoroutine::Resume ( float step ) {
 				MOAILuaState state ( this->mState );
 
 				#if (MOAI_WITH_LUAJIT)
-					//luajit has assertions on lua_call if the thread has crashed due to runtime error
-					//this means we can't run our custom stacktrace using this state. we will just bail instead
+					// luajit has assertions on lua_call if the thread has crashed due to runtime error
+					// this means we can't run our custom stacktrace using this state. we will just bail instead
 					if ( msg ) {
-						ZLLog::LogF ( ZLLog::CONSOLE, "%s\n", msg );
+						ZLLog_ErrorF ( ZLLog::CONSOLE, "%s\n", msg );
 					}
-					state.PrintStackTrace ( ZLLog::CONSOLE, NULL, 0 );
+					//TODO What happened to this guy? state.GetStackTrace( PrintErrors( ZLLog::CONSOLE, NULL, 0 );
 				#else
 					MOAILuaRuntime::Get ().PushTraceback ( state );
 					state.Push ( msg );

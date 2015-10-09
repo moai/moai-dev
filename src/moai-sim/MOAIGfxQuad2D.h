@@ -7,8 +7,6 @@
 #include <moai-sim/MOAIStandardDeck.h>
 #include <moai-sim/MOAIQuadBrush.h>
 
-class MOAIGfxState;
-
 //================================================================//
 // MOAIGfxQuad2D
 //================================================================//

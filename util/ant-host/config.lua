@@ -28,7 +28,8 @@ MODULES = {
 	},
 	
 	facebook = {
-		lib		= MOAI_SDK_HOME .. '3rdparty-android/facebook-v3',
+		--lib		= MOAI_SDK_HOME .. '3rdparty-android/facebook-v3',
+		lib		= MOAI_SDK_HOME .. '3rdparty-android/facebook-v4.4.1',
 		src		= MOAI_SDK_HOME .. 'src/moai-android-facebook',
 	},
 	

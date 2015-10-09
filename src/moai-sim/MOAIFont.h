@@ -11,7 +11,7 @@ class MOAIFontReader;
 class MOAIGlyph;
 class MOAIGlyphCache;
 class MOAIShader;
-class MOAITextureBase;
+class MOAISingleTexture;
 class MOAITexture;
 
 #define DPI 72
@@ -140,7 +140,7 @@ public:
 	void				AffirmGlyph				( float size, u32 c );
     MOAIGlyphSet&		AffirmGlyphSet			( float size );
 	MOAIGlyphSet*		GetGlyphSet				( float size );
-	MOAITextureBase*	GetGlyphTexture			( MOAIGlyph& glyph );
+	MOAISingleTexture*	GetGlyphTexture			( MOAIGlyph& glyph );
 	void				Init					( cc8* filename );
 	void				InitWithBMFont			( cc8* filename, const u32 numPreloadedTextures, MOAITexture** preloadedTextures );
 	static bool			IsControl				( u32 c );

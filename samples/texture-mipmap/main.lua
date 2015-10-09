@@ -15,7 +15,7 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 texture = MOAITexture.new ()
-texture:setFilter ( MOAITexture.GL_LINEAR_MIPMAP_LINEAR ) -- set the filter *before* loading the texture!
+texture:setFilter ( MOAITexture.GL_LINEAR_MIPMAP_LINEAR, MOAITexture.GL_LINEAR ) -- set the filter *before* loading the texture!
 texture:load ( "moai.png" )
 
 gfxQuad = MOAIGfxQuad2D.new ()

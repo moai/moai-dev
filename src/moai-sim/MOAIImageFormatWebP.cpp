@@ -24,7 +24,7 @@ bool MOAIImageFormatWebP::CheckHeader ( const void* buffer ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatWebP::CreateTexture ( MOAITextureBase& texture, const void* data, size_t size ) {
+bool MOAIImageFormatWebP::CreateTexture ( MOAISingleTexture& texture, const void* data, size_t size ) {
 	UNUSED ( texture );
 	UNUSED ( data );
 	UNUSED ( size );

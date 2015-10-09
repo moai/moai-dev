@@ -13,17 +13,18 @@ set ( MOAI_UTIL_INCLUDES
 
 include_directories ( 
   ${MOAI_UTIL_INCLUDES} 
+   ${LUA_HEADERS}
 )
 
 set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/moai-util/" )
 
 file ( GLOB MOAI_UTIL_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/*.h" )
 
-include_directories ( ${MOAI_UTIL_INCLUDES} )
+
 
 add_library ( moai-util STATIC ${MOAI_UTIL_SRC} )
 
-target_link_libraries ( moai-util moai-core zlcore  )
+target_link_libraries ( moai-util moai-core zlcore ${LUA_LIB} )
 
 
 target_include_directories (moai-util PUBLIC 

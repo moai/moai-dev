@@ -14,8 +14,7 @@ makeCube = function ( size )
 	vertexFormat:declareCoord ( 1, MOAIVertexFormat.GL_FLOAT, 3 )
 	vertexFormat:declareColor ( 2, MOAIVertexFormat.GL_UNSIGNED_BYTE )
 
-	local vbo = MOAIGfxBuffer.new ()
-	vbo:setTarget ( MOAIGfxBuffer.VERTEX_BUFFER )
+	local vbo = MOAIVertexBuffer.new ()
 	vbo:reserve ( 8 * vertexFormat:getVertexSize ())
 
 	-- 0: top back left
@@ -50,8 +49,8 @@ makeCube = function ( size )
 	vbo:writeFloat ( -size, -size, size )
 	vbo:writeColor32 ( 1, 0, 0 )
 
-	local ibo = MOAIGfxBuffer.new ()
-	ibo:setTarget ( MOAIGfxBuffer.INDEX_BUFFER )
+	local ibo = MOAIIndexBuffer.new ()
+	ibo:setIndexSize ( 2 )
 	ibo:reserve ( 36 * 2 )
 
 	-- front
@@ -105,7 +104,7 @@ makeCube = function ( size )
 	local mesh = MOAIMesh.new ()
 
 	mesh:setVertexBuffer ( vbo, vertexFormat )
-	mesh:setIndexBuffer ( ibo, 2 )
+	mesh:setIndexBuffer ( ibo )
 
 	mesh:setTotalElements ( 36 )
 	mesh:setBounds ( vbo:computeBounds ( vertexFormat ))

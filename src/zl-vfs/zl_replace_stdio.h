@@ -63,6 +63,9 @@
 #undef _fileno
 #define _fileno zl_fileno
 
+#undef flockfile
+#define flockfile zl_flockfile
+
 #undef fopen
 #define fopen zl_fopen
 
@@ -110,6 +113,12 @@
 
 #undef ftello
 #define ftello zl_ftello
+
+#undef ftrylockfile
+#define ftrylockfile zl_ftrylockfile
+
+#undef funlockfile
+#define funlockfile zl_funlockfile
 
 #undef fwrite
 #define fwrite zl_fwrite

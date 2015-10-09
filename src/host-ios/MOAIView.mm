@@ -11,6 +11,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import <host-modules/aku_modules.h>
+#import <host-modules/aku_modules_ios.h>
 #import <moai-ios/host.h>
 
 enum {
@@ -95,7 +96,21 @@ enum {
     
 		AKUIosNotifyRemoteNotificationRegistrationComplete ( nil, error );
 	}
-		
+
+    //----------------------------------------------------------------//
+    +( BOOL ) application :( UIApplication* )application didFinishLaunchingWithOptions:( NSDictionary* )launchOptions {
+    
+        AKUAppInitialize ();
+        if ( AKUModulesIosApplicationDidFinishLaunchingWithOptions ( application, launchOptions ) == NO ) return NO;
+
+        static const int length = 255;
+		char version [ length ];
+		AKUGetMoaiVersion ( version, length );
+		printf ( "%s\n", version );
+        
+        return YES;
+    }
+
 	//----------------------------------------------------------------//
 	-( void ) application:( UIApplication* )application didReceiveRemoteNotification:( NSDictionary* )pushBundle {
 		( void )application;
@@ -118,11 +133,10 @@ enum {
 		
     //----------------------------------------------------------------//
     -( BOOL ) application:( UIApplication* )application openURL:( NSURL* )url sourceApplication:( NSString* )sourceApplication annotation:( id )annotation {
-        ( void )application;
-        ( void )sourceApplication;
-        ( void )annotation;
 
-        AKUIosOpenUrl ( url, sourceApplication );
+        if ( AKUModulesIosApplicationOpenURL ( application, url, sourceApplication, annotation ) == NO ) {
+            AKUIosOpenUrl ( url, sourceApplication );
+        }
         return YES;
     }
 

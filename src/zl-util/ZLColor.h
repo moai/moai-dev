@@ -124,6 +124,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			Add					( const ZLColorVec& c );
+	void			AddAndClamp			( const ZLColorVec& c );
 	bool			Compare				( const ZLColorVec& c );
 	bool			Compare				( const ZLColorVec& c, float res );
 	void			FromHSV				( float h, float s, float v );
@@ -139,6 +140,8 @@ public:
 	void			Set					( float r, float g, float b, float a );
 	void			SetBlack			();
 	void			SetWhite			();
+	void			Sub					( const ZLColorVec& c );
+	void			SubAndClamp			( const ZLColorVec& c );
 	void			ToHSV				( float& h, float& s, float& v );
 	void			ToYUV				( float& y, float& u, float& v );
 					ZLColorVec			();

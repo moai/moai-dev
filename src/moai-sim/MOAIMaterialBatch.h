@@ -4,9 +4,9 @@
 #ifndef	MOAIMATERIALBATCH_H
 #define	MOAIMATERIALBATCH_H
 
-class MOAIGfxState;
 class MOAIImage;
 class MOAIShader;
+class MOAITextureBase;
 
 //================================================================//
 // MOAIMaterial
@@ -18,7 +18,7 @@ private:
 	friend class MOAIMaterialBatch;
 	
 	MOAIShader*			mShader;
-	MOAIGfxState*		mTexture;
+	MOAITextureBase*		mTexture;
 	MOAIImage*			mHitMask;
 
 	u32		mHitColorScalar;
@@ -84,7 +84,7 @@ public:
 	virtual				~MOAIMaterialBatch			();
 	MOAIMaterial*		RawGetMaterial				( u32 idx );
 	MOAIShader*			RawGetShader				( u32 idx );
-	MOAIGfxState*		RawGetTexture				( u32 idx );
+	MOAITextureBase*		RawGetTexture				( u32 idx );
 	void				RawLoadGfxState				( u32 idx, u32 defaultShader );
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
@@ -102,8 +102,8 @@ public:
 	void				SetShader					( u32 idx, u32 shaderID );
 	void				SetShader					( u32 idx, MOAIShader* shader );
 	MOAIShader*			SetShader					( MOAILuaState& state, u32 idx );
-	void				SetTexture					( u32 idx, MOAIGfxState* texture );
-	MOAIGfxState*		SetTexture					( MOAILuaState& state, u32 idx );
+	void				SetTexture					( u32 idx, MOAITextureBase* texture );
+	MOAITextureBase*		SetTexture					( MOAILuaState& state, u32 idx );
 	size_t				Size						();
 	bool				TestHit						( MOAIMaterialBatch* fallback, u32 idx, float x, float y );
 	bool				TestHit						( MOAIMaterialBatch* fallback, u32 materialID, u32 deckIndex, float x, float y );

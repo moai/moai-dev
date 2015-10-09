@@ -172,6 +172,40 @@ int MOAIAppIOS::_getIPAddress ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getResourcePathInBundle
+	@text	Returns a full path to a resource in an NSBundle.
+ 
+	@in		string bundlePath			The path to the NSBundle, relative to the app's resource directory.
+	@in		string resourcePath			The path to the resource, relative to the bundle's root directory.
+	
+	@out	string resourceFullPath		Full path to the resource.
+*/
+int MOAIAppIOS::_getResourcePathInBundle ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	// capture parameters
+	cc8* bundlePath = state.GetValue<cc8*>( 1, 0 );
+	cc8* resourcePath = state.GetValue<cc8*>( 2, 0 );
+	
+	// figure out full path to resource
+	NSString* relativeBundlePath = [ NSString stringWithUTF8String:bundlePath ];
+	NSString* relativeResourcePath = [ NSString stringWithUTF8String:resourcePath ];
+	
+	NSString* fullResourcePath = [[ NSBundle mainBundle ] resourcePath ];
+	NSString* fullBundlePath = [ fullResourcePath stringByAppendingPathComponent:relativeBundlePath ];
+	NSBundle* bundle = [ NSBundle bundleWithPath:fullBundlePath ];
+	
+	NSString* resourcePathNoExt = [ relativeResourcePath stringByDeletingPathExtension ];
+	NSString* resourceExt = [ relativeResourcePath pathExtension ];
+	NSString* resourceFullPath = [ bundle pathForResource:resourcePathNoExt ofType:resourceExt ];
+
+	// return full path to resource in bundle
+	lua_pushstring ( L, [ resourceFullPath UTF8String ]);
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	getUTCTime
  @text	Get the current UTC time in seconds
  
@@ -428,6 +462,7 @@ void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getInterfaceOrientation",	_getInterfaceOrientation },
 		{ "getIPAddress",				_getIPAddress },
 		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAIAppIOS > },
+		{ "getResourcePathInBundle",	_getResourcePathInBundle },
 		{ "getUTCTime",					_getUTCTime },
 		{ "openURL",					_openURL },
 		{ "openURLWithParams",			_openURLWithParams },
@@ -462,17 +497,19 @@ void MOAIAppIOS::RegisterNotificationListeners () {
 			object:[ UIApplication sharedApplication ]
 			queue:nil
 			usingBlock:^( NSNotification* notification ) {
-			
+				
+				ZLLog_DebugF ( ZLLog::CONSOLE, "MOAIAppIOS: received notification '%s'\n", [ notification.name UTF8String ]);
+				
 				MOAIScopedContext scopedContext;
-
+				
 				if ( !MOAIGlobalsMgr::Check ( context )) return;
 				MOAIGlobalsMgr::Set ( context );
-			
-				NSLog ( @"%@", notification.name );
+				
 				this->InvokeListener ( eventID );
 				
 				if ( eventID == WILL_TERMINATE ) {
 					AKUAppFinalize ();
+					scopedContext.Clear ();
 				}
 			}
 		];

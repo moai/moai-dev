@@ -13,14 +13,7 @@ test = {
 
 transform = MOAITransform.new ()
 
--- create the serializer and add the objects in the order we want them back
-serializer = MOAISerializer.new ()
-serializer:serialize ( test )
-serializer:serialize ( transform )
-
--- the serializer will produce a chunk that, when executed, will return
--- the objects in the order they were paseed in
-testStr = serializer:exportToString ()
+testStr = MOAISerializer.serializeToString ({ test, transform })
 
 -- convert the serialized objects to Lua bytecode
 compiled = string.dump ( loadstring ( testStr, '' )) -- using empty string for name of chunk
@@ -32,6 +25,6 @@ header = MOAIDataBuffer.toCppHeader ( compiled, 'serialized_lua', 12 )
 print ( header )
 
 -- write the header to a file
-file = io.open ( 'serialized_lua.h', 'wb' )
+file = io.open ( '../temp/serialized_lua.h', 'wb' )
 file:write ( header )
 file:close ()

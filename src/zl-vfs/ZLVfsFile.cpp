@@ -13,6 +13,8 @@
 #include <zl-vfs/ZLVfsZipStream.h>
 
 #ifdef MOAI_COMPILER_MSVC
+#include <windows.h>
+#include <io.h>
 	#include <Share.h>
 #endif
 
@@ -99,6 +101,12 @@ int ZLVfsFile::GetError () {
 }
 
 //----------------------------------------------------------------//
+void* ZLVfsFile::GetFileHandle () {
+
+	return this->mIsZip ? 0 : this->mPtr.mFile;;
+}
+
+//----------------------------------------------------------------//
 int	ZLVfsFile::GetFileNum () {
 	
 	// TODO:
@@ -149,6 +157,24 @@ char* ZLVfsFile::GetString ( char* string, int length ) {
 int ZLVfsFile::IsEOF () {
 
 	return ( this->mIsZip ) ? this->mPtr.mZip->IsAtEnd () : feof ( this->mPtr.mFile );
+}
+
+//----------------------------------------------------------------//
+void ZLVfsFile::Lock () {
+
+	// TODO: cross platform
+	if ( !this->mIsZip ) {
+	
+		#ifdef MOAI_COMPILER_MSVC	
+			OVERLAPPED olp;
+			olp.Offset = 0;
+			olp.OffsetHigh = 0;
+			olp.hEvent = 0;
+			LockFileEx((HANDLE)_get_osfhandle(_fileno(this->mPtr.mFile)), LOCKFILE_EXCLUSIVE_LOCK, 0,0, 0, &olp);
+		#else
+			flockfile ( this->mPtr.mFile );
+		#endif
+	}
 }
 
 //----------------------------------------------------------------//
@@ -298,6 +324,43 @@ int ZLVfsFile::SetPos ( const fpos_t * pos ) {
 long ZLVfsFile::Tell () {
 
 	return ( this->mIsZip ) ? ( long )this->mPtr.mZip->Tell () : ftell ( this->mPtr.mFile );
+}
+
+//----------------------------------------------------------------//
+int ZLVfsFile::TryLock () {
+
+	// TODO: cross platform
+	if ( !this->mIsZip ) {
+	
+   #ifdef MOAI_COMPILER_MSVC	
+		OVERLAPPED olp;
+		olp.Offset = 0;
+		olp.OffsetHigh = 0;
+		olp.hEvent = 0;
+		BOOL res = LockFileEx((HANDLE)_get_osfhandle(_fileno(this->mPtr.mFile)), LOCKFILE_FAIL_IMMEDIATELY |LOCKFILE_EXCLUSIVE_LOCK, 0, 0, 0, &olp);
+		return (res == FALSE) ? 1 : 0;
+	#else
+		return ftrylockfile(this->mPtr.mFile);
+	#endif
+	}
+	
+}
+
+//----------------------------------------------------------------//
+void ZLVfsFile::Unlock () {
+
+	// TODO: cross platform
+	if ( !this->mIsZip ) {
+		#ifdef MOAI_COMPILER_MSVC	
+			OVERLAPPED olp;
+			olp.Offset = 0;
+			olp.OffsetHigh = 0;
+			olp.hEvent = 0;
+			BOOL res = UnlockFileEx((HANDLE)_get_osfhandle(_fileno(this->mPtr.mFile)),  0, 0, 0, &olp);
+		#else
+			funlockfile ( this->mPtr.mFile );
+		#endif
+	}
 }
 
 //----------------------------------------------------------------//

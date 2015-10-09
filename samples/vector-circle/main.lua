@@ -25,13 +25,13 @@ tess:pushEllipse ( 0, 0, 100 )
 
 local vtxFormat = MOAIVertexFormatMgr.getFormat ( MOAIVertexFormatMgr.XYZC )
 
-local vtxBuffer = MOAIGfxBuffer.new ()
-local idxBuffer = MOAIGfxBuffer.new ()
-local totalElements = tess:tesselate ( vtxBuffer, idxBuffer, 2 );
+local vtxBuffer = MOAIVertexBuffer.new ()
+local idxBuffer = MOAIIndexBuffer.new ()
+local totalElements = tess:tesselate ( vtxBuffer, idxBuffer, 2, vtxFormat );
 
 local mesh = MOAIMesh.new ()
 mesh:setVertexBuffer ( vtxBuffer, vtxFormat )
-mesh:setIndexBuffer ( idxBuffer, 2 )
+mesh:setIndexBuffer ( idxBuffer)
 mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
 mesh:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.LINE_SHADER_3D ))
 mesh:setTotalElements ( totalElements )

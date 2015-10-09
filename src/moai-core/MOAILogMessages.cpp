@@ -13,7 +13,7 @@
 //----------------------------------------------------------------//
 int MOAILogMessages::_alertNewIsUnsupported ( lua_State* L ) {
 
-	MOAILog ( L, MOAI_NewIsUnsupported );
+	MOAILogF ( L, ZLLog::LOG_ERROR, MOAI_NewIsUnsupported );
 	return 0;
 }
 
@@ -29,7 +29,7 @@ bool MOAILogMessages::CheckFileExists ( cc8* filename, lua_State* L ) {
 	}
 	
 	STLString expand = ZLFileSys::GetAbsoluteFilePath ( filename );
-	MOAILog ( L, MOAILogMessages::MOAI_FileNotFound_S, expand.str ());
+	MOAILogF ( L, MOAILogMessages::MOAI_FileNotFound_S, expand.str ());
 	
 	return false;
 }
@@ -38,11 +38,11 @@ bool MOAILogMessages::CheckFileExists ( cc8* filename, lua_State* L ) {
 bool MOAILogMessages::CheckIndex ( u32 idx, u32 size, lua_State* L ) {
 
 	if ( size == 0 ) {
-		MOAILog ( L, MOAILogMessages::MOAI_IndexNoReserved );
+		MOAILogF ( L, ZLLog::LOG_ERROR, MOAILogMessages::MOAI_IndexNoReserved );
 		return false;
 	}
 	else if ( !( idx < size )) {
-		MOAILog ( L, MOAILogMessages::MOAI_IndexOutOfRange_DDD, idx, 0, size - 1 );
+		MOAILogF ( L, MOAILogMessages::MOAI_IndexOutOfRange_DDD, idx, 0, size - 1 );
 		return false;
 	}
 	return true;
@@ -52,11 +52,11 @@ bool MOAILogMessages::CheckIndex ( u32 idx, u32 size, lua_State* L ) {
 bool MOAILogMessages::CheckIndexPlusOne ( u32 idx, u32 size, lua_State* L ) {
 
 	if ( size == 0 ) {
-		MOAILog ( L, MOAILogMessages::MOAI_IndexNoReserved );
+		MOAILogF ( L, ZLLog::LOG_ERROR, MOAILogMessages::MOAI_IndexNoReserved );
 		return false;
 	}
 	else if ( !( idx < size )) {
-		MOAILog ( L, MOAILogMessages::MOAI_IndexOutOfRange_DDD, idx + 1, 1, size );
+		MOAILogF ( L, ZLLog::LOG_ERROR, MOAILogMessages::MOAI_IndexOutOfRange_DDD, idx + 1, 1, size );
 		return false;
 	}
 	return true;
@@ -66,7 +66,7 @@ bool MOAILogMessages::CheckIndexPlusOne ( u32 idx, u32 size, lua_State* L ) {
 bool MOAILogMessages::CheckReserve ( u32 idx, u32 size, lua_State* L ) {
 
 	if ( !( idx < size )) {
-		MOAILog ( L, MOAILogMessages::MOAI_IndexNoReserved );
+		MOAILogF ( L, ZLLog::LOG_ERROR, MOAILogMessages::MOAI_IndexNoReserved );
 		return false;
 	}
 	return true;
@@ -79,28 +79,28 @@ void MOAILogMessages::RegisterDefaultLogMessages () {
 	
 		MOAILogMgr& log = MOAILogMgr::Get ();
 		
-		log.RegisterLogMessage ( MOAI_BadCast_DS,						MOAILogMgr::LOG_ERROR,		"Bad cast at position %d: unexpected '%s'\n" );
-		log.RegisterLogMessage ( MOAI_FileNotFound_S,					MOAILogMgr::LOG_ERROR,		"File not found: %s\n" );
-		log.RegisterLogMessage ( MOAI_FileOpenError_S,					MOAILogMgr::LOG_ERROR,		"Couldn't open file: '%s'\n" );
-		log.RegisterLogMessage ( MOAI_FunctionDeprecated_S,				MOAILogMgr::LOG_WARNING,	"WARNING: Function '%s' has been deprecated.\n" );
-		log.RegisterLogMessage ( MOAI_IndexNoReserved,					MOAILogMgr::LOG_ERROR,		"Nothing reserved\n" );
-		log.RegisterLogMessage ( MOAI_IndexOutOfRange_DDD,				MOAILogMgr::LOG_ERROR,		"Index %d is out of acceptable range [%d, %d]\n" );
-		log.RegisterLogMessage ( MOAI_NewIsUnsupported,					MOAILogMgr::LOG_ERROR,		"Method \'new\' is unsupported. Instances of this class are created by the engine or through another interface.\n" );
-		log.RegisterLogMessage ( MOAI_ParamTypeMismatch,				MOAILogMgr::LOG_ERROR,		"Param type mismatch: check function call\n" );
-		log.RegisterLogMessage ( MOAI_ParamTypeMismatch_DSS,			MOAILogMgr::LOG_ERROR,		"Param type mismatch at position %d: expected a '%s' but got a '%s'\n" );
-		log.RegisterLogMessage ( MOAIAction_Profile_PSFF,				MOAILogMgr::LOG_STATUS,		"MOAIAction::Update(%p: %s [%s]) step %.2f ms took %.2f ms\n" );
-		log.RegisterLogMessage ( MOAIBox2DBody_InvalidVertexCount_D,	MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Vertex count %d is invalid (less than 3 or greater than max)\n" );
-		log.RegisterLogMessage ( MOAIBox2DBody_MissingInstance,			MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Attempt to access missing Box2D body instance\n" );
-		log.RegisterLogMessage ( MOAIBox2DFixture_MissingInstance,		MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Attempt to access missing Box2D fixture instance\n" );
-		log.RegisterLogMessage ( MOAIBox2DJoint_MissingInstance,		MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Attempt to access missing Box2D joint instance\n" );
-		log.RegisterLogMessage ( MOAIBox2DWorld_IsLocked,				MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Attempt to perform illegal operation during collision update\n" );
-		log.RegisterLogMessage ( MOAIGfxDevice_OpenGLError_S,			MOAILogMgr::LOG_ERROR,		"OPENGL ERROR: %s\n" );
-		log.RegisterLogMessage ( MOAIGfxResource_MissingDevice,			MOAILogMgr::LOG_ERROR,		"Unable to bind graphics resource - missing graphics device\n" );
-		log.RegisterLogMessage ( MOAINode_AttributeNotFound,			MOAILogMgr::LOG_ERROR,		"No such attribute\n" );
-		log.RegisterLogMessage ( MOAIShader_ShaderInfoLog_S,			MOAILogMgr::LOG_ERROR,		"%s\n" );
-		log.RegisterLogMessage ( MOAITexture_MemoryUse_SDFS,			MOAILogMgr::LOG_STATUS,		"TEXTURE: '%s' %10luk = %6.2fMB < %s\n" );
-		log.RegisterLogMessage ( MOAITexture_NoFramebuffer,				MOAILogMgr::LOG_ERROR,		"TEXTURE: OpenGL framebuffer object is unsupported on this device\n" );
-		log.RegisterLogMessage ( MOAITexture_NonPowerOfTwo_SDD,			MOAILogMgr::LOG_WARNING,	"TEXTURE: '%s' is not a power of two (w:%d, h:%d)\n" );
+		log.RegisterLogMessage ( MOAI_BadCast_DS,						ZLLog::LOG_ERROR,		"Bad cast at position %d: unexpected '%s'\n" );
+		log.RegisterLogMessage ( MOAI_FileNotFound_S,					ZLLog::LOG_ERROR,		"File not found: %s\n" );
+		log.RegisterLogMessage ( MOAI_FileOpenError_S,					ZLLog::LOG_ERROR,		"Couldn't open file: '%s'\n" );
+		log.RegisterLogMessage ( MOAI_FunctionDeprecated_S,				ZLLog::LOG_WARNING,		"WARNING: Function '%s' has been deprecated.\n" );
+		log.RegisterLogMessage ( MOAI_IndexNoReserved,					ZLLog::LOG_ERROR,		"Nothing reserved\n" );
+		log.RegisterLogMessage ( MOAI_IndexOutOfRange_DDD,				ZLLog::LOG_ERROR,		"Index %d is out of acceptable range [%d, %d]\n" );
+		log.RegisterLogMessage ( MOAI_NewIsUnsupported,					ZLLog::LOG_ERROR,		"Method \'new\' is unsupported. Instances of this class are created by the engine or through another interface.\n" );
+		log.RegisterLogMessage ( MOAI_ParamTypeMismatch,				ZLLog::LOG_ERROR,		"Param type mismatch: check function call\n" );
+		log.RegisterLogMessage ( MOAI_ParamTypeMismatch_DSS,			ZLLog::LOG_ERROR,		"Param type mismatch at position %d: expected a '%s' but got a '%s'\n" );
+		log.RegisterLogMessage ( MOAIAction_Profile_PSFF,				ZLLog::LOG_STATUS,		"MOAIAction::Update(%p: %s [%s]) step %.2f ms took %.2f ms\n" );
+		log.RegisterLogMessage ( MOAIBox2DBody_InvalidVertexCount_D,	ZLLog::LOG_ERROR,		"BOX2D ERROR: Vertex count %d is invalid (less than 3 or greater than max)\n" );
+		log.RegisterLogMessage ( MOAIBox2DBody_MissingInstance,			ZLLog::LOG_ERROR,		"BOX2D ERROR: Attempt to access missing Box2D body instance\n" );
+		log.RegisterLogMessage ( MOAIBox2DFixture_MissingInstance,		ZLLog::LOG_ERROR,		"BOX2D ERROR: Attempt to access missing Box2D fixture instance\n" );
+		log.RegisterLogMessage ( MOAIBox2DJoint_MissingInstance,		ZLLog::LOG_ERROR,		"BOX2D ERROR: Attempt to access missing Box2D joint instance\n" );
+		log.RegisterLogMessage ( MOAIBox2DWorld_IsLocked,				ZLLog::LOG_ERROR,		"BOX2D ERROR: Attempt to perform illegal operation during collision update\n" );
+		log.RegisterLogMessage ( MOAIGfxDevice_OpenGLError_S,			ZLLog::LOG_ERROR,		"OPENGL ERROR: %s\n" );
+		log.RegisterLogMessage ( MOAIGfxResource_MissingDevice,			ZLLog::LOG_ERROR,		"Unable to bind graphics resource - missing graphics device\n" );
+		log.RegisterLogMessage ( MOAINode_AttributeNotFound,			ZLLog::LOG_ERROR,		"No such attribute\n" );
+		log.RegisterLogMessage ( MOAIShader_ShaderInfoLog_S,			ZLLog::LOG_ERROR,		"%s\n" );
+		log.RegisterLogMessage ( MOAITexture_MemoryUse_SDFS,			ZLLog::LOG_STATUS,		"TEXTURE: '%s' %10luk = %6.2fMB < %s\n" );
+		log.RegisterLogMessage ( MOAITexture_NoFramebuffer,				ZLLog::LOG_ERROR,		"TEXTURE: OpenGL framebuffer object is unsupported on this device\n" );
+		log.RegisterLogMessage ( MOAITexture_NonPowerOfTwo_SDD,			ZLLog::LOG_WARNING,		"TEXTURE: '%s' is not a power of two (w:%d, h:%d)\n" );
 	
 	#endif
 }

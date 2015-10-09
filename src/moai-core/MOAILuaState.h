@@ -79,23 +79,25 @@ public:
 	bool			HexDecode					( int idx );
 	bool			HexEncode					( int idx );
 	bool			Inflate						( int idx, int windowBits );
-	bool			IsNil						();
 	bool			IsNil						( int idx );
+	bool			IsNilOrNone					( int idx );
 	bool			IsTableOrUserdata			( int idx );
 	bool			IsTrueOrNotNil				( int idx );
 	bool			IsType						( int idx, int type );
 	bool			IsType						( int idx, cc8* name, int type );
+	bool			IsValid						();
 	void			LoadLibs					();
+	
+	bool			LogErrors					( u32 level, FILE* file, int status );
+	void			LogStackDump				( u32 level, FILE* file );
+	void			LogStackTrace				( u32 level, FILE* file, cc8* title, int stackLevel );
+	
 					MOAILuaState				();
 					MOAILuaState				( lua_State* state );
 	virtual			~MOAILuaState				();
 	void			MoveToTop					( int idx );
 	void			Pop							( int n = 1 );
 	bool			PrepMemberFunc				( int idx, cc8* name );
-	bool			PrintErrors					( FILE* file, int status );
-	void			PrintStackDump				();
-	void			PrintStackDump				( FILE* file );
-	void			PrintStackTrace				( FILE* file, cc8* title, int level );
 	
 	void			Push						();
 	void			Push						( bool value );

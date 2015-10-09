@@ -120,7 +120,7 @@ bool MOAILuaState::CheckParams ( int idx, cc8* format, bool verbose ) {
 				cc8* expectedName = MOAILuaState::GetLuaTypeName ( expected );
 				cc8* gotName = MOAILuaState::GetLuaTypeName ( type );
 			
-				MOAILog ( *this, MOAILogMessages::MOAI_ParamTypeMismatch_DSS, pos, expectedName, gotName );
+				MOAILogF ( *this, ZLLog::LOG_ERROR, MOAILogMessages::MOAI_ParamTypeMismatch_DSS, pos, expectedName, gotName );
 			}
 			return false;
 		}
@@ -200,7 +200,7 @@ int MOAILuaState::DebugCall ( int nArgs, int nResults ) {
 	int status = lua_pcall ( this->mState, nArgs, nResults, errIdx );
 
 	if ( status ) {
-		this->PrintErrors ( ZLLog::CONSOLE, status );
+		this->LogErrors ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, status );
 	}
 	else {
 		lua_remove ( this->mState, errIdx );
@@ -540,11 +540,13 @@ void* MOAILuaState::GetPtrUserData ( int idx ) {
 
 //----------------------------------------------------------------//
 STLString MOAILuaState::GetStackDump () {
+
 	STLString out;
 	int top = GetTop ();
 	out.write ( "Lua stack: %d element(s)", top );
 
 	for ( int index = top; index >= 1; index-- ) {
+	
 		int type = lua_type ( this->mState, index );
 
 		// Print index and type
@@ -553,36 +555,31 @@ STLString MOAILuaState::GetStackDump () {
 
 		// Print value, if possible
 		switch ( type ) {
-		case LUA_TBOOLEAN:
-			// boolean
-			out.write ( ": %s", lua_toboolean ( this->mState, index ) ? "true" : "false" );
-			break;
-		case LUA_TNUMBER:
-			// number
-			out.write ( ": %g", lua_tonumber ( this->mState, index ) );
-			break;
-		case LUA_TSTRING:
-			// string
-			out.write ( ": \"%s\"", lua_tostring ( this->mState, index ) );
-			break;
-		case LUA_TUSERDATA:
-			// userdata
-		{
-			// Moai uses userdata exclusively for pointers to MOAILuaObject instances.
-			// This code will most likely crash if it encounters userdata that is used differently.
-			MOAILuaObject* luaObject = ( MOAILuaObject* )this->GetPtrUserData ( index );
-			if ( luaObject ) {
-				out.write ( ": %s at %p", luaObject->TypeName (), luaObject );
+			case LUA_TBOOLEAN:
+				out.write ( ": %s", lua_toboolean ( this->mState, index ) ? "true" : "false" );
+				break;
+			case LUA_TNUMBER:
+				out.write ( ": %g", lua_tonumber ( this->mState, index ) );
+				break;
+			case LUA_TSTRING:
+				out.write ( ": \"%s\"", lua_tostring ( this->mState, index ) );
+				break;
+			case LUA_TUSERDATA: {
+				// Moai uses userdata exclusively for pointers to MOAILuaObject instances.
+				// This code will most likely crash if it encounters userdata that is used differently.
+				MOAILuaObject* luaObject = ( MOAILuaObject* )this->GetPtrUserData ( index );
+				if ( luaObject ) {
+					out.write ( ": %s at %p", luaObject->TypeName (), luaObject );
+				}
+				break;
 			}
-			break;
-		}
-		case LUA_TLIGHTUSERDATA:
-		case LUA_TTABLE:
-		case LUA_TFUNCTION:
-		case LUA_TTHREAD:
-			// anything with an address
-			out.write ( " at %p", lua_topointer ( this->mState, index ) );
-			break;
+			case LUA_TLIGHTUSERDATA:
+			case LUA_TTABLE:
+			case LUA_TFUNCTION:
+			case LUA_TTHREAD:
+				// anything with an address
+				out.write ( " at %p", lua_topointer ( this->mState, index ) );
+				break;
 		}
 	}
 
@@ -1002,15 +999,16 @@ bool MOAILuaState::Inflate ( int idx, int windowBits ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAILuaState::IsNil () {
-
-	return ( !this->mState );
-}
-
-//----------------------------------------------------------------//
 bool MOAILuaState::IsNil ( int idx ) {
 
 	return lua_isnil ( this->mState, idx );
+}
+
+//----------------------------------------------------------------//
+bool MOAILuaState::IsNilOrNone ( int idx ) {
+
+	int t = lua_type ( this->mState, idx );
+	return (( t == LUA_TNONE ) || ( t == LUA_TNIL ));
 }
 
 //----------------------------------------------------------------//
@@ -1042,9 +1040,43 @@ bool MOAILuaState::IsType ( int idx, cc8* name, int type ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAILuaState::IsValid () {
+
+	return ( this->mState != 0 );
+}
+
+//----------------------------------------------------------------//
 void MOAILuaState::LoadLibs () {
 
 	luaL_openlibs ( this->mState );
+}
+
+//----------------------------------------------------------------//
+bool MOAILuaState::LogErrors ( u32 level, FILE* file, int status ) {
+
+	if ( status != 0 ) {
+	
+		cc8* error = lua_tostring ( this->mState, -1 );
+		if ( error ) {
+			STLString msg = lua_tostring ( this->mState, -1 );
+			ZLLog::LogF ( level, file, "-- %s\n", msg.c_str ());
+		}
+		lua_pop ( this->mState, 1 ); // pop error message
+		return true;
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAILuaState::LogStackDump ( u32 level, FILE* file ) {
+	STLString stackDump = this->GetStackDump ();
+	ZLLog::LogF ( level, file, stackDump );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaState::LogStackTrace ( u32 level, FILE* file, cc8* title, int stackLevel ) {
+	STLString stackTrace = this->GetStackTrace ( title, stackLevel );
+	ZLLog::LogF ( level, file, stackTrace.str ());
 }
 
 //----------------------------------------------------------------//
@@ -1085,40 +1117,6 @@ bool MOAILuaState::PrepMemberFunc ( int idx, cc8* name ) {
 	this->CopyToTop ( idx );
 	
 	return true;
-}
-
-//----------------------------------------------------------------//
-bool MOAILuaState::PrintErrors ( FILE* file, int status ) {
-
-	if ( status != 0 ) {
-	
-		cc8* error = lua_tostring ( this->mState, -1 );
-		if ( error ) {
-			STLString msg = lua_tostring ( this->mState, -1 );
-			ZLLog::LogF ( file, "-- %s\n", msg.c_str ());
-		}
-		lua_pop ( this->mState, 1 ); // pop error message
-		return true;
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
-void MOAILuaState::PrintStackDump () {
-	STLString stackDump = this->GetStackDump ();
-	ZLLog::LogF ( ZLLog::CONSOLE, stackDump );
-}
-
-//----------------------------------------------------------------//
-void MOAILuaState::PrintStackDump ( FILE* file  ) {
-	STLString stackDump = this->GetStackDump ();
-	ZLLog::LogF ( file, stackDump );
-}
-
-//----------------------------------------------------------------//
-void MOAILuaState::PrintStackTrace ( FILE* file, cc8* title, int level ) {
-	STLString stackTrace = this->GetStackTrace ( title, level );
-	ZLLog::LogF ( file, stackTrace.str ());
 }
 
 //----------------------------------------------------------------//
@@ -1343,7 +1341,7 @@ int MOAILuaState::RelIndex ( int idx ) {
 
 //----------------------------------------------------------------//
 void MOAILuaState::ReportBadCast ( int idx, cc8* typeName ) {
-	MOAILog ( *this, MOAILogMessages::MOAI_BadCast_DS, this->AbsIndex ( idx ), typeName );
+	MOAILogF ( *this, ZLLog::LOG_ERROR, MOAILogMessages::MOAI_BadCast_DS, this->AbsIndex ( idx ), typeName );
 }
 
 //----------------------------------------------------------------//

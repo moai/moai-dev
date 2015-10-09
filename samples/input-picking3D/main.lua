@@ -4,8 +4,14 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_MODEL_BOUNDS, 2, 1, 1, 1 )
+MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
+
 SCREEN_WIDTH = 320
 SCREEN_HEIGHT = 480
+
+WOBBLE = 10
+
 dofile ( "cube.lua" )
 
 MOAISim.openWindow ( "test", SCREEN_WIDTH, SCREEN_HEIGHT )
@@ -26,7 +32,7 @@ partition = MOAIPartition.new ()
 layer:setPartition ( partition )
 
 function addCube ( x, y, z, name )
-	local prop = makeCube ( 16 )
+	local prop = makeCube ( 32 )
 	prop:setLoc ( x, y, z )
 	prop.name = name
 	partition:insertProp ( prop )
@@ -74,20 +80,32 @@ function pointerCallback ( x, y )
 	end
 end
 
+function rand ( min, max )
+
+	return min + (( max - min ) * math.random ())
+end
+
 function clickCallback ( down )
 	
 	if down then
 		
 		--pick = partition:propForRay ( originX, originY, originZ, directionX, directionY, directionZ )
-        pickList = {partition:propListForRay ( originX, originY, originZ, directionX, directionY, directionZ )}
+        pickList = { partition:propListForRay ( originX, originY, originZ, directionX, directionY, directionZ )}
 		print ( pickList )
 		for k,v in pairs( pickList ) do print ( k, v ) end
 		
-		pick = pickList[1]
+		pick = pickList [ 1 ]
 		
 		if pick then
 			print ( pick.name )
 			pick:moveScl ( 0.25, 0.25, 0.25, 0.125, MOAIEaseType.EASE_IN )
+			pick:moveRot (
+				rand ( -WOBBLE, WOBBLE ),
+				rand ( -WOBBLE, WOBBLE ),
+				rand ( -WOBBLE, WOBBLE ),
+				0.125,
+				MOAIEaseType.EASE_IN
+			)
 		end
 	else
 		if pick then

@@ -16,6 +16,94 @@ bool ZLStream::CheckCaps ( u32 flags ) {
 }
 
 //----------------------------------------------------------------//
+size_t ZLStream::Collapse ( size_t clipBase, size_t clipSize, size_t chunkSize, size_t size, bool invert ) {
+
+	return this->Collapse ( *this, clipBase, clipSize, chunkSize, size, invert );
+}
+
+//----------------------------------------------------------------//
+size_t ZLStream::Collapse ( ZLStream& source, size_t clipBase, size_t clipSize, size_t chunkSize, size_t size, bool invert ) {
+
+
+	if (( clipBase + clipSize ) > chunkSize ) {
+		clipSize = ( clipBase < chunkSize ) ? ( clipBase + clipSize ) - chunkSize : 0;
+	}
+
+	if ( clipSize == 0 ) {
+		return this->WriteStream ( source, size );
+	}
+	
+	static const size_t BUFFER_SIZE = 1024;
+	char stackBuffer [ BUFFER_SIZE ];
+	char* buffer = stackBuffer;
+	
+	char* memBuffer = 0;
+	if ( BUFFER_SIZE < chunkSize ) {
+		memBuffer = ( char* )malloc ( chunkSize );
+		buffer = memBuffer;
+	}
+	
+	size_t dstStart = this->GetCursor ();
+	
+	// if the streams are the same we need to hop back and forth between two cursors
+	size_t srcCursor = source.GetCursor ();
+	size_t dstCursor = this->GetCursor ();
+	
+	// read one chunk at a time, until no more chunks
+	size_t readSize = 0;
+	size_t writeSize = 0;
+	size_t totalRead = 0;
+	
+	do {
+	
+		source.Seek ( srcCursor, SEEK_SET );
+		readSize = source.ReadBytes ( buffer, (( totalRead + chunkSize ) > size ) ? size - totalRead : chunkSize );
+	
+		srcCursor += readSize;
+		totalRead += readSize;
+		
+		if ( invert ) {
+		
+			if ( clipBase < readSize ) {
+			
+				size_t segSize = clipBase + clipSize;
+				segSize = segSize > readSize ? ( readSize - clipBase ) : segSize;
+				
+				memmove ( buffer, ( char* )(( size_t )buffer + clipBase ), segSize );
+				
+				writeSize = segSize;
+			}
+		}
+		else {
+		
+			writeSize = clipBase;
+		
+			size_t segBase = clipBase + clipSize;
+			if ( segBase < readSize ) {
+			
+				size_t segSize = readSize - segBase;
+				memmove (( char* )(( size_t )buffer + clipBase ), ( char* )(( size_t )buffer + segBase ), segSize );
+				
+				writeSize += segSize;
+			}
+		}
+		
+		if ( writeSize == 0 ) break;
+		
+		this->Seek ( dstCursor, SEEK_SET );
+		if ( this->WriteBytes ( buffer, writeSize ) < writeSize ) break;
+		dstCursor += writeSize;
+	}
+	while ( readSize == chunkSize ); // if we've read less than the buffer size (for any reason), then we're done
+	
+	if ( memBuffer ) {
+		free ( memBuffer );
+	}
+	
+	return this->GetCursor () - dstStart;
+}
+
+//----------------------------------------------------------------//
 void ZLStream::Compact () {
 }
 
@@ -246,7 +334,7 @@ int ZLStream::Seek ( long offset, int origin ) {
 	if ( absCursor > cursor ) {
 		if (( length == UNKNOWN_SIZE ) || ( absCursor > length )) return -1;
 	}
-	return this->SetCursor ( absCursor );
+	return ( absCursor != cursor ) ? this->SetCursor ( absCursor ) : 0;
 }
 
 //----------------------------------------------------------------//
@@ -307,19 +395,20 @@ size_t ZLStream::WriteStream ( ZLStream& source, size_t size ) {
 	if ( !( source.GetCaps () & CAN_READ )) return 0;
 	if ( !( this->GetCaps () & CAN_WRITE )) return 0;
 
+	if ( this == &source ) {
+		size_t cursor = this->GetCursor ();
+		this->Seek ( cursor + size, SEEK_SET );
+		return this->GetCursor () - cursor;
+	}
+
 	u8 buffer [ LOCAL_BUFFER ];
 
 	size_t readSize = 0;
 	size_t total = 0;
 	
 	do {
-	
-		if (( total + LOCAL_BUFFER ) > size ) {
-			readSize = source.ReadBytes ( buffer, size - total );
-		}
-		else {
-			readSize = source.ReadBytes ( buffer, LOCAL_BUFFER );
-		}
+		
+		readSize = source.ReadBytes ( buffer, (( total + LOCAL_BUFFER ) > size ) ? size - total : LOCAL_BUFFER );
 		
 		if ( readSize ) {
 			total += this->WriteBytes ( buffer, readSize );

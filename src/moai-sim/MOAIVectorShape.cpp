@@ -12,21 +12,19 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-int MOAIVectorShape::AddFillContours ( SafeTesselator* tess ) {
+int MOAIVectorShape::AddFillContours ( SafeTesselator& tess ) {
 	UNUSED ( tess );
 	return 0;
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorShape::AddStrokeContours ( SafeTesselator* tess, bool inside, bool outside ) {
+int MOAIVectorShape::AddStrokeContours ( SafeTesselator& tess, bool inside, bool outside ) {
 
 	int error = 0;
-	
-	assert ( tess );
 
 	SafeTesselator outline;
 	
-	this->AddFillContours ( &outline );
+	this->AddFillContours ( outline );
 	error = outline.Tesselate ( ( int )this->mStyle.mWindingRule, TESS_BOUNDARY_CONTOURS, 0, 0 );
 	if ( error ) return error;
 	
@@ -54,17 +52,17 @@ int MOAIVectorShape::AddStrokeContours ( SafeTesselator* tess, bool inside, bool
 	SafeTesselator stroke;
 	
 	if ( outside ) {
-		this->StrokeBoundaries ( &exterior, &outline, exteriorWidth, true, false );
+		this->StrokeBoundaries ( exterior, outline, exteriorWidth, true, false );
 		error = exterior.Tesselate ( TESS_WINDING_NONZERO, TESS_BOUNDARY_CONTOURS, 0, 0 );
 		if ( error ) return error;
-		this->CopyBoundaries ( &stroke, &exterior );
+		this->CopyBoundaries ( stroke, &exterior );
 	}
 	
 	if ( inside ) {
-		this->StrokeBoundaries ( &interior, &outline, interiorWidth, false, false );
+		this->StrokeBoundaries ( interior, outline, interiorWidth, false, false );
 		error = interior.Tesselate ( TESS_WINDING_NONZERO, TESS_BOUNDARY_CONTOURS, 0, 0 );
 		if ( error ) return error;
-		this->CopyBoundaries ( &stroke, &interior );
+		this->CopyBoundaries ( stroke, &interior );
 	}
 	
 	error = stroke.Tesselate ( TESS_WINDING_ODD, TESS_BOUNDARY_CONTOURS, 0, 0 );
@@ -81,7 +79,7 @@ bool MOAIVectorShape::CanGroup () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorShape::CopyBoundaries ( SafeTesselator* dest, SafeTesselator* src ) {
+void MOAIVectorShape::CopyBoundaries ( SafeTesselator& dest, SafeTesselator* src ) {
 
 	const float* verts = tessGetVertices ( src->mTess );
 	const int* elems = tessGetElements ( src->mTess );
@@ -90,7 +88,7 @@ void MOAIVectorShape::CopyBoundaries ( SafeTesselator* dest, SafeTesselator* src
 	for ( int i = 0; i < nelems; ++i ) {
 		int b = elems [( i * 2 )];
 		int n = elems [( i * 2 ) + 1 ];
-		dest->AddContour ( 2, &verts [ b * 2 ], sizeof ( float ) * 2, n );
+		dest.AddContour ( 2, &verts [ b * 2 ], sizeof ( float ) * 2, n );
 	}
 }
 
@@ -119,7 +117,7 @@ bool MOAIVectorShape::SetVertices ( const ZLVec2D* vertices, u32 total, bool clo
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorShape::Stroke ( SafeTesselator* tess, const ZLVec2D* verts, int nVerts, float width, bool forward, bool interior ) {
+void MOAIVectorShape::Stroke ( SafeTesselator& tess, const ZLVec2D* verts, int nVerts, float width, bool forward, bool interior ) {
 
 	MOAIVectorLineJoin* joins = ( MOAIVectorLineJoin* )alloca ( sizeof ( MOAIVectorLineJoin ) * nVerts );
 	MOAIVectorUtil::ComputeLineJoins ( joins, verts, nVerts, false, forward, interior );
@@ -131,15 +129,15 @@ void MOAIVectorShape::Stroke ( SafeTesselator* tess, const ZLVec2D* verts, int n
 	
 	MOAIVectorUtil::StrokeLine ( this->mStyle, contour, joins, nVerts, width, exact );
 	
-	tessAddContour ( tess->mTess, 2, contour, sizeof ( ZLVec2D ), contourVerts );
+	tessAddContour ( tess.mTess, 2, contour, sizeof ( ZLVec2D ), contourVerts );
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorShape::StrokeBoundaries ( SafeTesselator* tess, SafeTesselator* outline, float width, bool forward, bool interior ) {
+void MOAIVectorShape::StrokeBoundaries ( SafeTesselator& tess, SafeTesselator& outline, float width, bool forward, bool interior ) {
 
-	const float* verts = tessGetVertices ( outline->mTess );
-	const int* elems = tessGetElements ( outline->mTess );
-	int nelems = tessGetElementCount ( outline->mTess );
+	const float* verts = tessGetVertices ( outline.mTess );
+	const int* elems = tessGetElements ( outline.mTess );
+	int nelems = tessGetElementCount ( outline.mTess );
 
 	for ( int i = 0; i < nelems; ++i ) {
 
@@ -151,9 +149,7 @@ void MOAIVectorShape::StrokeBoundaries ( SafeTesselator* tess, SafeTesselator* o
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, SafeTesselator* tess ) {
-
-	assert ( tess );
+int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, SafeTesselator& tess ) {
 	
 	int error = 0;
 	
@@ -171,9 +167,7 @@ int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, SafeTesselator* 
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, ZLStream* vtxStream, ZLStream* idxStream, MOAIVertexFormat* format ) {
-	
-	assert ( vtxStream );
+int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format ) {
 	
 	u32 fillExtraID = this->mStyle.GetFillExtraID ();
 	u32 strokeExtraID = this->mStyle.GetStrokeExtraID ();
@@ -195,26 +189,24 @@ int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, ZLStream* vtxStr
 			
 			SafeTesselator skirt;
 			
-			error = this->AddFillContours ( &skirt );
+			error = this->AddFillContours ( skirt );
 			if ( error ) return error;
 			
 			error = skirt.Tesselate (( int )this->mStyle.mWindingRule, TESS_BOUNDARY_CONTOURS, NVP, 2 );
 			if ( error ) return error;
 			
-			drawing.WriteSkirt ( &skirt, vtxStream, idxStream, format, this->mStyle, this->mStyle.GetFillColor (), fillExtraID );
+			drawing.WriteSkirt ( skirt, vtxStream, idxStream, format, this->mStyle, this->mStyle.GetFillColor (), fillExtraID );
 		}
 		
 		SafeTesselator triangles;
 		
-		error = this->AddFillContours ( &triangles );
+		error = this->AddFillContours ( triangles );
 		if ( error ) return error;
 		
 		error = triangles.Tesselate (( int )this->mStyle.mWindingRule, TESS_POLYGONS, NVP, 2 );
 		if ( error ) return error;
 		
-		if ( vtxStream && idxStream ) {
-			drawing.WriteTriangles ( &triangles, vtxStream, idxStream, format, this->mStyle, this->mStyle.GetExtrude () + this->mStyle.GetZOffset (), this->mStyle.mFillColor.PackRGBA (), fillExtraID );
-		}
+		drawing.WriteTriangles ( triangles, vtxStream, idxStream, format, this->mStyle, this->mStyle.GetExtrude () + this->mStyle.GetZOffset (), this->mStyle.mFillColor.PackRGBA (), fillExtraID );
 	}
 	
 	if ( isStroked ) {
@@ -224,26 +216,24 @@ int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, ZLStream* vtxStr
 			SafeTesselator skirt;
 			
 			// only add the interior skirt we are *not* filled
-			error = this->AddStrokeContours ( &skirt, !isFilled, true );
+			error = this->AddStrokeContours ( skirt, !isFilled, true );
 			if ( error ) return error;
 			
 			error = skirt.Tesselate (( int )this->mStyle.mWindingRule, TESS_BOUNDARY_CONTOURS, NVP, 2 );
 			if ( error ) return error;
 			
-			drawing.WriteSkirt ( &skirt, vtxStream, idxStream, format, this->mStyle, this->mStyle.GetStrokeColor (), strokeExtraID );
+			drawing.WriteSkirt ( skirt, vtxStream, idxStream, format, this->mStyle, this->mStyle.GetStrokeColor (), strokeExtraID );
 		}
 		
 		SafeTesselator triangles;
 		
-		error = this->AddStrokeContours ( &triangles, true, true );
+		error = this->AddStrokeContours ( triangles, true, true );
 		if ( error ) return error;
 		
 		error = triangles.Tesselate ( TESS_WINDING_NONZERO, TESS_POLYGONS, NVP, 2 );
 		if ( error ) return error;
 		
-		if ( vtxStream && idxStream ) {
-			drawing.WriteTriangles ( &triangles, vtxStream, idxStream, format, this->mStyle, this->mStyle.GetExtrude () + this->mStyle.GetZOffset (), this->mStyle.mStrokeColor.PackRGBA (), strokeExtraID );
-		}
+		drawing.WriteTriangles ( triangles, vtxStream, idxStream, format, this->mStyle, this->mStyle.GetExtrude () + this->mStyle.GetZOffset (), this->mStyle.mStrokeColor.PackRGBA (), strokeExtraID );
 	}
 	
 	return error;
