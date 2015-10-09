@@ -59,4 +59,4 @@ public:
 };
 
 #endif
-#endif MOAI_WITH_LUAJIT
+#endif
