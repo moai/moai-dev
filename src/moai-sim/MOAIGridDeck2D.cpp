@@ -185,7 +185,6 @@ void MOAIGridDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D 
 			
 			MOAICellCoord coord ( x, y );
 			ZLVec3D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER, offset.mZ );
-			loc.Scale ( scale.mX, scale.mY, 1.0f );
 			
 			loc.mX = loc.mX + offset.mX;
 			loc.mY = loc.mY + offset.mY;

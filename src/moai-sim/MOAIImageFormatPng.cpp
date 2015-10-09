@@ -54,7 +54,7 @@ bool MOAIImageFormatPng::CheckHeader ( const void* buffer ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatPng::CreateTexture ( MOAITextureBase& texture, const void* data, size_t size ) {
+bool MOAIImageFormatPng::CreateTexture ( MOAISingleTexture& texture, const void* data, size_t size ) {
 	UNUSED ( texture );
 	UNUSED ( data );
 	UNUSED ( size );

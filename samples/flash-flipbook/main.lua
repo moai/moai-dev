@@ -48,33 +48,33 @@ function loadQuadListDeck ( spec )
 	local quadListDeck = MOAIGfxQuadListDeck2D.new ()
 	
 	quadListDeck:reserveUVQuads ( #spec.uvRects )
-		for j, uvRect in ipairs ( spec.uvRects ) do
-			
-			if uvRect.r then
-				quadListDeck:setUVQuad ( j,
-					uvRect.x0, uvRect.y0,
-					uvRect.x0, uvRect.y1,
-					uvRect.x1, uvRect.y1,
-					uvRect.x1, uvRect.y0
-				)
-			else
-				quadListDeck:setUVRect ( j, uvRect.x0, uvRect.y0, uvRect.x1, uvRect.y1 )
-			end
+	for j, uvRect in ipairs ( spec.uvRects ) do
+		
+		if uvRect.r then
+			quadListDeck:setUVQuad ( j,
+				uvRect.x0, uvRect.y0,
+				uvRect.x0, uvRect.y1,
+				uvRect.x1, uvRect.y1,
+				uvRect.x1, uvRect.y0
+			)
+		else
+			quadListDeck:setUVRect ( j, uvRect.x0, uvRect.y0, uvRect.x1, uvRect.y1 )
 		end
+	end
 
-		quadListDeck:reserveQuads ( #spec.quads )
-		for j, quad in ipairs ( spec.quads ) do
-			if quad.x0 ~= nil then
-				quadListDeck:setRect ( j, quad.x0, quad.y0, quad.x1, quad.y1 )
-			else
-				quadListDeck:setQuad ( j,
-					quad.v0.x, quad.v0.y,
-					quad.v1.x, quad.v1.y,
-					quad.v2.x, quad.v2.y,
-					quad.v3.x, quad.v3.y
-				)
-			end
+	quadListDeck:reserveQuads ( #spec.quads )
+	for j, quad in ipairs ( spec.quads ) do
+		if quad.x0 ~= nil then
+			quadListDeck:setRect ( j, quad.x0, quad.y0, quad.x1, quad.y1 )
+		else
+			quadListDeck:setQuad ( j,
+				quad.v0.x, quad.v0.y,
+				quad.v1.x, quad.v1.y,
+				quad.v2.x, quad.v2.y,
+				quad.v3.x, quad.v3.y
+			)
 		end
+	end
 	
 	quadListDeck:reservePairs ( #spec.prims )
 	for j, prim in ipairs ( spec.prims ) do
@@ -130,8 +130,9 @@ layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 
 MOAISim.pushRenderPass ( layer )
-MOAISim.setClearColor ( 1, 1, 1, 1 )
 MOAISim.openWindow ( "flash", fla.width, fla.height )
+
+MOAIGfxDevice.setClearColor ( 1, 1, 1, 1 )
 
 flash = parseFlash ( fla )
 

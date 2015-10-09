@@ -4,7 +4,7 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-INPUT_FILENAME = 'input.bin'
+INPUT_FILENAME = '../temp/input.bin'
 
 MOAIInputMgr.autoTimestamp ()
 

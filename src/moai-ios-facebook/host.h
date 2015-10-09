@@ -9,8 +9,13 @@
 
 #include <moai-core/host.h>
 
-AKU_API void	AKUIosFacebookAppFinalize				();
-AKU_API void	AKUIosFacebookAppInitialize				();
-AKU_API void	AKUIosFacebookContextInitialize			();
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+AKU_API void	AKUIosFacebookAppFinalize								();
+AKU_API void	AKUIosFacebookAppInitialize								();
+AKU_API BOOL	AKUIosFacebookApplicationDidFinishLaunchingWithOptions	( UIApplication* application, NSDictionary* launchOptions );
+AKU_API BOOL	AKUIosFacebookApplicationOpenURL						( UIApplication* application,  NSURL* url, NSString* sourceApplication, id annotation );
+AKU_API void	AKUIosFacebookContextInitialize							();
 
 #endif

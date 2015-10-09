@@ -8,7 +8,6 @@ class MOAIBoundsDeck;
 class MOAICellCoord;
 class MOAICollisionShape;
 class MOAIColor;
-class MOAIGfxState;
 class MOAIGrid;
 class MOAIImage;
 class MOAIMaterialBatch;

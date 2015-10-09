@@ -17,9 +17,9 @@
     @property ( readonly, nonatomic ) BOOL multisampleEnabled;
 
     //----------------------------------------------------------------//
-    +( void )       appInitialize;
 	-( void )       application                             :( UIApplication* )application didFailToRegisterForRemoteNotificationsWithError:( NSError* )error;
-	-( void )       application                             :( UIApplication* )application didReceiveRemoteNotification:( NSDictionary* )pushBundle;
+    +( BOOL )       application                             :( UIApplication* )application didFinishLaunchingWithOptions:( NSDictionary* )launchOptions;
+    -( void )       application                             :( UIApplication* )application didReceiveRemoteNotification:( NSDictionary* )pushBundle;
 	-( void )       application                             :( UIApplication* )application didRegisterForRemoteNotificationsWithDeviceToken:( NSData* )deviceToken;
     -( BOOL )       application                             :( UIApplication* )application openURL:( NSURL* )url sourceApplication:( NSString* )sourceApplication annotation:( id )annotation;
     +( CGRect )     getScreenBoundsFromCurrentOrientation   :( CGRect )bounds;

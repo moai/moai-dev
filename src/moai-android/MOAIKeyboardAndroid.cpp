@@ -24,11 +24,11 @@ extern JavaVM* jvm;
   
 //----------------------------------------------------------------//
 // The listeners need to be called on the event
-extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiKeyboard_AKUNotifyKeyEvent ( JNIEnv* env, jclass cls ) {
+extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_MoaiKeyboard_AKUNotifyKeyEvent ( JNIEnv* env, jclass cls ) {
 	MOAIKeyboardAndroid::Get ().NotifyKeyEvent();
 }
 
-extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiKeyboard_AKUNotifyTextDone ( JNIEnv* env, jclass cls ) {
+extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_MoaiKeyboard_AKUNotifyTextDone ( JNIEnv* env, jclass cls ) {
 	MOAIKeyboardAndroid::Get ().NotifyTextDone();
 }
 
@@ -37,7 +37,7 @@ int MOAIKeyboardAndroid::_hideKeyboard ( lua_State* L ) {
 	JNI_GET_ENV ( jvm, env );
 	MOAILuaState state ( L );
 
-	jclass moai = env->FindClass ( "com/ziplinegames/moai/MoaiKeyboard" );
+	jclass moai = env->FindClass ( "com/moaisdk/core/MoaiKeyboard" );
 
 	if ( moai ) {
         jmethodID hideSoftKeyboard = env->GetStaticMethodID ( moai, "hideKeyboard", "()V" );
@@ -87,7 +87,7 @@ int MOAIKeyboardAndroid::_setText ( lua_State* L ) {
 	JNI_GET_ENV ( jvm, env ); 
 	MOAIJString jtext = JNI_GET_JSTRING ( text );
 
-	jclass moai = env->FindClass ( "com/ziplinegames/moai/MoaiKeyboard" );
+	jclass moai = env->FindClass ( "com/moaisdk/core/MoaiKeyboard" );
 	if ( moai ) {
 		jmethodID setText = env->GetStaticMethodID ( moai, "setText", "(Ljava/lang/String;)V" );
 		if ( setText ) {
@@ -121,7 +121,7 @@ int MOAIKeyboardAndroid::_showPhoneKeyboard( lua_State* L ) {
 int MOAIKeyboardAndroid::_showKeyboardHelper( const char* j_func ) {
     JNI_GET_ENV ( jvm, env );
 
-    jclass t_class = env->FindClass ( "com/ziplinegames/moai/MoaiKeyboard" );
+    jclass t_class = env->FindClass ( "com/moaisdk/core/MoaiKeyboard" );
     if ( t_class ) {
         jmethodID t_func = env->GetStaticMethodID(t_class, j_func, "()V");
         if ( t_func ) {
@@ -156,7 +156,7 @@ void MOAIKeyboardAndroid::NotifyKeyEvent ( ) {
 	MOAILuaRef& callback = this->mListeners [ EVENT_INPUT ];
 	if ( callback ) {
 		
-		jclass moai = env->FindClass ( "com/ziplinegames/moai/MoaiKeyboard" );
+		jclass moai = env->FindClass ( "com/moaisdk/core/MoaiKeyboard" );
 		if ( moai ) {
 			jmethodID getString = env->GetStaticMethodID ( moai, "getString", "()Ljava/lang/String;" );
 			if ( getString ) {
@@ -194,7 +194,7 @@ void MOAIKeyboardAndroid::NotifyTextDone ( ) {
 void MOAIKeyboardAndroid::PushText ( MOAILuaState& state ) {
 	JNI_GET_ENV ( jvm, env );
 
-	jclass moai = env->FindClass ( "com/ziplinegames/moai/MoaiKeyboard" );
+	jclass moai = env->FindClass ( "com/moaisdk/core/MoaiKeyboard" );
 
 	if ( moai ) {
 		jmethodID getString = env->GetStaticMethodID ( moai, "getString", "()Ljava/lang/String;" );

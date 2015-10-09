@@ -94,7 +94,7 @@ void JniUtils::ClearException () {
 jobject JniUtils::CreateObjectOfClass () {
 
      if ( !this->mClass ) {
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: Missing class; cannot create object" );
+		ZLLogF ( ZLLog::CONSOLE, "MOAI JNI: Missing class; cannot create object" );
 		assert ( false );
 		return NULL;
     }
@@ -115,7 +115,7 @@ jclass JniUtils::GetClass ( cc8* className ) {
 	
 	jclass clazz = this->Env ()->FindClass ( className );
 	if ( clazz == NULL ) {
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: Unable to find java class %s", className );
+		ZLLogF ( ZLLog::CONSOLE, "MOAI JNI: Unable to find java class %s", className );
 		this->ClearException ();
 	}
 	return clazz;
@@ -137,7 +137,7 @@ jclass JniUtils::GetClassViaLoader ( cc8* className ) {
 	jclass clazz = ( jclass )( this->Env ()->CallObjectMethod ( classLoader, loadClass, jclassName ));
 	
     if ( clazz == NULL ) {
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: Missing class; cannot find java class %d", className );
+		ZLLogF ( ZLLog::CONSOLE, "MOAI JNI: Missing class; cannot find java class %d", className );
 		this->ClearException ();
     }
 	return clazz;
@@ -167,7 +167,7 @@ jmethodID JniUtils::GetMethod ( cc8* methodName, cc8* methodSignature ) {
 jmethodID JniUtils::GetMethod ( jclass clazz, cc8* methodName, cc8* methodSignature ) {
 	
     if ( !clazz ) {
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: Missing class; cannot find java method %d", methodName );
+		ZLLogF ( ZLLog::CONSOLE, "MOAI JNI: Missing class; cannot find java method %d", methodName );
 		this->ClearException ();
 		return NULL;
     }
@@ -175,7 +175,7 @@ jmethodID JniUtils::GetMethod ( jclass clazz, cc8* methodName, cc8* methodSignat
     jmethodID method = this->Env ()->GetMethodID ( clazz, methodName, methodSignature );
 	
 	if ( method == NULL ) {
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: Unable to find java method %s", methodName );
+		ZLLogF ( ZLLog::CONSOLE, "MOAI JNI: Unable to find java method %s", methodName );
 		this->ClearException ();
 	}
 	return method;
@@ -191,7 +191,7 @@ jmethodID JniUtils::GetStaticMethod ( cc8* methodName, cc8* methodSignature ) {
 jmethodID JniUtils::GetStaticMethod ( jclass clazz, cc8* methodName, cc8* methodSignature ) {
 	
     if ( !clazz ) {
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: Missing class; cannot find static java method %d", methodName );
+		ZLLogF ( ZLLog::CONSOLE, "MOAI JNI: Missing class; cannot find static java method %d", methodName );
 		this->ClearException ();
 		return NULL;
     }
@@ -199,7 +199,7 @@ jmethodID JniUtils::GetStaticMethod ( jclass clazz, cc8* methodName, cc8* method
     jmethodID method = this->Env ()->GetStaticMethodID ( clazz, methodName, methodSignature );
 	
 	if ( method == NULL ) {
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: Unable to find static java method %s", methodName );
+		ZLLogF ( ZLLog::CONSOLE, "MOAI JNI: Unable to find static java method %s", methodName );
 		this->ClearException ();
 	}
 	return method;
@@ -261,8 +261,7 @@ void JniUtils::ReleaseCString ( jstring jstr, cc8* cstr ) {
 //----------------------------------------------------------------//
 bool JniUtils::SetClass ( cc8* className ) {
 	
-	ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: set class %s", className );
-	
+	ZLLogF ( ZLLog::CONSOLE, "MOAI JNI: set class %s", className );
 	this->mClass = ( jclass )this->Env()->NewGlobalRef ( this->GetClass ( className ));
 	return this->mClass != NULL;
 }
@@ -270,8 +269,7 @@ bool JniUtils::SetClass ( cc8* className ) {
 //----------------------------------------------------------------//
 bool JniUtils::SetClassViaLoader ( cc8* className ) {
 	
-	ZLLog::LogF ( ZLLog::CONSOLE, "MOAI JNI: set class via loader %s", className );
-	
+	ZLLogF ( ZLLog::CONSOLE, "MOAI JNI: set class via loader %s", className );
 	this->mClass = this->GetClassViaLoader ( className );
 	return this->mClass != NULL;
 }

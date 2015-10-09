@@ -27,7 +27,7 @@ int MOAIBox2DRopeJoint::_getLimitState ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRopeJoint, "U" )
 	
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
@@ -50,7 +50,7 @@ int MOAIBox2DRopeJoint::_getMaxLength ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 	
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
@@ -74,7 +74,7 @@ int MOAIBox2DRopeJoint::_setMaxLength ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 	
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	

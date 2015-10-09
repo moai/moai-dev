@@ -99,6 +99,12 @@ int ZLVfsFile::GetError () {
 }
 
 //----------------------------------------------------------------//
+void* ZLVfsFile::GetFileHandle () {
+
+	return this->mIsZip ? 0 : this->mPtr.mFile;;
+}
+
+//----------------------------------------------------------------//
 int	ZLVfsFile::GetFileNum () {
 	
 	// TODO:
@@ -149,6 +155,15 @@ char* ZLVfsFile::GetString ( char* string, int length ) {
 int ZLVfsFile::IsEOF () {
 
 	return ( this->mIsZip ) ? this->mPtr.mZip->IsAtEnd () : feof ( this->mPtr.mFile );
+}
+
+//----------------------------------------------------------------//
+void ZLVfsFile::Lock () {
+
+	// TODO: cross platform
+	if ( !this->mIsZip ) {
+		flockfile ( this->mPtr.mFile );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -298,6 +313,25 @@ int ZLVfsFile::SetPos ( const fpos_t * pos ) {
 long ZLVfsFile::Tell () {
 
 	return ( this->mIsZip ) ? ( long )this->mPtr.mZip->Tell () : ftell ( this->mPtr.mFile );
+}
+
+//----------------------------------------------------------------//
+int ZLVfsFile::TryLock () {
+
+	// TODO: cross platform
+	if ( !this->mIsZip ) {
+		ftrylockfile ( this->mPtr.mFile );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+void ZLVfsFile::Unlock () {
+
+	// TODO: cross platform
+	if ( !this->mIsZip ) {
+		funlockfile ( this->mPtr.mFile );
+	}
 }
 
 //----------------------------------------------------------------//

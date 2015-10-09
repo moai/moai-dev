@@ -188,7 +188,7 @@ public:
 	void					RegisterLuaClass			( MOAILuaState& state );
 	void					RegisterLuaFuncs			( MOAILuaState& state );
 	void					ResizeCanvas				( const MOAIImage& image, ZLIntRect rect );
-	u32						SampleColor					( float x, float y, u32 filter ) const;
+	u32						SampleColor					( float x, float y, u32 filter, bool wrapX = false, bool wrapY = false ) const;
 	void					SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void					SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
 	void					SetColor					( u32 x, u32 y, u32 color );

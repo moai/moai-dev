@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.facebook.Facebook-Messenger-Share-Kit-SDK-1.3-for-iOS</string>
+	<key>CFBundleName</key>
+	<string>Facebook Messenger Share Kit SDK 1.3 for iOS Documentation</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	
+	
+	
+	
+	<key>DocSetFeedName</key>
+	<string>Facebook Messenger Share Kit SDK 1.3 for iOS</string>
+	
+	<key>DocSetMinimumXcodeVersion</key>
+	<string>3.0</string>
+	
+	<key>DashDocSetFamily</key>
+	<string>appledoc</string>
+	<key>DocSetPublisherIdentifier</key>
+	<string>com.facebook.documentation</string>
+	<key>DocSetPublisherName</key>
+	<string>Facebook</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2015 Facebook. All rights reserved.</string>
+</dict>
+</plist>

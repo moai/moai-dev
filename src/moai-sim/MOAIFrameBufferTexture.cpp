@@ -2,7 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIFrameBufferTexture.h>
 
@@ -43,8 +42,6 @@ int MOAIFrameBufferTexture::_init ( lua_State* L ) {
 	return 0;
 }
 
-
-
 //================================================================//
 // MOAIFrameBufferTexture
 //================================================================//
@@ -54,20 +51,14 @@ void MOAIFrameBufferTexture::Init ( u32 width, u32 height, u32 colorFormat, u32 
 
 	this->Destroy ();
 
-	if ( MOAIGfxDevice::Get ().IsFramebufferSupported ()) {
-
-		this->mWidth			= width;
-		this->mHeight			= height;
-		this->mColorFormat		= colorFormat;
-		this->mDepthFormat		= depthFormat;
-		this->mStencilFormat	= stencilFormat;
-		
-		this->FinishInit ();
-		this->DoCPUAffirm ();
-	}
-	else {
-		MOAILog ( 0, MOAILogMessages::MOAITexture_NoFramebuffer );
-	}
+	this->mWidth			= width;
+	this->mHeight			= height;
+	this->mColorFormat		= colorFormat;
+	this->mDepthFormat		= depthFormat;
+	this->mStencilFormat	= stencilFormat;
+	
+	this->FinishInit ();
+	this->DoCPUAffirm ();
 }
 
 //----------------------------------------------------------------//
@@ -81,7 +72,7 @@ MOAIFrameBufferTexture::MOAIFrameBufferTexture () :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIFrameBuffer )
-		RTTI_EXTEND ( MOAITextureBase )
+		RTTI_EXTEND ( MOAISingleTexture )
 	RTTI_END
  
 	this->mDebugName = "(texture from MOAIFrameBufferTexture)";
@@ -182,7 +173,7 @@ void MOAIFrameBufferTexture::OnGPUDestroy () {
 	MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_RENDERBUFFER, this->mGLStencilBufferID );
 	this->mGLStencilBufferID = 0;
 	
-	this->MOAITextureBase::OnGPUDestroy ();
+	this->MOAISingleTexture::OnGPUDestroy ();
 }
 
 //----------------------------------------------------------------//
@@ -193,21 +184,21 @@ void MOAIFrameBufferTexture::OnGPULost () {
 	this->mGLDepthBufferID = 0;
 	this->mGLStencilBufferID = 0;
 
-	this->MOAITextureBase::OnGPULost ();
+	this->MOAISingleTexture::OnGPULost ();
 }
 
 //----------------------------------------------------------------//
 void MOAIFrameBufferTexture::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAIFrameBuffer::RegisterLuaClass ( state );
-	MOAITextureBase::RegisterLuaClass ( state );
+	MOAISingleTexture::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIFrameBufferTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAIFrameBuffer::RegisterLuaFuncs ( state );
-	MOAITextureBase::RegisterLuaFuncs ( state );	
+	MOAISingleTexture::RegisterLuaFuncs ( state );	
 
 	luaL_Reg regTable [] = {
 		{ "init",						_init },
@@ -227,10 +218,10 @@ void MOAIFrameBufferTexture::Render () {
 
 //----------------------------------------------------------------//
 void MOAIFrameBufferTexture::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAITextureBase::SerializeIn ( state, serializer );
+	MOAISingleTexture::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAIFrameBufferTexture::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAITextureBase::SerializeOut ( state, serializer );
+	MOAISingleTexture::SerializeOut ( state, serializer );
 }

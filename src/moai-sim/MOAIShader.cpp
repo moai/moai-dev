@@ -85,7 +85,7 @@ void MOAIShader::BindUniforms () {
 			
 			if ( uniform.IsValid ()) {
 				if ( uniform.SetValue ( this->mUniformBuffers [ i ], true )) {
-					gfxDevice.Flush ();
+					gfxDevice.FlushBufferedPrims ();
 					uniform.Bind ();
 				}
 			}

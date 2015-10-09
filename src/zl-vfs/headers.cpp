@@ -452,6 +452,16 @@ int zl_fgetc ( ZLFILE* fp ) {
 }
 
 //----------------------------------------------------------------//
+void* zl_fgethandle ( ZLFILE* fp ) {
+
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
+	if ( file ) {
+		return file->GetFileHandle ();
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int zl_fgetpos ( ZLFILE* fp, fpos_t* position ) {
 	(( void )fp );
 	(( void )position );
@@ -482,6 +492,15 @@ int	zl_fileno ( ZLFILE* fp ) {
 }
 
 //----------------------------------------------------------------//
+void zl_flockfile ( ZLFILE *fp ) {
+
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
+	if ( file ) {
+		file->Lock ();
+	}
+}
+
+//----------------------------------------------------------------//
 ZLFILE* zl_fopen ( const char* filename, const char* mode ) {
 	
 	ZLVfsFile* file = new ZLVfsFile ();
@@ -496,14 +515,14 @@ ZLFILE* zl_fopen ( const char* filename, const char* mode ) {
 
 //----------------------------------------------------------------//
 #ifdef MOAI_COMPILER_MSVC
-	errno_t zl_fopen_s ( ZLFILE** fp, const char* filename, const char* mode ) {
 
+	errno_t zl_fopen_s ( ZLFILE** fp, const char* filename, const char* mode ) {
 		*fp = zl_fopen ( filename, mode );
 		return errno;
 	}
 
 	ZLFILE *zl_wfopen(const wchar_t *filename, const wchar_t *mode) {
-		ZLVfsFile* file = new ZLVfsFile();
+		ZLVfsFile* file = new ZLVfsFile ();
 
 		//Convert to ansi for our zlvfsfile functions
 		char filenameA[260];
@@ -616,6 +635,7 @@ int	zl_fseek ( ZLFILE* fp, long offset, int origin ) {
 	return -1;
 }
 
+//----------------------------------------------------------------//
 #if defined(__APPLE__) || defined(EMSCRIPTEN) || defined(__unix__) || defined(MOAI_COMPILER_MSVC)
 	int zl_fseeko ( ZLFILE* fp, off_t offset, int origin ) {
 		// TODO:
@@ -623,8 +643,7 @@ int	zl_fseek ( ZLFILE* fp, long offset, int origin ) {
 	}
 #endif
 
-
-
+//----------------------------------------------------------------//
 #ifdef __MINGW32__
 	int zl_fseeko64 ( ZLFILE* fp, __int64 offset, int origin ) {
 
@@ -661,11 +680,33 @@ long zl_ftell ( ZLFILE* fp ) {
 	return -1L;
 }
 
+//----------------------------------------------------------------//
 #if defined (__APPLE__) || defined (EMSCRIPTEN) || defined(__unix__)
-off_t zl_ftello ( ZLFILE* fp ) {
-	return (off_t) zl_ftell(fp);
-}
+	off_t zl_ftello ( ZLFILE* fp ) {
+		return (off_t) zl_ftell(fp);
+	}
 #endif
+
+//----------------------------------------------------------------//
+int zl_ftrylockfile ( ZLFILE *fp ) {
+
+	// TODO:
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
+	if ( file ) {
+		return file->TryLock ();
+	}
+	return -1;
+}
+
+//----------------------------------------------------------------//
+void zl_funlockfile ( ZLFILE *fp ) {
+
+	// TODO:
+	ZLVfsFile* file = ( ZLVfsFile* )fp;
+	if ( file ) {
+		file->Unlock ();
+	}
+}
 
 //----------------------------------------------------------------//
 size_t zl_fwrite ( const void* data, size_t size, size_t count, ZLFILE* fp ) {
@@ -797,16 +838,16 @@ ZLFILE* zl_tmpfile ( void ) {
 //----------------------------------------------------------------//
 char* zl_tmpnam ( char* str ) {
 
-#ifdef MOAI_OS_LINUX
-    // The last six characters of template must be "XXXXXX"
-    // Example:
-    //      char ss[200] = "/tmp/moaiXXXXXX";
-    //      zl_tmpnam(ss);
-    mkstemp(str);
-    return str;
-#else
-	return tmpnam ( str );
-#endif 
+	#ifdef MOAI_OS_LINUX
+		// The last six characters of template must be "XXXXXX"
+		// Example:
+		//      char ss[200] = "/tmp/moaiXXXXXX";
+		//      zl_tmpnam(ss);
+		mkstemp(str);
+		return str;
+	#else
+		return tmpnam ( str );
+	#endif 
 }
 
 //----------------------------------------------------------------//

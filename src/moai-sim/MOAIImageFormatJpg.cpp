@@ -101,7 +101,7 @@ bool MOAIImageFormatJpg::CheckHeader ( const void* buffer ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatJpg::CreateTexture ( MOAITextureBase& texture, const void* data, size_t size ) {
+bool MOAIImageFormatJpg::CreateTexture ( MOAISingleTexture& texture, const void* data, size_t size ) {
 	UNUSED ( texture );
 	UNUSED ( data );
 	UNUSED ( size );

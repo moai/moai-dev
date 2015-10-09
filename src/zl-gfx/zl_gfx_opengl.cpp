@@ -107,8 +107,6 @@ using namespace std;
 	#define GL_RGBA8 GL_RGBA8_OES
 #endif
 
-
-
 #ifdef MOAI_OS_BLACKBERRY
 	#include <GLES/gl.h>
 	#include <GLES/glext.h>
@@ -124,9 +122,6 @@ using namespace std;
 // globals
 //================================================================//
 
-static bool	sIsFramebufferSupported		= false;
-static bool	sIsOpenGLES					= false;
-static bool	sIsProgrammable				= false;
 static u32	sMaxTextureUnits			= 0;
 static u32	sMaxTextureSize				= 0;
 static u32	sOperationDepth				= 0; // this is just the counter for tracking begin/end calls
@@ -515,19 +510,8 @@ void zglInitialize () {
 	majorVersion = version.at ( 0 ) - '0';
 	minorVersion = version.at ( 2 ) - '0';
 
-	#ifdef __FLASH__
-		isOpenGLES = true;
-		sIsProgrammable = false;
-		sIsFramebufferSupported = false;
-	#else
-		sIsProgrammable = ( majorVersion >= 2 );
-		sIsFramebufferSupported = true;
-	#endif
-
 	#ifdef EMSCRIPTEN 
 		isOpenGLES = true;
-		sIsProgrammable = true;
-		sIsFramebufferSupported = true;
 	#endif
 	
 	#if defined ( __GLEW_H__ )
@@ -556,8 +540,7 @@ void zglInitialize () {
 				REMAP_EXTENSION_PTR ( glRenderbufferStorage,					glRenderbufferStorageEXT )
 			}
 			else {
-				// looks like frame buffer isn't supported
-				sIsFramebufferSupported = false;
+				assert ( false ); // needs framebuffer
 			}
 		}
 
@@ -566,9 +549,7 @@ void zglInitialize () {
 	int maxTextureUnits = 0;
 
 	if ( majorVersion == 1 ) {
-		#if USE_OPENGLES1
-			glGetIntegerv ( GL_MAX_TEXTURE_UNITS, &maxTextureUnits );
-		#endif
+		assert ( false ); // OpenGL ES1 no longer supported
 	}
 	else {
 		glGetIntegerv ( GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureUnits );
@@ -761,10 +742,6 @@ u32 zglGetCap ( u32 cap ) {
 	ASSERT_OPERATION_DEPTH ();
 
 	switch ( cap ) {
-		case ZGL_CAPS_IS_FRAMEBUFFER_SUPPORTED:
-			return sIsFramebufferSupported ? 1 : 0;
-		case ZGL_CAPS_IS_PROGRAMMABLE:
-			return sIsProgrammable ? 1 : 0;
 		case ZGL_CAPS_MAX_TEXTURE_SIZE:
 			return sMaxTextureSize;
 		case ZGL_CAPS_MAX_TEXTURE_UNITS:
@@ -788,13 +765,7 @@ u32 zglGetError () {
 		case GL_INVALID_OPERATION:	return ZGL_ERROR_INVALID_OPERATION;
 		case GL_INVALID_VALUE:		return ZGL_ERROR_INVALID_VALUE;
 		case GL_OUT_OF_MEMORY:		return ZGL_ERROR_OUT_OF_MEMORY;
-
-		#if USE_OPENGLES1
-			case GL_STACK_OVERFLOW:		return ZGL_ERROR_STACK_OVERFLOW;
-			case GL_STACK_UNDERFLOW:	return ZGL_ERROR_STACK_UNDERFLOW;
-		#endif
 	}
-
 	return ZGL_ERROR_UNKNOWN;
 }
 
@@ -827,56 +798,6 @@ void zglLineWidth ( float width ) {
 
 	ASSERT_OPERATION_DEPTH ();
 	glLineWidth (( GLfloat )width );
-}
-
-//----------------------------------------------------------------//
-void zglLoadIdentity () {
-
-	ASSERT_OPERATION_DEPTH ();
-
-	#if !MOAI_OS_NACL
-		glLoadIdentity ();
-	#endif
-}
-
-//----------------------------------------------------------------//
-void zglLoadMatrix ( const float* matrix ) {
-
-	ASSERT_OPERATION_DEPTH ();
-
-	#if !MOAI_OS_NACL
-		glLoadMatrixf ( matrix );
-	#endif
-}
-
-//----------------------------------------------------------------//
-void zglMatrixMode ( u32 mode ) {
-
-	ASSERT_OPERATION_DEPTH ();
-
-	#if !MOAI_OS_NACL
-		glMatrixMode ( _remapEnum ( mode ));
-	#endif
-}
-
-//----------------------------------------------------------------//
-void zglMultMatrix ( const float* matrix ) {
-
-	ASSERT_OPERATION_DEPTH ();
-
-	#if !MOAI_OS_NACL
-		glMultMatrixf ( matrix );
-	#endif
-}
-
-//----------------------------------------------------------------//
-void zglPointSize ( float size ) {
-
-	ASSERT_OPERATION_DEPTH ();
-
-	#if !MOAI_OS_NACL
-		glPointSize (( GLfloat )size );
-	#endif
 }
 
 //----------------------------------------------------------------//

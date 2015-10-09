@@ -22,8 +22,8 @@ private:
 	friend class MOAITextLayout;
 	
 	MOAIGlyph*				mGlyph;
-	MOAITextStyle*			mStyle;
-	MOAITextureBase*		mTexture; // caching this here to avoid add'l virtual calls when drawing
+	MOAITextStyleState*		mStyle;
+	MOAISingleTexture*		mTexture; // caching this here to avoid add'l virtual calls when drawing
 	MOAIShader*				mShader;
 	
 	u32			mIdx;		// index in original string
@@ -106,7 +106,7 @@ private:
 	void				CompactHighlights		();
 	void				FindSpriteSpan			( u32 idx, u32 size, u32& spanIdx, u32& spanSize );
 	void				PushLine				( u32 start, u32 size, const ZLRect& rect, float height, float ascent );
-	void				PushSprite				( u32 idx, MOAIGlyph& glyph, MOAITextStyle& style, float x, float y, float xScale, float yScale );
+	void				PushSprite				( u32 idx, MOAIGlyph& glyph, MOAITextStyleState& style, float x, float y, float xScale, float yScale );
 	void				PushStyleSpan			( int base, int top, MOAITextStyle& style );
 	
 public:

@@ -91,7 +91,7 @@ int MOAIBox2DWorld::_addBody ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UN" )
 	
 	if ( self->IsLocked ()) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -132,7 +132,7 @@ int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
 	
 	if ( self->IsLocked ()) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -185,7 +185,7 @@ int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNN" )
 	
 	if ( self->IsLocked ()) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -235,7 +235,7 @@ int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUN" )
 	
 	if ( self->IsLocked ()) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -279,7 +279,7 @@ int MOAIBox2DWorld::_addMotorJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUU" )
 
 	if ( self->IsLocked ()) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -323,7 +323,7 @@ int	MOAIBox2DWorld::_addMouseJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNN" )
 	
 	if ( self->IsLocked ()) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -374,7 +374,7 @@ int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
 	
 	if ( self->IsLocked ()) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -432,7 +432,7 @@ int	MOAIBox2DWorld::_addPulleyJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNNNNNNNNNN" )
 	
 	if ( self->IsLocked ()) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -494,7 +494,7 @@ int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNN" )
 	
 	if ( self->IsLocked ()) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -540,7 +540,7 @@ int	MOAIBox2DWorld::_addRevoluteJointLocal( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
 	
 	if ( self->IsLocked ()) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -593,7 +593,7 @@ int	MOAIBox2DWorld::_addRopeJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUU" )
 	
 	if ( self->IsLocked ()) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -650,7 +650,7 @@ int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNN" )
 	
 	if ( self->IsLocked ()) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -697,7 +697,7 @@ int	MOAIBox2DWorld::_addWheelJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
 	
 	if ( self->IsLocked ()) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	

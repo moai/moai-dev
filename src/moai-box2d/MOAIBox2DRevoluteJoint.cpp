@@ -24,7 +24,7 @@ int MOAIBox2DRevoluteJoint::_getJointAngle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRevoluteJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -45,7 +45,7 @@ int MOAIBox2DRevoluteJoint::_getJointSpeed ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRevoluteJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -66,7 +66,7 @@ int MOAIBox2DRevoluteJoint::_getLowerLimit ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRevoluteJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -87,7 +87,7 @@ int MOAIBox2DRevoluteJoint::_getMotorSpeed ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRevoluteJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -108,7 +108,7 @@ int MOAIBox2DRevoluteJoint::_getMotorTorque ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRevoluteJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -132,7 +132,7 @@ int MOAIBox2DRevoluteJoint::_getUpperLimit ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRevoluteJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -153,7 +153,7 @@ int MOAIBox2DRevoluteJoint::_isLimitEnabled ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRevoluteJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -174,7 +174,7 @@ int MOAIBox2DRevoluteJoint::_isMotorEnabled ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRevoluteJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -197,7 +197,7 @@ int MOAIBox2DRevoluteJoint::_setLimit ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRevoluteJoint, "U" )
 	
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
@@ -223,7 +223,7 @@ int MOAIBox2DRevoluteJoint::_setLimitEnabled ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRevoluteJoint, "U" )
 	
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
@@ -247,7 +247,7 @@ int MOAIBox2DRevoluteJoint::_setMaxMotorTorque ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRevoluteJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -276,7 +276,7 @@ int MOAIBox2DRevoluteJoint::_setMotor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRevoluteJoint, "U" )
 	
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
@@ -307,7 +307,7 @@ int MOAIBox2DRevoluteJoint::_setMotorSpeed ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRevoluteJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -331,7 +331,7 @@ int MOAIBox2DRevoluteJoint::_setMotorEnabled ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRevoluteJoint, "U" )
 	
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	

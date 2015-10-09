@@ -4,6 +4,11 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+if MOAIEnvironment.osBrand ~= MOAIEnvironment.OS_BRAND_IOS then
+	print ( 'iOS only sample - please run on an iOS device or simulator' )
+	os.exit ()
+end
+
 print ( "hello, iPhone!" )
 
 print ( 'screen: ', MOAIEnvironment.screenWidth, MOAIEnvironment.screenHeight )

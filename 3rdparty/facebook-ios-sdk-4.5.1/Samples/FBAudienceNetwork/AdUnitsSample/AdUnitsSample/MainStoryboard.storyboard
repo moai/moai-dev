@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="cXs-Xt-9qZ">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+    </dependencies>
+    <scenes>
+        <!--Interstitial-->
+        <scene sceneID="xHw-sX-4wU">
+            <objects>
+                <viewController id="Lyx-zj-cfh" customClass="InterstitialViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uMq-fc-2IX"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZYN-QZ-oGp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pnB-Mc-KrH">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="fqX-h9-flv">
+                                <rect key="frame" x="156" y="28" width="288" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="288" id="lfA-OU-wwC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2vS-3u-bZv">
+                                <rect key="frame" x="156" y="86" width="288" height="45"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="Zu0-Kd-8y7"/>
+                                </constraints>
+                                <state key="normal" title="Load Interstitial Ad"/>
+                                <connections>
+                                    <action selector="loadInterstitalTapped:" destination="Lyx-zj-cfh" eventType="touchUpInside" id="wbf-sg-E4A"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P9r-ms-7BR">
+                                <rect key="frame" x="156" y="139" width="288" height="45"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="hJg-E1-yAG"/>
+                                </constraints>
+                                <state key="normal" title="Show!"/>
+                                <connections>
+                                    <action selector="showInterstitialTapped:" destination="Lyx-zj-cfh" eventType="touchUpInside" id="A9z-Sn-TH3"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" name="controlHighlightColor" catalog="System" colorSpace="catalog"/>
+                        <constraints>
+                            <constraint firstItem="2vS-3u-bZv" firstAttribute="top" secondItem="fqX-h9-flv" secondAttribute="bottom" constant="8" symbolic="YES" id="6Wh-vD-fq5"/>
+                            <constraint firstItem="fqX-h9-flv" firstAttribute="top" secondItem="uMq-fc-2IX" secondAttribute="bottom" constant="8" symbolic="YES" id="6au-vv-udZ"/>
+                            <constraint firstItem="2vS-3u-bZv" firstAttribute="centerX" secondItem="pnB-Mc-KrH" secondAttribute="centerX" id="Fhk-Nf-5ar"/>
+                            <constraint firstItem="P9r-ms-7BR" firstAttribute="trailing" secondItem="2vS-3u-bZv" secondAttribute="trailing" id="H96-th-7FT"/>
+                            <constraint firstItem="fqX-h9-flv" firstAttribute="trailing" secondItem="2vS-3u-bZv" secondAttribute="trailing" id="XIt-zb-fky"/>
+                            <constraint firstItem="P9r-ms-7BR" firstAttribute="top" secondItem="2vS-3u-bZv" secondAttribute="bottom" constant="8" symbolic="YES" id="dFh-89-zDA"/>
+                            <constraint firstItem="fqX-h9-flv" firstAttribute="leading" secondItem="2vS-3u-bZv" secondAttribute="leading" id="fbZ-Ph-sRx"/>
+                            <constraint firstItem="2vS-3u-bZv" firstAttribute="leading" secondItem="P9r-ms-7BR" secondAttribute="leading" id="w2c-La-FqY"/>
+                            <constraint firstItem="ZYN-QZ-oGp" firstAttribute="top" relation="lessThanOrEqual" secondItem="P9r-ms-7BR" secondAttribute="bottom" constant="367" id="wqP-4c-xVM"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Interstitial" image="TabInterstitial" id="cRs-aR-dph"/>
+                    <connections>
+                        <outlet property="adStatusLabel" destination="fqX-h9-flv" id="1rl-wN-XuA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qy8-hk-L7m" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="922" y="767"/>
+        </scene>
+        <!--Medium Rect-->
+        <scene sceneID="SCj-IH-H5g">
+            <objects>
+                <viewController id="RDs-sL-OKZ" customClass="MediumRectViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="QIX-Yu-ObV"/>
+                        <viewControllerLayoutGuide type="bottom" id="fWN-H3-vDa"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xPl-Ao-0h5">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="250" text="Loading an ad..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="jIa-4f-XzP">
+                                <rect key="frame" x="156" y="28" width="288" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="288" id="jJF-fo-Mcc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" name="controlHighlightColor" catalog="System" colorSpace="catalog"/>
+                        <constraints>
+                            <constraint firstItem="fWN-H3-vDa" firstAttribute="top" secondItem="jIa-4f-XzP" secondAttribute="bottom" constant="473" id="9f2-4H-abG"/>
+                            <constraint firstItem="jIa-4f-XzP" firstAttribute="centerX" secondItem="xPl-Ao-0h5" secondAttribute="centerX" id="AvY-bb-lge"/>
+                            <constraint firstItem="jIa-4f-XzP" firstAttribute="top" secondItem="QIX-Yu-ObV" secondAttribute="bottom" constant="8" symbolic="YES" id="R18-Ei-Na1"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Medium Rect" image="TabMediumRect" id="mun-JE-D9f"/>
+                    <connections>
+                        <outlet property="adStatusLabel" destination="jIa-4f-XzP" id="Pwf-E0-1OW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7pz-Ll-UuV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1601" y="432"/>
+        </scene>
+        <!--Banner-->
+        <scene sceneID="EdB-6E-Ied">
+            <objects>
+                <viewController id="OMo-Hq-eep" customClass="BannerViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="e3o-Gq-b8k"/>
+                        <viewControllerLayoutGuide type="bottom" id="sz8-k3-4GI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="QBR-JO-Cw3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading an ad..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="mPY-m6-qra">
+                                <rect key="frame" x="156" y="28" width="288" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="288" id="dAj-9w-wWs"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" name="controlHighlightColor" catalog="System" colorSpace="catalog"/>
+                        <constraints>
+                            <constraint firstItem="mPY-m6-qra" firstAttribute="top" secondItem="e3o-Gq-b8k" secondAttribute="bottom" constant="8" symbolic="YES" id="HgK-Sa-Gra"/>
+                            <constraint firstItem="sz8-k3-4GI" firstAttribute="top" secondItem="mPY-m6-qra" secondAttribute="bottom" constant="473" id="ZfH-iw-BhA"/>
+                            <constraint firstItem="mPY-m6-qra" firstAttribute="centerX" secondItem="QBR-JO-Cw3" secondAttribute="centerX" id="yBU-U6-rxf"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Banner" image="TabBanner" id="LeD-t9-193"/>
+                    <connections>
+                        <outlet property="adStatusLabel" destination="mPY-m6-qra" id="aoE-yc-8YA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FZK-fb-qpK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="922.5" y="77.112676056338017"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="xI6-on-JAl">
+            <objects>
+                <tabBarController id="cXs-Xt-9qZ" sceneMemberID="viewController">
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="llv-vM-Tc6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="OMo-Hq-eep" kind="relationship" relationship="viewControllers" id="6O0-l3-sUC"/>
+                        <segue destination="RDs-sL-OKZ" kind="relationship" relationship="viewControllers" id="Uok-dA-W75"/>
+                        <segue destination="Lyx-zj-cfh" kind="relationship" relationship="viewControllers" id="9gI-E3-YWy"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8LE-7c-Vwv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="104" y="407"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="TabBanner" width="44" height="44"/>
+        <image name="TabInterstitial" width="44" height="44"/>
+        <image name="TabMediumRect" width="44" height="44"/>
+    </resources>
+</document>

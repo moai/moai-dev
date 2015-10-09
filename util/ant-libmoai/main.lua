@@ -243,7 +243,7 @@ local importJava = function ( path, namespace )
 
 	if JAVA_DIR then
 
-		-- the entre foler tree names 'src'
+		-- the entire folder tree named 'src'
 		local srcPath = path .. 'src/'
 		if MOAIFileSystem.checkPathExists ( srcPath ) then
 			MOAIFileSystem.copy (  srcPath, JAVA_DIR )
@@ -376,6 +376,9 @@ makeTarget = function ( target )
 	for k, v in util.pairsByKeys ( preprecessorFlags ) do
 		preprocessorString = preprocessorString .. string.format ( '\tMY_LOCAL_CFLAGS += -D%s=%d\n', k, v )
 	end
+
+	preprocessorString = preprocessorString .. string.format ( '\tMY_LOCAL_CFLAGS += -DNDEBUG\n' )
+	preprocessorString = preprocessorString .. string.format ( '\tMY_LOCAL_CFLAGS += -DMOAI_KEEP_ASSERT=1\n' )
 
 	util.replaceInFile ( targetMakefile, {
 		[ '@LIB_NAME@' ]					= target.NAME,

@@ -8,6 +8,7 @@ print ( "hello, moai!" )
 
 MOAILogMgr.registerLogMessage ( MOAILogMgr.MOAI_FileNotFound_S,			'CUSTOM %s NOT FOUND MESSAGE', MOAILogMgr.LOG_ERROR )
 MOAILogMgr.registerLogMessage ( MOAILogMgr.MOAI_ParamTypeMismatch,		'CUSTOM PARAM TYPE MISMATCH MESSAGE', MOAILogMgr.LOG_ERROR )
+MOAILogMgr.registerLogMessage ( MOAILogMgr.MOAI_ParamTypeMismatch_DSS,	'CUSTOM PARAM TYPE MISMATCH MESSAGE [%d, %s, %s]', MOAILogMgr.LOG_ERROR )
 MOAILogMgr.registerLogMessage ( MOAILogMgr.MOAI_IndexOutOfRange_DDD,	'CUSTOM INDEX %d OUT OF RANGE [%d, %d] MESSAGE', MOAILogMgr.LOG_ERROR )
 MOAILogMgr.registerLogMessage ( MOAILogMgr.MOAINode_AttributeNotFound,	'CUSTOM ATTRIBUTE NOT FOUND MESSAGE', MOAILogMgr.LOG_ERROR )
 

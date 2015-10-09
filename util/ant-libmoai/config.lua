@@ -33,7 +33,7 @@ MODULES = {
 	ADCOLONY = {
 		
 		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_ADCOLONY',
-		NAMESPACE = 'com.ziplinegames.moai',
+		NAMESPACE = 'com.moaisdk.adcolony',
 		
 		HEADER_SEARCH_PATHS = {
 		},
@@ -103,7 +103,7 @@ MODULES = {
 	CHARTBOOST = {
 		
 		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_CHARTBOOST',
-		NAMESPACE = 'com.ziplinegames.moai',
+		NAMESPACE = 'com.moaisdk.chartboost',
 	
 		HEADER_SEARCH_PATHS = {
 		},
@@ -124,7 +124,7 @@ MODULES = {
 	CRITTERCISM = {
 		
 		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_CRITTERCISM',
-		NAMESPACE = 'com.ziplinegames.moai',
+		NAMESPACE = 'com.moaisdk.crittercism',
 	
 		HEADER_SEARCH_PATHS = {
 		},
@@ -173,7 +173,7 @@ MODULES = {
 	FACEBOOK = {
 		
 		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_FACEBOOK',
-		NAMESPACE = 'com.ziplinegames.moai',
+		NAMESPACE = 'com.moaisdk.facebook',
 	
 		HEADER_SEARCH_PATHS = {
 		},
@@ -183,7 +183,8 @@ MODULES = {
 		},
 		
 		JAVA = {
-			MOAI_SDK_HOME .. '3rdparty-android/facebook-v3',
+			--MOAI_SDK_HOME .. '3rdparty-android/facebook-v3',
+			MOAI_SDK_HOME .. '3rdparty-android/facebook-v4.4.1',
 			MOAI_SDK_HOME .. 'src/moai-android-facebook',
 		},
 
@@ -194,7 +195,7 @@ MODULES = {
 	FLURRY = {
 		
 		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_FLURRY',
-		NAMESPACE = 'com.ziplinegames.moai',
+		NAMESPACE = 'com.moaisdk.flurry',
 	
 		HEADER_SEARCH_PATHS = {
 		},
@@ -238,7 +239,7 @@ MODULES = {
 	GOOGLE_PLAY_SERVICES = {
 		
 		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_GOOGLE_PLAY',
-		NAMESPACE = 'com.ziplinegames.moai',
+		NAMESPACE = 'com.moaisdk.googleplayservices',
 	
 		HEADER_SEARCH_PATHS = {
 		},
@@ -389,7 +390,7 @@ MODULES = {
 	TAPJOY = {
 		
 		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_TAPJOY',
-		NAMESPACE = 'com.ziplinegames.moai',
+		NAMESPACE = 'com.moaisdk.tapjoy',
 	
 		HEADER_SEARCH_PATHS = {
 		},
@@ -410,7 +411,7 @@ MODULES = {
 	TWITTER = {
 		
 		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_TWITTER',
-		NAMESPACE = 'com.ziplinegames.moai',
+		NAMESPACE = 'com.moaisdk.twitter',
 	
 		HEADER_SEARCH_PATHS = {
 		},
@@ -458,7 +459,7 @@ MODULES = {
 	VUNGLE = {
 		
 		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_VUNGLE',
-		NAMESPACE = 'com.ziplinegames.moai',
+		NAMESPACE = 'com.moaisdk.vungle',
 	
 		HEADER_SEARCH_PATHS = {
 		},
@@ -484,7 +485,7 @@ TARGETS = {
 	-- Like modules, new targets may be added in subsequent config files and existing
 	-- targets may be overwritten.
 
-	-- Targets may be overwritten via the command line, or be specifying an empty/nameless
+	-- Targets may be overwritten via the command line, or by specifying an empty/nameless
 	-- target override in a subsequent config file.
 
 	-- Target contents:

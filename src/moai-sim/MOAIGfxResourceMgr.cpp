@@ -3,19 +3,8 @@
 
 #include "pch.h"
 
-#include <moai-sim/MOAIFrameBuffer.h>
-#include <moai-sim/MOAIFrameBufferTexture.h>
-#include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIGfxResource.h>
-#include <moai-sim/MOAIMultiTexture.h>
-#include <moai-sim/MOAIShader.h>
-#include <moai-sim/MOAIShaderMgr.h>
-#include <moai-sim/MOAIShaderProgram.h>
-#include <moai-sim/MOAISim.h>
-#include <moai-sim/MOAITexture.h>
-#include <moai-sim/MOAIVertexFormat.h>
-#include <moai-sim/MOAIVertexFormatMgr.h>
-#include <moai-sim/MOAIViewport.h>
+#include <moai-sim/MOAIGfxResourceMgr.h>
 
 //================================================================//
 // MOAIGfxDeleter

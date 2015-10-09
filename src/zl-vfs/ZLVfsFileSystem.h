@@ -4,12 +4,35 @@
 #ifndef ZLFILESYSTEM_H
 #define ZLFILESYSTEM_H
 
+#include <zl-common/zl_types.h>
 #include <zl-vfs/zl_mutex.h>
 
 class ZLVfsFile;
 class ZLVfsVirtualPath;
 
 typedef std::string ( *FileRemapCallback )( const std::string& remappedFilename );
+
+//================================================================//
+// ZLVfsVirtualPathInfo
+//================================================================//
+class ZLVfsVirtualPathInfo {
+public:
+
+	bool				mIsVirtual;
+
+	std::string			mPathToArchive;
+	std::string			mLocalPath;
+	bool				mIsFile;
+	bool				mIsCompressed;
+	u32					mCompressedSize;
+	u32					mUncompressedSize;
+	
+	size_t				mOffsetToHeader;
+	
+	//----------------------------------------------------------------//
+	FILE*				Open						();
+						ZLVfsVirtualPathInfo		();
+};
 
 //================================================================//
 // ZLVfsFileSystem
@@ -46,6 +69,7 @@ public:
 	static std::string			GetBasename					( const char* filename );
 	std::string					GetRelativePath				( const char* path, const char* base = 0 );
 	std::string					GetWorkingPath				();
+	ZLVfsVirtualPathInfo		GetVirtualPathInfo			( char const* path );
 	void						Init						();
 	static bool					IsSeparator					( char c );
 	bool						IsVirtualPath				( char const* path );

@@ -45,6 +45,15 @@ enum {
 	AKU_DATA_UNCOMPRESSED,
 };
 
+enum {
+	AKU_LOG_DEBUG,
+	AKU_LOG_STATUS,
+	AKU_LOG_WARNING,
+	AKU_LOG_ERROR,
+	AKU_LOG_FATAL,
+	AKU_LOG_NONE,
+};
+
 // callbacks
 typedef void ( *AKUErrorTracebackFunc )         ( const char* message, struct lua_State* L, int level );
 
@@ -61,6 +70,7 @@ AKU_API void*			AKUGetUserdata					();
 
 AKU_API void			AKUInitMemPool					( size_t sizeInBytes );
 AKU_API int				AKUSetContext					( AKUContextID context );
+AKU_API void			AKUSetLogLevel					( int logLevel );
 AKU_API void			AKUSetUserdata					( void* user );
 
 // management api

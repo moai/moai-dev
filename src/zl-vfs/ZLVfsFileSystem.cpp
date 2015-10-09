@@ -27,6 +27,48 @@
 using namespace std;
 
 //================================================================//
+// ZLVfsVirtualPathInfo
+//================================================================//
+
+//----------------------------------------------------------------//
+FILE* ZLVfsVirtualPathInfo::Open () {
+
+	if ( !this->mIsFile ) return 0;
+	
+	FILE* file = fopen ( this->mPathToArchive.c_str (), "rb" );
+	if ( !file ) goto error;
+
+	// seek to the base of the zip file header
+	if ( fseek ( file, this->mOffsetToHeader, SEEK_SET )) goto error;
+
+	// read local header
+	ZLVfsZipFileHeader fileHeader;
+	if ( fileHeader.Read ( file )) goto error;
+
+	// skip the extra field, etc.
+	if ( fseek ( file, fileHeader.mNameLength + fileHeader.mExtraFieldLength, SEEK_CUR )) goto error;
+
+	return file;
+
+error:
+
+	if ( file ) {
+		fclose ( file );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+ZLVfsVirtualPathInfo::ZLVfsVirtualPathInfo () :
+	mIsVirtual ( false ),
+	mIsFile ( false ),
+	mIsCompressed ( 0 ),
+	mCompressedSize ( 0 ),
+	mUncompressedSize ( 0 ),
+	mOffsetToHeader ( 0 ) {
+}
+
+//================================================================//
 // ZLVfsFileSystem
 //================================================================//
 
@@ -188,7 +230,7 @@ ZLVfsVirtualPath* ZLVfsFileSystem::FindBestVirtualPath ( char const* path ) {
 	for ( ; cursor; cursor = cursor->mNext ) {
 	
 		const char* test = cursor->mPath.c_str ();
-		len = ComparePaths ( test, path );
+		len = this->ComparePaths ( test, path );
 	
 		if (( test [ len ] == 0 ) && ( len > bestlen )) {
 			best = cursor;
@@ -208,7 +250,7 @@ ZLVfsVirtualPath* ZLVfsFileSystem::FindNextVirtualSubdir ( char const* path, ZLV
 	for ( ; cursor; cursor = cursor->mNext ) {
 	
 		const char* test = cursor->mPath.c_str ();
-		len = ComparePaths ( test, path );
+		len = this->ComparePaths ( test, path );
 		
 		if ( test [ len ] && ( !path [ len ])) {
 			return cursor;
@@ -226,7 +268,7 @@ ZLVfsVirtualPath* ZLVfsFileSystem::FindVirtualPath ( char const* path ) {
 	for ( ; cursor; cursor = cursor->mNext ) {
 	
 		const char* test = cursor->mPath.c_str ();
-		len = ComparePaths ( test, path );
+		len = this->ComparePaths ( test, path );
 		
 		if ( !( test [ len ] || path [ len ])) break;
 	}
@@ -338,6 +380,45 @@ std::string ZLVfsFileSystem::GetWorkingPath () {
 	zl_mutex_unlock ( this->mMutex );
 
 	return buffer;
+}
+
+//----------------------------------------------------------------//
+ZLVfsVirtualPathInfo ZLVfsFileSystem::GetVirtualPathInfo ( char const* path ) {
+
+	ZLVfsVirtualPathInfo info;
+
+	string abspath = ZLVfsFileSystem::Get ().GetAbsoluteFilePath ( path );
+	path = abspath.c_str ();
+
+	ZLVfsVirtualPath* mount = ZLVfsFileSystem::Get ().FindBestVirtualPath ( path );
+
+	if ( mount && mount->mArchive ) {
+	
+		ZLVfsZipArchive* archive = mount->mArchive;
+	
+		info.mIsVirtual = true;
+		info.mPathToArchive = archive->mFilename.c_str ();
+	
+		cc8* localPath = mount->GetLocalPath ( path );
+		
+		if ( localPath ) {
+		
+			info.mLocalPath = localPath;
+
+			ZLVfsZipFileEntry* entry = archive->FindEntry ( localPath );
+			if ( entry ) {
+			
+				info.mIsFile = true;
+				
+				info.mIsCompressed			= entry->mCompression != 0;
+				info.mCompressedSize		= entry->mCompressedSize;
+				info.mUncompressedSize		= entry->mUncompressedSize;
+				
+				info.mOffsetToHeader		= entry->mFileHeaderAddr;
+			}
+		}
+	}
+	return info;
 }
 
 //----------------------------------------------------------------//

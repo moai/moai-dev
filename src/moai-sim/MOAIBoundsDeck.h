@@ -7,7 +7,7 @@
 #include <moai-sim/MOAIStandardDeck.h>
 #include <moai-sim/MOAIQuadBrush.h>
 
-class MOAITextureBase;
+class MOAISingleTexture;
 
 //================================================================//
 // MOAIBoundsDeck

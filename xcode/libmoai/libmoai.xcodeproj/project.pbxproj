@@ -1066,6 +1066,10 @@
 		CD04AF0B14725714009C20E5 /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AECB14725714009C20E5 /* zutil.c */; };
 		CD04AF0C14725714009C20E5 /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECC14725714009C20E5 /* zutil.h */; };
 		CD04AF0E14725714009C20E5 /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECC14725714009C20E5 /* zutil.h */; };
+		CD0BB63E1B0D22AC00399FCB /* MOAILuaUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD0BB63C1B0D22AC00399FCB /* MOAILuaUtil.cpp */; };
+		CD0BB63F1B0D22AC00399FCB /* MOAILuaUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0BB63D1B0D22AC00399FCB /* MOAILuaUtil.h */; };
+		CD0BB6401B0D22B900399FCB /* MOAILuaUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD0BB63C1B0D22AC00399FCB /* MOAILuaUtil.cpp */; };
+		CD0BB6411B0D22B900399FCB /* MOAILuaUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0BB63D1B0D22AC00399FCB /* MOAILuaUtil.h */; };
 		CD0DD3CE18E1392900FBA4B5 /* MOAIVectorUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4C050D18500C18005B0520 /* MOAIVectorUtil.cpp */; };
 		CD0DD3CF18E1393000FBA4B5 /* MOAIVectorStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4C050C18500C18005B0520 /* MOAIVectorStyle.cpp */; };
 		CD14013F1A0C5F660065AEE7 /* MOAIInputMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD14013D1A0C5F660065AEE7 /* MOAIInputMgr.cpp */; };
@@ -1299,36 +1303,6 @@
 		CD1BF8AA1940564E0066877A /* MOAIBox2DMotorJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF8A71940564E0066877A /* MOAIBox2DMotorJoint.cpp */; };
 		CD1BF8AB1940564E0066877A /* MOAIBox2DMotorJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF8A81940564E0066877A /* MOAIBox2DMotorJoint.h */; };
 		CD1BF8AC1940564E0066877A /* MOAIBox2DMotorJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF8A81940564E0066877A /* MOAIBox2DMotorJoint.h */; };
-		CD218FA013A7FDBA008337E7 /* dump.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9113A7FDBA008337E7 /* dump.c */; };
-		CD218FA113A7FDBA008337E7 /* error.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9213A7FDBA008337E7 /* error.c */; };
-		CD218FA213A7FDBA008337E7 /* hashtable.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9313A7FDBA008337E7 /* hashtable.c */; };
-		CD218FA313A7FDBA008337E7 /* hashtable.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9413A7FDBA008337E7 /* hashtable.h */; };
-		CD218FA413A7FDBA008337E7 /* jansson_config.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9513A7FDBA008337E7 /* jansson_config.h */; };
-		CD218FA513A7FDBA008337E7 /* jansson_private.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9613A7FDBA008337E7 /* jansson_private.h */; };
-		CD218FA613A7FDBA008337E7 /* jansson.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9713A7FDBA008337E7 /* jansson.h */; };
-		CD218FA713A7FDBA008337E7 /* load.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9813A7FDBA008337E7 /* load.c */; };
-		CD218FA813A7FDBA008337E7 /* memory.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9913A7FDBA008337E7 /* memory.c */; };
-		CD218FA913A7FDBA008337E7 /* pack_unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9A13A7FDBA008337E7 /* pack_unpack.c */; };
-		CD218FAA13A7FDBA008337E7 /* strbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9B13A7FDBA008337E7 /* strbuffer.c */; };
-		CD218FAB13A7FDBA008337E7 /* strbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9C13A7FDBA008337E7 /* strbuffer.h */; };
-		CD218FAC13A7FDBA008337E7 /* utf.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9D13A7FDBA008337E7 /* utf.c */; };
-		CD218FAD13A7FDBA008337E7 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9E13A7FDBA008337E7 /* utf.h */; };
-		CD218FAE13A7FDBA008337E7 /* value.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9F13A7FDBA008337E7 /* value.c */; };
-		CD218FAF13A7FDBA008337E7 /* dump.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9113A7FDBA008337E7 /* dump.c */; };
-		CD218FB013A7FDBA008337E7 /* error.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9213A7FDBA008337E7 /* error.c */; };
-		CD218FB113A7FDBA008337E7 /* hashtable.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9313A7FDBA008337E7 /* hashtable.c */; };
-		CD218FB213A7FDBA008337E7 /* hashtable.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9413A7FDBA008337E7 /* hashtable.h */; };
-		CD218FB313A7FDBA008337E7 /* jansson_config.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9513A7FDBA008337E7 /* jansson_config.h */; };
-		CD218FB413A7FDBA008337E7 /* jansson_private.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9613A7FDBA008337E7 /* jansson_private.h */; };
-		CD218FB513A7FDBA008337E7 /* jansson.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9713A7FDBA008337E7 /* jansson.h */; };
-		CD218FB613A7FDBA008337E7 /* load.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9813A7FDBA008337E7 /* load.c */; };
-		CD218FB713A7FDBA008337E7 /* memory.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9913A7FDBA008337E7 /* memory.c */; };
-		CD218FB813A7FDBA008337E7 /* pack_unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9A13A7FDBA008337E7 /* pack_unpack.c */; };
-		CD218FB913A7FDBA008337E7 /* strbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9B13A7FDBA008337E7 /* strbuffer.c */; };
-		CD218FBA13A7FDBA008337E7 /* strbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9C13A7FDBA008337E7 /* strbuffer.h */; };
-		CD218FBB13A7FDBA008337E7 /* utf.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9D13A7FDBA008337E7 /* utf.c */; };
-		CD218FBC13A7FDBA008337E7 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9E13A7FDBA008337E7 /* utf.h */; };
-		CD218FBD13A7FDBA008337E7 /* value.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9F13A7FDBA008337E7 /* value.c */; };
 		CD23665C180A5454006A7236 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD52323F1808ADDA00B81720 /* host.h */; };
 		CD23665D180A5454006A7236 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD5232401808ADDA00B81720 /* host.mm */; };
 		CD23665E180A5454006A7236 /* MOAIChartBoostIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5232411808ADDA00B81720 /* MOAIChartBoostIOS.h */; };
@@ -1357,6 +1331,18 @@
 		CD27BE16191DA1C5000A7770 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD27BE12191DA1C5000A7770 /* host.mm */; };
 		CD27BE17191DA1C5000A7770 /* MOAIAdColonyIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD27BE13191DA1C5000A7770 /* MOAIAdColonyIOS.h */; };
 		CD27BE18191DA1C5000A7770 /* MOAIAdColonyIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD27BE14191DA1C5000A7770 /* MOAIAdColonyIOS.mm */; };
+		CD2BA7961B2A16B00010C399 /* MOAIGfxDeviceMtxCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA7941B2A16B00010C399 /* MOAIGfxDeviceMtxCache.cpp */; };
+		CD2BA7971B2A16B00010C399 /* MOAIGfxDeviceMtxCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA7941B2A16B00010C399 /* MOAIGfxDeviceMtxCache.cpp */; };
+		CD2BA7981B2A16B00010C399 /* MOAIGfxDeviceMtxCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2BA7951B2A16B00010C399 /* MOAIGfxDeviceMtxCache.h */; };
+		CD2BA7991B2A16B00010C399 /* MOAIGfxDeviceMtxCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2BA7951B2A16B00010C399 /* MOAIGfxDeviceMtxCache.h */; };
+		CD2BA79C1B2A20A80010C399 /* MOAIGfxDeviceBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA79A1B2A20A80010C399 /* MOAIGfxDeviceBase.cpp */; };
+		CD2BA79D1B2A20A80010C399 /* MOAIGfxDeviceBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA79A1B2A20A80010C399 /* MOAIGfxDeviceBase.cpp */; };
+		CD2BA79E1B2A20A80010C399 /* MOAIGfxDeviceBase.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2BA79B1B2A20A80010C399 /* MOAIGfxDeviceBase.h */; };
+		CD2BA79F1B2A20A80010C399 /* MOAIGfxDeviceBase.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2BA79B1B2A20A80010C399 /* MOAIGfxDeviceBase.h */; };
+		CD2BA7A31B2A2D760010C399 /* MOAIGfxDeviceVertexWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA7A11B2A2D750010C399 /* MOAIGfxDeviceVertexWriter.cpp */; };
+		CD2BA7A41B2A2D760010C399 /* MOAIGfxDeviceVertexWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA7A11B2A2D750010C399 /* MOAIGfxDeviceVertexWriter.cpp */; };
+		CD2BA7A51B2A2D760010C399 /* MOAIGfxDeviceVertexWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2BA7A21B2A2D750010C399 /* MOAIGfxDeviceVertexWriter.h */; };
+		CD2BA7A61B2A2D760010C399 /* MOAIGfxDeviceVertexWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2BA7A21B2A2D750010C399 /* MOAIGfxDeviceVertexWriter.h */; };
 		CD2CB51D19FDBECA00C42260 /* MOAIStreamAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2CB51B19FDBECA00C42260 /* MOAIStreamAdapter.cpp */; };
 		CD2CB51E19FDBECA00C42260 /* MOAIStreamAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2CB51B19FDBECA00C42260 /* MOAIStreamAdapter.cpp */; };
 		CD2CB51F19FDBECA00C42260 /* MOAIStreamAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2CB51C19FDBECA00C42260 /* MOAIStreamAdapter.h */; };
@@ -1404,14 +1390,8 @@
 		CD32B3E119F9EDD10059D019 /* pngpriv.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B6013564CB0000ADC60 /* pngpriv.h */; };
 		CD32B3E219F9EDD10059D019 /* tinyxml.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA813564CB0000ADC60 /* tinyxml.h */; };
 		CD32B3E319F9EDD10059D019 /* sweep.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3417FA6CF90053E028 /* sweep.h */; };
-		CD32B3E419F9EDD10059D019 /* hashtable.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9413A7FDBA008337E7 /* hashtable.h */; };
-		CD32B3E519F9EDD10059D019 /* jansson_config.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9513A7FDBA008337E7 /* jansson_config.h */; };
 		CD32B3E619F9EDD10059D019 /* SFMT-params216091.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFC1731BB90009E233E /* SFMT-params216091.h */; };
-		CD32B3E719F9EDD10059D019 /* jansson_private.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9613A7FDBA008337E7 /* jansson_private.h */; };
-		CD32B3E819F9EDD10059D019 /* jansson.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9713A7FDBA008337E7 /* jansson.h */; };
 		CD32B3E919F9EDD10059D019 /* bucketalloc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2A17FA6CF90053E028 /* bucketalloc.h */; };
-		CD32B3EA19F9EDD10059D019 /* strbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9C13A7FDBA008337E7 /* strbuffer.h */; };
-		CD32B3EB19F9EDD10059D019 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9E13A7FDBA008337E7 /* utf.h */; };
 		CD32B3EC19F9EDD10059D019 /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490041141AB6EC00913D80 /* lapi.h */; };
 		CD32B3ED19F9EDD10059D019 /* MOAIIso8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */; };
 		CD32B3EE19F9EDD10059D019 /* lauxlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490043141AB6EC00913D80 /* lauxlib.h */; };
@@ -1530,15 +1510,6 @@
 		CD32B46519F9EDD10059D019 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA713564CB0000ADC60 /* tinyxml.cpp */; };
 		CD32B46619F9EDD10059D019 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA913564CB0000ADC60 /* tinyxmlerror.cpp */; };
 		CD32B46719F9EDD10059D019 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BAA13564CB0000ADC60 /* tinyxmlparser.cpp */; };
-		CD32B46819F9EDD10059D019 /* dump.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9113A7FDBA008337E7 /* dump.c */; };
-		CD32B46919F9EDD10059D019 /* error.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9213A7FDBA008337E7 /* error.c */; };
-		CD32B46A19F9EDD10059D019 /* hashtable.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9313A7FDBA008337E7 /* hashtable.c */; };
-		CD32B46B19F9EDD10059D019 /* load.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9813A7FDBA008337E7 /* load.c */; };
-		CD32B46C19F9EDD10059D019 /* memory.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9913A7FDBA008337E7 /* memory.c */; };
-		CD32B46D19F9EDD10059D019 /* pack_unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9A13A7FDBA008337E7 /* pack_unpack.c */; };
-		CD32B46E19F9EDD10059D019 /* strbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9B13A7FDBA008337E7 /* strbuffer.c */; };
-		CD32B46F19F9EDD10059D019 /* utf.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9D13A7FDBA008337E7 /* utf.c */; };
-		CD32B47019F9EDD10059D019 /* value.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9F13A7FDBA008337E7 /* value.c */; };
 		CD32B47119F9EDD10059D019 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490040141AB6EC00913D80 /* lapi.c */; };
 		CD32B47219F9EDD10059D019 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490042141AB6EC00913D80 /* lauxlib.c */; };
 		CD32B47319F9EDD10059D019 /* lbaselib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490044141AB6EC00913D80 /* lbaselib.c */; };
@@ -1885,6 +1856,18 @@
 		CD32B5D419F9EF2E0059D019 /* SDL_hints.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795CBF17F08459006AEB47 /* SDL_hints.c */; };
 		CD32B5D519F9EF2E0059D019 /* SDL_log.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795CC017F08459006AEB47 /* SDL_log.c */; };
 		CD32B5D619F9EF2E0059D019 /* SDL.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795CC117F08459006AEB47 /* SDL.c */; };
+		CD3430FE1B30ABB3002BEBFA /* MOAIVertexArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3430FC1B30ABB3002BEBFA /* MOAIVertexArray.cpp */; };
+		CD3430FF1B30ABB3002BEBFA /* MOAIVertexArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3430FC1B30ABB3002BEBFA /* MOAIVertexArray.cpp */; };
+		CD3431001B30ABB3002BEBFA /* MOAIVertexArray.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3430FD1B30ABB3002BEBFA /* MOAIVertexArray.h */; };
+		CD3431011B30ABB3002BEBFA /* MOAIVertexArray.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3430FD1B30ABB3002BEBFA /* MOAIVertexArray.h */; };
+		CD3431051B30EDC6002BEBFA /* MOAIGfxDeviceStateCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3431031B30EDC6002BEBFA /* MOAIGfxDeviceStateCache.cpp */; };
+		CD3431061B30EDC6002BEBFA /* MOAIGfxDeviceStateCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3431031B30EDC6002BEBFA /* MOAIGfxDeviceStateCache.cpp */; };
+		CD3431071B30EDC6002BEBFA /* MOAIGfxDeviceStateCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3431041B30EDC6002BEBFA /* MOAIGfxDeviceStateCache.h */; };
+		CD3431081B30EDC6002BEBFA /* MOAIGfxDeviceStateCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3431041B30EDC6002BEBFA /* MOAIGfxDeviceStateCache.h */; };
+		CD34310B1B31175F002BEBFA /* MOAISingleTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3431091B31175F002BEBFA /* MOAISingleTexture.cpp */; };
+		CD34310C1B31175F002BEBFA /* MOAISingleTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3431091B31175F002BEBFA /* MOAISingleTexture.cpp */; };
+		CD34310D1B31175F002BEBFA /* MOAISingleTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = CD34310A1B31175F002BEBFA /* MOAISingleTexture.h */; };
+		CD34310E1B31175F002BEBFA /* MOAISingleTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = CD34310A1B31175F002BEBFA /* MOAISingleTexture.h */; };
 		CD34A24F19C7D77A00BFF405 /* assert.h in Headers */ = {isa = PBXBuildFile; fileRef = CD34A24E19C7D77A00BFF405 /* assert.h */; };
 		CD41F2FF1A20115E008E3420 /* ZLBitBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD41F2FD1A20115E008E3420 /* ZLBitBuffer.cpp */; };
 		CD41F3001A20115E008E3420 /* ZLBitBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD41F2FD1A20115E008E3420 /* ZLBitBuffer.cpp */; };
@@ -2238,7 +2221,6 @@
 		CD4C3ECE180A63BB00C02381 /* MOAITextStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7003173AD0CA00DFE837 /* MOAITextStyle.h */; };
 		CD4C3ED1180A63BB00C02381 /* MOAITexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7006173AD0CA00DFE837 /* MOAITexture.cpp */; };
 		CD4C3ED2180A63BB00C02381 /* MOAITexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7007173AD0CA00DFE837 /* MOAITexture.h */; };
-		CD4C3ED3180A63BB00C02381 /* MOAITextureBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7008173AD0CA00DFE837 /* MOAITextureBase.cpp */; };
 		CD4C3ED4180A63BB00C02381 /* MOAITextureBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7009173AD0CA00DFE837 /* MOAITextureBase.h */; };
 		CD4C3ED5180A63BB00C02381 /* MOAITileDeck2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE700A173AD0CB00DFE837 /* MOAITileDeck2D.cpp */; };
 		CD4C3ED6180A63BB00C02381 /* MOAITileDeck2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE700B173AD0CB00DFE837 /* MOAITileDeck2D.h */; };
@@ -2494,7 +2476,6 @@
 		CD4C4100180A63C200C02381 /* MOAITextStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7003173AD0CA00DFE837 /* MOAITextStyle.h */; };
 		CD4C4103180A63C200C02381 /* MOAITexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7006173AD0CA00DFE837 /* MOAITexture.cpp */; };
 		CD4C4104180A63C200C02381 /* MOAITexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7007173AD0CA00DFE837 /* MOAITexture.h */; };
-		CD4C4105180A63C200C02381 /* MOAITextureBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE7008173AD0CA00DFE837 /* MOAITextureBase.cpp */; };
 		CD4C4106180A63C200C02381 /* MOAITextureBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE7009173AD0CA00DFE837 /* MOAITextureBase.h */; };
 		CD4C4107180A63C200C02381 /* MOAITileDeck2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE700A173AD0CB00DFE837 /* MOAITileDeck2D.cpp */; };
 		CD4C4108180A63C200C02381 /* MOAITileDeck2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE700B173AD0CB00DFE837 /* MOAITileDeck2D.h */; };
@@ -2641,6 +2622,42 @@
 		CD73A60D188F0AEC00DFACDB /* MOAIGraphicsProp2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD73A606188F0AEC00DFACDB /* MOAIGraphicsProp2D.cpp */; };
 		CD73A60E188F0AEC00DFACDB /* MOAIGraphicsProp2D.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73A607188F0AEC00DFACDB /* MOAIGraphicsProp2D.h */; };
 		CD73A60F188F0AEC00DFACDB /* MOAIGraphicsProp2D.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73A607188F0AEC00DFACDB /* MOAIGraphicsProp2D.h */; };
+		CD73D0061BA3FFB800BB50C3 /* dump.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFF01BA3FFB800BB50C3 /* dump.c */; };
+		CD73D0071BA3FFB800BB50C3 /* dump.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFF01BA3FFB800BB50C3 /* dump.c */; };
+		CD73D0081BA3FFB800BB50C3 /* error.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFF11BA3FFB800BB50C3 /* error.c */; };
+		CD73D0091BA3FFB800BB50C3 /* error.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFF11BA3FFB800BB50C3 /* error.c */; };
+		CD73D00A1BA3FFB800BB50C3 /* hashtable_seed.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFF21BA3FFB800BB50C3 /* hashtable_seed.c */; };
+		CD73D00B1BA3FFB800BB50C3 /* hashtable_seed.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFF21BA3FFB800BB50C3 /* hashtable_seed.c */; };
+		CD73D00C1BA3FFB800BB50C3 /* hashtable.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFF31BA3FFB800BB50C3 /* hashtable.c */; };
+		CD73D00D1BA3FFB800BB50C3 /* hashtable.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFF31BA3FFB800BB50C3 /* hashtable.c */; };
+		CD73D00E1BA3FFB800BB50C3 /* hashtable.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73CFF41BA3FFB800BB50C3 /* hashtable.h */; };
+		CD73D00F1BA3FFB800BB50C3 /* hashtable.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73CFF41BA3FFB800BB50C3 /* hashtable.h */; };
+		CD73D0101BA3FFB800BB50C3 /* jansson_config.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73CFF51BA3FFB800BB50C3 /* jansson_config.h */; };
+		CD73D0111BA3FFB800BB50C3 /* jansson_config.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73CFF51BA3FFB800BB50C3 /* jansson_config.h */; };
+		CD73D0121BA3FFB800BB50C3 /* jansson_private.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73CFF71BA3FFB800BB50C3 /* jansson_private.h */; };
+		CD73D0131BA3FFB800BB50C3 /* jansson_private.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73CFF71BA3FFB800BB50C3 /* jansson_private.h */; };
+		CD73D0141BA3FFB800BB50C3 /* jansson.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73CFF91BA3FFB800BB50C3 /* jansson.h */; };
+		CD73D0151BA3FFB800BB50C3 /* jansson.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73CFF91BA3FFB800BB50C3 /* jansson.h */; };
+		CD73D0161BA3FFB800BB50C3 /* load.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFFA1BA3FFB800BB50C3 /* load.c */; };
+		CD73D0171BA3FFB800BB50C3 /* load.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFFA1BA3FFB800BB50C3 /* load.c */; };
+		CD73D0181BA3FFB800BB50C3 /* lookup3.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73CFFB1BA3FFB800BB50C3 /* lookup3.h */; };
+		CD73D0191BA3FFB800BB50C3 /* lookup3.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73CFFB1BA3FFB800BB50C3 /* lookup3.h */; };
+		CD73D01A1BA3FFB800BB50C3 /* memory.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFFE1BA3FFB800BB50C3 /* memory.c */; };
+		CD73D01B1BA3FFB800BB50C3 /* memory.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFFE1BA3FFB800BB50C3 /* memory.c */; };
+		CD73D01C1BA3FFB800BB50C3 /* pack_unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFFF1BA3FFB800BB50C3 /* pack_unpack.c */; };
+		CD73D01D1BA3FFB800BB50C3 /* pack_unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73CFFF1BA3FFB800BB50C3 /* pack_unpack.c */; };
+		CD73D01E1BA3FFB800BB50C3 /* strbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73D0001BA3FFB800BB50C3 /* strbuffer.c */; };
+		CD73D01F1BA3FFB800BB50C3 /* strbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73D0001BA3FFB800BB50C3 /* strbuffer.c */; };
+		CD73D0201BA3FFB800BB50C3 /* strbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73D0011BA3FFB800BB50C3 /* strbuffer.h */; };
+		CD73D0211BA3FFB800BB50C3 /* strbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73D0011BA3FFB800BB50C3 /* strbuffer.h */; };
+		CD73D0221BA3FFB800BB50C3 /* strconv.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73D0021BA3FFB800BB50C3 /* strconv.c */; };
+		CD73D0231BA3FFB800BB50C3 /* strconv.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73D0021BA3FFB800BB50C3 /* strconv.c */; };
+		CD73D0241BA3FFB800BB50C3 /* utf.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73D0031BA3FFB800BB50C3 /* utf.c */; };
+		CD73D0251BA3FFB800BB50C3 /* utf.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73D0031BA3FFB800BB50C3 /* utf.c */; };
+		CD73D0261BA3FFB800BB50C3 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73D0041BA3FFB800BB50C3 /* utf.h */; };
+		CD73D0271BA3FFB800BB50C3 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD73D0041BA3FFB800BB50C3 /* utf.h */; };
+		CD73D0281BA3FFB800BB50C3 /* value.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73D0051BA3FFB800BB50C3 /* value.c */; };
+		CD73D0291BA3FFB800BB50C3 /* value.c in Sources */ = {isa = PBXBuildFile; fileRef = CD73D0051BA3FFB800BB50C3 /* value.c */; };
 		CD7548A51AEDA92300AD7FD8 /* MOAISelectionMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7548A31AEDA92300AD7FD8 /* MOAISelectionMesh.cpp */; };
 		CD7548A61AEDA92300AD7FD8 /* MOAISelectionMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7548A31AEDA92300AD7FD8 /* MOAISelectionMesh.cpp */; };
 		CD781095187CAA2D008B9C0A /* MOAITextStyleCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD781091187CAA2D008B9C0A /* MOAITextStyleCache.cpp */; };
@@ -2670,14 +2687,8 @@
 		CD80790B1831C3B500E658D9 /* pngpriv.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B6013564CB0000ADC60 /* pngpriv.h */; };
 		CD80790E1831C3B500E658D9 /* tinyxml.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA813564CB0000ADC60 /* tinyxml.h */; };
 		CD80790F1831C3B500E658D9 /* sweep.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3417FA6CF90053E028 /* sweep.h */; };
-		CD8079101831C3B500E658D9 /* hashtable.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9413A7FDBA008337E7 /* hashtable.h */; };
-		CD8079111831C3B500E658D9 /* jansson_config.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9513A7FDBA008337E7 /* jansson_config.h */; };
 		CD8079121831C3B500E658D9 /* SFMT-params216091.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFC1731BB90009E233E /* SFMT-params216091.h */; };
-		CD8079131831C3B500E658D9 /* jansson_private.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9613A7FDBA008337E7 /* jansson_private.h */; };
-		CD8079141831C3B500E658D9 /* jansson.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9713A7FDBA008337E7 /* jansson.h */; };
 		CD8079151831C3B500E658D9 /* bucketalloc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2A17FA6CF90053E028 /* bucketalloc.h */; };
-		CD8079161831C3B500E658D9 /* strbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9C13A7FDBA008337E7 /* strbuffer.h */; };
-		CD8079171831C3B500E658D9 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9E13A7FDBA008337E7 /* utf.h */; };
 		CD8079181831C3B500E658D9 /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490041141AB6EC00913D80 /* lapi.h */; };
 		CD8079191831C3B500E658D9 /* MOAIIso8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */; };
 		CD80791A1831C3B500E658D9 /* lauxlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490043141AB6EC00913D80 /* lauxlib.h */; };
@@ -4826,6 +4837,14 @@
 		CDF3592F1ADB93AB00C26CD5 /* MOAIMaterialBatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF359261ADB93AB00C26CD5 /* MOAIMaterialBatch.cpp */; };
 		CDF359301ADB93AB00C26CD5 /* MOAIMaterialBatch.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF359271ADB93AB00C26CD5 /* MOAIMaterialBatch.h */; };
 		CDF359311ADB93AB00C26CD5 /* MOAIMaterialBatch.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF359271ADB93AB00C26CD5 /* MOAIMaterialBatch.h */; };
+		CDF941B61B2FAEB1009D7787 /* MOAIVertexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF941B41B2FAEB1009D7787 /* MOAIVertexBuffer.cpp */; };
+		CDF941B71B2FAEB1009D7787 /* MOAIVertexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF941B41B2FAEB1009D7787 /* MOAIVertexBuffer.cpp */; };
+		CDF941B81B2FAEB1009D7787 /* MOAIVertexBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF941B51B2FAEB1009D7787 /* MOAIVertexBuffer.h */; };
+		CDF941B91B2FAEB1009D7787 /* MOAIVertexBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF941B51B2FAEB1009D7787 /* MOAIVertexBuffer.h */; };
+		CDF941BC1B2FAEC4009D7787 /* MOAIIndexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF941BA1B2FAEC4009D7787 /* MOAIIndexBuffer.cpp */; };
+		CDF941BD1B2FAEC4009D7787 /* MOAIIndexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF941BA1B2FAEC4009D7787 /* MOAIIndexBuffer.cpp */; };
+		CDF941BE1B2FAEC4009D7787 /* MOAIIndexBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF941BB1B2FAEC4009D7787 /* MOAIIndexBuffer.h */; };
+		CDF941BF1B2FAEC4009D7787 /* MOAIIndexBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF941BB1B2FAEC4009D7787 /* MOAIIndexBuffer.h */; };
 		CDFB27511A3C27F800853B1D /* STLSort.h in Headers */ = {isa = PBXBuildFile; fileRef = CDFB27501A3C27F800853B1D /* STLSort.h */; };
 		CDFB27521A3C27F800853B1D /* STLSort.h in Headers */ = {isa = PBXBuildFile; fileRef = CDFB27501A3C27F800853B1D /* STLSort.h */; };
 		E9940D6814B7A217006465CC /* lfs.c in Sources */ = {isa = PBXBuildFile; fileRef = E9940D6514B7A217006465CC /* lfs.c */; };
@@ -6074,7 +6093,6 @@
 		89BE7003173AD0CA00DFE837 /* MOAITextStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextStyle.h; sourceTree = "<group>"; };
 		89BE7006173AD0CA00DFE837 /* MOAITexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITexture.cpp; sourceTree = "<group>"; };
 		89BE7007173AD0CA00DFE837 /* MOAITexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITexture.h; sourceTree = "<group>"; };
-		89BE7008173AD0CA00DFE837 /* MOAITextureBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextureBase.cpp; sourceTree = "<group>"; };
 		89BE7009173AD0CA00DFE837 /* MOAITextureBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextureBase.h; sourceTree = "<group>"; };
 		89BE700A173AD0CB00DFE837 /* MOAITileDeck2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITileDeck2D.cpp; sourceTree = "<group>"; };
 		89BE700B173AD0CB00DFE837 /* MOAITileDeck2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITileDeck2D.h; sourceTree = "<group>"; };
@@ -6304,6 +6322,8 @@
 		CD07C3CD13A182AA00C9386C /* libmoai-ios-untz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-untz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD07C4E513A1918600C9386C /* libmoai-osx-untz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-untz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD07C53013A1954600C9386C /* Untz-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Untz-Prefix.pch"; path = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		CD0BB63C1B0D22AC00399FCB /* MOAILuaUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAILuaUtil.cpp; sourceTree = "<group>"; };
+		CD0BB63D1B0D22AC00399FCB /* MOAILuaUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAILuaUtil.h; sourceTree = "<group>"; };
 		CD14013D1A0C5F660065AEE7 /* MOAIInputMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIInputMgr.cpp; sourceTree = "<group>"; };
 		CD14013E1A0C5F660065AEE7 /* MOAIInputMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIInputMgr.h; sourceTree = "<group>"; };
 		CD14014B1A0CC5B40065AEE7 /* MOAIVectorSensor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVectorSensor.cpp; sourceTree = "<group>"; };
@@ -6417,21 +6437,6 @@
 		CD218F8513A7FD6E008337E7 /* luasql.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = luasql.c; path = "../../3rdparty/luasql-2.2.0/src/luasql.c"; sourceTree = SOURCE_ROOT; };
 		CD218F8613A7FD6E008337E7 /* luasql.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luasql.h; path = "../../3rdparty/luasql-2.2.0/src/luasql.h"; sourceTree = SOURCE_ROOT; };
 		CD218F8D13A7FD89008337E7 /* luacurl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = luacurl.c; path = "../../3rdparty/luacurl-1.2.1/luacurl.c"; sourceTree = SOURCE_ROOT; };
-		CD218F9113A7FDBA008337E7 /* dump.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dump.c; path = "../../3rdparty/jansson-2.1/src/dump.c"; sourceTree = SOURCE_ROOT; };
-		CD218F9213A7FDBA008337E7 /* error.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = error.c; path = "../../3rdparty/jansson-2.1/src/error.c"; sourceTree = SOURCE_ROOT; };
-		CD218F9313A7FDBA008337E7 /* hashtable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = hashtable.c; path = "../../3rdparty/jansson-2.1/src/hashtable.c"; sourceTree = SOURCE_ROOT; };
-		CD218F9413A7FDBA008337E7 /* hashtable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hashtable.h; path = "../../3rdparty/jansson-2.1/src/hashtable.h"; sourceTree = SOURCE_ROOT; };
-		CD218F9513A7FDBA008337E7 /* jansson_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jansson_config.h; path = "../../3rdparty/jansson-2.1/src/jansson_config.h"; sourceTree = SOURCE_ROOT; };
-		CD218F9613A7FDBA008337E7 /* jansson_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jansson_private.h; path = "../../3rdparty/jansson-2.1/src/jansson_private.h"; sourceTree = SOURCE_ROOT; };
-		CD218F9713A7FDBA008337E7 /* jansson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jansson.h; path = "../../3rdparty/jansson-2.1/src/jansson.h"; sourceTree = SOURCE_ROOT; };
-		CD218F9813A7FDBA008337E7 /* load.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = load.c; path = "../../3rdparty/jansson-2.1/src/load.c"; sourceTree = SOURCE_ROOT; };
-		CD218F9913A7FDBA008337E7 /* memory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = memory.c; path = "../../3rdparty/jansson-2.1/src/memory.c"; sourceTree = SOURCE_ROOT; };
-		CD218F9A13A7FDBA008337E7 /* pack_unpack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pack_unpack.c; path = "../../3rdparty/jansson-2.1/src/pack_unpack.c"; sourceTree = SOURCE_ROOT; };
-		CD218F9B13A7FDBA008337E7 /* strbuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = strbuffer.c; path = "../../3rdparty/jansson-2.1/src/strbuffer.c"; sourceTree = SOURCE_ROOT; };
-		CD218F9C13A7FDBA008337E7 /* strbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = strbuffer.h; path = "../../3rdparty/jansson-2.1/src/strbuffer.h"; sourceTree = SOURCE_ROOT; };
-		CD218F9D13A7FDBA008337E7 /* utf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = utf.c; path = "../../3rdparty/jansson-2.1/src/utf.c"; sourceTree = SOURCE_ROOT; };
-		CD218F9E13A7FDBA008337E7 /* utf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utf.h; path = "../../3rdparty/jansson-2.1/src/utf.h"; sourceTree = SOURCE_ROOT; };
-		CD218F9F13A7FDBA008337E7 /* value.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = value.c; path = "../../3rdparty/jansson-2.1/src/value.c"; sourceTree = SOURCE_ROOT; };
 		CD257BA21A6255380057A53A /* libmoai-ios-apple.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-apple.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD257BA31A6255D00057A53A /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = headers.h; path = "moai-apple/headers.h"; sourceTree = "<group>"; };
 		CD257BA41A6255D00057A53A /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-apple/host.h"; sourceTree = "<group>"; };
@@ -6477,6 +6482,12 @@
 		CD2B7C9117FA573B00EBA2DB /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = headers.h; path = "moai-ios/headers.h"; sourceTree = "<group>"; };
 		CD2B7C9217FA573B00EBA2DB /* host.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = host.mm; path = "moai-ios/host.mm"; sourceTree = "<group>"; };
 		CD2B7C9317FA573B00EBA2DB /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-ios/host.h"; sourceTree = "<group>"; };
+		CD2BA7941B2A16B00010C399 /* MOAIGfxDeviceMtxCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGfxDeviceMtxCache.cpp; sourceTree = "<group>"; };
+		CD2BA7951B2A16B00010C399 /* MOAIGfxDeviceMtxCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxDeviceMtxCache.h; sourceTree = "<group>"; };
+		CD2BA79A1B2A20A80010C399 /* MOAIGfxDeviceBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGfxDeviceBase.cpp; sourceTree = "<group>"; };
+		CD2BA79B1B2A20A80010C399 /* MOAIGfxDeviceBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxDeviceBase.h; sourceTree = "<group>"; };
+		CD2BA7A11B2A2D750010C399 /* MOAIGfxDeviceVertexWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGfxDeviceVertexWriter.cpp; sourceTree = "<group>"; };
+		CD2BA7A21B2A2D750010C399 /* MOAIGfxDeviceVertexWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxDeviceVertexWriter.h; sourceTree = "<group>"; };
 		CD2CB51B19FDBECA00C42260 /* MOAIStreamAdapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIStreamAdapter.cpp; sourceTree = "<group>"; };
 		CD2CB51C19FDBECA00C42260 /* MOAIStreamAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIStreamAdapter.h; sourceTree = "<group>"; };
 		CD3024BE1A68AB4B00CCEE32 /* MOAITestMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITestMgr.cpp; sourceTree = "<group>"; };
@@ -6510,6 +6521,12 @@
 		CD323B1D1A80530000E2FEBB /* MOAIMeshShader-fsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIMeshShader-fsh.h"; path = "shaders/MOAIMeshShader-fsh.h"; sourceTree = "<group>"; };
 		CD323B1E1A80530000E2FEBB /* MOAIMeshShader-vsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIMeshShader-vsh.h"; path = "shaders/MOAIMeshShader-vsh.h"; sourceTree = "<group>"; };
 		CD32B4D819F9EDD10059D019 /* libmoai-osx-3rdparty-sdl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-3rdparty-sdl.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD3430FC1B30ABB3002BEBFA /* MOAIVertexArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVertexArray.cpp; sourceTree = "<group>"; };
+		CD3430FD1B30ABB3002BEBFA /* MOAIVertexArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVertexArray.h; sourceTree = "<group>"; };
+		CD3431031B30EDC6002BEBFA /* MOAIGfxDeviceStateCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGfxDeviceStateCache.cpp; sourceTree = "<group>"; };
+		CD3431041B30EDC6002BEBFA /* MOAIGfxDeviceStateCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxDeviceStateCache.h; sourceTree = "<group>"; };
+		CD3431091B31175F002BEBFA /* MOAISingleTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAISingleTexture.cpp; sourceTree = "<group>"; };
+		CD34310A1B31175F002BEBFA /* MOAISingleTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAISingleTexture.h; sourceTree = "<group>"; };
 		CD34A24E19C7D77A00BFF405 /* assert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = assert.h; sourceTree = "<group>"; };
 		CD41F2FD1A20115E008E3420 /* ZLBitBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLBitBuffer.cpp; sourceTree = "<group>"; };
 		CD41F2FE1A20115E008E3420 /* ZLBitBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLBitBuffer.h; sourceTree = "<group>"; };
@@ -6648,6 +6665,24 @@
 		CD73A605188F0AEC00DFACDB /* MOAIGraphicsProp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGraphicsProp.h; sourceTree = "<group>"; };
 		CD73A606188F0AEC00DFACDB /* MOAIGraphicsProp2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGraphicsProp2D.cpp; sourceTree = "<group>"; };
 		CD73A607188F0AEC00DFACDB /* MOAIGraphicsProp2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGraphicsProp2D.h; sourceTree = "<group>"; };
+		CD73CFF01BA3FFB800BB50C3 /* dump.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dump.c; path = "../../3rdparty/jansson-2.7/src/dump.c"; sourceTree = "<group>"; };
+		CD73CFF11BA3FFB800BB50C3 /* error.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = error.c; path = "../../3rdparty/jansson-2.7/src/error.c"; sourceTree = "<group>"; };
+		CD73CFF21BA3FFB800BB50C3 /* hashtable_seed.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = hashtable_seed.c; path = "../../3rdparty/jansson-2.7/src/hashtable_seed.c"; sourceTree = "<group>"; };
+		CD73CFF31BA3FFB800BB50C3 /* hashtable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = hashtable.c; path = "../../3rdparty/jansson-2.7/src/hashtable.c"; sourceTree = "<group>"; };
+		CD73CFF41BA3FFB800BB50C3 /* hashtable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hashtable.h; path = "../../3rdparty/jansson-2.7/src/hashtable.h"; sourceTree = "<group>"; };
+		CD73CFF51BA3FFB800BB50C3 /* jansson_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jansson_config.h; path = "../../3rdparty/jansson-2.7/src/jansson_config.h"; sourceTree = "<group>"; };
+		CD73CFF71BA3FFB800BB50C3 /* jansson_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jansson_private.h; path = "../../3rdparty/jansson-2.7/src/jansson_private.h"; sourceTree = "<group>"; };
+		CD73CFF91BA3FFB800BB50C3 /* jansson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jansson.h; path = "../../3rdparty/jansson-2.7/src/jansson.h"; sourceTree = "<group>"; };
+		CD73CFFA1BA3FFB800BB50C3 /* load.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = load.c; path = "../../3rdparty/jansson-2.7/src/load.c"; sourceTree = "<group>"; };
+		CD73CFFB1BA3FFB800BB50C3 /* lookup3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lookup3.h; path = "../../3rdparty/jansson-2.7/src/lookup3.h"; sourceTree = "<group>"; };
+		CD73CFFE1BA3FFB800BB50C3 /* memory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = memory.c; path = "../../3rdparty/jansson-2.7/src/memory.c"; sourceTree = "<group>"; };
+		CD73CFFF1BA3FFB800BB50C3 /* pack_unpack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pack_unpack.c; path = "../../3rdparty/jansson-2.7/src/pack_unpack.c"; sourceTree = "<group>"; };
+		CD73D0001BA3FFB800BB50C3 /* strbuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = strbuffer.c; path = "../../3rdparty/jansson-2.7/src/strbuffer.c"; sourceTree = "<group>"; };
+		CD73D0011BA3FFB800BB50C3 /* strbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = strbuffer.h; path = "../../3rdparty/jansson-2.7/src/strbuffer.h"; sourceTree = "<group>"; };
+		CD73D0021BA3FFB800BB50C3 /* strconv.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = strconv.c; path = "../../3rdparty/jansson-2.7/src/strconv.c"; sourceTree = "<group>"; };
+		CD73D0031BA3FFB800BB50C3 /* utf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = utf.c; path = "../../3rdparty/jansson-2.7/src/utf.c"; sourceTree = "<group>"; };
+		CD73D0041BA3FFB800BB50C3 /* utf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utf.h; path = "../../3rdparty/jansson-2.7/src/utf.h"; sourceTree = "<group>"; };
+		CD73D0051BA3FFB800BB50C3 /* value.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = value.c; path = "../../3rdparty/jansson-2.7/src/value.c"; sourceTree = "<group>"; };
 		CD74E47B1377D9C10093EE68 /* aes_cbc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes_cbc.c; sourceTree = "<group>"; };
 		CD74E47C1377D9C10093EE68 /* aes_cfb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes_cfb.c; sourceTree = "<group>"; };
 		CD74E47D1377D9C10093EE68 /* aes_core.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes_core.c; sourceTree = "<group>"; };
@@ -7906,6 +7941,10 @@
 		CDF288BC17ED41CF00FD4F59 /* libmoai-ios-zl-vfs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-zl-vfs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDF359261ADB93AB00C26CD5 /* MOAIMaterialBatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIMaterialBatch.cpp; sourceTree = "<group>"; };
 		CDF359271ADB93AB00C26CD5 /* MOAIMaterialBatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIMaterialBatch.h; sourceTree = "<group>"; };
+		CDF941B41B2FAEB1009D7787 /* MOAIVertexBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVertexBuffer.cpp; sourceTree = "<group>"; };
+		CDF941B51B2FAEB1009D7787 /* MOAIVertexBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVertexBuffer.h; sourceTree = "<group>"; };
+		CDF941BA1B2FAEC4009D7787 /* MOAIIndexBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIIndexBuffer.cpp; sourceTree = "<group>"; };
+		CDF941BB1B2FAEC4009D7787 /* MOAIIndexBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIIndexBuffer.h; sourceTree = "<group>"; };
 		CDFB27501A3C27F800853B1D /* STLSort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STLSort.h; sourceTree = "<group>"; };
 		E9940D6514B7A217006465CC /* lfs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lfs.c; sourceTree = "<group>"; };
 		E9940D6714B7A217006465CC /* lfs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lfs.h; sourceTree = "<group>"; };
@@ -9053,6 +9092,8 @@
 				89BE68CB173974FC00DFE837 /* ZLHashedString.h */,
 				89BE68E0173974FC00DFE837 /* ZLHexDump.cpp */,
 				89BE68E1173974FC00DFE837 /* ZLHexDump.h */,
+				89BE68F1173974FC00DFE837 /* ZLLog.cpp */,
+				89BE68F2173974FC00DFE837 /* ZLLog.h */,
 				89BE690B173974FC00DFE837 /* ZLRadixSort16.h */,
 				89BE690C173974FC00DFE837 /* ZLRadixSort32.h */,
 				89BE691E173974FD00DFE837 /* ZLTypedPtr.cpp */,
@@ -9272,6 +9313,8 @@
 				89BE6CCF1739A42500DFE837 /* MOAIFileSystem.h */,
 				89BE6CD21739A42500DFE837 /* MOAIJsonParser.cpp */,
 				89BE6CD31739A42500DFE837 /* MOAIJsonParser.h */,
+				CD0BB63C1B0D22AC00399FCB /* MOAILuaUtil.cpp */,
+				CD0BB63D1B0D22AC00399FCB /* MOAILuaUtil.h */,
 				89BE6CD41739A42500DFE837 /* MOAIMath.cpp */,
 				89BE6CD51739A42500DFE837 /* MOAIMath.h */,
 				89BE6CD81739A42500DFE837 /* MOAIMutex.cpp */,
@@ -9316,6 +9359,7 @@
 				CDE9851818975AA7001827F9 /* deck */,
 				CDE9851918975AB6001827F9 /* font */,
 				CD13524B189738B000A39A74 /* graphics */,
+				CD2BA7A01B2A20BB0010C399 /* graphics cache */,
 				CD8DD76819195FFB0088EA60 /* grid */,
 				CDE36E4D1A5F4DAB0095E863 /* image */,
 				CD7F150318F5B13100BF74AE /* input */,
@@ -9725,12 +9769,6 @@
 				89BE6F4F173AD0CA00DFE837 /* MOAIDraw.h */,
 				89BE6F5B173AD0CA00DFE837 /* MOAIFrameBuffer.cpp */,
 				89BE6F5C173AD0CA00DFE837 /* MOAIFrameBuffer.h */,
-				89BE6F61173AD0CA00DFE837 /* MOAIGfxDevice.cpp */,
-				89BE6F62173AD0CA00DFE837 /* MOAIGfxDevice.h */,
-				89BE6F69173AD0CA00DFE837 /* MOAIGfxResource.cpp */,
-				89BE6F6A173AD0CA00DFE837 /* MOAIGfxResource.h */,
-				CD1AEB441A0F785C005512C8 /* MOAIGfxResourceMgr.cpp */,
-				CD1AEB451A0F785C005512C8 /* MOAIGfxResourceMgr.h */,
 				CD73A604188F0AEC00DFACDB /* MOAIGraphicsProp.cpp */,
 				CD73A605188F0AEC00DFACDB /* MOAIGraphicsProp.h */,
 				CD73A606188F0AEC00DFACDB /* MOAIGraphicsProp2D.cpp */,
@@ -9867,8 +9905,6 @@
 				89BE68BF173974FC00DFE837 /* ZLDirectoryItr.h */,
 				89BE68C5173974FC00DFE837 /* ZLFileSys.cpp */,
 				89BE68C6173974FC00DFE837 /* ZLFileSys.h */,
-				89BE68F1173974FC00DFE837 /* ZLLog.cpp */,
-				89BE68F2173974FC00DFE837 /* ZLLog.h */,
 			);
 			name = os;
 			sourceTree = "<group>";
@@ -10053,21 +10089,24 @@
 		CD218F9013A7FD8F008337E7 /* jansson */ = {
 			isa = PBXGroup;
 			children = (
-				CD218F9113A7FDBA008337E7 /* dump.c */,
-				CD218F9213A7FDBA008337E7 /* error.c */,
-				CD218F9313A7FDBA008337E7 /* hashtable.c */,
-				CD218F9413A7FDBA008337E7 /* hashtable.h */,
-				CD218F9513A7FDBA008337E7 /* jansson_config.h */,
-				CD218F9613A7FDBA008337E7 /* jansson_private.h */,
-				CD218F9713A7FDBA008337E7 /* jansson.h */,
-				CD218F9813A7FDBA008337E7 /* load.c */,
-				CD218F9913A7FDBA008337E7 /* memory.c */,
-				CD218F9A13A7FDBA008337E7 /* pack_unpack.c */,
-				CD218F9B13A7FDBA008337E7 /* strbuffer.c */,
-				CD218F9C13A7FDBA008337E7 /* strbuffer.h */,
-				CD218F9D13A7FDBA008337E7 /* utf.c */,
-				CD218F9E13A7FDBA008337E7 /* utf.h */,
-				CD218F9F13A7FDBA008337E7 /* value.c */,
+				CD73CFF01BA3FFB800BB50C3 /* dump.c */,
+				CD73CFF11BA3FFB800BB50C3 /* error.c */,
+				CD73CFF21BA3FFB800BB50C3 /* hashtable_seed.c */,
+				CD73CFF31BA3FFB800BB50C3 /* hashtable.c */,
+				CD73CFF41BA3FFB800BB50C3 /* hashtable.h */,
+				CD73CFF51BA3FFB800BB50C3 /* jansson_config.h */,
+				CD73CFF71BA3FFB800BB50C3 /* jansson_private.h */,
+				CD73CFF91BA3FFB800BB50C3 /* jansson.h */,
+				CD73CFFA1BA3FFB800BB50C3 /* load.c */,
+				CD73CFFB1BA3FFB800BB50C3 /* lookup3.h */,
+				CD73CFFE1BA3FFB800BB50C3 /* memory.c */,
+				CD73CFFF1BA3FFB800BB50C3 /* pack_unpack.c */,
+				CD73D0001BA3FFB800BB50C3 /* strbuffer.c */,
+				CD73D0011BA3FFB800BB50C3 /* strbuffer.h */,
+				CD73D0021BA3FFB800BB50C3 /* strconv.c */,
+				CD73D0031BA3FFB800BB50C3 /* utf.c */,
+				CD73D0041BA3FFB800BB50C3 /* utf.h */,
+				CD73D0051BA3FFB800BB50C3 /* value.c */,
 			);
 			name = jansson;
 			sourceTree = "<group>";
@@ -10135,6 +10174,27 @@
 				CD2B7C4B17FA56A100EBA2DB /* MOAIWebViewIOS.mm */,
 			);
 			name = "moai-ios";
+			sourceTree = "<group>";
+		};
+		CD2BA7A01B2A20BB0010C399 /* graphics cache */ = {
+			isa = PBXGroup;
+			children = (
+				89BE6F61173AD0CA00DFE837 /* MOAIGfxDevice.cpp */,
+				89BE6F62173AD0CA00DFE837 /* MOAIGfxDevice.h */,
+				CD2BA79A1B2A20A80010C399 /* MOAIGfxDeviceBase.cpp */,
+				CD2BA79B1B2A20A80010C399 /* MOAIGfxDeviceBase.h */,
+				CD2BA7941B2A16B00010C399 /* MOAIGfxDeviceMtxCache.cpp */,
+				CD2BA7951B2A16B00010C399 /* MOAIGfxDeviceMtxCache.h */,
+				CD3431031B30EDC6002BEBFA /* MOAIGfxDeviceStateCache.cpp */,
+				CD3431041B30EDC6002BEBFA /* MOAIGfxDeviceStateCache.h */,
+				CD2BA7A11B2A2D750010C399 /* MOAIGfxDeviceVertexWriter.cpp */,
+				CD2BA7A21B2A2D750010C399 /* MOAIGfxDeviceVertexWriter.h */,
+				89BE6F69173AD0CA00DFE837 /* MOAIGfxResource.cpp */,
+				89BE6F6A173AD0CA00DFE837 /* MOAIGfxResource.h */,
+				CD1AEB441A0F785C005512C8 /* MOAIGfxResourceMgr.cpp */,
+				CD1AEB451A0F785C005512C8 /* MOAIGfxResourceMgr.h */,
+			);
+			name = "graphics cache";
 			sourceTree = "<group>";
 		};
 		CD30249A1A689CC400CCEE32 /* libpvr */ = {
@@ -10282,9 +10342,10 @@
 				89BE6F82173AD0CA00DFE837 /* MOAIImageTexture.h */,
 				89BE6F9B173AD0CA00DFE837 /* MOAIMultiTexture.cpp */,
 				89BE6F9C173AD0CA00DFE837 /* MOAIMultiTexture.h */,
+				CD3431091B31175F002BEBFA /* MOAISingleTexture.cpp */,
+				CD34310A1B31175F002BEBFA /* MOAISingleTexture.h */,
 				89BE7006173AD0CA00DFE837 /* MOAITexture.cpp */,
 				89BE7007173AD0CA00DFE837 /* MOAITexture.h */,
-				89BE7008173AD0CA00DFE837 /* MOAITextureBase.cpp */,
 				89BE7009173AD0CA00DFE837 /* MOAITextureBase.h */,
 			);
 			name = texture;
@@ -12360,10 +12421,16 @@
 				CD6AFDA41B1683F800A36954 /* MOAIGeometryWriter.h */,
 				CD9E5BE01A772B4100469462 /* MOAIGfxBuffer.cpp */,
 				CD9E5BE11A772B4100469462 /* MOAIGfxBuffer.h */,
+				CDF941BA1B2FAEC4009D7787 /* MOAIIndexBuffer.cpp */,
+				CDF941BB1B2FAEC4009D7787 /* MOAIIndexBuffer.h */,
 				89BE6F97173AD0CA00DFE837 /* MOAIMesh.cpp */,
 				89BE6F98173AD0CA00DFE837 /* MOAIMesh.h */,
 				CD7548A31AEDA92300AD7FD8 /* MOAISelectionMesh.cpp */,
 				CD67B45B1B264C51004298CF /* MOAISelectionMesh.h */,
+				CD3430FC1B30ABB3002BEBFA /* MOAIVertexArray.cpp */,
+				CD3430FD1B30ABB3002BEBFA /* MOAIVertexArray.h */,
+				CDF941B41B2FAEB1009D7787 /* MOAIVertexBuffer.cpp */,
+				CDF941B51B2FAEB1009D7787 /* MOAIVertexBuffer.h */,
 				89BE701A173AD0CB00DFE837 /* MOAIVertexFormat.cpp */,
 				89BE701B173AD0CB00DFE837 /* MOAIVertexFormat.h */,
 				89BE701C173AD0CB00DFE837 /* MOAIVertexFormatMgr.cpp */,
@@ -12903,12 +12970,14 @@
 				CDD48B5417FA794B00525B77 /* SFMT-params4253.h in Headers */,
 				CD881F6519FF671C004498E8 /* backward_references.h in Headers */,
 				CDCDD0281A23F233008779B5 /* xmlrole.h in Headers */,
+				CD73D0111BA3FFB800BB50C3 /* jansson_config.h in Headers */,
 				CD881FE519FF6736004498E8 /* thread.h in Headers */,
 				CD881EE819FF66E5004498E8 /* vp8i.h in Headers */,
 				03240CD513564CB0000ADC60 /* ft2build.h in Headers */,
 				03240CD613564CB0000ADC60 /* ftconfig.h in Headers */,
 				CDCDD0121A23F233008779B5 /* expat_external.h in Headers */,
 				03240CD713564CB0000ADC60 /* ftheader.h in Headers */,
+				CD73D0271BA3FFB800BB50C3 /* utf.h in Headers */,
 				03240CD813564CB0000ADC60 /* ftmodule.h in Headers */,
 				03240CD913564CB0000ADC60 /* ftoption.h in Headers */,
 				03240CDA13564CB0000ADC60 /* ftstdlib.h in Headers */,
@@ -12918,20 +12987,14 @@
 				03240D0913564CB0000ADC60 /* pngpriv.h in Headers */,
 				03240D4E13564CB0000ADC60 /* tinyxml.h in Headers */,
 				CD69AB4E17FA6CF90053E028 /* sweep.h in Headers */,
-				CD218FB213A7FDBA008337E7 /* hashtable.h in Headers */,
-				CD218FB313A7FDBA008337E7 /* jansson_config.h in Headers */,
 				CDD48B5A17FA794B00525B77 /* SFMT-params216091.h in Headers */,
 				CD881FF419FF6743004498E8 /* demux.h in Headers */,
 				CD881FC919FF6736004498E8 /* filters.h in Headers */,
 				CD881F4019FF670D004498E8 /* yuv_tables_sse2.h in Headers */,
 				CD881FFC19FF6743004498E8 /* mux.h in Headers */,
-				CD218FB413A7FDBA008337E7 /* jansson_private.h in Headers */,
-				CD218FB513A7FDBA008337E7 /* jansson.h in Headers */,
 				CDCDD0141A23F233008779B5 /* expat.h in Headers */,
 				CD69AB3A17FA6CF90053E028 /* bucketalloc.h in Headers */,
 				CD881FBF19FF6736004498E8 /* bit_writer.h in Headers */,
-				CD218FBA13A7FDBA008337E7 /* strbuffer.h in Headers */,
-				CD218FBC13A7FDBA008337E7 /* utf.h in Headers */,
 				CD4900AB141AB6EC00913D80 /* lapi.h in Headers */,
 				CDCDD0201A23F233008779B5 /* utf8tab.h in Headers */,
 				CDD48CC117FA79FE00525B77 /* MOAIIso8601DateFormatter.h in Headers */,
@@ -12948,16 +13011,19 @@
 				CD4900BF141AB6EC00913D80 /* llimits.h in Headers */,
 				CD4900C2141AB6EC00913D80 /* lmem.h in Headers */,
 				CD4900C5141AB6EC00913D80 /* lobject.h in Headers */,
+				CD73D0211BA3FFB800BB50C3 /* strbuffer.h in Headers */,
 				CD4900C7141AB6EC00913D80 /* lopcodes.h in Headers */,
 				CD4900CA141AB6EC00913D80 /* lparser.h in Headers */,
 				CD881F8D19FF671C004498E8 /* vp8li.h in Headers */,
 				CDD48B5617FA794B00525B77 /* SFMT-params19937.h in Headers */,
 				CD4900CC141AB6EC00913D80 /* lstate.h in Headers */,
 				CDCDD0181A23F233008779B5 /* internal.h in Headers */,
+				CD73D0151BA3FFB800BB50C3 /* jansson.h in Headers */,
 				CD4900CE141AB6EC00913D80 /* lstring.h in Headers */,
 				CD4900D1141AB6EC00913D80 /* ltable.h in Headers */,
 				CD881F9719FF6728004498E8 /* muxi.h in Headers */,
 				CD4900D4141AB6EC00913D80 /* ltm.h in Headers */,
+				CD73D0131BA3FFB800BB50C3 /* jansson_private.h in Headers */,
 				CD4900D5141AB6EC00913D80 /* lua.h in Headers */,
 				CD881FD919FF6736004498E8 /* quant_levels.h in Headers */,
 				CD881F3219FF670D004498E8 /* lossless.h in Headers */,
@@ -12965,6 +13031,7 @@
 				CD881FE119FF6736004498E8 /* rescaler.h in Headers */,
 				CD4900D6141AB6EC00913D80 /* luaconf.h in Headers */,
 				CD4900D7141AB6EC00913D80 /* lualib.h in Headers */,
+				CD73D0191BA3FFB800BB50C3 /* lookup3.h in Headers */,
 				CD4900D9141AB6EC00913D80 /* lundump.h in Headers */,
 				CD4900DB141AB6EC00913D80 /* lvm.h in Headers */,
 				CD881FC519FF6736004498E8 /* endian_inl.h in Headers */,
@@ -12989,6 +13056,7 @@
 				07952A701447907100143A72 /* jversion.h in Headers */,
 				CD3024D61A68F34E00CCEE32 /* PVRTError.h in Headers */,
 				07658751145CD06900723A7D /* tlsf.h in Headers */,
+				CD73D00F1BA3FFB800BB50C3 /* hashtable.h in Headers */,
 				CD3024DA1A68F34E00CCEE32 /* PVRTMap.h in Headers */,
 				07658753145CD06900723A7D /* tlsfbits.h in Headers */,
 				CDCDD01E1A23F233008779B5 /* nametab.h in Headers */,
@@ -13088,6 +13156,7 @@
 				89BE6D3B1739A42500DFE837 /* MOAIStreamReader.h in Headers */,
 				89BE6D3F1739A42500DFE837 /* MOAIStreamWriter.h in Headers */,
 				CDADCCFB1A3576A10029FEDA /* MOAITrace.h in Headers */,
+				CD0BB6411B0D22B900399FCB /* MOAILuaUtil.h in Headers */,
 				89BE6D431739A42500DFE837 /* MOAITask.h in Headers */,
 				89BE6D471739A42500DFE837 /* MOAITaskQueue.h in Headers */,
 				CD4283641A0476D20069392E /* MOAIByteStream.h in Headers */,
@@ -13128,12 +13197,14 @@
 				CD881FE419FF6736004498E8 /* thread.h in Headers */,
 				CD881EE719FF66E5004498E8 /* vp8i.h in Headers */,
 				03240E7D13564CB0000ADC60 /* ftheader.h in Headers */,
+				CD73D0101BA3FFB800BB50C3 /* jansson_config.h in Headers */,
 				03240E7E13564CB0000ADC60 /* ftmodule.h in Headers */,
 				03240E7F13564CB0000ADC60 /* ftoption.h in Headers */,
 				03240E8013564CB0000ADC60 /* ftstdlib.h in Headers */,
 				03240EA913564CB0000ADC60 /* png.h in Headers */,
 				CDCDD0111A23F233008779B5 /* expat_external.h in Headers */,
 				03240EAA13564CB0000ADC60 /* pngconf.h in Headers */,
+				CD73D0261BA3FFB800BB50C3 /* utf.h in Headers */,
 				03240EAF13564CB0000ADC60 /* pngpriv.h in Headers */,
 				03240EF413564CB0000ADC60 /* tinyxml.h in Headers */,
 				CD80F63F135BBCFF006B0683 /* MOAIIso8601DateFormatter.h in Headers */,
@@ -13153,14 +13224,8 @@
 				CD69AB4D17FA6CF90053E028 /* sweep.h in Headers */,
 				CDD48B7217FA794E00525B77 /* SFMT-params2281.h in Headers */,
 				CDCDD0131A23F233008779B5 /* expat.h in Headers */,
-				CD218FA313A7FDBA008337E7 /* hashtable.h in Headers */,
 				CD881FBE19FF6736004498E8 /* bit_writer.h in Headers */,
-				CD218FA413A7FDBA008337E7 /* jansson_config.h in Headers */,
-				CD218FA513A7FDBA008337E7 /* jansson_private.h in Headers */,
-				CD218FA613A7FDBA008337E7 /* jansson.h in Headers */,
 				CDCDD01F1A23F233008779B5 /* utf8tab.h in Headers */,
-				CD218FAB13A7FDBA008337E7 /* strbuffer.h in Headers */,
-				CD218FAD13A7FDBA008337E7 /* utf.h in Headers */,
 				CD490076141AB6EC00913D80 /* lapi.h in Headers */,
 				CD490078141AB6EC00913D80 /* lauxlib.h in Headers */,
 				CD49007B141AB6EC00913D80 /* lcode.h in Headers */,
@@ -13173,16 +13238,19 @@
 				CD490085141AB6EC00913D80 /* lgc.h in Headers */,
 				CD490089141AB6EC00913D80 /* llex.h in Headers */,
 				CD49008A141AB6EC00913D80 /* llimits.h in Headers */,
+				CD73D0201BA3FFB800BB50C3 /* strbuffer.h in Headers */,
 				CD49008D141AB6EC00913D80 /* lmem.h in Headers */,
 				CD490090141AB6EC00913D80 /* lobject.h in Headers */,
 				CD881F8C19FF671C004498E8 /* vp8li.h in Headers */,
 				CD490092141AB6EC00913D80 /* lopcodes.h in Headers */,
 				CD490095141AB6EC00913D80 /* lparser.h in Headers */,
 				CDCDD0171A23F233008779B5 /* internal.h in Headers */,
+				CD73D0141BA3FFB800BB50C3 /* jansson.h in Headers */,
 				CD490097141AB6EC00913D80 /* lstate.h in Headers */,
 				CDD48B6E17FA794E00525B77 /* SFMT-common.h in Headers */,
 				CD881F9619FF6728004498E8 /* muxi.h in Headers */,
 				CD490099141AB6EC00913D80 /* lstring.h in Headers */,
+				CD73D0121BA3FFB800BB50C3 /* jansson_private.h in Headers */,
 				CD49009C141AB6EC00913D80 /* ltable.h in Headers */,
 				CD881FD819FF6736004498E8 /* quant_levels.h in Headers */,
 				CD881F3119FF670D004498E8 /* lossless.h in Headers */,
@@ -13190,6 +13258,7 @@
 				CD881FE019FF6736004498E8 /* rescaler.h in Headers */,
 				CD49009F141AB6EC00913D80 /* ltm.h in Headers */,
 				CDD48B7117FA794E00525B77 /* SFMT-params1279.h in Headers */,
+				CD73D0181BA3FFB800BB50C3 /* lookup3.h in Headers */,
 				CD4900A0141AB6EC00913D80 /* lua.h in Headers */,
 				CD4900A1141AB6EC00913D80 /* luaconf.h in Headers */,
 				CD881FC419FF6736004498E8 /* endian_inl.h in Headers */,
@@ -13214,6 +13283,7 @@
 				07952A131447907100143A72 /* jmorecfg.h in Headers */,
 				CD3024D51A68F34E00CCEE32 /* PVRTError.h in Headers */,
 				07952A141447907100143A72 /* jpegint.h in Headers */,
+				CD73D00E1BA3FFB800BB50C3 /* hashtable.h in Headers */,
 				CD3024D91A68F34E00CCEE32 /* PVRTMap.h in Headers */,
 				07952A151447907100143A72 /* jpeglib.h in Headers */,
 				CDCDD01D1A23F233008779B5 /* nametab.h in Headers */,
@@ -13298,6 +13368,7 @@
 				89BE6CFA1739A42500DFE837 /* headers.h in Headers */,
 				CDADCCFA1A3576A10029FEDA /* MOAITrace.h in Headers */,
 				89BE6CFE1739A42500DFE837 /* host.h in Headers */,
+				CD0BB63F1B0D22AC00399FCB /* MOAILuaUtil.h in Headers */,
 				89BE6D021739A42500DFE837 /* MOAIDataBuffer.h in Headers */,
 				89BE6D061739A42500DFE837 /* MOAIDataBufferStream.h in Headers */,
 				89BE6D0A1739A42500DFE837 /* MOAIDataIOTask.h in Headers */,
@@ -13351,6 +13422,7 @@
 				CD4C3EB3180A63BB00C02381 /* MOAIScriptDeck.h in Headers */,
 				CD4C3EB7180A63BB00C02381 /* MOAISensor.h in Headers */,
 				CD4C3ED2180A63BB00C02381 /* MOAITexture.h in Headers */,
+				CD34310D1B31175F002BEBFA /* MOAISingleTexture.h in Headers */,
 				CD4C3EE0180A63BB00C02381 /* MOAITransform2D.h in Headers */,
 				CD4C3EEC180A63BB00C02381 /* MOAIVectorPoly.h in Headers */,
 				CD9140971A0D6022002CC335 /* MOAIActionTree.h in Headers */,
@@ -13365,6 +13437,7 @@
 				CD4C3EA0180A63BB00C02381 /* MOAIProfilerReportBase.h in Headers */,
 				CD4C3DF5180A63BB00C02381 /* MOAIAnimCurveQuat.h in Headers */,
 				CD4C3EB9180A63BB00C02381 /* MOAIShader.h in Headers */,
+				CD3431071B30EDC6002BEBFA /* MOAIGfxDeviceStateCache.h in Headers */,
 				CD4C3E47180A63BB00C02381 /* MOAIGridSpace.h in Headers */,
 				CD4C3EC4180A63BB00C02381 /* MOAISurfaceDeck2D.h in Headers */,
 				CD4C3E72180A63BB00C02381 /* MOAIParticleForce.h in Headers */,
@@ -13395,6 +13468,7 @@
 				CD4C3E08180A63BB00C02381 /* MOAICameraAnchor2D.h in Headers */,
 				CD1401411A0C5F660065AEE7 /* MOAIInputMgr.h in Headers */,
 				CD73A602188F0AD200DFACDB /* MOAICollisionWorld.h in Headers */,
+				CD3431001B30ABB3002BEBFA /* MOAIVertexArray.h in Headers */,
 				CD4C3E7A180A63BB00C02381 /* MOAIParticleState.h in Headers */,
 				CD4C3E0E180A63BB00C02381 /* MOAIColor.h in Headers */,
 				CD4C3DEB180A63BB00C02381 /* MOAIAction.h in Headers */,
@@ -13423,6 +13497,7 @@
 				CD4C3E55180A63BB00C02381 /* MOAIJoystickSensor.h in Headers */,
 				CD73A5FE188F0AD200DFACDB /* MOAICollisionProp.h in Headers */,
 				CD67B4621B264C9C004298CF /* MOAIDeckProxy.h in Headers */,
+				CDF941BE1B2FAEC4009D7787 /* MOAIIndexBuffer.h in Headers */,
 				CD781097187CAA2D008B9C0A /* MOAITextStyleCache.h in Headers */,
 				CD4C3ECC180A63BB00C02381 /* MOAITextDesigner.h in Headers */,
 				CD4C3E2B180A63BB00C02381 /* MOAIFreeTypeFontReader.h in Headers */,
@@ -13438,6 +13513,8 @@
 				CDB0CA32193E6D3B00C54DB7 /* MOAIGridFancy.h in Headers */,
 				CD1AEB481A0F785C005512C8 /* MOAIGfxResourceMgr.h in Headers */,
 				CD4C3EBD180A63BB00C02381 /* MOAISim.h in Headers */,
+				CD2BA79E1B2A20A80010C399 /* MOAIGfxDeviceBase.h in Headers */,
+				CD2BA7A51B2A2D760010C399 /* MOAIGfxDeviceVertexWriter.h in Headers */,
 				CD4C3ED6180A63BB00C02381 /* MOAITileDeck2D.h in Headers */,
 				CD4C3EF1180A63BB00C02381 /* MOAIVectorStyle.h in Headers */,
 				CDEFD57C181ECB3E0058D772 /* MOAIVectorRect.h in Headers */,
@@ -13449,6 +13526,7 @@
 				CD4C3DFC180A63BB00C02381 /* MOAIBlendMode.h in Headers */,
 				CD4C3E25180A63BB00C02381 /* MOAIFontReader.h in Headers */,
 				CD4C3EDC180A63BB00C02381 /* MOAITouchSensor.h in Headers */,
+				CD2BA7981B2A16B00010C399 /* MOAIGfxDeviceMtxCache.h in Headers */,
 				CD4C3E5F180A63BB00C02381 /* MOAILocationSensor.h in Headers */,
 				CD4C3E27180A63BB00C02381 /* MOAIFrameBuffer.h in Headers */,
 				CDE36E521A5F4E340095E863 /* MOAIImageFormatMgr.h in Headers */,
@@ -13500,6 +13578,7 @@
 				CD4C3EF7180A63BB00C02381 /* MOAIVertexFormatMgr.h in Headers */,
 				CD4C3E39180A63BB00C02381 /* MOAIDynamicGlyphCache.h in Headers */,
 				CD4C3DF1180A63BB00C02381 /* MOAIAnimCurve.h in Headers */,
+				CDF941B81B2FAEB1009D7787 /* MOAIVertexBuffer.h in Headers */,
 				CD4C3E04180A63BB00C02381 /* MOAICamera.h in Headers */,
 				CD73A60E188F0AEC00DFACDB /* MOAIGraphicsProp2D.h in Headers */,
 				CD4C3E63180A63BB00C02381 /* MOAIMotionSensor.h in Headers */,
@@ -13532,12 +13611,15 @@
 				CD4C403E180A63C200C02381 /* MOAICollisionShape.h in Headers */,
 				CD4C40B8180A63C200C02381 /* MOAIPartitionResultBuffer.h in Headers */,
 				CD4C410A180A63C200C02381 /* MOAITileFlags.h in Headers */,
+				CD2BA79F1B2A20A80010C399 /* MOAIGfxDeviceBase.h in Headers */,
 				CD4C40D8180A63C200C02381 /* MOAIProp.h in Headers */,
+				CD34310E1B31175F002BEBFA /* MOAISingleTexture.h in Headers */,
 				CD4C4108180A63C200C02381 /* MOAITileDeck2D.h in Headers */,
 				CD4C407D180A63C200C02381 /* MOAIImage.h in Headers */,
 				CD4C40F0180A63C200C02381 /* MOAISpanList.h in Headers */,
 				CD4C40D4180A63C200C02381 /* MOAIProfilerReportBox.h in Headers */,
 				CD4C408F180A63C200C02381 /* MOAILayoutFrame.h in Headers */,
+				CDF941BF1B2FAEC4009D7787 /* MOAIIndexBuffer.h in Headers */,
 				CD4C40F6180A63C200C02381 /* MOAISurfaceDeck2D.h in Headers */,
 				CD4C4023180A63C200C02381 /* MOAIAnimCurve.h in Headers */,
 				CDE36E531A5F4E340095E863 /* MOAIImageFormatMgr.h in Headers */,
@@ -13611,6 +13693,7 @@
 				CD4C4067180A63C200C02381 /* MOAIGfxResource.h in Headers */,
 				CD4C40DF180A63C200C02381 /* MOAIRenderable.h in Headers */,
 				CDEFD571181ECB3E0058D772 /* MOAITextLayout.h in Headers */,
+				CD3431081B30EDC6002BEBFA /* MOAIGfxDeviceStateCache.h in Headers */,
 				CD4C402A180A63C200C02381 /* MOAIAttrOp.h in Headers */,
 				CD4C410C180A63C200C02381 /* MOAITimer.h in Headers */,
 				CD4C4032180A63C200C02381 /* MOAIBoundsDeck.h in Headers */,
@@ -13628,6 +13711,7 @@
 				CD4C401D180A63C200C02381 /* MOAIAction.h in Headers */,
 				CD4C4029180A63C200C02381 /* MOAIAnimCurveVec.h in Headers */,
 				CD4C4019180A63C200C02381 /* host.h in Headers */,
+				CD3431011B30ABB3002BEBFA /* MOAIVertexArray.h in Headers */,
 				CD4C4044180A63C200C02381 /* MOAICoroutine.h in Headers */,
 				CD4C408D180A63C200C02381 /* MOAILayer2D.h in Headers */,
 				CD4C4114180A63C200C02381 /* MOAITransformBase.h in Headers */,
@@ -13641,6 +13725,7 @@
 				CD4C40C4180A63C200C02381 /* MOAIPointerSensor.h in Headers */,
 				CD4C4046180A63C200C02381 /* MOAIDebugLines.h in Headers */,
 				CD73A603188F0AD200DFACDB /* MOAICollisionWorld.h in Headers */,
+				CD2BA7991B2A16B00010C399 /* MOAIGfxDeviceMtxCache.h in Headers */,
 				CDE36E6B1A5F6C970095E863 /* MOAIImageFormatWebP.h in Headers */,
 				CD4C40C6180A63C200C02381 /* MOAIProfiler.h in Headers */,
 				CD6ECF6F1A6E247C004813FF /* MOAIMatrix.h in Headers */,
@@ -13662,6 +13747,7 @@
 				CD4C40AE180A63C200C02381 /* MOAIParticleSystem.h in Headers */,
 				CD4C4050180A63C200C02381 /* MOAIEaseType.h in Headers */,
 				CDE36E671A5F6C970095E863 /* MOAIImageFormatPng.h in Headers */,
+				CD2BA7A61B2A2D760010C399 /* MOAIGfxDeviceVertexWriter.h in Headers */,
 				CD4C40D0180A63C200C02381 /* MOAIProfilerReport.h in Headers */,
 				CDE36E631A5F6C970095E863 /* MOAIImageFormatJpg.h in Headers */,
 				CD4C4017180A63C200C02381 /* headers.h in Headers */,
@@ -13674,6 +13760,7 @@
 				CDEFD56D181ECB3E0058D772 /* MOAITextLabel.h in Headers */,
 				CD4C404E180A63C200C02381 /* MOAIEaseDriver.h in Headers */,
 				CDEFD575181ECB3E0058D772 /* MOAITextStyleParser.h in Headers */,
+				CDF941B91B2FAEB1009D7787 /* MOAIVertexBuffer.h in Headers */,
 				CD4C406B180A63C200C02381 /* MOAIDynamicGlyphCache.h in Headers */,
 				CD4C40B6180A63C200C02381 /* MOAIPartitionLevel.h in Headers */,
 				CD4C4106180A63C200C02381 /* MOAITextureBase.h in Headers */,
@@ -14352,20 +14439,14 @@
 				CD32B3E319F9EDD10059D019 /* sweep.h in Headers */,
 				CD32B5D219F9EF2E0059D019 /* SDL_error_c.h in Headers */,
 				CD32B5B319F9EF200059D019 /* SDL_x11window.h in Headers */,
-				CD32B3E419F9EDD10059D019 /* hashtable.h in Headers */,
-				CD32B3E519F9EDD10059D019 /* jansson_config.h in Headers */,
 				CD32B56119F9EEE50059D019 /* mmx.h in Headers */,
 				CD32B52C19F9EE3F0059D019 /* SDL_events_c.h in Headers */,
 				CD32B56319F9EEE50059D019 /* SDL_sysrender.h in Headers */,
 				CD32B55319F9EEDC0059D019 /* SDL_draw.h in Headers */,
 				CD32B53E19F9EE550059D019 /* SDL_haptic_c.h in Headers */,
 				CD32B3E619F9EDD10059D019 /* SFMT-params216091.h in Headers */,
-				CD32B3E719F9EDD10059D019 /* jansson_private.h in Headers */,
-				CD32B3E819F9EDD10059D019 /* jansson.h in Headers */,
 				CD32B3E919F9EDD10059D019 /* bucketalloc.h in Headers */,
 				CD32B5B719F9EF260059D019 /* SDL_blit.h in Headers */,
-				CD32B3EA19F9EDD10059D019 /* strbuffer.h in Headers */,
-				CD32B3EB19F9EDD10059D019 /* utf.h in Headers */,
 				CD32B3EC19F9EDD10059D019 /* lapi.h in Headers */,
 				CD32B3ED19F9EDD10059D019 /* MOAIIso8601DateFormatter.h in Headers */,
 				CD32B3EE19F9EDD10059D019 /* lauxlib.h in Headers */,
@@ -14673,16 +14754,10 @@
 				CD8080C01831C68C00E658D9 /* bio.h in Headers */,
 				CD80790E1831C3B500E658D9 /* tinyxml.h in Headers */,
 				CD80790F1831C3B500E658D9 /* sweep.h in Headers */,
-				CD8079101831C3B500E658D9 /* hashtable.h in Headers */,
-				CD8079111831C3B500E658D9 /* jansson_config.h in Headers */,
 				CD8079121831C3B500E658D9 /* SFMT-params216091.h in Headers */,
 				CD807FF61831C63B00E658D9 /* hmac.h in Headers */,
-				CD8079131831C3B500E658D9 /* jansson_private.h in Headers */,
-				CD8079141831C3B500E658D9 /* jansson.h in Headers */,
 				CD8079151831C3B500E658D9 /* bucketalloc.h in Headers */,
 				CD8080661831C66C00E658D9 /* safestack.h in Headers */,
-				CD8079161831C3B500E658D9 /* strbuffer.h in Headers */,
-				CD8079171831C3B500E658D9 /* utf.h in Headers */,
 				CD8079181831C3B500E658D9 /* lapi.h in Headers */,
 				CD8079191831C3B500E658D9 /* MOAIIso8601DateFormatter.h in Headers */,
 				CD80791A1831C3B500E658D9 /* lauxlib.h in Headers */,
@@ -16024,7 +16099,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = NO;
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0700;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "libmoai" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -16137,6 +16212,7 @@
 				03240CE713564CB0000ADC60 /* pfr.c in Sources */,
 				03240CE813564CB0000ADC60 /* psaux.c in Sources */,
 				CD881EE419FF66E5004498E8 /* tree.c in Sources */,
+				CD73D0091BA3FFB800BB50C3 /* error.c in Sources */,
 				CD881F1A19FF670D004498E8 /* dec_sse2.c in Sources */,
 				03240CE913564CB0000ADC60 /* pshinter.c in Sources */,
 				03240CEA13564CB0000ADC60 /* psmodule.c in Sources */,
@@ -16154,6 +16230,7 @@
 				03240CF313564CB0000ADC60 /* bdf.c in Sources */,
 				03240CF413564CB0000ADC60 /* cff.c in Sources */,
 				03240CF513564CB0000ADC60 /* ftbase.c in Sources */,
+				CD73D00D1BA3FFB800BB50C3 /* hashtable.c in Sources */,
 				CD881FDF19FF6736004498E8 /* rescaler.c in Sources */,
 				03240CF613564CB0000ADC60 /* ftbitmap.c in Sources */,
 				CD881FC119FF6736004498E8 /* color_cache.c in Sources */,
@@ -16191,6 +16268,7 @@
 				CD881F3E19FF670D004498E8 /* yuv_sse2.c in Sources */,
 				CD881F6D19FF671C004498E8 /* filter.c in Sources */,
 				03240D0C13564CB0000ADC60 /* pngrtran.c in Sources */,
+				CD73D01B1BA3FFB800BB50C3 /* memory.c in Sources */,
 				03240D0D13564CB0000ADC60 /* pngrutil.c in Sources */,
 				03240D0E13564CB0000ADC60 /* pngset.c in Sources */,
 				03240D1013564CB0000ADC60 /* pngtrans.c in Sources */,
@@ -16207,20 +16285,11 @@
 				CD881FE719FF6736004498E8 /* utils.c in Sources */,
 				03240D4F13564CB0000ADC60 /* tinyxmlerror.cpp in Sources */,
 				03240D5013564CB0000ADC60 /* tinyxmlparser.cpp in Sources */,
-				CD218FAF13A7FDBA008337E7 /* dump.c in Sources */,
-				CD218FB013A7FDBA008337E7 /* error.c in Sources */,
-				CD218FB113A7FDBA008337E7 /* hashtable.c in Sources */,
-				CD218FB613A7FDBA008337E7 /* load.c in Sources */,
 				CD881F2C19FF670D004498E8 /* lossless_neon.c in Sources */,
-				CD218FB713A7FDBA008337E7 /* memory.c in Sources */,
-				CD218FB813A7FDBA008337E7 /* pack_unpack.c in Sources */,
 				CD881EF319FF66FF004498E8 /* demux.c in Sources */,
 				CD881F1019FF670D004498E8 /* alpha_processing.c in Sources */,
-				CD218FB913A7FDBA008337E7 /* strbuffer.c in Sources */,
-				CD218FBB13A7FDBA008337E7 /* utf.c in Sources */,
 				CD881F7B19FF671C004498E8 /* picture_rescale.c in Sources */,
 				CD881FC719FF6736004498E8 /* filters.c in Sources */,
-				CD218FBD13A7FDBA008337E7 /* value.c in Sources */,
 				CD881EDE19FF66E5004498E8 /* idec.c in Sources */,
 				CD4900AA141AB6EC00913D80 /* lapi.c in Sources */,
 				CD4900AC141AB6EC00913D80 /* lauxlib.c in Sources */,
@@ -16234,6 +16303,7 @@
 				CD4900B2141AB6EC00913D80 /* ldebug.c in Sources */,
 				CD4900B4141AB6EC00913D80 /* ldo.c in Sources */,
 				CD4900B6141AB6EC00913D80 /* ldump.c in Sources */,
+				CD73D0251BA3FFB800BB50C3 /* utf.c in Sources */,
 				CD4900B7141AB6EC00913D80 /* lfunc.c in Sources */,
 				CD4900B9141AB6EC00913D80 /* lgc.c in Sources */,
 				CD4900BB141AB6EC00913D80 /* linit.c in Sources */,
@@ -16276,6 +16346,7 @@
 				07952A381447907100143A72 /* jccolor.c in Sources */,
 				07952A391447907100143A72 /* jcdctmgr.c in Sources */,
 				CD881FDB19FF6736004498E8 /* random.c in Sources */,
+				CD73D0291BA3FFB800BB50C3 /* value.c in Sources */,
 				07952A3A1447907100143A72 /* jchuff.c in Sources */,
 				07952A3B1447907100143A72 /* jcinit.c in Sources */,
 				CD881F1619FF670D004498E8 /* dec_mips32.c in Sources */,
@@ -16294,6 +16365,7 @@
 				07952A461447907100143A72 /* jdapistd.c in Sources */,
 				07952A471447907100143A72 /* jdarith.c in Sources */,
 				07952A481447907100143A72 /* jdatadst.c in Sources */,
+				CD73D0171BA3FFB800BB50C3 /* load.c in Sources */,
 				07952A491447907100143A72 /* jdatasrc.c in Sources */,
 				CD881F9B19FF6728004498E8 /* muxread.c in Sources */,
 				07952A4A1447907100143A72 /* jdcoefct.c in Sources */,
@@ -16305,6 +16377,7 @@
 				07952A4F1447907100143A72 /* jdinput.c in Sources */,
 				07952A501447907100143A72 /* jdmainct.c in Sources */,
 				07952A511447907100143A72 /* jdmarker.c in Sources */,
+				CD73D00B1BA3FFB800BB50C3 /* hashtable_seed.c in Sources */,
 				07952A521447907100143A72 /* jdmaster.c in Sources */,
 				07952A531447907100143A72 /* jdmerge.c in Sources */,
 				07952A541447907100143A72 /* jdpostct.c in Sources */,
@@ -16323,6 +16396,7 @@
 				CD881F7919FF671C004498E8 /* picture_psnr.c in Sources */,
 				07952A5E1447907100143A72 /* jidctfst.c in Sources */,
 				07952A5F1447907100143A72 /* jidctint.c in Sources */,
+				CD73D0231BA3FFB800BB50C3 /* strconv.c in Sources */,
 				CD881F8719FF671C004498E8 /* tree.c in Sources */,
 				07952A651447907100143A72 /* jmemmgr.c in Sources */,
 				07952A671447907100143A72 /* jmemnobs.c in Sources */,
@@ -16330,6 +16404,7 @@
 				07952A6E1447907100143A72 /* jquant2.c in Sources */,
 				07952A6F1447907100143A72 /* jutils.c in Sources */,
 				CDCDD0261A23F233008779B5 /* xmlrole.c in Sources */,
+				CD73D0071BA3FFB800BB50C3 /* dump.c in Sources */,
 				0765874F145CD06900723A7D /* tlsf.c in Sources */,
 				CD69AB4417FA6CF90053E028 /* mesh.c in Sources */,
 				CD69AB4817FA6CF90053E028 /* priorityq.c in Sources */,
@@ -16337,6 +16412,7 @@
 				CD04AED214725714009C20E5 /* compress.c in Sources */,
 				CD04AED514725714009C20E5 /* crc32.c in Sources */,
 				CD04AEDB14725714009C20E5 /* deflate.c in Sources */,
+				CD73D01D1BA3FFB800BB50C3 /* pack_unpack.c in Sources */,
 				CD04AEE114725714009C20E5 /* gzio.c in Sources */,
 				CD04AEE414725714009C20E5 /* infback.c in Sources */,
 				CD04AEE714725714009C20E5 /* inffast.c in Sources */,
@@ -16346,6 +16422,7 @@
 				CD04AF0214725714009C20E5 /* uncompr.c in Sources */,
 				CD04AF0B14725714009C20E5 /* zutil.c in Sources */,
 				66E345471614CA710021FC4B /* moai_whirlpool.c in Sources */,
+				CD73D01F1BA3FFB800BB50C3 /* strbuffer.c in Sources */,
 				CDD48CC217FA79FE00525B77 /* MOAIIso8601DateFormatter.m in Sources */,
 				CD3024D41A68F34E00CCEE32 /* PVRTError.cpp in Sources */,
 				CD69AB3C17FA6CF90053E028 /* dict.c in Sources */,
@@ -16379,6 +16456,7 @@
 				89BE6B3B173975E500DFE837 /* MOAIObject.cpp in Sources */,
 				89BE6B3F173975E500DFE837 /* MOAIRtti.cpp in Sources */,
 				89BE6B43173975E500DFE837 /* MOAISerializer.cpp in Sources */,
+				CD0BB6401B0D22B900399FCB /* MOAILuaUtil.cpp in Sources */,
 				89BE6B47173975E500DFE837 /* MOAISerializerBase.cpp in Sources */,
 				89BE6B4F173975E500DFE837 /* pch.cpp in Sources */,
 				89BE6CFD1739A42500DFE837 /* host.cpp in Sources */,
@@ -16436,6 +16514,7 @@
 				03240EAB13564CB0000ADC60 /* pngerror.c in Sources */,
 				03240EAC13564CB0000ADC60 /* pngget.c in Sources */,
 				03240EAD13564CB0000ADC60 /* pngmem.c in Sources */,
+				CD73D01E1BA3FFB800BB50C3 /* strbuffer.c in Sources */,
 				03240EAE13564CB0000ADC60 /* pngpread.c in Sources */,
 				CD881F3519FF670D004498E8 /* upsampling_neon.c in Sources */,
 				03240EB013564CB0000ADC60 /* pngread.c in Sources */,
@@ -16450,6 +16529,7 @@
 				CDD4912217FA7A8600525B77 /* ftstroke.c in Sources */,
 				CD881F8419FF671C004498E8 /* token.c in Sources */,
 				03240EB613564CB0000ADC60 /* pngtrans.c in Sources */,
+				CD73D0281BA3FFB800BB50C3 /* value.c in Sources */,
 				03240EB713564CB0000ADC60 /* pngwio.c in Sources */,
 				CD881F7819FF671C004498E8 /* picture_psnr.c in Sources */,
 				03240EB813564CB0000ADC60 /* pngwrite.c in Sources */,
@@ -16465,6 +16545,7 @@
 				CDD4910D17FA7A8000525B77 /* psmodule.c in Sources */,
 				CD881FB819FF6736004498E8 /* bit_reader.c in Sources */,
 				CD881F1119FF670D004498E8 /* cpu.c in Sources */,
+				CD73D0241BA3FFB800BB50C3 /* utf.c in Sources */,
 				CD881F1719FF670D004498E8 /* dec_neon.c in Sources */,
 				CD69AB4717FA6CF90053E028 /* priorityq.c in Sources */,
 				CD881FDE19FF6736004498E8 /* rescaler.c in Sources */,
@@ -16479,6 +16560,7 @@
 				CDD4911617FA7A8600525B77 /* bdf.c in Sources */,
 				CDD4910117FA7A8000525B77 /* ftmm.c in Sources */,
 				CD3024DB1A68F34E00CCEE32 /* PVRTTexture.cpp in Sources */,
+				CD73D0161BA3FFB800BB50C3 /* load.c in Sources */,
 				CDD4911717FA7A8600525B77 /* cff.c in Sources */,
 				CDD4911317FA7A8000525B77 /* type42.c in Sources */,
 				CDD4912317FA7A8600525B77 /* ftsystem.c in Sources */,
@@ -16493,6 +16575,7 @@
 				CD881F2319FF670D004498E8 /* enc_neon.c in Sources */,
 				CD881F5E19FF671C004498E8 /* alpha.c in Sources */,
 				CDD4911D17FA7A8600525B77 /* ftgasp.c in Sources */,
+				CD73D00A1BA3FFB800BB50C3 /* hashtable_seed.c in Sources */,
 				CDD4910417FA7A8000525B77 /* ftpfr.c in Sources */,
 				CDD4911217FA7A8000525B77 /* type1cid.c in Sources */,
 				CD69AB3F17FA6CF90053E028 /* geom.c in Sources */,
@@ -16510,6 +16593,7 @@
 				CDD4911817FA7A8600525B77 /* ftbase.c in Sources */,
 				CDD4910817FA7A8000525B77 /* ftxf86.c in Sources */,
 				CDD4911417FA7A8000525B77 /* winfnt.c in Sources */,
+				CD73D0221BA3FFB800BB50C3 /* strconv.c in Sources */,
 				CD881F6C19FF671C004498E8 /* filter.c in Sources */,
 				CDD4911117FA7A8000525B77 /* type1.c in Sources */,
 				CD3024CF1A68F34E00CCEE32 /* PVRTDecompress.cpp in Sources */,
@@ -16517,20 +16601,11 @@
 				CDD4910517FA7A8000525B77 /* ftsynth.c in Sources */,
 				CD881F3919FF670D004498E8 /* upsampling.c in Sources */,
 				CD881F4119FF670D004498E8 /* yuv.c in Sources */,
-				CD218FA013A7FDBA008337E7 /* dump.c in Sources */,
-				CD218FA113A7FDBA008337E7 /* error.c in Sources */,
-				CD218FA213A7FDBA008337E7 /* hashtable.c in Sources */,
-				CD218FA713A7FDBA008337E7 /* load.c in Sources */,
-				CD218FA813A7FDBA008337E7 /* memory.c in Sources */,
 				CD881F2119FF670D004498E8 /* enc_mips32.c in Sources */,
-				CD218FA913A7FDBA008337E7 /* pack_unpack.c in Sources */,
 				CD881F8A19FF671C004498E8 /* vp8l.c in Sources */,
 				CD881F7E19FF671C004498E8 /* picture.c in Sources */,
-				CD218FAA13A7FDBA008337E7 /* strbuffer.c in Sources */,
 				CD881FE619FF6736004498E8 /* utils.c in Sources */,
-				CD218FAC13A7FDBA008337E7 /* utf.c in Sources */,
 				CDCDD02D1A23F233008779B5 /* xmltok_ns.c in Sources */,
-				CD218FAE13A7FDBA008337E7 /* value.c in Sources */,
 				CD490075141AB6EC00913D80 /* lapi.c in Sources */,
 				CD490077141AB6EC00913D80 /* lauxlib.c in Sources */,
 				CD490079141AB6EC00913D80 /* lbaselib.c in Sources */,
@@ -16544,6 +16619,7 @@
 				CD490081141AB6EC00913D80 /* ldump.c in Sources */,
 				CD490082141AB6EC00913D80 /* lfunc.c in Sources */,
 				CDD4910C17FA7A8000525B77 /* pshinter.c in Sources */,
+				CD73D01A1BA3FFB800BB50C3 /* memory.c in Sources */,
 				CD490084141AB6EC00913D80 /* lgc.c in Sources */,
 				CD881EED19FF66E5004498E8 /* webp.c in Sources */,
 				CD490086141AB6EC00913D80 /* linit.c in Sources */,
@@ -16584,6 +16660,7 @@
 				079529DF1447907100143A72 /* jcapistd.c in Sources */,
 				079529E01447907100143A72 /* jcarith.c in Sources */,
 				079529E11447907100143A72 /* jccoefct.c in Sources */,
+				CD73D01C1BA3FFB800BB50C3 /* pack_unpack.c in Sources */,
 				079529E21447907100143A72 /* jccolor.c in Sources */,
 				079529E31447907100143A72 /* jcdctmgr.c in Sources */,
 				CD881FD619FF6736004498E8 /* quant_levels.c in Sources */,
@@ -16613,9 +16690,11 @@
 				079529F71447907100143A72 /* jddctmgr.c in Sources */,
 				079529F81447907100143A72 /* jdhuff.c in Sources */,
 				079529F91447907100143A72 /* jdinput.c in Sources */,
+				CD73D00C1BA3FFB800BB50C3 /* hashtable.c in Sources */,
 				CDD4912417FA7A8600525B77 /* smooth.c in Sources */,
 				CD881F6619FF671C004498E8 /* config.c in Sources */,
 				079529FA1447907100143A72 /* jdmainct.c in Sources */,
+				CD73D0081BA3FFB800BB50C3 /* error.c in Sources */,
 				079529FB1447907100143A72 /* jdmarker.c in Sources */,
 				079529FC1447907100143A72 /* jdmaster.c in Sources */,
 				CD881F3719FF670D004498E8 /* upsampling_sse2.c in Sources */,
@@ -16666,6 +16745,7 @@
 				CD04AEFA14725714009C20E5 /* trees.c in Sources */,
 				CD04AF0014725714009C20E5 /* uncompr.c in Sources */,
 				CD04AF0914725714009C20E5 /* zutil.c in Sources */,
+				CD73D0061BA3FFB800BB50C3 /* dump.c in Sources */,
 				66E345461614CA710021FC4B /* moai_whirlpool.c in Sources */,
 				CD881F2519FF670D004498E8 /* enc_sse2.c in Sources */,
 			);
@@ -16703,6 +16783,7 @@
 				89BE6B4E173975E500DFE837 /* pch.cpp in Sources */,
 				CD1845C01A62751200FCCCE0 /* MOAIEnvironment.cpp in Sources */,
 				89BE6CFC1739A42500DFE837 /* host.cpp in Sources */,
+				CD0BB63E1B0D22AC00399FCB /* MOAILuaUtil.cpp in Sources */,
 				89BE6D001739A42500DFE837 /* MOAIDataBuffer.cpp in Sources */,
 				89BE6D041739A42500DFE837 /* MOAIDataBufferStream.cpp in Sources */,
 				89BE6D081739A42500DFE837 /* MOAIDataIOTask.cpp in Sources */,
@@ -16752,6 +16833,7 @@
 				CDC5203618A17EB700BCC12F /* MOAIShaderProgram.cpp in Sources */,
 				CD4C3E58180A63BB00C02381 /* MOAILayer.cpp in Sources */,
 				CD4C3E77180A63BB00C02381 /* MOAIParticleScript.cpp in Sources */,
+				CDF941BC1B2FAEC4009D7787 /* MOAIIndexBuffer.cpp in Sources */,
 				CD4C3ECD180A63BB00C02381 /* MOAITextStyle.cpp in Sources */,
 				CD4C3EB2180A63BB00C02381 /* MOAIScriptDeck.cpp in Sources */,
 				CD4C3E2A180A63BB00C02381 /* MOAIFreeTypeFontReader.cpp in Sources */,
@@ -16779,6 +16861,7 @@
 				CD4C3E11180A63BB00C02381 /* MOAICoroutine.cpp in Sources */,
 				CD4C3EA3180A63BB00C02381 /* MOAIProfilerScope.cpp in Sources */,
 				CD4C3E93180A63BB00C02381 /* MOAIProfiler.cpp in Sources */,
+				CD3430FE1B30ABB3002BEBFA /* MOAIVertexArray.cpp in Sources */,
 				CD4C3EFC180A63BB00C02381 /* pch.cpp in Sources */,
 				CD4C3EFA180A63BB00C02381 /* MOAIWheelSensor.cpp in Sources */,
 				CD4C3DF2180A63BB00C02381 /* MOAIAnimCurveBase.cpp in Sources */,
@@ -16790,6 +16873,7 @@
 				CD4C3EDF180A63BB00C02381 /* MOAITransform2D.cpp in Sources */,
 				CD4C3ECB180A63BB00C02381 /* MOAITextDesigner.cpp in Sources */,
 				CD4C3E0B180A63BB00C02381 /* MOAICollisionShape.cpp in Sources */,
+				CD2BA79C1B2A20A80010C399 /* MOAIGfxDeviceBase.cpp in Sources */,
 				CD14013F1A0C5F660065AEE7 /* MOAIInputMgr.cpp in Sources */,
 				CD4C3E81180A63BB00C02381 /* MOAIPartitionCell.cpp in Sources */,
 				CDEFD576181ECB3E0058D772 /* MOAIVectorEllipse.cpp in Sources */,
@@ -16834,6 +16918,7 @@
 				CD4C3E97180A63BB00C02381 /* MOAIProfilerContext.cpp in Sources */,
 				CD4C3E32180A63BB00C02381 /* MOAIGfxQuadListDeck2D.cpp in Sources */,
 				CD4C3ED7180A63BB00C02381 /* MOAITileFlags.cpp in Sources */,
+				CDF941B61B2FAEB1009D7787 /* MOAIVertexBuffer.cpp in Sources */,
 				CD4C3E24180A63BB00C02381 /* MOAIFontReader.cpp in Sources */,
 				CD4C3E8D180A63BB00C02381 /* MOAIPathTerrainDeck.cpp in Sources */,
 				CD4C3E40180A63BB00C02381 /* MOAIGrid.cpp in Sources */,
@@ -16846,6 +16931,7 @@
 				CD4C3E7F180A63BB00C02381 /* MOAIPartition.cpp in Sources */,
 				CD4C3DF0180A63BB00C02381 /* MOAIAnimCurve.cpp in Sources */,
 				CD4C3E60180A63BB00C02381 /* MOAIMesh.cpp in Sources */,
+				CD34310B1B31175F002BEBFA /* MOAISingleTexture.cpp in Sources */,
 				CDB0CA30193E6D3B00C54DB7 /* MOAIGridFancy.cpp in Sources */,
 				CD4C3EE3180A63BB00C02381 /* MOAIVecPathGraph.cpp in Sources */,
 				CD73A600188F0AD200DFACDB /* MOAICollisionWorld.cpp in Sources */,
@@ -16858,6 +16944,7 @@
 				CDEFD572181ECB3E0058D772 /* MOAITextStyleParser.cpp in Sources */,
 				CDC5203E18A17EB700BCC12F /* MOAIVectorTesselator.cpp in Sources */,
 				CD4C3E9B180A63BB00C02381 /* MOAIProfilerEntryBase.cpp in Sources */,
+				CD3431051B30EDC6002BEBFA /* MOAIGfxDeviceStateCache.cpp in Sources */,
 				CD1AEB461A0F785C005512C8 /* MOAIGfxResourceMgr.cpp in Sources */,
 				CD4C3EA5180A63BB00C02381 /* MOAIProp.cpp in Sources */,
 				CD4C3E1B180A63BB00C02381 /* MOAIEaseDriver.cpp in Sources */,
@@ -16870,6 +16957,7 @@
 				CD4C3EAE180A63BB00C02381 /* MOAIRenderMgr.cpp in Sources */,
 				CD4C3E38180A63BB00C02381 /* MOAIDynamicGlyphCache.cpp in Sources */,
 				CD4C3E03180A63BB00C02381 /* MOAICamera.cpp in Sources */,
+				CD2BA7961B2A16B00010C399 /* MOAIGfxDeviceMtxCache.cpp in Sources */,
 				CD4C3EB8180A63BB00C02381 /* MOAIShader.cpp in Sources */,
 				CD4C3ED9180A63BB00C02381 /* MOAITimer.cpp in Sources */,
 				CD4C3EDD180A63BB00C02381 /* MOAITransform.cpp in Sources */,
@@ -16877,7 +16965,7 @@
 				CD4C3EAC180A63BB00C02381 /* MOAIRenderable.cpp in Sources */,
 				CD4C050F18500C18005B0520 /* MOAIVectorStyle.cpp in Sources */,
 				CD67B4601B264C9C004298CF /* MOAIDeckProxy.cpp in Sources */,
-				CD4C3ED3180A63BB00C02381 /* MOAITextureBase.cpp in Sources */,
+				CD2BA7A31B2A2D760010C399 /* MOAIGfxDeviceVertexWriter.cpp in Sources */,
 				CD4C3E05180A63BB00C02381 /* MOAICamera2D.cpp in Sources */,
 				CDE36E641A5F6C970095E863 /* MOAIImageFormatPng.cpp in Sources */,
 				CD4C3E28180A63BB00C02381 /* MOAIFrameBufferTexture.cpp in Sources */,
@@ -16920,6 +17008,7 @@
 				CD4C402B180A63C200C02381 /* MOAIBitmapFontReader.cpp in Sources */,
 				CD4C4033180A63C200C02381 /* MOAIButtonSensor.cpp in Sources */,
 				CD4C40C1180A63C200C02381 /* MOAIPinTransform.cpp in Sources */,
+				CDF941BD1B2FAEC4009D7787 /* MOAIIndexBuffer.cpp in Sources */,
 				CD4C4092180A63C200C02381 /* MOAIMesh.cpp in Sources */,
 				CD4C4070180A63C200C02381 /* MOAIGlyphSet.cpp in Sources */,
 				CD4C40F5180A63C200C02381 /* MOAISurfaceDeck2D.cpp in Sources */,
@@ -16947,6 +17036,7 @@
 				CD4C40F7180A63C200C02381 /* MOAISurfaceSampler2D.cpp in Sources */,
 				CD4C40AB180A63C200C02381 /* MOAIParticleState.cpp in Sources */,
 				CD4C412E180A63C200C02381 /* pch.cpp in Sources */,
+				CD3430FF1B30ABB3002BEBFA /* MOAIVertexArray.cpp in Sources */,
 				CD4C4026180A63C200C02381 /* MOAIAnimCurveQuat.cpp in Sources */,
 				CD4C40E6180A63C200C02381 /* MOAIScriptNode.cpp in Sources */,
 				CD4C40E0180A63C200C02381 /* MOAIRenderMgr.cpp in Sources */,
@@ -16958,6 +17048,7 @@
 				CD4C404F180A63C200C02381 /* MOAIEaseType.cpp in Sources */,
 				CD4C40F1180A63C200C02381 /* MOAIStaticGlyphCache.cpp in Sources */,
 				CD4C410D180A63C200C02381 /* MOAITouchSensor.cpp in Sources */,
+				CD2BA79D1B2A20A80010C399 /* MOAIGfxDeviceBase.cpp in Sources */,
 				CD4C4053180A63C200C02381 /* MOAIFont.cpp in Sources */,
 				CD4C4072180A63C200C02381 /* MOAIGrid.cpp in Sources */,
 				CDC5203B18A17EB700BCC12F /* MOAIShaderUniform.cpp in Sources */,
@@ -17002,6 +17093,7 @@
 				CD4C4088180A63C200C02381 /* MOAIKeyboardSensor.cpp in Sources */,
 				CDEFD57B181ECB3E0058D772 /* MOAIVectorRect.cpp in Sources */,
 				CD4C4074180A63C200C02381 /* MOAIGridDeck2D.cpp in Sources */,
+				CDF941B71B2FAEB1009D7787 /* MOAIVertexBuffer.cpp in Sources */,
 				CD4C4031180A63C200C02381 /* MOAIBoundsDeck.cpp in Sources */,
 				CD4C410B180A63C200C02381 /* MOAITimer.cpp in Sources */,
 				CD9140961A0D6022002CC335 /* MOAIActionTree.cpp in Sources */,
@@ -17014,6 +17106,7 @@
 				CD4C4056180A63C200C02381 /* MOAIFontReader.cpp in Sources */,
 				CD4C40D3180A63C200C02381 /* MOAIProfilerReportBox.cpp in Sources */,
 				CD4C408C180A63C200C02381 /* MOAILayer2D.cpp in Sources */,
+				CD34310C1B31175F002BEBFA /* MOAISingleTexture.cpp in Sources */,
 				CD73A5FD188F0AD200DFACDB /* MOAICollisionProp.cpp in Sources */,
 				CD4C40DE180A63C200C02381 /* MOAIRenderable.cpp in Sources */,
 				CD4C412A180A63C200C02381 /* MOAIViewport.cpp in Sources */,
@@ -17026,6 +17119,7 @@
 				CD781096187CAA2D008B9C0A /* MOAITextStyleCache.cpp in Sources */,
 				CD4C401A180A63C200C02381 /* host_particles.cpp in Sources */,
 				CD4C409D180A63C200C02381 /* MOAIParticleCallbackPlugin.cpp in Sources */,
+				CD3431061B30EDC6002BEBFA /* MOAIGfxDeviceStateCache.cpp in Sources */,
 				CD4C402F180A63C200C02381 /* MOAIBlocker.cpp in Sources */,
 				CD4C4035180A63C200C02381 /* MOAICamera.cpp in Sources */,
 				CD4C40B9180A63C200C02381 /* MOAIPartitionResultMgr.cpp in Sources */,
@@ -17038,13 +17132,14 @@
 				CD4C401C180A63C200C02381 /* MOAIAction.cpp in Sources */,
 				CD1AEB471A0F785C005512C8 /* MOAIGfxResourceMgr.cpp in Sources */,
 				CDB0CA31193E6D3B00C54DB7 /* MOAIGridFancy.cpp in Sources */,
+				CD2BA7971B2A16B00010C399 /* MOAIGfxDeviceMtxCache.cpp in Sources */,
 				CD4C4121180A63C200C02381 /* MOAIVectorShape.cpp in Sources */,
 				CD4C4078180A63C200C02381 /* MOAIGridSpace.cpp in Sources */,
 				CD4C403D180A63C200C02381 /* MOAICollisionShape.cpp in Sources */,
 				CD4C4039180A63C200C02381 /* MOAICameraAnchor2D.cpp in Sources */,
 				CD4C4098180A63C200C02381 /* MOAINode.cpp in Sources */,
-				CD4C4105180A63C200C02381 /* MOAITextureBase.cpp in Sources */,
 				CD67B4611B264C9C004298CF /* MOAIDeckProxy.cpp in Sources */,
+				CD2BA7A41B2A2D760010C399 /* MOAIGfxDeviceVertexWriter.cpp in Sources */,
 				CD1401401A0C5F660065AEE7 /* MOAIInputMgr.cpp in Sources */,
 				CD4C407E180A63C200C02381 /* MOAIImageTexture.cpp in Sources */,
 				CD4C40F3180A63C200C02381 /* MOAIStretchPatch2D.cpp in Sources */,
@@ -17649,18 +17744,9 @@
 				CD32B46619F9EDD10059D019 /* tinyxmlerror.cpp in Sources */,
 				CD32B46719F9EDD10059D019 /* tinyxmlparser.cpp in Sources */,
 				CD32B54619F9EEBA0059D019 /* SDL_sysloadso.c in Sources */,
-				CD32B46819F9EDD10059D019 /* dump.c in Sources */,
-				CD32B46919F9EDD10059D019 /* error.c in Sources */,
 				CD32B5CC19F9EF260059D019 /* SDL_stretch.c in Sources */,
-				CD32B46A19F9EDD10059D019 /* hashtable.c in Sources */,
 				CD32B5A919F9EF200059D019 /* SDL_x11opengles.c in Sources */,
-				CD32B46B19F9EDD10059D019 /* load.c in Sources */,
-				CD32B46C19F9EDD10059D019 /* memory.c in Sources */,
-				CD32B46D19F9EDD10059D019 /* pack_unpack.c in Sources */,
-				CD32B46E19F9EDD10059D019 /* strbuffer.c in Sources */,
-				CD32B46F19F9EDD10059D019 /* utf.c in Sources */,
 				CD32B54219F9EE610059D019 /* SDL_joystick.c in Sources */,
-				CD32B47019F9EDD10059D019 /* value.c in Sources */,
 				CD32B47119F9EDD10059D019 /* lapi.c in Sources */,
 				CD32B5C519F9EF260059D019 /* SDL_pixels.c in Sources */,
 				CD32B53119F9EE3F0059D019 /* SDL_mouse.c in Sources */,
@@ -19686,11 +19772,11 @@
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"../../3rdparty/facebook-ios-sdk-4.5.1",
 					../../3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework,
 					"../../3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
 					"../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
 					../../3rdparty/kontagent_ios_v1.5.6,
-					"../../3rdparty/facebook-ios-sdk-3.14.1",
 					"../../3rdparty/adcolony-2.2.4",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -19779,7 +19865,7 @@
 					"\"../../3rdparty/luasocket-2.0.2/src\"",
 					"\"../../3rdparty/luasql-2.2.0/src\"",
 					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
+					"\"../../3rdparty/jansson-2.7/src\"",
 					"\"../../3rdparty/jpeg-8c\"",
 					"\"../../3rdparty/untz/include\"",
 					"\"../../3rdparty/untz/src\"",
@@ -21014,11 +21100,11 @@
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"../../3rdparty/facebook-ios-sdk-4.5.1",
 					../../3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework,
 					"../../3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
 					"../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
 					../../3rdparty/kontagent_ios_v1.5.6,
-					"../../3rdparty/facebook-ios-sdk-3.14.1",
 					"../../3rdparty/adcolony-2.2.4",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -21106,7 +21192,7 @@
 					"\"../../3rdparty/luasocket-2.0.2/src\"",
 					"\"../../3rdparty/luasql-2.2.0/src\"",
 					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
+					"\"../../3rdparty/jansson-2.7/src\"",
 					"\"../../3rdparty/jpeg-8c\"",
 					"\"../../3rdparty/untz/include\"",
 					"\"../../3rdparty/untz/src\"",
@@ -25470,11 +25556,11 @@
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"../../3rdparty/facebook-ios-sdk-4.5.1",
 					../../3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework,
 					"../../3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
 					"../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
 					../../3rdparty/kontagent_ios_v1.5.6,
-					"../../3rdparty/facebook-ios-sdk-3.14.1",
 					"../../3rdparty/adcolony-2.2.4",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -25563,7 +25649,7 @@
 					"\"../../3rdparty/luasocket-2.0.2/src\"",
 					"\"../../3rdparty/luasql-2.2.0/src\"",
 					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
+					"\"../../3rdparty/jansson-2.7/src\"",
 					"\"../../3rdparty/jpeg-8c\"",
 					"\"../../3rdparty/untz/include\"",
 					"\"../../3rdparty/untz/src\"",
@@ -25899,11 +25985,11 @@
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"../../3rdparty/facebook-ios-sdk-4.5.1",
 					../../3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework,
 					"../../3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
 					"../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
 					../../3rdparty/kontagent_ios_v1.5.6,
-					"../../3rdparty/facebook-ios-sdk-3.14.1",
 					"../../3rdparty/adcolony-2.2.4",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -25992,7 +26078,7 @@
 					"\"../../3rdparty/luasocket-2.0.2/src\"",
 					"\"../../3rdparty/luasql-2.2.0/src\"",
 					"\"../../3rdparty/libogg-1.2.2/include\"",
-					"\"../../3rdparty/jansson-2.1/src\"",
+					"\"../../3rdparty/jansson-2.7/src\"",
 					"\"../../3rdparty/jpeg-8c\"",
 					"\"../../3rdparty/untz/include\"",
 					"\"../../3rdparty/untz/src\"",

@@ -7,7 +7,7 @@
 #include <moai-sim/MOAIStandardDeck.h>
 #include <moai-sim/MOAIQuadBrush.h>
 
-class MOAITextureBase;
+class MOAISingleTexture;
 
 //================================================================//
 // MOAIGfxQuadDeck2D
@@ -23,6 +23,7 @@ private:
 	ZLLeanArray < u32 >					mMaterialIDs;
 	
 	//----------------------------------------------------------------//
+	static int	_getRect				( lua_State* L );
 	static int	_reserve				( lua_State* L );
 	static int	_setMaterialID			( lua_State* L );
 	static int	_setQuad				( lua_State* L );

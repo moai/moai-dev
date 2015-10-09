@@ -24,7 +24,7 @@ int MOAIBox2DDistanceJoint::_getDampingRatio ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DDistanceJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -45,7 +45,7 @@ int MOAIBox2DDistanceJoint::_getFrequency ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DDistanceJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -67,7 +67,7 @@ int MOAIBox2DDistanceJoint::_getLength ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -89,7 +89,7 @@ int MOAIBox2DDistanceJoint::_setDampingRatio ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DDistanceJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -113,7 +113,7 @@ int MOAIBox2DDistanceJoint::_setFrequency ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DDistanceJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -138,7 +138,7 @@ int MOAIBox2DDistanceJoint::_setLength ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 
 	if ( !self->mJoint ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 

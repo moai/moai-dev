@@ -128,7 +128,7 @@ void MOAIScriptDeck::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D 
 		if ( this->mOnDraw.PushRef ( state )) {
 	
 			MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-			gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYZWC );
+			gfxDevice.BindBufferedDrawing ( MOAIVertexFormatMgr::XYZWC );
 			
 			gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 			gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
