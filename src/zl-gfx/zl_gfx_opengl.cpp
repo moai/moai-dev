@@ -1266,7 +1266,7 @@ u32 zglCreateBuffer () {
 void* zglMapBuffer ( u32 target ) {
 
 	ASSERT_OPERATION_DEPTH ();
-	#ifdef MOAI_OS_ANDROID
+	#if defined(MOAI_OS_ANDROID) || defined(MOAI_OS_HTML)
 		return 0;
 	#else
 		return glMapBuffer ( _remapEnum ( target ), GL_WRITE_ONLY );
@@ -1277,7 +1277,7 @@ void* zglMapBuffer ( u32 target ) {
 void zglUnmapBuffer ( u32 target ) {
 
 	ASSERT_OPERATION_DEPTH ();
-	#ifdef MOAI_OS_ANDROID
+	#if defined(MOAI_OS_ANDROID) || defined(MOAI_OS_HTML)
 		return;
 	#else
 		glUnmapBuffer ( _remapEnum ( target ));
@@ -1293,7 +1293,7 @@ void zglBindVertexArray ( u32 vertexArrayID ) {
 
 	ASSERT_OPERATION_DEPTH ();
 
-	#ifdef MOAI_OS_ANDROID
+	#if defined(MOAI_OS_ANDROID) || defined(MOAI_OS_HTML)
 		return;
 	#else
 		glBindVertexArray ( vertexArrayID );
@@ -1305,7 +1305,7 @@ u32 zglCreateVertexArray () {
 
 	ASSERT_OPERATION_DEPTH ();
 
-	#ifdef MOAI_OS_ANDROID
+	#if defined(MOAI_OS_ANDROID) || defined(MOAI_OS_HTML)
 		return 0;
 	#else
 		u32 vertexArrayID;
@@ -1319,7 +1319,7 @@ void zglDeleteVertexArray ( u32 vertexArrayID ) {
 
 	ASSERT_OPERATION_DEPTH ();
 
-	#ifdef MOAI_OS_ANDROID
+	#if defined(MOAI_OS_ANDROID) || defined(MOAI_OS_HTML)
 		return;
 	#else
 		glDeleteVertexArrays ( 1, &vertexArrayID );
