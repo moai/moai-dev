@@ -20,44 +20,7 @@ add_subdirectory(moai-android-tapjoy)
 add_subdirectory(moai-android-twitter)
 add_subdirectory(moai-android-vungle)
 
-set ( MOAI_ANDROID_INCLUDES 
-  "${MOAI_ROOT}/src/"
-  "${CMAKE_BINARY_DIR}/libmoai/config"
- )
-
-include_directories ( 
-  ${MOAI_ANDROID_INCLUDES} 
-)
-
-set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/moai-android/" )
-
-# Use all cpp files in directory as source code
-file ( GLOB MOAI_ANDROID_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/*.h" )
-
-#exclude moai.cpp, that is a host file
-list(REMOVE_ITEM MOAI_ANDROID_SRC "${CMAKE_CURRENT_SOURCE_DIR}/moai.cpp")
-
-add_library ( moai-android STATIC ${MOAI_ANDROID_SRC} )
-target_link_libraries( moai-android moai-sim moai-util moai-core )
-
-install(TARGETS moai-android EXPORT libmoai ARCHIVE DESTINATION lib)
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} DESTINATION include/moai-android
-          FILES_MATCHING PATTERN "*.h")
-
-
-#jni
-#moai.cpp is part of the host and contains our jni calls
-
-#java
-FILE(GLOB JAVA_FILES "${CMAKE_CURRENT_SOURCE_DIR}/*.java")
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} 
-  DESTINATION ../modules/moai/moai-android/com/ziplinegames/moai
-  PATTERN "*.java"
-  PATTERN "*.cpp" EXCLUDE
-  PATTERN "*.h" EXCLUDE
-  PATTERN "MoaiActivity.java" EXCLUDE
-  PATTERN "MoaiView.java" EXCLUDE
-)
+android_module("moai-android" "" "core")
 
 #dump our modules for the host project
 
