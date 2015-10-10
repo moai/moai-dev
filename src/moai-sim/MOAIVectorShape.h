@@ -32,7 +32,7 @@ public:
 	GET_SET ( MOAIVectorStyle&, Style, mStyle );
 	
 	//----------------------------------------------------------------//
-	virtual int			AddFillContours				( SafeTesselator& tess );
+	virtual int			AddFillContours				( SafeTesselator& tess ); // TODO: should add status codes to make the meaning ot these return values clear
 	virtual int			AddStrokeContours			( SafeTesselator& tess, bool inside, bool outside );
 	bool				CanGroup					();
 	virtual bool		GroupShapes					( MOAIVectorShape** shapes, u32 total );
