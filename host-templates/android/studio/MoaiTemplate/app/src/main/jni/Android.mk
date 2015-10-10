@@ -42,6 +42,7 @@ LOCAL_C_INCLUDES += $(MOAI_LIB_ROOT)/include/lua
 LOCAL_C_INCLUDES += $(MOAI_LIB_ROOT)/include/expat
 LOCAL_C_INCLUDES += $(MOAI_LIB_ROOT)/include/tinyxml
 LOCAL_C_INCLUDES += $(MOAI_LIB_ROOT)/include/freetype
+LOCAL_C_INCLUDES += $(MOAI_LIB_ROOT)/include/jansson
 
 LOCAL_CPPFLAGS := -DAKU_WITH_ANDROID=1 $(MOAI_AKU_FLAGS)
 
