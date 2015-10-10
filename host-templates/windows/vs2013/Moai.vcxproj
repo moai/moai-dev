@@ -51,7 +51,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;AKU_WITH_SDL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;.\lib\include;.\lib\include\SDL2</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
@@ -74,7 +74,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;AKU_WITH_SDL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;.\lib\include;.\lib\include\SDL2</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -90,16 +90,18 @@
   <ItemGroup>
     <ClCompile Include="host-modules\aku_modules.cpp" />
     <ClCompile Include="host-modules\aku_modules_util.cpp" />
-    <ClCompile Include="host-sdl\Joystick.cpp" />
     <ClCompile Include="host-sdl\SDLHost.cpp" />
     <ClCompile Include="host-sdl\SDLHostMain.cpp" />
+    <ClCompile Include="host-sdl\SDLJoystick.cpp" />
+    <ClCompile Include="host-sdl\SDLKeyCodeMapping.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="host-modules\aku_modules.h" />
     <ClInclude Include="host-modules\aku_modules_config.h" />
     <ClInclude Include="host-modules\aku_modules_util.h" />
-    <ClInclude Include="host-sdl\Joystick.h" />
     <ClInclude Include="host-sdl\SDLHost.h" />
+    <ClInclude Include="host-sdl\SDLJoystick.h" />
+    <ClInclude Include="host-sdl\SDLKeyCodeMapping.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
