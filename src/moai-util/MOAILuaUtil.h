@@ -3,7 +3,7 @@
 
 #ifndef MOAI_WITH_LUAJIT //can't convert luajit bytecode
 #ifndef	MOAILUAUTIL_H
-#define	MOAIJSONPARSER_H
+#define	MOAILUAUTIL_H
 
 //================================================================//
 // MOAILuaHeader
