@@ -33,7 +33,7 @@ cmake -G "%generator%" ^
 -DCMAKE_INSTALL_PREFIX=%libprefix%\Release ^
 %rootpath%\cmake\hosts\host-win-sdl || exit /b 1
 
-cmake --build . --target INSTALL --config Release || exit /b 1
+cmake --build . --target INSTALL --config Release -- /verbosity:minimal || exit /b 1
 
 erase  libmoai\third-party\luajit\luajit\src\lua51.lib
 

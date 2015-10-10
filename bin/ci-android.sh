@@ -22,6 +22,8 @@ tar -xf ndk.tgz
 export ANDROID_NDK=`pwd`/android-ndk-r9c
 popd
 fi
+#no errors from here please
+set -e
 
 pushd `dirname $0`
 bash build-android.sh

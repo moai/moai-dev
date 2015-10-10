@@ -13,7 +13,7 @@ Thumbs.db
 
 /src/config
 
-build/
+/build/
 xcuserdata/
 DerivedData/
 *.pbxuser
@@ -21,13 +21,7 @@ DerivedData/
 
 # Artifacts when building with CMake
 flascc/build
-CMakeFiles
-CMakeCache.txt
-cmake_install.cmake
-*.o
-*.a
-src/moai/moai
-release
+/src/moai/moai
 tmp
 
 # Produced by test runner
@@ -37,5 +31,7 @@ cmake/projects/
 
 bin/api-reference-parser/vendor
 docs/api-reference
-moai-sdk/
+/moai-sdk/
 /lib/
+/bin/env-local.bat
+/util/moai
