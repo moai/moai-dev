@@ -27,6 +27,8 @@ private:
 	u32						mDefaultTimeout;
 	float					mExpectedLength;
 	float					mDataReceived;
+
+	bool					mCanceled;
 	
 	// This buffer holds data being sent *to* the server
 	ZLLeanArray < u8 >		mBody;
@@ -58,8 +60,10 @@ private:
 public:
 	
 	DECL_LUA_FACTORY ( MOAIHttpTaskNSURL )
+	GET ( bool, Canceled, mCanceled )
 	
 	//----------------------------------------------------------------//
+	void				Cancel					();
 	void				DidFinishLoading		();
 	void				DidReceiveData			( const void* data, int size );
 	void				DidReceiveResponse		( int responseCode, NSDictionary* headers, int expectedLength );
@@ -75,6 +79,7 @@ public:
 	void				SetFailOnError			( bool enable );
 	void				SetCookieSrc			( const char *file );
 	void				SetCookieDst			( const char *file );
+	void				SetSSLOptions			( bool verifyPeer, bool verifyHost, cc8* caBundlePath );
 	void				SetUrl					( cc8* url );
 	void				SetUserAgent			( cc8* useragent );
 	void				SetVerb					( int verb );
