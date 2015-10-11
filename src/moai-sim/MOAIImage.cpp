@@ -267,6 +267,33 @@ int MOAIImage::_fillCircle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	fillEllipse
+	@text	Draw a filled ellipse.
+ 
+	@in		number x
+	@in		number y
+	@in		number radiusX
+	@in		number radiusY
+	@opt	number r			Default value is 0.
+	@opt	number g			Default value is 0.
+	@opt	number b			Default value is 0.
+	@opt	number a			Default value is 0.
+	@out	nil
+*/
+int MOAIImage::_fillEllipse ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "UNNNN" )
+	
+	int x0	= state.GetValue < int >( 2, 0 );
+	int y0	= state.GetValue < int >( 3, 0 );
+	int rX	= state.GetValue < int >( 4, 0 );
+	int rY	= state.GetValue < int >( 5, 0 );
+	u32 color	= state.GetColor32 ( 6, 0.0f, 0.0f, 0.0f, 0.0f );
+	
+	self->FillEllipse ( x0, y0, rX, rY, color );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	fillRect
 	@text	Fill a rectangle in the image with a solid color.
 
@@ -1740,6 +1767,62 @@ void MOAIImage::FillCircle ( float centerX, float centerY, float xRad, u32 color
 }
 
 //----------------------------------------------------------------//
+void MOAIImage::FillEllipse ( int centerX, int centerY, int xRad, int yRad, u32 color ) {
+	
+	int x0 = centerX;
+	int y0 = centerY;
+	s64 err = 0;
+	s64 aa2 = 2 * xRad * xRad;
+	s64 bb2 = 2 * yRad * yRad;
+	s64 x = xRad;
+	s64 y = 0;
+	s64 stopX = bb2 * xRad;
+	s64 stopY = 0;
+	s64 dx = yRad * yRad * ( 1 - 2 * xRad );
+	s64 dy = xRad * xRad;
+	
+	while ( stopX >= stopY ) {
+		this->DrawLine ( x0 - x, y0 + y, x0 + x, y0 + y, color );
+		this->DrawLine ( x0 - x, y0 - y, x0 + x, y0 - y, color );
+		
+		y++;
+		stopY += aa2;
+		err += dy;
+		dy += aa2;
+		
+		if ( 2 * err + dx > 0 ) {
+			x--;
+			stopX -= bb2;
+			err += dx;
+			dx += bb2;
+		}
+	}
+	
+	x = 0;
+	y = yRad;
+	dx = yRad * yRad;
+	dy = xRad * xRad * ( 1 - 2 * yRad );
+	err = 0;
+	stopX = 0;
+	stopY = aa2 * yRad;
+	while ( stopX <= stopY ) {
+		
+		this->DrawLine ( x0 - x, y0 + y, x0 + x, y0 + y, color );
+		this->DrawLine ( x0 - x, y0 - y, x0 + x, y0 - y, color );
+		x++;
+		stopX += bb2;
+		err += dx;
+		dx += bb2;
+		if ( 2 * err + dy > 0 ) {
+			y--;
+			stopY -= aa2;
+			err += dy;
+			dy += aa2;
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIImage::FillRect ( ZLIntRect rect, u32 color ) {
 
 	if ( !color ) {
@@ -2520,6 +2603,7 @@ void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "copyRect",					_copyRect },
 		{ "desaturate",					_desaturate },
 		{ "fillCircle",					_fillCircle },
+		{ "fillEllipse",				_fillEllipse },
 		{ "fillRect",					_fillRect },
 		{ "gammaCorrection",			_gammaCorrection },
 		{ "generateOutlineFromSDF",		_generateOutlineFromSDF },

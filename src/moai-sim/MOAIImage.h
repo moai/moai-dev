@@ -87,6 +87,7 @@ private:
 	static int		_copyRect					( lua_State* L );
 	static int		_desaturate					( lua_State* L );
 	static int		_fillCircle					( lua_State* L );
+	static int		_fillEllipse				( lua_State* L );
 	static int		_fillRect					( lua_State* L );
 	static int		_gammaCorrection			( lua_State* L );
 	static int		_generateOutlineFromSDF		( lua_State* L );
@@ -151,6 +152,7 @@ public:
 	void					Desaturate					( const MOAIImage& image, float rY, float gY, float bY, float K );
 	void					DrawLine					( int p1x, int p1y, int p2x, int p2y, u32 color );
 	void					FillCircle					( float x, float y, float xRad, u32 color );
+	void					FillEllipse					( int x, int y, int xRad, int yRad, u32 color );
 	void					FillRect					( ZLIntRect rect, u32 color );
 	void					GammaCorrection				( const MOAIImage& image, float gamma );
 	void					GenerateOutlineFromSDF		( ZLIntRect rect, float distMin, float distMax, float r, float g, float b, float a );
