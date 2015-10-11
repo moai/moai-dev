@@ -1,26 +1,18 @@
 @echo off
 
-rem ---- SETTINGS -------
-rem * edit or remove these to suit your setup
-
-set CMAKE_PATH=K:\dev\mobile\moaiforge\cmake\bin
-set NDK_PATH=K:\dev\mobile\moaiforge\android-ndk-r9d
-set MINGW_PATH=K:\dev\mobile\moaiforge\mingw64\bin
-set EMSDK_PATH=K:\dev\mobile\moaiforge\emsdk-1.25
-set JAVA_HOME=C:\Program Files\Java\jdk1.7.0_25
-
-rem --OPTIONAL for docs--
-
-set DOXYGEN_PATH=K:\dev\mobile\doxygen
-set DOT_PATH=K:\dev\mobile\graphviz\bin
-
-rem ----------------------
-
+if exist "%~dp0%\env-local.bat" (
+  call "%~dp0%\env-local.bat"
+  ) else (
+  echo "Couldn't find local settings file env-local.bat"
+  echo "Please copy env-local.bat.template to env-local.bat and rerun."
+  exit /b 1
+)
 
 
 rem ---- cmake ------
 echo "Setting CMAKE bin path..."
 
+if "%CMAKE_PATH%"=="" goto :vstudio
 set PATH=%PATH%;%CMAKE_PATH%
 
 

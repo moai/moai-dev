@@ -47,7 +47,12 @@ cmake -G "Xcode" \
 -DCMAKE_INSTALL_PREFIX=$libprefix \
 $moai_root/cmake/hosts/host-osx-sdl
 
-cmake --build . --target install --config Release
+if hash xcpretty 2>/dev/null; then
+  set -o pipefail && cmake --build . --target install --config Release | xcpretty -c
+else
+  cmake --build . --target install --config Release
+fi
+
 
 if [ ! -e "$moai_root/util/moai" ]; then
    cp $libprefix/bin/moai $moai_root/util/moai

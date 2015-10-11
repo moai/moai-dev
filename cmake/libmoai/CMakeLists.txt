@@ -23,9 +23,9 @@ if (MOAI_TEST)
    add_subdirectory ( moai-test)
 endif (MOAI_TEST)
 
-if (MOAI_PLUGINS)
-  add_subdirectory ( moai-plugins )
-endif (MOAI_PLUGINS)
+
+add_subdirectory ( moai-plugins )
+
 
 #platform specific libs
 if (BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS)
