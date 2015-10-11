@@ -432,6 +432,10 @@ bool MOAIGraphicsProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 				//this->mShader.Set ( *this, attrOp.ApplyNoAdd < MOAIShader* >( this->mShader, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_VARIANT ));
 				return true;
 				
+			case ATTR_SCISSOR_RECT:
+				this->mScissorRect.Set ( *this, attrOp.ApplyNoAdd < MOAIScissorRect* >( this->mScissorRect, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_VARIANT ));
+				return true;
+
 			case ATTR_BLEND_MODE:
 				attrOp.ApplyNoAdd < MOAIBlendMode >( this->mBlendMode, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_VARIANT );
 				return true;
@@ -813,7 +817,7 @@ void MOAIGraphicsProp::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "ATTR_SHADER",					MOAIGraphicsPropAttr::Pack ( ATTR_SHADER ));
 	state.SetField ( -1, "ATTR_BLEND_MODE",				MOAIGraphicsPropAttr::Pack ( ATTR_BLEND_MODE ));
-	state.SetField ( -1, "ATTR_VISIBLE",				MOAIGraphicsPropAttr::Pack ( ATTR_VISIBLE ));
+	state.SetField ( -1, "ATTR_SCISSOR_RECT",			MOAIGraphicsPropAttr::Pack ( ATTR_SCISSOR_RECT ));
 
 	state.SetField ( -1, "ATTR_LOCAL_VISIBLE",			MOAIGraphicsPropAttr::Pack ( ATTR_LOCAL_VISIBLE ));
 	state.SetField ( -1, "ATTR_VISIBLE",				MOAIGraphicsPropAttr::Pack ( ATTR_VISIBLE ));
