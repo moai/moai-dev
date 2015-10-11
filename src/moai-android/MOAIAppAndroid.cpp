@@ -106,6 +106,40 @@ int MOAIAppAndroid::_getStatusBarHeight ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/** @lua    getSystemUptime
+    @text   Returns device uptime in seconds. 
+
+    @out    number uptime
+*/
+int MOAIAppAndroid::_getSystemUptime ( lua_State* L ) {
+
+    MOAILuaState state ( L );
+
+    JNI_GET_ENV ( jvm, env );
+
+    long outVal = 0;
+    jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
+    if ( moai == NULL ) {
+
+        ZLLogF ( ZLLog::CONSOLE, "MOAIAppAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
+    }
+    else {
+
+        jmethodID getSystemUptime = env->GetStaticMethodID ( moai, "getSystemUptime", "()J" );
+        if ( getSystemUptime == NULL ) {
+
+            ZLLogF ( ZLLog::CONSOLE, "MOAIAppAndroid: Unable to find static java method %s", "getSystemUptime" );
+        } else {
+
+            outVal = env->CallStaticLongMethod ( moai, getSystemUptime );
+        }
+    }
+
+    lua_pushnumber ( L, outVal );
+    return 1;
+}
+
+//----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIAppAndroid::_openURL ( lua_State* L ) {
 
@@ -310,7 +344,8 @@ void MOAIAppAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getListener",			&MOAIGlobalEventSource::_getListener < MOAIAppAndroid > },
 		{ "getUTCTime",				_getUTCTime },
 		{ "getStatusBarHeight",		_getStatusBarHeight },
-		{ "sendMail",				_sendMail },		
+        { "getSystemUptime",        _getSystemUptime },
+		{ "sendMail",				_sendMail },
 		{ "openURL",				_openURL },
 		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAIAppAndroid > },
 		{ "share",					_share },

@@ -624,6 +624,13 @@ public class Moai {
 	}
 
 	//----------------------------------------------------------------//
+	public static long getSystemUptime () {
+
+		long time = SystemClock.elapsedRealtime () / 1000;
+		return time;
+	}
+
+	//----------------------------------------------------------------//
 	public static long getUTCTime () {
 
 		Calendar cal = Calendar.getInstance ( TimeZone.getTimeZone ( "UTC" ));
