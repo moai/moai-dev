@@ -87,6 +87,7 @@ private:
 	static int			_start					( lua_State* L );
 	static int			_stop					( lua_State* L );
 	static int			_throttle				( lua_State* L );
+	static int			_update					( lua_State* L );
 
 	//----------------------------------------------------------------//
 	virtual void		OnLostChild				( MOAIAction* child );

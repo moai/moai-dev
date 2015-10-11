@@ -304,6 +304,23 @@ int MOAIAction::_throttle ( lua_State* L ) {
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/**	@name	update
+	@text	Update action manually. This call will not update child actions.
+	
+	@in		MOAIAction  self
+	@opt	number      step     Default value is sim step
+	@out	MOAIAction  self
+*/
+int MOAIAction::_update ( lua_State* L ) {
+    MOAI_LUA_SETUP ( MOAIAction, "U" )
+    
+    float step = state.GetValue < float >( 2, MOAISim::Get ().GetStep ());
+    self->OnUpdate ( step );
+    
+    return 0;
+}
+
 //================================================================//
 // MOAIAction
 //================================================================//
@@ -515,6 +532,7 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "start",					_start },
 		{ "stop",					_stop },
 		{ "throttle",				_throttle },
+		{ "update",					_update },
 		{ NULL, NULL }
 	};
 	
