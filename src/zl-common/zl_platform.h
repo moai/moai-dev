@@ -54,7 +54,9 @@
 
 
 #ifdef MOAI_OS_WINDOWS
+
 	#ifdef MOAI_COMPILER_MSVC
+		#pragma warning ( disable : 4250 )
 		#pragma warning ( disable : 4290 )
 		#pragma warning ( disable : 4995 )
 		#pragma warning ( disable : 4996 )
