@@ -52,7 +52,31 @@ public:
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	applyColor
+	@text	Apply a color to every vertex in a mesh. A MOAIRegion and/or
+			a blending mode may optionally be provided.
+			
+			Blending mode is one of COLOR_ADD, COLOR_MULTIPLY, COLOR_OVERWRITE,
+			COLOR_SUBTRACT.
+
+	@overload
+	
+		@in		MOAIVertexFormat format
+		@in		MOAIStream stream
+		@in		ZLColorVec color
+		@opt	number blendMode
+		@out 	nil
+	
+	@overload
+	
+		@in		MOAIVertexFormat format
+		@in		MOAIStream stream
+		@in		ZLColorVec color
+		@in		MOAIRegion region
+		@opt	number pad
+		@opt	number blendMode
+		@out 	nil
+*/
 int MOAIGeometryWriter::_applyColor ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 	
@@ -81,7 +105,31 @@ int MOAIGeometryWriter::_applyColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	applyLightFromImage
+	@text	Apply vertex colors from an image as a sperical map indexed by
+			vertex normals. Middle of image is the equator, with the poles at
+			image top and bottom. (Resolution diminishes as sample approaches
+			poles.)
+			
+			An optional linear alpha gradient may be also be applied.
+			
+			Blending mode is one of COLOR_ADD, COLOR_MULTIPLY, COLOR_OVERWRITE,
+			COLOR_SUBTRACT.
+	
+	@in		MOAIVertexFormat format
+	@in		MOAIStream stream
+	@in		MOAIImage image
+	@opt	number blendMode
+	@opt	number a0
+	@opt	number a1
+	@opt	number x0
+	@opt	number y0
+	@opt	number z0
+	@opt	number x1
+	@opt	number y1
+	@opt	number z1
+	@out 	nil
+*/
 int MOAIGeometryWriter::_applyLightFromImage ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 	
@@ -105,7 +153,33 @@ int MOAIGeometryWriter::_applyLightFromImage ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	applyLinearGradient
+	@text	Apply a linear color gradient.
+			
+			Blending mode is one of COLOR_ADD, COLOR_MULTIPLY, COLOR_OVERWRITE,
+			COLOR_SUBTRACT.
+	
+	@in		MOAIVertexFormat format
+	@in		MOAIStream stream
+	@opt	number x0
+	@opt	number y0
+	@opt	number z0
+	@opt	number x1
+	@opt	number y1
+	@opt	number z1
+	@opt	number r0
+	@opt	number g0
+	@opt	number b0
+	@opt	number a0
+	@opt	number r1
+	@opt	number g1
+	@opt	number b1
+	@opt	number a1
+	@opt	boolean cap0
+	@opt	boolean cap1
+	@opt	number blendMode
+	@out 	nil
+*/
 int MOAIGeometryWriter::_applyLinearGradient ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 	

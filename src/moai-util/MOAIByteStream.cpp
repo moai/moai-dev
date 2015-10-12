@@ -9,7 +9,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	close
+	@text	Release the byte stream's internal buffer.
+
+	@in		MOAIByteStream self
+	@out	nil
+*/
 int MOAIByteStream::_close ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIByteStream, "U" );
 	
@@ -18,7 +23,21 @@ int MOAIByteStream::_close ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	open
+	@text	Allocate and initialize the byte stream's internal buffer.
+
+	@overload
+
+		@in		MOAIByteStream self
+		@in		string buffer			Initialize the stream's buffer as a copy of provided string.
+		@out	nil
+	
+	@overload
+	
+		@in		MOAIByteStream self
+		@in		number size				Initialize the stream with a buffer of the given size. Buffer will be filled with zero.
+		@out	nil
+*/
 int MOAIByteStream::_open ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIByteStream, "U" );
 	
@@ -70,6 +89,7 @@ MOAIByteStream::~MOAIByteStream () {
 void MOAIByteStream::Open ( size_t size ) {
 
 	this->Close ();
+	
 	if ( size ) {
 		this->mData = calloc ( size, 1 );
 		this->SetBuffer ( this->mData, size );
