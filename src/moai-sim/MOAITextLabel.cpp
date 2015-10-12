@@ -205,6 +205,21 @@ int MOAITextLabel::_getTextBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	hasOverrun
+    @text	Returns whether there are additional glyphs that are not visible on the screen (either on next page or just thrown away).
+ 
+    @in		MOAITextBox self
+    @out	boolean overrun				If there is additional text below the cursor that is not visible on the screen due to clipping (or in the next page).
+ */
+int MOAITextLabel::_hasOverrun ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
+
+	bool overrun = self->mOverrun;
+	state.Push ( overrun );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	more
 	@text	Returns whether there are additional pages of text below the cursor position that are not visible on the screen.
 
@@ -867,6 +882,7 @@ MOAITextLabel::MOAITextLabel () :
 	mCurrentPageIdx ( 0 ),
 	mNextPageIdx ( 0 ),
 	mMore ( false ),
+	mOverrun ( false ),
 	mAutoFlip ( false ) {
 	
 	RTTI_BEGIN
@@ -989,7 +1005,7 @@ void MOAITextLabel::RefreshLayout () {
 	this->mStyleMap.BuildStyleMap ( this->mStyleCache, this->mText.c_str ());
 
 	ZLVec2D offset ( 0.0f, 0.0f );
-	this->mDesigner.Layout ( this->mLayout, this->mStyleCache, this->mStyleMap, this->mText.c_str (), this->mCurrentPageIdx, offset, &this->mMore, &this->mNextPageIdx );
+	this->mDesigner.Layout ( this->mLayout, this->mStyleCache, this->mStyleMap, this->mText.c_str (), this->mCurrentPageIdx, offset, &this->mMore, &this->mNextPageIdx, &this->mOverrun );
 }
 
 //----------------------------------------------------------------//
@@ -1030,6 +1046,7 @@ void MOAITextLabel::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getStyle",				_getStyle },
 		{ "getText",				_getText },
 		{ "getTextBounds",			_getTextBounds },
+		{ "hasOverrun",				_hasOverrun },
 		{ "more",					_more },
 		{ "nextPage",				_nextPage },
 		{ "reserveCurves",			_reserveCurves },
@@ -1061,6 +1078,7 @@ void MOAITextLabel::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAITextLabel::ResetLayout () {
 
 	this->mMore = false;
+	this->mOverrun = false;
 	this->mLayout.Reset ();
 }
 
@@ -1088,6 +1106,7 @@ void MOAITextLabel::SetText ( cc8* text ) {
 
 	this->mText = text;
 	this->mMore = ( text && text [ 0 ]);
+	this->mOverrun = this->mMore;
 	
 	this->mReveal = REVEAL_ALL;
 	this->mSpool = 0.0f;
