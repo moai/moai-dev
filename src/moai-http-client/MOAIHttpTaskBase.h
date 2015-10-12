@@ -44,6 +44,7 @@ protected:
 	MOAILuaStrongRef	mLatch;
 
 	//----------------------------------------------------------------//
+	static int		_cancel				( lua_State* L );
 	static int		_getProgress		( lua_State* L );
 	static int		_getResponseCode	( lua_State* L );
 	static int		_getResponseHeader	( lua_State* L );
@@ -62,6 +63,7 @@ protected:
 	static int		_setFailOnError		( lua_State* L );
 	static int		_setFollowRedirects	( lua_State* L );
 	static int		_setHeader			( lua_State* L );
+	static int		_setSSLOptions		( lua_State* L );
 	static int		_setStream			( lua_State* L );
 	static int		_setTimeout			( lua_State* L );
 	static int		_setUrl				( lua_State* L );
@@ -86,6 +88,7 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
+	virtual void		Cancel					() = 0;
 	virtual void		GetData					( void* buffer, u32 size );
 	void				HttpGet					( cc8* url, cc8* useragent, bool verbose, bool blocking );
 	void				HttpPost				( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose, bool blocking );
@@ -106,6 +109,7 @@ public:
 	virtual void		SetFailOnError			( bool enable ) = 0;
 	void				SetFollowRedirects		( u32 value );
 	void				SetHeader				( cc8* key, cc8* value );
+	virtual void		SetSSLOptions			( bool verifyPeer, bool verifyHost, cc8* caBundlePath ) = 0;
 	virtual void		SetUrl					( cc8* url ) = 0;
 	virtual void		SetUserAgent			( cc8* useragent ) = 0;
 	virtual void		SetVerb					( int verb ) = 0;

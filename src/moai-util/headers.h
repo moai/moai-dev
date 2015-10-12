@@ -13,6 +13,7 @@
 #include <moai-util/MOAIFileStream.h>
 #include <moai-util/MOAIFileSystem.h>
 #include <moai-util/MOAIHashWriter.h>
+#include <moai-util/MOAIImageLoadTask.h>
 #include <moai-util/MOAIJsonParser.h>
 #include <moai-util/MOAILuaUtil.h>
 #include <moai-util/MOAIMath.h>

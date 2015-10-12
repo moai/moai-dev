@@ -58,11 +58,13 @@ private:
 	static int		_getInterfaceOrientation		( lua_State* L );
 	static int		_getIPAddress					( lua_State* L );
 	static int		_getResourcePathInBundle		( lua_State* L );
+	static int		_getSystemUptime				( lua_State* L );
 	static int		_getUTCTime						( lua_State* L );
 	static int		_openURL						( lua_State* L );
 	static int		_openURLWithParams				( lua_State* L );
 	static int		_sendMail						( lua_State* L );
 	static int		_takeCamera						( lua_State* L );
+	static int		_vibrate						( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void			RegisterNotificationListeners	();

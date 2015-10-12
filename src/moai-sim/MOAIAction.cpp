@@ -145,6 +145,22 @@ int MOAIAction::_detach ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAction::_getChildren ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAIAction, "U" )
+	
+	u32 total = 0;
+	ChildIt childIt = self->mChildren.Head ();
+	for ( ; childIt; childIt = childIt->Next ()) {
+		lua_checkstack ( L, 2 );
+		total++;
+		childIt->Data ()->PushLuaUserdata ( state );
+	}
+	
+	return total;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	isActive
 	@text	Checks to see if an action is currently in the action tree.
 
@@ -286,6 +302,23 @@ int MOAIAction::_throttle ( lua_State* L ) {
 	state.CopyToTop ( 1 );
 	
 	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	update
+	@text	Update action manually. This call will not update child actions.
+	
+	@in		MOAIAction  self
+	@opt	number      step     Default value is sim step
+	@out	MOAIAction  self
+*/
+int MOAIAction::_update ( lua_State* L ) {
+    MOAI_LUA_SETUP ( MOAIAction, "U" )
+    
+    float step = state.GetValue < float >( 2, MOAISim::Get ().GetStep ());
+    self->OnUpdate ( step );
+    
+    return 0;
 }
 
 //================================================================//
@@ -489,6 +522,7 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "clear",					_clear },
 		{ "defer",					_defer },
 		{ "detach",					_detach },
+		{ "getChildren",			_getChildren },
 		{ "isActive",				_isActive },
 		{ "isBusy",					_isBusy },
 		{ "isDone",					_isDone },
@@ -498,6 +532,7 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "start",					_start },
 		{ "stop",					_stop },
 		{ "throttle",				_throttle },
+		{ "update",					_update },
 		{ NULL, NULL }
 	};
 	

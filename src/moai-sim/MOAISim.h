@@ -83,6 +83,11 @@ private:
 	float			mFrameRate;
 	float			mFrameRateBuffer [ FPS_BUFFER_SIZE ];
 	u32				mFrameRateIdx;
+
+	double			mNodeMgrTime;
+	double			mActionTreeTime;
+	double			mLastNodeMgrTime;
+	double			mLastActionTreeTime;
 	
 	u32				mLoopFlags;
 	double			mBoostThreshold;
@@ -101,6 +106,9 @@ private:
 	ShowCursorFunc				mShowCursorFunc;
 	HideCursorFunc				mHideCursorFunc;
 	
+	ZLLeanArray < double >		mSmoothBuffer; // used for sim step smoothing
+	u32							mSmoothIdx;
+
 	u32					mGCActive;
 	u32					mGCStep;
 	
@@ -123,6 +131,7 @@ private:
 	static int		_getLoopFlags				( lua_State* L );
 	static int		_getLuaObjectCount			( lua_State* L );
 	static int		_getMemoryUsage				( lua_State* L );
+	static int		_getMemoryUsagePlain		( lua_State* L );
 	static int		_getNetworkStatus			( lua_State* L );
 	static int		_getPerformance				( lua_State* L );
 	static int		_getStep					( lua_State* L );
@@ -139,6 +148,7 @@ private:
 	static int		_setLuaAllocLogEnabled		( lua_State* L );
 	static int		_setStep					( lua_State* L );
 	static int		_setStepMultiplier			( lua_State* L );
+	static int		_setStepSmoothing			( lua_State* L );
 	static int		_setTimerError				( lua_State* L );
 	static int		_setTraceback				( lua_State* L );
 	static int		_setTextInputRect			( lua_State* L );
@@ -156,6 +166,8 @@ private:
 	//----------------------------------------------------------------//
 	double			MeasureFrameRate			();
 	void			OnGlobalsFinalize			();
+	void			ResetPerformanceTimers		();
+	double			SmoothStep					( double step );
 	double			StepSim						( double step, u32 multiplier );
 
 public:

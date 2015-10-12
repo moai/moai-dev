@@ -80,6 +80,7 @@ private:
 	//----------------------------------------------------------------//
 	static int		_average					( lua_State* L );
 	static int		_bleedRect					( lua_State* L );
+	static int		_blur						( lua_State* L );
 	static int		_compare					( lua_State* L );
 	static int		_convert					( lua_State* L );
 	static int		_copy						( lua_State* L );
@@ -87,6 +88,7 @@ private:
 	static int		_copyRect					( lua_State* L );
 	static int		_desaturate					( lua_State* L );
 	static int		_fillCircle					( lua_State* L );
+	static int		_fillEllipse				( lua_State* L );
 	static int		_fillRect					( lua_State* L );
 	static int		_gammaCorrection			( lua_State* L );
 	static int		_generateOutlineFromSDF		( lua_State* L );
@@ -99,6 +101,7 @@ private:
 	static int		_getSize					( lua_State* L );
 	static int		_init						( lua_State* L );
 	static int		_load						( lua_State* L );
+	static int		_loadAsync					( lua_State* L );
 	static int		_loadFromBuffer				( lua_State* L );
 	static int		_mix						( lua_State* L );
 	static int		_padToPow2					( lua_State* L );
@@ -140,6 +143,7 @@ public:
 	ZLColorVec				Average						() const;
 	void					BleedRect					( ZLIntRect rect );
 	void					Blit						( const MOAIImage& image, int srcX, int srcY, int destX, int destY, int width, int height );
+	void					Blur						();
 	void					Clear						();
 	void					ClearBitmap					();
 	void					ClearRect					( ZLIntRect rect );
@@ -151,6 +155,7 @@ public:
 	void					Desaturate					( const MOAIImage& image, float rY, float gY, float bY, float K );
 	void					DrawLine					( int p1x, int p1y, int p2x, int p2y, u32 color );
 	void					FillCircle					( float x, float y, float xRad, u32 color );
+	void					FillEllipse					( int x, int y, int xRad, int yRad, u32 color );
 	void					FillRect					( ZLIntRect rect, u32 color );
 	void					GammaCorrection				( const MOAIImage& image, float gamma );
 	void					GenerateOutlineFromSDF		( ZLIntRect rect, float distMin, float distMax, float r, float g, float b, float a );

@@ -25,7 +25,7 @@ void MOAITextDesigner::ClearCurves () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextDesigner::Layout ( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, cc8* str, u32 idx, ZLVec2D& offset, bool* more, u32* nextIdx ) {
+void MOAITextDesigner::Layout ( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, cc8* str, u32 idx, ZLVec2D& offset, bool* more, u32* nextIdx, bool* overrun ) {
 
 	MOAITextDesignParser parser;
 	
@@ -38,6 +38,10 @@ void MOAITextDesigner::Layout ( MOAITextLayout& layout, MOAITextStyleCache& styl
 	
 	if ( nextIdx ) {
 		*nextIdx = parser.GetIndex ();
+	}
+
+	if ( overrun ) {
+		*overrun = parser.Overrun ();
 	}
 }
 

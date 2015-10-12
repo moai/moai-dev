@@ -23,7 +23,10 @@ private:
 	ZLLeanArray < u32 >					mMaterialIDs;
 	
 	//----------------------------------------------------------------//
+	static int	_getQuad				( lua_State* L );
 	static int	_getRect				( lua_State* L );
+	static int	_getUVQuad				( lua_State* L );
+	static int	_getUVRect				( lua_State* L );
 	static int	_reserve				( lua_State* L );
 	static int	_setMaterialID			( lua_State* L );
 	static int	_setQuad				( lua_State* L );

@@ -148,6 +148,7 @@ public:
 	enum {
 		ATTR_SHADER,
 		ATTR_BLEND_MODE,
+		ATTR_SCISSOR_RECT,
 		
 		ATTR_LOCAL_VISIBLE,		// direct access to the prop's 'local' visbility setting
 		ATTR_VISIBLE,			// read only - reflects the composite state of visibility
