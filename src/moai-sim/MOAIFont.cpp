@@ -18,7 +18,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getCache
+	@text	Returns glyph cache.
+	
+	@in		MOAIFont self
+	@out	MOAILuaObject cache
+*/
 int MOAIFont::_getCache ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
 	state.Push (( MOAILuaObject* )self->mCache );
@@ -89,7 +94,12 @@ int MOAIFont::_getImage ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getCache
+	@text	Returns font reader.
+	
+	@in		MOAIFont self
+	@out	MOAILuaObject reader
+*/
 int MOAIFont::_getReader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
 	state.Push (( MOAILuaObject* )self->mReader );
@@ -268,7 +278,14 @@ int MOAIFont::_setDefaultSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setFilter
+	@text	Sets the filtering mode for glyph textures.
+	
+	@in		MOAIFont self
+	@opt	number minFilter
+	@out	number magFilter
+	@out	MOAILuaObject cache
+*/
 int MOAIFont::_setFilter ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
 	
@@ -346,7 +363,14 @@ int MOAIFont::_setReader ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setShader
+	@text	Set the preferred shader for the font. (May be overridden by
+			a prop.)
+
+	@in		MOAIFont self
+	@in		MOAIShader shader
+	@out	MOAIShader shader
+*/
 int MOAIFont::_setShader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
 

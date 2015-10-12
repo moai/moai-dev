@@ -2,8 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-util/MOAIDataBuffer.h>
-#include <moai-util/MOAIImageLoadTask.h>
+#include <moai-sim/MOAIImageLoadTask.h>
 #include <moai-sim/MOAIImage.h>
 
 //================================================================//

@@ -1882,6 +1882,10 @@
 		CD42F36B1A60A873001B6D72 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD42F3661A60A873001B6D72 /* host.h */; };
 		CD42F36C1A60A873001B6D72 /* MOAIDialogSDL.h in Headers */ = {isa = PBXBuildFile; fileRef = CD42F3671A60A873001B6D72 /* MOAIDialogSDL.h */; };
 		CD42F36D1A60A873001B6D72 /* MOAIDialogSDL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD42F3681A60A873001B6D72 /* MOAIDialogSDL.cpp */; };
+		CD4322C11BCC6B520054F644 /* MOAIImageLoadTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4322BF1BCC6B520054F644 /* MOAIImageLoadTask.cpp */; };
+		CD4322C21BCC6B520054F644 /* MOAIImageLoadTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4322BF1BCC6B520054F644 /* MOAIImageLoadTask.cpp */; };
+		CD4322C31BCC6B520054F644 /* MOAIImageLoadTask.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4322C01BCC6B520054F644 /* MOAIImageLoadTask.h */; };
+		CD4322C41BCC6B520054F644 /* MOAIImageLoadTask.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4322C01BCC6B520054F644 /* MOAIImageLoadTask.h */; };
 		CD48CF221A12F8F70029F932 /* MOAIRegion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48CF201A12F8F70029F932 /* MOAIRegion.cpp */; };
 		CD48CF231A12F8F70029F932 /* MOAIRegion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48CF201A12F8F70029F932 /* MOAIRegion.cpp */; };
 		CD48CF241A12F8F70029F932 /* MOAIRegion.h in Headers */ = {isa = PBXBuildFile; fileRef = CD48CF211A12F8F70029F932 /* MOAIRegion.h */; };
@@ -6538,6 +6542,8 @@
 		CD42F3661A60A873001B6D72 /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-sdl/host.h"; sourceTree = "<group>"; };
 		CD42F3671A60A873001B6D72 /* MOAIDialogSDL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIDialogSDL.h; path = "moai-sdl/MOAIDialogSDL.h"; sourceTree = "<group>"; };
 		CD42F3681A60A873001B6D72 /* MOAIDialogSDL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIDialogSDL.cpp; path = "moai-sdl/MOAIDialogSDL.cpp"; sourceTree = "<group>"; };
+		CD4322BF1BCC6B520054F644 /* MOAIImageLoadTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIImageLoadTask.cpp; sourceTree = "<group>"; };
+		CD4322C01BCC6B520054F644 /* MOAIImageLoadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIImageLoadTask.h; sourceTree = "<group>"; };
 		CD48CF201A12F8F70029F932 /* MOAIRegion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIRegion.cpp; sourceTree = "<group>"; };
 		CD48CF211A12F8F70029F932 /* MOAIRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIRegion.h; sourceTree = "<group>"; };
 		CD490040141AB6EC00913D80 /* lapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lapi.c; path = "../../3rdparty/lua-5.1.3/src/lapi.c"; sourceTree = SOURCE_ROOT; };
@@ -12721,6 +12727,8 @@
 				CDE36E6D1A5F6EBA0095E863 /* MOAIImageFormatPvr.h */,
 				CDE36E5E1A5F6C970095E863 /* MOAIImageFormatWebP.cpp */,
 				CDE36E5F1A5F6C970095E863 /* MOAIImageFormatWebP.h */,
+				CD4322BF1BCC6B520054F644 /* MOAIImageLoadTask.cpp */,
+				CD4322C01BCC6B520054F644 /* MOAIImageLoadTask.h */,
 			);
 			name = image;
 			sourceTree = "<group>";
@@ -13167,6 +13175,7 @@
 				89BE6D5B1739A42500DFE837 /* MOAIThread_win32.h in Headers */,
 				89BE6D5F1739A42500DFE837 /* MOAIXmlParser.h in Headers */,
 				89BE6D631739A42500DFE837 /* MOAIXmlWriter.h in Headers */,
+				CD4322C41BCC6B520054F644 /* MOAIImageLoadTask.h in Headers */,
 				89BE6D671739A42500DFE837 /* pch.h in Headers */,
 				89E9D7891743F7EE00033CDD /* MOAIVersion.h in Headers */,
 				89E9D7A91745223E00033CDD /* MOAIScopedLuaState.h in Headers */,
@@ -13372,6 +13381,7 @@
 				89BE6D021739A42500DFE837 /* MOAIDataBuffer.h in Headers */,
 				89BE6D061739A42500DFE837 /* MOAIDataBufferStream.h in Headers */,
 				89BE6D0A1739A42500DFE837 /* MOAIDataIOTask.h in Headers */,
+				CD4322C31BCC6B520054F644 /* MOAIImageLoadTask.h in Headers */,
 				CD1844DB1A6269AB00FCCCE0 /* MOAIDialogIOS.h in Headers */,
 				89BE6D0E1739A42500DFE837 /* MOAIFileStream.h in Headers */,
 				89BE6D121739A42500DFE837 /* MOAIFileSystem.h in Headers */,
@@ -16492,6 +16502,7 @@
 				CD1845C11A62751200FCCCE0 /* MOAIEnvironment.cpp in Sources */,
 				89E9D7871743F7EE00033CDD /* MOAIVersion.cpp in Sources */,
 				89E9D7A71745223E00033CDD /* MOAIScopedLuaState.cpp in Sources */,
+				CD4322C21BCC6B520054F644 /* MOAIImageLoadTask.cpp in Sources */,
 				CD93078317EC473A00AED686 /* MOAILuaClass.cpp in Sources */,
 				CD93078717EC473A00AED686 /* MOAILuaRefTable.cpp in Sources */,
 				CD4283621A0476D20069392E /* MOAIByteStream.cpp in Sources */,
@@ -16769,6 +16780,7 @@
 				CD1975F61A8037D9006E3917 /* MOAIKeyCode.cpp in Sources */,
 				89BE6B1A173975E500DFE837 /* MOAILogMgr.cpp in Sources */,
 				CD3024C01A68AB4B00CCEE32 /* MOAITestMgr.cpp in Sources */,
+				CD4322C11BCC6B520054F644 /* MOAIImageLoadTask.cpp in Sources */,
 				89BE6B22173975E500DFE837 /* MOAILuaObject.cpp in Sources */,
 				CD1844E21A6269AB00FCCCE0 /* MOAIWebViewController.mm in Sources */,
 				CD1844DE1A6269AB00FCCCE0 /* MOAIKeyboardIOS.mm in Sources */,

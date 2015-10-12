@@ -4,7 +4,6 @@
 #ifndef MOAIIMAGELOADTASK_H
 #define MOAIIMAGELOADTASK_H
 
-#include <moai-util/MOAITask.h>
 #include <moai-sim/MOAIImage.h>
 
 class MOAIDataBuffer;

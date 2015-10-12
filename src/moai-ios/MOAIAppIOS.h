@@ -11,8 +11,7 @@
 #import <moai-core/host.h>
 #import <moai-core/headers.h>
 
-// TODO: rename to MOAIMailComposeDelegate
-@class MoaiMailComposeDelegate;
+@class MOAIMailComposeDelegate;
 @class MOAITakeCameraListener;
 
 //================================================================//
@@ -48,7 +47,7 @@ private:
 
 	MOAILuaStrongRef			mOnTakeCameraCallback;
 	MOAITakeCameraListener*		mTakeCameraListener;
-	//MoaiMailComposeDelegate*	mMailDelegate;
+	//MOAIMailComposeDelegate*	mMailDelegate;
 	UIPopoverController*		mImagePickerPopover;
 	
 	//----------------------------------------------------------------//
@@ -111,9 +110,9 @@ public:
 };
 
 //================================================================//
-// MoaiMailComposeDelegate
+// MOAIMailComposeDelegate
 //================================================================//
-//@interface MoaiMailComposeDelegate : NSObject < MFMailComposeViewControllerDelegate > {
+//@interface MOAIMailComposeDelegate : NSObject < MFMailComposeViewControllerDelegate > {
 //@private
 //}
 //@end

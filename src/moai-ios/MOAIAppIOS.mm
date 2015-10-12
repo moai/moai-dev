@@ -3,6 +3,8 @@
 
 #include "pch.h"
 
+#import <AudioToolbox/AudioToolbox.h>
+
 #import <moai-apple/NSData+MOAILib.h>
 #import <moai-apple/NSDate+MOAILib.h>
 #import <moai-apple/NSDictionary+MOAILib.h>
@@ -123,7 +125,12 @@ int MOAIAppIOS::_getInterfaceOrientation ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getIPAddress
+	@text	Get an IP address for the device (if available). Current implementation
+			returns only one ip, with preference given to wifi.
+ 
+	@out	string ip
+*/
 int MOAIAppIOS::_getIPAddress ( lua_State* L ) {
 
 	MOAILuaState state ( L );
@@ -153,7 +160,8 @@ int MOAIAppIOS::_getIPAddress ( lua_State* L ) {
                     // Interface is the wifi connection on the iPhone
                     wifiAddress = addr;
 					
-                } else if([ name isEqualToString:@"pdp_ip0" ]) {
+                }
+				else if([ name isEqualToString:@"pdp_ip0" ]) {
 					
 					// Interface is the cell connection on the iPhone
 					cellAddress = addr;
@@ -164,6 +172,8 @@ int MOAIAppIOS::_getIPAddress ( lua_State* L ) {
         // Free memory
         freeifaddrs(interfaces);
     }
+	
+	// TODO: seems like we should return both wifi and cellular instead of always preferring wifi
     NSString *addr = wifiAddress ? wifiAddress : cellAddress;
 	addr = addr ? addr : @"0.0.0.0";
 	
@@ -410,6 +420,7 @@ int MOAIAppIOS::_takeCamera( lua_State* L ) {
 	@out	nil
 */
 int MOAIAppIOS::_vibrate ( lua_State *L ) {
+	UNUSED ( L );
 	
 	AudioServicesPlaySystemSound ( kSystemSoundID_Vibrate );
 	return 0;
@@ -451,7 +462,7 @@ MOAIAppIOS::MOAIAppIOS () {
 
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 
-	//this->mMailDelegate = [ MoaiMailComposeDelegate alloc ];
+	//this->mMailDelegate = [ MOAIMailComposeDelegate alloc ];
 	this->mTakeCameraListener = [ MOAITakeCameraListener alloc ];
 	
 	this->RegisterNotificationListeners ();
@@ -579,13 +590,13 @@ void MOAIAppIOS::RemoveNotificationListeners () {
 }
 
 //================================================================//
-// MoaiMailComposeDelegate
+// MOAIMailComposeDelegate
 //================================================================//
-//@implementation MoaiMailComposeDelegate
+//@implementation MOAIMailComposeDelegate
 //
 ////================================================================//
 //#pragma mark -
-//#pragma mark Protocol MoaiMailComposeDelegate
+//#pragma mark Protocol MOAIMailComposeDelegate
 ////================================================================//
 //
 //- (void)mailComposeController:(MFMailComposeViewController*)controller

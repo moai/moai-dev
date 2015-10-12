@@ -23,7 +23,22 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	subdivideRect
+	@text	Convenience method. Here for now as a class method, but maybe should
+			move to MOAIGrid.
+			
+			Subdivides a rectangle given a tile width and height. A table tile
+			rectangles will be returned. The tiles will be clipped to the original
+			rect.
+
+	@in		number tileWidth
+	@in		number tileHeight
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@out	nil
+*/
 int MOAIDeck::_subdivideRect ( lua_State* L ) {
 	MOAI_LUA_SETUP_CLASS ( "NNNNNN" )
 

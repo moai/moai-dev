@@ -9,6 +9,7 @@
 
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIImageFormatMgr.h>
+#include <moai-sim/MOAIImageLoadTask.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <float.h>
 #include <contrib/edtaa3func.h>
