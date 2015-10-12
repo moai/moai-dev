@@ -9,6 +9,9 @@
 # You can change the CMake options using -DOPTION=VALUE
 # Check moai-dev/cmake/CMakeLists.txt for all the available options.
 #
+
+set -e
+
 if [ -z $1 ]; then
   libprefix=`dirname $0`/../lib/linux
 else
@@ -26,7 +29,7 @@ moai_root=$(pwd)
 
 BUILD_DIR="build/build-linux"
 
-if ! [ -d ${BUILD_DIR%/*} ]; then
+if ! [ -d ${BUILD_DIR} ]; then
 	mkdir -p $BUILD_DIR
 fi
 
@@ -37,8 +40,6 @@ cd $BUILD_DIR
 if ! [ -e PATH_SEPARATOR ]; then
 	export PATH_SEPARATOR=:
 fi
-
-set -e
 
 cmake \
 -DBUILD_LINUX=TRUE \
