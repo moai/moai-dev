@@ -72,8 +72,8 @@ endif (PLUGIN_DIR)
 #
 
 configure_file( "${PLUGINS_ROOT}/aku_plugins.cpp.in" "${CMAKE_CURRENT_BINARY_DIR}/aku_plugins.cpp")
-install(FILES ${PLUGINS_ROOT}/aku_plugins.h DESTINATION src/host-modules)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/aku_plugins.cpp DESTINATION src/host-modules)
+install(FILES ${PLUGINS_ROOT}/aku_plugins.h DESTINATION ../src/host-modules)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/aku_plugins.cpp DESTINATION ../src/host-modules)
 #
 #  actually define the target
 #

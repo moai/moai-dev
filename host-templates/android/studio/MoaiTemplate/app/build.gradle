@@ -3,13 +3,14 @@ apply plugin: 'com.android.application'
 
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion '21.1.2'
+    compileSdkVersion 22
+    buildToolsVersion '22.0.1'
+
 
     defaultConfig {
-        applicationId "com.moaiforge.moaitemplate"
-        minSdkVersion 10
-        targetSdkVersion 20
+        applicationId "com.getmoai.moaitemplate"
+        minSdkVersion 17
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }
@@ -35,5 +36,6 @@ apply from: 'moai.gradle' //leave after android config block, it needs applicati
 
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:20.0.0'
+    compile 'com.android.support:multidex:1.0.0'
+    compile 'com.android.support:appcompat-v7:22.1.1'
 }

@@ -130,10 +130,10 @@ copyhostfiles = function()
 --    MOAIFileSystem.deleteFile(output..'app/src/main/java/com/ziplinegames/moai/MoaiView.java')
 
     --lua
-    local hostsourcedir = output..'app/src/main/java/com/getmoai/androidhost/'
-    MOAIFileSystem.affirmPath(hostsourcedir)
-    MOAIFileSystem.copy(MOAI_SDK_HOME..'src/moai-android/MoaiActivity.java', hostsourcedir..'MoaiActivity.java')
-    MOAIFileSystem.copy(MOAI_SDK_HOME..'src/moai-android/MoaiView.java', hostsourcedir..'MoaiView.java')
+--    local hostsourcedir = output..'app/src/main/java/com/getmoai/androidhost/'
+    --MOAIFileSystem.affirmPath(hostsourcedir)
+    --MOAIFileSystem.copy(MOAI_SDK_HOME..'src/moai-android/MoaiActivity.java', hostsourcedir..'MoaiActivity.java')
+    --MOAIFileSystem.copy(MOAI_SDK_HOME..'src/moai-android/MoaiView.java', hostsourcedir..'MoaiView.java')
     
     --[[
 	for entry in util.iterateFiles(MOAI_SDK_HOME..'samples/hello-moai', false, true) do
@@ -270,12 +270,13 @@ configureHost = function()
   print("updating template values")
     --libroot
   util.replaceInFiles ({
-	  [ util.wrap(pairs, hostfiles) ]  = {
+	--[[  [ util.wrap(pairs, hostfiles) ]  = {
       ['package com.ziplinegames.moai'] = 'package com.getmoai.androidhost', --hardcoded, this package doesn't need to be unique per app anymore
       ['@WORKING_DIR@'] = 'bundle/assets'
-    },
+    },]]
 		[ output .. 'gradle.properties' ] = {
 			[ 'moaiLibRoot=[^\n]*' ]= "moaiLibRoot=./lib",
+      [ 'moaiSrcRoot=[^\n]*' ]= "moaiLibRoot=./lib",
 			[ 'moaiLuaRoot=[^\n]*' ]= "moaiLuaRoot="..luasrc,
       [ 'moaiModules=[^\n]*' ]= "moaiModules="..modulestr
 		},
