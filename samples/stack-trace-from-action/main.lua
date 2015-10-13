@@ -7,7 +7,7 @@
 MOAISim.openWindow ( "test", 320, 480 )
 
 func1 = function ()
-	printf ( 'STACK TRACE FROM INSIDE COROUTINE' )
+	print ( 'STACK TRACE FROM INSIDE COROUTINE' )
 	foo.bar = baz
 end
 

@@ -410,7 +410,7 @@ void MOAIMaterialBatch::SetShader ( u32 idx, MOAIShader* shader ) {
 MOAIShader* MOAIMaterialBatch::SetShader ( MOAILuaState& state, u32 idx ) {
 	
 	u32 materialIdx = 0;
-	if ( state.IsType ( idx, LUA_TNUMBER )) {
+	if ( state.IsType ( idx, LUA_TNUMBER ) && ( state.AbsIndex ( idx ) < state.GetTop ())) {
 		materialIdx = state.GetValue < u32 >( idx++, 1 ) - 1;
 	}
 

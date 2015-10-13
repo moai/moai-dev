@@ -11,7 +11,9 @@ class MOAIVertexFormat;
 //================================================================//
 // MOAIVertexBuffer
 //================================================================//
-// TODO: doxygen
+/**	@lua	MOAIIndexBuffer
+	@text	Buffer for vertices.
+*/
 class MOAIVertexBuffer :
 	public MOAIGfxBuffer {
 private:

@@ -18,7 +18,19 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	computeBounds
+	@text	Calculates the buffer's axis-aligned bounding box. Returns
+			nil if buffer is empty.
+ 
+	@in		MOAIVertexBuffer self
+	@in		MOAIVertexFormat format
+	@out	xMin
+	@out	yMin
+	@out	zMin
+	@out	xMax
+	@out	yMax
+	@out	zMax
+*/
 int MOAIVertexBuffer::_computeBounds ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
@@ -45,7 +57,22 @@ int MOAIVertexBuffer::_computeBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	countElements
+	@text	Get the number of vertices given either a vertex size or
+			a vertex format.
+ 
+	@overload
+ 
+		@in		MOAIVertexBuffer self
+		@in		number vertexSize
+		@out	number vertexCount
+	
+	@overload
+ 
+		@in		MOAIVertexBuffer self
+		@in		MOAIVertexFormat format
+		@out	number vertexCount
+*/
 int MOAIVertexBuffer::_countElements ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
 
@@ -73,7 +100,13 @@ int MOAIVertexBuffer::_countElements ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	printVertices
+	@text	Print the vertices (for debugging purposes).
+ 
+	@in		MOAIVertexBuffer self
+	@in		MOAIVertexFormat format
+	@out	nil
+*/
 int MOAIVertexBuffer::_printVertices ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
 	

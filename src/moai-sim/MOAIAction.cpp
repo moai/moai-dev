@@ -118,7 +118,12 @@ int MOAIAction::_clear ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	defer
+	@text	Defers action's update until the next time the action tree is processed.
+
+	@in		MOAIAction self
+	@out	nil
+*/
 int MOAIAction::_defer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" )
 	
@@ -145,7 +150,12 @@ int MOAIAction::_detach ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getChildren
+	@text	Get action's children (if any).
+
+	@in		MOAIAction self
+	@out	...					Child actions (returned as multiple values).
+*/
 int MOAIAction::_getChildren ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" )
 	
@@ -235,7 +245,13 @@ int MOAIAction::_pause ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setAutoStop
+	@text	Flag action to automatically stop (and be removed from action tree)
+			when no longer busy.
+
+	@in		MOAIAction self
+	@out	nil
+*/
 int MOAIAction::_setAutoStop ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" );
 	self->mActionFlags = state.GetValue < bool >( 2, false ) ? self->mActionFlags | FLAGS_AUTO_STOP : self->mActionFlags & ~FLAGS_AUTO_STOP;

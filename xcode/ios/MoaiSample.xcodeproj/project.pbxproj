@@ -179,8 +179,6 @@
 		CDFD7E471A08BBF500A94E6B /* libChartboost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFD7E441A08BBF500A94E6B /* libChartboost.a */; };
 		CDFD7E4A1A08BC0A00A94E6B /* libCrittercism_v4_3_3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFD7E481A08BC0A00A94E6B /* libCrittercism_v4_3_3.a */; };
 		CDFD7E4B1A08BC0A00A94E6B /* libCrittercism_v4_3_3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFD7E481A08BC0A00A94E6B /* libCrittercism_v4_3_3.a */; };
-		CDFD7E4E1A08BC2700A94E6B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFD7E4C1A08BC2700A94E6B /* FacebookSDK.framework */; };
-		CDFD7E4F1A08BC2700A94E6B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFD7E4C1A08BC2700A94E6B /* FacebookSDK.framework */; };
 		CDFD7E521A08BC4800A94E6B /* Tapjoy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFD7E501A08BC4800A94E6B /* Tapjoy.framework */; };
 		CDFD7E531A08BC4900A94E6B /* Tapjoy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFD7E501A08BC4800A94E6B /* Tapjoy.framework */; };
 		CDFD7E561A08BC7600A94E6B /* vunglepub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFD7E541A08BC7500A94E6B /* vunglepub.framework */; };
@@ -728,7 +726,6 @@
 		CDFD7E1D1A08B16C00A94E6B /* aku_modules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules.h; path = "../../src/host-modules/aku_modules.h"; sourceTree = SOURCE_ROOT; };
 		CDFD7E441A08BBF500A94E6B /* libChartboost.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libChartboost.a; path = "../../3rdparty/chartboost-4.2/libChartboost.a"; sourceTree = "<group>"; };
 		CDFD7E481A08BC0A00A94E6B /* libCrittercism_v4_3_3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCrittercism_v4_3_3.a; path = "../../3rdparty/crittercism-4.3.3/CrittercismSDK/libCrittercism_v4_3_3.a"; sourceTree = "<group>"; };
-		CDFD7E4C1A08BC2700A94E6B /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = "../../3rdparty/facebook-ios-sdk-3.14.1/FacebookSDK.framework"; sourceTree = "<group>"; };
 		CDFD7E501A08BC4800A94E6B /* Tapjoy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tapjoy.framework; path = ../../3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework/Tapjoy.framework; sourceTree = "<group>"; };
 		CDFD7E541A08BC7500A94E6B /* vunglepub.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vunglepub.framework; path = "../../3rdparty/vungle-2.0.1/vunglepub.embeddedframework/vunglepub.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -800,7 +797,6 @@
 				CDFD7E4B1A08BC0A00A94E6B /* libCrittercism_v4_3_3.a in Frameworks */,
 				CD236686180A5CBC006A7236 /* CFNetwork.framework in Frameworks */,
 				CD508A9A155E3AF90002FC3B /* QuartzCore.framework in Frameworks */,
-				CDFD7E4F1A08BC2700A94E6B /* FacebookSDK.framework in Frameworks */,
 				CD23669B180A5DC6006A7236 /* EventKit.framework in Frameworks */,
 				CD508A9B155E3AF90002FC3B /* StoreKit.framework in Frameworks */,
 				CD236683180A5CAD006A7236 /* AdSupport.framework in Frameworks */,
@@ -835,7 +831,6 @@
 				CDFD7E4A1A08BC0A00A94E6B /* libCrittercism_v4_3_3.a in Frameworks */,
 				CD236684180A5CBC006A7236 /* CFNetwork.framework in Frameworks */,
 				CDDD30761574AC7300C410A0 /* QuartzCore.framework in Frameworks */,
-				CDFD7E4E1A08BC2700A94E6B /* FacebookSDK.framework in Frameworks */,
 				CD23669A180A5DC6006A7236 /* EventKit.framework in Frameworks */,
 				CDDD30771574AC7300C410A0 /* StoreKit.framework in Frameworks */,
 				CD236682180A5CAD006A7236 /* AdSupport.framework in Frameworks */,
@@ -924,7 +919,6 @@
 				CD23668C180A5D40006A7236 /* CoreMedia.framework */,
 				CD236690180A5D77006A7236 /* CoreMotion.framework */,
 				CD236698180A5DC3006A7236 /* EventKit.framework */,
-				CDFD7E4C1A08BC2700A94E6B /* FacebookSDK.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				665383F6160A8466003D5529 /* MessageUI.framework */,
 				CD4C4162180A6A8600C02381 /* MobileCoreServices.framework */,

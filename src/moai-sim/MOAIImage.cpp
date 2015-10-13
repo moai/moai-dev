@@ -9,6 +9,7 @@
 
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIImageFormatMgr.h>
+#include <moai-sim/MOAIImageLoadTask.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <float.h>
 #include <contrib/edtaa3func.h>
@@ -18,7 +19,15 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	average
+	@text	Calculates the average of each color channel.
+
+	@in		MOAIImage self
+	@out	number averageR
+	@out	number averageG
+	@out	number averageB
+	@out	number averageA
+*/
 int MOAIImage::_average ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIImage, "U" )
 	
