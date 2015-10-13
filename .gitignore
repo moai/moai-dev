@@ -35,3 +35,5 @@ docs/api-reference
 /lib/
 /bin/env-local.bat
 /util/moai
+/**/java/build/
+/**/java/*.iml
