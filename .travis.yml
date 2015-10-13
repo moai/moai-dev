@@ -5,7 +5,3 @@ before_install:
 install: true
 before_script: bash ./bin/ci-linux.sh
 script: bash ./bin/ci-android.sh
-
-language: objective-c
-xcode_project: project xcode/osx/MoaiSample.xcodeproj
-xcode_scheme: moai
