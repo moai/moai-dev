@@ -9,7 +9,9 @@
 //================================================================//
 // MOAIIndexBuffer
 //================================================================//
-// TODO: doxygen
+/**	@lua	MOAIIndexBuffer
+	@text	Buffer for vertex indices.
+*/
 class MOAIIndexBuffer :
 	public MOAIGfxBuffer {
 private:

@@ -20,7 +20,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getHardwareInfo
+	@text	Get any hardware metadate string specified by the host.
+	
+	@in		MOAIInputDevice self
+	@out	string hardwareInfo
+*/
 int MOAIInputDevice::_getHardwareInfo ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIInputDevice, "U" )
 	

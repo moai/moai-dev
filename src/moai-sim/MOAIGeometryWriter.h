@@ -27,7 +27,7 @@ class MOAIVertexFormat;
 			vertices between the stream cursor and the end of the stream.
  
 			Once all vertices have been written, stream may be converted
-			into a mesh, optionally with an index buffer that is calculated
+			into a mesh with an index buffer that is calculated
 			by finding redundant vertices.
 */
 class MOAIGeometryWriter :

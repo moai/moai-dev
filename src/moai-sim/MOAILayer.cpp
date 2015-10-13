@@ -36,7 +36,12 @@ int MOAILayer::_clear ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getCamera
+	@text	Get the camera associated with the layer.
+	
+	@in		MOAILayer self
+	@out	MOAICamera camera
+*/
 int MOAILayer::_getCamera ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "U" )
 	state.Push (( MOAILuaObject* )self->mCamera );
@@ -89,7 +94,18 @@ int MOAILayer::_getFitting ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getFitting3D
+	@text	Find a position for the camera where all given locations or
+			props will be visible without changing the camera's orientation
+			(i.e. orient the camera first, then call this to derive the
+			correct position).
+	
+	@in		MOAILayer self
+	@in		table targets		A table of either props or locations. Locations are tables containing {x, y, z, r}.
+	@out	number x
+	@out	number y
+	@out	number z
+*/
 int MOAILayer::_getFitting3D ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UT" )
 
@@ -775,7 +791,7 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 		gfxDevice.SetAmbientColor ( this->mColor );
 		
 		// figure out the correct LOD factor
-		float lod = this->mLODFactor * this->GetLinkedValue ( MOAILayerAttr::Pack ( ATTR_LOD ), 1.0f );;
+		float lod = this->mLODFactor * this->GetLinkedValue ( MOAILayerAttr::Pack ( ATTR_LOD ), 1.0f );
 		
 		this->DrawProps ( buffer, lod );
 		

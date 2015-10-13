@@ -174,7 +174,14 @@ int MOAIGfxQuadDeck2D::_reserve ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setMaterialID
+	@text	Specify an optional material ID for a quad.
+	
+	@in		MOAIGfxQuadDeck2D self
+	@in		number idx
+	@in		number id
+	@out	nil
+*/
 int MOAIGfxQuadDeck2D::_setMaterialID ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuadDeck2D, "UN" )
 	
@@ -410,8 +417,6 @@ void MOAIGfxQuadDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec
 		
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
-
-	
 		
 		this->mQuads [ itemIdx ].Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY  );
 	}

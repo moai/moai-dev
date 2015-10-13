@@ -82,7 +82,13 @@ int MOAIGfxDevice::_getViewSize ( lua_State* L  ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setDefaultTexture
+	@text	Specify a fallback texture to use when textures are
+			unavailable (pending load, missing or in error state).
+	
+	@in		MOAITexture texture
+	@out	MOAITexture texture		Texture that was passed in or created.
+*/
 int MOAIGfxDevice::_setDefaultTexture ( lua_State* L ) {
 
 	MOAILuaState state ( L );
