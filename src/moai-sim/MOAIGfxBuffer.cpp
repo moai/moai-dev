@@ -296,7 +296,6 @@ void MOAIGfxBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "copyFromStream",			_copyFromStream },
-		{ "load",					_load },
 		{ "release",				_release },
 		{ "reserve",				_reserve },
 		{ "reserveVBOs",			_reserveVBOs },
