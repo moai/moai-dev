@@ -103,13 +103,16 @@ copy = function ( dstpath, srcpath )
 
 	if osx then
 		
+print("DEBUG: \"" .. srcpath .. "\" -> \"" .. dstpath .. "\"")
 		-- awful, but until there's a better way...
 		moaiCopy( srcpath, dstpath )
 
 		-- so awful
-		os.execute ( string.format ( 'rm -fr %s', dstpath ))
+		os.execute ( string.format ( 'rm -fr \"%s\"', dstpath ))
+print( "DEBUG: " .. string.format ( 'rm -fr \"%s\"', dstpath ))
 
-		local cmd = string.format ( 'cp -a %s %s', srcpath, dstpath )
+		local cmd = string.format ( 'cp -rp \"%s\" \"%s\"', srcpath, dstpath )
+print("DEBUG: " .. string.format ( 'cp -rp \"%s\" \"%s\"', srcpath, dstpath ))
 		print ( cmd )
 		os.execute ( cmd )
 	else
