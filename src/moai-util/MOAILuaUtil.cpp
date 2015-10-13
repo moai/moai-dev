@@ -59,7 +59,12 @@ void MOAILuaHeader::Write ( ZLStream& stream ) const {
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	convert
+	@text	Convert 32-bit Lua bytecode to 64-bit Lua bytecode.
+	
+	@in		string bytecode		32-bit bytecode
+	@out	string bytecode		64-bit bytecode
+*/
 int MOAILuaUtil::_convert ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAILuaUtil, "S" )
 	
@@ -91,7 +96,12 @@ int MOAILuaUtil::_convert ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getHeader
+	@text	Read the Lua bytecode header.
+	
+	@in		string bytecode
+	@out	table header
+*/
 int MOAILuaUtil::_getHeader ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAILuaUtil, "S" )
 	

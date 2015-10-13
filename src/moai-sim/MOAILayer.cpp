@@ -187,7 +187,18 @@ int	MOAILayer::_getPartition ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getPropViewList
+	@text	Return a list of props gathered and sorted by layer.
+	
+	@in		MOAILayer self
+	@opt	number sortMode					Default is layer's current value.
+	@opt	boolean sortInViewSpace			Default is layer's current value.
+	@opt	number xSortScale				Default is layer's current value.
+	@opt	number ySortScale				Default is layer's current value.
+	@opt	number zSortScale				Default is layer's current value.
+	@opt	number pSortScale				Priority sort scale. Default is layer's current value.
+	@out	...								Gathered props.
+*/
 int	MOAILayer::_getPropViewList ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "U" )
 	
@@ -281,7 +292,12 @@ int	MOAILayer::_getSortScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getViewport
+	@text	Return the viewport currently associated with the layer.
+	
+	@in		MOAILayer self
+	@out	MOAILuaObject viewport
+*/
 int MOAILayer::_getViewport ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "U" )
 	state.Push (( MOAILuaObject* )self->mViewport );
@@ -379,7 +395,14 @@ int MOAILayer::_setLODMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setOverlayTable
+	@text	Set or clear the table of renderables to be drawn on
+			top of the layer.
+	
+	@in		MOAILayer self
+	@opt	table overlayTable
+	@out	nil
+*/
 int MOAILayer::_setOverlayTable ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "U" )
 	
@@ -489,7 +512,14 @@ int	MOAILayer::_setSortScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setOverlayTable
+	@text	Set or clear the table of renderables to be drawn behind
+			the layer.
+	
+	@in		MOAILayer self
+	@opt	table underlayTable
+	@out	nil
+*/
 int MOAILayer::_setUnderlayTable ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "U" )
 	

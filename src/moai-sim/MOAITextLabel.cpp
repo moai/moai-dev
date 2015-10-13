@@ -303,7 +303,15 @@ int MOAITextLabel::_setAlignment ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setAutoFlip
+	@text	When autoflip is enabled, the label will be evaluated in
+			screen space during rendering, and flipped vertically to
+			remain 'upright' in the view.
+
+	@in		MOAITextLabel self
+	@in		boolean autoflip		Default value is false.
+	@out	nil
+*/
 int MOAITextLabel::_setAutoFlip ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 
@@ -314,7 +322,27 @@ int MOAITextLabel::_setAutoFlip ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setBounds
+	@text	Sets or removes a bounding rectangle for the text, specified
+			as the XY planes of the given bounding box. Toggles
+			the rect limits accordingly.
+
+	@overload	Set a the text label's bounding rectagle and enable the limits.
+
+		@in		MOAITextLabel self
+		@in		number xMin
+		@in		number yMin
+		@in		number zMin
+		@in		number xMax
+		@in		number yMax
+		@in		number zMax
+		@out	nil
+	
+	@overload	Clear the text label's bounding rectangle and disable the limits.
+
+		@in		MOAITextLabel self
+		@out	nil
+*/
 int MOAITextLabel::_setBounds ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 
