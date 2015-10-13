@@ -14,7 +14,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int MOAIUrbanAirshipIOS::_resetBadge ( lua_State* L ) {
 	UNUSED ( L );
 	[[ UAPush shared ] resetBadge ];
@@ -22,7 +22,7 @@ int MOAIUrbanAirshipIOS::_resetBadge ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int MOAIUrbanAirshipIOS::_setAppKeyAndSecret ( lua_State* L ) {
 	MOAILuaState state ( L );
 	UAConfig* config				= MOAIUrbanAirshipIOS::Get ().mConfig;
@@ -34,7 +34,7 @@ int MOAIUrbanAirshipIOS::_setAppKeyAndSecret ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int MOAIUrbanAirshipIOS::_setClearKeychain ( lua_State* L ) {
 	MOAILuaState state ( L );
 	MOAIUrbanAirshipIOS::Get ().mConfig.clearKeychain = state.GetValue < bool >( 1, false );
@@ -42,7 +42,7 @@ int MOAIUrbanAirshipIOS::_setClearKeychain ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int MOAIUrbanAirshipIOS::_setProductionFlag ( lua_State* L ) {
 	MOAILuaState state ( L );
 	MOAIUrbanAirshipIOS::Get ().mConfig.inProduction = state.GetValue < bool >( 1, true );
@@ -50,7 +50,7 @@ int MOAIUrbanAirshipIOS::_setProductionFlag ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int MOAIUrbanAirshipIOS::_setTags ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
@@ -70,7 +70,7 @@ int MOAIUrbanAirshipIOS::_setTags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int MOAIUrbanAirshipIOS::_takeOff ( lua_State* L ) {
 	UNUSED ( L );
 	[ UAirship takeOff:MOAIUrbanAirshipIOS::Get ().mConfig ];
@@ -78,7 +78,7 @@ int MOAIUrbanAirshipIOS::_takeOff ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int MOAIUrbanAirshipIOS::_validate ( lua_State* L ) {
 	UNUSED ( L );
 	[ MOAIUrbanAirshipIOS::Get ().mConfig validate ];

@@ -19,7 +19,15 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	average
+	@text	Calculates the average of each color channel.
+
+	@in		MOAIImage self
+	@out	number averageR
+	@out	number averageG
+	@out	number averageB
+	@out	number averageA
+*/
 int MOAIImage::_average ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIImage, "U" )
 	

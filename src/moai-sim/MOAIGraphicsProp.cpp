@@ -27,7 +27,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getIndexBatchSize
+	@text	Return the index batch size of the material batch attached
+			to the prop.
+	
+	@in		MOAIGraphicsProp self
+	@out	number indexBatchSize		Returns nil if no material batch is attached.
+*/
 int MOAIGraphicsProp::_getIndexBatchSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
 	
@@ -39,7 +45,12 @@ int MOAIGraphicsProp::_getIndexBatchSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getMaterialBatch
+	@text	Return the material batch attached to the prop.
+	
+	@in		MOAIGraphicsProp self
+	@out	MOAIMaterialBatch materialBatch
+*/
 int MOAIGraphicsProp::_getMaterialBatch ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
 	
@@ -65,7 +76,15 @@ int MOAIGraphicsProp::_getScissorRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getShader
+	@text	Get the shader at the given index in the prop's material batch,
+			ignoring the material's index batch size. If no material batch is
+			attached to the prop then nil will be returned.
+	
+	@in		MOAIGraphicsProp self
+	@opt	number idx				Default value is 1.
+	@out	MOAIShader shader		Or nil if none exists.
+*/
 int MOAIGraphicsProp::_getShader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
 	
@@ -77,7 +96,15 @@ int MOAIGraphicsProp::_getShader ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getTexture
+	@text	Get the texture at the given index in the prop's material batch,
+			ignoring the material's index batch size. If no material batch is
+			attached to the prop then nil will be returned.
+	
+	@in		MOAIGraphicsProp self
+	@opt	number idx				Default value is 1.
+	@out	MOAITexture texture		Or nil if none exists.
+*/
 int MOAIGraphicsProp::_getTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
 	
@@ -112,7 +139,14 @@ int	MOAIGraphicsProp::_isVisible ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	reserveMaterials
+	@text	Reserve materials in the prop's material batch (and creates a
+			material batch if none exists).
+	
+	@in		MOAIGraphicsProp self
+	@in		number count
+	@out	nil
+*/
 int MOAIGraphicsProp::_reserveMaterials ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
 	
@@ -122,7 +156,23 @@ int MOAIGraphicsProp::_reserveMaterials ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setBillboard
+	@text	Sets the prop's billboarding mode. One of BILLBOARD_NORMAL,
+			BILLBOARD_ORTHO, BILLBOARD_COMPASS, BILLBOARD_SCREEN,
+			BILLBOARD_NONE.
+	
+	@override
+	
+		@in		MOAIGraphicsProp self
+		@in		boolean billboard			true == BILLBOARD_NORMAL, false == BILLBOARD_NONE
+		@out	nil
+	
+	@override
+	
+		@in		MOAIGraphicsProp self
+		@in		number mode
+		@out	nil
+*/
 int MOAIGraphicsProp::_setBillboard ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
 
@@ -265,7 +315,14 @@ int MOAIGraphicsProp::_setDepthTest ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setIndexBatchSize
+	@text	Sets and index batch size of the associated matrial batch (and creates
+			a material batch if none exists).
+	
+	@in		MOAIGraphicsProp self
+	@opt	number indexBatchSize
+	@out	nil
+*/
 int MOAIGraphicsProp::_setIndexBatchSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
 	
@@ -297,7 +354,13 @@ int MOAIGraphicsProp::_setLODLimits ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setMaterialBatch
+	@text	Sets the prop's material batch.
+	
+	@in		MOAIGraphicsProp self
+	@opt	MOAIMaterialBatch materialBatch
+	@out	nil
+*/
 int MOAIGraphicsProp::_setMaterialBatch ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
 	
@@ -346,7 +409,26 @@ int MOAIGraphicsProp::_setScissorRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setShader
+	@text	Sets a shader in the associated matrial batch. Creates a
+			material batch is none exists. Index batch size is ignored.
+			
+			If not value for 'idx' is provided, then the shader or shader
+			preset is expected as the first paramater, and idx defaults to 1.
+	
+	@overload
+	
+		@in		MOAIGraphicsProp self
+		@in		number idx
+		@in		MOAIShader shader		Overloaded to accept a MOAIShader or a shader preset.
+		@out	MOAIShader shader		The shader that was set or created.
+	
+	@overload
+	
+		@in		MOAIGraphicsProp self
+		@in		MOAIShader shader		Overloaded to accept a MOAIShader or a shader preset.
+		@out	MOAIShader shader		The shader that was set or created.
+*/
 int MOAIGraphicsProp::_setShader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
 	
@@ -357,7 +439,26 @@ int MOAIGraphicsProp::_setShader ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setTexture
+	@text	Sets a texture in the associated matrial batch. Creates a
+			material batch is none exists. Index batch size is ignored.
+			
+			If not value for 'idx' is provided, then the texture or filename
+			is expected as the first paramater, and idx defaults to 1.
+	
+	@overload
+	
+		@in		MOAIGraphicsProp self
+		@in		number idx
+		@in		MOAITexture texture		Overloaded to accept a filename, MOAITexture, MOAIImage, MOAIStream or MOAIDataBuffer.
+		@out	MOAITexture texture		The texture that was set or created.
+	
+	@overload
+	
+		@in		MOAIGraphicsProp self
+		@in		MOAITexture texture		Overloaded to accept a filename, MOAITexture, MOAIImage, MOAIStream or MOAIDataBuffer.
+		@out	MOAITexture texture		The texture that was set or created.
+*/
 int MOAIGraphicsProp::_setTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
 	

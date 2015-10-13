@@ -6,3 +6,8 @@ install: true
 before_script: bash ./bin/ci-linux.sh
 script: bash ./bin/ci-android.sh
 
+language: objective-c
+before_install:
+    - brew update
+    - brew install xctool
+script: xctool -project xcode/osx/MoaiSample.xcodeproj -scheme moai

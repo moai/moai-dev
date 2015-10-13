@@ -62,7 +62,7 @@ public:
 	@overload
 	
 		@in		MOAIVertexFormat format
-		@in		MOAIStream stream
+		@in		MOAIStream vtxStream
 		@in		ZLColorVec color
 		@opt	number blendMode
 		@out 	nil
@@ -117,7 +117,7 @@ int MOAIGeometryWriter::_applyColor ( lua_State* L ) {
 			COLOR_SUBTRACT.
 	
 	@in		MOAIVertexFormat format
-	@in		MOAIStream stream
+	@in		MOAIStream vtxStream
 	@in		MOAIImage image
 	@opt	number blendMode
 	@opt	number a0
@@ -160,7 +160,7 @@ int MOAIGeometryWriter::_applyLightFromImage ( lua_State* L ) {
 			COLOR_SUBTRACT.
 	
 	@in		MOAIVertexFormat format
-	@in		MOAIStream stream
+	@in		MOAIStream vtxStream
 	@opt	number x0
 	@opt	number y0
 	@opt	number z0
@@ -205,7 +205,28 @@ int MOAIGeometryWriter::_applyLinearGradient ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getMesh
+	@text	Return the vertices as an MOAIVertexBuffer and MOAIIndexBuffer, or
+			as a ready-to-render MOAIMesh.
+			
+	@override
+	
+		@in		MOAIVertexFormat format
+		@in		MOAIStream vtxStream
+		@in		MOAIStream idxStream
+		@in		MOAIVertexBuffer vtxBuffer
+		@in		MOAIIndexBuffer idxBuffer
+		@opt	number idxSizeInBytes
+		@out 	number totalElements
+	
+	@override
+	
+		@in		MOAIVertexFormat format
+		@in		MOAIStream vtxStream
+		@in		MOAIStream idxStream
+		@opt	number idxSizeInBytes
+		@out 	MOAIMesh mesh
+*/
 int MOAIGeometryWriter::_getMesh ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 
@@ -238,6 +259,15 @@ int MOAIGeometryWriter::_getMesh ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	pruneVertices
+	@text	Remove duplicate vertices from the vertex stream and update
+			or create the index stream. Index stream is assuming to be 4 bytes.
+	
+	@in		MOAIVertexFormat format
+	@in		MOAIStream vtxStream
+	@in		MOAIStream idxStream
+	@out 	nil
+*/
 int MOAIGeometryWriter::_pruneVertices ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 	
@@ -252,7 +282,16 @@ int MOAIGeometryWriter::_pruneVertices ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	snapCoords
+	@text	Snap vertex coordinates to a give resolution.
+	
+	@in		MOAIVertexFormat format
+	@in		MOAIStream vtxStream
+	@in		number xSnap
+	@opt	number ySnap		Default value is xSnap.
+	@opt	number zSnap		Default valie is ySnap.
+	@out 	nil
+*/
 int MOAIGeometryWriter::_snapCoords ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 	
@@ -271,7 +310,19 @@ int MOAIGeometryWriter::_snapCoords ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	writeBox
+	@text	Writes the vertices of a box.
+	
+	@in		MOAIVertexFormat format
+	@in		MOAIStream vtxStream
+	@in		number xMin
+	@in		number yMin
+	@in		number zMin
+	@in		number xMax
+	@in		number yMax
+	@in		number zMax
+	@out 	nil
+*/
 int MOAIGeometryWriter::_writeBox ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 	
@@ -292,7 +343,17 @@ int MOAIGeometryWriter::_writeCone ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	writeCube
+	@text	Writes the vertices of a cube.
+	
+	@in		MOAIVertexFormat format
+	@in		MOAIStream vtxStream
+	@opt	number size		Default value is 1.
+	@opt	number x		Default value is 0.
+	@opt	number y		Default value is 0.
+	@opt	number z		Default value is 0.
+	@out 	nil
+*/
 int MOAIGeometryWriter::_writeCube ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 	
@@ -301,7 +362,7 @@ int MOAIGeometryWriter::_writeCube ( lua_State* L ) {
 	
 	if ( format && stream  ) {
 	
-		float size = state.GetValue < float >( 3, 0.0f );
+		float size = state.GetValue < float >( 3, 1.0f );
 		if ( size > 0.0f ) {
 			
 			ZLVec3D origin	= state.GetVec3D ( 4, 0.0f );

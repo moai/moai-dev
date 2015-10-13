@@ -169,7 +169,7 @@ int MOAIFacebookIOS::_logout ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int MOAIFacebookIOS::_postToFeed ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIFacebookIOS, "" )
 	
