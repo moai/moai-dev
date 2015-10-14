@@ -84,9 +84,9 @@ class MoaiPlugin implements Plugin<Project> {
         modules.each { module ->
             if (module == "") return
             //include a project if it has one
-            if (project.findProject(":modules:${module}")) {
+            if (project.findProject(":${module}")) {
                 project.dependencies {
-                    compile project.project(":modules:${module}")
+                    compile project.project(":${module}")
                 }
             }
         }

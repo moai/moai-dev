@@ -3,14 +3,9 @@ apply plugin: 'com.android.application'
 
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion '22.0.1'
-
 
     defaultConfig {
-        applicationId "com.getmoai.moaitemplate"
-        minSdkVersion 17
-        targetSdkVersion 22
+        applicationId "com.getmoai.MoaiTemplate"
         versionCode 1
         versionName "1.0"
     }
@@ -21,21 +16,14 @@ android {
         assets.srcDir 'bootstrap'
     }
 
-    buildTypes {
-        release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
     }
 }
+
 apply from: 'moai.gradle' //leave after android config block, it needs applicationId
 
 
 dependencies {
-    compile 'com.android.support:multidex:1.0.0'
     compile 'com.android.support:appcompat-v7:22.1.1'
 }

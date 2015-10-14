@@ -25,7 +25,9 @@ class MoaiSettings implements Plugin<Settings> {
             settings.moaiModules=""
         }
         def modules = settings.moaiModules.toString().split(",").collect { i -> i.trim() }
-
+        if (settings.moaiModules == "") {
+            modules = []
+        }
         //always include core
         settings.include(":core")
         settings.project(":core").projectDir = new File(srcRoot+"/moai-android/java")
@@ -35,9 +37,9 @@ class MoaiSettings implements Plugin<Settings> {
                 def modproj = new File(srcRoot+"/"+module+"/java/build.gradle")
                 if (modproj.exists()) {
                     println("enabling ${module}")
-                    settings.include(":modules:${module}")
-                    settings.project(":modules:${module}").projectDir = new File(srcRoot+"/"+module+"/java")
-                    settings.project(":modules:${module}").name = module
+                    settings.include(":${module}")
+                    settings.project(":${module}").projectDir = new File(srcRoot+"/"+module+"/java")
+                    settings.project(":${module}").name = module
                 } else {
                     throw new Exception("Missing module ${module} not found at ${srcRoot}/${module}/java")
                 }
