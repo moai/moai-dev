@@ -60,7 +60,7 @@ local		makeDlcResourceSig				= nil
 			wrap							= nil
 			zip								= nil
 
--- HACK
+-- osx needs special treatment
 local moaiCopy = MOAIFileSystem.copy
 if osx then
 	MOAIFileSystem.copy = function ( srcpath, dstpath ) copy ( dstpath, srcpath ) end
@@ -102,14 +102,20 @@ end
 copy = function ( dstpath, srcpath )
 
 	if osx then
-		
+		print("COPY: \"" .. srcpath .. "\" -> \"" .. dstpath .. "\"")
 		-- awful, but until there's a better way...
 		moaiCopy( srcpath, dstpath )
 
 		-- so awful
-		os.execute ( string.format ( 'rm -fr %s', dstpath ))
+		if (false) then
+		print( "Warning! removal operation: " .. string.format ( 'rm -fr \"%s\"', dstpath ))
+		os.execute ( string.format ( 'rm -fr \"%s\"', dstpath ))
+		end
 
-		local cmd = string.format ( 'cp -a %s %s', srcpath, dstpath )
+		-- less awful: ditto
+		--local cmd = string.format ( 'cp -rp \"%s\" \"%s\"', srcpath, dstpath )
+		local cmd = string.format ( 'ditto \"%s\" \"%s\"', srcpath, dstpath )
+		print("COPY COMMAND: " .. cmd)
 		print ( cmd )
 		os.execute ( cmd )
 	else
