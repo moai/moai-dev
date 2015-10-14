@@ -105,6 +105,7 @@ private:
 	static int		_loadFromBuffer				( lua_State* L );
 	static int		_mix						( lua_State* L );
 	static int		_padToPow2					( lua_State* L );
+	static int		_print						( lua_State* L );
 	static int		_resize						( lua_State* L );
 	static int		_resizeCanvas				( lua_State* L );
 	static int		_setColor32					( lua_State* L );
@@ -160,7 +161,7 @@ public:
 	void					GammaCorrection				( const MOAIImage& image, float gamma );
 	void					GenerateOutlineFromSDF		( ZLIntRect rect, float distMin, float distMax, float r, float g, float b, float a );
 	void					GenerateSDF					( ZLIntRect rect );
-	void					GenerateSDFAA				( ZLIntRect rect, float threshold );
+	void					GenerateSDFAA				( ZLIntRect rect, float sizeInPixels );
 	void					GenerateSDFDeadReckoning	( ZLIntRect rect, int threshold );
 	u32						GetBitmapSize				() const;
 	ZLIntRect				GetBounds					();
@@ -190,6 +191,7 @@ public:
 							~MOAIImage					();
 	void					PadToPow2					( const MOAIImage& image );
 	void					PremultiplyAlpha			( const MOAIImage& image );
+	void					Print						();
 	void					RegisterLuaClass			( MOAILuaState& state );
 	void					RegisterLuaFuncs			( MOAILuaState& state );
 	void					ResizeCanvas				( const MOAIImage& image, ZLIntRect rect );

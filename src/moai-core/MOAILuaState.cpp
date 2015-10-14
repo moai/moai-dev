@@ -875,9 +875,9 @@ ZLColorVec MOAILuaState::GetValue < ZLColorVec >( int idx, const ZLColorVec valu
 template <>
 ZLRect MOAILuaState::GetValue < ZLRect >( int idx, const ZLRect value ) {
 
+	ZLRect rect = value;
+
 	if ( this->CheckParams ( idx, "NNNN", false )) {
-	
-		ZLRect rect;
 		
 		rect.mXMin		= lua_tonumber ( this->mState, idx + 0 );
 		rect.mYMin		= lua_tonumber ( this->mState, idx + 1 );
@@ -886,7 +886,24 @@ ZLRect MOAILuaState::GetValue < ZLRect >( int idx, const ZLRect value ) {
 		
 		return rect;
 	}
-	return value;
+	else if ( this->CheckParams ( idx, "NN", false )) {
+		
+		rect.mXMin		= value.mXMin;
+		rect.mYMin		= value.mYMin;
+		rect.mXMax		= value.mXMin + lua_tonumber ( this->mState, idx + 1 );
+		rect.mYMax		= value.mYMin + lua_tonumber ( this->mState, idx + 2 );
+	}
+	else if ( this->IsType ( idx, LUA_TNUMBER )) {
+	
+		float size = lua_tonumber ( this->mState, idx );
+		
+		rect.mXMin		= value.mXMin;
+		rect.mYMin		= value.mYMin;
+		rect.mXMax		= value.mXMin + size;
+		rect.mYMax		= value.mYMin + size;
+	}
+	
+	return rect;
 }
 
 //----------------------------------------------------------------//
