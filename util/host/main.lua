@@ -61,7 +61,7 @@ local subcommand = arg[4]
 hostname = arg[5]
 
 if (subcommand == "" or subcommand == nil) then
-  usage()
+  usage("host")
   return
 end
 
@@ -73,7 +73,7 @@ if MOAIFileSystem.checkFileExists(SCRIPT_DIR..subcommand..'.lua') then
   dofile(SCRIPT_DIR..subcommand..'.lua')
 else
   print('host command "'..subcommand..'" not found')
-  usage()
+  usage("host")
 end
 
 os.exit(0)
