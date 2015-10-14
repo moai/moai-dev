@@ -1,24 +1,22 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIIMAGEFORMATJPG_H
-#define	MOAIIMAGEFORMATJPG_H
+#ifndef	MOAIIMAGEFORMATWEBP_H
+#define	MOAIIMAGEFORMATWEBP_H
 
-#if MOAI_WITH_LIBJPG
-
-#include <moai-sim/MOAIImageFormat.h>
+#include <moai-sim/headers.h>
 
 //================================================================//
-// MOAIImageFormatJpg
+// MOAIImageFormatWebP
 //================================================================//
-class MOAIImageFormatJpg :
+class MOAIImageFormatWebP :
 	public MOAIImageFormat {
 private:
 
-	static const u32 HEADER_SIZE = 8;
+	static const u32 HEADER_SIZE = 12;
 
 	//----------------------------------------------------------------//
-	void			ReadImageJpg				( MOAIImage& image, void* jpgInfoParam, u32 transform );
+	void			ReadImageWebP				( MOAIImage& image, u8 const* data, size_t dataSize, int width, int height, bool hasAlpha, u32 transform );
 
 public:
 
@@ -26,11 +24,10 @@ public:
 	bool			CheckHeader					( const void* buffer );
 	bool			CreateTexture				( MOAISingleTexture& texture, const void* data, size_t size );
 	size_t			GetHeaderSize				();
-					MOAIImageFormatJpg			();
-					~MOAIImageFormatJpg			();
+					MOAIImageFormatWebP			();
+					~MOAIImageFormatWebP		();
 	bool			ReadImage					( MOAIImage& image, ZLStream& stream, u32 transform );
 	bool			WriteImage					( const MOAIImage& image, ZLStream& stream );
 };
 
-#endif
 #endif

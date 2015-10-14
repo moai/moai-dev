@@ -51,6 +51,22 @@
 	#include <moai-http-server/host.h>
 #endif
 
+#if AKU_WITH_IMAGE_JPG
+	#include <moai-image-jpg/host.h>
+#endif
+
+#if AKU_WITH_IMAGE_PNG
+	#include <moai-image-png/host.h>
+#endif
+
+#if AKU_WITH_IMAGE_PVR
+	#include <moai-image-pvr/host.h>
+#endif
+
+#if AKU_WITH_IMAGE_WEBP
+	#include <moai-image-webp/host.h>
+#endif
+
 #if AKU_WITH_LUAEXT
 	#include <moai-luaext/host.h>
 #endif

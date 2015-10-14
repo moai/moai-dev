@@ -3,10 +3,7 @@
 
 #include "pch.h"
 
-SUPPRESS_EMPTY_FILE_WARNING
-#if MOAI_WITH_LIBWEBP
-
-#include <moai-sim/MOAIImageFormatWebP.h>
+#include <moai-image-webp/MOAIImageFormatWebP.h>
 
 extern "C" {
 	#include "libwebp-0.4.1/src/webp/demux.h"
@@ -130,5 +127,3 @@ bool MOAIImageFormatWebP::WriteImage ( const MOAIImage& image, ZLStream& stream 
 	UNUSED ( stream );
 	return false;
 }
-
-#endif
