@@ -20,7 +20,7 @@ function usage()
         (Presumably you found it already.)
     
     INITIALIZE Project folder:              moaiutil init
-        Run from a clean project folder to initialize a moaiutil-managed set of host projects.
+        Run from your project folder to initialize a moaiutil-managed set of host projects.
         Creates a hostconfig.lua file, which you must edit to describe your MOAI project.
         Example:
             mkdir newMOAIProject && cd newMOAIProject   # use the toolbelt in your own project workspace
@@ -36,6 +36,9 @@ function usage()
             host create <hostname> - Creates the host in the hosts folder (removing old host) based on latest config settings.
         Example:
             cd newMOAIProject && moaiutil host create ios && moaiutil host create android-studio && moaiutil host create host osx-app && #etc.
+
+    MAKE Lua Developer Documentation:       moaiutil make-lua-docs 
+        Creates compact documentation for the Lua-side of the MOAI API.
 
     MAKE Developer Documentation:           moaiutil make-cpp-docs
         Creates compact documentation from the MOAI C/C++ codebase.
