@@ -243,7 +243,7 @@ configureHost = function()
   util.replaceInFiles ({
 		[ output .. 'gradle.properties' ] = {
 			[ 'moaiLibRoot=[^\n]*' ]= "moaiLibRoot=./lib",
-      [ 'moaiSrcRoot=[^\n]*' ]= "moaiSrcRoot=./lib",
+      [ 'moaiSrcRoot=[^\n]*' ]= "moaiSrcRoot="..MOAI_SDK_HOME.."src",
 			[ 'moaiLuaRoot=[^\n]*' ]= "moaiLuaRoot="..luasrc,
       [ 'moaiModules=[^\n]*' ]= "moaiModules="..modulestr
 		},
