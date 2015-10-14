@@ -63,6 +63,10 @@
 	#include <moai-sim/host.h>
 #endif
 
+#if AKU_WITH_SPINE
+    #include <moai-spine/host.h>
+#endif
+
 #if AKU_WITH_UNTZ
 	#include <moai-untz/host.h>
 #endif
