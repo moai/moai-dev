@@ -96,7 +96,7 @@ void MOAIGfxDeviceVertexWriter::FlushBufferedPrims () {
 				this->BindIndexBuffer ( &this->mIdxBuffer );
 				
 				this->UpdateShaderGlobals ();
-				zglDrawElements ( this->mPrimType, count, ZGL_TYPE_UNSIGNED_INT, this->mIdxBuffer.GetAddress ());
+				zglDrawElements ( this->mPrimType, count, ZGL_TYPE_UNSIGNED_SHORT, this->mIdxBuffer.GetAddress ());
 				this->mDrawCount++;
 			}
 		}
@@ -275,13 +275,13 @@ void MOAIGfxDeviceVertexWriter::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* u
 
 		// indices
 	
-		this->mIdxBuffer.Write < u32 >( base + 0 ); // left top
-		this->mIdxBuffer.Write < u32 >( base + 3 ); // left bottom
-		this->mIdxBuffer.Write < u32 >( base + 2 ); // right bottom
+		this->mIdxBuffer.Write < u16 >( base + 0 ); // left top
+		this->mIdxBuffer.Write < u16 >( base + 3 ); // left bottom
+		this->mIdxBuffer.Write < u16 >( base + 2 ); // right bottom
 	
-		this->mIdxBuffer.Write < u32 >( base + 0 ); // left top
-		this->mIdxBuffer.Write < u32 >( base + 2 ); // right bottom
-		this->mIdxBuffer.Write < u32 >( base + 1 ); // right top
+		this->mIdxBuffer.Write < u16 >( base + 0 ); // left top
+		this->mIdxBuffer.Write < u16 >( base + 2 ); // right bottom
+		this->mIdxBuffer.Write < u16 >( base + 1 ); // right top
 	
 	this->EndPrim ();
 }

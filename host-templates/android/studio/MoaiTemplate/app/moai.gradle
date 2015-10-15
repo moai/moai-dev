@@ -13,10 +13,10 @@ class MoaiPlugin implements Plugin<Project> {
            def appId = project.android.defaultConfig.applicationId
            if (System.properties['os.name'].toLowerCase().contains('windows')) {
             
-              commandLine "cmd", "/c", "adb", "shell", "am","start","-n","$appId/com.getmoai.androidhost.MoaiActivity"
+              commandLine "cmd", "/c", "adb", "shell", "am","start","-n","$appId/com.moaisdk.core.MoaiActivity"
            }
            else {
-               commandLine  "adb", "shell", "am","start","-n","$appId/com.getmoai.androidhost.MoaiActivity"
+               commandLine  "adb", "shell", "am","start","-n","$appId/com.moaisdk.core.MoaiActivity"
            }
         }
         project.tasks.getByName("runApp").dependsOn('installDebug')

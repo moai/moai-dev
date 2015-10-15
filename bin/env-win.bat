@@ -44,7 +44,7 @@ echo "Setting MingW Gcc path..."
 
 set PATH=%PATH%;%MINGW_PATH%
 
-
+set OLD_JAVA_HOME=%JAVA_HOME%
 
 rem ---- emscripten SDK -------
 :emsdk
@@ -54,7 +54,9 @@ echo "Setting Emscripten path..."
 pushd .
 cd %EMSDK_PATH%
 call emsdk_env.bat
-popd
+popd                         
+
+if NOT "%OLD_JAVA_HOME%"=="" set JAVA_HOME=%OLD_JAVA_HOME%
 
 
 

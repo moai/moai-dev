@@ -65,7 +65,7 @@ public class MoaiView extends GLSurfaceView {
 				mHandler.postDelayed ( mUpdateRunnable , AKU_UPDATE_FREQUENCY );
 			}
 		};
-
+		setEGLConfigChooser(8 , 8, 8, 8, 16, 0);
         setRenderer ( new MoaiRenderer ());
 		onPause (); // Pause rendering until restarted by the activity lifecycle.		
 	}
