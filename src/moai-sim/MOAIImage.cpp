@@ -2715,46 +2715,9 @@ void MOAIImage::PremultiplyAlpha ( const MOAIImage& image ) {
 //----------------------------------------------------------------//
 void MOAIImage::Print () {
 
-	u32 depth = ZLColor::GetDepthInBits ( this->mColorFormat );
-	
-	cc8* format = "";
-	u32 mask = 0;
-	
-	switch ( depth ) {
-		
-		case 32:
-			format = "0x%08x, ";
-			mask = 0xffffffff;
-		break;
-		
-		case 24:
-			format = "0x%06x, ";
-			mask = 0x00ffffff;
-		break;
-		
-		case 16:
-			format = "0x%04x, ";
-			mask = 0x0000ffff;
-		break;
-		
-		case 8:
-			format = "0x%02x, ";
-			mask = 0x000000ff;
-		break;
-		
-		case 4:
-			format = "0x%01x, ";
-			mask = 0x0000000f;
-		break;
-		
-		default:
-			printf ( "unknown depth\n" );
-			return;
-	}
-
 	for ( u32 y = 0; y < this->mHeight; ++y ) {
 		for ( u32 x = 0; x < this->mWidth; ++x ) {
-			printf ( format, this->GetColor ( x, y ) & mask );
+			printf ( "0x%08x, ", this->GetColor ( x, y ));
 		}
 		printf ( "\n" );
 	}

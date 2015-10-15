@@ -4,37 +4,25 @@
 varying LOWP vec4 colorVarying;
 varying MEDP vec2 uvVarying;
 
-// TODO: expose as uniforms
-vec4 outlineColor = vec4 ( 0.0, 1.0, 1.0, 1.0 );
-vec4 glowColor = vec4 ( 0.0, 0.0, 1.0, 1.0 );
+uniform sampler2D sdfSampler;
+uniform sampler2D rampSampler;
 
-uniform sampler2D sampler;
+uniform vec4 outlineColor;
+uniform vec4 glowColor;
 
 void main () {
 
-	vec4 sample = texture2D ( sampler, uvVarying );
+	vec4 sdfSample = texture2D ( sdfSampler, uvVarying );
 
-	float sdf = sample.a;
-	vec4 texColor = vec4 ( sample.r, sample.g, sample.b, 1.0 ) * colorVarying;
+	float sdf = sdfSample.a;
 
-	if ( sdf > 0.5 ) {
+	vec4 texColor = vec4 ( sdfSample.r, sdfSample.g, sdfSample.b, sdf > 0.5 ? 1.0 : 0.0 ) * colorVarying;
+	
+	sdf = 1.0 - sdf;
 
-		gl_FragColor = texColor;
-	}
-	else if ( sdf > 0.45 ) {
-
-		gl_FragColor = mix ( outlineColor, texColor, ( sdf - 0.45 ) * 20.0 );
-	}
-	else if ( sdf > 0.35 ) {
-
-		gl_FragColor = outlineColor;
-	}
-	else if ( sdf > 0.3 ) {
-
-		gl_FragColor = mix ( glowColor * sdf, outlineColor, ( sdf - 0.3 ) * 20.0 );
-	}
-	else {
-
-		gl_FragColor = glowColor * sdf;
-	}
+	float ramp0 = texture2D ( rampSampler, vec2 ( 0.25, sdf )).a;
+	float ramp1 = texture2D ( rampSampler, vec2 ( 0.75, sdf )).a;
+	
+	texColor = mix ( texColor, glowColor, ramp1 );
+	gl_FragColor = mix ( texColor, outlineColor, ramp0 );
 }
