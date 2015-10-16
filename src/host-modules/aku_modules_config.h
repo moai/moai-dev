@@ -45,6 +45,10 @@
 		#define AKU_WITH_SDL 0
 	#endif
 
+	#ifndef AKU_WITH_SPINE
+		#define AKU_WITH_SPINE 1
+	#endif
+
 	#ifndef AKU_WITH_SIM
 		#define AKU_WITH_SIM 1
 	#endif

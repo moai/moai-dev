@@ -30,7 +30,6 @@ public:
 	friend class MOAIInputContext;
 	friend class MOAIInputDevice;
 	friend class MOAIInputMgr;
-	friend class MOAIInputMgr;
 
 	//----------------------------------------------------------------//
 	virtual void	ClearState			() {}

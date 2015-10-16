@@ -154,7 +154,13 @@ int MOAICoroutine::_run ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setDefaultParent
+	@text	This coroutine will be used as the default parent for
+			any actions launched from within this coroutine.
+
+	@in		MOAICoroutine coroutine
+	@out	nil
+*/
 int MOAICoroutine::_setDefaultParent ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICoroutine, "U" );
 	
@@ -177,7 +183,13 @@ int MOAICoroutine::_setTrackingGroup ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	step
+	@text	Resume the coroutine (run until the next call to coroutine.yield ()
+			or until the coroutine's main method returns).
+
+	@in		MOAICoroutine coroutine
+	@out	nil
+*/
 int MOAICoroutine::_step ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICoroutine, "U" )
 

@@ -16,6 +16,20 @@ class MOAIVertexFormat;
 //================================================================//
 // MOAIGeometryWriter
 //================================================================//
+/**	@lua	MOAIGeometryWriter
+	@text	Interface for writing and manipulating procedural geometry.
+			Geometry is written as vertices to a stream. Vertex layout is
+			given by a MOAIVertexFormat. Stream cursor is reset to starting
+			location after each write (to make writing multiple passes
+			easier).
+			
+			Operations that affect every vertex of a mesh affect all
+			vertices between the stream cursor and the end of the stream.
+ 
+			Once all vertices have been written, stream may be converted
+			into a mesh with an index buffer that is calculated
+			by finding redundant vertices.
+*/
 class MOAIGeometryWriter :
 	public MOAIGlobalClass < MOAIGeometryWriter, MOAILuaObject > {
 private:

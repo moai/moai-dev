@@ -37,6 +37,7 @@ protected:
 	float	mMaxMagnitude;
 
 	u32		mEmission;
+	u32		mParticleState;
 
 	MOAILuaSharedPtr < MOAIParticleSystem > mSystem;
 	
@@ -49,6 +50,7 @@ protected:
 	static int		_setMask				( lua_State* L );
 	static int		_setRadius				( lua_State* L );
 	static int		_setRect				( lua_State* L );
+	static int		_setState				( lua_State* L );
 	static int		_setSystem				( lua_State* L );
 	static int		_surge					( lua_State* L );
 	

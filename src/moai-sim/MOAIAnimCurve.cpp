@@ -28,6 +28,35 @@ int MOAIAnimCurve::_getValueAtTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getValueRange
+	@text	Returns the minimum and maximum values in the given time range. 
+	
+	@in		MOAIAnimCurve self
+	@in		number	start time
+	@in		number	end time
+	@out	number 	min value
+	@out	number 	max value
+*/
+int MOAIAnimCurve::_getValueRange ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAnimCurve, "UNN" );
+	
+	float t0 = state.GetValue < float >( 2, 0.0f );
+	float t1 = state.GetValue < float >( 3, 0.0f );
+	
+	float min = 0.0f;
+	float max = 0.0f;
+	
+	if ( t0 > t1 ) {
+		float tmp = t0; t0 = t1; t1 = tmp;
+	}
+	
+	self->GetValueRange ( t0, t1, min, max );
+	state.Push ( min );
+	state.Push ( max );
+	return 2;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setKey
 	@text	Initialize a key frame at a given time with a give value. Also set the transition type between
 			the specified key frame and the next key frame.
@@ -154,6 +183,57 @@ void MOAIAnimCurve::GetValue ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span )
 }
 
 //----------------------------------------------------------------//
+void MOAIAnimCurve::GetValueRange ( float t0, float t1, float &min, float &max ) {
+	
+	u32 key0 = 0;
+	u32 key1 = 0;
+	
+	MOAIAnimKeySpan span0 = this->GetSpan ( t0 );
+	MOAIAnimKeySpan span1 = this->GetSpan ( t1 );
+	
+	if ( t1 - t0 > this->GetLength ()) {
+		key0 = 0;
+		key1 = this->Size () - 1;
+	}
+	else {
+		if ( span0.mKeyID > span1.mKeyID ) {
+			
+			key0 = span1.mKeyID;
+			key1 = span0.mKeyID;
+		}
+		else {
+			
+			key0 = span0.mKeyID;
+			key1 = span1.mKeyID;
+		}
+	}
+	
+	min = this->GetValue ( span0 );
+	max = this->GetValue ( span0 );
+	
+	for ( u32 id = key0 + 1; id <= key1; id++ ) {
+		
+		float val = this->mSamples [ id ];
+		
+		if ( val < min ) {
+			min = val;
+		}
+		if ( val > max ) {
+			max = val;
+		}
+	}
+	
+	float last = this->GetValue ( span1 );
+	
+	if ( last < min ) {
+		min = last;
+	}
+	if ( last > max ) {
+		max = last;
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIAnimCurve::GetZero ( MOAIAttrOp& attrOp ) const {
 
 	attrOp.SetValue < float >( 0.0f, MOAIAttrOp::ATTR_TYPE_FLOAT );
@@ -189,6 +269,7 @@ void MOAIAnimCurve::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getValueAtTime",		_getValueAtTime },
+		{ "getValueRange",		_getValueRange },
 		{ "setKey",				_setKey },
 		{ NULL, NULL }
 	};

@@ -41,7 +41,18 @@ int MOAICamera::_getFieldOfView ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getFloorMove
+	@text	Project the given X, Y offset onto the floor (XY plane). Projected
+			X, Y will be rotated to match camera's orientation. This is for
+			implementing a truck along the floor plane relative to the
+			camera's orientation.
+
+	@in		MOAICamera self
+	@in		number x
+	@in		number y
+	@out	number x
+	@out	number y
+*/
 int MOAICamera::_getFloorMove ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICamera, "U" )
 
@@ -61,6 +72,7 @@ int MOAICamera::_getFloorMove ( lua_State* L ) {
 		v = mtx.GetYAxis ();
 	}
 	
+	// TODO: double check this
 	ZLVec2D r ( v.mX, v.mY );
 	r.Rotate90Clockwise ();
 	h.Init ( r.mX, r.mY, 0.0f );
@@ -108,7 +120,14 @@ int MOAICamera::_getNearPlane ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getViewVector
+	@text	Get the camera's normalized view vector (i.e. the Z axis).
+
+	@in		MOAICamera self
+	@out	number xN
+	@out	number yN
+	@out	number zN
+*/
 int MOAICamera::_getViewVector ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICamera, "U" )
 	
@@ -121,7 +140,15 @@ int MOAICamera::_getViewVector ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	lookAt
+	@text	Point the camera at a given point in space.
+
+	@in		MOAICamera self
+	@in		number x
+	@in		number y
+	@in		number z
+	@out	nil
+*/
 int MOAICamera::_lookAt ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICamera, "U" )
 
@@ -136,7 +163,14 @@ int MOAICamera::_lookAt ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	moveFieldOfView
+	@text	Animate the camera's FOV.
+
+	@in		MOAICamera self
+	@in		number fov
+	@in		number delay
+	@out	nil
+*/
 int MOAICamera::_moveFieldOfView ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICamera, "U" )
 	
@@ -166,7 +200,14 @@ int MOAICamera::_moveFieldOfView ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	seekFieldOfView
+	@text	Animate the camera's FOV.
+
+	@in		MOAICamera self
+	@in		number fov
+	@in		number delay
+	@out	nil
+*/
 int MOAICamera::_seekFieldOfView ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICamera, "U" )
 
@@ -252,7 +293,13 @@ int MOAICamera::_setOrtho ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setType
+	@text	Directly set the camera's type to one of CAMERA_TYPE_WINDOW, CAMERA_TYPE_ORTHO, CAMERA_TYPE_3D.
+
+	@in		MOAICamera self
+	@in		number type
+	@out	nil
+*/
 int MOAICamera::_setType ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICamera, "U" )
 	self->mType = state.GetValue < u32 >( 2, CAMERA_TYPE_WINDOW );
