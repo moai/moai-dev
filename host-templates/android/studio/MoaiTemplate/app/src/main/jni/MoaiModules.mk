@@ -52,6 +52,12 @@ LOCAL_SRC_FILES := $(MOAI_LIBS)/libtlsf.a
 include $(PREBUILT_STATIC_LIBRARY)
 include $(CLEAR_VARS)
 
+LOCAL_MODULE    := spine
+LOCAL_SRC_FILES := $(MOAI_LIBS)/libspine.a
+
+include $(PREBUILT_STATIC_LIBRARY)
+include $(CLEAR_VARS)
+
 LOCAL_MODULE    := moai-http-client 
 LOCAL_SRC_FILES := $(MOAI_LIBS)/libmoai-http-client.a
 
@@ -229,6 +235,12 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE    := luasql 
 LOCAL_SRC_FILES := $(MOAI_LIBS)/libluasql.a
+
+include $(PREBUILT_STATIC_LIBRARY)
+include $(CLEAR_VARS)
+
+LOCAL_MODULE    := moai-spine 
+LOCAL_SRC_FILES := $(MOAI_LIBS)/libmoai-spine.a
 
 include $(PREBUILT_STATIC_LIBRARY)
 include $(CLEAR_VARS)
