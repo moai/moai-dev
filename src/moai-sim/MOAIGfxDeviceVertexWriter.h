@@ -129,19 +129,19 @@ public:
 	//----------------------------------------------------------------//
 	inline void WriteFinalColor4b () {
 		
-		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
+		this->mVtxBuffer.WriteUnsafe < u32 >( this->mFinalColor32 );
 	}
 	
 	//----------------------------------------------------------------//
 	inline void WriteFinalColor4f () {
 		
-		this->mVtxBuffer.Write < ZLColorVec >( this->mFinalColor );
+		this->mVtxBuffer.WriteUnsafe < ZLColorVec >( this->mFinalColor );
 	}
 		
 	//----------------------------------------------------------------//
 	inline void WriteIndex ( u16 index ) {
 		
-		this->mIdxBuffer.Write < u16 >( this->mIndexBase + index );
+		this->mIdxBuffer.WriteUnsafe < u16 >( this->mIndexBase + index );
 	}
 	
 	//----------------------------------------------------------------//
@@ -154,7 +154,7 @@ public:
 		if ( this->mCpuUVTransform ) {
 			this->mUVTransform.Transform ( uv );
 		}
-		this->mVtxBuffer.Write < ZLVec2D >( uv );
+		this->mVtxBuffer.WriteUnsafe < ZLVec2D >( uv );
 	}
 	
 	//----------------------------------------------------------------//
@@ -163,7 +163,7 @@ public:
 		if ( this->mCpuUVTransform ) {
 			this->mUVTransform.Transform ( uv );
 		}
-		this->mVtxBuffer.Write < ZLVec2D >( uv );
+		this->mVtxBuffer.WriteUnsafe < ZLVec2D >( uv );
 	}
 	
 	//----------------------------------------------------------------//
@@ -190,7 +190,7 @@ public:
 		if ( this->mCpuVertexTransform ) {
 			this->mCpuVertexTransformMtx.Transform ( vtx );
 		}
-		this->mVtxBuffer.Write < ZLVec4D >( vtx );
+		this->mVtxBuffer.WriteUnsafe < ZLVec4D >( vtx );
 	}
 	
 	//----------------------------------------------------------------//

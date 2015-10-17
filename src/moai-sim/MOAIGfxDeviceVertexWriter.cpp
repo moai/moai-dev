@@ -282,24 +282,24 @@ void MOAIGfxDeviceVertexWriter::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* u
 	this->BeginPrimIndexed ( ZGL_PRIM_TRIANGLES, 4, 6 );
 	
 		// left top
-		this->mVtxBuffer.Write ( vtx [ 0 ]);
-		this->mVtxBuffer.Write ( uv [ 0 ]);
-		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
+		this->mVtxBuffer.WriteUnsafe ( vtx [ 0 ]);
+		this->mVtxBuffer.WriteUnsafe ( uv [ 0 ]);
+		this->mVtxBuffer.WriteUnsafe < u32 >( this->mFinalColor32 );
 	
 		// right top
-		this->mVtxBuffer.Write ( vtx [ 1 ]);
-		this->mVtxBuffer.Write ( uv [ 1 ]);
-		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
+		this->mVtxBuffer.WriteUnsafe ( vtx [ 1 ]);
+		this->mVtxBuffer.WriteUnsafe ( uv [ 1 ]);
+		this->mVtxBuffer.WriteUnsafe < u32 >( this->mFinalColor32 );
 	
 		// right bottom
-		this->mVtxBuffer.Write ( vtx[ 2 ]);
-		this->mVtxBuffer.Write ( uv [ 2 ]);
-		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
+		this->mVtxBuffer.WriteUnsafe ( vtx[ 2 ]);
+		this->mVtxBuffer.WriteUnsafe ( uv [ 2 ]);
+		this->mVtxBuffer.WriteUnsafe < u32 >( this->mFinalColor32 );
 	
 		// left bottom
-		this->mVtxBuffer.Write ( vtx [ 3 ]);
-		this->mVtxBuffer.Write ( uv [ 3 ]);
-		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
+		this->mVtxBuffer.WriteUnsafe ( vtx [ 3 ]);
+		this->mVtxBuffer.WriteUnsafe ( uv [ 3 ]);
+		this->mVtxBuffer.WriteUnsafe < u32 >( this->mFinalColor32 );
 
 		// indices
 		this->WriteIndex ( 0 ); // left top
