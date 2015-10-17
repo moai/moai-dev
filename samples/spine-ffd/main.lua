@@ -6,13 +6,7 @@
 
 MOAISim.openWindow ( "test", 480, 640 )
 
-MOAISim.clearLoopFlags()
-
-MOAISim.setLoopFlags(MOAISim.SIM_LOOP_ALLOW_BOOST)
-MOAISim.setLoopFlags(MOAISim.SIM_LOOP_LONG_DELAY)
-MOAISim.setBoostThreshold(0)
-
-MOAIDebugLines.setStyle(MOAIDebugLines.PROP_WORLD_BOUNDS)
+-- MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 480, 640 )
@@ -23,25 +17,39 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 local goblinsData = MOAISpineSkeletonData.new ()
-goblinsData:load("goblins/goblins-ffd.json", "goblins/goblins-ffd.atlas", 1)
+goblinsData:load ( "goblins/goblins-mesh.json", "goblins/goblins-mesh.atlas", 1 )
 
-local goblins = MOAISpineSkeleton.new ()
-goblins:init(goblinsData)
-goblins:setFlip(false, true)
-goblins:setToSetupPose()
-goblins:setSkin("goblin")
-goblins:initAnimationState()
-goblins:setAnimation (1, "walk", true)
+function makeGoblin ( x, y )
+    local goblins = MOAISpineSkeleton.new ()
+    goblins:init ( goblinsData )
+    goblins:setFlip ( false, true )
+    goblins:setToSetupPose ()
+    goblins:setSkin ( "goblin" )
+    goblins:setComputeBounds ( true )
+    goblins:initAnimationState ()
+    goblins:setAnimation (1, "walk", true)
+    goblins:start ()
+    goblins:setLoc ( x, y, 0 )
+    layer:insertProp ( goblins )
+end
 
--- By default MOAISpineSkeleton uses cached bounds for better performance. 
--- Bounds are recomputed: 
--- 1) when called setToSetupPose, setBonesToSetupPose, setSlotsToSetupPose or setSkin
--- 2) if setComputeBounds is true, bounds will be updated every frame
-goblins:setComputeBounds (true)
+timer = MOAITimer.new ()
+timer:setSpan ( 2 )
+timer:setListener ( MOAITimer.EVENT_TIMER_END_SPAN, function()
+    print("draw calls:", MOAIRenderMgr.getPerformanceDrawCount ())
+end)
+timer:start ():setMode ( MOAITimer.LOOP )
 
-goblins:start()
-goblins:setLoc(0, 100, 0)
 
-goblins:moveRot(0, 0, 360, 4)
+makeGoblin ( -100, -40 )
+makeGoblin ( -100, 300 )
+makeGoblin ( 100, -40 )
+makeGoblin ( 100, 300 )
 
-layer:insertProp(goblins)
+
+-- stress test:
+
+-- local count = 30
+-- for i = 1, count do
+--     makeGoblin ( math.random( -240, 240 ), math.random ( -320, 320 ))
+-- end

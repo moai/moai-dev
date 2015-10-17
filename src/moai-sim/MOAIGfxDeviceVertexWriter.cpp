@@ -25,18 +25,23 @@
 //----------------------------------------------------------------//
 void MOAIGfxDeviceVertexWriter::BeginPrim () {
 
-	if ( this->mPrimSize ) {
-
-		u32 totalIndices	= this->mIdxBuffer.GetLength () / INDEX_SIZE;
-		u32 totalVertices	= this->mVtxBuffer.GetLength() / this->mVertexSize;
-
-		u32 maxVertices		= MIN ( totalIndices, totalVertices );
-		
-		this->mMaxPrims = ( u32 )( maxVertices / this->mPrimSize );
-		
-		this->mPrimTopIdx = this->mIdxBuffer.GetCursor () + ( this->mPrimSize * INDEX_SIZE );
-		this->mPrimTopVtx = this->mVtxBuffer.GetCursor () + ( this->mPrimSize * this->mVertexSize );
+//	if ( this->mPrimSize ) {
+//
+//		u32 totalIndices	= this->mIdxBuffer.GetLength () / INDEX_SIZE;
+//		u32 totalVertices	= this->mVtxBuffer.GetLength() / this->mVertexSize;
+//
+//		u32 maxVertices		= MIN ( totalIndices, totalVertices );
+//		
+//		this->mMaxPrims = ( u32 )( maxVertices / this->mPrimSize );
+//	
+//		this->mPrimTopIdx = this->mIdxBuffer.GetCursor () + ( this->mPrimSize * INDEX_SIZE );
+//		this->mPrimTopVtx = this->mVtxBuffer.GetCursor () + ( this->mPrimSize * this->mVertexSize );
+//	}
+	
+	if ( this->mUseIdxBuffer ) {
+		this->FlushBufferedPrims ();
 	}
+	this->mUseIdxBuffer = false;
 }
 
 //----------------------------------------------------------------//
@@ -47,10 +52,30 @@ void MOAIGfxDeviceVertexWriter::BeginPrim ( u32 primType, u32 primSize ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxDeviceVertexWriter::BeginPrimIndexed ( u32 primType, u32 vtxCount, u32 idxCount ) {
+	
+	if ( !this->mUseIdxBuffer ||
+		( this->mTotalIndices + idxCount > this->mMaxIndices ) ||
+		( this->mTotalVertices + vtxCount > this->mMaxVertices )) {
+		
+		this->FlushBufferedPrims ();
+	}
+	
+	this->SetPrimType ( primType );
+	
+	this->mUseIdxBuffer		= true;
+	this->mIndexBase		= ( u16 )( this->mTotalVertices );
+	
+	this->mTotalIndices	   += idxCount;
+	this->mTotalVertices   += vtxCount;
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxDeviceVertexWriter::BindBufferedDrawing ( MOAIVertexFormat& format ) {
 	
 	this->mVertexFormat = &format;
 	this->mVertexSize = format.GetVertexSize ();
+	this->UpdateLimits ();
 }
 
 //----------------------------------------------------------------//
@@ -64,7 +89,7 @@ void MOAIGfxDeviceVertexWriter::BindBufferedDrawing ( u32 preset ) {
 
 //----------------------------------------------------------------//
 void MOAIGfxDeviceVertexWriter::EndPrim () {
-
+	
 	++this->mPrimCount;
 	
 	if (( this->mPrimSize == 0 ) || ( this->mPrimCount >= this->mMaxPrims )) {
@@ -75,16 +100,20 @@ void MOAIGfxDeviceVertexWriter::EndPrim () {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxDeviceVertexWriter::EndPrimIndexed () {
+	
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxDeviceVertexWriter::FlushBufferedPrims () {
 
 	if (( !this->mIsDrawing ) && this->mVertexFormat && this->mVertexSize ) {
 	
 		this->mIsDrawing = true;
 		
-		size_t cursor = this->mIdxBuffer.GetCursor ();
-		if ( cursor ) {
-	
-			u32 count = this->mPrimSize ? this->mPrimCount * this->mPrimSize : ( u32 )( cursor / INDEX_SIZE );
+		if ( this->mUseIdxBuffer ) {
+			
+			u32 count = ( u32 )( this->mIdxBuffer.GetCursor () / INDEX_SIZE );
 			
 			if ( count > 0 ) {
 				
@@ -96,7 +125,7 @@ void MOAIGfxDeviceVertexWriter::FlushBufferedPrims () {
 				this->BindIndexBuffer ( &this->mIdxBuffer );
 				
 				this->UpdateShaderGlobals ();
-				zglDrawElements ( this->mPrimType, count, ZGL_TYPE_UNSIGNED_INT, this->mIdxBuffer.GetAddress ());
+				zglDrawElements ( this->mPrimType, count, ZGL_TYPE_UNSIGNED_SHORT, this->mIdxBuffer.GetAddress ());
 				this->mDrawCount++;
 			}
 		}
@@ -121,10 +150,10 @@ void MOAIGfxDeviceVertexWriter::FlushBufferedPrims () {
 		
 		this->mVtxBuffer.Seek ( 0 );
 		this->mIdxBuffer.Seek ( 0 );
-	
-		this->mPrimTopIdx	= 0;
-		this->mPrimTopVtx	= 0;
-		this->mPrimCount	= 0;
+		
+		this->mPrimCount		= 0;
+		this->mTotalIndices		= 0;
+		this->mTotalVertices	= 0;
 	}
 }
 
@@ -134,12 +163,13 @@ MOAIGfxDeviceVertexWriter::MOAIGfxDeviceVertexWriter () :
 	mFinalColor32 ( 0xffffffff ),
 	mVertexSize ( 0 ),
 	mMaxVertices ( 0 ),
+	mMaxIndices ( 0 ),
 	mMaxPrims ( 0 ),
 	mPrimCount ( 0 ),
 	mPrimSize ( 0 ),
-	mPrimTopIdx ( 0 ),
-	mPrimTopVtx ( 0 ),
 	mPrimType ( 0xffffffff ),
+	mTotalVertices ( 0 ),
+	mTotalIndices ( 0 ),
 	mVertexFormat ( 0 ) {
 	
 	this->mAmbientColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
@@ -233,6 +263,7 @@ void MOAIGfxDeviceVertexWriter::SetPrimType ( u32 primType, u32 primSize ) {
 		
 		this->mPrimType = primType;
 		this->mPrimSize = primSize;
+		this->UpdateLimits ();
 	}
 }
 
@@ -247,43 +278,39 @@ void MOAIGfxDeviceVertexWriter::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* u
 		this->mUVTransform.TransformQuad ( uv );
 	}
 	
-	this->SetPrimType ( ZGL_PRIM_TRIANGLES, 6 );
-	
-	u32 base = this->mVtxBuffer.GetCursor () / this->mVertexSize;
-	
-	this->BeginPrim ();
+//	u32 base = this->mVtxBuffer.GetCursor () / this->mVertexSize;
+	this->BeginPrimIndexed ( ZGL_PRIM_TRIANGLES, 4, 6 );
 	
 		// left top
-		this->mVtxBuffer.Write ( vtx [ 0 ]);
-		this->mVtxBuffer.Write ( uv [ 0 ]);
-		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
+		this->mVtxBuffer.WriteUnsafe ( vtx [ 0 ]);
+		this->mVtxBuffer.WriteUnsafe ( uv [ 0 ]);
+		this->mVtxBuffer.WriteUnsafe < u32 >( this->mFinalColor32 );
 	
 		// right top
-		this->mVtxBuffer.Write ( vtx [ 1 ]);
-		this->mVtxBuffer.Write ( uv [ 1 ]);
-		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
+		this->mVtxBuffer.WriteUnsafe ( vtx [ 1 ]);
+		this->mVtxBuffer.WriteUnsafe ( uv [ 1 ]);
+		this->mVtxBuffer.WriteUnsafe < u32 >( this->mFinalColor32 );
 	
 		// right bottom
-		this->mVtxBuffer.Write ( vtx[ 2 ]);
-		this->mVtxBuffer.Write ( uv [ 2 ]);
-		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
+		this->mVtxBuffer.WriteUnsafe ( vtx[ 2 ]);
+		this->mVtxBuffer.WriteUnsafe ( uv [ 2 ]);
+		this->mVtxBuffer.WriteUnsafe < u32 >( this->mFinalColor32 );
 	
 		// left bottom
-		this->mVtxBuffer.Write ( vtx [ 3 ]);
-		this->mVtxBuffer.Write ( uv [ 3 ]);
-		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
+		this->mVtxBuffer.WriteUnsafe ( vtx [ 3 ]);
+		this->mVtxBuffer.WriteUnsafe ( uv [ 3 ]);
+		this->mVtxBuffer.WriteUnsafe < u32 >( this->mFinalColor32 );
 
 		// indices
+		this->WriteIndex ( 0 ); // left top
+		this->WriteIndex ( 3 ); // left bottom
+		this->WriteIndex ( 2 ); // right bottom
 	
-		this->mIdxBuffer.Write < u32 >( base + 0 ); // left top
-		this->mIdxBuffer.Write < u32 >( base + 3 ); // left bottom
-		this->mIdxBuffer.Write < u32 >( base + 2 ); // right bottom
+		this->WriteIndex ( 0 ); // left top
+		this->WriteIndex ( 2 ); // right bottom
+		this->WriteIndex ( 1 ); // right top
 	
-		this->mIdxBuffer.Write < u32 >( base + 0 ); // left top
-		this->mIdxBuffer.Write < u32 >( base + 2 ); // right bottom
-		this->mIdxBuffer.Write < u32 >( base + 1 ); // right top
-	
-	this->EndPrim ();
+	this->EndPrimIndexed ();
 }
 
 //----------------------------------------------------------------//
@@ -311,6 +338,19 @@ void MOAIGfxDeviceVertexWriter::UpdateFinalColor () {
 	this->mShaderDirty = true;
 }
 
+//----------------------------------------------------------------//
+void MOAIGfxDeviceVertexWriter::UpdateLimits () {
+	
+	u32 primSize	= this->mPrimSize ? this->mPrimSize : 1;
+	u32 vertexSize	= this->mVertexSize ? this->mVertexSize : 1;
+	
+	this->mMaxIndices	= this->mIdxBuffer.GetLength () / INDEX_SIZE;
+	this->mMaxVertices	= this->mVtxBuffer.GetLength() / vertexSize;
+	
+	u32 maxElements		= MIN ( this->mMaxIndices, this->mMaxVertices );
+	this->mMaxPrims		= ( u32 )( maxElements / primSize );
+}
+	
 //----------------------------------------------------------------//
 void MOAIGfxDeviceVertexWriter::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv ) {
 

@@ -724,20 +724,22 @@ void MOAISpineSkeleton::Draw ( int subPrimID, float lod ) {
 		gfxDevice.SetPenColor ( slotColor );
 		
 		if ( trianglesCount > 0 ) {
-			// TODO: Horrible to render meshes like this
-			// Better solution would be updating MOAIGfxDevice to use VBO and IBO internally
-			for ( u32 i = 0; i < trianglesCount; i += 3 ) {
-				gfxDevice.BeginPrim ( ZGL_PRIM_TRIANGLES );
-				
-				for ( u32 j = 0; j < 3; ++j ) {
-					int idx = triangles [ i + j ];
-					gfxDevice.WriteVtx ( mVertices [ idx * 2 ], mVertices [ idx * 2 + 1 ], 0 );
-					gfxDevice.WriteUV ( uvs [ idx * 2 ], uvs [ idx * 2 + 1 ] );
-					gfxDevice.WriteFinalColor4b ();
-				}
-				
-				gfxDevice.EndPrim ();
+			
+			u32 vtxCount = ( u32 )( mVertices.GetTop () / 2 );
+			
+			gfxDevice.BeginPrimIndexed ( ZGL_PRIM_TRIANGLES, vtxCount, trianglesCount );
+
+			for ( u32 i = 0; i < mVertices.GetTop (); i += 2 ) {
+				gfxDevice.WriteVtx ( mVertices [ i ], mVertices [ i + 1 ], 0 );
+				gfxDevice.WriteUV ( uvs [ i ], uvs [ i + 1 ] );
+				gfxDevice.WriteFinalColor4b ();
 			}
+
+			for ( u32 i = 0; i < trianglesCount; ++i ) {
+				gfxDevice.WriteIndex ( triangles [ i ]);
+			}
+
+			gfxDevice.EndPrimIndexed ();
 		}
 		else {
 			brush.SetVerts ( mVertices );
