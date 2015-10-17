@@ -13,6 +13,16 @@
 #define LEVELS1	12	// size of the first part of the stack
 #define LEVELS2	10	// size of the second part of the stack
 
+int _luaStreamWriter ( lua_State *L, const void* p, size_t sz, void* ud );
+
+//----------------------------------------------------------------//
+int _luaStreamWriter ( lua_State *L, const void* p, size_t sz, void* ud ) {
+	UNUSED ( L );
+
+	ZLStream* stream = ( ZLStream* )ud;
+	return ( stream->WriteBytes ( p, sz ) == sz ) ? 0 : -1;
+}
+
 //================================================================//
 // MOAILuaState
 //================================================================//
@@ -252,6 +262,16 @@ bool MOAILuaState::Deflate ( int idx, int level, int windowBits ) {
 	deflater.SetWindowBits ( windowBits );
 
 	return this->Encode ( idx, deflater );
+}
+
+//----------------------------------------------------------------//
+bool MOAILuaState::DumpChunk ( int idx, ZLStream& stream ) {
+
+	lua_pushvalue ( this->mState, idx );
+	int result = lua_dump ( this->mState, _luaStreamWriter, ( void* )&stream );
+	lua_pop ( this->mState, 1 );
+	
+	return ( result == 0 );
 }
 
 //----------------------------------------------------------------//
