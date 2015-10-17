@@ -2,7 +2,7 @@
 /* jansson_private_config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* Define to 1 if gcc's __atomic builtins are available */
-#define HAVE_ATOMIC_BUILTINS 1
+#undef HAVE_ATOMIC_BUILTINS
 
 /* Define to 1 if you have the `close' function. */
 #define HAVE_CLOSE 1

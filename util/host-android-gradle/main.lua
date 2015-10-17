@@ -92,6 +92,7 @@ end
 --==============================================================
 
 local copyhostfiles 
+local validateConfig
 local copylib
 local linklib
 local applyConfigFile
@@ -118,32 +119,6 @@ copyhostfiles = function()
     MOAIFileSystem.deleteFile(output..'app/src/main/jni/host-modules/aku_modules_ios.h')
     MOAIFileSystem.deleteFile(output..'app/src/main/jni/host-modules/aku_modules_ios_config.h')
     MOAIFileSystem.deleteFile(output..'app/src/main/jni/host-modules/aku_modules_ios.mm')
-
-    --java classes
-  --  files = util.listFiles( MOAI_SDK_HOME..'src/moai-android', ".java")
-  --  for k, entry in pairs ( files ) do
-  --  	local fullpath = string.format ( '%s/%s',MOAI_SDK_HOME..'src/moai-android' , entry )
---		print( string.format( '%s -> %s', fullpath, output..'app/src/main/java/com/ziplinegames/moai/'..entry ))
-	--	MOAIFileSystem.copy(fullpath, output..'app/src/main/java/com/ziplinegames/moai/'..entry)
---    end
-  --  MOAIFileSystem.deleteFile(output..'app/src/main/java/com/ziplinegames/moai/MoaiActivity.java')
---    MOAIFileSystem.deleteFile(output..'app/src/main/java/com/ziplinegames/moai/MoaiView.java')
-
-    --lua
-    local hostsourcedir = output..'app/src/main/java/com/getmoai/androidhost/'
-    MOAIFileSystem.affirmPath(hostsourcedir)
-    MOAIFileSystem.copy(MOAI_SDK_HOME..'src/moai-android/MoaiActivity.java', hostsourcedir..'MoaiActivity.java')
-    MOAIFileSystem.copy(MOAI_SDK_HOME..'src/moai-android/MoaiView.java', hostsourcedir..'MoaiView.java')
-    
-    --[[
-	for entry in util.iterateFiles(MOAI_SDK_HOME..'samples/hello-moai', false, true) do
-			local fullpath = string.format ( '%s/%s',MOAI_SDK_HOME..'samples/hello-moai' , entry )
-			print( string.format( '%s -> %s', fullpath, output..'lua/'..entry ))
-			MOAIFileSystem.copy(fullpath, output..'lua/'..entry)
-	end
-    ]]
-   
-
 
 end
 
@@ -174,13 +149,12 @@ applyConfigFile = function(configFile)
   
   hostconfig["HostSettings"] = nil
   
-  
-  
-  
+end
+
+validateConfig = function()
   --validation
   
   --validate lua path
-  
   local luapath = getAbsoluteLuaRoot()
   if not MOAIFileSystem.checkFileExists(luapath.."main.lua") then
     print ("Your configured lua path does not contain a main.lua")
@@ -188,10 +162,8 @@ applyConfigFile = function(configFile)
     os.exit(1)
   end
   
-  
   --valid sdk and ndk dirs
-  --try a default
-  if (not hostconfig['SdkDir']) or (hostconfig['SdkDir'] == "") then hostconfig['SdkDir'] = findAndroidSdk() end
+
   -- check it
   if (not hostconfig['SdkDir']) or not MOAIFileSystem.checkPathExists(MOAIFileSystem.getAbsoluteDirectoryPath(hostconfig['SdkDir']).."platforms") then
     print ("Error locating the defined sdk path (HostSettings.android-gradle.SdkDir).")
@@ -200,34 +172,31 @@ applyConfigFile = function(configFile)
     print ("configured sdk path was: ", hostconfig['SdkDir'])
     os.exit(1)
   end
-  
-  if not hostconfig['NdkDir'] or hostconfig['NdkDir'] == "" then 
-    hostconfig['NdkDir'] = os.getenv("ANDROID_NDK")
-  end
+
+
   if not hostconfig['NdkDir'] or not MOAIFileSystem.checkPathExists(MOAIFileSystem.getAbsoluteDirectoryPath(hostconfig['NdkDir']).."platforms") then
-  print ("Error locating the defined ndk path (HostSettings.android-gradle.NdkDir).")
-  print ("ensure it contains platforms subfolder. Android NDK r9d is required")
-  
-  print ("configured Ndk path was: ", hostconfig['NdkDir'])
-  os.exit(1)
-end
-  
+    print ("Error locating the defined ndk path (HostSettings.android-gradle.NdkDir).")
+    print ("ensure it contains platforms subfolder. Android NDK r10e is required")
+    
+    print ("configured Ndk path was: ", hostconfig['NdkDir'])
+    os.exit(1)
+  end
   
 end
 
 
 
 configureHost = function()
-  local output = config.OUTPUT_DIR
+ local output = config.OUTPUT_DIR
+ if configFile then
    print("\n\nApplying config from "..configFile..":")
+ else
+   print("\n\nUsing default config ")
+ end
+ 
   for k,v in pairs(hostconfig) do
     print (k..": ", v)
   end
-  local hostsourcedir = output..'app/src/main/java/com/getmoai/androidhost/'
-   local hostfiles = {
-            [ hostsourcedir..'MoaiActivity.java' ] = true,
-            [ hostsourcedir..'MoaiView.java' ] = true
-          }
 
   local modules = hostconfig['Modules'] or {}
   
@@ -240,6 +209,7 @@ configureHost = function()
       modulestr = modulestr..','..v
     end
   end
+  
   print("configuring lua source root")
   local oldworkingdir = MOAIFileSystem.getWorkingDirectory()
   
@@ -256,6 +226,7 @@ configureHost = function()
   local patternFor = function(name) 
     return '(<string name="'..name..'">)(.-)(</string>)'
   end
+  
   --gradle windows paths need to be double escaped 
   local escGradlePath = function(dir)
     return dir:gsub("\\","\\\\"):gsub(":","\\:")
@@ -270,12 +241,9 @@ configureHost = function()
   print("updating template values")
     --libroot
   util.replaceInFiles ({
-	  [ util.wrap(pairs, hostfiles) ]  = {
-      ['package com.ziplinegames.moai'] = 'package com.getmoai.androidhost', --hardcoded, this package doesn't need to be unique per app anymore
-      ['@WORKING_DIR@'] = 'bundle/assets'
-    },
 		[ output .. 'gradle.properties' ] = {
 			[ 'moaiLibRoot=[^\n]*' ]= "moaiLibRoot=./lib",
+      [ 'moaiSrcRoot=[^\n]*' ]= "moaiSrcRoot="..MOAI_SDK_HOME.."src",
 			[ 'moaiLuaRoot=[^\n]*' ]= "moaiLuaRoot="..luasrc,
       [ 'moaiModules=[^\n]*' ]= "moaiModules="..modulestr
 		},
@@ -330,8 +298,21 @@ linklib = function()
 
 end
 
+if configFile then
+  applyConfigFile(configFile)
+end
 
-applyConfigFile(configFile)
+
+if not hostconfig['NdkDir'] or hostconfig['NdkDir'] == "" then 
+  hostconfig['NdkDir'] = os.getenv("ANDROID_NDK")
+end
+
+--try a default
+if (not hostconfig['SdkDir']) or (hostconfig['SdkDir'] == "") then 
+  hostconfig['SdkDir'] = findAndroidSdk() 
+end
+
+validateConfig()
 copyhostfiles()
 configureHost()
 

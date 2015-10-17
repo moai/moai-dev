@@ -1,1 +1,0 @@
-include ':core', ':adcolony', ':amazonbilling', ':chartboost', ':crittercism', ':facebook', ':flurry', ':fortumo', ':googlebilling', ':googleplayservices', ':googlepush', ':tapjoy', ':twitter', ':vungle'
