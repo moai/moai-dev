@@ -19899,7 +19899,6 @@
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
 					"-include",
@@ -21226,7 +21225,6 @@
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-include",
@@ -25683,7 +25681,6 @@
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
 					"-include",
@@ -26112,7 +26109,6 @@
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
 					"-include",
