@@ -13,7 +13,12 @@ const float MOAITouchSensor::DEFAULT_TAPMARGIN = 50.0f;
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	countTouches
+	@text	Return the number of currently active touches.
+
+	@in		MOAITouchSensor self
+	@out	number count
+*/
 int MOAITouchSensor::_countTouches ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITouchSensor, "U" )
 	
@@ -63,7 +68,16 @@ int MOAITouchSensor::_getActiveTouches ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getCenterLoc
+	@text	Get the center coordinate of all currently active touches (as
+			a simple average of all active touch coordinates).
+	
+			Returns nil if no current active touches.
+
+	@in		MOAITouchSensor self
+	@out	number x
+	@out	number y
+*/
 int MOAITouchSensor::_getCenterLoc ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITouchSensor, "U" )
 	

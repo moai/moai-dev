@@ -11,14 +11,13 @@ class MOAITextureBase;
 //================================================================//
 // MOAIMaterial
 //================================================================//
-// TODO: doxygen
 class MOAIMaterial {
 private:
 	
 	friend class MOAIMaterialBatch;
 	
 	MOAIShader*			mShader;
-	MOAITextureBase*		mTexture;
+	MOAITextureBase*	mTexture;
 	MOAIImage*			mHitMask;
 
 	u32		mHitColorScalar;
@@ -38,7 +37,14 @@ public:
 //================================================================//
 // MOAIMaterialBatch
 //================================================================//
-// TODO: doxygen
+/**	@lua	MOAIMaterialBatch
+	@text	This is an indexed set of materials. A material is a shader, a texture
+			and an optional hit mask. A material batch may be attached to a prop
+			or a deck to change the materials used when rendering deck indices.
+			Some decks also allow multiple material batch indicies to be specified
+			per deck item. This is useful when rendering compound objects that
+			need elements form multiple shaders and textures.
+*/
 class MOAIMaterialBatch :
 	public virtual MOAILuaObject {
 private:
@@ -84,7 +90,7 @@ public:
 	virtual				~MOAIMaterialBatch			();
 	MOAIMaterial*		RawGetMaterial				( u32 idx );
 	MOAIShader*			RawGetShader				( u32 idx );
-	MOAITextureBase*		RawGetTexture				( u32 idx );
+	MOAITextureBase*	RawGetTexture				( u32 idx );
 	void				RawLoadGfxState				( u32 idx, u32 defaultShader );
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
@@ -103,7 +109,7 @@ public:
 	void				SetShader					( u32 idx, MOAIShader* shader );
 	MOAIShader*			SetShader					( MOAILuaState& state, u32 idx );
 	void				SetTexture					( u32 idx, MOAITextureBase* texture );
-	MOAITextureBase*		SetTexture					( MOAILuaState& state, u32 idx );
+	MOAITextureBase*	SetTexture					( MOAILuaState& state, u32 idx );
 	size_t				Size						();
 	bool				TestHit						( MOAIMaterialBatch* fallback, u32 idx, float x, float y );
 	bool				TestHit						( MOAIMaterialBatch* fallback, u32 materialID, u32 deckIndex, float x, float y );

@@ -410,23 +410,23 @@ int MOAIGraphicsProp::_setScissorRect ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@lua	setShader
-	@text	Sets a shader in the associated matrial batch. Creates a
+	@text	Sets a shader in the associated material batch. Creates a
 			material batch is none exists. Index batch size is ignored.
 			
-			If not value for 'idx' is provided, then the shader or shader
+			If no value for 'idx' is provided, then the shader or shader
 			preset is expected as the first paramater, and idx defaults to 1.
 	
 	@overload
 	
 		@in		MOAIGraphicsProp self
 		@in		number idx
-		@in		MOAIShader shader		Overloaded to accept a MOAIShader or a shader preset.
+		@in		variant shader			Overloaded to accept a MOAIShader or a shader preset.
 		@out	MOAIShader shader		The shader that was set or created.
 	
 	@overload
 	
 		@in		MOAIGraphicsProp self
-		@in		MOAIShader shader		Overloaded to accept a MOAIShader or a shader preset.
+		@in		variant shader			Overloaded to accept a MOAIShader or a shader preset.
 		@out	MOAIShader shader		The shader that was set or created.
 */
 int MOAIGraphicsProp::_setShader ( lua_State* L ) {
@@ -440,23 +440,23 @@ int MOAIGraphicsProp::_setShader ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@lua	setTexture
-	@text	Sets a texture in the associated matrial batch. Creates a
+	@text	Sets a texture in the associated material batch. Creates a
 			material batch is none exists. Index batch size is ignored.
 			
-			If not value for 'idx' is provided, then the texture or filename
+			If no value for 'idx' is provided, then the texture or filename
 			is expected as the first paramater, and idx defaults to 1.
 	
 	@overload
 	
 		@in		MOAIGraphicsProp self
 		@in		number idx
-		@in		MOAITexture texture		Overloaded to accept a filename, MOAITexture, MOAIImage, MOAIStream or MOAIDataBuffer.
+		@in		variant texture			Overloaded to accept a filename, MOAITexture, MOAIImage, MOAIStream or MOAIDataBuffer.
 		@out	MOAITexture texture		The texture that was set or created.
 	
 	@overload
 	
 		@in		MOAIGraphicsProp self
-		@in		MOAITexture texture		Overloaded to accept a filename, MOAITexture, MOAIImage, MOAIStream or MOAIDataBuffer.
+		@in		variant texture			Overloaded to accept a filename, MOAITexture, MOAIImage, MOAIStream or MOAIDataBuffer.
 		@out	MOAITexture texture		The texture that was set or created.
 */
 int MOAIGraphicsProp::_setTexture ( lua_State* L ) {

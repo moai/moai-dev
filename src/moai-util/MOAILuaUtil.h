@@ -30,7 +30,9 @@ public:
 //================================================================//
 // MOAILuaUtil
 //================================================================//
-// TODO: doxygen
+/**	@lua	MOAILuaUtil
+	@text	Methods for reading and converting Lua bytecode.
+*/
 class MOAILuaUtil :
 	public MOAIGlobalClass < MOAILuaUtil, MOAILuaObject > {
 private:

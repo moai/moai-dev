@@ -173,7 +173,13 @@ int MOAITextStyle::_setFont ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygeb
+/**	@lua	setShader
+	@text	Sets the shader for the text style to use.
+	
+	@in		MOAITextStyle self
+	@opt	variant shader			Shader or shader preset.
+	@out	MOAIShader shader		The shader that was set or created.
+*/
 int MOAITextStyle::_setShader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
 	
@@ -184,7 +190,27 @@ int MOAITextStyle::_setShader ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setPadding
+	@text	Add padding to glyphs during layout. Padding does not affect
+			placement of glyphs. Padding only causes more of the glyph
+			and its underlying texture to be shown.
+	
+	@overload
+	
+		@in		MOAITextStyle self
+		@in		number hPad		glyph xMin -= hPad * 0.5, glyph xMax += hPad * 0.5
+		@in		number vPad		glyph yMin -= vPad * 0.5, glyph yMax += vPad * 0.5
+		@out	nil
+
+	@overload
+	
+		@in		MOAITextStyle self
+		@in		xMinP			glyph xMin -= xMinP
+		@in		yMinP			glyph yMin -= yMinP
+		@in		xMaxP			glyph xMax += xMaxP
+		@in		yMaxP			glyph yMax += yMaxP
+		@out	nil
+*/
 int MOAITextStyle::_setPadding ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
 	
