@@ -26,7 +26,7 @@ class MOAIGfxDeviceVertexWriter :
 	public MOAIGfxDeviceMtxCache {
 protected:
 
-	static const size_t	INDEX_SIZE		= 4;
+	static const size_t	INDEX_SIZE		= 2;
 	
 	static const size_t DEFAULT_VERTEX_BUFFER_SIZE	= 0x8000;
 	static const size_t DEFAULT_INDEX_BUFFER_SIZE	= 0x1000;

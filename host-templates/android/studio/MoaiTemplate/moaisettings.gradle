@@ -1,41 +1,55 @@
 apply plugin: MoaiSettings
 
 class MoaiSettings implements Plugin<Settings> {
+
+
     void apply(Settings settings) {
         //get any enabled modules
 
-        def libRoot = "app/libmoai"
+        def libRoot = "lib"
         if (settings.hasProperty('moaiLibRoot')) {
             libRoot = settings.moaiLibRoot
         } else {
             settings.moaiLibRoot = libRoot
         }
+
+
+        def srcRoot = "src"
+        if (settings.hasProperty('moaiSrcRoot')) {
+            srcRoot = settings.moaiSrcRoot
+        } else {
+            settings.moaiSrcRoot = srcRoot
+        }
+
         if (!settings.hasProperty('moaiModules') || settings.moaiModules == null) {
             settings.moaiModules=""
         }
-        def modules = settings.moaiModules.toString().split(",").each { i -> i.trim() }
+        def modules = settings.moaiModules.toString().split(",").collect { i -> i.trim() }
+        if (settings.moaiModules == "") {
+            modules = []
+        }
+        //always include core
+        settings.include(":core")
+        settings.project(":core").projectDir = new File(srcRoot+"/moai-android/java")
+
+        def enableModule = {
+            module ->
+                def modproj = new File(srcRoot+"/"+module+"/java/build.gradle")
+                if (modproj.exists()) {
+                    println("enabling ${module}")
+                    settings.include(":${module}")
+                    settings.project(":${module}").projectDir = new File(srcRoot+"/"+module+"/java")
+                    settings.project(":${module}").name = module
+                } else {
+                    throw new Exception("Missing module ${module} not found at ${srcRoot}/${module}/java")
+                }
+        }
 
         //include enabled modules projects
-        def moddir = new File(libRoot+"/modules/external")
-
-        if (moddir.exists()) {
-            moddir.eachDir() { dir ->
-                def modulename = dir.name
-                dir.eachDirMatch(~/project/) { projectDir ->
-                    if (modules.contains(modulename)) {
-                        //some projects are nested, find our build.gradle
-                        def dirs = projectDir.listFiles().findAll() { d -> d.isDirectory() }
-                        dirs.add(0,projectDir)
-                        for (subdir in dirs) {
-                            if (subdir.listFiles().find { f -> f.name.equals('build.gradle') } != null) {
-                                settings.include(":modules:moaiexternal_${modulename}")
-                                settings.project(":modules:moaiexternal_${modulename}").projectDir = new File(subdir.path)
-                                break
-                            }
-                        }
-                    }
-                }
-            }
+        for (module in modules) {
+           enableModule(module)
         }
+
+        settings.ext.enableModule = enableModule
     }
 }
