@@ -8,7 +8,6 @@ MOAI_CMD=${1}
 if [ -z "$MOAI_SDK_BIN" ] 
 then
     echo "Cannot find a local moai binary - it needs to be built first."
-    echo "Use the appropriate build-*.sh script located in $MOAI_SDK_HOME/bin"
     case `uname` in
     Darwin*)
       bin_build_script="bin/build-osx.sh"
@@ -23,6 +22,7 @@ then
 
     if [ -e $bin_build_script ] 
     then
+        echo "Will use the $bin_build_script to build a moai binary for use by moaiutil..."
         exec $bin_build_script
     fi
 
