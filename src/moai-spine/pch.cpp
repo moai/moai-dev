@@ -1,3 +1,0 @@
-#include "pch.h"
-
-SUPPRESS_EMPTY_FILE_WARNING
