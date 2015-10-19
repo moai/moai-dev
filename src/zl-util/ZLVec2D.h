@@ -48,6 +48,22 @@ public:
 	TYPE	mY;
 
 	//----------------------------------------------------------------//
+	ZLMetaVec2D < TYPE > operator + ( const ZLMetaVec2D < TYPE >& v ) const {
+		ZLMetaVec2D < TYPE > result;
+		result.mX = this->mX + v.mX;
+		result.mY = this->mY + v.mY;
+		return result;
+	}
+
+	//----------------------------------------------------------------//
+	ZLMetaVec2D < TYPE > operator - ( const ZLMetaVec2D < TYPE >& v ) const {
+		ZLMetaVec2D < TYPE > result;
+		result.mX = this->mX - v.mX;
+		result.mY = this->mY - v.mY;
+		return result;
+	}
+
+	//----------------------------------------------------------------//
 	void Abs () {
 		mX = mX < 0.0f ? -mX : mX;
 		mY = mY < 0.0f ? -mY : mY;

@@ -25,13 +25,17 @@ class MOAIViewport;
 class MOAIGfxDeviceVertexWriter :
 	public MOAIGfxDeviceMtxCache {
 protected:
-
-	static const size_t	INDEX_SIZE		= 4;
+	
+	// Stock OpenGL ES 2.0 have no support for u32 index size in glDrawElements.
+	// iOS and many Androids (PowerVR, adreno) support it with GL_OES_element_index_uint extension.
+	// We can check extension availability, but using u16 index is fine for the current buffer size (~1000 vertices).
+	static const size_t	INDEX_SIZE		= 2;
 	
 	static const size_t DEFAULT_VERTEX_BUFFER_SIZE	= 0x8000;
 	static const size_t DEFAULT_INDEX_BUFFER_SIZE	= 0x1000;
 
 	bool						mIsDrawing;
+	bool						mUseIdxBuffer;
 
 	ZLColorVec					mAmbientColor;
 	ZLColorVec					mPenColor;
@@ -45,13 +49,18 @@ protected:
 	u32							mVertexSize;
 
 	u32							mMaxVertices;
+	u32							mMaxIndices;
 	u32							mMaxPrims;
 
 	u32							mPrimCount;
 	u32							mPrimSize;
-	u32							mPrimTopIdx;
-	u32							mPrimTopVtx;
+//	u32							mPrimTopIdx;
+//	u32							mPrimTopVtx;
 	u32							mPrimType;
+	
+	u32							mTotalVertices;
+	u32							mTotalIndices;
+	u16							mIndexBase;
 
 	MOAIVertexFormat*			mVertexFormat;
 
@@ -59,6 +68,7 @@ protected:
 	void			OnGfxStateWillChange			();
 	void			TransformAndWriteQuad			( ZLVec4D* vtx, ZLVec2D* uv );
 	void			UpdateFinalColor				();
+	void			UpdateLimits					();
 
 public:
 	
@@ -69,11 +79,13 @@ public:
 	//----------------------------------------------------------------//
 	void			BeginPrim						();
 	void			BeginPrim						( u32 primType, u32 primSize = 0 );
+	void			BeginPrimIndexed				( u32 primType, u32 vtxCount, u32 idxCount );
 	
 	void			BindBufferedDrawing				( MOAIVertexFormat& format );
 	void			BindBufferedDrawing				( u32 preset );
 	
 	void			EndPrim							();
+	void			EndPrimIndexed					();
 	
 	void			FlushBufferedPrims				();
 	
@@ -117,13 +129,19 @@ public:
 	//----------------------------------------------------------------//
 	inline void WriteFinalColor4b () {
 		
-		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
+		this->mVtxBuffer.WriteUnsafe < u32 >( this->mFinalColor32 );
 	}
 	
 	//----------------------------------------------------------------//
 	inline void WriteFinalColor4f () {
 		
-		this->mVtxBuffer.Write < ZLColorVec >( this->mFinalColor );
+		this->mVtxBuffer.WriteUnsafe < ZLColorVec >( this->mFinalColor );
+	}
+		
+	//----------------------------------------------------------------//
+	inline void WriteIndex ( u16 index ) {
+		
+		this->mIdxBuffer.WriteUnsafe < u16 >( this->mIndexBase + index );
 	}
 	
 	//----------------------------------------------------------------//
@@ -136,7 +154,7 @@ public:
 		if ( this->mCpuUVTransform ) {
 			this->mUVTransform.Transform ( uv );
 		}
-		this->mVtxBuffer.Write < ZLVec2D >( uv );
+		this->mVtxBuffer.WriteUnsafe < ZLVec2D >( uv );
 	}
 	
 	//----------------------------------------------------------------//
@@ -145,7 +163,7 @@ public:
 		if ( this->mCpuUVTransform ) {
 			this->mUVTransform.Transform ( uv );
 		}
-		this->mVtxBuffer.Write < ZLVec2D >( uv );
+		this->mVtxBuffer.WriteUnsafe < ZLVec2D >( uv );
 	}
 	
 	//----------------------------------------------------------------//
@@ -172,7 +190,7 @@ public:
 		if ( this->mCpuVertexTransform ) {
 			this->mCpuVertexTransformMtx.Transform ( vtx );
 		}
-		this->mVtxBuffer.Write < ZLVec4D >( vtx );
+		this->mVtxBuffer.WriteUnsafe < ZLVec4D >( vtx );
 	}
 	
 	//----------------------------------------------------------------//

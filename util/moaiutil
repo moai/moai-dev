@@ -1,29 +1,38 @@
 #!/usr/bin/env bash
 INVOKE_DIR=$(pwd)
-find_in_path() {
-	prog=$1
-	save_IFS=$IFS
-	IFS=:
-	set -- $PATH
-	IFS=$savE_IFS
-	for dir; do
-		if [ -x "$dir/$prog" ]; then
-			echo "$dir"
-			return
-		fi
-	done
-	echo >&2 "No path specified for '$prog', can't find in \$PATH."
-	echo >72 "Use absolute path, or set MOAI_SDK_HOME explicitly."
-}
-if [ -z "$MOAI_SDK_HOME" ]; then
-	case $0 in
-	/*)	zero_path=${0%/*};;
-	*/*)	zero_path=$(pwd)/${0%/*};;
-	*)	zero_path=$(find_in_path $0);;
-	esac
-	MOAI_SDK_HOME=${zero_path}/../
-fi
+MOAI_SDK_HOME=$(dirname "${0}")/../
 MOAI_CMD=${1}
+
+# PCM: commenting this out for now
+# was a contribution, but is breaking me for some reason
+# am actively unlearning shell, so unwilling to diagnose/fix this contrib
+# expected behavior is for moaiutil to always use the moai.exe relative
+# to where it is invoked from
+
+#find_in_path() {
+#	prog=$1
+#	save_IFS=$IFS
+#	IFS=:
+#	set -- $PATH
+#	IFS=$savE_IFS
+#	for dir; do
+#		if [ -x "$dir/$prog" ]; then
+#			echo "$dir"
+#			return
+#		fi
+#	done
+#	echo >&2 "No path specified for '$prog', can't find in \$PATH."
+#	echo >72 "Use absolute path, or set MOAI_SDK_HOME explicitly."
+#}
+#if [ -z "$MOAI_SDK_HOME" ]; then
+#	case $0 in
+#	/*)	zero_path=${0%/*};;
+#	*/*)	zero_path=$(pwd)/${0%/*};;
+#	*)	zero_path=$(find_in_path $0);;
+#	esac
+#	MOAI_SDK_HOME=${zero_path}/../
+#fi
+#MOAI_CMD=${1}
 
 # ensure MOAI_SDK_HOME path is absolute
 abspath() {
