@@ -10,5 +10,5 @@ envFile:write(envStr)
 envFile:close()
 
 print ( "\nA localized 'env.sh' script has been created for your environment.")
-print ( "To set up your environment to use this MOAI_SDK, source the \n" .. MOAI_SDK_HOME .. "/env.sh script in your shell.\ne.g.")
+print ( "To set up your environment to use this MOAI_SDK, source the \n" .. envFileName .. " script in your shell.\ne.g.")
 print (" \t\tsource " .. envFileName .. "\n")
