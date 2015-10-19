@@ -36,7 +36,6 @@ release/
 bin/api-reference-parser/vendor
 docs/api-reference
 /moai-sdk/
-/lib/
 /bin/env-local.bat
 /util/moai
 /**/java/build/

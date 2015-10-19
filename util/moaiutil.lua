@@ -12,7 +12,7 @@ SCRIPT_DIR      = string.format ( '%sutil/%s/', MOAI_SDK_HOME, MOAI_CMD or "help
 
 local usageText={}
 usageText["environment"] = [[
-    PREPARE to use the toolbelt locally:    moaiutil environment 
+    Cmd: moaiutil environment 
         This command will give you the needed environment variables to use moaiutil.
         Example:
             /absolute/path/to/moai_sdk/util/moaiutil environment
@@ -20,7 +20,7 @@ usageText["environment"] = [[
 ]]
 
 usageText["init"] = [[
-    INITIALIZE Project folder:              moaiutil init
+    Cmd: moaiutil init
         Run from your project folder to initialize a moaiutil-managed set of host projects.
         Creates a hostconfig.lua file, which you must edit to describe your MOAI project.
         Example:
@@ -30,7 +30,7 @@ usageText["init"] = [[
 ]]
 
 usageText["host"] = [[
-    CREATE and Manage MOAI Projects:        moaiutil host <subcommand> <args>
+    Cmd: moaiutil host <subcommand> <args>
         Subcommands:
             host list - Lists available hosts
             host init - Creates a template host config file used by subsequent commands
@@ -47,12 +47,12 @@ usageText["host"] = [[
 ]]
 
 usageText["make-lua-docs"] = [[
-    MAKE Lua Developer Documentation:       moaiutil make-lua-docs 
+    Cmd: moaiutil make-lua-docs 
         Creates compact documentation for the Lua-side of the MOAI API.
 ]]
 
 usageText["make-cpp-docs"] = [[
-    MAKE Developer Documentation:           moaiutil make-cpp-docs
+    Cmd: moaiutil make-cpp-docs
         Creates compact documentation from the MOAI C/C++ codebase.
         Example:    
             cd newMOAIProject && moaiutil make-cpp-docs
@@ -60,7 +60,7 @@ usageText["make-cpp-docs"] = [[
 ]]
 
 usageText["package-cmake-sdk"] = [[
-    PACKAGE CMake-based SDK:                moaiutil package-cmake-sdk
+    Cmd: moaiutil package-cmake-sdk
         Creates a distributable SDK based on cmake-driven MOAI build.
         Example:
             cd newMOAIProject && moaiutil package-cmake-sdk
@@ -68,27 +68,27 @@ usageText["package-cmake-sdk"] = [[
 ]]
 
 usageText["package-sdk"] = [[
-    PACKAGE the MOAI SDK:                   moaiutil package-sdk
+    Cmd: moaiutil package-sdk
         Create the standard release of the MOAI SDK.
 ]]
 
 usageText["run-samples"] = [[
-    RUN Samples:                            moaiutil run-samples
+    Cmd: moaiutil run-samples
         Run the MOAI samples.
 ]]
 
 usageText["run-tests"] = [[
-    RUN Tests:                              moaiutil run-tests
+    Cmd: moaiutil run-tests
         Run the Test suite.
 ]]
 
 usageText["sdk-version"] = [[
-    GET Version:                            moaiutil sdk-version
+    Cmd: moaiutil sdk-version
         Obtain the MOAI SDK Version info for the current configuration.
 ]]
 
 function usage(subSection)
-    print ("MOAI Utility Toolbelt - ", subSection or "general usage")
+    print ("MOAI Utility Toolbelt - ", subSection or "general usage:")
     if (subSection) and (usageText[subSection])  then
         print(usageText[subSection])
     else
