@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -l
+#!/usr/bin/env bash 
 INVOKE_DIR=$(pwd)
 MOAI_SDK_HOME=$(cd $(dirname "${0}")/../ && pwd)
 MOAI_SDK_BIN=$(which moai)
