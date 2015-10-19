@@ -3,6 +3,7 @@
 --==============================================================
 local envFileName = MOAI_SDK_HOME .. "env.sh"
 local envStr = string.format ( 'export MOAI_SDK_HOME=%s\n', MOAI_SDK_HOME ) ..
+               string.format ( 'export MOAI_SDK_BIN=$MOAI_SDK_HOME/util/moai\n') ..
                string.format ( 'export PATH=$MOAI_SDK_HOME/util:$PATH\n' ) 
 
 envFile = io.open(envFileName, "w+")
