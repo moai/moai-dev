@@ -8,14 +8,15 @@ require ( 'http' )
 INVOKE_DIR      = MOAIFileSystem.getAbsoluteDirectoryPath ( arg [ 1 ])
 MOAI_SDK_HOME   = MOAIFileSystem.getAbsoluteDirectoryPath ( arg [ 2 ])
 MOAI_CMD        = arg [ 3 ]
-SCRIPT_DIR      = string.format ( '%sutil/%s/', MOAI_SDK_HOME, MOAI_CMD )
+SCRIPT_DIR      = string.format ( '%sutil/%s/', MOAI_SDK_HOME, MOAI_CMD or "help" )
 
 local usageText={}
-usageText["prepare"] = [[
-    PREPARE to use the toolbelt:
-        MOAI SDK has a toolbox environment script (env.sh) for use prior to loading the toolbelt:
-            source $MOAI_SDK_HOME/env.sh
-        (Presumably you found it already.)
+usageText["environment"] = [[
+    PREPARE to use the toolbelt locally:    moaiutil environment 
+        This command will give you the needed environment variables to use moaiutil.
+        Example:
+            /absolute/path/to/moai_sdk/util/moaiutil environment
+            (Follow instructions)
 ]]
 
 usageText["init"] = [[
@@ -23,7 +24,7 @@ usageText["init"] = [[
         Run from your project folder to initialize a moaiutil-managed set of host projects.
         Creates a hostconfig.lua file, which you must edit to describe your MOAI project.
         Example:
-            mkdir newMOAIProject && cd newMOAIProject   # use the toolbelt in your own project workspace
+            mkdir newMOAIProject && cd newMOAIProject   # use the toolbelt in a new project
             moaiutil init 
             vi hostconfig.lua                           #&etc.
 ]]
@@ -33,11 +34,16 @@ usageText["host"] = [[
         Subcommands:
             host list - Lists available hosts
             host init - Creates a template host config file used by subsequent commands
-            host build <hostname> - Creates (if it doesn't exist) in hosts folder, and (re)builds the host named <hostname>. 
-            host run <hostname> - Creates (if it doesn't exists) in hosts folder, (re)builds and runs the host named <hostname>. 
-            host create <hostname> - Creates the host in the hosts folder (removing old host) based on latest config settings.
+            host build <hostname>  - Creates (if it doesn't exist) in hosts folder, and 
+                                     (re)builds the host named <hostname>. 
+            host run <hostname>    - Creates (if it doesn't exists) in hosts folder, 
+                                     (re)builds and runs the host named <hostname>. 
+            host create <hostname> - Creates the host in the hosts folder (removing old 
+                                     host) based on latest config settings.
         Example:
-            cd newMOAIProject && moaiutil host create ios && moaiutil host create android-studio && moaiutil host create host osx-app && #etc.
+            cd newMOAIProject && moaiutil host create ios && \
+                                 moaiutil host create android-studio && \
+                                 moaiutil host create host osx-app && #etc.
 ]]
 
 usageText["make-lua-docs"] = [[
@@ -82,7 +88,7 @@ usageText["sdk-version"] = [[
 ]]
 
 function usage(subSection)
-    print ("MOAI Utility Toolbelt " , subSection)
+    print ("MOAI Utility Toolbelt - ", subSection or "general usage")
     if (subSection) and (usageText[subSection])  then
         print(usageText[subSection])
     else

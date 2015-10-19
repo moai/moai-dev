@@ -37,3 +37,4 @@ docs/api-reference
 /util/moai
 /**/java/build/
 /**/java/*.iml
+env.sh
