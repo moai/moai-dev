@@ -102,7 +102,7 @@ end
 copy = function ( dstpath, srcpath )
 
 	if osx then
-		print("COPY: \"" .. srcpath .. "\" -> \"" .. dstpath .. "\"")
+		--print("COPY: \"" .. srcpath .. "\" -> \"" .. dstpath .. "\"")
 		-- awful, but until there's a better way...
 		moaiCopy( srcpath, dstpath )
 
@@ -115,7 +115,7 @@ copy = function ( dstpath, srcpath )
 		-- less awful: ditto
 		--local cmd = string.format ( 'cp -rp \"%s\" \"%s\"', srcpath, dstpath )
 		local cmd = string.format ( 'ditto \"%s\" \"%s\"', srcpath, dstpath )
-		print("COPY COMMAND: " .. cmd)
+		--print("COPY COMMAND: " .. cmd)
 		print ( cmd )
 		os.execute ( cmd )
 	else
