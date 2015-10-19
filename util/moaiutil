@@ -1,11 +1,11 @@
 #!/usr/bin/env bash 
 INVOKE_DIR=$(pwd)
 MOAI_SDK_HOME=$(cd $(dirname "${0}")/../ && pwd)
-MOAI_SDK_BIN=$(which moai)
+MOAI_SDK_BIN=$MOAI_SDK_HOME/util/moai
 MOAI_CMD=${1}
 
 # if we're missing moai, inform the user that they need to build it first
-if [ -z "$MOAI_SDK_BIN" ] 
+if ! [ -f "$MOAI_SDK_BIN" ] 
 then
     echo "Cannot find a local moai binary - it needs to be built first."
     case `uname` in
@@ -23,11 +23,18 @@ then
     if [ -e $bin_build_script ] 
     then
         echo "Will use the $bin_build_script to build a moai binary for use by moaiutil..."
-        exec $bin_build_script
+        $bin_build_script
     fi
 
-    echo "Re-run moaiutil now to confirm local moai binary was built."
+    echo "Need to confirm local moai binary was built ..."
+    if [ -f $MOAI_SDK_BIN ]
+    then
+        MOAI_SDK_BIN=$MOAI_SDK_HOME/util/moai
+        echo "Continuing moaiutil execution..."
+    else
+        echo "Something went wrong with building util/moai .. exiting!"
     exit 1
+    fi
 fi
 
 # call moaiutil.lua
