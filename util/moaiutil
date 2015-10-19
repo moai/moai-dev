@@ -12,9 +12,6 @@ then
     exit 1
 fi
 
-# add Moai util directory to path
-export PATH ; PATH=$MOAI_SDK_HOME/util:$PATH
-
 # call moaiutil.lua
 shift
 set $INVOKE_DIR $MOAI_SDK_HOME $MOAI_CMD $@
