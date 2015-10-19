@@ -25,6 +25,10 @@
 				3EDC16FC19F6DD37007A7775 /* PBXTargetDependency */,
 				CDFD7C311A0857EF00A94E6B /* PBXTargetDependency */,
 				3EDC170219F6DD37007A7775 /* PBXTargetDependency */,
+				CDD9541C1BD4AF2D001744F0 /* PBXTargetDependency */,
+				CDD9541E1BD4AF2D001744F0 /* PBXTargetDependency */,
+				CDD954201BD4AF2D001744F0 /* PBXTargetDependency */,
+				CDD954221BD4AF2D001744F0 /* PBXTargetDependency */,
 				CDFD7C331A0857EF00A94E6B /* PBXTargetDependency */,
 				3EDC170619F6DD37007A7775 /* PBXTargetDependency */,
 				3EDC170A19F6DD37007A7775 /* PBXTargetDependency */,
@@ -55,6 +59,10 @@
 				3E72B9CA19F703FA00A9DE30 /* PBXTargetDependency */,
 				3E72B9CE19F703FA00A9DE30 /* PBXTargetDependency */,
 				3E72B9D019F703FA00A9DE30 /* PBXTargetDependency */,
+				CDD954241BD4AF4C001744F0 /* PBXTargetDependency */,
+				CDD954261BD4AF4C001744F0 /* PBXTargetDependency */,
+				CDD954281BD4AF4C001744F0 /* PBXTargetDependency */,
+				CDD9542A1BD4AF4C001744F0 /* PBXTargetDependency */,
 				CDB14A391A01CCFB008CEA54 /* PBXTargetDependency */,
 				3E72B9DA19F703FA00A9DE30 /* PBXTargetDependency */,
 				3E72B9DE19F703FA00A9DE30 /* PBXTargetDependency */,
@@ -5039,6 +5047,62 @@
 			proxyType = 1;
 			remoteGlobalIDString = CD42F2D61A60A7CC001B6D72;
 			remoteInfo = "libmoai-osx-sdl";
+		};
+		CDD9541B1BD4AF2D001744F0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD515F101BCDB440000718FB;
+			remoteInfo = "libmoai-osx-image-jpg";
+		};
+		CDD9541D1BD4AF2D001744F0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD515F1F1BCDB45B000718FB;
+			remoteInfo = "libmoai-osx-image-png";
+		};
+		CDD9541F1BD4AF2D001744F0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD515F2E1BCDB467000718FB;
+			remoteInfo = "libmoai-osx-image-pvr";
+		};
+		CDD954211BD4AF2D001744F0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD515F3D1BCDB473000718FB;
+			remoteInfo = "libmoai-osx-image-webp";
+		};
+		CDD954231BD4AF4C001744F0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD515F501BCDBBEC000718FB;
+			remoteInfo = "libmoai-ios-image-jpg";
+		};
+		CDD954251BD4AF4C001744F0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD515F5F1BCDBBF8000718FB;
+			remoteInfo = "libmoai-ios-image-png";
+		};
+		CDD954271BD4AF4C001744F0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD515F6E1BCDBC00000718FB;
+			remoteInfo = "libmoai-ios-image-pvr";
+		};
+		CDD954291BD4AF4C001744F0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD515F7D1BCDBC08000718FB;
+			remoteInfo = "libmoai-ios-image-webp";
 		};
 		CDFD7C2A1A0857EF00A94E6B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -19832,6 +19896,46 @@
 			isa = PBXTargetDependency;
 			target = CD42F2D61A60A7CC001B6D72 /* libmoai-osx-sdl */;
 			targetProxy = CDBA1E4B1B1E443400DCDC75 /* PBXContainerItemProxy */;
+		};
+		CDD9541C1BD4AF2D001744F0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD515F101BCDB440000718FB /* libmoai-osx-image-jpg */;
+			targetProxy = CDD9541B1BD4AF2D001744F0 /* PBXContainerItemProxy */;
+		};
+		CDD9541E1BD4AF2D001744F0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD515F1F1BCDB45B000718FB /* libmoai-osx-image-png */;
+			targetProxy = CDD9541D1BD4AF2D001744F0 /* PBXContainerItemProxy */;
+		};
+		CDD954201BD4AF2D001744F0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD515F2E1BCDB467000718FB /* libmoai-osx-image-pvr */;
+			targetProxy = CDD9541F1BD4AF2D001744F0 /* PBXContainerItemProxy */;
+		};
+		CDD954221BD4AF2D001744F0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD515F3D1BCDB473000718FB /* libmoai-osx-image-webp */;
+			targetProxy = CDD954211BD4AF2D001744F0 /* PBXContainerItemProxy */;
+		};
+		CDD954241BD4AF4C001744F0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD515F501BCDBBEC000718FB /* libmoai-ios-image-jpg */;
+			targetProxy = CDD954231BD4AF4C001744F0 /* PBXContainerItemProxy */;
+		};
+		CDD954261BD4AF4C001744F0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD515F5F1BCDBBF8000718FB /* libmoai-ios-image-png */;
+			targetProxy = CDD954251BD4AF4C001744F0 /* PBXContainerItemProxy */;
+		};
+		CDD954281BD4AF4C001744F0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD515F6E1BCDBC00000718FB /* libmoai-ios-image-pvr */;
+			targetProxy = CDD954271BD4AF4C001744F0 /* PBXContainerItemProxy */;
+		};
+		CDD9542A1BD4AF4C001744F0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD515F7D1BCDBC08000718FB /* libmoai-ios-image-webp */;
+			targetProxy = CDD954291BD4AF4C001744F0 /* PBXContainerItemProxy */;
 		};
 		CDFD7C2B1A0857EF00A94E6B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
