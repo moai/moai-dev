@@ -50,7 +50,7 @@ bool MOAIImageFormatWebP::ReadImage ( MOAIImage& image, ZLStream& stream, u32 tr
 	WebPData data;
 	data.size = stream.GetLength ();
 	data.bytes = ( uint8_t* )malloc ( data.size );
-	if ( !data.bytes ) return;
+	if ( !data.bytes ) return false;
 	stream.ReadBytes ( ( void* )data.bytes, data.size );
 
 	// Create demuxer
@@ -66,6 +66,8 @@ bool MOAIImageFormatWebP::ReadImage ( MOAIImage& image, ZLStream& stream, u32 tr
 	WebPDemuxReleaseIterator ( &iter );
 	WebPDemuxDelete ( demux );
 	WebPDataClear ( &data );
+	
+	return true;
 }
 
 //----------------------------------------------------------------//
