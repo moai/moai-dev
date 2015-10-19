@@ -150,7 +150,7 @@ MOAIKeyboardAndroid::~MOAIKeyboardAndroid () {
 }
 
 //----------------------------------------------------------------//
-void MOAIKeyboardAndroid::NotifyKeyEvent ( ) {
+void MOAIKeyboardAndroid::NotifyKeyEvent () {
 	JNI_GET_ENV ( jvm, env );
 
 	MOAILuaRef& callback = this->mListeners [ EVENT_INPUT ];
@@ -167,8 +167,8 @@ void MOAIKeyboardAndroid::NotifyKeyEvent ( ) {
 
 				// push the start, length and string
 				state.Push ( 0 );
-				state.Push ( strlen(ckeystring) );
-				state.Push( ckeystring );
+				state.Push (( u32 )strlen ( ckeystring ));
+				state.Push ( ckeystring );
 
 				state.DebugCall ( 3, 0 );
 
@@ -179,7 +179,7 @@ void MOAIKeyboardAndroid::NotifyKeyEvent ( ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIKeyboardAndroid::NotifyTextDone ( ) {
+void MOAIKeyboardAndroid::NotifyTextDone () {
 	JNI_GET_ENV ( jvm, env );
 
 	MOAILuaRef& callback = this->mListeners [ EVENT_RETURN ];
