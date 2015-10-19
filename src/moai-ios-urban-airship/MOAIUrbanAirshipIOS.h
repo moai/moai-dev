@@ -12,7 +12,7 @@
 //================================================================//
 // MOAIUrbanAirshipIOS
 //================================================================//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 class MOAIUrbanAirshipIOS :
 	public MOAIGlobalClass < MOAIUrbanAirshipIOS, MOAILuaObject > {
 private:

@@ -122,7 +122,12 @@ int MOAIVertexFormat::_declareUV ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getVertexSize
+	@text	Return the size (in bytes) of the vertex described by the vertex format.
+	
+	@in		MOAIVertexFormat self
+	@out	number vertexSizeInBytes
+*/
 int MOAIVertexFormat::_getVertexSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 

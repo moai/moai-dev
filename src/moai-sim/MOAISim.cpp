@@ -131,7 +131,12 @@ int MOAISim::_framesToTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getActionMgr
+	@text	Get the sim's action tree. This is the 'global' action tree
+			that all newly started actions are automatically added.
+
+	@out	MOAIActionTree actionMgr
+*/
 int MOAISim::_getActionMgr ( lua_State* L ) {
 
 	MOAILuaState state ( L );
@@ -440,7 +445,12 @@ int MOAISim::_setCpuBudget ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setGCActive
+	@text	Enable incremental garbage collection.
+	
+	@in		boolean active			Default value is false.
+	@out	nil
+*/
 int MOAISim::_setGCActive ( lua_State* L ) {
 	MOAILuaState state ( L );
 	MOAISim::Get ().mGCActive = state.GetValue < bool >( 1, false );
@@ -448,7 +458,12 @@ int MOAISim::_setGCActive ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setGCStep
+	@text	Sets a step to use when running the incremental gc each frame.
+	
+	@in		number step
+	@out	nil
+*/
 int MOAISim::_setGCStep ( lua_State* L ) {
 	MOAILuaState state ( L );
 	MOAISim::Get ().mGCStep = state.GetValue < u32 >( 1, 0 );

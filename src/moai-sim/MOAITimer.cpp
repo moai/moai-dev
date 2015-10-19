@@ -162,7 +162,12 @@ int MOAITimer::_setTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	toggleDirection
+	@text	Reverses the current direction of the timer.
+
+	@in		MOAITimer self
+	@out	nil
+*/
 int MOAITimer::_toggleDirection ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITimer, "U" )
 	

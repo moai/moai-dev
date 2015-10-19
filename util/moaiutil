@@ -1,55 +1,43 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -l
 INVOKE_DIR=$(pwd)
-find_in_path() {
-	prog=$1
-	save_IFS=$IFS
-	IFS=:
-	set -- $PATH
-	IFS=$savE_IFS
-	for dir; do
-		if [ -x "$dir/$prog" ]; then
-			echo "$dir"
-			return
-		fi
-	done
-	echo >&2 "No path specified for '$prog', can't find in \$PATH."
-	echo >72 "Use absolute path, or set MOAI_SDK_HOME explicitly."
-}
-if [ -z "$MOAI_SDK_HOME" ]; then
-	case $0 in
-	/*)	zero_path=${0%/*};;
-	*/*)	zero_path=$(pwd)/${0%/*};;
-	*)	zero_path=$(find_in_path $0);;
-	esac
-	MOAI_SDK_HOME=${zero_path}/../
-fi
+MOAI_SDK_HOME=$(cd $(dirname "${0}")/../ && pwd)
+MOAI_SDK_BIN=$(which moai)
 MOAI_CMD=${1}
 
-# ensure MOAI_SDK_HOME path is absolute
-abspath() {
-    cd "$(dirname "$1")"
-    printf "%s/%s\n" "$(pwd)" "$(basename "$1")"
-}
-
-MOAI_SDK_HOME=$(abspath ${MOAI_SDK_HOME})
-
-# add Moai util directory to path
-export PATH=$PATH:$MOAI_SDK_HOME/util
-
-# add local bin directory to path
-export PATH=$PATH:$MOAI_SDK_HOME/bin/osx
-
-# if we're missing moai, build it
-if ! [ -x "$(which moai)" ]
+# if we're missing moai, inform the user that they need to build it first
+if [ -z "$MOAI_SDK_BIN" ] 
 then
-	pushd $MOAI_SDK_HOME/xcode/osx > /dev/null
-	./build.sh
-	popd > /dev/null
+    echo "Cannot find a local moai binary - it needs to be built first."
+    echo "Use the appropriate build-*.sh script located in $MOAI_SDK_HOME/bin"
+    case `uname` in
+    Darwin*)
+      bin_build_script="bin/build-osx.sh"
+      ;;
+    Linux*)
+      bin_build_script="bin/build-linux.sh"
+      ;;
+    *)
+      bin_build_script="bin/build-linux.sh"
+      ;;
+    esac
+
+    if [ -e $bin_build_script ] 
+    then
+        exec $bin_build_script
+    fi
+
+    echo "Re-run moaiutil now to confirm local moai binary was built."
+    exit 1
 fi
 
-# call moaiutil
+# call moaiutil.lua
 shift
 set $INVOKE_DIR $MOAI_SDK_HOME $MOAI_CMD $@
+
+echo    "         MOAI SDK location: $MOAI_SDK_HOME"
+echo    "      MOAI binary location: $MOAI_SDK_BIN"
+echo -n "moaiutil toolbelt location: " && which moaiutil 
+echo
 
 pushd $MOAI_SDK_HOME/util > /dev/null
 moai moaiutil.lua $@

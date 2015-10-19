@@ -128,6 +128,13 @@ size_t ZLByteStream::WriteBytes ( const void* buffer, size_t size ) {
 }
 
 //----------------------------------------------------------------//
+void ZLByteStream::WriteBytesUnsafe ( const void* buffer, size_t size ) {
+	
+	memcpy ( &(( u8* )this->mWriteBuffer )[ this->mCursor ], buffer, size );
+	this->mCursor += size;
+}
+
+//----------------------------------------------------------------//
 ZLByteStream::ZLByteStream () :
 	mReadBuffer ( 0 ),
 	mWriteBuffer ( 0 ),

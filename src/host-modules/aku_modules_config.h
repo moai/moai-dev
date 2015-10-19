@@ -30,7 +30,7 @@
 	#endif
 
 	#ifndef AKU_WITH_HTTP_SERVER
-		#define AKU_WITH_HTTP_SERVER 1
+		#define AKU_WITH_HTTP_SERVER 0
 	#endif
 
 	#ifndef AKU_WITH_LUAEXT
@@ -43,10 +43,6 @@
 
 	#ifndef AKU_WITH_SDL
 		#define AKU_WITH_SDL 0
-	#endif
-
-	#ifndef AKU_WITH_SPINE
-		#define AKU_WITH_SPINE 1
 	#endif
 
 	#ifndef AKU_WITH_SIM
