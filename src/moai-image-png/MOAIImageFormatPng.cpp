@@ -3,11 +3,7 @@
 
 #include "pch.h"
 
-SUPPRESS_EMPTY_FILE_WARNING
-#if MOAI_WITH_LIBPNG
-
-#include <moai-sim/MOAIImageFormatPng.h>
-#include <moai-sim/MOAITextureBase.h>
+#include <moai-image-png/MOAIImageFormatPng.h>
 
 #include <png.h>
 
@@ -405,5 +401,3 @@ bool MOAIImageFormatPng::WriteImage ( const MOAIImage& image, ZLStream& stream )
 	
 	return true;
 }
-
-#endif

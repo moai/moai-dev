@@ -40,6 +40,10 @@
 		CD4DF2BF1A12E35B00E9A523 /* libmoai-ios-zl-crypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4DF2B21A12E35B00E9A523 /* libmoai-ios-zl-crypto.a */; };
 		CD4DF2C01A12E35B00E9A523 /* libmoai-ios-zl-vfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4DF2B31A12E35B00E9A523 /* libmoai-ios-zl-vfs.a */; };
 		CD4DF2C11A12E35B00E9A523 /* libmoai-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4DF2B41A12E35B00E9A523 /* libmoai-ios.a */; };
+		CD76CB6E1BD4B288008AB56C /* libmoai-ios-image-jpg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD76CB6A1BD4B288008AB56C /* libmoai-ios-image-jpg.a */; settings = {ASSET_TAGS = (); }; };
+		CD76CB6F1BD4B288008AB56C /* libmoai-ios-image-png.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD76CB6B1BD4B288008AB56C /* libmoai-ios-image-png.a */; settings = {ASSET_TAGS = (); }; };
+		CD76CB701BD4B288008AB56C /* libmoai-ios-image-pvr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD76CB6C1BD4B288008AB56C /* libmoai-ios-image-pvr.a */; settings = {ASSET_TAGS = (); }; };
+		CD76CB711BD4B288008AB56C /* libmoai-ios-image-webp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD76CB6D1BD4B288008AB56C /* libmoai-ios-image-webp.a */; settings = {ASSET_TAGS = (); }; };
 		CD795FEB17F09B9F006AEB47 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795FEA17F09B9F006AEB47 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CD79ECBF1B1FAB2100863789 /* lua in Resources */ = {isa = PBXBuildFile; fileRef = CD79ECBE1B1FAB2100863789 /* lua */; };
 		CD79ECC11B1FAB5200863789 /* libmoai-ios-http-server.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD79ECC01B1FAB5200863789 /* libmoai-ios-http-server.a */; };
@@ -109,6 +113,10 @@
 		CD4DF2B41A12E35B00E9A523 /* libmoai-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios.a"; path = "../../lib/ios/libmoai-ios.a"; sourceTree = "<group>"; };
 		CD4DF2C51A12E62900E9A523 /* aku_modules_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_config.h; path = "../../src/host-modules/aku_modules_config.h"; sourceTree = "<group>"; };
 		CD4DF2C61A12E62900E9A523 /* aku_modules_ios_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_ios_config.h; path = "../../src/host-modules/aku_modules_ios_config.h"; sourceTree = "<group>"; };
+		CD76CB6A1BD4B288008AB56C /* libmoai-ios-image-jpg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-image-jpg.a"; path = "../../lib/ios/libmoai-ios-image-jpg.a"; sourceTree = "<group>"; };
+		CD76CB6B1BD4B288008AB56C /* libmoai-ios-image-png.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-image-png.a"; path = "../../lib/ios/libmoai-ios-image-png.a"; sourceTree = "<group>"; };
+		CD76CB6C1BD4B288008AB56C /* libmoai-ios-image-pvr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-image-pvr.a"; path = "../../lib/ios/libmoai-ios-image-pvr.a"; sourceTree = "<group>"; };
+		CD76CB6D1BD4B288008AB56C /* libmoai-ios-image-webp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-image-webp.a"; path = "../../lib/ios/libmoai-ios-image-webp.a"; sourceTree = "<group>"; };
 		CD795FEA17F09B9F006AEB47 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		CD79ECBE1B1FAB2100863789 /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lua; sourceTree = "<group>"; };
 		CD79ECC01B1FAB5200863789 /* libmoai-ios-http-server.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-http-server.a"; path = "../../lib/ios/libmoai-ios-http-server.a"; sourceTree = "<group>"; };
@@ -158,15 +166,18 @@
 				CD4DF2B81A12E35B00E9A523 /* libmoai-ios-box2d.a in Frameworks */,
 				CD4DF2B91A12E35B00E9A523 /* libmoai-ios-crypto.a in Frameworks */,
 				CD4DF2BA1A12E35B00E9A523 /* libmoai-ios-http-client.a in Frameworks */,
+				CD76CB701BD4B288008AB56C /* libmoai-ios-image-pvr.a in Frameworks */,
 				CD79ECC11B1FAB5200863789 /* libmoai-ios-http-server.a in Frameworks */,
 				CD4DF2BB1A12E35B00E9A523 /* libmoai-ios-luaext.a in Frameworks */,
 				CDBA1E501B1E44FA00DCDC75 /* libmoai-ios-movie.a in Frameworks */,
 				CD4DF2BC1A12E35B00E9A523 /* libmoai-ios-sim.a in Frameworks */,
 				CD4DF2BD1A12E35B00E9A523 /* libmoai-ios-untz.a in Frameworks */,
+				CD76CB6F1BD4B288008AB56C /* libmoai-ios-image-png.a in Frameworks */,
 				CD4DF2BE1A12E35B00E9A523 /* libmoai-ios-zl-core.a in Frameworks */,
 				CD4DF2BF1A12E35B00E9A523 /* libmoai-ios-zl-crypto.a in Frameworks */,
 				CD4DF2C01A12E35B00E9A523 /* libmoai-ios-zl-vfs.a in Frameworks */,
 				CD9F769E1808DEDC0001EF0C /* AdSupport.framework in Frameworks */,
+				CD76CB6E1BD4B288008AB56C /* libmoai-ios-image-jpg.a in Frameworks */,
 				03CC910C13B3C48400B2724C /* AudioToolbox.framework in Frameworks */,
 				CD236689180A5CFC006A7236 /* AVFoundation.framework in Frameworks */,
 				43BA2EF317733819007DCDF0 /* CFNetwork.framework in Frameworks */,
@@ -183,6 +194,7 @@
 				CD4C4163180A6A8600C02381 /* MobileCoreServices.framework in Frameworks */,
 				03CC90F813B3C45A00B2724C /* OpenGLES.framework in Frameworks */,
 				03CC912213B3C4A400B2724C /* QuartzCore.framework in Frameworks */,
+				CD76CB711BD4B288008AB56C /* libmoai-ios-image-webp.a in Frameworks */,
 				CD795FEB17F09B9F006AEB47 /* Social.framework in Frameworks */,
 				03CC912C13B3C4C000B2724C /* StoreKit.framework in Frameworks */,
 				03CC911C13B3C49400B2724C /* SystemConfiguration.framework in Frameworks */,
@@ -290,6 +302,10 @@
 				CD4DF2AC1A12E35B00E9A523 /* libmoai-ios-crypto.a */,
 				CD4DF2AD1A12E35B00E9A523 /* libmoai-ios-http-client.a */,
 				CD79ECC01B1FAB5200863789 /* libmoai-ios-http-server.a */,
+				CD76CB6A1BD4B288008AB56C /* libmoai-ios-image-jpg.a */,
+				CD76CB6B1BD4B288008AB56C /* libmoai-ios-image-png.a */,
+				CD76CB6C1BD4B288008AB56C /* libmoai-ios-image-pvr.a */,
+				CD76CB6D1BD4B288008AB56C /* libmoai-ios-image-webp.a */,
 				CD4DF2AE1A12E35B00E9A523 /* libmoai-ios-luaext.a */,
 				CDBA1E4E1B1E44FA00DCDC75 /* libmoai-ios-movie.a */,
 				CD4DF2AF1A12E35B00E9A523 /* libmoai-ios-sim.a */,

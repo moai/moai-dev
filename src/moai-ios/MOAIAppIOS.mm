@@ -422,7 +422,9 @@ int MOAIAppIOS::_takeCamera( lua_State* L ) {
 int MOAIAppIOS::_vibrate ( lua_State *L ) {
 	UNUSED ( L );
 	
-	AudioServicesPlaySystemSound ( kSystemSoundID_Vibrate );
+    //TODO: put this somewhere other than moai-ios - this is the only call that introduces a dependency on audio
+	// should be in untz or something
+	//AudioServicesPlaySystemSound ( kSystemSoundID_Vibrate );
 	return 0;
 }
 
