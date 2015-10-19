@@ -9,7 +9,7 @@ CONFIG_NAME = 'MOAI_MODULES' -- this will create a variable in Android.mk contai
 SETTINGS = {
 	LIB_NAME			= 'moai',
 	MY_ARM_MODE			= 'arm',
-	MY_ARM_ARCH			= 'armeabi-v7a x86',
+	MY_ARM_ARCH			= 'armeabi-v7a x86 x64',
 	MY_APP_PLATFORM		= 'android-10',
 }
 
