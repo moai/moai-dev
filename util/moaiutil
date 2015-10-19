@@ -47,5 +47,5 @@ echo -n "moaiutil toolbelt location: " && which moaiutil
 echo
 
 pushd $MOAI_SDK_HOME/util > /dev/null
-moai moaiutil.lua $@
+$MOAI_SDK_BIN moaiutil.lua $@
 popd > /dev/null
