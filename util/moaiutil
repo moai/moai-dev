@@ -7,8 +7,26 @@ MOAI_CMD=${1}
 # if we're missing moai, inform the user that they need to build it first
 if [ -z "$MOAI_SDK_BIN" ] 
 then
-    echo "Cannot find a local moai binary - you need to build it first."
+    echo "Cannot find a local moai binary - it needs to be built first."
     echo "Use the appropriate build-*.sh script located in $MOAI_SDK_HOME/bin"
+    case `uname` in
+    Darwin*)
+      bin_build_script="bin/build-osx.sh"
+      ;;
+    Linux*)
+      bin_build_script="bin/build-linux.sh"
+      ;;
+    *)
+      bin_build_script="bin/build-linux.sh"
+      ;;
+    esac
+
+    if [ -e $bin_build_script ] 
+    then
+        exec $bin_build_script
+    fi
+
+    echo "Re-run moaiutil now to confirm local moai binary was built."
     exit 1
 fi
 
