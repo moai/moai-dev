@@ -152,10 +152,13 @@ configureHost = function()
         [ output..'main.lua'] = {
         ['setWorkingDirectory%(.-%)'] = 'setWorkingDirectory("'..luafolder..'")'
       },
-    [ output..'run.sh'] = {
+    [ output..'run.sh' ] = {
       ['SCHEME_NAME'] = hostconfig['AppName'], 
-      }
-      })
+      },
+    [ output..'res/Info.plist' ] = {
+      ['com.getmoai'] = hostconfig['ApplicationId'],
+      },
+  })
 
     if (hostconfig['AppName'] ~= 'Moai Template' ) then
       
