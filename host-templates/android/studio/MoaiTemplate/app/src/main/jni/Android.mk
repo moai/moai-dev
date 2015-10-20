@@ -21,8 +21,8 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := moai
 LOCAL_CFLAGS :=  -DDISABLE_IMPORTGL
 LOCAL_LDLIBS := -llog -lGLESv1_CM -lGLESv2 -landroid -lEGL 
-LOCAL_STATIC_LIBRARIES := $(MOAI_STATIC_LIBRARIES) moai-android moai-http-client moai-http-server moai-luaext moai-box2d moai-spine moai-untz moai-crypto moai-sim moai-util moai-core zlcore luaext luasql luacrypto luacurl luasocket luafilesystem liblua-static zlcrypto zlvfs contrib expat freetype png box2d spine zlib jpg pvr jansson untz vorbis ogg sqlite3 mongoose tinyxml tlsf curl ssl crypto cares sfmt tess
-
+LOCAL_STATIC_LIBRARIES := $(MOAI_STATIC_LIBRARIES)  moai-android moai-image-webp moai-image-pvr  moai-image-jpg moai-image-png moai-http-client moai-http-server moai-luaext moai-box2d moai-untz moai-crypto moai-sim moai-util moai-core zlcore luaext luasql luacrypto luacurl luasocket luafilesystem liblua-static zlcrypto zlvfs contrib expat freetype png box2d zlib jpg pvr jansson untz vorbis ogg sqlite3 mongoose tinyxml tlsf curl ssl crypto cares sfmt tess webp cpufeatures
+ 
 # sfmt chipmunk curl ssl crypto tlsf tinyxml mongoose sqlite3 ogg vorbis untz jansson cares jpg zlib box2d png freetype expat contrib zlvfs liblua-static luafilesystem luasocket luacurl luacrypto luasql luaext zlcore  moai-core moai-util moai-sim moai-untz moai-box2d moai-luaext moai-http-client moai-chipmunk moai-android
 
 LOCAL_SRC_PATH := $(LOCAL_PATH)

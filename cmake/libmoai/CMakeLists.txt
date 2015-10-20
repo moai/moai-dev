@@ -18,7 +18,11 @@ add_subdirectory ( moai-http-client )
 add_subdirectory ( moai-http-server )
 add_subdirectory ( moai-luaext )
 add_subdirectory ( moai-audiosampler )
-add_subdirectory ( moai-spine )
+
+add_subdirectory ( moai-image-jpg )
+add_subdirectory ( moai-image-pvr )
+add_subdirectory ( moai-image-png )
+add_subdirectory ( moai-image-webp )
 
 if (MOAI_TEST)
    add_subdirectory ( moai-test)

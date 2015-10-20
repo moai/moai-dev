@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#if MOAI_WITH_LIBPNG
+#if AKU_WITH_IMAGE_PNG
   #include <png.h>
 #endif
 

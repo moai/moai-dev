@@ -8,11 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		63157D5C19FCB407009018A3 /* bootstrap.lua in Resources */ = {isa = PBXBuildFile; fileRef = 63157D5B19FCB407009018A3 /* bootstrap.lua */; };
-		63157D5F19FCB4F0009018A3 /* anim-basic in Resources */ = {isa = PBXBuildFile; fileRef = 63157D5E19FCB4F0009018A3 /* anim-basic */; };
+		63157D5F19FCB4F0009018A3 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 63157D5E19FCB4F0009018A3 /* src */; };
 		63157D6219FCB57D009018A3 /* libmoai-crypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63157D6019FCB57D009018A3 /* libmoai-crypto.a */; };
 		63157D6319FCB57D009018A3 /* libtess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63157D6119FCB57D009018A3 /* libtess.a */; };
 		63157D6619FCB5A1009018A3 /* aku_modules_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63157D6419FCB5A1009018A3 /* aku_modules_util.cpp */; };
 		6350149A1A162880000E237F /* Icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 635014991A162880000E237F /* Icon-120.png */; };
+		637AC50F1BD6743F004E3F10 /* libmoai-image-jpg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 637AC50B1BD6743F004E3F10 /* libmoai-image-jpg.a */; };
+		637AC5101BD6743F004E3F10 /* libmoai-image-png.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 637AC50C1BD6743F004E3F10 /* libmoai-image-png.a */; };
+		637AC5111BD6743F004E3F10 /* libmoai-image-pvr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 637AC50D1BD6743F004E3F10 /* libmoai-image-pvr.a */; };
+		637AC5121BD6743F004E3F10 /* libmoai-image-webp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 637AC50E1BD6743F004E3F10 /* libmoai-image-webp.a */; };
 		63E54A7919EE14DF00C7AC2F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 63E54A7719EE14DF00C7AC2F /* InfoPlist.strings */; };
 		63E54A9619EE170700C7AC2F /* aku_modules.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63E54A8C19EE170700C7AC2F /* aku_modules.cpp */; };
 		63E54A9819EE170700C7AC2F /* SDLHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63E54A9319EE170700C7AC2F /* SDLHost.cpp */; };
@@ -85,12 +89,16 @@
 
 /* Begin PBXFileReference section */
 		63157D5B19FCB407009018A3 /* bootstrap.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = bootstrap.lua; path = ../bootstrap.lua; sourceTree = "<group>"; };
-		63157D5E19FCB4F0009018A3 /* anim-basic */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "anim-basic"; path = "../../../samples/anim-basic"; sourceTree = "<group>"; };
+		63157D5E19FCB4F0009018A3 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = ../../src; sourceTree = "<group>"; };
 		63157D6019FCB57D009018A3 /* libmoai-crypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-crypto.a"; sourceTree = "<group>"; };
 		63157D6119FCB57D009018A3 /* libtess.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libtess.a; sourceTree = "<group>"; };
 		63157D6419FCB5A1009018A3 /* aku_modules_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aku_modules_util.cpp; sourceTree = "<group>"; };
 		63157D6519FCB5A1009018A3 /* aku_modules_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aku_modules_util.h; sourceTree = "<group>"; };
 		635014991A162880000E237F /* Icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-120.png"; sourceTree = "<group>"; };
+		637AC50B1BD6743F004E3F10 /* libmoai-image-jpg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-image-jpg.a"; sourceTree = "<group>"; };
+		637AC50C1BD6743F004E3F10 /* libmoai-image-png.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-image-png.a"; sourceTree = "<group>"; };
+		637AC50D1BD6743F004E3F10 /* libmoai-image-pvr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-image-pvr.a"; sourceTree = "<group>"; };
+		637AC50E1BD6743F004E3F10 /* libmoai-image-webp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libmoai-image-webp.a"; sourceTree = "<group>"; };
 		63E54A6B19EE14DF00C7AC2F /* Moai Template.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Moai Template.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63E54A6E19EE14DF00C7AC2F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		63E54A7119EE14DF00C7AC2F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -176,6 +184,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				637AC5121BD6743F004E3F10 /* libmoai-image-webp.a in Frameworks */,
 				63157D6219FCB57D009018A3 /* libmoai-crypto.a in Frameworks */,
 				63157D6319FCB57D009018A3 /* libtess.a in Frameworks */,
 				63E54B0719EE1C4B00C7AC2F /* Carbon.framework in Frameworks */,
@@ -205,6 +214,8 @@
 				63E54AC819EE179700C7AC2F /* libglew.a in Frameworks */,
 				63E54AC919EE179700C7AC2F /* libjansson.a in Frameworks */,
 				BD02B4291AB7B5A7006743DE /* libmoai-audiosampler.a in Frameworks */,
+				637AC50F1BD6743F004E3F10 /* libmoai-image-jpg.a in Frameworks */,
+				637AC5111BD6743F004E3F10 /* libmoai-image-pvr.a in Frameworks */,
 				63E54ACA19EE179700C7AC2F /* libjpg.a in Frameworks */,
 				63E54ACB19EE179700C7AC2F /* libluacrypto.a in Frameworks */,
 				63E54ACC19EE179700C7AC2F /* libluacurl.a in Frameworks */,
@@ -230,6 +241,7 @@
 				63E54ADD19EE179700C7AC2F /* libSDL2main.a in Frameworks */,
 				63E54ADE19EE179700C7AC2F /* libsfmt.a in Frameworks */,
 				63E54ADF19EE179700C7AC2F /* libsqlite3.a in Frameworks */,
+				637AC5101BD6743F004E3F10 /* libmoai-image-png.a in Frameworks */,
 				63E54AE019EE179700C7AC2F /* libssl.a in Frameworks */,
 				63E54AE119EE179700C7AC2F /* libtinyxml.a in Frameworks */,
 				BD02B42D1AB7B5A7006743DE /* libwebp.a in Frameworks */,
@@ -248,6 +260,10 @@
 		63157D5619FCAE84009018A3 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				637AC50B1BD6743F004E3F10 /* libmoai-image-jpg.a */,
+				637AC50C1BD6743F004E3F10 /* libmoai-image-png.a */,
+				637AC50D1BD6743F004E3F10 /* libmoai-image-pvr.a */,
+				637AC50E1BD6743F004E3F10 /* libmoai-image-webp.a */,
 				BD02B4221AB7B5A7006743DE /* libmoai-apple.a */,
 				BD02B4231AB7B5A7006743DE /* libmoai-audiosampler.a */,
 				BD02B4241AB7B5A7006743DE /* libmoai-http-server.a */,
@@ -310,7 +326,7 @@
 		63E54A6219EE14DF00C7AC2F = {
 			isa = PBXGroup;
 			children = (
-				63157D5E19FCB4F0009018A3 /* anim-basic */,
+				63157D5E19FCB4F0009018A3 /* src */,
 				63157D5619FCAE84009018A3 /* lib */,
 				63E54A7419EE14DF00C7AC2F /* app */,
 				63E54A6D19EE14DF00C7AC2F /* Frameworks */,
@@ -462,7 +478,7 @@
 			files = (
 				6350149A1A162880000E237F /* Icon-120.png in Resources */,
 				63E54A7919EE14DF00C7AC2F /* InfoPlist.strings in Resources */,
-				63157D5F19FCB4F0009018A3 /* anim-basic in Resources */,
+				63157D5F19FCB4F0009018A3 /* src in Resources */,
 				63157D5C19FCB407009018A3 /* bootstrap.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
