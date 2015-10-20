@@ -23,6 +23,49 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@lua	getBounds
+	@text	Return bounds for an item or the maximum bounds for the
+			deck.
+
+	@override
+
+		@in		number idx
+		@out	xMin
+		@out	yMin
+		@out	zMin
+		@out	xMax
+		@out	yMax
+		@out	zMax
+	
+	@override
+
+		@out	xMin
+		@out	yMin
+		@out	zMin
+		@out	xMax
+		@out	yMax
+		@out	zMax
+*/
+int MOAIDeck::_getBounds ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIDeck, "U" )
+	
+	ZLBox box;
+	
+	if ( state.IsType ( 2, LUA_TNUMBER )) {
+	
+		u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
+		box = self->GetBounds ( idx );
+	}
+	else {
+	
+		box = self->GetBounds ();
+	}
+	
+	state.Push ( box );
+	return 6;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	subdivideRect
 	@text	Convenience method. Here for now as a class method, but maybe should
 			move to MOAIGrid.
@@ -177,5 +220,11 @@ void MOAIDeck::RegisterLuaClass ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
-	UNUSED ( state );
+
+	luaL_Reg regTable [] = {
+		{ "getBounds",				_getBounds },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }

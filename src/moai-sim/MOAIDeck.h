@@ -30,6 +30,7 @@ protected:
 	};
 	
 	//----------------------------------------------------------------//
+	static int						_getBounds					( lua_State* L );
 	static int						_subdivideRect				( lua_State* L );
 
 public:
