@@ -104,7 +104,7 @@ copy = function ( dstpath, srcpath )
 	if osx then
 		--print("COPY: \"" .. srcpath .. "\" -> \"" .. dstpath .. "\"")
 		-- awful, but until there's a better way...
-		moaiCopy( srcpath, dstpath )
+		--moaiCopy( srcpath, dstpath )
 
 		-- so awful
 		if (false) then
