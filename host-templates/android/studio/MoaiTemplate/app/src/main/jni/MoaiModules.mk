@@ -52,12 +52,6 @@ LOCAL_SRC_FILES := $(MOAI_LIBS)/libtlsf.a
 include $(PREBUILT_STATIC_LIBRARY)
 include $(CLEAR_VARS)
 
-LOCAL_MODULE    := spine
-LOCAL_SRC_FILES := $(MOAI_LIBS)/libspine.a
-
-include $(PREBUILT_STATIC_LIBRARY)
-include $(CLEAR_VARS)
-
 LOCAL_MODULE    := moai-http-client 
 LOCAL_SRC_FILES := $(MOAI_LIBS)/libmoai-http-client.a
 
@@ -254,5 +248,29 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE    := luacurl 
 LOCAL_SRC_FILES := $(MOAI_LIBS)/libluacurl.a
+
+include $(PREBUILT_STATIC_LIBRARY)
+include $(CLEAR_VARS)
+
+LOCAL_MODULE    := moai-image-jpg
+LOCAL_SRC_FILES := $(MOAI_LIBS)/libmoai-image-jpg.a
+
+include $(PREBUILT_STATIC_LIBRARY)
+include $(CLEAR_VARS)
+
+LOCAL_MODULE    := moai-image-png 
+LOCAL_SRC_FILES := $(MOAI_LIBS)/libmoai-image-png.a
+
+include $(PREBUILT_STATIC_LIBRARY)
+include $(CLEAR_VARS)
+
+LOCAL_MODULE    := moai-image-pvr 
+LOCAL_SRC_FILES := $(MOAI_LIBS)/libmoai-image-pvr.a
+
+include $(PREBUILT_STATIC_LIBRARY)
+include $(CLEAR_VARS)
+
+LOCAL_MODULE    := moai-image-webp 
+LOCAL_SRC_FILES := $(MOAI_LIBS)/libmoai-image-webp.a
 
 include $(PREBUILT_STATIC_LIBRARY)

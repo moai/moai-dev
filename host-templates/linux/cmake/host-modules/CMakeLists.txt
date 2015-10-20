@@ -18,6 +18,10 @@ target_include_directories(host-modules PUBLIC ${HOST_ROOT})
   						  moai-box2d  
   						  moai-untz  
   						  moai-http-client 
+                moai-image-pvr
+                moai-image-png
+                moai-image-jpg
+                moai-image-webp
   						  moai-luaext 
   						  moai-core
                 moai-crypto
