@@ -5,22 +5,6 @@
 
 #include <moai-sim/MOAIImageFormatMgr.h>
 
-#if MOAI_WITH_LIBJPG
-	#include <moai-sim/MOAIImageFormatJpg.h>
-#endif
-
-#if MOAI_WITH_LIBPNG
-	#include <moai-sim/MOAIImageFormatPng.h>
-#endif
-
-#if MOAI_WITH_LIBWEBP
-	#include <moai-sim/MOAIImageFormatWebP.h>
-#endif
-
-#if MOAI_WITH_LIBPVR
-	#include <moai-sim/MOAIImageFormatPvr.h>
-#endif
-
 //================================================================//
 // MOAIImageFormatMgr
 //================================================================//
@@ -85,22 +69,6 @@ u32 MOAIImageFormatMgr::HashName ( cc8* name ) {
 
 //----------------------------------------------------------------//
 MOAIImageFormatMgr::MOAIImageFormatMgr () {
-
-	#if MOAI_WITH_LIBJPG
-		this->RegisterFormat < MOAIImageFormatJpg >( "jpg" );
-	#endif
-	
-	#if MOAI_WITH_LIBPNG
-		this->RegisterFormat < MOAIImageFormatPng >( "png" );
-	#endif
-	
-	#if MOAI_WITH_LIBWEBP
-		this->RegisterFormat < MOAIImageFormatWebP >( "webp" );
-	#endif
-	
-	#if MOAI_WITH_LIBPVR
-		this->RegisterFormat < MOAIImageFormatPvr >( "pvr" );
-	#endif
 }
 
 //----------------------------------------------------------------//

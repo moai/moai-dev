@@ -19,6 +19,10 @@
 		4C623B6615246B25008E4436 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6515246B25008E4436 /* CoreServices.framework */; };
 		CD096FD218E0FFE300A36EDD /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD096FD118E0FFE300A36EDD /* libstdc++.dylib */; };
 		CD6600661831CB5400D9862B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6600651831CB5400D9862B /* OpenGL.framework */; };
+		CD76CB761BD4B2AD008AB56C /* libmoai-osx-image-jpg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD76CB721BD4B2AD008AB56C /* libmoai-osx-image-jpg.a */; settings = {ASSET_TAGS = (); }; };
+		CD76CB771BD4B2AD008AB56C /* libmoai-osx-image-png.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD76CB731BD4B2AD008AB56C /* libmoai-osx-image-png.a */; settings = {ASSET_TAGS = (); }; };
+		CD76CB781BD4B2AD008AB56C /* libmoai-osx-image-pvr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD76CB741BD4B2AD008AB56C /* libmoai-osx-image-pvr.a */; settings = {ASSET_TAGS = (); }; };
+		CD76CB791BD4B2AD008AB56C /* libmoai-osx-image-webp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD76CB751BD4B2AD008AB56C /* libmoai-osx-image-webp.a */; settings = {ASSET_TAGS = (); }; };
 		CD795EE217F08C0B006AEB47 /* SDLHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD795EDF17F08C0B006AEB47 /* SDLHost.cpp */; };
 		CD795EE617F08C0B006AEB47 /* SDLHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD795EE117F08C0B006AEB47 /* SDLHostMain.cpp */; };
 		CD795EED17F08C21006AEB47 /* aku_modules.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD795EEB17F08C21006AEB47 /* aku_modules.cpp */; };
@@ -75,6 +79,10 @@
 		CD6600651831CB5400D9862B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		CD74EA2B137807E40093EE68 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
 		CD74EA311378080E0093EE68 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = /usr/lib/libssl.dylib; sourceTree = "<absolute>"; };
+		CD76CB721BD4B2AD008AB56C /* libmoai-osx-image-jpg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-image-jpg.a"; path = "../../lib/osx/libmoai-osx-image-jpg.a"; sourceTree = "<group>"; };
+		CD76CB731BD4B2AD008AB56C /* libmoai-osx-image-png.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-image-png.a"; path = "../../lib/osx/libmoai-osx-image-png.a"; sourceTree = "<group>"; };
+		CD76CB741BD4B2AD008AB56C /* libmoai-osx-image-pvr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-image-pvr.a"; path = "../../lib/osx/libmoai-osx-image-pvr.a"; sourceTree = "<group>"; };
+		CD76CB751BD4B2AD008AB56C /* libmoai-osx-image-webp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-image-webp.a"; path = "../../lib/osx/libmoai-osx-image-webp.a"; sourceTree = "<group>"; };
 		CD795EDF17F08C0B006AEB47 /* SDLHost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDLHost.cpp; path = "../host-sdl/SDLHost.cpp"; sourceTree = "<group>"; };
 		CD795EE017F08C0B006AEB47 /* SDLHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDLHost.h; path = "../host-sdl/SDLHost.h"; sourceTree = "<group>"; };
 		CD795EE117F08C0B006AEB47 /* SDLHostMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDLHostMain.cpp; path = "../host-sdl/SDLHostMain.cpp"; sourceTree = "<group>"; };
@@ -140,14 +148,18 @@
 				0300CF94140DC65100ABCC5B /* AudioUnit.framework in Frameworks */,
 				0300CF67140DC53C00ABCC5B /* Carbon.framework in Frameworks */,
 				CD795EF217F08E4B006AEB47 /* Cocoa.framework in Frameworks */,
+				CD76CB791BD4B2AD008AB56C /* libmoai-osx-image-webp.a in Frameworks */,
 				CD795EF417F08F4E006AEB47 /* CoreAudio.framework in Frameworks */,
+				CD76CB761BD4B2AD008AB56C /* libmoai-osx-image-jpg.a in Frameworks */,
 				0300CF66140DC53C00ABCC5B /* CoreFoundation.framework in Frameworks */,
 				4C623B6615246B25008E4436 /* CoreServices.framework in Frameworks */,
+				CD76CB771BD4B2AD008AB56C /* libmoai-osx-image-png.a in Frameworks */,
 				CD795EF617F08F86006AEB47 /* ForceFeedback.framework in Frameworks */,
 				4C623B6415246B10008E4436 /* Foundation.framework in Frameworks */,
 				0300CF68140DC53C00ABCC5B /* IOKit.framework in Frameworks */,
 				CD6600661831CB5400D9862B /* OpenGL.framework in Frameworks */,
 				CDBA1E7F1B1E582400DCDC75 /* SystemConfiguration.framework in Frameworks */,
+				CD76CB781BD4B2AD008AB56C /* libmoai-osx-image-pvr.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,6 +242,10 @@
 				CDFD7C5D1A0859CB00A94E6B /* libmoai-osx-crypto.a */,
 				CDFD7C5E1A0859CB00A94E6B /* libmoai-osx-http-client.a */,
 				CDFD7C5F1A0859CB00A94E6B /* libmoai-osx-http-server.a */,
+				CD76CB721BD4B2AD008AB56C /* libmoai-osx-image-jpg.a */,
+				CD76CB731BD4B2AD008AB56C /* libmoai-osx-image-png.a */,
+				CD76CB741BD4B2AD008AB56C /* libmoai-osx-image-pvr.a */,
+				CD76CB751BD4B2AD008AB56C /* libmoai-osx-image-webp.a */,
 				CDFD7C601A0859CB00A94E6B /* libmoai-osx-luaext.a */,
 				CDBA1E801B1E584F00DCDC75 /* libmoai-osx-sdl.a */,
 				CDFD7C611A0859CB00A94E6B /* libmoai-osx-sim.a */,
@@ -384,7 +400,6 @@
 					"\"../../3rdparty/sdl2-2.0.0/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = ../../lib/osx;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wall";
@@ -444,7 +459,6 @@
 					"\"../../3rdparty/sdl2-2.0.0/include\"",
 				);
 				LIBRARY_SEARCH_PATHS = ../../lib/osx;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;

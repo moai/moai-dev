@@ -4,7 +4,7 @@
 #ifndef	MOAIIMAGEFORMATPVR_H
 #define	MOAIIMAGEFORMATPVR_H
 
-#include <moai-sim/MOAIImageFormat.h>
+#include <moai-sim/headers.h>
 
 class MOAIPvrHeader;
 class MOAIPvrMipLevelInfo;
