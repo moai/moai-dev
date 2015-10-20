@@ -270,6 +270,19 @@ LOCAL_SRC_FILES := $(MOAI_LIBS)/libmoai-image-pvr.a
 include $(PREBUILT_STATIC_LIBRARY)
 include $(CLEAR_VARS)
 
+LOCAL_MODULE    := cpufeatures 
+LOCAL_SRC_FILES := $(MOAI_LIBS)/libcpufeatures.a
+
+include $(PREBUILT_STATIC_LIBRARY)
+include $(CLEAR_VARS)
+
+LOCAL_MODULE    := webp 
+LOCAL_SRC_FILES := $(MOAI_LIBS)/libwebp.a
+
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+
 LOCAL_MODULE    := moai-image-webp 
 LOCAL_SRC_FILES := $(MOAI_LIBS)/libmoai-image-webp.a
 
