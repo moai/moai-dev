@@ -11,7 +11,6 @@
 		63C4D5B91A1075A2009DBA1D /* libliblua-static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63C4D5B81A1075A2009DBA1D /* libliblua-static.a */; };
 		63CF1A0B1A065C7700F731F1 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63CF19FA1A065C7700F731F1 /* Default-568h@2x.png */; };
 		63CF1A611A065DF300F731F1 /* AdColony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63CF1A1E1A065DF300F731F1 /* AdColony.framework */; };
-		63CF1A621A065DF300F731F1 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63CF1A1F1A065DF300F731F1 /* FacebookSDK.framework */; };
 		63CF1A631A065DF300F731F1 /* Kontagent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63CF1A201A065DF300F731F1 /* Kontagent.framework */; };
 		63CF1A641A065DF300F731F1 /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63CF1A211A065DF300F731F1 /* libbox2d.a */; };
 		63CF1A651A065DF300F731F1 /* libcares.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63CF1A221A065DF300F731F1 /* libcares.a */; };
@@ -119,7 +118,6 @@
 		63CF19FA1A065C7700F731F1 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "res/Default-568h@2x.png"; sourceTree = "<group>"; };
 		63CF1A1C1A065D4900F731F1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = res/Info.plist; sourceTree = "<group>"; };
 		63CF1A1E1A065DF300F731F1 /* AdColony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdColony.framework; path = libmoai/lib/AdColony.framework; sourceTree = "<group>"; };
-		63CF1A1F1A065DF300F731F1 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = libmoai/lib/FacebookSDK.framework; sourceTree = "<group>"; };
 		63CF1A201A065DF300F731F1 /* Kontagent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kontagent.framework; path = libmoai/lib/Kontagent.framework; sourceTree = "<group>"; };
 		63CF1A211A065DF300F731F1 /* libbox2d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbox2d.a; path = libmoai/lib/libbox2d.a; sourceTree = "<group>"; };
 		63CF1A221A065DF300F731F1 /* libcares.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcares.a; path = libmoai/lib/libcares.a; sourceTree = "<group>"; };
@@ -263,7 +261,6 @@
 				63CF1AC81A06655F00F731F1 /* AudioToolbox.framework in Frameworks */,
 				63CF1AC61A06654E00F731F1 /* AVFoundation.framework in Frameworks */,
 				63CF1A611A065DF300F731F1 /* AdColony.framework in Frameworks */,
-				63CF1A621A065DF300F731F1 /* FacebookSDK.framework in Frameworks */,
 				63CF1A631A065DF300F731F1 /* Kontagent.framework in Frameworks */,
 				63CF1A641A065DF300F731F1 /* libbox2d.a in Frameworks */,
 				63CF1A651A065DF300F731F1 /* libcares.a in Frameworks */,
@@ -426,7 +423,6 @@
 				63CF1A5C1A065DF300F731F1 /* libzlib.a */,
 				63CF1A5D1A065DF300F731F1 /* libzlvfs.a */,
 				63CF1A1E1A065DF300F731F1 /* AdColony.framework */,
-				63CF1A1F1A065DF300F731F1 /* FacebookSDK.framework */,
 				63CF1A201A065DF300F731F1 /* Kontagent.framework */,
 			);
 			name = "Moai Libraries";
@@ -679,7 +675,6 @@
 					"$(inherited)",
 					"$(SRCROOT)/libmoai/lib",
 					"$(PROJECT_DIR)/libmoai/lib",
-					"/Users/mkinoshita/moai-dev/lib/ios/lib",
 				);
 				PRODUCT_NAME = "Moai Template";
 			};
@@ -709,7 +704,6 @@
 					"$(inherited)",
 					"$(SRCROOT)/libmoai/lib",
 					"$(PROJECT_DIR)/libmoai/lib",
-					"/Users/mkinoshita/moai-dev/lib/ios/lib",
 				);
 				PRODUCT_NAME = "Moai Template";
 			};

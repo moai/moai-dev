@@ -49,7 +49,11 @@ add_subdirectory ( png )
 add_subdirectory ( pvr )
 add_subdirectory ( sfmt )
 add_subdirectory ( sqlite3 )
+
+if (MOAI_SPINE)
 add_subdirectory ( spine )
+endif (MOAI_SPINE)
+
 add_subdirectory ( ssl )
 add_subdirectory ( tess )
 add_subdirectory ( tinyxml )
