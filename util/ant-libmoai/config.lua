@@ -1,6 +1,6 @@
 CONFIG_NAME = 'MOAI_MODULES' -- this will create a variable in Android.mk containing the relative path to this config file
 
--- Additional config files maybe specified on the command line. moaiutil libmoai-ant will
+-- Additional config files maybe specified on the command line. pito libmoai-ant will
 -- also look in its invoke directory for a config file that will be applied before additional
 -- config's specified on the command line.
 

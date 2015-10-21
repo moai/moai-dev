@@ -52,7 +52,7 @@ end
 
 function ensureHostConfig()
   if (not hasConfig()) then
-    command_error("this command must be run from a project folder containing hostconfig.lua\nYou can create one using moaiutil host init\n")
+    command_error("this command must be run from a project folder containing hostconfig.lua\nYou can create one using pito host init\n")
   end
 end
 

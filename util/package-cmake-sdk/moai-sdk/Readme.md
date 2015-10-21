@@ -12,17 +12,19 @@ You should try to  structure your moai projects so that there is a source direct
 
 While you can use the moai desktop binary provided to run your moai lua code, you will eventually want to build your own host. Building your own host is required to run and deploy your project on other platforms (android, ios, html) or to customize the desktop version with your own icon and customisations or in preparation for submission to an app store.
 
-Managing and building these per platform hosts can be a headache and repeating the process for each project can get annoying. Thankfully this sdk provides a set of utility scripts to help with building and creating moai projects called `moaiutil`.
+Managing and building these per platform hosts can be a headache and repeating the process for each project can get annoying. Thankfully this sdk provides a set of utility scripts to help with building and creating moai projects called `pito`.
 
-To use moaiutil you should first add `<sdk-path>\util` to your `PATH` environment variable (if you haven't already done so).
+    pito: https://en.wiktionary.org/wiki/pito
+
+To use pito you should first add `<sdk-path>\util` to your `PATH` environment variable (if you haven't already done so).
 
 You should also ensure you have the requirements installed for the platforms you wish to support. See [Requirements](Requirements) section below.
 
 ### Creating Host Config ###
 
-moaiutil uses a lua based config file `hostconfig.lua` to create host projects with the correct settings and correct lua src location. To create this config file for the first time on a project, ensure you are one level up from your lua src and run 
+pito uses a lua based config file `hostconfig.lua` to create host projects with the correct settings and correct lua src location. To create this config file for the first time on a project, ensure you are one level up from your lua src and run 
 ```bash
-moaiutil host init
+pito host init
 ```
 This will create the hostconfig.lua which contains default settings for each platform, and can be edited to setup the name, source location, icon etc for the project you wish to build.
 
@@ -30,12 +32,12 @@ This will create the hostconfig.lua which contains default settings for each pla
 
 Once there is a hostconfig.lua, you can create (or recreate) a host project for a particular platform by running 
 ```bash
-moaiutil host create <host-name>
+pito host create <host-name>
 ```
 
 where `host-name` is the name of the host you want to create (normally named after the target plaform). For a list of supported host-names run 
 ```bash
-moaiutil host list
+pito host list
 ```
 
 The created host will be in a subfolder called `hosts\<host-name>` in your current project. 
@@ -44,17 +46,17 @@ The created host will be in a subfolder called `hosts\<host-name>` in your curre
 
 To customize the created host, you can just edit the files in `hosts\<host-name>` using either the ide (xcode, visual studio, android studio) for the project, or just with a text editor. 
 
-A better option (when applicable) is to just update the `hostconfig.lua` with new values and run `moaiutil host create <host-name>` again. This will remove your old `hosts/<host-name>` folder and create a new host with new settings. The advantage of this method is that you can recreate your host projects after updating the moai sdk to get all the latest fixes or customisations you have made to the sdk.
+A better option (when applicable) is to just update the `hostconfig.lua` with new values and run `pito host create <host-name>` again. This will remove your old `hosts/<host-name>` folder and create a new host with new settings. The advantage of this method is that you can recreate your host projects after updating the moai sdk to get all the latest fixes or customisations you have made to the sdk.
 
 ### Building the created host projects ###
 
 To build the created hosts you can launch the created project in the relevant ide (xcode, visual studio, android studio) or you can run 
 ```bash
-moaiutil host build <host-name>
+pito host build <host-name>
 ```
 or 
 ```bash
-moaiutil host run <host-name>
+pito host run <host-name>
 ```
 
 These scripts will create the host if it doesn't exist, then build it using the build.sh|bat script in the host directory. The run command will also call the run.bat|sh script in the host directory (if available) to launch the build application.
