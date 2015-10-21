@@ -11,6 +11,11 @@ MOAI_CMD        = arg [ 3 ]
 SCRIPT_DIR      = string.format ( '%sutil/%s/', MOAI_SDK_HOME, MOAI_CMD or "help" )
 
 local usageText={}
+usageText["wut"] = [[
+    pito wut
+        Contemplate your pito.
+]]
+
 usageText["environment"] = [[
     pito environment 
         This command will give you the needed environment variables to use pito.
