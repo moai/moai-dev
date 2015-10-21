@@ -1,3 +1,3 @@
 pushd www
-moaiutil serve
+pito serve
 popd

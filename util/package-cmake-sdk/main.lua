@@ -89,4 +89,4 @@ for i, v in ipairs ( CLEAN_DIRS ) do
 	MOAIFileSystem.deleteDirectory ( OUTPUT_DIR .. v, true )
 end
 
-moaiexec ( 'moaiutil make-lua-docs -o "%sdocs/sdk-lua-reference"', OUTPUT_DIR )
+moaiexec ( 'pito make-lua-docs -o "%sdocs/sdk-lua-reference"', OUTPUT_DIR )

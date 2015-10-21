@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "Setting up MoaiUtil path..."
+echo "Setting up pito path..."
 
 UTIL_PATH=$(dirname "${BASH_SOURCE[0]}")
 UTIL_PATH=$(cd $UTIL_PATH/../util; pwd)
@@ -32,7 +32,7 @@ popd
 
 pushd `dirname $0`/..
 sudo chmod a+x util/moai
-sudo chmod a+x util/moaiutil
+sudo chmod a+x util/pito
 export MOAI_ROOT=$(pwd)
 popd
 
@@ -42,13 +42,13 @@ echo Creating test project
 mkdir testhost
 cd testhost
 cp -R $MOAI_ROOT/samples/hello-moai src/
-moaiutil host init
+pito host init
 
 echo Creating and building ios host
-moaiutil host build ios
+pito host build ios
 
 echo Creating and building osx host
-moaiutil host build osx
+pito host build osx
 
 popd
 

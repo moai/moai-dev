@@ -16,7 +16,7 @@ Now, create a directory that you want to use as output directory. This is where 
 
 Now navigate into the `util` directory and execute the following command:
 
-`moaiutil.bat host-html --use-symlink --output-dir <output directory>`
+`pito.bat host-html --use-symlink --output-dir <output directory>`
 
 Replace `<output directory>` with your output directory. Note that you can shorten `--use-symlink` to `-s` and `--output-dir` to -`o`.
 

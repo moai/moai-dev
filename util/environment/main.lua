@@ -1,5 +1,5 @@
 --==============================================================
--- setup environment for MOAI and moaiutil
+-- setup environment for MOAI and pito
 --==============================================================
 local envFileName = MOAI_SDK_HOME .. "env.sh"
 local envStr = string.format ( 'export MOAI_SDK_HOME=%s\n', MOAI_SDK_HOME ) ..

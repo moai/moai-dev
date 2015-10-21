@@ -1,4 +1,4 @@
-echo "Setting up MoaiUtil path..."
+echo "Setting up pito path..."
 
 UTIL_PATH=$(dirname "${BASH_SOURCE[0]}")
 UTIL_PATH=$(cd $UTIL_PATH/../util; pwd)
@@ -32,13 +32,13 @@ popd
 
 echo Creating and building android host
 sudo chmod a+x util/moai
-sudo chmod a+x util/moaiutil
+sudo chmod a+x util/pito
 
 export MOAI_ROOT=$(pwd)
 pushd ~
 mkdir testhost
 cd testhost
 cp -R $MOAI_ROOT/samples/hello-moai src/
-moaiutil host init
-moaiutil host build android-gradle
+pito host init
+pito host build android-gradle
 popd
