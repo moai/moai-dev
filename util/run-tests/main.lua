@@ -109,7 +109,7 @@ end
 ----------------------------------------------------------------
 execute = function ( mode )
 
-	os.execute ( string.format ( 'moaiutil run-tests -b %s', mode ))
+	os.execute ( string.format ( 'pito run-tests -b %s', mode ))
 
 	if mode == 'test' then
 		if MOAIFileSystem.checkFileExists ( TEST_LOG_FILENAME ) then

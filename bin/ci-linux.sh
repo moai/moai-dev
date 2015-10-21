@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "Setting up MoaiUtil path..."
+echo "Setting up pito path..."
 
 UTIL_PATH=$(dirname "${BASH_SOURCE[0]}")
 UTIL_PATH=$(cd $UTIL_PATH/../util; pwd)

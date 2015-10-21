@@ -86,7 +86,7 @@ for i, v in ipairs ( CLEAN_DIRS ) do
 	MOAIFileSystem.deleteDirectory ( PACKAGE_DIR .. v, true )
 end
 
-util.moaiexec ( 'moaiutil make-lua-docs -o "%sdocs/sdk-lua-reference"', PACKAGE_DIR )
+util.moaiexec ( 'pito make-lua-docs -o "%sdocs/sdk-lua-reference"', PACKAGE_DIR )
 util.moaiexec ( './test-build.sh %s', PACKAGE_DIR )
 
 --MOAIFileSystem.copy ( PACKAGE_DIR .. 'bin/osx/moai', MOAI_SDK_HOME .. 'bin/osx/moai' )
