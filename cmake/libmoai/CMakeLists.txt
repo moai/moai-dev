@@ -24,6 +24,10 @@ add_subdirectory ( moai-image-pvr )
 add_subdirectory ( moai-image-png )
 add_subdirectory ( moai-image-webp )
 
+if (MOAI_SPINE) 
+	add_subdirectory ( moai-spine )
+endif (MOAI_SPINE)
+
 if (MOAI_TEST)
    add_subdirectory ( moai-test)
 endif (MOAI_TEST)

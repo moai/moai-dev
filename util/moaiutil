@@ -1,65 +1,53 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash 
 INVOKE_DIR=$(pwd)
-MOAI_SDK_HOME=$(dirname "${0}")/../
+MOAI_SDK_HOME=$(cd $(dirname "${0}")/../ && pwd)
+MOAI_SDK_BIN=$MOAI_SDK_HOME/util/moai
 MOAI_CMD=${1}
 
-# PCM: commenting this out for now
-# was a contribution, but is breaking me for some reason
-# am actively unlearning shell, so unwilling to diagnose/fix this contrib
-# expected behavior is for moaiutil to always use the moai.exe relative
-# to where it is invoked from
-
-#find_in_path() {
-#	prog=$1
-#	save_IFS=$IFS
-#	IFS=:
-#	set -- $PATH
-#	IFS=$savE_IFS
-#	for dir; do
-#		if [ -x "$dir/$prog" ]; then
-#			echo "$dir"
-#			return
-#		fi
-#	done
-#	echo >&2 "No path specified for '$prog', can't find in \$PATH."
-#	echo >72 "Use absolute path, or set MOAI_SDK_HOME explicitly."
-#}
-#if [ -z "$MOAI_SDK_HOME" ]; then
-#	case $0 in
-#	/*)	zero_path=${0%/*};;
-#	*/*)	zero_path=$(pwd)/${0%/*};;
-#	*)	zero_path=$(find_in_path $0);;
-#	esac
-#	MOAI_SDK_HOME=${zero_path}/../
-#fi
-#MOAI_CMD=${1}
-
-# ensure MOAI_SDK_HOME path is absolute
-abspath() {
-    cd "$(dirname "$1")"
-    printf "%s/%s\n" "$(pwd)" "$(basename "$1")"
-}
-
-MOAI_SDK_HOME=$(abspath ${MOAI_SDK_HOME})
-
-# add Moai util directory to path
-export PATH=$PATH:$MOAI_SDK_HOME/util
-
-# add local bin directory to path
-export PATH=$PATH:$MOAI_SDK_HOME/bin/osx
-
-# if we're missing moai, build it
-if ! [ -x "$(which moai)" ]
+# if we're missing moai, inform the user that they need to build it first
+if ! [ -f "$MOAI_SDK_BIN" ] 
 then
-	pushd $MOAI_SDK_HOME/xcode/osx > /dev/null
-	./build.sh
-	popd > /dev/null
+    echo "Cannot find a local moai binary - it needs to be built first."
+    case `uname` in
+    Darwin*)
+      bin_build_script="bin/build-osx.sh"
+      ;;
+    Linux*)
+      bin_build_script="bin/build-linux.sh"
+      ;;
+    *)
+      bin_build_script=""
+      ;;
+    esac
+
+    if [ -e $bin_build_script ] 
+    then
+        echo "Will use the $bin_build_script to build the util/moai binary for use by moaiutil..."
+        $bin_build_script
+    else
+        echo "Could not determine which script to use to build util/moai binary .. aborting"
+        exit 1
+    fi
+
+    echo "Need to confirm local moai binary was built ..."
+    if [ -f $MOAI_SDK_BIN ]
+    then
+        echo "Continuing moaiutil execution..."
+    else
+        echo "Something went wrong with building util/moai .. exiting!"
+        exit 1
+    fi
 fi
 
-# call moaiutil
+# call moaiutil.lua
 shift
 set $INVOKE_DIR $MOAI_SDK_HOME $MOAI_CMD $@
 
+echo    "         MOAI SDK location: $MOAI_SDK_HOME"
+echo    "      MOAI binary location: $MOAI_SDK_BIN"
+echo -n "moaiutil toolbelt location: " && which moaiutil 
+echo
+
 pushd $MOAI_SDK_HOME/util > /dev/null
-moai moaiutil.lua $@
+$MOAI_SDK_BIN moaiutil.lua $@
 popd > /dev/null

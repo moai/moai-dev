@@ -727,7 +727,6 @@
 					"$(inherited)",
 					"$(SRCROOT)/libmoai/lib",
 					"$(PROJECT_DIR)/libmoai/lib",
-					"/Users/mkinoshita/moai-dev/lib/ios/lib",
 				);
 				PRODUCT_NAME = "Moai Template";
 			};
@@ -757,7 +756,6 @@
 					"$(inherited)",
 					"$(SRCROOT)/libmoai/lib",
 					"$(PROJECT_DIR)/libmoai/lib",
-					"/Users/mkinoshita/moai-dev/lib/ios/lib",
 				);
 				PRODUCT_NAME = "Moai Template";
 			};

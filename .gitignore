@@ -1,5 +1,6 @@
 obj/
 libs/
+lib/
 util/libmoai
 
 Thumbs.db
@@ -29,11 +30,15 @@ test/xml-results
 .idea
 cmake/projects/
 
+# Build and release products
+cmake/build/
+release/
+
 bin/api-reference-parser/vendor
 docs/api-reference
 /moai-sdk/
-/lib/
 /bin/env-local.bat
 /util/moai
 /**/java/build/
 /**/java/*.iml
+env.sh
