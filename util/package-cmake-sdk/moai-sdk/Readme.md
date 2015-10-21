@@ -14,6 +14,8 @@ While you can use the moai desktop binary provided to run your moai lua code, yo
 
 Managing and building these per platform hosts can be a headache and repeating the process for each project can get annoying. Thankfully this sdk provides a set of utility scripts to help with building and creating moai projects called `pito`.
 
+    pito: https://en.wiktionary.org/wiki/pito
+
 To use pito you should first add `<sdk-path>\util` to your `PATH` environment variable (if you haven't already done so).
 
 You should also ensure you have the requirements installed for the platforms you wish to support. See [Requirements](Requirements) section below.
