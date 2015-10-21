@@ -12,7 +12,7 @@ SCRIPT_DIR      = string.format ( '%sutil/%s/', MOAI_SDK_HOME, MOAI_CMD or "help
 
 local usageText={}
 usageText["environment"] = [[
-    Cmd: pito environment 
+    pito environment 
         This command will give you the needed environment variables to use pito.
         Example:
             /absolute/path/to/moai_sdk/util/pito environment
@@ -20,7 +20,7 @@ usageText["environment"] = [[
 ]]
 
 usageText["init"] = [[
-    Cmd: pito init
+    pito init
         Run from your project folder to initialize a pito-managed set of host projects.
         Creates a hostconfig.lua file, which you must edit to describe your MOAI project.
         Example:
@@ -30,7 +30,7 @@ usageText["init"] = [[
 ]]
 
 usageText["host"] = [[
-    Cmd: pito host <subcommand> <args>
+    pito host <subcommand> <args>
         Subcommands:
             host list - Lists available hosts
             host init - Creates a template host config file used by subsequent commands
@@ -47,12 +47,12 @@ usageText["host"] = [[
 ]]
 
 usageText["make-lua-docs"] = [[
-    Cmd: pito make-lua-docs 
+    pito make-lua-docs 
         Creates compact documentation for the Lua-side of the MOAI API.
 ]]
 
 usageText["make-cpp-docs"] = [[
-    Cmd: pito make-cpp-docs
+    pito make-cpp-docs
         Creates compact documentation from the MOAI C/C++ codebase.
         Example:    
             cd newMOAIProject && pito make-cpp-docs
@@ -60,7 +60,7 @@ usageText["make-cpp-docs"] = [[
 ]]
 
 usageText["package-cmake-sdk"] = [[
-    Cmd: pito package-cmake-sdk
+    pito package-cmake-sdk
         Creates a distributable SDK based on cmake-driven MOAI build.
         Example:
             cd newMOAIProject && pito package-cmake-sdk
@@ -68,22 +68,22 @@ usageText["package-cmake-sdk"] = [[
 ]]
 
 usageText["package-sdk"] = [[
-    Cmd: pito package-sdk
+    pito package-sdk
         Create the standard release of the MOAI SDK.
 ]]
 
 usageText["run-samples"] = [[
-    Cmd: pito run-samples
+    pito run-samples
         Run the MOAI samples.
 ]]
 
 usageText["run-tests"] = [[
-    Cmd: pito run-tests
+    pito run-tests
         Run the Test suite.
 ]]
 
 usageText["sdk-version"] = [[
-    Cmd: pito sdk-version
+    pito sdk-version
         Obtain the MOAI SDK Version info for the current configuration.
 ]]
 
