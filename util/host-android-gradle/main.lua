@@ -259,7 +259,11 @@ configureHost = function()
     [ output .. 'local.properties' ] = {
       [ 'sdk.dir=[^\n]+' ]= "sdk.dir="..sdkdir,
       [ 'ndk.dir=[^\n]+' ]= "ndk.dir="..ndkdir
-    }
+    },
+    -- TODO: Set up ApplicationId
+    -- [ output..'app/build.gradle' ] = {
+    --   ['com.getmoai'] = hostconfig['ApplicationId'],
+    --   },
 	})
   
   print("copying icons")

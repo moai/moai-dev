@@ -22,7 +22,7 @@ then
 
     if [ -e $bin_build_script ] 
     then
-        echo "Will use the $bin_build_script to build the util/moai binary for use by moaiutil..."
+        echo "Will use the $bin_build_script to build the util/moai binary for use by pito..."
         $bin_build_script
     else
         echo "Could not determine which script to use to build util/moai binary .. aborting"
@@ -32,22 +32,27 @@ then
     echo "Need to confirm local moai binary was built ..."
     if [ -f $MOAI_SDK_BIN ]
     then
-        echo "Continuing moaiutil execution..."
+        echo "Continuing pito execution..."
     else
         echo "Something went wrong with building util/moai .. exiting!"
         exit 1
     fi
 fi
 
-# call moaiutil.lua
+case ${1} in
+    wut*)
+        echo    "         MOAI SDK location: $MOAI_SDK_HOME"
+        echo    "      MOAI binary location: $MOAI_SDK_BIN"
+        echo -n "    pito toolbelt location: " && which pito 
+        echo
+        exit 0
+        ;;
+esac
+
+# call pito.lua
 shift
 set $INVOKE_DIR $MOAI_SDK_HOME $MOAI_CMD $@
 
-echo    "         MOAI SDK location: $MOAI_SDK_HOME"
-echo    "      MOAI binary location: $MOAI_SDK_BIN"
-echo -n "moaiutil toolbelt location: " && which moaiutil 
-echo
-
 pushd $MOAI_SDK_HOME/util > /dev/null
-$MOAI_SDK_BIN moaiutil.lua $@
+$MOAI_SDK_BIN pito.lua $@
 popd > /dev/null

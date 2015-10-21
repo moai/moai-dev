@@ -1,4 +1,4 @@
 #rm -rf libmoai/obj
 #rm -rf libmoai/libs
 
-../util/moaiutil ant-host
+../util/pito ant-host

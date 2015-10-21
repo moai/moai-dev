@@ -11,26 +11,31 @@ MOAI_CMD        = arg [ 3 ]
 SCRIPT_DIR      = string.format ( '%sutil/%s/', MOAI_SDK_HOME, MOAI_CMD or "help" )
 
 local usageText={}
+usageText["wut"] = [[
+    pito wut
+        Contemplate your pito.
+]]
+
 usageText["environment"] = [[
-    Cmd: moaiutil environment 
-        This command will give you the needed environment variables to use moaiutil.
+    pito environment 
+        This command will give you the needed environment variables to use pito.
         Example:
-            /absolute/path/to/moai_sdk/util/moaiutil environment
+            /absolute/path/to/moai_sdk/util/pito environment
             (Follow instructions)
 ]]
 
 usageText["init"] = [[
-    Cmd: moaiutil init
-        Run from your project folder to initialize a moaiutil-managed set of host projects.
+    pito init
+        Run from your project folder to initialize a pito-managed set of host projects.
         Creates a hostconfig.lua file, which you must edit to describe your MOAI project.
         Example:
             mkdir newMOAIProject && cd newMOAIProject   # use the toolbelt in a new project
-            moaiutil init 
+            pito init 
             vi hostconfig.lua                           #&etc.
 ]]
 
 usageText["host"] = [[
-    Cmd: moaiutil host <subcommand> <args>
+    pito host <subcommand> <args>
         Subcommands:
             host list - Lists available hosts
             host init - Creates a template host config file used by subsequent commands
@@ -41,54 +46,54 @@ usageText["host"] = [[
             host create <hostname> - Creates the host in the hosts folder (removing old 
                                      host) based on latest config settings.
         Example:
-            cd newMOAIProject && moaiutil host create ios && \
-                                 moaiutil host create android-studio && \
-                                 moaiutil host create host osx-app && #etc.
+            cd newMOAIProject && pito host create ios && \
+                                 pito host create android-studio && \
+                                 pito host create host osx-app && #etc.
 ]]
 
 usageText["make-lua-docs"] = [[
-    Cmd: moaiutil make-lua-docs 
+    pito make-lua-docs 
         Creates compact documentation for the Lua-side of the MOAI API.
 ]]
 
 usageText["make-cpp-docs"] = [[
-    Cmd: moaiutil make-cpp-docs
+    pito make-cpp-docs
         Creates compact documentation from the MOAI C/C++ codebase.
         Example:    
-            cd newMOAIProject && moaiutil make-cpp-docs
+            cd newMOAIProject && pito make-cpp-docs
             find moai-sdk/ #&etc.
 ]]
 
 usageText["package-cmake-sdk"] = [[
-    Cmd: moaiutil package-cmake-sdk
+    pito package-cmake-sdk
         Creates a distributable SDK based on cmake-driven MOAI build.
         Example:
-            cd newMOAIProject && moaiutil package-cmake-sdk
+            cd newMOAIProject && pito package-cmake-sdk
             find moai-sdk/ #&etc.
 ]]
 
 usageText["package-sdk"] = [[
-    Cmd: moaiutil package-sdk
+    pito package-sdk
         Create the standard release of the MOAI SDK.
 ]]
 
 usageText["run-samples"] = [[
-    Cmd: moaiutil run-samples
+    pito run-samples
         Run the MOAI samples.
 ]]
 
 usageText["run-tests"] = [[
-    Cmd: moaiutil run-tests
+    pito run-tests
         Run the Test suite.
 ]]
 
 usageText["sdk-version"] = [[
-    Cmd: moaiutil sdk-version
+    pito sdk-version
         Obtain the MOAI SDK Version info for the current configuration.
 ]]
 
 function usage(subSection)
-    print ("MOAI Utility Toolbelt - ", subSection or "general usage:")
+    print ("pito - the MOAI toolbelt - ", subSection or "general usage:")
     if (subSection) and (usageText[subSection])  then
         print(usageText[subSection])
     else

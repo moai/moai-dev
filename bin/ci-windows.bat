@@ -22,7 +22,7 @@ call bin\build-windows.bat
 echo Creating Windows Host
 mkdir hosttest
 cd hosttest
-moaiutil host init
-moaiutil host build windows
+pito host init
+pito host build windows
 
 popd
