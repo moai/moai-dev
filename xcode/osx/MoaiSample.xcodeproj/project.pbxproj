@@ -21,10 +21,10 @@
 		CD1845BD1A626F0300FCCCE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1845BC1A626F0300FCCCE0 /* SystemConfiguration.framework */; };
 		CD323B071A8040CB00E2FEBB /* SDLJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD323B031A8040CB00E2FEBB /* SDLJoystick.cpp */; };
 		CD323B081A8040CB00E2FEBB /* SDLKeyCodeMapping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD323B051A8040CB00E2FEBB /* SDLKeyCodeMapping.cpp */; };
-		CD5161D31BCDC52E000718FB /* liblibmoai-osx-image-jpg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD5161C01BCDC403000718FB /* liblibmoai-osx-image-jpg.a */; };
-		CD5161D41BCDC52E000718FB /* liblibmoai-osx-image-png.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD5161C21BCDC403000718FB /* liblibmoai-osx-image-png.a */; };
-		CD5161D51BCDC52E000718FB /* liblibmoai-osx-image-pvr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD5161C41BCDC403000718FB /* liblibmoai-osx-image-pvr.a */; };
-		CD5161D61BCDC52E000718FB /* liblibmoai-osx-image-webp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD5161C61BCDC403000718FB /* liblibmoai-osx-image-webp.a */; };
+		CD5161D31BCDC52E000718FB /* libmoai-osx-image-jpg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD5161C01BCDC403000718FB /* libmoai-osx-image-jpg.a */; };
+		CD5161D41BCDC52E000718FB /* libmoai-osx-image-png.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD5161C21BCDC403000718FB /* libmoai-osx-image-png.a */; };
+		CD5161D51BCDC52E000718FB /* libmoai-osx-image-pvr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD5161C41BCDC403000718FB /* libmoai-osx-image-pvr.a */; };
+		CD5161D61BCDC52E000718FB /* libmoai-osx-image-webp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD5161C61BCDC403000718FB /* libmoai-osx-image-webp.a */; };
 		CD6600661831CB5400D9862B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6600651831CB5400D9862B /* OpenGL.framework */; };
 		CD6DC2701574B378008C3996 /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC63135643FD000ADC60 /* libSystem.dylib */; };
 		CD6DC2711574B378008C3996 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA2B137807E40093EE68 /* libcrypto.dylib */; };
@@ -710,10 +710,10 @@
 				CDFD8FB61AD8653C0003F415 /* libmoai-osx-crypto.a in Frameworks */,
 				CDFD8FB71AD8653C0003F415 /* libmoai-osx-http-client.a in Frameworks */,
 				CDFD8FB81AD8653C0003F415 /* libmoai-osx-http-server.a in Frameworks */,
-				CD5161D31BCDC52E000718FB /* liblibmoai-osx-image-jpg.a in Frameworks */,
-				CD5161D41BCDC52E000718FB /* liblibmoai-osx-image-png.a in Frameworks */,
-				CD5161D51BCDC52E000718FB /* liblibmoai-osx-image-pvr.a in Frameworks */,
-				CD5161D61BCDC52E000718FB /* liblibmoai-osx-image-webp.a in Frameworks */,
+				CD5161D31BCDC52E000718FB /* libmoai-osx-image-jpg.a in Frameworks */,
+				CD5161D41BCDC52E000718FB /* libmoai-osx-image-png.a in Frameworks */,
+				CD5161D51BCDC52E000718FB /* libmoai-osx-image-pvr.a in Frameworks */,
+				CD5161D61BCDC52E000718FB /* libmoai-osx-image-webp.a in Frameworks */,
 				CDFD8FB91AD8653C0003F415 /* libmoai-osx-luaext.a in Frameworks */,
 				CDFD8FBA1AD8653C0003F415 /* libmoai-osx-sdl.a in Frameworks */,
 				CDFD8FBB1AD8653C0003F415 /* libmoai-osx-sim.a in Frameworks */,
@@ -884,10 +884,10 @@
 				CDE6C7DF1AD8682200D6B83A /* libmoai-ios-gamecenter.a */,
 				CDE6C7E11AD8682200D6B83A /* libmoai-ios-http-client.a */,
 				CDE6C7E31AD8682200D6B83A /* libmoai-ios-http-server.a */,
-				CD5161B81BCDC403000718FB /* liblibmoai-ios-image-jpg.a */,
-				CD5161BA1BCDC403000718FB /* liblibmoai-ios-image-png.a */,
-				CD5161BC1BCDC403000718FB /* liblibmoai-ios-image-pvr.a */,
-				CD5161BE1BCDC403000718FB /* liblibmoai-ios-image-webp.a */,
+				CD5161B81BCDC403000718FB /* libmoai-ios-image-jpg.a */,
+				CD5161BA1BCDC403000718FB /* libmoai-ios-image-png.a */,
+				CD5161BC1BCDC403000718FB /* libmoai-ios-image-pvr.a */,
+				CD5161BE1BCDC403000718FB /* libmoai-ios-image-webp.a */,
 				CDE6C7E51AD8682200D6B83A /* libmoai-ios-kontagent.a */,
 				CDE6C7E71AD8682200D6B83A /* libmoai-ios-luaext.a */,
 				CDE6C7E91AD8682200D6B83A /* libmoai-ios-mobile-app-tracker.a */,
@@ -913,10 +913,10 @@
 				CDE6C80F1AD8682200D6B83A /* libmoai-osx-fmod-ex.a */,
 				CDE6C8111AD8682200D6B83A /* libmoai-osx-http-client.a */,
 				CDE6C8131AD8682200D6B83A /* libmoai-osx-http-server.a */,
-				CD5161C01BCDC403000718FB /* liblibmoai-osx-image-jpg.a */,
-				CD5161C21BCDC403000718FB /* liblibmoai-osx-image-png.a */,
-				CD5161C41BCDC403000718FB /* liblibmoai-osx-image-pvr.a */,
-				CD5161C61BCDC403000718FB /* liblibmoai-osx-image-webp.a */,
+				CD5161C01BCDC403000718FB /* libmoai-osx-image-jpg.a */,
+				CD5161C21BCDC403000718FB /* libmoai-osx-image-png.a */,
+				CD5161C41BCDC403000718FB /* libmoai-osx-image-pvr.a */,
+				CD5161C61BCDC403000718FB /* libmoai-osx-image-webp.a */,
 				CDE6C8151AD8682200D6B83A /* libmoai-osx-luaext.a */,
 				CDE6C8171AD8682200D6B83A /* libmoai-osx-sdl.a */,
 				CDE6C8191AD8682200D6B83A /* libmoai-osx-sim.a */,
@@ -1049,59 +1049,59 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		CD5161B81BCDC403000718FB /* liblibmoai-ios-image-jpg.a */ = {
+		CD5161B81BCDC403000718FB /* libmoai-ios-image-jpg.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "liblibmoai-ios-image-jpg.a";
+			path = "libmoai-ios-image-jpg.a";
 			remoteRef = CD5161B71BCDC403000718FB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD5161BA1BCDC403000718FB /* liblibmoai-ios-image-png.a */ = {
+		CD5161BA1BCDC403000718FB /* libmoai-ios-image-png.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "liblibmoai-ios-image-png.a";
+			path = "libmoai-ios-image-png.a";
 			remoteRef = CD5161B91BCDC403000718FB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD5161BC1BCDC403000718FB /* liblibmoai-ios-image-pvr.a */ = {
+		CD5161BC1BCDC403000718FB /* libmoai-ios-image-pvr.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "liblibmoai-ios-image-pvr.a";
+			path = "libmoai-ios-image-pvr.a";
 			remoteRef = CD5161BB1BCDC403000718FB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD5161BE1BCDC403000718FB /* liblibmoai-ios-image-webp.a */ = {
+		CD5161BE1BCDC403000718FB /* libmoai-ios-image-webp.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "liblibmoai-ios-image-webp.a";
+			path = "libmoai-ios-image-webp.a";
 			remoteRef = CD5161BD1BCDC403000718FB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD5161C01BCDC403000718FB /* liblibmoai-osx-image-jpg.a */ = {
+		CD5161C01BCDC403000718FB /* libmoai-osx-image-jpg.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "liblibmoai-osx-image-jpg.a";
+			path = "libmoai-osx-image-jpg.a";
 			remoteRef = CD5161BF1BCDC403000718FB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD5161C21BCDC403000718FB /* liblibmoai-osx-image-png.a */ = {
+		CD5161C21BCDC403000718FB /* libmoai-osx-image-png.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "liblibmoai-osx-image-png.a";
+			path = "libmoai-osx-image-png.a";
 			remoteRef = CD5161C11BCDC403000718FB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD5161C41BCDC403000718FB /* liblibmoai-osx-image-pvr.a */ = {
+		CD5161C41BCDC403000718FB /* libmoai-osx-image-pvr.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "liblibmoai-osx-image-pvr.a";
+			path = "libmoai-osx-image-pvr.a";
 			remoteRef = CD5161C31BCDC403000718FB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD5161C61BCDC403000718FB /* liblibmoai-osx-image-webp.a */ = {
+		CD5161C61BCDC403000718FB /* libmoai-osx-image-webp.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "liblibmoai-osx-image-webp.a";
+			path = "libmoai-osx-image-webp.a";
 			remoteRef = CD5161C51BCDC403000718FB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1653,6 +1653,7 @@
 					FT2_BUILD_LIBRARY,
 					DARWIN_NO_CARBON,
 					"AKU_WITH_APPLE=1",
+					"AKU_WITH_HTTP_SERVER=1",
 					"AKU_WITH_SDL=1",
 				);
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
@@ -1710,6 +1711,7 @@
 					FT2_BUILD_LIBRARY,
 					DARWIN_NO_CARBON,
 					"AKU_WITH_APPLE=1",
+					"AKU_WITH_HTTP_SERVER=1",
 					"AKU_WITH_SDL=1",
 				);
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
