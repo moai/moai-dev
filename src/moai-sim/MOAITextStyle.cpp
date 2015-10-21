@@ -49,6 +49,7 @@ bool MOAITextStyleState::NeedsLayout ( const MOAITextStyleState& compare ) const
 
 	if ( this->mFont != compare.mFont ) return true;
 	if ( this->mSize != compare.mSize ) return true;
+	if ( !this->mScale.Equals ( compare.mScale )) return true;
 	
 	return false;
 }
