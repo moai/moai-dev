@@ -3,11 +3,7 @@
 
 #include "pch.h"
 
-SUPPRESS_EMPTY_FILE_WARNING
-#if MOAI_WITH_LIBJPG
-
-#include <moai-sim/MOAITextureBase.h>
-#include <moai-sim/MOAIImageFormatJpg.h>
+#include <moai-image-jpg/MOAIImageFormatJpg.h>
 
 extern "C" {
 	#include <jinclude.h>
@@ -269,5 +265,3 @@ bool MOAIImageFormatJpg::WriteImage ( const MOAIImage& image, ZLStream& stream )
 //
 //	jpeg_destroy_compress(&cinfo);
 //}
-
-#endif

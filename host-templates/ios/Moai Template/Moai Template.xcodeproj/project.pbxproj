@@ -8,6 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		633667A71A3C4C100020E6BF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 633667A61A3C4C100020E6BF /* Images.xcassets */; };
+		6396B95D1BD67CA20065A9E7 /* aku_plugins.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6396B95C1BD67CA20065A9E7 /* aku_plugins.cpp */; };
+		6396B9631BD67CE00065A9E7 /* AdColony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6396B95E1BD67CE00065A9E7 /* AdColony.framework */; };
+		6396B9641BD67CE00065A9E7 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6396B95F1BD67CE00065A9E7 /* FBSDKCoreKit.framework */; };
+		6396B9651BD67CE00065A9E7 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6396B9601BD67CE00065A9E7 /* FBSDKLoginKit.framework */; };
+		6396B9661BD67CE00065A9E7 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6396B9611BD67CE00065A9E7 /* FBSDKShareKit.framework */; };
+		6396B9671BD67CE00065A9E7 /* Kontagent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6396B9621BD67CE00065A9E7 /* Kontagent.framework */; };
+		6396B96C1BD67CF40065A9E7 /* libmoai-image-jpg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6396B9681BD67CF40065A9E7 /* libmoai-image-jpg.a */; };
+		6396B96D1BD67CF40065A9E7 /* libmoai-image-png.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6396B9691BD67CF40065A9E7 /* libmoai-image-png.a */; };
+		6396B96E1BD67CF40065A9E7 /* libmoai-image-pvr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6396B96A1BD67CF40065A9E7 /* libmoai-image-pvr.a */; };
+		6396B96F1BD67CF40065A9E7 /* libmoai-image-webp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6396B96B1BD67CF40065A9E7 /* libmoai-image-webp.a */; };
+		6396B9731BD67D2B0065A9E7 /* MobileAppTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6396B9701BD67D2B0065A9E7 /* MobileAppTracker.framework */; };
+		6396B9741BD67D2B0065A9E7 /* Tapjoy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6396B9711BD67D2B0065A9E7 /* Tapjoy.framework */; };
+		6396B9751BD67D2B0065A9E7 /* vunglepub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6396B9721BD67D2B0065A9E7 /* vunglepub.framework */; };
 		63C4D5B91A1075A2009DBA1D /* libliblua-static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63C4D5B81A1075A2009DBA1D /* libliblua-static.a */; };
 		63CF1A0B1A065C7700F731F1 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63CF19FA1A065C7700F731F1 /* Default-568h@2x.png */; };
 		63CF1A611A065DF300F731F1 /* AdColony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63CF1A1E1A065DF300F731F1 /* AdColony.framework */; };
@@ -113,6 +126,19 @@
 
 /* Begin PBXFileReference section */
 		633667A61A3C4C100020E6BF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = res/Images.xcassets; sourceTree = "<group>"; };
+		6396B95C1BD67CA20065A9E7 /* aku_plugins.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aku_plugins.cpp; sourceTree = "<group>"; };
+		6396B95E1BD67CE00065A9E7 /* AdColony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdColony.framework; path = libmoai/lib/AdColony.framework; sourceTree = "<group>"; };
+		6396B95F1BD67CE00065A9E7 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = libmoai/lib/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		6396B9601BD67CE00065A9E7 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = libmoai/lib/FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		6396B9611BD67CE00065A9E7 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = libmoai/lib/FBSDKShareKit.framework; sourceTree = "<group>"; };
+		6396B9621BD67CE00065A9E7 /* Kontagent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kontagent.framework; path = libmoai/lib/Kontagent.framework; sourceTree = "<group>"; };
+		6396B9681BD67CF40065A9E7 /* libmoai-image-jpg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-image-jpg.a"; path = "libmoai/lib/libmoai-image-jpg.a"; sourceTree = "<group>"; };
+		6396B9691BD67CF40065A9E7 /* libmoai-image-png.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-image-png.a"; path = "libmoai/lib/libmoai-image-png.a"; sourceTree = "<group>"; };
+		6396B96A1BD67CF40065A9E7 /* libmoai-image-pvr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-image-pvr.a"; path = "libmoai/lib/libmoai-image-pvr.a"; sourceTree = "<group>"; };
+		6396B96B1BD67CF40065A9E7 /* libmoai-image-webp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-image-webp.a"; path = "libmoai/lib/libmoai-image-webp.a"; sourceTree = "<group>"; };
+		6396B9701BD67D2B0065A9E7 /* MobileAppTracker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileAppTracker.framework; path = libmoai/lib/MobileAppTracker.framework; sourceTree = "<group>"; };
+		6396B9711BD67D2B0065A9E7 /* Tapjoy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Tapjoy.framework; path = libmoai/lib/Tapjoy.framework; sourceTree = "<group>"; };
+		6396B9721BD67D2B0065A9E7 /* vunglepub.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vunglepub.framework; path = libmoai/lib/vunglepub.framework; sourceTree = "<group>"; };
 		63C4D5B81A1075A2009DBA1D /* libliblua-static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libliblua-static.a"; path = "libmoai/lib/libliblua-static.a"; sourceTree = "<group>"; };
 		63CF19C11A065B5400F731F1 /* Moai Template.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Moai Template.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63CF19FA1A065C7700F731F1 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "res/Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -253,6 +279,7 @@
 				63CF1AA31A065DF300F731F1 /* vunglepub.framework in Frameworks */,
 				63CF1AEE1A06664500F731F1 /* QuartzCore.framework in Frameworks */,
 				63CF1AEF1A06664500F731F1 /* Social.framework in Frameworks */,
+				6396B9631BD67CE00065A9E7 /* AdColony.framework in Frameworks */,
 				63CF1AA11A065DF300F731F1 /* MobileAppTracker.framework in Frameworks */,
 				63CF1AF01A06664500F731F1 /* StoreKit.framework in Frameworks */,
 				63CF1AF11A06664500F731F1 /* SystemConfiguration.framework in Frameworks */,
@@ -262,14 +289,17 @@
 				63CF1AC61A06654E00F731F1 /* AVFoundation.framework in Frameworks */,
 				63CF1A611A065DF300F731F1 /* AdColony.framework in Frameworks */,
 				63CF1A631A065DF300F731F1 /* Kontagent.framework in Frameworks */,
+				6396B9651BD67CE00065A9E7 /* FBSDKLoginKit.framework in Frameworks */,
 				63CF1A641A065DF300F731F1 /* libbox2d.a in Frameworks */,
 				63CF1A651A065DF300F731F1 /* libcares.a in Frameworks */,
 				63CF1A661A065DF300F731F1 /* libChartboost.a in Frameworks */,
 				63CF1A681A065DF300F731F1 /* libcontrib.a in Frameworks */,
 				63CF1A691A065DF300F731F1 /* libCrittercism_v4_3_3.a in Frameworks */,
 				63CF1A6A1A065DF300F731F1 /* libcrypto.a in Frameworks */,
+				6396B9751BD67D2B0065A9E7 /* vunglepub.framework in Frameworks */,
 				63CF1A6B1A065DF300F731F1 /* libcurl.a in Frameworks */,
 				63CF1A6C1A065DF300F731F1 /* libexpat.a in Frameworks */,
+				6396B9671BD67CE00065A9E7 /* Kontagent.framework in Frameworks */,
 				63CF1A6D1A065DF300F731F1 /* libFlurry.a in Frameworks */,
 				63CF1A6E1A065DF300F731F1 /* libfreetype.a in Frameworks */,
 				63CF1A6F1A065DF300F731F1 /* libjansson.a in Frameworks */,
@@ -277,16 +307,21 @@
 				63CF1A711A065DF300F731F1 /* libluacrypto.a in Frameworks */,
 				63CF1A721A065DF300F731F1 /* libluacurl.a in Frameworks */,
 				63CF1A731A065DF300F731F1 /* libluafilesystem.a in Frameworks */,
+				6396B96F1BD67CF40065A9E7 /* libmoai-image-webp.a in Frameworks */,
 				63CF1A751A065DF300F731F1 /* libluasocket.a in Frameworks */,
 				63CF1A761A065DF300F731F1 /* libluasql.a in Frameworks */,
 				63CF1A771A065DF300F731F1 /* libmoai-audiosampler.a in Frameworks */,
+				6396B96E1BD67CF40065A9E7 /* libmoai-image-pvr.a in Frameworks */,
 				63CF1A781A065DF300F731F1 /* libmoai-box2d.a in Frameworks */,
 				63CF1A7A1A065DF300F731F1 /* libmoai-core.a in Frameworks */,
 				63C4D5B91A1075A2009DBA1D /* libliblua-static.a in Frameworks */,
 				63CF1A7B1A065DF300F731F1 /* libmoai-crypto.a in Frameworks */,
 				63CF1A7C1A065DF300F731F1 /* libmoai-http-client.a in Frameworks */,
+				6396B96C1BD67CF40065A9E7 /* libmoai-image-jpg.a in Frameworks */,
+				6396B9661BD67CE00065A9E7 /* FBSDKShareKit.framework in Frameworks */,
 				63CF1A7D1A065DF300F731F1 /* libmoai-ios-adcolony.a in Frameworks */,
 				63CF1A7E1A065DF300F731F1 /* libmoai-ios-billing.a in Frameworks */,
+				6396B9731BD67D2B0065A9E7 /* MobileAppTracker.framework in Frameworks */,
 				63CF1A7F1A065DF300F731F1 /* libmoai-ios-chartboost.a in Frameworks */,
 				63CF1A801A065DF300F731F1 /* libmoai-ios-crittercism.a in Frameworks */,
 				63CF1A811A065DF300F731F1 /* libmoai-ios-facebook.a in Frameworks */,
@@ -304,14 +339,17 @@
 				63CF1A8C1A065DF300F731F1 /* libmoai-luaext.a in Frameworks */,
 				63CF1A8D1A065DF300F731F1 /* libmoai-sim.a in Frameworks */,
 				63CF1A8E1A065DF300F731F1 /* libmoai-untz.a in Frameworks */,
+				6396B9741BD67D2B0065A9E7 /* Tapjoy.framework in Frameworks */,
 				63CF1A8F1A065DF300F731F1 /* libmoai-util.a in Frameworks */,
 				63CF1A901A065DF300F731F1 /* libmongoose.a in Frameworks */,
 				63CF1A911A065DF300F731F1 /* libogg.a in Frameworks */,
+				6396B9641BD67CE00065A9E7 /* FBSDKCoreKit.framework in Frameworks */,
 				63CF1A921A065DF300F731F1 /* libplayhaven-ios.a in Frameworks */,
 				63CF1A931A065DF300F731F1 /* libpng.a in Frameworks */,
 				63D01EC31A3865FB0097C3E8 /* libzlcrypto.a in Frameworks */,
 				63CF1A941A065DF300F731F1 /* libsfmt.a in Frameworks */,
 				63CF1A951A065DF300F731F1 /* libsqlite3.a in Frameworks */,
+				6396B96D1BD67CF40065A9E7 /* libmoai-image-png.a in Frameworks */,
 				63CF1A961A065DF300F731F1 /* libssl.a in Frameworks */,
 				63CF1A971A065DF300F731F1 /* libtess.a in Frameworks */,
 				63CF1A981A065DF300F731F1 /* libtinyxml.a in Frameworks */,
@@ -356,6 +394,18 @@
 		63CF1AA51A065E0F00F731F1 /* Moai Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				6396B9701BD67D2B0065A9E7 /* MobileAppTracker.framework */,
+				6396B9711BD67D2B0065A9E7 /* Tapjoy.framework */,
+				6396B9721BD67D2B0065A9E7 /* vunglepub.framework */,
+				6396B9681BD67CF40065A9E7 /* libmoai-image-jpg.a */,
+				6396B9691BD67CF40065A9E7 /* libmoai-image-png.a */,
+				6396B96A1BD67CF40065A9E7 /* libmoai-image-pvr.a */,
+				6396B96B1BD67CF40065A9E7 /* libmoai-image-webp.a */,
+				6396B95E1BD67CE00065A9E7 /* AdColony.framework */,
+				6396B95F1BD67CE00065A9E7 /* FBSDKCoreKit.framework */,
+				6396B9601BD67CE00065A9E7 /* FBSDKLoginKit.framework */,
+				6396B9611BD67CE00065A9E7 /* FBSDKShareKit.framework */,
+				6396B9621BD67CE00065A9E7 /* Kontagent.framework */,
 				63D01EC21A3865FB0097C3E8 /* libzlcrypto.a */,
 				63CF1A5E1A065DF300F731F1 /* MobileAppTracker.framework */,
 				63CF1A5F1A065DF300F731F1 /* Tapjoy.framework */,
@@ -431,6 +481,7 @@
 		63CF1AB51A06610600F731F1 /* host-modules */ = {
 			isa = PBXGroup;
 			children = (
+				6396B95C1BD67CA20065A9E7 /* aku_plugins.cpp */,
 				63CF1AB61A06610600F731F1 /* aku_modules.cpp */,
 				63CF1AB71A06610600F731F1 /* aku_modules.h */,
 				63CF1AB81A06610600F731F1 /* aku_modules_config.h */,
@@ -559,6 +610,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63D01EBC1A3864620097C3E8 /* MOAIAppDelegate.mm in Sources */,
+				6396B95D1BD67CA20065A9E7 /* aku_plugins.cpp in Sources */,
 				63D01EBB1A3864620097C3E8 /* main.mm in Sources */,
 				63D01EBD1A3864620097C3E8 /* MOAIView.mm in Sources */,
 				63CF1AC21A06610600F731F1 /* aku_modules_util.cpp in Sources */,

@@ -43,6 +43,23 @@ end
 ----------------------------------------------------------------
 for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
 
+	if escape == 'm' or escape == 'minor' then
+
+		print ( 'INCREMENT' )
+		VERSION.MINOR = VERSION.MINOR and ( VERSION.MINOR + 1 ) or 0
+		VERSION.REVISION = nil
+		update ()
+	end
+
+	if escape == 'M' or escape == 'major' then
+
+		print ( 'INCREMENT' )
+		VERSION.MAJOR = VERSION.MAJOR and ( VERSION.MAJOR + 1 ) or 0
+		VERSION.MINOR = 0
+		VERSION.REVISION = nil
+		update ()
+	end
+
 	if escape == 'i' or escape == 'increment' then
 
 		print ( 'INCREMENT' )

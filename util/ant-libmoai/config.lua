@@ -9,7 +9,7 @@ CONFIG_NAME = 'MOAI_MODULES' -- this will create a variable in Android.mk contai
 SETTINGS = {
 	LIB_NAME			= 'moai',
 	MY_ARM_MODE			= 'arm',
-	MY_ARM_ARCH			= 'armeabi-v7a x86',
+	MY_ARM_ARCH			= 'armeabi-v7a arm64-v8a x86',
 	MY_APP_PLATFORM		= 'android-10',
 }
 
@@ -327,6 +327,82 @@ MODULES = {
 	},
 
 	----------------------------------------------------------------
+	IMAGE_JPG = {
+		
+		PREPROCESSOR_FLAG = 'AKU_WITH_IMAGE_JPG',
+		NAMESPACE = 'com.ziplinegames.moai',
+		
+		HEADER_SEARCH_PATHS = {
+		},
+		
+		MAKE = {
+			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-jpg.mk',
+		},
+		
+		JAVA = {
+		},
+
+		STATIC_LIBRARIES = 'libmoai-image-jpg',
+	},
+
+	----------------------------------------------------------------
+	IMAGE_PNG = {
+		
+		PREPROCESSOR_FLAG = 'AKU_WITH_IMAGE_PNG',
+		NAMESPACE = 'com.ziplinegames.moai',
+		
+		HEADER_SEARCH_PATHS = {
+		},
+		
+		MAKE = {
+			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-png.mk',
+		},
+		
+		JAVA = {
+		},
+
+		STATIC_LIBRARIES = 'libmoai-image-png',
+	},
+
+	----------------------------------------------------------------
+	IMAGE_PVR = {
+		
+		PREPROCESSOR_FLAG = 'AKU_WITH_IMAGE_PVR',
+		NAMESPACE = 'com.ziplinegames.moai',
+		
+		HEADER_SEARCH_PATHS = {
+		},
+		
+		MAKE = {
+			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-pvr.mk',
+		},
+		
+		JAVA = {
+		},
+
+		STATIC_LIBRARIES = 'libmoai-image-pvr',
+	},
+
+	----------------------------------------------------------------
+	IMAGE_WEBP = {
+		
+		PREPROCESSOR_FLAG = 'AKU_WITH_IMAGE_WEBP',
+		NAMESPACE = 'com.ziplinegames.moai',
+		
+		HEADER_SEARCH_PATHS = {
+		},
+		
+		MAKE = {
+			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-webp.mk',
+		},
+		
+		JAVA = {
+		},
+
+		STATIC_LIBRARIES = 'libmoai-image-webp',
+	},
+				
+	----------------------------------------------------------------
 	LUAEXT = {
 		
 		PREPROCESSOR_FLAG = 'AKU_WITH_LUAEXT',
@@ -508,6 +584,10 @@ TARGETS = {
 			'GOOGLE_PLAY_SERVICES',
 			'HTTP_CLIENT',
 			'HTTP_SERVER',
+			'IMAGE_JPG',
+			'IMAGE_PNG',
+			'IMAGE_PVR',
+			'IMAGE_WEBP',
 			'LUAEXT',
 			'SIM',
 			'TAPJOY',
@@ -542,6 +622,10 @@ STATIC_LINK_ORDER = {
 	'libmoai-http-client',
 	'libmoai-http-server',
 	'libmoai-fmod-ex',
+	'libmoai-image-jpg',
+	'libmoai-image-png',
+	'libmoai-image-pvr',
+	'libmoai-image-webp',
 	'libmoai-luaext',
 	'libmoai-untz',
 	'libmoai-sim',

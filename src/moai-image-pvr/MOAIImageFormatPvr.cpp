@@ -3,10 +3,7 @@
 
 #include "pch.h"
 
-SUPPRESS_EMPTY_FILE_WARNING
-
-#include <moai-sim/MOAIGfxDevice.h>
-#include <moai-sim/MOAIImageFormatPvr.h>
+#include <moai-image-pvr/MOAIImageFormatPvr.h>
 
 #include <PVRTTexture.h>
 #include <PVRTDecompress.h>

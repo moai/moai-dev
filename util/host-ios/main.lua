@@ -81,6 +81,8 @@ copyhostfiles = function()
     
     MOAIFileSystem.copy(classes, output..'host-ios')
     MOAIFileSystem.copy(hostmodules, output..'host-modules')
+    MOAIFileSystem.copy(MOAI_SDK_HOME..'src/host-modules/aku_plugins.cpp.in', output..'host-modules/aku_plugins.cpp')
+    
     
     MOAIFileSystem.deleteFile(output..'host-modules/aku_modules_android.h')
     MOAIFileSystem.deleteFile(output..'host-modules/aku_modules_android_config.h')

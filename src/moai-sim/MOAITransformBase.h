@@ -29,13 +29,19 @@ protected:
 	ZLAffine3D		mWorldToLocalMtx;
 
 	//----------------------------------------------------------------//
-	static int	_getWorldDir	( lua_State* L );
-	static int	_getWorldLoc	( lua_State* L );
-	static int	_getWorldRot	( lua_State* L );
-	static int	_getWorldScl	( lua_State* L );
-	static int	_modelToWorld	( lua_State* L );
-	static int	_setParent		( lua_State* L );
-	static int	_worldToModel	( lua_State* L );
+	static int	_getWorldDir		( lua_State* L );
+	static int	_getWorldLoc		( lua_State* L );
+	static int	_getWorldRot		( lua_State* L );
+	static int	_getWorldScl		( lua_State* L );
+	static int	_getWorldXAxis		( lua_State* L );
+	static int	_getWorldYAxis		( lua_State* L );
+	static int	_getWorldZAxis		( lua_State* L );
+	static int	_getWorldXNormal	( lua_State* L );
+	static int	_getWorldYNormal	( lua_State* L );
+	static int	_getWorldZNormal	( lua_State* L );
+	static int	_modelToWorld		( lua_State* L );
+	static int	_setParent			( lua_State* L );
+	static int	_worldToModel		( lua_State* L );
 
 public:
 	

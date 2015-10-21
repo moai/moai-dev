@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#if MOAI_WITH_LIBPNG
+#if AKU_WITH_IMAGE_PNG
   #include <png.h>
 #endif
 
@@ -546,17 +546,20 @@ int MOAIImage::_getRGBA ( lua_State* L ) {
 	@text	Returns the width and height of the image.
 
 	@in		MOAIImage self
+	@opt	number scale
 	@out	number width
 	@out	number height
 */
 int MOAIImage::_getSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIImage, "U" )
 	
-	u32 width	= self->GetWidth ();
-	u32 height	= self->GetHeight ();
+	u32 width		= self->GetWidth ();
+	u32 height		= self->GetHeight ();
 
-	lua_pushnumber ( state, width );
-	lua_pushnumber ( state, height );
+	float scale		= state.GetValue < float >( 2, 1.0f );
+
+	lua_pushnumber ( state, ( float )width * scale );
+	lua_pushnumber ( state, ( float )height * scale );
 	
 	return 2;
 }
@@ -2202,7 +2205,6 @@ void MOAIImage::GenerateSDFAA ( ZLIntRect rect, float sizeInPixels ) {
 			colorVec.Set ( 0, 0, 0, dist );
 			this->SetColor ( x + rect.mXMin, y + rect.mYMin, colorVec.PackRGBA ());
 		}
-		printf ( "\n" );
 	}
 	
 	free ( xdist );

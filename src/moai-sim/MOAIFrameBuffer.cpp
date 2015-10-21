@@ -180,6 +180,29 @@ void MOAIClearableView::SetClearColor ( MOAIColor* color ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@lua	getGrabbedImage
+	@text	Returns the image into which frame(s) will be (or were) grabbed (if any).
+
+	@in		MOAIFrameBuffer self
+	@opt	boolean discard			If true, image will be discarded from the frame buffer.
+	@out	MOAIImage image			The frame grab image, or nil if none exists.
+*/	
+int MOAIFrameBuffer::_getGrabbedImage ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFrameBuffer, "U" )
+	
+	bool discard = state.GetValue < bool >( 2, false );
+	
+	self->mFrameImage.PushRef ( state );
+	
+	if ( discard ) {
+		self->mFrameImage.Set ( *self, 0 );
+	}
+	
+	return 1;
+}
+
+
+//----------------------------------------------------------------//
 /**	@lua	getPerformanceDrawCount	
 	@text	Returns the number of draw calls last frame.	
 
@@ -207,19 +230,30 @@ int MOAIFrameBuffer::_getRenderTable ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@lua	grabNextFrame
-	@text	Save the next frame rendered to 
+	@text	Save the next frame rendered to an image. If no image is
+			provided, one will be created tp match the size of the frame
+			buffer.
 
 	@in		MOAIFrameBuffer self
-	@in		MOAIImage image			Image to save the backbuffer to
-	@in		function callback		The function to execute when the frame has been saved into the image specified
+	@opt	MOAIImage image			Image to save the backbuffer to
+	@opt	function callback		The function to execute when the frame has been saved into the image specified
 	@out	nil
 */
 int MOAIFrameBuffer::_grabNextFrame ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFrameBuffer, "U" )
 
-	MOAIImage* image = state.GetLuaObject < MOAIImage >( 2, true );
+	MOAIImage* image = state.GetLuaObject < MOAIImage >( 2, false );
 	
-	self->mFrameImage.Set ( *self, image );
+	if ( image ) {
+		self->mFrameImage.Set ( *self, image );
+	}
+	else if ( !self->mFrameImage ) {
+	
+		image = new MOAIImage ();
+		image->Init ( self->mBufferWidth, self->mBufferHeight, ZLColor::RGBA_8888, MOAIImage::TRUECOLOR );
+		self->mFrameImage.Set ( *self, image );
+	}
+	
 	self->mGrabNextFrame = self->mFrameImage != 0;
 	
 	if ( self->mGrabNextFrame ) {
@@ -230,6 +264,19 @@ int MOAIFrameBuffer::_grabNextFrame ( lua_State* L ) {
 	}
 
 	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	isPendingGrab
+	@text	True if a frame grab has been requested but not yet grabbed.
+	
+	@in		MOAIFrameBuffer self
+	@out	table renderTable
+*/
+int MOAIFrameBuffer::_isPendingGrab ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFrameBuffer, "U" )
+	state.Push ( self->mGrabNextFrame );
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -272,6 +319,12 @@ ZLRect MOAIFrameBuffer::GetBufferRect () const {
 
 //----------------------------------------------------------------//
 void MOAIFrameBuffer::GrabImage ( MOAIImage* image ) {
+
+	// TODO: all this is extremely hinky. this assumes that the framebuffer is RGBA_8888, which it
+	// may not be. it also does two extra allocations and copies. what *should* happen is that we
+	// grab the pixels directly into the image if the format matches, and create an extra buffer
+	// only if we need to convert. we should also implement/use a mirror operation inside of MOAIImage
+	// so we don't have to do it here.
 
 	unsigned char* buffer = ( unsigned char* ) malloc ( this->mBufferWidth * this->mBufferHeight * 4 );
 
@@ -331,9 +384,11 @@ void MOAIFrameBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIClearableView::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
+		{ "getGrabbedImage",			_getGrabbedImage },
+		{ "grabNextFrame",				_grabNextFrame },
 		{ "getPerformanceDrawCount",	_getPerformanceDrawCount },
 		{ "getRenderTable",				_getRenderTable },
-		{ "grabNextFrame",				_grabNextFrame },
+		{ "isPendingGrab",				_isPendingGrab },
 		{ "setRenderTable",				_setRenderTable },
 		{ NULL, NULL }
 	};
@@ -365,7 +420,7 @@ void MOAIFrameBuffer::Render () {
 	if ( this->mGrabNextFrame ) {
 
 		this->GrabImage ( this->mFrameImage );
-		mGrabNextFrame = false;
+		this->mGrabNextFrame = false;
 
 		if ( this->mOnFrameFinish ) {
 			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();

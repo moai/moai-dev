@@ -4,9 +4,7 @@
 #ifndef	MOAIIMAGEFORMATPNG_H
 #define	MOAIIMAGEFORMATPNG_H
 
-#if MOAI_WITH_LIBPNG
-
-#include <moai-sim/MOAIImageFormat.h>
+#include <moai-sim/headers.h>
 
 //================================================================//
 // MOAIImageFormatPng
@@ -32,5 +30,4 @@ public:
 	bool			WriteImage					( const MOAIImage& image, ZLStream& stream );
 };
 
-#endif
 #endif

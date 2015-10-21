@@ -3,10 +3,7 @@
 
 #include "pch.h"
 
-SUPPRESS_EMPTY_FILE_WARNING
-#if MOAI_WITH_LIBWEBP
-
-#include <moai-sim/MOAIImageFormatWebP.h>
+#include <moai-image-webp/MOAIImageFormatWebP.h>
 
 extern "C" {
 	#include "libwebp-0.4.1/src/webp/demux.h"
@@ -53,7 +50,7 @@ bool MOAIImageFormatWebP::ReadImage ( MOAIImage& image, ZLStream& stream, u32 tr
 	WebPData data;
 	data.size = stream.GetLength ();
 	data.bytes = ( uint8_t* )malloc ( data.size );
-	if ( !data.bytes ) return;
+	if ( !data.bytes ) return false;
 	stream.ReadBytes ( ( void* )data.bytes, data.size );
 
 	// Create demuxer
@@ -69,6 +66,8 @@ bool MOAIImageFormatWebP::ReadImage ( MOAIImage& image, ZLStream& stream, u32 tr
 	WebPDemuxReleaseIterator ( &iter );
 	WebPDemuxDelete ( demux );
 	WebPDataClear ( &data );
+	
+	return true;
 }
 
 //----------------------------------------------------------------//
@@ -130,5 +129,3 @@ bool MOAIImageFormatWebP::WriteImage ( const MOAIImage& image, ZLStream& stream 
 	UNUSED ( stream );
 	return false;
 }
-
-#endif

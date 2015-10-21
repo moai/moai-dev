@@ -204,6 +204,18 @@ public:
 		
 		this->WriteVtx ( vtx.mX, vtx.mY, vtx.mZ );
 	}
+	
+	//----------------------------------------------------------------//
+	inline void WriteVtxRaw ( float x, float y, float z, float w ) {
+		
+		ZLVec4D vtx;
+		vtx.mX = x;
+		vtx.mY = y;
+		vtx.mZ = z;
+		vtx.mW = w;
+		
+		this->mVtxBuffer.WriteUnsafe < ZLVec4D >( vtx );
+	}
 };
 
 #endif
