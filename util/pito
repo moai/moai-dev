@@ -16,8 +16,8 @@ then
             MOAI_SDK_BIN=$MOAI_SDK_HOME/bin/osx/moai
             echo "Warning: pito will use your pre-built MOAI binary at $MOAI_SDK_HOME/bin/osx/moai"
         else
-            MOAI_BUILD_SCRIPT="bin/build-osx.sh"
-            MOAI_SDK_BIN=$MOAI_SDK_HOME/util/moai
+            MOAI_BUILD_SCRIPT=$MOAI_SDK_HOME/xcode/osx/build.sh
+            MOAI_SDK_BIN=$MOAI_SDK_HOME/bin/osx/moai
         fi
     ;;
     Linux*)
@@ -39,7 +39,7 @@ then
             $MOAI_BUILD_SCRIPT
             echo "Need to confirm local moai binary was built ..."
 
-            MOAI_SDK_BIN=$MOAI_SDK_HOME/util/moai
+            #MOAI_SDK_BIN=$MOAI_SDK_HOME/util/moai
             if [ -x $MOAI_SDK_BIN ]
             then
                 echo "Continuing pito execution..."

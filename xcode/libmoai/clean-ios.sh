@@ -8,5 +8,9 @@
 
 set -e # exit on error
 
+pushd $(dirname "${0}") > /dev/null
+
 xcodebuild -derivedDataPath build -configuration Release -project libmoai.xcodeproj -scheme libmoai-ios-all -sdk iphonesimulator clean
 xcodebuild -derivedDataPath build -configuration Release -project libmoai.xcodeproj -scheme libmoai-ios-all -sdk iphoneos clean
+
+popd > /dev/null
