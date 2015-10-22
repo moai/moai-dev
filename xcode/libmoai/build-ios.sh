@@ -2,6 +2,8 @@
 
 set -e # exit on error
 
+pushd $(dirname "${0}") > /dev/null
+
 xcodebuild -derivedDataPath build -configuration Release -project libmoai.xcodeproj -scheme libmoai-ios-all -sdk iphonesimulator
 xcodebuild -derivedDataPath build -configuration Release -project libmoai.xcodeproj -scheme libmoai-ios-all -sdk iphoneos
 
@@ -25,3 +27,5 @@ IOS_LIB=../../lib/ios
 rm -rf $IOS_LIB
 mkdir -p $IOS_LIB
 cp -a ./build/Build/Products/Release-universal/*.a $IOS_LIB
+
+popd > /dev/null
