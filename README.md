@@ -182,3 +182,11 @@ This SDK uses the [CPAL license](http://www.opensource.org/licenses/cpal_1.0). R
 ### Tools
 * [moaicli](http://halfnelson.github.io/moaicli/)
 * [MoaiUtils](https://github.com/DanielSWolf/MoaiUtils/blob/master/README.md)
+
+
+
+Miscellaneous links (for doc cleanup):
+http://moaiforge.github.io/moai-sdk/docs/
+http://getmoai.com/wiki/index.php?title=Main_Page
+http://www.gamefromscratch.com/page/Moai-tutorial-series-The-adventures-of-an-intrepid-programmer-in-the-lands-of-Moai.aspx
+http://www.moaisnippets.info/

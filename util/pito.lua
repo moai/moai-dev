@@ -77,9 +77,9 @@ usageText["package-sdk"] = [[
         Create the standard release of the MOAI SDK.
 ]]
 
-usageText["run-samples"] = [[
-    pito run-samples
-        Run the MOAI samples.
+usageText["run-sample"] = [[
+    pito run-sample
+        Run a MOAI sample.
 ]]
 
 usageText["run-tests"] = [[
@@ -108,6 +108,7 @@ MOAIFileSystem.setWorkingDirectory ( SCRIPT_DIR )
 if MOAIFileSystem.checkFileExists('main.lua') then
     dofile ( 'main.lua' )
 else
+    print("Script DIR: " .. SCRIPT_DIR)
     usage()
 end
 
