@@ -3,7 +3,6 @@
 # pito - rapa nui for 'navel'  (See: http://www.sacred-texts.com/pac/ei/)
 #
 
-#test pull
 INVOKE_DIR=$(pwd)
 MOAI_SDK_HOME=$(cd $(dirname "${0}")/../ && pwd)
 # pito should have its own moai bin local
