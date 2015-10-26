@@ -20,9 +20,9 @@ then
         if [ -x $MOAI_SDK_HOME/bin/osx/moai ] 
         then
             MOAI_SDK_BIN=$MOAI_SDK_HOME/bin/osx/moai
-            echo "Warning: pito will use your pre-built MOAI binary at $MOAI_SDK_HOME/bin/osx/moai"
+            echo "pito will use your pre-built MOAI binary at $MOAI_SDK_HOME/bin/osx/moai"
         else
-            MOAI_BUILD_SCRIPT=$MOAI_SDK_HOME/xcode/osx/build.sh
+            MOAI_BUILD_SCRIPT=$MOAI_SDK_HOME/xcode/build-osx.sh
             MOAI_SDK_BIN=$MOAI_SDK_HOME/bin/osx/moai
         fi
     ;;
