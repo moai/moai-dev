@@ -8,14 +8,14 @@
 	
 	include $(CLEAR_VARS)
 	
-	MOAI_SDK_HOME	:= ../../../
+	MOAI_SDK_HOME	:= $(abspath ../../../)
 	MY_ARM_MODE		:= arm
-	MY_ARM_ARCH		:= armeabi-v7a x86
+	MY_ARM_ARCH		:= armeabi-v7a arm64-v8a x86
 
 	MY_LOCAL_CFLAGS		:=
 	MY_INCLUDES			:=
 	
-	MOAI_MODULES	:= ../../../util/ant-libmoai/
+	MOAI_MODULES	:= $(abspath ../../../util/ant-libmoai/)
 
 	#----------------------------------------------------------------#
 	# recursive wildcard function
@@ -153,6 +153,34 @@
 	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-http-server.mk
 
 	#--------------------------------------------------------------#
+	# IMAGE_JPG
+
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/jpeg-8c
+	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-jpg.mk
+	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-jpg.mk
+
+	#--------------------------------------------------------------#
+	# IMAGE_PNG
+
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/lpng140
+	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-png.mk
+	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-png.mk
+
+	#--------------------------------------------------------------#
+	# IMAGE_PVR
+
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/libpvr-3.4
+	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-pvr.mk
+	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-pvr.mk
+
+	#--------------------------------------------------------------#
+	# IMAGE_WEBP
+
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty
+	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-webp.mk
+	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-webp.mk
+
+	#--------------------------------------------------------------#
 	# LUAEXT
 
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luacrypto-0.2.0/src
@@ -173,13 +201,7 @@
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/config
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/libtess2/Include
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/jpeg-8c
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/lpng140
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/libpvr-3.4
 	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-freetype.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-jpg.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-png.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-pvr.mk
 	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-tess.mk
 	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/zl-gfx.mk
 	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-sim.mk
