@@ -1,9 +1,12 @@
 --==============================================================
 -- args
 --==============================================================
+--
 
-OUTPUT_DIR				= INVOKE_DIR .. 'host/'
-MOAI_JAVA_NAMESPACE		= 'com.ziplinegames.moai'
+local config = {}
+
+config.OUTPUT_DIR				= INVOKE_DIR .. 'hosts/android-ant/'
+config.MOAI_JAVA_NAMESPACE		= 'com.ziplinegames.moai'
 
 CONFIGS					= {}
 
@@ -21,12 +24,12 @@ for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
 				param = INVOKE_DIR .. param
 			end 
 			
-			OUTPUT_DIR = MOAIFileSystem.getAbsoluteDirectoryPath ( param )
+			config.OUTPUT_DIR = MOAIFileSystem.getAbsoluteDirectoryPath ( param )
 		end
 	end
 end
 
-ANT_DIR							= OUTPUT_DIR .. 'ant/'
+ANT_DIR							= config.OUTPUT_DIR .. 'ant/'
 MOAI_PROJECT_PATH				= ANT_DIR .. 'project/'
 
 MODULES							= {}
@@ -195,7 +198,7 @@ if config.KEYSTORE_PATH and config.KEYSTORE_NAME then
 end
 
 for name, mod in pairs ( MODULES ) do
-	importSrc ( mod.src, mod.namespace or MOAI_JAVA_NAMESPACE )
+	importSrc ( mod.src, mod.namespace or config.MOAI_JAVA_NAMESPACE )
 	importLib ( mod.lib )
 	importBin ( mod.bin )
 end

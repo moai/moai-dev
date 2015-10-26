@@ -8,7 +8,7 @@
 	
 	include $(CLEAR_VARS)
 	
-	MOAI_SDK_HOME	:= @MOAI_SDK_HOME@
+	MOAI_SDK_HOME	:= $(abspath @MOAI_SDK_HOME@)
 	MY_ARM_MODE		:= @MY_ARM_MODE@
 	MY_ARM_ARCH		:= @MY_ARM_ARCH@
 

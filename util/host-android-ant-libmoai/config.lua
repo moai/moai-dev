@@ -333,16 +333,18 @@ MODULES = {
 		NAMESPACE = 'com.ziplinegames.moai',
 		
 		HEADER_SEARCH_PATHS = {
+			'$(MOAI_SDK_HOME)/3rdparty/jpeg-8c',
 		},
 		
 		MAKE = {
+			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-jpg.mk',
 			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-jpg.mk',
 		},
 		
 		JAVA = {
 		},
 
-		STATIC_LIBRARIES = 'libmoai-image-jpg',
+		STATIC_LIBRARIES = 'libmoai-image-jpg libjpg',
 	},
 
 	----------------------------------------------------------------
@@ -352,16 +354,18 @@ MODULES = {
 		NAMESPACE = 'com.ziplinegames.moai',
 		
 		HEADER_SEARCH_PATHS = {
+			'$(MOAI_SDK_HOME)/3rdparty/lpng140',
 		},
 		
 		MAKE = {
+			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-png.mk',
 			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-png.mk',
 		},
 		
 		JAVA = {
 		},
 
-		STATIC_LIBRARIES = 'libmoai-image-png',
+		STATIC_LIBRARIES = 'libmoai-image-png libpng',
 	},
 
 	----------------------------------------------------------------
@@ -371,16 +375,18 @@ MODULES = {
 		NAMESPACE = 'com.ziplinegames.moai',
 		
 		HEADER_SEARCH_PATHS = {
+			'$(MOAI_SDK_HOME)/3rdparty/libpvr-3.4',
 		},
 		
 		MAKE = {
+			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-pvr.mk',
 			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-pvr.mk',
 		},
 		
 		JAVA = {
 		},
 
-		STATIC_LIBRARIES = 'libmoai-image-pvr',
+		STATIC_LIBRARIES = 'libmoai-image-pvr libpvr',
 	},
 
 	----------------------------------------------------------------
@@ -390,16 +396,18 @@ MODULES = {
 		NAMESPACE = 'com.ziplinegames.moai',
 		
 		HEADER_SEARCH_PATHS = {
+			'$(MOAI_SDK_HOME)/3rdparty',
 		},
 		
 		MAKE = {
+			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-webp.mk',
 			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-webp.mk',
 		},
 		
 		JAVA = {
 		},
 
-		STATIC_LIBRARIES = 'libmoai-image-webp',
+		STATIC_LIBRARIES = 'libmoai-image-webp libwebp',
 	},
 				
 	----------------------------------------------------------------
@@ -441,16 +449,10 @@ MODULES = {
 			'$(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src',
 			'$(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/config',
 			'$(MOAI_SDK_HOME)/3rdparty/libtess2/Include',
-			'$(MOAI_SDK_HOME)/3rdparty/jpeg-8c',
-			'$(MOAI_SDK_HOME)/3rdparty/lpng140',
-			'$(MOAI_SDK_HOME)/3rdparty/libpvr-3.4',
 		},
 		
 		MAKE = {
 			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-freetype.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-jpg.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-png.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-pvr.mk',
 			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-tess.mk',
 			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/zl-gfx.mk',
 			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-sim.mk',
@@ -459,7 +461,7 @@ MODULES = {
 		JAVA = {
 		},
 
-		STATIC_LIBRARIES = 'libmoai-sim libfreetype libjpg libpng libpvr libtess libzl-gfx',
+		STATIC_LIBRARIES = 'libmoai-sim libfreetype libtess libzl-gfx',
 	},
 	
 	----------------------------------------------------------------
@@ -646,6 +648,7 @@ STATIC_LINK_ORDER = {
 	'libfreetype',
 	'libjpg',
 	'libpng',
+	'libwebp',
 	'libtess',
 	
 	'libmongoose',

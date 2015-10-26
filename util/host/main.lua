@@ -2,12 +2,15 @@ hostsFolder = INVOKE_DIR..'/hosts/'
 
 --TODO probably should iterate over folders and extract this information so we don't need to keep it up to date
 hosts = { 
-    ["android-gradle"] = "host-android-gradle",
     ["html"] = "host-html",
     ["ios"] = "host-ios",
     ["linux"] = "host-linux",
     ["osx"] = "host-osx-app",
-    ["windows"] = "host-windows-vs2013"
+    ["windows"] = "host-windows-vs2013",
+    ["windows-vs2012"] = "host-windows-vs2012",
+    ["android-ant"] = "host-android-ant",
+    ["android-ant-libmoai"] = "host-android-ant-libmoai",
+    ["android-gradle"] = "host-android-gradle",
   }
 
 function printValidHosts()

@@ -2296,23 +2296,15 @@
 		CD515F521BCDBBEC000718FB /* MOAIHashWriterCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A717FA818000FB64BB /* MOAIHashWriterCrypto.h */; };
 		CD515F531BCDBBEC000718FB /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A517FA818000FB64BB /* host.h */; };
 		CD515F541BCDBBEC000718FB /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A317FA818000FB64BB /* headers.h */; };
-		CD515F561BCDBBEC000718FB /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC123A417FA818000FB64BB /* host.cpp */; };
-		CD515F571BCDBBEC000718FB /* MOAIHashWriterCrypto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC123A617FA818000FB64BB /* MOAIHashWriterCrypto.cpp */; };
 		CD515F611BCDBBF8000718FB /* MOAIHashWriterCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A717FA818000FB64BB /* MOAIHashWriterCrypto.h */; };
 		CD515F621BCDBBF8000718FB /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A517FA818000FB64BB /* host.h */; };
 		CD515F631BCDBBF8000718FB /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A317FA818000FB64BB /* headers.h */; };
-		CD515F651BCDBBF8000718FB /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC123A417FA818000FB64BB /* host.cpp */; };
-		CD515F661BCDBBF8000718FB /* MOAIHashWriterCrypto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC123A617FA818000FB64BB /* MOAIHashWriterCrypto.cpp */; };
 		CD515F701BCDBC00000718FB /* MOAIHashWriterCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A717FA818000FB64BB /* MOAIHashWriterCrypto.h */; };
 		CD515F711BCDBC00000718FB /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A517FA818000FB64BB /* host.h */; };
 		CD515F721BCDBC00000718FB /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A317FA818000FB64BB /* headers.h */; };
-		CD515F741BCDBC00000718FB /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC123A417FA818000FB64BB /* host.cpp */; };
-		CD515F751BCDBC00000718FB /* MOAIHashWriterCrypto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC123A617FA818000FB64BB /* MOAIHashWriterCrypto.cpp */; };
 		CD515F7F1BCDBC08000718FB /* MOAIHashWriterCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A717FA818000FB64BB /* MOAIHashWriterCrypto.h */; };
 		CD515F801BCDBC08000718FB /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A517FA818000FB64BB /* host.h */; };
 		CD515F811BCDBC08000718FB /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A317FA818000FB64BB /* headers.h */; };
-		CD515F831BCDBC08000718FB /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC123A417FA818000FB64BB /* host.cpp */; };
-		CD515F841BCDBC08000718FB /* MOAIHashWriterCrypto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC123A617FA818000FB64BB /* MOAIHashWriterCrypto.cpp */; };
 		CD515F8C1BCDBC7A000718FB /* PVRTArray.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3024C41A68F34E00CCEE32 /* PVRTArray.h */; };
 		CD515F8D1BCDBC7A000718FB /* PVRTDecompress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3024C51A68F34E00CCEE32 /* PVRTDecompress.cpp */; };
 		CD515F8E1BCDBC7A000718FB /* PVRTDecompress.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3024C61A68F34E00CCEE32 /* PVRTDecompress.h */; };
@@ -18185,14 +18177,12 @@
 				CD5160361BCDBCBD000718FB /* jaricom.c in Sources */,
 				CD5160531BCDBCBD000718FB /* jdmainct.c in Sources */,
 				CD51605D1BCDBCBD000718FB /* jfdctfst.c in Sources */,
-				CD515F561BCDBBEC000718FB /* host.cpp in Sources */,
 				CD5160391BCDBCBD000718FB /* jcarith.c in Sources */,
 				CD5160371BCDBCBD000718FB /* jcapimin.c in Sources */,
 				CD51603B1BCDBCBD000718FB /* jccolor.c in Sources */,
 				CD5161641BCDC0E8000718FB /* host.cpp in Sources */,
 				CD51603E1BCDBCBD000718FB /* jcinit.c in Sources */,
 				CD51605C1BCDBCBD000718FB /* jfdctflt.c in Sources */,
-				CD515F571BCDBBEC000718FB /* MOAIHashWriterCrypto.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18203,7 +18193,6 @@
 				CD515FAD1BCDBC9C000718FB /* png.c in Sources */,
 				CD5161701BCDC0F6000718FB /* MOAIImageFormatPng.cpp in Sources */,
 				CD515FBB1BCDBC9C000718FB /* pngwio.c in Sources */,
-				CD515F651BCDBBF8000718FB /* host.cpp in Sources */,
 				CD515FBC1BCDBC9C000718FB /* pngwrite.c in Sources */,
 				CD515FB91BCDBC9C000718FB /* pngset.c in Sources */,
 				CD515FB81BCDBC9C000718FB /* pngrutil.c in Sources */,
@@ -18217,7 +18206,6 @@
 				CD515FB61BCDBC9C000718FB /* pngrio.c in Sources */,
 				CD515FBD1BCDBC9C000718FB /* pngwtran.c in Sources */,
 				CD515FB21BCDBC9C000718FB /* pngmem.c in Sources */,
-				CD515F661BCDBBF8000718FB /* MOAIHashWriterCrypto.cpp in Sources */,
 				CD515FB11BCDBC9C000718FB /* pngget.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -18227,9 +18215,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD515F8F1BCDBC7A000718FB /* PVRTError.cpp in Sources */,
-				CD515F741BCDBC00000718FB /* host.cpp in Sources */,
 				CD515F8D1BCDBC7A000718FB /* PVRTDecompress.cpp in Sources */,
-				CD515F751BCDBC00000718FB /* MOAIHashWriterCrypto.cpp in Sources */,
 				CD515F931BCDBC7A000718FB /* PVRTTexture.cpp in Sources */,
 				CD51617A1BCDC106000718FB /* MOAIImageFormatPvr.cpp in Sources */,
 				CD5161781BCDC106000718FB /* host.cpp in Sources */,
@@ -18280,9 +18266,7 @@
 				CD5160C31BCDBD07000718FB /* quant_levels_dec.c in Sources */,
 				CD5160B61BCDBD07000718FB /* bit_reader.c in Sources */,
 				CD5160BF1BCDBD07000718FB /* huffman_encode.c in Sources */,
-				CD515F831BCDBC08000718FB /* host.cpp in Sources */,
 				CD5160A71BCDBD07000718FB /* picture_tools.c in Sources */,
-				CD515F841BCDBC08000718FB /* MOAIHashWriterCrypto.cpp in Sources */,
 				CD5160CB1BCDBD07000718FB /* thread.c in Sources */,
 				CD5160AE1BCDBD07000718FB /* vp8l.c in Sources */,
 				CD5160B11BCDBD07000718FB /* muxedit.c in Sources */,
