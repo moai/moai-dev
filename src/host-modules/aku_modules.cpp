@@ -211,6 +211,10 @@ void AKUModulesContextInitialize () {
 		AKUFmodExContextInitialize ();
 	#endif
 
+	#if AKU_WITH_HARFBUZZ
+		AKUHarfBuzzContextInitialize ();
+	#endif
+
 	#if AKU_WITH_HARNESS
 		AKUHarnessContextInitialize ();
 	#endif
