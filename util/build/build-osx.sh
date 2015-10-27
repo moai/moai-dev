@@ -2,10 +2,10 @@
 
 set -e # exit on error
 
+pushd $(dirname "${0}")/../../xcode > /dev/null
+
 OSX_LIB=../lib/osx
 OSX_BIN=../bin/osx
-
-pushd $(dirname "${0}") > /dev/null
 
 #---------------------------------------------------------------
 # build libmoai osx
