@@ -11,7 +11,7 @@ echo $MOAI_SDK_ROOT
 #./libmoai-clean.sh
 #./libmoai-build.sh
 
-cd $MOAI_SDK_ROOT/xcode
+cd $MOAI_SDK_ROOT/util/build
 ./build-ios.sh
 ./build-osx.sh
 
