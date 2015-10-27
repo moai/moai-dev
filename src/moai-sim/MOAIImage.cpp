@@ -1,12 +1,11 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+#define PNG_SKIP_SETJMP_CHECK
 #include "pch.h"
-
 #if AKU_WITH_IMAGE_PNG
   #include <png.h>
 #endif
-
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIImageFormatMgr.h>
 #include <moai-sim/MOAIImageLoadTask.h>
