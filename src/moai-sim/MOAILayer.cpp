@@ -738,6 +738,9 @@ void MOAILayer::AffirmPartition () {
 	}
 }
 
+#include <moai-sim/MOAIShaderMgr.h>
+#include <moai-sim/MOAIVertexFormatMgr.h>
+
 //----------------------------------------------------------------//
 void MOAILayer::Draw ( int subPrimID, float lod  ) {
 	UNUSED ( subPrimID );
@@ -756,7 +759,7 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 	renderMgr.SetCamera ( this->mCamera );
 	renderMgr.SetViewport ( this->mViewport );
 	
-	// TODO: I really don't think we need to do this here
+	// TODO: leaving this here for now (Moai SDK 1.7) but we need to move/remove it soon
 	gfxDevice.ResetState ();
 
 	// TODO:
