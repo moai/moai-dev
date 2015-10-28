@@ -112,7 +112,7 @@ int MOAIMaterialBatch::_getShader ( lua_State* L ) {
 int MOAIMaterialBatch::_getTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
 	state.Push ( self->RawGetTexture ( state.GetValue < u32 >( 2, 1 ) - 1 ));
-	return 0;
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -126,7 +126,7 @@ int MOAIMaterialBatch::_getTexture ( lua_State* L ) {
 int MOAIMaterialBatch::_reserveMaterials ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
 	self->Reserve ( state.GetValue ( 2, 0 ));
-	return 0;
+	return 1;
 }
 
 //----------------------------------------------------------------//
