@@ -3,10 +3,6 @@
 
 #include "pch.h"
 
-#if AKU_WITH_IMAGE_PNG
-  #include <png.h>
-#endif
-
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIImageFormatMgr.h>
 #include <moai-sim/MOAIImageLoadTask.h>
