@@ -73,13 +73,13 @@ int MOAIPartition::_insertProp ( lua_State* L ) {
 	@in		number x
 	@in		number y
 	@in		number z
-	@opt	number interfaceMask
-	@opt	number queryMask
 	@opt	number sortMode			One of the MOAILayer sort modes. Default value is SORT_PRIORITY_ASCENDING.
 	@opt	number xScale			X scale for vector sort. Default value is 0.
 	@opt	number yScale			Y scale for vector sort. Default value is 0.
 	@opt	number zScale			Z scale for vector sort. Default value is 0.
 	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
+	@opt	number interfaceMask
+	@opt	number queryMask
 	@out	MOAIProp prop			The prop under the point or nil if no prop found.
 */
 int MOAIPartition::_propForPoint ( lua_State* L ) {
@@ -90,24 +90,27 @@ int MOAIPartition::_propForPoint ( lua_State* L ) {
 	vec.mY = state.GetValue < float >( 3, 0.0f );
 	vec.mZ = state.GetValue < float >( 4, 0.0f );
 
-	u32 interfaceMask	= state.GetValue < u32 >( 5, MASK_ANY );
-	u32 queryMask		= state.GetValue < u32 >( 6, MASK_ANY );
+	u32 sortMode = state.GetValue < u32 >( 5, MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
+	float xScale = state.GetValue < float >( 6, 0.0f );
+	float yScale = state.GetValue < float >( 7, 0.0f );
+	float zScale = state.GetValue < float >( 8, 0.0f );
+	float priorityScale = state.GetValue < float >( 9, 1.0f );
+
+	u32 interfaceMask	= state.GetValue < u32 >( 10, MASK_ANY );
+	u32 queryMask		= state.GetValue < u32 >( 11, MASK_ANY );
 
 	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
 	
 	u32 total = self->GatherProps ( buffer, 0, vec, interfaceMask, queryMask );
 	if ( total ) {
 		
+		// this just swaps the internal buffer pointers so we can access the results
 		buffer.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
 		
-		u32 sortMode = state.GetValue < u32 >( 7, MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
-		float xScale = state.GetValue < float >( 8, 0.0f );
-		float yScale = state.GetValue < float >( 9, 0.0f );
-		float zScale = state.GetValue < float >( 10, 0.0f );
-		float priorityScale = state.GetValue < float >( 11, 1.0f );
-		
+		// generate the sort keys, but don't actually sort
 		buffer.GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
 		
+		// since we're just looking for one prop, do a one-pass traversal to find the best result
 		MOAIProp* prop = buffer.FindBest ();
 		if ( prop ) {
 			prop->PushLuaUserdata ( state );
@@ -119,7 +122,7 @@ int MOAIPartition::_propForPoint ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@lua	propForRay
-	@text	Returns the prop closest to the camera that intersects the given ray
+	@text	Returns the first prop that intersects the given ray
 	 
 	@in		MOAIPartition self
 	@in		number x
