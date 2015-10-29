@@ -20,10 +20,14 @@
 {
     background-color: #202025;
     width: 100%;
-    height: 100%;
-    position: relative;
+    /* height: calc(100% - 30px); */
+    position: absolute;
+    left: 0;
+    bottom: 30px;
+    top: 0;
+    right: 0;
     text-align: center;
-    display:table-row;
+    /* display:table-row; */
 }
 
 
@@ -31,12 +35,12 @@
     width: 100%;
     height: auto;
     background-color: black;
-    margin: auto;
+    /* margin: auto; */
     max-width: none;
     max-height: 100%;
-
+    /* max-width: 100%; */
 }
-.moai-canvas-wrapper canvas,
+
 .moai-canvas-wrapper.portrait canvas {
     width: auto;
     max-width: 100%;
@@ -67,8 +71,12 @@
 .moai-footer
 {
    /*display: none;*/
-    height: 30px;
-    background-color: #111;
+   height: 30px;
+   background-color: #111;
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   right: 0;
 }
 
 .moai-footer:after {
@@ -144,10 +152,8 @@ body {
 
 #runMe {
     position: absolute;
-    width: 150px; 
+    width: 150px;
     height: 100px;
-
-
     top: 45%;
     left: 50%;
     margin-left: -75px;
@@ -160,7 +166,6 @@ body {
     line-height: 100px;
     color: #777;
     font-size: 65px;
-
 }
 #runMe:hover {
     opacity: 1;

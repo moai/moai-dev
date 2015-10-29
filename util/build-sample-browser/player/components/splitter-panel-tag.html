@@ -1,0 +1,64 @@
+<splitter-panel>
+    <style>
+        .splitter-left {
+            height: 100%;
+            max-height: 100%;
+            left: -4px;
+            position: absolute;
+            box-sizing: border-box;
+            -moz-box-sizing:border-box;
+        }
+
+        .splitter-right {
+            height: 100%;
+            max-height: 100%;
+            position: absolute;
+            box-sizing: border-box;
+            -moz-box-sizing:border-box;
+            right: -4px;
+        }
+
+        .splitter-top {
+            width: 100%;
+            max-width: 100%;
+            position: absolute;
+            box-sizing: border-box;
+            -moz-box-sizing:border-box;
+            top: -4px;
+        }
+
+        .splitter-bottom {
+            width: 100%;
+            max-width: 100%;
+            position: absolute;
+            box-sizing: border-box;
+            -moz-box-sizing:border-box;
+            bottom: -4px;
+        }
+    </style>
+
+
+    <div class="splitter-{type}" style="{splitterstyle}">
+        <yield/>
+    </div>
+
+    <script>
+        this.on("update",function() {
+            var type = this.type;
+            var location = this.parent.location;
+            if (type == "left") {
+                this.splitterstyle = "width: "+location+"%;";
+            } else
+            if (type == "right") {
+                this.splitterstyle = "width: "+(100-location)+"%;";
+            } else
+            if (type == "top") {
+                this.splitterstyle = "height: "+location+"%;";
+            } else
+            if (type == "bottom") {
+                this.splitterstyle = "height: "+(100-location)+"%;";
+            }
+        })
+    </script>
+
+</splitter-panel>

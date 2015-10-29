@@ -357,6 +357,11 @@ iterateFilesImplementation = function ( path, fileFilter, absPath, recurse )
 	
 	local match = function () return true end
 	
+  if type ( fileFilter ) == 'function' then
+    match = fileFilter
+  end
+  
+  
 	if type ( fileFilter ) == 'string' then
 		match = function ( filename ) return string.find ( filename, fileFilter ) end
 	end
