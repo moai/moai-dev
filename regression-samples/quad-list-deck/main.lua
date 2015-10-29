@@ -215,11 +215,11 @@ end
 MOAIInputMgr.device.mouseLeft:setCallback ( function ( down ) onMouseEvent ( down, 1 ) end )
 MOAIInputMgr.device.mouseRight:setCallback ( function ( down ) onMouseEvent ( down, -1 ) end )
 
-MOAISim.openWindow ( "test", 320, 480 )
+MOAISim.openWindow ( "test", 640, 480 )
 
 viewport = MOAIViewport.new ()
-viewport:setSize ( 320, 480 )
-viewport:setScale ( 320, 480 )
+viewport:setSize ( 640, 480 )
+viewport:setScale ( 640, 480 )
 
 layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
@@ -245,14 +245,14 @@ layer:insertProp ( label )
 -- loadAsset('r/worry_bear_run_left')
 
 -- single frame smallest than the tile size
---loadAsset('r/worry_bear_idle')
+-- loadAsset('r/worry_bear_idle')
 
 -- single, small rectangle (smaller than chunk size)
---loadAsset('r/rect')
+-- loadAsset('r/rect')
 
 -- single, large rectangle (bigger than chunk size, uses non-square blocks)
 -- a 720x720 image, with a 512 input chunkSize, will be cut in 4 pieces (from top left to bottom right)
 -- the conditioner works like this: 720 % 512 = 208. What's the nearest upper pow2 for 208? 256
 -- 512x512     256x512
 -- 512x256     256x256
-loadAsset('r/rect2'):setScl ( .25, .25 )
+loadAsset('r/rect2'):setScl ( .5, .5 )
