@@ -6,10 +6,15 @@
 
 #include <moai-sim/MOAIAction.h>
 
+// TODO: finish out for general purpose use
+
 //================================================================//
 // MOAIActionTree
 //================================================================//
-// TODO: doxygen
+/**	@lua MOAIActionTree
+	@text	Tree of MOAIAction objects. Formerly a singleton; not yet
+			ready for general purpose use.
+*/
 class MOAIActionTree :
 	public virtual MOAIAction {
 private:

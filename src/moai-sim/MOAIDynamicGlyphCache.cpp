@@ -35,7 +35,25 @@ int MOAIDynamicGlyphCache::_setColorFormat ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setPadding
+	@text	Add padding to glyphs when ripping from font.
+	
+	@overload
+	
+		@in		MOAIDynamicGlyphCache self
+		@in		number hPad		glyph xMin -= hPad * 0.5, glyph xMax += hPad * 0.5
+		@in		number vPad		glyph yMin -= vPad * 0.5, glyph yMax += vPad * 0.5
+		@out	nil
+
+	@overload
+	
+		@in		MOAIDynamicGlyphCache self
+		@in		xMinP			glyph xMin -= xMinP
+		@in		yMinP			glyph yMin -= yMinP
+		@in		xMaxP			glyph xMax += xMaxP
+		@in		yMaxP			glyph yMax += yMaxP
+		@out	nil
+*/
 int MOAIDynamicGlyphCache::_setPadding ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDynamicGlyphCache, "U" )
 	
@@ -86,7 +104,7 @@ MOAIImage* MOAIDynamicGlyphCache::GetGlyphImage ( MOAIGlyph& glyph ) {
 }
 
 //----------------------------------------------------------------//
-MOAITextureBase* MOAIDynamicGlyphCache::GetGlyphTexture ( MOAIGlyph& glyph ) {
+MOAISingleTexture* MOAIDynamicGlyphCache::GetGlyphTexture ( MOAIGlyph& glyph ) {
 
 	assert ( glyph.GetPageID () < this->mPages.Size ());
 	return this->mPages [ glyph.GetPageID ()]->mImageTexture;

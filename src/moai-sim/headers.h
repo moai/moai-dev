@@ -38,6 +38,9 @@
 #include <moai-sim/MOAIGeometryWriter.h>
 #include <moai-sim/MOAIGfxBuffer.h>
 #include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxDeviceBase.h>
+#include <moai-sim/MOAIGfxDeviceMtxCache.h>
+#include <moai-sim/MOAIGfxDeviceVertexWriter.h>
 #include <moai-sim/MOAIGfxQuad2D.h>
 #include <moai-sim/MOAIGfxQuadDeck2D.h>
 #include <moai-sim/MOAIGfxQuadListDeck2D.h>
@@ -51,7 +54,9 @@
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIImageFormat.h>
 #include <moai-sim/MOAIImageFormatMgr.h>
+#include <moai-sim/MOAIImageLoadTask.h>
 #include <moai-sim/MOAIImageTexture.h>
+#include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIInputDevice.h>
 #include <moai-sim/MOAIInputMgr.h>
 #include <moai-sim/MOAIJoystickSensor.h>
@@ -110,6 +115,7 @@
 #include <moai-sim/MOAIShaderProgram.h>
 #include <moai-sim/MOAIShaderUniform.h>
 #include <moai-sim/MOAISim.h>
+#include <moai-sim/MOAISingleTexture.h>
 #include <moai-sim/MOAISpanList.h>
 #include <moai-sim/MOAIStandardDeck.h>
 #include <moai-sim/MOAIStretchPatch2D.h>
@@ -133,6 +139,8 @@
 #include <moai-sim/MOAIVectorStyle.h>
 #include <moai-sim/MOAIVectorTesselator.h>
 #include <moai-sim/MOAIVectorUtil.h>
+#include <moai-sim/MOAIVertexArray.h>
+#include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 #include <moai-sim/MOAIViewport.h>

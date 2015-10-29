@@ -75,6 +75,7 @@ private:
 		MUL,
 		NORM,
 		RAND,
+		RAND_INT,
 		RAND_VEC,
 		SET,
 		SIN,
@@ -131,6 +132,7 @@ private:
 	static int		_packLiveReg		( lua_State* L );
 	static int		_packReg			( lua_State* L );
 	static int		_rand				( lua_State* L );
+	static int		_randInt			( lua_State* L );
 	static int		_randVec			( lua_State* L );
 	static int		_set				( lua_State* L );
 	static int		_setLiveReg			( lua_State* L );

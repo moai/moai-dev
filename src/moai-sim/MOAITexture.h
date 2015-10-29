@@ -5,7 +5,7 @@
 #define	MOAITEXTURE_H
 
 #include <moai-sim/MOAIImage.h>
-#include <moai-sim/MOAITextureBase.h>
+#include <moai-sim/MOAISingleTexture.h>
 
 class MOAIDataBuffer;
 class MOAIImageFormat;
@@ -17,7 +17,7 @@ class MOAIImageFormat;
 	@text	Texture class.
 */
 class MOAITexture :
-	public MOAITextureBase {
+	public MOAISingleTexture {
 private:
 
 	// for loading from file
@@ -49,7 +49,7 @@ public:
 	static const u32 DEFAULT_TRANSFORM = MOAIImageTransform::TRUECOLOR | MOAIImageTransform::PREMULTIPLY_ALPHA;
 	
 	//----------------------------------------------------------------//
-	static MOAIGfxState*	AffirmTexture			( MOAILuaState& state, int idx );
+	static MOAITextureBase*	AffirmTexture			( MOAILuaState& state, int idx );
 	void					Clear					();
 	bool					Init					( MOAILuaState& state, int idx );
 	void					Init					( MOAIImage& image, cc8* debugname, bool autoClear );

@@ -281,7 +281,7 @@ void ZLColor::Convert ( void* dest, ColorFormat destFmt, const void* src, ColorF
 			
 				for ( u32 i = 0; i < copy; ++i ) {
 				
-					color = *( u32* )src;
+					color = *( u16* )src;
 					src = ( void* )(( size_t )src + 2 );
 					
 					u8 r = ( color >> 0x0C ) & 0x0F;
@@ -1044,6 +1044,20 @@ void ZLColorVec::Add ( const ZLColorVec& c ) {
 }
 
 //----------------------------------------------------------------//
+void ZLColorVec::AddAndClamp ( const ZLColorVec& c ) {
+
+	this->mR += c.mR;
+	this->mG += c.mG;
+	this->mB += c.mB;
+	this->mA += c.mA;
+	
+	this->mR = this->mR < 1.0f ? this->mR : 1.0f;
+	this->mG = this->mG < 1.0f ? this->mG : 1.0f;
+	this->mB = this->mB < 1.0f ? this->mB : 1.0f;
+	this->mA = this->mA < 1.0f ? this->mA : 1.0f;
+}
+
+//----------------------------------------------------------------//
 bool ZLColorVec::Compare ( const ZLColorVec& c ) {
 
 	if ((( mR != c.mR ) || ( mR != c.mR )) ||
@@ -1217,6 +1231,29 @@ void ZLColorVec::SetBlack () {
 void ZLColorVec::SetWhite () {
 
 	this->Set ( 1.0f, 1.0f, 1.0f, 1.0f );
+}
+
+//----------------------------------------------------------------//
+void ZLColorVec::Sub ( const ZLColorVec& c ) {
+
+	this->mR -= c.mR;
+	this->mG -= c.mG;
+	this->mB -= c.mB;
+	this->mA -= c.mA;
+}
+
+//----------------------------------------------------------------//
+void ZLColorVec::SubAndClamp ( const ZLColorVec& c ) {
+
+	this->mR -= c.mR;
+	this->mG -= c.mG;
+	this->mB -= c.mB;
+	this->mA -= c.mA;
+	
+	this->mR = this->mR > 0.0f ? this->mR : 0.0f;
+	this->mG = this->mG > 0.0f ? this->mG : 0.0f;
+	this->mB = this->mB > 0.0f ? this->mB : 0.0f;
+	this->mA = this->mA > 0.0f ? this->mA : 0.0f;
 }
 
 //----------------------------------------------------------------//

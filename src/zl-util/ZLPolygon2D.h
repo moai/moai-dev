@@ -17,19 +17,55 @@ public:
 	static const u32 POLY_KNOWN_BIT			= 0x01;
 	static const u32 POLY_CLOCKWISE_BIT		= 0x02;
 	static const u32 POLY_CONCAVE_BIT		= 0x04;
+	static const u32 POLY_COMPLEX_BIT		= 0x08;
+	static const u32 POLY_CORRUPT_BIT		= 0x10;
 	
-	static const u32 POLY_UNKNOWN			= 0x00;
-	static const u32 POLY_COMPLEX			= 0x08;
-	static const u32 POLY_CORRUPT			= 0xffffffff;
+	static const u32 POLY_UNKNOWN					= 0;
+	static const u32 POLY_COMPLEX					= POLY_KNOWN_BIT | POLY_COMPLEX_BIT;
+	static const u32 POLY_CORRUPT					= POLY_KNOWN_BIT | POLY_CORRUPT_BIT;
 	
 	static const u32 POLY_ANTICLOCKWISE_CONVEX		= POLY_KNOWN_BIT;
 	static const u32 POLY_ANTICLOCKWISE_CONCAVE		= POLY_KNOWN_BIT | POLY_CONCAVE_BIT;
 	static const u32 POLY_CLOCKWISE_CONVEX			= POLY_KNOWN_BIT | POLY_CLOCKWISE_BIT;
 	static const u32 POLY_CLOCKWISE_CONCAVE			= POLY_KNOWN_BIT | POLY_CONCAVE_BIT | POLY_CLOCKWISE_BIT;
 
+	static const u32 WINDING_MASK			= POLY_KNOWN_BIT | POLY_CLOCKWISE_BIT;
+	static const u32 SHAPE_MASK				= POLY_KNOWN_BIT | POLY_CONCAVE_BIT;
+	static const u32 WINDING_SHAPE_MASK		= POLY_KNOWN_BIT | POLY_CLOCKWISE_BIT | POLY_CONCAVE_BIT;
+
+	enum {
+		POINT_OUTSIDE,
+		POINT_INSIDE,
+		POINT_ON_EDGE,
+	};
+	
+	enum {
+	
+		HAS_AREA,
+		HAS_NO_AREA,
+	
+		IS_COMPLEX,
+		IS_CORRUPT,
+		IS_KNOWN,
+		IS_UNKNOWN,
+		
+		IS_CONVEX,
+		IS_CONCAVE,
+		
+		IS_CLOCKWISE,
+		IS_ANTICLOCKWISE,
+		
+		IS_CLOCKWISE_CONVEX,
+		IS_CLOCKWISE_CONCAVE,
+		
+		IS_ANTICLOCKWISE_CONVEX,
+		IS_ANTICLOCKWISE_CONCAVE,
+	};
+
 private:
 	
 	u32										mInfo;
+	TYPE									mArea;
 	ZLMetaRect < TYPE >						mBounds;
 	ZLLeanArray < ZLMetaVec2D < TYPE > >	mVertices;
 	
@@ -46,6 +82,8 @@ private:
 		u32 countPositive = 0;
 		u32 countNegative = 0;
 		
+		TYPE area = 0.0;
+		
 		for ( u32 i = 0; i < totalVerts; i++ ) {
 
 			u32 nextIndex = ( i + 1 ) % totalVerts;
@@ -53,6 +91,8 @@ private:
 			ZLMetaVec2D < TYPE >& p0 = this->mVertices [ i ];
 			ZLMetaVec2D < TYPE >& p1 = this->mVertices [ nextIndex ];
 			ZLMetaVec2D < TYPE >& p2 = this->mVertices [( i + 2 ) % totalVerts ];
+			
+			area += p0.Cross ( p1 );
 			
 			ZLMetaVec2D < TYPE > v0 = p1;
 			v0.Sub ( p0 );
@@ -84,6 +124,8 @@ private:
 			}
 		}
 		
+		this->mArea = ABS ( area / 2 );
+		
 		if ( countPositive == countNegative ) {
 		
 			return POLY_CORRUPT;
@@ -106,6 +148,7 @@ public:
 	
 	GET_CONST ( ZLMetaRect < TYPE >&, Bounds, mBounds )
 	GET_CONST ( u32, Info, mInfo )
+	GET_CONST ( TYPE, Area, mArea )
 
 	GET_CONST ( ZLMetaVec2D < TYPE >*, Vertices, this->mVertices.Data ())
 	GET_CONST ( size_t, Size, this->mVertices.Size ())
@@ -130,6 +173,61 @@ public:
 		this->mInfo = this->Analyze ();
 		return this->mInfo;
 	}
+	
+	//----------------------------------------------------------------//
+	bool Check ( u32 check ) const {
+	
+		switch ( check ) {
+		
+			case HAS_AREA:					return ( this->mInfo & POLY_KNOWN_BIT ) && !( this->mInfo & ( POLY_COMPLEX_BIT | POLY_CORRUPT_BIT ));
+			case HAS_NO_AREA:				return ( this->mInfo & POLY_KNOWN_BIT ) && ( this->mInfo & ( POLY_COMPLEX_BIT | POLY_CORRUPT_BIT ));
+			
+			case IS_COMPLEX:				return this->mInfo == POLY_COMPLEX;
+			case IS_CORRUPT:				return this->mInfo == POLY_CORRUPT;
+			case IS_KNOWN:					return this->mInfo != POLY_UNKNOWN;
+			case IS_UNKNOWN:				return this->mInfo == POLY_UNKNOWN;
+			
+			case IS_CONVEX:					return (( this->mInfo & SHAPE_MASK ) == POLY_KNOWN_BIT );
+			case IS_CONCAVE:				return (( this->mInfo & SHAPE_MASK ) == ( POLY_KNOWN_BIT | POLY_CONCAVE_BIT ));
+			
+			case IS_CLOCKWISE:				return (( this->mInfo & WINDING_MASK ) == ( POLY_KNOWN_BIT | POLY_CLOCKWISE_BIT ));
+			case IS_ANTICLOCKWISE:			return (( this->mInfo & WINDING_MASK ) == POLY_KNOWN_BIT );
+			
+			case IS_CLOCKWISE_CONVEX:		return (( this->mInfo & WINDING_SHAPE_MASK ) == ( POLY_KNOWN_BIT | POLY_CLOCKWISE_BIT ));
+			case IS_CLOCKWISE_CONCAVE:		return (( this->mInfo & WINDING_SHAPE_MASK ) == ( POLY_KNOWN_BIT | POLY_CLOCKWISE_BIT | POLY_CONCAVE_BIT ));
+			
+			case IS_ANTICLOCKWISE_CONVEX:	return (( this->mInfo & WINDING_SHAPE_MASK ) == ( POLY_KNOWN_BIT ));
+			case IS_ANTICLOCKWISE_CONCAVE:	return (( this->mInfo & WINDING_SHAPE_MASK ) == ( POLY_KNOWN_BIT | POLY_CONCAVE_BIT ));
+		}
+		return false;
+	}
+	
+	//----------------------------------------------------------------//
+	void Clear () {
+	
+		this->mVertices.Clear ();
+		this->mInfo = POLY_UNKNOWN;
+	}
+	
+	//----------------------------------------------------------------//
+	void Copy ( const ZLMetaPolygon2D < TYPE >& src ) {
+	
+		this->Clear ();
+	
+		this->mInfo = src.mInfo;
+		this->mBounds = src.mBounds;
+		
+		this->mVertices.Init ( src.mVertices.Size ());
+		this->mVertices.CopyFrom ( src.mVertices );
+	}
+	
+	//----------------------------------------------------------------//
+	bool GetDistance ( const ZLMetaVec2D < TYPE >& point, float& d ) const {
+	
+		ZLMetaVec2D < TYPE > p;
+		return this->GetDistance ( point, d, p );
+	}
+	
 	
 	//----------------------------------------------------------------//
 	bool GetDistance ( const ZLMetaVec2D < TYPE >& point, float& d, ZLMetaVec2D < TYPE >& p ) const {
@@ -234,44 +332,65 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	bool PointInside ( const ZLMetaVec2D < TYPE >& p ) const {
+	u32 PointInside ( const ZLMetaVec2D < TYPE >& p, TYPE pad = 0.0f ) const {
 
-		bool inPoly = false;	// start off assuming it _isn't_ in the polygon
-
-		if ( !this->mBounds.Contains ( p )) return false;
-
-		TYPE x = p.mX;
-		TYPE y = p.mY;
-		
-		u32 totalVerts = this->mVertices.Size ();
-		for ( u32 i = 0; i < totalVerts; i++ ) {
-
-			ZLMetaVec2D < TYPE >& p1 = this->mVertices [ i ];
-			ZLMetaVec2D < TYPE >& p2 = this->mVertices [( i + 1 ) % totalVerts ];
+		if ( pad != 0.0f ) {
 			
-			// Components of points
-			TYPE p1X = p1.mX;
-			TYPE p1Y = p1.mY;
-			TYPE p2X = p2.mX;
-			TYPE p2Y = p2.mY;
+			TYPE dist = 0.0f;
 			
-			// Reject line segs above, below or horizontal
-			if ( y <= MIN ( p1Y, p2Y )) continue;
-			if ( y > MAX ( p1Y, p2Y )) continue;
-			if ( p1Y == p2Y ) continue;
-			
-			// Segment is behind point, so skip
-			if ( x > MAX ( p1X, p2X )) continue;
-			
-			// x intersect w/ line seg
-			TYPE xIntersect = (( y - p1Y ) * ( p2X - p1X ) / ( p2Y - p1Y )) + p1X;
-			
-			// If point is to the left of or on line, toggle state
-			if ( p1X == p2X || x <= xIntersect ) {
-				inPoly = !inPoly; // Crossed an edge, so flip the state
+			if ( this->GetDistance ( p, dist )) {
+				if ( dist <= ABS ( pad ) ) {
+					return pad < 0.0f ? POINT_OUTSIDE : POINT_ON_EDGE;
+				}
 			}
 		}
-		return inPoly;
+
+		bool inPoly = false; // start off assuming it _isn't_ in the polygon
+
+		if ( this->mBounds.Contains ( p )) {
+
+			TYPE x = p.mX;
+			TYPE y = p.mY;
+			
+			u32 totalVerts = this->mVertices.Size ();
+			for ( u32 i = 0; i < totalVerts; i++ ) {
+
+				ZLMetaVec2D < TYPE >& p1 = this->mVertices [ i ];
+				ZLMetaVec2D < TYPE >& p2 = this->mVertices [( i + 1 ) % totalVerts ];
+				
+				// Components of points
+				TYPE p1X = p1.mX;
+				TYPE p1Y = p1.mY;
+				TYPE p2X = p2.mX;
+				TYPE p2Y = p2.mY;
+				
+				// Segment is behind point, so skip
+				if ( x > MAX ( p1X, p2X )) continue;
+				
+				// Special case if edge is parallel
+				if ( p1Y == p2Y ) {
+					if (( p1Y == y ) && (( x <= p1X ) || ( x <= p2X ))) return POINT_ON_EDGE;
+					continue;
+				}
+				
+				// Reject line segs above, below or horizontal
+				if ( y <= MIN ( p1Y, p2Y )) continue;
+				if ( y > MAX ( p1Y, p2Y )) continue;
+				
+				// x intersect w/ line seg
+				TYPE xIntersect = (( y - p1Y ) * ( p2X - p1X ) / ( p2Y - p1Y )) + p1X;
+				
+				// If we're on the line, return true
+				if ( x == xIntersect ) return POINT_ON_EDGE;
+				
+				// If point is to the left of or on line, toggle state
+				if ( p1X == p2X || x <= xIntersect ) {
+					inPoly = !inPoly; // Crossed an edge, so flip the state
+				}
+			}
+		}
+		
+		return inPoly ? POINT_INSIDE : POINT_OUTSIDE;
 	}
 
 	//----------------------------------------------------------------//
@@ -279,6 +398,31 @@ public:
 	
 		this->mVertices.Init ( total );
 		this->mInfo = POLY_UNKNOWN;
+	}
+
+	//----------------------------------------------------------------//
+	void ReverseWinding () {
+
+		size_t nVerts = this->mVertices.Size ();
+		size_t nSwaps = nVerts >> 1;
+		
+		for ( size_t i = 0; i < nSwaps; ++i ) {
+		
+			size_t j = nVerts - i - 1;
+			
+			
+			ZLMetaVec2D < TYPE >& v0 = this->mVertices [ i ];
+			ZLMetaVec2D < TYPE >& v1 = this->mVertices [ j ];
+			
+			ZLMetaVec2D < TYPE > swap = v0;
+			
+			v0 = v1;
+			v1 = swap;
+		}
+		
+		if ( this->mInfo & POLY_KNOWN_BIT ) {
+			this->mInfo ^= POLY_CLOCKWISE_BIT;
+		}
 	}
 
 	//----------------------------------------------------------------//
@@ -307,6 +451,19 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
+	void Snap ( float xSnap, float ySnap ) {
+	
+		u32 totalVerts = this->mVertices.Size ();
+		for ( u32 i = 0; i < totalVerts; i++ ) {
+			
+			ZLMetaVec2D < TYPE >& vert = this->mVertices [ i ];
+		
+			vert.mX = xSnap == 0.0f ? vert.mX : floorf (( vert.mX / xSnap ) + 0.5f ) * xSnap;
+			vert.mY = ySnap == 0.0f ? vert.mY : floorf (( vert.mY / ySnap ) + 0.5f ) * ySnap;
+		}
+	}
+	
+	//----------------------------------------------------------------//
 	void Transform ( const ZLMetaAffine2D < TYPE >& matrix ) {
 	
 		u32 totalVerts = this->mVertices.Size ();
@@ -327,7 +484,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	ZLMetaPolygon2D () :
-		mInfo ( POLY_UNKNOWN ) {
+		mInfo ( POLY_UNKNOWN ),
+		mArea ( 0.0f ) {
 	}
 
 	//----------------------------------------------------------------//

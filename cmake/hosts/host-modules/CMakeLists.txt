@@ -56,6 +56,23 @@ endif ( MOAI_LUAEXT OR LIB_PATH)
 #audiosampler
   target_link_libraries ( host-modules moai-audiosampler)
 
+if ( MOAI_IMAGE_JPG OR LIB_PATH)
+  target_link_libraries ( host-modules moai-image-jpg )
+endif ()
+  
+if ( MOAI_IMAGE_PNG OR LIB_PATH)
+  target_link_libraries ( host-modules moai-image-png )
+endif ()
+
+if ( MOAI_IMAGE_PVR OR LIB_PATH)
+  target_link_libraries ( host-modules moai-image-pvr )
+endif ()
+
+if ( MOAI_IMAGE_WEBP OR LIB_PATH)
+  target_link_libraries ( host-modules moai-image-webp )
+endif ()
+
+
 #plugins
 if ( MOAI_PLUGINS )
 	target_link_libraries ( host-modules moai-plugins )

@@ -38,16 +38,16 @@ int MOAITwitterAndroid::_init ( lua_State* L ) {
 	MOAIJString jconsumerSecret = JNI_GET_JSTRING ( consumerSecret );
 	MOAIJString jcallbackUrl = JNI_GET_JSTRING ( callbackUrl );
 
-	jclass twitter = env->FindClass ( "com/ziplinegames/moai/MoaiTwitter" );
+	jclass twitter = env->FindClass ( "com/moaisdk/twitter/MoaiTwitter" );
     if ( twitter == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTwitter" );
+		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find java class %s", "com/moaisdk/twitter/MoaiTwitter" );
     } else {
 
     	jmethodID init = env->GetStaticMethodID ( twitter, "init", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
    		if ( init == NULL ) {
 
-			ZLLog::LogF ( ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find static java method %s", "init" );
+			ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find static java method %s", "init" );
 		} else {
 
 			env->CallStaticVoidMethod ( twitter, init, ( jstring )jconsumerKey, ( jstring )jconsumerSecret, ( jstring )jcallbackUrl);
@@ -69,16 +69,16 @@ int MOAITwitterAndroid::_login ( lua_State *L ) {
 
 	JNI_GET_ENV ( jvm, env );
 
-	jclass twitter = env->FindClass ( "com/ziplinegames/moai/MoaiTwitter" );
+	jclass twitter = env->FindClass ( "com/moaisdk/twitter/MoaiTwitter" );
     if ( twitter == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTwitter" );
+		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find java class %s", "com/moaisdk/twitter/MoaiTwitter" );
     } else {
 
     	jmethodID login = env->GetStaticMethodID ( twitter, "login", "()V" );
     	if ( login == NULL ) {
 
-			ZLLog::LogF ( ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find static java method %s", "login" );
+			ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find static java method %s", "login" );
     	} else {
 
 			env->CallStaticVoidMethod ( twitter, login);
@@ -100,16 +100,16 @@ int MOAITwitterAndroid::_isLoggedIn ( lua_State *L ) {
 
 	JNI_GET_ENV ( jvm, env );
 
-	jclass twitter = env->FindClass ( "com/ziplinegames/moai/MoaiTwitter" );
+	jclass twitter = env->FindClass ( "com/moaisdk/twitter/MoaiTwitter" );
     if ( twitter == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTwitter" );
+		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find java class %s", "com/moaisdk/twitter/MoaiTwitter" );
     } else {
 
     	jmethodID isLoggedIn = env->GetStaticMethodID ( twitter, "isLoggedIn", "()Z" );
     	if ( isLoggedIn  == NULL ) {
 
-			ZLLog::LogF ( ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find static java method %s", "isLoggedIn" );
+			ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find static java method %s", "isLoggedIn" );
     	} else {
 
 			jboolean isUserLoggedIn = env->CallStaticBooleanMethod ( twitter, isLoggedIn );
@@ -140,16 +140,16 @@ int MOAITwitterAndroid::_setAccessToken ( lua_State* L ) {
 	MOAIJString jtoken = JNI_GET_JSTRING ( token );
 	MOAIJString jtokenSecret = JNI_GET_JSTRING ( tokenSecret );
 
-	jclass twitter = env->FindClass ( "com/ziplinegames/moai/MoaiTwitter" );
+	jclass twitter = env->FindClass ( "com/moaisdk/twitter/MoaiTwitter" );
     if ( twitter == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTwitter" );
+		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find java class %s", "com/moaisdk/twitter/MoaiTwitter" );
     } else {
 
     	jmethodID setAccessToken = env->GetStaticMethodID ( twitter, "setAccessToken", "(Ljava/lang/String;Ljava/lang/String;)V" );
    		if ( setAccessToken == NULL ) {
 
-			ZLLog::LogF ( ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find static java method %s", "setAccessToken" );
+			ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find static java method %s", "setAccessToken" );
 		} else {
 
 			env->CallStaticVoidMethod ( twitter, setAccessToken, ( jstring )jtoken, ( jstring )jtokenSecret );
@@ -176,16 +176,16 @@ int MOAITwitterAndroid::_sendTweet ( lua_State* L ) {
 
 	MOAIJString jtext = JNI_GET_JSTRING ( text );
 
-	jclass twitter = env->FindClass ( "com/ziplinegames/moai/MoaiTwitter" );
+	jclass twitter = env->FindClass ( "com/moaisdk/twitter/MoaiTwitter" );
     if ( twitter == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiTwitter" );
+		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find java class %s", "com/moaisdk/twitter/MoaiTwitter" );
     } else {
 
     	jmethodID sendTweet = env->GetStaticMethodID ( twitter, "sendTweet", "(Ljava/lang/String;)V" );
    		if ( sendTweet == NULL ) {
 
-			ZLLog::LogF ( ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find static java method %s", "sendTweet" );
+			ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find static java method %s", "sendTweet" );
 		} else {
 
 			env->CallStaticVoidMethod ( twitter, sendTweet, ( jstring )jtext );
@@ -289,7 +289,7 @@ void MOAITwitterAndroid::NotifyTweetComplete ( int code ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiTwitter_AKUNotifyTwitterLoginComplete ( JNIEnv* env, jclass obj,
+extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_twitter_MoaiTwitter_AKUNotifyTwitterLoginComplete ( JNIEnv* env, jclass obj,
                                                                     jint code, jstring jtoken, jstring jtokenSecret ) {
 
 	JNI_GET_CSTRING ( jtoken, token );
@@ -302,7 +302,7 @@ extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiTwitter_AKUNoti
 }
 
 //----------------------------------------------------------------//
-extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiTwitter_AKUNotifyTwitterTweetComplete ( JNIEnv* env, jclass obj, jint code ) {
+extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_twitter_MoaiTwitter_AKUNotifyTwitterTweetComplete ( JNIEnv* env, jclass obj, jint code ) {
 
 	MOAITwitterAndroid::Get ().NotifyTweetComplete ( code );
 }

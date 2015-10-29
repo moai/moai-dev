@@ -23,10 +23,10 @@ font:preloadGlyphs ( charcodes, 76 )
 
 -- yank out the font image
 image = font:getImage ()
-image:writePNG ( 'font.png' )
+image:writePNG ( '../temp/font.png' )
 
 -- serialize out to a file
-file = io.open ( 'font.lua', 'w' )
+file = io.open ( '../temp/font.lua', 'w' )
 file:write ( MOAISerializer.serializeToString ( font ))
 file:close ()
 
@@ -49,13 +49,13 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 -- read the font in from the file
-file = io.open ( 'font.lua', 'r' )
+file = io.open ( '../temp/font.lua', 'r' )
 font = loadstring ( file:read ( '*all' ))()
 file:close ()
 
 -- load the font image back in
 image = MOAIImage.new ()
-image:load ( 'font.png', 0 )
+image:load ( '../temp/font.png', 0 )
 
 -- set the font image
 font:setCache ()

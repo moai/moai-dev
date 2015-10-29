@@ -195,10 +195,10 @@ onGroup = function ( text, attributes, style )
 
 			local vtxFormat = MOAIVertexFormatMgr.getFormat ( MOAIVertexFormatMgr.XYZC )
 
-			local vtxBuffer = MOAIGfxBuffer.new ()
-			local idxBuffer = MOAIGfxBuffer.new ()
+			local vtxBuffer = MOAIVertexBuffer.new ()
+			local idxBuffer = MOAIIndexBuffer.new ()
 
-			local totalElements = drawing:tesselate ( vtxBuffer, idxBuffer, 2 )
+			local totalElements = drawing:tesselate ( vtxBuffer, idxBuffer, 2, vtxFormat )
 
 			local mesh = MOAIMesh.new ()
 			mesh:setVertexBuffer ( vtxBuffer, vtxFormat )

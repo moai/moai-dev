@@ -24,36 +24,44 @@ public:
 //================================================================//
 // MOAIGfxBuffer
 //================================================================//
-// TODO: doxygen
+/**	@lua	MOAIGfxBuffer
+	@text	Base class for MOAIVertexBuffer and MOAIIndexBuffer.
+*/
 class MOAIGfxBuffer :
 	public MOAIGfxResource,
 	public MOAIStream,
 	public ZLByteStream {
-private:
+protected:
 	
-	ZLLeanArray < u32 >					mVBOs;
-	u32									mCurrentVBO;
-	u32									mTarget;
-	bool								mIsDirty;
+	friend class MOAIGfxDeviceBase;
+	friend class MOAIGfxDeviceStateCache;
+	
+	enum {
+		UPDATE_MODE_MAPBUFFER,
+		UPDATE_MODE_ORPHAN,
+		UPDATE_MODE_SUBDATA,
+	};
+	
+	ZLLeanArray < u32 >		mVBOs;
+	u32						mCurrentVBO;
+	u32						mTarget;
+	bool					mNeedsFlush;
 
-	MOAIGfxBufferLoader*				mLoader;
-	void*								mData;
+	MOAIGfxBufferLoader*	mLoader;
+	void*					mData;
+
+	bool					mUseVBOs;
 
 	//----------------------------------------------------------------//
-	static int				_computeBounds			( lua_State* L );
 	static int				_copyFromStream			( lua_State* L );
-	static int				_countElements			( lua_State* L );
-	static int				_load					( lua_State* L );
-	static int				_makeDirty				( lua_State* L );
-	static int				_printIndices			( lua_State* L );
-	static int				_printVertices			( lua_State* L );
 	static int				_release				( lua_State* L );
 	static int				_reserve				( lua_State* L );
 	static int				_reserveVBOs			( lua_State* L );
 	static int				_reset					( lua_State* L );
-	static int				_setTarget				( lua_State* L );
+	static int				_scheduleFlush			( lua_State* L );
 	
 	//----------------------------------------------------------------//
+	void					BindVertexFormat		( MOAIVertexFormat* format );
 	u32						GetLoadingPolicy		();
 	bool					OnCPUCreate				();
 	void					OnCPUDestroy			();
@@ -62,31 +70,28 @@ private:
 	void					OnGPUDestroy			();
 	void					OnGPULost				();
 	void					OnGPUUnbind				();
-	
+
 public:
-	
-	DECL_LUA_FACTORY ( MOAIGfxBuffer )
 	
 	GET ( const void*, Data, mData )
 	GET ( size_t, BufferCount, mVBOs.Size ())
-	IS ( Dirty, mIsDirty, true )
+	GET ( u32, Target, mTarget )
 	
-	GET_SET ( u32, Target, mTarget )
+	IS ( UsingVBOs, mUseVBOs, true )
 	
 	//----------------------------------------------------------------//
 	void					Clear					();
 	void					CopyFromStream			( ZLStream& stream );
-	void					CopyFromStream			( ZLStream& stream, u32 idxSizeInBytes, u32 srcInputSizeInBytes );
+	const void*				GetAddress				();
 	size_t					GetSize					();
-	void					MakeDirty				();
 							MOAIGfxBuffer			();
 							~MOAIGfxBuffer			();
-	void					PrintIndices			( u32 indexSize );
-	void					PrintVertices			( MOAIVertexFormat& vertexFormat );
+	bool					NeedsFlush				();
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
 	void					Reserve					( u32 size );
 	void					ReserveVBOs				( u32 gpuBuffers );
+	void					ScheduleFlush			();
 	void					SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void					SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };

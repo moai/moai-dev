@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int	MOAIKontagentIOS::_startSession ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
@@ -27,7 +27,7 @@ int	MOAIKontagentIOS::_startSession ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int	MOAIKontagentIOS::_stopSession ( lua_State* L ) {
 	MOAILuaState state ( L );
 	[ Kontagent stop ];

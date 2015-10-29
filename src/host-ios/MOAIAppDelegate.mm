@@ -32,16 +32,15 @@
 
 	//----------------------------------------------------------------//
 	-( BOOL ) application:( UIApplication* )application didFinishLaunchingWithOptions:( NSDictionary* )launchOptions {
-		( void )application;
+		
+        [ application setStatusBarHidden:true ];
         
-		[ application setStatusBarHidden:true ];
+        [ MOAIView application:application didFinishLaunchingWithOptions:launchOptions ];
         
         // clear old notifications
         NSArray* scheduledNotifications = [ NSArray arrayWithArray:application.scheduledLocalNotifications ];
         application.scheduledLocalNotifications = scheduledNotifications;
 
-        [ MOAIView appInitialize ];
-        
         CGRect nativeBounds = [[ UIScreen mainScreen ] bounds ];
         
         mMoaiView = [[ MOAIView alloc ] init ];
@@ -78,9 +77,8 @@
         if ( pushBundle != NULL ) {
             [ mMoaiView application:application didReceiveRemoteNotification:pushBundle ];
         }
-
-		// return
-		return YES;
+        
+        return YES;
 	}
 	
     //----------------------------------------------------------------//
@@ -121,8 +119,8 @@
 	
     //----------------------------------------------------------------//
     -( BOOL )application:( UIApplication* )application openURL:( NSURL* )url sourceApplication:( NSString* )sourceApplication annotation:( id )annotation {
-        [ mMoaiView application:application openURL:url sourceApplication:sourceApplication annotation:annotation ];
-        return YES;
+    
+        return [ mMoaiView application:application openURL:url sourceApplication:sourceApplication annotation:annotation ];
     }
 
 @end

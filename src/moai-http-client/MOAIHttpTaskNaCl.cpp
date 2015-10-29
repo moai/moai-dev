@@ -14,6 +14,11 @@ SUPPRESS_EMPTY_FILE_WARNING
 #include "moai_nacl.h"
 
 //----------------------------------------------------------------//
+void MOAIHttpTaskNaCl::Cancel () {
+	// TODO
+}
+
+//----------------------------------------------------------------//
 void MOAIHttpTaskNaCl::Clear () {
 	this->mUrl.clear ();
 	this->mData.Clear ();
@@ -198,6 +203,11 @@ void MOAIHttpTaskNaCl::SetCookieSrc	( const char *file ) {
 }
 
 void MOAIHttpTaskNaCl::SetFailOnError ( bool enable ) {
+	//unimplemented
+}
+
+//----------------------------------------------------------------//
+void MOAIHttpTaskNaCl::SetSSLOptions ( bool verifyPeer, bool verifyHost, cc8* caBundlePath ) {
 	//unimplemented
 }
 

@@ -12,7 +12,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-int MOAIVectorEllipse::AddFillContours ( SafeTesselator* tess ) {
+int MOAIVectorEllipse::AddFillContours ( SafeTesselator& tess ) {
 	
 	u32 steps = this->mStyle.GetCircleResolution ();
 
@@ -25,13 +25,13 @@ int MOAIVectorEllipse::AddFillContours ( SafeTesselator* tess ) {
 		verts [ i ].mX = this->mLoc.mX + ( Cos ( angle ) * this->mXRad );
 		verts [ i ].mY = this->mLoc.mY + ( Sin ( angle ) * this->mYRad );
 	}
-	tess->AddContour ( 2, verts, sizeof ( ZLVec2D ), steps );
+	tess.AddContour ( 2, verts, sizeof ( ZLVec2D ), steps );
 	
 	return 0;
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorEllipse::AddStrokeContours ( SafeTesselator* tess, bool inside, bool outside ) {
+int MOAIVectorEllipse::AddStrokeContours ( SafeTesselator& tess, bool inside, bool outside ) {
 
 	return MOAIVectorShape::AddStrokeContours ( tess, inside, outside );
 }

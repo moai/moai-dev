@@ -1,0 +1,14 @@
+#ifndef MOAI_VERSION_AUTHOR_H
+#define MOAI_VERSION_AUTHOR_H
+
+	// THIS IS THE BUILD SERVER'S VERSION OF THIS FILE
+	// Before building a binary release, copy this file
+	// to src/config and rename it to moai_author.h
+
+	#define MOAI_SDK_VERSION_AUTHOR	""	// string
+	#define MOAI_SDK_COMMIT	"@COMMIT@"	// string
+	
+	// The author string is left empty intentionally to
+	// designate an official release.
+	
+#endif

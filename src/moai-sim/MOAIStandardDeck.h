@@ -36,7 +36,6 @@ protected:
 	
 	//----------------------------------------------------------------//
 	static int				_setBoundsDeck				( lua_State* L );
-	static int				_subdivideRect				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void					DrawIndex					( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );

@@ -4,8 +4,6 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-MOAISim.openWindow ( "test", 512, 512 )
-
 function printTable ( t, tableName, indentationLevel )
 		
 	if type ( t ) ~= "table" then

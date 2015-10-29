@@ -138,7 +138,7 @@ int MOAINode::_getAttr ( lua_State* L ) {
 		return 1;
 	}
 	
-	MOAILog ( L, MOAILogMessages::MOAINode_AttributeNotFound );
+	MOAILogF ( L, ZLLog::LOG_ERROR, MOAILogMessages::MOAINode_AttributeNotFound );
 	return 0;
 }
 
@@ -169,7 +169,12 @@ int MOAINode::_getAttrLink ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getNodeState
+	@text	Returns the current state of the node (for debugging purposes).
+	
+	@in		MOAINode self
+	@out	number state			One of MOAINode.STATE_IDLE, MOAINode.STATE_ACTIVE, MOAINode.STATE_SCHEDULED, MOAINode.STATE_UPDATING.
+*/
 int MOAINode::_getNodeState ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAINode, "U" );
 
@@ -212,7 +217,7 @@ int MOAINode::_moveAttr ( lua_State* L ) {
 		return 1;
 	}
 	
-	MOAILog ( L, MOAILogMessages::MOAINode_AttributeNotFound );
+	MOAILogF ( L, ZLLog::LOG_ERROR, MOAILogMessages::MOAINode_AttributeNotFound );
 	return 0;
 }
 
@@ -272,7 +277,7 @@ int MOAINode::_seekAttr ( lua_State* L ) {
 		return 1;
 	}
 	
-	MOAILog ( L, MOAILogMessages::MOAINode_AttributeNotFound );
+	MOAILogF ( L, ZLLog::LOG_ERROR, MOAILogMessages::MOAINode_AttributeNotFound );
 	return 0;
 }
 
@@ -301,7 +306,7 @@ int MOAINode::_setAttr ( lua_State* L ) {
 		self->ScheduleUpdate ();
 	}
 	else {
-		MOAILog ( L, MOAILogMessages::MOAINode_AttributeNotFound );
+		MOAILogF ( L, ZLLog::LOG_ERROR, MOAILogMessages::MOAINode_AttributeNotFound );
 	}
 	
 	return 0;
@@ -334,7 +339,7 @@ int MOAINode::_setAttrLink ( lua_State* L ) {
 		return 0;
 	}
 	
-	MOAILog ( L, MOAILogMessages::MOAINode_AttributeNotFound );
+	MOAILogF ( L, ZLLog::LOG_ERROR, MOAILogMessages::MOAINode_AttributeNotFound );
 	return 0;
 }
 
@@ -609,10 +614,15 @@ void MOAINode::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIInstanceEventSource::RegisterLuaClass ( state );
 
-	state.SetField ( -1, "EVENT_UPDATE",		( u32 )EVENT_NODE_PRE_UPDATE ); // TODO: deprecate
+	state.SetField ( -1, "EVENT_UPDATE",			( u32 )EVENT_NODE_PRE_UPDATE ); // TODO: deprecate
 	
 	state.SetField ( -1, "EVENT_NODE_PRE_UPDATE",	( u32 )EVENT_NODE_PRE_UPDATE );
 	state.SetField ( -1, "EVENT_NODE_POST_UPDATE",	( u32 )EVENT_NODE_POST_UPDATE );
+	
+	state.SetField ( -1, "STATE_IDLE",				( u32 )STATE_IDLE );
+	state.SetField ( -1, "STATE_ACTIVE",			( u32 )STATE_ACTIVE );
+	state.SetField ( -1, "STATE_SCHEDULED",			( u32 )STATE_SCHEDULED );
+	state.SetField ( -1, "STATE_UPDATING",			( u32 )STATE_UPDATING );
 }
 
 //----------------------------------------------------------------//

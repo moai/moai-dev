@@ -34,12 +34,15 @@ namespace MOAIImageTransform {
 	@flag	PIXEL_FMT_INDEX_4
 	@flag	PIXEL_FMT_INDEX_8
 	
-	@flag	COLOR_FMT_A_8
-	@flag	COLOR_FMT_RGB_888
-	@flag	COLOR_FMT_RGB_565
-	@flag	COLOR_FMT_RGBA_5551
-	@flag	COLOR_FMT_RGBA_4444
-	@flag	COLOR_FMT_RGBA_8888
+	@flag	COLOR_FMT_A_1			Alpha only, 1 bit per pixel
+	@flag	COLOR_FMT_A_4			Alpha only, 4 bits per pixel
+	@flag	COLOR_FMT_A_8			Alpha only, 8 bits per pixel
+	@flag	COLOR_FMT_LA_8			Grayscale + alpha, 16 bits per pixel
+	@flag	COLOR_FMT_RGB_888		RGB, 24 bits per pixel
+	@flag	COLOR_FMT_RGB_565		RGB, 16 bits per pixel
+	@flag	COLOR_FMT_RGBA_5551		RGBA, 16 bits per pixel (1 bit alpha)
+	@flag	COLOR_FMT_RGBA_4444		RGBA, 16 bits per pixel (4 bits per channel)
+	@flag	COLOR_FMT_RGBA_8888		RGBA, 32 bits per pixel
 */
 class MOAIImage :
 	public virtual MOAILuaObject {
@@ -77,6 +80,7 @@ private:
 	//----------------------------------------------------------------//
 	static int		_average					( lua_State* L );
 	static int		_bleedRect					( lua_State* L );
+	static int		_blur						( lua_State* L );
 	static int		_compare					( lua_State* L );
 	static int		_convert					( lua_State* L );
 	static int		_copy						( lua_State* L );
@@ -84,6 +88,7 @@ private:
 	static int		_copyRect					( lua_State* L );
 	static int		_desaturate					( lua_State* L );
 	static int		_fillCircle					( lua_State* L );
+	static int		_fillEllipse				( lua_State* L );
 	static int		_fillRect					( lua_State* L );
 	static int		_gammaCorrection			( lua_State* L );
 	static int		_generateOutlineFromSDF		( lua_State* L );
@@ -96,9 +101,11 @@ private:
 	static int		_getSize					( lua_State* L );
 	static int		_init						( lua_State* L );
 	static int		_load						( lua_State* L );
+	static int		_loadAsync					( lua_State* L );
 	static int		_loadFromBuffer				( lua_State* L );
 	static int		_mix						( lua_State* L );
 	static int		_padToPow2					( lua_State* L );
+	static int		_print						( lua_State* L );
 	static int		_resize						( lua_State* L );
 	static int		_resizeCanvas				( lua_State* L );
 	static int		_setColor32					( lua_State* L );
@@ -137,6 +144,7 @@ public:
 	ZLColorVec				Average						() const;
 	void					BleedRect					( ZLIntRect rect );
 	void					Blit						( const MOAIImage& image, int srcX, int srcY, int destX, int destY, int width, int height );
+	void					Blur						();
 	void					Clear						();
 	void					ClearBitmap					();
 	void					ClearRect					( ZLIntRect rect );
@@ -148,11 +156,12 @@ public:
 	void					Desaturate					( const MOAIImage& image, float rY, float gY, float bY, float K );
 	void					DrawLine					( int p1x, int p1y, int p2x, int p2y, u32 color );
 	void					FillCircle					( float x, float y, float xRad, u32 color );
+	void					FillEllipse					( int x, int y, int xRad, int yRad, u32 color );
 	void					FillRect					( ZLIntRect rect, u32 color );
 	void					GammaCorrection				( const MOAIImage& image, float gamma );
 	void					GenerateOutlineFromSDF		( ZLIntRect rect, float distMin, float distMax, float r, float g, float b, float a );
 	void					GenerateSDF					( ZLIntRect rect );
-	void					GenerateSDFAA				( ZLIntRect rect, float threshold );
+	void					GenerateSDFAA				( ZLIntRect rect, float sizeInPixels );
 	void					GenerateSDFDeadReckoning	( ZLIntRect rect, int threshold );
 	u32						GetBitmapSize				() const;
 	ZLIntRect				GetBounds					();
@@ -182,10 +191,11 @@ public:
 							~MOAIImage					();
 	void					PadToPow2					( const MOAIImage& image );
 	void					PremultiplyAlpha			( const MOAIImage& image );
+	void					Print						();
 	void					RegisterLuaClass			( MOAILuaState& state );
 	void					RegisterLuaFuncs			( MOAILuaState& state );
 	void					ResizeCanvas				( const MOAIImage& image, ZLIntRect rect );
-	u32						SampleColor					( float x, float y, u32 filter ) const;
+	u32						SampleColor					( float x, float y, u32 filter, bool wrapX = false, bool wrapY = false ) const;
 	void					SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void					SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
 	void					SetColor					( u32 x, u32 y, u32 color );

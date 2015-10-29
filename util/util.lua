@@ -30,14 +30,17 @@ local  		iterateFilesImplementation		= nil
 			joinTables						= nil
 			listDirectories					= nil
 			listFiles						= nil
+			loadFileAsString				= nil
 local		makeDlcResourceSig				= nil
 			makeExecutable					= nil
 			makeStoreEntryFunc				= nil
 			mergeTables						= nil
+			moaiexec						= nil
 			move							= nil
 			onEntryCompile					= nil
 			onEntryCopy						= nil
 			onEntryStore					= nil
+			os								= nil
 			pack							= nil
 			package							= nil
 			pairsByKeys						= nil
@@ -50,13 +53,14 @@ local		makeDlcResourceSig				= nil
 			replaceInFiles					= nil
 			saveTable						= nil
 			scanFiles						= nil
+			timestamp						= nil
 			tokens							= nil
 			tokenize						= nil
 			trim							= nil
 			wrap							= nil
 			zip								= nil
 
--- HACK
+-- osx needs special treatment
 local moaiCopy = MOAIFileSystem.copy
 if osx then
 	MOAIFileSystem.copy = function ( srcpath, dstpath ) copy ( dstpath, srcpath ) end
@@ -98,14 +102,20 @@ end
 copy = function ( dstpath, srcpath )
 
 	if osx then
-		
+		--print("COPY: \"" .. srcpath .. "\" -> \"" .. dstpath .. "\"")
 		-- awful, but until there's a better way...
-		moaiCopy( srcpath, dstpath )
+		--moaiCopy( srcpath, dstpath )
 
 		-- so awful
-		os.execute ( string.format ( 'rm -fr %s', dstpath ))
+		if (false) then
+		print( "Warning! removal operation: " .. string.format ( 'rm -fr \"%s\"', dstpath ))
+		os.execute ( string.format ( 'rm -fr \"%s\"', dstpath ))
+		end
 
-		local cmd = string.format ( 'cp -a %s %s', srcpath, dstpath )
+		-- less awful: ditto
+		--local cmd = string.format ( 'cp -rp \"%s\" \"%s\"', srcpath, dstpath )
+		local cmd = string.format ( 'ditto \"%s\" \"%s\"', srcpath, dstpath )
+		--print("COPY COMMAND: " .. cmd)
 		print ( cmd )
 		os.execute ( cmd )
 	else
@@ -466,13 +476,13 @@ loadFileAsString = function ( filename )
 	
 	return str
 end
+
 ----------------------------------------------------------------
 makeExecutable = function ( path )
 	if MOAIEnvironment.osBrand ~= 'Windows' then
-		os.execute("chmod a+x "..path)
+		os.execute ( "chmod a+x "..path )
 	end
-end 
-
+end
 
 ----------------------------------------------------------------
 makeDlcResourceSig = function ( path, md5 )
@@ -512,10 +522,23 @@ mergeTables = function ( t1, t2 )
 end
 
 ----------------------------------------------------------------
+moaiexec = function ( cmd, ... )
+	local result = os.execute ( string.format ( cmd, ... ))
+	if not result == 0 then os.exit ( result ) end
+	return result
+end
+
+----------------------------------------------------------------
 move = function ( dstpath, srcpath )
 
 	local cmd = osx and 'mv -f %s %s' or 'move /y %s %s'
 	exec ( cmd, srcpath, dstpath )
+end
+
+----------------------------------------------------------------
+osname = function ()
+
+	return osx and 'osx' or 'win'
 end
 
 ----------------------------------------------------------------
@@ -766,6 +789,11 @@ scanFiles = function ( srcRoot, dstRoot, exclude, process, localPath )
 			scanFiles ( srcRoot, dstRoot, exclude, process, localPath .. entry .. '/' )
 		end
 	end
+end
+
+---------------------------------------------------------------
+timestamp = function ()
+	return os.date ( '%y_%m_%d_%H.%M.%S', os.time ())
 end
 
 ---------------------------------------------------------------

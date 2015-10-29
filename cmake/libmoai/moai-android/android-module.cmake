@@ -1,4 +1,4 @@
-macro(ANDROID_MODULE MODULE_NAME MODULE_EXTERNAL)
+macro(ANDROID_MODULE MODULE_NAME MODULE_EXTERNAL MODULE_JAVA_NAME)
   #tell our parent to dump our setting for ndk_build
   set ( MOAI_ANDROID_INCLUDES 
     "${MOAI_ROOT}/src/"
@@ -10,7 +10,7 @@ macro(ANDROID_MODULE MODULE_NAME MODULE_EXTERNAL)
 
   file ( GLOB MOAI_ANDROID_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/*.h" )
 
-  file ( GLOB MOAI_ANDROID_JAVA "${CMAKE_CURRENT_SOURCE_DIR}/*.java")
+  set ( MOAI_ANDROID_JAVA "${CMAKE_CURRENT_SOURCE_DIR}/com" )
 
   if ( MOAI_ANDROID_SRC )
 
@@ -18,6 +18,12 @@ macro(ANDROID_MODULE MODULE_NAME MODULE_EXTERNAL)
       ${MOAI_ANDROID_INCLUDES} 
     )
 
+    if (${MODULE_NAME} STREQUAL "moai-android")
+      #exclude moai.cpp, that is the host file that will bind all the others together
+      #it contains the jni calls
+      list(REMOVE_ITEM MOAI_ANDROID_SRC "${CMAKE_CURRENT_SOURCE_DIR}/moai.cpp")
+    endif ()
+    
     
     #tell our parent to dump our setting for ndk_build
     list(APPEND MOAI_ANDROID_MODULES ${MODULE_NAME})
@@ -33,13 +39,13 @@ macro(ANDROID_MODULE MODULE_NAME MODULE_EXTERNAL)
   endif ( MOAI_ANDROID_SRC )
 
   #java
-  if (MOAI_ANDROID_JAVA)
-    install(FILES ${MOAI_ANDROID_JAVA} DESTINATION ../modules/moai/${MODULE_NAME}/com/ziplinegames/moai)
-  endif (MOAI_ANDROID_JAVA)
+  if (EXISTS "${MOAI_ANDROID_JAVA}" )
+    install(DIRECTORY ${MOAI_ANDROID_JAVA} DESTINATION ../src/${MODULE_NAME})
+  endif ()
   
   #third-party
-  if (NOT "${MODULE_EXTERNAL}" EQUAL "")
-    install(DIRECTORY ${MOAI_ROOT}/3rdparty-android/${MODULE_EXTERNAL}/ DESTINATION ../modules/external/${MODULE_NAME})
+  if (NOT ("${MODULE_EXTERNAL}" STREQUAL ""))
+    install(DIRECTORY ${MOAI_ROOT}/3rdparty-android/${MODULE_EXTERNAL}/ DESTINATION ../3rdparty-android/${MODULE_NAME})
   endif ()
   
 endmacro(ANDROID_MODULE)

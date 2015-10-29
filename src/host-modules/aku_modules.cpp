@@ -251,6 +251,24 @@ void AKUModulesContextInitialize () {
 		AKUPluginsContextInitialize ();
 	#endif
 	
+	// have to do this *after* initializing Sim module
+	
+	#if AKU_WITH_IMAGE_JPG
+		AKUImageJpgContextInitialize ();
+	#endif
+
+	#if AKU_WITH_IMAGE_PNG
+		AKUImagePngContextInitialize ();
+	#endif
+
+	#if AKU_WITH_IMAGE_PVR
+		AKUImagePvrContextInitialize ();
+	#endif
+
+	#if AKU_WITH_IMAGE_WEBP
+		AKUImageWebPContextInitialize ();
+	#endif
+	
 	AKULoadFuncFromBuffer ( moai_lua, moai_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
 	AKUCallFunc ();
 	

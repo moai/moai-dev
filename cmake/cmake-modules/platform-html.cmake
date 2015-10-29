@@ -1,5 +1,5 @@
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_OS_HTML -DGL_ES -D_GNU_SOURCE -s LINKABLE=1 -Wno-warn-absolute-paths" )
-  SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_OS_HTML -DGL_ES -D_GNU_SOURCE -s LINKABLE=1 -Wno-warn-absolute-paths"   )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DGL_ES -D_GNU_SOURCE -s LINKABLE=1 -Wno-warn-absolute-paths" )
+  SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGL_ES -D_GNU_SOURCE -s LINKABLE=1 -Wno-warn-absolute-paths"   )
 
   if ( CMAKE_HOST_WIN32 )
     #Workaround batchfiles (cmd.exe) not being able to handle long command lines

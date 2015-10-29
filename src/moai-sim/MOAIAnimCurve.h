@@ -22,6 +22,7 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_getValueAtTime		( lua_State* L );
+	static int		_getValueRange		( lua_State* L );
 	static int		_setKey				( lua_State* L );
 
 	//----------------------------------------------------------------//
@@ -39,6 +40,7 @@ public:
 	float			GetSample			( u32 id );
 	float			GetValue			( float time ) const;
 	void			GetValue			( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) const;
+	void			GetValueRange		( float t0, float t1, float &min, float &max );
 	void			GetZero				( MOAIAttrOp& attrOp ) const;
 					MOAIAnimCurve		();
 					~MOAIAnimCurve		();

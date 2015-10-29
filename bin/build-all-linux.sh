@@ -14,7 +14,7 @@ echo "Linux Libs complete"
 
 echo "Creating linux host"
 
-moaiutil host-linux
+pito host-linux
 
 echo "Linux host Complete"
 
@@ -26,7 +26,7 @@ echo "Android libs complete"
 
 echo "Creating android host"
 
-moaiutil host-android-gradle
+pito host-android-gradle
 
 echo "Android host Complete"
 

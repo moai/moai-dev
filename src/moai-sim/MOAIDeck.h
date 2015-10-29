@@ -8,7 +8,6 @@ class MOAIBoundsDeck;
 class MOAICellCoord;
 class MOAICollisionShape;
 class MOAIColor;
-class MOAIGfxState;
 class MOAIGrid;
 class MOAIImage;
 class MOAIMaterialBatch;
@@ -29,7 +28,7 @@ protected:
 	enum {
 		NO_CONTENT = 0xffffffff,
 	};
-
+	
 	MOAILuaSharedPtr < MOAIBoundsDeck > mBoundsDeck; // bounds override
 
 	ZLBox	mMaxBounds;
@@ -37,9 +36,10 @@ protected:
 	
 	//----------------------------------------------------------------//
 	static int						_setBoundsDeck				( lua_State* L );
+	static int						_getBounds					( lua_State* L );
 	static int						_subdivideRect				( lua_State* L );
 public:
-
+	
 	//----------------------------------------------------------------//
 	virtual ZLBox					ComputeMaxBounds			() = 0;
 	virtual ZLBox					GetItemBounds				( u32 idx ) = 0;

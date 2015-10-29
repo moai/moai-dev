@@ -145,7 +145,7 @@ void MOAIDraw::DrawString ( cc8* text, float x, float y, float width, float heig
 			if ( glyph ) {
 
 				// Draw the current glyph
-				MOAITextureBase* glyphTexture = font.GetGlyphTexture ( *glyph );
+				MOAISingleTexture* glyphTexture = font.GetGlyphTexture ( *glyph );
 				if ( glyphTexture ) {
 
 					GlyphPlacement placement = { glyph, cursorX, cursorY };
@@ -194,7 +194,7 @@ void MOAIDraw::EndDrawString () {
 	//glGetIntegerv ( GL_BLEND_DST, &orgDestBlend );
 
 	// Apply render state
-	gfxDevice.SetShaderPreset ( MOAIShaderMgr::FONT_SHADER );
+	gfxDevice.SetShader ( MOAIShaderMgr::FONT_SHADER );
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_WORLD, MOAIGfxDevice::VTX_STAGE_PROJ );
 	gfxDevice.SetBlendMode ( ZGL_BLEND_FACTOR_ONE, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
 	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
@@ -234,19 +234,17 @@ void MOAIDraw::EndDrawString () {
 
 			const GlyphPlacement& glyphPlacement = *it;
 			MOAIGlyph* glyph = glyphPlacement.glyph;
-			MOAITextureBase* glyphTexture = font.GetGlyphTexture ( *glyph );
+			MOAISingleTexture* glyphTexture = font.GetGlyphTexture ( *glyph );
 			//glyph->Draw ( *glyphTexture, glyphPlacement.x + offsetX, glyphPlacement.y + offsetY, scale, scale );
 		}
 	}
 
 	// Restore render state
-	Bind();
+	Bind ();
 
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, orgWorldTransform );
 	gfxDevice.SetVertexMtxMode ( orgVtxModeInput, orgVtxModeOutput );
 	//gfxDevice.SetBlendMode ( orgSrcBlend, orgDestBlend ); // TODO
-	
-	gfxDevice.Flush();
 
 	// Clear context
 	g_CurrentTextDrawContext->mFont = 0;
@@ -280,7 +278,19 @@ int MOAIDraw::_drawAxisGrid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	drawBezierCurve
+	@text	Draws a bezier curve.
+	
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@in		number x2
+	@in		number y2
+	@in		number x3
+	@in		number y3
+	@out	nil
+*/
 int MOAIDraw::_drawBezierCurve ( lua_State* L ) {
 
 	MOAILuaState state ( L );
@@ -423,6 +433,9 @@ int MOAIDraw::_drawLine ( lua_State* L ) {
 	} else {
 		MOAIDraw::DrawLuaParams ( L, ZGL_PRIM_LINE_STRIP );
 	}
+	
+	MOAIGfxDevice::Get ().FlushBufferedPrims ();
+	
 	return 0;
 }
 
@@ -647,7 +660,27 @@ int MOAIDraw::_fillRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setBlendMode
+	@text	Sets the blend mode for drawing.
+	
+	@overload	Reset the blend mode to MOAIGraphicsProp.BLEND_NORMAL (equivalent to src = GL_ONE, dst = GL_ONE_MINUS_SRC_ALPHA). This will reset the blend function to GL_FUNC_ADD.
+
+		@in		nil
+		@out	nil
+
+	@overload	Set blend mode using one of the Moai presets. This will reset the blend function to GL_FUNC_ADD.
+
+		@in		number mode					One of MOAIGraphicsProp.BLEND_NORMAL, MOAIGraphicsProp.BLEND_ADD, MOAIGraphicsProp.BLEND_MULTIPLY.
+		@out	nil
+	
+	@overload	Set blend mode using OpenGL source and dest factors. OpenGl blend factor constants are exposed as members of MOAIGraphicsProp.
+				See the OpenGL documentation for an explanation of blending constants.
+
+		@in		number srcFactor
+		@in		number dstFactor
+		@in		number equation
+		@out	nil
+*/
 int MOAIDraw::_setBlendMode ( lua_State* L ) {
 	MOAILuaState state ( L );
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
@@ -658,12 +691,12 @@ int MOAIDraw::_setBlendMode ( lua_State* L ) {
 			u32 srcFactor = state.GetValue < u32 >( 1, 0 );
 			u32 dstFactor = state.GetValue < u32 >( 2, 0 );
 			u32 equation = state.GetValue < u32 >( 3, 0 );
-			gfxDevice.SetBlendMode(srcFactor, dstFactor, equation);
+			gfxDevice.SetBlendMode ( srcFactor, dstFactor, equation );
 		}
 		else {
 
 			u32 blendMode = state.GetValue < u32 >( 1, MOAIBlendMode::BLEND_NORMAL );
-			gfxDevice.SetBlendMode((const MOAIBlendMode&)blendMode);
+			gfxDevice.SetBlendMode (( const MOAIBlendMode& )blendMode);
 		}
 	}
 	else {
@@ -682,8 +715,8 @@ void MOAIDraw::Bind () {
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
 	gfxDevice.SetTexture ();
-	gfxDevice.SetShaderPreset ( MOAIShaderMgr::LINE_SHADER );
-	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYZWC );
+	gfxDevice.SetShader ( MOAIShaderMgr::LINE_SHADER );
+	gfxDevice.BindBufferedDrawing ( MOAIVertexFormatMgr::XYZWC );
 }
 
 //----------------------------------------------------------------//
@@ -837,22 +870,22 @@ void MOAIDraw::DrawBezierCurve ( const ZLCubicBezier2D& bezier ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawElements ( MOAIGfxBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat, u32 count ) {
 	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	gfxDevice.Flush (); // TODO: should remove this call
-	MOAIGfxDevice::Get ().SetVertexFormat ();
-	
-	vtxBuffer->Bind ();
-	vtxFormat->Bind ( 0 );
-	
-	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
-	
-	gfxDevice.UpdateShaderGlobals ();
-		
-	// TODO: use gfxDevice to cache buffers
-
-	zglDrawArrays ( ZGL_PRIM_TRIANGLES, 0, count );
-	vtxBuffer->Unbind ();
-	vtxFormat->Unbind ();
+//	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+//	
+//	MOAIGfxDevice::Get ().UnbindBufferedDrawing ();
+//	
+//	vtxBuffer->Bind ();
+//	vtxFormat->Bind ( 0 );
+//	
+//	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
+//	
+//	gfxDevice.UpdateShaderGlobals ();
+//		
+//	// TODO: use gfxDevice to cache buffers
+//
+//	zglDrawArrays ( ZGL_PRIM_TRIANGLES, 0, count );
+//	vtxBuffer->Unbind ();
+//	vtxFormat->Unbind ();
 }
 
 //----------------------------------------------------------------//
@@ -1241,12 +1274,10 @@ void MOAIDraw::DrawTexture ( float left, float top, float right, float bottom, M
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
 	if ( texture ) {
-		
-		gfxDevice.Flush ();
 
 //		gfxDevice.SetBlendMode ( ZGL_BLEND_FACTOR_ONE, ZGL_BLEND_FACTOR_ZERO );
 		gfxDevice.SetTexture ( texture );
-		gfxDevice.SetShaderPreset ( MOAIShaderMgr::DECK2D_SHADER );
+		gfxDevice.SetShader ( MOAIShaderMgr::DECK2D_SHADER );
 
 		const ZLColorVec& orgColor = gfxDevice.GetPenColor ();
 		gfxDevice.SetPenColor ( 1, 1, 1, 1 );
@@ -1257,8 +1288,6 @@ void MOAIDraw::DrawTexture ( float left, float top, float right, float bottom, M
 		quad.SetVerts ( left, top, right, bottom );
 		quad.SetUVs ( 0, 0, 1, 1 );		
 		quad.Draw ();
-
-		gfxDevice.Flush ();
 		
 //		gfxDevice.SetBlendMode ();
 		gfxDevice.SetPenColor ( orgColor );

@@ -40,9 +40,10 @@ MOAISim.pushRenderPass ( hudLayer )
 
 -- create the bridge
 pinTransform = MOAIPinTransform.new ()
-pinTransform:init ( prop, worldLayer, hudLayer )
+pinTransform:init ( worldLayer, hudLayer )
+pinTransform:setNodeLink ( prop )
 
--- create the pin hraphic and attach it to the pin transform
+-- create the pin graphic and attach it to the pin transform
 gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( "moai.png" )
 gfxQuad:setRect ( -32, -32, 32, 32 )

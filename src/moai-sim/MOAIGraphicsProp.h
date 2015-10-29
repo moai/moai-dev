@@ -14,7 +14,6 @@ class MOAICellCoord;
 class MOAICollisionShape;
 class MOAIDeck;
 class MOAIDeckRemapper;
-class MOAIGfxState;
 class MOAIGrid;
 class MOAILayoutFrame;
 class MOAIMaterialBatch;
@@ -26,7 +25,7 @@ class MOAIPartitionResultBuffer;
 class MOAIScissorRect;
 class MOAIShader;
 class MOAISurfaceSampler2D;
-class MOAITextureBase;
+class MOAISingleTexture;
 
 //================================================================//
 // MOAIGraphicsProp
@@ -149,6 +148,7 @@ public:
 	enum {
 		ATTR_SHADER,
 		ATTR_BLEND_MODE,
+		ATTR_SCISSOR_RECT,
 		
 		ATTR_LOCAL_VISIBLE,		// direct access to the prop's 'local' visbility setting
 		ATTR_VISIBLE,			// read only - reflects the composite state of visibility
@@ -170,7 +170,7 @@ public:
 		LOD_FLAGS_MAX_LIMIT			= 0x02,
 	};
 
-	static const u32 DEFAULT_FLAGS	= FLAGS_LOCAL_VISIBLE | FLAGS_VISIBLE;
+	static const u32 DEFAULT_FLAGS = FLAGS_LOCAL_VISIBLE | FLAGS_VISIBLE;
 	static const u32 DEFAULT_LOD_FLAGS	= 0;
 
 	GET_SET ( int, CullMode, mCullMode )

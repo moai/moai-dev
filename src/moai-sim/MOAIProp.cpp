@@ -715,6 +715,7 @@ MOAIProp::MOAIProp () :
 	mInterfaceMask ( 0 ),
 	mQueryMask ( 0xffffffff ),
 	mPriority ( UNKNOWN_PRIORITY ),
+	mBoundsStatus ( BOUNDS_EMPTY ),
 	mFlags ( 0 ),
 	mIndex ( 1 ),
 	mGridScale ( 1.0f, 1.0f ),
@@ -894,6 +895,8 @@ void MOAIProp::UpdateWorldBounds ( const ZLBox& bounds, u32 status ) {
 
 	this->mWorldBounds = bounds;
 	this->mWorldBounds.Bless ();
+	
+	this->mBoundsStatus = status;
 
 	if (( status == BOUNDS_OK ) && this->mWorldBounds.IsPoint ()) {
 		status = BOUNDS_EMPTY;

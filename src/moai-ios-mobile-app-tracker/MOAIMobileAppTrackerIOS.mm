@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int MOAIMobileAppTrackerIOS::_setDebugMode ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
@@ -24,7 +24,7 @@ int MOAIMobileAppTrackerIOS::_setDebugMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int MOAIMobileAppTrackerIOS::_setIFA ( lua_State* L ) {
 	MOAILuaState state ( L );
 	cc8* ifa = state.GetValue < cc8* >( 1, 0 );
@@ -36,7 +36,7 @@ int MOAIMobileAppTrackerIOS::_setIFA ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int MOAIMobileAppTrackerIOS::_setIFV ( lua_State* L ) {
 	MOAILuaState state ( L );
 	cc8* ifv = state.GetValue < cc8* >( 1, 0 );
@@ -48,7 +48,7 @@ int MOAIMobileAppTrackerIOS::_setIFV ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int MOAIMobileAppTrackerIOS::_setLocation ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
@@ -68,7 +68,7 @@ int MOAIMobileAppTrackerIOS::_setLocation ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int MOAIMobileAppTrackerIOS::_setMACAddress ( lua_State* L ) {
 	MOAILuaState state ( L );
 	cc8* macAddress = state.GetValue < cc8* >( 1, 0 );
@@ -79,7 +79,7 @@ int MOAIMobileAppTrackerIOS::_setMACAddress ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int MOAIMobileAppTrackerIOS::_setOpenUDID ( lua_State* L ) {
 	MOAILuaState state ( L );
 	cc8* openUDID = state.GetValue < cc8* >( 1, 0 );
@@ -90,7 +90,7 @@ int MOAIMobileAppTrackerIOS::_setOpenUDID ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int MOAIMobileAppTrackerIOS::_setUserId ( lua_State* L ) {
 	MOAILuaState state ( L );
 	cc8* userId = state.GetValue < cc8* >( 1, 0 );
@@ -130,7 +130,7 @@ int MOAIMobileAppTrackerIOS::_startTracker ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int MOAIMobileAppTrackerIOS::_trackAction ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
@@ -161,7 +161,7 @@ int MOAIMobileAppTrackerIOS::_trackAction ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int MOAIMobileAppTrackerIOS::_trackInstall ( lua_State* L ) {
 	UNUSED ( L );
 	
@@ -170,7 +170,7 @@ int MOAIMobileAppTrackerIOS::_trackInstall ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int MOAIMobileAppTrackerIOS::_trackUpdate ( lua_State* L ) {
 	UNUSED ( L );
 	

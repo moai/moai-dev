@@ -6,7 +6,7 @@
 
 MOAIMath.seedSFMT ( 0 )
 
-local file = io.open ( 'rand.csv', 'w' )
+local file = io.open ( '../temp/rand.csv', 'w' )
 
 function buildHistogram ( randFunc, samples, range )
 	local histogram = {}

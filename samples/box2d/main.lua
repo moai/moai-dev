@@ -8,8 +8,8 @@ local function printf ( ... )
 	return io.stdout:write ( string.format ( ... ))
 end 
 
-local width = MOAIEnvironment.horizontalResolution or 640
-local height = MOAIEnvironment.verticalResolution or 480
+local width = 640
+local height = 480
 MOAISim.openWindow ( "test", width ,height  )
 
 viewport = MOAIViewport.new ()

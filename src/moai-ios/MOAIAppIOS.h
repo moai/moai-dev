@@ -11,8 +11,7 @@
 #import <moai-core/host.h>
 #import <moai-core/headers.h>
 
-// TODO: rename to MOAIMailComposeDelegate
-@class MoaiMailComposeDelegate;
+@class MOAIMailComposeDelegate;
 @class MOAITakeCameraListener;
 
 //================================================================//
@@ -48,7 +47,7 @@ private:
 
 	MOAILuaStrongRef			mOnTakeCameraCallback;
 	MOAITakeCameraListener*		mTakeCameraListener;
-	//MoaiMailComposeDelegate*	mMailDelegate;
+	//MOAIMailComposeDelegate*	mMailDelegate;
 	UIPopoverController*		mImagePickerPopover;
 	
 	//----------------------------------------------------------------//
@@ -57,11 +56,14 @@ private:
 	static int		_getDirectoryInDomain			( lua_State* L );
 	static int		_getInterfaceOrientation		( lua_State* L );
 	static int		_getIPAddress					( lua_State* L );
+	static int		_getResourcePathInBundle		( lua_State* L );
+	static int		_getSystemUptime				( lua_State* L );
 	static int		_getUTCTime						( lua_State* L );
 	static int		_openURL						( lua_State* L );
 	static int		_openURLWithParams				( lua_State* L );
 	static int		_sendMail						( lua_State* L );
 	static int		_takeCamera						( lua_State* L );
+	static int		_vibrate						( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void			RegisterNotificationListeners	();
@@ -108,9 +110,9 @@ public:
 };
 
 //================================================================//
-// MoaiMailComposeDelegate
+// MOAIMailComposeDelegate
 //================================================================//
-//@interface MoaiMailComposeDelegate : NSObject < MFMailComposeViewControllerDelegate > {
+//@interface MOAIMailComposeDelegate : NSObject < MFMailComposeViewControllerDelegate > {
 //@private
 //}
 //@end

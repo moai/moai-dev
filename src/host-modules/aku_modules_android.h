@@ -11,6 +11,10 @@
 	#include <moai-android-adcolony/host.h>
 #endif
 
+#if AKU_WITH_ANDROID
+  #include <moai-android/host.h>
+#endif
+
 #if AKU_WITH_ANDROID_BILLING
 	#include <moai-android/host.h>
 #endif
@@ -51,10 +55,6 @@
 	#include <moai-android-tstore/host.h>;
 #endif
 
-#if AKU_WITH_ANDROID_PLAYSERVICES
-	#include <moai-android-google-play-services/host.h>;
-#endif
-
 #if AKU_WITH_ANDROID_TWITTER
 	#include <moai-android-twitter/host.h>
 #endif
@@ -63,58 +63,7 @@
 	#include <moai-android-vungle/host.h>
 #endif
 
-/*
-#ifndef AKU_WITH_ANDROID_AMAZON_BILLING
-	#define AKU_WITH_ANDROID_AMAZON_BILLING 1
-#endif
 
-#ifndef AKU_WITH_ANDROID_CHARTBOOST
-	#define AKU_WITH_ANDROID_CHARTBOOST 0
-#endif
-
-#ifndef AKU_WITH_ANDROID_CRITTERCISM
-	#define AKU_WITH_ANDROID_CRITTERCISM 0
-#endif
-
-#ifndef AKU_WITH_ANDROID_FACEBOOK
-	#define AKU_WITH_ANDROID_FACEBOOK 0
-#endif
-
-#ifndef AKU_WITH_ANDROID_FLURRY
-	#define AKU_WITH_ANDROID_FLURRY 0
-#endif
-
-#ifndef AKU_WITH_ANDROID_FORTUMO
-	#define AKU_WITH_ANDROID_FORTUMO 0
-#endif
-
-#ifndef AKU_WITH_ANDROID_GOOGLE_BILLING
-	#define AKU_WITH_ANDROID_GOOGLE_BILLING 0
-#endif
-
-#ifndef AKU_WITH_ANDROID_GOOGLE_PUSH
-	#define AKU_WITH_ANDROID_GOOGLE_PUSH 0
-#endif
-
-#ifndef AKU_WITH_ANDROID_GOOGLE_PLAY_SERVICES
-	#define AKU_WITH_ANDROID_GOOGLE_PLAY_SERVICES 0
-#endif
-
-#ifndef AKU_WITH_ANDROID_TAPJOY
-	#define AKU_WITH_ANDROID_TAPJOY 0
-#endif
-
-#ifndef AKU_WITH_ANDROID_TSTORE
-	#define AKU_WITH_ANDROID_TSTORE 0
-#endif
-*/
-
-/*
-#ifndef AKU_WITH_ANDROID_VUNGLE
-	#define AKU_WITH_ANDROID_VUNGLE 0
->>>>>>> community/develop
-#endif
-*/
 
 //----------------------------------------------------------------//
 void		AKUModulesAndroidAppFinalize				();

@@ -32,6 +32,22 @@ EOF
     exit 1
 }
 
+#clean up xcodebuild if we have xcpretty
+if hash xcpretty 2>/dev/null; then
+ pretty() {
+   xcpretty -c
+ }
+else
+ pretty() {
+   cat
+ } 
+fi 
+
+#our build command
+#ARCHS, SDK
+build () {
+  xcodebuild IPHONEOS_DEPLOYMENT_TARGET="6.0"  ONLY_ACTIVE_ARCH=NO ARCHS="$1" -project moai.xcodeproj -configuration Release -target install -sdk $2 | pretty
+}
 
 
 if [ x$1 == x ]; then
@@ -94,7 +110,8 @@ $moai_root/cmake
 
 rm -f ${lib_dir}/lib/*.a
 
-xcodebuild ONLY_ACTIVE_ARCH=NO ARCHS="i386 x86_64" -project moai.xcodeproj -target install -configuration Release -target install -sdk iphonesimulator
+
+build "i386 x86_64" iphonesimulator
 #work around cmake install bug with ios projects
 find . -iregex ".*/.*-iphonesimulator/[^/]*.a" | xargs -J % cp -npv % ${lib_dir}/lib
 
@@ -104,8 +121,8 @@ mv -v ${lib_dir}/lib/*.a ${lib_dir}/lib-iphonesimulator
 
 rm -f ${lib_dir}/lib/*.a
 
-xcodebuild ONLY_ACTIVE_ARCH=NO ARCHS="armv7 armv7s arm64" -project moai.xcodeproj -target install -configuration Release -target install -sdk iphoneos
 
+build "armv7 armv7s arm64" iphoneos
 #work around cmake install bug with ios projects
 find . -iregex ".*/.*-iphoneos/[^/]*.a" | xargs -J % cp -npv % ${lib_dir}/lib
 find . -iregex ".*/Export/cmake/[^/]*.cmake" | xargs -J % cp -pv % ${lib_dir}/cmake
