@@ -32,7 +32,7 @@ private:
 	static u32		sLogLevel;
 	static FILE*	sConsoleRedirect;
 
-	typedef void ( *LogFunc )( cc8* format, va_list args, void* userdata );
+	typedef void ( *LogFunc )( u32 level, cc8* format, va_list args, void* userdata );
 	
 	static LogFunc	sLogFunc;
 	static void*	sLogFuncUserdata;
