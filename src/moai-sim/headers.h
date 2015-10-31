@@ -161,6 +161,7 @@
 #include <moai-sim/MOAITextDesigner.h>
 #include <moai-sim/MOAITextDesignParser.h>
 #include <moai-sim/MOAITextLabel.h>
+#include <moai-sim/MOAITextShaper.h>
 #include <moai-sim/MOAITextStyle.h>
 #include <moai-sim/MOAITextStyleCache.h>
 #include <moai-sim/MOAITextStyleMap.h>

@@ -25,11 +25,61 @@ void MOAITextDesigner::ClearCurves () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextDesigner::Layout ( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, cc8* str, u32 idx, ZLVec2D& offset, bool* more, u32* nextIdx, bool* overrun ) {
+ZLRect MOAITextDesigner::GetGlyphRect ( const MOAIGlyph& glyph, float x, float y, float xScale, float yScale, u32 hRule, u32 vRule ) {
+	UNUSED ( hRule );
+	
+	const MOAIGlyphSet& glyphSet = glyph.GetDeck ();
+
+	x += ( glyph.mBearingX * xScale );
+	y -= ( glyph.mBearingY * yScale );
+
+	ZLRect rect;
+
+	rect.mXMin = x;
+	rect.mXMax = x + ( glyph.mWidth * xScale );
+
+	switch ( vRule ) {
+	
+		case GLYPH_SIZE:
+			
+			rect.mYMin = y;
+			rect.mYMax = y + ( glyph.mHeight * yScale );
+			break;
+		
+		case LOGICAL_SIZE:
+		
+			rect.mYMin = y - ( glyphSet.GetDescent () * yScale ),
+			rect.mYMax = y + ( glyphSet.GetAscent () * yScale );
+			break;
+		
+		case MAXIMUM_SIZE:
+		case VISIBLE_SIZE:
+		case VISIBLE_OR_LOGICAL_SIZE:
+			assert ( 0 ); // TODO: unsupported
+		break;
+	}
+
+	return rect;
+}
+
+//----------------------------------------------------------------//
+ZLRect MOAITextDesigner::GetGlyphLayoutRect ( const MOAIGlyph& glyph, float x, float y, float xScale, float yScale ) {
+
+	return MOAITextDesigner::GetGlyphRect ( glyph, x, y, xScale, yScale, this->mHLayoutSizingRule, this->mVLayoutSizingRule );
+}
+
+//----------------------------------------------------------------//
+ZLRect MOAITextDesigner::GetGlyphSpacingRect ( const MOAIGlyph& glyph, float x, float y, float xScale, float yScale ) {
+
+	return MOAITextDesigner::GetGlyphRect ( glyph, x, y, xScale, yScale, this->mLineSizingRule, this->mLineSizingRule );
+}
+
+//----------------------------------------------------------------//
+void MOAITextDesigner::Layout ( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, cc8* str, u32 idx, bool* more, u32* nextIdx, bool* overrun ) {
 
 	MOAITextDesignParser parser;
 	
-	parser.BuildLayout ( layout, styleCache, styleMap, *this, str, idx, offset );
+	parser.BuildLayout ( layout, styleCache, styleMap, *this, str, idx );
 	layout.ApplyHighlights ();
 	
 	if ( more ) {
@@ -57,7 +107,7 @@ void MOAITextDesigner::Init ( const MOAITextDesigner& designer ) {
 	this->mHAlign			= designer.mHAlign;
 	this->mVAlign			= designer.mVAlign;
 	this->mYFlip			= designer.mYFlip;
-	this->mWordBreak		= designer.mWordBreak;
+	this->mWordBreakRule	= designer.mWordBreakRule;
 	this->mGlyphScale		= designer.mGlyphScale;
 	this->mLineSpacing		= designer.mLineSpacing;
 	
@@ -76,7 +126,10 @@ MOAITextDesigner::MOAITextDesigner () :
 	mHAlign ( MOAITextDesigner::LEFT_JUSTIFY ),
 	mVAlign ( MOAITextDesigner::TOP_JUSTIFY ),
 	mYFlip ( false ),
-	mWordBreak ( MOAITextDesigner::WORD_BREAK_NONE ),
+	mWordBreakRule ( MOAITextDesigner::WORD_BREAK_NONE ),
+	mHLayoutSizingRule ( LOGICAL_SIZE ),
+	mVLayoutSizingRule ( LOGICAL_SIZE ),
+	mLineSizingRule ( LOGICAL_SIZE ),
 	mGlyphScale ( 1.0f ),
 	mLineSpacing ( 0.0f ),
 	mHLineSnap ( 0.0f ),

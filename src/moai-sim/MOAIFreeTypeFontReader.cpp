@@ -130,7 +130,7 @@ int MOAIFreeTypeFontReader::GetGlyphMetrics ( MOAIGlyphMetrics& glyphMetrics ) {
 	
 	glyphMetrics.mWidth			= ( float )( face->glyph->metrics.width >> 6 ); // div 64
 	glyphMetrics.mHeight		= ( float )( face->glyph->metrics.height >> 6 ); // div 64
-	glyphMetrics.mAdvanceX		= ( float )( face->glyph->metrics.horiAdvance >> 6 ); // di // div 64v 64
+	glyphMetrics.mAdvanceX		= ( float )( face->glyph->metrics.horiAdvance >> 6 ); // div 64
 	glyphMetrics.mBearingX		= ( float )( face->glyph->metrics.horiBearingX >> 6 ); // div 64
 	glyphMetrics.mBearingY		= ( float )( face->glyph->metrics.horiBearingY >> 6 ); // div 64
 	

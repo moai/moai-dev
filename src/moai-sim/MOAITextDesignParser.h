@@ -4,6 +4,8 @@
 #ifndef	MOAITEXTDESIGNPARSER_H
 #define	MOAITEXTDESIGNPARSER_H
 
+#include <moai-sim/MOAITextShaper.h>
+
 class MOAITextDesigner;
 class MOAITextLayout;
 class MOAITextStyle;
@@ -16,7 +18,10 @@ class MOAITextStyleState;
 //================================================================//
 // MOAITextDesignParser
 //================================================================//
-class MOAITextDesignParser {
+// parser for producing a layout
+class MOAITextDesignParser :
+	public MOAITextStyledCharStream,
+	public MOAITextLineLayout {
 private:
 	
 	//----------------------------------------------------------------//
@@ -26,39 +31,28 @@ private:
 	MOAITextStyleState*		mStyle;
 	u32						mSpanIdx;
 	
-	int						mIdx;
-	int						mPrevIdx;
+	int						mCharIdx;
 	
 	cc8*					mStr;
 	
-	MOAIGlyphSet*			mDeck;
-	float					mDeckScale;
+	int						mLineCharIdx;
+	u32						mLineSpriteIdx;
 	
-	int						mLineIdx;
-	u32						mLineSpriteID;
-	u32						mLineSize;
-	float					mLineHeight;
-	float					mLineAscent;
-	ZLRect					mLineRect;
+	u32						mLineSizeInSprites;
 	
-	int						mTokenIdx;
-	u32						mTokenSpriteID;
-	u32						mTokenSize;
-	float					mTokenHeight;
-	float					mTokenAscent;
-	ZLRect					mTokenRect;
+	// *layout* bounds (as opposed to *logical*) bounds are calculated based on the
+	// text designer's sizing/alignment rule. they may be distinct from the glyph
+	// bounds, the visible bounds and the logical bounds.
 	
-	float					mLayoutWidth;
-	float					mLayoutHeightMin;
-	float					mLayoutHeightMax;
+	ZLRect					mLayoutBounds;
+	ZLRect					mLineLayoutBounds;
 	
-	float					mPenX;
-	ZLVec2D					mOffset;
-	MOAIGlyph*				mPrevGlyph;
-	bool					mMore;
-	bool					mOverrun;
+	ZLRect					mLineSpacingBounds;
+	ZLRect					mPrevLineSpacingBounds;
 	
 	u32						mBaseLine;
+	
+	MOAITextStyledChar		mCurrentChar;
 	
 	//----------------------------------------------------------------//
 	// layout settings
@@ -69,24 +63,27 @@ private:
 	MOAITextStyleMap*		mStyleMap;
 	
 	//----------------------------------------------------------------//
-	void				AcceptLine					();
-	void				AcceptToken					();
-	void				Align						();
-	void				BuildLayout					();
-	float				GetLayoutHeight				();
-	u32					NextChar					();
-	float				Snap						( float f, float b );
+	u32						PushLine					();
+	void					Align						();
+	void					BuildLayout					();
+	u32						GetCharIdx					();
+	u32						GetSpriteIdx				();
+	MOAITextStyledChar		NextChar					();
+	u32						PushSprite					( const MOAITextStyledChar& styledChar, float x, float y );
+	void					SeekChar					( u32 charIdx );
+	void					SeekSprite					( u32 spriteIdx );
+	float					Snap						( float f, float b );
 
 public:
 
-	GET ( u32, Index, mIdx )
+	GET ( u32, Index, mCharIdx )
 
 	//----------------------------------------------------------------//
-	void				BuildLayout					( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, MOAITextDesigner& designer, cc8* str, u32 idx, ZLVec2D& offset );
-						MOAITextDesignParser		();
-	virtual				~MOAITextDesignParser		();
-	bool				More						();
-	bool				Overrun						();
+	void					BuildLayout					( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, MOAITextDesigner& designer, cc8* str, u32 idx );
+							MOAITextDesignParser		();
+	virtual					~MOAITextDesignParser		();
+	bool					More						();
+	bool					Overrun						();
 };
 
 #endif

@@ -944,6 +944,10 @@
 		CD14014E1A0CC5B40065AEE7 /* MOAIVectorSensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD14014B1A0CC5B40065AEE7 /* MOAIVectorSensor.cpp */; };
 		CD14014F1A0CC5B40065AEE7 /* MOAIVectorSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = CD14014C1A0CC5B40065AEE7 /* MOAIVectorSensor.h */; };
 		CD1401501A0CC5B40065AEE7 /* MOAIVectorSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = CD14014C1A0CC5B40065AEE7 /* MOAIVectorSensor.h */; };
+		CD14DBA11BE3630000F3400C /* MOAITextShaper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD14DB9B1BE3237E00F3400C /* MOAITextShaper.cpp */; settings = {ASSET_TAGS = (); }; };
+		CD14DBA21BE3630000F3400C /* MOAITextShaper.h in Headers */ = {isa = PBXBuildFile; fileRef = CD14DB9C1BE3237E00F3400C /* MOAITextShaper.h */; settings = {ASSET_TAGS = (); }; };
+		CD14DBA31BE3630600F3400C /* MOAITextShaper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD14DB9B1BE3237E00F3400C /* MOAITextShaper.cpp */; settings = {ASSET_TAGS = (); }; };
+		CD14DBA41BE3630600F3400C /* MOAITextShaper.h in Headers */ = {isa = PBXBuildFile; fileRef = CD14DB9C1BE3237E00F3400C /* MOAITextShaper.h */; settings = {ASSET_TAGS = (); }; };
 		CD1756471A199B24009C430A /* ZLBarycentric.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1756441A199B24009C430A /* ZLBarycentric.h */; };
 		CD1756481A199B24009C430A /* ZLBarycentric.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1756441A199B24009C430A /* ZLBarycentric.h */; };
 		CD1844D41A6269AB00FCCCE0 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C9117FA573B00EBA2DB /* headers.h */; };
@@ -6565,6 +6569,8 @@
 		CD14013E1A0C5F660065AEE7 /* MOAIInputMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIInputMgr.h; sourceTree = "<group>"; };
 		CD14014B1A0CC5B40065AEE7 /* MOAIVectorSensor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVectorSensor.cpp; sourceTree = "<group>"; };
 		CD14014C1A0CC5B40065AEE7 /* MOAIVectorSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVectorSensor.h; sourceTree = "<group>"; };
+		CD14DB9B1BE3237E00F3400C /* MOAITextShaper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextShaper.cpp; sourceTree = "<group>"; };
+		CD14DB9C1BE3237E00F3400C /* MOAITextShaper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextShaper.h; sourceTree = "<group>"; };
 		CD1756441A199B24009C430A /* ZLBarycentric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLBarycentric.h; sourceTree = "<group>"; };
 		CD18459C1A626BD500FCCCE0 /* libmoai-osx-apple.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-apple.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD1845BE1A62751200FCCCE0 /* MOAIEnvironment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIEnvironment.cpp; sourceTree = "<group>"; };
@@ -13441,6 +13447,8 @@
 				CDEFD55D181ECB3E0058D772 /* MOAITextLabel.h */,
 				CDEFD55E181ECB3E0058D772 /* MOAITextLayout.cpp */,
 				CDEFD55F181ECB3E0058D772 /* MOAITextLayout.h */,
+				CD14DB9B1BE3237E00F3400C /* MOAITextShaper.cpp */,
+				CD14DB9C1BE3237E00F3400C /* MOAITextShaper.h */,
 				89BE7002173AD0CA00DFE837 /* MOAITextStyle.cpp */,
 				89BE7003173AD0CA00DFE837 /* MOAITextStyle.h */,
 				CD781091187CAA2D008B9C0A /* MOAITextStyleCache.cpp */,
@@ -13951,6 +13959,7 @@
 				CD73A60A188F0AEC00DFACDB /* MOAIGraphicsProp.h in Headers */,
 				CD4C3E6E180A63BB00C02381 /* MOAIParticleDistanceEmitter.h in Headers */,
 				CD67B45C1B264C51004298CF /* MOAISelectionMesh.h in Headers */,
+				CD14DBA21BE3630000F3400C /* MOAITextShaper.h in Headers */,
 				CD4C3E96180A63BB00C02381 /* MOAIProfilerAutoScope.h in Headers */,
 				CD78109B187CAA2D008B9C0A /* MOAITextStyleMap.h in Headers */,
 				CD6AFDA71B1683F800A36954 /* MOAIGeometryWriter.h in Headers */,
@@ -14116,6 +14125,7 @@
 				CD4C40F6180A63C200C02381 /* MOAISurfaceDeck2D.h in Headers */,
 				CD4C4023180A63C200C02381 /* MOAIAnimCurve.h in Headers */,
 				CDE36E531A5F4E340095E863 /* MOAIImageFormatMgr.h in Headers */,
+				CD14DBA41BE3630600F3400C /* MOAITextShaper.h in Headers */,
 				CD4C4063180A63C200C02381 /* MOAIGfxQuadDeck2D.h in Headers */,
 				CD4C406D180A63C200C02381 /* MOAIGlyphCache.h in Headers */,
 				CD9140981A0D6022002CC335 /* MOAIActionTree.h in Headers */,
@@ -17651,6 +17661,7 @@
 				CD4C3E24180A63BB00C02381 /* MOAIFontReader.cpp in Sources */,
 				CD4C3E8D180A63BB00C02381 /* MOAIPathTerrainDeck.cpp in Sources */,
 				CD4C3E40180A63BB00C02381 /* MOAIGrid.cpp in Sources */,
+				CD14DBA11BE3630000F3400C /* MOAITextShaper.cpp in Sources */,
 				CD4C3E71180A63BB00C02381 /* MOAIParticleForce.cpp in Sources */,
 				CD4C3E73180A63BB00C02381 /* MOAIParticlePexPlugin.cpp in Sources */,
 				CD4C3E91180A63BB00C02381 /* MOAIPointerSensor.cpp in Sources */,
@@ -17822,6 +17833,7 @@
 				CD4C409A180A63C200C02381 /* MOAINodeMgr.cpp in Sources */,
 				CD4C40B5180A63C200C02381 /* MOAIPartitionLevel.cpp in Sources */,
 				CD4C4055180A63C200C02381 /* MOAIFont_bmfont.cpp in Sources */,
+				CD14DBA31BE3630600F3400C /* MOAITextShaper.cpp in Sources */,
 				CD4C4058180A63C200C02381 /* MOAIFrameBuffer.cpp in Sources */,
 				CD4C40B1180A63C200C02381 /* MOAIPartition.cpp in Sources */,
 				CD4C40CB180A63C200C02381 /* MOAIProfilerEntry.cpp in Sources */,
@@ -21026,6 +21038,7 @@
 				OTHER_CFLAGS = (
 					"-include",
 					"\"zl-vfs/zl_replace.h\"",
+					"-Werror=return-type",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
@@ -22355,6 +22368,7 @@
 				OTHER_CFLAGS = (
 					"-include",
 					"\"zl-vfs/zl_replace.h\"",
+					"-Werror=return-type",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
@@ -28212,6 +28226,7 @@
 				OTHER_CFLAGS = (
 					"-include",
 					"\"zl-vfs/zl_replace.h\"",
+					"-Werror=return-type",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
@@ -28643,6 +28658,7 @@
 				OTHER_CFLAGS = (
 					"-include",
 					"\"zl-vfs/zl_replace.h\"",
+					"-Werror=return-type",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";

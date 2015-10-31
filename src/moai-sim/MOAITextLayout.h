@@ -6,10 +6,12 @@
 
 #include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAIProp.h>
+#include <moai-sim/MOAITextShaper.h>
 #include <moai-sim/MOAITextStyle.h>
 #include <moai-sim/MOAITextStyleParser.h>
 
 class MOAIShader;
+class MOAITextStyledChar;
 
 //================================================================//
 // MOAITextSprite
@@ -47,14 +49,18 @@ private:
 	friend class MOAITextLabel;
 	friend class MOAITextLayout;
 	
-	u32			mStart;		// index in sprite stack
-	u32			mSize;		// number of sprites in line;
-	ZLRect		mRect;		// tight bounds of glyphs in the line
-	float		mHeight;	// total height of the line (irrespective of the glyphs)
-	float		mAscent;	// offset to the text baseline
+	u32			mStart;				// index in sprite stack
+	u32			mSize;				// number of sprites in line;
+	
+	ZLVec2D		mOrigin;			// offset to line 'hotspot' - origin of drawing
+	ZLRect		mLayoutBounds;		// bounds used for layout and alignment of line
 
 public:
 
+	//----------------------------------------------------------------//
+	float		GetAscent			();
+	float		GetDescent			();
+	void		Offset				( float xOff, float yOff );
 };
 
 //================================================================//
@@ -89,13 +95,12 @@ private:
 	ZLLeanStack < MOAITextSprite, 64 >	mSprites;
 	ZLLeanStack < MOAITextLine, 8 >		mLines;
 	
-	ZLRect								mGlyphBounds; // tight-fitting bounds including only actual glyphs
-	ZLRect								mLayoutBounds; // includes padding for font
+	ZLRect								mLayoutBounds; // bounds used for sizing and alignment
 	
 	// calculated during alignment
 	// - the text is laid out in model space with the origin at the *center* of the text frame
 	// - centering the text makes it easy to flip the textbox by prepending a rotation or scale
-	// - before the main transform, apply the offset to get the correct text position 
+	// - before the main transform, apply the offset to get the correct text position
 	float								mXOffset;
 	float								mYOffset;
 	
@@ -105,9 +110,8 @@ private:
 	//----------------------------------------------------------------//
 	void				CompactHighlights		();
 	void				FindSpriteSpan			( u32 idx, u32 size, u32& spanIdx, u32& spanSize );
-	void				PushLine				( u32 start, u32 size, const ZLRect& rect, float height, float ascent );
-	void				PushSprite				( u32 idx, MOAIGlyph& glyph, MOAITextStyleState& style, float x, float y, float xScale, float yScale );
-	void				PushStyleSpan			( int base, int top, MOAITextStyle& style );
+	void				PushLine				( u32 start, u32 size, const ZLVec2D& origin, const ZLRect& layoutBounds );
+	void				PushSprite				( const MOAITextStyledChar& styledChar, float x, float y );
 	
 public:
 

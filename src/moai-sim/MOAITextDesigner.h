@@ -4,6 +4,8 @@
 #ifndef	MOAITEXTDESIGNER_H
 #define	MOAITEXTDESIGNER_H
 
+class MOAIAnimCurve;
+class MOAINode;
 class MOAITextLayout;
 class MOAITextStyle;
 class MOAITextStyleCache;
@@ -29,7 +31,11 @@ protected:
 	u32			mVAlign;
 	bool		mYFlip;
 	
-	u32			mWordBreak; // rule for breaking words across lines
+	u32			mWordBreakRule;			// rule for breaking words across lines
+	
+	u32			mHLayoutSizingRule;		// controls sizing *and* alignment
+	u32			mVLayoutSizingRule;		// controls sizing *and* alignment
+	u32			mLineSizingRule;		// selects the edge to advance from
 	
 	float		mGlyphScale;
 	float		mLineSpacing;
@@ -58,33 +64,44 @@ public:
 		WORD_BREAK_NONE,
 		WORD_BREAK_CHAR,
 	};
+	
+	enum {
+		GLYPH_SIZE,
+		LOGICAL_SIZE,
+		MAXIMUM_SIZE,				// logical size plus padding
+		VISIBLE_SIZE,				// glyph size plus padding
+		VISIBLE_OR_LOGICAL_SIZE,	// greater of visible or logical size
+	};
 
 	GET_SET ( MOAINode*, Owner, mOwner )
 	
-	GET_SET ( ZLRect&, Frame, mFrame )
+	GET_SET_CONST ( ZLRect&, Frame, mFrame )
 	
-	GET_SET ( bool, LimitWidth, mLimitWidth )
-	GET_SET ( bool, LimitHeight, mLimitHeight )
+	GET_SET_CONST ( bool, LimitWidth, mLimitWidth )
+	GET_SET_CONST ( bool, LimitHeight, mLimitHeight )
 	
-	GET_SET ( u32, HAlign, mHAlign )
-	GET_SET ( u32, VAlign, mVAlign )
-	GET_SET ( bool, YFlip, mYFlip )
+	GET_SET_CONST ( u32, HAlign, mHAlign )
+	GET_SET_CONST ( u32, VAlign, mVAlign )
+	GET_SET_CONST ( bool, YFlip, mYFlip )
 	
-	GET_SET ( u32, WordBreak, mWordBreak )
-	GET_SET ( float, GlyphScale, mGlyphScale )
-	GET_SET ( float, LineSpacing, mLineSpacing )
+	GET_SET_CONST ( u32, WordBreakRule, mWordBreakRule )
+	GET_SET_CONST ( float, GlyphScale, mGlyphScale )
+	GET_SET_CONST ( float, LineSpacing, mLineSpacing )
 
-	GET_SET ( float, HLineSnap, mHLineSnap )
-	GET_SET ( float, VLineSnap, mVLineSnap )
+	GET_SET_CONST ( float, HLineSnap, mHLineSnap )
+	GET_SET_CONST ( float, VLineSnap, mVLineSnap )
 
 	//----------------------------------------------------------------//
-	void		ClearCurves					();
-	void		Layout						( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, cc8* str, u32 idx, ZLVec2D& offset, bool* more, u32* nextIdx, bool* overrun );
-	void		Init						( const MOAITextDesigner& designer );
-				MOAITextDesigner			();
-				~MOAITextDesigner			();
-	void		ReserveCurves				( u32 total );
-	void		SetCurve					( u32 idx, MOAIAnimCurve* curve );
+	void				ClearCurves					();
+	static ZLRect		GetGlyphRect				( const MOAIGlyph& glyph, float x, float y, float xScale, float yScale, u32 hRule, u32 vRule );
+	ZLRect				GetGlyphLayoutRect			( const MOAIGlyph& glyph, float x, float y, float xScale, float yScale );
+	ZLRect				GetGlyphSpacingRect			( const MOAIGlyph& glyph, float x, float y, float xScale, float yScale );
+	void				Layout						( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, cc8* str, u32 idx, bool* more, u32* nextIdx, bool* overrun );
+	void				Init						( const MOAITextDesigner& designer );
+						MOAITextDesigner			();
+						~MOAITextDesigner			();
+	void				ReserveCurves				( u32 total );
+	void				SetCurve					( u32 idx, MOAIAnimCurve* curve );
 };
 
 #endif

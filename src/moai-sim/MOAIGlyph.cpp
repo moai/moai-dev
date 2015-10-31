@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGlyph.h>
+#include <moai-sim/MOAIGlyphSet.h>
 #include <moai-sim/MOAIDynamicGlyphCachePage.h>
 #include <moai-sim/MOAISingleTexture.h>
 #include <moai-sim/MOAIQuadBrush.h>
@@ -29,6 +30,7 @@ void MOAIGlyph::Draw ( MOAISingleTexture& texture, float x, float y, float xScal
 		y + (( this->mHeight + padding.mYMax ) * yScale )
 	);
 	
+	// calculate this dynamically as the texture size may change
 	float uScale = 1.0f / texture.GetWidth ();
 	float vScale = 1.0f / texture.GetHeight ();
 	
@@ -42,6 +44,12 @@ void MOAIGlyph::Draw ( MOAISingleTexture& texture, float x, float y, float xScal
 		v + (( this->mHeight + padding.mYMax ) * vScale )
 	);
 	glQuad.Draw ();
+}
+
+//----------------------------------------------------------------//
+ZLRect MOAIGlyph::GetGlyphLogicalRect ( float x, float y, float xScale, float yScale ) const {
+
+	return this->GetLogicalRect ( x, y, this->mDeck->GetAscent (), this->mDeck->GetDescent (), xScale, yScale );
 }
 
 //----------------------------------------------------------------//
@@ -65,37 +73,13 @@ MOAIKernVec MOAIGlyph::GetKerning ( u32 name ) const {
 }
 
 //----------------------------------------------------------------//
-/**
- * Get the rect of the glyph which includes the bearing + the size of the bounding box of the glyph.
- * 
- * @param x The x pen position when drawing this glyph
- * @param y The y pen position when drawing this glyph
- * @param scale The scale at which the glyph would be drawn
- */
-ZLRect MOAIGlyph::GetRect ( float x, float y, float xScale, float yScale ) const {
-
-	x += this->mBearingX * xScale;
-	y -= this->mBearingY * yScale;
-
-	ZLRect rect;
-
-	rect.Init (
-		x,
-		y,
-		x + ( this->mWidth * xScale ),
-		y + ( this->mHeight * yScale )
-	);
-
-	return rect;
-}
-
-//----------------------------------------------------------------//
 MOAIGlyph::MOAIGlyph () :
 	mCode ( NULL_CODE_ID ),
 	mPageID ( NULL_PAGE_ID ),
 	mSrcX ( 0 ),
 	mSrcY ( 0 ),
-	mNext ( 0 ) {
+	mNext ( 0 ),
+	mDeck ( 0 ) {
 }
 
 //----------------------------------------------------------------//
@@ -181,12 +165,12 @@ void MOAIGlyph::SetKernVec ( u32 id, const MOAIKernVec& kernVec ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGlyph::SetScreenRect ( float width, float height, float yOff ) {
-	
-	this->mWidth = width;
-	this->mHeight = height;
-	this->mBearingY = -yOff;
-}
+//void MOAIGlyph::SetScreenRect ( float width, float height, float yOff ) {
+//	
+//	this->mWidth = width;
+//	this->mHeight = height;
+//	this->mBearingY = -yOff;
+//}
 
 //----------------------------------------------------------------//
 void MOAIGlyph::SetSourceLoc ( u32 srcX, u32 srcY ) {

@@ -508,13 +508,23 @@ public:
 
 	//----------------------------------------------------------------//
 	template < typename PARAM_TYPE >
-	void Grow ( const ZLMetaRect < PARAM_TYPE >& rect ) {
+	void Grow ( const ZLMetaRect < PARAM_TYPE >& rect, bool grow = true ) {
 
-		if ( this->mXMin > ( TYPE )rect.mXMin ) this->mXMin = ( TYPE )rect.mXMin;
-		if ( this->mXMax < ( TYPE )rect.mXMax ) this->mXMax = ( TYPE )rect.mXMax;
-	
-		if ( this->mYMin > ( TYPE )rect.mYMin ) this->mYMin = ( TYPE )rect.mYMin;
-		if ( this->mYMax < ( TYPE )rect.mYMax ) this->mYMax = ( TYPE )rect.mYMax;
+		if ( grow ) {
+
+			if ( this->mXMin > ( TYPE )rect.mXMin ) this->mXMin = ( TYPE )rect.mXMin;
+			if ( this->mXMax < ( TYPE )rect.mXMax ) this->mXMax = ( TYPE )rect.mXMax;
+		
+			if ( this->mYMin > ( TYPE )rect.mYMin ) this->mYMin = ( TYPE )rect.mYMin;
+			if ( this->mYMax < ( TYPE )rect.mYMax ) this->mYMax = ( TYPE )rect.mYMax;
+		}
+		else {
+		
+			this->mXMin = ( TYPE )rect.mXMin;
+			this->mXMax = ( TYPE )rect.mXMax;
+			this->mYMin = ( TYPE )rect.mYMin;
+			this->mYMax = ( TYPE )rect.mYMax;
+		}
 	}
 
 	//----------------------------------------------------------------//

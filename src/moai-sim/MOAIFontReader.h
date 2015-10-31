@@ -12,29 +12,6 @@ class MOAIKernVec;
 // if the texture page gets resized to make room for more glyphs
 
 //================================================================//
-// MOAIKernVec
-//================================================================//
-class MOAIKernVec :
-	public ZLVec2D {
-public:
-
-	u32			mName;
-};
-
-//================================================================//
-// MOAIFontFaceMetrics
-//================================================================//
-class MOAIFontFaceMetrics {
-public:
-
-	float		mHeight;
-	float		mAscent;
-	
-	//----------------------------------------------------------------//
-				MOAIFontFaceMetrics		();
-};
-
-//================================================================//
 // MOAIGlyphMetrics
 //================================================================//
 class MOAIGlyphMetrics {
@@ -47,8 +24,40 @@ public:
 	float		mWidth; // width of the glyph's bounding box (in pixels)
 	float		mHeight; // height of the glyph's bounding box (in pixels)
 	
+	GET ( float, Width, mWidth );
+	GET ( float, Height, mHeight );
+	GET_SET ( float, AdvanceX, mAdvanceX );
+	
 	//----------------------------------------------------------------//
+	ZLRect		GetGlyphRect			( float x, float y, float xScale = 1.0f, float yScale = 1.0f ) const;
+	ZLRect		GetLogicalRect			( float x, float y, float ascent, float descent, float xScale = 1.0f, float yScale = 1.0f ) const;
 				MOAIGlyphMetrics		();
+};
+
+//================================================================//
+// MOAIFontFaceMetrics
+//================================================================//
+class MOAIFontFaceMetrics {
+public:
+
+	float		mHeight;
+	float		mAscent;
+	
+	GET_SET_CONST	( float, Ascent, mAscent );
+	GET_CONST		( float, Descent, ( mHeight - mAscent ));
+	
+	//----------------------------------------------------------------//
+				MOAIFontFaceMetrics		();
+};
+
+//================================================================//
+// MOAIKernVec
+//================================================================//
+class MOAIKernVec :
+	public ZLVec2D {
+public:
+
+	u32			mName;
 };
 
 //================================================================//

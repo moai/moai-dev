@@ -14,6 +14,8 @@ const MOAIGlyph& MOAIGlyphSet::AffirmGlyph ( u32 c ) {
 	if ( !this->mGlyphMap.contains ( c )) {
 	
 		MOAIGlyph& glyph = this->mGlyphMap [ c ];
+		
+		glyph.mDeck = this;
 		glyph.mNext = this->mPending;
 		this->mPending = &glyph;
 		glyph.mCode = c;

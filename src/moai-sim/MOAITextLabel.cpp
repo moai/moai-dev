@@ -655,7 +655,7 @@ int MOAITextLabel::_setStyle ( lua_State* L ) {
 int MOAITextLabel::_setWordBreak ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 
-	self->mDesigner.SetWordBreak ( state.GetValue < u32 >( 2, MOAITextDesigner::WORD_BREAK_NONE ));
+	self->mDesigner.SetWordBreakRule ( state.GetValue < u32 >( 2, MOAITextDesigner::WORD_BREAK_NONE ));
 	return 0;
 }
 
@@ -874,13 +874,13 @@ ZLMatrix4x4 MOAITextLabel::GetWorldDrawingMtx () {
 				
 				// if there's no x-axis constraint, flip inside the glyph rect
 				if ( !this->mDesigner.GetLimitHeight ()) {
-					float xOffset = this->mLayout.mGlyphBounds.mXMin + this->mLayout.mGlyphBounds.mXMax;
+					float xOffset = this->mLayout.mLayoutBounds.mXMin + this->mLayout.mLayoutBounds.mXMax;
 					flip.m [ ZLMatrix4x4::C3_R0 ] = xOffset;
 				}
 				
 				// if there's no y-axis constraint, flip inside the glyph rect
 				if ( !this->mDesigner.GetLimitHeight ()) {
-					float yOffset = this->mLayout.mGlyphBounds.mYMin + this->mLayout.mGlyphBounds.mYMax;
+					float yOffset = this->mLayout.mLayoutBounds.mYMin + this->mLayout.mLayoutBounds.mYMax;
 					flip.m [ ZLMatrix4x4::C3_R1 ] = yOffset;
 				}
 				worldDrawingMtx.Prepend ( flip );
@@ -1032,8 +1032,7 @@ void MOAITextLabel::RefreshLayout () {
 
 	this->mStyleMap.BuildStyleMap ( this->mStyleCache, this->mText.c_str ());
 
-	ZLVec2D offset ( 0.0f, 0.0f );
-	this->mDesigner.Layout ( this->mLayout, this->mStyleCache, this->mStyleMap, this->mText.c_str (), this->mCurrentPageIdx, offset, &this->mMore, &this->mNextPageIdx, &this->mOverrun );
+	this->mDesigner.Layout ( this->mLayout, this->mStyleCache, this->mStyleMap, this->mText.c_str (), this->mCurrentPageIdx, &this->mMore, &this->mNextPageIdx, &this->mOverrun );
 }
 
 //----------------------------------------------------------------//

@@ -32,16 +32,15 @@ private:
 
 public:
 
-	GET_SET ( float, Size, mSize );
-	GET_SET ( float, Height, mHeight );
-	GET_SET ( float, Ascent, mAscent );
+	GET_SET_CONST	( float, Size, mSize );
+	GET_SET_CONST	( float, Height, mHeight );
 
 	//----------------------------------------------------------------//
-	MOAIGlyph*			GetGlyph			( u32 c );
-						MOAIGlyphSet		();
-						~MOAIGlyphSet		();
-	void				SerializeIn			( MOAILuaState& state );
-	void				SerializeOut		( MOAILuaState& state );
+	MOAIGlyph*		GetGlyph				( u32 c );
+					MOAIGlyphSet			();
+					~MOAIGlyphSet			();
+	void			SerializeIn				( MOAILuaState& state );
+	void			SerializeOut			( MOAILuaState& state );
 };
 
 #endif

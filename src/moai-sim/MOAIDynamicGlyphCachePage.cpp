@@ -39,14 +39,14 @@ void MOAIDynamicGlyphCachePage::AffirmCanvas ( MOAIDynamicGlyphCache& owner, MOA
 //----------------------------------------------------------------//
 MOAIDynamicGlyphCachePage::GlyphSpan* MOAIDynamicGlyphCachePage::Alloc ( MOAIDynamicGlyphCache& owner, MOAIFont& font, MOAIGlyph& glyph ) {
 	
-	u32 width = ( u32 )glyph.mWidth + ( owner.mPadding.mXMax - owner.mPadding.mXMin );
-	u32 height = ( u32 )glyph.mHeight + ( owner.mPadding.mYMax - owner.mPadding.mYMin );
+	u32 width = ( u32 )( glyph.mWidth + owner.mPadding.Width ());
+	u32 height = ( u32 )( glyph.mHeight + owner.mPadding.Height ());
 	
 	RowSpan* rowIt = this->mRows.mHead;
 	RowSpan* bestRowIt = 0;
 	RowSpan* backupRowIt = 0;
 	
-	// find the very shortest row that can still accomodate the glyph
+	// find the very shortest row that can still accommodate the glyph
 	for ( ; rowIt; rowIt = rowIt->mNext ) {
 		if ( rowIt->mOccupied && ( height <= rowIt->mSize ) && rowIt->mData.HasRoom ( width )){
 			if ( !bestRowIt || ( bestRowIt && ( rowIt->mSize < bestRowIt->mSize ))) {
