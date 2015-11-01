@@ -4,6 +4,8 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+MOAISim.openWindow ( "test", 320, 480 )
+
 print ( 'HELLO, WEB!' )
 
 function onHttpRequest ( self, method, uri, queryString, headers )

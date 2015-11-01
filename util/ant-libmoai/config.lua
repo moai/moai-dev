@@ -1,6 +1,6 @@
 CONFIG_NAME = 'MOAI_MODULES' -- this will create a variable in Android.mk containing the relative path to this config file
 
--- Additional config files maybe specified on the command line. moaiutil libmoai-ant will
+-- Additional config files maybe specified on the command line. pito libmoai-ant will
 -- also look in its invoke directory for a config file that will be applied before additional
 -- config's specified on the command line.
 
@@ -9,7 +9,7 @@ CONFIG_NAME = 'MOAI_MODULES' -- this will create a variable in Android.mk contai
 SETTINGS = {
 	LIB_NAME			= 'moai',
 	MY_ARM_MODE			= 'arm',
-	MY_ARM_ARCH			= 'armeabi-v7a x86',
+	MY_ARM_ARCH			= 'armeabi-v7a arm64-v8a x86',
 	MY_APP_PLATFORM		= 'android-10',
 }
 
@@ -33,7 +33,7 @@ MODULES = {
 	ADCOLONY = {
 		
 		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_ADCOLONY',
-		NAMESPACE = 'com.ziplinegames.moai',
+		NAMESPACE = 'com.moaisdk.adcolony',
 		
 		HEADER_SEARCH_PATHS = {
 		},
@@ -103,7 +103,7 @@ MODULES = {
 	CHARTBOOST = {
 		
 		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_CHARTBOOST',
-		NAMESPACE = 'com.ziplinegames.moai',
+		NAMESPACE = 'com.moaisdk.chartboost',
 	
 		HEADER_SEARCH_PATHS = {
 		},
@@ -124,7 +124,7 @@ MODULES = {
 	CRITTERCISM = {
 		
 		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_CRITTERCISM',
-		NAMESPACE = 'com.ziplinegames.moai',
+		NAMESPACE = 'com.moaisdk.crittercism',
 	
 		HEADER_SEARCH_PATHS = {
 		},
@@ -173,7 +173,7 @@ MODULES = {
 	FACEBOOK = {
 		
 		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_FACEBOOK',
-		NAMESPACE = 'com.ziplinegames.moai',
+		NAMESPACE = 'com.moaisdk.facebook',
 	
 		HEADER_SEARCH_PATHS = {
 		},
@@ -183,7 +183,8 @@ MODULES = {
 		},
 		
 		JAVA = {
-			MOAI_SDK_HOME .. '3rdparty-android/facebook-v3',
+			--MOAI_SDK_HOME .. '3rdparty-android/facebook-v3',
+			MOAI_SDK_HOME .. '3rdparty-android/facebook-v4.4.1',
 			MOAI_SDK_HOME .. 'src/moai-android-facebook',
 		},
 
@@ -194,7 +195,7 @@ MODULES = {
 	FLURRY = {
 		
 		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_FLURRY',
-		NAMESPACE = 'com.ziplinegames.moai',
+		NAMESPACE = 'com.moaisdk.flurry',
 	
 		HEADER_SEARCH_PATHS = {
 		},
@@ -238,7 +239,7 @@ MODULES = {
 	GOOGLE_PLAY_SERVICES = {
 		
 		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_GOOGLE_PLAY',
-		NAMESPACE = 'com.ziplinegames.moai',
+		NAMESPACE = 'com.moaisdk.googleplayservices',
 	
 		HEADER_SEARCH_PATHS = {
 		},
@@ -326,6 +327,90 @@ MODULES = {
 	},
 
 	----------------------------------------------------------------
+	IMAGE_JPG = {
+		
+		PREPROCESSOR_FLAG = 'AKU_WITH_IMAGE_JPG',
+		NAMESPACE = 'com.ziplinegames.moai',
+		
+		HEADER_SEARCH_PATHS = {
+			'$(MOAI_SDK_HOME)/3rdparty/jpeg-8c',
+		},
+		
+		MAKE = {
+			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-jpg.mk',
+			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-jpg.mk',
+		},
+		
+		JAVA = {
+		},
+
+		STATIC_LIBRARIES = 'libmoai-image-jpg libjpg',
+	},
+
+	----------------------------------------------------------------
+	IMAGE_PNG = {
+		
+		PREPROCESSOR_FLAG = 'AKU_WITH_IMAGE_PNG',
+		NAMESPACE = 'com.ziplinegames.moai',
+		
+		HEADER_SEARCH_PATHS = {
+			'$(MOAI_SDK_HOME)/3rdparty/lpng140',
+		},
+		
+		MAKE = {
+			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-png.mk',
+			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-png.mk',
+		},
+		
+		JAVA = {
+		},
+
+		STATIC_LIBRARIES = 'libmoai-image-png libpng',
+	},
+
+	----------------------------------------------------------------
+	IMAGE_PVR = {
+		
+		PREPROCESSOR_FLAG = 'AKU_WITH_IMAGE_PVR',
+		NAMESPACE = 'com.ziplinegames.moai',
+		
+		HEADER_SEARCH_PATHS = {
+			'$(MOAI_SDK_HOME)/3rdparty/libpvr-3.4',
+		},
+		
+		MAKE = {
+			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-pvr.mk',
+			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-pvr.mk',
+		},
+		
+		JAVA = {
+		},
+
+		STATIC_LIBRARIES = 'libmoai-image-pvr libpvr',
+	},
+
+	----------------------------------------------------------------
+	IMAGE_WEBP = {
+		
+		PREPROCESSOR_FLAG = 'AKU_WITH_IMAGE_WEBP',
+		NAMESPACE = 'com.ziplinegames.moai',
+		
+		HEADER_SEARCH_PATHS = {
+			'$(MOAI_SDK_HOME)/3rdparty',
+		},
+		
+		MAKE = {
+			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-webp.mk',
+			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-webp.mk',
+		},
+		
+		JAVA = {
+		},
+
+		STATIC_LIBRARIES = 'libmoai-image-webp libwebp',
+	},
+				
+	----------------------------------------------------------------
 	LUAEXT = {
 		
 		PREPROCESSOR_FLAG = 'AKU_WITH_LUAEXT',
@@ -364,16 +449,10 @@ MODULES = {
 			'$(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src',
 			'$(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/config',
 			'$(MOAI_SDK_HOME)/3rdparty/libtess2/Include',
-			'$(MOAI_SDK_HOME)/3rdparty/jpeg-8c',
-			'$(MOAI_SDK_HOME)/3rdparty/lpng140',
-			'$(MOAI_SDK_HOME)/3rdparty/libpvr-3.4',
 		},
 		
 		MAKE = {
 			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-freetype.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-jpg.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-png.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-pvr.mk',
 			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-tess.mk',
 			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/zl-gfx.mk',
 			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-sim.mk',
@@ -382,14 +461,14 @@ MODULES = {
 		JAVA = {
 		},
 
-		STATIC_LIBRARIES = 'libmoai-sim libfreetype libjpg libpng libpvr libtess libzl-gfx',
+		STATIC_LIBRARIES = 'libmoai-sim libfreetype libtess libzl-gfx',
 	},
 	
 	----------------------------------------------------------------
 	TAPJOY = {
 		
 		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_TAPJOY',
-		NAMESPACE = 'com.ziplinegames.moai',
+		NAMESPACE = 'com.moaisdk.tapjoy',
 	
 		HEADER_SEARCH_PATHS = {
 		},
@@ -410,7 +489,7 @@ MODULES = {
 	TWITTER = {
 		
 		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_TWITTER',
-		NAMESPACE = 'com.ziplinegames.moai',
+		NAMESPACE = 'com.moaisdk.twitter',
 	
 		HEADER_SEARCH_PATHS = {
 		},
@@ -458,7 +537,7 @@ MODULES = {
 	VUNGLE = {
 		
 		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_VUNGLE',
-		NAMESPACE = 'com.ziplinegames.moai',
+		NAMESPACE = 'com.moaisdk.vungle',
 	
 		HEADER_SEARCH_PATHS = {
 		},
@@ -484,7 +563,7 @@ TARGETS = {
 	-- Like modules, new targets may be added in subsequent config files and existing
 	-- targets may be overwritten.
 
-	-- Targets may be overwritten via the command line, or be specifying an empty/nameless
+	-- Targets may be overwritten via the command line, or by specifying an empty/nameless
 	-- target override in a subsequent config file.
 
 	-- Target contents:
@@ -507,6 +586,10 @@ TARGETS = {
 			'GOOGLE_PLAY_SERVICES',
 			'HTTP_CLIENT',
 			'HTTP_SERVER',
+			'IMAGE_JPG',
+			'IMAGE_PNG',
+			'IMAGE_PVR',
+			'IMAGE_WEBP',
 			'LUAEXT',
 			'SIM',
 			'TAPJOY',
@@ -541,6 +624,10 @@ STATIC_LINK_ORDER = {
 	'libmoai-http-client',
 	'libmoai-http-server',
 	'libmoai-fmod-ex',
+	'libmoai-image-jpg',
+	'libmoai-image-png',
+	'libmoai-image-pvr',
+	'libmoai-image-webp',
 	'libmoai-luaext',
 	'libmoai-untz',
 	'libmoai-sim',
@@ -561,6 +648,7 @@ STATIC_LINK_ORDER = {
 	'libfreetype',
 	'libjpg',
 	'libpng',
+	'libwebp',
 	'libtess',
 	
 	'libmongoose',

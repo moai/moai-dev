@@ -544,6 +544,17 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	template < typename PARAM_TYPE >
+	void Init ( const ZLMetaRect < PARAM_TYPE >& rect ) {
+
+		this->mXMin = ( TYPE )rect.mXMin;
+		this->mXMax = ( TYPE )rect.mXMax;
+
+		this->mYMin = ( TYPE )rect.mYMin;
+		this->mYMax = ( TYPE )rect.mYMax;
+	}
+
+	//----------------------------------------------------------------//
 	void Init ( ZLMetaVec3D < TYPE >& vec ) {
 
 		this->mXMin = vec.mX;

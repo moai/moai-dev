@@ -30,19 +30,24 @@ private:
 	const b2ContactImpulse*		mImpulse;
 
 	b2Vec2  mContactNormal;
+	b2Vec2	mContactPoints [ 2 ];
+	u32		mTotalPoints;
 	float	mNormalImpulse;
 	float	mTangentImpulse;
+	bool	mContactDirty;
 
 	/* For reference to get the unitsToMeters value */
 	const MOAIBox2DWorld*       mWorld;
 
 	//----------------------------------------------------------------//
 	static int		_getContactNormal		( lua_State* L );
+	static int		_getContactPoints		( lua_State* L );
 	static int		_getNormalImpulse		( lua_State* L );
 	static int		_getTangentImpulse		( lua_State* L );
 	static int		_setContactEnabled		( lua_State* L );
 	
 	//----------------------------------------------------------------//
+	void	AffirmContactData ();
 	void	BeginContact	( b2Contact* contact );
 	void	EndContact		( b2Contact* contact );
 	void	PostSolve		( b2Contact* contact, const b2ContactImpulse* impulse );

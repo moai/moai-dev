@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <moai-sim/MOAIGlyph.h>
 #include <moai-sim/MOAIDynamicGlyphCachePage.h>
-#include <moai-sim/MOAITextureBase.h>
+#include <moai-sim/MOAISingleTexture.h>
 #include <moai-sim/MOAIQuadBrush.h>
 
 //================================================================//
@@ -12,7 +12,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGlyph::Draw ( MOAITextureBase& texture, float x, float y, float xScale, float yScale, const ZLRect& padding ) const {
+void MOAIGlyph::Draw ( MOAISingleTexture& texture, float x, float y, float xScale, float yScale, const ZLRect& padding ) const {
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	gfxDevice.SetTexture ( &texture );

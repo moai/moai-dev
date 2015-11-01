@@ -29,6 +29,7 @@ class MOAIFacebookAndroid :
 private:
 
 	jmethodID	mJava_GetToken;
+	jmethodID	mJava_GetUserID;
 	jmethodID	mJava_GraphRequest;
 	jmethodID	mJava_Init;
 	jmethodID	mJava_IsSessionValid;
@@ -37,8 +38,10 @@ private:
 	jmethodID	mJava_PostToFeed;
 	jmethodID	mJava_RestoreSession;
 	jmethodID	mJava_SendRequest;
+	jmethodID	mJava_ShowInviteDialog;
 
 	//----------------------------------------------------------------//
+	static int	_getUserID			( lua_State* L );
 	static int	_getToken			( lua_State* L );
 	static int	_graphRequest		( lua_State* L );
 	static int	_init				( lua_State* L );
@@ -48,18 +51,16 @@ private:
 	static int	_restoreSession		( lua_State* L );
 	static int	_sendRequest		( lua_State* L );
 	static int	_sessionValid		( lua_State* L );
+	static int	_showInviteDialog	( lua_State* L );
 
 public:
 
 	DECL_LUA_SINGLETON ( MOAIFacebookAndroid );
 
 	enum {
-		DIALOG_DID_COMPLETE,
-		DIALOG_DID_NOT_COMPLETE,
-        REQUEST_RESPONSE,
-		REQUEST_RESPONSE_FAILED,
-		SESSION_DID_LOGIN,
-		SESSION_DID_NOT_LOGIN,
+		LOGIN_DISMISSED,
+		LOGIN_SUCCESS,
+		LOGIN_ERROR,
 		TOTAL,
 	};
 
@@ -71,9 +72,10 @@ public:
 
 			MOAIFacebookAndroid		();
 			~MOAIFacebookAndroid	();
-	void 	NotifyDialogComplete	( int code );
-	void 	NotifyLoginComplete		( int code );
-	void 	NotifyRequestComplete	( cc8* result );
+	void 	NotifyLoginSuccess		();
+	void 	NotifyLoginDismissed	();
+	void 	NotifyLoginError	    ();
+	void 	NotifyRequestComplete	( cc8* response );
 	void 	NotifyRequestFailed	    ();
 	void	RegisterLuaClass		( MOAILuaState& state );
 };

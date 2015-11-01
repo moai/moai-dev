@@ -129,17 +129,19 @@ int MOAINotificationsAndroid::_localNotificationInSeconds ( lua_State* L ) {
 		jkeys = env->NewObjectArray ( 0, env->FindClass( "java/lang/String" ), 0 );
 	}
 
-	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
+	jclass moai = env->FindClass ( "com/moaisdk/core/Moai" );
     if ( moai == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAINotificationsAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
-    } else {
+		ZLLogF ( ZLLog::CONSOLE, "MOAINotificationsAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
+    }
+    else {
 
     	jmethodID localNotificationInSeconds = env->GetStaticMethodID ( moai, "localNotificationInSeconds", "(ILjava/lang/String;[Ljava/lang/String;[Ljava/lang/String;)V" );
     	if ( localNotificationInSeconds == NULL ) {
 
-			ZLLog::LogF ( ZLLog::CONSOLE, "MOAINotificationsAndroid: Unable to find static java method %s", "localNotificationInSeconds" );
-    	} else {
+			ZLLogF ( ZLLog::CONSOLE, "MOAINotificationsAndroid: Unable to find static java method %s", "localNotificationInSeconds" );
+    	}
+    	else {
 
 			env->CallStaticVoidMethod ( moai, localNotificationInSeconds, seconds, ( jstring )jmessage, ( jstring )jkeys, ( jstring )jvalues );				
 		}
@@ -165,18 +167,19 @@ int MOAINotificationsAndroid::_registerForRemoteNotifications ( lua_State* L ) {
 	
 	MOAIJString jalias = JNI_GET_JSTRING ( alias );
 
-	jclass push = env->FindClass ( "com/ziplinegames/moai/MoaiGooglePush" );
+	jclass push = env->FindClass ( "com/moaisdk/core/MoaiGooglePush" );
     if ( push == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAINotificationsAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGooglePush" );
-    } else {
+		ZLLogF ( ZLLog::CONSOLE, "MOAINotificationsAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGooglePush" );
+    }
+    else {
 
     	jmethodID registerForRemoteNotifications = env->GetStaticMethodID ( push, "registerForRemoteNotifications", "(Ljava/lang/String;)V" );
     	if ( registerForRemoteNotifications == NULL ) {
 
-			ZLLog::LogF ( ZLLog::CONSOLE, "MOAINotificationsAndroid: Unable to find static java method %s", "registerForRemoteNotifications" );
-    	} else {
-
+			ZLLogF ( ZLLog::CONSOLE, "MOAINotificationsAndroid: Unable to find static java method %s", "registerForRemoteNotifications" );
+    	}
+    	else {
 			env->CallStaticVoidMethod ( push, registerForRemoteNotifications, ( jstring )jalias );				
 		}
 	}
@@ -222,17 +225,19 @@ int MOAINotificationsAndroid::_unregisterForRemoteNotifications ( lua_State* L )
 	
 	JNI_GET_ENV ( jvm, env );
 
-	jclass push = env->FindClass ( "com/ziplinegames/moai/MoaiGooglePush" );
+	jclass push = env->FindClass ( "com/moaisdk/core/MoaiGooglePush" );
     if ( push == NULL ) {
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "MOAINotificationsAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGooglePush" );
-    } else {
+		ZLLogF ( ZLLog::CONSOLE, "MOAINotificationsAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGooglePush" );
+    }
+    else {
 
     	jmethodID unregisterForRemoteNotifications = env->GetStaticMethodID ( push, "unregisterForRemoteNotifications", "()V" );
     	if ( unregisterForRemoteNotifications == NULL ) {
 
-			ZLLog::LogF ( ZLLog::CONSOLE, "MOAINotificationsAndroid: Unable to find static java method %s", "unregisterForRemoteNotifications" );
-    	} else {
+			ZLLogF ( ZLLog::CONSOLE, "MOAINotificationsAndroid: Unable to find static java method %s", "unregisterForRemoteNotifications" );
+    	}
+    	else {
 
 			env->CallStaticVoidMethod ( push, unregisterForRemoteNotifications );				
 		}
@@ -351,7 +356,7 @@ void MOAINotificationsAndroid::NotifyRemoteRegistrationComplete ( int code, cc8*
 //================================================================//
 
 //----------------------------------------------------------------//
-extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiGooglePushReceiver_AKUNotifyGooglePushRemoteNotificationRegistrationComplete ( JNIEnv* env, jclass obj, jint code, jstring jregistration ) {
+extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_googlepush_MoaiGooglePushReceiver_AKUNotifyGooglePushRemoteNotificationRegistrationComplete ( JNIEnv* env, jclass obj, jint code, jstring jregistration ) {
 
 	JNI_GET_CSTRING ( jregistration, registration );
 	
@@ -361,7 +366,7 @@ extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiGooglePushRecei
 }
 
 //----------------------------------------------------------------//
-extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiGooglePushReceiver_AKUNotifyGooglePushRemoteNotificationReceived ( JNIEnv* env, jclass obj, jobjectArray jkeys, jobjectArray jvalues ) {
+extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_googlepush_MoaiGooglePushReceiver_AKUNotifyGooglePushRemoteNotificationReceived ( JNIEnv* env, jclass obj, jobjectArray jkeys, jobjectArray jvalues ) {
 
 	if ( env->GetArrayLength ( jkeys ) != env->GetArrayLength ( jvalues )) return;
 
@@ -400,7 +405,7 @@ extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiGooglePushRecei
 }
 
 //----------------------------------------------------------------//
-extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiLocalNotificationReceiver_AKUNotifyLocalNotificationReceived ( JNIEnv* env, jclass obj, jobjectArray jkeys, jobjectArray jvalues ) {
+extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_googlepush_MoaiLocalNotificationReceiver_AKUNotifyLocalNotificationReceived ( JNIEnv* env, jclass obj, jobjectArray jkeys, jobjectArray jvalues ) {
 	
 	if ( env->GetArrayLength ( jkeys ) != env->GetArrayLength ( jvalues )) return;
 

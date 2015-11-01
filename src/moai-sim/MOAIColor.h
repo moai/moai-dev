@@ -15,10 +15,10 @@ class MOAILayer;
 /**	@lua	MOAIColor
 	@text	Color vector with animation helper methods.
 	
-	@attr	ATTR_R_COL
-	@attr	ATTR_G_COL
-	@attr	ATTR_B_COL
-	@attr	ATTR_A_COL
+	@attr	ATTR_R_COL	The R (red) channel
+	@attr	ATTR_G_COL	The G (green) channel
+	@attr	ATTR_B_COL	The B (blue) channel
+	@attr	ATTR_A_COL	The A (alpha) channel
 	
 	@attr	INHERIT_COLOR
 	@attr	COLOR_TRAIT

@@ -65,7 +65,12 @@ int MOAIDataBuffer::_base64Encode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	clear
+	@text	Release the data buffer's memory.
+
+	@in		MOAIDataBuffer self
+	@out	nil
+*/
 int MOAIDataBuffer::_clear ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDataBuffer, "U" );
 	self->Clear ();

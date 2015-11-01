@@ -236,11 +236,12 @@ public:
 class MOAIScopedContext {
 private:
 
-	MOAIGlobals*	mOriginalContext;
+	MOAIGlobals*		mOriginalContext;
 
 public:
 	
 	//----------------------------------------------------------------//
+	void				Clear						();
 						MOAIScopedContext			();
 						~MOAIScopedContext			();
 };

@@ -78,4 +78,8 @@ void		AKUModulesIosContextInitialize			();
 void		AKUModulesIosPause						( bool pause );
 void		AKUModulesIosUpdate						();
 
+//----------------------------------------------------------------//
+BOOL        AKUModulesIosApplicationDidFinishLaunchingWithOptions  ( UIApplication* application, NSDictionary* launchOptions );
+BOOL        AKUModulesIosApplicationOpenURL                        ( UIApplication* application,  NSURL* url, NSString* sourceApplication, id annotation );
+
 #endif

@@ -37,8 +37,15 @@ public:
 	void			SetBuffer			( const void* buffer, size_t size, size_t length = 0 );
 	size_t			SetLength			( size_t length );
 	size_t			WriteBytes			( const void* buffer, size_t size );
+	void			WriteBytesUnsafe	( const void* buffer, size_t size );
 					ZLByteStream		();
 					~ZLByteStream		();
+		
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	void WriteUnsafe ( TYPE value ) {
+		this->WriteBytesUnsafe ( &value, sizeof ( TYPE ));
+	}
 };
 
 #endif

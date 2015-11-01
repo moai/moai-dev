@@ -23,7 +23,83 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+//----------------------------------------------------------------//
+/**	@lua	setBoundsDeck
+	@text	Set or clear the bounds override deck.
+	
+	@in		MOAIDeck self
+	@opt	MOAIBoundsDeck boundsDeck
+	@out	nil
+*/
+int MOAIDeck::_setBoundsDeck ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIDeck, "U" )
+	
+	self->mBoundsDeck.Set ( *self, state.GetLuaObject < MOAIBoundsDeck >( 2, true ));
+	
+	return 0;
+}
+
+
+//----------------------------------------------------------------//
+/**	@lua	getBounds
+	@text	Return bounds for an item or the maximum bounds for the
+			deck.
+
+	@override
+
+		@in		number idx
+		@out	xMin
+		@out	yMin
+		@out	zMin
+		@out	xMax
+		@out	yMax
+		@out	zMax
+	
+	@override
+	
+		@out	xMin
+		@out	yMin
+		@out	zMin
+		@out	xMax
+		@out	yMax
+		@out	zMax
+*/
+int MOAIDeck::_getBounds ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIDeck, "U" )
+	
+	ZLBox box;
+	
+	if ( state.IsType ( 2, LUA_TNUMBER )) {
+	
+		u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
+		box = self->GetBounds ( idx );
+	}
+	else {
+	
+		box = self->GetBounds ();
+	}
+	
+	state.Push ( box );
+	return 6;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	subdivideRect
+	@text	Convenience method. Here for now as a class method, but maybe should
+			move to MOAIGrid.
+			
+			Subdivides a rectangle given a tile width and height. A table tile
+			rectangles will be returned. The tiles will be clipped to the original
+			rect.
+
+	@in		number tileWidth
+	@in		number tileHeight
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@out	nil
+*/
 int MOAIDeck::_subdivideRect ( lua_State* L ) {
 	MOAI_LUA_SETUP_CLASS ( "NNNNNN" )
 
@@ -152,6 +228,7 @@ MOAIDeck::~MOAIDeck () {
 //----------------------------------------------------------------//
 void MOAIDeck::RegisterLuaClass ( MOAILuaState& state ) {
 
+
 	luaL_Reg regTable [] = {
 		{ "subdivideRect",			_subdivideRect },
 		{ NULL, NULL }
@@ -162,5 +239,11 @@ void MOAIDeck::RegisterLuaClass ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
-	UNUSED ( state );
+
+	luaL_Reg regTable [] = {
+		{ "getBounds",				_getBounds },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }

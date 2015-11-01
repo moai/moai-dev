@@ -11,6 +11,6 @@
 	// your name.
 
 	// Build server:
-	// See moai_build_version.h.in for instructions
+	// See util/prepare-sdk-version/moai_version_author.h.in for instructions
 	
 #endif

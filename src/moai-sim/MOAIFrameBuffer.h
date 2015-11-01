@@ -58,6 +58,9 @@ class MOAIFrameBuffer :
 	public MOAIClearableView {
 protected:
 	
+	friend class MOAIGfxDevice;
+	friend class MOAIGfxDeviceStateCache;
+	
 	u32					mBufferWidth;
 	u32					mBufferHeight;
 	float				mBufferScale;
@@ -74,17 +77,18 @@ protected:
 	MOAILuaStrongRef	mRenderTable;
 
 	//----------------------------------------------------------------//
-	static int			_grabNextFrame				( lua_State* L );
+	static int			_getGrabbedImage			( lua_State* L );
 	static int			_getPerformanceDrawCount    ( lua_State* L );
 	static int			_getRenderTable				( lua_State* L );
+	static int			_grabNextFrame				( lua_State* L );
+	static int			_isPendingGrab				( lua_State* L );
 	static int			_setRenderTable				( lua_State* L );
+	
 
 	//----------------------------------------------------------------//
 	void				RenderTable					( MOAILuaState& state, int idx );
 
 public:
-	
-	friend class MOAIGfxDevice;
 	
 	DECL_LUA_FACTORY ( MOAIFrameBuffer )
 	

@@ -17,6 +17,19 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAITextStyleState::AffirmGlyph ( u32 c ) {
+
+	assert ( this->mFont );
+	this->mFont->AffirmGlyph ( this->mSize, c );
+}
+
+//----------------------------------------------------------------//
+void MOAITextStyleState::Init ( MOAITextStyleState& style ) {
+
+	*this = style;
+}
+
+//----------------------------------------------------------------//
 MOAITextStyleState::MOAITextStyleState () :
 	mFont ( 0 ),
 	mShader ( 0 ),
@@ -36,8 +49,21 @@ bool MOAITextStyleState::NeedsLayout ( const MOAITextStyleState& compare ) const
 
 	if ( this->mFont != compare.mFont ) return true;
 	if ( this->mSize != compare.mSize ) return true;
+	if ( !this->mScale.Equals ( compare.mScale )) return true;
 	
 	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAITextStyleState::SetFont ( MOAIFont* font ) {
+
+	this->mFont = font;
+}
+
+//----------------------------------------------------------------//
+void MOAITextStyleState::SetShader ( MOAIShader* shader ) {
+
+	this->mShader = shader;
 }
 
 //================================================================//
@@ -148,7 +174,13 @@ int MOAITextStyle::_setFont ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygeb
+/**	@lua	setShader
+	@text	Sets the shader for the text style to use.
+	
+	@in		MOAITextStyle self
+	@opt	variant shader			Shader or shader preset.
+	@out	MOAIShader shader		The shader that was set or created.
+*/
 int MOAITextStyle::_setShader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
 	
@@ -159,7 +191,27 @@ int MOAITextStyle::_setShader ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setPadding
+	@text	Add padding to glyphs during layout. Padding does not affect
+			placement of glyphs. Padding only causes more of the glyph
+			and its underlying texture to be shown.
+	
+	@overload
+	
+		@in		MOAITextStyle self
+		@in		number hPad		glyph xMin -= hPad * 0.5, glyph xMax += hPad * 0.5
+		@in		number vPad		glyph yMin -= vPad * 0.5, glyph yMax += vPad * 0.5
+		@out	nil
+
+	@overload
+	
+		@in		MOAITextStyle self
+		@in		xMinP			glyph xMin -= xMinP
+		@in		yMinP			glyph yMin -= yMinP
+		@in		xMaxP			glyph xMax += xMaxP
+		@in		yMaxP			glyph yMax += yMaxP
+		@out	nil
+*/
 int MOAITextStyle::_setPadding ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
 	
@@ -233,18 +285,13 @@ int MOAITextStyle::_setSize ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITextStyle::AffirmGlyph ( u32 c ) {
-
-	assert ( this->mFont );
-	this->mFont->AffirmGlyph ( this->mSize, c );
-}
-
-//----------------------------------------------------------------//
-void MOAITextStyle::Init ( MOAITextStyle& style ) {
-
+void MOAITextStyle::Init ( MOAITextStyleState& style ) {
+	
+	// do this first!!
 	this->SetFont ( style.mFont );
-	this->mSize = style.mSize;
-	this->mColor = style.mColor;
+	this->SetShader ( style.mShader );
+	
+	MOAITextStyleState::Init ( style );
 }
 
 //----------------------------------------------------------------//
@@ -322,13 +369,5 @@ void MOAITextStyle::SetShader ( MOAIShader* shader ) {
 		this->LuaRetain ( shader );
 		this->LuaRelease ( this->mShader );
 		this->mShader = shader;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAITextStyle::SetSize ( float size ) {
-
-	if ( this->mSize != size ) {
-		this->mSize = size;
 	}
 }

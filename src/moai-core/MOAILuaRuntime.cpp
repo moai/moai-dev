@@ -51,26 +51,26 @@ typedef STLSet < struct Table* > TableSet;
 
 			case LUA_TBOOLEAN:
 
-				ZLLog::LogF ( ZLLog::CONSOLE, format, tvalue, "bool", name );
-				ZLLog::LogF ( ZLLog::CONSOLE, " = %s", lua_toboolean ( state, idx ) ? "true" : "false" );
+				ZLLogF ( ZLLog::CONSOLE, format, tvalue, "bool", name );
+				ZLLogF ( ZLLog::CONSOLE, " = %s", lua_toboolean ( state, idx ) ? "true" : "false" );
 				break;
 
 			case LUA_TFUNCTION: {
 
 				const char *funcType = iscfunction ( tvalue ) ? "C function" : "Lua function";
 
-				ZLLog::LogF ( ZLLog::CONSOLE, format, clvalue ( tvalue ), funcType, name );
+				ZLLogF ( ZLLog::CONSOLE, format, clvalue ( tvalue ), funcType, name );
 				break;
 			}
 
 			case LUA_TLIGHTUSERDATA:
 
-				ZLLog::LogF ( ZLLog::CONSOLE, format, pvalue ( tvalue ), "pointer", name );
+				ZLLogF ( ZLLog::CONSOLE, format, pvalue ( tvalue ), "pointer", name );
 				break;
 
 			case LUA_TNIL:
 
-				ZLLog::LogF ( ZLLog::CONSOLE, format, tvalue, "nil", name );
+				ZLLogF ( ZLLog::CONSOLE, format, tvalue, "nil", name );
 				break;
 
 			case LUA_TNONE:
@@ -79,14 +79,14 @@ typedef STLSet < struct Table* > TableSet;
 
 			case LUA_TNUMBER:
 
-				ZLLog::LogF ( ZLLog::CONSOLE, format, tvalue, "number", name );
-				ZLLog::LogF ( ZLLog::CONSOLE, " = %f", lua_tonumber ( state, idx ));
+				ZLLogF ( ZLLog::CONSOLE, format, tvalue, "number", name );
+				ZLLogF ( ZLLog::CONSOLE, " = %f", lua_tonumber ( state, idx ));
 				break;
 
 			case LUA_TSTRING:
 
-				ZLLog::LogF ( ZLLog::CONSOLE, format, rawtsvalue( tvalue ), "string", name );
-				ZLLog::LogF ( ZLLog::CONSOLE, " = \"%s\"", lua_tostring ( state, idx ));
+				ZLLogF ( ZLLog::CONSOLE, format, rawtsvalue( tvalue ), "string", name );
+				ZLLogF ( ZLLog::CONSOLE, " = \"%s\"", lua_tostring ( state, idx ));
 				break;
 
 			case LUA_TTABLE: {
@@ -95,18 +95,18 @@ typedef STLSet < struct Table* > TableSet;
 
 				if ( foundTables.contains ( htable )) {
 
-					ZLLog::LogF ( ZLLog::CONSOLE, DUMP_FORMAT " (see above)", htable, "table", name );
+					ZLLogF ( ZLLog::CONSOLE, DUMP_FORMAT " (see above)", htable, "table", name );
 					break;
 				}
 				else {
 
 					foundTables.insert ( htable );
 
-					ZLLog::LogF ( ZLLog::CONSOLE, format, htable, "table", name );
+					ZLLogF ( ZLLog::CONSOLE, format, htable, "table", name );
 
 					if ( verbose ) {
 
-						ZLLog::LogF ( ZLLog::CONSOLE, "\n" );
+						ZLLogF ( ZLLog::CONSOLE, "\n" );
 						lua_pushnil ( state );
 
 						while ( lua_next ( state, idx ) ) {
@@ -124,18 +124,18 @@ typedef STLSet < struct Table* > TableSet;
 
 			case LUA_TTHREAD:
 
-				ZLLog::LogF ( ZLLog::CONSOLE, format, thvalue( tvalue ), "thread", name );
+				ZLLogF ( ZLLog::CONSOLE, format, thvalue( tvalue ), "thread", name );
 				break;
 
 			case LUA_TUSERDATA:
 
 				if ( lua_islightuserdata ( state, idx ) ) {
 					
-					ZLLog::LogF ( ZLLog::CONSOLE, format, lua_topointer ( state, idx ) , "light userdata", name );
+					ZLLogF ( ZLLog::CONSOLE, format, lua_topointer ( state, idx ) , "light userdata", name );
 				}
 				else {
 
-					ZLLog::LogF ( ZLLog::CONSOLE, format, lua_topointer( state, idx ), "userdata", name );
+					ZLLogF ( ZLLog::CONSOLE, format, lua_topointer( state, idx ), "userdata", name );
 
 					if ( verbose ) {
 
@@ -144,17 +144,17 @@ typedef STLSet < struct Table* > TableSet;
 						
 						lua_pcall ( state, 1, 1, 0 );
 
-						ZLLog::LogF ( ZLLog::CONSOLE, "\n\t%s", lua_tostring ( state, -1 ));
+						ZLLogF ( ZLLog::CONSOLE, "\n\t%s", lua_tostring ( state, -1 ));
 						state.Pop ( 1 );
 					}
 				}
 				break;
 
 			default:
-				ZLLog::LogF ( ZLLog::CONSOLE, "*** Unexpected type: %d ***", lua_type ( state, idx ));
+				ZLLogF ( ZLLog::CONSOLE, "*** Unexpected type: %d ***", lua_type ( state, idx ));
 		}
 
-		ZLLog::LogF ( ZLLog::CONSOLE, "\n" );
+		ZLLogF ( ZLLog::CONSOLE, "\n" );
 	}
 
 	//----------------------------------------------------------------//
@@ -178,7 +178,6 @@ typedef STLSet < struct Table* > TableSet;
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
 int MOAILuaRuntime::_clearRef ( lua_State* L ) {
 	MOAILuaState state ( L );
 
@@ -199,7 +198,6 @@ int MOAILuaRuntime::_debugCall ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
 int MOAILuaRuntime::_deref ( lua_State* L ) {
 	MOAILuaState state ( L );
 
@@ -244,7 +242,7 @@ int MOAILuaRuntime::_dumpStack ( lua_State* L ) {
 		TableSet foundTables;
 		for ( TValue* tvalue = state->stack; tvalue < state->top; ++tvalue ) {
 
-			ZLLog::LogF ( ZLLog::CONSOLE, "stack [ %d ] ", idx++ );
+			ZLLogF ( ZLLog::CONSOLE, "stack [ %d ] ", idx++ );
 			_dumpTypeByAddress ( state, tvalue, "", verbose, foundTables );
 		}
 	#endif
@@ -253,7 +251,7 @@ int MOAILuaRuntime::_dumpStack ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua forceGC
+/**	@lua	forceGC
 	@text	Runs the garbage collector repeatedly until no more MOAIObjects
 			can be collected.
 
@@ -283,7 +281,6 @@ int MOAILuaRuntime::_getHistogram ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
 int MOAILuaRuntime::_getRef ( lua_State* L ) {
 	MOAILuaState state ( L );
 
@@ -297,8 +294,8 @@ int MOAILuaRuntime::_getRef ( lua_State* L ) {
 int MOAILuaRuntime::_panic ( lua_State *L ) {
 
 	MOAILuaState state ( L );
-	state.PrintStackTrace ( ZLLog::CONSOLE, NULL, 1 );
-	ZLLog::LogF ( ZLLog::CONSOLE, "PANIC: unprotected error in call to Lua API (%s)\n", lua_tostring ( L, -1 ));
+	state.LogStackTrace ( ZLLog::LOG_FATAL, ZLLog::CONSOLE, NULL, 1 );
+	ZLLog_FatalF ( ZLLog::CONSOLE, "PANIC: unprotected error in call to Lua API (%s)\n", lua_tostring ( L, -1 ));
 	
 	return 0;
 }
@@ -398,15 +395,15 @@ int MOAILuaRuntime::_traceback ( lua_State *L ) {
 
 			if ( !result ) return 0;
 			
-			ZLLog::LogF ( ZLLog::CONSOLE, "error in user supplied traceback func\n" );
-			ZLLog::LogF ( ZLLog::CONSOLE, "falling back on default error handler:\n" );
+			ZLLog_ErrorF ( ZLLog::CONSOLE, "error in user supplied traceback func\n" );
+			ZLLog_ErrorF ( ZLLog::CONSOLE, "falling back on default error handler:\n" );
 		}
 	}
 
 	if ( msg ) {
-		ZLLog::LogF ( ZLLog::CONSOLE, "%s\n", msg );
+		ZLLogF ( ZLLog::CONSOLE, "%s\n", msg );
 	}
-	state.PrintStackTrace ( ZLLog::CONSOLE, NULL, 0 );
+	state.LogStackTrace ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, NULL, 1 );
 
 	return 0;
 }
@@ -810,7 +807,7 @@ MOAILuaState& MOAILuaRuntime::GetMainState () {
 //----------------------------------------------------------------//
 int MOAILuaRuntime::GetRef ( MOAILuaState& state, int idx, u32 type ) {
 	
-	if ( lua_isnil ( state, idx )) return LUA_NOREF;
+	if ( state.IsNilOrNone ( idx )) return LUA_NOREF;
 	return ( type == MOAILuaRef::MAKE_WEAK ) ? ( this->mWeakRefs.Ref ( state, idx ) | WEAK_REF_BIT ) : this->mStrongRefs.Ref ( state, idx );
 }
 
@@ -883,8 +880,6 @@ MOAILuaRuntime::~MOAILuaRuntime () {
 
 //----------------------------------------------------------------//
 void MOAILuaRuntime::OnGlobalsFinalize () {
-
-	this->Close ();
 }
 
 //----------------------------------------------------------------//
@@ -978,8 +973,8 @@ void MOAILuaRuntime::PrintTracking ( MOAILuaObject& object ) {
 
 	if ( this->mTrackingMap.contains ( &object )) {
 	
-		printf ( "Object <%p> created at:\n", &object );
-		printf ( "%s", this->mTrackingMap [ &object ].mStackTrace.c_str ());
+		ZLLogF ( ZLLog::CONSOLE, "Object <%p> created at:\n", &object );
+		ZLLogF ( ZLLog::CONSOLE, "%s", this->mTrackingMap [ &object ].mStackTrace.c_str ());
 	}
 }
 
@@ -1051,17 +1046,14 @@ void MOAILuaRuntime::RegisterObject ( MOAILuaState& state, MOAILuaObject& object
 //----------------------------------------------------------------//
 void MOAILuaRuntime::ReportHistogram ( cc8* filename, cc8* trackingGroup ) {
 	
-	FILE* file	= MOAILogMgr::Get ().GetFile ();
-	FILE* log	= 0;
-	
+	FILE* file = 0;
 	if ( filename ) {
-		log = fopen ( filename, "w" );
-		file = log;
-		assert ( log );
+		file = fopen ( filename, "w" );
+		assert ( file );
 	}
 	
 	size_t totalTracked = this->mTrackingMap.size ();
-	ZLLog::LogF ( file, "tracking %d of %d allocated MOAIObjects\n", ( int )totalTracked, ( int )this->mObjectCount );
+	ZLLogF ( file, "tracking %d of %d allocated MOAIObjects\n", ( int )totalTracked, ( int )this->mObjectCount );
 	
 	HistMap histogram;
 	this->BuildHistogram ( histogram, trackingGroup );
@@ -1073,24 +1065,21 @@ void MOAILuaRuntime::ReportHistogram ( cc8* filename, cc8* trackingGroup ) {
 		size_t count = histogramIt->second;
 		float percent = (( float )count / ( float )totalTracked ) * 100.0f;
 	
-		ZLLog::LogF ( file, "%-32.32s %d (%.2f%% of %d)\n", name.str (), ( int )count, percent, ( int )totalTracked );
+		ZLLogF ( file, "%-32.32s %d (%.2f%% of %d)\n", name.str (), ( int )count, percent, ( int )totalTracked );
 	}
 	
-	if ( log ) {
-		fclose ( log );
+	if ( file ) {
+		fclose ( file );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAILuaRuntime::ReportLeaksFormatted ( cc8* filename, cc8* trackingGroup ) {
 
-	FILE* file	= MOAILogMgr::Get ().GetFile ();
-	FILE* log	= 0;
-	
+	FILE* file = 0;
 	if ( filename ) {
-		log = fopen ( filename, "w" );
-		file = log;
-		assert ( log );
+		file = fopen ( filename, "w" );
+		assert ( file );
 	}
 
 	MOAILuaState& state = this->mState;
@@ -1110,8 +1099,8 @@ void MOAILuaRuntime::ReportLeaksFormatted ( cc8* filename, cc8* trackingGroup ) 
 		objectSet.affirm ( i->first );
 	}
 	
-	ZLLog::LogF ( file, "------------------------------------------------\n" );
-	ZLLog::LogF ( file, "-- BEGIN LUA OBJECT LEAKS --\n" );
+	ZLLogF ( file, "------------------------------------------------\n" );
+	ZLLogF ( file, "-- BEGIN LUA OBJECT LEAKS --\n" );
 	
 	// Then, print out each unique allocation spot along with all references
 	// (including multiple references) followed by the alloction stack
@@ -1121,61 +1110,58 @@ void MOAILuaRuntime::ReportLeaksFormatted ( cc8* filename, cc8* trackingGroup ) 
 	for ( LeakStackMapIt i = stacks.begin (); i != stacks.end (); ++i ) {
 		
 		const ObjectSet& objectSet = i->second;
-		ZLLog::LogF ( file, "Allocation: %lu\n", objectSet.size ());
+		ZLLogF ( file, "Allocation: %lu\n", objectSet.size ());
 		
 		for ( ObjectSetIt objectSetIt = objectSet.begin (); objectSetIt != objectSet.end (); ++objectSetIt ) {
 			MOAILuaObject* object = *objectSetIt;
-			ZLLog::LogF ( file, "<%s> %p\n", object->TypeName (), object );
+			ZLLogF ( file, "<%s> %p\n", object->TypeName (), object );
 			
 			if ( traversalState.mPathMap.contains ( object )) {
 				MOAILuaTraversalState::StringSet& pathSet = traversalState.mPathMap [ object ];
 				for ( MOAILuaTraversalState::StringSetIt j = pathSet.begin (); j != pathSet.end (); ++j ) {
-					ZLLog::LogF ( file, "path: %s\n", j->c_str ());
+					ZLLogF ( file, "path: %s\n", j->c_str ());
 				}
 			}
 		}
 		
 		// print the stack trace
-		ZLLog::LogF ( file, i->first.c_str ());
-		ZLLog::LogF ( file, "\n" );
+		ZLLogF ( file, i->first.c_str ());
+		ZLLogF ( file, "\n" );
 	}
 	
 	assert ( top == state.GetTop ());
 	
-	ZLLog::LogF ( file, "-- END LUA LEAKS --\n" );
+	ZLLogF ( file, "-- END LUA LEAKS --\n" );
 	
-	if ( log ) {
-		fclose ( log );
+	if ( file ) {
+		fclose ( file );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAILuaRuntime::ReportLeaksRaw ( cc8* filename, cc8* trackingGroup ) {
 
-	FILE* file	= MOAILogMgr::Get ().GetFile ();
-	FILE* log	= 0;
-	
+	FILE* file = 0;
 	if ( filename ) {
-		log = fopen ( filename, "w" );
-		file = log;
-		assert ( log );
+		file = fopen ( filename, "w" );
+		assert ( file );
 	}
 
 	this->ForceGarbageCollection ();
 	
-	ZLLog::LogF ( file, "-- LUA OBJECT LEAK REPORT ------------\n" );
+	ZLLogF ( file, "-- LUA OBJECT LEAK REPORT ------------\n" );
 	u32 count = 0;
 	
 	for ( TrackingMap::const_iterator i = this->mTrackingMap.begin () ; i != this->mTrackingMap.end (); ++i ) {
 		const MOAILuaObjectInfo& info = i->second;
 		if ( trackingGroup && ( info.mTrackingGroup.compare ( trackingGroup ) != 0 )) continue;
-		ZLLog::LogF ( file, info.mStackTrace.c_str ());
+		ZLLogF ( file, info.mStackTrace.c_str ());
 		count++;
 	}
-	ZLLog::LogF ( file, "-- END LEAK REPORT (Total Objects: %d) ---------\n", count );
+	ZLLogF ( file, "-- END LEAK REPORT (Total Objects: %d) ---------\n", count );
 	
-	if ( log ) {
-		fclose ( log );
+	if ( file ) {
+		fclose ( file );
 	}
 }
 

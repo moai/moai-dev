@@ -13,7 +13,7 @@ local function printf ( ... )
 	return io.stdout:write ( string.format ( ... ))
 end 
 
-MOAISim.openWindow ( "test", 640, 480 )
+MOAISim.openWindow ( "test", 320, 480 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
@@ -47,7 +47,7 @@ world = MOAIBox2DWorld.new ()
 world:setGravity ( 0, -10 )
 world:setUnitsToMeters ( 2 )
 world:start ()
-layer:setBox2DWorld ( world )
+layer:setUnderlayTable ({ world })
 
 body = world:addBody ( MOAIBox2DBody.KINEMATIC )
 

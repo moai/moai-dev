@@ -25,7 +25,7 @@
 // MOAILogMessage
 //================================================================//
 class MOAILogMessage {
-	private:
+private:
 	
 	friend class MOAILogMgr;
 	
@@ -39,11 +39,11 @@ class MOAILogMessage {
 /**	@lua	MOAILogMgr
 	@text	Singleton for managing debug log messages and log level.
 
-	@const LOG_NONE
-	@const LOG_ERROR
-	@const LOG_WARNING
-	@const LOG_STATUS
-	@const LOG_DEBUG
+	@const LOG_NONE		No logging
+	@const LOG_ERROR	Error level
+	@const LOG_WARNING	Warning level
+	@const LOG_STATUS	Status level
+	@const LOG_DEBUG	Debug level
 */
 class MOAILogMgr :
 	public MOAIGlobalClass < MOAILogMgr, MOAILuaObject > {
@@ -52,10 +52,8 @@ private:
 	typedef STLMap < u32, MOAILogMessage >::iterator MessageMapIt;
 	STLMap < u32, MOAILogMessage > mMessageMap;
 
-	u32			mLevel;
-	FILE*		mFile;
-	bool		mOwnsFileHandle;
-	bool		mTypeCheckLuaParams;
+	FILE*			mFile;
+	bool			mTypeCheckLuaParams;
 
 	//----------------------------------------------------------------//
 	static int		_closeFile					( lua_State* L );
@@ -70,26 +68,21 @@ public:
 	
 	DECL_LUA_SINGLETON ( MOAILogMgr )
 	
-	enum {
-		LOG_NONE,
-		LOG_ERROR,
-		LOG_WARNING,
-		LOG_STATUS,
-		LOG_DEBUG,
-	};
-	
-	GET ( FILE*, File, mFile ? mFile : ZLLog::CONSOLE )
+	//GET ( FILE*, File, mFile ? mFile : ZLLog::CONSOLE )
 	
 	//----------------------------------------------------------------//
 	void			CloseFile				();
-	void			Log						( lua_State *L, u32 messageID, ... );
-	void			LogVar					( lua_State *L, u32 messageID, va_list args );
+	
+	void			LogF					( lua_State *L, u32 level, u32 messageID, ... );
+	void			LogF					( lua_State *L, u32 level, cc8* message, ... );
+	
+	void			LogV					( lua_State *L, u32 level, u32 messageID, va_list args );
+	void			LogV					( lua_State *L, u32 level, cc8* message, va_list args );
+	
 	bool			LuaSetupClass			( MOAILuaState& state, cc8* typeStr );
 					MOAILogMgr				();
 					~MOAILogMgr				();
 	void			OpenFile				( cc8* filename );
-	void			Print					( cc8* message, ... );
-	void			PrintVar				( cc8* message, va_list args );
 	void			RegisterLogMessage		( u32 messageID, u32 level, cc8* formatString );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	
@@ -114,10 +107,7 @@ public:
 	}
 };
 
-//================================================================//
-// helpers
-//================================================================//
-extern void MOAILog		( lua_State *L, u32 messageID, ... );
-extern void MOAIPrint	( cc8* message, ... );
+#define MOAILogF(L,level,messageID,...)			MOAILogMgr::Get ().LogF ( L, level, messageID, ##__VA_ARGS__ )
+#define MOAILogV(L,level,messageID,args)		MOAILogMgr::Get ().LogV ( L, level, messageID, args )
 
 #endif

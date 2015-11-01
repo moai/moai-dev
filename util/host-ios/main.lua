@@ -81,6 +81,8 @@ copyhostfiles = function()
     
     MOAIFileSystem.copy(classes, output..'host-ios')
     MOAIFileSystem.copy(hostmodules, output..'host-modules')
+    MOAIFileSystem.copy(MOAI_SDK_HOME..'src/host-modules/aku_plugins.cpp.in', output..'host-modules/aku_plugins.cpp')
+    
     
     MOAIFileSystem.deleteFile(output..'host-modules/aku_modules_android.h')
     MOAIFileSystem.deleteFile(output..'host-modules/aku_modules_android_config.h')
@@ -145,15 +147,21 @@ configureHost = function()
         ['(63D01EC01A38659C0097C3E8%C-name = )([^;]-)(;.-path = )([^;]-)(;.*)'] = "%1"..'"'..luafolder..'"'.."%3"..'"'..relativeLua..'"'.."%5",
         --our app name
         ['Moai Template'] = hostconfig['AppName'],
-      },
-      [ util.wrap(pairs, projectfiles) ] = {
+        },
+        [ util.wrap(pairs, projectfiles) ] = {
         ['Moai Template'] = hostconfig['AppName'],
-      },
-      [ output..'main.lua'] = {
+        },
+        [ output..'main.lua'] = {
         ['setWorkingDirectory%(.-%)'] = 'setWorkingDirectory("'..luafolder..'")'
-      }
-    })
-        
+      },
+    [ output..'run.sh' ] = {
+      ['SCHEME_NAME'] = hostconfig['AppName'], 
+      },
+    [ output..'res/Info.plist' ] = {
+      ['com.getmoai'] = hostconfig['ApplicationId'],
+      },
+  })
+
     if (hostconfig['AppName'] ~= 'Moai Template' ) then
       
       

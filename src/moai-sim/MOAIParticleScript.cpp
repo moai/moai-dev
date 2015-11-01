@@ -268,10 +268,10 @@ int MOAIParticleScript::_angleVec ( lua_State* L ) {
  run in registers.
  
  @in		MOAIParticleScript self
- @in		number r0 (r)
- @in		number r1 (g)
- @in		number r2 (b)
- @in		number r3 (a) (optional)
+ @in		number r0	r
+ @in		number r1	g
+ @in		number r2	b
+ @opt		number r3	a
  @out	nil
  */
 int MOAIParticleScript::_color ( lua_State* L ) {
@@ -445,6 +445,20 @@ int MOAIParticleScript::_packReg ( lua_State* L ) {
 */
 int MOAIParticleScript::_rand ( lua_State* L ) {
 	IMPL_LUA_PARTICLE_OP ( RAND, "RVV" )
+}
+
+//----------------------------------------------------------------//
+/**	@lua	randInt
+	@text	Load a register with a random integer from a range.
+	
+	@in		MOAIParticleScript self
+	@in		number r0			Register to store result.
+	@in		number v0			Range minimum.
+	@in		number v1			Range maximum.
+	@out	nil
+ */
+int MOAIParticleScript::_randInt ( lua_State* L ) {
+	IMPL_LUA_PARTICLE_OP ( RAND_INT, "RVV" )
 }
 
 //----------------------------------------------------------------//
@@ -767,6 +781,7 @@ void MOAIParticleScript::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "mul",				_mul },
 		{ "norm",				_norm },
 		{ "rand",				_rand },
+		{ "randInt",			_randInt },
 		{ "randVec",			_randVec },
 		{ "set",				_set },
 		{ "setLiveReg",			_setLiveReg },
@@ -993,6 +1008,17 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 				}
 				break;
 				
+			case RAND_INT:
+				
+				READ_ADDR	( r0, bytecode );
+				READ_VALUE	( v0, bytecode );
+				READ_VALUE	( v1, bytecode );
+				
+				if ( r0 ) {
+					*r0 = ( v0 != v1 ) ? v0 + ( rand () % ( int )( v1 - v0 + 1)) : v0;
+				}
+				break;
+
 			case RAND_VEC: // RRVV
 				
 				READ_ADDR	( r0, bytecode );

@@ -243,7 +243,7 @@ local importJava = function ( path, namespace )
 
 	if JAVA_DIR then
 
-		-- the entre foler tree names 'src'
+		-- the entire folder tree named 'src'
 		local srcPath = path .. 'src/'
 		if MOAIFileSystem.checkPathExists ( srcPath ) then
 			MOAIFileSystem.copy (  srcPath, JAVA_DIR )
@@ -300,7 +300,8 @@ makeJniProject = function ()
 
 	for name, filename in pairs ( CONFIGS ) do
 		local configPath = util.getFolderFromPath ( filename )
-		GLOBALS [ name ] = MOAIFileSystem.getRelativePath ( configPath, JNI_DIR )
+		--GLOBALS [ name ] = MOAIFileSystem.getRelativePath ( configPath, JNI_DIR )
+		GLOBALS [ name ] = string.format ( '$(abspath %s)', MOAIFileSystem.getRelativePath ( configPath, JNI_DIR ))
 	end
 
 	MOAIFileSystem.copy ( 'README.txt', JNI_DIR .. 'README.txt' )
@@ -376,6 +377,9 @@ makeTarget = function ( target )
 	for k, v in util.pairsByKeys ( preprecessorFlags ) do
 		preprocessorString = preprocessorString .. string.format ( '\tMY_LOCAL_CFLAGS += -D%s=%d\n', k, v )
 	end
+
+	preprocessorString = preprocessorString .. string.format ( '\tMY_LOCAL_CFLAGS += -DNDEBUG\n' )
+	preprocessorString = preprocessorString .. string.format ( '\tMY_LOCAL_CFLAGS += -DMOAI_KEEP_ASSERT=1\n' )
 
 	util.replaceInFile ( targetMakefile, {
 		[ '@LIB_NAME@' ]					= target.NAME,

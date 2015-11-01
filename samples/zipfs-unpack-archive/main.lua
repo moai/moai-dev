@@ -1,7 +1,4 @@
 
-MOAISim.openWindow ( "test", 320, 480 )
-
-
 function unpackArchiveTo ( zipfile, outputDir )
 	
 	mountPoint = "unpackArchiveToTemp/"
@@ -41,5 +38,5 @@ function unpackArchiveTo ( zipfile, outputDir )
 
 end
 
-unpackArchiveTo ( "../resources/test.zip", 'extract/' )
+unpackArchiveTo ( "../resources/test.zip", '../temp/extract/' )
 print ( "done ")

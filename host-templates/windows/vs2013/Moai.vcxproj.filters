@@ -27,6 +27,12 @@
     <ClCompile Include="host-modules\aku_modules_util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="host-sdl\SDLJoystick.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="host-sdl\SDLKeyCodeMapping.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="host-modules\aku_modules.h">
@@ -41,5 +47,24 @@
     <ClInclude Include="host-modules\aku_modules_util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="host-sdl\SDLJoystick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="host-sdl\SDLKeyCodeMapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Moai.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="appicon.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

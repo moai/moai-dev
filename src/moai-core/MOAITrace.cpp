@@ -200,7 +200,8 @@ MOAITrace::MOAITrace () :
 	mLastRunAt ( 0 ),
 	mCurrentThread ( 0 ),
 	mCurrentThreadTrace ( 0 ),
-	mVerbose ( false ) {
+	mVerbose ( false ),
+	mListener ( 0 ) {
 
 	RTTI_SINGLE ( MOAILuaObject )
 }
@@ -231,8 +232,6 @@ void MOAITrace::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITrace::ReportTrace () {
 
-	FILE* file	= MOAILogMgr::Get ().GetFile ();
-
 	typedef STLSortPair < double, MOAIFuncTrace* > SortPair;
 	STLList < SortPair > sortList;
 
@@ -256,13 +255,13 @@ void MOAITrace::ReportTrace () {
 
 	sortList.sort ( SortPair::greater );
 
-	ZLLog::LogF ( file, "trace time: %fms\n", traceTime * 1000000 );
+	ZLLogF ( ZLLog::CONSOLE, "trace time: %fms\n", traceTime * 1000000 );
 
 	STLList < SortPair >::iterator sortListIt = sortList.begin ();
 	for ( ; sortListIt != sortList.end (); ++sortListIt ) {
 		MOAIFuncTrace& funcTrace = *( sortListIt->mValue );
-		ZLLog::LogF (
-			file,
+		ZLLogF (
+			ZLLog::CONSOLE,
 			"what:%s name:%s (%s) count:%d time:%3.2f%%\n",
 			( cc8* )funcTrace.mWhat,
 			( cc8* )funcTrace.mName,

@@ -7,11 +7,11 @@
 require ( 'cube' )
 
 --MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_MODEL_BOUNDS, 2, 1, 1, 1 )
-MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
+--MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
 
 MOAISim.openWindow ( "test", 960, 480 )
 
---MOAIGfxDevice.getFrameBuffer ():setClearDepth ( true )
+MOAIGfxDevice.getFrameBuffer ():setClearDepth ( true )
 
 XMIN = 20
 XMAX = 940
@@ -47,6 +47,7 @@ makeProp = function ( x, y, z )
 	local prop = MOAIProp.new ()
 	prop:setDeck ( cube )
 	prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
+	prop:setDepthTest ( MOAIGraphicsProp.DEPTH_TEST_LESS )
 	prop:setLoc ( x, y, z )
 	layer:insertProp ( prop )
 

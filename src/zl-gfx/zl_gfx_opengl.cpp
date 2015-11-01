@@ -107,8 +107,6 @@ using namespace std;
 	#define GL_RGBA8 GL_RGBA8_OES
 #endif
 
-
-
 #ifdef MOAI_OS_BLACKBERRY
 	#include <GLES/gl.h>
 	#include <GLES/glext.h>
@@ -124,9 +122,6 @@ using namespace std;
 // globals
 //================================================================//
 
-static bool	sIsFramebufferSupported		= false;
-static bool	sIsOpenGLES					= false;
-static bool	sIsProgrammable				= false;
 static u32	sMaxTextureUnits			= 0;
 static u32	sMaxTextureSize				= 0;
 static u32	sOperationDepth				= 0; // this is just the counter for tracking begin/end calls
@@ -176,7 +171,7 @@ GLenum _remapEnum ( u32 zglEnum ) {
 
 		case ZGL_BLEND_MODE_ADD:							return GL_FUNC_ADD;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case ZGL_BLEND_MODE_MAX:						return GL_MAX;
 			case ZGL_BLEND_MODE_MIN:						return GL_MIN;
 		#endif
@@ -187,27 +182,27 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		case ZGL_BUFFER_TARGET_ARRAY:						return GL_ARRAY_BUFFER;
 		case ZGL_BUFFER_TARGET_ELEMENT_ARRAY:				return GL_ELEMENT_ARRAY_BUFFER;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case ZGL_BUFFER_USAGE_DYNAMIC_COPY:				return GL_DYNAMIC_COPY;
 		#endif
 
 		case ZGL_BUFFER_USAGE_DYNAMIC_DRAW:					return GL_DYNAMIC_DRAW;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case ZGL_BUFFER_USAGE_DYNAMIC_READ:				return GL_DYNAMIC_READ;
 			case ZGL_BUFFER_USAGE_STATIC_COPY:				return GL_STATIC_COPY;
 		#endif
 
 		case ZGL_BUFFER_USAGE_STATIC_DRAW:					return GL_STATIC_DRAW;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case ZGL_BUFFER_USAGE_STATIC_READ:				return GL_STATIC_READ;
 			case ZGL_BUFFER_USAGE_STREAM_COPY:				return GL_STREAM_COPY;
 		#endif
 
 		case ZGL_BUFFER_USAGE_STREAM_DRAW:					return GL_STREAM_DRAW;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case ZGL_BUFFER_USAGE_STREAM_READ:				return GL_STREAM_READ;
 		#endif
 
@@ -232,14 +227,14 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		case ZGL_FRAMEBUFFER_ATTACHMENT_DEPTH:				return GL_DEPTH_ATTACHMENT;
 		case ZGL_FRAMEBUFFER_ATTACHMENT_STENCIL:			return GL_STENCIL_ATTACHMENT;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case ZGL_FRAMEBUFFER_TARGET_DRAW:				return GL_DRAW_FRAMEBUFFER;
 			case ZGL_FRAMEBUFFER_TARGET_READ:				return GL_READ_FRAMEBUFFER;
 		#endif
 
 		case ZGL_FRAMEBUFFER_TARGET_DRAW_READ:				return GL_FRAMEBUFFER;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case ZGL_MATRIX_COLOR:							return GL_COLOR;
 			case ZGL_MATRIX_MODELVIEW:						return GL_MODELVIEW;
 			case ZGL_MATRIX_PROJECTION:						return GL_PROJECTION;
@@ -271,14 +266,14 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		case ZGL_PIXEL_FORMAT_LUMINANCE:					return GL_LUMINANCE;
 		case ZGL_PIXEL_FORMAT_LUMINANCE_ALPHA:				return GL_LUMINANCE_ALPHA;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case ZGL_PIXEL_FORMAT_RED:						return GL_RED;
 			case ZGL_PIXEL_FORMAT_RG:						return GL_RG;
 		#endif
 
 		case ZGL_PIXEL_FORMAT_RGB:							return GL_RGB;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case ZGL_PIXEL_FORMAT_RGB4:						return GL_RGB4;
 		#endif
 
@@ -288,7 +283,7 @@ GLenum _remapEnum ( u32 zglEnum ) {
 			case ZGL_PIXEL_FORMAT_RGB565:					return GL_RGB565;
 		#endif
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case ZGL_PIXEL_FORMAT_RGB8:						return GL_RGB8;
 			case ZGL_PIXEL_FORMAT_BGR:						return GL_BGR;
 		#endif
@@ -300,7 +295,7 @@ GLenum _remapEnum ( u32 zglEnum ) {
 			case ZGL_PIXEL_FORMAT_RGBA8:					return GL_RGBA8;
 		#endif
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_ANDROID )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case ZGL_PIXEL_FORMAT_BGRA:						return GL_BGRA;
 		#endif
 
@@ -318,14 +313,14 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		case ZGL_PIXEL_TYPE_SHORT:							return GL_SHORT;
 		case ZGL_PIXEL_TYPE_UNSIGNED_BYTE:					return GL_UNSIGNED_BYTE;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case ZGL_PIXEL_TYPE_UNSIGNED_BYTE_2_3_3_REV:	return GL_UNSIGNED_BYTE_2_3_3_REV;
 			case ZGL_PIXEL_TYPE_UNSIGNED_BYTE_3_3_2:		return GL_UNSIGNED_BYTE_3_3_2;
 		#endif
 
 		case ZGL_PIXEL_TYPE_UNSIGNED_INT:					return GL_UNSIGNED_INT;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case ZGL_PIXEL_TYPE_UNSIGNED_INT_8_8_8_8:			return GL_UNSIGNED_INT_8_8_8_8;
 			case ZGL_PIXEL_TYPE_UNSIGNED_INT_8_8_8_8_REV:		return GL_UNSIGNED_INT_8_8_8_8_REV;
 			case ZGL_PIXEL_TYPE_UNSIGNED_INT_2_10_10_10_REV:	return GL_UNSIGNED_INT_2_10_10_10_REV;
@@ -335,13 +330,13 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		case ZGL_PIXEL_TYPE_UNSIGNED_SHORT:					return GL_UNSIGNED_SHORT;
 		case ZGL_PIXEL_TYPE_UNSIGNED_SHORT_5_6_5:			return GL_UNSIGNED_SHORT_5_6_5;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case ZGL_PIXEL_TYPE_UNSIGNED_SHORT_5_6_5_REV:	return GL_UNSIGNED_SHORT_5_6_5_REV;
 		#endif
 
 		case ZGL_PIXEL_TYPE_UNSIGNED_SHORT_4_4_4_4:			return GL_UNSIGNED_SHORT_4_4_4_4;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case ZGL_PIXEL_TYPE_UNSIGNED_SHORT_4_4_4_4_REV:		return GL_UNSIGNED_SHORT_4_4_4_4_REV;
 			case ZGL_PIXEL_TYPE_UNSIGNED_SHORT_1_5_5_5_REV:		return GL_UNSIGNED_SHORT_1_5_5_5_REV;
 		#endif
@@ -379,14 +374,14 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		case ZGL_SHADER_INFO_SOURCE_LENGTH:				return GL_SHADER_SOURCE_LENGTH;
 		case ZGL_SHADER_INFO_TYPE:						return GL_SHADER_TYPE;
 
-		#if !defined ( MOAI_OS_OSX ) && !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_LINUX ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
+		#if !defined ( MOAI_OS_OSX ) && !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_LINUX ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case ZGL_SHADER_TYPE_TESS_CONTROL:			return GL_TESS_CONTROL_SHADER;
 			case ZGL_SHADER_TYPE_TESS_EVALUATION:		return GL_TESS_EVALUATION_SHADER;
 		#endif
 
 		case ZGL_SHADER_TYPE_FRAGMENT:					return GL_FRAGMENT_SHADER;
 
-		#if !defined ( MOAI_OS_OSX ) && !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
+		#if !defined ( MOAI_OS_OSX ) && !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case ZGL_SHADER_TYPE_GEOMETRY:				return GL_GEOMETRY_SHADER;
 		#endif
 
@@ -397,7 +392,7 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		case ZGL_STRING_RENDERER:						return GL_RENDERER;
 		case ZGL_STRING_SHADING_LANGUAGE_VERSION:		return GL_SHADING_LANGUAGE_VERSION;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case ZGL_TEXTURE_BASE_LEVEL:				return GL_TEXTURE_BASE_LEVEL;
 			case ZGL_TEXTURE_COMPARE_FUNC:				return GL_TEXTURE_COMPARE_FUNC;
 			case ZGL_TEXTURE_COMPARE_MODE:				return GL_TEXTURE_COMPARE_MODE;
@@ -405,27 +400,27 @@ GLenum _remapEnum ( u32 zglEnum ) {
 			case ZGL_TEXTURE_ENV_MODE:					return GL_TEXTURE_ENV_MODE;
 		#endif
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case ZGL_TEXTURE_LOD_BIAS:					return GL_TEXTURE_LOD_BIAS;
 		#endif
 
   		case ZGL_TEXTURE_MAG_FILTER:					return GL_TEXTURE_MAG_FILTER;
 		case ZGL_TEXTURE_MIN_FILTER:					return GL_TEXTURE_MIN_FILTER;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case ZGL_TEXTURE_MAX_LEVEL:					return GL_TEXTURE_MAX_LEVEL;
 			case ZGL_TEXTURE_MAX_LOD:					return GL_TEXTURE_MAX_LOD;
 			case ZGL_TEXTURE_MIN_LOD:					return GL_TEXTURE_MIN_LOD;
 		#endif
 
-		#if !defined ( MOAI_OS_OSX ) && !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_LINUX ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
+		#if !defined ( MOAI_OS_OSX ) && !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_LINUX ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case ZGL_TEXTURE_SWIZZLE_A:					return GL_TEXTURE_SWIZZLE_A;
 			case ZGL_TEXTURE_SWIZZLE_B:					return GL_TEXTURE_SWIZZLE_B;
 			case ZGL_TEXTURE_SWIZZLE_G:					return GL_TEXTURE_SWIZZLE_G;
 			case ZGL_TEXTURE_SWIZZLE_R:					return GL_TEXTURE_SWIZZLE_R;
 		#endif
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case ZGL_TEXTURE_WRAP_R:					return GL_TEXTURE_WRAP_R;
 		#endif
 
@@ -434,7 +429,7 @@ GLenum _remapEnum ( u32 zglEnum ) {
 
 		case ZGL_TYPE_BYTE:								return GL_BYTE;
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
+		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case ZGL_TYPE_DOUBLE:						return GL_DOUBLE;
 		#endif
 
@@ -515,19 +510,8 @@ void zglInitialize () {
 	majorVersion = version.at ( 0 ) - '0';
 	minorVersion = version.at ( 2 ) - '0';
 
-	#ifdef __FLASH__
-		isOpenGLES = true;
-		sIsProgrammable = false;
-		sIsFramebufferSupported = false;
-	#else
-		sIsProgrammable = ( majorVersion >= 2 );
-		sIsFramebufferSupported = true;
-	#endif
-
 	#ifdef EMSCRIPTEN 
 		isOpenGLES = true;
-		sIsProgrammable = true;
-		sIsFramebufferSupported = true;
 	#endif
 	
 	#if defined ( __GLEW_H__ )
@@ -556,8 +540,7 @@ void zglInitialize () {
 				REMAP_EXTENSION_PTR ( glRenderbufferStorage,					glRenderbufferStorageEXT )
 			}
 			else {
-				// looks like frame buffer isn't supported
-				sIsFramebufferSupported = false;
+				assert ( false ); // needs framebuffer
 			}
 		}
 
@@ -566,9 +549,7 @@ void zglInitialize () {
 	int maxTextureUnits = 0;
 
 	if ( majorVersion == 1 ) {
-		#if USE_OPENGLES1
-			glGetIntegerv ( GL_MAX_TEXTURE_UNITS, &maxTextureUnits );
-		#endif
+		assert ( false ); // OpenGL ES1 no longer supported
 	}
 	else {
 		glGetIntegerv ( GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureUnits );
@@ -761,10 +742,6 @@ u32 zglGetCap ( u32 cap ) {
 	ASSERT_OPERATION_DEPTH ();
 
 	switch ( cap ) {
-		case ZGL_CAPS_IS_FRAMEBUFFER_SUPPORTED:
-			return sIsFramebufferSupported ? 1 : 0;
-		case ZGL_CAPS_IS_PROGRAMMABLE:
-			return sIsProgrammable ? 1 : 0;
 		case ZGL_CAPS_MAX_TEXTURE_SIZE:
 			return sMaxTextureSize;
 		case ZGL_CAPS_MAX_TEXTURE_UNITS:
@@ -788,13 +765,7 @@ u32 zglGetError () {
 		case GL_INVALID_OPERATION:	return ZGL_ERROR_INVALID_OPERATION;
 		case GL_INVALID_VALUE:		return ZGL_ERROR_INVALID_VALUE;
 		case GL_OUT_OF_MEMORY:		return ZGL_ERROR_OUT_OF_MEMORY;
-
-		#if USE_OPENGLES1
-			case GL_STACK_OVERFLOW:		return ZGL_ERROR_STACK_OVERFLOW;
-			case GL_STACK_UNDERFLOW:	return ZGL_ERROR_STACK_UNDERFLOW;
-		#endif
 	}
-
 	return ZGL_ERROR_UNKNOWN;
 }
 
@@ -827,56 +798,6 @@ void zglLineWidth ( float width ) {
 
 	ASSERT_OPERATION_DEPTH ();
 	glLineWidth (( GLfloat )width );
-}
-
-//----------------------------------------------------------------//
-void zglLoadIdentity () {
-
-	ASSERT_OPERATION_DEPTH ();
-
-	#if !MOAI_OS_NACL
-		glLoadIdentity ();
-	#endif
-}
-
-//----------------------------------------------------------------//
-void zglLoadMatrix ( const float* matrix ) {
-
-	ASSERT_OPERATION_DEPTH ();
-
-	#if !MOAI_OS_NACL
-		glLoadMatrixf ( matrix );
-	#endif
-}
-
-//----------------------------------------------------------------//
-void zglMatrixMode ( u32 mode ) {
-
-	ASSERT_OPERATION_DEPTH ();
-
-	#if !MOAI_OS_NACL
-		glMatrixMode ( _remapEnum ( mode ));
-	#endif
-}
-
-//----------------------------------------------------------------//
-void zglMultMatrix ( const float* matrix ) {
-
-	ASSERT_OPERATION_DEPTH ();
-
-	#if !MOAI_OS_NACL
-		glMultMatrixf ( matrix );
-	#endif
-}
-
-//----------------------------------------------------------------//
-void zglPointSize ( float size ) {
-
-	ASSERT_OPERATION_DEPTH ();
-
-	#if !MOAI_OS_NACL
-		glPointSize (( GLfloat )size );
-	#endif
 }
 
 //----------------------------------------------------------------//
@@ -1345,7 +1266,7 @@ u32 zglCreateBuffer () {
 void* zglMapBuffer ( u32 target ) {
 
 	ASSERT_OPERATION_DEPTH ();
-	#ifdef MOAI_OS_ANDROID
+	#if defined( MOAI_OS_ANDROID ) || defined( MOAI_OS_HTML )
 		return 0;
 	#else
 		return glMapBuffer ( _remapEnum ( target ), GL_WRITE_ONLY );
@@ -1356,7 +1277,7 @@ void* zglMapBuffer ( u32 target ) {
 void zglUnmapBuffer ( u32 target ) {
 
 	ASSERT_OPERATION_DEPTH ();
-	#ifdef MOAI_OS_ANDROID
+	#if defined( MOAI_OS_ANDROID ) || defined( MOAI_OS_HTML )
 		return;
 	#else
 		glUnmapBuffer ( _remapEnum ( target ));
@@ -1372,7 +1293,7 @@ void zglBindVertexArray ( u32 vertexArrayID ) {
 
 	ASSERT_OPERATION_DEPTH ();
 
-	#ifdef MOAI_OS_ANDROID
+	#if defined( MOAI_OS_ANDROID ) || defined( MOAI_OS_HTML )
 		return;
 	#else
 		glBindVertexArray ( vertexArrayID );
@@ -1384,7 +1305,7 @@ u32 zglCreateVertexArray () {
 
 	ASSERT_OPERATION_DEPTH ();
 
-	#ifdef MOAI_OS_ANDROID
+	#if defined( MOAI_OS_ANDROID ) || defined( MOAI_OS_HTML )
 		return 0;
 	#else
 		u32 vertexArrayID;
@@ -1398,7 +1319,7 @@ void zglDeleteVertexArray ( u32 vertexArrayID ) {
 
 	ASSERT_OPERATION_DEPTH ();
 
-	#ifdef MOAI_OS_ANDROID
+	#if defined( MOAI_OS_ANDROID ) || defined( MOAI_OS_HTML )
 		return;
 	#else
 		glDeleteVertexArrays ( 1, &vertexArrayID );

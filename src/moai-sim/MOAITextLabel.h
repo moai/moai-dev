@@ -143,6 +143,7 @@ protected:
 	u32					mCurrentPageIdx;
 	u32					mNextPageIdx;
 	bool				mMore;
+	bool				mOverrun;
 	
 	MOAITextDesigner	mDesigner;
 	MOAITextStyleCache	mStyleCache;
@@ -162,6 +163,7 @@ protected:
 	static int			_getStyle				( lua_State* L );
 	static int			_getText				( lua_State* L );
 	static int			_getTextBounds			( lua_State* L );
+	static int			_hasOverrun				( lua_State* L );
 	static int			_more					( lua_State* L );
 	static int			_nextPage				( lua_State* L );
 	static int			_revealAll				( lua_State* L );

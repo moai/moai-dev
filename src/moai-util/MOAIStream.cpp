@@ -11,7 +11,56 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	collapse
+	@text	Removes a series of spans from the stream and "collapses" the
+			remainder. Used to remove a series of regularly repeating bytes.
+			For example, if the stream contains vertices and user wishes to
+			remove the vertex normals.
+
+	@in		MOAIStream self
+	@in		number clipBase		Offset from the cursot to the first clip to remove.
+	@in		number clipSize		Size of the clip to remove.
+	@in		number chunkSize	The stride: the next clip will begin at clipBase + chunkSize.
+	@opt	number size			The amount of the stream to process. Default is stream.getLength () - stream.getCursor ()
+	@opt	boolean invert		Inverts the clip. Default value is false.
+	@out	number result		The new size in bytes of the collapsed section of the stream.
+*/
+int MOAIStream::_collapse ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIStream, "U" );
+	
+	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, false );
+	
+	int idx = 3;
+	if ( !stream ) {
+		idx = 2;
+		stream = self;
+	}
+	
+	u32 clipBase		= state.GetValue < u32 >( idx++, 0 );
+	u32 clipSize		= state.GetValue < u32 >( idx++, 0 );
+	u32 chunkSize		= state.GetValue < u32 >( idx++, 0 );
+	u32 size			= state.GetValue < u32 >( idx++, ( u32 )( stream->GetLength () - stream->GetCursor ()));
+	bool invert			= state.GetValue < bool >( idx++, false );
+	
+	size_t result = self->Collapse ( *stream, clipBase, clipSize, chunkSize, size, invert );
+	
+	state.Push (( u32 ) result );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	compact
+	@text	If the stream is backed by an internal buffer, and the buffer may
+			be reallocated by the stream, compact () causes the buffer to be
+			reallocated so that it more closely matches the current length of the
+			stream.
+			
+			For streams that are not buffer backer or that may not be reallocated,
+			compact () has no effect.
+
+	@in		MOAIStream self
+	@out	number
+*/
 int MOAIStream::_compact ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	self->Compact ();
@@ -623,6 +672,7 @@ void MOAIStream::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIStream::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "collapse",			_collapse },
 		{ "compact",			_compact },
 		{ "flush",				_flush },
 		{ "getCursor",			_getCursor },

@@ -154,7 +154,13 @@ int MOAICoroutine::_run ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setDefaultParent
+	@text	This coroutine will be used as the default parent for
+			any actions launched from within this coroutine.
+
+	@in		MOAICoroutine coroutine
+	@out	nil
+*/
 int MOAICoroutine::_setDefaultParent ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICoroutine, "U" );
 	
@@ -177,7 +183,13 @@ int MOAICoroutine::_setTrackingGroup ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	step
+	@text	Resume the coroutine (run until the next call to coroutine.yield ()
+			or until the coroutine's main method returns).
+
+	@in		MOAICoroutine coroutine
+	@out	nil
+*/
 int MOAICoroutine::_step ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICoroutine, "U" )
 
@@ -331,18 +343,24 @@ int MOAICoroutine::Resume ( float step ) {
 				cc8* msg = lua_tostring ( this->mState, -1 );
 				MOAILuaState state ( this->mState );
 
-				#if (MOAI_WITH_LUAJIT)
-					//luajit has assertions on lua_call if the thread has crashed due to runtime error
-					//this means we can't run our custom stacktrace using this state. we will just bail instead
+				#if ( MOAI_WITH_LUAJIT )
+				
+					// luajit has assertions on lua_call if the thread has crashed due to runtime error
+					// this means we can't run our custom stacktrace using this state. we will just print
+					// the debug stack trace and bail
 					if ( msg ) {
-						ZLLog::LogF ( ZLLog::CONSOLE, "%s\n", msg );
+						ZLLog_ErrorF ( ZLLog::CONSOLE, "%s\n", msg );
 					}
-					state.PrintStackTrace ( ZLLog::CONSOLE, NULL, 0 );
+					state.LogStackTrace ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, NULL, 0 );
+				
 				#else
+				
+					// run the custom stack trace
 					MOAILuaRuntime::Get ().PushTraceback ( state );
 					state.Push ( msg );
 					lua_call ( this->mState, 1, 0 );
 					lua_pop ( this->mState, 1 );
+				
 				#endif
 			}
 			this->Stop ();

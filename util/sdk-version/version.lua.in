@@ -1,0 +1,5 @@
+return {
+	MAJOR			= @VERSION_MAJOR@,
+	MINOR			= @VERSION_MINOR@,
+	REVISION		= @VERSION_REVISION@, -- to start counter over, set to 'nil'
+}

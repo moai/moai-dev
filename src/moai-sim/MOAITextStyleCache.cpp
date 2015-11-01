@@ -45,17 +45,13 @@ void MOAITextStyleRef::UpdateState () {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAITextStyle* MOAITextStyleCache::AddAnonymousStyle ( MOAITextStyle* source ) {
+MOAITextStyleState* MOAITextStyleCache::AddAnonymousStyle ( MOAITextStyleState* source ) {
 
-	MOAITextStyle* style = new MOAITextStyle ();
+	// TODO: replace with a pool
+	MOAITextStyleState* style = new MOAITextStyleState ();
 	style->Init ( *source );
 	
-	MOAITextStyleRef styleRef;
-	styleRef.mStyle = style;
-	styleRef.UpdateState ();
-	
-	this->RetainStyle ( style );
-	this->mAnonymousStyles.Push ( styleRef );
+	this->mAnonymousStyles.Push ( style );
 	
 	return style;
 }
@@ -63,19 +59,13 @@ MOAITextStyle* MOAITextStyleCache::AddAnonymousStyle ( MOAITextStyle* source ) {
 //----------------------------------------------------------------//
 bool MOAITextStyleCache::CheckStylesChanged () {
 
-	bool status = false;
-
-	// TODO: think about keeping list of currently active styles instead of iterating through everything
+	// no need to check anonymous styles; they cannot change
 	
-	u32 totalAnonymous = this->mAnonymousStyles.GetTop ();
-	for ( u32 i = 0; i < totalAnonymous; i++ ) {
-		MOAITextStyleRef& styleRef = this->mAnonymousStyles [ i ];
-		if ( styleRef.NeedsLayout ()) {
-			styleRef.UpdateState ();
-			status = true;
-		}
-	}
+	// always trust people who like big butts; they cannot lie
 
+	// check named/public styles
+	
+	bool status = false;
 	StyleSetIt styleSetIt = this->mStyleSet.begin ();
 	for ( ; styleSetIt != this->mStyleSet.end (); ++styleSetIt ) {
 		MOAITextStyleRef& styleRef = styleSetIt->second;
@@ -84,7 +74,9 @@ bool MOAITextStyleCache::CheckStylesChanged () {
 			status = true;
 		}
 	}
-
+	
+	// TODO: styles can change if styles are cleared; handle that case
+	
 	return status;
 }
 
@@ -100,13 +92,17 @@ void MOAITextStyleCache::ClearAnonymousStyles () {
 
 	u32 totalAnonymous = this->mAnonymousStyles.GetTop ();
 	for ( u32 i = 0; i < totalAnonymous; i++ ) {
-		this->ReleaseStyle ( this->mAnonymousStyles [ i ].mStyle );
+	
+		// TODO: replace with a pool
+		delete this->mAnonymousStyles [ i ];
 	}
 	this->mAnonymousStyles.Reset ();
 }
 
 //----------------------------------------------------------------//
 void MOAITextStyleCache::ClearNamedStyles () {
+	
+	this->ClearAnonymousStyles ();
 	
 	StyleSetIt styleSetIt = this->mStyleSet.begin ();
 	for ( ; styleSetIt != this->mStyleSet.end (); ++styleSetIt ) {

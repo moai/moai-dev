@@ -1,5 +1,6 @@
 obj/
 libs/
+lib/
 util/libmoai
 
 Thumbs.db
@@ -13,7 +14,7 @@ Thumbs.db
 
 /src/config
 
-build/
+/build/
 xcuserdata/
 DerivedData/
 *.pbxuser
@@ -21,13 +22,7 @@ DerivedData/
 
 # Artifacts when building with CMake
 flascc/build
-CMakeFiles
-CMakeCache.txt
-cmake_install.cmake
-*.o
-*.a
-src/moai/moai
-release
+/src/moai/moai
 tmp
 
 # Produced by test runner
@@ -35,7 +30,15 @@ test/xml-results
 .idea
 cmake/projects/
 
+# Build and release products
+cmake/build/
+release/
+
 bin/api-reference-parser/vendor
 docs/api-reference
-moai-sdk/
-/lib/
+/moai-sdk/
+/bin/env-local.bat
+/util/moai
+/**/java/build/
+/**/java/*.iml
+env.sh

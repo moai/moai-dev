@@ -4,6 +4,8 @@
 #ifndef	MOAIGFXRESOURCEMGR_H
 #define	MOAIGFXRESOURCEMGR_H
 
+class MOAIGfxResource;
+
 //================================================================//
 // MOAIGfxDeleter
 //================================================================//

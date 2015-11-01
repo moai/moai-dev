@@ -109,20 +109,23 @@ tess:pushPolygon ()
 tess:finish ()
 ]]--
 
-local vtxFormat = MOAIVertexFormatMgr.getFormat ( MOAIVertexFormatMgr.XYZC )
+local vtxStream = MOAIMemStream.new ()
+local idxStream = MOAIMemStream.new ()
 
-local vtxBuffer = MOAIGfxBuffer.new ()
-local idxBuffer = MOAIGfxBuffer.new ()
+local vtxFormat = MOAIVertexFormatMgr.getFormat ( MOAIVertexFormatMgr.XYZWNNNC )
 
-local totalElements = tess:tesselate ( vtxBuffer, idxBuffer, 2 );
+tess:tesselate ( vtxStream, idxStream, vtxFormat )
 
-local mesh = MOAIMesh.new ()
-mesh:setVertexBuffer ( vtxBuffer, vtxFormat )
-mesh:setIndexBuffer ( idxBuffer, 2 )
-mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
+--vtxStream:seek ( 0 )
+--MOAIGeometryWriter.applyLightFromImage ( vtxFormat, vtxStream, 'color.png' )
+
+vtxStream:seek ( 0 )
+vtxStream:collapse ( 12, 16, 32 )
+
+local vtxFormat = MOAIVertexFormatMgr.getFormat ( MOAIVertexFormatMgr.XYZC ) -- note the change in vertex format
+
+local mesh = MOAIGeometryWriter.getMesh ( vtxFormat, vtxStream, idxStream )
 mesh:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.LINE_SHADER_3D ))
-mesh:setTotalElements ( totalElements )
-mesh:setBounds ( vtxBuffer:computeBounds ( vtxFormat ))
 
 local prop = MOAIProp.new ()
 prop:setDeck ( mesh )

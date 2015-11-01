@@ -221,7 +221,7 @@ void MOAITestMgr::Error ( cc8* msg ) {
 		testResult.mPassed = false;
 		testResult.mErrorMsg = msg;
 		
-		ZLLog::LogF ( ZLLog::CONSOLE, "%s - FAILED\n%s\n", testResult.mName.c_str (), testResult.mErrorMsg.c_str ());
+		ZLLogF ( ZLLog::CONSOLE, "%s - FAILED\n%s\n", testResult.mName.c_str (), testResult.mErrorMsg.c_str ());
 	}
 }
 
@@ -326,17 +326,20 @@ void MOAITestMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAITestMgr::SetTimeout () {
-
+//TODO some kind of thread based timeout for windows
+#ifndef MOAI_COMPILER_MSVC
 	struct sigaction sa;
 
 	memset ( &sa, 0, sizeof ( sa ));
 	sa.sa_handler = SIG_IGN;
 	sigaction ( SIGALRM, &sa, NULL );
+#endif
 }
 
 //----------------------------------------------------------------//
 void MOAITestMgr::SetTimeout ( float seconds ) {
-
+//TODO some kind of thread based timeout for windows
+#ifndef MOAI_COMPILER_MSVC
 	struct sigaction sa;
 
 	memset ( &sa, 0, sizeof ( sa ));
@@ -350,6 +353,7 @@ void MOAITestMgr::SetTimeout ( float seconds ) {
 	ival.it_value.tv_usec = ( int )( ZLFloat::Decimal ( seconds ) * 1000000.f );
 
 	setitimer ( ITIMER_REAL, &ival, 0 );
+#endif
 }
 
 //----------------------------------------------------------------//

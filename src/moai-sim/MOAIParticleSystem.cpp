@@ -111,6 +111,7 @@ int  MOAIParticleSystem::_isIdle( lua_State* L ) {
 	@opt	number y					Default value is 0.
 	@opt	number dx					Default value is 0.
 	@opt	number dy					Default value is 0.
+	@opt	number state				Index of initial particle state.
 	@out	boolean result				true if particle was added, false if not.
 */
 int MOAIParticleSystem::_pushParticle ( lua_State* L ) {
@@ -122,7 +123,9 @@ int MOAIParticleSystem::_pushParticle ( lua_State* L ) {
 	float dx = state.GetValue < float >( 4, 0.0f );
 	float dy = state.GetValue < float >( 5, 0.0f );
 
-	bool result = self->PushParticle ( x, y, dx, dy );
+	u32 stateIdx = state.GetValue < u32 >( 6, 1 ) - 1;
+
+	bool result = self->PushParticle ( x, y, dx, dy, stateIdx );
 	lua_pushboolean ( state, result );
 	return 1;
 }
@@ -370,7 +373,7 @@ void MOAIParticleSystem::ClearQueue () {
 void MOAIParticleSystem::Draw ( int subPrimID, float lod ) {
 	UNUSED ( subPrimID );
 
-	if ( !this->IsVisible ( lod ) ) return;
+	if ( !this->IsVisible ( lod )) return;
 	if ( !this->mDeck ) return;
 	if ( this->IsClear ()) return;
 
@@ -486,50 +489,53 @@ MOAIParticleSystem::~MOAIParticleSystem () {
 //----------------------------------------------------------------//
 u32 MOAIParticleSystem::OnGetModelBounds ( ZLBox& bounds ) {
 
-	if ( this->mComputeBounds ) {
+	if ( this->mSpriteTop ) {
 		bounds = this->mParticleBounds;
 		return BOUNDS_OK;
 	}
-	return BOUNDS_GLOBAL;
+	return BOUNDS_EMPTY;
 }
 
 //----------------------------------------------------------------//
 void MOAIParticleSystem::OnUpdate ( double step ) {
+
+	bool schedule = ( this->mSpriteTop > 0 );
 
 	// clear out the sprites
 	this->mSpriteTop = 0;
 
 	this->mParticleBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 
-	// bail if no particles
-	if ( !this->mHead ) return;
+	// if particles
+	if ( this->mHead ) {
 
-	// grab the head then clear out the queue
-	MOAIParticle* cursor = this->mHead;
-	this->ClearQueue ();
-	
-	// update the particles and rebuild the queue
-	while ( cursor ) {
-		MOAIParticle* particle = cursor;
-		cursor = cursor->mNext;
+		// grab the head then clear out the queue
+		MOAIParticle* cursor = this->mHead;
+		this->ClearQueue ();
 		
-		// update the particle
-		if ( particle->mState ) {
-			particle->mState->ProcessParticle ( *this, *particle, step );
-		}
-		
-		// if is still to be killed, move it to the free list, else put it back in the queue
-		if ( !particle->mState ) {
-			particle->mNext = this->mFree;
-			this->mFree = particle;
-		}
-		else {
-			// and put it back in the queue
-			this->EnqueueParticle ( *particle );
+		// update the particles and rebuild the queue
+		while ( cursor ) {
+			MOAIParticle* particle = cursor;
+			cursor = cursor->mNext;
+			
+			// update the particle
+			if ( particle->mState ) {
+				particle->mState->ProcessParticle ( *this, *particle, step );
+			}
+			
+			// if is still to be killed, move it to the free list, else put it back in the queue
+			if ( !particle->mState ) {
+				particle->mNext = this->mFree;
+				this->mFree = particle;
+			}
+			else {
+				// and put it back in the queue
+				this->EnqueueParticle ( *particle );
+			}
 		}
 	}
 	
-	if ( this->mComputeBounds && this->mSpriteTop ) {
+	if ( schedule || this->mSpriteTop ) {
 		this->ScheduleUpdate ();
 	}
 }
@@ -537,17 +543,23 @@ void MOAIParticleSystem::OnUpdate ( double step ) {
 //----------------------------------------------------------------//
 bool MOAIParticleSystem::PushParticle ( float x, float y ) {
 	
-	return this->PushParticle ( x, y, 0.0f, 0.0f );
+	return this->PushParticle ( x, y, 0.0f, 0.0f, 0 );
 }
 
 //----------------------------------------------------------------//
 bool MOAIParticleSystem::PushParticle ( float x, float y, float dx, float dy ) {
 	
+	return this->PushParticle ( x, y, dx, dy, 0 );
+}
+
+//----------------------------------------------------------------//
+bool MOAIParticleSystem::PushParticle ( float x, float y, float dx, float dy, u32 stateIdx ) {
+	
 	if (( !this->mFree ) && this->mCapParticles ) {
 		return false;
 	}
 	
-	MOAIParticleState* state = this->GetState ( 0 );
+	MOAIParticleState* state = this->GetState ( stateIdx );
 	if ( !state ) return false;
 	
 	MOAIParticle* particle = 0;
@@ -604,9 +616,10 @@ bool MOAIParticleSystem::PushSprite ( const AKUParticleSprite& sprite ) {
 		
 		bounds.Scale ( scale );
 		
-		float radius = bounds.GetMaxExtent () * 1.4f;
-		bounds.mMin.Init ( -radius, -radius, -radius );
-		bounds.mMax.Init ( radius, radius, radius );
+		float radius = bounds.GetMaxExtent () * 1.4f; // handles case when bounds are rotated
+		
+		bounds.mMin.Init ( -radius, -radius, 0.0f );
+		bounds.mMax.Init ( radius, radius, 0.0f );
 		
 		bounds.Offset ( offset );
 		

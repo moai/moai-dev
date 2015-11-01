@@ -9,6 +9,9 @@
 # You can change the CMake options using -DOPTION=VALUE
 # Check moai-dev/cmake/CMakeLists.txt for all the available options.
 #
+
+set -e
+
 if [ -z $1 ]; then
   libprefix=`dirname $0`/../lib/linux
 else
@@ -18,6 +21,7 @@ fi
 mkdir -p $libprefix
 
 libprefix=$(cd $libprefix; pwd)
+cores=$(getconf _NPROCESSORS_ONLN)
 
 cd `dirname $0`/..
 
@@ -25,7 +29,7 @@ moai_root=$(pwd)
 
 BUILD_DIR="build/build-linux"
 
-if ! [ -d ${BUILD_DIR%/*} ]; then
+if ! [ -d ${BUILD_DIR} ]; then
 	mkdir -p $BUILD_DIR
 fi
 
@@ -37,8 +41,6 @@ if ! [ -e PATH_SEPARATOR ]; then
 	export PATH_SEPARATOR=:
 fi
 
-set -e
-
 cmake \
 -DBUILD_LINUX=TRUE \
 -DMOAI_SDL=TRUE \
@@ -47,7 +49,7 @@ cmake \
 -DCMAKE_INSTALL_PREFIX=$libprefix \
 $moai_root/cmake/hosts/host-linux-sdl
 
-cmake --build . --target install
+cmake --build . --target install -- -j$cores
 
 cp $libprefix/bin/moai $moai_root/util/moai
 

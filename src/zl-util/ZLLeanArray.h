@@ -145,23 +145,26 @@ public:
 	//----------------------------------------------------------------//
 	void Resize ( size_t size ) {
 
-		size_t oldSize = this->mSize;
-		TYPE* oldArray = this->mData;
+		if ( this->mSize != size ) {
 
-		this->mSize = 0;
-		this->mData = 0;
+			size_t oldSize = this->mSize;
+			TYPE* oldArray = this->mData;
 
-		if ( size ) {
-			this->Alloc ( size );
-			this->mSize = size;
-			
-			for ( size_t i = 0; (( i < size ) && ( i < oldSize )); ++i ) {
-				this->mData [ i ] = oldArray [ i ];
+			this->mSize = 0;
+			this->mData = 0;
+
+			if ( size ) {
+				this->Alloc ( size );
+				this->mSize = size;
+				
+				for ( size_t i = 0; (( i < size ) && ( i < oldSize )); ++i ) {
+					this->mData [ i ] = oldArray [ i ];
+				}
 			}
-		}
-		
-		if ( oldArray ) {
-			delete [] oldArray;
+			
+			if ( oldArray ) {
+				delete [] oldArray;
+			}
 		}
 	}
 

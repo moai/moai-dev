@@ -4,4 +4,4 @@ cd `dirname $0`/..
 mkdir hosts
 
 cd util
-moaiutil host-osx-app -o ../hosts/osx/ $@
+pito host-osx-app -o ../hosts/osx/ $@

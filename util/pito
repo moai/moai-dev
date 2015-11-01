@@ -1,0 +1,81 @@
+#!/usr/bin/env bash 
+#
+# pito - rapa nui for 'navel'  (See: http://www.sacred-texts.com/pac/ei/)
+#
+INVOKE_DIR=$(pwd)
+MOAI_SDK_HOME=$(cd $(dirname "${0}")/../ && pwd)
+# pito should have its own moai bin local
+MOAI_SDK_BIN=$MOAI_SDK_HOME/util/moai
+MOAI_CMD=${1}
+
+# pito needs at least one moai, so it must find it or build it
+if ! [ -x "$MOAI_SDK_BIN" ] 
+then
+    MOAI_BUILD_SCRIPT=""
+
+    # First check if we have some special-cases to build/not-build
+    case `uname` in
+    Darwin*)
+        # on OSX, we might have the bin already built
+        if [ -x $MOAI_SDK_HOME/bin/osx/moai ] 
+        then
+            MOAI_SDK_BIN=$MOAI_SDK_HOME/bin/osx/moai
+            echo "pito will use your pre-built MOAI binary at $MOAI_SDK_HOME/bin/osx/moai"
+        else
+            MOAI_BUILD_SCRIPT=$MOAI_SDK_HOME/util/build/build-osx.sh
+            MOAI_SDK_BIN=$MOAI_SDK_HOME/bin/osx/moai
+        fi
+    ;;
+    Linux*)
+        MOAI_BUILD_SCRIPT="bin/build-linux.sh"
+    ;;
+    *)
+        echo "Unknown OS"
+    ;;
+    esac
+
+    # We'll check it again:
+    if ! [ -x "$MOAI_SDK_BIN" ]
+    then
+        if [ -x "$MOAI_BUILD_SCRIPT" ]
+        then
+            # attempt to build moai on this system
+            echo "Will use the $MOAI_BUILD_SCRIPT to build $MOAI_SDK_BIN binary for use by pito..."
+            $MOAI_BUILD_SCRIPT
+
+            # Confirm it
+            echo "Need to confirm local moai binary was built ..."
+
+            # Build-script should deposit it here for us (TODO: tell build-script where to go)
+            #MOAI_SDK_BIN=$MOAI_SDK_HOME/util/moai
+            if [ -x $MOAI_SDK_BIN ]
+            then
+                echo "Continuing pito execution..."
+            else
+                echo "Something went wrong with building $MOAI_SDK_HOME/util/moai .. exiting!"
+                exit 1
+            fi
+        else
+            echo "Could not determine which script to use to build util/moai binary .. aborting"
+            exit 1
+        fi
+    fi
+fi
+
+case ${1} in
+    wut*)
+        echo    "         MOAI SDK location: $MOAI_SDK_HOME"
+        echo    "      MOAI binary location: $MOAI_SDK_BIN"
+        echo -n "    pito toolbelt location: " && which pito 
+        echo
+        exit 0
+        ;;
+esac
+
+# call pito.lua
+shift
+set $INVOKE_DIR $MOAI_SDK_HOME $MOAI_CMD $@
+
+pushd $MOAI_SDK_HOME/util > /dev/null
+$MOAI_SDK_BIN pito.lua $@
+popd > /dev/null

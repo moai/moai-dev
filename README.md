@@ -40,6 +40,16 @@ The following tools are required to build the API documentation.
 * [Bundler](http://gembundler.com/)
 * [Doxygen](http://www.doxygen.org/)
 
+On Mac OSX some tools need to be installed with homebrew:
+
+    $ brew install xctool ios-sim cmake
+    
+    cmake needs to be 3.3 on osx
+
+On Mac OSX, Linux and Windows, Android studio version should be 1.4+ and 
+Android ndk can be r10e+
+
+
 Please set the following environment variables.
 
 ### Mac OSX

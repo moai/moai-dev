@@ -34,6 +34,7 @@ private:
 	};
 	
 	//----------------------------------------------------------------//
+	static int		_collapse			( lua_State* L );
 	static int		_compact			( lua_State* L );
 	static int		_flush				( lua_State* L );
 	static int		_getCursor			( lua_State* L );

@@ -40,7 +40,7 @@ set(EXPORTED_FUNCTIONS "['_malloc','_RefreshContext','_Cleanup','_onKeyDown','_o
 
 #--closure 0 --minify 0
 add_custom_target( moaijs
-                    COMMAND ${EMSCRIPTEN_ROOT_PATH}/emcc${EMCC_SUFFIX} -O2 -s ASM_JS=0  -s TOTAL_MEMORY=248554432 -s FULL_ES2=1 -s LINKABLE=1 --js-library ${CMAKE_CURRENT_SOURCE_DIR}/moaicallbacks.js --js-library ${CMAKE_CURRENT_SOURCE_DIR}/library_webuntz.js 
+                    COMMAND ${EMSCRIPTEN_ROOT_PATH}/emcc${EMCC_SUFFIX} -O2 -s ASM_JS=1  -s TOTAL_MEMORY=248554432 -s FULL_ES2=1 -s LINKABLE=1 --js-library ${CMAKE_CURRENT_SOURCE_DIR}/moaicallbacks.js --js-library ${CMAKE_CURRENT_SOURCE_DIR}/library_webuntz.js 
                     --pre-js ${CMAKE_CURRENT_SOURCE_DIR}/libmoai-pre.js 
                     --post-js ${CMAKE_CURRENT_SOURCE_DIR}/libmoai-post.js
                     --memory-init-file 0

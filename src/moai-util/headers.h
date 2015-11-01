@@ -14,6 +14,7 @@
 #include <moai-util/MOAIFileSystem.h>
 #include <moai-util/MOAIHashWriter.h>
 #include <moai-util/MOAIJsonParser.h>
+#include <moai-util/MOAILuaUtil.h>
 #include <moai-util/MOAIMath.h>
 #include <moai-util/MOAIMemStream.h>
 #include <moai-util/MOAIMutex.h>

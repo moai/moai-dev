@@ -57,7 +57,7 @@ MOAIVungleAndroid::MOAIVungleAndroid () {
 
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 	
-	this->SetClass ( "com/ziplinegames/moai/MoaiVungle" );
+	this->SetClass ( "com/moaisdk/vungle/MoaiVungle" );
 }
 
 //----------------------------------------------------------------//
@@ -88,16 +88,16 @@ void MOAIVungleAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiVungle_AKUInvokeListener ( JNIEnv* env, jclass obj, jint eventID ) {
+extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_vungle_MoaiVungle_AKUInvokeListener ( JNIEnv* env, jclass obj, jint eventID ) {
 
-	ZLLog::LogF ( ZLLog::CONSOLE, "Java_com_ziplinegames_moai_MoaiVungle_AKUInvokeListener\n" );
+	ZLLog::LogF ( 1, ZLLog::CONSOLE, "Java_com_moaisdk_vungle_MoaiVungle_AKUInvokeListener\n" );
 	MOAIVungleAndroid::Get ().InvokeListener (( u32 )eventID );
 }
 
 //----------------------------------------------------------------//
-extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiVungle_AKUOnView ( JNIEnv* env, jclass obj, jdouble watched, jdouble length ) {
+extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_vungle_MoaiVungle_AKUOnView ( JNIEnv* env, jclass obj, jdouble watched, jdouble length ) {
 
-	ZLLog::LogF ( ZLLog::CONSOLE, "Java_com_ziplinegames_moai_MoaiVungle_AKUOnView\n" );
+	ZLLog::LogF ( 1, ZLLog::CONSOLE, "Java_com_moaisdk_vungle_MoaiVungle_AKUOnView\n" );
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	if ( MOAIVungleAndroid::Get ().PushListener ( MOAIVungleAndroid::AD_VIEWED, state )) {
 		state.Push ( watched == length );

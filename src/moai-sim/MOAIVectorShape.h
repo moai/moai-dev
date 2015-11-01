@@ -21,9 +21,9 @@ protected:
 	bool					mCanGroup;
 
 	//----------------------------------------------------------------//
-	void				CopyBoundaries				( SafeTesselator* dest, SafeTesselator* src );
-	void				Stroke						( SafeTesselator* tess, const ZLVec2D* verts, int nVerts, float width, bool forward, bool interior );
-	void				StrokeBoundaries			( SafeTesselator* tess, SafeTesselator* outline, float width, bool forward, bool interior );
+	void				CopyBoundaries				( SafeTesselator& dest, SafeTesselator* src );
+	void				Stroke						( SafeTesselator& tess, const ZLVec2D* verts, int nVerts, float width, bool forward, bool interior );
+	void				StrokeBoundaries			( SafeTesselator& tess, SafeTesselator& outline, float width, bool forward, bool interior );
 
 public:
 
@@ -32,8 +32,8 @@ public:
 	GET_SET ( MOAIVectorStyle&, Style, mStyle );
 	
 	//----------------------------------------------------------------//
-	virtual int			AddFillContours				( SafeTesselator* tess );
-	virtual int			AddStrokeContours			( SafeTesselator* tess, bool inside, bool outside );
+	virtual int			AddFillContours				( SafeTesselator& tess ); // TODO: should add status codes to make the meaning ot these return values clear
+	virtual int			AddStrokeContours			( SafeTesselator& tess, bool inside, bool outside );
 	bool				CanGroup					();
 	virtual bool		GroupShapes					( MOAIVectorShape** shapes, u32 total );
 	virtual bool		IsClosed					() = 0;
@@ -41,8 +41,8 @@ public:
 	virtual				~MOAIVectorShape			();
 	virtual bool		SetVertices					( const ZLVec2D* vertices, u32 total, bool closed );
 	
-	int					Tesselate					( MOAIVectorTesselator& drawing, SafeTesselator* tess );
-	int					Tesselate					( MOAIVectorTesselator& drawing, ZLStream* vertexStream, ZLStream* indexStream, MOAIVertexFormat* format );
+	int					Tesselate					( MOAIVectorTesselator& drawing, SafeTesselator& tess );
+	int					Tesselate					( MOAIVectorTesselator& drawing, ZLStream& vertexStream, ZLStream& indexStream, MOAIVertexFormat& format );
 };
 
 #endif

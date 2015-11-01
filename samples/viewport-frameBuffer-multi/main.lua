@@ -58,8 +58,6 @@ local function makeProp ( x, y, xs, ys, r )
 	return prop
 end
 
-MOAIGfxDevice.getFrameBuffer ():setClearColor () -- no need to clear the surface
-
 local layers = {}
 
 table.insert ( layers, makeLayer ( 0, 0, 256, 256, 1, 0, 0, 1 ))

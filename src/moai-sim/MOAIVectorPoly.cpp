@@ -12,7 +12,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-int MOAIVectorPoly::AddFillContours ( SafeTesselator* tess ) {
+int MOAIVectorPoly::AddFillContours ( SafeTesselator& tess ) {
 	
 	if ( this->mVertices.Size () < 3 ) return 0;
 	
@@ -29,7 +29,7 @@ int MOAIVectorPoly::AddFillContours ( SafeTesselator* tess ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorPoly::AddStrokeContours ( SafeTesselator* tess, bool inside, bool outside ) {
+int MOAIVectorPoly::AddStrokeContours ( SafeTesselator& tess, bool inside, bool outside ) {
 
 	if ( this->mIsClosed ) {
 		return MOAIVectorShape::AddStrokeContours ( tess, inside, outside );
@@ -76,7 +76,7 @@ int MOAIVectorPoly::AddStrokeContours ( SafeTesselator* tess, bool inside, bool 
 	MOAIVectorUtil::StrokeLine ( this->mStyle, contour0, joins0, nJoins, width, false );
 	MOAIVectorUtil::StrokeLine ( this->mStyle, contour1, joins1, nJoins, width, false );
 	
-	tess->AddContour ( 2, contour, sizeof ( ZLVec2D ), nContourVerts );
+	tess.AddContour ( 2, contour, sizeof ( ZLVec2D ), nContourVerts );
 	
 	return 0;
 }

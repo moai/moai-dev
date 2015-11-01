@@ -21,7 +21,7 @@ vertexFormat:declareCoord ( 1, MOAIVertexFormat.GL_FLOAT, 2 )
 vertexFormat:declareUV ( 2, MOAIVertexFormat.GL_FLOAT, 2 )
 vertexFormat:declareColor ( 3, MOAIVertexFormat.GL_UNSIGNED_BYTE )
 
-vbo = MOAIGfxBuffer.new ()
+vbo = MOAIVertexBuffer.new ()
 vbo:reserve ( 4 * vertexFormat:getVertexSize ())
 
 vbo:writeFloat ( -64, -64 )
@@ -49,35 +49,29 @@ mesh:setBounds ( vbo:computeBounds ( vertexFormat ))
 mesh:setTexture ( "moai.png" )
 mesh:setPrimType ( MOAIMesh.GL_TRIANGLE_FAN )
 
-if MOAIGfxDevice.isProgrammable () then
+vsh = MOAIFileSystem.loadFile ( 'shader.vsh' )
+fsh = MOAIFileSystem.loadFile ( 'shader.fsh' )
 
-	file = assert ( io.open ( 'shader.vsh', mode ))
-	vsh = file:read ( '*all' )
-	file:close ()
+assert ( vsh and fsh )
 
-	file = assert ( io.open ( 'shader.fsh', mode ))
-	fsh = file:read ( '*all' )
-	file:close ()
+local program = MOAIShaderProgram.new ()
 
-	local program = MOAIShaderProgram.new ()
+program:setVertexAttribute ( 1, 'position' )
+program:setVertexAttribute ( 2, 'uv' )
+program:setVertexAttribute ( 3, 'color' )
 
-	program:setVertexAttribute ( 1, 'position' )
-	program:setVertexAttribute ( 2, 'uv' )
-	program:setVertexAttribute ( 3, 'color' )
-	
-	program:reserveUniforms ( 1 )
-	program:declareUniform ( 1, 'transform', MOAIShaderProgram.UNIFORM_MATRIX_F4 )
-	
-	program:reserveGlobals ( 1 )
-	program:setGlobal ( 1, 1, MOAIShaderProgram.GLOBAL_WORLD_VIEW_PROJ )
-	
-	program:load ( vsh, fsh )
-	
-	local shader = MOAIShader.new ()
-	shader:setProgram ( program )
-	
-	mesh:setShader ( shader )
-end
+program:reserveUniforms ( 1 )
+program:declareUniform ( 1, 'transform', MOAIShaderProgram.UNIFORM_MATRIX_F4 )
+
+program:reserveGlobals ( 1 )
+program:setGlobal ( 1, 1, MOAIShaderProgram.GLOBAL_WORLD_VIEW_PROJ )
+
+program:load ( vsh, fsh )
+
+local shader = MOAIShader.new ()
+shader:setProgram ( program )
+
+mesh:setShader ( shader )
 
 prop = MOAIProp2D.new ()
 prop:setDeck ( mesh )

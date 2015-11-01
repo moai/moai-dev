@@ -67,7 +67,7 @@ int	MOAIVungleIOS::_cacheSizeSet ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int	MOAIVungleIOS::_displayAdvert ( lua_State* L ) {
 	MOAILuaState state ( L );
 	

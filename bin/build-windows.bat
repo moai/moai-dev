@@ -33,7 +33,7 @@ cmake -G "%generator%" ^
 -DCMAKE_INSTALL_PREFIX=%libprefix%\Release ^
 %rootpath%\cmake\hosts\host-win-sdl || exit /b 1
 
-cmake --build . --target INSTALL --config Release || exit /b 1
+cmake --build . --target INSTALL --config Release -- /verbosity:minimal || exit /b 1
 
 erase  libmoai\third-party\luajit\luajit\src\lua51.lib
 
@@ -49,13 +49,15 @@ echo Creating Distribute Libs
 rmdir /S/Q %libprefix%\Distribute\lib
 
 md %libprefix%\Distribute\lib
-lib /OUT:%libprefix%\Distribute\lib\moai.LIB %libprefix%\Release\lib\*.lib || exit /b 1
 
+lib /OUT:%libprefix%\Distribute\lib\moai.LIB %libprefix%\Release\lib\*.lib || exit /b 1
 lib /OUT:%libprefix%\Distribute\lib\moai_d.LIB %libprefix%\Debug\lib\*.lib || exit /b 1
+
 xcopy /S/I/Y %libprefix%\Release\include %libprefix%\Distribute\include  || exit /b 1
 mkdir %libprefix%\Distribute\bin
 copy /Y %libprefix%\Release\bin\moai.exe %libprefix%\Distribute\bin\moai.exe
-
+mkdir %libprefix%\Distribute\src
+copy /Y %libprefix%\Release\src\*.* %libprefix%\Distribute\src\
 
 if NOT EXIST %rootpath%\util\moai.exe copy /Y %libprefix%\Release\bin\moai.exe %rootpath%\util\moai.exe
 

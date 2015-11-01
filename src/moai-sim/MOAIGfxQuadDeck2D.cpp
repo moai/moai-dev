@@ -15,6 +15,141 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@lua	getQuad
+	@text	Get model space quad given a deck index. 
+			Vertex order is clockwiese from upper left.
+	
+	@in		MOAIGfxQuadDeck2D self
+	@in		number idx	Index of the quad.
+	@out	number x0
+	@out	number y0
+	@out	number x1
+	@out	number y1
+	@out	number x2
+	@out	number y2
+	@out	number x3
+	@out	number y3
+*/
+int MOAIGfxQuadDeck2D::_getQuad ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAIGfxQuadDeck2D, "UN" )
+	
+	u32 idx = state.GetValue < int >( 2, 1 ) - 1;
+	if ( MOAILogMessages::CheckIndexPlusOne ( idx, self->mQuads.Size (), L )) {
+
+		ZLQuad& quad = self->mQuads [ idx ].mModelQuad;
+		
+		state.Push ( quad.mV [ 0 ].mX );
+		state.Push ( quad.mV [ 0 ].mY );
+		state.Push ( quad.mV [ 1 ].mX );
+		state.Push ( quad.mV [ 1 ].mY );
+		state.Push ( quad.mV [ 2 ].mX );
+		state.Push ( quad.mV [ 2 ].mY );
+		state.Push ( quad.mV [ 3 ].mX );
+		state.Push ( quad.mV [ 3 ].mY );
+		
+		return 8;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	getRect
+	@text	Set model space quad given a valid deck index and a rect.
+	
+	@in		MOAIGfxQuadDeck2D self
+	@in		number idx	Index of the quad.
+	@out	number xMin
+	@out	number yMin
+	@out	number xMax
+	@out	number yMax
+*/
+int MOAIGfxQuadDeck2D::_getRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxQuadDeck2D, "UN" )
+	
+	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
+	
+	if ( idx < self->mQuads.Size ()) {
+		
+		ZLRect rect = self->mQuads [ idx ].GetVtxBounds();
+		
+		lua_pushnumber ( state, rect.mXMin );
+		lua_pushnumber ( state, rect.mYMin );
+		lua_pushnumber ( state, rect.mXMax );
+		lua_pushnumber ( state, rect.mYMax );
+		return 4;
+	}
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	getUVQuad
+	@text	Get UV model space quad given a valid deck index.
+			Vertex order is clockwise from upper left.
+
+	@in		MOAIGfxQuadDeck2D self
+	@in		number idx	Index of the quad.
+	@out	number u0
+	@out	number v0
+	@out	number u1
+	@out	number v1
+	@out	number u2
+	@out	number v2
+	@out	number u3
+	@out	number v3
+*/
+int MOAIGfxQuadDeck2D::_getUVQuad ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAIGfxQuadDeck2D, "UN" )
+	
+	u32 idx = state.GetValue < int >( 2, 1 ) - 1;
+	if ( MOAILogMessages::CheckIndexPlusOne ( idx, self->mQuads.Size (), L )) {
+		
+		ZLQuad& quad = self->mQuads [ idx ].mUVQuad;
+		
+		state.Push ( quad.mV [ 0 ].mX );
+		state.Push ( quad.mV [ 0 ].mY );
+		state.Push ( quad.mV [ 1 ].mX );
+		state.Push ( quad.mV [ 1 ].mY );
+		state.Push ( quad.mV [ 2 ].mX );
+		state.Push ( quad.mV [ 2 ].mY );
+		state.Push ( quad.mV [ 3 ].mX );
+		state.Push ( quad.mV [ 3 ].mY );
+		
+		return 8;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	getUVRect
+	@text	Get UV model space quad given a valid deck index.
+	
+	@in		MOAIGfxQuadDeck2D self
+	@in		number idx	Index of the quad.
+	@out	number xMin
+	@out	number yMin
+	@out	number xMax
+	@out	number yMax
+*/
+int MOAIGfxQuadDeck2D::_getUVRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxQuadDeck2D, "UN" )
+	
+	u32 idx = state.GetValue < int >( 2, 1 ) - 1;
+	if ( MOAILogMessages::CheckIndexPlusOne ( idx, self->mQuads.Size (), L )) {
+		
+		ZLRect rect = self->mQuads [ idx ].GetUVBounds ();
+		
+		state.Push ( rect.mXMin );
+		state.Push ( rect.mYMin );
+		state.Push ( rect.mXMax );
+		state.Push ( rect.mYMax );
+		
+		return 4;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	reserve
 	@text	Set capacity of quad deck.
 	
@@ -39,7 +174,14 @@ int MOAIGfxQuadDeck2D::_reserve ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setMaterialID
+	@text	Specify an optional material ID for a quad.
+	
+	@in		MOAIGfxQuadDeck2D self
+	@in		number idx
+	@in		number id
+	@out	nil
+*/
 int MOAIGfxQuadDeck2D::_setMaterialID ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuadDeck2D, "UN" )
 	
@@ -275,8 +417,6 @@ void MOAIGfxQuadDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec
 		
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
-
-	
 		
 		this->mQuads [ itemIdx ].Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY  );
 	}
@@ -340,6 +480,10 @@ void MOAIGfxQuadDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIStandardDeck::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
+		{ "getQuad",			_getQuad },
+		{ "getRect",			_getRect },
+		{ "getUVQuad",			_getUVQuad },
+		{ "getUVRect",			_getUVRect },
 		{ "reserve",			_reserve },
 		{ "setMaterialID",		_setMaterialID },
 		{ "setQuad",			_setQuad },

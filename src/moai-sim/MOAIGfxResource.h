@@ -5,31 +5,6 @@
 #define	MOAIGFXRESOURCE_H
 
 //================================================================//
-// MOAIGfxState
-//================================================================//
-/**	@lua	MOAIGfxState
-	@text	Abstract base class for objects that represent changes
-			to graphics state.
-*/
-class MOAIGfxState :
-	public virtual MOAILuaObject {
-private:
-
-	friend class MOAIGfxDevice;
-
-	//----------------------------------------------------------------//
-	// this is for binding via the gfx device's cache; we need this since
-	// Bind () is supposed to be ignorant of
-	virtual bool		LoadGfxState			() { return false; }
-
-public:
-
-	//----------------------------------------------------------------//
-						MOAIGfxState			();
-	virtual				~MOAIGfxState			();
-};
-
-//================================================================//
 // MOAIGfxResource
 //================================================================//
 /**	@lua	MOAIGfxResource
@@ -38,8 +13,13 @@ public:
 			context (if possible).
 */
 class MOAIGfxResource :
-	public MOAIGfxState {
+	public virtual MOAILuaObject {
 private:
+
+	friend class MOAIGfxDevice;
+	friend class MOAIGfxDeviceBase;
+	friend class MOAIGfxDeviceStateCache;
+	friend class MOAIGfxResourceMgr;
 
 	enum {
 		STATE_NEW, // we use this state to ensure we call DoCPUAffirm after init
@@ -65,9 +45,11 @@ private:
 	static int		_setReloader				( lua_State* L );
 
 	//----------------------------------------------------------------//
+	bool			Bind						(); // bind for drawing; go to STATE_READY
 	bool			DoGPUAffirm					(); // gets ready to bind
 	void			InvokeLoader				();
 	void			Renew						(); // lose (but not *delete*) the GPU resource
+	void			Unbind						();
 
 protected:
 
@@ -85,10 +67,10 @@ protected:
 
 public:
 
-	friend class MOAIGfxDevice;
-	friend class MOAIGfxResourceMgr;
-
-	GET ( u32, State, mState );
+	GET ( u32, State, mState )
+	IS ( Ready, mState, STATE_READY_TO_BIND )
+	
+	SET ( u32, LoadingPolicy, mLoadingPolicy )
 	
 	enum {
 		LOADING_POLICY_NONE,				// don't care and/or use global policy
@@ -106,7 +88,6 @@ public:
 
 	//----------------------------------------------------------------//
 	bool			DoCPUAffirm					(); // preload CPU portion
-	bool			Bind						(); // bind for drawing; go to STATE_READY
 	void			Destroy						(); // delete CPU and GPU data; go back to STATE_NEW
 	void			ForceCPUCreate				();
 	virtual u32		GetLoadingPolicy			();
@@ -116,7 +97,6 @@ public:
 	void			RegisterLuaFuncs			( MOAILuaState& state );
 	bool			Purge						( u32 age );
 	bool			PrepareForBind				();
-	void			Unbind						();
 };
 
 #endif

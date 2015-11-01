@@ -2,7 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIImageTexture.h>
 
@@ -45,7 +44,7 @@ MOAIImageTexture::MOAIImageTexture () :
 	mStatus ( INVALID ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAITextureBase )
+		RTTI_EXTEND ( MOAISingleTexture )
 		RTTI_EXTEND ( MOAIImage )
 	RTTI_END
 	
@@ -63,7 +62,7 @@ void MOAIImageTexture::OnGPUBind () {
 		this->UpdateTextureFromImage ( *this, this->mRegion );
 		this->mStatus = VALID;
 	}
-	MOAITextureBase::OnGPUBind ();
+	MOAISingleTexture::OnGPUBind ();
 }
 
 //----------------------------------------------------------------//
@@ -86,14 +85,14 @@ void MOAIImageTexture::OnImageStatusChanged	( bool isOK ) {
 //----------------------------------------------------------------//
 void MOAIImageTexture::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	MOAITextureBase::RegisterLuaClass ( state );
+	MOAISingleTexture::RegisterLuaClass ( state );
 	MOAIImage::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAITextureBase::RegisterLuaFuncs ( state );
+	MOAISingleTexture::RegisterLuaFuncs ( state );
 	MOAIImage::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
@@ -107,12 +106,12 @@ void MOAIImageTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAITextureBase::SerializeIn ( state, serializer );
+	MOAISingleTexture::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAITextureBase::SerializeOut ( state, serializer );
+	MOAISingleTexture::SerializeOut ( state, serializer );
 }
 
 //----------------------------------------------------------------//

@@ -11,6 +11,7 @@ class MOAITextStyleCache;
 class MOAITextStyleMap;
 class MOAITextStyler;
 class MOAITextStyleSpan;
+class MOAITextStyleState;
 
 //================================================================//
 // MOAITextDesignParser
@@ -21,42 +22,43 @@ private:
 	//----------------------------------------------------------------//
 	// layout state
 	
-	MOAITextStyleSpan*	mStyleSpan;
-	MOAITextStyle*		mStyle;
-	u32					mSpanIdx;
+	MOAITextStyleSpan*		mStyleSpan;
+	MOAITextStyleState*		mStyle;
+	u32						mSpanIdx;
 	
-	int					mIdx;
-	int					mPrevIdx;
+	int						mIdx;
+	int						mPrevIdx;
 	
-	cc8*				mStr;
+	cc8*					mStr;
 	
-	MOAIGlyphSet*		mDeck;
-	float				mDeckScale;
+	MOAIGlyphSet*			mDeck;
+	float					mDeckScale;
 	
-	int					mLineIdx;
-	u32					mLineSpriteID;
-	u32					mLineSize;
-	float				mLineHeight;
-	float				mLineAscent;
-	ZLRect				mLineRect;
+	int						mLineIdx;
+	u32						mLineSpriteID;
+	u32						mLineSize;
+	float					mLineHeight;
+	float					mLineAscent;
+	ZLRect					mLineRect;
 	
-	int					mTokenIdx;
-	u32					mTokenSpriteID;
-	u32					mTokenSize;
-	float				mTokenHeight;
-	float				mTokenAscent;
-	ZLRect				mTokenRect;
+	int						mTokenIdx;
+	u32						mTokenSpriteID;
+	u32						mTokenSize;
+	float					mTokenHeight;
+	float					mTokenAscent;
+	ZLRect					mTokenRect;
 	
-	float				mLayoutWidth;
-	float				mLayoutHeightMin;
-	float				mLayoutHeightMax;
+	float					mLayoutWidth;
+	float					mLayoutHeightMin;
+	float					mLayoutHeightMax;
 	
-	float				mPenX;
-	ZLVec2D				mOffset;
-	MOAIGlyph*			mPrevGlyph;
-	bool				mMore;
+	float					mPenX;
+	ZLVec2D					mOffset;
+	MOAIGlyph*				mPrevGlyph;
+	bool					mMore;
+	bool					mOverrun;
 	
-	u32					mBaseLine;
+	u32						mBaseLine;
 	
 	//----------------------------------------------------------------//
 	// layout settings
@@ -84,6 +86,7 @@ public:
 						MOAITextDesignParser		();
 	virtual				~MOAITextDesignParser		();
 	bool				More						();
+	bool				Overrun						();
 };
 
 #endif
