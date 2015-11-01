@@ -370,7 +370,7 @@ void MOAIGfxQuadListDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, Z
 		idx = idx - 1;
 		u32 itemIdx = idx % size;
 
-		bool hasMaterials = materials.Size () > 0;
+		bool hasMaterials = materials.Size () > 1;
 		
 		if ( !hasMaterials ) {
 			materials.LoadGfxState ( this, idx, MOAIShaderMgr::DECK2D_SHADER );
