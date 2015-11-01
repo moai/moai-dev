@@ -30,10 +30,9 @@ ZLRect MOAITextLayoutRules::GetGlyphRect ( const MOAIGlyph& glyph, float x, floa
 	
 	const MOAIGlyphSet& glyphSet = glyph.GetDeck ();
 
-	x += ( glyph.mBearingX * xScale );
-	y -= ( glyph.mBearingY * yScale );
-
 	ZLRect rect;
+
+	x += ( glyph.mBearingX * xScale );
 
 	rect.mXMin = x;
 	rect.mXMax = x + ( glyph.mWidth * xScale );
@@ -42,14 +41,16 @@ ZLRect MOAITextLayoutRules::GetGlyphRect ( const MOAIGlyph& glyph, float x, floa
 	
 		case GLYPH_SIZE:
 			
+			y -= ( glyph.mBearingY * yScale );
+			
 			rect.mYMin = y;
 			rect.mYMax = y + ( glyph.mHeight * yScale );
 			break;
 		
 		case LOGICAL_SIZE:
 		
-			rect.mYMin = y - ( glyphSet.GetDescent () * yScale ),
-			rect.mYMax = y + ( glyphSet.GetAscent () * yScale );
+			rect.mYMin = y - ( glyphSet.GetAscent () * yScale ),
+			rect.mYMax = y + ( glyphSet.GetDescent () * yScale );
 			break;
 		
 		case MAXIMUM_SIZE:
@@ -100,16 +101,17 @@ void MOAITextLayoutRules::Init ( const MOAITextLayoutRules& designer ) {
 
 	this->ClearCurves ();
 
-	this->mOwner			= designer.mOwner;
-	this->mFrame			= designer.mFrame;
-	this->mLimitWidth		= designer.mLimitWidth;
-	this->mLimitHeight		= designer.mLimitHeight;
-	this->mHAlign			= designer.mHAlign;
-	this->mVAlign			= designer.mVAlign;
-	this->mYFlip			= designer.mYFlip;
-	this->mWordBreakRule	= designer.mWordBreakRule;
-	this->mGlyphScale		= designer.mGlyphScale;
-	this->mLineSpacing		= designer.mLineSpacing;
+	this->mOwner				= designer.mOwner;
+	this->mFrame				= designer.mFrame;
+	this->mLimitWidth			= designer.mLimitWidth;
+	this->mLimitHeight			= designer.mLimitHeight;
+	this->mHAlign				= designer.mHAlign;
+	this->mVAlign				= designer.mVAlign;
+	this->mYFlip				= designer.mYFlip;
+	this->mFirstOverrunRule		= designer.mFirstOverrunRule;
+	this->mOverrunRule			= designer.mOverrunRule;
+	this->mGlyphScale			= designer.mGlyphScale;
+	this->mLineSpacing			= designer.mLineSpacing;
 	
 	u32 totalCurves = designer.mCurves.Size ();
 	this->ReserveCurves ( totalCurves );
@@ -126,7 +128,8 @@ MOAITextLayoutRules::MOAITextLayoutRules () :
 	mHAlign ( MOAITextLayoutRules::LEFT_JUSTIFY ),
 	mVAlign ( MOAITextLayoutRules::TOP_JUSTIFY ),
 	mYFlip ( false ),
-	mWordBreakRule ( MOAITextLayoutRules::WORD_BREAK_NONE ),
+	mFirstOverrunRule ( OVERRUN_WRAP_CHAR ),
+	mOverrunRule ( OVERRUN_WRAP_WORD ),
 	mHLayoutSizingRule ( LOGICAL_SIZE ),
 	mVLayoutSizingRule ( LOGICAL_SIZE ),
 	mLineSizingRule ( LOGICAL_SIZE ),

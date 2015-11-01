@@ -31,7 +31,8 @@ protected:
 	u32			mVAlign;
 	bool		mYFlip;
 	
-	u32			mWordBreakRule;			// rule for breaking words across lines
+	u32			mFirstOverrunRule;		// cannot be OVERRUN_WRAP_WORD
+	u32			mOverrunRule;
 	
 	u32			mHLayoutSizingRule;		// controls sizing *and* alignment
 	u32			mVLayoutSizingRule;		// controls sizing *and* alignment
@@ -59,10 +60,11 @@ public:
 		RIGHT_JUSTIFY,
 		TOP_JUSTIFY,
 	};
-
+	
 	enum {
-		WORD_BREAK_NONE,
-		WORD_BREAK_CHAR,
+		OVERRUN_WRAP_WORD, // not valid on first overflow
+		OVERRUN_WRAP_CHAR,
+		OVERRUN_ABORT,
 	};
 	
 	enum {
@@ -84,7 +86,8 @@ public:
 	GET_SET_CONST ( u32, VAlign, mVAlign )
 	GET_SET_CONST ( bool, YFlip, mYFlip )
 	
-	GET_SET_CONST ( u32, WordBreakRule, mWordBreakRule )
+	GET_SET_CONST ( u32, FirstOverrunRule, mFirstOverrunRule )
+	GET_SET_CONST ( u32, OverrunRule, mOverrunRule )
 	GET_SET_CONST ( float, GlyphScale, mGlyphScale )
 	GET_SET_CONST ( float, LineSpacing, mLineSpacing )
 

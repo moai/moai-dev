@@ -5,7 +5,8 @@
 ----------------------------------------------------------------
 
 MOAISim.openWindow ( "test", 320, 480 )
---MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX, 1, 1, 1, 1, 1 )
+MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX, 1, 0, 1, 1, 1 )
+MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_LIMITS, 2, 1, 1, 1, 1 )
 MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_BASELINES, 1, 1, 0, 0, 1 )
 --MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_GLYPHS, 1, 0.5, 0, 0, 1 )
 --MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_GLYPH_BOUNDS, 2, 1, 1, 0, 1 )
@@ -20,7 +21,6 @@ function newStyle ( font, size, r, g, b, a )
 	return style;
 end
 
-
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, -480 )
@@ -29,7 +29,12 @@ layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
-text = '<foo>A</><bar>B</><baz>C</>\n<baz>D</><bar>E</><foo>F</>'
+--text = '<foo>A</><bar>B</><baz>C</>\n<baz>D</><bar>E</><foo>F</>'
+
+--text = 'abcdefghijklmnop'
+--text = 'abcdefg hijklmnop qrstuv wxyz 0123456789 aaaaaa bbbbbb cccccc dddddd eeeeee'
+
+text = 'g\n\n\nqyjp'
 
 font = MOAIFont.new ()
 font:loadFromTTF ( '../resources/fonts/arial-rounded.TTF' )
@@ -45,7 +50,9 @@ label:setFont ( font )
 label:setTextSize ( 32 )
 label:setLineSpacing ( 0 )
 --label:setYFlip ( true )
-label:setAlignment ( MOAITextBox.CENTER_JUSTIFY, MOAITextBox.BASELINE_JUSTIFY )
+label:setRect ( -128, -128, 128, 128 )
+label:setRectLimits ( true, true )
+label:setAlignment ( MOAITextBox.CENTER_JUSTIFY, MOAITextBox.TOP_JUSTIFY )
 layer:insertProp ( label )
 
 gfxQuad = MOAIGfxQuad2D.new ()

@@ -20,9 +20,31 @@ class MOAITextStyleState;
 //================================================================//
 // parser for producing a layout
 class MOAITextLayoutEngine :
-	public MOAITextStyledCharStream,
-	public MOAITextLineLayout {
+	public MOAITextShaperClient {
 private:
+	
+	enum {
+		RESTORE_POINT_CHAR,
+		RESTORE_POINT_TOKEN,
+		TOTAL_RESTORE_POINTS,
+	};
+	
+	//================================================================//
+	// RestorePoint
+	//================================================================//
+	class RestorePoint {
+		public:
+		
+		u32						mCharIdx;
+		u32						mSpriteIdx;
+		ZLRect					mLineLayoutBounds;
+		ZLRect					mLineSpacingBounds;
+	};
+	
+	// a note about terminology:
+	// *layout* bounds (as opposed to *logical*) bounds are calculated based on the
+	// text designer's sizing/alignment rule. they may be distinct from the glyph
+	// bounds, the visible bounds and the logical bounds.
 	
 	//----------------------------------------------------------------//
 	// layout state
@@ -31,47 +53,48 @@ private:
 	MOAITextStyleState*		mStyle;
 	u32						mSpanIdx;
 	
-	int						mCharIdx;
+	u32						mCharIdx;
 	
 	cc8*					mStr;
 	
-	int						mLineCharIdx;
 	u32						mLineSpriteIdx;
-	
-	u32						mLineSizeInSprites;
-	
-	// *layout* bounds (as opposed to *logical*) bounds are calculated based on the
-	// text designer's sizing/alignment rule. they may be distinct from the glyph
-	// bounds, the visible bounds and the logical bounds.
 	
 	ZLRect					mLayoutBounds;
 	ZLRect					mLineLayoutBounds;
-	
 	ZLRect					mLineSpacingBounds;
-	ZLRect					mPrevLineSpacingBounds;
+	float					mLineSpacingCursor;
+	
+	float					mEmptyLineAscent;
+	float					mEmptyLineDescent;
 	
 	u32						mBaseLine;
 	
 	MOAITextStyledChar		mCurrentChar;
+	MOAIGlyphSet*			mCurrentGlyphDeck;
+	
+	RestorePoint			mRestorePoints [ TOTAL_RESTORE_POINTS ];
 	
 	//----------------------------------------------------------------//
 	// layout settings
 	
-	MOAITextLayoutRules*		mDesigner;
+	MOAITextLayoutRules*	mDesigner;
 	MOAITextLayout*			mLayout;
 	MOAITextStyleCache*		mStyleCache;
 	MOAITextStyleMap*		mStyleMap;
 	
 	//----------------------------------------------------------------//
-	u32						PushLine					();
 	void					Align						();
+	void					BeginChar					();
+	void					BeginToken					();
 	void					BuildLayout					();
+	void					CaptureRestorePoint			( u32 restorePointID );
 	u32						GetCharIdx					();
+	u32						GetLineSizeInSprites		();
 	u32						GetSpriteIdx				();
 	MOAITextStyledChar		NextChar					();
+	u32						PushLine					();
 	u32						PushSprite					( const MOAITextStyledChar& styledChar, float x, float y );
-	void					SeekChar					( u32 charIdx );
-	void					SeekSprite					( u32 spriteIdx );
+	void					Restore						( u32 restorePointID );
 	float					Snap						( float f, float b );
 
 public:

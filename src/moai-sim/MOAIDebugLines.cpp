@@ -138,6 +138,7 @@ void MOAIDebugLines::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "TEXT_BOX_BASELINES",						( u32 )TEXT_BOX_BASELINES );
 	state.SetField ( -1, "TEXT_BOX_GLYPH_BOUNDS",					( u32 )TEXT_BOX_GLYPH_BOUNDS );
 	state.SetField ( -1, "TEXT_BOX_GLYPHS",							( u32 )TEXT_BOX_GLYPHS );
+	state.SetField ( -1, "TEXT_BOX_LIMITS",							( u32 )TEXT_BOX_LIMITS );
 	state.SetField ( -1, "TEXT_BOX_LINES_GLYPH_BOUNDS",				( u32 )TEXT_BOX_LINES_GLYPH_BOUNDS );
 	state.SetField ( -1, "TEXT_BOX_LINES_LOGICAL_BOUNDS",			( u32 )TEXT_BOX_LINES_LOGICAL_BOUNDS );
 }

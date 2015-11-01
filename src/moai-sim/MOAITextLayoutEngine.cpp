@@ -18,35 +18,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-u32 MOAITextLayoutEngine::PushLine () {
-
-	u32 totalLines = this->mLayout->mLines.GetTop ();
-
-	float yDescend = 0.0f;
-
-	// this works because all the rectangles are first drawn with their baselines at the origin
-	if ( totalLines > 0 ) {
-		yDescend = ( this->mPrevLineSpacingBounds.mYMax - this->mLineSpacingBounds.mYMin ) + this->mDesigner->mLineSpacing;
-		this->mLineLayoutBounds.Offset ( 0.0f, yDescend );
-		this->mLineSpacingBounds.Offset ( 0.0f, yDescend );
-	}
-	this->mPrevLineSpacingBounds = this->mLineSpacingBounds;
-	
-	// TODO: check for overrun here
-	
-	this->mLayout->PushLine ( this->mLineSpriteIdx, this->mLineSizeInSprites, ZLVec2D ( 0.0f, yDescend ), this->mLineLayoutBounds );
-	
-	this->mLayoutBounds.Grow ( this->mLineLayoutBounds, ( totalLines > 0 ));
-	
-	this->mLineCharIdx = this->GetCharIdx ();
-	this->mLineSpriteIdx = this->GetSpriteIdx ();
-	
-	this->mLineSizeInSprites = 0;
-	
-	return PUSH_OK;
-}
-
-//----------------------------------------------------------------//
 void MOAITextLayoutEngine::Align () {
 
 	u32 totalLines = this->mLayout->mLines.GetTop ();
@@ -103,6 +74,9 @@ void MOAITextLayoutEngine::Align () {
 	
 	float lineYOffset = adjustedLayoutYMin - this->mLayoutBounds.mYMin;
 	
+	MOAIAnimCurve** curves = this->mDesigner->mCurves;
+	u32 totalCurves = this->mDesigner->mCurves.Size ();
+	
 	for ( u32 i = baseLine; i < totalLines; ++i ) {
 		
 		MOAITextLine& line = this->mLayout->mLines [ i ];
@@ -113,9 +87,6 @@ void MOAITextLayoutEngine::Align () {
 		
 		float adjustedLineXMin = xMin;
 		float adjustedLineYMin = lineRect.mYMin + lineYOffset;
-		//float lineY = penY;
-		
-		//penY += lineHeight + this->mDesigner->mLineSpacing;
 		
 		switch ( this->mDesigner->mHAlign ) {
 			
@@ -146,15 +117,15 @@ void MOAITextLayoutEngine::Align () {
 			adjustedLineY - line.mOrigin.mY
 		);
 		
-		//MOAIAnimCurve* curve = curves ? curves [( i - baseLine ) % totalCurves ] : 0;
+		MOAIAnimCurve* curve = curves ? curves [( i - baseLine ) % totalCurves ] : 0;
 		
 		for ( u32 j = 0; j < line.mSize; ++j ) {
 		
-			// TODO: restore anim curve!
-			//sprite.mPen.mY += curve ? yOff + curve->GetValue (( sprite.mPen.mX - xMin ) / width ) : yOff;
-		
 			MOAITextSprite& sprite = this->mLayout->mSprites [ line.mStart + j ];
-			
+		
+			// calculate this *before* shifting the sprite - uses sprite.mPen.mX!
+			float yOff = curve ? curve->GetValue (( sprite.mPen.mX - xMin ) / width ) : 0.0f;
+		
 			sprite.mPen.mX += line.mOrigin.mX;
 			sprite.mPen.mY += line.mOrigin.mY;
 		}
@@ -219,6 +190,18 @@ void MOAITextLayoutEngine::Align () {
 }
 
 //----------------------------------------------------------------//
+void MOAITextLayoutEngine::BeginChar () {
+
+	this->CaptureRestorePoint ( RESTORE_POINT_CHAR );
+}
+
+//----------------------------------------------------------------//
+void MOAITextLayoutEngine::BeginToken () {
+
+	this->mRestorePoints [ RESTORE_POINT_TOKEN ] = this->mRestorePoints [ RESTORE_POINT_CHAR ];
+}
+
+//----------------------------------------------------------------//
 void MOAITextLayoutEngine::BuildLayout () {
 	
 	bool limitWidth = this->mDesigner->mLimitWidth;
@@ -230,48 +213,31 @@ void MOAITextLayoutEngine::BuildLayout () {
 	bool more = true;
 	while ( more ) {
 		
+		u32 startingCharIdx = this->GetCharIdx ();
+		
 		MOAITextSimpleShaper shaper;
+		u32 discard = shaper.ShapeLine ( *this, *this->mDesigner );
 		
-		shaper.ShapeLine ( *this, *this, *this->mDesigner );
-		this->PushLine ();
+		if ( discard == MOAITextShaper::DISCARD_CHAR ) {
+			this->Restore ( RESTORE_POINT_CHAR );
+		}
+		else if ( discard == MOAITextShaper::DISCARD_TOKEN ) {
+			this->Restore ( RESTORE_POINT_TOKEN );
+		}
 		
-		more = this->mCurrentChar.mChar != 0;
+		if ( this->GetCharIdx () > startingCharIdx ) {
 		
-//		if ( MOAIFont::IsControl ( c )) {
-//		
-//			if ( c == '\n' ) {
-//				
-//				float newLineSize = this->mDeck->mHeight * this->mCurrentChar.mScale.mY;
-//				
-//				this->mLineHeight = this->mLineHeight == 0.0f ? newLineSize : this->mLineHeight;
-//				this->mLineAscent = this->mLineAscent == 0.0f ? newLineSize : this->mLineAscent;
-//			}
-//			else if ( c == 0 ) {
-//				
-//				more = false;
-//			}
-//		}
-		
-//		// if we overrun this->mHeight, then back up to the start of the current line
-//		if ( limitHeight && (( this->GetLayoutHeight () + this->mTokenHeight ) > frameHeight )) {
-//			
-//			this->mLayout->mSprites.SetTop ( this->mLineSpriteIdx );
-//			
-//			// if we're ending on an empty line (i.e. a newline) then throw it away
-//			// else back up so the next page will start on the line
-//			if ( this->mLineSize ) {
-//				this->mIdx = this->mLineCharIdx;
-//			}
-//			else if ( this->mTokenSize ) {
-//				this->mIdx = this->mTokenIdx;
-//			}
-//			else {
-//				this->mIdx = this->mIdx;
-//			}
-//			
-//			more = false;
-//		}
+			u32 result = this->PushLine ();
+			
+			more = (( result == PUSH_OK ) && ( this->mCurrentChar.mChar > 0 ));
+		}
+		else {
+			more = false;
+		}
 	}
+
+	// discard any sprites not already in a line
+	this->mLayout->mSprites.SetTop ( this->mLineSpriteIdx );
 
 	this->Align ();
 }
@@ -292,25 +258,47 @@ void MOAITextLayoutEngine::BuildLayout ( MOAITextLayout& layout, MOAITextStyleCa
 	this->mStyleSpan = 0;
 	this->mStyle = 0;
 	
-	this->mLineCharIdx = 0;
+	//this->mLineCharIdx = 0;
 	this->mLineSpriteIdx = 0;
-	this->mLineSizeInSprites = 0;
+	//this->mLineSizeInSprites = 0;
 	
 	this->mLayoutBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	this->mLineLayoutBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	
 	this->mLineSpacingBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-	this->mPrevLineSpacingBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	this->mLineSpacingCursor = 0.0f;
 	
 	this->mBaseLine = layout.mLines.GetTop ();
 	
+	memset ( &this->mCurrentChar, 0, sizeof ( MOAITextStyledChar ));
+	this->mCurrentChar.mScale.Init ( 1.0f, 1.0f );
+	
+	this->mCurrentGlyphDeck = 0;
+	
 	this->BuildLayout ();
+}
+
+//----------------------------------------------------------------//
+void MOAITextLayoutEngine::CaptureRestorePoint ( u32 restorePointID ) {
+
+	RestorePoint& restorePoint = this->mRestorePoints [ restorePointID ];
+	
+	restorePoint.mCharIdx				= this->mCharIdx;
+	restorePoint.mSpriteIdx				= this->mLayout->mSprites.GetTop ();
+	restorePoint.mLineLayoutBounds		= this->mLineLayoutBounds;
+	restorePoint.mLineSpacingBounds		= this->mLineSpacingBounds;
 }
 
 //----------------------------------------------------------------//
 u32 MOAITextLayoutEngine::GetCharIdx () {
 
 	return this->mCharIdx;
+}
+
+//----------------------------------------------------------------//
+u32 MOAITextLayoutEngine::GetLineSizeInSprites () {
+
+	return this->mLayout->mSprites.GetTop () - this->mLineSpriteIdx;
 }
 
 //----------------------------------------------------------------//
@@ -341,7 +329,7 @@ bool MOAITextLayoutEngine::More () {
 //----------------------------------------------------------------//
 MOAITextStyledChar MOAITextLayoutEngine::NextChar () {
 
-	memset ( &this->mCurrentChar, 0, sizeof ( MOAITextStyledChar ));
+	this->mCurrentChar.mChar = 0; // set this here so shaper will abort if we return due to an error.
 
 	bool newSpan = false;
 
@@ -369,9 +357,6 @@ MOAITextStyledChar MOAITextLayoutEngine::NextChar () {
 	
 	if ( this->mStyleSpan ) {
 	
-		MOAIGlyphSet* glyphDeck = 0;
-		float deckScale = 1.0f;
-	
 		if ( newSpan ) {
 		
 			MOAITextStyleState* defaultStyle = this->mStyleCache->GetStyle ();
@@ -389,28 +374,25 @@ MOAITextStyledChar MOAITextLayoutEngine::NextChar () {
 			font = font ? font : defaultFont;
 			if ( !font ) return this->mCurrentChar; // TODO: report error
 			
-			glyphDeck = font->GetGlyphSet ( this->mStyle->mSize );
-			if ( !glyphDeck && defaultFont ) {
-				glyphDeck = defaultFont->GetGlyphSet ( this->mStyle->mSize );
+			this->mCurrentGlyphDeck = font->GetGlyphSet ( this->mStyle->mSize );
+			if ( !this->mCurrentGlyphDeck && defaultFont ) {
+				this->mCurrentGlyphDeck = defaultFont->GetGlyphSet ( this->mStyle->mSize );
 			}
 			
-			if ( !glyphDeck ) return this->mCurrentChar; // TODO: report error
+			if ( !this->mCurrentGlyphDeck ) return this->mCurrentChar; // TODO: report error
 			
-			deckScale = glyphDeck && ( this->mStyle->mSize > 0.0f ) ? this->mStyle->mSize / glyphDeck->GetSize () : 1.0f;
+			float deckScale = this->mCurrentGlyphDeck && ( this->mStyle->mSize > 0.0f ) ? this->mStyle->mSize / this->mCurrentGlyphDeck->GetSize () : 1.0f;
+			
+			this->mCurrentChar.mStyle = this->mStyle;
+			this->mCurrentChar.mScale.mX = this->mDesigner->mGlyphScale * ( this->mStyle ? this->mStyle->mScale.mX : 1.0f ) * deckScale;
+			this->mCurrentChar.mScale.mY = this->mDesigner->mGlyphScale * ( this->mStyle ? this->mStyle->mScale.mY : 1.0f ) * deckScale;
 		}
 		
-		u32 charIdx = this->mCharIdx;
-		u32 c = moai_u8_nextchar ( this->mStr, &this->mCharIdx ); // advances the character index
+		this->mCurrentChar.mIdx = this->mCharIdx;
+		this->mCurrentChar.mChar = moai_u8_nextchar ( this->mStr, ( int* )&this->mCharIdx ); // advances the character index
 		
-		this->mCurrentChar.mIdx = charIdx;
-		this->mCurrentChar.mChar = c;
-		
-		this->mCurrentChar.mStyle = this->mStyle;
-		this->mCurrentChar.mScale.mX = this->mDesigner->mGlyphScale * ( this->mStyle ? this->mStyle->mScale.mX : 1.0f ) * deckScale;
-		this->mCurrentChar.mScale.mY = this->mDesigner->mGlyphScale * ( this->mStyle ? this->mStyle->mScale.mY : 1.0f ) * deckScale;
-		
-		if ( !MOAIFont::IsControl ( c )) {
-			this->mCurrentChar.mGlyph = glyphDeck->GetGlyph ( c );
+		if ( !MOAIFont::IsControl ( this->mCurrentChar.mChar )) {
+			this->mCurrentChar.mGlyph = this->mCurrentGlyphDeck->GetGlyph ( this->mCurrentChar.mChar );
 		}
 	}
 	return this->mCurrentChar;
@@ -421,6 +403,48 @@ bool MOAITextLayoutEngine::Overrun () {
 
 	//return this->mMore || this->mOverrun;
 	return false;
+}
+
+//----------------------------------------------------------------//
+u32 MOAITextLayoutEngine::PushLine () {
+
+	u32 lineSizeInSprites = this->GetLineSizeInSprites ();
+	
+	if ( lineSizeInSprites == 0 ) {
+	
+		float ascent = this->mCurrentGlyphDeck->GetAscent ();
+		float descent = this->mCurrentGlyphDeck->GetDescent ();
+		
+		this->mLineLayoutBounds.Init ( 0.0f, -ascent, 0.0f, descent );
+		this->mLineSpacingBounds = this->mLineLayoutBounds;
+	}
+
+	u32 totalLines = this->mLayout->mLines.GetTop ();
+
+	float yPen = 0.0f;
+
+	// this works because all the rectangles are first drawn with their baselines at the origin
+	if ( totalLines > 0 ) {
+		yPen = ( this->mLineSpacingCursor - this->mLineSpacingBounds.mYMin ) + this->mDesigner->mLineSpacing;
+		this->mLineLayoutBounds.Offset ( 0.0f, yPen );
+		this->mLineSpacingBounds.Offset ( 0.0f, yPen );
+	}
+	this->mLineSpacingCursor = this->mLineSpacingBounds.mYMax;
+	
+	ZLRect newLayoutBounds = this->mLayoutBounds;
+	newLayoutBounds.Grow ( this->mLineLayoutBounds, ( totalLines > 0 ));
+	
+	if ( this->mDesigner->mLimitHeight ) {
+	
+		float frameHeight = this->mDesigner->GetFrame ().Height ();
+		if ( newLayoutBounds.Height () > frameHeight ) return PUSH_OVERRUN;
+	}
+	
+	this->mLayout->PushLine ( this->mLineSpriteIdx, this->GetLineSizeInSprites (), ZLVec2D ( 0.0f, yPen ), this->mLineLayoutBounds );
+	this->mLayoutBounds = newLayoutBounds;
+	this->mLineSpriteIdx = this->GetSpriteIdx ();
+	
+	return PUSH_OK;
 }
 
 //----------------------------------------------------------------//
@@ -439,25 +463,26 @@ u32 MOAITextLayoutEngine::PushSprite ( const MOAITextStyledChar& styledChar, flo
 		if ( glyphLayoutRect.mXMax > frameWidth ) return PUSH_OVERRUN;
 	}
 	
-	this->mLineLayoutBounds.Grow ( glyphLayoutRect, ( this->mLineSizeInSprites > 0 ));
-	this->mLineSpacingBounds.Grow ( glyphSpacingRect, ( this->mLineSizeInSprites > 0 ));
+	u32 lineSizeInSprites = this->GetLineSizeInSprites ();
 	
-	this->mLineSizeInSprites++;
+	this->mLineLayoutBounds.Grow ( glyphLayoutRect, ( lineSizeInSprites > 0 ));
+	this->mLineSpacingBounds.Grow ( glyphSpacingRect, ( lineSizeInSprites > 0 ));
+	
 	this->mLayout->PushSprite ( styledChar, x, y );
 	
 	return PUSH_OK;
 }
 
 //----------------------------------------------------------------//
-void MOAITextLayoutEngine::SeekChar ( u32 charIdx ) {
+void MOAITextLayoutEngine::Restore ( u32 restorePointID ) {
 
-	this->mCharIdx = charIdx;
-}
-
-//----------------------------------------------------------------//
-void MOAITextLayoutEngine::SeekSprite ( u32 spriteIdx ) {
-
-	this->mLayout->mSprites.SetTop ( spriteIdx );
+	RestorePoint& restorePoint = this->mRestorePoints [ restorePointID ];
+	
+	this->mCharIdx				= restorePoint.mCharIdx;
+	this->mLineLayoutBounds		= restorePoint.mLineLayoutBounds;
+	this->mLineSpacingBounds	= restorePoint.mLineSpacingBounds;
+	
+	this->mLayout->mSprites.SetTop ( restorePoint.mSpriteIdx );
 }
 
 //----------------------------------------------------------------//

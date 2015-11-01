@@ -18,10 +18,10 @@
  */
 ZLRect MOAIGlyphMetrics::GetGlyphRect ( float x, float y, float xScale, float yScale ) const {
 
+	ZLRect rect;
+
 	x += ( this->mBearingX * xScale );
 	y -= ( this->mBearingY * yScale );
-
-	ZLRect rect;
 
 	rect.Init (
 		x,
@@ -36,16 +36,15 @@ ZLRect MOAIGlyphMetrics::GetGlyphRect ( float x, float y, float xScale, float yS
 //----------------------------------------------------------------//
 ZLRect MOAIGlyphMetrics::GetLogicalRect ( float x, float y, float ascent, float descent, float xScale, float yScale ) const {
 
-	x += ( this->mBearingX * xScale );
-	y -= ( this->mBearingY * yScale );
-
 	ZLRect rect;
+
+	x += ( this->mBearingX * xScale );
 
 	rect.Init (
 		x,
-		y - ( descent * yScale ),
+		y - ( ascent * yScale ),
 		x + ( this->mWidth * xScale ),
-		y + ( ascent * yScale )
+		y + ( descent * yScale )
 	);
 
 	return rect;

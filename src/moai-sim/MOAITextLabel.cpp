@@ -655,7 +655,7 @@ int MOAITextLabel::_setStyle ( lua_State* L ) {
 int MOAITextLabel::_setWordBreak ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 
-	self->mDesigner.SetWordBreakRule ( state.GetValue < u32 >( 2, MOAITextLayoutRules::WORD_BREAK_NONE ));
+	//self->mDesigner.SetWordBreakRule ( state.GetValue < u32 >( 2, MOAITextLayoutRules::WORD_BREAK_NONE ));
 	return 0;
 }
 
@@ -804,42 +804,43 @@ void MOAITextLabel::DrawDebug ( int subPrimID, float lod ) {
 	if ( this->IsClear ()) return;
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
-	
-	MOAIDraw& draw = MOAIDraw::Get ();
-	UNUSED ( draw ); // mystery warning in vs2008
-	
-	draw.Bind ();
 	
 	ZLMatrix4x4 worldDrawingMtx = this->GetWorldDrawingMtx ();
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, worldDrawingMtx );
-	
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	
-	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX )) {
+	this->mLayout.DrawDebug ();
 	
-		ZLRect bounds;
-		if ( this->mLayout.GetBounds ( bounds )) {
+	ZLRect frame = this->mDesigner.GetFrame ();
+	
+	if ( frame.Area () > 0.0f ) {
+	
+		frame.Offset ( -this->mLayout.mXOffset, -this->mLayout.mYOffset );
 		
-			ZLRect frame = this->mDesigner.GetFrame ();
+		MOAIDraw& draw = MOAIDraw::Get ();
+		UNUSED ( draw ); // mystery warning in vs2008
+		draw.Bind ();
 		
-			if ( this->mDesigner.GetLimitWidth ()) {
-				float xOffset = this->mLayout.mXOffset;
-				bounds.mXMin = frame.mXMin - xOffset;
-				bounds.mXMax = frame.mXMax - xOffset;
-			}
+		MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
+		
+		if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX )) {
+		
+			draw.DrawRectOutline ( frame );
+		}
+		
+		if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LIMITS )) {
 			
 			if ( this->mDesigner.GetLimitHeight ()) {
-				float yOffset = this->mLayout.mYOffset;
-				bounds.mYMin = frame.mYMin - yOffset;
-				bounds.mYMax = frame.mYMax - yOffset;
+				draw.DrawLine ( frame.mXMin, frame.mYMin, frame.mXMax, frame.mYMin );
+				draw.DrawLine ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMax );
 			}
-		
-			draw.DrawRectOutline ( bounds );
+			
+			if ( this->mDesigner.GetLimitWidth ()) {
+				draw.DrawLine ( frame.mXMin, frame.mYMin, frame.mXMin, frame.mYMax );
+				draw.DrawLine ( frame.mXMax, frame.mYMin, frame.mXMax, frame.mYMax );
+			}
 		}
 	}
-	
-	this->mLayout.DrawDebug ();
 }
 
 //----------------------------------------------------------------//
@@ -1047,8 +1048,8 @@ void MOAITextLabel::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIGraphicsProp::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass ( state );
 
-	state.SetField ( -1, "WORD_BREAK_NONE", ( u32 )MOAITextLayoutRules::WORD_BREAK_NONE );
-	state.SetField ( -1, "WORD_BREAK_CHAR", ( u32 )MOAITextLayoutRules::WORD_BREAK_CHAR );
+	//state.SetField ( -1, "WORD_BREAK_NONE", ( u32 )MOAITextLayoutRules::WORD_BREAK_NONE );
+	//state.SetField ( -1, "WORD_BREAK_CHAR", ( u32 )MOAITextLayoutRules::WORD_BREAK_CHAR );
 
 	state.SetField ( -1, "BASELINE_JUSTIFY",	( u32 )MOAITextLayoutRules::BASELINE_JUSTIFY );
 	state.SetField ( -1, "BOTTOM_JUSTIFY",		( u32 )MOAITextLayoutRules::BOTTOM_JUSTIFY );

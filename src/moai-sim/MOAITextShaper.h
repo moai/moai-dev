@@ -17,30 +17,14 @@ public:
 	u32							mIdx;
 	u32							mChar;
 	MOAITextStyleState*			mStyle;
-	//MOAIGlyphSet*				mDeck;
 	MOAIGlyph*					mGlyph;
 	ZLVec2D						mScale;
 };
 
 //================================================================//
-// MOAITextCharStream
+// MOAITextShaperClient
 //================================================================//
-// parser for producing a layout
-class MOAITextStyledCharStream {
-public:
-
-	//----------------------------------------------------------------//
-	virtual u32						GetCharIdx						() = 0;
-									MOAITextStyledCharStream		() {}
-	virtual							~MOAITextStyledCharStream		() {}
-	virtual MOAITextStyledChar		NextChar						() = 0;
-	virtual void					SeekChar						( u32 charIdx ) = 0;
-};
-
-//================================================================//
-// MOAITextLineLayout
-//================================================================//
-class MOAITextLineLayout {
+class MOAITextShaperClient {
 public:
 
 	enum {
@@ -49,31 +33,37 @@ public:
 	};
 
 	//----------------------------------------------------------------//
-	virtual u32			GetSpriteIdx			() = 0;
-						MOAITextLineLayout		() {}
-	virtual				~MOAITextLineLayout		() {}
-	virtual u32			PushSprite				( const MOAITextStyledChar& styledChar, float x, float y ) = 0;
-	virtual void		SeekSprite				( u32 spriteIdx ) = 0;
+	virtual void					BeginChar						() = 0; // set the resume point for characters
+	virtual void					BeginToken						() = 0; // set the resume point for tokens
+									MOAITextShaperClient			() {}
+	virtual							~MOAITextShaperClient			() {}
+	virtual MOAITextStyledChar		NextChar						() = 0; // read the next styled char from the input stream
+	virtual u32						PushSprite						( const MOAITextStyledChar& styledChar, float x, float y ) = 0; // push a visible character
 };
 
 //================================================================//
 // MOAITextShaper
 //================================================================//
 class MOAITextShaper {
-private:
-	
 public:
+
+	enum {
+		DISCARD_CHAR,
+		DISCARD_TOKEN,
+		DISCARD_NONE,
+	};
 
 	//----------------------------------------------------------------//
 						MOAITextShaper				() {}
 	virtual				~MOAITextShaper				() {}
-	virtual void		ShapeLine					( MOAITextStyledCharStream& charStream, MOAITextLineLayout& lineLayout, const MOAITextLayoutRules& designer ) = 0;
+	virtual u32			ShapeLine					( MOAITextShaperClient& client, const MOAITextLayoutRules& designer ) = 0;
 };
 
 //================================================================//
 // MOAITextSimpleShaper
 //================================================================//
-class MOAITextSimpleShaper {
+class MOAITextSimpleShaper :
+	public MOAITextShaper {
 private:
 
 	int					mTokenIdx;
@@ -88,7 +78,7 @@ public:
 	//----------------------------------------------------------------//
 						MOAITextSimpleShaper		();
 						~MOAITextSimpleShaper		();
-	void				ShapeLine					( MOAITextStyledCharStream& charStream, MOAITextLineLayout& lineLayout, const MOAITextLayoutRules& designer );
+	u32					ShapeLine					( MOAITextShaperClient& client, const MOAITextLayoutRules& designer );
 };
 
 #endif
