@@ -145,10 +145,13 @@ protected:
 	bool				mMore;
 	bool				mOverrun;
 	
-	MOAITextDesigner	mDesigner;
-	MOAITextStyleCache	mStyleCache;
-	MOAITextStyleMap	mStyleMap;
-	MOAITextLayout		mLayout;
+	// keeping these as components as opposed to base classes to make clear the text
+	// layout pipeline, which has more than a few moving parts
+	
+	MOAITextDesigner	mDesigner;		// design params for laying out text
+	MOAITextStyleCache	mStyleCache;	// some style are anonymous and created ad hoc
+	MOAITextStyleMap	mStyleMap;		// preprocessed text broken up by style changes
+	MOAITextLayout		mLayout;		// cached glyph layout for currently visible text
 	
 	STLString			mText;
 	

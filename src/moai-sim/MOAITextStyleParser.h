@@ -13,6 +13,7 @@ class MOAITextStyleMap;
 //================================================================//
 // MOAITextStyleParser
 //================================================================//
+// parser state for producing a style map
 class MOAITextStyleParser {
 private:
 
