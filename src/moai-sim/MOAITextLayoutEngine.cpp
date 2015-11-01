@@ -5,8 +5,8 @@
 #include <contrib/moai_utf8.h>
 #include <moai-sim/MOAIAnimCurve.h>
 #include <moai-sim/MOAIFont.h>
-#include <moai-sim/MOAITextDesigner.h>
-#include <moai-sim/MOAITextDesignParser.h>
+#include <moai-sim/MOAITextLayoutRules.h>
+#include <moai-sim/MOAITextLayoutEngine.h>
 #include <moai-sim/MOAITextLayout.h>
 #include <moai-sim/MOAITextShaper.h>
 #include <moai-sim/MOAITextStyle.h>
@@ -14,11 +14,11 @@
 #include <moai-sim/MOAITextStyleMap.h>
 
 //================================================================//
-// MOAITextDesignParser
+// MOAITextLayoutEngine
 //================================================================//
 
 //----------------------------------------------------------------//
-u32 MOAITextDesignParser::PushLine () {
+u32 MOAITextLayoutEngine::PushLine () {
 
 	u32 totalLines = this->mLayout->mLines.GetTop ();
 
@@ -47,7 +47,7 @@ u32 MOAITextDesignParser::PushLine () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextDesignParser::Align () {
+void MOAITextLayoutEngine::Align () {
 
 	u32 totalLines = this->mLayout->mLines.GetTop ();
 
@@ -85,15 +85,15 @@ void MOAITextDesignParser::Align () {
 	
 	switch ( this->mDesigner->mVAlign ) {
 		
-		case MOAITextDesigner::CENTER_JUSTIFY:
+		case MOAITextLayoutRules::CENTER_JUSTIFY:
 			adjustedLayoutYMin = yMin + ( height * 0.5f ) - ( layoutHeight * 0.5f );
 			break;
 			
-		case MOAITextDesigner::TOP_JUSTIFY:
+		case MOAITextLayoutRules::TOP_JUSTIFY:
 			adjustedLayoutYMin = yMin;
 			break;
 
-		case MOAITextDesigner::BOTTOM_JUSTIFY:
+		case MOAITextLayoutRules::BOTTOM_JUSTIFY:
 			adjustedLayoutYMin = yMax - layoutHeight;
 			break;
 		
@@ -119,15 +119,15 @@ void MOAITextDesignParser::Align () {
 		
 		switch ( this->mDesigner->mHAlign ) {
 			
-			case MOAITextDesigner::CENTER_JUSTIFY:
+			case MOAITextLayoutRules::CENTER_JUSTIFY:
 				adjustedLineXMin = xMin + ( width * 0.5f ) - ( lineWidth * 0.5f );
 				break;
 				
-			case MOAITextDesigner::LEFT_JUSTIFY:
+			case MOAITextLayoutRules::LEFT_JUSTIFY:
 				adjustedLineXMin = xMin;
 				break;
 
-			case MOAITextDesigner::RIGHT_JUSTIFY:
+			case MOAITextLayoutRules::RIGHT_JUSTIFY:
 				adjustedLineXMin = xMax - lineWidth;
 				break;
 			
@@ -168,15 +168,15 @@ void MOAITextDesignParser::Align () {
 	
 		switch ( this->mDesigner->mHAlign ) {
 	
-			case MOAITextDesigner::CENTER_JUSTIFY:
+			case MOAITextLayoutRules::CENTER_JUSTIFY:
 				this->mLayout->mXOffset = 0.0f;
 				break;
 				
-			case MOAITextDesigner::LEFT_JUSTIFY:
+			case MOAITextLayoutRules::LEFT_JUSTIFY:
 				this->mLayout->mXOffset = -xOffsetToCenter;
 				break;
 
-			case MOAITextDesigner::RIGHT_JUSTIFY:
+			case MOAITextLayoutRules::RIGHT_JUSTIFY:
 				this->mLayout->mXOffset = xOffsetToCenter;
 				break;
 			
@@ -191,19 +191,19 @@ void MOAITextDesignParser::Align () {
 	
 		switch ( this->mDesigner->mVAlign ) {
 		
-			case MOAITextDesigner::CENTER_JUSTIFY:
+			case MOAITextLayoutRules::CENTER_JUSTIFY:
 				this->mLayout->mYOffset = 0.0f;
 				break;
 				
-			case MOAITextDesigner::TOP_JUSTIFY:
+			case MOAITextLayoutRules::TOP_JUSTIFY:
 				this->mLayout->mYOffset = yOffsetToCenter;
 				break;
 
-			case MOAITextDesigner::BOTTOM_JUSTIFY:
+			case MOAITextLayoutRules::BOTTOM_JUSTIFY:
 				this->mLayout->mYOffset = -yOffsetToCenter;
 				break;
 			
-			case MOAITextDesigner::BASELINE_JUSTIFY: {
+			case MOAITextLayoutRules::BASELINE_JUSTIFY: {
 				float sign = this->mDesigner->mYFlip ? 1.0f : -1.0f;
 				float firstLineAscent = this->mLayout->mLines [ 0 ].GetAscent ();
 				this->mLayout->mYOffset = ( yOffsetToCenter + firstLineAscent ) * sign;
@@ -219,7 +219,7 @@ void MOAITextDesignParser::Align () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextDesignParser::BuildLayout () {
+void MOAITextLayoutEngine::BuildLayout () {
 	
 	bool limitWidth = this->mDesigner->mLimitWidth;
 	bool limitHeight = this->mDesigner->mLimitHeight;
@@ -277,7 +277,7 @@ void MOAITextDesignParser::BuildLayout () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextDesignParser::BuildLayout ( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, MOAITextDesigner& designer, cc8* str, u32 idx ) {
+void MOAITextLayoutEngine::BuildLayout ( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, MOAITextLayoutRules& designer, cc8* str, u32 idx ) {
 	
 	if ( styleMap.CountSpans () == 0 ) return;
 	
@@ -308,19 +308,19 @@ void MOAITextDesignParser::BuildLayout ( MOAITextLayout& layout, MOAITextStyleCa
 }
 
 //----------------------------------------------------------------//
-u32 MOAITextDesignParser::GetCharIdx () {
+u32 MOAITextLayoutEngine::GetCharIdx () {
 
 	return this->mCharIdx;
 }
 
 //----------------------------------------------------------------//
-u32 MOAITextDesignParser::GetSpriteIdx () {
+u32 MOAITextLayoutEngine::GetSpriteIdx () {
 
 	return this->mLayout->mSprites.GetTop ();
 }
 
 //----------------------------------------------------------------//
-MOAITextDesignParser::MOAITextDesignParser () :
+MOAITextLayoutEngine::MOAITextLayoutEngine () :
 	mDesigner ( 0 ),
 	mLayout ( 0 ),
 	mStyleCache ( 0 ),
@@ -328,18 +328,18 @@ MOAITextDesignParser::MOAITextDesignParser () :
 }
 
 //----------------------------------------------------------------//
-MOAITextDesignParser::~MOAITextDesignParser () {
+MOAITextLayoutEngine::~MOAITextLayoutEngine () {
 }
 
 //----------------------------------------------------------------//
-bool MOAITextDesignParser::More () {
+bool MOAITextLayoutEngine::More () {
 
 	//return this->mMore;
 	return false;
 }
 
 //----------------------------------------------------------------//
-MOAITextStyledChar MOAITextDesignParser::NextChar () {
+MOAITextStyledChar MOAITextLayoutEngine::NextChar () {
 
 	memset ( &this->mCurrentChar, 0, sizeof ( MOAITextStyledChar ));
 
@@ -417,14 +417,14 @@ MOAITextStyledChar MOAITextDesignParser::NextChar () {
 }
 
 //----------------------------------------------------------------//
-bool MOAITextDesignParser::Overrun () {
+bool MOAITextLayoutEngine::Overrun () {
 
 	//return this->mMore || this->mOverrun;
 	return false;
 }
 
 //----------------------------------------------------------------//
-u32 MOAITextDesignParser::PushSprite ( const MOAITextStyledChar& styledChar, float x, float y ) {
+u32 MOAITextLayoutEngine::PushSprite ( const MOAITextStyledChar& styledChar, float x, float y ) {
 	
 	float xScale = styledChar.mScale.mX;
 	float yScale = styledChar.mScale.mY;
@@ -449,19 +449,19 @@ u32 MOAITextDesignParser::PushSprite ( const MOAITextStyledChar& styledChar, flo
 }
 
 //----------------------------------------------------------------//
-void MOAITextDesignParser::SeekChar ( u32 charIdx ) {
+void MOAITextLayoutEngine::SeekChar ( u32 charIdx ) {
 
 	this->mCharIdx = charIdx;
 }
 
 //----------------------------------------------------------------//
-void MOAITextDesignParser::SeekSprite ( u32 spriteIdx ) {
+void MOAITextLayoutEngine::SeekSprite ( u32 spriteIdx ) {
 
 	this->mLayout->mSprites.SetTop ( spriteIdx );
 }
 
 //----------------------------------------------------------------//
-float MOAITextDesignParser::Snap ( float f, float b ) {
+float MOAITextLayoutEngine::Snap ( float f, float b ) {
 
 	return ( b > 0.0f ) ? floorf (( f / b ) + 0.5f ) * b : f;
 }

@@ -67,7 +67,7 @@ public:
 	//----------------------------------------------------------------//
 						MOAITextShaper				() {}
 	virtual				~MOAITextShaper				() {}
-	virtual void		ShapeLine					( MOAITextStyledCharStream& charStream, MOAITextLineLayout& lineLayout, const MOAITextDesigner& designer ) = 0;
+	virtual void		ShapeLine					( MOAITextStyledCharStream& charStream, MOAITextLineLayout& lineLayout, const MOAITextLayoutRules& designer ) = 0;
 };
 
 //================================================================//
@@ -88,7 +88,7 @@ public:
 	//----------------------------------------------------------------//
 						MOAITextSimpleShaper		();
 						~MOAITextSimpleShaper		();
-	void				ShapeLine					( MOAITextStyledCharStream& charStream, MOAITextLineLayout& lineLayout, const MOAITextDesigner& designer );
+	void				ShapeLine					( MOAITextStyledCharStream& charStream, MOAITextLineLayout& lineLayout, const MOAITextLayoutRules& designer );
 };
 
 #endif

@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAITEXTDESIGNER_H
-#define	MOAITEXTDESIGNER_H
+#ifndef	MOAITEXTLAYOUTRULES_H
+#define	MOAITEXTLAYOUTRULES_H
 
 class MOAIAnimCurve;
 class MOAINode;
@@ -13,14 +13,14 @@ class MOAITextStyleMap;
 class MOAITextStyleSpan;
 
 //================================================================//
-// MOAITextDesigner
+// MOAITextLayoutRules
 //================================================================//
-class MOAITextDesigner {
+class MOAITextLayoutRules {
 protected:
 
-	friend class MOAITextDesignParser;
+	friend class MOAITextLayoutEngine;
 
-	MOAINode*	mOwner;
+	MOAINode*	mOwner; // TODO: this sucks. kill it.
 
 	ZLRect		mFrame;
 	
@@ -97,9 +97,9 @@ public:
 	ZLRect				GetGlyphLayoutRect			( const MOAIGlyph& glyph, float x, float y, float xScale, float yScale );
 	ZLRect				GetGlyphSpacingRect			( const MOAIGlyph& glyph, float x, float y, float xScale, float yScale );
 	void				Layout						( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, cc8* str, u32 idx, bool* more, u32* nextIdx, bool* overrun );
-	void				Init						( const MOAITextDesigner& designer );
-						MOAITextDesigner			();
-						~MOAITextDesigner			();
+	void				Init						( const MOAITextLayoutRules& designer );
+						MOAITextLayoutRules			();
+						~MOAITextLayoutRules			();
 	void				ReserveCurves				( u32 total );
 	void				SetCurve					( u32 idx, MOAIAnimCurve* curve );
 };

@@ -43,7 +43,7 @@ public:
 	friend class MOAIGlyphCache;
 	friend class MOAIDynamicGlyphCachePage;
 	friend class MOAITextLabel;
-	friend class MOAITextDesignParser;
+	friend class MOAITextLayoutEngine;
 	friend class MOAITextLayout;
 	friend class MOAITextStyleParser;
 	

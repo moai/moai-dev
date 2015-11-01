@@ -15,7 +15,7 @@
 #include <moai-sim/MOAIRenderMgr.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAISim.h>
-#include <moai-sim/MOAITextDesigner.h>
+#include <moai-sim/MOAITextLayoutRules.h>
 #include <moai-sim/MOAITextLabel.h>
 #include <moai-sim/MOAITextStyle.h>
 #include <moai-sim/MOAITextStyleParser.h>
@@ -295,8 +295,8 @@ int MOAITextLabel::_revealAll ( lua_State* L ) {
 int MOAITextLabel::_setAlignment ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "UN" )
 
-	self->mDesigner.SetHAlign ( state.GetValue < u32 >( 2, MOAITextDesigner::LEFT_JUSTIFY ));
-	self->mDesigner.SetVAlign ( state.GetValue < u32 >( 3, MOAITextDesigner::TOP_JUSTIFY ));
+	self->mDesigner.SetHAlign ( state.GetValue < u32 >( 2, MOAITextLayoutRules::LEFT_JUSTIFY ));
+	self->mDesigner.SetVAlign ( state.GetValue < u32 >( 3, MOAITextLayoutRules::TOP_JUSTIFY ));
 	self->ScheduleLayout ();
 
 	return 0;
@@ -655,7 +655,7 @@ int MOAITextLabel::_setStyle ( lua_State* L ) {
 int MOAITextLabel::_setWordBreak ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 
-	self->mDesigner.SetWordBreakRule ( state.GetValue < u32 >( 2, MOAITextDesigner::WORD_BREAK_NONE ));
+	self->mDesigner.SetWordBreakRule ( state.GetValue < u32 >( 2, MOAITextLayoutRules::WORD_BREAK_NONE ));
 	return 0;
 }
 
@@ -1047,15 +1047,15 @@ void MOAITextLabel::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIGraphicsProp::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass ( state );
 
-	state.SetField ( -1, "WORD_BREAK_NONE", ( u32 )MOAITextDesigner::WORD_BREAK_NONE );
-	state.SetField ( -1, "WORD_BREAK_CHAR", ( u32 )MOAITextDesigner::WORD_BREAK_CHAR );
+	state.SetField ( -1, "WORD_BREAK_NONE", ( u32 )MOAITextLayoutRules::WORD_BREAK_NONE );
+	state.SetField ( -1, "WORD_BREAK_CHAR", ( u32 )MOAITextLayoutRules::WORD_BREAK_CHAR );
 
-	state.SetField ( -1, "BASELINE_JUSTIFY",	( u32 )MOAITextDesigner::BASELINE_JUSTIFY );
-	state.SetField ( -1, "BOTTOM_JUSTIFY",		( u32 )MOAITextDesigner::BOTTOM_JUSTIFY );
-	state.SetField ( -1, "LEFT_JUSTIFY",		( u32 )MOAITextDesigner::LEFT_JUSTIFY );
-	state.SetField ( -1, "CENTER_JUSTIFY",		( u32 )MOAITextDesigner::CENTER_JUSTIFY );
-	state.SetField ( -1, "RIGHT_JUSTIFY",		( u32 )MOAITextDesigner::RIGHT_JUSTIFY );
-	state.SetField ( -1, "TOP_JUSTIFY",			( u32 )MOAITextDesigner::TOP_JUSTIFY );
+	state.SetField ( -1, "BASELINE_JUSTIFY",	( u32 )MOAITextLayoutRules::BASELINE_JUSTIFY );
+	state.SetField ( -1, "BOTTOM_JUSTIFY",		( u32 )MOAITextLayoutRules::BOTTOM_JUSTIFY );
+	state.SetField ( -1, "LEFT_JUSTIFY",		( u32 )MOAITextLayoutRules::LEFT_JUSTIFY );
+	state.SetField ( -1, "CENTER_JUSTIFY",		( u32 )MOAITextLayoutRules::CENTER_JUSTIFY );
+	state.SetField ( -1, "RIGHT_JUSTIFY",		( u32 )MOAITextLayoutRules::RIGHT_JUSTIFY );
+	state.SetField ( -1, "TOP_JUSTIFY",			( u32 )MOAITextLayoutRules::TOP_JUSTIFY );
 }
 
 //----------------------------------------------------------------//

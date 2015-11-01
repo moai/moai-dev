@@ -20,7 +20,7 @@ class MOAITextSprite {
 private:
 
 	friend class MOAITextLabel;
-	friend class MOAITextDesignParser;
+	friend class MOAITextLayoutEngine;
 	friend class MOAITextLayout;
 	
 	MOAIGlyph*				mGlyph;
@@ -45,7 +45,7 @@ private:
 class MOAITextLine {
 private:
 
-	friend class MOAITextDesignParser;
+	friend class MOAITextLayoutEngine;
 	friend class MOAITextLabel;
 	friend class MOAITextLayout;
 	
@@ -87,7 +87,7 @@ public:
 class MOAITextLayout {
 private:
 	
-	friend class MOAITextDesignParser;
+	friend class MOAITextLayoutEngine;
 	friend class MOAITextLabel;
 	
 	// this is the text page layout. these are the actual sprites and lines

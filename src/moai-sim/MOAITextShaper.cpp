@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <moai-sim/MOAIGlyph.h>
 #include <moai-sim/MOAIFont.h>
-#include <moai-sim/MOAITextDesigner.h>
+#include <moai-sim/MOAITextLayoutRules.h>
 #include <moai-sim/MOAITextShaper.h>
 
 //================================================================//
@@ -28,7 +28,7 @@ MOAITextSimpleShaper::~MOAITextSimpleShaper () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextSimpleShaper::ShapeLine ( MOAITextStyledCharStream& charStream, MOAITextLineLayout& lineLayout, const MOAITextDesigner& designer ) {
+void MOAITextSimpleShaper::ShapeLine ( MOAITextStyledCharStream& charStream, MOAITextLineLayout& lineLayout, const MOAITextLayoutRules& designer ) {
 
 	u32 lineSize			= 0;
 	float penX				= 0.0f;

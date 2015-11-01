@@ -6,7 +6,7 @@
 
 #include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAIGraphicsProp.h>
-#include <moai-sim/MOAITextDesigner.h>
+#include <moai-sim/MOAITextLayoutRules.h>
 #include <moai-sim/MOAITextLayout.h>
 #include <moai-sim/MOAITextStyle.h>
 #include <moai-sim/MOAITextStyleCache.h>
@@ -145,7 +145,7 @@ protected:
 	bool				mMore;
 	bool				mOverrun;
 	
-	MOAITextDesigner	mDesigner;
+	MOAITextLayoutRules	mDesigner;
 	MOAITextStyleCache	mStyleCache;
 	MOAITextStyleMap	mStyleMap;
 	MOAITextLayout		mLayout;

@@ -5,18 +5,18 @@
 #include <contrib/moai_utf8.h>
 #include <moai-sim/MOAIAnimCurve.h>
 #include <moai-sim/MOAIFont.h>
-#include <moai-sim/MOAITextDesigner.h>
-#include <moai-sim/MOAITextDesignParser.h>
+#include <moai-sim/MOAITextLayoutRules.h>
+#include <moai-sim/MOAITextLayoutEngine.h>
 #include <moai-sim/MOAITextLayout.h>
 #include <moai-sim/MOAITextStyle.h>
 #include <moai-sim/MOAITextStyleMap.h>
 
 //================================================================//
-// MOAITextDesigner
+// MOAITextLayoutRules
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITextDesigner::ClearCurves () {
+void MOAITextLayoutRules::ClearCurves () {
 
 	for ( u32 i = 0; i < this->mCurves.Size (); ++i ) {
 		this->ReleaseCurve ( this->mCurves [ i ]);
@@ -25,7 +25,7 @@ void MOAITextDesigner::ClearCurves () {
 }
 
 //----------------------------------------------------------------//
-ZLRect MOAITextDesigner::GetGlyphRect ( const MOAIGlyph& glyph, float x, float y, float xScale, float yScale, u32 hRule, u32 vRule ) {
+ZLRect MOAITextLayoutRules::GetGlyphRect ( const MOAIGlyph& glyph, float x, float y, float xScale, float yScale, u32 hRule, u32 vRule ) {
 	UNUSED ( hRule );
 	
 	const MOAIGlyphSet& glyphSet = glyph.GetDeck ();
@@ -63,21 +63,21 @@ ZLRect MOAITextDesigner::GetGlyphRect ( const MOAIGlyph& glyph, float x, float y
 }
 
 //----------------------------------------------------------------//
-ZLRect MOAITextDesigner::GetGlyphLayoutRect ( const MOAIGlyph& glyph, float x, float y, float xScale, float yScale ) {
+ZLRect MOAITextLayoutRules::GetGlyphLayoutRect ( const MOAIGlyph& glyph, float x, float y, float xScale, float yScale ) {
 
-	return MOAITextDesigner::GetGlyphRect ( glyph, x, y, xScale, yScale, this->mHLayoutSizingRule, this->mVLayoutSizingRule );
+	return MOAITextLayoutRules::GetGlyphRect ( glyph, x, y, xScale, yScale, this->mHLayoutSizingRule, this->mVLayoutSizingRule );
 }
 
 //----------------------------------------------------------------//
-ZLRect MOAITextDesigner::GetGlyphSpacingRect ( const MOAIGlyph& glyph, float x, float y, float xScale, float yScale ) {
+ZLRect MOAITextLayoutRules::GetGlyphSpacingRect ( const MOAIGlyph& glyph, float x, float y, float xScale, float yScale ) {
 
-	return MOAITextDesigner::GetGlyphRect ( glyph, x, y, xScale, yScale, this->mLineSizingRule, this->mLineSizingRule );
+	return MOAITextLayoutRules::GetGlyphRect ( glyph, x, y, xScale, yScale, this->mLineSizingRule, this->mLineSizingRule );
 }
 
 //----------------------------------------------------------------//
-void MOAITextDesigner::Layout ( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, cc8* str, u32 idx, bool* more, u32* nextIdx, bool* overrun ) {
+void MOAITextLayoutRules::Layout ( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, cc8* str, u32 idx, bool* more, u32* nextIdx, bool* overrun ) {
 
-	MOAITextDesignParser parser;
+	MOAITextLayoutEngine parser;
 	
 	parser.BuildLayout ( layout, styleCache, styleMap, *this, str, idx );
 	layout.ApplyHighlights ();
@@ -96,7 +96,7 @@ void MOAITextDesigner::Layout ( MOAITextLayout& layout, MOAITextStyleCache& styl
 }
 
 //----------------------------------------------------------------//
-void MOAITextDesigner::Init ( const MOAITextDesigner& designer ) {
+void MOAITextLayoutRules::Init ( const MOAITextLayoutRules& designer ) {
 
 	this->ClearCurves ();
 
@@ -119,14 +119,14 @@ void MOAITextDesigner::Init ( const MOAITextDesigner& designer ) {
 }
 
 //----------------------------------------------------------------//
-MOAITextDesigner::MOAITextDesigner () :
+MOAITextLayoutRules::MOAITextLayoutRules () :
 	mOwner ( 0 ),
 	mLimitWidth ( false ),
 	mLimitHeight ( false ),
-	mHAlign ( MOAITextDesigner::LEFT_JUSTIFY ),
-	mVAlign ( MOAITextDesigner::TOP_JUSTIFY ),
+	mHAlign ( MOAITextLayoutRules::LEFT_JUSTIFY ),
+	mVAlign ( MOAITextLayoutRules::TOP_JUSTIFY ),
 	mYFlip ( false ),
-	mWordBreakRule ( MOAITextDesigner::WORD_BREAK_NONE ),
+	mWordBreakRule ( MOAITextLayoutRules::WORD_BREAK_NONE ),
 	mHLayoutSizingRule ( LOGICAL_SIZE ),
 	mVLayoutSizingRule ( LOGICAL_SIZE ),
 	mLineSizingRule ( LOGICAL_SIZE ),
@@ -139,13 +139,13 @@ MOAITextDesigner::MOAITextDesigner () :
 }
 
 //----------------------------------------------------------------//
-MOAITextDesigner::~MOAITextDesigner () {
+MOAITextLayoutRules::~MOAITextLayoutRules () {
 
 	this->ClearCurves ();
 }
 
 //----------------------------------------------------------------//
-void MOAITextDesigner::ReleaseCurve ( MOAIAnimCurve* curve  ) {
+void MOAITextLayoutRules::ReleaseCurve ( MOAIAnimCurve* curve  ) {
 
 	if ( curve ) {
 		if ( this->mOwner ) {
@@ -156,7 +156,7 @@ void MOAITextDesigner::ReleaseCurve ( MOAIAnimCurve* curve  ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextDesigner::ReserveCurves ( u32 total ) {
+void MOAITextLayoutRules::ReserveCurves ( u32 total ) {
 
 	this->ClearCurves ();
 	
@@ -165,7 +165,7 @@ void MOAITextDesigner::ReserveCurves ( u32 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextDesigner::RetainCurve ( MOAIAnimCurve* curve  ) {
+void MOAITextLayoutRules::RetainCurve ( MOAIAnimCurve* curve  ) {
 
 	if ( curve ) {
 		curve->Retain ();
@@ -176,7 +176,7 @@ void MOAITextDesigner::RetainCurve ( MOAIAnimCurve* curve  ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextDesigner::SetCurve ( u32 idx, MOAIAnimCurve* curve ) {
+void MOAITextLayoutRules::SetCurve ( u32 idx, MOAIAnimCurve* curve ) {
 
 	if ( idx > this->mCurves.Size ()) return;
 	if ( this->mCurves [ idx ] == curve ) return;

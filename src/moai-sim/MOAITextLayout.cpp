@@ -11,8 +11,8 @@
 #include <moai-sim/MOAINodeMgr.h>
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIShaderMgr.h>
-#include <moai-sim/MOAITextDesigner.h>
-#include <moai-sim/MOAITextDesignParser.h>
+#include <moai-sim/MOAITextLayoutRules.h>
+#include <moai-sim/MOAITextLayoutEngine.h>
 #include <moai-sim/MOAITextLayout.h>
 #include <moai-sim/MOAITextStyle.h>
 #include <moai-sim/MOAITextStyleParser.h>

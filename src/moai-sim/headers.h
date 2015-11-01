@@ -158,9 +158,10 @@
 #include <moai-sim/MOAISpanList.h>
 #include <moai-sim/MOAIStaticGlyphCache.h>
 #include <moai-sim/MOAITextBundle.h>
-#include <moai-sim/MOAITextDesigner.h>
-#include <moai-sim/MOAITextDesignParser.h>
 #include <moai-sim/MOAITextLabel.h>
+#include <moai-sim/MOAITextLayout.h>
+#include <moai-sim/MOAITextLayoutEngine.h>
+#include <moai-sim/MOAITextLayoutRules.h>
 #include <moai-sim/MOAITextShaper.h>
 #include <moai-sim/MOAITextStyle.h>
 #include <moai-sim/MOAITextStyleCache.h>

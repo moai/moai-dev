@@ -35,7 +35,7 @@ public:
 class MOAITextStyleCache {
 private:
 
-	friend class MOAITextDesignParser;
+	friend class MOAITextLayoutEngine;
 	friend class MOAITextStyleParser;
 
 	// set only if we care about LuaRelease, LuaRetain and setting dep links to styles

@@ -1,12 +1,12 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAITEXTDESIGNPARSER_H
-#define	MOAITEXTDESIGNPARSER_H
+#ifndef	MOAITEXTLAYOUTENGINE_H
+#define	MOAITEXTLAYOUTENGINE_H
 
 #include <moai-sim/MOAITextShaper.h>
 
-class MOAITextDesigner;
+class MOAITextLayoutRules;
 class MOAITextLayout;
 class MOAITextStyle;
 class MOAITextStyleCache;
@@ -16,10 +16,10 @@ class MOAITextStyleSpan;
 class MOAITextStyleState;
 
 //================================================================//
-// MOAITextDesignParser
+// MOAITextLayoutEngine
 //================================================================//
 // parser for producing a layout
-class MOAITextDesignParser :
+class MOAITextLayoutEngine :
 	public MOAITextStyledCharStream,
 	public MOAITextLineLayout {
 private:
@@ -57,7 +57,7 @@ private:
 	//----------------------------------------------------------------//
 	// layout settings
 	
-	MOAITextDesigner*		mDesigner;
+	MOAITextLayoutRules*		mDesigner;
 	MOAITextLayout*			mLayout;
 	MOAITextStyleCache*		mStyleCache;
 	MOAITextStyleMap*		mStyleMap;
@@ -79,9 +79,9 @@ public:
 	GET ( u32, Index, mCharIdx )
 
 	//----------------------------------------------------------------//
-	void					BuildLayout					( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, MOAITextDesigner& designer, cc8* str, u32 idx );
-							MOAITextDesignParser		();
-	virtual					~MOAITextDesignParser		();
+	void					BuildLayout					( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, MOAITextLayoutRules& designer, cc8* str, u32 idx );
+							MOAITextLayoutEngine		();
+	virtual					~MOAITextLayoutEngine		();
 	bool					More						();
 	bool					Overrun						();
 };
