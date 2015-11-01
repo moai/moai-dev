@@ -34,27 +34,27 @@ void MOAITextLayoutEngine::Align () {
 	
 	u32 baseLine = this->mBaseLine;
 	
-	bool limitWidth = this->mDesigner->mLimitWidth;
-	bool limitHeight = this->mDesigner->mLimitHeight;
+	bool limitWidth = this->mLayoutRules->mLimitWidth;
+	bool limitHeight = this->mLayoutRules->mLimitHeight;
 
 	// this is for alignment; text should already be within bounds, if constrained
-	float width = limitWidth ? this->mDesigner->mFrame.Width () : this->mLayoutBounds.Width ();
-	float height = limitHeight ? this->mDesigner->mFrame.Height () : this->mLayoutBounds.Height ();
+	float width = limitWidth ? this->mLayoutRules->mFrame.Width () : this->mLayoutBounds.Width ();
+	float height = limitHeight ? this->mLayoutRules->mFrame.Height () : this->mLayoutBounds.Height ();
 
 	float layoutHeight = this->mLayoutBounds.Height ();
 
-	float xMin = limitWidth ? this->mDesigner->mFrame.mXMin : 0.0f;
+	float xMin = limitWidth ? this->mLayoutRules->mFrame.mXMin : 0.0f;
 	float xMax = xMin + width;
 	
-	float yMin = limitHeight ? this->mDesigner->mFrame.mYMin : 0.0f;
+	float yMin = limitHeight ? this->mLayoutRules->mFrame.mYMin : 0.0f;
 	float yMax = yMin + height;
 	
-	float xOffsetToCenter = -this->Snap ( xMin + ( width * 0.5f ), this->mDesigner->mHLineSnap );
-	float yOffsetToCenter = -this->Snap ( yMin + ( height * 0.5f ), this->mDesigner->mVLineSnap );
+	float xOffsetToCenter = -this->Snap ( xMin + ( width * 0.5f ), this->mLayoutRules->mHLineSnap );
+	float yOffsetToCenter = -this->Snap ( yMin + ( height * 0.5f ), this->mLayoutRules->mVLineSnap );
 	
 	float adjustedLayoutYMin = yMin;
 	
-	switch ( this->mDesigner->mVAlign ) {
+	switch ( this->mLayoutRules->mVAlign ) {
 		
 		case MOAITextLayoutRules::CENTER_JUSTIFY:
 			adjustedLayoutYMin = yMin + ( height * 0.5f ) - ( layoutHeight * 0.5f );
@@ -74,8 +74,8 @@ void MOAITextLayoutEngine::Align () {
 	
 	float lineYOffset = adjustedLayoutYMin - this->mLayoutBounds.mYMin;
 	
-	MOAIAnimCurve** curves = this->mDesigner->mCurves;
-	u32 totalCurves = this->mDesigner->mCurves.Size ();
+	MOAIAnimCurve** curves = this->mLayoutRules->mCurves;
+	u32 totalCurves = this->mLayoutRules->mCurves.Size ();
 	
 	for ( u32 i = baseLine; i < totalLines; ++i ) {
 		
@@ -88,7 +88,7 @@ void MOAITextLayoutEngine::Align () {
 		float adjustedLineXMin = xMin;
 		float adjustedLineYMin = lineRect.mYMin + lineYOffset;
 		
-		switch ( this->mDesigner->mHAlign ) {
+		switch ( this->mLayoutRules->mHAlign ) {
 			
 			case MOAITextLayoutRules::CENTER_JUSTIFY:
 				adjustedLineXMin = xMin + ( width * 0.5f ) - ( lineWidth * 0.5f );
@@ -109,8 +109,8 @@ void MOAITextLayoutEngine::Align () {
 		float adjustedLineX = line.mOrigin.mX + ( adjustedLineXMin - lineRect.mXMin );
 		float adjustedLineY = line.mOrigin.mY + ( adjustedLineYMin - lineRect.mYMin );
 
-		adjustedLineX = this->Snap ( adjustedLineX, this->mDesigner->mHLineSnap ) + xOffsetToCenter;
-		adjustedLineY = this->Snap ( adjustedLineY, this->mDesigner->mVLineSnap ) + yOffsetToCenter;
+		adjustedLineX = this->Snap ( adjustedLineX, this->mLayoutRules->mHLineSnap ) + xOffsetToCenter;
+		adjustedLineY = this->Snap ( adjustedLineY, this->mLayoutRules->mVLineSnap ) + yOffsetToCenter;
 		
 		line.Offset (
 			adjustedLineX - line.mOrigin.mX,
@@ -137,7 +137,7 @@ void MOAITextLayoutEngine::Align () {
 	
 	if ( limitWidth == false ) {
 	
-		switch ( this->mDesigner->mHAlign ) {
+		switch ( this->mLayoutRules->mHAlign ) {
 	
 			case MOAITextLayoutRules::CENTER_JUSTIFY:
 				this->mLayout->mXOffset = 0.0f;
@@ -160,7 +160,7 @@ void MOAITextLayoutEngine::Align () {
 	
 	if ( limitHeight == false ) {
 	
-		switch ( this->mDesigner->mVAlign ) {
+		switch ( this->mLayoutRules->mVAlign ) {
 		
 			case MOAITextLayoutRules::CENTER_JUSTIFY:
 				this->mLayout->mYOffset = 0.0f;
@@ -175,7 +175,7 @@ void MOAITextLayoutEngine::Align () {
 				break;
 			
 			case MOAITextLayoutRules::BASELINE_JUSTIFY: {
-				float sign = this->mDesigner->mYFlip ? 1.0f : -1.0f;
+				float sign = this->mLayoutRules->mYFlip ? 1.0f : -1.0f;
 				float firstLineAscent = this->mLayout->mLines [ 0 ].GetAscent ();
 				this->mLayout->mYOffset = ( yOffsetToCenter + firstLineAscent ) * sign;
 				break;
@@ -204,11 +204,11 @@ void MOAITextLayoutEngine::BeginToken () {
 //----------------------------------------------------------------//
 void MOAITextLayoutEngine::BuildLayout () {
 	
-	bool limitWidth = this->mDesigner->mLimitWidth;
-	bool limitHeight = this->mDesigner->mLimitHeight;
+	bool limitWidth = this->mLayoutRules->mLimitWidth;
+	bool limitHeight = this->mLayoutRules->mLimitHeight;
 	
-	float frameWidth = this->mDesigner->mFrame.Width ();
-	float frameHeight = this->mDesigner->mFrame.Height ();
+	float frameWidth = this->mLayoutRules->mFrame.Width ();
+	float frameHeight = this->mLayoutRules->mFrame.Height ();
 	
 	bool more = true;
 	while ( more ) {
@@ -216,7 +216,7 @@ void MOAITextLayoutEngine::BuildLayout () {
 		u32 startingCharIdx = this->GetCharIdx ();
 		
 		MOAITextSimpleShaper shaper;
-		u32 discard = shaper.ShapeLine ( *this, *this->mDesigner );
+		u32 discard = shaper.ShapeLine ( *this, *this->mLayoutRules );
 		
 		if ( discard == MOAITextShaper::DISCARD_CHAR ) {
 			this->Restore ( RESTORE_POINT_CHAR );
@@ -250,7 +250,7 @@ void MOAITextLayoutEngine::BuildLayout ( MOAITextLayout& layout, MOAITextStyleCa
 	this->mLayout = &layout;
 	this->mStyleCache = &styleCache;
 	this->mStyleMap = &styleMap;
-	this->mDesigner = &designer;
+	this->mLayoutRules = &designer;
 	
 	this->mStr = str;
 	this->mCharIdx = idx;
@@ -309,7 +309,7 @@ u32 MOAITextLayoutEngine::GetSpriteIdx () {
 
 //----------------------------------------------------------------//
 MOAITextLayoutEngine::MOAITextLayoutEngine () :
-	mDesigner ( 0 ),
+	mLayoutRules ( 0 ),
 	mLayout ( 0 ),
 	mStyleCache ( 0 ),
 	mStyleMap ( 0 ) {
@@ -384,8 +384,8 @@ MOAITextStyledChar MOAITextLayoutEngine::NextChar () {
 			float deckScale = this->mCurrentGlyphDeck && ( this->mStyle->mSize > 0.0f ) ? this->mStyle->mSize / this->mCurrentGlyphDeck->GetSize () : 1.0f;
 			
 			this->mCurrentChar.mStyle = this->mStyle;
-			this->mCurrentChar.mScale.mX = this->mDesigner->mGlyphScale * ( this->mStyle ? this->mStyle->mScale.mX : 1.0f ) * deckScale;
-			this->mCurrentChar.mScale.mY = this->mDesigner->mGlyphScale * ( this->mStyle ? this->mStyle->mScale.mY : 1.0f ) * deckScale;
+			this->mCurrentChar.mScale.mX = this->mLayoutRules->mGlyphScale * ( this->mStyle ? this->mStyle->mScale.mX : 1.0f ) * deckScale;
+			this->mCurrentChar.mScale.mY = this->mLayoutRules->mGlyphScale * ( this->mStyle ? this->mStyle->mScale.mY : 1.0f ) * deckScale;
 		}
 		
 		this->mCurrentChar.mIdx = this->mCharIdx;
@@ -425,7 +425,7 @@ u32 MOAITextLayoutEngine::PushLine () {
 
 	// this works because all the rectangles are first drawn with their baselines at the origin
 	if ( totalLines > 0 ) {
-		yPen = ( this->mLineSpacingCursor - this->mLineSpacingBounds.mYMin ) + this->mDesigner->mLineSpacing;
+		yPen = ( this->mLineSpacingCursor - this->mLineSpacingBounds.mYMin ) + this->mLayoutRules->mLineSpacing;
 		this->mLineLayoutBounds.Offset ( 0.0f, yPen );
 		this->mLineSpacingBounds.Offset ( 0.0f, yPen );
 	}
@@ -434,9 +434,9 @@ u32 MOAITextLayoutEngine::PushLine () {
 	ZLRect newLayoutBounds = this->mLayoutBounds;
 	newLayoutBounds.Grow ( this->mLineLayoutBounds, ( totalLines > 0 ));
 	
-	if ( this->mDesigner->mLimitHeight ) {
+	if ( this->mLayoutRules->mLimitHeight ) {
 	
-		float frameHeight = this->mDesigner->GetFrame ().Height ();
+		float frameHeight = this->mLayoutRules->GetFrame ().Height ();
 		if ( newLayoutBounds.Height () > frameHeight ) return PUSH_OVERRUN;
 	}
 	
@@ -455,11 +455,11 @@ u32 MOAITextLayoutEngine::PushSprite ( const MOAITextStyledChar& styledChar, flo
 	
 	MOAIGlyph* glyph = styledChar.mGlyph;
 	
-	ZLRect glyphLayoutRect = this->mDesigner->GetGlyphLayoutRect ( *glyph, x, y, xScale, yScale );
-	ZLRect glyphSpacingRect = this->mDesigner->GetGlyphSpacingRect ( *glyph, x, y, xScale, yScale );
+	ZLRect glyphLayoutRect = this->mLayoutRules->GetGlyphLayoutRect ( *glyph, x, y, xScale, yScale );
+	ZLRect glyphSpacingRect = this->mLayoutRules->GetGlyphSpacingRect ( *glyph, x, y, xScale, yScale );
 	
-	if ( this->mDesigner->mLimitWidth ) {
-		float frameWidth = this->mDesigner->GetFrame ().Width ();
+	if ( this->mLayoutRules->mLimitWidth ) {
+		float frameWidth = this->mLayoutRules->GetFrame ().Width ();
 		if ( glyphLayoutRect.mXMax > frameWidth ) return PUSH_OVERRUN;
 	}
 	

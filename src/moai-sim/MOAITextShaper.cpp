@@ -20,7 +20,7 @@ MOAITextSimpleShaper::~MOAITextSimpleShaper () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAITextSimpleShaper::ShapeLine ( MOAITextShaperClient& client, const MOAITextLayoutRules& designer ) {
+u32 MOAITextSimpleShaper::ShapeLine ( MOAITextShaperClient& client, const MOAITextLayoutRules& layoutRules ) {
 
 	// return one of DISCARD_CHAR, DISCARD_TOKEN, DISCARD_NONE depending on how overruns are to be handled
 	u32 discard = DISCARD_NONE;
@@ -81,7 +81,7 @@ u32 MOAITextSimpleShaper::ShapeLine ( MOAITextShaperClient& client, const MOAITe
 			if ( result == MOAITextShaperClient::PUSH_OVERRUN ) {
 				
 				// there was an overrun, so we're either going to discard the last char or the last token
-				u32 overrunRule = ( tokenCount == 0 ) ? designer.GetFirstOverrunRule () : designer.GetOverrunRule ();
+				u32 overrunRule = ( tokenCount == 0 ) ? layoutRules.GetFirstOverrunRule () : layoutRules.GetOverrunRule ();
 				discard = ( overrunRule == MOAITextLayoutRules::OVERRUN_WRAP_CHAR ) ? DISCARD_CHAR : DISCARD_TOKEN;
 				break;
 			}

@@ -77,7 +77,7 @@ private:
 	//----------------------------------------------------------------//
 	// layout settings
 	
-	MOAITextLayoutRules*	mDesigner;
+	MOAITextLayoutRules*	mLayoutRules;
 	MOAITextLayout*			mLayout;
 	MOAITextStyleCache*		mStyleCache;
 	MOAITextStyleMap*		mStyleMap;

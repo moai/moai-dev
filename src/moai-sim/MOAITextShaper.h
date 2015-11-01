@@ -56,7 +56,7 @@ public:
 	//----------------------------------------------------------------//
 						MOAITextShaper				() {}
 	virtual				~MOAITextShaper				() {}
-	virtual u32			ShapeLine					( MOAITextShaperClient& client, const MOAITextLayoutRules& designer ) = 0;
+	virtual u32			ShapeLine					( MOAITextShaperClient& client, const MOAITextLayoutRules& layoutRules ) = 0;
 };
 
 //================================================================//
@@ -78,7 +78,7 @@ public:
 	//----------------------------------------------------------------//
 						MOAITextSimpleShaper		();
 						~MOAITextSimpleShaper		();
-	u32					ShapeLine					( MOAITextShaperClient& client, const MOAITextLayoutRules& designer );
+	u32					ShapeLine					( MOAITextShaperClient& client, const MOAITextLayoutRules& layoutRules );
 };
 
 #endif
