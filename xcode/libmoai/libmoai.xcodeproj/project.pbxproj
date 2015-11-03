@@ -3189,8 +3189,7 @@
 		EB9EE1EF1BE9424500E8938F /* MOAIFrameBufferTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD80D67016D8025000C172D2 /* MOAIFrameBufferTexture.cpp */; };
 		EB9EE1F01BE9424500E8938F /* SFMT.c in Sources */ = {isa = PBXBuildFile; fileRef = DD80D69916D8029700C172D2 /* SFMT.c */; };
 		EB9EE1F61BE94DA900E8938F /* AKU-iphone.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D0BA213599FD200802A3C /* AKU-iphone.h */; };
-		EB9EE1F71BE94DB500E8938F /* AKU-iphone.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD1D0BA313599FD200802A3C /* AKU-iphone.mm */; };
-		EB9EE1F81BE94DC800E8938F /* moaiext-iphone.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ECA1398BA6200AB0420 /* moaiext-iphone.h */; };
+		EB9EE1FB1BE95D4F00E8938F /* moaiext-tvos.h in Headers */ = {isa = PBXBuildFile; fileRef = EB9EE1FA1BE95D4F00E8938F /* moaiext-tvos.h */; };
 		EBC495FA184D21840059FBDE /* MOAITextRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B45A8BEA1829A95C00D2B255 /* MOAITextRenderer.cpp */; };
 		EBC495FB184D21880059FBDE /* MOAITextRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = B45A8BEB1829A95C00D2B255 /* MOAITextRenderer.h */; };
 		F00D616E18C00F1E00625DA9 /* sha1_one.c in Sources */ = {isa = PBXBuildFile; fileRef = F055A9691846ACCF0031F295 /* sha1_one.c */; };
@@ -4395,6 +4394,7 @@
 		EB9EE1851BE9422800E8938F /* liblibmoai-tvos-3rdparty.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liblibmoai-tvos-3rdparty.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB9EE1B81BE9423500E8938F /* liblibmoai-tvos-luaext.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liblibmoai-tvos-luaext.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB9EE1F51BE9424500E8938F /* liblibmoai-tvos-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liblibmoai-tvos-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB9EE1FA1BE95D4F00E8938F /* moaiext-tvos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "moaiext-tvos.h"; path = "moaiext-tvos/moaiext-tvos.h"; sourceTree = "<group>"; };
 		F055A9491846ABF40031F295 /* sha.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sha.h; path = "../../3rdparty/openssl-1.0.0d/crypto/sha/sha.h"; sourceTree = "<group>"; };
 		F055A9641846ACA90031F295 /* sha_locl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sha_locl.h; path = "../../3rdparty/openssl-1.0.0d/crypto/sha/sha_locl.h"; sourceTree = "<group>"; };
 		F055A9661846ACCF0031F295 /* sha_dgst.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = sha_dgst.c; path = "../../3rdparty/openssl-1.0.0d/crypto/sha/sha_dgst.c"; sourceTree = "<group>"; };
@@ -4914,6 +4914,7 @@
 				0324E4F913564BC7000ADC60 /* moaicore */,
 				66459FB71511641F0075BF13 /* moaiext-audiosampler */,
 				CD5089FA155E3AC30002FC3B /* moaiext-fmod-ex */,
+				EB9EE1F91BE95C7200E8938F /* moaiext-tvos */,
 				CD524476135982480086DA15 /* moaiext-iphone */,
 				CD07C31713A174EB00C9386C /* moaiext-luaext */,
 				B408CA0918CE607B00F9A780 /* moaiext-test */,
@@ -6424,6 +6425,14 @@
 			name = render;
 			sourceTree = "<group>";
 		};
+		EB9EE1F91BE95C7200E8938F /* moaiext-tvos */ = {
+			isa = PBXGroup;
+			children = (
+				EB9EE1FA1BE95D4F00E8938F /* moaiext-tvos.h */,
+			);
+			name = "moaiext-tvos";
+			sourceTree = "<group>";
+		};
 		F055A9471846ABC30031F295 /* openssl */ = {
 			isa = PBXGroup;
 			children = (
@@ -7661,6 +7670,7 @@
 				EB9EDE0A1BE9421B00E8938F /* USUnion.h in Headers */,
 				EB9EDE0B1BE9421B00E8938F /* USVec2D.h in Headers */,
 				EB9EDE0C1BE9421B00E8938F /* USVec3D.h in Headers */,
+				EB9EE1FB1BE95D4F00E8938F /* moaiext-tvos.h in Headers */,
 				EB9EDE0D1BE9421B00E8938F /* USZip.h in Headers */,
 				EB9EDE0E1BE9421B00E8938F /* USZipFile.h in Headers */,
 				EB9EDE101BE9421B00E8938F /* MOAIEventSource.h in Headers */,
@@ -7718,7 +7728,6 @@
 				EB9EDE441BE9421B00E8938F /* MOAIBox2DRevoluteJoint.h in Headers */,
 				EB9EDE451BE9421B00E8938F /* MOAIBox2DWeldJoint.h in Headers */,
 				EB9EDE461BE9421B00E8938F /* MOAIAttrOp.h in Headers */,
-				EB9EE1F81BE94DC800E8938F /* moaiext-iphone.h in Headers */,
 				EB9EDE471BE9421B00E8938F /* MOAIBox2DRopeJoint.h in Headers */,
 				EB9EDE481BE9421B00E8938F /* MOAIBox2DWheelJoint.h in Headers */,
 				EB9EDE491BE9421B00E8938F /* MOAIEaseElasticBase.h in Headers */,
@@ -9549,7 +9558,6 @@
 				EB9EDEF31BE9421B00E8938F /* MOAITextStyle.cpp in Sources */,
 				EB9EDEF41BE9421B00E8938F /* MOAITextStyler.cpp in Sources */,
 				EB9EDEF51BE9421B00E8938F /* MOAIEaseSineOut.cpp in Sources */,
-				EB9EE1F71BE94DB500E8938F /* AKU-iphone.mm in Sources */,
 				EB9EDEF61BE9421B00E8938F /* MOAIGlyphCache.cpp in Sources */,
 				EB9EDEF71BE9421B00E8938F /* MOAIGlyphCacheBase.cpp in Sources */,
 				EB9EDEF81BE9421B00E8938F /* MOAIGlyphCachePage.cpp in Sources */,
