@@ -2562,7 +2562,6 @@
 		EB9EDF4F1BE9421B00E8938F /* USStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5F213564BC8000ADC60 /* USStream.cpp */; };
 		EB9EDF501BE9421B00E8938F /* USZip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5FB13564BC8000ADC60 /* USZip.cpp */; };
 		EB9EDF511BE9421B00E8938F /* USZipFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5FD13564BC8000ADC60 /* USZipFile.cpp */; };
-		EB9EDF521BE9421B00E8938F /* AKU-iphone.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD1D0BA313599FD200802A3C /* AKU-iphone.mm */; };
 		EB9EDF531BE9421B00E8938F /* MOAIEventSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEB91421360A78800AAC558 /* MOAIEventSource.cpp */; };
 		EB9EDF541BE9421B00E8938F /* MOAIImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEB91441360A78800AAC558 /* MOAIImage.cpp */; };
 		EB9EDF551BE9421B00E8938F /* MOAICameraAnchor2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 031FA4CB138589C4007FD20C /* MOAICameraAnchor2D.cpp */; };
@@ -9668,7 +9667,6 @@
 				EB9EDF4F1BE9421B00E8938F /* USStream.cpp in Sources */,
 				EB9EDF501BE9421B00E8938F /* USZip.cpp in Sources */,
 				EB9EDF511BE9421B00E8938F /* USZipFile.cpp in Sources */,
-				EB9EDF521BE9421B00E8938F /* AKU-iphone.mm in Sources */,
 				EB9EDF531BE9421B00E8938F /* MOAIEventSource.cpp in Sources */,
 				EB9EDF541BE9421B00E8938F /* MOAIImage.cpp in Sources */,
 				EB9EDF551BE9421B00E8938F /* MOAICameraAnchor2D.cpp in Sources */,
