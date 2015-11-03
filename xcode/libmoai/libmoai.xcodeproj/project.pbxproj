@@ -2971,7 +2971,6 @@
 		EB9EE1051BE9422800E8938F /* loadlib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490059141AB6EC00913D80 /* loadlib.c */; };
 		EB9EE1061BE9422800E8938F /* lobject.c in Sources */ = {isa = PBXBuildFile; fileRef = CD49005A141AB6EC00913D80 /* lobject.c */; };
 		EB9EE1071BE9422800E8938F /* lopcodes.c in Sources */ = {isa = PBXBuildFile; fileRef = CD49005C141AB6EC00913D80 /* lopcodes.c */; };
-		EB9EE1081BE9422800E8938F /* loslib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD49005E141AB6EC00913D80 /* loslib.c */; };
 		EB9EE1091BE9422800E8938F /* lparser.c in Sources */ = {isa = PBXBuildFile; fileRef = CD49005F141AB6EC00913D80 /* lparser.c */; };
 		EB9EE10A1BE9422800E8938F /* lstate.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490061141AB6EC00913D80 /* lstate.c */; };
 		EB9EE10B1BE9422800E8938F /* lstring.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490063141AB6EC00913D80 /* lstring.c */; };
@@ -9920,7 +9919,6 @@
 				EB9EE1051BE9422800E8938F /* loadlib.c in Sources */,
 				EB9EE1061BE9422800E8938F /* lobject.c in Sources */,
 				EB9EE1071BE9422800E8938F /* lopcodes.c in Sources */,
-				EB9EE1081BE9422800E8938F /* loslib.c in Sources */,
 				EB9EE1091BE9422800E8938F /* lparser.c in Sources */,
 				EB9EE10A1BE9422800E8938F /* lstate.c in Sources */,
 				EB9EE10B1BE9422800E8938F /* lstring.c in Sources */,
