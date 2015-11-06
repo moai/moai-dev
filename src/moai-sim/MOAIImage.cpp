@@ -8,7 +8,7 @@
 #include <moai-sim/MOAIImageLoadTask.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <float.h>
-#include <contrib/edtaa3func.h>
+#include <contrib/moai_edtaa3func.h>
 
 //================================================================//
 // local
@@ -2165,8 +2165,8 @@ void MOAIImage::GenerateSDFAA ( ZLIntRect rect, float sizeInPixels ) {
 	}
 	
 	// Compute outside = edtaa3(bitmap); % Transform background (0's)
-	computegradient ( data, width, height, gx, gy );
-	edtaa3 ( data, gx, gy, width, height, xdist, ydist, outside );
+	moai_computegradient ( data, width, height, gx, gy );
+	moai_edtaa3 ( data, gx, gy, width, height, xdist, ydist, outside );
 	for ( u32 i = 0; i < width * height; ++i ) {
 		if ( outside [ i ] < 0 ) {
 			outside [ i ] = 0.0;
@@ -2179,8 +2179,8 @@ void MOAIImage::GenerateSDFAA ( ZLIntRect rect, float sizeInPixels ) {
 	for ( u32 i = 0; i < width * height; ++i ) {
 		data [ i ] = 1.0 - data [ i ];
 	}
-	computegradient ( data, width, height, gx, gy );
-	edtaa3 ( data, gx, gy, width, height, xdist, ydist, inside );
+	moai_computegradient ( data, width, height, gx, gy );
+	moai_edtaa3 ( data, gx, gy, width, height, xdist, ydist, inside );
 	for ( u32 i = 0; i < width * height; ++i ) {
 		if ( inside [ i ] < 0 ) {
 			inside [ i ] = 0.0;

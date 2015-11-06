@@ -28,7 +28,7 @@
  * policies, either expressed or implied, of Stefan Gustavson.
  *
  *
- * edtaa3()
+ * moai_dtaa3()
  *
  * Sweep-and-update Euclidean distance transform of an
  * image. Positive pixels are treated as object pixels,
@@ -56,14 +56,14 @@
  *
  */
 #include <math.h>
-#include "edtaa3func.h"
+#include "moai_edtaa3func.h"
 
 /*
  * Compute the local gradient at edge pixels using convolution filters.
  * The gradient is computed only at edge pixels. At other places in the
  * image, it is never used, and it's mostly zero anyway.
  */
-void computegradient(double *img, int w, int h, double *gx, double *gy)
+void moai_computegradient(double *img, int w, int h, double *gx, double *gy)
 {
     int i,j,k;
     double glength;
@@ -132,7 +132,7 @@ double edgedf(double gx, double gy, double a)
     return df;
 }
 
-double distaa3(double *img, double *gximg, double *gyimg, int w, int c, int xc, int yc, int xi, int yi)
+double moai_distaa3(double *img, double *gximg, double *gyimg, int w, int c, int xc, int yc, int xi, int yi)
 {
 	double di, df, dx, dy, gx, gy, a;
 	int closest;
@@ -160,9 +160,9 @@ double distaa3(double *img, double *gximg, double *gyimg, int w, int c, int xc, 
 }
 
 // Shorthand macro: add ubiquitous parameters dist, gx, gy, img and w and call distaa3()
-#define DISTAA(c,xc,yc,xi,yi) (distaa3(img, gx, gy, w, c, xc, yc, xi, yi))
+#define DISTAA(c,xc,yc,xi,yi) (moai_distaa3(img, gx, gy, w, c, xc, yc, xi, yi))
 
-void edtaa3(double *img, double *gx, double *gy, int w, int h, short *distx, short *disty, double *dist)
+void moai_edtaa3(double *img, double *gx, double *gy, int w, int h, short *distx, short *disty, double *dist)
 {
 	int x, y, i, c;
 	int offset_u, offset_ur, offset_r, offset_rd,

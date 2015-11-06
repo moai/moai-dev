@@ -191,10 +191,6 @@
 		07658751145CD06900723A7D /* tlsf.h in Headers */ = {isa = PBXBuildFile; fileRef = 0765874C145CD06900723A7D /* tlsf.h */; };
 		07658752145CD06900723A7D /* tlsfbits.h in Headers */ = {isa = PBXBuildFile; fileRef = 0765874D145CD06900723A7D /* tlsfbits.h */; };
 		07658753145CD06900723A7D /* tlsfbits.h in Headers */ = {isa = PBXBuildFile; fileRef = 0765874D145CD06900723A7D /* tlsfbits.h */; };
-		20A0B0291A5020740072F513 /* edtaa3func.c in Sources */ = {isa = PBXBuildFile; fileRef = 20A0B0271A5020740072F513 /* edtaa3func.c */; };
-		20A0B02A1A5020740072F513 /* edtaa3func.c in Sources */ = {isa = PBXBuildFile; fileRef = 20A0B0271A5020740072F513 /* edtaa3func.c */; };
-		20A0B02B1A5020740072F513 /* edtaa3func.h in Headers */ = {isa = PBXBuildFile; fileRef = 20A0B0281A5020740072F513 /* edtaa3func.h */; };
-		20A0B02C1A5020740072F513 /* edtaa3func.h in Headers */ = {isa = PBXBuildFile; fileRef = 20A0B0281A5020740072F513 /* edtaa3func.h */; };
 		663704171612813D002D0D27 /* moai_whirlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 663704111612812C002D0D27 /* moai_whirlpool.h */; };
 		663704191612813E002D0D27 /* moai_whirlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 663704111612812C002D0D27 /* moai_whirlpool.h */; };
 		66E345461614CA710021FC4B /* moai_whirlpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 66E345451614CA710021FC4B /* moai_whirlpool.c */; };
@@ -3587,6 +3583,10 @@
 		CD80F641135BBCFF006B0683 /* MOAIIso8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* MOAIIso8601DateFormatter.m */; };
 		CD8215FC195A322D00603EA1 /* MOAITakeCameraListener.h in Headers */ = {isa = PBXBuildFile; fileRef = CD8215FA195A322D00603EA1 /* MOAITakeCameraListener.h */; };
 		CD8215FD195A322D00603EA1 /* MOAITakeCameraListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD8215FB195A322D00603EA1 /* MOAITakeCameraListener.mm */; };
+		CD830D5F1BED33CB00745C8A /* moai_edtaa3func.c in Sources */ = {isa = PBXBuildFile; fileRef = 20A0B0271A5020740072F513 /* moai_edtaa3func.c */; settings = {ASSET_TAGS = (); }; };
+		CD830D601BED33CB00745C8A /* moai_edtaa3func.h in Headers */ = {isa = PBXBuildFile; fileRef = 20A0B0281A5020740072F513 /* moai_edtaa3func.h */; settings = {ASSET_TAGS = (); }; };
+		CD830D611BED33D000745C8A /* moai_edtaa3func.c in Sources */ = {isa = PBXBuildFile; fileRef = 20A0B0271A5020740072F513 /* moai_edtaa3func.c */; settings = {ASSET_TAGS = (); }; };
+		CD830D621BED33D000745C8A /* moai_edtaa3func.h in Headers */ = {isa = PBXBuildFile; fileRef = 20A0B0281A5020740072F513 /* moai_edtaa3func.h */; settings = {ASSET_TAGS = (); }; };
 		CD9140951A0D6022002CC335 /* MOAIActionTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD9140931A0D6022002CC335 /* MOAIActionTree.cpp */; };
 		CD9140961A0D6022002CC335 /* MOAIActionTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD9140931A0D6022002CC335 /* MOAIActionTree.cpp */; };
 		CD9140971A0D6022002CC335 /* MOAIActionTree.h in Headers */ = {isa = PBXBuildFile; fileRef = CD9140941A0D6022002CC335 /* MOAIActionTree.h */; };
@@ -5474,8 +5474,8 @@
 		0795297C1447907100143A72 /* jquant2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jquant2.c; sourceTree = "<group>"; };
 		0795297D1447907100143A72 /* jutils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jutils.c; sourceTree = "<group>"; };
 		0795297E1447907100143A72 /* jversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jversion.h; sourceTree = "<group>"; };
-		20A0B0271A5020740072F513 /* edtaa3func.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = edtaa3func.c; path = ../../3rdparty/contrib/edtaa3func.c; sourceTree = "<group>"; };
-		20A0B0281A5020740072F513 /* edtaa3func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = edtaa3func.h; path = ../../3rdparty/contrib/edtaa3func.h; sourceTree = "<group>"; };
+		20A0B0271A5020740072F513 /* moai_edtaa3func.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = moai_edtaa3func.c; path = ../../3rdparty/contrib/moai_edtaa3func.c; sourceTree = "<group>"; };
+		20A0B0281A5020740072F513 /* moai_edtaa3func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = moai_edtaa3func.h; path = ../../3rdparty/contrib/moai_edtaa3func.h; sourceTree = "<group>"; };
 		43BA2E5A17733267007DCDF0 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSON.h; path = "../../3rdparty/playhaven-ios-1.13.1/JSON/JSON.h"; sourceTree = "<group>"; };
 		43BA2E5B17733267007DCDF0 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBJsonBase.h; path = "../../3rdparty/playhaven-ios-1.13.1/JSON/SBJsonBase.h"; sourceTree = "<group>"; };
 		43BA2E5C17733267007DCDF0 /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJsonBase.m; path = "../../3rdparty/playhaven-ios-1.13.1/JSON/SBJsonBase.m"; sourceTree = "<group>"; };
@@ -8519,8 +8519,8 @@
 				CD80F63E135BBCFF006B0683 /* MOAIIso8601DateFormatter.m */,
 				03240A7713564CAF000ADC60 /* moai_utf8.c */,
 				03240A7813564CAF000ADC60 /* moai_utf8.h */,
-				20A0B0271A5020740072F513 /* edtaa3func.c */,
-				20A0B0281A5020740072F513 /* edtaa3func.h */,
+				20A0B0271A5020740072F513 /* moai_edtaa3func.c */,
+				20A0B0281A5020740072F513 /* moai_edtaa3func.h */,
 				66E345451614CA710021FC4B /* moai_whirlpool.c */,
 				663704111612812C002D0D27 /* moai_whirlpool.h */,
 			);
@@ -13157,6 +13157,7 @@
 				CD69AB5217FA6CF90053E028 /* tess.h in Headers */,
 				CD04AED814725714009C20E5 /* crc32.h in Headers */,
 				CDCDD0221A23F233008779B5 /* winconfig.h in Headers */,
+				CD830D621BED33D000745C8A /* moai_edtaa3func.h in Headers */,
 				CDD48B4F17FA794B00525B77 /* SFMT-common.h in Headers */,
 				CD04AEDE14725714009C20E5 /* deflate.h in Headers */,
 				CDCDD0101A23F233008779B5 /* asciitab.h in Headers */,
@@ -13176,7 +13177,6 @@
 				CD69AB4217FA6CF90053E028 /* geom.h in Headers */,
 				CDD48B5017FA794B00525B77 /* SFMT-params.h in Headers */,
 				CDD48B4E17FA794B00525B77 /* SFMT-alti.h in Headers */,
-				20A0B02C1A5020740072F513 /* edtaa3func.h in Headers */,
 				CDD48B5817FA794B00525B77 /* SFMT-params86243.h in Headers */,
 				CD69AB3E17FA6CF90053E028 /* dict.h in Headers */,
 			);
@@ -13330,6 +13330,7 @@
 				07658752145CD06900723A7D /* tlsfbits.h in Headers */,
 				CDD48B7A17FA794E00525B77 /* SFMT-sse2.h in Headers */,
 				CDCDD0211A23F233008779B5 /* winconfig.h in Headers */,
+				CD830D601BED33CB00745C8A /* moai_edtaa3func.h in Headers */,
 				CDD48B7817FA794E00525B77 /* SFMT-params132049.h in Headers */,
 				CDD48B7C17FA794E00525B77 /* SFMT.h in Headers */,
 				CDCDD00F1A23F233008779B5 /* asciitab.h in Headers */,
@@ -13349,7 +13350,6 @@
 				CD04AF0C14725714009C20E5 /* zutil.h in Headers */,
 				CD69AB5117FA6CF90053E028 /* tess.h in Headers */,
 				CD9F761F1808CC5A0001EF0C /* MOAIOpenUDID.h in Headers */,
-				20A0B02B1A5020740072F513 /* edtaa3func.h in Headers */,
 				CDD48B7517FA794E00525B77 /* SFMT-params19937.h in Headers */,
 				663704191612813E002D0D27 /* moai_whirlpool.h in Headers */,
 			);
@@ -16568,7 +16568,6 @@
 				CDCDD02E1A23F233008779B5 /* xmltok_ns.c in Sources */,
 				CD73D01B1BA3FFB800BB50C3 /* memory.c in Sources */,
 				03240D4D13564CB0000ADC60 /* tinyxml.cpp in Sources */,
-				20A0B02A1A5020740072F513 /* edtaa3func.c in Sources */,
 				03240D4F13564CB0000ADC60 /* tinyxmlerror.cpp in Sources */,
 				03240D5013564CB0000ADC60 /* tinyxmlparser.cpp in Sources */,
 				CD4900AA141AB6EC00913D80 /* lapi.c in Sources */,
@@ -16629,6 +16628,7 @@
 				66E345471614CA710021FC4B /* moai_whirlpool.c in Sources */,
 				CD73D01F1BA3FFB800BB50C3 /* strbuffer.c in Sources */,
 				CDD48CC217FA79FE00525B77 /* MOAIIso8601DateFormatter.m in Sources */,
+				CD830D611BED33D000745C8A /* moai_edtaa3func.c in Sources */,
 				CD69AB3C17FA6CF90053E028 /* dict.c in Sources */,
 				CD69AB5017FA6CF90053E028 /* tess.c in Sources */,
 				CD69AB4C17FA6CF90053E028 /* sweep.c in Sources */,
@@ -16733,6 +16733,7 @@
 				CDD4911317FA7A8000525B77 /* type42.c in Sources */,
 				CDD4912317FA7A8600525B77 /* ftsystem.c in Sources */,
 				CDD4910717FA7A8000525B77 /* ftwinfnt.c in Sources */,
+				CD830D5F1BED33CB00745C8A /* moai_edtaa3func.c in Sources */,
 				CDD4910317FA7A8000525B77 /* ftpatent.c in Sources */,
 				CDD4912017FA7A8600525B77 /* ftinit.c in Sources */,
 				CDD4910017FA7A8000525B77 /* ftlcdfil.c in Sources */,
@@ -16745,7 +16746,6 @@
 				CD69AB3F17FA6CF90053E028 /* geom.c in Sources */,
 				CDD4911C17FA7A8600525B77 /* ftfstype.c in Sources */,
 				CDD490FE17FA7A8000525B77 /* ftbbox.c in Sources */,
-				20A0B0291A5020740072F513 /* edtaa3func.c in Sources */,
 				CD9F76201808CC5A0001EF0C /* MOAIOpenUDID.m in Sources */,
 				CDD4910B17FA7A8000525B77 /* psaux.c in Sources */,
 				CDD4910917FA7A8000525B77 /* pcf.c in Sources */,
