@@ -60,22 +60,6 @@
 		#define MOAI_WITH_LIBCURL 1
 	#endif
 	
-	#ifndef MOAI_WITH_LIBJPG
-		#define MOAI_WITH_LIBJPG 1
-	#endif
-	
-	#ifndef MOAI_WITH_LIBPNG
-		#define MOAI_WITH_LIBPNG 1
-	#endif
-
-	#ifndef MOAI_WITH_LIBPVR
-		#define MOAI_WITH_LIBPVR 1
-	#endif
-
-	#ifndef MOAI_WITH_LIBWEBP
-		#define MOAI_WITH_LIBWEBP 1
-	#endif
-	
 	#ifndef MOAI_WITH_LUAEXT
 		#define MOAI_WITH_LUAEXT 1
 	#endif
