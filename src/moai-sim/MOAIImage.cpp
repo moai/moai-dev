@@ -3,10 +3,6 @@
 
 #include "pch.h"
 
-#if MOAI_WITH_LIBPNG
-  #include <png.h>
-#endif
-
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIImageFormatMgr.h>
 #include <moai-sim/MOAIGfxDevice.h>
