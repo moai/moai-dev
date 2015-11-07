@@ -1,0 +1,20 @@
+<file-item-display>
+  <editor if="{ fileUtil.isType(opts.file, 'text') }"  file="{opts.file}"></editor>
+  <picture-viewer if="{ fileUtil.isType(opts.file, 'image')}" file="{opts.file}"  ></picture-viewer>
+  <font-viewer if="{ fileUtil.isType(opts.file, 'font') }" file="{opts.file}" ></font-viewer>
+  <div class="file-info"  if="{ fileUtil.isType(opts.file, 'unknown') }">
+      <h2>Filename: { opts.file.filename }</h2>
+      <h3>Size: { opts.file.data.length }</h3>
+  </div>
+
+    <script>
+        this.flushChanges = function() {
+            if (fileUtil.isType(opts.file, 'text')) {
+               this.tags['editor'].flushChanges();
+            }
+        }
+
+
+    </script>
+
+</file-item-display>

@@ -1,0 +1,24 @@
+<picture-viewer>
+    <div class="trans">
+        <img src="{image_url}" style="width: 100%; height: 100%" />
+    </div>
+
+    <script>
+        this.image_url = "";
+        this.on("update", function() {
+            console.log("image update", opts.file);
+            if (!opts.hasOwnProperty("if") || opts.if ) {
+                console.log("has if");
+                if (opts.file) {
+                    console.log("has file");
+                    this.image_url = fileUtil.asObjectUrl(opts.file);
+                    console.log("image update url", this.image_url);
+                } else {
+                    this.image_url = "";
+                    console.log("image update url blank");
+                }
+            }
+        })
+    </script>
+
+</picture-viewer>

@@ -1,0 +1,32 @@
+<sample-list>
+    <div id="samplelist">
+    <ul>
+        <li each="{ name, i in opts.samples }" class="{ selected: (name == this.selected)}" onclick="{select}" >{name}</li>
+    </ul>
+    </div>
+    <script>
+
+        select(e) {
+            console.log("Select pressed",e);
+            this.selectSample(e.item.name);
+        }
+
+        this.selectSample = function (sample) {
+            if (this.selected != sample) {
+                this.selected = sample;
+                this.trigger("selected", sample)
+            }
+        };
+
+        this.on('mount', function () {
+            if (!this.selected) {
+                this.selectSample(opts.samples[0]);
+            }
+
+            var container = $('#samplelist')[0];
+            Ps.initialize(container);
+        });
+
+
+    </script>
+</sample-list>
