@@ -1126,6 +1126,10 @@
 		B383019F1BEDE4250097F0F8 /* moai_edtaa3func.h in Headers */ = {isa = PBXBuildFile; fileRef = 20A0B0281A5020740072F513 /* moai_edtaa3func.h */; settings = {ASSET_TAGS = (); }; };
 		B38301A01BEDE4250097F0F8 /* moai_whirlpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 66E345451614CA710021FC4B /* moai_whirlpool.c */; settings = {ASSET_TAGS = (); }; };
 		B38301A11BEDE4250097F0F8 /* moai_whirlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 663704111612812C002D0D27 /* moai_whirlpool.h */; settings = {ASSET_TAGS = (); }; };
+		B38301E91BEE0E030097F0F8 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3C8EF7C1BED7A2F0059BBCB /* host.cpp */; settings = {ASSET_TAGS = (); }; };
+		B38301EA1BEE0E030097F0F8 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = B3C8EF7D1BED7A2F0059BBCB /* host.h */; settings = {ASSET_TAGS = (); }; };
+		B38301EB1BEE0E030097F0F8 /* MOAIImageFormatPng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3C8EF7E1BED7A2F0059BBCB /* MOAIImageFormatPng.cpp */; settings = {ASSET_TAGS = (); }; };
+		B38301EC1BEE0E030097F0F8 /* MOAIImageFormatPng.h in Headers */ = {isa = PBXBuildFile; fileRef = B3C8EF7F1BED7A2F0059BBCB /* MOAIImageFormatPng.h */; settings = {ASSET_TAGS = (); }; };
 		B3C8EEEE1BED703A0059BBCB /* dump.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9113A7FDBA008337E7 /* dump.c */; settings = {ASSET_TAGS = (); }; };
 		B3C8EEEF1BED703D0059BBCB /* error.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9213A7FDBA008337E7 /* error.c */; settings = {ASSET_TAGS = (); }; };
 		B3C8EEF01BED70400059BBCB /* hashtable.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9313A7FDBA008337E7 /* hashtable.c */; settings = {ASSET_TAGS = (); }; };
@@ -1145,10 +1149,6 @@
 		B3C8EF791BED7A0D0059BBCB /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = B3C8EF751BED7A0D0059BBCB /* host.h */; settings = {ASSET_TAGS = (); }; };
 		B3C8EF7A1BED7A0D0059BBCB /* MOAIImageFormatJpg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3C8EF761BED7A0D0059BBCB /* MOAIImageFormatJpg.cpp */; settings = {ASSET_TAGS = (); }; };
 		B3C8EF7B1BED7A0D0059BBCB /* MOAIImageFormatJpg.h in Headers */ = {isa = PBXBuildFile; fileRef = B3C8EF771BED7A0D0059BBCB /* MOAIImageFormatJpg.h */; settings = {ASSET_TAGS = (); }; };
-		B3C8EF801BED7A2F0059BBCB /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3C8EF7C1BED7A2F0059BBCB /* host.cpp */; settings = {ASSET_TAGS = (); }; };
-		B3C8EF811BED7A2F0059BBCB /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = B3C8EF7D1BED7A2F0059BBCB /* host.h */; settings = {ASSET_TAGS = (); }; };
-		B3C8EF821BED7A2F0059BBCB /* MOAIImageFormatPng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3C8EF7E1BED7A2F0059BBCB /* MOAIImageFormatPng.cpp */; settings = {ASSET_TAGS = (); }; };
-		B3C8EF831BED7A2F0059BBCB /* MOAIImageFormatPng.h in Headers */ = {isa = PBXBuildFile; fileRef = B3C8EF7F1BED7A2F0059BBCB /* MOAIImageFormatPng.h */; settings = {ASSET_TAGS = (); }; };
 		B3C8EF881BED7A3E0059BBCB /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3C8EF841BED7A3E0059BBCB /* host.cpp */; settings = {ASSET_TAGS = (); }; };
 		B3C8EF891BED7A3E0059BBCB /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = B3C8EF851BED7A3E0059BBCB /* host.h */; settings = {ASSET_TAGS = (); }; };
 		B3C8EF8A1BED7A3E0059BBCB /* MOAIImageFormatPvr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3C8EF861BED7A3E0059BBCB /* MOAIImageFormatPvr.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -13156,11 +13156,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B38301EC1BEE0E030097F0F8 /* MOAIImageFormatPng.h in Headers */,
 				B3767D431BEDCECC0041E602 /* png.h in Headers */,
 				B3767D441BEDCECC0041E602 /* pngconf.h in Headers */,
+				B38301EA1BEE0E030097F0F8 /* host.h in Headers */,
 				B3767D451BEDCECC0041E602 /* pngpriv.h in Headers */,
-				B3C8EF811BED7A2F0059BBCB /* host.h in Headers */,
-				B3C8EF831BED7A2F0059BBCB /* MOAIImageFormatPng.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16729,6 +16729,7 @@
 				B3767D381BEDCEB10041E602 /* pngpread.c in Sources */,
 				B3767D391BEDCEB10041E602 /* pngread.c in Sources */,
 				B3767D3A1BEDCEB10041E602 /* pngrio.c in Sources */,
+				B38301E91BEE0E030097F0F8 /* host.cpp in Sources */,
 				B3767D3B1BEDCEB10041E602 /* pngrtran.c in Sources */,
 				B3767D3C1BEDCEB10041E602 /* pngrutil.c in Sources */,
 				B3767D3D1BEDCEB10041E602 /* pngset.c in Sources */,
@@ -16737,8 +16738,7 @@
 				B3767D401BEDCEB10041E602 /* pngwrite.c in Sources */,
 				B3767D411BEDCEB10041E602 /* pngwtran.c in Sources */,
 				B3767D421BEDCEB10041E602 /* pngwutil.c in Sources */,
-				B3C8EF821BED7A2F0059BBCB /* MOAIImageFormatPng.cpp in Sources */,
-				B3C8EF801BED7A2F0059BBCB /* host.cpp in Sources */,
+				B38301EB1BEE0E030097F0F8 /* MOAIImageFormatPng.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
