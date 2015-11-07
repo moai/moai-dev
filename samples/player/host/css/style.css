@@ -18,7 +18,7 @@
 .moai-canvas-wrapper,
 .moai-info
 {
-    background-color: #FFF;
+    background-color: #202025;
     width: 100%;
     height: 100%;
     position: relative;
@@ -108,7 +108,7 @@ body {
     height:100%;
     margin:0;
     padding:0;
-    background-color: #FFF;
+    background-color: #202025;
 }
 
 #moaiplayer {
