@@ -97,7 +97,7 @@ void moai_computegradient(double *img, int w, int h, double *gx, double *gy)
  * accuracy at and near edges, and reduces the error even at distant pixels
  * provided that the gradient direction is accurately estimated.
  */
-double edgedf(double gx, double gy, double a)
+double moai_edgedf(double gx, double gy, double a)
 {
     double df, glength, temp, a1;
 	
@@ -151,10 +151,10 @@ double moai_distaa3(double *img, double *gximg, double *gyimg, int w, int c, int
 	di = sqrt(dx*dx + dy*dy); // Length of integer vector, like a traditional EDT
 	if(di==0) { // Use local gradient only at edges
 		// Estimate based on local gradient only
-		df = edgedf(gx, gy, a);
+		df = moai_edgedf(gx, gy, a);
 	} else {
 		// Estimate gradient based on direction to edge (accurate for large di)
-		df = edgedf(dx, dy, a);
+		df = moai_edgedf(dx, dy, a);
 	}
 	return di + df; // Same metric as edtaa2, except at edges (where di=0)
 }
@@ -191,7 +191,7 @@ void moai_edtaa3(double *img, double *gx, double *gy, int w, int h, short *distx
 			dist[i]= 1000000.0; // Big value, means "not set yet"
 		}
 		else if (img[i]<1.0) {
-			dist[i] = edgedf(gx[i], gy[i], img[i]); // Gradient-assisted estimate
+			dist[i] = moai_edgedf(gx[i], gy[i], img[i]); // Gradient-assisted estimate
 		}
 		else {
 			dist[i]= 0.0; // Inside the object

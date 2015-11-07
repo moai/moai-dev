@@ -1116,6 +1116,16 @@
 		B3767DEC1BEDCF6A0041E602 /* mux_types.h in Headers */ = {isa = PBXBuildFile; fileRef = CD881FEE19FF6743004498E8 /* mux_types.h */; settings = {ASSET_TAGS = (); }; };
 		B3767DED1BEDCF6A0041E602 /* mux.h in Headers */ = {isa = PBXBuildFile; fileRef = CD881FEF19FF6743004498E8 /* mux.h */; settings = {ASSET_TAGS = (); }; };
 		B3767DEE1BEDCF6A0041E602 /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = CD881FF019FF6743004498E8 /* types.h */; settings = {ASSET_TAGS = (); }; };
+		B38301981BEDE4250097F0F8 /* MOAIOpenUDID.h in Headers */ = {isa = PBXBuildFile; fileRef = CD9F761B1808C7670001EF0C /* MOAIOpenUDID.h */; settings = {ASSET_TAGS = (); }; };
+		B38301991BEDE4250097F0F8 /* MOAIOpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9F761C1808C7670001EF0C /* MOAIOpenUDID.m */; settings = {ASSET_TAGS = (); }; };
+		B383019A1BEDE4250097F0F8 /* MOAIIso8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */; settings = {ASSET_TAGS = (); }; };
+		B383019B1BEDE4250097F0F8 /* MOAIIso8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* MOAIIso8601DateFormatter.m */; settings = {ASSET_TAGS = (); }; };
+		B383019C1BEDE4250097F0F8 /* moai_utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A7713564CAF000ADC60 /* moai_utf8.c */; settings = {ASSET_TAGS = (); }; };
+		B383019D1BEDE4250097F0F8 /* moai_utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7813564CAF000ADC60 /* moai_utf8.h */; settings = {ASSET_TAGS = (); }; };
+		B383019E1BEDE4250097F0F8 /* moai_edtaa3func.c in Sources */ = {isa = PBXBuildFile; fileRef = 20A0B0271A5020740072F513 /* moai_edtaa3func.c */; settings = {ASSET_TAGS = (); }; };
+		B383019F1BEDE4250097F0F8 /* moai_edtaa3func.h in Headers */ = {isa = PBXBuildFile; fileRef = 20A0B0281A5020740072F513 /* moai_edtaa3func.h */; settings = {ASSET_TAGS = (); }; };
+		B38301A01BEDE4250097F0F8 /* moai_whirlpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 66E345451614CA710021FC4B /* moai_whirlpool.c */; settings = {ASSET_TAGS = (); }; };
+		B38301A11BEDE4250097F0F8 /* moai_whirlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 663704111612812C002D0D27 /* moai_whirlpool.h */; settings = {ASSET_TAGS = (); }; };
 		B3C8EEEE1BED703A0059BBCB /* dump.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9113A7FDBA008337E7 /* dump.c */; settings = {ASSET_TAGS = (); }; };
 		B3C8EEEF1BED703D0059BBCB /* error.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9213A7FDBA008337E7 /* error.c */; settings = {ASSET_TAGS = (); }; };
 		B3C8EEF01BED70400059BBCB /* hashtable.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9313A7FDBA008337E7 /* hashtable.c */; settings = {ASSET_TAGS = (); }; };
@@ -3419,16 +3429,6 @@
 		CD8315AB1BED3A8100745C8A /* ftdebug.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B4E13564CB0000ADC60 /* ftdebug.c */; };
 		CD8315B21BED3A8100745C8A /* smooth.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B5713564CB0000ADC60 /* smooth.c */; };
 		CD8315B31BED3A8100745C8A /* autofit.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B4813564CB0000ADC60 /* autofit.c */; };
-		CD8315CB1BED3AE900745C8A /* moai_utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7813564CAF000ADC60 /* moai_utf8.h */; };
-		CD8315CC1BED3AE900745C8A /* MOAIIso8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */; };
-		CD8315EC1BED3AE900745C8A /* moai_edtaa3func.h in Headers */ = {isa = PBXBuildFile; fileRef = 20A0B0281A5020740072F513 /* moai_edtaa3func.h */; settings = {ASSET_TAGS = (); }; };
-		CD8315EE1BED3AE900745C8A /* MOAIOpenUDID.h in Headers */ = {isa = PBXBuildFile; fileRef = CD9F761B1808C7670001EF0C /* MOAIOpenUDID.h */; };
-		CD8315EF1BED3AE900745C8A /* moai_whirlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 663704111612812C002D0D27 /* moai_whirlpool.h */; };
-		CD8315F11BED3AE900745C8A /* moai_utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A7713564CAF000ADC60 /* moai_utf8.c */; };
-		CD8315F51BED3AE900745C8A /* MOAIIso8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* MOAIIso8601DateFormatter.m */; };
-		CD8315F81BED3AE900745C8A /* moai_edtaa3func.c in Sources */ = {isa = PBXBuildFile; fileRef = 20A0B0271A5020740072F513 /* moai_edtaa3func.c */; settings = {ASSET_TAGS = (); }; };
-		CD8315FA1BED3AE900745C8A /* MOAIOpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9F761C1808C7670001EF0C /* MOAIOpenUDID.m */; };
-		CD83161B1BED3AE900745C8A /* moai_whirlpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 66E345451614CA710021FC4B /* moai_whirlpool.c */; };
 		CD8316251BED3BC100745C8A /* bucketalloc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2A17FA6CF90053E028 /* bucketalloc.h */; };
 		CD8316281BED3BC100745C8A /* dict.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2C17FA6CF90053E028 /* dict.h */; };
 		CD8316291BED3BC100745C8A /* priorityq.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3217FA6CF90053E028 /* priorityq.h */; };
@@ -14265,11 +14265,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD8315CB1BED3AE900745C8A /* moai_utf8.h in Headers */,
-				CD8315CC1BED3AE900745C8A /* MOAIIso8601DateFormatter.h in Headers */,
-				CD8315EC1BED3AE900745C8A /* moai_edtaa3func.h in Headers */,
-				CD8315EE1BED3AE900745C8A /* MOAIOpenUDID.h in Headers */,
-				CD8315EF1BED3AE900745C8A /* moai_whirlpool.h in Headers */,
+				B383019D1BEDE4250097F0F8 /* moai_utf8.h in Headers */,
+				B38301A11BEDE4250097F0F8 /* moai_whirlpool.h in Headers */,
+				B383019A1BEDE4250097F0F8 /* MOAIIso8601DateFormatter.h in Headers */,
+				B383019F1BEDE4250097F0F8 /* moai_edtaa3func.h in Headers */,
+				B38301981BEDE4250097F0F8 /* MOAIOpenUDID.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18140,11 +18140,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD8315F11BED3AE900745C8A /* moai_utf8.c in Sources */,
-				CD8315F51BED3AE900745C8A /* MOAIIso8601DateFormatter.m in Sources */,
-				CD8315F81BED3AE900745C8A /* moai_edtaa3func.c in Sources */,
-				CD8315FA1BED3AE900745C8A /* MOAIOpenUDID.m in Sources */,
-				CD83161B1BED3AE900745C8A /* moai_whirlpool.c in Sources */,
+				B383019C1BEDE4250097F0F8 /* moai_utf8.c in Sources */,
+				B38301A01BEDE4250097F0F8 /* moai_whirlpool.c in Sources */,
+				B383019E1BEDE4250097F0F8 /* moai_edtaa3func.c in Sources */,
+				B38301991BEDE4250097F0F8 /* MOAIOpenUDID.m in Sources */,
+				B383019B1BEDE4250097F0F8 /* MOAIIso8601DateFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
