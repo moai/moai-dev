@@ -5597,10 +5597,10 @@
 		89E9D887174BD51100033CDD /* MOAITestKeywords.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITestKeywords.h; sourceTree = "<group>"; };
 		89E9D888174BD51100033CDD /* MOAITestMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITestMgr.cpp; sourceTree = "<group>"; };
 		89E9D889174BD51100033CDD /* MOAITestMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITestMgr.h; sourceTree = "<group>"; };
-		B3C8EF511BED78270059BBCB /* liblibmoai-ios-image-jpg.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liblibmoai-ios-image-jpg.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B3C8EF5B1BED784D0059BBCB /* liblibmoai-ios-image-png.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liblibmoai-ios-image-png.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B3C8EF651BED78520059BBCB /* liblibmoai-ios-image-webp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liblibmoai-ios-image-webp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B3C8EF6F1BED78540059BBCB /* liblibmoai-ios-image-pvr.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liblibmoai-ios-image-pvr.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3C8EF511BED78270059BBCB /* libmoai-ios-image-jpg.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-image-jpg.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3C8EF5B1BED784D0059BBCB /* libmoai-ios-image-png.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-image-png.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3C8EF651BED78520059BBCB /* libmoai-ios-image-webp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-image-webp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3C8EF6F1BED78540059BBCB /* libmoai-ios-image-pvr.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-image-pvr.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3C8EF741BED7A0D0059BBCB /* host.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = host.cpp; path = "moai-image-jpg/host.cpp"; sourceTree = "<group>"; };
 		B3C8EF751BED7A0D0059BBCB /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-image-jpg/host.h"; sourceTree = "<group>"; };
 		B3C8EF761BED7A0D0059BBCB /* MOAIImageFormatJpg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIImageFormatJpg.cpp; path = "moai-image-jpg/MOAIImageFormatJpg.cpp"; sourceTree = "<group>"; };
@@ -8094,10 +8094,10 @@
 				CD8316221BED3AE900745C8A /* libmoai-ios-3rdparty-contrib.a */,
 				CD83167D1BED3BC100745C8A /* libmoai-ios-3rdparty-libtess.a */,
 				CD8316C91BED3C1800745C8A /* libmoai-ios-3rdparty-liblua.a */,
-				B3C8EF511BED78270059BBCB /* liblibmoai-ios-image-jpg.a */,
-				B3C8EF5B1BED784D0059BBCB /* liblibmoai-ios-image-png.a */,
-				B3C8EF651BED78520059BBCB /* liblibmoai-ios-image-webp.a */,
-				B3C8EF6F1BED78540059BBCB /* liblibmoai-ios-image-pvr.a */,
+				B3C8EF511BED78270059BBCB /* libmoai-ios-image-jpg.a */,
+				B3C8EF5B1BED784D0059BBCB /* libmoai-ios-image-png.a */,
+				B3C8EF651BED78520059BBCB /* libmoai-ios-image-webp.a */,
+				B3C8EF6F1BED78540059BBCB /* libmoai-ios-image-pvr.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -14640,7 +14640,7 @@
 			);
 			name = "libmoai-ios-image-jpg";
 			productName = OpenUSLS;
-			productReference = B3C8EF511BED78270059BBCB /* liblibmoai-ios-image-jpg.a */;
+			productReference = B3C8EF511BED78270059BBCB /* libmoai-ios-image-jpg.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		B3C8EF521BED784D0059BBCB /* libmoai-ios-image-png */ = {
@@ -14657,7 +14657,7 @@
 			);
 			name = "libmoai-ios-image-png";
 			productName = OpenUSLS;
-			productReference = B3C8EF5B1BED784D0059BBCB /* liblibmoai-ios-image-png.a */;
+			productReference = B3C8EF5B1BED784D0059BBCB /* libmoai-ios-image-png.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		B3C8EF5C1BED78520059BBCB /* libmoai-ios-image-webp */ = {
@@ -14674,7 +14674,7 @@
 			);
 			name = "libmoai-ios-image-webp";
 			productName = OpenUSLS;
-			productReference = B3C8EF651BED78520059BBCB /* liblibmoai-ios-image-webp.a */;
+			productReference = B3C8EF651BED78520059BBCB /* libmoai-ios-image-webp.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		B3C8EF661BED78540059BBCB /* libmoai-ios-image-pvr */ = {
@@ -14691,7 +14691,7 @@
 			);
 			name = "libmoai-ios-image-pvr";
 			productName = OpenUSLS;
-			productReference = B3C8EF6F1BED78540059BBCB /* liblibmoai-ios-image-pvr.a */;
+			productReference = B3C8EF6F1BED78540059BBCB /* libmoai-ios-image-pvr.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		CD04AABB14725568009C20E5 /* libmoai-ios-zl-core */ = {
@@ -20285,7 +20285,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-ios-image-jpg";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
 			};
@@ -20315,7 +20315,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-ios-image-jpg";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
 			};
@@ -20345,7 +20345,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-ios-image-jpg";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
 			};
@@ -20375,7 +20375,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-ios-image-jpg";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
 			};
@@ -20405,7 +20405,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-ios-image-png";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
 			};
@@ -20435,7 +20435,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-ios-image-png";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
 			};
@@ -20465,7 +20465,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-ios-image-png";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
 			};
@@ -20495,7 +20495,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-ios-image-png";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
 			};
@@ -20525,7 +20525,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-ios-image-webp";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
 			};
@@ -20555,7 +20555,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-ios-image-webp";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
 			};
@@ -20585,7 +20585,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-ios-image-webp";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
 			};
@@ -20615,7 +20615,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-ios-image-webp";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
 			};
@@ -20645,7 +20645,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-ios-image-pvr";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
 			};
@@ -20675,7 +20675,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-ios-image-pvr";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
 			};
@@ -20705,7 +20705,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-ios-image-pvr";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
 			};
@@ -20735,7 +20735,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-ios-image-pvr";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
 			};
