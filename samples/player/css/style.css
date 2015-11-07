@@ -215,6 +215,15 @@ picture-viewer .trans {
     line-height: 0;
 }
 
+font-viewer {
+    display: block;
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+    color: #F8F8F2;
+
+}
+
 
 body {
     background-color: #171812;
