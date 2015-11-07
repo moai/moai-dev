@@ -2167,18 +2167,6 @@
 		CD4C417E180A9D0B00C02381 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD4C4176180A9D0300C02381 /* host.mm */; };
 		CD4C417F180A9D0B00C02381 /* MOAIUrbanAirshipIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4C4177180A9D0300C02381 /* MOAIUrbanAirshipIOS.h */; };
 		CD4C4180180A9D0B00C02381 /* MOAIUrbanAirshipIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD4C4178180A9D0300C02381 /* MOAIUrbanAirshipIOS.mm */; };
-		CD515F521BCDBBEC000718FB /* MOAIHashWriterCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A717FA818000FB64BB /* MOAIHashWriterCrypto.h */; };
-		CD515F531BCDBBEC000718FB /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A517FA818000FB64BB /* host.h */; };
-		CD515F541BCDBBEC000718FB /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A317FA818000FB64BB /* headers.h */; };
-		CD515F611BCDBBF8000718FB /* MOAIHashWriterCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A717FA818000FB64BB /* MOAIHashWriterCrypto.h */; };
-		CD515F621BCDBBF8000718FB /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A517FA818000FB64BB /* host.h */; };
-		CD515F631BCDBBF8000718FB /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A317FA818000FB64BB /* headers.h */; };
-		CD515F701BCDBC00000718FB /* MOAIHashWriterCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A717FA818000FB64BB /* MOAIHashWriterCrypto.h */; };
-		CD515F711BCDBC00000718FB /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A517FA818000FB64BB /* host.h */; };
-		CD515F721BCDBC00000718FB /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A317FA818000FB64BB /* headers.h */; };
-		CD515F7F1BCDBC08000718FB /* MOAIHashWriterCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A717FA818000FB64BB /* MOAIHashWriterCrypto.h */; };
-		CD515F801BCDBC08000718FB /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A517FA818000FB64BB /* host.h */; };
-		CD515F811BCDBC08000718FB /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A317FA818000FB64BB /* headers.h */; };
 		CD515F8C1BCDBC7A000718FB /* PVRTArray.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3024C41A68F34E00CCEE32 /* PVRTArray.h */; };
 		CD515F8D1BCDBC7A000718FB /* PVRTDecompress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3024C51A68F34E00CCEE32 /* PVRTDecompress.cpp */; };
 		CD515F8E1BCDBC7A000718FB /* PVRTDecompress.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3024C61A68F34E00CCEE32 /* PVRTDecompress.h */; };
@@ -14102,10 +14090,7 @@
 				CD51605B1BCDBCBD000718FB /* jerror.h in Headers */,
 				CD5160681BCDBCBD000718FB /* jpeglib.h in Headers */,
 				CD51604F1BCDBCBD000718FB /* jdct.h in Headers */,
-				CD515F521BCDBBEC000718FB /* MOAIHashWriterCrypto.h in Headers */,
-				CD515F531BCDBBEC000718FB /* host.h in Headers */,
 				CD5160661BCDBCBD000718FB /* jmorecfg.h in Headers */,
-				CD515F541BCDBBEC000718FB /* headers.h in Headers */,
 				CD5160671BCDBCBD000718FB /* jpegint.h in Headers */,
 				CD5160431BCDBCBD000718FB /* jconfig.h in Headers */,
 				CD5161671BCDC0E8000718FB /* MOAIImageFormatJpg.h in Headers */,
@@ -14119,12 +14104,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD515FAE1BCDBC9C000718FB /* png.h in Headers */,
-				CD515F611BCDBBF8000718FB /* MOAIHashWriterCrypto.h in Headers */,
 				CD51616F1BCDC0F6000718FB /* host.h in Headers */,
 				CD515FAF1BCDBC9C000718FB /* pngconf.h in Headers */,
 				CD5161711BCDC0F6000718FB /* MOAIImageFormatPng.h in Headers */,
-				CD515F621BCDBBF8000718FB /* host.h in Headers */,
-				CD515F631BCDBBF8000718FB /* headers.h in Headers */,
 				CD515FB41BCDBC9C000718FB /* pngpriv.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -14138,11 +14120,8 @@
 				CD515F8C1BCDBC7A000718FB /* PVRTArray.h in Headers */,
 				CD515F921BCDBC7A000718FB /* PVRTMap.h in Headers */,
 				CD51617B1BCDC106000718FB /* MOAIImageFormatPvr.h in Headers */,
-				CD515F701BCDBC00000718FB /* MOAIHashWriterCrypto.h in Headers */,
 				CD515F911BCDBC7A000718FB /* PVRTGlobal.h in Headers */,
-				CD515F711BCDBC00000718FB /* host.h in Headers */,
 				CD515F8E1BCDBC7A000718FB /* PVRTDecompress.h in Headers */,
-				CD515F721BCDBC00000718FB /* headers.h in Headers */,
 				CD515F901BCDBC7A000718FB /* PVRTError.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -14156,7 +14135,6 @@
 				CD5160C21BCDBD07000718FB /* huffman.h in Headers */,
 				CD5160C41BCDBD07000718FB /* quant_levels_dec.h in Headers */,
 				CD5160BE1BCDBD07000718FB /* filters.h in Headers */,
-				CD515F7F1BCDBC08000718FB /* MOAIHashWriterCrypto.h in Headers */,
 				CD5160BB1BCDBD07000718FB /* color_cache.h in Headers */,
 				CD5161851BCDC110000718FB /* MOAIImageFormatWebP.h in Headers */,
 				CD5160CF1BCDBD07000718FB /* decode.h in Headers */,
@@ -14188,8 +14166,6 @@
 				CD5160C81BCDBD07000718FB /* random.h in Headers */,
 				CD51609E1BCDBD07000718FB /* cost.h in Headers */,
 				CD51607B1BCDBD07000718FB /* webpi.h in Headers */,
-				CD515F801BCDBC08000718FB /* host.h in Headers */,
-				CD515F811BCDBC08000718FB /* headers.h in Headers */,
 				CD5160D41BCDBD07000718FB /* mux.h in Headers */,
 				CD5160701BCDBD07000718FB /* decode_vp8.h in Headers */,
 				CD5160A21BCDBD07000718FB /* histogram.h in Headers */,
