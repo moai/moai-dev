@@ -515,10 +515,6 @@ MoaiJS.prototype.OpenWindowFunc = function(title,width,height) {
 	}
 	this.canvas.style.display = "block";
 
-   //if (width > height) {
-  //      $(this.canvas).parent().addClass("portrait");
-   // }
-
 	canvas.width = width;
 	canvas.height = height;
 	this.canvasScale = canvas.width/$(canvas).width();
@@ -559,11 +555,15 @@ MoaiJS.prototype.OpenWindowFunc = function(title,width,height) {
 	  }
 	  var that = this;
 	  function resizeHandler() {
-		that.canvasScale = canvas.width/$(canvas).width();
+		that.recalibrateInput();
 	  }
 
 	return canvas;
 };
+
+MoaiJS.prototype.recalibrateInput = function() {
+		this.canvasScale = this.canvas.width/$(this.canvas).width();
+}
 
 MoaiJS.prototype.startUpdates = function() {
 	var step = this.AKUGetSimStep() || ((1000/60)/1000)
@@ -723,12 +723,14 @@ function MoaiPlayer(element, skipTemplate) {
     } else {
          infoEl = el.find(".moai-info");
     }
-
+	this.el = el;
 	var titleEl = el.find(".moai-title").first();
 	var statusEl = el.find(".moai-status").first();
 	var canvasEl = el.find(".moai-canvas").first();
-	var canvasWrapperEl = el.find(".moai-canvas-wrapper").first();
+	this.canvas = canvasEl[0];
 
+	var canvasWrapperEl = el.find(".moai-canvas-wrapper").first();
+	this.canvasWrapper = canvasWrapperEl;
     var pause = el.find("#moai-pause").first();
 	//get settings
 	this.url = el.attr('data-url');
@@ -757,11 +759,14 @@ function MoaiPlayer(element, skipTemplate) {
 		statusEl.html(status);
 	}
 
-	function onResolutionChange(width, height) {
-		console.log("width",width,"height",height,"portrait",(height > width));
-		el.find('.moai-canvas-wrapper').first().toggleClass("portrait", (height > width));
-	}
-    this.onResolutionChange = onResolutionChange;
+	
+    this.onResolutionChange = function(width, height) {
+		//resize canvas after moaijs has finished its stuff
+		window.setTimeout(function() {
+			this.resizeCanvas();
+		}.bind(this),10);
+    }
+
 	this.onError = function(err) {
 		console.log("ERROR: ",err);
 	};
@@ -784,13 +789,38 @@ function MoaiPlayer(element, skipTemplate) {
         canvasWrapperEl[0].style.display="table-row";
 }
 
+	 window.addEventListener("resize", resizeThrottler, false);
 
+	  var resizeTimeout;
+	  function resizeThrottler() {
+		// ignore resize events as long as an actualResizeHandler execution is in the queue
+		if ( !resizeTimeout ) {
+		  resizeTimeout = setTimeout(function() {
+		    resizeTimeout = null;
+		    resizeHandler();
+		 
+		   // The actualResizeHandler will execute at a rate of 15fps
+		   }, 66);
+		}
+	  }
+	  
+	  var resizeHandler = function() {
+		this.resizeCanvas();
+	  }.bind(this);
 
 
 
     this.initMoai = function() {
         this.moai = new MoaiJS(canvasEl[0], ram * 1024 * 1024, onTitleChange, onStatusChange, onError.bind(this), onPrint.bind(this), this.onResolutionChange.bind(this));
     }
+}
+
+
+MoaiPlayer.prototype.resizeCanvas = function() {
+	//we apply portrait class if the ratio of width to height is larger than our canvases
+	var wantedRatio = this.canvas.width / this.canvas.height;
+	var actualRatio = this.canvasWrapper.width() / this.canvasWrapper.height();
+	this.el.find('.moai-canvas-wrapper').first().toggleClass("portrait", (actualRatio > wantedRatio));
 }
 
 MoaiPlayer.prototype.isSupported = function() {
