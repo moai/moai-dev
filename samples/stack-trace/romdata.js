@@ -1,2 +1,2 @@
-romJson={"package_uuid": "129553a2-e1ee-4d6f-9410-fc62d790a5af", "directories": {}, "files": [{"filename": "/main.lua", "start": 0, "end": 345}]};
+romJson={"package_uuid": "63d7f333-4eea-416b-9ecf-db13d80313c9", "directories": {}, "files": [{"filename": "/main.lua", "start": 0, "end": 345}]};
 romData="LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQotLSBDb3B5cmlnaHQgKGMpIDIwMTAtMjAxMSBaaXBsaW5lIEdhbWVzLCBJbmMuIAotLSBBbGwgUmlnaHRzIFJlc2VydmVkLiAKLS0gaHR0cDovL2dldG1vYWkuY29tCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCmZ1bmMxID0gZnVuY3Rpb24gKCkKCWZvby5iYXIgPSBiYXoKZW5kCgpmdW5jMiA9IGZ1bmN0aW9uICgpCglmdW5jMSAoKQplbmQKCmZ1bmMzID0gZnVuY3Rpb24gKCkKCWZ1bmMyICgpCmVuZAoKZnVuYzMgKCkK";

@@ -17,11 +17,9 @@
 
 
         this.on("update", function() {
-            console.log("font update", opts.file);
             if (!opts.hasOwnProperty("if") || opts.if ) {
 
                 if (opts.file) {
-                    console.log("adding font");
                     //remove old style
                     var oldstyle = document.getElementById('demofontstyle');
                     if (oldstyle) {

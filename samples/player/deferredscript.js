@@ -35,5 +35,5 @@ function loadDeferredScripts( scripts, defines, callback ) {
                 window.clearInterval(awaiter);
                 callback();
             }
-        }, 100);
+        }, 10);
 };

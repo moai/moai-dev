@@ -25,10 +25,7 @@ var fileUtil = function() {
     };
 
     function arrayToString(arr) {
-        console.log("convert to str ", arr);
-        console.log((String.fromCharCode).apply(null, new Uint16Array(arr)));
         return (String.fromCharCode).apply(null, new Uint16Array(arr));
-
     }
 
     M.asText = function (file) {

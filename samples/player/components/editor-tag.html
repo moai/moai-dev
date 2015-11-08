@@ -16,7 +16,6 @@
         };
 
         this.on("update", function() {
-            console.log("editor update", opts, this);
             if (this.session && (!opts.hasOwnProperty("if") || opts.if )) {
                 if (opts.file != this.file) {
                     this.file = opts.file;

@@ -10,18 +10,10 @@
         this.files = [];
 
         isSelected(f) {
-            if (f == opts.picked) {
-                console.log("found selected", opts.picked,f);
-                return true;
-            } else {
-                console.log("not selected", opts.picked, f);
-                return false;
-            }
+            return (f == opts.picked);
         }
 
         select(e) {
-
-            console.log("File selected", e.item.file);
             this.trigger("fileSelected", e.item.file);
         }
 

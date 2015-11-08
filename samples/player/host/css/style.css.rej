@@ -1,0 +1,10 @@
+diff a/util/build-sample-browser/player/host/css/style.css b/util/build-sample-browser/player/host/css/style.css	(rejected hunks)
+@@ -108,7 +108,7 @@
+     height:100%;
+     margin:0;
+     padding:0;
+-    background-color: #202025;
++    background-color: #FFF;
+ }
+ 
+ #moaiplayer {

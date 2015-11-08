@@ -1,7 +1,8 @@
 <sample-list>
+    <sample-search></sample-search>
     <div id="samplelist">
     <ul>
-        <li each="{ name, i in opts.samples }" class="{ selected: (name == this.selected)}" onclick="{select}" >{name}</li>
+        <li each="{ name, i in samples }" class="{ selected: (name == this.selected)}" onclick="{select}" >{name}</li>
     </ul>
     </div>
     <script>
@@ -18,10 +19,53 @@
             }
         };
 
+        this.filterSamples = function(search) {
+            if (search == "") {
+                this.samples = opts.samples;
+                var container = $('#samplelist')[0];
+                container.scrollTop = 0;
+                this.update();
+            } else {
+                //traverse index looking for key matches
+                var tofind = search.toLowerCase();
+                var matching_samples =  _.filter(sampleindex, function(samples,token) {
+                    return token.toLowerCase().indexOf(tofind) > -1;
+                });
+
+                var ranked_samples = matching_samples.reduce(function(results, item) {
+                    _.each(item, function(v,k) {
+                        results[k] = (results[k] || 0) + v;
+                    });
+                    return results;
+                }, {});
+
+                var sorted_samples =_.sortBy(_.pairs(ranked_samples),function(i) { return i[1]});
+
+                this.samples = _.map(sorted_samples,function(i) {return i[0] });
+                console.log("filtered by ",search, "found", this.samples.length);
+                var container = $('#samplelist')[0];
+                container.scrollTop = 0;
+                this.update();
+            }
+
+        };
+
+        this.on('update', function() {
+            if (!this.samples) {
+                this.samples = opts.samples;
+            }
+        });
+
         this.on('mount', function () {
             if (!this.selected) {
                 this.selectSample(opts.samples[0]);
             }
+
+            var throttledFilter = _.throttle(this.filterSamples.bind(this),500, {leading:false});
+
+            this.tags['sample-search'].on("searchChange",throttledFilter);
+
+            this.samples = opts.samples;
 
             var container = $('#samplelist')[0];
             Ps.initialize(container);

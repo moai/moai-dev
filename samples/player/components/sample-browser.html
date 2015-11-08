@@ -1,6 +1,6 @@
 <sample-browser>
     <header>
-        <h2>Moai Sample Browser</h2>
+        <h2>Moai Sample Browser</h2><h3>{ sample }</h3>
     </header>
     <sample-list samples="{opts.samples}" onselected="{doselected}"/>
     <file-display files="{files}"/>
@@ -91,8 +91,6 @@
 
         this.on("mount", function() {
             this.tags['sample-list'].on("selected", this.loadSample.bind(this))
-
-
         })
 
 
