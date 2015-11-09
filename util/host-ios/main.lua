@@ -67,10 +67,12 @@ copyhostfiles = function()
 
 
     
-	for  entry in util.iterateFiles(MOAI_SDK_HOME..'host-templates/ios/Moai Template', false, true) do
-			local fullpath = string.format ( '%s/%s',MOAI_SDK_HOME..'host-templates/ios/Moai Template' , entry )
-			print( string.format( '%s -> %s', fullpath, output..entry ))
-			MOAIFileSystem.copy(fullpath, output..entry)
+  for  entry in util.iterateFiles(MOAI_SDK_HOME..'host-templates/ios/Moai Template', false, true) do
+    local fullpath = string.format ( '%s/%s',MOAI_SDK_HOME..'host-templates/ios/Moai Template' , entry )
+    if not config.USE_SYMLINK or entry ~= "libmoai" then
+      print( string.format( '%s -> %s', fullpath, output..entry ))
+      MOAIFileSystem.copy(fullpath, output..entry)
+    end
 	end
     --we want the copy from src
   MOAIFileSystem.deleteDirectory(output..'host-ios')
@@ -81,8 +83,9 @@ copyhostfiles = function()
     
     MOAIFileSystem.copy(classes, output..'host-ios')
     MOAIFileSystem.copy(hostmodules, output..'host-modules')
-    MOAIFileSystem.copy(MOAI_SDK_HOME..'src/host-modules/aku_plugins.cpp.in', output..'host-modules/aku_plugins.cpp')
-    
+    if not MOAIFileSystem.checkFileExists(output..'host-modules/aku_plugins.cpp') then
+      MOAIFileSystem.copy(MOAI_SDK_HOME..'src/host-modules/aku_plugins.cpp.in', output..'host-modules/aku_plugins.cpp')
+    end    
     
     MOAIFileSystem.deleteFile(output..'host-modules/aku_modules_android.h')
     MOAIFileSystem.deleteFile(output..'host-modules/aku_modules_android_config.h')
@@ -160,6 +163,9 @@ configureHost = function()
     [ output..'res/Info.plist' ] = {
       ['com.getmoai'] = hostconfig['ApplicationId'],
       },
+    [ output..'host-modules/aku_plugins.cpp'] = {
+      ['@(.-)@'] = ''
+    }
   })
 
     if (hostconfig['AppName'] ~= 'Moai Template' ) then
