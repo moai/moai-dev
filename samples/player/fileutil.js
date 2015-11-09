@@ -8,7 +8,7 @@ var fileUtil = function() {
     var typemap = {
         'ttf': {type: 'font', mime: 'application/font-sfnt'},
         'bmp': {type: 'image', mime: 'image/bmp'},
-        'svg': {type: 'image', mime: 'image/svg'},
+        'svg': {type: 'image', mime: 'image/svg+xml'},
         'png': {type: 'image', mime: 'image/png'},
         'jpg': {type: 'image', mime: 'image/jpeg'},
         'jpeg': {type: 'image', mime: 'image/jpeg'},
