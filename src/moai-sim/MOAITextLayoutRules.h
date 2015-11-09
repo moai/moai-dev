@@ -20,7 +20,7 @@ protected:
 
 	friend class MOAITextLayoutEngine;
 
-	MOAINode*	mOwner; // TODO: this sucks. kill it.
+	MOAINode*	mOwner; // TODO: just put here to make release/retain curve work. which sucks. kill it.
 
 	ZLRect		mFrame;
 	
@@ -31,7 +31,7 @@ protected:
 	u32			mVAlign;
 	bool		mYFlip;
 	
-	u32			mFirstOverrunRule;		// cannot be OVERRUN_WRAP_WORD
+	u32			mFirstOverrunRule;		// cannot be OVERRUN_MOVE_WORD
 	u32			mOverrunRule;
 	
 	u32			mHLayoutSizingRule;		// controls sizing *and* alignment
@@ -62,9 +62,12 @@ public:
 	};
 	
 	enum {
-		OVERRUN_WRAP_WORD, // not valid on first overflow
-		OVERRUN_WRAP_CHAR,
-		OVERRUN_ABORT,
+		OVERRUN_MOVE_WORD, // not valid on first overflow
+		OVERRUN_SPLIT_WORD,
+		OVERRUN_TRUNCATE_WORD,
+		OVERRUN_ABORT_LAYOUT, // reverts word
+		
+		OVERRUN_NONE, // for use by the shaper only
 	};
 	
 	enum {
@@ -94,6 +97,10 @@ public:
 	GET_SET_CONST ( float, HLineSnap, mHLineSnap )
 	GET_SET_CONST ( float, VLineSnap, mVLineSnap )
 
+	GET_SET_CONST ( float, HLayoutSizingRule, mHLayoutSizingRule )
+	GET_SET_CONST ( float, VLayoutSizingRule, mVLayoutSizingRule )
+	GET_SET_CONST ( float, LineSizingRule, mLineSizingRule )
+
 	//----------------------------------------------------------------//
 	void				ClearCurves					();
 	static ZLRect		GetGlyphRect				( const MOAIGlyph& glyph, float x, float y, float xScale, float yScale, u32 hRule, u32 vRule );
@@ -102,7 +109,7 @@ public:
 	void				Layout						( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, cc8* str, u32 idx, bool* more, u32* nextIdx, bool* overrun );
 	void				Init						( const MOAITextLayoutRules& designer );
 						MOAITextLayoutRules			();
-						~MOAITextLayoutRules			();
+						~MOAITextLayoutRules		();
 	void				ReserveCurves				( u32 total );
 	void				SetCurve					( u32 idx, MOAIAnimCurve* curve );
 };

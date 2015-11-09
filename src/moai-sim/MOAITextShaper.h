@@ -47,12 +47,6 @@ public:
 class MOAITextShaper {
 public:
 
-	enum {
-		DISCARD_CHAR,
-		DISCARD_TOKEN,
-		DISCARD_NONE,
-	};
-
 	//----------------------------------------------------------------//
 						MOAITextShaper				() {}
 	virtual				~MOAITextShaper				() {}

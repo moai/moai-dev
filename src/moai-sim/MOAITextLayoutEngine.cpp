@@ -213,23 +213,39 @@ void MOAITextLayoutEngine::BuildLayout () {
 	bool more = true;
 	while ( more ) {
 		
-		u32 startingCharIdx = this->GetCharIdx ();
+		u32 startingCharIdx = this->GetCharIndex ();
 		
 		MOAITextSimpleShaper shaper;
-		u32 discard = shaper.ShapeLine ( *this, *this->mLayoutRules );
+		u32 wrap = shaper.ShapeLine ( *this, *this->mLayoutRules );
 		
-		if ( discard == MOAITextShaper::DISCARD_CHAR ) {
-			this->Restore ( RESTORE_POINT_CHAR );
-		}
-		else if ( discard == MOAITextShaper::DISCARD_TOKEN ) {
-			this->Restore ( RESTORE_POINT_TOKEN );
-		}
-		
-		if ( this->GetCharIdx () > startingCharIdx ) {
-		
-			u32 result = this->PushLine ();
+		switch ( wrap ) {
 			
-			more = (( result == PUSH_OK ) && ( this->mCurrentChar.mChar > 0 ));
+			case MOAITextLayoutRules::OVERRUN_MOVE_WORD:
+				
+				this->Restore ( RESTORE_POINT_TOKEN );
+				break;
+			
+			case MOAITextLayoutRules::OVERRUN_TRUNCATE_WORD:
+			case MOAITextLayoutRules::OVERRUN_SPLIT_WORD:
+			
+				this->Restore ( RESTORE_POINT_CHAR );
+				break;
+			
+			case MOAITextLayoutRules::OVERRUN_ABORT_LAYOUT:
+				
+				more = false;
+				this->Restore ( RESTORE_POINT_TOKEN );
+				break;
+				
+			case MOAITextLayoutRules::OVERRUN_NONE:
+				break;
+		}
+		
+		this->mOverrun = wrap != MOAITextLayoutRules::OVERRUN_NONE;
+		
+		if ( this->GetCharIndex () > startingCharIdx ) {
+			u32 result = this->PushLine ();
+			more = more && (( result == PUSH_OK ) && ( this->mCurrentChar.mChar > 0 ));
 		}
 		else {
 			more = false;
@@ -258,9 +274,7 @@ void MOAITextLayoutEngine::BuildLayout ( MOAITextLayout& layout, MOAITextStyleCa
 	this->mStyleSpan = 0;
 	this->mStyle = 0;
 	
-	//this->mLineCharIdx = 0;
 	this->mLineSpriteIdx = 0;
-	//this->mLineSizeInSprites = 0;
 	
 	this->mLayoutBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	this->mLineLayoutBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
@@ -274,6 +288,8 @@ void MOAITextLayoutEngine::BuildLayout ( MOAITextLayout& layout, MOAITextStyleCa
 	this->mCurrentChar.mScale.Init ( 1.0f, 1.0f );
 	
 	this->mCurrentGlyphDeck = 0;
+	
+	this->mOverrun = false;
 	
 	this->BuildLayout ();
 }
@@ -290,7 +306,7 @@ void MOAITextLayoutEngine::CaptureRestorePoint ( u32 restorePointID ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAITextLayoutEngine::GetCharIdx () {
+u32 MOAITextLayoutEngine::GetCharIndex () {
 
 	return this->mCharIdx;
 }
@@ -302,7 +318,7 @@ u32 MOAITextLayoutEngine::GetLineSizeInSprites () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAITextLayoutEngine::GetSpriteIdx () {
+u32 MOAITextLayoutEngine::GetSpriteIndex () {
 
 	return this->mLayout->mSprites.GetTop ();
 }
@@ -322,8 +338,7 @@ MOAITextLayoutEngine::~MOAITextLayoutEngine () {
 //----------------------------------------------------------------//
 bool MOAITextLayoutEngine::More () {
 
-	//return this->mMore;
-	return false;
+	return ( this->mStr [ this->mCharIdx ] != NULL );
 }
 
 //----------------------------------------------------------------//
@@ -401,8 +416,7 @@ MOAITextStyledChar MOAITextLayoutEngine::NextChar () {
 //----------------------------------------------------------------//
 bool MOAITextLayoutEngine::Overrun () {
 
-	//return this->mMore || this->mOverrun;
-	return false;
+	return this->mOverrun;
 }
 
 //----------------------------------------------------------------//
@@ -442,7 +456,7 @@ u32 MOAITextLayoutEngine::PushLine () {
 	
 	this->mLayout->PushLine ( this->mLineSpriteIdx, this->GetLineSizeInSprites (), ZLVec2D ( 0.0f, yPen ), this->mLineLayoutBounds );
 	this->mLayoutBounds = newLayoutBounds;
-	this->mLineSpriteIdx = this->GetSpriteIdx ();
+	this->mLineSpriteIdx = this->GetSpriteIndex ();
 	
 	return PUSH_OK;
 }

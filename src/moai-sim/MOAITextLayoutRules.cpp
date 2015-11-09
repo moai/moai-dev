@@ -78,21 +78,21 @@ ZLRect MOAITextLayoutRules::GetGlyphSpacingRect ( const MOAIGlyph& glyph, float 
 //----------------------------------------------------------------//
 void MOAITextLayoutRules::Layout ( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, cc8* str, u32 idx, bool* more, u32* nextIdx, bool* overrun ) {
 
-	MOAITextLayoutEngine parser;
+	MOAITextLayoutEngine layoutEngine;
 	
-	parser.BuildLayout ( layout, styleCache, styleMap, *this, str, idx );
+	layoutEngine.BuildLayout ( layout, styleCache, styleMap, *this, str, idx );
 	layout.ApplyHighlights ();
 	
 	if ( more ) {
-		*more = parser.More ();
+		*more = layoutEngine.More ();
 	}
 	
 	if ( nextIdx ) {
-		*nextIdx = parser.GetIndex ();
+		*nextIdx = layoutEngine.GetCharIndex ();
 	}
 
 	if ( overrun ) {
-		*overrun = parser.Overrun ();
+		*overrun = layoutEngine.Overrun ();
 	}
 }
 
@@ -128,8 +128,8 @@ MOAITextLayoutRules::MOAITextLayoutRules () :
 	mHAlign ( MOAITextLayoutRules::LEFT_JUSTIFY ),
 	mVAlign ( MOAITextLayoutRules::TOP_JUSTIFY ),
 	mYFlip ( false ),
-	mFirstOverrunRule ( OVERRUN_WRAP_CHAR ),
-	mOverrunRule ( OVERRUN_WRAP_WORD ),
+	mFirstOverrunRule ( OVERRUN_SPLIT_WORD ),
+	mOverrunRule ( OVERRUN_MOVE_WORD ),
 	mHLayoutSizingRule ( LOGICAL_SIZE ),
 	mVLayoutSizingRule ( LOGICAL_SIZE ),
 	mLineSizingRule ( LOGICAL_SIZE ),

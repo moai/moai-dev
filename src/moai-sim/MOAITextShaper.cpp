@@ -22,8 +22,8 @@ MOAITextSimpleShaper::~MOAITextSimpleShaper () {
 //----------------------------------------------------------------//
 u32 MOAITextSimpleShaper::ShapeLine ( MOAITextShaperClient& client, const MOAITextLayoutRules& layoutRules ) {
 
-	// return one of DISCARD_CHAR, DISCARD_TOKEN, DISCARD_NONE depending on how overruns are to be handled
-	u32 discard = DISCARD_NONE;
+	// return one of overrun modes (in an overrun occurs)
+	u32 wrap = MOAITextLayoutRules::OVERRUN_NONE;
 
 	float penX				= 0.0f;
 	MOAIGlyph* prevGlyph	= 0;
@@ -34,8 +34,7 @@ u32 MOAITextSimpleShaper::ShapeLine ( MOAITextShaperClient& client, const MOAITe
 	bool more = true;
 	while ( more ) {
 	
-		// this sets the resume point for DISCARD_CHAR and the resume point for the
-		// next call to BeginToken ()
+		// this sets restore point to start of the current character; also prepares for the next call to BeginToken ()
 		client.BeginChar ();
 	
 		MOAITextStyledChar styledChar = client.NextChar ();
@@ -54,6 +53,7 @@ u32 MOAITextSimpleShaper::ShapeLine ( MOAITextShaperClient& client, const MOAITe
 		
 		// apply kerning
 		if ( prevGlyph ) {
+		
 			MOAIKernVec kernVec = prevGlyph->GetKerning ( code );
 			penX += kernVec.mX * xScale;
 		}
@@ -70,20 +70,27 @@ u32 MOAITextSimpleShaper::ShapeLine ( MOAITextShaperClient& client, const MOAITe
 			// handle new token
 			if ( tokenSize == 0 ) {
 			
-				// sets the resume point for DISCARD_TOKEN; just a copy of the
+				// sets the resume point for WRAP_TOKEN; just a copy of the
 				// resume point set by BeginChar ()
 				client.BeginToken ();
+			
+				if ( wrap == MOAITextLayoutRules::OVERRUN_TRUNCATE_WORD ) {
+					break;
+				}
 			}
 			tokenSize++;
 			
-			u32 result = client.PushSprite ( styledChar, penX, 0.0f );
+			if ( wrap == MOAITextLayoutRules::OVERRUN_NONE ) {
 			
-			if ( result == MOAITextShaperClient::PUSH_OVERRUN ) {
+				u32 result = client.PushSprite ( styledChar, penX, 0.0f );
 				
-				// there was an overrun, so we're either going to discard the last char or the last token
-				u32 overrunRule = ( tokenCount == 0 ) ? layoutRules.GetFirstOverrunRule () : layoutRules.GetOverrunRule ();
-				discard = ( overrunRule == MOAITextLayoutRules::OVERRUN_WRAP_CHAR ) ? DISCARD_CHAR : DISCARD_TOKEN;
-				break;
+				if ( result == MOAITextShaperClient::PUSH_OVERRUN ) {
+					
+					// there was an overrun, so we're either going to discard the last char or the last token
+					wrap = ( tokenCount == 0 ) ? layoutRules.GetFirstOverrunRule () : layoutRules.GetOverrunRule ();
+					
+					if (( wrap != MOAITextLayoutRules::OVERRUN_NONE ) && ( wrap != MOAITextLayoutRules::OVERRUN_TRUNCATE_WORD )) break;
+				}
 			}
 		}
 		
@@ -91,5 +98,5 @@ u32 MOAITextSimpleShaper::ShapeLine ( MOAITextShaperClient& client, const MOAITe
 		penX += glyph->mAdvanceX * xScale;
 	}
 	
-	return discard;
+	return wrap;
 }

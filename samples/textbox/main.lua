@@ -32,9 +32,8 @@ MOAISim.pushRenderPass ( layer )
 --text = '<foo>A</><bar>B</><baz>C</>\n<baz>D</><bar>E</><foo>F</>'
 
 --text = 'abcdefghijklmnop'
---text = 'abcdefg hijklmnop qrstuv wxyz 0123456789 aaaaaa bbbbbb cccccc dddddd eeeeee'
-
-text = 'g\n\n\nqyjp'
+text = 'abcdefg hijklmnop qrstuv wxyz 0123456789 aaaaaa bbbbbb cccccc dddddd eeeeee'
+--text = 'g\n\n\nqyjp'
 
 font = MOAIFont.new ()
 font:loadFromTTF ( '../resources/fonts/arial-rounded.TTF' )
@@ -50,9 +49,11 @@ label:setFont ( font )
 label:setTextSize ( 32 )
 label:setLineSpacing ( 0 )
 --label:setYFlip ( true )
-label:setRect ( -128, -128, 128, 128 )
+--label:setRect ( -128, -128, 128, 128 )
+label:setRect ( -64, -128, 64, 128 )
 label:setRectLimits ( true, true )
 label:setAlignment ( MOAITextBox.CENTER_JUSTIFY, MOAITextBox.TOP_JUSTIFY )
+label:setOverrunRules ( MOAITextBox.OVERRUN_SPLIT_WORD, MOAITextBox.OVERRUN_MOVE_WORD )
 layer:insertProp ( label )
 
 gfxQuad = MOAIGfxQuad2D.new ()

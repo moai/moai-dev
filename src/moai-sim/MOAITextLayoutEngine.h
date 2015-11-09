@@ -74,6 +74,8 @@ private:
 	
 	RestorePoint			mRestorePoints [ TOTAL_RESTORE_POINTS ];
 	
+	bool					mOverrun;
+	
 	//----------------------------------------------------------------//
 	// layout settings
 	
@@ -88,9 +90,8 @@ private:
 	void					BeginToken					();
 	void					BuildLayout					();
 	void					CaptureRestorePoint			( u32 restorePointID );
-	u32						GetCharIdx					();
 	u32						GetLineSizeInSprites		();
-	u32						GetSpriteIdx				();
+	u32						GetSpriteIndex				();
 	MOAITextStyledChar		NextChar					();
 	u32						PushLine					();
 	u32						PushSprite					( const MOAITextStyledChar& styledChar, float x, float y );
@@ -99,10 +100,9 @@ private:
 
 public:
 
-	GET ( u32, Index, mCharIdx )
-
 	//----------------------------------------------------------------//
 	void					BuildLayout					( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, MOAITextLayoutRules& designer, cc8* str, u32 idx );
+	u32						GetCharIndex				();
 							MOAITextLayoutEngine		();
 	virtual					~MOAITextLayoutEngine		();
 	bool					More						();

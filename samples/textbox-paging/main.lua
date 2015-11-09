@@ -6,7 +6,7 @@
 
 MOAISim.openWindow ( "test", 320, 480 )
 MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX, 1, 1, 1, 1, 1 )
-MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_LAYOUT, 1, 0, 0, 1, 1 )
+--MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_LAYOUT, 1, 0, 0, 1, 1 )
 MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_BASELINES, 1, 1, 0, 0, 1 )
 
 viewport = MOAIViewport.new ()
@@ -29,6 +29,7 @@ textbox:setFont ( font )
 textbox:setTextSize ( 16, 163 )
 textbox:setRect ( -150, 100, 150, 230 )
 textbox:setYFlip ( true )
+textbox:setSpeed ( 12 )
 layer:insertProp ( textbox )
 
 function page ( text )
