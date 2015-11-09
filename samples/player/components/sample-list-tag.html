@@ -2,19 +2,20 @@
     <sample-search></sample-search>
     <div id="samplelist">
     <ul>
-        <li each="{ name, i in samples }" class="{ selected: (name == this.selected)}" onclick="{select}" >{name}</li>
+        <li each="{ name, i in samples }" class="{ selected: (name == currentsample)}" onclick="{select}" data-sample="{name}" >{name}</li>
     </ul>
     </div>
     <script>
 
         select(e) {
+
             console.log("Select pressed",e);
+            console.log("Current sample",opts.current_sample)
             this.selectSample(e.item.name);
         }
 
         this.selectSample = function (sample) {
-            if (this.selected != sample) {
-                this.selected = sample;
+            if (this.currentsample != sample) {
                 this.trigger("selected", sample)
             }
         };
@@ -54,12 +55,23 @@
             if (!this.samples) {
                 this.samples = opts.samples;
             }
+            if (this.currentsample != opts.currentsample) {
+                this.currentsample = opts.currentsample;
+                //scroll to find it in view
+                var el = $("li[data-sample='"+this.currentsample+"']", this.root);
+                if (el.length) {
+                    //only scroll if not already visible
+                    var container = $('#samplelist');
+                    if (el.offset().top > (container.scrollTop() + container.height())) {
+                        el[0].scrollIntoView();
+                        Ps.update(container[0]);
+                    }
+                }
+
+            }
         });
 
         this.on('mount', function () {
-            if (!this.selected) {
-                this.selectSample(opts.samples[0]);
-            }
 
             var throttledFilter = _.throttle(this.filterSamples.bind(this),500, {leading:false});
 

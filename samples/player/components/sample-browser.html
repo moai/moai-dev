@@ -2,7 +2,7 @@
     <header>
         <h2>Moai Sample Browser</h2><h3>{ sample }</h3>
     </header>
-    <sample-list samples="{opts.samples}" onselected="{doselected}"/>
+    <sample-list samples="{opts.samples}" currentsample="{sample}" onselected="{doselected}"/>
     <file-display files="{files}"/>
 
     <player sample="{sample}"/>
@@ -90,7 +90,26 @@
 
 
         this.on("mount", function() {
-            this.tags['sample-list'].on("selected", this.loadSample.bind(this))
+
+            this.tags['sample-list'].on("selected",
+                function(sample) {
+                    riot.route(sample);
+                }.bind(this)
+            );
+
+            riot.route(function(sample) {
+                if ( this.opts.samples.indexOf(sample) > -1) {
+
+                    this.loadSample(sample)
+                }
+            }.bind(this));
+            riot.route.start();
+            riot.route.exec();
+            if (!this.sample) {
+                riot.route(opts.samples[0]);
+            }
+
+
         })
 
 
