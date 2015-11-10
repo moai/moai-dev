@@ -31,6 +31,8 @@ MOAIGlyph& MOAIGlyphSet::EditGlyph ( u32 c ) {
 	if ( !this->mGlyphMap.contains ( c )) {
 	
 		MOAIGlyph& glyph = this->mGlyphMap [ c ];
+		
+		glyph.mDeck = this;
 		glyph.mNext = this->mGlyphs;
 		this->mGlyphs = &glyph;
 		glyph.mCode = c;
@@ -72,6 +74,7 @@ void MOAIGlyphSet::SerializeIn ( MOAILuaState& state ) {
 			u32 c = state.GetValue < u32 >( -2, 0 );
 			MOAIGlyph& glyph = this->mGlyphMap [ c ];
 			glyph.SerializeIn ( state );
+			glyph.mDeck = this;
 		}
 		state.Pop ( 1 );
 	}

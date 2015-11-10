@@ -76,27 +76,6 @@ ZLRect MOAITextLayoutRules::GetGlyphSpacingRect ( const MOAIGlyph& glyph, float 
 }
 
 //----------------------------------------------------------------//
-void MOAITextLayoutRules::Layout ( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, cc8* str, u32 idx, bool* more, u32* nextIdx, bool* overrun ) {
-
-	MOAITextLayoutEngine layoutEngine;
-	
-	layoutEngine.BuildLayout ( layout, styleCache, styleMap, *this, str, idx );
-	layout.ApplyHighlights ();
-	
-	if ( more ) {
-		*more = layoutEngine.More ();
-	}
-	
-	if ( nextIdx ) {
-		*nextIdx = layoutEngine.GetCharIndex ();
-	}
-
-	if ( overrun ) {
-		*overrun = layoutEngine.Overrun ();
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAITextLayoutRules::Init ( const MOAITextLayoutRules& designer ) {
 
 	this->ClearCurves ();
@@ -117,6 +96,27 @@ void MOAITextLayoutRules::Init ( const MOAITextLayoutRules& designer ) {
 	this->ReserveCurves ( totalCurves );
 	for ( u32 i = 0; i < totalCurves; ++i ) {
 		this->SetCurve ( i, designer.mCurves [ i ]);
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITextLayoutRules::Layout ( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, cc8* str, u32 idx, bool* more, u32* nextIdx, bool* overrun ) {
+
+	MOAITextLayoutEngine layoutEngine;
+	
+	layoutEngine.BuildLayout ( layout, styleCache, styleMap, *this, str, idx );
+	layout.ApplyHighlights ();
+	
+	if ( more ) {
+		*more = layoutEngine.More ();
+	}
+	
+	if ( nextIdx ) {
+		*nextIdx = layoutEngine.GetCharIndex ();
+	}
+
+	if ( overrun ) {
+		*overrun = layoutEngine.Overrun ();
 	}
 }
 

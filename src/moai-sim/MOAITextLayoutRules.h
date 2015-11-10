@@ -106,8 +106,8 @@ public:
 	static ZLRect		GetGlyphRect				( const MOAIGlyph& glyph, float x, float y, float xScale, float yScale, u32 hRule, u32 vRule );
 	ZLRect				GetGlyphLayoutRect			( const MOAIGlyph& glyph, float x, float y, float xScale, float yScale );
 	ZLRect				GetGlyphSpacingRect			( const MOAIGlyph& glyph, float x, float y, float xScale, float yScale );
-	void				Layout						( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, cc8* str, u32 idx, bool* more, u32* nextIdx, bool* overrun );
 	void				Init						( const MOAITextLayoutRules& designer );
+	void				Layout						( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, cc8* str, u32 idx, bool* more, u32* nextIdx, bool* overrun );
 						MOAITextLayoutRules			();
 						~MOAITextLayoutRules		();
 	void				ReserveCurves				( u32 total );

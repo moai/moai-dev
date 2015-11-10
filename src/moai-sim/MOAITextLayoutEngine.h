@@ -16,29 +16,36 @@ class MOAITextStyleSpan;
 class MOAITextStyleState;
 
 //================================================================//
+// MOAILayoutEngineState
+//================================================================//
+class MOAILayoutEngineState {
+protected:
+
+	friend class MOAITextLayoutEngine;
+	
+	MOAITextStyleSpan*		mStyleSpan;
+	u32						mSpanIdx;
+	
+	u32						mCharIdx;
+	u32						mSpriteIdx;
+	ZLRect					mLineLayoutBounds;
+	ZLRect					mLineSpacingBounds;
+};
+
+//================================================================//
 // MOAITextLayoutEngine
 //================================================================//
 // parser for producing a layout
 class MOAITextLayoutEngine :
-	public MOAITextShaperClient {
+	public MOAITextShaperClient,
+	public MOAILayoutEngineState {
 private:
 	
 	enum {
 		RESTORE_POINT_CHAR,
 		RESTORE_POINT_TOKEN,
+		RESTORE_POINT_LINE,
 		TOTAL_RESTORE_POINTS,
-	};
-	
-	//================================================================//
-	// RestorePoint
-	//================================================================//
-	class RestorePoint {
-		public:
-		
-		u32						mCharIdx;
-		u32						mSpriteIdx;
-		ZLRect					mLineLayoutBounds;
-		ZLRect					mLineSpacingBounds;
 	};
 	
 	// a note about terminology:
@@ -49,21 +56,11 @@ private:
 	//----------------------------------------------------------------//
 	// layout state
 	
-	MOAITextStyleSpan*		mStyleSpan;
-	MOAITextStyleState*		mStyle;
-	u32						mSpanIdx;
-	
-	u32						mCharIdx;
-	
 	cc8*					mStr;
-	
-	u32						mLineSpriteIdx;
-	
+
 	ZLRect					mLayoutBounds;
-	ZLRect					mLineLayoutBounds;
-	ZLRect					mLineSpacingBounds;
-	float					mLineSpacingCursor;
 	
+	float					mLineSpacingCursor;
 	float					mEmptyLineAscent;
 	float					mEmptyLineDescent;
 	
@@ -72,8 +69,9 @@ private:
 	MOAITextStyledChar		mCurrentChar;
 	MOAIGlyphSet*			mCurrentGlyphDeck;
 	
-	RestorePoint			mRestorePoints [ TOTAL_RESTORE_POINTS ];
+	MOAILayoutEngineState	mRestorePoints [ TOTAL_RESTORE_POINTS ];
 	
+	bool					mResetStyle;
 	bool					mOverrun;
 	
 	//----------------------------------------------------------------//
@@ -91,6 +89,7 @@ private:
 	void					BuildLayout					();
 	void					CaptureRestorePoint			( u32 restorePointID );
 	u32						GetLineSizeInSprites		();
+	u32						GetLineSpriteIdx			();
 	u32						GetSpriteIndex				();
 	MOAITextStyledChar		NextChar					();
 	u32						PushLine					();
@@ -101,7 +100,7 @@ private:
 public:
 
 	//----------------------------------------------------------------//
-	void					BuildLayout					( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, MOAITextLayoutRules& designer, cc8* str, u32 idx );
+	void					BuildLayout					( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, MOAITextLayoutRules& layoutRules, cc8* str, u32 idx );
 	u32						GetCharIndex				();
 							MOAITextLayoutEngine		();
 	virtual					~MOAITextLayoutEngine		();

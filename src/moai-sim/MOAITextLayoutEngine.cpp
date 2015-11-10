@@ -213,6 +213,8 @@ void MOAITextLayoutEngine::BuildLayout () {
 	bool more = true;
 	while ( more ) {
 		
+		this->CaptureRestorePoint ( RESTORE_POINT_LINE );
+		
 		u32 startingCharIdx = this->GetCharIndex ();
 		
 		MOAITextSimpleShaper shaper;
@@ -220,8 +222,17 @@ void MOAITextLayoutEngine::BuildLayout () {
 		
 		switch ( wrap ) {
 			
+			case MOAITextLayoutRules::OVERRUN_NONE:
+				break;
+			
 			case MOAITextLayoutRules::OVERRUN_MOVE_WORD:
 				
+				this->Restore ( RESTORE_POINT_TOKEN );
+				break;
+			
+			case MOAITextLayoutRules::OVERRUN_ABORT_LAYOUT:
+			
+				more = false;
 				this->Restore ( RESTORE_POINT_TOKEN );
 				break;
 			
@@ -230,51 +241,43 @@ void MOAITextLayoutEngine::BuildLayout () {
 			
 				this->Restore ( RESTORE_POINT_CHAR );
 				break;
-			
-			case MOAITextLayoutRules::OVERRUN_ABORT_LAYOUT:
-				
-				more = false;
-				this->Restore ( RESTORE_POINT_TOKEN );
-				break;
-				
-			case MOAITextLayoutRules::OVERRUN_NONE:
-				break;
 		}
 		
 		this->mOverrun = wrap != MOAITextLayoutRules::OVERRUN_NONE;
 		
 		if ( this->GetCharIndex () > startingCharIdx ) {
+			
 			u32 result = this->PushLine ();
-			more = more && (( result == PUSH_OK ) && ( this->mCurrentChar.mChar > 0 ));
+			
+			if ( result != PUSH_OK ) {
+				this->Restore ( RESTORE_POINT_LINE );
+				more = false;
+			}
 		}
 		else {
 			more = false;
 		}
 	}
 
-	// discard any sprites not already in a line
-	this->mLayout->mSprites.SetTop ( this->mLineSpriteIdx );
-
 	this->Align ();
 }
 
 //----------------------------------------------------------------//
-void MOAITextLayoutEngine::BuildLayout ( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, MOAITextLayoutRules& designer, cc8* str, u32 idx ) {
+void MOAITextLayoutEngine::BuildLayout ( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, MOAITextLayoutRules& layoutRules, cc8* str, u32 idx ) {
 	
 	if ( styleMap.CountSpans () == 0 ) return;
 	
-	this->mLayout = &layout;
-	this->mStyleCache = &styleCache;
-	this->mStyleMap = &styleMap;
-	this->mLayoutRules = &designer;
+	this->mLayout		= &layout;
+	this->mStyleCache	= &styleCache;
+	this->mStyleMap		= &styleMap;
+	this->mLayoutRules	= &layoutRules;
 	
-	this->mStr = str;
-	this->mCharIdx = idx;
+	this->mStr			= str;
+	this->mCharIdx		= idx;
+	this->mSpriteIdx	= this->mLayout->mSprites.GetTop ();
 	
-	this->mStyleSpan = 0;
-	this->mStyle = 0;
-	
-	this->mLineSpriteIdx = 0;
+	this->mStyleSpan	= 0;
+	this->mSpanIdx		= 0;
 	
 	this->mLayoutBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	this->mLineLayoutBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
@@ -289,6 +292,7 @@ void MOAITextLayoutEngine::BuildLayout ( MOAITextLayout& layout, MOAITextStyleCa
 	
 	this->mCurrentGlyphDeck = 0;
 	
+	this->mResetStyle = true;
 	this->mOverrun = false;
 	
 	this->BuildLayout ();
@@ -297,12 +301,7 @@ void MOAITextLayoutEngine::BuildLayout ( MOAITextLayout& layout, MOAITextStyleCa
 //----------------------------------------------------------------//
 void MOAITextLayoutEngine::CaptureRestorePoint ( u32 restorePointID ) {
 
-	RestorePoint& restorePoint = this->mRestorePoints [ restorePointID ];
-	
-	restorePoint.mCharIdx				= this->mCharIdx;
-	restorePoint.mSpriteIdx				= this->mLayout->mSprites.GetTop ();
-	restorePoint.mLineLayoutBounds		= this->mLineLayoutBounds;
-	restorePoint.mLineSpacingBounds		= this->mLineSpacingBounds;
+	this->mRestorePoints [ restorePointID ] = *( MOAILayoutEngineState* )this;
 }
 
 //----------------------------------------------------------------//
@@ -314,7 +313,13 @@ u32 MOAITextLayoutEngine::GetCharIndex () {
 //----------------------------------------------------------------//
 u32 MOAITextLayoutEngine::GetLineSizeInSprites () {
 
-	return this->mLayout->mSprites.GetTop () - this->mLineSpriteIdx;
+	return this->mLayout->mSprites.GetTop () - this->GetLineSpriteIdx ();
+}
+
+//----------------------------------------------------------------//
+u32 MOAITextLayoutEngine::GetLineSpriteIdx () {
+
+	return this->mRestorePoints [ RESTORE_POINT_LINE ].mSpriteIdx;
 }
 
 //----------------------------------------------------------------//
@@ -346,12 +351,10 @@ MOAITextStyledChar MOAITextLayoutEngine::NextChar () {
 
 	this->mCurrentChar.mChar = 0; // set this here so shaper will abort if we return due to an error.
 
-	bool newSpan = false;
-
 	if ( !this->mStyleSpan ) {
 		this->mStyleSpan = &this->mStyleMap->Elem ( 0 );
 		this->mSpanIdx = 0;
-		newSpan = true;
+		this->mResetStyle = true;
 	}
 
 	if ( this->mCharIdx >= this->mStyleSpan->mTop ) {
@@ -364,7 +367,7 @@ MOAITextStyledChar MOAITextLayoutEngine::NextChar () {
 			
 			if ( this->mCharIdx < styleSpan.mTop ) {
 				this->mStyleSpan = &styleSpan;
-				newSpan = true;
+				this->mResetStyle = true;
 				break;
 			}
 		}
@@ -372,7 +375,7 @@ MOAITextStyledChar MOAITextLayoutEngine::NextChar () {
 	
 	if ( this->mStyleSpan ) {
 	
-		if ( newSpan ) {
+		if ( this->mResetStyle ) {
 		
 			MOAITextStyleState* defaultStyle = this->mStyleCache->GetStyle ();
 			MOAIFont* defaultFont = defaultStyle ? defaultStyle->mFont : 0;
@@ -381,26 +384,30 @@ MOAITextStyledChar MOAITextLayoutEngine::NextChar () {
 				this->mCharIdx = this->mStyleSpan->mBase;
 			}
 			
-			this->mStyle = this->mStyleSpan->mStyle;
-			this->mStyle = this->mStyle ? this->mStyle : defaultStyle;
-			if ( !this->mStyle ) return this->mCurrentChar; // TODO: report error
+			MOAITextStyleState* style = 0;
 			
-			MOAIFont* font = this->mStyle->mFont;
+			style = this->mStyleSpan->mStyle;
+			style = style ? style : defaultStyle;
+			if ( !style ) return this->mCurrentChar; // TODO: report error
+			
+			MOAIFont* font = style->mFont;
 			font = font ? font : defaultFont;
 			if ( !font ) return this->mCurrentChar; // TODO: report error
 			
-			this->mCurrentGlyphDeck = font->GetGlyphSet ( this->mStyle->mSize );
+			this->mCurrentGlyphDeck = font->GetGlyphSet ( style->mSize );
 			if ( !this->mCurrentGlyphDeck && defaultFont ) {
-				this->mCurrentGlyphDeck = defaultFont->GetGlyphSet ( this->mStyle->mSize );
+				this->mCurrentGlyphDeck = defaultFont->GetGlyphSet ( style->mSize );
 			}
 			
 			if ( !this->mCurrentGlyphDeck ) return this->mCurrentChar; // TODO: report error
 			
-			float deckScale = this->mCurrentGlyphDeck && ( this->mStyle->mSize > 0.0f ) ? this->mStyle->mSize / this->mCurrentGlyphDeck->GetSize () : 1.0f;
+			float deckScale = this->mCurrentGlyphDeck && ( style->mSize > 0.0f ) ? style->mSize / this->mCurrentGlyphDeck->GetSize () : 1.0f;
 			
-			this->mCurrentChar.mStyle = this->mStyle;
-			this->mCurrentChar.mScale.mX = this->mLayoutRules->mGlyphScale * ( this->mStyle ? this->mStyle->mScale.mX : 1.0f ) * deckScale;
-			this->mCurrentChar.mScale.mY = this->mLayoutRules->mGlyphScale * ( this->mStyle ? this->mStyle->mScale.mY : 1.0f ) * deckScale;
+			this->mCurrentChar.mStyle = style;
+			this->mCurrentChar.mScale.mX = this->mLayoutRules->mGlyphScale * style->mScale.mX * deckScale;
+			this->mCurrentChar.mScale.mY = this->mLayoutRules->mGlyphScale * style->mScale.mY * deckScale;
+			
+			this->mResetStyle = false;
 		}
 		
 		this->mCurrentChar.mIdx = this->mCharIdx;
@@ -454,9 +461,8 @@ u32 MOAITextLayoutEngine::PushLine () {
 		if ( newLayoutBounds.Height () > frameHeight ) return PUSH_OVERRUN;
 	}
 	
-	this->mLayout->PushLine ( this->mLineSpriteIdx, this->GetLineSizeInSprites (), ZLVec2D ( 0.0f, yPen ), this->mLineLayoutBounds );
+	this->mLayout->PushLine ( this->GetLineSpriteIdx (), this->GetLineSizeInSprites (), ZLVec2D ( 0.0f, yPen ), this->mLineLayoutBounds );
 	this->mLayoutBounds = newLayoutBounds;
-	this->mLineSpriteIdx = this->GetSpriteIndex ();
 	
 	return PUSH_OK;
 }
@@ -484,19 +490,19 @@ u32 MOAITextLayoutEngine::PushSprite ( const MOAITextStyledChar& styledChar, flo
 	
 	this->mLayout->PushSprite ( styledChar, x, y );
 	
+	this->mSpriteIdx = this->mLayout->mSprites.GetTop ();
+	
 	return PUSH_OK;
 }
 
 //----------------------------------------------------------------//
 void MOAITextLayoutEngine::Restore ( u32 restorePointID ) {
 
-	RestorePoint& restorePoint = this->mRestorePoints [ restorePointID ];
+	*( MOAILayoutEngineState* )this = this->mRestorePoints [ restorePointID ];
 	
-	this->mCharIdx				= restorePoint.mCharIdx;
-	this->mLineLayoutBounds		= restorePoint.mLineLayoutBounds;
-	this->mLineSpacingBounds	= restorePoint.mLineSpacingBounds;
+	this->mLayout->mSprites.SetTop ( this->mSpriteIdx );
 	
-	this->mLayout->mSprites.SetTop ( restorePoint.mSpriteIdx );
+	this->mResetStyle = true;
 }
 
 //----------------------------------------------------------------//
