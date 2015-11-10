@@ -108,20 +108,28 @@ sample-list {
 
 
 file-display {
-     left: calc(15% + 8px);
-     top: 44px;
+     /* left: calc(15% + 8px); */
+     /* top: 44px; */
      position: absolute;
-     bottom: 4px; 
-     right: 360px;
+     /* bottom: 4px; */
+     /* right: 360px; */
+     left: 0;
+     right: 0;
+     bottom: 0;
+     top: 0;
 }
 
 player {
     position: absolute;
-    left: calc(100% - 356px);
-    right: 4px;
-    bottom: 4px;
-    top: 44px;
+    /* left: calc(100% - 356px); */
+    /* right: 4px; */
+    /* bottom: 4px; */
+    /* top: 44px; */
+    left: 0;
+    right: 0;
     background-color:#272822;
+    top: 0;
+    bottom: 0;
 }
 
 player .player-wrapper {
@@ -273,6 +281,14 @@ font-viewer {
     height: 100%;
     color: #F8F8F2;
 
+}
+
+#contentsplitter {
+    left: calc(15% + 8px);
+    top: 44px;
+    position: absolute;
+    bottom: 5px;
+    right: 4px;
 }
 
 

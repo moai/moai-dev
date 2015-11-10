@@ -3,9 +3,15 @@
         <h2>Moai Sample Browser</h2><h3>{ sample }</h3>
     </header>
     <sample-list samples="{opts.samples}" currentsample="{sample}" onselected="{doselected}"/>
-    <file-display files="{files}"/>
-
-    <player sample="{sample}"/>
+    <splitter type="horizontal" id="contentsplitter" location="70">
+        <splitter-panel>
+            <file-display files="{parent.parent.files}"/>
+        </splitter-panel>
+        <splitter-handle></splitter-handle>
+        <splitter-panel>
+            <player sample="{parent.parent.sample}"/>
+        </splitter-panel>
+    </splitter>
 
     <script>
         this.files = [];
@@ -82,9 +88,11 @@
         };
 
 
+        window.appEvents = riot.observable();
         //hook for player to get our current rom
         window.getRom = function() {
-            this.tags['file-display'].flushChanges();
+            //this.tags['file-display'].flushChanges();
+            window.appEvents.trigger("flush-changes");
             return buildRomData(this.files);
         }.bind(this);
 

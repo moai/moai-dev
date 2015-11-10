@@ -9,11 +9,12 @@
   </div>
 
     <script>
-        this.flushChanges = function() {
+        window.appEvents.on("flush-changes",
+         function() {
             if (fileUtil.isType(opts.file, 'text')) {
                this.tags['editor'].flushChanges();
             }
-        }
+         }.bind(this));
 
 
     </script>
