@@ -428,11 +428,31 @@ MoaiJS.prototype.updateloop = function() {
 }
 
 MoaiJS.prototype.mousedown = function(e) {
-    this.onMouseButton(0,0); //MOUSE_LEFT, MOUSE_DOWN
+
+    var btn = e.button;
+
+    if (btn != 2) {
+        this.onMouseButton(0, 0); //MOUSE_LEFT, MOUSE_DOWN
+    } else {
+        this.onMouseButton(2, 0);
+    }
+   
 }
 
+MoaiJS.prototype.cancelMouseButtons = function() {
+    this.onMouseButton(0, 1);
+    this.onMouseButton(2, 1);
+};
+
 MoaiJS.prototype.mouseup = function(e) {
-    this.onMouseButton(0,1); //MOUSE_LEFT, MOUSE_UP
+
+    var btn = e.button;
+
+    if (btn != 2) {
+        this.onMouseButton(0, 1); //MOUSE_LEFT, MOUSE_Up
+    } else {
+        this.onMouseButton(2, 1);
+    }
 }
 
 MoaiJS.prototype.mousemove = function(e) {
@@ -528,13 +548,17 @@ MoaiJS.prototype.OpenWindowFunc = function(title,width,height) {
 
 	//grab focus on hover
 	canvas.addEventListener("mouseover",function() { canvas.focus(); },false);
-	canvas.addEventListener("mouseout",(function() { canvas.blur(); this.mouseup(); }).bind(this),false);
+	canvas.addEventListener("mouseout",(function() { canvas.blur(); this.cancelMouseButtons(); }).bind(this),false);
 
 	//grab keys
 	canvas.addEventListener("keydown", this.keydown.bind(this), false);
 	canvas.addEventListener("keyup", this.keyup.bind(this), false);
 	canvas.addEventListener("keypress", this.keypress.bind(this), false);
 
+	canvas.addEventListener("contextmenu", function(e) { 
+		e.preventDefault();
+		return false;
+	});
 	//now start rendering and updationg
 	this.startUpdates();
 	this.emscripten.requestAnimationFrame(this.renderloop.bind(this));
