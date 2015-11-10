@@ -78,6 +78,7 @@ public:
 	void				ReserveSensors				( u8 deviceID, u8 total );
 	void				ResetSensorState			();
 	void				SetAutosuspend				( double autosuspend );
+	void				SetAutotimestamp			( bool autotimestamp );
 	void				SetConfigurationName		( cc8* name );
 	void				SetDevice					( u8 deviceID, cc8* name ); // back compat
 	void				SetDeviceActive				( u8 deviceID, bool active );

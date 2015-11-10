@@ -54,6 +54,7 @@ AKU_API void			AKUSetFunc_SetTextInputRect		( AKUSetTextInputRectFunc func );
 // input device api
 AKU_API void			AKUReserveInputDevices			( int total );
 AKU_API void			AKUReserveInputDeviceSensors	( int deviceID, int total );
+AKU_API void			AKUSetInputAutoTimestamp		( bool autotimestamp ); // optional: causes the input manager to automatically assign timestamps
 AKU_API void			AKUSetInputConfigurationName	( char const* name );
 AKU_API void			AKUSetInputDevice				( int deviceID, char const* name );
 AKU_API void			AKUSetInputDeviceHardwareInfo	( int deviceID, char const* hardwareInfo );
