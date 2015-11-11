@@ -64,6 +64,38 @@ int MOAIFacebookAndroid::_getToken ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getTokenExpireTime
+	@text	Retrieve the Facebook login token.
+
+	@out	string	token
+*/
+int MOAIFacebookAndroid::_getTokenExpireTime ( lua_State* L ) {
+	MOAI_JAVA_LUA_SETUP ( MOAIFacebookAndroid, "" )
+
+	MOAIJString jtoken = ( jstring )self->CallStaticObjectMethod ( self->mJava_GetTokenExpireTime );
+	cc8* token = self->GetCString ( jtoken );
+	lua_pushstring ( state, token );
+	self->ReleaseCString ( jtoken, token );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	getTokenRefreshTime
+	@text	Retrieve the Facebook login token.
+
+	@out	string	token
+*/
+int MOAIFacebookAndroid::_getTokenRefreshTime ( lua_State* L ) {
+	MOAI_JAVA_LUA_SETUP ( MOAIFacebookAndroid, "" )
+
+	MOAIJString jtoken = ( jstring )self->CallStaticObjectMethod ( self->mJava_GetTokenRefreshTime );
+	cc8* token = self->GetCString ( jtoken );
+	lua_pushstring ( state, token );
+	self->ReleaseCString ( jtoken, token );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	graphRequest
     @text	Make a request on Facebook's Graph API
 
@@ -111,17 +143,37 @@ int MOAIFacebookAndroid::_init ( lua_State* L ) {
 int MOAIFacebookAndroid::_login ( lua_State *L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIFacebookAndroid, "" )
 	
-	jobjectArray jpermissions = NULL;
+	jobjectArray jpermissions 		= NULL;
+	MOAIJString  prevToken			= NULL;
+	MOAIJString  fbId				= NULL;
+	MOAIJString  tokenExpireTime	= NULL;
+	MOAIJString  tokenRefreshTime	= NULL;
 	
 	if ( state.IsType ( 1, LUA_TTABLE )) {
         jpermissions = self->StringArrayFromLua ( L, 1 );
 	}
-	
+
+	if ( state.IsType ( 2, LUA_TSTRING )) {
+		prevToken = self->GetJString ( lua_tostring ( state, 2 ));
+	}
+
+	if ( state.IsType ( 3, LUA_TSTRING )) {
+		fbId = self->GetJString ( lua_tostring ( state, 3 ));
+	}
+
+	if ( state.IsType ( 4, LUA_TSTRING )) {
+		tokenExpireTime = self->GetJString ( lua_tostring ( state, 4 ));
+	}
+
+	if ( state.IsType ( 5, LUA_TSTRING )) {
+		tokenRefreshTime = self->GetJString ( lua_tostring ( state, 5 ));
+	}
+
 	if ( jpermissions == NULL ) {
 		jpermissions = self->Env ()->NewObjectArray ( 0, self->Env ()->FindClass( "java/lang/String" ), 0 );
 	}
 
-	self->CallStaticVoidMethod ( self->mJava_Login, jpermissions );				
+	self->CallStaticVoidMethod ( self->mJava_Login, jpermissions, ( jstring ) prevToken, ( jstring ) fbId, ( jstring ) tokenExpireTime, ( jstring ) tokenRefreshTime );
 	return 0;
 }
 
@@ -227,14 +279,16 @@ MOAIFacebookAndroid::MOAIFacebookAndroid () {
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 		
 	this->SetClass ( "com/moaisdk/facebook/MoaiFacebook" );
-	
+
 	this->mJava_GetToken			= this->GetStaticMethod ( "getToken", "()Ljava/lang/String;" );
+	this->mJava_GetTokenExpireTime	= this->GetStaticMethod ( "getTokenExpireTime", "()Ljava/lang/String;" );
+	this->mJava_GetTokenRefreshTime	= this->GetStaticMethod ( "getTokenRefreshTime", "()Ljava/lang/String;" );
 	this->mJava_GetUserID			= this->GetStaticMethod ( "getUserID", "()Ljava/lang/String;" );
 	this->mJava_GetUserName			= this->GetStaticMethod ( "getUserName", "()Ljava/lang/String;" );
 	//this->mJava_GraphRequest		= this->GetStaticMethod ( "graphRequest", "(Ljava/lang/String;Landroid/os/Bundle;)V" );
 	this->mJava_Init				= this->GetStaticMethod ( "init", "(Ljava/lang/String;)V" );
 	this->mJava_IsSessionValid		= this->GetStaticMethod ( "isSessionValid", "()Z" );
-	this->mJava_Login				= this->GetStaticMethod ( "login", "([Ljava/lang/String;)V" );
+	this->mJava_Login				= this->GetStaticMethod ( "login", "([Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
 	this->mJava_Logout				= this->GetStaticMethod ( "logout", "()V" );
 	this->mJava_PostToFeed			= this->GetStaticMethod ( "postToFeed", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
 	this->mJava_RestoreSession		= this->GetStaticMethod ( "restoreSession", "()Z" );
@@ -259,6 +313,8 @@ void MOAIFacebookAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getUserID",				_getUserID },
 		{ "getUserName",			_getUserName },
 		{ "getToken",				_getToken },
+		{ "getTokenExpireTime",		_getTokenExpireTime },
+		{ "getTokenRefreshTime",	_getTokenRefreshTime },
 		{ "graphRequest",			_graphRequest },
 		{ "init",					_init },
 		{ "login",					_login },

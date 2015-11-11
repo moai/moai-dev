@@ -8,11 +8,15 @@ package com.moaisdk.facebook;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Collection;
+
+import com.facebook.AccessTokenSource;
 import com.moaisdk.core.*;
 
 import android.app.Activity;
@@ -65,72 +69,89 @@ public class MoaiFacebook {
         }
     }
 
-	private static Activity sActivity                                   = null;
-    private static CallbackManager sCallbackManager                     = null;
-	private static String sAppId                                        = null;
-    private static String sUserEmail                                    = null;
-    private static String sUserID                                       = null;
-    private static String sUserName                                     = null;
-    private static AccessToken  sLoginAccessToken                       = null;
+	private static Activity         sActivity                                   = null;
+    private static CallbackManager  sCallbackManager                            = null;
+	private static String           sAppId                                      = null;
+    private static String           sUserEmail                                  = null;
+    private static String           sUserID                                     = null;
+    private static String           sUserName                                   = null;
+    private static String           sLoginAccessToken                           = null;
+    private static Date             sAccessTokenExpireTime                      = null;
+    private static Date             sAccessTokenRefreshTime                     = null;
 
     protected static native void	AKUNotifyFacebookLoginSuccess	();
     protected static native void	AKUNotifyFacebookLoginDismissed	();
     protected static native void	AKUNotifyFacebookLoginError 	();
 
-    private static FacebookCallback sLoginCallback = new FacebookCallback<LoginResult>() {
+    private static FacebookCallback sLoginCallback = new FacebookCallback<LoginResult> () {
         @Override
         public void onSuccess ( LoginResult loginResult ) {
 
             MoaiLog.i ( "MoaiFacebook onSuccess" );
-            sLoginAccessToken = loginResult.getAccessToken ();
+            AccessToken token       = loginResult.getAccessToken ();
+            sLoginAccessToken       = token.getToken ();
+            sAccessTokenExpireTime  = token.getExpires ();
+            sAccessTokenRefreshTime = token.getLastRefresh ();
 
-            GraphRequest.newMeRequest(
-                    sLoginAccessToken, new GraphRequest.GraphJSONObjectCallback () {
+            GraphRequest.newMeRequest ( token, new GraphRequest.GraphJSONObjectCallback () {
 
                         @Override
                         public void onCompleted ( JSONObject json, GraphResponse response ) {
-                            if (response.getError () != null) {
-
+                            if ( response.getError () != null )
+                            {
                                 // handle error
                                 System.out.println ( "ERROR" );
                                 AKUNotifyFacebookLoginError ();
-
-                            } else {
-
+                            }
+                            else
+                            {
                                 System.out.println ( "Success" );
-                                try {
+                                try
+                                {
+                                    if ( json.has ( "id" ))
+                                        sUserID = json.getString ( "id" );
 
-                                    sUserID         = json.getString ( "id" );
-                                    sUserName       = json.getString ( "name" );
+                                    if ( json.has ( "name" ))
+                                        sUserName   = json.getString ( "name" );
 
-                                    AKUNotifyFacebookLoginSuccess ();
+                                    if ( json.has ( "email" ))
+                                        sUserEmail  = json.getString ( "email" );
 
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+                                    //AKUNotifyFacebookLoginSuccess ();
+                                }
+                                catch ( JSONException e )
+                                {
+                                    e.printStackTrace ();
                                 }
                             }
                         }
 
-                    }).executeAsync();
+                    }).executeAsync ();
         }
 
         @Override
-        public void onCancel() {
+        public void onCancel () {
 
             MoaiLog.i ( "MoaiFacebook onCancel" );
-            sUserEmail      = null;
-            sUserID         = null;
-            sUserName       = null;
+            sUserEmail              = null;
+            sUserID                 = null;
+            sUserName               = null;
+            sLoginAccessToken       = null;
+            sAccessTokenExpireTime  = null;
+            sAccessTokenRefreshTime = null;
             AKUNotifyFacebookLoginDismissed ();
         }
 
         @Override
-        public void onError(FacebookException exception) {
+        public void onError ( FacebookException exception ) {
 
             MoaiLog.i ( "MoaiFacebook onError" );
-            sUserEmail      = null;
-            sUserID         = null;
-            sUserName       = null;
+            sUserEmail              = null;
+            sUserID                 = null;
+            sUserName               = null;
+            sLoginAccessToken       = null;
+            sAccessTokenExpireTime  = null;
+            sAccessTokenRefreshTime = null;
             AKUNotifyFacebookLoginError ();
         }
     };
@@ -139,12 +160,7 @@ public class MoaiFacebook {
 	public static void onActivityResult ( int requestCode, int resultCode, Intent data ) {
 
 		MoaiLog.i ( "MoaiFacebook onActivityResult: Calling Session onActivityResult ()" );
-        sCallbackManager.onActivityResult(requestCode, resultCode, data);
-
-//		Session session = Session.getActiveSession ();
-//		if ( session != null ) {
-//		      session.onActivityResult ( sActivity, requestCode, resultCode, data );
-//		}
+        sCallbackManager.onActivityResult ( requestCode, resultCode, data );
 	}
 
 	//----------------------------------------------------------------//
@@ -160,7 +176,7 @@ public class MoaiFacebook {
 	}
 
 	//----------------------------------------------------------------//
-	public static void onResume ( ) {
+	public static void onResume () {
 
 		MoaiLog.i("MoaiFacebook on resume");
 //		if(sAppId != null) {
@@ -176,7 +192,45 @@ public class MoaiFacebook {
     public static String getToken () {
 
         MoaiLog.i ( "MoaiFacebook: getToken" );
-        return sLoginAccessToken.getToken ();
+
+        if ( sLoginAccessToken != null ) {
+
+            MoaiLog.i ( "MoaiFacebook: getToken sLoginAccessToken != null" );
+            return sLoginAccessToken;
+        }
+        else {
+            MoaiLog.i ( "MoaiFacebook: getToken sLoginAccessToken == null" );
+            return "";
+        }
+    }
+
+    //----------------------------------------------------------------//
+    public static String getTokenExpireTime () {
+
+        //MoaiLog.i ( "MoaiFacebook: getUserID" );
+
+        if ( sAccessTokenExpireTime != null )
+            return sAccessTokenExpireTime.toString ();
+        else
+            return "";
+    }
+
+    //----------------------------------------------------------------//
+    public static String getTokenRefreshTime () {
+
+        //MoaiLog.i ( "MoaiFacebook: getUserID" );
+
+        if ( sAccessTokenRefreshTime != null )
+            return sAccessTokenRefreshTime.toString ();
+        else
+            return "";
+    }
+
+    //----------------------------------------------------------------//
+    public static String getUserEmail () {
+
+        //MoaiLog.i ( "MoaiFacebook: getUserID" );
+        return sUserEmail;
     }
 
     //----------------------------------------------------------------//
@@ -213,24 +267,44 @@ public class MoaiFacebook {
 	}
 
 	//----------------------------------------------------------------//
-	public static void login ( String [] p ) {
+	public static void login ( String [] p, String prevToken, String fbId, String tokenExpireTime, String tokenRefreshTime ) {
 
 		MoaiLog.i("MoaiFacebook: login");
 
         // TODO pass permissions via argument
         ArrayList<String> permissions = new ArrayList<String>();
-        permissions.add ( "user_friends" );
-        permissions.add ( "user_photos" );
-        permissions.add ( "public_profile" );
-        permissions.add ( "email" );
+        for ( String permission : p )
+            permissions.add ( permission );
+
+        if ( prevToken != null && prevToken.length () > 0 )
+        {
+            try
+            {
+                Date expireTime     = DateFormat.getDateInstance ().parse ( tokenExpireTime );
+                Date refreshTime    = DateFormat.getDateInstance ().parse ( tokenRefreshTime );
+                AccessToken token   = new AccessToken ( prevToken, sAppId, fbId, permissions, null, AccessTokenSource.FACEBOOK_APPLICATION_SERVICE, expireTime, refreshTime );
+                AccessToken.setCurrentAccessToken ( token );
+            }
+            catch ( java.text.ParseException e )
+            {
+                e.printStackTrace ();
+            }
+        }
+
         LoginManager.getInstance().logInWithReadPermissions ( sActivity, permissions );
 	}
 
 	//----------------------------------------------------------------//
 	public static void logout () {
 
-        MoaiLog.i("MoaiFacebook: logout");
+        MoaiLog.i ( "MoaiFacebook: logout" );
         LoginManager.getInstance ().logOut ();
+        sUserEmail              = null;
+        sUserID                 = null;
+        sUserName               = null;
+        sLoginAccessToken       = null;
+        sAccessTokenExpireTime  = null;
+        sAccessTokenRefreshTime = null;
 	}
 
 	//----------------------------------------------------------------//
@@ -251,7 +325,7 @@ public class MoaiFacebook {
 
         MoaiLog.i ( "MoaiFacebook: showInviteDialog" );
 
-        if ( AppInviteDialog.canShow()) {
+        if ( AppInviteDialog.canShow ()) {
             AppInviteContent content = new AppInviteContent.Builder ()
                     .setApplinkUrl ( linkURL )
                     .setPreviewImageUrl ( imgURL )
