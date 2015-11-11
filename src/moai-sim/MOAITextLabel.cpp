@@ -900,17 +900,27 @@ void MOAITextLabel::DrawDebug ( int subPrimID, float lod ) {
 	
 	this->mLayout.DrawDebug ();
 	
+	MOAIDraw& draw = MOAIDraw::Get ();
+	UNUSED ( draw ); // mystery warning in vs2008
+	draw.Bind ();
+	
+	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
+	
+	if (( this->mLayout.mLayoutBounds.Area () > 0.0f ) && debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LAYOUT_BOUNDS )) {
+		
+		draw.DrawRectOutline ( this->mLayout.mLayoutBounds );
+	}
+	
+	if (( this->mLayout.mGlyphBounds.Area () > 0.0f ) && debugLines.Bind ( MOAIDebugLines::TEXT_BOX_GLYPH_BOUNDS )) {
+		
+		draw.DrawRectOutline ( this->mLayout.mGlyphBounds );
+	}
+	
 	ZLRect frame = this->mLayoutRules.GetFrame ();
 	
 	if ( frame.Area () > 0.0f ) {
 	
 		frame.Offset ( -this->mLayout.mXOffset, -this->mLayout.mYOffset );
-		
-		MOAIDraw& draw = MOAIDraw::Get ();
-		UNUSED ( draw ); // mystery warning in vs2008
-		draw.Bind ();
-		
-		MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
 		
 		if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX )) {
 		
@@ -963,14 +973,14 @@ ZLMatrix4x4 MOAITextLabel::GetWorldDrawingMtx () {
 				flip.Scale ( -1.0f, -1.0f, 1.0f );
 				
 				// if there's no x-axis constraint, flip inside the glyph rect
-				if ( !this->mLayoutRules.GetLimitHeight ()) {
-					float xOffset = this->mLayout.mLayoutBounds.mXMin + this->mLayout.mLayoutBounds.mXMax;
+				if ( !this->mLayoutRules.GetLimitWidth ()) {
+					float xOffset = this->mLayout.mGlyphBounds.mXMin + this->mLayout.mGlyphBounds.mXMax;
 					flip.m [ ZLMatrix4x4::C3_R0 ] = xOffset;
 				}
 				
 				// if there's no y-axis constraint, flip inside the glyph rect
 				if ( !this->mLayoutRules.GetLimitHeight ()) {
-					float yOffset = this->mLayout.mLayoutBounds.mYMin + this->mLayout.mLayoutBounds.mYMax;
+					float yOffset = this->mLayout.mGlyphBounds.mYMin + this->mLayout.mGlyphBounds.mYMax;
 					flip.m [ ZLMatrix4x4::C3_R1 ] = yOffset;
 				}
 				worldDrawingMtx.Prepend ( flip );

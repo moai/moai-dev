@@ -543,6 +543,15 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	void Inflate ( const ZLMetaRect < TYPE >& pad ) {
+
+		this->mXMin += pad.mXMin;
+		this->mYMin += pad.mYMin;
+		this->mXMax += pad.mXMax;
+		this->mYMax += pad.mYMax;
+	}
+
+	//----------------------------------------------------------------//
 	template < typename PARAM_TYPE >
 	void Init ( const ZLMetaVec2D < PARAM_TYPE >& point ) {
 

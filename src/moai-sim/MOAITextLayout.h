@@ -53,6 +53,7 @@ private:
 	u32			mSize;				// number of sprites in line;
 	
 	ZLVec2D		mOrigin;			// offset to line 'hotspot' - origin of drawing
+	ZLRect		mGlyphBounds;		// tight fitting glyph bounds
 	ZLRect		mLayoutBounds;		// bounds used for layout and alignment of line
 
 public:
@@ -95,6 +96,7 @@ private:
 	ZLLeanStack < MOAITextSprite, 64 >	mSprites;
 	ZLLeanStack < MOAITextLine, 8 >		mLines;
 	
+	ZLRect								mGlyphBounds;
 	ZLRect								mLayoutBounds; // bounds used for sizing and alignment
 	
 	// calculated during alignment

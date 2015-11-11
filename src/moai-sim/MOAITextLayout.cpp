@@ -306,11 +306,11 @@ void MOAITextLayout::DrawDebug () {
 		u32 totalLines = this->mLines.GetTop ();
 		for ( u32 i = 0; i < totalLines; ++i ) {
 			MOAITextLine& line = this->mLines [ i ];
-			draw.DrawRectOutline ( line.mLayoutBounds );
+			draw.DrawRectOutline ( line.mGlyphBounds );
 		}
 	}
 	
-	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LINES_LOGICAL_BOUNDS )) {
+	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LINES_LAYOUT_BOUNDS )) {
 		
 		u32 totalLines = this->mLines.GetTop ();
 		for ( u32 i = 0; i < totalLines; ++i ) {
@@ -318,11 +318,6 @@ void MOAITextLayout::DrawDebug () {
 			draw.DrawRectOutline ( line.mLayoutBounds );
 		}
 	}
-	
-//	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_GLYPH_BOUNDS )) {
-//	
-//		draw.DrawRectOutline ( this->mGlyphBounds );
-//	}
 	
 	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_BASELINES )) {
 		

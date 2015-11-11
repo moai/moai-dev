@@ -24,11 +24,11 @@ void MOAITextLayoutEngine::Align () {
 
 	if ( totalLines == 0 ) return;
 
-	ZLRect logicalBounds;
 	ZLRect glyphBounds;
+	ZLRect layoutBounds;
 	
-	logicalBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	glyphBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	layoutBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 
 	bool hasSprites = ( this->mLayout->mSprites.GetTop () > 0 );
 	
@@ -112,23 +112,32 @@ void MOAITextLayoutEngine::Align () {
 		adjustedLineX = this->Snap ( adjustedLineX, this->mLayoutRules->mHLineSnap ) + xOffsetToCenter;
 		adjustedLineY = this->Snap ( adjustedLineY, this->mLayoutRules->mVLineSnap ) + yOffsetToCenter;
 		
-		line.Offset (
-			adjustedLineX - line.mOrigin.mX,
-			adjustedLineY - line.mOrigin.mY
-		);
+		float xOff = adjustedLineX - line.mOrigin.mX;
+		float yOff = adjustedLineY - line.mOrigin.mY;
+		
+		line.Offset ( xOff, yOff );
 		
 		MOAIAnimCurve* curve = curves ? curves [( i - baseLine ) % totalCurves ] : 0;
 		
 		for ( u32 j = 0; j < line.mSize; ++j ) {
-		
+			
 			MOAITextSprite& sprite = this->mLayout->mSprites [ line.mStart + j ];
-		
-			// calculate this *before* shifting the sprite - uses sprite.mPen.mX!
-			float yOff = curve ? curve->GetValue (( sprite.mPen.mX - xMin ) / width ) : 0.0f;
-		
-			sprite.mPen.mX += line.mOrigin.mX;
-			sprite.mPen.mY += line.mOrigin.mY - yOff;
+			
+			//sprite.mPen.mX += ( line.mOrigin.mX ) - xMin;
+			//sprite.mPen.mY += ( line.mOrigin.mY + ( curve ? curve->GetValue (( sprite.mPen.mX - xMin ) / width ) : 0.0f )) - yMin;
+			
+			sprite.mPen.mX += xOff;
+			sprite.mPen.mY += line.mOrigin.mY + ( curve ? curve->GetValue (( sprite.mPen.mX - xMin ) / width ) : 0.0f );
+			
+			printf ( "SPRITE: %f %f\n", sprite.mPen.mX, sprite.mPen.mY );
+			
+			ZLRect glyphRect = sprite.mGlyph->GetGlyphRect ( sprite.mPen.mX, sprite.mPen.mY, sprite.mScale.mX, sprite.mScale.mY );
+			glyphRect.Inflate ( sprite.mStyle->mPadding );
+			line.mGlyphBounds.Grow ( glyphRect, j > 0 );
 		}
+		
+		glyphBounds.Grow ( line.mGlyphBounds, i > 0 );
+		layoutBounds.Grow ( line.mLayoutBounds, i > 0 );
 	}
 	
 	// center texbox in model space to make autoflip easier to implement
@@ -186,7 +195,24 @@ void MOAITextLayoutEngine::Align () {
 		}
 	}
 
-	this->mLayout->mLayoutBounds = this->mLayoutBounds;
+	printf ( "OFFSET: %f %f\n", this->mLayout->mXOffset, this->mLayout->mYOffset );
+
+	this->mLayout->mGlyphBounds		= glyphBounds;
+	this->mLayout->mLayoutBounds	= layoutBounds;
+	
+	printf ( "GLYPH BOUNDS: %f %f %f %f\n",
+		this->mLayout->mGlyphBounds.mXMin,
+		this->mLayout->mGlyphBounds.mYMin,
+		this->mLayout->mGlyphBounds.mXMax,
+		this->mLayout->mGlyphBounds.mYMax
+	);
+	
+	printf ( "LAYOUT BOUNDS: %f %f %f %f\n",
+		this->mLayout->mLayoutBounds.mXMin,
+		this->mLayout->mLayoutBounds.mYMin,
+		this->mLayout->mLayoutBounds.mXMax,
+		this->mLayout->mLayoutBounds.mYMax
+	);
 }
 
 //----------------------------------------------------------------//
