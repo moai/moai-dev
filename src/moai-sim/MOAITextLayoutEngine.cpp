@@ -127,7 +127,7 @@ void MOAITextLayoutEngine::Align () {
 			float yOff = curve ? curve->GetValue (( sprite.mPen.mX - xMin ) / width ) : 0.0f;
 		
 			sprite.mPen.mX += line.mOrigin.mX;
-			sprite.mPen.mY += line.mOrigin.mY;
+			sprite.mPen.mY += line.mOrigin.mY - yOff;
 		}
 	}
 	
