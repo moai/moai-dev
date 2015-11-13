@@ -23,6 +23,10 @@
 	#include <moai-android-crittercism/host.h>
 #endif
 
+#if AKU_WITH_ANDROID_DELTADNA
+	#include <moai-android-deltadna/host.h>
+#endif
+
 #if AKU_WITH_ANDROID_FACEBOOK
 	#include <moai-android-facebook/host.h>
 #endif

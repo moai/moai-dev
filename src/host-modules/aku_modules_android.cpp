@@ -31,6 +31,10 @@ void AKUModulesAndroidAppFinalize () {
 		AKUAndroidCrittercismAppFinalize ();
 	#endif
 	
+	#if AKU_WITH_ANDROID_DELTADNA
+		AKUAndroidDeltaDNAAppFinalize ();
+	#endif
+
 	#if AKU_WITH_ANDROID_FACEBOOK
 		AKUAndroidFacebookAppFinalize ();
 	#endif
@@ -79,6 +83,10 @@ void AKUModulesAndroidAppInitialize () {
 		AKUAndroidCrittercismAppInitialize ();
 	#endif
 	
+	#if AKU_WITH_ANDROID_DELTADNA
+		AKUAndroidDeltaDNAAppInitialize ();
+	#endif
+
 	#if AKU_WITH_ANDROID_FACEBOOK
 		AKUAndroidFacebookAppInitialize ();
 	#endif
@@ -127,6 +135,10 @@ void AKUModulesAndroidContextInitialize () {
 		AKUAndroidCrittercismContextInitialize ();
 	#endif
 	
+	#if AKU_WITH_ANDROID_DELTADNA
+		AKUAndroidDeltaDNAContextInitialize ();
+	#endif
+
 	#if AKU_WITH_ANDROID_FACEBOOK
 		AKUAndroidFacebookContextInitialize ();
 	#endif

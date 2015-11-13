@@ -29,6 +29,7 @@ MODULES = {
 	--   JAVA					- Imports Java source files or library components. (table)
 	--   STATIC_LIBRARIES		- Static library modules. (string)
 
+--[[
 	----------------------------------------------------------------
 	ADCOLONY = {
 		
@@ -49,7 +50,7 @@ MODULES = {
 
 		STATIC_LIBRARIES = 'libmoai-adcolony',
 	},
-
+]]
 	----------------------------------------------------------------
 	ANDROID = {
 		
@@ -98,7 +99,7 @@ MODULES = {
 
 		STATIC_LIBRARIES = 'libbox2d libmoai-box2d',
 	},
-	
+--[[	
 	----------------------------------------------------------------
 	CHARTBOOST = {
 		
@@ -140,7 +141,7 @@ MODULES = {
 
 		STATIC_LIBRARIES = 'libmoai-crittercism',
 	},
-
+]]
 	----------------------------------------------------------------
 	CRYPTO = {
 		
@@ -168,7 +169,28 @@ MODULES = {
 
 		STATIC_LIBRARIES = 'libmoai-crypto libzl-crypto libcrypto-a libcrypto-b libcrypto-c libcrypto-d',
 	},
+
+	----------------------------------------------------------------
+	DELTADNA = {
+		
+		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_DELTADNA',
+		NAMESPACE = 'com.moaisdk.deltadna',
 	
+		HEADER_SEARCH_PATHS = {
+		},
+
+		MAKE = {
+			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-deltadna.mk',
+		},
+		
+		JAVA = {
+			MOAI_SDK_HOME .. '3rdparty-android/deltadna-v3.3.6',
+			MOAI_SDK_HOME .. 'src/moai-android-deltadna',
+		},
+
+		STATIC_LIBRARIES = 'libmoai-deltadna',
+	},
+
 	----------------------------------------------------------------
 	FACEBOOK = {
 		
@@ -190,7 +212,7 @@ MODULES = {
 
 		STATIC_LIBRARIES = 'libmoai-facebook',
 	},
-
+--[[
 	----------------------------------------------------------------
 	FLURRY = {
 		
@@ -213,7 +235,7 @@ MODULES = {
 	},
 
 	----------------------------------------------------------------
-	--[[
+	
 	FMOD_EX = {
 	
 		PREPROCESSOR_FLAG = 'AKU_WITH_FMOD_EX',
@@ -385,7 +407,7 @@ MODULES = {
 
 		STATIC_LIBRARIES = 'libmoai-sim libfreetype libjpg libpng libpvr libtess libzl-gfx',
 	},
-	
+	--[[
 	----------------------------------------------------------------
 	TAPJOY = {
 		
@@ -425,7 +447,7 @@ MODULES = {
 
 		STATIC_LIBRARIES = 'libmoai-twitter',
 	},
-
+]]
 	----------------------------------------------------------------
 	UNTZ = {
 		
@@ -454,7 +476,7 @@ MODULES = {
 
 		STATIC_LIBRARIES = 'libogg libvorbis libuntz libmoai-untz',
 	},
-	
+	--[[
 	----------------------------------------------------------------
 	VUNGLE = {
 		
@@ -475,6 +497,7 @@ MODULES = {
 
 		STATIC_LIBRARIES = 'libmoai-vungle',
 	},
+	]]
 }
 
 TARGETS = {
@@ -498,22 +521,23 @@ TARGETS = {
 		NAME = 'moai',
 		
 		MODULES = {
-			'ADCOLONY',
+			--'ADCOLONY',
 			'ANDROID',
 			'BOX2D',
-			'CHARTBOOST',
+			--'CHARTBOOST',
 			'CRYPTO',
+			'DELTADNA',
 			'FACEBOOK',
-			'FLURRY',
+			--'FLURRY',
 			'GOOGLE_PLAY_SERVICES',
 			'HTTP_CLIENT',
 			'HTTP_SERVER',
 			'LUAEXT',
 			'SIM',
-			'TAPJOY',
-			'TWITTER',
+			--'TAPJOY',
+			--'TWITTER',
 			'UNTZ',
-			'VUNGLE',
+			--'VUNGLE',
 		},
 	},
 }
@@ -524,17 +548,16 @@ TARGETS = {
 STATIC_LINK_ORDER = {
 
 	-- integrations
-	'libmoai-adcolony',
-	'libmoai-chartboost',
-	'libmoai-crittercism',
+	--'libmoai-adcolony',
+	--'libmoai-chartboost',
+	--'libmoai-crittercism',
+	'libmoai-deltadna',
 	'libmoai-facebook',
-	'libmoai-flurry',
+	--'libmoai-flurry',
 	'libmoai-google-play-services',
-	'libmoai-tapjoy',
-	'libmoai-twitter',
-	'libmoai-vungle',
-
-	'libmoai-chartboost',
+	--'libmoai-tapjoy',
+	--'libmoai-twitter',
+	--'libmoai-vungle',
 
 	-- moai
 	'libmoai-android',
