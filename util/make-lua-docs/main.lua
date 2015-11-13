@@ -7,6 +7,12 @@ DST_PATH		= 'src-doxy-lua/'
 HTML_PATH		= 'html/'
 TEMPLATE_PATH	= 'template-lua/'
 OUTPUT_DIR		= INVOKE_DIR .. 'lua-docs-html/'
+VERSION				= dofile ( '../sdk-version/version.lua' )
+
+assert ( VERSION )
+assert ( VERSION.MAJOR )
+assert ( VERSION.MINOR )
+assert ( VERSION.REVISION )
 
 print ( 'SRC_PATH', SRC_PATH )
 
@@ -137,24 +143,18 @@ prepareDoxyfile = function ( filename, tmpFilename )
 
 	MOAIFileSystem.copy ( filename, tmpFilename )
 
-	local str1 = MOAIFileSystem.checkFileExists ( SRC_PATH..'config/moai_version_major.h' ) and
-		util.loadFileAsString ( SRC_PATH..'config/moai_version_major.h' ) or
-		util.loadFileAsString ( SRC_PATH..'config-default/moai_version_major.h' )
+	VERSION_STR			=	VERSION.MINOR == 0 and
+						VERSION.REVISION == 0 and
+						string.format ( '%d.%d', VERSION.MAJOR, VERSION.MINOR ) or
+						string.format ( '%d.%d.%d', VERSION.MAJOR, VERSION.MINOR, VERSION.REVISION )
 
-	local str2 = util.loadFileAsString ( SRC_PATH..'config/moai_version_minor.h' ) and
-		util.loadFileAsString ( SRC_PATH..'config/moai_version_minor.h' ) or
-		util.loadFileAsString ( SRC_PATH..'config-default/moai_version_minor.h' )
+	
 
-	if str1 and str2 then
 
-		major		= string.match ( string.sub ( str1, string.find ( str1, 'MOAI_SDK_VERSION_MAJOR %d' )),"%d+" )
-		minor		= string.match ( string.sub ( str2, string.find ( str2, 'MOAI_SDK_VERSION_MINOR %d' )),"%d+" )
-		revision	= string.match ( string.sub ( str2, string.find ( str2, 'MOAI_SDK_VERSION_REVISION %d' )),"%d+" )
-
-		util.replaceInFile (  tmpFilename, {
-			[ '@@VERSION@@' ] = string.format ( 'v%i.%i.%i', major, minor, revision ),
-		})
-	end
+	util.replaceInFile (  tmpFilename, {
+		[ '@@VERSION@@' ] = VERSION_STR,
+	})
+	
 end
 
 ----------------------------------------------------------------
