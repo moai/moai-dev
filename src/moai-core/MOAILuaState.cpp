@@ -13,6 +13,16 @@
 #define LEVELS1	12	// size of the first part of the stack
 #define LEVELS2	10	// size of the second part of the stack
 
+int _luaStreamWriter ( lua_State *L, const void* p, size_t sz, void* ud );
+
+//----------------------------------------------------------------//
+int _luaStreamWriter ( lua_State *L, const void* p, size_t sz, void* ud ) {
+	UNUSED ( L );
+
+	ZLStream* stream = ( ZLStream* )ud;
+	return ( stream->WriteBytes ( p, sz ) == sz ) ? 0 : -1;
+}
+
 //================================================================//
 // MOAILuaState
 //================================================================//
@@ -252,6 +262,16 @@ bool MOAILuaState::Deflate ( int idx, int level, int windowBits ) {
 	deflater.SetWindowBits ( windowBits );
 
 	return this->Encode ( idx, deflater );
+}
+
+//----------------------------------------------------------------//
+bool MOAILuaState::DumpChunk ( int idx, ZLStream& stream ) {
+
+	lua_pushvalue ( this->mState, idx );
+	int result = lua_dump ( this->mState, _luaStreamWriter, ( void* )&stream );
+	lua_pop ( this->mState, 1 );
+	
+	return ( result == 0 );
 }
 
 //----------------------------------------------------------------//
@@ -875,9 +895,9 @@ ZLColorVec MOAILuaState::GetValue < ZLColorVec >( int idx, const ZLColorVec valu
 template <>
 ZLRect MOAILuaState::GetValue < ZLRect >( int idx, const ZLRect value ) {
 
+	ZLRect rect = value;
+
 	if ( this->CheckParams ( idx, "NNNN", false )) {
-	
-		ZLRect rect;
 		
 		rect.mXMin		= lua_tonumber ( this->mState, idx + 0 );
 		rect.mYMin		= lua_tonumber ( this->mState, idx + 1 );
@@ -886,7 +906,24 @@ ZLRect MOAILuaState::GetValue < ZLRect >( int idx, const ZLRect value ) {
 		
 		return rect;
 	}
-	return value;
+	else if ( this->CheckParams ( idx, "NN", false )) {
+		
+		rect.mXMin		= value.mXMin;
+		rect.mYMin		= value.mYMin;
+		rect.mXMax		= value.mXMin + lua_tonumber ( this->mState, idx + 1 );
+		rect.mYMax		= value.mYMin + lua_tonumber ( this->mState, idx + 2 );
+	}
+	else if ( this->IsType ( idx, LUA_TNUMBER )) {
+	
+		float size = lua_tonumber ( this->mState, idx );
+		
+		rect.mXMin		= value.mXMin;
+		rect.mYMin		= value.mYMin;
+		rect.mXMax		= value.mXMin + size;
+		rect.mYMax		= value.mYMin + size;
+	}
+	
+	return rect;
 }
 
 //----------------------------------------------------------------//
@@ -999,15 +1036,16 @@ bool MOAILuaState::Inflate ( int idx, int windowBits ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAILuaState::IsNil () {
-
-	return ( !this->mState );
-}
-
-//----------------------------------------------------------------//
 bool MOAILuaState::IsNil ( int idx ) {
 
 	return lua_isnil ( this->mState, idx );
+}
+
+//----------------------------------------------------------------//
+bool MOAILuaState::IsNilOrNone ( int idx ) {
+
+	int t = lua_type ( this->mState, idx );
+	return (( t == LUA_TNONE ) || ( t == LUA_TNIL ));
 }
 
 //----------------------------------------------------------------//
@@ -1036,6 +1074,12 @@ bool MOAILuaState::IsType ( int idx, int type ) {
 bool MOAILuaState::IsType ( int idx, cc8* name, int type ) {
 	
 	return this->HasField ( idx, name, type );
+}
+
+//----------------------------------------------------------------//
+bool MOAILuaState::IsValid () {
+
+	return ( this->mState != 0 );
 }
 
 //----------------------------------------------------------------//

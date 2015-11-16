@@ -91,7 +91,7 @@ copyhostfiles = function()
 end
 
 configureHost = function()
-  print("\n\nApplying config from "..configFile..":")
+  print("\n\nApplying config from "..(configFile or "defaults")..":")
   for k,v in pairs(hostconfig) do
     print (k..": ", v)
   end
@@ -179,8 +179,9 @@ applyConfigFile = function(configFile)
   
 end
 
-
-applyConfigFile(configFile)
+if configFile then
+  applyConfigFile(configFile)
+end
 
 copyhostfiles()
 

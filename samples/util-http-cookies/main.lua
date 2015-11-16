@@ -4,6 +4,8 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+assert ( false, 'TODO: cookie support from MOAIHttpTaskNSURL' )
+
 MOAISim.openWindow ( "test", 32, 32 )
 task = nil
 
@@ -18,7 +20,7 @@ function onFinish ( task, responseCode )
 		print ( "nothing" )
 	end
 	
-	sendHTTPRequest ( "www.google.com" )
+	sendHTTPRequest ( "http://www.cnn.com" )
 end
 
 function sendHTTPRequest ( url )
@@ -38,4 +40,4 @@ function sendHTTPRequest ( url )
 	task:performAsync ()
 end
 
-sendHTTPRequest ( "www.google.com" )
+sendHTTPRequest ( "www.cnn.com" )

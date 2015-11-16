@@ -1,6 +1,7 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+#ifndef MOAI_WITH_LUAJIT
 #include "pch.h"
 #include <lundump.h>
 #include <moai-util/MOAILuaUtil.h>
@@ -58,7 +59,12 @@ void MOAILuaHeader::Write ( ZLStream& stream ) const {
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	convert
+	@text	Convert 32-bit Lua bytecode to 64-bit Lua bytecode.
+	
+	@in		string bytecode		32-bit bytecode
+	@out	string bytecode		64-bit bytecode
+*/
 int MOAILuaUtil::_convert ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAILuaUtil, "S" )
 	
@@ -90,7 +96,12 @@ int MOAILuaUtil::_convert ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getHeader
+	@text	Read the Lua bytecode header.
+	
+	@in		string bytecode
+	@out	table header
+*/
 int MOAILuaUtil::_getHeader ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAILuaUtil, "S" )
 	
@@ -197,7 +208,7 @@ void MOAILuaUtil::ConvertFunction ( const MOAILuaHeader& srcFormat, const MOAILu
 	s64 nInstructions = this->ConvertInt ( srcFormat, dstFormat, srcStream, dstStream ); // size of instruction list
 	
 	if ( srcFormat.mSizeOfInstruction == dstFormat.mSizeOfInstruction ) {
-		dstStream.WriteStream ( srcStream, nInstructions * srcFormat.mSizeOfInstruction );
+		dstStream.WriteStream ( srcStream, ( size_t )( nInstructions * srcFormat.mSizeOfInstruction ));
 	}
 	else {
 		for	( s64 i = 0; i < nInstructions; ++i ) {
@@ -281,3 +292,5 @@ void MOAILuaUtil::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAILuaUtil::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
+
+#endif 

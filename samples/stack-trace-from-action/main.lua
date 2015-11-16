@@ -7,6 +7,7 @@
 MOAISim.openWindow ( "test", 320, 480 )
 
 func1 = function ()
+	print ( 'STACK TRACE FROM INSIDE COROUTINE' )
 	foo.bar = baz
 end
 
@@ -17,8 +18,6 @@ end
 func3 = function ()
 	func2 ()
 end
-
-func3 ()
 
 thread = MOAICoroutine.new ()
 thread:run ( function () func3 () end )

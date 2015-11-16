@@ -92,7 +92,7 @@ int MOAIGridFancy::_getAlpha ( lua_State* L ) {
 	@in		MOAIGridFancy self
 	@in		number xTile
 	@in		number yTile
-	@out	number color (index into palette)
+	@out	number color	index into palette
 */
 int MOAIGridFancy::_getColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGridFancy, "UNN" )
@@ -203,7 +203,7 @@ int MOAIGridFancy::_setRowScale ( lua_State* L ) {
 
 	@in		MOAIGridFancy self
 	@in		number row
-	@in		... [palette indexes]
+	@in		... indexes			palette indexes
 	@out	nil
 */
 int MOAIGridFancy::_setRowColor ( lua_State* L ) {
@@ -296,7 +296,7 @@ int MOAIGridFancy::_setScale ( lua_State* L ) {
 	@in		number r
 	@in		number g
 	@in		number b
-	@in		number a (optional, default is 1)
+	@opt	number a			Default is 1
 	@out	nil
 */
 int MOAIGridFancy::_setPalette ( lua_State* L ) {

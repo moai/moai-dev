@@ -17,7 +17,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	copyFromStream
+	@text	Copies buffer contents from a stream.
+	
+	@in		MOAIGfxBuffer self
+	@in		MOAIStream stream
+	@out	nil
+*/
 int MOAIGfxBuffer::_copyFromStream ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxBuffer, "U" )
 	
@@ -25,13 +31,6 @@ int MOAIGfxBuffer::_copyFromStream ( lua_State* L ) {
 	if ( stream ) {
 		self->CopyFromStream ( *stream );
 	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIGfxBuffer::_load ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxBuffer, "U" )
 	return 0;
 }
 
@@ -66,7 +65,14 @@ int	MOAIGfxBuffer::_reserve ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	reserveVBOs
+	@text	Reserves one or more VBO objects. Multi-buffering is
+			supported via multiple VBOs.
+	
+	@in		MOAIGfxBuffer self
+	@in		number count
+	@out	nil
+*/
 int	MOAIGfxBuffer::_reserveVBOs ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxBuffer, "UN" )
 
@@ -91,7 +97,13 @@ int MOAIGfxBuffer::_reset ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	scheduleFlush
+	@text	Trigger an update of the GPU-side buffer. Call this when
+			the backing buffer has been altered.
+	
+	@in		MOAIGfxBuffer self
+	@out	nil
+*/
 int MOAIGfxBuffer::_scheduleFlush ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxBuffer, "U" )
 	
@@ -284,7 +296,6 @@ void MOAIGfxBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "copyFromStream",			_copyFromStream },
-		{ "load",					_load },
 		{ "release",				_release },
 		{ "reserve",				_reserve },
 		{ "reserveVBOs",			_reserveVBOs },

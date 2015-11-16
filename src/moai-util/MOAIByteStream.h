@@ -9,7 +9,9 @@
 //================================================================//
 // MOAIByteStream
 //================================================================//
-// TODO: doxygen
+/**	@lua	MOAIByteStream
+	@text	MOAIByteStream implements a stream with a fixed-size internal buffer.
+*/
 class MOAIByteStream :
 	public virtual ZLByteStream,
 	public virtual MOAIStream {

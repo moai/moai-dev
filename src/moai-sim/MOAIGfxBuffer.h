@@ -24,7 +24,9 @@ public:
 //================================================================//
 // MOAIGfxBuffer
 //================================================================//
-// TODO: doxygen
+/**	@lua	MOAIGfxBuffer
+	@text	Base class for MOAIVertexBuffer and MOAIIndexBuffer.
+*/
 class MOAIGfxBuffer :
 	public MOAIGfxResource,
 	public MOAIStream,
@@ -52,7 +54,6 @@ protected:
 
 	//----------------------------------------------------------------//
 	static int				_copyFromStream			( lua_State* L );
-	static int				_load					( lua_State* L );
 	static int				_release				( lua_State* L );
 	static int				_reserve				( lua_State* L );
 	static int				_reserveVBOs			( lua_State* L );

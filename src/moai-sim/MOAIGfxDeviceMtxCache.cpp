@@ -84,7 +84,7 @@ ZLMatrix4x4 MOAIGfxDeviceMtxCache::GetWorldToWndMtx ( const ZLRect& wndRect ) co
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAIGfxDeviceMtxCache::GetWndToNormMtx () const {
 
-	return this->GetNormToWndMtx ( this->mViewRect );
+	return this->GetWndToNormMtx ( this->mViewRect );
 }
 
 //----------------------------------------------------------------//

@@ -19,10 +19,6 @@ void AKUModulesAndroidAppFinalize () {
 		AKUAndroidAdColonyAppFinalize ();
 	#endif
 
-	// #if AKU_WITH_ANDROID_BILLING
-	// 	AKUAndroidBillingAppFinalize ();
-	// #endif
-
 	#if AKU_WITH_ANDROID_CHARTBOOST
 		AKUAndroidChartBoostAppFinalize ();
 	#endif
@@ -71,10 +67,6 @@ void AKUModulesAndroidAppInitialize () {
 		AKUAndroidAdColonyAppInitialize ();
 	#endif
 
-	// #if AKU_WITH_ANDROID_BILLING
-	// 	AKUAndroidBillingAppInitialize ();
-	// #endif
-
 	#if AKU_WITH_ANDROID_CHARTBOOST
 		AKUAndroidChartBoostAppInitialize ();
 	#endif
@@ -122,10 +114,6 @@ void AKUModulesAndroidContextInitialize () {
 	#if AKU_WITH_ANDROID_ADCOLONY
 		AKUAndroidAdColonyContextInitialize ();
 	#endif
-
-	// #if AKU_WITH_ANDROID_BILLING
-	// 	AKUAndroidBillingContextInitialize ();
-	// #endif
 
 	#if AKU_WITH_ANDROID_CHARTBOOST
 		AKUAndroidChartBoostContextInitialize ();

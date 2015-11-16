@@ -33,6 +33,7 @@ iterateFiles = function ( path )
 end
 
 local function uuid()
+  math.randomseed(os.time())
     local template ='xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
     return string.gsub(template, '[xy]', function (c)
         local v = (c == 'x') and math.random(0, 0xf) or math.random(8, 0xb)
@@ -83,11 +84,12 @@ end
 outstream:close()
 
 --json dump
+local uuid = uuid()
 local jsonstream = MOAIFileStream.new()
 jsonstream:open(jsonfile,MOAIFileStream.READ_WRITE_NEW)
 jsonstream:write(
   MOAIJsonParser.encode({
-   ['bundle_file'] = dumpfile , ['directories'] = partial_dirs, ['files'] = fileinfo, ['package_uuid'] = uuid() 
+   ['bundle_file'] = dumpfile , ['directories'] = partial_dirs, ['files'] = fileinfo, ['package_uuid'] = uuid
   })
 )
 jsonstream:flush()

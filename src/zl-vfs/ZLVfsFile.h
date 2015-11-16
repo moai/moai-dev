@@ -33,6 +33,7 @@ public:
 	int				GetPos				( fpos_t* position );
 	char*			GetString			( char* string, int length );
 	int				IsEOF				();
+	void			Lock				();
 	int				Open				( const char* filename, const char* mode );
 	int				OpenProcess			( const char *command, const char *mode );
 	int				OpenTemp			();
@@ -44,6 +45,8 @@ public:
 	void			SetFile				( FILE* file );
 	int				SetPos				( const fpos_t * pos );
 	long			Tell				();
+	int				TryLock				();
+	void			Unlock				();
 	size_t			Write				( const void* data, size_t size, size_t count );
 	void			SetBuf				( char* buffer );
 	int				SetVBuf				( char* buffer, int mode, size_t size );

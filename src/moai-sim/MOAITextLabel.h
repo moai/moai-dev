@@ -143,11 +143,15 @@ protected:
 	u32					mCurrentPageIdx;
 	u32					mNextPageIdx;
 	bool				mMore;
+	bool				mOverrun;
 	
-	MOAITextDesigner	mDesigner;
-	MOAITextStyleCache	mStyleCache;
-	MOAITextStyleMap	mStyleMap;
-	MOAITextLayout		mLayout;
+	// keeping these as components as opposed to base classes to make clear the text
+	// layout pipeline, which has more than a few moving parts
+	
+	MOAITextDesigner	mDesigner;		// design params for laying out text
+	MOAITextStyleCache	mStyleCache;	// some style are anonymous and created ad hoc
+	MOAITextStyleMap	mStyleMap;		// preprocessed text broken up by style changes
+	MOAITextLayout		mLayout;		// cached glyph layout for currently visible text
 	
 	STLString			mText;
 	
@@ -162,6 +166,7 @@ protected:
 	static int			_getStyle				( lua_State* L );
 	static int			_getText				( lua_State* L );
 	static int			_getTextBounds			( lua_State* L );
+	static int			_hasOverrun				( lua_State* L );
 	static int			_more					( lua_State* L );
 	static int			_nextPage				( lua_State* L );
 	static int			_revealAll				( lua_State* L );

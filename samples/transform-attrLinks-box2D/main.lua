@@ -13,7 +13,7 @@ local function printf ( ... )
 	return io.stdout:write ( string.format ( ... ))
 end 
 
-MOAISim.openWindow ( "test", 640, 480 )
+MOAISim.openWindow ( "test", 320, 480 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )

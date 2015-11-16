@@ -2,7 +2,7 @@
 #define MOAI_VERSION_H
 
 	// DO NOT EVER MODIFY THIS FILE
-	// this file should *only* be touched by the build server
+	// this file should *only* be touched by the build server or by using pito sdk-version
 
 	#define MOAI_SDK_VERSION_MAJOR			@VERSION_MAJOR@		// int
 	#define MOAI_SDK_VERSION_MINOR			@VERSION_MINOR@		// int

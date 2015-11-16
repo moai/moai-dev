@@ -343,6 +343,7 @@ void MOAIGfxDeviceStateCache::SetTexture ( MOAITextureBase* textureSet ) {
 
 	if ( this->mCurrentTexture != textureSet ) {
 
+		this->OnGfxStateWillChange ();
 		this->mCurrentTexture = textureSet;
 
 		u32 unitsEnabled = 0;
@@ -382,7 +383,13 @@ void MOAIGfxDeviceStateCache::SetTexture ( u32 textureUnit, MOAISingleTexture* t
 		this->mTextureUnits [ textureUnit ] = texture;
 		
 		if ( texture ) {
-			texture->Bind ();
+			if ( !texture->Bind ()) {
+			
+				MOAITexture* defaultTexture = this->GetDefaultTexture ();
+				if ( texture != defaultTexture ) {
+					this->SetTexture ( textureUnit, defaultTexture );
+				}
+			}
 		}
 	}
 }

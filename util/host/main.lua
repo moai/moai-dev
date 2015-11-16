@@ -1,22 +1,3 @@
-print("\n\n") --give us some room
-
-function usage()
-  print([[
-    
-    Moai Host Utility. Run from project root folder (outside lua source)
-    
-    Usage: moaiutil host <subcommand> <args>
-    
-    Subcommands:
-      host list - Lists available hosts
-      host init - Creates a template host config file used by subsequent commands
-      host build <hostname> - Creates (if it doesn't exist) in hosts folder, and (re)builds the host named <hostname>. 
-      host run <hostname> - Creates (if it doesn't exists) in hosts folder, (re)builds and runs the host named <hostname>. 
-      host create <hostname> - Creates the host in the hosts folder (removing old host) based on latest config settings.
-    ]])
-  
-end
-
 hostsFolder = INVOKE_DIR..'/hosts/'
 
 --TODO probably should iterate over folders and extract this information so we don't need to keep it up to date
@@ -71,7 +52,7 @@ end
 
 function ensureHostConfig()
   if (not hasConfig()) then
-    command_error("this command must be run from a project folder containing hostconfig.lua\nYou can create one using moaiutil host init\n")
+    command_error("this command must be run from a project folder containing hostconfig.lua\nYou can create one using pito host init\n")
   end
 end
 
@@ -80,7 +61,7 @@ local subcommand = arg[4]
 hostname = arg[5]
 
 if (subcommand == "" or subcommand == nil) then
-  usage()
+  usage("host")
   return
 end
 
@@ -92,7 +73,7 @@ if MOAIFileSystem.checkFileExists(SCRIPT_DIR..subcommand..'.lua') then
   dofile(SCRIPT_DIR..subcommand..'.lua')
 else
   print('host command "'..subcommand..'" not found')
-  usage()
+  usage("host")
 end
 
 os.exit(0)

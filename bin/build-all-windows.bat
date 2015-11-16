@@ -10,7 +10,7 @@ echo "windows lib complete"
 
 echo "Creating windows host"
 
-call moaiutil.bat host-windows-vs2013 || goto :error
+call pito.bat host-windows-vs2013 || goto :error
 
 echo "Windows host Complete"
 
@@ -22,7 +22,7 @@ echo "Android lib complete"
 
 echo "Creating android host"
 
-call moaiutil.bat host-android-gradle || goto :error
+call pito.bat host-android-gradle || goto :error
 
 echo "android host Complete"
 

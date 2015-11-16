@@ -54,6 +54,7 @@
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIImageFormat.h>
 #include <moai-sim/MOAIImageFormatMgr.h>
+#include <moai-sim/MOAIImageLoadTask.h>
 #include <moai-sim/MOAIImageTexture.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIInputDevice.h>

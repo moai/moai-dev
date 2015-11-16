@@ -74,7 +74,7 @@ public:
 
 	void			SetBlendMode				();
 	void			SetBlendMode				( const MOAIBlendMode& blendMode );
-	void			SetBlendMode				( int srcFactor, int dstFactor, int equation = 0 );
+	void			SetBlendMode				( int srcFactor, int dstFactor, int equation = ZGL_BLEND_MODE_ADD );
 
 	void			SetCullFunc					();
 	void			SetCullFunc					( int cullFunc );

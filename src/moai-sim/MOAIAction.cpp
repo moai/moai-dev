@@ -118,7 +118,12 @@ int MOAIAction::_clear ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	defer
+	@text	Defers action's update until the next time the action tree is processed.
+
+	@in		MOAIAction self
+	@out	nil
+*/
 int MOAIAction::_defer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" )
 	
@@ -142,6 +147,27 @@ int MOAIAction::_detach ( lua_State* L ) {
 	state.CopyToTop ( 1 );
 	
 	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	getChildren
+	@text	Get action's children (if any).
+
+	@in		MOAIAction self
+	@out	...					Child actions (returned as multiple values).
+*/
+int MOAIAction::_getChildren ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAIAction, "U" )
+	
+	u32 total = 0;
+	ChildIt childIt = self->mChildren.Head ();
+	for ( ; childIt; childIt = childIt->Next ()) {
+		lua_checkstack ( L, 2 );
+		total++;
+		childIt->Data ()->PushLuaUserdata ( state );
+	}
+	
+	return total;
 }
 
 //----------------------------------------------------------------//
@@ -219,7 +245,13 @@ int MOAIAction::_pause ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setAutoStop
+	@text	Flag action to automatically stop (and be removed from action tree)
+			when no longer busy.
+
+	@in		MOAIAction self
+	@out	nil
+*/
 int MOAIAction::_setAutoStop ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" );
 	self->mActionFlags = state.GetValue < bool >( 2, false ) ? self->mActionFlags | FLAGS_AUTO_STOP : self->mActionFlags & ~FLAGS_AUTO_STOP;
@@ -286,6 +318,23 @@ int MOAIAction::_throttle ( lua_State* L ) {
 	state.CopyToTop ( 1 );
 	
 	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	update
+	@text	Update action manually. This call will not update child actions.
+	
+	@in		MOAIAction  self
+	@opt	number      step     Default value is sim step
+	@out	MOAIAction  self
+*/
+int MOAIAction::_update ( lua_State* L ) {
+    MOAI_LUA_SETUP ( MOAIAction, "U" )
+    
+    float step = state.GetValue < float >( 2, MOAISim::Get ().GetStep ());
+    self->OnUpdate ( step );
+    
+    return 0;
 }
 
 //================================================================//
@@ -489,6 +538,7 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "clear",					_clear },
 		{ "defer",					_defer },
 		{ "detach",					_detach },
+		{ "getChildren",			_getChildren },
 		{ "isActive",				_isActive },
 		{ "isBusy",					_isBusy },
 		{ "isDone",					_isDone },
@@ -498,6 +548,7 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "start",					_start },
 		{ "stop",					_stop },
 		{ "throttle",				_throttle },
+		{ "update",					_update },
 		{ NULL, NULL }
 	};
 	

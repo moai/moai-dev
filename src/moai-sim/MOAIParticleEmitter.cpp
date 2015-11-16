@@ -139,6 +139,22 @@ int MOAIParticleEmitter::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	setState
+	@text	Set initial state index for new particles.
+	
+	@in		MOAIParticleEmitter self
+	@in		number	state	index of MOAIParticleState in attached MOAIParticleSystem
+	@out	nil
+*/
+int MOAIParticleEmitter::_setState ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIParticleEmitter, "U" )
+	
+	self->mParticleState = state.GetValue < u32 >( 2, 1 ) - 1;
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setSystem
 	@text	Attaches the emitter to a particle system.
 	
@@ -246,7 +262,8 @@ MOAIParticleEmitter::MOAIParticleEmitter () :
 	mMaxAngle ( 360.0f ),
 	mMinMagnitude ( 0.0f ),
 	mMaxMagnitude ( 1.0f ),
-	mEmission ( 0 ) {
+	mEmission ( 0 ),
+	mParticleState ( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITransform )
@@ -277,7 +294,7 @@ void MOAIParticleEmitter::OnDepNodeUpdate () {
 			if ( this->MaskParticle ( loc )) {
 			
 				this->mLocalToWorldMtx.TransformVec ( vec );
-				this->mSystem->PushParticle ( loc.mX, loc.mY, vec.mX, vec.mY );
+				this->mSystem->PushParticle ( loc.mX, loc.mY, vec.mX, vec.mY, this->mParticleState );
 			}
 		}
 	}
@@ -305,6 +322,7 @@ void MOAIParticleEmitter::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setMask",			_setMask },
 		{ "setRadius",			_setRadius },
 		{ "setRect",			_setRect },
+		{ "setState",			_setState },
 		{ "setSystem",			_setSystem },
 		{ "surge",				_surge },
 		{ NULL, NULL }

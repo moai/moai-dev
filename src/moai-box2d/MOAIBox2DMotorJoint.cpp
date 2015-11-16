@@ -291,7 +291,7 @@ void MOAIBox2DMotorJoint::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getMaxForce", 			_getMaxForce },
 		{ "setMaxTorque", 			_setMaxTorque },
 		{ "getMaxTorque", 			_getMaxTorque },
-		{ "getMaxTorque", 			_setCorrectionFactor },
+		{ "setCorrectionFactor",	_setCorrectionFactor },
 		{ "getCorrectionFactor", 	_getCorrectionFactor },
 		{ NULL, NULL }
 	};

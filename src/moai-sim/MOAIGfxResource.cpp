@@ -67,7 +67,14 @@ int MOAIGfxResource::_setLoadingPolicy ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setReloader
+	@text	The reloaded is called prior to recreating the resource. It should
+			in turn call the resources regular load or init methods.
+ 
+	@in		MOAIGfxResource self
+	@opt	function reloader
+	@out	nil
+*/
 int MOAIGfxResource::_setReloader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )
 

@@ -143,12 +143,12 @@ MOAILuaStrongRef::MOAILuaStrongRef ( MOAILuaObject* object ) {
 
 //----------------------------------------------------------------//
 void MOAILuaStrongRef::SetRef ( MOAILuaObject* object ) {
-	MOAILuaRef::SetRef ( object, false );
+	MOAILuaRef::SetRef ( object, MAKE_STRONG );
 }
 
 //----------------------------------------------------------------//
 void MOAILuaStrongRef::SetRef ( MOAILuaState& state, int idx ) {
-	MOAILuaRef::SetRef ( state, idx, false );
+	MOAILuaRef::SetRef ( state, idx, MAKE_STRONG );
 }
 
 //================================================================//
@@ -166,12 +166,12 @@ MOAILuaWeakRef::MOAILuaWeakRef ( MOAILuaObject* object ) {
 
 //----------------------------------------------------------------//
 void MOAILuaWeakRef::SetRef ( MOAILuaObject* object ) {
-	MOAILuaRef::SetRef ( object, true );
+	MOAILuaRef::SetRef ( object, MAKE_WEAK );
 }
 
 //----------------------------------------------------------------//
 void MOAILuaWeakRef::SetRef ( MOAILuaState& state, int idx ) {
-	MOAILuaRef::SetRef ( state, idx, true );
+	MOAILuaRef::SetRef ( state, idx, MAKE_WEAK );
 }
 
 //================================================================//

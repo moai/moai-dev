@@ -13,6 +13,9 @@ class MOAITextStyleSpan;
 //================================================================//
 // MOAITextDesigner
 //================================================================//
+// design params for laying out text. distinct from a label, which caches
+// a layout and renders as a prop. we do this so we can draw text on
+// demand without having to create a text label.
 class MOAITextDesigner {
 protected:
 
@@ -79,7 +82,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void		ClearCurves					();
-	void		Layout						( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, cc8* str, u32 idx, ZLVec2D& offset, bool* more, u32* nextIdx );
+	void		Layout						( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, cc8* str, u32 idx, ZLVec2D& offset, bool* more, u32* nextIdx, bool* overrun );
 	void		Init						( const MOAITextDesigner& designer );
 				MOAITextDesigner			();
 				~MOAITextDesigner			();

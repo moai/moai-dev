@@ -161,18 +161,20 @@ bool MOAIFrameBufferTexture::OnGPUCreate () {
 //----------------------------------------------------------------//
 void MOAIFrameBufferTexture::OnGPUDestroy () {
 
-	MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_FRAMEBUFFER, this->mGLFrameBufferID );
-	this->mGLFrameBufferID = 0;
+	if ( MOAIGfxResourceMgr::IsValid ()) {
 
-	MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_RENDERBUFFER, this->mGLColorBufferID );
-	this->mGLColorBufferID = 0;
+		MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_FRAMEBUFFER, this->mGLFrameBufferID );
+		this->mGLFrameBufferID = 0;
 
-	MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_RENDERBUFFER, this->mGLDepthBufferID );
-	this->mGLDepthBufferID = 0;
-	
-	MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_RENDERBUFFER, this->mGLStencilBufferID );
-	this->mGLStencilBufferID = 0;
-	
+		MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_RENDERBUFFER, this->mGLColorBufferID );
+		this->mGLColorBufferID = 0;
+
+		MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_RENDERBUFFER, this->mGLDepthBufferID );
+		this->mGLDepthBufferID = 0;
+		
+		MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_RENDERBUFFER, this->mGLStencilBufferID );
+		this->mGLStencilBufferID = 0;
+	}
 	this->MOAISingleTexture::OnGPUDestroy ();
 }
 

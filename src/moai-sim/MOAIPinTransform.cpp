@@ -57,8 +57,7 @@ bool MOAIPinTransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 //----------------------------------------------------------------//
 MOAIPinTransform::MOAIPinTransform () :
-	mFront ( 1.0f )
-{
+	mFront ( 1.0f ) {
 	
 	RTTI_SINGLE ( MOAITransform )
 }

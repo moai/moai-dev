@@ -27,7 +27,7 @@ int MOAIDeserializer::_createObject ( lua_State* L ) {
 	
 	lua_getglobal ( state, classname );
 	
-	if ( state.IsNil ()) {
+	if ( state.IsNil ( -1 )) {
 		state.Pop ( 1 );
 	}
 	else {

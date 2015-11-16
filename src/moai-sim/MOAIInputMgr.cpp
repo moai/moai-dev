@@ -26,10 +26,7 @@
 int MOAIInputMgr::_autoTimestamp ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIInputMgr, "" )
 	
-	self->mAutoTimestamp = state.GetValue < bool >( 1, true );
-	if ( self->mAutoTimestamp ) {
-		self->mTimebase = ZLDeviceTime::GetTimeInSeconds ();
-	}
+	self->SetAutotimestamp ( state.GetValue < bool >( 1, true ));
 	
 	return 0;
 }
@@ -300,6 +297,15 @@ void MOAIInputMgr::SetAutosuspend ( double autosuspend ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIInputMgr::SetAutotimestamp ( bool autotimestamp ) {
+
+	this->mAutoTimestamp = autotimestamp;
+	if ( this->mAutoTimestamp ) {
+		this->mTimebase = ZLDeviceTime::GetTimeInSeconds ();
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIInputMgr::SetConfigurationName ( cc8* name ) {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
@@ -404,6 +410,7 @@ bool MOAIInputMgr::WriteEventHeader ( u8 deviceID, u8 sensorID, u32 type ) {
 		this->Write < u8 >(( u8 )sensorID );
 		
 		double timestamp = this->mAutoTimestamp ? ZLDeviceTime::GetTimeInSeconds () : this->mTimestamp;
+		
 		this->Write < double >( timestamp - this->mTimebase );
 		
 		return true;

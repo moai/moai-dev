@@ -156,10 +156,10 @@ int MOAIFacebookIOS::_login ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@lua	logout
- @text	Log the user out of Facebook.
- 
- @in		nil
- @out 	nil
+	 @text	Log the user out of Facebook.
+	 
+	 @in	nil
+	 @out 	nil
  */
 int MOAIFacebookIOS::_logout ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIFacebookIOS, "" )
@@ -169,7 +169,7 @@ int MOAIFacebookIOS::_logout ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int MOAIFacebookIOS::_postToFeed ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIFacebookIOS, "" )
 	

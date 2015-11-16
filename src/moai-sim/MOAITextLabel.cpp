@@ -205,6 +205,21 @@ int MOAITextLabel::_getTextBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	hasOverrun
+    @text	Returns whether there are additional glyphs that are not visible on the screen (either on next page or just thrown away).
+ 
+    @in		MOAITextBox self
+    @out	boolean overrun				If there is additional text below the cursor that is not visible on the screen due to clipping (or in the next page).
+ */
+int MOAITextLabel::_hasOverrun ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
+
+	bool overrun = self->mOverrun;
+	state.Push ( overrun );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	more
 	@text	Returns whether there are additional pages of text below the cursor position that are not visible on the screen.
 
@@ -288,7 +303,15 @@ int MOAITextLabel::_setAlignment ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setAutoFlip
+	@text	When autoflip is enabled, the label will be evaluated in
+			screen space during rendering, and flipped vertically to
+			remain 'upright' in the view.
+
+	@in		MOAITextLabel self
+	@in		boolean autoflip		Default value is false.
+	@out	nil
+*/
 int MOAITextLabel::_setAutoFlip ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 
@@ -299,7 +322,27 @@ int MOAITextLabel::_setAutoFlip ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setBounds
+	@text	Sets or removes a bounding rectangle for the text, specified
+			as the XY planes of the given bounding box. Toggles
+			the rect limits accordingly.
+
+	@overload	Set a the text label's bounding rectagle and enable the limits.
+
+		@in		MOAITextLabel self
+		@in		number xMin
+		@in		number yMin
+		@in		number zMin
+		@in		number xMax
+		@in		number yMax
+		@in		number zMax
+		@out	nil
+	
+	@overload	Clear the text label's bounding rectangle and disable the limits.
+
+		@in		MOAITextLabel self
+		@out	nil
+*/
 int MOAITextLabel::_setBounds ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 
@@ -867,6 +910,7 @@ MOAITextLabel::MOAITextLabel () :
 	mCurrentPageIdx ( 0 ),
 	mNextPageIdx ( 0 ),
 	mMore ( false ),
+	mOverrun ( false ),
 	mAutoFlip ( false ) {
 	
 	RTTI_BEGIN
@@ -989,7 +1033,7 @@ void MOAITextLabel::RefreshLayout () {
 	this->mStyleMap.BuildStyleMap ( this->mStyleCache, this->mText.c_str ());
 
 	ZLVec2D offset ( 0.0f, 0.0f );
-	this->mDesigner.Layout ( this->mLayout, this->mStyleCache, this->mStyleMap, this->mText.c_str (), this->mCurrentPageIdx, offset, &this->mMore, &this->mNextPageIdx );
+	this->mDesigner.Layout ( this->mLayout, this->mStyleCache, this->mStyleMap, this->mText.c_str (), this->mCurrentPageIdx, offset, &this->mMore, &this->mNextPageIdx, &this->mOverrun );
 }
 
 //----------------------------------------------------------------//
@@ -1030,6 +1074,7 @@ void MOAITextLabel::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getStyle",				_getStyle },
 		{ "getText",				_getText },
 		{ "getTextBounds",			_getTextBounds },
+		{ "hasOverrun",				_hasOverrun },
 		{ "more",					_more },
 		{ "nextPage",				_nextPage },
 		{ "reserveCurves",			_reserveCurves },
@@ -1061,6 +1106,7 @@ void MOAITextLabel::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAITextLabel::ResetLayout () {
 
 	this->mMore = false;
+	this->mOverrun = false;
 	this->mLayout.Reset ();
 }
 
@@ -1088,6 +1134,7 @@ void MOAITextLabel::SetText ( cc8* text ) {
 
 	this->mText = text;
 	this->mMore = ( text && text [ 0 ]);
+	this->mOverrun = this->mMore;
 	
 	this->mReveal = REVEAL_ALL;
 	this->mSpool = 0.0f;

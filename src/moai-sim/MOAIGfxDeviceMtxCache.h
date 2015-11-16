@@ -9,7 +9,6 @@
 //================================================================//
 // MOAIGfxDeviceMtxCache
 //================================================================//
-// TODO: doxygen
 class MOAIGfxDeviceMtxCache :
 	public MOAIGfxDeviceStateCache {
 public:

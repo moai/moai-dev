@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "63C4897045D0EF88507AD257AEF500CB53038CE0",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "63C4897045D0EF88507AD257AEF500CB53038CE0" : 0,
+    "48551224D478114233D4C5F6FBA10183FF078E69" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "5A10B985-5B0F-426C-95EE-8F3ED779304D",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "63C4897045D0EF88507AD257AEF500CB53038CE0" : "moai-dev",
+    "48551224D478114233D4C5F6FBA10183FF078E69" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "MoaiSample",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "xcode\/ios\/MoaiSample.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/moai\/moai-studio.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "48551224D478114233D4C5F6FBA10183FF078E69"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/patrickmeehan\/moai-dev.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "63C4897045D0EF88507AD257AEF500CB53038CE0"
+    }
+  ]
+}

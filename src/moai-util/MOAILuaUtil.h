@@ -1,8 +1,9 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+#ifndef MOAI_WITH_LUAJIT //can't convert luajit bytecode
 #ifndef	MOAILUAUTIL_H
-#define	MOAIJSONPARSER_H
+#define	MOAILUAUTIL_H
 
 //================================================================//
 // MOAILuaHeader
@@ -29,7 +30,9 @@ public:
 //================================================================//
 // MOAILuaUtil
 //================================================================//
-// TODO: doxygen
+/**	@lua	MOAILuaUtil
+	@text	Methods for reading and converting Lua bytecode.
+*/
 class MOAILuaUtil :
 	public MOAIGlobalClass < MOAILuaUtil, MOAILuaObject > {
 private:
@@ -58,3 +61,5 @@ public:
 };
 
 #endif
+#endif
+
