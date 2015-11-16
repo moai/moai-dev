@@ -1173,7 +1173,6 @@
 		CD323B0B1A80445400E2FEBB /* MOAIKeyCodeEnum.h in Headers */ = {isa = PBXBuildFile; fileRef = CD323B091A80445400E2FEBB /* MOAIKeyCodeEnum.h */; };
 		CD32B3C319F9EDD10059D019 /* SFMT-params11213.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF71731BB90009E233E /* SFMT-params11213.h */; };
 		CD32B3C419F9EDD10059D019 /* SFMT-params44497.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF91731BB90009E233E /* SFMT-params44497.h */; };
-		CD32B3C519F9EDD10059D019 /* moai_utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7813564CAF000ADC60 /* moai_utf8.h */; };
 		CD32B3C619F9EDD10059D019 /* SFMT-params1279.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF41731BB90009E233E /* SFMT-params1279.h */; };
 		CD32B3C719F9EDD10059D019 /* SFMT-params607.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF31731BB90009E233E /* SFMT-params607.h */; };
 		CD32B3C819F9EDD10059D019 /* SFMT-sse2.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFD1731BB90009E233E /* SFMT-sse2.h */; };
@@ -1189,7 +1188,6 @@
 		CD32B3E619F9EDD10059D019 /* SFMT-params216091.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFC1731BB90009E233E /* SFMT-params216091.h */; };
 		CD32B3E919F9EDD10059D019 /* bucketalloc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2A17FA6CF90053E028 /* bucketalloc.h */; };
 		CD32B3EC19F9EDD10059D019 /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490041141AB6EC00913D80 /* lapi.h */; };
-		CD32B3ED19F9EDD10059D019 /* MOAIIso8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */; };
 		CD32B3EE19F9EDD10059D019 /* lauxlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490043141AB6EC00913D80 /* lauxlib.h */; };
 		CD32B3EF19F9EDD10059D019 /* lcode.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490046141AB6EC00913D80 /* lcode.h */; };
 		CD32B3F019F9EDD10059D019 /* ldebug.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490049141AB6EC00913D80 /* ldebug.h */; };
@@ -1218,14 +1216,12 @@
 		CD32B41219F9EDD10059D019 /* SFMT-params2281.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF51731BB90009E233E /* SFMT-params2281.h */; };
 		CD32B41319F9EDD10059D019 /* tess.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3617FA6CF90053E028 /* tess.h */; };
 		CD32B41519F9EDD10059D019 /* SFMT-common.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF11731BB90009E233E /* SFMT-common.h */; };
-		CD32B41F19F9EDD10059D019 /* moai_whirlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 663704111612812C002D0D27 /* moai_whirlpool.h */; };
 		CD32B42019F9EDD10059D019 /* priorityq.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3217FA6CF90053E028 /* priorityq.h */; };
 		CD32B42119F9EDD10059D019 /* geom.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2E17FA6CF90053E028 /* geom.h */; };
 		CD32B42219F9EDD10059D019 /* SFMT-params.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF21731BB90009E233E /* SFMT-params.h */; };
 		CD32B42319F9EDD10059D019 /* SFMT-alti.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF01731BB90009E233E /* SFMT-alti.h */; };
 		CD32B42419F9EDD10059D019 /* SFMT-params86243.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFA1731BB90009E233E /* SFMT-params86243.h */; };
 		CD32B42519F9EDD10059D019 /* dict.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2C17FA6CF90053E028 /* dict.h */; };
-		CD32B42719F9EDD10059D019 /* moai_utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A7713564CAF000ADC60 /* moai_utf8.c */; };
 		CD32B42D19F9EDD10059D019 /* ftbbox.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B3113564CB0000ADC60 /* ftbbox.c */; };
 		CD32B42E19F9EDD10059D019 /* ftgxval.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B3213564CB0000ADC60 /* ftgxval.c */; };
 		CD32B42F19F9EDD10059D019 /* ftlcdfil.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B3313564CB0000ADC60 /* ftlcdfil.c */; };
@@ -1300,8 +1296,6 @@
 		CD32B48F19F9EDD10059D019 /* print.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490074141AB6EC00913D80 /* print.c */; };
 		CD32B4BF19F9EDD10059D019 /* mesh.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB2F17FA6CF90053E028 /* mesh.c */; };
 		CD32B4C019F9EDD10059D019 /* priorityq.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB3117FA6CF90053E028 /* priorityq.c */; };
-		CD32B4CD19F9EDD10059D019 /* moai_whirlpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 66E345451614CA710021FC4B /* moai_whirlpool.c */; };
-		CD32B4CE19F9EDD10059D019 /* MOAIIso8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* MOAIIso8601DateFormatter.m */; };
 		CD32B4CF19F9EDD10059D019 /* dict.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB2B17FA6CF90053E028 /* dict.c */; };
 		CD32B4D019F9EDD10059D019 /* tess.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB3517FA6CF90053E028 /* tess.c */; };
 		CD32B4D119F9EDD10059D019 /* sweep.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB3317FA6CF90053E028 /* sweep.c */; };
@@ -2693,7 +2687,6 @@
 		CD78109C187CAA2D008B9C0A /* MOAITextStyleMap.h in Headers */ = {isa = PBXBuildFile; fileRef = CD781094187CAA2D008B9C0A /* MOAITextStyleMap.h */; };
 		CD8078A01831C3B500E658D9 /* SFMT-params11213.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF71731BB90009E233E /* SFMT-params11213.h */; };
 		CD8078A11831C3B500E658D9 /* SFMT-params44497.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF91731BB90009E233E /* SFMT-params44497.h */; };
-		CD8078A21831C3B500E658D9 /* moai_utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7813564CAF000ADC60 /* moai_utf8.h */; };
 		CD8078B01831C3B500E658D9 /* SFMT-params1279.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF41731BB90009E233E /* SFMT-params1279.h */; };
 		CD8078C41831C3B500E658D9 /* SFMT-params607.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF31731BB90009E233E /* SFMT-params607.h */; };
 		CD8078CA1831C3B500E658D9 /* SFMT-sse2.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFD1731BB90009E233E /* SFMT-sse2.h */; };
@@ -2709,7 +2702,6 @@
 		CD8079121831C3B500E658D9 /* SFMT-params216091.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFC1731BB90009E233E /* SFMT-params216091.h */; };
 		CD8079151831C3B500E658D9 /* bucketalloc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2A17FA6CF90053E028 /* bucketalloc.h */; };
 		CD8079181831C3B500E658D9 /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490041141AB6EC00913D80 /* lapi.h */; };
-		CD8079191831C3B500E658D9 /* MOAIIso8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */; };
 		CD80791A1831C3B500E658D9 /* lauxlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490043141AB6EC00913D80 /* lauxlib.h */; };
 		CD80791B1831C3B500E658D9 /* lcode.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490046141AB6EC00913D80 /* lcode.h */; };
 		CD80791C1831C3B500E658D9 /* ldebug.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490049141AB6EC00913D80 /* ldebug.h */; };
@@ -2738,7 +2730,6 @@
 		CD80793E1831C3B500E658D9 /* SFMT-params2281.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF51731BB90009E233E /* SFMT-params2281.h */; };
 		CD80793F1831C3B500E658D9 /* tess.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3617FA6CF90053E028 /* tess.h */; };
 		CD8079411831C3B500E658D9 /* SFMT-common.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF11731BB90009E233E /* SFMT-common.h */; };
-		CD80794B1831C3B500E658D9 /* moai_whirlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 663704111612812C002D0D27 /* moai_whirlpool.h */; };
 		CD8079551831C3B500E658D9 /* priorityq.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3217FA6CF90053E028 /* priorityq.h */; };
 		CD8079771831C3B500E658D9 /* geom.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2E17FA6CF90053E028 /* geom.h */; };
 		CD8079811831C3B500E658D9 /* SFMT-params.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF21731BB90009E233E /* SFMT-params.h */; };
@@ -3404,8 +3395,8 @@
 		CD8081F21831C76900E658D9 /* ZLHashWriterSHA512.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC1239217FA808A00FB64BB /* ZLHashWriterSHA512.h */; };
 		CD8215FC195A322D00603EA1 /* MOAITakeCameraListener.h in Headers */ = {isa = PBXBuildFile; fileRef = CD8215FA195A322D00603EA1 /* MOAITakeCameraListener.h */; };
 		CD8215FD195A322D00603EA1 /* MOAITakeCameraListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD8215FB195A322D00603EA1 /* MOAITakeCameraListener.mm */; };
-		CD830D611BED33D000745C8A /* moai_edtaa3func.c in Sources */ = {isa = PBXBuildFile; fileRef = 20A0B0271A5020740072F513 /* moai_edtaa3func.c */; settings = {ASSET_TAGS = (); }; };
-		CD830D621BED33D000745C8A /* moai_edtaa3func.h in Headers */ = {isa = PBXBuildFile; fileRef = 20A0B0281A5020740072F513 /* moai_edtaa3func.h */; settings = {ASSET_TAGS = (); }; };
+		CD830D611BED33D000745C8A /* moai_edtaa3func.c in Sources */ = {isa = PBXBuildFile; fileRef = 20A0B0271A5020740072F513 /* moai_edtaa3func.c */; };
+		CD830D621BED33D000745C8A /* moai_edtaa3func.h in Headers */ = {isa = PBXBuildFile; fileRef = 20A0B0281A5020740072F513 /* moai_edtaa3func.h */; };
 		CD830D781BED355500745C8A /* amigaconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDCFF71A23F233008779B5 /* amigaconfig.h */; };
 		CD830D7A1BED355500745C8A /* xmlrole.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDD0051A23F233008779B5 /* xmlrole.h */; };
 		CD830D821BED355500745C8A /* expat_external.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDCFFA1A23F233008779B5 /* expat_external.h */; };
@@ -3473,22 +3464,22 @@
 		CD83146F1BED395600745C8A /* tlsf.h in Headers */ = {isa = PBXBuildFile; fileRef = 0765874C145CD06900723A7D /* tlsf.h */; };
 		CD8314701BED395600745C8A /* tlsfbits.h in Headers */ = {isa = PBXBuildFile; fileRef = 0765874D145CD06900723A7D /* tlsfbits.h */; };
 		CD8314EB1BED395600745C8A /* tlsf.c in Sources */ = {isa = PBXBuildFile; fileRef = 0765874B145CD06900723A7D /* tlsf.c */; };
-		CD83151A1BED3A3500745C8A /* SFMT-alti.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF01731BB90009E233E /* SFMT-alti.h */; settings = {ASSET_TAGS = (); }; };
-		CD83151B1BED3A3500745C8A /* SFMT-common.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF11731BB90009E233E /* SFMT-common.h */; settings = {ASSET_TAGS = (); }; };
-		CD83151C1BED3A3500745C8A /* SFMT-params.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF21731BB90009E233E /* SFMT-params.h */; settings = {ASSET_TAGS = (); }; };
-		CD83151D1BED3A3500745C8A /* SFMT-params607.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF31731BB90009E233E /* SFMT-params607.h */; settings = {ASSET_TAGS = (); }; };
-		CD83151E1BED3A3500745C8A /* SFMT-params1279.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF41731BB90009E233E /* SFMT-params1279.h */; settings = {ASSET_TAGS = (); }; };
-		CD83151F1BED3A3500745C8A /* SFMT-params2281.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF51731BB90009E233E /* SFMT-params2281.h */; settings = {ASSET_TAGS = (); }; };
-		CD8315201BED3A3500745C8A /* SFMT-params4253.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF61731BB90009E233E /* SFMT-params4253.h */; settings = {ASSET_TAGS = (); }; };
-		CD8315211BED3A3500745C8A /* SFMT-params11213.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF71731BB90009E233E /* SFMT-params11213.h */; settings = {ASSET_TAGS = (); }; };
-		CD8315221BED3A3500745C8A /* SFMT-params19937.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF81731BB90009E233E /* SFMT-params19937.h */; settings = {ASSET_TAGS = (); }; };
-		CD8315231BED3A3500745C8A /* SFMT-params44497.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF91731BB90009E233E /* SFMT-params44497.h */; settings = {ASSET_TAGS = (); }; };
-		CD8315241BED3A3500745C8A /* SFMT-params86243.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFA1731BB90009E233E /* SFMT-params86243.h */; settings = {ASSET_TAGS = (); }; };
-		CD8315251BED3A3500745C8A /* SFMT-params132049.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFB1731BB90009E233E /* SFMT-params132049.h */; settings = {ASSET_TAGS = (); }; };
-		CD8315261BED3A3500745C8A /* SFMT-params216091.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFC1731BB90009E233E /* SFMT-params216091.h */; settings = {ASSET_TAGS = (); }; };
-		CD8315271BED3A3500745C8A /* SFMT-sse2.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFD1731BB90009E233E /* SFMT-sse2.h */; settings = {ASSET_TAGS = (); }; };
-		CD8315281BED3A3500745C8A /* SFMT.c in Sources */ = {isa = PBXBuildFile; fileRef = 8942AFFE1731BB90009E233E /* SFMT.c */; settings = {ASSET_TAGS = (); }; };
-		CD8315291BED3A3500745C8A /* SFMT.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFF1731BB90009E233E /* SFMT.h */; settings = {ASSET_TAGS = (); }; };
+		CD83151A1BED3A3500745C8A /* SFMT-alti.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF01731BB90009E233E /* SFMT-alti.h */; };
+		CD83151B1BED3A3500745C8A /* SFMT-common.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF11731BB90009E233E /* SFMT-common.h */; };
+		CD83151C1BED3A3500745C8A /* SFMT-params.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF21731BB90009E233E /* SFMT-params.h */; };
+		CD83151D1BED3A3500745C8A /* SFMT-params607.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF31731BB90009E233E /* SFMT-params607.h */; };
+		CD83151E1BED3A3500745C8A /* SFMT-params1279.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF41731BB90009E233E /* SFMT-params1279.h */; };
+		CD83151F1BED3A3500745C8A /* SFMT-params2281.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF51731BB90009E233E /* SFMT-params2281.h */; };
+		CD8315201BED3A3500745C8A /* SFMT-params4253.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF61731BB90009E233E /* SFMT-params4253.h */; };
+		CD8315211BED3A3500745C8A /* SFMT-params11213.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF71731BB90009E233E /* SFMT-params11213.h */; };
+		CD8315221BED3A3500745C8A /* SFMT-params19937.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF81731BB90009E233E /* SFMT-params19937.h */; };
+		CD8315231BED3A3500745C8A /* SFMT-params44497.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF91731BB90009E233E /* SFMT-params44497.h */; };
+		CD8315241BED3A3500745C8A /* SFMT-params86243.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFA1731BB90009E233E /* SFMT-params86243.h */; };
+		CD8315251BED3A3500745C8A /* SFMT-params132049.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFB1731BB90009E233E /* SFMT-params132049.h */; };
+		CD8315261BED3A3500745C8A /* SFMT-params216091.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFC1731BB90009E233E /* SFMT-params216091.h */; };
+		CD8315271BED3A3500745C8A /* SFMT-sse2.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFD1731BB90009E233E /* SFMT-sse2.h */; };
+		CD8315281BED3A3500745C8A /* SFMT.c in Sources */ = {isa = PBXBuildFile; fileRef = 8942AFFE1731BB90009E233E /* SFMT.c */; };
+		CD8315291BED3A3500745C8A /* SFMT.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFF1731BB90009E233E /* SFMT.h */; };
 		CD8315311BED3A8100745C8A /* ft2build.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2913564CB0000ADC60 /* ft2build.h */; };
 		CD8315321BED3A8100745C8A /* ftconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2A13564CB0000ADC60 /* ftconfig.h */; };
 		CD8315331BED3A8100745C8A /* ftheader.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2B13564CB0000ADC60 /* ftheader.h */; };
@@ -3536,12 +3527,12 @@
 		CD8315B31BED3A8100745C8A /* autofit.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B4813564CB0000ADC60 /* autofit.c */; };
 		CD8315CB1BED3AE900745C8A /* moai_utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7813564CAF000ADC60 /* moai_utf8.h */; };
 		CD8315CC1BED3AE900745C8A /* MOAIIso8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */; };
-		CD8315EC1BED3AE900745C8A /* moai_edtaa3func.h in Headers */ = {isa = PBXBuildFile; fileRef = 20A0B0281A5020740072F513 /* moai_edtaa3func.h */; settings = {ASSET_TAGS = (); }; };
+		CD8315EC1BED3AE900745C8A /* moai_edtaa3func.h in Headers */ = {isa = PBXBuildFile; fileRef = 20A0B0281A5020740072F513 /* moai_edtaa3func.h */; };
 		CD8315EE1BED3AE900745C8A /* MOAIOpenUDID.h in Headers */ = {isa = PBXBuildFile; fileRef = CD9F761B1808C7670001EF0C /* MOAIOpenUDID.h */; };
 		CD8315EF1BED3AE900745C8A /* moai_whirlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 663704111612812C002D0D27 /* moai_whirlpool.h */; };
 		CD8315F11BED3AE900745C8A /* moai_utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A7713564CAF000ADC60 /* moai_utf8.c */; };
 		CD8315F51BED3AE900745C8A /* MOAIIso8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* MOAIIso8601DateFormatter.m */; };
-		CD8315F81BED3AE900745C8A /* moai_edtaa3func.c in Sources */ = {isa = PBXBuildFile; fileRef = 20A0B0271A5020740072F513 /* moai_edtaa3func.c */; settings = {ASSET_TAGS = (); }; };
+		CD8315F81BED3AE900745C8A /* moai_edtaa3func.c in Sources */ = {isa = PBXBuildFile; fileRef = 20A0B0271A5020740072F513 /* moai_edtaa3func.c */; };
 		CD8315FA1BED3AE900745C8A /* MOAIOpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9F761C1808C7670001EF0C /* MOAIOpenUDID.m */; };
 		CD83161B1BED3AE900745C8A /* moai_whirlpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 66E345451614CA710021FC4B /* moai_whirlpool.c */; };
 		CD8316251BED3BC100745C8A /* bucketalloc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2A17FA6CF90053E028 /* bucketalloc.h */; };
@@ -3612,12 +3603,12 @@
 		CD8316BF1BED3C1800745C8A /* lvm.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490070141AB6EC00913D80 /* lvm.c */; };
 		CD8316C01BED3C1800745C8A /* lzio.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490072141AB6EC00913D80 /* lzio.c */; };
 		CD8316C11BED3C1800745C8A /* print.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490074141AB6EC00913D80 /* print.c */; };
-		CD8317741BED3E5D00745C8A /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA313564CB0000ADC60 /* sqlite3.c */; settings = {ASSET_TAGS = (); }; };
-		CD8317751BED3E5D00745C8A /* sqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA413564CB0000ADC60 /* sqlite3.h */; settings = {ASSET_TAGS = (); }; };
-		CD8317761BED3E5D00745C8A /* sqlite3ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA513564CB0000ADC60 /* sqlite3ext.h */; settings = {ASSET_TAGS = (); }; };
-		CD8317771BED3E6100745C8A /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA313564CB0000ADC60 /* sqlite3.c */; settings = {ASSET_TAGS = (); }; };
-		CD8317781BED3E6100745C8A /* sqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA413564CB0000ADC60 /* sqlite3.h */; settings = {ASSET_TAGS = (); }; };
-		CD8317791BED3E6100745C8A /* sqlite3ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA513564CB0000ADC60 /* sqlite3ext.h */; settings = {ASSET_TAGS = (); }; };
+		CD8317741BED3E5D00745C8A /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA313564CB0000ADC60 /* sqlite3.c */; };
+		CD8317751BED3E5D00745C8A /* sqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA413564CB0000ADC60 /* sqlite3.h */; };
+		CD8317761BED3E5D00745C8A /* sqlite3ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA513564CB0000ADC60 /* sqlite3ext.h */; };
+		CD8317771BED3E6100745C8A /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA313564CB0000ADC60 /* sqlite3.c */; };
+		CD8317781BED3E6100745C8A /* sqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA413564CB0000ADC60 /* sqlite3.h */; };
+		CD8317791BED3E6100745C8A /* sqlite3ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA513564CB0000ADC60 /* sqlite3ext.h */; };
 		CD9140951A0D6022002CC335 /* MOAIActionTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD9140931A0D6022002CC335 /* MOAIActionTree.cpp */; };
 		CD9140961A0D6022002CC335 /* MOAIActionTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD9140931A0D6022002CC335 /* MOAIActionTree.cpp */; };
 		CD9140971A0D6022002CC335 /* MOAIActionTree.h in Headers */ = {isa = PBXBuildFile; fileRef = CD9140941A0D6022002CC335 /* MOAIActionTree.h */; };
@@ -13755,7 +13746,6 @@
 				CD32B4F919F9EE180059D019 /* SDL_opengles2.h in Headers */,
 				CD32B53819F9EE3F0059D019 /* SDL_windowevents_c.h in Headers */,
 				CD32B55219F9EEDC0059D019 /* SDL_blendpoint.h in Headers */,
-				CD32B3C519F9EDD10059D019 /* moai_utf8.h in Headers */,
 				CD32B52819F9EE3F0059D019 /* SDL_clipboardevents_c.h in Headers */,
 				CD32B50619F9EE180059D019 /* SDL_system.h in Headers */,
 				CD32B3C619F9EDD10059D019 /* SFMT-params1279.h in Headers */,
@@ -13821,7 +13811,6 @@
 				CD32B3E919F9EDD10059D019 /* bucketalloc.h in Headers */,
 				CD32B5B719F9EF260059D019 /* SDL_blit.h in Headers */,
 				CD32B3EC19F9EDD10059D019 /* lapi.h in Headers */,
-				CD32B3ED19F9EDD10059D019 /* MOAIIso8601DateFormatter.h in Headers */,
 				CD32B3EE19F9EDD10059D019 /* lauxlib.h in Headers */,
 				CD32B3EF19F9EDD10059D019 /* lcode.h in Headers */,
 				CD32B3F019F9EDD10059D019 /* ldebug.h in Headers */,
@@ -13919,7 +13908,6 @@
 				CD32B5A419F9EF200059D019 /* SDL_x11modes.h in Headers */,
 				CD32B4F819F9EE180059D019 /* SDL_opengles.h in Headers */,
 				CD32B5AF19F9EF200059D019 /* SDL_x11touch.h in Headers */,
-				CD32B41F19F9EDD10059D019 /* moai_whirlpool.h in Headers */,
 				CD32B4FD19F9EE180059D019 /* SDL_quit.h in Headers */,
 				CD32B5CB19F9EF260059D019 /* SDL_shape_internals.h in Headers */,
 				CD32B52019F9EE340059D019 /* SDL_wave.h in Headers */,
@@ -14230,7 +14218,6 @@
 				CD8078A01831C3B500E658D9 /* SFMT-params11213.h in Headers */,
 				CD80809A1831C68500E658D9 /* evp.h in Headers */,
 				CD8078A11831C3B500E658D9 /* SFMT-params44497.h in Headers */,
-				CD8078A21831C3B500E658D9 /* moai_utf8.h in Headers */,
 				CD8080FE1831C6AA00E658D9 /* sha.h in Headers */,
 				CD807F061831C5CA00E658D9 /* asn1.h in Headers */,
 				CD80812C1831C6D300E658D9 /* des_locl.h in Headers */,
@@ -14289,7 +14276,6 @@
 				CD8079151831C3B500E658D9 /* bucketalloc.h in Headers */,
 				CD8080661831C66C00E658D9 /* safestack.h in Headers */,
 				CD8079181831C3B500E658D9 /* lapi.h in Headers */,
-				CD8079191831C3B500E658D9 /* MOAIIso8601DateFormatter.h in Headers */,
 				CD80791A1831C3B500E658D9 /* lauxlib.h in Headers */,
 				CD80791B1831C3B500E658D9 /* lcode.h in Headers */,
 				CD80813F1831C6D300E658D9 /* spr.h in Headers */,
@@ -14328,7 +14314,6 @@
 				CD807F6B1831C5EE00E658D9 /* conf_api.h in Headers */,
 				CD807FCB1831C62200E658D9 /* blowfish.h in Headers */,
 				CD8080EE1831C69900E658D9 /* rand.h in Headers */,
-				CD80794B1831C3B500E658D9 /* moai_whirlpool.h in Headers */,
 				CD807F041831C5CA00E658D9 /* asn1_mac.h in Headers */,
 				CD8079551831C3B500E658D9 /* priorityq.h in Headers */,
 				CD8080411831C65F00E658D9 /* ec.h in Headers */,
@@ -16061,7 +16046,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = NO;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0720;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "libmoai" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -17236,7 +17221,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD32B42719F9EDD10059D019 /* moai_utf8.c in Sources */,
 				CD32B57319F9EF000059D019 /* SDL_systls.c in Sources */,
 				CD32B51619F9EE340059D019 /* SDL_audio.c in Sources */,
 				CD32B42D19F9EDD10059D019 /* ftbbox.c in Sources */,
@@ -17419,9 +17403,7 @@
 				CD32B5D419F9EF2E0059D019 /* SDL_hints.c in Sources */,
 				CD32B51919F9EE340059D019 /* SDL_audiodev.c in Sources */,
 				CD32B5AB19F9EF200059D019 /* SDL_x11shape.c in Sources */,
-				CD32B4CD19F9EDD10059D019 /* moai_whirlpool.c in Sources */,
 				CD32B55119F9EEDC0059D019 /* SDL_blendpoint.c in Sources */,
-				CD32B4CE19F9EDD10059D019 /* MOAIIso8601DateFormatter.m in Sources */,
 				CD32B4CF19F9EDD10059D019 /* dict.c in Sources */,
 				CD32B4D019F9EDD10059D019 /* tess.c in Sources */,
 				CD32B52B19F9EE3F0059D019 /* SDL_events.c in Sources */,
