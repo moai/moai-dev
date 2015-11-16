@@ -16,18 +16,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	generateGUID
-	@text	Generates a globally unique identifier. This method will be
-			moved to MOAIUnique in a future release.
-
-	@out	string GUID
-*/
-//int MOAIEnvironment::_generateGUID ( lua_State* L ) {
-//
-//	STLString guid = USUnique::GetGUID ();
-//	lua_pushstring ( L, guid );
-//	return 1;
-//}
 
 //----------------------------------------------------------------//
 /**	@name	getMACAddress
