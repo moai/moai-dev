@@ -102,7 +102,7 @@ private:
 	MOAILuaRef			mListeners;
 	
 	//----------------------------------------------------------------//
-	static int			_generateGUID				( lua_State* L );
+//	static int			_generateGUID				( lua_State* L );
 	static int			_getMACAddress				( lua_State* L );
 	static int			_setValue					( lua_State* L );
 
