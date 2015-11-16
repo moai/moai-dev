@@ -11,13 +11,13 @@ for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
 end
 
 directorypath = "./" -- current working directory
---upload = ""
---for filename in lfs.dir(directorypath) do
- --   if filename:match("%.zip$") then -- "%." is an escaped ".", "$" is end of string
- --       upload = filename
-  --  end
---end
---os.execute("s3cmd put "..upload .." s3://moai-downloads/develop/"..upload )
+upload = ""
+for filename in lfs.dir(directorypath) do
+    if filename:match("%.zip$") then -- "%." is an escaped ".", "$" is end of string
+        upload = filename
+    end
+end
+os.execute("s3cmd put "..upload .." s3://moai-downloads/develop/"..upload )
 
 os.execute("s3cmd ls s3://moai-downloads/develop/ > output.txt")
 
