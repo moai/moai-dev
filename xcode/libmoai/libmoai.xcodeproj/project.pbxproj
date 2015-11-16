@@ -823,6 +823,7 @@
 		07D1A8A913EDFD8300604979 /* MOAIFrameBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D1A8A113EDFD8300604979 /* MOAIFrameBuffer.h */; };
 		07FAC91613B8F1CA00AFD0B3 /* moaicore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */; };
 		07FAC91813B8F1E000AFD0B3 /* uslscore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */; };
+		357DE8D31BFA7EE300C4CE8D /* USUnique.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA07151AF7E2006A1F9D /* USUnique.h */; };
 		4D4973461872370F00D46882 /* MOAIEase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D4973441872370F00D46882 /* MOAIEase.cpp */; };
 		4D4973471872370F00D46882 /* MOAIEase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D4973451872370F00D46882 /* MOAIEase.h */; };
 		4D49734A187258FA00D46882 /* MOAIEaseLinear.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D497348187258FA00D46882 /* MOAIEaseLinear.cpp */; };
@@ -4389,10 +4390,10 @@
 		EB70434318761FDE0057E450 /* MOAIEaseExponentialInOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIEaseExponentialInOut.h; sourceTree = "<group>"; };
 		EB92A50616B6671000FC326E /* MOAITakeCameraListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAITakeCameraListener.h; path = "moaiext-iphone/MOAITakeCameraListener.h"; sourceTree = "<group>"; };
 		EB92A50716B6671000FC326E /* MOAITakeCameraListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAITakeCameraListener.mm; path = "moaiext-iphone/MOAITakeCameraListener.mm"; sourceTree = "<group>"; };
-		EB9EE00B1BE9421B00E8938F /* liblibmoai-tvos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liblibmoai-tvos.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		EB9EE1851BE9422800E8938F /* liblibmoai-tvos-3rdparty.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liblibmoai-tvos-3rdparty.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		EB9EE1B81BE9423500E8938F /* liblibmoai-tvos-luaext.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liblibmoai-tvos-luaext.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		EB9EE1F51BE9424500E8938F /* liblibmoai-tvos-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liblibmoai-tvos-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB9EE00B1BE9421B00E8938F /* libmoai-tvos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-tvos.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB9EE1851BE9422800E8938F /* libmoai-tvos-3rdparty.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-tvos-3rdparty.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB9EE1B81BE9423500E8938F /* libmoai-tvos-luaext.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-tvos-luaext.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB9EE1F51BE9424500E8938F /* libmoai-tvos-zlcore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-tvos-zlcore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB9EE1FA1BE95D4F00E8938F /* moaiext-tvos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "moaiext-tvos.h"; path = "moaiext-tvos/moaiext-tvos.h"; sourceTree = "<group>"; };
 		F055A9491846ABF40031F295 /* sha.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sha.h; path = "../../3rdparty/openssl-1.0.0d/crypto/sha/sha.h"; sourceTree = "<group>"; };
 		F055A9641846ACA90031F295 /* sha_locl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sha_locl.h; path = "../../3rdparty/openssl-1.0.0d/crypto/sha/sha_locl.h"; sourceTree = "<group>"; };
@@ -5011,10 +5012,10 @@
 				CDD06D87139882D900AB0420 /* libmoai-osx-luaext.a */,
 				CD04ACB414725568009C20E5 /* libmoai-ios-zlcore.a */,
 				CD04AE7F1472557F009C20E5 /* libmoai-osx-zlcore.a */,
-				EB9EE00B1BE9421B00E8938F /* liblibmoai-tvos.a */,
-				EB9EE1851BE9422800E8938F /* liblibmoai-tvos-3rdparty.a */,
-				EB9EE1B81BE9423500E8938F /* liblibmoai-tvos-luaext.a */,
-				EB9EE1F51BE9424500E8938F /* liblibmoai-tvos-zlcore.a */,
+				EB9EE00B1BE9421B00E8938F /* libmoai-tvos.a */,
+				EB9EE1851BE9422800E8938F /* libmoai-tvos-3rdparty.a */,
+				EB9EE1B81BE9423500E8938F /* libmoai-tvos-luaext.a */,
+				EB9EE1F51BE9424500E8938F /* libmoai-tvos-zlcore.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -7824,6 +7825,7 @@
 				EB9EDEAC1BE9421B00E8938F /* USStreamReader.h in Headers */,
 				EB9EDEAD1BE9421B00E8938F /* USBase64Encoder.h in Headers */,
 				EB9EDEAE1BE9421B00E8938F /* MOAIGridDeck2D.h in Headers */,
+				357DE8D31BFA7EE300C4CE8D /* USUnique.h in Headers */,
 				EB9EDEB01BE9421B00E8938F /* MOAIHashWriter.h in Headers */,
 				EB9EDEB11BE9421B00E8938F /* USHexWriter.h in Headers */,
 				EB9EDEB21BE9421B00E8938F /* USHashWriterAdler32.h in Headers */,
@@ -8242,7 +8244,7 @@
 			);
 			name = "libmoai-tvos";
 			productName = OpenUSLS;
-			productReference = EB9EE00B1BE9421B00E8938F /* liblibmoai-tvos.a */;
+			productReference = EB9EE00B1BE9421B00E8938F /* libmoai-tvos.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		EB9EE00C1BE9422800E8938F /* libmoai-tvos-3rdparty */ = {
@@ -8259,7 +8261,7 @@
 			);
 			name = "libmoai-tvos-3rdparty";
 			productName = OpenUSLS;
-			productReference = EB9EE1851BE9422800E8938F /* liblibmoai-tvos-3rdparty.a */;
+			productReference = EB9EE1851BE9422800E8938F /* libmoai-tvos-3rdparty.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		EB9EE1861BE9423500E8938F /* libmoai-tvos-luaext */ = {
@@ -8276,7 +8278,7 @@
 			);
 			name = "libmoai-tvos-luaext";
 			productName = OpenUSLS;
-			productReference = EB9EE1B81BE9423500E8938F /* liblibmoai-tvos-luaext.a */;
+			productReference = EB9EE1B81BE9423500E8938F /* libmoai-tvos-luaext.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		EB9EE1B91BE9424500E8938F /* libmoai-tvos-zlcore */ = {
@@ -8293,7 +8295,7 @@
 			);
 			name = "libmoai-tvos-zlcore";
 			productName = OpenUSLS;
-			productReference = EB9EE1F51BE9424500E8938F /* liblibmoai-tvos-zlcore.a */;
+			productReference = EB9EE1F51BE9424500E8938F /* libmoai-tvos-zlcore.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -10879,7 +10881,7 @@
 					DISABLE_TAPJOY,
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-tvos";
 				SDKROOT = appletvos;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
 				TARGETED_DEVICE_FAMILY = 3;
@@ -10921,7 +10923,7 @@
 					MOAI_NO_DEFAULT_LOG_MESSAGES,
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-tvos";
 				SDKROOT = appletvos;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
 				TARGETED_DEVICE_FAMILY = 3;
@@ -10983,7 +10985,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-tvos-3rdparty";
 				SDKROOT = appletvos;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
 				TARGETED_DEVICE_FAMILY = 3;
@@ -11041,7 +11043,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-tvos-3rdparty";
 				SDKROOT = appletvos;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
 				TARGETED_DEVICE_FAMILY = 3;
@@ -11074,7 +11076,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-tvos-luaext";
 				SDKROOT = appletvos;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
 				TARGETED_DEVICE_FAMILY = 3;
@@ -11107,7 +11109,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-tvos-luaext";
 				SDKROOT = appletvos;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
 				TARGETED_DEVICE_FAMILY = 3;
@@ -11120,7 +11122,7 @@
 			baseConfigurationReference = 5751E6CE18565F8B00775234 /* libmoai-ios-debug.xcconfig */;
 			buildSettings = {
 				OTHER_CFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-tvos-zlcore";
 				SDKROOT = appletvos;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
 				TARGETED_DEVICE_FAMILY = 3;
@@ -11133,7 +11135,7 @@
 			baseConfigurationReference = 5751E6CF18565F8B00775234 /* libmoai-ios-release.xcconfig */;
 			buildSettings = {
 				OTHER_CFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-tvos-zlcore";
 				SDKROOT = appletvos;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
 				TARGETED_DEVICE_FAMILY = 3;

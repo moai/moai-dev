@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EB9EDD971BE9421B00E8938F"
-               BuildableName = "liblibmoai-tvos.a"
+               BuildableName = "libmoai-tvos.a"
                BlueprintName = "libmoai-tvos"
                ReferencedContainer = "container:libmoai.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EB9EDD971BE9421B00E8938F"
-            BuildableName = "liblibmoai-tvos.a"
+            BuildableName = "libmoai-tvos.a"
             BlueprintName = "libmoai-tvos"
             ReferencedContainer = "container:libmoai.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EB9EDD971BE9421B00E8938F"
-            BuildableName = "liblibmoai-tvos.a"
+            BuildableName = "libmoai-tvos.a"
             BlueprintName = "libmoai-tvos"
             ReferencedContainer = "container:libmoai.xcodeproj">
          </BuildableReference>

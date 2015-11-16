@@ -16,18 +16,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	generateGUID
-	@text	Generates a globally unique identifier. This method will be
-			moved to MOAIUnique in a future release.
-
-	@out	string GUID
-*/
-int MOAIEnvironment::_generateGUID ( lua_State* L ) {
-
-	STLString guid = USUnique::GetGUID ();
-	lua_pushstring ( L, guid );
-	return 1;
-}
 
 //----------------------------------------------------------------//
 /**	@name	getMACAddress
@@ -196,7 +184,7 @@ void MOAIEnvironment::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "OS_BRAND_UNAVAILABLE", ( u32 )OS_BRAND_UNAVAILABLE );
 
 	luaL_Reg regTable [] = {
-		{ "generateGUID",		_generateGUID },
+//		{ "generateGUID",		_generateGUID },
 		{ "getMACAddress",		_getMACAddress },
 		{ "setListener",		&MOAIGlobalEventSource::_setListener < MOAIEnvironment > },
 		{ "setValue",			_setValue },
