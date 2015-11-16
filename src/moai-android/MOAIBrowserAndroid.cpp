@@ -83,7 +83,7 @@ MOAIBrowserAndroid::MOAIBrowserAndroid () {
 
 	RTTI_SINGLE ( MOAILuaObject )
 	
-	//if ( this->SetClass ( "com/ziplinegames/moai/MoaiBrowser" )) {
+	//if ( this->SetClass ( "com/moaisdk/core/MoaiBrowser" )) {
 	//	this->mJava_CanOpenURL			= this->GetStaticMethod ( "canOpenURL", "(Ljava/lang/String;)Z" );
 	//	this->mJava_OpenURL				= this->GetStaticMethod ( "openURL", "(Ljava/lang/String;)V" );
 	//	this->mJava_OpenURLWithParams	= this->GetStaticMethod ( "openURLWithParams", "(Ljava/lang/String;Landroid/os/Bundle;)V" );

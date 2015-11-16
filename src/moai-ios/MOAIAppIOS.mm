@@ -3,6 +3,8 @@
 
 #include "pch.h"
 
+#import <AudioToolbox/AudioToolbox.h>
+
 #import <moai-apple/NSData+MOAILib.h>
 #import <moai-apple/NSDate+MOAILib.h>
 #import <moai-apple/NSDictionary+MOAILib.h>
@@ -14,6 +16,7 @@
 
 #import <ifaddrs.h>
 #import <arpa/inet.h>
+#import <sys/sysctl.h>
 
 //================================================================//
 // lua
@@ -122,7 +125,12 @@ int MOAIAppIOS::_getInterfaceOrientation ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getIPAddress
+	@text	Get an IP address for the device (if available). Current implementation
+			returns only one ip, with preference given to wifi.
+ 
+	@out	string ip
+*/
 int MOAIAppIOS::_getIPAddress ( lua_State* L ) {
 
 	MOAILuaState state ( L );
@@ -152,7 +160,8 @@ int MOAIAppIOS::_getIPAddress ( lua_State* L ) {
                     // Interface is the wifi connection on the iPhone
                     wifiAddress = addr;
 					
-                } else if([ name isEqualToString:@"pdp_ip0" ]) {
+                }
+				else if([ name isEqualToString:@"pdp_ip0" ]) {
 					
 					// Interface is the cell connection on the iPhone
 					cellAddress = addr;
@@ -163,6 +172,8 @@ int MOAIAppIOS::_getIPAddress ( lua_State* L ) {
         // Free memory
         freeifaddrs(interfaces);
     }
+	
+	// TODO: seems like we should return both wifi and cellular instead of always preferring wifi
     NSString *addr = wifiAddress ? wifiAddress : cellAddress;
 	addr = addr ? addr : @"0.0.0.0";
 	
@@ -203,6 +214,38 @@ int MOAIAppIOS::_getResourcePathInBundle ( lua_State* L ) {
 	// return full path to resource in bundle
 	lua_pushstring ( L, [ resourceFullPath UTF8String ]);
 	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getSystemUptime
+	@text	Get the current uptime in seconds. This value does not change when system clock is modified by user
+	
+	@in		nil
+	@out	num 	time since last boot in seconds or nil if failed
+*/
+int MOAIAppIOS::_getSystemUptime ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	struct timeval boottime;
+	
+	int mib [ 2 ] = { CTL_KERN, KERN_BOOTTIME };
+	size_t size = sizeof ( boottime );
+	time_t now;
+	time_t uptime = -1;
+	
+	( void ) time ( &now );
+	
+	if ( sysctl ( mib, 2, &boottime, &size, NULL, 0 ) != -1 && boottime.tv_sec != 0 ) {
+		uptime = now - boottime.tv_sec;
+	}
+	
+	if ( uptime != -1 ) {
+		state.Push (( double )uptime );
+		return 1;
+	}
+	
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -370,6 +413,22 @@ int MOAIAppIOS::_takeCamera( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@lua	vibrate
+	@text	Make the phone vibrate. Does nothing if vibration is unsupported by device.
+ 
+	@out	nil
+*/
+int MOAIAppIOS::_vibrate ( lua_State *L ) {
+	UNUSED ( L );
+	
+    //TODO: put this somewhere other than moai-ios - this is the only call that introduces a dependency on audio
+	// should be in untz or something
+	//AudioServicesPlaySystemSound ( kSystemSoundID_Vibrate );
+	return 0;
+}
+
+
 void MOAIAppIOS::callTakeCameraLuaCallback (NSString *imagePath) {
 	MOAILuaRef& callback = MOAIAppIOS::Get ().mOnTakeCameraCallback;
 	MOAIScopedLuaState state = callback.GetSelf ();
@@ -405,7 +464,7 @@ MOAIAppIOS::MOAIAppIOS () {
 
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 
-	//this->mMailDelegate = [ MoaiMailComposeDelegate alloc ];
+	//this->mMailDelegate = [ MOAIMailComposeDelegate alloc ];
 	this->mTakeCameraListener = [ MOAITakeCameraListener alloc ];
 	
 	this->RegisterNotificationListeners ();
@@ -463,12 +522,14 @@ void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getIPAddress",				_getIPAddress },
 		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAIAppIOS > },
 		{ "getResourcePathInBundle",	_getResourcePathInBundle },
+		{ "getSystemUptime",			_getSystemUptime },
 		{ "getUTCTime",					_getUTCTime },
 		{ "openURL",					_openURL },
 		{ "openURLWithParams",			_openURLWithParams },
 		{ "sendMail",					_sendMail },
 		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIAppIOS > },
 		{ "takeCamera",					_takeCamera },
+		{ "vibrate",					_vibrate },
 		{ NULL, NULL }
 	};
 
@@ -531,13 +592,13 @@ void MOAIAppIOS::RemoveNotificationListeners () {
 }
 
 //================================================================//
-// MoaiMailComposeDelegate
+// MOAIMailComposeDelegate
 //================================================================//
-//@implementation MoaiMailComposeDelegate
+//@implementation MOAIMailComposeDelegate
 //
 ////================================================================//
 //#pragma mark -
-//#pragma mark Protocol MoaiMailComposeDelegate
+//#pragma mark Protocol MOAIMailComposeDelegate
 ////================================================================//
 //
 //- (void)mailComposeController:(MFMailComposeViewController*)controller

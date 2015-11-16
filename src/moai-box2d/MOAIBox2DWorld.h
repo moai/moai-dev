@@ -99,6 +99,7 @@ private:
 	static int		_getAutoClearForces			( lua_State* L );
 	static int		_getGravity					( lua_State* L );
 	static int		_getLinearSleepTolerance	( lua_State* L );
+	static int		_getPerformance				( lua_State* L );
 	static int		_getRayCast					( lua_State* L );
 	static int		_getTimeToSleep				( lua_State* L );
 	static int		_setAngularSleepTolerance	( lua_State* L );

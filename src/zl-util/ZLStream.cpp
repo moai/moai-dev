@@ -24,7 +24,6 @@ size_t ZLStream::Collapse ( size_t clipBase, size_t clipSize, size_t chunkSize, 
 //----------------------------------------------------------------//
 size_t ZLStream::Collapse ( ZLStream& source, size_t clipBase, size_t clipSize, size_t chunkSize, size_t size, bool invert ) {
 
-
 	if (( clipBase + clipSize ) > chunkSize ) {
 		clipSize = ( clipBase < chunkSize ) ? ( clipBase + clipSize ) - chunkSize : 0;
 	}

@@ -131,7 +131,12 @@ int MOAISim::_framesToTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getActionMgr
+	@text	Get the sim's action tree. This is the 'global' action tree
+			that all newly started actions are automatically added.
+
+	@out	MOAIActionTree actionMgr
+*/
 int MOAISim::_getActionMgr ( lua_State* L ) {
 
 	MOAILuaState state ( L );
@@ -274,18 +279,48 @@ int MOAISim::_getMemoryUsage ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/** @lua	getMemoryUsagePlain
+	@text	Returns lua and texture memory usage measured by MOAI subsystems.
+			This function tries to avoid allocations to minimize skewing the results.
+			Suitable for realtime memory monitoring.
+	
+	@out	number lua memory usage in bytes
+	@out	number texture memory usage in bytes
+*/
+int MOAISim::_getMemoryUsagePlain ( lua_State *L ) {
+	
+	size_t lua = MOAILuaRuntime::Get().GetMemoryUsage ();
+	size_t tex = MOAIGfxDevice::Get ().GetTextureMemoryUsage ();
+	
+	lua_pushnumber ( L, lua );
+	lua_pushnumber ( L, tex );
+	
+	return 2;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	getPerformance
-	@text	Returns an estimated frames per second based on measurements
-			taken at every render.
+	@text	Returns an estimated frames per second and other performance counters 
+			based on measurements taken at every render.
 
 	@out	number fps		Estimated frames per second.
+	@out	number seconds	Last ActionTree update duration
+	@out	number seconds  Last NodeMgr update duration
+	@out	number seconds  Last sim duration
+	@out	number seconds  Last render duration
 */
 int MOAISim::_getPerformance ( lua_State* L ) {
 
 	MOAISim& device = MOAISim::Get ();
-	lua_pushnumber ( L, device.mFrameRate );
+	MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
 
-	return 1;
+	lua_pushnumber ( L, device.mFrameRate );
+	lua_pushnumber ( L, device.mLastActionTreeTime );
+	lua_pushnumber ( L, device.mLastNodeMgrTime );
+	lua_pushnumber ( L, device.mSimDuration );
+	lua_pushnumber ( L, renderMgr.GetRenderDuration ());
+
+	return 5;
 }
 
 //----------------------------------------------------------------//
@@ -410,7 +445,12 @@ int MOAISim::_setCpuBudget ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setGCActive
+	@text	Enable incremental garbage collection.
+	
+	@in		boolean active			Default value is false.
+	@out	nil
+*/
 int MOAISim::_setGCActive ( lua_State* L ) {
 	MOAILuaState state ( L );
 	MOAISim::Get ().mGCActive = state.GetValue < bool >( 1, false );
@@ -418,7 +458,12 @@ int MOAISim::_setGCActive ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setGCStep
+	@text	Sets a step to use when running the incremental gc each frame.
+	
+	@in		number step
+	@out	nil
+*/
 int MOAISim::_setGCStep ( lua_State* L ) {
 	MOAILuaState state ( L );
 	MOAISim::Get ().mGCStep = state.GetValue < u32 >( 1, 0 );
@@ -503,6 +548,30 @@ int MOAISim::_setStep ( lua_State* L ) {
 int MOAISim::_setStepMultiplier ( lua_State* L ) {
 	MOAILuaState state ( L );
 	MOAISim::Get ().mStepMultiplier = state.GetValue < u32 >( 1, DEFAULT_STEP_MULTIPLIER );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**
+	@lua	setStepSmoothing
+	@text	Average delta time over N last frames. This is useful to
+			filter out momentary single-frame spikes. 
+			Can make difference even in fixed step setup (helps to avoids double steps).
+
+	@in		number count		Number of frames. Default is 0 (no smoothing).
+	@out	nil
+*/
+int MOAISim::_setStepSmoothing ( lua_State *L ) {
+	MOAILuaState state ( L );
+
+	u32 size = state.GetValue < u32 >( 1, 0 );
+
+	MOAISim& device = MOAISim::Get ();
+	
+	device.mSmoothBuffer.Init ( size );
+	device.mSmoothBuffer.Fill ( device.mStep );
+	device.mSmoothIdx = 0;
+	
 	return 0;
 }
 
@@ -658,6 +727,10 @@ MOAISim::MOAISim () :
 	mStepCount ( 0 ),
 	mFrameRate ( 0.0f ),
 	mFrameRateIdx ( 0 ),
+	mNodeMgrTime ( 0.0 ),
+	mActionTreeTime ( 0.0 ),
+	mLastNodeMgrTime ( 0.0 ),
+	mLastActionTreeTime ( 0.0 ),
 	mLoopFlags ( LOOP_FLAGS_DEFAULT ),
 	mBoostThreshold ( DEFAULT_BOOST_THRESHOLD ),
 	mLongDelayThreshold ( DEFAULT_LONG_DELAY_THRESHOLD ),
@@ -672,6 +745,7 @@ MOAISim::MOAISim () :
 	mShowCursorFunc ( 0 ),
 	mHideCursorFunc ( 0 ),
 	mGCActive ( true ),
+	mSmoothIdx ( 0 ),
 	mGCStep ( 0 ) {
 	
 	RTTI_SINGLE ( MOAIGlobalEventSource )
@@ -726,6 +800,15 @@ void MOAISim::OnGlobalsFinalize () {
 }
 
 //----------------------------------------------------------------//
+void MOAISim::ResetPerformanceTimers () {
+
+	this->mLastActionTreeTime = this->mActionTreeTime;
+	this->mLastNodeMgrTime = this->mNodeMgrTime;
+	this->mNodeMgrTime = 0.0;
+	this->mActionTreeTime = 0.0;
+}
+
+//----------------------------------------------------------------//
 void MOAISim::Pause () {
 
 	if ( this->mLoopState != PAUSED ) {
@@ -777,6 +860,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getLoopFlags",				_getLoopFlags },
 		{ "getLuaObjectCount",			_getLuaObjectCount },
 		{ "getMemoryUsage",				_getMemoryUsage },
+		{ "getMemoryUsagePlain",		_getMemoryUsagePlain },
 		{ "getPerformance",				_getPerformance },
 		{ "getStep",					_getStep },
 		{ "getStepCount",				_getStepCount },
@@ -793,6 +877,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setLuaAllocLogEnabled",		_setLuaAllocLogEnabled },
 		{ "setStep",					_setStep },
 		{ "setStepMultiplier",			_setStepMultiplier },
+		{ "setStepSmoothing",			_setStepSmoothing },
 		{ "setTimerError",				_setTimerError },
 		{ "setTraceback",				_setTraceback },
 		{ "setTextInputRect",			_setTextInputRect },
@@ -835,6 +920,32 @@ void MOAISim::SetStep ( double step ) {
 }
 
 //----------------------------------------------------------------//
+double MOAISim::SmoothStep ( double step ) {
+	
+	if ( this->mSmoothBuffer.Size () == 0 ) {
+		return step;
+	}
+	
+	u32 size = this->mSmoothBuffer.Size ();
+	
+	this->mSmoothBuffer [ this->mSmoothIdx++ ] = step;
+	this->mSmoothIdx %= size;
+	
+	u32 count = 0;
+	double sum = 0.0;
+	for ( u32 i = 0; i < size; ++i ) {
+		double dt = this->mSmoothBuffer [ i ];
+		
+		// Ignore long delay steps
+		if ( !( this->mLoopFlags & SIM_LOOP_LONG_DELAY ) || ( dt < this->mStep * this->mLongDelayThreshold )) {
+			count++;
+			sum += dt;
+		}
+	}
+	return ( count > 0 ) ? sum / count : step;
+}
+
+//----------------------------------------------------------------//
 double MOAISim::StepSim ( double step, u32 multiplier ) {
 
 	double time = ZLDeviceTime::GetTimeInSeconds ();
@@ -849,10 +960,14 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 		
 		this->InvokeListener ( EVENT_STEP );
 		
+		double t = ZLDeviceTime::GetTimeInSeconds ();
 		MOAIInputMgr::Get ().Update ( step );
 		this->mActionTree->Update ( step );
+		this->mActionTreeTime = this->mActionTreeTime + ZLDeviceTime::GetTimeInSeconds () - t;
 		
+		t = ZLDeviceTime::GetTimeInSeconds ();
 		MOAINodeMgr::Get ().Update ();
+		this->mNodeMgrTime = this->mNodeMgrTime + ZLDeviceTime::GetTimeInSeconds () - t;
 		
 		this->mSimTime += step;
 		this->mStepCount++;
@@ -888,6 +1003,7 @@ void MOAISim::Update () {
 	double simStartTime = ZLDeviceTime::GetTimeInSeconds ();
 
 	double interval = this->MeasureFrameRate ();
+	this->ResetPerformanceTimers ();
 	
 	MOAIMainThreadTaskSubscriber::Get ().Publish ();
 	
@@ -905,6 +1021,8 @@ void MOAISim::Update () {
 			interval = this->mStep * ( integer + 1.0 );
 		}
 	}
+
+	interval = this->SmoothStep ( interval );
 	
 	// actual device time elapsed since starting or restarting the sim
 	this->mRealTime += interval;

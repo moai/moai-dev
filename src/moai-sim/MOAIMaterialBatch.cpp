@@ -72,7 +72,12 @@ bool MOAIMaterial::TestHit ( float x, float y ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getIndexBatchSize
+	@text	Get the index batch size.
+	
+	@in		MOAIMaterialBatch self
+	@out	number indexBatchSize
+*/
 int MOAIMaterialBatch::_getIndexBatchSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" );
 	state.Push ( self->mIndexBatchSize );
@@ -80,7 +85,14 @@ int MOAIMaterialBatch::_getIndexBatchSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getShader
+	@text	Get the shader for the given index. Index batch size
+			is ignored.
+	
+	@in		MOAIMaterialBatch self
+	@opt	number idx					Default value is 1.
+	@out	MOAIShader shader
+*/
 int MOAIMaterialBatch::_getShader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
 	state.Push ( self->RawGetShader ( state.GetValue < u32 >( 2, 1 ) - 1 ));
@@ -88,19 +100,32 @@ int MOAIMaterialBatch::_getShader ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO
+/**	@lua	getTexture
+	@text	Get the texture for the given index. Index batch size
+			is ignored.
+	
+	@in		MOAIMaterialBatch self
+	@opt	number idx					Default value is 1.
+	@out	MOAITexture shader
+*/
 int MOAIMaterialBatch::_getTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
 	state.Push ( self->RawGetTexture ( state.GetValue < u32 >( 2, 1 ) - 1 ));
-	return 0;
+	return 1;
 }
 
 //----------------------------------------------------------------//
-// TODO
+/**	@lua	reserveMaterials
+	@text	Reserve material indices.
+	
+	@in		MOAIMaterialBatch self
+	@opt	number count
+	@out	nil
+*/
 int MOAIMaterialBatch::_reserveMaterials ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
 	self->Reserve ( state.GetValue ( 2, 0 ));
-	return 0;
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -118,7 +143,30 @@ int MOAIMaterialBatch::_setHitMask ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setHitMaskScalar
+	@text	Set a color to modulate hit mask samples.
+	
+			If no value for 'idx' is provided, the value of index is 1.
+	
+	@overload
+	
+		@in		MOAIDeck self
+		@in		number idx
+		@in		number r
+		@in		number g
+		@in		number b
+		@in		number a
+		@out	nil
+	
+	@overload
+	
+		@in		MOAIDeck self
+		@in		number r
+		@in		number g
+		@in		number b
+		@in		number a
+		@out	nil
+*/
 int MOAIMaterialBatch::_setHitMaskScalar ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
 	self->SetHitMaskScalar ( state, 2 );
@@ -126,7 +174,30 @@ int MOAIMaterialBatch::_setHitMaskScalar ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setHitMaskThreshold
+	@text	Set a color to act as a threshold for hit mask samples.
+	
+			If no value for 'idx' is provided, the value of index is 1.
+	
+	@overload
+	
+		@in		MOAIDeck self
+		@in		number idx
+		@in		number r
+		@in		number g
+		@in		number b
+		@in		number a
+		@out	nil
+	
+	@overload
+	
+		@in		MOAIDeck self
+		@in		number r
+		@in		number g
+		@in		number b
+		@in		number a
+		@out	nil
+*/
 int MOAIMaterialBatch::_setHitMaskThreshold ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
 	self->SetHitMaskThreshold ( state, 2 );
@@ -134,7 +205,20 @@ int MOAIMaterialBatch::_setHitMaskThreshold ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO
+/**	@lua	setIndexBatchSize
+	@text	Set the index batch size. When a prop or deck is drawing,
+			the index is divided by the material batch's index batch size
+			to get the material index. In this way sets of deck indices
+			may be assigned to material indices. For example, an index
+			batch size of 256 for a set of 4 materials would distribute
+			1024 deck indices across materials 1 though 4. An index batch
+			size of 1 would create a 1 to 1 mapping between deck indices
+			and materials.
+	
+	@in		MOAIMaterialBatch self
+	@opt	number indexBatchSize		Default value is 1.
+	@out	nil
+*/
 int MOAIMaterialBatch::_setIndexBatchSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
 	self->mIndexBatchSize = state.GetValue < u32 >( 2, 1 );
@@ -142,7 +226,25 @@ int MOAIMaterialBatch::_setIndexBatchSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setShader
+	@text	Sets a shader in the material batch. Index batch size is ignored.
+			
+			If no value for 'idx' is provided, then the shader or shader
+			preset is expected as the first paramater, and idx defaults to 1.
+	
+	@overload
+	
+		@in		MOAIMaterialBatch self
+		@in		number idx
+		@in		variant shader			Overloaded to accept a MOAIShader or a shader preset.
+		@out	MOAIShader shader		The shader that was set or created.
+	
+	@overload
+	
+		@in		MOAIMaterialBatch self
+		@in		variant shader			Overloaded to accept a MOAIShader or a shader preset.
+		@out	MOAIShader shader		The shader that was set or created.
+*/
 int MOAIMaterialBatch::_setShader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
 	state.Push ( self->SetShader ( state, 2 ));
@@ -150,7 +252,25 @@ int MOAIMaterialBatch::_setShader ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setTexture
+	@text	Sets a texture in material batch. Index batch size is ignored.
+			
+			If no value for 'idx' is provided, then the texture or filename
+			is expected as the first paramater, and idx defaults to 1.
+	
+	@overload
+	
+		@in		MOAIMaterialBatch self
+		@in		number idx
+		@in		variant texture			Overloaded to accept a filename, MOAITexture, MOAIImage, MOAIStream or MOAIDataBuffer.
+		@out	MOAITexture texture		The texture that was set or created.
+	
+	@overload
+	
+		@in		MOAIMaterialBatch self
+		@in		variant texture			Overloaded to accept a filename, MOAITexture, MOAIImage, MOAIStream or MOAIDataBuffer.
+		@out	MOAITexture texture		The texture that was set or created.
+*/
 int MOAIMaterialBatch::_setTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
 	state.Push ( self->SetTexture ( state, 2 ));
@@ -407,7 +527,7 @@ void MOAIMaterialBatch::SetShader ( u32 idx, MOAIShader* shader ) {
 MOAIShader* MOAIMaterialBatch::SetShader ( MOAILuaState& state, u32 idx ) {
 	
 	u32 materialIdx = 0;
-	if ( state.IsType ( idx, LUA_TNUMBER )) {
+	if ( state.IsType ( idx, LUA_TNUMBER ) && ( state.AbsIndex ( idx ) < state.GetTop ())) {
 		materialIdx = state.GetValue < u32 >( idx++, 1 ) - 1;
 	}
 

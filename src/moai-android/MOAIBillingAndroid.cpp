@@ -46,13 +46,16 @@ int MOAIBillingAndroid::_checkBillingSupported ( lua_State* L ) {
     if ( billing == NULL ) {
 
 		ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find java class %s", MOAIBillingAndroid::Get ().mBillingProvider );
-    } else {
+    }
+    else {
 
     	jmethodID checkBillingSupported = env->GetStaticMethodID ( billing, "checkBillingSupported", "()Z" );
+
     	if ( checkBillingSupported == NULL ) {
 
 			ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find static java method %s", "checkBillingSupported" );
-    	} else {
+    	}
+    	else {
 
 			jboolean jsuccess = ( jboolean )env->CallStaticBooleanMethod ( billing, checkBillingSupported );
 
@@ -89,13 +92,17 @@ int MOAIBillingAndroid::_confirmNotification ( lua_State* L ) {
     if ( billing == NULL ) {
 
 		ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find java class %s", MOAIBillingAndroid::Get ().mBillingProvider );
-    } else {
+
+    }
+    else {
 
     	jmethodID confirmNotification = env->GetStaticMethodID ( billing, "confirmNotification", "(Ljava/lang/String;)Z" );
     	if ( confirmNotification == NULL ) {
 
 			ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find static java method %s", "confirmNotification" );
-    	} else {
+
+    	}
+    	else {
 
 			jboolean jsuccess = ( jboolean )env->CallStaticBooleanMethod ( billing, confirmNotification, ( jstring )jnotification );
 
@@ -128,13 +135,17 @@ int MOAIBillingAndroid::_getUserId ( lua_State* L ) {
     if ( billing == NULL ) {
 
 		ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find java class %s", MOAIBillingAndroid::Get ().mBillingProvider );
-    } else {
+
+    }
+    else {
 
     	jmethodID getUserId = env->GetStaticMethodID ( billing, "getUserId", "()Z" );
     	if ( getUserId == NULL ) {
 
 			ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find static java method %s", "getUserId" );
-    	} else {
+
+    	}
+    	else {
 
 			jboolean jsuccess = ( jboolean )env->CallStaticBooleanMethod ( billing, getUserId );
 
@@ -173,13 +184,16 @@ int MOAIBillingAndroid::_requestPurchase ( lua_State* L ) {
     if ( billing == NULL ) {
 
 		ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find java class %s", MOAIBillingAndroid::Get ().mBillingProvider );
-    } else {
+
+    }
+    else {
 
     	jmethodID requestPurchase = env->GetStaticMethodID ( billing, "requestPurchase", "(Ljava/lang/String;Ljava/lang/String;)Z" );
     	if ( requestPurchase == NULL ) {
 
 			ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find static java method %s", "requestPurchase" );
-    	} else {
+    	}
+    	else {
 
 			jboolean jsuccess = ( jboolean )env->CallStaticBooleanMethod ( billing, requestPurchase, ( jstring )jidentifier, ( jstring )jpayload );
 
@@ -215,13 +229,15 @@ int MOAIBillingAndroid::_restoreTransactions ( lua_State* L ) {
     if ( billing == NULL ) {
 
 		ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find java class %s", MOAIBillingAndroid::Get ().mBillingProvider );
-    } else {
+    }
+    else {
 
     	jmethodID restoreTransactions = env->GetStaticMethodID ( billing, "restoreTransactions", "(Ljava/lang/String;)Z" );
     	if ( restoreTransactions == NULL ) {
 
 			ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find static java method %s", "restoreTransactions" );
-    	} else {
+    	}
+    	else {
 
 			jboolean jsuccess = ( jboolean )env->CallStaticBooleanMethod ( billing, restoreTransactions, ( jstring )joffset );
 
@@ -251,25 +267,31 @@ int MOAIBillingAndroid::_setBillingProvider ( lua_State* L ) {
 
 	if ( provider == BILLING_PROVIDER_GOOGLE ) {
 
-		MOAIBillingAndroid::Get ().mBillingProvider = "com/ziplinegames/moai/MoaiGoogleBilling";
+		MOAIBillingAndroid::Get ().mBillingProvider = "com/moaisdk/core/MoaiGoogleBilling";
 
 		ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Setting in-app billing provider to %s", MOAIBillingAndroid::Get ().mBillingProvider );
-	} else if ( provider == BILLING_PROVIDER_AMAZON ) {
+	}
+	else if ( provider == BILLING_PROVIDER_AMAZON ) {
 
-		MOAIBillingAndroid::Get ().mBillingProvider = "com/ziplinegames/moai/MoaiAmazonBilling";
-
-		ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Setting in-app billing provider to %s", MOAIBillingAndroid::Get ().mBillingProvider );
-	} else if ( provider == BILLING_PROVIDER_TSTORE ) {
-
-		MOAIBillingAndroid::Get ().mBillingProvider = "com/ziplinegames/moai/MoaiTstoreBilling";
+		MOAIBillingAndroid::Get ().mBillingProvider = "com/moaisdk/core/MoaiAmazonBilling";
 
 		ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Setting in-app billing provider to %s", MOAIBillingAndroid::Get ().mBillingProvider );
-	} else if ( provider == BILLING_PROVIDER_FORTUMO ) {
 
-		MOAIBillingAndroid::Get ().mBillingProvider = "com/ziplinegames/moai/MoaiFortumoBilling";
+	}
+	else if ( provider == BILLING_PROVIDER_TSTORE ) {
+
+		MOAIBillingAndroid::Get ().mBillingProvider = "com/moaisdk/core/MoaiTstoreBilling";
 
 		ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Setting in-app billing provider to %s", MOAIBillingAndroid::Get ().mBillingProvider );
-	} else {
+
+	}
+	else if ( provider == BILLING_PROVIDER_FORTUMO ) {
+
+		MOAIBillingAndroid::Get ().mBillingProvider = "com/moaisdk/core/MoaiFortumoBilling";
+
+		ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Setting in-app billing provider to %s", MOAIBillingAndroid::Get ().mBillingProvider );
+	}
+	else {
 
 		ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unknown billing provider, using %s", MOAIBillingAndroid::Get ().mBillingProvider );
 
@@ -319,13 +341,17 @@ int MOAIBillingAndroid::_setPublicKey ( lua_State* L ) {
     if ( billing == NULL ) {
 
 		ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find java class %s", MOAIBillingAndroid::Get ().mBillingProvider );
-    } else {
+
+    }
+    else {
 
     	jmethodID setPublicKey = env->GetStaticMethodID ( billing, "setPublicKey", "(Ljava/lang/String;)V" );
     	if ( setPublicKey == NULL ) {
 
 			ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find static java method %s", "setPublicKey" );
-    	} else {
+
+    	}
+    	else {
 
 			env->CallStaticVoidMethod ( billing, setPublicKey, ( jstring )jkey );
 		}
@@ -348,17 +374,21 @@ int MOAIBillingAndroid::_checkInAppSupported ( lua_State* L ) {
 
 	JNI_GET_ENV ( jvm, env );
 
-	jclass billing = env->FindClass ( "com/ziplinegames/moai/MoaiGoogleBilling" );
+	jclass billing = env->FindClass ( "com/moaisdk/core/MoaiGoogleBilling" );
     if ( billing == NULL ) {
 
 		ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGoogleBilling" );
-    } else {
+
+    }
+    else {
 
     	jmethodID checkInAppSupported = env->GetStaticMethodID ( billing, "checkInAppSupported", "()Z" );
     	if ( checkInAppSupported == NULL ) {
 
 			ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find static java method %s", "checkInAppSupported" );
-    	} else {
+
+    	}
+    	else {
 
 			jboolean jsuccess = ( jboolean )env->CallStaticBooleanMethod ( billing, checkInAppSupported );
 
@@ -383,17 +413,21 @@ int MOAIBillingAndroid::_checkSubscriptionSupported ( lua_State* L ) {
 
 	JNI_GET_ENV ( jvm, env );
 
-	jclass billing = env->FindClass ( "com/ziplinegames/moai/MoaiGoogleBilling" );
+	jclass billing = env->FindClass ( "com/moaisdk/core/MoaiGoogleBilling" );
     if ( billing == NULL ) {
 
 		ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGoogleBilling" );
-    } else {
+
+    }
+    else {
 
     	jmethodID checkSubscriptionSupported = env->GetStaticMethodID ( billing, "checkSubscriptionSupported", "()Z" );
     	if ( checkSubscriptionSupported == NULL ) {
 
 			ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find static java method %s", "checkSubscriptionSupported" );
-    	} else {
+
+    	}
+    	else {
 
 			jboolean jsuccess = ( jboolean )env->CallStaticBooleanMethod ( billing, checkSubscriptionSupported );
 
@@ -422,17 +456,20 @@ int MOAIBillingAndroid::_consumePurchaseSync ( lua_State* L ) {
 	JNI_GET_ENV ( jvm, env );
 	MOAIJString jtoken = JNI_GET_JSTRING ( token );
 
-	jclass billing = env->FindClass ( "com/ziplinegames/moai/MoaiGoogleBilling" );
+	jclass billing = env->FindClass ( "com/moaisdk/core/MoaiGoogleBilling" );
     if ( billing == NULL ) {
 
 		ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGoogleBilling" );
-    } else {
+    }
+    else {
 
     	jmethodID consumePurchaseSync = env->GetStaticMethodID ( billing, "consumePurchaseSync", "(Ljava/lang/String;)I" );
     	if ( consumePurchaseSync == NULL ) {
 
 			ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find static java method %s", "consumePurchaseSync" );
-    	} else {
+
+    	}
+    	else {
 
 			jint result = ( jint )env->CallStaticIntMethod ( billing, consumePurchaseSync, ( jstring )jtoken );
 			lua_pushinteger ( state, result );
@@ -463,17 +500,19 @@ int MOAIBillingAndroid::_getPurchasedProducts ( lua_State* L ) {
 	cc8* continuation = lua_tostring ( state, 2 );
 	MOAIJString jcontinuation = JNI_GET_JSTRING ( continuation );
 
-	jclass billing = env->FindClass ( "com/ziplinegames/moai/MoaiGoogleBilling" );
+	jclass billing = env->FindClass ( "com/moaisdk/core/MoaiGoogleBilling" );
     if ( billing == NULL ) {
 
 		ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGoogleBilling" );
-    } else {
+    }
+    else {
 
     	jmethodID getPurchasedProducts = env->GetStaticMethodID ( billing, "getPurchasedProducts", "(ILjava/lang/String;)Ljava/lang/String;" );
     	if ( getPurchasedProducts == NULL ) {
 
 			ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find static java method %s", "getPurchasedProducts" );
-    	} else {
+    	}
+    	else {
 
 			MOAIJString jresult = ( jstring )env->CallStaticObjectMethod ( billing, getPurchasedProducts, type, ( jstring )jcontinuation );
 
@@ -508,17 +547,21 @@ int MOAIBillingAndroid::_purchaseProduct ( lua_State* L ) {
 	MOAIJString jsku = JNI_GET_JSTRING ( sku );
 	MOAIJString jdevPayload = JNI_GET_JSTRING ( devPayload );
 
-	jclass billing = env->FindClass ( "com/ziplinegames/moai/MoaiGoogleBilling" );
+	jclass billing = env->FindClass ( "com/moaisdk/core/MoaiGoogleBilling" );
     if ( billing == NULL ) {
 
 		ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGoogleBilling" );
-    } else {
+
+    }
+    else {
 
     	jmethodID purchaseProduct = env->GetStaticMethodID ( billing, "purchaseProduct", "(Ljava/lang/String;ILjava/lang/String;)I" );
     	if ( purchaseProduct == NULL ) {
 
 			ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find static java method %s", "purchaseProduct" );
-    	} else {
+
+    	}
+    	else {
 
 			jint result = ( jint )env->CallStaticIntMethod ( billing, purchaseProduct, ( jstring )jsku, type, ( jstring )jdevPayload );
 			lua_pushinteger ( state, result );
@@ -554,17 +597,21 @@ int MOAIBillingAndroid::_purchaseProductFortumo( lua_State* L ) {
 	MOAIJString jsecret = JNI_GET_JSTRING ( secret );
 	MOAIJString jdisplayName = JNI_GET_JSTRING ( displayName );
 
-	jclass billing = env->FindClass ( "com/ziplinegames/slotstycoon/MoaiActivity" );
+	jclass billing = env->FindClass ( "com/moaisdk/core/MoaiActivity" );
     if ( billing == NULL ) {
 
 		ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find java class %s", "com/ziplinegames/slotstycoon/MoaiActivity" );
-    } else {
+
+    }
+    else {
 
     	jmethodID purchaseProduct = env->GetStaticMethodID ( billing, "purchaseProduct", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
     	if ( purchaseProduct == NULL ) {
 
 			ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find static java method %s", "purchaseProduct" );
-    	} else {
+
+    	}
+    	else {
 
 			env->CallStaticVoidMethod ( billing, purchaseProduct, ( jstring )jproductId, ( jstring )jserviceId, ( jstring )jsecret, ( jstring )jdisplayName );
 
@@ -635,17 +682,19 @@ int MOAIBillingAndroid::_requestProductsSync ( lua_State* L ) {
 	// get type
 	int type = lua_tointeger ( state, 2 );
 
-	jclass billing = env->FindClass ( "com/ziplinegames/moai/MoaiGoogleBilling" );
+	jclass billing = env->FindClass ( "com/moaisdk/core/MoaiGoogleBilling" );
     if ( billing == NULL ) {
 
 		ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiGoogleBilling" );
-    } else {
+    }
+    else {
 
     	jmethodID requestProductsSync = env->GetStaticMethodID ( billing, "requestProductsSync", "([Ljava/lang/String;I)Ljava/lang/String;" );
     	if ( requestProductsSync == NULL ) {
 
 			ZLLogF ( ZLLog::CONSOLE, "MOAIBillingAndroid: Unable to find static java method %s", "requestProductsSync" );
-    	} else {
+    	}
+    	else {
 
 			MOAIJString jresult = ( jstring )env->CallStaticObjectMethod ( billing, requestProductsSync, jskus, type );
 
@@ -666,7 +715,7 @@ int MOAIBillingAndroid::_requestProductsSync ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAIBillingAndroid::MOAIBillingAndroid () :
-	mBillingProvider ( "com/ziplinegames/moai/MoaiGoogleBilling" ) {
+	mBillingProvider ( "com/moaisdk/core/MoaiGoogleBilling" ) {
 
 	RTTI_SINGLE ( MOAILuaObject )
 }

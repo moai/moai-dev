@@ -30,7 +30,23 @@
 	#endif
 
 	#ifndef AKU_WITH_HTTP_SERVER
-		#define AKU_WITH_HTTP_SERVER 1
+		#define AKU_WITH_HTTP_SERVER 0
+	#endif
+
+	#ifndef AKU_WITH_IMAGE_JPG
+		#define AKU_WITH_IMAGE_JPG 1
+	#endif
+
+	#ifndef AKU_WITH_IMAGE_PNG
+		#define AKU_WITH_IMAGE_PNG 1
+	#endif
+
+	#ifndef AKU_WITH_IMAGE_PVR
+		#define AKU_WITH_IMAGE_PVR 1
+	#endif
+
+	#ifndef AKU_WITH_IMAGE_WEBP
+		#define AKU_WITH_IMAGE_WEBP 1
 	#endif
 
 	#ifndef AKU_WITH_LUAEXT

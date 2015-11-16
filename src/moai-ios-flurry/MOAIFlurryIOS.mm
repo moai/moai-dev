@@ -11,14 +11,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int	MOAIFlurryIOS::_beginEvent ( lua_State* L ) {
 	MOAIFlurryIOS::LogEvent ( L, 1, true );
 	return 0;
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int	MOAIFlurryIOS::_endEvent ( lua_State* L ) {
 	MOAILuaState state ( L );
 
@@ -34,7 +34,7 @@ int	MOAIFlurryIOS::_endEvent ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int	MOAIFlurryIOS::_getAgentVersion ( lua_State* L ) {
 	MOAILuaState state ( L );
 	NSString* agentVersion = [ Flurry getFlurryAgentVersion ];
@@ -43,14 +43,14 @@ int	MOAIFlurryIOS::_getAgentVersion ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int	MOAIFlurryIOS::_logEvent ( lua_State* L ) {
 	MOAIFlurryIOS::LogEvent ( L, 1, false );
 	return 0;
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int	MOAIFlurryIOS::_setAge ( lua_State* L ) {
 	MOAILuaState state ( L );
 	int age = state.GetValue < int >( 1, 0 );
@@ -59,7 +59,7 @@ int	MOAIFlurryIOS::_setAge ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int	MOAIFlurryIOS::_setAppVersion ( lua_State* L ) {
 	MOAILuaState state ( L );
 	cc8* version = state.GetValue < cc8* >( 1, "" );
@@ -68,7 +68,7 @@ int	MOAIFlurryIOS::_setAppVersion ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int	MOAIFlurryIOS::_setDebugLogEnabled ( lua_State* L ) {
 	MOAILuaState state ( L );
 	bool enabled = state.GetValue < bool >( 1, true );
@@ -77,7 +77,7 @@ int	MOAIFlurryIOS::_setDebugLogEnabled ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int	MOAIFlurryIOS::_setEventLoggingEnabled ( lua_State* L ) {
 	MOAILuaState state ( L );
 	bool enabled = state.GetValue < bool >( 1, true );
@@ -86,7 +86,7 @@ int	MOAIFlurryIOS::_setEventLoggingEnabled ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int	MOAIFlurryIOS::_setGender ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
@@ -101,7 +101,7 @@ int	MOAIFlurryIOS::_setGender ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int	MOAIFlurryIOS::_setLocation ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
@@ -120,7 +120,7 @@ int	MOAIFlurryIOS::_setLocation ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int	MOAIFlurryIOS::_setSecureTransportEnabled ( lua_State* L ) {
 	MOAILuaState state ( L );
 	bool enabled = state.GetValue < bool >( 1, true );
@@ -129,7 +129,7 @@ int	MOAIFlurryIOS::_setSecureTransportEnabled ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int	MOAIFlurryIOS::_setSessionContinueSeconds ( lua_State* L ) {
 	MOAILuaState state ( L );
 	int seconds = state.GetValue < int >( 1, 0 );
@@ -138,7 +138,7 @@ int	MOAIFlurryIOS::_setSessionContinueSeconds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int	MOAIFlurryIOS::_setSessionReportsOnCloseEnabled ( lua_State* L ) {
 	MOAILuaState state ( L );
 	bool enabled = state.GetValue < bool >( 1, true );
@@ -147,7 +147,7 @@ int	MOAIFlurryIOS::_setSessionReportsOnCloseEnabled ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int	MOAIFlurryIOS::_setSessionReportsOnPauseEnabled ( lua_State* L ) {
 	MOAILuaState state ( L );
 	bool enabled = state.GetValue < bool >( 1, true );
@@ -156,7 +156,7 @@ int	MOAIFlurryIOS::_setSessionReportsOnPauseEnabled ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int	MOAIFlurryIOS::_setShowErrorInLogEnabled ( lua_State* L ) {
 	MOAILuaState state ( L );
 	bool enabled = state.GetValue < bool >( 1, true );
@@ -165,7 +165,7 @@ int	MOAIFlurryIOS::_setShowErrorInLogEnabled ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int	MOAIFlurryIOS::_setUserID ( lua_State* L ) {
 	MOAILuaState state ( L );
 	cc8* userID	= state.GetValue < cc8* >( 1, "" );
@@ -174,7 +174,7 @@ int	MOAIFlurryIOS::_setUserID ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: 3rdparty doxygen
 int	MOAIFlurryIOS::_startSession ( lua_State* L ) {
 	MOAILuaState state ( L );
 	cc8* apiKey	= state.GetValue < cc8* >( 1, "" );

@@ -67,6 +67,16 @@ int MOAIParticleEmitter::_setMagnitude ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIParticleEmitter::_setMask ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIParticleEmitter, "U" )
+	
+	self->mMaskProp.Set ( *self, state.GetLuaObject < MOAIProp >( 2, true ));
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setRadius
 	@text	Set the shape and radius of the emitter.
 	
@@ -124,6 +134,22 @@ int MOAIParticleEmitter::_setRect ( lua_State* L ) {
 	
 	self->SetRect ( rect );
 	self->SetShapeID ( RECT );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	setState
+	@text	Set initial state index for new particles.
+	
+	@in		MOAIParticleEmitter self
+	@in		number	state	index of MOAIParticleState in attached MOAIParticleSystem
+	@out	nil
+*/
+int MOAIParticleEmitter::_setState ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIParticleEmitter, "U" )
+	
+	self->mParticleState = state.GetValue < u32 >( 2, 1 ) - 1;
 	
 	return 0;
 }
@@ -220,6 +246,12 @@ bool MOAIParticleEmitter::IsDone () {
 }
 
 //----------------------------------------------------------------//
+bool MOAIParticleEmitter::MaskParticle ( const ZLVec3D& loc ) {
+
+	return this->mMaskProp ? this->mMaskProp->Inside ( loc, 0.0f ) : true;
+}
+
+//----------------------------------------------------------------//
 MOAIParticleEmitter::MOAIParticleEmitter () :
 	mShapeID ( POINT ),
 	mInnerRadius ( 0.0f ),
@@ -230,7 +262,8 @@ MOAIParticleEmitter::MOAIParticleEmitter () :
 	mMaxAngle ( 360.0f ),
 	mMinMagnitude ( 0.0f ),
 	mMaxMagnitude ( 1.0f ),
-	mEmission ( 0 ) {
+	mEmission ( 0 ),
+	mParticleState ( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITransform )
@@ -242,6 +275,7 @@ MOAIParticleEmitter::MOAIParticleEmitter () :
 MOAIParticleEmitter::~MOAIParticleEmitter () {
 
 	this->mSystem.Set ( *this, 0 );
+	this->mMaskProp.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -256,8 +290,12 @@ void MOAIParticleEmitter::OnDepNodeUpdate () {
 		for ( u32 i = 0; i < this->mEmission; ++i ) {
 			this->GetRandomParticle ( loc, vec );
 			this->mLocalToWorldMtx.Transform ( loc );
-			this->mLocalToWorldMtx.TransformVec ( vec );
-			this->mSystem->PushParticle ( loc.mX, loc.mY, vec.mX, vec.mY );
+			
+			if ( this->MaskParticle ( loc )) {
+			
+				this->mLocalToWorldMtx.TransformVec ( vec );
+				this->mSystem->PushParticle ( loc.mX, loc.mY, vec.mX, vec.mY, this->mParticleState );
+			}
 		}
 	}
 	
@@ -281,8 +319,10 @@ void MOAIParticleEmitter::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setAngle",			_setAngle },
 		{ "setEmission",		_setEmission },
 		{ "setMagnitude",		_setMagnitude },
+		{ "setMask",			_setMask },
 		{ "setRadius",			_setRadius },
 		{ "setRect",			_setRect },
+		{ "setState",			_setState },
 		{ "setSystem",			_setSystem },
 		{ "surge",				_surge },
 		{ NULL, NULL }

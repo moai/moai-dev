@@ -67,10 +67,6 @@ void AKUModulesAppFinalize () {
 		AKUFmodExAppFinalize ();
 	#endif
 
-	#if AKU_WITH_HARNESS
-		AKUHarnessAppFinalize ();
-	#endif
-
 	#if AKU_WITH_HTTP_CLIENT
 		AKUHttpClientAppFinalize ();
 	#endif
@@ -137,10 +133,6 @@ void AKUModulesAppInitialize () {
 
 	#if AKU_WITH_FMOD_EX
 		AKUFmodExAppInitialize ();
-	#endif
-
-	#if AKU_WITH_HARNESS
-		AKUHarnessAppInitialize ();
 	#endif
 
 	#if AKU_WITH_HTTP_CLIENT
@@ -251,6 +243,24 @@ void AKUModulesContextInitialize () {
 		AKUPluginsContextInitialize ();
 	#endif
 	
+	// have to do this *after* initializing Sim module
+	
+	#if AKU_WITH_IMAGE_JPG
+		AKUImageJpgContextInitialize ();
+	#endif
+
+	#if AKU_WITH_IMAGE_PNG
+		AKUImagePngContextInitialize ();
+	#endif
+
+	#if AKU_WITH_IMAGE_PVR
+		AKUImagePvrContextInitialize ();
+	#endif
+
+	#if AKU_WITH_IMAGE_WEBP
+		AKUImageWebPContextInitialize ();
+	#endif
+	
 	AKULoadFuncFromBuffer ( moai_lua, moai_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
 	AKUCallFunc ();
 	
@@ -299,10 +309,6 @@ void AKUModulesUpdate () {
 
 	#if AKU_WITH_FMOD_EX
 		AKUFmodExUpdate ();
-	#endif
-
-	#if AKU_WITH_HARNESS
-		AKUHarnessUpdate ()
 	#endif
 
 	#if AKU_WITH_SIM

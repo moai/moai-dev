@@ -50,6 +50,20 @@ int MOAIGfxDevice::_getFrameBuffer ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getMaxTextureSize
+	@text	Returns the maximum texture size supported by device
+ 
+	@out	number maxTextureSize
+*/
+int MOAIGfxDevice::_getMaxTextureSize ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	state.Push ( MOAIGfxDevice::Get ().mMaxTextureSize );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	getMaxTextureUnits
 	@text	Returns the total number of texture units available on the device.
 
@@ -81,7 +95,13 @@ int MOAIGfxDevice::_getViewSize ( lua_State* L  ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setDefaultTexture
+	@text	Specify a fallback texture to use when textures are
+			unavailable (pending load, missing or in error state).
+	
+	@in		MOAITexture texture
+	@out	MOAITexture texture		Texture that was passed in or created.
+*/
 int MOAIGfxDevice::_setDefaultTexture ( lua_State* L ) {
 
 	MOAILuaState state ( L );
@@ -317,6 +337,7 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "enablePipelineLogging",		_enablePipelineLogging },
 		{ "getFrameBuffer",				_getFrameBuffer },
 		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAIGfxDevice > },
+		{ "getMaxTextureSize",			_getMaxTextureSize },
 		{ "getMaxTextureUnits",			_getMaxTextureUnits },
 		{ "getViewSize",				_getViewSize },
 		{ "setDefaultTexture",			_setDefaultTexture },
@@ -354,6 +375,14 @@ void MOAIGfxDevice::ResetDrawCount () {
 void MOAIGfxDevice::ResetState () {
 
 	ZGL_COMMENT ( *this->mDrawingAPI, "GFX RESET STATE" );
+
+	this->OnGfxStateWillChange ();
+
+	for ( u32 i = 0; i < TOTAL_VTX_TRANSFORMS; ++i ) {
+		this->mVertexTransforms [ i ].Ident ();
+	}
+	this->mUVTransform.Ident ();
+	this->mCpuVertexTransformMtx.Ident ();
 	
 	// reset the active texture
 	this->mDrawingAPI->ActiveTexture ( 0 );

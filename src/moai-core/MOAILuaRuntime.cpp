@@ -178,7 +178,6 @@ typedef STLSet < struct Table* > TableSet;
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
 int MOAILuaRuntime::_clearRef ( lua_State* L ) {
 	MOAILuaState state ( L );
 
@@ -199,7 +198,6 @@ int MOAILuaRuntime::_debugCall ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
 int MOAILuaRuntime::_deref ( lua_State* L ) {
 	MOAILuaState state ( L );
 
@@ -253,7 +251,7 @@ int MOAILuaRuntime::_dumpStack ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua forceGC
+/**	@lua	forceGC
 	@text	Runs the garbage collector repeatedly until no more MOAIObjects
 			can be collected.
 
@@ -283,7 +281,6 @@ int MOAILuaRuntime::_getHistogram ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
 int MOAILuaRuntime::_getRef ( lua_State* L ) {
 	MOAILuaState state ( L );
 
@@ -406,7 +403,7 @@ int MOAILuaRuntime::_traceback ( lua_State *L ) {
 	if ( msg ) {
 		ZLLogF ( ZLLog::CONSOLE, "%s\n", msg );
 	}
-	state.LogStackTrace ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, NULL, 0 );
+	state.LogStackTrace ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, NULL, 1 );
 
 	return 0;
 }

@@ -49,7 +49,13 @@ int MOAISingleTexture::_release ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setDebugName
+	@text	Set a name for the texture to use during memory logging.
+	
+	@in		MOAISingleTexture self
+	@in		string debugName
+	@out	nil
+*/
 int MOAISingleTexture::_setDebugName ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISingleTexture, "U" )
 

@@ -16,6 +16,7 @@ class MOAITextStyleState;
 //================================================================//
 // MOAITextDesignParser
 //================================================================//
+// parser for producing a layout
 class MOAITextDesignParser {
 private:
 	
@@ -56,6 +57,7 @@ private:
 	ZLVec2D					mOffset;
 	MOAIGlyph*				mPrevGlyph;
 	bool					mMore;
+	bool					mOverrun;
 	
 	u32						mBaseLine;
 	
@@ -85,6 +87,7 @@ public:
 						MOAITextDesignParser		();
 	virtual				~MOAITextDesignParser		();
 	bool				More						();
+	bool				Overrun						();
 };
 
 #endif

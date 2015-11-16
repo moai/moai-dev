@@ -51,12 +51,12 @@ void ZLLog::LogV ( u32 level, FILE* file, cc8* format, va_list args ) {
 	
 		if ( sLogFunc ) {
 		
-			sLogFunc ( format, args, sLogFuncUserdata );
+			sLogFunc ( level, format, args, sLogFuncUserdata );
 		}
 		else {
 		
 			file = file ? file : ( sConsoleRedirect ? sConsoleRedirect : CONSOLE );
-		
+
 			if ( file ) {
 				zl_vfprintf (( FILE* )file, format, args );
 			}

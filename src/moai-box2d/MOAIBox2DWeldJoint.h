@@ -17,6 +17,10 @@ class MOAIBox2DWeldJoint :
 private:
 
 	//----------------------------------------------------------------//
+	static int		_getDampingRatio		( lua_State* L );
+	static int		_getFrequency			( lua_State* L );
+	static int		_setDampingRatio		( lua_State* L );
+	static int		_setFrequency			( lua_State* L );
 
 public:
 	

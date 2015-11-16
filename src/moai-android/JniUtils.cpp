@@ -262,7 +262,6 @@ void JniUtils::ReleaseCString ( jstring jstr, cc8* cstr ) {
 bool JniUtils::SetClass ( cc8* className ) {
 	
 	ZLLogF ( ZLLog::CONSOLE, "MOAI JNI: set class %s", className );
-	
 	this->mClass = ( jclass )this->Env()->NewGlobalRef ( this->GetClass ( className ));
 	return this->mClass != NULL;
 }
@@ -271,7 +270,6 @@ bool JniUtils::SetClass ( cc8* className ) {
 bool JniUtils::SetClassViaLoader ( cc8* className ) {
 	
 	ZLLogF ( ZLLog::CONSOLE, "MOAI JNI: set class via loader %s", className );
-	
 	this->mClass = this->GetClassViaLoader ( className );
 	return this->mClass != NULL;
 }

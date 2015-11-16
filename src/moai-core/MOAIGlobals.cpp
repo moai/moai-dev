@@ -161,7 +161,7 @@ MOAIGlobals* MOAIGlobalsMgr::Get () {
 //----------------------------------------------------------------//
 MOAIGlobals* MOAIGlobalsMgr::Set ( MOAIGlobals* globals ) {
 
-	ZLLog_DebugF ( ZLLog::CONSOLE, "MOAIGlobalsMgr: setting context %p\n", globals );
+//	ZLLog_DebugF ( ZLLog::CONSOLE, "MOAIGlobalsMgr: setting context %p\n", globals );
 
 	MOAIGlobals* prev = sInstance;
 	sInstance = globals;

@@ -34,11 +34,11 @@ int MOAIUntzSampleBuffer::_load ( lua_State* L ) {
  @text	Returns attributes of sample buffer.
  
  @in		MOAIUntzSampleBuffer self
- @out		number bits per sample 
- @out		number num of channels (mono=1, stereo=2)
- @out		number num of total frames contained
- @out		number sample rate (44100, 22050, etc )
- @out		number seconds of sound length 
+ @out		number bps					bits per sample 
+ @out		number channels				number of channels (mono=1, stereo=2)
+ @out		number frames				num of total frames contained
+ @out		number sampleRate			sample rate (44100, 22050, etc.)
+ @out		number length				sound length in seconds
  */
 int MOAIUntzSampleBuffer::_getInfo( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIUntzSampleBuffer, "U" );
@@ -55,7 +55,7 @@ int MOAIUntzSampleBuffer::_getInfo( lua_State* L ) {
  @text	Retrieve every sample data in buffer
  
  @in		MOAIUntzSampleBuffer self
- @out		table array of sample data number ( -1 ~ 1 as sample level)
+ @out		table data					array of sample data number ( -1 ~ 1 as sample level)
  */
 int MOAIUntzSampleBuffer::_getData( lua_State* L ) {
 	MOAI_LUA_SETUP( MOAIUntzSampleBuffer, "U" );
@@ -71,8 +71,8 @@ int MOAIUntzSampleBuffer::_getData( lua_State* L ) {
  @text	Write sample data into buffer
  
  @in		MOAIUntzSampleBuffer self
- @in		table array of sample data number ( -1 ~ 1 as sample level )
- @in		number index of sample buffer start copying from (1 for the first sample)
+ @in		table data					array of sample data number ( -1 ~ 1 as sample level )
+ @in		number startIndex			index of sample buffer to start copying from (1 for the first sample)
  @out		nil
  */
 
@@ -121,9 +121,9 @@ int MOAIUntzSampleBuffer::_setRawData( lua_State* L ) {
  @text	Allocate internal memory for sample buffer
  
  @in		MOAIUntzSampleBuffer self
- @in		number num of channels (mono=1, stereo=2)
- @in		number num of total frames of sample
- @in		number sample rate in Hz (44100 or else)
+ @in		number channels				number of channels (mono=1, stereo=2)
+ @in		number frames				number of total frames of sample
+ @in		number sampleRate			sample rate in Hz (44100 or else)
  @out		nil
  */
 int MOAIUntzSampleBuffer::_prepareBuffer( lua_State* L ) {

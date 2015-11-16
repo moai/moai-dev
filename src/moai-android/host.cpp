@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#import "host.h"
-#import "headers.h"
+#include "host.h"
+#include "headers.h"
 
 //================================================================//
 // aku-util

@@ -215,6 +215,12 @@ void AKUSetFunc_SetSimStep ( AKUSetSimStepFunc func ) {
 }
 
 //----------------------------------------------------------------//
+void AKUSetInputAutoTimestamp ( bool autotimestamp ) {
+
+	MOAIInputMgr::Get ().SetAutotimestamp ( autotimestamp );
+}
+
+//----------------------------------------------------------------//
 void AKUSetInputConfigurationName ( char const* name ) {
 
 	MOAIInputMgr::Get ().SetConfigurationName ( name );

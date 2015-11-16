@@ -24,12 +24,8 @@ int MOAITransformBase::_getWorldDir ( lua_State* L ) {
 
 	self->ForceUpdate ();
 
-	ZLVec3D direction = self->mLocalToWorldMtx.GetHeading ();
-
-	lua_pushnumber ( state, direction.mX );
-	lua_pushnumber ( state, direction.mY );
-	lua_pushnumber ( state, direction.mZ );
-
+	state.Push ( self->mLocalToWorldMtx.GetHeading ());
+	
 	return 3;
 }
 
@@ -46,12 +42,8 @@ int MOAITransformBase::_getWorldLoc ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
 
 	self->ForceUpdate ();
-
-	ZLVec3D loc = self->mLocalToWorldMtx.GetTranslation ();
-
-	lua_pushnumber ( state, loc.mX );
-	lua_pushnumber ( state, loc.mY );
-	lua_pushnumber ( state, loc.mZ );
+	
+	state.Push ( self->mLocalToWorldMtx.GetTranslation ());
 
 	return 3;
 }
@@ -68,9 +60,7 @@ int MOAITransformBase::_getWorldRot ( lua_State* L ) {
 
 	self->ForceUpdate ();
 
-	float rot = self->mLocalToWorldMtx.GetRot ();
-	
-	lua_pushnumber ( state, rot );
+	state.Push ( self->mLocalToWorldMtx.GetRot ());
 
 	return 1;
 }
@@ -89,13 +79,138 @@ int MOAITransformBase::_getWorldScl ( lua_State* L ) {
 
 	self->ForceUpdate ();
 
-	ZLVec3D scale = self->mLocalToWorldMtx.GetStretch ();
-	
-	lua_pushnumber ( state, scale.mX );
-	lua_pushnumber ( state, scale.mY );
-	lua_pushnumber ( state, scale.mZ );
+	state.Push ( self->mLocalToWorldMtx.GetStretch ());
 
 	return 3;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	getWorldXAxis
+	@text	Return the X axis of the coordinate system (includes scale);
+	
+	@in		MOAITransform self
+	@out	number x
+	@out	number y
+	@out	number z
+*/
+int	MOAITransformBase::_getWorldXAxis ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
+
+	self->ForceUpdate ();
+
+	state.Push ( self->mLocalToWorldMtx.GetXAxis ());
+
+	return 3;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	getWorldXAxis
+	@text	Return the Y axis of the coordinate system (includes scale);
+	
+	@in		MOAITransform self
+	@out	number x
+	@out	number y
+	@out	number z
+*/
+int	MOAITransformBase::_getWorldYAxis ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
+
+	self->ForceUpdate ();
+
+	state.Push ( self->mLocalToWorldMtx.GetYAxis ());
+
+	return 3;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	getWorldXAxis
+	@text	Return the Z axis of the coordinate system (includes scale);
+	
+	@in		MOAITransform self
+	@out	number x
+	@out	number y
+	@out	number z
+*/
+int	MOAITransformBase::_getWorldZAxis ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
+
+	self->ForceUpdate ();
+
+	state.Push ( self->mLocalToWorldMtx.GetZAxis ());
+
+	return 3;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	getWorldXNormal
+	@text	Return the X axis of the coordinate system (normalized);
+	
+	@in		MOAITransform self
+	@out	number x
+	@out	number y
+	@out	number z
+	@opt	number length
+*/
+int	MOAITransformBase::_getWorldXNormal ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
+
+	self->ForceUpdate ();
+
+	ZLVec3D axis = self->mLocalToWorldMtx.GetXAxis ();
+	float length = axis.NormSafe ();
+
+	state.Push ( axis );
+	lua_pushnumber ( state, length );
+
+	return 4;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	getWorldYNormal
+	@text	Return the Y axis of the coordinate system (normalized);
+	
+	@in		MOAITransform self
+	@out	number x
+	@out	number y
+	@out	number z
+	@opt	number length
+*/
+int	MOAITransformBase::_getWorldYNormal ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
+
+	self->ForceUpdate ();
+
+	ZLVec3D axis = self->mLocalToWorldMtx.GetYAxis ();
+	float length = axis.NormSafe ();
+
+	state.Push ( axis );
+	lua_pushnumber ( state, length );
+
+	return 4;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	getWorldZNormal
+	@text	Return the Z axis of the coordinate system (normalized);
+	
+	@in		MOAITransform self
+	@out	number x
+	@out	number y
+	@out	number z
+	@opt	number length
+*/
+int	MOAITransformBase::_getWorldZNormal ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
+
+	self->ForceUpdate ();
+
+	ZLVec3D axis = self->mLocalToWorldMtx.GetZAxis ();
+	float length = axis.NormSafe ();
+
+	state.Push ( axis );
+	lua_pushnumber ( state, length );
+
+	return 4;
 }
 
 //----------------------------------------------------------------//
@@ -123,9 +238,7 @@ int MOAITransformBase::_modelToWorld ( lua_State* L ) {
 	ZLAffine3D modelToWorld = self->GetLocalToWorldMtx ();
 	modelToWorld.Transform ( loc );
 
-	lua_pushnumber ( state, loc.mX );
-	lua_pushnumber ( state, loc.mY );
-	lua_pushnumber ( state, loc.mZ );
+	state.Push ( loc );
 
 	return 3;
 }
@@ -175,9 +288,7 @@ int MOAITransformBase::_worldToModel ( lua_State* L ) {
 	ZLAffine3D worldToModel = self->GetWorldToLocalMtx ();
 	worldToModel.Transform ( loc );
 
-	lua_pushnumber ( state, loc.mX );
-	lua_pushnumber ( state, loc.mY );
-	lua_pushnumber ( state, loc.mZ );
+	state.Push ( loc );
 
 	return 3;
 }
@@ -344,6 +455,15 @@ void MOAITransformBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getWorldLoc",		_getWorldLoc },
 		{ "getWorldRot",		_getWorldRot },
 		{ "getWorldScl",		_getWorldScl },
+		
+		{ "getWorldXAxis",		_getWorldXAxis },
+		{ "getWorldYAxis",		_getWorldYAxis },
+		{ "getWorldZAxis",		_getWorldZAxis },
+		
+		{ "getWorldXNormal",	_getWorldXNormal },
+		{ "getWorldYNormal",	_getWorldYNormal },
+		{ "getWorldZNormal",	_getWorldZNormal },
+		
 		{ "modelToWorld",		_modelToWorld },
 		{ "setParent",			_setParent },
 		{ "worldToModel",		_worldToModel },

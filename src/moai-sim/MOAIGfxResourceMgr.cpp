@@ -12,7 +12,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	purgeResources
+	@text	Purges all resources older that a given age (in render cycles).
+			If age is 0 then all resources are purged.
+ 
+	@opt	number age		Default value is 0.
+	@out	nil
+*/
 int MOAIGfxResourceMgr::_purgeResources ( lua_State* L ) {
 	MOAILuaState state ( L );
 
@@ -28,7 +34,11 @@ int MOAIGfxResourceMgr::_purgeResources ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	renewResources
+	@text	Renews all resources.
+ 
+	@out	nil
+*/
 int MOAIGfxResourceMgr::_renewResources ( lua_State* L ) {
 	MOAILuaState state ( L );
 

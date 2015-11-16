@@ -11,14 +11,13 @@ class MOAITextureBase;
 //================================================================//
 // MOAIMaterial
 //================================================================//
-// TODO: doxygen
 class MOAIMaterial {
 private:
 	
 	friend class MOAIMaterialBatch;
 	
 	MOAIShader*			mShader;
-	MOAITextureBase*		mTexture;
+	MOAITextureBase*	mTexture;
 	MOAIImage*			mHitMask;
 
 	u32		mHitColorScalar;
@@ -38,7 +37,14 @@ public:
 //================================================================//
 // MOAIMaterialBatch
 //================================================================//
-// TODO: doxygen
+/**	@lua	MOAIMaterialBatch
+	@text	This is an indexed set of materials. A material is a shader, a texture
+			and an optional hit mask. A material batch may be attached to a prop
+			or a deck to change the materials used when rendering deck indices.
+			Some decks also allow multiple material batch indicies to be specified
+			per deck item. This is useful when rendering compound objects that
+			need elements form multiple shaders and textures.
+*/
 class MOAIMaterialBatch :
 	public virtual MOAILuaObject {
 private:

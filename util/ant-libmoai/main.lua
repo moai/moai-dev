@@ -243,7 +243,7 @@ local importJava = function ( path, namespace )
 
 	if JAVA_DIR then
 
-		-- the entre foler tree names 'src'
+		-- the entire folder tree named 'src'
 		local srcPath = path .. 'src/'
 		if MOAIFileSystem.checkPathExists ( srcPath ) then
 			MOAIFileSystem.copy (  srcPath, JAVA_DIR )
@@ -300,7 +300,8 @@ makeJniProject = function ()
 
 	for name, filename in pairs ( CONFIGS ) do
 		local configPath = util.getFolderFromPath ( filename )
-		GLOBALS [ name ] = MOAIFileSystem.getRelativePath ( configPath, JNI_DIR )
+		--GLOBALS [ name ] = MOAIFileSystem.getRelativePath ( configPath, JNI_DIR )
+		GLOBALS [ name ] = string.format ( '$(abspath %s)', MOAIFileSystem.getRelativePath ( configPath, JNI_DIR ))
 	end
 
 	MOAIFileSystem.copy ( 'README.txt', JNI_DIR .. 'README.txt' )

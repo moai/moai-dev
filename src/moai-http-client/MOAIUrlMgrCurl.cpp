@@ -174,7 +174,7 @@ void MOAIUrlMgrCurl::ProcessHandle () {
 //----------------------------------------------------------------//
 bool MOAIUrlMgrCurl::Process () {
 	
-	StopIfDone();
+	StopIfDone ();
 	
 	if ( this->mHandleMap.empty ()) return false;
 	
@@ -188,8 +188,9 @@ bool MOAIUrlMgrCurl::Process () {
 		msg = curl_multi_info_read ( multiHandle, &msgsInQueue );
 	
 		if ( msg && ( msg->msg == CURLMSG_DONE )) {
-		
-			MOAIAutoLock autolock( this->mLock );
+			
+//			MOAIAutoLock autolock( this->mLock );
+			this->mLock.Lock ();
 			
 			CURL* handle = msg->easy_handle;
 			if ( handleMap.contains ( handle )) {
@@ -199,8 +200,14 @@ bool MOAIUrlMgrCurl::Process () {
 				curl_multi_remove_handle ( this->mMultiHandle, handle );
 				handleMap.erase ( handle );
 				
+				// lock only the STLMap?
+				this->mLock.Unlock ();
+				
 				task->CurlFinish ();
 				task->LatchRelease ();
+			}
+			else {
+				this->mLock.Unlock ();
 			}
 		}
 	}

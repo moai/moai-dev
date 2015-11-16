@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "63C4897045D0EF88507AD257AEF500CB53038CE0",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "63C4897045D0EF88507AD257AEF500CB53038CE0" : 0,
+    "DE072679D3B61AA77D9DD9650241084BC6FA3713" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "1CE8BDE3-4B91-46EF-B29A-33104254C877",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "63C4897045D0EF88507AD257AEF500CB53038CE0" : "moai-dev\/",
+    "DE072679D3B61AA77D9DD9650241084BC6FA3713" : "..\/.."
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "moai-ios-static",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "xcode\/ios-static\/moai-ios-static.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:fallguyconsulting\/moai-dev.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "63C4897045D0EF88507AD257AEF500CB53038CE0"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "bitbucket.org:pointinside\/ios-pimapslib.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DE072679D3B61AA77D9DD9650241084BC6FA3713"
+    }
+  ]
+}

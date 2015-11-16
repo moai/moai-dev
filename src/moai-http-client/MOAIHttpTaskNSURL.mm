@@ -40,6 +40,12 @@ u32 MOAIHttpTaskNSURL::_writeData ( char* data, u32 n, u32 l, void* s ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIHttpTaskNSURL::Cancel () {
+	
+	this->mCanceled = true;
+}
+
+//----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::Clear () {
 	
 	this->mUrl.clear ();
@@ -100,6 +106,7 @@ MOAIHttpTaskNSURL::MOAIHttpTaskNSURL () :
 	mOpt ( 0 ),
 	mDefaultTimeout ( 10 ),
 	mDataReceived ( 0 ),
+	mCanceled ( false ),
 	mStream ( 0 ),
 	mRequest ( 0 ) {
 	
@@ -248,6 +255,18 @@ void MOAIHttpTaskNSURL::SetCookieSrc	( const char *file ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIHttpTaskNSURL::SetSSLOptions ( bool verifyPeer, bool verifyHost, cc8* caBundlePath ) {
+	
+	UNUSED(verifyPeer);
+	UNUSED(verifyHost);
+	UNUSED(caBundlePath);
+
+	// TODO: Handle both self-signed and ca-signed certificates. 
+	// Looks like [ MOAIHttpTaskNSURLDelegate didReceiveAuthenticationChallenge: ] was needed to allow for
+	// self-signed certificates, but does it still do full validation for CA certificates? 
+}
+
+//----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::SetUrl ( cc8* url ) {
 	
 	this->mUrl = url;
@@ -317,6 +336,9 @@ void MOAIHttpTaskNSURL::SetVerbose ( bool verbose ) {
 		UNUSED ( myConnection );
 	
 		self->mTask->DidReceiveData ( myData.bytes, myData.length );
+		if ( self->mTask->GetCanceled ()) {
+			[ myConnection cancel ];
+		}
 	}
 
 	//----------------------------------------------------------------//

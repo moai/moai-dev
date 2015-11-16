@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "Setting up MoaiUtil path..."
+echo "Setting up pito path..."
 
 UTIL_PATH=$(dirname "${BASH_SOURCE[0]}")
 UTIL_PATH=$(cd $UTIL_PATH/../util; pwd)
@@ -14,7 +14,7 @@ cd cmake-3.1.3-Linux-x86_64/bin
 export PATH=$(pwd):$PATH
 popd
 
-
+set -e
 pushd `dirname $0`
 bash build-linux.sh
 echo Linux Build Successful

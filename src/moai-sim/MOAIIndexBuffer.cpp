@@ -18,9 +18,30 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	copyFromStream
+	@text	Copy the buffer contents from a stream. Optionally convert
+			index size in bytes between streams.
+			
+			Warning: going from 4 bytes to 2 bytes is supported, but use
+			at your own risk; truncations will not be reported.
+
+	@overload
+
+		@in		MOAIIndexBuffer self
+		@in		MOAIStream stream
+		@opt	number sourceSizeInBytes		Default value is 4.
+		@out	nil
+
+	@overload
+
+		@in		MOAIIndexBuffer self
+		@in		MOAIIndexBuffer indexBuffer		Source size in bytes taken from source buffer.
+		@out	nil
+*/
 int MOAIIndexBuffer::_copyFromStream ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIIndexBuffer, "U" )
+	
+	// TODO: report trunctations!
 	
 	MOAIIndexBuffer* idxBuffer = state.GetLuaObject < MOAIIndexBuffer >( 2, true );
 	if ( idxBuffer ) {
@@ -39,7 +60,13 @@ int MOAIIndexBuffer::_copyFromStream ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	countElements
+	@text	Calculates the number of elements given a prim type.
+ 
+	@in		MOAIIndexBuffer self
+	@opt	number primType				Default value is GL_TRIANGLES.
+	@out	number totalElements
+*/
 int MOAIIndexBuffer::_countElements ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIIndexBuffer, "U" )
 
@@ -48,7 +75,7 @@ int MOAIIndexBuffer::_countElements ( lua_State* L ) {
 	// prim type, index size in bytes
 	if ( state.CheckParams ( 2, "N", false )) {
 	
-		u32  primType			= state.GetValue < u32 >( 2, ZGL_PRIM_TRIANGLES );
+		u32  primType = state.GetValue < u32 >( 2, ZGL_PRIM_TRIANGLES );
 		
 		totalElements = self->GetSize () / self->mIndexSize;
 		
@@ -65,7 +92,12 @@ int MOAIIndexBuffer::_countElements ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	printIndices
+	@text	Print the indices (for debugging purposes).
+ 
+	@in		MOAIIndexBuffer self
+	@out	nil
+*/
 int MOAIIndexBuffer::_printIndices ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIIndexBuffer, "U" )
 	
@@ -74,12 +106,20 @@ int MOAIIndexBuffer::_printIndices ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setIndexSize
+	@text	Sets the index size in bytes.
+	
+			NOTE: The current implementation does not convert between sizes;
+			going from 4 to 2 will result in twice as many indices.
+ 
+	@in		MOAIIndexBuffer self
+	@out	nil
+*/
 int MOAIIndexBuffer::_setIndexSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIIndexBuffer, "U" )
 	
 	u32 indexSize = state.GetValue < u32 >( 2, 4 );
-	self->SetIndexSize ( indexSize );
+	self->SetIndexSize ( indexSize ); // TODO: convert index size
 	return 0;
 }
 

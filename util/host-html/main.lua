@@ -113,9 +113,11 @@ end
 
 configureHost = function()
   local output = config.OUTPUT_DIR
-  print("\n\nApplying config from "..configFile..":")
-  for k,v in pairs(hostconfig) do
-    print (k..": ", v)
+  if configFile then
+    print("\n\nApplying config from "..configFile..":")
+    for k,v in pairs(hostconfig) do
+      print (k..": ", v)
+    end
   end
   
   local oldworkingdir = MOAIFileSystem.getWorkingDirectory()

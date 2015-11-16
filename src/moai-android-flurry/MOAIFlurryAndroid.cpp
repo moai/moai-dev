@@ -87,7 +87,7 @@ MOAIFlurryAndroid::MOAIFlurryAndroid () {
 
 	RTTI_SINGLE ( MOAILuaObject )
 	
-	this->SetClass ( "com/ziplinegames/moai/MoaiFlurry" );
+	this->SetClass ( "com/moaisdk/flurry/MoaiFlurry" );
 }
 
 //----------------------------------------------------------------//

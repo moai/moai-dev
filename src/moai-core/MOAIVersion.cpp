@@ -3,9 +3,8 @@
 
 #include "pch.h"
 #include <moai_version_author.h>
-#include <moai_version_major.h>
-#include <moai_version_minor.h>
 #include <moai-core/MOAIVersion.h>
+#include <moai-core/moai_version.h>
 
 //================================================================//
 // MOAIVersion
@@ -28,5 +27,10 @@ STLString MOAIVersion::GetVersionString () {
 	if ( strlen ( MOAI_SDK_VERSION_AUTHOR ) > 0 ) {
 		version.write ( " (ad hoc build by %s)", MOAI_SDK_VERSION_AUTHOR );
 	}
+	
+	#ifdef MOAI_SDK_COMMIT
+		version.write ( " %s", MOAI_SDK_COMMIT );
+	#endif
+	
 	return version;
 }

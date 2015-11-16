@@ -8,6 +8,7 @@
 #include <moai-sim/MOAITransform.h>
 
 class MOAIParticleSystem;
+class MOAIProp;
 
 //================================================================//
 // MOAIParticleEmitter
@@ -36,15 +37,20 @@ protected:
 	float	mMaxMagnitude;
 
 	u32		mEmission;
+	u32		mParticleState;
 
 	MOAILuaSharedPtr < MOAIParticleSystem > mSystem;
+	
+	MOAILuaSharedPtr < MOAIProp > mMaskProp;
 
 	//----------------------------------------------------------------//
 	static int		_setAngle				( lua_State* L );
 	static int		_setEmission			( lua_State* L );
 	static int		_setMagnitude			( lua_State* L );
+	static int		_setMask				( lua_State* L );
 	static int		_setRadius				( lua_State* L );
 	static int		_setRect				( lua_State* L );
+	static int		_setState				( lua_State* L );
 	static int		_setSystem				( lua_State* L );
 	static int		_surge					( lua_State* L );
 	
@@ -52,6 +58,7 @@ protected:
 	u32				GetRandomEmission		();
 	void			GetRandomParticle		( ZLVec3D& loc, ZLVec3D& vec ); // in local space
 	ZLVec3D			GetRandomVec			( float minAngle, float maxAngle, float min, float max );
+	bool			MaskParticle			( const ZLVec3D& loc );
 
 public:
 	

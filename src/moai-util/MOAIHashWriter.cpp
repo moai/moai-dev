@@ -9,7 +9,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getChecksum
+	@text	Return the checksum (if supported).
+	
+	@in		MOAIHashWriter self
+	@out	number checksum
+*/
 int MOAIHashWriter::_getChecksum ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHashWriter, "U" );
 
@@ -24,7 +29,12 @@ int MOAIHashWriter::_getChecksum ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getHash
+	@text	Return the hash (if supported).
+	
+	@in		MOAIHashWriter self
+	@out	string hash
+*/
 int MOAIHashWriter::_getHash ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHashWriter, "U" );
 
@@ -39,7 +49,12 @@ int MOAIHashWriter::_getHash ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getHashBase64
+	@text	Return the hash, converted to base64.
+	
+	@in		MOAIHashWriter self
+	@out	string hash64
+*/
 int MOAIHashWriter::_getHashBase64 ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHashWriter, "U" );
 
@@ -55,7 +70,12 @@ int MOAIHashWriter::_getHashBase64 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getHashBase64
+	@text	Return the hash, converted to hexadecimal.
+	
+	@in		MOAIHashWriter self
+	@out	string hashHex
+*/
 int MOAIHashWriter::_getHashHex ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHashWriter, "U" );
 
@@ -149,7 +169,13 @@ int MOAIHashWriter::_openWhirlpool ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setHMACKey
+	@text	Set the HMAC key (if supported).
+	
+	@in		MOAIHashWriter self
+	@in		string hmac
+	@out	nil
+*/
 int MOAIHashWriter::_setHMACKey ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHashWriter, "US" );
 	

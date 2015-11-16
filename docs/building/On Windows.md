@@ -13,7 +13,7 @@ Edit the bin\env-win.bat file and change the CMAKE_PATH to point to your cmake i
 
 From the SDK folder, run `bin\env-win.bat` to set the paths
 
-From the SDK folder, run `bin\build-windows.bat vs2013`. This will create a `lib\windows\vs2013\Distribute` folder inside your SDK folder which contains the includes and the libs needed to use libmoai in a custom host. It also includes a bin folder with the compiled bundled SDL host. This can be used to run any of the samples. This also adds moai.exe to the SDK_PATH/util folder in order for moaiutil scripts to run.
+From the SDK folder, run `bin\build-windows.bat vs2013`. This will create a `lib\windows\vs2013\Distribute` folder inside your SDK folder which contains the includes and the libs needed to use libmoai in a custom host. It also includes a bin folder with the compiled bundled SDL host. This can be used to run any of the samples. This also adds moai.exe to the SDK_PATH/util folder in order for pito scripts to run.
 
 ## Building Android Lib (using cmake)
 
@@ -50,11 +50,11 @@ From the SDK folder, run `bin\build-html.bat`. This will create the `lib\html\mo
 
 A Moai host is a project that links against the moai libraries. There is usually one host per project and setting up a host may involve pointing it to your lua source, editing the author and product names, changing the icon, and linking against different host modules. 
 
-To generate a host for your lua project, you use `moaiutil.bat` found in the util folder. `moaiutil.bat` requires a recent copy of moai.exe either in the util path or on your system path.
+To generate a host for your lua project, you use `pito.bat` found in the util folder. `pito.bat` requires a recent copy of moai.exe either in the util path or on your system path.
 
 Hosts will be generated under the `SDK_ROOT\hosts` folder by default but this can be changed by passing `-o [output dir]` .
 
-Hosts will also take a copy of the compiled libs they need from `SDK_ROOT\lib\[platform]` folder. The lib source can be changed with `-l [lib dir]`. Instead of a copy, a symlink to the lib can be created instead with `-s`. This only works if the moaiutil script is run in an administrator cmd window. This is useful if you are updating your libs and want all of your projects to get the update (instead of manually copying the libs to each project after building).
+Hosts will also take a copy of the compiled libs they need from `SDK_ROOT\lib\[platform]` folder. The lib source can be changed with `-l [lib dir]`. Instead of a copy, a symlink to the lib can be created instead with `-s`. This only works if the pito script is run in an administrator cmd window. This is useful if you are updating your libs and want all of your projects to get the update (instead of manually copying the libs to each project after building).
 
 Each host includes a `readme.md` file in the root of the host output that describes what steps are needed to customize and build the host.
 
@@ -62,21 +62,21 @@ Each host includes a `readme.md` file in the root of the host output that descri
 
 Generates a vs2013 solution that contains the sdl host sources and is preconfigured with a resource file for versioning and branding and an application and taskbar icon.
 
-`moaiutil host-windows-vs2013`  generates a host under `SDK_ROOT\hosts\windows\vs2013`
+`pito host-windows-vs2013`  generates a host under `SDK_ROOT\hosts\windows\vs2013`
 
-`moaiutil host-windows-vs2013 -s -l c:\moai\1.5-stable\lib\windows\vs2013 -o c:\projects\mygame\hosts\vs2013` generates a host using a symlink to the libs in `c:\moai\1.5-stable\lib\windows\vs2013` and places it at `c:\projects\mygame\hosts\vs2013`
+`pito host-windows-vs2013 -s -l c:\moai\1.5-stable\lib\windows\vs2013 -o c:\projects\mygame\hosts\vs2013` generates a host using a symlink to the libs in `c:\moai\1.5-stable\lib\windows\vs2013` and places it at `c:\projects\mygame\hosts\vs2013`
 
 ### Android Studio Host
 
 Generates a android studio (Google's new default IDE for android projects) compatible gradle project.
 
-`moaiutil host-android-gradle` generates a host under `SDK_ROOT\hosts\android-studio`
+`pito host-android-gradle` generates a host under `SDK_ROOT\hosts\android-studio`
 
 ### HTML/JS Host
 
 Generates a html site template containing a moai player that will play your moai lua in the browser.
 
-`moaiutil host-html` generates a host under `SDK_ROOT\hosts\html`
+`pito host-html` generates a host under `SDK_ROOT\hosts\html`
 
 
 # Building all Windows compatible Libs and Hosts

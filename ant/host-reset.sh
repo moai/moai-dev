@@ -1,1 +1,1 @@
-../util/moaiutil ant-host
+../util/pito ant-host

@@ -796,6 +796,37 @@ int MOAIBox2DWorld::_getLinearSleepTolerance ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/** @lua    getPerformace
+	@text   Returns profiler numbers from box2d
+	
+	@in		MOAIBox2DWorld self
+	@out	number	step
+	@out	number	collide
+	@out	number	solve
+	@out	number	solveInit
+	@out	number	solveVelocity
+	@out	number	solvePosition
+	@out	number	broadphase
+	@out	number	solveTOI
+*/
+int MOAIBox2DWorld::_getPerformance ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
+
+	b2Profile p = self->mWorld->GetProfile ();
+
+	state.Push ( p.step );
+	state.Push ( p.collide );
+	state.Push ( p.solve );
+	state.Push ( p.solveInit );
+	state.Push ( p.solveVelocity );
+	state.Push ( p.solvePosition );
+	state.Push ( p.broadphase );
+	state.Push ( p.solveTOI );
+
+	return 8;
+}
+
+//----------------------------------------------------------------//
 /**	@lua   getRayCast
 	@text   return RayCast 1st point hit
        
@@ -1102,7 +1133,7 @@ MOAIBox2DWorld::MOAIBox2DWorld () :
 	this->mArbiter.Set ( *this, new MOAIBox2DArbiter ( *this ));
 	
 	b2Vec2 gravity ( 0.0f, 0.0f );
-	this->mWorld = new b2World ( gravity);
+	this->mWorld = new b2World ( gravity );
 	this->mWorld->SetContactListener ( this->mArbiter );
 	this->mWorld->SetDestructionListener ( this );
 	this->mWorld->SetAllowSleeping ( true );

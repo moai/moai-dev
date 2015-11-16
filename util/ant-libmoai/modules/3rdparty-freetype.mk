@@ -4,52 +4,52 @@
 # http://getmoai.com
 #================================================================#
 
-	include $(CLEAR_VARS)
+include $(CLEAR_VARS)
 
-	LOCAL_MODULE 		:= freetype
-	LOCAL_ARM_MODE 		:= $(MY_ARM_MODE)
-	LOCAL_CFLAGS 		:= -DPIC -DFT2_BUILD_LIBRARY -DDARWIN_NO_CARBON
-	LOCAL_CFLAGS		+= -include $(MOAI_SDK_HOME)/src/zl-vfs/zl_replace.h
-	LOCAL_CFLAGS		+= -fvisibility=hidden
+LOCAL_MODULE 		:= freetype
+LOCAL_ARM_MODE 		:= $(MY_ARM_MODE)
+LOCAL_CFLAGS 		:= -DPIC -DFT2_BUILD_LIBRARY -DDARWIN_NO_CARBON
+LOCAL_CFLAGS		+= -include $(MOAI_SDK_HOME)/src/zl-vfs/zl_replace.h
+LOCAL_CFLAGS		+= -fvisibility=hidden
 
-	LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/autofit/autofit.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/bdf/bdf.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/cff/cff.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftbase.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftbitmap.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/cache/ftcache.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftfstype.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftgasp.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftglyph.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/gzip/ftgzip.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftinit.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/lzw/ftlzw.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftstroke.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftsystem.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/smooth/smooth.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftbbox.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftgxval.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftlcdfil.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftmm.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftotval.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftpatent.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftpfr.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftsynth.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/fttype1.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftwinfnt.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftxf86.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/pcf/pcf.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/pfr/pfr.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/psaux/psaux.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/pshinter/pshinter.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/psnames/psmodule.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/raster/raster.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/sfnt/sfnt.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/truetype/truetype.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/type1/type1.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/cid/type1cid.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/type42/type42.c
-	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/winfonts/winfnt.c
+LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/autofit/autofit.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/bdf/bdf.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/cff/cff.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftbase.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftbitmap.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/cache/ftcache.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftfstype.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftgasp.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftglyph.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/gzip/ftgzip.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftinit.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/lzw/ftlzw.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftstroke.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftsystem.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/smooth/smooth.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftbbox.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftgxval.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftlcdfil.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftmm.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftotval.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftpatent.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftpfr.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftsynth.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/fttype1.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftwinfnt.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/base/ftxf86.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/pcf/pcf.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/pfr/pfr.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/psaux/psaux.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/pshinter/pshinter.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/psnames/psmodule.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/raster/raster.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/sfnt/sfnt.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/truetype/truetype.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/type1/type1.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/cid/type1cid.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/type42/type42.c
+LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src/winfonts/winfnt.c
 
-	include $(BUILD_STATIC_LIBRARY)
+include $(BUILD_STATIC_LIBRARY)

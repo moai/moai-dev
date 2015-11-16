@@ -479,3 +479,4 @@ public:
 typedef ZLMetaMatrix3x3 < float > ZLMatrix3x3;
 
 #endif
+
