@@ -134,7 +134,7 @@ void MOAIGfxDeviceVertexWriter::FlushBufferedPrims () {
 				
 				this->UpdateShaderGlobals ();
 
-				this->mDrawingAPI->DrawElements ( this->mPrimType, count, ZGL_TYPE_UNSIGNED_INT, this->mIdxBuffer.GetBuffer (), 0 );
+				this->mDrawingAPI->DrawElements ( this->mPrimType, count, ZGL_TYPE_UNSIGNED_SHORT, this->mIdxBuffer.GetBuffer (), 0 );
 				this->mDrawCount++;
 			}
 		}
