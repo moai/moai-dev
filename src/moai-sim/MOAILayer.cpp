@@ -619,6 +619,10 @@ int MOAILayer::_wndToWorld ( lua_State* L ) {
 int MOAILayer::_wndToWorldRay ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UNN" )
 
+	if ( self->mCamera ) {
+		self->mCamera->ForceUpdate ();
+	}
+
 	ZLMatrix4x4 wndToWorld = self->GetWndToWorldMtx ();
 
 	ZLVec4D loc;
@@ -681,7 +685,7 @@ int MOAILayer::_wndToWorldRay ( lua_State* L ) {
 		if ( self->mCamera  && ( self->mCamera->GetType () == MOAICamera::CAMERA_TYPE_3D )) {
 			const ZLAffine3D& localToWorldMtx = self->mCamera->GetLocalToWorldMtx ();
 			ZLVec3D zAxis = localToWorldMtx.GetZAxis ();
-			ns = -( d / zAxis.Dot ( norm ));
+			ns = -( d * zAxis.Dot ( norm ));
 		}
 		else {
 			ns = d;
