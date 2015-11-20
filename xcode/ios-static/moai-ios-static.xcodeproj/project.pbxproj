@@ -168,7 +168,7 @@
 		CDFD7E1B1A08B16C00A94E6B /* aku_modules_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_util.h; path = "../../src/host-modules/aku_modules_util.h"; sourceTree = SOURCE_ROOT; };
 		CDFD7E1C1A08B16C00A94E6B /* aku_modules.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aku_modules.cpp; path = "../../src/host-modules/aku_modules.cpp"; sourceTree = SOURCE_ROOT; };
 		CDFD7E1D1A08B16C00A94E6B /* aku_modules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules.h; path = "../../src/host-modules/aku_modules.h"; sourceTree = SOURCE_ROOT; };
-		CDFD7E4C1A08BC2700A94E6B /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = "../../3rdparty/facebook-ios-sdk-3.14.1/FacebookSDK.framework"; sourceTree = "<group>"; };
+		CDFD7E4C1A08BC2700A94E6B /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = "../../3rdparty/facebook-ios-sdk-4.5.1/FBSDKCoreKit.framework"; path = "../../3rdparty/facebook-ios-sdk-4.5.1/FBSDKLoginKit.framework"; path = "../../3rdparty/facebook-ios-sdk-4.5.1/FBSDKShareKit.framework";sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
