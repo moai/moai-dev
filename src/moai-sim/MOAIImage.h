@@ -68,9 +68,6 @@ private:
 	void*	mBitmap;
 	void*	mPalette;
 
-	//GET_SET ( void*, Bitmap, mBitmap );
-	//GET_SET ( void*, Palette, mPalette );
-
 	SET ( PixelFormat, PixelFormat, mPixelFormat )
 	SET ( ZLColor::ColorFormat, ColorFormat, mColorFormat )
 
@@ -83,6 +80,8 @@ private:
 	static int		_blur						( lua_State* L );
 	static int		_compare					( lua_State* L );
 	static int		_convert					( lua_State* L );
+	static int		_convolve					( lua_State* L );
+	static int		_convolve1D					( lua_State* L );
 	static int		_copy						( lua_State* L );
 	static int		_copyBits					( lua_State* L );
 	static int		_copyRect					( lua_State* L );
@@ -150,6 +149,9 @@ public:
 	void					ClearRect					( ZLIntRect rect );
 	bool					Compare						( const MOAIImage& image );
 	bool					Convert						( const MOAIImage& image, ZLColor::ColorFormat colorFmt, PixelFormat pixelFmt );
+	void					Convolve					( const MOAIImage& image, const float* kernel, size_t kernelWidth );
+	void					Convolve					( const MOAIImage& image, const float* kernel, size_t kernelWidth, size_t kernelHeight );
+	void					Convolve1D					( const MOAIImage& image, const float* kernel, size_t kernelSize, bool horizontal );
 	void					Copy						( const MOAIImage& image );
 	void					CopyRect					( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect destRect, u32 filter = FILTER_LINEAR );
 	void					CopyRect					( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect destRect, u32 filter, const ZLColorBlendFunc& blendFunc );
