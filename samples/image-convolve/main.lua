@@ -27,7 +27,9 @@ local kernel = {
 }
 ]]--
 
-local kernel = { 1, 2, 4, 8, 4, 2, 1 }
+--local kernel = { 1, 2, 4, 8, 4, 2, 1 }
+
+local kernel = MOAIImage.calculateGaussianKernel ( 16 )
 
 image = image:convolve ( kernel, true )
 

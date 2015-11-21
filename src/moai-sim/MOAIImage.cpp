@@ -81,6 +81,37 @@ int MOAIImage::_blur ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	calculateGaussianKernel
+	@text	Calculate a one dimensional gaussian kernel suitable for blurring.
+ 	
+	@in		MOAIImage   self
+	@opt	number radius		Default valus is 1.0.
+	@opt	number sigma		Default valie is radius / 3 (https://en.wikipedia.org/wiki/Gaussian_blur)
+	@out	nil
+*/
+int MOAIImage::_calculateGaussianKernel ( lua_State* L ) {
+	MOAI_LUA_SETUP_CLASS ( "" )
+	
+	float radius	= state.GetValue < float >( 1, 1.0f );
+	float sigma		= state.GetValue < float >( 2, ( radius / 3.0f ));
+	
+	if ( radius > 0.0f ) {
+	
+		size_t kernelWidth = MOAIImage::CalculateGaussianKernelWidth ( radius );
+		float* kernel = ( float* )alloca ( kernelWidth * sizeof ( float ));
+		
+		MOAIImage::CalculateGaussianKernel ( radius, sigma, kernel, kernelWidth );
+
+		lua_newtable ( state );
+		for ( size_t i = 0; i < kernelWidth; ++i ) {
+			state.SetFieldByIndex ( -1, i + 1, kernel [ i ]);
+		}
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	compare
 	@text	Compares the image to another image.
 	
@@ -88,7 +119,6 @@ int MOAIImage::_blur ( lua_State *L ) {
 	@in		MOAIImage other
 	@out	boolean areEqual	A value indicating whether the images are equal.
 */
-
 int MOAIImage::_compare ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIImage, "UU" )
 
@@ -1365,6 +1395,31 @@ void MOAIImage::Blur () {
 			this->SetColor ( x, y, sum.PackRGBA ());
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIImage::CalculateGaussianKernel ( float radius, float sigma, float* kernel, size_t kernelWidth ) {
+
+	float sum = 0.0;
+
+	double x = -( double )radius;
+	for ( size_t i = 0; i < kernelWidth; ++i, x += 1.0 ) {
+	
+		float g = ( float )Gaussian ( x, 2.0, 0.0, sigma ); // since we're going to normalize, we can use any value for a
+		
+		kernel [ i ] = g;
+		sum += g;
+	}
+	
+	for ( size_t i = 0; i < kernelWidth; ++i ) {
+		kernel [ i ] /= sum;
+	}
+}
+
+//----------------------------------------------------------------//
+size_t MOAIImage::CalculateGaussianKernelWidth ( float radius ) {
+
+	return ((( size_t )ceil ( radius )) * 2 ) + 1;
 }
 
 //----------------------------------------------------------------//
@@ -2987,6 +3042,13 @@ void MOAIImage::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "BLEND_FACTOR_ONE_MINUS_SRC_COLOR",	( u32 )ZLColor::BLEND_FACTOR_ONE_MINUS_SRC_COLOR );
 	state.SetField ( -1, "BLEND_FACTOR_SRC_ALPHA",				( u32 )ZLColor::BLEND_FACTOR_SRC_ALPHA );
 	state.SetField ( -1, "BLEND_FACTOR_SRC_COLOR",				( u32 )ZLColor::BLEND_FACTOR_SRC_COLOR );
+	
+	luaL_Reg regTable [] = {
+		{ "calculateGaussianKernel",	_calculateGaussianKernel },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
