@@ -158,25 +158,32 @@ size_t ZLCopyOnWrite::GetSize () const {
 
 //----------------------------------------------------------------//
 void* ZLCopyOnWrite::Invalidate () {
-
-	ZLCopyOnWriteBuffer* internal = this->mInternal;
 	
-	if (( internal ) && ( internal->GetRefCount () > 1 )) {
+	// if the internal buffer has been referenced by more than one client,
+	// we're going to copy it and create a new internal buffer
 	
+	if (( this->mInternal ) && ( this->mInternal->GetRefCount () > 1 )) {
+	
+		// original buffer
+		ZLCopyOnWriteBuffer* internal = this->mInternal;
+	
+		// new buffer to hold locally
 		this->mInternal = new ZLCopyOnWriteBuffer ();
 		this->mInternal->Retain ();
 	
+		// grab the original buffer
 		this->mInternal->mBuffer	= internal->mBuffer;
 		this->mInternal->mSize		= internal->mSize;
 		this->mInternal->mLength	= internal->mLength;
 	
+		// one less client for the original
 		internal->Release ();
 		
+		// allocate some new memory to hold the contents of the original; can
+		// use the length (as we don't need the entire buffer)
 		internal->mSize = internal->mLength;
 		internal->mBuffer = malloc ( internal->mLength );
-		
 		assert ( internal->mBuffer );
-	
 		memcpy ( internal->mBuffer, this->mInternal->mBuffer, internal->mLength );
 	}
 	return this->mInternal ? this->mInternal->mBuffer : 0;
