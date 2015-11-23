@@ -10,6 +10,25 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@lua	release
+	@text	Releases any memory associated with the texture.
+	
+	@in		MOAIMultiTexture self
+	@out	nil
+*/
+int MOAIMultiTexture::_release ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIMultiTexture, "U" )
+	
+	for ( size_t i = 0; i < self->mTextures.Size (); ++i ) {
+		MOAISingleTexture* texture = self->mTextures [ i ];
+		if ( texture ) {
+			texture->Destroy ();
+		}
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	reserve
 	@text	Reserve or clears indices for textures.
 	

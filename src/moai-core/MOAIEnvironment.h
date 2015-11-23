@@ -40,7 +40,10 @@
 #define MOAI_ENV_udid						"udid"
 #define MOAI_ENV_openUdid					"openUdid"
 
-#define MOAI_ENV_iosIFA						"iosIFA"
+#if AKU_WITH_IFA
+	#define MOAI_ENV_iosIFA					"iosIFA"
+#endif
+
 #define MOAI_ENV_iosIFV						"iosIFV"
 
 #define OS_BRAND_AMAZON			"Amazon"

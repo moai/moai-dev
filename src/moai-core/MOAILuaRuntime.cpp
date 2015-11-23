@@ -1112,8 +1112,8 @@ void MOAILuaRuntime::ReportLeaksFormatted ( cc8* filename, cc8* trackingGroup ) 
 		const ObjectSet& objectSet = i->second;
 		ZLLogF ( file, "Allocation: %lu\n", objectSet.size ());
 		
-		for ( ObjectSetIt objectSetIt = objectSet.begin (); objectSetIt != objectSet.end (); ++objectSetIt ) {
-			MOAILuaObject* object = *objectSetIt;
+		for ( ObjectSetConstIt objectSetIt = objectSet.begin (); objectSetIt != objectSet.end (); ++objectSetIt ) {
+			const MOAILuaObject* object = *objectSetIt;
 			ZLLogF ( file, "<%s> %p\n", object->TypeName (), object );
 			
 			if ( traversalState.mPathMap.contains ( object )) {
