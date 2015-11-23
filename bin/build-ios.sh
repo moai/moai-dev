@@ -113,7 +113,7 @@ rm -f ${lib_dir}/lib/*.a
 
 build "i386 x86_64" iphonesimulator
 #work around cmake install bug with ios projects
-find . -iregex ".*/.*-iphonesimulator/[^/]*.a" | xargs -J % cp -npv % ${lib_dir}/lib
+find . -iregex ".*/.*-iphonesimulator/[^/]*.a" -exec cp -fnpv {} ${lib_dir}/lib \;
 
 
 mkdir -p ${lib_dir}/lib-iphonesimulator
@@ -124,8 +124,8 @@ rm -f ${lib_dir}/lib/*.a
 
 build "armv7 armv7s arm64" iphoneos
 #work around cmake install bug with ios projects
-find . -iregex ".*/.*-iphoneos/[^/]*.a" | xargs -J % cp -npv % ${lib_dir}/lib
-find . -iregex ".*/Export/cmake/[^/]*.cmake" | xargs -J % cp -pv % ${lib_dir}/cmake
+find . -iregex ".*/.*-iphoneos/[^/]*.a" -exec cp -fnpv {} ${lib_dir}/lib \;
+find . -iregex ".*/Export/cmake/[^/]*.cmake" -exec cp -fpv {} ${lib_dir}/cmake \;
 
 mkdir -p ${lib_dir}/lib-iphoneos
 set +e
