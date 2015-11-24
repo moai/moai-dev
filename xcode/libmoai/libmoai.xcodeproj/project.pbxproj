@@ -2561,6 +2561,8 @@
 		CD57EC7119F90306007FEF66 /* MOAIHttpTaskNSURL.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDAC02BD192407E700392FAB /* MOAIHttpTaskNSURL.mm */; };
 		CD57EC7219F9032C007FEF66 /* MOAIHttpTaskNSURL.h in Headers */ = {isa = PBXBuildFile; fileRef = CDAC02BC192407E700392FAB /* MOAIHttpTaskNSURL.h */; };
 		CD57EC7319F9032C007FEF66 /* MOAIHttpTaskNSURL.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDAC02BD192407E700392FAB /* MOAIHttpTaskNSURL.mm */; };
+		CD5AB5D91C046388000C8424 /* ZLAllocator.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5AB5D81C046388000C8424 /* ZLAllocator.h */; };
+		CD5AB5DA1C046388000C8424 /* ZLAllocator.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5AB5D81C046388000C8424 /* ZLAllocator.h */; };
 		CD67B45C1B264C51004298CF /* MOAISelectionMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD67B45B1B264C51004298CF /* MOAISelectionMesh.h */; };
 		CD67B45D1B264C51004298CF /* MOAISelectionMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD67B45B1B264C51004298CF /* MOAISelectionMesh.h */; };
 		CD67B4601B264C9C004298CF /* MOAIDeckProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD67B45E1B264C9C004298CF /* MOAIDeckProxy.cpp */; };
@@ -6410,6 +6412,7 @@
 		CD5232411808ADDA00B81720 /* MOAIChartBoostIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIChartBoostIOS.h; path = "moai-ios-chartboost/MOAIChartBoostIOS.h"; sourceTree = "<group>"; };
 		CD5232421808ADDA00B81720 /* MOAIChartBoostIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIChartBoostIOS.mm; path = "moai-ios-chartboost/MOAIChartBoostIOS.mm"; sourceTree = "<group>"; };
 		CD5232BC1808ADF400B81720 /* libmoai-ios-crittercism.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-crittercism.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD5AB5D81C046388000C8424 /* ZLAllocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLAllocator.h; sourceTree = "<group>"; };
 		CD67B45B1B264C51004298CF /* MOAISelectionMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAISelectionMesh.h; sourceTree = "<group>"; };
 		CD67B45E1B264C9C004298CF /* MOAIDeckProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIDeckProxy.cpp; sourceTree = "<group>"; };
 		CD67B45F1B264C9C004298CF /* MOAIDeckProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDeckProxy.h; sourceTree = "<group>"; };
@@ -12547,6 +12550,7 @@
 		CDF0D37B19FCCC7C001C64C5 /* stream */ = {
 			isa = PBXGroup;
 			children = (
+				CD5AB5D81C046388000C8424 /* ZLAllocator.h */,
 				89BE68A3173974FC00DFE837 /* ZLBase64Encoder.cpp */,
 				89BE68A4173974FC00DFE837 /* ZLBase64Encoder.h */,
 				89BE68A5173974FC00DFE837 /* ZLBase64Reader.cpp */,
@@ -13499,6 +13503,7 @@
 				89BE6A51173974FD00DFE837 /* ZLRhombus.h in Headers */,
 				89BE6A55173974FD00DFE837 /* ZLStream.h in Headers */,
 				89BE6A59173974FD00DFE837 /* ZLStreamAdapter.h in Headers */,
+				CD5AB5D91C046388000C8424 /* ZLAllocator.h in Headers */,
 				89BE6A61173974FD00DFE837 /* ZLSurface2D.h in Headers */,
 				89BE6A65173974FD00DFE837 /* ZLSyntaxNode.h in Headers */,
 				89BE6A69173974FD00DFE837 /* ZLSyntaxScanner.h in Headers */,
@@ -13588,6 +13593,7 @@
 				CD9FFC3C1BF9C2B300FB2A4A /* zl_gfx.h in Headers */,
 				89BE6A18173974FD00DFE837 /* ZLLog.h in Headers */,
 				89BE6A1A173974FD00DFE837 /* ZLMathConsts.h in Headers */,
+				CD5AB5DA1C046388000C8424 /* ZLAllocator.h in Headers */,
 				89BE6A1C173974FD00DFE837 /* ZLMatrix.h in Headers */,
 				89BE6A1E173974FD00DFE837 /* ZLMatrix3x3.h in Headers */,
 				89BE6A20173974FD00DFE837 /* ZLMatrix4x4.h in Headers */,
