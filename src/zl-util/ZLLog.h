@@ -52,21 +52,27 @@ public:
 	static void		SetRedirect		( FILE* file );
 };
 
+#define ZLLog(format,...)					ZLLog::LogF ( ZLLog::LOG_REPORT, ZLLog::CONSOLE, format, ##__VA_ARGS__ )
 #define ZLLogF(file,format,...)				ZLLog::LogF ( ZLLog::LOG_REPORT, file, format, ##__VA_ARGS__ )
 #define ZLLogV(file,format,args)			ZLLog::LogV ( ZLLog::LOG_REPORT, file, format, args )
 
+#define ZLLog_Debug(format,...)				ZLLog::LogF ( ZLLog::LOG_DEBUG, ZLLog::CONSOLE, format, ##__VA_ARGS__ )
 #define ZLLog_DebugF(file,format,...)		ZLLog::LogF ( ZLLog::LOG_DEBUG, file, format, ##__VA_ARGS__ )
 #define ZLLog_DebugV(file,format,args)		ZLLog::LogV ( ZLLog::LOG_DEBUG, file, format, args )
 
+#define ZLLog_Status(format,...)			ZLLog::LogF ( ZLLog::LOG_STATUS, ZLLog::CONSOLE, format, ##__VA_ARGS__ )
 #define ZLLog_StatusF(file,format,...)		ZLLog::LogF ( ZLLog::LOG_STATUS, file, format, ##__VA_ARGS__ )
 #define ZLLog_StatusV(file,format,args)		ZLLog::LogV ( ZLLog::LOG_STATUS, file, format, args )
 
+#define ZLLog_Warning(format,...)			ZLLog::LogF ( ZLLog::LOG_WARNING, ZLLog::CONSOLE, format, ##__VA_ARGS__ )
 #define ZLLog_WarningF(file,format,...)		ZLLog::LogF ( ZLLog::LOG_WARNING, file, format, ##__VA_ARGS__ )
 #define ZLLog_WarningV(file,format,args)	ZLLog::LogV ( ZLLog::LOG_WARNING, file, format, args )
 
+#define ZLLog_Error(format,...)				ZLLog::LogF ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, format, ##__VA_ARGS__ )
 #define ZLLog_ErrorF(file,format,...)		ZLLog::LogF ( ZLLog::LOG_ERROR, file, format, ##__VA_ARGS__ )
 #define ZLLog_ErrorV(file,format,args)		ZLLog::LogV ( ZLLog::LOG_ERROR, file, format, args )
 
+#define ZLLog_Fatal(format,...)				ZLLog::LogF ( ZLLog::LOG_FATAL, ZLLog::CONSOLE, format, ##__VA_ARGS__ )
 #define ZLLog_FatalF(file,format,...)		ZLLog::LogF ( ZLLog::LOG_FATAL, file, format, ##__VA_ARGS__ )
 #define ZLLog_FatalV(file,format,args)		ZLLog::LogV ( ZLLog::LOG_FATAL, file, format, args )
 
