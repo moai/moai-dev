@@ -962,11 +962,16 @@ DhcpNameServer
   status = ARES_EOF;
 
 #elif defined(ANDROID)
-  char value[PROP_VALUE_MAX]="";
-  __system_property_get("net.dns1", value);
-  status = config_nameserver(&servers, &nservers, value);
-  if (status == ARES_SUCCESS)
+  #if defined(__arm64__) || defined(__LP64__)
+  
     status = ARES_EOF;
+  #else
+    char value[PROP_VALUE_MAX]="";
+    __system_property_get("net.dns1", value);
+    status = config_nameserver(&servers, &nservers, value);
+    if (status == ARES_SUCCESS)
+      status = ARES_EOF;
+  #endif
 #else
   {
     char *p;
