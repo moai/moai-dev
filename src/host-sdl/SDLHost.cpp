@@ -555,8 +555,6 @@ void MainLoop () {
 		
 		AKUModulesUpdate ();
 		
-		//AKUDisplayListPublishAndReset ();
-		
 		if ( simUpdateCounter >= ( SIM_UPDATE_INTERVAL - 1 )) {
 			simUpdateCounter = 0;
 		
@@ -571,11 +569,8 @@ void MainLoop () {
 			
 			#else
 			
-				if ( simUpdateCounter >= ( SIM_UPDATE_INTERVAL - 1 )) {
-					simUpdateCounter = 0;
-					AKURender ();
-					SDL_GL_SwapWindow ( sWindow );
-				}
+				AKURender ();
+				SDL_GL_SwapWindow ( sWindow );
 			
 			#endif
 			

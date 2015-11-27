@@ -7,6 +7,8 @@
 #include <zl-util/ZLRefCountedObject.h>
 #include <zl-util/ZLStream.h>
 
+class ZLAllocator;
+
 //================================================================//
 // ZLCopyOnWriteBuffer
 //================================================================//
@@ -20,15 +22,15 @@ private:
 	size_t				mSize;
 	size_t				mLength;
 
-	//----------------------------------------------------------------//
-						ZLCopyOnWriteBuffer		();
-						~ZLCopyOnWriteBuffer	();
-
 public:
 
 	GET_CONST ( void*, ConstData, mBuffer )
 	GET ( void*, MutableData, mBuffer )
 	GET ( size_t, Size, mLength )
+	
+	//----------------------------------------------------------------//
+						ZLCopyOnWriteBuffer		();
+						~ZLCopyOnWriteBuffer	();
 };
 
 //================================================================//
@@ -40,13 +42,17 @@ private:
 
 	ZLCopyOnWriteBuffer*	mInternal;
 	size_t					mCursor;
+	
+	ZLAllocator*			mAllocator;
 
 	//----------------------------------------------------------------//
 	void				AffirmInternal			();
+	ZLAllocator&		DefaultAllocator		();
 
 public:
 
 	GET ( ZLSharedConstBuffer*, SharedConstBuffer, mInternal )
+	GET_SET ( ZLAllocator*, Allocator, mAllocator )
 
 	//----------------------------------------------------------------//
 	void*				Alloc					( size_t size );

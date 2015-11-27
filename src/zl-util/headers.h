@@ -14,8 +14,9 @@
 #include <zl-util/STLSort.h>
 #include <zl-util/STLString.h>
 
-#include <zl-util/ZLAdapterInfo.h>
+#include <zl-util/ZLAllocator.h>
 #include <zl-util/ZLAccessors.h>
+#include <zl-util/ZLAdapterInfo.h>
 #include <zl-util/ZLAffine2D.h>
 #include <zl-util/ZLBarycentric.h>
 #include <zl-util/ZLBase64Encoder.h>

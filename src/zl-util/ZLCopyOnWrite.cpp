@@ -2,6 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
+
+#include <zl-util/ZLAllocator.h>
 #include <zl-util/ZLCopyOnWrite.h>
 
 //================================================================//
@@ -19,7 +21,9 @@ ZLCopyOnWriteBuffer::ZLCopyOnWriteBuffer () :
 ZLCopyOnWriteBuffer::~ZLCopyOnWriteBuffer () {
 
 	if ( this->mBuffer ) {
-		free ( this->mBuffer );
+	
+		assert ( this->mAllocator );
+		this->mAllocator->Free ( this->mBuffer );
 	}
 }
 
@@ -31,8 +35,12 @@ ZLCopyOnWriteBuffer::~ZLCopyOnWriteBuffer () {
 void ZLCopyOnWrite::AffirmInternal () {
 
 	if ( !this->mInternal ) {
-		this->mInternal = new ZLCopyOnWriteBuffer ();
+	
+		this->mAllocator = this->mAllocator ? this->mAllocator : &this->DefaultAllocator ();
+		
+		this->mInternal = this->mAllocator->New < ZLCopyOnWriteBuffer >();
 		this->mInternal->Retain ();
+		this->mInternal->SetAllocator ( this->mAllocator );
 	}
 }
 
@@ -44,7 +52,7 @@ void* ZLCopyOnWrite::Alloc ( size_t size ) {
 	
 	this->AffirmInternal ();
 	
-	void* buffer = malloc ( size );
+	void* buffer = this->mAllocator->Alloc ( size );
 	
 	if ( buffer ) {
 		this->mInternal->mBuffer = buffer;
@@ -57,22 +65,9 @@ void* ZLCopyOnWrite::Alloc ( size_t size ) {
 //----------------------------------------------------------------//
 void* ZLCopyOnWrite::Alloc ( size_t size, u8 fill ) {
 
-	this->Free ();
-	if ( !size ) return 0;
-	
-	this->AffirmInternal ();
-	
-	void* buffer = fill == 0 ? calloc ( 1, size ) : malloc ( size );
-	
+	void* buffer = this->Alloc ( size );
 	if ( buffer ) {
-	
-		if ( fill != 0 ) {
-			memset ( buffer, fill, size );
-		}
-	
-		this->mInternal->mBuffer = buffer;
-		this->mInternal->mSize = size;
-		this->mInternal->mLength = size;
+		memset ( buffer, fill, size );
 	}
 	return buffer;
 }
@@ -80,22 +75,9 @@ void* ZLCopyOnWrite::Alloc ( size_t size, u8 fill ) {
 //----------------------------------------------------------------//
 void* ZLCopyOnWrite::Alloc ( size_t size, const void* fill ) {
 
-	this->Free ();
-	if ( !size ) return 0;
-	
-	this->AffirmInternal ();
-	
-	void* buffer = fill == 0 ? calloc ( 1, size ) : malloc ( size );
-	
+	void* buffer = this->Alloc ( size );
 	if ( buffer ) {
-	
-		if ( fill != 0 ) {
-			memcpy ( buffer, fill, size );
-		}
-	
-		this->mInternal->mBuffer = buffer;
-		this->mInternal->mSize = size;
-		this->mInternal->mLength = size;
+		memcpy ( buffer, fill, size );
 	}
 	return buffer;
 }
@@ -108,11 +90,20 @@ void ZLCopyOnWrite::Assign ( const ZLCopyOnWrite& assign ) {
 		this->Free ();
 		
 		this->mInternal = assign.mInternal;
+		this->mAllocator = assign.mAllocator;
+		
 		if ( this->mInternal ) {
 			this->mInternal->Retain ();
 		}
 	}
 	this->mCursor = assign.mCursor;
+}
+
+//----------------------------------------------------------------//
+ZLAllocator& ZLCopyOnWrite::DefaultAllocator () {
+
+	static ZLSimpleAllocator allocator;
+	return allocator;
 }
 
 //----------------------------------------------------------------//
@@ -164,27 +155,30 @@ void* ZLCopyOnWrite::Invalidate () {
 	
 	if (( this->mInternal ) && ( this->mInternal->GetRefCount () > 1 )) {
 	
+		assert ( this->mAllocator );
+	
 		// original buffer
 		ZLCopyOnWriteBuffer* internal = this->mInternal;
 	
 		// new buffer to hold locally
-		this->mInternal = new ZLCopyOnWriteBuffer ();
+		this->mInternal = this->mAllocator->New < ZLCopyOnWriteBuffer >();
 		this->mInternal->Retain ();
+		this->mInternal->SetAllocator ( this->mAllocator );
 	
 		// grab the original buffer
 		this->mInternal->mBuffer	= internal->mBuffer;
 		this->mInternal->mSize		= internal->mSize;
 		this->mInternal->mLength	= internal->mLength;
-	
-		// one less client for the original
-		internal->Release ();
 		
 		// allocate some new memory to hold the contents of the original; can
 		// use the length (as we don't need the entire buffer)
 		internal->mSize = internal->mLength;
-		internal->mBuffer = malloc ( internal->mLength );
+		internal->mBuffer = this->mAllocator->Alloc ( internal->mLength );
 		assert ( internal->mBuffer );
 		memcpy ( internal->mBuffer, this->mInternal->mBuffer, internal->mLength );
+		
+		// one less client for the original
+		internal->Release ();
 	}
 	return this->mInternal ? this->mInternal->mBuffer : 0;
 }
@@ -281,13 +275,15 @@ size_t ZLCopyOnWrite::WriteBytes ( const void* buffer, size_t size ) {
 //----------------------------------------------------------------//
 ZLCopyOnWrite::ZLCopyOnWrite () :
 	mInternal ( 0 ),
-	mCursor ( 0 ) {
+	mCursor ( 0 ),
+	mAllocator ( 0 ) {
 }
 
 //----------------------------------------------------------------//
 ZLCopyOnWrite::ZLCopyOnWrite ( size_t size ) :
 	mInternal ( 0 ),
-	mCursor ( 0 ) {
+	mCursor ( 0 ),
+	mAllocator ( 0 ) {
 	
 	this->Alloc ( size );
 }
@@ -295,7 +291,8 @@ ZLCopyOnWrite::ZLCopyOnWrite ( size_t size ) :
 //----------------------------------------------------------------//
 ZLCopyOnWrite::ZLCopyOnWrite ( size_t size, u8 fill ) :
 	mInternal ( 0 ),
-	mCursor ( 0 ) {
+	mCursor ( 0 ),
+	mAllocator ( 0 ) {
 	
 	this->Alloc ( size, fill );
 }
@@ -303,7 +300,8 @@ ZLCopyOnWrite::ZLCopyOnWrite ( size_t size, u8 fill ) :
 //----------------------------------------------------------------//
 ZLCopyOnWrite::ZLCopyOnWrite ( size_t size, const void* fill ) :
 	mInternal ( 0 ),
-	mCursor ( 0 ) {
+	mCursor ( 0 ),
+	mAllocator ( 0 ) {
 	
 	this->Alloc ( size, fill );
 }
@@ -311,7 +309,8 @@ ZLCopyOnWrite::ZLCopyOnWrite ( size_t size, const void* fill ) :
 //----------------------------------------------------------------//
 ZLCopyOnWrite::ZLCopyOnWrite ( const ZLCopyOnWrite& copy ) :
 	mInternal ( 0 ),
-	mCursor ( 0 ) {
+	mCursor ( 0 ),
+	mAllocator ( 0 ) {
 	
 	this->Assign ( copy );
 }

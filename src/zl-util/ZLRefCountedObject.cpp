@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <zl-util/ZLAllocator.h>
 #include <zl-util/ZLRefCountedObject.h>
 
 //================================================================//
@@ -17,7 +18,13 @@ void ZLRefCountedObject::Release () {
 	}
 	
 	if ( this->mRefCount == 0 ) {
-		delete ( this );
+	
+		if ( this->mAllocator ) {
+			this->mAllocator->Delete < ZLRefCountedObject >( this );
+		}
+		else {
+			delete ( this );
+		}
 	}
 }
 
@@ -29,7 +36,8 @@ void ZLRefCountedObject::Retain () {
 
 //----------------------------------------------------------------//
 ZLRefCountedObject::ZLRefCountedObject () :
-	mRefCount ( 0 ) {
+	mRefCount ( 0 ),
+	mAllocator ( 0 ) {
 }
 
 //----------------------------------------------------------------//
