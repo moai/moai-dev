@@ -1,0 +1,18 @@
+<player>
+    <div class="player-wrapper">
+
+        <iframe  name="result" id="result" src="./samplehost.html?sample={opts.sample}"></iframe>
+
+    </div>
+    <player-console></player-console>
+
+    <script>
+        this.on("mount", function() {
+            this.tags['player-console'].on("consoleCommand", function(command) {
+                window.frames['result'].sendCommand(command);
+            })
+        })
+    </script>
+
+
+</player>
