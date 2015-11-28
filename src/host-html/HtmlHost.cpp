@@ -78,7 +78,10 @@ void onMouseButton ( int button, int state  ) {
 	switch ( button ) {
 		case HtmlMouseButton::MOUSE_LEFT:
 			AKUEnqueueButtonEvent ( HtmlInputDeviceID::DEVICE, HtmlInputDeviceSensorID::MOUSE_LEFT, ( state == HtmlMouseButtonState::MOUSE_DOWN));
-		break;
+			break;
+		case HtmlMouseButton::MOUSE_RIGHT:
+			AKUEnqueueButtonEvent ( HtmlInputDeviceID::DEVICE, HtmlInputDeviceSensorID::MOUSE_RIGHT, ( state == HtmlMouseButtonState::MOUSE_DOWN));
+			break;
 	}
 }
 

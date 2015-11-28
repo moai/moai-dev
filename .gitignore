@@ -42,3 +42,5 @@ docs/api-reference
 /**/java/build/
 /**/java/*.iml
 env.sh
+sample-browser/
+util/build-sample-browser/temprom/

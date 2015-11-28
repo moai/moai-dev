@@ -1,7 +1,7 @@
 /* Promise lib (c) Jonathan Gotti - licence: https://github.com/malko/d.js/LICENCE.txt @version 0.6.0*/
 !function(a){"use strict";function b(a){j(function(){throw a})}function c(b){return this.then(b,a)}function d(b){return this.then(a,b)}function e(b,c){return this.then(function(a){return k(b)?b.apply(null,l(a)?a:[a]):t.onlyFuncs?a:b},c||a)}function f(a){function b(){a()}return this.then(b,b),this}function g(a){return this.then(function(b){return k(a)?a.apply(null,l(b)?b.splice(0,0,void 0)&&b:[void 0,b]):t.onlyFuncs?b:a},function(b){return a(b)})}function h(c){return this.then(a,c?function(a){throw c(a),a}:b)}function i(a,b){var c=o(a);if(1===c.length&&l(c[0])){if(!c[0].length)return t.fulfilled([]);c=c[0]}var d=[],e=t(),f=c.length;if(f)for(var g=(function(a){c[a]=t.promisify(c[a]),c[a].then(function(g){a in d||(d[a]=b?c[a]:g,--f||e.resolve(d))},function(g){a in d||(b?(d[a]=c[a],--f||e.resolve(d)):e.reject(g))})}),h=0,i=f;i>h;h++)g(h);else e.resolve(d);return e.promise}var j,k=function(a){return"function"==typeof a},l=function(a){return Array.isArray?Array.isArray(a):a instanceof Array},m=function(a){return!(!a||!(typeof a).match(/function|object/))},n=function(b){return b===!1||b===a||null===b},o=function(a,b){return[].slice.call(a,b)},p="undefined",q=typeof TypeError===p?Error:TypeError;if(typeof process!==p&&process.nextTick)j=process.nextTick;else if(typeof MessageChannel!==p){var r=new MessageChannel,s=[];r.port1.onmessage=function(){s.length&&s.shift()()},j=function(a){s.push(a),r.port2.postMessage(0)}}else j=function(a){setTimeout(a,0)};var t=function(b){function i(){if(0!==s){var a,b=u,c=0,d=b.length,e=~s?0:1;for(u=[];d>c;c++)(a=b[c][e])&&a(p)}}function l(a){function b(a){return function(b){return c?void 0:(c=!0,a(b))}}var c=!1;if(s)return this;try{var d=m(a)&&a.then;if(k(d)){if(a===v)throw new q("Promise can't resolve itself");return d.call(a,b(l),b(o)),this}}catch(e){return b(o)(e),this}return r(function(){p=a,s=1,i()}),this}function o(a){return s||r(function(){try{throw a}catch(b){p=b}s=-1,i()}),this}var p,r=(a!==b?b:t.alwaysAsync)?j:function(a){a()},s=0,u=[],v={then:function(a,b){var c=t();return u.push([function(b){try{n(a)?c.resolve(b):c.resolve(k(a)?a(b):t.onlyFuncs?b:a)}catch(d){c.reject(d)}},function(a){if((n(b)||!k(b)&&t.onlyFuncs)&&c.reject(a),b)try{c.resolve(k(b)?b(a):b)}catch(d){c.reject(d)}}]),0!==s&&r(i),c.promise},success:c,error:d,otherwise:d,apply:e,spread:e,ensure:f,nodify:g,rethrow:h,isPending:function(){return!(0!==s)},getStatus:function(){return s}};return v.toSource=v.toString=v.valueOf=function(){return p===a?this:p},{promise:v,resolve:l,fulfill:l,reject:o}};t.deferred=t.defer=t,t.nextTick=j,t.alwaysAsync=!0,t.onlyFuncs=!0,t.resolved=t.fulfilled=function(a){return t(!0).resolve(a).promise},t.rejected=function(a){return t(!0).reject(a).promise},t.wait=function(a){var b=t();return setTimeout(b.resolve,a||0),b.promise},t.delay=function(a,b){var c=t();return setTimeout(function(){try{c.resolve(a.apply(null))}catch(b){c.reject(b)}},b||0),c.promise},t.promisify=function(a){return a&&k(a.then)?a:t.resolved(a)},t.all=function(){return i(arguments,!1)},t.resolveAll=function(){return i(arguments,!0)},t.nodeCapsule=function(a,b){return b||(b=a,a=void 0),function(){var c=t(),d=o(arguments);d.push(function(a,b){a?c.reject(a):c.resolve(arguments.length>2?o(arguments,1):b)});try{b.apply(a,d)}catch(e){c.reject(e)}return c.promise}},typeof window!==p&&(window.D=t),typeof module!==p&&module.exports&&(module.exports=t)}();
 
-var LoadRom = (function() {
+var RomLoader = (function() {
 
 /* rom cache */
 function RomCache() {
@@ -119,7 +119,7 @@ RomCache.prototype.cacheRemotePackage = function(packageName, packageData, packa
    }).otherwise(function(e) {
            console.log("Can't cache package:",e);
            return false;
-   });
+       });
 };
 
 RomCache.prototype.dbCacheRemotePackage = function(db, packageName, packageData, packageMeta) {
@@ -161,6 +161,10 @@ function LoadFileSystemJson(fsJsonUrl) {
     xhr.responseType = "json";
     xhr.onload = function(event) {
         var packageInfo = xhr.response;
+        if (typeof packageInfo == "string") {
+          //safari and older browsers can't do responseType=json :(
+          packageInfo = JSON.parse(packageInfo);
+        }
         d.resolve(packageInfo);
     };
     xhr.onerror = function(event) {
@@ -227,7 +231,7 @@ function installFile(emscripten, romPackage, start, end, name) {
   var byteArray = romPackage.subarray(start, end);
   var d = D.defer() 
   emscripten['FS_createPreloadedFile'](name, null, byteArray, true, true, function() {
-    d.resolve(true)
+      d.resolve(true)
   }, function() {
     d.reject( 'Preloading file ' + name + ' failed');
   }, false, true); 
@@ -286,8 +290,20 @@ function doLoadRom(emscripten, romUrl, romProgress, fileProgress ) {
     //return our promise for a fully created file system
    return InstalledFileSystem;
 }
-  
-return doLoadRom; //only expose this function
+
+    function doLoadRomRaw(emscripten, romPackageRaw, fileSystemInfo, fileProgress ) {
+        //return our promise for a fully created file system
+        var installedData = installFileSystemData(emscripten, romPackageRaw)
+
+        //create filesystem entries pointing to blob segements
+        return installFiles(emscripten, installedData, fileSystemInfo, fileProgress);
+    }
+
+
+    return {
+    LoadRom: doLoadRom,
+    LoadRomRaw: doLoadRomRaw
+    }; //only expose this function
 })();
  
 
@@ -361,11 +377,23 @@ MoaiJS.prototype.loadFileSystem = function(romUrl) {
 		}
   };
   console.log("MoaiJS Load Filesystem "+romUrl);
-  this.loadedFileSystems.push(window.LoadRom(this.getEmscripten(),romUrl, makeProgress('Loading Data'), makeProgress('Installing File')));
+  this.loadedFileSystems.push(RomLoader.LoadRom(this.getEmscripten(),romUrl, makeProgress('Loading Data'), makeProgress('Installing File')));
+}
+
+
+MoaiJS.prototype.loadFileSystemRaw = function(romDataRaw, fileSystemInfo) {
+    var that = this;
+    function makeProgress(prefix) {
+        return function(done,total) {
+            that.onStatusChange(prefix+": "+done+"/"+total);
+        }
+    }
+    console.log("MoaiJS Installing Filesystem");
+    this.loadedFileSystems.push(RomLoader.LoadRomRaw(this.getEmscripten(), romDataRaw, fileSystemInfo, makeProgress('Installing File')));
 }
 
 MoaiJS.prototype.runFunc = function(func) {
-	var that = this;
+    var that=this;
     D.all(this.loadedFileSystems).then(function(){
 	   console.log("MoaiJS Filesystem Loaded");	
   	   that.emscripten.run();   
@@ -400,11 +428,31 @@ MoaiJS.prototype.updateloop = function() {
 }
 
 MoaiJS.prototype.mousedown = function(e) {
-    this.onMouseButton(0,0); //MOUSE_LEFT, MOUSE_DOWN
+
+    var btn = e.button;
+
+    if (btn != 2) {
+        this.onMouseButton(0, 0); //MOUSE_LEFT, MOUSE_DOWN
+    } else {
+        this.onMouseButton(2, 0);
+    }
+   
 }
 
+MoaiJS.prototype.cancelMouseButtons = function() {
+    this.onMouseButton(0, 1);
+    this.onMouseButton(2, 1);
+};
+
 MoaiJS.prototype.mouseup = function(e) {
-    this.onMouseButton(0,1); //MOUSE_LEFT, MOUSE_UP
+
+    var btn = e.button;
+
+    if (btn != 2) {
+        this.onMouseButton(0, 1); //MOUSE_LEFT, MOUSE_Up
+    } else {
+        this.onMouseButton(2, 1);
+    }
 }
 
 MoaiJS.prototype.mousemove = function(e) {
@@ -487,10 +535,6 @@ MoaiJS.prototype.OpenWindowFunc = function(title,width,height) {
 	}
 	this.canvas.style.display = "block";
 
-   //if (width > height) {
-  //      $(this.canvas).parent().addClass("portrait");
-   // }
-
 	canvas.width = width;
 	canvas.height = height;
 	this.canvasScale = canvas.width/$(canvas).width();
@@ -504,13 +548,17 @@ MoaiJS.prototype.OpenWindowFunc = function(title,width,height) {
 
 	//grab focus on hover
 	canvas.addEventListener("mouseover",function() { canvas.focus(); },false);
-	canvas.addEventListener("mouseout",(function() { canvas.blur(); this.mouseup(); }).bind(this),false);
+	canvas.addEventListener("mouseout",(function() { canvas.blur(); this.cancelMouseButtons(); }).bind(this),false);
 
 	//grab keys
 	canvas.addEventListener("keydown", this.keydown.bind(this), false);
 	canvas.addEventListener("keyup", this.keyup.bind(this), false);
 	canvas.addEventListener("keypress", this.keypress.bind(this), false);
 
+	canvas.addEventListener("contextmenu", function(e) { 
+		e.preventDefault();
+		return false;
+	});
 	//now start rendering and updationg
 	this.startUpdates();
 	this.emscripten.requestAnimationFrame(this.renderloop.bind(this));
@@ -531,11 +579,15 @@ MoaiJS.prototype.OpenWindowFunc = function(title,width,height) {
 	  }
 	  var that = this;
 	  function resizeHandler() {
-		that.canvasScale = canvas.width/$(canvas).width();
+		that.recalibrateInput();
 	  }
 
 	return canvas;
 };
+
+MoaiJS.prototype.recalibrateInput = function() {
+		this.canvasScale = this.canvas.width/$(this.canvas).width();
+}
 
 MoaiJS.prototype.startUpdates = function() {
 	var step = this.AKUGetSimStep() || ((1000/60)/1000)
@@ -695,12 +747,14 @@ function MoaiPlayer(element, skipTemplate) {
     } else {
          infoEl = el.find(".moai-info");
     }
-
+	this.el = el;
 	var titleEl = el.find(".moai-title").first();
 	var statusEl = el.find(".moai-status").first();
 	var canvasEl = el.find(".moai-canvas").first();
-	var canvasWrapperEl = el.find(".moai-canvas-wrapper").first();
+	this.canvas = canvasEl[0];
 
+	var canvasWrapperEl = el.find(".moai-canvas-wrapper").first();
+	this.canvasWrapper = canvasWrapperEl;
     var pause = el.find("#moai-pause").first();
 	//get settings
 	this.url = el.attr('data-url');
@@ -729,10 +783,13 @@ function MoaiPlayer(element, skipTemplate) {
 		statusEl.html(status);
 	}
 
-	function onResolutionChange(width, height) {
-		console.log("width",width,"height",height,"portrait",(height > width));
-		el.find('.moai-canvas-wrapper').first().toggleClass("portrait", (height > width));
-	}
+	
+    this.onResolutionChange = function(width, height) {
+		//resize canvas after moaijs has finished its stuff
+		window.setTimeout(function() {
+			this.resizeCanvas();
+		}.bind(this),10);
+    }
 
 	this.onError = function(err) {
 		console.log("ERROR: ",err);
@@ -756,13 +813,38 @@ function MoaiPlayer(element, skipTemplate) {
         canvasWrapperEl[0].style.display="table-row";
 }
 
+	 window.addEventListener("resize", resizeThrottler, false);
 
+	  var resizeTimeout;
+	  function resizeThrottler() {
+		// ignore resize events as long as an actualResizeHandler execution is in the queue
+		if ( !resizeTimeout ) {
+		  resizeTimeout = setTimeout(function() {
+		    resizeTimeout = null;
+		    resizeHandler();
+		 
+		   // The actualResizeHandler will execute at a rate of 15fps
+		   }, 66);
+		}
+	  }
+	  
+	  var resizeHandler = function() {
+		this.resizeCanvas();
+	  }.bind(this);
 
 
 
     this.initMoai = function() {
-        this.moai = new MoaiJS(canvasEl[0], ram * 1024 * 1024, onTitleChange, onStatusChange, onError.bind(this), onPrint.bind(this), onResolutionChange);
+        this.moai = new MoaiJS(canvasEl[0], ram * 1024 * 1024, onTitleChange, onStatusChange, onError.bind(this), onPrint.bind(this), this.onResolutionChange.bind(this));
     }
+}
+
+
+MoaiPlayer.prototype.resizeCanvas = function() {
+	//we apply portrait class if the ratio of width to height is larger than our canvases
+	var wantedRatio = this.canvas.width / this.canvas.height;
+	var actualRatio = this.canvasWrapper.width() / this.canvasWrapper.height();
+	this.el.find('.moai-canvas-wrapper').first().toggleClass("portrait", (actualRatio > wantedRatio));
 }
 
 MoaiPlayer.prototype.isSupported = function() {
@@ -822,6 +904,11 @@ MoaiPlayer.prototype.run = function() {
 MoaiPlayer.prototype.loadRom = function(rom) {
     if (!this.moai) { this.initMoai(); }
     this.moai.loadFileSystem(rom);
+}
+
+MoaiPlayer.prototype.loadRomRaw = function(romRaw, fsInfo) {
+    if (!this.moai) { this.initMoai(); }
+    this.moai.loadFileSystemRaw(romRaw, fsInfo);
 }
 
 MoaiPlayer.prototype.runString = function(str) {

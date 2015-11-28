@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Moai Sample Browser</title>
+
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="vendor/terminal/jquery.terminal.css">
+    <link rel="stylesheet" href="vendor/perfect-scrollbar/css/perfect-scrollbar.css">
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="vendor/awesomplete/awesomplete.css">
+
+    <!-- borrowed from moai player host -->
+
+    <script src="host/vendor/jquery-1.10.2.js"></script>
+    <script src="vendor/b64.js"></script>
+
+    <!-- 3rd party  -->
+    <script src="vendor/underscore-min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="vendor/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="vendor/ace/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+    <script src="vendor/terminal/jquery.terminal-0.8.7.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="vendor/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+    <script src="vendor/awesomplete/awesomplete.js"></script>
+
+
+    <!-- ui scripts -->
+    <script src="components/audio-viewer-tag.html" type="riot/tag"></script>
+    <script src="components/sample-list-tag.html" type="riot/tag"></script>
+    <script src="components/sample-search-tag.html" type="riot/tag"></script>
+    <script src="components/file-display-tag.html" type="riot/tag"></script>
+    <script src="components/file-list-tag.html" type="riot/tag"></script>
+    <script src="components/editor-tag.html" type="riot/tag"></script>
+    <script src="components/player-tag.html" type="riot/tag"></script>
+    <script src="components/player-console-tag.html" type="riot/tag"></script>
+    <script src="components/picture-viewer-tag.html" type="riot/tag"></script>
+    <script src="components/font-viewer-tag.html" type="riot/tag"></script>
+    <script src="components/sample-browser.html" type="riot/tag"></script>
+    <script src="components/file-item-display-tag.html" type="riot/tag"></script>
+    <script src="components/file-icon-tag.html" type="riot/tag"></script>
+    <script src="components/splitter-handle-tag.html" type="riot/tag"></script>
+    <script src="components/splitter-panel-tag.html" type="riot/tag"></script>
+    <script src="components/splitter-tag.html" type="riot/tag"></script>
+
+
+    <script src="vendor/riot+compiler.min.js"></script>
+
+    <!-- app specific scripts -->
+    <script src="deferredscript.js"></script>
+    <script src="fileutil.js"></script>
+    <script src="samplelist.js"></script>
+    <script src="sampleindex.js"></script>
+</head>
+<body>
+
+
+<sample-browser>
+</sample-browser>
+
+
+<script>
+var app;
+    riot.compile(function() {
+        // here tags are compiled and riot.mount works synchronously
+       app = riot.mount('sample-browser', { samples: samplelist });
+    });
+
+</script>
+</body>
+</html>
