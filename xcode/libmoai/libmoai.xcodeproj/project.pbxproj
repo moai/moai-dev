@@ -874,10 +874,6 @@
 		CD04AF0814725714009C20E5 /* zlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECA14725714009C20E5 /* zlib.h */; };
 		CD04AF0B14725714009C20E5 /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AECB14725714009C20E5 /* zutil.c */; };
 		CD04AF0E14725714009C20E5 /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECC14725714009C20E5 /* zutil.h */; };
-		CD0969F11C05AD45005B5ECE /* ZLAllocator.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0969F01C05AD45005B5ECE /* ZLAllocator.h */; };
-		CD0969F21C05AD45005B5ECE /* ZLAllocator.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0969F01C05AD45005B5ECE /* ZLAllocator.h */; };
-		CD0969F41C05AE33005B5ECE /* ZLAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD0969F31C05AE33005B5ECE /* ZLAllocator.cpp */; };
-		CD0969F51C05AE33005B5ECE /* ZLAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD0969F31C05AE33005B5ECE /* ZLAllocator.cpp */; };
 		CD0BB63E1B0D22AC00399FCB /* MOAILuaUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD0BB63C1B0D22AC00399FCB /* MOAILuaUtil.cpp */; };
 		CD0BB63F1B0D22AC00399FCB /* MOAILuaUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0BB63D1B0D22AC00399FCB /* MOAILuaUtil.h */; };
 		CD0BB6401B0D22B900399FCB /* MOAILuaUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD0BB63C1B0D22AC00399FCB /* MOAILuaUtil.cpp */; };
@@ -6093,8 +6089,6 @@
 		CD07C3CD13A182AA00C9386C /* libmoai-ios-untz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-untz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD07C4E513A1918600C9386C /* libmoai-osx-untz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-untz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD07C53013A1954600C9386C /* Untz-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Untz-Prefix.pch"; path = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch"; sourceTree = SOURCE_ROOT; };
-		CD0969F01C05AD45005B5ECE /* ZLAllocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLAllocator.h; sourceTree = "<group>"; };
-		CD0969F31C05AE33005B5ECE /* ZLAllocator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLAllocator.cpp; sourceTree = "<group>"; };
 		CD0BB63C1B0D22AC00399FCB /* MOAILuaUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAILuaUtil.cpp; sourceTree = "<group>"; };
 		CD0BB63D1B0D22AC00399FCB /* MOAILuaUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAILuaUtil.h; sourceTree = "<group>"; };
 		CD14013D1A0C5F660065AEE7 /* MOAIInputMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIInputMgr.cpp; sourceTree = "<group>"; };
@@ -8756,8 +8750,6 @@
 				89BE6894173974FC00DFE837 /* pch.cpp */,
 				89BE6895173974FC00DFE837 /* pch.h */,
 				89BE689D173974FC00DFE837 /* ZLAccessors.h */,
-				CD0969F31C05AE33005B5ECE /* ZLAllocator.cpp */,
-				CD0969F01C05AD45005B5ECE /* ZLAllocator.h */,
 				89BE68A9173974FC00DFE837 /* ZLBinarySearch.h */,
 				CD41F2FD1A20115E008E3420 /* ZLBitBuffer.cpp */,
 				CD41F2FE1A20115E008E3420 /* ZLBitBuffer.h */,
@@ -13423,7 +13415,6 @@
 			files = (
 				89BE694D173974FD00DFE837 /* headers.h in Headers */,
 				CD9FFC491BF9C2B300FB2A4A /* ZLGfxEnum.h in Headers */,
-				CD0969F11C05AD45005B5ECE /* ZLAllocator.h in Headers */,
 				89BE6951173974FD00DFE837 /* pch.h in Headers */,
 				CD9FFC451BF9C2B300FB2A4A /* ZLGfxDevice.h in Headers */,
 				89BE6959173974FD00DFE837 /* headers.h in Headers */,
@@ -13608,7 +13599,6 @@
 				89BE6A34173974FD00DFE837 /* ZLPolar.h in Headers */,
 				89BE6A36173974FD00DFE837 /* ZLPolygon2D.h in Headers */,
 				89BE6A38173974FD00DFE837 /* ZLPolyScanner.h in Headers */,
-				CD0969F21C05AD45005B5ECE /* ZLAllocator.h in Headers */,
 				89BE6A3C173974FD00DFE837 /* ZLPrism.h in Headers */,
 				89BE6A40173974FD00DFE837 /* ZLQuad.h in Headers */,
 				CD9FFC421BF9C2B300FB2A4A /* ZLGfx.h in Headers */,
@@ -17103,7 +17093,6 @@
 				89BE6A3D173974FD00DFE837 /* ZLQuad.cpp in Sources */,
 				89BE6A41173974FD00DFE837 /* ZLQuadCoord.cpp in Sources */,
 				89BE6A45173974FD00DFE837 /* ZLQuaternion.cpp in Sources */,
-				CD0969F41C05AE33005B5ECE /* ZLAllocator.cpp in Sources */,
 				89BE6A4F173974FD00DFE837 /* ZLRhombus.cpp in Sources */,
 				89BE6A53173974FD00DFE837 /* ZLStream.cpp in Sources */,
 				89BE6A57173974FD00DFE837 /* ZLStreamAdapter.cpp in Sources */,
@@ -17179,7 +17168,6 @@
 				89BE6A3E173974FD00DFE837 /* ZLQuad.cpp in Sources */,
 				89BE6A42173974FD00DFE837 /* ZLQuadCoord.cpp in Sources */,
 				89BE6A46173974FD00DFE837 /* ZLQuaternion.cpp in Sources */,
-				CD0969F51C05AE33005B5ECE /* ZLAllocator.cpp in Sources */,
 				89BE6A50173974FD00DFE837 /* ZLRhombus.cpp in Sources */,
 				89BE6A54173974FD00DFE837 /* ZLStream.cpp in Sources */,
 				89BE6A58173974FD00DFE837 /* ZLStreamAdapter.cpp in Sources */,

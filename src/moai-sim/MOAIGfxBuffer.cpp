@@ -136,7 +136,8 @@ MOAIGfxBuffer::MOAIGfxBuffer () :
 	mCurrentVBO ( 0 ),
 	mTarget ( ZGL_BUFFER_TARGET_ARRAY ),
 	mLoader ( 0 ),
-	mUseVBOs ( false ) {
+	mUseVBOs ( false ),
+	mCopyOnUpdate ( false ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIGfxResource )
@@ -188,8 +189,14 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 			ZLGfxHandle* vbo = gfx.CreateBuffer ();
 			if ( vbo ) {
 			
+				ZLSharedConstBuffer* buffer = this->GetCursor () ? this->GetBuffer () : 0;
+				
+				if ( this->mCopyOnUpdate ) {
+					buffer = gfx.CopyBuffer ( buffer );
+				}
+			
 				gfx.BindBuffer ( this->mTarget, vbo );
-				gfx.BufferData ( this->mTarget, this->GetLength (), this->GetCursor () ? this->GetBuffer () : 0, 0, hint );
+				gfx.BufferData ( this->mTarget, this->GetLength (), buffer, 0, hint );
 				gfx.BindBuffer ( this->mTarget, 0 );
 				
 				count++;
@@ -247,8 +254,14 @@ bool MOAIGfxBuffer::OnGPUUpdate () {
 	
 		ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
 		
+		ZLSharedConstBuffer* buffer = this->GetSharedConstBuffer ();
+		
+		if ( this->mCopyOnUpdate ) {
+			buffer = gfx.CopyBuffer ( buffer );
+		}
+		
 		gfx.BindBuffer ( this->mTarget, vbo );
-		gfx.BufferSubData ( this->mTarget, 0, this->GetCursor (), this->GetSharedConstBuffer (), 0 );
+		gfx.BufferSubData ( this->mTarget, 0, this->GetCursor (), buffer, 0 );
 	
 		//u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_DYNAMIC_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
 		//zglBufferData ( this->mTarget, this->GetLength (), 0, hint );

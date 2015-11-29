@@ -144,6 +144,12 @@ void ZLGfxLogger::CompressedTexImage2D ( u32 level, u32 internalFormat, u32 widt
 }
 
 //----------------------------------------------------------------//
+ZLSharedConstBuffer* ZLGfxLogger::CopyBuffer ( ZLSharedConstBuffer* buffer ) {
+
+	return buffer;
+}
+
+//----------------------------------------------------------------//
 ZLGfxHandle* ZLGfxLogger::Create ( ZLGfxHandle* handle, u32 param ) {
 
 	if ( handle ) {

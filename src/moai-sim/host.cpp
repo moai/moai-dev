@@ -55,7 +55,7 @@ void AKUDisplayListProcess ( int list ) {
 void AKUDisplayListPublishAndReset () {
 
 	MOAIGfxDevice::Get ().PublishAndReset ( MOAIGfxDevice::LOADING_PIPELINE );
-	MOAIGfxDevice::Get ().PublishAndReset ( MOAIGfxDevice::LOADING_PIPELINE );
+	MOAIGfxDevice::Get ().PublishAndReset ( MOAIGfxDevice::DRAWING_PIPELINE );
 }
 
 //----------------------------------------------------------------//

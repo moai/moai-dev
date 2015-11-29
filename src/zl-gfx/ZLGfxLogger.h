@@ -56,6 +56,8 @@ public:
 	void					CompileShader				( ZLGfxHandle* shader, bool verbose );
 	void					CompressedTexImage2D		( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, ZLSharedConstBuffer* buffer );
 	
+	ZLSharedConstBuffer*	CopyBuffer					( ZLSharedConstBuffer* buffer );
+	
 	ZLGfxHandle*			Create						( ZLGfxHandle* handle, u32 param );
 	
 	ZLGfxHandle*			CreateBuffer				();

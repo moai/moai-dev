@@ -129,12 +129,14 @@ void MOAIGfxDeviceVertexWriter::FlushBufferedPrims () {
 				this->BindVertexFormat ();
 				
 				this->BindVertexBuffer ( &this->mVtxBuffer );
-				this->BindVertexFormat ( this->mVertexFormat );
+				this->BindVertexFormat ( this->mVertexFormat, true );
 				this->BindIndexBuffer ( &this->mIdxBuffer );
 				
 				this->UpdateShaderGlobals ();
 
-				this->mDrawingAPI->DrawElements ( this->mPrimType, count, ZGL_TYPE_UNSIGNED_SHORT, this->mIdxBuffer.GetBuffer (), 0 );
+				ZLSharedConstBuffer* buffer = this->mDrawingAPI->CopyBuffer ( this->mIdxBuffer.GetBuffer ());
+
+				this->mDrawingAPI->DrawElements ( this->mPrimType, count, ZGL_TYPE_UNSIGNED_SHORT, buffer, 0 );
 				this->mDrawCount++;
 			}
 		}
@@ -149,7 +151,7 @@ void MOAIGfxDeviceVertexWriter::FlushBufferedPrims () {
 				this->BindVertexFormat ();
 				
 				this->BindVertexBuffer ( &this->mVtxBuffer );
-				this->BindVertexFormat ( this->mVertexFormat );
+				this->BindVertexFormat ( this->mVertexFormat, true );
 				
 				this->UpdateShaderGlobals ();
 				this->mDrawingAPI->DrawArrays ( this->mPrimType, 0, count );
@@ -193,6 +195,9 @@ MOAIGfxDeviceVertexWriter::MOAIGfxDeviceVertexWriter () :
 	
 	this->mVtxBuffer.Reserve ( DEFAULT_VERTEX_BUFFER_SIZE );
 	this->mIdxBuffer.Reserve ( DEFAULT_INDEX_BUFFER_SIZE );
+	
+	this->mVtxBuffer.SetCopyOnUpdate ( true );
+	this->mIdxBuffer.SetCopyOnUpdate ( true );
 }
 
 //----------------------------------------------------------------//

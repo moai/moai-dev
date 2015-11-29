@@ -154,9 +154,13 @@ MOAIVertexFormat* MOAIVertexFormat::AffirmVertexFormat ( MOAILuaState& state, in
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormat::Bind ( ZLSharedConstBuffer* buffer ) const {
+void MOAIVertexFormat::Bind ( ZLSharedConstBuffer* buffer, bool copyBuffer ) const {
 
 	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+
+	if ( copyBuffer ) {
+		buffer = gfx.CopyBuffer ( buffer );
+	}
 
 	for ( u32 i = 0; i < this->mTotalAttributes; ++i ) {
 		

@@ -26,7 +26,7 @@ class MOAIGfxDeviceVertexWriter :
 	public MOAIGfxDeviceMtxCache {
 protected:
 	
-	// Stock OpenGL ES 2.0 have no support for u32 index size in glDrawElements.
+	// Stock OpenGL ES 2.0 has no support for u32 index size in glDrawElements.
 	// iOS and many Androids (PowerVR, adreno) support it with GL_OES_element_index_uint extension.
 	// We can check extension availability, but using u16 index is fine for the current buffer size (~1000 vertices).
 	static const size_t	INDEX_SIZE		= 2;

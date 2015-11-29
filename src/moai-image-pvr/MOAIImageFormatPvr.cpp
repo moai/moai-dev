@@ -348,7 +348,7 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 			else {
 			
 				buffer.Alloc ( info.mSizeDecompressed, imageData );
-				gfx.TexImage2D ( level, internalFormat, width, height, internalFormat, pixelType, buffer.GetSharedConstBuffer () );
+				gfx.TexImage2D ( level, internalFormat, width, height, internalFormat, pixelType, buffer.GetSharedConstBuffer ());
 			}
 			
 			if ( MOAIGfxDevice::Get ().LogErrors ()) {

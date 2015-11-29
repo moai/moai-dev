@@ -69,7 +69,7 @@ public:
 	bool			BindTexture					( MOAITextureBase* textureSet = 0 );
 	bool			BindVertexArray				( MOAIVertexArray* vtxArray = 0 );
 	bool			BindVertexBuffer			( MOAIVertexBuffer* buffer = 0 );
-	bool			BindVertexFormat			( MOAIVertexFormat* format = 0 );
+	bool			BindVertexFormat			( MOAIVertexFormat* format = 0, bool copyBuffer = false );
 	
 					MOAIGfxDeviceStateCache		();
 	virtual			~MOAIGfxDeviceStateCache	();

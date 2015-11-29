@@ -6,8 +6,6 @@
 
 #include <zl-util/ZLAccessors.h>
 
-class ZLAllocator;
-
 //================================================================//
 // ZLRefCountedObject
 //================================================================//
@@ -18,12 +16,12 @@ private:
 
 protected:
 
-	ZLAllocator*		mAllocator;
+	//----------------------------------------------------------------//
+	virtual void		Delete						();
 
 public:
 
 	GET ( u32, RefCount, mRefCount )
-	GET_SET ( ZLAllocator*, Allocator, mAllocator )
 
 	//----------------------------------------------------------------//
 	virtual void		Release						();

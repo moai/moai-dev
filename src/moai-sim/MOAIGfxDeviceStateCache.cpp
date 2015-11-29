@@ -206,7 +206,7 @@ bool MOAIGfxDeviceStateCache::BindVertexBuffer ( MOAIVertexBuffer* buffer ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxDeviceStateCache::BindVertexFormat ( MOAIVertexFormat* format ) {
+bool MOAIGfxDeviceStateCache::BindVertexFormat ( MOAIVertexFormat* format, bool copyBuffer ) {
 
 	if ( this->mCurrentVtxFormat != format ) {
 	
@@ -222,7 +222,7 @@ bool MOAIGfxDeviceStateCache::BindVertexFormat ( MOAIVertexFormat* format ) {
 		
 			assert ( this->mCurrentVtxBuffer ); // must currently have a valid vertex buffer bound (to receive the vertex format)
 		
-			format->Bind ( this->mCurrentVtxBuffer->GetBuffer ());
+			format->Bind ( this->mCurrentVtxBuffer->GetBuffer (), copyBuffer );
 		}
 	}
 	

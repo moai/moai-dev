@@ -130,6 +130,8 @@ public:
 	virtual void					CompileShader				( ZLGfxHandle* shader, bool verbose ) = 0;
 	virtual void					CompressedTexImage2D		( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, ZLSharedConstBuffer* buffer ) = 0;
 	
+	virtual ZLSharedConstBuffer*	CopyBuffer					( ZLSharedConstBuffer* buffer ) = 0;
+	
 	virtual ZLGfxHandle*			CreateBuffer				() = 0;
 	virtual ZLGfxHandle*			CreateFramebuffer			() = 0;
 	virtual ZLGfxHandle*			CreateProgram				() = 0;
