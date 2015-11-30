@@ -372,6 +372,7 @@ void MOAIGfxDevice::ResetState () {
 
 	// turn off texture
 	this->mTextureUnits [ 0 ] = 0;
+	this->mCurrentTexture = 0;
 	
 	// turn off blending
 	zglDisable ( ZGL_PIPELINE_BLEND );
