@@ -25,12 +25,12 @@ usageText["environment"] = [[
 ]]
 
 usageText["init"] = [[
-    pito init
+    pito host init
         Run from your project folder to initialize a pito-managed set of host projects.
         Creates a hostconfig.lua file, which you must edit to describe your MOAI project.
         Example:
             mkdir newMOAIProject && cd newMOAIProject   # use the toolbelt in a new project
-            pito init 
+            pito host init 
             vi hostconfig.lua                           #&etc.
 ]]
 
