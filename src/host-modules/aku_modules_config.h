@@ -54,7 +54,7 @@
 	#endif
 
 	#ifndef AKU_WITH_PLUGINS
-		#define AKU_WITH_PLUGINS 0
+		#define AKU_WITH_PLUGINS 1
 	#endif
 
 	#ifndef AKU_WITH_SDL

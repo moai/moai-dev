@@ -22,7 +22,7 @@
 	#endif
 
 	#ifndef AKU_WITH_IOS_FACEBOOK
-		#define AKU_WITH_IOS_FACEBOOK 0
+		#define AKU_WITH_IOS_FACEBOOK 1
 	#endif
 
 	#ifndef AKU_WITH_IOS_FLURRY
@@ -64,5 +64,6 @@
 	#ifndef AKU_WITH_IOS_VUNGLE
 		#define AKU_WITH_IOS_VUNGLE 0
 	#endif
+
 
 #endif
