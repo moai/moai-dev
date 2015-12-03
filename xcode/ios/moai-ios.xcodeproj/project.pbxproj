@@ -93,6 +93,9 @@
 		CDC963D11A12C6B000F9CA22 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDC963CA1A12C6B000F9CA22 /* main.mm */; };
 		CDC963D41A12C6B000F9CA22 /* MOAIAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDC963CC1A12C6B000F9CA22 /* MOAIAppDelegate.mm */; };
 		CDC963D71A12C6B000F9CA22 /* MOAIView.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDC963CE1A12C6B000F9CA22 /* MOAIView.mm */; };
+		CDE655AD1C0AFA0E004493DD /* MOAIViewLoadingThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDE655A81C0AFA0E004493DD /* MOAIViewLoadingThread.mm */; };
+		CDE655AE1C0AFA0E004493DD /* MOAIViewRenderThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDE655AA1C0AFA0E004493DD /* MOAIViewRenderThread.mm */; };
+		CDE655AF1C0AFA0E004493DD /* MOAIViewThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDE655AC1C0AFA0E004493DD /* MOAIViewThread.mm */; };
 		CDFD7E1F1A08B16C00A94E6B /* aku_modules_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDFD7E191A08B16C00A94E6B /* aku_modules_ios.mm */; };
 		CDFD7E221A08B16C00A94E6B /* aku_modules_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDFD7E1A1A08B16C00A94E6B /* aku_modules_util.cpp */; };
 		CDFD7E251A08B16C00A94E6B /* aku_modules.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDFD7E1C1A08B16C00A94E6B /* aku_modules.cpp */; };
@@ -837,6 +840,12 @@
 		CDC963CC1A12C6B000F9CA22 /* MOAIAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIAppDelegate.mm; path = "../../src/host-ios/MOAIAppDelegate.mm"; sourceTree = "<group>"; };
 		CDC963CD1A12C6B000F9CA22 /* MOAIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIView.h; path = "../../src/host-ios/MOAIView.h"; sourceTree = "<group>"; };
 		CDC963CE1A12C6B000F9CA22 /* MOAIView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIView.mm; path = "../../src/host-ios/MOAIView.mm"; sourceTree = "<group>"; };
+		CDE655A71C0AFA0E004493DD /* MOAIViewLoadingThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIViewLoadingThread.h; path = "../../src/host-ios/MOAIViewLoadingThread.h"; sourceTree = "<group>"; };
+		CDE655A81C0AFA0E004493DD /* MOAIViewLoadingThread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIViewLoadingThread.mm; path = "../../src/host-ios/MOAIViewLoadingThread.mm"; sourceTree = "<group>"; };
+		CDE655A91C0AFA0E004493DD /* MOAIViewRenderThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIViewRenderThread.h; path = "../../src/host-ios/MOAIViewRenderThread.h"; sourceTree = "<group>"; };
+		CDE655AA1C0AFA0E004493DD /* MOAIViewRenderThread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIViewRenderThread.mm; path = "../../src/host-ios/MOAIViewRenderThread.mm"; sourceTree = "<group>"; };
+		CDE655AB1C0AFA0E004493DD /* MOAIViewThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIViewThread.h; path = "../../src/host-ios/MOAIViewThread.h"; sourceTree = "<group>"; };
+		CDE655AC1C0AFA0E004493DD /* MOAIViewThread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIViewThread.mm; path = "../../src/host-ios/MOAIViewThread.mm"; sourceTree = "<group>"; };
 		CDF389EE1A51D39000BDEB4D /* aku_modules_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_config.h; path = "../../src/host-modules/aku_modules_config.h"; sourceTree = "<group>"; };
 		CDF389EF1A51D39000BDEB4D /* aku_modules_ios_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_ios_config.h; path = "../../src/host-modules/aku_modules_ios_config.h"; sourceTree = "<group>"; };
 		CDFD7E181A08B16C00A94E6B /* aku_modules_ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_ios.h; path = "../../src/host-modules/aku_modules_ios.h"; sourceTree = SOURCE_ROOT; };
@@ -1084,6 +1093,12 @@
 				CDC963CC1A12C6B000F9CA22 /* MOAIAppDelegate.mm */,
 				CDC963CD1A12C6B000F9CA22 /* MOAIView.h */,
 				CDC963CE1A12C6B000F9CA22 /* MOAIView.mm */,
+				CDE655A71C0AFA0E004493DD /* MOAIViewLoadingThread.h */,
+				CDE655A81C0AFA0E004493DD /* MOAIViewLoadingThread.mm */,
+				CDE655A91C0AFA0E004493DD /* MOAIViewRenderThread.h */,
+				CDE655AA1C0AFA0E004493DD /* MOAIViewRenderThread.mm */,
+				CDE655AB1C0AFA0E004493DD /* MOAIViewThread.h */,
+				CDE655AC1C0AFA0E004493DD /* MOAIViewThread.mm */,
 			);
 			name = moai;
 			sourceTree = SOURCE_ROOT;
@@ -1161,7 +1176,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0720;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = BUD786NAA6;
@@ -1732,10 +1747,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDE655AE1C0AFA0E004493DD /* MOAIViewRenderThread.mm in Sources */,
 				CDC963D41A12C6B000F9CA22 /* MOAIAppDelegate.mm in Sources */,
 				CDFD7E251A08B16C00A94E6B /* aku_modules.cpp in Sources */,
+				CDE655AF1C0AFA0E004493DD /* MOAIViewThread.mm in Sources */,
 				CDC963D71A12C6B000F9CA22 /* MOAIView.mm in Sources */,
 				CDFD7E221A08B16C00A94E6B /* aku_modules_util.cpp in Sources */,
+				CDE655AD1C0AFA0E004493DD /* MOAIViewLoadingThread.mm in Sources */,
 				CDFD7E1F1A08B16C00A94E6B /* aku_modules_ios.mm in Sources */,
 				CDC963D11A12C6B000F9CA22 /* main.mm in Sources */,
 			);

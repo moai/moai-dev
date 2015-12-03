@@ -147,8 +147,11 @@ u32 ZLGfxEnum::MapZLToNative ( u32 value ) {
 			case ZGL_PIPELINE_VERTEX_ARRAY:					return GL_VERTEX_ARRAY;
 		#endif
 
-		case ZGL_COLOR_INDEX:								return GL_COLOR_INDEX;
-		case ZGL_STENCIL_INDEX:								return GL_STENCIL_INDEX;
+		#if !defined ( MOAI_OS_IPHONE )
+			case ZGL_COLOR_INDEX:								return GL_COLOR_INDEX;
+			case ZGL_STENCIL_INDEX:								return GL_STENCIL_INDEX;
+		#endif
+		
 		case ZGL_DEPTH_COMPONENT:							return GL_DEPTH_COMPONENT;
 
 		case ZGL_PIXEL_FORMAT_ALPHA:						return GL_ALPHA;

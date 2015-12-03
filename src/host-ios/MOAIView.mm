@@ -5,6 +5,7 @@
 //----------------------------------------------------------------//
 
 #import "MOAIView.h"
+#import "MOAIViewRenderThread.h"
 
 #import <CoreMotion/CoreMotion.h>
 #import <OpenGLES/EAGLDrawable.h>
@@ -33,40 +34,16 @@ enum {
     NSTimeInterval      mAnimInterval;
     CADisplayLink*      mDisplayLink;
     
-    GLint				mWidth;
-    GLint				mHeight;
-    
-    EAGLContext*		mEAGLContext;
-    
-    GLuint				mFramebuffer;
-    GLuint				mRenderbuffer;
-    GLuint              mDepthbuffer;
-	
-    GLuint				mMSAAFramebuffer;
-    GLuint				mMSAARenderBuffer;
-	
-    GLuint				mDepthBuffer;
-	
     BOOL                mGCDetected;
     BOOL				mSimStarted;
-    int					mMultisample;
+    
+    MOAIViewRenderThread*   mRenderThread;
 }
 
 	//----------------------------------------------------------------//
-    -( void )       beginDrawing;
-    -( void )       closeGraphicsContext;
-    -( bool )       createBuffers;
-    -( void )       createContext;
-    -( void )       deleteBuffers;
-    -( void )       drawView;
     -( void )       dummyFunc;
-    -( void )       endDrawing;
 	-( void )       handleTouches           :( NSSet* )touches :( BOOL )down;
-    -( void )       openGraphicsContext;
     -( void )       onUpdateAnim;
-    -( void )       releaseContext;
-    -( void )       renewContext;
-    -( BOOL )       sizeChanged;
 	-( void )       startAnimation;
 	-( void )       stopAnimation;
 @end
@@ -75,9 +52,6 @@ enum {
 // MOAIView
 //================================================================//
 @implementation MOAIView
-
-    @dynamic multisample;
-    @dynamic multisampleEnabled;
 
     //----------------------------------------------------------------//
     +( void ) appInitialize {
@@ -140,202 +114,17 @@ enum {
         return YES;
     }
 
-    //----------------------------------------------------------------//
-	-( void ) beginDrawing {
-	
-		[self openGraphicsContext];
-    	[self bindFramebuffer];
-	}
-
-	//----------------------------------------------------------------//
-	- (void) bindFramebuffer {
-
-	    if ([ self multisampleEnabled ]) {
-	        // draw into multisample buffer
-	        glBindFramebufferOES ( GL_FRAMEBUFFER_OES, mMSAAFramebuffer );
-	    }
-	    else {
-	        glBindFramebufferOES ( GL_FRAMEBUFFER_OES, mFramebuffer );
-	    }
-	}
-
-	//----------------------------------------------------------------//
-	-( void ) closeGraphicsContext {
-	
-		if ([ EAGLContext currentContext ] == mEAGLContext ) {
-			[ EAGLContext setCurrentContext:nil ];
-		}
-	}
-
-	//----------------------------------------------------------------//
-	-( bool ) createBuffers {
-        
-		mWidth = 0;
-		mHeight = 0;
-
-		// set us up the frame buffers
-	    glGenFramebuffersOES(1, &mFramebuffer);
-	    glBindFramebufferOES(GL_FRAMEBUFFER_OES, mFramebuffer);
-	    
-	    glGenRenderbuffersOES(1, &mRenderbuffer);
-	    glBindRenderbufferOES(GL_RENDERBUFFER_OES, mRenderbuffer);
-	    
-	    [ mEAGLContext renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:(CAEAGLLayer*)self.layer ];
-	    glGetRenderbufferParameterivOES ( GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &mWidth );
-	    glGetRenderbufferParameterivOES ( GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &mHeight );
-        
-	    glFramebufferRenderbufferOES ( GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, mRenderbuffer );
-
-	    // check OK
-	    if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES) {
-	        NSLog(@"failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
-	        return false;
-	    }
-
-	    // set us up the msaa buffers
-	    if ([self multisampleEnabled]) {
-	        glGenFramebuffersOES ( 1 , &mMSAAFramebuffer );
-	        glBindFramebufferOES ( GL_FRAMEBUFFER_OES, mMSAAFramebuffer );
-	    
-	        glGenRenderbuffersOES ( 1, &mMSAARenderBuffer );
-	        glBindRenderbufferOES ( GL_RENDERBUFFER_OES, mMSAARenderBuffer );
-
-	        glRenderbufferStorageMultisampleAPPLE ( GL_RENDERBUFFER_OES, self.multisample, GL_RGBA4_OES, mWidth, mHeight );
-	        glFramebufferRenderbufferOES ( GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, mMSAARenderBuffer);
-	    }
-
-	    glGenRenderbuffersOES ( 1, &mDepthBuffer );
-	    glBindRenderbufferOES ( GL_RENDERBUFFER_OES, mDepthBuffer );
-	    
-        // set us up the depth buffer
-	    if ([self multisampleEnabled]) {
-	        glRenderbufferStorageMultisampleAPPLE ( GL_RENDERBUFFER_OES, self.multisample, GL_DEPTH_COMPONENT16_OES, mWidth, mHeight );
-	    }
-	    else {
-	        glRenderbufferStorageOES ( GL_RENDERBUFFER_OES, GL_DEPTH_COMPONENT16_OES, mWidth, mHeight );
-	    }
-	    
-	    glFramebufferRenderbufferOES ( GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, mDepthBuffer );
-
-	    // check OK
-	    if ( glCheckFramebufferStatusOES ( GL_FRAMEBUFFER_OES ) != GL_FRAMEBUFFER_COMPLETE_OES ) {
-	        NSLog(@"failed to make complete framebuffer object %x", glCheckFramebufferStatusOES ( GL_FRAMEBUFFER_OES ));
-	        return false;
-	    }
-
-	    CGRect screenRect = [[ UIScreen mainScreen ] bounds ];
-	    CGFloat scale = [[ UIScreen mainScreen ] scale ];
-	    CGFloat screenWidth = screenRect.size.width * scale;
-	    CGFloat screenHeight = screenRect.size.height * scale;
-	    
-	    [ self bindFramebuffer ];
-	    
-        AKUSetScreenSize ( screenWidth, screenHeight );
-		AKUSetViewSize ( mWidth, mHeight );
-        AKUDetectFramebuffer ();
-        
-	    return true;
-	}
-
-	//----------------------------------------------------------------//
-	-( void ) createContext {
-		
-		// Get the layer
-		CAEAGLLayer* glLayer = ( CAEAGLLayer* )self.layer;
-		
-		glLayer.opaque = YES;
-		glLayer.drawableProperties = @{
-			kEAGLDrawablePropertyRetainedBacking:[NSNumber numberWithBool:NO],
-			kEAGLDrawablePropertyColorFormat:kEAGLColorFormatRGBA8, // kEAGLColorFormatRGB565 or kEAGLColorFormatRGBA8
-		};
-		
-		if ([[ UIScreen mainScreen ] respondsToSelector: @selector ( scale )]) {
-			CGFloat appContentScaleFactor = [[ UIScreen mainScreen ] scale ];
-			if ([ glLayer respondsToSelector: @selector ( setContentsScale: )]) {
-				glLayer.contentsScale = appContentScaleFactor;
-			}
-		}
-		
-        mEAGLContext = [[ EAGLContext alloc ] initWithAPI:kEAGLRenderingAPIOpenGLES2 ];
-	    assert ( mEAGLContext );
-
-        [ self openGraphicsContext ];
-        AKUDetectGfxContext ();
-	}
-
 	//----------------------------------------------------------------//
 	-( void ) dealloc {
 		
         AKUDeleteContext ( mAKUContext );
-        [ self releaseContext ];
-	}
-
-	//----------------------------------------------------------------//
-	- ( void ) deleteBuffers {
-
-	    if ( mFramebuffer ) {
-	        glDeleteFramebuffersOES ( 1, &mFramebuffer );
-	        mFramebuffer = 0;
-	    }
-	    
-	    if ( mRenderbuffer ) {
-	        glDeleteRenderbuffersOES ( 1, &mRenderbuffer );
-	        mRenderbuffer = 0;
-	    }
-	    
-	    if ( mMSAAFramebuffer ) {
-	        glDeleteFramebuffersOES ( 1, &mMSAAFramebuffer );
-	        mMSAAFramebuffer = 0;
-	    }
-	    
-	    if (mMSAARenderBuffer ) {
-	        glDeleteRenderbuffersOES ( 1, &mMSAARenderBuffer );
-	        mMSAARenderBuffer = 0;
-	    }
-	    
-	    if ( mDepthBuffer ) {
-	        glDeleteRenderbuffersOES ( 1, &mDepthBuffer );
-	        mDepthBuffer = 0;
-	    }
-	}
-
-	//----------------------------------------------------------------//
-	-( void ) drawView {
-        
-        self.opaque = AKUIsGfxBufferOpaque () != 0;
-		
-		[ self beginDrawing ];
-		
-		AKUSetContext ( mAKUContext );
-		AKURender ();
-
-		[ self endDrawing ];
+        [ mRenderThread shutdown ];
 	}
 	
     //----------------------------------------------------------------//
     -( void ) dummyFunc {
         //dummy to fix weird input bug
     }
-
-    //----------------------------------------------------------------//
-	-( void ) endDrawing {
-        
-		if ([ self multisampleEnabled ]) {
-			// resolve multisample buffer
-			glBindFramebufferOES ( GL_READ_FRAMEBUFFER_APPLE, mMSAAFramebuffer );
-			glBindFramebufferOES ( GL_DRAW_FRAMEBUFFER_APPLE, mFramebuffer );
-			glResolveMultisampleFramebufferAPPLE ();
-	            
-			GLenum attachments [] = { GL_COLOR_ATTACHMENT0_OES, GL_DEPTH_ATTACHMENT_OES };
-			glDiscardFramebufferEXT ( GL_READ_FRAMEBUFFER_APPLE, 1, attachments );
-		}
-	        
-		// finish & present
-		glBindRenderbufferOES ( GL_RENDERBUFFER_OES, mRenderbuffer );
-		[ mEAGLContext presentRenderbuffer:GL_RENDERBUFFER_OES ];
-
-	    [ self closeGraphicsContext ]; // do not remove this
-	}
 
     //----------------------------------------------------------------//
     // Since iOS 8.0 both [[UIScreen mainScreen] bounds/applicationFrame] are interface oriented.
@@ -388,11 +177,10 @@ enum {
 	}
 
     //----------------------------------------------------------------//
-    -( id ) initWithCoder:(NSCoder*)aDecoder
-    {
+    -( id ) initWithCoder:( NSCoder* )aDecoder {
+    
         // make sure to do self init here
-        if ( self = [ self init ]) {
-            mMultisample = 1;
+        if ( self = [ super initWithCoder:aDecoder ]) {
         }
         return self;
     }
@@ -415,11 +203,7 @@ enum {
 	    // It is necessary to call super here
 	    [ super layoutSubviews ];
 	    
-	    if (( mEAGLContext != nil ) && ([ self sizeChanged ])) {
-	        [ self openGraphicsContext ];
-	        [ self deleteBuffers ];
-	        [ self createBuffers ];
-	    }
+        [ mRenderThread resize:( CAEAGLLayer* )self.layer ];
 	}
 
     //----------------------------------------------------------------//
@@ -431,8 +215,6 @@ enum {
 	-( void ) moaiInitWithMultisample :( int )multisample {
     
         NSAssert ((( multisample == 1 ) || ( multisample == 4 )), @"Invalid multisample" );
-    
-        mMultisample = multisample;
     
 		mAKUContext = AKUCreateContext ();
 		AKUSetUserdata (( __bridge void* )self );
@@ -452,11 +234,11 @@ enum {
 		CGFloat screenWidth = screenRect.size.width * scale;
 		CGFloat screenHeight = screenRect.size.height * scale;
 		
-		AKUSetScreenDpi([ self guessScreenDpi ]);
+		AKUSetScreenDpi ([ self guessScreenDpi ]);
 		
-		[ self createContext ];
-        [ self openGraphicsContext ];
-        [ self createBuffers ];
+        mRenderThread = [[ MOAIViewRenderThread alloc ] init ];
+        [ mRenderThread start ];
+        [ mRenderThread create:( CAEAGLLayer* )self.layer :multisample ];
         
         AKUModulesRunLuaAPIWrapper ();
         
@@ -465,39 +247,24 @@ enum {
         mAnimInterval = 1; // 1 for 60fps, 2 for 30fps
         
         [ self pause:false ];
-        [ self closeGraphicsContext ];
-	}
-
-    //----------------------------------------------------------------//
-	-( int ) multisample {
-	    return mMultisample;
-	}
-
-    //----------------------------------------------------------------//
-	-( BOOL ) multisampleEnabled {
-	    return mMultisample > 1;
-	}
-	
-	//----------------------------------------------------------------//
-	-( void ) openGraphicsContext {
-		
-		if ([ EAGLContext currentContext ] != mEAGLContext ) {
-			[ EAGLContext setCurrentContext:mEAGLContext ];
-		}
 	}
 
     //----------------------------------------------------------------//
 	-( void ) onUpdateAnim {
 		
-		AKUSetContext ( mAKUContext );
-		AKUModulesUpdate ();
+        printf ( "OH HAI!\n" );
         
-		self.opaque = AKUIsGfxBufferOpaque () != 0;
-		
-		[ self beginDrawing ];
-		AKUSetContext ( mAKUContext );
-		AKURender ();
-		[ self endDrawing ];
+        [ mRenderThread presentFrame ];
+        
+        AKUSetContext ( mAKUContext );
+        AKUModulesUpdate ();
+        self.opaque = AKUIsGfxBufferOpaque () != 0;
+        
+        [ mRenderThread displayListBeginPhase :AKU_DISPLAY_LIST_LOGIC_PHASE ];
+        AKURender ();
+        [ mRenderThread displayListEndPhase :AKU_DISPLAY_LIST_LOGIC_PHASE ];
+        
+        [ mRenderThread render ];
         
         //sometimes the input handler will get 'locked out' by the render, this will allow it to run
         [ self performSelector:@selector( dummyFunc ) withObject:self afterDelay: 0 ];
@@ -516,29 +283,6 @@ enum {
 		}
 	}
 
-    //----------------------------------------------------------------//
-	-( void ) releaseContext {
-	
-        [ self closeGraphicsContext ];
-    
-        if ( mEAGLContext != nil ) {
-            [ self openGraphicsContext ];
-            [ self deleteBuffers ];
-            [ self closeGraphicsContext ];
-        }
-        mEAGLContext = nil;
-	}
-
-	//----------------------------------------------------------------//
-	-( void ) renewContext {
-		
-		if ( !mEAGLContext ) {
-			[ self createContext ];
-			[ self openGraphicsContext ];
-			[ self createBuffers ];
-		}
-	}
-
 	//----------------------------------------------------------------//
 	-( void ) run :( NSString* )filename {
 	
@@ -552,19 +296,6 @@ enum {
     
         AKUSetContext ( mAKUContext );
         AKUSetWorkingDirectory ([ path UTF8String ]);
-    }
-
-    //----------------------------------------------------------------//
-    -( BOOL ) sizeChanged {
-    
-        float scale = 1;
-
-		if ([[ UIScreen mainScreen ] respondsToSelector:@selector ( scale )]) {
-			scale = [[ UIScreen mainScreen ] scale];
-		}
-    
-        CGSize size = self.layer.bounds.size;
-        return (( mWidth != ( GLint )( size.width * scale )) || ( mHeight != ( GLint )( size.height * scale )));
     }
 
 	//----------------------------------------------------------------//
