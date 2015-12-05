@@ -1,8 +1,8 @@
 #ifndef ZL_PLATFORM_H
 #define	ZL_PLATFORM_H
 
-#if !(defined(DEBUG) || defined(NDEBUG))
-	#error DEBUG or NDEBUG *must* be defined!
+#if !(defined(_DEBUG) || defined(NDEBUG))
+	#error _DEBUG or NDEBUG *must* be defined!
 #endif
 
 //http://predef.sourceforge.net/preos.html#sec19
