@@ -229,6 +229,22 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	static float Normalize ( float* f, size_t size ) {
+	
+		float sum = 0;
+	
+		for ( size_t i = 0; i < size; ++i ) {
+			sum += f [ i ];
+		}
+		
+		for ( size_t i = 0; i < size; ++i ) {
+			f [ i ] /= sum;
+		}
+		
+		return sum;
+	}
+
+	//----------------------------------------------------------------//
 	static inline float Rand () {
 
 		return ( float )rand () / ( float )RAND_MAX;

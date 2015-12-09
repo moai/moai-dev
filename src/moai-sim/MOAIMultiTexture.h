@@ -22,6 +22,7 @@ private:
 	ZLLeanArray < MOAISingleTexture* > mTextures;
 
 	//----------------------------------------------------------------//
+	static int			_release					( lua_State* L );
 	static int			_reserve					( lua_State* L );
 	static int			_setTexture					( lua_State* L );
 

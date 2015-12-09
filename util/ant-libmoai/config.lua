@@ -10,7 +10,7 @@ SETTINGS = {
 	LIB_NAME			= 'moai',
 	MY_ARM_MODE			= 'arm',
 	MY_ARM_ARCH			= 'armeabi-v7a arm64-v8a x86',
-	MY_APP_PLATFORM		= 'android-10',
+	MY_APP_PLATFORM		= 'android-21',
 }
 
 MODULES = {

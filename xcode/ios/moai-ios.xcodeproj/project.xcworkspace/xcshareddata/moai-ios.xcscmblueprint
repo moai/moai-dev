@@ -5,12 +5,14 @@
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
     "63C4897045D0EF88507AD257AEF500CB53038CE0" : 0,
-    "DE072679D3B61AA77D9DD9650241084BC6FA3713" : 0
+    "DE072679D3B61AA77D9DD9650241084BC6FA3713" : 0,
+    "7BB53B1506E6E1939A1DD83892672A1FDD165695" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "9CCA7776-63D6-4DF0-AE81-B70EB1BDF459",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "63C4897045D0EF88507AD257AEF500CB53038CE0" : "moai-dev\/",
-    "DE072679D3B61AA77D9DD9650241084BC6FA3713" : "..\/.."
+    "DE072679D3B61AA77D9DD9650241084BC6FA3713" : "..\/..",
+    "7BB53B1506E6E1939A1DD83892672A1FDD165695" : ""
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "moai-ios",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -20,6 +22,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:fallguyconsulting\/moai-dev.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "63C4897045D0EF88507AD257AEF500CB53038CE0"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/moai\/zipline-studio.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7BB53B1506E6E1939A1DD83892672A1FDD165695"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "bitbucket.org:pointinside\/ios-pimapslib.git",
