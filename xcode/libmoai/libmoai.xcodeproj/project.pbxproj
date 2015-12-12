@@ -21241,6 +21241,7 @@
 					"${inherited}",
 					MACOSX,
 					LUA_USE_MACOSX,
+					"verbose=-1",
 				);
 				PRODUCT_NAME = "moai-osx-zl-core";
 				SDKROOT = macosx;
@@ -21257,6 +21258,7 @@
 					"${inherited}",
 					MACOSX,
 					LUA_USE_MACOSX,
+					"verbose=-1",
 				);
 				PRODUCT_NAME = "moai-osx-zl-core";
 				SDKROOT = macosx;
@@ -24768,6 +24770,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"MOAI_KEEP_ASSERT=1",
+					"verbose=-1",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -24804,6 +24807,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"MOAI_KEEP_ASSERT=1",
+					"verbose=-1",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -24840,6 +24844,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"MOAI_KEEP_ASSERT=1",
+					"verbose=-1",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -24876,6 +24881,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"MOAI_KEEP_ASSERT=1",
+					"verbose=-1",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -28427,6 +28433,7 @@
 					"${inherited}",
 					MACOSX,
 					LUA_USE_MACOSX,
+					"verbose=-1",
 				);
 				PRODUCT_NAME = "moai-osx-zl-core";
 				SDKROOT = macosx;
@@ -28821,6 +28828,7 @@
 					"${inherited}",
 					MACOSX,
 					LUA_USE_MACOSX,
+					"verbose=-1",
 				);
 				PRODUCT_NAME = "moai-osx-zl-core";
 				SDKROOT = macosx;
