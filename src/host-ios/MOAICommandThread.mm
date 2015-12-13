@@ -22,13 +22,11 @@
     NSThread*           mThread;
     
     NSCondition*        mCommandCondition;
-    NSCondition*        mDoneCondition;
     
     void                ( ^mCommand )( void );
     
     BOOL                mIsRunning;
     BOOL                mIsBusy;
-    BOOL                mIsDone;
 }
 
 	//----------------------------------------------------------------//
@@ -48,30 +46,29 @@
     
         if ( !command ) return;
         
-        if ( !mIsRunning ) {
-            mIsRunning = YES;
-            mThread = [[ NSThread alloc ] initWithTarget:self selector:@selector ( main: ) object:nil ];
-            [ mThread start ];
-        }
-
-        [ mDoneCondition lock ]; // block until done
-        
         [ mCommandCondition lock ];
+        
+        if ( !mIsRunning ) {
+
+            mThread = [[ NSThread alloc ] initWithTarget:self selector:@selector ( main: ) object:nil ];
+            
+            [ mThread start ];
+            
+            while ( !mIsRunning ) {
+                [ mCommandCondition wait ]; // unlock the command condition and wait for the signal
+            }
+        }
+        
         mCommand = command;
         [ mCommandCondition signal ];
         
-        if ( !waitDone ) {
-            [ mDoneCondition unlock ]; // since we locked it, unlock it so command can proceed
+        if ( waitDone ) {
+            while ( mCommand ) {
+                [ mCommandCondition wait ]; // unlock the command condition and wait for the signal
+            }
         }
         
         [ mCommandCondition unlock ];
-        
-        if ( waitDone ) {
-            while ( !mIsDone ) {
-                [ mDoneCondition wait ]; // unlock the done condition and wait for the signal
-            }
-            [ mDoneCondition unlock ];
-        }
     }
 
     //----------------------------------------------------------------//
@@ -80,7 +77,6 @@
 		if ( self = [ super init ]) {
         
             mCommandCondition = [[ NSCondition alloc ] init ];
-            mDoneCondition = [[ NSCondition alloc ] init ];
 		}
         return self;
 	}
@@ -88,35 +84,27 @@
     //----------------------------------------------------------------//
     -( void ) main :( id* )argument {
         
-        [ mDoneCondition lock ];
+        [ mCommandCondition lock ];
+        
+        mIsRunning = YES;
+        [ mCommandCondition signal ];
         
         while ( mIsRunning ) {
-        
-            [ mCommandCondition lock ];
-            [ mDoneCondition unlock ];
             
             while ( !mCommand ) {
                 [ mCommandCondition wait ]; // unlock the command condition and wait for the signal
             }
             
             [ self setIsBusy:YES ];
-            
-            void ( ^command )( void ) = mCommand;
+
+            mCommand ();
             mCommand = 0;
-            mIsDone = NO;
-            
-            [ mDoneCondition lock ];
-            [ mCommandCondition unlock ];
-            
-            command ();
             
             [ self setIsBusy:NO ];
-            mIsDone = YES;
-            
-            [ mDoneCondition signal ];
+            [ mCommandCondition signal ];
         }
         
-        [ mDoneCondition unlock ];
+        [ mCommandCondition unlock ];
     }
 
     //----------------------------------------------------------------//
