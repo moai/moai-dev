@@ -38,7 +38,7 @@
     BOOL				mSimStarted;
     int					mMultisample;
     
-    BOOL                mFrameReady;
+    BOOL                mFrameIsReady;
 }
 
     @property ( readonly, nonatomic ) int multisample;
@@ -243,10 +243,10 @@
         
         [ self openGraphicsContext ];
         
-        if ( mFrameReady ) {
+        if ( mFrameIsReady ) {
             glBindRenderbufferOES ( GL_RENDERBUFFER_OES, mRenderbuffer );
             [ mEAGLContext presentRenderbuffer:GL_RENDERBUFFER_OES ];
-            mFrameReady = NO;
+            mFrameIsReady = NO;
         }
         
         [ self closeGraphicsContext ];
@@ -255,6 +255,7 @@
     //----------------------------------------------------------------//
     -( void ) render {
         
+        if ( mFrameIsReady ) return;
         if ( !AKUDisplayListHasContent ( AKU_DISPLAY_LIST_DRAWING )) return;
         
         [ self openGraphicsContext ];
@@ -283,7 +284,7 @@
 
         //[ NSThread sleepForTimeInterval:( 1.0f / 15.0f )];
 
-        mFrameReady = YES;
+        mFrameIsReady = YES;
         
         [ self closeGraphicsContext ];
     }

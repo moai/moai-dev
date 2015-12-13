@@ -29,7 +29,7 @@
 @private
 }
 
-    @property ( atomic ) EAGLContext* eaglContext;
+    @property ( readonly, atomic ) EAGLContext* eaglContext;
 
     //----------------------------------------------------------------//
     -( id )         initWithLayer           :( CAEAGLLayer* )layer :( int )multisample;
