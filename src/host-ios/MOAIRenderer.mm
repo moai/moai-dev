@@ -83,13 +83,6 @@
 	}
 
     //----------------------------------------------------------------//
-    -( void ) create :( CAEAGLLayer* )layer :( int )multisample {
-    
-        [ self createContext :layer ];
-        [ self createBuffers :layer :multisample ];
-    }
-
-    //----------------------------------------------------------------//
 	-( BOOL ) createBuffers :( CAEAGLLayer* )layer :( int )multisample {
         
         mMultisample = multisample;
@@ -215,6 +208,17 @@
 	        mDepthBuffer = 0;
 	    }
 	}
+
+    //----------------------------------------------------------------//
+    -( id ) initWithLayer :( CAEAGLLayer* )layer :( int )multisample {
+    
+        self = [ super init ];
+		if ( self != nil ) {
+            [ self createContext :layer ];
+            [ self createBuffers :layer :multisample ];
+        }
+        return self;
+    }
 
     //----------------------------------------------------------------//
 	-( int ) multisample {

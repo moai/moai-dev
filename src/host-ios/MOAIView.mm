@@ -39,8 +39,6 @@ enum {
     BOOL                mGCDetected;
     BOOL				mSimStarted;
     
-    BOOL                mUseDisplayLists;
-    
     id < MOAIRendererProtocol >   mRenderer;
 }
 
@@ -248,17 +246,11 @@ enum {
                 useLoadingThread = YES;
             #endif
         
-            mUseDisplayLists = YES;
-        
-            MOAIRendererAsync* renderer = [[ MOAIRendererAsync alloc ] init ];
-            [ renderer create :( CAEAGLLayer* )self.layer :multisample :useLoadingThread ];
-            mRenderer = renderer;
+            mRenderer = [[ MOAIRendererAsync alloc ] initWithLayer :( CAEAGLLayer* )self.layer :multisample :useLoadingThread ];
         
         #else
         
-            MOAIRenderer* renderer = [[ MOAIRenderer alloc ] init ];
-            [ renderer create :( CAEAGLLayer* )self.layer :multisample ];
-            mRenderer = renderer;
+            mRenderer = [[ MOAIRenderer alloc ] initWithLayer :( CAEAGLLayer* )self.layer :multisample ];
         
         #endif
         

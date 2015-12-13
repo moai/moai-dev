@@ -32,6 +32,6 @@
     @property ( atomic ) EAGLContext* eaglContext;
 
     //----------------------------------------------------------------//
-    -( void )       create                  :( CAEAGLLayer* )layer :( int )multisample;
+    -( id )         initWithLayer           :( CAEAGLLayer* )layer :( int )multisample;
 
 @end

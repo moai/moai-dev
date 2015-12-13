@@ -17,6 +17,6 @@
 }
 
     //----------------------------------------------------------------//
-    -( void )       create                  :( CAEAGLLayer* )layer :( int )multisample :( BOOL )useLoadingThread;
+    -( id )         initWithLayer               :( CAEAGLLayer* )layer :( int )multisample :( BOOL )useLoadingThread;
 
 @end

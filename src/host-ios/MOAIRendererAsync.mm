@@ -43,28 +43,31 @@
 @implementation MOAIRendererAsync
 
     //----------------------------------------------------------------//
-    -( void ) create :( CAEAGLLayer* )layer :( int )multisample :( BOOL )useLoadingThread {
+    -( id ) initWithLayer :( CAEAGLLayer* )layer :( int )multisample :( BOOL )useLoadingThread {
         
-        mDrawingThread = [[ MOAICommandThread alloc ] init ];
+        self = [ super init];
+		if ( self != nil ) {
         
-        mRenderer = [[ MOAIRenderer alloc ] init ];
-        
-        void ( ^command )( void ) = ^{
-        
-            AKUDisplayListEnable ( AKU_DISPLAY_LIST_DRAWING );
-            [ mRenderer create :layer :multisample ];
+            mDrawingThread = [[ MOAICommandThread alloc ] init ];
             
-            if ( useLoadingThread ) {
+            void ( ^command )( void ) = ^{
             
-                AKUDisplayListEnable ( AKU_DISPLAY_LIST_LOADING );
-                mLoadingContext = [[ EAGLContext alloc ] initWithAPI:kEAGLRenderingAPIOpenGLES2 sharegroup:[[ mRenderer eaglContext ] sharegroup ]];
+                AKUDisplayListEnable ( AKU_DISPLAY_LIST_DRAWING );
+                mRenderer = [[ MOAIRenderer alloc ] initWithLayer :layer :multisample ];
                 
-                mLoadingThread = [[ MOAICommandThread alloc ] init ];
-                [ mLoadingThread start ];
-            }
-        };
-        
-        [ mDrawingThread command:command :YES ];
+                if ( useLoadingThread ) {
+                
+                    AKUDisplayListEnable ( AKU_DISPLAY_LIST_LOADING );
+                    mLoadingContext = [[ EAGLContext alloc ] initWithAPI:kEAGLRenderingAPIOpenGLES2 sharegroup:[[ mRenderer eaglContext ] sharegroup ]];
+                    
+                    mLoadingThread = [[ MOAICommandThread alloc ] init ];
+                    [ mLoadingThread start ];
+                }
+            };
+            
+            [ mDrawingThread command:command :YES ];
+        }
+        return self;
     }
 
     //----------------------------------------------------------------//
