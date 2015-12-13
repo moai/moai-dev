@@ -7,17 +7,15 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "MOAICommandThread.h"
-
 //================================================================//
-// MOAIViewLoadingThread
+// MOAIContextMgr
 //================================================================//
-@interface MOAIViewLoadingThread : MOAICommandThread {
-@private
+@interface MOAIContextMgr : NSObject {
+@protected
 }
 
     //----------------------------------------------------------------//
-    -( void )           create                      :( EAGLContext* )eaglContext;
-	-( void )           load;
+    +( void )       displayListBeginPhase       :( int )list;
+    +( void )       displayListEndPhase         :( int )list;
 
 @end

@@ -4,6 +4,7 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
+#import "MOAIContextMgr.h"
 #import "MOAIViewRenderThread.h"
 
 #import <CoreMotion/CoreMotion.h>
@@ -21,6 +22,13 @@ enum {
     COMMAND_SHUTDOWN,
 };
 
+// vsync
+// if ready and done, swap buffers and draw next frame
+// swap buffers (if buffer is ready) - main thread
+// if not busy, kick off redraw
+// OK to drop render frames
+// not OK to drop loading frames
+
 //================================================================//
 // MOAIViewRenderThread ()
 //================================================================//
@@ -33,21 +41,22 @@ enum {
     
     GLuint				mFramebuffer;
     GLuint				mRenderbuffer;
-    GLuint              mDepthbuffer;
-	
+
     GLuint				mMSAAFramebuffer;
     GLuint				mMSAARenderBuffer;
 	
+    // this gets bound to either mFramebuffer or mMSAAFramebuffer, depending on whether multisampling is enabled
     GLuint				mDepthBuffer;
-	
+    
     BOOL                mGCDetected;
     BOOL				mSimStarted;
     int					mMultisample;
     
     BOOL                mFrameReady;
-    
-    NSLock*             mDisplayListLock;
 }
+
+    @property ( readonly, nonatomic ) int multisample;
+    @property ( readonly, nonatomic ) BOOL multisampleEnabled;
 
 	//----------------------------------------------------------------//
     -( void )           bindFramebuffer;
@@ -65,8 +74,10 @@ enum {
 //================================================================//
 @implementation MOAIViewRenderThread
 
+    @synthesize eaglContext = mEAGLContext;
+
 	//----------------------------------------------------------------//
-	- (void) bindFramebuffer {
+	-( void ) bindFramebuffer {
 
 	    if ([ self multisampleEnabled ]) {
 	        // draw into multisample buffer
@@ -88,15 +99,15 @@ enum {
     //----------------------------------------------------------------//
     -( void ) create :( CAEAGLLayer* )layer :( int )multisample {
         
-        mDisplayListLock = [[ NSLock alloc ] init ];
-        
         void ( ^command )( void ) = ^{
+        
+            AKUDisplayListEnable ( AKU_DISPLAY_LIST_DRAWING );
         
             [ self createContext :layer ];
             [ self createBuffers :layer :multisample ];
         };
         
-        [ self command:command :YES :YES ];
+        [ self command:command :YES ];
     }
 
     //----------------------------------------------------------------//
@@ -107,27 +118,30 @@ enum {
 		mWidth = 0;
 		mHeight = 0;
 
+        glBindFramebufferOES ( GL_FRAMEBUFFER_OES, nil );
+
 		// set us up the frame buffers
 	    glGenFramebuffersOES ( 1, &mFramebuffer );
 	    glBindFramebufferOES ( GL_FRAMEBUFFER_OES, mFramebuffer );
-	    
+        
 	    glGenRenderbuffersOES ( 1, &mRenderbuffer );
 	    glBindRenderbufferOES ( GL_RENDERBUFFER_OES, mRenderbuffer );
-	    
 	    [ mEAGLContext renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:( CAEAGLLayer* )layer ];
+        
 	    glGetRenderbufferParameterivOES ( GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &mWidth );
 	    glGetRenderbufferParameterivOES ( GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &mHeight );
         
 	    glFramebufferRenderbufferOES ( GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, mRenderbuffer );
 
 	    // check OK
-	    if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES) {
+	    if ( glCheckFramebufferStatusOES ( GL_FRAMEBUFFER_OES ) != GL_FRAMEBUFFER_COMPLETE_OES ) {
 	        NSLog ( @"failed to make complete framebuffer object %x", glCheckFramebufferStatusOES ( GL_FRAMEBUFFER_OES ));
 	        return NO;
 	    }
 
 	    // set us up the msaa buffers
 	    if ([ self multisampleEnabled ]) {
+        
 	        glGenFramebuffersOES ( 1 , &mMSAAFramebuffer );
 	        glBindFramebufferOES ( GL_FRAMEBUFFER_OES, mMSAAFramebuffer );
 	    
@@ -153,7 +167,7 @@ enum {
 
 	    // check OK
 	    if ( glCheckFramebufferStatusOES ( GL_FRAMEBUFFER_OES ) != GL_FRAMEBUFFER_COMPLETE_OES ) {
-	        NSLog(@"failed to make complete framebuffer object %x", glCheckFramebufferStatusOES ( GL_FRAMEBUFFER_OES ));
+	        NSLog ( @"failed to make complete framebuffer object %x", glCheckFramebufferStatusOES ( GL_FRAMEBUFFER_OES ));
 	        return NO;
 	    }
 
@@ -192,7 +206,6 @@ enum {
 
         [ self openGraphicsContext ];
         AKUDetectGfxContext ();
-        AKUDisplayListEnable ( AKU_DISPLAY_LIST_DRAWING );
 	}
 
     //----------------------------------------------------------------//
@@ -225,22 +238,6 @@ enum {
 	}
 
     //----------------------------------------------------------------//
-	-( void ) displayListBeginPhase :( int )list {
-	
-		[ mDisplayListLock lock ];
-		AKUDisplayListBeginPhase ( list );
-		[ mDisplayListLock unlock ];
-	}
-	
-	//----------------------------------------------------------------//
-	-( void ) displayListEndPhase :( int )list {
-	
-		[ mDisplayListLock lock ];
-		AKUDisplayListEndPhase ( list );
-		[ mDisplayListLock unlock ];
-	}
-
-    //----------------------------------------------------------------//
 	-( int ) multisample {
 	    return mMultisample;
 	}
@@ -261,6 +258,8 @@ enum {
     //----------------------------------------------------------------//
     -( void ) presentFrame {
     
+        if ([ self isBusy ]) return;
+    
         void ( ^command )( void ) = ^{
         
             [ self openGraphicsContext ];
@@ -274,12 +273,13 @@ enum {
             [ self closeGraphicsContext ];
         };
         
-        [ self command:command :YES :YES ];
+        [ self command:command :YES ];
     }
 
     //----------------------------------------------------------------//
     -( void ) render {
-    
+        
+        if ([ self isBusy ]) return;
         if ( !AKUDisplayListHasContent ( AKU_DISPLAY_LIST_DRAWING )) return;
     
         void ( ^command )( void ) = ^{
@@ -287,9 +287,9 @@ enum {
             [ self openGraphicsContext ];
             [ self bindFramebuffer ];
             
-            [ self displayListBeginPhase:AKU_DISPLAY_LIST_DRAWING_PHASE ];
+            [ MOAIContextMgr displayListBeginPhase:AKU_DISPLAY_LIST_DRAWING_PHASE ];
             AKUDisplayListProcess ( AKU_DISPLAY_LIST_DRAWING );
-            [ self displayListEndPhase:AKU_DISPLAY_LIST_DRAWING_PHASE ];
+            [ MOAIContextMgr displayListEndPhase:AKU_DISPLAY_LIST_DRAWING_PHASE ];
             
             if ([ self multisampleEnabled ]) {
                 // resolve multisample buffer
@@ -301,12 +301,14 @@ enum {
                 glDiscardFramebufferEXT ( GL_READ_FRAMEBUFFER_APPLE, 1, attachments );
             }
 
+            //[ NSThread sleepForTimeInterval:( 1.0f / 15.0f )];
+
             mFrameReady = YES;
             
             [ self closeGraphicsContext ];
         };
         
-        [ self command:command :NO :NO ];
+        [ self command:command :NO ];
     }
 
     //----------------------------------------------------------------//
@@ -322,7 +324,7 @@ enum {
             }
         };
         
-        [ self command:command :YES :YES ];
+        [ self command:command :YES ];
     }
 
     //----------------------------------------------------------------//
@@ -351,7 +353,8 @@ enum {
             mEAGLContext = nil;
         };
         
-        [ self command:command :YES :YES ];
+        [ self command:command :YES ];
+        [ self stop ];
     }
 
 @end

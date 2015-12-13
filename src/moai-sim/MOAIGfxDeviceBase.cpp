@@ -54,7 +54,7 @@ void MOAIGfxPipeline::PhaseBegin ( u32 phase ) {
 
 	switch ( phase ) {
 	
-		case LOGIC_PHASE: {
+		case CPU_PHASE: {
 			
 			// put these back
 			while ( this->mFinishedDisplayPairs.GetTop ()) {
@@ -62,7 +62,7 @@ void MOAIGfxPipeline::PhaseBegin ( u32 phase ) {
 			}
 
 			// illegal to begin while already in progress
-			assert ( this->mPipeline [ PIPELINE_LOGIC ] == 0 );
+			assert ( this->mPipeline [ PIPELINE_CPU ] == 0 );
 			
 			MOAIGfxPipelinePair* pair = 0;
 			
@@ -70,28 +70,29 @@ void MOAIGfxPipeline::PhaseBegin ( u32 phase ) {
 			
 				pair = this->mPipeline [ PIPELINE_PENDING ];
 				pair->mCritical.Comment ( "ROLLING BACK FROM PENDING" );
-				pair->mTemporal.Reset ();
+				pair->mOptional.Reset (); // discard pending commands
 			}
 			else {
 				pair = this->GetPair ();
 			}
 
-			this->mPipeline [ PIPELINE_LOGIC ] = pair;
+			this->mPipeline [ PIPELINE_CPU ] = pair;
 			this->mPipeline [ PIPELINE_PENDING ] = 0;
+			
 			this->mHasContent = pair->mCritical.HasContent ();
 			
 			break;
 		}
 		
-		case RENDER_PHASE: {
+		case GPU_PHASE: {
 		
 			// illegal to begin while already in progress
-			assert ( this->mPipeline [ PIPELINE_RENDER ] == 0 );
+			assert ( this->mPipeline [ PIPELINE_GPU ] == 0 );
 			
 			MOAIGfxPipelinePair* pair = this->mPipeline [ PIPELINE_PENDING ];
 			
 			if ( pair ) {
-				this->mPipeline [ PIPELINE_RENDER ] = pair;
+				this->mPipeline [ PIPELINE_GPU ] = pair;
 				this->mPipeline [ PIPELINE_PENDING ] = 0;
 			}
 			break;
@@ -104,29 +105,36 @@ void MOAIGfxPipeline::PhaseEnd ( u32 phase ) {
 
 	switch ( phase ) {
 	
-		case LOGIC_PHASE: {
+		case CPU_PHASE: {
 		
 			assert ( this->mPipeline [ PIPELINE_PENDING ] == 0 );
 		
-			MOAIGfxPipelinePair* pair = this->mPipeline [ PIPELINE_LOGIC ];
+			MOAIGfxPipelinePair* pair = this->mPipeline [ PIPELINE_CPU ];
 			assert ( pair );
 			
-			this->mPipeline [ PIPELINE_LOGIC ] = 0;
-			this->mPipeline [ PIPELINE_PENDING ] = pair;
+			this->mPipeline [ PIPELINE_CPU ] = 0;
 			
-			this->mHasContent = pair->mTemporal.HasContent () || pair->mCritical.HasContent ();
+			this->mHasContent = pair->mOptional.HasContent () || pair->mCritical.HasContent ();
 			
+			if ( this->mHasContent ) {
+				this->mPipeline [ PIPELINE_PENDING ] = pair;
+			}
+			else {
+				this->ReleasePair ( pair );
+			}
 			break;
 		}
 		
-		case RENDER_PHASE: {
+		case GPU_PHASE: {
 		
-			MOAIGfxPipelinePair* pair = this->mPipeline [ PIPELINE_RENDER ];
+			MOAIGfxPipelinePair* pair = this->mPipeline [ PIPELINE_GPU ];
 	
 			if ( pair ) {
 				this->mFinishedDisplayPairs.Push ( pair );
-				this->mPipeline [ PIPELINE_RENDER ] = 0;
+				this->mPipeline [ PIPELINE_GPU ] = 0;
 			}
+		
+			this->mHasContent = false;
 		
 			break;
 		}
@@ -142,12 +150,15 @@ void MOAIGfxPipeline::PublishAndReset () {
 		MOAIGfxPipelinePair* pair = this->mFinishedDisplayPairs [ i ];
 		
 		pair->mCritical.PublishEventsAndReset ();
-		pair->mTemporal.PublishEventsAndReset ();
+		pair->mOptional.PublishEventsAndReset ();
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxPipeline::ReleasePair ( MOAIGfxPipelinePair* pair ) {
+
+	pair->mCritical.Reset ();
+	pair->mOptional.Reset ();
 
 	this->mFreeDisplayPairs.Push ( pair );
 }
@@ -166,19 +177,19 @@ void MOAIGfxDeviceBase::BeginPhase ( u32 phase ) {
 			this->PublishAndReset ( LOADING_PIPELINE );
 			this->PublishAndReset ( DRAWING_PIPELINE );
 		
-			this->BeginPhase ( LOADING_PIPELINE, MOAIGfxPipeline::LOGIC_PHASE );
-			this->BeginPhase ( DRAWING_PIPELINE, MOAIGfxPipeline::LOGIC_PHASE );
+			this->BeginPhase ( LOADING_PIPELINE, MOAIGfxPipeline::CPU_PHASE );
+			this->BeginPhase ( DRAWING_PIPELINE, MOAIGfxPipeline::CPU_PHASE );
 			
 			break;
 			
 		case LOADING_PHASE:
 		
-			this->BeginPhase ( LOADING_PIPELINE, MOAIGfxPipeline::RENDER_PHASE );
+			this->BeginPhase ( LOADING_PIPELINE, MOAIGfxPipeline::GPU_PHASE );
 			break;
 			
 		case RENDER_PHASE:
 		
-			this->BeginPhase ( DRAWING_PIPELINE, MOAIGfxPipeline::RENDER_PHASE );
+			this->BeginPhase ( DRAWING_PIPELINE, MOAIGfxPipeline::GPU_PHASE );
 			break;
 	}
 }
@@ -196,7 +207,7 @@ void MOAIGfxDeviceBase::BeginPhase ( u32 pipelineID, u32 phase ) {
 			
 			pipeline->PhaseBegin ( phase );
 			
-			if (( phase == MOAIGfxPipeline::RENDER_PHASE ) && ( pipeline->mPipeline [ MOAIGfxPipeline::PIPELINE_RENDER ])) {
+			if (( phase == MOAIGfxPipeline::GPU_PHASE ) && ( pipeline->mPipeline [ MOAIGfxPipeline::PIPELINE_GPU ])) {
 				pipeline->mRenderCount = this->mPipelineRenderCount++;
 			}
 		}
@@ -217,18 +228,18 @@ void MOAIGfxDeviceBase::EndPhase ( u32 phase ) {
 	
 		case LOGIC_PHASE:
 		
-			this->EndPhase ( LOADING_PIPELINE, MOAIGfxPipeline::LOGIC_PHASE );
-			this->EndPhase ( DRAWING_PIPELINE, MOAIGfxPipeline::LOGIC_PHASE );
+			this->EndPhase ( LOADING_PIPELINE, MOAIGfxPipeline::CPU_PHASE );
+			this->EndPhase ( DRAWING_PIPELINE, MOAIGfxPipeline::CPU_PHASE );
 			break;
 			
 		case LOADING_PHASE:
 		
-			this->EndPhase ( LOADING_PIPELINE, MOAIGfxPipeline::RENDER_PHASE );
+			this->EndPhase ( LOADING_PIPELINE, MOAIGfxPipeline::GPU_PHASE );
 			break;
 			
 		case RENDER_PHASE:
 		
-			this->EndPhase ( DRAWING_PIPELINE, MOAIGfxPipeline::RENDER_PHASE );
+			this->EndPhase ( DRAWING_PIPELINE, MOAIGfxPipeline::GPU_PHASE );
 			break;
 	}
 }
@@ -308,22 +319,22 @@ void MOAIGfxDeviceBase::ProcessPipeline ( u32 pipelineID ) {
 	assert ( pipelineID < TOTAL_PIPELINES );
 	MOAIGfxPipeline* pipeline = this->mPipelines [ pipelineID ];
 	
-	if ( pipeline && pipeline->mPipeline [ MOAIGfxPipeline::PIPELINE_RENDER ]) {
+	if ( pipeline && pipeline->mPipeline [ MOAIGfxPipeline::PIPELINE_GPU ]) {
 
-		MOAIGfxPipelinePair* pair = pipeline->mPipeline [ MOAIGfxPipeline::PIPELINE_RENDER ];
+		MOAIGfxPipelinePair* pair = pipeline->mPipeline [ MOAIGfxPipeline::PIPELINE_GPU ];
 
-		if ( pair->mCritical.HasContent () || pair->mTemporal.HasContent ()) {
+		if ( pair->mCritical.HasContent () || pair->mOptional.HasContent ()) {
 
 			if ( pipeline->mEnableLogging ) {
 			
 				cc8* name = pipelineID == DRAWING_PIPELINE ? "drawing" : "loading";
 			
 				this->LogPipelineRender ( pair->mCritical, pipeline->mRenderCount, name, "critical" );
-				this->LogPipelineRender ( pair->mTemporal, pipeline->mRenderCount, name, "temporal" );
+				this->LogPipelineRender ( pair->mOptional, pipeline->mRenderCount, name, "temporal" );
 			}
 
 			pair->mCritical.Draw ( this->mGfxImmediate );
-			pair->mTemporal.Draw ( this->mGfxImmediate );
+			pair->mOptional.Draw ( this->mGfxImmediate );
 			
 			if ( pipelineID == LOADING_PIPELINE ) {
 				this->mGfxImmediate.Flush ( true );
@@ -361,10 +372,10 @@ ZLGfx& MOAIGfxDeviceBase::SelectDrawingAPI ( u32 pipelineID, bool critical ) {
 		
 		if ( pipeline ) {
 			
-			MOAIGfxPipelinePair* pair = pipeline->mPipeline [ MOAIGfxPipeline::PIPELINE_LOGIC ];
+			MOAIGfxPipelinePair* pair = pipeline->mPipeline [ MOAIGfxPipeline::PIPELINE_CPU ];
 			assert ( pair );
 			
-			this->mDrawingAPI = critical ? &pair->mCritical : &pair->mTemporal;
+			this->mDrawingAPI = critical ? &pair->mCritical : &pair->mOptional;
 		}
 		else if ( pipelineID == LOADING_PIPELINE ) {
 		

@@ -21,7 +21,7 @@ private:
 	friend class MOAIGfxDeviceBase;
 	
 	ZLGfxRetained	mCritical;
-	ZLGfxRetained	mTemporal;
+	ZLGfxRetained	mOptional;
 };
 
 //================================================================//
@@ -37,15 +37,15 @@ private:
 	ZLLeanStack < MOAIGfxPipelinePair* > mFinishedDisplayPairs;
 
 	enum {
-		PIPELINE_LOGIC,			// busy on the main thread
+		PIPELINE_CPU,			// busy on the main thread
 		PIPELINE_PENDING,		// waiting for the graphics thread
-		PIPELINE_RENDER,		// busy for the graphics thread
+		PIPELINE_GPU,			// busy on the graphics thread
 		PIPELINE_TOTAL,
 	};
 
 	enum {
-		LOGIC_PHASE,
-		RENDER_PHASE,
+		CPU_PHASE,
+		GPU_PHASE,
 	};
 
 	MOAIGfxPipelinePair* mPipeline [ PIPELINE_TOTAL ];

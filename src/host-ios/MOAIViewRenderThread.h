@@ -7,22 +7,19 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "MOAIViewThread.h"
+#import "MOAICommandThread.h"
 
 //================================================================//
 // MOAIViewRenderThread
 //================================================================//
-@interface MOAIViewRenderThread : MOAIViewThread {
+@interface MOAIViewRenderThread : MOAICommandThread {
 @private
 }
 
-    @property ( readonly, nonatomic ) int multisample;
-    @property ( readonly, nonatomic ) BOOL multisampleEnabled;
+    @property ( atomic ) EAGLContext* eaglContext;
 
     //----------------------------------------------------------------//
     -( void )       create                      :( CAEAGLLayer* )layer :( int )multisample;
-    -( void )       displayListBeginPhase       :( int )list;
-    -( void )       displayListEndPhase         :( int )list;
     -( void )       presentFrame;
     -( void )       render;
     -( void )       resize                      :( CAEAGLLayer* )layer;

@@ -4,7 +4,9 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
+#import "MOAIContextMgr.h"
 #import "MOAIView.h"
+#import "MOAIViewLoadingThread.h"
 #import "MOAIViewRenderThread.h"
 
 #import <CoreMotion/CoreMotion.h>
@@ -37,6 +39,7 @@ enum {
     BOOL                mGCDetected;
     BOOL				mSimStarted;
     
+    MOAIViewLoadingThread*  mLoadingThread;
     MOAIViewRenderThread*   mRenderThread;
 }
 
@@ -235,10 +238,12 @@ enum {
 		CGFloat screenHeight = screenRect.size.height * scale;
 		
 		AKUSetScreenDpi ([ self guessScreenDpi ]);
-		
+        
         mRenderThread = [[ MOAIViewRenderThread alloc ] init ];
-        [ mRenderThread start ];
         [ mRenderThread create:( CAEAGLLayer* )self.layer :multisample ];
+        
+        mLoadingThread = [[ MOAIViewLoadingThread alloc ] init ];
+        [ mLoadingThread create:[ mRenderThread eaglContext ]];
         
         AKUModulesRunLuaAPIWrapper ();
         
@@ -251,8 +256,6 @@ enum {
 
     //----------------------------------------------------------------//
 	-( void ) onUpdateAnim {
-		
-        printf ( "OH HAI!\n" );
         
         [ mRenderThread presentFrame ];
         
@@ -260,10 +263,11 @@ enum {
         AKUModulesUpdate ();
         self.opaque = AKUIsGfxBufferOpaque () != 0;
         
-        [ mRenderThread displayListBeginPhase :AKU_DISPLAY_LIST_LOGIC_PHASE ];
+        [ MOAIContextMgr displayListBeginPhase :AKU_DISPLAY_LIST_LOGIC_PHASE ];
         AKURender ();
-        [ mRenderThread displayListEndPhase :AKU_DISPLAY_LIST_LOGIC_PHASE ];
+        [ MOAIContextMgr displayListEndPhase :AKU_DISPLAY_LIST_LOGIC_PHASE ];
         
+        [ mLoadingThread load ];
         [ mRenderThread render ];
         
         //sometimes the input handler will get 'locked out' by the render, this will allow it to run

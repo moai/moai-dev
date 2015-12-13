@@ -8,25 +8,16 @@
 #import <UIKit/UIKit.h>
 
 //================================================================//
-// MOAIViewThread
+// MOAICommandThread
 //================================================================//
-@interface MOAIViewThread : NSObject {
+@interface MOAICommandThread : NSObject {
 @protected
-
-	NSThread*           mThread;
-	bool                mIsDone;
-	EAGLContext*		mEAGLContext;
-	int                 mMask;
 }
 
+    @property ( atomic ) BOOL isBusy;
+
     //----------------------------------------------------------------//
-    -( void )           command         :( void (^)( void ))command :( BOOL )waitStart :( BOOL )waitDone;
-    -( void )           lock;
-    //-( void )           onCommand       :( int )command;
-    //-( void )           onStart;
-    -( void )           signal;
-    -( void )           start;
+    -( void )           command         :( void (^)( void ))command :( BOOL )waitDone; // calling thread will *block* until prev command is finished (if any). may optionally block until new command is finished.
     -( void )           stop;
-    -( void )           unlock;
 
 @end
