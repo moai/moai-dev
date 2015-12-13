@@ -260,7 +260,7 @@ void MOAIGfxDeviceBase::EndPhase ( u32 pipelineID, u32 phase ) {
 bool MOAIGfxDeviceBase::HasContent ( u32 pipelineID ) {
 
 	assert ( pipelineID < TOTAL_PIPELINES );
-	return this->mPipelines [ pipelineID ]->HasContent ();
+	return this->mPipelines [ pipelineID ] ? this->mPipelines [ pipelineID ]->HasContent () : true;
 }
 
 //----------------------------------------------------------------//

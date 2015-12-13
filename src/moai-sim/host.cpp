@@ -46,6 +46,12 @@ bool AKUDisplayListHasContent ( int list ) {
 }
 
 //----------------------------------------------------------------//
+bool AKUDisplayListIsEnabled ( int list ) {
+
+	return MOAIGfxDevice::Get ().IsPipelineEnabled ( list );
+}
+
+//----------------------------------------------------------------//
 void AKUDisplayListProcess ( int list ) {
 
 	MOAIGfxDevice::Get ().ProcessPipeline ( list );

@@ -7,17 +7,16 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "MOAICommandThread.h"
+#import "MOAIRenderer.h"
 
 //================================================================//
-// MOAIViewLoadingThread
+// MOAIRendererAsync
 //================================================================//
-@interface MOAIViewLoadingThread : MOAICommandThread {
+@interface MOAIRendererAsync : NSObject < MOAIRendererProtocol > {
 @private
 }
 
     //----------------------------------------------------------------//
-    -( void )           create                      :( EAGLContext* )eaglContext;
-	-( void )           load;
+    -( void )       create                  :( CAEAGLLayer* )layer :( int )multisample :( BOOL )useLoadingThread;
 
 @end

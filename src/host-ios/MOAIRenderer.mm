@@ -5,7 +5,7 @@
 //----------------------------------------------------------------//
 
 #import "MOAIContextMgr.h"
-#import "MOAIViewRenderThread.h"
+#import "MOAIRenderer.h"
 
 #import <CoreMotion/CoreMotion.h>
 #import <OpenGLES/EAGLDrawable.h>
@@ -15,24 +15,10 @@
 #import <host-modules/aku_modules_ios.h>
 #import <moai-ios/host.h>
 
-enum {
-    COMMAND_CREATE,
-    COMMAND_RENDER,
-    COMMAND_RESIZE,
-    COMMAND_SHUTDOWN,
-};
-
-// vsync
-// if ready and done, swap buffers and draw next frame
-// swap buffers (if buffer is ready) - main thread
-// if not busy, kick off redraw
-// OK to drop render frames
-// not OK to drop loading frames
-
 //================================================================//
-// MOAIViewRenderThread ()
+// MOAIRenderer ()
 //================================================================//
-@interface MOAIViewRenderThread () {
+@interface MOAIRenderer () {
     
     GLint				mWidth;
     GLint				mHeight;
@@ -70,9 +56,9 @@ enum {
 @end
 
 //================================================================//
-// MOAIViewRenderThread
+// MOAIRenderer
 //================================================================//
-@implementation MOAIViewRenderThread
+@implementation MOAIRenderer
 
     @synthesize eaglContext = mEAGLContext;
 
@@ -98,16 +84,9 @@ enum {
 
     //----------------------------------------------------------------//
     -( void ) create :( CAEAGLLayer* )layer :( int )multisample {
-        
-        void ( ^command )( void ) = ^{
-        
-            AKUDisplayListEnable ( AKU_DISPLAY_LIST_DRAWING );
-        
-            [ self createContext :layer ];
-            [ self createBuffers :layer :multisample ];
-        };
-        
-        [ self command:command :YES ];
+    
+        [ self createContext :layer ];
+        [ self createBuffers :layer :multisample ];
     }
 
     //----------------------------------------------------------------//
@@ -257,74 +236,63 @@ enum {
 
     //----------------------------------------------------------------//
     -( void ) presentFrame {
-    
-        if ([ self isBusy ]) return;
-    
-        void ( ^command )( void ) = ^{
         
-            [ self openGraphicsContext ];
-            
-            if ( mFrameReady ) {
-                glBindRenderbufferOES ( GL_RENDERBUFFER_OES, mRenderbuffer );
-                [ mEAGLContext presentRenderbuffer:GL_RENDERBUFFER_OES ];
-                mFrameReady = NO;
-            }
-            
-            [ self closeGraphicsContext ];
-        };
+        [ self openGraphicsContext ];
         
-        [ self command:command :YES ];
+        if ( mFrameReady ) {
+            glBindRenderbufferOES ( GL_RENDERBUFFER_OES, mRenderbuffer );
+            [ mEAGLContext presentRenderbuffer:GL_RENDERBUFFER_OES ];
+            mFrameReady = NO;
+        }
+        
+        [ self closeGraphicsContext ];
     }
 
     //----------------------------------------------------------------//
     -( void ) render {
         
-        if ([ self isBusy ]) return;
         if ( !AKUDisplayListHasContent ( AKU_DISPLAY_LIST_DRAWING )) return;
-    
-        void ( ^command )( void ) = ^{
         
-            [ self openGraphicsContext ];
-            [ self bindFramebuffer ];
-            
-            [ MOAIContextMgr displayListBeginPhase:AKU_DISPLAY_LIST_DRAWING_PHASE ];
+        [ self openGraphicsContext ];
+        [ self bindFramebuffer ];
+        
+        [ MOAIContextMgr displayListBeginPhase:AKU_DISPLAY_LIST_DRAWING_PHASE ];
+        
+        if ( AKUDisplayListIsEnabled ( AKU_DISPLAY_LIST_DRAWING )) {
             AKUDisplayListProcess ( AKU_DISPLAY_LIST_DRAWING );
-            [ MOAIContextMgr displayListEndPhase:AKU_DISPLAY_LIST_DRAWING_PHASE ];
-            
-            if ([ self multisampleEnabled ]) {
-                // resolve multisample buffer
-                glBindFramebufferOES ( GL_READ_FRAMEBUFFER_APPLE, mMSAAFramebuffer );
-                glBindFramebufferOES ( GL_DRAW_FRAMEBUFFER_APPLE, mFramebuffer );
-                glResolveMultisampleFramebufferAPPLE ();
-                    
-                GLenum attachments [] = { GL_COLOR_ATTACHMENT0_OES, GL_DEPTH_ATTACHMENT_OES };
-                glDiscardFramebufferEXT ( GL_READ_FRAMEBUFFER_APPLE, 1, attachments );
-            }
-
-            //[ NSThread sleepForTimeInterval:( 1.0f / 15.0f )];
-
-            mFrameReady = YES;
-            
-            [ self closeGraphicsContext ];
-        };
+        }
+        else {
+            AKURender ();
+        }
         
-        [ self command:command :NO ];
+        [ MOAIContextMgr displayListEndPhase:AKU_DISPLAY_LIST_DRAWING_PHASE ];
+        
+        if ([ self multisampleEnabled ]) {
+            // resolve multisample buffer
+            glBindFramebufferOES ( GL_READ_FRAMEBUFFER_APPLE, mMSAAFramebuffer );
+            glBindFramebufferOES ( GL_DRAW_FRAMEBUFFER_APPLE, mFramebuffer );
+            glResolveMultisampleFramebufferAPPLE ();
+                
+            GLenum attachments [] = { GL_COLOR_ATTACHMENT0_OES, GL_DEPTH_ATTACHMENT_OES };
+            glDiscardFramebufferEXT ( GL_READ_FRAMEBUFFER_APPLE, 1, attachments );
+        }
+
+        //[ NSThread sleepForTimeInterval:( 1.0f / 15.0f )];
+
+        mFrameReady = YES;
+        
+        [ self closeGraphicsContext ];
     }
 
     //----------------------------------------------------------------//
     -( void ) resize :( CAEAGLLayer* )layer {
-    
-        void ( ^command )( void ) = ^{
             
-            if (( mEAGLContext != nil ) && ([ self sizeChanged :layer ])) {
-                [ self openGraphicsContext ];
-                [ self deleteBuffers ];
-                [ self createBuffers :layer :mMultisample ];
-                [ self closeGraphicsContext ];
-            }
-        };
-        
-        [ self command:command :YES ];
+        if (( mEAGLContext != nil ) && ([ self sizeChanged :layer ])) {
+            [ self openGraphicsContext ];
+            [ self deleteBuffers ];
+            [ self createBuffers :layer :mMultisample ];
+            [ self closeGraphicsContext ];
+        }
     }
 
     //----------------------------------------------------------------//
@@ -342,19 +310,13 @@ enum {
 
     //----------------------------------------------------------------//
     -( void ) shutdown {
-    
-        void ( ^command )( void ) = ^{
             
-            if ( mEAGLContext != nil ) {
-                [ self openGraphicsContext ];
-                [ self deleteBuffers ];
-                [ self closeGraphicsContext ];
-            }
-            mEAGLContext = nil;
-        };
-        
-        [ self command:command :YES ];
-        [ self stop ];
+        if ( mEAGLContext != nil ) {
+            [ self openGraphicsContext ];
+            [ self deleteBuffers ];
+            [ self closeGraphicsContext ];
+        }
+        mEAGLContext = nil;
     }
 
 @end

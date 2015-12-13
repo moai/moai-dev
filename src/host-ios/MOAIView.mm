@@ -6,8 +6,8 @@
 
 #import "MOAIContextMgr.h"
 #import "MOAIView.h"
-#import "MOAIViewLoadingThread.h"
-#import "MOAIViewRenderThread.h"
+#import "MOAIRenderer.h"
+#import "MOAIRendererAsync.h"
 
 #import <CoreMotion/CoreMotion.h>
 #import <OpenGLES/EAGLDrawable.h>
@@ -39,8 +39,9 @@ enum {
     BOOL                mGCDetected;
     BOOL				mSimStarted;
     
-    MOAIViewLoadingThread*  mLoadingThread;
-    MOAIViewRenderThread*   mRenderThread;
+    BOOL                mUseDisplayLists;
+    
+    id < MOAIRendererProtocol >   mRenderer;
 }
 
 	//----------------------------------------------------------------//
@@ -121,7 +122,7 @@ enum {
 	-( void ) dealloc {
 		
         AKUDeleteContext ( mAKUContext );
-        [ mRenderThread shutdown ];
+        [ mRenderer shutdown ];
 	}
 	
     //----------------------------------------------------------------//
@@ -206,7 +207,7 @@ enum {
 	    // It is necessary to call super here
 	    [ super layoutSubviews ];
 	    
-        [ mRenderThread resize:( CAEAGLLayer* )self.layer ];
+        [ mRenderer resize:( CAEAGLLayer* )self.layer ];
 	}
 
     //----------------------------------------------------------------//
@@ -239,11 +240,27 @@ enum {
 		
 		AKUSetScreenDpi ([ self guessScreenDpi ]);
         
-        mRenderThread = [[ MOAIViewRenderThread alloc ] init ];
-        [ mRenderThread create:( CAEAGLLayer* )self.layer :multisample ];
+        #if defined ( AKU_HOST_GFX_ASYNC ) || defined ( AKU_HOST_FULL_ASYNC )
         
-        mLoadingThread = [[ MOAIViewLoadingThread alloc ] init ];
-        [ mLoadingThread create:[ mRenderThread eaglContext ]];
+            BOOL useLoadingThread = NO;
+        
+            #ifdef AKU_HOST_FULL_ASYNC
+                useLoadingThread = YES;
+            #endif
+        
+            mUseDisplayLists = YES;
+        
+            MOAIRendererAsync* renderer = [[ MOAIRendererAsync alloc ] init ];
+            [ renderer create :( CAEAGLLayer* )self.layer :multisample :useLoadingThread ];
+            mRenderer = renderer;
+        
+        #else
+        
+            MOAIRenderer* renderer = [[ MOAIRenderer alloc ] init ];
+            [ renderer create :( CAEAGLLayer* )self.layer :multisample ];
+            mRenderer = renderer;
+        
+        #endif
         
         AKUModulesRunLuaAPIWrapper ();
         
@@ -257,18 +274,13 @@ enum {
     //----------------------------------------------------------------//
 	-( void ) onUpdateAnim {
         
-        [ mRenderThread presentFrame ];
+        [ mRenderer presentFrame ];
         
         AKUSetContext ( mAKUContext );
         AKUModulesUpdate ();
         self.opaque = AKUIsGfxBufferOpaque () != 0;
         
-        [ MOAIContextMgr displayListBeginPhase :AKU_DISPLAY_LIST_LOGIC_PHASE ];
-        AKURender ();
-        [ MOAIContextMgr displayListEndPhase :AKU_DISPLAY_LIST_LOGIC_PHASE ];
-        
-        [ mLoadingThread load ];
-        [ mRenderThread render ];
+        [ mRenderer render ];
         
         //sometimes the input handler will get 'locked out' by the render, this will allow it to run
         [ self performSelector:@selector( dummyFunc ) withObject:self afterDelay: 0 ];

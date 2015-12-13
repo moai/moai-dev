@@ -58,6 +58,7 @@ AKU_API void			AKUDisplayListBeginPhase		( int phase );
 AKU_API void			AKUDisplayListEnable			( int list );
 AKU_API void			AKUDisplayListEndPhase			( int phase );
 AKU_API bool			AKUDisplayListHasContent		( int list );
+AKU_API bool			AKUDisplayListIsEnabled			( int list );
 AKU_API void			AKUDisplayListProcess			( int list );
 AKU_API void			AKUDisplayListPublishAndReset	();
 

@@ -18,6 +18,7 @@
 
     //----------------------------------------------------------------//
     -( void )           command         :( void (^)( void ))command :( BOOL )waitDone; // calling thread will *block* until prev command is finished (if any). may optionally block until new command is finished.
+    -( void )           start;
     -( void )           stop;
 
 @end
