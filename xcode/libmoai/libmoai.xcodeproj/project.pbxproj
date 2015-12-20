@@ -4654,6 +4654,18 @@
 		CDD492AB17FA7D1900525B77 /* RCriticalSection.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C2A613A172B900C9386C /* RCriticalSection.h */; };
 		CDD492AC17FA7D1900525B77 /* RThread.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C2A713A172B900C9386C /* RThread.h */; };
 		CDD492AD17FA7D1900525B77 /* Untz-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = CD07C53013A1954600C9386C /* Untz-Prefix.pch */; };
+		CDD5D68F1C24DDF10070237E /* MOAIPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD5D68D1C24DDF10070237E /* MOAIPath.cpp */; };
+		CDD5D6901C24DDF10070237E /* MOAIPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD5D68D1C24DDF10070237E /* MOAIPath.cpp */; };
+		CDD5D6911C24DDF10070237E /* MOAIPath.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD5D68E1C24DDF10070237E /* MOAIPath.h */; };
+		CDD5D6921C24DDF10070237E /* MOAIPath.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD5D68E1C24DDF10070237E /* MOAIPath.h */; };
+		CDD5D6951C24EB6A0070237E /* MOAIPathStepper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD5D6931C24EB6A0070237E /* MOAIPathStepper.cpp */; };
+		CDD5D6961C24EB6A0070237E /* MOAIPathStepper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD5D6931C24EB6A0070237E /* MOAIPathStepper.cpp */; };
+		CDD5D6971C24EB6A0070237E /* MOAIPathStepper.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD5D6941C24EB6A0070237E /* MOAIPathStepper.h */; };
+		CDD5D6981C24EB6A0070237E /* MOAIPathStepper.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD5D6941C24EB6A0070237E /* MOAIPathStepper.h */; };
+		CDD5D69B1C260DFD0070237E /* ZLCubicBezier2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD5D6991C260DFD0070237E /* ZLCubicBezier2D.cpp */; };
+		CDD5D69C1C260DFD0070237E /* ZLCubicBezier2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD5D6991C260DFD0070237E /* ZLCubicBezier2D.cpp */; };
+		CDD5D69D1C260DFD0070237E /* ZLCubicBezier2D.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD5D69A1C260DFD0070237E /* ZLCubicBezier2D.h */; };
+		CDD5D69E1C260DFD0070237E /* ZLCubicBezier2D.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD5D69A1C260DFD0070237E /* ZLCubicBezier2D.h */; };
 		CDE36E501A5F4E340095E863 /* MOAIImageFormatMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE36E4E1A5F4E340095E863 /* MOAIImageFormatMgr.cpp */; };
 		CDE36E511A5F4E340095E863 /* MOAIImageFormatMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE36E4E1A5F4E340095E863 /* MOAIImageFormatMgr.cpp */; };
 		CDE36E521A5F4E340095E863 /* MOAIImageFormatMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE36E4F1A5F4E340095E863 /* MOAIImageFormatMgr.h */; };
@@ -7619,6 +7631,12 @@
 		CDD06DAC1398838D00AB0420 /* usocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = usocket.c; path = "../../3rdparty/luasocket-2.0.2/src/usocket.c"; sourceTree = SOURCE_ROOT; };
 		CDD06DAD1398838D00AB0420 /* usocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = usocket.h; path = "../../3rdparty/luasocket-2.0.2/src/usocket.h"; sourceTree = SOURCE_ROOT; };
 		CDD480D117FA78AE00525B77 /* libmoai-ios-3rdparty-crypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-3rdparty-crypto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDD5D68D1C24DDF10070237E /* MOAIPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPath.cpp; sourceTree = "<group>"; };
+		CDD5D68E1C24DDF10070237E /* MOAIPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPath.h; sourceTree = "<group>"; };
+		CDD5D6931C24EB6A0070237E /* MOAIPathStepper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPathStepper.cpp; sourceTree = "<group>"; };
+		CDD5D6941C24EB6A0070237E /* MOAIPathStepper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPathStepper.h; sourceTree = "<group>"; };
+		CDD5D6991C260DFD0070237E /* ZLCubicBezier2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLCubicBezier2D.cpp; sourceTree = "<group>"; };
+		CDD5D69A1C260DFD0070237E /* ZLCubicBezier2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLCubicBezier2D.h; sourceTree = "<group>"; };
 		CDD781CA1A11631E00AD133E /* libmoai-ios-motion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-motion.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD781CC1A11635F00AD133E /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-ios-motion/host.h"; sourceTree = "<group>"; };
 		CDD781CD1A11635F00AD133E /* host.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = host.mm; path = "moai-ios-motion/host.mm"; sourceTree = "<group>"; };
@@ -9403,6 +9421,8 @@
 				CD1756441A199B24009C430A /* ZLBarycentric.h */,
 				89BE68AA173974FC00DFE837 /* ZLBox.cpp */,
 				89BE68AB173974FC00DFE837 /* ZLBox.h */,
+				CDD5D6991C260DFD0070237E /* ZLCubicBezier2D.cpp */,
+				CDD5D69A1C260DFD0070237E /* ZLCubicBezier2D.h */,
 				89BE68B2173974FC00DFE837 /* ZLCurve.cpp */,
 				89BE68B3173974FC00DFE837 /* ZLCurve.h */,
 				89BE68C0173974FC00DFE837 /* ZLDistance.cpp */,
@@ -12325,6 +12345,10 @@
 		CDE9851718975A85001827F9 /* vector */ = {
 			isa = PBXGroup;
 			children = (
+				CDD5D68D1C24DDF10070237E /* MOAIPath.cpp */,
+				CDD5D68E1C24DDF10070237E /* MOAIPath.h */,
+				CDD5D6931C24EB6A0070237E /* MOAIPathStepper.cpp */,
+				CDD5D6941C24EB6A0070237E /* MOAIPathStepper.h */,
 				CD48CF201A12F8F70029F932 /* MOAIRegion.cpp */,
 				CD48CF211A12F8F70029F932 /* MOAIRegion.h */,
 				CD69AB0617FA6C7E0053E028 /* MOAIVectorCombo.cpp */,
@@ -12829,6 +12853,7 @@
 				CD4C3E7E180A63BB00C02381 /* MOAIParticleTimedEmitter.h in Headers */,
 				CD73A60A188F0AEC00DFACDB /* MOAIGraphicsProp.h in Headers */,
 				CD4C3E6E180A63BB00C02381 /* MOAIParticleDistanceEmitter.h in Headers */,
+				CDD5D6911C24DDF10070237E /* MOAIPath.h in Headers */,
 				CD67B45C1B264C51004298CF /* MOAISelectionMesh.h in Headers */,
 				CD4C3E96180A63BB00C02381 /* MOAIProfilerAutoScope.h in Headers */,
 				CD78109B187CAA2D008B9C0A /* MOAITextStyleMap.h in Headers */,
@@ -12896,6 +12921,7 @@
 				CD4C051118500C18005B0520 /* MOAIVectorUtil.h in Headers */,
 				CD4C3E35180A63BB00C02381 /* MOAIGfxResource.h in Headers */,
 				CD4C3E9E180A63BB00C02381 /* MOAIProfilerReport.h in Headers */,
+				CDD5D6971C24EB6A0070237E /* MOAIPathStepper.h in Headers */,
 				CD4C3DFC180A63BB00C02381 /* MOAIBlendMode.h in Headers */,
 				CD4C3E25180A63BB00C02381 /* MOAIFontReader.h in Headers */,
 				CD4C3EDC180A63BB00C02381 /* MOAITouchSensor.h in Headers */,
@@ -13041,7 +13067,9 @@
 				CD4C40D2180A63C200C02381 /* MOAIProfilerReportBase.h in Headers */,
 				CD4C4057180A63C200C02381 /* MOAIFontReader.h in Headers */,
 				CD4C40DD180A63C200C02381 /* MOAIQuadBrush.h in Headers */,
+				CDD5D6981C24EB6A0070237E /* MOAIPathStepper.h in Headers */,
 				CD4C4091180A63C200C02381 /* MOAILocationSensor.h in Headers */,
+				CDD5D6921C24DDF10070237E /* MOAIPath.h in Headers */,
 				CD4C40F4180A63C200C02381 /* MOAIStretchPatch2D.h in Headers */,
 				CDEFD569181ECB3E0058D772 /* MOAITextDesignParser.h in Headers */,
 				CD4C406F180A63C200C02381 /* MOAIDynamicGlyphCachePage.h in Headers */,
@@ -13405,6 +13433,7 @@
 				89BE6A2F173974FD00DFE837 /* ZLPlane.h in Headers */,
 				89BE6A33173974FD00DFE837 /* ZLPolar.h in Headers */,
 				89BE6A35173974FD00DFE837 /* ZLPolygon2D.h in Headers */,
+				CDD5D69D1C260DFD0070237E /* ZLCubicBezier2D.h in Headers */,
 				89BE6A37173974FD00DFE837 /* ZLPolyScanner.h in Headers */,
 				89BE6A3B173974FD00DFE837 /* ZLPrism.h in Headers */,
 				89BE6A3F173974FD00DFE837 /* ZLQuad.h in Headers */,
@@ -13479,6 +13508,7 @@
 				89BE69CA173974FD00DFE837 /* ZLHashedString.h in Headers */,
 				CDE440191AC0D27600C745DB /* ZLFrustumFitter.h in Headers */,
 				89BE69CE173974FD00DFE837 /* ZLHashWriter.h in Headers */,
+				CDD5D69E1C260DFD0070237E /* ZLCubicBezier2D.h in Headers */,
 				89BE69D2173974FD00DFE837 /* ZLHashWriterAdler32.h in Headers */,
 				89BE69D6173974FD00DFE837 /* ZLHashWriterCRC32.h in Headers */,
 				89BE69F2173974FD00DFE837 /* ZLHashWriterWhirlpool.h in Headers */,
@@ -16553,6 +16583,7 @@
 				CD4C3E21180A63BB00C02381 /* MOAIFont.cpp in Sources */,
 				CD4C3EC1180A63BB00C02381 /* MOAIStretchPatch2D.cpp in Sources */,
 				CD4C3E6B180A63BB00C02381 /* MOAIParticleCallbackPlugin.cpp in Sources */,
+				CDD5D68F1C24DDF10070237E /* MOAIPath.cpp in Sources */,
 				CD4C3E89180A63BB00C02381 /* MOAIPathFinder.cpp in Sources */,
 				CD4C3E95180A63BB00C02381 /* MOAIProfilerAutoScope.cpp in Sources */,
 				CD4C3E50180A63BB00C02381 /* MOAIInputDevice.cpp in Sources */,
@@ -16565,6 +16596,7 @@
 				CD4C3E3E180A63BB00C02381 /* MOAIGlyphSet.cpp in Sources */,
 				CD781099187CAA2D008B9C0A /* MOAITextStyleMap.cpp in Sources */,
 				CD4C3E44180A63BB00C02381 /* MOAIGridPathGraph.cpp in Sources */,
+				CDD5D6951C24EB6A0070237E /* MOAIPathStepper.cpp in Sources */,
 				CD9E5BE41A772B4100469462 /* MOAIGfxBuffer.cpp in Sources */,
 				CD4C3EEF180A63BB00C02381 /* MOAIVectorShape.cpp in Sources */,
 				CD4C3E3A180A63BB00C02381 /* MOAIGlyphCache.cpp in Sources */,
@@ -16724,6 +16756,7 @@
 				CD4C4111180A63C200C02381 /* MOAITransform2D.cpp in Sources */,
 				CD4C40FF180A63C200C02381 /* MOAITextStyle.cpp in Sources */,
 				CD4C40E2180A63C200C02381 /* MOAIScissorRect.cpp in Sources */,
+				CDD5D6901C24DDF10070237E /* MOAIPath.cpp in Sources */,
 				CD4C40D1180A63C200C02381 /* MOAIProfilerReportBase.cpp in Sources */,
 				CD4C4113180A63C200C02381 /* MOAITransformBase.cpp in Sources */,
 				CD4C40B7180A63C200C02381 /* MOAIPartitionResultBuffer.cpp in Sources */,
@@ -16736,6 +16769,7 @@
 				CDEFD56B181ECB3E0058D772 /* MOAITextLabel.cpp in Sources */,
 				CD4C40CF180A63C200C02381 /* MOAIProfilerReport.cpp in Sources */,
 				CD4C406E180A63C200C02381 /* MOAIDynamicGlyphCachePage.cpp in Sources */,
+				CDD5D6961C24EB6A0070237E /* MOAIPathStepper.cpp in Sources */,
 				CD4C4066180A63C200C02381 /* MOAIGfxResource.cpp in Sources */,
 				CD9E5BE51A772B4100469462 /* MOAIGfxBuffer.cpp in Sources */,
 				CD4C4103180A63C200C02381 /* MOAITexture.cpp in Sources */,
@@ -16979,6 +17013,7 @@
 				CDE440161AC0D27600C745DB /* ZLFrustumFitter.cpp in Sources */,
 				89BE6A03173974FD00DFE837 /* ZLIntersect.cpp in Sources */,
 				89BE6A0F173974FD00DFE837 /* ZLLexStream.cpp in Sources */,
+				CDD5D69B1C260DFD0070237E /* ZLCubicBezier2D.cpp in Sources */,
 				89BE6A15173974FD00DFE837 /* ZLLog.cpp in Sources */,
 				89BE6A21173974FD00DFE837 /* ZLMemStream.cpp in Sources */,
 				89BE6A25173974FD00DFE837 /* ZLMercator.cpp in Sources */,
@@ -17049,6 +17084,7 @@
 				CDE440171AC0D27600C745DB /* ZLFrustumFitter.cpp in Sources */,
 				89BE6A04173974FD00DFE837 /* ZLIntersect.cpp in Sources */,
 				89BE6A10173974FD00DFE837 /* ZLLexStream.cpp in Sources */,
+				CDD5D69C1C260DFD0070237E /* ZLCubicBezier2D.cpp in Sources */,
 				89BE6A16173974FD00DFE837 /* ZLLog.cpp in Sources */,
 				89BE6A22173974FD00DFE837 /* ZLMemStream.cpp in Sources */,
 				89BE6A26173974FD00DFE837 /* ZLMercator.cpp in Sources */,

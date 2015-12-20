@@ -27,6 +27,7 @@
 #include <zl-util/ZLByteStream.h>
 #include <zl-util/ZLCgt.h>
 #include <zl-util/ZLColor.h>
+#include <zl-util/ZLCubicBezier2D.h>
 #include <zl-util/ZLCurve.h>
 #include <zl-util/ZLDeflateReader.h>
 #include <zl-util/ZLDeflateWriter.h>
