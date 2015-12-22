@@ -16,36 +16,48 @@ class MOAIPathStepper :
 	public virtual MOAILuaObject {
 private:
 
-	float							mT;
-	float							mStep;
+	u32								mStepCount;
+	u32								mTotalSteps;
 	
-	ZLVec2D							mSamples [ 3 ];
+	float							mStepSize;
+	
+	float							mEdgeBase;
+	float							mEdgeLength;
+	
+	ZLVec2D							mEdge [ 3 ];
 	ZLVec2D							mNormal;
-
+	
 	MOAILuaSharedPtr < MOAIPath>	mPath;
-
-	bool							mIsStepping;
-	bool							mStepByDistance;
-
-	//----------------------------------------------------------------//
-	static int		_reset				( lua_State* L );
-	static int		_setPath			( lua_State* L );
-	static int		_setStepSize		( lua_State* L );
-	static int		_step				( lua_State* L );
+	
+	ZLCubicBezierFlattener2D		mFlattener;
+	size_t							mSegmentIdx;
+	size_t							mTotalSegments;
+	float							mLength;
 
 	//----------------------------------------------------------------//
+	static int		_getLength				( lua_State* L );
+	static int		_more					( lua_State* L );
+	static int		_next					( lua_State* L );
+	static int		_start					( lua_State* L );
+
+	//----------------------------------------------------------------//
+	bool			MoreVertices			();
+	ZLVec2D			NextVertex				();
 
 public:
 	
-	DECL_LUA_FACTORY ( MOAILuaObject )
+	DECL_LUA_FACTORY ( MOAIPathStepper )
+	
+	GET ( float, Length, mLength )
 	
 	//----------------------------------------------------------------//
-					MOAIPathStepper		();
-					~MOAIPathStepper	();
-	void			RegisterLuaClass	( MOAILuaState& state );
-	void			RegisterLuaFuncs	( MOAILuaState& state );
-	void			Reset				();
-	void			Step				();
+					MOAIPathStepper			();
+					~MOAIPathStepper		();
+	bool			More					();
+	ZLVec2D			Next					();
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			Start					( MOAIPath& path, float stepSize );
 };
 
 #endif

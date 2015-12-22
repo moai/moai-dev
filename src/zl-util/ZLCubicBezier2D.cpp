@@ -173,205 +173,48 @@ u32 ZLCubicBezier2D::FindInflections ( float& t0, float& t1 ) const {
 //----------------------------------------------------------------//
 void ZLCubicBezier2D::Flatten ( ZLAbstractVertexWriter2D& writer, float flatness, float angle ) const {
 
-	// cribbed from https://github.com/rougier/gl-bezier
-
-	float cusp = 0.0f;
-
-	float t0_minus = -1.0f;
-	float t0_plus = -1.0f;
-
-	float t1_minus = 2.0f;
-	float t1_plus = 2.0f;
-
-	float inflection0;
-	float inflection1;
-	u32 inflections = this->FindInflections ( inflection0, inflection1 );
-	
-	switch ( inflections ) {
-		case ONE_CUSP: {
-			cusp = inflection0;
-			break;
-		}
-		case TWO_INFLECTIONS: {
-			this->FindInflectionDomain ( inflection0, t0_minus, t0_plus, flatness );
-			this->FindInflectionDomain ( inflection1, t1_minus, t1_plus, flatness );
-			break;
-			
-		}
-		case ONE_INFLECTION: {
-			this->FindInflectionDomain ( inflection0, t0_minus, t0_plus, flatness );
-			break;
-		}
-		case DEGENERATE: {
-			writer.WriteVertex ( this->mP0 ); // add first point
-			writer.WriteVertex ( this->mP3 ); // add last point
-			return;
-		}
-	}
-
-	// Split the two domains if they overlap
-	if (( t0_minus < t1_minus ) && ( t1_minus < t0_plus )) {
-		t0_plus = t1_minus;
-		t1_minus = t0_plus;
-	}
-
-    bool t0_out = ( t0_plus < 0.0f ) || ( t0_minus > 1.0f );
-	bool t1_out = ( t1_plus < 0.0f ) || ( t1_minus > 1.0f );
-	
-	bool t0_t1_cross = t1_minus < t0_plus;
-
-    // Make sure the possible out domain is always t1
-    // (this will save some specific tests below)
-    if ( t0_out ) {
-    
-        t0_minus = t1_minus;
-        t0_plus = t1_plus;
-        t0_out = t1_out;
-        
-        t1_minus = 2.0f;
-        t1_plus = 2.0f;
-        t1_out = true;
-	}
-
-	bool t0_in				= ( 0.0f < t0_minus ) && ( t0_minus < t0_plus ) && ( t0_plus < 1.0f );
-	bool t0_cross_start		= ( t0_minus < 0.0f ) && ( 0.0f < t0_plus ) && ( t0_plus < 1.0f );
-	bool t0_cross_end		= ( 0.0f < t0_minus ) && ( t0_minus < 1.0f ) && ( 1.0f < t0_plus );
-	bool t0_cross			= t0_cross_start || t0_cross_end;
-
-	bool t1_in				= ( 0.0f < t1_minus ) && ( t1_minus < t1_plus ) && ( t1_plus < 1.0f );
-	bool t1_cross_end		= ( 0.0f < t1_minus ) && ( t1_minus < 1.0f ) && ( 1.0f < t1_plus );
-
-	writer.WriteVertex ( this->mP0 ); // add first point
-	
-	ZLCubicBezier2D left;
-	ZLCubicBezier2D right;
-	
-	if ( inflections == ONE_CUSP ) {
-	
-		this->Split ( inflection0, left, right );
-		left.FlattenProgressive ( writer, flatness, angle );
-		writer.WriteVertex ( this->Evaluate ( inflection0 )); // the inflection point
-		right.FlattenProgressive ( writer, flatness, angle );
-	}
-	else {
-		
-        if ( t0_out && t1_out ) {
-		
-			// No inflection points
-			this->FlattenProgressive ( writer, flatness, angle );
-        }
-        else if (( t0_in || t0_cross ) && t1_out ) {
-		
-			// One inflection point
-			if ( t0_cross_start ) {
-			
-				writer.WriteVertex ( this->Evaluate ( t0_plus ));
-				this->Split ( t0_plus, left, right );
-				right.FlattenProgressive ( writer, flatness, angle );
-			}
-			else if ( t0_cross_end ) {
-			
-				this->Split ( t0_minus, left, right );
-				left.FlattenProgressive ( writer, flatness, angle );
-				writer.WriteVertex ( this->Evaluate ( t0_minus ) );
-			}
-			else {
-			
-				this->Split ( t0_minus, left, right );
-				left.FlattenProgressive ( writer, flatness, angle );
-				
-				writer.WriteVertex ( this->Evaluate ( t0_minus ));
-				writer.WriteVertex ( this->Evaluate ( t0_plus ));
-				
-				this->Split ( t0_plus, left, right );
-				right.FlattenProgressive ( writer, flatness, angle );
-			}
-        }
-        else if (( t0_in || t0_cross_start ) && ( t1_in || t1_cross_end )) {
-		
-			// Two inflection points
-			if ( !t0_cross_start ) {
-				this->Split ( t0_minus, left, right );
-				left.FlattenProgressive ( writer, flatness, angle );
-				writer.WriteVertex ( this->Evaluate ( t0_minus ));
-			}
-			
-			if ( t0_t1_cross ) {
-				writer.WriteVertex ( this->Evaluate ( t1_minus ));
-				writer.WriteVertex ( this->Evaluate ( t0_plus ));
-			}
-			else {
-				writer.WriteVertex ( this->Evaluate ( t0_plus ));
-				ZLCubicBezier2D middle = this->Split ( t0_plus, t1_minus );
-				middle.FlattenProgressive ( writer, flatness, angle );
-				writer.WriteVertex ( this->Evaluate ( t1_minus ));
-			}
-			
-			if ( !t1_cross_end ) {
-				writer.WriteVertex ( this->Evaluate ( t1_plus ));
-				this->Split ( t1_plus, left, right );
-				right.FlattenProgressive ( writer, flatness, angle );
-			}
-		}
-	}
-
-	writer.WriteVertex ( this->mP3 );
-}
-
-//----------------------------------------------------------------//
-void ZLCubicBezier2D::Flatten2 ( ZLAbstractVertexWriter2D& writer, float flatness, float angle ) const {
-
 	ZLCubicBezierFlattener2D flattener;
-	
 	flattener.Init ( *this, flatness, angle );
+	
 	while ( flattener.More ()) {
 		writer.WriteVertex ( flattener.Next ());
 	}
 }
 
 //----------------------------------------------------------------//
-void ZLCubicBezier2D::FlattenProgressive ( ZLAbstractVertexWriter2D& writer, float flatness, float angle ) const {
+float ZLCubicBezier2D::GetFlattenedLength ( float flatness, float angle ) {
 
-	angle *= ( float )D2R;
-	ZLCubicBezier2D curve = *this;
-    curve.Bless ();
-    
-    bool more = true;
-	while ( more ) {
-    
-		float dx = curve.mP1.mX - curve.mP0.mX;
-		float dy = curve.mP1.mY - curve.mP0.mY;
+	float length = 0.0f;
+	
+	ZLCubicBezierFlattener2D flattener;
+	flattener.Init ( *this, flatness, angle );
+	
+	if ( flattener.More ()) {
+	
+		ZLVec2D v0 = flattener.Next ();
+	
+		while ( flattener.More ()) {
 		
-		float norm = Sqrt (( dx * dx ) + ( dy * dy ));
-		if ( norm == 0.0f ) {
-			break;
+			ZLVec2D v1 = flattener.Next ();
+			length += v0.Dist ( v1 );
+			v0 = v1;
 		}
-
-		float s3 = ( float )fabs ((( curve.mP2.mX - curve.mP0.mX ) * dy ) - ((  curve.mP2.mY -  curve.mP0.mY ) * dx )) / norm;
-		if ( s3 == 0.0f ) break;
-
-		float t = 2.0f * Sqrt ( flatness /( 3.0f * s3 ));
-		if ( t > 1.0f )break;
-
-		ZLCubicBezier2D left;
-		ZLCubicBezier2D right;
-
-		// check if angle is below tolerance
-		for ( u32 i = 0; i < 50; ++i ) { // TODO: make param; min of t better?
-			curve.Split ( t, left, right );
-			if ( left.Angle () > angle ) {
-				t /= 1.75f; // magic numbers, yay
-			}
-			else {
-				break;
-			}
-		}
-		
-		curve = right;
-		writer.WriteVertex ( curve.mP0 );
 	}
 	
-	writer.WriteVertex ( curve.mP3 );
+	return length;
+}
+
+//----------------------------------------------------------------//
+size_t ZLCubicBezier2D::GetFlattenedSize ( float flatness, float angle ) {
+
+	size_t size = 0;
+	
+	ZLCubicBezierFlattener2D flattener;
+	flattener.Init ( *this, flatness, angle );
+	
+	for ( ; flattener.More (); flattener.Next (), size++ );
+	
+	return size;
 }
 
 //----------------------------------------------------------------//
@@ -645,7 +488,9 @@ bool ZLCubicBezierFlattener2D::More () {
 //----------------------------------------------------------------//
 ZLVec2D ZLCubicBezierFlattener2D::Next () {
 
-	assert ( this->mCommandIdx < this->mTotalCommands );
+	if ( this->mCommandIdx >= this->mTotalCommands ) {
+		return this->mLastVertex;
+	}
 
 	if ( !this->mIsProcessingCurve ) {
 	
@@ -674,7 +519,8 @@ ZLVec2D ZLCubicBezierFlattener2D::Next () {
 	
 	if (( norm == 0.0f ) || ( s3 == 0.0f ) || ( t > 1.0f )) {
 		this->mIsProcessingCurve = false;
-		return this->mCurve.mP3;
+		this->mLastVertex = this->mCurve.mP3;
+		return this->mLastVertex;
 	}
 	
 	ZLCubicBezier2D left;
@@ -692,7 +538,8 @@ ZLVec2D ZLCubicBezierFlattener2D::Next () {
 	}
 	
 	this->mCurve = right;
-	return right.mP0;
+	this->mLastVertex = right.mP0;
+	return this->mLastVertex;
 }
 
 //----------------------------------------------------------------//
@@ -716,84 +563,4 @@ ZLCubicBezierFlattener2D::ZLCubicBezierFlattener2D () :
 
 //----------------------------------------------------------------//
 ZLCubicBezierFlattener2D::~ZLCubicBezierFlattener2D () {
-}
-
-#include <zl-util/ZLFloat.h>
-#include <zl-util/ZLMemStream.h>
-
-//================================================================//
-// TestVertexWriter
-//================================================================//
-class TestVertexWriter :
-	public ZLAbstractVertexWriter2D {
-public:
-
-	ZLMemStream mVertices;
-	
-	//----------------------------------------------------------------//
-	void WriteVertex ( const ZLVec2D& v ) {
-	
-		this->mVertices.Write ( v );
-	}
-};
-
-//================================================================//
-// test
-//================================================================//
-
-//----------------------------------------------------------------//
-void TestBezierFlattener () {
-
-	ZLCubicBezier2D curve;
-	
-	curve.mP0.mX = -1000.0f + ( ZLFloat::Rand () * 2000.0f );
-	curve.mP0.mY = -1000.0f + ( ZLFloat::Rand () * 2000.0f );
-	
-	curve.mP1.mX = -1000.0f + ( ZLFloat::Rand () * 2000.0f );
-	curve.mP1.mY = -1000.0f + ( ZLFloat::Rand () * 2000.0f );
-	
-	curve.mP2.mX = -1000.0f + ( ZLFloat::Rand () * 2000.0f );
-	curve.mP2.mY = -1000.0f + ( ZLFloat::Rand () * 2000.0f );
-	
-	curve.mP3.mX = -1000.0f + ( ZLFloat::Rand () * 2000.0f );
-	curve.mP3.mY = -1000.0f + ( ZLFloat::Rand () * 2000.0f );
-	
-	printf ( "*(( u32* )&curve.mP0.mX ) = 0x%08X;\n", *( u32* )( &curve.mP0.mX ));
-	printf ( "*(( u32* )&curve.mP0.mY ) = 0x%08X;\n", *( u32* )( &curve.mP0.mY ));
-	
-	printf ( "*(( u32* )&curve.mP1.mX ) = 0x%08X;\n", *( u32* )( &curve.mP1.mX ));
-	printf ( "*(( u32* )&curve.mP1.mY ) = 0x%08X;\n", *( u32* )( &curve.mP1.mY ));
-	
-	printf ( "*(( u32* )&curve.mP2.mX ) = 0x%08X;\n", *( u32* )( &curve.mP2.mX ));
-	printf ( "*(( u32* )&curve.mP2.mY ) = 0x%08X;\n", *( u32* )( &curve.mP2.mY ));
-	
-	printf ( "*(( u32* )&curve.mP3.mX ) = 0x%08X;\n", *( u32* )( &curve.mP3.mX ));
-	printf ( "*(( u32* )&curve.mP3.mY ) = 0x%08X;\n", *( u32* )( &curve.mP3.mY ));
-	
-	printf ( "\n" );
-	
-	TestVertexWriter writer1;
-	TestVertexWriter writer2;
-	
-	curve.Flatten ( writer1 );
-	curve.Flatten2 ( writer2 );
-	
-	size_t total1 = writer1.mVertices.GetCursor () / sizeof ( ZLVec2D );
-	size_t total2 = writer2.mVertices.GetCursor () / sizeof ( ZLVec2D );
-
-	assert ( total1 == total2 );
-
-	printf ( "count: %d\n\n", total1 );
-	
-	writer1.mVertices.Seek ( 0 );
-	writer2.mVertices.Seek ( 0 );
-	
-	for ( size_t i = 0; i < total1; ++i ) {
-	
-		ZLVec2D vec1 = writer1.mVertices.Read < ZLVec2D >( ZLVec2D ( 0.0f, 0.0f ));
-		ZLVec2D vec2 = writer2.mVertices.Read < ZLVec2D >( ZLVec2D ( 0.0f, 0.0f ));
-		
-		assert ( vec1.mX == vec2.mX );
-		assert ( vec1.mY == vec2.mY );
-	}
 }

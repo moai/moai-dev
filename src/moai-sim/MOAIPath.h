@@ -12,42 +12,45 @@ class MOAIPath :
 	public virtual MOAILuaObject {
 private:
 
-	//================================================================//
-	// MOAIPathSegmant
-	//================================================================//
-	// TODO: doxygen
-	class MOAIPathSegment {
-	public:
-
-		size_t	mBase;
-		size_t	mSize;
-		float	mLength;
-	};
-
 	ZLLeanArray < ZLVec2D >				mControlPoints;
-	ZLLeanArray < MOAIPathSegment >		mSegments;
-	ZLLeanArray < ZLVec2D >				mVertices;
+	ZLLeanArray < float >				mSegmentLengths;
+
+	float			mFlatness;
+	float			mAngle;
+
+	float			mLength;
 
 	//----------------------------------------------------------------//
+	static int		_bless				( lua_State* L );
 	static int		_evaluate			( lua_State* L );
+	static int		_getLength			( lua_State* L );
 	static int		_reserve			( lua_State* L );
 	static int		_setPoint			( lua_State* L );
+	static int		_setThresholds		( lua_State* L );
 
 	//----------------------------------------------------------------//
 
 public:
 	
-	DECL_LUA_FACTORY ( MOAILuaObject )
+	DECL_LUA_FACTORY ( MOAIPath )
+	
+	GET_SET ( float, Flatness, mFlatness )
+	GET_SET ( float, Angle, mAngle )
+	
+	GET ( float, Length, mLength )
 	
 	//----------------------------------------------------------------//
-	ZLVec2D			Evaluate			( float t );
-	float			GetCubicBezier		( float t, ZLCubicBezier2D& curve );
-					MOAIPath			();
-					~MOAIPath			();
-	void			RegisterLuaClass	( MOAILuaState& state );
-	void			RegisterLuaFuncs	( MOAILuaState& state );
-	void			Reserve				( size_t size );
-	void			SetPoint			( size_t idx, float x, float y );
+	void				Bless					();
+	size_t				CountSegments			();
+	ZLVec2D				Evaluate				( float t );
+	ZLCubicBezier2D		GetSegment				( size_t idx );
+	ZLCubicBezier2D		GetSegmentForTime		( float t, float* st = 0 );
+						MOAIPath				();
+						~MOAIPath				();
+	void				RegisterLuaClass		( MOAILuaState& state );
+	void				RegisterLuaFuncs		( MOAILuaState& state );
+	void				Reserve					( size_t size );
+	void				SetPoint				( size_t idx, float x, float y );
 };
 
 #endif

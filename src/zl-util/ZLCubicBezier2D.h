@@ -46,7 +46,8 @@ public:
 	void				FindInflectionDomain	( float t, float& t0, float& t1, float flatness = 0.25f ) const;
 	u32					FindInflections			( float& t0, float& t1 ) const;
 	void				Flatten					( ZLAbstractVertexWriter2D& writer, float flatness = 0.125f, float angle = 15.0f ) const;
-	void				Flatten2				( ZLAbstractVertexWriter2D& writer, float flatness = 0.125f, float angle = 15.0f ) const;
+	float				GetFlattenedLength		( float flatness = 0.125f, float angle = 15.0f );
+	size_t				GetFlattenedSize		( float flatness = 0.125f, float angle = 15.0f );
 	void				Split					( float t, ZLCubicBezier2D& left, ZLCubicBezier2D& right ) const;
 	ZLCubicBezier2D		Split					( float t0, float t1 ) const;
 };
@@ -83,6 +84,8 @@ private:
 	
 	bool				mIsProcessingCurve;
 	ZLCubicBezier2D		mCurve;
+	
+	ZLVec2D				mLastVertex;
 
 	//----------------------------------------------------------------//
 	void				PushCommand			( const ZLCubicBezier2D& curve );
@@ -97,12 +100,5 @@ public:
 						ZLCubicBezierFlattener2D		();
 						~ZLCubicBezierFlattener2D		();
 };
-
-//================================================================//
-// test
-//================================================================//
-
-//----------------------------------------------------------------//
-extern void				TestBezierFlattener				();
 
 #endif

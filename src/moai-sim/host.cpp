@@ -15,11 +15,6 @@ void AKUSimAppFinalize () {
 
 //----------------------------------------------------------------//
 void AKUSimAppInitialize () {
-
-	for ( u32 i = 0; i < 1000; ++i ) {
-	
-		TestBezierFlattener ();
-	}
 }
 
 //----------------------------------------------------------------//
@@ -107,7 +102,9 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIParticleSystem )
 	REGISTER_LUA_CLASS ( MOAIParticleTimedEmitter )
 	REGISTER_LUA_CLASS ( MOAIPartition )
+	REGISTER_LUA_CLASS ( MOAIPath )
 	REGISTER_LUA_CLASS ( MOAIPathFinder )
+	REGISTER_LUA_CLASS ( MOAIPathStepper )
 	REGISTER_LUA_CLASS ( MOAIPathTerrainDeck )
 	REGISTER_LUA_CLASS ( MOAIPinTransform )
 	REGISTER_LUA_CLASS ( MOAIPointerSensor )
