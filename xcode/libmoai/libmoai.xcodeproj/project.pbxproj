@@ -2575,6 +2575,18 @@
 		CD57EC7119F90306007FEF66 /* MOAIHttpTaskNSURL.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDAC02BD192407E700392FAB /* MOAIHttpTaskNSURL.mm */; };
 		CD57EC7219F9032C007FEF66 /* MOAIHttpTaskNSURL.h in Headers */ = {isa = PBXBuildFile; fileRef = CDAC02BC192407E700392FAB /* MOAIHttpTaskNSURL.h */; };
 		CD57EC7319F9032C007FEF66 /* MOAIHttpTaskNSURL.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDAC02BD192407E700392FAB /* MOAIHttpTaskNSURL.mm */; };
+		CD5F96F71C2BCD0D000FA476 /* MOAIFourier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5F96F51C2BCD0D000FA476 /* MOAIFourier.cpp */; };
+		CD5F96F81C2BCD0D000FA476 /* MOAIFourier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5F96F51C2BCD0D000FA476 /* MOAIFourier.cpp */; };
+		CD5F96F91C2BCD0D000FA476 /* MOAIFourier.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5F96F61C2BCD0D000FA476 /* MOAIFourier.h */; };
+		CD5F96FA1C2BCD0D000FA476 /* MOAIFourier.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5F96F61C2BCD0D000FA476 /* MOAIFourier.h */; };
+		CD5F97001C2BD279000FA476 /* _kiss_fft_guts.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5F96FC1C2BD279000FA476 /* _kiss_fft_guts.h */; };
+		CD5F97011C2BD279000FA476 /* _kiss_fft_guts.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5F96FC1C2BD279000FA476 /* _kiss_fft_guts.h */; };
+		CD5F97021C2BD279000FA476 /* kiss_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5F96FD1C2BD279000FA476 /* kiss_fft.c */; };
+		CD5F97031C2BD279000FA476 /* kiss_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5F96FD1C2BD279000FA476 /* kiss_fft.c */; };
+		CD5F97041C2BD279000FA476 /* kiss_fft.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5F96FE1C2BD279000FA476 /* kiss_fft.h */; };
+		CD5F97051C2BD279000FA476 /* kiss_fft.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5F96FE1C2BD279000FA476 /* kiss_fft.h */; };
+		CD5F97061C2BD279000FA476 /* kissfft.hh in Headers */ = {isa = PBXBuildFile; fileRef = CD5F96FF1C2BD279000FA476 /* kissfft.hh */; };
+		CD5F97071C2BD279000FA476 /* kissfft.hh in Headers */ = {isa = PBXBuildFile; fileRef = CD5F96FF1C2BD279000FA476 /* kissfft.hh */; };
 		CD67B45C1B264C51004298CF /* MOAISelectionMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD67B45B1B264C51004298CF /* MOAISelectionMesh.h */; };
 		CD67B45D1B264C51004298CF /* MOAISelectionMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD67B45B1B264C51004298CF /* MOAISelectionMesh.h */; };
 		CD67B4601B264C9C004298CF /* MOAIDeckProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD67B45E1B264C9C004298CF /* MOAIDeckProxy.cpp */; };
@@ -6391,6 +6403,12 @@
 		CD5232411808ADDA00B81720 /* MOAIChartBoostIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIChartBoostIOS.h; path = "moai-ios-chartboost/MOAIChartBoostIOS.h"; sourceTree = "<group>"; };
 		CD5232421808ADDA00B81720 /* MOAIChartBoostIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIChartBoostIOS.mm; path = "moai-ios-chartboost/MOAIChartBoostIOS.mm"; sourceTree = "<group>"; };
 		CD5232BC1808ADF400B81720 /* libmoai-ios-crittercism.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-crittercism.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD5F96F51C2BCD0D000FA476 /* MOAIFourier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFourier.cpp; sourceTree = "<group>"; };
+		CD5F96F61C2BCD0D000FA476 /* MOAIFourier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIFourier.h; sourceTree = "<group>"; };
+		CD5F96FC1C2BD279000FA476 /* _kiss_fft_guts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _kiss_fft_guts.h; path = ../../3rdparty/kissfft/_kiss_fft_guts.h; sourceTree = "<group>"; };
+		CD5F96FD1C2BD279000FA476 /* kiss_fft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = kiss_fft.c; path = ../../3rdparty/kissfft/kiss_fft.c; sourceTree = "<group>"; };
+		CD5F96FE1C2BD279000FA476 /* kiss_fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kiss_fft.h; path = ../../3rdparty/kissfft/kiss_fft.h; sourceTree = "<group>"; };
+		CD5F96FF1C2BD279000FA476 /* kissfft.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = kissfft.hh; path = ../../3rdparty/kissfft/kissfft.hh; sourceTree = "<group>"; };
 		CD67B45B1B264C51004298CF /* MOAISelectionMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAISelectionMesh.h; sourceTree = "<group>"; };
 		CD67B45E1B264C9C004298CF /* MOAIDeckProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIDeckProxy.cpp; sourceTree = "<group>"; };
 		CD67B45F1B264C9C004298CF /* MOAIDeckProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDeckProxy.h; sourceTree = "<group>"; };
@@ -8161,6 +8179,7 @@
 				03240B2713564CB0000ADC60 /* freetype */,
 				CD218F9013A7FD8F008337E7 /* jansson */,
 				0795291A1447907100143A72 /* jpeg-8c */,
+				CD5F96FB1C2BD244000FA476 /* kissfft */,
 				CD74E4481377D6610093EE68 /* libcrypto */,
 				CD49003E141AB67700913D80 /* liblua */,
 				CD07C0FE13A14B2900C9386C /* libogg */,
@@ -8933,6 +8952,8 @@
 				89BE6CCB1739A42500DFE837 /* MOAIDataIOTask.h */,
 				89BE6CCE1739A42500DFE837 /* MOAIFileSystem.cpp */,
 				89BE6CCF1739A42500DFE837 /* MOAIFileSystem.h */,
+				CD5F96F51C2BCD0D000FA476 /* MOAIFourier.cpp */,
+				CD5F96F61C2BCD0D000FA476 /* MOAIFourier.h */,
 				89BE6CD21739A42500DFE837 /* MOAIJsonParser.cpp */,
 				89BE6CD31739A42500DFE837 /* MOAIJsonParser.h */,
 				CD0BB63C1B0D22AC00399FCB /* MOAILuaUtil.cpp */,
@@ -9999,6 +10020,17 @@
 				CD5161581BCDC0BD000718FB /* MOAIImageFormatPng.h */,
 			);
 			name = "moai-image-png";
+			sourceTree = "<group>";
+		};
+		CD5F96FB1C2BD244000FA476 /* kissfft */ = {
+			isa = PBXGroup;
+			children = (
+				CD5F96FC1C2BD279000FA476 /* _kiss_fft_guts.h */,
+				CD5F96FD1C2BD279000FA476 /* kiss_fft.c */,
+				CD5F96FE1C2BD279000FA476 /* kiss_fft.h */,
+				CD5F96FF1C2BD279000FA476 /* kissfft.hh */,
+			);
+			name = kissfft;
 			sourceTree = "<group>";
 		};
 		CD67857D189830DB007C7D2B /* texture */ = {
@@ -12561,7 +12593,9 @@
 			files = (
 				CDD48B5517FA794B00525B77 /* SFMT-params11213.h in Headers */,
 				CDD48B5717FA794B00525B77 /* SFMT-params44497.h in Headers */,
+				CD5F97071C2BD279000FA476 /* kissfft.hh in Headers */,
 				03240C2A13564CB0000ADC60 /* moai_utf8.h in Headers */,
+				CD5F97051C2BD279000FA476 /* kiss_fft.h in Headers */,
 				CDD48B5217FA794B00525B77 /* SFMT-params1279.h in Headers */,
 				CDD48B5117FA794B00525B77 /* SFMT-params607.h in Headers */,
 				CDD48B5B17FA794B00525B77 /* SFMT-sse2.h in Headers */,
@@ -12603,6 +12637,7 @@
 				CDD48B5617FA794B00525B77 /* SFMT-params19937.h in Headers */,
 				CD4900CC141AB6EC00913D80 /* lstate.h in Headers */,
 				CDCDD0181A23F233008779B5 /* internal.h in Headers */,
+				CD5F97011C2BD279000FA476 /* _kiss_fft_guts.h in Headers */,
 				CD73D0151BA3FFB800BB50C3 /* jansson.h in Headers */,
 				CD4900CE141AB6EC00913D80 /* lstring.h in Headers */,
 				CD4900D1141AB6EC00913D80 /* ltable.h in Headers */,
@@ -12659,6 +12694,7 @@
 			files = (
 				89BE6AF9173975E500DFE837 /* headers.h in Headers */,
 				89BE6AFD173975E500DFE837 /* host.h in Headers */,
+				CD5F96FA1C2BCD0D000FA476 /* MOAIFourier.h in Headers */,
 				89BE6B01173975E500DFE837 /* MOAICanary.h in Headers */,
 				89BE6B05173975E500DFE837 /* MOAIDeserializer.h in Headers */,
 				89BE6B09173975E500DFE837 /* MOAIEventSource.h in Headers */,
@@ -12761,6 +12797,7 @@
 				CD1844E31A6269AB00FCCCE0 /* MOAIWebViewIOS.h in Headers */,
 				89BE6B44173975E500DFE837 /* MOAISerializer.h in Headers */,
 				89BE6B48173975E500DFE837 /* MOAISerializerBase.h in Headers */,
+				CD5F96F91C2BCD0D000FA476 /* MOAIFourier.h in Headers */,
 				89BE6B4A173975E500DFE837 /* MOAISharedPtr.h in Headers */,
 				89BE6B4C173975E500DFE837 /* MOAIWeakPtr.h in Headers */,
 				89BE6B50173975E500DFE837 /* pch.h in Headers */,
@@ -14516,6 +14553,9 @@
 			files = (
 				CD8315CB1BED3AE900745C8A /* moai_utf8.h in Headers */,
 				CD8315CC1BED3AE900745C8A /* MOAIIso8601DateFormatter.h in Headers */,
+				CD5F97061C2BD279000FA476 /* kissfft.hh in Headers */,
+				CD5F97041C2BD279000FA476 /* kiss_fft.h in Headers */,
+				CD5F97001C2BD279000FA476 /* _kiss_fft_guts.h in Headers */,
 				CD8315EC1BED3AE900745C8A /* moai_edtaa3func.h in Headers */,
 				CD8315EE1BED3AE900745C8A /* MOAIOpenUDID.h in Headers */,
 				CD8315EF1BED3AE900745C8A /* moai_whirlpool.h in Headers */,
@@ -16254,6 +16294,7 @@
 				CD4900C8141AB6EC00913D80 /* loslib.c in Sources */,
 				CD4900C9141AB6EC00913D80 /* lparser.c in Sources */,
 				CD4900CB141AB6EC00913D80 /* lstate.c in Sources */,
+				CD5F97031C2BD279000FA476 /* kiss_fft.c in Sources */,
 				CD4900CD141AB6EC00913D80 /* lstring.c in Sources */,
 				CD4900CF141AB6EC00913D80 /* lstrlib.c in Sources */,
 				CD4900D0141AB6EC00913D80 /* ltable.c in Sources */,
@@ -16301,6 +16342,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				89BE6AFB173975E500DFE837 /* host.cpp in Sources */,
+				CD5F96F81C2BCD0D000FA476 /* MOAIFourier.cpp in Sources */,
 				89BE6AFF173975E500DFE837 /* MOAICanary.cpp in Sources */,
 				CD3024C11A68AB4B00CCEE32 /* MOAITestMgr.cpp in Sources */,
 				89BE6B03173975E500DFE837 /* MOAIDeserializer.cpp in Sources */,
@@ -16420,6 +16462,7 @@
 				89BE6D481739A42500DFE837 /* MOAITaskSubscriber.cpp in Sources */,
 				89BE6D4C1739A42500DFE837 /* MOAITaskThread.cpp in Sources */,
 				89BE6D501739A42500DFE837 /* MOAIThread.cpp in Sources */,
+				CD5F96F71C2BCD0D000FA476 /* MOAIFourier.cpp in Sources */,
 				CD1844E41A6269AB00FCCCE0 /* MOAIWebViewIOS.mm in Sources */,
 				89BE6D541739A42500DFE837 /* MOAIThread_posix.cpp in Sources */,
 				CD1844E01A6269AB00FCCCE0 /* MOAINotificationsIOS.mm in Sources */,
@@ -18570,6 +18613,7 @@
 			files = (
 				CD8315F11BED3AE900745C8A /* moai_utf8.c in Sources */,
 				CD8315F51BED3AE900745C8A /* MOAIIso8601DateFormatter.m in Sources */,
+				CD5F97021C2BD279000FA476 /* kiss_fft.c in Sources */,
 				CD8315F81BED3AE900745C8A /* moai_edtaa3func.c in Sources */,
 				CD8315FA1BED3AE900745C8A /* MOAIOpenUDID.m in Sources */,
 				CD83161B1BED3AE900745C8A /* moai_whirlpool.c in Sources */,
