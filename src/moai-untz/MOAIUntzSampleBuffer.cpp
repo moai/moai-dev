@@ -160,7 +160,7 @@ int MOAIUntzSampleBuffer::_setRawData ( lua_State* L ) {
 	
 		float val = buf [ idx ];
 		val = val < 0 ? ( val / 32768.0f ) : ( val / 32767.0f );
-		//4printf ( "%f\n", val );
+//		printf ( "bloop: %f\n", val );
 		
 		self->mBuffer [ idx ] = val;
 	}	

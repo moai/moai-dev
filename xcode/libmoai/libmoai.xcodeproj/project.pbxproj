@@ -4678,6 +4678,10 @@
 		CDD5D69C1C260DFD0070237E /* ZLCubicBezier2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD5D6991C260DFD0070237E /* ZLCubicBezier2D.cpp */; };
 		CDD5D69D1C260DFD0070237E /* ZLCubicBezier2D.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD5D69A1C260DFD0070237E /* ZLCubicBezier2D.h */; };
 		CDD5D69E1C260DFD0070237E /* ZLCubicBezier2D.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD5D69A1C260DFD0070237E /* ZLCubicBezier2D.h */; };
+		CDDAF4661C2FC5AA00F10946 /* ZLSample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDDAF4621C2F3D7C00F10946 /* ZLSample.cpp */; };
+		CDDAF4671C2FC5AA00F10946 /* ZLSample.h in Headers */ = {isa = PBXBuildFile; fileRef = CDDAF4631C2F3D7C00F10946 /* ZLSample.h */; };
+		CDDAF4681C2FC5AD00F10946 /* ZLSample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDDAF4621C2F3D7C00F10946 /* ZLSample.cpp */; };
+		CDDAF4691C2FC5AD00F10946 /* ZLSample.h in Headers */ = {isa = PBXBuildFile; fileRef = CDDAF4631C2F3D7C00F10946 /* ZLSample.h */; };
 		CDE36E501A5F4E340095E863 /* MOAIImageFormatMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE36E4E1A5F4E340095E863 /* MOAIImageFormatMgr.cpp */; };
 		CDE36E511A5F4E340095E863 /* MOAIImageFormatMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE36E4E1A5F4E340095E863 /* MOAIImageFormatMgr.cpp */; };
 		CDE36E521A5F4E340095E863 /* MOAIImageFormatMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE36E4F1A5F4E340095E863 /* MOAIImageFormatMgr.h */; };
@@ -7660,6 +7664,8 @@
 		CDD781CD1A11635F00AD133E /* host.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = host.mm; path = "moai-ios-motion/host.mm"; sourceTree = "<group>"; };
 		CDD781CE1A11635F00AD133E /* MOAIMotionMgrIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIMotionMgrIOS.h; path = "moai-ios-motion/MOAIMotionMgrIOS.h"; sourceTree = "<group>"; };
 		CDD781CF1A11635F00AD133E /* MOAIMotionMgrIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIMotionMgrIOS.mm; path = "moai-ios-motion/MOAIMotionMgrIOS.mm"; sourceTree = "<group>"; };
+		CDDAF4621C2F3D7C00F10946 /* ZLSample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLSample.cpp; sourceTree = "<group>"; };
+		CDDAF4631C2F3D7C00F10946 /* ZLSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLSample.h; sourceTree = "<group>"; };
 		CDDD30921574AE0000C410A0 /* libmoai-ios-fmod-designer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-fmod-designer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDDD30A51574AE0F00C410A0 /* libmoai-osx-fmod-designer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-fmod-designer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDE36E4E1A5F4E340095E863 /* MOAIImageFormatMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIImageFormatMgr.cpp; sourceTree = "<group>"; };
@@ -8737,6 +8743,8 @@
 				89BE68F2173974FC00DFE837 /* ZLLog.h */,
 				89BE690B173974FC00DFE837 /* ZLRadixSort16.h */,
 				89BE690C173974FC00DFE837 /* ZLRadixSort32.h */,
+				CDDAF4621C2F3D7C00F10946 /* ZLSample.cpp */,
+				CDDAF4631C2F3D7C00F10946 /* ZLSample.h */,
 				89BE691E173974FD00DFE837 /* ZLTypedPtr.cpp */,
 				89BE691F173974FD00DFE837 /* ZLTypedPtr.h */,
 				89BE6920173974FD00DFE837 /* ZLTypeID.h */,
@@ -13440,6 +13448,7 @@
 				89BE69BB173974FD00DFE837 /* ZLFileStream.h in Headers */,
 				89BE69BF173974FD00DFE837 /* ZLFileSys.h in Headers */,
 				89BE69C1173974FD00DFE837 /* ZLFloat.h in Headers */,
+				CDDAF4671C2FC5AA00F10946 /* ZLSample.h in Headers */,
 				89BE69C9173974FD00DFE837 /* ZLHashedString.h in Headers */,
 				89BE69CD173974FD00DFE837 /* ZLHashWriter.h in Headers */,
 				89BE69D1173974FD00DFE837 /* ZLHashWriterAdler32.h in Headers */,
@@ -13504,6 +13513,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CDB718AF1A44E7FE003DFFBA /* zl_socket.h in Headers */,
+				CDDAF4691C2FC5AD00F10946 /* ZLSample.h in Headers */,
 				89BE694A173974FD00DFE837 /* zl_platform.h in Headers */,
 				89BE694C173974FD00DFE837 /* zl_types.h in Headers */,
 				89BE694E173974FD00DFE837 /* headers.h in Headers */,
@@ -17066,6 +17076,7 @@
 				89BE6A31173974FD00DFE837 /* ZLPolar.cpp in Sources */,
 				89BE6A39173974FD00DFE837 /* ZLPrism.cpp in Sources */,
 				89BE6A3D173974FD00DFE837 /* ZLQuad.cpp in Sources */,
+				CDDAF4661C2FC5AA00F10946 /* ZLSample.cpp in Sources */,
 				89BE6A41173974FD00DFE837 /* ZLQuadCoord.cpp in Sources */,
 				89BE6A45173974FD00DFE837 /* ZLQuaternion.cpp in Sources */,
 				89BE6A4F173974FD00DFE837 /* ZLRhombus.cpp in Sources */,
@@ -17137,6 +17148,7 @@
 				89BE6A32173974FD00DFE837 /* ZLPolar.cpp in Sources */,
 				89BE6A3A173974FD00DFE837 /* ZLPrism.cpp in Sources */,
 				89BE6A3E173974FD00DFE837 /* ZLQuad.cpp in Sources */,
+				CDDAF4681C2FC5AD00F10946 /* ZLSample.cpp in Sources */,
 				89BE6A42173974FD00DFE837 /* ZLQuadCoord.cpp in Sources */,
 				89BE6A46173974FD00DFE837 /* ZLQuaternion.cpp in Sources */,
 				89BE6A50173974FD00DFE837 /* ZLRhombus.cpp in Sources */,

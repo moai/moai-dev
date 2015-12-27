@@ -37,7 +37,7 @@ public:
 					~MOAIFourier		();
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
-	void			Transform			( ZLStream& inStream, ZLStream& outStream, bool complexIn, bool complexOut );
+	void			Transform			( ZLStream& inStream, u32 inStreamType, bool complexIn, ZLStream& outStream, u32 outStreamType, bool complexOut );
 };
 
 #endif
