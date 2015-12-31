@@ -78,6 +78,7 @@ private:
 	static int			_defer					( lua_State* L );
 	static int			_detach					( lua_State* L );
 	static int 			_getChildren			( lua_State* L );
+	static int 			_hasChildren			( lua_State* L );
 	static int			_isActive				( lua_State* L );
 	static int			_isBusy					( lua_State* L );
 	static int			_isDone					( lua_State* L );
