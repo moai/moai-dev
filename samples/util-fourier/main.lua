@@ -4,6 +4,9 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+-- great demo on an excellent site
+-- http://madebyevan.com/dft/
+
 signal			= MOAIMemStream.new ()
 transform		= MOAIMemStream.new ()
 reconstruction	= MOAIMemStream.new ()
