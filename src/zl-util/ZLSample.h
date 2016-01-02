@@ -29,13 +29,9 @@ public:
 
 	//----------------------------------------------------------------//
 	static size_t		Convert					( u32 sourceType, const void* source, u32 destType, void* dest );
-	void				GetSample				( void* buffer, u32 type );
 	static size_t		GetSize					( u32 type );
 	static void			ReadSample				( ZLStream& stream, u32 streamType, void* buffer, u32 bufferType );
 	static void			WriteSample				( ZLStream& stream, u32 streamType, const void* buffer, u32 bufferType );
-	void				SetSample				( const void* buffer, u32 type );
-						ZLSample				();
-						~ZLSample				();
 };
 
 #endif

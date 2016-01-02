@@ -750,6 +750,9 @@ void MOAIDraw::Bind () {
 	gfxDevice.SetTexture ();
 	gfxDevice.SetShader ( MOAIShaderMgr::LINE_SHADER );
 	gfxDevice.BindBufferedDrawing ( MOAIVertexFormatMgr::XYZWC );
+	
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
 }
 
 //----------------------------------------------------------------//

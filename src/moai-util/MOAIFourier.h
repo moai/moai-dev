@@ -26,6 +26,9 @@ private:
 	static int		_init				( lua_State* L );
 	static int		_transform			( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void			ReadSample			( ZLStream& inStream, u32 inStreamType, bool complexIn, float& real, float& imag );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIFourier )
@@ -37,7 +40,7 @@ public:
 					~MOAIFourier		();
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
-	void			Transform			( ZLStream& inStream, u32 inStreamType, bool complexIn, ZLStream& outStream, u32 outStreamType, bool complexOut );
+	void			Transform			( ZLStream& inStream, u32 inStreamType, bool complexIn, ZLStream& outStream, u32 outStreamType, bool complexOut, u32 stride, u32 average );
 };
 
 #endif

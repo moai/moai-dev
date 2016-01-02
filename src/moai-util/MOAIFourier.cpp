@@ -37,7 +37,7 @@ int MOAIFourier::_init ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIFourier::_transform ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIFourier, "UUU" )
+	MOAI_LUA_SETUP ( MOAIFourier, "UUNBUNB" )
 	
 	MOAIStream* inStream		= state.GetLuaObject < MOAIStream >( 2, true );
 	u32 inStreamType			= state.GetValue < u32 >( 3, ZLSample::SAMPLE_FLOAT );
@@ -45,9 +45,11 @@ int MOAIFourier::_transform ( lua_State* L ) {
 	MOAIStream* outStream		= state.GetLuaObject < MOAIStream >( 5, true );
 	u32 outStreamType			= state.GetValue < u32 >( 6, ZLSample::SAMPLE_FLOAT );
 	bool complexOut				= state.GetValue < bool >( 7, true );
+    u32 stride                  = state.GetValue < u32 >( 8, 1 );
+    u32 average                 = state.GetValue < u32 >( 9, 1 );
 	
 	if ( inStream && outStream ) {
-		self->Transform ( *inStream, inStreamType, complexIn, *outStream, outStreamType, complexOut );
+		self->Transform ( *inStream, inStreamType, complexIn, *outStream, outStreamType, complexOut, stride, average );
 	}
 	return 0;
 }
@@ -69,6 +71,7 @@ void MOAIFourier::Init ( size_t size, bool inverse ) {
 
 	this->Clear ();
 	this->mKissFFT = kiss_fft_alloc (( int )size, inverse ? 1 : 0, 0, 0 );
+	this->mSize = size;
 }
 
 //----------------------------------------------------------------//
@@ -83,6 +86,18 @@ MOAIFourier::MOAIFourier () :
 MOAIFourier::~MOAIFourier () {
 
 	this->Clear ();
+}
+
+//----------------------------------------------------------------//
+void MOAIFourier::ReadSample ( ZLStream& inStream, u32 inStreamType, bool complexIn, float& real, float& imag ) {
+
+	real = 0.0f;
+	imag = 0.0f;
+
+	ZLSample::ReadSample ( inStream, inStreamType, &real, ZLSample::SAMPLE_FLOAT );
+	if ( complexIn ) {
+		ZLSample::ReadSample ( inStream, inStreamType, &imag, ZLSample::SAMPLE_FLOAT );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -111,22 +126,47 @@ void MOAIFourier::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFourier::Transform ( ZLStream& inStream, u32 inStreamType, bool complexIn, ZLStream& outStream, u32 outStreamType, bool complexOut ) {
-
-	ZLSample sample;
+void MOAIFourier::Transform ( ZLStream& inStream, u32 inStreamType, bool complexIn, ZLStream& outStream, u32 outStreamType, bool complexOut, u32 stride, u32 average ) {
 
 	kiss_fft_cpx* in = ( kiss_fft_cpx* )alloca ( this->mSize * sizeof ( kiss_fft_cpx ));
 	kiss_fft_cpx* out = ( kiss_fft_cpx* )alloca ( this->mSize * sizeof ( kiss_fft_cpx ));
 
+	size_t sampleSize = ZLSample::GetSize ( inStreamType );
+	
+	stride *= complexIn ? sampleSize * 2 : sampleSize;
+
 	for ( size_t i = 0; i < this->mSize; ++i ) {
-	
-		sample.ReadSample ( inStream, inStreamType, &in [ i ].r, ZLSample::SAMPLE_FLOAT );
-	
-		if ( complexIn ) {
-			sample.ReadSample ( inStream, inStreamType, &in [ i ].i, ZLSample::SAMPLE_FLOAT );
+		
+		size_t next = inStream.GetCursor () + stride;
+		
+		if ( average > 1 ) {
+		
+			float realAvg = 0.0f;
+			float imagAvg = 0.0f;
+			
+			float scale = 1 / ( float )average;
+			
+			for ( u32 j = 0; j < average; ++j ) {
+			
+				float real;
+				float imag;
+				
+				this->ReadSample ( inStream, inStreamType, complexIn, real, imag );
+				
+				realAvg += real * scale;
+				imagAvg += imag * scale;
+			}
+		
+			in [ i ].r = realAvg;
+			in [ i ].i = imagAvg;
 		}
 		else {
-			in [ i ].i = 0.0f;
+		
+			this->ReadSample ( inStream, inStreamType, complexIn, in [ i ].r, in [ i ].i );
+		}
+		
+		if ( inStream.GetCursor () != next ) {
+			inStream.Seek ( next, SEEK_SET );
 		}
 	}
 
@@ -134,10 +174,10 @@ void MOAIFourier::Transform ( ZLStream& inStream, u32 inStreamType, bool complex
 	
 	for ( size_t i = 0; i < this->mSize; ++i ) {
 		
-		sample.WriteSample ( outStream, outStreamType, &out [ i ].r, ZLSample::SAMPLE_FLOAT );
+		ZLSample::WriteSample ( outStream, outStreamType, &out [ i ].r, ZLSample::SAMPLE_FLOAT );
 	
 		if ( complexOut ) {
-			sample.WriteSample ( outStream, outStreamType, &out [ i ].i, ZLSample::SAMPLE_FLOAT );
+			ZLSample::WriteSample ( outStream, outStreamType, &out [ i ].i, ZLSample::SAMPLE_FLOAT );
 		}
 	}
 }

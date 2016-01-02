@@ -31,6 +31,7 @@ void AKUUtilContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIDataIOTask )
 	REGISTER_LUA_CLASS ( MOAIFileStream )
 	REGISTER_LUA_CLASS ( MOAIFileSystem )
+	REGISTER_LUA_CLASS ( MOAIFourier )
 	
 	#ifndef MOAI_WITH_LUAJIT
 		REGISTER_LUA_CLASS ( MOAILuaUtil )
