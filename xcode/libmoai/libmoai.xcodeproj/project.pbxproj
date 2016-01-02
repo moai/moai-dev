@@ -28940,7 +28940,7 @@
 				E90D02C714D5E12700DD75AA /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		0324E2B81356485F000ADC60 /* Build configuration list for PBXNativeTarget "libmoai-osx" */ = {
 			isa = XCConfigurationList;
@@ -28951,7 +28951,7 @@
 				E90D02C614D5E12700DD75AA /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		03C2F6F8104DE131009A2D5D /* Build configuration list for PBXNativeTarget "libmoai-ios" */ = {
 			isa = XCConfigurationList;
@@ -28962,7 +28962,7 @@
 				E90D02C014D5E12700DD75AA /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		3EDC16EA19F6DD1A007A7775 /* Build configuration list for PBXAggregateTarget "libmoai-osx-all" */ = {
 			isa = XCConfigurationList;
@@ -28973,7 +28973,7 @@
 				3EDC16E919F6DD1A007A7775 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		3EDC171219F6DE01007A7775 /* Build configuration list for PBXAggregateTarget "libmoai-ios-all" */ = {
 			isa = XCConfigurationList;
@@ -28984,7 +28984,7 @@
 				3EDC171619F6DE01007A7775 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		89BE6F01173AD06700DFE837 /* Build configuration list for PBXNativeTarget "libmoai-ios-sim" */ = {
 			isa = XCConfigurationList;
@@ -28995,7 +28995,7 @@
 				89BE6F05173AD06700DFE837 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		89BE6F13173AD07100DFE837 /* Build configuration list for PBXNativeTarget "libmoai-osx-sim" */ = {
 			isa = XCConfigurationList;
@@ -29006,7 +29006,7 @@
 				89BE6F17173AD07100DFE837 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		89BE7376173AD29200DFE837 /* Build configuration list for PBXNativeTarget "libmoai-osx-box2d" */ = {
 			isa = XCConfigurationList;
@@ -29017,7 +29017,7 @@
 				89BE737A173AD29200DFE837 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		89BE749C173AD2B600DFE837 /* Build configuration list for PBXNativeTarget "libmoai-ios-box2d" */ = {
 			isa = XCConfigurationList;
@@ -29028,7 +29028,7 @@
 				89BE74A0173AD2B600DFE837 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		89BE75D5173C121800DFE837 /* Build configuration list for PBXNativeTarget "libmoai-osx-http-client" */ = {
 			isa = XCConfigurationList;
@@ -29039,7 +29039,7 @@
 				89BE75D9173C121800DFE837 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		89BE75F2173C126100DFE837 /* Build configuration list for PBXNativeTarget "libmoai-ios-http-client" */ = {
 			isa = XCConfigurationList;
@@ -29050,7 +29050,7 @@
 				89BE75F6173C126100DFE837 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		89BE7681173C15F100DFE837 /* Build configuration list for PBXNativeTarget "libmoai-ios-http-server" */ = {
 			isa = XCConfigurationList;
@@ -29061,7 +29061,7 @@
 				89BE7685173C15F100DFE837 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		89BE769A173C160E00DFE837 /* Build configuration list for PBXNativeTarget "libmoai-osx-http-server" */ = {
 			isa = XCConfigurationList;
@@ -29072,7 +29072,7 @@
 				89BE769E173C160E00DFE837 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "libmoai" */ = {
 			isa = XCConfigurationList;
@@ -29083,7 +29083,7 @@
 				E90D02BF14D5E12700DD75AA /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD04ACB114725568009C20E5 /* Build configuration list for PBXNativeTarget "libmoai-ios-zl-core" */ = {
 			isa = XCConfigurationList;
@@ -29094,7 +29094,7 @@
 				E90D02C514D5E12700DD75AA /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD04AE7C1472557F009C20E5 /* Build configuration list for PBXNativeTarget "libmoai-osx-zl-core" */ = {
 			isa = XCConfigurationList;
@@ -29105,7 +29105,7 @@
 				E90D02CA14D5E12700DD75AA /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD07C3CA13A182AA00C9386C /* Build configuration list for PBXNativeTarget "libmoai-ios-untz" */ = {
 			isa = XCConfigurationList;
@@ -29116,7 +29116,7 @@
 				E90D02C414D5E12700DD75AA /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD07C4E213A1918600C9386C /* Build configuration list for PBXNativeTarget "libmoai-osx-untz" */ = {
 			isa = XCConfigurationList;
@@ -29127,7 +29127,7 @@
 				E90D02C914D5E12700DD75AA /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD1845971A626BD500FCCCE0 /* Build configuration list for PBXNativeTarget "libmoai-osx-apple" */ = {
 			isa = XCConfigurationList;
@@ -29138,7 +29138,7 @@
 				CD18459B1A626BD500FCCCE0 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD257B9D1A6255380057A53A /* Build configuration list for PBXNativeTarget "libmoai-ios-apple" */ = {
 			isa = XCConfigurationList;
@@ -29149,7 +29149,7 @@
 				CD257BA11A6255380057A53A /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD27BE08191D9F44000A7770 /* Build configuration list for PBXNativeTarget "libmoai-ios-adcolony" */ = {
 			isa = XCConfigurationList;
@@ -29160,7 +29160,7 @@
 				CD27BE0C191D9F44000A7770 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD32B4D319F9EDD10059D019 /* Build configuration list for PBXNativeTarget "libmoai-osx-3rdparty-sdl" */ = {
 			isa = XCConfigurationList;
@@ -29171,7 +29171,7 @@
 				CD32B4D719F9EDD10059D019 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD42F35E1A60A7CC001B6D72 /* Build configuration list for PBXNativeTarget "libmoai-osx-sdl" */ = {
 			isa = XCConfigurationList;
@@ -29182,7 +29182,7 @@
 				CD42F3621A60A7CC001B6D72 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD4C3A7C180A623200C02381 /* Build configuration list for PBXNativeTarget "libmoai-ios-crypto" */ = {
 			isa = XCConfigurationList;
@@ -29193,7 +29193,7 @@
 				CD4C3A80180A623200C02381 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD4C413A180A667300C02381 /* Build configuration list for PBXNativeTarget "libmoai-ios-mobile-app-tracker" */ = {
 			isa = XCConfigurationList;
@@ -29204,7 +29204,7 @@
 				CD4C413E180A667300C02381 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD4C416F180A9AEA00C02381 /* Build configuration list for PBXNativeTarget "libmoai-ios-urban-airship" */ = {
 			isa = XCConfigurationList;
@@ -29215,7 +29215,7 @@
 				CD4C4173180A9AEA00C02381 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD5089F4155E3A1B0002FC3B /* Build configuration list for PBXNativeTarget "libmoai-ios-fmod-ex" */ = {
 			isa = XCConfigurationList;
@@ -29226,7 +29226,7 @@
 				CD5089F8155E3A1B0002FC3B /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD515F191BCDB440000718FB /* Build configuration list for PBXNativeTarget "libmoai-osx-image-jpg" */ = {
 			isa = XCConfigurationList;
@@ -29237,7 +29237,7 @@
 				CD515F1D1BCDB440000718FB /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD515F281BCDB45B000718FB /* Build configuration list for PBXNativeTarget "libmoai-osx-image-png" */ = {
 			isa = XCConfigurationList;
@@ -29248,7 +29248,7 @@
 				CD515F2C1BCDB45B000718FB /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD515F371BCDB467000718FB /* Build configuration list for PBXNativeTarget "libmoai-osx-image-pvr" */ = {
 			isa = XCConfigurationList;
@@ -29259,7 +29259,7 @@
 				CD515F3B1BCDB467000718FB /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD515F461BCDB473000718FB /* Build configuration list for PBXNativeTarget "libmoai-osx-image-webp" */ = {
 			isa = XCConfigurationList;
@@ -29270,7 +29270,7 @@
 				CD515F4A1BCDB473000718FB /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD515F591BCDBBEC000718FB /* Build configuration list for PBXNativeTarget "libmoai-ios-image-jpg" */ = {
 			isa = XCConfigurationList;
@@ -29281,7 +29281,7 @@
 				CD515F5D1BCDBBEC000718FB /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD515F681BCDBBF8000718FB /* Build configuration list for PBXNativeTarget "libmoai-ios-image-png" */ = {
 			isa = XCConfigurationList;
@@ -29292,7 +29292,7 @@
 				CD515F6C1BCDBBF8000718FB /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD515F771BCDBC00000718FB /* Build configuration list for PBXNativeTarget "libmoai-ios-image-pvr" */ = {
 			isa = XCConfigurationList;
@@ -29303,7 +29303,7 @@
 				CD515F7B1BCDBC00000718FB /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD515F861BCDBC08000718FB /* Build configuration list for PBXNativeTarget "libmoai-ios-image-webp" */ = {
 			isa = XCConfigurationList;
@@ -29314,7 +29314,7 @@
 				CD515F8A1BCDBC08000718FB /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD5232B71808ADF400B81720 /* Build configuration list for PBXNativeTarget "libmoai-ios-crittercism" */ = {
 			isa = XCConfigurationList;
@@ -29325,7 +29325,7 @@
 				CD5232BB1808ADF400B81720 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD6D752017EE415D00964415 /* Build configuration list for PBXNativeTarget "libmoai-osx-zl-vfs" */ = {
 			isa = XCConfigurationList;
@@ -29336,7 +29336,7 @@
 				CD6D752417EE415D00964415 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD70C11718441DD0005CEBC0 /* Build configuration list for PBXNativeTarget "libmoai-ios-flurry" */ = {
 			isa = XCConfigurationList;
@@ -29347,7 +29347,7 @@
 				CD70C11B18441DD0005CEBC0 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD70C20918449935005CEBC0 /* Build configuration list for PBXNativeTarget "libmoai-ios-kontagent" */ = {
 			isa = XCConfigurationList;
@@ -29358,7 +29358,7 @@
 				CD70C20D18449935005CEBC0 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD807B451831C3B500E658D9 /* Build configuration list for PBXNativeTarget "libmoai-osx-3rdparty-crypto" */ = {
 			isa = XCConfigurationList;
@@ -29369,7 +29369,7 @@
 				CD807B491831C3B500E658D9 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD807E931831C42100E658D9 /* Build configuration list for PBXNativeTarget "libmoai-osx-zl-crypto" */ = {
 			isa = XCConfigurationList;
@@ -29380,7 +29380,7 @@
 				CD807E971831C42100E658D9 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD830E451BED355500745C8A /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty-expat" */ = {
 			isa = XCConfigurationList;
@@ -29391,7 +29391,7 @@
 				CD830E491BED355500745C8A /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD830F1C1BED356D00745C8A /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty-jansson" */ = {
 			isa = XCConfigurationList;
@@ -29402,7 +29402,7 @@
 				CD830F201BED356D00745C8A /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD8312781BED379600745C8A /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty-tinyxml" */ = {
 			isa = XCConfigurationList;
@@ -29413,7 +29413,7 @@
 				CD83127C1BED379600745C8A /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD83134F1BED38F600745C8A /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty-zlib" */ = {
 			isa = XCConfigurationList;
@@ -29424,7 +29424,7 @@
 				CD8313531BED38F600745C8A /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD8314261BED394D00745C8A /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty-sfmt" */ = {
 			isa = XCConfigurationList;
@@ -29435,7 +29435,7 @@
 				CD83142A1BED394D00745C8A /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD8314FD1BED395600745C8A /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty-tlsf" */ = {
 			isa = XCConfigurationList;
@@ -29446,7 +29446,7 @@
 				CD8315011BED395600745C8A /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD8315C21BED3A8100745C8A /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty-freetype" */ = {
 			isa = XCConfigurationList;
@@ -29457,7 +29457,7 @@
 				CD8315C61BED3A8100745C8A /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD83161D1BED3AE900745C8A /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty-contrib" */ = {
 			isa = XCConfigurationList;
@@ -29468,7 +29468,7 @@
 				CD8316211BED3AE900745C8A /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD8316781BED3BC100745C8A /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty-libtess" */ = {
 			isa = XCConfigurationList;
@@ -29479,7 +29479,7 @@
 				CD83167C1BED3BC100745C8A /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD8316C41BED3C1800745C8A /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty-liblua" */ = {
 			isa = XCConfigurationList;
@@ -29490,7 +29490,7 @@
 				CD8316C81BED3C1800745C8A /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CD95D4A01831D4E20080C34E /* Build configuration list for PBXNativeTarget "libmoai-osx-crypto" */ = {
 			isa = XCConfigurationList;
@@ -29501,7 +29501,7 @@
 				CD95D4A41831D4E20080C34E /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CDA0D9FF1A01B111002B71B6 /* Build configuration list for PBXNativeTarget "libmoai-ios-audio-sampler" */ = {
 			isa = XCConfigurationList;
@@ -29512,7 +29512,7 @@
 				CDA0DA031A01B111002B71B6 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CDA0DC9E1A01B184002B71B6 /* Build configuration list for PBXNativeTarget "libmoai-osx-audio-sampler" */ = {
 			isa = XCConfigurationList;
@@ -29523,7 +29523,7 @@
 				CDA0DCA21A01B184002B71B6 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CDA4B7A91808AC61000129F9 /* Build configuration list for PBXNativeTarget "libmoai-ios-billing" */ = {
 			isa = XCConfigurationList;
@@ -29534,7 +29534,7 @@
 				CDA4B7AD1808AC61000129F9 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CDA4B81F1808AC6E000129F9 /* Build configuration list for PBXNativeTarget "libmoai-ios-chartboost" */ = {
 			isa = XCConfigurationList;
@@ -29545,7 +29545,7 @@
 				CDA4B8231808AC6E000129F9 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CDA4B8951808AC82000129F9 /* Build configuration list for PBXNativeTarget "libmoai-ios-facebook" */ = {
 			isa = XCConfigurationList;
@@ -29556,7 +29556,7 @@
 				CDA4B8991808AC82000129F9 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CDA4B90B1808AC8F000129F9 /* Build configuration list for PBXNativeTarget "libmoai-ios-gamecenter" */ = {
 			isa = XCConfigurationList;
@@ -29567,7 +29567,7 @@
 				CDA4B90F1808AC8F000129F9 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CDA4B9811808AC9D000129F9 /* Build configuration list for PBXNativeTarget "libmoai-ios-tapjoy" */ = {
 			isa = XCConfigurationList;
@@ -29578,7 +29578,7 @@
 				CDA4B9851808AC9D000129F9 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CDA4B9F71808ACA6000129F9 /* Build configuration list for PBXNativeTarget "libmoai-ios-vungle" */ = {
 			isa = XCConfigurationList;
@@ -29589,7 +29589,7 @@
 				CDA4B9FB1808ACA6000129F9 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CDC097DC1AE9C72E002E325F /* Build configuration list for PBXNativeTarget "libmoai-ios-movie" */ = {
 			isa = XCConfigurationList;
@@ -29600,7 +29600,7 @@
 				CDC097E01AE9C72E002E325F /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CDC1237E17FA804C00FB64BB /* Build configuration list for PBXNativeTarget "libmoai-ios-zl-crypto" */ = {
 			isa = XCConfigurationList;
@@ -29611,7 +29611,7 @@
 				CDC1238217FA804C00FB64BB /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CDD06BCD1398822500AB0420 /* Build configuration list for PBXNativeTarget "libmoai-ios-luaext" */ = {
 			isa = XCConfigurationList;
@@ -29622,7 +29622,7 @@
 				E90D02C214D5E12700DD75AA /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CDD06D84139882D900AB0420 /* Build configuration list for PBXNativeTarget "libmoai-osx-luaext" */ = {
 			isa = XCConfigurationList;
@@ -29633,7 +29633,7 @@
 				E90D02C814D5E12700DD75AA /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CDD480CC17FA78AE00525B77 /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty-crypto" */ = {
 			isa = XCConfigurationList;
@@ -29644,7 +29644,7 @@
 				CDD480D017FA78AE00525B77 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CDD781C51A11631E00AD133E /* Build configuration list for PBXNativeTarget "libmoai-ios-motion" */ = {
 			isa = XCConfigurationList;
@@ -29655,7 +29655,7 @@
 				CDD781C91A11631E00AD133E /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CDDD308D1574AE0000C410A0 /* Build configuration list for PBXNativeTarget "libmoai-ios-fmod-designer" */ = {
 			isa = XCConfigurationList;
@@ -29666,7 +29666,7 @@
 				CDDD30911574AE0000C410A0 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CDDD30A01574AE0F00C410A0 /* Build configuration list for PBXNativeTarget "libmoai-osx-fmod-designer" */ = {
 			isa = XCConfigurationList;
@@ -29677,7 +29677,7 @@
 				CDDD30A41574AE0F00C410A0 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CDE8A7FD155E42EF00C2DFF5 /* Build configuration list for PBXNativeTarget "libmoai-osx-fmod-ex" */ = {
 			isa = XCConfigurationList;
@@ -29688,7 +29688,7 @@
 				CDE8A801155E42EF00C2DFF5 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		CDF288B717ED41CF00FD4F59 /* Build configuration list for PBXNativeTarget "libmoai-ios-zl-vfs" */ = {
 			isa = XCConfigurationList;
@@ -29699,7 +29699,7 @@
 				CDF288BB17ED41CF00FD4F59 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

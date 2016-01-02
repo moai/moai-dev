@@ -171,6 +171,19 @@ int MOAIAction::_getChildren ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAction::_hasChildren ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAction, "U" )
+
+	size_t count = self->mChildren.Count ();
+
+	state.Push ( count > 0 );
+	state.Push (( u32 )count );
+
+	return 2;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	isActive
 	@text	Checks to see if an action is currently in the action tree.
 
@@ -539,6 +552,7 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "defer",					_defer },
 		{ "detach",					_detach },
 		{ "getChildren",			_getChildren },
+		{ "hasChildren",			_hasChildren },
 		{ "isActive",				_isActive },
 		{ "isBusy",					_isBusy },
 		{ "isDone",					_isDone },
