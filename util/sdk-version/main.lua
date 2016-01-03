@@ -12,9 +12,10 @@ prepare = function ()
 
 	assert ( VERSION.REVISION )
 
-	util.moaiexec ( 'git rev-parse HEAD > commit.tmp' )
-	COMMIT = string.sub ( util.loadFileAsString ( 'commit.tmp' ), 1, 40 )
-	MOAIFileSystem.deleteFile ( 'commit.tmp' )
+	-- TODO: use a less borked way to get a tmpfile
+	util.moaiexec ( 'git rev-parse HEAD > /tmp/commit.tmp' )
+	COMMIT = string.sub ( util.loadFileAsString ( '/tmp/commit.tmp' ), 1, 40 )
+	MOAIFileSystem.deleteFile ( '/tmp/commit.tmp' )
 
 	MOAIFileSystem.copy ( 'moai_version.h.in', MOAI_SDK_HOME .. 'src/moai-core/moai_version.h' )
 	util.replaceInFile ( MOAI_SDK_HOME .. 'src/moai-core/moai_version.h', {
@@ -81,4 +82,4 @@ for i, escape, param, iter in util.iterateCommandLine ( arg or {}) do
 	end
 end
 
-print ( string.format ( 'MOAI SDK VERSION IS %d.%d.%d', VERSION.MAJOR, VERSION.MINOR, VERSION.REVISION or -1 ))
+print ( string.format ( 'MOAI_SDK_VERSION=%d.%d.%d', VERSION.MAJOR, VERSION.MINOR, VERSION.REVISION or -1 ))

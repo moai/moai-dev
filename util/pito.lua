@@ -10,6 +10,10 @@ MOAI_SDK_HOME   = MOAIFileSystem.getAbsoluteDirectoryPath ( arg [ 2 ])
 MOAI_CMD        = arg [ 3 ]
 SCRIPT_DIR      = string.format ( '%sutil/%s/', MOAI_SDK_HOME, MOAI_CMD or "help" )
 
+print ("SCRIPT_DIR: [" .. SCRIPT_DIR .. "] CMD: [" .. MOAI_CMD .. "] SDK HOME: [" .. MOAI_SDK_HOME .. "] INVOKE: [" .. INVOKE_DIR .. "]")
+
+
+
 local usageText={}
 usageText["wut"] = [[
     pito wut
@@ -108,7 +112,6 @@ MOAIFileSystem.setWorkingDirectory ( SCRIPT_DIR )
 if MOAIFileSystem.checkFileExists('main.lua') then
     dofile ( 'main.lua' )
 else
-    print("Script DIR: " .. SCRIPT_DIR)
     usage()
 end
 
