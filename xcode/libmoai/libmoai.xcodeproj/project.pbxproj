@@ -1561,6 +1561,10 @@
 		CD34310D1B31175F002BEBFA /* MOAISingleTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = CD34310A1B31175F002BEBFA /* MOAISingleTexture.h */; };
 		CD34310E1B31175F002BEBFA /* MOAISingleTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = CD34310A1B31175F002BEBFA /* MOAISingleTexture.h */; };
 		CD34A24F19C7D77A00BFF405 /* assert.h in Headers */ = {isa = PBXBuildFile; fileRef = CD34A24E19C7D77A00BFF405 /* assert.h */; };
+		CD3FA6C01C3D087B003CC9F8 /* ZLRingAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3FA6BE1C3D087B003CC9F8 /* ZLRingAdapter.cpp */; };
+		CD3FA6C11C3D087B003CC9F8 /* ZLRingAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3FA6BE1C3D087B003CC9F8 /* ZLRingAdapter.cpp */; };
+		CD3FA6C21C3D087B003CC9F8 /* ZLRingAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3FA6BF1C3D087B003CC9F8 /* ZLRingAdapter.h */; };
+		CD3FA6C31C3D087B003CC9F8 /* ZLRingAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3FA6BF1C3D087B003CC9F8 /* ZLRingAdapter.h */; };
 		CD41F2FF1A20115E008E3420 /* ZLBitBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD41F2FD1A20115E008E3420 /* ZLBitBuffer.cpp */; };
 		CD41F3001A20115E008E3420 /* ZLBitBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD41F2FD1A20115E008E3420 /* ZLBitBuffer.cpp */; };
 		CD41F3011A20115E008E3420 /* ZLBitBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD41F2FE1A20115E008E3420 /* ZLBitBuffer.h */; };
@@ -6292,6 +6296,8 @@
 		CD3431091B31175F002BEBFA /* MOAISingleTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAISingleTexture.cpp; sourceTree = "<group>"; };
 		CD34310A1B31175F002BEBFA /* MOAISingleTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAISingleTexture.h; sourceTree = "<group>"; };
 		CD34A24E19C7D77A00BFF405 /* assert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = assert.h; sourceTree = "<group>"; };
+		CD3FA6BE1C3D087B003CC9F8 /* ZLRingAdapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLRingAdapter.cpp; sourceTree = "<group>"; };
+		CD3FA6BF1C3D087B003CC9F8 /* ZLRingAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLRingAdapter.h; sourceTree = "<group>"; };
 		CD41F2FD1A20115E008E3420 /* ZLBitBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLBitBuffer.cpp; sourceTree = "<group>"; };
 		CD41F2FE1A20115E008E3420 /* ZLBitBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLBitBuffer.h; sourceTree = "<group>"; };
 		CD42835F1A0476D20069392E /* MOAIByteStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIByteStream.cpp; sourceTree = "<group>"; };
@@ -12565,6 +12571,8 @@
 				89BE68E3173974FC00DFE837 /* ZLHexAdapter.h */,
 				89BE68F7173974FC00DFE837 /* ZLMemStream.cpp */,
 				89BE68F8173974FC00DFE837 /* ZLMemStream.h */,
+				CD3FA6BE1C3D087B003CC9F8 /* ZLRingAdapter.cpp */,
+				CD3FA6BF1C3D087B003CC9F8 /* ZLRingAdapter.h */,
 				89BE6910173974FC00DFE837 /* ZLStream.cpp */,
 				89BE6911173974FC00DFE837 /* ZLStream.h */,
 				89BE6912173974FC00DFE837 /* ZLStreamAdapter.cpp */,
@@ -13436,6 +13444,7 @@
 				89BE698D173974FD00DFE837 /* ZLByteStream.h in Headers */,
 				89BE6991173974FD00DFE837 /* ZLCgt.h in Headers */,
 				89BE6995173974FD00DFE837 /* ZLColor.h in Headers */,
+				CD3FA6C21C3D087B003CC9F8 /* ZLRingAdapter.h in Headers */,
 				89BE6999173974FD00DFE837 /* ZLCurve.h in Headers */,
 				89BE699D173974FD00DFE837 /* ZLDeflateReader.h in Headers */,
 				89BE69A1173974FD00DFE837 /* ZLDeflateWriter.h in Headers */,
@@ -13604,6 +13613,7 @@
 				89BE6A7E173974FD00DFE837 /* ZLVec2D.h in Headers */,
 				89BE6A80173974FD00DFE837 /* ZLVec3D.h in Headers */,
 				89BE6A82173974FD00DFE837 /* ZLVec4D.h in Headers */,
+				CD3FA6C31C3D087B003CC9F8 /* ZLRingAdapter.h in Headers */,
 				89BE6A86173974FD00DFE837 /* ZLXmlReader.h in Headers */,
 				89BE6A8A173974FD00DFE837 /* ZLZip.h in Headers */,
 				89BE6A8E173974FD00DFE837 /* ZLZipFile.h in Headers */,
@@ -17080,6 +17090,7 @@
 				89BE6A41173974FD00DFE837 /* ZLQuadCoord.cpp in Sources */,
 				89BE6A45173974FD00DFE837 /* ZLQuaternion.cpp in Sources */,
 				89BE6A4F173974FD00DFE837 /* ZLRhombus.cpp in Sources */,
+				CD3FA6C01C3D087B003CC9F8 /* ZLRingAdapter.cpp in Sources */,
 				89BE6A53173974FD00DFE837 /* ZLStream.cpp in Sources */,
 				89BE6A57173974FD00DFE837 /* ZLStreamAdapter.cpp in Sources */,
 				89BE6A5F173974FD00DFE837 /* ZLSurface2D.cpp in Sources */,
@@ -17152,6 +17163,7 @@
 				89BE6A42173974FD00DFE837 /* ZLQuadCoord.cpp in Sources */,
 				89BE6A46173974FD00DFE837 /* ZLQuaternion.cpp in Sources */,
 				89BE6A50173974FD00DFE837 /* ZLRhombus.cpp in Sources */,
+				CD3FA6C11C3D087B003CC9F8 /* ZLRingAdapter.cpp in Sources */,
 				89BE6A54173974FD00DFE837 /* ZLStream.cpp in Sources */,
 				89BE6A58173974FD00DFE837 /* ZLStreamAdapter.cpp in Sources */,
 				89BE6A60173974FD00DFE837 /* ZLSurface2D.cpp in Sources */,

@@ -44,7 +44,9 @@ public:
 	void			Clear				();
 	void			Compact				();
 	void			DiscardAll			();
+	void			DiscardBack			();
 	void			DiscardBack			( size_t size );
+	void			DiscardFront		();
 	void			DiscardFront		( size_t size );
 	u32				GetCaps				();
 	size_t			GetCursor			();

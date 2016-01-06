@@ -58,6 +58,12 @@ void ZLMemStream::DiscardAll () {
 }
 
 //----------------------------------------------------------------//
+void ZLMemStream::DiscardBack () {
+
+	this->DiscardBack ( this->mLength - this->mCursor );
+}
+
+//----------------------------------------------------------------//
 void ZLMemStream::DiscardBack ( size_t size ) {
 
 	if ( !size ) return;
@@ -71,6 +77,12 @@ void ZLMemStream::DiscardBack ( size_t size ) {
 		this->mLength -= size;
 		this->mCursor = ( this->mCursor <= this->mLength ) ? this->mCursor : this->mLength;
 	}
+}
+
+//----------------------------------------------------------------//
+void ZLMemStream::DiscardFront () {
+
+	this->DiscardFront ( this->mCursor );
 }
 
 //----------------------------------------------------------------//
