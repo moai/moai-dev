@@ -114,22 +114,22 @@ size_t ZLSample::GetSize ( u32 type ) {
 }
 
 //----------------------------------------------------------------//
-void ZLSample::ReadSample ( ZLStream& stream, u32 streamType, void* buffer, u32 bufferType ) {
+size_t ZLSample::ReadSample ( ZLStream& stream, u32 streamType, void* buffer, u32 bufferType ) {
 
-	stream.ReadBytes ( buffer, ZLSample::GetSize ( streamType ));
-	ZLSample::Convert ( streamType, buffer, bufferType, buffer );
+	size_t result = stream.ReadBytes ( buffer, ZLSample::GetSize ( streamType ));
+	if ( result ) {
+		ZLSample::Convert ( streamType, buffer, bufferType, buffer );
+	}
+	return result;
 }
 
 //----------------------------------------------------------------//
-void ZLSample::WriteSample ( ZLStream& stream, u32 streamType, const void* buffer, u32 bufferType ) {
+size_t ZLSample::WriteSample ( ZLStream& stream, u32 streamType, const void* buffer, u32 bufferType ) {
 
 	if ( streamType == bufferType ) {
-	
-		stream.WriteBytes ( buffer, ZLSample::GetSize ( streamType ));
+		return stream.WriteBytes ( buffer, ZLSample::GetSize ( streamType ));
 	}
-	else {
-		u8 temp [ SAMPLE_BUFFER_SIZE ];
-		size_t size = ZLSample::Convert ( bufferType, buffer, streamType, temp );
-		stream.WriteBytes ( temp, size );
-	}
+	u8 temp [ SAMPLE_BUFFER_SIZE ];
+	size_t size = ZLSample::Convert ( bufferType, buffer, streamType, temp );
+	return stream.WriteBytes ( temp, size );
 }

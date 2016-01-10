@@ -97,7 +97,7 @@ void ZLMemStream::DiscardFront ( size_t size ) {
 		return;
 	}
 	
-	if ( !this->mGuestBuffer ) {
+	if ( this->mGuestBuffer ) {
 	
 		// it's safe to discard any portion of the guest buffer
 		this->mBase += size;
@@ -217,7 +217,6 @@ void ZLMemStream::Reserve ( size_t length ) {
 	for ( size_t i = this->mTotalChunks; i < totalChunks; ++i ) {
 		this->mChunks [ i ] = malloc ( this->mChunkSize );
 	}
-	
 	this->mTotalChunks = totalChunks;
 }
 
@@ -232,7 +231,7 @@ void ZLMemStream::SetChunkSize ( size_t chunkSize ) {
 //----------------------------------------------------------------//
 int ZLMemStream::SetCursor ( long offset ) {
 
-	this->mCursor = offset > 0 ? offset : 0;
+	this->mCursor = offset <= 0 ? 0 : ( offset > this->mLength ? this->mLength : 0 );
 	return 0;
 }
 

@@ -5,6 +5,23 @@
 #include <moai-util/MOAIFourier.h>
 #include <moai-util/MOAIStream.h>
 
+enum {
+	KISS_FFT,
+	KISS_FFTR,
+	KISS_FFTRI,
+};
+
+enum {
+	STREAM_CCI,		// 000
+	STREAM_CCF,		// 001
+	STREAM_CRI,		// 010
+	STREAM_CRF,		// 011
+	STREAM_RCI,		// 100
+	STREAM_RCF,		// 101
+	STREAM_RRI,		// 110
+	STREAM_RRF,		// 111
+};
+
 //================================================================//
 // lua
 //================================================================//
@@ -59,10 +76,33 @@ int MOAIFourier::_transform ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIFourier::Affirm ( u32 fft ) {
+
+	if ( fft == KISS_FFT ) {
+		if ( !this->mKissFFT ) {
+			this->Clear ();
+			this->mKissFFT = kiss_fft_alloc (( int )this->mSize, this->mInverse ? 1 : 0, 0, 0 );
+		}
+	}
+	else {
+		if ( !this->mKissFFTR ) {
+			this->Clear ();
+			this->mKissFFTR = kiss_fftr_alloc (( int )this->mSize, this->mInverse ? 1 : 0, 0, 0 );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIFourier::Clear () {
 
 	if ( this->mKissFFT ) {
 		free ( this->mKissFFT );
+		this->mKissFFT = 0;
+	}
+	
+	if ( this->mKissFFTR ) {
+		free ( this->mKissFFTR );
+		this->mKissFFTR = 0;
 	}
 }
 
@@ -70,14 +110,16 @@ void MOAIFourier::Clear () {
 void MOAIFourier::Init ( size_t size, bool inverse ) {
 
 	this->Clear ();
-	this->mKissFFT = kiss_fft_alloc (( int )size, inverse ? 1 : 0, 0, 0 );
-	this->mSize = size;
+	this->mSize		= size;
+	this->mInverse	= inverse;
 }
 
 //----------------------------------------------------------------//
 MOAIFourier::MOAIFourier () :
 	mSize ( 0 ),
-	mKissFFT ( 0 ) {
+	mInverse ( false ),
+	mKissFFT ( 0 ),
+	mKissFFTR ( 0 ) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
 }
@@ -128,14 +170,62 @@ void MOAIFourier::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIFourier::Transform ( ZLStream& inStream, u32 inStreamType, bool complexIn, ZLStream& outStream, u32 outStreamType, bool complexOut, u32 stride, u32 average ) {
 
-	kiss_fft_cpx* in = ( kiss_fft_cpx* )alloca ( this->mSize * sizeof ( kiss_fft_cpx ));
-	kiss_fft_cpx* out = ( kiss_fft_cpx* )alloca ( this->mSize * sizeof ( kiss_fft_cpx ));
+	// the way kissft is written the cases are either C to C, R to C or C to R. There appears to be no R to R.
+
+	assert ( sizeof ( kiss_fft_scalar ) == sizeof ( float ));
+
+	u32 code = (( this->mInverse ? 0 : 1 ) + ( complexOut ? 0 : 2 ) + ( complexIn ? 0 : 4 ));
+
+	size_t halfSize = this->mSize >> 1;
+
+	u32 fft;
+	bool fftComplexIn;
+	bool fftComplexOut;
+	
+	bool halfInput = false;
+	bool halfOutput = false;
+	
+	switch ( code ) {
+	
+		case STREAM_CCI:
+		case STREAM_CCF:
+		case STREAM_RCI:
+		case STREAM_CRF:
+			fft				= KISS_FFT;
+			fftComplexIn	= true;
+			fftComplexOut	= true;
+			break;
+			
+		case STREAM_CRI:
+		case STREAM_RRI:
+			fft				= KISS_FFTRI;
+			fftComplexIn	= true;
+			fftComplexOut	= false;
+			halfInput		= true;
+			break;
+			
+		case STREAM_RCF:
+		case STREAM_RRF:
+			fft				= KISS_FFTR;
+			fftComplexIn	= false;
+			fftComplexOut	= true;
+			halfOutput		= true;
+			break;
+	}
+	
+	this->Affirm ( fft );
+
+	void* in	= alloca ( this->mSize * ( fftComplexIn ? sizeof ( kiss_fft_cpx ) : sizeof ( kiss_fft_scalar )));
+	void* out	= alloca ( this->mSize * ( fftComplexOut ? sizeof ( kiss_fft_cpx ) : sizeof ( kiss_fft_scalar )));
 
 	size_t sampleSize = ZLSample::GetSize ( inStreamType );
 	
 	stride *= complexIn ? sampleSize * 2 : sampleSize;
 
 	for ( size_t i = 0; i < this->mSize; ++i ) {
+		
+		float realResult = 0.0f;
+		float imagResult = 0.0f;
 		
 		size_t next = inStream.GetCursor () + stride;
 		
@@ -153,31 +243,78 @@ void MOAIFourier::Transform ( ZLStream& inStream, u32 inStreamType, bool complex
 				
 				this->ReadSample ( inStream, inStreamType, complexIn, real, imag );
 				
+				real = 0;
+				imag = 0;
+				
 				realAvg += real * scale;
 				imagAvg += imag * scale;
 			}
 		
-			in [ i ].r = realAvg;
-			in [ i ].i = imagAvg;
+			realResult = realAvg;
+			imagResult = imagAvg;
 		}
 		else {
 		
-			this->ReadSample ( inStream, inStreamType, complexIn, in [ i ].r, in [ i ].i );
+			this->ReadSample ( inStream, inStreamType, complexIn, realResult, imagResult );
+		}
+		
+		if ( fftComplexIn ) {
+		
+			kiss_fft_cpx* complexBuffer = ( kiss_fft_cpx* )in;
+		
+			complexBuffer [ i ].r = realResult;
+			complexBuffer [ i ].i = imagResult;
+		}
+		else {
+		
+			(( kiss_fft_scalar* )in )[ i ] = realResult;
 		}
 		
 		if ( inStream.GetCursor () != next ) {
 			inStream.Seek ( next, SEEK_SET );
 		}
+		
+		if ( halfInput && ( i > halfSize )) break;
 	}
-
-	kiss_fft ( this->mKissFFT, in, out );
+	
+	switch ( fft ) {
+	
+		case KISS_FFT:
+			kiss_fft ( this->mKissFFT, ( kiss_fft_cpx* )in, ( kiss_fft_cpx* )out );
+			break;
+			
+		case KISS_FFTR:
+			kiss_fftr ( this->mKissFFTR, ( kiss_fft_scalar* )in, ( kiss_fft_cpx* )out );
+			break;
+		
+		case KISS_FFTRI:
+			kiss_fftri ( this->mKissFFTR, ( kiss_fft_cpx* )in, ( kiss_fft_scalar* )out );
+			break;
+	}
 	
 	for ( size_t i = 0; i < this->mSize; ++i ) {
 		
-		ZLSample::WriteSample ( outStream, outStreamType, &out [ i ].r, ZLSample::SAMPLE_FLOAT );
-	
+		float realResult = 0.0f;
+		float imagResult = 0.0f;
+		
+		if ( fftComplexOut ) {
+		
+			size_t j = halfOutput ? (( i < halfSize ) ? i : halfSize - ( i % halfSize )) : i;
+		
+			kiss_fft_cpx* complexBuffer = ( kiss_fft_cpx* )out;
+		
+			realResult = complexBuffer [ j ].r;
+			imagResult = complexBuffer [ j ].i;
+		}
+		else {
+		
+			realResult = (( kiss_fft_scalar* )out )[ i ];
+		}
+		
+		ZLSample::WriteSample ( outStream, outStreamType, &realResult, ZLSample::SAMPLE_FLOAT );
+		
 		if ( complexOut ) {
-			ZLSample::WriteSample ( outStream, outStreamType, &out [ i ].i, ZLSample::SAMPLE_FLOAT );
+			ZLSample::WriteSample ( outStream, outStreamType, &imagResult, ZLSample::SAMPLE_FLOAT );
 		}
 	}
 }

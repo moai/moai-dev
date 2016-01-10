@@ -104,7 +104,7 @@ drawTransform = function ( stream, yOff )
 end
 
 
-function onDraw ()
+onDraw = function ()
 
 	drawSignal ( signal, 128 )
 	drawTransform ( transform, 0 )

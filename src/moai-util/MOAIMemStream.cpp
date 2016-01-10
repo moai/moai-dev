@@ -45,7 +45,7 @@ int MOAIMemStream::_discardBack ( lua_State* L ) {
 int MOAIMemStream::_discardFront ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMemStream, "U" );
 	
-	self->DiscardFront ( state.GetValue ( 2, self->GetCursor ()));
+	self->DiscardFront ( state.GetValue < u32 >( 2, ( u32 )self->GetCursor ()));
 	return 0;
 }
 
@@ -146,6 +146,9 @@ void MOAIMemStream::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "close",				_close },
+		{ "discardAll",			_discardAll },
+		{ "discardBack",		_discardBack },
+		{ "discardFront",		_discardFront },
 		{ "getString",			_getString },
 		{ "open",				_open },
 		{ NULL, NULL }

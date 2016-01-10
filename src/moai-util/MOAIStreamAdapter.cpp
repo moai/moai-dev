@@ -137,15 +137,19 @@ int MOAIStreamAdapter::_openHex ( lua_State* L ) {
 int MOAIStreamAdapter::_openRing ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStreamAdapter, "U" );
 	
-	u32 size = state.GetValue < u32 >( 3, 0 );
+	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
+	u32 size = state.GetValue < u32 >( 3, ( u32 )stream->GetLength ());
 	
 	if ( size > 0 ) {
 	
 		ZLRingAdapter* adapter = new ZLRingAdapter ();
-		self->Open ( state, 2, adapter );
-		adapter->SetLength ( size );
+		bool result = self->Open ( adapter, stream );
 		
-		return 1;
+		if ( result ) {
+			adapter->SetLength ( size );
+			state.Push ( result );
+			return 1;
+		}
 	}
 	return 0;
 }
@@ -156,6 +160,8 @@ int MOAIStreamAdapter::_openRing ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 void MOAIStreamAdapter::Clear () {
+	
+	this->Close ();
 	
 	if ( this->mAdapter ) {
 		delete this->mAdapter;

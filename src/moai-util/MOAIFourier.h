@@ -5,6 +5,7 @@
 #define MOAIFOURIER_H
 
 #include <kissfft/kiss_fft.h>
+#include <kissfft/tools/kiss_fftr.h>
 
 #include <moai-core/MOAILua.h>
 #include <moai-core/MOAILuaState-impl.h>
@@ -19,7 +20,10 @@ class MOAIFourier :
 private:
 
 	size_t			mSize;
+	bool			mInverse;
+	
 	kiss_fft_cfg	mKissFFT;
+	kiss_fftr_cfg	mKissFFTR;
 	
 	//----------------------------------------------------------------//
 	static int		_getFastSize		( lua_State* L );
@@ -27,6 +31,7 @@ private:
 	static int		_transform			( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void			Affirm				( u32 fft );
 	void			ReadSample			( ZLStream& inStream, u32 inStreamType, bool complexIn, float& real, float& imag );
 
 public:

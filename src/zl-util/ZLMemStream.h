@@ -28,7 +28,7 @@ private:
 
 	ZLLeanArray < void* > mChunks;
 
-	size_t		mBase;			// offset into base chunk (in the event of DiscardFront); never larger than chunk size
+	size_t		mBase;			// offset into first chunk (in the event of DiscardFront); never larger than chunk size
 	size_t		mCursor;		// current position in stream
 	size_t		mLength;		// current length of stream
 

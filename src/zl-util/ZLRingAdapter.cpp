@@ -30,6 +30,15 @@ size_t ZLRingAdapter::Process ( void* readBuffer, const void* writeBuffer, size_
 	while ( bytes < size ) {
 	
 		size_t available = this->mLength - this->mCursor;
+		
+		if ( available == 0 ) {
+			
+			if ( this->mProxiedStream->SetCursor ( this->mBase ) != 0 ) break;
+			
+			this->mCursor = 0;
+			available = this->mLength;
+		}
+		
 		size_t chunkSize = size <= available ? size : available;
 	
 		size_t result = 0;
@@ -44,9 +53,7 @@ size_t ZLRingAdapter::Process ( void* readBuffer, const void* writeBuffer, size_
 		this->mCursor += result;
 		bytes += result;
 	
-		if (( result < bytes ) || (( this->mCursor >= this->mLength ) && this->mProxiedStream->Seek ( this->mBase ) != 0 )) {
-			break;
-		}
+		if ( result < chunkSize ) break;
 	}
 	return bytes;
 }
@@ -60,8 +67,11 @@ size_t ZLRingAdapter::ReadBytes ( void* buffer, size_t size ) {
 //----------------------------------------------------------------//
 int ZLRingAdapter::SetCursor ( long offset ) {
 
-	offset = offset % this->mLength;
-	this->mCursor = offset;
+	if ( this->mProxiedStream ) {
+		offset = offset % this->mLength;
+		this->mCursor = offset;
+		this->mProxiedStream->SetCursor ( this->mBase + offset );
+	}
 }
 
 //----------------------------------------------------------------//

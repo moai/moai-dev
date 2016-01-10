@@ -898,6 +898,10 @@
 		CD14014E1A0CC5B40065AEE7 /* MOAIVectorSensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD14014B1A0CC5B40065AEE7 /* MOAIVectorSensor.cpp */; };
 		CD14014F1A0CC5B40065AEE7 /* MOAIVectorSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = CD14014C1A0CC5B40065AEE7 /* MOAIVectorSensor.h */; };
 		CD1401501A0CC5B40065AEE7 /* MOAIVectorSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = CD14014C1A0CC5B40065AEE7 /* MOAIVectorSensor.h */; };
+		CD1642A01C42501E009926E0 /* kiss_fftr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD16429E1C42501E009926E0 /* kiss_fftr.c */; };
+		CD1642A11C42501E009926E0 /* kiss_fftr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD16429E1C42501E009926E0 /* kiss_fftr.c */; };
+		CD1642A21C42501E009926E0 /* kiss_fftr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD16429F1C42501E009926E0 /* kiss_fftr.h */; };
+		CD1642A31C42501E009926E0 /* kiss_fftr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD16429F1C42501E009926E0 /* kiss_fftr.h */; };
 		CD1756471A199B24009C430A /* ZLBarycentric.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1756441A199B24009C430A /* ZLBarycentric.h */; };
 		CD1756481A199B24009C430A /* ZLBarycentric.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1756441A199B24009C430A /* ZLBarycentric.h */; };
 		CD1844D41A6269AB00FCCCE0 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C9117FA573B00EBA2DB /* headers.h */; };
@@ -6096,6 +6100,8 @@
 		CD14013E1A0C5F660065AEE7 /* MOAIInputMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIInputMgr.h; sourceTree = "<group>"; };
 		CD14014B1A0CC5B40065AEE7 /* MOAIVectorSensor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVectorSensor.cpp; sourceTree = "<group>"; };
 		CD14014C1A0CC5B40065AEE7 /* MOAIVectorSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVectorSensor.h; sourceTree = "<group>"; };
+		CD16429E1C42501E009926E0 /* kiss_fftr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = kiss_fftr.c; path = ../../3rdparty/kissfft/tools/kiss_fftr.c; sourceTree = "<group>"; };
+		CD16429F1C42501E009926E0 /* kiss_fftr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kiss_fftr.h; path = ../../3rdparty/kissfft/tools/kiss_fftr.h; sourceTree = "<group>"; };
 		CD1756441A199B24009C430A /* ZLBarycentric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLBarycentric.h; sourceTree = "<group>"; };
 		CD18459C1A626BD500FCCCE0 /* libmoai-osx-apple.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-apple.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD1845BE1A62751200FCCCE0 /* MOAIEnvironment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIEnvironment.cpp; sourceTree = "<group>"; };
@@ -8749,8 +8755,6 @@
 				89BE68F2173974FC00DFE837 /* ZLLog.h */,
 				89BE690B173974FC00DFE837 /* ZLRadixSort16.h */,
 				89BE690C173974FC00DFE837 /* ZLRadixSort32.h */,
-				CDDAF4621C2F3D7C00F10946 /* ZLSample.cpp */,
-				CDDAF4631C2F3D7C00F10946 /* ZLSample.h */,
 				89BE691E173974FD00DFE837 /* ZLTypedPtr.cpp */,
 				89BE691F173974FD00DFE837 /* ZLTypedPtr.h */,
 				89BE6920173974FD00DFE837 /* ZLTypeID.h */,
@@ -9448,6 +9452,15 @@
 			name = graphics;
 			sourceTree = "<group>";
 		};
+		CD16429D1C424F92009926E0 /* tools */ = {
+			isa = PBXGroup;
+			children = (
+				CD16429E1C42501E009926E0 /* kiss_fftr.c */,
+				CD16429F1C42501E009926E0 /* kiss_fftr.h */,
+			);
+			name = tools;
+			sourceTree = "<group>";
+		};
 		CD17563D1A199905009C430A /* math */ = {
 			isa = PBXGroup;
 			children = (
@@ -10039,6 +10052,7 @@
 		CD5F96FB1C2BD244000FA476 /* kissfft */ = {
 			isa = PBXGroup;
 			children = (
+				CD16429D1C424F92009926E0 /* tools */,
 				CD5F96FC1C2BD279000FA476 /* _kiss_fft_guts.h */,
 				CD5F96FD1C2BD279000FA476 /* kiss_fft.c */,
 				CD5F96FE1C2BD279000FA476 /* kiss_fft.h */,
@@ -12573,6 +12587,8 @@
 				89BE68F8173974FC00DFE837 /* ZLMemStream.h */,
 				CD3FA6BE1C3D087B003CC9F8 /* ZLRingAdapter.cpp */,
 				CD3FA6BF1C3D087B003CC9F8 /* ZLRingAdapter.h */,
+				CDDAF4621C2F3D7C00F10946 /* ZLSample.cpp */,
+				CDDAF4631C2F3D7C00F10946 /* ZLSample.h */,
 				89BE6910173974FC00DFE837 /* ZLStream.cpp */,
 				89BE6911173974FC00DFE837 /* ZLStream.h */,
 				89BE6912173974FC00DFE837 /* ZLStreamAdapter.cpp */,
@@ -12668,6 +12684,7 @@
 				CD4900DD141AB6EC00913D80 /* lzio.h in Headers */,
 				CDE7C5691B0C00440038A8C9 /* tesselator.h in Headers */,
 				CDCDD0161A23F233008779B5 /* iasciitab.h in Headers */,
+				CD1642A31C42501E009926E0 /* kiss_fftr.h in Headers */,
 				CDCDD01A1A23F233008779B5 /* latin1tab.h in Headers */,
 				CDD48B5D17FA794B00525B77 /* SFMT.h in Headers */,
 				07658751145CD06900723A7D /* tlsf.h in Headers */,
@@ -14573,6 +14590,7 @@
 			files = (
 				CD8315CB1BED3AE900745C8A /* moai_utf8.h in Headers */,
 				CD8315CC1BED3AE900745C8A /* MOAIIso8601DateFormatter.h in Headers */,
+				CD1642A21C42501E009926E0 /* kiss_fftr.h in Headers */,
 				CD5F97061C2BD279000FA476 /* kissfft.hh in Headers */,
 				CD5F97041C2BD279000FA476 /* kiss_fft.h in Headers */,
 				CD5F97001C2BD279000FA476 /* _kiss_fft_guts.h in Headers */,
@@ -16251,6 +16269,7 @@
 				03240CE113564CB0000ADC60 /* ftpfr.c in Sources */,
 				03240CE213564CB0000ADC60 /* ftsynth.c in Sources */,
 				03240CE313564CB0000ADC60 /* fttype1.c in Sources */,
+				CD1642A11C42501E009926E0 /* kiss_fftr.c in Sources */,
 				03240CE413564CB0000ADC60 /* ftwinfnt.c in Sources */,
 				03240CE513564CB0000ADC60 /* ftxf86.c in Sources */,
 				03240CE613564CB0000ADC60 /* pcf.c in Sources */,
@@ -18641,6 +18660,7 @@
 				CD8315F81BED3AE900745C8A /* moai_edtaa3func.c in Sources */,
 				CD8315FA1BED3AE900745C8A /* MOAIOpenUDID.m in Sources */,
 				CD83161B1BED3AE900745C8A /* moai_whirlpool.c in Sources */,
+				CD1642A01C42501E009926E0 /* kiss_fftr.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
