@@ -13,7 +13,7 @@ DELAY = 0.125
 sampleStream = MOAIMemStream.new ()
 
 sampler = MOAIAudioSamplerCocoa.new ()
-sampler:init ()
+sampler:init ( 44100, 1, 2048 )
 sampler:setStream ( sampleStream )
 sampler:setListener ( MOAIAudioSamplerCocoa.EVENT_BUFFER, onSampleBufferFull )
 sampler:start ()
