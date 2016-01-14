@@ -127,11 +127,7 @@ void MOAIScriptDeck::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D 
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		if ( this->mOnDraw.PushRef ( state )) {
 	
-			MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-			gfxDevice.BindBufferedDrawing ( MOAIVertexFormatMgr::XYZWC );
-			
-			gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
-			gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+			MOAIDraw::Bind ();
 		
 			// TODO: fix this to take all offset/scale params
 			lua_pushnumber ( state, idx );

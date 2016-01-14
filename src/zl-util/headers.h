@@ -28,6 +28,7 @@
 #include <zl-util/ZLCgt.h>
 #include <zl-util/ZLColor.h>
 #include <zl-util/ZLCopyOnWrite.h>
+#include <zl-util/ZLCubicBezier2D.h>
 #include <zl-util/ZLCurve.h>
 #include <zl-util/ZLDeflateReader.h>
 #include <zl-util/ZLDeflateWriter.h>
@@ -77,6 +78,8 @@
 #include <zl-util/ZLRect.h>
 #include <zl-util/ZLRefCountedObject.h>
 #include <zl-util/ZLRhombus.h>
+#include <zl-util/ZLRingAdapter.h>
+#include <zl-util/ZLSample.h>
 #include <zl-util/ZLSharedHandle.h>
 #include <zl-util/ZLStream.h>
 #include <zl-util/ZLStreamAdapter.h>

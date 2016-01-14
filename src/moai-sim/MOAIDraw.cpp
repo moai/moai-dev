@@ -366,6 +366,22 @@ int MOAIDraw::_drawCircle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDraw::_drawCircleSpokes ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	
+	float x0	= state.GetValue < float >( 1, 0.0f );
+	float y0	= state.GetValue < float >( 2, 0.0f );
+	float r		= state.GetValue < float >( 3, 0.0f );
+	u32 steps	= state.GetValue < u32 >( 4, DEFAULT_ELLIPSE_STEPS );
+
+	MOAIDraw::DrawEllipseSpokes ( x0, y0, r, r, steps );
+	return 0;
+}
+
+
+//----------------------------------------------------------------//
 /**	@lua	drawElements
 	@text	Draw elements.
 	
@@ -409,6 +425,23 @@ int MOAIDraw::_drawEllipse ( lua_State* L ) {
 	u32 steps = state.GetValue < u32 >( 5, DEFAULT_ELLIPSE_STEPS );
 
 	MOAIDraw::DrawEllipseOutline ( x, y, xRad, yRad, steps );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDraw::_drawEllipseSpokes ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	
+	float x		= state.GetValue < float >( 1, 0.0f );
+	float y		= state.GetValue < float >( 2, 0.0f );
+	float xRad	= state.GetValue < float >( 3, 0.0f );
+	float yRad	= state.GetValue < float >( 4, 0.0f );
+
+	u32 steps = state.GetValue < u32 >( 5, DEFAULT_ELLIPSE_STEPS );
+
+	MOAIDraw::DrawEllipseSpokes ( x, y, xRad, yRad, steps );
 	return 0;
 }
 
@@ -719,6 +752,10 @@ bool MOAIDraw::Bind () {
 	if ( !gfxDevice.BindShader ( MOAIShaderMgr::LINE_SHADER )) return false;
 	
 	gfxDevice.BindBufferedDrawing ( MOAIVertexFormatMgr::XYZWC );
+	
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+
 	return true;
 }
 
@@ -949,6 +986,25 @@ void MOAIDraw::DrawEllipseOutline ( float x, float y, float xRad, float yRad, u3
 		gfxDevice.WriteFinalColor4b ();
 	}
 	gfxDevice.EndPrim ();
+}
+
+//----------------------------------------------------------------//
+void MOAIDraw::DrawEllipseSpokes ( float x, float y, float xRad, float yRad, u32 steps ) {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+
+	float step = ( float )TWOPI / ( float )steps;
+	float angle = ( float )PI;
+	
+	for ( u32 i = 0; i < steps; ++i, angle += step ) {
+	
+		MOAIDraw::DrawLine (
+			x,
+			y,
+			x + ( Cos ( angle ) * xRad ),
+			y + ( Sin ( angle ) * yRad )
+		);
+	}
 }
 
 //----------------------------------------------------------------//
@@ -1357,8 +1413,10 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "drawBezierCurve",		_drawBezierCurve },
 		{ "drawBoxOutline",			_drawBoxOutline },
 		{ "drawCircle",				_drawCircle },
+		{ "drawCircleSpokes",		_drawCircleSpokes },
 		{ "drawElements",			_drawElements },
 		{ "drawEllipse",			_drawEllipse },
+		{ "drawEllipseSpokes",		_drawEllipseSpokes },
 		//{ "drawGrid",				_drawGrid }, // TODO
 		{ "drawLine",				_drawLine },
 		{ "drawPoints",				_drawPoints },

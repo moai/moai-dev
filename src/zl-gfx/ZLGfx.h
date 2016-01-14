@@ -127,7 +127,7 @@ public:
 	
 	virtual void					Comment						( cc8* comment = 0 ) = 0;
 	
-	virtual void					CompileShader				( ZLGfxHandle* shader, bool verbose ) = 0;
+	virtual void					CompileShader				( ZLGfxHandle* shader, bool log ) = 0;
 	virtual void					CompressedTexImage2D		( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, ZLSharedConstBuffer* buffer ) = 0;
 	
 	virtual ZLSharedConstBuffer*	CopyBuffer					( ZLSharedConstBuffer* buffer ) = 0;
@@ -166,7 +166,7 @@ public:
 	
 	virtual void					LineWidth					( float width ) = 0;
 	
-	virtual void					LinkProgram					( ZLGfxHandle* program, bool verbose ) = 0;
+	virtual void					LinkProgram					( ZLGfxHandle* program, bool log ) = 0;
 	
 	virtual void					PopSection					() = 0;
 	virtual bool					PushErrorHandler			() = 0;

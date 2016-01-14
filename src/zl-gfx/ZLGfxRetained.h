@@ -166,7 +166,7 @@ public:
 	
 	void					Comment						( cc8* comment );
 	
-	void					CompileShader				( ZLGfxHandle* shader, bool verbose );
+	void					CompileShader				( ZLGfxHandle* shader, bool log );
 	void					CompressedTexImage2D		( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, ZLSharedConstBuffer* buffer );
 	
 	ZLSharedConstBuffer*	CopyBuffer					( ZLSharedConstBuffer* buffer );
@@ -208,7 +208,7 @@ public:
 	
 	void					LineWidth					( float width );
 	
-	void					LinkProgram					( ZLGfxHandle* program, bool verbose );
+	void					LinkProgram					( ZLGfxHandle* program, bool log );
 	
 	void					PopSection					();
 	

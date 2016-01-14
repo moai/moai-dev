@@ -157,7 +157,7 @@ void ZLGfxImmediate::Comment ( cc8* comment ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::CompileShader ( ZLGfxHandle* shader, bool verbose ) {
+void ZLGfxImmediate::CompileShader ( ZLGfxHandle* shader, bool log ) {
 
 	GLuint shaderID = ( GLuint )( shader ? shader->mGLID : 0 );
 
@@ -172,7 +172,7 @@ void ZLGfxImmediate::CompileShader ( ZLGfxHandle* shader, bool verbose ) {
 	
 		this->mError = true;
 	
-		if ( verbose ) {
+		if ( log ) {
 	
 			s32 logLength;
 			glGetShaderiv ( shaderID, GL_INFO_LOG_LENGTH, &logLength );
@@ -528,7 +528,7 @@ void ZLGfxImmediate::LineWidth ( float width ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::LinkProgram ( ZLGfxHandle* program, bool verbose ) {
+void ZLGfxImmediate::LinkProgram ( ZLGfxHandle* program, bool log ) {
 
 	GLuint programID = ( GLuint )ZLGfxHandle::GLID ( program );
 
@@ -543,7 +543,7 @@ void ZLGfxImmediate::LinkProgram ( ZLGfxHandle* program, bool verbose ) {
 	
 		this->mError = true;
 	
-		if ( verbose ) {
+		if ( log ) {
 	
 			s32 logLength;
 			glGetProgramiv ( programID, GL_INFO_LOG_LENGTH, &logLength );

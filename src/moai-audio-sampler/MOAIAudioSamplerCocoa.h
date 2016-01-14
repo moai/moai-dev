@@ -17,67 +17,58 @@
 	@text	Audio sampler singleton
 */
 class MOAIAudioSamplerCocoa :
-	public virtual MOAINode {
-
+	public virtual MOAIInstanceEventSource {
 private:
-    void pause();
-    void resume();
+		
+	AudioStreamBasicDescription				mStreamDescription;
+    AudioQueueRef							mQueue;
+    ZLLeanArray < AudioQueueBufferRef >		mBuffers;
+
+    bool									mIsRunning;
+	bool									mIsPaused;
+	
+    void*									mSessionActiveObserver;
+    void*									mSessionInactiveObserver;
+
+	MOAILuaSharedPtr < MOAIStream >			mStream;
+	u32										mStreamFormat;
+	size_t									mEventFrequency;
+	size_t									mSamplesWritten;
 
 	//----------------------------------------------------------------//
-	static int		_setFrequency			( lua_State* L );
-    static int		_setNumChannels			( lua_State* L );
-    static int		_prepareBuffer			( lua_State* L );
-    static int		_start					( lua_State* L );
-    static int		_read					( lua_State* L );
+	static int		_getLevels				( lua_State* L );
+	static int		_init					( lua_State* L );
+	static int		_pause					( lua_State* L );
+	static int		_resume					( lua_State* L );
+	static int		_setEventFrequency		( lua_State* L );
+	static int		_setStream				( lua_State* L );
+	static int		_start					( lua_State* L );
     static int		_stop					( lua_State* L );
-    static int		_pause					( lua_State* L );
-    static int		_resume					( lua_State* L );        
-    static int		_getLevels				( lua_State* L );
 
-    u32 mNumFrequency;
-    u32 mNumChannels;
-    size_t mMaxBufferSizeInBytes;
-    size_t mBufferAryLen;
-    short **mBufferAry;
-    size_t *mBufferReadSizeInBytes;
-
-    AudioStreamBasicDescription recFmt;
-    AudioQueueRef queue;
-    AudioQueueBufferRef *buffers;
-    AudioQueueLevelMeterState *levels;
-    u32 currentWriteIndex;
-    u32 currentReadIndex;
-
-    bool isActive;
-    bool isQueueInitialized;
-    bool isQueuePrimed;
-    void* mSessionActiveObserver;
-    void* mSessionInactiveObserver;
-
-    static void globalCallback( void *inUserData,
-                                AudioQueueRef inAQ,
-                                AudioQueueBufferRef inBuffer,
-                                const AudioTimeStamp *inStartTime,
-                                UInt32 inNumPackets,
-                                const AudioStreamPacketDescription *inPacketDesc );
+	//----------------------------------------------------------------//
+	void			HandleInput				( AudioQueueRef inAQ, AudioQueueBufferRef inBuffer, UInt32 inNumPackets );
+	static void		InputCallback			( void *inUserData, AudioQueueRef inAQ, AudioQueueBufferRef inBuffer, const AudioTimeStamp *inStartTime, UInt32 inNumPackets, const AudioStreamPacketDescription *inPacketDesc );
+	void			Pause					();
+    void			Resume					();
+		
 public:
 
 	DECL_LUA_FACTORY ( MOAIAudioSamplerCocoa )
-        //	DECL_ATTR_HELPER ( MOAIUntzSound )
-        //	enum {
-        //		ATTR_VOLUME,
-        //		TOTAL_ATTR,
-        //	};
 
-
+	enum {
+		EVENT_BUFFER,
+	};
 
 	//----------------------------------------------------------------//
-					MOAIAudioSamplerCocoa	();
-					~MOAIAudioSamplerCocoa	();
-	void			RegisterLuaClass	( MOAILuaState& state );
-	void			RegisterLuaFuncs	( MOAILuaState& state );
-
-    
+	void			Clear						();
+	void			GetLevels					( double& average, double& peak );
+	void			Init						( u32 sampleRate, u32 channels, u32 sampleSize, u32 totalBuffers );
+					MOAIAudioSamplerCocoa		();
+					~MOAIAudioSamplerCocoa		();
+	void			RegisterLuaClass			( MOAILuaState& state );
+	void			RegisterLuaFuncs			( MOAILuaState& state );
+	void			Start						();
+	void			Stop						();
 };
 
 #endif

@@ -7,19 +7,6 @@
 #include <zl-util/ZLVec2D.h>
 
 //================================================================//
-// ZLAbstractVertexWriter2D
-//================================================================//
-// TODO: this should be moved someplace more general
-class ZLAbstractVertexWriter2D {
-public:
-
-	//----------------------------------------------------------------//
-	virtual void	WriteVertex					( const ZLVec2D& v ) = 0;
-					ZLAbstractVertexWriter2D	() {};
-	virtual			~ZLAbstractVertexWriter2D	() {};
-};
-
-//================================================================//
 // ZLCurve1D
 //================================================================//
 class ZLCurve1D {
@@ -111,41 +98,6 @@ public:
 
 	//----------------------------------------------------------------//
 	ZLVec2D		Evaluate			( float t ) const;
-};
-
-//================================================================//
-// ZLCubicBezier2D
-//================================================================//
-class ZLCubicBezier2D :
-	public ZLCubicCurve2D {
-public:
-
-	typedef void ( *AddVertFunc )( const ZLVec2D& vert, void* userdata );
-
-private:
-
-	//----------------------------------------------------------------//
-	void				Bless					();
-	void				FindInflectionDomain	( float t, float& t0, float& t1, float flatness = 0.25f ) const;
-	u32					FindInflections			( float& t0, float& t1 ) const;
-	void				FlattenProgressive		( ZLAbstractVertexWriter2D& writer, float flatness = 0.125f, float angle = 15.0f ) const;
-
-public:
-
-	enum {
-		NONE,
-		ONE_INFLECTION,
-		TWO_INFLECTIONS,
-		ONE_CUSP,
-		DEGENERATE,
-	};
-
-	//----------------------------------------------------------------//
-	float				Angle					();
-	ZLVec2D				Evaluate				( float t ) const;
-	void				Flatten					( ZLAbstractVertexWriter2D& writer, float flatness = 0.125f, float angle = 15.0f ) const;
-	void				Split					( float t, ZLCubicBezier2D& left, ZLCubicBezier2D& right ) const;
-	ZLCubicBezier2D		Split					( float t0, float t1 ) const;
 };
 
 //================================================================//

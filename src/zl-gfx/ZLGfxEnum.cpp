@@ -1,7 +1,6 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include <zl-vfs/assert.h>
 #include "pch.h"
 #include <zl-gfx/headers.h>
 #include <zl-gfx/ZLGfx-gles.h>

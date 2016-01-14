@@ -257,13 +257,13 @@ void ZLGfxRetained::Comment ( cc8* comment ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::CompileShader ( ZLGfxHandle* shader, bool verbose ) {
+void ZLGfxRetained::CompileShader ( ZLGfxHandle* shader, bool log ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( COMPILE_SHADER );
 	this->mStream->Write < ZLGfxHandle* >( shader );
-	this->mStream->Write < bool >( verbose );
+	this->mStream->Write < bool >( log );
 }
 
 //----------------------------------------------------------------//
@@ -1192,13 +1192,13 @@ void ZLGfxRetained::LineWidth ( float width ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::LinkProgram ( ZLGfxHandle* program, bool verbose ) {
+void ZLGfxRetained::LinkProgram ( ZLGfxHandle* program, bool log ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( LINK_PROGRAM );
 	this->mStream->Write < ZLGfxHandle* >( program );
-	this->mStream->Write < bool >( verbose );
+	this->mStream->Write < bool >( log );
 }
 
 //----------------------------------------------------------------//

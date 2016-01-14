@@ -1,6 +1,10 @@
 #ifndef ZL_PLATFORM_H
 #define	ZL_PLATFORM_H
 
+#if !(( defined ( DEBUG ) && defined ( _DEBUG )) || defined ( NDEBUG ))
+	#error DEBUG and _DEBUG or NDEBUG *must* be defined!
+#endif
+
 //http://predef.sourceforge.net/preos.html#sec19
 #if defined( __APPLE__ ) && defined( __MACH__ )
 

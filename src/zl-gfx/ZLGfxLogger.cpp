@@ -123,7 +123,7 @@ void ZLGfxLogger::Comment ( cc8* comment ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::CompileShader ( ZLGfxHandle* shader, bool verbose ) {
+void ZLGfxLogger::CompileShader ( ZLGfxHandle* shader, bool log ) {
 
 	this->PrintLine ( "glCompileShader - shader: %d\n", DEREF_HANDLE ( shader ));
 }
@@ -392,7 +392,7 @@ void ZLGfxLogger::LineWidth ( float width ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::LinkProgram ( ZLGfxHandle* program, bool verbose ) {
+void ZLGfxLogger::LinkProgram ( ZLGfxHandle* program, bool log ) {
 
 	this->PrintLine ( "glLinkProgram - program: %d\n", DEREF_HANDLE ( program ));
 }

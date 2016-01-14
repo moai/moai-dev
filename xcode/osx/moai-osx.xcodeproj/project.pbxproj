@@ -49,6 +49,7 @@
 		CDFD8FBE1AD8653C0003F415 /* libmoai-osx-zl-crypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFD8FAE1AD8653C0003F415 /* libmoai-osx-zl-crypto.a */; };
 		CDFD8FBF1AD8653C0003F415 /* libmoai-osx-zl-vfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFD8FAF1AD8653C0003F415 /* libmoai-osx-zl-vfs.a */; };
 		CDFD8FC01AD8653C0003F415 /* libmoai-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFD8FB01AD8653C0003F415 /* libmoai-osx.a */; };
+		CDFF5ADE1C29232600969B44 /* libmoai-osx-audio-sampler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C8071AD8682200D6B83A /* libmoai-osx-audio-sampler.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -255,70 +256,70 @@
 			remoteGlobalIDString = CDC097E11AE9C72E002E325F;
 			remoteInfo = "libmoai-ios-movie";
 		};
-		CD9FFC971BF9C88700FB2A4A /* PBXContainerItemProxy */ = {
+		CDE6556A1C0AAB75004493DD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = CD8316221BED3AE900745C8A;
 			remoteInfo = "libmoai-ios-3rdparty-contrib";
 		};
-		CD9FFC991BF9C88700FB2A4A /* PBXContainerItemProxy */ = {
+		CDE6556C1C0AAB75004493DD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = CD830E4A1BED355500745C8A;
 			remoteInfo = "libmoai-ios-3rdparty-expat";
 		};
-		CD9FFC9B1BF9C88700FB2A4A /* PBXContainerItemProxy */ = {
+		CDE6556E1C0AAB75004493DD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = CD8315C71BED3A8100745C8A;
 			remoteInfo = "libmoai-ios-3rdparty-freetype";
 		};
-		CD9FFC9D1BF9C88700FB2A4A /* PBXContainerItemProxy */ = {
+		CDE655701C0AAB75004493DD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = CD830F211BED356D00745C8A;
 			remoteInfo = "libmoai-ios-3rdparty-jansson";
 		};
-		CD9FFC9F1BF9C88700FB2A4A /* PBXContainerItemProxy */ = {
+		CDE655721C0AAB75004493DD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = CD8316C91BED3C1800745C8A;
 			remoteInfo = "libmoai-ios-3rdparty-liblua";
 		};
-		CD9FFCA11BF9C88700FB2A4A /* PBXContainerItemProxy */ = {
+		CDE655741C0AAB75004493DD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = CD83167D1BED3BC100745C8A;
 			remoteInfo = "libmoai-ios-3rdparty-libtess";
 		};
-		CD9FFCA31BF9C88700FB2A4A /* PBXContainerItemProxy */ = {
+		CDE655761C0AAB75004493DD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = CD83142B1BED394D00745C8A;
 			remoteInfo = "libmoai-ios-3rdparty-sfmt";
 		};
-		CD9FFCA51BF9C88700FB2A4A /* PBXContainerItemProxy */ = {
+		CDE655781C0AAB75004493DD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = CD83127D1BED379600745C8A;
 			remoteInfo = "libmoai-ios-3rdparty-tinyxml";
 		};
-		CD9FFCA71BF9C88700FB2A4A /* PBXContainerItemProxy */ = {
+		CDE6557A1C0AAB75004493DD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = CD8315021BED395600745C8A;
 			remoteInfo = "libmoai-ios-3rdparty-tlsf";
 		};
-		CD9FFCA91BF9C88700FB2A4A /* PBXContainerItemProxy */ = {
+		CDE6557C1C0AAB75004493DD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
 			proxyType = 2;
@@ -661,6 +662,13 @@
 			remoteGlobalIDString = CD6D752517EE415D00964415;
 			remoteInfo = "libmoai-osx-zl-vfs";
 		};
+		CDFF5ADF1C29233B00969B44 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CDA0DC161A01B184002B71B6;
+			remoteInfo = "libmoai-osx-audio-sampler";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -722,6 +730,7 @@
 				CDFD8FB21AD8653C0003F415 /* libmoai-osx-3rdparty-crypto.a in Frameworks */,
 				CDFD8FB31AD8653C0003F415 /* libmoai-osx-3rdparty-sdl.a in Frameworks */,
 				CDFD8FB41AD8653C0003F415 /* libmoai-osx-apple.a in Frameworks */,
+				CDFF5ADE1C29232600969B44 /* libmoai-osx-audio-sampler.a in Frameworks */,
 				CDFD8FB51AD8653C0003F415 /* libmoai-osx-box2d.a in Frameworks */,
 				CDFD8FB61AD8653C0003F415 /* libmoai-osx-crypto.a in Frameworks */,
 				CDFD8FB71AD8653C0003F415 /* libmoai-osx-http-client.a in Frameworks */,
@@ -844,17 +853,17 @@
 			children = (
 				CDE6C7C11AD8682200D6B83A /* libmoai-ios.a */,
 				CDE6C7C31AD8682200D6B83A /* libmoai-ios-apple.a */,
-				CD9FFC981BF9C88700FB2A4A /* libmoai-ios-3rdparty-contrib.a */,
+				CDE6556B1C0AAB75004493DD /* libmoai-ios-3rdparty-contrib.a */,
 				CDE6C7C71AD8682200D6B83A /* libmoai-ios-3rdparty-crypto.a */,
-				CD9FFC9A1BF9C88700FB2A4A /* libmoai-ios-3rdparty-expat.a */,
-				CD9FFC9C1BF9C88700FB2A4A /* libmoai-ios-3rdparty-freetype.a */,
-				CD9FFC9E1BF9C88700FB2A4A /* libmoai-ios-3rdparty-jannson.a */,
-				CD9FFCA01BF9C88700FB2A4A /* libmoai-ios-3rdparty-liblua.a */,
-				CD9FFCA21BF9C88700FB2A4A /* libmoai-ios-3rdparty-libtess.a */,
-				CD9FFCA41BF9C88700FB2A4A /* libmoai-ios-3rdparty-sfmt.a */,
-				CD9FFCA61BF9C88700FB2A4A /* libmoai-ios-3rdparty-tinyxml.a */,
-				CD9FFCA81BF9C88700FB2A4A /* libmoai-ios-3rdparty-tlsf.a */,
-				CD9FFCAA1BF9C88700FB2A4A /* libmoai-ios-3rdparty-zlib.a */,
+				CDE6556D1C0AAB75004493DD /* libmoai-ios-3rdparty-expat.a */,
+				CDE6556F1C0AAB75004493DD /* libmoai-ios-3rdparty-freetype.a */,
+				CDE655711C0AAB75004493DD /* libmoai-ios-3rdparty-jannson.a */,
+				CDE655731C0AAB75004493DD /* libmoai-ios-3rdparty-liblua.a */,
+				CDE655751C0AAB75004493DD /* libmoai-ios-3rdparty-libtess.a */,
+				CDE655771C0AAB75004493DD /* libmoai-ios-3rdparty-sfmt.a */,
+				CDE655791C0AAB75004493DD /* libmoai-ios-3rdparty-tinyxml.a */,
+				CDE6557B1C0AAB75004493DD /* libmoai-ios-3rdparty-tlsf.a */,
+				CDE6557D1C0AAB75004493DD /* libmoai-ios-3rdparty-zlib.a */,
 				CDE6C7C91AD8682200D6B83A /* libmoai-ios-adcolony.a */,
 				CDE6C7CB1AD8682200D6B83A /* libmoai-ios-audio-sampler.a */,
 				CDE6C7CD1AD8682200D6B83A /* libmoai-ios-billing.a */,
@@ -929,6 +938,7 @@
 			dependencies = (
 				CD1830721AECC0AC00D92E9E /* PBXTargetDependency */,
 				CD1830741AECC0AC00D92E9E /* PBXTargetDependency */,
+				CDFF5AE01C29233B00969B44 /* PBXTargetDependency */,
 				CD1830761AECC0AC00D92E9E /* PBXTargetDependency */,
 				CD1830781AECC0AC00D92E9E /* PBXTargetDependency */,
 				CD18307A1AECC0AC00D92E9E /* PBXTargetDependency */,
@@ -1061,74 +1071,74 @@
 			remoteRef = CD7548CD1AEDA9A300AD7FD8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD9FFC981BF9C88700FB2A4A /* libmoai-ios-3rdparty-contrib.a */ = {
+		CDE6556B1C0AAB75004493DD /* libmoai-ios-3rdparty-contrib.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libmoai-ios-3rdparty-contrib.a";
-			remoteRef = CD9FFC971BF9C88700FB2A4A /* PBXContainerItemProxy */;
+			remoteRef = CDE6556A1C0AAB75004493DD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD9FFC9A1BF9C88700FB2A4A /* libmoai-ios-3rdparty-expat.a */ = {
+		CDE6556D1C0AAB75004493DD /* libmoai-ios-3rdparty-expat.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libmoai-ios-3rdparty-expat.a";
-			remoteRef = CD9FFC991BF9C88700FB2A4A /* PBXContainerItemProxy */;
+			remoteRef = CDE6556C1C0AAB75004493DD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD9FFC9C1BF9C88700FB2A4A /* libmoai-ios-3rdparty-freetype.a */ = {
+		CDE6556F1C0AAB75004493DD /* libmoai-ios-3rdparty-freetype.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libmoai-ios-3rdparty-freetype.a";
-			remoteRef = CD9FFC9B1BF9C88700FB2A4A /* PBXContainerItemProxy */;
+			remoteRef = CDE6556E1C0AAB75004493DD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD9FFC9E1BF9C88700FB2A4A /* libmoai-ios-3rdparty-jannson.a */ = {
+		CDE655711C0AAB75004493DD /* libmoai-ios-3rdparty-jannson.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libmoai-ios-3rdparty-jannson.a";
-			remoteRef = CD9FFC9D1BF9C88700FB2A4A /* PBXContainerItemProxy */;
+			remoteRef = CDE655701C0AAB75004493DD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD9FFCA01BF9C88700FB2A4A /* libmoai-ios-3rdparty-liblua.a */ = {
+		CDE655731C0AAB75004493DD /* libmoai-ios-3rdparty-liblua.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libmoai-ios-3rdparty-liblua.a";
-			remoteRef = CD9FFC9F1BF9C88700FB2A4A /* PBXContainerItemProxy */;
+			remoteRef = CDE655721C0AAB75004493DD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD9FFCA21BF9C88700FB2A4A /* libmoai-ios-3rdparty-libtess.a */ = {
+		CDE655751C0AAB75004493DD /* libmoai-ios-3rdparty-libtess.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libmoai-ios-3rdparty-libtess.a";
-			remoteRef = CD9FFCA11BF9C88700FB2A4A /* PBXContainerItemProxy */;
+			remoteRef = CDE655741C0AAB75004493DD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD9FFCA41BF9C88700FB2A4A /* libmoai-ios-3rdparty-sfmt.a */ = {
+		CDE655771C0AAB75004493DD /* libmoai-ios-3rdparty-sfmt.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libmoai-ios-3rdparty-sfmt.a";
-			remoteRef = CD9FFCA31BF9C88700FB2A4A /* PBXContainerItemProxy */;
+			remoteRef = CDE655761C0AAB75004493DD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD9FFCA61BF9C88700FB2A4A /* libmoai-ios-3rdparty-tinyxml.a */ = {
+		CDE655791C0AAB75004493DD /* libmoai-ios-3rdparty-tinyxml.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libmoai-ios-3rdparty-tinyxml.a";
-			remoteRef = CD9FFCA51BF9C88700FB2A4A /* PBXContainerItemProxy */;
+			remoteRef = CDE655781C0AAB75004493DD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD9FFCA81BF9C88700FB2A4A /* libmoai-ios-3rdparty-tlsf.a */ = {
+		CDE6557B1C0AAB75004493DD /* libmoai-ios-3rdparty-tlsf.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libmoai-ios-3rdparty-tlsf.a";
-			remoteRef = CD9FFCA71BF9C88700FB2A4A /* PBXContainerItemProxy */;
+			remoteRef = CDE6557A1C0AAB75004493DD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD9FFCAA1BF9C88700FB2A4A /* libmoai-ios-3rdparty-zlib.a */ = {
+		CDE6557D1C0AAB75004493DD /* libmoai-ios-3rdparty-zlib.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libmoai-ios-3rdparty-zlib.a";
-			remoteRef = CD9FFCA91BF9C88700FB2A4A /* PBXContainerItemProxy */;
+			remoteRef = CDE6557C1C0AAB75004493DD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CDE6C7C11AD8682200D6B83A /* libmoai-ios.a */ = {
@@ -1603,6 +1613,11 @@
 			name = "libmoai-osx-image-webp";
 			targetProxy = CD5161E51BCDC55C000718FB /* PBXContainerItemProxy */;
 		};
+		CDFF5AE01C29233B00969B44 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-audio-sampler";
+			targetProxy = CDFF5ADF1C29233B00969B44 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -1645,6 +1660,7 @@
 					"AKU_WITH_APPLE=1",
 					"AKU_WITH_HTTP_SERVER=1",
 					"AKU_WITH_SDL=1",
+					"AKU_WITH_AUDIO_SAMPLER=1",
 				);
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1703,6 +1719,7 @@
 					"AKU_WITH_APPLE=1",
 					"AKU_WITH_HTTP_SERVER=1",
 					"AKU_WITH_SDL=1",
+					"AKU_WITH_AUDIO_SAMPLER=1",
 				);
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

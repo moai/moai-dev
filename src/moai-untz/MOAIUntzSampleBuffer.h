@@ -17,29 +17,30 @@
 class MOAIUntzSampleBuffer :
 	public virtual MOAILuaObject {
 private:
-	float* mBuffer;
-	UNTZ::SoundInfo mInfo;
+
+	float*				mBuffer;
+	UNTZ::SoundInfo		mInfo;
 
 	//----------------------------------------------------------------//
-	static int		_load						( lua_State* L );
-	static int		_getInfo					( lua_State* L );
 	static int		_getData					( lua_State* L );
+	static int		_getInfo					( lua_State* L );
+	static int		_load						( lua_State* L );
+	static int		_prepareBuffer				( lua_State* L );
 	static int		_setData					( lua_State* L );
 	static int		_setRawData					( lua_State* L );
-	static int		_prepareBuffer				( lua_State* L );
 
 public:
 
 	DECL_LUA_FACTORY ( MOAIUntzSampleBuffer )
 
-	//----------------------------------------------------------------//
-					MOAIUntzSampleBuffer		();
-					~MOAIUntzSampleBuffer		();
-	void			RegisterLuaClass			( MOAILuaState& state );
-	void			RegisterLuaFuncs			( MOAILuaState& state );		
+	GET ( UNTZ::SoundInfo, SoundInfo, mInfo )
+	GET ( float*, SampleBuffer, mBuffer )
 
-	UNTZ::SoundInfo GetSoundInfo() { return mInfo; }
-	float* GetSampleBuffer() { return mBuffer; } 
+	//----------------------------------------------------------------//
+						MOAIUntzSampleBuffer		();
+						~MOAIUntzSampleBuffer		();
+	void				RegisterLuaClass			( MOAILuaState& state );
+	void				RegisterLuaFuncs			( MOAILuaState& state );
 };
 
 #endif

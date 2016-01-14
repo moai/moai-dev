@@ -1,3 +1,6 @@
 [submodule "3rdparty/civetweb"]
 	path = 3rdparty/civetweb
 	url = https://github.com/civetweb/civetweb.git
+[submodule "3rdparty/kissfft"]
+	path = 3rdparty/kissfft
+	url = https://github.com/itdaniher/kissfft.git

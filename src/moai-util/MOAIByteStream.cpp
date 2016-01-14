@@ -46,13 +46,11 @@ int MOAIByteStream::_open ( lua_State* L ) {
 		size_t size;
 		data = ( void* )lua_tolstring ( state, 2, &size );
 		self->Open ( data, size );
-		
 	}
 	
 	if ( state.IsType ( 2, LUA_TNUMBER )) {
 		u32 size = state.GetValue < u32 >( 2, 0 );
 		self->Open ( size );
-	
 	}
 	return 0;
 }
