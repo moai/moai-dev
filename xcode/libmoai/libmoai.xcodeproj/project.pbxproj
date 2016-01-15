@@ -26707,6 +26707,7 @@
 		CDA4B8961808AC82000129F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"../../../3rdparty/facebook-ios-sdk-4.5.1",
@@ -26747,6 +26748,7 @@
 		CDA4B8971808AC82000129F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"../../../3rdparty/facebook-ios-sdk-4.5.1",
@@ -26782,6 +26784,7 @@
 		CDA4B8981808AC82000129F9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"../../../3rdparty/facebook-ios-sdk-4.5.1",
@@ -26817,6 +26820,7 @@
 		CDA4B8991808AC82000129F9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"../../../3rdparty/facebook-ios-sdk-4.5.1",

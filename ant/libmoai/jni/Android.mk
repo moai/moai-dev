@@ -117,6 +117,12 @@
 	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-crypto.mk
 
 	#--------------------------------------------------------------#
+	# DELTADNA
+
+	MY_HEADER_SEARCH_PATHS += 
+	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-deltadna.mk
+
+	#--------------------------------------------------------------#
 	# FACEBOOK
 
 	MY_HEADER_SEARCH_PATHS += 
