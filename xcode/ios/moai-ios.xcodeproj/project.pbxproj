@@ -1964,6 +1964,8 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
+					DEBUG,
+					_DEBUG,
 					"AKU_WITH_APPLE=1",
 					"AKU_WITH_IOS=1",
 				);
@@ -2043,6 +2045,7 @@
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
+					NDEBUG,
 					"AKU_WITH_APPLE=1",
 					"AKU_WITH_IOS=1",
 				);

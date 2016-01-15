@@ -17,7 +17,7 @@
 #import <host-modules/aku_modules_ios.h>
 #import <moai-ios/host.h>
 
-#define AKU_HOST_FULL_ASYNC
+//#define AKU_HOST_FULL_ASYNC
 
 enum {
     MOAI_INPUT_DEVICE,
