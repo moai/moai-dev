@@ -23,6 +23,9 @@ private:
 	
 	//----------------------------------------------------------------//
 	static int		_close				( lua_State* L );
+	static int		_discardAll			( lua_State* L );
+	static int		_discardBack		( lua_State* L );
+	static int		_discardFront		( lua_State* L );
 	static int		_getString			( lua_State* L );
 	static int		_open				( lua_State* L );
 

@@ -132,12 +132,36 @@ int MOAIStreamAdapter::_openHex ( lua_State* L ) {
 	return self->Open ( state, 2, new ZLHexAdapter ());
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIStreamAdapter::_openRing ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIStreamAdapter, "U" );
+	
+	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
+	u32 size = state.GetValue < u32 >( 3, ( u32 )stream->GetLength ());
+	
+	if ( size > 0 ) {
+	
+		ZLRingAdapter* adapter = new ZLRingAdapter ();
+		bool result = self->Open ( adapter, stream );
+		
+		if ( result ) {
+			adapter->SetLength ( size );
+			state.Push ( result );
+			return 1;
+		}
+	}
+	return 0;
+}
+
 //================================================================//
 // MOAIStreamAdapter
 //================================================================//
 
 //----------------------------------------------------------------//
 void MOAIStreamAdapter::Clear () {
+	
+	this->Close ();
 	
 	if ( this->mAdapter ) {
 		delete this->mAdapter;
@@ -218,6 +242,7 @@ void MOAIStreamAdapter::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "openDeflateReader",		_openDeflateReader },
 		{ "openDeflateWriter",		_openDeflateWriter },
 		{ "openHex",				_openHex },
+		{ "openRing",				_openRing },
 		{ NULL, NULL }
 	};
 

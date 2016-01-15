@@ -83,14 +83,7 @@ public:
 	//----------------------------------------------------------------//
 	static inline float Clamp ( float n, float l, float u ) {
 
-		if ( n < l ) {
-			return l;
-		}
-		else if ( n > u ) {
-			return u;
-		}
-
-		return n;
+		return n < l ? l : ( n > u ? u : n );
 	}
 
 	//----------------------------------------------------------------//

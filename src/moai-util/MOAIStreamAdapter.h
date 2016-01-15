@@ -36,6 +36,7 @@ protected:
 	static int		_openDeflateReader		( lua_State* L );
 	static int		_openDeflateWriter		( lua_State* L );
 	static int		_openHex				( lua_State* L );
+	static int		_openRing				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	int				Open					( MOAILuaState& state, int idx, ZLStreamAdapter* adapter );
