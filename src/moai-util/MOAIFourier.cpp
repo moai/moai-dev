@@ -5,6 +5,13 @@
 #include <moai-util/MOAIFourier.h>
 #include <moai-util/MOAIStream.h>
 
+// http://madebyevan.com/dft/
+// http://betterexplained.com/articles/an-interactive-guide-to-the-fourier-transform/
+// http://toxicdump.org/stuff/FourierToy.swf
+// http://stackoverflow.com/questions/4364823/how-do-i-obtain-the-frequencies-of-each-value-in-a-fft
+// http://code.compartmental.net/2007/03/21/fft-averages/
+// http://stackoverflow.com/questions/20408388/how-to-filter-fft-data-for-audio-visualisation
+
 enum {
 	KISS_FFT,
 	KISS_FFTR,
@@ -53,20 +60,34 @@ int MOAIFourier::_init ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIFourier::_setOutputType ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFourier, "U" )
+	
+	u32 outputType					= state.GetValue < u32 >( 2, OUTPUT_COMPLEX );
+	u32 sampleRate					= state.GetValue < u32 >( 3, SAMPLE_RATE );
+	u32 bands						= state.GetValue < u32 >( 4, 0 );
+	float minOctaveBandWidth		= state.GetValue < float >( 5, 0.0f );
+	
+	self->SetOutputType ( outputType, sampleRate, bands, minOctaveBandWidth );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIFourier::_transform ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIFourier, "UUNBUNB" )
+	MOAI_LUA_SETUP ( MOAIFourier, "UUNBUN" )
 	
 	MOAIStream* inStream		= state.GetLuaObject < MOAIStream >( 2, true );
 	u32 inStreamType			= state.GetValue < u32 >( 3, ZLSample::SAMPLE_FLOAT );
 	bool complexIn				= state.GetValue < bool >( 4, false );
 	MOAIStream* outStream		= state.GetLuaObject < MOAIStream >( 5, true );
 	u32 outStreamType			= state.GetValue < u32 >( 6, ZLSample::SAMPLE_FLOAT );
-	bool complexOut				= state.GetValue < bool >( 7, true );
-    u32 stride                  = state.GetValue < u32 >( 8, 1 );
-    u32 average                 = state.GetValue < u32 >( 9, 1 );
+    u32 stride                  = state.GetValue < u32 >( 7, 1 );
+    u32 average                 = state.GetValue < u32 >( 8, 1 );
 	
 	if ( inStream && outStream ) {
-		self->Transform ( *inStream, inStreamType, complexIn, *outStream, outStreamType, complexOut, stride, average );
+		self->Transform ( *inStream, inStreamType, complexIn, *outStream, outStreamType, stride, average );
 	}
 	return 0;
 }
@@ -93,6 +114,18 @@ void MOAIFourier::Affirm ( u32 fft ) {
 }
 
 //----------------------------------------------------------------//
+size_t MOAIFourier::CalculateOctaveBands ( float minBandWidth, size_t bandsPerOctave ) {
+
+	float nyquist = ( float )this->mSampleRate / 2.0f;
+	
+	size_t octaves = 1;
+	while (( nyquist /= 2.0f ) > minBandWidth ) {
+      octaves++;
+    }
+    return octaves * bandsPerOctave;
+}
+
+//----------------------------------------------------------------//
 void MOAIFourier::Clear () {
 
 	if ( this->mKissFFT ) {
@@ -104,6 +137,35 @@ void MOAIFourier::Clear () {
 		free ( this->mKissFFTR );
 		this->mKissFFTR = 0;
 	}
+}
+
+//----------------------------------------------------------------//
+float MOAIFourier::GetBandWidth () {
+
+	return ( 2.0f / ( float )this->mSize ) * ( this->mSampleRate / 2.0f );
+}
+
+//----------------------------------------------------------------//
+size_t MOAIFourier::GetBandForFrequency ( float frequency) {
+
+	float hBandWidth = this->GetBandWidth () / 2.0f;
+
+	if ( frequency < hBandWidth ) return 0;
+	if ( frequency > (( float )( this->mSampleRate >> 1 ) - hBandWidth )) return this->mSize >> 1;
+	
+	return ( u32 )ZLFloat::Round (( float )this->mSize * ( frequency / ( float )this->mSampleRate ));
+}
+
+//----------------------------------------------------------------//
+size_t MOAIFourier::GetFastSize ( size_t size ) {
+
+	return ( size_t )kiss_fft_next_fast_size (( int )size );
+}
+
+//----------------------------------------------------------------//
+float MOAIFourier::GetFrequencyForBand ( size_t band ) {
+
+	return (( float )band * ( float )this->mSampleRate ) / ( float )this->mSize;
 }
 
 //----------------------------------------------------------------//
@@ -119,7 +181,11 @@ MOAIFourier::MOAIFourier () :
 	mSize ( 0 ),
 	mInverse ( false ),
 	mKissFFT ( 0 ),
-	mKissFFTR ( 0 ) {
+	mKissFFTR ( 0 ),
+	mOutputType ( OUTPUT_COMPLEX ),
+	mOutputOctaves ( 0 ),
+	mOutputBands ( 0 ),
+	mSampleRate ( SAMPLE_RATE ) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
 }
@@ -152,15 +218,23 @@ void MOAIFourier::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "SAMPLE_S32",			( u32 )ZLSample::SAMPLE_S32 );
 	state.SetField ( -1, "SAMPLE_U32",			( u32 )ZLSample::SAMPLE_U32 );
 	state.SetField ( -1, "SAMPLE_FLOAT",		( u32 )ZLSample::SAMPLE_FLOAT );
+	
+	state.SetField ( -1, "OUTPUT_COMPLEX",		( u32 )OUTPUT_COMPLEX );
+	state.SetField ( -1, "OUTPUT_REAL",			( u32 )OUTPUT_REAL );
+	state.SetField ( -1, "OUTPUT_IMAGINARY",	( u32 )OUTPUT_IMAGINARY );
+	state.SetField ( -1, "OUTPUT_AMPLITUDE",	( u32 )OUTPUT_AMPLITUDE );
+	state.SetField ( -1, "OUTPUT_AVERAGE",		( u32 )OUTPUT_AVERAGE );
+	state.SetField ( -1, "OUTPUT_OCTAVES",		( u32 )OUTPUT_OCTAVES );
 }
 
 //----------------------------------------------------------------//
 void MOAIFourier::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
-		{ "getFastSize",		_getFastSize },
-		{ "init",				_init },
-		{ "transform",			_transform },
+		{ "getFastSize",				_getFastSize },
+		{ "init",						_init },
+		{ "setOutputType",				_setOutputType },
+		{ "transform",					_transform },
 		{ NULL, NULL }
 	};
 
@@ -168,15 +242,40 @@ void MOAIFourier::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFourier::Transform ( ZLStream& inStream, u32 inStreamType, bool complexIn, ZLStream& outStream, u32 outStreamType, bool complexOut, u32 stride, u32 average ) {
+void MOAIFourier::SetOutputType ( u32 outputType, u32 sampleRate, size_t bands, float minOctaveBandWidth ) {
 
-	// the way kissft is written the cases are either C to C, R to C or C to R. There appears to be no R to R.
+	this->mOutputType = outputType;
+	this->mSampleRate = sampleRate;
+	
+	if ( outputType == OUTPUT_OCTAVES ) {
+		
+		float nyquist = ( float )this->mSampleRate / 2.0f;
+	
+		this->mOutputOctaves = 1;
+		while (( nyquist /= 2.0f ) > minOctaveBandWidth ) {
+		  this->mOutputOctaves++;
+		}
+		this->mOutputBands = bands;
+	}
+	else {
+		
+		this->mOutputOctaves = 0;
+		this->mOutputBands = bands;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIFourier::Transform ( ZLStream& inStream, u32 inStreamType, bool complexIn, ZLStream& outStream, u32 outStreamType, u32 stride, u32 average ) {
 
 	assert ( sizeof ( kiss_fft_scalar ) == sizeof ( float ));
 
-	u32 code = (( this->mInverse ? 0 : 1 ) + ( complexOut ? 0 : 2 ) + ( complexIn ? 0 : 4 ));
+	bool complexOut = (( this->mOutputType == OUTPUT_COMPLEX ) || ( this->mOutputType == OUTPUT_IMAGINARY ));
 
 	size_t halfSize = this->mSize >> 1;
+
+	// the way kissft is written the cases are either C to C, R to C or C to R. There appears to be no R to R.
+
+	u32 code = (( this->mInverse ? 0 : 1 ) + ( complexOut ? 0 : 2 ) + ( complexIn ? 0 : 4 ));
 
 	u32 fft;
 	bool fftComplexIn;
@@ -216,7 +315,7 @@ void MOAIFourier::Transform ( ZLStream& inStream, u32 inStreamType, bool complex
 	this->Affirm ( fft );
 
 	void* in	= alloca ( this->mSize * ( fftComplexIn ? sizeof ( kiss_fft_cpx ) : sizeof ( kiss_fft_scalar )));
-	void* out	= alloca ( this->mSize * ( fftComplexOut ? sizeof ( kiss_fft_cpx ) : sizeof ( kiss_fft_scalar )));
+	void* out	= alloca ( this->mSize * ( fftComplexOut ? sizeof ( kiss_fft_cpx ) : sizeof ( kiss_fft_scalar ))); // TODO: get smarter about this size
 
 	size_t sampleSize = ZLSample::GetSize ( inStreamType );
 	
@@ -292,6 +391,12 @@ void MOAIFourier::Transform ( ZLStream& inStream, u32 inStreamType, bool complex
 			break;
 	}
 	
+	float* amplitudes = 0;
+	
+	if (( this->mOutputType == OUTPUT_AMPLITUDE ) || ( this->mOutputType == OUTPUT_AMPLITUDE ) || ( this->mOutputType == OUTPUT_AMPLITUDE )) {
+		amplitudes = ( float* )in; // let's re-use this buffer
+	}
+	
 	for ( size_t i = 0; i < this->mSize; ++i ) {
 		
 		float realResult = 0.0f;
@@ -311,10 +416,102 @@ void MOAIFourier::Transform ( ZLStream& inStream, u32 inStreamType, bool complex
 			realResult = (( kiss_fft_scalar* )out )[ i ];
 		}
 		
-		ZLSample::WriteSample ( outStream, outStreamType, &realResult, ZLSample::SAMPLE_FLOAT );
-		
-		if ( complexOut ) {
-			ZLSample::WriteSample ( outStream, outStreamType, &imagResult, ZLSample::SAMPLE_FLOAT );
+		switch ( this->mOutputType ) {
+			
+			case OUTPUT_COMPLEX:
+				ZLSample::WriteSample ( outStream, outStreamType, &realResult, ZLSample::SAMPLE_FLOAT );
+				ZLSample::WriteSample ( outStream, outStreamType, &imagResult, ZLSample::SAMPLE_FLOAT );
+				break;
+			
+			case OUTPUT_REAL:
+				ZLSample::WriteSample ( outStream, outStreamType, &realResult, ZLSample::SAMPLE_FLOAT );
+				break;
+			
+			case OUTPUT_IMAGINARY:
+				ZLSample::WriteSample ( outStream, outStreamType, &imagResult, ZLSample::SAMPLE_FLOAT );
+				break;
+			
+			case OUTPUT_AMPLITUDE:
+			case OUTPUT_AVERAGE:
+			case OUTPUT_OCTAVES: {
+			
+				float amplitude = complexOut ? sqrtf (( realResult * realResult ) + ( imagResult * imagResult )) : realResult;
+			
+				if ( this->mOutputType == OUTPUT_AMPLITUDE ) {
+				
+					ZLSample::WriteSample ( outStream, outStreamType, &amplitude, ZLSample::SAMPLE_FLOAT );
+				}
+				else {
+					amplitudes = ( float* )in;
+					amplitudes [ i ] = amplitude;
+				}
+				break;
+			}
 		}
+	}
+	
+	switch ( this->mOutputType ) {
+		
+		case OUTPUT_COMPLEX:
+		case OUTPUT_REAL:
+		case OUTPUT_IMAGINARY:
+		case OUTPUT_AMPLITUDE:
+			return;
+		
+		case OUTPUT_AVERAGE:
+			this->WriteAverage ( amplitudes, outStream, outStreamType );
+			return;
+		
+		case OUTPUT_OCTAVES:
+			this->WriteOctaves ( amplitudes, outStream, outStreamType );
+			return;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIFourier::WriteAverage ( float* amplitudes, ZLStream& outStream, u32 outStreamType ) {
+
+	size_t chunkSize = this->mSize / this->mOutputBands;
+	
+	for ( size_t i = 0; i < this->mOutputBands; ++i ) {
+	
+		size_t chunk = i * chunkSize;
+		
+		float avg = 0.0f;
+		float div = 1.0f / ( float )chunkSize;
+		
+		for ( size_t j = 0; j < chunkSize; ++j ) {
+			avg += amplitudes [ chunk + j ] * div;
+		}
+		
+		ZLSample::WriteSample ( outStream, outStreamType, &avg, ZLSample::SAMPLE_FLOAT );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIFourier::WriteOctaves ( float* amplitudes, ZLStream& outStream, u32 outStreamType ) {
+
+	size_t hSampleRate = this->mSampleRate >> 1;
+
+	size_t totalBands = this->mOutputOctaves * this->mOutputBands;
+
+	float powScalar = 1.0f / ( float )this->mOutputBands;
+
+	for ( size_t i = 0; i < totalBands; i++ ) {
+		
+		float lowerBound	= i == 0 ? 0.0f : (( float )hSampleRate / powf ( 2.0f, ( totalBands - ( float )i )) * powScalar );
+		float upperBound	= (( float )hSampleRate / powf ( 2.0f, (( totalBands - 1 ) - ( float )i )) * powScalar );
+		
+		size_t lowerBand = this->GetBandForFrequency ( lowerBound );
+		size_t upperBand = this->GetBandForFrequency ( upperBound );
+		
+		float avg = 0.0f;
+		float div = 1.0f / ( float )( upperBand - lowerBand + 1 );
+		
+		for ( size_t j = lowerBand; j <= upperBand; j++ ) {
+			avg += amplitudes [ j ] * div;
+		}
+		
+		ZLSample::WriteSample ( outStream, outStreamType, &avg, ZLSample::SAMPLE_FLOAT );
 	}
 }

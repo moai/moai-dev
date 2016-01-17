@@ -70,7 +70,7 @@ public:
 	@overload
 	
 		@in		MOAIVertexFormat format
-		@in		MOAIStream stream
+		@in		MOAIStream vtxStream
 		@in		ZLColorVec color
 		@in		MOAIRegion region
 		@opt	number pad

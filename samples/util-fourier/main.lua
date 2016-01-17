@@ -6,6 +6,9 @@
 
 -- great demo on an excellent site
 -- http://madebyevan.com/dft/
+-- also fun
+-- http://betterexplained.com/articles/an-interactive-guide-to-the-fourier-transform/
+-- http://toxicdump.org/stuff/FourierToy.swf
 
 signal			= MOAIMemStream.new ()
 transform		= MOAIMemStream.new ()
@@ -20,6 +23,7 @@ end
 
 fourier = MOAIFourier.new ()
 fourier:init ( 128 )
+fourier:setOutputType ( MOAIFourier.OUTPUT_COMPLEX )
 
 signal:seek ( 0 )
 fourier:transform (
@@ -27,8 +31,7 @@ fourier:transform (
 	MOAIFourier.SAMPLE_FLOAT,
 	false,
 	transform,
-	MOAIFourier.SAMPLE_FLOAT,
-	true
+	MOAIFourier.SAMPLE_FLOAT
 )
 
 transformMax = 0
@@ -39,6 +42,7 @@ for i = 1, 128 do
 end
 
 fourier:init ( 128, true )
+fourier:setOutputType ( MOAIFourier.OUTPUT_REAL )
 
 transform:seek ( 0 )
 fourier:transform (
@@ -46,8 +50,7 @@ fourier:transform (
 	MOAIFourier.SAMPLE_FLOAT,
 	true,
 	reconstruction,
-	MOAIFourier.SAMPLE_FLOAT,
-	false
+	MOAIFourier.SAMPLE_FLOAT
 )
 
 MOAISim.openWindow ( "test", 768, 512 )

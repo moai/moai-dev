@@ -31,6 +31,7 @@ MOAISim.pushRenderPass ( layer )
 
 fourier = MOAIFourier.new ()
 fourier:init ( WINDOW_SIZE )
+fourier:setOutputType ( MOAIFourier.OUTPUT_REAL )
 
 frequencyBuffer = MOAIByteStream.new ()
 frequencyBuffer:open ( WINDOW_SIZE * 4 * 2 )
@@ -59,8 +60,7 @@ onDraw = function ()
 			MOAIFourier.SAMPLE_S16,
 			false,
 			frequencyBuffer,
-			MOAIFourier.SAMPLE_FLOAT,
-			false
+			MOAIFourier.SAMPLE_FLOAT
 		)
 
 		elapsedFrames = targetFrame + 1
