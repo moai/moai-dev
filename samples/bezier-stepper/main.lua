@@ -55,24 +55,6 @@ function onDraw ()
 	for i, v in ipairs ( points ) do
 		MOAIDraw.drawCircle ( v.x, v.y, 2, 8 )
 	end
-
-	--[[
-	local r = 64
-
-	MOAIGfxDevice.setPenColor ( 1, 0, 0, 1 )
-	MOAIDraw.fillCircle ( 0, 0, r, 32 )
-
-	MOAIGfxDevice.setPenColor ( 1, 1, 1, 1 )
-	MOAIDraw.drawCircleSpokes ( 0, 0, r, 8 )
-	MOAIDraw.drawCircle ( 0, 0, r, 32 )
-	]]--
 end
 
-scriptDeck = MOAIScriptDeck.new ()
-scriptDeck:setRect ( -64, -64, 64, 64 )
-scriptDeck:setDrawCallback ( onDraw )
-
-prop = MOAIProp2D.new ()
-prop:setDeck ( scriptDeck )
-layer:insertProp ( prop )
-
+layer:setOverlayTable ({ onDraw })
