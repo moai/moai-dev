@@ -69,6 +69,8 @@ MOAIPathStepper::MOAIPathStepper () :
 
 //----------------------------------------------------------------//
 MOAIPathStepper::~MOAIPathStepper () {
+
+	this->mPath.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -142,8 +144,6 @@ ZLVec2D MOAIPathStepper::NextVertex () {
 
 //----------------------------------------------------------------//
 void MOAIPathStepper::RegisterLuaClass ( MOAILuaState& state ) {
-
-	this->mPath.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
