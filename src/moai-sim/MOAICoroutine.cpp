@@ -227,7 +227,7 @@ MOAICoroutine::MOAICoroutine () :
 	mNarg ( 0 ),
 	mIsUpdating ( false ),
 	mIsActive ( false ),
-	mIsDefaultParent ( true ) {
+	mIsDefaultParent ( false ) {
 
 	RTTI_SINGLE ( MOAIAction )
 	
