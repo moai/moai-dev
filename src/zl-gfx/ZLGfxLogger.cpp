@@ -353,10 +353,10 @@ void ZLGfxLogger::Event ( ZLGfxListener* listener, u32 event, void* userdata ) {
 //----------------------------------------------------------------//
 void ZLGfxLogger::Flush ( bool finish ) {
 
-	this->PrintLine ( "glFlush\n", index );
+	this->PrintLine ( "glFlush\n" );
 
 	if ( finish ) {
-		this->PrintLine ( "glFinish\n", index );
+		this->PrintLine ( "glFinish\n" );
 	}
 }
 

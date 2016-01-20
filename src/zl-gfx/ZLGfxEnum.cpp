@@ -147,8 +147,8 @@ u32 ZLGfxEnum::MapZLToNative ( u32 value ) {
 		#endif
 
 		#if !defined ( MOAI_OS_IPHONE )
-			case ZGL_COLOR_INDEX:								return GL_COLOR_INDEX;
-			case ZGL_STENCIL_INDEX:								return GL_STENCIL_INDEX;
+			//case ZGL_COLOR_INDEX:								return GL_COLOR_INDEX;
+			//case ZGL_STENCIL_INDEX:								return GL_STENCIL_INDEX;
 		#endif
 		
 		case ZGL_DEPTH_COMPONENT:							return GL_DEPTH_COMPONENT;

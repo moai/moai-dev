@@ -12,6 +12,6 @@ LOCAL_CFLAGS		:= -include $(MOAI_SDK_HOME)/src/zl-vfs/zl_replace.h
 LOCAL_CFLAGS		+= -fvisibility=hidden
 
 LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
-LOCAL_SRC_FILES 	+= $(wildcard $(MOAI_SDK_HOME)/src/zl-gfx/zl_gfx_opengl.cpp)
+LOCAL_SRC_FILES 	+= $(wildcard $(MOAI_SDK_HOME)/src/zl-gfx/*.cpp)
 
 include $(BUILD_STATIC_LIBRARY)
