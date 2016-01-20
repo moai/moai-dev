@@ -133,7 +133,7 @@ public:
 							~MOAIAction				();
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
-	void					Start					( MOAIActionTree& tree, bool defer );
+	void					Start					( MOAIAction* parent, bool defer );
 	void					Stop					();
 };
 

@@ -148,7 +148,7 @@ int MOAICoroutine::_run ( lua_State* L ) {
 	
 	lua_xmove ( state, self->mState, self->mNarg + 1 );
 	
-	self->Start ( MOAISim::Get ().GetActionMgr (), defer );
+	self->Start ( 0, defer );
 
 	return 0;
 }

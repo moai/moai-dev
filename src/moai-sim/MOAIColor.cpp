@@ -66,7 +66,7 @@ int MOAIColor::_moveColor ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr (), false );
+		action->Start ( 0, false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -120,7 +120,7 @@ int MOAIColor::_seekColor ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr (), false );
+		action->Start ( 0, false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
