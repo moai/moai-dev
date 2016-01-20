@@ -71,8 +71,12 @@ void ZLGfxImmediate::BindTexture ( ZLGfxHandle* handle ) {
 //----------------------------------------------------------------//
 void ZLGfxImmediate::BindVertexArray ( ZLGfxHandle* handle ) {
 
-	glBindVertexArray ( handle ? handle->mGLID : 0 );
-	GL_LOG_ERRORS ( "glBindVertexArray" )
+	#if defined( MOAI_OS_ANDROID ) || defined( MOAI_OS_HTML )
+		return;
+	#else
+		glBindVertexArray ( handle ? handle->mGLID : 0 );
+		GL_LOG_ERRORS ( "glBindVertexArray" )
+	#endif
 }
 
 //----------------------------------------------------------------//
@@ -268,7 +272,11 @@ ZLGfxHandle* ZLGfxImmediate::Create ( ZLGfxHandle* handle, u32 param ) {
 //----------------------------------------------------------------//
 ZLGfxHandle* ZLGfxImmediate::CreateBuffer () {
 
-	return this->Create ( new ZLGfxHandle ( ZLGfxHandle::BUFFER, 0, true ), 0 );
+	#if defined( MOAI_OS_ANDROID ) || defined( MOAI_OS_HTML )
+		return 0;
+	#else
+		return this->Create ( new ZLGfxHandle ( ZLGfxHandle::BUFFER, 0, true ), 0 );
+	#endif
 }
 
 //----------------------------------------------------------------//
@@ -367,7 +375,7 @@ void ZLGfxImmediate::DeleteHandle ( ZLGfxHandle* handle ) {
 				break;
 			
 			case ZLGfxHandle::VERTEXARRAY:
-				#ifndef MOAI_OS_ANDROID
+				#if !( defined( MOAI_OS_ANDROID ) || defined( MOAI_OS_HTML ))
 					glDeleteVertexArrays ( 1, &handle->mGLID );
 					GL_LOG_ERRORS ( "glDeleteVertexArrays" )
 				#endif
