@@ -1159,6 +1159,10 @@
 		CD2CB51E19FDBECA00C42260 /* MOAIStreamAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2CB51B19FDBECA00C42260 /* MOAIStreamAdapter.cpp */; };
 		CD2CB51F19FDBECA00C42260 /* MOAIStreamAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2CB51C19FDBECA00C42260 /* MOAIStreamAdapter.h */; };
 		CD2CB52019FDBECA00C42260 /* MOAIStreamAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2CB51C19FDBECA00C42260 /* MOAIStreamAdapter.h */; };
+		CD2E468E1C517FF6008E22A1 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2E468C1C517FF6008E22A1 /* host.cpp */; };
+		CD2E468F1C517FF6008E22A1 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2E468C1C517FF6008E22A1 /* host.cpp */; };
+		CD2E46901C517FF6008E22A1 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2E468D1C517FF6008E22A1 /* host.h */; };
+		CD2E46911C517FF6008E22A1 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2E468D1C517FF6008E22A1 /* host.h */; };
 		CD2FB1A41C473ABE005F8D8D /* ZLCopyOnWrite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2FB19A1C473AB4005F8D8D /* ZLCopyOnWrite.cpp */; };
 		CD2FB1A51C473ABE005F8D8D /* ZLCopyOnWrite.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2FB19B1C473AB4005F8D8D /* ZLCopyOnWrite.h */; };
 		CD2FB1A61C473ABE005F8D8D /* ZLRefCountedObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2FB19C1C473AB4005F8D8D /* ZLRefCountedObject.cpp */; };
@@ -6506,6 +6510,8 @@
 		CD2BA7A21B2A2D750010C399 /* MOAIGfxDeviceVertexWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxDeviceVertexWriter.h; sourceTree = "<group>"; };
 		CD2CB51B19FDBECA00C42260 /* MOAIStreamAdapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIStreamAdapter.cpp; sourceTree = "<group>"; };
 		CD2CB51C19FDBECA00C42260 /* MOAIStreamAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIStreamAdapter.h; sourceTree = "<group>"; };
+		CD2E468C1C517FF6008E22A1 /* host.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = host.cpp; path = "moai-harfbuzz/host.cpp"; sourceTree = "<group>"; };
+		CD2E468D1C517FF6008E22A1 /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-harfbuzz/host.h"; sourceTree = "<group>"; };
 		CD2FB19A1C473AB4005F8D8D /* ZLCopyOnWrite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLCopyOnWrite.cpp; sourceTree = "<group>"; };
 		CD2FB19B1C473AB4005F8D8D /* ZLCopyOnWrite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLCopyOnWrite.h; sourceTree = "<group>"; };
 		CD2FB19C1C473AB4005F8D8D /* ZLRefCountedObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLRefCountedObject.cpp; sourceTree = "<group>"; };
@@ -6541,8 +6547,8 @@
 		CD3024CA1A68F34E00CCEE32 /* PVRTMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PVRTMap.h; path = "../../3rdparty/libpvr-3.4/PVRTMap.h"; sourceTree = "<group>"; };
 		CD3024CB1A68F34E00CCEE32 /* PVRTTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PVRTTexture.cpp; path = "../../3rdparty/libpvr-3.4/PVRTTexture.cpp"; sourceTree = "<group>"; };
 		CD3024CC1A68F34E00CCEE32 /* PVRTTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PVRTTexture.h; path = "../../3rdparty/libpvr-3.4/PVRTTexture.h"; sourceTree = "<group>"; };
-		CD320DDA1C5179B000AD5E5C /* libmoai-ios-3rdparty-harfbuzz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-3rdparty-harfbuzz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD320F5D1C517A0E00AD5E5C /* libmoai-osx-3rdparty-harfbuzz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-3rdparty-harfbuzz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD320DDA1C5179B000AD5E5C /* libmoai-ios-harfbuzz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-harfbuzz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD320F5D1C517A0E00AD5E5C /* libmoai-osx-harfbuzz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-harfbuzz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD320F681C517ACF00AD5E5C /* hb-atomic-private.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "hb-atomic-private.hh"; path = "../../3rdparty/harfbuzz-1.0.6/hb-atomic-private.hh"; sourceTree = "<group>"; };
 		CD320F691C517ACF00AD5E5C /* hb-blob.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-blob.cc"; path = "../../3rdparty/harfbuzz-1.0.6/hb-blob.cc"; sourceTree = "<group>"; };
 		CD320F6A1C517ACF00AD5E5C /* hb-blob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-blob.h"; path = "../../3rdparty/harfbuzz-1.0.6/hb-blob.h"; sourceTree = "<group>"; };
@@ -8816,6 +8822,7 @@
 				CDC123A217FA816C00FB64BB /* moai-crypto */,
 				89BE6C571739A3D000DFE837 /* moai-fmod-designer */,
 				89BE6B781739A02200DFE837 /* moai-fmod-ex */,
+				CD2E468B1C517FAC008E22A1 /* moai-harfbuzz */,
 				89BE75F8173C12CE00DFE837 /* moai-http-client */,
 				89BE76A0173C168400DFE837 /* moai-http-server */,
 				CD515F4D1BCDBB5D000718FB /* moai-image-jpg */,
@@ -8923,8 +8930,8 @@
 				CD8316221BED3AE900745C8A /* libmoai-ios-3rdparty-contrib.a */,
 				CD83167D1BED3BC100745C8A /* libmoai-ios-3rdparty-libtess.a */,
 				CD8316C91BED3C1800745C8A /* libmoai-ios-3rdparty-liblua.a */,
-				CD320DDA1C5179B000AD5E5C /* libmoai-ios-3rdparty-harfbuzz.a */,
-				CD320F5D1C517A0E00AD5E5C /* libmoai-osx-3rdparty-harfbuzz.a */,
+				CD320DDA1C5179B000AD5E5C /* libmoai-ios-harfbuzz.a */,
+				CD320F5D1C517A0E00AD5E5C /* libmoai-osx-harfbuzz.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -10289,6 +10296,15 @@
 				CD1AEB451A0F785C005512C8 /* MOAIGfxResourceMgr.h */,
 			);
 			name = "graphics cache";
+			sourceTree = "<group>";
+		};
+		CD2E468B1C517FAC008E22A1 /* moai-harfbuzz */ = {
+			isa = PBXGroup;
+			children = (
+				CD2E468C1C517FF6008E22A1 /* host.cpp */,
+				CD2E468D1C517FF6008E22A1 /* host.h */,
+			);
+			name = "moai-harfbuzz";
 			sourceTree = "<group>";
 		};
 		CD30249A1A689CC400CCEE32 /* libpvr */ = {
@@ -14477,6 +14493,7 @@
 				CD3210971C517ADB00AD5E5C /* hb-ot-shape-complex-use-private.hh in Headers */,
 				CD3210AC1C517ADB00AD5E5C /* hb-shape.h in Headers */,
 				CD3210881C517ADB00AD5E5C /* hb-ot-shape-complex-arabic-win1256.hh in Headers */,
+				CD2E46901C517FF6008E22A1 /* host.h in Headers */,
 				CD3210851C517ADB00AD5E5C /* hb-ot-shape-complex-arabic-fallback.hh in Headers */,
 				CD32107A1C517ADB00AD5E5C /* hb-ot-layout-gpos-table.hh in Headers */,
 				CD32106D1C517ADB00AD5E5C /* hb-mutex-private.hh in Headers */,
@@ -14558,6 +14575,7 @@
 				CD3211091C517AE000AD5E5C /* hb-ot-shape-complex-use-private.hh in Headers */,
 				CD32111E1C517AE000AD5E5C /* hb-shape.h in Headers */,
 				CD3210FA1C517AE000AD5E5C /* hb-ot-shape-complex-arabic-win1256.hh in Headers */,
+				CD2E46911C517FF6008E22A1 /* host.h in Headers */,
 				CD3210F71C517AE000AD5E5C /* hb-ot-shape-complex-arabic-fallback.hh in Headers */,
 				CD3210EC1C517AE000AD5E5C /* hb-ot-layout-gpos-table.hh in Headers */,
 				CD3210DF1C517AE000AD5E5C /* hb-mutex-private.hh in Headers */,
@@ -16035,9 +16053,9 @@
 			productReference = CD27BE0D191D9F44000A7770 /* libmoai-ios-adcolony.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		CD320DCD1C5179B000AD5E5C /* libmoai-ios-3rdparty-harfbuzz */ = {
+		CD320DCD1C5179B000AD5E5C /* libmoai-ios-harfbuzz */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CD320DD51C5179B000AD5E5C /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty-harfbuzz" */;
+			buildConfigurationList = CD320DD51C5179B000AD5E5C /* Build configuration list for PBXNativeTarget "libmoai-ios-harfbuzz" */;
 			buildPhases = (
 				CD320DCE1C5179B000AD5E5C /* Headers */,
 				CD320DD01C5179B000AD5E5C /* Sources */,
@@ -16047,14 +16065,14 @@
 			);
 			dependencies = (
 			);
-			name = "libmoai-ios-3rdparty-harfbuzz";
+			name = "libmoai-ios-harfbuzz";
 			productName = OpenUSLS;
-			productReference = CD320DDA1C5179B000AD5E5C /* libmoai-ios-3rdparty-harfbuzz.a */;
+			productReference = CD320DDA1C5179B000AD5E5C /* libmoai-ios-harfbuzz.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		CD320DDB1C517A0E00AD5E5C /* libmoai-osx-3rdparty-harfbuzz */ = {
+		CD320DDB1C517A0E00AD5E5C /* libmoai-osx-harfbuzz */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CD320F581C517A0E00AD5E5C /* Build configuration list for PBXNativeTarget "libmoai-osx-3rdparty-harfbuzz" */;
+			buildConfigurationList = CD320F581C517A0E00AD5E5C /* Build configuration list for PBXNativeTarget "libmoai-osx-harfbuzz" */;
 			buildPhases = (
 				CD320DDC1C517A0E00AD5E5C /* Headers */,
 				CD320E9B1C517A0E00AD5E5C /* Sources */,
@@ -16064,9 +16082,9 @@
 			);
 			dependencies = (
 			);
-			name = "libmoai-osx-3rdparty-harfbuzz";
+			name = "libmoai-osx-harfbuzz";
 			productName = OpenUSLS;
-			productReference = CD320F5D1C517A0E00AD5E5C /* libmoai-osx-3rdparty-harfbuzz.a */;
+			productReference = CD320F5D1C517A0E00AD5E5C /* libmoai-osx-harfbuzz.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		CD32B3C119F9EDD10059D019 /* libmoai-osx-3rdparty-sdl */ = {
@@ -16941,7 +16959,6 @@
 				CDD47B9417FA78AE00525B77 /* libmoai-ios-3rdparty-crypto */,
 				CD830D741BED355500745C8A /* libmoai-ios-3rdparty-expat */,
 				CD83152D1BED3A8100745C8A /* libmoai-ios-3rdparty-freetype */,
-				CD320DCD1C5179B000AD5E5C /* libmoai-ios-3rdparty-harfbuzz */,
 				CD830E4B1BED356D00745C8A /* libmoai-ios-3rdparty-jansson */,
 				CD83167E1BED3C1800745C8A /* libmoai-ios-3rdparty-liblua */,
 				CD8316231BED3BC100745C8A /* libmoai-ios-3rdparty-libtess */,
@@ -16961,6 +16978,7 @@
 				CDDD30811574AE0000C410A0 /* libmoai-ios-fmod-designer */,
 				CD5089C6155E3A1B0002FC3B /* libmoai-ios-fmod-ex */,
 				CDA4B89B1808AC8F000129F9 /* libmoai-ios-gamecenter */,
+				CD320DCD1C5179B000AD5E5C /* libmoai-ios-harfbuzz */,
 				89BE75DB173C126100DFE837 /* libmoai-ios-http-client */,
 				89BE766E173C15F100DFE837 /* libmoai-ios-http-server */,
 				CD515F501BCDBBEC000718FB /* libmoai-ios-image-jpg */,
@@ -16984,13 +17002,13 @@
 				CD1845231A626BD500FCCCE0 /* libmoai-osx-apple */,
 				0324E2A81356485F000ADC60 /* libmoai-osx-3rdparty-core */,
 				CD80789E1831C3B500E658D9 /* libmoai-osx-3rdparty-crypto */,
-				CD320DDB1C517A0E00AD5E5C /* libmoai-osx-3rdparty-harfbuzz */,
 				CD32B3C119F9EDD10059D019 /* libmoai-osx-3rdparty-sdl */,
 				CDA0DC161A01B184002B71B6 /* libmoai-osx-audio-sampler */,
 				89BE725E173AD29200DFE837 /* libmoai-osx-box2d */,
 				CD95D48D1831D4E20080C34E /* libmoai-osx-crypto */,
 				CDDD30941574AE0F00C410A0 /* libmoai-osx-fmod-designer */,
 				CDE8A7CF155E42EF00C2DFF5 /* libmoai-osx-fmod-ex */,
+				CD320DDB1C517A0E00AD5E5C /* libmoai-osx-harfbuzz */,
 				89BE75BE173C121800DFE837 /* libmoai-osx-http-client */,
 				89BE7687173C160E00DFE837 /* libmoai-osx-http-server */,
 				CD515F101BCDB440000718FB /* libmoai-osx-image-jpg */,
@@ -18127,6 +18145,7 @@
 				CD3210691C517ADB00AD5E5C /* hb-graphite2.cc in Sources */,
 				CD3210AB1C517ADB00AD5E5C /* hb-shape.cc in Sources */,
 				CD3210B91C517ADB00AD5E5C /* hb-warning.cc in Sources */,
+				CD2E468E1C517FF6008E22A1 /* host.cpp in Sources */,
 				CD3210A11C517ADB00AD5E5C /* hb-ot-tag.cc in Sources */,
 				CD3210821C517ADB00AD5E5C /* hb-ot-map.cc in Sources */,
 				CD3210991C517ADB00AD5E5C /* hb-ot-shape-complex-use.cc in Sources */,
@@ -18174,6 +18193,7 @@
 				CD3210DB1C517AE000AD5E5C /* hb-graphite2.cc in Sources */,
 				CD32111D1C517AE000AD5E5C /* hb-shape.cc in Sources */,
 				CD32112B1C517AE000AD5E5C /* hb-warning.cc in Sources */,
+				CD2E468F1C517FF6008E22A1 /* host.cpp in Sources */,
 				CD3211131C517AE000AD5E5C /* hb-ot-tag.cc in Sources */,
 				CD3210F41C517AE000AD5E5C /* hb-ot-map.cc in Sources */,
 				CD32110B1C517AE000AD5E5C /* hb-ot-shape-complex-use.cc in Sources */,
@@ -22726,7 +22746,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-3rdparty-harfbuzz";
+				PRODUCT_NAME = "moai-ios-harfbuzz";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
 			};
@@ -22762,7 +22782,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-3rdparty-harfbuzz";
+				PRODUCT_NAME = "moai-ios-harfbuzz";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
 			};
@@ -22798,7 +22818,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-3rdparty-harfbuzz";
+				PRODUCT_NAME = "moai-ios-harfbuzz";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
 			};
@@ -22834,7 +22854,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-3rdparty-harfbuzz";
+				PRODUCT_NAME = "moai-ios-harfbuzz";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
 			};
@@ -22878,7 +22898,7 @@
 					"\"/usr/X11R6/include\"",
 					"$(inherited)",
 				);
-				PRODUCT_NAME = "moai-osx-3rdparty-harfbuzz";
+				PRODUCT_NAME = "moai-osx-harfbuzz";
 				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
@@ -22924,7 +22944,7 @@
 					"\"/usr/X11R6/include\"",
 					"$(inherited)",
 				);
-				PRODUCT_NAME = "moai-osx-3rdparty-harfbuzz";
+				PRODUCT_NAME = "moai-osx-harfbuzz";
 				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
@@ -22970,7 +22990,7 @@
 					"\"/usr/X11R6/include\"",
 					"$(inherited)",
 				);
-				PRODUCT_NAME = "moai-osx-3rdparty-harfbuzz";
+				PRODUCT_NAME = "moai-osx-harfbuzz";
 				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
@@ -23016,7 +23036,7 @@
 					"\"/usr/X11R6/include\"",
 					"$(inherited)",
 				);
-				PRODUCT_NAME = "moai-osx-3rdparty-harfbuzz";
+				PRODUCT_NAME = "moai-osx-harfbuzz";
 				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
 			};
@@ -30382,7 +30402,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CD320DD51C5179B000AD5E5C /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty-harfbuzz" */ = {
+		CD320DD51C5179B000AD5E5C /* Build configuration list for PBXNativeTarget "libmoai-ios-harfbuzz" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CD320DD61C5179B000AD5E5C /* Debug */,
@@ -30393,7 +30413,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CD320F581C517A0E00AD5E5C /* Build configuration list for PBXNativeTarget "libmoai-osx-3rdparty-harfbuzz" */ = {
+		CD320F581C517A0E00AD5E5C /* Build configuration list for PBXNativeTarget "libmoai-osx-harfbuzz" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CD320F591C517A0E00AD5E5C /* Debug */,
