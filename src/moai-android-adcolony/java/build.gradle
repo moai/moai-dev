@@ -23,11 +23,11 @@ android {
         }
     }
 }
-
+/*
 moai {
     nativeLib "moai-android-adcolony"
 }
-
+*/
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.1.1'

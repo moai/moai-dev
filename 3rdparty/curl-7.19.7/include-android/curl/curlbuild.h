@@ -153,6 +153,46 @@
 #  include <sys/socket.h>
 #endif
 
+#if defined(__arm64__) || defined(__LP64__)
+
+/* The size of `long', as computed by sizeof. */
+#define CURL_SIZEOF_LONG 8
+
+/* Integral data type used for curl_socklen_t. */
+#define CURL_TYPEOF_CURL_SOCKLEN_T socklen_t
+
+/* The size of `curl_socklen_t', as computed by sizeof. */
+#define CURL_SIZEOF_CURL_SOCKLEN_T 4
+
+/* Data type definition of curl_socklen_t. */
+typedef CURL_TYPEOF_CURL_SOCKLEN_T curl_socklen_t;
+
+/* Signed integral data type used for curl_off_t. */
+#define CURL_TYPEOF_CURL_OFF_T long
+
+/* Data type definition of curl_off_t. */
+typedef CURL_TYPEOF_CURL_OFF_T curl_off_t;
+
+/* curl_off_t formatting string directive without "%" conversion specifier. */
+#define CURL_FORMAT_CURL_OFF_T "ld"
+
+/* unsigned curl_off_t formatting string without "%" conversion specifier. */
+#define CURL_FORMAT_CURL_OFF_TU "lu"
+
+/* curl_off_t formatting string directive with "%" conversion specifier. */
+#define CURL_FORMAT_OFF_T "%ld"
+
+/* The size of `curl_off_t', as computed by sizeof. */
+#define CURL_SIZEOF_CURL_OFF_T 8
+
+/* curl_off_t constant suffix. */
+#define CURL_SUFFIX_CURL_OFF_T L
+
+/* unsigned curl_off_t constant suffix. */
+#define CURL_SUFFIX_CURL_OFF_TU UL
+
+#else
+
 /* The size of `long', as computed by sizeof. */
 #define CURL_SIZEOF_LONG 4
 
@@ -188,5 +228,6 @@ typedef CURL_TYPEOF_CURL_OFF_T curl_off_t;
 
 /* unsigned curl_off_t constant suffix. */
 #define CURL_SUFFIX_CURL_OFF_TU ULL
+#endif /* __arm64__ */
 
 #endif /* __CURL_CURLBUILD_H */

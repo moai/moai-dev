@@ -24,6 +24,33 @@ int MOAIMemStream::_close ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIMemStream::_discardAll ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIMemStream, "U" );
+	
+	self->DiscardAll ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIMemStream::_discardBack ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIMemStream, "U" );
+	
+	self->DiscardBack ( state.GetValue ( 2, self->GetCursor ()));
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIMemStream::_discardFront ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIMemStream, "U" );
+	
+	self->DiscardFront ( state.GetValue < u32 >( 2, ( u32 )self->GetCursor ()));
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIMemStream::_getString ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMemStream, "U" );
 
@@ -119,6 +146,9 @@ void MOAIMemStream::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "close",				_close },
+		{ "discardAll",			_discardAll },
+		{ "discardBack",		_discardBack },
+		{ "discardFront",		_discardFront },
 		{ "getString",			_getString },
 		{ "open",				_open },
 		{ NULL, NULL }

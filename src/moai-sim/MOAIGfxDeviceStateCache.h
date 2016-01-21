@@ -56,16 +56,20 @@ protected:
 	//----------------------------------------------------------------//
 	virtual	MOAIFrameBuffer*	GetDefaultFrameBuffer		() = 0;
 	virtual	MOAITexture*		GetDefaultTexture			() = 0;
-	void						SetTexture					( u32 textureUnit, MOAISingleTexture* texture );
+	bool						BindTexture					( u32 textureUnit, MOAISingleTexture* texture );
 
 public:
 	
 	//----------------------------------------------------------------//
-	void			BindFrameBuffer				( MOAIFrameBuffer* frameBuffer = 0 );
-	void			BindIndexBuffer				( MOAIIndexBuffer* buffer = 0 );
-	void			BindVertexArray				( MOAIVertexArray* vtxArray = 0 );
-	void			BindVertexBuffer			( MOAIVertexBuffer* buffer = 0 );
-	void			BindVertexFormat			( MOAIVertexFormat* format = 0 );
+	bool			BindFrameBuffer				( MOAIFrameBuffer* frameBuffer = 0 );
+	bool			BindIndexBuffer				( MOAIIndexBuffer* buffer = 0 );
+	bool			BindShader					( MOAIShader* shader = 0 );
+	bool			BindShader					( u32 preset );
+	bool			BindShader					( MOAIShaderProgram* program );
+	bool			BindTexture					( MOAITextureBase* textureSet = 0 );
+	bool			BindVertexArray				( MOAIVertexArray* vtxArray = 0 );
+	bool			BindVertexBuffer			( MOAIVertexBuffer* buffer = 0 );
+	bool			BindVertexFormat			( MOAIVertexFormat* format = 0, bool copyBuffer = false );
 	
 					MOAIGfxDeviceStateCache		();
 	virtual			~MOAIGfxDeviceStateCache	();
@@ -88,11 +92,7 @@ public:
 	void			SetScissorRect				();
 	void			SetScissorRect				( ZLRect rect );
 	
-	void			SetShader					( MOAIShader* shader = 0 );
-	void			SetShader					( u32 preset );
-	void			SetShader					( MOAIShaderProgram* program = 0 );
-	
-	void			SetTexture					( MOAITextureBase* textureSet = 0 );
+	void			UnbindAll					();
 };
 
 #endif

@@ -304,15 +304,18 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 		default:
 			return false;
 	}
+	
+	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
 
-	u32 glTexID = zglCreateTexture ();
+	ZLGfxHandle* glTexID = gfx.CreateTexture ();
 	if ( glTexID ) {
 
-		zglBindTexture ( glTexID );
+		gfx.BindTexture ( glTexID );
 		
 		size_t textureSize = 0;
 		
 		const void* imageData = header->GetFileData ( data, size );
+		ZLCopyOnWrite buffer;
 		
 		int nLevels = header->mMipMapCount + 1;
 		for ( int level = 0; level < nLevels; ++level ) {
@@ -326,22 +329,26 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 			
 				#if ZGL_DEVCAPS_PVR_TEXTURE
 				
-					zglCompressedTexImage2D ( level, internalFormat, width, height, info.mSizeCompressed, imageData );
+					buffer.Alloc ( info.mSizeCompressed, imageData );
+					gfx.CompressedTexImage2D ( level, internalFormat, width, height, info.mSizeCompressed, buffer.GetSharedConstBuffer ());
 				
 				#elif MOAI_WITH_LIBPVR
 				
-					ZLLeanArray < char > buffer;
-					buffer.Init ( info.mSizeDecompressed );
-					if ( !this->Decompress ( *header, info, buffer.Data (), info.mSizeDecompressed, imageData, info.mSizeCompressed )) {
+				
+					buffer.Reserve ( info.mSizeDecompressed );
+				
+					if ( !this->Decompress ( *header, info, buffer.Invalidate (), info.mSizeDecompressed, imageData, info.mSizeCompressed )) {
 						this->CleanupTexture ( texture );
 						return false;
 					}
-					zglTexImage2D ( level, internalFormat, width, height, internalFormat, pixelType, buffer.Data ());
+					gfx.TexImage2D ( level, internalFormat, width, height, internalFormat, pixelType, buffer.GetSharedConstBuffer ());
 				
 				#endif
 			}
 			else {
-				zglTexImage2D ( level, internalFormat, width, height, internalFormat, pixelType, imageData );
+			
+				buffer.Alloc ( info.mSizeDecompressed, imageData );
+				gfx.TexImage2D ( level, internalFormat, width, height, internalFormat, pixelType, buffer.GetSharedConstBuffer ());
 			}
 			
 			if ( MOAIGfxDevice::Get ().LogErrors ()) {
@@ -354,6 +361,7 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 		}
 
 		this->SetTextureID ( texture, glTexID, internalFormat, pixelType, textureSize );
+		
 		return true;
 	}
 	return false;
@@ -408,7 +416,7 @@ bool MOAIImageFormatPvr::Decompress ( MOAIPvrHeader& header, const MOAIPvrMipLev
 	this->SetPixelFormat ( image, MOAIImage::TRUECOLOR );
 	this->Alloc ( image );
 	
-	if ( !MOAIImageFormatPvr::Decompress ( header, info, this->GetBitmap ( image ), image.GetBitmapSize (), stream )) {
+	if ( !MOAIImageFormatPvr::Decompress ( header, info, this->GetBitmapMutable ( image ), image.GetBitmapSize (), stream )) {
 		ZLLog_ErrorF ( ZLLog::CONSOLE, "Error loading or decompressing PVR at mip level %d\n", info.mLevel );
 		return false;
 	}

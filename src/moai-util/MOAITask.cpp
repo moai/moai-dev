@@ -10,17 +10,17 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITask::LatchRelease () {
-
-	this->mLatch.Clear ();
-}
+//void MOAITask::LatchRelease () {
+//
+//	this->mLatch.Clear ();
+//}
 
 //----------------------------------------------------------------//
-void MOAITask::LatchRetain () {
-
-	assert ( !this->mLatch );
-	this->GetRef ( this->mLatch );
-}
+//void MOAITask::LatchRetain () {
+//
+//	assert ( !this->mLatch );
+//	this->GetRef ( this->mLatch );
+//}
 
 //----------------------------------------------------------------//
 MOAITask::MOAITask () :

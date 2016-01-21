@@ -85,6 +85,7 @@ public:
 //================================================================//
 // MOAITextLayout
 //================================================================//
+// this is a buffer that holds glyphs once they've been laid out
 class MOAITextLayout {
 private:
 	

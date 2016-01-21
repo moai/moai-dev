@@ -67,10 +67,6 @@ void AKUModulesAppFinalize () {
 		AKUFmodExAppFinalize ();
 	#endif
 
-	#if AKU_WITH_HARNESS
-		AKUHarnessAppFinalize ();
-	#endif
-
 	#if AKU_WITH_HTTP_CLIENT
 		AKUHttpClientAppFinalize ();
 	#endif
@@ -137,10 +133,6 @@ void AKUModulesAppInitialize () {
 
 	#if AKU_WITH_FMOD_EX
 		AKUFmodExAppInitialize ();
-	#endif
-
-	#if AKU_WITH_HARNESS
-		AKUHarnessAppInitialize ();
 	#endif
 
 	#if AKU_WITH_HTTP_CLIENT
@@ -321,10 +313,6 @@ void AKUModulesUpdate () {
 
 	#if AKU_WITH_FMOD_EX
 		AKUFmodExUpdate ();
-	#endif
-
-	#if AKU_WITH_HARNESS
-		AKUHarnessUpdate ()
 	#endif
 
 	#if AKU_WITH_SIM

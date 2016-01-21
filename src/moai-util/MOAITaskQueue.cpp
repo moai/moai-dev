@@ -2,22 +2,50 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-util/MOAITask.h>
-#include <moai-util/MOAITaskSubscriber.h>
 #include <moai-util/MOAITaskQueue.h>
+#include <moai-util/MOAITaskSubscriber.h>
+
+//================================================================//
+// MOAITaskQueue main
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAITaskQueue::_main ( void* param, MOAIThreadState& threadState ) {
+	UNUSED ( threadState );
+
+	(( MOAITaskQueue* )param )->Main ();
+}
 
 //================================================================//
 // MOAITaskQueue
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAITaskQueue::MOAITaskQueue () {
+void MOAITaskQueue::Main () {
 
-	RTTI_SINGLE ( MOAILuaObject )
+	this->mCondition.Lock ();
+	
+	while ( this->mIsRunning ) {
+		
+		this->Process ();
+		
+		this->mCondition.Wait ();
+	}
+	
+	this->mCondition.Unlock ();
+}
+
+//----------------------------------------------------------------//
+MOAITaskQueue::MOAITaskQueue () :
+	mIsRunning ( false ) {
+
+	RTTI_SINGLE ( MOAITaskQueue )
 }
 
 //----------------------------------------------------------------//
 MOAITaskQueue::~MOAITaskQueue () {
+
+	this->Stop ();
 }
 
 //----------------------------------------------------------------//
@@ -30,9 +58,7 @@ void MOAITaskQueue::Process () {
 		MOAITask* task = taskIt->Data ();
 		taskIt = taskIt->Next ();
 
-		this->mMutex.Lock ();
 		this->mPendingTasks.PopFront ();
-		this->mMutex.Unlock ();
 	
 		task->Execute ();
 
@@ -42,7 +68,7 @@ void MOAITaskQueue::Process () {
 		case MOAITask::PRIORITY_IMMEDIATE:
 
 			task->Publish ();
-			task->LatchRelease ();
+			task->Release ();
 			break;
 
 		default:
@@ -62,11 +88,25 @@ void MOAITaskQueue::Process () {
 //----------------------------------------------------------------//
 void MOAITaskQueue::PushTask ( MOAITask& task ) {
 
-	task.LatchRetain ();
+	bool start = false;
 
-	this->mMutex.Lock ();
+	task.Retain ();
+
+	this->mCondition.Lock ();
+	
 	this->mPendingTasks.PushBack ( task.mLink );
-	this->mMutex.Unlock ();
+	
+	if ( !this->mIsRunning ) {
+		this->mIsRunning = true;
+		start = true;
+	}
+	
+	this->mCondition.Signal ();
+	this->mCondition.Unlock ();
+	
+	if ( start ) {
+		this->mThread.Start ( _main, this, 0 );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -79,3 +119,20 @@ void MOAITaskQueue::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
+//----------------------------------------------------------------//
+void MOAITaskQueue::Stop () {
+
+	bool stop = false;
+
+	this->mCondition.Lock ();
+	if ( this->mIsRunning ) {
+		this->mIsRunning = false;
+		stop = true;
+		this->mCondition.Signal ();
+	}
+	this->mCondition.Unlock ();
+
+	if ( stop ) {
+		this->mThread.Join ();
+	}
+}

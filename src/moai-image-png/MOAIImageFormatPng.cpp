@@ -207,14 +207,14 @@ void MOAIImageFormatPng::ReadImagePng ( MOAIImage& image, void* pngParam, void* 
 			
 			for ( int i = 0; i < passes; ++i ) {
 				for ( u32 y = 0; y < height; ++y ) {
-					void* row = this->GetRowAddr ( image, y );
+					void* row = this->GetRowAddrMutable ( image, y );
 					png_read_row ( png, ( png_bytep )row, 0 );
 				}
 			}
 			
 			if ( transform & MOAIImageTransform::PREMULTIPLY_ALPHA ) {
 				for ( u32 y = 0; y < height; ++y ) {
-					void* row = this->GetRowAddr ( image, y );
+					void* row = this->GetRowAddrMutable ( image, y );
 					ZLColor::PremultiplyAlpha ( row, image.GetColorFormat (), width );
 				}
 			}
@@ -237,7 +237,7 @@ void MOAIImageFormatPng::ReadImagePng ( MOAIImage& image, void* pngParam, void* 
 				
 				for ( u32 y = 0; y < height; ++y ) {
 					void* srcRow = ( void* )(( size_t )srcBuff + ( srcRowSize * y ));
-					void* destRow = this->GetRowAddr ( image, y );
+					void* destRow = this->GetRowAddrMutable ( image, y );
 					ZLColor::Convert ( destRow, image.GetColorFormat (), srcRow, pngColorFormat, width );
 					
 					if ( transform & MOAIImageTransform::PREMULTIPLY_ALPHA ) {
@@ -252,7 +252,7 @@ void MOAIImageFormatPng::ReadImagePng ( MOAIImage& image, void* pngParam, void* 
 				
 				for ( u32 y = 0; y < height; ++y ) {
 					png_read_row ( png, ( png_bytep )srcRow, 0 );
-					void* destRow = this->GetRowAddr ( image, y );
+					void* destRow = this->GetRowAddrMutable ( image, y );
 					ZLColor::Convert ( destRow, image.GetColorFormat (), srcRow, pngColorFormat, width );
 					
 					if ( transform & MOAIImageTransform::PREMULTIPLY_ALPHA ) {
@@ -293,7 +293,7 @@ void MOAIImageFormatPng::ReadImagePng ( MOAIImage& image, void* pngParam, void* 
 		// copy the rows
 		for ( int i = 0; i < passes; ++i ) {
 			for ( u32 y = 0; y < height; ++y ) {
-				void* row = this->GetRowAddr ( image, y );
+				void* row = this->GetRowAddrMutable ( image, y );
 				png_read_row ( png, ( png_bytep )row, 0 );
 			}
 		}

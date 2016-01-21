@@ -20,9 +20,9 @@ class MOAIFrameBufferTexture :
 	public MOAISingleTexture {
 private:
 	
-	u32					mGLColorBufferID;
-	u32					mGLDepthBufferID;
-	u32					mGLStencilBufferID;
+	ZLGfxHandle*		mGLColorBufferID;
+	ZLGfxHandle*		mGLDepthBufferID;
+	ZLGfxHandle*		mGLStencilBufferID;
 	
 	u32					mColorFormat;
 	u32					mDepthFormat;

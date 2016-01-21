@@ -208,7 +208,7 @@ void MOAILuaUtil::ConvertFunction ( const MOAILuaHeader& srcFormat, const MOAILu
 	s64 nInstructions = this->ConvertInt ( srcFormat, dstFormat, srcStream, dstStream ); // size of instruction list
 	
 	if ( srcFormat.mSizeOfInstruction == dstFormat.mSizeOfInstruction ) {
-		dstStream.WriteStream ( srcStream, nInstructions * srcFormat.mSizeOfInstruction );
+		dstStream.WriteStream ( srcStream, ( size_t )( nInstructions * srcFormat.mSizeOfInstruction ));
 	}
 	else {
 		for	( s64 i = 0; i < nInstructions; ++i ) {

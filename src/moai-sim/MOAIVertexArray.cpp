@@ -102,7 +102,6 @@ int MOAIVertexArray::_setVertexBuffer ( lua_State* L ) {
 	MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( baseParam++, false );
 	
 	self->SetVertexBuffer ( idx, buffer, format );
-	self->FinishInit ();
 
 	return 0;
 }
@@ -131,8 +130,7 @@ void MOAIVertexArray::BindVertexArrayItems () {
 
 //----------------------------------------------------------------//
 MOAIVertexArray::MOAIVertexArray () :
-	mUseVAOs ( false ),
-	mNeedsFlush ( false ) {
+	mUseVAOs ( false ) {
 
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIGfxResource )
@@ -159,35 +157,20 @@ void MOAIVertexArray::OnCPUDestroy () {
 //----------------------------------------------------------------//
 void MOAIVertexArray::OnGPUBind () {
 
-	u32 vao = 0;
-
-	if ( this->mUseVAOs && this->mNeedsFlush ) {
+	if ( this->mUseVAOs && this->mVAOs.Size ()) {
 	
-		if ( !this->mVAOs.Size ()) return;
-	
-		if ( this->mNeedsFlush ) {
-			this->mCurrentVAO = ( this->mCurrentVAO + 1 ) % this->mVAOs.Size ();
-		}
-		vao = this->mVAOs [ this->mCurrentVAO ];
-	}
-	
-	if ( vao ) {
-
-		zglBindVertexArray ( vao );
-
-		if ( this->mNeedsFlush ) {
-			this->BindVertexArrayItems ();
-			this->mNeedsFlush = false;
-		}
+		ZLGfxHandle* vao = this->mVAOs [ this->mCurrentVAO ];
+		MOAIGfxDevice::GetDrawingAPI ().BindVertexArray ( vao );
 	}
 	else {
-	
 		this->BindVertexArrayItems ();
 	}
 }
 
 //----------------------------------------------------------------//
 bool MOAIVertexArray::OnGPUCreate () {
+
+	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
 
 	this->mUseVAOs = false;
 	
@@ -196,12 +179,17 @@ bool MOAIVertexArray::OnGPUCreate () {
 	if ( totalVAOs ) {
 		
 		for ( size_t i = 0; i < totalVAOs; ++i ) {
-			u32 vao = zglCreateVertexArray (); // OK for this to return 0
-			if ( !vao ) return true;
-			this->mVAOs [ i ] = vao;
+			ZLGfxHandle* vao = gfx.CreateVertexArray (); // OK for this to return 0
+			if ( vao ) {
+				this->mVAOs [ i ] = vao;
+				this->mUseVAOs = true;
+			}
 		}
-		this->mUseVAOs = true;
 	}
+	
+	this->mCurrentVAO = 0;
+	this->OnGPUUpdate ();
+	
 	return true;
 }
 
@@ -219,9 +207,26 @@ void MOAIVertexArray::OnGPULost () {
 void MOAIVertexArray::OnGPUUnbind () {
 
 	if ( this->mUseVAOs ) {
-		zglBindVertexArray ( 0 );
+		MOAIGfxDevice::GetDrawingAPI ().BindVertexArray ( 0 );
 	}
 	this->UnbindVertexArrayItems ();
+}
+
+//----------------------------------------------------------------//
+bool MOAIVertexArray::OnGPUUpdate () {
+
+	if ( !this->mUseVAOs ) return true;
+	if ( !this->mVAOs.Size ()) return false;
+
+	this->mCurrentVAO = ( this->mCurrentVAO + 1 ) % this->mVAOs.Size ();
+	ZLGfxHandle* vao = this->mVAOs [ this->mCurrentVAO ];
+	
+	if ( vao ) {
+		MOAIGfxDevice::GetDrawingAPI ().BindVertexArray ( vao );
+		this->BindVertexArrayItems ();
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//
@@ -250,11 +255,13 @@ void MOAIVertexArray::ReserveVAOs ( u32 total ) {
 
 	if ( MOAIGfxResourceMgr::IsValid ()) {
 		for ( size_t i = 0; i < this->mVAOs.Size (); ++i ) {
-			MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_BUFFER, this->mVAOs [ i ]);
+			MOAIGfxResourceMgr::Get ().PushDeleter ( this->mVAOs [ i ]);
 		}
 	}
 	this->mVAOs.Init ( total );
 	this->mVAOs.Fill ( 0 );
+	
+	this->FinishInit ();
 }
 
 //----------------------------------------------------------------//
@@ -264,6 +271,8 @@ void MOAIVertexArray::ReserveVertexBuffers ( u32 total ) {
 		this->mVertexBuffers [ i ].SetBufferAndFormat ( *this, 0, 0 );
 	}
 	this->mVertexBuffers.Init ( total );
+	
+	this->FinishInit ();
 }
 
 //----------------------------------------------------------------//
@@ -286,8 +295,6 @@ void MOAIVertexArray::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seria
 		}
 		state.Pop ();
 	}
-	
-	this->mNeedsFlush = true;
 	this->FinishInit ();
 }
 
@@ -313,7 +320,7 @@ void MOAIVertexArray::SetVertexBuffer ( u32 idx, MOAIVertexBuffer* vtxBuffer, MO
 
 	if ( this->AffirmVertexBuffers ( idx )) {
 		this->mVertexBuffers [ idx ].SetBufferAndFormat ( *this, vtxBuffer, vtxFormat );
-		this->mNeedsFlush = true;
+		this->ScheduleForGPUUpdate ();
 	}
 }
 

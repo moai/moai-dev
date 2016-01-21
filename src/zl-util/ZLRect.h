@@ -70,6 +70,15 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	void Clear () {
+	
+		this->mXMin = 0;
+		this->mYMin = 0;
+		this->mXMax = 0;
+		this->mYMax = 0;
+	}
+
+	//----------------------------------------------------------------//
 	void Clip ( ZLMetaRect < TYPE >& rect ) const {
 
 		// Clamp XMin
@@ -549,6 +558,12 @@ public:
 		this->mYMin += pad.mYMin;
 		this->mXMax += pad.mXMax;
 		this->mYMax += pad.mYMax;
+	}
+
+	//----------------------------------------------------------------//
+	void Init () {
+	
+		this->Clear ();
 	}
 
 	//----------------------------------------------------------------//

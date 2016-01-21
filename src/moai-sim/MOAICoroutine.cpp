@@ -148,7 +148,7 @@ int MOAICoroutine::_run ( lua_State* L ) {
 	
 	lua_xmove ( state, self->mState, self->mNarg + 1 );
 	
-	self->Start ( MOAISim::Get ().GetActionMgr (), defer );
+	self->Start ( 0, defer );
 
 	return 0;
 }
@@ -227,7 +227,7 @@ MOAICoroutine::MOAICoroutine () :
 	mNarg ( 0 ),
 	mIsUpdating ( false ),
 	mIsActive ( false ),
-	mIsDefaultParent ( true ) {
+	mIsDefaultParent ( false ) {
 
 	RTTI_SINGLE ( MOAIAction )
 	

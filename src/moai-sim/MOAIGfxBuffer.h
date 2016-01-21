@@ -29,8 +29,8 @@ public:
 */
 class MOAIGfxBuffer :
 	public MOAIGfxResource,
-	public MOAIStream,
-	public ZLByteStream {
+	public virtual MOAIStream,
+	public ZLCopyOnWrite {
 protected:
 	
 	friend class MOAIGfxDeviceBase;
@@ -42,27 +42,24 @@ protected:
 		UPDATE_MODE_SUBDATA,
 	};
 	
-	ZLLeanArray < u32 >		mVBOs;
-	u32						mCurrentVBO;
-	u32						mTarget;
-	bool					mNeedsFlush;
+	ZLLeanArray < ZLGfxHandle* >	mVBOs;
+	u32								mCurrentVBO;
+	u32								mTarget;
 
-	MOAIGfxBufferLoader*	mLoader;
-	void*					mData;
+	MOAIGfxBufferLoader*			mLoader;
 
-	bool					mUseVBOs;
+	bool							mUseVBOs;
+	bool							mCopyOnUpdate;
 
 	//----------------------------------------------------------------//
 	static int				_copyFromStream			( lua_State* L );
 	static int				_release				( lua_State* L );
 	static int				_reserve				( lua_State* L );
 	static int				_reserveVBOs			( lua_State* L );
-	static int				_reset					( lua_State* L );
 	static int				_scheduleFlush			( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void					BindVertexFormat		( MOAIVertexFormat* format );
-	u32						GetLoadingPolicy		();
+	//void					BindVertexFormat		( MOAIVertexFormat* format );
 	bool					OnCPUCreate				();
 	void					OnCPUDestroy			();
 	void					OnGPUBind				();
@@ -73,27 +70,25 @@ protected:
 
 public:
 	
-	GET ( const void*, Data, mData )
 	GET ( size_t, BufferCount, mVBOs.Size ())
 	GET ( u32, Target, mTarget )
+	GET_SET ( bool, CopyOnUpdate, mCopyOnUpdate )
 	
 	IS ( UsingVBOs, mUseVBOs, true )
 	
 	//----------------------------------------------------------------//
-	void					Clear					();
-	void					CopyFromStream			( ZLStream& stream );
-	const void*				GetAddress				();
-	size_t					GetSize					();
-							MOAIGfxBuffer			();
-							~MOAIGfxBuffer			();
-	bool					NeedsFlush				();
-	void					RegisterLuaClass		( MOAILuaState& state );
-	void					RegisterLuaFuncs		( MOAILuaState& state );
-	void					Reserve					( u32 size );
-	void					ReserveVBOs				( u32 gpuBuffers );
-	void					ScheduleFlush			();
-	void					SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
-	void					SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
+	void						Clear					();
+	void						CopyFromStream			( ZLStream& stream );
+	ZLSharedConstBuffer*		GetBuffer				();
+								MOAIGfxBuffer			();
+								~MOAIGfxBuffer			();
+	bool						OnGPUUpdate				();
+	void						RegisterLuaClass		( MOAILuaState& state );
+	void						RegisterLuaFuncs		( MOAILuaState& state );
+	void						Reserve					( u32 size );
+	void						ReserveVBOs				( u32 gpuBuffers );
+	void						SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void						SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

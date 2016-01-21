@@ -35,13 +35,12 @@ class MOAIVertexArray :
 	public MOAIGfxResource {
 protected:
 
-	ZLLeanArray < u32 >						mVAOs; // vertex array objects to bind all the vertex and buffer state
+	ZLLeanArray < ZLGfxHandle* >			mVAOs; // vertex array objects to bind all the vertex and buffer state
 	u32										mCurrentVAO;
 
 	ZLLeanArray < MOAIVertexArrayItem >		mVertexBuffers;
 
 	bool				mUseVAOs;
-	bool				mNeedsFlush;
 
 	//----------------------------------------------------------------//
 	static int			_reserveVAOs				( lua_State* L );
@@ -58,6 +57,7 @@ protected:
 	void				OnGPUDestroy				(); // schedule GPU-side resource for destruction
 	void				OnGPULost					(); // clear any handles or references to GPU-side (called by 'Abandon')
 	void				OnGPUUnbind					(); // unbind GPU-side resource
+	bool				OnGPUUpdate					();
 	void				UnbindVertexArrayItems		();
 
 public:

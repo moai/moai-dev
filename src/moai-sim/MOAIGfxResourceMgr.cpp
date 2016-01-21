@@ -3,43 +3,9 @@
 
 #include "pch.h"
 
+#include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
-
-//================================================================//
-// MOAIGfxDeleter
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAIGfxDeleter::Delete () {
-
-	switch ( this->mType ) {
-		
-		case DELETE_BUFFER:
-			zglDeleteBuffer ( this->mResourceID );
-			break;
-		
-		case DELETE_FRAMEBUFFER:
-			zglDeleteFramebuffer ( this->mResourceID );
-			break;
-		
-		case DELETE_PROGRAM:
-			zglDeleteProgram ( this->mResourceID );
-			break;
-		
-		case DELETE_SHADER:
-			zglDeleteShader ( this->mResourceID );
-			break;
-		
-		case DELETE_TEXTURE:
-			zglDeleteTexture ( this->mResourceID );
-			break;
-		
-		case DELETE_RENDERBUFFER:
-			zglDeleteRenderbuffer ( this->mResourceID );
-			break;
-	}
-}
 
 //================================================================//
 // lua
@@ -58,9 +24,11 @@ int MOAIGfxResourceMgr::_purgeResources ( lua_State* L ) {
 
 	u32 age = state.GetValue < u32 >( 1, 0 );
 
-	zglBegin ();
+	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+
+	ZLGfxDevice::Begin ();
 	MOAIGfxResourceMgr::Get ().PurgeResources ( age );
-	zglEnd ();
+	ZLGfxDevice::End ();
 	
 	return 0;
 }
@@ -74,19 +42,12 @@ int MOAIGfxResourceMgr::_purgeResources ( lua_State* L ) {
 int MOAIGfxResourceMgr::_renewResources ( lua_State* L ) {
 	MOAILuaState state ( L );
 
-	zglBegin ();
+	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+
+	ZLGfxDevice::Begin ();
 	MOAIGfxResourceMgr::Get ().RenewResources ();
-	zglEnd ();
+	ZLGfxDevice::End ();
 	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIGfxResourceMgr::_setResourceLoadingPolicy ( lua_State* L ) {
-	MOAILuaState state ( L );
-
-	MOAIGfxResourceMgr::Get ().mResourceLoadingPolicy = state.GetValue < u32 >( 1, MOAIGfxResource::DEFAULT_LOADING_POLICY );
 	return 0;
 }
 
@@ -97,18 +58,58 @@ int MOAIGfxResourceMgr::_setResourceLoadingPolicy ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIGfxResourceMgr::InsertGfxResource ( MOAIGfxResource& resource ) {
 
-	this->mResources.PushBack ( resource.mLink );
+	this->mResources.PushBack ( resource.mMasterLink );
 }
 
 //----------------------------------------------------------------//
-MOAIGfxResourceMgr::MOAIGfxResourceMgr () :
-	mResourceLoadingPolicy ( MOAIGfxResource::DEFAULT_LOADING_POLICY ) {
+MOAIGfxResourceMgr::MOAIGfxResourceMgr () {
 	
 	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
 MOAIGfxResourceMgr::~MOAIGfxResourceMgr () {
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxResourceMgr::ProcessDeleters () {
+
+	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+
+	ZLGfxDevice::Begin ();
+	
+	u32 top = this->mDeleterStack.GetTop ();
+	
+	if ( top ) {
+		gfx.Flush ();
+	}
+	
+	for ( u32 i = 0; i < top; ++i ) {
+		ZLGfxHandle* handle = this->mDeleterStack [ i ];
+		gfx.DeleteHandle ( handle );
+	}
+	this->mDeleterStack.Reset ();
+	
+	if ( top ) {
+		gfx.Flush ();
+	}
+	
+	ZLGfxDevice::End ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxResourceMgr::ProcessPending ( ZLLeanList < MOAIGfxResource* > &list ) {
+	
+	this->ProcessDeleters ();
+	
+	ResourceIt resourceIt = list.Head ();
+	while ( resourceIt ) {
+		MOAIGfxResource* resource = resourceIt->Data ();
+		resourceIt = resourceIt->Next ();
+	
+		resource->Affirm ();
+	}
+	list.Clear ();
 }
 
 //----------------------------------------------------------------//
@@ -121,30 +122,19 @@ void MOAIGfxResourceMgr::PurgeResources ( u32 age ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceMgr::PushDeleter ( u32 type, u32 id ) {
+void MOAIGfxResourceMgr::PushDeleter ( ZLGfxHandle* handle ) {
 
-	if ( id ) {
-	
-		MOAIGfxDeleter deleter;
-		deleter.mType = type;
-		deleter.mResourceID = id;
-		
-		this->mDeleterStack.Push ( deleter );
+	if ( handle ) {
+		this->mDeleterStack.Push ( handle );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxResourceMgr::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "LOADING_POLICY_CPU_GPU_ASAP",			( u32 )MOAIGfxResource::LOADING_POLICY_CPU_GPU_ASAP );
-	state.SetField ( -1, "LOADING_POLICY_CPU_ASAP_GPU_NEXT",	( u32 )MOAIGfxResource::LOADING_POLICY_CPU_ASAP_GPU_NEXT );
-	state.SetField ( -1, "LOADING_POLICY_CPU_ASAP_GPU_BIND",	( u32 )MOAIGfxResource::LOADING_POLICY_CPU_ASAP_GPU_BIND );
-	state.SetField ( -1, "LOADING_POLICY_CPU_GPU_BIND",			( u32 )MOAIGfxResource::LOADING_POLICY_CPU_GPU_BIND );
-
 	luaL_Reg regTable [] = {
 		{ "purgeResources",				_purgeResources },
 		{ "renewResources",				_renewResources },
-		{ "setResourceLoadingPolicy",	_setResourceLoadingPolicy },
 		{ NULL, NULL }
 	};
 
@@ -154,8 +144,9 @@ void MOAIGfxResourceMgr::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGfxResourceMgr::RemoveGfxResource ( MOAIGfxResource& resource ) {
 
-	this->mResources.Remove ( resource.mLink );
-	this->mPending.Remove ( resource.mLink );
+	this->mResources.Remove ( resource.mMasterLink );
+	this->mPendingForLoadList.Remove ( resource.mPendingLink );
+	this->mPendingForDrawList.Remove ( resource.mPendingLink );
 }
 
 //----------------------------------------------------------------//
@@ -171,40 +162,51 @@ void MOAIGfxResourceMgr::RenewResources () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceMgr::ScheduleGPUAffirm ( MOAIGfxResource& resource ) {
+void MOAIGfxResourceMgr::ScheduleGPUAffirm ( MOAIGfxResource& resource, u32 listID ) {
 
-	this->mPending.PushBack ( resource.mLink );
+	switch ( listID ) {
+
+		case MOAIGfxDevice::LOADING_PIPELINE:
+			this->mPendingForLoadList.PushBack ( resource.mPendingLink );
+			break;
+		
+		case MOAIGfxDevice::DRAWING_PIPELINE:
+			this->mPendingForDrawList.PushBack ( resource.mPendingLink );
+			break;
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxResourceMgr::Update () {
 
-	zglBegin ();
+	ZLGfxDevice::Begin ();
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+
+	if ( this->mDeleterStack.GetTop () || this->mPendingForLoadList.Count ()) {
 	
-	u32 top = this->mDeleterStack.GetTop ();
-	
-	if ( top ) {
-		zglFlush ();
+		ZLGfx& gfxLoading = gfxDevice.SelectDrawingAPI ( MOAIGfxDevice::LOADING_PIPELINE, true );
+		
+		ZGL_COMMENT ( gfxLoading, "RESOURCE MGR LOADING PIPELINE UPDATE" );
+		gfxDevice.ResetState ();
+		this->ProcessDeleters ();
+		this->ProcessPending ( this->mPendingForLoadList );
+		gfxDevice.UnbindAll ();
 	}
 	
-	for ( u32 i = 0; i < top; ++i ) {
-		MOAIGfxDeleter& deleter = this->mDeleterStack [ i ];
-		deleter.Delete ();
+	if ( this->mPendingForDrawList.Count ()) {
+	
+		ZLGfx& gfxDrawing = gfxDevice.SelectDrawingAPI ( MOAIGfxDevice::DRAWING_PIPELINE, true );
+		
+		ZGL_COMMENT ( gfxDrawing, "RESOURCE MGR DRAWING PIPELINE UPDATE" );
+		gfxDevice.ResetState ();
+		this->ProcessPending ( this->mPendingForDrawList );
+		gfxDevice.UnbindAll ();
 	}
-	this->mDeleterStack.Reset ();
+
+	// TODO: think about cases where we can get async results back on the
+	// same display list so we can remove the one-frame lag when creating resources
+	// in retained mode.
 	
-	if ( top ) {
-		zglFlush ();
-	}
-	
-	ResourceIt resourceIt = this->mPending.Head ();
-	while ( resourceIt ) {
-		MOAIGfxResource* resource = resourceIt->Data ();
-		resourceIt = resourceIt->Next ();
-	
-		resource->DoGPUAffirm ();
-		this->mResources.PushBack ( resource->mLink );
-	}
-	
-	zglEnd ();
+	ZLGfxDevice::End ();
 }

@@ -156,7 +156,7 @@ void MOAIIndexBuffer::CopyFromStream ( ZLStream& stream, u32 srcInputSizeInBytes
 			this->Write < u16 >(( u16 )idx );
 		}
 	}
-	this->mNeedsFlush = true;
+	this->ScheduleForGPUUpdate ();
 }
 
 //----------------------------------------------------------------//

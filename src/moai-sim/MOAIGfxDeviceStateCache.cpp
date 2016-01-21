@@ -24,7 +24,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceStateCache::BindFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
+bool MOAIGfxDeviceStateCache::BindFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 
 	frameBuffer = frameBuffer ? frameBuffer : this->GetDefaultFrameBuffer ();
 
@@ -32,13 +32,15 @@ void MOAIGfxDeviceStateCache::BindFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 		
 		this->OnGfxStateWillChange ();
 		
-		zglBindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, frameBuffer->mGLFrameBufferID );
+		this->mDrawingAPI->BindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, frameBuffer->mGLFrameBufferID );
 		this->mCurrentFrameBuffer = frameBuffer;
 	}
+	
+	return true;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceStateCache::BindIndexBuffer ( MOAIIndexBuffer* buffer ) {
+bool MOAIGfxDeviceStateCache::BindIndexBuffer ( MOAIIndexBuffer* buffer ) {
 
 	if ( this->mCurrentIdxBuffer != buffer ) {
 	
@@ -52,14 +54,117 @@ void MOAIGfxDeviceStateCache::BindIndexBuffer ( MOAIIndexBuffer* buffer ) {
 			buffer->Bind ();
 		}
 	}
-	else if ( this->mCurrentIdxBuffer && this->mCurrentIdxBuffer->NeedsFlush ()) {
-		
-		this->mCurrentIdxBuffer->Bind ();
-	}
+	
+	return buffer ? buffer->IsReady () : true;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceStateCache::BindVertexArray ( MOAIVertexArray* vtxArray ) {
+bool MOAIGfxDeviceStateCache::BindShader ( MOAIShader* shader ) {
+
+	if ( shader ) {
+		if ( !this->BindShader ( shader->GetProgram ())) return false;
+		shader->BindUniforms ();
+		return true;
+	}
+	return this->BindShader (( MOAIShaderProgram* )0 );
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxDeviceStateCache::BindShader ( u32 preset ) {
+
+	return MOAIShaderMgr::Get ().BindShader ( preset );
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxDeviceStateCache::BindShader ( MOAIShaderProgram* program ) {
+
+	if ( this->mShaderProgram != program ) {
+	
+		this->OnGfxStateWillChange ();
+		
+		if ( this->mShaderProgram ) {
+			this->mShaderProgram->Unbind ();
+		}
+		
+		this->mShaderProgram = program;
+		
+		if ( program ) {
+			program->Bind ();
+		}
+	}
+	this->mShaderDirty = true;
+	
+	return this->mShaderProgram ? this->mShaderProgram->IsReady () : true;
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxDeviceStateCache::BindTexture ( MOAITextureBase* textureSet ) {
+
+	bool result = true;
+
+	if ( this->mCurrentTexture != textureSet ) {
+
+		this->OnGfxStateWillChange ();
+
+		this->mCurrentTexture = textureSet;
+
+		u32 unitsEnabled = 0;
+
+		if ( textureSet ) {
+
+			unitsEnabled = textureSet->CountActiveUnits ();
+			
+			// bind or unbind textues depending on state of texture set
+			for ( u32 i = 0; i < unitsEnabled; ++i ) {
+				if ( !this->BindTexture ( i, textureSet->GetTextureForUnit ( i ))) {
+					result = false;
+				}
+			}
+		}
+		
+		// unbind/disable any excess textures
+		for ( u32 i = unitsEnabled; i < this->mActiveTextures; ++i ) {
+			this->BindTexture ( i, 0 );
+		}
+		
+		this->mActiveTextures = unitsEnabled;
+	}
+	
+	return result;
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxDeviceStateCache::BindTexture ( u32 textureUnit, MOAISingleTexture* texture ) {
+	
+	MOAISingleTexture* currentTexture = this->mTextureUnits [ textureUnit ];
+	MOAISingleTexture* bindTexture = texture;
+	
+	if ( texture && ( !texture->IsReady ())) {
+		bindTexture = this->GetDefaultTexture ();
+	}
+	
+	if ( currentTexture != bindTexture ) {
+		
+		this->OnGfxStateWillChange ();
+		
+		this->mDrawingAPI->ActiveTexture ( textureUnit );
+		
+		if ( currentTexture ) {
+			currentTexture->Unbind ();
+		}
+		
+		this->mTextureUnits [ textureUnit ] = bindTexture;
+		
+		if ( bindTexture ) {
+			bindTexture->Bind ();
+		}
+	}
+	
+	return texture ? ( bindTexture && bindTexture->IsReady ()) : true;
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxDeviceStateCache::BindVertexArray ( MOAIVertexArray* vtxArray ) {
 
 	if ( this->mCurrentVtxArray != vtxArray ) {
 	
@@ -74,10 +179,12 @@ void MOAIGfxDeviceStateCache::BindVertexArray ( MOAIVertexArray* vtxArray ) {
 			vtxArray->Bind ();
 		}
 	}
+	
+	return vtxArray ? vtxArray->IsReady () : true;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceStateCache::BindVertexBuffer ( MOAIVertexBuffer* buffer ) {
+bool MOAIGfxDeviceStateCache::BindVertexBuffer ( MOAIVertexBuffer* buffer ) {
 
 	if ( this->mCurrentVtxBuffer != buffer ) {
 	
@@ -94,15 +201,12 @@ void MOAIGfxDeviceStateCache::BindVertexBuffer ( MOAIVertexBuffer* buffer ) {
 			buffer->Bind ();
 		}
 	}
-	else if ( this->mCurrentVtxBuffer && this->mCurrentVtxBuffer->NeedsFlush ()) {
-		
-		this->mCurrentVtxBuffer->Bind ();
-		this->mCurrentVtxFormat = 0;
-	}
+	
+	return buffer ? buffer->IsReady () : true;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceStateCache::BindVertexFormat ( MOAIVertexFormat* format ) {
+bool MOAIGfxDeviceStateCache::BindVertexFormat ( MOAIVertexFormat* format, bool copyBuffer ) {
 
 	if ( this->mCurrentVtxFormat != format ) {
 	
@@ -118,9 +222,11 @@ void MOAIGfxDeviceStateCache::BindVertexFormat ( MOAIVertexFormat* format ) {
 		
 			assert ( this->mCurrentVtxBuffer ); // must currently have a valid vertex buffer bound (to receive the vertex format)
 		
-			format->Bind ( this->mCurrentVtxBuffer->GetAddress ());
+			format->Bind ( this->mCurrentVtxBuffer->GetBuffer (), copyBuffer );
 		}
 	}
+	
+	return true;
 }
 
 //----------------------------------------------------------------//
@@ -151,7 +257,7 @@ void MOAIGfxDeviceStateCache::SetBlendMode () {
 	
 		this->OnGfxStateWillChange ();
 		
-		zglDisable ( ZGL_PIPELINE_BLEND );
+		this->mDrawingAPI->Disable ( ZGL_PIPELINE_BLEND );
 		this->mBlendEnabled = false;
 	}
 }
@@ -163,11 +269,11 @@ void MOAIGfxDeviceStateCache::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 	
 		this->OnGfxStateWillChange ();
 		
-		zglEnable ( ZGL_PIPELINE_BLEND );
+		this->mDrawingAPI->Enable ( ZGL_PIPELINE_BLEND );
 		
 		this->mBlendMode = blendMode;
-		zglBlendMode ( this->mBlendMode.mEquation );
-		zglBlendFunc ( this->mBlendMode.mSourceFactor, this->mBlendMode.mDestFactor );
+		this->mDrawingAPI->BlendMode ( this->mBlendMode.mEquation );
+		this->mDrawingAPI->BlendFunc ( this->mBlendMode.mSourceFactor, this->mBlendMode.mDestFactor );
 		this->mBlendEnabled = true;
 	}
 	else if ( !this->mBlendMode.IsSame ( blendMode )) {
@@ -175,8 +281,8 @@ void MOAIGfxDeviceStateCache::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 		this->OnGfxStateWillChange ();
 		
 		this->mBlendMode = blendMode;
-		zglBlendMode ( this->mBlendMode.mEquation );
-		zglBlendFunc ( this->mBlendMode.mSourceFactor, this->mBlendMode.mDestFactor );
+		this->mDrawingAPI->BlendMode ( this->mBlendMode.mEquation );
+		this->mDrawingAPI->BlendFunc ( this->mBlendMode.mSourceFactor, this->mBlendMode.mDestFactor );
 	}
 }
 
@@ -206,11 +312,11 @@ void MOAIGfxDeviceStateCache::SetCullFunc ( int cullFunc ) {
 		this->mCullFunc = cullFunc;
 	
 		if ( cullFunc ) {
-			zglEnable ( ZGL_PIPELINE_CULL );
-			zglCullFace ( this->mCullFunc );
+			this->mDrawingAPI->Enable ( ZGL_PIPELINE_CULL );
+			this->mDrawingAPI->CullFace ( this->mCullFunc );
 		}
 		else {
-			zglDisable ( ZGL_PIPELINE_CULL );
+			this->mDrawingAPI->Disable ( ZGL_PIPELINE_CULL );
 		}
 	}
 }
@@ -231,11 +337,11 @@ void MOAIGfxDeviceStateCache::SetDepthFunc ( int depthFunc ) {
 		this->mDepthFunc = depthFunc;
 	
 		if ( depthFunc ) {
-			zglEnable ( ZGL_PIPELINE_DEPTH );
-			zglDepthFunc ( this->mDepthFunc );
+			this->mDrawingAPI->Enable ( ZGL_PIPELINE_DEPTH );
+			this->mDrawingAPI->DepthFunc ( this->mDepthFunc );
 		}
 		else {
-			zglDisable ( ZGL_PIPELINE_DEPTH );
+			this->mDrawingAPI->Disable ( ZGL_PIPELINE_DEPTH );
 		}
 	}
 }
@@ -248,7 +354,7 @@ void MOAIGfxDeviceStateCache::SetDepthMask ( bool depthMask ) {
 		this->OnGfxStateWillChange ();
 
 		this->mDepthMask = depthMask;
-		zglDepthMask ( this->mDepthMask );
+		this->mDrawingAPI->DepthMask ( this->mDepthMask );
 	}
 }
 
@@ -258,7 +364,7 @@ void MOAIGfxDeviceStateCache::SetPenWidth ( float penWidth ) {
 	if ( this->mPenWidth != penWidth ) {
 		this->OnGfxStateWillChange ();
 		this->mPenWidth = penWidth;
-		zglLineWidth ( penWidth );
+		this->mDrawingAPI->LineWidth ( penWidth );
 	}
 }
 
@@ -266,7 +372,7 @@ void MOAIGfxDeviceStateCache::SetPenWidth ( float penWidth ) {
 void MOAIGfxDeviceStateCache::SetScissorRect () {
 
 	this->SetScissorRect ( this->mCurrentFrameBuffer->GetBufferRect ());
-	zglDisable ( ZGL_PIPELINE_SCISSOR );
+	this->mDrawingAPI->Disable ( ZGL_PIPELINE_SCISSOR );
 }
 
 //----------------------------------------------------------------//
@@ -295,100 +401,25 @@ void MOAIGfxDeviceStateCache::SetScissorRect ( ZLRect rect ) {
 		w = h == 0 ? 0 : w;
 		h = w == 0 ? 0 : h;
 		
-		zglScissor ( x, y, w, h );
+		this->mDrawingAPI->Scissor ( x, y, w, h );
 		this->mScissorRect = rect;
 	
-		zglEnable ( ZGL_PIPELINE_SCISSOR );
+		this->mDrawingAPI->Enable ( ZGL_PIPELINE_SCISSOR );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceStateCache::SetShader ( MOAIShader* shader ) {
+void MOAIGfxDeviceStateCache::UnbindAll () {
 
-	if ( shader ) {
-		this->SetShader ( shader->GetProgram ());
-		shader->BindUniforms ();
-	}
-	else {
-		this->SetShader (( MOAIShaderProgram* )0 );
-	}	
-}
+	this->mDrawingAPI->Comment ( "GFX UNBIND ALL" );
 
-//----------------------------------------------------------------//
-void MOAIGfxDeviceStateCache::SetShader ( u32 preset ) {
-
-	MOAIShaderMgr::Get ().BindShader ( preset );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDeviceStateCache::SetShader ( MOAIShaderProgram* program ) {
-
-	if ( this->mShaderProgram != program ) {
+	this->BindFrameBuffer ();
+	this->BindIndexBuffer ();
+	this->BindShader ();
+	this->BindTexture ();
+	this->BindVertexArray ();
+	this->BindVertexBuffer ();
+	this->BindVertexFormat ();
 	
-		this->OnGfxStateWillChange ();
-		this->mShaderProgram = program;
-		
-		if ( program ) {
-			program->Bind ();
-		}
-		else {
-			program->Unbind ();
-		}
-	}
-	this->mShaderDirty = true;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDeviceStateCache::SetTexture ( MOAITextureBase* textureSet ) {
-
-	if ( this->mCurrentTexture != textureSet ) {
-
-		this->mCurrentTexture = textureSet;
-
-		u32 unitsEnabled = 0;
-
-		if ( textureSet ) {
-
-			unitsEnabled = textureSet->CountActiveUnits ();
-			
-			// bind of unbind textues depending on state of texture set
-			for ( u32 i = 0; i < unitsEnabled; ++i ) {
-				this->SetTexture ( i, textureSet->GetTextureForUnit ( i ));
-			}
-		}
-		
-		// unbind/disable any excess textures
-		for ( u32 i = unitsEnabled; i < this->mActiveTextures; ++i ) {
-			this->SetTexture ( i, 0 );
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDeviceStateCache::SetTexture ( u32 textureUnit, MOAISingleTexture* texture ) {
-	
-	MOAISingleTexture* currentTexture = this->mTextureUnits [ textureUnit ];
-	
-	if ( currentTexture != texture ) {
-	
-		this->OnGfxStateWillChange ();
-	
-		zglActiveTexture ( textureUnit );
-	
-		if ( currentTexture && ( !texture )) {
-			currentTexture->Unbind ();
-		}
-		
-		this->mTextureUnits [ textureUnit ] = texture;
-		
-		if ( texture ) {
-			if ( !texture->Bind ()) {
-			
-				MOAITexture* defaultTexture = this->GetDefaultTexture ();
-				if ( texture != defaultTexture ) {
-					this->SetTexture ( textureUnit, defaultTexture );
-				}
-			}
-		}
-	}
+	ZGL_COMMENT ( *this->mDrawingAPI, "" );
 }

@@ -161,7 +161,7 @@ void MOAITexture::Init ( MOAIImage& image, cc8* debugname, bool autoClear ) {
 		this->mAutoClearImage = autoClear;
 		this->mDebugName = debugname;
 		this->FinishInit ();
-		this->DoCPUAffirm (); // If you do not calculated here, it is impossible to get the texture size.
+		this->DoCPUCreate (); // If you do not calculate here, it is impossible to get the texture size.
 	}
 }
 
@@ -179,7 +179,7 @@ void MOAITexture::Init ( MOAIImage& image, int srcX, int srcY, int width, int he
 		this->mImage->Blit ( image, srcX, srcY, 0, 0, width, height );
 		this->mDebugName = debugname;
 		this->FinishInit ();
-		this->DoCPUAffirm (); // If you do not calculated here, it is impossible to get the texture size.
+		this->DoCPUCreate (); // If you do not calculate here, it is impossible to get the texture size.
 	}
 }
 
@@ -199,7 +199,7 @@ void MOAITexture::Init ( cc8* filename, u32 transform, cc8* debugname ) {
 		}		
 		this->mTransform = transform;
 		this->FinishInit ();
-		this->DoCPUAffirm (); // If you do not calculated here, it is impossible to get the texture size.
+		this->DoCPUCreate (); // If you do not calculate here, it is impossible to get the texture size.
 	}
 }
 
@@ -213,7 +213,7 @@ void MOAITexture::Init ( ZLStream& stream, u32 transform, cc8* debugname ) {
 	if ( this->mTextureData || ( this->mImage && this->mImage->IsOK ())) {
 		this->mDebugName = debugname;
 		this->FinishInit ();
-		this->DoCPUAffirm (); // If you do not calculated here, it is impossible to get the texture size.
+		this->DoCPUCreate (); // If you do not calculate here, it is impossible to get the texture size.
 	}
 }
 
@@ -355,10 +355,13 @@ bool MOAITexture::OnGPUCreate () {
 	else if ( this->mTextureDataFormat && this->mTextureData ) {
 		success = this->mTextureDataFormat->CreateTexture ( *this, this->mTextureData, this->mTextureDataSize );
 	}
-	if ( success ) return true;
 	
-	this->Clear ();
-	return false;
+	if ( !success ) {
+		this->Clear ();
+		return false;
+	}
+	
+	return this->OnGPUUpdate ();
 }
 
 //----------------------------------------------------------------//

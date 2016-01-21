@@ -95,10 +95,10 @@
 #ifdef CARES_PULL_SYS_SOCKET_H
 #  include <sys/socket.h>
 #endif
-
 /* The size of `long', as computed by sizeof. */
-#define CARES_SIZEOF_LONG 4
+#define CARES_SIZEOF_LONG sizeof(long)
 
+   
 /* Integral data type used for ares_socklen_t. */
 #define CARES_TYPEOF_ARES_SOCKLEN_T socklen_t
 

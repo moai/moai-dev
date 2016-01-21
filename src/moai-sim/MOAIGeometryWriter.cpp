@@ -70,7 +70,7 @@ public:
 	@overload
 	
 		@in		MOAIVertexFormat format
-		@in		MOAIStream stream
+		@in		MOAIStream vtxStream
 		@in		ZLColorVec color
 		@in		MOAIRegion region
 		@opt	number pad
@@ -560,7 +560,7 @@ MOAIMesh* MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream
 	mesh->SetTotalElements ( totalElements );
 	
 	ZLBox bounds;
-	format.ComputeBounds ( bounds, vtxBuffer->GetReadBuffer (), vtxBuffer->GetSize ());
+	format.ComputeBounds ( bounds, vtxBuffer->GetBuffer ()->GetConstData (), vtxBuffer->GetSize ());
 	
 	mesh->SetBounds ( bounds );
 	

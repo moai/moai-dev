@@ -4,19 +4,17 @@
 #ifndef	MOAIPARTICLEPEXPLUGIN_H
 #define	MOAIPARTICLEPEXPLUGIN_H
 
+#if MOAI_WITH_TINYXML
+
 #include <moai-sim/host_particles.h>
 #include <moai-sim/MOAIParticlePlugin.h>
 #include <moai-sim/MOAIParticleScript.h>
-
-#if MOAI_WITH_TINYXML
-  #include <tinyxml.h>
-#endif
 
 //================================================================//
 // MOAIParticlePexPlugin
 //================================================================//
 /**	@lua	MOAIParticlePexPlugin
-	@text	Allows custom particle processing  derived from .pex file via C language callback.
+	@text	Allows custom particle processing derived from .pex file via C language callback.
 */
 class MOAIParticlePexPlugin :
 	public virtual MOAIParticlePlugin {
@@ -27,90 +25,92 @@ private:
 		EMITTER_RADIAL,
 	};
 
-	u32 mNumParticles;
-	EmitterType mEmitterType;
+	u32				mNumParticles;
+	EmitterType		mEmitterType;
 	
-	float mLifespan;
-	float mLifespanVariance;
-	float mLifespanTerm[2];
+	float	mLifespan;
+	float	mLifespanVariance;
+	float	mLifespanTerm [ 2 ];
 
-	s32  mLifespanRegister;
+	s32		mLifespanRegister;
 
-	float mAngle;
-	float mAngleVariance;
-	s32 mAngleRegister;
+	float	mAngle;
+	float	mAngleVariance;
+	s32		mAngleRegister;
 
-	float mStartColor[4];
-	float mStartColorVariance[4];
-	int mStartColorRegister[4];
+	float	mStartColor [ 4 ];
+	float	mStartColorVariance [ 4 ];
+	int		mStartColorRegister [ 4 ];
 	
-	float mFinishColor[4];
-	float mFinishColorVariance[4];
-	s32 mFinishColorRegister[4];
+	float	mFinishColor [ 4 ];
+	float	mFinishColorVariance [ 4 ];
+	s32		mFinishColorRegister [ 4 ];
 
-	float mStartSize;
-	float mStartSizeVariance;
-	s32	  mStartSizeRegister;
+	float	mStartSize;
+	float	mStartSizeVariance;
+	s32		mStartSizeRegister;
 	
-	float mFinishSize;
-	float mFinishSizeVariance;
-	s32	  mFinishSizeRegister;
+	float	mFinishSize;
+	float	mFinishSizeVariance;
+	s32		mFinishSizeRegister;
 	
-	float mGravity[2];
+	float	mGravity [ 2 ];
 	
-	float mMaxRadius;
-	float mMaxRadiusVariance;
-	s32	  mMaxRadiusRegister;
+	float	mMaxRadius;
+	float	mMaxRadiusVariance;
+	s32		mMaxRadiusRegister;
 	
-	float mMinRadius;
+	float	mMinRadius;
 	
-	float mRadialAcceleration;
-	float mRadialAccelVariance;
-	s32	  mRadialAccelRegister;
+	float	mRadialAcceleration;
+	float	mRadialAccelVariance;
+	s32		mRadialAccelRegister;
 	
-	float mTanAccel;
-	float mTanAccelVariance;
-	s32   mTanAccelRegister;
+	float	mTanAccel;
+	float	mTanAccelVariance;
+	s32		mTanAccelRegister;
 	
-	float mRotStart;
-	float mRotStartVariance;
-	s32	  mRotStartRegister;
+	float	mRotStart;
+	float	mRotStartVariance;
+	s32		mRotStartRegister;
 	
-	float mRotEnd;
-	float mRotEndVariance;
-	s32	  mRotEndRegister;
+	float	mRotEnd;
+	float	mRotEndVariance;
+	s32		mRotEndRegister;
 	
-	float mSpeed;
-	float mSpeedVariance;
-	s32	  mSpeedRegister;
+	float	mSpeed;
+	float	mSpeedVariance;
+	s32		mSpeedRegister;
 	
-	float mRotPerSecond;
-	float mRotPerSecondVariance;
+	float	mRotPerSecond;
+	float	mRotPerSecondVariance;
 	
-	float mSourcePos[2];
-	float mSourcePosVariance[2];
+	float	mSourcePos [ 2 ];
+	float	mSourcePosVariance [ 2 ];
 	
-	float mDuration;
+	float	mDuration;
 
-	u32 mBlendFuncSrc;
-	u32	mBlendFuncDst;
+	u32		mBlendFuncSrc;
+	u32		mBlendFuncDst;
 
-	STLString mTextureName;
-	STLString mParticlePath;
+	STLString	mTextureName;
+	STLString	mParticlePath;
 
 	// Gravity Registers
-	s32 mStartXRegister;
-	s32 mStartYRegister;
-	s32 mDirectionXRegister;
-	s32 mDirectionYRegister;
+	s32		mStartXRegister;
+	s32		mStartYRegister;
+	s32		mDirectionXRegister;
+	s32		mDirectionYRegister;
 
 	// Radial Registers
-	s32 mRotPerSecondRegister;
-	s32 mRadialRegister;
+	s32		mRotPerSecondRegister;
+	s32		mRadialRegister;
 
 	// Emission information.
-	u32 mEmissionCount;
-	float mEmissionRate;
+	u32		mEmissionCount;
+	float	mEmissionRate;
+	
+	//MOAILuaSharedPtr < MOAIImage > mImage;
 	
 	//----------------------------------------------------------------//
 	static int		_getBlendMode		( lua_State* L );
@@ -123,9 +123,8 @@ private:
 	static int		_getTextureName		( lua_State* L );
 	static int		_load				( lua_State* L );
 
-#if MOAI_WITH_TINYXML
-	static void		Parse						( cc8* filename, MOAIParticlePexPlugin& plugin, TiXmlNode* node );
-#endif
+	
+	static void		Parse				( cc8* filename, MOAIParticlePexPlugin& plugin, TiXmlNode* node );
 	
 public:
 	
@@ -141,5 +140,6 @@ public:
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
 };
-	
+
+#endif
 #endif

@@ -123,15 +123,20 @@ void MOAIGfxDeviceVertexWriter::FlushBufferedPrims () {
 			
 			if ( count > 0 ) {
 				
-				this->mVtxBuffer.ScheduleFlush ();
-				this->mIdxBuffer.ScheduleFlush ();
+				this->mVtxBuffer.OnGPUUpdate ();
+				this->mIdxBuffer.OnGPUUpdate ();
+				
+				this->BindVertexFormat ();
 				
 				this->BindVertexBuffer ( &this->mVtxBuffer );
-				this->BindVertexFormat ( this->mVertexFormat );
+				this->BindVertexFormat ( this->mVertexFormat, true );
 				this->BindIndexBuffer ( &this->mIdxBuffer );
 				
 				this->UpdateShaderGlobals ();
-				zglDrawElements ( this->mPrimType, count, ZGL_TYPE_UNSIGNED_SHORT, this->mIdxBuffer.GetAddress ());
+
+				ZLSharedConstBuffer* buffer = this->mDrawingAPI->CopyBuffer ( this->mIdxBuffer.GetBuffer ());
+
+				this->mDrawingAPI->DrawElements ( this->mPrimType, count, ZGL_TYPE_UNSIGNED_SHORT, buffer, 0 );
 				this->mDrawCount++;
 			}
 		}
@@ -141,21 +146,27 @@ void MOAIGfxDeviceVertexWriter::FlushBufferedPrims () {
 			
 			if ( count > 0 ) {
 				
-				this->mVtxBuffer.ScheduleFlush ();
+				this->mVtxBuffer.OnGPUUpdate ();
+				
+				this->BindVertexFormat ();
 				
 				this->BindVertexBuffer ( &this->mVtxBuffer );
-				this->BindVertexFormat ( this->mVertexFormat );
+				this->BindVertexFormat ( this->mVertexFormat, true );
 				
 				this->UpdateShaderGlobals ();
-				zglDrawArrays ( this->mPrimType, 0, count );
+				this->mDrawingAPI->DrawArrays ( this->mPrimType, 0, count );
 				this->mDrawCount++;
 			}
 		}
 		
 		this->mIsDrawing = false;
 		
-		this->mVtxBuffer.Seek ( 0 );
-		this->mIdxBuffer.Seek ( 0 );
+		this->mVtxBuffer.SetLength ( 0 );
+		this->mIdxBuffer.SetLength ( 0 );
+	
+//		this->mPrimTopIdx		= 0;
+//		this->mPrimTopVtx		= 0;
+		this->mPrimCount		= 0;
 		
 		this->mPrimCount		= 0;
 		this->mTotalIndices		= 0;
@@ -184,6 +195,9 @@ MOAIGfxDeviceVertexWriter::MOAIGfxDeviceVertexWriter () :
 	
 	this->mVtxBuffer.Reserve ( DEFAULT_VERTEX_BUFFER_SIZE );
 	this->mIdxBuffer.Reserve ( DEFAULT_INDEX_BUFFER_SIZE );
+	
+	this->mVtxBuffer.SetCopyOnUpdate ( true );
+	this->mIdxBuffer.SetCopyOnUpdate ( true );
 }
 
 //----------------------------------------------------------------//
@@ -287,25 +301,27 @@ void MOAIGfxDeviceVertexWriter::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* u
 //	u32 base = this->mVtxBuffer.GetCursor () / this->mVertexSize;
 	this->BeginPrimIndexed ( ZGL_PRIM_TRIANGLES, 4, 6 );
 	
+		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
+	
 		// left top
-		this->mVtxBuffer.WriteUnsafe ( vtx [ 0 ]);
-		this->mVtxBuffer.WriteUnsafe ( uv [ 0 ]);
-		this->mVtxBuffer.WriteUnsafe < u32 >( this->mFinalColor32 );
+		this->mVtxBuffer.Write ( vtx [ 0 ]);
+		this->mVtxBuffer.Write ( uv [ 0 ]);
+		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
 	
 		// right top
-		this->mVtxBuffer.WriteUnsafe ( vtx [ 1 ]);
-		this->mVtxBuffer.WriteUnsafe ( uv [ 1 ]);
-		this->mVtxBuffer.WriteUnsafe < u32 >( this->mFinalColor32 );
+		this->mVtxBuffer.Write ( vtx [ 1 ]);
+		this->mVtxBuffer.Write ( uv [ 1 ]);
+		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
 	
 		// right bottom
-		this->mVtxBuffer.WriteUnsafe ( vtx[ 2 ]);
-		this->mVtxBuffer.WriteUnsafe ( uv [ 2 ]);
-		this->mVtxBuffer.WriteUnsafe < u32 >( this->mFinalColor32 );
+		this->mVtxBuffer.Write ( vtx[ 2 ]);
+		this->mVtxBuffer.Write ( uv [ 2 ]);
+		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
 	
 		// left bottom
-		this->mVtxBuffer.WriteUnsafe ( vtx [ 3 ]);
-		this->mVtxBuffer.WriteUnsafe ( uv [ 3 ]);
-		this->mVtxBuffer.WriteUnsafe < u32 >( this->mFinalColor32 );
+		this->mVtxBuffer.Write ( vtx [ 3 ]);
+		this->mVtxBuffer.Write ( uv [ 3 ]);
+		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
 
 		// indices
 		this->WriteIndex ( 0 ); // left top

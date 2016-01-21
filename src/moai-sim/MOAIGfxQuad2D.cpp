@@ -186,7 +186,7 @@ ZLBox MOAIGfxQuad2D::ComputeMaxBounds () {
 //----------------------------------------------------------------//
 void MOAIGfxQuad2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 	
-	materials.LoadGfxState ( this, idx, MOAIShaderMgr::DECK2D_SHADER );
+	if ( !materials.LoadGfxState ( this, idx, MOAIShaderMgr::DECK2D_SHADER )) return;
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIQuadBrush::BindVertexFormat ( gfxDevice );

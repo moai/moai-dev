@@ -65,7 +65,7 @@ public:
 	void Free ( TYPE* type ) {
 		
 		if ( type ) {
-			type->TYPE::~TYPE ();
+			type->~TYPE ();
 			this->mFree.Push ( type );
 		}
 	}

@@ -5,6 +5,7 @@
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIRenderable.h>
 #include <moai-sim/MOAIRenderMgr.h>
@@ -105,7 +106,7 @@ void MOAIClearableView::ClearSurface () {
 			clearColor.SetRGBA ( this->mClearColor );
 		}
 		
-		zglClearColor (
+		MOAIGfxDevice::GetDrawingAPI ().ClearColor (
 			clearColor.mR,
 			clearColor.mG,
 			clearColor.mB,
@@ -302,7 +303,8 @@ int MOAIFrameBuffer::_setRenderTable ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 void MOAIFrameBuffer::DetectGLFrameBufferID () {
-	this->mGLFrameBufferID = zglGetCurrentFramebuffer ();
+
+	this->mGLFrameBufferID = MOAIGfxDevice::GetDrawingAPI ().GetCurrentFramebuffer ();
 }
 
 //----------------------------------------------------------------//
@@ -326,28 +328,28 @@ void MOAIFrameBuffer::GrabImage ( MOAIImage* image ) {
 	// only if we need to convert. we should also implement/use a mirror operation inside of MOAIImage
 	// so we don't have to do it here.
 
-	unsigned char* buffer = ( unsigned char* ) malloc ( this->mBufferWidth * this->mBufferHeight * 4 );
-
-	zglReadPixels ( 0, 0, this->mBufferWidth, this->mBufferHeight, buffer );
-
-	//image is flipped vertically, flip it back
-	int index,indexInvert;
-	for ( u32 y = 0; y < ( this->mBufferHeight / 2 ); ++y ) {
-		for ( u32 x = 0; x < this->mBufferWidth; ++x ) {
-			for ( u32 i = 0; i < 4; ++i ) {
-
-				index = i + ( x * 4 ) + ( y * this->mBufferWidth * 4 );
-				indexInvert = i + ( x * 4 ) + (( this->mBufferHeight - 1 - y ) * this->mBufferWidth * 4 );
-
-				unsigned char temp = buffer [ indexInvert ];
-				buffer [ indexInvert ] = buffer [ index ];
-				buffer [ index ] = temp;
-			}
-		}
-	}
-
-	image->Init ( buffer, this->mBufferWidth, this->mBufferHeight, ZLColor::RGBA_8888 );
-	free ( buffer );
+//	unsigned char* buffer = ( unsigned char* ) malloc ( this->mBufferWidth * this->mBufferHeight * 4 );
+//
+//	zglReadPixels ( 0, 0, this->mBufferWidth, this->mBufferHeight, buffer );
+//
+//	//image is flipped vertically, flip it back
+//	int index,indexInvert;
+//	for ( u32 y = 0; y < ( this->mBufferHeight / 2 ); ++y ) {
+//		for ( u32 x = 0; x < this->mBufferWidth; ++x ) {
+//			for ( u32 i = 0; i < 4; ++i ) {
+//
+//				index = i + ( x * 4 ) + ( y * this->mBufferWidth * 4 );
+//				indexInvert = i + ( x * 4 ) + (( this->mBufferHeight - 1 - y ) * this->mBufferWidth * 4 );
+//
+//				unsigned char temp = buffer [ indexInvert ];
+//				buffer [ indexInvert ] = buffer [ index ];
+//				buffer [ index ] = temp;
+//			}
+//		}
+//	}
+//
+//	image->Init ( buffer, this->mBufferWidth, this->mBufferHeight, ZLColor::RGBA_8888 );
+//	free ( buffer );
 }
 
 //----------------------------------------------------------------//
@@ -369,7 +371,28 @@ MOAIFrameBuffer::MOAIFrameBuffer () :
 //----------------------------------------------------------------//
 MOAIFrameBuffer::~MOAIFrameBuffer () {
 
+	MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLFrameBufferID );
+	this->mGLFrameBufferID = 0;
 	this->mFrameImage.Set ( *this, 0 );
+}
+
+//----------------------------------------------------------------//
+void MOAIFrameBuffer::OnReadPixels ( const ZLCopyOnWrite& buffer ) {
+
+	MOAIImage* image = this->mFrameImage;
+	
+	if ( image ) {
+
+		image->Init ( buffer.GetBuffer (), this->mBufferWidth, this->mBufferHeight, ZLColor::RGBA_8888 );
+
+		if ( this->mOnFrameFinish ) {
+			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+			if ( this->mOnFrameFinish.PushRef ( state )) {
+				this->mFrameImage.PushRef ( state );
+				state.DebugCall ( 1, 0 );
+			}
+		}
+	}
 }
 
 //----------------------------------------------------------------//
@@ -419,16 +442,9 @@ void MOAIFrameBuffer::Render () {
 
 	if ( this->mGrabNextFrame ) {
 
-		this->GrabImage ( this->mFrameImage );
-		this->mGrabNextFrame = false;
-
-		if ( this->mOnFrameFinish ) {
-			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-			if ( this->mOnFrameFinish.PushRef ( state )) {
-				this->mFrameImage.PushRef ( state );
-				state.DebugCall ( 1, 0 );
-			}
-		}
+		ZLGfx& gfx = gfxDevice.GetDrawingAPI ();
+		gfx.ReadPixels ( 0, 0, this->mBufferWidth, this->mBufferHeight, ZGL_PIXEL_FORMAT_RGBA, ZGL_PIXEL_TYPE_UNSIGNED_BYTE, 4, this );
+		mGrabNextFrame = false;
 	}
 	
 	this->mRenderCounter++;
@@ -474,7 +490,7 @@ void MOAIFrameBuffer::SetBufferSize ( u32 width, u32 height ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBuffer::SetGLFrameBufferID ( u32 frameBufferID ){
+void MOAIFrameBuffer::SetGLFrameBufferID ( ZLGfxHandle* frameBufferID ){
   this->mGLFrameBufferID = frameBufferID;
 }
 

@@ -26,7 +26,7 @@ class MOAIGfxDeviceVertexWriter :
 	public MOAIGfxDeviceMtxCache {
 protected:
 	
-	// Stock OpenGL ES 2.0 have no support for u32 index size in glDrawElements.
+	// Stock OpenGL ES 2.0 has no support for u32 index size in glDrawElements.
 	// iOS and many Androids (PowerVR, adreno) support it with GL_OES_element_index_uint extension.
 	// We can check extension availability, but using u16 index is fine for the current buffer size (~1000 vertices).
 	static const size_t	INDEX_SIZE		= 2;
@@ -129,19 +129,22 @@ public:
 	//----------------------------------------------------------------//
 	inline void WriteFinalColor4b () {
 		
-		this->mVtxBuffer.WriteUnsafe < u32 >( this->mFinalColor32 );
+		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
+		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
 	}
 	
 	//----------------------------------------------------------------//
 	inline void WriteFinalColor4f () {
 		
-		this->mVtxBuffer.WriteUnsafe < ZLColorVec >( this->mFinalColor );
+		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
+		this->mVtxBuffer.Write < ZLColorVec >( this->mFinalColor );
 	}
 		
 	//----------------------------------------------------------------//
 	inline void WriteIndex ( u16 index ) {
 		
-		this->mIdxBuffer.WriteUnsafe < u16 >( this->mIndexBase + index );
+		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
+		this->mIdxBuffer.Write < u16 >( this->mIndexBase + index );
 	}
 	
 	//----------------------------------------------------------------//
@@ -154,7 +157,9 @@ public:
 		if ( this->mCpuUVTransform ) {
 			this->mUVTransform.Transform ( uv );
 		}
-		this->mVtxBuffer.WriteUnsafe < ZLVec2D >( uv );
+		
+		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
+		this->mVtxBuffer.Write < ZLVec2D >( uv );
 	}
 	
 	//----------------------------------------------------------------//
@@ -163,7 +168,9 @@ public:
 		if ( this->mCpuUVTransform ) {
 			this->mUVTransform.Transform ( uv );
 		}
-		this->mVtxBuffer.WriteUnsafe < ZLVec2D >( uv );
+		
+		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
+		this->mVtxBuffer.Write < ZLVec2D >( uv );
 	}
 	
 	//----------------------------------------------------------------//
@@ -190,7 +197,9 @@ public:
 		if ( this->mCpuVertexTransform ) {
 			this->mCpuVertexTransformMtx.Transform ( vtx );
 		}
-		this->mVtxBuffer.WriteUnsafe < ZLVec4D >( vtx );
+		
+		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
+		this->mVtxBuffer.Write < ZLVec4D >( vtx );
 	}
 	
 	//----------------------------------------------------------------//
@@ -214,7 +223,8 @@ public:
 		vtx.mZ = z;
 		vtx.mW = w;
 		
-		this->mVtxBuffer.WriteUnsafe < ZLVec4D >( vtx );
+		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
+		this->mVtxBuffer.Write < ZLVec4D >( vtx );
 	}
 };
 

@@ -5,8 +5,10 @@
 #define ZLMATRIX3X3_H
 
 #include <zl-util/ZLMatrix.h>
+#include <zl-util/ZLRect.h>
 #include <zl-util/ZLTrig.h>
 #include <zl-util/ZLVec2D.h>
+#include <zl-util/ZLVec3D.h>
 
 //================================================================//
 // ZLMetaMatrix3x3
@@ -477,3 +479,4 @@ public:
 typedef ZLMetaMatrix3x3 < float > ZLMatrix3x3;
 
 #endif
+

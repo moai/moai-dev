@@ -6,8 +6,11 @@
 #import "headers.h"
 
 #import <contrib/MOAIOpenUDID.h>
-#import <AdSupport/ASIdentifierManager.h>
 #import <moai-sim/MOAIGfxDevice.h>
+
+#if AKU_WITH_IFA
+	#import <AdSupport/ASIdentifierManager.h>
+#endif
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -64,13 +67,15 @@ void AKUIosContextInitialize () {
 		environment.SetValue ( MOAI_ENV_iosIFV, [[[[UIDevice currentDevice] identifierForVendor ] UUIDString ] UTF8String ]);
 	}
 	
-	Class identifierManagerClass = NSClassFromString ( @"ASIdentifierManager" );
-	if ( identifierManagerClass ) {
-		ASIdentifierManager* sharedManager = [ identifierManagerClass sharedManager ];
-		if ([ sharedManager isAdvertisingTrackingEnabled ]) {
-			environment.SetValue ( MOAI_ENV_iosIFA, [[[ sharedManager advertisingIdentifier ] UUIDString ] UTF8String ]);
+	#if AKU_WITH_IFA
+		Class identifierManagerClass = NSClassFromString ( @"ASIdentifierManager" );
+		if ( identifierManagerClass ) {
+			ASIdentifierManager* sharedManager = [ identifierManagerClass sharedManager ];
+			if ([ sharedManager isAdvertisingTrackingEnabled ]) {
+				environment.SetValue ( MOAI_ENV_iosIFA, [[[ sharedManager advertisingIdentifier ] UUIDString ] UTF8String ]);
+			}
 		}
-    }
+	#endif
 	
     int name [] = { CTL_HW, HW_MACHINE };
 	
@@ -110,6 +115,6 @@ void AKUIosOpenUrl ( NSURL* url, NSString* sourceApplication ) {
 //----------------------------------------------------------------//
 void AKUIosSetFrameBuffer ( GLuint frameBuffer ) {
 
-	MOAIGfxDevice::Get ().GetDefaultFrameBuffer ()->SetGLFrameBufferID ( frameBuffer );
+	MOAIGfxDevice::Get ().GetDefaultFrameBuffer ()->SetGLFrameBufferID ( new ZLGfxHandle ( ZLGfxHandle::FRAMEBUFFER, frameBuffer, true ));
 }
 

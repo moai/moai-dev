@@ -842,10 +842,10 @@ int MOAIBox2DWorld::_getPerformance ( lua_State* L ) {
 */
 int MOAIBox2DWorld::_getRayCast ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
-	float p1x=state.GetValue < float >( 2, 0 );
-	float p1y=state.GetValue < float >( 3, 0 );
-	float p2x=state.GetValue < float >( 4, 0 );
-	float p2y=state.GetValue < float >( 5, 0 );
+	float p1x=state.GetValue < float >( 2, 0 ) * self->mUnitsToMeters;
+	float p1y=state.GetValue < float >( 3, 0 ) * self->mUnitsToMeters;
+	float p2x=state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
+	float p2y=state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
  
 	b2Vec2 p1(p1x,p1y);
 	b2Vec2 p2(p2x,p2y);
@@ -1237,9 +1237,7 @@ void MOAIBox2DWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIBox2DWorld::Render () {
 
-	if ( this->mDebugDraw ) {
-		
-		MOAIDraw::Bind ();
+	if ( this->mDebugDraw && MOAIDraw::Bind ()) {
 		
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 		

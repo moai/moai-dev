@@ -35,7 +35,7 @@ protected:
 	STLString			mDebugName;
 
 	// GL texture
-	u32					mGLTexID;
+	ZLGfxHandle*		mGLTexID;
 	
 	// size of the original texture
 	u32					mWidth;
@@ -58,8 +58,6 @@ protected:
 	int					mGLPixelType;
 	
 	size_t				mTextureSize;
-	
-	bool				mIsDirty;
 
 	//----------------------------------------------------------------//
 	static int			_getSize				( lua_State* L );
@@ -73,18 +71,20 @@ protected:
 	bool				CreateTextureFromImage		( MOAIImage& srcImage );
 	bool				OnCPUCreate					();
 	void				OnCPUDestroy				();
+	void				OnGfxEvent					( u32 event, void* userdata );
 	void				OnGPUBind					();
 	void				OnGPUDestroy				();
 	void				OnGPULost					();
 	void				OnGPUUnbind					();
-	void				SetTextureID				( u32 glTexID, int internalFormat, int pixelType, size_t textureSize );
+	bool				OnGPUUpdate					();
+	void				SetTextureID				( ZLGfxHandle* glTexID, int internalFormat, int pixelType, size_t textureSize );
 	bool				ShouldGenerateMipmaps		();
-	void				UpdateTextureFromImage		( MOAIImage& image, ZLIntRect rect );
+	bool				UpdateTextureFromImage		( MOAIImage& image, ZLIntRect rect );
 	
 public:
 	
 	GET_SET ( cc8*, DebugName, mDebugName );
-	GET ( u32, TextureID, mGLTexID );
+	GET ( ZLGfxHandle*, TextureID, mGLTexID );
 
 	//----------------------------------------------------------------//
 	u32					CountActiveUnits			();
@@ -93,7 +93,7 @@ public:
 	MOAISingleTexture*	GetTextureForUnit			( u32 unit );
 	u32					GetWidth					();
 	bool				IsValid						();
-						MOAISingleTexture				();
+						MOAISingleTexture			();
 						~MOAISingleTexture			();
 	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );

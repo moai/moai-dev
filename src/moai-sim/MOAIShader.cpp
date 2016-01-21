@@ -36,7 +36,7 @@ MOAIShader* MOAIShader::AffirmShader ( MOAILuaState& state, int idx ) {
 		shader = MOAIShaderMgr::Get ().GetShader ( state.GetValue < u32 >( idx, MOAIShaderMgr::UNKNOWN_SHADER ));
 	}
 	else {
-		shader = state.GetLuaObject < MOAIShader >( 2, true );
+		shader = state.GetLuaObject < MOAIShader >( idx, true );
 	}
 	return shader;
 }
@@ -84,10 +84,11 @@ void MOAIShader::BindUniforms () {
 			MOAIShaderUniform& uniform = program->mUniforms [ i ];
 			
 			if ( uniform.IsValid ()) {
-				if ( uniform.SetValue ( this->mUniformBuffers [ i ], true )) {
+				//if ( uniform.SetValue ( this->mUniformBuffers [ i ], true )) {
+					uniform.SetValue ( this->mUniformBuffers [ i ], true );
 					gfxDevice.FlushBufferedPrims ();
 					uniform.Bind ();
-				}
+				//}
 			}
 		}
 	}

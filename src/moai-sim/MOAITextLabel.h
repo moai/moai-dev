@@ -144,11 +144,11 @@ protected:
 	u32						mNextPageIdx;
 	bool					mMore;
 	bool					mOverrun;
-	
-	MOAITextLayoutRules		mLayoutRules;
-	MOAITextStyleCache		mStyleCache;
-	MOAITextStyleMap		mStyleMap;
-	MOAITextLayout			mLayout;
+
+	MOAITextLayoutRules		mLayoutRules;	// design params for laying out text
+	MOAITextStyleCache		mStyleCache;	// some style are anonymous and created ad hoc
+	MOAITextStyleMap		mStyleMap;		// preprocessed text broken up by style changes
+	MOAITextLayout			mLayout;		// cached glyph layout for currently visible text
 	
 	STLString				mText;
 	

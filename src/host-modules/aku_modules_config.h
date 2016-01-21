@@ -37,6 +37,10 @@
 		#define AKU_WITH_HTTP_SERVER 0
 	#endif
 
+	#ifndef AKU_WITH_IFA // technically not a module; just configuration
+		#define AKU_WITH_IFA 1
+	#endif
+
 	#ifndef AKU_WITH_IMAGE_JPG
 		#define AKU_WITH_IMAGE_JPG 1
 	#endif

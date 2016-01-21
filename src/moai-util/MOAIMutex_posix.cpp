@@ -11,12 +11,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMutexImpl::Init () {
-
-	pthread_mutex_init ( &this->mMutex, 0 );
-}
-
-//----------------------------------------------------------------//
 void MOAIMutexImpl::Lock () {
 
 	pthread_mutex_lock ( &this->mMutex );
@@ -26,6 +20,7 @@ void MOAIMutexImpl::Lock () {
 MOAIMutexImpl::MOAIMutexImpl () {
 
 	memset ( &this->mMutex, 0, sizeof ( pthread_mutex_t ));
+	pthread_mutex_init ( &this->mMutex, 0 );
 }
 
 //----------------------------------------------------------------//

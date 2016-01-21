@@ -15,11 +15,11 @@ class MOAIMutexImpl {
 private:
 
 	friend class MOAIMutex;
+	friend class MOAIConditionVariableImpl;
 
 	pthread_mutex_t		mMutex;
 
 	//----------------------------------------------------------------//
-	void			Init				();
 	void			Lock				();
 					MOAIMutexImpl		();
 					~MOAIMutexImpl		();

@@ -16,7 +16,7 @@
 void MOAIGlyph::Draw ( MOAISingleTexture& texture, float x, float y, float xScale, float yScale, const ZLRect& padding ) const {
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	gfxDevice.SetTexture ( &texture );
+	if ( !gfxDevice.BindTexture ( &texture )) return;
 	
 	MOAIQuadBrush glQuad;
 	

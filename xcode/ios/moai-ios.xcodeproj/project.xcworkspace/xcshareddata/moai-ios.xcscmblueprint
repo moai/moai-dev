@@ -1,0 +1,44 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "63C4897045D0EF88507AD257AEF500CB53038CE0",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "DE072679D3B61AA77D9DD9650241084BC6FA3713" : 0,
+    "0BE2D393D91F44FADD1C4CA1AAED513D7753907E" : 0,
+    "7BB53B1506E6E1939A1DD83892672A1FDD165695" : 0,
+    "63C4897045D0EF88507AD257AEF500CB53038CE0" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "9CCA7776-63D6-4DF0-AE81-B70EB1BDF459",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "DE072679D3B61AA77D9DD9650241084BC6FA3713" : "..\/..",
+    "0BE2D393D91F44FADD1C4CA1AAED513D7753907E" : "moai-dev\/3rdparty\/kissfft\/",
+    "7BB53B1506E6E1939A1DD83892672A1FDD165695" : "",
+    "63C4897045D0EF88507AD257AEF500CB53038CE0" : "moai-dev\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "moai-ios",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "xcode\/ios\/moai-ios.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/itdaniher\/kissfft.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "0BE2D393D91F44FADD1C4CA1AAED513D7753907E"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:fallguyconsulting\/moai-dev.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "63C4897045D0EF88507AD257AEF500CB53038CE0"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/moai\/zipline-studio.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7BB53B1506E6E1939A1DD83892672A1FDD165695"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "bitbucket.org:pointinside\/ios-pimapslib.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DE072679D3B61AA77D9DD9650241084BC6FA3713"
+    }
+  ]
+}

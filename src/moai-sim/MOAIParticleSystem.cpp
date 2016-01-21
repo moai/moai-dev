@@ -617,7 +617,7 @@ bool MOAIParticleSystem::PushSprite ( const AKUParticleSprite& sprite ) {
 		bounds.Scale ( scale );
 		
 		float radius = bounds.GetMaxExtent () * 1.4f; // handles case when bounds are rotated
-		
+
 		bounds.mMin.Init ( -radius, -radius, 0.0f );
 		bounds.mMax.Init ( radius, radius, 0.0f );
 		

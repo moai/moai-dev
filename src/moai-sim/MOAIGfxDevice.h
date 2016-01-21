@@ -56,6 +56,7 @@ private:
 	MOAILuaSharedPtr < MOAITexture >		mDefaultTexture;
 
 	//----------------------------------------------------------------//
+	static int			_enablePipelineLogging		( lua_State* L );
 	static int			_getFrameBuffer				( lua_State* L );
 	static int			_getMaxTextureSize			( lua_State* L );
 	static int			_getMaxTextureUnits			( lua_State* L );
@@ -117,13 +118,20 @@ public:
 	
 	void			SetBufferScale			( float scale );
 	void			SetBufferSize			( u32 width, u32 height );
-	
-	void			SetScreenSpace			( MOAIViewport& viewport );
 
 	void			SetViewRect				();
 	void			SetViewRect				( ZLRect rect );
 		
 	void			UpdateShaderGlobals		();
+	
+	//----------------------------------------------------------------//
+	static ZLGfx& GetDrawingAPI () {
+	
+		ZLGfx* gfx = MOAIGfxDevice::Get ().mDrawingAPI;
+		assert ( gfx );
+		
+		return *gfx;
+	}
 };
 
 #endif

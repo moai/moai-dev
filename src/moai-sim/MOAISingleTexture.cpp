@@ -25,7 +25,7 @@
 int MOAISingleTexture::_getSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISingleTexture, "U" )
 	
-	self->ForceCPUCreate ();
+	self->DoCPUCreate ();
 	
 	lua_pushnumber ( state, self->mWidth );
 	lua_pushnumber ( state, self->mHeight );
@@ -110,7 +110,7 @@ int MOAISingleTexture::_setWrap ( lua_State* L ) {
 void MOAISingleTexture::CleanupOnError () {
 
 	this->mTextureSize = 0;
-	zglDeleteTexture ( this->mGLTexID );
+	MOAIGfxDevice::GetDrawingAPI ().DeleteHandle ( this->mGLTexID );
 	this->mGLTexID = 0;
 	this->mWidth = 0;
 	this->mHeight = 0;
@@ -128,6 +128,8 @@ bool MOAISingleTexture::CreateTextureFromImage ( MOAIImage& srcImage ) {
 
 	if ( !MOAIGfxDevice::Get ().GetHasContext ()) return false;
 
+	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+
 	MOAIImage altImage;
 
 	ZLColor::ColorFormat colorFormat = srcImage.GetColorFormat ();
@@ -144,8 +146,8 @@ bool MOAISingleTexture::CreateTextureFromImage ( MOAIImage& srcImage ) {
 	MOAIImage& image = altImage.IsOK () ? altImage : srcImage;
 	if ( !image.IsOK ()) return false;
 
-	MOAIGfxDevice::Get ().ClearErrors ();
-	this->mGLTexID = zglCreateTexture ();
+	//MOAIGfxDevice::Get ().ClearErrors ();
+	this->mGLTexID = gfx.CreateTexture ();
 	if ( !this->mGLTexID ) return false;
 
 	// get the dimensions before trying to get the OpenGL texture ID
@@ -210,25 +212,28 @@ bool MOAISingleTexture::CreateTextureFromImage ( MOAIImage& srcImage ) {
 			return false;
 	}
 
-	zglBindTexture ( this->mGLTexID );
+	gfx.BindTexture ( this->mGLTexID );
 
-	zglTexImage2D (
+	gfx.TexImage2D (
 		0,
 		this->mGLInternalFormat,
 		this->mWidth,  
 		this->mHeight,  
 		this->mGLInternalFormat,
-		this->mGLPixelType,  
-		image.GetBitmap ()
+		this->mGLPixelType,
+		image.GetBitmapBuffer ()
 	);
 	
 	this->mTextureSize = image.GetBitmapSize ();
+
+	// TODO: error handling
+//	if ( MOAIGfxDevice::Get ().LogErrors ()) {
+//		this->CleanupOnError ();
+//		return false;
+//	}
+//	else if ( this->ShouldGenerateMipmaps ()) {
 	
-	if ( MOAIGfxDevice::Get ().LogErrors ()) {
-		this->CleanupOnError ();
-		return false;
-	}
-	else if ( this->ShouldGenerateMipmaps ()) {
+	if ( this->ShouldGenerateMipmaps ()) {
 	
 		u32 mipLevel = 1;
 		
@@ -237,14 +242,14 @@ bool MOAISingleTexture::CreateTextureFromImage ( MOAIImage& srcImage ) {
 		
 		while ( mipmap.MipReduce ()) {
 			
-			zglTexImage2D (
+			gfx.TexImage2D (
 				mipLevel++,  
 				this->mGLInternalFormat,
 				mipmap.GetWidth (),  
 				mipmap.GetHeight (),  
 				this->mGLInternalFormat,
-				this->mGLPixelType,  
-				mipmap.GetBitmap ()
+				this->mGLPixelType,
+				mipmap.GetBitmapBuffer ()
 			);
 			
 			if ( MOAIGfxDevice::Get ().LogErrors ()) {
@@ -255,8 +260,8 @@ bool MOAISingleTexture::CreateTextureFromImage ( MOAIImage& srcImage ) {
 		}
 	}
 	
-	MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
-	this->mIsDirty = true;
+	//MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
+	
 	return true;
 }
 
@@ -287,8 +292,7 @@ MOAISingleTexture::MOAISingleTexture () :
 	mMinFilter ( ZGL_SAMPLE_LINEAR ),
 	mMagFilter ( ZGL_SAMPLE_NEAREST ),
 	mWrap ( ZGL_WRAP_MODE_CLAMP ),
-	mTextureSize ( 0 ),
-	mIsDirty ( false ) {
+	mTextureSize ( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
@@ -313,20 +317,16 @@ void MOAISingleTexture::OnCPUDestroy () {
 }
 
 //----------------------------------------------------------------//
+void MOAISingleTexture::OnGfxEvent ( u32 event, void* userdata ) {
+
+	MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
+	MOAIGfxResource::OnGfxEvent ( event, userdata );
+}
+
+//----------------------------------------------------------------//
 void MOAISingleTexture::OnGPUBind () {
 
-	zglBindTexture ( this->mGLTexID );
-	
-	if ( this->mIsDirty ) {
-		
-		zglTexParameteri ( ZGL_TEXTURE_WRAP_S, this->mWrap );
-		zglTexParameteri ( ZGL_TEXTURE_WRAP_T, this->mWrap );
-		
-		zglTexParameteri ( ZGL_TEXTURE_MIN_FILTER, this->mMinFilter );
-		zglTexParameteri ( ZGL_TEXTURE_MAG_FILTER, this->mMagFilter );
-		
-		this->mIsDirty = false;
-	}
+	MOAIGfxDevice::GetDrawingAPI ().BindTexture ( this->mGLTexID );
 }
 
 //----------------------------------------------------------------//
@@ -335,7 +335,7 @@ void MOAISingleTexture::OnGPUDestroy () {
 	if ( this->mGLTexID ) {
 		if ( MOAIGfxDevice::IsValid ()) {
 			MOAIGfxDevice::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
-			MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_TEXTURE, this->mGLTexID );
+			MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLTexID );
 		}
 	}
 	this->mGLTexID = 0;
@@ -355,7 +355,21 @@ void MOAISingleTexture::OnGPULost () {
 //----------------------------------------------------------------//
 void MOAISingleTexture::OnGPUUnbind () {
 
-	zglBindTexture ( 0 );
+	MOAIGfxDevice::GetDrawingAPI ().BindTexture ( 0 );
+}
+
+//----------------------------------------------------------------//
+bool MOAISingleTexture::OnGPUUpdate () {
+
+	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+
+	gfx.TexParameteri ( ZGL_TEXTURE_WRAP_S, this->mWrap );
+	gfx.TexParameteri ( ZGL_TEXTURE_WRAP_T, this->mWrap );
+		
+	gfx.TexParameteri ( ZGL_TEXTURE_MIN_FILTER, this->mMinFilter );
+	gfx.TexParameteri ( ZGL_TEXTURE_MAG_FILTER, this->mMagFilter );
+	
+	return true;
 }
 
 //----------------------------------------------------------------//
@@ -429,26 +443,26 @@ void MOAISingleTexture::SetFilter ( int min, int mag ) {
 	this->mMinFilter = min;
 	this->mMagFilter = mag;
 	
-	this->mIsDirty = true;
+	this->ScheduleForGPUUpdate ();
 }
 
 //----------------------------------------------------------------//
-void MOAISingleTexture::SetTextureID ( u32 glTexID, int internalFormat, int pixelType, size_t textureSize ) {
+void MOAISingleTexture::SetTextureID ( ZLGfxHandle* glTexID, int internalFormat, int pixelType, size_t textureSize ) {
 
 	this->mGLTexID = glTexID;
 	this->mGLInternalFormat = internalFormat;
 	this->mGLPixelType = pixelType;
 	this->mTextureSize = textureSize;
 
-	MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, textureSize );
-	this->mIsDirty = true;
+	this->ScheduleForGPUUpdate ();
 }
 
 //----------------------------------------------------------------//
 void MOAISingleTexture::SetWrap ( int wrap ) {
 
 	this->mWrap = wrap;
-	this->mIsDirty = true;
+	
+	this->ScheduleForGPUUpdate ();
 }
 
 //----------------------------------------------------------------//
@@ -463,7 +477,7 @@ bool MOAISingleTexture::ShouldGenerateMipmaps () {
 }
 
 //----------------------------------------------------------------//
-void MOAISingleTexture::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rect ) {
+bool MOAISingleTexture::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rect ) {
 
 	// TODO: what happens when image is an unsupported format?
 
@@ -471,29 +485,37 @@ void MOAISingleTexture::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rec
 	if ( this->ShouldGenerateMipmaps () || ( this->mWidth != image.GetWidth ()) || ( this->mHeight != image.GetHeight ())) {
 	
 		MOAIGfxDevice::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
-		MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_TEXTURE, this->mGLTexID );
-		this->mGLTexID = 0;	
+		MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLTexID );
+		this->mGLTexID = 0;
+		
+		if ( this->CreateTextureFromImage ( image )) {
+			MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
+			return true;
+		}
+		return false;
 	}
+	
+	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
 	
 	// if the texture exists just update the sub-region
 	// otherwise create a new texture from the image
 	if ( this->mGLTexID ) {
 
-		zglBindTexture ( this->mGLTexID );
+		gfx.BindTexture ( this->mGLTexID );
 
 		rect.Bless ();
 		ZLIntRect imageRect = image.GetRect ();
 		imageRect.Clip ( rect );
 		
-		const void* buffer = image.GetBitmap ();
+		ZLSharedConstBuffer* bitmapBuffer = image.GetBitmapBuffer ();
 		
 		MOAIImage subImage;
 		if (( this->mWidth != ( u32 )rect.Width ()) || ( this->mHeight != ( u32 )rect.Height ())) {
 			subImage.GetSubImage ( image, rect ); // TODO: need to convert to correct format for texture
-			buffer = subImage.GetBitmap ();
+			bitmapBuffer = subImage.GetBitmapBuffer ();
 		}
 
-		zglTexSubImage2D (
+		gfx.TexSubImage2D (
 			0,
 			rect.mXMin,
 			rect.mYMin,
@@ -501,13 +523,13 @@ void MOAISingleTexture::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rec
 			rect.Height (),
 			this->mGLInternalFormat,
 			this->mGLPixelType,  
-			buffer
+			bitmapBuffer
 		);
 		
 		MOAIGfxDevice::Get ().LogErrors ();
+		
+		return true;
 	}
-	else {
 	
-		this->CreateTextureFromImage ( image );
-	}
+	return false;
 }

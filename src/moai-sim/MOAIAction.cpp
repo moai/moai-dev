@@ -171,6 +171,19 @@ int MOAIAction::_getChildren ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAction::_hasChildren ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAction, "U" )
+
+	size_t count = self->mChildren.Count ();
+
+	state.Push ( count > 0 );
+	state.Push (( u32 )count );
+
+	return 2;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	isActive
 	@text	Checks to see if an action is currently in the action tree.
 
@@ -270,17 +283,12 @@ int MOAIAction::_setAutoStop ( lua_State* L ) {
 int MOAIAction::_start ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" )
 
-	MOAIAction* action		= state.GetLuaObject < MOAIAction >( 2, true );
+	MOAIAction* parent		= state.GetLuaObject < MOAIAction >( 2, true );
 	bool defer				= state.GetValue < bool >( 3, false );
 	
-	if ( !action ) {
-		action = MOAISim::Get ().GetActionMgr ().GetDefaultParent ();
-	}
+	self->Start ( parent, defer );
 
-	self->Attach ( action, defer );
 	state.CopyToTop ( 1 );
-	self->mActionFlags &= ~FLAGS_IS_PAUSED;
-
 	return 1;
 }
 
@@ -539,6 +547,7 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "defer",					_defer },
 		{ "detach",					_detach },
 		{ "getChildren",			_getChildren },
+		{ "hasChildren",			_hasChildren },
 		{ "isActive",				_isActive },
 		{ "isBusy",					_isBusy },
 		{ "isDone",					_isDone },
@@ -648,10 +657,10 @@ void MOAIAction::Update ( MOAIActionTree& tree, double step ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAction::Start ( MOAIActionTree& tree, bool defer ) {
+void MOAIAction::Start ( MOAIAction* parent, bool defer ) {
 
-	MOAIAction* defaultParent = tree.GetDefaultParent ();
-	this->Attach ( defaultParent, defer );
+	parent = parent ? parent : MOAIActionStackMgr::Get ().GetDefaultParent ();
+	this->Attach ( parent, defer );
 	this->mActionFlags &= ~FLAGS_IS_PAUSED;
 }
 

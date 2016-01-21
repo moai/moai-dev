@@ -7,28 +7,6 @@
 class MOAIGfxResource;
 
 //================================================================//
-// MOAIGfxDeleter
-//================================================================//
-class MOAIGfxDeleter {
-public:
-
-	enum {
-		DELETE_BUFFER,
-		DELETE_FRAMEBUFFER,
-		DELETE_PROGRAM,
-		DELETE_SHADER,
-		DELETE_TEXTURE,
-		DELETE_RENDERBUFFER,
-	};
-
-	u32		mResourceID;
-	u32		mType;
-
-	//----------------------------------------------------------------//
-	void		Delete			();
-};
-
-//================================================================//
 // MOAIGfxResourceMgr
 //================================================================//
 class MOAIGfxResourceMgr :
@@ -36,24 +14,24 @@ class MOAIGfxResourceMgr :
 private:
 	
 	typedef ZLLeanList < MOAIGfxResource* >::Iterator ResourceIt;
-	ZLLeanList < MOAIGfxResource* > mResources;
-	ZLLeanList < MOAIGfxResource* > mPending;
+	ZLLeanList < MOAIGfxResource* >		mResources;
 	
-	ZLLeanStack < MOAIGfxDeleter, 32 > mDeleterStack;
-
-	u32				mResourceLoadingPolicy;
+	ZLLeanList < MOAIGfxResource* >		mPendingForLoadList;
+	ZLLeanList < MOAIGfxResource* >		mPendingForDrawList;
+	
+	ZLLeanStack < ZLGfxHandle*, 32 >	mDeleterStack;
 
 	//----------------------------------------------------------------//
 	static int		_purgeResources				( lua_State* L );
 	static int		_renewResources				( lua_State* L );
-	static int		_setResourceLoadingPolicy	( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			InsertGfxResource		( MOAIGfxResource& resource );
+	void			ProcessDeleters			();
+	void			ProcessPending			( ZLLeanList < MOAIGfxResource* > &list );
 	void			RemoveGfxResource		( MOAIGfxResource& resource );
 	void			RenewResources			();
-	void			ScheduleGPUAffirm		( MOAIGfxResource& resource );
-	void			Update					();
+	void			ScheduleGPUAffirm		( MOAIGfxResource& resource, u32 listID );
 	
 public:
 	
@@ -67,8 +45,9 @@ public:
 					MOAIGfxResourceMgr		();
 					~MOAIGfxResourceMgr		();
 	void			PurgeResources			( u32 age = 0 );
-	void			PushDeleter				( u32 type, u32 id );
+	void			PushDeleter				( ZLGfxHandle* handle );
 	void			RegisterLuaClass		( MOAILuaState& state );
+	void			Update					();
 };
 
 #endif

@@ -195,7 +195,7 @@ void MOAIImageFormatJpg::ReadImageJpg ( MOAIImage& image, void* jpgInfoParam, u3
 		
 		if ( transform & MOAIImageTransform::PREMULTIPLY_ALPHA ) {
 			for ( u32 y = 0; y < height; ++y ) {
-				void* row = this->GetRowAddr ( image, y );
+				void* row = this->GetRowAddrMutable ( image, y );
 				ZLColor::PremultiplyAlpha ( row, image.GetColorFormat (), width );
 			}
 		}
@@ -207,7 +207,7 @@ void MOAIImageFormatJpg::ReadImageJpg ( MOAIImage& image, void* jpgInfoParam, u3
 		
 		for ( u32 y = 0; y < height; ++y ) {
 			jpeg_read_scanlines ( cinfo, &samprow, 1 );
-			void* destRow = this->GetRowAddr ( image, y );
+			void* destRow = this->GetRowAddrMutable ( image, y );
 			ZLColor::Convert ( destRow, image.GetColorFormat (), rowBuffer, jpgColorFormat, width );
 			
 			if ( transform & MOAIImageTransform::PREMULTIPLY_ALPHA ) {

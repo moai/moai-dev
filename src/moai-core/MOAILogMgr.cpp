@@ -88,9 +88,9 @@ int MOAILogMgr::_log ( lua_State* L ) {
 	}
 
 	STLString log;
-	log.write ( "[%s] %s", token, msg );
+	log.write ( "[%s-%d] %s", token, level, msg );
 
-	ZLLogF ( ZLLog::CONSOLE, "%s", log.c_str ());	// Caller's string may contain % and should NOT be used as a format to LogF
+	ZLLog::LogF ( level, ZLLog::CONSOLE, "%s", log.c_str ());	// Caller's string may contain % and should NOT be used as a format to LogF
 
 	return 0;
 }
@@ -225,21 +225,21 @@ void MOAILogMgr::LogV ( lua_State *L, u32 level, cc8* message, va_list args ) {
 	if ( ZLLog::IsEnabled ( level )) {
 
 		if ( L ) {
-			ZLLogF ( ZLLog::CONSOLE, "----------------------------------------------------------------\n" );
+			ZLLog::LogF ( level, ZLLog::CONSOLE, "----------------------------------------------------------------\n" );
 		}
 
-		ZLLogV ( ZLLog::CONSOLE, message, args );
+		ZLLog::LogV ( level, ZLLog::CONSOLE, message, args );
 		
 		size_t msgSize = strlen ( message );
 		if ( msgSize && ( message [ msgSize - 1 ] != '\n' )) {
-			ZLLogF ( ZLLog::CONSOLE, "\n" );
+			ZLLog::LogF ( level, ZLLog::CONSOLE, "\n" );
 		}
 		
 		if ( L ) {
-			ZLLogF ( ZLLog::CONSOLE, "\n" );
+			ZLLog::LogF ( level, ZLLog::CONSOLE, "\n" );
 			MOAILuaState state ( L );
 			state.LogStackTrace ( level, ZLLog::CONSOLE, NULL, 0 );
-			ZLLogF ( ZLLog::CONSOLE, "\n" );
+			ZLLog::LogF ( level, ZLLog::CONSOLE, "\n" );
 		}
 	}
 }

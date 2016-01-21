@@ -23,6 +23,24 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+//----------------------------------------------------------------//
+/**	@lua	setBoundsDeck
+	@text	Set or clear the bounds override deck.
+	
+	@in		MOAIDeck self
+	@opt	MOAIBoundsDeck boundsDeck
+	@out	nil
+*/
+int MOAIDeck::_setBoundsDeck ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIDeck, "U" )
+	
+	self->mBoundsDeck.Set ( *self, state.GetLuaObject < MOAIBoundsDeck >( 2, true ));
+	
+	return 0;
+}
+
+
+//----------------------------------------------------------------//
 /**	@lua	getBounds
 	@text	Return bounds for an item or the maximum bounds for the
 			deck.
@@ -38,7 +56,7 @@
 		@out	zMax
 	
 	@override
-
+	
 		@out	xMin
 		@out	yMin
 		@out	zMin
@@ -209,6 +227,7 @@ MOAIDeck::~MOAIDeck () {
 
 //----------------------------------------------------------------//
 void MOAIDeck::RegisterLuaClass ( MOAILuaState& state ) {
+
 
 	luaL_Reg regTable [] = {
 		{ "subdivideRect",			_subdivideRect },
