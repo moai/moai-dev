@@ -1239,15 +1239,6 @@
 		CD3210611C517ADB00AD5E5C /* hb-font.h in Headers */ = {isa = PBXBuildFile; fileRef = CD320F7D1C517ACF00AD5E5C /* hb-font.h */; };
 		CD3210621C517ADB00AD5E5C /* hb-ft.cc in Sources */ = {isa = PBXBuildFile; fileRef = CD320F7E1C517ACF00AD5E5C /* hb-ft.cc */; };
 		CD3210631C517ADB00AD5E5C /* hb-ft.h in Headers */ = {isa = PBXBuildFile; fileRef = CD320F7F1C517ACF00AD5E5C /* hb-ft.h */; };
-		CD3210641C517ADB00AD5E5C /* hb-glib.cc in Sources */ = {isa = PBXBuildFile; fileRef = CD320F801C517ACF00AD5E5C /* hb-glib.cc */; };
-		CD3210651C517ADB00AD5E5C /* hb-glib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD320F811C517ACF00AD5E5C /* hb-glib.h */; };
-		CD3210661C517ADB00AD5E5C /* hb-gobject-structs.cc in Sources */ = {isa = PBXBuildFile; fileRef = CD320F821C517ACF00AD5E5C /* hb-gobject-structs.cc */; };
-		CD3210671C517ADB00AD5E5C /* hb-gobject-structs.h in Headers */ = {isa = PBXBuildFile; fileRef = CD320F831C517ACF00AD5E5C /* hb-gobject-structs.h */; };
-		CD3210681C517ADB00AD5E5C /* hb-gobject.h in Headers */ = {isa = PBXBuildFile; fileRef = CD320F841C517ACF00AD5E5C /* hb-gobject.h */; };
-		CD3210691C517ADB00AD5E5C /* hb-graphite2.cc in Sources */ = {isa = PBXBuildFile; fileRef = CD320F851C517ACF00AD5E5C /* hb-graphite2.cc */; };
-		CD32106A1C517ADB00AD5E5C /* hb-graphite2.h in Headers */ = {isa = PBXBuildFile; fileRef = CD320F861C517ACF00AD5E5C /* hb-graphite2.h */; };
-		CD32106B1C517ADB00AD5E5C /* hb-icu.cc in Sources */ = {isa = PBXBuildFile; fileRef = CD320F871C517ACF00AD5E5C /* hb-icu.cc */; };
-		CD32106C1C517ADB00AD5E5C /* hb-icu.h in Headers */ = {isa = PBXBuildFile; fileRef = CD320F881C517ACF00AD5E5C /* hb-icu.h */; };
 		CD32106D1C517ADB00AD5E5C /* hb-mutex-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = CD320F891C517ACF00AD5E5C /* hb-mutex-private.hh */; };
 		CD32106E1C517ADB00AD5E5C /* hb-object-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = CD320F8A1C517ACF00AD5E5C /* hb-object-private.hh */; };
 		CD32106F1C517ADB00AD5E5C /* hb-open-file-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = CD320F8B1C517ACF00AD5E5C /* hb-open-file-private.hh */; };
@@ -1320,8 +1311,6 @@
 		CD3210B21C517ADB00AD5E5C /* hb-unicode-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = CD320FCE1C517AD000AD5E5C /* hb-unicode-private.hh */; };
 		CD3210B31C517ADB00AD5E5C /* hb-unicode.cc in Sources */ = {isa = PBXBuildFile; fileRef = CD320FCF1C517AD000AD5E5C /* hb-unicode.cc */; };
 		CD3210B41C517ADB00AD5E5C /* hb-unicode.h in Headers */ = {isa = PBXBuildFile; fileRef = CD320FD01C517AD000AD5E5C /* hb-unicode.h */; };
-		CD3210B51C517ADB00AD5E5C /* hb-uniscribe.cc in Sources */ = {isa = PBXBuildFile; fileRef = CD320FD11C517AD000AD5E5C /* hb-uniscribe.cc */; };
-		CD3210B61C517ADB00AD5E5C /* hb-uniscribe.h in Headers */ = {isa = PBXBuildFile; fileRef = CD320FD21C517AD000AD5E5C /* hb-uniscribe.h */; };
 		CD3210B71C517ADB00AD5E5C /* hb-utf-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = CD320FD31C517AD000AD5E5C /* hb-utf-private.hh */; };
 		CD3210B81C517ADB00AD5E5C /* hb-version.h in Headers */ = {isa = PBXBuildFile; fileRef = CD320FD41C517AD000AD5E5C /* hb-version.h */; };
 		CD3210B91C517ADB00AD5E5C /* hb-warning.cc in Sources */ = {isa = PBXBuildFile; fileRef = CD320FD51C517AD000AD5E5C /* hb-warning.cc */; };
@@ -1353,15 +1342,6 @@
 		CD3210D31C517AE000AD5E5C /* hb-font.h in Headers */ = {isa = PBXBuildFile; fileRef = CD320F7D1C517ACF00AD5E5C /* hb-font.h */; };
 		CD3210D41C517AE000AD5E5C /* hb-ft.cc in Sources */ = {isa = PBXBuildFile; fileRef = CD320F7E1C517ACF00AD5E5C /* hb-ft.cc */; };
 		CD3210D51C517AE000AD5E5C /* hb-ft.h in Headers */ = {isa = PBXBuildFile; fileRef = CD320F7F1C517ACF00AD5E5C /* hb-ft.h */; };
-		CD3210D61C517AE000AD5E5C /* hb-glib.cc in Sources */ = {isa = PBXBuildFile; fileRef = CD320F801C517ACF00AD5E5C /* hb-glib.cc */; };
-		CD3210D71C517AE000AD5E5C /* hb-glib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD320F811C517ACF00AD5E5C /* hb-glib.h */; };
-		CD3210D81C517AE000AD5E5C /* hb-gobject-structs.cc in Sources */ = {isa = PBXBuildFile; fileRef = CD320F821C517ACF00AD5E5C /* hb-gobject-structs.cc */; };
-		CD3210D91C517AE000AD5E5C /* hb-gobject-structs.h in Headers */ = {isa = PBXBuildFile; fileRef = CD320F831C517ACF00AD5E5C /* hb-gobject-structs.h */; };
-		CD3210DA1C517AE000AD5E5C /* hb-gobject.h in Headers */ = {isa = PBXBuildFile; fileRef = CD320F841C517ACF00AD5E5C /* hb-gobject.h */; };
-		CD3210DB1C517AE000AD5E5C /* hb-graphite2.cc in Sources */ = {isa = PBXBuildFile; fileRef = CD320F851C517ACF00AD5E5C /* hb-graphite2.cc */; };
-		CD3210DC1C517AE000AD5E5C /* hb-graphite2.h in Headers */ = {isa = PBXBuildFile; fileRef = CD320F861C517ACF00AD5E5C /* hb-graphite2.h */; };
-		CD3210DD1C517AE000AD5E5C /* hb-icu.cc in Sources */ = {isa = PBXBuildFile; fileRef = CD320F871C517ACF00AD5E5C /* hb-icu.cc */; };
-		CD3210DE1C517AE000AD5E5C /* hb-icu.h in Headers */ = {isa = PBXBuildFile; fileRef = CD320F881C517ACF00AD5E5C /* hb-icu.h */; };
 		CD3210DF1C517AE000AD5E5C /* hb-mutex-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = CD320F891C517ACF00AD5E5C /* hb-mutex-private.hh */; };
 		CD3210E01C517AE000AD5E5C /* hb-object-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = CD320F8A1C517ACF00AD5E5C /* hb-object-private.hh */; };
 		CD3210E11C517AE000AD5E5C /* hb-open-file-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = CD320F8B1C517ACF00AD5E5C /* hb-open-file-private.hh */; };
@@ -1434,8 +1414,6 @@
 		CD3211241C517AE000AD5E5C /* hb-unicode-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = CD320FCE1C517AD000AD5E5C /* hb-unicode-private.hh */; };
 		CD3211251C517AE000AD5E5C /* hb-unicode.cc in Sources */ = {isa = PBXBuildFile; fileRef = CD320FCF1C517AD000AD5E5C /* hb-unicode.cc */; };
 		CD3211261C517AE000AD5E5C /* hb-unicode.h in Headers */ = {isa = PBXBuildFile; fileRef = CD320FD01C517AD000AD5E5C /* hb-unicode.h */; };
-		CD3211271C517AE000AD5E5C /* hb-uniscribe.cc in Sources */ = {isa = PBXBuildFile; fileRef = CD320FD11C517AD000AD5E5C /* hb-uniscribe.cc */; };
-		CD3211281C517AE000AD5E5C /* hb-uniscribe.h in Headers */ = {isa = PBXBuildFile; fileRef = CD320FD21C517AD000AD5E5C /* hb-uniscribe.h */; };
 		CD3211291C517AE000AD5E5C /* hb-utf-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = CD320FD31C517AD000AD5E5C /* hb-utf-private.hh */; };
 		CD32112A1C517AE000AD5E5C /* hb-version.h in Headers */ = {isa = PBXBuildFile; fileRef = CD320FD41C517AD000AD5E5C /* hb-version.h */; };
 		CD32112B1C517AE000AD5E5C /* hb-warning.cc in Sources */ = {isa = PBXBuildFile; fileRef = CD320FD51C517AD000AD5E5C /* hb-warning.cc */; };
@@ -6573,15 +6551,6 @@
 		CD320F7D1C517ACF00AD5E5C /* hb-font.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-font.h"; path = "../../3rdparty/harfbuzz-1.0.6/hb-font.h"; sourceTree = "<group>"; };
 		CD320F7E1C517ACF00AD5E5C /* hb-ft.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-ft.cc"; path = "../../3rdparty/harfbuzz-1.0.6/hb-ft.cc"; sourceTree = "<group>"; };
 		CD320F7F1C517ACF00AD5E5C /* hb-ft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-ft.h"; path = "../../3rdparty/harfbuzz-1.0.6/hb-ft.h"; sourceTree = "<group>"; };
-		CD320F801C517ACF00AD5E5C /* hb-glib.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-glib.cc"; path = "../../3rdparty/harfbuzz-1.0.6/hb-glib.cc"; sourceTree = "<group>"; };
-		CD320F811C517ACF00AD5E5C /* hb-glib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-glib.h"; path = "../../3rdparty/harfbuzz-1.0.6/hb-glib.h"; sourceTree = "<group>"; };
-		CD320F821C517ACF00AD5E5C /* hb-gobject-structs.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-gobject-structs.cc"; path = "../../3rdparty/harfbuzz-1.0.6/hb-gobject-structs.cc"; sourceTree = "<group>"; };
-		CD320F831C517ACF00AD5E5C /* hb-gobject-structs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-gobject-structs.h"; path = "../../3rdparty/harfbuzz-1.0.6/hb-gobject-structs.h"; sourceTree = "<group>"; };
-		CD320F841C517ACF00AD5E5C /* hb-gobject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-gobject.h"; path = "../../3rdparty/harfbuzz-1.0.6/hb-gobject.h"; sourceTree = "<group>"; };
-		CD320F851C517ACF00AD5E5C /* hb-graphite2.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-graphite2.cc"; path = "../../3rdparty/harfbuzz-1.0.6/hb-graphite2.cc"; sourceTree = "<group>"; };
-		CD320F861C517ACF00AD5E5C /* hb-graphite2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-graphite2.h"; path = "../../3rdparty/harfbuzz-1.0.6/hb-graphite2.h"; sourceTree = "<group>"; };
-		CD320F871C517ACF00AD5E5C /* hb-icu.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-icu.cc"; path = "../../3rdparty/harfbuzz-1.0.6/hb-icu.cc"; sourceTree = "<group>"; };
-		CD320F881C517ACF00AD5E5C /* hb-icu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-icu.h"; path = "../../3rdparty/harfbuzz-1.0.6/hb-icu.h"; sourceTree = "<group>"; };
 		CD320F891C517ACF00AD5E5C /* hb-mutex-private.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "hb-mutex-private.hh"; path = "../../3rdparty/harfbuzz-1.0.6/hb-mutex-private.hh"; sourceTree = "<group>"; };
 		CD320F8A1C517ACF00AD5E5C /* hb-object-private.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "hb-object-private.hh"; path = "../../3rdparty/harfbuzz-1.0.6/hb-object-private.hh"; sourceTree = "<group>"; };
 		CD320F8B1C517ACF00AD5E5C /* hb-open-file-private.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "hb-open-file-private.hh"; path = "../../3rdparty/harfbuzz-1.0.6/hb-open-file-private.hh"; sourceTree = "<group>"; };
@@ -6654,8 +6623,6 @@
 		CD320FCE1C517AD000AD5E5C /* hb-unicode-private.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "hb-unicode-private.hh"; path = "../../3rdparty/harfbuzz-1.0.6/hb-unicode-private.hh"; sourceTree = "<group>"; };
 		CD320FCF1C517AD000AD5E5C /* hb-unicode.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-unicode.cc"; path = "../../3rdparty/harfbuzz-1.0.6/hb-unicode.cc"; sourceTree = "<group>"; };
 		CD320FD01C517AD000AD5E5C /* hb-unicode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-unicode.h"; path = "../../3rdparty/harfbuzz-1.0.6/hb-unicode.h"; sourceTree = "<group>"; };
-		CD320FD11C517AD000AD5E5C /* hb-uniscribe.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-uniscribe.cc"; path = "../../3rdparty/harfbuzz-1.0.6/hb-uniscribe.cc"; sourceTree = "<group>"; };
-		CD320FD21C517AD000AD5E5C /* hb-uniscribe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-uniscribe.h"; path = "../../3rdparty/harfbuzz-1.0.6/hb-uniscribe.h"; sourceTree = "<group>"; };
 		CD320FD31C517AD000AD5E5C /* hb-utf-private.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "hb-utf-private.hh"; path = "../../3rdparty/harfbuzz-1.0.6/hb-utf-private.hh"; sourceTree = "<group>"; };
 		CD320FD41C517AD000AD5E5C /* hb-version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-version.h"; path = "../../3rdparty/harfbuzz-1.0.6/hb-version.h"; sourceTree = "<group>"; };
 		CD320FD51C517AD000AD5E5C /* hb-warning.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-warning.cc"; path = "../../3rdparty/harfbuzz-1.0.6/hb-warning.cc"; sourceTree = "<group>"; };
@@ -10350,15 +10317,6 @@
 				CD320F7D1C517ACF00AD5E5C /* hb-font.h */,
 				CD320F7E1C517ACF00AD5E5C /* hb-ft.cc */,
 				CD320F7F1C517ACF00AD5E5C /* hb-ft.h */,
-				CD320F801C517ACF00AD5E5C /* hb-glib.cc */,
-				CD320F811C517ACF00AD5E5C /* hb-glib.h */,
-				CD320F821C517ACF00AD5E5C /* hb-gobject-structs.cc */,
-				CD320F831C517ACF00AD5E5C /* hb-gobject-structs.h */,
-				CD320F841C517ACF00AD5E5C /* hb-gobject.h */,
-				CD320F851C517ACF00AD5E5C /* hb-graphite2.cc */,
-				CD320F861C517ACF00AD5E5C /* hb-graphite2.h */,
-				CD320F871C517ACF00AD5E5C /* hb-icu.cc */,
-				CD320F881C517ACF00AD5E5C /* hb-icu.h */,
 				CD320F891C517ACF00AD5E5C /* hb-mutex-private.hh */,
 				CD320F8A1C517ACF00AD5E5C /* hb-object-private.hh */,
 				CD320F8B1C517ACF00AD5E5C /* hb-open-file-private.hh */,
@@ -10431,8 +10389,6 @@
 				CD320FCE1C517AD000AD5E5C /* hb-unicode-private.hh */,
 				CD320FCF1C517AD000AD5E5C /* hb-unicode.cc */,
 				CD320FD01C517AD000AD5E5C /* hb-unicode.h */,
-				CD320FD11C517AD000AD5E5C /* hb-uniscribe.cc */,
-				CD320FD21C517AD000AD5E5C /* hb-uniscribe.h */,
 				CD320FD31C517AD000AD5E5C /* hb-utf-private.hh */,
 				CD320FD41C517AD000AD5E5C /* hb-version.h */,
 				CD320FD51C517AD000AD5E5C /* hb-warning.cc */,
@@ -14454,11 +14410,8 @@
 				CD3210801C517ADB00AD5E5C /* hb-ot-layout.h in Headers */,
 				CD3210AE1C517ADB00AD5E5C /* hb-shaper-list.hh in Headers */,
 				CD3210BA1C517ADB00AD5E5C /* hb.h in Headers */,
-				CD3210651C517ADB00AD5E5C /* hb-glib.h in Headers */,
-				CD3210681C517ADB00AD5E5C /* hb-gobject.h in Headers */,
 				CD32109A1C517ADB00AD5E5C /* hb-ot-shape-fallback-private.hh in Headers */,
 				CD32106E1C517ADB00AD5E5C /* hb-object-private.hh in Headers */,
-				CD32106A1C517ADB00AD5E5C /* hb-graphite2.h in Headers */,
 				CD3210AF1C517ADB00AD5E5C /* hb-shaper-private.hh in Headers */,
 				CD3210761C517ADB00AD5E5C /* hb-ot-hhea-table.hh in Headers */,
 				CD3210571C517ADB00AD5E5C /* hb-common.h in Headers */,
@@ -14468,17 +14421,14 @@
 				CD3210AA1C517ADB00AD5E5C /* hb-shape-plan.h in Headers */,
 				CD3210551C517ADB00AD5E5C /* hb-cache-private.hh in Headers */,
 				CD3210A51C517ADB00AD5E5C /* hb-set-private.hh in Headers */,
-				CD3210B61C517ADB00AD5E5C /* hb-uniscribe.h in Headers */,
 				CD3210BC1C517ADB00AD5E5C /* ucdn.h in Headers */,
 				CD32105D1C517ADB00AD5E5C /* hb-face.h in Headers */,
 				CD3210911C517ADB00AD5E5C /* hb-ot-shape-complex-myanmar-machine.hh in Headers */,
-				CD32106C1C517ADB00AD5E5C /* hb-icu.h in Headers */,
 				CD3210771C517ADB00AD5E5C /* hb-ot-hmtx-table.hh in Headers */,
 				CD3210501C517ADB00AD5E5C /* hb-buffer-deserialize-text.hh in Headers */,
 				CD3210861C517ADB00AD5E5C /* hb-ot-shape-complex-arabic-private.hh in Headers */,
 				CD3210A01C517ADB00AD5E5C /* hb-ot-shape.h in Headers */,
 				CD32104C1C517ADB00AD5E5C /* hb-atomic-private.hh in Headers */,
-				CD3210671C517ADB00AD5E5C /* hb-gobject-structs.h in Headers */,
 				CD32104E1C517ADB00AD5E5C /* hb-blob.h in Headers */,
 				CD32108E1C517ADB00AD5E5C /* hb-ot-shape-complex-indic-private.hh in Headers */,
 				CD3210791C517ADB00AD5E5C /* hb-ot-layout-gdef-table.hh in Headers */,
@@ -14536,11 +14486,8 @@
 				CD3210F21C517AE000AD5E5C /* hb-ot-layout.h in Headers */,
 				CD3211201C517AE000AD5E5C /* hb-shaper-list.hh in Headers */,
 				CD32112C1C517AE000AD5E5C /* hb.h in Headers */,
-				CD3210D71C517AE000AD5E5C /* hb-glib.h in Headers */,
-				CD3210DA1C517AE000AD5E5C /* hb-gobject.h in Headers */,
 				CD32110C1C517AE000AD5E5C /* hb-ot-shape-fallback-private.hh in Headers */,
 				CD3210E01C517AE000AD5E5C /* hb-object-private.hh in Headers */,
-				CD3210DC1C517AE000AD5E5C /* hb-graphite2.h in Headers */,
 				CD3211211C517AE000AD5E5C /* hb-shaper-private.hh in Headers */,
 				CD3210E81C517AE000AD5E5C /* hb-ot-hhea-table.hh in Headers */,
 				CD3210C91C517AE000AD5E5C /* hb-common.h in Headers */,
@@ -14550,17 +14497,14 @@
 				CD32111C1C517AE000AD5E5C /* hb-shape-plan.h in Headers */,
 				CD3210C71C517AE000AD5E5C /* hb-cache-private.hh in Headers */,
 				CD3211171C517AE000AD5E5C /* hb-set-private.hh in Headers */,
-				CD3211281C517AE000AD5E5C /* hb-uniscribe.h in Headers */,
 				CD32112E1C517AE000AD5E5C /* ucdn.h in Headers */,
 				CD3210CF1C517AE000AD5E5C /* hb-face.h in Headers */,
 				CD3211031C517AE000AD5E5C /* hb-ot-shape-complex-myanmar-machine.hh in Headers */,
-				CD3210DE1C517AE000AD5E5C /* hb-icu.h in Headers */,
 				CD3210E91C517AE000AD5E5C /* hb-ot-hmtx-table.hh in Headers */,
 				CD3210C21C517AE000AD5E5C /* hb-buffer-deserialize-text.hh in Headers */,
 				CD3210F81C517AE000AD5E5C /* hb-ot-shape-complex-arabic-private.hh in Headers */,
 				CD3211121C517AE000AD5E5C /* hb-ot-shape.h in Headers */,
 				CD3210BE1C517AE000AD5E5C /* hb-atomic-private.hh in Headers */,
-				CD3210D91C517AE000AD5E5C /* hb-gobject-structs.h in Headers */,
 				CD3210C01C517AE000AD5E5C /* hb-blob.h in Headers */,
 				CD3211001C517AE000AD5E5C /* hb-ot-shape-complex-indic-private.hh in Headers */,
 				CD3210EB1C517AE000AD5E5C /* hb-ot-layout-gdef-table.hh in Headers */,
@@ -18136,13 +18080,10 @@
 				CD3210921C517ADB00AD5E5C /* hb-ot-shape-complex-myanmar.cc in Sources */,
 				CD3210891C517ADB00AD5E5C /* hb-ot-shape-complex-arabic.cc in Sources */,
 				CD32105C1C517ADB00AD5E5C /* hb-face.cc in Sources */,
-				CD3210B51C517ADB00AD5E5C /* hb-uniscribe.cc in Sources */,
 				CD3210561C517ADB00AD5E5C /* hb-common.cc in Sources */,
 				CD32109B1C517ADB00AD5E5C /* hb-ot-shape-fallback.cc in Sources */,
 				CD3210581C517ADB00AD5E5C /* hb-coretext.cc in Sources */,
 				CD3210B11C517ADB00AD5E5C /* hb-ucdn.cc in Sources */,
-				CD3210661C517ADB00AD5E5C /* hb-gobject-structs.cc in Sources */,
-				CD3210691C517ADB00AD5E5C /* hb-graphite2.cc in Sources */,
 				CD3210AB1C517ADB00AD5E5C /* hb-shape.cc in Sources */,
 				CD3210B91C517ADB00AD5E5C /* hb-warning.cc in Sources */,
 				CD2E468E1C517FF6008E22A1 /* host.cpp in Sources */,
@@ -18154,8 +18095,6 @@
 				CD3210981C517ADB00AD5E5C /* hb-ot-shape-complex-use-table.cc in Sources */,
 				CD32105E1C517ADB00AD5E5C /* hb-fallback-shape.cc in Sources */,
 				CD3210601C517ADB00AD5E5C /* hb-font.cc in Sources */,
-				CD3210641C517ADB00AD5E5C /* hb-glib.cc in Sources */,
-				CD32106B1C517ADB00AD5E5C /* hb-icu.cc in Sources */,
 				CD32108F1C517ADB00AD5E5C /* hb-ot-shape-complex-indic-table.cc in Sources */,
 				CD3210B31C517ADB00AD5E5C /* hb-unicode.cc in Sources */,
 				CD3210BB1C517ADB00AD5E5C /* ucdn.c in Sources */,
@@ -18184,13 +18123,10 @@
 				CD3211041C517AE000AD5E5C /* hb-ot-shape-complex-myanmar.cc in Sources */,
 				CD3210FB1C517AE000AD5E5C /* hb-ot-shape-complex-arabic.cc in Sources */,
 				CD3210CE1C517AE000AD5E5C /* hb-face.cc in Sources */,
-				CD3211271C517AE000AD5E5C /* hb-uniscribe.cc in Sources */,
 				CD3210C81C517AE000AD5E5C /* hb-common.cc in Sources */,
 				CD32110D1C517AE000AD5E5C /* hb-ot-shape-fallback.cc in Sources */,
 				CD3210CA1C517AE000AD5E5C /* hb-coretext.cc in Sources */,
 				CD3211231C517AE000AD5E5C /* hb-ucdn.cc in Sources */,
-				CD3210D81C517AE000AD5E5C /* hb-gobject-structs.cc in Sources */,
-				CD3210DB1C517AE000AD5E5C /* hb-graphite2.cc in Sources */,
 				CD32111D1C517AE000AD5E5C /* hb-shape.cc in Sources */,
 				CD32112B1C517AE000AD5E5C /* hb-warning.cc in Sources */,
 				CD2E468F1C517FF6008E22A1 /* host.cpp in Sources */,
@@ -18202,8 +18138,6 @@
 				CD32110A1C517AE000AD5E5C /* hb-ot-shape-complex-use-table.cc in Sources */,
 				CD3210D01C517AE000AD5E5C /* hb-fallback-shape.cc in Sources */,
 				CD3210D21C517AE000AD5E5C /* hb-font.cc in Sources */,
-				CD3210D61C517AE000AD5E5C /* hb-glib.cc in Sources */,
-				CD3210DD1C517AE000AD5E5C /* hb-icu.cc in Sources */,
 				CD3211011C517AE000AD5E5C /* hb-ot-shape-complex-indic-table.cc in Sources */,
 				CD3211251C517AE000AD5E5C /* hb-unicode.cc in Sources */,
 				CD32112D1C517AE000AD5E5C /* ucdn.c in Sources */,
@@ -20791,6 +20725,9 @@
 					"MOAI_WITH_LIBCURL=0",
 					"MOAI_WITH_OPENSSL=0",
 					"MOAI_WITH_NSURL=1",
+					HAVE_OT,
+					HAVE_CORETEXT,
+					HAVE_UCDN,
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
@@ -22121,6 +22058,9 @@
 					"MOAI_WITH_LIBCURL=0",
 					"MOAI_WITH_OPENSSL=0",
 					"MOAI_WITH_NSURL=1",
+					HAVE_OT,
+					HAVE_CORETEXT,
+					HAVE_UCDN,
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
@@ -29428,6 +29368,9 @@
 					"MOAI_WITH_LIBCURL=0",
 					"MOAI_WITH_OPENSSL=0",
 					"MOAI_WITH_NSURL=1",
+					HAVE_OT,
+					HAVE_CORETEXT,
+					HAVE_UCDN,
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
@@ -29823,6 +29766,9 @@
 					"MOAI_WITH_LIBCURL=0",
 					"MOAI_WITH_OPENSSL=0",
 					"MOAI_WITH_NSURL=1",
+					HAVE_OT,
+					HAVE_CORETEXT,
+					HAVE_UCDN,
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
