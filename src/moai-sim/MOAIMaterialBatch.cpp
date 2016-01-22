@@ -352,6 +352,8 @@ MOAIMaterialBatch::MOAIMaterialBatch () :
 
 //----------------------------------------------------------------//
 MOAIMaterialBatch::~MOAIMaterialBatch () {
+
+	this->Clear ();
 }
 
 //----------------------------------------------------------------//
