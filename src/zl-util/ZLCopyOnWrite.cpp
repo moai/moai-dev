@@ -37,7 +37,7 @@ void* ZLCopyOnWrite::Alloc ( size_t size ) {
 	if ( !this->mInternal ) {
 	
 		this->mInternal = new ZLCopyOnWriteBuffer ();
-		this->mInternal->Retain ();;
+		this->mInternal->Retain ();
 	}
 	
 	void* buffer = malloc ( size );

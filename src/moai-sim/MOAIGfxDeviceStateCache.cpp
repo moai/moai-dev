@@ -61,6 +61,7 @@ bool MOAIGfxDeviceStateCache::BindIndexBuffer ( MOAIIndexBuffer* buffer ) {
 //----------------------------------------------------------------//
 bool MOAIGfxDeviceStateCache::BindShader ( MOAIShader* shader ) {
 
+	// TODO: why not caching shader?
 	if ( shader ) {
 		if ( !this->BindShader ( shader->GetProgram ())) return false;
 		shader->BindUniforms ();

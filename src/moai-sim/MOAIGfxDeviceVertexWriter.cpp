@@ -60,14 +60,14 @@ void MOAIGfxDeviceVertexWriter::BeginPrim ( u32 primType, u32 primSize ) {
 //----------------------------------------------------------------//
 void MOAIGfxDeviceVertexWriter::BeginPrimIndexed ( u32 primType, u32 vtxCount, u32 idxCount ) {
 	
+	this->SetPrimType ( primType );
+	
 	if ( !this->mUseIdxBuffer ||
-		( this->mTotalIndices + idxCount > this->mMaxIndices ) ||
-		( this->mTotalVertices + vtxCount > this->mMaxVertices )) {
+		(( this->mTotalIndices + idxCount ) > this->mMaxIndices ) ||
+		(( this->mTotalVertices + vtxCount ) > this->mMaxVertices )) {
 		
 		this->FlushBufferedPrims ();
 	}
-	
-	this->SetPrimType ( primType );
 	
 	this->mUseIdxBuffer		= true;
 	this->mIndexBase		= ( u16 )( this->mTotalVertices );
@@ -366,8 +366,8 @@ void MOAIGfxDeviceVertexWriter::UpdateLimits () {
 	u32 primSize	= this->mPrimSize ? this->mPrimSize : 1;
 	u32 vertexSize	= this->mVertexSize ? this->mVertexSize : 1;
 	
-	this->mMaxIndices	= this->mIdxBuffer.GetLength () / INDEX_SIZE;
-	this->mMaxVertices	= this->mVtxBuffer.GetLength() / vertexSize;
+	this->mMaxIndices	= this->mIdxBuffer.GetSize () / INDEX_SIZE;
+	this->mMaxVertices	= this->mVtxBuffer.GetSize () / vertexSize;
 	
 	u32 maxElements		= MIN ( this->mMaxIndices, this->mMaxVertices );
 	this->mMaxPrims		= ( u32 )( maxElements / primSize );
