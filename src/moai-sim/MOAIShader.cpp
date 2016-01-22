@@ -79,6 +79,7 @@ void MOAIShader::BindUniforms () {
 	if ( program ) {
 		
 		u32 nUniforms = program->mUniforms.Size ();
+		bool flushed = false;
 		
 		for ( u32 i = 0; i < nUniforms; ++i ) {
 			MOAIShaderUniform& uniform = program->mUniforms [ i ];
@@ -86,8 +87,11 @@ void MOAIShader::BindUniforms () {
 			if ( uniform.IsValid ()) {
 				//if ( uniform.SetValue ( this->mUniformBuffers [ i ], true )) {
 					uniform.SetValue ( this->mUniformBuffers [ i ], true );
-					gfxDevice.FlushBufferedPrims (); // TODO: just do this once
-					uniform.Bind ();
+					if ( !flushed ) {
+						gfxDevice.FlushBufferedPrims ();
+						flushed = true;
+					}
+					uniform.Bind (); // TODO: maybe should be handled by the state cache
 				//}
 			}
 		}
