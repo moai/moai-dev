@@ -14,6 +14,23 @@
 #include <moai-sim/MOAITextStyleMap.h>
 
 //================================================================//
+// MOAILayoutEngineState
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAILayoutEngineState::MOAILayoutEngineState () :
+	mStyleSpan ( 0 ),
+	mSpanIdx ( 0 ),
+	mCharIdx ( 0 ),
+	mSpriteIdx ( 0 ) {
+}
+
+//----------------------------------------------------------------//
+MOAILayoutEngineState::~MOAILayoutEngineState () {
+}
+	
+
+//================================================================//
 // MOAITextLayoutEngine
 //================================================================//
 
@@ -356,6 +373,14 @@ u32 MOAITextLayoutEngine::GetSpriteIndex () {
 
 //----------------------------------------------------------------//
 MOAITextLayoutEngine::MOAITextLayoutEngine () :
+	mStr ( 0 ),
+	mLineSpacingCursor ( 0.0f ),
+	mEmptyLineAscent ( 0.0f ),
+	mEmptyLineDescent ( 0.0f ),
+	mBaseLine ( 0 ),
+	mCurrentGlyphDeck ( 0 ),
+	mResetStyle ( false ),
+	mOverrun ( false ),
 	mLayoutRules ( 0 ),
 	mLayout ( 0 ),
 	mStyleCache ( 0 ),
@@ -369,7 +394,7 @@ MOAITextLayoutEngine::~MOAITextLayoutEngine () {
 //----------------------------------------------------------------//
 bool MOAITextLayoutEngine::More () {
 
-	return ( this->mStr [ this->mCharIdx ] != NULL );
+	return ( this->mStr && ( this->mStr [ this->mCharIdx ] != NULL ));
 }
 
 //----------------------------------------------------------------//

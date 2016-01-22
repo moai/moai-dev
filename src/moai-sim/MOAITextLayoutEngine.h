@@ -30,6 +30,10 @@ protected:
 	u32						mSpriteIdx;
 	ZLRect					mLineLayoutBounds;
 	ZLRect					mLineSpacingBounds;
+	
+	//----------------------------------------------------------------//
+			MOAILayoutEngineState		();
+			~MOAILayoutEngineState		();
 };
 
 //================================================================//
