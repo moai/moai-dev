@@ -35,6 +35,8 @@ void MOAIImageLoadTask::Execute () {
 //----------------------------------------------------------------//
 void MOAIImageLoadTask::Init ( cc8* filename, MOAIImage& target, u32 transform ) {
 
+	this->mTarget = &target;
+
 	this->mFilename = filename;
 	this->mTransform = transform;
 	this->mTarget->LuaRetain ();
@@ -42,6 +44,9 @@ void MOAIImageLoadTask::Init ( cc8* filename, MOAIImage& target, u32 transform )
 
 //----------------------------------------------------------------//
 void MOAIImageLoadTask::Init ( MOAIDataBuffer& data, MOAIImage& target, u32 transform ) {
+
+	this->mDataBuffer = &data;
+	this->mTarget = &target;
 
 	this->mTransform = transform;
 	this->mDataBuffer->LuaRetain ();
