@@ -65,8 +65,8 @@ int MOAIFourier::_setOutputType ( lua_State* L ) {
 	
 	u32 outputType					= state.GetValue < u32 >( 2, OUTPUT_COMPLEX );
 	u32 sampleRate					= state.GetValue < u32 >( 3, SAMPLE_RATE );
-	u32 bands						= state.GetValue < u32 >( 4, 0 );
-	float minOctaveBandWidth		= state.GetValue < float >( 5, 0.0f );
+	u32 bands						= state.GetValue < u32 >( 4, 1 ); // total bands for linear average OR bands per octave
+	float minOctaveBandWidth		= state.GetValue < float >( 5, 8.0f );
 	
 	self->SetOutputType ( outputType, sampleRate, bands, minOctaveBandWidth );
 	
@@ -255,7 +255,7 @@ void MOAIFourier::SetOutputType ( u32 outputType, u32 sampleRate, size_t bands, 
 		while (( nyquist /= 2.0f ) > minOctaveBandWidth ) {
 		  this->mOutputOctaves++;
 		}
-		this->mOutputBands = bands;
+		this->mOutputBands = bands > 0 ? bands : 1;
 	}
 	else {
 		

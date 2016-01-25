@@ -7,16 +7,6 @@
 SAMPLE_RATE = 44100
 WINDOW_SIZE = 1024
 WINDOW_BYTES = WINDOW_SIZE * 2
-OFFSET = WINDOW_SIZE / 2
-DELAY = 0.125
-
-sampleStream = MOAIMemStream.new ()
-
-sampler = MOAIAudioSamplerCocoa.new ()
-sampler:init ( 44100, 1, 2048 )
-sampler:setStream ( sampleStream )
-sampler:setListener ( MOAIAudioSamplerCocoa.EVENT_BUFFER, onSampleBufferFull )
-sampler:start ()
 
 MOAISim.openWindow ( "test", 1024, 512 )
 
@@ -29,56 +19,68 @@ layer:setViewport ( viewport )
 layer:setClearColor ( 1, 1, 1, 1 )
 MOAISim.pushRenderPass ( layer )
 
-fourier = MOAIFourier.new ()
-fourier:init ( WINDOW_SIZE )
-fourier:setOutputType ( MOAIFourier.OUTPUT_REAL )
+sampleStream = MOAIMemStream.new ()
+sampleBuffer = MOAIMemStream.new ()
 
-frequencyBuffer = MOAIByteStream.new ()
-frequencyBuffer:open ( WINDOW_SIZE * 4 * 2 )
+onSampleBufferFull = function ()
+
+	sampleStream:seek ( 0 )
+	sampleBuffer:seek ( 0 )
+
+	sampleBuffer:writeStream ( sampleStream, WINDOW_BYTES )
+
+	sampleStream:seek ( 0 )
+end
+
+sampler = MOAIAudioSamplerCocoa.new ()
+sampler:init ( 44100, 1, WINDOW_SIZE )
+sampler:setStream ( sampleStream )
+sampler:setListener ( MOAIAudioSamplerCocoa.EVENT_BUFFER, onSampleBufferFull )
+sampler:start ()
 
 startTime = MOAISim.getDeviceTime ()
 elapsedFrames = 0
 
+fourier = MOAIFourier.new ()
+fourier:init ( WINDOW_SIZE )
+fourier:setOutputType ( MOAIFourier.OUTPUT_OCTAVES )
+
+frequencyBuffer = MOAIByteStream.new ()
+frequencyBuffer:open ( WINDOW_SIZE * 4 )
+
 onDraw = function ()
 
-	local elapsedTime	= MOAISim.getDeviceTime () - startTime - DELAY
+	if sampleBuffer:getCursor () >= WINDOW_BYTES then
 
-	if elapsedTime < 0 then return end
-
-	local length		= sampleStream:getLength ()
-
-	local targetFrame	= math.floor (( elapsedTime * SAMPLE_RATE ) / WINDOW_SIZE )
-	local totalFrames	= elapsedFrames + math.floor ( length / WINDOW_BYTES )
-
-	if elapsedFrames ~= targetFrame and targetFrame < totalFrames then
-
-		sampleStream:seek (( targetFrame - elapsedFrames ) * WINDOW_BYTES )
+		sampleBuffer:seek ( 0 )
 		frequencyBuffer:seek ( 0 )
 
 		fourier:transform (
-			sampleStream,
+			sampleBuffer,
 			MOAIFourier.SAMPLE_S16,
 			false,
 			frequencyBuffer,
 			MOAIFourier.SAMPLE_FLOAT
 		)
 
-		elapsedFrames = targetFrame + 1
-		sampleStream:discardFront ()
+		sampleBuffer:seek ( 0 )
 	end
 
-	if frequencyBuffer:getLength () > 0 then
+	local length = frequencyBuffer:getLength () / 4
+
+	if length > 0 then
 
 		frequencyBuffer:seek ( 0 )
 
-		for i = 1, WINDOW_SIZE do
+		local span = WINDOW_SIZE / length
 
-			local offset = i < OFFSET and OFFSET or -OFFSET
-			local x = ( i - OFFSET ) + offset
-			local y = frequencyBuffer:readFloat () / 2
+		for i = 1, length do
+
+			local x = (( i - 1 ) * span ) - ( WINDOW_SIZE / 2 )
+			local y = math.abs ( frequencyBuffer:readFloat ()) * 128
 
 			MOAIGfxDevice.setPenColor ( 1, 0, 0, 1 )
-			MOAIDraw.drawLine ( x, 0, x, y )
+			MOAIDraw.fillRect ( x, y, x + span, 0 )
 		end
 	end
 end
