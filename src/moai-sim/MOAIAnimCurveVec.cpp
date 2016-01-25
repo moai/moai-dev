@@ -24,11 +24,17 @@ int MOAIAnimCurveVec::_getValueAtTime ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnimCurveVec, "UN" );
 
 	float time = state.GetValue < float >( 2, 0 );
-	ZLVec3D value = self->GetValue ( time );
+	
+	MOAIAnimKeySpan span = self->GetSpan ( time );
+	ZLVec3D value = self->GetValue ( span );
+	
 	state.Push ( value.mX );
 	state.Push ( value.mY );
 	state.Push ( value.mZ );
-	return 3;
+	
+	state.Push ( span.mKeyID + 1 );
+	
+	return 4;
 }
 
 //----------------------------------------------------------------//

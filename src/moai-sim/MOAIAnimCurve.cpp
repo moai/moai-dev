@@ -22,9 +22,14 @@ int MOAIAnimCurve::_getValueAtTime ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnimCurve, "UN" );
 
 	float time = state.GetValue < float >( 2, 0 );
-	float value = self->GetValue ( time );
+	
+	MOAIAnimKeySpan span = self->GetSpan ( time );
+	float value = self->GetValue ( span );
+	
 	state.Push ( value );
-	return 1;
+	state.Push ( span.mKeyID + 1 );
+	
+	return 2;
 }
 
 //----------------------------------------------------------------//

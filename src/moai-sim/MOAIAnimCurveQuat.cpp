@@ -25,15 +25,19 @@ int MOAIAnimCurveQuat::_getValueAtTime ( lua_State* L ) {
 
 	float time = state.GetValue < float >( 2, 0 );
 	
-	ZLQuaternion quat;
-	quat = self->GetValue( time );
+	MOAIAnimKeySpan span = self->GetSpan ( time );
+	ZLQuaternion quat = self->GetValue ( span );
 	
 	ZLVec3D value;
 	quat.Get ( value.mX, value.mY, value.mZ );
+
 	state.Push ( value.mX );
 	state.Push ( value.mY );
 	state.Push ( value.mZ );
-	return 3;
+	
+	state.Push ( span.mKeyID + 1 );
+	
+	return 4;
 }
 
 //----------------------------------------------------------------//
