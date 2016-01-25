@@ -8,6 +8,7 @@
 #include <zl-gfx/ZLGfx-gles.h>
 #include <zl-gfx/ZLGfxEnum.h>
 #include <zl-gfx/ZLGfxImmediate.h>
+#include <zl-util/ZLLog.h>
 
 #ifdef DEBUG
 	#define GL_LOG_ERRORS(name) this->LogErrors ( name );
@@ -573,15 +574,15 @@ void ZLGfxImmediate::LinkProgram ( ZLGfxHandle* program, bool log ) {
 //----------------------------------------------------------------//
 void ZLGfxImmediate::LogErrors ( cc8* origin ) {
 
+	bool hasErrors = false;
+
 	GLenum error = ZGL_ERROR_NONE;
 	while (( error = ZLGfxDevice::GetError ()) != ZGL_ERROR_NONE ) {
 	
-		printf ( "GL ERROR: %s - %s\n", ZLGfxDevice::GetErrorString ( error ), origin ? origin : "<unknown>" );
-		
-		#ifdef ZGL_ASSERT_ON_ERROR
-			assert ( false );
-		#endif
+		ZLLog_Error ( "GL ERROR: %s - %s\n", ZLGfxDevice::GetErrorString ( error ), origin ? origin : "<unknown>" );
+		hasErrors = true;
 	}
+	assert ( !hasErrors );
 }
 
 //----------------------------------------------------------------//

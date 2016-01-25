@@ -146,7 +146,7 @@ void MOAITextLayoutEngine::Align () {
 			sprite.mPen.mX += xOff;
 			sprite.mPen.mY += line.mOrigin.mY + ( curve ? curve->GetValue (( sprite.mPen.mX - xMin ) / width ) : 0.0f );
 			
-			printf ( "SPRITE: %f %f\n", sprite.mPen.mX, sprite.mPen.mY );
+			//printf ( "SPRITE: %f %f\n", sprite.mPen.mX, sprite.mPen.mY );
 			
 			ZLRect glyphRect = sprite.mGlyph->GetGlyphRect ( sprite.mPen.mX, sprite.mPen.mY, sprite.mScale.mX, sprite.mScale.mY );
 			glyphRect.Inflate ( sprite.mStyle->mPadding );
@@ -212,24 +212,24 @@ void MOAITextLayoutEngine::Align () {
 		}
 	}
 
-	printf ( "OFFSET: %f %f\n", this->mLayout->mXOffset, this->mLayout->mYOffset );
+//	printf ( "OFFSET: %f %f\n", this->mLayout->mXOffset, this->mLayout->mYOffset );
 
 	this->mLayout->mGlyphBounds		= glyphBounds;
 	this->mLayout->mLayoutBounds	= layoutBounds;
 	
-	printf ( "GLYPH BOUNDS: %f %f %f %f\n",
-		this->mLayout->mGlyphBounds.mXMin,
-		this->mLayout->mGlyphBounds.mYMin,
-		this->mLayout->mGlyphBounds.mXMax,
-		this->mLayout->mGlyphBounds.mYMax
-	);
-	
-	printf ( "LAYOUT BOUNDS: %f %f %f %f\n",
-		this->mLayout->mLayoutBounds.mXMin,
-		this->mLayout->mLayoutBounds.mYMin,
-		this->mLayout->mLayoutBounds.mXMax,
-		this->mLayout->mLayoutBounds.mYMax
-	);
+//	printf ( "GLYPH BOUNDS: %f %f %f %f\n",
+//		this->mLayout->mGlyphBounds.mXMin,
+//		this->mLayout->mGlyphBounds.mYMin,
+//		this->mLayout->mGlyphBounds.mXMax,
+//		this->mLayout->mGlyphBounds.mYMax
+//	);
+//	
+//	printf ( "LAYOUT BOUNDS: %f %f %f %f\n",
+//		this->mLayout->mLayoutBounds.mXMin,
+//		this->mLayout->mLayoutBounds.mYMin,
+//		this->mLayout->mLayoutBounds.mXMax,
+//		this->mLayout->mLayoutBounds.mYMax
+//	);
 }
 
 //----------------------------------------------------------------//

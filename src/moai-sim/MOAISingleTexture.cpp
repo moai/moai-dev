@@ -79,6 +79,8 @@ int MOAISingleTexture::_setFilter ( lua_State* L ) {
 	int min = state.GetValue < int >( 2, ZGL_SAMPLE_LINEAR );
 	int mag = state.GetValue < int >( 3, min );
 
+	MOAISingleTexture::CheckFilterModes ( min, mag );
+
 	self->SetFilter ( min, mag );
 
 	return 0;
@@ -105,6 +107,28 @@ int MOAISingleTexture::_setWrap ( lua_State* L ) {
 //================================================================//
 // MOAISingleTexture
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAISingleTexture::CheckFilterModes ( int min, int mag ) {
+
+	#ifdef _DEBUG
+		switch ( min ) {
+			case ZGL_SAMPLE_LINEAR_MIPMAP_LINEAR:
+			case ZGL_SAMPLE_LINEAR_MIPMAP_NEAREST:
+			case ZGL_SAMPLE_NEAREST_MIPMAP_LINEAR:
+			case ZGL_SAMPLE_NEAREST_MIPMAP_NEAREST:
+		
+				if (( mag != ZGL_SAMPLE_LINEAR ) || ( mag != ZGL_SAMPLE_NEAREST )) {
+				
+					ZLLog_Warning ( "WARNING: possibly incompatible filter modes; MIPMAP not supported for mag filter\n" );
+				}
+				break;
+				
+			default:
+				break;
+		}
+	#endif
+}
 
 //----------------------------------------------------------------//
 void MOAISingleTexture::CleanupOnError () {

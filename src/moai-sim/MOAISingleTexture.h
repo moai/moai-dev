@@ -87,6 +87,7 @@ public:
 	GET ( ZLGfxHandle*, TextureID, mGLTexID );
 
 	//----------------------------------------------------------------//
+	static void			CheckFilterModes			( int min, int mag );
 	u32					CountActiveUnits			();
 	void				DeleteTexture				();
 	u32					GetHeight					();

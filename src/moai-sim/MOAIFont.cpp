@@ -289,8 +289,13 @@ int MOAIFont::_setDefaultSize ( lua_State* L ) {
 int MOAIFont::_setFilter ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
 	
-	self->mMinFilter = state.GetValue < int >( 2, ZGL_SAMPLE_LINEAR );
-	self->mMagFilter = state.GetValue < int >( 3, self->mMinFilter );
+	int min = state.GetValue < int >( 2, ZGL_SAMPLE_LINEAR );
+	int mag = state.GetValue < int >( 3, min );
+	
+	MOAISingleTexture::CheckFilterModes ( min, mag );
+	
+	self->mMinFilter = min;
+	self->mMagFilter = mag;
 
 	return 0;
 }
