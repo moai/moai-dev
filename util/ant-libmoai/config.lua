@@ -260,7 +260,7 @@ MODULES = {
 	----------------------------------------------------------------
 	GOOGLE_PLAY_SERVICES = {
 		
-		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_GOOGLE_PLAY',
+		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_GOOGLE_PLAY_SERVICES',
 		NAMESPACE = 'com.moaisdk.googleplayservices',
 	
 		HEADER_SEARCH_PATHS = {
