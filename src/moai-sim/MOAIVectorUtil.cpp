@@ -104,7 +104,7 @@ int SafeTesselator::Tesselate ( int windingRule, int elementType, int polySize, 
 	if ( err == 0 ) {
 		tessTesselate ( this->mTess, windingRule, elementType, polySize, vertexSize, normal ? normal : ( const TESSreal* )&sNormal );
 	}
-	zl_begin_assert_env ();
+	zl_end_assert_env ();
 	return err;
 }
 

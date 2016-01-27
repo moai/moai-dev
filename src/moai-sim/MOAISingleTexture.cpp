@@ -118,8 +118,8 @@ void MOAISingleTexture::CheckFilterModes ( int min, int mag ) {
 			case ZGL_SAMPLE_NEAREST_MIPMAP_LINEAR:
 			case ZGL_SAMPLE_NEAREST_MIPMAP_NEAREST:
 		
-				if (( mag != ZGL_SAMPLE_LINEAR ) || ( mag != ZGL_SAMPLE_NEAREST )) {
-				
+				if ( !(( mag == ZGL_SAMPLE_LINEAR ) || ( mag == ZGL_SAMPLE_NEAREST ))) {
+
 					ZLLog_Warning ( "WARNING: possibly incompatible filter modes; MIPMAP not supported for mag filter\n" );
 				}
 				break;
