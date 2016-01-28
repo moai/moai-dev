@@ -189,7 +189,7 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 			ZLGfxHandle* vbo = gfx.CreateBuffer ();
 			if ( vbo ) {
 			
-				ZLSharedConstBuffer* buffer = this->GetCursor () ? this->GetBuffer () : 0;
+				ZLSharedConstBuffer* buffer = this->GetCursor () ? this->GetSharedConstBuffer () : 0;
 				
 				if ( this->mCopyOnUpdate ) {
 					buffer = gfx.CopyBuffer ( buffer );
