@@ -262,6 +262,7 @@ bool MOAIGfxBuffer::OnGPUUpdate () {
 		
 		gfx.BindBuffer ( this->mTarget, vbo );
 		gfx.BufferSubData ( this->mTarget, 0, this->GetCursor (), buffer, 0 );
+		gfx.BindBuffer ( this->mTarget, 0 );
 	
 		//u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_DYNAMIC_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
 		//zglBufferData ( this->mTarget, this->GetLength (), 0, hint );

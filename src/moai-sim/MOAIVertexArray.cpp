@@ -209,7 +209,9 @@ void MOAIVertexArray::OnGPUUnbind () {
 	if ( this->mUseVAOs ) {
 		MOAIGfxDevice::GetDrawingAPI ().BindVertexArray ( 0 );
 	}
-	this->UnbindVertexArrayItems ();
+	else {
+		this->UnbindVertexArrayItems ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -222,8 +224,10 @@ bool MOAIVertexArray::OnGPUUpdate () {
 	ZLGfxHandle* vao = this->mVAOs [ this->mCurrentVAO ];
 	
 	if ( vao ) {
-		MOAIGfxDevice::GetDrawingAPI ().BindVertexArray ( vao );
+		ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+		gfx.BindVertexArray ( vao );
 		this->BindVertexArrayItems ();
+		gfx.BindVertexArray ( 0 );
 		return true;
 	}
 	return false;
