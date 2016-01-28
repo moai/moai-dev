@@ -22,12 +22,12 @@ void MOAIVertexArrayItem::Bind ( bool useVAOs ) {
 
 	if ( this->mBuffer && this->mFormat ) {
 		
+		assert (( useVAOs && this->mBuffer->IsUsingVBOs ()) || ( !useVAOs )); // buffer objects must use VBOs to work with VAOs
+		
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
 		gfxDevice.BindVertexBuffer ( this->mBuffer );
 		gfxDevice.BindVertexFormat ( this->mFormat );
-		
-		assert (( useVAOs && this->mBuffer->IsUsingVBOs ()) || ( !useVAOs )); // buffer objects must use VBOs to work with VAOs
 	}
 }
 

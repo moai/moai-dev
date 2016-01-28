@@ -166,8 +166,8 @@ void MOAIVertexFormat::Bind ( ZLSharedConstBuffer* buffer, bool copyBuffer ) con
 		
 		const MOAIVertexAttribute& attr = this->mAttributes [ i ];
 		
-		gfx.VertexAttribPointer ( attr.mIndex, attr.mSize, attr.mType, attr.mNormalized, this->mVertexSize, buffer, attr.mOffset );
 		gfx.EnableVertexAttribArray ( attr.mIndex );
+		gfx.VertexAttribPointer ( attr.mIndex, attr.mSize, attr.mType, attr.mNormalized, this->mVertexSize, buffer, attr.mOffset );
 	}
 }
 

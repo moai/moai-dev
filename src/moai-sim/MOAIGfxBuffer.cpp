@@ -312,14 +312,16 @@ void MOAIGfxBuffer::Reserve ( u32 size ) {
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::ReserveVBOs ( u32 gpuBuffers ) {
 
+	if ( gpuBuffers < this->mVBOs.Size ()) {
+		this->mVBOs.Clear ();
+	}
+
 	if ( gpuBuffers ) {
 		this->mVBOs.Resize ( gpuBuffers, 0 );
 		this->mCurrentVBO = gpuBuffers - 1;
 	}
-	else {
-		this->mVBOs.Clear ();
-		this->mCurrentVBO = 0;
-	}
+
+	this->FinishInit ();
 }
 
 //----------------------------------------------------------------//
