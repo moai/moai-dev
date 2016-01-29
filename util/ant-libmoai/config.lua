@@ -29,7 +29,6 @@ MODULES = {
 	--   JAVA					- Imports Java source files or library components. (table)
 	--   STATIC_LIBRARIES		- Static library modules. (string)
 
---[[
 	----------------------------------------------------------------
 	ADCOLONY = {
 		
@@ -50,7 +49,7 @@ MODULES = {
 
 		STATIC_LIBRARIES = 'libmoai-adcolony',
 	},
-]]
+
 	----------------------------------------------------------------
 	ANDROID = {
 		
@@ -99,7 +98,7 @@ MODULES = {
 
 		STATIC_LIBRARIES = 'libbox2d libmoai-box2d',
 	},
---[[	
+
 	----------------------------------------------------------------
 	CHARTBOOST = {
 		
@@ -141,7 +140,7 @@ MODULES = {
 
 		STATIC_LIBRARIES = 'libmoai-crittercism',
 	},
-]]
+
 	----------------------------------------------------------------
 	CRYPTO = {
 		
@@ -212,7 +211,7 @@ MODULES = {
 
 		STATIC_LIBRARIES = 'libmoai-facebook',
 	},
---[[
+
 	----------------------------------------------------------------
 	FLURRY = {
 		
@@ -235,6 +234,7 @@ MODULES = {
 	},
 
 	----------------------------------------------------------------
+	--[[
 	
 	FMOD_EX = {
 	
@@ -485,7 +485,7 @@ MODULES = {
 
 		STATIC_LIBRARIES = 'libmoai-sim libfreetype libtess libzl-gfx',
 	},
-	--[[
+
 	----------------------------------------------------------------
 	TAPJOY = {
 		
@@ -525,7 +525,7 @@ MODULES = {
 
 		STATIC_LIBRARIES = 'libmoai-twitter',
 	},
-]]
+
 	----------------------------------------------------------------
 	UNTZ = {
 		
@@ -554,7 +554,7 @@ MODULES = {
 
 		STATIC_LIBRARIES = 'libogg libvorbis libuntz libmoai-untz',
 	},
-	--[[
+
 	----------------------------------------------------------------
 	VUNGLE = {
 		
@@ -575,7 +575,6 @@ MODULES = {
 
 		STATIC_LIBRARIES = 'libmoai-vungle',
 	},
-	]]
 }
 
 TARGETS = {
@@ -599,14 +598,14 @@ TARGETS = {
 		NAME = 'moai',
 		
 		MODULES = {
-			--'ADCOLONY',
+			'ADCOLONY',
 			'ANDROID',
 			'BOX2D',
-			--'CHARTBOOST',
+			'CHARTBOOST',
 			'CRYPTO',
 			'DELTADNA',
 			'FACEBOOK',
-			--'FLURRY',
+			'FLURRY',
 			'GOOGLE_PLAY_SERVICES',
 			'HTTP_CLIENT',
 			'HTTP_SERVER',
@@ -616,10 +615,10 @@ TARGETS = {
 			'IMAGE_WEBP',
 			'LUAEXT',
 			'SIM',
-			--'TAPJOY',
-			--'TWITTER',
+			'TAPJOY',
+			'TWITTER',
 			'UNTZ',
-			--'VUNGLE',
+			'VUNGLE',
 		},
 	},
 }
@@ -630,16 +629,16 @@ TARGETS = {
 STATIC_LINK_ORDER = {
 
 	-- integrations
-	--'libmoai-adcolony',
-	--'libmoai-chartboost',
-	--'libmoai-crittercism',
+	'libmoai-adcolony',
+	'libmoai-chartboost',
+	'libmoai-crittercism',
 	'libmoai-deltadna',
 	'libmoai-facebook',
-	--'libmoai-flurry',
+	'libmoai-flurry',
 	'libmoai-google-play-services',
-	--'libmoai-tapjoy',
-	--'libmoai-twitter',
-	--'libmoai-vungle',
+	'libmoai-tapjoy',
+	'libmoai-twitter',
+	'libmoai-vungle',
 
 	-- moai
 	'libmoai-android',
