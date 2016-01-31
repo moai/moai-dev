@@ -11,6 +11,7 @@
 // http://stackoverflow.com/questions/4364823/how-do-i-obtain-the-frequencies-of-each-value-in-a-fft
 // http://code.compartmental.net/2007/03/21/fft-averages/
 // http://stackoverflow.com/questions/20408388/how-to-filter-fft-data-for-audio-visualisation
+// http://www.ni.com/white-paper/4844/en/
 
 enum {
 	KISS_FFT,
@@ -32,6 +33,16 @@ enum {
 //================================================================//
 // lua
 //================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFourier::_countBands ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFourier, "U" )
+	
+	state.Push (( u32 )self->CountBands ());
+	
+	return 1;
+}
 
 //----------------------------------------------------------------//
 // TODO: doxygen
@@ -75,6 +86,19 @@ int MOAIFourier::_setOutputType ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIFourier::_setWindowFunction ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFourier, "U" )
+	
+	u32 func	= state.GetValue < u32 >( 1, RECTANGULAR );
+	float a		= state.GetValue < float >( 4, MOAIFourier::GetDefaultWindowAlpha ( func ));
+	
+	self->SetWindowFunction ( func, a );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIFourier::_transform ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFourier, "UUNBUN" )
 	
@@ -90,6 +114,21 @@ int MOAIFourier::_transform ( lua_State* L ) {
 		self->Transform ( *inStream, inStreamType, complexIn, *outStream, outStreamType, stride, average );
 	}
 	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFourier::_window ( lua_State* L ) {
+	MOAI_LUA_SETUP_CLASS ( "NNN" )
+	
+	u32 func	= state.GetValue < u32 >( 1, RECTANGULAR );
+	u32 index	= state.GetValue < u32 >( 2, 1 ) - 1;
+	u32 length	= state.GetValue < u32 >( 3, 0 );
+	float a		= state.GetValue < float >( 4, MOAIFourier::GetDefaultWindowAlpha ( func ));
+	
+	state.Push ( MOAIFourier::Window ( func, index, length, a ));
+	
+	return 1;
 }
 
 //================================================================//
@@ -140,6 +179,29 @@ void MOAIFourier::Clear () {
 }
 
 //----------------------------------------------------------------//
+size_t MOAIFourier::CountBands () {
+
+	switch ( this->mOutputType ) {
+			
+		case OUTPUT_COMPLEX:
+		case OUTPUT_REAL:
+		case OUTPUT_IMAGINARY:
+		case OUTPUT_AMPLITUDE:
+		
+			return this->mSize;
+		
+		case OUTPUT_AVERAGE:
+		
+			return this->mOutputBands;
+		
+		case OUTPUT_OCTAVES:
+		
+			return this->mOutputOctaves * this->mOutputBands;
+	}
+	return this->mSize;
+}
+
+//----------------------------------------------------------------//
 float MOAIFourier::GetBandWidth () {
 
 	return ( 2.0f / ( float )this->mSize ) * ( this->mSampleRate / 2.0f );
@@ -154,6 +216,15 @@ size_t MOAIFourier::GetBandForFrequency ( float frequency) {
 	if ( frequency > (( float )( this->mSampleRate >> 1 ) - hBandWidth )) return this->mSize >> 1;
 	
 	return ( u32 )ZLFloat::Round (( float )this->mSize * ( frequency / ( float )this->mSampleRate ));
+}
+
+//----------------------------------------------------------------//
+float MOAIFourier::GetDefaultWindowAlpha ( u32 func ) {
+
+	if ( func == BLACKMAN ) return 0.16;
+	if ( func == GAUSS ) return 0.25;
+	
+	return 0.0f;
 }
 
 //----------------------------------------------------------------//
@@ -185,7 +256,9 @@ MOAIFourier::MOAIFourier () :
 	mOutputType ( OUTPUT_COMPLEX ),
 	mOutputOctaves ( 0 ),
 	mOutputBands ( 0 ),
-	mSampleRate ( SAMPLE_RATE ) {
+	mSampleRate ( SAMPLE_RATE ),
+	mWindowFunction ( RECTANGULAR ),
+	mWindowAlpha ( 0.0f ) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
 }
@@ -225,15 +298,35 @@ void MOAIFourier::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "OUTPUT_AMPLITUDE",	( u32 )OUTPUT_AMPLITUDE );
 	state.SetField ( -1, "OUTPUT_AVERAGE",		( u32 )OUTPUT_AVERAGE );
 	state.SetField ( -1, "OUTPUT_OCTAVES",		( u32 )OUTPUT_OCTAVES );
+	
+	state.SetField ( -1, "BARTLETT",			( u32 )BARTLETT );
+	state.SetField ( -1, "BARTLETT_HANN",		( u32 )BARTLETT_HANN );
+	state.SetField ( -1, "BLACKMAN",			( u32 )BLACKMAN );
+	state.SetField ( -1, "COSINE",				( u32 )COSINE );
+	state.SetField ( -1, "GAUSS",				( u32 )GAUSS );
+	state.SetField ( -1, "HAMMING",				( u32 )HAMMING );
+	state.SetField ( -1, "HANN",				( u32 )HANN );
+	state.SetField ( -1, "LANCZOS",				( u32 )LANCZOS );
+	state.SetField ( -1, "RECTANGULAR",			( u32 )RECTANGULAR );
+	state.SetField ( -1, "WELCH",				( u32 )WELCH );
+	
+	luaL_Reg regTable [] = {
+		{ "window",						_window },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
 void MOAIFourier::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "countBands",					_countBands },
 		{ "getFastSize",				_getFastSize },
 		{ "init",						_init },
 		{ "setOutputType",				_setOutputType },
+		{ "setWindowFunction",			_setWindowFunction },
 		{ "transform",					_transform },
 		{ NULL, NULL }
 	};
@@ -262,6 +355,13 @@ void MOAIFourier::SetOutputType ( u32 outputType, u32 sampleRate, size_t bands, 
 		this->mOutputOctaves = 0;
 		this->mOutputBands = bands;
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIFourier::SetWindowFunction ( u32 func, float a ) {
+
+	this->mWindowFunction = func;
+	this->mWindowAlpha = a;
 }
 
 //----------------------------------------------------------------//
@@ -357,16 +457,18 @@ void MOAIFourier::Transform ( ZLStream& inStream, u32 inStreamType, bool complex
 			this->ReadSample ( inStream, inStreamType, complexIn, realResult, imagResult );
 		}
 		
+		float window = MOAIFourier::Window ( this->mWindowFunction, i, this->mSize, this->mWindowAlpha );
+		
 		if ( fftComplexIn ) {
 		
 			kiss_fft_cpx* complexBuffer = ( kiss_fft_cpx* )in;
 		
-			complexBuffer [ i ].r = realResult;
-			complexBuffer [ i ].i = imagResult;
+			complexBuffer [ i ].r = realResult * window;
+			complexBuffer [ i ].i = imagResult * window;
 		}
 		else {
 		
-			(( kiss_fft_scalar* )in )[ i ] = realResult;
+			(( kiss_fft_scalar* )in )[ i ] = realResult * window;
 		}
 		
 		if ( inStream.GetCursor () != next ) {
@@ -435,10 +537,9 @@ void MOAIFourier::Transform ( ZLStream& inStream, u32 inStreamType, bool complex
 			case OUTPUT_AVERAGE:
 			case OUTPUT_OCTAVES: {
 			
-				float amplitude = complexOut ? sqrtf (( realResult * realResult ) + ( imagResult * imagResult )) : realResult;
+				float amplitude = complexOut ? sqrtf (( realResult * realResult ) + ( imagResult * imagResult )) : ABS ( realResult );
 			
 				if ( this->mOutputType == OUTPUT_AMPLITUDE ) {
-				
 					ZLSample::WriteSample ( outStream, outStreamType, &amplitude, ZLSample::SAMPLE_FLOAT );
 				}
 				else {
@@ -466,6 +567,67 @@ void MOAIFourier::Transform ( ZLStream& inStream, u32 inStreamType, bool complex
 			this->WriteOctaves ( amplitudes, outStream, outStreamType );
 			return;
 	}
+}
+
+//----------------------------------------------------------------//
+float MOAIFourier::Window ( u32 func, size_t index, size_t length, float a ) {
+
+	double n = ( double )index;
+	double N = ( double )length;
+
+	switch ( func ) {
+	
+		case BARTLETT:
+		
+			return ( float )( 1.0 - ABS (( n - (( N - 2 ) / 2.0 )) / (( N + a ) / 2.0 )));
+
+		case BARTLETT_HANN: {
+
+			return ( float )( 0.62 - ( 0.48 * ABS (( n / ( N - 1 )) - 0.5 )) - ( 0.38 * cos (( TWOPI * n ) / ( N - 1 ))));
+		}
+
+		case BLACKMAN: {
+
+			double a0 = ( 1.0 - a ) / 2.0;
+			double a1 = 0.5;
+			double a2 = a / 2.0;
+
+			return ( float )( a0 - ( a1 * cos (( TWOPI * n ) / ( N - 1 ))) + ( a2 * cos (( 4.0 * PI * n ) / ( N - 1 ))));
+		}
+
+		case COSINE:
+
+			return ( float )( cos (( PI * n ) / ( N - 1 ) - ( PI / 2.0 )));
+
+		case GAUSS:
+
+			return ( float )pow ( M_E, -0.5 * pow (( n - ( N - 1 ) / 2.0 ) / ( a * ( N - 1 ) / 2.0 ), 2.0 ));
+
+		case HAMMING:
+	
+			return ( float )( 0.54 - ( 0.46 * cos (( TWOPI * n ) / ( N - 1 ))));
+
+		case HANN:
+
+			return 0.5 * ( 1.0 - cos (( TWOPI * n ) / ( N - 1 )));
+
+		case LANCZOS: {
+
+			double x = (( 2 * n ) / ( N - 1 )) - 1.0;
+			return ( float )( sin( PI * x ) / ( PI * x ));
+		}
+
+		case RECTANGULAR:
+		
+			return 1.0f;
+
+		case WELCH: {
+			double x = ( N - 1 ) / 2.0;
+			return ( float )( 1.0 - pow ((( n  - x ) / x ), 2.0 ));
+		}
+	}
+	
+	return 1.0f;
 }
 
 //----------------------------------------------------------------//

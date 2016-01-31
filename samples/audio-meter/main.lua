@@ -7,6 +7,7 @@
 SAMPLE_RATE = 44100
 WINDOW_SIZE = 1024
 WINDOW_BYTES = WINDOW_SIZE * 2
+BLEND = 0.125
 
 MOAISim.openWindow ( "test", 1024, 512 )
 
@@ -19,15 +20,49 @@ layer:setViewport ( viewport )
 layer:setClearColor ( 1, 1, 1, 1 )
 MOAISim.pushRenderPass ( layer )
 
+fourier = MOAIFourier.new ()
+fourier:init ( WINDOW_SIZE )
+fourier:setOutputType ( MOAIFourier.OUTPUT_OCTAVES, 44100, 3, 1024 * 4 )
+fourier:setWindowFunction ( MOAIFourier.HANN )
+
+bands = fourier:countBands ()
+
+octaves = MOAIByteStream.new ()
+octaves:open ( bands * 4 )
+
+meter = MOAIByteStream.new ()
+meter:open ( bands * 4 )
+
+for i = 1, bands do
+	meter:writeFloat ( 0 )
+end
+
 sampleStream = MOAIMemStream.new ()
-sampleBuffer = MOAIMemStream.new ()
 
 onSampleBufferFull = function ()
 
 	sampleStream:seek ( 0 )
-	sampleBuffer:seek ( 0 )
+	octaves:seek ( 0 )
 
-	sampleBuffer:writeStream ( sampleStream, WINDOW_BYTES )
+	fourier:transform (
+		sampleStream,
+		MOAIFourier.SAMPLE_S16,
+		false,
+		octaves,
+		MOAIFourier.SAMPLE_FLOAT
+	)
+
+	octaves:seek ( 0 )
+	meter:seek ( 0 )
+
+	for i = 1, bands do
+
+		local newResult = octaves:readFloat ()
+		local oldResult = meter:readFloat ()
+
+		meter:seek ( meter:getCursor () - 4 )
+		meter:writeFloat (( newResult * BLEND ) + ( oldResult * ( 1 - BLEND )))
+	end
 
 	sampleStream:seek ( 0 )
 end
@@ -41,47 +76,19 @@ sampler:start ()
 startTime = MOAISim.getDeviceTime ()
 elapsedFrames = 0
 
-fourier = MOAIFourier.new ()
-fourier:init ( WINDOW_SIZE )
-fourier:setOutputType ( MOAIFourier.OUTPUT_OCTAVES )
-
-frequencyBuffer = MOAIByteStream.new ()
-frequencyBuffer:open ( WINDOW_SIZE * 4 )
-
 onDraw = function ()
 
-	if sampleBuffer:getCursor () >= WINDOW_BYTES then
+	meter:seek ( 0 )
 
-		sampleBuffer:seek ( 0 )
-		frequencyBuffer:seek ( 0 )
+	local span = 1024 / bands
 
-		fourier:transform (
-			sampleBuffer,
-			MOAIFourier.SAMPLE_S16,
-			false,
-			frequencyBuffer,
-			MOAIFourier.SAMPLE_FLOAT
-		)
+	for i = 1, bands do
 
-		sampleBuffer:seek ( 0 )
-	end
+		local x = (( i - 1 ) * span ) - ( 1024 / 2 )
+		local y = ( meter:readFloat () * 128 ) - 256
 
-	local length = frequencyBuffer:getLength () / 4
-
-	if length > 0 then
-
-		frequencyBuffer:seek ( 0 )
-
-		local span = WINDOW_SIZE / length
-
-		for i = 1, length do
-
-			local x = (( i - 1 ) * span ) - ( WINDOW_SIZE / 2 )
-			local y = math.abs ( frequencyBuffer:readFloat ()) * 128
-
-			MOAIGfxDevice.setPenColor ( 1, 0, 0, 1 )
-			MOAIDraw.fillRect ( x, y, x + span, 0 )
-		end
+		MOAIGfxDevice.setPenColor ( 1, 0, 0, 1 )
+		MOAIDraw.fillRect ( x, y, x + span, -256 )
 	end
 end
 
