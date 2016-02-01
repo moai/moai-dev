@@ -272,7 +272,7 @@ int MOAIDraw::_drawAnimCurve ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: implement
 int MOAIDraw::_drawAxisGrid ( lua_State* L ) {
 	UNUSED ( L );
 	return 0;
@@ -366,7 +366,15 @@ int MOAIDraw::_drawCircle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	drawCircleSpokes
+	@text	Draw the spokes of a circle.
+	
+	@in		number x
+	@in		number y
+	@in		number r
+	@in		number steps
+	@out	nil
+*/
 int MOAIDraw::_drawCircleSpokes ( lua_State* L ) {
 
 	MOAILuaState state ( L );
@@ -429,7 +437,16 @@ int MOAIDraw::_drawEllipse ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	drawCircleSpokes
+	@text	Draw the spokes of an ellipse.
+	
+	@in		number x
+	@in		number y
+	@in		number xRad
+	@in		number yRad
+	@in		number steps
+	@out	nil
+*/
 int MOAIDraw::_drawEllipseSpokes ( lua_State* L ) {
 
 	MOAILuaState state ( L );
@@ -446,7 +463,7 @@ int MOAIDraw::_drawEllipseSpokes ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: implement
 int MOAIDraw::_drawGrid ( lua_State* L ) {
 	UNUSED ( L );
 	return 0;

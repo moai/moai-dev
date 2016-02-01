@@ -171,7 +171,14 @@ int MOAIAction::_getChildren ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	hasChildren
+	@text	Returns 'true; if action has children and the number of
+			children.
+
+	@in		MOAIAction self
+	@out	boolean hasChildren
+	@out	number nChildren
+*/
 int MOAIAction::_hasChildren ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" )
 

@@ -21,8 +21,8 @@ layer:setClearColor ( 1, 1, 1, 1 )
 MOAISim.pushRenderPass ( layer )
 
 fourier = MOAIFourier.new ()
-fourier:init ( WINDOW_SIZE )
-fourier:setOutputType ( MOAIFourier.OUTPUT_OCTAVES, 44100, 3 )
+fourier:init ( WINDOW_SIZE, true )
+fourier:setOutputType ( MOAIFourier.OUTPUT_OCTAVES, 3, 44100 )
 fourier:setWindowFunction ( MOAIFourier.HANN )
 
 --for i = 1, WINDOW_SIZE do

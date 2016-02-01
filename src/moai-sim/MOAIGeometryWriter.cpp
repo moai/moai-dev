@@ -336,7 +336,7 @@ int MOAIGeometryWriter::_writeBox ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: implement
 int MOAIGeometryWriter::_writeCone ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 	return 0;
@@ -386,21 +386,21 @@ int MOAIGeometryWriter::_writeCube ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: implement
 int MOAIGeometryWriter::_writeCylinder ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 	return 0;
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: implement
 int MOAIGeometryWriter::_writeIcoSphere ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 	return 0;
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// TODO: implement
 int MOAIGeometryWriter::_writeUVSphere ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 	return 0;

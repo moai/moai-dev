@@ -106,7 +106,7 @@ public:
 					~MOAIFourier						();
 	void			RegisterLuaClass					( MOAILuaState& state );
 	void			RegisterLuaFuncs					( MOAILuaState& state );
-	void			SetOutputType						( u32 outputType, u32 sampleRate, size_t bands, float minOctaveBandWidth );
+	void			SetOutputType						( u32 outputType, size_t bands, u32 sampleRate, float minOctaveBandWidth );
 	void			SetWindowFunction					( u32 func, float a );
 	void			Transform							( ZLStream& inStream, u32 inStreamType, bool complexIn, ZLStream& outStream, u32 outStreamType, u32 stride, u32 average );
 };

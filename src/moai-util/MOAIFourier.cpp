@@ -35,7 +35,15 @@ enum {
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	countBands
+	@text	Returns the number of bands. Only valid for OUTPUT_AVERAGE or
+			OUTPUT_OCTAVES. If the former, the total number of bands. If
+			the latter, the total number of octaves times the number of
+			bands per octave.
+	
+	@in		MOAIFourier fourier
+	@out	number nBands
+*/
 int MOAIFourier::_countBands ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFourier, "U" )
 	
@@ -44,7 +52,12 @@ int MOAIFourier::_countBands ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	countOctaves
+	@text	Returns the number of octaves. Only valid for OUTPUT_OCTAVES.
+	
+	@in		MOAIFourier fourier
+	@out	number nOctaves
+*/
 int MOAIFourier::_countOctaves ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFourier, "U" )
 	
@@ -53,16 +66,29 @@ int MOAIFourier::_countOctaves ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getBinForFrequency
+	@text	Given a frequency, returns the bin index.
+	
+	@in		MOAIFourier fourier
+	@in		number frequency
+	@out	number bin
+*/
 int MOAIFourier::_getBinForFrequency ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFourier, "U" )
 	
-	state.Push (( u32 )self->GetBinForFrequency ( state.GetValue < float >( 2, 0.0f )));
+	state.Push (( u32 )self->GetBinForFrequency ( state.GetValue < float >( 2, 0.0f )) + 1 );
 	return 1;
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getCenterFrequencyForBand
+	@text	Given a band index, returns the center frequency. Size and
+			placement of bands depends on output mode.
+	
+	@in		MOAIFourier fourier
+	@in		number band
+	@out	number centerFrequency
+*/
 int MOAIFourier::_getCenterFrequencyForBand ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFourier, "U" )
 
@@ -71,7 +97,13 @@ int MOAIFourier::_getCenterFrequencyForBand ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getCenterFrequencyForOctave
+	@text	Given an octave index, returns the center frequency.
+	
+	@in		MOAIFourier fourier
+	@in		number octave
+	@out	number centerFrequency
+*/
 int MOAIFourier::_getCenterFrequencyForOctave ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFourier, "U" )
 
@@ -80,7 +112,14 @@ int MOAIFourier::_getCenterFrequencyForOctave ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getFastSize
+	@text	Return an optimal FFT size equal to or matching the given
+			size.
+	
+	@in		MOAIFourier fourier
+	@in		number size
+	@out	number fastSize
+*/
 int MOAIFourier::_getFastSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFourier, "U" )
 	
@@ -91,7 +130,13 @@ int MOAIFourier::_getFastSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getFrequencyForBin
+	@text	Given a bin index, return the frequency.
+	
+	@in		MOAIFourier fourier
+	@in		number bin
+	@out	number frequency
+*/
 int MOAIFourier::_getFrequencyForBin ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFourier, "U" )
 	
@@ -100,7 +145,12 @@ int MOAIFourier::_getFrequencyForBin ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getWidth
+	@text	Return the total frequency width of for the FFT size.
+	
+	@in		MOAIFourier fourier
+	@out	number width
+*/
 int MOAIFourier::_getWidth ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFourier, "U" )
 
@@ -109,7 +159,14 @@ int MOAIFourier::_getWidth ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getWidth
+	@text	Return the width of the given band. Size and
+			placement of bands depends on output mode.
+	
+	@in		MOAIFourier fourier
+	@in		number band
+	@out	number width
+*/
 int MOAIFourier::_getWidthOfBand ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFourier, "U" )
 
@@ -118,7 +175,13 @@ int MOAIFourier::_getWidthOfBand ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getWidthOfOctave
+	@text	Return the width of the given octave.
+	
+	@in		MOAIFourier fourier
+	@in		number octave
+	@out	number width
+*/
 int MOAIFourier::_getWidthOfOctave ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFourier, "U" )
 
@@ -127,7 +190,15 @@ int MOAIFourier::_getWidthOfOctave ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	init
+	@text	Initialize the FFT's internal buffers.
+	
+	@in		MOAIFourier fourier
+	@in		number size				FFT size; number of bins.
+	@in		bool inverse			'true' for a inverse FFT.
+	
+	@out	nil
+*/
 int MOAIFourier::_init ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFourier, "U" )
 	
@@ -139,21 +210,54 @@ int MOAIFourier::_init ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setOutputType
+	@text	Set the desired output mode of the FFT. One of MOAIFourier.OUTPUT_COMPLEX,
+			MOAIFourier.OUTPUT_REAL, MOAIFourier.OUTPUT_IMAGINARY, MOAIFourier.OUTPUT_AMPLITUDE,
+			MOAIFourier.OUTPUT_AVERAGE or MOAIFourier.OUTPUT_OCTAVES.
+			
+			The additional two parameters ('bands' and 'minOctaveBandWidth') only apply to
+			OUTPUT_AVERAGE and OUTPUT_OCTAVES.
+ 
+			The meaning of the 'bands' is interpreted differently if type is OUTPUT_AVERAGE or
+			OUTPUT_OCTAVES. If OUTPUT_AVERAGE, it is the total number of bands to generate,
+			applied linearly over all bins. If OUTPUT_OCTAVES, it is the total number of bands
+			per octave. As the final number of octaves is computed based on the number of bins,
+			the sample rate and the minimum octave width, the total number of bands will
+			be the given number of bands times the result of countOctaves ().
+	
+	@in		MOAIFourier fourier
+	@in		number outputType			FFT size.
+	@in		number bands				Total bands if OUTPUT_AVERAGE. Bands per octave if OUTPUT_OCTAVES.
+	@in		number sampleRate			Used for octave width calculations.
+	@in		number minOctaveBandWidth	USed for computing number of octaves.
+	@out	nil
+*/
 int MOAIFourier::_setOutputType ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFourier, "U" )
 	
 	u32 outputType					= state.GetValue < u32 >( 2, OUTPUT_COMPLEX );
-	u32 sampleRate					= state.GetValue < u32 >( 3, SAMPLE_RATE );
-	u32 bands						= state.GetValue < u32 >( 4, 1 ); // total bands for linear average OR bands per octave
+	u32 bands						= state.GetValue < u32 >( 3, 1 ); // total bands for linear average OR bands per octave
+	u32 sampleRate					= state.GetValue < u32 >( 4, SAMPLE_RATE );
 	float minOctaveBandWidth		= state.GetValue < float >( 5, 0.0f );
 	
-	self->SetOutputType ( outputType, sampleRate, bands, minOctaveBandWidth );
+	self->SetOutputType ( outputType, bands, sampleRate, minOctaveBandWidth );
 	return 0;
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setWindowFunction
+	@text	Set or clear the window function to apply. One of MOAIFourier.BARTLETT,
+			MOAIFourier.BARTLETT_HANN, MOAIFourier.BLACKMAN, MOAIFourier.COSINE,
+			MOAIFourier.GAUSS, MOAIFourier.HAMMING, MOAIFourier.HANN, MOAIFourier.LANCZOS,
+			MOAIFourier.RECTANGULAR, MOAIFourier.WELCH.
+	
+			BLACKMAN and GAUSS both accept an alpha parameter.
+	
+	@in		MOAIFourier fourier
+	@opt	number windowType			Type of window to apply. Pass 'RECTANGULAR' or nil to clear.
+	@opt	number alpha				Alpha parameter for windows that use it (BLACKMAN and GAUSS).
+	@out	nil
+*/
 int MOAIFourier::_setWindowFunction ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFourier, "U" )
 	
@@ -165,7 +269,27 @@ int MOAIFourier::_setWindowFunction ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	transform
+	@text	Apply the FFT to the input stream and write the result to
+			the output stream.
+			
+			Stream types ('inStreamType' and 'outStreamType') define the sample
+			type held in the stream. One of MOAIFourier.SAMPLE_S8, MOAIFourier.SAMPLE_U8,
+			MOAIFourier.SAMPLE_S16, MOAIFourier.SAMPLE_U16, MOAIFourier.SAMPLE_S32,
+			MOAIFourier.SAMPLE_U32, MOAIFourier.SAMPLE_FLOAT. For audio processing,
+			input stream sample type will typically be SAMPLE_S16 and output stream
+			sample type will be SAMPLE_FLOAT.
+	
+	@in		MOAIFourier fourier
+	@in		MOAIStream inStream
+	@in		number inStreamType
+	@in		boolean complexIn				'true' is input stream contains both real and imaginary samples.
+	@in		MOAIStream outStream
+	@in		number outStreamType
+	@opt	number inputStreamStride		Number of samples to advance input stream when reading.
+	@opt	number inputStreamAverage		Number of samples to average when reading input stream.
+	@out	nil
+*/
 int MOAIFourier::_transform ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFourier, "UUNBUN" )
 	
@@ -184,7 +308,19 @@ int MOAIFourier::_transform ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	window
+	@text	Given a window function and an FFT length, returns the value
+			of the window given a bin index.
+	
+			See the documentation for setWindowFunction () for a list of
+			valid window types.
+	
+	@in		number windowType
+	@in		number index
+	@in		number length
+	@opt	number alpha
+	@out	nil
+*/
 int MOAIFourier::_window ( lua_State* L ) {
 	MOAI_LUA_SETUP_CLASS ( "NNN" )
 	
@@ -346,8 +482,8 @@ float MOAIFourier::GetWidthOfOctave ( size_t octave ) {
 void MOAIFourier::Init ( size_t size, bool inverse ) {
 
 	this->Clear ();
-	this->mSize		= size;
-	this->mInverse	= inverse;
+	this->mSize			= size;
+	this->mInverse		= inverse;
 }
 
 //----------------------------------------------------------------//
@@ -445,7 +581,7 @@ void MOAIFourier::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFourier::SetOutputType ( u32 outputType, u32 sampleRate, size_t bands, float minOctaveBandWidth ) {
+void MOAIFourier::SetOutputType ( u32 outputType, size_t bands, u32 sampleRate, float minOctaveBandWidth ) {
 
 	this->mOutputType = outputType;
 	this->mSampleRate = sampleRate;
@@ -737,6 +873,7 @@ float MOAIFourier::Window ( u32 func, size_t index, size_t length, float a ) {
 			return 1.0f;
 
 		case WELCH: {
+		
 			double x = ( N - 1 ) / 2.0;
 			return ( float )( 1.0 - pow ((( n  - x ) / x ), 2.0 ));
 		}
