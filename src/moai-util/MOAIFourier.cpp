@@ -40,7 +40,33 @@ int MOAIFourier::_countBands ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFourier, "U" )
 	
 	state.Push (( u32 )self->CountBands ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFourier::_countOctaves ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFourier, "U" )
 	
+	state.Push (( u32 )self->CountOctaves ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFourier::_getCenterFrequencyForBand ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFourier, "U" )
+
+	state.Push ( self->GetCenterFrequencyForBand ( state.GetValue < u32 >( 2, 1 ) - 1 ));
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFourier::_getCenterFrequencyForOctave ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFourier, "U" )
+
+	state.Push ( self->GetCenterFrequencyForOctave ( state.GetValue < u32 >( 2, 1 ) - 1 ));
 	return 1;
 }
 
@@ -52,7 +78,51 @@ int MOAIFourier::_getFastSize ( lua_State* L ) {
 	int size = state.GetValue < int >( 2, 0 );
 	
 	state.Push ( kiss_fft_next_fast_size ( size ));
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFourier::_getFrequencyForIndex ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFourier, "U" )
 	
+	state.Push (( float )self->GetFrequencyForIndex ( state.GetValue < u32 >( 2, 1 ) - 1 ));
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFourier::_getIndexForFrequency ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFourier, "U" )
+	
+	state.Push (( u32 )self->GetIndexForFrequency ( state.GetValue < float >( 2, 0.0f )));
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFourier::_getWidth ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFourier, "U" )
+
+	state.Push ( self->GetWidth ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFourier::_getWidthOfBand ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFourier, "U" )
+
+	state.Push ( self->GetWidthOfBand ( state.GetValue < u32 >( 2, 1 ) - 1 ));
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFourier::_getWidthOfOctave ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFourier, "U" )
+
+	state.Push ( self->GetWidthOfOctave ( state.GetValue < u32 >( 2, 1 ) - 1 ));
 	return 1;
 }
 
@@ -65,7 +135,6 @@ int MOAIFourier::_init ( lua_State* L ) {
 	bool inverse	= state.GetValue < bool >( 3, false );
 	
 	self->Init ( size, inverse );
-	
 	return 0;
 }
 
@@ -77,10 +146,9 @@ int MOAIFourier::_setOutputType ( lua_State* L ) {
 	u32 outputType					= state.GetValue < u32 >( 2, OUTPUT_COMPLEX );
 	u32 sampleRate					= state.GetValue < u32 >( 3, SAMPLE_RATE );
 	u32 bands						= state.GetValue < u32 >( 4, 1 ); // total bands for linear average OR bands per octave
-	float minOctaveBandWidth		= state.GetValue < float >( 5, 8.0f );
+	float minOctaveBandWidth		= state.GetValue < float >( 5, 0.0f );
 	
 	self->SetOutputType ( outputType, sampleRate, bands, minOctaveBandWidth );
-	
 	return 0;
 }
 
@@ -93,7 +161,6 @@ int MOAIFourier::_setWindowFunction ( lua_State* L ) {
 	float a		= state.GetValue < float >( 4, MOAIFourier::GetDefaultWindowAlpha ( func ));
 	
 	self->SetWindowFunction ( func, a );
-	
 	return 0;
 }
 
@@ -127,7 +194,6 @@ int MOAIFourier::_window ( lua_State* L ) {
 	float a		= state.GetValue < float >( 4, MOAIFourier::GetDefaultWindowAlpha ( func ));
 	
 	state.Push ( MOAIFourier::Window ( func, index, length, a ));
-	
 	return 1;
 }
 
@@ -153,18 +219,6 @@ void MOAIFourier::Affirm ( u32 fft ) {
 }
 
 //----------------------------------------------------------------//
-size_t MOAIFourier::CalculateOctaveBands ( float minBandWidth, size_t bandsPerOctave ) {
-
-	float nyquist = ( float )this->mSampleRate / 2.0f;
-	
-	size_t octaves = 1;
-	while (( nyquist /= 2.0f ) > minBandWidth ) {
-      octaves++;
-    }
-    return octaves * bandsPerOctave;
-}
-
-//----------------------------------------------------------------//
 void MOAIFourier::Clear () {
 
 	if ( this->mKissFFT ) {
@@ -181,41 +235,44 @@ void MOAIFourier::Clear () {
 //----------------------------------------------------------------//
 size_t MOAIFourier::CountBands () {
 
-	switch ( this->mOutputType ) {
-			
-		case OUTPUT_COMPLEX:
-		case OUTPUT_REAL:
-		case OUTPUT_IMAGINARY:
-		case OUTPUT_AMPLITUDE:
+	return this->mOutputBands;
+}
+
+//----------------------------------------------------------------//
+size_t MOAIFourier::CountOctaves () {
+
+	return this->mOutputOctaves;
+}
+
+//----------------------------------------------------------------//
+float MOAIFourier::GetCenterFrequencyForBand ( size_t band ) {
+
+	if ( this->mOutputType == OUTPUT_OCTAVES ) {
+
+		float lowerBound;
+		float upperBound;
 		
-			return this->mSize;
+		this->GetOctaveFrequencyBounds (( size_t )( band / this->mBandsPerOctave ), lowerBound, upperBound );
 		
-		case OUTPUT_AVERAGE:
+		float step = ( upperBound - lowerBound ) / ( float )this->mBandsPerOctave;
 		
-			return this->mOutputBands;
-		
-		case OUTPUT_OCTAVES:
-		
-			return this->mOutputOctaves * this->mOutputBands;
+		return lowerBound + (( float )( band % this->mBandsPerOctave ) * step ) + ( step * 0.5f );
 	}
-	return this->mSize;
-}
-
-//----------------------------------------------------------------//
-float MOAIFourier::GetBandWidth () {
-
-	return ( 2.0f / ( float )this->mSize ) * ( this->mSampleRate / 2.0f );
-}
-
-//----------------------------------------------------------------//
-size_t MOAIFourier::GetBandForFrequency ( float frequency) {
-
-	float hBandWidth = this->GetBandWidth () / 2.0f;
-
-	if ( frequency < hBandWidth ) return 0;
-	if ( frequency > (( float )( this->mSampleRate >> 1 ) - hBandWidth )) return this->mSize >> 1;
 	
-	return ( u32 )ZLFloat::Round (( float )this->mSize * ( frequency / ( float )this->mSampleRate ));
+	float step = this->GetWidthOfBand ( band );
+	
+	return (( float )band * step ) + ( step * 0.5 );
+}
+
+//----------------------------------------------------------------//
+float MOAIFourier::GetCenterFrequencyForOctave ( size_t octave ) {
+
+	float lowerBound;
+	float upperBound;
+
+	this->GetOctaveFrequencyBounds ( octave, lowerBound, upperBound );
+	
+	return ( upperBound - lowerBound ) * 0.5f;
 }
 
 //----------------------------------------------------------------//
@@ -234,9 +291,55 @@ size_t MOAIFourier::GetFastSize ( size_t size ) {
 }
 
 //----------------------------------------------------------------//
-float MOAIFourier::GetFrequencyForBand ( size_t band ) {
+float MOAIFourier::GetFrequencyForIndex ( size_t index ) {
 
-	return (( float )band * ( float )this->mSampleRate ) / ( float )this->mSize;
+	return (( float )index * ( float )this->mSampleRate ) / ( float )this->mSize;
+}
+
+//----------------------------------------------------------------//
+size_t MOAIFourier::GetIndexForFrequency ( float frequency ) {
+
+	float hBandWidth = this->GetWidth () / 2.0f;
+
+	if ( frequency < hBandWidth ) return 0;
+	if ( frequency > (( float )( this->mSampleRate >> 1 ) - hBandWidth )) return this->mSize >> 1;
+	
+	return ( u32 )ZLFloat::Round (( float )this->mSize * ( frequency / ( float )this->mSampleRate ));
+}
+
+//----------------------------------------------------------------//
+void MOAIFourier::GetOctaveFrequencyBounds ( size_t octave, float& lowerBound, float& upperBound ) {
+
+	size_t hSampleRate = this->mSampleRate >> 1;
+
+	lowerBound = octave == 0 ? 0.0f : (( float )hSampleRate / powf ( 2.0f, ( float )( this->mOutputOctaves - octave )));
+	upperBound = (( float )hSampleRate / powf ( 2.0f, ( float )( this->mOutputOctaves - octave - 1 )));
+}
+
+//----------------------------------------------------------------//
+float MOAIFourier::GetWidth () {
+
+	return ( 2.0f / ( float )this->mSize ) * ( this->mSampleRate / 2.0f );
+}
+
+//----------------------------------------------------------------//
+float MOAIFourier::GetWidthOfBand ( size_t band ) {
+
+	if ( this->mOutputType == OUTPUT_OCTAVES ) {
+		return this->GetWidthOfOctave (( size_t )( band / this->mBandsPerOctave )) / ( float )this->mBandsPerOctave;
+	}
+	return this->GetWidth () / ( float )this->mOutputBands;
+}
+
+//----------------------------------------------------------------//
+float MOAIFourier::GetWidthOfOctave ( size_t octave ) {
+
+	float lowerBound;
+	float upperBound;
+	
+	this->GetOctaveFrequencyBounds ( octave, lowerBound, upperBound );
+
+	return upperBound - lowerBound;
 }
 
 //----------------------------------------------------------------//
@@ -253,10 +356,11 @@ MOAIFourier::MOAIFourier () :
 	mInverse ( false ),
 	mKissFFT ( 0 ),
 	mKissFFTR ( 0 ),
-	mOutputType ( OUTPUT_COMPLEX ),
-	mOutputOctaves ( 0 ),
-	mOutputBands ( 0 ),
 	mSampleRate ( SAMPLE_RATE ),
+	mOutputType ( OUTPUT_COMPLEX ),
+	mOutputBands ( 0 ),
+	mOutputOctaves ( 0 ),
+	mBandsPerOctave ( 0 ),
 	mWindowFunction ( RECTANGULAR ),
 	mWindowAlpha ( 0.0f ) {
 	
@@ -323,7 +427,13 @@ void MOAIFourier::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "countBands",					_countBands },
+		{ "countOctaves",				_countOctaves },
 		{ "getFastSize",				_getFastSize },
+		{ "getFrequencyForIndex",		_getFrequencyForIndex },
+		{ "getIndexForFrequency",		_getIndexForFrequency },
+		{ "getWidth",					_getWidth },
+		{ "getWidthOfBand",				_getWidthOfBand },
+		{ "getWidthOfOctave",			_getWidthOfOctave },
 		{ "init",						_init },
 		{ "setOutputType",				_setOutputType },
 		{ "setWindowFunction",			_setWindowFunction },
@@ -342,18 +452,23 @@ void MOAIFourier::SetOutputType ( u32 outputType, u32 sampleRate, size_t bands, 
 	
 	if ( outputType == OUTPUT_OCTAVES ) {
 		
+		float firstFreq = this->GetFrequencyForIndex ( 1 );
+		minOctaveBandWidth = minOctaveBandWidth < firstFreq ? firstFreq : minOctaveBandWidth;
+		
 		float nyquist = ( float )this->mSampleRate / 2.0f;
 	
 		this->mOutputOctaves = 1;
-		while (( nyquist /= 2.0f ) > minOctaveBandWidth ) {
+		while (( nyquist /= 2.0f ) >= minOctaveBandWidth ) {
 		  this->mOutputOctaves++;
 		}
-		this->mOutputBands = bands > 0 ? bands : 1;
+		this->mBandsPerOctave = bands > 0 ? bands : 1;
+		this->mOutputBands = this->mOutputOctaves * this->mBandsPerOctave;
 	}
 	else {
 		
-		this->mOutputOctaves = 0;
 		this->mOutputBands = bands;
+		this->mOutputOctaves = 0;
+		this->mBandsPerOctave = 0;
 	}
 }
 
@@ -653,27 +768,31 @@ void MOAIFourier::WriteAverage ( float* amplitudes, ZLStream& outStream, u32 out
 //----------------------------------------------------------------//
 void MOAIFourier::WriteOctaves ( float* amplitudes, ZLStream& outStream, u32 outStreamType ) {
 
-	size_t hSampleRate = this->mSampleRate >> 1;
-
-	size_t totalBands = this->mOutputOctaves * this->mOutputBands;
-
-	float powScalar = 1.0f / ( float )this->mOutputBands;
-
-	for ( size_t i = 0; i < totalBands; i++ ) {
+	for ( size_t i = 0; i < this->mOutputOctaves; i++ ) {
 		
-		float lowerBound	= i == 0 ? 0.0f : (( float )hSampleRate / powf ( 2.0f, ( totalBands - ( float )i )) * powScalar );
-		float upperBound	= (( float )hSampleRate / powf ( 2.0f, (( totalBands - 1 ) - ( float )i )) * powScalar );
+		float lowerBound;
+		float upperBound;
 		
-		size_t lowerBand = this->GetBandForFrequency ( lowerBound );
-		size_t upperBand = this->GetBandForFrequency ( upperBound );
+		this->GetOctaveFrequencyBounds ( i, lowerBound, upperBound );
 		
-		float avg = 0.0f;
-		float div = 1.0f / ( float )( upperBand - lowerBand + 1 );
+		float step = ( upperBound - lowerBound ) / ( float )this->mBandsPerOctave;
 		
-		for ( size_t j = lowerBand; j <= upperBand; j++ ) {
-			avg += amplitudes [ j ] * div;
+		float freq = lowerBound;
+		for ( size_t j = 0; j < this->mBandsPerOctave; ++j ) {
+		
+			size_t lowerBand = this->GetIndexForFrequency ( freq );
+			size_t upperBand = this->GetIndexForFrequency ( freq + step );
+			
+			float avg = 0.0f;
+			float div = 1.0f / ( float )( upperBand - lowerBand + 1 );
+			
+			for ( size_t k = lowerBand; k <= upperBand; k++ ) {
+				avg += amplitudes [ k ] * div;
+			}
+			
+			ZLSample::WriteSample ( outStream, outStreamType, &avg, ZLSample::SAMPLE_FLOAT );
+			
+			freq += step;
 		}
-		
-		ZLSample::WriteSample ( outStream, outStreamType, &avg, ZLSample::SAMPLE_FLOAT );
 	}
 }

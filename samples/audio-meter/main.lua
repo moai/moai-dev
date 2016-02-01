@@ -22,8 +22,16 @@ MOAISim.pushRenderPass ( layer )
 
 fourier = MOAIFourier.new ()
 fourier:init ( WINDOW_SIZE )
-fourier:setOutputType ( MOAIFourier.OUTPUT_OCTAVES, 44100, 3, 1024 * 4 )
+fourier:setOutputType ( MOAIFourier.OUTPUT_OCTAVES, 44100, 3 )
 fourier:setWindowFunction ( MOAIFourier.HANN )
+
+--for i = 1, WINDOW_SIZE do
+--	print ( 'index', i, fourier:getFrequencyForIndex ( i ))
+--end
+
+--for i = 1, fourier:countOctaves () do
+--	print ( 'octave', i, fourier:getWidthOfOctave ( i ))
+--end
 
 bands = fourier:countBands ()
 
@@ -85,7 +93,7 @@ onDraw = function ()
 	for i = 1, bands do
 
 		local x = (( i - 1 ) * span ) - ( 1024 / 2 )
-		local y = ( meter:readFloat () * 128 ) - 256
+		local y = ( meter:readFloat () * 64 ) - 256
 
 		MOAIGfxDevice.setPenColor ( 1, 0, 0, 1 )
 		MOAIDraw.fillRect ( x, y, x + span, -256 )
