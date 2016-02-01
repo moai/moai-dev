@@ -40,11 +40,11 @@ private:
 	//----------------------------------------------------------------//
 	static int		_countBands						( lua_State* L );
 	static int		_countOctaves					( lua_State* L );
+	static int		_getBinForFrequency				( lua_State* L );
 	static int		_getCenterFrequencyForBand		( lua_State* L );
 	static int		_getCenterFrequencyForOctave	( lua_State* L );
 	static int		_getFastSize					( lua_State* L );
-	static int		_getFrequencyForIndex			( lua_State* L );
-	static int		_getIndexForFrequency			( lua_State* L );
+	static int		_getFrequencyForBin				( lua_State* L );
 	static int		_getWidth						( lua_State* L );
 	static int		_getWidthOfBand					( lua_State* L );
 	static int		_getWidthOfOctave				( lua_State* L );
@@ -91,12 +91,12 @@ public:
 	void			Clear								();
 	size_t			CountBands							();
 	size_t			CountOctaves						();
+	size_t			GetBinForFrequency					( float frequency );
 	float			GetCenterFrequencyForBand			( size_t band );
 	float			GetCenterFrequencyForOctave			( size_t octave );
 	static float	GetDefaultWindowAlpha				( u32 func );
 	size_t			GetFastSize							( size_t size );
-	float			GetFrequencyForIndex				( size_t index );
-	size_t			GetIndexForFrequency				( float frequency );
+	float			GetFrequencyForBin					( size_t bin );
 	void			GetOctaveFrequencyBounds			( size_t octave, float& lowerBound, float& upperBound );
 	float			GetWidth							();
 	float			GetWidthOfBand						( size_t band );
