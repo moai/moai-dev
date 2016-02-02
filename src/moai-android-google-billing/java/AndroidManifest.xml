@@ -1,2 +1,3 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.moaisdk.googlebilling">
+    <uses-permission android:name="com.android.vending.BILLING" />
 </manifest>

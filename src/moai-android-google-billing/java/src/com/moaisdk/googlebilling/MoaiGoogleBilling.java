@@ -121,8 +121,10 @@ public class MoaiGoogleBilling {
                 }
 			}
 		};
-		
-		sActivity.bindService ( new Intent ( "com.android.vending.billing.InAppBillingService.BIND" ), sServiceConn, Context.BIND_AUTO_CREATE );
+        Intent serviceIntent = new Intent ( "com.android.vending.billing.InAppBillingService.BIND" );
+        serviceIntent.setPackage ( "com.android.vending" );
+
+		sActivity.bindService ( serviceIntent, sServiceConn, Context.BIND_AUTO_CREATE );
 	}
 
 	//----------------------------------------------------------------//
