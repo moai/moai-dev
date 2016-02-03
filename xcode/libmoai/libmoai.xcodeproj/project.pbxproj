@@ -20567,6 +20567,7 @@
 					"${inherited}",
 					MACOSX,
 					LUA_USE_MACOSX,
+					"verbose=-1",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -20612,6 +20613,7 @@
 					"${inherited}",
 					MACOSX,
 					LUA_USE_MACOSX,
+					"verbose=-1",
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -29593,6 +29595,7 @@
 					"${inherited}",
 					MACOSX,
 					LUA_USE_MACOSX,
+					"verbose=-1",
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -29991,6 +29994,7 @@
 					"${inherited}",
 					MACOSX,
 					LUA_USE_MACOSX,
+					"verbose=-1",
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
