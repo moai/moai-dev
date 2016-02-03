@@ -222,7 +222,7 @@ void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 	
 	// and take a weak ref back to the userdata	
 	this->mUserdata.SetRef ( state, -1 );
-	assert ( !lua_isnil ( state, -1 ));
+	assert ( this->mUserdata );
 	
 	// NOTE: we have to do this *after* mUserdata has been initialized as LuaRetain calls PushLuaUserdata
 	// which in turn calls BindToLua if there is no mUserdata...

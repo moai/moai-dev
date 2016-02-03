@@ -371,14 +371,18 @@ MOAIFrameBuffer::MOAIFrameBuffer () :
 //----------------------------------------------------------------//
 MOAIFrameBuffer::~MOAIFrameBuffer () {
 
-	MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLFrameBufferID );
+	if ( MOAIGfxResourceMgr::IsValid ()) {
+		MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLFrameBufferID );
+	}
 	this->mGLFrameBufferID = 0;
 	this->mFrameImage.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBuffer::OnReadPixels ( const ZLCopyOnWrite& buffer ) {
+void MOAIFrameBuffer::OnReadPixels ( const ZLCopyOnWrite& buffer, void * userdata ) {
+	UNUSED ( userdata );
 
+	this->mGrabNextFrame = false;
 	MOAIImage* image = this->mFrameImage;
 	
 	if ( image ) {
@@ -440,11 +444,11 @@ void MOAIFrameBuffer::Render () {
 
 	gfxDevice.FlushBufferedPrims ();
 
+	// since we're doing this on the render thread, set it every time until we get a callback
 	if ( this->mGrabNextFrame ) {
 
 		ZLGfx& gfx = gfxDevice.GetDrawingAPI ();
-		gfx.ReadPixels ( 0, 0, this->mBufferWidth, this->mBufferHeight, ZGL_PIXEL_FORMAT_RGBA, ZGL_PIXEL_TYPE_UNSIGNED_BYTE, 4, this );
-		mGrabNextFrame = false;
+		gfx.ReadPixels ( 0, 0, this->mBufferWidth, this->mBufferHeight, ZGL_PIXEL_FORMAT_RGBA, ZGL_PIXEL_TYPE_UNSIGNED_BYTE, 4, this, 0 );
 	}
 	
 	this->mRenderCounter++;

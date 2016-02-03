@@ -64,23 +64,6 @@ int MOAIImage::_bleedRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-///**	@lua	blur
-//	@text	Fast gaussian blur (approximated with box blur)
-// 	
-//	@in		MOAIImage   self
-//	@out	nil
-//*/
-//int MOAIImage::_blur ( lua_State *L ) {
-//	MOAI_LUA_SETUP ( MOAIImage, "U" )
-//	
-//	// TODO: better implementation with support for radius and sigma.
-//	// 		 Current is rather an ad-hoc one with r = 5
-//	self->Blur ();
-//	
-//	return 0;
-//}
-
-//----------------------------------------------------------------//
 /**	@lua	calculateGaussianKernel
 	@text	Calculate a one dimensional gaussian kernel suitable for blurring.
  	
@@ -863,23 +846,29 @@ int MOAIImage::_loadFromBuffer ( lua_State* L ) {
 			may be rearranged or blended.
 	
 	@in		MOAIImage self
+	
 	@opt	number r1
 	@opt	number r2
 	@opt	number r3
 	@opt	number r4
+	
 	@opt	number g1
 	@opt	number g2
 	@opt	number g3
 	@opt	number g4
+	
 	@opt	number b1
 	@opt	number b2
 	@opt	number b3
 	@opt	number b4
+	
 	@opt	number a1
 	@opt	number a2
 	@opt	number a3
 	@opt	number a4
+	
 	@opt	number K					Default value is 1.
+	
 	@out	nil
 */
 int MOAIImage::_mix ( lua_State* L ) {
@@ -1329,55 +1318,6 @@ static int reflect( int M, int x ) {
 	}
 	return x;
 }
-
-//----------------------------------------------------------------//
-//void MOAIImage::Blur () {
-//	
-//	MOAIImage image;
-//	image.Copy ( *this );
-//	
-//	ZLColorVec sum, color;
-//	int x1, y1;
-//	
-//	// coefficients of 1D gaussian kernel with sigma = 1
-//	float coeffs [] = { 0.0545, 0.2442, 0.4026, 0.2442, 0.0545 };
-////    float coeffs [] = { 0.006, 0.061, 0.242, 0.383, 0.242, 0.061, 0.006 };
-//	int r = 2;
-//	
-//	// along y - direction
-//	for ( int y = 0; y < this->mHeight; y++ ) {
-//		for ( int x = 0; x < this->mWidth; x++ ) {
-//			sum.SetRGBA ( 0 );
-//			for ( int i = -r; i <= r; i++ ) {
-//				y1 = reflect ( this->mHeight, y - i );
-//				color.SetRGBA ( this->GetColor ( x, y1 ));
-//				color.mA *= coeffs [ i + r ];
-//				color.mR *= coeffs [ i + r ];
-//				color.mG *= coeffs [ i + r ];
-//				color.mB *= coeffs [ i + r ];
-//				sum.Add ( color );
-//			}
-//			image.SetColor ( x, y, sum.PackRGBA ());
-//		}
-//	}
-//	
-//	// along x - direction
-//	for ( int y = 0; y < this->mHeight; y++ ) {
-//		for ( int x = 0; x < this->mWidth; x++ ) {
-//			sum.SetRGBA ( 0 );
-//			for ( int i = -r; i <= r; i++ ) {
-//				x1 = reflect ( this->mWidth, x - i );
-//				color.SetRGBA ( image.GetColor ( x1, y ));
-//				color.mA *= coeffs [ i + r ];
-//				color.mR *= coeffs [ i + r ];
-//				color.mG *= coeffs [ i + r ];
-//				color.mB *= coeffs [ i + r ];
-//				sum.Add ( color );
-//			}
-//			this->SetColor ( x, y, sum.PackRGBA ());
-//		}
-//	}
-//}
 
 //----------------------------------------------------------------//
 void MOAIImage::CalculateGaussianKernel ( float radius, float sigma, float* kernel, size_t kernelWidth ) {
@@ -2339,8 +2279,8 @@ void MOAIImage::GenerateSDF ( ZLIntRect rect ) {
 		}
 	}
 	
-	CalculateSDF( grid1, width, height );
-	CalculateSDF( grid2, width, height );
+	CalculateSDF ( grid1, width, height );
+	CalculateSDF ( grid2, width, height );
 		
 	int maxDist = INT_MIN;
 	int minDist = INT_MAX;

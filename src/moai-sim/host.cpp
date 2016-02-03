@@ -174,6 +174,7 @@ void AKUPause ( bool pause ) {
 //----------------------------------------------------------------//
 void AKURender () {
 
+	MOAIGfxDevice::Get ().ResetDrawingAPIs ();
 	MOAIGfxResourceMgr::Get ().Update ();
 	MOAIRenderMgr::Get ().Render ();
 }

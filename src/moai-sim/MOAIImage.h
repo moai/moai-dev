@@ -77,7 +77,6 @@ private:
 	//----------------------------------------------------------------//
 	static int		_average					( lua_State* L );
 	static int		_bleedRect					( lua_State* L );
-//	static int		_blur						( lua_State* L );
 	static int		_calculateGaussianKernel	( lua_State* L );
 	static int		_compare					( lua_State* L );
 	static int		_convert					( lua_State* L );

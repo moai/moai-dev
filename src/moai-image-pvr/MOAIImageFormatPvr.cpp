@@ -222,10 +222,6 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 	
 	bool isCompressed = header->IsCompressed ();
 	
-	#if !( ZGL_DEVCAPS_PVR_TEXTURE || MOAI_WITH_LIBPVR )
-		if ( isCompressed ) return false;
-	#endif
-	
 	bool hasAlpha = header->HasAlpha ();
 
 	int internalFormat = 0;
@@ -332,7 +328,7 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 					buffer.Alloc ( info.mSizeCompressed, imageData );
 					gfx.CompressedTexImage2D ( level, internalFormat, width, height, info.mSizeCompressed, buffer.GetSharedConstBuffer ());
 				
-				#elif MOAI_WITH_LIBPVR
+				#else
 				
 				
 					buffer.Reserve ( info.mSizeDecompressed );
@@ -464,9 +460,9 @@ bool MOAIImageFormatPvr::Decompress ( MOAIPvrHeader& header, const MOAIPvrMipLev
 	
 		int resultSize = 0;
 		
-		#if MOAI_WITH_LIBPVR
+		//#if MOAI_WITH_LIBPVR
 			resultSize = PVRTDecompressPVRTC ( srcBuffer, header.IsTwoBit (), info.mWidth, info.mHeight, ( unsigned char* )buffer );
-		#endif
+		//#endif
 	
 		if ( resultSize != info.mSizeCompressed ) {
 			ZLLog_ErrorF ( ZLLog::CONSOLE, "Error decompressing PVR at mip level %d\n", info.mLevel );
@@ -490,10 +486,6 @@ bool MOAIImageFormatPvr::GetTextureInfo ( ZLStream& stream, MOAITextureInfo& inf
 	
 	MOAIPvrHeader header;
 	if ( header.Load ( stream )) {
-	
-		#if !( ZGL_DEVCAPS_PVR_TEXTURE || MOAI_WITH_LIBPVR )
-			if ( header.IsCompressed ()) return false;
-		#endif
 	
 		info.mWidth		= header.mWidth;
 		info.mHeight	= header.mHeight;
@@ -525,14 +517,7 @@ bool MOAIImageFormatPvr::ReadImage ( MOAIImage& image, ZLStream& stream, u32 tra
 		return false;
 	}
 
-	#if !MOAI_WITH_LIBPVR
-		if ( header.IsCompressed ()) {
-			ZLLog_ErrorF ( ZLLog::CONSOLE, "Software PVR decompression not supported; build Moai SDK using MOAI_WITH_LIBPVR\n" );
-			return false;
-		}
-	#endif
-
-	MOAIPvrMipLevelInfo info = header.GetMipLevelInfo ( 1 );
+	MOAIPvrMipLevelInfo info = header.GetMipLevelInfo ( 0 );
 	
 	if ( this->Decompress ( header, info, image, stream )) {
 		image.Transform ( transform );

@@ -74,27 +74,26 @@ MOAIGfxResourceMgr::~MOAIGfxResourceMgr () {
 //----------------------------------------------------------------//
 void MOAIGfxResourceMgr::ProcessDeleters () {
 
-	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
-
-	ZLGfxDevice::Begin ();
-	
 	u32 top = this->mDeleterStack.GetTop ();
-	
+
 	if ( top ) {
+
+		ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+
+		ZLGfxDevice::Begin ();
+	
 		gfx.Flush ();
-	}
 	
-	for ( u32 i = 0; i < top; ++i ) {
-		ZLGfxHandle* handle = this->mDeleterStack [ i ];
-		gfx.DeleteHandle ( handle );
-	}
-	this->mDeleterStack.Reset ();
+		for ( u32 i = 0; i < top; ++i ) {
+			ZLGfxHandle* handle = this->mDeleterStack [ i ];
+			gfx.DeleteHandle ( handle );
+		}
+		this->mDeleterStack.Reset ();
 	
-	if ( top ) {
 		gfx.Flush ();
-	}
 	
-	ZLGfxDevice::End ();
+		ZLGfxDevice::End ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -188,7 +187,6 @@ void MOAIGfxResourceMgr::Update () {
 		ZLGfx& gfxLoading = gfxDevice.SelectDrawingAPI ( MOAIGfxDevice::LOADING_PIPELINE, true );
 		
 		ZGL_COMMENT ( gfxLoading, "RESOURCE MGR LOADING PIPELINE UPDATE" );
-		gfxDevice.ResetState ();
 		this->ProcessDeleters ();
 		this->ProcessPending ( this->mPendingForLoadList );
 		gfxDevice.UnbindAll ();
@@ -199,7 +197,6 @@ void MOAIGfxResourceMgr::Update () {
 		ZLGfx& gfxDrawing = gfxDevice.SelectDrawingAPI ( MOAIGfxDevice::DRAWING_PIPELINE, true );
 		
 		ZGL_COMMENT ( gfxDrawing, "RESOURCE MGR DRAWING PIPELINE UPDATE" );
-		gfxDevice.ResetState ();
 		this->ProcessPending ( this->mPendingForDrawList );
 		gfxDevice.UnbindAll ();
 	}

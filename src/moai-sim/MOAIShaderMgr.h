@@ -55,6 +55,7 @@ public:
 	DECL_LUA_SINGLETON ( MOAIShaderMgr )
 	
 	//----------------------------------------------------------------//
+	void					AffirmAll				();
 	bool					BindShader				( u32 shaderID );
 	MOAIShaderProgram*		GetProgram				( u32 shaderID );
 	MOAIShader*				GetShader				( u32 shaderID );

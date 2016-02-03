@@ -87,7 +87,7 @@ protected:
 	
 
 	//----------------------------------------------------------------//
-	void				OnReadPixels				( const ZLCopyOnWrite& buffer );
+	void				OnReadPixels				( const ZLCopyOnWrite& buffer, void* userdata );
 	void				RenderTable					( MOAILuaState& state, int idx );
 
 public:

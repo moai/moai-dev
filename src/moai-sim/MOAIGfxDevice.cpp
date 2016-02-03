@@ -213,6 +213,8 @@ void MOAIGfxDevice::DetectContext () {
 	
 	this->mDefaultFrameBuffer->DetectGLFrameBufferID ();
 	
+	MOAIShaderMgr::Get ().AffirmAll ();
+	
 	MOAIGfxResourceMgr::Get ().RenewResources ();
 	
 	ZLGfxDevice::End ();
@@ -376,8 +378,6 @@ void MOAIGfxDevice::ResetState () {
 
 	ZGL_COMMENT ( *this->mDrawingAPI, "GFX RESET STATE" );
 
-	this->OnGfxStateWillChange ();
-
 	for ( u32 i = 0; i < TOTAL_VTX_TRANSFORMS; ++i ) {
 		this->mVertexTransforms [ i ].Ident ();
 	}
@@ -388,7 +388,7 @@ void MOAIGfxDevice::ResetState () {
 	this->mDrawingAPI->ActiveTexture ( 0 );
 	this->mDrawingAPI->BindTexture ( 0 );
 
-	// rezet the shader
+	// reset the shader
 	this->mDrawingAPI->UseProgram ( 0 );
 	
 	// turn off blending
@@ -412,9 +412,8 @@ void MOAIGfxDevice::ResetState () {
 	this->mDrawingAPI->LineWidth ( this->mPenWidth );
 	
 	// reset the scissor rect
-	ZLRect scissorRect = this->mCurrentFrameBuffer->GetBufferRect ();
-	this->mDrawingAPI->Scissor (( s32 )scissorRect.mXMin, ( s32 )scissorRect.mYMin, ( u32 )scissorRect.Width (), ( u32 )scissorRect.Height ());
-	this->mScissorRect = scissorRect;
+	this->mScissorEnabled = false;
+	this->mDrawingAPI->Disable ( ZGL_PIPELINE_SCISSOR );
 	
 	// clear the CPU matrix pipeline
 	for ( u32 i = 0; i < TOTAL_VTX_TRANSFORMS; ++i ) {
@@ -425,6 +424,23 @@ void MOAIGfxDevice::ResetState () {
 	
 	this->mVertexMtxInput = VTX_STAGE_MODEL;
 	this->mVertexMtxOutput = VTX_STAGE_MODEL;
+	
+	for ( size_t i = 0; i < this->mTextureUnits.Size (); ++i ){
+		this->mDrawingAPI->ActiveTexture (( u32 )i );
+		this->mDrawingAPI->BindTexture ( 0 );
+		this->mTextureUnits [ i ] = 0;
+	}
+	this->mActiveTextures = 0;
+
+	this->mShaderProgram		= 0;
+	this->mCurrentIdxBuffer		= 0;
+	this->mCurrentTexture		= 0;
+	this->mCurrentVtxArray		= 0;
+	this->mCurrentVtxBuffer		= 0;
+	this->mCurrentVtxFormat		= 0;
+	
+	this->mCurrentFrameBuffer = this->GetDefaultFrameBuffer ();
+	this->mDrawingAPI->BindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, this->mCurrentFrameBuffer->mGLFrameBufferID );
 	
 	ZGL_COMMENT ( *this->mDrawingAPI, "" );
 }

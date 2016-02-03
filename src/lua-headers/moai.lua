@@ -375,7 +375,7 @@ MOAIRenderMgr.extend (
 		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 		function class.grabNextFrame (image, callback)
 			local frameBuffer = MOAIGfxDevice.getFrameBuffer ()
-			frameBuffer:grabNextFrame (image, callback)
+			frameBuffer:grabNextFrame ( image, callback )
 		end
 		
 		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -

@@ -764,7 +764,7 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 	renderMgr.SetViewport ( this->mViewport );
 	
 	// TODO: leaving this here for now (Moai SDK 1.7) but we need to move/remove it soon
-	gfxDevice.ResetState ();
+	//gfxDevice.ResetState ();
 
 	// TODO:
 	ZLMatrix4x4 mtx;

@@ -866,6 +866,24 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				);
 				break;
 			}
+			case READ_PIXELS: {
+		
+				s32 x			= this->mStream->Read < s32 >( 0 );
+				s32 y			= this->mStream->Read < s32 >( 0 );
+				
+				u32 width		= this->mStream->Read < u32 >( 0 );
+				u32 height		= this->mStream->Read < u32 >( 0 );
+				
+				u32 format		= this->mStream->Read < u32 >( 0 );
+				u32 type		= this->mStream->Read < u32 >( 0 );
+				u32 pixelSize	= this->mStream->Read < u32 >( 0 );
+				
+				u32 listenerRecordIdx = this->mStream->Read < u32 >( 0 );
+				
+				draw.ReadPixels ( x, y, width, height, format, type, pixelSize, this, ( void* )listenerRecordIdx );
+				
+				break;
+			}
 			case RENDER_BUFFER_STORAGE: {
 				
 				u32 internalFormat		= this->mStream->Read < u32 >( 0 );
@@ -1183,6 +1201,12 @@ bool ZLGfxRetained::HasContent () {
 }
 
 //----------------------------------------------------------------//
+bool ZLGfxRetained::IsImmediate () {
+
+	return false;
+}
+
+//----------------------------------------------------------------//
 void ZLGfxRetained::LineWidth ( float width ) {
 
 	assert ( this->mStream );
@@ -1210,6 +1234,18 @@ void ZLGfxRetained::OnGfxEvent ( u32 event, void* userdata ) {
 		
 		listenerRecord.mCallbackID = ZLGfxListenerRecord::ON_EVENT;
 		listenerRecord.mEvent = event;
+	}
+}
+
+//----------------------------------------------------------------//
+void ZLGfxRetained::OnReadPixels ( const ZLCopyOnWrite& copyOnWrite, void* userdata ) {
+
+	size_t idx = ( size_t )userdata;
+	if ( idx < this->mListenerRecords.GetTop ()) {
+		ZLGfxListenerRecord& listenerRecord = this->mListenerRecords [ idx ];
+		
+		listenerRecord.mCallbackID = ZLGfxListenerRecord::ON_READ_PIXELS;
+		listenerRecord.mCopyOnWrite = copyOnWrite;
 	}
 }
 
@@ -1244,6 +1280,10 @@ void ZLGfxRetained::PublishEvents () {
 			
 				case ZLGfxListenerRecord::ON_EVENT:
 					listener->OnGfxEvent ( record.mEvent, record.mUserdata );
+					break;
+				
+				case ZLGfxListenerRecord::ON_READ_PIXELS:
+					listener->OnReadPixels ( record.mCopyOnWrite, record.mUserdata );
 					break;
 			
 				case ZLGfxListenerRecord::ON_UNIFORM_LOCATION:
@@ -1280,15 +1320,26 @@ bool ZLGfxRetained::PushSuccessHandler () {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::ReadPixels ( s32 x, s32 y, u32 width, u32 height, u32 format, u32 type, u32 pixelSize, ZLGfxListener* listener ) {
-	UNUSED ( x );
-	UNUSED ( y );
-	UNUSED ( width );
-	UNUSED ( height );
-	UNUSED ( format );
-	UNUSED ( type );
-	UNUSED ( pixelSize );
-	UNUSED ( listener );
+void ZLGfxRetained::ReadPixels ( s32 x, s32 y, u32 width, u32 height, u32 format, u32 type, u32 pixelSize, ZLGfxListener* listener, void* userdata ) {
+	
+	assert ( this->mStream );
+
+	if ( listener ) {
+
+		this->mStream->Write < u32 >( READ_PIXELS );
+		
+		this->mStream->Write < s32 >( x );
+		this->mStream->Write < s32 >( y );
+		
+		this->mStream->Write < u32 >( width );
+		this->mStream->Write < u32 >( height );
+		
+		this->mStream->Write < u32 >( format );
+		this->mStream->Write < u32 >( type );
+		this->mStream->Write < u32 >( pixelSize );
+		
+		this->WriteListenerRecord ( listener, userdata );
+	}
 }
 
 //----------------------------------------------------------------//

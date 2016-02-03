@@ -237,6 +237,7 @@ MOAIGfxDeviceStateCache::MOAIGfxDeviceStateCache () :
 	mDepthMask ( true ),
 	mBlendEnabled ( 0 ),
 	mPenWidth ( 1.0f ),
+	mScissorEnabled ( false ),
 	mShaderProgram ( 0 ),
 	mActiveTextures ( 0 ),
 	mCurrentFrameBuffer ( 0 ),
@@ -265,6 +266,10 @@ void MOAIGfxDeviceStateCache::SetBlendMode () {
 
 //----------------------------------------------------------------//
 void MOAIGfxDeviceStateCache::SetBlendMode ( const MOAIBlendMode& blendMode ) {
+
+	//this->mBlendEnabled = false;
+	
+	this->mDrawingAPI->Enable ( ZGL_PIPELINE_BLEND );
 
 	if ( !this->mBlendEnabled ) {
 	
@@ -372,8 +377,11 @@ void MOAIGfxDeviceStateCache::SetPenWidth ( float penWidth ) {
 //----------------------------------------------------------------//
 void MOAIGfxDeviceStateCache::SetScissorRect () {
 
-	this->SetScissorRect ( this->mCurrentFrameBuffer->GetBufferRect ());
-	this->mDrawingAPI->Disable ( ZGL_PIPELINE_SCISSOR );
+	if ( this->mScissorEnabled ) {
+		//this->SetScissorRect ( this->mCurrentFrameBuffer->GetBufferRect ());
+		this->mDrawingAPI->Disable ( ZGL_PIPELINE_SCISSOR );
+		this->mScissorEnabled = false;
+	}
 }
 
 //----------------------------------------------------------------//
@@ -384,10 +392,7 @@ void MOAIGfxDeviceStateCache::SetScissorRect ( ZLRect rect ) {
 
 	ZLRect& current = this->mScissorRect;
 	
-	if (	( current.mXMin != rect.mXMin ) ||
-			( current.mYMin != rect.mYMin ) ||
-			( current.mXMax != rect.mXMax ) ||
-			( current.mYMax != rect.mYMax )) {
+	if ( !( this->mScissorEnabled && this->mScissorRect.IsEqual ( rect ))) {
 		
 		this->OnGfxStateWillChange ();
 
@@ -404,8 +409,11 @@ void MOAIGfxDeviceStateCache::SetScissorRect ( ZLRect rect ) {
 		
 		this->mDrawingAPI->Scissor ( x, y, w, h );
 		this->mScissorRect = rect;
+	}
 	
+	if ( !this->mScissorEnabled ) {
 		this->mDrawingAPI->Enable ( ZGL_PIPELINE_SCISSOR );
+		this->mScissorEnabled = true;
 	}
 }
 

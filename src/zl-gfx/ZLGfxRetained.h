@@ -21,6 +21,7 @@ private:
 
 	enum {
 		ON_EVENT,
+		ON_READ_PIXELS,
 		ON_UNIFORM_LOCATION,
 		UNKNOWN,
 	};
@@ -31,6 +32,8 @@ private:
 	u32						mCallbackID;
 	u32						mEvent;
 	u32						mUniformAddr;
+	
+	ZLCopyOnWrite			mCopyOnWrite;
 
 public:
 
@@ -97,6 +100,7 @@ private:
 		GET_UNIFORM_LOCATION,
 		LINE_WIDTH,
 		LINK_PROGRAM,
+		READ_PIXELS,
 		RENDER_BUFFER_STORAGE,
 		SCISSOR,
 		
@@ -133,6 +137,7 @@ private:
 	//----------------------------------------------------------------//
 	ZLGfxHandle*			Create						( ZLGfxHandle* handle, u32 param );
 	void					OnGfxEvent					( u32 event, void* userdata );
+	void					OnReadPixels				( const ZLCopyOnWrite& copyOnWrite, void* userdata );
 	void					OnUniformLocation			( u32 addr, void* userdata );
 	void					Retain						( ZLRefCountedObject* object );
 	ZLGfxListenerRecord&	WriteListenerRecord			( ZLGfxListener* listener, void* userdata );
@@ -206,6 +211,8 @@ public:
 	
 	bool					HasContent					();
 	
+	bool					IsImmediate					();
+	
 	void					LineWidth					( float width );
 	
 	void					LinkProgram					( ZLGfxHandle* program, bool log );
@@ -219,7 +226,7 @@ public:
 	void					PushSection					();
 	bool					PushSuccessHandler			();
 	
-	void					ReadPixels					( s32 x, s32 y, u32 width, u32 height, u32 format, u32 type, u32 pixelSize, ZLGfxListener* listener );
+	void					ReadPixels					( s32 x, s32 y, u32 width, u32 height, u32 format, u32 type, u32 pixelSize, ZLGfxListener* listener, void* userdata );
 	void					RenderbufferStorage			( u32 internalFormat, u32 width, u32 height );
 	void					Reset						();
 	

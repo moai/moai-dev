@@ -78,7 +78,7 @@ public:
 
 	//----------------------------------------------------------------//
 	virtual	void			OnGfxEvent				( u32 event, void* userdata );
-	virtual void			OnReadPixels			( const ZLCopyOnWrite& copyOnWrite );
+	virtual void			OnReadPixels			( const ZLCopyOnWrite& copyOnWrite, void* userdata );
 	virtual void			OnUniformLocation		( u32 addr, void* userdata );
 							ZLGfxListener			();
 	virtual					~ZLGfxListener			();
@@ -164,6 +164,8 @@ public:
 	virtual ZLGfxHandle*			GetCurrentFramebuffer		() = 0;
 	virtual void					GetUniformLocation			( ZLGfxHandle* program, cc8* uniformName, ZLGfxListener* listener, void* userdata ) = 0;
 	
+	virtual bool					IsImmediate					() = 0;
+	
 	virtual void					LineWidth					( float width ) = 0;
 	
 	virtual void					LinkProgram					( ZLGfxHandle* program, bool log ) = 0;
@@ -173,7 +175,7 @@ public:
 	virtual void					PushSection					() = 0;
 	virtual bool					PushSuccessHandler			() = 0;
 	
-	virtual void					ReadPixels					( s32 x, s32 y, u32 width, u32 height, u32 format, u32 type, u32 pixelSize, ZLGfxListener* listener ) = 0;
+	virtual void					ReadPixels					( s32 x, s32 y, u32 width, u32 height, u32 format, u32 type, u32 pixelSize, ZLGfxListener* listener, void* userdata ) = 0;
 	virtual void					RenderbufferStorage			( u32 internalFormat, u32 width, u32 height ) = 0;
 	
 	virtual void					Scissor						( s32 x, s32 y, u32 w, u32 h ) = 0;

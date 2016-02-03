@@ -355,6 +355,18 @@ void MOAIGfxDeviceBase::PublishAndReset ( u32 pipelineID ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxDeviceBase::ResetDrawingAPIs () {
+
+	ZLGfx& loadingAPI = this->SelectDrawingAPI ( LOADING_PIPELINE );
+	this->ResetState ();
+	
+	ZLGfx& drawingAPI = this->SelectDrawingAPI ( DRAWING_PIPELINE );
+	if ( &loadingAPI != &drawingAPI ) {
+		this->ResetState ();
+	}
+}
+
+//----------------------------------------------------------------//
 ZLGfx& MOAIGfxDeviceBase::SelectDrawingAPI () {
 
 	this->mDrawingAPI = &this->mGfxImmediate;
@@ -382,5 +394,6 @@ ZLGfx& MOAIGfxDeviceBase::SelectDrawingAPI ( u32 pipelineID, bool critical ) {
 			this->SelectDrawingAPI ( DRAWING_PIPELINE );
 		}
 	}
+	
 	return *this->mDrawingAPI;
 }

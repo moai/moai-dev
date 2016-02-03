@@ -386,6 +386,12 @@ void ZLGfxLogger::GetUniformLocation ( ZLGfxHandle* program, cc8* uniformName, Z
 }
 
 //----------------------------------------------------------------//
+bool ZLGfxLogger::IsImmediate () {
+
+	return true;
+}
+
+//----------------------------------------------------------------//
 void ZLGfxLogger::LineWidth ( float width ) {
 
 	this->PrintLine ( "glLineWidth - width: %f\n", width );
@@ -457,9 +463,9 @@ bool ZLGfxLogger::PushSuccessHandler () {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::ReadPixels ( s32 x, s32 y, u32 width, u32 height, u32 format, u32 type, u32 pixelSize, ZLGfxListener* listener ) {
+void ZLGfxLogger::ReadPixels ( s32 x, s32 y, u32 width, u32 height, u32 format, u32 type, u32 pixelSize, ZLGfxListener* listener, void* userdata ) {
 
-	this->PrintLine ( "glReadPixels - x: %d y: %d width: %d height: %d format: %d type: %d pixelSize: %d listener: %p\n",
+	this->PrintLine ( "glReadPixels - x: %d y: %d width: %d height: %d format: %d type: %d pixelSize: %d listener: %p userdata: %p\n",
 		x,
 		y,
 		width,
@@ -467,7 +473,8 @@ void ZLGfxLogger::ReadPixels ( s32 x, s32 y, u32 width, u32 height, u32 format, 
 		format,
 		type,
 		pixelSize,
-		listener
+		listener,
+		userdata
 	);
 }
 

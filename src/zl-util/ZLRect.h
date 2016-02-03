@@ -641,6 +641,17 @@ public:
 	
 		return ( this->mYMax < this->mYMin );
 	}
+	
+	//----------------------------------------------------------------//
+	bool IsEqual ( const ZLMetaRect < TYPE >& rect ) {
+	
+		return (
+			( this->mXMin == rect.mXMin ) &&
+			( this->mYMin == rect.mYMin ) &&
+			( this->mXMax == rect.mXMax ) &&
+			( this->mYMax == rect.mYMax )
+		);
+	}
 
 	//----------------------------------------------------------------//
 	void Offset ( TYPE xOff, TYPE yOff ) {

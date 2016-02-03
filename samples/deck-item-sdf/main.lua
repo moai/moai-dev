@@ -43,13 +43,13 @@ makeLayerWithDeckItem = function ( deck, idx, pad, viewWidth, viewHeight )
 	prop:setIndex ( idx )
 	layer:insertProp ( prop )
 
-	return layer, width, height
+	return layer, prop, width, height
 end
 
 -- renders a deck item to a (padded) offscreen buffer then capturs and returns an image
 makeImageFromDeckItem = function ( deck, idx, pad )
 
-	local layer, width, height = makeLayerWithDeckItem ( deck, idx, pad )
+	local layer, prop, width, height = makeLayerWithDeckItem ( deck, idx, pad )
 
 	local frameBuffer = MOAIFrameBufferTexture.new ()
 	frameBuffer:setRenderTable ({ layer })
@@ -57,9 +57,10 @@ makeImageFromDeckItem = function ( deck, idx, pad )
 	frameBuffer:setClearColor ( 0, 0, 0, 0 )
 	MOAIRenderMgr.setBufferTable ({ frameBuffer })
 
-	frameBuffer:grabNextFrame ( MOAIImage.new (), onGrab )
+	frameBuffer.grabNextFrame ( frameBuffer, MOAIImage.new ())
 
 	while frameBuffer:isPendingGrab () do coroutine:yield () end
+
 	local image = frameBuffer:getGrabbedImage ()
 	assert ( image )
 
@@ -77,9 +78,13 @@ end
 
 main = function ()
 
+	local texture = MOAITexture.new ()
+	texture:load ( '../resources/moai-alpha.png' )
+	while texture:getResourceState () ~= MOAITexture.STATE_READY_TO_BIND do coroutine:yield () end
+
 	-- load the deck
 	local gfxQuad = MOAIGfxQuad2D.new ()
-	gfxQuad:setTexture ( '../resources/moai-alpha.png' )
+	gfxQuad:setTexture ( texture )
 	gfxQuad:setRect ( -128, -128, 128, 128 )
 	gfxQuad:setUVRect ( 0, 1, 1, 0 )
 
@@ -89,10 +94,11 @@ main = function ()
 	local hWidth, hHeight = width * 0.5, height * 0.5
 	gfxQuad:setRect ( -hWidth, -hHeight, hWidth, hHeight )
 
-	local layer = makeLayerWithDeckItem ( gfxQuad, 1, 0, WIN_WIDTH, WIN_HEIGHT )
+	local layer, prop = makeLayerWithDeckItem ( gfxQuad, 1, 0, WIN_WIDTH, WIN_HEIGHT )
 	layer:setClearColor ( 1, 1, 1, 1 )
 
 	MOAISim.pushRenderPass ( layer )
+
 end
 
 thread = MOAICoroutine.new ()

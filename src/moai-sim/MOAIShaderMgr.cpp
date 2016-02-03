@@ -72,6 +72,14 @@ int MOAIShaderMgr::_getShader ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIShaderMgr::AffirmAll () {
+
+	for ( size_t i = 0; i < TOTAL_SHADERS; ++i ) {
+		this->GetShader ( i );
+	}
+}
+
+//----------------------------------------------------------------//
 bool MOAIShaderMgr::BindShader ( u32 shaderID ) {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();

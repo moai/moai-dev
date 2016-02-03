@@ -10,14 +10,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIBlendMode::Bind () {
-	
-	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
-	
-	gfx.Enable ( ZGL_PIPELINE_BLEND );
-	gfx.BlendMode ( this->mEquation );
-	gfx.BlendFunc ( this->mSourceFactor, this->mDestFactor );
-}
+//void MOAIBlendMode::Bind () {
+//	
+//	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+//	
+//	gfx.Enable ( ZGL_PIPELINE_BLEND );
+//	gfx.BlendMode ( this->mEquation );
+//	gfx.BlendFunc ( this->mSourceFactor, this->mDestFactor );
+//}
 
 //----------------------------------------------------------------//
 void MOAIBlendMode::GetBlendFactors ( u32 blend, int& srcFactor, int& dstFactor ) {

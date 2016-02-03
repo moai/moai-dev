@@ -21,7 +21,7 @@ public:
 	int				mDestFactor;
 
 	//----------------------------------------------------------------//
-	void			Bind				();
+	//void			Bind				();
 	static void		GetBlendFactors		( u32 blend, int& srcFactor, int& dstFactor );
 	void			SetBlend			( u32 blend );
 	void			SetBlend			( int srcFactor, int dstFactor );

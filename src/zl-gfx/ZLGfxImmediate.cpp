@@ -530,6 +530,12 @@ void ZLGfxImmediate::GetUniformLocation ( ZLGfxHandle* program, cc8* uniformName
 }
 
 //----------------------------------------------------------------//
+bool ZLGfxImmediate::IsImmediate () {
+
+	return true;
+}
+
+//----------------------------------------------------------------//
 void ZLGfxImmediate::LineWidth ( float width ) {
 
 	glLineWidth (( GLfloat )width );
@@ -608,7 +614,7 @@ bool ZLGfxImmediate::PushSuccessHandler () {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::ReadPixels ( s32 x, s32 y, u32 width, u32 height, u32 format, u32 type, u32 pixelSize, ZLGfxListener* listener ) {
+void ZLGfxImmediate::ReadPixels ( s32 x, s32 y, u32 width, u32 height, u32 format, u32 type, u32 pixelSize, ZLGfxListener* listener, void* userdata ) {
 
 	if ( listener ) {
 
@@ -641,7 +647,7 @@ void ZLGfxImmediate::ReadPixels ( s32 x, s32 y, u32 width, u32 height, u32 forma
 			}
 		}
 		
-		listener->OnReadPixels ( copyOnWrite );
+		listener->OnReadPixels ( copyOnWrite, userdata );
 	}
 }
 

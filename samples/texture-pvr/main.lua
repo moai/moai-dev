@@ -64,7 +64,7 @@ prop1:setLoc ( 0, -128 )
 layer:insertProp ( prop1 )
 
 prop2 = MOAIProp2D.new ()
-prop2:setDeck ( texQuadFromFile )
+prop2:setDeck ( texQuadFromImage )
 prop2:setLoc ( 0, 128 )
 layer:insertProp ( prop2 )
 

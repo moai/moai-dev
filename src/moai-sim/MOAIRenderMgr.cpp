@@ -190,8 +190,6 @@ void MOAIRenderMgr::Render () {
 
 	ZGL_COMMENT ( gfx, "RENDER MGR RENDER" );
 
-	device.ResetState ();
-
 	if ( this->mBufferTable ) {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		state.Push ( this->mBufferTable );
@@ -210,6 +208,7 @@ void MOAIRenderMgr::Render () {
 	
 	this->mFrameBuffer = 0;
 	
+	device.FlushBufferedPrims ();
 	device.UnbindAll ();
 	
 	ZLGfxDevice::End ();

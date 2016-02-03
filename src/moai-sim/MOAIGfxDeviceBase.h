@@ -125,6 +125,8 @@ public:
 	virtual				~MOAIGfxDeviceBase			();
 	void				ProcessPipeline				( u32 pipelineID );
 	void				PublishAndReset				( u32 pipelineID );
+	void				ResetDrawingAPIs			();
+	virtual void		ResetState					() = 0;
 	ZLGfx&				SelectDrawingAPI			();
 	ZLGfx&				SelectDrawingAPI			( u32 pipelineID, bool critical = false );
 };

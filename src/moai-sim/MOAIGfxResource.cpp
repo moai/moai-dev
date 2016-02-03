@@ -37,6 +37,7 @@ int MOAIGfxResource::_getAge ( lua_State* L ) {
 int MOAIGfxResource::_getResourceState ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )
 
+	state.Push ( self->mState );
 	return 1;
 }
 
@@ -172,6 +173,9 @@ bool MOAIGfxResource::DoGPUCreate () {
 	
 		// set this now; in immediate mode we'll go straight to STATE_READY_TO_BIND on success
 		// otherwise we'll go there later when we get GFX_EVENT_CREATED
+		// why can't we set STATE_READY_TO_BIND? becausein multi-threaded mode, it might be
+		// a few more frames before we get GFX_EVENT_CREATED
+		
 		this->mState = STATE_PENDING;
 	
 		if ( this->OnGPUCreate ()) {
