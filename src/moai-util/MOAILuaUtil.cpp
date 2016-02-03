@@ -100,7 +100,7 @@ int MOAILuaUtil::_convert ( lua_State* L ) {
 	@text	Read the Lua bytecode header.
 	
 	@in		string bytecode
-	@out	table header
+	@out	table header		Returns 'nil' is no valid signature is found.
 */
 int MOAILuaUtil::_getHeader ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAILuaUtil, "S" )
@@ -114,18 +114,22 @@ int MOAILuaUtil::_getHeader ( lua_State* L ) {
 	MOAILuaHeader header;
 	header.Read ( stream );
 	
-	lua_newtable ( state );
-	state.SetField ( -1, "signature",			header.mSignature );
-	state.SetField ( -1, "version",				header.mVersion );
-	state.SetField ( -1, "format",				header.mFormat );
-	state.SetField ( -1, "byteOrder",			header.mByteOrder );
-	state.SetField ( -1, "sizeOfInt",			header.mSizeOfInt );
-	state.SetField ( -1, "sizeOfSizeT",			header.mSizeOfSizeT );
-	state.SetField ( -1, "sizeOfInstruction",	header.mSizeOfInstruction );
-	state.SetField ( -1, "sizeOfLuaNumber",		header.mSizeOfLuaNumber );
-	state.SetField ( -1, "typeOfNumber",		header.mTypeOfLuaNumber );
+	if ( header.mSignature == MOAILuaHeader::SIGNATURE ) {
 	
-	return 1;
+		lua_newtable ( state );
+		state.SetField ( -1, "signature",			header.mSignature );
+		state.SetField ( -1, "version",				header.mVersion );
+		state.SetField ( -1, "format",				header.mFormat );
+		state.SetField ( -1, "byteOrder",			header.mByteOrder );
+		state.SetField ( -1, "sizeOfInt",			header.mSizeOfInt );
+		state.SetField ( -1, "sizeOfSizeT",			header.mSizeOfSizeT );
+		state.SetField ( -1, "sizeOfInstruction",	header.mSizeOfInstruction );
+		state.SetField ( -1, "sizeOfLuaNumber",		header.mSizeOfLuaNumber );
+		state.SetField ( -1, "typeOfNumber",		header.mTypeOfLuaNumber );
+		
+		return 1;
+	}
+	return 0;
 }
 
 //================================================================//

@@ -11,6 +11,8 @@
 class MOAILuaHeader {
 public:
 
+	static const u32 SIGNATURE = 0x6175C41B;
+
 	u32			mSignature;				// "ESCLua" or 0x6175C41B
 	u8			mVersion;				// 0x51 for Lua 5.1
 	u8			mFormat;				// 0 = official version
