@@ -139,9 +139,9 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& mater
 		
 		gfxDevice.UpdateShaderGlobals ();
 		
-		// TODO: use gfxDevice to cache buffers
 		if ( this->mIndexBuffer ) {
 			
+			// TODO: turns out we can bind this inside the VAO as well. so there.
 			if ( gfxDevice.BindIndexBuffer ( this->mIndexBuffer )) {
 			
 				u32 indexSizeInBytes = this->mIndexBuffer->GetIndexSize ();
