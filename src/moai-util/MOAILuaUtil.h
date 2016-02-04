@@ -11,9 +11,9 @@
 class MOAILuaHeader {
 public:
 
-	static const u32 SIGNATURE = 0x6175C41B;
+	static const u32 SIGNATURE = 0x61754C1B;
 
-	u32			mSignature;				// "ESCLua" or 0x6175C41B
+	u32			mSignature;				// "ESCLua" or 0x61754C1B
 	u8			mVersion;				// 0x51 for Lua 5.1
 	u8			mFormat;				// 0 = official version
 	u8			mByteOrder;				// 0 = big endian, 1 = little endian
