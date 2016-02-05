@@ -266,10 +266,10 @@ s64 MOAILuaUtil::ConvertInt ( const MOAILuaHeader& srcFormat, const MOAILuaHeade
 //----------------------------------------------------------------//
 void MOAILuaUtil::ConvertString ( const MOAILuaHeader& srcFormat, const MOAILuaHeader& dstFormat, ZLStream& srcStream, ZLStream& dstStream ) {
 
-	size_t size = 0;
+	u64 size = 0;
 	srcStream.ReadBytes ( &size, srcFormat.mSizeOfSizeT ); // TODO: respect byte order
 	dstStream.WriteBytes ( &size, dstFormat.mSizeOfSizeT );
-	dstStream.WriteStream ( srcStream, size );
+	dstStream.WriteStream ( srcStream, ( size_t ) size );
 }
 
 //----------------------------------------------------------------//
