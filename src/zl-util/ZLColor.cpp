@@ -809,8 +809,8 @@ void ZLColor::PremultiplyAlpha ( void* colors, ColorFormat format, u32 nColors )
 		case LA_8:
 		
 			for ( u32 i = 0; i < nColors; ++i ) {
-				color = *( u32* )colors;
-				alpha = ( color >> 0x18 ) & 0xFF;
+				color = *( u16* )colors;
+				alpha = ( color >> 0x08 ) & 0xFF;
 				*( u16* )colors = ( u16 )(	(( color & 0xFF ) * alpha ) >> 0x08 ) +
 											( alpha << 0x08 );
 				colors = ( void* )(( size_t )colors + 2 );
