@@ -7,6 +7,8 @@
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxStateCache.h>
+#include <moai-sim/MOAIGfxVertexCache.h>
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAILayoutFrame.h>
@@ -607,7 +609,7 @@ void MOAIGraphicsProp::DrawDebug ( int subPrimID, float lod ) {
 	
 	this->LoadVertexTransform ();
 	
-	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+	gfxDevice.SetVertexTransform ( gfxDevice.GetMtx ( MOAIGfxDevice::WORLD_VIEW_PROJ_MTX ));
 	
 	ZLBox modelBounds;
 	this->OnGetModelBounds ( modelBounds );
@@ -625,7 +627,7 @@ void MOAIGraphicsProp::DrawDebug ( int subPrimID, float lod ) {
 	}
 	
 	// clear out the world transform (draw in world space)
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+	gfxDevice.SetVertexTransform ( gfxDevice.GetMtx ( MOAIGfxDevice::VIEW_PROJ_MTX ));
 	
 	if ( debugLines.Bind ( MOAIDebugLines::PROP_WORLD_BOUNDS )) {
 		draw.DrawBoxOutline ( this->GetBounds ());
@@ -751,7 +753,7 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 		
 		case BILLBOARD_SCREEN: {
 			
-			MOAIGfxDevice::Get ().GetWorldToWndMtx ();
+			//MOAIGfxDevice::Get ().GetWorldToWndMtx ();
 			
 			ZLMatrix4x4 viewProjMtx = camera->GetWorldToWndMtx ( *viewport );
 			
@@ -843,7 +845,7 @@ void MOAIGraphicsProp::LoadGfxState () {
 	gfxDevice.SetBlendMode ( this->mBlendMode );
 	
 	if ( this->mScissorRect ) {
-		ZLRect scissorRect = this->mScissorRect->GetScissorRect ( gfxDevice.GetWorldToWndMtx ());		
+		ZLRect scissorRect = this->mScissorRect->GetScissorRect ( gfxDevice.GetWorldToWndMtx ());
 		gfxDevice.SetScissorRect ( scissorRect );
 	}
 	else {
@@ -858,10 +860,10 @@ void MOAIGraphicsProp::LoadUVTransform () {
 	
 	if ( this->mUVTransform ) {
 		ZLAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
-		gfxDevice.SetUVTransform ( uvMtx );
+		gfxDevice.SetMtx ( MOAIGfxDevice::UV_MTX, uvMtx );
 	}
 	else {
-		gfxDevice.SetUVTransform ();
+		gfxDevice.SetMtx ( MOAIGfxDevice::UV_MTX );
 	}
 }
 
@@ -869,7 +871,7 @@ void MOAIGraphicsProp::LoadUVTransform () {
 void MOAIGraphicsProp::LoadVertexTransform () {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetWorldDrawingMtx ());
+	gfxDevice.SetMtx ( MOAIGfxDevice::WORLD_MTX, this->GetWorldDrawingMtx ());
 }
 
 //----------------------------------------------------------------//

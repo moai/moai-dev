@@ -364,45 +364,45 @@ bool MOAIGfxQuadListDeck2D::Contains ( u32 idx, const ZLVec2D& vec ) {
 //----------------------------------------------------------------//
 void MOAIGfxQuadListDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 
-	u32 size = this->mSprites.Size ();
-	if ( size ) {
-
-		idx = idx - 1;
-		u32 itemIdx = idx % size;
-
-		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-		MOAIQuadBrush::BindVertexFormat ( gfxDevice );
-		
-		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
-		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
-		
-		USSprite& sprite = this->mSprites [ itemIdx ];
-		MOAIQuadBrush glQuad;
-		
-		u32 base = sprite.mBasePair;
-		u32 top = base + sprite.mTotalPairs;
-		
-		u32 totalSpritePairs = this->mPairs.Size ();
-		
-		u32 materialID = MOAIMaterialBatch::UNKNOWN;
-		
-		for ( u32 i = base; i < top; ++i ) {
-			
-			USSpritePair spritePair = this->mPairs [ i % totalSpritePairs ];
-			
-			if (( i == base ) || ( materialID != spritePair.mMaterialID )) {
-				materialID = spritePair.mMaterialID;
-				materials.LoadGfxState ( this, materialID, idx, MOAIShaderMgr::DECK2D_SHADER );
-			}
-			
-			ZLQuad& uvQuad = this->mUVQuads [ spritePair.mUVQuadID ]; 
-			ZLQuad& quad = this->mQuads [ spritePair.mQuadID ];
-			
-			glQuad.SetUVs ( uvQuad.mV [ 0 ], uvQuad.mV [ 1 ], uvQuad.mV [ 2 ], uvQuad.mV [ 3 ] );
-			glQuad.SetVerts ( quad.mV [ 0 ], quad.mV [ 1 ], quad.mV [ 2 ], quad.mV [ 3 ]);
-			glQuad.Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY );
-		}
-	}
+//	u32 size = this->mSprites.Size ();
+//	if ( size ) {
+//
+//		idx = idx - 1;
+//		u32 itemIdx = idx % size;
+//
+//		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+//		MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+//		
+//		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+//		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+//		
+//		USSprite& sprite = this->mSprites [ itemIdx ];
+//		MOAIQuadBrush glQuad;
+//		
+//		u32 base = sprite.mBasePair;
+//		u32 top = base + sprite.mTotalPairs;
+//		
+//		u32 totalSpritePairs = this->mPairs.Size ();
+//		
+//		u32 materialID = MOAIMaterialBatch::UNKNOWN;
+//		
+//		for ( u32 i = base; i < top; ++i ) {
+//			
+//			USSpritePair spritePair = this->mPairs [ i % totalSpritePairs ];
+//			
+//			if (( i == base ) || ( materialID != spritePair.mMaterialID )) {
+//				materialID = spritePair.mMaterialID;
+//				materials.LoadGfxState ( this, materialID, idx, MOAIShaderMgr::DECK2D_SHADER );
+//			}
+//			
+//			ZLQuad& uvQuad = this->mUVQuads [ spritePair.mUVQuadID ]; 
+//			ZLQuad& quad = this->mQuads [ spritePair.mQuadID ];
+//			
+//			glQuad.SetUVs ( uvQuad.mV [ 0 ], uvQuad.mV [ 1 ], uvQuad.mV [ 2 ], uvQuad.mV [ 3 ] );
+//			glQuad.SetVerts ( quad.mV [ 0 ], quad.mV [ 1 ], quad.mV [ 2 ], quad.mV [ 3 ]);
+//			glQuad.Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY );
+//		}
+//	}
 }
 
 //----------------------------------------------------------------//

@@ -485,8 +485,8 @@ void MOAICollisionWorld::Render () {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_WORLD, MOAIGfxDevice::VTX_STAGE_PROJ );
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+	gfxDevice.SetMtx ( MOAIGfxDevice::WORLD_MTX );
+	gfxDevice.SetVertexTransform ( gfxDevice.GetMtx ( MOAIGfxDevice::VIEW_PROJ_MTX ));
 
 	MOAICollisionProp* drawList = 0;
 

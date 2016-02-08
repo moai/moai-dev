@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXDEVICEBASE_H
-#define	MOAIGFXDEVICEBASE_H
+#ifndef	MOAIGFXPIPELINEMGR_H
+#define	MOAIGFXPIPELINEMGR_H
 
 class MOAIIndexBuffer;
 class MOAIVertexArray;
@@ -18,7 +18,7 @@ class MOAIGfxPipelinePair {
 private:
 
 	friend class MOAIGfxPipeline;
-	friend class MOAIGfxDeviceBase;
+	friend class MOAIGfxPipelineMgr;
 	
 	ZLGfxRetained	mCritical;
 	ZLGfxRetained	mOptional;
@@ -30,7 +30,7 @@ private:
 class MOAIGfxPipeline {
 private:
 
-	friend class MOAIGfxDeviceBase;
+	friend class MOAIGfxPipelineMgr;
 
 	ZLLeanArray < MOAIGfxPipelinePair* > mDisplayPairs;
 	ZLLeanStack < MOAIGfxPipelinePair* > mFreeDisplayPairs;
@@ -66,9 +66,9 @@ private:
 };
 
 //================================================================//
-// MOAIGfxDeviceBase
+// MOAIGfxPipelineMgr
 //================================================================//
-class MOAIGfxDeviceBase {
+class MOAIGfxPipelineMgr {
 public:
 
 	enum {
@@ -85,9 +85,6 @@ protected:
 	
 	ZLGfx*						mDrawingAPI;
 	
-	ZLRect						mViewRect;
-	ZLFrustum					mViewVolume;
-	
 	u32							mDrawCount;
 	u32							mPipelineRenderCount;
 	
@@ -97,7 +94,6 @@ protected:
 	void				BeginPhase					( u32 list, u32 phase );
 	void				EndPhase					( u32 list, u32 phase );
 	void				LogPipelineRender			( ZLGfxRetained& gfx, size_t renderCount, cc8* name, cc8* flavor );
-	virtual void		UpdateAndBindUniforms		() = 0;
 
 public:
 	
@@ -107,9 +103,6 @@ public:
 		RENDER_PHASE,
 	};
 	
-	GET ( const ZLFrustum&, ViewVolume, mViewVolume )
-	GET ( const ZLRect&, ViewRect, mViewRect )
-	
 	GET ( u32, DrawCount, mDrawCount )
 	
 	//GET ( ZLGfx&, API, *mGfx )
@@ -117,15 +110,15 @@ public:
 	//----------------------------------------------------------------//
 	void				BeginPhase					( u32 phase );
 	void				EnablePipeline				( u32 pipelineID );
+	void				EnablePipelineLogging		( bool enable );
 	void				EndPhase					( u32 phase );
 	bool				HasContent					( u32 pipelineID );
 	bool				IsPipelineEnabled			( u32 pipelineID );
-						MOAIGfxDeviceBase			();
-	virtual				~MOAIGfxDeviceBase			();
+						MOAIGfxPipelineMgr			();
+	virtual				~MOAIGfxPipelineMgr			();
 	void				ProcessPipeline				( u32 pipelineID );
 	void				PublishAndReset				( u32 pipelineID );
 	void				ResetDrawingAPIs			();
-	virtual void		ResetState					() = 0;
 	ZLGfx&				SelectDrawingAPI			();
 	ZLGfx&				SelectDrawingAPI			( u32 pipelineID, bool critical = false );
 };

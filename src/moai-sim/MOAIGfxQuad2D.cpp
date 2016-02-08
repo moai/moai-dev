@@ -5,6 +5,8 @@
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGfxQuad2D.h>
+#include <moai-sim/MOAIGfxStateCache.h>
+#include <moai-sim/MOAIGfxVertexCache.h>
 #include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAIShaderMgr.h>
@@ -191,8 +193,8 @@ void MOAIGfxQuad2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D o
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
 	
-	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
-	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+	gfxDevice.SetVertexTransform ( gfxDevice.GetMtx ( MOAIGfxDevice::WORLD_VIEW_PROJ_MTX ));
+	gfxDevice.SetUVTransform ( gfxDevice.GetMtx ( MOAIGfxDevice::UV_MTX ));
 	
 	this->mQuad.Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY );
 }

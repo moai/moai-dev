@@ -1,10 +1,9 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXDEVICEVERTEXWRITER_H
-#define	MOAIGFXDEVICEVERTEXWRITER_H
+#ifndef	MOAIGFXVERTEXCACHE_H
+#define	MOAIGFXVERTEXCACHE_H
 
-#include <moai-sim/MOAIGfxDeviceMtxCache.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIVertexBuffer.h>
 
@@ -20,11 +19,13 @@ class MOAIVertexFormat;
 class MOAIViewport;
 
 //================================================================//
-// MOAIGfxDeviceVertexWriter
+// MOAIGfxVertexCache
 //================================================================//
-class MOAIGfxDeviceVertexWriter :
-	public MOAIGfxDeviceMtxCache {
+class MOAIGfxVertexCache {
 protected:
+
+	friend class MOAIGfxMtxCache;
+	friend class MOAIGfxStateCache;
 	
 	// Stock OpenGL ES 2.0 has no support for u32 index size in glDrawElements.
 	// iOS and many Androids (PowerVR, adreno) support it with GL_OES_element_index_uint extension.
@@ -64,8 +65,13 @@ protected:
 
 	MOAIVertexFormat*			mVertexFormat;
 
+	bool						mApplyVertexTransform;
+	ZLMatrix4x4					mVertexTransform;
+
+	bool						mApplyUVTransform;
+	ZLMatrix4x4					mUVTransform;
+
 	//----------------------------------------------------------------//
-	void			OnGfxStateWillChange			();
 	void			TransformAndWriteQuad			( ZLVec4D* vtx, ZLVec2D* uv );
 	void			UpdateFinalColor				();
 	void			UpdateLimits					();
@@ -89,8 +95,8 @@ public:
 	
 	void			FlushBufferedPrims				();
 	
-					MOAIGfxDeviceVertexWriter		();
-					~MOAIGfxDeviceVertexWriter		();
+					MOAIGfxVertexCache				();
+					~MOAIGfxVertexCache				();
 	void			SetAmbientColor					( u32 color );
 	void			SetAmbientColor					( const ZLColorVec& colorVec );
 	void			SetAmbientColor					( float r, float g, float b, float a );
@@ -101,22 +107,16 @@ public:
 
 	void			SetPrimType						( u32 primType, u32 primSize = 0 );
 
-	void			UnbindBufferedDrawing			();
+	void			SetUVTransform					();
+	void			SetUVTransform					( const ZLMatrix4x4& uvTransform );
+	void			SetVertexTransform				();
+	void			SetVertexTransform				( const ZLMatrix4x4& vertexTransform );
+
+	//void			UnbindBufferedDrawing			();
 	void			WriteQuad						( const ZLVec2D* vtx, const ZLVec2D* uv );
 	void			WriteQuad						( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff );
 	void			WriteQuad						( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale );
 	void			WriteQuad						( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale );
-	
-	//----------------------------------------------------------------//
-//	template < typename TYPE >
-//	inline void Write ( const TYPE& type ) {
-//		
-//		size_t top = this->mTop + sizeof ( TYPE );
-//		if ( top < this->mSize ) {
-//			*( TYPE* )(( size_t )this->mBuffer + this->mTop ) = type;
-//			this->mTop = top;
-//		}
-//	}
 	
 	//----------------------------------------------------------------//
 	inline void WriteColor ( float r, float g, float b, float a ) {
@@ -154,7 +154,7 @@ public:
 		uv.mX = u;
 		uv.mY = v;
 	
-		if ( this->mCpuUVTransform ) {
+		if ( this->mApplyUVTransform ) {
 			this->mUVTransform.Transform ( uv );
 		}
 		
@@ -165,7 +165,7 @@ public:
 	//----------------------------------------------------------------//
 	inline void WriteUV ( ZLVec2D uv ) {
 	
-		if ( this->mCpuUVTransform ) {
+		if ( this->mApplyUVTransform ) {
 			this->mUVTransform.Transform ( uv );
 		}
 		
@@ -194,8 +194,8 @@ public:
 		vtx.mZ = z;
 		vtx.mW = w;
 		
-		if ( this->mCpuVertexTransform ) {
-			this->mCpuVertexTransformMtx.Transform ( vtx );
+		if ( this->mApplyVertexTransform ) {
+			this->mVertexTransform.Transform ( vtx );
 		}
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)

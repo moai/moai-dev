@@ -38,13 +38,14 @@
 #include <moai-sim/MOAIGeometryWriter.h>
 #include <moai-sim/MOAIGfxBuffer.h>
 #include <moai-sim/MOAIGfxDevice.h>
-#include <moai-sim/MOAIGfxDeviceBase.h>
-#include <moai-sim/MOAIGfxDeviceMtxCache.h>
-#include <moai-sim/MOAIGfxDeviceVertexWriter.h>
+#include <moai-sim/MOAIGfxMtxCache.h>
+#include <moai-sim/MOAIGfxPipelineMgr.h>
+#include <moai-sim/MOAIGfxStateCache.h>
 #include <moai-sim/MOAIGfxQuad2D.h>
 #include <moai-sim/MOAIGfxQuadDeck2D.h>
 #include <moai-sim/MOAIGfxQuadListDeck2D.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxVertexCache.h>
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIGridDeck2D.h>

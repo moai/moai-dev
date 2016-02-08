@@ -60,7 +60,7 @@ class MOAIFrameBuffer :
 protected:
 	
 	friend class MOAIGfxDevice;
-	friend class MOAIGfxDeviceStateCache;
+	friend class MOAIGfxStateCache;
 	
 	u32					mBufferWidth;
 	u32					mBufferHeight;

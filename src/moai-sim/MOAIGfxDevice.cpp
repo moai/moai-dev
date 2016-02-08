@@ -8,6 +8,8 @@
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxStateCache.h>
+#include <moai-sim/MOAIGfxVertexCache.h>
 #include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
@@ -27,7 +29,7 @@
 int MOAIGfxDevice::_enablePipelineLogging ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIGfxDevice, "" )
 
-	self->mEnablePipelineLogging = state.GetValue < bool >( 1, false );
+	MOAIGfxDevice::Get ().EnablePipelineLogging ( state.GetValue < bool >( 1, false ));
 
 	ZLFileSys::DeleteDirectory ( GFX_PIPELINE_LOGGING_FOLDER, true, true );
 	ZLFileSys::AffirmPath ( GFX_PIPELINE_LOGGING_FOLDER );
@@ -44,7 +46,7 @@ int MOAIGfxDevice::_enablePipelineLogging ( lua_State* L ) {
 int MOAIGfxDevice::_getFrameBuffer ( lua_State* L ) {
 
 	MOAILuaState state ( L );
-	state.Push ( MOAIGfxDevice::Get ().GetDefaultFrameBuffer ());
+	MOAIGfxDevice::Get ().mDefaultFrameBuffer.PushRef ( state );
 
 	return 1;
 }
@@ -71,8 +73,7 @@ int MOAIGfxDevice::_getMaxTextureSize ( lua_State* L ) {
 */
 int MOAIGfxDevice::_getMaxTextureUnits ( lua_State* L ) {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	lua_pushnumber ( L, gfxDevice.mTextureUnits.Size ());
+	lua_pushnumber ( L, ( double )MOAIGfxDevice::Get ().CountTextureUnits ());
 
 	return 1;
 }
@@ -88,8 +89,10 @@ int MOAIGfxDevice::_getViewSize ( lua_State* L  ) {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	lua_pushnumber ( L, gfxDevice.GetWidth ());
-	lua_pushnumber ( L, gfxDevice.GetHeight ());
+	MOAIFrameBuffer* frameBuffer = MOAIGfxDevice::Get ().GetCurrentFrameBuffer ();
+	
+	lua_pushnumber ( L, frameBuffer->GetBufferWidth ());
+	lua_pushnumber ( L, frameBuffer->GetBufferHeight ());
 	
 	return 2;
 }
@@ -181,14 +184,16 @@ void MOAIGfxDevice::ClearErrors () {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::ClearSurface ( u32 clearFlags ) {
 
+	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+
 	if ( clearFlags ) {
-		if (( clearFlags & ZGL_CLEAR_DEPTH_BUFFER_BIT ) && !this->mDepthMask ) {
-			this->mDrawingAPI->DepthMask ( true );
-			this->mDrawingAPI->Clear ( clearFlags );
-			this->mDrawingAPI->DepthMask ( false );
+		if (( clearFlags & ZGL_CLEAR_DEPTH_BUFFER_BIT ) && !this->GetDepthMask ()) {
+			gfx.DepthMask ( true );
+			gfx.Clear ( clearFlags );
+			gfx.DepthMask ( false );
 		}
 		else {
-			this->mDrawingAPI->Clear ( clearFlags );
+			gfx.Clear ( clearFlags );
 		}
 	}
 }
@@ -203,8 +208,7 @@ void MOAIGfxDevice::DetectContext () {
 	ZLGfxDevice::Initialize ();
 	
 	u32 maxTextureUnits = ZLGfxDevice::GetCap ( ZGL_CAPS_MAX_TEXTURE_UNITS );
-	this->mTextureUnits.Init ( maxTextureUnits );
-	this->mTextureUnits.Fill ( 0 );
+	this->InitTextureUnits ( maxTextureUnits );
 	
 	this->mMaxTextureSize = ZLGfxDevice::GetCap ( ZGL_CAPS_MAX_TEXTURE_SIZE );
 
@@ -228,47 +232,6 @@ void MOAIGfxDevice::DetectFramebuffer () {
 	this->mDefaultFrameBuffer->DetectGLFrameBufferID ();
 	
 	ZLGfxDevice::End ();
-}
-
-//----------------------------------------------------------------//
-float MOAIGfxDevice::GetDeviceScale () {
-
-	return this->mCurrentFrameBuffer->mBufferScale;
-}
-
-//----------------------------------------------------------------//
-u32 MOAIGfxDevice::GetHeight () const {
-
-	return this->mCurrentFrameBuffer->mBufferHeight;
-}
-
-//----------------------------------------------------------------//
-//ZLQuad MOAIGfxDevice::GetViewQuad () const {
-//
-//	ZLQuad quad;
-//
-//	ZLMatrix4x4 invMtx;
-//	invMtx.Inverse ( this->GetViewProjMtx ());
-//	
-//	quad.mV [ 0 ].Init ( -1.0f, 1.0f );
-//	quad.mV [ 1 ].Init ( 1.0f, 1.0f );
-//	quad.mV [ 2 ].Init ( 1.0f, -1.0f );
-//	quad.mV [ 3 ].Init ( -1.0f, -1.0f );
-//	
-//	invMtx.TransformQuad ( quad.mV );
-//	return quad;
-//}
-
-//----------------------------------------------------------------//
-//ZLRect MOAIGfxDevice::GetViewRect () const {
-//
-//	return this->mViewRect;
-//}
-
-//----------------------------------------------------------------//
-u32 MOAIGfxDevice::GetWidth () const {
-
-	return this->mCurrentFrameBuffer->mBufferWidth;
 }
 
 //----------------------------------------------------------------//
@@ -308,14 +271,15 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 	
-	this->mScissorRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-	
 	this->mDefaultFrameBuffer.Set ( *this, new MOAIFrameBuffer ());
 	this->mCurrentFrameBuffer = this->mDefaultFrameBuffer;
 }
 
 //----------------------------------------------------------------//
 MOAIGfxDevice::~MOAIGfxDevice () {
+
+	this->mDefaultFrameBuffer.Set ( *this, 0 );
+	this->mDefaultTexture.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -332,8 +296,8 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "EVENT_RESIZE",	( u32 )EVENT_RESIZE );
 	
-	state.SetField ( -1, "DRAWING_PIPELINE",	( u32 )DRAWING_PIPELINE );
-	state.SetField ( -1, "LOADING_PIPELINE",	( u32 )LOADING_PIPELINE );
+	state.SetField ( -1, "DRAWING_PIPELINE",	( u32 )MOAIGfxPipelineMgr::DRAWING_PIPELINE );
+	state.SetField ( -1, "LOADING_PIPELINE",	( u32 )MOAIGfxPipelineMgr::LOADING_PIPELINE );
 
 	luaL_Reg regTable [] = {
 		{ "enablePipelineLogging",		_enablePipelineLogging },
@@ -370,79 +334,7 @@ void MOAIGfxDevice::ReportTextureFree ( cc8* name, size_t size ) {
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::ResetDrawCount () {
-	this->mDrawCount = 0;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::ResetState () {
-
-	ZGL_COMMENT ( *this->mDrawingAPI, "GFX RESET STATE" );
-
-	for ( u32 i = 0; i < TOTAL_VTX_TRANSFORMS; ++i ) {
-		this->mVertexTransforms [ i ].Ident ();
-	}
-	this->mUVTransform.Ident ();
-	this->mCpuVertexTransformMtx.Ident ();
-	
-	// reset the active texture
-	this->mDrawingAPI->ActiveTexture ( 0 );
-	this->mDrawingAPI->BindTexture ( 0 );
-
-	// reset the shader
-	this->mDrawingAPI->UseProgram ( 0 );
-	
-	// turn off blending
-	this->mDrawingAPI->Disable ( ZGL_PIPELINE_BLEND );
-	this->mBlendEnabled = false;
-	
-	// disable backface culling
-	this->mDrawingAPI->Disable ( ZGL_PIPELINE_CULL );
-	this->mCullFunc = 0;
-	
-	// disable depth test
-	this->mDrawingAPI->Disable ( ZGL_PIPELINE_DEPTH );
-	this->mDepthFunc = 0;
-	
-	// disable depth write
-	this->mDrawingAPI->DepthMask ( false );
-	this->mDepthMask = false;
-	
-	// reset the pen width
-	this->mPenWidth = 1.0f;
-	this->mDrawingAPI->LineWidth ( this->mPenWidth );
-	
-	// reset the scissor rect
-	this->mScissorEnabled = false;
-	this->mDrawingAPI->Disable ( ZGL_PIPELINE_SCISSOR );
-	
-	// clear the CPU matrix pipeline
-	for ( u32 i = 0; i < TOTAL_VTX_TRANSFORMS; ++i ) {
-		this->mVertexTransforms [ i ].Ident ();
-	}
-	this->mUVTransform.Ident ();
-	this->mCpuVertexTransformMtx.Ident ();
-	
-	this->mVertexMtxInput = VTX_STAGE_MODEL;
-	this->mVertexMtxOutput = VTX_STAGE_MODEL;
-	
-	for ( size_t i = 0; i < this->mTextureUnits.Size (); ++i ){
-		this->mDrawingAPI->ActiveTexture (( u32 )i );
-		this->mDrawingAPI->BindTexture ( 0 );
-		this->mTextureUnits [ i ] = 0;
-	}
-	this->mActiveTextures = 0;
-
-	this->mShaderProgram		= 0;
-	this->mCurrentIdxBuffer		= 0;
-	this->mCurrentTexture		= 0;
-	this->mCurrentVtxArray		= 0;
-	this->mCurrentVtxBuffer		= 0;
-	this->mCurrentVtxFormat		= 0;
-	
-	this->mCurrentFrameBuffer = this->GetDefaultFrameBuffer ();
-	this->mDrawingAPI->BindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, this->mCurrentFrameBuffer->mGLFrameBufferID );
-	
-	ZGL_COMMENT ( *this->mDrawingAPI, "" );
+	//this->mDrawCount = 0;
 }
 
 //----------------------------------------------------------------//
@@ -455,42 +347,4 @@ void MOAIGfxDevice::SetBufferScale ( float scale ) {
 void MOAIGfxDevice::SetBufferSize ( u32 width, u32 height ) {
 
 	this->mDefaultFrameBuffer->SetBufferSize ( width, height );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetViewRect () {
-
-	float width = ( float )this->mCurrentFrameBuffer->mBufferWidth;
-	float height = ( float )this->mCurrentFrameBuffer->mBufferHeight;
-
-	MOAIViewport rect;
-	rect.Init ( 0.0f, 0.0f, width, height );
-	
-	this->SetViewRect ( rect );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetViewRect ( ZLRect rect ) {
-
-	ZLRect deviceRect;
-	
-	deviceRect = this->mCurrentFrameBuffer->WndRectToDevice ( rect );
-	
-	s32 x = ( s32 )deviceRect.mXMin;
-	s32 y = ( s32 )deviceRect.mYMin;
-	
-	u32 w = ( u32 )( deviceRect.Width () + 0.5f );
-	u32 h = ( u32 )( deviceRect.Height () + 0.5f );
-	
-	this->mDrawingAPI->Viewport ( x, y, w, h );
-	
-	this->mViewRect = rect;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::UpdateAndBindUniforms () {
-
-	if ( this->mShader ) {
-		this->mShader->UpdateAndBindUniforms ();
-	}
 }

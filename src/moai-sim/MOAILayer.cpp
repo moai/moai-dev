@@ -762,9 +762,6 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 	
 	renderMgr.SetCamera ( this->mCamera );
 	renderMgr.SetViewport ( this->mViewport );
-	
-	// TODO: leaving this here for now (Moai SDK 1.7) but we need to move/remove it soon
-	//gfxDevice.ResetState ();
 
 	// TODO:
 	ZLMatrix4x4 mtx;
@@ -777,17 +774,16 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 	gfxDevice.SetScissorRect ( viewportRect );
 	this->ClearSurface ();
 	
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+	gfxDevice.SetMtx ( MOAIGfxDevice::WORLD_MTX );
 	
 	ZLMatrix4x4 view = this->GetViewMtx ();
 	ZLMatrix4x4 proj = this->GetProjectionMtx ();
 	
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM, view );
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, proj );
+	gfxDevice.SetMtx ( MOAIGfxDevice::VIEW_MTX, view );
+	gfxDevice.SetMtx ( MOAIGfxDevice::PROJ_MTX, proj );
 	
 	// recompute the frustum
-	gfxDevice.UpdateViewVolume ();
+	//gfxDevice.UpdateViewVolume ();
 	
 	this->RenderTable ( this->mUnderlayTable );
 	

@@ -4,6 +4,8 @@
 #include "pch.h"
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxStateCache.h>
+#include <moai-sim/MOAIGfxVertexCache.h>
 #include <moai-sim/MOAIRenderMgr.h>
 
 //================================================================//
@@ -182,11 +184,12 @@ void MOAIRenderMgr::Render () {
 
 	// Measure performance
 	double startTime = ZLDeviceTime::GetTimeInSeconds ();
+	
+	//device.ResetDrawCount ();
 
-	MOAIGfxDevice& device = MOAIGfxDevice::Get ();
-	device.ResetDrawCount ();
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	ZLGfx& gfx = device.SelectDrawingAPI ( MOAIGfxDevice::DRAWING_PIPELINE );
+	ZLGfx& gfx = gfxDevice.SelectDrawingAPI ( MOAIGfxPipelineMgr::DRAWING_PIPELINE );
 
 	ZGL_COMMENT ( gfx, "RENDER MGR RENDER" );
 
@@ -197,8 +200,8 @@ void MOAIRenderMgr::Render () {
 		state.Pop ( 1 );
 	}
 	
-	device.GetDefaultFrameBuffer ()->Render ();
-	this->mLastDrawCount = MOAIGfxDevice::Get ().GetDrawCount ();
+	gfxDevice.GetDefaultFrameBuffer ()->Render ();
+	//this->mLastDrawCount = MOAIGfxDevice::Get ().GetDrawCount ();
 	this->mRenderCounter++;
 	
 	// Measure performance
@@ -208,8 +211,8 @@ void MOAIRenderMgr::Render () {
 	
 	this->mFrameBuffer = 0;
 	
-	device.FlushBufferedPrims ();
-	device.UnbindAll ();
+	gfxDevice.FlushBufferedPrims ();
+	gfxDevice.UnbindAll ();
 	
 	ZLGfxDevice::End ();
 }

@@ -18,8 +18,8 @@ class MOAIGfxResource :
 private:
 
 	friend class MOAIGfxDevice;
-	friend class MOAIGfxDeviceBase;
-	friend class MOAIGfxDeviceStateCache;
+	friend class MOAIGfxPipelineMgr;
+	friend class MOAIGfxStateCache;
 	friend class MOAIGfxResourceMgr;
 
 	u32					mState;

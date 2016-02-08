@@ -404,22 +404,22 @@ ZLBox MOAIGfxQuadDeck2D::ComputeMaxBounds () {
 //----------------------------------------------------------------//
 void MOAIGfxQuadDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 
-	u32 size = this->mQuads.Size ();
-	if ( size ) {
-
-		idx = idx - 1;
-		u32 itemIdx = idx % size;
-
-		if ( !materials.LoadGfxState ( this, this->mMaterialIDs [ itemIdx ], idx, MOAIShaderMgr::DECK2D_SHADER )) return;
-
-		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-		MOAIQuadBrush::BindVertexFormat ( gfxDevice );
-		
-		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
-		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
-		
-		this->mQuads [ itemIdx ].Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY  );
-	}
+//	u32 size = this->mQuads.Size ();
+//	if ( size ) {
+//
+//		idx = idx - 1;
+//		u32 itemIdx = idx % size;
+//
+//		if ( !materials.LoadGfxState ( this, this->mMaterialIDs [ itemIdx ], idx, MOAIShaderMgr::DECK2D_SHADER )) return;
+//
+//		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+//		MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+//		
+//		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+//		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+//		
+//		this->mQuads [ itemIdx ].Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY  );
+//	}
 }
 
 //----------------------------------------------------------------//

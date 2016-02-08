@@ -1241,8 +1241,8 @@ void MOAIBox2DWorld::Render () {
 		
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 		
-		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_WORLD, MOAIGfxDevice::VTX_STAGE_PROJ );
-		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+		gfxDevice.SetMtx ( MOAIGfxDevice::WORLD_MTX );
+		gfxDevice.SetVertexTransform ( gfxDevice.GetMtx ( MOAIGfxDevice::VIEW_PROJ_MTX ));
 		
 		this->mDebugDraw->mScale = 1.0f / this->mUnitsToMeters;
 		this->mWorld->DrawDebugData ();

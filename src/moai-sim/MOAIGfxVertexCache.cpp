@@ -5,7 +5,9 @@
 
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIFrameBufferTexture.h>
-#include <moai-sim/MOAIGfxDeviceVertexWriter.h>
+#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxStateCache.h>
+#include <moai-sim/MOAIGfxVertexCache.h>
 #include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIMultiTexture.h>
@@ -19,11 +21,11 @@
 #include <moai-sim/MOAIViewport.h>
 
 //================================================================//
-// MOAIGfxDeviceVertexWriter
+// MOAIGfxVertexCache
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::BeginPrim () {
+void MOAIGfxVertexCache::BeginPrim () {
 
 	// TODO: this was commented out to deal with prims improperly batching in Vavius's
 	// spine implementation. this code did not handle indexed prims correctly. the
@@ -51,14 +53,14 @@ void MOAIGfxDeviceVertexWriter::BeginPrim () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::BeginPrim ( u32 primType, u32 primSize ) {
+void MOAIGfxVertexCache::BeginPrim ( u32 primType, u32 primSize ) {
 
 	this->SetPrimType ( primType, primSize );
 	this->BeginPrim ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::BeginPrimIndexed ( u32 primType, u32 vtxCount, u32 idxCount ) {
+void MOAIGfxVertexCache::BeginPrimIndexed ( u32 primType, u32 vtxCount, u32 idxCount ) {
 	
 	this->SetPrimType ( primType );
 	
@@ -77,7 +79,7 @@ void MOAIGfxDeviceVertexWriter::BeginPrimIndexed ( u32 primType, u32 vtxCount, u
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::BindBufferedDrawing ( MOAIVertexFormat& format ) {
+void MOAIGfxVertexCache::BindBufferedDrawing ( MOAIVertexFormat& format ) {
 	
 	this->mVertexFormat = &format;
 	this->mVertexSize = format.GetVertexSize ();
@@ -85,7 +87,7 @@ void MOAIGfxDeviceVertexWriter::BindBufferedDrawing ( MOAIVertexFormat& format )
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::BindBufferedDrawing ( u32 preset ) {
+void MOAIGfxVertexCache::BindBufferedDrawing ( u32 preset ) {
 
 	MOAIVertexFormat* format = MOAIVertexFormatMgr::Get ().GetFormat ( preset );
 	
@@ -94,7 +96,7 @@ void MOAIGfxDeviceVertexWriter::BindBufferedDrawing ( u32 preset ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::EndPrim () {
+void MOAIGfxVertexCache::EndPrim () {
 	
 	++this->mPrimCount;
 	
@@ -106,16 +108,19 @@ void MOAIGfxDeviceVertexWriter::EndPrim () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::EndPrimIndexed () {
+void MOAIGfxVertexCache::EndPrimIndexed () {
 	
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::FlushBufferedPrims () {
+void MOAIGfxVertexCache::FlushBufferedPrims () {
 
 	if (( !this->mIsDrawing ) && this->mVertexFormat && this->mVertexSize ) {
 	
 		this->mIsDrawing = true;
+		
+		ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 		
 		if ( this->mUseIdxBuffer ) {
 			
@@ -126,18 +131,18 @@ void MOAIGfxDeviceVertexWriter::FlushBufferedPrims () {
 				this->mVtxBuffer.OnGPUUpdate ();
 				this->mIdxBuffer.OnGPUUpdate ();
 				
-				this->BindVertexFormat ();
+				//gfxCache.BindVertexFormat ();
 				
-				this->BindVertexBuffer ( &this->mVtxBuffer );
-				this->BindVertexFormat ( this->mVertexFormat, true );
-				this->BindIndexBuffer ( &this->mIdxBuffer );
+				gfxDevice.BindVertexBuffer ( &this->mVtxBuffer );
+				gfxDevice.BindVertexFormat ( this->mVertexFormat, true );
+				gfxDevice.BindIndexBuffer ( &this->mIdxBuffer );
 				
-				this->UpdateAndBindUniforms ();
+				gfxDevice.UpdateAndBindUniforms ();
 
-				ZLSharedConstBuffer* buffer = this->mDrawingAPI->CopyBuffer ( this->mIdxBuffer.GetBuffer ());
+				ZLSharedConstBuffer* buffer = gfx.CopyBuffer ( this->mIdxBuffer.GetBuffer ());
 
-				this->mDrawingAPI->DrawElements ( this->mPrimType, count, ZGL_TYPE_UNSIGNED_SHORT, buffer, 0 );
-				this->mDrawCount++;
+				gfx.DrawElements ( this->mPrimType, count, ZGL_TYPE_UNSIGNED_SHORT, buffer, 0 );
+				//this->mDrawCount++;
 			}
 		}
 		else {
@@ -148,14 +153,15 @@ void MOAIGfxDeviceVertexWriter::FlushBufferedPrims () {
 				
 				this->mVtxBuffer.OnGPUUpdate ();
 				
-				this->BindVertexFormat ();
+				//gfxCache.BindVertexFormat ();
 				
-				this->BindVertexBuffer ( &this->mVtxBuffer );
-				this->BindVertexFormat ( this->mVertexFormat, true );
+				gfxDevice.BindVertexBuffer ( &this->mVtxBuffer );
+				gfxDevice.BindVertexFormat ( this->mVertexFormat, true );
 				
-				this->UpdateAndBindUniforms ();
-				this->mDrawingAPI->DrawArrays ( this->mPrimType, 0, count );
-				this->mDrawCount++;
+				gfxDevice.UpdateAndBindUniforms ();
+				
+				gfx.DrawArrays ( this->mPrimType, 0, count );
+				//this->mDrawCount++;
 			}
 		}
 		
@@ -175,7 +181,7 @@ void MOAIGfxDeviceVertexWriter::FlushBufferedPrims () {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxDeviceVertexWriter::MOAIGfxDeviceVertexWriter () :
+MOAIGfxVertexCache::MOAIGfxVertexCache () :
 	mIsDrawing ( false ),
 	mFinalColor32 ( 0xffffffff ),
 	mVertexSize ( 0 ),
@@ -187,7 +193,9 @@ MOAIGfxDeviceVertexWriter::MOAIGfxDeviceVertexWriter () :
 	mPrimType ( 0xffffffff ),
 	mTotalVertices ( 0 ),
 	mTotalIndices ( 0 ),
-	mVertexFormat ( 0 ) {
+	mVertexFormat ( 0 ),
+	mApplyVertexTransform ( false ),
+	mApplyUVTransform ( false ) {
 	
 	this->mAmbientColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
 	this->mFinalColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
@@ -198,62 +206,59 @@ MOAIGfxDeviceVertexWriter::MOAIGfxDeviceVertexWriter () :
 	
 	this->mVtxBuffer.SetCopyOnUpdate ( true );
 	this->mIdxBuffer.SetCopyOnUpdate ( true );
+	
+	this->mVertexTransform.Ident ();
+	this->mUVTransform.Ident ();
 }
 
 //----------------------------------------------------------------//
-MOAIGfxDeviceVertexWriter::~MOAIGfxDeviceVertexWriter () {
+MOAIGfxVertexCache::~MOAIGfxVertexCache () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::OnGfxStateWillChange () {
-
-	this->FlushBufferedPrims ();
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::SetAmbientColor ( u32 color ) {
+void MOAIGfxVertexCache::SetAmbientColor ( u32 color ) {
 
 	this->mAmbientColor.SetRGBA ( color );
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::SetAmbientColor ( const ZLColorVec& colorVec ) {
+void MOAIGfxVertexCache::SetAmbientColor ( const ZLColorVec& colorVec ) {
 
 	this->mAmbientColor = colorVec;
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::SetAmbientColor ( float r, float g, float b, float a ) {
+void MOAIGfxVertexCache::SetAmbientColor ( float r, float g, float b, float a ) {
 
 	this->mAmbientColor.Set ( r, g, b, a );
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::SetPenColor ( u32 color ) {
+void MOAIGfxVertexCache::SetPenColor ( u32 color ) {
 
 	this->mPenColor.SetRGBA ( color );
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::SetPenColor ( const ZLColorVec& colorVec ) {
+void MOAIGfxVertexCache::SetPenColor ( const ZLColorVec& colorVec ) {
 
 	this->mPenColor = colorVec;
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::SetPenColor ( float r, float g, float b, float a ) {
+void MOAIGfxVertexCache::SetPenColor ( float r, float g, float b, float a ) {
 
 	this->mPenColor.Set ( r, g, b, a );
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::SetPrimType ( u32 primType, u32 primSize ) {
+void MOAIGfxVertexCache::SetPrimType ( u32 primType, u32 primSize ) {
 
 	if ( !primSize ) {
 
@@ -288,13 +293,41 @@ void MOAIGfxDeviceVertexWriter::SetPrimType ( u32 primType, u32 primSize ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* uv ) {
+void MOAIGfxVertexCache::SetUVTransform () {
 
-	if ( this->mCpuVertexTransform ) {
-		this->mCpuVertexTransformMtx.TransformQuad ( vtx );
+	this->mApplyUVTransform = false;
+	this->mUVTransform.Ident ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxVertexCache::SetUVTransform ( const ZLMatrix4x4& uvTransform ) {
+
+	this->mApplyUVTransform = !uvTransform.IsIdent ();
+	this->mUVTransform = uvTransform;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxVertexCache::SetVertexTransform () {
+
+	this->mApplyVertexTransform = false;
+	this->mVertexTransform.Ident ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxVertexCache::SetVertexTransform ( const ZLMatrix4x4& vertexTransform ) {
+
+	this->mApplyVertexTransform = !vertexTransform.IsIdent ();
+	this->mVertexTransform = vertexTransform;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxVertexCache::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* uv ) {
+
+	if ( this->mApplyVertexTransform ) {
+		this->mVertexTransform.TransformQuad ( vtx );
 	}
 	
-	if ( this->mCpuUVTransform ) {
+	if ( this->mApplyUVTransform ) {
 		this->mUVTransform.TransformQuad ( uv );
 	}
 	
@@ -336,19 +369,21 @@ void MOAIGfxDeviceVertexWriter::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* u
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::UnbindBufferedDrawing () {
-
-	this->FlushBufferedPrims ();
-
-	this->BindVertexBuffer ();
-	this->BindIndexBuffer ();
-	
-	this->mVertexFormat = 0;
-	this->mVertexSize = 0;
-}
+//void MOAIGfxVertexCache::UnbindBufferedDrawing () {
+//
+//	MOAIGfxStateCache& gfxCache = MOAIGfxStateCache::Get ();
+//
+//	this->FlushBufferedPrims ();
+//
+//	this->BindVertexBuffer ();
+//	this->BindIndexBuffer ();
+//	
+//	this->mVertexFormat = 0;
+//	this->mVertexSize = 0;
+//}
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::UpdateFinalColor () {
+void MOAIGfxVertexCache::UpdateFinalColor () {
 
 	this->mFinalColor.mR = this->mAmbientColor.mR * this->mPenColor.mR;
 	this->mFinalColor.mG = this->mAmbientColor.mG * this->mPenColor.mG;
@@ -359,7 +394,7 @@ void MOAIGfxDeviceVertexWriter::UpdateFinalColor () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::UpdateLimits () {
+void MOAIGfxVertexCache::UpdateLimits () {
 	
 	u32 primSize	= this->mPrimSize ? this->mPrimSize : 1;
 	u32 vertexSize	= this->mVertexSize ? this->mVertexSize : 1;
@@ -372,7 +407,7 @@ void MOAIGfxDeviceVertexWriter::UpdateLimits () {
 }
 	
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv ) {
+void MOAIGfxVertexCache::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv ) {
 
 	ZLVec4D vtxBuffer [ 4 ];
 	
@@ -403,7 +438,7 @@ void MOAIGfxDeviceVertexWriter::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* u
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff ) {
+void MOAIGfxVertexCache::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff ) {
 
 	ZLVec4D vtxBuffer [ 4 ];
 	
@@ -434,7 +469,7 @@ void MOAIGfxDeviceVertexWriter::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* u
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale ) {
+void MOAIGfxVertexCache::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale ) {
 
 	ZLVec4D vtxBuffer [ 4 ];
 	
@@ -465,7 +500,7 @@ void MOAIGfxDeviceVertexWriter::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* u
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDeviceVertexWriter::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale ) {
+void MOAIGfxVertexCache::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale ) {
 
 	ZLVec4D vtxBuffer [ 4 ];
 	

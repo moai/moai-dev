@@ -86,8 +86,9 @@ void MOAIDraw::DrawString ( cc8* text, float x, float y, float width, float heig
 	assert ( g_CurrentTextDrawContext );
 
 	// Transform the center into 'world' space
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	const ZLMatrix4x4& orgWorldTransform = gfxDevice.GetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+	MOAIGfxDevice& gfxStateCache = MOAIGfxDevice::Get ();
+	
+	const ZLMatrix4x4& orgWorldTransform = gfxStateCache.GetMtx ( MOAIGfxDevice::WORLD_MTX );
 	ZLVec2D pos ( x, y );
 	orgWorldTransform.Transform ( pos );
 	x = pos.mX;
@@ -181,12 +182,11 @@ void MOAIDraw::EndDrawString () {
 
 	// Setup for drawing
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxDevice& gfxStateCache = MOAIGfxDevice::Get ();
+	MOAIGfxDevice& gfxVtxCache = MOAIGfxDevice::Get ();
 
 	// Get current state
-	const ZLMatrix4x4& orgWorldTransform = gfxDevice.GetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
-
-	u32 orgVtxModeInput, orgVtxModeOutput;
-	gfxDevice.GetVertexMtxMode ( orgVtxModeInput, orgVtxModeOutput );
+	const ZLMatrix4x4& orgWorldTransform = gfxStateCache.GetMtx ( MOAIGfxDevice::WORLD_MTX );
 
 	// TODO
 	//GLint orgSrcBlend, orgDestBlend;
@@ -194,11 +194,11 @@ void MOAIDraw::EndDrawString () {
 	//glGetIntegerv ( GL_BLEND_DST, &orgDestBlend );
 
 	// Apply render state
-	if ( !gfxDevice.BindShader ( MOAIShaderMgr::FONT_SHADER )) return;
+	if ( !gfxStateCache.BindShader ( MOAIShaderMgr::FONT_SHADER )) return;
 	
-	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_WORLD, MOAIGfxDevice::VTX_STAGE_PROJ );
-	gfxDevice.SetBlendMode ( ZGL_BLEND_FACTOR_ONE, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
-	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+	gfxStateCache.SetBlendMode ( ZGL_BLEND_FACTOR_ONE, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
+	gfxVtxCache.SetVertexTransform ( gfxStateCache.GetMtx ( MOAIGfxDevice::WORLD_MTX ));
+	MOAIQuadBrush::BindVertexFormat ( gfxVtxCache );
 
 	// Get the context data
 	assert( g_CurrentTextDrawContext );
@@ -213,11 +213,11 @@ void MOAIDraw::EndDrawString () {
 	u32 numPasses = 1;
 	float offsetX = 0;
 	float offsetY = 0;
-	ZLColorVec penColor = gfxDevice.GetPenColor ();
+	ZLColorVec penColor = gfxVtxCache.GetPenColor ();
 	if ( drawDropShadows ) {
 
 		numPasses = 2;		
-		gfxDevice.SetPenColor ( 0, 0, 0, 1 );
+		gfxVtxCache.SetPenColor ( 0, 0, 0, 1 );
 		offsetX = shadowOffsetX;
 		offsetY = shadowOffsetY;
 	}
@@ -225,7 +225,7 @@ void MOAIDraw::EndDrawString () {
 	for ( u32 pass = 0; pass < numPasses; pass++ ) {
 
 		if ( pass == 1 || numPasses == 1 ) {
-			gfxDevice.SetPenColor ( penColor );
+			gfxVtxCache.SetPenColor ( penColor );
 			offsetX = 0;
 			offsetY = 0;
 		}
@@ -241,10 +241,9 @@ void MOAIDraw::EndDrawString () {
 	}
 
 	// Restore render state
-	Bind ();
+	MOAIDraw::Bind ();
 
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, orgWorldTransform );
-	gfxDevice.SetVertexMtxMode ( orgVtxModeInput, orgVtxModeOutput );
+	//gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, orgWorldTransform );
 	//gfxDevice.SetBlendMode ( orgSrcBlend, orgDestBlend ); // TODO
 
 	// Clear context
@@ -734,7 +733,7 @@ int MOAIDraw::_fillRect ( lua_State* L ) {
 */
 int MOAIDraw::_setBlendMode ( lua_State* L ) {
 	MOAILuaState state ( L );
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxDevice& gfxStateCache = MOAIGfxDevice::Get ();
 
 	if ( state.IsType ( 1, LUA_TNUMBER )) {
 		if ( state.IsType ( 2, LUA_TNUMBER )) {
@@ -742,16 +741,16 @@ int MOAIDraw::_setBlendMode ( lua_State* L ) {
 			u32 srcFactor = state.GetValue < u32 >( 1, 0 );
 			u32 dstFactor = state.GetValue < u32 >( 2, 0 );
 			u32 equation = state.GetValue < u32 >( 3, 0 );
-			gfxDevice.SetBlendMode ( srcFactor, dstFactor, equation );
+			gfxStateCache.SetBlendMode ( srcFactor, dstFactor, equation );
 		}
 		else {
 
 			u32 blendMode = state.GetValue < u32 >( 1, MOAIBlendMode::BLEND_NORMAL );
-			gfxDevice.SetBlendMode (( const MOAIBlendMode& )blendMode);
+			gfxStateCache.SetBlendMode (( const MOAIBlendMode& )blendMode);
 		}
 	}
 	else {
-		gfxDevice.SetBlendMode();
+		gfxStateCache.SetBlendMode();
 	}
 	return 0;
 }
@@ -763,15 +762,17 @@ int MOAIDraw::_setBlendMode ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAIDraw::Bind () {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxDevice& gfxStateCache = MOAIGfxDevice::Get ();
 	
-	if ( !gfxDevice.BindTexture ()) return false;
-	if ( !gfxDevice.BindShader ( MOAIShaderMgr::LINE_SHADER )) return false;
+	if ( !gfxStateCache.BindTexture ()) return false;
+	if ( !gfxStateCache.BindShader ( MOAIShaderMgr::LINE_SHADER )) return false;
 	
-	gfxDevice.BindBufferedDrawing ( MOAIVertexFormatMgr::XYZWC );
+	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
 	
-	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
-	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+	gfxVertexCache.BindBufferedDrawing ( MOAIVertexFormatMgr::XYZWC );
+	
+	gfxVertexCache.SetVertexTransform ( gfxStateCache.GetMtx ( MOAIGfxDevice::WORLD_VIEW_PROJ_MTX ));
+	gfxVertexCache.SetUVTransform ( MOAIGfxDevice::Get ().GetMtx ( MOAIGfxDevice::UV_MTX ));
 
 	return true;
 }
@@ -785,7 +786,7 @@ void MOAIDraw::DrawAnimCurve ( const MOAIAnimCurve& curve, u32 resolution ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawAxisGrid ( ZLVec2D loc, ZLVec2D vec, float size ) {
 
-	ZLMatrix4x4 mtx = MOAIGfxDevice::Get ().GetViewProjMtx ();
+	ZLMatrix4x4 mtx = MOAIGfxDevice::Get ().GetMtx ( MOAIGfxDevice::VIEW_PROJ_MTX );
 	
 	ZLMatrix4x4 invMtx;
 	invMtx.Inverse ( mtx );
@@ -916,12 +917,12 @@ void MOAIDraw::DrawBoxOutline ( const ZLBox& box ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawBezierCurve ( const ZLCubicBezier2D& bezier ) {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
 	MOAIDrawVertexWriter2D writer;
 	
-	gfxDevice.BeginPrim ( ZGL_PRIM_LINE_STRIP );
-	bezier.Flatten ( writer );
-	gfxDevice.EndPrim ();
+	gfxVertexCache.BeginPrim ( ZGL_PRIM_LINE_STRIP );
+		bezier.Flatten ( writer );
+	gfxVertexCache.EndPrim ();
 }
 
 //----------------------------------------------------------------//
@@ -957,22 +958,22 @@ void MOAIDraw::DrawEllipseFill ( const ZLRect& rect, u32 steps ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawEllipseFill ( float x, float y, float xRad, float yRad, u32 steps ) {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
 
 	float angle = ( float )TWOPI / ( float )steps;
 	float angleStep = ( float )PI;
 	
-	gfxDevice.BeginPrim ( ZGL_PRIM_TRIANGLE_FAN );
+	gfxVertexCache.BeginPrim ( ZGL_PRIM_TRIANGLE_FAN );
 	
 	for ( u32 i = 0; i < steps; ++i, angleStep += angle ) {
-		gfxDevice.WriteVtx (
+		gfxVertexCache.WriteVtx (
 			x + ( Sin ( angleStep ) * xRad ),
 			y + ( Cos ( angleStep ) * yRad ),
 			0.0f
 		);
-		gfxDevice.WriteFinalColor4b ();
+		gfxVertexCache.WriteFinalColor4b ();
 	}
-	gfxDevice.EndPrim ();
+	gfxVertexCache.EndPrim ();
 }
 
 //----------------------------------------------------------------//
@@ -987,22 +988,22 @@ void MOAIDraw::DrawEllipseOutline ( const ZLRect& rect, u32 steps ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawEllipseOutline ( float x, float y, float xRad, float yRad, u32 steps ) {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
 
 	float step = ( float )TWOPI / ( float )steps;
 	float angle = ( float )PI;
 	
-	gfxDevice.BeginPrim ( ZGL_PRIM_LINE_LOOP );
+	gfxVertexCache.BeginPrim ( ZGL_PRIM_LINE_LOOP );
 	
 	for ( u32 i = 0; i < steps; ++i, angle += step ) {
-		gfxDevice.WriteVtx (
+		gfxVertexCache.WriteVtx (
 			x + ( Cos ( angle ) * xRad ),
 			y + ( Sin ( angle ) * yRad ),
 			0.0f
 		);
-		gfxDevice.WriteFinalColor4b ();
+		gfxVertexCache.WriteFinalColor4b ();
 	}
-	gfxDevice.EndPrim ();
+	gfxVertexCache.EndPrim ();
 }
 
 //----------------------------------------------------------------//
@@ -1073,30 +1074,30 @@ void MOAIDraw::DrawLine ( const ZLVec3D& v0, const ZLVec3D& v1 ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawLine ( float x0, float y0, float z0, float x1, float y1, float z1 ) {
 	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
 
-	gfxDevice.SetPrimType ( ZGL_PRIM_LINE_STRIP );
+	gfxVertexCache.SetPrimType ( ZGL_PRIM_LINE_STRIP );
 
-	gfxDevice.BeginPrim ();
+	gfxVertexCache.BeginPrim ();
 	
-		gfxDevice.WriteVtx ( x0, y0, z0 );
-		gfxDevice.WriteFinalColor4b ();
+		gfxVertexCache.WriteVtx ( x0, y0, z0 );
+		gfxVertexCache.WriteFinalColor4b ();
 		
-		gfxDevice.WriteVtx ( x1, y1, z1 );
-		gfxDevice.WriteFinalColor4b ();
+		gfxVertexCache.WriteVtx ( x1, y1, z1 );
+		gfxVertexCache.WriteFinalColor4b ();
 	
-	gfxDevice.EndPrim ();
+	gfxVertexCache.EndPrim ();
 }
 
 //----------------------------------------------------------------//
 void MOAIDraw::DrawLuaParams ( lua_State* L, u32 primType ) {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
 	MOAILuaState state ( L );
 
 	u32 total = state.GetTop () >> 1;
 	
-	gfxDevice.BeginPrim ( primType );
+	gfxVertexCache.BeginPrim ( primType );
 	
 	for ( u32 i = 0; i < total; ++i ) {
 		
@@ -1105,24 +1106,24 @@ void MOAIDraw::DrawLuaParams ( lua_State* L, u32 primType ) {
 		float x = state.GetValue < float >( idx, 0.0f );
 		float y = state.GetValue < float >( idx + 1, 0.0f );
 		
-		gfxDevice.WriteVtx ( x, y, 0.0f );
-		gfxDevice.WriteFinalColor4b ();
+		gfxVertexCache.WriteVtx ( x, y, 0.0f );
+		gfxVertexCache.WriteFinalColor4b ();
 	}
 	
-	gfxDevice.EndPrim ();
+	gfxVertexCache.EndPrim ();
 }
 
 
 //----------------------------------------------------------------//
 void MOAIDraw::DrawLuaArray ( lua_State* L, u32 primType ) {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
 	MOAILuaState state ( L );
 
 	float x = 0.0f;
 	float y = 0.0f;
 	
-	gfxDevice.BeginPrim ( primType );
+	gfxVertexCache.BeginPrim ( primType );
 
 	u32 counter = 0;
 	lua_pushnil ( L );
@@ -1133,14 +1134,14 @@ void MOAIDraw::DrawLuaArray ( lua_State* L, u32 primType ) {
 			x = state.GetValue < float >( -1, 0.0f );
 		} else {
 			y = state.GetValue < float >( -1, 0.0f );
-			gfxDevice.WriteVtx ( x, y );
-			gfxDevice.WriteFinalColor4b ();
+			gfxVertexCache.WriteVtx ( x, y );
+			gfxVertexCache.WriteFinalColor4b ();
 		}
 		++counter;
 		lua_pop ( L, 1 );
 	}
 
-	gfxDevice.EndPrim ();
+	gfxVertexCache.EndPrim ();
 }
 
 //----------------------------------------------------------------//
@@ -1152,32 +1153,32 @@ void MOAIDraw::DrawPoint ( const ZLVec2D& loc ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawPoint ( float x, float y ) {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
 
-	gfxDevice.SetPrimType ( ZGL_PRIM_POINTS );
+	gfxVertexCache.SetPrimType ( ZGL_PRIM_POINTS );
 
-	gfxDevice.BeginPrim ();
-		gfxDevice.WriteVtx ( x, y, 0.0f );
-		gfxDevice.WriteFinalColor4b ();
-	gfxDevice.EndPrim ();
+	gfxVertexCache.BeginPrim ();
+		gfxVertexCache.WriteVtx ( x, y, 0.0f );
+		gfxVertexCache.WriteFinalColor4b ();
+	gfxVertexCache.EndPrim ();
 }
 
 //----------------------------------------------------------------//
 void MOAIDraw::DrawPolyOutline ( const ZLPolygon2D& poly ) {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
 
-	gfxDevice.SetPrimType ( ZGL_PRIM_LINE_LOOP );
+	gfxVertexCache.SetPrimType ( ZGL_PRIM_LINE_LOOP );
 	
 	size_t size = poly.GetSize ();
 
-	gfxDevice.BeginPrim ();
+	gfxVertexCache.BeginPrim ();
 	for ( u32 i = 0; i < size; ++i ) {
 		const ZLVec2D& v0 = poly.GetVertex ( i );
-		gfxDevice.WriteVtx ( v0.mX, v0.mY, 0.0f );
-		gfxDevice.WriteFinalColor4b ();
+		gfxVertexCache.WriteVtx ( v0.mX, v0.mY, 0.0f );
+		gfxVertexCache.WriteFinalColor4b ();
 	}
-	gfxDevice.EndPrim ();
+	gfxVertexCache.EndPrim ();
 }
 
 //----------------------------------------------------------------//
@@ -1195,7 +1196,7 @@ void MOAIDraw::DrawRay ( float x, float y, float dx, float dy ) {
 	ZLVec2D loc ( x, y );
 	ZLVec2D vec ( dx, dy );
 	
-	ZLMatrix4x4 mtx = MOAIGfxDevice::Get ().GetViewProjMtx ();
+	ZLMatrix4x4 mtx = MOAIGfxDevice::Get ().GetMtx ( MOAIGfxDevice::VIEW_PROJ_MTX );
 	
 	ZLMatrix4x4 invMtx;
 	invMtx.Inverse ( mtx );
@@ -1214,17 +1215,17 @@ void MOAIDraw::DrawRay ( float x, float y, float dx, float dy ) {
 		invMtx.Transform ( p0 );
 		invMtx.Transform ( p1 );
 		
-		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+		MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
 		
-		gfxDevice.BeginPrim ( ZGL_PRIM_LINES );
+		gfxVertexCache.BeginPrim ( ZGL_PRIM_LINES );
 		
-			gfxDevice.WriteVtx ( p0.mX, p0.mY, 0.0f );
-			gfxDevice.WriteFinalColor4b ();
+			gfxVertexCache.WriteVtx ( p0.mX, p0.mY, 0.0f );
+			gfxVertexCache.WriteFinalColor4b ();
 			
-			gfxDevice.WriteVtx ( p1.mX, p1.mY, 0.0f );
-			gfxDevice.WriteFinalColor4b ();
+			gfxVertexCache.WriteVtx ( p1.mX, p1.mY, 0.0f );
+			gfxVertexCache.WriteFinalColor4b ();
 
-		gfxDevice.EndPrim ();
+		gfxVertexCache.EndPrim ();
 	}
 }
 
@@ -1264,55 +1265,55 @@ void MOAIDraw::DrawRectFill ( ZLRect rect, bool asTriStrip ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawRectFill ( float left, float top, float right, float bottom, bool asTriStrip ) {
 	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
 	
 	if ( asTriStrip ) {
 
-		gfxDevice.BeginPrim ( ZGL_PRIM_TRIANGLE_STRIP );
+		gfxVertexCache.BeginPrim ( ZGL_PRIM_TRIANGLE_STRIP );
 	
-			gfxDevice.WriteVtx ( left, top, 0.0f );
-			gfxDevice.WriteFinalColor4b ();
+			gfxVertexCache.WriteVtx ( left, top, 0.0f );
+			gfxVertexCache.WriteFinalColor4b ();
 		
-			gfxDevice.WriteVtx ( right, top, 0.0f );
-			gfxDevice.WriteFinalColor4b ();
+			gfxVertexCache.WriteVtx ( right, top, 0.0f );
+			gfxVertexCache.WriteFinalColor4b ();
 		
-			gfxDevice.WriteVtx ( left, bottom, 0.0f );
-			gfxDevice.WriteFinalColor4b ();
+			gfxVertexCache.WriteVtx ( left, bottom, 0.0f );
+			gfxVertexCache.WriteFinalColor4b ();
 		
-			gfxDevice.WriteVtx ( right, bottom, 0.0f );
-			gfxDevice.WriteFinalColor4b ();
+			gfxVertexCache.WriteVtx ( right, bottom, 0.0f );
+			gfxVertexCache.WriteFinalColor4b ();
 	
-		gfxDevice.EndPrim ();
+		gfxVertexCache.EndPrim ();
 	}
 	else {
 		
 		// Tri 1
-		gfxDevice.BeginPrim ( ZGL_PRIM_TRIANGLES );
+		gfxVertexCache.BeginPrim ( ZGL_PRIM_TRIANGLES );
 	
-			gfxDevice.WriteVtx ( left, top, 0.0f );
-			gfxDevice.WriteFinalColor4b ();
+			gfxVertexCache.WriteVtx ( left, top, 0.0f );
+			gfxVertexCache.WriteFinalColor4b ();
 		
-			gfxDevice.WriteVtx ( right, top, 0.0f );
-			gfxDevice.WriteFinalColor4b ();
+			gfxVertexCache.WriteVtx ( right, top, 0.0f );
+			gfxVertexCache.WriteFinalColor4b ();
 		
-			gfxDevice.WriteVtx ( right, bottom, 0.0f );
-			gfxDevice.WriteFinalColor4b ();
+			gfxVertexCache.WriteVtx ( right, bottom, 0.0f );
+			gfxVertexCache.WriteFinalColor4b ();
 			
-		gfxDevice.EndPrim ();
+		gfxVertexCache.EndPrim ();
 		
 		// Tri 2
-		gfxDevice.BeginPrim ( ZGL_PRIM_TRIANGLES );
+		gfxVertexCache.BeginPrim ( ZGL_PRIM_TRIANGLES );
 
-			gfxDevice.WriteVtx ( right, bottom, 0.0f );
-			gfxDevice.WriteFinalColor4b ();
+			gfxVertexCache.WriteVtx ( right, bottom, 0.0f );
+			gfxVertexCache.WriteFinalColor4b ();
 
-			gfxDevice.WriteVtx ( left, bottom, 0.0f );
-			gfxDevice.WriteFinalColor4b ();
+			gfxVertexCache.WriteVtx ( left, bottom, 0.0f );
+			gfxVertexCache.WriteFinalColor4b ();
 			
-			gfxDevice.WriteVtx ( left, top, 0.0f );
-			gfxDevice.WriteFinalColor4b ();
+			gfxVertexCache.WriteVtx ( left, top, 0.0f );
+			gfxVertexCache.WriteFinalColor4b ();
 	
-		gfxDevice.EndPrim ();
+		gfxVertexCache.EndPrim ();
 	}
 }
 
@@ -1325,40 +1326,41 @@ void MOAIDraw::DrawRectOutline ( const ZLRect& rect ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawRectOutline ( float left, float top, float right, float bottom ) {
 	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
 	
-	gfxDevice.BeginPrim ( ZGL_PRIM_LINE_LOOP );
+	gfxVertexCache.BeginPrim ( ZGL_PRIM_LINE_LOOP );
 	
-		gfxDevice.WriteVtx ( left, top, 0.0f );
-		gfxDevice.WriteFinalColor4b ();
+		gfxVertexCache.WriteVtx ( left, top, 0.0f );
+		gfxVertexCache.WriteFinalColor4b ();
 		
-		gfxDevice.WriteVtx ( right, top, 0.0f );
-		gfxDevice.WriteFinalColor4b ();
+		gfxVertexCache.WriteVtx ( right, top, 0.0f );
+		gfxVertexCache.WriteFinalColor4b ();
 		
-		gfxDevice.WriteVtx ( right, bottom, 0.0f );
-		gfxDevice.WriteFinalColor4b ();
+		gfxVertexCache.WriteVtx ( right, bottom, 0.0f );
+		gfxVertexCache.WriteFinalColor4b ();
 		
-		gfxDevice.WriteVtx ( left, bottom, 0.0f );
-		gfxDevice.WriteFinalColor4b ();
+		gfxVertexCache.WriteVtx ( left, bottom, 0.0f );
+		gfxVertexCache.WriteFinalColor4b ();
 	
-	gfxDevice.EndPrim ();
+	gfxVertexCache.EndPrim ();
 }
 
 //----------------------------------------------------------------//
 void MOAIDraw::DrawTexture ( float left, float top, float right, float bottom, MOAITexture* texture ) {
 	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxDevice& gfxStateCache = MOAIGfxDevice::Get ();
+	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
 	
 	if ( texture ) {
 
 //		gfxDevice.SetBlendMode ( ZGL_BLEND_FACTOR_ONE, ZGL_BLEND_FACTOR_ZERO );
-		if ( !gfxDevice.BindTexture ( texture )) return;
-		if ( !gfxDevice.BindShader ( MOAIShaderMgr::DECK2D_SHADER )) return;
+		if ( !gfxStateCache.BindTexture ( texture )) return;
+		if ( !gfxStateCache.BindShader ( MOAIShaderMgr::DECK2D_SHADER )) return;
 
-		const ZLColorVec& orgColor = gfxDevice.GetPenColor ();
-		gfxDevice.SetPenColor ( 1, 1, 1, 1 );
+		const ZLColorVec& orgColor = gfxVertexCache.GetPenColor ();
+		gfxVertexCache.SetPenColor ( 1, 1, 1, 1 );
 		
-		MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+		MOAIQuadBrush::BindVertexFormat ( gfxVertexCache );
 
 		MOAIQuadBrush quad;
 		quad.SetVerts ( left, top, right, bottom );
@@ -1366,7 +1368,7 @@ void MOAIDraw::DrawTexture ( float left, float top, float right, float bottom, M
 		quad.Draw ();
 		
 //		gfxDevice.SetBlendMode ();
-		gfxDevice.SetPenColor ( orgColor );
+		gfxVertexCache.SetPenColor ( orgColor );
 		
 		MOAIDraw::Bind ();
 	}
@@ -1375,39 +1377,39 @@ void MOAIDraw::DrawTexture ( float left, float top, float right, float bottom, M
 //----------------------------------------------------------------//
 void MOAIDraw::DrawVertexArray ( const ZLVec3D* verts, u32 count, u32 color, u32 primType ) {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
 
-	gfxDevice.SetPrimType ( primType );
-	gfxDevice.SetPenColor ( color );
+	gfxVertexCache.SetPrimType ( primType );
+	gfxVertexCache.SetPenColor ( color );
 	
-	gfxDevice.BeginPrim ();
+	gfxVertexCache.BeginPrim ();
 	
 	for ( u32 i = 0; i < count; ++i ) {
 		const ZLVec3D& vtx = verts [ i ];
-		gfxDevice.WriteVtx ( vtx );
-		gfxDevice.WriteFinalColor4b ();
+		gfxVertexCache.WriteVtx ( vtx );
+		gfxVertexCache.WriteFinalColor4b ();
 	}
 
-	gfxDevice.EndPrim ();
+	gfxVertexCache.EndPrim ();
 }
 
 //----------------------------------------------------------------//
 void MOAIDraw::DrawVertexArray2D ( const float* verts, u32 count, u32 color, u32 primType ) {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
 
-	gfxDevice.SetPrimType ( primType );
-	gfxDevice.SetPenColor ( color );
+	gfxVertexCache.SetPrimType ( primType );
+	gfxVertexCache.SetPenColor ( color );
 	
-	gfxDevice.BeginPrim ();
+	gfxVertexCache.BeginPrim ();
 	
 	for ( u32 i = 0; i < count; ++i ) {
 		u32 v = i << 1;
-		gfxDevice.WriteVtx ( verts [ v ], verts [ v + 1 ], 0.0f );
-		gfxDevice.WriteFinalColor4b ();
+		gfxVertexCache.WriteVtx ( verts [ v ], verts [ v + 1 ], 0.0f );
+		gfxVertexCache.WriteFinalColor4b ();
 	}
 
-	gfxDevice.EndPrim ();
+	gfxVertexCache.EndPrim ();
 }
 
 //----------------------------------------------------------------//

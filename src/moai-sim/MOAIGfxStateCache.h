@@ -1,12 +1,12 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXDEVICESTATECACHE_H
-#define	MOAIGFXDEVICESTATECACHE_H
+#ifndef	MOAIGFXSTATECACHE_H
+#define	MOAIGFXSTATECACHE_H
 
-#include <moai-sim/MOAIGfxDeviceBase.h>
+#include <moai-sim/MOAIGfxPipelineMgr.h>
+#include <moai-sim/MOAIGfxMtxCache.h>
 #include <moai-sim/MOAIBlendMode.h>
-
 
 class MOAICamera;
 class MOAIFrameBuffer;
@@ -24,10 +24,9 @@ class MOAIVertexFormat;
 class MOAIViewport;
 
 //================================================================//
-// MOAIGfxDeviceStateCache
+// MOAIGfxStateCache
 //================================================================//
-class MOAIGfxDeviceStateCache :
-	public MOAIGfxDeviceBase {
+class MOAIGfxStateCache {
 protected:
 
 	int										mCullFunc;
@@ -56,13 +55,18 @@ protected:
 	MOAIVertexBuffer*						mCurrentVtxBuffer;
 	MOAIVertexFormat*						mCurrentVtxFormat;
 
+	ZLRect									mViewRect;
+
 	//----------------------------------------------------------------//
-	virtual	MOAIFrameBuffer*	GetDefaultFrameBuffer		() = 0;
-	virtual	MOAITexture*		GetDefaultTexture			() = 0;
 	bool						BindShaderProgram			( MOAIShaderProgram* program ); // only called by BindShader ()
 	bool						BindTexture					( u32 textureUnit, MOAISingleTexture* texture );
 
 public:
+	
+	GET ( MOAIBlendMode, BlendMode, mBlendMode )
+	GET ( bool, DepthMask, mDepthMask )
+	GET ( MOAIFrameBuffer*, CurrentFrameBuffer, mCurrentFrameBuffer )
+	GET ( const ZLRect&, ViewRect, mViewRect )
 	
 	//----------------------------------------------------------------//
 	bool			BindFrameBuffer				( MOAIFrameBuffer* frameBuffer = 0 );
@@ -74,10 +78,18 @@ public:
 	bool			BindVertexBuffer			( MOAIVertexBuffer* buffer = 0 );
 	bool			BindVertexFormat			( MOAIVertexFormat* format = 0, bool copyBuffer = false );
 	
-					MOAIGfxDeviceStateCache		();
-	virtual			~MOAIGfxDeviceStateCache	();
+	size_t			CountTextureUnits			();
+	
+	float			GetDeviceScale				();
+	u32				GetHeight					() const;
+	u32				GetWidth					() const;
+	
+	void			InitTextureUnits			( size_t nTextureUnits );
+	
+					MOAIGfxStateCache			();
+	virtual			~MOAIGfxStateCache			();
 
-	virtual void	OnGfxStateWillChange		() = 0;
+	void			ResetState					();
 
 	void			SetBlendMode				();
 	void			SetBlendMode				( const MOAIBlendMode& blendMode );
@@ -95,7 +107,11 @@ public:
 	void			SetScissorRect				();
 	void			SetScissorRect				( ZLRect rect );
 	
+	void			SetViewRect					();
+	void			SetViewRect					( ZLRect rect );
+	
 	void			UnbindAll					();
+	void			UpdateAndBindUniforms		(); // call this immediately before drawing
 };
 
 #endif

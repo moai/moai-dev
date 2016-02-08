@@ -181,27 +181,27 @@ void MOAIStretchPatch2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVe
 	
 	// TODO: make use of offset and scale
 	
-	if ( !materials.LoadGfxState ( this, idx - 1, MOAIShaderMgr::DECK2D_SHADER )) return;
-	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
-	
-	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
-	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
-	
-	ZLMatrix4x4 transform = gfxDevice.GetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
-	ZLVec3D stretch = transform.GetStretch ();
-	
-	ZLMatrix4x4 noStretch;
-	noStretch.Scale ( 1.0f / stretch.mX, 1.0f / stretch.mY, 1.0f / stretch.mZ );
-	noStretch.Append ( transform );
-	
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, noStretch );
-	
-	this->UpdateParams ();
-	this->DrawStretch ( idx, stretch.mX, stretch.mY );
-	
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, transform );
+//	if ( !materials.LoadGfxState ( this, idx - 1, MOAIShaderMgr::DECK2D_SHADER )) return;
+//	
+//	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+//	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+//	
+//	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+//	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+//	
+//	ZLMatrix4x4 transform = gfxDevice.GetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+//	ZLVec3D stretch = transform.GetStretch ();
+//	
+//	ZLMatrix4x4 noStretch;
+//	noStretch.Scale ( 1.0f / stretch.mX, 1.0f / stretch.mY, 1.0f / stretch.mZ );
+//	noStretch.Append ( transform );
+//	
+//	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, noStretch );
+//	
+//	this->UpdateParams ();
+//	this->DrawStretch ( idx, stretch.mX, stretch.mY );
+//	
+//	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, transform );
 }
 
 //----------------------------------------------------------------//

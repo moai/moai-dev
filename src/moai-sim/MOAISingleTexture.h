@@ -28,7 +28,7 @@ class MOAISingleTexture :
 protected:
 
 	friend class MOAIGfxDevice;
-	friend class MOAIGfxDeviceStateCache;
+	friend class MOAIGfxStateCache;
 	friend class MOAIImageFormat;
 
 	// debug name for memory use reporting

@@ -114,57 +114,57 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& mater
 	UNUSED ( offset );
 	UNUSED ( scale );
 
-	if ( !materials.LoadGfxState ( this, idx, MOAIShaderMgr::MESH_SHADER )) return;
-
-	// TODO: make use of offset and scale
-
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	if ( gfxDevice.BindVertexArray ( this )) {
-
-		ZLGfx& gfx = gfxDevice.GetDrawingAPI ();
-
-		// I am super lazy, so set this up here instead of adding if's below
-		MOAIMeshSpan defaultSpan;
-		if ( !span ) {
-			defaultSpan.mBase = 0;
-			defaultSpan.mTop = this->mTotalElements;
-			defaultSpan.mNext = 0;
-			span = &defaultSpan;
-		}
-
-		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
-		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
-		
-		gfxDevice.SetPenWidth ( this->mPenWidth );
-		
-		gfxDevice.UpdateAndBindUniforms ();
-		
-		if ( this->mIndexBuffer ) {
-			
-			// TODO: turns out we can bind this inside the VAO as well. so there.
-			if ( gfxDevice.BindIndexBuffer ( this->mIndexBuffer )) {
-			
-				u32 indexSizeInBytes = this->mIndexBuffer->GetIndexSize ();
-				
-				for ( ; span; span = span->mNext ) {
-					gfx.DrawElements (
-						this->mPrimType,
-						span->mTop - span->mBase,
-						indexSizeInBytes == 2 ? ZGL_TYPE_UNSIGNED_SHORT : ZGL_TYPE_UNSIGNED_INT,
-						this->mIndexBuffer->GetBuffer (),
-						span->mBase * indexSizeInBytes
-					);
-				}
-				gfxDevice.BindIndexBuffer ();
-			}
-		}
-		else {
-			for ( ; span; span = span->mNext ) {
-				gfx.DrawArrays ( this->mPrimType, span->mBase, span->mTop - span->mBase );
-			}
-		}
-		gfxDevice.BindVertexArray ();
-	}
+//	if ( !materials.LoadGfxState ( this, idx, MOAIShaderMgr::MESH_SHADER )) return;
+//
+//	// TODO: make use of offset and scale
+//
+//	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+//	if ( gfxDevice.BindVertexArray ( this )) {
+//
+//		ZLGfx& gfx = gfxDevice.GetDrawingAPI ();
+//
+//		// I am super lazy, so set this up here instead of adding if's below
+//		MOAIMeshSpan defaultSpan;
+//		if ( !span ) {
+//			defaultSpan.mBase = 0;
+//			defaultSpan.mTop = this->mTotalElements;
+//			defaultSpan.mNext = 0;
+//			span = &defaultSpan;
+//		}
+//
+//		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
+//		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+//		
+//		gfxDevice.SetPenWidth ( this->mPenWidth );
+//		
+//		gfxDevice.UpdateAndBindUniforms ();
+//		
+//		if ( this->mIndexBuffer ) {
+//			
+//			// TODO: turns out we can bind this inside the VAO as well. so there.
+//			if ( gfxDevice.BindIndexBuffer ( this->mIndexBuffer )) {
+//			
+//				u32 indexSizeInBytes = this->mIndexBuffer->GetIndexSize ();
+//				
+//				for ( ; span; span = span->mNext ) {
+//					gfx.DrawElements (
+//						this->mPrimType,
+//						span->mTop - span->mBase,
+//						indexSizeInBytes == 2 ? ZGL_TYPE_UNSIGNED_SHORT : ZGL_TYPE_UNSIGNED_INT,
+//						this->mIndexBuffer->GetBuffer (),
+//						span->mBase * indexSizeInBytes
+//					);
+//				}
+//				gfxDevice.BindIndexBuffer ();
+//			}
+//		}
+//		else {
+//			for ( ; span; span = span->mNext ) {
+//				gfx.DrawArrays ( this->mPrimType, span->mBase, span->mTop - span->mBase );
+//			}
+//		}
+//		gfxDevice.BindVertexArray ();
+//	}
 }
 
 //----------------------------------------------------------------//

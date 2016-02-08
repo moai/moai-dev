@@ -7,7 +7,10 @@
 #include <moai-sim/MOAIBlendMode.h>
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIFrameBuffer.h>
-#include <moai-sim/MOAIGfxDeviceVertexWriter.h>
+#include <moai-sim/MOAIGfxMtxCache.h>
+#include <moai-sim/MOAIGfxPipelineMgr.h>
+#include <moai-sim/MOAIGfxStateCache.h>
+#include <moai-sim/MOAIGfxVertexCache.h>
 #include <moai-sim/MOAIImage.h>
 
 class MOAICamera;
@@ -30,7 +33,10 @@ class MOAIViewport;
 	@const	EVENT_RESIZE
 */
 class MOAIGfxDevice :
-	public MOAIGfxDeviceVertexWriter,
+	public MOAIGfxMtxCache,
+	public MOAIGfxPipelineMgr,
+	public MOAIGfxStateCache,
+	public MOAIGfxVertexCache,
 	public MOAIGlobalClass < MOAIGfxDevice, MOAIGlobalEventSource > {
 public:
 	
@@ -64,9 +70,6 @@ private:
 	static int			_setDefaultTexture			( lua_State* L );
 	static int			_setPenColor				( lua_State* L );
 	static int			_setPenWidth				( lua_State* L );
-
-	//----------------------------------------------------------------//
-	void				TransformAndWriteQuad		( ZLVec4D* vtx, ZLVec2D* uv );
 	
 public:
 	
@@ -83,8 +86,6 @@ public:
 	GET_BOOL ( IsOpenGLES, mIsOpenGLES )
 	GET_BOOL ( IsFramebufferSupported, mIsFramebufferSupported )
 	
-	GET ( MOAIBlendMode, BlendMode, mBlendMode )
-	
 	GET ( MOAIFrameBuffer*, DefaultFrameBuffer, mDefaultFrameBuffer )
 	GET ( MOAITexture*, DefaultTexture, mDefaultTexture )
 	
@@ -94,11 +95,6 @@ public:
 	void			ClearSurface			( u32 clearFlags ); // takes zgl clear flags
 	void			DetectContext			();
 	void			DetectFramebuffer		();
-	
-	float			GetDeviceScale			();
-	
-	u32				GetHeight				() const;
-	u32				GetWidth				() const;
 	
 	bool			IsOpaque				() const;
 	u32				LogErrors				();
@@ -114,15 +110,9 @@ public:
 	void			ReportTextureFree		( cc8* name, size_t size );
 	
 	void			ResetDrawCount			();
-	void			ResetState				();
 	
-	void			SetBufferScale			( float scale );
-	void			SetBufferSize			( u32 width, u32 height );
-
-	void			SetViewRect				();
-	void			SetViewRect				( ZLRect rect );
-	
-	void			UpdateAndBindUniforms	(); // call this immediately before drawing
+	void			SetBufferScale				( float scale );
+	void			SetBufferSize				( u32 width, u32 height );
 	
 	//----------------------------------------------------------------//
 	static ZLGfx& GetDrawingAPI () {

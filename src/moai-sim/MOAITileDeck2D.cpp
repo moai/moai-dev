@@ -240,26 +240,26 @@ ZLBox MOAITileDeck2D::ComputeMaxBounds () {
 //----------------------------------------------------------------//
 void MOAITileDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 
-	idx = idx - 1;
-
-	if ( !materials.LoadGfxState ( this, idx, MOAIShaderMgr::DECK2D_SHADER )) return;
-
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
-	
-	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
-	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
-	
-	MOAICellCoord coord = this->GetCellCoord ( idx );
-	ZLRect uvRect = this->GetTileRect ( coord );
-	
-	float uScale = ( uvRect.mXMax - uvRect.mXMin );
-	float vScale = -( uvRect.mYMax - uvRect.mYMin );
-	
-	float uOff = uvRect.mXMin + ( 0.5f * uScale );
-	float vOff = uvRect.mYMin - ( 0.5f * vScale );
-	
-	this->mQuad.Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY, uOff, vOff, uScale, vScale );
+//	idx = idx - 1;
+//
+//	if ( !materials.LoadGfxState ( this, idx, MOAIShaderMgr::DECK2D_SHADER )) return;
+//
+//	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+//	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+//	
+//	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+//	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+//	
+//	MOAICellCoord coord = this->GetCellCoord ( idx );
+//	ZLRect uvRect = this->GetTileRect ( coord );
+//	
+//	float uScale = ( uvRect.mXMax - uvRect.mXMin );
+//	float vScale = -( uvRect.mYMax - uvRect.mYMin );
+//	
+//	float uOff = uvRect.mXMin + ( 0.5f * uScale );
+//	float vOff = uvRect.mYMin - ( 0.5f * vScale );
+//	
+//	this->mQuad.Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY, uOff, vOff, uScale, vScale );
 }
 
 //----------------------------------------------------------------//

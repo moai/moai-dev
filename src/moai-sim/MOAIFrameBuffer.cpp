@@ -6,6 +6,8 @@
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxStateCache.h>
+#include <moai-sim/MOAIGfxVertexCache.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIRenderable.h>
 #include <moai-sim/MOAIRenderMgr.h>
@@ -427,7 +429,7 @@ void MOAIFrameBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIFrameBuffer::Render () {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	this->mLastDrawCount = gfxDevice.GetDrawCount ();
+	//this->mLastDrawCount = gfxDevice.GetDrawCount ();
 
 	gfxDevice.BindFrameBuffer ( this );
 	
@@ -447,12 +449,12 @@ void MOAIFrameBuffer::Render () {
 	// since we're doing this on the render thread, set it every time until we get a callback
 	if ( this->mGrabNextFrame ) {
 
-		ZLGfx& gfx = gfxDevice.GetDrawingAPI ();
+		ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
 		gfx.ReadPixels ( 0, 0, this->mBufferWidth, this->mBufferHeight, ZGL_PIXEL_FORMAT_RGBA, ZGL_PIXEL_TYPE_UNSIGNED_BYTE, 4, this, 0 );
 	}
 	
 	this->mRenderCounter++;
-	this->mLastDrawCount = gfxDevice.GetDrawCount () - this->mLastDrawCount;
+	//this->mLastDrawCount = gfxDevice.GetDrawCount () - this->mLastDrawCount;
 }
 
 //----------------------------------------------------------------//

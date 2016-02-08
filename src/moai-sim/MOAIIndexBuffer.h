@@ -16,7 +16,7 @@ class MOAIIndexBuffer :
 	public MOAIGfxBuffer {
 private:
 
-	friend class MOAIGfxDeviceBase;
+	friend class MOAIGfxPipelineMgr;
 
 	u32				mIndexSize;
 

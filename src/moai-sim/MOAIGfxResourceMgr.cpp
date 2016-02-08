@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxStateCache.h>
 #include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
 
@@ -165,11 +166,11 @@ void MOAIGfxResourceMgr::ScheduleGPUAffirm ( MOAIGfxResource& resource, u32 list
 
 	switch ( listID ) {
 
-		case MOAIGfxDevice::LOADING_PIPELINE:
+		case MOAIGfxPipelineMgr::LOADING_PIPELINE:
 			this->mPendingForLoadList.PushBack ( resource.mPendingLink );
 			break;
 		
-		case MOAIGfxDevice::DRAWING_PIPELINE:
+		case MOAIGfxPipelineMgr::DRAWING_PIPELINE:
 			this->mPendingForDrawList.PushBack ( resource.mPendingLink );
 			break;
 	}
@@ -178,13 +179,13 @@ void MOAIGfxResourceMgr::ScheduleGPUAffirm ( MOAIGfxResource& resource, u32 list
 //----------------------------------------------------------------//
 void MOAIGfxResourceMgr::Update () {
 
-	ZLGfxDevice::Begin ();
-
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+
+	ZLGfxDevice::Begin ();
 
 	if ( this->mDeleterStack.GetTop () || this->mPendingForLoadList.Count ()) {
 	
-		ZLGfx& gfxLoading = gfxDevice.SelectDrawingAPI ( MOAIGfxDevice::LOADING_PIPELINE, true );
+		ZLGfx& gfxLoading = gfxDevice.SelectDrawingAPI ( MOAIGfxPipelineMgr::LOADING_PIPELINE, true );
 		
 		ZGL_COMMENT ( gfxLoading, "RESOURCE MGR LOADING PIPELINE UPDATE" );
 		this->ProcessDeleters ();
@@ -194,7 +195,7 @@ void MOAIGfxResourceMgr::Update () {
 	
 	if ( this->mPendingForDrawList.Count ()) {
 	
-		ZLGfx& gfxDrawing = gfxDevice.SelectDrawingAPI ( MOAIGfxDevice::DRAWING_PIPELINE, true );
+		ZLGfx& gfxDrawing = gfxDevice.SelectDrawingAPI ( MOAIGfxPipelineMgr::DRAWING_PIPELINE, true );
 		
 		ZGL_COMMENT ( gfxDrawing, "RESOURCE MGR DRAWING PIPELINE UPDATE" );
 		this->ProcessPending ( this->mPendingForDrawList );

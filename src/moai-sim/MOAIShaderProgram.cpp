@@ -225,12 +225,7 @@ void MOAIShaderProgram::ApplyGlobals () {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	const ZLMatrix4x4& world	= gfxDevice.mVertexTransforms [ MOAIGfxDevice::VTX_WORLD_TRANSFORM ];
-	const ZLMatrix4x4& view		= gfxDevice.mVertexTransforms [ MOAIGfxDevice::VTX_VIEW_TRANSFORM ];
-	const ZLMatrix4x4& proj		= gfxDevice.mVertexTransforms [ MOAIGfxDevice::VTX_PROJ_TRANSFORM ];
-
-	// TODO: all these need to be cached in the gfx state instead of recomputed every single time
-	// TODO: should check against the cached values in the shader to see if the uniforms need to be re-uploaded
+	const ZLRect& viewRect = gfxDevice.GetViewRect ();
 
 	// NOTE: matrices are submitted transposed; it is up to the shader to transform vertices correctly
 	// vert * matrix implicitely transposes the matrix; martix * vert uses the matrix as submitted
@@ -251,70 +246,53 @@ void MOAIShaderProgram::ApplyGlobals () {
 				break;
 			}
 			case GLOBAL_VIEW_PROJ: {
-			
-				ZLMatrix4x4 mtx = view;
-				mtx.Append ( proj );
 				
-				uniform.mFlags |= uniform.SetValue ( mtx, true );
+				uniform.mFlags |= uniform.SetValue ( gfxDevice.GetMtx ( MOAIGfxDevice::VIEW_PROJ_MTX ), true );
 				break;
 			}
 			case GLOBAL_VIEW_WIDTH: {
 			
-				uniform.mFlags |= uniform.SetValue ( gfxDevice.mViewRect.Width ());
+				uniform.mFlags |= uniform.SetValue ( viewRect.Width ());
 				break;
 			}
 			case GLOBAL_VIEW_HEIGHT: {
 			
-				uniform.mFlags |= uniform.SetValue ( gfxDevice.mViewRect.Height ());
+				uniform.mFlags |= uniform.SetValue ( viewRect.Height ());
 				break;
 			}
 			case GLOBAL_VIEW_HALF_WIDTH: {
 			
-				uniform.mFlags |= uniform.SetValue ( gfxDevice.mViewRect.Width () * 0.5f );
+				uniform.mFlags |= uniform.SetValue ( viewRect.Width () * 0.5f );
 				break;
 			}
 			case GLOBAL_VIEW_HALF_HEIGHT: {
 			
-				uniform.mFlags |= uniform.SetValue ( gfxDevice.mViewRect.Height () * 0.5f );
+				uniform.mFlags |= uniform.SetValue ( viewRect.Height () * 0.5f );
 				break;
 			}
 			case GLOBAL_WORLD: {
 			
-				uniform.mFlags |= uniform.SetValue ( world, true );
+				uniform.mFlags |= uniform.SetValue ( gfxDevice.GetMtx ( MOAIGfxDevice::WORLD_MTX ), true );
 				break;
 			}
 			case GLOBAL_WORLD_INVERSE: {
-			
-				ZLMatrix4x4 mtx = world;
-				mtx.Inverse ();
 				
-				uniform.mFlags |= uniform.SetValue ( mtx, true );
+				uniform.mFlags |= uniform.SetValue ( gfxDevice.GetMtx ( MOAIGfxDevice::INVERSE_WORLD_MTX ), true );
 				break;
 			}
 			case GLOBAL_WORLD_VIEW: {
-			
-				ZLMatrix4x4 mtx = world;
-				mtx.Append ( view );
 				
-				uniform.mFlags |= uniform.SetValue ( mtx, true );
+				uniform.mFlags |= uniform.SetValue ( gfxDevice.GetMtx ( MOAIGfxDevice::WORLD_VIEW_MTX ), true );
 				break;
 			}
 			case GLOBAL_WORLD_VIEW_INVERSE: {
-			
-				ZLMatrix4x4 mtx = world;
-				mtx.Append ( view );
-				mtx.Inverse ();
 				
-				uniform.mFlags |= uniform.SetValue ( mtx, true );
+				uniform.mFlags |= uniform.SetValue ( gfxDevice.GetMtx ( MOAIGfxDevice::INVERSE_WORLD_VIEW_MTX ), true );
 				break;
 			}
 			case GLOBAL_WORLD_VIEW_PROJ: {
-			
-				ZLMatrix4x4 mtx = world;
-				mtx.Append ( view );
-				mtx.Append ( proj );
 				
-				uniform.mFlags |= uniform.SetValue ( mtx, true );
+				uniform.mFlags |= uniform.SetValue ( gfxDevice.GetMtx ( MOAIGfxDevice::WORLD_VIEW_PROJ_MTX ), true );
 				break;
 			}
 		}

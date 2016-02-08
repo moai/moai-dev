@@ -5,12 +5,14 @@
 #include <moai-sim/MOAIGfxBuffer.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAIVertexArray.h>
+#include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIVertexFormat.h>
 
 //================================================================//
