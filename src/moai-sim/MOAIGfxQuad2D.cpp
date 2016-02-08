@@ -5,8 +5,6 @@
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGfxQuad2D.h>
-#include <moai-sim/MOAIGfxStateCache.h>
-#include <moai-sim/MOAIGfxVertexCache.h>
 #include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAIShaderMgr.h>

@@ -47,19 +47,16 @@ public:
 	
 private:
 
-	bool									mHasContext;
+	bool				mHasContext;
 
-	bool									mIsFramebufferSupported;
-	bool									mIsOpenGLES;
+	bool				mIsFramebufferSupported;
+	bool				mIsOpenGLES;
 
-	u32										mMajorVersion;
-	u32										mMinorVersion;
+	u32					mMajorVersion;
+	u32					mMinorVersion;
 	
-	size_t									mTextureMemoryUsage;
-	u32										mMaxTextureSize;
-
-	MOAILuaSharedPtr < MOAIFrameBuffer >	mDefaultFrameBuffer;
-	MOAILuaSharedPtr < MOAITexture >		mDefaultTexture;
+	size_t				mTextureMemoryUsage;
+	u32					mMaxTextureSize;
 
 	//----------------------------------------------------------------//
 	static int			_enablePipelineLogging		( lua_State* L );
@@ -85,9 +82,6 @@ public:
 	
 	GET_BOOL ( IsOpenGLES, mIsOpenGLES )
 	GET_BOOL ( IsFramebufferSupported, mIsFramebufferSupported )
-	
-	GET ( MOAIFrameBuffer*, DefaultFrameBuffer, mDefaultFrameBuffer )
-	GET ( MOAITexture*, DefaultTexture, mDefaultTexture )
 	
 	//----------------------------------------------------------------//
 	

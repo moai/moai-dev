@@ -7,8 +7,6 @@
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIGfxDevice.h>
-#include <moai-sim/MOAIGfxStateCache.h>
-#include <moai-sim/MOAIGfxVertexCache.h>
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAILayoutFrame.h>

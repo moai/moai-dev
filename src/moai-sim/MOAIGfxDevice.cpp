@@ -8,8 +8,6 @@
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
-#include <moai-sim/MOAIGfxStateCache.h>
-#include <moai-sim/MOAIGfxVertexCache.h>
 #include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
@@ -269,7 +267,10 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mTextureMemoryUsage ( 0 ),
 	mMaxTextureSize ( 0 ) {
 	
-	RTTI_SINGLE ( MOAIGlobalEventSource )
+	RTTI_BEGIN
+		RTTI_SINGLE ( MOAIGfxStateCache )
+		RTTI_SINGLE ( MOAIGlobalEventSource )
+	RTTI_END
 	
 	this->mDefaultFrameBuffer.Set ( *this, new MOAIFrameBuffer ());
 	this->mCurrentFrameBuffer = this->mDefaultFrameBuffer;
@@ -293,6 +294,8 @@ void MOAIGfxDevice::OnGlobalsFinalize () {
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
+
+	MOAIGfxStateCache::RegisterLuaClass ( state );
 
 	state.SetField ( -1, "EVENT_RESIZE",	( u32 )EVENT_RESIZE );
 	

@@ -4,8 +4,6 @@
 #include "pch.h"
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIGfxDevice.h>
-#include <moai-sim/MOAIGfxStateCache.h>
-#include <moai-sim/MOAIGfxVertexCache.h>
 #include <moai-sim/MOAINodeMgr.h>
 #include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAISim.h>

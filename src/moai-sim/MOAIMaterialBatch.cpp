@@ -4,7 +4,6 @@
 #include "pch.h"
 
 #include <moai-sim/MOAIGfxDevice.h>
-#include <moai-sim/MOAIGfxStateCache.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIMaterialBatch.h>
 #include <moai-sim/MOAIProp.h>

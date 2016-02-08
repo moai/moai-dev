@@ -6,8 +6,6 @@
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
-#include <moai-sim/MOAIGfxStateCache.h>
-#include <moai-sim/MOAIGfxVertexCache.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIRenderable.h>
 #include <moai-sim/MOAIRenderMgr.h>

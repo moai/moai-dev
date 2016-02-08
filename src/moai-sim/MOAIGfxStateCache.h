@@ -26,7 +26,8 @@ class MOAIViewport;
 //================================================================//
 // MOAIGfxStateCache
 //================================================================//
-class MOAIGfxStateCache {
+class MOAIGfxStateCache :
+	public virtual MOAILuaObject {
 protected:
 
 	int										mCullFunc;
@@ -57,9 +58,12 @@ protected:
 
 	ZLRect									mViewRect;
 
+	MOAILuaSharedPtr < MOAIFrameBuffer >	mDefaultFrameBuffer;
+	MOAILuaSharedPtr < MOAITexture >		mDefaultTexture;
+
 	//----------------------------------------------------------------//
-	bool						BindShaderProgram			( MOAIShaderProgram* program ); // only called by BindShader ()
-	bool						BindTexture					( u32 textureUnit, MOAISingleTexture* texture );
+	bool				BindShaderProgram			( MOAIShaderProgram* program ); // only called by BindShader ()
+	bool				BindTexture					( u32 textureUnit, MOAISingleTexture* texture );
 
 public:
 	
@@ -67,6 +71,8 @@ public:
 	GET ( bool, DepthMask, mDepthMask )
 	GET ( MOAIFrameBuffer*, CurrentFrameBuffer, mCurrentFrameBuffer )
 	GET ( const ZLRect&, ViewRect, mViewRect )
+	GET ( MOAIFrameBuffer*, DefaultFrameBuffer, mDefaultFrameBuffer )
+	GET ( MOAITexture*, DefaultTexture, mDefaultTexture )
 	
 	//----------------------------------------------------------------//
 	bool			BindFrameBuffer				( MOAIFrameBuffer* frameBuffer = 0 );

@@ -6,8 +6,6 @@
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIFrameBufferTexture.h>
 #include <moai-sim/MOAIGfxDevice.h>
-#include <moai-sim/MOAIGfxVertexCache.h>
-#include <moai-sim/MOAIGfxStateCache.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAIShader.h>
@@ -315,6 +313,8 @@ MOAIGfxStateCache::MOAIGfxStateCache () :
 	
 	this->mScissorRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	this->mViewRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
