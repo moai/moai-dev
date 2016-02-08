@@ -132,7 +132,7 @@ void MOAIGfxDeviceVertexWriter::FlushBufferedPrims () {
 				this->BindVertexFormat ( this->mVertexFormat, true );
 				this->BindIndexBuffer ( &this->mIdxBuffer );
 				
-				this->UpdateShaderGlobals ();
+				this->UpdateAndBindUniforms ();
 
 				ZLSharedConstBuffer* buffer = this->mDrawingAPI->CopyBuffer ( this->mIdxBuffer.GetBuffer ());
 
@@ -153,7 +153,7 @@ void MOAIGfxDeviceVertexWriter::FlushBufferedPrims () {
 				this->BindVertexBuffer ( &this->mVtxBuffer );
 				this->BindVertexFormat ( this->mVertexFormat, true );
 				
-				this->UpdateShaderGlobals ();
+				this->UpdateAndBindUniforms ();
 				this->mDrawingAPI->DrawArrays ( this->mPrimType, 0, count );
 				this->mDrawCount++;
 			}
@@ -356,8 +356,6 @@ void MOAIGfxDeviceVertexWriter::UpdateFinalColor () {
 	this->mFinalColor.mA = this->mAmbientColor.mA * this->mPenColor.mA;
 
 	this->mFinalColor32 = this->mFinalColor.PackRGBA ();
-	
-	this->mShaderDirty = true;
 }
 
 //----------------------------------------------------------------//

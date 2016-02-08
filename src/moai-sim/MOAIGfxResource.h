@@ -17,10 +17,6 @@ class MOAIGfxResource :
 	public virtual ZLGfxListener {
 private:
 
-	enum {
-		GFX_EVENT_CREATED,
-	};
-
 	friend class MOAIGfxDevice;
 	friend class MOAIGfxDeviceBase;
 	friend class MOAIGfxDeviceStateCache;
@@ -53,6 +49,11 @@ private:
 	void			Unbind						();
 
 protected:
+
+	enum {
+		GFX_EVENT_CREATED,
+		GFX_EVENT_TOTAL,
+	};
 
 	//----------------------------------------------------------------//
 	void			FinishInit					(); // ready to CPU/GPU affirm; recover from STATE_NEW or STATE_ERROR

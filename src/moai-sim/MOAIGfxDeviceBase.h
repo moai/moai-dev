@@ -85,7 +85,6 @@ protected:
 	
 	ZLGfx*						mDrawingAPI;
 	
-	bool						mShaderDirty;
 	ZLRect						mViewRect;
 	ZLFrustum					mViewVolume;
 	
@@ -98,7 +97,7 @@ protected:
 	void				BeginPhase					( u32 list, u32 phase );
 	void				EndPhase					( u32 list, u32 phase );
 	void				LogPipelineRender			( ZLGfxRetained& gfx, size_t renderCount, cc8* name, cc8* flavor );
-	virtual void		UpdateShaderGlobals			() = 0;
+	virtual void		UpdateAndBindUniforms		() = 0;
 
 public:
 	

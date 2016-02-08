@@ -61,26 +61,33 @@ bool MOAIGfxDeviceStateCache::BindIndexBuffer ( MOAIIndexBuffer* buffer ) {
 //----------------------------------------------------------------//
 bool MOAIGfxDeviceStateCache::BindShader ( MOAIShader* shader ) {
 
-	// TODO: why not caching shader?
-	if ( shader ) {
-		if ( !this->BindShader ( shader->GetProgram ())) return false;
-		shader->BindUniforms ();
+	// we don't cache the shader itself because it doesn't cause a bind;
+	// we only care about binding its program (right now), which is cached.
+	// later on we will re-bind the current shader's uniforms, the caching
+	// of which is controlled by the shader program.
+	
+	this->mShader = shader;
+	
+	if ( this->mShader ) {
+	
+		if ( !this->BindShaderProgram ( shader->GetProgram ())) return false;
+		
 		return true;
 	}
-	return this->BindShader (( MOAIShaderProgram* )0 );
+	return this->BindShaderProgram (( MOAIShaderProgram* )0 );
 }
 
 //----------------------------------------------------------------//
 bool MOAIGfxDeviceStateCache::BindShader ( u32 preset ) {
 
-	return MOAIShaderMgr::Get ().BindShader ( preset );
+	return this->BindShader ( MOAIShaderMgr::Get ().GetShader ( preset ));
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxDeviceStateCache::BindShader ( MOAIShaderProgram* program ) {
+bool MOAIGfxDeviceStateCache::BindShaderProgram ( MOAIShaderProgram* program ) {
 
 	if ( this->mShaderProgram != program ) {
-	
+		
 		this->OnGfxStateWillChange ();
 		
 		if ( this->mShaderProgram ) {
@@ -93,7 +100,6 @@ bool MOAIGfxDeviceStateCache::BindShader ( MOAIShaderProgram* program ) {
 			program->Bind ();
 		}
 	}
-	this->mShaderDirty = true;
 	
 	return this->mShaderProgram ? this->mShaderProgram->IsReady () : true;
 }
@@ -238,6 +244,7 @@ MOAIGfxDeviceStateCache::MOAIGfxDeviceStateCache () :
 	mBlendEnabled ( 0 ),
 	mPenWidth ( 1.0f ),
 	mScissorEnabled ( false ),
+	mShader ( 0 ),
 	mShaderProgram ( 0 ),
 	mActiveTextures ( 0 ),
 	mCurrentFrameBuffer ( 0 ),

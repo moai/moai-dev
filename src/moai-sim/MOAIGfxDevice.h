@@ -121,8 +121,8 @@ public:
 
 	void			SetViewRect				();
 	void			SetViewRect				( ZLRect rect );
-		
-	void			UpdateShaderGlobals		();
+	
+	void			UpdateAndBindUniforms	(); // call this immediately before drawing
 	
 	//----------------------------------------------------------------//
 	static ZLGfx& GetDrawingAPI () {

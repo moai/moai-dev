@@ -178,7 +178,7 @@ int MOAIShaderProgram::_setGlobal ( lua_State* L ) {
 
 	u32 idx			= state.GetValue < u32 >( 2, 1 ) - 1;
 	u32 uniformID	= state.GetValue < u32 >( 3, 1 ) - 1;
-	u32 globalID	= state.GetValue < u32 >( 4, GLOBAL_NONE );
+	u32 globalID	= state.GetValue < u32 >( 4, INVALID_INDEX );
 	
 	self->SetGlobal ( idx, uniformID, globalID );
 
@@ -208,6 +208,145 @@ int MOAIShaderProgram::_setVertexAttribute ( lua_State* L ) {
 //================================================================//
 // MOAIShaderProgram
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAIShaderProgram::ApplyDefaults () {
+
+	for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
+		MOAIShaderUniform& uniform = this->mUniforms [ i ];
+		if (( uniform.mFlags & MOAIShaderUniform::UNIFORM_FLAG_GLOBAL ) == 0 ) {
+			uniform.mFlags |= uniform.SetValue ( this->mDefaults [ i ], true );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderProgram::ApplyGlobals () {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+
+	const ZLMatrix4x4& world	= gfxDevice.mVertexTransforms [ MOAIGfxDevice::VTX_WORLD_TRANSFORM ];
+	const ZLMatrix4x4& view		= gfxDevice.mVertexTransforms [ MOAIGfxDevice::VTX_VIEW_TRANSFORM ];
+	const ZLMatrix4x4& proj		= gfxDevice.mVertexTransforms [ MOAIGfxDevice::VTX_PROJ_TRANSFORM ];
+
+	// TODO: all these need to be cached in the gfx state instead of recomputed every single time
+	// TODO: should check against the cached values in the shader to see if the uniforms need to be re-uploaded
+
+	// NOTE: matrices are submitted transposed; it is up to the shader to transform vertices correctly
+	// vert * matrix implicitely transposes the matrix; martix * vert uses the matrix as submitted
+
+	for ( u32 i = 0; i < this->mGlobals.Size (); ++i ) {
+	
+		const MOAIShaderProgramGlobal& global = this->mGlobals [ i ];
+		
+		if ( global.mUniformID == INVALID_INDEX ) continue;
+		
+		MOAIShaderUniform& uniform = this->mUniforms [ global.mUniformID ];
+	
+		switch ( global.mGlobalID ) {
+		
+			case GLOBAL_PEN_COLOR: {
+			
+				uniform.mFlags |= uniform.SetValue ( gfxDevice.mFinalColor, true );
+				break;
+			}
+			case GLOBAL_VIEW_PROJ: {
+			
+				ZLMatrix4x4 mtx = view;
+				mtx.Append ( proj );
+				
+				uniform.mFlags |= uniform.SetValue ( mtx, true );
+				break;
+			}
+			case GLOBAL_VIEW_WIDTH: {
+			
+				uniform.mFlags |= uniform.SetValue ( gfxDevice.mViewRect.Width ());
+				break;
+			}
+			case GLOBAL_VIEW_HEIGHT: {
+			
+				uniform.mFlags |= uniform.SetValue ( gfxDevice.mViewRect.Height ());
+				break;
+			}
+			case GLOBAL_VIEW_HALF_WIDTH: {
+			
+				uniform.mFlags |= uniform.SetValue ( gfxDevice.mViewRect.Width () * 0.5f );
+				break;
+			}
+			case GLOBAL_VIEW_HALF_HEIGHT: {
+			
+				uniform.mFlags |= uniform.SetValue ( gfxDevice.mViewRect.Height () * 0.5f );
+				break;
+			}
+			case GLOBAL_WORLD: {
+			
+				uniform.mFlags |= uniform.SetValue ( world, true );
+				break;
+			}
+			case GLOBAL_WORLD_INVERSE: {
+			
+				ZLMatrix4x4 mtx = world;
+				mtx.Inverse ();
+				
+				uniform.mFlags |= uniform.SetValue ( mtx, true );
+				break;
+			}
+			case GLOBAL_WORLD_VIEW: {
+			
+				ZLMatrix4x4 mtx = world;
+				mtx.Append ( view );
+				
+				uniform.mFlags |= uniform.SetValue ( mtx, true );
+				break;
+			}
+			case GLOBAL_WORLD_VIEW_INVERSE: {
+			
+				ZLMatrix4x4 mtx = world;
+				mtx.Append ( view );
+				mtx.Inverse ();
+				
+				uniform.mFlags |= uniform.SetValue ( mtx, true );
+				break;
+			}
+			case GLOBAL_WORLD_VIEW_PROJ: {
+			
+				ZLMatrix4x4 mtx = world;
+				mtx.Append ( view );
+				mtx.Append ( proj );
+				
+				uniform.mFlags |= uniform.SetValue ( mtx, true );
+				break;
+			}
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderProgram::BindUniforms () {
+	
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	
+	bool flushed = false;
+	
+	for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
+		MOAIShaderUniform& uniform = this->mUniforms [ i ];
+		
+		if ( uniform.IsValid () && ( uniform.mFlags & MOAIShaderUniform::UNIFORM_FLAG_DIRTY )) {
+			if ( !flushed ) {
+				gfxDevice.FlushBufferedPrims ();
+				flushed = true;
+			}
+			uniform.Bind ();
+		}
+	}
+	
+	// in multi-threaded gfx mode, drawing frames may get dropped. for this reason, we
+	// only clear the dirty flag once we're sure a draw frame has been completed.
+	if ( flushed ) {
+		ZLGfx& gfx = gfxDevice.GetDrawingAPI ();
+		gfx.Event ( this, GFX_EVENT_UPDATED_UNIFORMS, 0 );
+	}
+}
 
 //----------------------------------------------------------------//
 void MOAIShaderProgram::Clear () {
@@ -272,7 +411,7 @@ void MOAIShaderProgram::DeclareUniform ( u32 idx, cc8* name, u32 type ) {
 		uniform.mName = name;
 		uniform.SetType ( type );
 		
-		MOAIShaderUniformBuffer& uniformDefault = this->mUniformDefaults [ idx ];
+		MOAIShaderUniformBuffer& uniformDefault = this->mDefaults [ idx ];
 		uniformDefault.SetType ( type );
 		uniformDefault.Default ();
 	}
@@ -283,7 +422,7 @@ void MOAIShaderProgram::DeclareUniform ( u32 idx, cc8* name, u32 type, float val
 
 	if ( idx < this->mUniforms.Size ()) {
 		this->DeclareUniform ( idx, name, type );
-		this->mUniformDefaults [ idx ].SetValue ( value );
+		this->mDefaults [ idx ].SetValue ( value );
 	}
 }
 
@@ -292,7 +431,7 @@ void MOAIShaderProgram::DeclareUniform ( u32 idx, cc8* name, u32 type, int value
 
 	if ( idx < this->mUniforms.Size ()) {
 		this->DeclareUniform ( idx, name, type );
-		this->mUniformDefaults [ idx ].SetValue ( value );
+		this->mDefaults [ idx ].SetValue ( value );
 	}
 }
 
@@ -321,6 +460,22 @@ bool MOAIShaderProgram::OnCPUCreate () {
 
 //----------------------------------------------------------------//
 void MOAIShaderProgram::OnCPUDestroy () {
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderProgram::OnGfxEvent ( u32 event, void* userdata ) {
+
+	if ( event == GFX_EVENT_UPDATED_UNIFORMS ) {
+	
+		// getting this event proves that the draw frame was completed. so now
+		// it's safe to clear the dirty flag.
+	
+		for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
+			this->mUniforms [ i ].mFlags &= ~MOAIShaderUniform::UNIFORM_FLAG_DIRTY;
+		}
+	}
+	
+	MOAIGfxResource::OnGfxEvent ( event, userdata );
 }
 
 //----------------------------------------------------------------//
@@ -438,7 +593,6 @@ void MOAIShaderProgram::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "UNIFORM_MATRIX_F4",					( u32 )MOAIShaderUniform::UNIFORM_MATRIX_F4 );
 	state.SetField ( -1, "UNIFORM_VECTOR_F4",					( u32 )MOAIShaderUniform::UNIFORM_VECTOR_F4 );
 	
-	state.SetField ( -1, "GLOBAL_NONE",							( u32 )GLOBAL_NONE );
 	state.SetField ( -1, "GLOBAL_PEN_COLOR",					( u32 )GLOBAL_PEN_COLOR );
 	state.SetField ( -1, "GLOBAL_VIEW_PROJ",					( u32 )GLOBAL_VIEW_PROJ );
 	state.SetField ( -1, "GLOBAL_VIEW_WIDTH",					( u32 )GLOBAL_VIEW_WIDTH );
@@ -474,19 +628,55 @@ void MOAIShaderProgram::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIShaderProgram::ReserveGlobals ( u32 nGlobals ) {
 
+	// clear out the old globals (if any)
+	for ( size_t i = 0; i < this->mGlobals.Size (); ++i ) {
+		this->SetGlobal ( i, INVALID_INDEX, INVALID_INDEX );
+	}
+
 	this->mGlobals.Init ( nGlobals );
+	
+	for ( size_t i = 0; i < nGlobals; ++i ) {
+		this->mGlobals [ i ].mUniformID = INVALID_INDEX;
+		this->mGlobals [ i ].mGlobalID = INVALID_INDEX;
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAIShaderProgram::ReserveUniforms ( u32 nUniforms ) {
 
 	this->mUniforms.Init ( nUniforms );
-	this->mUniformDefaults.Init ( nUniforms );
+	this->mDefaults.Init ( nUniforms );
 }
 
 //----------------------------------------------------------------//
 void MOAIShaderProgram::SetGlobal ( u32 idx, u32 uniformID, u32 globalID ) {
 
+	MOAIShaderProgramGlobal& global = this->mGlobals [ idx ];
+	
+	// clear out the old flag (if any )
+	if ( global.mUniformID != INVALID_INDEX ) {
+		this->mUniforms [ global.mUniformID ].mFlags &= ~MOAIShaderUniform::UNIFORM_FLAG_GLOBAL;
+	}
+	
+	uniformID = globalID == INVALID_INDEX ? INVALID_INDEX : uniformID;
+	
+	if ( uniformID != INVALID_INDEX ) {
+	
+		// if the uniform is already pointed at a global, clear that global
+		if ( this->mUniforms [ uniformID ].mFlags & MOAIShaderUniform::UNIFORM_FLAG_GLOBAL ) {
+		
+			for ( size_t i = 0; i < this->mGlobals.Size (); ++i ) {
+				if ( this->mGlobals [ i ].mUniformID == uniformID ) {
+					this->mGlobals [ i ].mUniformID = INVALID_INDEX;
+					this->mGlobals [ i ].mGlobalID = INVALID_INDEX;
+				}
+			}
+		}
+		
+		// set the global flag
+		this->mUniforms [ uniformID ].mFlags |= MOAIShaderUniform::UNIFORM_FLAG_GLOBAL;
+	}
+	
 	this->mGlobals [ idx ].mUniformID = uniformID;
 	this->mGlobals [ idx ].mGlobalID = globalID;
 }
@@ -506,119 +696,5 @@ void MOAIShaderProgram::SetVertexAttribute ( u32 idx, cc8* attribute ) {
 
 	if ( attribute ) {
 		this->mAttributeMap [ idx ] = attribute;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgram::UpdateGlobals () {
-
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-
-	const ZLMatrix4x4& world	= gfxDevice.mVertexTransforms [ MOAIGfxDevice::VTX_WORLD_TRANSFORM ];
-	const ZLMatrix4x4& view		= gfxDevice.mVertexTransforms [ MOAIGfxDevice::VTX_VIEW_TRANSFORM ];
-	const ZLMatrix4x4& proj		= gfxDevice.mVertexTransforms [ MOAIGfxDevice::VTX_PROJ_TRANSFORM ];
-
-	// TODO: all these need to be cached in the gfx state instead of recomputed every single time
-	// TODO: should check against the cached values in the shader to see if the uniforms need to be re-uploaded
-
-	// NOTE: matrices are submitted transposed; it is up to the shader to transform vertices correctly
-	// vert * matrix implicitely transposes the matrix; martix * vert uses the matrix as submitted
-
-	for ( u32 i = 0; i < this->mGlobals.Size (); ++i ) {
-	
-		const MOAIShaderProgramGlobal& global = this->mGlobals [ i ];
-		MOAIShaderUniform& uniform = this->mUniforms [ global.mUniformID ];
-	
-		switch ( global.mGlobalID ) {
-		
-			case GLOBAL_PEN_COLOR: {
-				if ( uniform.SetValue ( gfxDevice.mFinalColor, true )) {
-					uniform.Bind ();
-				}
-				break;
-			}
-			case GLOBAL_VIEW_PROJ: {
-			
-				ZLMatrix4x4 mtx = view;
-				mtx.Append ( proj );
-				
-				if ( uniform.SetValue ( mtx, true )) {
-					uniform.Bind ();
-				}
-				break;
-			}
-			case GLOBAL_VIEW_WIDTH: {
-				if ( uniform.SetValue ( gfxDevice.mViewRect.Width ())) {
-					uniform.Bind ();
-				}
-				break;
-			}
-			case GLOBAL_VIEW_HEIGHT: {
-				if ( uniform.SetValue ( gfxDevice.mViewRect.Height ())) {
-					uniform.Bind ();
-				}
-				break;
-			}
-			case GLOBAL_VIEW_HALF_WIDTH: {
-				if ( uniform.SetValue ( gfxDevice.mViewRect.Width () * 0.5f )) {
-					uniform.Bind ();
-				}
-				break;
-			}
-			case GLOBAL_VIEW_HALF_HEIGHT: {
-				if ( uniform.SetValue ( gfxDevice.mViewRect.Height () * 0.5f )) {
-					uniform.Bind ();
-				}
-				break;
-			}
-			case GLOBAL_WORLD: {
-				if ( uniform.SetValue ( world, true )) {
-					uniform.Bind ();
-				}
-				break;
-			}
-			case GLOBAL_WORLD_INVERSE: {
-			
-				ZLMatrix4x4 mtx = world;
-				mtx.Inverse ();
-				
-				if ( uniform.SetValue ( mtx, true )) {
-					uniform.Bind ();
-				}
-				break;
-			}
-			case GLOBAL_WORLD_VIEW: {
-			
-				ZLMatrix4x4 mtx = world;
-				mtx.Append ( view );
-				
-				if ( uniform.SetValue ( mtx, true )) {
-					uniform.Bind ();
-				}
-				break;
-			}
-			case GLOBAL_WORLD_VIEW_INVERSE: {
-			
-				ZLMatrix4x4 mtx = world;
-				mtx.Append ( view );
-				mtx.Inverse ();
-				
-				if ( uniform.SetValue ( mtx, true )) {
-					uniform.Bind ();
-				}
-				break;
-			}
-			case GLOBAL_WORLD_VIEW_PROJ: {
-			
-				ZLMatrix4x4 mtx = world;
-				mtx.Append ( view );
-				mtx.Append ( proj );
-				
-				if ( uniform.SetValue ( mtx, true )) {
-					uniform.Bind ();
-				}
-				break;
-			}
-		}
 	}
 }

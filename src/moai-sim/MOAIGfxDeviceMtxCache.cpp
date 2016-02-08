@@ -235,8 +235,6 @@ void MOAIGfxDeviceMtxCache::SetVertexTransform ( u32 id, const ZLMatrix4x4& tran
 			this->UpdateCpuVertexMtx ();
 		}
 	}
-	
-	this->mShaderDirty = true;
 }
 
 //----------------------------------------------------------------//

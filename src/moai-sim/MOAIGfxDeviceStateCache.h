@@ -43,6 +43,7 @@ protected:
 	bool									mScissorEnabled;
 	ZLRect									mScissorRect;
 	
+	MOAIShader*								mShader;
 	MOAIShaderProgram*						mShaderProgram;
 	
 	ZLLeanArray < MOAISingleTexture* >		mTextureUnits;
@@ -58,6 +59,7 @@ protected:
 	//----------------------------------------------------------------//
 	virtual	MOAIFrameBuffer*	GetDefaultFrameBuffer		() = 0;
 	virtual	MOAITexture*		GetDefaultTexture			() = 0;
+	bool						BindShaderProgram			( MOAIShaderProgram* program ); // only called by BindShader ()
 	bool						BindTexture					( u32 textureUnit, MOAISingleTexture* texture );
 
 public:
@@ -67,7 +69,6 @@ public:
 	bool			BindIndexBuffer				( MOAIIndexBuffer* buffer = 0 );
 	bool			BindShader					( MOAIShader* shader = 0 );
 	bool			BindShader					( u32 preset );
-	bool			BindShader					( MOAIShaderProgram* program );
 	bool			BindTexture					( MOAITextureBase* textureSet = 0 );
 	bool			BindVertexArray				( MOAIVertexArray* vtxArray = 0 );
 	bool			BindVertexBuffer			( MOAIVertexBuffer* buffer = 0 );

@@ -485,14 +485,12 @@ void MOAIGfxDevice::SetViewRect ( ZLRect rect ) {
 	this->mDrawingAPI->Viewport ( x, y, w, h );
 	
 	this->mViewRect = rect;
-	this->mShaderDirty = true;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::UpdateShaderGlobals () {
+void MOAIGfxDevice::UpdateAndBindUniforms () {
 
-	if ( this->mShaderProgram && this->mShaderDirty ) {
-		this->mShaderProgram->UpdateGlobals ();
+	if ( this->mShader ) {
+		this->mShader->UpdateAndBindUniforms ();
 	}
-	this->mShaderDirty = false;
 }

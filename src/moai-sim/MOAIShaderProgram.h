@@ -12,6 +12,8 @@
 #define		OPENGL_ES_PREPROC	"#define LOWP lowp\n #define MEDP mediump\n #define HIGHP highp\n"
 #define		WEBGL_PREPROC		"precision mediump int;\n precision mediump float;\n"
 
+class MOAIShader;
+
 //================================================================//
 // MOAIShaderProgramGlobal
 //================================================================//
@@ -28,30 +30,39 @@ private:
 // MOAIShaderProgram
 //================================================================//
 /**	@lua	MOAIShaderProgram
-	@text	Programmable shader class.
+	@text	Programmable shader class. This represents the shader
+			program itself, which may be shared by one or more
+			MOAIShader instances. The shader program holds the graphics
+			resource, and the shader instances apply the (non-global)
+			uniform values.
 
-	@const	UNIFORM_COLOR
 	@const	UNIFORM_FLOAT
+	@const	UNIFORM_INDEX
 	@const	UNIFORM_INT
-	@const  UNIFORM_NORMAL
-	@const	UNIFORM_PEN_COLOR
-	@const	UNIFORM_SAMPLER
-	@const	UNIFORM_TRANSFORM
-	@const	UNIFORM_VIEW_PROJ
-	@const	UNIFORM_VIEW_WIDTH
-	@const	UNIFORM_VIEW_HEIGHT
-	@const	UNIFORM_VIEW_HALF_WIDTH
-	@const	UNIFORM_VIEW_HALF_HEIGHT
-	@const	UNIFORM_WORLD
-	@const	UNIFORM_WORLD_VIEW
-	@const	UNIFORM_WORLD_VIEW_PROJ
+	@const	UNIFORM_MATRIX_F3
+	@const	UNIFORM_MATRIX_F4
+	@const	UNIFORM_VECTOR_F4
+	
+	@const	GLOBAL_VIEW_PROJ
+	@const	GLOBAL_VIEW_PROJ
+	@const	GLOBAL_VIEW_WIDTH
+	@const	GLOBAL_VIEW_HEIGHT
+	@const	GLOBAL_WORLD
+	@const	GLOBAL_WORLD_INVERSE
+	@const	GLOBAL_WORLD_VIEW
+	@const	GLOBAL_WORLD_VIEW_INVERSE
+	@const	GLOBAL_WORLD_VIEW_PROJ
 */
 class MOAIShaderProgram :
 	public MOAIGfxResource {
 protected:
 
 	friend class MOAIShader;
-	// friend class MOAIShaderProgram;
+	friend class MOAIGfxDevice;
+
+	enum {
+		GFX_EVENT_UPDATED_UNIFORMS = GFX_EVENT_TOTAL,
+	};
 
 	STLString		mVertexShaderSource;
 	STLString		mFragmentShaderSource;
@@ -63,8 +74,8 @@ protected:
 	typedef STLMap < u32, STLString >::iterator AttributeMapIt;
 	STLMap < u32, STLString > mAttributeMap;
 
-	ZLLeanArray < MOAIShaderUniform >			mUniforms;
-	ZLLeanArray < MOAIShaderUniformBuffer >		mUniformDefaults;
+	ZLLeanArray < MOAIShaderUniform >			mUniforms; // these are the actual uniforms
+	ZLLeanArray < MOAIShaderUniformBuffer >		mDefaults;
 	ZLLeanArray < MOAIShaderProgramGlobal >		mGlobals;
 
 	//----------------------------------------------------------------//
@@ -80,9 +91,13 @@ protected:
 	static int		_setVertexAttribute			( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void			ApplyDefaults				();
+	void			ApplyGlobals				();
+	void			BindUniforms				();
 	ZLGfxHandle*	CompileShader				( u32 type, cc8* source );
 	bool			OnCPUCreate					();
 	void			OnCPUDestroy				();
+	void			OnGfxEvent					( u32 event, void* userdata );
 	void			OnGPUBind					();
 	bool			OnGPUCreate					();
 	void			OnGPUDestroy				();
@@ -90,13 +105,12 @@ protected:
 	void			OnGPUUnbind					();
 	bool			OnGPUUpdate					();
 	void			OnUniformLocation			( u32 addr, void* userdata );
-
+	
 public:
 
 	DECL_LUA_FACTORY ( MOAIShaderProgram )
 
 	enum {
-		GLOBAL_NONE,
 		GLOBAL_PEN_COLOR,
 		GLOBAL_VIEW_PROJ,
 		GLOBAL_VIEW_WIDTH,
@@ -119,7 +133,6 @@ public:
 	void			DeclareUniform				( u32 idx, cc8* name, u32 type, float value );
 	void			DeclareUniform				( u32 idx, cc8* name, u32 type, int value );
 	bool			IsValid						();
-	//bool			LoadGfxState				();
 					MOAIShaderProgram			();
 					~MOAIShaderProgram			();
 	void			RegisterLuaClass			( MOAILuaState& state );
@@ -130,7 +143,6 @@ public:
 	void			SetGlobal					( u32 idx, u32 uniformID, u32 globalID );
 	void			SetSource					( cc8* vshSource, cc8* fshSource );
 	void			SetVertexAttribute			( u32 idx, cc8* attribute );
-	void			UpdateGlobals				();
 };
 
 #endif

@@ -80,15 +80,6 @@ void MOAIShaderMgr::AffirmAll () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderMgr::BindShader ( u32 shaderID ) {
-
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-
-	MOAIShader* shader = this->GetShader ( shaderID );
-	return gfxDevice.BindShader ( shader );
-}
-
-//----------------------------------------------------------------//
 MOAIShaderProgram* MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 
 	MOAIShaderProgram* program = 0;

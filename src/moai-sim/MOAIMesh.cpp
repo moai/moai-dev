@@ -137,7 +137,7 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& mater
 		
 		gfxDevice.SetPenWidth ( this->mPenWidth );
 		
-		gfxDevice.UpdateShaderGlobals ();
+		gfxDevice.UpdateAndBindUniforms ();
 		
 		if ( this->mIndexBuffer ) {
 			

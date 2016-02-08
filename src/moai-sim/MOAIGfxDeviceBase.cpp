@@ -293,7 +293,6 @@ void MOAIGfxDeviceBase::LogPipelineRender ( ZLGfxRetained& gfx, size_t renderCou
 //----------------------------------------------------------------//
 MOAIGfxDeviceBase::MOAIGfxDeviceBase () :
 	mDrawingAPI ( &mGfxImmediate ),
-	mShaderDirty ( false ),
 	mDrawCount ( 0 ),
 	mPipelineRenderCount ( 0 ),
 	mEnablePipelineLogging ( false ) {

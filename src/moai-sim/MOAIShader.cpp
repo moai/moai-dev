@@ -71,34 +71,6 @@ bool MOAIShader::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShader::BindUniforms () {
-
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	MOAIShaderProgram* program = this->mProgram;
-
-	if ( program ) {
-		
-		u32 nUniforms = program->mUniforms.Size ();
-		bool flushed = false;
-		
-		for ( u32 i = 0; i < nUniforms; ++i ) {
-			MOAIShaderUniform& uniform = program->mUniforms [ i ];
-			
-			if ( uniform.IsValid ()) {
-				//if ( uniform.SetValue ( this->mUniformBuffers [ i ], true )) {
-					uniform.SetValue ( this->mUniformBuffers [ i ], true );
-					if ( !flushed ) {
-						gfxDevice.FlushBufferedPrims ();
-						flushed = true;
-					}
-					uniform.Bind (); // TODO: maybe should be handled by the state cache
-				//}
-			}
-		}
-	}
-}
-
-//----------------------------------------------------------------//
 MOAIShader::MOAIShader () {
 
 	RTTI_BEGIN
@@ -145,8 +117,28 @@ void MOAIShader::SetProgram ( MOAIShaderProgram* program ) {
 			u32 type = program->mUniforms [ i ].GetType ();
 			MOAIShaderUniformBuffer& uniformBuffer = this->mUniformBuffers [ i ];
 			uniformBuffer.SetType ( program->mUniforms [ i ].GetType ());
-			uniformBuffer.SetValue ( program->mUniformDefaults [ i ], false );
-			
+			uniformBuffer.SetValue ( program->mDefaults [ i ], false );
 		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIShader::UpdateAndBindUniforms () {
+
+	MOAIShaderProgram* program = this->mProgram;
+
+	if ( program ) {
+		
+		u32 nUniforms = program->mUniforms.Size ();
+		
+		for ( u32 i = 0; i < nUniforms; ++i ) {
+			MOAIShaderUniform& uniform = program->mUniforms [ i ];
+			if (( uniform.mFlags & MOAIShaderUniform::UNIFORM_FLAG_GLOBAL ) == 0 ) {
+				uniform.mFlags |= uniform.SetValue ( this->mUniformBuffers [ i ], true );
+			}
+		}
+		
+		program->ApplyGlobals ();
+		program->BindUniforms ();
 	}
 }
