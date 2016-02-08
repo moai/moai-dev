@@ -132,7 +132,7 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 MOAISim.openWindow ( "flash", fla.width, fla.height )
 
-MOAIGfxDevice.setClearColor ( 1, 1, 1, 1 )
+MOAIGfxMgr.setClearColor ( 1, 1, 1, 1 )
 
 flash = parseFlash ( fla )
 

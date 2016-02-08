@@ -95,7 +95,7 @@ onDraw = function ()
 		local x = (( i - 1 ) * span ) - ( 1024 / 2 )
 		local y = ( meter:readFloat () * 64 ) - 256
 
-		MOAIGfxDevice.setPenColor ( 1, 0, 0, 1 )
+		MOAIGfxMgr.setPenColor ( 1, 0, 0, 1 )
 		MOAIDraw.fillRect ( x, y, x + span, -256 )
 	end
 end

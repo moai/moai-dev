@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIRenderMgr.h>
 
@@ -26,8 +26,8 @@ int MOAIRenderMgr::_getBufferTable ( lua_State* L ) {
 */	
 int MOAIRenderMgr::_getPerformanceDrawCount ( lua_State* L ) {
 
-	MOAIRenderMgr& device = MOAIRenderMgr::Get ();
-	lua_pushnumber ( L, device.mLastDrawCount );
+	MOAIRenderMgr& gfxMgr = MOAIRenderMgr::Get ();
+	lua_pushnumber ( L, gfxMgr.mLastDrawCount );
 
 	return 1;
 }
@@ -44,8 +44,8 @@ int MOAIRenderMgr::_setBufferTable ( lua_State* L ) {
 // TODO: doxygen
 int MOAIRenderMgr::_getRenderCount ( lua_State* L ) {
 
-	MOAIRenderMgr& device = MOAIRenderMgr::Get ();
-	lua_pushnumber ( L, device.mRenderCounter );
+	MOAIRenderMgr& gfxMgr = MOAIRenderMgr::Get ();
+	lua_pushnumber ( L, gfxMgr.mRenderCounter );
 
 	return 1;
 }
@@ -183,11 +183,11 @@ void MOAIRenderMgr::Render () {
 	// Measure performance
 	double startTime = ZLDeviceTime::GetTimeInSeconds ();
 	
-	//device.ResetDrawCount ();
+	//gfxMgr.ResetDrawCount ();
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	ZLGfx& gfx = gfxDevice.SelectDrawingAPI ( MOAIGfxPipelineMgr::DRAWING_PIPELINE );
+	ZLGfx& gfx = gfxMgr.SelectDrawingAPI ( MOAIGfxPipelineMgr::DRAWING_PIPELINE );
 
 	ZGL_COMMENT ( gfx, "RENDER MGR RENDER" );
 
@@ -198,8 +198,8 @@ void MOAIRenderMgr::Render () {
 		state.Pop ( 1 );
 	}
 	
-	gfxDevice.GetDefaultFrameBuffer ()->Render ();
-	//this->mLastDrawCount = MOAIGfxDevice::Get ().GetDrawCount ();
+	gfxMgr.GetDefaultFrameBuffer ()->Render ();
+	//this->mLastDrawCount = MOAIGfxMgr::Get ().GetDrawCount ();
 	this->mRenderCounter++;
 	
 	// Measure performance
@@ -209,8 +209,8 @@ void MOAIRenderMgr::Render () {
 	
 	this->mFrameBuffer = 0;
 	
-	gfxDevice.FlushBufferedPrims ();
-	gfxDevice.UnbindAll ();
+	gfxMgr.FlushBufferedPrims ();
+	gfxMgr.UnbindAll ();
 	
 	ZLGfxDevice::End ();
 }

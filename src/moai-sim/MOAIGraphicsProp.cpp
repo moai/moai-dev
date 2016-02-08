@@ -6,7 +6,7 @@
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDebugLines.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAILayoutFrame.h>
@@ -597,7 +597,7 @@ void MOAIGraphicsProp::DrawDebug ( int subPrimID, float lod ) {
 
 	if ( this->GetBoundsStatus () != BOUNDS_OK ) return;
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
 	
 	MOAIDraw& draw = MOAIDraw::Get ();
@@ -607,7 +607,7 @@ void MOAIGraphicsProp::DrawDebug ( int subPrimID, float lod ) {
 	
 	this->LoadVertexTransform ();
 	
-	gfxDevice.SetVertexTransform ( gfxDevice.GetMtx ( MOAIGfxDevice::WORLD_VIEW_PROJ_MTX ));
+	gfxMgr.SetVertexTransform ( gfxMgr.GetMtx ( MOAIGfxMgr::WORLD_VIEW_PROJ_MTX ));
 	
 	ZLBox modelBounds;
 	this->OnGetModelBounds ( modelBounds );
@@ -625,7 +625,7 @@ void MOAIGraphicsProp::DrawDebug ( int subPrimID, float lod ) {
 	}
 	
 	// clear out the world transform (draw in world space)
-	gfxDevice.SetVertexTransform ( gfxDevice.GetMtx ( MOAIGfxDevice::VIEW_PROJ_MTX ));
+	gfxMgr.SetVertexTransform ( gfxMgr.GetMtx ( MOAIGfxMgr::VIEW_PROJ_MTX ));
 	
 	if ( debugLines.Bind ( MOAIDebugLines::PROP_WORLD_BOUNDS )) {
 		draw.DrawBoxOutline ( this->GetBounds ());
@@ -751,7 +751,7 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 		
 		case BILLBOARD_SCREEN: {
 			
-			//MOAIGfxDevice::Get ().GetWorldToWndMtx ();
+			//MOAIGfxMgr::Get ().GetWorldToWndMtx ();
 			
 			ZLMatrix4x4 viewProjMtx = camera->GetWorldToWndMtx ( *viewport );
 			
@@ -820,7 +820,7 @@ bool MOAIGraphicsProp::IsVisible ( float lod ) {
 //----------------------------------------------------------------//
 void MOAIGraphicsProp::LoadGfxState () {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	//MOAIDeckGfxState gfxState;
 
@@ -833,43 +833,43 @@ void MOAIGraphicsProp::LoadGfxState () {
 	//gfxState.SetShader ( this->mShader );
 	//gfxState.SetTexture ( this->mTexture );
 
-	//gfxDevice.SetShader ( gfxState.GetShader ());
-	//gfxDevice.SetGfxState ( gfxState.GetTexture ());
+	//gfxMgr.SetShader ( gfxState.GetShader ());
+	//gfxMgr.SetGfxState ( gfxState.GetTexture ());
 
-	gfxDevice.SetPenColor ( this->mColor );
-	gfxDevice.SetCullFunc ( this->mCullMode );
-	gfxDevice.SetDepthFunc ( this->mDepthTest );
-	gfxDevice.SetDepthMask ( this->mDepthMask );
-	gfxDevice.SetBlendMode ( this->mBlendMode );
+	gfxMgr.SetPenColor ( this->mColor );
+	gfxMgr.SetCullFunc ( this->mCullMode );
+	gfxMgr.SetDepthFunc ( this->mDepthTest );
+	gfxMgr.SetDepthMask ( this->mDepthMask );
+	gfxMgr.SetBlendMode ( this->mBlendMode );
 	
 	if ( this->mScissorRect ) {
-		ZLRect scissorRect = this->mScissorRect->GetScissorRect ( gfxDevice.GetWorldToWndMtx ());
-		gfxDevice.SetScissorRect ( scissorRect );
+		ZLRect scissorRect = this->mScissorRect->GetScissorRect ( gfxMgr.GetWorldToWndMtx ());
+		gfxMgr.SetScissorRect ( scissorRect );
 	}
 	else {
-		gfxDevice.SetScissorRect ();
+		gfxMgr.SetScissorRect ();
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIGraphicsProp::LoadUVTransform () {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
 	if ( this->mUVTransform ) {
 		ZLAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
-		gfxDevice.SetMtx ( MOAIGfxDevice::UV_MTX, uvMtx );
+		gfxMgr.SetMtx ( MOAIGfxMgr::UV_MTX, uvMtx );
 	}
 	else {
-		gfxDevice.SetMtx ( MOAIGfxDevice::UV_MTX );
+		gfxMgr.SetMtx ( MOAIGfxMgr::UV_MTX );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIGraphicsProp::LoadVertexTransform () {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	gfxDevice.SetMtx ( MOAIGfxDevice::WORLD_MTX, this->GetWorldDrawingMtx ());
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	gfxMgr.SetMtx ( MOAIGfxMgr::WORLD_MTX, this->GetWorldDrawingMtx ());
 }
 
 //----------------------------------------------------------------//

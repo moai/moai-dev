@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIDebugLines.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 
@@ -85,13 +85,13 @@ int MOAIDebugLines::_showStyle ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAIDebugLines::Bind ( u32 styleID ) {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	MOAIDebugLineStyle& style = this->mStyles [ styleID ];
 	
 	if ( style.mVisible ) {
-		gfxDevice.SetPenColor ( style.mColor );
-		gfxDevice.SetPenWidth ( style.mSize );
+		gfxMgr.SetPenColor ( style.mColor );
+		gfxMgr.SetPenWidth ( style.mSize );
 		return true;
 	}
 	return false;

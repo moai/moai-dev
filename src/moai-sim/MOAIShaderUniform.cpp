@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIColor.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIShaderUniform.h>
 
 //================================================================//
@@ -390,7 +390,7 @@ void MOAIShaderUniform::Bind () {
 
 	if ( this->mAddr == ZGL_INVALID_UNIFORM_ADDR ) return;
 
-	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
 	switch ( this->mType ) {
 

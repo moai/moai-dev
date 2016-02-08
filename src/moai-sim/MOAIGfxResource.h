@@ -17,7 +17,7 @@ class MOAIGfxResource :
 	public virtual ZLGfxListener {
 private:
 
-	friend class MOAIGfxDevice;
+	friend class MOAIGfxMgr;
 	friend class MOAIGfxPipelineMgr;
 	friend class MOAIGfxStateCache;
 	friend class MOAIGfxResourceMgr;

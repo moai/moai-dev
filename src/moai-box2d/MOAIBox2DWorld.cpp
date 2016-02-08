@@ -1239,10 +1239,10 @@ void MOAIBox2DWorld::Render () {
 
 	if ( this->mDebugDraw && MOAIDraw::Bind ()) {
 		
-		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 		
-		gfxDevice.SetMtx ( MOAIGfxDevice::WORLD_MTX );
-		gfxDevice.SetVertexTransform ( gfxDevice.GetMtx ( MOAIGfxDevice::VIEW_PROJ_MTX ));
+		gfxMgr.SetMtx ( MOAIGfxMgr::WORLD_MTX );
+		gfxMgr.SetVertexTransform ( gfxMgr.GetMtx ( MOAIGfxMgr::VIEW_PROJ_MTX ));
 		
 		this->mDebugDraw->mScale = 1.0f / this->mUnitsToMeters;
 		this->mWorld->DrawDebugData ();

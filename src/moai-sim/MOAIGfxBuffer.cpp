@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGfxBuffer.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
@@ -168,7 +168,7 @@ void MOAIGfxBuffer::OnGPUBind () {
 	ZLGfxHandle* vbo = this->mVBOs [ this->mCurrentVBO ];
 	
 	if ( vbo ) {
-		MOAIGfxDevice::GetDrawingAPI ().BindBuffer ( this->mTarget, vbo );
+		MOAIGfxMgr::GetDrawingAPI ().BindBuffer ( this->mTarget, vbo );
 	}
 }
 
@@ -176,7 +176,7 @@ void MOAIGfxBuffer::OnGPUBind () {
 bool MOAIGfxBuffer::OnGPUCreate () {
 
 	u32 count = 0;
-	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
 	this->mUseVBOs = ( this->mVBOs.Size () > 0 );
 	
@@ -228,7 +228,7 @@ void MOAIGfxBuffer::OnGPULost () {
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::OnGPUUnbind () {
 
-	MOAIGfxDevice::GetDrawingAPI ().BindBuffer ( this->mTarget, 0 ); // OK?
+	MOAIGfxMgr::GetDrawingAPI ().BindBuffer ( this->mTarget, 0 ); // OK?
 }
 
 //----------------------------------------------------------------//
@@ -252,7 +252,7 @@ bool MOAIGfxBuffer::OnGPUUpdate () {
 		// on multiple devices, evaluate other approaches and possible expose the configuration of
 		// those to the end user via Lua.
 	
-		ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 		
 		ZLSharedConstBuffer* buffer = this->GetSharedConstBuffer ();
 		

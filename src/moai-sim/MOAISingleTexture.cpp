@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAISingleTexture.h>
@@ -134,7 +134,7 @@ void MOAISingleTexture::CheckFilterModes ( int min, int mag ) {
 void MOAISingleTexture::CleanupOnError () {
 
 	this->mTextureSize = 0;
-	MOAIGfxDevice::GetDrawingAPI ().DeleteHandle ( this->mGLTexID );
+	MOAIGfxMgr::GetDrawingAPI ().DeleteHandle ( this->mGLTexID );
 	this->mGLTexID = 0;
 	this->mWidth = 0;
 	this->mHeight = 0;
@@ -150,9 +150,9 @@ u32 MOAISingleTexture::CountActiveUnits () {
 //----------------------------------------------------------------//
 bool MOAISingleTexture::CreateTextureFromImage ( MOAIImage& srcImage ) {
 
-	if ( !MOAIGfxDevice::Get ().GetHasContext ()) return false;
+	if ( !MOAIGfxMgr::Get ().GetHasContext ()) return false;
 
-	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
 	MOAIImage altImage;
 
@@ -170,7 +170,7 @@ bool MOAISingleTexture::CreateTextureFromImage ( MOAIImage& srcImage ) {
 	MOAIImage& image = altImage.IsOK () ? altImage : srcImage;
 	if ( !image.IsOK ()) return false;
 
-	//MOAIGfxDevice::Get ().ClearErrors ();
+	//MOAIGfxMgr::Get ().ClearErrors ();
 	this->mGLTexID = gfx.CreateTexture ();
 	if ( !this->mGLTexID ) return false;
 
@@ -251,7 +251,7 @@ bool MOAISingleTexture::CreateTextureFromImage ( MOAIImage& srcImage ) {
 	this->mTextureSize = image.GetBitmapSize ();
 
 	// TODO: error handling
-//	if ( MOAIGfxDevice::Get ().LogErrors ()) {
+//	if ( MOAIGfxMgr::Get ().LogErrors ()) {
 //		this->CleanupOnError ();
 //		return false;
 //	}
@@ -276,7 +276,7 @@ bool MOAISingleTexture::CreateTextureFromImage ( MOAIImage& srcImage ) {
 				mipmap.GetBitmapBuffer ()
 			);
 			
-			if ( MOAIGfxDevice::Get ().LogErrors ()) {
+			if ( MOAIGfxMgr::Get ().LogErrors ()) {
 				this->CleanupOnError ();
 				return false;
 			}
@@ -284,7 +284,7 @@ bool MOAISingleTexture::CreateTextureFromImage ( MOAIImage& srcImage ) {
 		}
 	}
 	
-	//MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
+	//MOAIGfxMgr::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
 	
 	return true;
 }
@@ -343,22 +343,22 @@ void MOAISingleTexture::OnCPUDestroy () {
 //----------------------------------------------------------------//
 void MOAISingleTexture::OnGfxEvent ( u32 event, void* userdata ) {
 
-	MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
+	MOAIGfxMgr::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
 	MOAIGfxResource::OnGfxEvent ( event, userdata );
 }
 
 //----------------------------------------------------------------//
 void MOAISingleTexture::OnGPUBind () {
 
-	MOAIGfxDevice::GetDrawingAPI ().BindTexture ( this->mGLTexID );
+	MOAIGfxMgr::GetDrawingAPI ().BindTexture ( this->mGLTexID );
 }
 
 //----------------------------------------------------------------//
 void MOAISingleTexture::OnGPUDestroy () {
 
 	if ( this->mGLTexID ) {
-		if ( MOAIGfxDevice::IsValid ()) {
-			MOAIGfxDevice::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
+		if ( MOAIGfxMgr::IsValid ()) {
+			MOAIGfxMgr::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
 			MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLTexID );
 		}
 	}
@@ -369,8 +369,8 @@ void MOAISingleTexture::OnGPUDestroy () {
 void MOAISingleTexture::OnGPULost () {
 
 	if ( this->mGLTexID ) {
-		if ( MOAIGfxDevice::IsValid ()) {
-			MOAIGfxDevice::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
+		if ( MOAIGfxMgr::IsValid ()) {
+			MOAIGfxMgr::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
 		}
 	}
 	this->mGLTexID = 0;
@@ -379,13 +379,13 @@ void MOAISingleTexture::OnGPULost () {
 //----------------------------------------------------------------//
 void MOAISingleTexture::OnGPUUnbind () {
 
-	MOAIGfxDevice::GetDrawingAPI ().BindTexture ( 0 );
+	MOAIGfxMgr::GetDrawingAPI ().BindTexture ( 0 );
 }
 
 //----------------------------------------------------------------//
 bool MOAISingleTexture::OnGPUUpdate () {
 
-	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
 	gfx.TexParameteri ( ZGL_TEXTURE_WRAP_S, this->mWrap );
 	gfx.TexParameteri ( ZGL_TEXTURE_WRAP_T, this->mWrap );
@@ -508,18 +508,18 @@ bool MOAISingleTexture::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rec
 	// if we need to generate mipmaps or the dimensions have changed, clear out the old texture
 	if ( this->ShouldGenerateMipmaps () || ( this->mWidth != image.GetWidth ()) || ( this->mHeight != image.GetHeight ())) {
 	
-		MOAIGfxDevice::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
+		MOAIGfxMgr::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
 		MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLTexID );
 		this->mGLTexID = 0;
 		
 		if ( this->CreateTextureFromImage ( image )) {
-			MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
+			MOAIGfxMgr::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
 			return true;
 		}
 		return false;
 	}
 	
-	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 	
 	// if the texture exists just update the sub-region
 	// otherwise create a new texture from the image
@@ -550,7 +550,7 @@ bool MOAISingleTexture::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rec
 			bitmapBuffer
 		);
 		
-		MOAIGfxDevice::Get ().LogErrors ();
+		MOAIGfxMgr::Get ().LogErrors ();
 		
 		return true;
 	}

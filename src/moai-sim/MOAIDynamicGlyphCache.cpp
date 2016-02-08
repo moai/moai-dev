@@ -6,7 +6,7 @@
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIDynamicGlyphCache.h>
 #include <moai-sim/MOAIDynamicGlyphCachePage.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGlyph.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIImageTexture.h>

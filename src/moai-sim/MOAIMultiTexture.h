@@ -16,7 +16,7 @@ class MOAIMultiTexture :
 	public MOAITextureBase {
 private:
 
-	friend class MOAIGfxDevice;
+	friend class MOAIGfxMgr;
 	friend class MOAIGfxStateCache;
 
 	ZLLeanArray < MOAISingleTexture* > mTextures;

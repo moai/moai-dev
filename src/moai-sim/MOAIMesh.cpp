@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIIndexBuffer.h>
@@ -118,10 +118,10 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& mater
 //
 //	// TODO: make use of offset and scale
 //
-//	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-//	if ( gfxDevice.BindVertexArray ( this )) {
+//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+//	if ( gfxMgr.BindVertexArray ( this )) {
 //
-//		ZLGfx& gfx = gfxDevice.GetDrawingAPI ();
+//		ZLGfx& gfx = gfxMgr.GetDrawingAPI ();
 //
 //		// I am super lazy, so set this up here instead of adding if's below
 //		MOAIMeshSpan defaultSpan;
@@ -132,17 +132,17 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& mater
 //			span = &defaultSpan;
 //		}
 //
-//		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
-//		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+//		gfxMgr.SetVertexMtxMode ( MOAIGfxMgr::VTX_STAGE_MODEL, MOAIGfxMgr::VTX_STAGE_MODEL );
+//		gfxMgr.SetUVMtxMode ( MOAIGfxMgr::UV_STAGE_MODEL, MOAIGfxMgr::UV_STAGE_TEXTURE );
 //		
-//		gfxDevice.SetPenWidth ( this->mPenWidth );
+//		gfxMgr.SetPenWidth ( this->mPenWidth );
 //		
-//		gfxDevice.UpdateAndBindUniforms ();
+//		gfxMgr.UpdateAndBindUniforms ();
 //		
 //		if ( this->mIndexBuffer ) {
 //			
 //			// TODO: turns out we can bind this inside the VAO as well. so there.
-//			if ( gfxDevice.BindIndexBuffer ( this->mIndexBuffer )) {
+//			if ( gfxMgr.BindIndexBuffer ( this->mIndexBuffer )) {
 //			
 //				u32 indexSizeInBytes = this->mIndexBuffer->GetIndexSize ();
 //				
@@ -155,7 +155,7 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& mater
 //						span->mBase * indexSizeInBytes
 //					);
 //				}
-//				gfxDevice.BindIndexBuffer ();
+//				gfxMgr.BindIndexBuffer ();
 //			}
 //		}
 //		else {
@@ -163,7 +163,7 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& mater
 //				gfx.DrawArrays ( this->mPrimType, span->mBase, span->mTop - span->mBase );
 //			}
 //		}
-//		gfxDevice.BindVertexArray ();
+//		gfxMgr.BindVertexArray ();
 //	}
 }
 

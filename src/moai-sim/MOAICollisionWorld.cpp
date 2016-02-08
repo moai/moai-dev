@@ -7,7 +7,7 @@
 #include <moai-sim/MOAICollisionShape.h>
 #include <moai-sim/MOAICollisionWorld.h>
 #include <moai-sim/MOAIGraphicsProp.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIPartitionResultMgr.h>
@@ -483,10 +483,10 @@ void MOAICollisionWorld::Render () {
 
 	draw.Bind ();
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	gfxDevice.SetMtx ( MOAIGfxDevice::WORLD_MTX );
-	gfxDevice.SetVertexTransform ( gfxDevice.GetMtx ( MOAIGfxDevice::VIEW_PROJ_MTX ));
+	gfxMgr.SetMtx ( MOAIGfxMgr::WORLD_MTX );
+	gfxMgr.SetVertexTransform ( gfxMgr.GetMtx ( MOAIGfxMgr::VIEW_PROJ_MTX ));
 
 	MOAICollisionProp* drawList = 0;
 

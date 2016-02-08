@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIEaseDriver.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAITransformBase.h>

@@ -10,33 +10,33 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIQuadBrush::BindVertexFormat ( MOAIGfxDevice& gfxDevice ) {
+void MOAIQuadBrush::BindVertexFormat ( MOAIGfxMgr& gfxMgr ) {
 	
-	gfxDevice.BindBufferedDrawing ( MOAIVertexFormatMgr::XYZWUVC );
+	gfxMgr.BindBufferedDrawing ( MOAIVertexFormatMgr::XYZWUVC );
 }
 
 //----------------------------------------------------------------//
 void MOAIQuadBrush::Draw () {
 
-	MOAIGfxDevice::Get ().WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV );
+	MOAIGfxMgr::Get ().WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV );
 }
 
 //----------------------------------------------------------------//
 void MOAIQuadBrush::Draw ( float xOff, float yOff, float zOff ) {
 	
-	MOAIGfxDevice::Get ().WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff );
+	MOAIGfxMgr::Get ().WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff );
 }
 
 //----------------------------------------------------------------//
 void MOAIQuadBrush::Draw ( float xOff, float yOff, float zOff, float xScale, float yScale ) {
 	
-	MOAIGfxDevice::Get ().WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff, xScale, yScale );
+	MOAIGfxMgr::Get ().WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff, xScale, yScale );
 }
 
 //----------------------------------------------------------------//
 void MOAIQuadBrush::Draw ( float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale ) {
 	
-	MOAIGfxDevice::Get ().WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff, xScale, yScale, uOff, vOff, uScale, vScale );
+	MOAIGfxMgr::Get ().WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff, xScale, yScale, uOff, vOff, uScale, vScale );
 }
 
 //----------------------------------------------------------------//

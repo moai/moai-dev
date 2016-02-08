@@ -59,7 +59,7 @@ public:
 
 private:
 
-	friend class MOAIGfxDevice;
+	friend class MOAIGfxMgr;
 	friend class MOAIGfxPipelineMgr;
 	friend class MOAIGfxStateCache;
 

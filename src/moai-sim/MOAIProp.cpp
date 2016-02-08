@@ -7,7 +7,7 @@
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDebugLines.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAILayer.h>
 #include <moai-sim/MOAILayoutFrame.h>
@@ -630,7 +630,7 @@ bool MOAIProp::GetCellRect ( ZLRect* cellRect, ZLRect* paddedRect ) {
 //----------------------------------------------------------------//
 void MOAIProp::GetGridBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 
-	const ZLFrustum& frustum = MOAIGfxDevice::Get ().GetViewVolume ();
+	const ZLFrustum& frustum = MOAIGfxMgr::Get ().GetViewVolume ();
 	
 	ZLRect viewRect;
 	if ( frustum.GetXYSectRect ( this->GetWorldToLocalMtx (), viewRect )) {

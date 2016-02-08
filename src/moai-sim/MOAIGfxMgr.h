@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXDEVICE_H
-#define	MOAIGFXDEVICE_H
+#ifndef	MOAIGFXMGR_H
+#define	MOAIGFXMGR_H
 
 #include <moai-sim/MOAIBlendMode.h>
 #include <moai-sim/MOAIColor.h>
@@ -25,19 +25,19 @@ class MOAIVertexFormat;
 class MOAIViewport;
 
 //================================================================//
-// MOAIGfxDevice
+// MOAIGfxMgr
 //================================================================//
-/**	@lua	MOAIGfxDevice
+/**	@lua	MOAIGfxMgr
 	@text	Interface to the graphics singleton.
 	
 	@const	EVENT_RESIZE
 */
-class MOAIGfxDevice :
+class MOAIGfxMgr :
 	public MOAIGfxMtxCache,
 	public MOAIGfxPipelineMgr,
 	public MOAIGfxStateCache,
 	public MOAIGfxVertexCache,
-	public MOAIGlobalClass < MOAIGfxDevice, MOAIGlobalEventSource > {
+	public MOAIGlobalClass < MOAIGfxMgr, MOAIGlobalEventSource > {
 public:
 	
 	enum {
@@ -74,7 +74,7 @@ public:
 	friend class MOAIShaderProgram;
 	friend class MOAISingleTexture;
 	
-	DECL_LUA_SINGLETON ( MOAIGfxDevice )
+	DECL_LUA_SINGLETON ( MOAIGfxMgr )
 	
 	GET ( size_t, TextureMemoryUsage, mTextureMemoryUsage )
 	GET ( u32, MaxTextureSize, mMaxTextureSize )
@@ -93,8 +93,8 @@ public:
 	bool			IsOpaque				() const;
 	u32				LogErrors				();
 	
-					MOAIGfxDevice			();
-					~MOAIGfxDevice			();
+					MOAIGfxMgr			();
+					~MOAIGfxMgr			();
 	
 	void			OnGlobalsFinalize		();
 
@@ -111,7 +111,7 @@ public:
 	//----------------------------------------------------------------//
 	static ZLGfx& GetDrawingAPI () {
 	
-		ZLGfx* gfx = MOAIGfxDevice::Get ().mDrawingAPI;
+		ZLGfx* gfx = MOAIGfxMgr::Get ().mDrawingAPI;
 		assert ( gfx );
 		
 		return *gfx;

@@ -244,11 +244,11 @@ void MOAITileDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D 
 //
 //	if ( !materials.LoadGfxState ( this, idx, MOAIShaderMgr::DECK2D_SHADER )) return;
 //
-//	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-//	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+//	MOAIQuadBrush::BindVertexFormat ( gfxMgr );
 //	
-//	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
-//	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+//	gfxMgr.SetVertexMtxMode ( MOAIGfxMgr::VTX_STAGE_MODEL, MOAIGfxMgr::VTX_STAGE_PROJ );
+//	gfxMgr.SetUVMtxMode ( MOAIGfxMgr::UV_STAGE_MODEL, MOAIGfxMgr::UV_STAGE_TEXTURE );
 //	
 //	MOAICellCoord coord = this->GetCellCoord ( idx );
 //	ZLRect uvRect = this->GetTileRect ( coord );

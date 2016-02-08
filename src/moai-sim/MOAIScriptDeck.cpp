@@ -5,7 +5,7 @@
 #include <moai-sim/MOAIScriptDeck.h>
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDraw.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>

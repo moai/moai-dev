@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxMtxCache.h>
 
 //================================================================//
@@ -13,7 +13,7 @@
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAIGfxMtxCache::GetNormToWndMtx () {
 
-	return this->GetNormToWndMtx ( MOAIGfxDevice::Get ().GetViewRect ());
+	return this->GetNormToWndMtx ( MOAIGfxMgr::Get ().GetViewRect ());
 }
 
 //----------------------------------------------------------------//
@@ -158,7 +158,7 @@ const ZLMatrix4x4& MOAIGfxMtxCache::GetMtx ( u32 transformID ) {
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAIGfxMtxCache::GetWorldToWndMtx () {
 
-	return this->GetWorldToWndMtx ( MOAIGfxDevice::Get ().GetViewRect ());
+	return this->GetWorldToWndMtx ( MOAIGfxMgr::Get ().GetViewRect ());
 }
 
 //----------------------------------------------------------------//
@@ -173,7 +173,7 @@ ZLMatrix4x4 MOAIGfxMtxCache::GetWorldToWndMtx ( const ZLRect& wndRect ) {
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAIGfxMtxCache::GetWndToNormMtx () {
 
-	return this->GetWndToNormMtx ( MOAIGfxDevice::Get ().GetViewRect ());
+	return this->GetWndToNormMtx ( MOAIGfxMgr::Get ().GetViewRect ());
 }
 
 //----------------------------------------------------------------//
@@ -196,7 +196,7 @@ ZLMatrix4x4 MOAIGfxMtxCache::GetWndToNormMtx ( const ZLRect& wndRect ) {
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAIGfxMtxCache::GetWndToWorldMtx () {
 
-	return this->GetWndToWorldMtx ( MOAIGfxDevice::Get ().GetViewRect ());
+	return this->GetWndToWorldMtx ( MOAIGfxMgr::Get ().GetViewRect ());
 }
 
 //----------------------------------------------------------------//

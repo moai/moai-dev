@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
 
@@ -24,7 +24,7 @@ int MOAIGfxResourceMgr::_purgeResources ( lua_State* L ) {
 
 	u32 age = state.GetValue < u32 >( 1, 0 );
 
-	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
 	ZLGfxDevice::Begin ();
 	MOAIGfxResourceMgr::Get ().PurgeResources ( age );
@@ -42,7 +42,7 @@ int MOAIGfxResourceMgr::_purgeResources ( lua_State* L ) {
 int MOAIGfxResourceMgr::_renewResources ( lua_State* L ) {
 	MOAILuaState state ( L );
 
-	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
 	ZLGfxDevice::Begin ();
 	MOAIGfxResourceMgr::Get ().RenewResources ();
@@ -78,7 +78,7 @@ void MOAIGfxResourceMgr::ProcessDeleters () {
 
 	if ( top ) {
 
-		ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
 		ZLGfxDevice::Begin ();
 	
@@ -178,27 +178,27 @@ void MOAIGfxResourceMgr::ScheduleGPUAffirm ( MOAIGfxResource& resource, u32 list
 //----------------------------------------------------------------//
 void MOAIGfxResourceMgr::Update () {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	ZLGfxDevice::Begin ();
 
 	if ( this->mDeleterStack.GetTop () || this->mPendingForLoadList.Count ()) {
 	
-		ZLGfx& gfxLoading = gfxDevice.SelectDrawingAPI ( MOAIGfxPipelineMgr::LOADING_PIPELINE, true );
+		ZLGfx& gfxLoading = gfxMgr.SelectDrawingAPI ( MOAIGfxPipelineMgr::LOADING_PIPELINE, true );
 		
 		ZGL_COMMENT ( gfxLoading, "RESOURCE MGR LOADING PIPELINE UPDATE" );
 		this->ProcessDeleters ();
 		this->ProcessPending ( this->mPendingForLoadList );
-		gfxDevice.UnbindAll ();
+		gfxMgr.UnbindAll ();
 	}
 	
 	if ( this->mPendingForDrawList.Count ()) {
 	
-		ZLGfx& gfxDrawing = gfxDevice.SelectDrawingAPI ( MOAIGfxPipelineMgr::DRAWING_PIPELINE, true );
+		ZLGfx& gfxDrawing = gfxMgr.SelectDrawingAPI ( MOAIGfxPipelineMgr::DRAWING_PIPELINE, true );
 		
 		ZGL_COMMENT ( gfxDrawing, "RESOURCE MGR DRAWING PIPELINE UPDATE" );
 		this->ProcessPending ( this->mPendingForDrawList );
-		gfxDevice.UnbindAll ();
+		gfxMgr.UnbindAll ();
 	}
 
 	// TODO: think about cases where we can get async results back on the

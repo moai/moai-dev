@@ -5,7 +5,7 @@
 #include <moai-sim/MOAIAnimCurve.h>
 #include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIGfxBuffer.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 #include <moai-sim/MOAITexture.h>
@@ -24,9 +24,9 @@ public:
 
 	//----------------------------------------------------------------//
 	void WriteVertex ( const ZLVec2D& v ) {
-		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-		gfxDevice.WriteVtx ( v.mX, v.mY );
-		gfxDevice.WriteFinalColor4b ();
+		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+		gfxMgr.WriteVtx ( v.mX, v.mY );
+		gfxMgr.WriteFinalColor4b ();
 	}
 };
 
@@ -86,9 +86,9 @@ void MOAIDraw::DrawString ( cc8* text, float x, float y, float width, float heig
 	assert ( g_CurrentTextDrawContext );
 
 	// Transform the center into 'world' space
-	MOAIGfxDevice& gfxStateCache = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxStateCache = MOAIGfxMgr::Get ();
 	
-	const ZLMatrix4x4& orgWorldTransform = gfxStateCache.GetMtx ( MOAIGfxDevice::WORLD_MTX );
+	const ZLMatrix4x4& orgWorldTransform = gfxStateCache.GetMtx ( MOAIGfxMgr::WORLD_MTX );
 	ZLVec2D pos ( x, y );
 	orgWorldTransform.Transform ( pos );
 	x = pos.mX;
@@ -181,12 +181,12 @@ void MOAIDraw::DrawString	( cc8* text, float x, float y, float scale, MOAIFont& 
 void MOAIDraw::EndDrawString () {
 
 	// Setup for drawing
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	MOAIGfxDevice& gfxStateCache = MOAIGfxDevice::Get ();
-	MOAIGfxDevice& gfxVtxCache = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxStateCache = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxVtxCache = MOAIGfxMgr::Get ();
 
 	// Get current state
-	const ZLMatrix4x4& orgWorldTransform = gfxStateCache.GetMtx ( MOAIGfxDevice::WORLD_MTX );
+	const ZLMatrix4x4& orgWorldTransform = gfxStateCache.GetMtx ( MOAIGfxMgr::WORLD_MTX );
 
 	// TODO
 	//GLint orgSrcBlend, orgDestBlend;
@@ -197,7 +197,7 @@ void MOAIDraw::EndDrawString () {
 	if ( !gfxStateCache.BindShader ( MOAIShaderMgr::FONT_SHADER )) return;
 	
 	gfxStateCache.SetBlendMode ( ZGL_BLEND_FACTOR_ONE, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
-	gfxVtxCache.SetVertexTransform ( gfxStateCache.GetMtx ( MOAIGfxDevice::WORLD_MTX ));
+	gfxVtxCache.SetVertexTransform ( gfxStateCache.GetMtx ( MOAIGfxMgr::WORLD_MTX ));
 	MOAIQuadBrush::BindVertexFormat ( gfxVtxCache );
 
 	// Get the context data
@@ -243,8 +243,8 @@ void MOAIDraw::EndDrawString () {
 	// Restore render state
 	MOAIDraw::Bind ();
 
-	//gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, orgWorldTransform );
-	//gfxDevice.SetBlendMode ( orgSrcBlend, orgDestBlend ); // TODO
+	//gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_WORLD_TRANSFORM, orgWorldTransform );
+	//gfxMgr.SetBlendMode ( orgSrcBlend, orgDestBlend ); // TODO
 
 	// Clear context
 	g_CurrentTextDrawContext->mFont = 0;
@@ -484,7 +484,7 @@ int MOAIDraw::_drawLine ( lua_State* L ) {
 		MOAIDraw::DrawLuaParams ( L, ZGL_PRIM_LINE_STRIP );
 	}
 	
-	MOAIGfxDevice::Get ().FlushBufferedPrims ();
+	MOAIGfxMgr::Get ().FlushBufferedPrims ();
 	
 	return 0;
 }
@@ -733,7 +733,7 @@ int MOAIDraw::_fillRect ( lua_State* L ) {
 */
 int MOAIDraw::_setBlendMode ( lua_State* L ) {
 	MOAILuaState state ( L );
-	MOAIGfxDevice& gfxStateCache = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxStateCache = MOAIGfxMgr::Get ();
 
 	if ( state.IsType ( 1, LUA_TNUMBER )) {
 		if ( state.IsType ( 2, LUA_TNUMBER )) {
@@ -762,17 +762,17 @@ int MOAIDraw::_setBlendMode ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAIDraw::Bind () {
 
-	MOAIGfxDevice& gfxStateCache = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxStateCache = MOAIGfxMgr::Get ();
 	
 	if ( !gfxStateCache.BindTexture ()) return false;
 	if ( !gfxStateCache.BindShader ( MOAIShaderMgr::LINE_SHADER )) return false;
 	
-	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxVertexCache = MOAIGfxMgr::Get ();
 	
 	gfxVertexCache.BindBufferedDrawing ( MOAIVertexFormatMgr::XYZWC );
 	
-	gfxVertexCache.SetVertexTransform ( gfxStateCache.GetMtx ( MOAIGfxDevice::WORLD_VIEW_PROJ_MTX ));
-	gfxVertexCache.SetUVTransform ( MOAIGfxDevice::Get ().GetMtx ( MOAIGfxDevice::UV_MTX ));
+	gfxVertexCache.SetVertexTransform ( gfxStateCache.GetMtx ( MOAIGfxMgr::WORLD_VIEW_PROJ_MTX ));
+	gfxVertexCache.SetUVTransform ( MOAIGfxMgr::Get ().GetMtx ( MOAIGfxMgr::UV_MTX ));
 
 	return true;
 }
@@ -786,7 +786,7 @@ void MOAIDraw::DrawAnimCurve ( const MOAIAnimCurve& curve, u32 resolution ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawAxisGrid ( ZLVec2D loc, ZLVec2D vec, float size ) {
 
-	ZLMatrix4x4 mtx = MOAIGfxDevice::Get ().GetMtx ( MOAIGfxDevice::VIEW_PROJ_MTX );
+	ZLMatrix4x4 mtx = MOAIGfxMgr::Get ().GetMtx ( MOAIGfxMgr::VIEW_PROJ_MTX );
 	
 	ZLMatrix4x4 invMtx;
 	invMtx.Inverse ( mtx );
@@ -917,7 +917,7 @@ void MOAIDraw::DrawBoxOutline ( const ZLBox& box ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawBezierCurve ( const ZLCubicBezier2D& bezier ) {
 
-	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxVertexCache = MOAIGfxMgr::Get ();
 	MOAIDrawVertexWriter2D writer;
 	
 	gfxVertexCache.BeginPrim ( ZGL_PRIM_LINE_STRIP );
@@ -928,18 +928,18 @@ void MOAIDraw::DrawBezierCurve ( const ZLCubicBezier2D& bezier ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawElements ( MOAIGfxBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat, u32 count ) {
 	
-//	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 //	
-//	MOAIGfxDevice::Get ().UnbindBufferedDrawing ();
+//	MOAIGfxMgr::Get ().UnbindBufferedDrawing ();
 //	
 //	vtxBuffer->Bind ();
 //	vtxFormat->Bind ( 0 );
 //	
-//	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
+//	gfxMgr.SetVertexMtxMode ( MOAIGfxMgr::VTX_STAGE_MODEL, MOAIGfxMgr::VTX_STAGE_MODEL );
 //	
-//	gfxDevice.UpdateShaderGlobals ();
+//	gfxMgr.UpdateShaderGlobals ();
 //		
-//	// TODO: use gfxDevice to cache buffers
+//	// TODO: use gfxMgr to cache buffers
 //
 //	zglDrawArrays ( ZGL_PRIM_TRIANGLES, 0, count );
 //	vtxBuffer->Unbind ();
@@ -958,7 +958,7 @@ void MOAIDraw::DrawEllipseFill ( const ZLRect& rect, u32 steps ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawEllipseFill ( float x, float y, float xRad, float yRad, u32 steps ) {
 
-	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxVertexCache = MOAIGfxMgr::Get ();
 
 	float angle = ( float )TWOPI / ( float )steps;
 	float angleStep = ( float )PI;
@@ -988,7 +988,7 @@ void MOAIDraw::DrawEllipseOutline ( const ZLRect& rect, u32 steps ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawEllipseOutline ( float x, float y, float xRad, float yRad, u32 steps ) {
 
-	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxVertexCache = MOAIGfxMgr::Get ();
 
 	float step = ( float )TWOPI / ( float )steps;
 	float angle = ( float )PI;
@@ -1009,7 +1009,7 @@ void MOAIDraw::DrawEllipseOutline ( float x, float y, float xRad, float yRad, u3
 //----------------------------------------------------------------//
 void MOAIDraw::DrawEllipseSpokes ( float x, float y, float xRad, float yRad, u32 steps ) {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	float step = ( float )TWOPI / ( float )steps;
 	float angle = ( float )PI;
@@ -1074,7 +1074,7 @@ void MOAIDraw::DrawLine ( const ZLVec3D& v0, const ZLVec3D& v1 ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawLine ( float x0, float y0, float z0, float x1, float y1, float z1 ) {
 	
-	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxVertexCache = MOAIGfxMgr::Get ();
 
 	gfxVertexCache.SetPrimType ( ZGL_PRIM_LINE_STRIP );
 
@@ -1092,7 +1092,7 @@ void MOAIDraw::DrawLine ( float x0, float y0, float z0, float x1, float y1, floa
 //----------------------------------------------------------------//
 void MOAIDraw::DrawLuaParams ( lua_State* L, u32 primType ) {
 
-	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxVertexCache = MOAIGfxMgr::Get ();
 	MOAILuaState state ( L );
 
 	u32 total = state.GetTop () >> 1;
@@ -1117,7 +1117,7 @@ void MOAIDraw::DrawLuaParams ( lua_State* L, u32 primType ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawLuaArray ( lua_State* L, u32 primType ) {
 
-	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxVertexCache = MOAIGfxMgr::Get ();
 	MOAILuaState state ( L );
 
 	float x = 0.0f;
@@ -1153,7 +1153,7 @@ void MOAIDraw::DrawPoint ( const ZLVec2D& loc ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawPoint ( float x, float y ) {
 
-	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxVertexCache = MOAIGfxMgr::Get ();
 
 	gfxVertexCache.SetPrimType ( ZGL_PRIM_POINTS );
 
@@ -1166,7 +1166,7 @@ void MOAIDraw::DrawPoint ( float x, float y ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawPolyOutline ( const ZLPolygon2D& poly ) {
 
-	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxVertexCache = MOAIGfxMgr::Get ();
 
 	gfxVertexCache.SetPrimType ( ZGL_PRIM_LINE_LOOP );
 	
@@ -1196,7 +1196,7 @@ void MOAIDraw::DrawRay ( float x, float y, float dx, float dy ) {
 	ZLVec2D loc ( x, y );
 	ZLVec2D vec ( dx, dy );
 	
-	ZLMatrix4x4 mtx = MOAIGfxDevice::Get ().GetMtx ( MOAIGfxDevice::VIEW_PROJ_MTX );
+	ZLMatrix4x4 mtx = MOAIGfxMgr::Get ().GetMtx ( MOAIGfxMgr::VIEW_PROJ_MTX );
 	
 	ZLMatrix4x4 invMtx;
 	invMtx.Inverse ( mtx );
@@ -1215,7 +1215,7 @@ void MOAIDraw::DrawRay ( float x, float y, float dx, float dy ) {
 		invMtx.Transform ( p0 );
 		invMtx.Transform ( p1 );
 		
-		MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
+		MOAIGfxMgr& gfxVertexCache = MOAIGfxMgr::Get ();
 		
 		gfxVertexCache.BeginPrim ( ZGL_PRIM_LINES );
 		
@@ -1265,7 +1265,7 @@ void MOAIDraw::DrawRectFill ( ZLRect rect, bool asTriStrip ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawRectFill ( float left, float top, float right, float bottom, bool asTriStrip ) {
 	
-	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxVertexCache = MOAIGfxMgr::Get ();
 	
 	if ( asTriStrip ) {
 
@@ -1326,7 +1326,7 @@ void MOAIDraw::DrawRectOutline ( const ZLRect& rect ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawRectOutline ( float left, float top, float right, float bottom ) {
 	
-	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxVertexCache = MOAIGfxMgr::Get ();
 	
 	gfxVertexCache.BeginPrim ( ZGL_PRIM_LINE_LOOP );
 	
@@ -1348,12 +1348,12 @@ void MOAIDraw::DrawRectOutline ( float left, float top, float right, float botto
 //----------------------------------------------------------------//
 void MOAIDraw::DrawTexture ( float left, float top, float right, float bottom, MOAITexture* texture ) {
 	
-	MOAIGfxDevice& gfxStateCache = MOAIGfxDevice::Get ();
-	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxStateCache = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxVertexCache = MOAIGfxMgr::Get ();
 	
 	if ( texture ) {
 
-//		gfxDevice.SetBlendMode ( ZGL_BLEND_FACTOR_ONE, ZGL_BLEND_FACTOR_ZERO );
+//		gfxMgr.SetBlendMode ( ZGL_BLEND_FACTOR_ONE, ZGL_BLEND_FACTOR_ZERO );
 		if ( !gfxStateCache.BindTexture ( texture )) return;
 		if ( !gfxStateCache.BindShader ( MOAIShaderMgr::DECK2D_SHADER )) return;
 
@@ -1367,7 +1367,7 @@ void MOAIDraw::DrawTexture ( float left, float top, float right, float bottom, M
 		quad.SetUVs ( 0, 0, 1, 1 );		
 		quad.Draw ();
 		
-//		gfxDevice.SetBlendMode ();
+//		gfxMgr.SetBlendMode ();
 		gfxVertexCache.SetPenColor ( orgColor );
 		
 		MOAIDraw::Bind ();
@@ -1377,7 +1377,7 @@ void MOAIDraw::DrawTexture ( float left, float top, float right, float bottom, M
 //----------------------------------------------------------------//
 void MOAIDraw::DrawVertexArray ( const ZLVec3D* verts, u32 count, u32 color, u32 primType ) {
 
-	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxVertexCache = MOAIGfxMgr::Get ();
 
 	gfxVertexCache.SetPrimType ( primType );
 	gfxVertexCache.SetPenColor ( color );
@@ -1396,7 +1396,7 @@ void MOAIDraw::DrawVertexArray ( const ZLVec3D* verts, u32 count, u32 color, u32
 //----------------------------------------------------------------//
 void MOAIDraw::DrawVertexArray2D ( const float* verts, u32 count, u32 color, u32 primType ) {
 
-	MOAIGfxDevice& gfxVertexCache = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxVertexCache = MOAIGfxMgr::Get ();
 
 	gfxVertexCache.SetPrimType ( primType );
 	gfxVertexCache.SetPenColor ( color );

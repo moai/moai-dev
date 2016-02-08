@@ -27,7 +27,7 @@ class MOAISingleTexture :
 	public MOAIGfxResource {
 protected:
 
-	friend class MOAIGfxDevice;
+	friend class MOAIGfxMgr;
 	friend class MOAIGfxStateCache;
 	friend class MOAIImageFormat;
 

@@ -35,7 +35,7 @@ private:
 	
 public:
 	
-	friend class MOAIGfxDevice;
+	friend class MOAIGfxMgr;
 	friend class MOAIGfxResource;
 	friend class MOAIRenderMgr;
 	

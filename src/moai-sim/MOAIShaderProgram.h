@@ -58,7 +58,7 @@ class MOAIShaderProgram :
 protected:
 
 	friend class MOAIShader;
-	friend class MOAIGfxDevice;
+	friend class MOAIGfxMgr;
 
 	enum {
 		GFX_EVENT_UPDATED_UNIFORMS = GFX_EVENT_TOTAL,

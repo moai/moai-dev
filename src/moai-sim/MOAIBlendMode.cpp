@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIBlendMode.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 
 //================================================================//
 // MOAIBlendMode
@@ -12,7 +12,7 @@
 //----------------------------------------------------------------//
 //void MOAIBlendMode::Bind () {
 //	
-//	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+//	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 //	
 //	gfx.Enable ( ZGL_PIPELINE_BLEND );
 //	gfx.BlendMode ( this->mEquation );

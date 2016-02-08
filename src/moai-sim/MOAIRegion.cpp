@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIDraw.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAIVectorUtil.h>
@@ -519,7 +519,7 @@ void MOAIRegion::DrawDebug () const {
 	
 	static u32 POLY_CORRUPT_COLOR					= ZLColor::PackRGBA ( 1.0f, 0.0f, 0.0f, 1.0f );
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	MOAIDraw::Bind ();
 
@@ -530,38 +530,38 @@ void MOAIRegion::DrawDebug () const {
 		switch ( poly.GetInfo ()) {
 		
 			case ZLPolygon2D::POLY_UNKNOWN: {
-				gfxDevice.SetPenColor ( POLY_UNKNOWN_COLOR );
-				gfxDevice.SetPenWidth ( 1.0f );
+				gfxMgr.SetPenColor ( POLY_UNKNOWN_COLOR );
+				gfxMgr.SetPenWidth ( 1.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_COMPLEX_BIT: {
-				gfxDevice.SetPenColor ( POLY_COMPLEX_COLOR );
-				gfxDevice.SetPenWidth ( 1.0f );
+				gfxMgr.SetPenColor ( POLY_COMPLEX_COLOR );
+				gfxMgr.SetPenWidth ( 1.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_ANTICLOCKWISE_CONVEX: {
-				gfxDevice.SetPenColor ( POLY_ANTICLOCKWISE_CONVEX_COLOR );
-				gfxDevice.SetPenWidth ( 2.0f );
+				gfxMgr.SetPenColor ( POLY_ANTICLOCKWISE_CONVEX_COLOR );
+				gfxMgr.SetPenWidth ( 2.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_ANTICLOCKWISE_CONCAVE: {
-				gfxDevice.SetPenColor ( POLY_ANTICLOCKWISE_CONCAVE_COLOR );
-				gfxDevice.SetPenWidth ( 2.0f );
+				gfxMgr.SetPenColor ( POLY_ANTICLOCKWISE_CONCAVE_COLOR );
+				gfxMgr.SetPenWidth ( 2.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_CLOCKWISE_CONVEX: {
-				gfxDevice.SetPenColor ( POLY_CLOCKWISE_CONVEX_COLOR );
-				gfxDevice.SetPenWidth ( 1.0f );
+				gfxMgr.SetPenColor ( POLY_CLOCKWISE_CONVEX_COLOR );
+				gfxMgr.SetPenWidth ( 1.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_CLOCKWISE_CONCAVE: {
-				gfxDevice.SetPenColor ( POLY_CLOCKWISE_CONCAVE_COLOR );
-				gfxDevice.SetPenWidth ( 1.0f );
+				gfxMgr.SetPenColor ( POLY_CLOCKWISE_CONCAVE_COLOR );
+				gfxMgr.SetPenWidth ( 1.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_CORRUPT: {
-				gfxDevice.SetPenColor ( POLY_CORRUPT_COLOR );
-				gfxDevice.SetPenWidth ( 1.0f );
+				gfxMgr.SetPenColor ( POLY_CORRUPT_COLOR );
+				gfxMgr.SetPenWidth ( 1.0f );
 				break;
 			}
 		}

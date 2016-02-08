@@ -39,7 +39,7 @@ end
 function onDraw ( index, xOff, yOff, xFlip, yFlip )
 
 	-- draw graph
-	MOAIGfxDevice.setPenColor ( 1, 1, 1, 1 )
+	MOAIGfxMgr.setPenColor ( 1, 1, 1, 1 )
 
 	for i = 1, graph:getNodeCount () do
 		local x, y = graph:getNode ( i )
@@ -54,7 +54,7 @@ function onDraw ( index, xOff, yOff, xFlip, yFlip )
 	end
 
 	-- draw path
-	MOAIGfxDevice.setPenColor ( 1, 0, 0, 1 )
+	MOAIGfxMgr.setPenColor ( 1, 0, 0, 1 )
 
 	local lastX, lastY
 	for i = 1, pathFinder:getPathSize () do

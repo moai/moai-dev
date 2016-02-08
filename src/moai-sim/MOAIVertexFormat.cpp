@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 
@@ -156,7 +156,7 @@ MOAIVertexFormat* MOAIVertexFormat::AffirmVertexFormat ( MOAILuaState& state, in
 //----------------------------------------------------------------//
 void MOAIVertexFormat::Bind ( ZLSharedConstBuffer* buffer, bool copyBuffer ) const {
 
-	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
 	if ( copyBuffer ) {
 		buffer = gfx.CopyBuffer ( buffer );
@@ -694,7 +694,7 @@ void MOAIVertexFormat::Unbind () const {
 	for ( u32 i = 0; i < this->mTotalAttributes; ++i ) {
 		
 		MOAIVertexAttribute& attr = this->mAttributes [ i ];
-		MOAIGfxDevice::GetDrawingAPI ().DisableVertexAttribArray ( attr.mIndex );
+		MOAIGfxMgr::GetDrawingAPI ().DisableVertexAttribArray ( attr.mIndex );
 	}
 }
 

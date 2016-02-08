@@ -7,7 +7,7 @@
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIFont.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAINodeMgr.h>
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIShaderMgr.h>
@@ -232,16 +232,16 @@ void MOAITextLayout::Draw ( u32 reveal, MOAIShader* defaultShader, bool useSprit
 	
 	if ( reveal ) {
 		
-		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-		MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+		MOAIQuadBrush::BindVertexFormat ( gfxMgr );
 
-		ZLColorVec baseColor = gfxDevice.GetPenColor ();
+		ZLColorVec baseColor = gfxMgr.GetPenColor ();
 		ZLColorVec blendColor;
 		u32 rgba0 = 0xffffffff;
 		u32 rgba1 = 0xffffffff;
 		
 		if ( !useSpriteShaders ) {
-			if ( !gfxDevice.BindShader ( defaultShader )) return;
+			if ( !gfxMgr.BindShader ( defaultShader )) return;
 		}
 
 		MOAIShader* currentShader = 0;
@@ -258,14 +258,14 @@ void MOAITextLayout::Draw ( u32 reveal, MOAIShader* defaultShader, bool useSprit
 				
 				blendColor.SetRGBA ( rgba0 );
 				blendColor.Modulate ( baseColor );
-				gfxDevice.SetPenColor ( blendColor );
+				gfxMgr.SetPenColor ( blendColor );
 			}
 			
 			if ( useSpriteShaders ) {
 			
 				MOAIShader* spriteShader = sprite.mShader ? sprite.mShader : defaultShader;
 				if ( spriteShader != currentShader ) {
-					if ( !gfxDevice.BindShader ( spriteShader )) continue;
+					if ( !gfxMgr.BindShader ( spriteShader )) continue;
 					currentShader = spriteShader;
 				}
 			}

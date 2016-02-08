@@ -5,7 +5,7 @@
 
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIFrameBufferTexture.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIMultiTexture.h>
@@ -24,10 +24,10 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIGfxDevice::_enablePipelineLogging ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAIGfxDevice, "" )
+int MOAIGfxMgr::_enablePipelineLogging ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIGfxMgr, "" )
 
-	MOAIGfxDevice::Get ().EnablePipelineLogging ( state.GetValue < bool >( 1, false ));
+	MOAIGfxMgr::Get ().EnablePipelineLogging ( state.GetValue < bool >( 1, false ));
 
 	ZLFileSys::DeleteDirectory ( GFX_PIPELINE_LOGGING_FOLDER, true, true );
 	ZLFileSys::AffirmPath ( GFX_PIPELINE_LOGGING_FOLDER );
@@ -41,10 +41,10 @@ int MOAIGfxDevice::_enablePipelineLogging ( lua_State* L ) {
 
 	@out	MOAIFrameBuffer frameBuffer
 */
-int MOAIGfxDevice::_getFrameBuffer ( lua_State* L ) {
+int MOAIGfxMgr::_getFrameBuffer ( lua_State* L ) {
 
 	MOAILuaState state ( L );
-	MOAIGfxDevice::Get ().mDefaultFrameBuffer.PushRef ( state );
+	MOAIGfxMgr::Get ().mDefaultFrameBuffer.PushRef ( state );
 
 	return 1;
 }
@@ -55,10 +55,10 @@ int MOAIGfxDevice::_getFrameBuffer ( lua_State* L ) {
  
 	@out	number maxTextureSize
 */
-int MOAIGfxDevice::_getMaxTextureSize ( lua_State* L ) {
+int MOAIGfxMgr::_getMaxTextureSize ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
-	state.Push ( MOAIGfxDevice::Get ().mMaxTextureSize );
+	state.Push ( MOAIGfxMgr::Get ().mMaxTextureSize );
 	
 	return 1;
 }
@@ -69,9 +69,9 @@ int MOAIGfxDevice::_getMaxTextureSize ( lua_State* L ) {
 
 	@out	number maxTextureUnits
 */
-int MOAIGfxDevice::_getMaxTextureUnits ( lua_State* L ) {
+int MOAIGfxMgr::_getMaxTextureUnits ( lua_State* L ) {
 
-	lua_pushnumber ( L, ( double )MOAIGfxDevice::Get ().CountTextureUnits ());
+	lua_pushnumber ( L, ( double )MOAIGfxMgr::Get ().CountTextureUnits ());
 
 	return 1;
 }
@@ -83,11 +83,11 @@ int MOAIGfxDevice::_getMaxTextureUnits ( lua_State* L ) {
 	@out	number width
 	@out	number height
 */
-int MOAIGfxDevice::_getViewSize ( lua_State* L  ) {
+int MOAIGfxMgr::_getViewSize ( lua_State* L  ) {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
-	MOAIFrameBuffer* frameBuffer = MOAIGfxDevice::Get ().GetCurrentFrameBuffer ();
+	MOAIFrameBuffer* frameBuffer = MOAIGfxMgr::Get ().GetCurrentFrameBuffer ();
 	
 	lua_pushnumber ( L, frameBuffer->GetBufferWidth ());
 	lua_pushnumber ( L, frameBuffer->GetBufferHeight ());
@@ -103,10 +103,10 @@ int MOAIGfxDevice::_getViewSize ( lua_State* L  ) {
 	@in		MOAITexture texture
 	@out	MOAITexture texture		Texture that was passed in or created.
 */
-int MOAIGfxDevice::_setDefaultTexture ( lua_State* L ) {
+int MOAIGfxMgr::_setDefaultTexture ( lua_State* L ) {
 
 	MOAILuaState state ( L );
-	MOAIGfxDevice& device = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	MOAITexture* texture = state.GetLuaObject < MOAITexture >( 1, false );
 	
@@ -119,7 +119,7 @@ int MOAIGfxDevice::_setDefaultTexture ( lua_State* L ) {
 		}
 	}
 
-	device.mDefaultTexture.Set ( device, texture );
+	gfxMgr.mDefaultTexture.Set ( gfxMgr, texture );
 
 	if ( texture ) {
 		texture->PushLuaUserdata ( state );
@@ -137,7 +137,7 @@ int MOAIGfxDevice::_setDefaultTexture ( lua_State* L ) {
 	@opt	number a	Default value is 1.
 	@out	nil
 */
-int MOAIGfxDevice::_setPenColor ( lua_State* L ) {
+int MOAIGfxMgr::_setPenColor ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 
@@ -146,7 +146,7 @@ int MOAIGfxDevice::_setPenColor ( lua_State* L ) {
 	float b = state.GetValue < float >( 3, 1.0f );
 	float a = state.GetValue < float >( 4, 1.0f );
 
-	MOAIGfxDevice::Get ().SetPenColor ( r, g, b, a );
+	MOAIGfxMgr::Get ().SetPenColor ( r, g, b, a );
 	return 0;
 }
 
@@ -156,21 +156,21 @@ int MOAIGfxDevice::_setPenColor ( lua_State* L ) {
 	@in		number width
 	@out	nil
 */
-int MOAIGfxDevice::_setPenWidth ( lua_State* L ) {
+int MOAIGfxMgr::_setPenWidth ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 
 	float width = state.GetValue < float >( 1, 1.0f );
-	MOAIGfxDevice::Get ().SetPenWidth ( width );
+	MOAIGfxMgr::Get ().SetPenWidth ( width );
 	return 0;
 }
 
 //================================================================//
-// MOAIGfxDevice
+// MOAIGfxMgr
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::ClearErrors () {
+void MOAIGfxMgr::ClearErrors () {
 
 	#ifndef MOAI_OS_NACL
 		if ( this->mHasContext ) {
@@ -180,9 +180,9 @@ void MOAIGfxDevice::ClearErrors () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::ClearSurface ( u32 clearFlags ) {
+void MOAIGfxMgr::ClearSurface ( u32 clearFlags ) {
 
-	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
 	if ( clearFlags ) {
 		if (( clearFlags & ZGL_CLEAR_DEPTH_BUFFER_BIT ) && !this->GetDepthMask ()) {
@@ -197,7 +197,7 @@ void MOAIGfxDevice::ClearSurface ( u32 clearFlags ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::DetectContext () {
+void MOAIGfxMgr::DetectContext () {
 
 	this->mHasContext = true;
 	
@@ -223,7 +223,7 @@ void MOAIGfxDevice::DetectContext () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::DetectFramebuffer () {
+void MOAIGfxMgr::DetectFramebuffer () {
 	
 	ZLGfxDevice::Begin ();
 	
@@ -233,14 +233,14 @@ void MOAIGfxDevice::DetectFramebuffer () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxDevice::IsOpaque () const {
+bool MOAIGfxMgr::IsOpaque () const {
 	
 	assert ( this->mDefaultFrameBuffer );
 	return this->mDefaultFrameBuffer->IsOpaque ();
 }
 
 //----------------------------------------------------------------//
-u32 MOAIGfxDevice::LogErrors () {
+u32 MOAIGfxMgr::LogErrors () {
 
 	u32 count = 0;
 	#ifndef MOAI_OS_NACL
@@ -254,7 +254,7 @@ u32 MOAIGfxDevice::LogErrors () {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxDevice::MOAIGfxDevice () :
+MOAIGfxMgr::MOAIGfxMgr () :
 	mHasContext ( false ),
 	mIsFramebufferSupported ( 0 ),
 	#if defined ( MOAI_OS_NACL ) || defined ( MOAI_OS_IPHONE ) || defined ( MOAI_OS_ANDROID ) || defined ( EMSCRIPTEN )
@@ -277,14 +277,14 @@ MOAIGfxDevice::MOAIGfxDevice () :
 }
 
 //----------------------------------------------------------------//
-MOAIGfxDevice::~MOAIGfxDevice () {
+MOAIGfxMgr::~MOAIGfxMgr () {
 
 	this->mDefaultFrameBuffer.Set ( *this, 0 );
 	this->mDefaultTexture.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::OnGlobalsFinalize () {
+void MOAIGfxMgr::OnGlobalsFinalize () {
 
 	this->mDefaultFrameBuffer.Set ( *this, 0 );
 	this->mDefaultTexture.Set ( *this, 0 );
@@ -293,7 +293,7 @@ void MOAIGfxDevice::OnGlobalsFinalize () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIGfxMgr::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIGfxStateCache::RegisterLuaClass ( state );
 
@@ -305,12 +305,12 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "enablePipelineLogging",		_enablePipelineLogging },
 		{ "getFrameBuffer",				_getFrameBuffer },
-		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAIGfxDevice > },
+		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAIGfxMgr > },
 		{ "getMaxTextureSize",			_getMaxTextureSize },
 		{ "getMaxTextureUnits",			_getMaxTextureUnits },
 		{ "getViewSize",				_getViewSize },
 		{ "setDefaultTexture",			_setDefaultTexture },
-		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIGfxDevice > },
+		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIGfxMgr > },
 		{ "setPenColor",				_setPenColor },
 		{ "setPenWidth",				_setPenWidth },
 		{ NULL, NULL }
@@ -320,7 +320,7 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::ReportTextureAlloc ( cc8* name, size_t size ) {
+void MOAIGfxMgr::ReportTextureAlloc ( cc8* name, size_t size ) {
 
 	this->mTextureMemoryUsage += size;
 	float mb = ( float )this->mTextureMemoryUsage / 1024.0f / 1024.0f;
@@ -328,7 +328,7 @@ void MOAIGfxDevice::ReportTextureAlloc ( cc8* name, size_t size ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::ReportTextureFree ( cc8* name, size_t size ) {
+void MOAIGfxMgr::ReportTextureFree ( cc8* name, size_t size ) {
 
 	this->mTextureMemoryUsage -= size;
 	float mb = ( float )this->mTextureMemoryUsage / 1024.0f / 1024.0f;
@@ -336,18 +336,18 @@ void MOAIGfxDevice::ReportTextureFree ( cc8* name, size_t size ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::ResetDrawCount () {
+void MOAIGfxMgr::ResetDrawCount () {
 	//this->mDrawCount = 0;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetBufferScale ( float scale ) {
+void MOAIGfxMgr::SetBufferScale ( float scale ) {
 
 	this->mDefaultFrameBuffer->SetBufferScale ( scale );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetBufferSize ( u32 width, u32 height ) {
+void MOAIGfxMgr::SetBufferSize ( u32 width, u32 height ) {
 
 	this->mDefaultFrameBuffer->SetBufferSize ( width, height );
 }

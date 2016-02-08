@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxPipelineMgr.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIVertexArray.h>
@@ -362,11 +362,11 @@ void MOAIGfxPipelineMgr::PublishAndReset ( u32 pipelineID ) {
 void MOAIGfxPipelineMgr::ResetDrawingAPIs () {
 
 	ZLGfx& loadingAPI = this->SelectDrawingAPI ( LOADING_PIPELINE );
-	MOAIGfxDevice::Get ().ResetState ();
+	MOAIGfxMgr::Get ().ResetState ();
 	
 	ZLGfx& drawingAPI = this->SelectDrawingAPI ( DRAWING_PIPELINE );
 	if ( &loadingAPI != &drawingAPI ) {
-		MOAIGfxDevice::Get ().ResetState ();
+		MOAIGfxMgr::Get ().ResetState ();
 	}
 }
 

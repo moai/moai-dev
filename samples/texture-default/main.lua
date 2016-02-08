@@ -5,7 +5,7 @@
 ----------------------------------------------------------------
 
 MOAISim.openWindow ( 'test', 320, 480 )
-MOAIGfxDevice.setDefaultTexture ( 'numbers.png' )
+MOAIGfxMgr.setDefaultTexture ( 'numbers.png' )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )

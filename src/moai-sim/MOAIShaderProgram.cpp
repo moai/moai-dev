@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIEaseDriver.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIShaderProgram.h>
 #include <moai-sim/MOAITransformBase.h>
@@ -223,9 +223,9 @@ void MOAIShaderProgram::ApplyDefaults () {
 //----------------------------------------------------------------//
 void MOAIShaderProgram::ApplyGlobals () {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	const ZLRect& viewRect = gfxDevice.GetViewRect ();
+	const ZLRect& viewRect = gfxMgr.GetViewRect ();
 
 	// NOTE: matrices are submitted transposed; it is up to the shader to transform vertices correctly
 	// vert * matrix implicitely transposes the matrix; martix * vert uses the matrix as submitted
@@ -242,12 +242,12 @@ void MOAIShaderProgram::ApplyGlobals () {
 		
 			case GLOBAL_PEN_COLOR: {
 			
-				uniform.mFlags |= uniform.SetValue ( gfxDevice.mFinalColor, true );
+				uniform.mFlags |= uniform.SetValue ( gfxMgr.mFinalColor, true );
 				break;
 			}
 			case GLOBAL_VIEW_PROJ: {
 				
-				uniform.mFlags |= uniform.SetValue ( gfxDevice.GetMtx ( MOAIGfxDevice::VIEW_PROJ_MTX ), true );
+				uniform.mFlags |= uniform.SetValue ( gfxMgr.GetMtx ( MOAIGfxMgr::VIEW_PROJ_MTX ), true );
 				break;
 			}
 			case GLOBAL_VIEW_WIDTH: {
@@ -272,27 +272,27 @@ void MOAIShaderProgram::ApplyGlobals () {
 			}
 			case GLOBAL_WORLD: {
 			
-				uniform.mFlags |= uniform.SetValue ( gfxDevice.GetMtx ( MOAIGfxDevice::WORLD_MTX ), true );
+				uniform.mFlags |= uniform.SetValue ( gfxMgr.GetMtx ( MOAIGfxMgr::WORLD_MTX ), true );
 				break;
 			}
 			case GLOBAL_WORLD_INVERSE: {
 				
-				uniform.mFlags |= uniform.SetValue ( gfxDevice.GetMtx ( MOAIGfxDevice::INVERSE_WORLD_MTX ), true );
+				uniform.mFlags |= uniform.SetValue ( gfxMgr.GetMtx ( MOAIGfxMgr::INVERSE_WORLD_MTX ), true );
 				break;
 			}
 			case GLOBAL_WORLD_VIEW: {
 				
-				uniform.mFlags |= uniform.SetValue ( gfxDevice.GetMtx ( MOAIGfxDevice::WORLD_VIEW_MTX ), true );
+				uniform.mFlags |= uniform.SetValue ( gfxMgr.GetMtx ( MOAIGfxMgr::WORLD_VIEW_MTX ), true );
 				break;
 			}
 			case GLOBAL_WORLD_VIEW_INVERSE: {
 				
-				uniform.mFlags |= uniform.SetValue ( gfxDevice.GetMtx ( MOAIGfxDevice::INVERSE_WORLD_VIEW_MTX ), true );
+				uniform.mFlags |= uniform.SetValue ( gfxMgr.GetMtx ( MOAIGfxMgr::INVERSE_WORLD_VIEW_MTX ), true );
 				break;
 			}
 			case GLOBAL_WORLD_VIEW_PROJ: {
 				
-				uniform.mFlags |= uniform.SetValue ( gfxDevice.GetMtx ( MOAIGfxDevice::WORLD_VIEW_PROJ_MTX ), true );
+				uniform.mFlags |= uniform.SetValue ( gfxMgr.GetMtx ( MOAIGfxMgr::WORLD_VIEW_PROJ_MTX ), true );
 				break;
 			}
 		}
@@ -302,7 +302,7 @@ void MOAIShaderProgram::ApplyGlobals () {
 //----------------------------------------------------------------//
 void MOAIShaderProgram::BindUniforms () {
 	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
 	bool flushed = false;
 	
@@ -311,7 +311,7 @@ void MOAIShaderProgram::BindUniforms () {
 		
 		if ( uniform.IsValid () && ( uniform.mFlags & MOAIShaderUniform::UNIFORM_FLAG_DIRTY )) {
 			if ( !flushed ) {
-				gfxDevice.FlushBufferedPrims ();
+				gfxMgr.FlushBufferedPrims ();
 				flushed = true;
 			}
 			uniform.Bind ();
@@ -321,7 +321,7 @@ void MOAIShaderProgram::BindUniforms () {
 	// in multi-threaded gfx mode, drawing frames may get dropped. for this reason, we
 	// only clear the dirty flag once we're sure a draw frame has been completed.
 	if ( flushed ) {
-		ZLGfx& gfx = gfxDevice.GetDrawingAPI ();
+		ZLGfx& gfx = gfxMgr.GetDrawingAPI ();
 		gfx.Event ( this, GFX_EVENT_UPDATED_UNIFORMS, 0 );
 	}
 }
@@ -350,15 +350,15 @@ void MOAIShaderProgram::ClearUniform ( u32 idx ) {
 //----------------------------------------------------------------//
 ZLGfxHandle* MOAIShaderProgram::CompileShader ( u32 type, cc8* source ) {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	ZLGfx& gfx = gfxDevice.GetDrawingAPI ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	ZLGfx& gfx = gfxMgr.GetDrawingAPI ();
 
 	ZLGfxHandle* shader = gfx.CreateShader ( type );
 
 	STLString buffer;
 
-	buffer.append ( gfxDevice.IsOpenGLES () ? OPENGL_ES_PREPROC : OPENGL_PREPROC );
-	if (( type == ZGL_SHADER_TYPE_FRAGMENT ) && gfxDevice.IsOpenGLES ()) {
+	buffer.append ( gfxMgr.IsOpenGLES () ? OPENGL_ES_PREPROC : OPENGL_PREPROC );
+	if (( type == ZGL_SHADER_TYPE_FRAGMENT ) && gfxMgr.IsOpenGLES ()) {
 		buffer.append ( WEBGL_PREPROC );
 	}
 
@@ -460,7 +460,7 @@ void MOAIShaderProgram::OnGfxEvent ( u32 event, void* userdata ) {
 void MOAIShaderProgram::OnGPUBind () {
 
 	// use shader program.
-	MOAIGfxDevice::GetDrawingAPI ().UseProgram ( this->mProgram );
+	MOAIGfxMgr::GetDrawingAPI ().UseProgram ( this->mProgram );
 
 	// reload the uniform values
 	//for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
@@ -471,7 +471,7 @@ void MOAIShaderProgram::OnGPUBind () {
 //----------------------------------------------------------------//
 bool MOAIShaderProgram::OnGPUCreate () {
 
-	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
 	this->mVertexShader = this->CompileShader ( ZGL_SHADER_TYPE_VERTEX, this->mVertexShaderSource );
 	this->mFragmentShader = this->CompileShader ( ZGL_SHADER_TYPE_FRAGMENT, this->mFragmentShaderSource );
@@ -540,7 +540,7 @@ void MOAIShaderProgram::OnGPULost () {
 //----------------------------------------------------------------//
 void MOAIShaderProgram::OnGPUUnbind () {
 
-	MOAIGfxDevice::GetDrawingAPI ().UseProgram ( 0 );
+	MOAIGfxMgr::GetDrawingAPI ().UseProgram ( 0 );
 }
 
 //----------------------------------------------------------------//

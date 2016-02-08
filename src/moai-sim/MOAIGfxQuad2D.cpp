@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGrid.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxQuad2D.h>
 #include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAIProp.h>
@@ -188,11 +188,11 @@ void MOAIGfxQuad2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D o
 	
 	if ( !materials.LoadGfxState ( this, idx, MOAIShaderMgr::DECK2D_SHADER )) return;
 	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIQuadBrush::BindVertexFormat ( gfxMgr );
 	
-	gfxDevice.SetVertexTransform ( gfxDevice.GetMtx ( MOAIGfxDevice::WORLD_VIEW_PROJ_MTX ));
-	gfxDevice.SetUVTransform ( gfxDevice.GetMtx ( MOAIGfxDevice::UV_MTX ));
+	gfxMgr.SetVertexTransform ( gfxMgr.GetMtx ( MOAIGfxMgr::WORLD_VIEW_PROJ_MTX ));
+	gfxMgr.SetUVTransform ( gfxMgr.GetMtx ( MOAIGfxMgr::UV_MTX ));
 	
 	this->mQuad.Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY );
 }

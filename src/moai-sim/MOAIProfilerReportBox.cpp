@@ -4,7 +4,7 @@
 #include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAIRenderMgr.h>
 #include <moai-sim/MOAIDraw.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIProfilerReportBox.h>
 
@@ -346,7 +346,7 @@ void MOAIProfilerReportBox::Draw ( int subPrimID, float lod ) {
 	
 //	if ( !mFont ) return;
 //	
-//	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 //	
 //	// Get memory stats
 //	u32 availableMainMem, usedMainMem;
@@ -356,7 +356,7 @@ void MOAIProfilerReportBox::Draw ( int subPrimID, float lod ) {
 //	float simRate = ( float )MOAISim::Get ().GetSimDuration () * 1000.0f;
 //	float renderRate = ( float )MOAIRenderMgr::Get ().GetRenderDuration () * 1000.0f;
 //	size_t luaMem = MOAILuaRuntime::Get ().GetMemoryUsage ();
-//	size_t texMem = gfxDevice.GetTextureMemoryUsage ();
+//	size_t texMem = gfxMgr.GetTextureMemoryUsage ();
 //
 //	// used for drawing the memory bar
 //	float memBarWidth = mMemoryXRange.mY - mMemoryXRange.mX;
@@ -365,16 +365,16 @@ void MOAIProfilerReportBox::Draw ( int subPrimID, float lod ) {
 //	const float cellOffsetX = 2;
 //
 //	// Get current state
-//	const ZLMatrix4x4& orgUvMatrix = gfxDevice.GetUVTransform ();
-//	const ZLMatrix4x4& orgWorldTransform = gfxDevice.GetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
-//	const ZLMatrix4x4& orgViewTransform = gfxDevice.GetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM );
-//	const ZLMatrix4x4& orgProjTransform = gfxDevice.GetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM );
+//	const ZLMatrix4x4& orgUvMatrix = gfxMgr.GetUVTransform ();
+//	const ZLMatrix4x4& orgWorldTransform = gfxMgr.GetVertexTransform ( MOAIGfxMgr::VTX_WORLD_TRANSFORM );
+//	const ZLMatrix4x4& orgViewTransform = gfxMgr.GetVertexTransform ( MOAIGfxMgr::VTX_VIEW_TRANSFORM );
+//	const ZLMatrix4x4& orgProjTransform = gfxMgr.GetVertexTransform ( MOAIGfxMgr::VTX_PROJ_TRANSFORM );
 //
-//	MOAIBlendMode origBlendMode = gfxDevice.GetBlendMode ();
+//	MOAIBlendMode origBlendMode = gfxMgr.GetBlendMode ();
 //
 //	// Set state
-//	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_WORLD, MOAIGfxDevice::VTX_STAGE_PROJ );
-//	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM );
+//	gfxMgr.SetVertexMtxMode ( MOAIGfxMgr::VTX_STAGE_WORLD, MOAIGfxMgr::VTX_STAGE_PROJ );
+//	gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_VIEW_TRANSFORM );
 //
 //	float rotation = 0;
 //	if ( mOrientation == 1 ) {
@@ -389,8 +389,8 @@ void MOAIProfilerReportBox::Draw ( int subPrimID, float lod ) {
 //	// Calculate projection matrix
 //	ZLMatrix4x4 proj;
 //
-//	u32 windowWidth = gfxDevice.GetWidth ();
-//	u32 windowheight = gfxDevice.GetHeight ();
+//	u32 windowWidth = gfxMgr.GetWidth ();
+//	u32 windowheight = gfxMgr.GetHeight ();
 //
 //	proj.Ortho ( 2.0f / (float)windowWidth, -2.0f / (float)windowheight, 0, 1 );
 //
@@ -405,7 +405,7 @@ void MOAIProfilerReportBox::Draw ( int subPrimID, float lod ) {
 //		proj.Multiply ( orgProjTransform, rot );
 //	}
 //		
-//	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, proj );
+//	gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_PROJ_TRANSFORM, proj );
 //
 //	MOAIDraw::Bind ();
 //
@@ -456,17 +456,17 @@ void MOAIProfilerReportBox::Draw ( int subPrimID, float lod ) {
 //	// Prepare immediate mode drawing
 //	MOAIDraw::Bind ();
 //
-//	gfxDevice.SetUVTransform ();
-//	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+//	gfxMgr.SetUVTransform ();
+//	gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_WORLD_TRANSFORM );
 //
-//	gfxDevice.SetBlendMode ( ZGL_BLEND_FACTOR_SRC_ALPHA, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
+//	gfxMgr.SetBlendMode ( ZGL_BLEND_FACTOR_SRC_ALPHA, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
 //
 //	// Draw the table background	
-//	gfxDevice.SetPenColor ( mBackgroundColor );
+//	gfxMgr.SetPenColor ( mBackgroundColor );
 //	MOAIDraw::DrawRectFill ( this->mFrame.mXMin, this->mFrame.mYMin, this->mFrame.mXMax, this->mFrame.mYMax, false );
 //
 //	// Draw the summary row
-//	gfxDevice.SetPenColor ( mRowColor );
+//	gfxMgr.SetPenColor ( mRowColor );
 //
 //	MOAIDraw::DrawRectFill ( mOverviewXRange.mX, mSummaryYRange.mX, mOverviewXRange.mY, mSummaryYRange.mY, false );
 //
@@ -488,14 +488,14 @@ void MOAIProfilerReportBox::Draw ( int subPrimID, float lod ) {
 //		}
 //	}
 //
-//	gfxDevice.SetPenColor ( memColorCur );
+//	gfxMgr.SetPenColor ( memColorCur );
 //	MOAIDraw::DrawRectFill ( mMemoryXRange.mX, mSummaryYRange.mX, mMemoryXRange.mX + memUsedWidth, mSummaryYRange.mY, false );
 //	
-//	gfxDevice.SetPenColor ( mRowColor );
+//	gfxMgr.SetPenColor ( mRowColor );
 //	MOAIDraw::DrawRectFill (mMemoryXRange.mX + memUsedWidth, mSummaryYRange.mX, mMemoryXRange.mY, mSummaryYRange.mY, false );
 //
 //	// Draw the rows
-//	gfxDevice.SetPenColor ( mRowColor );
+//	gfxMgr.SetPenColor ( mRowColor );
 //
 //	mCursorY = mHeaderYRange.mX;	
 //	for ( u32 i = 0; i < COLUMN_COUNT; i++ ) {
@@ -511,7 +511,7 @@ void MOAIProfilerReportBox::Draw ( int subPrimID, float lod ) {
 //	}
 //
 //	// Draw the text of the profile report
-//	gfxDevice.SetPenColor ( mTextColor );
+//	gfxMgr.SetPenColor ( mTextColor );
 //	
 //	// Draw general frame information
 //	MOAIDraw::BeginDrawString ( 1, *mFont, mFontSize, 0, 0 );
@@ -546,7 +546,7 @@ void MOAIProfilerReportBox::Draw ( int subPrimID, float lod ) {
 //			mOneOverTotalDurationMicroSec = (float) profileReport->GetTotalDurationMicroSec ();
 //			mOneOverTotalDurationMicroSec = mOneOverTotalDurationMicroSec > 0 ? 1.0f / mOneOverTotalDurationMicroSec : 0.0f;
 //			
-//			gfxDevice.SetPenColor ( mTextColor );
+//			gfxMgr.SetPenColor ( mTextColor );
 //
 //			// ToDo: Prefix the name of the report
 //			
@@ -562,7 +562,7 @@ void MOAIProfilerReportBox::Draw ( int subPrimID, float lod ) {
 //			ZLColorVec col;
 //			col.SetRGBA ( mTextColor );
 //			col.mA *= 0.5f;
-//			gfxDevice.SetPenColor ( col.PackRGBA () );
+//			gfxMgr.SetPenColor ( col.PackRGBA () );
 //
 //			mCursorY = cursor;
 //			profileReport->TraverseProfileEntries ( DrawEntryVisuals, this );
@@ -582,21 +582,21 @@ void MOAIProfilerReportBox::Draw ( int subPrimID, float lod ) {
 //	ZLColorVec col;
 //	col.SetRGBA ( mRowColor );
 //	col.mA *= 0.5f;
-//	gfxDevice.SetPenColor ( col );
+//	gfxMgr.SetPenColor ( col );
 //	MOAIDraw::DrawRectFill ( memStatX, memStatY, memStatX + memStatWidth, memStatY + memStatHeight, false );
-//	gfxDevice.SetPenColor ( mTextColor );
+//	gfxMgr.SetPenColor ( mTextColor );
 //	sprintf ( mTemp, "Mem - lua:%ukb usr:%ukb used:%umb avail:%umb", (u32) (luaMem / 1024), (mUserMemory / 1024), usedMainMem, availableMainMem );
 //	MOAIDraw::DrawString ( mTemp, memStatX, memStatY, 1, *mFont, mFontSize, 0, 0, 0, 0 );
 //
 //	// Restore render state
-//	gfxDevice.SetUVTransform ( orgUvMatrix );
-//	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, orgWorldTransform );
-//	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM, orgViewTransform );
-//	gfxDevice.SetBlendMode ( origBlendMode );
+//	gfxMgr.SetUVTransform ( orgUvMatrix );
+//	gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_WORLD_TRANSFORM, orgWorldTransform );
+//	gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_VIEW_TRANSFORM, orgViewTransform );
+//	gfxMgr.SetBlendMode ( origBlendMode );
 //	
 //	if ( rotation != 0 ) {
 //
-//		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, orgProjTransform );
+//		gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_PROJ_TRANSFORM, orgProjTransform );
 //	}
 }
 
@@ -760,12 +760,12 @@ bool MOAIProfilerReportBox::_DrawEntryVisuals ( MOAIProfilerEntry* entry ) {
 //		}
 //		
 //		// ...and draw it
-//		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-//		const ZLColorVec& penColor = gfxDevice.GetPenColor ();
+//		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+//		const ZLColorVec& penColor = gfxMgr.GetPenColor ();
 //
 //		MOAIDraw::DrawVertexArray2D ( mSampleVerts, MOAIProfilerEntry::NUM_SAMPLES, 0xff0000ff, ZGL_PRIM_LINE_STRIP );
 //
-//		gfxDevice.SetPenColor ( penColor );
+//		gfxMgr.SetPenColor ( penColor );
 //
 //		// Draw the frame
 //		ZLRect percentageRect;

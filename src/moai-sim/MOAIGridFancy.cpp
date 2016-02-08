@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIGridFancy.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIMaterialBatch.h>
 
 //================================================================//
@@ -332,8 +332,8 @@ void MOAIGridFancy::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, MOAIMater
 	float tileWidth = this->GetTileWidth ();
 	float tileHeight = this->GetTileHeight ();
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	ZLColorVec penColor = gfxDevice.GetPenColor();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	ZLColorVec penColor = gfxMgr.GetPenColor();
 
 	for ( int y = c0.mY; y <= c1.mY; ++y ) {
 		for ( int x = c0.mX; x <= c1.mX; ++x ) {
@@ -348,10 +348,10 @@ void MOAIGridFancy::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, MOAIMater
 			ZLVec2D loc = this->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
 
 			if ( color ) {
-				gfxDevice.SetPenColor ( penColor * this->GetPalette ( color ).ScaleAlpha ( alpha ) );
+				gfxMgr.SetPenColor ( penColor * this->GetPalette ( color ).ScaleAlpha ( alpha ) );
 			}
 			else {
-				gfxDevice.SetPenColor ( penColor * ZLColorVec ( 1.0, 1.0, 1.0, alpha ) );
+				gfxMgr.SetPenColor ( penColor * ZLColorVec ( 1.0, 1.0, 1.0, alpha ) );
 			}
 			
 			offset.mX	= loc.mX;
@@ -363,7 +363,7 @@ void MOAIGridFancy::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, MOAIMater
 		}
 	}
 	
-	gfxDevice.SetPenColor(penColor);
+	gfxMgr.SetPenColor(penColor);
 }
 
 //----------------------------------------------------------------//

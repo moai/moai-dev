@@ -3,9 +3,9 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGfxBuffer.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAIShader.h>
@@ -26,10 +26,10 @@ void MOAIVertexArrayItem::Bind ( bool useVAOs ) {
 		
 		assert (( useVAOs && this->mBuffer->IsUsingVBOs ()) || ( !useVAOs )); // buffer objects must use VBOs to work with VAOs
 		
-		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
-		gfxDevice.BindVertexBuffer ( this->mBuffer );
-		gfxDevice.BindVertexFormat ( this->mFormat );
+		gfxMgr.BindVertexBuffer ( this->mBuffer );
+		gfxMgr.BindVertexFormat ( this->mFormat );
 	}
 }
 
@@ -53,10 +53,10 @@ void MOAIVertexArrayItem::Unbind () {
 
 	if ( this->mBuffer && this->mFormat ) {
 	
-		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
-		gfxDevice.BindVertexBuffer ();
-		gfxDevice.BindVertexFormat ();
+		gfxMgr.BindVertexBuffer ();
+		gfxMgr.BindVertexFormat ();
 	}
 }
 
@@ -162,7 +162,7 @@ void MOAIVertexArray::OnGPUBind () {
 	if ( this->mUseVAOs && this->mVAOs.Size ()) {
 	
 		ZLGfxHandle* vao = this->mVAOs [ this->mCurrentVAO ];
-		MOAIGfxDevice::GetDrawingAPI ().BindVertexArray ( vao );
+		MOAIGfxMgr::GetDrawingAPI ().BindVertexArray ( vao );
 	}
 	else {
 		this->BindVertexArrayItems ();
@@ -172,7 +172,7 @@ void MOAIVertexArray::OnGPUBind () {
 //----------------------------------------------------------------//
 bool MOAIVertexArray::OnGPUCreate () {
 
-	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
 	this->mUseVAOs = false;
 	
@@ -209,7 +209,7 @@ void MOAIVertexArray::OnGPULost () {
 void MOAIVertexArray::OnGPUUnbind () {
 
 	if ( this->mUseVAOs ) {
-		MOAIGfxDevice::GetDrawingAPI ().BindVertexArray ( 0 );
+		MOAIGfxMgr::GetDrawingAPI ().BindVertexArray ( 0 );
 	}
 	else {
 		this->UnbindVertexArrayItems ();
@@ -226,7 +226,7 @@ bool MOAIVertexArray::OnGPUUpdate () {
 	ZLGfxHandle* vao = this->mVAOs [ this->mCurrentVAO ];
 	
 	if ( vao ) {
-		ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 		gfx.BindVertexArray ( vao );
 		this->BindVertexArrayItems ();
 		gfx.BindVertexArray ( 0 );

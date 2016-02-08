@@ -6,7 +6,7 @@
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIFrameBufferTexture.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAILayer.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIPartitionResultMgr.h>
@@ -754,7 +754,7 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 	if ( !this->mViewport ) return;
 	if ( this->IsClear ()) return;
 	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
 	
 	MOAIViewport& viewport = *this->mViewport;
@@ -767,23 +767,23 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 	ZLMatrix4x4 mtx;
 	mtx.Init ( this->mLocalToWorldMtx );
 	// TODO:
-	//mtx.Append ( gfxDevice.GetWorldToWndMtx ( 1.0f, 1.0f ));
+	//mtx.Append ( gfxMgr.GetWorldToWndMtx ( 1.0f, 1.0f ));
 	mtx.Transform ( viewportRect );
 
-	gfxDevice.SetViewRect ( viewportRect );
-	gfxDevice.SetScissorRect ( viewportRect );
+	gfxMgr.SetViewRect ( viewportRect );
+	gfxMgr.SetScissorRect ( viewportRect );
 	this->ClearSurface ();
 	
-	gfxDevice.SetMtx ( MOAIGfxDevice::WORLD_MTX );
+	gfxMgr.SetMtx ( MOAIGfxMgr::WORLD_MTX );
 	
 	ZLMatrix4x4 view = this->GetViewMtx ();
 	ZLMatrix4x4 proj = this->GetProjectionMtx ();
 	
-	gfxDevice.SetMtx ( MOAIGfxDevice::VIEW_MTX, view );
-	gfxDevice.SetMtx ( MOAIGfxDevice::PROJ_MTX, proj );
+	gfxMgr.SetMtx ( MOAIGfxMgr::VIEW_MTX, view );
+	gfxMgr.SetMtx ( MOAIGfxMgr::PROJ_MTX, proj );
 	
 	// recompute the frustum
-	//gfxDevice.UpdateViewVolume ();
+	//gfxMgr.UpdateViewVolume ();
 	
 	this->RenderTable ( this->mUnderlayTable );
 	
@@ -793,7 +793,7 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 		if ( !interfaceMask ) return;
 		
 		MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
-		const ZLFrustum& viewVolume = gfxDevice.GetViewVolume ();
+		const ZLFrustum& viewVolume = gfxMgr.GetViewVolume ();
 		
 		u32 totalResults = 0;
 		
@@ -821,7 +821,7 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 		buffer.Sort ( this->mSortMode );
 		
 		// set up the ambient color
-		gfxDevice.SetAmbientColor ( this->mColor );
+		gfxMgr.SetAmbientColor ( this->mColor );
 		
 		// figure out the correct LOD factor
 		float lod = this->mLODFactor * this->GetLinkedValue ( MOAILayerAttr::Pack ( ATTR_LOD ), 1.0f );
@@ -831,7 +831,7 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 		if ( this->mShowDebugLines ) {
 			
 			// clear the ambient color and bind vector drawing
-			gfxDevice.SetAmbientColor ( 1.0f, 1.0f, 1.0f, 1.0f );
+			gfxMgr.SetAmbientColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 			MOAIDraw::Get ().Bind ();
 			this->DrawPropsDebug ( buffer, lod );
 		}

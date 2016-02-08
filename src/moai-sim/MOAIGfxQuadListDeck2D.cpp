@@ -370,11 +370,11 @@ void MOAIGfxQuadListDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, Z
 //		idx = idx - 1;
 //		u32 itemIdx = idx % size;
 //
-//		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-//		MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+//		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+//		MOAIQuadBrush::BindVertexFormat ( gfxMgr );
 //		
-//		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
-//		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+//		gfxMgr.SetVertexMtxMode ( MOAIGfxMgr::VTX_STAGE_MODEL, MOAIGfxMgr::VTX_STAGE_PROJ );
+//		gfxMgr.SetUVMtxMode ( MOAIGfxMgr::UV_STAGE_MODEL, MOAIGfxMgr::UV_STAGE_TEXTURE );
 //		
 //		USSprite& sprite = this->mSprites [ itemIdx ];
 //		MOAIQuadBrush glQuad;

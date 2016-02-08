@@ -183,25 +183,25 @@ void MOAIStretchPatch2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVe
 	
 //	if ( !materials.LoadGfxState ( this, idx - 1, MOAIShaderMgr::DECK2D_SHADER )) return;
 //	
-//	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-//	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+//	MOAIQuadBrush::BindVertexFormat ( gfxMgr );
 //	
-//	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
-//	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+//	gfxMgr.SetVertexMtxMode ( MOAIGfxMgr::VTX_STAGE_MODEL, MOAIGfxMgr::VTX_STAGE_PROJ );
+//	gfxMgr.SetUVMtxMode ( MOAIGfxMgr::UV_STAGE_MODEL, MOAIGfxMgr::UV_STAGE_TEXTURE );
 //	
-//	ZLMatrix4x4 transform = gfxDevice.GetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+//	ZLMatrix4x4 transform = gfxMgr.GetVertexTransform ( MOAIGfxMgr::VTX_WORLD_TRANSFORM );
 //	ZLVec3D stretch = transform.GetStretch ();
 //	
 //	ZLMatrix4x4 noStretch;
 //	noStretch.Scale ( 1.0f / stretch.mX, 1.0f / stretch.mY, 1.0f / stretch.mZ );
 //	noStretch.Append ( transform );
 //	
-//	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, noStretch );
+//	gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_WORLD_TRANSFORM, noStretch );
 //	
 //	this->UpdateParams ();
 //	this->DrawStretch ( idx, stretch.mX, stretch.mY );
 //	
-//	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, transform );
+//	gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_WORLD_TRANSFORM, transform );
 }
 
 //----------------------------------------------------------------//

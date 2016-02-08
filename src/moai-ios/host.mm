@@ -6,7 +6,7 @@
 #import "headers.h"
 
 #import <contrib/MOAIOpenUDID.h>
-#import <moai-sim/MOAIGfxDevice.h>
+#import <moai-sim/MOAIGfxMgr.h>
 
 #if AKU_WITH_IFA
 	#import <AdSupport/ASIdentifierManager.h>
@@ -115,6 +115,6 @@ void AKUIosOpenUrl ( NSURL* url, NSString* sourceApplication ) {
 //----------------------------------------------------------------//
 void AKUIosSetFrameBuffer ( GLuint frameBuffer ) {
 
-	MOAIGfxDevice::Get ().GetDefaultFrameBuffer ()->SetGLFrameBufferID ( new ZLGfxHandle ( ZLGfxHandle::FRAMEBUFFER, frameBuffer, true ));
+	MOAIGfxMgr::Get ().GetDefaultFrameBuffer ()->SetGLFrameBufferID ( new ZLGfxHandle ( ZLGfxHandle::FRAMEBUFFER, frameBuffer, true ));
 }
 

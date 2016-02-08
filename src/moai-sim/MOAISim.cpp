@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIDebugLines.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAINodeMgr.h>
 #include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAISim.h>
@@ -124,8 +124,8 @@ int MOAISim::_framesToTime ( lua_State* L ) {
 	
 	float frames = state.GetValue < float >( 1, 0.0f );
 	
-	MOAISim& device = MOAISim::Get ();
-	lua_pushnumber ( state, frames * device.mStep );
+	MOAISim& sim = MOAISim::Get ();
+	lua_pushnumber ( state, frames * sim.mStep );
 	
 	return 1;
 }
@@ -233,7 +233,7 @@ int MOAISim::_getMemoryUsage ( lua_State* L ) {
 	lua_pushnumber ( L, luabytes / divisor  );
 	lua_setfield ( L, -2, "_luagc_count" );
 	
-	count = MOAIGfxDevice::Get ().GetTextureMemoryUsage ();
+	count = MOAIGfxMgr::Get ().GetTextureMemoryUsage ();
 	lua_pushnumber ( L, count / divisor );
 	lua_setfield ( L, -2, "texture" );
 	total += count;
@@ -290,7 +290,7 @@ int MOAISim::_getMemoryUsage ( lua_State* L ) {
 int MOAISim::_getMemoryUsagePlain ( lua_State *L ) {
 	
 	size_t lua = MOAILuaRuntime::Get().GetMemoryUsage ();
-	size_t tex = MOAIGfxDevice::Get ().GetTextureMemoryUsage ();
+	size_t tex = MOAIGfxMgr::Get ().GetTextureMemoryUsage ();
 	
 	lua_pushnumber ( L, lua );
 	lua_pushnumber ( L, tex );
@@ -385,7 +385,7 @@ int MOAISim::_openWindow ( lua_State* L ) {
 
 	OpenWindowFunc openWindow = MOAISim::Get ().GetOpenWindowFunc ();
 	if ( openWindow ) {
-		MOAIGfxDevice::Get ().SetBufferSize ( width, height );
+		MOAIGfxMgr::Get ().SetBufferSize ( width, height );
 		openWindow ( title, width, height );
 	}
 

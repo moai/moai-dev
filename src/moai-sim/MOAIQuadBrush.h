@@ -3,7 +3,7 @@
 #ifndef	MOAIQUADBRUSH_H
 #define	MOAIQUADBRUSH_H
 
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 
 //================================================================//
 // MOAIQuadBrush
@@ -12,11 +12,11 @@ class MOAIQuadBrush {
 private:
 	
 	//----------------------------------------------------------------//
-	static inline void WriteVertex ( MOAIGfxDevice& gfxDevice, const ZLVec2D& vtx, const ZLVec2D& uv ) {
+	static inline void WriteVertex ( MOAIGfxMgr& gfxMgr, const ZLVec2D& vtx, const ZLVec2D& uv ) {
 		
-		gfxDevice.WriteVtx ( vtx );
-		gfxDevice.WriteUV ( uv );
-		gfxDevice.WriteFinalColor4b ();
+		gfxMgr.WriteVtx ( vtx );
+		gfxMgr.WriteUV ( uv );
+		gfxMgr.WriteFinalColor4b ();
 	}
 
 public:
@@ -25,7 +25,7 @@ public:
 	ZLQuad	mUVQuad;
 
 	//----------------------------------------------------------------//
-	static void			BindVertexFormat	( MOAIGfxDevice& gfxDevice );
+	static void			BindVertexFormat	( MOAIGfxMgr& gfxMgr );
 	void				Draw				();
 	void				Draw				( float xOff, float yOff, float zOff );
 	void				Draw				( float xOff, float yOff, float zOff, float xScale, float yScale );

@@ -38,7 +38,7 @@ private:
 
 public:
 	
-	friend class MOAIGfxDevice;
+	friend class MOAIGfxMgr;
 	friend class MOAISingleTexture;
 	
 	DECL_LUA_FACTORY ( MOAIFrameBufferTexture )

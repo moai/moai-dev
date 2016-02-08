@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIFrameBufferTexture.h>
 
@@ -94,7 +94,7 @@ bool MOAIFrameBufferTexture::OnGPUCreate () {
 	this->mBufferWidth = this->mWidth;
 	this->mBufferHeight = this->mHeight;
 	
-	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 	
 	// bail and retry (no error) if GL cannot generate buffer ID
 	this->mGLFrameBufferID = gfx.CreateFramebuffer ();

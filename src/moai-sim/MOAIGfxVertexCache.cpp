@@ -5,7 +5,7 @@
 
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIFrameBufferTexture.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIMultiTexture.h>
@@ -117,8 +117,8 @@ void MOAIGfxVertexCache::FlushBufferedPrims () {
 	
 		this->mIsDrawing = true;
 		
-		ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
-		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 		
 		if ( this->mUseIdxBuffer ) {
 			
@@ -131,11 +131,11 @@ void MOAIGfxVertexCache::FlushBufferedPrims () {
 				
 				//gfxCache.BindVertexFormat ();
 				
-				gfxDevice.BindVertexBuffer ( &this->mVtxBuffer );
-				gfxDevice.BindVertexFormat ( this->mVertexFormat, true );
-				gfxDevice.BindIndexBuffer ( &this->mIdxBuffer );
+				gfxMgr.BindVertexBuffer ( &this->mVtxBuffer );
+				gfxMgr.BindVertexFormat ( this->mVertexFormat, true );
+				gfxMgr.BindIndexBuffer ( &this->mIdxBuffer );
 				
-				gfxDevice.UpdateAndBindUniforms ();
+				gfxMgr.UpdateAndBindUniforms ();
 
 				ZLSharedConstBuffer* buffer = gfx.CopyBuffer ( this->mIdxBuffer.GetBuffer ());
 
@@ -153,10 +153,10 @@ void MOAIGfxVertexCache::FlushBufferedPrims () {
 				
 				//gfxCache.BindVertexFormat ();
 				
-				gfxDevice.BindVertexBuffer ( &this->mVtxBuffer );
-				gfxDevice.BindVertexFormat ( this->mVertexFormat, true );
+				gfxMgr.BindVertexBuffer ( &this->mVtxBuffer );
+				gfxMgr.BindVertexFormat ( this->mVertexFormat, true );
 				
-				gfxDevice.UpdateAndBindUniforms ();
+				gfxMgr.UpdateAndBindUniforms ();
 				
 				gfx.DrawArrays ( this->mPrimType, 0, count );
 				//this->mDrawCount++;

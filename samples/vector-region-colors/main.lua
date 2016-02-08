@@ -5,7 +5,7 @@
 --==============================================================
 
 MOAISim.openWindow ( "test", 640, 480 )
-MOAIGfxDevice.setClearColor ( 1, 1, 1, 1 )
+MOAIGfxMgr.setClearColor ( 1, 1, 1, 1 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 640, 480 )

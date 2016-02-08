@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIRenderMgr.h>
@@ -120,7 +120,7 @@ void MOAIGfxResource::Affirm () {
 //----------------------------------------------------------------//
 u32 MOAIGfxResource::Bind () {
 
-//	if ( !MOAIGfxDevice::Get ().GetHasContext ()) {
+//	if ( !MOAIGfxMgr::Get ().GetHasContext ()) {
 //		MOAILog ( 0, MOAILogMessages::MOAIGfxResource_MissingDevice );
 //		return false;
 //	}
@@ -179,7 +179,7 @@ bool MOAIGfxResource::DoGPUCreate () {
 		this->mState = STATE_PENDING;
 	
 		if ( this->OnGPUCreate ()) {
-			MOAIGfxDevice::GetDrawingAPI ().Event ( this, GFX_EVENT_CREATED, 0 );
+			MOAIGfxMgr::GetDrawingAPI ().Event ( this, GFX_EVENT_CREATED, 0 );
 			this->OnCPUDestroy ();
 		}
 		else {

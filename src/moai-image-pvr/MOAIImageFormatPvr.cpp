@@ -214,8 +214,8 @@ bool MOAIImageFormatPvr::CheckHeader ( const void* buffer ) {
 //----------------------------------------------------------------//
 bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void* data, size_t size ) {
 
-	if ( !MOAIGfxDevice::Get ().GetHasContext ()) return false;
-	MOAIGfxDevice::Get ().ClearErrors ();
+	if ( !MOAIGfxMgr::Get ().GetHasContext ()) return false;
+	MOAIGfxMgr::Get ().ClearErrors ();
 
 	MOAIPvrHeader* header = MOAIPvrHeader::GetHeader ( data, size );
 	if ( !header ) return false;
@@ -301,7 +301,7 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 			return false;
 	}
 	
-	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
 	ZLGfxHandle* glTexID = gfx.CreateTexture ();
 	if ( glTexID ) {
@@ -347,7 +347,7 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 				gfx.TexImage2D ( level, internalFormat, width, height, internalFormat, pixelType, buffer.GetSharedConstBuffer ());
 			}
 			
-			if ( MOAIGfxDevice::Get ().LogErrors ()) {
+			if ( MOAIGfxMgr::Get ().LogErrors ()) {
 				this->CleanupTexture ( texture );
 				return false;
 			}
