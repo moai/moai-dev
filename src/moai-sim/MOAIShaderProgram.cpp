@@ -224,6 +224,8 @@ void MOAIShaderProgram::ApplyDefaults () {
 void MOAIShaderProgram::ApplyGlobals () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	
+	ZLRect viewRect = gfxMgr.GetViewRect ();
 
 	// NOTE: matrices are submitted transposed; it is up to the shader to transform vertices correctly
 	// vert * matrix implicitely transposes the matrix; martix * vert uses the matrix as submitted
@@ -236,7 +238,43 @@ void MOAIShaderProgram::ApplyGlobals () {
 		
 		MOAIShaderUniform& uniform = this->mUniforms [ global.mUniformID ];
 		
-		uniform.mFlags |= gfxMgr.Apply ( global.mGlobalID, uniform );
+		switch ( global.mUniformID ) {
+			
+			case MOAIGfxMgr::VIEW_PROJ_MTX:
+			case MOAIGfxMgr::WORLD_MTX:
+			case MOAIGfxMgr::INVERSE_WORLD_MTX:
+			case MOAIGfxMgr::WORLD_VIEW_MTX:
+			case MOAIGfxMgr::INVERSE_WORLD_VIEW_MTX:
+			case MOAIGfxMgr::WORLD_VIEW_PROJ_MTX:
+			
+				uniform.mFlags |= uniform.SetValue ( gfxMgr.GetMtx ( global.mUniformID ), true );
+				break;
+			
+			case MOAIGfxMgr::PEN_COLOR:
+			
+				uniform.mFlags |= uniform.SetValue ( gfxMgr.mFinalColor, true );
+				break;
+			
+			case MOAIGfxMgr::VIEW_HALF_HEIGHT:
+			
+				uniform.mFlags |= uniform.SetValue ( viewRect.Height () * 0.5f, true );
+				break;
+				
+			case MOAIGfxMgr::VIEW_HALF_WIDTH:
+			
+				uniform.mFlags |= uniform.SetValue ( viewRect.Width () * 0.5f, true );
+				break;
+				
+			case MOAIGfxMgr::VIEW_HEIGHT:
+			
+				uniform.mFlags |= uniform.SetValue ( viewRect.Height (), true );
+				break;
+				
+			case MOAIGfxMgr::VIEW_WIDTH:
+			
+				uniform.mFlags |= uniform.SetValue ( viewRect.Width (), true );
+				break;
+		}
 	}
 }
 

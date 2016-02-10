@@ -1,17 +1,17 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXMTXCACHE_H
-#define	MOAIGFXMTXCACHE_H
+#ifndef	MOAIGFXSHADERGLOBALSCACHE_H
+#define	MOAIGFXSHADERGLOBALSCACHE_H
 
 class MOAIShaderUniformBuffer;
 
 #define ID_TO_FLAG(id) ( 1 << id )
 
 //================================================================//
-// MOAIGfxMtxCache
+// MOAIGfxGlobalsCache
 //================================================================//
-class MOAIGfxMtxCache {
+class MOAIGfxGlobalsCache {
 public:
 
 	// GLOBAL IDs
@@ -129,7 +129,6 @@ public:
 	GET_SET ( u32, ShaderFlags, mShaderFlags )
 
 	//----------------------------------------------------------------//
-	u32						Apply						( u32 attrID, MOAIShaderUniformBuffer& uniform );
 	
 	ZLMatrix4x4				GetNormToWndMtx				();
 	ZLMatrix4x4				GetNormToWndMtx				( const ZLRect& wndRect );
@@ -150,8 +149,8 @@ public:
 	
 	const ZLFrustum&		GetViewVolume				();
 	
-							MOAIGfxMtxCache				();
-							~MOAIGfxMtxCache			();
+							MOAIGfxGlobalsCache				();
+							~MOAIGfxGlobalsCache			();
 
 	void					SetAmbientColor				( u32 color );
 	void					SetAmbientColor				( const ZLColorVec& colorVec );

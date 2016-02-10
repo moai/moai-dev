@@ -3,54 +3,16 @@
 
 #include "pch.h"
 
+#include <moai-sim/MOAIGfxGlobalsCache.h>
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIGfxMtxCache.h>
 #include <moai-sim/MOAIShaderUniform.h>
 
 //================================================================//
-// MOAIGfxMtxCache
+// MOAIGfxGlobalsCache
 //================================================================//
 
 //----------------------------------------------------------------//
-u32 MOAIGfxMtxCache::Apply ( u32 attrID, MOAIShaderUniformBuffer& uniform ) {
-
-	switch ( attrID ) {
-			
-		case MOAIGfxMgr::VIEW_PROJ_MTX:
-		case MOAIGfxMgr::WORLD_MTX:
-		case MOAIGfxMgr::INVERSE_WORLD_MTX:
-		case MOAIGfxMgr::WORLD_VIEW_MTX:
-		case MOAIGfxMgr::INVERSE_WORLD_VIEW_MTX:
-		case MOAIGfxMgr::WORLD_VIEW_PROJ_MTX:
-		
-			return uniform.SetValue ( this->GetMtx ( attrID ), true );
-		
-		case MOAIGfxMgr::PEN_COLOR:
-		
-			return uniform.SetValue ( this->mFinalColor, true );
-		
-		case VIEW_HALF_HEIGHT:
-		
-			return uniform.SetValue ( MOAIGfxMgr::Get ().GetViewHeight () * 0.5f, true );
-			
-		case VIEW_HALF_WIDTH:
-		
-			return uniform.SetValue ( MOAIGfxMgr::Get ().GetViewWidth () * 0.5f, true );
-			
-		case VIEW_HEIGHT:
-		
-			return uniform.SetValue ( MOAIGfxMgr::Get ().GetViewHeight (), true );
-			
-		case VIEW_WIDTH:
-		
-			return uniform.SetValue ( MOAIGfxMgr::Get ().GetViewWidth (), true );
-	}
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMtxCache::Flush () {
+void MOAIGfxGlobalsCache::Flush () {
 
 	bool needsFlush = ( this->mDirtyFlags & this->mShaderFlags ) != 0;
 	
@@ -64,13 +26,13 @@ void MOAIGfxMtxCache::Flush () {
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxMtxCache::GetNormToWndMtx () {
+ZLMatrix4x4 MOAIGfxGlobalsCache::GetNormToWndMtx () {
 
 	return this->GetNormToWndMtx ( MOAIGfxMgr::Get ().GetViewRect ());
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxMtxCache::GetNormToWndMtx ( const ZLRect& wndRect ) {
+ZLMatrix4x4 MOAIGfxGlobalsCache::GetNormToWndMtx ( const ZLRect& wndRect ) {
 
 	float hWidth = wndRect.Width () * 0.5f;
 	float hHeight = wndRect.Height () * 0.5f;
@@ -87,7 +49,7 @@ ZLMatrix4x4 MOAIGfxMtxCache::GetNormToWndMtx ( const ZLRect& wndRect ) {
 }
 
 //----------------------------------------------------------------//
-const ZLMatrix4x4& MOAIGfxMtxCache::GetMtx ( u32 transformID ) {
+const ZLMatrix4x4& MOAIGfxGlobalsCache::GetMtx ( u32 transformID ) {
 
 	switch ( transformID ) {
 	
@@ -209,28 +171,28 @@ const ZLMatrix4x4& MOAIGfxMtxCache::GetMtx ( u32 transformID ) {
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxMtxCache::GetWorldToWndMtx () {
+ZLMatrix4x4 MOAIGfxGlobalsCache::GetWorldToWndMtx () {
 
 	return this->GetWorldToWndMtx ( MOAIGfxMgr::Get ().GetViewRect ());
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxMtxCache::GetWorldToWndMtx ( const ZLRect& wndRect ) {
+ZLMatrix4x4 MOAIGfxGlobalsCache::GetWorldToWndMtx ( const ZLRect& wndRect ) {
 
 	ZLMatrix4x4 worldToWnd = this->GetMtx ( VIEW_PROJ_MTX );
-	worldToWnd.Append ( MOAIGfxMtxCache::GetNormToWndMtx ( wndRect ));
+	worldToWnd.Append ( MOAIGfxGlobalsCache::GetNormToWndMtx ( wndRect ));
 	
 	return worldToWnd;
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxMtxCache::GetWndToNormMtx () {
+ZLMatrix4x4 MOAIGfxGlobalsCache::GetWndToNormMtx () {
 
 	return this->GetWndToNormMtx ( MOAIGfxMgr::Get ().GetViewRect ());
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxMtxCache::GetWndToNormMtx ( const ZLRect& wndRect ) {
+ZLMatrix4x4 MOAIGfxGlobalsCache::GetWndToNormMtx ( const ZLRect& wndRect ) {
 
 	float hWidth = wndRect.Width () * 0.5f;
 	float hHeight = wndRect.Height () * 0.5f;
@@ -247,15 +209,15 @@ ZLMatrix4x4 MOAIGfxMtxCache::GetWndToNormMtx ( const ZLRect& wndRect ) {
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxMtxCache::GetWndToWorldMtx () {
+ZLMatrix4x4 MOAIGfxGlobalsCache::GetWndToWorldMtx () {
 
 	return this->GetWndToWorldMtx ( MOAIGfxMgr::Get ().GetViewRect ());
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxMtxCache::GetWndToWorldMtx ( const ZLRect& wndRect ) {
+ZLMatrix4x4 MOAIGfxGlobalsCache::GetWndToWorldMtx ( const ZLRect& wndRect ) {
 
-	ZLMatrix4x4 wndToWorld = MOAIGfxMtxCache::GetWndToNormMtx ( wndRect );
+	ZLMatrix4x4 wndToWorld = MOAIGfxGlobalsCache::GetWndToNormMtx ( wndRect );
 	
 	// inv viewproj
 	ZLMatrix4x4 mtx = this->GetMtx ( VIEW_PROJ_MTX );
@@ -266,7 +228,7 @@ ZLMatrix4x4 MOAIGfxMtxCache::GetWndToWorldMtx ( const ZLRect& wndRect ) {
 }
 
 //----------------------------------------------------------------//
-const ZLFrustum& MOAIGfxMtxCache::GetViewVolume () {
+const ZLFrustum& MOAIGfxGlobalsCache::GetViewVolume () {
 
 	if ( this->mDirtyFlags & VIEW_VOLUME_MASK ) {
 		this->mViewVolume.Init ( this->GetMtx ( INVERSE_VIEW_PROJ_MTX ));
@@ -276,7 +238,7 @@ const ZLFrustum& MOAIGfxMtxCache::GetViewVolume () {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxMtxCache::MOAIGfxMtxCache () :
+MOAIGfxGlobalsCache::MOAIGfxGlobalsCache () :
 	mDirtyFlags ( 0 ),
 	mShaderFlags ( 0 ),
 	mFinalColor32 ( 0xffffffff ),
@@ -294,32 +256,32 @@ MOAIGfxMtxCache::MOAIGfxMtxCache () :
 }
 
 //----------------------------------------------------------------//
-MOAIGfxMtxCache::~MOAIGfxMtxCache () {
+MOAIGfxGlobalsCache::~MOAIGfxGlobalsCache () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMtxCache::SetAmbientColor ( u32 color ) {
+void MOAIGfxGlobalsCache::SetAmbientColor ( u32 color ) {
 
 	this->mAmbientColor.SetRGBA ( color );
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMtxCache::SetAmbientColor ( const ZLColorVec& colorVec ) {
+void MOAIGfxGlobalsCache::SetAmbientColor ( const ZLColorVec& colorVec ) {
 
 	this->mAmbientColor = colorVec;
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMtxCache::SetAmbientColor ( float r, float g, float b, float a ) {
+void MOAIGfxGlobalsCache::SetAmbientColor ( float r, float g, float b, float a ) {
 
 	this->mAmbientColor.Set ( r, g, b, a );
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMtxCache::SetMtx ( u32 transformID ) {
+void MOAIGfxGlobalsCache::SetMtx ( u32 transformID ) {
 
 	ZLMatrix4x4 mtx;
 	mtx.Ident ();
@@ -327,7 +289,7 @@ void MOAIGfxMtxCache::SetMtx ( u32 transformID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMtxCache::SetMtx ( u32 transformID, const ZLAffine3D& transform ) {
+void MOAIGfxGlobalsCache::SetMtx ( u32 transformID, const ZLAffine3D& transform ) {
 
 	ZLMatrix4x4 mtx;
 	mtx.Init ( transform );
@@ -335,7 +297,7 @@ void MOAIGfxMtxCache::SetMtx ( u32 transformID, const ZLAffine3D& transform ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMtxCache::SetMtx ( u32 transformID, const ZLMatrix4x4& mtx ) {
+void MOAIGfxGlobalsCache::SetMtx ( u32 transformID, const ZLMatrix4x4& mtx ) {
 
 	u32 dirtyMask = 0;
 
@@ -385,28 +347,28 @@ void MOAIGfxMtxCache::SetMtx ( u32 transformID, const ZLMatrix4x4& mtx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMtxCache::SetPenColor ( u32 color ) {
+void MOAIGfxGlobalsCache::SetPenColor ( u32 color ) {
 
 	this->mPenColor.SetRGBA ( color );
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMtxCache::SetPenColor ( const ZLColorVec& colorVec ) {
+void MOAIGfxGlobalsCache::SetPenColor ( const ZLColorVec& colorVec ) {
 
 	this->mPenColor = colorVec;
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMtxCache::SetPenColor ( float r, float g, float b, float a ) {
+void MOAIGfxGlobalsCache::SetPenColor ( float r, float g, float b, float a ) {
 
 	this->mPenColor.Set ( r, g, b, a );
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-//void MOAIGfxMtxCache::SetUVTransform () {
+//void MOAIGfxGlobalsCache::SetUVTransform () {
 //
 //	ZLMatrix4x4 mtx;
 //	mtx.Ident ();
@@ -414,7 +376,7 @@ void MOAIGfxMtxCache::SetPenColor ( float r, float g, float b, float a ) {
 //}
 
 //----------------------------------------------------------------//
-//void MOAIGfxMtxCache::SetUVTransform ( const ZLAffine3D& transform ) {
+//void MOAIGfxGlobalsCache::SetUVTransform ( const ZLAffine3D& transform ) {
 //
 //	ZLMatrix4x4 mtx;
 //	mtx.Init ( transform );
@@ -422,7 +384,7 @@ void MOAIGfxMtxCache::SetPenColor ( float r, float g, float b, float a ) {
 //}
 
 //----------------------------------------------------------------//
-//void MOAIGfxMtxCache::SetUVTransform ( const ZLMatrix4x4& transform ) {
+//void MOAIGfxGlobalsCache::SetUVTransform ( const ZLMatrix4x4& transform ) {
 //
 //	if ( !this->mUVTransform.IsSame ( transform )) {
 //		this->mUVTransform = transform;
@@ -431,7 +393,7 @@ void MOAIGfxMtxCache::SetPenColor ( float r, float g, float b, float a ) {
 //}
 
 //----------------------------------------------------------------//
-//void MOAIGfxMtxCache::SetVertexMtxMode ( u32 input, u32 output ) {
+//void MOAIGfxGlobalsCache::SetVertexMtxMode ( u32 input, u32 output ) {
 //	
 //	if (( this->mVertexMtxInput != input ) || ( this->mVertexMtxOutput != output )) {
 //
@@ -448,7 +410,7 @@ void MOAIGfxMtxCache::SetPenColor ( float r, float g, float b, float a ) {
 //}
 
 //----------------------------------------------------------------//
-//void MOAIGfxMtxCache::SetVertexTransform ( u32 id ) {
+//void MOAIGfxGlobalsCache::SetVertexTransform ( u32 id ) {
 //
 //	ZLMatrix4x4 mtx;
 //	mtx.Ident ();
@@ -456,7 +418,7 @@ void MOAIGfxMtxCache::SetPenColor ( float r, float g, float b, float a ) {
 //}
 
 //----------------------------------------------------------------//
-//void MOAIGfxMtxCache::SetVertexTransform ( u32 id, const ZLAffine3D& transform ) {
+//void MOAIGfxGlobalsCache::SetVertexTransform ( u32 id, const ZLAffine3D& transform ) {
 //
 //	ZLMatrix4x4 mtx;
 //	mtx.Init ( transform );
@@ -464,7 +426,7 @@ void MOAIGfxMtxCache::SetPenColor ( float r, float g, float b, float a ) {
 //}
 
 //----------------------------------------------------------------//
-//void MOAIGfxMtxCache::SetVertexTransform ( u32 id, const ZLMatrix4x4& transform ) {
+//void MOAIGfxGlobalsCache::SetVertexTransform ( u32 id, const ZLMatrix4x4& transform ) {
 //
 //	assert ( id < TOTAL_VTX_TRANSFORMS );
 //
@@ -485,7 +447,7 @@ void MOAIGfxMtxCache::SetPenColor ( float r, float g, float b, float a ) {
 //}
 
 //----------------------------------------------------------------//
-//void MOAIGfxMtxCache::UpdateCpuVertexMtx () {
+//void MOAIGfxGlobalsCache::UpdateCpuVertexMtx () {
 //	
 //	// Used signed, so we can roll "under" to -1 without an extra range check
 //	int start = this->mVertexMtxInput;
@@ -519,7 +481,7 @@ void MOAIGfxMtxCache::SetPenColor ( float r, float g, float b, float a ) {
 //}
 
 //----------------------------------------------------------------//
-void MOAIGfxMtxCache::UpdateFinalColor () {
+void MOAIGfxGlobalsCache::UpdateFinalColor () {
 
 	this->mFinalColor.mR = this->mAmbientColor.mR * this->mPenColor.mR;
 	this->mFinalColor.mG = this->mAmbientColor.mG * this->mPenColor.mG;
@@ -543,7 +505,7 @@ void MOAIGfxMtxCache::UpdateFinalColor () {
 }
 
 //----------------------------------------------------------------//
-//void MOAIGfxMtxCache::UpdateUVMtx () {
+//void MOAIGfxGlobalsCache::UpdateUVMtx () {
 //
 //	if ( this->mUVMtxOutput == UV_STAGE_TEXTURE ) {
 //	
@@ -556,7 +518,7 @@ void MOAIGfxMtxCache::UpdateFinalColor () {
 //}
 
 //----------------------------------------------------------------//
-//void MOAIGfxMtxCache::UpdateViewVolume () {
+//void MOAIGfxGlobalsCache::UpdateViewVolume () {
 //
 //	ZLMatrix4x4 invViewProj;
 //	invViewProj.Inverse ( this->GetMtx ( VIEW_PROJ_MTX ));

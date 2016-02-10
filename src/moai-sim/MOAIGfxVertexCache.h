@@ -24,7 +24,7 @@ class MOAIViewport;
 class MOAIGfxVertexCache {
 protected:
 
-	friend class MOAIGfxMtxCache;
+	friend class MOAIGfxGlobalsCache;
 	friend class MOAIGfxStateCache;
 	
 	// Stock OpenGL ES 2.0 has no support for u32 index size in glDrawElements.

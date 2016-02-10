@@ -37,8 +37,8 @@
 #include <moai-sim/MOAIFrameBufferTexture.h>
 #include <moai-sim/MOAIGeometryWriter.h>
 #include <moai-sim/MOAIGfxBuffer.h>
+#include <moai-sim/MOAIGfxGlobalsCache.h>
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIGfxMtxCache.h>
 #include <moai-sim/MOAIGfxPipelineMgr.h>
 #include <moai-sim/MOAIGfxStateCache.h>
 #include <moai-sim/MOAIGfxQuad2D.h>

@@ -7,7 +7,7 @@
 #include <moai-sim/MOAIBlendMode.h>
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIFrameBuffer.h>
-#include <moai-sim/MOAIGfxMtxCache.h>
+#include <moai-sim/MOAIGfxGlobalsCache.h>
 #include <moai-sim/MOAIGfxPipelineMgr.h>
 #include <moai-sim/MOAIGfxStateCache.h>
 #include <moai-sim/MOAIGfxVertexCache.h>
@@ -33,7 +33,7 @@ class MOAIViewport;
 	@const	EVENT_RESIZE
 */
 class MOAIGfxMgr :
-	public MOAIGfxMtxCache,
+	public MOAIGfxGlobalsCache,
 	public MOAIGfxPipelineMgr,
 	public MOAIGfxStateCache,
 	public MOAIGfxVertexCache,
