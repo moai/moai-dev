@@ -74,6 +74,7 @@ bool MOAIGfxStateCache::BindShader ( MOAIShader* shader ) {
 		
 		return true;
 	}
+	
 	return this->BindShaderProgram (( MOAIShaderProgram* )0 );
 }
 
@@ -87,8 +88,8 @@ bool MOAIGfxStateCache::BindShader ( u32 preset ) {
 bool MOAIGfxStateCache::BindShaderProgram ( MOAIShaderProgram* program ) {
 
 	if ( this->mShaderProgram != program ) {
-		
-		MOAIGfxMgr::Get ().FlushBufferedPrims ();
+
+		 MOAIGfxMgr::Get ().FlushBufferedPrims ();
 		
 		if ( this->mShaderProgram ) {
 			this->mShaderProgram->Unbind ();
@@ -243,17 +244,36 @@ size_t MOAIGfxStateCache::CountTextureUnits () {
 }
 
 //----------------------------------------------------------------//
-float MOAIGfxStateCache::GetDeviceScale () {
-
-	assert ( this->mCurrentFrameBuffer );
-	return this->mCurrentFrameBuffer->mBufferScale;
-}
-
-//----------------------------------------------------------------//
-u32 MOAIGfxStateCache::GetHeight () const {
+u32 MOAIGfxStateCache::GetBufferHeight () const {
 
 	assert ( this->mCurrentFrameBuffer );
 	return this->mCurrentFrameBuffer->mBufferHeight;
+}
+
+//----------------------------------------------------------------//
+u32 MOAIGfxStateCache::GetBufferWidth () const {
+
+	assert ( this->mCurrentFrameBuffer );
+	return this->mCurrentFrameBuffer->GetBufferWidth ();
+}
+
+//----------------------------------------------------------------//
+//float MOAIGfxStateCache::GetDeviceScale () {
+//
+//	assert ( this->mCurrentFrameBuffer );
+//	return this->mCurrentFrameBuffer->mBufferScale;
+//}
+
+//----------------------------------------------------------------//
+u32 MOAIGfxStateCache::GetShaderGlobalsMask () {
+
+	return this->mShaderProgram ? this->mShaderProgram->GetGlobalsMask () : 0;
+}
+
+//----------------------------------------------------------------//
+float MOAIGfxStateCache::GetViewHeight () const {
+
+	return this->mViewRect.Height ();
 }
 
 //----------------------------------------------------------------//
@@ -280,10 +300,9 @@ u32 MOAIGfxStateCache::GetHeight () const {
 //}
 
 //----------------------------------------------------------------//
-u32 MOAIGfxStateCache::GetWidth () const {
+float MOAIGfxStateCache::GetViewWidth () const {
 
-	assert ( this->mCurrentFrameBuffer );
-	return this->mCurrentFrameBuffer->GetBufferWidth ();
+	return this->mViewRect.Width ();
 }
 
 //----------------------------------------------------------------//

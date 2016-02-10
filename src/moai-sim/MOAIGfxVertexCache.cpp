@@ -47,6 +47,10 @@ void MOAIGfxVertexCache::BeginPrim () {
 	if ( this->mUseIdxBuffer ) {
 		this->FlushBufferedPrims ();
 	}
+	
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	gfxMgr.SetShaderFlags ( gfxMgr.GetShaderGlobalsMask ());
+	
 	this->mUseIdxBuffer = false;
 }
 
@@ -68,6 +72,9 @@ void MOAIGfxVertexCache::BeginPrimIndexed ( u32 primType, u32 vtxCount, u32 idxC
 		
 		this->FlushBufferedPrims ();
 	}
+	
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	gfxMgr.SetShaderFlags ( gfxMgr.GetShaderGlobalsMask ());
 	
 	this->mUseIdxBuffer		= true;
 	this->mIndexBase		= ( u16 )( this->mTotalVertices );
@@ -175,13 +182,14 @@ void MOAIGfxVertexCache::FlushBufferedPrims () {
 		this->mPrimCount		= 0;
 		this->mTotalIndices		= 0;
 		this->mTotalVertices	= 0;
+		
+		gfxMgr.SetShaderFlags ( 0 );
 	}
 }
 
 //----------------------------------------------------------------//
 MOAIGfxVertexCache::MOAIGfxVertexCache () :
 	mIsDrawing ( false ),
-	mFinalColor32 ( 0xffffffff ),
 	mVertexSize ( 0 ),
 	mMaxVertices ( 0 ),
 	mMaxIndices ( 0 ),
@@ -193,11 +201,8 @@ MOAIGfxVertexCache::MOAIGfxVertexCache () :
 	mTotalIndices ( 0 ),
 	mVertexFormat ( 0 ),
 	mApplyVertexTransform ( false ),
-	mApplyUVTransform ( false ) {
-	
-	this->mAmbientColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
-	this->mFinalColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
-	this->mPenColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
+	mApplyUVTransform ( false ),
+	mVertexColor32 ( 0xffffffff ) {
 	
 	this->mVtxBuffer.Reserve ( DEFAULT_VERTEX_BUFFER_SIZE );
 	this->mIdxBuffer.Reserve ( DEFAULT_INDEX_BUFFER_SIZE );
@@ -207,52 +212,12 @@ MOAIGfxVertexCache::MOAIGfxVertexCache () :
 	
 	this->mVertexTransform.Ident ();
 	this->mUVTransform.Ident ();
+	
+	this->mVertexColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
 }
 
 //----------------------------------------------------------------//
 MOAIGfxVertexCache::~MOAIGfxVertexCache () {
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxVertexCache::SetAmbientColor ( u32 color ) {
-
-	this->mAmbientColor.SetRGBA ( color );
-	this->UpdateFinalColor ();
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxVertexCache::SetAmbientColor ( const ZLColorVec& colorVec ) {
-
-	this->mAmbientColor = colorVec;
-	this->UpdateFinalColor ();
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxVertexCache::SetAmbientColor ( float r, float g, float b, float a ) {
-
-	this->mAmbientColor.Set ( r, g, b, a );
-	this->UpdateFinalColor ();
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxVertexCache::SetPenColor ( u32 color ) {
-
-	this->mPenColor.SetRGBA ( color );
-	this->UpdateFinalColor ();
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxVertexCache::SetPenColor ( const ZLColorVec& colorVec ) {
-
-	this->mPenColor = colorVec;
-	this->UpdateFinalColor ();
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxVertexCache::SetPenColor ( float r, float g, float b, float a ) {
-
-	this->mPenColor.Set ( r, g, b, a );
-	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
@@ -337,22 +302,22 @@ void MOAIGfxVertexCache::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* uv ) {
 		// left top
 		this->mVtxBuffer.Write ( vtx [ 0 ]);
 		this->mVtxBuffer.Write ( uv [ 0 ]);
-		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
+		this->mVtxBuffer.Write < u32 >( this->mVertexColor32 );
 	
 		// right top
 		this->mVtxBuffer.Write ( vtx [ 1 ]);
 		this->mVtxBuffer.Write ( uv [ 1 ]);
-		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
+		this->mVtxBuffer.Write < u32 >( this->mVertexColor32 );
 	
 		// right bottom
 		this->mVtxBuffer.Write ( vtx[ 2 ]);
 		this->mVtxBuffer.Write ( uv [ 2 ]);
-		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
+		this->mVtxBuffer.Write < u32 >( this->mVertexColor32 );
 	
 		// left bottom
 		this->mVtxBuffer.Write ( vtx [ 3 ]);
 		this->mVtxBuffer.Write ( uv [ 3 ]);
-		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
+		this->mVtxBuffer.Write < u32 >( this->mVertexColor32 );
 
 		// indices
 		this->WriteIndex ( 0 ); // left top
@@ -379,17 +344,6 @@ void MOAIGfxVertexCache::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* uv ) {
 //	this->mVertexFormat = 0;
 //	this->mVertexSize = 0;
 //}
-
-//----------------------------------------------------------------//
-void MOAIGfxVertexCache::UpdateFinalColor () {
-
-	this->mFinalColor.mR = this->mAmbientColor.mR * this->mPenColor.mR;
-	this->mFinalColor.mG = this->mAmbientColor.mG * this->mPenColor.mG;
-	this->mFinalColor.mB = this->mAmbientColor.mB * this->mPenColor.mB;
-	this->mFinalColor.mA = this->mAmbientColor.mA * this->mPenColor.mA;
-
-	this->mFinalColor32 = this->mFinalColor.PackRGBA ();
-}
 
 //----------------------------------------------------------------//
 void MOAIGfxVertexCache::UpdateLimits () {

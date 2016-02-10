@@ -26,7 +26,7 @@ public:
 	void WriteVertex ( const ZLVec2D& v ) {
 		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 		gfxMgr.WriteVtx ( v.mX, v.mY );
-		gfxMgr.WriteFinalColor4b ();
+		gfxMgr.WritePenColor4b ();
 	}
 };
 
@@ -971,7 +971,7 @@ void MOAIDraw::DrawEllipseFill ( float x, float y, float xRad, float yRad, u32 s
 			y + ( Cos ( angleStep ) * yRad ),
 			0.0f
 		);
-		gfxVertexCache.WriteFinalColor4b ();
+		gfxVertexCache.WritePenColor4b ();
 	}
 	gfxVertexCache.EndPrim ();
 }
@@ -1001,7 +1001,7 @@ void MOAIDraw::DrawEllipseOutline ( float x, float y, float xRad, float yRad, u3
 			y + ( Sin ( angle ) * yRad ),
 			0.0f
 		);
-		gfxVertexCache.WriteFinalColor4b ();
+		gfxVertexCache.WritePenColor4b ();
 	}
 	gfxVertexCache.EndPrim ();
 }
@@ -1081,10 +1081,10 @@ void MOAIDraw::DrawLine ( float x0, float y0, float z0, float x1, float y1, floa
 	gfxVertexCache.BeginPrim ();
 	
 		gfxVertexCache.WriteVtx ( x0, y0, z0 );
-		gfxVertexCache.WriteFinalColor4b ();
+		gfxVertexCache.WritePenColor4b ();
 		
 		gfxVertexCache.WriteVtx ( x1, y1, z1 );
-		gfxVertexCache.WriteFinalColor4b ();
+		gfxVertexCache.WritePenColor4b ();
 	
 	gfxVertexCache.EndPrim ();
 }
@@ -1107,7 +1107,7 @@ void MOAIDraw::DrawLuaParams ( lua_State* L, u32 primType ) {
 		float y = state.GetValue < float >( idx + 1, 0.0f );
 		
 		gfxVertexCache.WriteVtx ( x, y, 0.0f );
-		gfxVertexCache.WriteFinalColor4b ();
+		gfxVertexCache.WritePenColor4b ();
 	}
 	
 	gfxVertexCache.EndPrim ();
@@ -1135,7 +1135,7 @@ void MOAIDraw::DrawLuaArray ( lua_State* L, u32 primType ) {
 		} else {
 			y = state.GetValue < float >( -1, 0.0f );
 			gfxVertexCache.WriteVtx ( x, y );
-			gfxVertexCache.WriteFinalColor4b ();
+			gfxVertexCache.WritePenColor4b ();
 		}
 		++counter;
 		lua_pop ( L, 1 );
@@ -1159,7 +1159,7 @@ void MOAIDraw::DrawPoint ( float x, float y ) {
 
 	gfxVertexCache.BeginPrim ();
 		gfxVertexCache.WriteVtx ( x, y, 0.0f );
-		gfxVertexCache.WriteFinalColor4b ();
+		gfxVertexCache.WritePenColor4b ();
 	gfxVertexCache.EndPrim ();
 }
 
@@ -1176,7 +1176,7 @@ void MOAIDraw::DrawPolyOutline ( const ZLPolygon2D& poly ) {
 	for ( u32 i = 0; i < size; ++i ) {
 		const ZLVec2D& v0 = poly.GetVertex ( i );
 		gfxVertexCache.WriteVtx ( v0.mX, v0.mY, 0.0f );
-		gfxVertexCache.WriteFinalColor4b ();
+		gfxVertexCache.WritePenColor4b ();
 	}
 	gfxVertexCache.EndPrim ();
 }
@@ -1220,10 +1220,10 @@ void MOAIDraw::DrawRay ( float x, float y, float dx, float dy ) {
 		gfxVertexCache.BeginPrim ( ZGL_PRIM_LINES );
 		
 			gfxVertexCache.WriteVtx ( p0.mX, p0.mY, 0.0f );
-			gfxVertexCache.WriteFinalColor4b ();
+			gfxVertexCache.WritePenColor4b ();
 			
 			gfxVertexCache.WriteVtx ( p1.mX, p1.mY, 0.0f );
-			gfxVertexCache.WriteFinalColor4b ();
+			gfxVertexCache.WritePenColor4b ();
 
 		gfxVertexCache.EndPrim ();
 	}
@@ -1272,16 +1272,16 @@ void MOAIDraw::DrawRectFill ( float left, float top, float right, float bottom, 
 		gfxVertexCache.BeginPrim ( ZGL_PRIM_TRIANGLE_STRIP );
 	
 			gfxVertexCache.WriteVtx ( left, top, 0.0f );
-			gfxVertexCache.WriteFinalColor4b ();
+			gfxVertexCache.WritePenColor4b ();
 		
 			gfxVertexCache.WriteVtx ( right, top, 0.0f );
-			gfxVertexCache.WriteFinalColor4b ();
+			gfxVertexCache.WritePenColor4b ();
 		
 			gfxVertexCache.WriteVtx ( left, bottom, 0.0f );
-			gfxVertexCache.WriteFinalColor4b ();
+			gfxVertexCache.WritePenColor4b ();
 		
 			gfxVertexCache.WriteVtx ( right, bottom, 0.0f );
-			gfxVertexCache.WriteFinalColor4b ();
+			gfxVertexCache.WritePenColor4b ();
 	
 		gfxVertexCache.EndPrim ();
 	}
@@ -1291,13 +1291,13 @@ void MOAIDraw::DrawRectFill ( float left, float top, float right, float bottom, 
 		gfxVertexCache.BeginPrim ( ZGL_PRIM_TRIANGLES );
 	
 			gfxVertexCache.WriteVtx ( left, top, 0.0f );
-			gfxVertexCache.WriteFinalColor4b ();
+			gfxVertexCache.WritePenColor4b ();
 		
 			gfxVertexCache.WriteVtx ( right, top, 0.0f );
-			gfxVertexCache.WriteFinalColor4b ();
+			gfxVertexCache.WritePenColor4b ();
 		
 			gfxVertexCache.WriteVtx ( right, bottom, 0.0f );
-			gfxVertexCache.WriteFinalColor4b ();
+			gfxVertexCache.WritePenColor4b ();
 			
 		gfxVertexCache.EndPrim ();
 		
@@ -1305,13 +1305,13 @@ void MOAIDraw::DrawRectFill ( float left, float top, float right, float bottom, 
 		gfxVertexCache.BeginPrim ( ZGL_PRIM_TRIANGLES );
 
 			gfxVertexCache.WriteVtx ( right, bottom, 0.0f );
-			gfxVertexCache.WriteFinalColor4b ();
+			gfxVertexCache.WritePenColor4b ();
 
 			gfxVertexCache.WriteVtx ( left, bottom, 0.0f );
-			gfxVertexCache.WriteFinalColor4b ();
+			gfxVertexCache.WritePenColor4b ();
 			
 			gfxVertexCache.WriteVtx ( left, top, 0.0f );
-			gfxVertexCache.WriteFinalColor4b ();
+			gfxVertexCache.WritePenColor4b ();
 	
 		gfxVertexCache.EndPrim ();
 	}
@@ -1331,16 +1331,16 @@ void MOAIDraw::DrawRectOutline ( float left, float top, float right, float botto
 	gfxVertexCache.BeginPrim ( ZGL_PRIM_LINE_LOOP );
 	
 		gfxVertexCache.WriteVtx ( left, top, 0.0f );
-		gfxVertexCache.WriteFinalColor4b ();
+		gfxVertexCache.WritePenColor4b ();
 		
 		gfxVertexCache.WriteVtx ( right, top, 0.0f );
-		gfxVertexCache.WriteFinalColor4b ();
+		gfxVertexCache.WritePenColor4b ();
 		
 		gfxVertexCache.WriteVtx ( right, bottom, 0.0f );
-		gfxVertexCache.WriteFinalColor4b ();
+		gfxVertexCache.WritePenColor4b ();
 		
 		gfxVertexCache.WriteVtx ( left, bottom, 0.0f );
-		gfxVertexCache.WriteFinalColor4b ();
+		gfxVertexCache.WritePenColor4b ();
 	
 	gfxVertexCache.EndPrim ();
 }
@@ -1387,7 +1387,7 @@ void MOAIDraw::DrawVertexArray ( const ZLVec3D* verts, u32 count, u32 color, u32
 	for ( u32 i = 0; i < count; ++i ) {
 		const ZLVec3D& vtx = verts [ i ];
 		gfxVertexCache.WriteVtx ( vtx );
-		gfxVertexCache.WriteFinalColor4b ();
+		gfxVertexCache.WritePenColor4b ();
 	}
 
 	gfxVertexCache.EndPrim ();
@@ -1406,7 +1406,7 @@ void MOAIDraw::DrawVertexArray2D ( const float* verts, u32 count, u32 color, u32
 	for ( u32 i = 0; i < count; ++i ) {
 		u32 v = i << 1;
 		gfxVertexCache.WriteVtx ( verts [ v ], verts [ v + 1 ], 0.0f );
-		gfxVertexCache.WriteFinalColor4b ();
+		gfxVertexCache.WritePenColor4b ();
 	}
 
 	gfxVertexCache.EndPrim ();

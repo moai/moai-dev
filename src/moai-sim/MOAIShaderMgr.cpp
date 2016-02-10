@@ -115,8 +115,8 @@ MOAIShaderProgram* MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 					program->DeclareUniform ( 1, "ySnap", MOAIShaderUniform::UNIFORM_FLOAT );
 					
 					program->ReserveGlobals ( 2 );
-					program->SetGlobal ( 0, 0, MOAIShaderProgram::GLOBAL_VIEW_HALF_WIDTH );
-					program->SetGlobal ( 1, 1, MOAIShaderProgram::GLOBAL_VIEW_HALF_HEIGHT );
+					program->SetGlobal ( 0, 0, MOAIGfxMgr::VIEW_HALF_WIDTH );
+					program->SetGlobal ( 1, 1, MOAIGfxMgr::VIEW_HALF_HEIGHT );
 					
 					break;
 				
@@ -148,8 +148,8 @@ MOAIShaderProgram* MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 					program->DeclareUniform ( 1, "ySnap", MOAIShaderUniform::UNIFORM_FLOAT );
 					
 					program->ReserveGlobals ( 2 );
-					program->SetGlobal ( 0, 0, MOAIShaderProgram::GLOBAL_VIEW_HALF_WIDTH );
-					program->SetGlobal ( 1, 1, MOAIShaderProgram::GLOBAL_VIEW_HALF_HEIGHT );
+					program->SetGlobal ( 0, 0, MOAIGfxMgr::VIEW_HALF_WIDTH );
+					program->SetGlobal ( 1, 1, MOAIGfxMgr::VIEW_HALF_HEIGHT );
 					
 					break;
 					
@@ -188,8 +188,8 @@ MOAIShaderProgram* MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 					program->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_VECTOR_F4 );
 					
 					program->ReserveGlobals ( 2 );
-					program->SetGlobal ( 0, 0, MOAIShaderProgram::GLOBAL_WORLD_VIEW_PROJ );
-					program->SetGlobal ( 1, 1, MOAIShaderProgram::GLOBAL_PEN_COLOR );
+					program->SetGlobal ( 0, 0, MOAIGfxMgr::WORLD_VIEW_PROJ_MTX );
+					program->SetGlobal ( 1, 1, MOAIGfxMgr::PEN_COLOR );
 					
 					break;
 
@@ -205,8 +205,8 @@ MOAIShaderProgram* MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 					program->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_VECTOR_F4 );
 					
 					program->ReserveGlobals ( 2 );
-					program->SetGlobal ( 0, 0, MOAIShaderProgram::GLOBAL_WORLD_VIEW_PROJ );
-					program->SetGlobal ( 1, 1, MOAIShaderProgram::GLOBAL_PEN_COLOR );
+					program->SetGlobal ( 0, 0, MOAIGfxMgr::WORLD_VIEW_PROJ_MTX );
+					program->SetGlobal ( 1, 1, MOAIGfxMgr::PEN_COLOR );
 					
 					break;
 			}

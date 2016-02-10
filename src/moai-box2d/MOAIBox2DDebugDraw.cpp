@@ -202,5 +202,5 @@ void MOAIBox2DDebugDraw::WriteVtx ( MOAIGfxVertexCache& gfxMgr, float x, float y
 	vtx.mY = y * this->mScale;
 	vtx.mZ = 0.0f;
 	gfxMgr.WriteVtx ( vtx );
-	gfxMgr.WriteFinalColor4b ();
+	gfxMgr.WritePenColor4b ();
 }

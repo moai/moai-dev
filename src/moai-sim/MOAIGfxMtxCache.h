@@ -4,13 +4,20 @@
 #ifndef	MOAIGFXMTXCACHE_H
 #define	MOAIGFXMTXCACHE_H
 
+class MOAIShaderUniformBuffer;
+
+#define ID_TO_FLAG(id) ( 1 << id )
+
 //================================================================//
 // MOAIGfxMtxCache
 //================================================================//
 class MOAIGfxMtxCache {
 public:
 
+	// GLOBAL IDs
 	enum {
+	
+		// NOTE: GROUP ALL MATRICES TOGETHER
 		INVERSE_PROJ_MTX,
 		INVERSE_UV_MTX,
 		INVERSE_VIEW_MTX,
@@ -24,55 +31,106 @@ public:
 		VIEW_PROJ_MTX,
 		WORLD_MTX,
 		WORLD_VIEW_MTX,
-		WORLD_VIEW_PROJ_MTX,
-		TOTAL_MATRICES,
+		WORLD_VIEW_PROJ_MTX,	// NOTE: WHATEVER FOLLOWS THIS *MUST* BE ALIASED AS TOTAL_MATRICES (BELOW)
+		
+		PEN_COLOR,
+		VIEW_VOLUME,
+		
+		VIEW_HALF_HEIGHT,
+		VIEW_HALF_WIDTH,
+		VIEW_HEIGHT,
+		VIEW_WIDTH,
+		
+		TOTAL_GLOBALS,
 	};
+	
+	static const u32 TOTAL_MATRICES = PEN_COLOR;
+
+	// NOTE: we don't need a dirty mask for the view dimensions; the state cache will flush if the view rect changes
 
 	enum {
-		INVERSE_PROJ_MTX_FLAG				= 0x0001,
-		INVERSE_UV_MTX_FLAG					= 0x0002,
-		INVERSE_VIEW_MTX_FLAG				= 0x0004,
-		INVERSE_VIEW_PROJ_MTX_FLAG			= 0x0008,
-		INVERSE_WORLD_MTX_FLAG				= 0x0010,
-		INVERSE_WORLD_VIEW_MTX_FLAG			= 0x0020,
-		INVERSE_WORLD_VIEW_PROJ_MTX_FLAG	= 0x0040,
-		VIEW_PROJ_MTX_FLAG					= 0x0080,
-		VIEW_VOLUME_FLAG					= 0x0100,
-		WORLD_VIEW_MTX_FLAG					= 0x0200,
-		WORLD_VIEW_PROJ_MTX_FLAG			= 0x0400,
-	};
-
-	enum {
-		INVERSE_PROJ_MTX_MASK				= INVERSE_PROJ_MTX_FLAG,
-		INVERSE_UV_MTX_MASK					= INVERSE_UV_MTX_FLAG,
-		INVERSE_VIEW_MTX_MASK				= INVERSE_VIEW_MTX_FLAG,
-		INVERSE_VIEW_PROJ_MTX_MASK			= INVERSE_VIEW_PROJ_MTX_FLAG | INVERSE_PROJ_MTX_FLAG | INVERSE_VIEW_MTX_FLAG,
-		INVERSE_WORLD_MTX_MASK				= INVERSE_WORLD_MTX_FLAG,
-		INVERSE_WORLD_VIEW_MTX_MASK			= INVERSE_WORLD_VIEW_MTX_FLAG | INVERSE_VIEW_MTX_FLAG,
-		INVERSE_WORLD_VIEW_PROJ_MTX_MASK	= INVERSE_WORLD_VIEW_PROJ_MTX_FLAG | INVERSE_PROJ_MTX_FLAG | INVERSE_VIEW_MTX_FLAG,
-		VIEW_PROJ_MTX_MASK					= VIEW_PROJ_MTX_FLAG,
-		VIEW_VOLUME_MASK					= VIEW_VOLUME_FLAG | INVERSE_PROJ_MTX_FLAG | INVERSE_VIEW_MTX_FLAG,
-		WORLD_VIEW_MTX_MASK					= WORLD_VIEW_MTX_FLAG,
-		WORLD_VIEW_PROJ_MTX_MASK			= WORLD_VIEW_PROJ_MTX_FLAG,
-	};
-
-	enum {
-		PROJ_MTX_DIRTY_MASK					= INVERSE_PROJ_MTX_FLAG | INVERSE_VIEW_PROJ_MTX_FLAG | INVERSE_WORLD_VIEW_PROJ_MTX_FLAG | VIEW_PROJ_MTX_FLAG | WORLD_VIEW_PROJ_MTX_FLAG | VIEW_VOLUME_MASK,
-		UV_MTX_DIRTY_MASK					= INVERSE_UV_MTX_FLAG,
-		VIEW_MTX_DIRTY_MASK					= INVERSE_VIEW_MTX_FLAG | INVERSE_VIEW_PROJ_MTX_FLAG | INVERSE_WORLD_VIEW_MTX_FLAG | INVERSE_WORLD_VIEW_PROJ_MTX_FLAG | VIEW_PROJ_MTX_FLAG | WORLD_VIEW_MTX_FLAG | WORLD_VIEW_PROJ_MTX_FLAG | VIEW_VOLUME_MASK,
-		WORLD_MTX_DIRTY_MASK				= INVERSE_WORLD_MTX_FLAG | INVERSE_WORLD_VIEW_MTX_FLAG | INVERSE_WORLD_VIEW_PROJ_MTX_FLAG | WORLD_VIEW_MTX_FLAG | WORLD_VIEW_PROJ_MTX_FLAG,
+	
+		INVERSE_PROJ_MTX_MASK				= ID_TO_FLAG ( INVERSE_PROJ_MTX ),
+		INVERSE_UV_MTX_MASK					= ID_TO_FLAG ( INVERSE_UV_MTX ),
+		INVERSE_VIEW_MTX_MASK				= ID_TO_FLAG ( INVERSE_VIEW_MTX ),
+		INVERSE_VIEW_PROJ_MTX_MASK			= ID_TO_FLAG ( INVERSE_VIEW_PROJ_MTX ) | ID_TO_FLAG ( INVERSE_PROJ_MTX ) | ID_TO_FLAG ( INVERSE_VIEW_MTX ),
+		INVERSE_WORLD_MTX_MASK				= ID_TO_FLAG ( INVERSE_WORLD_MTX ),
+		INVERSE_WORLD_VIEW_MTX_MASK			= ID_TO_FLAG ( INVERSE_WORLD_VIEW_MTX ) | ID_TO_FLAG ( INVERSE_VIEW_MTX ),
+		INVERSE_WORLD_VIEW_PROJ_MTX_MASK	= ID_TO_FLAG ( INVERSE_WORLD_VIEW_PROJ_MTX ) | ID_TO_FLAG ( INVERSE_PROJ_MTX ) | ID_TO_FLAG ( INVERSE_VIEW_MTX ),
+		VIEW_PROJ_MTX_MASK					= ID_TO_FLAG ( VIEW_PROJ_MTX ),
+		VIEW_VOLUME_MASK					= ID_TO_FLAG ( VIEW_VOLUME ) | ID_TO_FLAG ( INVERSE_PROJ_MTX ) | ID_TO_FLAG ( INVERSE_VIEW_MTX ),
+		WORLD_VIEW_MTX_MASK					= ID_TO_FLAG ( WORLD_VIEW_MTX ),
+		WORLD_VIEW_PROJ_MTX_MASK			= ID_TO_FLAG ( WORLD_VIEW_PROJ_MTX ),
+	
+		BASE_ATTRS_MASK						= ID_TO_FLAG ( PROJ_MTX )
+											| ID_TO_FLAG ( UV_MTX )
+											| ID_TO_FLAG ( VIEW_MTX )
+											| ID_TO_FLAG ( WORLD_MTX )
+											| ID_TO_FLAG ( PEN_COLOR ),
+		
+		PEN_COLOR_DIRTY_MASK				= ID_TO_FLAG ( PEN_COLOR ),
+		
+		PROJ_MTX_DIRTY_MASK					= ID_TO_FLAG ( PROJ_MTX )
+											| ID_TO_FLAG ( INVERSE_PROJ_MTX )
+											| ID_TO_FLAG ( INVERSE_VIEW_PROJ_MTX )
+											| ID_TO_FLAG ( INVERSE_WORLD_VIEW_PROJ_MTX )
+											| ID_TO_FLAG ( VIEW_PROJ_MTX )
+											| ID_TO_FLAG ( WORLD_VIEW_PROJ_MTX )
+											| ID_TO_FLAG ( VIEW_VOLUME ),
+		
+		UV_MTX_DIRTY_MASK					= ID_TO_FLAG ( UV_MTX )
+											| ID_TO_FLAG ( INVERSE_UV_MTX ),
+		
+		VIEW_MTX_DIRTY_MASK					= ID_TO_FLAG ( VIEW_MTX )
+											| ID_TO_FLAG ( INVERSE_VIEW_MTX )
+											| ID_TO_FLAG ( INVERSE_VIEW_PROJ_MTX )
+											| ID_TO_FLAG ( INVERSE_WORLD_VIEW_MTX )
+											| ID_TO_FLAG ( INVERSE_WORLD_VIEW_PROJ_MTX )
+											| ID_TO_FLAG ( VIEW_PROJ_MTX )
+											| ID_TO_FLAG ( WORLD_VIEW_MTX )
+											| ID_TO_FLAG ( WORLD_VIEW_PROJ_MTX )
+											| ID_TO_FLAG ( VIEW_VOLUME ),
+		
+		WORLD_MTX_DIRTY_MASK				= ID_TO_FLAG ( WORLD_MTX )
+											| ID_TO_FLAG ( INVERSE_WORLD_MTX )
+											| ID_TO_FLAG ( INVERSE_WORLD_VIEW_MTX )
+											| ID_TO_FLAG ( INVERSE_WORLD_VIEW_PROJ_MTX )
+											| ID_TO_FLAG ( WORLD_VIEW_MTX )
+											| ID_TO_FLAG ( WORLD_VIEW_PROJ_MTX ),
 	};
 
 protected:
 	
 	ZLMatrix4x4				mVertexTransforms [ TOTAL_MATRICES ]; // composition of VIEW and PROJ matrices via CPU
 	u32						mDirtyFlags;
+	u32						mShaderFlags;
 	
 	ZLFrustum				mViewVolume;
 	
+	ZLColorVec				mAmbientColor;
+	ZLColorVec				mPenColor;
+	ZLColorVec				mFinalColor;
+	u32						mFinalColor32;
+	
+	u32						mBufferWidth;
+	u32						mBufferHeight;
+	
+	//----------------------------------------------------------------//
+	void					Flush						();
+	void					UpdateFinalColor			();
+	
 public:
 
+	GET ( const ZLColorVec&, AmbientColor, mAmbientColor )
+	GET ( const ZLColorVec&, PenColor, mPenColor )
+	GET ( const ZLColorVec&, FinalColor, mFinalColor )
+	GET ( u32, FinalColor32, mFinalColor32 )
+
+	GET_SET ( u32, ShaderFlags, mShaderFlags )
+
 	//----------------------------------------------------------------//
+	u32						Apply						( u32 attrID, MOAIShaderUniformBuffer& uniform );
+	
 	ZLMatrix4x4				GetNormToWndMtx				();
 	ZLMatrix4x4				GetNormToWndMtx				( const ZLRect& wndRect );
 	
@@ -95,11 +153,25 @@ public:
 							MOAIGfxMtxCache				();
 							~MOAIGfxMtxCache			();
 
-	void					SetMtx						( u32 id );
-	void					SetMtx						( u32 id, const ZLAffine3D& transform );
+	void					SetAmbientColor				( u32 color );
+	void					SetAmbientColor				( const ZLColorVec& colorVec );
+	void					SetAmbientColor				( float r, float g, float b, float a );
+
+	void					SetBufferSize				( u32 width, u32 height );
+
+	void					SetMtx						( u32 transformID );
+	void					SetMtx						( u32 transformID, const ZLAffine3D& transform );
 	void					SetMtx						( u32 transformID, const ZLMatrix4x4& mtx );
 	
-	//void					UpdateViewVolume			();
+	void					SetPenColor					( u32 color );
+	void					SetPenColor					( const ZLColorVec& colorVec );
+	void					SetPenColor					( float r, float g, float b, float a );
+	
+	//----------------------------------------------------------------//
+	static inline u32 GetAttrFlagForID ( u32 globalID ) {
+
+		return globalID < TOTAL_GLOBALS ? 1 << globalID : 0;
+	}
 };
 
 #endif

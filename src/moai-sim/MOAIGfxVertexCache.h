@@ -38,12 +38,6 @@ protected:
 	bool						mIsDrawing;
 	bool						mUseIdxBuffer;
 
-	ZLColorVec					mAmbientColor;
-	ZLColorVec					mPenColor;
-	
-	ZLColorVec					mFinalColor;
-	u32							mFinalColor32;
-
 	MOAIVertexBuffer			mVtxBuffer;
 	MOAIIndexBuffer				mIdxBuffer;
 	
@@ -71,16 +65,14 @@ protected:
 	bool						mApplyUVTransform;
 	ZLMatrix4x4					mUVTransform;
 
+	ZLColorVec					mVertexColor;
+	u32							mVertexColor32;
+
 	//----------------------------------------------------------------//
 	void			TransformAndWriteQuad			( ZLVec4D* vtx, ZLVec2D* uv );
-	void			UpdateFinalColor				();
 	void			UpdateLimits					();
 
 public:
-	
-	GET ( ZLColorVec, AmbientColor, mAmbientColor )
-	GET ( ZLColorVec, FinalColor, mFinalColor )
-	GET ( ZLColorVec, PenColor, mPenColor )
 	
 	//----------------------------------------------------------------//
 	void			BeginPrim						();
@@ -97,13 +89,6 @@ public:
 	
 					MOAIGfxVertexCache				();
 					~MOAIGfxVertexCache				();
-	void			SetAmbientColor					( u32 color );
-	void			SetAmbientColor					( const ZLColorVec& colorVec );
-	void			SetAmbientColor					( float r, float g, float b, float a );
-	
-	void			SetPenColor						( u32 color );
-	void			SetPenColor						( const ZLColorVec& colorVec );
-	void			SetPenColor						( float r, float g, float b, float a );
 
 	void			SetPrimType						( u32 primType, u32 primSize = 0 );
 
@@ -119,25 +104,25 @@ public:
 	void			WriteQuad						( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale );
 	
 	//----------------------------------------------------------------//
-	inline void WriteColor ( float r, float g, float b, float a ) {
-		UNUSED ( r );
-		UNUSED ( g );
-		UNUSED ( b );
-		UNUSED ( a );
+//	inline void WriteColor ( float r, float g, float b, float a ) {
+//		UNUSED ( r );
+//		UNUSED ( g );
+//		UNUSED ( b );
+//		UNUSED ( a );
+//	}
+	
+	//----------------------------------------------------------------//
+	inline void WritePenColor4b () {
+		
+		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
+		this->mVtxBuffer.Write < u32 >( this->mVertexColor32 );
 	}
 	
 	//----------------------------------------------------------------//
-	inline void WriteFinalColor4b () {
+	inline void WritePenColor4f () {
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		this->mVtxBuffer.Write < u32 >( this->mFinalColor32 );
-	}
-	
-	//----------------------------------------------------------------//
-	inline void WriteFinalColor4f () {
-		
-		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		this->mVtxBuffer.Write < ZLColorVec >( this->mFinalColor );
+		this->mVtxBuffer.Write < ZLColorVec >( this->mVertexColor );
 	}
 		
 	//----------------------------------------------------------------//

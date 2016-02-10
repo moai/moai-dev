@@ -225,8 +225,6 @@ void MOAIShaderProgram::ApplyGlobals () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	const ZLRect& viewRect = gfxMgr.GetViewRect ();
-
 	// NOTE: matrices are submitted transposed; it is up to the shader to transform vertices correctly
 	// vert * matrix implicitely transposes the matrix; martix * vert uses the matrix as submitted
 
@@ -237,65 +235,8 @@ void MOAIShaderProgram::ApplyGlobals () {
 		if ( global.mUniformID == INVALID_INDEX ) continue;
 		
 		MOAIShaderUniform& uniform = this->mUniforms [ global.mUniformID ];
-	
-		switch ( global.mGlobalID ) {
 		
-			case GLOBAL_PEN_COLOR: {
-			
-				uniform.mFlags |= uniform.SetValue ( gfxMgr.mFinalColor, true );
-				break;
-			}
-			case GLOBAL_VIEW_PROJ: {
-				
-				uniform.mFlags |= uniform.SetValue ( gfxMgr.GetMtx ( MOAIGfxMgr::VIEW_PROJ_MTX ), true );
-				break;
-			}
-			case GLOBAL_VIEW_WIDTH: {
-			
-				uniform.mFlags |= uniform.SetValue ( viewRect.Width ());
-				break;
-			}
-			case GLOBAL_VIEW_HEIGHT: {
-			
-				uniform.mFlags |= uniform.SetValue ( viewRect.Height ());
-				break;
-			}
-			case GLOBAL_VIEW_HALF_WIDTH: {
-			
-				uniform.mFlags |= uniform.SetValue ( viewRect.Width () * 0.5f );
-				break;
-			}
-			case GLOBAL_VIEW_HALF_HEIGHT: {
-			
-				uniform.mFlags |= uniform.SetValue ( viewRect.Height () * 0.5f );
-				break;
-			}
-			case GLOBAL_WORLD: {
-			
-				uniform.mFlags |= uniform.SetValue ( gfxMgr.GetMtx ( MOAIGfxMgr::WORLD_MTX ), true );
-				break;
-			}
-			case GLOBAL_WORLD_INVERSE: {
-				
-				uniform.mFlags |= uniform.SetValue ( gfxMgr.GetMtx ( MOAIGfxMgr::INVERSE_WORLD_MTX ), true );
-				break;
-			}
-			case GLOBAL_WORLD_VIEW: {
-				
-				uniform.mFlags |= uniform.SetValue ( gfxMgr.GetMtx ( MOAIGfxMgr::WORLD_VIEW_MTX ), true );
-				break;
-			}
-			case GLOBAL_WORLD_VIEW_INVERSE: {
-				
-				uniform.mFlags |= uniform.SetValue ( gfxMgr.GetMtx ( MOAIGfxMgr::INVERSE_WORLD_VIEW_MTX ), true );
-				break;
-			}
-			case GLOBAL_WORLD_VIEW_PROJ: {
-				
-				uniform.mFlags |= uniform.SetValue ( gfxMgr.GetMtx ( MOAIGfxMgr::WORLD_VIEW_PROJ_MTX ), true );
-				break;
-			}
-		}
+		uniform.mFlags |= gfxMgr.Apply ( global.mGlobalID, uniform );
 	}
 }
 
@@ -414,10 +355,23 @@ void MOAIShaderProgram::DeclareUniform ( u32 idx, cc8* name, u32 type, int value
 }
 
 //----------------------------------------------------------------//
+u32 MOAIShaderProgram::GetGlobalsMask () {
+
+	if ( this->mGlobals.Size () && !this->mGlobalsMask ) {
+		for ( u32 i = 0; i < this->mGlobals.Size (); ++i ) {
+			const MOAIShaderProgramGlobal& global = this->mGlobals [ i ];
+			this->mGlobalsMask |= MOAIGfxMgr::GetAttrFlagForID ( global.mGlobalID );
+		}
+	}
+	return this->mGlobalsMask;
+}
+
+//----------------------------------------------------------------//
 MOAIShaderProgram::MOAIShaderProgram () :
 	mProgram ( 0 ),
 	mVertexShader ( 0 ),
-	mFragmentShader ( 0 ) {
+	mFragmentShader ( 0 ),
+	mGlobalsMask ( 0 ) {
 
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIGfxResource )
@@ -461,11 +415,6 @@ void MOAIShaderProgram::OnGPUBind () {
 
 	// use shader program.
 	MOAIGfxMgr::GetDrawingAPI ().UseProgram ( this->mProgram );
-
-	// reload the uniform values
-	//for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
-	//	this->mUniforms [ i ].Bind ();
-	//}
 }
 
 //----------------------------------------------------------------//
@@ -571,15 +520,18 @@ void MOAIShaderProgram::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "UNIFORM_MATRIX_F4",					( u32 )MOAIShaderUniform::UNIFORM_MATRIX_F4 );
 	state.SetField ( -1, "UNIFORM_VECTOR_F4",					( u32 )MOAIShaderUniform::UNIFORM_VECTOR_F4 );
 	
-	state.SetField ( -1, "GLOBAL_PEN_COLOR",					( u32 )GLOBAL_PEN_COLOR );
-	state.SetField ( -1, "GLOBAL_VIEW_PROJ",					( u32 )GLOBAL_VIEW_PROJ );
-	state.SetField ( -1, "GLOBAL_VIEW_WIDTH",					( u32 )GLOBAL_VIEW_WIDTH );
-	state.SetField ( -1, "GLOBAL_VIEW_HEIGHT",					( u32 )GLOBAL_VIEW_HEIGHT );
-	state.SetField ( -1, "GLOBAL_WORLD",						( u32 )GLOBAL_WORLD );
-	state.SetField ( -1, "GLOBAL_WORLD_INVERSE",				( u32 )GLOBAL_WORLD_INVERSE );
-	state.SetField ( -1, "GLOBAL_WORLD_VIEW",					( u32 )GLOBAL_WORLD_VIEW );
-	state.SetField ( -1, "GLOBAL_WORLD_VIEW_INVERSE",			( u32 )GLOBAL_WORLD_VIEW_INVERSE );
-	state.SetField ( -1, "GLOBAL_WORLD_VIEW_PROJ",				( u32 )GLOBAL_WORLD_VIEW_PROJ );
+	state.SetField ( -1, "GLOBAL_WORLD_INVERSE",				( u32 )MOAIGfxMgr::INVERSE_WORLD_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_VIEW_INVERSE",			( u32 )MOAIGfxMgr::INVERSE_WORLD_VIEW_MTX );
+	
+	state.SetField ( -1, "GLOBAL_VIEW_PROJ",					( u32 )MOAIGfxMgr::VIEW_PROJ_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD",						( u32 )MOAIGfxMgr::WORLD_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_VIEW",					( u32 )MOAIGfxMgr::WORLD_VIEW_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_VIEW_PROJ",				( u32 )MOAIGfxMgr::WORLD_VIEW_PROJ_MTX );
+	
+	state.SetField ( -1, "GLOBAL_PEN_COLOR",					( u32 )MOAIGfxMgr::PEN_COLOR );
+	
+	state.SetField ( -1, "GLOBAL_VIEW_HEIGHT",					( u32 )MOAIGfxMgr::VIEW_HEIGHT );
+	state.SetField ( -1, "GLOBAL_VIEW_WIDTH",					( u32 )MOAIGfxMgr::VIEW_WIDTH );
 }
 
 //----------------------------------------------------------------//
@@ -657,6 +609,8 @@ void MOAIShaderProgram::SetGlobal ( u32 idx, u32 uniformID, u32 globalID ) {
 	
 	this->mGlobals [ idx ].mUniformID = uniformID;
 	this->mGlobals [ idx ].mGlobalID = globalID;
+	
+	this->mGlobalsMask = 0;
 }
 
 //----------------------------------------------------------------//

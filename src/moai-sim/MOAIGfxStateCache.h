@@ -86,9 +86,14 @@ public:
 	
 	size_t			CountTextureUnits			();
 	
-	float			GetDeviceScale				();
-	u32				GetHeight					() const;
-	u32				GetWidth					() const;
+	u32				GetBufferHeight				() const;
+	u32				GetBufferWidth				() const;
+	
+	//float			GetDeviceScale				();
+	u32				GetShaderGlobalsMask		();
+	
+	float			GetViewHeight				() const;
+	float			GetViewWidth				() const;
 	
 	void			InitTextureUnits			( size_t nTextureUnits );
 	

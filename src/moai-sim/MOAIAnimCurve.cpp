@@ -123,14 +123,14 @@ void MOAIAnimCurve::Draw ( u32 resolution ) const {
 		float v = this->GetValue ( t );
 		
 		gfxMgr.WriteVtx ( t, v, 0.0f );
-		gfxMgr.WriteFinalColor4b ();
+		gfxMgr.WritePenColor4b ();
 	}
 	
 	float t = length;
 	float v = this->GetValue ( t );
 	
 	gfxMgr.WriteVtx ( t, v, 0.0f );
-	gfxMgr.WriteFinalColor4b ();
+	gfxMgr.WritePenColor4b ();
 	
 	gfxMgr.EndPrim ();
 }

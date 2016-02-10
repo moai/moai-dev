@@ -78,6 +78,8 @@ protected:
 	ZLLeanArray < MOAIShaderUniformBuffer >		mDefaults;
 	ZLLeanArray < MOAIShaderProgramGlobal >		mGlobals;
 
+	u32											mGlobalsMask;
+
 	//----------------------------------------------------------------//
 	static int		_clearUniform				( lua_State* L );
 	static int		_declareUniform				( lua_State* L );
@@ -110,19 +112,19 @@ public:
 
 	DECL_LUA_FACTORY ( MOAIShaderProgram )
 
-	enum {
-		GLOBAL_PEN_COLOR,
-		GLOBAL_VIEW_PROJ,
-		GLOBAL_VIEW_WIDTH,
-		GLOBAL_VIEW_HEIGHT,
-		GLOBAL_VIEW_HALF_WIDTH,
-		GLOBAL_VIEW_HALF_HEIGHT,
-		GLOBAL_WORLD,
-		GLOBAL_WORLD_INVERSE,
-		GLOBAL_WORLD_VIEW,
-		GLOBAL_WORLD_VIEW_INVERSE,
-		GLOBAL_WORLD_VIEW_PROJ,
-	};
+//	enum {
+//		GLOBAL_PEN_COLOR,
+//		GLOBAL_VIEW_PROJ,
+//		GLOBAL_VIEW_WIDTH,
+//		GLOBAL_VIEW_HEIGHT,
+//		GLOBAL_VIEW_HALF_WIDTH,
+//		GLOBAL_VIEW_HALF_HEIGHT,
+//		GLOBAL_WORLD,
+//		GLOBAL_WORLD_INVERSE,
+//		GLOBAL_WORLD_VIEW,
+//		GLOBAL_WORLD_VIEW_INVERSE,
+//		GLOBAL_WORLD_VIEW_PROJ,
+//	};
 
 	//----------------------------------------------------------------//
 	void			Clear						();
@@ -132,7 +134,7 @@ public:
 	void			DeclareUniform				( u32 idx, cc8* name, u32 type );
 	void			DeclareUniform				( u32 idx, cc8* name, u32 type, float value );
 	void			DeclareUniform				( u32 idx, cc8* name, u32 type, int value );
-	bool			IsValid						();
+	u32				GetGlobalsMask				();
 					MOAIShaderProgram			();
 					~MOAIShaderProgram			();
 	void			RegisterLuaClass			( MOAILuaState& state );

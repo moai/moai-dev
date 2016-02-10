@@ -347,8 +347,8 @@ void AKUSetViewSize ( int width, int height ) {
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
-	u32 currentWidth = gfxMgr.GetWidth ();
-	u32 currentHeight = gfxMgr.GetHeight ();
+	u32 currentWidth = gfxMgr.GetBufferWidth ();
+	u32 currentHeight = gfxMgr.GetBufferHeight ();
 	
 	if (( currentWidth != ( u32 )width ) || ( currentHeight != ( u32 )height )) {
 	

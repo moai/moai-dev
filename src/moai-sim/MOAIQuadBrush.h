@@ -16,7 +16,7 @@ private:
 		
 		gfxMgr.WriteVtx ( vtx );
 		gfxMgr.WriteUV ( uv );
-		gfxMgr.WriteFinalColor4b ();
+		gfxMgr.WritePenColor4b ();
 	}
 
 public:
