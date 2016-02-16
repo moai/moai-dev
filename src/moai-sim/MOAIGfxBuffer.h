@@ -33,7 +33,7 @@ class MOAIGfxBuffer :
 	public ZLCopyOnWrite {
 protected:
 	
-	friend class MOAIGfxPipelineMgr;
+	friend class MOAIGfxPipelineClerk;
 	friend class MOAIGfxStateCache;
 	
 	enum {

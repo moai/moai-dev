@@ -187,7 +187,7 @@ void MOAIRenderMgr::Render () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	ZLGfx& gfx = gfxMgr.mPipelineMgr.SelectDrawingAPI ( MOAIGfxPipelineMgr::DRAWING_PIPELINE );
+	ZLGfx& gfx = gfxMgr.mPipelineMgr.SelectDrawingAPI ( MOAIGfxPipelineClerk::DRAWING_PIPELINE );
 
 	ZGL_COMMENT ( gfx, "RENDER MGR RENDER" );
 

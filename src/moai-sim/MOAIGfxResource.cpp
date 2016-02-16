@@ -79,7 +79,7 @@ int MOAIGfxResource::_purge ( lua_State* L ) {
 int MOAIGfxResource::_scheduleForGPUCreate ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )
 
-	u32 listID = state.GetValue < u32 >( 2, MOAIGfxPipelineMgr::DRAWING_PIPELINE );
+	u32 listID = state.GetValue < u32 >( 2, MOAIGfxPipelineClerk::DRAWING_PIPELINE );
 	self->ScheduleForGPUCreate ( listID );
 	return 0;
 }
@@ -203,7 +203,7 @@ void MOAIGfxResource::FinishInit () {
 
 	if (( this->mState == STATE_UNINITIALIZED ) || ( this->mState == STATE_ERROR )) {
 		this->mState = STATE_READY_FOR_CPU_CREATE;
-		this->ScheduleForGPUCreate ( MOAIGfxPipelineMgr::DRAWING_PIPELINE );
+		this->ScheduleForGPUCreate ( MOAIGfxPipelineClerk::DRAWING_PIPELINE );
 	}
 	else {
 		this->ScheduleForGPUUpdate ();
@@ -280,7 +280,7 @@ bool MOAIGfxResource::Purge ( u32 age ) {
 		this->OnGPUDestroy ();
 		this->mState = STATE_READY_FOR_CPU_CREATE;
 		
-		this->ScheduleForGPUCreate ( MOAIGfxPipelineMgr::DRAWING_PIPELINE );
+		this->ScheduleForGPUCreate ( MOAIGfxPipelineClerk::DRAWING_PIPELINE );
 		
 		return true;
 	}
@@ -300,8 +300,8 @@ void MOAIGfxResource::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "GFX_EVENT_CREATED",					( u32 )GFX_EVENT_CREATED );
 	
-	state.SetField ( -1, "DRAWING_PIPELINE",					( u32 )MOAIGfxPipelineMgr::DRAWING_PIPELINE );
-	state.SetField ( -1, "LOADING_PIPELINE",					( u32 )MOAIGfxPipelineMgr::LOADING_PIPELINE );
+	state.SetField ( -1, "DRAWING_PIPELINE",					( u32 )MOAIGfxPipelineClerk::DRAWING_PIPELINE );
+	state.SetField ( -1, "LOADING_PIPELINE",					( u32 )MOAIGfxPipelineClerk::LOADING_PIPELINE );
 }
 
 //----------------------------------------------------------------//
@@ -355,7 +355,7 @@ bool MOAIGfxResource::ScheduleForGPUUpdate () {
 	this->mState = STATE_NEEDS_GPU_UPDATE;
 
 	if ( MOAIGfxResourceMgr::IsValid ()) {
-		MOAIGfxResourceMgr::Get ().ScheduleGPUAffirm ( *this, MOAIGfxPipelineMgr::DRAWING_PIPELINE ); // always update in the drawing pipeline
+		MOAIGfxResourceMgr::Get ().ScheduleGPUAffirm ( *this, MOAIGfxPipelineClerk::DRAWING_PIPELINE ); // always update in the drawing pipeline
 	}
 	return true;
 }

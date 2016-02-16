@@ -18,7 +18,7 @@ class MOAIGfxResource :
 private:
 
 	friend class MOAIGfxMgr;
-	friend class MOAIGfxPipelineMgr;
+	friend class MOAIGfxPipelineClerk;
 	friend class MOAIGfxStateCache;
 	friend class MOAIGfxResourceMgr;
 

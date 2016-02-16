@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXPIPELINEMGR_H
-#define	MOAIGFXPIPELINEMGR_H
+#ifndef	MOAIGFXPIPELINECLERK_H
+#define	MOAIGFXPIPELINECLERK_H
 
 class MOAIIndexBuffer;
 class MOAIVertexArray;
@@ -18,7 +18,7 @@ class MOAIGfxPipelinePair {
 private:
 
 	friend class MOAIGfxPipeline;
-	friend class MOAIGfxPipelineMgr;
+	friend class MOAIGfxPipelineClerk;
 	
 	ZLGfxRetained	mCritical;
 	ZLGfxRetained	mOptional;
@@ -30,7 +30,7 @@ private:
 class MOAIGfxPipeline {
 private:
 
-	friend class MOAIGfxPipelineMgr;
+	friend class MOAIGfxPipelineClerk;
 
 	ZLLeanArray < MOAIGfxPipelinePair* > mDisplayPairs;
 	ZLLeanStack < MOAIGfxPipelinePair* > mFreeDisplayPairs;
@@ -66,9 +66,9 @@ private:
 };
 
 //================================================================//
-// MOAIGfxPipelineMgr
+// MOAIGfxPipelineClerk
 //================================================================//
-class MOAIGfxPipelineMgr {
+class MOAIGfxPipelineClerk {
 public:
 
 	enum {
@@ -113,8 +113,8 @@ public:
 	void				EndPhase					( u32 phase );
 	bool				HasContent					( u32 pipelineID );
 	bool				IsPipelineEnabled			( u32 pipelineID );
-						MOAIGfxPipelineMgr			();
-	virtual				~MOAIGfxPipelineMgr			();
+						MOAIGfxPipelineClerk			();
+	virtual				~MOAIGfxPipelineClerk			();
 	void				ProcessPipeline				( u32 pipelineID );
 	void				PublishAndReset				( u32 pipelineID );
 	void				ResetDrawingAPIs			();

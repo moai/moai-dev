@@ -8,7 +8,7 @@
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIGfxGlobalsCache.h>
-#include <moai-sim/MOAIGfxPipelineMgr.h>
+#include <moai-sim/MOAIGfxPipelineClerk.h>
 #include <moai-sim/MOAIGfxVertexCache.h>
 #include <moai-sim/MOAIImage.h>
 
@@ -80,7 +80,7 @@ public:
 	
 	MOAIGfxGlobalsCache		mGfxState;
 	MOAIGfxVertexCache		mVertexCache;
-	MOAIGfxPipelineMgr		mPipelineMgr;
+	MOAIGfxPipelineClerk		mPipelineMgr;
 	
 	//----------------------------------------------------------------//
 	

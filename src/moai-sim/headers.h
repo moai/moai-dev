@@ -39,7 +39,7 @@
 #include <moai-sim/MOAIGfxBuffer.h>
 #include <moai-sim/MOAIGfxGlobalsCache.h>
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIGfxPipelineMgr.h>
+#include <moai-sim/MOAIGfxPipelineClerk.h>
 #include <moai-sim/MOAIGfxStateCache.h>
 #include <moai-sim/MOAIGfxQuad2D.h>
 #include <moai-sim/MOAIGfxQuadDeck2D.h>

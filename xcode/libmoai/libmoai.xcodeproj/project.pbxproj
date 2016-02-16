@@ -1147,10 +1147,10 @@
 		CD2BA7971B2A16B00010C399 /* MOAIGfxGlobalsCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA7941B2A16B00010C399 /* MOAIGfxGlobalsCache.cpp */; };
 		CD2BA7981B2A16B00010C399 /* MOAIGfxGlobalsCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2BA7951B2A16B00010C399 /* MOAIGfxGlobalsCache.h */; };
 		CD2BA7991B2A16B00010C399 /* MOAIGfxGlobalsCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2BA7951B2A16B00010C399 /* MOAIGfxGlobalsCache.h */; };
-		CD2BA79C1B2A20A80010C399 /* MOAIGfxPipelineMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA79A1B2A20A80010C399 /* MOAIGfxPipelineMgr.cpp */; };
-		CD2BA79D1B2A20A80010C399 /* MOAIGfxPipelineMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA79A1B2A20A80010C399 /* MOAIGfxPipelineMgr.cpp */; };
-		CD2BA79E1B2A20A80010C399 /* MOAIGfxPipelineMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2BA79B1B2A20A80010C399 /* MOAIGfxPipelineMgr.h */; };
-		CD2BA79F1B2A20A80010C399 /* MOAIGfxPipelineMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2BA79B1B2A20A80010C399 /* MOAIGfxPipelineMgr.h */; };
+		CD2BA79C1B2A20A80010C399 /* MOAIGfxPipelineClerk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA79A1B2A20A80010C399 /* MOAIGfxPipelineClerk.cpp */; };
+		CD2BA79D1B2A20A80010C399 /* MOAIGfxPipelineClerk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA79A1B2A20A80010C399 /* MOAIGfxPipelineClerk.cpp */; };
+		CD2BA79E1B2A20A80010C399 /* MOAIGfxPipelineClerk.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2BA79B1B2A20A80010C399 /* MOAIGfxPipelineClerk.h */; };
+		CD2BA79F1B2A20A80010C399 /* MOAIGfxPipelineClerk.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2BA79B1B2A20A80010C399 /* MOAIGfxPipelineClerk.h */; };
 		CD2BA7A31B2A2D760010C399 /* MOAIGfxVertexCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA7A11B2A2D750010C399 /* MOAIGfxVertexCache.cpp */; };
 		CD2BA7A41B2A2D760010C399 /* MOAIGfxVertexCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA7A11B2A2D750010C399 /* MOAIGfxVertexCache.cpp */; };
 		CD2BA7A51B2A2D760010C399 /* MOAIGfxVertexCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2BA7A21B2A2D750010C399 /* MOAIGfxVertexCache.h */; };
@@ -6482,8 +6482,8 @@
 		CD2B7C9317FA573B00EBA2DB /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-ios/host.h"; sourceTree = "<group>"; };
 		CD2BA7941B2A16B00010C399 /* MOAIGfxGlobalsCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGfxGlobalsCache.cpp; sourceTree = "<group>"; };
 		CD2BA7951B2A16B00010C399 /* MOAIGfxGlobalsCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxGlobalsCache.h; sourceTree = "<group>"; };
-		CD2BA79A1B2A20A80010C399 /* MOAIGfxPipelineMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGfxPipelineMgr.cpp; sourceTree = "<group>"; };
-		CD2BA79B1B2A20A80010C399 /* MOAIGfxPipelineMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxPipelineMgr.h; sourceTree = "<group>"; };
+		CD2BA79A1B2A20A80010C399 /* MOAIGfxPipelineClerk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGfxPipelineClerk.cpp; sourceTree = "<group>"; };
+		CD2BA79B1B2A20A80010C399 /* MOAIGfxPipelineClerk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxPipelineClerk.h; sourceTree = "<group>"; };
 		CD2BA7A11B2A2D750010C399 /* MOAIGfxVertexCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGfxVertexCache.cpp; sourceTree = "<group>"; };
 		CD2BA7A21B2A2D750010C399 /* MOAIGfxVertexCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxVertexCache.h; sourceTree = "<group>"; };
 		CD2CB51B19FDBECA00C42260 /* MOAIStreamAdapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIStreamAdapter.cpp; sourceTree = "<group>"; };
@@ -10247,12 +10247,12 @@
 		CD2BA7A01B2A20BB0010C399 /* graphics cache */ = {
 			isa = PBXGroup;
 			children = (
-				89BE6F61173AD0CA00DFE837 /* MOAIGfxMgr.cpp */,
-				89BE6F62173AD0CA00DFE837 /* MOAIGfxMgr.h */,
 				CD2BA7941B2A16B00010C399 /* MOAIGfxGlobalsCache.cpp */,
 				CD2BA7951B2A16B00010C399 /* MOAIGfxGlobalsCache.h */,
-				CD2BA79A1B2A20A80010C399 /* MOAIGfxPipelineMgr.cpp */,
-				CD2BA79B1B2A20A80010C399 /* MOAIGfxPipelineMgr.h */,
+				89BE6F61173AD0CA00DFE837 /* MOAIGfxMgr.cpp */,
+				89BE6F62173AD0CA00DFE837 /* MOAIGfxMgr.h */,
+				CD2BA79A1B2A20A80010C399 /* MOAIGfxPipelineClerk.cpp */,
+				CD2BA79B1B2A20A80010C399 /* MOAIGfxPipelineClerk.h */,
 				89BE6F69173AD0CA00DFE837 /* MOAIGfxResource.cpp */,
 				89BE6F6A173AD0CA00DFE837 /* MOAIGfxResource.h */,
 				CD1AEB441A0F785C005512C8 /* MOAIGfxResourceMgr.cpp */,
@@ -13501,7 +13501,7 @@
 				CDB0CA32193E6D3B00C54DB7 /* MOAIGridFancy.h in Headers */,
 				CD1AEB481A0F785C005512C8 /* MOAIGfxResourceMgr.h in Headers */,
 				CD4C3EBD180A63BB00C02381 /* MOAISim.h in Headers */,
-				CD2BA79E1B2A20A80010C399 /* MOAIGfxPipelineMgr.h in Headers */,
+				CD2BA79E1B2A20A80010C399 /* MOAIGfxPipelineClerk.h in Headers */,
 				CD2BA7A51B2A2D760010C399 /* MOAIGfxVertexCache.h in Headers */,
 				CD4C3ED6180A63BB00C02381 /* MOAITileDeck2D.h in Headers */,
 				CD4C3EF1180A63BB00C02381 /* MOAIVectorStyle.h in Headers */,
@@ -13602,7 +13602,7 @@
 				CD4C403E180A63C200C02381 /* MOAICollisionShape.h in Headers */,
 				CD4C40B8180A63C200C02381 /* MOAIPartitionResultBuffer.h in Headers */,
 				CD4C410A180A63C200C02381 /* MOAITileFlags.h in Headers */,
-				CD2BA79F1B2A20A80010C399 /* MOAIGfxPipelineMgr.h in Headers */,
+				CD2BA79F1B2A20A80010C399 /* MOAIGfxPipelineClerk.h in Headers */,
 				CD4C40D8180A63C200C02381 /* MOAIProp.h in Headers */,
 				CD34310E1B31175F002BEBFA /* MOAISingleTexture.h in Headers */,
 				CD4C4108180A63C200C02381 /* MOAITileDeck2D.h in Headers */,
@@ -17287,7 +17287,7 @@
 				CD4C3EBF180A63BB00C02381 /* MOAIStaticGlyphCache.cpp in Sources */,
 				CD4C3EDF180A63BB00C02381 /* MOAITransform2D.cpp in Sources */,
 				CD4C3E0B180A63BB00C02381 /* MOAICollisionShape.cpp in Sources */,
-				CD2BA79C1B2A20A80010C399 /* MOAIGfxPipelineMgr.cpp in Sources */,
+				CD2BA79C1B2A20A80010C399 /* MOAIGfxPipelineClerk.cpp in Sources */,
 				CD14013F1A0C5F660065AEE7 /* MOAIInputMgr.cpp in Sources */,
 				CD4C3E81180A63BB00C02381 /* MOAIPartitionCell.cpp in Sources */,
 				CDEFD576181ECB3E0058D772 /* MOAIVectorEllipse.cpp in Sources */,
@@ -17457,7 +17457,7 @@
 				CD4C404F180A63C200C02381 /* MOAIEaseType.cpp in Sources */,
 				CD4C40F1180A63C200C02381 /* MOAIStaticGlyphCache.cpp in Sources */,
 				CD4C410D180A63C200C02381 /* MOAITouchSensor.cpp in Sources */,
-				CD2BA79D1B2A20A80010C399 /* MOAIGfxPipelineMgr.cpp in Sources */,
+				CD2BA79D1B2A20A80010C399 /* MOAIGfxPipelineClerk.cpp in Sources */,
 				CD4C4053180A63C200C02381 /* MOAIFont.cpp in Sources */,
 				CD4C4072180A63C200C02381 /* MOAIGrid.cpp in Sources */,
 				CDC5203B18A17EB700BCC12F /* MOAIShaderUniform.cpp in Sources */,

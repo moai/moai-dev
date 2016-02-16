@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIGfxPipelineMgr.h>
+#include <moai-sim/MOAIGfxPipelineClerk.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIVertexArray.h>
 #include <moai-sim/MOAIVertexBuffer.h>
@@ -165,11 +165,11 @@ void MOAIGfxPipeline::ReleasePair ( MOAIGfxPipelinePair* pair ) {
 }
 
 //================================================================//
-// MOAIGfxPipelineMgr
+// MOAIGfxPipelineClerk
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxPipelineMgr::BeginPhase ( u32 phase ) {
+void MOAIGfxPipelineClerk::BeginPhase ( u32 phase ) {
 
 	switch ( phase ) {
 	
@@ -196,7 +196,7 @@ void MOAIGfxPipelineMgr::BeginPhase ( u32 phase ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipelineMgr::BeginPhase ( u32 pipelineID, u32 phase ) {
+void MOAIGfxPipelineClerk::BeginPhase ( u32 pipelineID, u32 phase ) {
 
 	if ( pipelineID < TOTAL_PIPELINES ) {
 	
@@ -216,20 +216,20 @@ void MOAIGfxPipelineMgr::BeginPhase ( u32 pipelineID, u32 phase ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipelineMgr::EnablePipeline ( u32 pipelineID ) {
+void MOAIGfxPipelineClerk::EnablePipeline ( u32 pipelineID ) {
 	
 	assert ( pipelineID < TOTAL_PIPELINES );
 	this->mPipelines [ pipelineID ] = new MOAIGfxPipeline ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipelineMgr::EnablePipelineLogging ( bool enable ) {
+void MOAIGfxPipelineClerk::EnablePipelineLogging ( bool enable ) {
 
 	this->mEnablePipelineLogging = enable;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipelineMgr::EndPhase ( u32 phase ) {
+void MOAIGfxPipelineClerk::EndPhase ( u32 phase ) {
 
 	switch ( phase ) {
 	
@@ -252,7 +252,7 @@ void MOAIGfxPipelineMgr::EndPhase ( u32 phase ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipelineMgr::EndPhase ( u32 pipelineID, u32 phase ) {
+void MOAIGfxPipelineClerk::EndPhase ( u32 pipelineID, u32 phase ) {
 
 	if ( pipelineID < TOTAL_PIPELINES ) {
 		MOAIGfxPipeline* pipeline = this->mPipelines [ pipelineID ];
@@ -264,20 +264,20 @@ void MOAIGfxPipelineMgr::EndPhase ( u32 pipelineID, u32 phase ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxPipelineMgr::HasContent ( u32 pipelineID ) {
+bool MOAIGfxPipelineClerk::HasContent ( u32 pipelineID ) {
 
 	assert ( pipelineID < TOTAL_PIPELINES );
 	return this->mPipelines [ pipelineID ] ? this->mPipelines [ pipelineID ]->HasContent () : true;
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxPipelineMgr::IsPipelineEnabled ( u32 pipelineID ) {
+bool MOAIGfxPipelineClerk::IsPipelineEnabled ( u32 pipelineID ) {
 
 	return ( pipelineID < TOTAL_PIPELINES ) && ( this->mPipelines [ pipelineID ] != NULL );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipelineMgr::LogPipelineRender ( ZLGfxRetained& gfx, size_t renderCount, cc8* name, cc8* flavor ) {
+void MOAIGfxPipelineClerk::LogPipelineRender ( ZLGfxRetained& gfx, size_t renderCount, cc8* name, cc8* flavor ) {
 
 	STLString temp;
 	temp.write ( "%s/%p.tmp", GFX_PIPELINE_LOGGING_FOLDER, &gfx );
@@ -298,7 +298,7 @@ void MOAIGfxPipelineMgr::LogPipelineRender ( ZLGfxRetained& gfx, size_t renderCo
 }
 
 //----------------------------------------------------------------//
-MOAIGfxPipelineMgr::MOAIGfxPipelineMgr () :
+MOAIGfxPipelineClerk::MOAIGfxPipelineClerk () :
 	mDrawingAPI ( &mGfxImmediate ),
 	mDrawCount ( 0 ),
 	mPipelineRenderCount ( 0 ),
@@ -308,7 +308,7 @@ MOAIGfxPipelineMgr::MOAIGfxPipelineMgr () :
 }
 
 //----------------------------------------------------------------//
-MOAIGfxPipelineMgr::~MOAIGfxPipelineMgr () {
+MOAIGfxPipelineClerk::~MOAIGfxPipelineClerk () {
 
 	for ( u32 i = 0; i < TOTAL_PIPELINES; ++i ) {
 		if ( this->mPipelines [ i ]) {
@@ -318,7 +318,7 @@ MOAIGfxPipelineMgr::~MOAIGfxPipelineMgr () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipelineMgr::ProcessPipeline ( u32 pipelineID ) {
+void MOAIGfxPipelineClerk::ProcessPipeline ( u32 pipelineID ) {
 
 	assert ( pipelineID < TOTAL_PIPELINES );
 	MOAIGfxPipeline* pipeline = this->mPipelines [ pipelineID ];
@@ -348,7 +348,7 @@ void MOAIGfxPipelineMgr::ProcessPipeline ( u32 pipelineID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipelineMgr::PublishAndReset ( u32 pipelineID ) {
+void MOAIGfxPipelineClerk::PublishAndReset ( u32 pipelineID ) {
 
 	assert ( pipelineID < TOTAL_PIPELINES );
 	MOAIGfxPipeline* pipeline = this->mPipelines [ pipelineID ];
@@ -359,7 +359,7 @@ void MOAIGfxPipelineMgr::PublishAndReset ( u32 pipelineID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipelineMgr::ResetDrawingAPIs () {
+void MOAIGfxPipelineClerk::ResetDrawingAPIs () {
 
 	ZLGfx& loadingAPI = this->SelectDrawingAPI ( LOADING_PIPELINE );
 	MOAIGfxMgr::Get ().mGfxState.ResetState ();
@@ -371,14 +371,14 @@ void MOAIGfxPipelineMgr::ResetDrawingAPIs () {
 }
 
 //----------------------------------------------------------------//
-ZLGfx& MOAIGfxPipelineMgr::SelectDrawingAPI () {
+ZLGfx& MOAIGfxPipelineClerk::SelectDrawingAPI () {
 
 	this->mDrawingAPI = &this->mGfxImmediate;
 	return *this->mDrawingAPI;
 }
 
 //----------------------------------------------------------------//
-ZLGfx& MOAIGfxPipelineMgr::SelectDrawingAPI ( u32 pipelineID, bool critical ) {
+ZLGfx& MOAIGfxPipelineClerk::SelectDrawingAPI ( u32 pipelineID, bool critical ) {
 
 	this->mDrawingAPI = &this->mGfxImmediate;
 

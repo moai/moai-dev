@@ -5,7 +5,7 @@
 #define	MOAIGFXSTATECACHE_H
 
 #include <moai-sim/MOAIBlendMode.h>
-#include <moai-sim/MOAIGfxPipelineMgr.h>
+#include <moai-sim/MOAIGfxPipelineClerk.h>
 
 class MOAICamera;
 class MOAIFrameBuffer;

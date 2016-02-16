@@ -24,11 +24,7 @@ int MOAIGfxResourceMgr::_purgeResources ( lua_State* L ) {
 
 	u32 age = state.GetValue < u32 >( 1, 0 );
 
-	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-
-	ZLGfxDevice::Begin ();
 	MOAIGfxResourceMgr::Get ().PurgeResources ( age );
-	ZLGfxDevice::End ();
 	
 	return 0;
 }
@@ -42,11 +38,7 @@ int MOAIGfxResourceMgr::_purgeResources ( lua_State* L ) {
 int MOAIGfxResourceMgr::_renewResources ( lua_State* L ) {
 	MOAILuaState state ( L );
 
-	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-
-	ZLGfxDevice::Begin ();
 	MOAIGfxResourceMgr::Get ().RenewResources ();
-	ZLGfxDevice::End ();
 	
 	return 0;
 }
@@ -114,10 +106,14 @@ void MOAIGfxResourceMgr::ProcessPending ( ZLLeanList < MOAIGfxResource* > &list 
 //----------------------------------------------------------------//
 void MOAIGfxResourceMgr::PurgeResources ( u32 age ) {
 	
+	ZLGfxDevice::Begin ();
+	
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
 		resourceIt->Data ()->Purge ( age );
 	}
+	
+	ZLGfxDevice::End ();
 }
 
 //----------------------------------------------------------------//
@@ -152,12 +148,16 @@ void MOAIGfxResourceMgr::RemoveGfxResource ( MOAIGfxResource& resource ) {
 // this gets called when the graphics context is renewed
 void MOAIGfxResourceMgr::RenewResources () {
 
+	ZLGfxDevice::Begin ();
+
 	this->mDeleterStack.Reset ();
 
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
 		resourceIt->Data ()->Renew ();
 	}
+	
+	ZLGfxDevice::End ();
 }
 
 //----------------------------------------------------------------//
@@ -165,11 +165,11 @@ void MOAIGfxResourceMgr::ScheduleGPUAffirm ( MOAIGfxResource& resource, u32 list
 
 	switch ( listID ) {
 
-		case MOAIGfxPipelineMgr::LOADING_PIPELINE:
+		case MOAIGfxPipelineClerk::LOADING_PIPELINE:
 			this->mPendingForLoadList.PushBack ( resource.mPendingLink );
 			break;
 		
-		case MOAIGfxPipelineMgr::DRAWING_PIPELINE:
+		case MOAIGfxPipelineClerk::DRAWING_PIPELINE:
 			this->mPendingForDrawList.PushBack ( resource.mPendingLink );
 			break;
 	}
@@ -184,7 +184,7 @@ void MOAIGfxResourceMgr::Update () {
 
 	if ( this->mDeleterStack.GetTop () || this->mPendingForLoadList.Count ()) {
 	
-		ZLGfx& gfxLoading = gfxMgr.mPipelineMgr.SelectDrawingAPI ( MOAIGfxPipelineMgr::LOADING_PIPELINE, true );
+		ZLGfx& gfxLoading = gfxMgr.mPipelineMgr.SelectDrawingAPI ( MOAIGfxPipelineClerk::LOADING_PIPELINE, true );
 		
 		ZGL_COMMENT ( gfxLoading, "RESOURCE MGR LOADING PIPELINE UPDATE" );
 		this->ProcessDeleters ();
@@ -194,7 +194,7 @@ void MOAIGfxResourceMgr::Update () {
 	
 	if ( this->mPendingForDrawList.Count ()) {
 	
-		ZLGfx& gfxDrawing = gfxMgr.mPipelineMgr.SelectDrawingAPI ( MOAIGfxPipelineMgr::DRAWING_PIPELINE, true );
+		ZLGfx& gfxDrawing = gfxMgr.mPipelineMgr.SelectDrawingAPI ( MOAIGfxPipelineClerk::DRAWING_PIPELINE, true );
 		
 		ZGL_COMMENT ( gfxDrawing, "RESOURCE MGR DRAWING PIPELINE UPDATE" );
 		this->ProcessPending ( this->mPendingForDrawList );

@@ -60,7 +60,7 @@ public:
 private:
 
 	friend class MOAIGfxMgr;
-	friend class MOAIGfxPipelineMgr;
+	friend class MOAIGfxPipelineClerk;
 	friend class MOAIGfxStateCache;
 
 	static const u32 COLOR_SIZE				= 4;
