@@ -20,6 +20,22 @@
 #include <moai-sim/MOAIViewport.h>
 
 //================================================================//
+// MOAIGfxStateCacheClient
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAIGfxStateCacheClient::MOAIGfxStateCacheClient () {
+}
+
+//----------------------------------------------------------------//
+MOAIGfxStateCacheClient::~MOAIGfxStateCacheClient () {
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateCacheClient::OnGfxStateWillChange () {
+}
+
+//================================================================//
 // MOAIGfxStateCache
 //================================================================//
 
@@ -30,7 +46,7 @@ bool MOAIGfxStateCache::BindFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 
 	if ( this->mCurrentFrameBuffer != frameBuffer ) {
 		
-		MOAIGfxMgr::Get ().FlushBufferedPrims ();
+		this->OnGfxStateWillChange ();
 		
 		MOAIGfxMgr::GetDrawingAPI ().BindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, frameBuffer->mGLFrameBufferID );
 		this->mCurrentFrameBuffer = frameBuffer;
@@ -89,7 +105,7 @@ bool MOAIGfxStateCache::BindShaderProgram ( MOAIShaderProgram* program ) {
 
 	if ( this->mShaderProgram != program ) {
 
-		 MOAIGfxMgr::Get ().FlushBufferedPrims ();
+		 this->OnGfxStateWillChange ();
 		
 		if ( this->mShaderProgram ) {
 			this->mShaderProgram->Unbind ();
@@ -112,7 +128,7 @@ bool MOAIGfxStateCache::BindTexture ( MOAITextureBase* textureSet ) {
 
 	if ( this->mCurrentTexture != textureSet ) {
 
-		MOAIGfxMgr::Get ().FlushBufferedPrims ();
+		this->OnGfxStateWillChange ();
 
 		this->mCurrentTexture = textureSet;
 
@@ -153,7 +169,7 @@ bool MOAIGfxStateCache::BindTexture ( u32 textureUnit, MOAISingleTexture* textur
 	
 	if ( currentTexture != bindTexture ) {
 		
-		MOAIGfxMgr::Get ().FlushBufferedPrims ();
+		this->OnGfxStateWillChange ();
 		
 		MOAIGfxMgr::GetDrawingAPI ().ActiveTexture ( textureUnit );
 		
@@ -196,7 +212,7 @@ bool MOAIGfxStateCache::BindVertexBuffer ( MOAIVertexBuffer* buffer ) {
 
 	if ( this->mCurrentVtxBuffer != buffer ) {
 	
-		MOAIGfxMgr::Get ().FlushBufferedPrims ();
+		this->OnGfxStateWillChange ();
 		
 		if ( this->mCurrentVtxBuffer ) {
 			this->mCurrentVtxBuffer->Unbind ();
@@ -218,7 +234,7 @@ bool MOAIGfxStateCache::BindVertexFormat ( MOAIVertexFormat* format, bool copyBu
 
 	if ( this->mCurrentVtxFormat != format ) {
 	
-		MOAIGfxMgr::Get ().FlushBufferedPrims ();
+		this->OnGfxStateWillChange ();
 	
 		if ( this->mCurrentVtxFormat ) {
 			this->mCurrentVtxFormat->Unbind ();
@@ -328,7 +344,8 @@ MOAIGfxStateCache::MOAIGfxStateCache () :
 	mCurrentTexture ( 0 ),
 	mCurrentVtxArray ( 0 ),
 	mCurrentVtxBuffer ( 0 ),
-	mCurrentVtxFormat ( 0 ) {
+	mCurrentVtxFormat ( 0 ),
+	mClient ( 0 ) {
 	
 	this->mScissorRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	this->mViewRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
@@ -410,7 +427,7 @@ void MOAIGfxStateCache::SetBlendMode () {
 
 	if ( this->mBlendEnabled ) {
 	
-		MOAIGfxMgr::Get ().FlushBufferedPrims ();
+		this->OnGfxStateWillChange ();
 		
 		MOAIGfxMgr::GetDrawingAPI ().Disable ( ZGL_PIPELINE_BLEND );
 		this->mBlendEnabled = false;
@@ -424,7 +441,7 @@ void MOAIGfxStateCache::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 
 	if ( !this->mBlendEnabled ) {
 	
-		MOAIGfxMgr::Get ().FlushBufferedPrims ();
+		this->OnGfxStateWillChange ();
 		
 		gfx.Enable ( ZGL_PIPELINE_BLEND );
 		
@@ -435,7 +452,7 @@ void MOAIGfxStateCache::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 	}
 	else if ( !this->mBlendMode.IsSame ( blendMode )) {
 	
-		MOAIGfxMgr::Get ().FlushBufferedPrims ();
+		this->OnGfxStateWillChange ();
 		
 		this->mBlendMode = blendMode;
 		gfx.BlendMode ( this->mBlendMode.mEquation );
@@ -454,6 +471,22 @@ void MOAIGfxStateCache::SetBlendMode ( int srcFactor, int dstFactor, int equatio
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxStateCache::SetClient () {
+
+	this->SetClient ( 0 );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateCache::SetClient ( MOAIGfxStateCacheClient* client ) {
+
+	if ( this->mClient != client ) {
+	
+		this->OnGfxStateWillChange ();
+		this->mClient = client;
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxStateCache::SetCullFunc () {
 
 	this->SetCullFunc ( 0 );
@@ -464,7 +497,7 @@ void MOAIGfxStateCache::SetCullFunc ( int cullFunc ) {
 
 	if ( this->mCullFunc != cullFunc ) {
 	
-		MOAIGfxMgr::Get ().FlushBufferedPrims ();
+		this->OnGfxStateWillChange ();
 		
 		this->mCullFunc = cullFunc;
 	
@@ -491,7 +524,7 @@ void MOAIGfxStateCache::SetDepthFunc ( int depthFunc ) {
 
 	if ( this->mDepthFunc != depthFunc ) {
 	
-		MOAIGfxMgr::Get ().FlushBufferedPrims ();
+		this->OnGfxStateWillChange ();
 		
 		this->mDepthFunc = depthFunc;
 	
@@ -513,9 +546,7 @@ void MOAIGfxStateCache::SetDepthMask ( bool depthMask ) {
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
 	if ( this->mDepthMask != depthMask ) {
-	
-		MOAIGfxMgr::Get ().FlushBufferedPrims ();
-
+		this->OnGfxStateWillChange ();
 		this->mDepthMask = depthMask;
 		MOAIGfxMgr::GetDrawingAPI ().DepthMask ( this->mDepthMask );
 	}
@@ -525,7 +556,7 @@ void MOAIGfxStateCache::SetDepthMask ( bool depthMask ) {
 void MOAIGfxStateCache::SetPenWidth ( float penWidth ) {
 
 	if ( this->mPenWidth != penWidth ) {
-		MOAIGfxMgr::Get ().FlushBufferedPrims ();
+		this->OnGfxStateWillChange ();
 		this->mPenWidth = penWidth;
 		MOAIGfxMgr::GetDrawingAPI ().LineWidth ( penWidth );
 	}
@@ -550,7 +581,7 @@ void MOAIGfxStateCache::SetScissorRect ( ZLRect rect ) {
 	
 	if ( !( this->mScissorEnabled && this->mScissorRect.IsEqual ( rect ))) {
 		
-		MOAIGfxMgr::Get ().FlushBufferedPrims ();
+		this->OnGfxStateWillChange ();
 
 		ZLRect deviceRect = this->mCurrentFrameBuffer->WndRectToDevice ( rect );
 

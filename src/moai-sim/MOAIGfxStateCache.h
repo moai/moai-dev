@@ -5,7 +5,6 @@
 #define	MOAIGFXSTATECACHE_H
 
 #include <moai-sim/MOAIBlendMode.h>
-#include <moai-sim/MOAIGfxGlobalsCache.h>
 #include <moai-sim/MOAIGfxPipelineMgr.h>
 
 class MOAICamera;
@@ -22,6 +21,20 @@ class MOAIVertexArray;
 class MOAIVertexBuffer;
 class MOAIVertexFormat;
 class MOAIViewport;
+
+//================================================================//
+// MOAIGfxStateCacheClient
+//================================================================//
+class MOAIGfxStateCacheClient {
+protected:
+
+	friend class MOAIGfxStateCache;
+
+	//----------------------------------------------------------------//
+						MOAIGfxStateCacheClient				();
+	virtual				~MOAIGfxStateCacheClient			();
+	virtual void		OnGfxStateWillChange				();
+};
 
 //================================================================//
 // MOAIGfxStateCache
@@ -61,9 +74,20 @@ protected:
 	MOAILuaSharedPtr < MOAIFrameBuffer >	mDefaultFrameBuffer;
 	MOAILuaSharedPtr < MOAITexture >		mDefaultTexture;
 
+	MOAIGfxStateCacheClient*				mClient;
+
 	//----------------------------------------------------------------//
 	bool				BindShaderProgram			( MOAIShaderProgram* program ); // only called by BindShader ()
 	bool				BindTexture					( u32 textureUnit, MOAISingleTexture* texture );
+	
+	//----------------------------------------------------------------//
+	inline void OnGfxStateWillChange () {
+	
+		if ( this->mClient ) {
+			this->mClient->OnGfxStateWillChange ();
+			this->mClient = 0;
+		}
+	}
 
 public:
 	
@@ -105,6 +129,9 @@ public:
 	void			SetBlendMode				();
 	void			SetBlendMode				( const MOAIBlendMode& blendMode );
 	void			SetBlendMode				( int srcFactor, int dstFactor, int equation = ZGL_BLEND_MODE_ADD );
+
+	void			SetClient					();
+	void			SetClient					( MOAIGfxStateCacheClient* client );
 
 	void			SetCullFunc					();
 	void			SetCullFunc					( int cullFunc );

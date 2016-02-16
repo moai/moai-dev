@@ -50,6 +50,7 @@ void MOAIGfxVertexCache::BeginPrim () {
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	gfxMgr.SetShaderFlags ( gfxMgr.GetShaderGlobalsMask ());
+	gfxMgr.SetClient ( this );
 	
 	this->mUseIdxBuffer = false;
 }
@@ -75,6 +76,7 @@ void MOAIGfxVertexCache::BeginPrimIndexed ( u32 primType, u32 vtxCount, u32 idxC
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	gfxMgr.SetShaderFlags ( gfxMgr.GetShaderGlobalsMask ());
+	gfxMgr.SetClient ( this );
 	
 	this->mUseIdxBuffer		= true;
 	this->mIndexBase		= ( u16 )( this->mTotalVertices );
@@ -218,6 +220,12 @@ MOAIGfxVertexCache::MOAIGfxVertexCache () :
 
 //----------------------------------------------------------------//
 MOAIGfxVertexCache::~MOAIGfxVertexCache () {
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxVertexCache::OnGfxStateWillChange () {
+
+	this->FlushBufferedPrims ();
 }
 
 //----------------------------------------------------------------//

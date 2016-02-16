@@ -4,6 +4,7 @@
 #ifndef	MOAIGFXVERTEXCACHE_H
 #define	MOAIGFXVERTEXCACHE_H
 
+#include <moai-sim/MOAIGfxStateCache.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIVertexBuffer.h>
 
@@ -21,7 +22,8 @@ class MOAIViewport;
 //================================================================//
 // MOAIGfxVertexCache
 //================================================================//
-class MOAIGfxVertexCache {
+class MOAIGfxVertexCache :
+	virtual public MOAIGfxStateCacheClient {
 protected:
 
 	friend class MOAIGfxGlobalsCache;
@@ -69,6 +71,7 @@ protected:
 	u32							mVertexColor32;
 
 	//----------------------------------------------------------------//
+	void			OnGfxStateWillChange			();
 	void			TransformAndWriteQuad			( ZLVec4D* vtx, ZLVec2D* uv );
 	void			UpdateLimits					();
 
