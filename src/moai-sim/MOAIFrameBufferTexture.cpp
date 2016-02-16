@@ -171,18 +171,20 @@ bool MOAIFrameBufferTexture::OnGPUCreate () {
 //----------------------------------------------------------------//
 void MOAIFrameBufferTexture::OnGPUDestroy () {
 
-	if ( MOAIGfxResourceMgr::IsValid ()) {
+	if ( MOAIGfxMgr::IsValid ()) {
 	
-		MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLFrameBufferID );
+		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	
+		gfxMgr.mResourceMgr.PushDeleter ( this->mGLFrameBufferID );
 		this->mGLFrameBufferID = 0;
 
-		MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLColorBufferID );
+		gfxMgr.mResourceMgr.PushDeleter ( this->mGLColorBufferID );
 		this->mGLColorBufferID = 0;
 
-		MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLDepthBufferID );
+		gfxMgr.mResourceMgr.PushDeleter ( this->mGLDepthBufferID );
 		this->mGLDepthBufferID = 0;
 		
-		MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLStencilBufferID );
+		gfxMgr.mResourceMgr.PushDeleter ( this->mGLStencilBufferID );
 		this->mGLStencilBufferID = 0;
 	}
 	this->MOAISingleTexture::OnGPUDestroy ();

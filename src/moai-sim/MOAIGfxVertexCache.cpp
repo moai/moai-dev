@@ -33,15 +33,15 @@ void MOAIGfxVertexCache::BeginPrim () {
 
 //	if ( this->mPrimSize ) {
 //
-//		u32 totalIndices	= this->mIdxBuffer.GetLength () / INDEX_SIZE;
-//		u32 totalVertices	= this->mVtxBuffer.GetLength() / this->mVertexSize;
+//		u32 totalIndices	= this->mIdxBuffer->GetLength () / INDEX_SIZE;
+//		u32 totalVertices	= this->mVtxBuffer->GetLength() / this->mVertexSize;
 //
 //		u32 maxVertices		= MIN ( totalIndices, totalVertices );
 //		
 //		this->mMaxPrims = ( u32 )( maxVertices / this->mPrimSize );
 //	
-//		this->mPrimTopIdx = this->mIdxBuffer.GetCursor () + ( this->mPrimSize * INDEX_SIZE );
-//		this->mPrimTopVtx = this->mVtxBuffer.GetCursor () + ( this->mPrimSize * this->mVertexSize );
+//		this->mPrimTopIdx = this->mIdxBuffer->GetCursor () + ( this->mPrimSize * INDEX_SIZE );
+//		this->mPrimTopVtx = this->mVtxBuffer->GetCursor () + ( this->mPrimSize * this->mVertexSize );
 //	}
 	
 	if ( this->mUseIdxBuffer ) {
@@ -131,22 +131,22 @@ void MOAIGfxVertexCache::FlushBufferedPrims () {
 		
 		if ( this->mUseIdxBuffer ) {
 			
-			u32 count = ( u32 )( this->mIdxBuffer.GetCursor () / INDEX_SIZE );
+			u32 count = ( u32 )( this->mIdxBuffer->GetCursor () / INDEX_SIZE );
 			
 			if ( count > 0 ) {
 				
-				this->mVtxBuffer.OnGPUUpdate ();
-				this->mIdxBuffer.OnGPUUpdate ();
+				this->mVtxBuffer->OnGPUUpdate ();
+				this->mIdxBuffer->OnGPUUpdate ();
 				
 				//gfxCache.BindVertexFormat ();
 				
-				gfxMgr.mGfxState.BindVertexBuffer ( &this->mVtxBuffer );
+				gfxMgr.mGfxState.BindVertexBuffer ( this->mVtxBuffer );
 				gfxMgr.mGfxState.BindVertexFormat ( this->mVertexFormat, true );
-				gfxMgr.mGfxState.BindIndexBuffer ( &this->mIdxBuffer );
+				gfxMgr.mGfxState.BindIndexBuffer ( this->mIdxBuffer );
 				
 				gfxMgr.mGfxState.UpdateAndBindUniforms ();
 
-				ZLSharedConstBuffer* buffer = gfx.CopyBuffer ( this->mIdxBuffer.GetBuffer ());
+				ZLSharedConstBuffer* buffer = gfx.CopyBuffer ( this->mIdxBuffer->GetBuffer ());
 
 				gfx.DrawElements ( this->mPrimType, count, ZGL_TYPE_UNSIGNED_SHORT, buffer, 0 );
 				//this->mDrawCount++;
@@ -154,15 +154,15 @@ void MOAIGfxVertexCache::FlushBufferedPrims () {
 		}
 		else {
 			
-			u32 count = this->mPrimSize ? this->mPrimCount * this->mPrimSize : ( u32 )( this->mVtxBuffer.GetCursor () / this->mVertexSize );
+			u32 count = this->mPrimSize ? this->mPrimCount * this->mPrimSize : ( u32 )( this->mVtxBuffer->GetCursor () / this->mVertexSize );
 			
 			if ( count > 0 ) {
 				
-				this->mVtxBuffer.OnGPUUpdate ();
+				this->mVtxBuffer->OnGPUUpdate ();
 				
 				//gfxCache.BindVertexFormat ();
 				
-				gfxMgr.mGfxState.BindVertexBuffer ( &this->mVtxBuffer );
+				gfxMgr.mGfxState.BindVertexBuffer ( this->mVtxBuffer );
 				gfxMgr.mGfxState.BindVertexFormat ( this->mVertexFormat, true );
 				
 				gfxMgr.mGfxState.UpdateAndBindUniforms ();
@@ -174,8 +174,8 @@ void MOAIGfxVertexCache::FlushBufferedPrims () {
 		
 		this->mIsDrawing = false;
 		
-		this->mVtxBuffer.SetLength ( 0 );
-		this->mIdxBuffer.SetLength ( 0 );
+		this->mVtxBuffer->SetLength ( 0 );
+		this->mIdxBuffer->SetLength ( 0 );
 	
 //		this->mPrimTopIdx		= 0;
 //		this->mPrimTopVtx		= 0;
@@ -190,8 +190,27 @@ void MOAIGfxVertexCache::FlushBufferedPrims () {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxVertexCache::InitBuffers () {
+
+	if ( !this->mVtxBuffer ) {
+
+		this->mVtxBuffer = new MOAIVertexBuffer ();
+		this->mIdxBuffer = new MOAIIndexBuffer ();
+
+		this->mVtxBuffer->Reserve ( DEFAULT_VERTEX_BUFFER_SIZE );
+		this->mIdxBuffer->Reserve ( DEFAULT_INDEX_BUFFER_SIZE );
+		
+		this->mVtxBuffer->SetCopyOnUpdate ( true );
+		this->mIdxBuffer->SetCopyOnUpdate ( true );
+	}
+}
+
+//----------------------------------------------------------------//
 MOAIGfxVertexCache::MOAIGfxVertexCache () :
 	mIsDrawing ( false ),
+	mUseIdxBuffer ( false ),
+	mVtxBuffer ( 0 ),
+	mIdxBuffer ( 0 ),
 	mVertexSize ( 0 ),
 	mMaxVertices ( 0 ),
 	mMaxIndices ( 0 ),
@@ -206,12 +225,6 @@ MOAIGfxVertexCache::MOAIGfxVertexCache () :
 	mApplyUVTransform ( false ),
 	mVertexColor32 ( 0xffffffff ) {
 	
-	this->mVtxBuffer.Reserve ( DEFAULT_VERTEX_BUFFER_SIZE );
-	this->mIdxBuffer.Reserve ( DEFAULT_INDEX_BUFFER_SIZE );
-	
-	this->mVtxBuffer.SetCopyOnUpdate ( true );
-	this->mIdxBuffer.SetCopyOnUpdate ( true );
-	
 	this->mVertexTransform.Ident ();
 	this->mUVTransform.Ident ();
 	
@@ -220,6 +233,12 @@ MOAIGfxVertexCache::MOAIGfxVertexCache () :
 
 //----------------------------------------------------------------//
 MOAIGfxVertexCache::~MOAIGfxVertexCache () {
+
+	if ( this->mVtxBuffer ) {
+	
+		delete this->mVtxBuffer;
+		delete this->mIdxBuffer;
+	}
 }
 
 //----------------------------------------------------------------//
@@ -302,30 +321,30 @@ void MOAIGfxVertexCache::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* uv ) {
 		this->mUVTransform.TransformQuad ( uv );
 	}
 	
-//	u32 base = this->mVtxBuffer.GetCursor () / this->mVertexSize;
+//	u32 base = this->mVtxBuffer->GetCursor () / this->mVertexSize;
 	this->BeginPrimIndexed ( ZGL_PRIM_TRIANGLES, 4, 6 );
 	
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
 	
 		// left top
-		this->mVtxBuffer.Write ( vtx [ 0 ]);
-		this->mVtxBuffer.Write ( uv [ 0 ]);
-		this->mVtxBuffer.Write < u32 >( this->mVertexColor32 );
+		this->mVtxBuffer->Write ( vtx [ 0 ]);
+		this->mVtxBuffer->Write ( uv [ 0 ]);
+		this->mVtxBuffer->Write < u32 >( this->mVertexColor32 );
 	
 		// right top
-		this->mVtxBuffer.Write ( vtx [ 1 ]);
-		this->mVtxBuffer.Write ( uv [ 1 ]);
-		this->mVtxBuffer.Write < u32 >( this->mVertexColor32 );
+		this->mVtxBuffer->Write ( vtx [ 1 ]);
+		this->mVtxBuffer->Write ( uv [ 1 ]);
+		this->mVtxBuffer->Write < u32 >( this->mVertexColor32 );
 	
 		// right bottom
-		this->mVtxBuffer.Write ( vtx[ 2 ]);
-		this->mVtxBuffer.Write ( uv [ 2 ]);
-		this->mVtxBuffer.Write < u32 >( this->mVertexColor32 );
+		this->mVtxBuffer->Write ( vtx[ 2 ]);
+		this->mVtxBuffer->Write ( uv [ 2 ]);
+		this->mVtxBuffer->Write < u32 >( this->mVertexColor32 );
 	
 		// left bottom
-		this->mVtxBuffer.Write ( vtx [ 3 ]);
-		this->mVtxBuffer.Write ( uv [ 3 ]);
-		this->mVtxBuffer.Write < u32 >( this->mVertexColor32 );
+		this->mVtxBuffer->Write ( vtx [ 3 ]);
+		this->mVtxBuffer->Write ( uv [ 3 ]);
+		this->mVtxBuffer->Write < u32 >( this->mVertexColor32 );
 
 		// indices
 		this->WriteIndex ( 0 ); // left top
@@ -359,8 +378,8 @@ void MOAIGfxVertexCache::UpdateLimits () {
 	u32 primSize	= this->mPrimSize ? this->mPrimSize : 1;
 	u32 vertexSize	= this->mVertexSize ? this->mVertexSize : 1;
 	
-	this->mMaxIndices	= this->mIdxBuffer.GetSize () / INDEX_SIZE;
-	this->mMaxVertices	= this->mVtxBuffer.GetSize () / vertexSize;
+	this->mMaxIndices	= this->mIdxBuffer->GetSize () / INDEX_SIZE;
+	this->mMaxVertices	= this->mVtxBuffer->GetSize () / vertexSize;
 	
 	u32 maxElements		= MIN ( this->mMaxIndices, this->mMaxVertices );
 	this->mMaxPrims		= ( u32 )( maxElements / primSize );

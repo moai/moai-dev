@@ -136,7 +136,7 @@ u32 MOAIGfxResource::Bind () {
 //----------------------------------------------------------------//
 void MOAIGfxResource::Destroy () {
 
-	if ( MOAIGfxResourceMgr::IsValid ()) {
+	if ( MOAIGfxMgr::IsValid ()) {
 		this->OnGPUDestroy ();
 	}
 	this->OnGPULost ();
@@ -239,14 +239,14 @@ MOAIGfxResource::MOAIGfxResource () :
 	this->mMasterLink.Data ( this );
 	this->mPendingLink.Data ( this );
 	
-	MOAIGfxResourceMgr::Get ().InsertGfxResource ( *this );
+	MOAIGfxMgr::Get ().mResourceMgr.InsertGfxResource ( *this );
 }
 
 //----------------------------------------------------------------//
 MOAIGfxResource::~MOAIGfxResource () {
 
-	if ( MOAIGfxResourceMgr::IsValid ()) {
-		MOAIGfxResourceMgr::Get ().RemoveGfxResource ( *this );
+	if ( MOAIGfxMgr::IsValid ()) {
+		MOAIGfxMgr::Get ().mResourceMgr.RemoveGfxResource ( *this );
 	}
 	this->mReloader.Clear ();
 }
@@ -341,8 +341,8 @@ bool MOAIGfxResource::ScheduleForGPUCreate ( u32 pipelineID ) {
 	if ( this->mState == STATE_READY_TO_BIND ) return true;
 	if (( this->mState == STATE_UNINITIALIZED ) || ( this->mState == STATE_ERROR )) return false;
 	
-	if ( MOAIGfxResourceMgr::IsValid ()) {
-		MOAIGfxResourceMgr::Get ().ScheduleGPUAffirm ( *this, pipelineID );
+	if ( MOAIGfxMgr::IsValid ()) {
+		MOAIGfxMgr::Get ().mResourceMgr.ScheduleGPUAffirm ( *this, pipelineID );
 	}
 	return true;
 }
@@ -354,8 +354,8 @@ bool MOAIGfxResource::ScheduleForGPUUpdate () {
 
 	this->mState = STATE_NEEDS_GPU_UPDATE;
 
-	if ( MOAIGfxResourceMgr::IsValid ()) {
-		MOAIGfxResourceMgr::Get ().ScheduleGPUAffirm ( *this, MOAIGfxPipelineClerk::DRAWING_PIPELINE ); // always update in the drawing pipeline
+	if ( MOAIGfxMgr::IsValid ()) {
+		MOAIGfxMgr::Get ().mResourceMgr.ScheduleGPUAffirm ( *this, MOAIGfxPipelineClerk::DRAWING_PIPELINE ); // always update in the drawing pipeline
 	}
 	return true;
 }

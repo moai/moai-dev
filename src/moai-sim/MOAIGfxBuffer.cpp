@@ -212,7 +212,7 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 void MOAIGfxBuffer::OnGPUDestroy () {
 
 	for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
-		MOAIGfxResourceMgr::Get ().PushDeleter ( this->mVBOs [ i ]);
+		MOAIGfxMgr::Get ().mResourceMgr.PushDeleter ( this->mVBOs [ i ]);
 		this->mVBOs [ i ] = 0;
 	}
 }

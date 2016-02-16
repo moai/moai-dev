@@ -9,6 +9,7 @@
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIGfxGlobalsCache.h>
 #include <moai-sim/MOAIGfxPipelineClerk.h>
+#include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIGfxVertexCache.h>
 #include <moai-sim/MOAIImage.h>
 
@@ -59,9 +60,15 @@ private:
 	static int			_getMaxTextureSize			( lua_State* L );
 	static int			_getMaxTextureUnits			( lua_State* L );
 	static int			_getViewSize				( lua_State* L );
+	static int			_purgeResources				( lua_State* L );
+	static int			_renewResources				( lua_State* L );
 	static int			_setDefaultTexture			( lua_State* L );
 	static int			_setPenColor				( lua_State* L );
 	static int			_setPenWidth				( lua_State* L );
+	
+	//----------------------------------------------------------------//
+	void				OnGlobalsFinalize			();
+	void				OnGlobalsInitialize			();
 	
 public:
 	
@@ -78,9 +85,10 @@ public:
 	GET_BOOL ( IsOpenGLES, mIsOpenGLES )
 	GET_BOOL ( IsFramebufferSupported, mIsFramebufferSupported )
 	
+	MOAIGfxResourceMgr		mResourceMgr;
 	MOAIGfxGlobalsCache		mGfxState;
 	MOAIGfxVertexCache		mVertexCache;
-	MOAIGfxPipelineClerk		mPipelineMgr;
+	MOAIGfxPipelineClerk	mPipelineMgr;
 	
 	//----------------------------------------------------------------//
 	
@@ -94,8 +102,6 @@ public:
 	
 					MOAIGfxMgr				();
 					~MOAIGfxMgr				();
-	
-	void			OnGlobalsFinalize		();
 
 	void			RegisterLuaClass		( MOAILuaState& state );
 	

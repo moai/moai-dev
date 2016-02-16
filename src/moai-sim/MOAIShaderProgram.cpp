@@ -506,13 +506,15 @@ bool MOAIShaderProgram::OnGPUCreate () {
 //----------------------------------------------------------------//
 void MOAIShaderProgram::OnGPUDestroy () {
 
-	MOAIGfxResourceMgr::Get ().PushDeleter ( this->mVertexShader );
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+
+	gfxMgr.mResourceMgr.PushDeleter ( this->mVertexShader );
 	this->mVertexShader = 0;
 
-	MOAIGfxResourceMgr::Get ().PushDeleter ( this->mFragmentShader );
+	gfxMgr.mResourceMgr.PushDeleter ( this->mFragmentShader );
 	this->mFragmentShader = 0;
 
-	MOAIGfxResourceMgr::Get ().PushDeleter ( this->mProgram );
+	gfxMgr.mResourceMgr.PushDeleter ( this->mProgram );
 	this->mProgram = 0;
 }
 

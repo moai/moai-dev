@@ -9,8 +9,7 @@ class MOAIGfxResource;
 //================================================================//
 // MOAIGfxResourceMgr
 //================================================================//
-class MOAIGfxResourceMgr :
-	public MOAIGlobalClass < MOAIGfxResourceMgr, MOAILuaObject > {
+class MOAIGfxResourceMgr {
 private:
 	
 	typedef ZLLeanList < MOAIGfxResource* >::Iterator ResourceIt;
@@ -20,10 +19,6 @@ private:
 	ZLLeanList < MOAIGfxResource* >		mPendingForDrawList;
 	
 	ZLLeanStack < ZLGfxHandle*, 32 >	mDeleterStack;
-
-	//----------------------------------------------------------------//
-	static int		_purgeResources				( lua_State* L );
-	static int		_renewResources				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			InsertGfxResource		( MOAIGfxResource& resource );
@@ -39,14 +34,11 @@ public:
 	friend class MOAIGfxResource;
 	friend class MOAIRenderMgr;
 	
-	DECL_LUA_SINGLETON ( MOAIGfxResourceMgr )
-	
 	//----------------------------------------------------------------//
 					MOAIGfxResourceMgr		();
 					~MOAIGfxResourceMgr		();
 	void			PurgeResources			( u32 age = 0 );
 	void			PushDeleter				( ZLGfxHandle* handle );
-	void			RegisterLuaClass		( MOAILuaState& state );
 	void			Update					();
 };
 

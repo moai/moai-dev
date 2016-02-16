@@ -96,6 +96,38 @@ int MOAIGfxMgr::_getViewSize ( lua_State* L  ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	purgeResources
+	@text	Purges all resources older that a given age (in render cycles).
+			If age is 0 then all resources are purged.
+ 
+	@opt	number age		Default value is 0.
+	@out	nil
+*/
+int MOAIGfxMgr::_purgeResources ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	u32 age = state.GetValue < u32 >( 1, 0 );
+
+	MOAIGfxMgr::Get ().mResourceMgr.PurgeResources ( age );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	renewResources
+	@text	Renews all resources.
+ 
+	@out	nil
+*/
+int MOAIGfxMgr::_renewResources ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	MOAIGfxMgr::Get ().mResourceMgr.RenewResources ();
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setDefaultTexture
 	@text	Specify a fallback texture to use when textures are
 			unavailable (pending load, missing or in error state).
@@ -217,7 +249,7 @@ void MOAIGfxMgr::DetectContext () {
 	
 	MOAIShaderMgr::Get ().AffirmAll ();
 	
-	MOAIGfxResourceMgr::Get ().RenewResources ();
+	mResourceMgr.RenewResources ();
 	
 	ZLGfxDevice::End ();
 }
@@ -288,7 +320,13 @@ void MOAIGfxMgr::OnGlobalsFinalize () {
 	this->mGfxState.SetDefaultFrameBuffer ( *this, 0 );
 	this->mGfxState.SetDefaultFrameBuffer ( *this, 0 );
 	
-	MOAIGfxResourceMgr::Get ().ProcessDeleters ();
+	mResourceMgr.ProcessDeleters ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxMgr::OnGlobalsInitialize () {
+
+	this->mVertexCache.InitBuffers ();
 }
 
 //----------------------------------------------------------------//
@@ -306,6 +344,8 @@ void MOAIGfxMgr::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getMaxTextureSize",			_getMaxTextureSize },
 		{ "getMaxTextureUnits",			_getMaxTextureUnits },
 		{ "getViewSize",				_getViewSize },
+		{ "purgeResources",				_purgeResources },
+		{ "renewResources",				_renewResources },
 		{ "setDefaultTexture",			_setDefaultTexture },
 		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIGfxMgr > },
 		{ "setPenColor",				_setPenColor },

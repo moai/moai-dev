@@ -8,42 +8,6 @@
 #include <moai-sim/MOAIGfxResourceMgr.h>
 
 //================================================================//
-// lua
-//================================================================//
-
-//----------------------------------------------------------------//
-/**	@lua	purgeResources
-	@text	Purges all resources older that a given age (in render cycles).
-			If age is 0 then all resources are purged.
- 
-	@opt	number age		Default value is 0.
-	@out	nil
-*/
-int MOAIGfxResourceMgr::_purgeResources ( lua_State* L ) {
-	MOAILuaState state ( L );
-
-	u32 age = state.GetValue < u32 >( 1, 0 );
-
-	MOAIGfxResourceMgr::Get ().PurgeResources ( age );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	renewResources
-	@text	Renews all resources.
- 
-	@out	nil
-*/
-int MOAIGfxResourceMgr::_renewResources ( lua_State* L ) {
-	MOAILuaState state ( L );
-
-	MOAIGfxResourceMgr::Get ().RenewResources ();
-	
-	return 0;
-}
-
-//================================================================//
 // MOAIGfxResourceMgr
 //================================================================//
 
@@ -55,8 +19,6 @@ void MOAIGfxResourceMgr::InsertGfxResource ( MOAIGfxResource& resource ) {
 
 //----------------------------------------------------------------//
 MOAIGfxResourceMgr::MOAIGfxResourceMgr () {
-	
-	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
@@ -122,18 +84,6 @@ void MOAIGfxResourceMgr::PushDeleter ( ZLGfxHandle* handle ) {
 	if ( handle ) {
 		this->mDeleterStack.Push ( handle );
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxResourceMgr::RegisterLuaClass ( MOAILuaState& state ) {
-
-	luaL_Reg regTable [] = {
-		{ "purgeResources",				_purgeResources },
-		{ "renewResources",				_renewResources },
-		{ NULL, NULL }
-	};
-
-	luaL_register( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

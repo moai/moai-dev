@@ -40,8 +40,8 @@ protected:
 	bool						mIsDrawing;
 	bool						mUseIdxBuffer;
 
-	MOAIVertexBuffer			mVtxBuffer;
-	MOAIIndexBuffer				mIdxBuffer;
+	MOAIVertexBuffer*			mVtxBuffer;
+	MOAIIndexBuffer*			mIdxBuffer;
 	
 	u32							mVertexSize;
 
@@ -90,6 +90,8 @@ public:
 	
 	void			FlushBufferedPrims				();
 	
+	void			InitBuffers						();
+	
 					MOAIGfxVertexCache				();
 					~MOAIGfxVertexCache				();
 
@@ -118,21 +120,21 @@ public:
 	inline void WritePenColor4b () {
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		this->mVtxBuffer.Write < u32 >( this->mVertexColor32 );
+		this->mVtxBuffer->Write < u32 >( this->mVertexColor32 );
 	}
 	
 	//----------------------------------------------------------------//
 	inline void WritePenColor4f () {
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		this->mVtxBuffer.Write < ZLColorVec >( this->mVertexColor );
+		this->mVtxBuffer->Write < ZLColorVec >( this->mVertexColor );
 	}
 		
 	//----------------------------------------------------------------//
 	inline void WriteIndex ( u16 index ) {
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		this->mIdxBuffer.Write < u16 >( this->mIndexBase + index );
+		this->mIdxBuffer->Write < u16 >( this->mIndexBase + index );
 	}
 	
 	//----------------------------------------------------------------//
@@ -147,7 +149,7 @@ public:
 		}
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		this->mVtxBuffer.Write < ZLVec2D >( uv );
+		this->mVtxBuffer->Write < ZLVec2D >( uv );
 	}
 	
 	//----------------------------------------------------------------//
@@ -158,7 +160,7 @@ public:
 		}
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		this->mVtxBuffer.Write < ZLVec2D >( uv );
+		this->mVtxBuffer->Write < ZLVec2D >( uv );
 	}
 	
 	//----------------------------------------------------------------//
@@ -187,7 +189,7 @@ public:
 		}
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		this->mVtxBuffer.Write < ZLVec4D >( vtx );
+		this->mVtxBuffer->Write < ZLVec4D >( vtx );
 	}
 	
 	//----------------------------------------------------------------//
@@ -212,7 +214,7 @@ public:
 		vtx.mW = w;
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		this->mVtxBuffer.Write < ZLVec4D >( vtx );
+		this->mVtxBuffer->Write < ZLVec4D >( vtx );
 	}
 };
 

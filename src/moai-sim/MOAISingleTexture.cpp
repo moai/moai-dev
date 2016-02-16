@@ -359,7 +359,7 @@ void MOAISingleTexture::OnGPUDestroy () {
 	if ( this->mGLTexID ) {
 		if ( MOAIGfxMgr::IsValid ()) {
 			MOAIGfxMgr::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
-			MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLTexID );
+			MOAIGfxMgr::Get ().mResourceMgr.PushDeleter ( this->mGLTexID );
 		}
 	}
 	this->mGLTexID = 0;
@@ -509,7 +509,7 @@ bool MOAISingleTexture::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rec
 	if ( this->ShouldGenerateMipmaps () || ( this->mWidth != image.GetWidth ()) || ( this->mHeight != image.GetHeight ())) {
 	
 		MOAIGfxMgr::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
-		MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLTexID );
+		MOAIGfxMgr::Get ().mResourceMgr.PushDeleter ( this->mGLTexID );
 		this->mGLTexID = 0;
 		
 		if ( this->CreateTextureFromImage ( image )) {

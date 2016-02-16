@@ -259,9 +259,9 @@ void MOAIVertexArray::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIVertexArray::ReserveVAOs ( u32 total ) {
 
-	if ( MOAIGfxResourceMgr::IsValid ()) {
+	if ( MOAIGfxMgr::IsValid ()) {
 		for ( size_t i = 0; i < this->mVAOs.Size (); ++i ) {
-			MOAIGfxResourceMgr::Get ().PushDeleter ( this->mVAOs [ i ]);
+			MOAIGfxMgr::Get ().mResourceMgr.PushDeleter ( this->mVAOs [ i ]);
 		}
 	}
 	this->mVAOs.Init ( total );

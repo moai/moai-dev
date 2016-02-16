@@ -175,7 +175,7 @@ void AKUPause ( bool pause ) {
 void AKURender () {
 
 	MOAIGfxMgr::Get ().mPipelineMgr.ResetDrawingAPIs ();
-	MOAIGfxResourceMgr::Get ().Update ();
+	MOAIGfxMgr::Get ().mResourceMgr.Update ();
 	MOAIRenderMgr::Get ().Render ();
 }
 
@@ -392,7 +392,6 @@ void AKUSimContextInitialize () {
 	MOAIActionStackMgr::Affirm ();
 
 	//MOAIProfiler::Affirm ();
-	MOAIGfxResourceMgr::Affirm ();
 	MOAIGfxMgr::Affirm ();
 	MOAIImageFormatMgr::Affirm ();
 	MOAIVertexFormatMgr::Affirm ();
@@ -435,7 +434,6 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIGfxQuad2D )
 	REGISTER_LUA_CLASS ( MOAIGfxQuadDeck2D )
 	REGISTER_LUA_CLASS ( MOAIGfxQuadListDeck2D )
-	REGISTER_LUA_CLASS ( MOAIGfxResourceMgr )
 	REGISTER_LUA_CLASS ( MOAIGraphicsProp )
 	REGISTER_LUA_CLASS ( MOAIGrid )
 	REGISTER_LUA_CLASS ( MOAIGridDeck2D )
