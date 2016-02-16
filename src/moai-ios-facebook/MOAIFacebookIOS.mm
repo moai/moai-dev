@@ -6,6 +6,9 @@
 
 #import <moai-ios/headers.h>
 #import <moai-ios-facebook/MOAIFacebookIOS.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
 
 //================================================================//
 // lua
@@ -161,7 +164,17 @@ int MOAIFacebookIOS::_graphRequest ( lua_State* L ) {
 	
 	return 0;
 }
-
+int MOAIFacebookIOS::_handleDidBecomeActive		( lua_State* L ) {
+	UNUSED( L );
+	
+	[FBSDKAppEvents activateApp];
+	return 0;
+}
+int MOAIFacebookIOS::_handleOpenUrl ( lua_State* L ) {
+	
+	UNUSED( L );
+	return 0;
+}
 //----------------------------------------------------------------//
 /**	@lua	init
  @text	Initialize Facebook.
@@ -232,6 +245,14 @@ int MOAIFacebookIOS::_logout ( lua_State* L ) {
 	return 0;
 }
 
+int MOAIFacebookIOS::_restoreSession ( lua_State* L ) {
+	UNUSED( L );
+	if ( [ FBSDKAccessToken currentAccessToken ]) {
+		MOAIFacebookIOS::Get ().SessionDidLogin ();
+	}
+	
+	return 1;
+}
 //----------------------------------------------------------------//
 // TODO: 3rdparty doxygen
 int MOAIFacebookIOS::_postToFeed ( lua_State* L ) {
@@ -364,10 +385,13 @@ void MOAIFacebookIOS::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getUserID",					_getUserID },
 		{ "getUserName",				_getUserName },
 		{ "graphRequest",				_graphRequest },
+		{ "handleDidBecomeActive",		_handleDidBecomeActive },
+		{ "handleOpenUrl",				_handleOpenUrl },
 		{ "init",						_init },
 		{ "login",						_login },
 		{ "logout",						_logout },
 		{ "postToFeed",					_postToFeed },
+		{ "restoreSession",				_restoreSession },
 		{ "sendRequest",				_sendRequest },
 		{ "sessionValid",				_sessionValid },
 		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIFacebookIOS > },
@@ -431,10 +455,13 @@ void MOAIFacebookIOS::SessionDidLogin () {
 		 startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
 			 UNUSED ( connection );
 			 if (!error) {
+				 
 				 this->mName.clear();
+				 if( [ result[ @"name" ]  UTF8String ] )
 				 this->mName.write( [ result[ @"name" ]  UTF8String ]);
 				 this->mEmail.clear();
-				 this->mEmail.write( [ result[ @"email" ]  UTF8String ]);
+				 if( [ result[ @"email" ]  UTF8String ] )
+					 this->mEmail.write( [ result[ @"email" ]  UTF8String ] );
 			 }
 		 }];
 		
