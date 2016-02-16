@@ -5,7 +5,7 @@
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIEaseDriver.h>
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIShaderProgram.h>
 #include <moai-sim/MOAITransformBase.h>
 

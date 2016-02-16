@@ -5,28 +5,28 @@
 
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResource.h>
-#include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxResourceClerk.h>
 
 //================================================================//
-// MOAIGfxResourceMgr
+// MOAIGfxResourceClerk
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceMgr::InsertGfxResource ( MOAIGfxResource& resource ) {
+void MOAIGfxResourceClerk::InsertGfxResource ( MOAIGfxResource& resource ) {
 
 	this->mResources.PushBack ( resource.mMasterLink );
 }
 
 //----------------------------------------------------------------//
-MOAIGfxResourceMgr::MOAIGfxResourceMgr () {
+MOAIGfxResourceClerk::MOAIGfxResourceClerk () {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxResourceMgr::~MOAIGfxResourceMgr () {
+MOAIGfxResourceClerk::~MOAIGfxResourceClerk () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceMgr::ProcessDeleters () {
+void MOAIGfxResourceClerk::ProcessDeleters () {
 
 	u32 top = this->mDeleterStack.GetTop ();
 
@@ -51,7 +51,7 @@ void MOAIGfxResourceMgr::ProcessDeleters () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceMgr::ProcessPending ( ZLLeanList < MOAIGfxResource* > &list ) {
+void MOAIGfxResourceClerk::ProcessPending ( ZLLeanList < MOAIGfxResource* > &list ) {
 	
 	this->ProcessDeleters ();
 	
@@ -66,7 +66,7 @@ void MOAIGfxResourceMgr::ProcessPending ( ZLLeanList < MOAIGfxResource* > &list 
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceMgr::PurgeResources ( u32 age ) {
+void MOAIGfxResourceClerk::PurgeResources ( u32 age ) {
 	
 	ZLGfxDevice::Begin ();
 	
@@ -79,7 +79,7 @@ void MOAIGfxResourceMgr::PurgeResources ( u32 age ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceMgr::PushDeleter ( ZLGfxHandle* handle ) {
+void MOAIGfxResourceClerk::PushDeleter ( ZLGfxHandle* handle ) {
 
 	if ( handle ) {
 		this->mDeleterStack.Push ( handle );
@@ -87,7 +87,7 @@ void MOAIGfxResourceMgr::PushDeleter ( ZLGfxHandle* handle ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceMgr::RemoveGfxResource ( MOAIGfxResource& resource ) {
+void MOAIGfxResourceClerk::RemoveGfxResource ( MOAIGfxResource& resource ) {
 
 	this->mResources.Remove ( resource.mMasterLink );
 	this->mPendingForLoadList.Remove ( resource.mPendingLink );
@@ -96,7 +96,7 @@ void MOAIGfxResourceMgr::RemoveGfxResource ( MOAIGfxResource& resource ) {
 
 //----------------------------------------------------------------//
 // this gets called when the graphics context is renewed
-void MOAIGfxResourceMgr::RenewResources () {
+void MOAIGfxResourceClerk::RenewResources () {
 
 	ZLGfxDevice::Begin ();
 
@@ -111,7 +111,7 @@ void MOAIGfxResourceMgr::RenewResources () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceMgr::ScheduleGPUAffirm ( MOAIGfxResource& resource, u32 listID ) {
+void MOAIGfxResourceClerk::ScheduleGPUAffirm ( MOAIGfxResource& resource, u32 listID ) {
 
 	switch ( listID ) {
 
@@ -126,7 +126,7 @@ void MOAIGfxResourceMgr::ScheduleGPUAffirm ( MOAIGfxResource& resource, u32 list
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceMgr::Update () {
+void MOAIGfxResourceClerk::Update () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 

@@ -44,7 +44,7 @@
 #include <moai-sim/MOAIGfxQuad2D.h>
 #include <moai-sim/MOAIGfxQuadDeck2D.h>
 #include <moai-sim/MOAIGfxQuadListDeck2D.h>
-#include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIGfxVertexCache.h>
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIGrid.h>

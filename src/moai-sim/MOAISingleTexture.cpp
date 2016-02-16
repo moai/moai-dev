@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAISingleTexture.h>
 

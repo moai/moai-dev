@@ -5,7 +5,7 @@
 
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResource.h>
-#include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIRenderMgr.h>
 
 //================================================================//

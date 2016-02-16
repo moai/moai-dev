@@ -9,7 +9,7 @@
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIGfxGlobalsCache.h>
 #include <moai-sim/MOAIGfxPipelineClerk.h>
-#include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIGfxVertexCache.h>
 #include <moai-sim/MOAIImage.h>
 
@@ -85,10 +85,10 @@ public:
 	GET_BOOL ( IsOpenGLES, mIsOpenGLES )
 	GET_BOOL ( IsFramebufferSupported, mIsFramebufferSupported )
 	
-	MOAIGfxResourceMgr		mResourceMgr;
-	MOAIGfxGlobalsCache		mGfxState;
-	MOAIGfxVertexCache		mVertexCache;
-	MOAIGfxPipelineClerk	mPipelineMgr;
+	MOAIGfxResourceClerk		mResourceMgr;
+	MOAIGfxGlobalsCache			mGfxState;
+	MOAIGfxVertexCache			mVertexCache;
+	MOAIGfxPipelineClerk		mPipelineMgr;
 	
 	//----------------------------------------------------------------//
 	

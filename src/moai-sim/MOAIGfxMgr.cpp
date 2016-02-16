@@ -7,7 +7,7 @@
 #include <moai-sim/MOAIFrameBufferTexture.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResource.h>
-#include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>

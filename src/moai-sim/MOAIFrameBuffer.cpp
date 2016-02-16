@@ -5,7 +5,7 @@
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIRenderable.h>
 #include <moai-sim/MOAIRenderMgr.h>

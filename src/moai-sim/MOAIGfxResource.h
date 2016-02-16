@@ -20,7 +20,7 @@ private:
 	friend class MOAIGfxMgr;
 	friend class MOAIGfxPipelineClerk;
 	friend class MOAIGfxStateCache;
-	friend class MOAIGfxResourceMgr;
+	friend class MOAIGfxResourceClerk;
 
 	u32					mState;
 	u32					mLastRenderCount;

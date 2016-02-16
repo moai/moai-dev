@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIMesh.h>

@@ -1,15 +1,15 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXRESOURCEMGR_H
-#define	MOAIGFXRESOURCEMGR_H
+#ifndef	MOAIGFXRESOURCECLERK_H
+#define	MOAIGFXRESOURCECLERK_H
 
 class MOAIGfxResource;
 
 //================================================================//
-// MOAIGfxResourceMgr
+// MOAIGfxResourceClerk
 //================================================================//
-class MOAIGfxResourceMgr {
+class MOAIGfxResourceClerk {
 private:
 	
 	typedef ZLLeanList < MOAIGfxResource* >::Iterator ResourceIt;
@@ -35,8 +35,8 @@ public:
 	friend class MOAIRenderMgr;
 	
 	//----------------------------------------------------------------//
-					MOAIGfxResourceMgr		();
-					~MOAIGfxResourceMgr		();
+					MOAIGfxResourceClerk		();
+					~MOAIGfxResourceClerk		();
 	void			PurgeResources			( u32 age = 0 );
 	void			PushDeleter				( ZLGfxHandle* handle );
 	void			Update					();
