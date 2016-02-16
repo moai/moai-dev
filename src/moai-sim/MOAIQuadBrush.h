@@ -12,11 +12,11 @@ class MOAIQuadBrush {
 private:
 	
 	//----------------------------------------------------------------//
-	static inline void WriteVertex ( MOAIGfxMgr& gfxMgr, const ZLVec2D& vtx, const ZLVec2D& uv ) {
+	static inline void WriteVertex ( MOAIGfxVertexCache& vertexCache, const ZLVec2D& vtx, const ZLVec2D& uv ) {
 		
-		gfxMgr.WriteVtx ( vtx );
-		gfxMgr.WriteUV ( uv );
-		gfxMgr.WritePenColor4b ();
+		vertexCache.WriteVtx ( vtx );
+		vertexCache.WriteUV ( uv );
+		vertexCache.WritePenColor4b ();
 	}
 
 public:
@@ -25,7 +25,7 @@ public:
 	ZLQuad	mUVQuad;
 
 	//----------------------------------------------------------------//
-	static void			BindVertexFormat	( MOAIGfxMgr& gfxMgr );
+	static void			BindVertexFormat	( MOAIGfxVertexCache& vertexCache );
 	void				Draw				();
 	void				Draw				( float xOff, float yOff, float zOff );
 	void				Draw				( float xOff, float yOff, float zOff, float xScale, float yScale );

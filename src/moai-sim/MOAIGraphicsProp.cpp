@@ -607,7 +607,7 @@ void MOAIGraphicsProp::DrawDebug ( int subPrimID, float lod ) {
 	
 	this->LoadVertexTransform ();
 	
-	gfxMgr.SetVertexTransform ( gfxMgr.GetMtx ( MOAIGfxMgr::WORLD_VIEW_PROJ_MTX ));
+	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
 	
 	ZLBox modelBounds;
 	this->OnGetModelBounds ( modelBounds );
@@ -625,7 +625,7 @@ void MOAIGraphicsProp::DrawDebug ( int subPrimID, float lod ) {
 	}
 	
 	// clear out the world transform (draw in world space)
-	gfxMgr.SetVertexTransform ( gfxMgr.GetMtx ( MOAIGfxMgr::VIEW_PROJ_MTX ));
+	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_PROJ_MTX ));
 	
 	if ( debugLines.Bind ( MOAIDebugLines::PROP_WORLD_BOUNDS )) {
 		draw.DrawBoxOutline ( this->GetBounds ());
@@ -836,18 +836,18 @@ void MOAIGraphicsProp::LoadGfxState () {
 	//gfxMgr.SetShader ( gfxState.GetShader ());
 	//gfxMgr.SetGfxState ( gfxState.GetTexture ());
 
-	gfxMgr.SetPenColor ( this->mColor );
-	gfxMgr.SetCullFunc ( this->mCullMode );
-	gfxMgr.SetDepthFunc ( this->mDepthTest );
-	gfxMgr.SetDepthMask ( this->mDepthMask );
-	gfxMgr.SetBlendMode ( this->mBlendMode );
+	gfxMgr.mGfxState.SetPenColor ( this->mColor );
+	gfxMgr.mGfxState.SetCullFunc ( this->mCullMode );
+	gfxMgr.mGfxState.SetDepthFunc ( this->mDepthTest );
+	gfxMgr.mGfxState.SetDepthMask ( this->mDepthMask );
+	gfxMgr.mGfxState.SetBlendMode ( this->mBlendMode );
 	
 	if ( this->mScissorRect ) {
-		ZLRect scissorRect = this->mScissorRect->GetScissorRect ( gfxMgr.GetWorldToWndMtx ());
-		gfxMgr.SetScissorRect ( scissorRect );
+		ZLRect scissorRect = this->mScissorRect->GetScissorRect ( gfxMgr.mGfxState.GetWorldToWndMtx ());
+		gfxMgr.mGfxState.SetScissorRect ( scissorRect );
 	}
 	else {
-		gfxMgr.SetScissorRect ();
+		gfxMgr.mGfxState.SetScissorRect ();
 	}
 }
 
@@ -858,10 +858,10 @@ void MOAIGraphicsProp::LoadUVTransform () {
 	
 	if ( this->mUVTransform ) {
 		ZLAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
-		gfxMgr.SetMtx ( MOAIGfxMgr::UV_MTX, uvMtx );
+		gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::UV_MTX, uvMtx );
 	}
 	else {
-		gfxMgr.SetMtx ( MOAIGfxMgr::UV_MTX );
+		gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::UV_MTX );
 	}
 }
 
@@ -869,7 +869,7 @@ void MOAIGraphicsProp::LoadUVTransform () {
 void MOAIGraphicsProp::LoadVertexTransform () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	gfxMgr.SetMtx ( MOAIGfxMgr::WORLD_MTX, this->GetWorldDrawingMtx ());
+	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX, this->GetWorldDrawingMtx ());
 }
 
 //----------------------------------------------------------------//

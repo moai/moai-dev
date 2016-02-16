@@ -485,8 +485,8 @@ void MOAICollisionWorld::Render () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	gfxMgr.SetMtx ( MOAIGfxMgr::WORLD_MTX );
-	gfxMgr.SetVertexTransform ( gfxMgr.GetMtx ( MOAIGfxMgr::VIEW_PROJ_MTX ));
+	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX );
+	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_PROJ_MTX ));
 
 	MOAICollisionProp* drawList = 0;
 

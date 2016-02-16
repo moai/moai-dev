@@ -429,10 +429,10 @@ void MOAIFrameBuffer::Render () {
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	//this->mLastDrawCount = gfxMgr.GetDrawCount ();
 
-	gfxMgr.BindFrameBuffer ( this );
+	gfxMgr.mGfxState.BindFrameBuffer ( this );
 	
 	//disable scissor rect for clear
-	gfxMgr.SetScissorRect ();
+	gfxMgr.mGfxState.SetScissorRect ();
 	this->ClearSurface ();
 	
 	if ( this->mRenderTable ) {
@@ -442,7 +442,7 @@ void MOAIFrameBuffer::Render () {
 		state.Pop ( 1 );
 	}
 
-	gfxMgr.FlushBufferedPrims ();
+	gfxMgr.mVertexCache.FlushBufferedPrims ();
 
 	// since we're doing this on the render thread, set it every time until we get a callback
 	if ( this->mGrabNextFrame ) {

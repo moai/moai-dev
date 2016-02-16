@@ -630,7 +630,7 @@ bool MOAIProp::GetCellRect ( ZLRect* cellRect, ZLRect* paddedRect ) {
 //----------------------------------------------------------------//
 void MOAIProp::GetGridBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 
-	const ZLFrustum& frustum = MOAIGfxMgr::Get ().GetViewVolume ();
+	const ZLFrustum& frustum = MOAIGfxMgr::Get ().mGfxState.GetViewVolume ();
 	
 	ZLRect viewRect;
 	if ( frustum.GetXYSectRect ( this->GetWorldToLocalMtx (), viewRect )) {

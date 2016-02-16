@@ -104,8 +104,7 @@ public:
 	};
 	
 	GET ( u32, DrawCount, mDrawCount )
-	
-	//GET ( ZLGfx&, API, *mGfx )
+	GET ( ZLGfx*, DrawingAPI, mDrawingAPI )
 	
 	//----------------------------------------------------------------//
 	void				BeginPhase					( u32 phase );

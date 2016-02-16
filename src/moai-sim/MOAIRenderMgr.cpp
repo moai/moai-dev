@@ -187,7 +187,7 @@ void MOAIRenderMgr::Render () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	ZLGfx& gfx = gfxMgr.SelectDrawingAPI ( MOAIGfxPipelineMgr::DRAWING_PIPELINE );
+	ZLGfx& gfx = gfxMgr.mPipelineMgr.SelectDrawingAPI ( MOAIGfxPipelineMgr::DRAWING_PIPELINE );
 
 	ZGL_COMMENT ( gfx, "RENDER MGR RENDER" );
 
@@ -198,7 +198,7 @@ void MOAIRenderMgr::Render () {
 		state.Pop ( 1 );
 	}
 	
-	gfxMgr.GetDefaultFrameBuffer ()->Render ();
+	gfxMgr.mGfxState.GetDefaultFrameBuffer ()->Render ();
 	//this->mLastDrawCount = MOAIGfxMgr::Get ().GetDrawCount ();
 	this->mRenderCounter++;
 	
@@ -209,8 +209,8 @@ void MOAIRenderMgr::Render () {
 	
 	this->mFrameBuffer = 0;
 	
-	gfxMgr.FlushBufferedPrims ();
-	gfxMgr.UnbindAll ();
+	gfxMgr.mVertexCache.FlushBufferedPrims (); // TODO: need to do this here?
+	gfxMgr.mGfxState.UnbindAll ();
 	
 	ZLGfxDevice::End ();
 }

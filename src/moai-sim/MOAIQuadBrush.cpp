@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 
@@ -10,33 +11,33 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIQuadBrush::BindVertexFormat ( MOAIGfxMgr& gfxMgr ) {
+void MOAIQuadBrush::BindVertexFormat ( MOAIGfxVertexCache& vertexCache ) {
 	
-	gfxMgr.BindBufferedDrawing ( MOAIVertexFormatMgr::XYZWUVC );
+	vertexCache.BindBufferedDrawing ( MOAIVertexFormatMgr::XYZWUVC );
 }
 
 //----------------------------------------------------------------//
 void MOAIQuadBrush::Draw () {
 
-	MOAIGfxMgr::Get ().WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV );
+	MOAIGfxMgr::Get ().mVertexCache.WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV );
 }
 
 //----------------------------------------------------------------//
 void MOAIQuadBrush::Draw ( float xOff, float yOff, float zOff ) {
 	
-	MOAIGfxMgr::Get ().WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff );
+	MOAIGfxMgr::Get ().mVertexCache.WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff );
 }
 
 //----------------------------------------------------------------//
 void MOAIQuadBrush::Draw ( float xOff, float yOff, float zOff, float xScale, float yScale ) {
 	
-	MOAIGfxMgr::Get ().WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff, xScale, yScale );
+	MOAIGfxMgr::Get ().mVertexCache.WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff, xScale, yScale );
 }
 
 //----------------------------------------------------------------//
 void MOAIQuadBrush::Draw ( float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale ) {
 	
-	MOAIGfxMgr::Get ().WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff, xScale, yScale, uOff, vOff, uScale, vScale );
+	MOAIGfxMgr::Get ().mVertexCache.WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff, xScale, yScale, uOff, vOff, uScale, vScale );
 }
 
 //----------------------------------------------------------------//

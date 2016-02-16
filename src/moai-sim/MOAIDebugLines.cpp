@@ -90,8 +90,8 @@ bool MOAIDebugLines::Bind ( u32 styleID ) {
 	MOAIDebugLineStyle& style = this->mStyles [ styleID ];
 	
 	if ( style.mVisible ) {
-		gfxMgr.SetPenColor ( style.mColor );
-		gfxMgr.SetPenWidth ( style.mSize );
+		gfxMgr.mGfxState.SetPenColor ( style.mColor );
+		gfxMgr.mGfxState.SetPenWidth ( style.mSize );
 		return true;
 	}
 	return false;

@@ -12,7 +12,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxGlobalsCache::Flush () {
+void MOAIGfxGlobalsCache::CheckGlobalsAndFlush () {
 
 	bool needsFlush = ( this->mDirtyFlags & this->mShaderFlags ) != 0;
 	
@@ -21,14 +21,14 @@ void MOAIGfxGlobalsCache::Flush () {
 	
 	// flush if ya gotta
 	if ( needsFlush ) {
-		MOAIGfxMgr::Get ().FlushBufferedPrims ();
+		this->GfxStateWillChange ();
 	}
 }
 
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAIGfxGlobalsCache::GetNormToWndMtx () {
 
-	return this->GetNormToWndMtx ( MOAIGfxMgr::Get ().GetViewRect ());
+	return this->GetNormToWndMtx ( this->GetViewRect ());
 }
 
 //----------------------------------------------------------------//
@@ -173,7 +173,7 @@ const ZLMatrix4x4& MOAIGfxGlobalsCache::GetMtx ( u32 transformID ) {
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAIGfxGlobalsCache::GetWorldToWndMtx () {
 
-	return this->GetWorldToWndMtx ( MOAIGfxMgr::Get ().GetViewRect ());
+	return this->GetWorldToWndMtx ( this->GetViewRect ());
 }
 
 //----------------------------------------------------------------//
@@ -188,7 +188,7 @@ ZLMatrix4x4 MOAIGfxGlobalsCache::GetWorldToWndMtx ( const ZLRect& wndRect ) {
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAIGfxGlobalsCache::GetWndToNormMtx () {
 
-	return this->GetWndToNormMtx ( MOAIGfxMgr::Get ().GetViewRect ());
+	return this->GetWndToNormMtx ( this->GetViewRect ());
 }
 
 //----------------------------------------------------------------//
@@ -211,7 +211,7 @@ ZLMatrix4x4 MOAIGfxGlobalsCache::GetWndToNormMtx ( const ZLRect& wndRect ) {
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAIGfxGlobalsCache::GetWndToWorldMtx () {
 
-	return this->GetWndToWorldMtx ( MOAIGfxMgr::Get ().GetViewRect ());
+	return this->GetWndToWorldMtx ( this->GetViewRect ());
 }
 
 //----------------------------------------------------------------//
@@ -343,7 +343,7 @@ void MOAIGfxGlobalsCache::SetMtx ( u32 transformID, const ZLMatrix4x4& mtx ) {
 		this->mDirtyFlags |= dirtyMask;
 	}
 	
-	this->Flush ();
+	this->CheckGlobalsAndFlush ();
 }
 
 //----------------------------------------------------------------//
@@ -497,10 +497,10 @@ void MOAIGfxGlobalsCache::UpdateFinalColor () {
 		
 		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 		
-		gfxMgr.mVertexColor = this->mFinalColor;
-		gfxMgr.mVertexColor32 = this->mFinalColor32;
+		gfxMgr.mVertexCache.mVertexColor = this->mFinalColor;
+		gfxMgr.mVertexCache.mVertexColor32 = this->mFinalColor32;
 		
-		this->Flush ();
+		this->CheckGlobalsAndFlush ();
 	}
 }
 

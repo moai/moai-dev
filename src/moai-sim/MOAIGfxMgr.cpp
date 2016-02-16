@@ -27,7 +27,7 @@
 int MOAIGfxMgr::_enablePipelineLogging ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIGfxMgr, "" )
 
-	MOAIGfxMgr::Get ().EnablePipelineLogging ( state.GetValue < bool >( 1, false ));
+	MOAIGfxMgr::Get ().mPipelineMgr.EnablePipelineLogging ( state.GetValue < bool >( 1, false ));
 
 	ZLFileSys::DeleteDirectory ( GFX_PIPELINE_LOGGING_FOLDER, true, true );
 	ZLFileSys::AffirmPath ( GFX_PIPELINE_LOGGING_FOLDER );
@@ -44,7 +44,7 @@ int MOAIGfxMgr::_enablePipelineLogging ( lua_State* L ) {
 int MOAIGfxMgr::_getFrameBuffer ( lua_State* L ) {
 
 	MOAILuaState state ( L );
-	MOAIGfxMgr::Get ().mDefaultFrameBuffer.PushRef ( state );
+	state.Push ( MOAIGfxMgr::Get ().mGfxState.GetDefaultFrameBuffer ());
 
 	return 1;
 }
@@ -71,7 +71,7 @@ int MOAIGfxMgr::_getMaxTextureSize ( lua_State* L ) {
 */
 int MOAIGfxMgr::_getMaxTextureUnits ( lua_State* L ) {
 
-	lua_pushnumber ( L, ( double )MOAIGfxMgr::Get ().CountTextureUnits ());
+	lua_pushnumber ( L, ( double )MOAIGfxMgr::Get ().mGfxState.CountTextureUnits ());
 
 	return 1;
 }
@@ -87,7 +87,7 @@ int MOAIGfxMgr::_getViewSize ( lua_State* L  ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
-	MOAIFrameBuffer* frameBuffer = MOAIGfxMgr::Get ().GetCurrentFrameBuffer ();
+	MOAIFrameBuffer* frameBuffer = MOAIGfxMgr::Get ().mGfxState.GetCurrentFrameBuffer ();
 	
 	lua_pushnumber ( L, frameBuffer->GetBufferWidth ());
 	lua_pushnumber ( L, frameBuffer->GetBufferHeight ());
@@ -119,7 +119,7 @@ int MOAIGfxMgr::_setDefaultTexture ( lua_State* L ) {
 		}
 	}
 
-	gfxMgr.mDefaultTexture.Set ( gfxMgr, texture );
+	gfxMgr.mGfxState.SetDefaultTexture ( gfxMgr, texture );
 
 	if ( texture ) {
 		texture->PushLuaUserdata ( state );
@@ -146,7 +146,7 @@ int MOAIGfxMgr::_setPenColor ( lua_State* L ) {
 	float b = state.GetValue < float >( 3, 1.0f );
 	float a = state.GetValue < float >( 4, 1.0f );
 
-	MOAIGfxMgr::Get ().SetPenColor ( r, g, b, a );
+	MOAIGfxMgr::Get ().mGfxState.SetPenColor ( r, g, b, a );
 	return 0;
 }
 
@@ -161,7 +161,7 @@ int MOAIGfxMgr::_setPenWidth ( lua_State* L ) {
 	MOAILuaState state ( L );
 
 	float width = state.GetValue < float >( 1, 1.0f );
-	MOAIGfxMgr::Get ().SetPenWidth ( width );
+	MOAIGfxMgr::Get ().mGfxState.SetPenWidth ( width );
 	return 0;
 }
 
@@ -185,7 +185,7 @@ void MOAIGfxMgr::ClearSurface ( u32 clearFlags ) {
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
 	if ( clearFlags ) {
-		if (( clearFlags & ZGL_CLEAR_DEPTH_BUFFER_BIT ) && !this->GetDepthMask ()) {
+		if (( clearFlags & ZGL_CLEAR_DEPTH_BUFFER_BIT ) && !this->mGfxState.GetDepthMask ()) {
 			gfx.DepthMask ( true );
 			gfx.Clear ( clearFlags );
 			gfx.DepthMask ( false );
@@ -206,14 +206,14 @@ void MOAIGfxMgr::DetectContext () {
 	ZLGfxDevice::Initialize ();
 	
 	u32 maxTextureUnits = ZLGfxDevice::GetCap ( ZGL_CAPS_MAX_TEXTURE_UNITS );
-	this->InitTextureUnits ( maxTextureUnits );
+	this->mGfxState.InitTextureUnits ( maxTextureUnits );
 	
 	this->mMaxTextureSize = ZLGfxDevice::GetCap ( ZGL_CAPS_MAX_TEXTURE_SIZE );
 
 	// renew resources in immediate mode
-	this->SelectDrawingAPI ();
+	this->mPipelineMgr.SelectDrawingAPI ();
 	
-	this->mDefaultFrameBuffer->DetectGLFrameBufferID ();
+	this->mGfxState.GetDefaultFrameBuffer ()->DetectGLFrameBufferID ();
 	
 	MOAIShaderMgr::Get ().AffirmAll ();
 	
@@ -227,16 +227,16 @@ void MOAIGfxMgr::DetectFramebuffer () {
 	
 	ZLGfxDevice::Begin ();
 	
-	this->mDefaultFrameBuffer->DetectGLFrameBufferID ();
+	this->mGfxState.GetDefaultFrameBuffer ()->DetectGLFrameBufferID ();
 	
 	ZLGfxDevice::End ();
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxMgr::IsOpaque () const {
+bool MOAIGfxMgr::IsOpaque () {
 	
-	assert ( this->mDefaultFrameBuffer );
-	return this->mDefaultFrameBuffer->IsOpaque ();
+	assert ( this->mGfxState.GetDefaultFrameBuffer ());
+	return this->mGfxState.GetDefaultFrameBuffer ()->IsOpaque ();
 }
 
 //----------------------------------------------------------------//
@@ -272,30 +272,27 @@ MOAIGfxMgr::MOAIGfxMgr () :
 		RTTI_SINGLE ( MOAIGlobalEventSource )
 	RTTI_END
 	
-	this->mDefaultFrameBuffer.Set ( *this, new MOAIFrameBuffer ());
-	this->mCurrentFrameBuffer = this->mDefaultFrameBuffer;
+	this->mGfxState.SetDefaultFrameBuffer ( *this, new MOAIFrameBuffer ());
 }
 
 //----------------------------------------------------------------//
 MOAIGfxMgr::~MOAIGfxMgr () {
 
-	this->mDefaultFrameBuffer.Set ( *this, 0 );
-	this->mDefaultTexture.Set ( *this, 0 );
+	this->mGfxState.SetDefaultFrameBuffer ( *this, 0 );
+	this->mGfxState.SetDefaultFrameBuffer ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxMgr::OnGlobalsFinalize () {
 
-	this->mDefaultFrameBuffer.Set ( *this, 0 );
-	this->mDefaultTexture.Set ( *this, 0 );
+	this->mGfxState.SetDefaultFrameBuffer ( *this, 0 );
+	this->mGfxState.SetDefaultFrameBuffer ( *this, 0 );
 	
 	MOAIGfxResourceMgr::Get ().ProcessDeleters ();
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxMgr::RegisterLuaClass ( MOAILuaState& state ) {
-
-	MOAIGfxStateCache::RegisterLuaClass ( state );
 
 	state.SetField ( -1, "EVENT_RESIZE",	( u32 )EVENT_RESIZE );
 	
@@ -343,11 +340,11 @@ void MOAIGfxMgr::ResetDrawCount () {
 //----------------------------------------------------------------//
 void MOAIGfxMgr::SetBufferScale ( float scale ) {
 
-	this->mDefaultFrameBuffer->SetBufferScale ( scale );
+	this->mGfxState.GetDefaultFrameBuffer ()->SetBufferScale ( scale );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxMgr::SetBufferSize ( u32 width, u32 height ) {
 
-	this->mDefaultFrameBuffer->SetBufferSize ( width, height );
+	this->mGfxState.GetDefaultFrameBuffer ()->SetBufferSize ( width, height );
 }

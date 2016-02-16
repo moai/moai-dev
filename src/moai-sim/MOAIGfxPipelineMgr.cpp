@@ -362,11 +362,11 @@ void MOAIGfxPipelineMgr::PublishAndReset ( u32 pipelineID ) {
 void MOAIGfxPipelineMgr::ResetDrawingAPIs () {
 
 	ZLGfx& loadingAPI = this->SelectDrawingAPI ( LOADING_PIPELINE );
-	MOAIGfxMgr::Get ().ResetState ();
+	MOAIGfxMgr::Get ().mGfxState.ResetState ();
 	
 	ZLGfx& drawingAPI = this->SelectDrawingAPI ( DRAWING_PIPELINE );
 	if ( &loadingAPI != &drawingAPI ) {
-		MOAIGfxMgr::Get ().ResetState ();
+		MOAIGfxMgr::Get ().mGfxState.ResetState ();
 	}
 }
 

@@ -4,6 +4,8 @@
 #ifndef	MOAIGFXSHADERGLOBALSCACHE_H
 #define	MOAIGFXSHADERGLOBALSCACHE_H
 
+#include <moai-sim/MOAIGfxStateCache.h>
+
 class MOAIShaderUniformBuffer;
 
 #define ID_TO_FLAG(id) ( 1 << id )
@@ -11,7 +13,8 @@ class MOAIShaderUniformBuffer;
 //================================================================//
 // MOAIGfxGlobalsCache
 //================================================================//
-class MOAIGfxGlobalsCache {
+class MOAIGfxGlobalsCache :
+	public MOAIGfxStateCache {
 public:
 
 	// GLOBAL IDs
@@ -116,7 +119,7 @@ protected:
 	u32						mBufferHeight;
 	
 	//----------------------------------------------------------------//
-	void					Flush						();
+	void					CheckGlobalsAndFlush		();
 	void					UpdateFinalColor			();
 	
 public:

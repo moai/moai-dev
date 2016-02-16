@@ -530,38 +530,38 @@ void MOAIRegion::DrawDebug () const {
 		switch ( poly.GetInfo ()) {
 		
 			case ZLPolygon2D::POLY_UNKNOWN: {
-				gfxMgr.SetPenColor ( POLY_UNKNOWN_COLOR );
-				gfxMgr.SetPenWidth ( 1.0f );
+				gfxMgr.mGfxState.SetPenColor ( POLY_UNKNOWN_COLOR );
+				gfxMgr.mGfxState.SetPenWidth ( 1.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_COMPLEX_BIT: {
-				gfxMgr.SetPenColor ( POLY_COMPLEX_COLOR );
-				gfxMgr.SetPenWidth ( 1.0f );
+				gfxMgr.mGfxState.SetPenColor ( POLY_COMPLEX_COLOR );
+				gfxMgr.mGfxState.SetPenWidth ( 1.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_ANTICLOCKWISE_CONVEX: {
-				gfxMgr.SetPenColor ( POLY_ANTICLOCKWISE_CONVEX_COLOR );
-				gfxMgr.SetPenWidth ( 2.0f );
+				gfxMgr.mGfxState.SetPenColor ( POLY_ANTICLOCKWISE_CONVEX_COLOR );
+				gfxMgr.mGfxState.SetPenWidth ( 2.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_ANTICLOCKWISE_CONCAVE: {
-				gfxMgr.SetPenColor ( POLY_ANTICLOCKWISE_CONCAVE_COLOR );
-				gfxMgr.SetPenWidth ( 2.0f );
+				gfxMgr.mGfxState.SetPenColor ( POLY_ANTICLOCKWISE_CONCAVE_COLOR );
+				gfxMgr.mGfxState.SetPenWidth ( 2.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_CLOCKWISE_CONVEX: {
-				gfxMgr.SetPenColor ( POLY_CLOCKWISE_CONVEX_COLOR );
-				gfxMgr.SetPenWidth ( 1.0f );
+				gfxMgr.mGfxState.SetPenColor ( POLY_CLOCKWISE_CONVEX_COLOR );
+				gfxMgr.mGfxState.SetPenWidth ( 1.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_CLOCKWISE_CONCAVE: {
-				gfxMgr.SetPenColor ( POLY_CLOCKWISE_CONCAVE_COLOR );
-				gfxMgr.SetPenWidth ( 1.0f );
+				gfxMgr.mGfxState.SetPenColor ( POLY_CLOCKWISE_CONCAVE_COLOR );
+				gfxMgr.mGfxState.SetPenWidth ( 1.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_CORRUPT: {
-				gfxMgr.SetPenColor ( POLY_CORRUPT_COLOR );
-				gfxMgr.SetPenWidth ( 1.0f );
+				gfxMgr.mGfxState.SetPenColor ( POLY_CORRUPT_COLOR );
+				gfxMgr.mGfxState.SetPenWidth ( 1.0f );
 				break;
 			}
 		}

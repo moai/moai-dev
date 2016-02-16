@@ -184,21 +184,21 @@ void MOAIGfxResourceMgr::Update () {
 
 	if ( this->mDeleterStack.GetTop () || this->mPendingForLoadList.Count ()) {
 	
-		ZLGfx& gfxLoading = gfxMgr.SelectDrawingAPI ( MOAIGfxPipelineMgr::LOADING_PIPELINE, true );
+		ZLGfx& gfxLoading = gfxMgr.mPipelineMgr.SelectDrawingAPI ( MOAIGfxPipelineMgr::LOADING_PIPELINE, true );
 		
 		ZGL_COMMENT ( gfxLoading, "RESOURCE MGR LOADING PIPELINE UPDATE" );
 		this->ProcessDeleters ();
 		this->ProcessPending ( this->mPendingForLoadList );
-		gfxMgr.UnbindAll ();
+		gfxMgr.mGfxState.UnbindAll ();
 	}
 	
 	if ( this->mPendingForDrawList.Count ()) {
 	
-		ZLGfx& gfxDrawing = gfxMgr.SelectDrawingAPI ( MOAIGfxPipelineMgr::DRAWING_PIPELINE, true );
+		ZLGfx& gfxDrawing = gfxMgr.mPipelineMgr.SelectDrawingAPI ( MOAIGfxPipelineMgr::DRAWING_PIPELINE, true );
 		
 		ZGL_COMMENT ( gfxDrawing, "RESOURCE MGR DRAWING PIPELINE UPDATE" );
 		this->ProcessPending ( this->mPendingForDrawList );
-		gfxMgr.UnbindAll ();
+		gfxMgr.mGfxState.UnbindAll ();
 	}
 
 	// TODO: think about cases where we can get async results back on the

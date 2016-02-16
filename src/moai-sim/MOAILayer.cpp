@@ -770,17 +770,17 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 	//mtx.Append ( gfxMgr.GetWorldToWndMtx ( 1.0f, 1.0f ));
 	mtx.Transform ( viewportRect );
 
-	gfxMgr.SetViewRect ( viewportRect );
-	gfxMgr.SetScissorRect ( viewportRect );
+	gfxMgr.mGfxState.SetViewRect ( viewportRect );
+	gfxMgr.mGfxState.SetScissorRect ( viewportRect );
 	this->ClearSurface ();
 	
-	gfxMgr.SetMtx ( MOAIGfxMgr::WORLD_MTX );
+	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX );
 	
 	ZLMatrix4x4 view = this->GetViewMtx ();
 	ZLMatrix4x4 proj = this->GetProjectionMtx ();
 	
-	gfxMgr.SetMtx ( MOAIGfxMgr::VIEW_MTX, view );
-	gfxMgr.SetMtx ( MOAIGfxMgr::PROJ_MTX, proj );
+	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::VIEW_MTX, view );
+	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::PROJ_MTX, proj );
 	
 	// recompute the frustum
 	//gfxMgr.UpdateViewVolume ();
@@ -793,7 +793,7 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 		if ( !interfaceMask ) return;
 		
 		MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
-		const ZLFrustum& viewVolume = gfxMgr.GetViewVolume ();
+		const ZLFrustum& viewVolume = gfxMgr.mGfxState.GetViewVolume ();
 		
 		u32 totalResults = 0;
 		
@@ -821,7 +821,7 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 		buffer.Sort ( this->mSortMode );
 		
 		// set up the ambient color
-		gfxMgr.SetAmbientColor ( this->mColor );
+		gfxMgr.mGfxState.SetAmbientColor ( this->mColor );
 		
 		// figure out the correct LOD factor
 		float lod = this->mLODFactor * this->GetLinkedValue ( MOAILayerAttr::Pack ( ATTR_LOD ), 1.0f );
@@ -831,7 +831,7 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 		if ( this->mShowDebugLines ) {
 			
 			// clear the ambient color and bind vector drawing
-			gfxMgr.SetAmbientColor ( 1.0f, 1.0f, 1.0f, 1.0f );
+			gfxMgr.mGfxState.SetAmbientColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 			MOAIDraw::Get ().Bind ();
 			this->DrawPropsDebug ( buffer, lod );
 		}

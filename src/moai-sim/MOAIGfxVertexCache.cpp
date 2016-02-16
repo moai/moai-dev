@@ -49,8 +49,8 @@ void MOAIGfxVertexCache::BeginPrim () {
 	}
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	gfxMgr.SetShaderFlags ( gfxMgr.GetShaderGlobalsMask ());
-	gfxMgr.SetClient ( this );
+	gfxMgr.mGfxState.SetShaderFlags ( gfxMgr.mGfxState.GetShaderGlobalsMask ());
+	gfxMgr.mGfxState.SetClient ( this );
 	
 	this->mUseIdxBuffer = false;
 }
@@ -75,8 +75,8 @@ void MOAIGfxVertexCache::BeginPrimIndexed ( u32 primType, u32 vtxCount, u32 idxC
 	}
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	gfxMgr.SetShaderFlags ( gfxMgr.GetShaderGlobalsMask ());
-	gfxMgr.SetClient ( this );
+	gfxMgr.mGfxState.SetShaderFlags ( gfxMgr.mGfxState.GetShaderGlobalsMask ());
+	gfxMgr.mGfxState.SetClient ( this );
 	
 	this->mUseIdxBuffer		= true;
 	this->mIndexBase		= ( u16 )( this->mTotalVertices );
@@ -140,11 +140,11 @@ void MOAIGfxVertexCache::FlushBufferedPrims () {
 				
 				//gfxCache.BindVertexFormat ();
 				
-				gfxMgr.BindVertexBuffer ( &this->mVtxBuffer );
-				gfxMgr.BindVertexFormat ( this->mVertexFormat, true );
-				gfxMgr.BindIndexBuffer ( &this->mIdxBuffer );
+				gfxMgr.mGfxState.BindVertexBuffer ( &this->mVtxBuffer );
+				gfxMgr.mGfxState.BindVertexFormat ( this->mVertexFormat, true );
+				gfxMgr.mGfxState.BindIndexBuffer ( &this->mIdxBuffer );
 				
-				gfxMgr.UpdateAndBindUniforms ();
+				gfxMgr.mGfxState.UpdateAndBindUniforms ();
 
 				ZLSharedConstBuffer* buffer = gfx.CopyBuffer ( this->mIdxBuffer.GetBuffer ());
 
@@ -162,10 +162,10 @@ void MOAIGfxVertexCache::FlushBufferedPrims () {
 				
 				//gfxCache.BindVertexFormat ();
 				
-				gfxMgr.BindVertexBuffer ( &this->mVtxBuffer );
-				gfxMgr.BindVertexFormat ( this->mVertexFormat, true );
+				gfxMgr.mGfxState.BindVertexBuffer ( &this->mVtxBuffer );
+				gfxMgr.mGfxState.BindVertexFormat ( this->mVertexFormat, true );
 				
-				gfxMgr.UpdateAndBindUniforms ();
+				gfxMgr.mGfxState.UpdateAndBindUniforms ();
 				
 				gfx.DrawArrays ( this->mPrimType, 0, count );
 				//this->mDrawCount++;
@@ -185,7 +185,7 @@ void MOAIGfxVertexCache::FlushBufferedPrims () {
 		this->mTotalIndices		= 0;
 		this->mTotalVertices	= 0;
 		
-		gfxMgr.SetShaderFlags ( 0 );
+		gfxMgr.mGfxState.SetShaderFlags ( 0 );
 	}
 }
 

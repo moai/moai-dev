@@ -225,7 +225,7 @@ void MOAIShaderProgram::ApplyGlobals () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
-	ZLRect viewRect = gfxMgr.GetViewRect ();
+	ZLRect viewRect = gfxMgr.mGfxState.GetViewRect ();
 
 	// NOTE: matrices are submitted transposed; it is up to the shader to transform vertices correctly
 	// vert * matrix implicitely transposes the matrix; martix * vert uses the matrix as submitted
@@ -240,37 +240,37 @@ void MOAIShaderProgram::ApplyGlobals () {
 		
 		switch ( global.mUniformID ) {
 			
-			case MOAIGfxMgr::VIEW_PROJ_MTX:
-			case MOAIGfxMgr::WORLD_MTX:
-			case MOAIGfxMgr::INVERSE_WORLD_MTX:
-			case MOAIGfxMgr::WORLD_VIEW_MTX:
-			case MOAIGfxMgr::INVERSE_WORLD_VIEW_MTX:
-			case MOAIGfxMgr::WORLD_VIEW_PROJ_MTX:
+			case MOAIGfxGlobalsCache::VIEW_PROJ_MTX:
+			case MOAIGfxGlobalsCache::WORLD_MTX:
+			case MOAIGfxGlobalsCache::INVERSE_WORLD_MTX:
+			case MOAIGfxGlobalsCache::WORLD_VIEW_MTX:
+			case MOAIGfxGlobalsCache::INVERSE_WORLD_VIEW_MTX:
+			case MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX:
 			
-				uniform.mFlags |= uniform.SetValue ( gfxMgr.GetMtx ( global.mUniformID ), true );
+				uniform.mFlags |= uniform.SetValue ( gfxMgr.mGfxState.GetMtx ( global.mUniformID ), true );
 				break;
 			
-			case MOAIGfxMgr::PEN_COLOR:
+			case MOAIGfxGlobalsCache::PEN_COLOR:
 			
-				uniform.mFlags |= uniform.SetValue ( gfxMgr.mFinalColor, true );
+				uniform.mFlags |= uniform.SetValue ( gfxMgr.mGfxState.GetFinalColor (), true );
 				break;
 			
-			case MOAIGfxMgr::VIEW_HALF_HEIGHT:
+			case MOAIGfxGlobalsCache::VIEW_HALF_HEIGHT:
 			
 				uniform.mFlags |= uniform.SetValue ( viewRect.Height () * 0.5f, true );
 				break;
 				
-			case MOAIGfxMgr::VIEW_HALF_WIDTH:
+			case MOAIGfxGlobalsCache::VIEW_HALF_WIDTH:
 			
 				uniform.mFlags |= uniform.SetValue ( viewRect.Width () * 0.5f, true );
 				break;
 				
-			case MOAIGfxMgr::VIEW_HEIGHT:
+			case MOAIGfxGlobalsCache::VIEW_HEIGHT:
 			
 				uniform.mFlags |= uniform.SetValue ( viewRect.Height (), true );
 				break;
 				
-			case MOAIGfxMgr::VIEW_WIDTH:
+			case MOAIGfxGlobalsCache::VIEW_WIDTH:
 			
 				uniform.mFlags |= uniform.SetValue ( viewRect.Width (), true );
 				break;
@@ -290,7 +290,7 @@ void MOAIShaderProgram::BindUniforms () {
 		
 		if ( uniform.IsValid () && ( uniform.mFlags & MOAIShaderUniform::UNIFORM_FLAG_DIRTY )) {
 			if ( !flushed ) {
-				gfxMgr.FlushBufferedPrims ();
+				gfxMgr.mGfxState.GfxStateWillChange ();
 				flushed = true;
 			}
 			uniform.Bind ();
@@ -398,7 +398,7 @@ u32 MOAIShaderProgram::GetGlobalsMask () {
 	if ( this->mGlobals.Size () && !this->mGlobalsMask ) {
 		for ( u32 i = 0; i < this->mGlobals.Size (); ++i ) {
 			const MOAIShaderProgramGlobal& global = this->mGlobals [ i ];
-			this->mGlobalsMask |= MOAIGfxMgr::GetAttrFlagForID ( global.mGlobalID );
+			this->mGlobalsMask |= MOAIGfxGlobalsCache::GetAttrFlagForID ( global.mGlobalID );
 		}
 	}
 	return this->mGlobalsMask;
@@ -558,18 +558,18 @@ void MOAIShaderProgram::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "UNIFORM_MATRIX_F4",					( u32 )MOAIShaderUniform::UNIFORM_MATRIX_F4 );
 	state.SetField ( -1, "UNIFORM_VECTOR_F4",					( u32 )MOAIShaderUniform::UNIFORM_VECTOR_F4 );
 	
-	state.SetField ( -1, "GLOBAL_WORLD_INVERSE",				( u32 )MOAIGfxMgr::INVERSE_WORLD_MTX );
-	state.SetField ( -1, "GLOBAL_WORLD_VIEW_INVERSE",			( u32 )MOAIGfxMgr::INVERSE_WORLD_VIEW_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_INVERSE",				( u32 )MOAIGfxGlobalsCache::INVERSE_WORLD_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_VIEW_INVERSE",			( u32 )MOAIGfxGlobalsCache::INVERSE_WORLD_VIEW_MTX );
 	
-	state.SetField ( -1, "GLOBAL_VIEW_PROJ",					( u32 )MOAIGfxMgr::VIEW_PROJ_MTX );
-	state.SetField ( -1, "GLOBAL_WORLD",						( u32 )MOAIGfxMgr::WORLD_MTX );
-	state.SetField ( -1, "GLOBAL_WORLD_VIEW",					( u32 )MOAIGfxMgr::WORLD_VIEW_MTX );
-	state.SetField ( -1, "GLOBAL_WORLD_VIEW_PROJ",				( u32 )MOAIGfxMgr::WORLD_VIEW_PROJ_MTX );
+	state.SetField ( -1, "GLOBAL_VIEW_PROJ",					( u32 )MOAIGfxGlobalsCache::VIEW_PROJ_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD",						( u32 )MOAIGfxGlobalsCache::WORLD_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_VIEW",					( u32 )MOAIGfxGlobalsCache::WORLD_VIEW_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_VIEW_PROJ",				( u32 )MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX );
 	
-	state.SetField ( -1, "GLOBAL_PEN_COLOR",					( u32 )MOAIGfxMgr::PEN_COLOR );
+	state.SetField ( -1, "GLOBAL_PEN_COLOR",					( u32 )MOAIGfxGlobalsCache::PEN_COLOR );
 	
-	state.SetField ( -1, "GLOBAL_VIEW_HEIGHT",					( u32 )MOAIGfxMgr::VIEW_HEIGHT );
-	state.SetField ( -1, "GLOBAL_VIEW_WIDTH",					( u32 )MOAIGfxMgr::VIEW_WIDTH );
+	state.SetField ( -1, "GLOBAL_VIEW_HEIGHT",					( u32 )MOAIGfxGlobalsCache::VIEW_HEIGHT );
+	state.SetField ( -1, "GLOBAL_VIEW_WIDTH",					( u32 )MOAIGfxGlobalsCache::VIEW_WIDTH );
 }
 
 //----------------------------------------------------------------//

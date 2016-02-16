@@ -79,15 +79,6 @@ protected:
 	//----------------------------------------------------------------//
 	bool				BindShaderProgram			( MOAIShaderProgram* program ); // only called by BindShader ()
 	bool				BindTexture					( u32 textureUnit, MOAISingleTexture* texture );
-	
-	//----------------------------------------------------------------//
-	inline void OnGfxStateWillChange () {
-	
-		if ( this->mClient ) {
-			this->mClient->OnGfxStateWillChange ();
-			this->mClient = 0;
-		}
-	}
 
 public:
 	
@@ -136,6 +127,9 @@ public:
 	void			SetCullFunc					();
 	void			SetCullFunc					( int cullFunc );
 	
+	void			SetDefaultFrameBuffer		( MOAILuaObject& owner, MOAIFrameBuffer* frameBuffer );
+	void			SetDefaultTexture			( MOAILuaObject& owner, MOAITexture* texture );
+	
 	void			SetDepthFunc				();
 	void			SetDepthFunc				( int depthFunc );
 	void			SetDepthMask				( bool depthMask );
@@ -150,6 +144,15 @@ public:
 	
 	void			UnbindAll					();
 	void			UpdateAndBindUniforms		(); // call this immediately before drawing
+	
+	//----------------------------------------------------------------//
+	inline void GfxStateWillChange () {
+	
+		if ( this->mClient ) {
+			this->mClient->OnGfxStateWillChange ();
+			this->mClient = 0;
+		}
+	}
 };
 
 #endif

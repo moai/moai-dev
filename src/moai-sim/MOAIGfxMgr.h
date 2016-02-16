@@ -9,7 +9,6 @@
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIGfxGlobalsCache.h>
 #include <moai-sim/MOAIGfxPipelineMgr.h>
-#include <moai-sim/MOAIGfxStateCache.h>
 #include <moai-sim/MOAIGfxVertexCache.h>
 #include <moai-sim/MOAIImage.h>
 
@@ -33,10 +32,6 @@ class MOAIViewport;
 	@const	EVENT_RESIZE
 */
 class MOAIGfxMgr :
-	public MOAIGfxGlobalsCache,
-	public MOAIGfxPipelineMgr,
-	public MOAIGfxStateCache,
-	public MOAIGfxVertexCache,
 	public MOAIGlobalClass < MOAIGfxMgr, MOAIGlobalEventSource > {
 public:
 	
@@ -83,6 +78,10 @@ public:
 	GET_BOOL ( IsOpenGLES, mIsOpenGLES )
 	GET_BOOL ( IsFramebufferSupported, mIsFramebufferSupported )
 	
+	MOAIGfxGlobalsCache		mGfxState;
+	MOAIGfxVertexCache		mVertexCache;
+	MOAIGfxPipelineMgr		mPipelineMgr;
+	
 	//----------------------------------------------------------------//
 	
 	void			ClearErrors				();
@@ -90,11 +89,11 @@ public:
 	void			DetectContext			();
 	void			DetectFramebuffer		();
 	
-	bool			IsOpaque				() const;
+	bool			IsOpaque				();
 	u32				LogErrors				();
 	
-					MOAIGfxMgr			();
-					~MOAIGfxMgr			();
+					MOAIGfxMgr				();
+					~MOAIGfxMgr				();
 	
 	void			OnGlobalsFinalize		();
 
@@ -105,13 +104,13 @@ public:
 	
 	void			ResetDrawCount			();
 	
-	void			SetBufferScale				( float scale );
-	void			SetBufferSize				( u32 width, u32 height );
+	void			SetBufferScale			( float scale );
+	void			SetBufferSize			( u32 width, u32 height );
 	
 	//----------------------------------------------------------------//
 	static ZLGfx& GetDrawingAPI () {
 	
-		ZLGfx* gfx = MOAIGfxMgr::Get ().mDrawingAPI;
+		ZLGfx* gfx = MOAIGfxMgr::Get ().mPipelineMgr.GetDrawingAPI ();
 		assert ( gfx );
 		
 		return *gfx;
