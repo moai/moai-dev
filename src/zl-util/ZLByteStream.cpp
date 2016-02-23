@@ -61,7 +61,7 @@ void* ZLByteStream::GetWriteBuffer () {
 }
 
 //----------------------------------------------------------------//
-size_t ZLByteStream::ReadBytes ( void* buffer, size_t size ) {
+ZLSizeResult ZLByteStream::ReadBytes ( void* buffer, size_t size ) {
 
 	if (( this->mCursor + size ) > this->mLength ) {
 		size = this->mLength - this->mCursor;
@@ -106,7 +106,7 @@ int ZLByteStream::SetCursor ( long offset ) {
 }
 
 //----------------------------------------------------------------//
-size_t ZLByteStream::SetLength ( size_t length ) {
+ZLSizeResult ZLByteStream::SetLength ( size_t length ) {
 
 	length = length > this->mCapacity ? this->mCapacity : length;
 	this->mLength = length;
@@ -114,7 +114,7 @@ size_t ZLByteStream::SetLength ( size_t length ) {
 }
 
 //----------------------------------------------------------------//
-size_t ZLByteStream::WriteBytes ( const void* buffer, size_t size ) {
+ZLSizeResult ZLByteStream::WriteBytes ( const void* buffer, size_t size ) {
 
 	if (( this->mCursor + size ) > this->mCapacity ) {
 		size = this->mCapacity - this->mCursor;

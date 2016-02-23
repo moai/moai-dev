@@ -13,8 +13,8 @@ class ZLHexAdapter :
 	public ZLStreamAdapter {
 	
 	//----------------------------------------------------------------//
-	size_t				ReadBytes				( void* buffer, size_t size );
-	size_t				WriteBytes				( const void* buffer, size_t size );
+	ZLSizeResult		ReadBytes				( void* buffer, size_t size );
+	ZLSizeResult		WriteBytes				( const void* buffer, size_t size );
 	
 public:
 

@@ -26,7 +26,7 @@ private:
 	size_t				Deflate					( const void* src, size_t size );
 	void				OnClose					();
 	bool				OnOpen					();
-	size_t				WriteBytes				( const void* buffer, size_t size );
+	ZLSizeResult		WriteBytes				( const void* buffer, size_t size );
 
 public:
 

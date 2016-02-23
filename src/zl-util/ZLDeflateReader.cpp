@@ -148,7 +148,7 @@ bool ZLDeflateReader::OnOpen () {
 }
 
 //----------------------------------------------------------------//
-size_t ZLDeflateReader::ReadBytes ( void* buffer, size_t size ) {
+ZLSizeResult ZLDeflateReader::ReadBytes ( void* buffer, size_t size ) {
 
 	ZLStreamChunk* chunk;
 	size_t remaining = size;

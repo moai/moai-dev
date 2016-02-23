@@ -37,7 +37,7 @@ u8 ZLHexAdapter::HexToByte ( u32 c ) {
 }
 
 //----------------------------------------------------------------//
-size_t ZLHexAdapter::ReadBytes ( void* buffer, size_t size ) {
+ZLSizeResult ZLHexAdapter::ReadBytes ( void* buffer, size_t size ) {
 	
 	if ( !this->mProxiedStream ) return 0;
 	
@@ -60,7 +60,7 @@ size_t ZLHexAdapter::ReadBytes ( void* buffer, size_t size ) {
 }
 
 //----------------------------------------------------------------//
-size_t ZLHexAdapter::WriteBytes ( const void* buffer, size_t size ) {
+ZLSizeResult ZLHexAdapter::WriteBytes ( const void* buffer, size_t size ) {
 	
 	if ( !this->mProxiedStream ) return 0;
 	

@@ -81,7 +81,7 @@ bool ZLDeflateWriter::OnOpen () {
 }
 
 //----------------------------------------------------------------//
-size_t ZLDeflateWriter::WriteBytes ( const void* buffer, size_t size ) {
+ZLSizeResult ZLDeflateWriter::WriteBytes ( const void* buffer, size_t size ) {
 
 	if ( size ) {
 	

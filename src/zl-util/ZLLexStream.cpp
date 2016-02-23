@@ -29,7 +29,7 @@ size_t ZLLexStream::GetLength () {
 }
 
 //----------------------------------------------------------------//
-size_t ZLLexStream::ReadBytes ( void* buffer, size_t size ) {
+ZLSizeResult ZLLexStream::ReadBytes ( void* buffer, size_t size ) {
 
 	size_t cursor = this->GetCursor ();
 

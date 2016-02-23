@@ -20,7 +20,7 @@ private:
 	//----------------------------------------------------------------//
 	void				OnClose					();
 	bool				OnOpen					();
-	size_t				WriteBytes				( const void* buffer, size_t size );
+	ZLSizeResult		WriteBytes				( const void* buffer, size_t size );
 
 public:
 

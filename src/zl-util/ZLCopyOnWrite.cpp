@@ -158,7 +158,7 @@ void* ZLCopyOnWrite::Invalidate () {
 }
 
 //----------------------------------------------------------------//
-size_t ZLCopyOnWrite::ReadBytes ( void* buffer, size_t size ) {
+ZLSizeResult ZLCopyOnWrite::ReadBytes ( void* buffer, size_t size ) {
 
 	ZLCopyOnWriteBuffer* internal = this->mInternal;
 	
@@ -198,7 +198,7 @@ int ZLCopyOnWrite::SetCursor ( long offset ) {
 }
 
 //----------------------------------------------------------------//
-size_t ZLCopyOnWrite::SetLength ( size_t length ) {
+ZLSizeResult ZLCopyOnWrite::SetLength ( size_t length ) {
 
 	ZLCopyOnWriteBuffer* internal = this->mInternal;
 	
@@ -220,7 +220,7 @@ size_t ZLCopyOnWrite::SetLength ( size_t length ) {
 }
 
 //----------------------------------------------------------------//
-size_t ZLCopyOnWrite::WriteBytes ( const void* buffer, size_t size ) {
+ZLSizeResult ZLCopyOnWrite::WriteBytes ( const void* buffer, size_t size ) {
 
 	ZLCopyOnWriteBuffer* internal = this->mInternal;
 	

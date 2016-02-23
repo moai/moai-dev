@@ -48,7 +48,7 @@ bool ZLBase64Writer::OnOpen () {
 }
 
 //----------------------------------------------------------------//
-size_t ZLBase64Writer::WriteBytes ( const void* buffer, size_t size ) {
+ZLSizeResult ZLBase64Writer::WriteBytes ( const void* buffer, size_t size ) {
 	
 	u8 crypt [ ZLBase64Encoder::CRYPT_BLOCK_SIZE ];
 

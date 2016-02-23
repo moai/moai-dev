@@ -133,7 +133,7 @@ size_t ZLMemStream::GetLength () {
 }
 
 //----------------------------------------------------------------//
-size_t ZLMemStream::ReadBytes ( void* buffer, size_t size ) {
+ZLSizeResult ZLMemStream::ReadBytes ( void* buffer, size_t size ) {
 
 	size_t cursor0 = this->mBase + this->mCursor;
 	size_t cursor1 = cursor0 + size;
@@ -265,7 +265,7 @@ void ZLMemStream::SetGuestBuffer ( void* guestBuffer, size_t guestBufferSize ) {
 }
 
 //----------------------------------------------------------------//
-size_t ZLMemStream::SetLength ( size_t length ) {
+ZLSizeResult ZLMemStream::SetLength ( size_t length ) {
 
 	if ( length < this->mLength ) {
 		this->DiscardBack ( this->mLength - length );
@@ -278,7 +278,7 @@ size_t ZLMemStream::SetLength ( size_t length ) {
 }
 
 //----------------------------------------------------------------//
-size_t ZLMemStream::WriteBytes ( const void* buffer, size_t size ) {
+ZLSizeResult ZLMemStream::WriteBytes ( const void* buffer, size_t size ) {
 
 	if ( !size ) return 0;
 

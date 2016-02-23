@@ -74,7 +74,7 @@ bool ZLHashWriter::OnOpen () {
 }
 
 //----------------------------------------------------------------//
-size_t ZLHashWriter::WriteBytes ( const void* buffer, size_t size ) {
+ZLSizeResult ZLHashWriter::WriteBytes ( const void* buffer, size_t size ) {
 	
 	// Pass the write through to stream
 	if ( this->mProxiedStream ) {

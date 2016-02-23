@@ -201,20 +201,21 @@ size_t ZLStream::Print ( cc8* format, va_list args ) {
 }
 
 //----------------------------------------------------------------//
-template <> bool ZLStream::Read < bool >( bool value ) {
+template <> ZLResult < bool > ZLStream::Read < bool >( bool value ) {
 	u8 result = this->Read < u8 >( value ? 1 : 0 );
     return ( result > 0 );
 }
 
 //----------------------------------------------------------------//
-size_t ZLStream::ReadBytes ( void* buffer, size_t size ) {
+ZLSizeResult ZLStream::ReadBytes ( void* buffer, size_t size ) {
 	UNUSED ( buffer );
 	UNUSED ( size );
+	
 	return 0;
 }
 
 //----------------------------------------------------------------//
-STLString ZLStream::ReadString ( size_t size ) {
+ZLStringResult ZLStream::ReadString ( size_t size ) {
 
 	STLString str;
 
@@ -240,7 +241,7 @@ STLString ZLStream::ReadString ( size_t size ) {
 }
 
 //----------------------------------------------------------------//
-STLString ZLStream::ReadToken ( cc8* delimiters ) {
+ZLStringResult ZLStream::ReadToken ( cc8* delimiters ) {
 
 	STLString str;
 	if ( this->IsAtEnd ()) return str;
@@ -361,27 +362,27 @@ int ZLStream::SetCursor ( long offset ) {
 }
 
 //----------------------------------------------------------------//
-size_t ZLStream::SetLength ( size_t length ) {
+ZLSizeResult ZLStream::SetLength ( size_t length ) {
 	UNUSED ( length );
 	return 0;
 }
 
 //----------------------------------------------------------------//
-template <> void ZLStream::Write < bool >( bool value ) {
+template <> ZLSizeResult ZLStream::Write < bool >( bool value ) {
 
     u8 boolByte = ( value ) ? 1 : 0;
-    this->Write < u8 >( boolByte );
+    return this->Write < u8 >( boolByte );
 }
 
 //----------------------------------------------------------------//
-size_t ZLStream::WriteBytes ( const void* buffer, size_t size ) {
+ZLSizeResult ZLStream::WriteBytes ( const void* buffer, size_t size ) {
 	UNUSED ( buffer );
 	UNUSED ( size );
 	return 0;
 }
 
 //----------------------------------------------------------------//
-size_t ZLStream::WriteStream ( ZLStream& source ) {
+ZLSizeResult ZLStream::WriteStream ( ZLStream& source ) {
 
 	if ( !( source.GetCaps () & CAN_READ )) return 0;
 	if ( !( this->GetCaps () & CAN_WRITE )) return 0;
@@ -407,7 +408,7 @@ size_t ZLStream::WriteStream ( ZLStream& source ) {
 }
 
 //----------------------------------------------------------------//
-size_t ZLStream::WriteStream ( ZLStream& source, size_t size ) {
+ZLSizeResult ZLStream::WriteStream ( ZLStream& source, size_t size ) {
 
 	if ( !( source.GetCaps () & CAN_READ )) return 0;
 	if ( !( this->GetCaps () & CAN_WRITE )) return 0;

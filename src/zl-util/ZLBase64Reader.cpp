@@ -29,7 +29,7 @@ void ZLBase64Reader::OnClose () {
 }
 
 //----------------------------------------------------------------//
-size_t ZLBase64Reader::ReadBytes ( void* buffer, size_t size ) {
+ZLSizeResult ZLBase64Reader::ReadBytes ( void* buffer, size_t size ) {
 
 	size_t remainder = size;
 	while ( remainder ) {

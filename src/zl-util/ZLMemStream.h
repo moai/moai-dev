@@ -51,12 +51,12 @@ public:
 	u32				GetCaps				();
 	size_t			GetCursor			();
 	size_t			GetLength			();
-	size_t			ReadBytes			( void* buffer, size_t size );
+	ZLSizeResult	ReadBytes			( void* buffer, size_t size );
 	void			Reserve				( size_t length );
 	void			SetChunkSize		( size_t chunkSize );
 	void			SetGuestBuffer		( void* guestBuffer, size_t guestBufferSize );
-	size_t			SetLength			( size_t length );
-	size_t			WriteBytes			( const void* buffer, size_t size );
+	ZLSizeResult	SetLength			( size_t length );
+	ZLSizeResult	WriteBytes			( const void* buffer, size_t size );
 					ZLMemStream			();
 					~ZLMemStream		();
 };

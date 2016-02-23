@@ -47,9 +47,9 @@ bool ZLStreamProxy::IsAtEnd () {
 }
 
 //----------------------------------------------------------------//
-size_t ZLStreamProxy::ReadBytes ( void* buffer, size_t size ) {
+ZLSizeResult ZLStreamProxy::ReadBytes ( void* buffer, size_t size ) {
 
-	return this->mProxiedStream ? this->mProxiedStream->ReadBytes ( buffer, size ) : 0;
+	return this->mProxiedStream ? this->mProxiedStream->ReadBytes ( buffer, size ) : ZLSizeResult ( 0 );
 }
 
 //----------------------------------------------------------------//
@@ -59,15 +59,15 @@ int ZLStreamProxy::SetCursor ( long offset ) {
 }
 
 //----------------------------------------------------------------//
-size_t ZLStreamProxy::SetLength ( size_t length ) {
+ZLSizeResult ZLStreamProxy::SetLength ( size_t length ) {
 
-	return this->mProxiedStream ? this->mProxiedStream->SetLength ( length ) : 0;
+	return this->mProxiedStream ? this->mProxiedStream->SetLength ( length ) : ZLSizeResult ( 0 );
 }
 
 //----------------------------------------------------------------//
-size_t ZLStreamProxy::WriteBytes ( const void* buffer, size_t size ) {
+ZLSizeResult ZLStreamProxy::WriteBytes ( const void* buffer, size_t size ) {
 
-	return this->mProxiedStream ? this->mProxiedStream->WriteBytes ( buffer, size ) : 0;
+	return this->mProxiedStream ? this->mProxiedStream->WriteBytes ( buffer, size ) : ZLSizeResult ( 0 );
 }
 
 //----------------------------------------------------------------//

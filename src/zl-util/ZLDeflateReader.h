@@ -49,7 +49,7 @@ private:
 	void				InflateChunk			( ZLStreamChunk& chunk );
 	void				OnClose					();
 	bool				OnOpen					();
-	size_t				ReadBytes				( void* buffer, size_t size );
+	ZLSizeResult		ReadBytes				( void* buffer, size_t size );
 	int					ResetZipStream			();
 
 public:
