@@ -23,9 +23,9 @@ private:
 	int					mWindowBits;
 	
 	//----------------------------------------------------------------//
-	size_t				Deflate					( const void* src, size_t size );
+	ZLSizeResult		Deflate					( const void* src, size_t size );
 	void				OnClose					();
-	bool				OnOpen					();
+	ZLResultCode		OnOpen					();
 	ZLSizeResult		WriteBytes				( const void* buffer, size_t size );
 
 public:

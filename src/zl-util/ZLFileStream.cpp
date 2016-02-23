@@ -147,7 +147,7 @@ bool ZLFileStream::OpenWrite ( cc8* filename ) {
 //----------------------------------------------------------------//
 ZLSizeResult ZLFileStream::ReadBytes ( void* buffer, size_t size ) {
 
-	return zl_fread ( buffer, 1, size, this->mFile );
+	return ZLSizeResult ( zl_fread ( buffer, 1, size, this->mFile ), ZL_OK );
 }
 
 //----------------------------------------------------------------//
@@ -159,19 +159,19 @@ int ZLFileStream::SetCursor ( long offset ) {
 //----------------------------------------------------------------//
 ZLSizeResult ZLFileStream::SetLength ( size_t length ) {
 	UNUSED ( length );
-	return 0;
+	return ZLSizeResult ( 0, ZL_UNSUPPORTED );
 }
 
 //----------------------------------------------------------------//
 ZLSizeResult ZLFileStream::WriteBytes ( const void* buffer, size_t size ) {
 
-	size_t result = zl_fwrite ( buffer, 1, size, this->mFile );
+	size_t writeSize = zl_fwrite ( buffer, 1, size, this->mFile );
 	
 	size_t cursor = ( size_t )zl_ftell ( this->mFile );
 	if ( cursor > this->mLength ) {
 		this->mLength = cursor;
 	}
-	return result;
+	return ZLSizeResult ( writeSize, ZL_OK );
 }
 
 //----------------------------------------------------------------//

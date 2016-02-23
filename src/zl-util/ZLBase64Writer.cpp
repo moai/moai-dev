@@ -41,10 +41,10 @@ void ZLBase64Writer::OnClose () {
 }
 
 //----------------------------------------------------------------//
-bool ZLBase64Writer::OnOpen () {
+ZLResultCode ZLBase64Writer::OnOpen () {
 
 	this->mEncoder.FormatPlainBlock ( this->mPlainBlock );
-	return true;
+	return ZL_OK;
 }
 
 //----------------------------------------------------------------//
@@ -87,7 +87,8 @@ ZLSizeResult ZLBase64Writer::WriteBytes ( const void* buffer, size_t size ) {
 	if ( this->mLength < this->mCursor ) {
 		this->mLength = this->mCursor;
 	}
-	return size - remainder;
+	
+	return ZLSizeResult ( size - remainder, ZL_OK );
 }
 
 //----------------------------------------------------------------//

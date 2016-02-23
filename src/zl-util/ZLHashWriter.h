@@ -19,7 +19,7 @@ protected:
 	virtual void		FinalizeHash			() = 0;
 	virtual void		InitHash				() = 0;
 	void				OnClose					();
-	bool				OnOpen					();
+	ZLResultCode		OnOpen					();
 	ZLSizeResult		WriteBytes				( const void* buffer, size_t size );
 
 public:

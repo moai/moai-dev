@@ -161,20 +161,18 @@ void* ZLCopyOnWrite::Invalidate () {
 ZLSizeResult ZLCopyOnWrite::ReadBytes ( void* buffer, size_t size ) {
 
 	ZLCopyOnWriteBuffer* internal = this->mInternal;
+	size_t readSize = 0;
 	
 	if ( internal ) {
 
-		if (( this->mCursor + size ) > internal->mLength ) {
-			size = internal->mLength - this->mCursor;
-		}
+		readSize = (( this->mCursor + size ) > internal->mLength ) ? ( internal->mLength - this->mCursor ) : size;
 
-		if ( size ) {
-			memcpy ( buffer, ( const void* )(( size_t )internal->mBuffer + this->mCursor ), size );
-			this->mCursor += size;
+		if ( readSize ) {
+			memcpy ( buffer, ( const void* )(( size_t )internal->mBuffer + this->mCursor ), readSize );
+			this->mCursor += readSize;
 		}
-		return size;
 	}
-	return 0;
+	return ZLSizeResult ( readSize, ZL_OK );
 }
 
 //----------------------------------------------------------------//
@@ -214,15 +212,16 @@ ZLSizeResult ZLCopyOnWrite::SetLength ( size_t length ) {
 		if ( this->mCursor > length ) {
 			this->mCursor = length;
 		}
-		return length;
+		return ZLSizeResult ( length, ZL_OK );
 	}
-	return 0;
+	return ZLSizeResult ( 0, ZL_ERROR );
 }
 
 //----------------------------------------------------------------//
 ZLSizeResult ZLCopyOnWrite::WriteBytes ( const void* buffer, size_t size ) {
 
 	ZLCopyOnWriteBuffer* internal = this->mInternal;
+	size_t writeSize = 0;
 	
 	if ( internal ) {
 
@@ -230,20 +229,17 @@ ZLSizeResult ZLCopyOnWrite::WriteBytes ( const void* buffer, size_t size ) {
 			this->Invalidate ();
 		}
 
-		if (( this->mCursor + size ) > internal->mSize ) {
-			size = internal->mSize - this->mCursor;
-		}
+		writeSize = (( this->mCursor + size ) > internal->mSize ) ? ( internal->mSize - this->mCursor ) : size;
 
-		if ( size ) {
-			memcpy (( void* )(( size_t )internal->mBuffer + this->mCursor ), buffer, size );
-			this->mCursor += size;
+		if ( writeSize ) {
+			memcpy (( void* )(( size_t )internal->mBuffer + this->mCursor ), buffer, writeSize );
+			this->mCursor += writeSize;
 			if ( internal->mLength < this->mCursor ) {
 				internal->mLength = this->mCursor;
 			}
-			return size;
 		}
 	}
-	return 0;
+	return ZLSizeResult ( writeSize, ZL_OK );
 }
 
 //----------------------------------------------------------------//

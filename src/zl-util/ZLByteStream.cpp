@@ -63,16 +63,13 @@ void* ZLByteStream::GetWriteBuffer () {
 //----------------------------------------------------------------//
 ZLSizeResult ZLByteStream::ReadBytes ( void* buffer, size_t size ) {
 
-	if (( this->mCursor + size ) > this->mLength ) {
-		size = this->mLength - this->mCursor;
-	}
+	size_t readSize = (( this->mCursor + size ) > this->mLength ) ? ( this->mLength - this->mCursor ) : size;
 
-	if ( size ) {
-		memcpy ( buffer, &(( u8* )this->mReadBuffer )[ this->mCursor ], size );
-		this->mCursor += size;
+	if ( readSize ) {
+		memcpy ( buffer, &(( u8* )this->mReadBuffer )[ this->mCursor ], readSize );
+		this->mCursor += readSize;
 	}
-	
-	return size;
+	return ZLSizeResult ( readSize, ZL_OK );
 }
 
 //----------------------------------------------------------------//
@@ -108,27 +105,23 @@ int ZLByteStream::SetCursor ( long offset ) {
 //----------------------------------------------------------------//
 ZLSizeResult ZLByteStream::SetLength ( size_t length ) {
 
-	length = length > this->mCapacity ? this->mCapacity : length;
-	this->mLength = length;
-	return length;
+	this->mLength = length > this->mCapacity ? this->mCapacity : length;
+	return ZLSizeResult ( length, length <= this->mCapacity ? ZL_OK : ZL_ERROR );
 }
 
 //----------------------------------------------------------------//
 ZLSizeResult ZLByteStream::WriteBytes ( const void* buffer, size_t size ) {
 
-	if (( this->mCursor + size ) > this->mCapacity ) {
-		size = this->mCapacity - this->mCursor;
-	}
+	size_t writeSize = (( this->mCursor + size ) > this->mCapacity ) ? ( this->mCapacity - this->mCursor ) : size;
 
-	if ( size ) {
-		memcpy ( &(( u8* )this->mWriteBuffer )[ this->mCursor ], buffer, size );
-		this->mCursor += size;
+	if ( writeSize ) {
+		memcpy ( &(( u8* )this->mWriteBuffer )[ this->mCursor ], buffer, writeSize );
+		this->mCursor += writeSize;
 		if ( this->mLength < this->mCursor ) {
 			this->mLength = this->mCursor;
 		}
-		return size;
 	}
-	return 0;
+	return ZLSizeResult ( writeSize, ZL_OK );
 }
 
 //----------------------------------------------------------------//

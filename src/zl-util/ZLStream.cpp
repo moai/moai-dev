@@ -202,8 +202,8 @@ size_t ZLStream::Print ( cc8* format, va_list args ) {
 
 //----------------------------------------------------------------//
 template <> ZLResult < bool > ZLStream::Read < bool >( bool value ) {
-	u8 result = this->Read < u8 >( value ? 1 : 0 );
-    return ( result > 0 );
+	ZLResult < u8 > result = this->Read < u8 >( value ? 1 : 0 );
+    return ZLResult < bool > ( result.Value () > 0, result.Code ());
 }
 
 //----------------------------------------------------------------//
@@ -211,7 +211,7 @@ ZLSizeResult ZLStream::ReadBytes ( void* buffer, size_t size ) {
 	UNUSED ( buffer );
 	UNUSED ( size );
 	
-	return 0;
+	return ZLSizeResult ( 0, ZL_UNSUPPORTED );
 }
 
 //----------------------------------------------------------------//
@@ -237,14 +237,14 @@ ZLStringResult ZLStream::ReadString ( size_t size ) {
 			free ( buffer );
 		}
 	}
-	return str;
+	return ZLStringResult ( str, ZL_OK );
 }
 
 //----------------------------------------------------------------//
 ZLStringResult ZLStream::ReadToken ( cc8* delimiters ) {
 
 	STLString str;
-	if ( this->IsAtEnd ()) return str;
+	if ( this->IsAtEnd ()) return ZLStringResult ( str, ZL_OK );
 
 	char stackBuffer [ LOCAL_BUFFER ];
 	
@@ -304,7 +304,7 @@ ZLStringResult ZLStream::ReadToken ( cc8* delimiters ) {
 			size -= readSize;
 		}
 	}
-	return str;
+	return ZLStringResult ( str, ZL_OK );
 }
 
 //----------------------------------------------------------------//
@@ -364,7 +364,7 @@ int ZLStream::SetCursor ( long offset ) {
 //----------------------------------------------------------------//
 ZLSizeResult ZLStream::SetLength ( size_t length ) {
 	UNUSED ( length );
-	return 0;
+	return ZLSizeResult ( 0, ZL_UNSUPPORTED );
 }
 
 //----------------------------------------------------------------//
@@ -378,14 +378,13 @@ template <> ZLSizeResult ZLStream::Write < bool >( bool value ) {
 ZLSizeResult ZLStream::WriteBytes ( const void* buffer, size_t size ) {
 	UNUSED ( buffer );
 	UNUSED ( size );
-	return 0;
+	return ZLSizeResult ( 0, ZL_UNSUPPORTED );
 }
 
 //----------------------------------------------------------------//
 ZLSizeResult ZLStream::WriteStream ( ZLStream& source ) {
 
-	if ( !( source.GetCaps () & CAN_READ )) return 0;
-	if ( !( this->GetCaps () & CAN_WRITE )) return 0;
+	if ( !(( source.GetCaps () & CAN_READ ) && ( this->GetCaps () & CAN_WRITE ))) return ZLSizeResult ( 0, ZL_ERROR );
 
 	u8 buffer [ LOCAL_BUFFER ];
 
@@ -404,19 +403,18 @@ ZLSizeResult ZLStream::WriteStream ( ZLStream& source ) {
 		
 	} while ( readSize == LOCAL_BUFFER );
 
-	return total;
+	return ZLSizeResult ( total, ZL_OK );
 }
 
 //----------------------------------------------------------------//
 ZLSizeResult ZLStream::WriteStream ( ZLStream& source, size_t size ) {
 
-	if ( !( source.GetCaps () & CAN_READ )) return 0;
-	if ( !( this->GetCaps () & CAN_WRITE )) return 0;
+	if ( !(( source.GetCaps () & CAN_READ ) && ( this->GetCaps () & CAN_WRITE ))) return ZLSizeResult ( 0, ZL_ERROR );
 
 	if ( this == &source ) {
 		size_t cursor = this->GetCursor ();
 		this->Seek ( cursor + size, SEEK_SET );
-		return this->GetCursor () - cursor;
+		return ZLSizeResult ( this->GetCursor () - cursor, ZL_OK );
 	}
 
 	u8 buffer [ LOCAL_BUFFER ];
@@ -434,7 +432,7 @@ ZLSizeResult ZLStream::WriteStream ( ZLStream& source, size_t size ) {
 	
 	} while ( readSize == LOCAL_BUFFER );
 	
-	return total;
+	return ZLSizeResult ( total, ZL_OK );
 }
 
 //----------------------------------------------------------------//

@@ -6,6 +6,15 @@
 
 #include <zl-util/STLString.h>
 
+enum {
+	ZL_OK,
+	ZL_ERROR,
+	ZL_ALLOCATION_ERROR,
+	ZL_RANGE_ERROR,
+	ZL_UNSUPPORTED,
+	ZL_TOTAL_ERRORS,
+};
+
 //================================================================//
 // ZLResultBase
 //================================================================//
@@ -43,31 +52,25 @@ class ZLResult :
 	public ZLResultBase {
 private:
 
-	TYPE mValue;
+	TYPE	mValue;
 
 public:
 	
 	//----------------------------------------------------------------//
 	inline operator const TYPE& () const {
-		assert ( !this->mCode );
+		assert ( this->mCode == 0 );
 		return this->mValue;
 	}
 	
 	//----------------------------------------------------------------//
 	inline const TYPE& Value () {
-		assert ( !this->mCode );
+		assert ( this->mCode == 0 );
 		return this->mValue;
 	}
 	
 	//----------------------------------------------------------------//
-	ZLResult ( const TYPE& value )  {
-		this->mValue = value;
-		this->mCode = 0;
-	}
-	
-	//----------------------------------------------------------------//
-	ZLResult ( const TYPE& value, int code ) {
-		this->mValue = value;
+	ZLResult ( const TYPE& value, int code ) :
+		mValue ( value ) {
 		this->mCode = code;
 	}
 };

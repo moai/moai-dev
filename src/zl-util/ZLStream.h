@@ -24,11 +24,6 @@ public:
 		CAN_TRUNC	= 0x08,
 	};
 
-	enum {
-		ERROR_NONE,
-		ERROR_ALLOCATION,
-	};
-
 	//----------------------------------------------------------------//
 	bool						CheckCaps				( u32 flags );
 	size_t						Collapse				( size_t clipBase, size_t clipSize, size_t chunkSize, size_t size, bool invert );
@@ -61,9 +56,9 @@ public:
 		TYPE temp;
 		size_t result = this->ReadBytes ( &temp, sizeof ( TYPE ));
 		if ( result == sizeof ( TYPE )) {
-			value = temp;
+			return ZLResult < TYPE >( temp, ZL_OK );
 		}
-		return value;
+		return ZLResult < TYPE >( value, ZL_ERROR );
 	}
 
 	//----------------------------------------------------------------//

@@ -50,19 +50,19 @@ protected:
 	bool			mIsOpen;
 
 	//----------------------------------------------------------------//
-	virtual void	OnClose					();
-	virtual bool	OnOpen					();
+	virtual void			OnClose					();
+	virtual ZLResultCode	OnOpen					();
 
 public:
 
 	//----------------------------------------------------------------//
-	void			Close					();
-	size_t			GetCursor				();
-	size_t			GetLength				();
-	bool			IsAtEnd					();
-	bool			Open					( ZLStream* stream );
-					ZLStreamAdapter			();
-					~ZLStreamAdapter		();
+	void					Close					();
+	size_t					GetCursor				();
+	size_t					GetLength				();
+	bool					IsAtEnd					();
+	bool					Open					( ZLStream* stream );
+							ZLStreamAdapter			();
+							~ZLStreamAdapter		();
 };
 
 #endif

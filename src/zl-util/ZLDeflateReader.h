@@ -48,7 +48,7 @@ private:
 	size_t				Inflate					( void* dest, size_t size );
 	void				InflateChunk			( ZLStreamChunk& chunk );
 	void				OnClose					();
-	bool				OnOpen					();
+	ZLResultCode		OnOpen					();
 	ZLSizeResult		ReadBytes				( void* buffer, size_t size );
 	int					ResetZipStream			();
 

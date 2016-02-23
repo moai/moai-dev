@@ -14,7 +14,7 @@ class ZLRingAdapter :
 protected:
 
 	//----------------------------------------------------------------//
-	size_t				Process					( void* readBuffer, const void* writeBuffer, size_t size );
+	ZLSizeResult		Process					( void* readBuffer, const void* writeBuffer, size_t size );
 	
 public:
 

@@ -61,7 +61,7 @@ ZLSizeResult ZLBase64Reader::ReadBytes ( void* buffer, size_t size ) {
 		}
 	}
 	
-	return size - remainder;
+	return ZLSizeResult ( size - remainder, ZL_OK );
 }
 
 //----------------------------------------------------------------//
