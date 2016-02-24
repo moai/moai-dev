@@ -210,17 +210,6 @@ int MOAIShaderProgram::_setVertexAttribute ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIShaderProgram::ApplyDefaults () {
-
-	for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
-		MOAIShaderUniform& uniform = this->mUniforms [ i ];
-		if (( uniform.mFlags & MOAIShaderUniform::UNIFORM_FLAG_GLOBAL ) == 0 ) {
-			uniform.mFlags |= uniform.SetValue ( this->mDefaults [ i ], true );
-		}
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIShaderProgram::ApplyGlobals () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
@@ -238,7 +227,7 @@ void MOAIShaderProgram::ApplyGlobals () {
 		
 		MOAIShaderUniform& uniform = this->mUniforms [ global.mUniformID ];
 		
-		switch ( global.mUniformID ) {
+		switch ( global.mGlobalID ) {
 			
 			case MOAIGfxGlobalsCache::VIEW_PROJ_MTX:
 			case MOAIGfxGlobalsCache::WORLD_MTX:
@@ -247,32 +236,32 @@ void MOAIShaderProgram::ApplyGlobals () {
 			case MOAIGfxGlobalsCache::INVERSE_WORLD_VIEW_MTX:
 			case MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX:
 			
-				uniform.mFlags |= uniform.SetValue ( gfxMgr.mGfxState.GetMtx ( global.mUniformID ), true );
+				uniform.mFlags |= uniform.SetValue ( gfxMgr.mGfxState.GetMtx ( global.mGlobalID ));
 				break;
 			
 			case MOAIGfxGlobalsCache::PEN_COLOR:
 			
-				uniform.mFlags |= uniform.SetValue ( gfxMgr.mGfxState.GetFinalColor (), true );
+				uniform.mFlags |= uniform.SetValue ( gfxMgr.mGfxState.GetFinalColor ());
 				break;
 			
 			case MOAIGfxGlobalsCache::VIEW_HALF_HEIGHT:
 			
-				uniform.mFlags |= uniform.SetValue ( viewRect.Height () * 0.5f, true );
+				uniform.mFlags |= uniform.SetValue ( viewRect.Height () * 0.5f );
 				break;
 				
-			case MOAIGfxGlobalsCache::VIEW_HALF_WIDTH:
+			case MOAIGfxGlobalsCache::VIEW_HALF_WIDTH: {
 			
-				uniform.mFlags |= uniform.SetValue ( viewRect.Width () * 0.5f, true );
+				uniform.mFlags |= uniform.SetValue ( viewRect.Width () * 0.5f );
 				break;
-				
+			}
 			case MOAIGfxGlobalsCache::VIEW_HEIGHT:
 			
-				uniform.mFlags |= uniform.SetValue ( viewRect.Height (), true );
+				uniform.mFlags |= uniform.SetValue ( viewRect.Height ());
 				break;
 				
 			case MOAIGfxGlobalsCache::VIEW_WIDTH:
 			
-				uniform.mFlags |= uniform.SetValue ( viewRect.Width (), true );
+				uniform.mFlags |= uniform.SetValue ( viewRect.Width ());
 				break;
 		}
 	}

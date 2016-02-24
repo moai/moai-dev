@@ -782,9 +782,6 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::VIEW_MTX, view );
 	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::PROJ_MTX, proj );
 	
-	// recompute the frustum
-	//gfxMgr.UpdateViewVolume ();
-	
 	this->RenderTable ( this->mUnderlayTable );
 	
 	if ( this->mPartition ) {

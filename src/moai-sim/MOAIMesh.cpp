@@ -131,9 +131,6 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& mater
 			defaultSpan.mNext = 0;
 			span = &defaultSpan;
 		}
-
-		//gfxMgr.SetVertexMtxMode ( MOAIGfxMgr::VTX_STAGE_MODEL, MOAIGfxMgr::VTX_STAGE_MODEL );
-		//gfxMgr.SetUVMtxMode ( MOAIGfxMgr::UV_STAGE_MODEL, MOAIGfxMgr::UV_STAGE_TEXTURE );
 		
 		gfxMgr.mGfxState.SetPenWidth ( this->mPenWidth );
 		

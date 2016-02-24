@@ -82,12 +82,12 @@ const ZLMatrix4x4& MOAIGfxGlobalsCache::GetMtx ( u32 transformID ) {
 			
 		case INVERSE_VIEW_PROJ_MTX:
 			
-			if ( this->mDirtyFlags & INVERSE_WORLD_VIEW_MTX_MASK ) {
+			if ( this->mDirtyFlags & INVERSE_VIEW_PROJ_MTX_MASK ) {
 			
-				this->mVertexTransforms [ INVERSE_WORLD_VIEW_MTX ].Inverse ( this->GetMtx ( VIEW_PROJ_MTX ));
-				this->mDirtyFlags &= ~ID_TO_FLAG ( INVERSE_WORLD_VIEW_MTX );
+				this->mVertexTransforms [ INVERSE_VIEW_PROJ_MTX ].Inverse ( this->GetMtx ( VIEW_PROJ_MTX ));
+				this->mDirtyFlags &= ~ID_TO_FLAG ( INVERSE_VIEW_PROJ_MTX );
 			}
-			return this->mVertexTransforms [ INVERSE_WORLD_VIEW_MTX ];
+			return this->mVertexTransforms [ INVERSE_VIEW_PROJ_MTX ];
 			
 		case INVERSE_WORLD_MTX:
 			

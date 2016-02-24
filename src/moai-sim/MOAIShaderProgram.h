@@ -93,7 +93,6 @@ protected:
 	static int		_setVertexAttribute			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			ApplyDefaults				();
 	void			ApplyGlobals				();
 	void			BindUniforms				();
 	ZLGfxHandle*	CompileShader				( u32 type, cc8* source );

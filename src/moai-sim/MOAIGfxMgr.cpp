@@ -318,7 +318,7 @@ MOAIGfxMgr::~MOAIGfxMgr () {
 void MOAIGfxMgr::OnGlobalsFinalize () {
 
 	this->mGfxState.SetDefaultFrameBuffer ( *this, 0 );
-	this->mGfxState.SetDefaultFrameBuffer ( *this, 0 );
+	this->mGfxState.SetDefaultTexture ( *this, 0 );
 	
 	mResourceMgr.ProcessDeleters ();
 }
