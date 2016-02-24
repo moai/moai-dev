@@ -224,7 +224,6 @@ MOAIGridDeck2D::MOAIGridDeck2D () {
 		RTTI_EXTEND ( MOAIStandardDeck )
 	RTTI_END
 	
-	//this->SetContentMask ( MOAIProp::CAN_DRAW );
 	this->mMaxBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 }
 

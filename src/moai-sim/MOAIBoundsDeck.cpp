@@ -140,8 +140,6 @@ MOAIBoundsDeck::MOAIBoundsDeck () {
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIStandardDeck )
 	RTTI_END
-	
-	//this->SetContentMask ( MOAIProp::CAN_DRAW );
 }
 
 //----------------------------------------------------------------//

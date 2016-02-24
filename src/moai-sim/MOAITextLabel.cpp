@@ -858,28 +858,28 @@ void MOAITextLabel::BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
 void MOAITextLabel::Draw ( int subPrimID, float lod ) {
 	UNUSED ( subPrimID );
 	
-//	if ( !this->IsVisible ( lod )) return;
-//	if ( this->IsClear ()) return;
-//	
-//	if ( this->mReveal ) {
-//		
-//		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-//
-//		this->LoadGfxState ();
-//		this->LoadVertexTransform ();
-//		this->LoadUVTransform ();
-//	
-//		gfxMgr.SetVertexMtxMode ( MOAIGfxMgr::VTX_STAGE_MODEL, MOAIGfxMgr::VTX_STAGE_PROJ );
-//		gfxMgr.SetUVMtxMode ( MOAIGfxMgr::UV_STAGE_MODEL, MOAIGfxMgr::UV_STAGE_TEXTURE );
-//		
-//		MOAIShader* shader = this->mMaterialBatch ? this->mMaterialBatch->RawGetShader ( 0 ) : 0;
-//		bool useSpriteShaders = !shader;
-//		
-//		if ( useSpriteShaders ) {
-//			shader = MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::FONT_SNAPPING_SHADER );
-//		}
-//		this->mLayout.Draw ( this->mReveal, shader, useSpriteShaders );
-//	}
+	if ( !this->IsVisible ( lod )) return;
+	if ( this->IsClear ()) return;
+	
+	if ( this->mReveal ) {
+		
+		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+
+		this->LoadGfxState ();
+		this->LoadVertexTransform ();
+		this->LoadUVTransform ();
+	
+		gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
+		gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_MTX ));
+		
+		MOAIShader* shader = this->mMaterialBatch ? this->mMaterialBatch->RawGetShader ( 0 ) : 0;
+		bool useSpriteShaders = !shader;
+		
+		if ( useSpriteShaders ) {
+			shader = MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::FONT_SNAPPING_SHADER );
+		}
+		this->mLayout.Draw ( this->mReveal, shader, useSpriteShaders );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -887,59 +887,60 @@ void MOAITextLabel::DrawDebug ( int subPrimID, float lod ) {
 	UNUSED ( subPrimID );
 	UNUSED ( lod );
 
-//	MOAIGraphicsProp::DrawDebug ( subPrimID, lod );
-//
-//	if ( !this->IsVisible ( lod )) return;
-//	if ( this->IsClear ()) return;
-//
-//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-//	
-//	ZLMatrix4x4 worldDrawingMtx = this->GetWorldDrawingMtx ();
-//	gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_WORLD_TRANSFORM, worldDrawingMtx );
-//	gfxMgr.SetVertexMtxMode ( MOAIGfxMgr::VTX_STAGE_MODEL, MOAIGfxMgr::VTX_STAGE_PROJ );
-//	
-//	this->mLayout.DrawDebug ();
-//	
-//	MOAIDraw& draw = MOAIDraw::Get ();
-//	UNUSED ( draw ); // mystery warning in vs2008
-//	draw.Bind ();
-//	
-//	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
-//	
-//	if (( this->mLayout.mLayoutBounds.Area () > 0.0f ) && debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LAYOUT_BOUNDS )) {
-//		
-//		draw.DrawRectOutline ( this->mLayout.mLayoutBounds );
-//	}
-//	
-//	if (( this->mLayout.mGlyphBounds.Area () > 0.0f ) && debugLines.Bind ( MOAIDebugLines::TEXT_BOX_GLYPH_BOUNDS )) {
-//		
-//		draw.DrawRectOutline ( this->mLayout.mGlyphBounds );
-//	}
-//	
-//	ZLRect frame = this->mLayoutRules.GetFrame ();
-//	
-//	if ( frame.Area () > 0.0f ) {
-//	
-//		frame.Offset ( -this->mLayout.mXOffset, -this->mLayout.mYOffset );
-//		
-//		if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX )) {
-//		
-//			draw.DrawRectOutline ( frame );
-//		}
-//		
-//		if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LIMITS )) {
-//			
-//			if ( this->mLayoutRules.GetLimitHeight ()) {
-//				draw.DrawLine ( frame.mXMin, frame.mYMin, frame.mXMax, frame.mYMin );
-//				draw.DrawLine ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMax );
-//			}
-//			
-//			if ( this->mLayoutRules.GetLimitWidth ()) {
-//				draw.DrawLine ( frame.mXMin, frame.mYMin, frame.mXMin, frame.mYMax );
-//				draw.DrawLine ( frame.mXMax, frame.mYMin, frame.mXMax, frame.mYMax );
-//			}
-//		}
-//	}
+	MOAIGraphicsProp::DrawDebug ( subPrimID, lod );
+
+	if ( !this->IsVisible ( lod )) return;
+	if ( this->IsClear ()) return;
+
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	
+	ZLMatrix4x4 worldDrawingMtx = this->GetWorldDrawingMtx ();
+	
+	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX, worldDrawingMtx );
+	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
+	
+	this->mLayout.DrawDebug ();
+	
+	MOAIDraw& draw = MOAIDraw::Get ();
+	UNUSED ( draw ); // mystery warning in vs2008
+	draw.Bind ();
+	
+	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
+	
+	if (( this->mLayout.mLayoutBounds.Area () > 0.0f ) && debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LAYOUT_BOUNDS )) {
+		
+		draw.DrawRectOutline ( this->mLayout.mLayoutBounds );
+	}
+	
+	if (( this->mLayout.mGlyphBounds.Area () > 0.0f ) && debugLines.Bind ( MOAIDebugLines::TEXT_BOX_GLYPH_BOUNDS )) {
+		
+		draw.DrawRectOutline ( this->mLayout.mGlyphBounds );
+	}
+	
+	ZLRect frame = this->mLayoutRules.GetFrame ();
+	
+	if ( frame.Area () > 0.0f ) {
+	
+		frame.Offset ( -this->mLayout.mXOffset, -this->mLayout.mYOffset );
+		
+		if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX )) {
+		
+			draw.DrawRectOutline ( frame );
+		}
+		
+		if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LIMITS )) {
+			
+			if ( this->mLayoutRules.GetLimitHeight ()) {
+				draw.DrawLine ( frame.mXMin, frame.mYMin, frame.mXMax, frame.mYMin );
+				draw.DrawLine ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMax );
+			}
+			
+			if ( this->mLayoutRules.GetLimitWidth ()) {
+				draw.DrawLine ( frame.mXMin, frame.mYMin, frame.mXMin, frame.mYMax );
+				draw.DrawLine ( frame.mXMax, frame.mYMin, frame.mXMax, frame.mYMax );
+			}
+		}
+	}
 }
 
 //----------------------------------------------------------------//

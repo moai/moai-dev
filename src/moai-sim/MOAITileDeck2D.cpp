@@ -240,26 +240,26 @@ ZLBox MOAITileDeck2D::ComputeMaxBounds () {
 //----------------------------------------------------------------//
 void MOAITileDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 
-//	idx = idx - 1;
-//
-//	if ( !materials.LoadGfxState ( this, idx, MOAIShaderMgr::DECK2D_SHADER )) return;
-//
-//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-//	MOAIQuadBrush::BindVertexFormat ( gfxMgr );
-//	
-//	gfxMgr.SetVertexMtxMode ( MOAIGfxMgr::VTX_STAGE_MODEL, MOAIGfxMgr::VTX_STAGE_PROJ );
-//	gfxMgr.SetUVMtxMode ( MOAIGfxMgr::UV_STAGE_MODEL, MOAIGfxMgr::UV_STAGE_TEXTURE );
-//	
-//	MOAICellCoord coord = this->GetCellCoord ( idx );
-//	ZLRect uvRect = this->GetTileRect ( coord );
-//	
-//	float uScale = ( uvRect.mXMax - uvRect.mXMin );
-//	float vScale = -( uvRect.mYMax - uvRect.mYMin );
-//	
-//	float uOff = uvRect.mXMin + ( 0.5f * uScale );
-//	float vOff = uvRect.mYMin - ( 0.5f * vScale );
-//	
-//	this->mQuad.Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY, uOff, vOff, uScale, vScale );
+	idx = idx - 1;
+
+	if ( !materials.LoadGfxState ( this, idx, MOAIShaderMgr::DECK2D_SHADER )) return;
+	
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIQuadBrush::BindVertexFormat ( gfxMgr.mVertexCache );
+	
+	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
+	gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_MTX ));
+	
+	MOAICellCoord coord = this->GetCellCoord ( idx );
+	ZLRect uvRect = this->GetTileRect ( coord );
+	
+	float uScale = ( uvRect.mXMax - uvRect.mXMin );
+	float vScale = -( uvRect.mYMax - uvRect.mYMin );
+	
+	float uOff = uvRect.mXMin + ( 0.5f * uScale );
+	float vOff = uvRect.mYMin - ( 0.5f * vScale );
+	
+	this->mQuad.Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY, uOff, vOff, uScale, vScale );
 }
 
 //----------------------------------------------------------------//

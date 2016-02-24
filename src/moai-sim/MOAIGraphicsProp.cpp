@@ -822,20 +822,6 @@ void MOAIGraphicsProp::LoadGfxState () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	//MOAIDeckGfxState gfxState;
-
-	// TODO: deck resolves when drawing
-
-	//if ( this->mDeck ) {
-	//	this->mDeck->GetGfxState ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), gfxState );
-	//}
-
-	//gfxState.SetShader ( this->mShader );
-	//gfxState.SetTexture ( this->mTexture );
-
-	//gfxMgr.SetShader ( gfxState.GetShader ());
-	//gfxMgr.SetGfxState ( gfxState.GetTexture ());
-
 	gfxMgr.mGfxState.SetPenColor ( this->mColor );
 	gfxMgr.mGfxState.SetCullFunc ( this->mCullMode );
 	gfxMgr.mGfxState.SetDepthFunc ( this->mDepthTest );

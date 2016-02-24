@@ -120,24 +120,24 @@ ZLBox MOAIScriptDeck::ComputeMaxBounds () {
 //----------------------------------------------------------------//
 void MOAIScriptDeck::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 	
-//	if ( !materials.LoadGfxState ( this, idx - 1, MOAIShaderMgr::LINE_SHADER )) return;
-//	
-//	if ( this->mOnDraw ) {
-//	
-//		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-//		if ( this->mOnDraw.PushRef ( state )) {
-//	
-//			MOAIDraw::Bind ();
-//		
-//			// TODO: fix this to take all offset/scale params
-//			lua_pushnumber ( state, idx );
-//			lua_pushnumber ( state, offset.mX );
-//			lua_pushnumber ( state, offset.mY );
-//			lua_pushnumber ( state, scale.mX );
-//			lua_pushnumber ( state, scale.mY );
-//			state.DebugCall ( 5, 0 );
-//		}
-//	}
+	if ( !materials.LoadGfxState ( this, idx - 1, MOAIShaderMgr::LINE_SHADER )) return;
+	
+	if ( this->mOnDraw ) {
+	
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		if ( this->mOnDraw.PushRef ( state )) {
+	
+			MOAIDraw::Bind ();
+		
+			// TODO: fix this to take all offset/scale params
+			lua_pushnumber ( state, idx );
+			lua_pushnumber ( state, offset.mX );
+			lua_pushnumber ( state, offset.mY );
+			lua_pushnumber ( state, scale.mX );
+			lua_pushnumber ( state, scale.mY );
+			state.DebugCall ( 5, 0 );
+		}
+	}
 }
 
 //----------------------------------------------------------------//

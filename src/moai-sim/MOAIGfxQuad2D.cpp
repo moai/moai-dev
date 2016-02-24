@@ -220,8 +220,6 @@ MOAIGfxQuad2D::MOAIGfxQuad2D () {
 		RTTI_EXTEND ( MOAIStandardDeck )
 	RTTI_END
 	
-	//this->SetContentMask ( MOAIProp::CAN_DRAW );
-	
 	// set up rects to draw a unit tile centered at the origin
 	this->mQuad.SetVerts ( -0.5f, -0.5f, 0.5f, 0.5f );
 	this->mQuad.SetUVs ( 0.0f, 1.0f, 1.0f, 0.0f );

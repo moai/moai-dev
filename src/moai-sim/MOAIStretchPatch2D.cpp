@@ -181,27 +181,26 @@ void MOAIStretchPatch2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVe
 	
 	// TODO: make use of offset and scale
 	
-//	if ( !materials.LoadGfxState ( this, idx - 1, MOAIShaderMgr::DECK2D_SHADER )) return;
-//	
-//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-//	MOAIQuadBrush::BindVertexFormat ( gfxMgr );
-//	
-//	gfxMgr.SetVertexMtxMode ( MOAIGfxMgr::VTX_STAGE_MODEL, MOAIGfxMgr::VTX_STAGE_PROJ );
-//	gfxMgr.SetUVMtxMode ( MOAIGfxMgr::UV_STAGE_MODEL, MOAIGfxMgr::UV_STAGE_TEXTURE );
-//	
-//	ZLMatrix4x4 transform = gfxMgr.GetVertexTransform ( MOAIGfxMgr::VTX_WORLD_TRANSFORM );
-//	ZLVec3D stretch = transform.GetStretch ();
-//	
-//	ZLMatrix4x4 noStretch;
-//	noStretch.Scale ( 1.0f / stretch.mX, 1.0f / stretch.mY, 1.0f / stretch.mZ );
-//	noStretch.Append ( transform );
-//	
-//	gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_WORLD_TRANSFORM, noStretch );
-//	
-//	this->UpdateParams ();
-//	this->DrawStretch ( idx, stretch.mX, stretch.mY );
-//	
-//	gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_WORLD_TRANSFORM, transform );
+	if ( !materials.LoadGfxState ( this, idx - 1, MOAIShaderMgr::DECK2D_SHADER )) return;
+	
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIQuadBrush::BindVertexFormat ( gfxMgr.mVertexCache );
+	
+	ZLMatrix4x4 worldTransform = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_MTX );
+	ZLVec3D stretch = worldTransform.GetStretch ();
+	
+	ZLMatrix4x4 noStretch;
+	noStretch.Scale ( 1.0f / stretch.mX, 1.0f / stretch.mY, 1.0f / stretch.mZ );
+	noStretch.Append ( worldTransform );
+	noStretch.Append ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_PROJ_MTX ) );
+	
+	gfxMgr.mVertexCache.SetVertexTransform ( noStretch );
+	gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_MTX ));
+	
+	this->UpdateParams ();
+	this->DrawStretch ( idx, stretch.mX, stretch.mY );
+	
+	//gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_WORLD_TRANSFORM, transform );
 }
 
 //----------------------------------------------------------------//
@@ -328,7 +327,6 @@ MOAIStretchPatch2D::MOAIStretchPatch2D () :
 		RTTI_EXTEND ( MOAIStandardDeck )
 	RTTI_END
 	
-	//this->SetContentMask ( MOAIProp::CAN_DRAW );
 	this->mRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
