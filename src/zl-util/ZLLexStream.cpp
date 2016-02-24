@@ -29,20 +29,18 @@ size_t ZLLexStream::GetLength () {
 }
 
 //----------------------------------------------------------------//
-size_t ZLLexStream::ReadBytes ( void* buffer, size_t size ) {
+ZLSizeResult ZLLexStream::ReadBytes ( void* buffer, size_t size ) {
 
 	size_t cursor = this->GetCursor ();
-
 	size_t length = this->GetLength ();
-	if (( cursor + size ) > length ) {
-		size = length - cursor;
-	}
+	
+	size_t readSize = (( cursor + size ) > length ) ? ( length - cursor ) : size;
 
 	u8* bytes = ( u8* )buffer;
-	for ( u32 i = 0; i < size; ++i ) {
+	for ( u32 i = 0; i < readSize; ++i ) {
 		bytes [ i ] = this->ReadByte ();
 	}
-	return size;
+	return ZLSizeResult ( readSize, ZL_OK );
 }
 
 //----------------------------------------------------------------//

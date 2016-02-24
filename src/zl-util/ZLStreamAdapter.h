@@ -27,10 +27,10 @@ public:
 	size_t			GetCursor				();
 	size_t			GetLength				();
 	bool			IsAtEnd					();
-	size_t			ReadBytes				( void* buffer, size_t size );
+	ZLSizeResult	ReadBytes				( void* buffer, size_t size );
 	int				SetCursor				( long offset );
-	size_t			SetLength				( size_t length );
-	size_t			WriteBytes				( const void* buffer, size_t size );
+	ZLSizeResult	SetLength				( size_t length );
+	ZLSizeResult	WriteBytes				( const void* buffer, size_t size );
 					ZLStreamProxy			();
 					~ZLStreamProxy			();
 };
@@ -50,19 +50,19 @@ protected:
 	bool			mIsOpen;
 
 	//----------------------------------------------------------------//
-	virtual void	OnClose					();
-	virtual bool	OnOpen					();
+	virtual void			OnClose					();
+	virtual ZLResultCode	OnOpen					();
 
 public:
 
 	//----------------------------------------------------------------//
-	void			Close					();
-	size_t			GetCursor				();
-	size_t			GetLength				();
-	bool			IsAtEnd					();
-	bool			Open					( ZLStream* stream );
-					ZLStreamAdapter			();
-					~ZLStreamAdapter		();
+	void					Close					();
+	size_t					GetCursor				();
+	size_t					GetLength				();
+	bool					IsAtEnd					();
+	bool					Open					( ZLStream* stream );
+							ZLStreamAdapter			();
+							~ZLStreamAdapter		();
 };
 
 #endif

@@ -57,11 +57,11 @@ public:
 	size_t				GetLength				();
 	size_t				GetSize					() const;
 	void*				Invalidate				();
-	size_t				ReadBytes				( void* buffer, size_t size );
+	ZLSizeResult		ReadBytes				( void* buffer, size_t size );
 	void*				Reserve					( size_t size );
 	int					SetCursor				( long offset );
-	size_t				SetLength				( size_t length );
-	size_t				WriteBytes				( const void* buffer, size_t size );
+	ZLSizeResult		SetLength				( size_t length );
+	ZLSizeResult		WriteBytes				( const void* buffer, size_t size );
 						ZLCopyOnWrite			();
 						ZLCopyOnWrite			( size_t size );
 						ZLCopyOnWrite			( size_t size, u8 fill );

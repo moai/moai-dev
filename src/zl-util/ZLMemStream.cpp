@@ -133,7 +133,9 @@ size_t ZLMemStream::GetLength () {
 }
 
 //----------------------------------------------------------------//
-size_t ZLMemStream::ReadBytes ( void* buffer, size_t size ) {
+ZLSizeResult ZLMemStream::ReadBytes ( void* buffer, size_t size ) {
+
+	if ( size == 0 ) return ZLSizeResult ( 0, ZL_OK );
 
 	size_t cursor0 = this->mBase + this->mCursor;
 	size_t cursor1 = cursor0 + size;
@@ -144,44 +146,45 @@ size_t ZLMemStream::ReadBytes ( void* buffer, size_t size ) {
 		cursor1 = top;
 	}
 
-	if ( size == 0 ) return 0;
-
 	// if there's a guest buffer, use it
+	// if the guest buffer exists, it is guaranteed to be a large enough size
 	if ( this->mGuestBuffer ) {
 		memcpy ( buffer, &(( u8* )this->mGuestBuffer )[ cursor0 ], size );
 		this->mCursor += size;
-		return size;
-	}
-
-	assert ( this->mChunks );
-
-	size_t chunk0 = ( size_t )( cursor0 / this->mChunkSize );
-	size_t chunk1 = ( size_t )( cursor1 / this->mChunkSize );
-
-	size_t offset0 = cursor0 - ( chunk0 * this->mChunkSize );
-	size_t offset1 = cursor1 - ( chunk1 * this->mChunkSize );
-
-	void* src = ( void* )(( size_t )this->mChunks [ chunk0 ] + offset0 );
-	void* dest = buffer;
-
-	if ( chunk0 == chunk1 ) {
-		
-		memcpy ( dest, src, offset1 - offset0 );
 	}
 	else {
-		
-		memcpy ( dest, src, this->mChunkSize - offset0 );
-		dest = ( void* )(( size_t )dest + this->mChunkSize - offset0 );
-		
-		for ( size_t i = ( chunk0 + 1 ); i < chunk1; ++i ) {
-			memcpy ( dest, this->mChunks [ i ], this->mChunkSize );
-			dest = ( void* )(( size_t )dest + this->mChunkSize );
-		}
-		memcpy ( dest, this->mChunks [ chunk1 ], offset1 );
-	}
+	
+		assert ( this->mChunks );
 
-	this->mCursor = cursor1 - this->mBase;
-	return size;
+		size_t chunk0 = ( size_t )( cursor0 / this->mChunkSize );
+		size_t chunk1 = ( size_t )( cursor1 / this->mChunkSize );
+
+		size_t offset0 = cursor0 - ( chunk0 * this->mChunkSize );
+		size_t offset1 = cursor1 - ( chunk1 * this->mChunkSize );
+
+		void* src = ( void* )(( size_t )this->mChunks [ chunk0 ] + offset0 );
+		void* dest = buffer;
+
+		if ( chunk0 == chunk1 ) {
+			
+			memcpy ( dest, src, offset1 - offset0 );
+		}
+		else {
+			
+			memcpy ( dest, src, this->mChunkSize - offset0 );
+			dest = ( void* )(( size_t )dest + this->mChunkSize - offset0 );
+			
+			for ( size_t i = ( chunk0 + 1 ); i < chunk1; ++i ) {
+				memcpy ( dest, this->mChunks [ i ], this->mChunkSize );
+				dest = ( void* )(( size_t )dest + this->mChunkSize );
+			}
+			memcpy ( dest, this->mChunks [ chunk1 ], offset1 );
+		}
+
+		this->mCursor = cursor1 - this->mBase;
+	}
+	
+	return ZLSizeResult ( size, ZL_OK );
 }
 
 //----------------------------------------------------------------//
@@ -265,22 +268,22 @@ void ZLMemStream::SetGuestBuffer ( void* guestBuffer, size_t guestBufferSize ) {
 }
 
 //----------------------------------------------------------------//
-size_t ZLMemStream::SetLength ( size_t length ) {
+ZLSizeResult ZLMemStream::SetLength ( size_t length ) {
 
 	if ( length < this->mLength ) {
 		this->DiscardBack ( this->mLength - length );
 	}
 	else {
-		this->Reserve ( length );
+		this->Reserve ( length ); // TODO: report error
 		this->mLength = length;
 	}
-	return length;
+	return ZLSizeResult ( length, ZL_OK );
 }
 
 //----------------------------------------------------------------//
-size_t ZLMemStream::WriteBytes ( const void* buffer, size_t size ) {
+ZLSizeResult ZLMemStream::WriteBytes ( const void* buffer, size_t size ) {
 
-	if ( !size ) return 0;
+	if ( !size ) return ZLSizeResult ( 0, ZL_OK );
 
 	this->Reserve ( this->mCursor + size );
 
@@ -293,39 +296,41 @@ size_t ZLMemStream::WriteBytes ( const void* buffer, size_t size ) {
 		if ( this->mLength < this->mCursor ) {
 			this->mLength = this->mCursor;
 		}
-		return size;
-	}
-
-	size_t chunk0 = ( size_t )( cursor0 / this->mChunkSize );
-	size_t chunk1 = ( size_t )( cursor1 / this->mChunkSize );
-
-	size_t offset0 = cursor0 - ( chunk0 * this->mChunkSize );
-	size_t offset1 = cursor1 - ( chunk1 * this->mChunkSize );
-
-	void* dest = ( void* )(( size_t )this->mChunks [ chunk0 ] + offset0 );
-	const void* src = buffer;
-
-	if ( chunk0 == chunk1 ) {
-	
-		memcpy ( dest, src, offset1 - offset0 );
 	}
 	else {
-		
-		memcpy ( dest, src, this->mChunkSize - offset0 );
-		src = ( void* )(( size_t )src + this->mChunkSize - offset0 );
-		
-		for ( size_t i = ( chunk0 + 1 ); i < chunk1; ++i ) {
-			memcpy ( this->mChunks [ i ], src, this->mChunkSize );
-			src = ( void* )(( size_t )src + this->mChunkSize );
-		}
-		memcpy ( this->mChunks [ chunk1 ], src, offset1 );
-	}
 
-	this->mCursor = cursor1 - this->mBase;
-	if ( this->mLength < this->mCursor ) {
-		this->mLength = this->mCursor;
+		size_t chunk0 = ( size_t )( cursor0 / this->mChunkSize );
+		size_t chunk1 = ( size_t )( cursor1 / this->mChunkSize );
+
+		size_t offset0 = cursor0 - ( chunk0 * this->mChunkSize );
+		size_t offset1 = cursor1 - ( chunk1 * this->mChunkSize );
+
+		void* dest = ( void* )(( size_t )this->mChunks [ chunk0 ] + offset0 );
+		const void* src = buffer;
+
+		if ( chunk0 == chunk1 ) {
+		
+			memcpy ( dest, src, offset1 - offset0 );
+		}
+		else {
+			
+			memcpy ( dest, src, this->mChunkSize - offset0 );
+			src = ( void* )(( size_t )src + this->mChunkSize - offset0 );
+			
+			for ( size_t i = ( chunk0 + 1 ); i < chunk1; ++i ) {
+				memcpy ( this->mChunks [ i ], src, this->mChunkSize );
+				src = ( void* )(( size_t )src + this->mChunkSize );
+			}
+			memcpy ( this->mChunks [ chunk1 ], src, offset1 );
+		}
+
+		this->mCursor = cursor1 - this->mBase;
+		if ( this->mLength < this->mCursor ) {
+			this->mLength = this->mCursor;
+		}
 	}
-	return size;
+	
+	return ZLSizeResult ( size, ZL_OK );
 }
 
 //----------------------------------------------------------------//

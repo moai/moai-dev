@@ -127,11 +127,11 @@ void ZLDeflateReader::OnClose () {
 }
 
 //----------------------------------------------------------------//
-bool ZLDeflateReader::OnOpen () {
+ZLResultCode ZLDeflateReader::OnOpen () {
 
 	memset ( &this->mZStream, 0, sizeof ( z_stream ));
 	int result = inflateInit2 ( &this->mZStream, mWindowBits );
-	if ( result != Z_OK ) return false;
+	if ( result != Z_OK ) return ZLResultCode ( ZL_ERROR );
 
 	this->mInputChunk = malloc ( ZL_DEFLATE_READER_CHUNK_SIZE );
 
@@ -144,16 +144,14 @@ bool ZLDeflateReader::OnOpen () {
 	this->mChunk [ 1 ].mCache = ( void* )(( size_t )this->mCache + ZL_DEFLATE_READER_CHUNK_SIZE );
 	this->mChunk [ 1 ].mChunkID = -1;
 	
-	return true;
+	return ZLResultCode ( ZL_OK );
 }
 
 //----------------------------------------------------------------//
-size_t ZLDeflateReader::ReadBytes ( void* buffer, size_t size ) {
+ZLSizeResult ZLDeflateReader::ReadBytes ( void* buffer, size_t size ) {
 
 	ZLStreamChunk* chunk;
 	size_t remaining = size;
-
-	if ( !remaining ) return size;
 	
 	while ( remaining ) {
 		
@@ -183,7 +181,7 @@ size_t ZLDeflateReader::ReadBytes ( void* buffer, size_t size ) {
 		remaining -= read;
 		buffer = ( void* )(( size_t )buffer + read );
 	}
-    return size - remaining;
+    return ZLSizeResult ( size - remaining, ZL_OK );
 }
 
 //----------------------------------------------------------------//

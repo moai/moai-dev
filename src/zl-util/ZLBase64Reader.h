@@ -21,7 +21,7 @@ private:
 
 	//----------------------------------------------------------------//
 	void				OnClose					();
-	size_t				ReadBytes				( void* buffer, size_t size );
+	ZLSizeResult		ReadBytes				( void* buffer, size_t size );
 	void				SyncBlock				();
 
 public:
