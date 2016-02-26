@@ -23,11 +23,13 @@ private:
 	//----------------------------------------------------------------//
 	static int		_bless				( lua_State* L );
 	static int		_copy				( lua_State* L );
+	static int		_countPolygons		( lua_State* L );
 	static int		_cull				( lua_State* L );
 	static int		_boolean			( lua_State* L );
 	static int		_drawDebug			( lua_State* L );
 	static int		_edge				( lua_State* L );
 	static int		_getDistance		( lua_State* L );
+	static int		_getPolygon			( lua_State* L );
 	static int		_getTriangles		( lua_State* L );
 	static int		_pointInside		( lua_State* L );
 	static int		_print				( lua_State* L );
@@ -60,7 +62,7 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIRegion )
 
-	GET ( size_t, Size, mPolygons.Size ())
+	GET_CONST ( size_t, Size, mPolygons.Size ())
 
 	//----------------------------------------------------------------//
 	int						AddFillContours			( SafeTesselator& tess, u32 mask = 0xffffffff ) const;

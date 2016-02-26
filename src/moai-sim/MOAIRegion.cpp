@@ -53,6 +53,14 @@ int MOAIRegion::_copy ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIRegion::_countPolygons ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIRegion, "U" )
+	
+	state.Push (( u32 )self->mPolygons.Size ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
 int MOAIRegion::_cull ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRegion, "U" )
 	
@@ -112,6 +120,37 @@ int MOAIRegion::_getDistance ( lua_State* L ) {
 		return 3;
 	}
 
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIRegion::_getPolygon ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIRegion, "U" )
+
+	u32 polygonID	= state.GetValue < u32 >( 2, 1 ) - 1;
+	
+	if ( polygonID < self->mPolygons.Size ()) {
+	
+		lua_newtable ( state );
+	
+		const ZLPolygon2D& polygon = self->mPolygons [ polygonID ];
+	
+		size_t polygonSize = polygon.GetSize ();
+		for ( size_t i = 0; i < polygonSize; ++i ) {
+		
+			ZLVec2D vec = polygon.GetVertex ( i );
+		
+			state.Push (( u32 )i + 1 );
+		
+			lua_newtable ( state );
+			state.SetField ( -1, "x", vec.mX );
+			state.SetField ( -1, "y", vec.mY );
+			
+			lua_settable ( state, -2 );
+		}
+		return 1;
+	}
 	return 0;
 }
 
@@ -801,10 +840,12 @@ void MOAIRegion::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "bless",				_bless },
 		{ "boolean",			_boolean },
 		{ "copy",				_copy },
+		{ "countPolygons",		_countPolygons },
 		{ "cull",				_cull },
 		{ "drawDebug",			_drawDebug },
 		{ "edge",				_edge },
 		{ "getDistance",		_getDistance },
+		{ "getPolygon",			_getPolygon },
 		{ "getTriangles",		_getTriangles },
 		{ "pointInside",		_pointInside },
 		{ "print",				_print },

@@ -72,21 +72,21 @@ private:
 	//----------------------------------------------------------------//
 	u32 Analyze () {
 	
-		u32 totalVerts = this->mVertices.Size ();
+		size_t totalVerts = this->mVertices.Size ();
 		if ( totalVerts < 3 ) return POLY_CORRUPT;
 		
 		u32 status = POLY_KNOWN_BIT;
 		
 		TYPE sign = 0.0;
 		
-		u32 countPositive = 0;
-		u32 countNegative = 0;
+		size_t countPositive = 0;
+		size_t countNegative = 0;
 		
 		TYPE area = 0.0;
 		
-		for ( u32 i = 0; i < totalVerts; i++ ) {
+		for ( size_t i = 0; i < totalVerts; i++ ) {
 
-			u32 nextIndex = ( i + 1 ) % totalVerts;
+			size_t nextIndex = ( i + 1 ) % totalVerts;
 
 			ZLMetaVec2D < TYPE >& p0 = this->mVertices [ i ];
 			ZLMetaVec2D < TYPE >& p1 = this->mVertices [ nextIndex ];
@@ -112,7 +112,7 @@ private:
 			// TODO: check number of edges and do something efficient (Shamos-Hoey, for example)
 			if ( i >= 2 ) {
 				
-				for ( u32 j = nextIndex == 0 ? 1 : 0; j < ( i - 1 ); ++j ) {
+				for ( size_t j = nextIndex == 0 ? 1 : 0; j < ( i - 1 ); ++j ) {
 				
 					ZLMetaVec2D < TYPE >& q0 = this->mVertices [ j ];
 					ZLMetaVec2D < TYPE >& q1 = this->mVertices [ j + 1 ];
@@ -154,9 +154,9 @@ public:
 	GET_CONST ( size_t, Size, this->mVertices.Size ())
 
 	//----------------------------------------------------------------//
-	u32 Bless () {
+	size_t Bless () {
 
-		u32 totalVerts = this->mVertices.Size ();
+		size_t totalVerts = this->mVertices.Size ();
 		
 		if ( totalVerts < 3 ) {
 			this->mInfo = POLY_CORRUPT;
@@ -165,7 +165,7 @@ public:
 		
 		this->mBounds.Init (this->mVertices [ 0 ]);
 		
-		for ( u32 i = 1; i < totalVerts; ++i ) {
+		for ( size_t i = 1; i < totalVerts; ++i ) {
 			ZLMetaVec2D < TYPE >& point = this->mVertices [ i ];
 			this->mBounds.Grow ( point );
 		}
@@ -303,7 +303,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	const ZLVec2D& GetVertex ( u32 idx ) const {
+	const ZLVec2D& GetVertex ( size_t idx ) const {
 	
 		size_t size = this->mVertices.Size ();
 		assert ( size );
@@ -352,8 +352,8 @@ public:
 			TYPE x = p.mX;
 			TYPE y = p.mY;
 			
-			u32 totalVerts = this->mVertices.Size ();
-			for ( u32 i = 0; i < totalVerts; i++ ) {
+			size_t totalVerts = this->mVertices.Size ();
+			for ( size_t i = 0; i < totalVerts; i++ ) {
 
 				ZLMetaVec2D < TYPE >& p1 = this->mVertices [ i ];
 				ZLMetaVec2D < TYPE >& p2 = this->mVertices [( i + 1 ) % totalVerts ];
@@ -426,16 +426,16 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void SetVert ( u32 id, const ZLMetaVec2D < TYPE >& v ) {
+	void SetVert ( size_t idx, const ZLMetaVec2D < TYPE >& v ) {
 
-		this->mVertices [ id ] = v;
+		this->mVertices [ idx ] = v;
 		this->mInfo = POLY_UNKNOWN;
 	}
 	
 	//----------------------------------------------------------------//
-	void SetVert ( u32 id, TYPE x, TYPE y ) {
+	void SetVert ( size_t idx, TYPE x, TYPE y ) {
 
-		ZLMetaVec2D < TYPE >& vert = this->mVertices [ id ];
+		ZLMetaVec2D < TYPE >& vert = this->mVertices [ idx ];
 
 		vert.mX = x;
 		vert.mY = y;
@@ -453,8 +453,8 @@ public:
 	//----------------------------------------------------------------//
 	void Snap ( float xSnap, float ySnap ) {
 	
-		u32 totalVerts = this->mVertices.Size ();
-		for ( u32 i = 0; i < totalVerts; i++ ) {
+		size_t totalVerts = this->mVertices.Size ();
+		for ( size_t i = 0; i < totalVerts; i++ ) {
 			
 			ZLMetaVec2D < TYPE >& vert = this->mVertices [ i ];
 		
@@ -466,8 +466,8 @@ public:
 	//----------------------------------------------------------------//
 	void Transform ( const ZLMetaAffine2D < TYPE >& matrix ) {
 	
-		u32 totalVerts = this->mVertices.Size ();
-		for ( u32 i = 0; i < totalVerts; i++ ) {
+		size_t totalVerts = this->mVertices.Size ();
+		for ( size_t i = 0; i < totalVerts; i++ ) {
 			matrix.Transform ( this->mVertices [ i ]);
 		}
 		
@@ -485,7 +485,7 @@ public:
 	//----------------------------------------------------------------//
 	ZLMetaPolygon2D () :
 		mInfo ( POLY_UNKNOWN ),
-		mArea ( 0.0f ) {
+		mArea ( 0 ) {
 	}
 
 	//----------------------------------------------------------------//
