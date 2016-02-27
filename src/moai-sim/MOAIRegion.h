@@ -21,6 +21,7 @@ private:
 	ZLLeanArray < ZLPolygon2D > mPolygons;
 	
 	//----------------------------------------------------------------//
+	static int		_append				( lua_State* L );
 	static int		_bless				( lua_State* L );
 	static int		_copy				( lua_State* L );
 	static int		_countPolygons		( lua_State* L );
@@ -31,6 +32,7 @@ private:
 	static int		_getDistance		( lua_State* L );
 	static int		_getPolygon			( lua_State* L );
 	static int		_getTriangles		( lua_State* L );
+	static int		_pad				( lua_State* L );
 	static int		_pointInside		( lua_State* L );
 	static int		_print				( lua_State* L );
 	static int		_reservePolygons	( lua_State* L );
@@ -66,6 +68,7 @@ public:
 
 	//----------------------------------------------------------------//
 	int						AddFillContours			( SafeTesselator& tess, u32 mask = 0xffffffff ) const;
+	void					Append					( const MOAIRegion& regionA, const MOAIRegion& regionB );
 	void					Bless					();
 	void					Boolean					( const MOAIRegion& regionA, const MOAIRegion& regionB, u32 operation );
 	void					BooleanAnd				( const MOAIRegion& regionA, const MOAIRegion& regionB );
@@ -88,11 +91,12 @@ public:
 	u32						GetTriangles			( MOAIVertexFormat& format, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytex ) const;
 							MOAIRegion				();
 							~MOAIRegion				();
+	void					Pad						( const MOAIRegion& region, float pad );
 	bool					PointInside				( const ZLVec2D& p, float pad ) const;
 	void					Print					() const;
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
-	void					ReservePolygons			( u32 size );
+	void					ReservePolygons			( size_t size );
 	void					ReverseWinding			( const MOAIRegion& region );
 	void					SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void					SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );

@@ -203,7 +203,7 @@ int MOAIVectorTesselator::_pushRect ( lua_State* L ) {
 int MOAIVectorTesselator::_pushRegion ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	MOAIRegion* region = state.GetLuaObject < MOAIRegion >( state, 1 );
+	MOAIRegion* region = state.GetLuaObject < MOAIRegion >( 2, true );
 	
 	if ( region ) {
 		self->PushCombo ();
