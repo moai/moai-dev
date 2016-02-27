@@ -146,6 +146,10 @@ ZLSizeResult ZLMemStream::ReadBytes ( void* buffer, size_t size ) {
 		cursor1 = top;
 	}
 
+	if ( cursor0 == cursor1 ) {
+		return ZLSizeResult ( 0, ZL_OK );
+	}
+
 	// if there's a guest buffer, use it
 	// if the guest buffer exists, it is guaranteed to be a large enough size
 	if ( this->mGuestBuffer ) {
