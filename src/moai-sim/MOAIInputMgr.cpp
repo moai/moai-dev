@@ -220,7 +220,7 @@ size_t MOAIInputMgr::ParseEvents ( ZLStream& stream, double timestep ) {
 			first = false;
 		}
 		
-		if ( timestep < ( timestamp - timebase )) break;
+		//if ( timestep < ( timestamp - timebase )) break; // TODO: come back to this
 		
 		MOAISensor* sensor = this->GetSensor ( deviceID, sensorID );
 		assert ( sensor );
