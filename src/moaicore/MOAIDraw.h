@@ -69,7 +69,7 @@ private:
 	//----------------------------------------------------------------//
 	static void			DrawLuaParams			( lua_State* L, u32 primType );
 	static void			DrawLuaArray			( lua_State* L, u32 primType );
-	static void			DrawFromLua				( lua_State* L, u32 primType );
+	static void			DrawFromLua             ( lua_State* L, u32 primType );
 
 public:
 
