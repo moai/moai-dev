@@ -57,6 +57,7 @@ private:
 	static int				_fillEllipticalSliceGradient ( lua_State* L );
 	static int				_fillHorizontalRectangularGradient ( lua_State* L );
 	static int				_fillFan			( lua_State* L );
+	static int				_fillStrip			( lua_State* L );
 	static int				_fillRect			( lua_State* L );
 	static int				_fillRoundedRect	( lua_State* L );
 	static int				_fillRoundedRectangularGradient	( lua_State* L );
@@ -68,6 +69,7 @@ private:
 	//----------------------------------------------------------------//
 	static void			DrawLuaParams			( lua_State* L, u32 primType );
 	static void			DrawLuaArray			( lua_State* L, u32 primType );
+	static void			DrawFromLua				( lua_State* L, u32 primType );
 
 public:
 

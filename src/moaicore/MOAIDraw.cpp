@@ -1074,14 +1074,23 @@ int MOAIDraw::_fillEllipticalSliceGradient(lua_State *L){
 	@out	nil
 */
 int MOAIDraw::_fillFan ( lua_State* L ) {
-
-	if ( lua_istable ( L, -1 ) ) {
-		MOAIDraw::DrawLuaArray( L, GL_TRIANGLE_FAN );
-	} else {
-		MOAIDraw::DrawLuaParams( L, GL_TRIANGLE_FAN );
-	}
+	MOAIDraw::DrawFromLua( L, GL_TRIANGLE_FAN );
 	return 0;
 }
+
+//----------------------------------------------------------------//
+/**	@name	fillStrip
+	@text	Draw a filled triangle strip.
+	
+	@in		...		List of vertices (x, y) or an array of vertices
+					 { x0, y0, x1, y1, ... , xn, yn }
+	@out	nil
+ */
+int MOAIDraw::_fillStrip ( lua_State* L ) {
+	MOAIDraw::DrawFromLua( L, GL_TRIANGLE_STRIP );
+	return 0;
+}
+
 //----------------------------------------------------------------//
 /** @name	fillHorizontalRectangularGradient
 	@text	Draw a filled rectangle with a gradient between two colors
@@ -4319,6 +4328,16 @@ void MOAIDraw::DrawLuaArray ( lua_State* L, u32 primType ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIDraw::DrawFromLua ( lua_State* L, u32 primType ) {
+	if ( lua_istable ( L, -1 ) ) {
+		MOAIDraw::DrawLuaArray( L, primType );
+	} else {
+		MOAIDraw::DrawLuaParams( L, primType );
+	}
+}
+
+
+//----------------------------------------------------------------//
 void MOAIDraw::DrawPoint ( const USVec2D& loc ) {
 
 	MOAIDraw::DrawPoint ( loc.mX, loc.mY );
@@ -5808,6 +5827,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "fillEllipticalSliceGradient", _fillEllipticalSliceGradient },
 		{ "fillHorizontalRectangularGradient", _fillHorizontalRectangularGradient },
 		{ "fillFan",				_fillFan },
+		{ "fillStrip",				_fillStrip },
 		{ "fillRect",				_fillRect },
 		{ "fillRoundedRect",		_fillRoundedRect },
 		{ "fillRoundedRectangularGradient",		_fillRoundedRectangularGradient },
