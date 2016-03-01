@@ -4,6 +4,8 @@
 #ifndef	ZLLEANARRAY_H
 #define	ZLLEANARRAY_H
 
+#include <zl-util/ZLResult.h>
+
 //================================================================//
 // ZLLeanArray
 //================================================================//
@@ -15,9 +17,10 @@ protected:
 	TYPE*	mData;
 
 	//----------------------------------------------------------------//
-	virtual void Alloc ( size_t size ) {
+	virtual ZLResultCode Alloc ( size_t size ) {
 
 		this->mData = new TYPE [ size ];
+		return this->mData ? ZL_OK : ZL_ALLOCATION_ERROR;
 	}
 
 	//----------------------------------------------------------------//
@@ -49,7 +52,7 @@ public:
 	//----------------------------------------------------------------//
 	virtual void Clear () {
 
-		if ( this->mSize && this->mData ) {
+		if ( this->mData ) {
 			this->Free ();
 		}
 
@@ -58,10 +61,11 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void CloneFrom ( const ZLLeanArray < TYPE >& src ) {
+	ZLResultCode CloneFrom ( const ZLLeanArray < TYPE >& src ) {
 
-		this->Init ( src.mSize );
+		if ( this->Init ( src.mSize ) != ZL_OK ) return ZL_ALLOCATION_ERROR;
 		this->CopyFrom ( src );
+		return ZL_OK;
 	}
 
 	//----------------------------------------------------------------//
@@ -97,43 +101,45 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Grow ( size_t size ) {
+	ZLResultCode Grow ( size_t size ) {
 	
 		if ( size > this->mSize ) {
-			this->Resize ( size );
+			return this->Resize ( size );
 		}
+		return ZL_OK;
 	}
 	
 	//----------------------------------------------------------------//
-	void Grow ( size_t size, size_t chunkSize ) {
+	ZLResultCode Grow ( size_t size, size_t chunkSize ) {
 		
 		size_t chunks = ( size / chunkSize ) + 1;
-		this->Grow ( chunks * chunkSize );
+		return this->Grow ( chunks * chunkSize );
 	}
 
 	//----------------------------------------------------------------//
-	void Grow ( size_t size, size_t chunkSize, const TYPE& value ) {
+	ZLResultCode Grow ( size_t size, size_t chunkSize, const TYPE& value ) {
 		
 		size_t chunks = ( size / chunkSize ) + 1;
 		size_t newSize = chunks * chunkSize;
 		
 		if ( newSize > this->mSize ) {
-			this->Resize ( newSize, value );
+			return this->Resize ( newSize, value );
 		}
+		return ZL_OK;
 	}
 
 	//----------------------------------------------------------------//
-	bool Init ( size_t size ) {
+	ZLResultCode Init ( size_t size ) {
 
 		this->Clear ();
 
-		if ( !size ) return true;
+		if ( !size ) return ZL_OK;
 
 		this->Alloc ( size );
-		if ( !this->mData ) return false;
+		if ( !this->mData ) return ZL_ALLOCATION_ERROR;
 
 		this->mSize = size;
-		return true;
+		return ZL_OK;
 	}
 
 	//----------------------------------------------------------------//
@@ -143,43 +149,33 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Resize ( size_t size ) {
+	ZLResultCode Resize ( size_t size ) {
 
 		if ( this->mSize != size ) {
 
-			size_t oldSize = this->mSize;
-			TYPE* oldArray = this->mData;
+			ZLLeanArray < TYPE > temp;
+			if ( temp.Init ( size ) != ZL_OK ) return ZL_ALLOCATION_ERROR;
 
-			this->mSize = 0;
-			this->mData = 0;
+			temp.CopyFrom ( *this );
 
-			if ( size ) {
-				this->Alloc ( size );
-				this->mSize = size;
-				
-				for ( size_t i = 0; (( i < size ) && ( i < oldSize )); ++i ) {
-					this->mData [ i ] = oldArray [ i ];
-				}
-			}
-			
-			if ( oldArray ) {
-				delete [] oldArray;
-			}
+			this->Take ( temp );
 		}
+		return ZL_OK;
 	}
 
 	//----------------------------------------------------------------//
-	void Resize ( size_t size, const TYPE& value ) {
+	ZLResultCode Resize ( size_t size, const TYPE& value ) {
 
 		size_t oldSize = this->mSize;
 		
-		this->Resize ( size );
+		if ( this->Resize ( size ) != ZL_OK ) return ZL_ALLOCATION_ERROR;
 		
 		if ( size >= oldSize ) {
 			for ( size_t i = oldSize; i < size; ++i ) {
 				this->mData [ i ] = value;
 			}
 		}
+		return ZL_OK;
 	}
 
 	//----------------------------------------------------------------//
@@ -227,6 +223,22 @@ public:
 	//----------------------------------------------------------------//
 	inline size_t Size () const {
 		return this->mSize;
+	}
+
+	//----------------------------------------------------------------//
+	void Take ( ZLLeanArray < TYPE >& src ) {
+	
+		if ( this->mData != src.mData ) {
+			
+			if ( this->mData ) {
+				this->Free ();
+			}
+			
+			this->mSize = src.mSize;
+			this->mData = src.mData;
+			src.mSize = 0;
+			src.mData = 0;
+		}
 	}
 
 	//----------------------------------------------------------------//

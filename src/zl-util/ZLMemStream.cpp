@@ -135,7 +135,7 @@ size_t ZLMemStream::GetLength () {
 //----------------------------------------------------------------//
 ZLSizeResult ZLMemStream::ReadBytes ( void* buffer, size_t size ) {
 
-	if ( size == 0 ) return ZLSizeResult ( 0, ZL_OK );
+	if ( size == 0 ) ZL_RETURN_SIZE_RESULT ( 0, ZL_OK );
 
 	size_t cursor0 = this->mBase + this->mCursor;
 	size_t cursor1 = cursor0 + size;
@@ -146,9 +146,7 @@ ZLSizeResult ZLMemStream::ReadBytes ( void* buffer, size_t size ) {
 		cursor1 = top;
 	}
 
-	if ( cursor0 == cursor1 ) {
-		return ZLSizeResult ( 0, ZL_OK );
-	}
+	if ( cursor0 == cursor1 ) ZL_RETURN_SIZE_RESULT ( 0, ZL_OK );
 
 	// if there's a guest buffer, use it
 	// if the guest buffer exists, it is guaranteed to be a large enough size
@@ -188,7 +186,7 @@ ZLSizeResult ZLMemStream::ReadBytes ( void* buffer, size_t size ) {
 		this->mCursor = cursor1 - this->mBase;
 	}
 	
-	return ZLSizeResult ( size, ZL_OK );
+	ZL_RETURN_SIZE_RESULT ( size, ZL_OK );
 }
 
 //----------------------------------------------------------------//
@@ -281,13 +279,13 @@ ZLSizeResult ZLMemStream::SetLength ( size_t length ) {
 		this->Reserve ( length ); // TODO: report error
 		this->mLength = length;
 	}
-	return ZLSizeResult ( length, ZL_OK );
+	ZL_RETURN_SIZE_RESULT  ( length, ZL_OK );
 }
 
 //----------------------------------------------------------------//
 ZLSizeResult ZLMemStream::WriteBytes ( const void* buffer, size_t size ) {
 
-	if ( !size ) return ZLSizeResult ( 0, ZL_OK );
+	if ( !size ) ZL_RETURN_SIZE_RESULT ( 0, ZL_OK );
 
 	this->Reserve ( this->mCursor + size );
 
@@ -334,7 +332,7 @@ ZLSizeResult ZLMemStream::WriteBytes ( const void* buffer, size_t size ) {
 		}
 	}
 	
-	return ZLSizeResult ( size, ZL_OK );
+	ZL_RETURN_SIZE_RESULT ( size, ZL_OK );
 }
 
 //----------------------------------------------------------------//

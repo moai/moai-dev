@@ -49,7 +49,8 @@ bool ZLStreamProxy::IsAtEnd () {
 //----------------------------------------------------------------//
 ZLSizeResult ZLStreamProxy::ReadBytes ( void* buffer, size_t size ) {
 
-	return this->mProxiedStream ? this->mProxiedStream->ReadBytes ( buffer, size ) : ZLSizeResult ( 0, ZL_ERROR );
+	if ( this->mProxiedStream ) return this->mProxiedStream->ReadBytes ( buffer, size );
+	ZL_RETURN_SIZE_RESULT ( 0, ZL_ERROR );
 }
 
 //----------------------------------------------------------------//
@@ -61,13 +62,15 @@ int ZLStreamProxy::SetCursor ( long offset ) {
 //----------------------------------------------------------------//
 ZLSizeResult ZLStreamProxy::SetLength ( size_t length ) {
 
-	return this->mProxiedStream ? this->mProxiedStream->SetLength ( length ) : ZLSizeResult ( 0, ZL_ERROR );
+	if ( this->mProxiedStream ) return this->mProxiedStream->SetLength ( length );
+	ZL_RETURN_SIZE_RESULT ( 0, ZL_ERROR );
 }
 
 //----------------------------------------------------------------//
 ZLSizeResult ZLStreamProxy::WriteBytes ( const void* buffer, size_t size ) {
 
-	return this->mProxiedStream ? this->mProxiedStream->WriteBytes ( buffer, size ) : ZLSizeResult ( 0, ZL_ERROR );
+	if ( this->mProxiedStream ) return this->mProxiedStream->WriteBytes ( buffer, size );
+	ZL_RETURN_SIZE_RESULT ( 0, ZL_ERROR );
 }
 
 //----------------------------------------------------------------//
@@ -122,11 +125,11 @@ void ZLStreamAdapter::OnClose () {
 //----------------------------------------------------------------//
 ZLResultCode ZLStreamAdapter::OnOpen () {
 
-	return ZLResultCode ( ZL_OK );
+	return ZL_OK;
 }
 
 //----------------------------------------------------------------//
-bool ZLStreamAdapter::Open ( ZLStream* stream ) {
+ZLResultCode ZLStreamAdapter::Open ( ZLStream* stream ) {
 
 	this->Close ();
 
@@ -136,11 +139,11 @@ bool ZLStreamAdapter::Open ( ZLStream* stream ) {
 		this->mBase = stream->GetCursor ();
 	}
 	
-	this->mIsOpen = ( this->OnOpen ().Code () == ZL_OK );
+	this->mIsOpen = ( this->OnOpen () == ZL_OK );
 	if ( !this->mIsOpen ) {
 		this->Close ();
 	}
-	return this->mIsOpen;
+	return this->mIsOpen ? ZL_OK : ZL_ERROR;
 }
 
 //----------------------------------------------------------------//

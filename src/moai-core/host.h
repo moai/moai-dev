@@ -54,6 +54,11 @@ enum {
 	AKU_LOG_NONE,
 };
 
+enum {
+	AKU_OK,
+	AKU_ERROR		= -1,
+};
+
 // callbacks
 typedef void ( *AKUErrorTracebackFunc )         ( const char* message, struct lua_State* L, int level );
 
@@ -74,15 +79,15 @@ AKU_API void			AKUSetLogLevel					( int logLevel );
 AKU_API void			AKUSetUserdata					( void* user );
 
 // management api
-AKU_API void			AKUCallFunc						();
-AKU_API void			AKUCallFuncWithArgArray			( char* exeName, char* scriptName, int argc, char** argv, int asParams );
-AKU_API void			AKUCallFuncWithArgString		( char* exeName, char* scriptName, char* args, int asParams );
+AKU_API int				AKUCallFunc						();
+AKU_API int				AKUCallFuncWithArgArray			( char* exeName, char* scriptName, int argc, char** argv, int asParams );
+AKU_API int				AKUCallFuncWithArgString		( char* exeName, char* scriptName, char* args, int asParams );
 AKU_API lua_State*		AKUGetLuaState					();
 AKU_API char*			AKUGetMoaiVersion				( char* buffer, size_t length );
 AKU_API char*			AKUGetWorkingDirectory			( char* buffer, size_t length );
-AKU_API void			AKULoadFuncFromBuffer			( void* data, size_t size, int dataType, int compressed );
-AKU_API void			AKULoadFuncFromFile				( const char* filename );
-AKU_API void			AKULoadFuncFromString			( const char* script );
+AKU_API int				AKULoadFuncFromBuffer			( void* data, size_t size, int dataType, int compressed );
+AKU_API int				AKULoadFuncFromFile				( const char* filename );
+AKU_API int				AKULoadFuncFromString			( const char* script );
 AKU_API int				AKUMountVirtualDirectory		( char const* virtualPath, char const* archive );
 AKU_API int				AKUSetWorkingDirectory			( char const* path );
 

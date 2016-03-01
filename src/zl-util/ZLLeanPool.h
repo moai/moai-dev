@@ -57,6 +57,11 @@ public:
 	//----------------------------------------------------------------//
 	void Clear () {
 		
+		size_t top = this->mChunks.GetTop ();
+		for ( size_t i = 0; i < top; ++i ) {
+			free ( this->mChunks [ i ]);
+		}
+		
 		this->mChunks.Clear ();
 		this->mFree.Clear ();
 	}

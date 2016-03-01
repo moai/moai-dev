@@ -26,17 +26,17 @@ public:
 
 	//----------------------------------------------------------------//
 	bool						CheckCaps				( u32 flags );
-	size_t						Collapse				( size_t clipBase, size_t clipSize, size_t chunkSize, size_t size, bool invert );
-	size_t						Collapse				( ZLStream& source, size_t clipBase, size_t clipSize, size_t chunkSize, size_t size, bool invert );
+	ZLSizeResult				Collapse				( size_t clipBase, size_t clipSize, size_t chunkSize, size_t size, bool invert );
+	ZLSizeResult				Collapse				( ZLStream& source, size_t clipBase, size_t clipSize, size_t chunkSize, size_t size, bool invert );
 	virtual void				Compact					();
 	virtual void				Flush					();
 	virtual u32					GetCaps					() = 0;
 	virtual size_t				GetCursor				() = 0;
 	virtual size_t				GetLength				();
 	virtual bool				IsAtEnd					();
-	size_t						PeekBytes				( void* buffer, size_t size );
-	size_t						Print					( cc8* format, ... );
-	size_t						Print					( cc8* format, va_list args );
+	ZLSizeResult				PeekBytes				( void* buffer, size_t size );
+	ZLSizeResult				Print					( cc8* format, ... );
+	ZLSizeResult				Print					( cc8* format, va_list args );
 	virtual ZLSizeResult		ReadBytes				( void* buffer, size_t size );
 	ZLStringResult				ReadString				( size_t size );
 	ZLStringResult				ReadToken				( cc8* delimiters = 0 );
@@ -56,9 +56,9 @@ public:
 		TYPE temp;
 		size_t result = this->ReadBytes ( &temp, sizeof ( TYPE ));
 		if ( result == sizeof ( TYPE )) {
-			return ZLResult < TYPE >( temp, ZL_OK );
+			ZL_RETURN_RESULT ( ZLResult < TYPE >, temp, ZL_OK );
 		}
-		return ZLResult < TYPE >( value, ZL_ERROR );
+		ZL_RETURN_RESULT ( ZLResult < TYPE >, value, ZL_ERROR );
 	}
 
 	//----------------------------------------------------------------//

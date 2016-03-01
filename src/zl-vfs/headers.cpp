@@ -306,19 +306,32 @@ int zl_rmdir ( const char* path ) {
 // stdlib
 //================================================================//
 
-static ZLTlsfPool* sTlsfPool = 0;
+static zl_out_of_memory_func sOutOtMemoryHandler	= abort;
+static ZLTlsfPool* sTlsfPool						= 0;
 
 //----------------------------------------------------------------//
 void* zl_calloc ( size_t num, size_t size ) {
 
+	void* ptr = 0;
+
 	if ( sTlsfPool ) {
-		void* ptr = tlsf_malloc ( sTlsfPool->mPool, num * size );
+		ptr = tlsf_malloc ( sTlsfPool->mPool, num * size );
 		if ( ptr ) {
 			memset ( ptr, 0, num * size );
 		}
-		return ptr;
 	}
-	return calloc ( num, size );
+	else {
+		ptr = calloc ( num, size );
+	}
+	
+	if ( !ptr ) {
+		if ( !sOutOtMemoryHandler ) {
+			abort ();
+		}
+		sOutOtMemoryHandler ();
+	}
+	
+	return ptr;
 }
 
 //----------------------------------------------------------------//
@@ -335,19 +348,37 @@ void zl_free ( void* ptr ) {
 //----------------------------------------------------------------//
 void* zl_malloc ( size_t size ) {
 
-	if ( sTlsfPool ) {
-		return tlsf_malloc ( sTlsfPool->mPool, size );
+	void* ptr = sTlsfPool ? tlsf_malloc ( sTlsfPool->mPool, size ) : malloc ( size );
+
+	if ( !ptr ) {
+		if ( !sOutOtMemoryHandler ) {
+			abort ();
+		}
+		sOutOtMemoryHandler ();
 	}
-	return malloc ( size );
+	
+	return ptr;
 }
 
 //----------------------------------------------------------------//
 void* zl_realloc ( void* ptr, size_t size ) {
 
-	if ( sTlsfPool ) {
-		return tlsf_realloc ( sTlsfPool->mPool, ptr, size );
+	ptr = sTlsfPool ? tlsf_realloc ( sTlsfPool->mPool, ptr, size ) : realloc ( ptr, size );
+	
+	if ( !ptr ) {
+		if ( !sOutOtMemoryHandler ) {
+			abort ();
+		}
+		sOutOtMemoryHandler ();
 	}
-	return realloc ( ptr, size );
+	
+	return ptr;
+}
+
+//----------------------------------------------------------------//
+void zl_set_out_of_memory_func ( zl_out_of_memory_func handler ) {
+
+	sOutOtMemoryHandler = handler;
 }
 
 //----------------------------------------------------------------//

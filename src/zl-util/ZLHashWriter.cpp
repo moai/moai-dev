@@ -67,7 +67,7 @@ ZLResultCode ZLHashWriter::OnOpen () {
 		for ( u32 i = 0; i < blockSize; ++i ) {
 			xorKey [ i ] = key [ i ] ^ 0x36;
 		}
-		return ( this->WriteBytes ( xorKey, blockSize ).Code () == ZL_OK ) ? ZL_OK : ZL_ERROR;
+		return ( this->WriteBytes ( xorKey, blockSize ).mCode == ZL_OK ) ? ZL_OK : ZL_ERROR;
 	}
 	return ZL_OK;
 }
@@ -92,7 +92,7 @@ ZLSizeResult ZLHashWriter::WriteBytes ( const void* buffer, size_t size ) {
 		this->mLength = this->mCursor;
 	}
 
-	return ZLSizeResult ( writeSize, ZL_OK );
+	ZL_RETURN_SIZE_RESULT ( writeSize, ZL_OK );
 }
 
 //----------------------------------------------------------------//

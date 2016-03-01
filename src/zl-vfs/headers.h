@@ -11,6 +11,8 @@
 	extern "C" {
 #endif
 
+typedef void ( *zl_out_of_memory_func )();
+
 //================================================================//
 // zl_stat
 //================================================================//
@@ -63,6 +65,7 @@ extern void*				zl_calloc					( size_t num, size_t size );
 extern void					zl_free						( void* ptr );
 extern void*				zl_malloc					( size_t size );
 extern void*				zl_realloc					( void* ptr, size_t size );
+extern void					zl_set_out_of_memory_func	( zl_out_of_memory_func handler );
 extern ZL_TLSF_POOL*		zl_tlsf_create_pool			( size_t bytes );
 extern void					zl_tlsf_destroy_pool		( ZL_TLSF_POOL* opaque );
 extern ZL_TLSF_POOL*		zl_tlsf_get_pool			( void );

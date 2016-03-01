@@ -69,7 +69,7 @@ ZLSizeResult ZLByteStream::ReadBytes ( void* buffer, size_t size ) {
 		memcpy ( buffer, &(( u8* )this->mReadBuffer )[ this->mCursor ], readSize );
 		this->mCursor += readSize;
 	}
-	return ZLSizeResult ( readSize, ZL_OK );
+	ZL_RETURN_SIZE_RESULT ( readSize, ZL_OK );
 }
 
 //----------------------------------------------------------------//
@@ -106,7 +106,7 @@ int ZLByteStream::SetCursor ( long offset ) {
 ZLSizeResult ZLByteStream::SetLength ( size_t length ) {
 
 	this->mLength = length > this->mCapacity ? this->mCapacity : length;
-	return ZLSizeResult ( length, length <= this->mCapacity ? ZL_OK : ZL_ERROR );
+	ZL_RETURN_SIZE_RESULT ( length, length <= this->mCapacity ? ZL_OK : ZL_ERROR );
 }
 
 //----------------------------------------------------------------//
@@ -121,7 +121,7 @@ ZLSizeResult ZLByteStream::WriteBytes ( const void* buffer, size_t size ) {
 			this->mLength = this->mCursor;
 		}
 	}
-	return ZLSizeResult ( writeSize, ZL_OK );
+	ZL_RETURN_SIZE_RESULT ( writeSize, ZL_OK );
 }
 
 //----------------------------------------------------------------//

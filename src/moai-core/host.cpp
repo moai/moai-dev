@@ -45,13 +45,13 @@ static AKUContext*		sContext = 0;
 // local
 //================================================================//
 
-void	_debugCallWithArgs	( MOAILuaState& state, int totalArgs, int asParams );
+int		_debugCallWithArgs	( MOAILuaState& state, int totalArgs, int asParams );
 int		_loadContextFunc	( MOAILuaState& state );
 void	_pushArgOrParam		( MOAILuaState& state, int index, char* arg, int asParam );
 void	_setupArgs			( MOAILuaState& state, char* exeName, char* scriptName, int asParams );
 
 //----------------------------------------------------------------//
-void _debugCallWithArgs ( MOAILuaState& state, int totalArgs, int asParams ) {
+int _debugCallWithArgs ( MOAILuaState& state, int totalArgs, int asParams ) {
 
 	int status;
 	
@@ -63,7 +63,7 @@ void _debugCallWithArgs ( MOAILuaState& state, int totalArgs, int asParams ) {
 		status = state.DebugCall ( totalArgs, 0 );
 	}
 	
-	state.LogErrors ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, status );
+	return state.LogErrors ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, status ) ? AKU_ERROR : AKU_OK;
 }
 
 //----------------------------------------------------------------//
@@ -72,11 +72,11 @@ int _loadContextFunc ( MOAILuaState& state ) {
 	if ( sContext && sContext->mLuaFunc ) {
 		state.Push ( sContext->mLuaFunc );
 		sContext->mLuaFunc.Clear ();
-		return 0;
+		return AKU_OK;
 	}
 	
 	ZLLog_ErrorF ( ZLLog::CONSOLE, "Missing function to call; use AKULoadFunc* to load a function\n" );
-	return 1;
+	return AKU_ERROR;
 }
 
 //----------------------------------------------------------------//
@@ -154,12 +154,12 @@ void AKUAppInitialize () {
 }
 
 //----------------------------------------------------------------//
-void AKUCallFunc () {
+int AKUCallFunc () {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	if ( _loadContextFunc ( state ) != 0 ) return;
+	if ( _loadContextFunc ( state ) != 0 ) return AKU_ERROR;
 	int status = state.DebugCall ( 0, 0 );
-	state.LogErrors ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, status );
+	return state.LogErrors ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, status ) ? AKU_ERROR : AKU_OK;
 }
 
 //----------------------------------------------------------------//
@@ -168,24 +168,24 @@ void AKUCallFunc () {
 // arg[1]  => next arg/option/script
 // arg[2]  => next arg/option/script
 	// ...
-void AKUCallFuncWithArgArray ( char* exeName, char* scriptName, int argc, char** argv, int asParams ) {
+int AKUCallFuncWithArgArray ( char* exeName, char* scriptName, int argc, char** argv, int asParams ) {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	if ( _loadContextFunc ( state ) != 0 ) return;
+	if ( _loadContextFunc ( state ) != 0 ) return AKU_ERROR;
 
 	_setupArgs ( state, exeName, scriptName, asParams );
 	
 	for ( int i = 0; i < argc; ++i ) {
 		_pushArgOrParam ( state, i + 1, argv [ i ], asParams );
 	}
-	_debugCallWithArgs ( state, argc, asParams );
+	return _debugCallWithArgs ( state, argc, asParams );
 }
 
 //----------------------------------------------------------------//
-void AKUCallFuncWithArgString ( char* exeName, char* scriptName, char* args, int asParams ) {
+int AKUCallFuncWithArgString ( char* exeName, char* scriptName, char* args, int asParams ) {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	if ( _loadContextFunc ( state ) != 0 ) return;
+	if ( _loadContextFunc ( state ) != 0 ) return AKU_ERROR;
 
 	_setupArgs ( state, exeName, scriptName, asParams );
 	
@@ -198,7 +198,7 @@ void AKUCallFuncWithArgString ( char* exeName, char* scriptName, char* args, int
 			token = strtok ( NULL, " " );
 		}
 	}
-	_debugCallWithArgs ( state, numParams, asParams );
+	return _debugCallWithArgs ( state, numParams, asParams );
 }
 
 //----------------------------------------------------------------//
@@ -326,11 +326,11 @@ void AKUInitMemPool ( size_t bytes ) {
 }
 
 //----------------------------------------------------------------//
-void AKULoadFuncFromBuffer ( void* data, size_t size, int dataType, int compressed ) {
+int AKULoadFuncFromBuffer ( void* data, size_t size, int dataType, int compressed ) {
 
 	sContext->mLuaFunc.Clear ();
 
-	if ( !size ) return;
+	if ( !size ) return AKU_OK;
 
 	MOAIDataBuffer buffer;
 	buffer.Load ( data, size );
@@ -356,16 +356,17 @@ void AKULoadFuncFromBuffer ( void* data, size_t size, int dataType, int compress
 	}
 	
 	buffer.Unlock ();
+	return AKU_OK;
 }
 
 //----------------------------------------------------------------//
-void AKULoadFuncFromFile ( const char* filename ) {
+int AKULoadFuncFromFile ( const char* filename ) {
 
 	sContext->mLuaFunc.Clear ();
 
 	if ( !ZLFileSys::CheckFileExists ( filename )) {
 		ZLLog_ErrorF ( ZLLog::CONSOLE, "Could not find file %s \n", filename );
-		return;
+		return AKU_ERROR;
 	}
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
@@ -380,22 +381,22 @@ void AKULoadFuncFromFile ( const char* filename ) {
 	state.Push ( filename );
 	
 	int status = state.DebugCall ( 1, 2 );
-	if ( !state.LogErrors ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, status )) {
-		if ( state.IsNil ( -2 )) {
+	if ( state.LogErrors ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, status )) return AKU_ERROR;
+	
+	if ( state.IsNil ( -2 )) {
+	
+		cc8* msg = state.GetValue < cc8* >( -1, "loafile returned 'nil'" );
+		UNUSED ( msg );
 		
-			cc8* msg = state.GetValue < cc8* >( -1, "loafile returned 'nil'" );
-			UNUSED ( msg );
-			
-			ZLLog_ErrorF ( ZLLog::CONSOLE, "%s\n", msg );
-		}
-		else {
-			sContext->mLuaFunc.SetRef ( state, -2 );
-		}
+		ZLLog_ErrorF ( ZLLog::CONSOLE, "%s\n", msg );
+		return AKU_ERROR;
 	}
+	sContext->mLuaFunc.SetRef ( state, -2 );
+	return AKU_OK;
 }
 
 //----------------------------------------------------------------//
-void AKULoadFuncFromString ( const char* script ) {
+int AKULoadFuncFromString ( const char* script ) {
 
 	sContext->mLuaFunc.Clear ();
 
@@ -409,9 +410,10 @@ void AKULoadFuncFromString ( const char* script ) {
 	state.Push ( script );
 	
 	int status = state.DebugCall ( 1, 1 );
-	if ( !state.LogErrors ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, status )) {
-		sContext->mLuaFunc.SetRef ( state, -1 );
-	}
+	if ( state.LogErrors ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, status )) return AKU_ERROR;
+	
+	sContext->mLuaFunc.SetRef ( state, -1 );
+	return AKU_OK;
 }
 
 //----------------------------------------------------------------//

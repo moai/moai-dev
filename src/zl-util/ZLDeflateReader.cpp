@@ -181,7 +181,7 @@ ZLSizeResult ZLDeflateReader::ReadBytes ( void* buffer, size_t size ) {
 		remaining -= read;
 		buffer = ( void* )(( size_t )buffer + read );
 	}
-    return ZLSizeResult ( size - remaining, ZL_OK );
+    ZL_RETURN_SIZE_RESULT ( size - remaining, ZL_OK );
 }
 
 //----------------------------------------------------------------//

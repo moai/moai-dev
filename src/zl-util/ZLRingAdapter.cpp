@@ -23,7 +23,7 @@ bool ZLRingAdapter::IsAtEnd () {
 //----------------------------------------------------------------//
 ZLSizeResult ZLRingAdapter::Process ( void* readBuffer, const void* writeBuffer, size_t size ) {
 
-	if ( !( this->mProxiedStream && ( readBuffer || writeBuffer ))) return ZLSizeResult ( 0, ZL_ERROR );
+	if ( !( this->mProxiedStream && ( readBuffer || writeBuffer ))) ZL_RETURN_SIZE_RESULT ( 0, ZL_ERROR );
 	
 	size_t bytes = 0;
 	
@@ -55,7 +55,7 @@ ZLSizeResult ZLRingAdapter::Process ( void* readBuffer, const void* writeBuffer,
 	
 		if ( result < chunkSize ) break;
 	}
-	return ZLSizeResult ( bytes, ZL_OK );
+	ZL_RETURN_SIZE_RESULT ( bytes, ZL_OK );
 }
 
 //----------------------------------------------------------------//

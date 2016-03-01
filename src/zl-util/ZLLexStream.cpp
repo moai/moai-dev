@@ -40,7 +40,7 @@ ZLSizeResult ZLLexStream::ReadBytes ( void* buffer, size_t size ) {
 	for ( u32 i = 0; i < readSize; ++i ) {
 		bytes [ i ] = this->ReadByte ();
 	}
-	return ZLSizeResult ( readSize, ZL_OK );
+	ZL_RETURN_SIZE_RESULT ( readSize, ZL_OK );
 }
 
 //----------------------------------------------------------------//

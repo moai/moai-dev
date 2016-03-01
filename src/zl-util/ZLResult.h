@@ -15,33 +15,20 @@ enum {
 	ZL_TOTAL_ERRORS,
 };
 
+typedef int ZLResultCode;
+
 //================================================================//
 // ZLResultBase
 //================================================================//
 class ZLResultBase {
-protected:
-
-	int		mCode;
-
 public:
-	
-	//----------------------------------------------------------------//
-	inline int Code () {
-		return this->mCode;
-	}
-};
 
-//================================================================//
-// ZLResultCode
-//================================================================//
-class ZLResultCode :
-	public ZLResultBase {
-public:
+	ZLResultCode	mCode;
 	
-	//----------------------------------------------------------------//
-	ZLResultCode ( int code ) {
-		this->mCode = code;
-	}
+//	//----------------------------------------------------------------//
+//	inline ZLResultCode Code () {
+//		return this->mCode;
+//	}
 };
 
 //================================================================//
@@ -50,36 +37,36 @@ public:
 template < typename TYPE >
 class ZLResult :
 	public ZLResultBase {
-private:
+public:
 
 	TYPE	mValue;
-
-public:
 	
 	//----------------------------------------------------------------//
 	inline operator const TYPE& () const {
-		assert ( this->mCode == 0 );
+		assert ( this->mCode == ZL_OK );
 		return this->mValue;
-	}
-	
-	//----------------------------------------------------------------//
-	inline const TYPE& Value () {
-		assert ( this->mCode == 0 );
-		return this->mValue;
-	}
-	
-	//----------------------------------------------------------------//
-	ZLResult ( const TYPE& value, int code ) :
-		mValue ( value ) {
-		this->mCode = code;
 	}
 };
 
-typedef ZLResult < bool > ZLBoolResult;
-typedef ZLResult < double > ZLDoubleResult;
-typedef ZLResult < float > ZLFloatResult;
-typedef ZLResult < int > ZLIntResult;
-typedef ZLResult < size_t > ZLSizeResult;
-typedef ZLResult < STLString > ZLStringResult;
+typedef ZLResult < bool >		ZLBoolResult;
+typedef ZLResult < double >		ZLDoubleResult;
+typedef ZLResult < float >		ZLFloatResult;
+typedef ZLResult < int >		ZLIntResult;
+typedef ZLResult < size_t >		ZLSizeResult;
+typedef ZLResult < STLString >	ZLStringResult;
+
+#define ZL_RETURN_RESULT(type,value,code) {		\
+	type __result;								\
+	__result.mValue = value;					\
+	__result.mCode = code;						\
+	return __result;							\
+}
+
+#define ZL_RETURN_BOOL_RESULT(value,code)		ZL_RETURN_RESULT ( ZLBoolResult, value, code )
+#define ZL_RETURN_DOUBLE_RESULT(value,code)		ZL_RETURN_RESULT ( ZLDoubleResult, value, code )
+#define ZL_RETURN_FLOAT_RESULT(value,code)		ZL_RETURN_RESULT ( ZLFloatResult, value, code )
+#define ZL_RETURN_INT_RESULT(value,code)		ZL_RETURN_RESULT ( ZLIntResult, value, code )
+#define ZL_RETURN_SIZE_RESULT(value,code)		ZL_RETURN_RESULT ( ZLSizeResult, value, code )
+#define ZL_RETURN_STRING_RESULT(value,code)		ZL_RETURN_RESULT ( ZLStringResult, value, code )
 
 #endif

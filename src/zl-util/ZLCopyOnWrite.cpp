@@ -172,7 +172,7 @@ ZLSizeResult ZLCopyOnWrite::ReadBytes ( void* buffer, size_t size ) {
 			this->mCursor += readSize;
 		}
 	}
-	return ZLSizeResult ( readSize, ZL_OK );
+	ZL_RETURN_SIZE_RESULT ( readSize, ZL_OK );
 }
 
 //----------------------------------------------------------------//
@@ -212,9 +212,9 @@ ZLSizeResult ZLCopyOnWrite::SetLength ( size_t length ) {
 		if ( this->mCursor > length ) {
 			this->mCursor = length;
 		}
-		return ZLSizeResult ( length, ZL_OK );
+		ZL_RETURN_SIZE_RESULT ( length, ZL_OK );
 	}
-	return ZLSizeResult ( 0, ZL_ERROR );
+	ZL_RETURN_SIZE_RESULT ( 0, ZL_ERROR );
 }
 
 //----------------------------------------------------------------//
@@ -239,7 +239,7 @@ ZLSizeResult ZLCopyOnWrite::WriteBytes ( const void* buffer, size_t size ) {
 			}
 		}
 	}
-	return ZLSizeResult ( writeSize, ZL_OK );
+	ZL_RETURN_SIZE_RESULT ( writeSize, ZL_OK );
 }
 
 //----------------------------------------------------------------//
