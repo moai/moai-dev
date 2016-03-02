@@ -1,6 +1,7 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+#include <moai-core/headers.h>
 #include <moai-luaext/host.h>
 
 extern "C" {	
@@ -26,21 +27,20 @@ void AKULuaExtAppInitialize () {
 //----------------------------------------------------------------//
 void AKULuaExtContextInitialize () {
 
-	lua_State* state = AKUGetLuaState ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 
 	#if MOAI_WITH_LIBCRYPTO
 		luaopen_crypto ( state );
 	#endif
 
-  #if MOAI_WITH_CURL
+	#if MOAI_WITH_CURL
 		luaopen_luacurl ( state );
 	#endif
 
-  #if MOAI_WITH_SQLITE
-  	luaopen_luasql_sqlite3 ( state );
-  #endif
+	#if MOAI_WITH_SQLITE
+		luaopen_luasql_sqlite3 ( state );
+	#endif
 	
 	luaopen_lfs ( state );
 	luapreload_fullluasocket ( state );
-
 }

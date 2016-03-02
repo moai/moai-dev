@@ -24,9 +24,11 @@ public:
 	u8			mTypeOfLuaNumber;		// 0 = floating point, 1 = integral
 	
 	//----------------------------------------------------------------//
-	void		Init			();
-	void		Read			( ZLStream& stream );
-	void		Write			( ZLStream& stream ) const;
+	void				Init			();
+	bool				IsBytecode		();
+	bool				IsCompatible	( const MOAILuaHeader& check ) const;
+	ZLResultCode		Read			( ZLStream& stream );
+	ZLResultCode		Write			( ZLStream& stream ) const;
 };
 
 //================================================================//
