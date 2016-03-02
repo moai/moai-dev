@@ -93,8 +93,8 @@
 
 //----------------------------------------------------------------//
 void		AKUModulesAppFinalize					();
-void		AKUModulesAppInitialize					();
-void		AKUModulesContextInitialize				();
+int			AKUModulesAppInitialize					();
+int			AKUModulesContextInitialize				();
 void		AKUModulesPause							( bool pause );
 void		AKUModulesUpdate						();
 

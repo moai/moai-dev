@@ -55,6 +55,39 @@ typedef ZLResult < int >		ZLIntResult;
 typedef ZLResult < size_t >		ZLSizeResult;
 typedef ZLResult < STLString >	ZLStringResult;
 
+//================================================================//
+// ZLResultCodeAccumulator
+//================================================================//
+class ZLResultCodeAccumulator {
+private:
+
+	ZLResultCode	mCode;
+
+public:
+
+	//----------------------------------------------------------------//
+	inline operator const int () const {
+		return this->mCode;
+	}
+	
+	//----------------------------------------------------------------//
+	inline void operator = ( int code ) {
+		this->mCode = code != ZL_OK ? code : this->mCode;
+	}
+	
+	//----------------------------------------------------------------//
+	inline int Reset () {
+		int code = this->mCode;
+		this->mCode = ZL_OK;
+		return code;
+	}
+	
+	//----------------------------------------------------------------//
+	ZLResultCodeAccumulator () :
+		mCode ( ZL_OK ) {
+	}
+};
+
 #define ZL_RETURN_RESULT(type,value,code) {		\
 	type __result;								\
 	__result.mValue = value;					\
