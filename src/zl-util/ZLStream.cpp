@@ -360,9 +360,9 @@ int ZLStream::Seek ( long offset, int origin ) {
 }
 
 //----------------------------------------------------------------//
-int ZLStream::SetCursor ( long offset ) {
+ZLResultCode ZLStream::SetCursor ( long offset ) {
 	UNUSED ( offset );
-	return -1;
+	return ZL_UNSUPPORTED;
 }
 
 //----------------------------------------------------------------//

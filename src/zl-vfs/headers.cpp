@@ -43,6 +43,15 @@
 
 using namespace std;
 
+//----------------------------------------------------------------//
+void _out_of_memory () {
+
+	zl_printf ( "FATAL: Ran out of memory. Aborting.\n" );
+	zl_printf ( "NOTE: Provide your own OOM handler by calling zl_set_out_of_memory_func ().\n" );
+	
+	abort ();
+}
+
 //================================================================//
 // ZLTlsfPool
 //================================================================//
@@ -57,9 +66,9 @@ typedef struct ZLTlsfPool {
 // zlcore
 //================================================================//
 
-ZLFILE* zl_stderr = 0;
-ZLFILE* zl_stdin = 0;
-ZLFILE* zl_stdout = 0;
+ZLFILE* zl_stderr	= 0;
+ZLFILE* zl_stdin	= 0;
+ZLFILE* zl_stdout	= 0;
 
 //----------------------------------------------------------------//
 int zl_affirm_path ( const char* path ) {
@@ -306,7 +315,7 @@ int zl_rmdir ( const char* path ) {
 // stdlib
 //================================================================//
 
-static zl_out_of_memory_func sOutOtMemoryHandler	= abort;
+static zl_out_of_memory_func sOutOtMemoryHandler	= _out_of_memory;
 static ZLTlsfPool* sTlsfPool						= 0;
 
 //----------------------------------------------------------------//

@@ -59,7 +59,7 @@ public:
 	void*				Invalidate				();
 	ZLSizeResult		ReadBytes				( void* buffer, size_t size );
 	void*				Reserve					( size_t size );
-	int					SetCursor				( long offset );
+	ZLResultCode		SetCursor				( long offset );
 	ZLSizeResult		SetLength				( size_t length );
 	ZLSizeResult		WriteBytes				( const void* buffer, size_t size );
 						ZLCopyOnWrite			();

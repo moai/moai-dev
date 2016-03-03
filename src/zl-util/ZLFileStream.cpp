@@ -151,9 +151,9 @@ ZLSizeResult ZLFileStream::ReadBytes ( void* buffer, size_t size ) {
 }
 
 //----------------------------------------------------------------//
-int ZLFileStream::SetCursor ( long offset ) {
+ZLResultCode ZLFileStream::SetCursor ( long offset ) {
 
-	return zl_fseek ( this->mFile, offset, SEEK_SET );
+	return zl_fseek ( this->mFile, offset, SEEK_SET ) == 0 ? ZL_OK : ZL_ERROR;
 }
 
 //----------------------------------------------------------------//

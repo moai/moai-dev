@@ -54,9 +54,9 @@ ZLSizeResult ZLStreamProxy::ReadBytes ( void* buffer, size_t size ) {
 }
 
 //----------------------------------------------------------------//
-int ZLStreamProxy::SetCursor ( long offset ) {
+ZLResultCode ZLStreamProxy::SetCursor ( long offset ) {
 
-	return this->mProxiedStream ? this->mProxiedStream->SetCursor ( offset ) : -1;
+	return this->mProxiedStream ? this->mProxiedStream->SetCursor ( offset ) : ZL_ERROR;
 }
 
 //----------------------------------------------------------------//

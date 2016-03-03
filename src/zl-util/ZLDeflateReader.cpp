@@ -202,10 +202,10 @@ int ZLDeflateReader::ResetZipStream () {
 }
 
 //----------------------------------------------------------------//
-int ZLDeflateReader::SetCursor ( long offset ) {
+ZLResultCode ZLDeflateReader::SetCursor ( long offset ) {
 
-	this->mCursor = offset;
-	return 0;
+	this->mCursor = offset; // TODO: check bounds and report error
+	return ZL_OK;
 }
 
 //----------------------------------------------------------------//

@@ -42,7 +42,7 @@ public:
 	ZLStringResult				ReadToken				( cc8* delimiters = 0 );
 	float						Sample					( u32 streamType, size_t sampleSize );
 	int							Seek					( long offset, int origin = SEEK_SET );
-	virtual int					SetCursor				( long offset );
+	virtual ZLResultCode		SetCursor				( long offset );
 	virtual ZLSizeResult		SetLength				( size_t length );
 	virtual ZLSizeResult		WriteBytes				( const void* buffer, size_t size );
 	ZLSizeResult				WriteStream				( ZLStream& source );

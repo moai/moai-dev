@@ -49,6 +49,7 @@ public:
 };
 
 typedef ZLResult < bool >		ZLBoolResult;
+typedef ZLResult < u8 >			ZLCharResult;
 typedef ZLResult < double >		ZLDoubleResult;
 typedef ZLResult < float >		ZLFloatResult;
 typedef ZLResult < int >		ZLIntResult;
@@ -96,6 +97,7 @@ public:
 }
 
 #define ZL_RETURN_BOOL_RESULT(value,code)		ZL_RETURN_RESULT ( ZLBoolResult, value, code )
+#define	ZL_RETURN_CHAR_RESULT(value,code)		ZL_RETURN_RESULT ( ZLCharResult, value, code )
 #define ZL_RETURN_DOUBLE_RESULT(value,code)		ZL_RETURN_RESULT ( ZLDoubleResult, value, code )
 #define ZL_RETURN_FLOAT_RESULT(value,code)		ZL_RETURN_RESULT ( ZLFloatResult, value, code )
 #define ZL_RETURN_INT_RESULT(value,code)		ZL_RETURN_RESULT ( ZLIntResult, value, code )

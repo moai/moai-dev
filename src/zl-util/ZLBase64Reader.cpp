@@ -65,10 +65,10 @@ ZLSizeResult ZLBase64Reader::ReadBytes ( void* buffer, size_t size ) {
 }
 
 //----------------------------------------------------------------//
-int ZLBase64Reader::SetCursor ( long offset ) {
+ZLResultCode ZLBase64Reader::SetCursor ( long offset ) {
 
-	this->mCursor = offset;
-	return 0;
+	this->mCursor = offset; // TODO: check bounds and report error
+	return ZL_OK;
 }
 
 //----------------------------------------------------------------//

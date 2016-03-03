@@ -65,13 +65,14 @@ ZLSizeResult ZLRingAdapter::ReadBytes ( void* buffer, size_t size ) {
 }
 
 //----------------------------------------------------------------//
-int ZLRingAdapter::SetCursor ( long offset ) {
+ZLResultCode ZLRingAdapter::SetCursor ( long offset ) {
 
-	if ( this->mProxiedStream ) {
-		offset = offset % this->mLength;
-		this->mCursor = offset;
-		this->mProxiedStream->SetCursor ( this->mBase + offset );
-	}
+	if ( !this->mProxiedStream ) return ZL_ERROR;
+
+	offset = offset % this->mLength;
+	if ( this->mProxiedStream->SetCursor ( this->mBase + offset ) != ZL_OK ) return ZL_ERROR;
+	this->mCursor = offset;
+	return ZL_OK;
 }
 
 //----------------------------------------------------------------//

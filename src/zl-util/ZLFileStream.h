@@ -18,7 +18,7 @@ protected:
 	u32				mCaps;
 
 	//----------------------------------------------------------------//
-	int				SetCursor			( long offset );
+	ZLResultCode	SetCursor			( long offset );
 
 public:
 
