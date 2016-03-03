@@ -6,6 +6,21 @@
 
 #include <zl-util/STLString.h>
 
+#define ZL_RETURN_RESULT(type,value,code) {		\
+	ZLResult < type > __result;					\
+	__result.mValue = value;					\
+	__result.mCode = code;						\
+	return __result;							\
+}
+
+#define	ZL_RETURN_BOOL_RESULT(value,code)		ZL_RETURN_RESULT ( bool, value, code )
+#define	ZL_RETURN_CHAR_RESULT(value,code)		ZL_RETURN_RESULT ( u8, value, code )
+#define	ZL_RETURN_DOUBLE_RESULT(value,code)		ZL_RETURN_RESULT ( double, value, code )
+#define	ZL_RETURN_FLOAT_RESULT(value,code)		ZL_RETURN_RESULT ( float, value, code )
+#define	ZL_RETURN_INT_RESULT(value,code)		ZL_RETURN_RESULT ( int, value, code )
+#define	ZL_RETURN_SIZE_RESULT(value,code)		ZL_RETURN_RESULT ( size_t, value, code )
+#define	ZL_RETURN_STRING_RESULT(value,code)		ZL_RETURN_RESULT ( STLString, value, code )
+
 enum {
 	ZL_OK,
 	ZL_ERROR,
@@ -24,11 +39,6 @@ class ZLResultBase {
 public:
 
 	ZLResultCode	mCode;
-	
-//	//----------------------------------------------------------------//
-//	inline ZLResultCode Code () {
-//		return this->mCode;
-//	}
 };
 
 //================================================================//
@@ -47,14 +57,6 @@ public:
 		return this->mValue;
 	}
 };
-
-typedef ZLResult < bool >		ZLBoolResult;
-typedef ZLResult < u8 >			ZLCharResult;
-typedef ZLResult < double >		ZLDoubleResult;
-typedef ZLResult < float >		ZLFloatResult;
-typedef ZLResult < int >		ZLIntResult;
-typedef ZLResult < size_t >		ZLSizeResult;
-typedef ZLResult < STLString >	ZLStringResult;
 
 //================================================================//
 // ZLResultCodeAccumulator
@@ -89,19 +91,12 @@ public:
 	}
 };
 
-#define ZL_RETURN_RESULT(type,value,code) {		\
-	type __result;								\
-	__result.mValue = value;					\
-	__result.mCode = code;						\
-	return __result;							\
-}
-
-#define ZL_RETURN_BOOL_RESULT(value,code)		ZL_RETURN_RESULT ( ZLBoolResult, value, code )
-#define	ZL_RETURN_CHAR_RESULT(value,code)		ZL_RETURN_RESULT ( ZLCharResult, value, code )
-#define ZL_RETURN_DOUBLE_RESULT(value,code)		ZL_RETURN_RESULT ( ZLDoubleResult, value, code )
-#define ZL_RETURN_FLOAT_RESULT(value,code)		ZL_RETURN_RESULT ( ZLFloatResult, value, code )
-#define ZL_RETURN_INT_RESULT(value,code)		ZL_RETURN_RESULT ( ZLIntResult, value, code )
-#define ZL_RETURN_SIZE_RESULT(value,code)		ZL_RETURN_RESULT ( ZLSizeResult, value, code )
-#define ZL_RETURN_STRING_RESULT(value,code)		ZL_RETURN_RESULT ( ZLStringResult, value, code )
+typedef	ZLResult < bool >		ZLBoolResult;
+typedef	ZLResult < u8 >			ZLCharResult;
+typedef	ZLResult < double >		ZLDoubleResult;
+typedef	ZLResult < float >		ZLFloatResult;
+typedef	ZLResult < int >		ZLIntResult;
+typedef	ZLResult < size_t >		ZLSizeResult;
+typedef	ZLResult < STLString >	ZLStringResult;
 
 #endif

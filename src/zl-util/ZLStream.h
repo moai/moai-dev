@@ -55,9 +55,9 @@ public:
 	ZLResult < TYPE > Read ( TYPE value ) {
 		TYPE temp;
 		if ( this->ReadBytes ( &temp, sizeof ( TYPE )).mValue == sizeof ( TYPE )) {
-			ZL_RETURN_RESULT ( ZLResult < TYPE >, temp, ZL_OK );
+			ZL_RETURN_RESULT ( TYPE, temp, ZL_OK );
 		}
-		ZL_RETURN_RESULT ( ZLResult < TYPE >, value, ZL_ERROR );
+		ZL_RETURN_RESULT ( TYPE, value, ZL_ERROR );
 	}
 
 	//----------------------------------------------------------------//
