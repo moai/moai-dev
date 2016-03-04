@@ -13,31 +13,11 @@
 template < typename TYPE, size_t CHUNKSIZE = 64 >
 class ZLLeanStack :
 	public ZLLeanArray < TYPE > {
-private:
+protected:
 
 	size_t mTop;
 
-	//----------------------------------------------------------------//
-	virtual ZLResultCode Alloc ( size_t size ) {
-
-		this->mData = ( TYPE* )malloc ( size * sizeof ( TYPE ));
-		return this->mData ? ZL_OK : ZL_ALLOCATION_ERROR;
-	}
-
-	//----------------------------------------------------------------//
-	virtual void Free () {
-
-		free ( this->mData );
-	}
-
 public:
-	
-	//----------------------------------------------------------------//
-	void Clear () {
-
-		this->ZLLeanArray < TYPE >::Clear ();
-		this->mTop = 0;
-	}
 	
 	//----------------------------------------------------------------//
 	size_t GetTop () const {
@@ -132,6 +112,40 @@ public:
 	//----------------------------------------------------------------//
 	void Reset () {
 		this->mTop = 0;
+	}
+	
+	//----------------------------------------------------------------//
+	ZLResultCode Resize ( size_t size ) {
+
+		if ( this->mSize != size ) {
+
+			TYPE* data = 0;
+			size_t top = 0;
+			
+			if ( size ) {
+			
+				data = ( TYPE* )malloc ( size * sizeof ( TYPE ));
+				if ( !data ) return ZL_ALLOCATION_ERROR;
+
+				top = ( this->mTop < size ) ? this->mTop : size;
+
+				for ( size_t i = 0; i < top; ++i ) {
+					new ( &data [ i ]) TYPE ( this->mData [ i ]); // placement new
+				}
+			}
+
+			if ( this->mData ) {
+				for ( size_t i = this->mTop; i > 0; --i ) {
+					this->mData [ i - 1 ].~TYPE ();
+				}
+				free ( this->mData );
+			}
+
+			this->mData = data;
+			this->mSize = size;
+			this->mTop = top;
+		}
+		return ZL_OK;
 	}
 	
 	//----------------------------------------------------------------//

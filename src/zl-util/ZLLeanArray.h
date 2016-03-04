@@ -16,19 +16,6 @@ protected:
 	size_t	mSize;
 	TYPE*	mData;
 
-	//----------------------------------------------------------------//
-	virtual ZLResultCode Alloc ( size_t size ) {
-
-		this->mData = new TYPE [ size ];
-		return this->mData ? ZL_OK : ZL_ALLOCATION_ERROR;
-	}
-
-	//----------------------------------------------------------------//
-	virtual void Free () {
-
-		delete [] this->mData;
-	}
-
 public:
 
 	//----------------------------------------------------------------//
@@ -50,14 +37,9 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	virtual void Clear () {
+	void Clear () {
 
-		if ( this->mData ) {
-			this->Free ();
-		}
-
-		this->mData = 0;
-		this->mSize = 0;
+		this->Resize ( 0 );
 	}
 
 	//----------------------------------------------------------------//
@@ -131,34 +113,41 @@ public:
 	//----------------------------------------------------------------//
 	ZLResultCode Init ( size_t size ) {
 
-		this->Clear ();
-
-		if ( !size ) return ZL_OK;
-
-		this->Alloc ( size );
-		if ( !this->mData ) return ZL_ALLOCATION_ERROR;
-
-		this->mSize = size;
-		return ZL_OK;
+		return this->Resize ( size );
 	}
 
 	//----------------------------------------------------------------//
 	void Nullify () {
+	
 		mData = 0;
 		mSize = 0;
 	}
 
 	//----------------------------------------------------------------//
-	ZLResultCode Resize ( size_t size ) {
+	virtual ZLResultCode Resize ( size_t size ) {
 
 		if ( this->mSize != size ) {
 
-			ZLLeanArray < TYPE > temp;
-			if ( temp.Init ( size ) != ZL_OK ) return ZL_ALLOCATION_ERROR;
+			TYPE* data = 0;
 
-			temp.CopyFrom ( *this );
+			if ( size ) {
+			
+				data = new TYPE [ size ];
+				if ( !data ) return ZL_ALLOCATION_ERROR;
 
-			this->Take ( temp );
+				size_t total = ( this->mSize < size ) ? this->mSize : size;
+				
+				for ( size_t i = 0; i < total; ++i ) {
+					data [ i ] = this->mData [ i ];
+				}
+			}
+			
+			if ( this->mData ) {
+				delete [] this->mData;
+			}
+			
+			this->mData = data;
+			this->mSize = size;
 		}
 		return ZL_OK;
 	}
@@ -226,12 +215,12 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Take ( ZLLeanArray < TYPE >& src ) {
+	virtual void Take ( ZLLeanArray < TYPE >& src ) {
 	
 		if ( this->mData != src.mData ) {
 			
 			if ( this->mData ) {
-				this->Free ();
+				this->Clear ();
 			}
 			
 			this->mSize = src.mSize;
