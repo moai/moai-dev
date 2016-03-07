@@ -16,6 +16,20 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIRegion::_append ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIRegion, "U" )
+	
+	MOAIRegion* regionA = state.GetLuaObject < MOAIRegion >( 2, false );
+	MOAIRegion* regionB = state.GetLuaObject < MOAIRegion >( 3, false );
+
+	if ( regionA && regionB ) {
+		self->Append ( *regionA, *regionB );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIRegion::_bless ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRegion, "U" )
 	
@@ -50,6 +64,14 @@ int MOAIRegion::_copy ( lua_State* L ) {
 		self->Copy ( *region );
 	}
 	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIRegion::_countPolygons ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIRegion, "U" )
+	
+	state.Push (( u32 )self->mPolygons.Size ());
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -117,6 +139,37 @@ int MOAIRegion::_getDistance ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIRegion::_getPolygon ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIRegion, "U" )
+
+	u32 polygonID = state.GetValue < u32 >( 2, 1 ) - 1;
+	
+	if ( polygonID < self->mPolygons.Size ()) {
+	
+		lua_newtable ( state );
+	
+		const ZLPolygon2D& polygon = self->mPolygons [ polygonID ];
+	
+		size_t polygonSize = polygon.GetSize ();
+		for ( size_t i = 0; i < polygonSize; ++i ) {
+		
+			ZLVec2D vec = polygon.GetVertex ( i );
+		
+			state.Push (( u32 )i + 1 );
+		
+			lua_newtable ( state );
+			state.SetField ( -1, "x", vec.mX );
+			state.SetField ( -1, "y", vec.mY );
+			
+			lua_settable ( state, -3 );
+		}
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIRegion::_getTriangles ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRegion, "U" )
 	
@@ -150,6 +203,18 @@ int MOAIRegion::_getTriangles ( lua_State* L ) {
 	state.Push ( base );
 	state.Push ( base + totalElements );
 	return 3;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIRegion::_pad ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIRegion, "U" )
+	
+	MOAIRegion* region = state.GetLuaObject < MOAIRegion >( 2, false );
+	if ( region ) {
+		self->Pad ( *region, state.GetValue < float >( 3, 0.0f ));
+	}
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -257,26 +322,26 @@ int MOAIRegion::_stroke ( lua_State* L ) {
 
 	MOAIRegion* region		= state.GetLuaObject < MOAIRegion >( 2, false );
 	
-	float exterior			= 0.0;
-	bool strokeExterior		= false;
-	
-	float interior			= 0.0;
-	bool strokeInterior		= false;
-	
-	if ( state.IsType ( 3, LUA_TNUMBER )) {
-		exterior = state.GetValue < float >( 3, 0.0f );
-		strokeExterior = true;
-	}
-	
-	if ( strokeExterior && state.IsType ( 4, LUA_TNUMBER )) {
-	
-		interior = exterior;
-		strokeInterior = true;
-	
-		exterior = state.GetValue < float >( 4, 0.0f );
-	}
-	
 	if ( region ) {
+		
+		float exterior			= 0.0;
+		bool strokeExterior		= false;
+		
+		float interior			= 0.0;
+		bool strokeInterior		= false;
+		
+		if ( state.IsType ( 3, LUA_TNUMBER )) {
+			exterior = state.GetValue < float >( 3, 0.0f );
+			strokeExterior = true;
+		}
+		
+		if ( strokeExterior && state.IsType ( 4, LUA_TNUMBER )) {
+		
+			interior = exterior;
+			strokeInterior = true;
+		
+			exterior = state.GetValue < float >( 4, 0.0f );
+		}
 	
 		if ( strokeExterior || strokeInterior ) {
 			self->Stroke ( *region, exterior, strokeExterior, interior, strokeInterior );
@@ -348,6 +413,25 @@ int MOAIRegion::AddFillContours ( SafeTesselator& tess, u32 mask ) const {
 	}
 	
 	return 0; // since we're not tesselating here (and thus do not have any error case) we always report no error
+}
+
+//----------------------------------------------------------------//
+void MOAIRegion::Append ( const MOAIRegion& regionA, const MOAIRegion& regionB ) {
+
+	size_t sizeA = regionA.GetSize ();
+	size_t sizeB = regionB.GetSize ();
+	
+	this->ReservePolygons ( sizeA + sizeB );
+	
+	for ( size_t i = 0; i < sizeA; ++i ) {
+		this->mPolygons [ i ].Copy ( regionA.mPolygons [ i ]);
+	}
+	
+	for ( size_t i = 0; i < sizeB; ++i ) {
+		this->mPolygons [ i + sizeA ].Copy ( regionA.mPolygons [ i + sizeA ]);
+	}
+	
+	this->Bless ();
 }
 
 //----------------------------------------------------------------//
@@ -715,6 +799,38 @@ MOAIRegion::~MOAIRegion () {
 }
 
 //----------------------------------------------------------------//
+void MOAIRegion::Pad ( const MOAIRegion& region, float pad ) {
+
+	this->Copy ( region );
+
+	if ( pad == 0.0f ) return;
+	
+	size_t size = region.mPolygons.Size ();
+
+	MOAIVectorStyle style;
+	style.Default ();
+
+	for ( size_t i = 0; i < size; ++i ) {
+	
+		ZLPolygon2D& polygon = region.mPolygons [ i ];
+		
+		size_t nVerts = polygon.GetSize ();
+		
+		MOAIVectorLineJoin* joins = ( MOAIVectorLineJoin* )alloca ( sizeof ( MOAIVectorLineJoin ) * nVerts );
+		
+		MOAIVectorUtil::ComputeLineJoins ( joins, polygon.GetVertices (), nVerts, false, true, false );
+	
+		int contourVerts = MOAIVectorUtil::StrokeLine ( style, 0, joins, nVerts, pad, false );
+		ZLVec2D* contour = ( ZLVec2D* )alloca ( sizeof ( ZLVec2D ) * contourVerts );
+		MOAIVectorUtil::StrokeLine ( style, contour, joins, nVerts, pad, false );
+		
+		this->mPolygons [ i ].SetVertices ( contour, contourVerts );
+	}
+	
+	this->Bless ();
+}
+
+//----------------------------------------------------------------//
 bool MOAIRegion::PointInside ( const ZLVec2D& p, float pad ) const {
 
 	u32 nPolys = this->mPolygons.Size ();
@@ -798,14 +914,18 @@ void MOAIRegion::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIRegion::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "append",				_append },
 		{ "bless",				_bless },
 		{ "boolean",			_boolean },
 		{ "copy",				_copy },
+		{ "countPolygons",		_countPolygons },
 		{ "cull",				_cull },
 		{ "drawDebug",			_drawDebug },
 		{ "edge",				_edge },
 		{ "getDistance",		_getDistance },
+		{ "getPolygon",			_getPolygon },
 		{ "getTriangles",		_getTriangles },
+		{ "pad",				_pad },
 		{ "pointInside",		_pointInside },
 		{ "print",				_print },
 		{ "reservePolygons",	_reservePolygons },
@@ -824,7 +944,7 @@ void MOAIRegion::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIRegion::ReservePolygons ( u32 size ) {
+void MOAIRegion::ReservePolygons ( size_t size ) {
 
 	this->mPolygons.Init ( size );
 }

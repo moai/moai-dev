@@ -158,7 +158,7 @@ void MOAITrace::HandleTrace ( lua_State* L, lua_Debug *ar ) {
 				const void* func = lua_topointer ( L, -1 );
 				lua_pop ( L, 1 );
 				
-				MOAIFuncTraceStackFrame& frame = threadTrace.mStack.Pop ();
+				MOAIFuncTraceStackFrame frame = threadTrace.mStack.Pop ();
 				assert ( frame.mFunc == func );
 				
 				MOAIFuncTrace& record = this->mFuncTrace [ func ];

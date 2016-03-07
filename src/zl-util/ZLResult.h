@@ -6,6 +6,21 @@
 
 #include <zl-util/STLString.h>
 
+#define ZL_RETURN_RESULT(type,value,code) {		\
+	ZLResult < type > __result;					\
+	__result.mValue = value;					\
+	__result.mCode = code;						\
+	return __result;							\
+}
+
+#define	ZL_RETURN_BOOL_RESULT(value,code)		ZL_RETURN_RESULT ( bool, value, code )
+#define	ZL_RETURN_CHAR_RESULT(value,code)		ZL_RETURN_RESULT ( u8, value, code )
+#define	ZL_RETURN_DOUBLE_RESULT(value,code)		ZL_RETURN_RESULT ( double, value, code )
+#define	ZL_RETURN_FLOAT_RESULT(value,code)		ZL_RETURN_RESULT ( float, value, code )
+#define	ZL_RETURN_INT_RESULT(value,code)		ZL_RETURN_RESULT ( int, value, code )
+#define	ZL_RETURN_SIZE_RESULT(value,code)		ZL_RETURN_RESULT ( size_t, value, code )
+#define	ZL_RETURN_STRING_RESULT(value,code)		ZL_RETURN_RESULT ( STLString, value, code )
+
 enum {
 	ZL_OK,
 	ZL_ERROR,
@@ -15,33 +30,15 @@ enum {
 	ZL_TOTAL_ERRORS,
 };
 
+typedef int ZLResultCode;
+
 //================================================================//
 // ZLResultBase
 //================================================================//
 class ZLResultBase {
-protected:
-
-	int		mCode;
-
 public:
-	
-	//----------------------------------------------------------------//
-	inline int Code () {
-		return this->mCode;
-	}
-};
 
-//================================================================//
-// ZLResultCode
-//================================================================//
-class ZLResultCode :
-	public ZLResultBase {
-public:
-	
-	//----------------------------------------------------------------//
-	ZLResultCode ( int code ) {
-		this->mCode = code;
-	}
+	ZLResultCode	mCode;
 };
 
 //================================================================//
@@ -50,36 +47,56 @@ public:
 template < typename TYPE >
 class ZLResult :
 	public ZLResultBase {
-private:
+public:
 
 	TYPE	mValue;
-
-public:
 	
 	//----------------------------------------------------------------//
 	inline operator const TYPE& () const {
-		assert ( this->mCode == 0 );
+		assert ( this->mCode == ZL_OK );
 		return this->mValue;
-	}
-	
-	//----------------------------------------------------------------//
-	inline const TYPE& Value () {
-		assert ( this->mCode == 0 );
-		return this->mValue;
-	}
-	
-	//----------------------------------------------------------------//
-	ZLResult ( const TYPE& value, int code ) :
-		mValue ( value ) {
-		this->mCode = code;
 	}
 };
 
-typedef ZLResult < bool > ZLBoolResult;
-typedef ZLResult < double > ZLDoubleResult;
-typedef ZLResult < float > ZLFloatResult;
-typedef ZLResult < int > ZLIntResult;
-typedef ZLResult < size_t > ZLSizeResult;
-typedef ZLResult < STLString > ZLStringResult;
+//================================================================//
+// ZLResultCodeAccumulator
+//================================================================//
+class ZLResultCodeAccumulator {
+private:
+
+	ZLResultCode	mCode;
+
+public:
+
+	//----------------------------------------------------------------//
+	inline operator const int () const {
+		return this->mCode;
+	}
+	
+	//----------------------------------------------------------------//
+	inline void operator = ( int code ) {
+		this->mCode = code != ZL_OK ? code : this->mCode;
+	}
+	
+	//----------------------------------------------------------------//
+	inline int Reset () {
+		int code = this->mCode;
+		this->mCode = ZL_OK;
+		return code;
+	}
+	
+	//----------------------------------------------------------------//
+	ZLResultCodeAccumulator () :
+		mCode ( ZL_OK ) {
+	}
+};
+
+typedef	ZLResult < bool >		ZLBoolResult;
+typedef	ZLResult < u8 >			ZLCharResult;
+typedef	ZLResult < double >		ZLDoubleResult;
+typedef	ZLResult < float >		ZLFloatResult;
+typedef	ZLResult < int >		ZLIntResult;
+typedef	ZLResult < size_t >		ZLSizeResult;
+typedef	ZLResult < STLString >	ZLStringResult;
 
 #endif

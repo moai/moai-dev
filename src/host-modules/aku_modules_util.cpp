@@ -63,7 +63,7 @@ void AKUModulesParseArgs ( int argc, char** argv ) {
 			if (( strcmp ( arg, "-s" ) == 0 )) {
 			
 				char* script = argv [ ++i ];
-				AKULoadFuncFromString ( script );
+				AKULoadFuncFromString ( script, strlen ( script ));
 				i = _parseArgStringAndCall ( argv [ 0 ], 0, argc, argv, i );
 			}
 			else if (( strcmp ( arg, "-f" ) == 0 )) {

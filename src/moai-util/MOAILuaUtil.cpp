@@ -27,31 +27,51 @@ void MOAILuaHeader::Init () {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaHeader::Read ( ZLStream& stream ) {
+bool MOAILuaHeader::IsBytecode () {
 
-	this->mSignature			= stream.Read < u32 >( 0 );
-	this->mVersion				= stream.Read < u8 >( 0 );
-	this->mFormat				= stream.Read < u8 >( 0 );
-	this->mByteOrder			= stream.Read < u8 >( 0 );
-	this->mSizeOfInt			= stream.Read < u8 >( 0 );
-	this->mSizeOfSizeT			= stream.Read < u8 >( 0 );
-	this->mSizeOfInstruction	= stream.Read < u8 >( 0 );
-	this->mSizeOfLuaNumber		= stream.Read < u8 >( 0 );
-	this->mTypeOfLuaNumber		= stream.Read < u8 >( 0 );
+	return this->mSignature == SIGNATURE;
 }
 
 //----------------------------------------------------------------//
-void MOAILuaHeader::Write ( ZLStream& stream ) const {
+bool MOAILuaHeader::IsCompatible ( const MOAILuaHeader& check ) const {
 
-	stream.Write < u32 >( this->mSignature );
-	stream.Write < u8 >( this->mVersion );
-	stream.Write < u8 >( this->mFormat );
-	stream.Write < u8 >( this->mByteOrder );
-	stream.Write < u8 >( this->mSizeOfInt );
-	stream.Write < u8 >( this->mSizeOfSizeT );
-	stream.Write < u8 >( this->mSizeOfInstruction );
-	stream.Write < u8 >( this->mSizeOfLuaNumber );
-	stream.Write < u8 >( this->mTypeOfLuaNumber );
+	return ( memcmp ( this, &check, sizeof ( MOAILuaHeader )) == 0 );
+}
+
+//----------------------------------------------------------------//
+ZLResultCode MOAILuaHeader::Read ( ZLStream& stream ) {
+
+	ZLResultCodeAccumulator result;
+
+	result = stream.Read < u32 >( this->mSignature, 0 );
+	result = stream.Read < u8 >( this->mVersion, 0 );
+	result = stream.Read < u8 >( this->mFormat, 0 );
+	result = stream.Read < u8 >( this->mByteOrder,  0 );
+	result = stream.Read < u8 >( this->mSizeOfInt, 0 );
+	result = stream.Read < u8 >( this->mSizeOfSizeT, 0 );
+	result = stream.Read < u8 >( this->mSizeOfInstruction, 0 );
+	result = stream.Read < u8 >( this->mSizeOfLuaNumber, 0 );
+	result = stream.Read < u8 >( this->mTypeOfLuaNumber, 0 );
+	
+	return result;
+}
+
+//----------------------------------------------------------------//
+ZLResultCode MOAILuaHeader::Write ( ZLStream& stream ) const {
+
+	ZLResultCodeAccumulator result;
+
+	result = stream.Write < u32 >( this->mSignature ).mCode;
+	result = stream.Write < u8 >( this->mVersion ).mCode;
+	result = stream.Write < u8 >( this->mFormat ).mCode;
+	result = stream.Write < u8 >( this->mByteOrder ).mCode;
+	result = stream.Write < u8 >( this->mSizeOfInt ).mCode;
+	result = stream.Write < u8 >( this->mSizeOfSizeT ).mCode;
+	result = stream.Write < u8 >( this->mSizeOfInstruction ).mCode;
+	result = stream.Write < u8 >( this->mSizeOfLuaNumber ).mCode;
+	result = stream.Write < u8 >( this->mTypeOfLuaNumber ).mCode;
+	
+	return result;
 }
 
 //================================================================//

@@ -24,17 +24,15 @@ private:
 	size_t		mGuestBufferSize;
 
 	size_t		mChunkSize;
-	size_t		mTotalChunks;
 
-	ZLLeanArray < void* > mChunks;
+	ZLLeanArray < ZLLeanArray < u8 > > mChunks;
 
 	size_t		mBase;			// offset into first chunk (in the event of DiscardFront); never larger than chunk size
 	size_t		mCursor;		// current position in stream
 	size_t		mLength;		// current length of stream
 
 	//----------------------------------------------------------------//
-	void			ClearChunks			();
-	int				SetCursor			( long offset );
+	ZLResultCode	SetCursor			( long offset );
 
 public:
 
@@ -52,7 +50,7 @@ public:
 	size_t			GetCursor			();
 	size_t			GetLength			();
 	ZLSizeResult	ReadBytes			( void* buffer, size_t size );
-	void			Reserve				( size_t length );
+	ZLResultCode	Reserve				( size_t length );
 	void			SetChunkSize		( size_t chunkSize );
 	void			SetGuestBuffer		( void* guestBuffer, size_t guestBufferSize );
 	ZLSizeResult	SetLength			( size_t length );

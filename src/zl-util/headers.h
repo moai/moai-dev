@@ -77,6 +77,7 @@
 #include <zl-util/ZLRadixSort32.h>
 #include <zl-util/ZLRect.h>
 #include <zl-util/ZLRefCountedObject.h>
+#include <zl-util/ZLResult.h>
 #include <zl-util/ZLRhombus.h>
 #include <zl-util/ZLRingAdapter.h>
 #include <zl-util/ZLSample.h>

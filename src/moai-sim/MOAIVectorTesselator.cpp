@@ -201,6 +201,20 @@ int MOAIVectorTesselator::_pushRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIVectorTesselator::_pushRegion ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
+	
+	MOAIRegion* region = state.GetLuaObject < MOAIRegion >( 2, true );
+	
+	if ( region ) {
+		self->PushCombo ();
+		self->PushRegion ( *region );
+		self->Finish ();
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAIVectorTesselator::_pushRotate ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
@@ -737,7 +751,7 @@ void MOAIVectorTesselator::PushEllipse ( float x, float y, float xRad, float yRa
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::PushPoly ( ZLVec2D* vertices, u32 total, bool closed ) {
+void MOAIVectorTesselator::PushPoly ( const ZLVec2D* vertices, u32 total, bool closed ) {
 
 	this->mPolyClosed = closed;
 
@@ -752,6 +766,17 @@ void MOAIVectorTesselator::PushRect ( float xMin, float yMin, float xMax, float 
 	MOAIVectorRect* vectorRect = new MOAIVectorRect ();
 	this->PushShape ( vectorRect );
 	vectorRect->Init ( xMin, yMin, xMax, yMax );
+}
+
+//----------------------------------------------------------------//
+void MOAIVectorTesselator::PushRegion ( const MOAIRegion& region ) {
+
+	size_t size = region.GetSize ();
+	for ( size_t i = 0; i < size; ++i ) {
+	
+		const ZLPolygon2D& polygon = region.GetPolygon (( u32 )i );
+		this->PushPoly ( polygon.GetVertices(), polygon.GetSize (), true );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -893,6 +918,7 @@ void MOAIVectorTesselator::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "pushEllipse",			_pushEllipse },
 		{ "pushPoly",				_pushPoly },
 		{ "pushRect",				_pushRect },
+		{ "pushRegion",				_pushRegion },
 		{ "pushRotate",				_pushRotate },
 		{ "pushScale",				_pushScale },
 		{ "pushSkew",				_pushSkew },

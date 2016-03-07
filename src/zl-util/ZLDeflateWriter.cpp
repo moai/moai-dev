@@ -46,14 +46,14 @@ ZLSizeResult ZLDeflateWriter::Deflate ( const void* src, size_t size ) {
 		if ( result != Z_OK ) {
 			if ( result != Z_STREAM_END ) {
 				printf ( "%s\n", ZLZip::GetErrMsg ( result ));
-				return ZLSizeResult ( 0, ZL_ERROR );
+				ZL_RETURN_SIZE_RESULT ( 0, ZL_ERROR );
 			}
 			break;
 		}
 	}
 	while ( stream->avail_out == 0 );
 	
-    return ZLSizeResult ( size - stream->avail_in, stream->avail_in ? ZL_OK : ZL_ERROR );
+    ZL_RETURN_SIZE_RESULT ( size - stream->avail_in, stream->avail_in ? ZL_OK : ZL_ERROR );
 }
 
 //----------------------------------------------------------------//
@@ -88,7 +88,7 @@ ZLSizeResult ZLDeflateWriter::WriteBytes ( const void* buffer, size_t size ) {
 	
 		ZLSizeResult result = this->Deflate ( buffer, size );
 		
-		if ( result.Code () == ZL_OK ) {
+		if ( result.mCode == ZL_OK ) {
 		
 			this->mCursor += size;
 			if ( this->mLength < this->mCursor ) {
@@ -97,7 +97,7 @@ ZLSizeResult ZLDeflateWriter::WriteBytes ( const void* buffer, size_t size ) {
 			return result;
 		}
 	}
-	return ZLSizeResult ( 0, ZL_OK );
+	ZL_RETURN_SIZE_RESULT ( 0, ZL_OK );
 }
 
 //----------------------------------------------------------------//

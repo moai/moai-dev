@@ -28,7 +28,7 @@ public:
 	size_t			GetLength				();
 	bool			IsAtEnd					();
 	ZLSizeResult	ReadBytes				( void* buffer, size_t size );
-	int				SetCursor				( long offset );
+	ZLResultCode	SetCursor				( long offset );
 	ZLSizeResult	SetLength				( size_t length );
 	ZLSizeResult	WriteBytes				( const void* buffer, size_t size );
 					ZLStreamProxy			();
@@ -60,7 +60,7 @@ public:
 	size_t					GetCursor				();
 	size_t					GetLength				();
 	bool					IsAtEnd					();
-	bool					Open					( ZLStream* stream );
+	ZLResultCode			Open					( ZLStream* stream );
 							ZLStreamAdapter			();
 							~ZLStreamAdapter		();
 };

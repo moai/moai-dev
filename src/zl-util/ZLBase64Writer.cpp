@@ -88,7 +88,7 @@ ZLSizeResult ZLBase64Writer::WriteBytes ( const void* buffer, size_t size ) {
 		this->mLength = this->mCursor;
 	}
 	
-	return ZLSizeResult ( size - remainder, ZL_OK );
+	ZL_RETURN_SIZE_RESULT ( size - remainder, ZL_OK );
 }
 
 //----------------------------------------------------------------//

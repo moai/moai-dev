@@ -43,6 +43,15 @@
 
 using namespace std;
 
+//----------------------------------------------------------------//
+void _out_of_memory () {
+
+	zl_printf ( "FATAL: Ran out of memory. Aborting.\n" );
+	zl_printf ( "NOTE: Provide your own OOM handler by calling zl_set_out_of_memory_func ().\n" );
+	
+	abort ();
+}
+
 //================================================================//
 // ZLTlsfPool
 //================================================================//
@@ -57,9 +66,9 @@ typedef struct ZLTlsfPool {
 // zlcore
 //================================================================//
 
-ZLFILE* zl_stderr = 0;
-ZLFILE* zl_stdin = 0;
-ZLFILE* zl_stdout = 0;
+ZLFILE* zl_stderr	= 0;
+ZLFILE* zl_stdin	= 0;
+ZLFILE* zl_stdout	= 0;
 
 //----------------------------------------------------------------//
 int zl_affirm_path ( const char* path ) {
@@ -306,19 +315,32 @@ int zl_rmdir ( const char* path ) {
 // stdlib
 //================================================================//
 
-static ZLTlsfPool* sTlsfPool = 0;
+static zl_out_of_memory_func sOutOtMemoryHandler	= _out_of_memory;
+static ZLTlsfPool* sTlsfPool						= 0;
 
 //----------------------------------------------------------------//
 void* zl_calloc ( size_t num, size_t size ) {
 
+	void* ptr = 0;
+
 	if ( sTlsfPool ) {
-		void* ptr = tlsf_malloc ( sTlsfPool->mPool, num * size );
+		ptr = tlsf_malloc ( sTlsfPool->mPool, num * size );
 		if ( ptr ) {
 			memset ( ptr, 0, num * size );
 		}
-		return ptr;
 	}
-	return calloc ( num, size );
+	else {
+		ptr = calloc ( num, size );
+	}
+	
+	if ( !ptr ) {
+		if ( !sOutOtMemoryHandler ) {
+			abort ();
+		}
+		sOutOtMemoryHandler ();
+	}
+	
+	return ptr;
 }
 
 //----------------------------------------------------------------//
@@ -335,19 +357,37 @@ void zl_free ( void* ptr ) {
 //----------------------------------------------------------------//
 void* zl_malloc ( size_t size ) {
 
-	if ( sTlsfPool ) {
-		return tlsf_malloc ( sTlsfPool->mPool, size );
+	void* ptr = sTlsfPool ? tlsf_malloc ( sTlsfPool->mPool, size ) : malloc ( size );
+
+	if ( !ptr ) {
+		if ( !sOutOtMemoryHandler ) {
+			abort ();
+		}
+		sOutOtMemoryHandler ();
 	}
-	return malloc ( size );
+	
+	return ptr;
 }
 
 //----------------------------------------------------------------//
 void* zl_realloc ( void* ptr, size_t size ) {
 
-	if ( sTlsfPool ) {
-		return tlsf_realloc ( sTlsfPool->mPool, ptr, size );
+	ptr = sTlsfPool ? tlsf_realloc ( sTlsfPool->mPool, ptr, size ) : realloc ( ptr, size );
+	
+	if ( !ptr ) {
+		if ( !sOutOtMemoryHandler ) {
+			abort ();
+		}
+		sOutOtMemoryHandler ();
 	}
-	return realloc ( ptr, size );
+	
+	return ptr;
+}
+
+//----------------------------------------------------------------//
+void zl_set_out_of_memory_func ( zl_out_of_memory_func handler ) {
+
+	sOutOtMemoryHandler = handler;
 }
 
 //----------------------------------------------------------------//

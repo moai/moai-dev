@@ -4,6 +4,8 @@
 #ifndef	ZLLEANLIST_H
 #define	ZLLEANLIST_H
 
+#include <zl-util/ZLTypeID.h>
+
 template < typename TYPE > class ZLLeanList;
 template < typename TYPE > class ZLList;
 
@@ -23,6 +25,16 @@ public:
 
 	friend class ZLLeanList < TYPE >;
 	friend class ZLList < TYPE >;
+
+	//----------------------------------------------------------------//
+	inline void operator = ( const TYPE& data ) {
+		this->mData = data;
+	}
+	
+	//----------------------------------------------------------------//
+	inline operator const TYPE& () const {
+		return this->mData;
+	}
 
 	//----------------------------------------------------------------//
 	inline TYPE& Data () {
@@ -97,6 +109,16 @@ public:
 		assert ( this->mTail );
 		return this->mTail->Data ();
 	}
+	
+	//----------------------------------------------------------------//
+	inline TYPE& Back ( ZLResultCode& result ) {
+		if ( this->mTail ) {
+			result = ZL_OK;
+			return this->mTail->Data ();
+		}
+		result = ZL_ERROR;
+		return ZLTypeID < TYPE >::DummyRef ();
+	}
 
 	//----------------------------------------------------------------//
 	void Clear () {
@@ -109,7 +131,6 @@ public:
 			clear->mNext = 0;
 			clear->mList = 0;
 		}
-		
 		this->mCount = 0;
 		this->mHead = 0;
 		this->mTail = 0;
@@ -148,6 +169,71 @@ public:
 	inline TYPE& Front () {
 		assert ( this->mHead );
 		return this->mHead->Data ();
+	}
+
+	//----------------------------------------------------------------//
+	inline TYPE& Front ( ZLResultCode& result ) {
+		if ( this->mTail ) {
+			result = ZL_OK;
+			return this->mHead->Data ();
+		}
+		result = ZL_ERROR;
+		return ZLTypeID < TYPE >::DummyRef ();
+	}
+
+	//----------------------------------------------------------------//
+	inline ZLLeanLink < TYPE >* Head () {
+		return ( this->mHead ) ? this->mHead : 0;
+	}
+
+	//----------------------------------------------------------------//
+	ZLResultCode InsertAfter ( ZLLeanLink < TYPE >& cursor, ZLLeanLink < TYPE >& link ) {
+
+		if ( cursor->mList != this ) return ZL_ERROR;
+
+		link.Remove ();
+
+		if ( cursor.mNext ) {
+		
+			link.mPrev = &cursor;
+			link.mNext = cursor.mNext;
+		
+			link.mPrev->mNext = &link;
+			link.mNext->mPrev = &link;
+		}
+		else {
+			this->PushBack ( link );
+		}
+		
+		link.mList = this;
+		++this->mCount;
+		
+		return ZL_OK;
+	}
+
+	//----------------------------------------------------------------//
+	ZLResultCode InsertBefore ( ZLLeanLink < TYPE >& cursor, ZLLeanLink < TYPE >& link ) {
+
+		if ( cursor->mList != this ) return ZL_ERROR;
+
+		link.Remove ();
+
+		if ( cursor.mPrev ) {
+			
+			link.mPrev = cursor.mPrev;
+			link.mNext = &cursor;
+		
+			link.mPrev->mNext = &link;
+			link.mNext->mPrev = &link;
+		}
+		else {
+			this->PushFront ( link );
+		}
+		
+		link.mList = this;
+		++this->mCount;
+		
+		return ZL_OK;
 	}
 
 	//----------------------------------------------------------------//
@@ -210,70 +296,29 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	inline ZLLeanLink < TYPE >* Head () {
-		return ( this->mHead ) ? this->mHead : 0;
-	}
-
-	//----------------------------------------------------------------//
-	void InsertAfter ( ZLLeanLink < TYPE >& cursor, ZLLeanLink < TYPE >& link ) {
-
-		link.Remove ();
-
-		if ( cursor.mNext ) {
-		
-			link.mPrev = &cursor;
-			link.mNext = cursor.mNext;
-		
-			link.mPrev->mNext = &link;
-			link.mNext->mPrev = &link;
-		}
-		else {
-			this->PushBack ( link );
-		}
-		
-		link.mList = this;
-		++this->mCount;
-	}
-
-	//----------------------------------------------------------------//
-	void InsertBefore ( ZLLeanLink < TYPE >& cursor, ZLLeanLink < TYPE >& link ) {
-
-		link.Remove ();
-
-		if ( cursor.mPrev ) {
-			
-			link.mPrev = cursor.mPrev;
-			link.mNext = &cursor;
-		
-			link.mPrev->mNext = &link;
-			link.mNext->mPrev = &link;
-		}
-		else {
-			this->PushFront ( link );
-		}
-		
-		link.mList = this;
-		++this->mCount;
-	}
-
-	//----------------------------------------------------------------//
-	void PopBack () {
+	ZLLeanLink < TYPE >* PopBack () {
 	
-		if ( this->mTail ) {
-			this->Remove ( *this->mTail );
-		}
-	}
-
-	//----------------------------------------------------------------//
-	void PopFront () {
+		ZLLeanLink < TYPE >* tail = this->mTail;
 	
-		if ( this->mHead ) {
-			this->Remove ( *this->mHead );
+		if ( tail ) {
+			this->Remove ( *tail );
 		}
+		return tail;
 	}
 
 	//----------------------------------------------------------------//
-	void PushBack ( ZLLeanLink < TYPE >& link ) {
+	ZLLeanLink < TYPE >* PopFront () {
+	
+		ZLLeanLink < TYPE >* head = this->mTail;
+	
+		if ( head ) {
+			this->Remove ( *head );
+		}
+		return head;
+	}
+
+	//----------------------------------------------------------------//
+	ZLLeanLink < TYPE >* PushBack ( ZLLeanLink < TYPE >& link ) {
 
 		link.Remove ();
 
@@ -292,10 +337,12 @@ public:
 
 		link.mList = this;
 		++this->mCount;
+		
+		return &link;
 	}
 
 	//----------------------------------------------------------------//
-	void PushFront ( ZLLeanLink < TYPE >& link ) {
+	ZLLeanLink < TYPE >* PushFront ( ZLLeanLink < TYPE >& link ) {
 
 		link.Remove ();
 
@@ -314,6 +361,8 @@ public:
 		
 		link.mList = this;
 		++this->mCount;
+		
+		return &link;
 	}
 
 	//----------------------------------------------------------------//

@@ -22,9 +22,9 @@ private:
 	size_t mLine;
 	
 	//----------------------------------------------------------------//
-	u8				ReadByte			();
-	int				SetCursor			( long offset );
-	u8				UnreadByte			();
+	ZLCharResult	ReadByte			();
+	ZLResultCode	SetCursor			( long offset );
+	ZLCharResult	UnreadByte			();
 
 public:
 	

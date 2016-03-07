@@ -26,6 +26,23 @@ class ZLTypeID :
 	public:
 	
 	//----------------------------------------------------------------//
+	static const TYPE& Dummy () {
+	
+		static TYPE dummy = TYPE ();
+		return dummy;
+	}
+	
+	//----------------------------------------------------------------//
+	static TYPE& DummyRef () {
+	
+		// intent is to create an object that will crash if accessed.
+		// on system withouth memory protection (are there sill any?) this
+		// should be redefined to just return a statically declared sentinel.
+	
+		return *( TYPE* )0;
+	}
+	
+	//----------------------------------------------------------------//
 	static u32 GetID ( void	) {
 	
 		static u32 type	= GetUniqueID ();
