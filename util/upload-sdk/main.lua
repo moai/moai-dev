@@ -35,18 +35,25 @@ end
 local file = io.open("moai-downloads.html","w")
 function Beginhtml(  )
   file:write([[
-<div class="container" style="font-family:arial">
-  <h2>Moai SDK</h2>
-  <p>Most-recent builds</p>            
-  <table class="table table-hover" width="100%">
-    <thead>
-      <tr>
-        <th>File name</th>
-        <th>Build number</th>
-        <th>Date</th>
-      </tr>
-    </thead>
-    <tbody>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous"><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  </head>
+  <body>
+    <div class="container" style="font-family:arial">
+      <h2>Moai SDK</h2>
+      <p>Most-recent builds</p>            
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>File name</th>
+            <th>Build number</th>
+            <th>Date</th>
+            <th>Documentation</th>
+          </tr>
+        </thead>
+        <tbody>
 ]])
 end
 
@@ -68,9 +75,11 @@ function midhtml(  )
 end
 function endhtml( )
   file:write([[
-    </tbody>
-  </table>
-</div>
+    </table>
+      </div>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+  </body>
+</html>
 ]])
 end
 
@@ -86,6 +95,23 @@ function writebinaryinfo( T )
         ..link..[[">]]..string.sub(T[4],startname+1,endname)..[[</a></td>
         <td>]]..string.sub(T[4],start,endchar)..[[</td>
         <td>]]..T[1]..[[</td>
+      </tr>
+]])
+end
+
+function writebinaryinfowithdoc( T )
+  local link = string.gsub(T[4],"s3://","https://s3-us-west-1.amazonaws.com/")
+  startname = string.find(T[4],"/[^/]*$")
+  endname = string.len(T[4])
+  start,endchar = string.find(T[4],"%d+%.%d+%.%d+")
+  
+  file:write([[
+      <tr>
+        <td><a href="]]
+        ..link..[[">]]..string.sub(T[4],startname+1,endname)..[[</a></td>
+        <td>]]..string.sub(T[4],start,endchar)..[[</td>
+        <td>]]..T[1]..[[</td>
+        <td><a href="https://s3-us-west-1.amazonaws.com/moai-downloads/lua-docs-html/index.html">Moai SDK documentation</a></td>
       </tr>
 ]])
 end
@@ -106,7 +132,7 @@ for index = #t,2,-1 do
 	print(t[index][4])
 end
 Beginhtml()
-writebinaryinfo(t[#t])
+writebinaryinfowithdoc(t[#t])
 midhtml()
 for index = #t-1,2,-1 do
   writebinaryinfo(t[index])

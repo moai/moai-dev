@@ -71,8 +71,10 @@ copyhostfiles = function()
     
 	for  entry in util.iterateFiles(MOAI_SDK_HOME..'host-templates/osx/Moai Template', false, true) do
 			local fullpath = string.format ( '%s/%s',MOAI_SDK_HOME..'host-templates/osx/Moai Template' , entry )
-			print( string.format( '%s -> %s', fullpath, output..entry ))
-			MOAIFileSystem.copy(fullpath, output..entry)
+      if not config.USE_SYMLINK or entry ~= "lib" then
+        print( string.format( '%s -> %s', fullpath, output..entry ))
+        MOAIFileSystem.copy(fullpath, output..entry)
+      end
 	end
     --we want the copy from src
 	MOAIFileSystem.deleteDirectory(output..'host-sdl',true)
@@ -142,7 +144,7 @@ configureHost = function()
   util.replaceInFiles ({
     [ output..'Moai Template.xcodeproj/project.pbxproj' ] = {
         --our lua path
-        ['(63157D5E19FCB4F0009018A3%C-name = ")([^"]-)(".-path = ")([^"]-)(".*)'] = "%1"..luafolder.."%3"..relativeLua.."%5",
+        ['(63157D5E19FCB4F0009018A3%C-name = )([^;]-)(;.-path = )([^;]-)(;.*)'] = "%1"..luafolder.."%3"..relativeLua.."%5",
         --our app name
         ['Moai Template'] = hostconfig['AppName']
     },

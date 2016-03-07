@@ -1,0 +1,43 @@
+<splitter-handle>
+        <style>
+                .splitter-horizontal {
+                        width: 8px;
+                        position: absolute;
+                        top: 5px;
+                        bottom: 5px;
+                        cursor: col-resize;
+                        margin-left:-4px;
+                        height: 100%;
+                }
+
+                .splitter-vertical {
+                        height: 8px;
+                        position: absolute;
+                        left: 5px;
+                        right: 5px;
+                        cursor: row-resize;
+                        margin-top:-4px;
+                        width:100%;
+                }
+        </style>
+
+        <div class="splitter-{type}" style="{splitterStyle}" onmousedown="{ splitterBeginMove }"></div>
+        <script>
+
+            splitterBeginMove(e) {
+                    this.trigger("splitter-begin-move", e);
+            }
+
+            this.on("update", function() {
+                this.type = this.parent.type;
+                var type = this.type;
+                var location = this.parent.location;
+                if (type == "horizontal") {
+                        this.splitterStyle = "left: "+location+"%;";
+                } else {
+                        this.splitterStyle = "top: "+location+"%;";
+                }
+
+            });
+        </script>
+</splitter-handle>

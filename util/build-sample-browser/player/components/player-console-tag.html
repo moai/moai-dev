@@ -1,0 +1,32 @@
+<player-console>
+    <div id="terminal">
+
+    </div>
+
+    <script>
+
+        //console
+        this.on("mount", function() {
+
+            window.consoleWrite = function(x) {
+                this.terminal.echo(x);
+            }.bind(this);
+
+            window.consoleError = function(x) {
+                this.terminal.error(x);
+            }.bind(this);
+
+            this.terminal = $('#terminal').terminal(function (command, term) {
+                        this.trigger("consoleCommand", command);
+            }.bind(this),
+                    {
+                        greetings: '[[b;#FFFFFF;#FFFFFF00]Moai Sample Player v1.00]',
+                        name: 'sample_console',
+                        prompt: '[[b;#A1B56C;#FFFFFF00]moai$ ]'
+                    });
+
+            this.terminal.disable(); //steals focs
+        });
+
+    </script>
+</player-console>

@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <string.h>
 #include <moai_config.h>
 #include <zl-vfs/headers.h>
 #include <zl-vfs/zl_util.h>
@@ -11,10 +12,9 @@ using namespace std;
 
 #define SCAN_BUFFER_SIZE 256
 
-#define ARCHIVE_HEADER_SIGNATURE  0x06054b50
 #define ENTRY_HEADER_SIGNATURE  0x02014b50
 #define FILE_HEADER_SIGNATURE  0x04034b50
-
+const char * const ARCHIVE_HEADER_SIGNATURE = "PK\005\006";
 //================================================================//
 // ZLVfsZipArchiveHeader
 //================================================================//
@@ -48,7 +48,7 @@ int ZLVfsZipArchiveHeader::FindAndRead ( FILE* file, size_t* offset ) {
 		for ( i = scansize - 4; i >= 0; --i ) {
 			
 			// maybe found it
-			if ( *( u32* )&buffer [ i ] == ARCHIVE_HEADER_SIGNATURE ) {
+			if ( memcmp( &buffer[i], ARCHIVE_HEADER_SIGNATURE, 4) == 0 ) {
 
 				if ( offset ) {
 					( *offset ) = cursor + i;

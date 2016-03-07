@@ -1,0 +1,24 @@
+<audio-viewer>
+
+    <div class="file-info">
+        <h2>Filename: { opts.file.filename }</h2>
+        <h3>Size: { opts.file.data.length }</h3>
+    </div>
+
+
+    <audio controls src="{audio_url}" style="width:100%"></audio>
+
+    <script>
+        this.audio_url = "";
+        this.on("update", function() {
+            if (!opts.hasOwnProperty("if") || opts.if ) {
+                if (opts.file) {
+                    this.audio_url = fileUtil.asObjectUrl(opts.file);
+                } else {
+                    this.audio_url = "";
+                }
+            }
+        })
+    </script>
+
+</audio-viewer>
