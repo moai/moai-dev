@@ -135,7 +135,7 @@ int _loadFuncFromBuffer ( MOAIDataBuffer& buffer, int compressed ) {
 	}
 	
 	buffer.Unlock ();
-	return AKU_OK;
+	return result;
 }
 
 //----------------------------------------------------------------//
@@ -433,10 +433,17 @@ int AKULoadFuncFromString ( const char* script, size_t size ) {
 	
 	state.Push (( void* )script, size );
 	
-	int status = state.DebugCall ( 1, 1 );
+	int status = state.DebugCall ( 1, 2 );
 	if ( state.LogErrors ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, status )) return AKU_ERROR;
 	
-	sContext->mLuaFunc.SetRef ( state, -1 );
+	if ( state.IsType ( -1, LUA_TSTRING )) {
+	
+		ZLLog_ErrorF ( ZLLog::CONSOLE, "Error loading script:\n" );
+		ZLLog_ErrorF ( ZLLog::CONSOLE, "%s\n", state.GetValue < cc8* >( -1, "" ));
+		return AKU_ERROR;
+	}
+	
+	sContext->mLuaFunc.SetRef ( state, -2 );
 	assert ( !sContext->mLuaFunc.IsNil ());
 	return AKU_OK;
 }

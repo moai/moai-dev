@@ -1,0 +1,5 @@
+pito package-cmake-sdk
+    Creates a distributable SDK based on cmake-driven MOAI build.
+    Example:
+        cd newMOAIProject && pito package-cmake-sdk
+        find moai-sdk/ #&etc.

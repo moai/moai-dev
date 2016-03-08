@@ -11,7 +11,7 @@ local SAMPLES_DIRECTORY		= MOAI_SDK_HOME .. '/samples/'
 local gCount	= MOAIFileSystem.checkFileExists ( STATE_FILENAME ) and dofile ( STATE_FILENAME ).count or 1
 local gMarked	= MOAIFileSystem.checkFileExists ( MARKED_FILENAME ) and dofile ( MARKED_FILENAME ) or {}
 
-local gDirectories = MOAIFileSystem.listDirectories ( SAMPLES_DIRECTORY );
+local gDirectories = MOAIFileSystem.listDirectories ( SAMPLES_DIRECTORY )
 
 local PREV		= -1
 local NONE		= 0
