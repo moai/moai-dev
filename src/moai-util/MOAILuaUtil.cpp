@@ -123,16 +123,23 @@ int MOAILuaUtil::_convert ( lua_State* L ) {
 	@out	table header		Returns 'nil' is no valid signature is found.
 */
 int MOAILuaUtil::_getHeader ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAILuaUtil, "S" )
-	
-	size_t bufflen;
-	cc8* buffer = lua_tolstring ( L, -1, &bufflen );
-	
-	ZLByteStream stream;
-	stream.SetBuffer ( buffer, bufflen, bufflen );
+	MOAI_LUA_SETUP_SINGLE ( MOAILuaUtil, "" )
 	
 	MOAILuaHeader header;
-	header.Read ( stream );
+	
+	if ( state.IsType ( 1, LUA_TSTRING )) {
+	
+		size_t bufflen;
+		cc8* buffer = lua_tolstring ( L, -1, &bufflen );
+	
+		ZLByteStream stream;
+		stream.SetBuffer ( buffer, bufflen, bufflen );
+	
+		header.Read ( stream );
+	}
+	else {
+		header.Init ();
+	}
 	
 	if ( header.mSignature == MOAILuaHeader::SIGNATURE ) {
 	
