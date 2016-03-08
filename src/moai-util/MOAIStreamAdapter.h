@@ -50,7 +50,7 @@ public:
 	void			Close					(); // clears the stream and closes the adapter, but *doesn't* also clear the adapter
 					MOAIStreamAdapter		();
 					~MOAIStreamAdapter		();
-	bool			Open					( ZLStreamAdapter* adapter, MOAIStream* stream );
+	ZLResultCode	Open					( ZLStreamAdapter* adapter, MOAIStream* stream );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };

@@ -1115,9 +1115,9 @@ int MOAIImage::_write ( lua_State* L ) {
 	
 	ZLFileStream stream;
 	stream.OpenWrite ( filename );
-	bool result = self->Write ( stream, format );
+	ZLResultCode result = self->Write ( stream, format );
 	
-	state.Push ( result );
+	state.Push ( result == ZL_OK );
 	return 1;
 }
 
