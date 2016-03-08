@@ -12,7 +12,7 @@ echo $MOAI_SDK_ROOT
 #./libmoai-build.sh
 
 cd $MOAI_SDK_ROOT/util/build
-./build-ios.sh
-./build-osx.sh
+./build-ios.sh || exit 1
+./build-osx.sh || exit 1
 
 popd > /dev/null

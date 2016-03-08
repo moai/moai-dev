@@ -7,7 +7,10 @@
 #include <lua-headers/moai_test_mgr_lua.h>
 
 #include <zl-vfs/zl_replace.h>
-#include <zl-util/headers.h>
+#include <zl-common/zl_types.h>
+
+#include <zl-util/ZLLog.h>
+#include <zl-util/ZLResult.h>
 
 //================================================================//
 // objc modules

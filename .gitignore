@@ -1,6 +1,9 @@
-obj/
+/bin/
+/build/
+/lib/
+
 libs/
-lib/
+obj/
 util/libmoai
 
 Thumbs.db

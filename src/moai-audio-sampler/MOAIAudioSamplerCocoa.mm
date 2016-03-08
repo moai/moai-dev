@@ -122,7 +122,7 @@ void MOAIAudioSamplerCocoa::GetLevels ( double& average, double& peak ) {
 	
     if ( result ) {
         fprintf ( stderr, "AudioQueueGetProperty kAudioQueueProperty_CurrentLevelMeterDB failed with %ld\n", result );
-        return false;
+        return;
     }
     
     // average both channels for detection
@@ -194,7 +194,7 @@ void MOAIAudioSamplerCocoa::Init ( u32 sampleRate, u32 channels, u32 sampleSize,
     }
 
 	size_t bufsize = this->mStreamDescription.mBytesPerFrame * sampleSize;
-    if ( bufsize < 0 ) {
+    if ( bufsize <= 0 ) {
         fprintf ( stderr, "invalid arg?" );
         return;
     }
@@ -206,7 +206,7 @@ void MOAIAudioSamplerCocoa::Init ( u32 sampleRate, u32 channels, u32 sampleSize,
 	
     for ( u32 i = 0; i < this->mBuffers.Size (); ++i ){
 	
-        result = AudioQueueAllocateBuffer ( this->mQueue, bufsize, &this->mBuffers [ i ]);
+        result = AudioQueueAllocateBuffer ( this->mQueue, ( UInt32 )bufsize, &this->mBuffers [ i ]);
         if ( result ){
             fprintf ( stderr, "AudioQueueAllocateBuffer failed with %ld\n", result );
             return;
@@ -356,8 +356,6 @@ void MOAIAudioSamplerCocoa::Start () {
 		
 		this->mIsRunning = true;
 	}
-
-    return 0;
 }
 
 //----------------------------------------------------------------//

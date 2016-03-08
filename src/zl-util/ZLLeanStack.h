@@ -69,6 +69,8 @@ public:
 	TYPE& Push () {
 		
 		ZLResultCode result = this->Grow ( this->mTop + 1, CHUNKSIZE );
+		
+		UNUSED ( result );
 		assert ( result == ZL_OK );
 		
 		new ( &this->mData [ this->mTop ]) TYPE (); // placement new
@@ -92,7 +94,10 @@ public:
 	TYPE& Push ( const TYPE& type ) {
 		
 		ZLResultCode result = this->Grow ( this->mTop + 1, CHUNKSIZE );
+		
+		UNUSED ( result );
 		assert ( result == ZL_OK );
+		
 		new ( &this->mData [ this->mTop ]) TYPE ( type ); // placement copy constructor
 		return this->mData [ this->mTop++ ]; // Note the post-increment
 	}
