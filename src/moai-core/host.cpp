@@ -124,9 +124,16 @@ int _loadFuncFromBuffer ( MOAIDataBuffer& buffer, int compressed ) {
 	
 		lua_getglobal ( state, "loadstring" );
 		state.Push ( data, size );
-		int status = state.DebugCall ( 1, 1 );
+		int status = state.DebugCall ( 1, 2 );
+		
 		if ( !state.LogErrors ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, status )) {
 			sContext->mLuaFunc.SetRef ( state, -1 );
+			result = AKU_ERROR;
+		}
+		else if ( state.IsType ( -1, LUA_TSTRING )) {
+	
+			ZLLog_ErrorF ( ZLLog::CONSOLE, "Error loading script:\n" );
+			ZLLog_ErrorF ( ZLLog::CONSOLE, "%s\n", state.GetValue < cc8* >( -1, "" ));
 			result = AKU_ERROR;
 		}
 	}
