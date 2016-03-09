@@ -52,12 +52,12 @@ public:
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	ZLResult < TYPE > Read ( TYPE value ) {
+	ZLResult < TYPE > Read ( TYPE fallback ) {
 		TYPE temp;
 		if ( this->ReadBytes ( &temp, sizeof ( TYPE )).mValue == sizeof ( TYPE )) {
 			ZL_RETURN_RESULT ( TYPE, temp, ZL_OK );
 		}
-		ZL_RETURN_RESULT ( TYPE, value, ZL_ERROR );
+		ZL_RETURN_RESULT ( TYPE, fallback, ZL_ERROR );
 	}
 
 	//----------------------------------------------------------------//
@@ -65,9 +65,10 @@ public:
 	ZLResultCode Read ( TYPE& value, const TYPE& fallback ) {
 		TYPE temp;
 		if ( this->ReadBytes ( &temp, sizeof ( TYPE )).mValue == sizeof ( TYPE )) {
-			value = fallback;
+			value = temp;
 			return ZL_OK;
 		}
+		value = fallback;
 		return ZL_ERROR;
 	}
 
