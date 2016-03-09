@@ -302,7 +302,7 @@ void MOAIGfxBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::Reserve ( u32 size ) {
 	
-	this->Clear ();
+	this->ZLCopyOnWrite::Free ();
 	
 	if ( size ) {
 		this->ZLCopyOnWrite::Reserve ( size );

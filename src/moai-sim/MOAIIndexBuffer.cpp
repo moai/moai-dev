@@ -43,7 +43,7 @@ int MOAIIndexBuffer::_copyFromStream ( lua_State* L ) {
 	
 	// TODO: report trunctations!
 	
-	MOAIIndexBuffer* idxBuffer = state.GetLuaObject < MOAIIndexBuffer >( 2, true );
+	MOAIIndexBuffer* idxBuffer = state.GetLuaObject < MOAIIndexBuffer >( 2, false );
 	if ( idxBuffer ) {
 	
 		self->CopyFromStream ( *idxBuffer, idxBuffer->mIndexSize );
@@ -73,18 +73,15 @@ int MOAIIndexBuffer::_countElements ( lua_State* L ) {
 	u32 totalElements = 0;
 	
 	// prim type, index size in bytes
-	if ( state.CheckParams ( 2, "N", false )) {
+	u32  primType = state.GetValue < u32 >( 2, ZGL_PRIM_TRIANGLES );
 	
-		u32  primType = state.GetValue < u32 >( 2, ZGL_PRIM_TRIANGLES );
-		
-		totalElements = self->GetSize () / self->mIndexSize;
-		
-		if ( primType == ZGL_PRIM_LINES ) {
-			totalElements /= 2;
-		}
-		else if ( primType == ZGL_PRIM_TRIANGLES ) {
-			totalElements /= 3;
-		}
+	totalElements = self->GetSize () / self->mIndexSize;
+	
+	if ( primType == ZGL_PRIM_LINES ) {
+		totalElements /= 2;
+	}
+	else if ( primType == ZGL_PRIM_TRIANGLES ) {
+		totalElements /= 3;
 	}
 	
 	state.Push ( totalElements );

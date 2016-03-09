@@ -233,7 +233,7 @@ int AKUCallFunc () {
 // arg[0]  => argZero - first arg counting from offset (script name as passed to host binary)
 // arg[1]  => next arg/option/script
 // arg[2]  => next arg/option/script
-	// ...
+// ...
 int AKUCallFuncWithArgArray ( char* exeName, char* scriptName, int argc, char** argv, int asParams ) {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
