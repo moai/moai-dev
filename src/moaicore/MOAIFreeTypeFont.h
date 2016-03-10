@@ -60,6 +60,8 @@ protected:
 		
 	FT_Face mFreeTypeFace;
 	
+	FT_Library *mLibrary;
+	
 	unsigned char* mBitmapData;
 	u32 mBitmapWidth;
 	u32 mBitmapHeight;
