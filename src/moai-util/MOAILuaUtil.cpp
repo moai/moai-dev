@@ -39,6 +39,15 @@ bool MOAILuaHeader::IsCompatible ( const MOAILuaHeader& check ) const {
 }
 
 //----------------------------------------------------------------//
+MOAILuaHeader::MOAILuaHeader () :
+	mSignature ( 0 ) {
+}
+
+//----------------------------------------------------------------//
+MOAILuaHeader::~MOAILuaHeader () {
+}
+
+//----------------------------------------------------------------//
 ZLResultCode MOAILuaHeader::Read ( ZLStream& stream ) {
 
 	ZLResultCodeAccumulator result;
@@ -57,6 +66,16 @@ ZLResultCode MOAILuaHeader::Read ( ZLStream& stream ) {
 }
 
 //----------------------------------------------------------------//
+ZLResultCode MOAILuaHeader::Read ( void* buffer, size_t size ) {
+
+	if ( sizeof ( MOAILuaHeader ) <= size ) {
+		memcpy ( this, buffer, sizeof ( MOAILuaHeader ));
+		return ZL_OK;
+	}
+	return ZL_ERROR;
+}
+
+//----------------------------------------------------------------//
 ZLResultCode MOAILuaHeader::Write ( ZLStream& stream ) const {
 
 	ZLResultCodeAccumulator result;
@@ -72,6 +91,16 @@ ZLResultCode MOAILuaHeader::Write ( ZLStream& stream ) const {
 	result = stream.Write < u8 >( this->mTypeOfLuaNumber ).mCode;
 	
 	return result;
+}
+
+//----------------------------------------------------------------//
+ZLResultCode MOAILuaHeader::Write ( void* buffer, size_t size ) {
+
+	if ( sizeof ( MOAILuaHeader ) <= size ) {
+		memcpy ( buffer, this, sizeof ( MOAILuaHeader ));
+		return ZL_OK;
+	}
+	return ZL_ERROR;
 }
 
 //================================================================//

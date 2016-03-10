@@ -80,4 +80,48 @@ public:
 	void			Unlock					();
 };
 
+//================================================================//
+// MOAIDataBufferScopedLock
+//================================================================//
+class MOAIDataBufferScopedLock {
+private:
+
+	MOAIDataBuffer&		mDataBuffer;
+	void*				mBytes;
+	size_t				mSize;
+
+public:
+
+	GET ( void*, Bytes, mBytes )
+	GET ( size_t, Size, mSize )
+
+	//----------------------------------------------------------------//
+	MOAIDataBufferScopedLock ( MOAIDataBuffer& buffer ) :
+		mDataBuffer ( buffer ) {
+		
+		this->mDataBuffer.Lock ( &this->mBytes, &this->mSize );
+	}
+	
+	//----------------------------------------------------------------//
+	MOAIDataBufferScopedLock ( MOAIDataBuffer& buffer, void** bytes, size_t* size ) :
+		mDataBuffer ( buffer ) {
+		
+		this->mDataBuffer.Lock ( &this->mBytes, &this->mSize );
+		
+		if ( bytes ) {
+			*bytes = this->mBytes;
+		}
+		
+		if ( size ) {
+			*size = this->mSize;
+		}
+	}
+	
+	//----------------------------------------------------------------//
+	~MOAIDataBufferScopedLock () {
+	
+		this->mDataBuffer.Unlock ();
+	}
+};
+
 #endif

@@ -83,9 +83,9 @@ AKU_API int				AKUCallFuncWithArgString		( char* exeName, char* scriptName, char
 AKU_API lua_State*		AKUGetLuaState					();
 AKU_API char*			AKUGetMoaiVersion				( char* buffer, size_t length );
 AKU_API char*			AKUGetWorkingDirectory			( char* buffer, size_t length );
-AKU_API int				AKULoadFuncFromBuffer			( void* data, size_t size, int compressed );
+AKU_API int				AKULoadFuncFromBuffer			( void* data, size_t size, const char* chunkname, int compressed );
 AKU_API int				AKULoadFuncFromFile				( const char* filename );
-AKU_API int				AKULoadFuncFromString			( const char* script, size_t size );
+AKU_API int				AKULoadFuncFromString			( const char* script, size_t size, const char* chunkname );
 AKU_API int				AKUMountVirtualDirectory		( char const* virtualPath, char const* archive );
 AKU_API int				AKUSetWorkingDirectory			( char const* path );
 
