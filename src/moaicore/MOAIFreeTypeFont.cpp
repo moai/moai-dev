@@ -343,10 +343,10 @@ int MOAIFreeTypeFont::_setDefaultSize(lua_State *L){
 FT_Face MOAIFreeTypeFont::AffirmFreeTypeFace () {
 	
 	if (!this->mFreeTypeFace) {
-		FT_Library library;
-		FT_Error error = FT_Init_FreeType( &library );
+		this->mLibrary = new FT_Library();
+		FT_Error error = FT_Init_FreeType( this->mLibrary );
 		CHECK_ERROR(error);
-		return this->LoadFreeTypeFace( &library );
+		return this->LoadFreeTypeFace( this->mLibrary );
 	}
 	else{
 		return this->mFreeTypeFace;
@@ -1037,6 +1037,7 @@ FT_Face MOAIFreeTypeFont::LoadFreeTypeFace ( FT_Library *library )
 MOAIFreeTypeFont::MOAIFreeTypeFont():
 	mDefaultSize( 0.0f ),
 	mFreeTypeFace( NULL ),
+	mLibrary( NULL ),
     mBitmapData( NULL ),
 	mBitmapWidth(0.0f),
 	mBitmapHeight(0.0f),
@@ -1050,6 +1051,14 @@ MOAIFreeTypeFont::MOAIFreeTypeFont():
 
 MOAIFreeTypeFont::~MOAIFreeTypeFont(){
 	this->ResetBitmapData();
+	if (this->mFreeTypeFace) {
+		FT_Done_Face(this->mFreeTypeFace);
+	}
+	
+	if (this->mLibrary) {
+		FT_Done_FreeType(*this->mLibrary);
+		delete this->mLibrary;
+	}
 }
 
 /*
@@ -1737,7 +1746,8 @@ MOAITexture* MOAIFreeTypeFont::RenderTextureSingleLine(cc8 *text, float fontSize
 	
 	delete [] positions;
 	deleteGlyphArray(glyphs, numGlyphs);
-	
+	delete [] xAdvances;
+	delete [] xOffsets;
 	
 	delete [] wideString; 
 	wideString = NULL;
