@@ -255,6 +255,11 @@ MOAISerializerBase::ObjID MOAISerializer::AffirmMemberID ( MOAILuaState& state, 
 		
 		this->mTableMap [ memberID ].SetRef ( state, idx );
 		
+		if ( lua_getmetatable ( state, idx )) {
+			this->AffirmMemberID ( state, -1 );
+			state.Pop ( 1 );
+		}
+		
 		u32 itr = state.PushTableItr ( idx );
 		while ( state.TableItrNext ( itr )) {
 			this->AffirmMemberID ( state, -1 );
@@ -543,6 +548,8 @@ u32 MOAISerializer::WriteTableInitializer ( ZLStream& stream, MOAILuaState& stat
 			case LUA_TNIL:
 			case LUA_TFUNCTION:
 			case LUA_TTHREAD:
+			
+				ZLLog_ErrorF ( ZLLog::CONSOLE, "ERROR: MOAISerializer encountered an unsupported value type\n" );
 				continue;
 		}
 		
@@ -550,6 +557,7 @@ u32 MOAISerializer::WriteTableInitializer ( ZLStream& stream, MOAILuaState& stat
 		switch ( keyType ) {
 		
 			case LUA_TSTRING: {
+			
 				if ( MOAISerializer::IsSimpleStringKey ( keyName )) {
 					stream.Print ( "\t%s.%s = ", prefix, keyName );
 				}
@@ -559,9 +567,12 @@ u32 MOAISerializer::WriteTableInitializer ( ZLStream& stream, MOAILuaState& stat
 				break;
 			}
 			case LUA_TNUMBER: {
+			
 				stream.Print ( "\t%s [ %s ]\t= ", prefix, keyName );
 				break;
 			}
+			default:
+				ZLLog_ErrorF ( ZLLog::CONSOLE, "ERROR: MOAISerializer encountered an unsupported key type\n" );
 		};
 		
 		switch ( valType ) {
@@ -604,6 +615,21 @@ u32 MOAISerializer::WriteTableInitializer ( ZLStream& stream, MOAILuaState& stat
 		
 		++count;
 	}
+	
+	if ( lua_getmetatable ( state, idx )) {
+	
+		if ( state.IsType ( -1, LUA_TTABLE )) {
+		
+			ObjID tableID = this->GetID ( state, -1 );
+			if ( this->mTableMap.contains ( tableID )) {
+				stream.Print ( "\tsetmetatable ( %s, objects [ 0x%02X ])\n", prefix, tableID );
+			}
+		}
+		else {
+			ZLLog_ErrorF ( ZLLog::CONSOLE, "ERROR: MOAISerializer encountered an unsupported metatable type\n" );
+		}
+	}
+	state.Pop ( 1 );
 	
 	return count;
 }
