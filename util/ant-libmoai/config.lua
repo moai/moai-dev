@@ -39,7 +39,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-adcolony.mk',
+			'$(MOAI_MODULES)/modules/moai-adcolony.mk',
 		},
 		
 		JAVA = {
@@ -60,7 +60,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-android.mk',
+			'$(MOAI_MODULES)/modules/moai-android.mk',
 		},
 		
 		JAVA = {
@@ -89,8 +89,8 @@ MODULES = {
 		},
 	
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-box2d.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-box2d.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-box2d.mk',
+			'$(MOAI_MODULES)/modules/moai-box2d.mk',
 		},
 		
 		JAVA = {
@@ -109,7 +109,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-chartboost.mk',
+			'$(MOAI_MODULES)/modules/moai-chartboost.mk',
 		},
 		
 		JAVA = {
@@ -130,7 +130,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-crittercism.mk',
+			'$(MOAI_MODULES)/modules/moai-crittercism.mk',
 		},
 		
 		JAVA = {
@@ -155,12 +155,12 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-crypto-a.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-crypto-b.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-crypto-c.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-crypto-d.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/zl-crypto.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-crypto.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-crypto-a.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-crypto-b.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-crypto-c.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-crypto-d.mk',
+			'$(MOAI_MODULES)/modules/zl-crypto.mk',
+			'$(MOAI_MODULES)/modules/moai-crypto.mk',
 		},
 		
 		JAVA = {
@@ -179,7 +179,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-facebook.mk',
+			'$(MOAI_MODULES)/modules/moai-facebook.mk',
 		},
 		
 		JAVA = {
@@ -201,7 +201,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-flurry.mk',
+			'$(MOAI_MODULES)/modules/moai-flurry.mk',
 		},
 		
 		JAVA = {
@@ -225,7 +225,7 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-fmod-ex.mk',
+			'$(MOAI_MODULES)/modules/moai-fmod-ex.mk',
 		},
 		
 		JAVA = {
@@ -238,14 +238,14 @@ MODULES = {
 	----------------------------------------------------------------
 	GOOGLE_PLAY_SERVICES = {
 		
-		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_GOOGLE_PLAY',
+		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_GOOGLE_PLAY_SERVICES',
 		NAMESPACE = 'com.moaisdk.googleplayservices',
 	
 		HEADER_SEARCH_PATHS = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-google-play-services.mk',
+			'$(MOAI_MODULES)/modules/moai-google-play-services.mk',
 		},
 		
 		JAVA = {
@@ -293,10 +293,10 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-c-ares.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-curl.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-ssl.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-http-client.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-c-ares.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-curl.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-ssl.mk',
+			'$(MOAI_MODULES)/modules/moai-http-client.mk',
 		},
 		
 		JAVA = {
@@ -316,8 +316,8 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-mongoose.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-http-server.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-mongoose.mk',
+			'$(MOAI_MODULES)/modules/moai-http-server.mk',
 		},
 		
 		JAVA = {
@@ -337,8 +337,8 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-jpg.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-jpg.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-jpg.mk',
+			'$(MOAI_MODULES)/modules/moai-image-jpg.mk',
 		},
 		
 		JAVA = {
@@ -358,8 +358,8 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-png.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-png.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-png.mk',
+			'$(MOAI_MODULES)/modules/moai-image-png.mk',
 		},
 		
 		JAVA = {
@@ -379,8 +379,8 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-pvr.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-pvr.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-pvr.mk',
+			'$(MOAI_MODULES)/modules/moai-image-pvr.mk',
 		},
 		
 		JAVA = {
@@ -400,8 +400,8 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-webp.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-webp.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-webp.mk',
+			'$(MOAI_MODULES)/modules/moai-image-webp.mk',
 		},
 		
 		JAVA = {
@@ -426,7 +426,7 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-luaext.mk',
+			'$(MOAI_MODULES)/modules/moai-luaext.mk',
 		},
 		
 		JAVA = {
@@ -452,10 +452,10 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-freetype.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-tess.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/zl-gfx.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-sim.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-freetype.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-tess.mk',
+			'$(MOAI_MODULES)/modules/zl-gfx.mk',
+			'$(MOAI_MODULES)/modules/moai-sim.mk',
 		},
 		
 		JAVA = {
@@ -474,7 +474,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-tapjoy.mk',
+			'$(MOAI_MODULES)/modules/moai-tapjoy.mk',
 		},
 		
 		JAVA = {
@@ -495,7 +495,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-twitter.mk',
+			'$(MOAI_MODULES)/modules/moai-twitter.mk',
 		},
 		
 		JAVA = {
@@ -521,10 +521,10 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-ogg.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-vorbis.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-untz.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-untz.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-ogg.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-vorbis.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-untz.mk',
+			'$(MOAI_MODULES)/modules/moai-untz.mk',
 		},
 		
 		JAVA = {
@@ -543,7 +543,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-vungle.mk',
+			'$(MOAI_MODULES)/modules/moai-vungle.mk',
 		},
 		
 		JAVA = {

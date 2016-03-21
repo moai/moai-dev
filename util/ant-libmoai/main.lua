@@ -1,7 +1,7 @@
 --==============================================================
 -- args
 --==============================================================
-
+MOAIFileSystem.setWorkingDirectory ( SCRIPT_DIR )
 OUTPUT_DIR				= INVOKE_DIR .. 'libmoai/'
 
 LIB_NAME				= 'moai'
@@ -166,6 +166,19 @@ getLibrariesString = function ( libraries, mask )
 	return str or ''
 end
 
+getJniLibrariesString = function ( libraries, mask )
+
+	local str
+
+	for i, v in ipairs ( libraries ) do
+		if mask [ v ] then
+			str = ( str and ( str .. "\n" ) or '' ) .. "LOCAL_STATIC_JNI_LIBRARIES += "..v
+		end
+	end
+
+	return str or "LOCAL_STATIC_JNI_LIBRARIES := \n"
+end
+
 ----------------------------------------------------------------
 getModulesString = function ()
 
@@ -308,6 +321,17 @@ makeJniProject = function ()
 	MOAIFileSystem.copy ( 'Android.mk', JNI_DIR .. 'Android.mk' )
 	MOAIFileSystem.copy ( 'Application.mk', JNI_DIR .. 'Application.mk' )
 	MOAIFileSystem.copy ( 'src/', JNI_DIR .. 'src/' )
+
+	local hostmodules = MOAI_SDK_HOME..'src/host-modules/'
+	MOAIFileSystem.copy(hostmodules, JNI_DIR..'src/host-modules/')
+
+	--don't want these ones
+	MOAIFileSystem.deleteFile(JNI_DIR..'src/host-modules/aku_modules_ios.h')
+	MOAIFileSystem.deleteFile(JNI_DIR..'src/host-modules/aku_modules_ios_config.h')
+	MOAIFileSystem.deleteFile(JNI_DIR..'src/host-modules/aku_modules_ios.mm')
+
+
+
 	MOAIFileSystem.copy ( MOAI_SDK_HOME .. 'src/host-modules/aku_plugins.cpp.in', JNI_DIR .. 'src/aku_plugins.cpp' )
 
 	local file = io.open ( JNI_DIR .. 'libraries.mk', 'w' )
@@ -318,6 +342,10 @@ makeJniProject = function ()
 		end
 	end
 	file:close ()
+
+
+
+
 
 	util.replaceInFile ( JNI_DIR .. 'Android.mk', {
 		[ '@MOAI_SDK_HOME@' ]				= MOAIFileSystem.getRelativePath ( MOAI_SDK_HOME, JNI_DIR ),
@@ -348,11 +376,13 @@ makeTarget = function ( target )
 	local JNI_DIR = FOLDERS.JNI
 	local targetMakefile = JNI_DIR .. target.NAME .. '.mk'
 	MOAIFileSystem.copy ( 'MoaiTarget.mk', targetMakefile )
+  MOAIFileSystem.copy ( 'prebuiltcore.mk', JNI_DIR.."prebuiltcore.mk" )
 
 	print ( 'TARGET', target.NAME, targetMakefile )
 
 	local modules = {}
 	local libraries = {}
+	local javaLibraries = {} --our libraries that expose JNI, keep these apart so they can be easily disabled (other libs the linker will take care of)
 	local preprecessorFlags = {}
 
 	-- build a set of modules to include
@@ -361,7 +391,11 @@ makeTarget = function ( target )
 		if module then
 			MODULES_USED [ moduleName ] = module
 			modules [ moduleName ] = module
-			addLibraries ( libraries, module.STATIC_LIBRARIES )
+			if table.getn(module.JAVA) > 0 then
+				addLibraries ( javaLibraries, module.STATIC_LIBRARIES )
+			else
+				addLibraries ( libraries, module.STATIC_LIBRARIES )
+			end
 		end
 	end
 
@@ -371,7 +405,9 @@ makeTarget = function ( target )
 			preprecessorFlags [ module.PREPROCESSOR_FLAG ] = modules [ k ] and 1 or 0
 		end
 	end
+ 
 
+	
 	-- build the preprocessor string
 	local preprocessorString = '\n'
 	for k, v in util.pairsByKeys ( preprecessorFlags ) do
@@ -384,9 +420,34 @@ makeTarget = function ( target )
 	util.replaceInFile ( targetMakefile, {
 		[ '@LIB_NAME@' ]					= target.NAME,
 		[ '@AKU_PREPROCESSOR@' ]			= preprocessorString,
+		[ '@STATIC_JNI_LIBRARIES@']   = getJniLibrariesString ( STATIC_LIBRARIES, javaLibraries ),
 		[ '@STATIC_LIBRARIES@' ] 			= getLibrariesString ( STATIC_LIBRARIES, libraries ),
 		[ '@WHOLE_STATIC_LIBRARIES@' ] 		= getLibrariesString ( WHOLE_STATIC_LIBRARIES, libraries ),
 	})
+
+  --dump prebuilt
+   local file = io.open ( JNI_DIR .. 'prebuilt.mk', 'w' )
+   local libstr = ""
+   file:write("LOCAL_PATH := $(call my-dir)\n")
+   
+   for k, v in pairs ( libraries ) do
+      
+       file:write ("include $(CLEAR_VARS)\n")
+       file:write ("LOCAL_MODULE := "..k.."\n")
+       file:write ("LOCAL_SRC_FILES := $(LOCAL_PATH)/../obj/local/$(TARGET_ARCH_ABI)/"..k..".a\n")
+       file:write ("include $(PREBUILT_STATIC_LIBRARY)\n\n")
+      
+   end
+   
+   for k, v in pairs ( javaLibraries ) do
+      
+       file:write ("include $(CLEAR_VARS)\n")
+       file:write ("LOCAL_MODULE := "..k.."\n")
+       file:write ("LOCAL_SRC_FILES := $(LOCAL_PATH)/../obj/local/$(TARGET_ARCH_ABI)/"..k..".a\n")
+       file:write ("include $(PREBUILT_STATIC_LIBRARY)\n\n")
+      
+   end
+	 file:close ()
 end
 
 ----------------------------------------------------------------
@@ -476,7 +537,7 @@ for k, path in pairs ( FOLDERS ) do
 		FOLDERS [ k ] = path
 
 		if path ~= INVOKE_DIR then
-			MOAIFileSystem.deleteDirectory ( path, true )
+		--	MOAIFileSystem.deleteDirectory ( path, true )
 			MOAIFileSystem.affirmPath ( path )
 		end
 	end
