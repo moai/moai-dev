@@ -45,6 +45,7 @@ protected:
 	static int			_setMesh					( lua_State* L );
 
 	//----------------------------------------------------------------//
+	ZLResult < u32 >	AffirmSpanSet				();
 	MOAISelectionSpan*	AllocSpan					( u32 set, size_t base, size_t top );
 //	void				BooleanAnd					( u32 set, u32 a, u32 b );
 //	void				BooleanOr					( u32 set, u32 a, u32 b );

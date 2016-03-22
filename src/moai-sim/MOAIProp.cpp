@@ -135,6 +135,23 @@ int MOAIProp::_getIndex ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getPartition
+	@text	Returns the partition prop is currently held in.
+	
+	@in		MOAILayer self
+	@out	MOAIPartition partition
+*/
+int	MOAIProp::_getPartition ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+
+	if ( self->mPartition ) {
+		self->mPartition->PushLuaUserdata ( state );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	getPriority
 	@text	Returns the current priority of the node or 'nil' if the
 			priority is uninitialized.
@@ -820,6 +837,7 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getDims",				_getDims },
 		{ "getGrid",				_getGrid },
 		{ "getIndex",				_getIndex },
+		{ "getPartition",			_getPartition },
 		{ "getPriority",			_getPriority },
 		{ "getWorldBounds",			_getWorldBounds },
 		{ "getWorldBoundsCenter",	_getWorldBoundsCenter },
