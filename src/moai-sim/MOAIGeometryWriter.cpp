@@ -576,13 +576,13 @@ u32 MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream& vtxS
 	vtxStream.Seek ( 0, SEEK_SET );
 	idxStream.Seek ( 0, SEEK_SET );
 	
-	if ( vtxBuffer.GetBufferCount () == 0 ) {
-		vtxBuffer.ReserveVBOs ( 1 );
-	}
-	
-	if ( idxBuffer.GetBufferCount () == 0 ) {
-		idxBuffer.ReserveVBOs ( 1 );
-	}
+//	if ( vtxBuffer.GetBufferCount () == 0 ) {
+//		vtxBuffer.ReserveVBOs ( 1 );
+//	}
+//	
+//	if ( idxBuffer.GetBufferCount () == 0 ) {
+//		idxBuffer.ReserveVBOs ( 1 );
+//	}
 	
 	vtxBuffer.CopyFromStream ( vtxStream );
 	
