@@ -333,6 +333,17 @@ void Finalize () {
 	SDL_Quit ();
 }
 
+#ifndef __APPLE__
+
+//----------------------------------------------------------------//
+void GetDeviceToPixelScale ( float& w, float& h ) {
+
+	w = 1.0f;
+	h = 1.0f;
+}
+
+#endif
+
 //----------------------------------------------------------------//
 void Init ( int argc, char** argv ) {
 
