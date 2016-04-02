@@ -1745,6 +1745,36 @@
 		CD32B5D419F9EF2E0059D019 /* SDL_hints.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795CBF17F08459006AEB47 /* SDL_hints.c */; };
 		CD32B5D519F9EF2E0059D019 /* SDL_log.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795CC017F08459006AEB47 /* SDL_log.c */; };
 		CD32B5D619F9EF2E0059D019 /* SDL.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795CC117F08459006AEB47 /* SDL.c */; };
+		CD3371B01CAF8E56008B8BC7 /* bucketalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3371A21CAF8E56008B8BC7 /* bucketalloc.c */; };
+		CD3371B11CAF8E56008B8BC7 /* bucketalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3371A21CAF8E56008B8BC7 /* bucketalloc.c */; };
+		CD3371B21CAF8E56008B8BC7 /* bucketalloc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3371A31CAF8E56008B8BC7 /* bucketalloc.h */; };
+		CD3371B31CAF8E56008B8BC7 /* bucketalloc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3371A31CAF8E56008B8BC7 /* bucketalloc.h */; };
+		CD3371B41CAF8E56008B8BC7 /* dict.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3371A41CAF8E56008B8BC7 /* dict.c */; };
+		CD3371B51CAF8E56008B8BC7 /* dict.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3371A41CAF8E56008B8BC7 /* dict.c */; };
+		CD3371B61CAF8E56008B8BC7 /* dict.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3371A51CAF8E56008B8BC7 /* dict.h */; };
+		CD3371B71CAF8E56008B8BC7 /* dict.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3371A51CAF8E56008B8BC7 /* dict.h */; };
+		CD3371B81CAF8E56008B8BC7 /* geom.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3371A61CAF8E56008B8BC7 /* geom.c */; };
+		CD3371B91CAF8E56008B8BC7 /* geom.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3371A61CAF8E56008B8BC7 /* geom.c */; };
+		CD3371BA1CAF8E56008B8BC7 /* geom.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3371A71CAF8E56008B8BC7 /* geom.h */; };
+		CD3371BB1CAF8E56008B8BC7 /* geom.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3371A71CAF8E56008B8BC7 /* geom.h */; };
+		CD3371BC1CAF8E56008B8BC7 /* mesh.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3371A81CAF8E56008B8BC7 /* mesh.c */; };
+		CD3371BD1CAF8E56008B8BC7 /* mesh.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3371A81CAF8E56008B8BC7 /* mesh.c */; };
+		CD3371BE1CAF8E56008B8BC7 /* mesh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3371A91CAF8E56008B8BC7 /* mesh.h */; };
+		CD3371BF1CAF8E56008B8BC7 /* mesh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3371A91CAF8E56008B8BC7 /* mesh.h */; };
+		CD3371C01CAF8E56008B8BC7 /* priorityq.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3371AA1CAF8E56008B8BC7 /* priorityq.c */; };
+		CD3371C11CAF8E56008B8BC7 /* priorityq.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3371AA1CAF8E56008B8BC7 /* priorityq.c */; };
+		CD3371C21CAF8E56008B8BC7 /* priorityq.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3371AB1CAF8E56008B8BC7 /* priorityq.h */; };
+		CD3371C31CAF8E56008B8BC7 /* priorityq.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3371AB1CAF8E56008B8BC7 /* priorityq.h */; };
+		CD3371C41CAF8E56008B8BC7 /* sweep.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3371AC1CAF8E56008B8BC7 /* sweep.c */; };
+		CD3371C51CAF8E56008B8BC7 /* sweep.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3371AC1CAF8E56008B8BC7 /* sweep.c */; };
+		CD3371C61CAF8E56008B8BC7 /* sweep.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3371AD1CAF8E56008B8BC7 /* sweep.h */; };
+		CD3371C71CAF8E56008B8BC7 /* sweep.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3371AD1CAF8E56008B8BC7 /* sweep.h */; };
+		CD3371C81CAF8E56008B8BC7 /* tess.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3371AE1CAF8E56008B8BC7 /* tess.c */; };
+		CD3371C91CAF8E56008B8BC7 /* tess.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3371AE1CAF8E56008B8BC7 /* tess.c */; };
+		CD3371CA1CAF8E56008B8BC7 /* tess.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3371AF1CAF8E56008B8BC7 /* tess.h */; };
+		CD3371CB1CAF8E56008B8BC7 /* tess.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3371AF1CAF8E56008B8BC7 /* tess.h */; };
+		CD3371CD1CAF8E62008B8BC7 /* tesselator.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3371CC1CAF8E62008B8BC7 /* tesselator.h */; };
+		CD3371CE1CAF8E62008B8BC7 /* tesselator.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3371CC1CAF8E62008B8BC7 /* tesselator.h */; };
 		CD3430FE1B30ABB3002BEBFA /* MOAIVertexArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3430FC1B30ABB3002BEBFA /* MOAIVertexArray.cpp */; };
 		CD3430FF1B30ABB3002BEBFA /* MOAIVertexArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3430FC1B30ABB3002BEBFA /* MOAIVertexArray.cpp */; };
 		CD3431001B30ABB3002BEBFA /* MOAIVertexArray.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3430FD1B30ABB3002BEBFA /* MOAIVertexArray.h */; };
@@ -2794,20 +2824,6 @@
 		CD67B4671B264FF0004298CF /* MOAIStandardDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD67B4641B264FF0004298CF /* MOAIStandardDeck.cpp */; };
 		CD67B4681B264FF0004298CF /* MOAIStandardDeck.h in Headers */ = {isa = PBXBuildFile; fileRef = CD67B4651B264FF0004298CF /* MOAIStandardDeck.h */; };
 		CD67B4691B264FF0004298CF /* MOAIStandardDeck.h in Headers */ = {isa = PBXBuildFile; fileRef = CD67B4651B264FF0004298CF /* MOAIStandardDeck.h */; };
-		CD69AB3817FA6CF90053E028 /* bucketalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB2917FA6CF90053E028 /* bucketalloc.c */; };
-		CD69AB3A17FA6CF90053E028 /* bucketalloc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2A17FA6CF90053E028 /* bucketalloc.h */; };
-		CD69AB3C17FA6CF90053E028 /* dict.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB2B17FA6CF90053E028 /* dict.c */; };
-		CD69AB3E17FA6CF90053E028 /* dict.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2C17FA6CF90053E028 /* dict.h */; };
-		CD69AB4017FA6CF90053E028 /* geom.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB2D17FA6CF90053E028 /* geom.c */; };
-		CD69AB4217FA6CF90053E028 /* geom.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2E17FA6CF90053E028 /* geom.h */; };
-		CD69AB4417FA6CF90053E028 /* mesh.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB2F17FA6CF90053E028 /* mesh.c */; };
-		CD69AB4617FA6CF90053E028 /* mesh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3017FA6CF90053E028 /* mesh.h */; };
-		CD69AB4817FA6CF90053E028 /* priorityq.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB3117FA6CF90053E028 /* priorityq.c */; };
-		CD69AB4A17FA6CF90053E028 /* priorityq.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3217FA6CF90053E028 /* priorityq.h */; };
-		CD69AB4C17FA6CF90053E028 /* sweep.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB3317FA6CF90053E028 /* sweep.c */; };
-		CD69AB4E17FA6CF90053E028 /* sweep.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3417FA6CF90053E028 /* sweep.h */; };
-		CD69AB5017FA6CF90053E028 /* tess.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB3517FA6CF90053E028 /* tess.c */; };
-		CD69AB5217FA6CF90053E028 /* tess.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3617FA6CF90053E028 /* tess.h */; };
 		CD6AFDA51B1683F800A36954 /* MOAIGeometryWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD6AFDA31B1683F800A36954 /* MOAIGeometryWriter.cpp */; };
 		CD6AFDA61B1683F800A36954 /* MOAIGeometryWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD6AFDA31B1683F800A36954 /* MOAIGeometryWriter.cpp */; };
 		CD6AFDA71B1683F800A36954 /* MOAIGeometryWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD6AFDA41B1683F800A36954 /* MOAIGeometryWriter.h */; };
@@ -3737,21 +3753,6 @@
 		CD8315F81BED3AE900745C8A /* moai_edtaa3func.c in Sources */ = {isa = PBXBuildFile; fileRef = 20A0B0271A5020740072F513 /* moai_edtaa3func.c */; };
 		CD8315FA1BED3AE900745C8A /* MOAIOpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9F761C1808C7670001EF0C /* MOAIOpenUDID.m */; };
 		CD83161B1BED3AE900745C8A /* moai_whirlpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 66E345451614CA710021FC4B /* moai_whirlpool.c */; };
-		CD8316251BED3BC100745C8A /* bucketalloc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2A17FA6CF90053E028 /* bucketalloc.h */; };
-		CD8316281BED3BC100745C8A /* dict.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2C17FA6CF90053E028 /* dict.h */; };
-		CD8316291BED3BC100745C8A /* priorityq.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3217FA6CF90053E028 /* priorityq.h */; };
-		CD83162A1BED3BC100745C8A /* mesh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3017FA6CF90053E028 /* mesh.h */; };
-		CD83162B1BED3BC100745C8A /* geom.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB2E17FA6CF90053E028 /* geom.h */; };
-		CD83162C1BED3BC100745C8A /* sweep.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3417FA6CF90053E028 /* sweep.h */; };
-		CD8316431BED3BC100745C8A /* tesselator.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE7C5671B0C00440038A8C9 /* tesselator.h */; };
-		CD8316481BED3BC100745C8A /* tess.h in Headers */ = {isa = PBXBuildFile; fileRef = CD69AB3617FA6CF90053E028 /* tess.h */; };
-		CD83164D1BED3BC100745C8A /* tess.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB3517FA6CF90053E028 /* tess.c */; };
-		CD83164E1BED3BC100745C8A /* bucketalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB2917FA6CF90053E028 /* bucketalloc.c */; };
-		CD83164F1BED3BC100745C8A /* dict.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB2B17FA6CF90053E028 /* dict.c */; };
-		CD8316511BED3BC100745C8A /* priorityq.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB3117FA6CF90053E028 /* priorityq.c */; };
-		CD8316521BED3BC100745C8A /* sweep.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB3317FA6CF90053E028 /* sweep.c */; };
-		CD8316541BED3BC100745C8A /* geom.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB2D17FA6CF90053E028 /* geom.c */; };
-		CD8316561BED3BC100745C8A /* mesh.c in Sources */ = {isa = PBXBuildFile; fileRef = CD69AB2F17FA6CF90053E028 /* mesh.c */; };
 		CD8316821BED3C1800745C8A /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490041141AB6EC00913D80 /* lapi.h */; };
 		CD8316831BED3C1800745C8A /* lauxlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490043141AB6EC00913D80 /* lauxlib.h */; };
 		CD8316851BED3C1800745C8A /* lcode.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490046141AB6EC00913D80 /* lcode.h */; };
@@ -4888,7 +4889,6 @@
 		CDE440171AC0D27600C745DB /* ZLFrustumFitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE440101AC0D27600C745DB /* ZLFrustumFitter.cpp */; };
 		CDE440181AC0D27600C745DB /* ZLFrustumFitter.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE440111AC0D27600C745DB /* ZLFrustumFitter.h */; };
 		CDE440191AC0D27600C745DB /* ZLFrustumFitter.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE440111AC0D27600C745DB /* ZLFrustumFitter.h */; };
-		CDE7C5691B0C00440038A8C9 /* tesselator.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE7C5671B0C00440038A8C9 /* tesselator.h */; };
 		CDE93C1A1B34EF370051ADA1 /* moai_version.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE93C191B34EF370051ADA1 /* moai_version.h */; };
 		CDE93C1B1B34EF370051ADA1 /* moai_version.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE93C191B34EF370051ADA1 /* moai_version.h */; };
 		CDECEE2018E0C87C00546426 /* mongoose.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795EFE17F0901A006AEB47 /* mongoose.c */; };
@@ -6690,6 +6690,21 @@
 		CD323B1D1A80530000E2FEBB /* MOAIMeshShader-fsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIMeshShader-fsh.h"; path = "shaders/MOAIMeshShader-fsh.h"; sourceTree = "<group>"; };
 		CD323B1E1A80530000E2FEBB /* MOAIMeshShader-vsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIMeshShader-vsh.h"; path = "shaders/MOAIMeshShader-vsh.h"; sourceTree = "<group>"; };
 		CD32B4D819F9EDD10059D019 /* libmoai-osx-3rdparty-sdl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-3rdparty-sdl.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD3371A21CAF8E56008B8BC7 /* bucketalloc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bucketalloc.c; path = ../../3rdparty/libtess2/Source/bucketalloc.c; sourceTree = "<group>"; };
+		CD3371A31CAF8E56008B8BC7 /* bucketalloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bucketalloc.h; path = ../../3rdparty/libtess2/Source/bucketalloc.h; sourceTree = "<group>"; };
+		CD3371A41CAF8E56008B8BC7 /* dict.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dict.c; path = ../../3rdparty/libtess2/Source/dict.c; sourceTree = "<group>"; };
+		CD3371A51CAF8E56008B8BC7 /* dict.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dict.h; path = ../../3rdparty/libtess2/Source/dict.h; sourceTree = "<group>"; };
+		CD3371A61CAF8E56008B8BC7 /* geom.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = geom.c; path = ../../3rdparty/libtess2/Source/geom.c; sourceTree = "<group>"; };
+		CD3371A71CAF8E56008B8BC7 /* geom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = geom.h; path = ../../3rdparty/libtess2/Source/geom.h; sourceTree = "<group>"; };
+		CD3371A81CAF8E56008B8BC7 /* mesh.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mesh.c; path = ../../3rdparty/libtess2/Source/mesh.c; sourceTree = "<group>"; };
+		CD3371A91CAF8E56008B8BC7 /* mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mesh.h; path = ../../3rdparty/libtess2/Source/mesh.h; sourceTree = "<group>"; };
+		CD3371AA1CAF8E56008B8BC7 /* priorityq.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = priorityq.c; path = ../../3rdparty/libtess2/Source/priorityq.c; sourceTree = "<group>"; };
+		CD3371AB1CAF8E56008B8BC7 /* priorityq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = priorityq.h; path = ../../3rdparty/libtess2/Source/priorityq.h; sourceTree = "<group>"; };
+		CD3371AC1CAF8E56008B8BC7 /* sweep.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sweep.c; path = ../../3rdparty/libtess2/Source/sweep.c; sourceTree = "<group>"; };
+		CD3371AD1CAF8E56008B8BC7 /* sweep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sweep.h; path = ../../3rdparty/libtess2/Source/sweep.h; sourceTree = "<group>"; };
+		CD3371AE1CAF8E56008B8BC7 /* tess.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tess.c; path = ../../3rdparty/libtess2/Source/tess.c; sourceTree = "<group>"; };
+		CD3371AF1CAF8E56008B8BC7 /* tess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tess.h; path = ../../3rdparty/libtess2/Source/tess.h; sourceTree = "<group>"; };
+		CD3371CC1CAF8E62008B8BC7 /* tesselator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tesselator.h; path = ../../3rdparty/libtess2/Include/tesselator.h; sourceTree = "<group>"; };
 		CD3430FC1B30ABB3002BEBFA /* MOAIVertexArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVertexArray.cpp; sourceTree = "<group>"; };
 		CD3430FD1B30ABB3002BEBFA /* MOAIVertexArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVertexArray.h; sourceTree = "<group>"; };
 		CD3431031B30EDC6002BEBFA /* MOAIGfxStateCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGfxStateCache.cpp; sourceTree = "<group>"; };
@@ -6831,20 +6846,6 @@
 		CD69AB0717FA6C7E0053E028 /* MOAIVectorCombo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVectorCombo.h; sourceTree = "<group>"; };
 		CD69AB0E17FA6C7E0053E028 /* MOAIVectorShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVectorShape.cpp; sourceTree = "<group>"; };
 		CD69AB0F17FA6C7E0053E028 /* MOAIVectorShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVectorShape.h; sourceTree = "<group>"; };
-		CD69AB2917FA6CF90053E028 /* bucketalloc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bucketalloc.c; path = ../../3rdparty/libtess2/Source/bucketalloc.c; sourceTree = "<group>"; };
-		CD69AB2A17FA6CF90053E028 /* bucketalloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bucketalloc.h; path = ../../3rdparty/libtess2/Source/bucketalloc.h; sourceTree = "<group>"; };
-		CD69AB2B17FA6CF90053E028 /* dict.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dict.c; path = ../../3rdparty/libtess2/Source/dict.c; sourceTree = "<group>"; };
-		CD69AB2C17FA6CF90053E028 /* dict.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dict.h; path = ../../3rdparty/libtess2/Source/dict.h; sourceTree = "<group>"; };
-		CD69AB2D17FA6CF90053E028 /* geom.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = geom.c; path = ../../3rdparty/libtess2/Source/geom.c; sourceTree = "<group>"; };
-		CD69AB2E17FA6CF90053E028 /* geom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = geom.h; path = ../../3rdparty/libtess2/Source/geom.h; sourceTree = "<group>"; };
-		CD69AB2F17FA6CF90053E028 /* mesh.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mesh.c; path = ../../3rdparty/libtess2/Source/mesh.c; sourceTree = "<group>"; };
-		CD69AB3017FA6CF90053E028 /* mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mesh.h; path = ../../3rdparty/libtess2/Source/mesh.h; sourceTree = "<group>"; };
-		CD69AB3117FA6CF90053E028 /* priorityq.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = priorityq.c; path = ../../3rdparty/libtess2/Source/priorityq.c; sourceTree = "<group>"; };
-		CD69AB3217FA6CF90053E028 /* priorityq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = priorityq.h; path = ../../3rdparty/libtess2/Source/priorityq.h; sourceTree = "<group>"; };
-		CD69AB3317FA6CF90053E028 /* sweep.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sweep.c; path = ../../3rdparty/libtess2/Source/sweep.c; sourceTree = "<group>"; };
-		CD69AB3417FA6CF90053E028 /* sweep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sweep.h; path = ../../3rdparty/libtess2/Source/sweep.h; sourceTree = "<group>"; };
-		CD69AB3517FA6CF90053E028 /* tess.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tess.c; path = ../../3rdparty/libtess2/Source/tess.c; sourceTree = "<group>"; };
-		CD69AB3617FA6CF90053E028 /* tess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tess.h; path = ../../3rdparty/libtess2/Source/tess.h; sourceTree = "<group>"; };
 		CD6AFDA31B1683F800A36954 /* MOAIGeometryWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGeometryWriter.cpp; sourceTree = "<group>"; };
 		CD6AFDA41B1683F800A36954 /* MOAIGeometryWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGeometryWriter.h; sourceTree = "<group>"; };
 		CD6D752517EE415D00964415 /* libmoai-osx-zl-vfs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zl-vfs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -8030,7 +8031,6 @@
 		CDE4400F1AC0D27600C745DB /* ZLFrustum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLFrustum.h; sourceTree = "<group>"; };
 		CDE440101AC0D27600C745DB /* ZLFrustumFitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLFrustumFitter.cpp; sourceTree = "<group>"; };
 		CDE440111AC0D27600C745DB /* ZLFrustumFitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLFrustumFitter.h; sourceTree = "<group>"; };
-		CDE7C5671B0C00440038A8C9 /* tesselator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tesselator.h; path = ../../3rdparty/libtess2/Include/tesselator.h; sourceTree = "<group>"; };
 		CDE8A802155E42EF00C2DFF5 /* libmoai-osx-fmod-ex.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-fmod-ex.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDE93C191B34EF370051ADA1 /* moai_version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = moai_version.h; sourceTree = "<group>"; };
 		CDEEC77C1C7BCEDC0014CC3F /* ZLResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLResult.h; sourceTree = "<group>"; };
@@ -10667,21 +10667,21 @@
 		CD69AB2817FA6CBE0053E028 /* libtess */ = {
 			isa = PBXGroup;
 			children = (
-				CD69AB2917FA6CF90053E028 /* bucketalloc.c */,
-				CD69AB2A17FA6CF90053E028 /* bucketalloc.h */,
-				CD69AB2B17FA6CF90053E028 /* dict.c */,
-				CD69AB2C17FA6CF90053E028 /* dict.h */,
-				CD69AB2D17FA6CF90053E028 /* geom.c */,
-				CD69AB2E17FA6CF90053E028 /* geom.h */,
-				CD69AB2F17FA6CF90053E028 /* mesh.c */,
-				CD69AB3017FA6CF90053E028 /* mesh.h */,
-				CD69AB3117FA6CF90053E028 /* priorityq.c */,
-				CD69AB3217FA6CF90053E028 /* priorityq.h */,
-				CD69AB3317FA6CF90053E028 /* sweep.c */,
-				CD69AB3417FA6CF90053E028 /* sweep.h */,
-				CD69AB3517FA6CF90053E028 /* tess.c */,
-				CD69AB3617FA6CF90053E028 /* tess.h */,
-				CDE7C5671B0C00440038A8C9 /* tesselator.h */,
+				CD3371A21CAF8E56008B8BC7 /* bucketalloc.c */,
+				CD3371A31CAF8E56008B8BC7 /* bucketalloc.h */,
+				CD3371A41CAF8E56008B8BC7 /* dict.c */,
+				CD3371A51CAF8E56008B8BC7 /* dict.h */,
+				CD3371A61CAF8E56008B8BC7 /* geom.c */,
+				CD3371A71CAF8E56008B8BC7 /* geom.h */,
+				CD3371A81CAF8E56008B8BC7 /* mesh.c */,
+				CD3371A91CAF8E56008B8BC7 /* mesh.h */,
+				CD3371AA1CAF8E56008B8BC7 /* priorityq.c */,
+				CD3371AB1CAF8E56008B8BC7 /* priorityq.h */,
+				CD3371AC1CAF8E56008B8BC7 /* sweep.c */,
+				CD3371AD1CAF8E56008B8BC7 /* sweep.h */,
+				CD3371AE1CAF8E56008B8BC7 /* tess.c */,
+				CD3371AF1CAF8E56008B8BC7 /* tess.h */,
+				CD3371CC1CAF8E62008B8BC7 /* tesselator.h */,
 			);
 			name = libtess;
 			sourceTree = "<group>";
@@ -13265,6 +13265,7 @@
 				CD5F97071C2BD279000FA476 /* kissfft.hh in Headers */,
 				03240C2A13564CB0000ADC60 /* moai_utf8.h in Headers */,
 				CD5F97051C2BD279000FA476 /* kiss_fft.h in Headers */,
+				CD3371B71CAF8E56008B8BC7 /* dict.h in Headers */,
 				CDD48B5217FA794B00525B77 /* SFMT-params1279.h in Headers */,
 				CDD48B5117FA794B00525B77 /* SFMT-params607.h in Headers */,
 				CDD48B5B17FA794B00525B77 /* SFMT-sse2.h in Headers */,
@@ -13272,9 +13273,13 @@
 				CDCDD00C1A23F233008779B5 /* amigaconfig.h in Headers */,
 				CDD48B5417FA794B00525B77 /* SFMT-params4253.h in Headers */,
 				CDCDD0281A23F233008779B5 /* xmlrole.h in Headers */,
+				CD3371BF1CAF8E56008B8BC7 /* mesh.h in Headers */,
+				CD3371B31CAF8E56008B8BC7 /* bucketalloc.h in Headers */,
+				CD3371C71CAF8E56008B8BC7 /* sweep.h in Headers */,
 				CD73D0111BA3FFB800BB50C3 /* jansson_config.h in Headers */,
 				03240CD513564CB0000ADC60 /* ft2build.h in Headers */,
 				03240CD613564CB0000ADC60 /* ftconfig.h in Headers */,
+				CD3371CE1CAF8E62008B8BC7 /* tesselator.h in Headers */,
 				CDCDD0121A23F233008779B5 /* expat_external.h in Headers */,
 				03240CD713564CB0000ADC60 /* ftheader.h in Headers */,
 				CD73D0271BA3FFB800BB50C3 /* utf.h in Headers */,
@@ -13282,13 +13287,12 @@
 				03240CD913564CB0000ADC60 /* ftoption.h in Headers */,
 				03240CDA13564CB0000ADC60 /* ftstdlib.h in Headers */,
 				03240D4E13564CB0000ADC60 /* tinyxml.h in Headers */,
-				CD69AB4E17FA6CF90053E028 /* sweep.h in Headers */,
 				CDD48B5A17FA794B00525B77 /* SFMT-params216091.h in Headers */,
 				CDCDD0141A23F233008779B5 /* expat.h in Headers */,
-				CD69AB3A17FA6CF90053E028 /* bucketalloc.h in Headers */,
 				CD4900AB141AB6EC00913D80 /* lapi.h in Headers */,
 				CDCDD0201A23F233008779B5 /* utf8tab.h in Headers */,
 				CDD48CC117FA79FE00525B77 /* MOAIIso8601DateFormatter.h in Headers */,
+				CD3371CB1CAF8E56008B8BC7 /* tess.h in Headers */,
 				CD4900AD141AB6EC00913D80 /* lauxlib.h in Headers */,
 				CD4900B0141AB6EC00913D80 /* lcode.h in Headers */,
 				CD4900B3141AB6EC00913D80 /* ldebug.h in Headers */,
@@ -13319,18 +13323,17 @@
 				CD4900D9141AB6EC00913D80 /* lundump.h in Headers */,
 				CD4900DB141AB6EC00913D80 /* lvm.h in Headers */,
 				CD4900DD141AB6EC00913D80 /* lzio.h in Headers */,
-				CDE7C5691B0C00440038A8C9 /* tesselator.h in Headers */,
 				CDCDD0161A23F233008779B5 /* iasciitab.h in Headers */,
+				CD3371BB1CAF8E56008B8BC7 /* geom.h in Headers */,
 				CD1642A31C42501E009926E0 /* kiss_fftr.h in Headers */,
 				CDCDD01A1A23F233008779B5 /* latin1tab.h in Headers */,
 				CDD48B5D17FA794B00525B77 /* SFMT.h in Headers */,
 				07658751145CD06900723A7D /* tlsf.h in Headers */,
 				CD73D00F1BA3FFB800BB50C3 /* hashtable.h in Headers */,
 				07658753145CD06900723A7D /* tlsfbits.h in Headers */,
+				CD3371C31CAF8E56008B8BC7 /* priorityq.h in Headers */,
 				CDCDD01E1A23F233008779B5 /* nametab.h in Headers */,
-				CD69AB4617FA6CF90053E028 /* mesh.h in Headers */,
 				CDD48B5317FA794B00525B77 /* SFMT-params2281.h in Headers */,
-				CD69AB5217FA6CF90053E028 /* tess.h in Headers */,
 				CD04AED814725714009C20E5 /* crc32.h in Headers */,
 				CDCDD0221A23F233008779B5 /* winconfig.h in Headers */,
 				CD830D621BED33D000745C8A /* moai_edtaa3func.h in Headers */,
@@ -13349,12 +13352,9 @@
 				CD04AF0814725714009C20E5 /* zlib.h in Headers */,
 				CD04AF0E14725714009C20E5 /* zutil.h in Headers */,
 				663704171612813D002D0D27 /* moai_whirlpool.h in Headers */,
-				CD69AB4A17FA6CF90053E028 /* priorityq.h in Headers */,
-				CD69AB4217FA6CF90053E028 /* geom.h in Headers */,
 				CDD48B5017FA794B00525B77 /* SFMT-params.h in Headers */,
 				CDD48B4E17FA794B00525B77 /* SFMT-alti.h in Headers */,
 				CDD48B5817FA794B00525B77 /* SFMT-params86243.h in Headers */,
-				CD69AB3E17FA6CF90053E028 /* dict.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15439,14 +15439,14 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD8316251BED3BC100745C8A /* bucketalloc.h in Headers */,
-				CD8316281BED3BC100745C8A /* dict.h in Headers */,
-				CD8316291BED3BC100745C8A /* priorityq.h in Headers */,
-				CD83162A1BED3BC100745C8A /* mesh.h in Headers */,
-				CD83162B1BED3BC100745C8A /* geom.h in Headers */,
-				CD83162C1BED3BC100745C8A /* sweep.h in Headers */,
-				CD8316431BED3BC100745C8A /* tesselator.h in Headers */,
-				CD8316481BED3BC100745C8A /* tess.h in Headers */,
+				CD3371CD1CAF8E62008B8BC7 /* tesselator.h in Headers */,
+				CD3371BA1CAF8E56008B8BC7 /* geom.h in Headers */,
+				CD3371C21CAF8E56008B8BC7 /* priorityq.h in Headers */,
+				CD3371BE1CAF8E56008B8BC7 /* mesh.h in Headers */,
+				CD3371CA1CAF8E56008B8BC7 /* tess.h in Headers */,
+				CD3371C61CAF8E56008B8BC7 /* sweep.h in Headers */,
+				CD3371B61CAF8E56008B8BC7 /* dict.h in Headers */,
+				CD3371B21CAF8E56008B8BC7 /* bucketalloc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17155,7 +17155,6 @@
 				03240CED13564CB0000ADC60 /* truetype.c in Sources */,
 				03240CEE13564CB0000ADC60 /* type1.c in Sources */,
 				03240CEF13564CB0000ADC60 /* type1cid.c in Sources */,
-				CD69AB4017FA6CF90053E028 /* geom.c in Sources */,
 				03240CF013564CB0000ADC60 /* type42.c in Sources */,
 				03240CF113564CB0000ADC60 /* winfnt.c in Sources */,
 				03240CF213564CB0000ADC60 /* autofit.c in Sources */,
@@ -17172,21 +17171,25 @@
 				03240CFC13564CB0000ADC60 /* ftgzip.c in Sources */,
 				03240CFD13564CB0000ADC60 /* ftinit.c in Sources */,
 				03240CFE13564CB0000ADC60 /* ftlzw.c in Sources */,
+				CD3371C51CAF8E56008B8BC7 /* sweep.c in Sources */,
 				03240CFF13564CB0000ADC60 /* ftstroke.c in Sources */,
 				03240D0013564CB0000ADC60 /* ftsystem.c in Sources */,
 				03240D0113564CB0000ADC60 /* smooth.c in Sources */,
-				CD69AB3817FA6CF90053E028 /* bucketalloc.c in Sources */,
 				CDCDD02E1A23F233008779B5 /* xmltok_ns.c in Sources */,
 				CD73D01B1BA3FFB800BB50C3 /* memory.c in Sources */,
 				03240D4D13564CB0000ADC60 /* tinyxml.cpp in Sources */,
 				03240D4F13564CB0000ADC60 /* tinyxmlerror.cpp in Sources */,
 				03240D5013564CB0000ADC60 /* tinyxmlparser.cpp in Sources */,
+				CD3371B91CAF8E56008B8BC7 /* geom.c in Sources */,
 				CD4900AA141AB6EC00913D80 /* lapi.c in Sources */,
+				CD3371BD1CAF8E56008B8BC7 /* mesh.c in Sources */,
 				CD4900AC141AB6EC00913D80 /* lauxlib.c in Sources */,
 				CD4900AE141AB6EC00913D80 /* lbaselib.c in Sources */,
 				CD4900AF141AB6EC00913D80 /* lcode.c in Sources */,
+				CD3371B11CAF8E56008B8BC7 /* bucketalloc.c in Sources */,
 				CD4900B1141AB6EC00913D80 /* ldblib.c in Sources */,
 				CD4900B2141AB6EC00913D80 /* ldebug.c in Sources */,
+				CD3371C11CAF8E56008B8BC7 /* priorityq.c in Sources */,
 				CD4900B4141AB6EC00913D80 /* ldo.c in Sources */,
 				CD4900B6141AB6EC00913D80 /* ldump.c in Sources */,
 				CD73D0251BA3FFB800BB50C3 /* utf.c in Sources */,
@@ -17201,6 +17204,7 @@
 				CD4900C3141AB6EC00913D80 /* loadlib.c in Sources */,
 				CD4900C4141AB6EC00913D80 /* lobject.c in Sources */,
 				CD4900C6141AB6EC00913D80 /* lopcodes.c in Sources */,
+				CD3371C91CAF8E56008B8BC7 /* tess.c in Sources */,
 				CD4900C8141AB6EC00913D80 /* loslib.c in Sources */,
 				CD4900C9141AB6EC00913D80 /* lparser.c in Sources */,
 				CD4900CB141AB6EC00913D80 /* lstate.c in Sources */,
@@ -17222,8 +17226,6 @@
 				CDCDD0261A23F233008779B5 /* xmlrole.c in Sources */,
 				CD73D0071BA3FFB800BB50C3 /* dump.c in Sources */,
 				0765874F145CD06900723A7D /* tlsf.c in Sources */,
-				CD69AB4417FA6CF90053E028 /* mesh.c in Sources */,
-				CD69AB4817FA6CF90053E028 /* priorityq.c in Sources */,
 				CD04AECF14725714009C20E5 /* adler32.c in Sources */,
 				CD04AED214725714009C20E5 /* compress.c in Sources */,
 				CD04AED514725714009C20E5 /* crc32.c in Sources */,
@@ -17237,13 +17239,11 @@
 				CD04AEFC14725714009C20E5 /* trees.c in Sources */,
 				CD04AF0214725714009C20E5 /* uncompr.c in Sources */,
 				CD04AF0B14725714009C20E5 /* zutil.c in Sources */,
+				CD3371B51CAF8E56008B8BC7 /* dict.c in Sources */,
 				66E345471614CA710021FC4B /* moai_whirlpool.c in Sources */,
 				CD73D01F1BA3FFB800BB50C3 /* strbuffer.c in Sources */,
 				CDD48CC217FA79FE00525B77 /* MOAIIso8601DateFormatter.m in Sources */,
 				CD830D611BED33D000745C8A /* moai_edtaa3func.c in Sources */,
-				CD69AB3C17FA6CF90053E028 /* dict.c in Sources */,
-				CD69AB5017FA6CF90053E028 /* tess.c in Sources */,
-				CD69AB4C17FA6CF90053E028 /* sweep.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19634,13 +19634,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD83164D1BED3BC100745C8A /* tess.c in Sources */,
-				CD83164E1BED3BC100745C8A /* bucketalloc.c in Sources */,
-				CD83164F1BED3BC100745C8A /* dict.c in Sources */,
-				CD8316511BED3BC100745C8A /* priorityq.c in Sources */,
-				CD8316521BED3BC100745C8A /* sweep.c in Sources */,
-				CD8316541BED3BC100745C8A /* geom.c in Sources */,
-				CD8316561BED3BC100745C8A /* mesh.c in Sources */,
+				CD3371C81CAF8E56008B8BC7 /* tess.c in Sources */,
+				CD3371C41CAF8E56008B8BC7 /* sweep.c in Sources */,
+				CD3371BC1CAF8E56008B8BC7 /* mesh.c in Sources */,
+				CD3371C01CAF8E56008B8BC7 /* priorityq.c in Sources */,
+				CD3371B01CAF8E56008B8BC7 /* bucketalloc.c in Sources */,
+				CD3371B41CAF8E56008B8BC7 /* dict.c in Sources */,
+				CD3371B81CAF8E56008B8BC7 /* geom.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -20944,12 +20944,12 @@
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
 					"\"../../3rdparty/sdl2-2.0.4/include\"",
-					"\"../../3rdparty/libtess2/include\"",
 					"\"../../3rdparty/sfmt-1.4\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Common\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
 					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
+					"\"../../3rdparty/libtess2/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "";
@@ -22260,12 +22260,12 @@
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
 					"\"../../3rdparty/sdl2-2.0.4/include\"",
-					"\"../../3rdparty/libtess2/include\"",
 					"\"../../3rdparty/sfmt-1.4\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Common\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
 					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
+					"\"../../3rdparty/libtess2/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "";
@@ -29504,12 +29504,12 @@
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
 					"\"../../3rdparty/sdl2-2.0.4/include\"",
-					"\"../../3rdparty/libtess2/include\"",
 					"\"../../3rdparty/sfmt-1.4\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Common\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
 					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
+					"\"../../3rdparty/libtess2/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "";
@@ -29897,12 +29897,12 @@
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
 					"\"../../3rdparty/sdl2-2.0.4/include\"",
-					"\"../../3rdparty/libtess2/include\"",
 					"\"../../3rdparty/sfmt-1.4\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Common\"",
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
 					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
+					"\"../../3rdparty/libtess2/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "";

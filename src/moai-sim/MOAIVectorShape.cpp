@@ -129,7 +129,7 @@ void MOAIVectorShape::Stroke ( SafeTesselator& tess, const ZLVec2D* verts, int n
 	
 	MOAIVectorUtil::StrokeLine ( this->mStyle, contour, joins, nVerts, width, exact );
 	
-	tessAddContour ( tess.mTess, 2, contour, sizeof ( ZLVec2D ), contourVerts );
+	tess.AddContour ( 2, contour, sizeof ( ZLVec2D ), contourVerts );
 }
 
 //----------------------------------------------------------------//

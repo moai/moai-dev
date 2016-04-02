@@ -3,8 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "SDL.h"
-#include "SDL_Opengl.h"
+#include <GLFW/glfw3.h>
 #include "nanosvg.h"
 #include "tesselator.h"
 
@@ -12,12 +11,14 @@
 void* stdAlloc(void* userData, unsigned int size)
 {
 	int* allocated = ( int*)userData;
+	TESS_NOTUSED(userData);
 	*allocated += (int)size;
 	return malloc(size);
 }
 
 void stdFree(void* userData, void* ptr)
 {
+	TESS_NOTUSED(userData);
 	free(ptr);
 }
 
@@ -31,18 +32,22 @@ struct MemPool
 void* poolAlloc( void* userData, unsigned int size )
 {
 	struct MemPool* pool = (struct MemPool*)userData;
+	size = (size+0x7) & ~0x7;
 	if (pool->size + size < pool->cap)
 	{
 		unsigned char* ptr = pool->buf + pool->size;
 		pool->size += size;
 		return ptr;
 	}
+	printf("out of mem: %d < %d!\n", pool->size + size, pool->cap);
 	return 0;
 }
 
 void poolFree( void* userData, void* ptr )
 {
 	// empty
+	TESS_NOTUSED(userData);
+	TESS_NOTUSED(ptr);
 }
 
 
@@ -50,37 +55,55 @@ void poolFree( void* userData, void* ptr )
 #define USE_POOL 1
 
 
+int run = 1;
+
+static void key(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	TESS_NOTUSED(scancode);
+	TESS_NOTUSED(mods);
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, GL_TRUE);
+	if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
+		run = !run;
+}
+
 int main(int argc, char *argv[])
 {
-	int done;
-	SDL_Event event;
-	SDL_Surface* screen;
-	const SDL_VideoInfo* vi;
+	GLFWwindow* window;
+	const GLFWvidmode* mode;
 	int width,height,i,j;
 	struct SVGPath* bg;
 	struct SVGPath* fg;
 	struct SVGPath* it;
 	float bounds[4],view[4],cx,cy,w,offx,offy;
-	float t = 0.0f;
-	Uint32 lastTime,time;
+	float t = 0.0f, pt = 0.0f;
 	TESSalloc ma;
 	TESStesselator* tess = 0;
 	const int nvp = 6;
 	unsigned char* vflags = 0;
 	int nvflags = 0;
-	int run = 1;
 #ifdef USE_POOL
 	struct MemPool pool;
-	unsigned char mem[1024*512];
+	unsigned char mem[1024*1024];
 #else
 	int allocated = 0;
 #endif
-	
+	TESS_NOTUSED(argc);
+	TESS_NOTUSED(argv);
+
+	if (!glfwInit()) {
+		printf("Failed to init GLFW.");
+		return -1;
+	}
+
+	printf("loading...\n");
 	// Load assets
-	bg = svgParseFromFile("bg.svg");
+	bg = svgParseFromFile("../Bin/bg.svg");
 	if (!bg) return -1;
-	fg = svgParseFromFile("fg.svg");
+	fg = svgParseFromFile("../Bin/fg.svg");
 	if (!fg) return -1;
+
+	printf("go...\n");
 	
 	// Flip y
 	for (it = bg; it != NULL; it = it->next)
@@ -178,28 +201,17 @@ int main(int argc, char *argv[])
 	
 #endif
 	
-		
-	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
-	{
-		fprintf(stderr, "Couldn't initialize SDL: %s\n", SDL_GetError());
+	mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+	width = mode->width - 40;
+	height = mode->height - 80;
+    window = glfwCreateWindow(width, height, "Libtess2 Demo", NULL, NULL);
+	if (!window) {
+		glfwTerminate();
 		return -1;
 	}
-	
-	// Init OpenGL
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
-	
-	vi = SDL_GetVideoInfo();
-	width = vi->current_w - 20;
-	height = vi->current_h - 80;
-	screen = SDL_SetVideoMode(width, height, 0, SDL_OPENGL);
-	if (!screen) return -1;
-	
-	SDL_WM_SetCaption("libtess2 Demo", 0);
+
+	glfwSetKeyCallback(window, key);
+	glfwMakeContextCurrent(window);
 
 	// Adjust bounds so that we get nice view of the bg.
 	cx = (bounds[0]+bounds[2])/2;
@@ -207,39 +219,16 @@ int main(int argc, char *argv[])
 	w = (bounds[2]-bounds[0])/2;
 	view[0] = cx - w*1.2f;
 	view[2] = cx + w*1.2f;
-	view[1] = cy - w*1.2f*height/width;
-	view[3] = cy + w*1.2f*height/width;
+	view[1] = cy - w*1.2f*(float)height/(float)width;
+	view[3] = cy + w*1.2f*(float)height/(float)width;
 		
-	lastTime = SDL_GetTicks();
-	done = 0;
-	while (!done)
+	glfwSetTime(0);
+
+	while (!glfwWindowShouldClose(window))
 	{
-		while (SDL_PollEvent(&event))
-		{
-			switch (event.type)
-			{
-				case SDL_MOUSEMOTION:
-					break;
-				case SDL_MOUSEBUTTONDOWN:
-					break;
-				case SDL_KEYDOWN:
-					if (event.key.keysym.sym == SDLK_ESCAPE)
-						done = 1;
-					else if (event.key.keysym.sym == SDLK_SPACE)
-						run ^= 1;
-					break;
-				case SDL_QUIT:
-					done = 1;
-					break;
-				default:
-					break;
-			}
-		}
-		
-		time = SDL_GetTicks();
-		if (run)
-			t += (time-lastTime) / 1000.0f;
-		lastTime = time;
+		float ct = (float)glfwGetTime();
+		if (run) t += ct - pt;
+		pt = ct;
 		
 		// Update and render
 		glViewport(0, 0, width, height);
@@ -375,7 +364,8 @@ int main(int argc, char *argv[])
 		}
 		
 		glEnable(GL_DEPTH_TEST);
-		SDL_GL_SwapBuffers();
+		glfwSwapBuffers(window);
+		glfwPollEvents();
 	}
 	
 	if (tess) tessDeleteTess(tess);
@@ -386,6 +376,6 @@ int main(int argc, char *argv[])
 	svgDelete(bg);	
 	svgDelete(fg);	
 
-	SDL_Quit();
+	glfwTerminate();
 	return 0;
 }

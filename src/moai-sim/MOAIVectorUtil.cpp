@@ -11,8 +11,6 @@
 #include <signal.h>
 #include <setjmp.h>
 
-#define TESS_PRECISION 10000
-
 //================================================================//
 // SafeTesselator
 //================================================================//
@@ -22,13 +20,13 @@ const ZLVec3D SafeTesselator::sNormal = ZLVec3D ( 0.0f, 0.0f, 1.0f );
 //----------------------------------------------------------------//
 void SafeTesselator::AddContour ( int size, const void* vertices, int stride, int numVertices ) {
 	
-	tessAddContour ( this->mTess, size, vertices, sizeof ( TESSreal ) * size, numVertices );
+	tessAddContour ( this->mTess, size, vertices, stride, numVertices );
 }
 
 //----------------------------------------------------------------//
 void SafeTesselator::AddPolygon ( const ZLPolygon2D& poly ) {
 
-	tessAddContour ( this->mTess, 2, poly.GetVertices (), sizeof ( TESSreal ) * 2, poly.GetSize ());
+	this->AddContour ( 2, poly.GetVertices (), sizeof ( TESSreal ) * 2, poly.GetSize ());
 }
 
 //----------------------------------------------------------------//
@@ -83,7 +81,7 @@ void SafeTesselator::Reset () {
 		tessDeleteTess ( this->mTess );
 	}
 	this->mTess = tessNewTess ( 0 );
-	tessSetPrecision ( this->mTess, TESS_PRECISION );
+	//tessSetPrecision ( this->mTess, TESS_PRECISION );
 }
 
 //------------------------------------------------------------------//
@@ -171,9 +169,21 @@ void MOAIVectorUtil::ComputeLineJoins ( MOAIVectorLineJoin* joins, const ZLVec2D
 	
 	for ( int i = start; i < max; ++i ) {
 		
-		ZLVec2D n = joins [( i + top ) % nVerts ].mEdgeNorm;
-		n.Add ( joins [ i ].mEdgeNorm );
-		n.Norm ();
+		int prevID = ( i + top ) % nVerts;
+		
+		ZLVec2D prevNorm = joins [ prevID ].mEdgeNorm;
+		ZLVec2D nextNorm = joins [ i ].mEdgeNorm;
+		
+		ZLVec2D n = prevNorm;
+		
+		if ( prevNorm.Dot ( nextNorm ) > -1.0f ) {
+			n.Add ( joins [ i ].mEdgeNorm );
+			n.Norm ();
+		}
+		else {
+			n = joins [ prevID ].mEdgeVec;
+			n.Scale ( scale );
+		}
 		
 		joins [ i ].mJointNorm = n;
 	}
