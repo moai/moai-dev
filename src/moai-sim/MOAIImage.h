@@ -110,6 +110,7 @@ private:
 	static int		_setColor32					( lua_State* L );
 	static int		_setRGBA					( lua_State* L );
 	static int		_simpleThreshold			( lua_State* L );
+	static int		_subdivideRect				( lua_State* L );
 	static int		_write						( lua_State* L );
 
 	//----------------------------------------------------------------//
