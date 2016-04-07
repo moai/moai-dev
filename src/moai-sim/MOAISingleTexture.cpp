@@ -134,7 +134,7 @@ void MOAISingleTexture::CheckFilterModes ( int min, int mag ) {
 void MOAISingleTexture::CleanupOnError () {
 
 	this->mTextureSize = 0;
-	MOAIGfxMgr::GetDrawingAPI ().DeleteHandle ( this->mGLTexID );
+	MOAIGfxMgr::GetDrawingAPI ().Delete ( this->mGLTexID );
 	this->mGLTexID = 0;
 	this->mWidth = 0;
 	this->mHeight = 0;
@@ -327,7 +327,7 @@ MOAISingleTexture::MOAISingleTexture () :
 //----------------------------------------------------------------//
 MOAISingleTexture::~MOAISingleTexture () {
 
-	this->OnGPUDestroy ();
+	this->OnGPUDeleteOrDiscard ( true );
 }
 
 //----------------------------------------------------------------//
@@ -354,26 +354,12 @@ void MOAISingleTexture::OnGPUBind () {
 }
 
 //----------------------------------------------------------------//
-void MOAISingleTexture::OnGPUDestroy () {
+void MOAISingleTexture::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 
-	if ( this->mGLTexID ) {
-		if ( MOAIGfxMgr::IsValid ()) {
-			MOAIGfxMgr::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
-			MOAIGfxMgr::Get ().mResourceMgr.PushDeleter ( this->mGLTexID );
-		}
+	if ( this->mGLTexID  && MOAIGfxMgr::IsValid ()) {
+		MOAIGfxMgr::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
 	}
-	this->mGLTexID = 0;
-}
-
-//----------------------------------------------------------------//
-void MOAISingleTexture::OnGPULost () {
-
-	if ( this->mGLTexID ) {
-		if ( MOAIGfxMgr::IsValid ()) {
-			MOAIGfxMgr::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
-		}
-	}
-	this->mGLTexID = 0;
+	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mGLTexID, shouldDelete );
 }
 
 //----------------------------------------------------------------//
@@ -509,8 +495,7 @@ bool MOAISingleTexture::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rec
 	if ( this->ShouldGenerateMipmaps () || ( this->mWidth != image.GetWidth ()) || ( this->mHeight != image.GetHeight ())) {
 	
 		MOAIGfxMgr::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
-		MOAIGfxMgr::Get ().mResourceMgr.PushDeleter ( this->mGLTexID );
-		this->mGLTexID = 0;
+		MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mGLTexID, false );
 		
 		if ( this->CreateTextureFromImage ( image )) {
 			MOAIGfxMgr::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );

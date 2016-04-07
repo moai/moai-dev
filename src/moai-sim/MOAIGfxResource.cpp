@@ -136,10 +136,7 @@ u32 MOAIGfxResource::Bind () {
 //----------------------------------------------------------------//
 void MOAIGfxResource::Destroy () {
 
-	if ( MOAIGfxMgr::IsValid ()) {
-		this->OnGPUDestroy ();
-	}
-	this->OnGPULost ();
+	this->OnGPUDeleteOrDiscard ( true );
 	this->OnCPUDestroy ();
 	this->mState = STATE_UNINITIALIZED;
 }
@@ -277,7 +274,7 @@ bool MOAIGfxResource::Purge ( u32 age ) {
 
 	if ( this->mLastRenderCount <= age ) {
 		this->OnCPUDestroy ();
-		this->OnGPUDestroy ();
+		this->OnGPUDeleteOrDiscard ( true );
 		this->mState = STATE_READY_FOR_CPU_CREATE;
 		
 		this->ScheduleForGPUCreate ( MOAIGfxPipelineClerk::DRAWING_PIPELINE );
@@ -328,7 +325,7 @@ void MOAIGfxResource::Renew () {
 	// any (valid) state other than error we go back to square zero
 	if ( !(( this->mState == STATE_UNINITIALIZED ) || ( this->mState == STATE_ERROR ))) {
 	
-		this->OnGPULost (); // clear out the resource id (if any)
+		this->OnGPUDeleteOrDiscard ( false ); // clear out the resource id (if any)
 		this->mState = STATE_READY_FOR_CPU_CREATE;
 		this->InvokeLoader ();
 		this->DoGPUCreate ();

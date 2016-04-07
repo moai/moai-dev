@@ -43,6 +43,7 @@ AKU_API void			AKUSimContextInitialize			();
 // management api
 AKU_API void			AKUDetectFramebuffer			();
 AKU_API void			AKUDetectGfxContext				();
+AKU_API void			AKUDiscardGfxResources			();
 AKU_API double			AKUGetSimStep					();
 AKU_API int				AKUIsGfxBufferOpaque			();
 AKU_API void			AKUPause						( bool pause );

@@ -22,6 +22,12 @@ void AKUDetectGfxContext () {
 }
 
 //----------------------------------------------------------------//
+void AKUDiscardGfxResources () {
+
+	MOAIGfxMgr::Get ().mResourceMgr.DiscardResources ();
+}
+
+//----------------------------------------------------------------//
 void AKUDisplayListBeginPhase ( int phase ) {
 
 	MOAIGfxMgr::Get ().mPipelineMgr.BeginPhase ( phase );

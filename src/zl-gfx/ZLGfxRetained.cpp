@@ -336,104 +336,6 @@ ZLGfxHandle* ZLGfxRetained::Create ( ZLGfxHandle* handle, u32 param ) {
 }
 
 //----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxRetained::CreateBuffer () {
-
-	assert ( this->mStream );
-
-	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::BUFFER, 0, false );
-	
-	this->mStream->Write < u32 >( CREATE );
-	this->mStream->Write < ZLGfxHandle* >( handle );
-	this->mStream->Write < u32 >( 0 );
-	
-	return handle;
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxRetained::CreateFramebuffer () {
-
-	assert ( this->mStream );
-
-	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::FRAMEBUFFER, 0, false );
-	
-	this->mStream->Write < u32 >( CREATE );
-	this->mStream->Write < ZLGfxHandle* >( handle );
-	this->mStream->Write < u32 >( 0 );
-	
-	return handle;
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxRetained::CreateProgram () {
-
-	assert ( this->mStream );
-
-	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::PROGRAM, 0, false );
-	
-	this->mStream->Write < u32 >( CREATE );
-	this->mStream->Write < ZLGfxHandle* >( handle );
-	this->mStream->Write < u32 >( 0 );
-	
-	return handle;
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxRetained::CreateRenderbuffer () {
-
-	assert ( this->mStream );
-
-	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::RENDERBUFFER, 0, false );
-	
-	this->mStream->Write < u32 >( CREATE );
-	this->mStream->Write < ZLGfxHandle* >( handle );
-	this->mStream->Write < u32 >( 0 );
-	
-	return handle;
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxRetained::CreateShader ( u32 shaderType ) {
-
-	assert ( this->mStream );
-
-	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::SHADER, 0, false );
-	
-	this->mStream->Write < u32 >( CREATE );
-	this->mStream->Write < ZLGfxHandle* >( handle );
-	this->mStream->Write < u32 >( shaderType );
-	
-	return handle;
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxRetained::CreateTexture () {
-
-	assert ( this->mStream );
-
-	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::TEXTURE, 0, false );
-	
-	this->mStream->Write < u32 >( CREATE );
-	this->mStream->Write < ZLGfxHandle* >( handle );
-	this->mStream->Write < u32 >( 0 );
-	
-	return handle;
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxRetained::CreateVertexArray () {
-
-	assert ( this->mStream );
-
-	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::VERTEXARRAY, 0, false );
-	
-	this->mStream->Write < u32 >( CREATE );
-	this->mStream->Write < ZLGfxHandle* >( handle );
-	this->mStream->Write < u32 >( 0 );
-	
-	return handle;
-}
-
-//----------------------------------------------------------------//
 void ZLGfxRetained::CullFace ( u32 mode ) {
 
 	assert ( this->mStream );
@@ -443,12 +345,13 @@ void ZLGfxRetained::CullFace ( u32 mode ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::DeleteHandle ( ZLGfxHandle* handle ) {
+void ZLGfxRetained::Delete ( u32 type, u32 glid ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( DELETE );
-	this->mStream->Write < ZLGfxHandle* >( handle );
+	this->mStream->Write < u32 >( type );
+	this->mStream->Write < u32 >( glid );
 }
 
 //----------------------------------------------------------------//
@@ -712,7 +615,10 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			case DELETE: {
 			
 				ZLGfxHandle* handle = this->mStream->Read < ZLGfxHandle* >( 0 );
-				draw.DeleteHandle ( handle );
+				draw.Delete (
+					this->mStream->Read < u32 >( 0 ),
+					this->mStream->Read < u32 >( 0 )
+				);
 				break;
 			}
 			case DEPTH_FUNC: {

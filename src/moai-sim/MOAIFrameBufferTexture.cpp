@@ -81,7 +81,7 @@ MOAIFrameBufferTexture::MOAIFrameBufferTexture () :
 //----------------------------------------------------------------//
 MOAIFrameBufferTexture::~MOAIFrameBufferTexture () {
 
-	this->OnGPUDestroy ();
+	this->OnGPUDeleteOrDiscard ( true );
 }
 
 //----------------------------------------------------------------//
@@ -157,10 +157,10 @@ bool MOAIFrameBufferTexture::OnGPUCreate () {
 	
 	if ( gfx.PushErrorHandler ()) {
 	
-		gfx.DeleteHandle ( this->mGLFrameBufferID );
-		gfx.DeleteHandle ( this->mGLColorBufferID );
-		gfx.DeleteHandle ( this->mGLDepthBufferID );
-		gfx.DeleteHandle ( this->mGLStencilBufferID );
+		gfx.Delete ( this->mGLFrameBufferID );
+		gfx.Delete ( this->mGLColorBufferID );
+		gfx.Delete ( this->mGLDepthBufferID );
+		gfx.Delete ( this->mGLStencilBufferID );
 	}
 
 	gfx.PopSection ();
@@ -169,36 +169,14 @@ bool MOAIFrameBufferTexture::OnGPUCreate () {
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferTexture::OnGPUDestroy () {
+void MOAIFrameBufferTexture::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 
-	if ( MOAIGfxMgr::IsValid ()) {
-	
-		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	
-		gfxMgr.mResourceMgr.PushDeleter ( this->mGLFrameBufferID );
-		this->mGLFrameBufferID = 0;
+	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mGLFrameBufferID, shouldDelete );
+	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mGLColorBufferID, shouldDelete );
+	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mGLDepthBufferID, shouldDelete );
+	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mGLStencilBufferID, shouldDelete );
 
-		gfxMgr.mResourceMgr.PushDeleter ( this->mGLColorBufferID );
-		this->mGLColorBufferID = 0;
-
-		gfxMgr.mResourceMgr.PushDeleter ( this->mGLDepthBufferID );
-		this->mGLDepthBufferID = 0;
-		
-		gfxMgr.mResourceMgr.PushDeleter ( this->mGLStencilBufferID );
-		this->mGLStencilBufferID = 0;
-	}
-	this->MOAISingleTexture::OnGPUDestroy ();
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferTexture::OnGPULost () {
-
-	this->mGLFrameBufferID = 0;
-	this->mGLColorBufferID = 0;
-	this->mGLDepthBufferID = 0;
-	this->mGLStencilBufferID = 0;
-
-	this->MOAISingleTexture::OnGPULost ();
+	this->MOAISingleTexture::OnGPUDeleteOrDiscard ( shouldDelete );
 }
 
 //----------------------------------------------------------------//

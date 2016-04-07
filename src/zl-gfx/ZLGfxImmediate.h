@@ -19,6 +19,7 @@ private:
 
 	//----------------------------------------------------------------//
 	ZLGfxHandle*			Create						( ZLGfxHandle* handle, u32 param );
+	void					Delete						( u32 type, u32 glid );
 	void					LogErrors					( cc8* origin );
 
 public:
@@ -62,8 +63,6 @@ public:
 	ZLGfxHandle*			CreateVertexArray			();
 	
 	void					CullFace					( u32 mode );
-	
-	void					DeleteHandle				( ZLGfxHandle* handle );
 	
 	void					DepthFunc					( u32 depthFunc );
 	void					DepthMask					( bool flag );

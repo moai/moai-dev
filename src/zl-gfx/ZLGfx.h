@@ -96,6 +96,7 @@ class ZLGfx {
 
 	//----------------------------------------------------------------//
 	virtual ZLGfxHandle*			Create						( ZLGfxHandle* handle, u32 param ) = 0;
+	virtual void					Delete						( u32 type, u32 glid ) = 0;
 
 public:
 
@@ -132,23 +133,26 @@ public:
 	
 	virtual ZLSharedConstBuffer*	CopyBuffer					( ZLSharedConstBuffer* buffer ) = 0;
 	
-	virtual ZLGfxHandle*			CreateBuffer				() = 0;
-	virtual ZLGfxHandle*			CreateFramebuffer			() = 0;
-	virtual ZLGfxHandle*			CreateProgram				() = 0;
-	virtual ZLGfxHandle*			CreateRenderbuffer			() = 0;
-	virtual ZLGfxHandle*			CreateShader				( u32 shaderType ) = 0;
-	virtual ZLGfxHandle*			CreateTexture				() = 0;
-	virtual ZLGfxHandle*			CreateVertexArray			() = 0;
+	ZLGfxHandle*					CreateBuffer				();
+	ZLGfxHandle*					CreateFramebuffer			();
+	ZLGfxHandle*					CreateProgram				();
+	ZLGfxHandle*					CreateRenderbuffer			();
+	ZLGfxHandle*					CreateShader				( u32 shaderType );
+	ZLGfxHandle*					CreateTexture				();
+	ZLGfxHandle*					CreateVertexArray			();
 	
 	virtual void					CullFace					( u32 mode ) = 0;
 	
-	virtual void					DeleteHandle				( ZLGfxHandle* handle ) = 0;
+	void							Delete						( ZLGfxHandle*& handle );
 	
 	virtual void					DepthFunc					( u32 depthFunc ) = 0;
 	virtual void					DepthMask					( bool flag ) = 0;
 	virtual void					Disable						( u32 cap ) = 0;
 	virtual void					DisableClientState			( u32 cap ) = 0;
 	virtual void					DisableVertexAttribArray	( u32 index ) = 0;
+	
+	static void						Discard						( ZLGfxHandle*& handle );
+	
 	virtual void					DrawArrays					( u32 primType, u32 first, u32 count ) = 0;
 	virtual void					DrawElements				( u32 primType, u32 count, u32 indexType, ZLSharedConstBuffer* buffer, size_t offset ) = 0;
 	virtual void					Enable						( u32 cap ) = 0;

@@ -21,12 +21,12 @@ private:
 	ZLLeanStack < ZLGfxHandle*, 32 >	mDeleterStack;
 
 	//----------------------------------------------------------------//
-	void			InsertGfxResource		( MOAIGfxResource& resource );
-	void			ProcessDeleters			();
-	void			ProcessPending			( ZLLeanList < MOAIGfxResource* > &list );
-	void			RemoveGfxResource		( MOAIGfxResource& resource );
-	void			RenewResources			();
-	void			ScheduleGPUAffirm		( MOAIGfxResource& resource, u32 listID );
+	void			InsertGfxResource			( MOAIGfxResource& resource );
+	void			ProcessDeleters				();
+	void			ProcessPending				( ZLLeanList < MOAIGfxResource* > &list );
+	void			RemoveGfxResource			( MOAIGfxResource& resource );
+	void			RenewResources				();
+	void			ScheduleGPUAffirm			( MOAIGfxResource& resource, u32 listID );
 	
 public:
 	
@@ -35,11 +35,12 @@ public:
 	friend class MOAIRenderMgr;
 	
 	//----------------------------------------------------------------//
+	static void		DeleteOrDiscardHandle		( ZLGfxHandle*& handle, bool shouldDelete );
+	void			DiscardResources			();
 					MOAIGfxResourceClerk		();
 					~MOAIGfxResourceClerk		();
-	void			PurgeResources			( u32 age = 0 );
-	void			PushDeleter				( ZLGfxHandle* handle );
-	void			Update					();
+	void			PurgeResources				( u32 age = 0 );
+	void			Update						();
 };
 
 #endif

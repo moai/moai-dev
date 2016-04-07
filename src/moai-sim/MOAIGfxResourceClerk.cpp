@@ -12,6 +12,33 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIGfxResourceClerk::DeleteOrDiscardHandle ( ZLGfxHandle*& handle, bool shouldDelete ) {
+
+	if ( shouldDelete && MOAIGfxMgr::IsValid ()) {
+	
+		MOAIGfxMgr::Get ().mResourceMgr.mDeleterStack.Push ( handle );
+		return;
+	}
+	ZLGfx::Discard ( handle );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxResourceClerk::DiscardResources () {
+
+	ResourceIt resourceIt = this->mResources.Head ();
+	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
+		resourceIt->Data ()->OnGPUDeleteOrDiscard ( false );
+	}
+	
+	size_t top = this->mDeleterStack.GetTop ();
+
+	for ( size_t i = 0; i < top; ++i ) {
+		ZLGfx::Discard ( this->mDeleterStack [ i ]);
+	}
+	this->mDeleterStack.Reset ();
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxResourceClerk::InsertGfxResource ( MOAIGfxResource& resource ) {
 
 	this->mResources.PushBack ( resource.mMasterLink );
@@ -40,7 +67,7 @@ void MOAIGfxResourceClerk::ProcessDeleters () {
 	
 		for ( u32 i = 0; i < top; ++i ) {
 			ZLGfxHandle* handle = this->mDeleterStack [ i ];
-			gfx.DeleteHandle ( handle );
+			gfx.Delete ( handle );
 		}
 		this->mDeleterStack.Reset ();
 	
@@ -76,14 +103,6 @@ void MOAIGfxResourceClerk::PurgeResources ( u32 age ) {
 	}
 	
 	ZLGfxDevice::End ();
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxResourceClerk::PushDeleter ( ZLGfxHandle* handle ) {
-
-	if ( handle ) {
-		this->mDeleterStack.Push ( handle );
-	}
 }
 
 //----------------------------------------------------------------//

@@ -101,8 +101,7 @@ protected:
 	void			OnGfxEvent					( u32 event, void* userdata );
 	void			OnGPUBind					();
 	bool			OnGPUCreate					();
-	void			OnGPUDestroy				();
-	void			OnGPULost					();
+	void			OnGPUDeleteOrDiscard		( bool shouldDelete );
 	void			OnGPUUnbind					();
 	bool			OnGPUUpdate					();
 	void			OnUniformLocation			( u32 addr, void* userdata );

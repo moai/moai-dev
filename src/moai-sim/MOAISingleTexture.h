@@ -73,8 +73,7 @@ protected:
 	void				OnCPUDestroy				();
 	void				OnGfxEvent					( u32 event, void* userdata );
 	void				OnGPUBind					();
-	void				OnGPUDestroy				();
-	void				OnGPULost					();
+	void				OnGPUDeleteOrDiscard		( bool shouldDelete );
 	void				OnGPUUnbind					();
 	bool				OnGPUUpdate					();
 	void				SetTextureID				( ZLGfxHandle* glTexID, int internalFormat, int pixelType, size_t textureSize );

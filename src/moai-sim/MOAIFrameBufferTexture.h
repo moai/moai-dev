@@ -33,8 +33,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	bool				OnGPUCreate					();
-	void				OnGPUDestroy				();
-	void				OnGPULost					();
+	void				OnGPUDeleteOrDiscard		( bool shouldDelete );
 
 public:
 	

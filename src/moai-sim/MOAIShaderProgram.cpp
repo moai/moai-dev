@@ -338,7 +338,7 @@ ZLGfxHandle* MOAIShaderProgram::CompileShader ( u32 type, cc8* source ) {
 	gfx.CompileShader ( shader, true );
 
 	if ( gfx.PushErrorHandler ()) {
-		gfx.DeleteHandle ( shader );
+		gfx.Delete ( shader );
 	}
 
 	gfx.PopSection ();
@@ -480,10 +480,10 @@ bool MOAIShaderProgram::OnGPUCreate () {
 		}
 	}
 
-	gfx.DeleteHandle ( this->mVertexShader );
+	gfx.Delete ( this->mVertexShader );
 	this->mVertexShader = 0;
 
-	gfx.DeleteHandle ( this->mFragmentShader );
+	gfx.Delete ( this->mFragmentShader );
 	this->mFragmentShader = 0;
 
 	//AJV TODO - does the attribute map ever need to be cleared?
@@ -493,26 +493,11 @@ bool MOAIShaderProgram::OnGPUCreate () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgram::OnGPUDestroy () {
+void MOAIShaderProgram::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-
-	gfxMgr.mResourceMgr.PushDeleter ( this->mVertexShader );
-	this->mVertexShader = 0;
-
-	gfxMgr.mResourceMgr.PushDeleter ( this->mFragmentShader );
-	this->mFragmentShader = 0;
-
-	gfxMgr.mResourceMgr.PushDeleter ( this->mProgram );
-	this->mProgram = 0;
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgram::OnGPULost () {
-
-	this->mVertexShader = 0;
-	this->mFragmentShader = 0;
-	this->mProgram = 0;
+	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mVertexShader, shouldDelete );
+	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mFragmentShader, shouldDelete );
+	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mProgram, shouldDelete );
 }
 
 //----------------------------------------------------------------//

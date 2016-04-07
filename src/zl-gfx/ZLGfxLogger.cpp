@@ -239,43 +239,39 @@ void ZLGfxLogger::CullFace ( u32 mode ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::DeleteHandle ( ZLGfxHandle* handle ) {
+void ZLGfxLogger::Delete ( u32 type, u32 glid ) {
 
-	if ( !handle ) return;
+	switch ( type ) {
 	
-	if ( handle->mOwns ) {
-		switch ( handle->mType ) {
+		case ZLGfxHandle::BUFFER:
+			this->PrintLine ( "glDeleteBuffers - handle: %d\n", glid );
+			break;
 		
-			case ZLGfxHandle::BUFFER:
-				this->PrintLine ( "glDeleteBuffers - handle: %d\n", DEREF_HANDLE ( handle ));
-				break;
-			
-			case ZLGfxHandle::FRAMEBUFFER:
-				this->PrintLine ( "glDeleteFramebuffers - handle: %d\n", DEREF_HANDLE ( handle ));
-				break;
-			
-			case ZLGfxHandle::PROGRAM: {
-				this->PrintLine ( "glDeleteProgram - handle: %d\n", DEREF_HANDLE ( handle ));
-				break;
-			}
-			case ZLGfxHandle::SHADER: {
-				this->PrintLine ( "glDeleteShader - handle: %d\n", DEREF_HANDLE ( handle ));
-				break;
-			}
-			case ZLGfxHandle::TEXTURE:
-				this->PrintLine ( "glDeleteTextures - handle: %d\n", DEREF_HANDLE ( handle ));
-				break;
-			
-			case ZLGfxHandle::RENDERBUFFER:
-				this->PrintLine ( "glDeleteRenderbuffers - handle: %d\n", DEREF_HANDLE ( handle ));
-				break;
-			
-			case ZLGfxHandle::VERTEXARRAY:
-				#ifndef MOAI_OS_ANDROID
-					this->PrintLine ( "glDeleteVertexArrays - handle: %d\n", DEREF_HANDLE ( handle ));
-				#endif
+		case ZLGfxHandle::FRAMEBUFFER:
+			this->PrintLine ( "glDeleteFramebuffers - handle: %d\n", glid );
+			break;
+		
+		case ZLGfxHandle::PROGRAM: {
+			this->PrintLine ( "glDeleteProgram - handle: %d\n", glid );
 			break;
 		}
+		case ZLGfxHandle::SHADER: {
+			this->PrintLine ( "glDeleteShader - handle: %d\n", glid );
+			break;
+		}
+		case ZLGfxHandle::TEXTURE:
+			this->PrintLine ( "glDeleteTextures - handle: %d\n", glid );
+			break;
+		
+		case ZLGfxHandle::RENDERBUFFER:
+			this->PrintLine ( "glDeleteRenderbuffers - handle: %d\n", glid );
+			break;
+		
+		case ZLGfxHandle::VERTEXARRAY:
+			#ifndef MOAI_OS_ANDROID
+				this->PrintLine ( "glDeleteVertexArrays - handle: %d\n", glid );
+			#endif
+		break;
 	}
 }
 

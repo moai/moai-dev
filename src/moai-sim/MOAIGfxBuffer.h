@@ -64,8 +64,7 @@ protected:
 	void					OnCPUDestroy			();
 	void					OnGPUBind				();
 	bool					OnGPUCreate				();
-	void					OnGPUDestroy			();
-	void					OnGPULost				();
+	void					OnGPUDeleteOrDiscard	( bool shouldDelete );
 	void					OnGPUUnbind				();
 
 public:

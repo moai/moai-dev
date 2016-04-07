@@ -196,13 +196,11 @@ bool MOAIVertexArray::OnGPUCreate () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexArray::OnGPUDestroy () {
-}
+void MOAIVertexArray::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 
-//----------------------------------------------------------------//
-void MOAIVertexArray::OnGPULost () {
-
-	this->mVAOs.Fill ( 0 );
+	for ( size_t i = 0; i < this->mVAOs.Size (); ++i ) {
+		MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mVAOs [ i ], shouldDelete );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -261,7 +259,7 @@ void MOAIVertexArray::ReserveVAOs ( u32 total ) {
 
 	if ( MOAIGfxMgr::IsValid ()) {
 		for ( size_t i = 0; i < this->mVAOs.Size (); ++i ) {
-			MOAIGfxMgr::Get ().mResourceMgr.PushDeleter ( this->mVAOs [ i ]);
+			MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mVAOs [ i ], false );
 		}
 	}
 	this->mVAOs.Init ( total );

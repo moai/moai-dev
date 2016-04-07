@@ -230,13 +230,10 @@ void MOAIMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIMesh::ReserveVAOs ( u32 total ) {
 
-	if ( MOAIGfxMgr::IsValid ()) {
-		for ( size_t i = 0; i < this->mVAOs.Size (); ++i ) {
-			MOAIGfxMgr::Get ().mResourceMgr.PushDeleter ( this->mVAOs [ i ]);
-		}
+	for ( size_t i = 0; i < this->mVAOs.Size (); ++i ) {
+		MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mVAOs [ i ], false );
 	}
 	this->mVAOs.Init ( total );
-	this->mVAOs.Fill ( 0 );
 }
 
 //----------------------------------------------------------------//

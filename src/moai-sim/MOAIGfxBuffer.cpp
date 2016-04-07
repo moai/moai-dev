@@ -209,19 +209,10 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::OnGPUDestroy () {
+void MOAIGfxBuffer::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 
 	for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
-		MOAIGfxMgr::Get ().mResourceMgr.PushDeleter ( this->mVBOs [ i ]);
-		this->mVBOs [ i ] = 0;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxBuffer::OnGPULost () {
-
-	for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
-		this->mVBOs [ i ] = 0;
+		MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mVBOs [ i ], shouldDelete );
 	}
 }
 
