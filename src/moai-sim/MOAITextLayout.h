@@ -118,6 +118,8 @@ private:
 	
 public:
 
+	GET ( const ZLRect&, LayoutBounds, mLayoutBounds )
+
 	//----------------------------------------------------------------//
 	void				AddHighlight			( u32 base, u32 top, u32 color );
 	void				ApplyHighlights			();

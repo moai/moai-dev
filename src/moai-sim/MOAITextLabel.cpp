@@ -223,7 +223,8 @@ int MOAITextLabel::_getTextBounds ( lua_State* L ) {
 		hasRect = self->mLayout.GetBoundsForRange ( index, size, rect );
 	}
 	else {
-		hasRect = self->mLayout.GetBounds ( rect );
+		rect = self->mLayout.GetLayoutBounds ();
+		hasRect = true;
 	}
 	
 	if ( hasRect ) {

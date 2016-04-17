@@ -433,7 +433,7 @@ MOAITextLayout::~MOAITextLayout () {
 //----------------------------------------------------------------//
 void MOAITextLayout::PushLine ( u32 start, u32 size, const ZLVec2D& origin, const ZLRect& layoutBounds ) {
 
-	if ( layoutBounds.Area () == 0.0f ) return;
+	if ( layoutBounds.mYMin == layoutBounds.mYMax ) return;
 
 	MOAITextLine textLine;
 	
