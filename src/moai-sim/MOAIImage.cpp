@@ -2289,16 +2289,18 @@ void MOAIImage::GammaCorrection ( const MOAIImage& image, float gamma ) {
 
 //----------------------------------------------------------------//
 void MOAIImage::GenerateOutlineFromSDF ( ZLIntRect rect, float distMin, float distMax, float r, float g, float b, float a ) {
+
 	u32 width = rect.Width () + 1;
 	u32 height = rect.Height () + 1;
 	
 	for ( int y = 0; y < height; ++y ) {
 		for ( int x = 0; x < width; ++x ) {
+		
 			u32 color = this->GetColor ( x + rect.mXMin, y + rect.mYMin );
 			ZLColorVec colorVec;
 			colorVec.SetRGBA ( color );
 			
-			if ( colorVec.mA >= distMin && colorVec.mA < distMax ) {
+			if ( colorVec.mA > distMin && colorVec.mA <= distMax ) {
 				colorVec.mR = r;
 				colorVec.mG = g;
 				colorVec.mB = b;

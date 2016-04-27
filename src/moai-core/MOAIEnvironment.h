@@ -7,6 +7,7 @@
 #include <moai-core/MOAILua.h>
 #include <moai-core/MOAIEventSource.h>
 
+#define MOAI_ENV_appDirectory				"appDirectory"
 #define MOAI_ENV_appDisplayName				"appDisplayName"
 #define MOAI_ENV_appID						"appID"
 #define MOAI_ENV_appVersion					"appVersion"
