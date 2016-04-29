@@ -621,6 +621,41 @@ int MOAIImage::_getColor32 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getContentRect
+	@text	computes the content rect, not taking in account any boundary transparency
+ 
+	@in		MOAIImage self
+	@out	rect
+ */
+int MOAIImage::_getContentRect(lua_State *L) {
+	MOAI_LUA_SETUP ( MOAIImage, "U" )
+	
+	ZLIntRect contentRect = self->GetContentRect ();
+	int left, right, top, bottom;
+	contentRect.GetRect ( left, top, right, bottom );
+	lua_pushnumber ( state,  left);
+	lua_pushnumber ( state,	 top );
+	lua_pushnumber ( state,  right);
+	lua_pushnumber ( state,	 bottom );
+	
+	return 4;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	getData
+	@text	returns the bitmap data
+ 
+	@in		MOAIImage self
+	@out	byte array string
+ */
+int MOAIImage::_getData(lua_State *L) {
+	MOAI_LUA_SETUP ( MOAIImage, "U" )
+
+	lua_pushlstring ( state, ( const char* )self->mBitmap.GetBuffer (), self->mBitmap.GetSize ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	getFormat
 	@text	Returns the color format of the image.
 
@@ -719,6 +754,34 @@ int MOAIImage::_init ( lua_State* L ) {
 		self->Init ( width, height, ( ZLColor::ColorFormat )colorFmt, TRUECOLOR );
 	}
 	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	isOpaque
+	@text	false if at least one pixel is not opaque
+ 
+	@in		MOAIImage self
+	@out	bool
+ */
+int MOAIImage::_isOpaque(lua_State *L) {
+	MOAI_LUA_SETUP ( MOAIImage, "U" )
+	
+	// TODO: this is so inefficient
+	
+	for ( u32 y = 0; y < self->mHeight; y++ ) {
+		for ( u32 x = 0; x < self->mWidth; x++ ) {
+			ZLColorVec color;
+			color.SetRGBA ( self->GetColor ( x, y ));
+			if ( color.mA != 255 ) {
+				lua_pushboolean ( L, 0 );
+				return 1;
+			}
+		}
+	}
+	
+	// it's opaque!
+	lua_pushboolean ( L, 1 );
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -2658,6 +2721,81 @@ u32 MOAIImage::GetColor ( u32 x, u32 y ) const {
 }
 
 //----------------------------------------------------------------//
+ZLIntRect MOAIImage::GetContentRect () {
+
+	// TODO: this is crazy inefficient
+	// TODO: one iteration through all pixels should be sufficient
+	// TODO: should just check alpha bitmask from GetColor ()
+
+	u32 cropLeft = -1;
+	for ( u32 x = 0; x < this->mWidth; x++ ) {
+		for ( u32 y = 0; y < this->mHeight; y++ ) {
+			ZLColorVec color;
+			color.SetRGBA ( this->GetColor ( x, y ));
+			if ( color.mA > 0 ) {
+				cropLeft = x;
+				break;
+			}
+		}
+		if ( cropLeft != -1 )
+			break;
+	}
+	
+	if ( cropLeft == -1 ) {
+		// completely empty image!
+		ZLIntRect rect;
+		rect.Init ( 0, 0, 0, 0 );
+		return rect;
+	}
+
+	u32 cropRight = -1;
+	for ( u32 x = this->mWidth - 1; x >= 0; x-- ) {
+		for ( u32 y = 0; y < this->mHeight; y++ ) {
+			ZLColorVec color;
+			color.SetRGBA ( this->GetColor ( x, y ));
+			if ( color.mA > 0 ) {
+				cropRight = x + 1;
+				break;
+			}
+		}
+		if ( cropRight != -1 )
+			break;
+	}
+
+	u32 cropTop = -1;
+	for ( u32 y = 0; y < this->mHeight; y++ ) {
+		for ( u32 x = 0; x < this->mWidth; x++ ) {
+			ZLColorVec color;
+			color.SetRGBA ( this->GetColor ( x, y ));
+			if ( color.mA > 0 ) {
+				cropTop = y;
+				break;
+			}
+		}
+		if (cropTop != -1)
+			break;
+	}
+
+	u32 cropBottom = -1;
+	for ( u32 y = this->mHeight - 1; y >= 0; y-- ) {
+		for ( u32 x = 0; x < this->mWidth; x++ ) {
+			ZLColorVec color;
+			color.SetRGBA ( this->GetColor ( x, y ));
+			if ( color.mA > 0 ) {
+				cropBottom = y+1;
+				break;
+			}
+		}
+		if ( cropBottom != -1 )
+			break;
+	}
+
+	ZLIntRect rect;
+	rect.Init ( cropLeft, cropTop, cropRight, cropBottom );
+	return rect;
+}
+
+//----------------------------------------------------------------//
 u32 MOAIImage::GetDataSize () const {
 
 	return this->GetPaletteSize () + this->GetBitmapSize ();
@@ -3051,7 +3189,6 @@ void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "average",					_average },
 		{ "bleedRect",					_bleedRect },
-//		{ "blur",						_blur },
 		{ "compare",					_compare },
 		{ "convert",					_convert },
 		{ "convertColors",				_convert }, // back compat
@@ -3071,10 +3208,13 @@ void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "generateSDFAA",				_generateSDFAA },
 		{ "generateSDFDeadReckoning",	_generateSDFDeadReckoning },
 		{ "getColor32",					_getColor32 },
+		{ "getContentRect",				_getContentRect },
+		{ "getData",					_getData },
 		{ "getFormat",					_getFormat },
 		{ "getRGBA",					_getRGBA },
 		{ "getSize",					_getSize },
 		{ "init",						_init },
+		{ "isOpaque",					_isOpaque },
 		{ "load",						_load },
 		{ "loadAsync",					_loadAsync },
 		{ "loadFromBuffer",				_loadFromBuffer },

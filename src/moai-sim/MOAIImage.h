@@ -95,10 +95,13 @@ private:
 	static int		_generateSDFAA				( lua_State* L );
 	static int		_generateSDFDeadReckoning	( lua_State* L );
 	static int		_getColor32					( lua_State* L );
+	static int		_getContentRect				( lua_State* L );
+	static int		_getData					( lua_State* L );
 	static int		_getFormat					( lua_State* L );
 	static int		_getRGBA					( lua_State* L );
 	static int		_getSize					( lua_State* L );
 	static int		_init						( lua_State* L );
+	static int		_isOpaque					( lua_State* L );
 	static int		_load						( lua_State* L );
 	static int		_loadAsync					( lua_State* L );
 	static int		_loadFromBuffer				( lua_State* L );
@@ -178,6 +181,7 @@ public:
 	u32						GetBitmapSize					() const;
 	ZLIntRect				GetBounds						();
 	u32						GetColor						( u32 x, u32 y ) const;
+	ZLIntRect				GetContentRect					();
 	u32						GetDataSize						() const;
 	static u32				GetMinPowerOfTwo				( u32 size ); // gets the smallest power of two greater than size
 	u32						GetPaletteColor					( u32 idx ) const;
