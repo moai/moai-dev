@@ -9,6 +9,7 @@
 	include $(CLEAR_VARS)
 	
 	MOAI_SDK_HOME	:= $(abspath ../../../)
+	
 	MY_ARM_MODE		:= arm
 	MY_ARM_ARCH		:= armeabi-v7a arm64-v8a x86
 
@@ -41,14 +42,14 @@
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/tlsf-2.0
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/zlib-1.2.3
 
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-contrib.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-expat.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-json.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-lua.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-sfmt.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-sqlite.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-tinyxml.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-zlib.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-contrib.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-expat.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-json.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-lua.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-sfmt.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-sqlite.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-tinyxml.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-zlib.mk
 
 #================================================================#
 # moai core
@@ -59,10 +60,10 @@
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/src
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/src/config-default
 
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/zl-core.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/zl-vfs.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-core.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-util.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/zl-core.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/zl-vfs.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-core.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-util.mk
 
 #================================================================#
 # moai modules
@@ -72,13 +73,13 @@
 	# ADCOLONY
 
 	MY_HEADER_SEARCH_PATHS += 
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-adcolony.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-adcolony.mk
 
 	#--------------------------------------------------------------#
 	# ANDROID
 
 	MY_HEADER_SEARCH_PATHS += 
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-android.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-android.mk
 
 	#--------------------------------------------------------------#
 	# BOX2D
@@ -91,14 +92,14 @@
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/Box2D/Dynamics
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/Box2D/Dynamics/Contacts
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/box2d-2.3.0/Box2D/Dynamics/Joints
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-box2d.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-box2d.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-box2d.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-box2d.mk
 
 	#--------------------------------------------------------------#
 	# CHARTBOOST
 
 	MY_HEADER_SEARCH_PATHS += 
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-chartboost.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-chartboost.mk
 
 	#--------------------------------------------------------------#
 	# CRYPTO
@@ -107,30 +108,30 @@
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-crypto-a.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-crypto-b.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-crypto-c.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-crypto-d.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/zl-crypto.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-crypto.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-crypto-a.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-crypto-b.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-crypto-c.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-crypto-d.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/zl-crypto.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-crypto.mk
 
 	#--------------------------------------------------------------#
 	# FACEBOOK
 
 	MY_HEADER_SEARCH_PATHS += 
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-facebook.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-facebook.mk
 
 	#--------------------------------------------------------------#
 	# FLURRY
 
 	MY_HEADER_SEARCH_PATHS += 
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-flurry.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-flurry.mk
 
 	#--------------------------------------------------------------#
 	# GOOGLE_PLAY_SERVICES
 
 	MY_HEADER_SEARCH_PATHS += 
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-google-play-services.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-google-play-services.mk
 
 	#--------------------------------------------------------------#
 	# HTTP_CLIENT
@@ -140,45 +141,45 @@
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/curl-7.19.7/include-android
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include-android
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-c-ares.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-curl.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-ssl.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-http-client.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-c-ares.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-curl.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-ssl.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-http-client.mk
 
 	#--------------------------------------------------------------#
 	# HTTP_SERVER
 
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/mongoose
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-mongoose.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-http-server.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-mongoose.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-http-server.mk
 
 	#--------------------------------------------------------------#
 	# IMAGE_JPG
 
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/jpeg-8c
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-jpg.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-jpg.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-jpg.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-image-jpg.mk
 
 	#--------------------------------------------------------------#
 	# IMAGE_PNG
 
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/lpng140
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-png.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-png.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-png.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-image-png.mk
 
 	#--------------------------------------------------------------#
 	# IMAGE_PVR
 
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/libpvr-3.4
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-pvr.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-pvr.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-pvr.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-image-pvr.mk
 
 	#--------------------------------------------------------------#
 	# IMAGE_WEBP
 
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-webp.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-webp.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-webp.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-image-webp.mk
 
 	#--------------------------------------------------------------#
 	# LUAEXT
@@ -189,7 +190,7 @@
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luasocket-2.0.2/src
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luasocket-2.0.2-embed/src
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luasql-2.2.0/src
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-luaext.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-luaext.mk
 
 	#--------------------------------------------------------------#
 	# SIM
@@ -201,22 +202,22 @@
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/config
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/libtess2/Include
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-freetype.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-tess.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/zl-gfx.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-sim.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-freetype.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-tess.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/zl-gfx.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-sim.mk
 
 	#--------------------------------------------------------------#
 	# TAPJOY
 
 	MY_HEADER_SEARCH_PATHS += 
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-tapjoy.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-tapjoy.mk
 
 	#--------------------------------------------------------------#
 	# TWITTER
 
 	MY_HEADER_SEARCH_PATHS += 
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-twitter.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-twitter.mk
 
 	#--------------------------------------------------------------#
 	# UNTZ
@@ -228,16 +229,16 @@
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/libvorbis-1.3.2/include
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/libvorbis-1.3.2/lib
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/libogg-1.2.2/include
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-ogg.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-vorbis.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-untz.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-untz.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-ogg.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-vorbis.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-untz.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-untz.mk
 
 	#--------------------------------------------------------------#
 	# VUNGLE
 
 	MY_HEADER_SEARCH_PATHS += 
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-vungle.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-vungle.mk
 
 
 #================================================================#
@@ -245,4 +246,9 @@
 #================================================================#
 
 	include libraries.mk
-	include $(MY_INCLUDES)
+  ifdef USE_PREBUILT
+   include $(MOAI_SDK_HOME)/libmoai/jni/prebuiltcore.mk
+   include $(MOAI_SDK_HOME)/libmoai/jni/prebuilt.mk
+  else
+	 include $(MY_INCLUDES)
+  endif
