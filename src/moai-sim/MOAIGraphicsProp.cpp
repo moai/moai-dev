@@ -27,6 +27,61 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGraphicsProp::_getBillboard ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+	
+	state.Push ( self->mBillboard );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGraphicsProp::_getBlendEquation ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+	
+	state.Push ( self->mBlendMode.mEquation );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGraphicsProp::_getBlendMode ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+	
+	state.Push ( self->mBlendMode.mSourceFactor );
+	state.Push ( self->mBlendMode.mDestFactor );
+	return 2;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGraphicsProp::_getCullMode ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+	
+	state.Push ( self->mCullMode );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGraphicsProp::_getDepthMask ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+	
+	state.Push ( self->mDepthMask );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGraphicsProp::_getDepthTest ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+	
+	state.Push ( self->mDepthTest );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getIndexBatchSize
 	@text	Return the index batch size of the material batch attached
 			to the prop.
@@ -962,6 +1017,12 @@ void MOAIGraphicsProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIColor::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
+		{ "getBillboard",			_getBillboard },
+		{ "getBlendEquation",		_getBlendEquation },
+		{ "getBlendMode",			_getBlendMode },
+		{ "getCullMode",			_getCullMode },
+		{ "getDepthMask",			_getDepthMask },
+		{ "getDepthTest",			_getDepthTest },
 		{ "getIndexBatchSize",		_getIndexBatchSize },
 		{ "getMaterialBatch",		_getMaterialBatch },
 		{ "getScissorRect",			_getScissorRect },
