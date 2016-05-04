@@ -232,7 +232,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\sdl2-2.0.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;DECLSPEC=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -240,7 +240,7 @@
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>CompileAsC</CompileAs>
-      <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles>zl-vfs/zl_replace.h;../3rdparty/sdl2-2.0.0/include-moai/SDL_config_windows.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <ForcedUsingFiles>%(ForcedUsingFiles)</ForcedUsingFiles>
     </ClCompile>
     <PostBuildEvent>
@@ -320,7 +320,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\sdl2-2.0.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;DECLSPEC=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -328,7 +328,7 @@
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>CompileAsC</CompileAs>
-      <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles>zl-vfs/zl_replace.h;../3rdparty/sdl2-2.0.0/include-moai/SDL_config_windows.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <ForcedUsingFiles>%(ForcedUsingFiles)</ForcedUsingFiles>
     </ClCompile>
     <PostBuildEvent>
@@ -408,7 +408,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\sdl2-2.0.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;DECLSPEC=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -416,7 +416,7 @@
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>CompileAsC</CompileAs>
-      <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles>zl-vfs/zl_replace.h;../3rdparty/sdl2-2.0.0/include-moai/SDL_config_windows.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <ForcedUsingFiles>%(ForcedUsingFiles)</ForcedUsingFiles>
     </ClCompile>
     <PostBuildEvent>
@@ -549,7 +549,6 @@
     <ClInclude Include="..\..\3rdparty\sdl2-2.0.0\src\libm\math.h" />
     <ClInclude Include="..\..\3rdparty\sdl2-2.0.0\src\libm\math_private.h" />
     <ClInclude Include="..\..\3rdparty\sdl2-2.0.0\src\render\mmx.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="..\..\3rdparty\sdl2-2.0.0\src\audio\SDL_audio_c.h" />
     <ClInclude Include="..\..\3rdparty\sdl2-2.0.0\src\audio\SDL_audiodev_c.h" />
     <ClInclude Include="..\..\3rdparty\sdl2-2.0.0\src\audio\SDL_audiomem.h" />
@@ -732,9 +731,6 @@
     <ClCompile Include="..\..\3rdparty\sdl2-2.0.0\src\audio\xaudio2\SDL_xaudio2.c" />
     <ClCompile Include="..\..\3rdparty\sdl2-2.0.0\src\render\SDL_yuv_mmx.c" />
     <ClCompile Include="..\..\3rdparty\sdl2-2.0.0\src\render\SDL_yuv_sw.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="..\..\3rdparty\sdl2-2.0.0\src\main\windows\version.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

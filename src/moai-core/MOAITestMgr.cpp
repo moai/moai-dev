@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <jansson.h>
 #include <moai-core/MOAITestMgr.h>
 
 //================================================================//

@@ -124,6 +124,7 @@ void ZLGfxLogger::Comment ( cc8* comment ) {
 
 //----------------------------------------------------------------//
 void ZLGfxLogger::CompileShader ( ZLGfxHandle* shader, bool log ) {
+	UNUSED ( log );
 
 	this->PrintLine ( "glCompileShader - shader: %d\n", DEREF_HANDLE ( shader ));
 }
@@ -131,7 +132,7 @@ void ZLGfxLogger::CompileShader ( ZLGfxHandle* shader, bool log ) {
 //----------------------------------------------------------------//
 void ZLGfxLogger::CompressedTexImage2D ( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, ZLSharedConstBuffer* buffer ) {
 	
-	const void* data = ( const void* )ZLSharedConstBuffer::GetConstData ( buffer );
+	//const void* data = ( const void* )ZLSharedConstBuffer::GetConstData ( buffer );
 	
 	this->PrintLine ( "glCompressedTexImage2D - level: %d internalFormat: %d width: %d height: %d imageSize: %d buffer: %p\n",
 		level,
@@ -399,6 +400,7 @@ void ZLGfxLogger::LineWidth ( float width ) {
 
 //----------------------------------------------------------------//
 void ZLGfxLogger::LinkProgram ( ZLGfxHandle* program, bool log ) {
+	UNUSED ( log );
 
 	this->PrintLine ( "glLinkProgram - program: %d\n", DEREF_HANDLE ( program ));
 }
@@ -448,6 +450,7 @@ void ZLGfxLogger::PrintLine ( cc8* format, ... ) {
 bool ZLGfxLogger::PushErrorHandler () {
 
 	this->PrintLine ( "PUSH ERROR HANDLER\n" );
+	return true;
 }
 
 //----------------------------------------------------------------//
@@ -460,6 +463,7 @@ void ZLGfxLogger::PushSection () {
 bool ZLGfxLogger::PushSuccessHandler () {
 
 	this->PrintLine ( "PUSH SUCCESS HANDLER\n" );
+	return true;
 }
 
 //----------------------------------------------------------------//
@@ -492,6 +496,7 @@ void ZLGfxLogger::Scissor ( s32 x, s32 y, u32 w, u32 h ) {
 
 //----------------------------------------------------------------//
 void ZLGfxLogger::ShaderSource ( ZLGfxHandle* shader, cc8* source, size_t length ) {
+	UNUSED ( source );
 	UNUSED ( shader );
 
 	this->PrintLine ( "glShaderSource - length: %d\n", length );
@@ -526,7 +531,7 @@ void ZLGfxLogger::TexImage2D ( u32 level, u32 internalFormat, u32 width, u32 hei
 //----------------------------------------------------------------//
 void ZLGfxLogger::TexParameteri ( u32 pname, s32 param ) {
 
-	this->PrintLine ( "glTexParameteri - pname: %d param: %d\n", GL_UNPACK_ALIGNMENT, 1 );
+	this->PrintLine ( "glTexParameteri - pname: %d param: %d\n", pname, param );
 }
 
 //----------------------------------------------------------------//

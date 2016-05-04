@@ -1,8 +1,6 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include "pch.h"
-
 #include <moai-image-png/MOAIImageFormatPng.h>
 
 #include <png.h>

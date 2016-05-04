@@ -8,6 +8,9 @@
 SUPPRESS_EMPTY_FILE_WARNING
 #if MOAI_WITH_EXPAT
 
+#undef XML_Parser
+#include <expat.h>
+
 //================================================================//
 // ZLXmlElement
 //================================================================//
@@ -66,7 +69,7 @@ void ZLXmlReader::_onText ( void *userData, const char* text, int len ) {
 void ZLXmlReader::Clear () {
 
 	if ( this->mParser ) {
-		XML_ParserFree ( this->mParser );
+		XML_ParserFree (( XML_Parser )this->mParser );
 		this->mParser = 0;
 	}
 	this->mStream = 0;
@@ -93,7 +96,7 @@ ZLXmlElement* ZLXmlReader::GetElement () {
 //----------------------------------------------------------------//
 int ZLXmlReader::GetLineNumber () {
 	
-	return XML_GetCurrentLineNumber ( this->mParser );
+	return XML_GetCurrentLineNumber (( XML_Parser )this->mParser );
 }
 
 //----------------------------------------------------------------//
@@ -169,8 +172,8 @@ ZLXmlElement* ZLXmlReader::Parse () {
 			case XML_STATUS_ERROR: {
 				fprintf ( stderr,
 					"%s at line %d\n",
-					XML_ErrorString ( XML_GetErrorCode ( this->mParser )),
-					( int )XML_GetCurrentLineNumber ( this->mParser )
+					XML_ErrorString ( XML_GetErrorCode (( XML_Parser )this->mParser )),
+					( int )XML_GetCurrentLineNumber (( XML_Parser )this->mParser )
 				);
 				this->mEvent = XML_ERROR;
 				this->SetElement ( 0 );
@@ -215,25 +218,25 @@ ZLXmlElement* ZLXmlReader::PushElement ( cc8* name ) {
 }
 
 //----------------------------------------------------------------//
-XML_Status ZLXmlReader::Resume () {
+int ZLXmlReader::Resume () {
 
 	this->mSuspended = false;
 	this->mEvent = NONE;
 
 	XML_ParsingStatus parsingStatus;
-	XML_GetParsingStatus ( this->mParser, &parsingStatus );
+	XML_GetParsingStatus (( XML_Parser )this->mParser, &parsingStatus );
 	
 	XML_Status status;
 	
 	if ( parsingStatus.parsing == XML_SUSPENDED ) {
-		status = XML_ResumeParser ( this->mParser );
+		status = XML_ResumeParser (( XML_Parser )this->mParser );
 	}
 	else {
 		bool final = this->mInputLen < BUFFER_SIZE;
-		status = XML_Parse ( this->mParser, this->mBuffer, this->mInputLen, final );
+		status = XML_Parse (( XML_Parser )this->mParser, this->mBuffer, this->mInputLen, final );
 	}
 	
-	return status;
+	return ( int )status;
 }
 
 //----------------------------------------------------------------//
@@ -252,10 +255,10 @@ void ZLXmlReader::SetStream ( ZLStream& stream ) {
 
 	this->mStream = &stream;
 	
-	this->mParser = XML_ParserCreate ( NULL );
-	XML_SetUserData ( this->mParser, this );
-	XML_SetElementHandler ( this->mParser, _onElementBegin, _onElementEnd );
-	XML_SetCharacterDataHandler ( this->mParser, _onText );
+	this->mParser = ( ZLXmlParser )XML_ParserCreate ( NULL );
+	XML_SetUserData (( XML_Parser )this->mParser, this );
+	XML_SetElementHandler (( XML_Parser )this->mParser, _onElementBegin, _onElementEnd );
+	XML_SetCharacterDataHandler (( XML_Parser )this->mParser, _onText );
 	
 	this->mInputLen = this->mStream->ReadBytes ( this->mBuffer, BUFFER_SIZE );
 }
@@ -264,7 +267,7 @@ void ZLXmlReader::SetStream ( ZLStream& stream ) {
 void ZLXmlReader::Suspend ( u32 event ) {
 
 	this->mEvent = event;
-	XML_StopParser ( this->mParser, XML_TRUE );
+	XML_StopParser (( XML_Parser )this->mParser, XML_TRUE );
 	this->mSuspended = true;
 }
 

@@ -466,7 +466,7 @@ void ZLGfxRetained::DepthMask ( bool flag ) {
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( DEPTH_MASK );
-	this->mStream->Write < u32 >( flag );
+	this->mStream->Write < u32 >( flag ? 1 : 0 );
 }
 
 //----------------------------------------------------------------//
@@ -628,8 +628,9 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			case CHECK_FRAMEBUFFER_STATUS: {
 			
 				// TODO: GFX
-				u32 target						= this->mStream->Read < u32 >( 0 );
-				
+				//u32 target						= this->mStream->Read < u32 >( 0 );
+				this->mStream->Read < u32 >( 0 );
+
 				break;
 			}
 			case CLEAR: {
@@ -723,9 +724,9 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				break;
 			}
 			case DEPTH_MASK: {
-			
+
 				draw.DepthMask (
-					this->mStream->Read < u32 >( 0 )
+					this->mStream->Read < u32 >( 0 ) == 1
 				);
 				break;
 			}
@@ -832,8 +833,9 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			case GET_CURRENT_FRAMEBUFFER: {
 			
 				// TODO: GFX
-				ZLGfxHandle* handle				= this->mStream->Read < ZLGfxHandle* >( 0 );
-				
+				//ZLGfxHandle* handle				= this->mStream->Read < ZLGfxHandle* >( 0 );
+				this->mStream->Read < ZLGfxHandle* >( 0 );
+
 				break;
 			}
 			case GET_UNIFORM_LOCATION: {
@@ -983,8 +985,8 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			}
 			case UNIFORM_4FV: {
 			
-				u32 location = this->mStream->Read < u32 >( location );
-				u32 count = this->mStream->Read < u32 >( count );
+				u32 location = this->mStream->Read < u32 >( 0 );
+				u32 count = this->mStream->Read < u32 >( 0 );
 				
 				float vec [ 4 ];
 				this->mStream->ReadBytes ( vec, sizeof ( float ) * 4 );

@@ -50,6 +50,9 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\3rdparty\LuaJIT-2.0.3\src\host\minilua.c" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0ADB3D95-A750-4A3F-B2EB-560A7E29C465}</ProjectGuid>
     <RootNamespace>minilua</RootNamespace>
@@ -636,9 +639,6 @@
       <Command>minilua-post.bat $(OutDir)$(TargetName) $(OutDir)luajit</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\3rdparty\LuaJIT-2.0.1\src\host\minilua.c" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

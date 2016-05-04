@@ -51,78 +51,69 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{2C12AE60-0D24-4200-99BB-CB49CBA3003F}</ProjectGuid>
-    <RootNamespace>chipmunk</RootNamespace>
+    <ProjectGuid>{99E440CC-F4D1-427E-9AB0-0BA2F2D1F89D}</ProjectGuid>
+    <RootNamespace>moai-lib-image-jpg</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-LuaJIT|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>NotSet</CharacterSet>
-    <WholeProgramOptimization>false</WholeProgramOptimization>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-LuaJIT|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>NotSet</CharacterSet>
-    <WholeProgramOptimization>false</WholeProgramOptimization>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.2|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>NotSet</CharacterSet>
-    <WholeProgramOptimization>false</WholeProgramOptimization>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.2|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>NotSet</CharacterSet>
-    <WholeProgramOptimization>false</WholeProgramOptimization>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.1|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>NotSet</CharacterSet>
-    <WholeProgramOptimization>false</WholeProgramOptimization>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.1|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>NotSet</CharacterSet>
-    <WholeProgramOptimization>false</WholeProgramOptimization>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-LuaJIT|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-LuaJIT|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.2|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.2|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.1|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.1|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -231,28 +222,30 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.1|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\chipmunk-5.3.4\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_LIB;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>Sync</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
-      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <CompileAs>CompileAsCpp</CompileAs>
       <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <ForcedUsingFiles>%(ForcedUsingFiles)</ForcedUsingFiles>
     </ClCompile>
+    <Lib>
+      <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
     <PostBuildEvent>
       <Command>
       </Command>
     </PostBuildEvent>
-    <Lib>
-      <TargetMachine>
-      </TargetMachine>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.1|x64'">
     <Midl>
@@ -260,55 +253,76 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\chipmunk-5.3.4\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;AKU_STATIC;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>Sync</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
-      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
-      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <CompileAs>CompileAsCpp</CompileAs>
       <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
+    <Lib>
+      <AdditionalDependencies>iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
+      <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
     <PostBuildEvent>
       <Command>
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.1|Win32'">
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
     <ClCompile>
       <Optimization>Full</Optimization>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
-      <OmitFramePointers>true</OmitFramePointers>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\chipmunk-5.3.4\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>false</OmitFramePointers>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
-      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>
       </DebugInformationFormat>
-      <CompileAs>CompileAsCpp</CompileAs>
       <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <ForcedUsingFiles>zipfs/zipfs_replace.h;%(ForcedUsingFiles)</ForcedUsingFiles>
     </ClCompile>
+    <Lib>
+      <AdditionalOptions>/LTCG %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
     <PostBuildEvent>
       <Command>
       </Command>
     </PostBuildEvent>
-    <Lib>
-      <TargetMachine>
-      </TargetMachine>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.1|x64'">
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
     <Midl>
       <TargetEnvironment>X64</TargetEnvironment>
     </Midl>
@@ -317,48 +331,61 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\chipmunk-5.3.4\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_STATIC;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions</EnableEnhancedInstructionSet>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
-      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
-      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <CompileAs>CompileAsCpp</CompileAs>
       <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
+    <Lib>
+      <AdditionalOptions>/LTCG %(AdditionalOptions)</AdditionalOptions>
+      <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
+      <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>xcopy /yr "$(OutDir)$(TargetFileName)" "..\..\windows\bin\"
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.2|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\chipmunk-5.3.4\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\lua-5.2.2\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;XML_STATIC;LUA_COMPAT_MODULE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>Sync</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
-      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <CompileAs>CompileAsCpp</CompileAs>
       <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <ForcedUsingFiles>%(ForcedUsingFiles)</ForcedUsingFiles>
     </ClCompile>
+    <Lib>
+      <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
     <PostBuildEvent>
       <Command>
       </Command>
     </PostBuildEvent>
-    <Lib>
-      <TargetMachine>
-      </TargetMachine>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.2|x64'">
     <Midl>
@@ -366,55 +393,76 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\chipmunk-5.3.4\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\lua-5.2.2\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;XML_STATIC;LUA_COMPAT_MODULE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>Sync</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
-      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
-      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <CompileAs>CompileAsCpp</CompileAs>
       <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
+    <Lib>
+      <AdditionalDependencies>iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
+      <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
     <PostBuildEvent>
       <Command>
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.2|Win32'">
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
     <ClCompile>
       <Optimization>Full</Optimization>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
-      <OmitFramePointers>true</OmitFramePointers>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\chipmunk-5.3.4\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>false</OmitFramePointers>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\lua-5.2.2\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;XML_STATIC;LUA_COMPAT_MODULE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
-      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>
       </DebugInformationFormat>
-      <CompileAs>CompileAsCpp</CompileAs>
       <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <ForcedUsingFiles>zipfs/zipfs_replace.h;%(ForcedUsingFiles)</ForcedUsingFiles>
     </ClCompile>
+    <Lib>
+      <AdditionalOptions>/LTCG %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
     <PostBuildEvent>
       <Command>
       </Command>
     </PostBuildEvent>
-    <Lib>
-      <TargetMachine>
-      </TargetMachine>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.2|x64'">
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
     <Midl>
       <TargetEnvironment>X64</TargetEnvironment>
     </Midl>
@@ -423,48 +471,61 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\chipmunk-5.3.4\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\lua-5.2.2\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;XML_STATIC;LUA_COMPAT_MODULE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions</EnableEnhancedInstructionSet>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
-      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
-      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <CompileAs>CompileAsCpp</CompileAs>
       <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
+    <Lib>
+      <AdditionalOptions>/LTCG %(AdditionalOptions)</AdditionalOptions>
+      <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
+      <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>xcopy /yr "$(OutDir)$(TargetFileName)" "..\..\windows\bin\"
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-LuaJIT|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\chipmunk-5.3.4\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\luajit-2.0.1\src;$(TargetDir)luajit;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;XML_STATIC;MOAI_WITH_LUAJIT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>Sync</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
-      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <CompileAs>CompileAsCpp</CompileAs>
       <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <ForcedUsingFiles>%(ForcedUsingFiles)</ForcedUsingFiles>
     </ClCompile>
+    <Lib>
+      <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
     <PostBuildEvent>
       <Command>
       </Command>
     </PostBuildEvent>
-    <Lib>
-      <TargetMachine>
-      </TargetMachine>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-LuaJIT|x64'">
     <Midl>
@@ -472,55 +533,76 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\chipmunk-5.3.4\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\luajit-2.0.1\src;$(TargetDir)luajit;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;XML_STATIC;MOAI_WITH_LUAJIT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>Sync</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
-      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
-      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <CompileAs>CompileAsCpp</CompileAs>
       <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
+    <Lib>
+      <AdditionalDependencies>iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
+      <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
     <PostBuildEvent>
       <Command>
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-LuaJIT|Win32'">
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
     <ClCompile>
       <Optimization>Full</Optimization>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
-      <OmitFramePointers>true</OmitFramePointers>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\chipmunk-5.3.4\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>false</OmitFramePointers>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\luajit-2.0.1\src;$(TargetDir)luajit;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;XML_STATIC;MOAI_WITH_LUAJIT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
-      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>
       </DebugInformationFormat>
-      <CompileAs>CompileAsCpp</CompileAs>
       <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <ForcedUsingFiles>zipfs/zipfs_replace.h;%(ForcedUsingFiles)</ForcedUsingFiles>
     </ClCompile>
+    <Lib>
+      <AdditionalOptions>/LTCG %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
     <PostBuildEvent>
       <Command>
       </Command>
     </PostBuildEvent>
-    <Lib>
-      <TargetMachine>
-      </TargetMachine>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-LuaJIT|x64'">
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
     <Midl>
       <TargetEnvironment>X64</TargetEnvironment>
     </Midl>
@@ -529,81 +611,47 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\chipmunk-5.3.4\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\luajit-2.0.1\src;$(TargetDir)luajit;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;XML_STATIC;MOAI_WITH_LUAJIT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions</EnableEnhancedInstructionSet>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
-      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
-      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <CompileAs>CompileAsCpp</CompileAs>
       <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
+    <Lib>
+      <AdditionalOptions>/LTCG %(AdditionalOptions)</AdditionalOptions>
+      <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
+      <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>xcopy /yr "$(OutDir)$(TargetFileName)" "..\..\windows\bin\"
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\constraints\cpConstraint.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\constraints\cpDampedRotarySpring.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\constraints\cpDampedSpring.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\constraints\cpGearJoint.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\constraints\cpGrooveJoint.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\constraints\cpPinJoint.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\constraints\cpPivotJoint.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\constraints\cpRatchetJoint.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\constraints\cpRotaryLimitJoint.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\constraints\cpSimpleMotor.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\constraints\cpSlideJoint.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\chipmunk.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\cpArbiter.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\cpArray.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\cpBB.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\cpBody.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\cpCollision.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\cpHashSet.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\cpPolyShape.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\cpShape.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\cpSpace.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\cpSpaceComponent.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\cpSpaceHash.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\cpSpaceQuery.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\cpSpaceStep.c" />
-    <ClCompile Include="..\..\3rdparty\chipmunk-5.3.4\src\cpVect.c" />
+    <ProjectReference Include="..\moai-lib-core\moai-lib-core.vcxproj">
+      <Project>{aa2bd0be-d174-4f8f-a7f7-b924128fed00}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\constraints\cpConstraint.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\constraints\cpDampedRotarySpring.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\constraints\cpDampedSpring.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\constraints\cpGearJoint.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\constraints\cpGrooveJoint.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\constraints\cpPinJoint.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\constraints\cpPivotJoint.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\constraints\cpRatchetJoint.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\constraints\cpRotaryLimitJoint.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\constraints\cpSimpleMotor.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\constraints\cpSlideJoint.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\constraints\util.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\chipmunk.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\chipmunk_ffi.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\chipmunk_private.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\chipmunk_types.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\chipmunk_unsafe.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\cpArbiter.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\cpArray.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\cpBB.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\cpBody.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\cpCollision.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\cpHashSet.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\cpPolyShape.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\cpShape.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\cpSpace.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\cpSpaceHash.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\include\chipmunk\cpVect.h" />
-    <ClInclude Include="..\..\3rdparty\chipmunk-5.3.4\src\prime.h" />
+    <ClCompile Include="..\..\src\moai-image-webp\host.cpp" />
+    <ClCompile Include="..\..\src\moai-image-webp\MOAIImageFormatWebP.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\moai-image-webp\host.h" />
+    <ClInclude Include="..\..\src\moai-image-webp\MOAIImageFormatWebP.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -32,9 +32,9 @@ typedef struct zl_stat {
 // zlcore
 //================================================================//
 
-typedef void ZLDIR;
-typedef void ZLFILE;
-typedef void ZL_TLSF_POOL;
+typedef int ZLDIR;
+typedef int ZLFILE;
+typedef int ZL_TLSF_POOL;
 
 extern ZLFILE* zl_stderr;
 extern ZLFILE* zl_stdin;
@@ -107,7 +107,7 @@ extern ZLFILE*				zl_popen				( const char *command, const char *mode );
 extern int					zl_printf				( const char* format, ... );
 extern int					zl_putc					( int character, ZLFILE* fp );
 extern int					zl_puts					( const char* string );
-extern int					zl_remove				( const char* path );
+extern int 					zl_remove				( const char* path );
 extern int					zl_rename				( const char* oldname, const char* newname );
 extern void					zl_rewind				( ZLFILE* fp );
 extern void					zl_setbuf				( ZLFILE* fp, char* buffer );

@@ -121,6 +121,7 @@
 #include <ctype.h>
 #include <errno.h>
 #include <float.h>
+#include <io.h>
 #include <math.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -134,6 +135,7 @@
 	#include <algorithm>
 	#include <cstdio>
 	#include <cstdlib>
+	#include <fstream>
 	#include <map>
 	#include <set>
 	#include <string>

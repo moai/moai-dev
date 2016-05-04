@@ -697,10 +697,6 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\zl-lib-util\zl-lib-util.vcxproj">
-      <Project>{e97a3e3d-01d5-4210-bca0-a6d816624f1a}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
     <ProjectReference Include="..\zl-lib-vfs\zl-lib-vfs.vcxproj">
       <Project>{1e2d4a61-74ea-46fb-896d-6926dbca43d0}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

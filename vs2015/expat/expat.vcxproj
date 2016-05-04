@@ -50,6 +50,30 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\3rdparty\expat-2.1.0\lib\amigaconfig.h" />
+    <ClInclude Include="..\..\3rdparty\expat-2.1.0\lib\ascii.h" />
+    <ClInclude Include="..\..\3rdparty\expat-2.1.0\lib\asciitab.h" />
+    <ClInclude Include="..\..\3rdparty\expat-2.1.0\lib\expat.h" />
+    <ClInclude Include="..\..\3rdparty\expat-2.1.0\lib\expat_external.h" />
+    <ClInclude Include="..\..\3rdparty\expat-2.1.0\lib\iasciitab.h" />
+    <ClInclude Include="..\..\3rdparty\expat-2.1.0\lib\internal.h" />
+    <ClInclude Include="..\..\3rdparty\expat-2.1.0\lib\latin1tab.h" />
+    <ClInclude Include="..\..\3rdparty\expat-2.1.0\lib\macconfig.h" />
+    <ClInclude Include="..\..\3rdparty\expat-2.1.0\lib\nametab.h" />
+    <ClInclude Include="..\..\3rdparty\expat-2.1.0\lib\utf8tab.h" />
+    <ClInclude Include="..\..\3rdparty\expat-2.1.0\lib\winconfig.h" />
+    <ClInclude Include="..\..\3rdparty\expat-2.1.0\lib\xmlrole.h" />
+    <ClInclude Include="..\..\3rdparty\expat-2.1.0\lib\xmltok.h" />
+    <ClInclude Include="..\..\3rdparty\expat-2.1.0\lib\xmltok_impl.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\3rdparty\expat-2.1.0\lib\xmlparse.c" />
+    <ClCompile Include="..\..\3rdparty\expat-2.1.0\lib\xmlrole.c" />
+    <ClCompile Include="..\..\3rdparty\expat-2.1.0\lib\xmltok.c" />
+    <ClCompile Include="..\..\3rdparty\expat-2.1.0\lib\xmltok_impl.c" />
+    <ClCompile Include="..\..\3rdparty\expat-2.1.0\lib\xmltok_ns.c" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{860D46BC-EC6B-43C3-B335-3479F096FB1B}</ProjectGuid>
     <RootNamespace>expat</RootNamespace>
@@ -232,7 +256,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;HAVE_MEMMOVE;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;HAVE_MEMMOVE;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -330,7 +354,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;HAVE_MEMMOVE;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;HAVE_MEMMOVE;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -428,7 +452,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;HAVE_MEMMOVE;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;HAVE_MEMMOVE;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -522,28 +546,6 @@
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\3rdparty\expat-2.0.1\lib\ascii.h" />
-    <ClInclude Include="..\..\3rdparty\expat-2.0.1\lib\asciitab.h" />
-    <ClInclude Include="..\..\3rdparty\expat-2.0.1\lib\expat.h" />
-    <ClInclude Include="..\..\3rdparty\expat-2.0.1\lib\expat_external.h" />
-    <ClInclude Include="..\..\3rdparty\expat-2.0.1\lib\iasciitab.h" />
-    <ClInclude Include="..\..\3rdparty\expat-2.0.1\lib\internal.h" />
-    <ClInclude Include="..\..\3rdparty\expat-2.0.1\lib\latin1tab.h" />
-    <ClInclude Include="..\..\3rdparty\expat-2.0.1\lib\nametab.h" />
-    <ClInclude Include="..\..\3rdparty\expat-2.0.1\lib\utf8tab.h" />
-    <ClInclude Include="..\..\3rdparty\expat-2.0.1\lib\winconfig.h" />
-    <ClInclude Include="..\..\3rdparty\expat-2.0.1\lib\xmlrole.h" />
-    <ClInclude Include="..\..\3rdparty\expat-2.0.1\lib\xmltok.h" />
-    <ClInclude Include="..\..\3rdparty\expat-2.0.1\lib\xmltok_impl.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\3rdparty\expat-2.0.1\lib\xmlparse.c" />
-    <ClCompile Include="..\..\3rdparty\expat-2.0.1\lib\xmlrole.c" />
-    <ClCompile Include="..\..\3rdparty\expat-2.0.1\lib\xmltok.c" />
-    <ClCompile Include="..\..\3rdparty\expat-2.0.1\lib\xmltok_impl.c" />
-    <ClCompile Include="..\..\3rdparty\expat-2.0.1\lib\xmltok_ns.c" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

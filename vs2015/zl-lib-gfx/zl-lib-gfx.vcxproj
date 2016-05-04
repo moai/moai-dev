@@ -50,6 +50,31 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\zl-gfx\headers.h" />
+    <ClInclude Include="..\..\src\zl-gfx\pch.h" />
+    <ClInclude Include="..\..\src\zl-gfx\ZLGfx-gles.h" />
+    <ClInclude Include="..\..\src\zl-gfx\ZLGfx.h" />
+    <ClInclude Include="..\..\src\zl-gfx\ZLGfxDevice.h" />
+    <ClInclude Include="..\..\src\zl-gfx\ZLGfxEnum.h" />
+    <ClInclude Include="..\..\src\zl-gfx\ZLGfxImmediate.h" />
+    <ClInclude Include="..\..\src\zl-gfx\ZLGfxLogger.h" />
+    <ClInclude Include="..\..\src\zl-gfx\ZLGfxRetained.h" />
+    <ClInclude Include="..\..\src\zl-gfx\zl_gfx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\zl-gfx\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.1|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.2|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug-LuaJIT|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\zl-gfx\ZLGfx.cpp" />
+    <ClCompile Include="..\..\src\zl-gfx\ZLGfxDevice.cpp" />
+    <ClCompile Include="..\..\src\zl-gfx\ZLGfxEnum.cpp" />
+    <ClCompile Include="..\..\src\zl-gfx\ZLGfxImmediate.cpp" />
+    <ClCompile Include="..\..\src\zl-gfx\ZLGfxLogger.cpp" />
+    <ClCompile Include="..\..\src\zl-gfx\ZLGfxRetained.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{15EA6761-E3C5-4035-97EE-4F74A5ACEE96}</ProjectGuid>
     <RootNamespace>zl-lib-gfx</RootNamespace>
@@ -223,7 +248,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\tlsf-2.0;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\glew-1.5.6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -231,7 +256,6 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
-      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -365,7 +389,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\tlsf-2.0;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\glew-1.5.6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_LIB;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -373,7 +397,6 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
-      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -507,7 +530,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\tlsf-2.0;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\glew-1.5.6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -515,7 +538,6 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
-      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -645,23 +667,6 @@
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\src\zl-gfx\headers.h" />
-    <ClInclude Include="..\..\src\zl-gfx\pch.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\src\zl-gfx\pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.1|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.2|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug-LuaJIT|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.1|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.2|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release-LuaJIT|Win32'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\..\src\zl-gfx\zl_gfx_dummy.cpp" />
-    <ClCompile Include="..\..\src\zl-gfx\zl_gfx_flascc.cpp" />
-    <ClCompile Include="..\..\src\zl-gfx\zl_gfx_opengl.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

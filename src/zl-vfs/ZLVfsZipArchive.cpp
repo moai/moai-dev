@@ -125,6 +125,8 @@ int ZLVfsZipEntryHeader::Read ( FILE* file, u32 dataOffset ) {
 
 //----------------------------------------------------------------//
 int ZLVfsZipEntryHeader::StripTimestampsAndSkip ( FILE* file, size_t* fileHeaderAddr ) {
+	UNUSED ( file );
+	UNUSED ( fileHeaderAddr );
 
 	/*
 	unsigned long signature;
@@ -582,7 +584,7 @@ int ZLVfsZipArchive::StripTimestamps ( const char* infilename, const char* outfi
 		fileHeaderAddrTable [ i ] = ftell ( outfile );
 		fileHeader.Write ( outfile );
 		
-		for ( size_t i = 0; i < fileHeader.mNameLength; ++i ) {
+		for ( size_t j = 0; j < fileHeader.mNameLength; ++j ) {
 			putc ( getc ( infile ), outfile );
 		}
 		
@@ -590,7 +592,7 @@ int ZLVfsZipArchive::StripTimestamps ( const char* infilename, const char* outfi
 		
 		size_t size = fileHeader.mCompression == 0 ? fileHeader.mUncompressedSize : fileHeader.mCompressedSize;
 		
-		for ( size_t i = 0; i < size; ++i ) {
+		for ( size_t j = 0; j < size; ++j ) {
 			putc ( getc ( infile ), outfile );
 		}
 		
@@ -617,7 +619,7 @@ int ZLVfsZipArchive::StripTimestamps ( const char* infilename, const char* outfi
 
 		entryHeader.Write ( outfile );
 		
-		for ( size_t i = 0; i < entryHeader.mNameLength; ++i ) {
+		for ( size_t j = 0; j < entryHeader.mNameLength; ++j ) {
 			putc ( getc ( infile ), outfile );
 		}
 		

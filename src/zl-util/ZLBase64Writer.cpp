@@ -12,7 +12,7 @@
 // returns an approx. len no smaller than actual encoded size
 size_t ZLBase64Writer::EstimateEncodedLength ( size_t plainLength ) {
 
-	return 4 * ( size_t )ceilf (( double )plainLength / 3.0 );
+	return 4 * ( size_t )ceil (( double )plainLength / 3.0 );
 }
 
 //----------------------------------------------------------------//

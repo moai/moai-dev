@@ -1,10 +1,13 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
+#include "pch.h"
+#include <moai-util/MOAILuaUtil.h>
+
+SUPPRESS_EMPTY_FILE_WARNING
 
 #ifndef MOAI_WITH_LUAJIT
-#include "pch.h"
+
 #include <lundump.h>
-#include <moai-util/MOAILuaUtil.h>
 
 //================================================================//
 // MOAILuaHeader

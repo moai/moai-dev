@@ -4,12 +4,12 @@
 #ifndef MOAIFOURIER_H
 #define MOAIFOURIER_H
 
-#include <kissfft/kiss_fft.h>
-#include <kissfft/tools/kiss_fftr.h>
-
 #include <moai-core/MOAILua.h>
 #include <moai-core/MOAILuaState-impl.h>
 #include <moai-core/MOAILuaClass-impl.h>
+
+typedef int* MOAIKissFft;
+typedef int* MOAIKissFftr;
 
 //================================================================//
 // MOAIFourier
@@ -24,8 +24,8 @@ private:
 	size_t			mSize;
 	bool			mInverse;
 	
-	kiss_fft_cfg	mKissFFT;
-	kiss_fftr_cfg	mKissFFTR;
+	MOAIKissFft		mKissFFT;
+	MOAIKissFftr	mKissFFTR;
 	
 	u32				mSampleRate;
 	

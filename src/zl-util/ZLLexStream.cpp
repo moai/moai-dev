@@ -64,7 +64,7 @@ ZLResultCode ZLLexStream::SetCursor ( long offset ) {
 	size_t restoreCursor = this->GetCursor ();
 	size_t restoreLine = this->mLine;
 
-	if (( offset < 0 ) || ( this->GetLength () < offset )) return ZL_ERROR;
+	if (( offset < 0 ) || ( this->GetLength () < ( size_t )offset )) return ZL_ERROR;
 
 	long localOffset = offset - ( long )restoreCursor;
 	
@@ -82,7 +82,7 @@ ZLResultCode ZLLexStream::SetCursor ( long offset ) {
 	
 	// instead of checking each byte, we'll check the final cursor position
 	// if it isn't where we expected it to be, reset and return an error
-	if ( this->mStream->GetCursor () != offset ) {
+	if ( this->mStream->GetCursor () != ( size_t )offset ) {
 	
 		this->mStream->SetCursor ( restoreCursor );
 		this->mLine = restoreLine;

@@ -94,7 +94,7 @@ void ZLByteStream::SetBuffer ( const void* buffer, size_t size, size_t length ) 
 //----------------------------------------------------------------//
 ZLResultCode ZLByteStream::SetCursor ( long offset ) {
 
-	if (( offset < 0 ) || ( this->mLength < offset )) return ZL_ERROR;
+	if (( offset < 0 ) || ( this->mLength < ( size_t )offset )) return ZL_ERROR;
 
 	this->mCursor = offset;
 	return ZL_OK;

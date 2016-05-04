@@ -105,7 +105,7 @@ void ZLGfxImmediate::BufferData ( u32 target, u32 size, ZLSharedConstBuffer* buf
 //----------------------------------------------------------------//
 void ZLGfxImmediate::BufferSubData ( u32 target, u32 offset, u32 size, ZLSharedConstBuffer* buffer, size_t srcOffset ) {
 
-	const GLvoid* data = ( const GLvoid* )(( size_t )ZLSharedConstBuffer::GetConstData ( buffer ) + offset );
+	const GLvoid* data = ( const GLvoid* )(( size_t )ZLSharedConstBuffer::GetConstData ( buffer ) + srcOffset );
 	glBufferSubData ( ZLGfxEnum::MapZLToNative ( target ), ( GLintptr )offset, ( GLsizeiptr )size, data );
 	GL_LOG_ERRORS ( "glBufferSubData" )
 }
@@ -184,13 +184,13 @@ void ZLGfxImmediate::CompileShader ( ZLGfxHandle* shader, bool log ) {
 			GL_LOG_ERRORS ( "glGetShaderiv" )
 
 			if ( logLength > 1 ) {
-				char* log = ( char* )malloc ( logLength );
+				char* message = ( char* )malloc ( logLength );
 				
-				glGetShaderInfoLog ( shaderID, ( GLsizei )logLength, ( GLsizei* )&logLength, ( GLchar* )log );
+				glGetShaderInfoLog ( shaderID, ( GLsizei )logLength, ( GLsizei* )&logLength, ( GLchar* )message );
 				GL_LOG_ERRORS ( "glGetShaderInfoLog" )
 				
-				printf ( "%s\n", log );
-				free ( log );
+				printf ( "%s\n", message );
+				free ( message );
 			}
 		}
 	}
@@ -565,13 +565,13 @@ void ZLGfxImmediate::LinkProgram ( ZLGfxHandle* program, bool log ) {
 			GL_LOG_ERRORS ( "glGetProgramiv" )
 
 			if ( logLength > 1 ) {
-				char* log = ( char* )malloc ( logLength );
+				char* message = ( char* )malloc ( logLength );
 				
-				glGetProgramInfoLog ( programID, ( GLsizei )logLength, ( GLsizei* )&logLength, ( GLchar* )log );
+				glGetProgramInfoLog ( programID, ( GLsizei )logLength, ( GLsizei* )&logLength, ( GLchar* )message );
 				GL_LOG_ERRORS ( "glGetProgramInfoLog" )
 				
-				printf ( "%s\n", log );
-				free ( log );
+				printf ( "%s\n", message );
+				free ( message );
 			}
 		}
 	}
@@ -633,12 +633,12 @@ void ZLGfxImmediate::ReadPixels ( s32 x, s32 y, u32 width, u32 height, u32 forma
 		
 		//image is flipped vertically, flip it back
 		int index,indexInvert;
-		for ( u32 y = 0; y < ( height / 2 ); ++y ) {
-			for ( u32 x = 0; x < width; ++x ) {
+		for ( u32 yFlip = 0; yFlip < ( height / 2 ); ++yFlip ) {
+			for ( u32 xFlip = 0; xFlip < width; ++xFlip ) {
 				for ( u32 i = 0; i < pixelSize; ++i ) {
 
-					index = i + ( x * pixelSize ) + ( y * width * pixelSize );
-					indexInvert = i + ( x * pixelSize ) + (( height - 1 - y ) * width * pixelSize );
+					index = i + ( xFlip * pixelSize ) + ( yFlip * width * pixelSize );
+					indexInvert = i + ( xFlip * pixelSize ) + (( height - 1 - yFlip ) * width * pixelSize );
 
 					unsigned char temp = buffer [ indexInvert ];
 					buffer [ indexInvert ] = buffer [ index ];

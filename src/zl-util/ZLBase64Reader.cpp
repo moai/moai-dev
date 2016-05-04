@@ -12,7 +12,7 @@
 // returns an approx. len no smaller than actual decoded size
 size_t ZLBase64Reader::EstimateDecodedLength ( size_t encodedLength ) {
 
-	return 3 * ( size_t )ceilf (( double )encodedLength / 4.0 ); // should not need ceil
+	return 3 * ( size_t )ceil (( double )encodedLength / 4.0 ); // should not need ceil
 }
 
 //----------------------------------------------------------------//

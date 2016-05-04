@@ -13,6 +13,12 @@
 // http://stackoverflow.com/questions/20408388/how-to-filter-fft-data-for-audio-visualisation
 // http://www.ni.com/white-paper/4844/en/
 
+#include <kissfft/kiss_fft.h>
+#include <kissfft/tools/kiss_fftr.h>
+
+//kiss_fft_cfg mKissFFT;
+//kiss_fftr_cfg
+
 enum {
 	KISS_FFT,
 	KISS_FFTR,
@@ -343,13 +349,13 @@ void MOAIFourier::Affirm ( u32 fft ) {
 	if ( fft == KISS_FFT ) {
 		if ( !this->mKissFFT ) {
 			this->Clear ();
-			this->mKissFFT = kiss_fft_alloc (( int )this->mSize, this->mInverse ? 1 : 0, 0, 0 );
+			this->mKissFFT = ( MOAIKissFft )kiss_fft_alloc (( int )this->mSize, this->mInverse ? 1 : 0, 0, 0 );
 		}
 	}
 	else {
 		if ( !this->mKissFFTR ) {
 			this->Clear ();
-			this->mKissFFTR = kiss_fftr_alloc (( int )this->mSize, this->mInverse ? 1 : 0, 0, 0 );
+			this->mKissFFTR = ( MOAIKissFftr )kiss_fftr_alloc (( int )this->mSize, this->mInverse ? 1 : 0, 0, 0 );
 		}
 	}
 }
@@ -403,7 +409,7 @@ float MOAIFourier::GetCenterFrequencyForBand ( size_t band ) {
 	
 	float step = this->GetWidthOfBand ( band );
 	
-	return (( float )band * step ) + ( step * 0.5 );
+	return ( float )(( band * step ) + ( step * 0.5 ));
 }
 
 //----------------------------------------------------------------//
@@ -420,8 +426,8 @@ float MOAIFourier::GetCenterFrequencyForOctave ( size_t octave ) {
 //----------------------------------------------------------------//
 float MOAIFourier::GetDefaultWindowAlpha ( u32 func ) {
 
-	if ( func == BLACKMAN ) return 0.16;
-	if ( func == GAUSS ) return 0.25;
+	if ( func == BLACKMAN ) return 0.16f;
+	if ( func == GAUSS ) return 0.25f;
 	
 	return 0.0f;
 }
@@ -628,9 +634,9 @@ void MOAIFourier::Transform ( ZLStream& inStream, u32 inStreamType, bool complex
 
 	u32 code = (( this->mInverse ? 0 : 1 ) + ( complexOut ? 0 : 2 ) + ( complexIn ? 0 : 4 ));
 
-	u32 fft;
-	bool fftComplexIn;
-	bool fftComplexOut;
+	u32 fft = 0;
+	bool fftComplexIn = false;
+	bool fftComplexOut = false;
 	
 	bool halfInput = false;
 	bool halfOutput = false;
@@ -661,6 +667,9 @@ void MOAIFourier::Transform ( ZLStream& inStream, u32 inStreamType, bool complex
 			fftComplexOut	= true;
 			halfOutput		= true;
 			break;
+
+		default:
+			assert ( false );
 	}
 	
 	this->Affirm ( fft );
@@ -732,15 +741,15 @@ void MOAIFourier::Transform ( ZLStream& inStream, u32 inStreamType, bool complex
 	switch ( fft ) {
 	
 		case KISS_FFT:
-			kiss_fft ( this->mKissFFT, ( kiss_fft_cpx* )in, ( kiss_fft_cpx* )out );
+			kiss_fft (( kiss_fft_cfg )this->mKissFFT, ( kiss_fft_cpx* )in, ( kiss_fft_cpx* )out );
 			break;
 			
 		case KISS_FFTR:
-			kiss_fftr ( this->mKissFFTR, ( kiss_fft_scalar* )in, ( kiss_fft_cpx* )out );
+			kiss_fftr (( kiss_fftr_cfg )this->mKissFFTR, ( kiss_fft_scalar* )in, ( kiss_fft_cpx* )out );
 			break;
 		
 		case KISS_FFTRI:
-			kiss_fftri ( this->mKissFFTR, ( kiss_fft_cpx* )in, ( kiss_fft_scalar* )out );
+			kiss_fftri (( kiss_fftr_cfg )this->mKissFFTR, ( kiss_fft_cpx* )in, ( kiss_fft_scalar* )out );
 			break;
 	}
 	
@@ -860,7 +869,7 @@ float MOAIFourier::Window ( u32 func, size_t index, size_t length, float a ) {
 
 		case HANN:
 
-			return 0.5 * ( 1.0 - cos (( TWOPI * n ) / ( N - 1 )));
+			return ( float )( 0.5 * ( 1.0 - cos (( TWOPI * n ) / ( N - 1 ))));
 
 		case LANCZOS: {
 

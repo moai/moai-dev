@@ -716,14 +716,8 @@
     <ProjectReference Include="..\moai-lib-box2d\moai-lib-box2d.vcxproj">
       <Project>{baaf0611-4ba9-4bdd-9d83-822f3b23aba3}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\moai-lib-chipmunk\moai-lib-chipmunk.vcxproj">
-      <Project>{899650a9-86f0-42df-90d3-e046f4ec2092}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\moai-lib-core\moai-lib-core.vcxproj">
       <Project>{aa2bd0be-d174-4f8f-a7f7-b924128fed00}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\moai-lib-fmod-designer\moai-lib-fmod-designer.vcxproj">
-      <Project>{7b02e245-7904-4daa-ad0c-2c9ce881f35b}</Project>
     </ProjectReference>
     <ProjectReference Include="..\moai-lib-http-client\moai-lib-http-client.vcxproj">
       <Project>{caf76e4c-0b1b-424d-b36e-ba0d974a7a0c}</Project>

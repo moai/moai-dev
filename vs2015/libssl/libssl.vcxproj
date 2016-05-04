@@ -231,8 +231,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.1|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0d\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;WIN32_LEAN_AND_MEAN;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;OPENSSL_SYSNAME_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0m\include-win32;..\..\3rdparty\openssl-1.0.0m\include;..\..\3rdparty\openssl-1.0.0m\crypto;..\..\3rdparty\openssl-1.0.0m\crypto\asn1;..\..\3rdparty\openssl-1.0.0m\crypto\evp;..\..\3rdparty\openssl-1.0.0m;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;WIN32_LEAN_AND_MEAN;DEBUG;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;OPENSSL_SYSNAME_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -257,7 +257,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0d\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0m\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -283,7 +283,7 @@
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0d\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0m\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN32_LEAN_AND_MEAN;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;OPENSSL_SYSNAME_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -311,7 +311,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0d\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0m\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -331,8 +331,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.2|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0d\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;WIN32_LEAN_AND_MEAN;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;OPENSSL_SYSNAME_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0m\include-win32;..\..\3rdparty\openssl-1.0.0m\include;..\..\3rdparty\openssl-1.0.0m\crypto;..\..\3rdparty\openssl-1.0.0m\crypto\asn1;..\..\3rdparty\openssl-1.0.0m\crypto\evp;..\..\3rdparty\openssl-1.0.0m;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;WIN32_LEAN_AND_MEAN;DEBUG;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;OPENSSL_SYSNAME_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -357,7 +357,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0d\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0m\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -383,7 +383,7 @@
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0d\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0m\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN32_LEAN_AND_MEAN;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;OPENSSL_SYSNAME_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -411,7 +411,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0d\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0m\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -431,8 +431,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-LuaJIT|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0d\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;WIN32_LEAN_AND_MEAN;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;OPENSSL_SYSNAME_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0m\include-win32;..\..\3rdparty\openssl-1.0.0m\include;..\..\3rdparty\openssl-1.0.0m\crypto;..\..\3rdparty\openssl-1.0.0m\crypto\asn1;..\..\3rdparty\openssl-1.0.0m\crypto\evp;..\..\3rdparty\openssl-1.0.0m;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;WIN32_LEAN_AND_MEAN;DEBUG;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;OPENSSL_SYSNAME_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -457,7 +457,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0d\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0m\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -483,7 +483,7 @@
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0d\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0m\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN32_LEAN_AND_MEAN;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;OPENSSL_SYSNAME_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -511,7 +511,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0d\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0m\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -529,59 +529,59 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\bio_ssl.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\d1_both.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\d1_clnt.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\d1_enc.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\d1_lib.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\d1_meth.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\d1_pkt.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\d1_srvr.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\kssl.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\s23_clnt.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\s23_lib.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\s23_meth.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\s23_pkt.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\s23_srvr.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\s2_clnt.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\s2_enc.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\s2_lib.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\s2_meth.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\s2_pkt.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\s2_srvr.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\s3_both.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\s3_clnt.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\s3_enc.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\s3_lib.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\s3_meth.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\s3_pkt.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\s3_srvr.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\ssl_algs.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\ssl_asn1.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\ssl_cert.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\ssl_ciph.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\ssl_err.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\ssl_err2.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\ssl_lib.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\ssl_rsa.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\ssl_sess.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\ssl_stat.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\ssl_txt.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\t1_clnt.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\t1_enc.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\t1_lib.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\t1_meth.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\t1_reneg.c" />
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\ssl\t1_srvr.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\bio_ssl.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\d1_both.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\d1_clnt.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\d1_enc.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\d1_lib.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\d1_meth.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\d1_pkt.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\d1_srvr.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\kssl.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s23_clnt.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s23_lib.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s23_meth.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s23_pkt.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s23_srvr.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s2_clnt.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s2_enc.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s2_lib.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s2_meth.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s2_pkt.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s2_srvr.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s3_both.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s3_clnt.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s3_enc.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s3_lib.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s3_meth.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s3_pkt.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s3_srvr.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\ssl_algs.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\ssl_asn1.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\ssl_cert.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\ssl_ciph.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\ssl_err.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\ssl_err2.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\ssl_lib.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\ssl_rsa.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\ssl_sess.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\ssl_stat.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\ssl_txt.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\t1_clnt.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\t1_enc.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\t1_lib.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\t1_meth.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\t1_reneg.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\t1_srvr.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\ssl\kssl.h" />
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\ssl\ssl.h" />
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\ssl\ssl2.h" />
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\ssl\ssl23.h" />
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\ssl\ssl3.h" />
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\ssl\ssl_locl.h" />
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\ssl\tls1.h" />
+    <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\ssl\kssl.h" />
+    <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\ssl\ssl.h" />
+    <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\ssl\ssl2.h" />
+    <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\ssl\ssl23.h" />
+    <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\ssl\ssl3.h" />
+    <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\ssl\ssl_locl.h" />
+    <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\ssl\tls1.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

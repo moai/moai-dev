@@ -237,7 +237,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.1|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(TargetDir)luajit;..\..\3rdparty\luajit-2.0.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(TargetDir)luajit;..\..\3rdparty\luajit-2.0.3\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -371,7 +371,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.2|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(TargetDir)luajit;..\..\3rdparty\luajit-2.0.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(TargetDir)luajit;..\..\3rdparty\luajit-2.0.3\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -505,7 +505,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-LuaJIT|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(TargetDir)luajit;..\..\3rdparty\luajit-2.0.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(TargetDir)luajit;..\..\3rdparty\luajit-2.0.3\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -637,20 +637,20 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\3rdparty\LuaJIT-2.0.1\src\host\buildvm.c" />
-    <ClCompile Include="..\..\3rdparty\LuaJIT-2.0.1\src\host\buildvm_asm.c" />
-    <ClCompile Include="..\..\3rdparty\LuaJIT-2.0.1\src\host\buildvm_fold.c" />
-    <ClCompile Include="..\..\3rdparty\LuaJIT-2.0.1\src\host\buildvm_lib.c" />
-    <ClCompile Include="..\..\3rdparty\LuaJIT-2.0.1\src\host\buildvm_peobj.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\3rdparty\LuaJIT-2.0.1\src\host\buildvm.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\minilua\minilua.vcxproj">
       <Project>{0adb3d95-a750-4a3f-b2eb-560a7e29c465}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\3rdparty\LuaJIT-2.0.3\src\host\buildvm.c" />
+    <ClCompile Include="..\..\3rdparty\LuaJIT-2.0.3\src\host\buildvm_asm.c" />
+    <ClCompile Include="..\..\3rdparty\LuaJIT-2.0.3\src\host\buildvm_fold.c" />
+    <ClCompile Include="..\..\3rdparty\LuaJIT-2.0.3\src\host\buildvm_lib.c" />
+    <ClCompile Include="..\..\3rdparty\LuaJIT-2.0.3\src\host\buildvm_peobj.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\3rdparty\LuaJIT-2.0.3\src\host\buildvm.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

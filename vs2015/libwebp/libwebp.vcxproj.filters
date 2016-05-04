@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="dec">
+      <UniqueIdentifier>{25022db4-ca34-4293-826c-958585111c13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="demux">
+      <UniqueIdentifier>{070ac3c7-2fb2-431a-af3c-9fd68519eac5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dsp">
+      <UniqueIdentifier>{b59993b3-8ac0-409d-926d-a43b54d1c782}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mux">
+      <UniqueIdentifier>{c70c435c-562f-4d32-90a7-4fd80ddd9c1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils">
+      <UniqueIdentifier>{a1e35d56-bcf6-4031-894f-62e87a8a6520}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="webp">
+      <UniqueIdentifier>{13f5f517-7e7f-4ea4-b65d-f0838844138f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dec\alpha.c">
+      <Filter>dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dec\buffer.c">
+      <Filter>dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dec\frame.c">
+      <Filter>dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dec\idec.c">
+      <Filter>dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dec\io.c">
+      <Filter>dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dec\quant.c">
+      <Filter>dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dec\tree.c">
+      <Filter>dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dec\vp8.c">
+      <Filter>dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dec\vp8l.c">
+      <Filter>dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dec\webp.c">
+      <Filter>dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\demux\demux.c">
+      <Filter>demux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\alpha_processing.c">
+      <Filter>dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\cpu.c">
+      <Filter>dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\dec.c">
+      <Filter>dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\dec_clip_tables.c">
+      <Filter>dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\dec_mips32.c">
+      <Filter>dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\dec_neon.c">
+      <Filter>dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\dec_sse2.c">
+      <Filter>dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\enc.c">
+      <Filter>dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\enc_avx2.c">
+      <Filter>dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\enc_mips32.c">
+      <Filter>dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\enc_neon.c">
+      <Filter>dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\enc_sse2.c">
+      <Filter>dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\lossless.c">
+      <Filter>dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\lossless_mips32.c">
+      <Filter>dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\lossless_neon.c">
+      <Filter>dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\lossless_sse2.c">
+      <Filter>dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\upsampling.c">
+      <Filter>dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\upsampling_neon.c">
+      <Filter>dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\upsampling_sse2.c">
+      <Filter>dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\yuv.c">
+      <Filter>dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\yuv_mips32.c">
+      <Filter>dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\yuv_sse2.c">
+      <Filter>dsp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\mux\muxedit.c">
+      <Filter>mux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\mux\muxinternal.c">
+      <Filter>mux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\mux\muxread.c">
+      <Filter>mux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\utils\bit_reader.c">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\utils\bit_writer.c">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\utils\color_cache.c">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\utils\filters.c">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\utils\huffman.c">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\utils\huffman_encode.c">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\utils\quant_levels.c">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\utils\quant_levels_dec.c">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\utils\random.c">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\utils\rescaler.c">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\utils\thread.c">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.4.1\src\utils\utils.c">
+      <Filter>utils</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\dec\alphai.h">
+      <Filter>dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\dec\decode_vp8.h">
+      <Filter>dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\dec\vp8i.h">
+      <Filter>dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\dec\vp8li.h">
+      <Filter>dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\dec\webpi.h">
+      <Filter>dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\dsp.h">
+      <Filter>dsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\lossless.h">
+      <Filter>dsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\neon.h">
+      <Filter>dsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\yuv.h">
+      <Filter>dsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\dsp\yuv_tables_sse2.h">
+      <Filter>dsp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\mux\muxi.h">
+      <Filter>mux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\utils\bit_reader.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\utils\bit_reader_inl.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\utils\bit_writer.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\utils\color_cache.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\utils\endian_inl.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\utils\filters.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\utils\huffman.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\utils\huffman_encode.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\utils\quant_levels.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\utils\quant_levels_dec.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\utils\random.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\utils\rescaler.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\utils\thread.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\utils\utils.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\webp\decode.h">
+      <Filter>webp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\webp\demux.h">
+      <Filter>webp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\webp\encode.h">
+      <Filter>webp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\webp\format_constants.h">
+      <Filter>webp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\webp\mux.h">
+      <Filter>webp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\webp\mux_types.h">
+      <Filter>webp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.4.1\src\webp\types.h">
+      <Filter>webp</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

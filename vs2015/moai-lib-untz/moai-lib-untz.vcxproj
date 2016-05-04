@@ -235,13 +235,12 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;..\..\3rdparty\untz\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;AKU_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;AKU_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
-      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -356,13 +355,12 @@ xcopy /yr "$(OutDir)$(TargetName).lib" "..\..\bin\win32\$(Configuration)\"
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\lua-5.2.2\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;..\..\3rdparty\untz\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;XML_STATIC;LUA_COMPAT_MODULE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;XML_STATIC;LUA_COMPAT_MODULE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
-      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -477,13 +475,12 @@ xcopy /yr "$(OutDir)$(TargetName).lib" "..\..\bin\win32\$(Configuration)\"
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\luajit-2.0.1\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;..\..\3rdparty\untz\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;XML_STATIC;MOAI_WITH_LUAJIT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;XML_STATIC;MOAI_WITH_LUAJIT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
-      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
@@ -605,24 +602,6 @@ xcopy /yr "$(OutDir)$(TargetName).lib" "..\..\bin\win32\$(Configuration)\"
     <ClInclude Include="..\..\src\moai-untz\MOAIUntzSampleBuffer.h" />
     <ClInclude Include="..\..\src\moai-untz\MOAIUntzSound.h" />
     <ClInclude Include="..\..\src\moai-untz\MOAIUntzSystem.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\libogg\libogg.vcxproj">
-      <Project>{3986e679-6e11-4b7a-a00d-9669dedbbc1e}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\libvorbis\libvorbis.vcxproj">
-      <Project>{cbd64ddc-70ce-470b-b5ed-e12b59196ee7}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\moai-lib-sim\moai-engine.vcxproj">
-      <Project>{fa856173-3823-4fff-8207-32db9c1711fa}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\untz\untz.vcxproj">
-      <Project>{76508aad-7030-4fd2-9d05-99184af2baf5}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

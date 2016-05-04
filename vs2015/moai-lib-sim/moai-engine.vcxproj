@@ -223,8 +223,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.1|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\jpeg-8c;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\kissfft;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\jpeg-8c;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_LIB;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -232,7 +232,6 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
-      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -367,8 +366,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.2|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\lua-5.2.2\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\jpeg-8c;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;XML_STATIC;LUA_COMPAT_MODULE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\kissfft;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\lua-5.2.2\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\jpeg-8c;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;XML_STATIC;LUA_COMPAT_MODULE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -376,7 +375,6 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
-      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -511,8 +509,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-LuaJIT|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\luajit-2.0.1\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\jpeg-8c;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;XML_STATIC;MOAI_WITH_LUAJIT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\kissfft;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\luajit-2.0.1\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\jpeg-8c;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;XML_STATIC;MOAI_WITH_LUAJIT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -520,7 +518,6 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <BufferSecurityCheck>true</BufferSecurityCheck>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
-      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -938,24 +935,6 @@
     <ClInclude Include="..\..\src\moai-sim\host.h" />
     <ClInclude Include="..\..\src\moai-sim\host_particles.h" />
     <ClInclude Include="..\..\src\moai-sim\pch.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\freetype\freetype.vcxproj">
-      <Project>{97d147f3-4dbc-45cd-87eb-6c90eb6efe21}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\glew\glew.vcxproj">
-      <Project>{48580411-0a48-46f9-87a6-cf5c9b81d146}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\moai-lib-util\moai-lib-util.vcxproj">
-      <Project>{9cf1dc0d-a3c1-45c2-98ec-f4f30b6bb49d}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\zl-lib-gfx\zl-lib-gfx.vcxproj">
-      <Project>{15ea6761-e3c5-4035-97ee-4f74a5acee96}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
