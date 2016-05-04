@@ -114,30 +114,30 @@ void MOAIEnvironment::DetectEnvironment () {
 			strcpy ( pszOS, TEXT ( "Win" ));			
 			if ( osvi.dwMajorVersion == 6 ) {
 				if ( osvi.dwMinorVersion == 1 ) {
-					if( osvi.wProductType == VER_NT_WORKSTATION )
-						strcat(pszOS, TEXT("7"));
-					else strcat(pszOS, TEXT("2008R2" ));
+					if ( osvi.wProductType == VER_NT_WORKSTATION )
+						strcat ( pszOS, TEXT ( "7" ));
+					else strcat ( pszOS, TEXT ( "2008R2" ));
 				}
 				else if( osvi.dwMinorVersion == 0 ) {
 					if( osvi.wProductType == VER_NT_WORKSTATION )
-						strcat(pszOS, TEXT("Vista"));
-					else strcat(pszOS, TEXT("Server2008" ));
+						strcat ( pszOS, TEXT ( "Vista" ));
+					else strcat ( pszOS, TEXT ( "Server2008" ));
 				}
 			}
 			else if ( osvi.dwMajorVersion == 5 ) {
 				if (osvi.dwMinorVersion == 2) {				
 					if( osvi.wProductType == VER_NT_WORKSTATION && si.wProcessorArchitecture==PROCESSOR_ARCHITECTURE_AMD64) {
-						strcat(pszOS, TEXT( "XPx64"));
+						strcat ( pszOS, TEXT ( "XPx64" ));
 					}
 					else {
-						strcat(pszOS, TEXT("Server2003"));
+						strcat ( pszOS, TEXT ( "Server2003" ));
 					}
 				}
 				else if ( osvi.dwMinorVersion == 1 ) {
-					strcat(pszOS, TEXT("XP"));					
+					strcat ( pszOS, TEXT ( "XP" ));
 				}
 				else if ( osvi.dwMinorVersion == 0 ) {
-					strcat(pszOS, TEXT("2000"));
+					strcat ( pszOS, TEXT ( "2000" ));
 				}
 			}
 			

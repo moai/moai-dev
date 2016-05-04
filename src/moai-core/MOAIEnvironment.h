@@ -35,6 +35,7 @@
 #define MOAI_ENV_osVersion					"osVersion"
 #define MOAI_ENV_resourceDirectory			"resourceDirectory"
 #define MOAI_ENV_screenDpi					"screenDpi"
+#define MOAI_ENV_screenScale				"screenScale"
 #define MOAI_ENV_systemLanguageCode			"systemLanguageCode"
 #define MOAI_ENV_verticalResolution			"verticalResolution"
 #define MOAI_ENV_horizontalResolution		"horizontalResolution"
