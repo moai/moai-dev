@@ -185,17 +185,17 @@ int MOAISerializer::_setBase64Enabled ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAISerializerBase::ObjID MOAISerializer::AffirmMemberID ( MOAILuaObject* object ) {
+MOAISerializerBase::ObjID MOAISerializer::AffirmMemberID ( MOAILuaObject* object, bool processMetatable ) {
 
 	if ( object ) {
 		MOAIScopedLuaState state = object->GetSelf ();
-		return this->AffirmMemberID ( state, -1 );
+		return this->AffirmMemberID ( state, -1, processMetatable );
 	}
 	return NULL_OBJ_ID;
 }
 
 //----------------------------------------------------------------//
-MOAISerializerBase::ObjID MOAISerializer::AffirmMemberID ( MOAILuaState& state, int idx ) {
+MOAISerializerBase::ObjID MOAISerializer::AffirmMemberID ( MOAILuaState& state, int idx, bool processMetatable ) {
 
 	if ( !( state.IsType ( idx, LUA_TUSERDATA ) || state.IsType ( idx, LUA_TTABLE ))) return NULL_OBJ_ID;
 
@@ -242,9 +242,9 @@ MOAISerializerBase::ObjID MOAISerializer::AffirmMemberID ( MOAILuaState& state, 
 			int status = state.DebugCall ( 3, 3 );
 			
 			if ( status == 0 ) {
-				objectInfo.mUserTableID		= this->AffirmMemberID ( state, -3 );
-				objectInfo.mMemberTableID	= this->AffirmMemberID ( state, -2 );
-				objectInfo.mInitTableID		= this->AffirmMemberID ( state, -1 );
+				objectInfo.mUserTableID		= this->AffirmMemberID ( state, -3, false );
+				objectInfo.mMemberTableID	= this->AffirmMemberID ( state, -2, false );
+				objectInfo.mInitTableID		= this->AffirmMemberID ( state, -1, false );
 				state.Pop ( 3 );
 			}
 		}
@@ -255,7 +255,7 @@ MOAISerializerBase::ObjID MOAISerializer::AffirmMemberID ( MOAILuaState& state, 
 		
 		this->mTableMap [ memberID ].SetRef ( state, idx );
 		
-		if ( lua_getmetatable ( state, idx )) {
+		if ( processMetatable && lua_getmetatable ( state, idx )) {
 			this->AffirmMemberID ( state, -1 );
 			state.Pop ( 1 );
 		}
