@@ -342,11 +342,10 @@ void AKUSetScreenDpi ( int dpi ) {
 }
 
 //----------------------------------------------------------------//
-void AKUSetScreenSize ( int width, int height, float scale ) {
+void AKUSetScreenSize ( int width, int height) {
 
 	MOAIEnvironment::Get ().SetValue ( MOAI_ENV_horizontalResolution, width );
 	MOAIEnvironment::Get ().SetValue ( MOAI_ENV_verticalResolution, height );
-	MOAIEnvironment::Get ().SetValue ( MOAI_ENV_screenScale, scale );
 }
 
 //----------------------------------------------------------------//
