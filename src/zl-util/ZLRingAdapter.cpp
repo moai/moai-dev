@@ -79,6 +79,7 @@ ZLResultCode ZLRingAdapter::SetCursor ( long offset ) {
 ZLSizeResult ZLRingAdapter::SetLength ( size_t length ) {
 
 	this->mLength = length;
+	ZL_RETURN_SIZE_RESULT ( this->mLength, ZL_OK );
 }
 
 //----------------------------------------------------------------//

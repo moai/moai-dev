@@ -346,7 +346,7 @@ int MOAIAction::_throttle ( lua_State* L ) {
 int MOAIAction::_update ( lua_State* L ) {
     MOAI_LUA_SETUP ( MOAIAction, "U" )
     
-    float step = state.GetValue < float >( 2, MOAISim::Get ().GetStep ());
+    double step = state.GetValue < double >( 2, MOAISim::Get ().GetStep ());
     self->OnUpdate ( step );
     
     return 0;

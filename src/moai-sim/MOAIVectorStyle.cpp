@@ -53,7 +53,7 @@ void MOAIVectorStyle::Default () {
 //----------------------------------------------------------------//
 float MOAIVectorStyle::GetMergeNormalsCosine () const {
 
-	return Cos ( this->mMergeNormals * D2R );
+	return Cos (( float )( this->mMergeNormals * D2R ));
 }
 
 //----------------------------------------------------------------//

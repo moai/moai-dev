@@ -3,10 +3,12 @@
 
 #include "pch.h"
 
+SUPPRESS_EMPTY_FILE_WARNING
+
+#if MOAI_WITH_LIBCURL
+
 #include <algorithm>
 
-SUPPRESS_EMPTY_FILE_WARNING
-#if MOAI_WITH_LIBCURL
 #include <moai-http-client/MOAIHttpTaskCurl.h>
 #include <moai-http-client/MOAIUrlMgrCurl.h>
 

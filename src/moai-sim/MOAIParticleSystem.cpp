@@ -520,7 +520,7 @@ void MOAIParticleSystem::OnUpdate ( double step ) {
 			
 			// update the particle
 			if ( particle->mState ) {
-				particle->mState->ProcessParticle ( *this, *particle, step );
+				particle->mState->ProcessParticle ( *this, *particle,( float )step );
 			}
 			
 			// if is still to be killed, move it to the free list, else put it back in the queue

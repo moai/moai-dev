@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moai-util/MOAIConditionVariable.h>
 #include <moai-util/MOAIConditionVariable_posix.h>
+#include <moai-util/MOAIConditionVariable_win32.h>
 
 //================================================================//
 // MOAIMutex

@@ -37,6 +37,9 @@
     <Filter Include="xml">
       <UniqueIdentifier>{d347566c-f0f4-4570-ba37-574c07542438}</UniqueIdentifier>
     </Filter>
+    <Filter Include="socket">
+      <UniqueIdentifier>{ee52e811-e07f-4ed9-b694-a0611b8cbf40}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\zl-util\ZLAccessors.h">
@@ -287,6 +290,30 @@
     <ClInclude Include="..\..\src\zl-util\ZLHexAdapter.h">
       <Filter>stream\encoding</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\zl-util\zl_socket.h">
+      <Filter>socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\zl-util\zl_usocket.h">
+      <Filter>socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\zl-util\zl_wsocket.h">
+      <Filter>socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\zl-util\ZLCubicBezier2D.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\zl-util\ZLFrustumFitter.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\zl-util\ZLCopyOnWrite.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\zl-util\ZLBitBuffer.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLRefCountedObject.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLSample.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLRingAdapter.h">
+      <Filter>stream</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\zl-util\ZLAdapterInfo_posix.cpp">
@@ -451,6 +478,27 @@
     </ClCompile>
     <ClCompile Include="..\..\src\zl-util\ZLHexAdapter.cpp">
       <Filter>stream\encoding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\zl-util\zl_usocket.cpp">
+      <Filter>socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\zl-util\zl_wsocket.cpp">
+      <Filter>socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\zl-util\ZLCubicBezier2D.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\zl-util\ZLFrustumFitter.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\zl-util\ZLCopyOnWrite.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\zl-util\ZLBitBuffer.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLRefCountedObject.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLSample.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLRingAdapter.cpp">
+      <Filter>stream</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

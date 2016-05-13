@@ -57,7 +57,7 @@ MOAIParticleTimedEmitter::~MOAIParticleTimedEmitter () {
 //----------------------------------------------------------------//
 void MOAIParticleTimedEmitter::OnUpdate ( double step ) {
 
-	this->mTime += step;
+	this->mTime += ( float )step;
 	if ( !this->mSystem ) return;
 	if ( this->mTime < this->mEmitTime ) return;
 	

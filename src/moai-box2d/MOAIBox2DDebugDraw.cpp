@@ -171,13 +171,14 @@ void MOAIBox2DDebugDraw::DrawTransform ( const b2Transform& xf ) {
 
 //----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::DrawPoint ( const b2Vec2& p, float32 size, const b2Color& color ) {
+	UNUSED ( size );
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	gfxDevice.BeginPrim(ZGL_PRIM_POINTS);
-	gfxDevice.SetPenColor(color.r, color.g, color.b, 1.0f);
-	this->WriteVtx(gfxDevice, p.x, p.y);
-	gfxDevice.EndPrim();
+	gfxDevice.BeginPrim ( ZGL_PRIM_POINTS );
+	gfxDevice.SetPenColor ( color.r, color.g, color.b, 1.0f );
+	this->WriteVtx ( gfxDevice, p.x, p.y );
+	gfxDevice.EndPrim ();
 }
 
 //----------------------------------------------------------------//

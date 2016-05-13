@@ -24,7 +24,7 @@ int MOAIGfxResourceMgr::_purgeResources ( lua_State* L ) {
 
 	u32 age = state.GetValue < u32 >( 1, 0 );
 
-	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+	//ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
 
 	ZLGfxDevice::Begin ();
 	MOAIGfxResourceMgr::Get ().PurgeResources ( age );
@@ -42,7 +42,7 @@ int MOAIGfxResourceMgr::_purgeResources ( lua_State* L ) {
 int MOAIGfxResourceMgr::_renewResources ( lua_State* L ) {
 	MOAILuaState state ( L );
 
-	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+	//ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
 
 	ZLGfxDevice::Begin ();
 	MOAIGfxResourceMgr::Get ().RenewResources ();

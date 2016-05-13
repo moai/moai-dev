@@ -97,9 +97,9 @@ public:
 	GET_SET_CONST ( float, HLineSnap, mHLineSnap )
 	GET_SET_CONST ( float, VLineSnap, mVLineSnap )
 
-	GET_SET_CONST ( float, HLayoutSizingRule, mHLayoutSizingRule )
-	GET_SET_CONST ( float, VLayoutSizingRule, mVLayoutSizingRule )
-	GET_SET_CONST ( float, LineSizingRule, mLineSizingRule )
+	GET_SET_CONST ( u32, HLayoutSizingRule, mHLayoutSizingRule )
+	GET_SET_CONST ( u32, VLayoutSizingRule, mVLayoutSizingRule )
+	GET_SET_CONST ( u32, LineSizingRule, mLineSizingRule )
 
 	//----------------------------------------------------------------//
 	void				ClearCurves					();

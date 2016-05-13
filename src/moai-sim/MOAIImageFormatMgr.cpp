@@ -50,7 +50,7 @@ u32 MOAIImageFormatMgr::HashName ( cc8* name ) {
 		if ( c && isalnum ( c )) {
 			
 			if ( isalpha ( c )) {
-				c = toupper ( c );
+				c = ( char )toupper ( c );
 				c = ( c - 'A' ) + 10;
 			}
 			else {

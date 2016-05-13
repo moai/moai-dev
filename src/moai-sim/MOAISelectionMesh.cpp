@@ -254,6 +254,7 @@ void MOAISelectionMesh::Clear () {
 
 //----------------------------------------------------------------//
 void MOAISelectionMesh::ClearSelection ( u32 set ) {
+	UNUSED ( set ); // TODO: shouldn't this do something?
 }
 
 //----------------------------------------------------------------//

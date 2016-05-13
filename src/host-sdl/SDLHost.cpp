@@ -6,6 +6,7 @@
 #include <string.h>
 
 #include <moai-core/host.h>
+#include <moai-sdl/host.h>
 #include <host-modules/aku_modules.h>
 
 #ifdef MOAI_OS_WINDOWS
@@ -28,8 +29,9 @@
 	#include <limits.h>
 #endif
 
-#include <OpenGL/gl.h>
-#include <OpenGL/glext.h>
+//#include <OpenGL/gl.h>
+//#include <OpenGL/glext.h>
+#include <zl-gfx/ZLGfx-gles.h>
 
 #define UNUSED(p) (( void )p)
 
@@ -500,7 +502,7 @@ void MainLoop () {
 							const int32_t y = sdlEvent.wheel.y; 
 
 							//XXX: x or y ?
-							AKUEnqueueWheelEvent ( InputDeviceID::DEVICE, InputSensorID::MOUSE_WHEEL, y );
+							AKUEnqueueWheelEvent ( InputDeviceID::DEVICE, InputSensorID::MOUSE_WHEEL, ( float )y );
 						}
 					break;
 
@@ -520,7 +522,7 @@ void MainLoop () {
 						if ( sdlEvent.jaxis.which == 0 /* what joystick? */  && joystick0 != NULL ) {
 
                             const Joystick::AXIS_MOTION & axis = joystick0->HandleAxisMotion(sdlEvent);
-					        AKUEnqueueJoystickEvent ( InputDeviceID::DEVICE, InputSensorID::JOYSTICK, axis.x, axis.y );
+					        AKUEnqueueJoystickEvent ( InputDeviceID::DEVICE, InputSensorID::JOYSTICK, ( float )axis.x, ( float )axis.y );
 						}
 					break;
 

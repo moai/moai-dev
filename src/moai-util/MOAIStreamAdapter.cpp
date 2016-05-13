@@ -203,7 +203,7 @@ bool MOAIStreamAdapter::Open ( ZLStreamAdapter* adapter, MOAIStream* stream ) {
 	this->SetProxiedStream ( this->mAdapter );
 	this->mAdaptedStream.Set ( *this, stream );
 	
-	bool result = this->mAdapter->Open ( this->mAdaptedStream );
+	bool result = this->mAdapter->Open ( this->mAdaptedStream ) == ZL_OK;
 	
 	if ( !result ) {
 		this->Close ();

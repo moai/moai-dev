@@ -69,9 +69,7 @@ class MOAIFontReader :
 	public MOAILuaObject {
 protected:
 
-	enum {
-		GLYPH_CODE_NULL = -1,
-	};
+	static const u32 GLYPH_CODE_NULL = 0xffffffff;
 
 	//----------------------------------------------------------------//
 	static int		_close					( lua_State* L );

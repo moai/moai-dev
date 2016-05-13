@@ -301,7 +301,7 @@ void MOAIMesh::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) 
 	
 	lua_setfield ( state, -2, "mBounds" );
 	
-	state.SetField < u32 >( -1, "mPenWidth", this->mPenWidth );
+	state.SetField < u32 >( -1, "mPenWidth", ( u32 )this->mPenWidth );
 }
 
 //----------------------------------------------------------------//

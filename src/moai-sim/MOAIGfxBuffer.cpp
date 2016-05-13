@@ -236,7 +236,7 @@ bool MOAIGfxBuffer::OnGPUUpdate () {
 
 	if ( !this->mUseVBOs ) return true;
 	
-	bool dirty = this->GetCursor ();
+	bool dirty = this->GetCursor () > 0;
 	
 	if ( dirty ) {
 		this->mCurrentVBO = ( this->mCurrentVBO + 1 ) % this->mVBOs.Size ();
@@ -327,6 +327,7 @@ void MOAIGfxBuffer::ReserveVBOs ( u32 gpuBuffers ) {
 
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+	UNUSED ( serializer );
 
 	u32 totalVBOs		= state.GetField < u32 >( -1, "mTotalVBOs", 0 );
 	u32 size			= state.GetField < u32 >( -1, "mSize", 0 );
@@ -351,6 +352,7 @@ void MOAIGfxBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seriali
 
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+	UNUSED ( serializer );
 
 	u32 size = ( u32 )this->GetLength ();
 

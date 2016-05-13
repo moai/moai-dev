@@ -9,13 +9,13 @@
 class ZLColorVec;
 class ZLColorBlendFunc;
 
-#define LUMA_601_R 0.299
-#define LUMA_601_G 0.587
-#define LUMA_601_B 0.114
+#define LUMA_601_R 0.299f
+#define LUMA_601_G 0.587f
+#define LUMA_601_B 0.114f
 
-#define LUMA_709_R 0.2126
-#define LUMA_709_G 0.7152
-#define LUMA_709_B 0.0722
+#define LUMA_709_R 0.2126f
+#define LUMA_709_G 0.7152f
+#define LUMA_709_B 0.0722f
 
 //================================================================//
 // ZLColor

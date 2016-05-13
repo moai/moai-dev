@@ -640,12 +640,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="..\moai-lib-core\moai-lib-core.vcxproj">
-      <Project>{aa2bd0be-d174-4f8f-a7f7-b924128fed00}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\..\src\moai-image-webp\host.cpp" />
     <ClCompile Include="..\..\src\moai-image-webp\MOAIImageFormatWebP.cpp" />
   </ItemGroup>

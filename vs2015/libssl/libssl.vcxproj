@@ -232,7 +232,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0m\include-win32;..\..\3rdparty\openssl-1.0.0m\include;..\..\3rdparty\openssl-1.0.0m\crypto;..\..\3rdparty\openssl-1.0.0m\crypto\asn1;..\..\3rdparty\openssl-1.0.0m\crypto\evp;..\..\3rdparty\openssl-1.0.0m;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;WIN32_LEAN_AND_MEAN;DEBUG;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;OPENSSL_SYSNAME_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;OPENSSL_SYSNAME_WIN32;DSO_WIN32;L_ENDIAN;MK1MF_BUILD;MK1MF_PLATFORM_VC_WIN32;OPENSSL_NO_BF;OPENSSL_NO_CAST;OPENSSL_NO_IDEA;OPENSSL_NO_MDC2;OPENSSL_NO_RIPEMD;OPENSSL_NO_WHIRLPOOL;OPENSSL_NO_STATIC_ENGINE;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -332,7 +332,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0m\include-win32;..\..\3rdparty\openssl-1.0.0m\include;..\..\3rdparty\openssl-1.0.0m\crypto;..\..\3rdparty\openssl-1.0.0m\crypto\asn1;..\..\3rdparty\openssl-1.0.0m\crypto\evp;..\..\3rdparty\openssl-1.0.0m;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;WIN32_LEAN_AND_MEAN;DEBUG;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;OPENSSL_SYSNAME_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;OPENSSL_SYSNAME_WIN32;DSO_WIN32;L_ENDIAN;MK1MF_BUILD;MK1MF_PLATFORM_VC_WIN32;OPENSSL_NO_BF;OPENSSL_NO_CAST;OPENSSL_NO_IDEA;OPENSSL_NO_MDC2;OPENSSL_NO_RIPEMD;OPENSSL_NO_WHIRLPOOL;OPENSSL_NO_STATIC_ENGINE;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -432,7 +432,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0m\include-win32;..\..\3rdparty\openssl-1.0.0m\include;..\..\3rdparty\openssl-1.0.0m\crypto;..\..\3rdparty\openssl-1.0.0m\crypto\asn1;..\..\3rdparty\openssl-1.0.0m\crypto\evp;..\..\3rdparty\openssl-1.0.0m;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;WIN32_LEAN_AND_MEAN;DEBUG;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;OPENSSL_SYSNAME_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;OPENSSL_SYSNAME_WIN32;DSO_WIN32;L_ENDIAN;MK1MF_BUILD;MK1MF_PLATFORM_VC_WIN32;OPENSSL_NO_BF;OPENSSL_NO_CAST;OPENSSL_NO_IDEA;OPENSSL_NO_MDC2;OPENSSL_NO_RIPEMD;OPENSSL_NO_WHIRLPOOL;OPENSSL_NO_STATIC_ENGINE;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -550,6 +550,7 @@
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s2_pkt.c" />
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s2_srvr.c" />
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s3_both.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s3_cbc.c" />
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s3_clnt.c" />
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s3_enc.c" />
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\ssl\s3_lib.c" />

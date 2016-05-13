@@ -4,8 +4,6 @@
 #ifndef ZLGFX_GLES_H
 #define ZLGFX_GLES_H
 
-#include <zl-gfx/ZLGfx.h>
-
 #ifdef MOAI_OS_WINDOWS
 	#define GLEW_STATIC
 	#include <gl/glew.h>

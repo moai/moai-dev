@@ -47,7 +47,7 @@ void MOAITextLayoutEngine::Align () {
 	glyphBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	layoutBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 
-	bool hasSprites = ( this->mLayout->mSprites.GetTop () > 0 );
+	//bool hasSprites = ( this->mLayout->mSprites.GetTop () > 0 );
 	
 	u32 baseLine = this->mBaseLine;
 	
@@ -100,7 +100,7 @@ void MOAITextLayoutEngine::Align () {
 		const ZLRect& lineRect = line.mLayoutBounds;
 		
 		float lineWidth = lineRect.Width ();
-		float lineHeight = lineRect.Height ();
+		//float lineHeight = lineRect.Height ();
 		
 		float adjustedLineXMin = xMin;
 		float adjustedLineYMin = lineRect.mYMin + lineYOffset;
@@ -247,11 +247,11 @@ void MOAITextLayoutEngine::BeginToken () {
 //----------------------------------------------------------------//
 void MOAITextLayoutEngine::BuildLayout () {
 	
-	bool limitWidth = this->mLayoutRules->mLimitWidth;
-	bool limitHeight = this->mLayoutRules->mLimitHeight;
+	//bool limitWidth = this->mLayoutRules->mLimitWidth;
+	//bool limitHeight = this->mLayoutRules->mLimitHeight;
 	
-	float frameWidth = this->mLayoutRules->mFrame.Width ();
-	float frameHeight = this->mLayoutRules->mFrame.Height ();
+	//float frameWidth = this->mLayoutRules->mFrame.Width ();
+	//float frameHeight = this->mLayoutRules->mFrame.Height ();
 	
 	bool more = true;
 	while ( more ) {
@@ -408,7 +408,7 @@ MOAITextStyledChar MOAITextLayoutEngine::NextChar () {
 		this->mResetStyle = true;
 	}
 
-	if ( this->mCharIdx >= this->mStyleSpan->mTop ) {
+	if (( int )this->mCharIdx >= this->mStyleSpan->mTop ) {
 		
 		this->mStyleSpan = 0;
 		
@@ -416,7 +416,7 @@ MOAITextStyledChar MOAITextLayoutEngine::NextChar () {
 		for ( this->mSpanIdx++; this->mSpanIdx < totalStyles; this->mSpanIdx++ ) {
 			MOAITextStyleSpan& styleSpan = this->mStyleMap->Elem ( this->mSpanIdx );
 			
-			if ( this->mCharIdx < styleSpan.mTop ) {
+			if (( int )this->mCharIdx < styleSpan.mTop ) {
 				this->mStyleSpan = &styleSpan;
 				this->mResetStyle = true;
 				break;
@@ -431,7 +431,7 @@ MOAITextStyledChar MOAITextLayoutEngine::NextChar () {
 			MOAITextStyleState* defaultStyle = this->mStyleCache->GetStyle ();
 			MOAIFont* defaultFont = defaultStyle ? defaultStyle->mFont : 0;
 		
-			if ( this->mCharIdx < this->mStyleSpan->mBase ) {
+			if (( int )this->mCharIdx < this->mStyleSpan->mBase ) {
 				this->mCharIdx = this->mStyleSpan->mBase;
 			}
 			

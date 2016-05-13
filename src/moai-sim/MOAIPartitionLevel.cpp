@@ -29,25 +29,25 @@ void MOAIPartitionLevel::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLe
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 interfaceMask, u32 queryMask ) {
+void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, u32 interfaceMask, u32 queryMask ) {
 
 	u32 totalCells = this->mCells.Size ();
 	for ( u32 i = 0; i < totalCells; ++i ) {
-		this->mCells [ i ].GatherProps ( results, ignore, interfaceMask, queryMask );
+		this->mCells [ i ].GatherProps ( results, ignoreProp, interfaceMask, queryMask );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask, u32 queryMask ) {
+void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask, u32 queryMask ) {
 	
 	u32 totalCells = this->mCells.Size ();
 	for ( u32 i = 0; i < totalCells; ++i ) {
-		this->mCells [ i ].GatherProps ( results, ignore, point, orientation, interfaceMask, queryMask );
+		this->mCells [ i ].GatherProps ( results, ignoreProp, point, orientation, interfaceMask, queryMask );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const ZLVec3D& point, u32 planeID, u32 interfaceMask, u32 queryMask ) {
+void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLVec3D& point, u32 planeID, u32 interfaceMask, u32 queryMask ) {
 
 	ZLVec2D cellPoint ( 0.0f, 0.0f );
 	
@@ -80,13 +80,13 @@ void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 			
 			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord.mX + x, coord.mY - y );
 			int addr = this->mGridSpace.GetCellAddr ( offset );
-			this->mCells [ addr ].GatherProps ( results, ignore, point, interfaceMask, queryMask );
+			this->mCells [ addr ].GatherProps ( results, ignoreProp, point, interfaceMask, queryMask );
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const ZLBox& box, u32 planeID, u32 interfaceMask, u32 queryMask ) {
+void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLBox& box, u32 planeID, u32 interfaceMask, u32 queryMask ) {
 
 	float halfSize = this->mCellSize * 0.5f;
 
@@ -108,13 +108,13 @@ void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 			
 			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord0.mX + x, coord0.mY + y );
 			u32 addr = this->mGridSpace.GetCellAddr ( offset );
-			this->mCells [ addr ].GatherProps ( results, ignore, box, interfaceMask, queryMask );
+			this->mCells [ addr ].GatherProps ( results, ignoreProp, box, interfaceMask, queryMask );
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const ZLFrustum& frustum, u32 planeID, u32 interfaceMask, u32 queryMask ) {
+void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLFrustum& frustum, u32 planeID, u32 interfaceMask, u32 queryMask ) {
 
 	float halfSize = this->mCellSize * 0.5f;
 
@@ -136,7 +136,7 @@ void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 			
 			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord0.mX + x, coord0.mY + y );
 			u32 addr = this->mGridSpace.GetCellAddr ( offset );
-			this->mCells [ addr ].GatherProps ( results, ignore, frustum, interfaceMask, queryMask );
+			this->mCells [ addr ].GatherProps ( results, ignoreProp, frustum, interfaceMask, queryMask );
 		}
 	}
 }

@@ -212,10 +212,10 @@ int	MOAILayer::_getPropViewList ( lua_State* L ) {
 		u32 sortMode			= state.GetValue < u32 >( 2, self->mSortMode );
 		bool sortInViewSpace	= state.GetValue < bool >( 3, self->mSortInViewSpace );
 		
-		sortScale [ 0 ]			= state.GetValue < bool >( 4, self->mSortScale [ 0 ]);
-		sortScale [ 1 ]			= state.GetValue < bool >( 5, self->mSortScale [ 1 ]);
-		sortScale [ 2 ]			= state.GetValue < bool >( 6, self->mSortScale [ 2 ]);
-		sortScale [ 3 ]			= state.GetValue < bool >( 7, self->mSortScale [ 3 ]);
+		sortScale [ 0 ]			= state.GetValue < float >( 4, self->mSortScale [ 0 ]);
+		sortScale [ 1 ]			= state.GetValue < float >( 5, self->mSortScale [ 1 ]);
+		sortScale [ 2 ]			= state.GetValue < float >( 6, self->mSortScale [ 2 ]);
+		sortScale [ 3 ]			= state.GetValue < float >( 7, self->mSortScale [ 3 ]);
 		
 		ZLMatrix4x4 viewMtx = self->GetViewMtx ();
 		ZLMatrix4x4 invViewProjMtx = viewMtx;
@@ -828,16 +828,16 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 		gfxDevice.SetAmbientColor ( this->mColor );
 		
 		// figure out the correct LOD factor
-		float lod = this->mLODFactor * this->GetLinkedValue ( MOAILayerAttr::Pack ( ATTR_LOD ), 1.0f );
+		float lodFactor = this->mLODFactor * this->GetLinkedValue ( MOAILayerAttr::Pack ( ATTR_LOD ), 1.0f );
 		
-		this->DrawProps ( buffer, lod );
+		this->DrawProps ( buffer, lodFactor );
 		
 		if ( this->mShowDebugLines ) {
 			
 			// clear the ambient color and bind vector drawing
 			gfxDevice.SetAmbientColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 			MOAIDraw::Get ().Bind ();
-			this->DrawPropsDebug ( buffer, lod );
+			this->DrawPropsDebug ( buffer, lodFactor );
 		}
 	}
 	

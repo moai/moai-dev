@@ -257,6 +257,7 @@ void MOAIGfxResource::OnClearDirty () {
 
 //----------------------------------------------------------------//
 void MOAIGfxResource::OnGfxEvent ( u32 event, void* userdata ) {
+	UNUSED ( userdata );
 
 	if ( event == GFX_EVENT_CREATED ) {
 	

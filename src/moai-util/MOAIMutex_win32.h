@@ -18,7 +18,7 @@ private:
 	friend class MOAIMutex;
 	friend class MOAIConditionVariableImpl;
 
-	HANDLE			mMutexHandle;
+	CRITICAL_SECTION	mCriticalSection;
 
 	//----------------------------------------------------------------//
 	void			Lock				();

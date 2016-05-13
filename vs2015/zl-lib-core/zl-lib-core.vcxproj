@@ -243,7 +243,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Lib>
-      <AdditionalDependencies>contrib.lib;expat.lib;jansson.lib;libcrypto.lib;libjpg.lib;libpng.lib;libssl.lib;sfmt.lib;sqlite.lib;tinyxml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
@@ -390,7 +390,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Lib>
-      <AdditionalDependencies>contrib.lib;expat.lib;jansson.lib;libcrypto.lib;libjpg.lib;libpng.lib;libssl.lib;sfmt.lib;sqlite.lib;tinyxml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
@@ -537,7 +537,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Lib>
-      <AdditionalDependencies>contrib.lib;expat.lib;jansson.lib;libcrypto.lib;libjpg.lib;libpng.lib;libssl.lib;sfmt.lib;sqlite.lib;tinyxml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
@@ -664,15 +664,22 @@
     <ClInclude Include="..\..\src\zl-util\ZLAccessors.h" />
     <ClInclude Include="..\..\src\zl-util\ZLAdapterInfo.h" />
     <ClInclude Include="..\..\src\zl-util\ZLBinarySearch.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLBitBuffer.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLCopyOnWrite.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLCubicBezier2D.h" />
     <ClInclude Include="..\..\src\zl-util\ZLDelegate.h" />
     <ClInclude Include="..\..\src\zl-util\ZLDirectoryItr.h" />
     <ClInclude Include="..\..\src\zl-util\ZLFileSys.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLFrustumFitter.h" />
     <ClInclude Include="..\..\src\zl-util\ZLHashedString.h" />
     <ClInclude Include="..\..\src\zl-util\ZLHexAdapter.h" />
     <ClInclude Include="..\..\src\zl-util\ZLHexDump.h" />
     <ClInclude Include="..\..\src\zl-util\ZLLog.h" />
     <ClInclude Include="..\..\src\zl-util\ZLRadixSort16.h" />
     <ClInclude Include="..\..\src\zl-util\ZLRadixSort32.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLRefCountedObject.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLRingAdapter.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLSample.h" />
     <ClInclude Include="..\..\src\zl-util\ZLSharedHandle.h" />
     <ClInclude Include="..\..\src\zl-util\ZLStreamAdapter.h" />
     <ClInclude Include="..\..\src\zl-util\ZLTypedPtr.h" />
@@ -745,16 +752,26 @@
     <ClInclude Include="..\..\src\zl-util\ZLXmlReader.h" />
     <ClInclude Include="..\..\src\zl-util\headers.h" />
     <ClInclude Include="..\..\src\zl-util\pch.h" />
+    <ClInclude Include="..\..\src\zl-util\zl_socket.h" />
+    <ClInclude Include="..\..\src\zl-util\zl_usocket.h" />
+    <ClInclude Include="..\..\src\zl-util\zl_wsocket.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\zl-util\ZLAdapterInfo_posix.cpp" />
     <ClCompile Include="..\..\src\zl-util\ZLAdapterInfo_win32.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLBitBuffer.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLCopyOnWrite.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLCubicBezier2D.cpp" />
     <ClCompile Include="..\..\src\zl-util\ZLDirectoryItr.cpp" />
     <ClCompile Include="..\..\src\zl-util\ZLFileSys.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLFrustumFitter.cpp" />
     <ClCompile Include="..\..\src\zl-util\ZLHashedString.cpp" />
     <ClCompile Include="..\..\src\zl-util\ZLHexAdapter.cpp" />
     <ClCompile Include="..\..\src\zl-util\ZLHexDump.cpp" />
     <ClCompile Include="..\..\src\zl-util\ZLLog.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLRefCountedObject.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLRingAdapter.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLSample.cpp" />
     <ClCompile Include="..\..\src\zl-util\ZLStreamAdapter.cpp" />
     <ClCompile Include="..\..\src\zl-util\ZLTypedPtr.cpp" />
     <ClCompile Include="..\..\src\zl-util\ZLUnique_linux.cpp" />
@@ -809,6 +826,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.2|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release-LuaJIT|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\src\zl-util\zl_usocket.cpp" />
+    <ClCompile Include="..\..\src\zl-util\zl_wsocket.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

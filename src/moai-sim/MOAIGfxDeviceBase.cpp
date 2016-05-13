@@ -9,6 +9,10 @@
 #include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIVertexFormat.h>
 
+#ifdef MOAI_COMPILER_MSVC
+	#undef DeleteFile
+#endif
+
 //================================================================//
 // MOAIGfxPipeline
 //================================================================//

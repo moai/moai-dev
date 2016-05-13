@@ -191,7 +191,7 @@ MOAIAnim::~MOAIAnim () {
 void MOAIAnim::OnUpdate ( double step ) {
 
 	float t0 = this->GetTime ();
-	this->DoStep ( step );
+	this->DoStep (( float )step );
 	float t1 = this->GetTime ();
 	
 	this->Apply ( t0, t1 );

@@ -75,9 +75,7 @@ public:
 		OVERLAP_UPDATE,
 	};
 	
-	enum {
-		OVERLAP_PASS_INIT	= 0,
-	};
+	static const u32 OVERLAP_PASS_INIT = 0;
 	
 	//----------------------------------------------------------------//
 					MOAICollisionWorld		();

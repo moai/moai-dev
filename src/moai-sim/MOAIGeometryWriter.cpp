@@ -449,8 +449,8 @@ void MOAIGeometryWriter::ApplyColor ( const MOAIVertexFormat& format, ZLStream& 
 //----------------------------------------------------------------//
 void MOAIGeometryWriter::ApplyLightFromImage ( const MOAIVertexFormat& format, ZLStream& stream, u32 mode, MOAIImage& image, bool gradient, float a0, float a1, const ZLVec3D& v0, const ZLVec3D& v1 ) {
 	
-	float width		= image.GetWidth ();
-	float height	= image.GetHeight ();
+	float width		= ( float )image.GetWidth ();
+	float height	= ( float )image.GetHeight ();
 	
 	size_t base = stream.GetCursor ();
 	u32 total = ( u32 )(( stream.GetLength () - base ) / format.GetVertexSize ());
@@ -489,8 +489,8 @@ void MOAIGeometryWriter::ApplyLightFromImage ( const MOAIVertexFormat& format, Z
 		ZLVec2D hVec ( normal.mX, normal.mY );
 		hVec.Norm ();
 
-		float x = ( hVec.Radians () / TWOPI ) * width;
-		float y = ( normal.Radians ( ZLVec3D::Z_AXIS ) / PI ) * height;
+		float x = ( float )(( hVec.Radians () / TWOPI ) * width );
+		float y = ( float )(( normal.Radians ( ZLVec3D::Z_AXIS ) / PI ) * height );
 
 		u32 sampleColor = image.SampleColor ( x, y, MOAIImage::FILTER_LINEAR, true, true );
 		ZLColorVec color ( sampleColor );
@@ -827,10 +827,20 @@ void MOAIGeometryWriter::WriteColor ( const MOAIVertexFormat& format, ZLStream& 
 
 //----------------------------------------------------------------//
 void MOAIGeometryWriter::WriteCylinder ( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec2D& r0, const ZLVec2D& r1 ) {
+	UNUSED ( format );
+	UNUSED ( stream );
+	UNUSED ( v0 );
+	UNUSED ( v1 );
+	UNUSED ( r0 );
+	UNUSED ( r1 );
 }
 
 //----------------------------------------------------------------//
 void MOAIGeometryWriter::WriteIcoSphere ( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& r ) {
+	UNUSED ( format );
+	UNUSED ( stream );
+	UNUSED ( v0 );
+	UNUSED ( r );
 }
 
 //----------------------------------------------------------------//
@@ -853,6 +863,10 @@ void MOAIGeometryWriter::WriteQuad ( const MOAIVertexFormat& format, ZLStream& s
 
 //----------------------------------------------------------------//
 void MOAIGeometryWriter::WriteUVSphere ( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& r ) {
+	UNUSED ( format );
+	UNUSED ( stream );
+	UNUSED ( v0 );
+	UNUSED ( r );
 }
 
 //----------------------------------------------------------------//

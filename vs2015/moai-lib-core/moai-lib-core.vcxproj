@@ -52,7 +52,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{AA2BD0BE-D174-4F8F-A7F7-B924128FED00}</ProjectGuid>
-    <RootNamespace>moai-lib-core-lua-5.1</RootNamespace>
+    <RootNamespace>moai-lib-core</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -222,7 +222,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.1|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\zlib-1.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\jansson-2.7\src-win32;..\..\3rdparty\jansson-2.7\src;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\zlib-1.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_LIB;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -365,7 +365,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.2|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\lua-5.2.2\src;..\..\3rdparty\zlib-1.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\jansson-2.7\src-win32;..\..\3rdparty\jansson-2.7\src;..\..\3rdparty\lua-5.2.2\src;..\..\3rdparty\zlib-1.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;XML_STATIC;LUA_COMPAT_MODULE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -508,7 +508,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-LuaJIT|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\luajit-2.0.1\src;..\..\3rdparty\zlib-1.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\jansson-2.7\src-win32;..\..\3rdparty\jansson-2.7\src;..\..\3rdparty\luajit-2.0.1\src;..\..\3rdparty\zlib-1.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;XML_STATIC;MOAI_WITH_LUAJIT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -653,13 +653,17 @@
     <ClInclude Include="..\..\src\moai-core\host.h" />
     <ClInclude Include="..\..\src\moai-core\MOAICanary.h" />
     <ClInclude Include="..\..\src\moai-core\MOAIDeserializer.h" />
+    <ClInclude Include="..\..\src\moai-core\MOAIEnvironment.h" />
     <ClInclude Include="..\..\src\moai-core\MOAIEventSource.h" />
+    <ClInclude Include="..\..\src\moai-core\MOAIFoo.h" />
+    <ClInclude Include="..\..\src\moai-core\MOAIFooMgr.h" />
     <ClInclude Include="..\..\src\moai-core\MOAIGlobals.h" />
     <ClInclude Include="..\..\src\moai-core\MOAILogMessages.h" />
     <ClInclude Include="..\..\src\moai-core\MOAILogMgr.h" />
     <ClInclude Include="..\..\src\moai-core\MOAILua.h" />
+    <ClInclude Include="..\..\src\moai-core\MOAILuaClass-impl.h" />
     <ClInclude Include="..\..\src\moai-core\MOAILuaClass.h" />
-    <ClInclude Include="..\..\src\moai-core\MOAILuaObject-impl.h" />
+    <ClInclude Include="..\..\src\moai-core\MOAILuaLocal.h" />
     <ClInclude Include="..\..\src\moai-core\MOAILuaObject.h" />
     <ClInclude Include="..\..\src\moai-core\MOAILuaRef.h" />
     <ClInclude Include="..\..\src\moai-core\MOAILuaRefTable.h" />
@@ -673,15 +677,21 @@
     <ClInclude Include="..\..\src\moai-core\MOAISerializer.h" />
     <ClInclude Include="..\..\src\moai-core\MOAISerializerBase.h" />
     <ClInclude Include="..\..\src\moai-core\MOAISharedPtr.h" />
+    <ClInclude Include="..\..\src\moai-core\MOAITestMgr.h" />
+    <ClInclude Include="..\..\src\moai-core\MOAITrace.h" />
     <ClInclude Include="..\..\src\moai-core\MOAIVersion.h" />
     <ClInclude Include="..\..\src\moai-core\MOAIWeakPtr.h" />
+    <ClInclude Include="..\..\src\moai-core\moai_version.h" />
     <ClInclude Include="..\..\src\moai-core\pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\moai-core\host.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAICanary.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAIDeserializer.cpp" />
+    <ClCompile Include="..\..\src\moai-core\MOAIEnvironment.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAIEventSource.cpp" />
+    <ClCompile Include="..\..\src\moai-core\MOAIFoo.cpp" />
+    <ClCompile Include="..\..\src\moai-core\MOAIFooMgr.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAIGlobals.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAILogMessages.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAILogMgr.cpp" />
@@ -696,6 +706,8 @@
     <ClCompile Include="..\..\src\moai-core\MOAIScopedLuaState.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAISerializer.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAISerializerBase.cpp" />
+    <ClCompile Include="..\..\src\moai-core\MOAITestMgr.cpp" />
+    <ClCompile Include="..\..\src\moai-core\MOAITrace.cpp" />
     <ClCompile Include="..\..\src\moai-core\MOAIVersion.cpp" />
     <ClCompile Include="..\..\src\moai-core\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.1|Win32'">Create</PrecompiledHeader>

@@ -2,6 +2,9 @@
 // http://getmoai.com
 
 #include "pch.h"
+
+SUPPRESS_EMPTY_FILE_WARNING
+
 #ifdef _WIN32
 
 #include <moai-util/MOAIThread_win32.h>

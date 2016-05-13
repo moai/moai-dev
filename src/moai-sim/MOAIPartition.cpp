@@ -494,78 +494,78 @@ void MOAIPartition::Clear () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 interfaceMask, u32 queryMask ) {
+u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, u32 interfaceMask, u32 queryMask ) {
 	
 	results.Reset ();
 	
 	u32 totalLevels = this->mLevels.Size ();
 	for ( u32 i = 0; i < totalLevels; ++i ) {
-		this->mLevels [ i ].GatherProps ( results, ignore, interfaceMask, queryMask );
+		this->mLevels [ i ].GatherProps ( results, ignoreProp, interfaceMask, queryMask );
 	}
-	this->mBiggies.GatherProps ( results, ignore, interfaceMask, queryMask );
-	this->mGlobals.GatherProps ( results, ignore, interfaceMask, queryMask );
-	this->mEmpties.GatherProps ( results, ignore, interfaceMask, queryMask );
+	this->mBiggies.GatherProps ( results, ignoreProp, interfaceMask, queryMask );
+	this->mGlobals.GatherProps ( results, ignoreProp, interfaceMask, queryMask );
+	this->mEmpties.GatherProps ( results, ignoreProp, interfaceMask, queryMask );
 	
 	return results.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
 }
 
 //----------------------------------------------------------------//
-u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask, u32 queryMask ) {
+u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask, u32 queryMask ) {
 	
 	results.Reset ();
 	
 	u32 totalLevels = this->mLevels.Size ();
 	for ( u32 i = 0; i < totalLevels; ++i ) {
-		this->mLevels [ i ].GatherProps ( results, ignore, point, orientation, interfaceMask, queryMask );
+		this->mLevels [ i ].GatherProps ( results, ignoreProp, point, orientation, interfaceMask, queryMask );
 	}
-	this->mBiggies.GatherProps ( results, ignore, point, orientation, interfaceMask, queryMask );
-	this->mGlobals.GatherProps ( results, ignore, point, orientation, interfaceMask, queryMask );
+	this->mBiggies.GatherProps ( results, ignoreProp, point, orientation, interfaceMask, queryMask );
+	this->mGlobals.GatherProps ( results, ignoreProp, point, orientation, interfaceMask, queryMask );
 	
 	return results.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
 }
 
 //----------------------------------------------------------------//
-u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const ZLVec3D& point, u32 interfaceMask, u32 queryMask ) {
+u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLVec3D& point, u32 interfaceMask, u32 queryMask ) {
 	
 	results.Reset ();
 	
 	u32 totalLevels = this->mLevels.Size ();
 	for ( u32 i = 0; i < totalLevels; ++i ) {
-		this->mLevels [ i ].GatherProps ( results, ignore, point, this->mPlaneID, interfaceMask, queryMask );
+		this->mLevels [ i ].GatherProps ( results, ignoreProp, point, this->mPlaneID, interfaceMask, queryMask );
 	}
-	this->mBiggies.GatherProps ( results, ignore, point, interfaceMask, queryMask );
-	this->mGlobals.GatherProps ( results, ignore, interfaceMask, queryMask );
+	this->mBiggies.GatherProps ( results, ignoreProp, point, interfaceMask, queryMask );
+	this->mGlobals.GatherProps ( results, ignoreProp, interfaceMask, queryMask );
 	
 	return results.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
 }
 
 //----------------------------------------------------------------//
-u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, ZLBox box, u32 interfaceMask, u32 queryMask ) {
+u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, ZLBox box, u32 interfaceMask, u32 queryMask ) {
 	
 	results.Reset ();
 	box.Bless ();
 	
 	u32 totalLevels = this->mLevels.Size ();
 	for ( u32 i = 0; i < totalLevels; ++i ) {
-		this->mLevels [ i ].GatherProps ( results, ignore, box, this->mPlaneID, interfaceMask, queryMask );
+		this->mLevels [ i ].GatherProps ( results, ignoreProp, box, this->mPlaneID, interfaceMask, queryMask );
 	}
-	this->mBiggies.GatherProps ( results, ignore, box, interfaceMask, queryMask );
-	this->mGlobals.GatherProps ( results, ignore, interfaceMask, queryMask );
+	this->mBiggies.GatherProps ( results, ignoreProp, box, interfaceMask, queryMask );
+	this->mGlobals.GatherProps ( results, ignoreProp, interfaceMask, queryMask );
 	
 	return results.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
 }
 
 //----------------------------------------------------------------//
-u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const ZLFrustum& frustum, u32 interfaceMask, u32 queryMask ) {
+u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLFrustum& frustum, u32 interfaceMask, u32 queryMask ) {
 	
 	results.Reset ();
 	
 	u32 totalLevels = this->mLevels.Size ();
 	for ( u32 i = 0; i < totalLevels; ++i ) {
-		this->mLevels [ i ].GatherProps ( results, ignore, frustum, this->mPlaneID, interfaceMask, queryMask );
+		this->mLevels [ i ].GatherProps ( results, ignoreProp, frustum, this->mPlaneID, interfaceMask, queryMask );
 	}
-	this->mBiggies.GatherProps ( results, ignore, frustum, interfaceMask, queryMask );
-	this->mGlobals.GatherProps ( results, ignore, interfaceMask, queryMask );
+	this->mBiggies.GatherProps ( results, ignoreProp, frustum, interfaceMask, queryMask );
+	this->mGlobals.GatherProps ( results, ignoreProp, interfaceMask, queryMask );
 	
 	return results.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
 }

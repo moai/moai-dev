@@ -1106,7 +1106,7 @@ u32 MOAITextLabel::OnGetModelBounds ( ZLBox& bounds ) {
 //----------------------------------------------------------------//
 void MOAITextLabel::OnUpdate ( double step ) {
 	
-	this->mSpool += ( this->mSpeed * step );
+	this->mSpool += ( float )( this->mSpeed * step );
 	this->mReveal = ( u32 )this->mSpool;
 }
 

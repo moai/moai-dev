@@ -5,12 +5,10 @@
 
 SUPPRESS_EMPTY_FILE_WARNING
 
-#ifndef _WIN32
+#ifdef _WIN32
 
-#include <pthread.h>
-
-#include <moai-util/MOAIConditionVariable_posix.h>
-#include <moai-util/MOAIMutex_posix.h>
+#include <moai-util/MOAIConditionVariable_win32.h>
+#include <moai-util/MOAIMutex_win32.h>
 
 //================================================================//
 // MOAIConditionVariableImpl
@@ -19,32 +17,29 @@ SUPPRESS_EMPTY_FILE_WARNING
 //----------------------------------------------------------------//
 void MOAIConditionVariableImpl::Broadcast () {
 
-	pthread_cond_broadcast ( &this->mConditional );
+	WakeAllConditionVariable ( &this->mConditional );
 }
 
 //----------------------------------------------------------------//
 MOAIConditionVariableImpl::MOAIConditionVariableImpl () {
 
-	memset ( &this->mConditional, 0, sizeof ( pthread_cond_t ));
-	pthread_cond_init ( &this->mConditional, NULL );
+	InitializeConditionVariable ( &this->mConditional );
 }
 
 //----------------------------------------------------------------//
 MOAIConditionVariableImpl::~MOAIConditionVariableImpl () {
-
-	pthread_cond_destroy ( &this->mConditional );
 }
 
 //----------------------------------------------------------------//
 void MOAIConditionVariableImpl::Signal () {
 
-	pthread_cond_signal ( &this->mConditional );
+	WakeConditionVariable ( &this->mConditional );
 }
 
 //----------------------------------------------------------------//
 void MOAIConditionVariableImpl::Wait ( MOAIMutexImpl& mutexImpl ) {
 
-	pthread_cond_wait ( &this->mConditional, &mutexImpl.mMutex );
+	SleepConditionVariableCS ( &this->mConditional, &mutexImpl.mCriticalSection, INFINITE );
 }
 
 #endif

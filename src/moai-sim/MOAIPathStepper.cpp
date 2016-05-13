@@ -144,6 +144,7 @@ ZLVec2D MOAIPathStepper::NextVertex () {
 
 //----------------------------------------------------------------//
 void MOAIPathStepper::RegisterLuaClass ( MOAILuaState& state ) {
+	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//

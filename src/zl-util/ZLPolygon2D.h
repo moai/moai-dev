@@ -77,7 +77,7 @@ private:
 		
 		u32 status = POLY_KNOWN_BIT;
 		
-		TYPE sign = 0.0;
+		//TYPE sign = 0.0;
 		
 		size_t countPositive = 0;
 		size_t countNegative = 0;

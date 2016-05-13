@@ -258,7 +258,7 @@ void MOAICoroutine::OnStop () {
 
 //----------------------------------------------------------------//
 void MOAICoroutine::OnUpdate ( double step ) {
-	this->Resume ( step );
+	this->Resume (( float )step );
 }
 
 //----------------------------------------------------------------//

@@ -56,6 +56,7 @@
     <ClInclude Include="..\..\src\moai-util\MOAIByteStream.h" />
     <ClInclude Include="..\..\src\moai-util\MOAIConditionVariable.h" />
     <ClInclude Include="..\..\src\moai-util\MOAIConditionVariable_posix.h" />
+    <ClInclude Include="..\..\src\moai-util\MOAIConditionVariable_win32.h" />
     <ClInclude Include="..\..\src\moai-util\MOAIDataBuffer.h" />
     <ClInclude Include="..\..\src\moai-util\MOAIDataBufferStream.h" />
     <ClInclude Include="..\..\src\moai-util\MOAIDataIOTask.h" />
@@ -90,6 +91,7 @@
     <ClCompile Include="..\..\src\moai-util\MOAIByteStream.cpp" />
     <ClCompile Include="..\..\src\moai-util\MOAIConditionVariable.cpp" />
     <ClCompile Include="..\..\src\moai-util\MOAIConditionVariable_posix.cpp" />
+    <ClCompile Include="..\..\src\moai-util\MOAIConditionVariable_win32.cpp" />
     <ClCompile Include="..\..\src\moai-util\MOAIDataBuffer.cpp" />
     <ClCompile Include="..\..\src\moai-util\MOAIDataBufferStream.cpp" />
     <ClCompile Include="..\..\src\moai-util\MOAIDataIOTask.cpp" />
@@ -295,7 +297,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.1|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\jansson-2.7\src;..\..\3rdparty\kissfft;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\jansson-2.7\src-win32;..\..\3rdparty\jansson-2.7\src;..\..\3rdparty\kissfft;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_LIB;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -435,7 +437,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.2|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\jansson-2.7\src;..\..\3rdparty\kissfft;..\..\3rdparty\lua-5.2.2\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\jansson-2.7\src-win32;..\..\3rdparty\jansson-2.7\src;..\..\3rdparty\kissfft;..\..\3rdparty\lua-5.2.2\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;XML_STATIC;LUA_COMPAT_MODULE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -575,7 +577,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-LuaJIT|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\jansson-2.7\src;..\..\3rdparty\kissfft;..\..\3rdparty\luajit-2.0.1\src;$(TargetDir)luajit;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\jansson-2.7\src-win32;..\..\3rdparty\jansson-2.7\src;..\..\3rdparty\kissfft;..\..\3rdparty\luajit-2.0.1\src;$(TargetDir)luajit;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;XML_STATIC;MOAI_WITH_LUAJIT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>

@@ -150,7 +150,8 @@ void MOAIVectorShape::StrokeBoundaries ( SafeTesselator& tess, SafeTesselator& o
 
 //----------------------------------------------------------------//
 int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, SafeTesselator& tess ) {
-	
+	UNUSED ( drawing );
+
 	int error = 0;
 	
 	if ( this->mStyle.GetFillStyle () == MOAIVectorStyle::FILL_SOLID ) {
@@ -176,7 +177,7 @@ int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vtxStr
 	bool isExtruded		= this->mStyle.GetExtrude () > 0.0f;
 	bool isStroked		= ( this->mStyle.GetStrokeStyle () != MOAIVectorStyle::STROKE_NONE ) && ( this->mStyle.GetStrokeWidth () > 0.0f );
 	bool isFilled		= this->mStyle.GetFillStyle () == MOAIVectorStyle::FILL_SOLID;
-	bool isClosed		= this->IsClosed ();
+	//bool isClosed		= this->IsClosed ();
 	
 	// fill solid w/ stroke
 	// fill solid w/o stroke

@@ -396,8 +396,6 @@ void MOAIGfxDeviceStateCache::SetScissorRect ( ZLRect rect ) {
 	
 	rect.Bless ();
 	this->mViewRect.Clip ( rect );
-
-	ZLRect& current = this->mScissorRect;
 	
 	if ( !( this->mScissorEnabled && this->mScissorRect.IsEqual ( rect ))) {
 		

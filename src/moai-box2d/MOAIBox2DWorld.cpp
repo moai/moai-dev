@@ -1164,7 +1164,7 @@ MOAIBox2DWorld::~MOAIBox2DWorld () {
 void MOAIBox2DWorld::OnUpdate ( double step ) {
 	
 	this->mLock = true;
-	this->mWorld->Step ( step, this->mVelocityIterations, this->mPositionIterations );
+	this->mWorld->Step (( float32 )step, this->mVelocityIterations, this->mPositionIterations );
 	this->mLock = false;
 	
 	this->Destroy ();

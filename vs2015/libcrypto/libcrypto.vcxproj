@@ -1,14 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug - Lua 5.2|Win32">
-      <Configuration>Debug - Lua 5.2</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug - Lua 5.2|x64">
-      <Configuration>Debug - Lua 5.2</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug-Lua-5.1|Win32">
       <Configuration>Debug-Lua-5.1</Configuration>
       <Platform>Win32</Platform>
@@ -88,10 +80,6 @@
     <WholeProgramOptimization>false</WholeProgramOptimization>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug - Lua 5.2|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v140</PlatformToolset>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.1|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>NotSet</CharacterSet>
@@ -126,11 +114,6 @@
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug - Lua 5.2|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.1|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
@@ -157,9 +140,6 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.2|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug - Lua 5.2|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.1|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -176,9 +156,6 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.2|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug - Lua 5.2|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.1|x64'" Label="PropertySheets">
@@ -198,10 +175,6 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.1|Win32'">$(Platform)\$(Configuration)\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.1|x64'">..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.1|x64'">$(Platform)\$(Configuration)\</IntDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug - Lua 5.2|Win32'">..\bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug - Lua 5.2|Win32'">$(Platform)\$(Configuration)\</IntDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug - Lua 5.2|x64'">..\bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug - Lua 5.2|x64'">$(Platform)\$(Configuration)\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.2|Win32'">..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.2|Win32'">$(Platform)\$(Configuration)\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.2|x64'">..\bin\$(Platform)\$(Configuration)\</OutDir>
@@ -218,12 +191,6 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release-LuaJIT|Win32'">$(Platform)\$(Configuration)\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release-LuaJIT|x64'">..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release-LuaJIT|x64'">$(Platform)\$(Configuration)\</IntDir>
-    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug - Lua 5.2|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug - Lua 5.2|Win32'" />
-    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug - Lua 5.2|Win32'" />
-    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug - Lua 5.2|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug - Lua 5.2|x64'" />
-    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug - Lua 5.2|x64'" />
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.1|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.1|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.1|Win32'" />
@@ -265,7 +232,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0m\include-win32;..\..\3rdparty\openssl-1.0.0m\include;..\..\3rdparty\openssl-1.0.0m\crypto;..\..\3rdparty\openssl-1.0.0m\crypto\asn1;..\..\3rdparty\openssl-1.0.0m\crypto\evp;..\..\3rdparty\openssl-1.0.0m;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DSO_WIN32;OPENSSL_SYSNAME_WIN32;WIN32_LEAN_AND_MEAN;L_ENDIAN;MK1MF_BUILD;MK1MF_PLATFORM_VC_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DSO_WIN32;L_ENDIAN;MK1MF_BUILD;MK1MF_PLATFORM_VC_WIN32;OPENSSL_NO_ASM;OPENSSL_NO_BF;OPENSSL_NO_CAST;OPENSSL_NO_IDEA;OPENSSL_NO_JPAKE;OPENSSL_NO_KRB5;OPENSSL_NO_MD2;OPENSSL_NO_MDC2;OPENSSL_NO_RC5;OPENSSL_NO_RIPEMD;OPENSSL_NO_STATIC_ENGINE;OPENSSL_NO_WHIRLPOOL;OPENSSL_SYSNAME_WIN32;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -361,45 +328,11 @@
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug - Lua 5.2|Win32'">
-    <ClCompile>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0m\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
-      <WarningLevel>TurnOffAllWarnings</WarningLevel>
-      <CompileAs>CompileAsC</CompileAs>
-      <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-    </ClCompile>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug - Lua 5.2|x64'">
-    <Midl>
-      <TargetEnvironment>X64</TargetEnvironment>
-    </Midl>
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0m\include-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
-      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
-      <WarningLevel>TurnOffAllWarnings</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <CompileAs>CompileAsC</CompileAs>
-      <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-    </ClCompile>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.2|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0m\include-win32;..\..\3rdparty\openssl-1.0.0m\include;..\..\3rdparty\openssl-1.0.0m\crypto;..\..\3rdparty\openssl-1.0.0m\crypto\asn1;..\..\3rdparty\openssl-1.0.0m\crypto\evp;..\..\3rdparty\openssl-1.0.0m;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DSO_WIN32;OPENSSL_SYSNAME_WIN32;WIN32_LEAN_AND_MEAN;L_ENDIAN;MK1MF_BUILD;MK1MF_PLATFORM_VC_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DSO_WIN32;L_ENDIAN;MK1MF_BUILD;MK1MF_PLATFORM_VC_WIN32;OPENSSL_NO_ASM;OPENSSL_NO_BF;OPENSSL_NO_CAST;OPENSSL_NO_IDEA;OPENSSL_NO_JPAKE;OPENSSL_NO_KRB5;OPENSSL_NO_MD2;OPENSSL_NO_MDC2;OPENSSL_NO_RC5;OPENSSL_NO_RIPEMD;OPENSSL_NO_STATIC_ENGINE;OPENSSL_NO_WHIRLPOOL;OPENSSL_SYSNAME_WIN32;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -499,7 +432,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\openssl-1.0.0m\include-win32;..\..\3rdparty\openssl-1.0.0m\include;..\..\3rdparty\openssl-1.0.0m\crypto;..\..\3rdparty\openssl-1.0.0m\crypto\asn1;..\..\3rdparty\openssl-1.0.0m\crypto\evp;..\..\3rdparty\openssl-1.0.0m;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DSO_WIN32;OPENSSL_SYSNAME_WIN32;WIN32_LEAN_AND_MEAN;L_ENDIAN;MK1MF_BUILD;MK1MF_PLATFORM_VC_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DSO_WIN32;L_ENDIAN;MK1MF_BUILD;MK1MF_PLATFORM_VC_WIN32;OPENSSL_NO_ASM;OPENSSL_NO_BF;OPENSSL_NO_CAST;OPENSSL_NO_IDEA;OPENSSL_NO_JPAKE;OPENSSL_NO_KRB5;OPENSSL_NO_MD2;OPENSSL_NO_MDC2;OPENSSL_NO_RC5;OPENSSL_NO_RIPEMD;OPENSSL_NO_STATIC_ENGINE;OPENSSL_NO_WHIRLPOOL;OPENSSL_SYSNAME_WIN32;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -598,18 +531,32 @@
   <ItemGroup>
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\aes\aes.h" />
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\aes\aes_locl.h" />
+    <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\camellia\camellia.h" />
+    <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\camellia\cmll_locl.h" />
+    <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\cms\cms.h" />
+    <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\cms\cms_lcl.h" />
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\des\des.h" />
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\des\des_locl.h" />
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\des\des_ver.h" />
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\des\rpc_des.h" />
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\des\spr.h" />
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\comp\comp.h" />
+    <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\ecdh\ecdh.h" />
+    <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\ecdh\ech_locl.h" />
+    <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\ecdsa\ecdsa.h" />
+    <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\ecdsa\ecs_locl.h" />
+    <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\ec\ec.h" />
+    <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\ec\ec_lcl.h" />
+    <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\engine\engine.h" />
+    <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\engine\eng_int.h" />
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\rc2\rc2.h" />
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\rc2\rc2_locl.h" />
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\rc4\rc4.h" />
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\rc4\rc4_locl.h" />
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\md5\md5.h" />
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\md5\md5_locl.h" />
+    <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\seed\seed.h" />
+    <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\seed\seed_locl.h" />
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\sha\sha.h" />
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\sha\sha_locl.h" />
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0m\crypto\md4\md4.h" />
@@ -674,6 +621,25 @@
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\aes\aes_misc.c" />
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\aes\aes_ofb.c" />
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\aes\aes_wrap.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\camellia\camellia.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\camellia\cmll_cbc.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\camellia\cmll_cfb.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\camellia\cmll_ctr.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\camellia\cmll_ecb.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\camellia\cmll_misc.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\camellia\cmll_ofb.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\cms\cms_asn1.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\cms\cms_att.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\cms\cms_cd.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\cms\cms_dd.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\cms\cms_enc.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\cms\cms_env.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\cms\cms_err.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\cms\cms_ess.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\cms\cms_io.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\cms\cms_lib.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\cms\cms_sd.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\cms\cms_smime.c" />
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\des\cbc_cksm.c" />
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\des\cbc_enc.c" />
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\des\cfb64ede.c" />
@@ -701,6 +667,53 @@
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\comp\c_zlib.c" />
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\comp\comp_err.c" />
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\comp\comp_lib.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ecdh\ech_err.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ecdh\ech_key.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ecdh\ech_lib.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ecdh\ech_ossl.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ecdsa\ecs_asn1.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ecdsa\ecs_err.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ecdsa\ecs_lib.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ecdsa\ecs_ossl.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ecdsa\ecs_sign.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ecdsa\ecs_vrf.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ec\ec2_mult.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ec\ec2_smpl.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ec\eck_prn.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ec\ecp_mont.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ec\ecp_nist.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ec\ecp_smpl.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ec\ec_ameth.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ec\ec_asn1.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ec\ec_check.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ec\ec_curve.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ec\ec_cvt.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ec\ec_err.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ec\ec_key.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ec\ec_lib.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ec\ec_mult.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ec\ec_pmeth.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\ec\ec_print.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\engine\eng_all.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\engine\eng_ctrl.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\engine\eng_dyn.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\engine\eng_err.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\engine\eng_fat.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\engine\eng_init.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\engine\eng_lib.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\engine\eng_list.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\engine\eng_pkey.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\engine\eng_table.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\engine\tb_asnmth.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\engine\tb_cipher.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\engine\tb_dh.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\engine\tb_digest.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\engine\tb_dsa.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\engine\tb_ecdh.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\engine\tb_ecdsa.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\engine\tb_pkmeth.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\engine\tb_rand.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\engine\tb_rsa.c" />
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\rc2\rc2_cbc.c" />
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\rc2\rc2_ecb.c" />
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\rc2\rc2_skey.c" />
@@ -710,6 +723,11 @@
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\rc4\rc4_skey.c" />
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\md5\md5_dgst.c" />
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\md5\md5_one.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\seed\seed.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\seed\seed_cbc.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\seed\seed_cfb.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\seed\seed_ecb.c" />
+    <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\seed\seed_ofb.c" />
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\sha\sha1_one.c" />
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\sha\sha1dgst.c" />
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0m\crypto\sha\sha256.c" />

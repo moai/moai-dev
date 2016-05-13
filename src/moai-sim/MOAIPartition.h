@@ -73,11 +73,11 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			Clear					();
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const ZLVec3D& point, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, ZLBox box, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const ZLFrustum& frustum, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLVec3D& point, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, ZLBox box, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLFrustum& frustum, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
 	void			InsertProp				( MOAIProp& prop );
 	bool			IsEmpty					( MOAIProp& prop );
 	bool			IsGlobal				( MOAIProp& prop );

@@ -321,6 +321,7 @@ ZLRect MOAIFrameBuffer::GetBufferRect () const {
 
 //----------------------------------------------------------------//
 void MOAIFrameBuffer::GrabImage ( MOAIImage* image ) {
+	UNUSED ( image ); // TODO: doesn't work now?
 
 	// TODO: all this is extremely hinky. this assumes that the framebuffer is RGBA_8888, which it
 	// may not be. it also does two extra allocations and copies. what *should* happen is that we

@@ -68,20 +68,17 @@
     <ClCompile Include="..\..\3rdparty\jansson-2.7\src\pack_unpack.c" />
     <ClCompile Include="..\..\3rdparty\jansson-2.7\src\strbuffer.c" />
     <ClCompile Include="..\..\3rdparty\jansson-2.7\src\strconv.c" />
+    <ClCompile Include="..\..\3rdparty\jansson-2.7\src\utf.c" />
     <ClCompile Include="..\..\3rdparty\jansson-2.7\src\value.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\3rdparty\jansson-2.7\src-win32\jansson_config.h" />
-    <ClInclude Include="..\..\3rdparty\jansson-2.7\src-win32\jansson_private_config.h" />
     <ClInclude Include="..\..\3rdparty\jansson-2.7\src\hashtable.h" />
     <ClInclude Include="..\..\3rdparty\jansson-2.7\src\jansson.h" />
     <ClInclude Include="..\..\3rdparty\jansson-2.7\src\jansson_config.h" />
     <ClInclude Include="..\..\3rdparty\jansson-2.7\src\jansson_private.h" />
     <ClInclude Include="..\..\3rdparty\jansson-2.7\src\lookup3.h" />
     <ClInclude Include="..\..\3rdparty\jansson-2.7\src\strbuffer.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\3rdparty\jansson-2.7\src\jansson_config.h.in" />
+    <ClInclude Include="..\..\3rdparty\jansson-2.7\src\utf.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{52496C82-2EDB-4649-8509-451891F6A3DE}</ProjectGuid>
@@ -295,7 +292,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\jansson-2.7\src-win32;..\..\3rdparty\jansson-2.7\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;CURL_STATICLIB;AKU_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;HAVE_STDINT_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -447,7 +444,7 @@ xcopy /yr "$(OutDir)$(TargetName).lib" "..\..\bin\win32\$(Configuration)\"
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\jansson-2.7\src-win32;..\..\3rdparty\jansson-2.7\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;CURL_STATICLIB;AKU_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;HAVE_STDINT_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -581,7 +578,7 @@ xcopy /yr "$(OutDir)$(TargetName).lib" "..\..\bin\win32\$(Configuration)\"
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\jansson-2.7\src-win32;..\..\3rdparty\jansson-2.7\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;CURL_STATICLIB;AKU_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;HAVE_STDINT_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>

@@ -60,7 +60,7 @@ struct TextDrawContext {
 };
 
 static TextDrawContext g_TextDrawContext;
-static TextDrawContext* g_CurrentTextDrawContext = 0;
+static TextDrawContext* g_CurrentTextDrawContext = 0; // TODO: ugh! refactor this!
 
 //----------------------------------------------------------------//
 void MOAIDraw::BeginDrawString ( float scale, MOAIFont& font, float fontSize, float shadowOffsetX, float shadowOffsetY ) {
@@ -203,8 +203,8 @@ void MOAIDraw::EndDrawString () {
 	// Get the context data
 	assert( g_CurrentTextDrawContext );
 	
-	MOAIFont& font = *g_CurrentTextDrawContext->mFont;
-	float scale = g_CurrentTextDrawContext->mScale;
+	//MOAIFont& font = *g_CurrentTextDrawContext->mFont;
+	//float scale = g_CurrentTextDrawContext->mScale;
 	float shadowOffsetX = g_CurrentTextDrawContext->mShadowOffsetX;
 	float shadowOffsetY = g_CurrentTextDrawContext->mShadowOffsetY;
 
@@ -230,14 +230,14 @@ void MOAIDraw::EndDrawString () {
 			offsetY = 0;
 		}
 
-		STLList < GlyphPlacement >::const_iterator it;
-		for ( it = g_CurrentTextDrawContext->mGlyphs.begin (); it != g_CurrentTextDrawContext->mGlyphs.end (); ++it ) {
+		//STLList < GlyphPlacement >::const_iterator it;
+		//for ( it = g_CurrentTextDrawContext->mGlyphs.begin (); it != g_CurrentTextDrawContext->mGlyphs.end (); ++it ) {
 
-			const GlyphPlacement& glyphPlacement = *it;
-			MOAIGlyph* glyph = glyphPlacement.glyph;
-			MOAISingleTexture* glyphTexture = font.GetGlyphTexture ( *glyph );
-			//glyph->Draw ( *glyphTexture, glyphPlacement.x + offsetX, glyphPlacement.y + offsetY, scale, scale );
-		}
+		//	const GlyphPlacement& glyphPlacement = *it;
+		//	MOAIGlyph* glyph = glyphPlacement.glyph;
+		//	MOAISingleTexture* glyphTexture = font.GetGlyphTexture ( *glyph );
+		//	glyph->Draw ( *glyphTexture, glyphPlacement.x + offsetX, glyphPlacement.y + offsetY, scale, scale );
+		//}
 	}
 
 	// Restore render state
@@ -926,7 +926,13 @@ void MOAIDraw::DrawBezierCurve ( const ZLCubicBezier2D& bezier ) {
 
 //----------------------------------------------------------------//
 void MOAIDraw::DrawElements ( MOAIGfxBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat, u32 count ) {
-	
+
+	// TODO: fix this?
+
+	UNUSED ( vtxBuffer );
+	UNUSED ( vtxFormat );
+	UNUSED ( count );
+
 //	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 //	
 //	MOAIGfxDevice::Get ().UnbindBufferedDrawing ();
@@ -1008,7 +1014,7 @@ void MOAIDraw::DrawEllipseOutline ( float x, float y, float xRad, float yRad, u3
 //----------------------------------------------------------------//
 void MOAIDraw::DrawEllipseSpokes ( float x, float y, float xRad, float yRad, u32 steps ) {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	//MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
 	float step = ( float )TWOPI / ( float )steps;
 	float angle = ( float )PI;

@@ -183,7 +183,7 @@ void MOAIIndexBuffer::PrintIndices () {
 		this->Seek ( 0, SEEK_SET );
 		for ( u32 i = 0; i < length; ++i ) {
 		
-			u32 v = this->mIndexSize == 4 ? this->Read < u32 >( 0 ) : this->Read < u16 >( 0 );
+			u32 v = this->mIndexSize == 4 ? this->Read < u32 >( 0 ) : ( u32 )this->Read < u16 >( 0 );
 			printf ( "%d: %d\n", i, v );
 		}
 		this->Seek ( cursor, SEEK_SET );

@@ -137,7 +137,7 @@ void AKUEnqueueTouchEventCancel ( int deviceID, int sensorID ) {
 }
 
 //----------------------------------------------------------------//
-void AKUEnqueueVectorEvent ( int deviceID, int sensorID, int touchID, bool down, float x, float y, float z ) {
+void AKUEnqueueVectorEvent ( int deviceID, int sensorID, float x, float y, float z ) {
 
 	MOAIVectorSensor::EnqueueVectorEvent (( u8 )deviceID, ( u8 )sensorID, x, y, z );
 }

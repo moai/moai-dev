@@ -114,7 +114,7 @@ void MOAIShader::SetProgram ( MOAIShaderProgram* program ) {
 		this->mUniformBuffers.Init ( nUniforms );
 		
 		for ( u32 i = 0; i < nUniforms; ++i ) {
-			u32 type = program->mUniforms [ i ].GetType ();
+
 			MOAIShaderUniformBuffer& uniformBuffer = this->mUniformBuffers [ i ];
 			uniformBuffer.SetType ( program->mUniforms [ i ].GetType ());
 			uniformBuffer.SetValue ( program->mDefaults [ i ], false );

@@ -116,7 +116,7 @@ bool MOAITexture::Init ( MOAILuaState& state, int idx ) {
 
 	if ( state.IsType ( idx, LUA_TSTRING )) {
 		cc8* filename = lua_tostring ( state, idx );
-		u32 transform = state.GetValue < u32 >( idx + 1, MOAITexture::DEFAULT_TRANSFORM );
+		transform = state.GetValue < u32 >( idx + 1, MOAITexture::DEFAULT_TRANSFORM );
 		this->Init ( filename, transform, debugName ? debugName : filename );
 		done = true;
 	}
@@ -237,6 +237,7 @@ void MOAITexture::Init ( const void* data, u32 size, u32 transform, cc8* debugna
 
 //----------------------------------------------------------------//
 bool MOAITexture::LoadFromStream ( ZLStream& stream, u32 transform ) {
+	UNUSED ( transform ); // TODO: why is transform unused?
 
 	MOAIImageFormat* format = 0;
 	bool result = false;

@@ -449,7 +449,6 @@ bool MOAIGfxQuadListDeck2D::Inside ( u32 idx, MOAIMaterialBatch& materials, u32 
 	
 		idx = ( idx - 1 ) % size;
 		
-		ZLRect rect;
 		USSprite& sprite = this->mSprites [ idx ];
 		
 		for ( u32 i	 = 0; i < sprite.mTotalPairs; ++i ) {

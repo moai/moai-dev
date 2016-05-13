@@ -164,7 +164,8 @@ bool MOAISingleTexture::CreateTextureFromImage ( MOAIImage& srcImage ) {
 	}
 	
 	if (( colorFormat != srcImage.GetColorFormat ()) || ( srcImage.GetPixelFormat () != MOAIImage::TRUECOLOR )) {
-		if ( !altImage.Convert ( srcImage, colorFormat, MOAIImage::TRUECOLOR ));
+		//if ( !altImage.Convert ( srcImage, colorFormat, MOAIImage::TRUECOLOR )); // TODO: what was this? add error handling?
+		altImage.Convert ( srcImage, colorFormat, MOAIImage::TRUECOLOR );
 	}
 	
 	MOAIImage& image = altImage.IsOK () ? altImage : srcImage;

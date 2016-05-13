@@ -219,8 +219,6 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 	if ( !header ) return false;
 	
 	bool isCompressed = header->IsCompressed ();
-	
-	bool hasAlpha = header->HasAlpha ();
 
 	int internalFormat = 0;
 	int pixelType = 0;
@@ -265,11 +263,11 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 		#if ZGL_DEVCAPS_PVR_TEXTURE
 		
 			case MOAIPvrHeader::OGL_PVRTC2:
-				internalFormat = hasAlpha ? ZGL_PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG : ZGL_PIXEL_TYPE_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
+				internalFormat = header->HasAlpha () ? ZGL_PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG : ZGL_PIXEL_TYPE_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
 				break;
 			
 			case MOAIPvrHeader::OGL_PVRTC4:
-				internalFormat = hasAlpha ? ZGL_PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG : ZGL_PIXEL_TYPE_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
+				internalFormat = header->HasAlpha () ? ZGL_PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG : ZGL_PIXEL_TYPE_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
 				break;
 		
 		#else
@@ -363,8 +361,6 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 
 //----------------------------------------------------------------//
 bool MOAIImageFormatPvr::Decompress ( MOAIPvrHeader& header, const MOAIPvrMipLevelInfo& info, MOAIImage& image, ZLStream& stream ) {
-
-	bool isCompressed = header.IsCompressed ();
 	
 	this->SetDimensions ( image, info.mWidth, info.mHeight, 0 );
 
@@ -456,11 +452,7 @@ bool MOAIImageFormatPvr::Decompress ( MOAIPvrHeader& header, const MOAIPvrMipLev
 
 	if ( isCompressed ) {
 	
-		int resultSize = 0;
-		
-		//#if MOAI_WITH_LIBPVR
-			resultSize = PVRTDecompressPVRTC ( srcBuffer, header.IsTwoBit (), info.mWidth, info.mHeight, ( unsigned char* )buffer );
-		//#endif
+		size_t resultSize = ( size_t )PVRTDecompressPVRTC ( srcBuffer, header.IsTwoBit (), info.mWidth, info.mHeight, ( unsigned char* )buffer );
 	
 		if ( resultSize != info.mSizeCompressed ) {
 			ZLLog_ErrorF ( ZLLog::CONSOLE, "Error decompressing PVR at mip level %d\n", info.mLevel );

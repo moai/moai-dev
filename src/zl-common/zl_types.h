@@ -25,6 +25,6 @@ typedef signed short			s16;
 typedef signed int				s32;
 typedef signed long long		s64;
 
-#define INVALID_INDEX			-1
+#define INVALID_INDEX			(( uint )-1 )
 
 #endif
