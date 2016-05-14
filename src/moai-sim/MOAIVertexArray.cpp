@@ -19,6 +19,7 @@
 
 //----------------------------------------------------------------//
 void MOAIVertexArrayItem::Bind ( bool useVAOs ) {
+	UNUSED ( useVAOs ); // TODO: why isn't zl's assert redefine taking care of this?
 
 	if ( this->mBuffer && this->mFormat ) {
 		

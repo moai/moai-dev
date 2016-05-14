@@ -43,7 +43,7 @@ size_t ZLStreamProxy::GetLength () {
 //----------------------------------------------------------------//
 bool ZLStreamProxy::IsAtEnd () {
 
-	return this->mProxiedStream ? this->mProxiedStream->GetLength () : true;
+	return this->mProxiedStream ? this->mProxiedStream->GetLength () > 0 : true; // TODO: does this make sense?
 }
 
 //----------------------------------------------------------------//

@@ -8,7 +8,7 @@
 SUPPRESS_EMPTY_FILE_WARNING
 #if MOAI_WITH_EXPAT
 
-#undef XML_Parser
+#define XML_STATIC
 #include <expat.h>
 
 //================================================================//

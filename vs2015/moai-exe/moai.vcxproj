@@ -238,7 +238,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\sdl2-2.0.0\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\glew-1.5.6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_CONSOLE;DEBUG;_DEBUG;DECLSPEC=;SDL_MAIN_HANDLED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CONSOLE;DECLSPEC=;SDL_MAIN_HANDLED;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -256,7 +256,7 @@
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>zlib.lib;zl-lib-vfs.lib;box2d.lib;contrib.lib;expat.lib;freetype.lib;glew.lib;jansson.lib;kissfft.lib;tinyxml.lib;libcrypto.lib;libssl.lib;libcurl.lib;libjpg.lib;libpng.lib;libpvr.lib;libwebp.lib;libogg.lib;libvorbis.lib;libtess.lib;sdl.lib;zl-lib-core.lib;zl-lib-crypto.lib;zl-lib-gfx.lib;moai-lib-core.lib;moai-lib-util.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-sim.lib;moai-lib-image-jpg.lib;moai-lib-image-png.lib;moai-lib-image-pvr.lib;moai-lib-image-webp.lib;moai-lib-untz.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>zlib.lib;zl-lib-vfs.lib;box2d.lib;contrib.lib;expat.lib;freetype.lib;glew.lib;jansson.lib;kissfft.lib;tinyxml.lib;libcrypto.lib;libssl.lib;libcurl.lib;libjpg.lib;libpng.lib;libpvr.lib;libwebp.lib;libogg.lib;libvorbis.lib;libtess.lib;sdl.lib;zl-lib-core.lib;zl-lib-crypto.lib;zl-lib-gfx.lib;moai-lib-core.lib;moai-lib-util.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-sim.lib;moai-lib-image-jpg.lib;moai-lib-image-png.lib;moai-lib-image-pvr.lib;moai-lib-image-webp.lib;moai-lib-untz.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;opengl32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -317,8 +317,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.1|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\sdl2-2.0.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_CONSOLE;DECLSPEC=;SDL_MAIN_HANDLED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\sdl2-2.0.0\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\glew-1.5.6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_CONSOLE;DECLSPEC=;SDL_MAIN_HANDLED;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
       <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
@@ -331,10 +331,10 @@
       <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <ProjectReference>
-      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>zlib.lib;zl-lib-vfs.lib;box2d.lib;contrib.lib;expat.lib;freetype.lib;glew.lib;jansson.lib;kissfft.lib;tinyxml.lib;libcrypto.lib;libssl.lib;libcurl.lib;libjpg.lib;libpng.lib;libpvr.lib;libwebp.lib;libogg.lib;libvorbis.lib;libtess.lib;sdl.lib;zl-lib-core.lib;zl-lib-crypto.lib;zl-lib-gfx.lib;moai-lib-core.lib;moai-lib-util.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-sim.lib;moai-lib-image-jpg.lib;moai-lib-image-png.lib;moai-lib-image-pvr.lib;moai-lib-image-webp.lib;moai-lib-untz.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>zlib.lib;zl-lib-vfs.lib;box2d.lib;contrib.lib;expat.lib;freetype.lib;glew.lib;jansson.lib;kissfft.lib;tinyxml.lib;libcrypto.lib;libssl.lib;libcurl.lib;libjpg.lib;libpng.lib;libpvr.lib;libwebp.lib;libogg.lib;libvorbis.lib;libtess.lib;sdl.lib;zl-lib-core.lib;zl-lib-crypto.lib;zl-lib-gfx.lib;moai-lib-core.lib;moai-lib-util.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-sim.lib;moai-lib-image-jpg.lib;moai-lib-image-png.lib;moai-lib-image-pvr.lib;moai-lib-image-webp.lib;moai-lib-untz.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;opengl32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -393,7 +393,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\sdl2-2.0.0\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\glew-1.5.6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_CONSOLE;DEBUG;_DEBUG;AKU_WITH_LUAEXT=0;DECLSPEC=;SDL_MAIN_HANDLED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CONSOLE;DECLSPEC=;SDL_MAIN_HANDLED;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -411,7 +411,7 @@
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>zlib.lib;zl-lib-vfs.lib;box2d.lib;contrib.lib;expat.lib;freetype.lib;glew.lib;jansson.lib;kissfft.lib;tinyxml.lib;libcrypto.lib;libssl.lib;libcurl.lib;libjpg.lib;libpng.lib;libpvr.lib;libwebp.lib;libogg.lib;libvorbis.lib;libtess.lib;sdl.lib;zl-lib-core.lib;zl-lib-crypto.lib;zl-lib-gfx.lib;moai-lib-core.lib;moai-lib-util.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-sim.lib;moai-lib-image-jpg.lib;moai-lib-image-png.lib;moai-lib-image-pvr.lib;moai-lib-image-webp.lib;moai-lib-untz.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>zlib.lib;zl-lib-vfs.lib;box2d.lib;contrib.lib;expat.lib;freetype.lib;glew.lib;jansson.lib;kissfft.lib;tinyxml.lib;libcrypto.lib;libssl.lib;libcurl.lib;libjpg.lib;libpng.lib;libpvr.lib;libwebp.lib;libogg.lib;libvorbis.lib;libtess.lib;sdl.lib;zl-lib-core.lib;zl-lib-crypto.lib;zl-lib-gfx.lib;moai-lib-core.lib;moai-lib-util.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-sim.lib;moai-lib-image-jpg.lib;moai-lib-image-png.lib;moai-lib-image-pvr.lib;moai-lib-image-webp.lib;moai-lib-untz.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;opengl32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -472,8 +472,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.2|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\sdl2-2.0.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_CONSOLE;AKU_WITH_LUAEXT=0;DECLSPEC=;SDL_MAIN_HANDLED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\sdl2-2.0.0\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\glew-1.5.6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_CONSOLE;DECLSPEC=;SDL_MAIN_HANDLED;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
       <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
@@ -486,10 +486,10 @@
       <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <ProjectReference>
-      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>zlib.lib;zl-lib-vfs.lib;box2d.lib;contrib.lib;expat.lib;freetype.lib;glew.lib;jansson.lib;kissfft.lib;tinyxml.lib;libcrypto.lib;libssl.lib;libcurl.lib;libjpg.lib;libpng.lib;libpvr.lib;libwebp.lib;libogg.lib;libvorbis.lib;libtess.lib;sdl.lib;zl-lib-core.lib;zl-lib-crypto.lib;zl-lib-gfx.lib;moai-lib-core.lib;moai-lib-util.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-sim.lib;moai-lib-image-jpg.lib;moai-lib-image-png.lib;moai-lib-image-pvr.lib;moai-lib-image-webp.lib;moai-lib-untz.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>zlib.lib;zl-lib-vfs.lib;box2d.lib;contrib.lib;expat.lib;freetype.lib;glew.lib;jansson.lib;kissfft.lib;tinyxml.lib;libcrypto.lib;libssl.lib;libcurl.lib;libjpg.lib;libpng.lib;libpvr.lib;libwebp.lib;libogg.lib;libvorbis.lib;libtess.lib;sdl.lib;zl-lib-core.lib;zl-lib-crypto.lib;zl-lib-gfx.lib;moai-lib-core.lib;moai-lib-util.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-sim.lib;moai-lib-image-jpg.lib;moai-lib-image-png.lib;moai-lib-image-pvr.lib;moai-lib-image-webp.lib;moai-lib-untz.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;opengl32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -548,7 +548,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\sdl2-2.0.0\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\glew-1.5.6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_CONSOLE;DEBUG;_DEBUG;DECLSPEC=;SDL_MAIN_HANDLED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CONSOLE;DECLSPEC=;SDL_MAIN_HANDLED;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -566,7 +566,7 @@
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>zlib.lib;zl-lib-vfs.lib;box2d.lib;contrib.lib;expat.lib;freetype.lib;glew.lib;jansson.lib;kissfft.lib;tinyxml.lib;libcrypto.lib;libssl.lib;libcurl.lib;libjpg.lib;libpng.lib;libpvr.lib;libwebp.lib;libogg.lib;libvorbis.lib;libtess.lib;sdl.lib;zl-lib-core.lib;zl-lib-crypto.lib;zl-lib-gfx.lib;moai-lib-core.lib;moai-lib-util.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-sim.lib;moai-lib-image-jpg.lib;moai-lib-image-png.lib;moai-lib-image-pvr.lib;moai-lib-image-webp.lib;moai-lib-untz.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>zlib.lib;zl-lib-vfs.lib;box2d.lib;contrib.lib;expat.lib;freetype.lib;glew.lib;jansson.lib;kissfft.lib;tinyxml.lib;libcrypto.lib;libssl.lib;libcurl.lib;libjpg.lib;libpng.lib;libpvr.lib;libwebp.lib;libogg.lib;libvorbis.lib;libtess.lib;sdl.lib;zl-lib-core.lib;zl-lib-crypto.lib;zl-lib-gfx.lib;moai-lib-core.lib;moai-lib-util.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-sim.lib;moai-lib-image-jpg.lib;moai-lib-image-png.lib;moai-lib-image-pvr.lib;moai-lib-image-webp.lib;moai-lib-untz.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;opengl32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -627,8 +627,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-LuaJIT|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\sdl2-2.0.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_CONSOLE;DECLSPEC=;SDL_MAIN_HANDLED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\sdl2-2.0.0\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\glew-1.5.6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_CONSOLE;DECLSPEC=;SDL_MAIN_HANDLED;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
       <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
@@ -641,10 +641,10 @@
       <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <ProjectReference>
-      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>zlib.lib;zl-lib-vfs.lib;box2d.lib;contrib.lib;expat.lib;freetype.lib;glew.lib;jansson.lib;kissfft.lib;tinyxml.lib;libcrypto.lib;libssl.lib;libcurl.lib;libjpg.lib;libpng.lib;libpvr.lib;libwebp.lib;libogg.lib;libvorbis.lib;libtess.lib;sdl.lib;zl-lib-core.lib;zl-lib-crypto.lib;zl-lib-gfx.lib;moai-lib-core.lib;moai-lib-util.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-sim.lib;moai-lib-image-jpg.lib;moai-lib-image-png.lib;moai-lib-image-pvr.lib;moai-lib-image-webp.lib;moai-lib-untz.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>zlib.lib;zl-lib-vfs.lib;box2d.lib;contrib.lib;expat.lib;freetype.lib;glew.lib;jansson.lib;kissfft.lib;tinyxml.lib;libcrypto.lib;libssl.lib;libcurl.lib;libjpg.lib;libpng.lib;libpvr.lib;libwebp.lib;libogg.lib;libvorbis.lib;libtess.lib;sdl.lib;zl-lib-core.lib;zl-lib-crypto.lib;zl-lib-gfx.lib;moai-lib-core.lib;moai-lib-util.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-sim.lib;moai-lib-image-jpg.lib;moai-lib-image-png.lib;moai-lib-image-pvr.lib;moai-lib-image-webp.lib;moai-lib-untz.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;opengl32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>

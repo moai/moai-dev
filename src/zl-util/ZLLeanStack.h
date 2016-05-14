@@ -92,6 +92,7 @@ public:
 	TYPE& Push ( const TYPE& type ) {
 		
 		ZLResultCode result = this->Grow ( this->mTop + 1, CHUNKSIZE );
+		UNUSED ( result ); // TODO: why isn't assert () redefine working here?
 		assert ( result == ZL_OK );
 		new ( &this->mData [ this->mTop ]) TYPE ( type ); // placement copy constructor
 		return this->mData [ this->mTop++ ]; // Note the post-increment

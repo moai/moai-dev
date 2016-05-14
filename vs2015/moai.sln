@@ -1722,8 +1722,8 @@ Global
 		{6DE5E8C5-E477-4CEE-8824-73E3C3C483DE} = {3C05055B-3444-43CB-8793-D469F0D40706}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		AMDCaPersistentConfig = Debug|Win32
-		AMDCaPersistentStartup = moai (Utilities\moai)
 		AMDCaProjectFile = C:\Documents and Settings\Patrick\My Documents\git\moai\vs2008\CodeAnalyst\moai.caw
+		AMDCaPersistentStartup = moai (Utilities\moai)
+		AMDCaPersistentConfig = Debug|Win32
 	EndGlobalSection
 EndGlobal

@@ -434,7 +434,7 @@ void ZLVfsFileSystem::Init () {
 		char* result = getcwd ( buffer, FILENAME_MAX );
 		assert ( result );
 		
-		this->mWorkingPath = this->NormalizeDirPath ( buffer );
+		this->mWorkingPath = this->NormalizeDirPath ( result );
 	#endif
 }
 

@@ -110,6 +110,8 @@ int MOAISingleTexture::_setWrap ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 void MOAISingleTexture::CheckFilterModes ( int min, int mag ) {
+	UNUSED ( min );
+	UNUSED ( mag );
 
 	#ifdef _DEBUG
 		switch ( min ) {

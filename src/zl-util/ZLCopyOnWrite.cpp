@@ -187,7 +187,7 @@ void* ZLCopyOnWrite::Reserve ( size_t size ) {
 ZLResultCode ZLCopyOnWrite::SetCursor ( long offset ) {
 
 	size_t length = this->GetLength ();
-	if (( offset < 0 ) || ( length < offset )) return ZL_ERROR;
+	if (( offset < 0 ) || ( length < ( size_t )offset )) return ZL_ERROR;
 	
 	this->mCursor = length;
 	return 0;

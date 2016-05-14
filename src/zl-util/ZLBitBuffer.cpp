@@ -69,7 +69,7 @@ void decode_bin ( void* buffer, cc8* str ) {
 		u32 byte = i >> 3;
 		u32 shift = i & 0x07;
 		
-		bytes [ byte ] = ( bytes [ byte ] & ~( 1 << shift )) | ( bit << shift );
+		bytes [ byte ] = ( u8 )(( bytes [ byte ] & ~( 1 << shift )) | ( bit << shift ));
 	}
 }
 
@@ -190,10 +190,10 @@ void ZLBitBuffer::Blit ( void* dest, size_t destX, const void* src, size_t srcX,
 					srcValue = ( srcValue + ( *srcBytes << ( 8 - srcMod ))) & mask;
 				}
 
-				destBytes [ 0 ] = ( *destBytes & ~( mask << destMod )) | ( srcValue << destMod );
+				destBytes [ 0 ] = ( u8 )(( *destBytes & ~( mask << destMod )) | ( srcValue << destMod ));
 				
 				if (( destMod + n ) > 8 ) {
-					destBytes [ 1 ] = ( destBytes [ 1 ] & ~( mask >> ( 8 - destMod ))) | ( srcValue >> ( 8 - destMod ));
+					destBytes [ 1 ] = ( u8 )(( destBytes [ 1 ] & ~( mask >> ( 8 - destMod ))) | ( srcValue >> ( 8 - destMod )));
 				}
 			}
 		}
@@ -325,7 +325,6 @@ u32 ZLBitBuffer::GetValue ( const void* buffer, size_t x, u32 bitDepth ) {
 		}
 		return value;
 	}
-	return 0;
 }
 
 //----------------------------------------------------------------//

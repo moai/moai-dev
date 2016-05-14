@@ -341,6 +341,7 @@ void MOAIGfxBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seriali
 		STLString zipString = lua_tostring ( state, -1 );
 		size_t unzipLen = zipString.zip_inflate ( this->ZLCopyOnWrite::Invalidate (), size );
 		assert ( unzipLen == size ); // TODO: fail gracefully
+		UNUSED ( unzipLen ); // TODO: this *should* be handled by the zl assert redefine
 		
 		this->Seek ( size, SEEK_SET );
 	}
