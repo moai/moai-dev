@@ -1,5 +1,0 @@
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<Target Name="Build">
-		<MsBuild Projects="moai.sln" Targets="Clean;Build" Properties="Configuration=$(Configuration);Platform=$(Platform)"/>
-	</Target>
-</Project>
