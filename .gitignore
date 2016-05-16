@@ -38,6 +38,8 @@ bin/api-reference-parser/vendor
 docs/api-reference
 /moai-sdk/
 /bin/env-local.bat
+/bin/win32/
+/bin/x64/
 /util/moai
 /**/java/build/
 /**/java/*.iml

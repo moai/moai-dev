@@ -111,9 +111,6 @@
     <ClInclude Include="..\..\3rdparty\rtaudio-4.0.8\include\iasiodrv.h">
       <Filter>RTAudio</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\3rdparty\rtaudio-4.0.8\include\iasiothiscallresolver.h">
-      <Filter>RTAudio</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\3rdparty\rtaudio-4.0.8\RtAudio.h">
       <Filter>RTAudio</Filter>
     </ClInclude>
@@ -159,9 +156,6 @@
       <Filter>RTAudio</Filter>
     </ClCompile>
     <ClCompile Include="..\..\3rdparty\rtaudio-4.0.8\include\asiolist.cpp">
-      <Filter>RTAudio</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\rtaudio-4.0.8\include\iasiothiscallresolver.cpp">
       <Filter>RTAudio</Filter>
     </ClCompile>
     <ClCompile Include="..\..\3rdparty\rtaudio-4.0.8\RtAudio.cpp">

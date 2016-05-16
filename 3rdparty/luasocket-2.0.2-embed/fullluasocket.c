@@ -1,8 +1,8 @@
 #include <lua.h>
 #include <lauxlib.h>
 
-#include "luasocket.h"
-#include "mime.h"
+#include "../luasocket-2.0.2/src/luasocket.h"
+#include "../luasocket-2.0.2/src/mime.h"
 #include "luasocketscripts.h"
 #include "fullluasocket.h"
 
