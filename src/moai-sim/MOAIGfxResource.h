@@ -17,10 +17,10 @@ class MOAIGfxResource :
 	public virtual ZLGfxListener {
 private:
 
-	friend class MOAIGfxDevice;
-	friend class MOAIGfxDeviceBase;
-	friend class MOAIGfxDeviceStateCache;
-	friend class MOAIGfxResourceMgr;
+	friend class MOAIGfxMgr;
+	friend class MOAIGfxPipelineClerk;
+	friend class MOAIGfxStateCache;
+	friend class MOAIGfxResourceClerk;
 
 	u32					mState;
 	u32					mLastRenderCount;
@@ -64,8 +64,7 @@ protected:
 	void			OnGfxEvent					( u32 event, void* userdata );
 	virtual void	OnGPUBind					() = 0; // select GPU-side resource on device for use
 	virtual bool	OnGPUCreate					() = 0; // create GPU-side resource
-	virtual void	OnGPUDestroy				() = 0; // schedule GPU-side resource for destruction
-	virtual void	OnGPULost					() = 0; // clear any handles or references to GPU-side (called by 'Abandon')
+	virtual void	OnGPUDeleteOrDiscard		( bool shouldDelete ) = 0; // delete or discard GPU resource handles
 	virtual void	OnGPUUnbind					() = 0; // unbind GPU-side resource
 	virtual bool	OnGPUUpdate					() = 0;
 

@@ -16,11 +16,11 @@ MOAISim.pushRenderPass ( layer )
 
 function onDraw ( index, xOff, yOff, xFlip, yFlip )
 
-	MOAIGfxDevice.setPenColor ( 1, 0, 0, 1 )
+	MOAIGfxMgr.setPenColor ( 1, 0, 0, 1 )
 	MOAIDraw.fillCircle ( 0, 0, 64, 32 )
 
-	MOAIGfxDevice.setPenColor ( 1, 1, 1, 1 )
-	MOAIGfxDevice.setPenWidth ( 2 )
+	MOAIGfxMgr.setPenColor ( 1, 1, 1, 1 )
+	MOAIGfxMgr.setPenWidth ( 2 )
 	MOAIDraw.drawEllipse ( 0, 0, 64, 64, 32 )
 	
 	MOAIDraw.drawRay ( 0, 0, 0, 1 )
@@ -43,7 +43,7 @@ function onDraw ( index, xOff, yOff, xFlip, yFlip )
 		-64, 64
 	)
 
-	MOAIGfxDevice.setPenColor ( 1, 1, 0, 1 )
+	MOAIGfxMgr.setPenColor ( 1, 1, 0, 1 )
 	
 	MOAIDraw.fillFan (
 		-32, -64,

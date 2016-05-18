@@ -8,7 +8,7 @@ VIEW_WIDTH = 512
 VIEW_HEIGHT = 512
 
 if MOAIAppIOS then
-	VIEW_WIDTH, VIEW_HEIGHT = MOAIGfxDevice.getViewSize ()
+	VIEW_WIDTH, VIEW_HEIGHT = MOAIGfxMgr.getViewSize ()
 end
 
 minPow2 = function ( num )

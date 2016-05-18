@@ -5,7 +5,7 @@
 ----------------------------------------------------------------
 
 MOAISim.openWindow ( "test", 480, 100 )
-MOAIGfxDevice.setClearColor ( 0.25, 0, 0.5 )
+MOAIGfxMgr.setClearColor ( 0.25, 0, 0.5 )
 
 local viewport = MOAIViewport.new ()
 viewport:setSize ( 480, 100 )
@@ -55,7 +55,7 @@ local cursorColor = MOAIColor.new ()
 local cursorDeck = MOAIScriptDeck.new ()
 cursorDeck:setRect ( 0, 0, 1, 1 ) -- dummy
 cursorDeck:setDrawCallback ( function ( index )
-	MOAIGfxDevice.setPenColor ( cursorColor:getColor ())
+	MOAIGfxMgr.setPenColor ( cursorColor:getColor ())
 	local cursorWidth = 2
 	local cursorHeight = 30
 	local cursorX

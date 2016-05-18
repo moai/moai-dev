@@ -78,14 +78,14 @@ void ZLGfxLogger::BlendMode ( u32 mode ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::BufferData ( u32 target, u32 size, ZLSharedConstBuffer* buffer, size_t offset, u32 usage ) {
+void ZLGfxLogger::BufferData ( u32 target, size_t size, ZLSharedConstBuffer* buffer, size_t offset, u32 usage ) {
 
 	const void* data = ( const void* )ZLSharedConstBuffer::GetConstData ( buffer );
 	this->PrintLine ( "glBufferData - target: %d size: %d buffer: %p offset: %d usage: %d\n", target, size, data, offset, usage );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::BufferSubData ( u32 target, u32 offset, u32 size, ZLSharedConstBuffer* buffer, size_t srcOffset ) {
+void ZLGfxLogger::BufferSubData ( u32 target, size_t offset, size_t size, ZLSharedConstBuffer* buffer, size_t srcOffset ) {
 
 	const void* data = ( const void* )ZLSharedConstBuffer::GetConstData ( buffer );
 	this->PrintLine ( "glBufferSubData - target: %d offset: %d size: %d buffer: %p srcOffset: %d\n", target, offset, size, data, srcOffset );
@@ -240,43 +240,39 @@ void ZLGfxLogger::CullFace ( u32 mode ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::DeleteHandle ( ZLGfxHandle* handle ) {
+void ZLGfxLogger::Delete ( u32 type, u32 glid ) {
 
-	if ( !handle ) return;
+	switch ( type ) {
 	
-	if ( handle->mOwns ) {
-		switch ( handle->mType ) {
+		case ZLGfxHandle::BUFFER:
+			this->PrintLine ( "glDeleteBuffers - handle: %d\n", glid );
+			break;
 		
-			case ZLGfxHandle::BUFFER:
-				this->PrintLine ( "glDeleteBuffers - handle: %d\n", DEREF_HANDLE ( handle ));
-				break;
-			
-			case ZLGfxHandle::FRAMEBUFFER:
-				this->PrintLine ( "glDeleteFramebuffers - handle: %d\n", DEREF_HANDLE ( handle ));
-				break;
-			
-			case ZLGfxHandle::PROGRAM: {
-				this->PrintLine ( "glDeleteProgram - handle: %d\n", DEREF_HANDLE ( handle ));
-				break;
-			}
-			case ZLGfxHandle::SHADER: {
-				this->PrintLine ( "glDeleteShader - handle: %d\n", DEREF_HANDLE ( handle ));
-				break;
-			}
-			case ZLGfxHandle::TEXTURE:
-				this->PrintLine ( "glDeleteTextures - handle: %d\n", DEREF_HANDLE ( handle ));
-				break;
-			
-			case ZLGfxHandle::RENDERBUFFER:
-				this->PrintLine ( "glDeleteRenderbuffers - handle: %d\n", DEREF_HANDLE ( handle ));
-				break;
-			
-			case ZLGfxHandle::VERTEXARRAY:
-				#ifndef MOAI_OS_ANDROID
-					this->PrintLine ( "glDeleteVertexArrays - handle: %d\n", DEREF_HANDLE ( handle ));
-				#endif
+		case ZLGfxHandle::FRAMEBUFFER:
+			this->PrintLine ( "glDeleteFramebuffers - handle: %d\n", glid );
+			break;
+		
+		case ZLGfxHandle::PROGRAM: {
+			this->PrintLine ( "glDeleteProgram - handle: %d\n", glid );
 			break;
 		}
+		case ZLGfxHandle::SHADER: {
+			this->PrintLine ( "glDeleteShader - handle: %d\n", glid );
+			break;
+		}
+		case ZLGfxHandle::TEXTURE:
+			this->PrintLine ( "glDeleteTextures - handle: %d\n", glid );
+			break;
+		
+		case ZLGfxHandle::RENDERBUFFER:
+			this->PrintLine ( "glDeleteRenderbuffers - handle: %d\n", glid );
+			break;
+		
+		case ZLGfxHandle::VERTEXARRAY:
+			#ifndef MOAI_OS_ANDROID
+				this->PrintLine ( "glDeleteVertexArrays - handle: %d\n", glid );
+			#endif
+		break;
 	}
 }
 

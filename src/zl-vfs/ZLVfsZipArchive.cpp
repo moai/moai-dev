@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <string.h>
 #include <moai_config.h>
 #include <zl-vfs/headers.h>
 #include <zl-vfs/zl_util.h>
@@ -11,10 +12,9 @@ using namespace std;
 
 #define SCAN_BUFFER_SIZE 256
 
-#define ARCHIVE_HEADER_SIGNATURE  0x06054b50
 #define ENTRY_HEADER_SIGNATURE  0x02014b50
 #define FILE_HEADER_SIGNATURE  0x04034b50
-
+const char * const ARCHIVE_HEADER_SIGNATURE = "PK\005\006";
 //================================================================//
 // ZLVfsZipArchiveHeader
 //================================================================//
@@ -26,7 +26,7 @@ int ZLVfsZipArchiveHeader::FindAndRead ( FILE* file, size_t* offset ) {
 	size_t cursor;
 	char buffer [ SCAN_BUFFER_SIZE ];
 	size_t scansize;
-	int i;
+	size_t i;
 	
 	if ( !file ) return -1;
 
@@ -42,19 +42,19 @@ int ZLVfsZipArchiveHeader::FindAndRead ( FILE* file, size_t* offset ) {
 		
 		scansize = (( cursor + SCAN_BUFFER_SIZE ) > filelen ) ? filelen - cursor : SCAN_BUFFER_SIZE;
 		
-		fseek ( file, cursor, SEEK_SET );
+		fseek ( file, ( long )cursor, SEEK_SET );
 		fread ( buffer, scansize, 1, file );
 
 		for ( i = scansize - 4; i >= 0; --i ) {
 			
 			// maybe found it
-			if ( *( u32* )&buffer [ i ] == ARCHIVE_HEADER_SIGNATURE ) {
+			if ( memcmp( &buffer[i], ARCHIVE_HEADER_SIGNATURE, 4) == 0 ) {
 
 				if ( offset ) {
 					( *offset ) = cursor + i;
 				}
 
-				fseek ( file, cursor + i, SEEK_SET );
+				fseek ( file, ( long )( cursor + i ), SEEK_SET );
 				
 				fread ( &this->mSignature, 4, 1, file );
 				fread ( &this->mDiskNumber, 2, 1, file );
@@ -65,7 +65,7 @@ int ZLVfsZipArchiveHeader::FindAndRead ( FILE* file, size_t* offset ) {
 				fread ( &this->mCDAddr, 4, 1, file );
 				fread ( &this->mCommentLength, 2, 1, file );
 				
-				this->mDataOffset = ( cursor + i ) - ( this->mCDSize + this->mCDAddr ); // saved for use in loading the entry files
+				this->mDataOffset = ( u32 )(( cursor + i ) - ( this->mCDSize + this->mCDAddr )); // saved for use in loading the entry files
 				this->mCDAddr += this->mDataOffset;
 
 				return 0;
@@ -393,7 +393,7 @@ ZLVfsZipFileEntry* ZLVfsZipArchive::FindEntry ( char const* filename ) {
 
 	ZLVfsZipFileDir* dir;
 	ZLVfsZipFileEntry* entry;
-	int i;
+	size_t i;
 	
 	if ( !filename ) return 0;
 	
@@ -559,7 +559,7 @@ int ZLVfsZipArchive::StripTimestamps ( const char* infilename, const char* outfi
 	assert ( header.mStartDisk == 0 );
 	assert ( header.mTotalDiskEntries == header.mTotalEntries );
 	
-	size_t* fileHeaderAddrTable = ( size_t* )alloca ( header.mTotalEntries * sizeof ( size_t ));
+	u32* fileHeaderAddrTable = ( u32* )alloca ( header.mTotalEntries * sizeof ( u32 ));
 	
 	// copy the files
 	fseek ( infile, header.mCDAddr, SEEK_SET );
@@ -581,14 +581,14 @@ int ZLVfsZipArchive::StripTimestamps ( const char* infilename, const char* outfi
 		fileHeader.mExtraFieldLength = 0;
 		fileHeader.mFlag ^= ( 1 << 3 ); // clear bit 3
 
-		fileHeaderAddrTable [ i ] = ftell ( outfile );
+		fileHeaderAddrTable [ i ] = ( u32 )ftell ( outfile );
 		fileHeader.Write ( outfile );
 		
 		for ( size_t j = 0; j < fileHeader.mNameLength; ++j ) {
 			putc ( getc ( infile ), outfile );
 		}
 		
-		fseek ( infile, skip, SEEK_CUR );
+		fseek ( infile, ( long )skip, SEEK_CUR );
 		
 		size_t size = fileHeader.mCompression == 0 ? fileHeader.mUncompressedSize : fileHeader.mCompressedSize;
 		
@@ -596,7 +596,7 @@ int ZLVfsZipArchive::StripTimestamps ( const char* infilename, const char* outfi
 			putc ( getc ( infile ), outfile );
 		}
 		
-		fseek ( infile, resumeAddr, SEEK_SET );
+		fseek ( infile, ( long )resumeAddr, SEEK_SET );
 	}
 	
 	size_t directoryStartAddr = ftell ( outfile );
@@ -623,14 +623,14 @@ int ZLVfsZipArchive::StripTimestamps ( const char* infilename, const char* outfi
 			putc ( getc ( infile ), outfile );
 		}
 		
-		fseek ( infile, skip, SEEK_CUR );
+		fseek ( infile, ( long )skip, SEEK_CUR );
 	}
 	
 	size_t directoryEndAddr = ftell ( outfile );
 	
 	// copy the header
-	header.mCDAddr = directoryStartAddr;
-	header.mCDSize = directoryEndAddr - directoryStartAddr;
+	header.mCDAddr = ( u32 )directoryStartAddr;
+	header.mCDSize = ( u32 ) ( directoryEndAddr - directoryStartAddr );
 	header.mCommentLength = 0;
 	header.Write ( outfile );
 

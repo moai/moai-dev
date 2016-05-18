@@ -5,7 +5,7 @@
 #include <contrib/moai_utf8.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIFontReader.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGlyphCache.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIImageTexture.h>
@@ -451,8 +451,8 @@ void MOAIFont::BuildKerning ( MOAIGlyph* glyphs, MOAIGlyph* pendingGlyphs ) {
 	for ( MOAIGlyph* glyphIt = glyphs; glyphIt; glyphIt = glyphIt->mNext ) {
 		MOAIGlyph& glyph = *glyphIt;
 		
-		u32 kernTableSize = 0;
-		u32 oldTableSize = glyph.mKernTable.Size ();
+		size_t kernTableSize = 0;
+		size_t oldTableSize = glyph.mKernTable.Size ();
 		
 		this->mReader->SelectGlyph ( glyph.mCode );
 		
@@ -463,7 +463,7 @@ void MOAIFont::BuildKerning ( MOAIGlyph* glyphs, MOAIGlyph* pendingGlyphs ) {
 			// skip if glyph is already in old glyph's kerning table
 			// may happen if glyphs are purged and then re-added
 			bool unknown = true;
-			for ( u32 i = 0; i < oldTableSize; ++i ) {
+			for ( size_t i = 0; i < oldTableSize; ++i ) {
 				if ( glyph.mKernTable [ i ].mName == glyph2.mCode ) {
 					unknown = false;
 					break;
@@ -490,7 +490,7 @@ void MOAIFont::BuildKerning ( MOAIGlyph* glyphs, MOAIGlyph* pendingGlyphs ) {
 	for ( MOAIGlyph* glyphIt = pendingGlyphs; glyphIt; glyphIt = glyphIt->mNext ) {
 		MOAIGlyph& glyph = *glyphIt;
 		
-		u32 kernTableSize = 0;
+		size_t kernTableSize = 0;
 		
 		this->mReader->SelectGlyph ( glyph.mCode );
 		

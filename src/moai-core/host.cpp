@@ -48,7 +48,7 @@ static AKUContext*		sContext = 0;
 
 int			_debugCallWithArgs		( MOAILuaState& state, int totalArgs, int asParams );
 int			_loadContextFunc		( MOAILuaState& state );
-int			_loadFuncFromBuffer		( MOAIDataBuffer& buffer, int compressed );
+int			_loadFuncFromBuffer		( MOAIDataBuffer& buffer, cc8* chunkname, int compressed );
 void		_pushArgOrParam			( MOAILuaState& state, int index, char* arg, int asParam );
 void		_setupArgs				( MOAILuaState& state, char* exeName, char* scriptName, int asParams );
 
@@ -82,7 +82,7 @@ int _loadContextFunc ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-int _loadFuncFromBuffer ( MOAIDataBuffer& buffer, int compressed ) {
+int _loadFuncFromBuffer ( MOAIDataBuffer& buffer, cc8* chunkname, int compressed ) {
 
 	if ( compressed == AKU_DATA_ZIPPED ) {
 		buffer.Inflate ( ZLDeflateWriter::DEFAULT_WBITS );
@@ -90,51 +90,54 @@ int _loadFuncFromBuffer ( MOAIDataBuffer& buffer, int compressed ) {
 
 	if ( !buffer.Size ()) return AKU_ERROR;
 
-	void* data;
+	u8* data;
 	size_t size;
-	buffer.Lock ( &data, &size );
 	
-	bool isBytecode = false;
+	MOAIDataBufferScopedLock lock ( buffer, ( void** )&data, &size  );
 	
-	if ( sizeof ( MOAILuaHeader ) <= size ) {
-	
-		MOAILuaHeader header;
-		memcpy ( &header, data, sizeof ( MOAILuaHeader ));
+	MOAILuaHeader header;
+	header.Read ( data, size );
 		
-		if ( header.IsBytecode ()) {
-	
-			isBytecode = true;
-	
-			MOAILuaHeader sysHeader;
-			sysHeader.Init ();
-			
-			if ( !sysHeader.IsCompatible ( header )) {
-				ZLLog_ErrorF ( ZLLog::CONSOLE, "ERROR: Attempt to load incompatible Lua bytecode.\n" );
-				buffer.Unlock ();
-				return AKU_ERROR;
-			}
-		}
-	}
-	
-	int result = AKU_OK;
-
-	if ( isBytecode ) {
-	
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();;
-	
-		lua_getglobal ( state, "loadstring" );
-		state.Push ( data, size );
-		int status = state.DebugCall ( 1, 1 );
-		if ( !state.LogErrors ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, status )) {
-			sContext->mLuaFunc.SetRef ( state, -1 );
-			result = AKU_ERROR;
+	if ( header.IsBytecode ()) {
+		
+		MOAILuaHeader sysHeader;
+		sysHeader.Init ();
+		
+		if ( !sysHeader.IsCompatible ( header )) {
+			ZLLog_ErrorF ( ZLLog::CONSOLE, "ERROR: Attempt to load incompatible Lua bytecode.\n" );
+			return AKU_ERROR;
 		}
 	}
 	else {
-		result = AKULoadFuncFromString (( cc8* )data, size );
+		// trim trailing nulls from non-bytecode
+		while (( size > 1 ) && ( data [ size - 1 ] == 0 )) --size;
 	}
 	
-	buffer.Unlock ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+
+	lua_getglobal ( state, "loadstring" );
+	if ( !state.IsType ( -1, LUA_TFUNCTION )) {
+		ZLLog_ErrorF ( ZLLog::CONSOLE, "Missing global Lua function 'loadstring'\n" );
+	}
+	
+	state.Push ( data, size );
+	
+	if ( chunkname ) {
+		state.Push ( chunkname );
+	}
+
+	int status = state.DebugCall ( state.GetLocalTop () - 1, 2 );
+	if ( state.LogErrors ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, status )) return AKU_ERROR;
+	
+	if ( state.IsType ( -1, LUA_TSTRING )) {
+	
+		ZLLog_ErrorF ( ZLLog::CONSOLE, "Error loading script:\n" );
+		ZLLog_ErrorF ( ZLLog::CONSOLE, "%s\n", state.GetValue < cc8* >( -1, "" ));
+		return AKU_ERROR;
+	}
+	
+	sContext->mLuaFunc.SetRef ( state, -2 );
+	assert ( !sContext->mLuaFunc.IsNil ());
 	return AKU_OK;
 }
 
@@ -226,7 +229,7 @@ int AKUCallFunc () {
 // arg[0]  => argZero - first arg counting from offset (script name as passed to host binary)
 // arg[1]  => next arg/option/script
 // arg[2]  => next arg/option/script
-	// ...
+// ...
 int AKUCallFuncWithArgArray ( char* exeName, char* scriptName, int argc, char** argv, int asParams ) {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
@@ -385,14 +388,14 @@ void AKUInitMemPool ( size_t bytes ) {
 }
 
 //----------------------------------------------------------------//
-int AKULoadFuncFromBuffer ( void* data, size_t size, int compressed ) {
+int AKULoadFuncFromBuffer ( void* data, size_t size, const char* chunkname, int compressed ) {
 
 	sContext->mLuaFunc.Clear ();
 
 	MOAIDataBuffer buffer;
 	buffer.Load ( data, size );
 	
-	return _loadFuncFromBuffer ( buffer, compressed );
+	return _loadFuncFromBuffer ( buffer, chunkname, compressed );
 }
 
 //----------------------------------------------------------------//
@@ -409,36 +412,13 @@ int AKULoadFuncFromFile ( const char* filename ) {
 	if ( !buffer.Load ( filename )) return AKU_ERROR;
 	if ( !buffer.Size ()) return AKU_ERROR;
 	
-	return _loadFuncFromBuffer ( buffer, AKU_DATA_UNCOMPRESSED );
+	return _loadFuncFromBuffer ( buffer, filename, AKU_DATA_UNCOMPRESSED );
 }
 
 //----------------------------------------------------------------//
-int AKULoadFuncFromString ( const char* script, size_t size ) {
+int AKULoadFuncFromString ( const char* script, size_t size, const char* chunkname ) {
 
-	sContext->mLuaFunc.Clear ();
-
-	// turns out Lua is really picky about trailing nulls
-	while (( size > 1 ) && ( script [ size - 1 ] == 0 )) --size;
-
-	if ( !size ) return AKU_OK;
-
-	sContext->mLuaFunc.Clear ();
-
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	
-	lua_getglobal ( state, "loadstring" );
-	if ( !state.IsType ( -1, LUA_TFUNCTION )) {
-		ZLLog_ErrorF ( ZLLog::CONSOLE, "Missing global Lua function 'loadstring'\n" );
-	}
-	
-	state.Push (( void* )script, size );
-	
-	int status = state.DebugCall ( 1, 1 );
-	if ( state.LogErrors ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, status )) return AKU_ERROR;
-	
-	sContext->mLuaFunc.SetRef ( state, -1 );
-	assert ( !sContext->mLuaFunc.IsNil ());
-	return AKU_OK;
+	return AKULoadFuncFromBuffer (( void* )script, size, chunkname, AKU_DATA_UNCOMPRESSED );
 }
 
 //----------------------------------------------------------------//

@@ -66,7 +66,7 @@ size_t ZLDeflateReader::Inflate ( void* dest, size_t size ) {
     
     z_stream* stream = &this->mZStream;
 	stream->next_out = ( Bytef* )dest;
-	stream->avail_out = size;
+	stream->avail_out = ( uInt )size;
 
 	size_t totalRead = 0;
     while ( totalRead < size ) {
@@ -77,7 +77,7 @@ size_t ZLDeflateReader::Inflate ( void* dest, size_t size ) {
 			if ( available <= 0 ) break;
 			
 			stream->next_in = ( Bytef* )this->mInputChunk;
-			stream->avail_in = available;
+			stream->avail_in = ( uInt )available;
 		}
 
 		size_t totalOut = stream->total_out;
@@ -160,7 +160,7 @@ ZLSizeResult ZLDeflateReader::ReadBytes ( void* buffer, size_t size ) {
 		size_t chunkID = ( size_t )( this->mCursor / ZL_DEFLATE_READER_CHUNK_SIZE );
 		int sign = chunkID & 1 ? 1 : 0;
 		
-		this->AffirmChunk ( chunkID );
+		this->AffirmChunk (( int )chunkID );
 		
 		if ( this->mLength && ( this->mCursor >= this->mLength )) {
 			this->mCursor = this->mLength;
@@ -196,13 +196,13 @@ int ZLDeflateReader::ResetZipStream () {
 	inflateEnd ( &this->mZStream );
 	this->mZStream = newStream;
 
-	this->mProxiedStream->Seek ( this->mBase, SEEK_SET );
+	this->mProxiedStream->Seek (( long )this->mBase, SEEK_SET );
 	
 	return 0;
 }
 
 //----------------------------------------------------------------//
-ZLResultCode ZLDeflateReader::SetCursor ( long offset ) {
+ZLResultCode ZLDeflateReader::SetCursor ( size_t offset ) {
 
 	this->mCursor = offset; // TODO: check bounds and report error
 	return ZL_OK;

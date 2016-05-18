@@ -33,8 +33,8 @@ class MOAIGfxBuffer :
 	public ZLCopyOnWrite {
 protected:
 	
-	friend class MOAIGfxDeviceBase;
-	friend class MOAIGfxDeviceStateCache;
+	friend class MOAIGfxPipelineClerk;
+	friend class MOAIGfxStateCache;
 	
 	enum {
 		UPDATE_MODE_MAPBUFFER,
@@ -64,8 +64,7 @@ protected:
 	void					OnCPUDestroy			();
 	void					OnGPUBind				();
 	bool					OnGPUCreate				();
-	void					OnGPUDestroy			();
-	void					OnGPULost				();
+	void					OnGPUDeleteOrDiscard	( bool shouldDelete );
 	void					OnGPUUnbind				();
 
 public:

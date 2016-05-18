@@ -23,14 +23,14 @@ ZLSizeResult ZLDeflateWriter::Deflate ( const void* src, size_t size ) {
     
     z_stream* stream = &this->mZStream;
     stream->next_in = ( Bytef* )src;
-	stream->avail_in = size;
+	stream->avail_in = ( uInt )size;
 
 	int flush = size ? Z_NO_FLUSH : Z_FINISH;
 
     do {
 		
 		stream->next_out = ( Bytef* )buffer;
-		stream->avail_out = bufferSize;
+		stream->avail_out = ( uInt )bufferSize;
 		
 		int result = deflate ( stream, flush );
 		

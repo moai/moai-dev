@@ -9,6 +9,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 
 #include <zl-util/ZLUnique.h>
 
+#pragma warning ( disable:4267 )
 #pragma warning ( disable:4512 )
 #pragma warning ( disable:4355 )
 

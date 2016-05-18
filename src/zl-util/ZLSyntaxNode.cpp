@@ -9,13 +9,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-u32 ZLSyntaxNode::CountChildren () {
+size_t ZLSyntaxNode::CountChildren () {
 
 	return this->mChildren.Size ();
 }
 
 //----------------------------------------------------------------//
-ZLSyntaxNode* ZLSyntaxNode::GetChild ( u32 i ) {
+ZLSyntaxNode* ZLSyntaxNode::GetChild ( size_t i ) {
 
 	if ( i < this->mChildren.Size ()) {
 		return this->mChildren [ i ];
@@ -54,7 +54,7 @@ void ZLSyntaxNode::Print ( u32 indent, u32 offset ) {
 	if ( this->mChildren.Size ()) {
 		printf ( "%s <%d>\n", this->mName.c_str (), this->mID );
 	
-		for ( u32 i = 0; i < this->mChildren.Size (); ++i )
+		for ( size_t i = 0; i < this->mChildren.Size (); ++i )
 			this->mChildren [ i ]->Print ( indent + offset, offset );
 	}
 	else {
@@ -69,7 +69,7 @@ ZLSyntaxNode::ZLSyntaxNode () {
 //----------------------------------------------------------------//
 ZLSyntaxNode::~ZLSyntaxNode () {
 
-	for ( u32 i = 0; i < this->mChildren.Size (); ++i ) {
+	for ( size_t i = 0; i < this->mChildren.Size (); ++i ) {
 		delete this->mChildren [ i ];
 	}
 }

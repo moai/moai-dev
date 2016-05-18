@@ -4,8 +4,8 @@
 #include "pch.h"
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIFrameBuffer.h>
-#include <moai-sim/MOAIGfxDevice.h>
-#include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxMgr.h>
+#include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIRenderable.h>
 #include <moai-sim/MOAIRenderMgr.h>
@@ -106,7 +106,7 @@ void MOAIClearableView::ClearSurface () {
 			clearColor.SetRGBA ( this->mClearColor );
 		}
 		
-		MOAIGfxDevice::GetDrawingAPI ().ClearColor (
+		MOAIGfxMgr::GetDrawingAPI ().ClearColor (
 			clearColor.mR,
 			clearColor.mG,
 			clearColor.mB,
@@ -114,7 +114,7 @@ void MOAIClearableView::ClearSurface () {
 		);
 	}
 
-	MOAIGfxDevice::Get ().ClearSurface ( this->mClearFlags );
+	MOAIGfxMgr::Get ().ClearSurface ( this->mClearFlags );
 }
 
 //----------------------------------------------------------------//
@@ -304,7 +304,7 @@ int MOAIFrameBuffer::_setRenderTable ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIFrameBuffer::DetectGLFrameBufferID () {
 
-	this->mGLFrameBufferID = MOAIGfxDevice::GetDrawingAPI ().GetCurrentFramebuffer ();
+	this->mGLFrameBufferID = MOAIGfxMgr::GetDrawingAPI ().GetCurrentFramebuffer ();
 }
 
 //----------------------------------------------------------------//
@@ -372,10 +372,7 @@ MOAIFrameBuffer::MOAIFrameBuffer () :
 //----------------------------------------------------------------//
 MOAIFrameBuffer::~MOAIFrameBuffer () {
 
-	if ( MOAIGfxResourceMgr::IsValid ()) {
-		MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLFrameBufferID );
-	}
-	this->mGLFrameBufferID = 0;
+	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mGLFrameBufferID, false );
 	this->mFrameImage.Set ( *this, 0 );
 }
 
@@ -427,13 +424,13 @@ void MOAIFrameBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIFrameBuffer::Render () {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	this->mLastDrawCount = gfxDevice.GetDrawCount ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	//this->mLastDrawCount = gfxMgr.GetDrawCount ();
 
-	gfxDevice.BindFrameBuffer ( this );
+	gfxMgr.mGfxState.BindFrameBuffer ( this );
 	
 	//disable scissor rect for clear
-	gfxDevice.SetScissorRect ();
+	gfxMgr.mGfxState.SetScissorRect ();
 	this->ClearSurface ();
 	
 	if ( this->mRenderTable ) {
@@ -443,17 +440,17 @@ void MOAIFrameBuffer::Render () {
 		state.Pop ( 1 );
 	}
 
-	gfxDevice.FlushBufferedPrims ();
+	gfxMgr.mVertexCache.FlushBufferedPrims ();
 
 	// since we're doing this on the render thread, set it every time until we get a callback
 	if ( this->mGrabNextFrame ) {
 
-		ZLGfx& gfx = gfxDevice.GetDrawingAPI ();
+		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 		gfx.ReadPixels ( 0, 0, this->mBufferWidth, this->mBufferHeight, ZGL_PIXEL_FORMAT_RGBA, ZGL_PIXEL_TYPE_UNSIGNED_BYTE, 4, this, 0 );
 	}
 	
 	this->mRenderCounter++;
-	this->mLastDrawCount = gfxDevice.GetDrawCount () - this->mLastDrawCount;
+	//this->mLastDrawCount = gfxMgr.GetDrawCount () - this->mLastDrawCount;
 }
 
 //----------------------------------------------------------------//

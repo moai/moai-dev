@@ -940,7 +940,7 @@ void MOAILuaRuntime::PushHistogram ( MOAILuaState& state, cc8* trackingGroup  ) 
 		size_t count = histogramIt->second;
 		
 		lua_pushstring ( state, name );
-		lua_pushnumber ( state, count );
+		lua_pushnumber ( state, ( lua_Number )count );
 		lua_settable ( state, -3 );
 	}
 }

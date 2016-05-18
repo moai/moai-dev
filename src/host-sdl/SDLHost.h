@@ -5,6 +5,7 @@
 #define	SDLHOST_H
 
 //----------------------------------------------------------------//
+void	GetDeviceToPixelScale	( float& w, float& h );
 int		SDLHost					( int argc, char** arg );
 
 #endif

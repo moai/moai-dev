@@ -4,8 +4,8 @@
 #include "pch.h"
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIEaseDriver.h>
-#include <moai-sim/MOAIGfxDevice.h>
-#include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxMgr.h>
+#include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIShaderProgram.h>
 #include <moai-sim/MOAITransformBase.h>
 
@@ -210,27 +210,11 @@ int MOAIShaderProgram::_setVertexAttribute ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIShaderProgram::ApplyDefaults () {
-
-	for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
-		MOAIShaderUniform& uniform = this->mUniforms [ i ];
-		if (( uniform.mFlags & MOAIShaderUniform::UNIFORM_FLAG_GLOBAL ) == 0 ) {
-			uniform.mFlags |= uniform.SetValue ( this->mDefaults [ i ], true );
-		}
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIShaderProgram::ApplyGlobals () {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-
-	const ZLMatrix4x4& world	= gfxDevice.mVertexTransforms [ MOAIGfxDevice::VTX_WORLD_TRANSFORM ];
-	const ZLMatrix4x4& view		= gfxDevice.mVertexTransforms [ MOAIGfxDevice::VTX_VIEW_TRANSFORM ];
-	const ZLMatrix4x4& proj		= gfxDevice.mVertexTransforms [ MOAIGfxDevice::VTX_PROJ_TRANSFORM ];
-
-	// TODO: all these need to be cached in the gfx state instead of recomputed every single time
-	// TODO: should check against the cached values in the shader to see if the uniforms need to be re-uploaded
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	
+	ZLRect viewRect = gfxMgr.mGfxState.GetViewRect ();
 
 	// NOTE: matrices are submitted transposed; it is up to the shader to transform vertices correctly
 	// vert * matrix implicitely transposes the matrix; martix * vert uses the matrix as submitted
@@ -242,81 +226,43 @@ void MOAIShaderProgram::ApplyGlobals () {
 		if ( global.mUniformID == INVALID_INDEX ) continue;
 		
 		MOAIShaderUniform& uniform = this->mUniforms [ global.mUniformID ];
-	
-		switch ( global.mGlobalID ) {
 		
-			case GLOBAL_PEN_COLOR: {
+		switch ( global.mGlobalID ) {
 			
-				uniform.mFlags |= uniform.SetValue ( gfxDevice.mFinalColor, true );
+			case MOAIGfxGlobalsCache::VIEW_PROJ_MTX:
+			case MOAIGfxGlobalsCache::WORLD_MTX:
+			case MOAIGfxGlobalsCache::INVERSE_WORLD_MTX:
+			case MOAIGfxGlobalsCache::WORLD_VIEW_MTX:
+			case MOAIGfxGlobalsCache::INVERSE_WORLD_VIEW_MTX:
+			case MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX:
+			
+				uniform.mFlags |= uniform.SetValue ( gfxMgr.mGfxState.GetMtx ( global.mGlobalID ));
 				break;
-			}
-			case GLOBAL_VIEW_PROJ: {
 			
-				ZLMatrix4x4 mtx = view;
-				mtx.Append ( proj );
+			case MOAIGfxGlobalsCache::PEN_COLOR:
+			
+				uniform.mFlags |= uniform.SetValue ( gfxMgr.mGfxState.GetFinalColor ());
+				break;
+			
+			case MOAIGfxGlobalsCache::VIEW_HALF_HEIGHT:
+			
+				uniform.mFlags |= uniform.SetValue ( viewRect.Height () * 0.5f );
+				break;
 				
-				uniform.mFlags |= uniform.SetValue ( mtx, true );
+			case MOAIGfxGlobalsCache::VIEW_HALF_WIDTH: {
+			
+				uniform.mFlags |= uniform.SetValue ( viewRect.Width () * 0.5f );
 				break;
 			}
-			case GLOBAL_VIEW_WIDTH: {
+			case MOAIGfxGlobalsCache::VIEW_HEIGHT:
 			
-				uniform.mFlags |= uniform.SetValue ( gfxDevice.mViewRect.Width ());
+				uniform.mFlags |= uniform.SetValue ( viewRect.Height ());
 				break;
-			}
-			case GLOBAL_VIEW_HEIGHT: {
-			
-				uniform.mFlags |= uniform.SetValue ( gfxDevice.mViewRect.Height ());
-				break;
-			}
-			case GLOBAL_VIEW_HALF_WIDTH: {
-			
-				uniform.mFlags |= uniform.SetValue ( gfxDevice.mViewRect.Width () * 0.5f );
-				break;
-			}
-			case GLOBAL_VIEW_HALF_HEIGHT: {
-			
-				uniform.mFlags |= uniform.SetValue ( gfxDevice.mViewRect.Height () * 0.5f );
-				break;
-			}
-			case GLOBAL_WORLD: {
-			
-				uniform.mFlags |= uniform.SetValue ( world, true );
-				break;
-			}
-			case GLOBAL_WORLD_INVERSE: {
-			
-				ZLMatrix4x4 mtx = world;
-				mtx.Inverse ();
 				
-				uniform.mFlags |= uniform.SetValue ( mtx, true );
-				break;
-			}
-			case GLOBAL_WORLD_VIEW: {
+			case MOAIGfxGlobalsCache::VIEW_WIDTH:
 			
-				ZLMatrix4x4 mtx = world;
-				mtx.Append ( view );
-				
-				uniform.mFlags |= uniform.SetValue ( mtx, true );
+				uniform.mFlags |= uniform.SetValue ( viewRect.Width ());
 				break;
-			}
-			case GLOBAL_WORLD_VIEW_INVERSE: {
-			
-				ZLMatrix4x4 mtx = world;
-				mtx.Append ( view );
-				mtx.Inverse ();
-				
-				uniform.mFlags |= uniform.SetValue ( mtx, true );
-				break;
-			}
-			case GLOBAL_WORLD_VIEW_PROJ: {
-			
-				ZLMatrix4x4 mtx = world;
-				mtx.Append ( view );
-				mtx.Append ( proj );
-				
-				uniform.mFlags |= uniform.SetValue ( mtx, true );
-				break;
-			}
 		}
 	}
 }
@@ -324,7 +270,7 @@ void MOAIShaderProgram::ApplyGlobals () {
 //----------------------------------------------------------------//
 void MOAIShaderProgram::BindUniforms () {
 	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
 	bool flushed = false;
 	
@@ -333,7 +279,7 @@ void MOAIShaderProgram::BindUniforms () {
 		
 		if ( uniform.IsValid () && ( uniform.mFlags & MOAIShaderUniform::UNIFORM_FLAG_DIRTY )) {
 			if ( !flushed ) {
-				gfxDevice.FlushBufferedPrims ();
+				gfxMgr.mGfxState.GfxStateWillChange ();
 				flushed = true;
 			}
 			uniform.Bind ();
@@ -343,7 +289,7 @@ void MOAIShaderProgram::BindUniforms () {
 	// in multi-threaded gfx mode, drawing frames may get dropped. for this reason, we
 	// only clear the dirty flag once we're sure a draw frame has been completed.
 	if ( flushed ) {
-		ZLGfx& gfx = gfxDevice.GetDrawingAPI ();
+		ZLGfx& gfx = gfxMgr.GetDrawingAPI ();
 		gfx.Event ( this, GFX_EVENT_UPDATED_UNIFORMS, 0 );
 	}
 }
@@ -372,15 +318,15 @@ void MOAIShaderProgram::ClearUniform ( u32 idx ) {
 //----------------------------------------------------------------//
 ZLGfxHandle* MOAIShaderProgram::CompileShader ( u32 type, cc8* source ) {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	ZLGfx& gfx = gfxDevice.GetDrawingAPI ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	ZLGfx& gfx = gfxMgr.GetDrawingAPI ();
 
 	ZLGfxHandle* shader = gfx.CreateShader ( type );
 
 	STLString buffer;
 
-	buffer.append ( gfxDevice.IsOpenGLES () ? OPENGL_ES_PREPROC : OPENGL_PREPROC );
-	if (( type == ZGL_SHADER_TYPE_FRAGMENT ) && gfxDevice.IsOpenGLES ()) {
+	buffer.append ( gfxMgr.IsOpenGLES () ? OPENGL_ES_PREPROC : OPENGL_PREPROC );
+	if (( type == ZGL_SHADER_TYPE_FRAGMENT ) && gfxMgr.IsOpenGLES ()) {
 		buffer.append ( WEBGL_PREPROC );
 	}
 
@@ -392,7 +338,7 @@ ZLGfxHandle* MOAIShaderProgram::CompileShader ( u32 type, cc8* source ) {
 	gfx.CompileShader ( shader, true );
 
 	if ( gfx.PushErrorHandler ()) {
-		gfx.DeleteHandle ( shader );
+		gfx.Delete ( shader );
 	}
 
 	gfx.PopSection ();
@@ -436,10 +382,23 @@ void MOAIShaderProgram::DeclareUniform ( u32 idx, cc8* name, u32 type, int value
 }
 
 //----------------------------------------------------------------//
+u32 MOAIShaderProgram::GetGlobalsMask () {
+
+	if ( this->mGlobals.Size () && !this->mGlobalsMask ) {
+		for ( u32 i = 0; i < this->mGlobals.Size (); ++i ) {
+			const MOAIShaderProgramGlobal& global = this->mGlobals [ i ];
+			this->mGlobalsMask |= MOAIGfxGlobalsCache::GetAttrFlagForID ( global.mGlobalID );
+		}
+	}
+	return this->mGlobalsMask;
+}
+
+//----------------------------------------------------------------//
 MOAIShaderProgram::MOAIShaderProgram () :
 	mProgram ( 0 ),
 	mVertexShader ( 0 ),
-	mFragmentShader ( 0 ) {
+	mFragmentShader ( 0 ),
+	mGlobalsMask ( 0 ) {
 
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIGfxResource )
@@ -482,18 +441,13 @@ void MOAIShaderProgram::OnGfxEvent ( u32 event, void* userdata ) {
 void MOAIShaderProgram::OnGPUBind () {
 
 	// use shader program.
-	MOAIGfxDevice::GetDrawingAPI ().UseProgram ( this->mProgram );
-
-	// reload the uniform values
-	//for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
-	//	this->mUniforms [ i ].Bind ();
-	//}
+	MOAIGfxMgr::GetDrawingAPI ().UseProgram ( this->mProgram );
 }
 
 //----------------------------------------------------------------//
 bool MOAIShaderProgram::OnGPUCreate () {
 
-	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
 	this->mVertexShader = this->CompileShader ( ZGL_SHADER_TYPE_VERTEX, this->mVertexShaderSource );
 	this->mFragmentShader = this->CompileShader ( ZGL_SHADER_TYPE_FRAGMENT, this->mFragmentShaderSource );
@@ -521,15 +475,15 @@ bool MOAIShaderProgram::OnGPUCreate () {
 		MOAIShaderUniform& uniform = this->mUniforms [ i ];
 
 		if ( uniform.mType != MOAIShaderUniform::UNIFORM_NONE ) {
-			gfx.GetUniformLocation ( this->mProgram, uniform.mName, this, ( void* )i );
+			gfx.GetUniformLocation ( this->mProgram, uniform.mName, this, ( void* )(( size_t )i )); // TODO: cast?
 			uniform.ClearValue ();
 		}
 	}
 
-	gfx.DeleteHandle ( this->mVertexShader );
+	gfx.Delete ( this->mVertexShader );
 	this->mVertexShader = 0;
 
-	gfx.DeleteHandle ( this->mFragmentShader );
+	gfx.Delete ( this->mFragmentShader );
 	this->mFragmentShader = 0;
 
 	//AJV TODO - does the attribute map ever need to be cleared?
@@ -539,30 +493,17 @@ bool MOAIShaderProgram::OnGPUCreate () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgram::OnGPUDestroy () {
+void MOAIShaderProgram::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 
-	MOAIGfxResourceMgr::Get ().PushDeleter ( this->mVertexShader );
-	this->mVertexShader = 0;
-
-	MOAIGfxResourceMgr::Get ().PushDeleter ( this->mFragmentShader );
-	this->mFragmentShader = 0;
-
-	MOAIGfxResourceMgr::Get ().PushDeleter ( this->mProgram );
-	this->mProgram = 0;
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgram::OnGPULost () {
-
-	this->mVertexShader = 0;
-	this->mFragmentShader = 0;
-	this->mProgram = 0;
+	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mVertexShader, shouldDelete );
+	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mFragmentShader, shouldDelete );
+	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mProgram, shouldDelete );
 }
 
 //----------------------------------------------------------------//
 void MOAIShaderProgram::OnGPUUnbind () {
 
-	MOAIGfxDevice::GetDrawingAPI ().UseProgram ( 0 );
+	MOAIGfxMgr::GetDrawingAPI ().UseProgram ( 0 );
 }
 
 //----------------------------------------------------------------//
@@ -593,15 +534,18 @@ void MOAIShaderProgram::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "UNIFORM_MATRIX_F4",					( u32 )MOAIShaderUniform::UNIFORM_MATRIX_F4 );
 	state.SetField ( -1, "UNIFORM_VECTOR_F4",					( u32 )MOAIShaderUniform::UNIFORM_VECTOR_F4 );
 	
-	state.SetField ( -1, "GLOBAL_PEN_COLOR",					( u32 )GLOBAL_PEN_COLOR );
-	state.SetField ( -1, "GLOBAL_VIEW_PROJ",					( u32 )GLOBAL_VIEW_PROJ );
-	state.SetField ( -1, "GLOBAL_VIEW_WIDTH",					( u32 )GLOBAL_VIEW_WIDTH );
-	state.SetField ( -1, "GLOBAL_VIEW_HEIGHT",					( u32 )GLOBAL_VIEW_HEIGHT );
-	state.SetField ( -1, "GLOBAL_WORLD",						( u32 )GLOBAL_WORLD );
-	state.SetField ( -1, "GLOBAL_WORLD_INVERSE",				( u32 )GLOBAL_WORLD_INVERSE );
-	state.SetField ( -1, "GLOBAL_WORLD_VIEW",					( u32 )GLOBAL_WORLD_VIEW );
-	state.SetField ( -1, "GLOBAL_WORLD_VIEW_INVERSE",			( u32 )GLOBAL_WORLD_VIEW_INVERSE );
-	state.SetField ( -1, "GLOBAL_WORLD_VIEW_PROJ",				( u32 )GLOBAL_WORLD_VIEW_PROJ );
+	state.SetField ( -1, "GLOBAL_WORLD_INVERSE",				( u32 )MOAIGfxGlobalsCache::INVERSE_WORLD_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_VIEW_INVERSE",			( u32 )MOAIGfxGlobalsCache::INVERSE_WORLD_VIEW_MTX );
+	
+	state.SetField ( -1, "GLOBAL_VIEW_PROJ",					( u32 )MOAIGfxGlobalsCache::VIEW_PROJ_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD",						( u32 )MOAIGfxGlobalsCache::WORLD_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_VIEW",					( u32 )MOAIGfxGlobalsCache::WORLD_VIEW_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_VIEW_PROJ",				( u32 )MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX );
+	
+	state.SetField ( -1, "GLOBAL_PEN_COLOR",					( u32 )MOAIGfxGlobalsCache::PEN_COLOR );
+	
+	state.SetField ( -1, "GLOBAL_VIEW_HEIGHT",					( u32 )MOAIGfxGlobalsCache::VIEW_HEIGHT );
+	state.SetField ( -1, "GLOBAL_VIEW_WIDTH",					( u32 )MOAIGfxGlobalsCache::VIEW_WIDTH );
 }
 
 //----------------------------------------------------------------//
@@ -630,7 +574,7 @@ void MOAIShaderProgram::ReserveGlobals ( u32 nGlobals ) {
 
 	// clear out the old globals (if any)
 	for ( size_t i = 0; i < this->mGlobals.Size (); ++i ) {
-		this->SetGlobal ( i, INVALID_INDEX, INVALID_INDEX );
+		this->SetGlobal (( u32 )i, INVALID_INDEX, INVALID_INDEX ); // TODO: cast
 	}
 
 	this->mGlobals.Init ( nGlobals );
@@ -679,6 +623,8 @@ void MOAIShaderProgram::SetGlobal ( u32 idx, u32 uniformID, u32 globalID ) {
 	
 	this->mGlobals [ idx ].mUniformID = uniformID;
 	this->mGlobals [ idx ].mGlobalID = globalID;
+	
+	this->mGlobalsMask = 0;
 }
 
 //----------------------------------------------------------------//

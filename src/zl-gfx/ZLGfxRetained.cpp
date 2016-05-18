@@ -173,7 +173,7 @@ void ZLGfxRetained::BlendMode ( u32 mode ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::BufferData ( u32 target, u32 size, ZLSharedConstBuffer* buffer, size_t offset, u32 usage ) {
+void ZLGfxRetained::BufferData ( u32 target, size_t size, ZLSharedConstBuffer* buffer, size_t offset, u32 usage ) {
 
 	this->Retain ( buffer );
 
@@ -181,14 +181,14 @@ void ZLGfxRetained::BufferData ( u32 target, u32 size, ZLSharedConstBuffer* buff
 
 	this->mStream->Write < u32 >( ZLGFX_BUFFER_DATA );
 	this->mStream->Write < u32 >( target );
-	this->mStream->Write < u32 >( size );
+	this->mStream->Write < size_t >( size );
 	this->mStream->Write < ZLSharedConstBuffer* >( buffer );
 	this->mStream->Write < size_t >( offset );
 	this->mStream->Write < u32 >( usage );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::BufferSubData ( u32 target, u32 offset, u32 size, ZLSharedConstBuffer* buffer, size_t srcOffset ) {
+void ZLGfxRetained::BufferSubData ( u32 target, size_t offset, size_t size, ZLSharedConstBuffer* buffer, size_t srcOffset ) {
 
 	this->Retain ( buffer );
 
@@ -196,8 +196,8 @@ void ZLGfxRetained::BufferSubData ( u32 target, u32 offset, u32 size, ZLSharedCo
 
 	this->mStream->Write < u32 >( ZLGFX_BUFFER_SUB_DATA );
 	this->mStream->Write < u32 >( target );
-	this->mStream->Write < u32 >( offset );
-	this->mStream->Write < u32 >( size );
+	this->mStream->Write < size_t >( offset );
+	this->mStream->Write < size_t >( size );
 	this->mStream->Write < ZLSharedConstBuffer* >( buffer );
 	this->mStream->Write < size_t >( srcOffset );
 }
@@ -336,104 +336,6 @@ ZLGfxHandle* ZLGfxRetained::Create ( ZLGfxHandle* handle, u32 param ) {
 }
 
 //----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxRetained::CreateBuffer () {
-
-	assert ( this->mStream );
-
-	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::BUFFER, 0, false );
-	
-	this->mStream->Write < u32 >( ZLGFX_CREATE );
-	this->mStream->Write < ZLGfxHandle* >( handle );
-	this->mStream->Write < u32 >( 0 );
-	
-	return handle;
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxRetained::CreateFramebuffer () {
-
-	assert ( this->mStream );
-
-	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::FRAMEBUFFER, 0, false );
-	
-	this->mStream->Write < u32 >( ZLGFX_CREATE );
-	this->mStream->Write < ZLGfxHandle* >( handle );
-	this->mStream->Write < u32 >( 0 );
-	
-	return handle;
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxRetained::CreateProgram () {
-
-	assert ( this->mStream );
-
-	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::PROGRAM, 0, false );
-	
-	this->mStream->Write < u32 >( ZLGFX_CREATE );
-	this->mStream->Write < ZLGfxHandle* >( handle );
-	this->mStream->Write < u32 >( 0 );
-	
-	return handle;
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxRetained::CreateRenderbuffer () {
-
-	assert ( this->mStream );
-
-	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::RENDERBUFFER, 0, false );
-	
-	this->mStream->Write < u32 >( ZLGFX_CREATE );
-	this->mStream->Write < ZLGfxHandle* >( handle );
-	this->mStream->Write < u32 >( 0 );
-	
-	return handle;
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxRetained::CreateShader ( u32 shaderType ) {
-
-	assert ( this->mStream );
-
-	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::SHADER, 0, false );
-	
-	this->mStream->Write < u32 >( ZLGFX_CREATE );
-	this->mStream->Write < ZLGfxHandle* >( handle );
-	this->mStream->Write < u32 >( shaderType );
-	
-	return handle;
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxRetained::CreateTexture () {
-
-	assert ( this->mStream );
-
-	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::TEXTURE, 0, false );
-	
-	this->mStream->Write < u32 >( ZLGFX_CREATE );
-	this->mStream->Write < ZLGfxHandle* >( handle );
-	this->mStream->Write < u32 >( 0 );
-	
-	return handle;
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxRetained::CreateVertexArray () {
-
-	assert ( this->mStream );
-
-	ZLGfxHandle* handle = new ZLGfxHandle ( ZLGfxHandle::VERTEXARRAY, 0, false );
-	
-	this->mStream->Write < u32 >( ZLGFX_CREATE );
-	this->mStream->Write < ZLGfxHandle* >( handle );
-	this->mStream->Write < u32 >( 0 );
-	
-	return handle;
-}
-
-//----------------------------------------------------------------//
 void ZLGfxRetained::CullFace ( u32 mode ) {
 
 	assert ( this->mStream );
@@ -443,12 +345,13 @@ void ZLGfxRetained::CullFace ( u32 mode ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::DeleteHandle ( ZLGfxHandle* handle ) {
+void ZLGfxRetained::Delete ( u32 type, u32 glid ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( ZLGFX_DELETE );
-	this->mStream->Write < ZLGfxHandle* >( handle );
+	this->mStream->Write < u32 >( type );
+	this->mStream->Write < u32 >( glid );
 }
 
 //----------------------------------------------------------------//
@@ -604,7 +507,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			case ZLGFX_BUFFER_DATA: {
 			
 				u32 target						= this->mStream->Read < u32 >( 0 );
-				u32 size						= this->mStream->Read < u32 >( 0 );
+				size_t size						= this->mStream->Read < size_t >( 0 );
 				ZLSharedConstBuffer* buffer		= this->mStream->Read < ZLSharedConstBuffer* >( 0 );
 				size_t offset					= this->mStream->Read < size_t >( 0 );
 				u32 usage						= this->mStream->Read < u32 >( 0 );
@@ -616,8 +519,8 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			case ZLGFX_BUFFER_SUB_DATA: {
 			
 				u32 target						= this->mStream->Read < u32 >( 0 );
-				u32 offset						= this->mStream->Read < u32 >( 0 );
-				u32 size						= this->mStream->Read < u32 >( 0 );
+				size_t offset					= this->mStream->Read < size_t >( 0 );
+				size_t size						= this->mStream->Read < size_t >( 0 );
 				ZLSharedConstBuffer* buffer		= this->mStream->Read < ZLSharedConstBuffer* >( 0 );
 				size_t srcOffset				= this->mStream->Read < size_t >( 0 );
 				
@@ -711,9 +614,11 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				break;
 			}
 			case ZLGFX_DELETE: {
-			
-				ZLGfxHandle* handle = this->mStream->Read < ZLGfxHandle* >( 0 );
-				draw.DeleteHandle ( handle );
+				
+				draw.Delete (
+					this->mStream->Read < u32 >( 0 ),
+					this->mStream->Read < u32 >( 0 )
+				);
 				break;
 			}
 			case ZLGFX_DEPTH_FUNC: {
@@ -798,7 +703,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				u32 event				= this->mStream->Read < u32 >( 0 );
 				u32 listenerRecordIdx	= this->mStream->Read < u32 >( 0 );
 				
-				draw.Event ( this, event, ( void* )listenerRecordIdx );
+				draw.Event ( this, event, ( void* )(( size_t )listenerRecordIdx ));
 				
 				break;
 			}
@@ -849,7 +754,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				
 				u32 listenerRecordIdx = this->mStream->Read < u32 >( 0 );
 				
-				draw.GetUniformLocation ( handle, name, this, ( void* )listenerRecordIdx );
+				draw.GetUniformLocation ( handle, name, this, ( void* )(( size_t )listenerRecordIdx ));
 				
 				break;
 			}
@@ -882,7 +787,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				
 				u32 listenerRecordIdx = this->mStream->Read < u32 >( 0 );
 				
-				draw.ReadPixels ( x, y, width, height, format, type, pixelSize, this, ( void* )listenerRecordIdx );
+				draw.ReadPixels ( x, y, width, height, format, type, pixelSize, this, ( void* )(( size_t )listenerRecordIdx ));
 				
 				break;
 			}
@@ -1062,7 +967,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 		}
 	}
 	
-	this->mStream->Seek ( top, SEEK_SET );
+	this->mStream->Seek (( long )top, SEEK_SET );
 	
 	//zglEnd ();
 }
@@ -1577,7 +1482,7 @@ ZLGfxListenerRecord& ZLGfxRetained::WriteListenerRecord ( ZLGfxListener* listene
 	ZLGfxListenerHandle* listenerHandle = listener->GetRetainedHandle ();
 	this->mReleaseStack.Push ( listenerHandle );
 	
-	u32 idx = this->mListenerRecords.GetTop ();
+	u32 idx = ( u32 )this->mListenerRecords.GetTop ();
 	ZLGfxListenerRecord& record = this->mListenerRecords.Push ();
 
 	record.mListenerHandle		= listenerHandle;

@@ -207,7 +207,7 @@ void MOAIHttpTaskCurl::CurlFinish () {
 
 	if ( this->mStream == &this->mMemStream ) {
 	
-		u32 size = this->mMemStream.GetLength ();
+		u32 size = ( u32 )this->mMemStream.GetLength ();
 		
 		if ( size ) {
 			this->mData.Init ( size );

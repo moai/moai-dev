@@ -632,7 +632,7 @@ int MOAIStream::ReadFormat ( MOAILuaState& state, int idx ) {
 	idx = state.AbsIndex ( idx );
 	cc8* format = state.GetValue < cc8* >( idx, "" );
 	
-	u32 bytes = 0;
+	size_t bytes = 0;
 	u32 type = UNKNOWN;
 	
 	while ( format ) {
@@ -669,7 +669,7 @@ int MOAIStream::ReadFormat ( MOAILuaState& state, int idx ) {
 		}
 	}
 	
-	state.Push ( bytes );
+	state.Push (( u64 )bytes );
 	return ( state.GetTop () - idx );
 }
 

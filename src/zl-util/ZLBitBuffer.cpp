@@ -64,10 +64,10 @@ void decode_bin ( void* buffer, cc8* str ) {
 	u8* bytes = ( u8* )buffer;
 	for ( size_t i = 0; str [ i ]; ++i ) {
 	
-		u32 bit = str [ i ] == '1' ? 1 : 0;
+		size_t bit = str [ i ] == '1' ? 1 : 0;
 	
-		u32 byte = i >> 3;
-		u32 shift = i & 0x07;
+		size_t byte = i >> 3;
+		size_t shift = i & 0x07;
 		
 		bytes [ byte ] = ( u8 )(( bytes [ byte ] & ~( 1 << shift )) | ( bit << shift ));
 	}
@@ -82,10 +82,10 @@ void print_bin ( const void* buffer, size_t size ) {
 
 	for ( size_t i = 0; i < size; ++i ) {
 	
-		u32 byte = i >> 3;
-		u32 shift = i & 0x07;
+		size_t byte = i >> 3;
+		size_t shift = i & 0x07;
 		
-		u32 bit = ( bytes [ byte ] & ( 1 << shift ));
+		size_t bit = ( bytes [ byte ] & ( 1 << shift ));
 		
 		str.write ( bit ? "1" : "0" );
 	}
@@ -140,7 +140,7 @@ void ZLBitBuffer::Blit ( void* dest, size_t destX, const void* src, size_t srcX,
 		
 			// we don't have to bitshift; just handle the two edges (if any) and memcopy the rest
 		
-			size_t mod = srcMod;
+			u32 mod = srcMod;
 			
 			if ( mod ) {
 				u32 b = 8 - mod;

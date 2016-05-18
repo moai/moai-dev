@@ -332,8 +332,8 @@ ZLBox MOAIGfxQuadListDeck2D::ComputeMaxBounds () {
 	ZLRect rect;
 	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 
-	u32 size = this->mQuads.Size ();
-	for ( u32 i = 0; i < size; ++i ) {
+	size_t size = this->mQuads.Size ();
+	for ( size_t i = 0; i < size; ++i ) {
 		rect.Grow ( this->mQuads [ i ].GetBounds ());
 	}
 	
@@ -345,13 +345,13 @@ ZLBox MOAIGfxQuadListDeck2D::ComputeMaxBounds () {
 //----------------------------------------------------------------//
 bool MOAIGfxQuadListDeck2D::Contains ( u32 idx, const ZLVec2D& vec ) {
 	
-	u32 size = this->mSprites.Size ();
+	size_t size = this->mSprites.Size ();
 	if ( size ) {
 		
 		idx = ( idx - 1 ) % size;
 		USSprite& brush = this->mSprites [ idx ];
 		
-		for ( u32 i = 0; i < brush.mTotalPairs; ++i ) {
+		for ( size_t i = 0; i < brush.mTotalPairs; ++i ) {
 			USSpritePair& prim = this->mPairs [ brush.mBasePair + i ];
 			if ( this->mQuads [ prim.mQuadID ].Contains ( vec.mX, vec.mY )) {
 				return true;
@@ -364,17 +364,17 @@ bool MOAIGfxQuadListDeck2D::Contains ( u32 idx, const ZLVec2D& vec ) {
 //----------------------------------------------------------------//
 void MOAIGfxQuadListDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 
-	u32 size = this->mSprites.Size ();
+	size_t size = this->mSprites.Size ();
 	if ( size ) {
 
 		idx = idx - 1;
-		u32 itemIdx = idx % size;
+		size_t itemIdx = idx % size;
 
-		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-		MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+		MOAIQuadBrush::BindVertexFormat ( gfxMgr.mVertexCache );
 		
-		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
-		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+		gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
+		gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_MTX ));
 		
 		USSprite& sprite = this->mSprites [ itemIdx ];
 		MOAIQuadBrush glQuad;
@@ -382,11 +382,11 @@ void MOAIGfxQuadListDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, Z
 		u32 base = sprite.mBasePair;
 		u32 top = base + sprite.mTotalPairs;
 		
-		u32 totalSpritePairs = this->mPairs.Size ();
+		size_t totalSpritePairs = this->mPairs.Size ();
 		
 		u32 materialID = MOAIMaterialBatch::UNKNOWN;
 		
-		for ( u32 i = base; i < top; ++i ) {
+		for ( size_t i = base; i < top; ++i ) {
 			
 			USSpritePair spritePair = this->mPairs [ i % totalSpritePairs ];
 			
@@ -410,7 +410,7 @@ ZLBox MOAIGfxQuadListDeck2D::GetItemBounds ( u32 idx ) {
 	
 	ZLBox bounds;
 
-	u32 size = this->mSprites.Size ();
+	u32 size = ( u32 )this->mSprites.Size ();
 	if ( size ) {
 
 		idx = ( idx - 1 ) % size;
@@ -444,7 +444,7 @@ ZLBox MOAIGfxQuadListDeck2D::GetItemBounds ( u32 idx ) {
 bool MOAIGfxQuadListDeck2D::Inside ( u32 idx, MOAIMaterialBatch& materials, u32 granularity, ZLVec3D vec, float pad ) {
 	UNUSED ( pad );
 
-	u32 size = this->mSprites.Size ();
+	u32 size = ( u32 )this->mSprites.Size (); // TODO: cast
 	if ( size ) {
 	
 		idx = ( idx - 1 ) % size;
@@ -465,8 +465,6 @@ MOAIGfxQuadListDeck2D::MOAIGfxQuadListDeck2D () {
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIStandardDeck )
 	RTTI_END
-	
-	//this->SetContentMask ( MOAIProp::CAN_DRAW );
 }
 
 //----------------------------------------------------------------//
@@ -590,8 +588,8 @@ void MOAIGfxQuadListDeck2D::SetUVRect ( u32 idx, ZLRect& rect ) {
 //----------------------------------------------------------------//
 void MOAIGfxQuadListDeck2D::Transform ( const ZLAffine3D& mtx ) {
 
-	u32 total = this->mQuads.Size ();
-	for ( u32 i = 0; i < total; ++i ) {
+	size_t total = this->mQuads.Size ();
+	for ( size_t i = 0; i < total; ++i ) {
 		this->mQuads [ i ].Transform ( mtx );
 	}
 }
@@ -599,8 +597,8 @@ void MOAIGfxQuadListDeck2D::Transform ( const ZLAffine3D& mtx ) {
 //----------------------------------------------------------------//
 void MOAIGfxQuadListDeck2D::TransformUV ( const ZLAffine3D& mtx ) {
 
-	u32 total = this->mQuads.Size ();
-	for ( u32 i = 0; i < total; ++i ) {
+	size_t total = this->mQuads.Size ();
+	for ( size_t i = 0; i < total; ++i ) {
 		this->mUVQuads [ i ].Transform ( mtx );
 	}
 }

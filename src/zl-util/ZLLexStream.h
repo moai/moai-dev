@@ -23,7 +23,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	ZLCharResult	ReadByte			();
-	ZLResultCode	SetCursor			( long offset );
+	ZLResultCode	SetCursor			( size_t offset );
 	ZLCharResult	UnreadByte			();
 
 public:

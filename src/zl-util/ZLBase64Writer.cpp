@@ -56,8 +56,8 @@ ZLSizeResult ZLBase64Writer::WriteBytes ( const void* buffer, size_t size ) {
 	while ( remainder ) {
 
 		// space remaining in current block
-		u32 blockCursor = this->mCursor % ZLBase64Encoder::PLAIN_BLOCK_SIZE;
-		u32 blockRemainder = ZLBase64Encoder::PLAIN_BLOCK_SIZE - blockCursor;
+		size_t blockCursor = this->mCursor % ZLBase64Encoder::PLAIN_BLOCK_SIZE;
+		size_t blockRemainder = ZLBase64Encoder::PLAIN_BLOCK_SIZE - blockCursor;
 
 		size_t copySize = remainder;
 		if ( copySize > blockRemainder ) {

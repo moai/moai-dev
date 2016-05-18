@@ -39,7 +39,7 @@ FILE* ZLVfsVirtualPathInfo::Open () {
 	if ( !file ) goto error;
 
 	// seek to the base of the zip file header
-	if ( fseek ( file, this->mOffsetToHeader, SEEK_SET )) goto error;
+	if ( fseek ( file, ( long )this->mOffsetToHeader, SEEK_SET )) goto error;
 
 	// read local header
 	ZLVfsZipFileHeader fileHeader;
@@ -343,8 +343,8 @@ std::string ZLVfsFileSystem::GetRelativePath ( const char* path, const char* bas
 
 	string workpath = base ? base : this->GetWorkingPath ();
 
-	int depth = 0;
-	int same;
+	size_t depth = 0;
+	size_t same;
 
 	string abspath = this->GetAbsoluteFilePath ( path );
 	
@@ -354,7 +354,7 @@ std::string ZLVfsFileSystem::GetRelativePath ( const char* path, const char* bas
 	}
 
 	// count the number of steps up in the current directory
-	for ( int i = same; workpath [ i ]; ++i ) {
+	for ( size_t i = same; workpath [ i ]; ++i ) {
 		if ( base [ i ] == '/' ) {
 			depth++;
 		}
@@ -362,7 +362,7 @@ std::string ZLVfsFileSystem::GetRelativePath ( const char* path, const char* bas
 
 	string relPath;
 
-	for ( int i = 0; i < depth; ++i ) {
+	for ( size_t i = 0; i < depth; ++i ) {
 		relPath.append ( "../" );
 	}
 	

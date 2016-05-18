@@ -160,7 +160,7 @@ double moai_distaa3(double *img, double *gximg, double *gyimg, int w, int c, int
 }
 
 // Shorthand macro: add ubiquitous parameters dist, gx, gy, img and w and call distaa3()
-#define DISTAA(c,xc,yc,xi,yi) (moai_distaa3(img, gx, gy, w, c, xc, yc, xi, yi))
+//#define DISTAA(c,xc,yc,xi,yi) (moai_distaa3(img, gx, gy, w, c, xc, yc, xi, yi))
 
 void moai_edtaa3(double *img, double *gx, double *gy, int w, int h, short *distx, short *disty, double *dist)
 {

@@ -6,7 +6,7 @@
 
 MOAISim.openWindow ( "test", 640, 480 )
 
-gFrameBuffer = MOAIGfxDevice.getFrameBuffer ()
+gFrameBuffer = MOAIGfxMgr.getFrameBuffer ()
 gFrameBuffer:setClearDepth ( true )
 gFrameBuffer:setClearColor ( 1, 1, 1, 1 )
 

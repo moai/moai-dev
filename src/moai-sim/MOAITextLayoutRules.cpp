@@ -92,7 +92,7 @@ void MOAITextLayoutRules::Init ( const MOAITextLayoutRules& designer ) {
 	this->mGlyphScale			= designer.mGlyphScale;
 	this->mLineSpacing			= designer.mLineSpacing;
 	
-	u32 totalCurves = designer.mCurves.Size ();
+	u32 totalCurves = ( u32 )designer.mCurves.Size (); // TODO: cast
 	this->ReserveCurves ( totalCurves );
 	for ( u32 i = 0; i < totalCurves; ++i ) {
 		this->SetCurve ( i, designer.mCurves [ i ]);

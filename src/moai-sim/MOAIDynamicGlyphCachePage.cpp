@@ -20,7 +20,7 @@ void MOAIDynamicGlyphCachePage::AffirmCanvas ( MOAIDynamicGlyphCache& owner, MOA
 	if ( !this->mImageTexture ) {
 		
 		this->mImageTexture = new MOAIImageTexture ();
-		this->mImageTexture->Init ( MAX_TEXTURE_SIZE, this->mRows.mSize, owner.mColorFormat, MOAIImage::TRUECOLOR );
+		this->mImageTexture->Init ( MAX_TEXTURE_SIZE, ( u32 )this->mRows.mSize, owner.mColorFormat, MOAIImage::TRUECOLOR );
 		this->mImageTexture->SetDebugName ( font.GetFilename ());
 		this->mImageTexture->SetFilter ( font.GetMinFilter (), font.GetMagFilter ());
 		this->mImageTexture->ClearBitmap ();
@@ -30,7 +30,7 @@ void MOAIDynamicGlyphCachePage::AffirmCanvas ( MOAIDynamicGlyphCache& owner, MOA
 	else if ( this->mImageTexture->MOAIImage::GetHeight () < this->mRows.mSize ) {
 		
 		ZLIntRect rect;
-		rect.Init ( 0, 0, MAX_TEXTURE_SIZE, this->mRows.mSize );
+		rect.Init ( 0, 0, MAX_TEXTURE_SIZE, ( int )this->mRows.mSize );
 		this->mImageTexture->ResizeCanvas ( *this->mImageTexture, rect );
 		this->mImageTexture->UpdateRegion ();
 	}
@@ -106,7 +106,7 @@ MOAIDynamicGlyphCachePage::RowSpan* MOAIDynamicGlyphCachePage::AllocRow ( u32 he
 		
 	// if alloc succeeded, initialize the new row
 	if ( rowIt ) {
-		//u32 maxTextureSize = MOAIGfxDevice::Get ().GetMaxTextureSize ();
+		//u32 maxTextureSize = MOAIGfxMgr::Get ().GetMaxTextureSize ();
 		u32 maxTextureSize = MAX_TEXTURE_SIZE;
 		rowIt->mData.Expand ( maxTextureSize );
 	}
@@ -126,7 +126,7 @@ void MOAIDynamicGlyphCachePage::Clear ( MOAIDynamicGlyphCache& owner ) {
 //----------------------------------------------------------------//
 bool MOAIDynamicGlyphCachePage::ExpandToNextPowerofTwo () {
 
-	//u32 maxTextureSize = MOAIGfxDevice::Get ().GetMaxTextureSize ();
+	//u32 maxTextureSize = MOAIGfxMgr::Get ().GetMaxTextureSize ();
 	u32 maxTextureSize = MAX_TEXTURE_SIZE;
 	if ( this->mRows.mSize >= maxTextureSize ) return false;
 	

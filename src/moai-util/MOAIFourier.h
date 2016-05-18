@@ -108,7 +108,7 @@ public:
 	void			RegisterLuaFuncs					( MOAILuaState& state );
 	void			SetOutputType						( u32 outputType, size_t bands, u32 sampleRate, float minOctaveBandWidth );
 	void			SetWindowFunction					( u32 func, float a );
-	void			Transform							( ZLStream& inStream, u32 inStreamType, bool complexIn, ZLStream& outStream, u32 outStreamType, u32 stride, u32 average );
+	void			Transform							( ZLStream& inStream, u32 inStreamType, bool complexIn, ZLStream& outStream, u32 outStreamType, size_t stride, u32 average );
 };
 
 #endif

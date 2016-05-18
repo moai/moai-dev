@@ -3,8 +3,8 @@
 
 #include "pch.h"
 
-#include <moai-sim/MOAIGfxDevice.h>
-#include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxMgr.h>
+#include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
@@ -82,7 +82,7 @@ int MOAIVertexBuffer::_countElements ( lua_State* L ) {
 	if ( state.CheckParams ( 2, "N", false )) {
 		
 		u32  elementSize = state.GetValue < u32 >( 2, 4 );
-		totalElements = self->GetSize () / elementSize;
+		totalElements = ( u32 )( self->GetSize () / elementSize ); // TODO: cast
 	}
 	
 	// vertex format
@@ -140,9 +140,9 @@ void MOAIVertexBuffer::PrintVertices ( MOAIVertexFormat& vertexFormat ) {
 
 	size_t cursor = this->GetCursor ();
 	if ( cursor ) {
-		this->Seek ( 0, SEEK_SET );
+		this->SetCursor ( 0 );
 		vertexFormat.PrintVertices ( *this, cursor );
-		this->Seek ( cursor, SEEK_SET );
+		this->SetCursor ( cursor );
 	}
 }
 

@@ -96,8 +96,8 @@ MOAIEaseDriver::MOAIEaseDriver () {
 //----------------------------------------------------------------//
 MOAIEaseDriver::~MOAIEaseDriver () {
 
-	u32 total = this->mLinks.Size ();
-	for ( u32 i = 0; i < total; ++i ) {	
+	size_t total = this->mLinks.Size ();
+	for ( size_t i = 0; i < total; ++i ) {	
 		MOAIEaseDriverLink& link = this->mLinks [ i ];
 		link.mSource.Set ( *this, 0 );
 		link.mDest.Set ( *this, 0 );
@@ -118,8 +118,8 @@ void MOAIEaseDriver::OnUpdate ( double step ) {
 
 	MOAIAttrOp adder;
 
-	u32 total = this->mLinks.Size ();
-	for ( u32 i = 0; i < total; ++i ) {
+	size_t total = this->mLinks.Size ();
+	for ( size_t i = 0; i < total; ++i ) {
 		
 		MOAIEaseDriverLink& link = this->mLinks [ i ];
 		if ( link.mDest ) {

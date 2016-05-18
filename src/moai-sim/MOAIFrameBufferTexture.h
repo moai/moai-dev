@@ -33,12 +33,11 @@ private:
 	
 	//----------------------------------------------------------------//
 	bool				OnGPUCreate					();
-	void				OnGPUDestroy				();
-	void				OnGPULost					();
+	void				OnGPUDeleteOrDiscard		( bool shouldDelete );
 
 public:
 	
-	friend class MOAIGfxDevice;
+	friend class MOAIGfxMgr;
 	friend class MOAISingleTexture;
 	
 	DECL_LUA_FACTORY ( MOAIFrameBufferTexture )

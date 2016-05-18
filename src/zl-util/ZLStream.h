@@ -42,7 +42,7 @@ public:
 	ZLStringResult				ReadToken				( cc8* delimiters = 0 );
 	float						Sample					( u32 streamType, size_t sampleSize );
 	int							Seek					( long offset, int origin = SEEK_SET );
-	virtual ZLResultCode		SetCursor				( long offset );
+	virtual ZLResultCode		SetCursor				( size_t offset );
 	virtual ZLSizeResult		SetLength				( size_t length );
 	virtual ZLSizeResult		WriteBytes				( const void* buffer, size_t size );
 	ZLSizeResult				WriteStream				( ZLStream& source );
@@ -52,12 +52,12 @@ public:
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	ZLResult < TYPE > Read ( TYPE value ) {
+	ZLResult < TYPE > Read ( TYPE fallback ) {
 		TYPE temp;
 		if ( this->ReadBytes ( &temp, sizeof ( TYPE )).mValue == sizeof ( TYPE )) {
 			ZL_RETURN_RESULT ( TYPE, temp, ZL_OK );
 		}
-		ZL_RETURN_RESULT ( TYPE, value, ZL_ERROR );
+		ZL_RETURN_RESULT ( TYPE, fallback, ZL_ERROR );
 	}
 
 	//----------------------------------------------------------------//
@@ -65,9 +65,10 @@ public:
 	ZLResultCode Read ( TYPE& value, const TYPE& fallback ) {
 		TYPE temp;
 		if ( this->ReadBytes ( &temp, sizeof ( TYPE )).mValue == sizeof ( TYPE )) {
-			value = fallback;
+			value = temp;
 			return ZL_OK;
 		}
+		value = fallback;
 		return ZL_ERROR;
 	}
 

@@ -32,8 +32,8 @@ public:
 	GET ( STLString, Terminal, mTerminal )
 
 	//----------------------------------------------------------------//
-	u32					CountChildren			();
-	ZLSyntaxNode*		GetChild				( u32 i );
+	size_t				CountChildren			();
+	ZLSyntaxNode*		GetChild				( size_t i );
 	double				GetNumber				();
 	STLString			GetText					();
 	bool				IsNonterminal			();

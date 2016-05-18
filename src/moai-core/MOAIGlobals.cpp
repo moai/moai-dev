@@ -15,6 +15,10 @@ void MOAIGlobalClassBase::OnGlobalsFinalize () {
 }
 
 //----------------------------------------------------------------//
+void MOAIGlobalClassBase::OnGlobalsInitialize () {
+}
+
+//----------------------------------------------------------------//
 MOAIGlobalClassBase::MOAIGlobalClassBase () {
 }
 

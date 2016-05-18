@@ -3,8 +3,8 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGfxBuffer.h>
-#include <moai-sim/MOAIGfxDevice.h>
-#include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxMgr.h>
+#include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 
@@ -168,7 +168,7 @@ void MOAIGfxBuffer::OnGPUBind () {
 	ZLGfxHandle* vbo = this->mVBOs [ this->mCurrentVBO ];
 	
 	if ( vbo ) {
-		MOAIGfxDevice::GetDrawingAPI ().BindBuffer ( this->mTarget, vbo );
+		MOAIGfxMgr::GetDrawingAPI ().BindBuffer ( this->mTarget, vbo );
 	}
 }
 
@@ -176,7 +176,7 @@ void MOAIGfxBuffer::OnGPUBind () {
 bool MOAIGfxBuffer::OnGPUCreate () {
 
 	u32 count = 0;
-	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
 	this->mUseVBOs = ( this->mVBOs.Size () > 0 );
 	
@@ -209,26 +209,17 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::OnGPUDestroy () {
+void MOAIGfxBuffer::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 
 	for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
-		MOAIGfxResourceMgr::Get ().PushDeleter ( this->mVBOs [ i ]);
-		this->mVBOs [ i ] = 0;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxBuffer::OnGPULost () {
-
-	for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
-		this->mVBOs [ i ] = 0;
+		MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mVBOs [ i ], shouldDelete );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::OnGPUUnbind () {
 
-	MOAIGfxDevice::GetDrawingAPI ().BindBuffer ( this->mTarget, 0 ); // OK?
+	MOAIGfxMgr::GetDrawingAPI ().BindBuffer ( this->mTarget, 0 ); // OK?
 }
 
 //----------------------------------------------------------------//
@@ -252,7 +243,7 @@ bool MOAIGfxBuffer::OnGPUUpdate () {
 		// on multiple devices, evaluate other approaches and possible expose the configuration of
 		// those to the end user via Lua.
 	
-		ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 		
 		ZLSharedConstBuffer* buffer = this->GetSharedConstBuffer ();
 		
@@ -302,7 +293,7 @@ void MOAIGfxBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::Reserve ( u32 size ) {
 	
-	this->Clear ();
+	this->ZLCopyOnWrite::Free ();
 	
 	if ( size ) {
 		this->ZLCopyOnWrite::Reserve ( size );
@@ -355,10 +346,10 @@ void MOAIGfxBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seriali
 void MOAIGfxBuffer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 
-	u32 size = ( u32 )this->GetLength ();
+	size_t size = this->GetLength ();
 
-	state.SetField < u32 >( -1, "mTotalVBOs", this->mVBOs.Size ());
-	state.SetField < u32 >( -1, "mSize", size );
+	state.SetField < u32 >( -1, "mTotalVBOs", ( u32 )this->mVBOs.Size ());
+	state.SetField < u32 >( -1, "mSize", ( u32 )size );
 	
 	STLString zipString;
 	zipString.zip_deflate ( this->ZLCopyOnWrite::GetBuffer (), size );

@@ -154,7 +154,7 @@ ZLXmlElement* ZLXmlReader::Parse () {
 		switch ( status ) {
 			
 			case XML_STATUS_OK: {
-				this->mInputLen = this->mStream->ReadBytes ( this->mBuffer, BUFFER_SIZE );
+				this->mInputLen = ( int )this->mStream->ReadBytes ( this->mBuffer, BUFFER_SIZE );
 				if ( !this->mInputLen ) {
 					this->mEvent = DONE;
 					this->SetElement ( 0 );
@@ -260,7 +260,7 @@ void ZLXmlReader::SetStream ( ZLStream& stream ) {
 	XML_SetElementHandler (( XML_Parser )this->mParser, _onElementBegin, _onElementEnd );
 	XML_SetCharacterDataHandler (( XML_Parser )this->mParser, _onText );
 	
-	this->mInputLen = this->mStream->ReadBytes ( this->mBuffer, BUFFER_SIZE );
+	this->mInputLen = ( int )this->mStream->ReadBytes ( this->mBuffer, BUFFER_SIZE );
 }
 
 //----------------------------------------------------------------//

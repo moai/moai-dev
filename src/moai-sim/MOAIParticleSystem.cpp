@@ -5,7 +5,7 @@
 #include <float.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDeckRemapper.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIParticleState.h>
 #include <moai-sim/MOAIParticleSystem.h>
 #include <moai-sim/MOAITextureBase.h>
@@ -377,7 +377,7 @@ void MOAIParticleSystem::Draw ( int subPrimID, float lod ) {
 	if ( !this->mDeck ) return;
 	if ( this->IsClear ()) return;
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
 	this->LoadGfxState ();
 	this->LoadUVTransform ();
@@ -387,7 +387,7 @@ void MOAIParticleSystem::Draw ( int subPrimID, float lod ) {
 	ZLAffine3D drawingMtx;
 	ZLAffine3D spriteMtx;
 	
-	u32 maxSprites = this->mSprites.Size ();
+	u32 maxSprites = ( u32 )this->mSprites.Size ();
 	u32 total = this->mSpriteTop;
 	u32 base = 0;
 	if ( total > maxSprites ) {
@@ -406,14 +406,14 @@ void MOAIParticleSystem::Draw ( int subPrimID, float lod ) {
 		}
 				
 		AKUParticleSprite& sprite = this->mSprites [ idx ];
-		gfxDevice.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
+		gfxMgr.mGfxState.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
 		
 		spriteMtx.ScRoTr ( sprite.mXScl, sprite.mYScl, 1.0f, 0.0f, 0.0f, sprite.mZRot * ( float )D2R, sprite.mXLoc, sprite.mYLoc, 0.0f );
 		
 		drawingMtx = this->GetLocalToWorldMtx ();
 		drawingMtx.Prepend ( spriteMtx );
 		
-		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, drawingMtx );
+		gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX, drawingMtx );
 		
 		this->mDeck->Draw ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex + ( u32 )sprite.mGfxID ), materials );
 	}
@@ -597,7 +597,7 @@ bool MOAIParticleSystem::PushParticle ( float x, float y, float dx, float dy, u3
 //----------------------------------------------------------------//
 bool MOAIParticleSystem::PushSprite ( const AKUParticleSprite& sprite ) {
 
-	u32 size = this->mSprites.Size ();
+	u32 size = ( u32 )this->mSprites.Size ();
 	
 	if ( size && this->mDeck ) {
 	

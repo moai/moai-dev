@@ -65,6 +65,7 @@ private:
 	static int			_getDims					( lua_State* L );
 	static int			_getGrid					( lua_State* L );
 	static int			_getIndex					( lua_State* L );
+	static int			_getPartition				( lua_State* L );
 	static int			_getPriority				( lua_State* L );
 	static int			_getWorldBounds				( lua_State* L );
 	static int			_getWorldBoundsCenter		( lua_State* L );

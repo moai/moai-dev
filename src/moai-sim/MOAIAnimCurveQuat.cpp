@@ -89,7 +89,7 @@ ZLQuaternion MOAIAnimCurveQuat::GetCurveDelta () const {
 
 	ZLQuaternion delta;
 
-	u32 size = this->mKeys.Size ();
+	u32 size = ( u32 )this->mKeys.Size ();
 	if ( size > 1 ) {
 		delta = this->mSamples [ size - 1 ];
 		delta.Sub ( this->mSamples [ 0 ]);

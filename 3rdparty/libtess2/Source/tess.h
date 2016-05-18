@@ -52,8 +52,6 @@ struct TESStesselator {
 						the tessellation itself */
 	int outOfMemory;
 
-	TESSreal	precision;
-
 	/*** state needed for projecting onto the sweep plane ***/
 
 	TESSreal normal[3];	/* user-specified normal (if provided) */

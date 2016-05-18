@@ -124,7 +124,7 @@ int MOAIDataBuffer::_getSize ( lua_State* L ) {
 	size_t size;
 	self->Lock ( &bytes, &size );
 	
-	lua_pushnumber ( state, size );
+	lua_pushnumber ( state, ( lua_Number )size );
 
 	self->Unlock ();
 

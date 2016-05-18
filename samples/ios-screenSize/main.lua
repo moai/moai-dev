@@ -13,7 +13,7 @@ print ( "hello, iPhone!" )
 
 print ( 'screen: ', MOAIEnvironment.screenWidth, MOAIEnvironment.screenHeight )
 
-viewWidth, viewHeight = MOAIGfxDevice.getViewSize ()
+viewWidth, viewHeight = MOAIGfxMgr.getViewSize ()
 print ( 'view: ', viewWidth, viewHeight )
 
 if MOAIEnvironment.iosRetinaDisplay then

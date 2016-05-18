@@ -78,9 +78,9 @@ int MOAIStreamAdapter::_openDeflateReader ( lua_State* L ) {
 	
 	reader->SetWindowBits ( windowBits );
 	
-	bool result = self->Open ( reader, stream );
+	ZLResultCode result = self->Open ( reader, stream );
 	
-	state.Push ( result );
+	state.Push ( result == ZL_OK );
 	return 1;
 }
 
@@ -111,9 +111,9 @@ int MOAIStreamAdapter::_openDeflateWriter ( lua_State* L ) {
 	writer->SetCompressionLevel ( level );
 	writer->SetWindowBits ( windowBits );
 	
-	bool result = self->Open ( writer, stream );
+	ZLResultCode result = self->Open ( writer, stream );
 	
-	state.Push ( result );
+	state.Push ( result == ZL_OK );
 	return 1;
 }
 
@@ -143,9 +143,9 @@ int MOAIStreamAdapter::_openRing ( lua_State* L ) {
 	if ( size > 0 ) {
 	
 		ZLRingAdapter* adapter = new ZLRingAdapter ();
-		bool result = self->Open ( adapter, stream );
+		ZLResultCode result = self->Open ( adapter, stream );
 		
-		if ( result ) {
+		if ( result == ZL_OK ) {
 			adapter->SetLength ( size );
 			state.Push ( result );
 			return 1;
@@ -195,7 +195,7 @@ MOAIStreamAdapter::~MOAIStreamAdapter () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIStreamAdapter::Open ( ZLStreamAdapter* adapter, MOAIStream* stream ) {
+ZLResultCode MOAIStreamAdapter::Open ( ZLStreamAdapter* adapter, MOAIStream* stream ) {
 
 	this->Clear ();
 	
@@ -203,9 +203,9 @@ bool MOAIStreamAdapter::Open ( ZLStreamAdapter* adapter, MOAIStream* stream ) {
 	this->SetProxiedStream ( this->mAdapter );
 	this->mAdaptedStream.Set ( *this, stream );
 	
-	bool result = this->mAdapter->Open ( this->mAdaptedStream ) == ZL_OK;
+	ZLResultCode result = this->mAdapter->Open ( this->mAdaptedStream );
 	
-	if ( !result ) {
+	if ( result != ZL_OK ) {
 		this->Close ();
 	}
 	return result;
@@ -216,8 +216,8 @@ int MOAIStreamAdapter::Open ( MOAILuaState& state, int idx, ZLStreamAdapter* ada
 
 	MOAIStream* stream = state.GetLuaObject < MOAIStream >( idx, true );
 
-	bool result = this->Open ( adapter, stream );
-	state.Push ( result );
+	ZLResultCode result = this->Open ( adapter, stream );
+	state.Push ( result == ZL_OK );
 	return 1;
 }
 

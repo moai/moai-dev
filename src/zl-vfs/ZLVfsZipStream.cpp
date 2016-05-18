@@ -40,7 +40,7 @@ void ZLVfsZipStream::AffirmBlock () {
 		}
 	}
 	else {
-		fseek ( this->mFile, this->mBaseAddr + block->mBase, SEEK_SET );
+		fseek ( this->mFile, ( long )( this->mBaseAddr + block->mBase ), SEEK_SET );
 		// Should hopefully never happen, except maybe the edge case?
 		if (block->mBase >= mEntry->mUncompressedSize) {
 			block->mSize = 0;
@@ -95,7 +95,7 @@ int ZLVfsZipStream::FullyCache () {
 	}
 	else {
 	
-		fseek ( this->mFile, this->mBaseAddr, SEEK_SET );
+		fseek ( this->mFile, ( long )this->mBaseAddr, SEEK_SET );
 		fread ( this->mFileBuffer, 1, this->mFileBufferSize, this->mFile );
 	}
 	
@@ -122,7 +122,7 @@ size_t ZLVfsZipStream::Inflate ( void* dest, size_t size, void* buffer, size_t b
 	if ( !size )	return 0;
     
 	stream->next_out = ( Bytef* )dest;
-	stream->avail_out = size;
+	stream->avail_out = ( uInt )size;
 
     while ( totalRead < size ) {
 		
@@ -140,7 +140,7 @@ size_t ZLVfsZipStream::Inflate ( void* dest, size_t size, void* buffer, size_t b
 
 				this->mCompressedCursor += cacheSize;
 				stream->next_in = ( Bytef* )buffer;
-				stream->avail_in = cacheSize;
+				stream->avail_in = ( uInt )cacheSize;
 			}
 		}
 
@@ -315,7 +315,7 @@ int ZLVfsZipStream::ResetZipStream () {
 	z_stream newStream;
 	memset ( &newStream, 0, sizeof ( z_stream ));
 	
-	result = fseek ( file, this->mBaseAddr, SEEK_SET );
+	result = fseek ( file, ( long )this->mBaseAddr, SEEK_SET );
 	if ( result ) return -1;
 	
 	result = inflateInit2 ( &newStream, -MAX_WBITS );

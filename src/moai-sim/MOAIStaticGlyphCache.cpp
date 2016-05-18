@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <contrib/moai_utf8.h>
 #include <moai-sim/MOAIFont.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGlyph.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIStaticGlyphCache.h>

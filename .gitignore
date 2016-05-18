@@ -1,6 +1,9 @@
-obj/
+/bin/
+/build/
+/lib/
+
 libs/
-lib/
+obj/
 util/libmoai
 
 Thumbs.db
@@ -44,3 +47,5 @@ docs/api-reference
 /**/java/build/
 /**/java/*.iml
 env.sh
+sample-browser/
+util/build-sample-browser/temprom/

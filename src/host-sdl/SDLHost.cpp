@@ -64,6 +64,9 @@ static const int SIM_UPDATE_INTERVAL		= 1;
 static const int LOAD_UPDATE_INTERVAL		= 1;
 static const int RENDER_UPDATE_INTERVAL		= 1;
 
+static float sDeviceScaleX = 1.0f;
+static float sDeviceScaleY = 1.0f;
+
 static SDL_Window* sWindow = 0;
 
 typedef int ( *DisplayModeFunc ) (int, SDL_DisplayMode *);
@@ -274,10 +277,19 @@ void _AKUExitFullscreenModeFunc () {
 void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	
 	if ( !sWindow ) {
+		
+		GetDeviceToPixelScale ( sDeviceScaleX, sDeviceScaleY );
 	
 		SDL_GL_SetAttribute ( SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1 );
-		sWindow = SDL_CreateWindow ( title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN );
-		
+		sWindow = SDL_CreateWindow (
+			title,
+			SDL_WINDOWPOS_CENTERED,
+			SDL_WINDOWPOS_CENTERED,
+			( int )( width / sDeviceScaleX ),
+			( int )( height / sDeviceScaleY ),
+			SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI
+		);
+
 		AKUSetViewSize ( width, height );
 		AKUSdlSetWindow ( sWindow );
 
@@ -322,6 +334,17 @@ void Finalize () {
 	
 	SDL_Quit ();
 }
+
+#ifndef __APPLE__
+
+//----------------------------------------------------------------//
+void GetDeviceToPixelScale ( float& w, float& h ) {
+
+	w = 1.0f;
+	h = 1.0f;
+}
+
+#endif
 
 //----------------------------------------------------------------//
 void Init ( int argc, char** argv ) {
@@ -370,23 +393,23 @@ void Init ( int argc, char** argv ) {
 	
 	#ifdef __APPLE__
 	
-			//are we a bundle?
-			CFBundleRef bref = CFBundleGetMainBundle ();
-			if ( bref == NULL || CFBundleGetIdentifier ( bref ) == NULL ) {
-				AKUModulesParseArgs ( argc, argv );
-			}
-			else {
+		//are we a bundle?
+		CFBundleRef bref = CFBundleGetMainBundle ();
+		if ( bref == NULL || CFBundleGetIdentifier ( bref ) == NULL ) {
+			AKUModulesParseArgs ( argc, argv );
+		}
+		else {
+		
+			CFURLRef bundleurl = CFBundleCopyResourcesDirectoryURL ( bref );
+			assert ( bundleurl != NULL );
 			
-				CFURLRef bundleurl = CFBundleCopyResourcesDirectoryURL ( bref );
-				assert ( bundleurl != NULL );
-				
-				UInt8 buf [ PATH_MAX ];
-				CFURLGetFileSystemRepresentation ( bundleurl, true, buf, PATH_MAX );
+			UInt8 buf [ PATH_MAX ];
+			CFURLGetFileSystemRepresentation ( bundleurl, true, buf, PATH_MAX );
 
-				AKUSetWorkingDirectory(( const char * )buf );
-				AKULoadFuncFromFile ( "bootstrap.lua" );
-				AKUCallFunc ();
-			}
+			AKUSetWorkingDirectory(( const char * )buf );
+			AKULoadFuncFromFile ( "bootstrap.lua" );
+			AKUCallFunc ();
+		}
 	#else
 	
 		AKUModulesParseArgs ( argc, argv );
@@ -408,6 +431,7 @@ void MainLoop () {
 		renderThread.Start ( WorkerThreadInfo::RENDER_FLAG, "Render Thread" );
 
 		SDL_GL_MakeCurrent ( sWindow, NULL );
+	
 	#else
 	
 		SDL_GLContext context = SDL_GL_CreateContext ( sWindow );
@@ -417,6 +441,7 @@ void MainLoop () {
 		glGetIntegerv ( GL_FRAMEBUFFER_BINDING, &buffer );
 	
 		AKUDetectGfxContext ();
+	
 	#endif
 
 	// TODO: array's of Joysticks
@@ -528,7 +553,12 @@ void MainLoop () {
 
 				case SDL_MOUSEMOTION:
 				
-					AKUEnqueuePointerEvent ( InputDeviceID::DEVICE, InputSensorID::POINTER, sdlEvent.motion.x, sdlEvent.motion.y );
+					AKUEnqueuePointerEvent (
+						InputDeviceID::DEVICE,
+						InputSensorID::POINTER,
+						( int )( sdlEvent.motion.x * sDeviceScaleX ),
+						( int )( sdlEvent.motion.y * sDeviceScaleY )
+					);
 					break;
 
 				case SDL_WINDOWEVENT:

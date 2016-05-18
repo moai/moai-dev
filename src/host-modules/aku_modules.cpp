@@ -7,7 +7,10 @@
 #include <lua-headers/moai_test_mgr_lua.h>
 
 #include <zl-vfs/zl_replace.h>
-#include <zl-util/headers.h>
+#include <zl-common/zl_types.h>
+
+#include <zl-util/ZLLog.h>
+#include <zl-util/ZLResult.h>
 
 //================================================================//
 // objc modules
@@ -273,7 +276,7 @@ int AKUModulesContextInitialize () {
 	#endif
 	
 	result.Reset ();
-	result = AKULoadFuncFromBuffer ( moai_lua, moai_lua_SIZE, AKU_DATA_ZIPPED );
+	result = AKULoadFuncFromBuffer ( moai_lua, moai_lua_SIZE, "moai.lua", AKU_DATA_ZIPPED );
 	result = AKUCallFunc ();
 	
 	if ( result != AKU_OK ) {
@@ -281,7 +284,7 @@ int AKUModulesContextInitialize () {
 	}
 
 	result.Reset ();
-	result = AKULoadFuncFromBuffer ( moai_test_mgr_lua, moai_test_mgr_lua_SIZE, AKU_DATA_ZIPPED );
+	result = AKULoadFuncFromBuffer ( moai_test_mgr_lua, moai_test_mgr_lua_SIZE, "moai_test_mgr.lua", AKU_DATA_ZIPPED );
 	result = AKUCallFunc ();
 	
 	if ( result != AKU_OK ) {

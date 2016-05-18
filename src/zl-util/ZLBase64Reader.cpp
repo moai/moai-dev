@@ -65,7 +65,7 @@ ZLSizeResult ZLBase64Reader::ReadBytes ( void* buffer, size_t size ) {
 }
 
 //----------------------------------------------------------------//
-ZLResultCode ZLBase64Reader::SetCursor ( long offset ) {
+ZLResultCode ZLBase64Reader::SetCursor ( size_t offset ) {
 
 	this->mCursor = offset; // TODO: check bounds and report error
 	return ZL_OK;
@@ -81,7 +81,7 @@ void ZLBase64Reader::SyncBlock () {
 		this->mBlockID = blockID;
 		
 		size_t cryptBlockAddr = ( blockID * ZLBase64Encoder::CRYPT_BLOCK_SIZE ) + this->mBase;
-		this->mProxiedStream->Seek ( cryptBlockAddr, SEEK_SET );
+		this->mProxiedStream->Seek (( long )cryptBlockAddr, SEEK_SET );
 		
 		u8 cryptBlock [ ZLBase64Encoder::CRYPT_BLOCK_SIZE ];
 		this->mEncoder.FormatCryptBlock ( cryptBlock );

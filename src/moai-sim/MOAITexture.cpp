@@ -2,8 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIGfxDevice.h>
-#include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxMgr.h>
+#include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIImageFormatMgr.h>
 #include <moai-sim/MOAITexture.h>
 #include <moai-sim/MOAIMultiTexture.h>
@@ -228,7 +228,7 @@ void MOAITexture::Init ( MOAIDataBuffer& data, u32 transform, cc8* debugname ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITexture::Init ( const void* data, u32 size, u32 transform, cc8* debugname ) {
+void MOAITexture::Init ( const void* data, size_t size, u32 transform, cc8* debugname ) {
 
 	ZLByteStream stream;
 	stream.SetBuffer ( data, size, size );

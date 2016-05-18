@@ -185,17 +185,17 @@ int MOAISerializer::_setBase64Enabled ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAISerializerBase::ObjID MOAISerializer::AffirmMemberID ( MOAILuaObject* object ) {
+MOAISerializerBase::ObjID MOAISerializer::AffirmMemberID ( MOAILuaObject* object, bool processMetatable ) {
 
 	if ( object ) {
 		MOAIScopedLuaState state = object->GetSelf ();
-		return this->AffirmMemberID ( state, -1 );
+		return this->AffirmMemberID ( state, -1, processMetatable );
 	}
 	return NULL_OBJ_ID;
 }
 
 //----------------------------------------------------------------//
-MOAISerializerBase::ObjID MOAISerializer::AffirmMemberID ( MOAILuaState& state, int idx ) {
+MOAISerializerBase::ObjID MOAISerializer::AffirmMemberID ( MOAILuaState& state, int idx, bool processMetatable ) {
 
 	if ( !( state.IsType ( idx, LUA_TUSERDATA ) || state.IsType ( idx, LUA_TTABLE ))) return NULL_OBJ_ID;
 
@@ -242,9 +242,9 @@ MOAISerializerBase::ObjID MOAISerializer::AffirmMemberID ( MOAILuaState& state, 
 			int status = state.DebugCall ( 3, 3 );
 			
 			if ( status == 0 ) {
-				objectInfo.mUserTableID		= this->AffirmMemberID ( state, -3 );
-				objectInfo.mMemberTableID	= this->AffirmMemberID ( state, -2 );
-				objectInfo.mInitTableID		= this->AffirmMemberID ( state, -1 );
+				objectInfo.mUserTableID		= this->AffirmMemberID ( state, -3, false );
+				objectInfo.mMemberTableID	= this->AffirmMemberID ( state, -2, false );
+				objectInfo.mInitTableID		= this->AffirmMemberID ( state, -1, false );
 				state.Pop ( 3 );
 			}
 		}
@@ -255,9 +255,15 @@ MOAISerializerBase::ObjID MOAISerializer::AffirmMemberID ( MOAILuaState& state, 
 		
 		this->mTableMap [ memberID ].SetRef ( state, idx );
 		
+		if ( processMetatable && lua_getmetatable ( state, idx )) {
+			this->AffirmMemberID ( state, -1 );
+			state.Pop ( 1 );
+		}
+		
 		u32 itr = state.PushTableItr ( idx );
 		while ( state.TableItrNext ( itr )) {
-			this->AffirmMemberID ( state, -1 );
+			this->AffirmMemberID ( state, -2 ); // key
+			this->AffirmMemberID ( state, -1 ); // value
 		}
 	}
 	return memberID;
@@ -536,20 +542,50 @@ u32 MOAISerializer::WriteTableInitializer ( ZLStream& stream, MOAILuaState& stat
 		
 		int keyType = lua_type ( state, -2 );
 		int valType = lua_type ( state, -1 );
-		cc8* keyName = lua_tostring ( state, -2 );
+		
+		lua_pushvalue ( state, -2 );
+		cc8* keyName = lua_tostring ( state, -1 );
+		lua_pop ( state, 1 );
+		
+		cc8* unsupportedValueTypeName = 0;
 		
 		switch ( valType ) {
 			case LUA_TNONE:
 			case LUA_TNIL:
 			case LUA_TFUNCTION:
 			case LUA_TTHREAD:
-				continue;
+			
+				unsupportedValueTypeName = MOAILuaState::GetLuaTypeName ( valType );
+				break;
+		}
+		
+		if ( unsupportedValueTypeName ) {
+			ZLLog_ErrorF ( ZLLog::CONSOLE, "ERROR: MOAISerializer encountered an unsupported value type ( %s)\n", unsupportedValueTypeName );
+			continue;
 		}
 		
 		// TODO: warn about unsupported key types
 		switch ( keyType ) {
-		
+			
+			case LUA_TBOOLEAN: {
+			
+				int value = lua_toboolean ( state, -1 );
+				cc8* str = ( value ) ? "true": "false";
+				stream.Print ( "\t%s [ %s ]\t= ", prefix, str );
+				break;
+			}
+			case LUA_TLIGHTUSERDATA: {
+			
+				stream.Print ( "\t%s [ %p ]\t= ", prefix, lua_touserdata ( state, -2 ));
+				break;
+			}
+			case LUA_TNUMBER: {
+			
+				stream.Print ( "\t%s [ %s ]\t= ", prefix, keyName );
+				break;
+			}
 			case LUA_TSTRING: {
+			
 				if ( MOAISerializer::IsSimpleStringKey ( keyName )) {
 					stream.Print ( "\t%s.%s = ", prefix, keyName );
 				}
@@ -558,9 +594,24 @@ u32 MOAISerializer::WriteTableInitializer ( ZLStream& stream, MOAILuaState& stat
 				}
 				break;
 			}
-			case LUA_TNUMBER: {
-				stream.Print ( "\t%s [ %s ]\t= ", prefix, keyName );
+			case LUA_TTABLE: {
+			
+				ObjID tableID = this->GetID ( state, -2 );
+				if ( this->mTableMap.contains ( tableID )) {
+					stream.Print ( "\t%s [ objects [ 0x%02X ]]\t= ", prefix, tableID );
+				}
 				break;
+			}
+			case LUA_TUSERDATA: {
+			
+				MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( -2, false );
+				ObjID instanceID = this->GetID ( object );
+				stream.Print ( "\t%s [ objects [ 0x%02X ]]\t= ", prefix, instanceID );
+				break;
+			}
+			default: {
+				cc8* keyTypeName = MOAILuaState::GetLuaTypeName ( valType );
+				ZLLog_ErrorF ( ZLLog::CONSOLE, "ERROR: MOAISerializer encountered an unsupported key type (%s)\n", keyTypeName );
 			}
 		};
 		
@@ -572,11 +623,12 @@ u32 MOAISerializer::WriteTableInitializer ( ZLStream& stream, MOAILuaState& stat
 				stream.Print ( "%s\n", str );
 				break;
 			}
-			case LUA_TTABLE: {
-				ObjID tableID = this->GetID ( state, -1 );
-				if ( this->mTableMap.contains ( tableID )) {
-					stream.Print ( "objects [ 0x%02X ]\n", tableID );
-				}
+			case LUA_TLIGHTUSERDATA: {
+				stream.Print ( "%p,\n", lua_touserdata ( state, -1 ));
+				break;
+			}
+			case LUA_TNUMBER: {
+				stream.Print ( "%s\n", lua_tostring ( state, -1 ));
 				break;
 			}
 			case LUA_TSTRING: {
@@ -586,8 +638,11 @@ u32 MOAISerializer::WriteTableInitializer ( ZLStream& stream, MOAILuaState& stat
 				stream.Print ( "%s\n", str.c_str ());
 				break;
 			}
-			case LUA_TNUMBER: {
-				stream.Print ( "%s\n", lua_tostring ( state, -1 ));
+			case LUA_TTABLE: {
+				ObjID tableID = this->GetID ( state, -1 );
+				if ( this->mTableMap.contains ( tableID )) {
+					stream.Print ( "objects [ 0x%02X ]\n", tableID );
+				}
 				break;
 			}
 			case LUA_TUSERDATA: {
@@ -596,13 +651,21 @@ u32 MOAISerializer::WriteTableInitializer ( ZLStream& stream, MOAILuaState& stat
 				stream.Print ( "objects [ 0x%02X ]\n", instanceID );
 				break;
 			}
-			case LUA_TLIGHTUSERDATA: {
-				stream.Print ( "%p,\n", lua_touserdata ( state, -1 ));
-				break;
-			}
 		};
 		
 		++count;
+	}
+	
+	if ( lua_getmetatable ( state, idx )) {
+	
+		if ( state.IsType ( -1, LUA_TTABLE )) {
+		
+			ObjID tableID = this->GetID ( state, -1 );
+			if ( this->mTableMap.contains ( tableID )) {
+				stream.Print ( "\tsetmetatable ( %s, objects [ 0x%02X ])\n", prefix, tableID );
+			}
+		}
+		state.Pop ( 1 );
 	}
 	
 	return count;

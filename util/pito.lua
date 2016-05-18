@@ -7,107 +7,40 @@ require ( 'http' )
 
 INVOKE_DIR      = MOAIFileSystem.getAbsoluteDirectoryPath ( arg [ 1 ])
 MOAI_SDK_HOME   = MOAIFileSystem.getAbsoluteDirectoryPath ( arg [ 2 ])
-MOAI_CMD        = arg [ 3 ]
-SCRIPT_DIR      = string.format ( '%sutil/%s/', MOAI_SDK_HOME, MOAI_CMD or "help" )
 
-local usageText={}
-usageText["wut"] = [[
-    pito wut
-        Contemplate your pito.
-]]
+local HELP = {
+    [ 'help' ]  = true,
+    [ '?' ]     = true,
+    [ '-?' ]    = true,
+    [ '--?' ]   = true,
+}
 
-usageText["environment"] = [[
-    pito environment 
-        This command will give you the needed environment variables to use pito.
-        Example:
-            /absolute/path/to/moai_sdk/util/pito environment
-            (Follow instructions)
-]]
+----------------------------------------------------------------
+local isCommand = function ( param )
+    return param and MOAIFileSystem.checkFileExists ( string.format ( '%sutil/%s/main.lua', MOAI_SDK_HOME, param ))
+end
 
-usageText["init"] = [[
-    pito init
-        Run from your project folder to initialize a pito-managed set of host projects.
-        Creates a hostconfig.lua file, which you must edit to describe your MOAI project.
-        Example:
-            mkdir newMOAIProject && cd newMOAIProject   # use the toolbelt in a new project
-            pito init 
-            vi hostconfig.lua                           #&etc.
-]]
+local param1 = arg [ 3 ] or ''
+local param2 = arg [ 4 ] or ''
 
-usageText["host"] = [[
-    pito host <subcommand> <args>
-        Subcommands:
-            host list - Lists available hosts
-            host init - Creates a template host config file used by subsequent commands
-            host build <hostname>  - Creates (if it doesn't exist) in hosts folder, and 
-                                     (re)builds the host named <hostname>. 
-            host run <hostname>    - Creates (if it doesn't exists) in hosts folder, 
-                                     (re)builds and runs the host named <hostname>. 
-            host create <hostname> - Creates the host in the hosts folder (removing old 
-                                     host) based on latest config settings.
-        Example:
-            cd newMOAIProject && pito host create ios && \
-                                 pito host create android-studio && \
-                                 pito host create host osx-app && #etc.
-]]
+if not arg [ 3 ] or HELP [ arg [ 3 ]] then
 
-usageText["make-lua-docs"] = [[
-    pito make-lua-docs 
-        Creates compact documentation for the Lua-side of the MOAI API.
-]]
+    arg [ 3 ] = 'help'
+end
 
-usageText["make-cpp-docs"] = [[
-    pito make-cpp-docs
-        Creates compact documentation from the MOAI C/C++ codebase.
-        Example:    
-            cd newMOAIProject && pito make-cpp-docs
-            find moai-sdk/ #&etc.
-]]
+if isCommand ( arg [ 3 ]) then
 
-usageText["package-cmake-sdk"] = [[
-    pito package-cmake-sdk
-        Creates a distributable SDK based on cmake-driven MOAI build.
-        Example:
-            cd newMOAIProject && pito package-cmake-sdk
-            find moai-sdk/ #&etc.
-]]
-
-usageText["package-sdk"] = [[
-    pito package-sdk
-        Create the standard release of the MOAI SDK.
-]]
-
-usageText["run-samples"] = [[
-    pito run-samples
-        Run the MOAI samples.
-]]
-
-usageText["run-tests"] = [[
-    pito run-tests
-        Run the Test suite.
-]]
-
-usageText["sdk-version"] = [[
-    pito sdk-version
-        Obtain the MOAI SDK Version info for the current configuration.
-]]
-
-function usage(subSection)
-    print ("pito - the MOAI toolbelt - ", subSection or "general usage:")
-    if (subSection) and (usageText[subSection])  then
-        print(usageText[subSection])
-    else
-        for i,v in pairs(usageText) do
-            print(v)
-        end
+    if arg [ 4 ] and HELP [ arg [ 4 ]] then
+        arg [ 4 ] = arg [ 3 ]
+        arg [ 3 ] = 'help'
     end
-end
 
-MOAIFileSystem.setWorkingDirectory ( SCRIPT_DIR )
+    MOAI_CMD = arg [ 3 ]
+    SCRIPT_DIR = string.format ( '%sutil/%s/', MOAI_SDK_HOME, MOAI_CMD )
 
-if MOAIFileSystem.checkFileExists('main.lua') then
-    dofile ( 'main.lua' )
+    MOAIFileSystem.setWorkingDirectory ( SCRIPT_DIR )
+    dofile ( 'main.lua' ) 
 else
-    usage()
-end
 
+    print ( 'could not find command:', arg [ 3 ])
+end

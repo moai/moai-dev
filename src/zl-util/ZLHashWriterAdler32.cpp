@@ -38,7 +38,7 @@ size_t ZLHashWriterAdler32::GetHashSize () {
 //----------------------------------------------------------------//
 void ZLHashWriterAdler32::HashBytes ( const void* buffer, size_t size ) {
 
-	this->mSum = adler32 ( this->mSum, ( Bytef* )buffer, size );
+	this->mSum = ( u32 )adler32 ( this->mSum, ( Bytef* )buffer, ( uInt )size );
 	
 	this->mHash [ 0 ] = ( this->mSum >> 24 ) & 0x000000ff;
 	this->mHash [ 1 ] = ( this->mSum >> 16 ) & 0x000000ff;

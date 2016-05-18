@@ -44,9 +44,9 @@ public:
 
 	//----------------------------------------------------------------//
 	static bool		CheckFileExists					( cc8* filename, lua_State* L = 0 );
-	static bool		CheckIndex						( u32 idx, u32 size, lua_State* L = 0 );
-	static bool		CheckIndexPlusOne				( u32 idx, u32 size, lua_State* L = 0 );
-	static bool		CheckReserve					( u32 idx, u32 size, lua_State* L = 0 );
+	static bool		CheckIndex						( size_t idx, size_t size, lua_State* L = 0 );
+	static bool		CheckIndexPlusOne				( size_t idx, size_t size, lua_State* L = 0 );
+	static bool		CheckReserve					( size_t idx, size_t size, lua_State* L = 0 );
 	static void		RegisterDefaultLogMessages		();
 	static void		RegisterLogMessageIDs			( MOAILuaState& state );
 };

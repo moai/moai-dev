@@ -5,7 +5,7 @@
 --==============================================================
 
 MOAISim.openWindow ( "test", 640, 480 )
-MOAIGfxDevice.setClearColor ( 1, 1, 1, 1 )
+MOAIGfxMgr.setClearColor ( 1, 1, 1, 1 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 640, 480 )
@@ -52,26 +52,26 @@ function onDraw ( index, xOff, yOff, xFlip, yFlip )
 
 	region:drawDebug ()
 
-	MOAIGfxDevice.setPenWidth ( 1 )
+	MOAIGfxMgr.setPenWidth ( 1 )
 
 	if cursorX and regionX then
-		MOAIGfxDevice.setPenColor ( 0, 0, 1, 1 )
+		MOAIGfxMgr.setPenColor ( 0, 0, 1, 1 )
 		MOAIDraw.drawLine ( cursorX, cursorY, regionX, regionY )
 	end
 
 	if cursorX then
 
 		if inside then
-			MOAIGfxDevice.setPenColor ( 0, 0, 1, 1 )
+			MOAIGfxMgr.setPenColor ( 0, 0, 1, 1 )
 			MOAIDraw.fillCircle ( cursorX, cursorY, radius )
 		else
-			MOAIGfxDevice.setPenColor ( 0, 1, 0, 1 )
+			MOAIGfxMgr.setPenColor ( 0, 1, 0, 1 )
 			MOAIDraw.fillCircle ( cursorX, cursorY, radius )
 		end
 	end
 
 	if regionX then
-		MOAIGfxDevice.setPenColor ( 1, 0, 0, 1 )
+		MOAIGfxMgr.setPenColor ( 1, 0, 0, 1 )
 		MOAIDraw.fillCircle ( regionX, regionY, 3 )
 	end
 end

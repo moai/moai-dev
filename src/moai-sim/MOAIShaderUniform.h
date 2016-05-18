@@ -31,7 +31,7 @@ protected:
 	//----------------------------------------------------------------//
 	void		Clear				();
 	void		ClearValue			();
-	u32			SetBuffer			( void* buffer, size_t size, bool check );
+	u32			SetBuffer			( void* buffer, size_t size );
 
 public:
 
@@ -55,12 +55,12 @@ public:
 	void		SetType				( u32 type );
 	u32			SetValue			( float value );
 	u32			SetValue			( int value );
-	u32			SetValue			( const MOAIAttrOp& attrOp, bool check );
-	u32			SetValue			( const ZLColorVec& value, bool check );
-	u32			SetValue			( const ZLAffine3D& value, bool check );
-	u32			SetValue			( const ZLMatrix4x4& value, bool check );
-	u32			SetValue          	( const ZLMatrix3x3& value, bool check );
-	u32			SetValue			( const MOAIShaderUniformBuffer& uniformBuffer, bool check );
+	u32			SetValue			( const MOAIAttrOp& attrOp );
+	u32			SetValue			( const ZLColorVec& value );
+	u32			SetValue			( const ZLAffine3D& value );
+	u32			SetValue			( const ZLMatrix4x4& value );
+	u32			SetValue          	( const ZLMatrix3x3& value );
+	u32			SetValue			( const MOAIShaderUniformBuffer& uniformBuffer );
 };
 
 //================================================================//

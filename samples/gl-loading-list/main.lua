@@ -20,11 +20,11 @@ MOAISim.pushRenderPass ( layer )
 
 texture1 = MOAITexture.new ()
 texture1:load ( '../resources/moai.png' )
-texture1:scheduleForGPUCreate ( MOAIGfxDevice.LOADING_LIST )
+texture1:scheduleForGPUCreate ( MOAIGfxMgr.LOADING_LIST )
 
 texture2 = MOAITexture.new ()
 texture2:load ( '../resources/test.png' )
-texture2:scheduleForGPUCreate ( MOAIGfxDevice.LOADING_LIST )
+texture2:scheduleForGPUCreate ( MOAIGfxMgr.LOADING_LIST )
 
 onCreated = function ( texture )
 

@@ -30,7 +30,7 @@ MOAIImageFormat* MOAIImageFormatMgr::FindFormat ( ZLStream& stream ) {
 		
 			void* buffer = alloca ( headerSize );
 			size_t size = stream.ReadBytes ( buffer, headerSize );
-			stream.Seek ( cursor, SEEK_SET );
+			stream.SetCursor ( cursor );
 		
 			if (( size == headerSize ) && format.CheckHeader ( buffer )) return &format;
 		}

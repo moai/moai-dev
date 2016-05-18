@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIMaterialBatch.h>
 #include <moai-sim/MOAIProp.h>
@@ -19,12 +19,12 @@
 //----------------------------------------------------------------//
 bool MOAIMaterial::LoadGfxState ( MOAIMaterial* fallback, u32 defaultShader ) {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
 	MOAIShader* shader = this->mShader ? this->mShader : (( fallback && fallback->mShader ) ? fallback->mShader : MOAIShaderMgr::Get ().GetShader ( defaultShader ));
 	MOAITextureBase* texture = this->mTexture ? this->mTexture : (( fallback && fallback->mTexture ) ? fallback->mTexture : 0 );
 	
-	return ( gfxDevice.BindShader ( shader ) && gfxDevice.BindTexture ( texture ));
+	return ( gfxMgr.mGfxState.BindShader ( shader ) && gfxMgr.mGfxState.BindTexture ( texture ));
 }
 
 //----------------------------------------------------------------//
@@ -335,10 +335,10 @@ bool MOAIMaterialBatch::LoadGfxState ( MOAIMaterialBatch* fallback, u32 material
 		return secondary->LoadGfxState ( 0, defaultShader );
 	}
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
-	gfxDevice.BindTexture ();
-	return gfxDevice.BindShader ( MOAIShaderMgr::Get ().GetShader ( defaultShader ));
+	gfxMgr.mGfxState.BindTexture ();
+	return gfxMgr.mGfxState.BindShader ( MOAIShaderMgr::Get ().GetShader ( defaultShader ));
 }
 
 //----------------------------------------------------------------//
@@ -484,7 +484,7 @@ void MOAIMaterialBatch::SetHitMaskThreshold ( MOAILuaState& state, u32 idx ) {
 //----------------------------------------------------------------//
 //void MOAIMaterialBatch::RawLoadGfxState ( u32 idx, u32 defaultShader ) {
 //
-//	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 //	
 //	MOAIShader* shader = 0;
 //	MOAITextureBase* texture = 0;
@@ -496,8 +496,8 @@ void MOAIMaterialBatch::SetHitMaskThreshold ( MOAILuaState& state, u32 idx ) {
 //	
 //	shader = shader ? shader : MOAIShaderMgr::Get ().GetShader ( defaultShader );
 //	
-//	gfxDevice.SetShader ( shader );
-//	gfxDevice.SetTexture ( texture );
+//	gfxMgr.SetShader ( shader );
+//	gfxMgr.SetTexture ( texture );
 //}
 
 //----------------------------------------------------------------//

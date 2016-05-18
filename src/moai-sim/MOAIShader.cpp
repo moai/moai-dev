@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIEaseDriver.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAITransformBase.h>
@@ -55,7 +55,7 @@ bool MOAIShader::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 			return true;
 
 		case MOAIAttrOp::SET:
-			this->mUniformBuffers [ attrID ].SetValue ( attrOp, true );
+			this->mUniformBuffers [ attrID ].SetValue ( attrOp );
 			return true;
 
 		case MOAIAttrOp::ADD:
@@ -110,14 +110,14 @@ void MOAIShader::SetProgram ( MOAIShaderProgram* program ) {
 	
 	if ( program ) {
 		
-		u32 nUniforms = program->mUniforms.Size ();
+		size_t nUniforms = program->mUniforms.Size ();
 		this->mUniformBuffers.Init ( nUniforms );
 		
-		for ( u32 i = 0; i < nUniforms; ++i ) {
+		for ( size_t i = 0; i < nUniforms; ++i ) {
 
 			MOAIShaderUniformBuffer& uniformBuffer = this->mUniformBuffers [ i ];
 			uniformBuffer.SetType ( program->mUniforms [ i ].GetType ());
-			uniformBuffer.SetValue ( program->mDefaults [ i ], false );
+			uniformBuffer.SetValue ( program->mDefaults [ i ]);
 		}
 	}
 }
@@ -129,12 +129,12 @@ void MOAIShader::UpdateAndBindUniforms () {
 
 	if ( program ) {
 		
-		u32 nUniforms = program->mUniforms.Size ();
+		size_t nUniforms = program->mUniforms.Size ();
 		
-		for ( u32 i = 0; i < nUniforms; ++i ) {
+		for ( size_t i = 0; i < nUniforms; ++i ) {
 			MOAIShaderUniform& uniform = program->mUniforms [ i ];
 			if (( uniform.mFlags & MOAIShaderUniform::UNIFORM_FLAG_GLOBAL ) == 0 ) {
-				uniform.mFlags |= uniform.SetValue ( this->mUniformBuffers [ i ], true );
+				uniform.mFlags |= uniform.SetValue ( this->mUniformBuffers [ i ]);
 			}
 		}
 		

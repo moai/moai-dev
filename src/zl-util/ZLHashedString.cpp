@@ -25,11 +25,11 @@
 //}
 
 //----------------------------------------------------------------//
-u32 ZLHashedString::Hash ( cc8* szKey, const u32 nLength, const u32 seed ) {
+u32 ZLHashedString::Hash ( cc8* szKey, size_t nLength, const u32 seed ) {
 
     u32 hash = seed;
 
-    for ( u32 i = 0; i < nLength; ++i ) {
+    for ( size_t i = 0; i < nLength; ++i ) {
         hash = ( hash ^ szKey [ i ]) * FNV_prime;
     }
 
@@ -47,7 +47,7 @@ u32 ZLHashedString::Hash ( cc8* szKey, const u32 nLength, const u32 seed ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLHashedString::ZLHashedStringEntry::ZLHashedStringEntry ( cc8* name, const u32 nameLength, const u32 hash ) :
+ZLHashedString::ZLHashedStringEntry::ZLHashedStringEntry ( cc8* name, size_t nameLength, const u32 hash ) :
 	mName ( 0 ),
 	mHash ( hash ) {
 
@@ -89,7 +89,7 @@ const ZLHashedString::ZLHashedStringEntry& ZLHashedString::GetHashedStringEntry 
 }
 
 //----------------------------------------------------------------//
-u32 ZLHashedString::GetStringHash ( cc8* str, u32 strLength ) {
+u32 ZLHashedString::GetStringHash ( cc8* str, size_t strLength ) {
 
 	u32 hash = 0;
 

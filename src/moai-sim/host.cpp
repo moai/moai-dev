@@ -12,56 +12,62 @@
 //----------------------------------------------------------------//
 void AKUDetectFramebuffer () {
 
-	MOAIGfxDevice::Get ().DetectFramebuffer ();
+	MOAIGfxMgr::Get ().DetectFramebuffer ();
 }
 
 //----------------------------------------------------------------//
 void AKUDetectGfxContext () {
 
-	MOAIGfxDevice::Get ().DetectContext ();
+	MOAIGfxMgr::Get ().DetectContext ();
+}
+
+//----------------------------------------------------------------//
+void AKUDiscardGfxResources () {
+
+	MOAIGfxMgr::Get ().mResourceMgr.DiscardResources ();
 }
 
 //----------------------------------------------------------------//
 void AKUDisplayListBeginPhase ( int phase ) {
 
-	MOAIGfxDevice::Get ().BeginPhase ( phase );
+	MOAIGfxMgr::Get ().mPipelineMgr.BeginPhase ( phase );
 }
 
 //----------------------------------------------------------------//
 void AKUDisplayListEnable ( int list ) {
 
-	MOAIGfxDevice::Get ().EnablePipeline ( list );
+	MOAIGfxMgr::Get ().mPipelineMgr.EnablePipeline ( list );
 }
 
 //----------------------------------------------------------------//
 void AKUDisplayListEndPhase ( int phase ) {
 
-	MOAIGfxDevice::Get ().EndPhase ( phase );
+	MOAIGfxMgr::Get ().mPipelineMgr.EndPhase ( phase );
 }
 
 //----------------------------------------------------------------//
 bool AKUDisplayListHasContent ( int list ) {
 
-	return MOAIGfxDevice::Get ().HasContent ( list );
+	return MOAIGfxMgr::Get ().mPipelineMgr.HasContent ( list );
 }
 
 //----------------------------------------------------------------//
 bool AKUDisplayListIsEnabled ( int list ) {
 
-	return MOAIGfxDevice::Get ().IsPipelineEnabled ( list );
+	return MOAIGfxMgr::Get ().mPipelineMgr.IsPipelineEnabled ( list );
 }
 
 //----------------------------------------------------------------//
 void AKUDisplayListProcess ( int list ) {
 
-	MOAIGfxDevice::Get ().ProcessPipeline ( list );
+	MOAIGfxMgr::Get ().mPipelineMgr.ProcessPipeline ( list );
 }
 
 //----------------------------------------------------------------//
 void AKUDisplayListPublishAndReset () {
 
-	MOAIGfxDevice::Get ().PublishAndReset ( MOAIGfxDevice::LOADING_PIPELINE );
-	MOAIGfxDevice::Get ().PublishAndReset ( MOAIGfxDevice::DRAWING_PIPELINE );
+	MOAIGfxMgr::Get ().mPipelineMgr.PublishAndReset ( MOAIGfxPipelineClerk::LOADING_PIPELINE );
+	MOAIGfxMgr::Get ().mPipelineMgr.PublishAndReset ( MOAIGfxPipelineClerk::DRAWING_PIPELINE );
 }
 
 //----------------------------------------------------------------//
@@ -157,7 +163,7 @@ double AKUGetSimStep () {
 //----------------------------------------------------------------//
 int AKUIsGfxBufferOpaque () {
 
-	return MOAIGfxDevice::Get ().IsOpaque ();
+	return MOAIGfxMgr::Get ().IsOpaque ();
 }
 
 //----------------------------------------------------------------//
@@ -174,8 +180,8 @@ void AKUPause ( bool pause ) {
 //----------------------------------------------------------------//
 void AKURender () {
 
-	MOAIGfxDevice::Get ().ResetDrawingAPIs ();
-	MOAIGfxResourceMgr::Get ().Update ();
+	MOAIGfxMgr::Get ().mPipelineMgr.ResetDrawingAPIs ();
+	MOAIGfxMgr::Get ().mResourceMgr.Update ();
 	MOAIRenderMgr::Get ().Render ();
 }
 
@@ -326,7 +332,7 @@ void AKUSetInputTimestamp ( double timestamp ) {
 //----------------------------------------------------------------//
 void AKUSetOrientation ( int orientation ) {
 
-	MOAIGfxDevice::Get ().GetDefaultFrameBuffer ()->SetLandscape ( orientation == AKU_ORIENTATION_LANDSCAPE );
+	MOAIGfxMgr::Get ().mGfxState.GetDefaultFrameBuffer ()->SetLandscape ( orientation == AKU_ORIENTATION_LANDSCAPE );
 }
 
 //----------------------------------------------------------------//	
@@ -336,7 +342,7 @@ void AKUSetScreenDpi ( int dpi ) {
 }
 
 //----------------------------------------------------------------//
-void AKUSetScreenSize ( int width, int height ) {
+void AKUSetScreenSize ( int width, int height) {
 
 	MOAIEnvironment::Get ().SetValue ( MOAI_ENV_horizontalResolution, width );
 	MOAIEnvironment::Get ().SetValue ( MOAI_ENV_verticalResolution, height );
@@ -345,17 +351,17 @@ void AKUSetScreenSize ( int width, int height ) {
 //----------------------------------------------------------------//
 void AKUSetViewSize ( int width, int height ) {
 	
-	MOAIGfxDevice& device = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
-	u32 currentWidth = device.GetWidth ();
-	u32 currentHeight = device.GetHeight ();
+	u32 currentWidth = gfxMgr.mGfxState.GetBufferWidth ();
+	u32 currentHeight = gfxMgr.mGfxState.GetBufferHeight ();
 	
 	if (( currentWidth != ( u32 )width ) || ( currentHeight != ( u32 )height )) {
 	
-		MOAIGfxDevice::Get ().SetBufferSize ( width, height );
+		MOAIGfxMgr::Get ().SetBufferSize ( width, height );
 		
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		if ( device.PushListener ( MOAIGfxDevice::EVENT_RESIZE, state )) {
+		if ( gfxMgr.PushListener ( MOAIGfxMgr::EVENT_RESIZE, state )) {
 			lua_pushnumber ( state, width );
 			lua_pushnumber ( state, height );
 			state.DebugCall ( 2, 0 );
@@ -392,8 +398,7 @@ void AKUSimContextInitialize () {
 	MOAIActionStackMgr::Affirm ();
 
 	//MOAIProfiler::Affirm ();
-	MOAIGfxResourceMgr::Affirm ();
-	MOAIGfxDevice::Affirm ();
+	MOAIGfxMgr::Affirm ();
 	MOAIImageFormatMgr::Affirm ();
 	MOAIVertexFormatMgr::Affirm ();
 	MOAIShaderMgr::Affirm ();
@@ -431,11 +436,10 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIFrameBuffer )
 	REGISTER_LUA_CLASS ( MOAIFrameBufferTexture )
 	REGISTER_LUA_CLASS ( MOAIGeometryWriter )
-	REGISTER_LUA_CLASS ( MOAIGfxDevice )
+	REGISTER_LUA_CLASS ( MOAIGfxMgr )
 	REGISTER_LUA_CLASS ( MOAIGfxQuad2D )
 	REGISTER_LUA_CLASS ( MOAIGfxQuadDeck2D )
 	REGISTER_LUA_CLASS ( MOAIGfxQuadListDeck2D )
-	REGISTER_LUA_CLASS ( MOAIGfxResourceMgr )
 	REGISTER_LUA_CLASS ( MOAIGraphicsProp )
 	REGISTER_LUA_CLASS ( MOAIGrid )
 	REGISTER_LUA_CLASS ( MOAIGridDeck2D )

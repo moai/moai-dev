@@ -32,7 +32,6 @@ private:
 	size_t		mLength;		// current length of stream
 
 	//----------------------------------------------------------------//
-	ZLResultCode	SetCursor			( long offset );
 
 public:
 
@@ -52,6 +51,7 @@ public:
 	ZLSizeResult	ReadBytes			( void* buffer, size_t size );
 	ZLResultCode	Reserve				( size_t length );
 	void			SetChunkSize		( size_t chunkSize );
+	ZLResultCode	SetCursor			( size_t offset );
 	void			SetGuestBuffer		( void* guestBuffer, size_t guestBufferSize );
 	ZLSizeResult	SetLength			( size_t length );
 	ZLSizeResult	WriteBytes			( const void* buffer, size_t size );

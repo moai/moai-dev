@@ -60,6 +60,7 @@ bool MOAIThreadImpl::IsRunning () const {
 	if ( this->mThread ) {
 		DWORD exitCode = 0;
 		BOOL result = GetExitCodeThread ( this->mThread, &exitCode );
+		UNUSED ( result ); // TODO: should be fixed by assert undef
 		assert ( result == TRUE );
 		return ( exitCode == STILL_ACTIVE );
 	}
@@ -128,6 +129,7 @@ MOAIThreadLocalImpl::~MOAIThreadLocalImpl () {
 void MOAIThreadLocalImpl::SetCurrentThread ( MOAIThread* thread ) {
 	
 	BOOL success = ::TlsSetValue( mTlsIndex, thread );
+	UNUSED ( success ); // TODO: should be fixed by assert undef
 	assert ( success == TRUE );
 }
 

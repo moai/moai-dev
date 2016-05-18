@@ -33,7 +33,7 @@ cp -a ./build/Build/Products/Release-universal/*.a $IOS_LIB
 
 #---------------------------------------------------------------
 # build ios static
-xcodebuild -derivedDataPath build -configuration Release -workspace moai.xcworkspace -scheme moai-ios-static -sdk iphonesimulator || exit 1
+xcodebuild -derivedDataPath build -configuration Release -workspace moai.xcworkspace -scheme moai-ios-static -sdk iphonesimulator PLATFORM_NAME=iphonesimulator || exit 1
 xcodebuild -derivedDataPath build -configuration Release -workspace moai.xcworkspace -scheme moai-ios-static -sdk iphoneos || exit 1
 
 

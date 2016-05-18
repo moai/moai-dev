@@ -261,7 +261,7 @@ void MOAIImageFormatPng::ReadImagePng ( MOAIImage& image, void* pngParam, void* 
 	}
 	else {
 	
-		u32 rowsize = image.GetRowSize ();
+		size_t rowsize = image.GetRowSize ();
 		if ( rowsize < png_get_rowbytes ( png, pngInfo )) return;
 		
 		this->Alloc ( image );

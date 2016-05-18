@@ -23,7 +23,7 @@ private:
 		u32		mHash;
 		
 		//----------------------------------------------------------------//
-				ZLHashedStringEntry		( cc8* name, const u32 nameLength, const u32 hash );
+				ZLHashedStringEntry		( cc8* name, size_t nameLength, const u32 hash );
 				ZLHashedStringEntry		( const ZLHashedStringEntry& other );
 				~ZLHashedStringEntry	();
 	};
@@ -44,8 +44,8 @@ public:
 	GET_CONST ( u32, Hash, mHashedString->mHash )
 
 	//----------------------------------------------------------------//
-	static u32		GetStringHash		( cc8* str, u32 strLength );
-	static u32		Hash				( cc8* szKey, const u32 nLength, const u32 seed = FNV_seed );
+	static u32		GetStringHash		( cc8* str, size_t strLength );
+	static u32		Hash				( cc8* szKey, size_t nLength, const u32 seed = FNV_seed );
 					ZLHashedString		();
 					ZLHashedString		( cc8* name );
 					ZLHashedString		( const ZLHashedString& other );

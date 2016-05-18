@@ -2,8 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIGfxDevice.h>
-#include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxMgr.h>
+#include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIFrameBufferTexture.h>
 
 //================================================================//
@@ -81,7 +81,7 @@ MOAIFrameBufferTexture::MOAIFrameBufferTexture () :
 //----------------------------------------------------------------//
 MOAIFrameBufferTexture::~MOAIFrameBufferTexture () {
 
-	this->OnGPUDestroy ();
+	this->OnGPUDeleteOrDiscard ( true );
 }
 
 //----------------------------------------------------------------//
@@ -94,7 +94,7 @@ bool MOAIFrameBufferTexture::OnGPUCreate () {
 	this->mBufferWidth = this->mWidth;
 	this->mBufferHeight = this->mHeight;
 	
-	ZLGfx& gfx = MOAIGfxDevice::GetDrawingAPI ();
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 	
 	// bail and retry (no error) if GL cannot generate buffer ID
 	this->mGLFrameBufferID = gfx.CreateFramebuffer ();
@@ -157,10 +157,10 @@ bool MOAIFrameBufferTexture::OnGPUCreate () {
 	
 	if ( gfx.PushErrorHandler ()) {
 	
-		gfx.DeleteHandle ( this->mGLFrameBufferID );
-		gfx.DeleteHandle ( this->mGLColorBufferID );
-		gfx.DeleteHandle ( this->mGLDepthBufferID );
-		gfx.DeleteHandle ( this->mGLStencilBufferID );
+		gfx.Delete ( this->mGLFrameBufferID );
+		gfx.Delete ( this->mGLColorBufferID );
+		gfx.Delete ( this->mGLDepthBufferID );
+		gfx.Delete ( this->mGLStencilBufferID );
 	}
 
 	gfx.PopSection ();
@@ -169,34 +169,14 @@ bool MOAIFrameBufferTexture::OnGPUCreate () {
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferTexture::OnGPUDestroy () {
+void MOAIFrameBufferTexture::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 
-	if ( MOAIGfxResourceMgr::IsValid ()) {
-	
-		MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLFrameBufferID );
-		this->mGLFrameBufferID = 0;
+	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mGLFrameBufferID, shouldDelete );
+	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mGLColorBufferID, shouldDelete );
+	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mGLDepthBufferID, shouldDelete );
+	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mGLStencilBufferID, shouldDelete );
 
-		MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLColorBufferID );
-		this->mGLColorBufferID = 0;
-
-		MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLDepthBufferID );
-		this->mGLDepthBufferID = 0;
-		
-		MOAIGfxResourceMgr::Get ().PushDeleter ( this->mGLStencilBufferID );
-		this->mGLStencilBufferID = 0;
-	}
-	this->MOAISingleTexture::OnGPUDestroy ();
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferTexture::OnGPULost () {
-
-	this->mGLFrameBufferID = 0;
-	this->mGLColorBufferID = 0;
-	this->mGLDepthBufferID = 0;
-	this->mGLStencilBufferID = 0;
-
-	this->MOAISingleTexture::OnGPULost ();
+	this->MOAISingleTexture::OnGPUDeleteOrDiscard ( shouldDelete );
 }
 
 //----------------------------------------------------------------//

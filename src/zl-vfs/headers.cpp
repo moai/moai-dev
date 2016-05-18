@@ -194,7 +194,7 @@ int zl_get_stat ( char const* path, zl_stat* filestat ) {
 			ZLVfsZipFileEntry* entry;
 
 			const char *filename = localpath;
-			int i = strlen ( filename ) - 2;
+			size_t i = strlen ( filename ) - 2;
 
 			result = stat ( mount->mArchive->mFilename.c_str (), &s );
 

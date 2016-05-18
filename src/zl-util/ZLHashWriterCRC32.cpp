@@ -105,7 +105,7 @@ void ZLHashWriterCRC32::HashBytes ( const void* buffer, size_t size ) {
 			break;
 		}
 		case CRC32B: {
-			this->mSum = crc32 ( this->mSum, ( Bytef* )buffer, size );
+			this->mSum = ( u32 )crc32 ( this->mSum, ( Bytef* )buffer, ( uInt )size );
 			break;
 		}
 	}

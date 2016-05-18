@@ -57,25 +57,24 @@ ZLCharResult ZLLexStream::ReadByte () {
 }
 
 //----------------------------------------------------------------//
-ZLResultCode ZLLexStream::SetCursor ( long offset ) {
+ZLResultCode ZLLexStream::SetCursor ( size_t offset ) {
 
 	if ( !( this->mStream && ( this->GetCaps () & ( CAN_READ | CAN_WRITE )))) return ZL_ERROR;
 
 	size_t restoreCursor = this->GetCursor ();
 	size_t restoreLine = this->mLine;
 
-	if (( offset < 0 ) || ( this->GetLength () < ( size_t )offset )) return ZL_ERROR;
-
-	long localOffset = offset - ( long )restoreCursor;
+	if ( this->GetLength () < offset ) return ZL_ERROR;
 	
-	if ( localOffset > 0 ) {
-		for ( long i = 0; i < localOffset; ++i ) {
+	// TODO: test this
+
+	if ( restoreCursor <= offset ) {
+		for ( size_t i = restoreCursor; i < offset; ++i ) {
 			this->ReadByte ();
 		}
 	}
 	else {
-		localOffset = -localOffset;
-		for ( long i = 0; i < localOffset; ++i ) {
+		for ( size_t i = offset; i < restoreCursor; ++i ) {
 			this->UnreadByte ();
 		}
 	}

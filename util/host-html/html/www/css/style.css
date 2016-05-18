@@ -1,0 +1,184 @@
+/* moai window */
+
+.moai-window canvas {
+    outline:none;
+}
+
+
+
+.moai-window  {
+    font-family: Helvetica,'Trebuchet MS','Liberation Sans',FreeSans,sans-serif;
+    font-size:14px;
+    display: table;
+    height:100%;
+    width:100%;
+}
+
+
+.moai-canvas-wrapper,
+.moai-info
+{
+    background-color: #202025;
+    width: 100%;
+    /* height: calc(100% - 30px); */
+    position: absolute;
+    left: 0;
+    bottom: 30px;
+    top: 0;
+    right: 0;
+    text-align: center;
+    /* display:table-row; */
+}
+
+
+.moai-canvas-wrapper canvas {
+    width: 100%;
+    height: auto;
+    background-color: black;
+    /* margin: auto; */
+    max-width: none;
+    max-height: 100%;
+    /* max-width: 100%; */
+}
+
+.moai-canvas-wrapper.portrait canvas {
+    width: auto;
+    max-width: 100%;
+    max-height: none;
+    height: 100%;
+    margin: auto;
+}
+
+.moai-header  {
+    color: #CCC;
+    background-color: #111;
+    width:100%;
+    box-sizing:border-box;
+    -moz-box-sizing: border-box;
+    height: 30px;
+}
+.moai-header .moai-title {
+    font-size: 19px;
+    padding-left: 5px;
+    line-height:30px;
+}
+.moai-header .moai-status {
+    float:right;
+    line-height: 30px;
+    text-align: right;
+    padding-right: 5px;
+}
+.moai-footer
+{
+   /*display: none;*/
+   height: 30px;
+   background-color: #111;
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   right: 0;
+}
+
+.moai-footer:after {
+    content: ' ';
+    clear: both;
+}
+
+.moai-attrib {
+    margin-right: 8px;
+    padding-left: 136px; /* logo */
+    font-size: 10px;
+    text-align: right;
+    display:none;
+}
+
+#moai-pause,#moai-play, #moai-stop {
+    font-size:25px;
+    line-height:30px;
+    padding-left:5px;
+    color:#444;
+}
+#moai-pause.paused {
+    background-color: #CCC;
+
+}
+
+.moai-window #moai-play {
+    display:inline-block;
+}
+
+html {
+    height: 100%;
+}
+body {
+    color: #CCC;
+    font-size: 14px;
+    height:100%;
+    margin:0;
+    padding:0;
+    background-color: #202025;
+}
+
+#moaiplayer {
+    width: 100%;
+    height: 100%;
+    margin:auto;
+    background-color: #202025;
+}
+
+.moai-cpal {
+    width: 150px;
+    max-width:100%;
+    margin: auto;
+    font-size: 10px;
+    position:absolute;
+    bottom: 30px;
+    left: 50%;
+    margin-left: -85px;
+    background-color: rgba(32,32,37,0.9);
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.moai-cpal img {
+    margin: 5px 0;
+    width: 100%;
+    opacity: 0.4;
+}
+.moai-cpal a {
+    color: #CCC;
+}
+
+
+#runMe {
+    position: absolute;
+    width: 150px;
+    height: 100px;
+    top: 45%;
+    left: 50%;
+    margin-left: -75px;
+    margin-top: -50px;
+    border-radius: 10px;
+    border: 1px solid #CCC;
+    background-color: #CCC;
+    opacity: 0.6;
+    z-index:1000;
+    line-height: 100px;
+    color: #777;
+    font-size: 65px;
+}
+#runMe:hover {
+    opacity: 1;
+}
+
+
+.moai-info {
+  background-image: url(../background.jpg);
+  background-position-x: 50%;
+  background-position-y: 50%;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+
+

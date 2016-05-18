@@ -22,7 +22,7 @@ public:
 	size_t				GetCursor				();
 	bool				IsAtEnd					();
 	ZLSizeResult		ReadBytes				( void* buffer, size_t size );
-	int					SetCursor				( long offset );
+	int					SetCursor				( size_t offset );
 	ZLSizeResult		SetLength				( size_t length );
 	ZLSizeResult		WriteBytes				( const void* buffer, size_t size );
 						ZLRingAdapter			();

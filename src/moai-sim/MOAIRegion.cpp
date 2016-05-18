@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIDraw.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAIVectorUtil.h>
@@ -184,7 +184,7 @@ int MOAIRegion::_getTriangles ( lua_State* L ) {
 		u32 idxSizeInBytes = state.GetValue < u32 >( 4, 4 );
 		MOAIVertexFormat* format = state.GetLuaObject < MOAIVertexFormat >( 5, false );
 		
-		base = idxBuffer->GetCursor () / idxSizeInBytes;
+		base = ( u32 )( idxBuffer->GetCursor () / idxSizeInBytes );
 		totalElements = self->GetTriangles ( *format, *vtxBuffer, *idxBuffer, idxSizeInBytes );
 	}
 	else {
@@ -194,7 +194,7 @@ int MOAIRegion::_getTriangles ( lua_State* L ) {
 		MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 4, false );
 		
 		if ( vtxStream && idxStream && format ) {
-			base = idxStream->GetCursor () / 4;
+			base = ( u32 )( idxStream->GetCursor () / 4 );
 			totalElements = self->GetTriangles ( *format, *vtxStream, *idxStream );
 		}
 	}
@@ -603,49 +603,49 @@ void MOAIRegion::DrawDebug () const {
 	
 	static u32 POLY_CORRUPT_COLOR					= ZLColor::PackRGBA ( 1.0f, 0.0f, 0.0f, 1.0f );
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	MOAIDraw::Bind ();
 
-	u32 nPolys = this->mPolygons.Size ();
-	for ( u32 i = 0; i < nPolys; ++i ) {
+	size_t nPolys = this->mPolygons.Size ();
+	for ( size_t i = 0; i < nPolys; ++i ) {
 		const ZLPolygon2D& poly = this->mPolygons [ i ];
 		
 		switch ( poly.GetInfo ()) {
 		
 			case ZLPolygon2D::POLY_UNKNOWN: {
-				gfxDevice.SetPenColor ( POLY_UNKNOWN_COLOR );
-				gfxDevice.SetPenWidth ( 1.0f );
+				gfxMgr.mGfxState.SetPenColor ( POLY_UNKNOWN_COLOR );
+				gfxMgr.mGfxState.SetPenWidth ( 1.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_COMPLEX_BIT: {
-				gfxDevice.SetPenColor ( POLY_COMPLEX_COLOR );
-				gfxDevice.SetPenWidth ( 1.0f );
+				gfxMgr.mGfxState.SetPenColor ( POLY_COMPLEX_COLOR );
+				gfxMgr.mGfxState.SetPenWidth ( 1.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_ANTICLOCKWISE_CONVEX: {
-				gfxDevice.SetPenColor ( POLY_ANTICLOCKWISE_CONVEX_COLOR );
-				gfxDevice.SetPenWidth ( 2.0f );
+				gfxMgr.mGfxState.SetPenColor ( POLY_ANTICLOCKWISE_CONVEX_COLOR );
+				gfxMgr.mGfxState.SetPenWidth ( 2.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_ANTICLOCKWISE_CONCAVE: {
-				gfxDevice.SetPenColor ( POLY_ANTICLOCKWISE_CONCAVE_COLOR );
-				gfxDevice.SetPenWidth ( 2.0f );
+				gfxMgr.mGfxState.SetPenColor ( POLY_ANTICLOCKWISE_CONCAVE_COLOR );
+				gfxMgr.mGfxState.SetPenWidth ( 2.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_CLOCKWISE_CONVEX: {
-				gfxDevice.SetPenColor ( POLY_CLOCKWISE_CONVEX_COLOR );
-				gfxDevice.SetPenWidth ( 1.0f );
+				gfxMgr.mGfxState.SetPenColor ( POLY_CLOCKWISE_CONVEX_COLOR );
+				gfxMgr.mGfxState.SetPenWidth ( 1.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_CLOCKWISE_CONCAVE: {
-				gfxDevice.SetPenColor ( POLY_CLOCKWISE_CONCAVE_COLOR );
-				gfxDevice.SetPenWidth ( 1.0f );
+				gfxMgr.mGfxState.SetPenColor ( POLY_CLOCKWISE_CONCAVE_COLOR );
+				gfxMgr.mGfxState.SetPenWidth ( 1.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_CORRUPT: {
-				gfxDevice.SetPenColor ( POLY_CORRUPT_COLOR );
-				gfxDevice.SetPenWidth ( 1.0f );
+				gfxMgr.mGfxState.SetPenColor ( POLY_CORRUPT_COLOR );
+				gfxMgr.mGfxState.SetPenWidth ( 1.0f );
 				break;
 			}
 		}
@@ -755,10 +755,10 @@ const ZLPolygon2D& MOAIRegion::GetPolygon ( u32 idx ) const {
 //----------------------------------------------------------------//
 u32 MOAIRegion::GetTriangles ( SafeTesselator& tess ) const {
 
-	u32 nPolys = this->mPolygons.Size ();
-	for ( u32 i = 0; i < nPolys; ++i ) {
+	size_t nPolys = this->mPolygons.Size ();
+	for ( size_t i = 0; i < nPolys; ++i ) {
 		const ZLPolygon2D& poly = this->mPolygons [ i ];
-		tess.AddContour ( 2, poly.GetVertices (), sizeof ( ZLVec2D ), poly.GetSize ());
+		tess.AddContour ( 2, poly.GetVertices (), sizeof ( ZLVec2D ), ( int )poly.GetSize ());
 	}
 	
 	return tess.Tesselate ( TESS_WINDING_NONZERO, TESS_POLYGONS, 3, 2 );
@@ -814,7 +814,7 @@ void MOAIRegion::Pad ( const MOAIRegion& region, float pad ) {
 	
 		ZLPolygon2D& polygon = region.mPolygons [ i ];
 		
-		size_t nVerts = polygon.GetSize ();
+		int nVerts = ( int )polygon.GetSize ();
 		
 		MOAIVectorLineJoin* joins = ( MOAIVectorLineJoin* )alloca ( sizeof ( MOAIVectorLineJoin ) * nVerts );
 		
@@ -833,7 +833,7 @@ void MOAIRegion::Pad ( const MOAIRegion& region, float pad ) {
 //----------------------------------------------------------------//
 bool MOAIRegion::PointInside ( const ZLVec2D& p, float pad ) const {
 
-	u32 nPolys = this->mPolygons.Size ();
+	size_t nPolys = this->mPolygons.Size ();
 
 	if ( pad != 0.0f ) {
 		float dist = 0.0f;
@@ -846,7 +846,7 @@ bool MOAIRegion::PointInside ( const ZLVec2D& p, float pad ) const {
 
 	bool inside = false;
 
-	for ( u32 i = 0; i < nPolys; ++i ) {
+	for ( size_t i = 0; i < nPolys; ++i ) {
 		
 		switch ( this->mPolygons [ i ].PointInside ( p )) {
 		
@@ -966,13 +966,13 @@ void MOAIRegion::ReverseWinding ( const MOAIRegion& region ) {
 void MOAIRegion::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 
-	size_t nPolys = lua_objlen ( state, -1 );
+	size_t nPolys = ( int )lua_objlen ( state, -1 );
 	this->mPolygons.Init ( nPolys );
 	
 	for ( size_t i = 0; i < nPolys; ++i ) {
 		ZLPolygon2D& poly = this->mPolygons [ i ];
 	
-		state.GetField ( -1, i + 1 );
+		state.GetField ( -1, ( int )( i + 1 )); // TODO: cast
 	
 		size_t len = 0;
 		const void* vertices = lua_tolstring ( state, -1, &len );
@@ -1031,7 +1031,7 @@ void MOAIRegion::Stroke ( const MOAIRegion& region, float exterior, bool strokeE
 	for ( size_t i = 0; i < size; ++i ) {
 		ZLPolygon2D& polygon = region.mPolygons [ i ];
 		
-		size_t nVerts = polygon.GetSize ();
+		int nVerts = ( int )polygon.GetSize ();
 		
 		MOAIVectorLineJoin* joins = ( MOAIVectorLineJoin* )alloca ( sizeof ( MOAIVectorLineJoin ) * nVerts );
 		

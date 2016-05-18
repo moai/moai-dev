@@ -11,7 +11,7 @@ require ( 'cube' )
 
 MOAISim.openWindow ( "test", 960, 480 )
 
-MOAIGfxDevice.getFrameBuffer ():setClearDepth ( true )
+MOAIGfxMgr.getFrameBuffer ():setClearDepth ( true )
 
 XMIN = 20
 XMAX = 940

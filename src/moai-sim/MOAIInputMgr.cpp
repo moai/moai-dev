@@ -237,9 +237,9 @@ size_t MOAIInputMgr::ParseEvents ( ZLStream& stream, double timestep ) {
 void MOAIInputMgr::Record ( size_t size ) {
 
 	if ( this->mRecorder && size ) {
-		this->Seek ( 0, SEEK_SET );
+		this->SetCursor ( 0 );
 		this->mRecorder->WriteStream ( *this, size );
-		this->Seek ( size, SEEK_SET );
+		this->SetCursor ( size );
 	}
 }
 
@@ -372,7 +372,7 @@ void MOAIInputMgr::Update ( double timestep ) {
 	if ( this->mPlayback ) {
 		if ( this->mRecorder ) {
 			size_t cursor = this->ParseEvents ( *this->mRecorder, timestep );
-			this->mRecorder->Seek ( cursor, SEEK_SET );
+			this->mRecorder->SetCursor ( cursor );
 		}
 	}
 	else {
@@ -397,7 +397,7 @@ void MOAIInputMgr::Update ( double timestep ) {
 			this->DiscardFront ( cursor );
 			
 			// back to the end of the queue
-			this->Seek ( this->GetLength (), SEEK_SET );
+			this->SetCursor ( this->GetLength ());
 		}
 	}
 }

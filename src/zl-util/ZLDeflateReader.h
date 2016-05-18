@@ -58,7 +58,7 @@ public:
 
 	//----------------------------------------------------------------//
 	u32					GetCaps					();
-	int					SetCursor				( long offset );
+	int					SetCursor				( size_t offset );
 						ZLDeflateReader			();
 						~ZLDeflateReader		();
 };

@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIDebugLines.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAILayoutFrame.h>
 
 //================================================================//
@@ -301,7 +301,7 @@ ZLRect MOAILayoutFrame::GetScissorRect () {
 	
 	// TODO:
 	mtx.Init ( this->mLocalToWorldMtx );
-	//mtx.Append ( MOAIGfxDevice::Get ().GetWorldToWndMtx ( 1.0f, 1.0f ));
+	//mtx.Append ( MOAIGfxMgr::Get ().GetWorldToWndMtx ( 1.0f, 1.0f ));
 	mtx.Transform ( scissorRect );
 	
 	return scissorRect;

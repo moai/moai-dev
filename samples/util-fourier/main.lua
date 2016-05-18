@@ -68,7 +68,7 @@ drawSignal = function ( stream, yOff, yScale )
 
 	yScale = yScale or 1
 
-	MOAIGfxDevice.setPenColor ( 0, 0, 1, 1 )
+	MOAIGfxMgr.setPenColor ( 0, 0, 1, 1 )
 
 	stream:seek ( 0 )
 	for i = 1, 128 do
@@ -96,11 +96,11 @@ drawTransform = function ( stream, yOff )
 		local yR = (( stream:readFloat () / transformMax ) * 64 ) + yOff
 		local yI = (( stream:readFloat () / transformMax ) * 64 ) + yOff
 
-		MOAIGfxDevice.setPenColor ( 0, 1, 0, 1 )
+		MOAIGfxMgr.setPenColor ( 0, 1, 0, 1 )
 		MOAIDraw.drawLine ( xI, yOff, xI, yI )
 		MOAIDraw.fillCircle ( xI, yI, 2 )
 
-		MOAIGfxDevice.setPenColor ( 0, 0, 1, 1 )
+		MOAIGfxMgr.setPenColor ( 0, 0, 1, 1 )
 		MOAIDraw.drawLine ( xR, yOff, xR, yR )
 		MOAIDraw.fillCircle ( xR, yR, 2 )
 	end

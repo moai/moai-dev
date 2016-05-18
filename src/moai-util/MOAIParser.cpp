@@ -218,8 +218,8 @@ void MOAIParser::Traverse ( ZLSyntaxNode* node ) {
 		
 		this->OnStartNonterminal ( node );
 		
-		u32 nChildren = node->CountChildren ();
-		for ( u32 i = 0; i < nChildren; ++i ) {
+		size_t nChildren = node->CountChildren ();
+		for ( size_t i = 0; i < nChildren; ++i ) {
 			this->Traverse ( node->GetChild ( i ));
 		}
 		

@@ -37,7 +37,7 @@ MOAILayoutEngineState::~MOAILayoutEngineState () {
 //----------------------------------------------------------------//
 void MOAITextLayoutEngine::Align () {
 
-	u32 totalLines = this->mLayout->mLines.GetTop ();
+	u32 totalLines = ( u32 )this->mLayout->mLines.GetTop ();
 
 	if ( totalLines == 0 ) return;
 
@@ -92,7 +92,7 @@ void MOAITextLayoutEngine::Align () {
 	float lineYOffset = adjustedLayoutYMin - this->mLayoutBounds.mYMin;
 	
 	MOAIAnimCurve** curves = this->mLayoutRules->mCurves;
-	u32 totalCurves = this->mLayoutRules->mCurves.Size ();
+	u32 totalCurves = ( u32 )this->mLayoutRules->mCurves.Size ();
 	
 	for ( u32 i = baseLine; i < totalLines; ++i ) {
 		
@@ -317,7 +317,7 @@ void MOAITextLayoutEngine::BuildLayout ( MOAITextLayout& layout, MOAITextStyleCa
 	
 	this->mStr			= str;
 	this->mCharIdx		= idx;
-	this->mSpriteIdx	= this->mLayout->mSprites.GetTop ();
+	this->mSpriteIdx	= ( u32 )this->mLayout->mSprites.GetTop ();
 	
 	this->mStyleSpan	= 0;
 	this->mSpanIdx		= 0;
@@ -328,7 +328,7 @@ void MOAITextLayoutEngine::BuildLayout ( MOAITextLayout& layout, MOAITextStyleCa
 	this->mLineSpacingBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	this->mLineSpacingCursor = 0.0f;
 	
-	this->mBaseLine = layout.mLines.GetTop ();
+	this->mBaseLine = ( u32 )layout.mLines.GetTop ();
 	
 	memset ( &this->mCurrentChar, 0, sizeof ( MOAITextStyledChar ));
 	this->mCurrentChar.mScale.Init ( 1.0f, 1.0f );
@@ -356,7 +356,7 @@ u32 MOAITextLayoutEngine::GetCharIndex () {
 //----------------------------------------------------------------//
 u32 MOAITextLayoutEngine::GetLineSizeInSprites () {
 
-	return this->mLayout->mSprites.GetTop () - this->GetLineSpriteIdx ();
+	return ( u32 )this->mLayout->mSprites.GetTop () - this->GetLineSpriteIdx ();
 }
 
 //----------------------------------------------------------------//
@@ -368,7 +368,7 @@ u32 MOAITextLayoutEngine::GetLineSpriteIdx () {
 //----------------------------------------------------------------//
 u32 MOAITextLayoutEngine::GetSpriteIndex () {
 
-	return this->mLayout->mSprites.GetTop ();
+	return ( u32 )this->mLayout->mSprites.GetTop (); // TODO: cast
 }
 
 //----------------------------------------------------------------//
@@ -412,7 +412,7 @@ MOAITextStyledChar MOAITextLayoutEngine::NextChar () {
 		
 		this->mStyleSpan = 0;
 		
-		u32 totalStyles = this->mStyleMap->GetTop ();
+		u32 totalStyles = ( u32 )this->mStyleMap->GetTop ();
 		for ( this->mSpanIdx++; this->mSpanIdx < totalStyles; this->mSpanIdx++ ) {
 			MOAITextStyleSpan& styleSpan = this->mStyleMap->Elem ( this->mSpanIdx );
 			
@@ -491,7 +491,7 @@ u32 MOAITextLayoutEngine::PushLine () {
 		this->mLineSpacingBounds = this->mLineLayoutBounds;
 	}
 
-	u32 totalLines = this->mLayout->mLines.GetTop ();
+	u32 totalLines = ( u32 )this->mLayout->mLines.GetTop ();
 
 	float yPen = 0.0f;
 
@@ -541,7 +541,7 @@ u32 MOAITextLayoutEngine::PushSprite ( const MOAITextStyledChar& styledChar, flo
 	
 	this->mLayout->PushSprite ( styledChar, x, y );
 	
-	this->mSpriteIdx = this->mLayout->mSprites.GetTop ();
+	this->mSpriteIdx = ( u32 )this->mLayout->mSprites.GetTop ();
 	
 	return PUSH_OK;
 }

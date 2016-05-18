@@ -3,8 +3,8 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGfxBuffer.h>
-#include <moai-sim/MOAIGfxDevice.h>
-#include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxMgr.h>
+#include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIMesh.h>
 #include <moai-sim/MOAIProp.h>
@@ -21,15 +21,31 @@
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAISelectionMesh::_addSelection ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAISelectionMesh, "UNNN" )
+	MOAI_LUA_SETUP ( MOAISelectionMesh, "UNN*" )
+	
+	u32 set		= 0;
+	u32 base	= 0;
+	u32 top		= 0;
+	
+	if ( state.IsType ( 4, LUA_TNUMBER )) {
 
-	u32 set			= state.GetValue < u32 >( 2, 1 ) - 1;
-	u32 base		= state.GetValue < u32 >( 3, 1 ) - 1;
-	u32 top			= state.GetValue < u32 >( 4, 1 ) - 1;
-
+		set			= state.GetValue < u32 >( 2, 1 ) - 1;
+		base		= state.GetValue < u32 >( 3, 1 ) - 1;
+		top			= state.GetValue < u32 >( 4, 1 ) - 1;
+	}
+	else {
+	
+		ZLResult < u32 > result = self->AffirmSpanSet ();
+		if ( result.mCode != ZL_OK ) return 0;
+		
+		set			= result;
+		base		= state.GetValue < u32 >( 2, 1 ) - 1;
+		top			= state.GetValue < u32 >( 3, 1 ) - 1;
+	}
+	
 	self->AddSelection ( set, base, top );
-
-	return 0;
+	state.Push ( set + 1 );
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -39,7 +55,7 @@ int MOAISelectionMesh::_clearSelection ( lua_State* L ) {
 
 	u32 set			= state.GetValue < u32 >( 2, 1 ) - 1;
 	
-	if ( state.CheckParams ( 3, "NN" )) {
+	if ( state.CheckParams ( 3, "NN", false )) {
 	
 		u32 base		= state.GetValue < u32 >( 3, 1 ) - 1;
 		u32 top			= state.GetValue < u32 >( 4, 1 ) - 1;
@@ -125,7 +141,7 @@ void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t top ) {
 	// of the new span will be clipped.
 
 	// make sure the array of sets is big enough
-	this->mSets.Grow ( set + 1, 1, 0 );
+	this->mSets.Grow ( set, 1, 0 );
 	
 	// identify the previous span in both the master and set lists.
 	// a span is only 'previous' if its base is entirely below the new span's base.
@@ -156,7 +172,7 @@ void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t top ) {
 			if ( prevInMaster->mTop <= top ) {
 			
 				// previous span only overlaps the base of the new span.
-				// clip it to the base and inser the new span after it
+				// clip it to the base and insert the new span after it
 				// or, if it matches the new span, extend it.
 			
 				if ( prevInMaster->mSetID == set ) {
@@ -201,6 +217,23 @@ void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t top ) {
 		// insert the new span at the head of the list and fix all the overlaps.
 		this->FixOverlaps ( this->InsertSpan ( this->AllocSpan ( set, base, top ), 0, 0 ));
 	}
+}
+
+//----------------------------------------------------------------//
+ZLResult < u32 > MOAISelectionMesh::AffirmSpanSet () {
+
+	size_t top = this->mSets.Size ();
+
+	for ( size_t i = 0; i < top; ++i ) {
+		if ( !this->mSets [ i ]) {
+			ZL_RETURN_RESULT ( u32, ( u32 )i, ZL_OK );
+		}
+	}
+	
+	if ( this->mSets.Grow ( top ) == ZL_OK ) {
+		ZL_RETURN_RESULT ( u32, ( u32 )top, ZL_OK );
+	}
+	ZL_RETURN_RESULT ( u32, ( u32 )-1, ZL_ERROR );
 }
 
 //----------------------------------------------------------------//
@@ -254,7 +287,15 @@ void MOAISelectionMesh::Clear () {
 
 //----------------------------------------------------------------//
 void MOAISelectionMesh::ClearSelection ( u32 set ) {
-	UNUSED ( set ); // TODO: shouldn't this do something?
+
+	MOAIMeshSpan* cursor = this->mSets [ set ];
+	while ( cursor ) {
+	
+		MOAIMeshSpan* span = cursor;
+		cursor = cursor->mNext;
+			
+		this->FreeSpan (( MOAISelectionSpan* )span );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -274,7 +315,6 @@ void MOAISelectionMesh::ClearSelection ( u32 set, size_t base, size_t top ) {
 			cursor->mTop = base;
 		}
 		else {
-		
 		
 			while ( cursor && ( cursor->mBase < top )) {
 			
@@ -428,8 +468,8 @@ void MOAISelectionMesh::MergeSelection ( u32 set, u32 merge ) {
 	
 		if ( cursor->mSetID == merge ) {
 		
-			u32 base = cursor->mBase;
-			u32 top = cursor->mTop;
+			size_t base = cursor->mBase;
+			size_t top = cursor->mTop;
 		
 			this->FreeSpan ( cursor );
 			cursor = this->InsertSpan ( this->AllocSpan ( set, base, top ), 0, 0 );
@@ -448,8 +488,8 @@ void MOAISelectionMesh::MergeSelection ( u32 set, u32 merge ) {
 			
 				MOAISelectionSpan* prevInMaster = span->mPrevInMaster;
 			
-				u32 base = span->mBase;
-				u32 top = span->mTop;
+				size_t base = span->mBase;
+				size_t top = span->mTop;
 			
 				this->FreeSpan ( span );
 				span = this->InsertSpan ( this->AllocSpan ( set, base, top ), prevInMaster, prevInSet );

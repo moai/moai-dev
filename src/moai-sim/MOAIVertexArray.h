@@ -54,8 +54,7 @@ protected:
 	void				OnCPUDestroy				(); // clear any CPU-side memory used by class
 	void				OnGPUBind					(); // select GPU-side resource on device for use
 	bool				OnGPUCreate					(); // create GPU-side resource
-	void				OnGPUDestroy				(); // schedule GPU-side resource for destruction
-	void				OnGPULost					(); // clear any handles or references to GPU-side (called by 'Abandon')
+	void				OnGPUDeleteOrDiscard		( bool shouldDelete ); // delete or discard GPU resource
 	void				OnGPUUnbind					(); // unbind GPU-side resource
 	bool				OnGPUUpdate					();
 	void				UnbindVertexArrayItems		();

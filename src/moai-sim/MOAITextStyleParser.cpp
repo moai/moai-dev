@@ -180,8 +180,8 @@ void MOAITextStyleParser::Parse () {
 		}
 	}
 	
-	u32 totalActiveStyles = this->mActiveStyles.GetTop ();
-	for ( u32 i = 0; i < totalActiveStyles; ++i ) {
+	size_t totalActiveStyles = this->mActiveStyles.GetTop ();
+	for ( size_t i = 0; i < totalActiveStyles; ++i ) {
 		MOAITextStyleState* style = this->mActiveStyles [ i ];
 		assert ( style->mFont );
 		style->mFont->ProcessGlyphs ();
@@ -368,7 +368,7 @@ void MOAITextStyleParser::PushStyle ( MOAITextStyleState* style ) {
 	assert ( style );
 	
 	u32 styleID = 0;
-	u32 totalStyles = this->mActiveStyles.GetTop ();
+	u32 totalStyles = ( u32 )this->mActiveStyles.GetTop (); // TODO: cast
 	for ( ; styleID < totalStyles; ++styleID ) {
 		if ( this->mActiveStyles [ styleID ] == style ) {
 			break;

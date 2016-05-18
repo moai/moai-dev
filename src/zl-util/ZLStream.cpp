@@ -56,7 +56,7 @@ ZLSizeResult ZLStream::Collapse ( ZLStream& source, size_t clipBase, size_t clip
 	
 	do {
 	
-		source.Seek ( srcCursor, SEEK_SET );
+		source.Seek (( long )srcCursor, SEEK_SET );
 		readSize = source.ReadBytes ( buffer, (( totalRead + chunkSize ) > size ) ? size - totalRead : chunkSize ).mValue;
 	
 		srcCursor += readSize;
@@ -90,7 +90,7 @@ ZLSizeResult ZLStream::Collapse ( ZLStream& source, size_t clipBase, size_t clip
 		
 		if ( writeSize == 0 ) break;
 		
-		this->Seek ( dstCursor, SEEK_SET );
+		this->Seek (( long )dstCursor, SEEK_SET );
 		if ( this->WriteBytes ( buffer, writeSize ).mValue < writeSize ) break;
 		dstCursor += writeSize;
 	}
@@ -131,7 +131,7 @@ ZLSizeResult ZLStream::PeekBytes ( void* buffer, size_t size  ) {
 
 	size_t cursor = this->GetCursor ();
 	result = this->ReadBytes ( buffer, size );
-	this->Seek ( cursor, SEEK_SET );
+	this->Seek (( long )cursor, SEEK_SET );
 	return result;
 }
 
@@ -321,6 +321,7 @@ float ZLStream::Sample ( u32 streamType, size_t sampleSize ) {
 		float sample;
 	
 		size_t result = ZLSample::ReadSample ( *this, streamType, &sample, ZLSample::SAMPLE_FLOAT );
+		UNUSED ( result ); // TODO: why isn't assert undef taking care of this?
 		assert ( result );
 		
 		accum += sample / ( float )sampleSize;
@@ -360,7 +361,7 @@ int ZLStream::Seek ( long offset, int origin ) {
 }
 
 //----------------------------------------------------------------//
-ZLResultCode ZLStream::SetCursor ( long offset ) {
+ZLResultCode ZLStream::SetCursor ( size_t offset ) {
 	UNUSED ( offset );
 	return ZL_UNSUPPORTED;
 }
@@ -417,7 +418,7 @@ ZLSizeResult ZLStream::WriteStream ( ZLStream& source, size_t size ) {
 
 	if ( this == &source ) {
 		size_t cursor = this->GetCursor ();
-		this->Seek ( cursor + size, SEEK_SET );
+		this->Seek (( long )( cursor + size ), SEEK_SET );
 		ZL_RETURN_SIZE_RESULT ( this->GetCursor () - cursor, ZL_OK );
 	}
 

@@ -6,7 +6,7 @@
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDebugLines.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAILayoutFrame.h>
@@ -25,6 +25,61 @@
 //================================================================//
 // local
 //================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGraphicsProp::_getBillboard ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+	
+	state.Push ( self->mBillboard );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGraphicsProp::_getBlendEquation ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+	
+	state.Push ( self->mBlendMode.mEquation );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGraphicsProp::_getBlendMode ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+	
+	state.Push ( self->mBlendMode.mSourceFactor );
+	state.Push ( self->mBlendMode.mDestFactor );
+	return 2;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGraphicsProp::_getCullMode ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+	
+	state.Push ( self->mCullMode );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGraphicsProp::_getDepthMask ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+	
+	state.Push ( self->mDepthMask );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGraphicsProp::_getDepthTest ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+	
+	state.Push ( self->mDepthTest );
+	return 1;
+}
 
 //----------------------------------------------------------------//
 /**	@name	getIndexBatchSize
@@ -597,7 +652,7 @@ void MOAIGraphicsProp::DrawDebug ( int subPrimID, float lod ) {
 
 	if ( this->GetBoundsStatus () != BOUNDS_OK ) return;
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
 	
 	MOAIDraw& draw = MOAIDraw::Get ();
@@ -607,7 +662,7 @@ void MOAIGraphicsProp::DrawDebug ( int subPrimID, float lod ) {
 	
 	this->LoadVertexTransform ();
 	
-	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
 	
 	ZLBox modelBounds;
 	this->OnGetModelBounds ( modelBounds );
@@ -625,7 +680,7 @@ void MOAIGraphicsProp::DrawDebug ( int subPrimID, float lod ) {
 	}
 	
 	// clear out the world transform (draw in world space)
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_PROJ_MTX ));
 	
 	if ( debugLines.Bind ( MOAIDebugLines::PROP_WORLD_BOUNDS )) {
 		draw.DrawBoxOutline ( this->GetBounds ());
@@ -751,7 +806,7 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 		
 		case BILLBOARD_SCREEN: {
 			
-			MOAIGfxDevice::Get ().GetWorldToWndMtx ();
+			//MOAIGfxMgr::Get ().GetWorldToWndMtx ();
 			
 			ZLMatrix4x4 viewProjMtx = camera->GetWorldToWndMtx ( *viewport );
 			
@@ -820,56 +875,42 @@ bool MOAIGraphicsProp::IsVisible ( float lod ) {
 //----------------------------------------------------------------//
 void MOAIGraphicsProp::LoadGfxState () {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	//MOAIDeckGfxState gfxState;
-
-	// TODO: deck resolves when drawing
-
-	//if ( this->mDeck ) {
-	//	this->mDeck->GetGfxState ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), gfxState );
-	//}
-
-	//gfxState.SetShader ( this->mShader );
-	//gfxState.SetTexture ( this->mTexture );
-
-	//gfxDevice.SetShader ( gfxState.GetShader ());
-	//gfxDevice.SetGfxState ( gfxState.GetTexture ());
-
-	gfxDevice.SetPenColor ( this->mColor );
-	gfxDevice.SetCullFunc ( this->mCullMode );
-	gfxDevice.SetDepthFunc ( this->mDepthTest );
-	gfxDevice.SetDepthMask ( this->mDepthMask );
-	gfxDevice.SetBlendMode ( this->mBlendMode );
+	gfxMgr.mGfxState.SetPenColor ( this->mColor );
+	gfxMgr.mGfxState.SetCullFunc ( this->mCullMode );
+	gfxMgr.mGfxState.SetDepthFunc ( this->mDepthTest );
+	gfxMgr.mGfxState.SetDepthMask ( this->mDepthMask );
+	gfxMgr.mGfxState.SetBlendMode ( this->mBlendMode );
 	
 	if ( this->mScissorRect ) {
-		ZLRect scissorRect = this->mScissorRect->GetScissorRect ( gfxDevice.GetWorldToWndMtx ());		
-		gfxDevice.SetScissorRect ( scissorRect );
+		ZLRect scissorRect = this->mScissorRect->GetScissorRect ( gfxMgr.mGfxState.GetWorldToWndMtx ());
+		gfxMgr.mGfxState.SetScissorRect ( scissorRect );
 	}
 	else {
-		gfxDevice.SetScissorRect ();
+		gfxMgr.mGfxState.SetScissorRect ();
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIGraphicsProp::LoadUVTransform () {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
 	if ( this->mUVTransform ) {
 		ZLAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
-		gfxDevice.SetUVTransform ( uvMtx );
+		gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::UV_MTX, uvMtx );
 	}
 	else {
-		gfxDevice.SetUVTransform ();
+		gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::UV_MTX );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIGraphicsProp::LoadVertexTransform () {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetWorldDrawingMtx ());
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX, this->GetWorldDrawingMtx ());
 }
 
 //----------------------------------------------------------------//
@@ -976,6 +1017,12 @@ void MOAIGraphicsProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIColor::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
+		{ "getBillboard",			_getBillboard },
+		{ "getBlendEquation",		_getBlendEquation },
+		{ "getBlendMode",			_getBlendMode },
+		{ "getCullMode",			_getCullMode },
+		{ "getDepthMask",			_getDepthMask },
+		{ "getDepthTest",			_getDepthTest },
 		{ "getIndexBatchSize",		_getIndexBatchSize },
 		{ "getMaterialBatch",		_getMaterialBatch },
 		{ "getScissorRect",			_getScissorRect },

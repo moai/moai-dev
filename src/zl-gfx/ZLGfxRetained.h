@@ -136,6 +136,7 @@ private:
 
 	//----------------------------------------------------------------//
 	ZLGfxHandle*			Create						( ZLGfxHandle* handle, u32 param );
+	void					Delete						( u32 type, u32 glid );
 	void					OnGfxEvent					( u32 event, void* userdata );
 	void					OnReadPixels				( const ZLCopyOnWrite& copyOnWrite, void* userdata );
 	void					OnUniformLocation			( u32 addr, void* userdata );
@@ -160,8 +161,8 @@ public:
 	
 	void					BlendFunc					( u32 sourceFactor, u32 destFactor );
 	void					BlendMode					( u32 mode );
-	void					BufferData					( u32 target, u32 size, ZLSharedConstBuffer* buffer, size_t offset, u32 usage );
-	void					BufferSubData				( u32 target, u32 offset, u32 size, ZLSharedConstBuffer* buffer, size_t srcOffset );
+	void					BufferData					( u32 target, size_t size, ZLSharedConstBuffer* buffer, size_t offset, u32 usage );
+	void					BufferSubData				( u32 target, size_t offset, size_t size, ZLSharedConstBuffer* buffer, size_t srcOffset );
 	
 	void					CheckFramebufferStatus		( u32 target );
 	
@@ -185,8 +186,6 @@ public:
 	ZLGfxHandle*			CreateVertexArray			();
 	
 	void					CullFace					( u32 mode );
-	
-	void					DeleteHandle				( ZLGfxHandle* handle );
 	
 	void					DepthFunc					( u32 depthFunc );
 	void					DepthMask					( bool flag );

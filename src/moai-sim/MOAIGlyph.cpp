@@ -15,8 +15,8 @@
 //----------------------------------------------------------------//
 void MOAIGlyph::Draw ( MOAISingleTexture& texture, float x, float y, float xScale, float yScale, const ZLRect& padding ) const {
 	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	if ( !gfxDevice.BindTexture ( &texture )) return;
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	if ( !gfxMgr.mGfxState.BindTexture ( &texture )) return;
 	
 	MOAIQuadBrush glQuad;
 	
@@ -55,8 +55,8 @@ ZLRect MOAIGlyph::GetGlyphLogicalRect ( float x, float y, float xScale, float yS
 //----------------------------------------------------------------//
 MOAIKernVec MOAIGlyph::GetKerning ( u32 name ) const {
 
-	u32 total = this->mKernTable.Size ();
-	for ( u32 i = 0; i < total; ++i ) {
+	size_t total = this->mKernTable.Size ();
+	for ( size_t i = 0; i < total; ++i ) {
 		MOAIKernVec& kernVec = this->mKernTable [ i ];
 		
 		if ( kernVec.mName == name ) {
@@ -109,10 +109,10 @@ void MOAIGlyph::SerializeIn ( MOAILuaState& state ) {
 	
 	if ( state.GetFieldWithType ( -1, "mKernTable", LUA_TTABLE )) {
 		
-		u32 size = lua_objlen ( state, -1 );
+		int size = ( int )lua_objlen ( state, -1 ); // TODO: cast
 		this->mKernTable.Init ( size );
 		
-		for ( u32 i = 0; i < size; ++i ) {
+		for ( int i = 0; i < size; ++i ) {
 		
 			if ( state.GetFieldWithType ( -1, i + 1, LUA_TTABLE )) {
 				

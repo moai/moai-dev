@@ -45,7 +45,7 @@ bool ZLZipEntry::SerializeIn ( ZLStream& stream ) {
 	this->mName		= stream.ReadString ( nameLen );
 	this->mExtra	= stream.ReadString ( extraLen );
 	
-	this->mDataAddr = stream.GetCursor ();
+	this->mDataAddr = ( u32 )stream.GetCursor ();
 	stream.Seek ( this->mCompressedSize, SEEK_CUR );
 	
 	if ( this->mBitFlag & BIT_HAS_DESCRIPTOR ) {
@@ -93,13 +93,13 @@ void ZLZipFile::Close () {
 }
 
 //----------------------------------------------------------------//
-ZLZipEntry& ZLZipFile::GetEntry ( u32 idx ) {
+ZLZipEntry& ZLZipFile::GetEntry ( size_t idx ) {
 
 	return *this->mEntryTable [ idx ];
 }
 
 //----------------------------------------------------------------//
-u32 ZLZipFile::GetTotal () {
+size_t ZLZipFile::GetTotal () {
 
 	return this->mEntryTable.Size ();
 }
@@ -107,7 +107,7 @@ u32 ZLZipFile::GetTotal () {
 //----------------------------------------------------------------//
 int ZLZipFile::Inflate () {
 	
-	u32 total = this->mEntryTable.Size ();
+	u32 total = ( u32 )this->mEntryTable.Size ();
 	for ( u32 i = 0; i < total; ++i ) {
 	
 		ZLFileStream stream;

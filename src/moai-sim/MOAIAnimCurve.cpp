@@ -3,7 +3,8 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIAnimCurve.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
+#include <moai-sim/MOAIGfxVertexCache.h>
 
 //================================================================//
 // local
@@ -109,35 +110,35 @@ void MOAIAnimCurve::Draw ( u32 resolution ) const {
 	// and then the spans between keys should be filled in with an approximation of
 	// the resolution.
 	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
 	float length = this->GetLength ();
 	float step = length / ( float )resolution;
 	
-	gfxDevice.BeginPrim ( ZGL_PRIM_LINE_STRIP );
+	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_STRIP );
 	
 	for ( u32 i = 0; i < resolution; ++i ) {
 		
 		float t = step * ( float )i;
 		float v = this->GetValue ( t );
 		
-		gfxDevice.WriteVtx ( t, v, 0.0f );
-		gfxDevice.WriteFinalColor4b ();
+		gfxMgr.mVertexCache.WriteVtx ( t, v, 0.0f );
+		gfxMgr.mVertexCache.WritePenColor4b ();
 	}
 	
 	float t = length;
 	float v = this->GetValue ( t );
 	
-	gfxDevice.WriteVtx ( t, v, 0.0f );
-	gfxDevice.WriteFinalColor4b ();
+	gfxMgr.mVertexCache.WriteVtx ( t, v, 0.0f );
+	gfxMgr.mVertexCache.WritePenColor4b ();
 	
-	gfxDevice.EndPrim ();
+	gfxMgr.mVertexCache.EndPrim ();
 }
 
 //----------------------------------------------------------------//
 float MOAIAnimCurve::GetCurveDelta () const {
 
-	u32 size = this->mKeys.Size ();
+	size_t size = this->mKeys.Size ();
 	if ( size > 1 ) {
 		return this->mSamples [ size - 1 ] - this->mSamples [ 0 ];
 	}

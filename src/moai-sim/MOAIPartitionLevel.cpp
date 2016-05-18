@@ -13,8 +13,8 @@
 //----------------------------------------------------------------//
 void MOAIPartitionLevel::Clear () {
 
-	u32 totalCells = this->mCells.Size ();
-	for ( u32 i = 0; i < totalCells; ++i ) {
+	size_t totalCells = this->mCells.Size ();
+	for ( size_t i = 0; i < totalCells; ++i ) {
 		this->mCells [ i ].Clear ();
 	}
 }
@@ -22,8 +22,8 @@ void MOAIPartitionLevel::Clear () {
 //----------------------------------------------------------------//
 void MOAIPartitionLevel::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLevel* level ) {
 
-	u32 totalCells = this->mCells.Size ();
-	for ( u32 i = 0; i < totalCells; ++i ) {
+	size_t totalCells = this->mCells.Size ();
+	for ( size_t i = 0; i < totalCells; ++i ) {
 		this->mCells [ i ].ExtractProps ( cell, level );
 	}
 }
@@ -31,8 +31,8 @@ void MOAIPartitionLevel::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLe
 //----------------------------------------------------------------//
 void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, u32 interfaceMask, u32 queryMask ) {
 
-	u32 totalCells = this->mCells.Size ();
-	for ( u32 i = 0; i < totalCells; ++i ) {
+	size_t totalCells = this->mCells.Size ();
+	for ( size_t i = 0; i < totalCells; ++i ) {
 		this->mCells [ i ].GatherProps ( results, ignoreProp, interfaceMask, queryMask );
 	}
 }
@@ -40,8 +40,8 @@ void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 //----------------------------------------------------------------//
 void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask, u32 queryMask ) {
 	
-	u32 totalCells = this->mCells.Size ();
-	for ( u32 i = 0; i < totalCells; ++i ) {
+	size_t totalCells = this->mCells.Size ();
+	for ( size_t i = 0; i < totalCells; ++i ) {
 		this->mCells [ i ].GatherProps ( results, ignoreProp, point, orientation, interfaceMask, queryMask );
 	}
 }

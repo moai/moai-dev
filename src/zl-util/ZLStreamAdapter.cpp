@@ -25,7 +25,7 @@ void ZLStreamProxy::Flush () {
 //----------------------------------------------------------------//
 u32 ZLStreamProxy::GetCaps () {
 
-	return this->mProxiedStream ? this->mProxiedStream->GetCaps () : 0;
+	return this->mProxiedStream ? this->mProxiedStream->GetCaps () : CAN_WRITE;
 }
 
 //----------------------------------------------------------------//
@@ -54,7 +54,7 @@ ZLSizeResult ZLStreamProxy::ReadBytes ( void* buffer, size_t size ) {
 }
 
 //----------------------------------------------------------------//
-ZLResultCode ZLStreamProxy::SetCursor ( long offset ) {
+ZLResultCode ZLStreamProxy::SetCursor ( size_t offset ) {
 
 	return this->mProxiedStream ? this->mProxiedStream->SetCursor ( offset ) : ZL_ERROR;
 }
@@ -70,7 +70,7 @@ ZLSizeResult ZLStreamProxy::SetLength ( size_t length ) {
 ZLSizeResult ZLStreamProxy::WriteBytes ( const void* buffer, size_t size ) {
 
 	if ( this->mProxiedStream ) return this->mProxiedStream->WriteBytes ( buffer, size );
-	ZL_RETURN_SIZE_RESULT ( 0, ZL_ERROR );
+	ZL_RETURN_SIZE_RESULT ( size, ZL_OK ); // this is deliberate; an open proxy to an empty stream should just throw writes away
 }
 
 //----------------------------------------------------------------//

@@ -22,7 +22,7 @@
 	#endif
 
 	#ifndef AKU_WITH_IOS_FACEBOOK
-		#define AKU_WITH_IOS_FACEBOOK 1
+		#define AKU_WITH_IOS_FACEBOOK 0
 	#endif
 
 	#ifndef AKU_WITH_IOS_FLURRY

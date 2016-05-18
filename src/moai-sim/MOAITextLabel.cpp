@@ -8,7 +8,7 @@
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIFont.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIMaterialBatch.h>
 #include <moai-sim/MOAINodeMgr.h>
 #include <moai-sim/MOAIQuadBrush.h>
@@ -223,7 +223,8 @@ int MOAITextLabel::_getTextBounds ( lua_State* L ) {
 		hasRect = self->mLayout.GetBoundsForRange ( index, size, rect );
 	}
 	else {
-		hasRect = self->mLayout.GetBounds ( rect );
+		rect = self->mLayout.GetLayoutBounds ();
+		hasRect = true;
 	}
 	
 	if ( hasRect ) {
@@ -863,14 +864,14 @@ void MOAITextLabel::Draw ( int subPrimID, float lod ) {
 	
 	if ( this->mReveal ) {
 		
-		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 		this->LoadGfxState ();
 		this->LoadVertexTransform ();
 		this->LoadUVTransform ();
 	
-		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
-		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+		gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
+		gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_MTX ));
 		
 		MOAIShader* shader = this->mMaterialBatch ? this->mMaterialBatch->RawGetShader ( 0 ) : 0;
 		bool useSpriteShaders = !shader;
@@ -892,11 +893,12 @@ void MOAITextLabel::DrawDebug ( int subPrimID, float lod ) {
 	if ( !this->IsVisible ( lod )) return;
 	if ( this->IsClear ()) return;
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
 	ZLMatrix4x4 worldDrawingMtx = this->GetWorldDrawingMtx ();
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, worldDrawingMtx );
-	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+	
+	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX, worldDrawingMtx );
+	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
 	
 	this->mLayout.DrawDebug ();
 	

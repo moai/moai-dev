@@ -66,7 +66,7 @@ private:
 	ZLXmlParser	mParser;
 	ZLStream*	mStream;
 	
-	u32			mInputLen;
+	int			mInputLen;
 	char		mBuffer [ BUFFER_SIZE ];
 
 	STLList < ZLXmlElement* > mElementStack;

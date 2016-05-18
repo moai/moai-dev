@@ -95,15 +95,15 @@ void ZLGfxImmediate::BlendMode ( u32 mode ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::BufferData ( u32 target, u32 size, ZLSharedConstBuffer* buffer, size_t offset, u32 usage ) {
+void ZLGfxImmediate::BufferData ( u32 target, size_t size, ZLSharedConstBuffer* buffer, size_t offset, u32 usage ) {
 
-	const GLvoid* data = ( const GLvoid* )(( size_t )ZLSharedConstBuffer::GetConstData ( buffer ) + offset );
+	const GLvoid* data = ( const GLvoid* )(( size_t )ZLSharedConstBuffer::GetConstData ( buffer ) + offset ); // TODO: cast
 	glBufferData ( ZLGfxEnum::MapZLToNative ( target ), ( GLsizeiptr )size, data, ZLGfxEnum::MapZLToNative ( usage ));
 	GL_LOG_ERRORS ( "glBufferData" )
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::BufferSubData ( u32 target, u32 offset, u32 size, ZLSharedConstBuffer* buffer, size_t srcOffset ) {
+void ZLGfxImmediate::BufferSubData ( u32 target, size_t offset, size_t size, ZLSharedConstBuffer* buffer, size_t srcOffset ) {
 
 	const GLvoid* data = ( const GLvoid* )(( size_t )ZLSharedConstBuffer::GetConstData ( buffer ) + srcOffset );
 	glBufferSubData ( ZLGfxEnum::MapZLToNative ( target ), ( GLintptr )offset, ( GLsizeiptr )size, data );
@@ -271,52 +271,6 @@ ZLGfxHandle* ZLGfxImmediate::Create ( ZLGfxHandle* handle, u32 param ) {
 }
 
 //----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxImmediate::CreateBuffer () {
-
-	#if defined( MOAI_OS_ANDROID ) || defined( MOAI_OS_HTML )
-		return 0;
-	#else
-		return this->Create ( new ZLGfxHandle ( ZLGfxHandle::BUFFER, 0, true ), 0 );
-	#endif
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxImmediate::CreateFramebuffer () {
-
-	return this->Create ( new ZLGfxHandle ( ZLGfxHandle::FRAMEBUFFER, 0, true ), 0 );
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxImmediate::CreateProgram () {
-
-	return this->Create ( new ZLGfxHandle ( ZLGfxHandle::PROGRAM, 0, true ), 0 );
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxImmediate::CreateRenderbuffer () {
-
-	return this->Create ( new ZLGfxHandle ( ZLGfxHandle::RENDERBUFFER, 0, true ), 0 );
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxImmediate::CreateShader ( u32 shaderType ) {
-
-	return this->Create ( new ZLGfxHandle ( ZLGfxHandle::SHADER, 0, true ), shaderType );
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxImmediate::CreateTexture () {
-
-	return this->Create ( new ZLGfxHandle ( ZLGfxHandle::TEXTURE, 0, true ), 0 );
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxImmediate::CreateVertexArray () {
-
-	return this->Create ( new ZLGfxHandle ( ZLGfxHandle::VERTEXARRAY, 0, true ), 0 );
-}
-
-//----------------------------------------------------------------//
 void ZLGfxImmediate::CullFace ( u32 mode ) {
 
 	glCullFace ( ZLGfxEnum::MapZLToNative ( mode ));
@@ -324,67 +278,61 @@ void ZLGfxImmediate::CullFace ( u32 mode ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::DeleteHandle ( ZLGfxHandle* handle ) {
+void ZLGfxImmediate::Delete ( u32 type, u32 glid ) {
 
-	if ( !handle ) return;
+	switch ( type ) {
 	
-	if ( handle->mOwns ) {
-		switch ( handle->mType ) {
+		case ZLGfxHandle::BUFFER:
+			glDeleteBuffers ( 1, &glid );
+			GL_LOG_ERRORS ( "glDeleteBuffers" )
+			break;
 		
-			case ZLGfxHandle::BUFFER:
-				glDeleteBuffers ( 1, &handle->mGLID );
-				GL_LOG_ERRORS ( "glDeleteBuffers" )
-				break;
-			
-			case ZLGfxHandle::FRAMEBUFFER:
-				glDeleteFramebuffers ( 1, &handle->mGLID );
-				GL_LOG_ERRORS ( "glDeleteFramebuffers" )
-				break;
-			
-			case ZLGfxHandle::PROGRAM: {
-			
-				GLint status;
-				glGetProgramiv ( handle->mGLID, GL_DELETE_STATUS, &status );
-				GL_LOG_ERRORS ( "glGetProgramiv" )
+		case ZLGfxHandle::FRAMEBUFFER:
+			glDeleteFramebuffers ( 1, &glid );
+			GL_LOG_ERRORS ( "glDeleteFramebuffers" )
+			break;
+		
+		case ZLGfxHandle::PROGRAM: {
+		
+			GLint status;
+			glGetProgramiv ( glid, GL_DELETE_STATUS, &status );
+			GL_LOG_ERRORS ( "glGetProgramiv" )
 
-				if ( status == GL_FALSE ) {
-					glDeleteProgram ( handle->mGLID );
-					GL_LOG_ERRORS ( "glDeleteProgram" )
-				}
-				break;
+			if ( status == GL_FALSE ) {
+				glDeleteProgram ( glid );
+				GL_LOG_ERRORS ( "glDeleteProgram" )
 			}
-			case ZLGfxHandle::SHADER: {
-			
-				GLint status;
-				glGetShaderiv ( handle->mGLID, GL_DELETE_STATUS, &status );
-				GL_LOG_ERRORS ( "glGetShaderiv" )
-			
-				if ( status == GL_FALSE ) {
-					glDeleteShader ( handle->mGLID );
-					GL_LOG_ERRORS ( "glDeleteShader" )
-				}
-				break;
-			}
-			case ZLGfxHandle::TEXTURE:
-				glDeleteTextures ( 1, &handle->mGLID );
-				GL_LOG_ERRORS ( "glDeleteTextures" )
-				break;
-			
-			case ZLGfxHandle::RENDERBUFFER:
-				glDeleteRenderbuffers ( 1, &handle->mGLID );
-				GL_LOG_ERRORS ( "glDeleteRenderbuffers" )
-				break;
-			
-			case ZLGfxHandle::VERTEXARRAY:
-				#if !( defined( MOAI_OS_ANDROID ) || defined( MOAI_OS_HTML ))
-					glDeleteVertexArrays ( 1, &handle->mGLID );
-					GL_LOG_ERRORS ( "glDeleteVertexArrays" )
-				#endif
-				break;
+			break;
 		}
+		case ZLGfxHandle::SHADER: {
+		
+			GLint status;
+			glGetShaderiv ( glid, GL_DELETE_STATUS, &status );
+			GL_LOG_ERRORS ( "glGetShaderiv" )
+		
+			if ( status == GL_FALSE ) {
+				glDeleteShader ( glid );
+				GL_LOG_ERRORS ( "glDeleteShader" )
+			}
+			break;
+		}
+		case ZLGfxHandle::TEXTURE:
+			glDeleteTextures ( 1, &glid );
+			GL_LOG_ERRORS ( "glDeleteTextures" )
+			break;
+		
+		case ZLGfxHandle::RENDERBUFFER:
+			glDeleteRenderbuffers ( 1, &glid );
+			GL_LOG_ERRORS ( "glDeleteRenderbuffers" )
+			break;
+		
+		case ZLGfxHandle::VERTEXARRAY:
+			#if !( defined( MOAI_OS_ANDROID ) || defined( MOAI_OS_HTML ))
+				glDeleteVertexArrays ( 1, &glid );
+				GL_LOG_ERRORS ( "glDeleteVertexArrays" )
+			#endif
+			break;
 	}
-	
-	delete handle;
 }
 
 //----------------------------------------------------------------//

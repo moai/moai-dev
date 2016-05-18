@@ -118,12 +118,14 @@ private:
 	
 public:
 
+	GET ( const ZLRect&, LayoutBounds, mLayoutBounds )
+
 	//----------------------------------------------------------------//
 	void				AddHighlight			( u32 base, u32 top, u32 color );
 	void				ApplyHighlights			();
 	void				ClearHighlight			( u32 base, u32 top );
 	void				ClearHighlights			();
-	u32					CountSprites			();
+	size_t				CountSprites			();
 	void				Draw					( u32 reveal, MOAIShader* defaultShader, bool useSpriteShaders );
 	void				DrawDebug				();
 	bool				GetBounds				( ZLRect& rect );

@@ -622,7 +622,7 @@ void MOAIFourier::SetWindowFunction ( u32 func, float a ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFourier::Transform ( ZLStream& inStream, u32 inStreamType, bool complexIn, ZLStream& outStream, u32 outStreamType, u32 stride, u32 average ) {
+void MOAIFourier::Transform ( ZLStream& inStream, u32 inStreamType, bool complexIn, ZLStream& outStream, u32 outStreamType, size_t stride, u32 average ) {
 
 	assert ( sizeof ( kiss_fft_scalar ) == sizeof ( float ));
 
@@ -732,7 +732,7 @@ void MOAIFourier::Transform ( ZLStream& inStream, u32 inStreamType, bool complex
 		}
 		
 		if ( inStream.GetCursor () != next ) {
-			inStream.Seek ( next, SEEK_SET );
+			inStream.Seek (( long )next, SEEK_SET );
 		}
 		
 		if ( halfInput && ( i > halfSize )) break;

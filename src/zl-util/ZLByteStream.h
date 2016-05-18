@@ -20,7 +20,7 @@ private:
 	size_t			mCapacity;
 
 	//----------------------------------------------------------------//
-	ZLResultCode	SetCursor			( long offset );
+	ZLResultCode	SetCursor			( size_t offset );
 
 public:
 

@@ -42,6 +42,15 @@ bool MOAILuaHeader::IsCompatible ( const MOAILuaHeader& check ) const {
 }
 
 //----------------------------------------------------------------//
+MOAILuaHeader::MOAILuaHeader () :
+	mSignature ( 0 ) {
+}
+
+//----------------------------------------------------------------//
+MOAILuaHeader::~MOAILuaHeader () {
+}
+
+//----------------------------------------------------------------//
 ZLResultCode MOAILuaHeader::Read ( ZLStream& stream ) {
 
 	ZLResultCodeAccumulator result;
@@ -60,6 +69,16 @@ ZLResultCode MOAILuaHeader::Read ( ZLStream& stream ) {
 }
 
 //----------------------------------------------------------------//
+ZLResultCode MOAILuaHeader::Read ( void* buffer, size_t size ) {
+
+	if ( sizeof ( MOAILuaHeader ) <= size ) {
+		memcpy ( this, buffer, sizeof ( MOAILuaHeader ));
+		return ZL_OK;
+	}
+	return ZL_ERROR;
+}
+
+//----------------------------------------------------------------//
 ZLResultCode MOAILuaHeader::Write ( ZLStream& stream ) const {
 
 	ZLResultCodeAccumulator result;
@@ -75,6 +94,16 @@ ZLResultCode MOAILuaHeader::Write ( ZLStream& stream ) const {
 	result = stream.Write < u8 >( this->mTypeOfLuaNumber ).mCode;
 	
 	return result;
+}
+
+//----------------------------------------------------------------//
+ZLResultCode MOAILuaHeader::Write ( void* buffer, size_t size ) {
+
+	if ( sizeof ( MOAILuaHeader ) <= size ) {
+		memcpy ( buffer, this, sizeof ( MOAILuaHeader ));
+		return ZL_OK;
+	}
+	return ZL_ERROR;
 }
 
 //================================================================//
@@ -126,16 +155,23 @@ int MOAILuaUtil::_convert ( lua_State* L ) {
 	@out	table header		Returns 'nil' is no valid signature is found.
 */
 int MOAILuaUtil::_getHeader ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAILuaUtil, "S" )
-	
-	size_t bufflen;
-	cc8* buffer = lua_tolstring ( L, -1, &bufflen );
-	
-	ZLByteStream stream;
-	stream.SetBuffer ( buffer, bufflen, bufflen );
+	MOAI_LUA_SETUP_SINGLE ( MOAILuaUtil, "" )
 	
 	MOAILuaHeader header;
-	header.Read ( stream );
+	
+	if ( state.IsType ( 1, LUA_TSTRING )) {
+	
+		size_t bufflen;
+		cc8* buffer = lua_tolstring ( L, -1, &bufflen );
+	
+		ZLByteStream stream;
+		stream.SetBuffer ( buffer, bufflen, bufflen );
+	
+		header.Read ( stream );
+	}
+	else {
+		header.Init ();
+	}
 	
 	if ( header.mSignature == MOAILuaHeader::SIGNATURE ) {
 	
@@ -168,7 +204,7 @@ bool MOAILuaUtil::Convert ( const MOAILuaHeader& dstFormat, ZLStream& srcStream,
 	srcFormat.Read ( srcStream );
 	
 	if ( memcmp ( &srcFormat, &dstFormat, sizeof ( MOAILuaHeader )) == 0 ) {
-		srcStream.Seek ( base, SEEK_SET );
+		srcStream.Seek (( long )base, SEEK_SET );
 		return false;
 	}
 	

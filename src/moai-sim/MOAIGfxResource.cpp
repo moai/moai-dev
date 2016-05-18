@@ -3,9 +3,9 @@
 
 #include "pch.h"
 
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResource.h>
-#include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIRenderMgr.h>
 
 //================================================================//
@@ -79,7 +79,7 @@ int MOAIGfxResource::_purge ( lua_State* L ) {
 int MOAIGfxResource::_scheduleForGPUCreate ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )
 
-	u32 listID = state.GetValue < u32 >( 2, MOAIGfxDevice::DRAWING_PIPELINE );
+	u32 listID = state.GetValue < u32 >( 2, MOAIGfxPipelineClerk::DRAWING_PIPELINE );
 	self->ScheduleForGPUCreate ( listID );
 	return 0;
 }
@@ -120,7 +120,7 @@ void MOAIGfxResource::Affirm () {
 //----------------------------------------------------------------//
 u32 MOAIGfxResource::Bind () {
 
-//	if ( !MOAIGfxDevice::Get ().GetHasContext ()) {
+//	if ( !MOAIGfxMgr::Get ().GetHasContext ()) {
 //		MOAILog ( 0, MOAILogMessages::MOAIGfxResource_MissingDevice );
 //		return false;
 //	}
@@ -136,10 +136,7 @@ u32 MOAIGfxResource::Bind () {
 //----------------------------------------------------------------//
 void MOAIGfxResource::Destroy () {
 
-	if ( MOAIGfxResourceMgr::IsValid ()) {
-		this->OnGPUDestroy ();
-	}
-	this->OnGPULost ();
+	this->OnGPUDeleteOrDiscard ( true );
 	this->OnCPUDestroy ();
 	this->mState = STATE_UNINITIALIZED;
 }
@@ -179,7 +176,7 @@ bool MOAIGfxResource::DoGPUCreate () {
 		this->mState = STATE_PENDING;
 	
 		if ( this->OnGPUCreate ()) {
-			MOAIGfxDevice::GetDrawingAPI ().Event ( this, GFX_EVENT_CREATED, 0 );
+			MOAIGfxMgr::GetDrawingAPI ().Event ( this, GFX_EVENT_CREATED, 0 );
 			this->OnCPUDestroy ();
 		}
 		else {
@@ -203,7 +200,7 @@ void MOAIGfxResource::FinishInit () {
 
 	if (( this->mState == STATE_UNINITIALIZED ) || ( this->mState == STATE_ERROR )) {
 		this->mState = STATE_READY_FOR_CPU_CREATE;
-		this->ScheduleForGPUCreate ( MOAIGfxDevice::DRAWING_PIPELINE );
+		this->ScheduleForGPUCreate ( MOAIGfxPipelineClerk::DRAWING_PIPELINE );
 	}
 	else {
 		this->ScheduleForGPUUpdate ();
@@ -239,14 +236,14 @@ MOAIGfxResource::MOAIGfxResource () :
 	this->mMasterLink.Data ( this );
 	this->mPendingLink.Data ( this );
 	
-	MOAIGfxResourceMgr::Get ().InsertGfxResource ( *this );
+	MOAIGfxMgr::Get ().mResourceMgr.InsertGfxResource ( *this );
 }
 
 //----------------------------------------------------------------//
 MOAIGfxResource::~MOAIGfxResource () {
 
-	if ( MOAIGfxResourceMgr::IsValid ()) {
-		MOAIGfxResourceMgr::Get ().RemoveGfxResource ( *this );
+	if ( MOAIGfxMgr::IsValid ()) {
+		MOAIGfxMgr::Get ().mResourceMgr.RemoveGfxResource ( *this );
 	}
 	this->mReloader.Clear ();
 }
@@ -278,10 +275,10 @@ bool MOAIGfxResource::Purge ( u32 age ) {
 
 	if ( this->mLastRenderCount <= age ) {
 		this->OnCPUDestroy ();
-		this->OnGPUDestroy ();
+		this->OnGPUDeleteOrDiscard ( true );
 		this->mState = STATE_READY_FOR_CPU_CREATE;
 		
-		this->ScheduleForGPUCreate ( MOAIGfxDevice::DRAWING_PIPELINE );
+		this->ScheduleForGPUCreate ( MOAIGfxPipelineClerk::DRAWING_PIPELINE );
 		
 		return true;
 	}
@@ -301,8 +298,8 @@ void MOAIGfxResource::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "GFX_EVENT_CREATED",					( u32 )GFX_EVENT_CREATED );
 	
-	state.SetField ( -1, "DRAWING_PIPELINE",					( u32 )MOAIGfxDevice::DRAWING_PIPELINE );
-	state.SetField ( -1, "LOADING_PIPELINE",					( u32 )MOAIGfxDevice::LOADING_PIPELINE );
+	state.SetField ( -1, "DRAWING_PIPELINE",					( u32 )MOAIGfxPipelineClerk::DRAWING_PIPELINE );
+	state.SetField ( -1, "LOADING_PIPELINE",					( u32 )MOAIGfxPipelineClerk::LOADING_PIPELINE );
 }
 
 //----------------------------------------------------------------//
@@ -329,7 +326,7 @@ void MOAIGfxResource::Renew () {
 	// any (valid) state other than error we go back to square zero
 	if ( !(( this->mState == STATE_UNINITIALIZED ) || ( this->mState == STATE_ERROR ))) {
 	
-		this->OnGPULost (); // clear out the resource id (if any)
+		this->OnGPUDeleteOrDiscard ( false ); // clear out the resource id (if any)
 		this->mState = STATE_READY_FOR_CPU_CREATE;
 		this->InvokeLoader ();
 		this->DoGPUCreate ();
@@ -342,8 +339,8 @@ bool MOAIGfxResource::ScheduleForGPUCreate ( u32 pipelineID ) {
 	if ( this->mState == STATE_READY_TO_BIND ) return true;
 	if (( this->mState == STATE_UNINITIALIZED ) || ( this->mState == STATE_ERROR )) return false;
 	
-	if ( MOAIGfxResourceMgr::IsValid ()) {
-		MOAIGfxResourceMgr::Get ().ScheduleGPUAffirm ( *this, pipelineID );
+	if ( MOAIGfxMgr::IsValid ()) {
+		MOAIGfxMgr::Get ().mResourceMgr.ScheduleGPUAffirm ( *this, pipelineID );
 	}
 	return true;
 }
@@ -355,8 +352,8 @@ bool MOAIGfxResource::ScheduleForGPUUpdate () {
 
 	this->mState = STATE_NEEDS_GPU_UPDATE;
 
-	if ( MOAIGfxResourceMgr::IsValid ()) {
-		MOAIGfxResourceMgr::Get ().ScheduleGPUAffirm ( *this, MOAIGfxDevice::DRAWING_PIPELINE ); // always update in the drawing pipeline
+	if ( MOAIGfxMgr::IsValid ()) {
+		MOAIGfxMgr::Get ().mResourceMgr.ScheduleGPUAffirm ( *this, MOAIGfxPipelineClerk::DRAWING_PIPELINE ); // always update in the drawing pipeline
 	}
 	return true;
 }

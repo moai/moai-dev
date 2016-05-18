@@ -3,8 +3,8 @@
 
 #include "pch.h"
 
-#include <moai-sim/MOAIGfxDevice.h>
-#include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxMgr.h>
+#include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIMesh.h>
@@ -118,10 +118,10 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& mater
 
 	// TODO: make use of offset and scale
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	if ( gfxDevice.BindVertexArray ( this )) {
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	if ( gfxMgr.mGfxState.BindVertexArray ( this )) {
 
-		ZLGfx& gfx = gfxDevice.GetDrawingAPI ();
+		ZLGfx& gfx = gfxMgr.GetDrawingAPI ();
 
 		// I am super lazy, so set this up here instead of adding if's below
 		MOAIMeshSpan defaultSpan;
@@ -131,39 +131,36 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& mater
 			defaultSpan.mNext = 0;
 			span = &defaultSpan;
 		}
-
-		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
-		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
 		
-		gfxDevice.SetPenWidth ( this->mPenWidth );
+		gfxMgr.mGfxState.SetPenWidth ( this->mPenWidth );
 		
-		gfxDevice.UpdateAndBindUniforms ();
+		gfxMgr.mGfxState.UpdateAndBindUniforms ();
 		
 		if ( this->mIndexBuffer ) {
 			
 			// TODO: turns out we can bind this inside the VAO as well. so there.
-			if ( gfxDevice.BindIndexBuffer ( this->mIndexBuffer )) {
+			if ( gfxMgr.mGfxState.BindIndexBuffer ( this->mIndexBuffer )) {
 			
-				u32 indexSizeInBytes = this->mIndexBuffer->GetIndexSize ();
+				size_t indexSizeInBytes = this->mIndexBuffer->GetIndexSize ();
 				
 				for ( ; span; span = span->mNext ) {
 					gfx.DrawElements (
 						this->mPrimType,
-						span->mTop - span->mBase,
+						( u32 )( span->mTop - span->mBase ),
 						indexSizeInBytes == 2 ? ZGL_TYPE_UNSIGNED_SHORT : ZGL_TYPE_UNSIGNED_INT,
 						this->mIndexBuffer->GetBuffer (),
 						span->mBase * indexSizeInBytes
 					);
 				}
-				gfxDevice.BindIndexBuffer ();
+				gfxMgr.mGfxState.BindIndexBuffer ();
 			}
 		}
 		else {
 			for ( ; span; span = span->mNext ) {
-				gfx.DrawArrays ( this->mPrimType, span->mBase, span->mTop - span->mBase );
+				gfx.DrawArrays ( this->mPrimType, ( u32 )span->mBase, ( u32 )( span->mTop - span->mBase ));
 			}
 		}
-		gfxDevice.BindVertexArray ();
+		gfxMgr.mGfxState.BindVertexArray ();
 	}
 }
 
@@ -233,13 +230,10 @@ void MOAIMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIMesh::ReserveVAOs ( u32 total ) {
 
-	if ( MOAIGfxResourceMgr::IsValid ()) {
-		for ( size_t i = 0; i < this->mVAOs.Size (); ++i ) {
-			MOAIGfxResourceMgr::Get ().PushDeleter ( this->mVAOs [ i ]);
-		}
+	for ( size_t i = 0; i < this->mVAOs.Size (); ++i ) {
+		MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mVAOs [ i ], false );
 	}
 	this->mVAOs.Init ( total );
-	this->mVAOs.Fill ( 0 );
 }
 
 //----------------------------------------------------------------//

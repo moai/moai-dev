@@ -7,6 +7,7 @@
 #include <moai-core/MOAILua.h>
 #include <moai-core/MOAIEventSource.h>
 
+#define MOAI_ENV_appDirectory				"appDirectory"
 #define MOAI_ENV_appDisplayName				"appDisplayName"
 #define MOAI_ENV_appID						"appID"
 #define MOAI_ENV_appVersion					"appVersion"
@@ -34,6 +35,7 @@
 #define MOAI_ENV_osVersion					"osVersion"
 #define MOAI_ENV_resourceDirectory			"resourceDirectory"
 #define MOAI_ENV_screenDpi					"screenDpi"
+#define MOAI_ENV_screenScale				"screenScale"
 #define MOAI_ENV_systemLanguageCode			"systemLanguageCode"
 #define MOAI_ENV_verticalResolution			"verticalResolution"
 #define MOAI_ENV_horizontalResolution		"horizontalResolution"
