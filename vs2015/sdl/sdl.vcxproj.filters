@@ -119,6 +119,12 @@
     </ClCompile>
     <ClCompile Include="..\..\3rdparty\sdl2-2.0.4\src\haptic\windows\SDL_xinputhaptic.c" />
     <ClCompile Include="..\..\3rdparty\sdl2-2.0.4\src\joystick\windows\SDL_xinputjoystick.c" />
+    <ClCompile Include="..\..\3rdparty\sdl2-2.0.4\src\render\direct3d11\SDL_render_d3d11.c" />
+    <ClCompile Include="..\..\3rdparty\sdl2-2.0.4\src\render\direct3d11\SDL_render_winrt.cpp" />
+    <ClCompile Include="..\..\3rdparty\sdl2-2.0.4\src\render\opengles\SDL_render_gles.c" />
+    <ClCompile Include="..\..\3rdparty\sdl2-2.0.4\src\render\opengles2\SDL_render_gles2.c" />
+    <ClCompile Include="..\..\3rdparty\sdl2-2.0.4\src\render\opengles2\SDL_shaders_gles2.c" />
+    <ClCompile Include="..\..\3rdparty\sdl2-2.0.4\src\render\psp\SDL_render_psp.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\3rdparty\sdl2-2.0.4\src\core\windows\SDL_directx.h" />
@@ -446,6 +452,10 @@
     <ClInclude Include="..\..\3rdparty\sdl2-2.0.4\src\render\software\SDL_rotate.h" />
     <ClInclude Include="..\..\3rdparty\sdl2-2.0.4\src\haptic\windows\SDL_xinputhaptic_c.h" />
     <ClInclude Include="..\..\3rdparty\sdl2-2.0.4\src\joystick\windows\SDL_xinputjoystick_c.h" />
+    <ClInclude Include="..\..\3rdparty\sdl2-2.0.4\src\render\direct3d11\SDL_render_winrt.h" />
+    <ClInclude Include="..\..\3rdparty\sdl2-2.0.4\src\render\opengles\SDL_glesfuncs.h" />
+    <ClInclude Include="..\..\3rdparty\sdl2-2.0.4\src\render\opengles2\SDL_gles2funcs.h" />
+    <ClInclude Include="..\..\3rdparty\sdl2-2.0.4\src\render\opengles2\SDL_shaders_gles2.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="include">
