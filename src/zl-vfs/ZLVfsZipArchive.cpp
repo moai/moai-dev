@@ -265,7 +265,7 @@ ZLVfsZipFileDir* ZLVfsZipFileDir::AffirmSubDir ( const char* path, size_t len ) 
 	ZLVfsZipFileDir* dir = this->mChildDirs;
 	
 	for ( ; dir; dir = dir->mNext ) {
-		if ( count_same_nocase ( dir->mName.c_str (), path ) == len ) return dir;
+		if ( zl_count_same_nocase ( dir->mName.c_str (), path ) == len ) return dir;
 	}
 	
 	dir = new ZLVfsZipFileDir ();
@@ -369,7 +369,7 @@ ZLVfsZipFileDir* ZLVfsZipArchive::FindDir ( char const* path ) {
 			ZLVfsZipFileDir* cursor = dir->mChildDirs;
 			
 			for ( ; cursor; cursor = cursor->mNext ) {
-				if ( count_same_nocase ( cursor->mName.c_str (), path ) == cursor->mName.length ()) {
+				if ( zl_count_same_nocase ( cursor->mName.c_str (), path ) == cursor->mName.length ()) {
 					dir = cursor;
 					break;
 				}
@@ -412,7 +412,7 @@ ZLVfsZipFileEntry* ZLVfsZipArchive::FindEntry ( char const* filename ) {
 	
 	entry = dir->mChildFiles;
 	for ( ; entry; entry = entry->mNext ) {
-		if ( strcmp_ignore_case ( entry->mName.c_str (), filename ) == 0 ) break;
+		if ( zl_strcmp_ignore_case ( entry->mName.c_str (), filename ) == 0 ) break;
 	}
 
 	return entry;

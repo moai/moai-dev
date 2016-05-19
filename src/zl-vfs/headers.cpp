@@ -34,7 +34,7 @@
 	#include "NaClFile.h"
 #endif
 
-#ifdef ANDROID
+#ifdef MOAI_OS_ANDROID
 	#include <android/log.h>
 #endif
 
@@ -209,7 +209,7 @@ int zl_get_stat ( char const* path, zl_stat* filestat ) {
 
 			entry = parentDir->mChildFiles;
 			for ( ; entry; entry = entry->mNext ) {
-				if ( strcmp_ignore_case ( entry->mName.c_str (), filename ) == 0 ) break;
+				if ( zl_strcmp_ignore_case ( entry->mName.c_str (), filename ) == 0 ) break;
 			}
 
 			if ( entry ) {
@@ -226,7 +226,7 @@ int zl_get_stat ( char const* path, zl_stat* filestat ) {
 					dirname.append ( "/" );
 				}
 				for ( ; dir; dir = dir->mNext ) {
-					if ( strcmp_ignore_case ( dir->mName.c_str (), dirname.c_str ()) == 0 ) break;
+					if ( zl_strcmp_ignore_case ( dir->mName.c_str (), dirname.c_str ()) == 0 ) break;
 				}
 
 				if ( dir ) {
@@ -611,11 +611,7 @@ int zl_fputs ( const char* string, ZLFILE* fp ) {
 
 	if (( fp == 0 ) || ( fp == zl_stdout )) {
 
-		#ifdef ANDROID
-			return __android_log_print ( ANDROID_LOG_INFO, "MoaiLog", "%s", string );
-		#else
-			return printf ( "%s", string );
-		#endif
+		zl_puts ( string );
 	}
 	else {
 
@@ -817,11 +813,7 @@ int zl_putc ( int character, ZLFILE* fp ) {
 //----------------------------------------------------------------//
 int zl_puts ( const char* string ) {
 
-	#ifdef ANDROID
-		return __android_log_print ( ANDROID_LOG_INFO, "MoaiLog", "%s\n", string );
-	#else
-		return printf ( "%s\n", string );
-	#endif
+	return zl_printf ( "%s\n", string );
 }
 
 //----------------------------------------------------------------//
@@ -905,10 +897,23 @@ int zl_vfprintf ( ZLFILE* fp, const char* format, va_list arg ) {
 
 	if (( fp == 0 ) || ( fp == zl_stdout )) {
 	
-		#ifdef ANDROID
+		#ifdef MOAI_OS_ANDROID
 			return __android_log_vprint ( ANDROID_LOG_INFO, "MoaiLog", format, arg );
 		#else
+			#ifdef MOAI_OS_WINDOWS
+
+				char buffer [ 1024 ];
+				char* str = zl_vsnprintf_alloc ( buffer, sizeof ( buffer ), format, arg );
+				OutputDebugString ( str );
+
+				if ( str != buffer ) {
+					free ( str );
+				}
+
+			#endif
+
 			return vprintf ( format, arg );
+
 		#endif
 	}
 	else {

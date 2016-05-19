@@ -494,7 +494,7 @@ int ZLVfsFileSystem::MountVirtual ( const char* path, const char* archive ) {
 		virtualPath = cursor;
 		cursor = cursor->mNext;
 		
-		if ( strcmp_ignore_case ( virtualPath->mPath.c_str (), path ) == 0 ) {
+		if ( zl_strcmp_ignore_case ( virtualPath->mPath.c_str (), path ) == 0 ) {
 			delete virtualPath;
 		}
 		else {

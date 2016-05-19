@@ -9,8 +9,9 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-extern size_t	count_same			( char const* str0, char const* str1 );
-extern size_t	count_same_nocase	( char const* str0, char const* str1 );
-extern int		strcmp_ignore_case	( char const* str0, char const* str1 );
+extern size_t	zl_count_same			( char const* str0, char const* str1 );
+extern size_t	zl_count_same_nocase	( char const* str0, char const* str1 );
+extern int		zl_strcmp_ignore_case	( char const* str0, char const* str1 );
+extern char*	zl_vsnprintf_alloc		( char* s, size_t n, const char* format, va_list arg );
 
 #endif

@@ -315,6 +315,20 @@ void _AKUSetTextInputRectFunc ( int xMin, int yMin, int xMax, int yMax ) {
 	SDL_SetTextInputRect ( &sdlRect );
 }
 
+//================================================================//
+// SDL callbacks
+//================================================================//
+
+void	_SDL_LogOutputFunction	( void *userdata, int category, SDL_LogPriority priority, const char *message );
+
+//----------------------------------------------------------------//
+void _SDL_LogOutputFunction ( void *userdata, int category, SDL_LogPriority priority, const char *message ) {
+	UNUSED ( userdata );
+	UNUSED ( category );
+	UNUSED ( priority );
+
+	printf ( message );
+}
 
 //================================================================//
 // helpers
@@ -348,6 +362,9 @@ void GetDeviceToPixelScale ( float& w, float& h ) {
 
 //----------------------------------------------------------------//
 void Init ( int argc, char** argv ) {
+
+	SDL_LogSetOutputFunction ( _SDL_LogOutputFunction, 0 );
+	SDL_LogSetPriority ( SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_VERBOSE );
 
 	SDL_Init ( SDL_INIT_EVERYTHING );
 	PrintMoaiVersion ();
