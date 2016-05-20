@@ -32,5 +32,16 @@
     <ClInclude Include="..\..\src\zl-vfs\ZLVfsVirtualPath.h" />
     <ClInclude Include="..\..\src\zl-vfs\ZLVfsZipArchive.h" />
     <ClInclude Include="..\..\src\zl-vfs\ZLVfsZipStream.h" />
+    <ClInclude Include="..\..\src\zl-common\zl_platform.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\zl-common\zl_types.h">
+      <Filter>common</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="common">
+      <UniqueIdentifier>{36e6a161-2a52-4709-9344-f9aaa95a9477}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

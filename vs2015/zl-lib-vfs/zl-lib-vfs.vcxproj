@@ -241,6 +241,8 @@
     <ClCompile Include="..\..\src\zl-vfs\ZLVfsZipStream.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\zl-common\zl_platform.h" />
+    <ClInclude Include="..\..\src\zl-common\zl_types.h" />
     <ClInclude Include="..\..\src\zl-vfs\assert.h" />
     <ClInclude Include="..\..\src\zl-vfs\headers.h" />
     <ClInclude Include="..\..\src\zl-vfs\pch.h" />
