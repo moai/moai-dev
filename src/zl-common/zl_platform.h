@@ -86,6 +86,7 @@
 		#include <crtdbg.h>
     #endif
 	
+	#include <io.h>
 	#include <direct.h>
 
 	#ifndef PATH_MAX
@@ -121,7 +122,6 @@
 #include <ctype.h>
 #include <errno.h>
 #include <float.h>
-//#include <io.h> // windows only?
 #include <math.h>
 #include <stdarg.h>
 #include <stdio.h>
