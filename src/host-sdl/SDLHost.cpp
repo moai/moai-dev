@@ -327,7 +327,7 @@ void _SDL_LogOutputFunction ( void *userdata, int category, SDL_LogPriority prio
 	UNUSED ( category );
 	UNUSED ( priority );
 
-	printf ( message );
+	printf ( "%s", message );
 }
 
 //================================================================//
@@ -453,9 +453,6 @@ void MainLoop () {
 	
 		SDL_GLContext context = SDL_GL_CreateContext ( sWindow );
 		SDL_GL_SetSwapInterval ( 1 );
-	
-		GLint buffer;
-		glGetIntegerv ( GL_FRAMEBUFFER_BINDING, &buffer );
 	
 		AKUDetectGfxContext ();
 	

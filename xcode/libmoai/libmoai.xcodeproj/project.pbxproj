@@ -20831,8 +20831,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CC = "$(SRCROOT)/../util/ccache-clang";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
+				CXX = "$(SRCROOT)/../util/ccache-clang++";
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -20925,10 +20927,6 @@
 					"\"../../3rdparty/box2d-2.3.0\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
 					"\"../../3rdparty/libogg-1.2.2/include\"",
 					"\"../../3rdparty/jansson-2.7/src\"",
 					"\"../../3rdparty/jpeg-8c\"",
@@ -22146,8 +22144,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CC = "$(SRCROOT)/../util/ccache-clang";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				CXX = "$(SRCROOT)/../util/ccache-clang++";
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -22241,10 +22241,6 @@
 					"\"../../3rdparty/box2d-2.3.0\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
 					"\"../../3rdparty/libogg-1.2.2/include\"",
 					"\"../../3rdparty/jansson-2.7/src\"",
 					"\"../../3rdparty/jpeg-8c\"",
@@ -25458,6 +25454,8 @@
 					"${inherited}",
 					MACOSX,
 					LUA_USE_MACOSX,
+					BN_CTX_DEBUG,
+					BN_DEBUG,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -28581,6 +28579,7 @@
 					"${inherited}",
 					MACOSX,
 					LUA_USE_MACOSX,
+					SQLITE_DEBUG,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -29390,8 +29389,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CC = "$(SRCROOT)/../util/ccache-clang";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
+				CXX = "$(SRCROOT)/../util/ccache-clang++";
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -29485,10 +29486,6 @@
 					"\"../../3rdparty/box2d-2.3.0\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
 					"\"../../3rdparty/libogg-1.2.2/include\"",
 					"\"../../3rdparty/jansson-2.7/src\"",
 					"\"../../3rdparty/jpeg-8c\"",
@@ -29784,8 +29781,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CC = "$(SRCROOT)/../util/ccache-clang";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
+				CXX = "$(SRCROOT)/../util/ccache-clang++";
 				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -29878,10 +29877,6 @@
 					"\"../../3rdparty/box2d-2.3.0\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
-					"\"../../3rdparty/luacrypto-0.2.0/src\"",
-					"\"../../3rdparty/luacurl-1.2.1/src\"",
-					"\"../../3rdparty/luasocket-2.0.2/src\"",
-					"\"../../3rdparty/luasql-2.2.0/src\"",
 					"\"../../3rdparty/libogg-1.2.2/include\"",
 					"\"../../3rdparty/jansson-2.7/src\"",
 					"\"../../3rdparty/jpeg-8c\"",

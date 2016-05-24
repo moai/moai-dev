@@ -31,6 +31,8 @@ SUPPRESS_EMPTY_FILE_WARNING
 
 #include <zl-util/ZLDeviceTime.h>
 #include <zl-util/zl_socket.h>
+#include <luasocket-2.0.2/src/io.h>
+#include <luasocket-2.0.2/src/usocket.h>
 
 #ifdef ZL_SOCKET_POLL
 

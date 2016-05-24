@@ -36,8 +36,8 @@ extern jmp_buf*				zl_set_assert_jmp_buf		( jmp_buf* env );
 #undef assert
 
 #ifdef NDEBUG
-	#define __assert(x) (( void )x )
-	#define assert(x) (( void )x )
+	#define __assert(x) (( void )( x ))
+	#define assert(x) (( void )( x ))
 #else
 	#define __assert zl_assert
 	#define assert zl_assert
