@@ -41,8 +41,6 @@ SUPPRESS_EMPTY_FILE_WARNING
 
 SUPPRESS_EMPTY_FILE_WARNING
 
-#ifdef _WIN32
-
 #include <string.h>
 
 #include <zl-util/zl_socket.h>
