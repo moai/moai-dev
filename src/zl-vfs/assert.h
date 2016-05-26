@@ -5,7 +5,7 @@
 #define ZL_ASSERT_H
 
 #ifdef  __cplusplus
-	extern "C" {
+    extern "C" {
 #endif
 
 #include <setjmp.h>
@@ -19,11 +19,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-extern void					zl_handle_assert			( const char* condition, const char* funcname, const char* filename, int lineno );
-extern jmp_buf*				zl_set_assert_jmp_buf		( jmp_buf* env );
+extern void                    zl_handle_assert            ( const char* condition, const char* funcname, const char* filename, int lineno );
+extern jmp_buf*                zl_set_assert_jmp_buf        ( jmp_buf* env );
 
 #ifdef  __cplusplus
-	}
+    }
 #endif
 
 #endif
@@ -36,9 +36,12 @@ extern jmp_buf*				zl_set_assert_jmp_buf		( jmp_buf* env );
 #undef assert
 
 #ifdef NDEBUG
-	#define __assert(x) (( void )( x ))
-	#define assert(x) (( void )( x ))
+    //for vs2015 currently break command line build
+    //#define __assert(x) (( void )sizeof ( x ))
+    //#define assert(x) (( void )sizeof ( x ))
+    #define __assert(x) (( void ) 0 )
+	#define assert(x) (( void ) 0 )
 #else
-	#define __assert zl_assert
-	#define assert zl_assert
+    #define __assert zl_assert
+    #define assert zl_assert
 #endif
