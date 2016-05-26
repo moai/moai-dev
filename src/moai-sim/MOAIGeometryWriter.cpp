@@ -259,6 +259,20 @@ int MOAIGeometryWriter::_getMesh ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGeometryWriter::_offsetIndices ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
+	
+	MOAIStream* idxStream		= state.GetLuaObject < MOAIStream >( 1, true );
+	s32 offset					= state.GetValue < s32 >( 2, 0 );
+	
+	if ( idxStream ) {
+		MOAIGeometryWriter::OffsetIndices ( *idxStream, offset );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	pruneVertices
 	@text	Remove duplicate vertices from the vertex stream and update
 			or create the index stream. Index stream is assuming to be 4 bytes.
@@ -617,6 +631,24 @@ MOAIGeometryWriter::~MOAIGeometryWriter () {
 }
 
 //----------------------------------------------------------------//
+void MOAIGeometryWriter::OffsetIndices ( ZLStream& idxStream, s32 offset ) {
+
+	size_t idxStreamBase = idxStream.GetCursor ();
+
+	size_t totalIdx = idxStream.GetLength () >> 2;
+	if ( !totalIdx ) return;
+
+	for ( size_t i = 0; i < totalIdx; ++i ) {
+		
+		u32 idx = idxStream.Read < u32 >( 0 );
+		idxStream.Seek ( -4, SEEK_CUR );
+		idxStream.Write < u32 >(( u32 )( idx + offset ));
+	}
+
+	idxStream.Seek ( idxStreamBase, SEEK_SET );
+}
+
+//----------------------------------------------------------------//
 void MOAIGeometryWriter::PruneVertices ( const MOAIVertexFormat& format, MOAIStream& vtxStream, MOAIStream& idxStream ) {
 
 	size_t vtxStreamBase = vtxStream.GetCursor ();
@@ -713,6 +745,7 @@ void MOAIGeometryWriter::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "applyLightFromImage",	_applyLightFromImage },
 		{ "applyLinearGradient",	_applyLinearGradient },
 		{ "getMesh",				_getMesh },
+		{ "offsetIndices",			_offsetIndices },
 		{ "pruneVertices",			_pruneVertices },
 		{ "snapCoords",				_snapCoords },
 		{ "writeBox",				_writeBox },
