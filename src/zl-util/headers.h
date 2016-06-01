@@ -26,6 +26,7 @@
 #include <zl-util/ZLBox.h>
 #include <zl-util/ZLByteStream.h>
 #include <zl-util/ZLCgt.h>
+#include <zl-util/ZLCleanup.h>
 #include <zl-util/ZLColor.h>
 #include <zl-util/ZLCopyOnWrite.h>
 #include <zl-util/ZLCubicBezier2D.h>
@@ -49,6 +50,7 @@
 #include <zl-util/ZLHashWriterWhirlpool.h>
 #include <zl-util/ZLHexAdapter.h>
 #include <zl-util/ZLHexDump.h>
+#include <zl-util/ZLHull2D.h>
 #include <zl-util/ZLInterpolate.h>
 #include <zl-util/ZLIntersect.h>
 #include <zl-util/ZLLeanArray.h>

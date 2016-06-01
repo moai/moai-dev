@@ -21,6 +21,28 @@
 #define	ZL_RETURN_SIZE_RESULT(value,code)		ZL_RETURN_RESULT ( size_t, value, code )
 #define	ZL_RETURN_STRING_RESULT(value,code)		ZL_RETURN_RESULT ( STLString, value, code )
 
+#define ZL_HANDLE_ERROR_CODE(code,handler) {	\
+	ZLResultCode CODE = code;					\
+	if ( CODE != ZL_OK ) {						\
+		handler;								\
+	}											\
+}
+
+#define ZL_HANDLE_ERROR_RESULT(result,handler)	ZL_HANDLE_ERROR_CODE ( result.mCode, handler )
+
+#define ZL_RETURN_IF_NOT_EQUAL(result,expected,type,value,code) {				\
+	if ( result.mCode != ZL_OK ) ZL_RETURN_RESULT ( type, value, result.mCode )		\
+	if ( result.mValue != expected ) ZL_RETURN_RESULT ( type, value, code )			\
+}
+
+#define	ZL_RETURN_BOOL_RESULT_IF_NOT_EQUAL(result,expected,value,code)		ZL_RETURN_IF_NOT_EQUAL ( result, expected, bool, value, code )
+#define	ZL_RETURN_CHAR_RESULT_IF_NOT_EQUAL(result,expected,value,code)		ZL_RETURN_IF_NOT_EQUAL ( result, expected, u8, value, code )
+#define	ZL_RETURN_DOUBLE_RESULT_IF_NOT_EQUAL(result,expected,value,code)	ZL_RETURN_IF_NOT_EQUAL ( result, expected, double, value, code )
+#define	ZL_RETURN_FLOAT_RESULT_IF_NOT_EQUAL(result,expected,value,code)		ZL_RETURN_IF_NOT_EQUAL ( result, expected, float, value, code )
+#define	ZL_RETURN_INT_RESULT_IF_NOT_EQUAL(result,expected,value,code)		ZL_RETURN_IF_NOT_EQUAL ( result, expected, int, value, code )
+#define	ZL_RETURN_SIZE_RESULT_IF_NOT_EQUAL(result,expected,value,code)		ZL_RETURN_IF_NOT_EQUAL ( result, expected, size_t, value, code )
+#define	ZL_RETURN_STRING_RESULT_IF_NOT_EQUAL(result,expected,value,code)	ZL_RETURN_IF_NOT_EQUAL ( result, expected, STLString, value, code )
+
 enum {
 	ZL_OK,
 	ZL_ERROR,

@@ -107,6 +107,9 @@ private:
 			else if ( z < 0.0f ) {
 				countNegative++;
 			}
+			else {
+				continue;
+			}
 			
 			// we're going to brute force this here for now
 			// TODO: check number of edges and do something efficient (Shamos-Hoey, for example)
@@ -394,10 +397,10 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void ReserveVertices ( size_t total ) {
+	ZLResultCode ReserveVertices ( size_t total ) {
 	
-		this->mVertices.Init ( total );
 		this->mInfo = POLY_UNKNOWN;
+		return this->mVertices.Init ( total );
 	}
 
 	//----------------------------------------------------------------//

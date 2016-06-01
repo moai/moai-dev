@@ -6,6 +6,14 @@
 
 #include <zl-util/ZLResult.h>
 
+#define ZL_DECLARE_SCOPED_BUFFER(name,type,size,stackAllocMax)									\
+	ZLLeanArray < u8 >			_##name##_array;												\
+	type* name					= ( type* )( size <= stackAllocMax ? alloca ( size ) : 0 );		\
+	if ( !name ) {																				\
+		_##name##_array.Init ( size );															\
+		name = ( type* )_##name##_array.Data ();												\
+	}
+
 //================================================================//
 // ZLLeanArray
 //================================================================//

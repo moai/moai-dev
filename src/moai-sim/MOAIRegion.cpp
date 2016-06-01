@@ -55,6 +55,48 @@ int MOAIRegion::_boolean ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIRegion::_clear ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIRegion, "U" )
+
+	self->Clear ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIRegion::_convexHull ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIRegion, "U" )
+
+	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
+	
+	if ( stream ) {
+	
+		size_t resetCursor = stream->GetCursor ();
+	
+		size_t nVerts = state.GetValue < u32 >( 3, 0 );
+	
+		if ( nVerts == 0 ) {
+			nVerts = stream->GetLength () / ZLHull2D::VERTEX_SIZE;
+			stream->Seek ( 0, SEEK_SET );
+		}
+	
+		if ( nVerts > 0 ) {
+		
+			ZLSizeResult result = self->ConvexHull ( *stream, nVerts );
+			
+			if ( result.mCode == ZL_OK ) {
+				state.Push (( u32 )result.mValue );
+				return 1;
+			}
+		}
+		
+		stream->Seek ( resetCursor, SEEK_SET );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAIRegion::_copy ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRegion, "UU" )
 
@@ -203,6 +245,25 @@ int MOAIRegion::_getTriangles ( lua_State* L ) {
 	state.Push ( base );
 	state.Push ( base + totalElements );
 	return 3;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIRegion::_getVertices ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIRegion, "U" )
+
+	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
+	
+	if ( stream ) {
+	
+		ZLSizeResult result = self->GetVertices ( *stream );
+		
+		if ( result.mCode == ZL_OK ) {
+			state.Push (( u32 )result.mValue );
+			return 1;
+		}
+	}
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -498,6 +559,12 @@ void MOAIRegion::BooleanXor ( const MOAIRegion& regionA, const MOAIRegion& regio
 }
 
 //----------------------------------------------------------------//
+void MOAIRegion::Clear () {
+
+	this->mPolygons.Clear ();
+}
+
+//----------------------------------------------------------------//
 int MOAIRegion::CombineAndTesselate ( const MOAIRegion& regionA, const MOAIRegion& regionB, int windingRule ) {
 
 	SafeTesselator tess;
@@ -513,6 +580,43 @@ int MOAIRegion::CombineAndTesselate ( const MOAIRegion& regionA, const MOAIRegio
 		this->Cull ( *this, ZLPolygon2D::IS_CORRUPT );
 	}
 	return error;
+}
+
+//----------------------------------------------------------------//
+ZLSizeResult MOAIRegion::ConvexHull ( ZLStream& vtxStream, size_t nVerts ) {
+
+	ZLCleanup < MOAIRegion > cleanup ( this, &MOAIRegion::Clear );
+
+	this->Clear ();
+
+	ZLMemStream hull;
+	ZLSizeResult hullSize = ZLHull2D::MonotoneChain ( hull, vtxStream, nVerts, ZLHull2D::SORT_CSTDLIB );
+	
+	ZL_HANDLE_ERROR_CODE ( hullSize.mCode, ZL_RETURN_SIZE_RESULT ( 0, CODE ))
+	
+	nVerts = hullSize;
+	if ( nVerts == 0 ) ZL_RETURN_SIZE_RESULT ( 0, ZL_ERROR )
+	
+	ZL_HANDLE_ERROR_CODE ( this->ReservePolygons ( 1 ), ZL_RETURN_SIZE_RESULT ( 0, CODE ))
+	ZL_HANDLE_ERROR_CODE ( this->ReserveVertices ( 0, nVerts ), ZL_RETURN_SIZE_RESULT ( 0, CODE ));
+	
+	hull.Seek ( 0, SEEK_SET );
+	
+	for ( size_t i = 0; i < nVerts; ++i ) {
+		
+		ZLResult < float > x = hull.Read < float >( 0.0f );
+		ZL_HANDLE_ERROR_CODE ( x.mCode, ZL_RETURN_SIZE_RESULT ( 0, CODE ));
+		
+		ZLResult < float > y = hull.Read < float >( 0.0f );
+		ZL_HANDLE_ERROR_CODE ( y.mCode, ZL_RETURN_SIZE_RESULT ( 0, CODE ));
+		
+		this->mPolygons [ 0 ].SetVert ( i, ZLVec2D ( x, y ));
+	}
+	
+	this->Bless ();
+	
+	cleanup.Skip ();
+	ZL_RETURN_SIZE_RESULT ( nVerts, ZL_OK )
 }
 
 //----------------------------------------------------------------//
@@ -789,6 +893,28 @@ u32 MOAIRegion::GetTriangles ( MOAIVertexFormat& format, MOAIVertexBuffer& vtxBu
 }
 
 //----------------------------------------------------------------//
+ZLSizeResult MOAIRegion::GetVertices ( ZLStream& vtxStream ) const {
+
+	size_t count = 0;
+
+	size_t nPolys = this->mPolygons.Size ();
+	for ( size_t i = 0; i < nPolys; ++i ) {
+	
+		const ZLPolygon2D& poly = this->mPolygons [ i ];
+	
+		size_t nVerts = poly.GetSize ();
+		for ( size_t j = 0; j < nVerts; ++j ) {
+		
+			const ZLVec2D& v = poly.GetVertex ( j );
+			vtxStream.Write < float >( v.mX );
+			vtxStream.Write < float >( v.mY );
+			count++;
+		}
+	}
+	ZL_RETURN_SIZE_RESULT ( count, ZL_OK )
+}
+
+//----------------------------------------------------------------//
 MOAIRegion::MOAIRegion () {
 	
 	RTTI_SINGLE ( MOAILuaObject )
@@ -917,6 +1043,8 @@ void MOAIRegion::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "append",				_append },
 		{ "bless",				_bless },
 		{ "boolean",			_boolean },
+		{ "clear",				_clear },
+		{ "convexHull",			_convexHull },
 		{ "copy",				_copy },
 		{ "countPolygons",		_countPolygons },
 		{ "cull",				_cull },
@@ -925,6 +1053,7 @@ void MOAIRegion::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getDistance",		_getDistance },
 		{ "getPolygon",			_getPolygon },
 		{ "getTriangles",		_getTriangles },
+		{ "getVertices",		_getVertices },
 		{ "pad",				_pad },
 		{ "pointInside",		_pointInside },
 		{ "print",				_print },
@@ -944,9 +1073,20 @@ void MOAIRegion::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIRegion::ReservePolygons ( size_t size ) {
+ZLResultCode MOAIRegion::ReservePolygons ( size_t size ) {
 
-	this->mPolygons.Init ( size );
+	return this->mPolygons.Init ( size );
+}
+
+//----------------------------------------------------------------//
+ZLResultCode MOAIRegion::ReserveVertices ( size_t idx, size_t size ) {
+
+	if ( idx >= this->mPolygons.Size ()) {
+	
+		ZLResultCode result = this->mPolygons.Grow ( idx );
+		if ( result != ZL_OK ) return result;
+	}
+	return this->mPolygons [ idx ].ReserveVertices ( size );
 }
 
 //----------------------------------------------------------------//
