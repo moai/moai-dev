@@ -50,7 +50,6 @@
 #include <zl-util/ZLHashWriterWhirlpool.h>
 #include <zl-util/ZLHexAdapter.h>
 #include <zl-util/ZLHexDump.h>
-#include <zl-util/ZLHull2D.h>
 #include <zl-util/ZLInterpolate.h>
 #include <zl-util/ZLIntersect.h>
 #include <zl-util/ZLLeanArray.h>

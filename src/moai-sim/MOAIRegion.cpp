@@ -77,7 +77,7 @@ int MOAIRegion::_convexHull ( lua_State* L ) {
 		size_t nVerts = state.GetValue < u32 >( 3, 0 );
 	
 		if ( nVerts == 0 ) {
-			nVerts = stream->GetLength () / ZLHull2D::VERTEX_SIZE;
+			nVerts = stream->GetLength () / ZLPolygon2D::VERTEX_SIZE;
 			stream->Seek ( 0, SEEK_SET );
 		}
 	
@@ -589,31 +589,13 @@ ZLSizeResult MOAIRegion::ConvexHull ( ZLStream& vtxStream, size_t nVerts ) {
 
 	this->Clear ();
 
+	ZL_HANDLE_ERROR_CODE ( this->ReservePolygons ( 1 ), ZL_RETURN_SIZE_RESULT ( 0, CODE ))
+
 	ZLMemStream hull;
-	ZLSizeResult hullSize = ZLHull2D::MonotoneChain ( hull, vtxStream, nVerts, ZLHull2D::SORT_CSTDLIB );
+	ZLSizeResult hullSize = this->mPolygons [ 0 ].ConvexHull ( vtxStream, nVerts );
 	
 	ZL_HANDLE_ERROR_CODE ( hullSize.mCode, ZL_RETURN_SIZE_RESULT ( 0, CODE ))
-	
-	nVerts = hullSize;
-	if ( nVerts == 0 ) ZL_RETURN_SIZE_RESULT ( 0, ZL_ERROR )
-	
-	ZL_HANDLE_ERROR_CODE ( this->ReservePolygons ( 1 ), ZL_RETURN_SIZE_RESULT ( 0, CODE ))
-	ZL_HANDLE_ERROR_CODE ( this->ReserveVertices ( 0, nVerts ), ZL_RETURN_SIZE_RESULT ( 0, CODE ));
-	
-	hull.Seek ( 0, SEEK_SET );
-	
-	for ( size_t i = 0; i < nVerts; ++i ) {
-		
-		ZLResult < float > x = hull.Read < float >( 0.0f );
-		ZL_HANDLE_ERROR_CODE ( x.mCode, ZL_RETURN_SIZE_RESULT ( 0, CODE ));
-		
-		ZLResult < float > y = hull.Read < float >( 0.0f );
-		ZL_HANDLE_ERROR_CODE ( y.mCode, ZL_RETURN_SIZE_RESULT ( 0, CODE ));
-		
-		this->mPolygons [ 0 ].SetVert ( i, ZLVec2D ( x, y ));
-	}
-	
-	this->Bless ();
+	if ( hullSize < 3 ) ZL_RETURN_SIZE_RESULT ( 0, ZL_ERROR )
 	
 	cleanup.Skip ();
 	ZL_RETURN_SIZE_RESULT ( nVerts, ZL_OK )

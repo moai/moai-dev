@@ -30,8 +30,9 @@
 
 #define ZL_HANDLE_ERROR_RESULT(result,handler)	ZL_HANDLE_ERROR_CODE ( result.mCode, handler )
 
-#define ZL_RETURN_IF_NOT_EQUAL(result,expected,type,value,code) {				\
-	if ( result.mCode != ZL_OK ) ZL_RETURN_RESULT ( type, value, result.mCode )		\
+#define ZL_RETURN_IF_NOT_EQUAL(result,expected,type,value,code) {					\
+	ZLResultCode CODE = result.mCode;												\
+	if ( CODE != ZL_OK ) ZL_RETURN_RESULT ( type, value, CODE )						\
 	if ( result.mValue != expected ) ZL_RETURN_RESULT ( type, value, code )			\
 }
 
