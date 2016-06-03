@@ -7,9 +7,11 @@
 
 function drawBackground()
 	MOAIGfxDevice.setPenColor(1,1,1)
-	MOAIDraw.drawLine(0, 0, 1000, 1000)
-	MOAIDraw.drawLine(1000, 0, 1000, 1000)
+	MOAIDraw.drawLine(-1000, -1000, 1000, 1000)
+	MOAIDraw.drawLine(1000, -1000, -1000, 1000)
 end
+
+MOAIDebugLines.setStyle(MOAIDebugLines.PROP_WORLD_BOUNDS)
 
 MOAISim.openWindow ( "test", 640, 480 )
 
@@ -23,6 +25,8 @@ layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 layer:setCamera ( camera )
 MOAISim.pushRenderPass ( layer )
+
+layer:showDebugLines(true)
 
 -- add a background to make the tracking more visible
 backgroundDeck = MOAIScriptDeck.new()
