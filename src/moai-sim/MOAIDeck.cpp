@@ -27,7 +27,7 @@
 	@text	Return bounds for an item or the maximum bounds for the
 			deck.
 
-	@override
+	@overload
 
 		@in		number idx
 		@out	xMin
@@ -37,7 +37,7 @@
 		@out	yMax
 		@out	zMax
 	
-	@override
+	@overload
 
 		@out	xMin
 		@out	yMin

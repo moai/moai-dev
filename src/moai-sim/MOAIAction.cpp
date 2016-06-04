@@ -321,7 +321,7 @@ int MOAIAction::_throttle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	update
+/**	@lua	update
 	@text	Update action manually. This call will not update child actions.
 	
 	@in		MOAIAction  self
