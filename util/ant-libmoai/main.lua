@@ -537,7 +537,7 @@ for k, path in pairs ( FOLDERS ) do
 		FOLDERS [ k ] = path
 
 		if path ~= INVOKE_DIR then
-		--	MOAIFileSystem.deleteDirectory ( path, true )
+			MOAIFileSystem.deleteDirectory ( path, true )
 			MOAIFileSystem.affirmPath ( path )
 		end
 	end
