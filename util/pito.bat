@@ -1,14 +1,14 @@
 @echo off
 setlocal 
-set SCRIPT_DIR=%~dp0%
-set INVOKE_DIR=%CD%
-set SDK_HOME=%SCRIPT_DIR%\..\
+set "SCRIPT_DIR=%~dp0"
+set "INVOKE_DIR=%CD%"
+set "SDK_HOME=%SCRIPT_DIR%\.."
 set MOAI_CMD=%1
 
 rem pito scripts assume pito is on the path
-set PATH=%PATH%;%SCRIPT_DIR%
+set "PATH=%PATH%;%SCRIPT_DIR%"
 
-set args=%INVOKE_DIR% %SDK_HOME% %MOAI_CMD%
+set args="%INVOKE_DIR%" "%SDK_HOME%" "%MOAI_CMD%"
 
 shift
 
@@ -18,7 +18,7 @@ if "%~1" neq "" (
    shift 
    goto :parse
 )
-pushd %SCRIPT_DIR% 
+pushd "%SCRIPT_DIR%" 
 moai pito.lua %args%
 popd 
 
