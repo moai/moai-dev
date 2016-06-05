@@ -273,7 +273,7 @@ void MOAIMotionMgrIOS::Init () {
 	state.Push ( inputMgr.GetDevice ( this->mInputDeviceID ));
 	lua_setfield ( state, -2, "deviceMotion" );
 	
-	this->Start ( MOAISim::Get ().GetActionTree (), true );
+	this->Start ( MOAISim::Get ().GetActionTree ().GetDefaultParent (), true );
 }
 
 //----------------------------------------------------------------//

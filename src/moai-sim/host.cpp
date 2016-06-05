@@ -102,7 +102,9 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIParticleSystem )
 	REGISTER_LUA_CLASS ( MOAIParticleTimedEmitter )
 	REGISTER_LUA_CLASS ( MOAIPartition )
+	REGISTER_LUA_CLASS ( MOAIPath )
 	REGISTER_LUA_CLASS ( MOAIPathFinder )
+	REGISTER_LUA_CLASS ( MOAIPathStepper )
 	REGISTER_LUA_CLASS ( MOAIPathTerrainDeck )
 	REGISTER_LUA_CLASS ( MOAIPinTransform )
 	REGISTER_LUA_CLASS ( MOAIPointerSensor )
@@ -316,6 +318,12 @@ void AKUSetFunc_OpenWindow ( AKUOpenWindowFunc func ) {
 void AKUSetFunc_SetSimStep ( AKUSetSimStepFunc func ) {
 
 	MOAISim::Get ().SetSetSimStepFunc ( func );
+}
+
+//----------------------------------------------------------------//
+void AKUSetInputAutoTimestamp ( bool autotimestamp ) {
+
+	MOAIInputMgr::Get ().SetAutotimestamp ( autotimestamp );
 }
 
 //----------------------------------------------------------------//

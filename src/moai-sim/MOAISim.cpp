@@ -759,7 +759,7 @@ MOAISim::MOAISim () :
 	this->mActionMgr.Set ( *this, new MOAIActionTree ());
 	this->mActionTree.Set ( *this, new MOAIActionTree ());
 	
-	this->mActionMgr->Start ( *this->mActionTree, false );
+	this->mActionMgr->Start ( this->mActionTree->GetDefaultParent (), false );
 }
 
 //----------------------------------------------------------------//

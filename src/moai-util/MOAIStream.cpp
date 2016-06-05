@@ -275,6 +275,19 @@ int MOAIStream::_readU32 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIStream::_sample ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIStream, "U" );
+
+	u32 sampleSize		= state.GetValue < u32 >( 2, 1 );
+	u32 streamType		= state.GetValue < u32 >( 3, ZLSample::SAMPLE_FLOAT );
+	
+	state.Push ( self->Sample ( streamType, sampleSize ));
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	seek
 	@text	Repositions the cursor in the stream.
 	
@@ -666,6 +679,14 @@ void MOAIStream::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "SEEK_CUR", ( u32 )SEEK_CUR );
 	state.SetField ( -1, "SEEK_END", ( u32 )SEEK_END );
 	state.SetField ( -1, "SEEK_SET", ( u32 )SEEK_SET );
+	
+	state.SetField ( -1, "SAMPLE_S8",			( u32 )ZLSample::SAMPLE_S8 );
+	state.SetField ( -1, "SAMPLE_U8",			( u32 )ZLSample::SAMPLE_U8 );
+	state.SetField ( -1, "SAMPLE_S16",			( u32 )ZLSample::SAMPLE_S16 );
+	state.SetField ( -1, "SAMPLE_U16",			( u32 )ZLSample::SAMPLE_U16 );
+	state.SetField ( -1, "SAMPLE_S32",			( u32 )ZLSample::SAMPLE_S32 );
+	state.SetField ( -1, "SAMPLE_U32",			( u32 )ZLSample::SAMPLE_U32 );
+	state.SetField ( -1, "SAMPLE_FLOAT",		( u32 )ZLSample::SAMPLE_FLOAT );
 }
 
 //----------------------------------------------------------------//
@@ -687,6 +708,7 @@ void MOAIStream::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "readU8",				_readU8 },
 		{ "readU16",			_readU16 },
 		{ "readU32",			_readU32 },
+		{ "sample",				_sample },
 		{ "seek",				_seek },
 		{ "write",				_write },
 		{ "write8",				_write8 },

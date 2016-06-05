@@ -1051,10 +1051,16 @@ void ZLColorVec::AddAndClamp ( const ZLColorVec& c ) {
 	this->mB += c.mB;
 	this->mA += c.mA;
 	
-	this->mR = this->mR < 1.0f ? this->mR : 1.0f;
-	this->mG = this->mG < 1.0f ? this->mG : 1.0f;
-	this->mB = this->mB < 1.0f ? this->mB : 1.0f;
-	this->mA = this->mA < 1.0f ? this->mA : 1.0f;
+	this->Clamp ();
+}
+
+//----------------------------------------------------------------//
+void ZLColorVec::Clamp () {
+	
+	this->mR = ZLFloat::Clamp ( this->mR, 0.0f, 1.0f );
+	this->mG = ZLFloat::Clamp ( this->mG, 0.0f, 1.0f );
+	this->mB = ZLFloat::Clamp ( this->mB, 0.0f, 1.0f );
+	this->mA = ZLFloat::Clamp ( this->mA, 0.0f, 1.0f );
 }
 
 //----------------------------------------------------------------//

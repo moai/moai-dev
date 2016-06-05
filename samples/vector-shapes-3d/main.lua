@@ -49,17 +49,17 @@ tess:setShadowCurve ( MOAIEaseType.LINEAR )
 
 tess:setExtrude ( 100 )
 --tess:pushRect ( -50, -50, 50, 50 )
-tess:pushEllipse ( 0, 0, 100 )
+--tess:pushEllipse ( 0, 0, 100 )
 tess:setExtrude ( 0 )
 
 tess:setStrokeStyle ( MOAIVectorTesselator.STROKE_EXTERIOR )
 tess:setStrokeColor ( 0.45, 0.5, 1, 1  )
-tess:setStrokeWidth ( 50 )
+--tess:setStrokeWidth ( 50 )
 tess:setJoinStyle ( MOAIVectorTesselator.JOIN_ROUND )
 tess:setCapStyle ( MOAIVectorTesselator.CAP_POINTY )
 tess:setMiterLimit ( 10 )
 
---tess:pushRect ( -50, -50, 50, 50 )
+tess:pushRect ( -50, -50, 50, 50 )
 
 --tess:pushEllipse ( 0, 0, 100 )
 

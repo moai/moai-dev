@@ -37,9 +37,12 @@ class MOAIFacebookIOS :
 	public MOAIGlobalClass < MOAIFacebookIOS, MOAILuaObject >,
 	public MOAIGlobalEventSource {
 private:
-		
+	
 	//----------------------------------------------------------------//
 	static int		_getExpirationDate			( lua_State* L );
+	static int		_getUserEmail				( lua_State* L );
+	static int		_getUserID					( lua_State* L );
+	static int		_getUserName				( lua_State* L );
 	static int		_getToken					( lua_State* L );
 	static int		_graphRequest				( lua_State* L );
 	static int		_init						( lua_State* L );
@@ -49,6 +52,9 @@ private:
 	static int		_sendRequest				( lua_State* L );
 	static int		_sessionValid				( lua_State* L );
 	
+		
+	STLString			mName;
+	STLString			mEmail;
 public:
     
 	DECL_LUA_SINGLETON ( MOAIFacebookIOS );

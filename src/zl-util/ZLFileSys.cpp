@@ -100,6 +100,9 @@ bool ZLFileSys::Copy ( cc8* path, cc8* newPath ) {
 //----------------------------------------------------------------//
 bool ZLFileSys::DeleteDirectory ( cc8* path, bool force, bool recursive ) {
 
+	// TODO: check to see if user is trying to delete parent of working dir
+	// TODO: better return codes? (partial recursive delete, for example)
+
 	if ( ZLFileSys::CheckPathExists ( path ) == false ) return true;
 		
 	int result = zl_rmdir ( path );
@@ -108,7 +111,8 @@ bool ZLFileSys::DeleteDirectory ( cc8* path, bool force, bool recursive ) {
 	if ( !( force || recursive )) return false;
 	
 	STLString currentDir = ZLFileSys::GetCurrentPath ();
-	ZLFileSys::SetCurrentPath ( path );
+	
+	if ( !ZLFileSys::SetCurrentPath ( path )) return false;
 	
 	ZLDirectoryItr dirItr;
 	

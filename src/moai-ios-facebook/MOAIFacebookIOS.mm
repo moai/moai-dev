@@ -29,7 +29,6 @@ int MOAIFacebookIOS::_getExpirationDate ( lua_State* L ) {
 	
 	return 1;
 }
-
 //----------------------------------------------------------------//
 /**	@lua	getToken
  @text	Retrieve the Facebook login token.
@@ -50,6 +49,69 @@ int MOAIFacebookIOS::_getToken ( lua_State* L ) {
 	
 	return 1;
 }
+
+//----------------------------------------------------------------//
+/**	@lua	getUserEmail
+ @text	Retrieve the Facebook User email .
+ 
+ @in	nil
+ @out	string	User email
+ */
+int MOAIFacebookIOS::_getUserEmail ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIFacebookIOS, "" )
+	
+
+	
+	if ( MOAIFacebookIOS::Get ().mEmail != "" ) {
+		lua_pushstring ( L, MOAIFacebookIOS::Get ().mEmail);
+	} else {
+		lua_pushnil ( L );
+	}
+	
+	return 1;
+}
+//----------------------------------------------------------------//
+/**	@lua	getUserID
+ @text	Retrieve the Facebook User ID .
+ 
+ @in	nil
+ @out	string	User ID
+ */
+int MOAIFacebookIOS::_getUserID ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIFacebookIOS, "" )
+	
+	NSString* ID = [[ FBSDKAccessToken currentAccessToken ] userID ];
+	
+	if ( ID ) {
+		lua_pushstring ( L, [ ID UTF8String ]);
+	} else {
+		lua_pushnil ( L );
+	}
+	
+	return 1;
+}
+//----------------------------------------------------------------//
+/**	@lua	getUserName
+ @text	Retrieve the Facebook User Name .
+ 
+ @in	nil
+ @out	string	User User Name
+ */
+int MOAIFacebookIOS::_getUserName ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIFacebookIOS, "" )
+	
+	
+	
+
+	if ( MOAIFacebookIOS::Get ().mName != "") {
+		lua_pushstring ( L, MOAIFacebookIOS::Get ().mName.c_str() );
+	} else {
+		lua_pushnil ( L );
+	}
+	
+	return 1;
+}
+
 
 //----------------------------------------------------------------//
 /**	@lua	graphRequest
@@ -93,6 +155,7 @@ int MOAIFacebookIOS::_graphRequest ( lua_State* L ) {
 		}
 		else {
 			MOAIFacebookIOS::Get ().ReceivedRequestResponse ( result );
+			
 		}
 	}];
 	
@@ -146,7 +209,8 @@ int MOAIFacebookIOS::_login ( lua_State* L ) {
 			// If you ask for multiple permissions at once, you
 			// should check if specific permissions missing
 			//if ([ result.grantedPermissions containsObject:@"email" ]) {
-			//	// Do work
+				// Do work
+				
 			//}
 		}
 	}];
@@ -269,10 +333,13 @@ int MOAIFacebookIOS::_sessionValid ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIFacebookIOS::MOAIFacebookIOS () {
+MOAIFacebookIOS::MOAIFacebookIOS ():
+	mName(""),mEmail(0) {
     
 	RTTI_SINGLE ( MOAILuaObject )
 	RTTI_SINGLE ( MOAIGlobalEventSource )
+	
+	
 }
 
 //----------------------------------------------------------------//
@@ -294,7 +361,8 @@ void MOAIFacebookIOS::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getExpirationDate",			_getExpirationDate },
 		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAIFacebookIOS > },
 		{ "getToken",					_getToken },
-		{ "getUserID",					_getToken },
+		{ "getUserID",					_getUserID },
+		{ "getUserName",				_getUserName },
 		{ "graphRequest",				_graphRequest },
 		{ "init",						_init },
 		{ "login",						_login },
@@ -358,6 +426,20 @@ void MOAIFacebookIOS::ReceivedRequestResponseFailure () {
 //----------------------------------------------------------------//
 void MOAIFacebookIOS::SessionDidLogin () {
 	
+	if ([FBSDKAccessToken currentAccessToken]) {
+		[[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{@"fields": @"email,name"}]
+		 startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+			 UNUSED ( connection );
+			 if (!error) {
+				 this->mName.clear();
+				 this->mName.write( [ result[ @"name" ]  UTF8String ]);
+				 this->mEmail.clear();
+				 this->mEmail.write( [ result[ @"email" ]  UTF8String ]);
+			 }
+		 }];
+		
+		
+	}
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
 	if ( this->PushListener ( SESSION_DID_LOGIN, state )) {

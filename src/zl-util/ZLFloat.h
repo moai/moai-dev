@@ -83,14 +83,7 @@ public:
 	//----------------------------------------------------------------//
 	static inline float Clamp ( float n, float l, float u ) {
 
-		if ( n < l ) {
-			return l;
-		}
-		else if ( n > u ) {
-			return u;
-		}
-
-		return n;
+		return n < l ? l : ( n > u ? u : n );
 	}
 
 	//----------------------------------------------------------------//
@@ -226,6 +219,22 @@ public:
 		d = Decimal ( d );
 		if ( d < 0.0f ) d += 1.0f;
 		return d * m;
+	}
+
+	//----------------------------------------------------------------//
+	static float Normalize ( float* f, size_t size ) {
+	
+		float sum = 0;
+	
+		for ( size_t i = 0; i < size; ++i ) {
+			sum += f [ i ];
+		}
+		
+		for ( size_t i = 0; i < size; ++i ) {
+			f [ i ] /= sum;
+		}
+		
+		return sum;
 	}
 
 	//----------------------------------------------------------------//

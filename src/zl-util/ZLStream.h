@@ -39,6 +39,7 @@ public:
 	virtual size_t		ReadBytes				( void* buffer, size_t size );
 	STLString			ReadString				( size_t size );
 	STLString			ReadToken				( cc8* delimiters = 0 );
+	float				Sample					( u32 streamType, size_t sampleSize );
 	int					Seek					( long offset, int origin = SEEK_SET );
 	virtual int			SetCursor				( long offset );
 	virtual size_t		SetLength				( size_t length );

@@ -336,12 +336,13 @@ void MOAIMaterialBatch::LoadGfxState ( MOAIMaterialBatch* fallback, u32 material
 		secondary->LoadGfxState ( 0, defaultShader );
 	}
 	else {
-	
+		
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	
+		
 		gfxDevice.SetTexture ();
 		gfxDevice.SetShader ( MOAIShaderMgr::Get ().GetShader ( defaultShader ));
 	}
+
 }
 
 //----------------------------------------------------------------//
