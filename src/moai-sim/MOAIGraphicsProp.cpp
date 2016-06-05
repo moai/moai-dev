@@ -27,7 +27,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getIndexBatchSize
+/**	@lua	getIndexBatchSize
 	@text	Return the index batch size of the material batch attached
 			to the prop.
 	
@@ -45,7 +45,7 @@ int MOAIGraphicsProp::_getIndexBatchSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMaterialBatch
+/**	@lua	getMaterialBatch
 	@text	Return the material batch attached to the prop.
 	
 	@in		MOAIGraphicsProp self
@@ -59,7 +59,7 @@ int MOAIGraphicsProp::_getMaterialBatch ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getScissorRect
+/**	@lua	getScissorRect
 	@text	Retrieve the prop's scissor rect.
 	
 	@in		MOAIGraphicsProp self
@@ -76,7 +76,7 @@ int MOAIGraphicsProp::_getScissorRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getShader
+/**	@lua	getShader
 	@text	Get the shader at the given index in the prop's material batch,
 			ignoring the material's index batch size. If no material batch is
 			attached to the prop then nil will be returned.
@@ -96,7 +96,7 @@ int MOAIGraphicsProp::_getShader ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTexture
+/**	@lua	getTexture
 	@text	Get the texture at the given index in the prop's material batch,
 			ignoring the material's index batch size. If no material batch is
 			attached to the prop then nil will be returned.
@@ -161,13 +161,13 @@ int MOAIGraphicsProp::_reserveMaterials ( lua_State* L ) {
 			BILLBOARD_ORTHO, BILLBOARD_COMPASS, BILLBOARD_SCREEN,
 			BILLBOARD_NONE.
 	
-	@override
+	@overload
 	
 		@in		MOAIGraphicsProp self
 		@in		boolean billboard			true == BILLBOARD_NORMAL, false == BILLBOARD_NONE
 		@out	nil
 	
-	@override
+	@overload
 	
 		@in		MOAIGraphicsProp self
 		@in		number mode

@@ -209,7 +209,7 @@ int MOAIGeometryWriter::_applyLinearGradient ( lua_State* L ) {
 	@text	Return the vertices as an MOAIVertexBuffer and MOAIIndexBuffer, or
 			as a ready-to-render MOAIMesh.
 			
-	@override
+	@overload
 	
 		@in		MOAIVertexFormat format
 		@in		MOAIStream vtxStream
@@ -219,7 +219,7 @@ int MOAIGeometryWriter::_applyLinearGradient ( lua_State* L ) {
 		@opt	number idxSizeInBytes
 		@out 	number totalElements
 	
-	@override
+	@overload
 	
 		@in		MOAIVertexFormat format
 		@in		MOAIStream vtxStream

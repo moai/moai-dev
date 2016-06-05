@@ -205,7 +205,7 @@ int MOAITextLabel::_getTextBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	hasOverrun
+/**	@lua	hasOverrun
     @text	Returns whether there are additional glyphs that are not visible on the screen (either on next page or just thrown away).
  
     @in		MOAITextBox self

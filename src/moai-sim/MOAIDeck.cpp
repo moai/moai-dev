@@ -45,7 +45,7 @@ int MOAIDeck::_setBoundsDeck ( lua_State* L ) {
 	@text	Return bounds for an item or the maximum bounds for the
 			deck.
 
-	@override
+	@overload
 
 		@in		number idx
 		@out	xMin
@@ -55,8 +55,13 @@ int MOAIDeck::_setBoundsDeck ( lua_State* L ) {
 		@out	yMax
 		@out	zMax
 	
+<<<<<<< HEAD
 	@override
 	
+=======
+	@overload
+
+>>>>>>> pull-doc-cleanup
 		@out	xMin
 		@out	yMin
 		@out	zMin

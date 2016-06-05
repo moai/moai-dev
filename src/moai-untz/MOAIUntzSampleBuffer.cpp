@@ -12,7 +12,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getData
+/**	@lua	getData
 	@text	Retrieve every sample data in buffer
 
 	@in		MOAIUntzSampleBuffer self
@@ -31,7 +31,7 @@ int MOAIUntzSampleBuffer::_getData ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/** @name	getInfo
+/** @lua	getInfo
 	@text	Returns attributes of sample buffer.
 
 	@in		MOAIUntzSampleBuffer self
@@ -54,7 +54,7 @@ int MOAIUntzSampleBuffer::_getInfo ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	load
+/**	@lua	load
 	@text	Loads a sound from disk.
 	
 	@in		MOAIUntzSampleBuffer self
@@ -73,7 +73,7 @@ int MOAIUntzSampleBuffer::_load ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	prepareBuffer
+/**	@lua	prepareBuffer
 	@text	Allocate internal memory for sample buffer
 
 	@in		MOAIUntzSampleBuffer self
@@ -107,7 +107,7 @@ int MOAIUntzSampleBuffer::_prepareBuffer( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setData
+/**	@lua	setData
 	@text	Write sample data into buffer
 
 	@in		MOAIUntzSampleBuffer self
@@ -135,7 +135,7 @@ int MOAIUntzSampleBuffer::_setData ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRawData
+/**	@lua	setRawData
 	@text	Write raw sample data (array of 16bit short value) into buffer
 	
 	@in		MOAIUntzSampleBuffer self
