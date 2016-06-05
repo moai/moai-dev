@@ -1,3 +1,0 @@
-apply from: 'moaisettings.gradle'
-
-include ':app'
