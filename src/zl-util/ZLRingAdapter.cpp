@@ -72,12 +72,14 @@ int ZLRingAdapter::SetCursor ( long offset ) {
 		this->mCursor = offset;
 		this->mProxiedStream->SetCursor ( this->mBase + offset );
 	}
+	return 0;
 }
 
 //----------------------------------------------------------------//
 size_t ZLRingAdapter::SetLength ( size_t length ) {
 
 	this->mLength = length;
+	return length;
 }
 
 //----------------------------------------------------------------//
