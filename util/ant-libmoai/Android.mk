@@ -9,6 +9,7 @@
 	include $(CLEAR_VARS)
 	
 	MOAI_SDK_HOME	:= $(abspath @MOAI_SDK_HOME@)
+	
 	MY_ARM_MODE		:= @MY_ARM_MODE@
 	MY_ARM_ARCH		:= @MY_ARM_ARCH@
 
@@ -42,15 +43,15 @@
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/tlsf-2.0
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/zlib-1.2.3
 
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-contrib.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-kissfft.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-expat.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-json.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-lua.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-sfmt.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-sqlite.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-tinyxml.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-zlib.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-contrib.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-expat.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-json.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-kissfft.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-lua.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-sfmt.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-sqlite.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-tinyxml.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-zlib.mk
 
 #================================================================#
 # moai core
@@ -61,10 +62,10 @@
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/src
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/src/config-default
 
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/zl-core.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/zl-vfs.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-core.mk
-	MY_INCLUDES += $(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-util.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/zl-core.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/zl-vfs.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-core.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-util.mk
 
 #================================================================#
 # moai modules
@@ -77,4 +78,9 @@
 #================================================================#
 
 	include libraries.mk
+  ifdef USE_PREBUILT
+   include $(MOAI_SDK_HOME)/libmoai/jni/prebuiltcore.mk
+   include $(MOAI_SDK_HOME)/libmoai/jni/prebuilt.mk
+  else
 	include $(MY_INCLUDES)
+  endif
