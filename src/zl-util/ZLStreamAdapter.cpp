@@ -25,7 +25,7 @@ void ZLStreamProxy::Flush () {
 //----------------------------------------------------------------//
 u32 ZLStreamProxy::GetCaps () {
 
-	return this->mProxiedStream ? this->mProxiedStream->GetCaps () : 0;
+	return this->mProxiedStream ? this->mProxiedStream->GetCaps () : CAN_WRITE;
 }
 
 //----------------------------------------------------------------//
@@ -43,31 +43,34 @@ size_t ZLStreamProxy::GetLength () {
 //----------------------------------------------------------------//
 bool ZLStreamProxy::IsAtEnd () {
 
-	return this->mProxiedStream ? this->mProxiedStream->GetLength () : true;
+	return this->mProxiedStream ? this->mProxiedStream->GetLength () > 0 : true; // TODO: does this make sense?
 }
 
 //----------------------------------------------------------------//
-size_t ZLStreamProxy::ReadBytes ( void* buffer, size_t size ) {
+ZLSizeResult ZLStreamProxy::ReadBytes ( void* buffer, size_t size ) {
 
-	return this->mProxiedStream ? this->mProxiedStream->ReadBytes ( buffer, size ) : 0;
+	if ( this->mProxiedStream ) return this->mProxiedStream->ReadBytes ( buffer, size );
+	ZL_RETURN_SIZE_RESULT ( 0, ZL_ERROR );
 }
 
 //----------------------------------------------------------------//
-int ZLStreamProxy::SetCursor ( long offset ) {
+ZLResultCode ZLStreamProxy::SetCursor ( size_t offset ) {
 
-	return this->mProxiedStream ? this->mProxiedStream->SetCursor ( offset ) : -1;
+	return this->mProxiedStream ? this->mProxiedStream->SetCursor ( offset ) : ZL_ERROR;
 }
 
 //----------------------------------------------------------------//
-size_t ZLStreamProxy::SetLength ( size_t length ) {
+ZLSizeResult ZLStreamProxy::SetLength ( size_t length ) {
 
-	return this->mProxiedStream ? this->mProxiedStream->SetLength ( length ) : 0;
+	if ( this->mProxiedStream ) return this->mProxiedStream->SetLength ( length );
+	ZL_RETURN_SIZE_RESULT ( 0, ZL_ERROR );
 }
 
 //----------------------------------------------------------------//
-size_t ZLStreamProxy::WriteBytes ( const void* buffer, size_t size ) {
+ZLSizeResult ZLStreamProxy::WriteBytes ( const void* buffer, size_t size ) {
 
-	return this->mProxiedStream ? this->mProxiedStream->WriteBytes ( buffer, size ) : 0;
+	if ( this->mProxiedStream ) return this->mProxiedStream->WriteBytes ( buffer, size );
+	ZL_RETURN_SIZE_RESULT ( size, ZL_OK ); // this is deliberate; an open proxy to an empty stream should just throw writes away
 }
 
 //----------------------------------------------------------------//
@@ -120,13 +123,13 @@ void ZLStreamAdapter::OnClose () {
 }
 
 //----------------------------------------------------------------//
-bool ZLStreamAdapter::OnOpen () {
+ZLResultCode ZLStreamAdapter::OnOpen () {
 
-	return true;
+	return ZL_OK;
 }
 
 //----------------------------------------------------------------//
-bool ZLStreamAdapter::Open ( ZLStream* stream ) {
+ZLResultCode ZLStreamAdapter::Open ( ZLStream* stream ) {
 
 	this->Close ();
 
@@ -136,11 +139,11 @@ bool ZLStreamAdapter::Open ( ZLStream* stream ) {
 		this->mBase = stream->GetCursor ();
 	}
 	
-	this->mIsOpen = this->OnOpen ();
+	this->mIsOpen = ( this->OnOpen () == ZL_OK );
 	if ( !this->mIsOpen ) {
 		this->Close ();
 	}
-	return this->mIsOpen;
+	return this->mIsOpen ? ZL_OK : ZL_ERROR;
 }
 
 //----------------------------------------------------------------//

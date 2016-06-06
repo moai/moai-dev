@@ -21,9 +21,9 @@ bool ZLRingAdapter::IsAtEnd () {
 }
 
 //----------------------------------------------------------------//
-size_t ZLRingAdapter::Process ( void* readBuffer, const void* writeBuffer, size_t size ) {
+ZLSizeResult ZLRingAdapter::Process ( void* readBuffer, const void* writeBuffer, size_t size ) {
 
-	if ( !( this->mProxiedStream && ( readBuffer || writeBuffer ))) return 0;
+	if ( !( this->mProxiedStream && ( readBuffer || writeBuffer ))) ZL_RETURN_SIZE_RESULT ( 0, ZL_ERROR );
 	
 	size_t bytes = 0;
 	
@@ -55,35 +55,35 @@ size_t ZLRingAdapter::Process ( void* readBuffer, const void* writeBuffer, size_
 	
 		if ( result < chunkSize ) break;
 	}
-	return bytes;
+	ZL_RETURN_SIZE_RESULT ( bytes, ZL_OK );
 }
 
 //----------------------------------------------------------------//
-size_t ZLRingAdapter::ReadBytes ( void* buffer, size_t size ) {
+ZLSizeResult ZLRingAdapter::ReadBytes ( void* buffer, size_t size ) {
 	
 	return this->Process ( buffer, 0, size );
 }
 
 //----------------------------------------------------------------//
-int ZLRingAdapter::SetCursor ( long offset ) {
+ZLResultCode ZLRingAdapter::SetCursor ( size_t offset ) {
 
-	if ( this->mProxiedStream ) {
-		offset = offset % this->mLength;
-		this->mCursor = offset;
-		this->mProxiedStream->SetCursor ( this->mBase + offset );
-	}
-	return 0;
+	if ( !this->mProxiedStream ) return ZL_ERROR;
+
+	offset = offset % this->mLength;
+	if ( this->mProxiedStream->SetCursor ( this->mBase + offset ) != ZL_OK ) return ZL_ERROR;
+	this->mCursor = offset;
+	return ZL_OK;
 }
 
 //----------------------------------------------------------------//
-size_t ZLRingAdapter::SetLength ( size_t length ) {
+ZLSizeResult ZLRingAdapter::SetLength ( size_t length ) {
 
 	this->mLength = length;
-	return length;
+	ZL_RETURN_SIZE_RESULT ( this->mLength, ZL_OK );
 }
 
 //----------------------------------------------------------------//
-size_t ZLRingAdapter::WriteBytes ( const void* buffer, size_t size ) {
+ZLSizeResult ZLRingAdapter::WriteBytes ( const void* buffer, size_t size ) {
 	
 	return this->Process ( 0, buffer, size );
 }

@@ -20,6 +20,9 @@
 */
 
 #include "pch.h"
+
+SUPPRESS_EMPTY_FILE_WARNING
+
 #if defined ( __linux ) | defined ( __FLASCC__ ) | defined ( __QNX__ ) | defined ( __EMSCRIPTEN__ )
 
 #include <zl-util/ZLDeviceTime.h>

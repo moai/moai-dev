@@ -156,7 +156,7 @@ int MOAIVecPathGraph::_setNode ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAIVecPathGraph::AreNeighbors ( u32 id1, u32 id2 ) {
 	
-	u32 total = this->mNodes.Size ();
+	size_t total = this->mNodes.Size ();
 
 	if ( id1 < total && id2 < total ) {
 		return this->mNeighbors [ id1 * total + id2 ];
@@ -178,13 +178,13 @@ ZLVec3D MOAIVecPathGraph::GetNode ( u32 id ) {
 //----------------------------------------------------------------//
 u32 MOAIVecPathGraph::GetNodeCount () {
 	
-	return this->mNodes.Size ();
+	return ( u32 )this->mNodes.Size ();
 }
 
 //----------------------------------------------------------------//
 void MOAIVecPathGraph::PushNeighbors ( MOAIPathFinder& pathFinder, int nodeID ) {
 
-	u32 total = this->mNodes.Size ();
+	u32 total = ( u32 )this->mNodes.Size (); // TODO: cast
 
 	ZLVec3D currentNode = this->GetNode ( nodeID );
 	ZLVec3D targetNode = this->GetNode ( pathFinder.GetTargetNodeID ());
@@ -235,9 +235,9 @@ void MOAIVecPathGraph::ReserveNodes ( u32 total ) {
 //----------------------------------------------------------------//
 void MOAIVecPathGraph::SetNeighbors ( u32 id1, u32 id2, bool value ) {
 	
-	u32 total = this->mNodes.Size ();
+	size_t total = this->mNodes.Size ();
 
-	if ( id1 < total && id2 < total) {
+	if (( id1 < total ) && ( id2 < total )) {
 		this->mNeighbors [ id1 * total + id2 ] = value;
 		this->mNeighbors [ id2 * total + id1 ] = value;
 	}

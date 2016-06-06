@@ -84,7 +84,7 @@ int MOAITouchSensor::_getCenterLoc ( lua_State* L ) {
 	u32 count = self->mTop;
 	if ( count == 0 ) return 0;
 	
-	ZLVec2D loc;
+	ZLVec2D loc ( 0.0f, 0.0f );
 	
 	for ( u32 i = 0; i < count; ++i ) {
 		u32 touchID = self->mActiveStack [ i ];

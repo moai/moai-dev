@@ -16,7 +16,7 @@ dofile ( "cube.lua" )
 
 MOAISim.openWindow ( "test", SCREEN_WIDTH, SCREEN_HEIGHT )
 
-frameBuffer = MOAIGfxDevice.getFrameBuffer ()
+frameBuffer = MOAIGfxMgr.getFrameBuffer ()
 frameBuffer:setClearDepth ( true )
 frameBuffer:setClearColor ( 0, 0, 0, 1 )
 

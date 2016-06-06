@@ -42,7 +42,8 @@ public class MoaiGoogleBilling {
 	
 	private static boolean					sInAppSupported = false;
 	private static boolean					sSubscriptionSupported = false;
-	
+	private static boolean                  sWaitingForPurchase     = false;
+
 	// purchase types
 	public static final String				PURCHASE_TYPE_INAPP = "inapp";
 	public static final String				PURCHASE_TYPE_SUBSCRIPTION = "subs";
@@ -69,7 +70,7 @@ public class MoaiGoogleBilling {
 		MoaiLog.i ( "MoaiGoogleBilling v3 onCreate: Initializing Google Billing" );
 		
 		sActivity = activity;
-		
+        sWaitingForPurchase = false;
 		sServiceConn = new ServiceConnection () {
 			
 			//--------------------------------------------------------// 
@@ -120,8 +121,10 @@ public class MoaiGoogleBilling {
                 }
 			}
 		};
-		
-		sActivity.bindService ( new Intent ( "com.android.vending.billing.InAppBillingService.BIND" ), sServiceConn, Context.BIND_AUTO_CREATE );
+        Intent serviceIntent = new Intent ( "com.android.vending.billing.InAppBillingService.BIND" );
+        serviceIntent.setPackage ( "com.android.vending" );
+
+		sActivity.bindService ( serviceIntent, sServiceConn, Context.BIND_AUTO_CREATE );
 	}
 
 	//----------------------------------------------------------------//
@@ -136,9 +139,9 @@ public class MoaiGoogleBilling {
 
 	//----------------------------------------------------------------//
 	public static void onActivityResult ( int requestCode, int resultCode, Intent data ) {
-		
-        MoaiLog.i("Test java!");
-        
+
+        if ( !sWaitingForPurchase ) return;
+
 		if ( resultCode == Activity.RESULT_OK ) {
 			
 			if ( requestCode == 1001 ) {
@@ -151,7 +154,8 @@ public class MoaiGoogleBilling {
 				jsonData.add ( purchaseData );
 				jsonData.add ( dataSignature );
 				JSONArray jsonArray = new JSONArray ( jsonData );
-                
+                sWaitingForPurchase = false;
+
 				synchronized ( Moai.sAkuLock ) {
                     
 					AKUNotifyGooglePurchaseResponseReceived ( responseCode, jsonArray.toString ());
@@ -274,6 +278,7 @@ public class MoaiGoogleBilling {
 				sActivity.startIntentSenderForResult ( pendingIntent.getIntentSender (), 1001, new Intent (), Integer.valueOf ( 0 ), Integer.valueOf ( 0 ), Integer.valueOf ( 0 ));
 			}
 
+            sWaitingForPurchase = true;
 			return buyIntentBundle.getInt ( "RESPONSE_CODE" );
 			
 		} catch ( Exception e ) {

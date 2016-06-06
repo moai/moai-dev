@@ -9,7 +9,7 @@ if MOAIEnvironment.osBrand ~= MOAIEnvironment.OS_BRAND_IOS then
 	os.exit ()
 end
 
-viewWidth, viewHeight = MOAIGfxDevice.getViewSize ()
+viewWidth, viewHeight = MOAIGfxMgr.getViewSize ()
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( viewWidth, viewHeight )
@@ -35,7 +35,7 @@ function onResize ( width, height )
 	print ( 'RESIZED', width, height )
 end
 
-MOAIGfxDevice.setListener ( MOAIGfxDevice.EVENT_RESIZE, onResize )
+MOAIGfxMgr.setListener ( MOAIGfxMgr.EVENT_RESIZE, onResize )
 
 function onTap ( eventType, idx, x, y, tapCount  )
 	

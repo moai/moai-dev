@@ -45,6 +45,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	virtual void			OnGlobalsFinalize			();
+	virtual void			OnGlobalsInitialize			();
 							MOAIGlobalClassBase			();
 	virtual					~MOAIGlobalClassBase		();
 };
@@ -114,6 +115,8 @@ public:
 			pair.mGlobal		= global;
 			pair.mProxy			= 0;
 			pair.mIsValid		= true;
+			
+			pair.mGlobalBase->OnGlobalsInitialize ();
 		}
 		
 		if ( !this->mGlobals [ id ].mIsValid ) {

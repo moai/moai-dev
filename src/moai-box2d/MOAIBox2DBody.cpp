@@ -30,7 +30,7 @@ int MOAIBox2DBody::_addChain ( lua_State* L ) {
 	}
  
 	float unitsToMeters = self->GetUnitsToMeters ();
-	u32 totalCoords = lua_objlen ( state, 2 );
+	u32 totalCoords = ( u32 )lua_objlen ( state, 2 );
 	if( totalCoords < 4 || totalCoords % 2 != 0 ) {
 		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_InvalidVertexCount_D, totalCoords );
 		return 0;
@@ -115,7 +115,7 @@ int MOAIBox2DBody::_addEdges ( lua_State* L ) {
 	}
 	
 	float unitsToMeters = self->GetUnitsToMeters ();
-	u32 totalVerts = lua_objlen ( state, 2 ) / 2;
+	u32 totalVerts = ( u32 )lua_objlen ( state, 2 ) / 2;
 	
 	if (totalVerts) {
 		

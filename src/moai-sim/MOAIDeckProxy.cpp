@@ -7,7 +7,7 @@
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDeckProxy.h>
 #include <moai-sim/MOAIDeckRemapper.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIImage.h>

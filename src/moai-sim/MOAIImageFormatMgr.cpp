@@ -30,7 +30,7 @@ MOAIImageFormat* MOAIImageFormatMgr::FindFormat ( ZLStream& stream ) {
 		
 			void* buffer = alloca ( headerSize );
 			size_t size = stream.ReadBytes ( buffer, headerSize );
-			stream.Seek ( cursor, SEEK_SET );
+			stream.SetCursor ( cursor );
 		
 			if (( size == headerSize ) && format.CheckHeader ( buffer )) return &format;
 		}
@@ -50,7 +50,7 @@ u32 MOAIImageFormatMgr::HashName ( cc8* name ) {
 		if ( c && isalnum ( c )) {
 			
 			if ( isalpha ( c )) {
-				c = toupper ( c );
+				c = ( char )toupper ( c );
 				c = ( c - 'A' ) + 10;
 			}
 			else {

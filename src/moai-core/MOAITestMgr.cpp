@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <jansson.h>
 #include <moai-core/MOAITestMgr.h>
 
 //================================================================//
@@ -48,7 +49,7 @@ void MOAITestResult::Push ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-json_t* MOAITestResult::ToJson () {
+void* MOAITestResult::ToJson () {
 
 	json_t* json = json_object ();
 
@@ -71,7 +72,7 @@ json_t* MOAITestResult::ToJson () {
 	ChildrenIt childrenIt = this->mChildren.begin ();
 	for ( u32 i = 0; childrenIt != this->mChildren.end (); ++childrenIt, ++i ) {
 		MOAITestResult& child = *childrenIt;
-		json_array_append_new ( children, child.ToJson ());
+		json_array_append_new ( children, ( json_t* )child.ToJson ());
 	}
 	json_object_set_new ( json, "children", children );
 	
@@ -338,22 +339,25 @@ void MOAITestMgr::SetTimeout () {
 
 //----------------------------------------------------------------//
 void MOAITestMgr::SetTimeout ( float seconds ) {
-//TODO some kind of thread based timeout for windows
-#ifndef MOAI_COMPILER_MSVC
-	struct sigaction sa;
 
-	memset ( &sa, 0, sizeof ( sa ));
-	sa.sa_handler = MOAITestMgr::OnAlarm;
-	sigaction ( SIGALRM, &sa, NULL );
+	//TODO some kind of thread based timeout for windows
+	#ifdef MOAI_COMPILER_MSVC
+		UNUSED ( seconds );
+	#else
+		struct sigaction sa;
 
-	itimerval ival;
+		memset ( &sa, 0, sizeof ( sa ));
+		sa.sa_handler = MOAITestMgr::OnAlarm;
+		sigaction ( SIGALRM, &sa, NULL );
 
-	memset ( &ival, 0, sizeof ( ival ));
-	ival.it_value.tv_sec = ( int )seconds;
-	ival.it_value.tv_usec = ( int )( ZLFloat::Decimal ( seconds ) * 1000000.f );
+		itimerval ival;
 
-	setitimer ( ITIMER_REAL, &ival, 0 );
-#endif
+		memset ( &ival, 0, sizeof ( ival ));
+		ival.it_value.tv_sec = ( int )seconds;
+		ival.it_value.tv_usec = ( int )( ZLFloat::Decimal ( seconds ) * 1000000.f );
+
+		setitimer ( ITIMER_REAL, &ival, 0 );
+	#endif
 }
 
 //----------------------------------------------------------------//
@@ -371,7 +375,7 @@ void MOAITestMgr::WriteLog () {
 
 	if ( this->mRoot ) {
 	
-		json_t* json = this->mRoot->ToJson ();
+		json_t* json = ( json_t* )this->mRoot->ToJson ();
 		STLString out = json_dumps ( json, JSON_INDENT ( 4 ) | JSON_SORT_KEYS );
 		json_decref ( json );
 		out.append ( "\n" );

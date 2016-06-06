@@ -57,13 +57,6 @@ int MOAIAudioSamplerCocoa::_resume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIAudioSamplerCocoa::_setEventFrequency ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAudioSamplerCocoa, "U" )
-	self->mEventFrequency = state.GetValue < u32 >( 2, 0 );
-	return 0;
-}
-
-//----------------------------------------------------------------//
 int MOAIAudioSamplerCocoa::_setStream ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAudioSamplerCocoa, "U" )
 	self->mStream.Set ( *self, state.GetLuaObject < MOAIStream >( 2, false ));
@@ -129,7 +122,7 @@ void MOAIAudioSamplerCocoa::GetLevels ( double& average, double& peak ) {
 	
     if ( result ) {
         fprintf ( stderr, "AudioQueueGetProperty kAudioQueueProperty_CurrentLevelMeterDB failed with %ld\n", result );
-        return false;
+        return;
     }
     
     // average both channels for detection
@@ -152,7 +145,7 @@ void MOAIAudioSamplerCocoa::HandleInput ( AudioQueueRef inAQ, AudioQueueBufferRe
 			
 			ZLSample::WriteSample ( *this->mStream, this->mStreamFormat, &inbuf [ i ], ZLSample::SAMPLE_S16 );
 			
-			if (( this->mEventFrequency > 0 ) && ( this->mSamplesWritten >= ( this->mEventFrequency - 1 ))) {
+			if (( this->mSampleSize > 0 ) && ( this->mSamplesWritten >= ( this->mSampleSize - 1 ))) {
 			
 				this->InvokeListenerWithSelf ( EVENT_BUFFER );
 				this->mSamplesWritten = 0;
@@ -201,19 +194,19 @@ void MOAIAudioSamplerCocoa::Init ( u32 sampleRate, u32 channels, u32 sampleSize,
     }
 
 	size_t bufsize = this->mStreamDescription.mBytesPerFrame * sampleSize;
-    if ( bufsize < 0 ) {
+    if ( bufsize <= 0 ) {
         fprintf ( stderr, "invalid arg?" );
         return;
     }
 
-    fprintf ( stderr, "bufsize:%d\n", bufsize );
+    //fprintf ( stderr, "bufsize:%d\n", bufsize );
 
     // where
 	this->mBuffers.Init ( totalBuffers );
 	
     for ( u32 i = 0; i < this->mBuffers.Size (); ++i ){
 	
-        result = AudioQueueAllocateBuffer ( this->mQueue, bufsize, &this->mBuffers [ i ]);
+        result = AudioQueueAllocateBuffer ( this->mQueue, ( UInt32 )bufsize, &this->mBuffers [ i ]);
         if ( result ){
             fprintf ( stderr, "AudioQueueAllocateBuffer failed with %ld\n", result );
             return;
@@ -232,6 +225,8 @@ void MOAIAudioSamplerCocoa::Init ( u32 sampleRate, u32 channels, u32 sampleSize,
 	if ( result ) {
         fprintf ( stderr, "AudioQueueSetProperty kAudioQueueProperty_EnableLevelMetering failed with %ld\n", result );
     }
+	
+	this->mSampleSize = sampleSize;
 }
 
 //----------------------------------------------------------------//
@@ -253,7 +248,7 @@ MOAIAudioSamplerCocoa::MOAIAudioSamplerCocoa () :
     mSessionActiveObserver ( 0 ),
     mSessionInactiveObserver ( 0 ),
 	mStreamFormat ( 0 ),
-	mEventFrequency ( 0 ),
+	mSampleSize ( 0 ),
 	mSamplesWritten ( 0 ) {
 	
     RTTI_SINGLE ( MOAIInstanceEventSource )
@@ -329,7 +324,6 @@ void MOAIAudioSamplerCocoa::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "init",					_init },
 		{ "pause",					_pause },
 		{ "resume",					_resume },
-		{ "setEventFrequency",		_setEventFrequency },
 		{ "setStream",				_setStream },
 		{ "start",					_start },
 		{ "stop",					_stop },
@@ -362,8 +356,6 @@ void MOAIAudioSamplerCocoa::Start () {
 		
 		this->mIsRunning = true;
 	}
-
-    return 0;
 }
 
 //----------------------------------------------------------------//

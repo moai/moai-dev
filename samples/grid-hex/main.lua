@@ -18,11 +18,11 @@ local grid_rows = 8
 local grid_columns = 8
 grid = MOAIGrid.new ()
 grid:initHexGrid ( grid_columns, grid_rows, 32 )
-grid:setRepeat ( false )
+grid:setRepeat ( true )
 
 for c = 1, grid_columns do
 	for r = 1, grid_rows do
-		grid:setTile ( c, r, ((c + r) % 4) + 1 )
+		grid:setTile ( c, r, (( c + r ) % 4 ) + 1 )
 	end
 end
 

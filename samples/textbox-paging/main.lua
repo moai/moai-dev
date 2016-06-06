@@ -6,8 +6,8 @@
 
 MOAISim.openWindow ( "test", 320, 480 )
 MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX, 1, 1, 1, 1, 1 )
-MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_LAYOUT, 1, 0, 0, 1, 1 )
 MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_BASELINES, 1, 1, 0, 0, 1 )
+MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_LINES_LAYOUT_BOUNDS, 1, 0, 0, 1, 1 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
@@ -17,7 +17,7 @@ layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
-charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-'
+--charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-<>'
 text1 = "a b c d e f g h i j k l m n o p q r s t u v w x y z <c:fc0>A B C D E F G H I J K L M N O P Q R <c:0cf>S T U V W X Y Z"
 text2 = "<c:0f0>1 2 3 4 5 6 7 8 9 0 <c:f00>a i e o u <c:00f>sa shi se su so ma mi me mu mo <c:0f0>ta chi te tsu to ka ki ke ku ko <c:fc0>ra ri re ru ro"
 
@@ -29,6 +29,7 @@ textbox:setFont ( font )
 textbox:setTextSize ( 16, 163 )
 textbox:setRect ( -150, 100, 150, 230 )
 textbox:setYFlip ( true )
+textbox:setSpeed ( 12 )
 layer:insertProp ( textbox )
 
 function page ( text )
@@ -45,7 +46,7 @@ function page ( text )
 		
 		-- if there's more to spool, show the next page
 		if textbox:more () then
-		
+
 			-- this shows the next page and restarts the spool action
 			textbox:nextPage ()
 			textbox:spool ()

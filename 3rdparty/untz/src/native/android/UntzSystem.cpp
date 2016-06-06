@@ -152,9 +152,9 @@ void PlaybackThread::run()
 	bool isPlaying = true;
 
 	// Set the playback rate
-//  int error = env->CallNonvirtualIntMethod(track, audioTrackClass, setPlaybackRateMethod, mpSystemData->mSampleRate);
-//	if(error != 0)
-//		__android_log_write(ANDROID_LOG_ERROR, "UntzJNI", "Failed to set playback rate");
+    int error = env->CallNonvirtualIntMethod(track, audioTrackClass, setPlaybackRateMethod, mpSystemData->mSampleRate);
+	if(error != 0)
+		__android_log_write(ANDROID_LOG_ERROR, "UntzJNI", "Failed to set playback rate");
     
     // Get our buffer
     jarray buffer = env->NewByteArray(bufferSizeInBytes);
@@ -306,8 +306,26 @@ UInt32 System::getSampleRate()
     return d->mSampleRate;
 }
 
+// This function was left empty so this implementation may
+// need refactoring
 void System::setSampleRate(UInt32 sampleRate)
 {
+    //__android_log_write(ANDROID_LOG_VERBOSE, "UntzJNI", "setSampleRate");
+    
+    AndroidSystemData *d = (AndroidSystemData*)mpData;
+    d->mSampleRate = sampleRate;
+
+    // set up audio thread.
+    d->mpAudioThread = PlaybackThread::getInstance();
+    d->mpAudioThread->deleteInstance ();
+    d->mpAudioThread = PlaybackThread::getInstance();
+
+    //__android_log_write(ANDROID_LOG_VERBOSE, "UntzJNI", "getInstance2");
+    // FIXME: set up audio thread.
+    d->mpAudioThread->setData(d);
+    d->mpAudioThread->start();
+
+    //__android_log_write(ANDROID_LOG_VERBOSE, "UntzJNI", "start");
 }
 
 void System::setVolume(float volume)

@@ -30,7 +30,7 @@ void AKUSetParticlePreset ( const char* presetTable, const char* presetName, AKU
 	
 	lua_getglobal ( L, presetTable );
 	
-	if ( lua_isnil ( L, -1 )) {
+	if ( lua_isnil ( L, -1 )) { // TODO: nil or none?
 		lua_newtable ( L );
 		lua_setglobal ( L, presetTable );
 	}

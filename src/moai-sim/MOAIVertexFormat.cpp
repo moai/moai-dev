@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 
@@ -154,14 +154,20 @@ MOAIVertexFormat* MOAIVertexFormat::AffirmVertexFormat ( MOAILuaState& state, in
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormat::Bind ( const void* buffer ) const {
+void MOAIVertexFormat::Bind ( ZLSharedConstBuffer* buffer, bool copyBuffer ) const {
+
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+
+	if ( copyBuffer ) {
+		buffer = gfx.CopyBuffer ( buffer );
+	}
 
 	for ( u32 i = 0; i < this->mTotalAttributes; ++i ) {
 		
 		const MOAIVertexAttribute& attr = this->mAttributes [ i ];
 		
-		zglVertexAttribPointer ( attr.mIndex, attr.mSize, attr.mType, attr.mNormalized, this->mVertexSize, ( const void* )(( size_t )buffer + attr.mOffset ));
-		zglEnableVertexAttribArray ( attr.mIndex );
+		gfx.EnableVertexAttribArray ( attr.mIndex );
+		gfx.VertexAttribPointer ( attr.mIndex, attr.mSize, attr.mType, attr.mNormalized, this->mVertexSize, buffer, attr.mOffset );
 	}
 }
 
@@ -235,7 +241,7 @@ bool MOAIVertexFormat::ComputeBounds ( ZLBox& bounds, const void* buffer, size_t
 //----------------------------------------------------------------//
 bool MOAIVertexFormat::ComputeBounds ( ZLBox& bounds, ZLStream& stream, size_t size ) const {
 
-	u32 total = this->mVertexSize ? ( size / this->mVertexSize ) : 0;
+	u32 total = this->mVertexSize ? ( u32 )( size / this->mVertexSize ) : 0; // TODO: cast
 	if ( !total ) return false;
 	
 	size_t base = stream.GetCursor ();
@@ -464,7 +470,7 @@ void MOAIVertexFormat::PrintVertices ( ZLStream& stream ) const {
 //----------------------------------------------------------------//
 void MOAIVertexFormat::PrintVertices ( ZLStream& stream, size_t size ) const {
 
-	u32 total = this->mVertexSize ? ( size / this->mVertexSize ) : 0;
+	u32 total = this->mVertexSize ? ( u32 )( size / this->mVertexSize ) : 0; // TODO: cast
 	if ( !total ) return;
 
 	for ( u32 i = 0; i < total; ++i ) {
@@ -528,9 +534,9 @@ ZLVec4D MOAIVertexFormat::ReadAttribute ( ZLStream& stream, u32 attrID, float zF
 		const MOAIVertexAttribute& attribute = this->mAttributes [ attrID ];
 		
 		size_t base = stream.GetCursor ();
-		stream.Seek ( base + attribute.mOffset, SEEK_SET );
+		stream.SetCursor ( base + attribute.mOffset );
 		stream.ReadBytes ( buffer, attribute.mSizeInBytes );
-		stream.Seek ( base, SEEK_SET );
+		stream.SetCursor ( base );
 		
 		return this->UnpackAttribute ( buffer, attribute, zFallback, wFallback );
 	}
@@ -596,7 +602,7 @@ void MOAIVertexFormat::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 size_t MOAIVertexFormat::SeekVertex ( ZLStream& stream, size_t base, size_t vertex ) const {
 
-	stream.Seek ( base + ( vertex * this->mVertexSize ), SEEK_SET );
+	stream.SetCursor ( base + ( vertex * this->mVertexSize ));
 	return stream.GetCursor ();
 }
 
@@ -688,7 +694,7 @@ void MOAIVertexFormat::Unbind () const {
 	for ( u32 i = 0; i < this->mTotalAttributes; ++i ) {
 		
 		MOAIVertexAttribute& attr = this->mAttributes [ i ];
-		zglDisableVertexAttribArray ( attr.mIndex );
+		MOAIGfxMgr::GetDrawingAPI ().DisableVertexAttribArray ( attr.mIndex );
 	}
 }
 
@@ -783,7 +789,7 @@ void MOAIVertexFormat::WriteAhead ( ZLStream& stream ) const {
 	memset ( buffer, 0, this->mVertexSize );
 	
 	stream.WriteBytes ( buffer, this->mVertexSize );
-	stream.Seek ( base, SEEK_SET );
+	stream.SetCursor ( base );
 }
 
 //----------------------------------------------------------------//
@@ -799,9 +805,9 @@ void MOAIVertexFormat::WriteAttribute ( ZLStream& stream, u32 attrID, float x, f
 		
 		if ( size ) {
 			size_t base = stream.GetCursor ();
-			stream.Seek ( base + attribute.mOffset, SEEK_SET );
+			stream.SetCursor ( base + attribute.mOffset );
 			stream.WriteBytes ( buffer, size );
-			stream.Seek ( base, SEEK_SET );
+			stream.SetCursor ( base );
 		}
 	}
 }

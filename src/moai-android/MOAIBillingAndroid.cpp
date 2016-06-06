@@ -1042,13 +1042,13 @@ extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiAmazonBilling_A
 //================================================================//
 
 //----------------------------------------------------------------//
-extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiGoogleBilling_AKUNotifyGoogleBillingSupported ( JNIEnv* env, jclass obj, jboolean supported ) {
+extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_googlebilling_MoaiGoogleBilling_AKUNotifyGoogleBillingSupported ( JNIEnv* env, jclass obj, jboolean supported ) {
 
 	MOAIBillingAndroid::Get ().NotifyBillingSupported ( supported );
 }
 
 //----------------------------------------------------------------//
-extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiGoogleBilling_AKUNotifyGooglePurchaseResponseReceived ( JNIEnv* env, jclass obj, jint code, jstring jidentifier ) {
+extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_googlebilling_MoaiGoogleBilling_AKUNotifyGooglePurchaseResponseReceived ( JNIEnv* env, jclass obj, jint code, jstring jidentifier ) {
 
 	JNI_GET_CSTRING ( jidentifier, identifier );
 
@@ -1058,7 +1058,7 @@ extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiGoogleBilling_A
 }
 
 //----------------------------------------------------------------//
-extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiGoogleBilling_AKUNotifyGooglePurchaseStateChanged ( JNIEnv* env, jclass obj, jint code, jstring jidentifier, jstring jorder, jstring jnotification, jstring jpayload ) {
+extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_googlebilling_MoaiGoogleBilling_AKUNotifyGooglePurchaseStateChanged ( JNIEnv* env, jclass obj, jint code, jstring jidentifier, jstring jorder, jstring jnotification, jstring jpayload ) {
 
 	JNI_GET_CSTRING ( jidentifier, identifier );
 	JNI_GET_CSTRING ( jorder, order );
@@ -1074,7 +1074,7 @@ extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiGoogleBilling_A
 }
 
 //----------------------------------------------------------------//
-extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiGoogleBilling_AKUNotifyGoogleRestoreResponseReceived ( JNIEnv* env, jclass obj, jint code ) {
+extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_googlebilling_MoaiGoogleBilling_AKUNotifyGoogleRestoreResponseReceived ( JNIEnv* env, jclass obj, jint code ) {
 
 	MOAIBillingAndroid::Get ().NotifyRestoreResponseReceived ( MOAIBillingAndroid::MapGoogleResponseCode ( code ), false, NULL );
 }

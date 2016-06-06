@@ -16,21 +16,21 @@ u32 ZLDeflateWriter::GetCaps () {
 }
 
 //----------------------------------------------------------------//
-size_t ZLDeflateWriter::Deflate ( const void* src, size_t size ) {
+ZLSizeResult ZLDeflateWriter::Deflate ( const void* src, size_t size ) {
     
 	char buffer [ ZL_DEFLATE_WRITER_CHUNK_SIZE ];
 	size_t bufferSize = ZL_DEFLATE_WRITER_CHUNK_SIZE;
     
     z_stream* stream = &this->mZStream;
     stream->next_in = ( Bytef* )src;
-	stream->avail_in = size;
+	stream->avail_in = ( uInt )size;
 
 	int flush = size ? Z_NO_FLUSH : Z_FINISH;
 
     do {
 		
 		stream->next_out = ( Bytef* )buffer;
-		stream->avail_out = bufferSize;
+		stream->avail_out = ( uInt )bufferSize;
 		
 		int result = deflate ( stream, flush );
 		
@@ -46,13 +46,14 @@ size_t ZLDeflateWriter::Deflate ( const void* src, size_t size ) {
 		if ( result != Z_OK ) {
 			if ( result != Z_STREAM_END ) {
 				printf ( "%s\n", ZLZip::GetErrMsg ( result ));
+				ZL_RETURN_SIZE_RESULT ( 0, ZL_ERROR );
 			}
 			break;
 		}
 	}
 	while ( stream->avail_out == 0 );
 	
-    return size - stream->avail_in;
+    ZL_RETURN_SIZE_RESULT ( size - stream->avail_in, stream->avail_in ? ZL_OK : ZL_ERROR );
 }
 
 //----------------------------------------------------------------//
@@ -70,29 +71,33 @@ void ZLDeflateWriter::OnClose () {
 }
 
 //----------------------------------------------------------------//
-bool ZLDeflateWriter::OnOpen () {
+ZLResultCode ZLDeflateWriter::OnOpen () {
 
 	memset ( &this->mZStream, 0, sizeof ( z_stream ));
 	int result = deflateInit2 ( &this->mZStream, this->mCompressionLevel, Z_DEFLATED, this->mWindowBits, 7, Z_DEFAULT_STRATEGY );
 
-	if ( result != Z_OK ) return false;
+	if ( result != Z_OK ) return ZL_ERROR;
 
-	return true;
+	return ZL_OK;
 }
 
 //----------------------------------------------------------------//
-size_t ZLDeflateWriter::WriteBytes ( const void* buffer, size_t size ) {
+ZLSizeResult ZLDeflateWriter::WriteBytes ( const void* buffer, size_t size ) {
 
 	if ( size ) {
 	
-		size = this->Deflate ( buffer, size );
+		ZLSizeResult result = this->Deflate ( buffer, size );
 		
-		this->mCursor += size;
-		if ( this->mLength < this->mCursor ) {
-			this->mLength = this->mCursor;
+		if ( result.mCode == ZL_OK ) {
+		
+			this->mCursor += size;
+			if ( this->mLength < this->mCursor ) {
+				this->mLength = this->mCursor;
+			}
+			return result;
 		}
 	}
-	return 0;
+	ZL_RETURN_SIZE_RESULT ( 0, ZL_OK );
 }
 
 //----------------------------------------------------------------//

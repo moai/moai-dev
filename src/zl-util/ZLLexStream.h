@@ -22,22 +22,22 @@ private:
 	size_t mLine;
 	
 	//----------------------------------------------------------------//
-	u8			ReadByte			();
-	int			SetCursor			( long offset );
-	u8			UnreadByte			();
+	ZLCharResult	ReadByte			();
+	ZLResultCode	SetCursor			( size_t offset );
+	ZLCharResult	UnreadByte			();
 
 public:
 	
 	GET ( size_t, Line, mLine )
 	
 	//----------------------------------------------------------------//
-	u32			GetCaps				();
-	size_t		GetCursor			();
-	size_t		GetLength			();
-	size_t		ReadBytes			( void* buffer, size_t size );
-	void		SetStream			( ZLStream* stream );
-				ZLLexStream			();
-				~ZLLexStream		();
+	u32				GetCaps				();
+	size_t			GetCursor			();
+	size_t			GetLength			();
+	ZLSizeResult	ReadBytes			( void* buffer, size_t size );
+	void			SetStream			( ZLStream* stream );
+					ZLLexStream			();
+					~ZLLexStream		();
 };
 
 #endif

@@ -55,18 +55,19 @@ public:
 			indexed from 1.
 */
 class MOAIFrameBuffer :
-	public MOAIClearableView {
+	public MOAIClearableView,
+	public virtual ZLGfxListener {
 protected:
 	
-	friend class MOAIGfxDevice;
-	friend class MOAIGfxDeviceStateCache;
+	friend class MOAIGfxMgr;
+	friend class MOAIGfxStateCache;
 	
 	u32					mBufferWidth;
 	u32					mBufferHeight;
 	float				mBufferScale;
 	bool				mLandscape;
 	
-	u32					mGLFrameBufferID;
+	ZLGfxHandle*		mGLFrameBufferID;
 
 	bool				mGrabNextFrame;
 	MOAILuaMemberRef	mOnFrameFinish;
@@ -86,6 +87,7 @@ protected:
 	
 
 	//----------------------------------------------------------------//
+	void				OnReadPixels				( const ZLCopyOnWrite& buffer, void* userdata );
 	void				RenderTable					( MOAILuaState& state, int idx );
 
 public:
@@ -105,7 +107,7 @@ public:
 						MOAIFrameBuffer				();
 						~MOAIFrameBuffer			();
 	void				SetBufferSize				( u32 width, u32 height );
-	void				SetGLFrameBufferID			( u32 frameBufferID );
+	void				SetGLFrameBufferID			( ZLGfxHandle* frameBufferID );
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
 	virtual void		Render						();

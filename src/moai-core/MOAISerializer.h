@@ -73,8 +73,8 @@ public:
 	DECL_LUA_FACTORY ( MOAISerializer )
 
 	//----------------------------------------------------------------//
-	ObjID			AffirmMemberID				( MOAILuaObject* object );
-	ObjID			AffirmMemberID				( MOAILuaState& state, int idx );
+	ObjID			AffirmMemberID				( MOAILuaObject* object, bool processMetatable = true );
+	ObjID			AffirmMemberID				( MOAILuaState& state, int idx, bool processMetatable = true );
 	void			Clear						();
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );

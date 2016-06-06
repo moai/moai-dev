@@ -1,8 +1,6 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include "pch.h"
-
 #include <moai-image-webp/MOAIImageFormatWebP.h>
 
 extern "C" {
@@ -112,7 +110,7 @@ void MOAIImageFormatWebP::ReadImageWebP ( MOAIImage& image, u8 const* data, size
 			break;
 	}
 	config.output.u.RGBA.rgba = ( u8* )this->GetBitmap ( image );
-	config.output.u.RGBA.stride = image.GetRowSize ();
+	config.output.u.RGBA.stride = ( int )image.GetRowSize ();
 	config.output.u.RGBA.size = image.GetBitmapSize ();
 	config.output.is_external_memory = true;
 

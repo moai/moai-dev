@@ -26,7 +26,7 @@ int ZLVfsZipArchiveHeader::FindAndRead ( FILE* file, size_t* offset ) {
 	size_t cursor;
 	char buffer [ SCAN_BUFFER_SIZE ];
 	size_t scansize;
-	int i;
+	size_t i;
 	
 	if ( !file ) return -1;
 
@@ -42,7 +42,7 @@ int ZLVfsZipArchiveHeader::FindAndRead ( FILE* file, size_t* offset ) {
 		
 		scansize = (( cursor + SCAN_BUFFER_SIZE ) > filelen ) ? filelen - cursor : SCAN_BUFFER_SIZE;
 		
-		fseek ( file, cursor, SEEK_SET );
+		fseek ( file, ( long )cursor, SEEK_SET );
 		fread ( buffer, scansize, 1, file );
 
 		for ( i = scansize - 4; i >= 0; --i ) {
@@ -54,7 +54,7 @@ int ZLVfsZipArchiveHeader::FindAndRead ( FILE* file, size_t* offset ) {
 					( *offset ) = cursor + i;
 				}
 
-				fseek ( file, cursor + i, SEEK_SET );
+				fseek ( file, ( long )( cursor + i ), SEEK_SET );
 				
 				fread ( &this->mSignature, 4, 1, file );
 				fread ( &this->mDiskNumber, 2, 1, file );
@@ -65,7 +65,7 @@ int ZLVfsZipArchiveHeader::FindAndRead ( FILE* file, size_t* offset ) {
 				fread ( &this->mCDAddr, 4, 1, file );
 				fread ( &this->mCommentLength, 2, 1, file );
 				
-				this->mDataOffset = ( cursor + i ) - ( this->mCDSize + this->mCDAddr ); // saved for use in loading the entry files
+				this->mDataOffset = ( u32 )(( cursor + i ) - ( this->mCDSize + this->mCDAddr )); // saved for use in loading the entry files
 				this->mCDAddr += this->mDataOffset;
 
 				return 0;
@@ -125,6 +125,8 @@ int ZLVfsZipEntryHeader::Read ( FILE* file, u32 dataOffset ) {
 
 //----------------------------------------------------------------//
 int ZLVfsZipEntryHeader::StripTimestampsAndSkip ( FILE* file, size_t* fileHeaderAddr ) {
+	UNUSED ( file );
+	UNUSED ( fileHeaderAddr );
 
 	/*
 	unsigned long signature;
@@ -263,7 +265,7 @@ ZLVfsZipFileDir* ZLVfsZipFileDir::AffirmSubDir ( const char* path, size_t len ) 
 	ZLVfsZipFileDir* dir = this->mChildDirs;
 	
 	for ( ; dir; dir = dir->mNext ) {
-		if ( count_same_nocase ( dir->mName.c_str (), path ) == len ) return dir;
+		if ( zl_count_same_nocase ( dir->mName.c_str (), path ) == len ) return dir;
 	}
 	
 	dir = new ZLVfsZipFileDir ();
@@ -367,7 +369,7 @@ ZLVfsZipFileDir* ZLVfsZipArchive::FindDir ( char const* path ) {
 			ZLVfsZipFileDir* cursor = dir->mChildDirs;
 			
 			for ( ; cursor; cursor = cursor->mNext ) {
-				if ( count_same_nocase ( cursor->mName.c_str (), path ) == cursor->mName.length ()) {
+				if ( zl_count_same_nocase ( cursor->mName.c_str (), path ) == cursor->mName.length ()) {
 					dir = cursor;
 					break;
 				}
@@ -391,7 +393,7 @@ ZLVfsZipFileEntry* ZLVfsZipArchive::FindEntry ( char const* filename ) {
 
 	ZLVfsZipFileDir* dir;
 	ZLVfsZipFileEntry* entry;
-	int i;
+	size_t i;
 	
 	if ( !filename ) return 0;
 	
@@ -410,7 +412,7 @@ ZLVfsZipFileEntry* ZLVfsZipArchive::FindEntry ( char const* filename ) {
 	
 	entry = dir->mChildFiles;
 	for ( ; entry; entry = entry->mNext ) {
-		if ( strcmp_ignore_case ( entry->mName.c_str (), filename ) == 0 ) break;
+		if ( zl_strcmp_ignore_case ( entry->mName.c_str (), filename ) == 0 ) break;
 	}
 
 	return entry;
@@ -557,7 +559,7 @@ int ZLVfsZipArchive::StripTimestamps ( const char* infilename, const char* outfi
 	assert ( header.mStartDisk == 0 );
 	assert ( header.mTotalDiskEntries == header.mTotalEntries );
 	
-	size_t* fileHeaderAddrTable = ( size_t* )alloca ( header.mTotalEntries * sizeof ( size_t ));
+	u32* fileHeaderAddrTable = ( u32* )alloca ( header.mTotalEntries * sizeof ( u32 ));
 	
 	// copy the files
 	fseek ( infile, header.mCDAddr, SEEK_SET );
@@ -579,22 +581,22 @@ int ZLVfsZipArchive::StripTimestamps ( const char* infilename, const char* outfi
 		fileHeader.mExtraFieldLength = 0;
 		fileHeader.mFlag ^= ( 1 << 3 ); // clear bit 3
 
-		fileHeaderAddrTable [ i ] = ftell ( outfile );
+		fileHeaderAddrTable [ i ] = ( u32 )ftell ( outfile );
 		fileHeader.Write ( outfile );
 		
-		for ( size_t i = 0; i < fileHeader.mNameLength; ++i ) {
+		for ( size_t j = 0; j < fileHeader.mNameLength; ++j ) {
 			putc ( getc ( infile ), outfile );
 		}
 		
-		fseek ( infile, skip, SEEK_CUR );
+		fseek ( infile, ( long )skip, SEEK_CUR );
 		
 		size_t size = fileHeader.mCompression == 0 ? fileHeader.mUncompressedSize : fileHeader.mCompressedSize;
 		
-		for ( size_t i = 0; i < size; ++i ) {
+		for ( size_t j = 0; j < size; ++j ) {
 			putc ( getc ( infile ), outfile );
 		}
 		
-		fseek ( infile, resumeAddr, SEEK_SET );
+		fseek ( infile, ( long )resumeAddr, SEEK_SET );
 	}
 	
 	size_t directoryStartAddr = ftell ( outfile );
@@ -617,18 +619,18 @@ int ZLVfsZipArchive::StripTimestamps ( const char* infilename, const char* outfi
 
 		entryHeader.Write ( outfile );
 		
-		for ( size_t i = 0; i < entryHeader.mNameLength; ++i ) {
+		for ( size_t j = 0; j < entryHeader.mNameLength; ++j ) {
 			putc ( getc ( infile ), outfile );
 		}
 		
-		fseek ( infile, skip, SEEK_CUR );
+		fseek ( infile, ( long )skip, SEEK_CUR );
 	}
 	
 	size_t directoryEndAddr = ftell ( outfile );
 	
 	// copy the header
-	header.mCDAddr = directoryStartAddr;
-	header.mCDSize = directoryEndAddr - directoryStartAddr;
+	header.mCDAddr = ( u32 )directoryStartAddr;
+	header.mCDSize = ( u32 ) ( directoryEndAddr - directoryStartAddr );
 	header.mCommentLength = 0;
 	header.Write ( outfile );
 

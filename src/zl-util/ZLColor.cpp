@@ -50,10 +50,10 @@ u32 ZLColor::AddAndClamp ( u32 c0, u32 c1 ) {
 	u32 r32;
 	u8* rb32 = ( u8* )&r32;
 	
-	rb32 [ R_BYTE ] = r > 0xff ? 0xff : r;
-	rb32 [ G_BYTE ] = g > 0xff ? 0xff : g;
-	rb32 [ B_BYTE ] = b > 0xff ? 0xff : b;
-	rb32 [ A_BYTE ] = a > 0xff ? 0xff : a;
+	rb32 [ R_BYTE ] = r > 0xff ? 0xff : ( u8 )r;
+	rb32 [ G_BYTE ] = g > 0xff ? 0xff : ( u8 )g;
+	rb32 [ B_BYTE ] = b > 0xff ? 0xff : ( u8 )b;
+	rb32 [ A_BYTE ] = a > 0xff ? 0xff : ( u8 )a;
 	
 	return r32;
 }
@@ -811,8 +811,7 @@ void ZLColor::PremultiplyAlpha ( void* colors, ColorFormat format, u32 nColors )
 			for ( u32 i = 0; i < nColors; ++i ) {
 				color = *( u32* )colors;
 				alpha = ( color >> 0x18 ) & 0xFF;
-				*( u16* )colors = ( u16 )(	(( color & 0xFF ) * alpha ) >> 0x08 ) +
-											( alpha << 0x08 );
+				*( u16* )colors = ( u16 )(((( color & 0xFF ) * alpha ) >> 0x08 ) + ( alpha << 0x08 ));
 				colors = ( void* )(( size_t )colors + 2 );
 			}
 			break;
@@ -890,11 +889,14 @@ ZLColorVec ZLColor::Set ( u32 c0 ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: WTF is this?
 u32 ZLColor::Set ( u32 c0, u8 b, u8 v ) {
-	
+	UNUSED ( b );
+	UNUSED ( v );
+
 	u32 r32 = c0;
-	u8* rb32 = ( u8* )&r32;
-	
+	//u8* rb32 = ( u8* )&r32;
+		
 	return r32;
 }
 
@@ -1005,10 +1007,10 @@ u32 ZLColor::SubAndClamp ( u32 c0, u32 c1 ) {
 	u32 r32;
 	u8* rb32 = ( u8* )&r32;
 	
-	rb32 [ R_BYTE ] = r > 0xff ? 0 : r;
-	rb32 [ G_BYTE ] = g > 0xff ? 0 : g;
-	rb32 [ B_BYTE ] = b > 0xff ? 0 : b;
-	rb32 [ A_BYTE ] = a > 0xff ? 0 : a;
+	rb32 [ R_BYTE ] = r > 0xff ? 0 : ( u8 )r;
+	rb32 [ G_BYTE ] = g > 0xff ? 0 : ( u8 )g;
+	rb32 [ B_BYTE ] = b > 0xff ? 0 : ( u8 )b;
+	rb32 [ A_BYTE ] = a > 0xff ? 0 : ( u8 )a;
 	
 	return r32;
 }

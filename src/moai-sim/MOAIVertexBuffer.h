@@ -18,7 +18,7 @@ class MOAIVertexBuffer :
 	public MOAIGfxBuffer {
 private:
 	
-	friend class MOAIGfxDeviceBase;
+	friend class MOAIGfxPipelineClerk;
 
 	//----------------------------------------------------------------//
 	static int		_computeBounds			( lua_State* L );

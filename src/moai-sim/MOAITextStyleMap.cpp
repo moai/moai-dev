@@ -26,7 +26,7 @@ void MOAITextStyleMap::BuildStyleMap ( MOAITextStyleCache& styleCache, cc8* str 
 //----------------------------------------------------------------//
 u32 MOAITextStyleMap::CountSpans () {
 
-	return this->GetTop ();
+	return ( u32 )this->GetTop (); // TODO: cast
 }
 
 //----------------------------------------------------------------//
@@ -52,10 +52,10 @@ void MOAITextStyleMap::PushStyleSpan ( int base, int top, MOAITextStyleState& st
 //----------------------------------------------------------------//
 void MOAITextStyleMap::RefreshStyleGlyphs ( cc8* str ) {
 
-	u32 totalSpans = this->GetTop ();
+	size_t totalSpans = ( u32 )this->GetTop ();
 	if ( !totalSpans ) return;
 	
-	for ( u32 i = 0; i < totalSpans; ++i ) {
+	for ( size_t i = 0; i < totalSpans; ++i ) {
 		MOAITextStyleSpan& span = this->Elem ( i );
 		
 		int idx = span.mBase;
@@ -67,7 +67,7 @@ void MOAITextStyleMap::RefreshStyleGlyphs ( cc8* str ) {
 	
 	// TODO: think about keeping list of currently active styles instead of iterating through everything
 	
-	for ( u32 i = 0; i < totalSpans; ++i ) {
+	for ( size_t i = 0; i < totalSpans; ++i ) {
 		MOAITextStyleSpan& span = this->Elem ( i );
 		span.mStyle->mFont->ProcessGlyphs ();
 	}

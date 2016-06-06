@@ -8,14 +8,14 @@
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIFont.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIMaterialBatch.h>
 #include <moai-sim/MOAINodeMgr.h>
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIRenderMgr.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAISim.h>
-#include <moai-sim/MOAITextDesigner.h>
+#include <moai-sim/MOAITextLayoutRules.h>
 #include <moai-sim/MOAITextLabel.h>
 #include <moai-sim/MOAITextStyle.h>
 #include <moai-sim/MOAITextStyleParser.h>
@@ -57,8 +57,8 @@ int MOAITextLabel::_clearHighlights ( lua_State* L ) {
 */
 int MOAITextLabel::_getAlignment ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
-	state.Push ( self->mDesigner.GetHAlign ());
-	state.Push ( self->mDesigner.GetVAlign ());
+	state.Push ( self->mLayoutRules.GetHAlign ());
+	state.Push ( self->mLayoutRules.GetVAlign ());
 	return 2;
 }
 
@@ -71,7 +71,7 @@ int MOAITextLabel::_getAlignment ( lua_State* L ) {
 */
 int MOAITextLabel::_getGlyphScale ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
-	state.Push ( self->mDesigner.GetGlyphScale ());
+	state.Push ( self->mLayoutRules.GetGlyphScale ());
 	return 1;
 }
 
@@ -85,8 +85,25 @@ int MOAITextLabel::_getGlyphScale ( lua_State* L ) {
 int MOAITextLabel::_getLineSpacing ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 	
-	lua_pushnumber ( state, self->mDesigner.GetLineSpacing ());
+	lua_pushnumber ( state, self->mLayoutRules.GetLineSpacing ());
 	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	getOverrunRules
+	@text	Returns the overrun rules.
+
+	@in		MOAITextLabel self
+	@out	number firstOverrunRule
+	@out	number overrunRule
+*/
+int MOAITextLabel::_getOverrunRules ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
+	
+	state.Push ( self->mLayoutRules.GetFirstOverrunRule ());
+	state.Push ( self->mLayoutRules.GetOverrunRule ());
+	
+	return 2;
 }
 
 //----------------------------------------------------------------//
@@ -102,10 +119,29 @@ int MOAITextLabel::_getLineSpacing ( lua_State* L ) {
 int MOAITextLabel::_getRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 
-	ZLRect rect = self->mDesigner.GetFrame ();
+	ZLRect rect = self->mLayoutRules.GetFrame ();
 	state.Push ( rect );
 
 	return 4;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	getSizingRules
+	@text	Returns the sizing rules.
+
+	@in		MOAITextLabel self
+	@out	number hLayoutSizingRule
+	@out	number vLayoutSizingRule
+	@out	number lineSizingRule
+*/
+int MOAITextLabel::_getSizingRules ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
+	
+	state.Push ( self->mLayoutRules.GetHLayoutSizingRule ());
+	state.Push ( self->mLayoutRules.GetVLayoutSizingRule ());
+	state.Push ( self->mLayoutRules.GetLineSizingRule ());
+	
+	return 3;
 }
 
 //----------------------------------------------------------------//
@@ -187,7 +223,8 @@ int MOAITextLabel::_getTextBounds ( lua_State* L ) {
 		hasRect = self->mLayout.GetBoundsForRange ( index, size, rect );
 	}
 	else {
-		hasRect = self->mLayout.GetBounds ( rect );
+		rect = self->mLayout.GetLayoutBounds ();
+		hasRect = true;
 	}
 	
 	if ( hasRect ) {
@@ -206,10 +243,10 @@ int MOAITextLabel::_getTextBounds ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@lua	hasOverrun
-    @text	Returns whether there are additional glyphs that are not visible on the screen (either on next page or just thrown away).
+    @text	Returns whether a token was truncated at the end of the text layout.
  
     @in		MOAITextBox self
-    @out	boolean overrun				If there is additional text below the cursor that is not visible on the screen due to clipping (or in the next page).
+    @out	boolean overrun			Only true if a token is split across layout pages.
  */
 int MOAITextLabel::_hasOverrun ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
@@ -263,7 +300,7 @@ int MOAITextLabel::_reserveCurves ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "UN" )
 
 	u32 total = state.GetValue < u32 >( 2, 0 );
-	self->mDesigner.ReserveCurves ( total );
+	self->mLayoutRules.ReserveCurves ( total );
 
 	return 0;
 }
@@ -295,8 +332,8 @@ int MOAITextLabel::_revealAll ( lua_State* L ) {
 int MOAITextLabel::_setAlignment ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "UN" )
 
-	self->mDesigner.SetHAlign ( state.GetValue < u32 >( 2, MOAITextDesigner::LEFT_JUSTIFY ));
-	self->mDesigner.SetVAlign ( state.GetValue < u32 >( 3, MOAITextDesigner::TOP_JUSTIFY ));
+	self->mLayoutRules.SetHAlign ( state.GetValue < u32 >( 2, MOAITextLayoutRules::LEFT_JUSTIFY ));
+	self->mLayoutRules.SetVAlign ( state.GetValue < u32 >( 3, MOAITextLayoutRules::TOP_JUSTIFY ));
 	self->ScheduleLayout ();
 
 	return 0;
@@ -354,13 +391,13 @@ int MOAITextLabel::_setBounds ( lua_State* L ) {
 		ZLRect frame;
 		frame = bounds.GetRect ( ZLBox::PLANE_XY );
 		
-		self->mDesigner.SetFrame ( frame );
-		self->mDesigner.SetLimitWidth ( true );
-		self->mDesigner.SetLimitHeight ( true );
+		self->mLayoutRules.SetFrame ( frame );
+		self->mLayoutRules.SetLimitWidth ( true );
+		self->mLayoutRules.SetLimitHeight ( true );
 	}
 	else {
-		self->mDesigner.SetLimitWidth ( false );
-		self->mDesigner.SetLimitHeight ( false );
+		self->mLayoutRules.SetLimitWidth ( false );
+		self->mLayoutRules.SetLimitHeight ( false );
 	}
 	
 	self->ScheduleLayout ();
@@ -393,11 +430,11 @@ int MOAITextLabel::_setCurve ( lua_State* L ) {
 		MOAIAnimCurve* curve = state.GetLuaObject < MOAIAnimCurve >( 3, true );
 		if ( !curve ) return 0;
 
-		self->mDesigner.SetCurve ( index, curve );
+		self->mLayoutRules.SetCurve ( index, curve );
 		self->ScheduleLayout ();
 	}
 	else {
-		self->mDesigner.ClearCurves ();
+		self->mLayoutRules.ClearCurves ();
 		self->ScheduleLayout ();
 	}
 	return 0;
@@ -414,7 +451,7 @@ int MOAITextLabel::_setCurve ( lua_State* L ) {
 */
 int MOAITextLabel::_setGlyphScale ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
-	self->mDesigner.SetGlyphScale ( state.GetValue < float >( 2, 1.0f ));
+	self->mLayoutRules.SetGlyphScale ( state.GetValue < float >( 2, 1.0f ));
 	self->ScheduleLayout ();
 	return 0;
 }
@@ -478,8 +515,8 @@ int MOAITextLabel::_setLineSnap ( lua_State* L ) {
 	float hLineSnap = state.GetValue < float >( 2, 0.0f );
 	float vLineSnap = state.GetValue < float >( 3, hLineSnap );
 	
-	self->mDesigner.SetHLineSnap ( hLineSnap );
-	self->mDesigner.SetVLineSnap ( vLineSnap );
+	self->mLayoutRules.SetHLineSnap ( hLineSnap );
+	self->mLayoutRules.SetVLineSnap ( vLineSnap );
 	self->ScheduleLayout ();
 	
 	return 0;
@@ -499,9 +536,36 @@ int MOAITextLabel::_setLineSpacing ( lua_State* L ) {
 	
 	float lineSpacing = state.GetValue < float >( 2, 0.0f );
 	
-	self->mDesigner.SetLineSpacing ( lineSpacing );
+	self->mLayoutRules.SetLineSpacing ( lineSpacing );
 	self->ScheduleLayout ();
 	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	setOverrunRule
+	@text	Control behavior of text shaper when a token needs to be wrapped.
+			An alternate rule may be set for the first token on a line.
+
+			OVERRUN_MOVE_WORD will cause the entire token to be moved to the next line.
+			OVERRUN_SPLIT_WORD will split the token across lines.
+			OVERRUN_TRUNCATE_WORD will discard the remaining characters in the token.
+			OVERRUN_ABORT_LAYOUT will back up to the start of the token and stop the layout.
+			
+			OVERRUN_MOVE_WORD is not permitted as the rule for the line's first token. If the
+			first token doesn't fit on current line, it will not fit on the next line and so on.
+
+	@in		MOAITextLabel self
+	@in		number firstOverrunRule		One of OVERRUN_SPLIT_WORD, OVERRUN_TRUNCATE_WORD, OVERRUN_ABORT_LAYOUT. Default value is OVERRUN_SPLIT_WORD.
+	@in		number overrunRule			One of OVERRUN_MOVE_WORD, OVERRUN_SPLIT_WORD, OVERRUN_TRUNCATE_WORD, OVERRUN_ABORT_LAYOUT. Default value is OVERRUN_MOVE_WORD.
+	@out	nil
+*/
+int MOAITextLabel::_setOverrunRules ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
+
+	self->mLayoutRules.SetFirstOverrunRule ( state.GetValue < u32 >( 2, MOAITextLayoutRules::OVERRUN_SPLIT_WORD ));
+	self->mLayoutRules.SetOverrunRule ( state.GetValue < u32 >( 3, MOAITextLayoutRules::OVERRUN_MOVE_WORD ));
+
 	return 0;
 }
 
@@ -521,10 +585,10 @@ int MOAITextLabel::_setRect ( lua_State* L ) {
 
 	ZLRect rect = state.GetRect < float >( 2 );
 	rect.Bless ();
-	self->mDesigner.SetFrame ( rect );
+	self->mLayoutRules.SetFrame ( rect );
 
-	self->mDesigner.SetLimitWidth ( true );
-	self->mDesigner.SetLimitHeight ( true );
+	self->mLayoutRules.SetLimitWidth ( true );
+	self->mLayoutRules.SetLimitHeight ( true );
 
 	self->ScheduleLayout ();
 
@@ -543,8 +607,8 @@ int MOAITextLabel::_setRect ( lua_State* L ) {
 int MOAITextLabel::_setRectLimits ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 
-	self->mDesigner.SetLimitWidth ( state.GetValue < bool >( 2, false ));
-	self->mDesigner.SetLimitHeight ( state.GetValue < bool >( 3, false ));
+	self->mLayoutRules.SetLimitWidth ( state.GetValue < bool >( 2, false ));
+	self->mLayoutRules.SetLimitHeight ( state.GetValue < bool >( 3, false ));
 
 	self->ScheduleLayout ();
 
@@ -567,6 +631,32 @@ int MOAITextLabel::_setReveal ( lua_State* L ) {
 
 	self->mReveal = state.GetValue < u32 >( 2, self->mReveal );
 	self->mSpool = ( float )self->mReveal;
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	setSizingRule
+	@text	The sizing rules are used to determine the boundaries of each line for
+			layout and alignment purposes. The H and V layout sizing rules determine whether
+			the layout is based on the tight-fitting glyph boundaries or the (possibly) looser
+			fitting 'logical' bounds (i.e. the bounds specified by the type face, allowing for
+			full ascent and descent). The line sizing rule determines whether lines are spaced
+			from logical or glyph bounds. Note that these rules do not affect the spacing of
+			glyphs as they are laid out within a line, but they do affect the spacing of lines.
+
+	@in		MOAITextLabel self
+	@in		number hLayoutSizingRule		One of LOGICAL_SIZE or GLYPH_SIZE. Default is LOGICAL_SIZE.
+	@in		number vLayoutSizingRule		One of LOGICAL_SIZE or GLYPH_SIZE. Default is LOGICAL_SIZE.
+	@in		number lineSizingRule			One of LOGICAL_SIZE or GLYPH_SIZE. Default is LOGICAL_SIZE.
+	@out	nil
+*/
+int MOAITextLabel::_setSizingRules ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
+
+	self->mLayoutRules.SetHLayoutSizingRule ( state.GetValue < u32 >( 2, MOAITextLayoutRules::LOGICAL_SIZE ));
+	self->mLayoutRules.SetVLayoutSizingRule ( state.GetValue < u32 >( 3, MOAITextLayoutRules::LOGICAL_SIZE ));
+	self->mLayoutRules.SetLineSizingRule ( state.GetValue < u32 >( 3, MOAITextLayoutRules::LOGICAL_SIZE ));
 
 	return 0;
 }
@@ -655,7 +745,7 @@ int MOAITextLabel::_setStyle ( lua_State* L ) {
 int MOAITextLabel::_setWordBreak ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 
-	self->mDesigner.SetWordBreak ( state.GetValue < u32 >( 2, MOAITextDesigner::WORD_BREAK_NONE ));
+	//self->mLayoutRules.SetWordBreakRule ( state.GetValue < u32 >( 2, MOAITextLayoutRules::WORD_BREAK_NONE ));
 	return 0;
 }
 
@@ -673,7 +763,7 @@ int MOAITextLabel::_setWordBreak ( lua_State* L ) {
 int MOAITextLabel::_setYFlip ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "UB" )
 
-	self->mDesigner.SetYFlip ( state.GetValue < bool >( 2, false ));
+	self->mLayoutRules.SetYFlip ( state.GetValue < bool >( 2, false ));
 	self->ScheduleLayout ();
 
 	return 0;
@@ -758,7 +848,7 @@ void MOAITextLabel::BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
 
 	this->MOAITransform::BuildLocalToWorldMtx ( localToWorldMtx );
 
-	float yScale = this->mDesigner.GetYFlip () ? -1.0f : 1.0f;
+	float yScale = this->mLayoutRules.GetYFlip () ? -1.0f : 1.0f;
 
 	ZLAffine3D mtx;
 	mtx.ScRoTr ( 1.0f, yScale, 1.0f, 0.0f, 0.0f, 0.0f, this->mLayout.mXOffset, this->mLayout.mYOffset, 0.0f );
@@ -774,14 +864,14 @@ void MOAITextLabel::Draw ( int subPrimID, float lod ) {
 	
 	if ( this->mReveal ) {
 		
-		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 		this->LoadGfxState ();
 		this->LoadVertexTransform ();
 		this->LoadUVTransform ();
 	
-		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
-		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+		gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
+		gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_MTX ));
 		
 		MOAIShader* shader = this->mMaterialBatch ? this->mMaterialBatch->RawGetShader ( 0 ) : 0;
 		bool useSpriteShaders = !shader;
@@ -803,43 +893,55 @@ void MOAITextLabel::DrawDebug ( int subPrimID, float lod ) {
 	if ( !this->IsVisible ( lod )) return;
 	if ( this->IsClear ()) return;
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	
+	ZLMatrix4x4 worldDrawingMtx = this->GetWorldDrawingMtx ();
+	
+	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX, worldDrawingMtx );
+	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
+	
+	this->mLayout.DrawDebug ();
 	
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
-	
 	draw.Bind ();
 	
-	ZLMatrix4x4 worldDrawingMtx = this->GetWorldDrawingMtx ();
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, worldDrawingMtx );
+	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
 	
-	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+	if (( this->mLayout.mLayoutBounds.Area () > 0.0f ) && debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LAYOUT_BOUNDS )) {
 	
-	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX )) {
-	
-		ZLRect bounds;
-		if ( this->mLayout.GetBounds ( bounds )) {
-		
-			ZLRect frame = this->mDesigner.GetFrame ();
-		
-			if ( this->mDesigner.GetLimitWidth ()) {
-				float xOffset = this->mLayout.mXOffset;
-				bounds.mXMin = frame.mXMin - xOffset;
-				bounds.mXMax = frame.mXMax - xOffset;
-			}
-			
-			if ( this->mDesigner.GetLimitHeight ()) {
-				float yOffset = this->mLayout.mYOffset;
-				bounds.mYMin = frame.mYMin - yOffset;
-				bounds.mYMax = frame.mYMax - yOffset;
-			}
-		
-			draw.DrawRectOutline ( bounds );
-		}
+		draw.DrawRectOutline ( this->mLayout.mLayoutBounds );
 	}
 	
-	this->mLayout.DrawDebug ();
+	if (( this->mLayout.mGlyphBounds.Area () > 0.0f ) && debugLines.Bind ( MOAIDebugLines::TEXT_BOX_GLYPH_BOUNDS )) {
+		
+		draw.DrawRectOutline ( this->mLayout.mGlyphBounds );
+	}
+		
+	ZLRect frame = this->mLayoutRules.GetFrame ();
+	
+	if ( frame.Area () > 0.0f ) {
+	
+		frame.Offset ( -this->mLayout.mXOffset, -this->mLayout.mYOffset );
+		
+		if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX )) {
+		
+			draw.DrawRectOutline ( frame );
+			}
+			
+		if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LIMITS )) {
+			
+			if ( this->mLayoutRules.GetLimitHeight ()) {
+				draw.DrawLine ( frame.mXMin, frame.mYMin, frame.mXMax, frame.mYMin );
+				draw.DrawLine ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMax );
+			}
+		
+			if ( this->mLayoutRules.GetLimitWidth ()) {
+				draw.DrawLine ( frame.mXMin, frame.mYMin, frame.mXMin, frame.mYMax );
+				draw.DrawLine ( frame.mXMax, frame.mYMin, frame.mXMax, frame.mYMax );
+		}
+	}
+}
 }
 
 //----------------------------------------------------------------//
@@ -873,13 +975,13 @@ ZLMatrix4x4 MOAITextLabel::GetWorldDrawingMtx () {
 				flip.Scale ( -1.0f, -1.0f, 1.0f );
 				
 				// if there's no x-axis constraint, flip inside the glyph rect
-				if ( !this->mDesigner.GetLimitHeight ()) {
+				if ( !this->mLayoutRules.GetLimitWidth ()) {
 					float xOffset = this->mLayout.mGlyphBounds.mXMin + this->mLayout.mGlyphBounds.mXMax;
 					flip.m [ ZLMatrix4x4::C3_R0 ] = xOffset;
 				}
 				
 				// if there's no y-axis constraint, flip inside the glyph rect
-				if ( !this->mDesigner.GetLimitHeight ()) {
+				if ( !this->mLayoutRules.GetLimitHeight ()) {
 					float yOffset = this->mLayout.mGlyphBounds.mYMin + this->mLayout.mGlyphBounds.mYMax;
 					flip.m [ ZLMatrix4x4::C3_R1 ] = yOffset;
 				}
@@ -919,7 +1021,7 @@ MOAITextLabel::MOAITextLabel () :
 	RTTI_END
 	
 	this->mStyleCache.SetOwner ( this );
-	this->mDesigner.SetOwner ( this );
+	this->mLayoutRules.SetOwner ( this );
 
 	this->mBlendMode.SetBlend ( ZGL_BLEND_FACTOR_SRC_ALPHA, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
 }
@@ -972,9 +1074,9 @@ u32 MOAITextLabel::OnGetModelBounds ( ZLBox& bounds ) {
 	ZLRect textBounds; // the tight fitting bounds of the text (if any: may be empty)
 	bool hasBounds = this->mLayout.GetBounds ( textBounds );
 	
-	ZLRect textFrame = this->mDesigner.GetFrame ();
-	bool limitWidth = this->mDesigner.GetLimitWidth ();
-	bool limitHeight = this->mDesigner.GetLimitHeight ();
+	ZLRect textFrame = this->mLayoutRules.GetFrame ();
+	bool limitWidth = this->mLayoutRules.GetLimitWidth ();
+	bool limitHeight = this->mLayoutRules.GetLimitHeight ();
 	
 	if ( hasBounds ) {
 	
@@ -1006,7 +1108,7 @@ u32 MOAITextLabel::OnGetModelBounds ( ZLBox& bounds ) {
 //----------------------------------------------------------------//
 void MOAITextLabel::OnUpdate ( double step ) {
 	
-	this->mSpool += ( this->mSpeed * step );
+	this->mSpool += ( float )( this->mSpeed * step );
 	this->mReveal = ( u32 )this->mSpool;
 }
 
@@ -1032,8 +1134,7 @@ void MOAITextLabel::RefreshLayout () {
 
 	this->mStyleMap.BuildStyleMap ( this->mStyleCache, this->mText.c_str ());
 
-	ZLVec2D offset ( 0.0f, 0.0f );
-	this->mDesigner.Layout ( this->mLayout, this->mStyleCache, this->mStyleMap, this->mText.c_str (), this->mCurrentPageIdx, offset, &this->mMore, &this->mNextPageIdx, &this->mOverrun );
+	this->mLayoutRules.Layout ( this->mLayout, this->mStyleCache, this->mStyleMap, this->mText.c_str (), this->mCurrentPageIdx, &this->mMore, &this->mNextPageIdx, &this->mOverrun );
 }
 
 //----------------------------------------------------------------//
@@ -1048,15 +1149,20 @@ void MOAITextLabel::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIGraphicsProp::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass ( state );
 
-	state.SetField ( -1, "WORD_BREAK_NONE", ( u32 )MOAITextDesigner::WORD_BREAK_NONE );
-	state.SetField ( -1, "WORD_BREAK_CHAR", ( u32 )MOAITextDesigner::WORD_BREAK_CHAR );
+	state.SetField ( -1, "OVERRUN_MOVE_WORD",		( u32 )MOAITextLayoutRules::OVERRUN_MOVE_WORD );
+	state.SetField ( -1, "OVERRUN_SPLIT_WORD",		( u32 )MOAITextLayoutRules::OVERRUN_SPLIT_WORD );
+	state.SetField ( -1, "OVERRUN_TRUNCATE_WORD",	( u32 )MOAITextLayoutRules::OVERRUN_TRUNCATE_WORD );
+	state.SetField ( -1, "OVERRUN_ABORT_LAYOUT",	( u32 )MOAITextLayoutRules::OVERRUN_ABORT_LAYOUT );
 
-	state.SetField ( -1, "BASELINE_JUSTIFY",	( u32 )MOAITextDesigner::BASELINE_JUSTIFY );
-	state.SetField ( -1, "BOTTOM_JUSTIFY",		( u32 )MOAITextDesigner::BOTTOM_JUSTIFY );
-	state.SetField ( -1, "LEFT_JUSTIFY",		( u32 )MOAITextDesigner::LEFT_JUSTIFY );
-	state.SetField ( -1, "CENTER_JUSTIFY",		( u32 )MOAITextDesigner::CENTER_JUSTIFY );
-	state.SetField ( -1, "RIGHT_JUSTIFY",		( u32 )MOAITextDesigner::RIGHT_JUSTIFY );
-	state.SetField ( -1, "TOP_JUSTIFY",			( u32 )MOAITextDesigner::TOP_JUSTIFY );
+	state.SetField ( -1, "GLYPH_SIZE",				( u32 )MOAITextLayoutRules::GLYPH_SIZE );
+	state.SetField ( -1, "LOGICAL_SIZE",			( u32 )MOAITextLayoutRules::LOGICAL_SIZE );
+
+	state.SetField ( -1, "BASELINE_JUSTIFY",		( u32 )MOAITextLayoutRules::BASELINE_JUSTIFY );
+	state.SetField ( -1, "BOTTOM_JUSTIFY",			( u32 )MOAITextLayoutRules::BOTTOM_JUSTIFY );
+	state.SetField ( -1, "LEFT_JUSTIFY",			( u32 )MOAITextLayoutRules::LEFT_JUSTIFY );
+	state.SetField ( -1, "CENTER_JUSTIFY",			( u32 )MOAITextLayoutRules::CENTER_JUSTIFY );
+	state.SetField ( -1, "RIGHT_JUSTIFY",			( u32 )MOAITextLayoutRules::RIGHT_JUSTIFY );
+	state.SetField ( -1, "TOP_JUSTIFY",				( u32 )MOAITextLayoutRules::TOP_JUSTIFY );
 }
 
 //----------------------------------------------------------------//
@@ -1070,7 +1176,9 @@ void MOAITextLabel::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getAlignment",			_getAlignment },
 		{ "getGlyphScale",			_getGlyphScale },
 		{ "getLineSpacing",			_getLineSpacing },
+		{ "getOverrunRules",		_getOverrunRules },
 		{ "getRect",				_getRect },
+		{ "getSizingRules",			_getSizingRules },
 		{ "getStyle",				_getStyle },
 		{ "getText",				_getText },
 		{ "getTextBounds",			_getTextBounds },
@@ -1087,9 +1195,11 @@ void MOAITextLabel::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setLineSnap",			_setLineSnap },
 		{ "setLineSpacing",			_setLineSpacing },
 		{ "setHighlight",			_setHighlight },
-		{ "setReveal",				_setReveal },
+		{ "setOverrunRules",		_setOverrunRules },
 		{ "setRect",				_setRect },
 		{ "setRectLimits",			_setRectLimits },
+		{ "setReveal",				_setReveal },
+		{ "setSizingRules",			_setSizingRules },
 		{ "setSpeed",				_setSpeed },
 		{ "setStyle",				_setStyle },
 		{ "setText",				_setText },

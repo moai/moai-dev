@@ -644,7 +644,7 @@ MOAICellCoord MOAIGridSpace::GetAxialHexCellCoord ( float x, float y ) const {
 	r = floorf (( floorf ( t1 - x ) + t2 ) / 3.0f );
 	q = floorf (( floorf ( 2.0f * x + 1.0f ) + t2) / 3.0f );
 
-	return MOAICellCoord ( q, r );
+	return MOAICellCoord (( int )q, ( int )r );
 }
 
 //----------------------------------------------------------------//
@@ -700,12 +700,14 @@ void MOAIGridSpace::GetBoundsInRect ( ZLRect rect, MOAICellCoord& c0, MOAICellCo
 	maxSize.Bless ();
 
 	if ( this->mShape == AXIAL_HEX_SHAPE ) {
-		float rectHeight;
+
 		c0 = this->GetAxialHexCellCoord ( rect.mXMin, rect.mYMin );
 		c1 = this->GetAxialHexCellCoord ( rect.mXMax, rect.mYMax );
-		rectHeight = c1.mY - c0.mY;
-		/* you need an extra column per two rows */
-		c1.mX = c1.mX + (rectHeight / 2);
+
+		int rectHeight = c1.mY - c0.mY;
+
+		// you need an extra column per two rows
+		c1.mX = c1.mX +  ( rectHeight >> 1 );
 	} else {
 		c0.mX = ( int )floorf ( ( rect.mXMin / this->mCellWidth )  - ( maxSize.mXMax / 0.5f - 1.0f ) );
 		c0.mY = ( int )floorf ( ( rect.mYMin / this->mCellHeight ) - ( maxSize.mYMax / 0.5f - 1.0f ) );

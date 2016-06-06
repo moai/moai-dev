@@ -6,7 +6,7 @@
 #import "headers.h"
 
 #import <contrib/MOAIOpenUDID.h>
-#import <moai-sim/MOAIGfxDevice.h>
+#import <moai-sim/MOAIGfxMgr.h>
 
 #if AKU_WITH_IFA
 	#import <AdSupport/ASIdentifierManager.h>
@@ -55,9 +55,11 @@ void AKUIosContextInitialize () {
 	environment.SetValue ( MOAI_ENV_osBrand,				"iOS" );
 	environment.SetValue ( MOAI_ENV_osVersion,				[[ UIDevice currentDevice ].systemVersion UTF8String ]);
 	environment.SetValue ( MOAI_ENV_openUdid,				[[ MOAIOpenUDID value] UTF8String ]);
+	environment.SetValue ( MOAI_ENV_screenScale,			[[ UIScreen mainScreen ] scale ]);
 	environment.SetValue ( MOAI_ENV_systemLanguageCode,		[[[ NSLocale preferredLanguages ] objectAtIndex: 0 ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_verticalResolution,		[[ UIScreen mainScreen ] bounds ].size.height * [[ UIScreen mainScreen ] scale ]);
 	
+	environment.SetValue ( MOAI_ENV_appDirectory,			[[ NSSearchPathForDirectoriesInDomains ( NSApplicationDirectory, NSUserDomainMask, YES ) objectAtIndex:0 ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_cacheDirectory,			[[ NSSearchPathForDirectoriesInDomains ( NSCachesDirectory, NSUserDomainMask, YES ) objectAtIndex:0 ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_resourceDirectory,		[[[ NSBundle mainBundle ] resourcePath ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_documentDirectory,		[[ NSSearchPathForDirectoriesInDomains ( NSDocumentDirectory, NSUserDomainMask, YES ) objectAtIndex:0 ] UTF8String ]);
@@ -115,6 +117,6 @@ void AKUIosOpenUrl ( NSURL* url, NSString* sourceApplication ) {
 //----------------------------------------------------------------//
 void AKUIosSetFrameBuffer ( GLuint frameBuffer ) {
 
-	MOAIGfxDevice::Get ().GetDefaultFrameBuffer ()->SetGLFrameBufferID ( frameBuffer );
+	MOAIGfxMgr::Get ().mGfxState.GetDefaultFrameBuffer ()->SetGLFrameBufferID ( new ZLGfxHandle ( ZLGfxHandle::FRAMEBUFFER, frameBuffer, true ));
 }
 

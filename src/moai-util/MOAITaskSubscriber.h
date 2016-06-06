@@ -38,7 +38,6 @@ private:
 	double						mLatentPublishDuration;
 
 	//----------------------------------------------------------------//
-	void			Process					();
 	void			PushTask				( MOAITask& task );
 	void			PushTaskLatent			( MOAITask& task );
 

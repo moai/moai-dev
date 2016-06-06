@@ -14,17 +14,17 @@ class ZLRingAdapter :
 protected:
 
 	//----------------------------------------------------------------//
-	size_t				Process					( void* readBuffer, const void* writeBuffer, size_t size );
+	ZLSizeResult		Process					( void* readBuffer, const void* writeBuffer, size_t size );
 	
 public:
 
 	//----------------------------------------------------------------//
 	size_t				GetCursor				();
 	bool				IsAtEnd					();
-	size_t				ReadBytes				( void* buffer, size_t size );
-	int					SetCursor				( long offset );
-	size_t				SetLength				( size_t length );
-	size_t				WriteBytes				( const void* buffer, size_t size );
+	ZLSizeResult		ReadBytes				( void* buffer, size_t size );
+	int					SetCursor				( size_t offset );
+	ZLSizeResult		SetLength				( size_t length );
+	ZLSizeResult		WriteBytes				( const void* buffer, size_t size );
 						ZLRingAdapter			();
 						~ZLRingAdapter			();
 };

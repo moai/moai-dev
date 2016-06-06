@@ -56,7 +56,7 @@ void ZLHashWriter::OnClose () {
 }
 
 //----------------------------------------------------------------//
-bool ZLHashWriter::OnOpen () {
+ZLResultCode ZLHashWriter::OnOpen () {
 	
 	this->InitHash ();
 	
@@ -67,30 +67,32 @@ bool ZLHashWriter::OnOpen () {
 		for ( u32 i = 0; i < blockSize; ++i ) {
 			xorKey [ i ] = key [ i ] ^ 0x36;
 		}
-		this->WriteBytes ( xorKey, blockSize );
+		return ( this->WriteBytes ( xorKey, blockSize ).mCode == ZL_OK ) ? ZL_OK : ZL_ERROR;
 	}
-	
-	return true;
+	return ZL_OK;
 }
 
 //----------------------------------------------------------------//
-size_t ZLHashWriter::WriteBytes ( const void* buffer, size_t size ) {
+ZLSizeResult ZLHashWriter::WriteBytes ( const void* buffer, size_t size ) {
+	
+	size_t writeSize = size;
 	
 	// Pass the write through to stream
 	if ( this->mProxiedStream ) {
-		size = this->mProxiedStream->WriteBytes( buffer, size );
+		writeSize = this->mProxiedStream->WriteBytes( buffer, writeSize );
 	}
 	
 	// Update the hash
-	if ( size ) {
-		this->HashBytes ( buffer, size );
+	if ( writeSize ) {
+		this->HashBytes ( buffer, writeSize );
 	}
 	
-	this->mCursor += size;
+	this->mCursor += writeSize;
 	if ( this->mLength < this->mCursor ) {
 		this->mLength = this->mCursor;
 	}
-	return size;
+
+	ZL_RETURN_SIZE_RESULT ( writeSize, ZL_OK );
 }
 
 //----------------------------------------------------------------//

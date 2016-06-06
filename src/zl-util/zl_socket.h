@@ -49,10 +49,10 @@
 #endif
 
 enum {
-    IO_DONE = 0,        /* operation completed successfully */
-    IO_TIMEOUT = -1,    /* operation timed out */
-    IO_CLOSED = -2,     /* the connection has been closed */
-	IO_UNKNOWN = -3
+    ZL_IO_DONE		= 0,        /* operation completed successfully */
+    ZL_IO_TIMEOUT	= -1,    /* operation timed out */
+    ZL_IO_CLOSED	= -2,     /* the connection has been closed */
+	ZL_IO_UNKNOWN	= -3
 };
 
 typedef struct in_addr zl_inaddr;

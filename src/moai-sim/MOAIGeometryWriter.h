@@ -39,6 +39,7 @@ private:
 	static int			_applyLightFromImage	( lua_State* L );
 	static int			_applyLinearGradient	( lua_State* L );
 	static int			_getMesh				( lua_State* L );
+	static int			_offsetIndices			( lua_State* L );
 	static int			_pruneVertices			( lua_State* L );
 	static int			_snapCoords				( lua_State* L );
 	static int			_writeBox				( lua_State* L );
@@ -74,6 +75,7 @@ public:
 	static u32			GetMesh					( const MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes );
 						MOAIGeometryWriter		();
 						~MOAIGeometryWriter		();
+	static void			OffsetIndices			( ZLStream& idxStream, s32 offset );
 	static void			PruneVertices			( const MOAIVertexFormat& format, MOAIStream& vtxStream, MOAIStream& idxStream );
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );

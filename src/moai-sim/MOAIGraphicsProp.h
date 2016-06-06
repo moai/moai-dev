@@ -79,6 +79,12 @@ class MOAIGraphicsProp :
 private:
 	
 	//----------------------------------------------------------------//
+	static int		_getBillboard			( lua_State* L );
+	static int		_getBlendEquation		( lua_State* L );
+	static int		_getBlendMode			( lua_State* L );
+	static int		_getCullMode			( lua_State* L );
+	static int		_getDepthMask			( lua_State* L );
+	static int		_getDepthTest			( lua_State* L );
 	static int		_getIndexBatchSize		( lua_State* L );
 	static int		_getMaterialBatch		( lua_State* L );
 	static int		_getScissorRect			( lua_State* L );

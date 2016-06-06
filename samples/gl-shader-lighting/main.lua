@@ -187,6 +187,6 @@ local mesh = makeCube ( 128, 'moai.png' )
 
 prop = MOAIProp.new ()
 prop:setDeck ( mesh )
-prop:moveRot ( 360, 360, 0, 12 )
+prop:moveRot ( 360, 360, 0, 6 )
 prop:setCullMode ( MOAIProp.CULL_BACK )
 layer:insertProp ( prop )

@@ -35,21 +35,21 @@ bool MOAILogMessages::CheckFileExists ( cc8* filename, lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAILogMessages::CheckIndex ( u32 idx, u32 size, lua_State* L ) {
+bool MOAILogMessages::CheckIndex ( size_t idx, size_t size, lua_State* L ) {
 
 	if ( size == 0 ) {
 		MOAILogF ( L, ZLLog::LOG_ERROR, MOAILogMessages::MOAI_IndexNoReserved );
 		return false;
 	}
 	else if ( !( idx < size )) {
-		MOAILogF ( L, MOAILogMessages::MOAI_IndexOutOfRange_DDD, idx, 0, size - 1 );
+		MOAILogF ( L, MOAILogMessages::MOAI_IndexOutOfRange_DDD, ( u32 )idx, 0, ( u32 )( size - 1 ));
 		return false;
 	}
 	return true;
 }
 
 //----------------------------------------------------------------//
-bool MOAILogMessages::CheckIndexPlusOne ( u32 idx, u32 size, lua_State* L ) {
+bool MOAILogMessages::CheckIndexPlusOne ( size_t idx, size_t size, lua_State* L ) {
 
 	if ( size == 0 ) {
 		MOAILogF ( L, ZLLog::LOG_ERROR, MOAILogMessages::MOAI_IndexNoReserved );
@@ -63,7 +63,7 @@ bool MOAILogMessages::CheckIndexPlusOne ( u32 idx, u32 size, lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAILogMessages::CheckReserve ( u32 idx, u32 size, lua_State* L ) {
+bool MOAILogMessages::CheckReserve ( size_t idx, size_t size, lua_State* L ) {
 
 	if ( !( idx < size )) {
 		MOAILogF ( L, ZLLog::LOG_ERROR, MOAILogMessages::MOAI_IndexNoReserved );

@@ -341,7 +341,7 @@ float MOAIPathFinder::ComputeTerrainCost ( float moveCost, u32 terrain0, u32 ter
 	if ( terrain0 & MOAITileFlags::HIDDEN ) return 0.0f;
 	if ( terrain1 & MOAITileFlags::HIDDEN ) return 0.0f;
 
-	u32 total = MIN ( this->mTerrainDeck->GetVectorSize (), this->mWeights.Size ());
+	u32 total = MIN ( this->mTerrainDeck->GetVectorSize (), ( u32 )this->mWeights.Size ());
 	
 	float* v0 = this->mTerrainDeck->GetVector ( terrain0 & MOAITileFlags::CODE_MASK );
 	float* v1 = this->mTerrainDeck->GetVector ( terrain1 & MOAITileFlags::CODE_MASK );

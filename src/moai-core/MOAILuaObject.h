@@ -68,7 +68,9 @@ public:
 	bool					IsBound						();
 	static bool				IsMoaiUserdata				( MOAILuaState& state, int idx );
 	bool					IsSingleton					();
+	void					LuaRelease					();
 	void					LuaRelease					( MOAILuaObject* object );
+	void					LuaRetain					();
 	void					LuaRetain					( MOAILuaObject* object );
 							MOAILuaObject				();
 	virtual					~MOAILuaObject				();

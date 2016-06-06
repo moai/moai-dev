@@ -5,7 +5,7 @@
 #include <moai-sim/MOAIScriptDeck.h>
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDraw.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
@@ -120,7 +120,7 @@ ZLBox MOAIScriptDeck::ComputeMaxBounds () {
 //----------------------------------------------------------------//
 void MOAIScriptDeck::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 	
-	materials.LoadGfxState ( this, idx - 1, MOAIShaderMgr::LINE_SHADER );
+	if ( !materials.LoadGfxState ( this, idx - 1, MOAIShaderMgr::LINE_SHADER )) return;
 	
 	if ( this->mOnDraw ) {
 	

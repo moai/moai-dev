@@ -31,7 +31,7 @@ class MOAITextStyleMap :
 	public ZLLeanStack < MOAITextStyleSpan, 64 > {
 private:
 
-	friend class MOAITextDesignParser;
+	friend class MOAITextLayoutEngine;
 	friend class MOAITextStyleParser;
 	
 	//----------------------------------------------------------------//

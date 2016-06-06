@@ -110,7 +110,6 @@ size_t ZLSample::GetSize ( u32 type ) {
 		default:
 			return 0;
 	}
-	return 0;
 }
 
 //----------------------------------------------------------------//

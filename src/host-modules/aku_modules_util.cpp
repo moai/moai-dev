@@ -51,7 +51,7 @@ int _parseArgStringAndCall ( char* exeName, char* scriptName, int argc, char** a
 void AKUModulesParseArgs ( int argc, char** argv ) {
 
 	if ( argc < 2 ) {
-		AKULoadFuncFromFile ( "main.lua" );
+		if ( AKULoadFuncFromFile ( "main.lua" ) != AKU_OK ) return;
 		AKUCallFunc ();
 	}
 	else {
@@ -63,13 +63,13 @@ void AKUModulesParseArgs ( int argc, char** argv ) {
 			if (( strcmp ( arg, "-s" ) == 0 )) {
 			
 				char* script = argv [ ++i ];
-				AKULoadFuncFromString ( script );
+				AKULoadFuncFromString ( script, strlen ( script ), 0 );
 				i = _parseArgStringAndCall ( argv [ 0 ], 0, argc, argv, i );
 			}
 			else if (( strcmp ( arg, "-f" ) == 0 )) {
 				
 				char* filename = argv [ ++i ];
-				AKULoadFuncFromFile ( filename );
+				if ( AKULoadFuncFromFile ( filename ) != AKU_OK ) return;
 				i = _parseArgStringAndCall ( argv [ 0 ], filename, argc, argv, i );
 			}
 			else {
@@ -77,7 +77,7 @@ void AKUModulesParseArgs ( int argc, char** argv ) {
 				int argc2		= argc - 2;
 				char** argv2	= argc2 > 0 ? &argv [ i + 1 ] : 0;
 				
-				AKULoadFuncFromFile ( arg );
+				if ( AKULoadFuncFromFile ( arg ) != AKU_OK ) return;
 				AKUCallFuncWithArgArray ( argv [ 0 ], argv [ i ], argc2, argv2, AKU_AS_ARGS );
 				break;
 			}

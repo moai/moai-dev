@@ -117,7 +117,7 @@ public class MoaiFacebook {
                                     if ( json.has ( "email" ))
                                         sUserEmail  = json.getString ( "email" );
 
-                                    //AKUNotifyFacebookLoginSuccess ();
+                                    AKUNotifyFacebookLoginSuccess ();
                                 }
                                 catch ( JSONException e )
                                 {

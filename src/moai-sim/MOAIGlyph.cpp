@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGlyph.h>
+#include <moai-sim/MOAIGlyphSet.h>
 #include <moai-sim/MOAIDynamicGlyphCachePage.h>
 #include <moai-sim/MOAISingleTexture.h>
 #include <moai-sim/MOAIQuadBrush.h>
@@ -14,8 +15,8 @@
 //----------------------------------------------------------------//
 void MOAIGlyph::Draw ( MOAISingleTexture& texture, float x, float y, float xScale, float yScale, const ZLRect& padding ) const {
 	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	gfxDevice.SetTexture ( &texture );
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	if ( !gfxMgr.mGfxState.BindTexture ( &texture )) return;
 	
 	MOAIQuadBrush glQuad;
 	
@@ -29,6 +30,7 @@ void MOAIGlyph::Draw ( MOAISingleTexture& texture, float x, float y, float xScal
 		y + (( this->mHeight + padding.mYMax ) * yScale )
 	);
 	
+	// calculate this dynamically as the texture size may change
 	float uScale = 1.0f / texture.GetWidth ();
 	float vScale = 1.0f / texture.GetHeight ();
 	
@@ -45,10 +47,16 @@ void MOAIGlyph::Draw ( MOAISingleTexture& texture, float x, float y, float xScal
 }
 
 //----------------------------------------------------------------//
+ZLRect MOAIGlyph::GetGlyphLogicalRect ( float x, float y, float xScale, float yScale ) const {
+
+	return this->GetLogicalRect ( x, y, this->mDeck->GetAscent (), this->mDeck->GetDescent (), xScale, yScale );
+}
+
+//----------------------------------------------------------------//
 MOAIKernVec MOAIGlyph::GetKerning ( u32 name ) const {
 
-	u32 total = this->mKernTable.Size ();
-	for ( u32 i = 0; i < total; ++i ) {
+	size_t total = this->mKernTable.Size ();
+	for ( size_t i = 0; i < total; ++i ) {
 		MOAIKernVec& kernVec = this->mKernTable [ i ];
 		
 		if ( kernVec.mName == name ) {
@@ -65,37 +73,13 @@ MOAIKernVec MOAIGlyph::GetKerning ( u32 name ) const {
 }
 
 //----------------------------------------------------------------//
-/**
- * Get the rect of the glyph which includes the bearing + the size of the bounding box of the glyph.
- * 
- * @param x The x pen position when drawing this glyph
- * @param y The y pen position when drawing this glyph
- * @param scale The scale at which the glyph would be drawn
- */
-ZLRect MOAIGlyph::GetRect ( float x, float y, float xScale, float yScale ) const {
-
-	x += this->mBearingX * xScale;
-	y -= this->mBearingY * yScale;
-
-	ZLRect rect;
-
-	rect.Init (
-		x,
-		y,
-		x + ( this->mWidth * xScale ),
-		y + ( this->mHeight * yScale )
-	);
-
-	return rect;
-}
-
-//----------------------------------------------------------------//
 MOAIGlyph::MOAIGlyph () :
 	mCode ( NULL_CODE_ID ),
 	mPageID ( NULL_PAGE_ID ),
 	mSrcX ( 0 ),
 	mSrcY ( 0 ),
-	mNext ( 0 ) {
+	mNext ( 0 ),
+	mDeck ( 0 ) {
 }
 
 //----------------------------------------------------------------//
@@ -125,10 +109,10 @@ void MOAIGlyph::SerializeIn ( MOAILuaState& state ) {
 	
 	if ( state.GetFieldWithType ( -1, "mKernTable", LUA_TTABLE )) {
 		
-		u32 size = lua_objlen ( state, -1 );
+		int size = ( int )lua_objlen ( state, -1 ); // TODO: cast
 		this->mKernTable.Init ( size );
 		
-		for ( u32 i = 0; i < size; ++i ) {
+		for ( int i = 0; i < size; ++i ) {
 		
 			if ( state.GetFieldWithType ( -1, i + 1, LUA_TTABLE )) {
 				
@@ -181,12 +165,12 @@ void MOAIGlyph::SetKernVec ( u32 id, const MOAIKernVec& kernVec ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGlyph::SetScreenRect ( float width, float height, float yOff ) {
-	
-	this->mWidth = width;
-	this->mHeight = height;
-	this->mBearingY = -yOff;
-}
+//void MOAIGlyph::SetScreenRect ( float width, float height, float yOff ) {
+//	
+//	this->mWidth = width;
+//	this->mHeight = height;
+//	this->mBearingY = -yOff;
+//}
 
 //----------------------------------------------------------------//
 void MOAIGlyph::SetSourceLoc ( u32 srcX, u32 srcY ) {

@@ -2,8 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIGfxDevice.h>
-#include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxMgr.h>
+#include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIImageFormatMgr.h>
 #include <moai-sim/MOAITexture.h>
 #include <moai-sim/MOAIMultiTexture.h>
@@ -116,7 +116,7 @@ bool MOAITexture::Init ( MOAILuaState& state, int idx ) {
 
 	if ( state.IsType ( idx, LUA_TSTRING )) {
 		cc8* filename = lua_tostring ( state, idx );
-		u32 transform = state.GetValue < u32 >( idx + 1, MOAITexture::DEFAULT_TRANSFORM );
+		transform = state.GetValue < u32 >( idx + 1, MOAITexture::DEFAULT_TRANSFORM );
 		this->Init ( filename, transform, debugName ? debugName : filename );
 		done = true;
 	}
@@ -161,7 +161,7 @@ void MOAITexture::Init ( MOAIImage& image, cc8* debugname, bool autoClear ) {
 		this->mAutoClearImage = autoClear;
 		this->mDebugName = debugname;
 		this->FinishInit ();
-		this->DoCPUAffirm (); // If you do not calculated here, it is impossible to get the texture size.
+		this->DoCPUCreate (); // If you do not calculate here, it is impossible to get the texture size.
 	}
 }
 
@@ -179,7 +179,7 @@ void MOAITexture::Init ( MOAIImage& image, int srcX, int srcY, int width, int he
 		this->mImage->Blit ( image, srcX, srcY, 0, 0, width, height );
 		this->mDebugName = debugname;
 		this->FinishInit ();
-		this->DoCPUAffirm (); // If you do not calculated here, it is impossible to get the texture size.
+		this->DoCPUCreate (); // If you do not calculate here, it is impossible to get the texture size.
 	}
 }
 
@@ -199,7 +199,7 @@ void MOAITexture::Init ( cc8* filename, u32 transform, cc8* debugname ) {
 		}		
 		this->mTransform = transform;
 		this->FinishInit ();
-		this->DoCPUAffirm (); // If you do not calculated here, it is impossible to get the texture size.
+		this->DoCPUCreate (); // If you do not calculate here, it is impossible to get the texture size.
 	}
 }
 
@@ -213,7 +213,7 @@ void MOAITexture::Init ( ZLStream& stream, u32 transform, cc8* debugname ) {
 	if ( this->mTextureData || ( this->mImage && this->mImage->IsOK ())) {
 		this->mDebugName = debugname;
 		this->FinishInit ();
-		this->DoCPUAffirm (); // If you do not calculated here, it is impossible to get the texture size.
+		this->DoCPUCreate (); // If you do not calculate here, it is impossible to get the texture size.
 	}
 }
 
@@ -228,7 +228,7 @@ void MOAITexture::Init ( MOAIDataBuffer& data, u32 transform, cc8* debugname ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITexture::Init ( const void* data, u32 size, u32 transform, cc8* debugname ) {
+void MOAITexture::Init ( const void* data, size_t size, u32 transform, cc8* debugname ) {
 
 	ZLByteStream stream;
 	stream.SetBuffer ( data, size, size );
@@ -237,6 +237,7 @@ void MOAITexture::Init ( const void* data, u32 size, u32 transform, cc8* debugna
 
 //----------------------------------------------------------------//
 bool MOAITexture::LoadFromStream ( ZLStream& stream, u32 transform ) {
+	UNUSED ( transform ); // TODO: why is transform unused?
 
 	MOAIImageFormat* format = 0;
 	bool result = false;
@@ -355,10 +356,13 @@ bool MOAITexture::OnGPUCreate () {
 	else if ( this->mTextureDataFormat && this->mTextureData ) {
 		success = this->mTextureDataFormat->CreateTexture ( *this, this->mTextureData, this->mTextureDataSize );
 	}
-	if ( success ) return true;
 	
-	this->Clear ();
-	return false;
+	if ( !success ) {
+		this->Clear ();
+		return false;
+	}
+	
+	return this->OnGPUUpdate ();
 }
 
 //----------------------------------------------------------------//

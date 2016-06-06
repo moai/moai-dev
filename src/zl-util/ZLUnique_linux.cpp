@@ -2,6 +2,9 @@
 // http://getmoai.com
 
 #include "pch.h"
+
+SUPPRESS_EMPTY_FILE_WARNING
+
 #ifndef _WIN32
 
 #include <zl-util/ZLUnique.h>

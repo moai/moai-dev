@@ -1,0 +1,14 @@
+#!/bin/sh
+
+#https://pspdfkit.com/blog/2015/ccache-for-fun-and-profit/
+
+if type -p ccache >/dev/null 2>&1; then
+    export CCACHE_LOGFILE=/tmp/cache.debug
+    export CCACHE_MAXSIZE=10G
+    export CCACHE_CPP2=true
+    export CCACHE_HARDLINK=true
+    export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime,file_stat_matches
+    exec ccache /usr/bin/clang "$@"
+else
+    exec clang "$@"
+fi

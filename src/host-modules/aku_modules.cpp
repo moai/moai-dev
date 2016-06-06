@@ -6,6 +6,12 @@
 #include <lua-headers/moai_lua.h>
 #include <lua-headers/moai_test_mgr_lua.h>
 
+#include <zl-vfs/zl_replace.h>
+#include <zl-common/zl_types.h>
+
+#include <zl-util/ZLLog.h>
+#include <zl-util/ZLResult.h>
+
 //================================================================//
 // objc modules
 //================================================================//
@@ -105,7 +111,7 @@ void AKUModulesAppFinalize () {
 }
 
 //----------------------------------------------------------------//
-void AKUModulesAppInitialize () {
+int AKUModulesAppInitialize () {
 
 	#if AKU_WITH_ANDROID
 		AKUModulesAndroidAppInitialize ();
@@ -170,10 +176,14 @@ void AKUModulesAppInitialize () {
 	#if AKU_WITH_PLUGINS
 		AKUPluginsAppInitialize ();
 	#endif
+	
+	return AKU_OK;
 }
 
 //----------------------------------------------------------------//
-void AKUModulesContextInitialize () {
+int AKUModulesContextInitialize () {
+
+	ZLResultCodeAccumulator result;
 
 	#if AKU_WITH_ANDROID
 		AKUModulesAndroidContextInitialize ();
@@ -201,6 +211,10 @@ void AKUModulesContextInitialize () {
 
 	#if AKU_WITH_FMOD_EX
 		AKUFmodExContextInitialize ();
+	#endif
+
+	#if AKU_WITH_HARFBUZZ
+		AKUHarfBuzzContextInitialize ();
 	#endif
 
 	#if AKU_WITH_HARNESS
@@ -261,11 +275,23 @@ void AKUModulesContextInitialize () {
 		AKUImageWebPContextInitialize ();
 	#endif
 	
-	AKULoadFuncFromBuffer ( moai_lua, moai_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
-	AKUCallFunc ();
+	result.Reset ();
+	result = AKULoadFuncFromBuffer ( moai_lua, moai_lua_SIZE, "moai.lua", AKU_DATA_ZIPPED );
+	result = AKUCallFunc ();
 	
-	AKULoadFuncFromBuffer ( moai_test_mgr_lua, moai_test_mgr_lua_SIZE, AKU_DATA_STRING, AKU_DATA_ZIPPED );
-	AKUCallFunc ();
+	if ( result != AKU_OK ) {
+		ZLLog_ErrorF ( ZLLog::CONSOLE, "ERROR: Failed to load Moai's embedded Lua wrapper. Some functions may be unavailable.\n" );
+	}
+
+	result.Reset ();
+	result = AKULoadFuncFromBuffer ( moai_test_mgr_lua, moai_test_mgr_lua_SIZE, "moai_test_mgr.lua", AKU_DATA_ZIPPED );
+	result = AKUCallFunc ();
+	
+	if ( result != AKU_OK ) {
+		ZLLog_ErrorF ( ZLLog::CONSOLE, "ERROR: Failed to load Moai's embedded test manager. Some functions may be unavailable.\n" );
+	}
+	
+	return result;
 }
 
 //----------------------------------------------------------------//

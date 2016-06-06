@@ -65,8 +65,8 @@ private:
 	u32		mWidth;
 	u32		mHeight;
 	
-	void*	mBitmap;
-	void*	mPalette;
+	ZLCopyOnWrite	mBitmap;
+	ZLCopyOnWrite	mPalette;
 
 	SET ( PixelFormat, PixelFormat, mPixelFormat )
 	SET ( ZLColor::ColorFormat, ColorFormat, mColorFormat )
@@ -77,7 +77,6 @@ private:
 	//----------------------------------------------------------------//
 	static int		_average					( lua_State* L );
 	static int		_bleedRect					( lua_State* L );
-//	static int		_blur						( lua_State* L );
 	static int		_calculateGaussianKernel	( lua_State* L );
 	static int		_compare					( lua_State* L );
 	static int		_convert					( lua_State* L );
@@ -96,10 +95,13 @@ private:
 	static int		_generateSDFAA				( lua_State* L );
 	static int		_generateSDFDeadReckoning	( lua_State* L );
 	static int		_getColor32					( lua_State* L );
+	static int		_getContentRect				( lua_State* L );
+	static int		_getData					( lua_State* L );
 	static int		_getFormat					( lua_State* L );
 	static int		_getRGBA					( lua_State* L );
 	static int		_getSize					( lua_State* L );
 	static int		_init						( lua_State* L );
+	static int		_isOpaque					( lua_State* L );
 	static int		_load						( lua_State* L );
 	static int		_loadAsync					( lua_State* L );
 	static int		_loadFromBuffer				( lua_State* L );
@@ -111,15 +113,16 @@ private:
 	static int		_setColor32					( lua_State* L );
 	static int		_setRGBA					( lua_State* L );
 	static int		_simpleThreshold			( lua_State* L );
+	static int		_subdivideRect				( lua_State* L );
 	static int		_write						( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			Alloc						();
-	void			ComparePixel				( ZLIntVec2D** grid, ZLIntVec2D& p, int x, int y, int offsetX, int offsetY, int width, int height );
-	void			CalculateSDF				( ZLIntVec2D** grid, int width, int height );
-	void*			GetRowAddr					( u32 y );
-	const void*		GetRowAddr					( u32 y ) const;
-	virtual void	OnImageStatusChanged		( bool isOK );
+	void			Alloc					();
+	void			ComparePixel			( ZLIntVec2D** grid, ZLIntVec2D& p, int x, int y, int offsetX, int offsetY, int width, int height );
+	void			CalculateSDF			( ZLIntVec2D** grid, int width, int height );
+	const void*		GetRowAddr				( u32 y ) const;
+	void*			GetRowAddrMutable		( u32 y );
+	virtual void	OnImageStatusChanged	( bool isOK );
 
 public:
 	
@@ -131,8 +134,14 @@ public:
 	GET_CONST ( u32, Width, mWidth )
 	GET_CONST ( u32, Height, mHeight )
 	
-	GET_CONST ( void*, Bitmap, mBitmap );
-	GET_CONST ( void*, Palette, mPalette );
+	GET_CONST ( void*, Bitmap, mBitmap.GetBuffer ())
+	GET_CONST ( void*, Palette, mPalette.GetBuffer ())
+	
+	GET ( ZLCopyOnWrite, BitmapCow, mBitmap )
+	GET ( ZLCopyOnWrite, PaletteCow, mPalette )
+	
+	GET ( ZLSharedConstBuffer*, BitmapBuffer, mBitmap.GetSharedConstBuffer ())
+	GET ( ZLSharedConstBuffer*, PaletteBuffer, mBitmap.GetSharedConstBuffer ())
 	
 	enum {
 		FILTER_LINEAR,
@@ -144,7 +153,7 @@ public:
 	ZLColorVec				Average							() const;
 	void					BleedRect						( ZLIntRect rect );
 	void					Blit							( const MOAIImage& image, int srcX, int srcY, int destX, int destY, int width, int height );
-//	void					Blur							();
+	void					Blur							();
 	static void				CalculateGaussianKernel			( float radius, float* kernel, size_t kernalWidth );
 	static void				CalculateGaussianKernel			( float radius, float sigma, float* kernel, size_t kernalWidth );
 	static size_t			CalculateGaussianKernelWidth	( float radius );
@@ -169,14 +178,15 @@ public:
 	void					GenerateSDF						( ZLIntRect rect );
 	void					GenerateSDFAA					( ZLIntRect rect, float sizeInPixels );
 	void					GenerateSDFDeadReckoning		( ZLIntRect rect, int threshold );
-	u32						GetBitmapSize					() const;
+	size_t					GetBitmapSize					() const;
 	ZLIntRect				GetBounds						();
 	u32						GetColor						( u32 x, u32 y ) const;
-	u32						GetDataSize						() const;
+	ZLIntRect				GetContentRect					();
+	size_t					GetDataSize						() const;
 	static u32				GetMinPowerOfTwo				( u32 size ); // gets the smallest power of two greater than size
 	u32						GetPaletteColor					( u32 idx ) const;
 	u32						GetPaletteCount					() const;
-	u32						GetPaletteSize					() const;
+	size_t					GetPaletteSize					() const;
 	u32						GetPixel						( u32 x, u32 y ) const;
 	u32						GetPixelDepthInBits				() const;
 	u32						GetPixelMask					() const;
@@ -185,7 +195,7 @@ public:
 	void					GetSubImage						( const MOAIImage& image, ZLIntRect rect );
 	void					Init							( const MOAIImage& image );
 	void					Init							( u32 width, u32 height, ZLColor::ColorFormat colorFmt, PixelFormat pixelFmt );
-	void					Init							( void* bitmap, u32 width, u32 height, ZLColor::ColorFormat colorFmt );
+	void					Init							( const void* bitmap, u32 width, u32 height, ZLColor::ColorFormat colorFmt );
 	bool					IsPow2							();
 	static bool				IsPow2							( u32 n );
 	bool					Load							( cc8* filename, u32 transform = 0 );

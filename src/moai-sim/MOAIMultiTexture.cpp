@@ -73,7 +73,7 @@ int MOAIMultiTexture::_setTexture ( lua_State* L ) {
 //----------------------------------------------------------------//
 u32 MOAIMultiTexture::CountActiveUnits () {
 
-	return this->mTextures.Size ();
+	return ( u32 )this->mTextures.Size ();
 }
 
 //----------------------------------------------------------------//

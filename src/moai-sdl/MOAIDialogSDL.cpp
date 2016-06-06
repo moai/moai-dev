@@ -47,7 +47,7 @@ int MOAIDialogSDL::_show ( lua_State* L ) {
 		self->mWindow,					// window
 		title,							// title
 		message,						// message
-		nButtons,						// numbuttons
+		( int )nButtons,				// numbuttons
 		buttons,						// buttons
 		NULL							// colorScheme
     };

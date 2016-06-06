@@ -7,11 +7,11 @@
 #if MOAI_WITH_FREETYPE
 
 #include <contrib/moai_utf8.h>
-#include <ft2build.h>
-#include FT_FREETYPE_H
-#include FT_STROKER_H
 
 #include <moai-sim/MOAIFontReader.h>
+
+typedef int* MOAIFtLibrary;
+typedef int* MOAIFtFace;
 
 //================================================================//
 // MOAIFreeTypeFontReader
@@ -27,8 +27,8 @@ private:
 	u32				mGlyphCode;
 	float			mFaceSize;
 
-	FT_Library		mLibrary;
-	FT_Face			mFace;
+	MOAIFtLibrary	mLibrary;
+	MOAIFtFace		mFace;
 	float			mFaceHeight;
 
 	bool			mAntiAlias;

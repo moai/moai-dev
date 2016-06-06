@@ -21,7 +21,7 @@
 
 #include <Box2D/Box2D.h>
 
-class MOAIGfxDevice;
+class MOAIGfxMgr;
 struct b2AABB;
 
 // This class implements debug drawing callbacks that are invoked
@@ -32,7 +32,7 @@ class MOAIBox2DDebugDraw : public b2Draw {
 
 	float mScale;
 
-	void WriteVtx ( MOAIGfxDevice& gfxDevice, float x, float y );
+	void WriteVtx ( MOAIGfxVertexCache& vertexCache, float x, float y );
 
 public:
 	void DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color);

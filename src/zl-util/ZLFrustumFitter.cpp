@@ -110,7 +110,7 @@ void ZLFrustumFitter::Init ( const ZLRect& viewRect, const ZLRect& fitRect, floa
 	float hHeight = viewRect.Height () * 0.5f;
 	float distToNearPlane = hWidth * Cot ( hFov * 0.5f * ( float )D2R );
 
-	float aspect = hWidth / ( viewRect.Height () * 0.5f );
+	//float aspect = hWidth / ( viewRect.Height () * 0.5f );
 
 	this->mIsDirty = false;
 	this->mNeedsInit = true;

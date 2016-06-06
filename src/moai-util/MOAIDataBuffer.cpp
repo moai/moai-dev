@@ -124,7 +124,7 @@ int MOAIDataBuffer::_getSize ( lua_State* L ) {
 	size_t size;
 	self->Lock ( &bytes, &size );
 	
-	lua_pushnumber ( state, size );
+	lua_pushnumber ( state, ( lua_Number )size );
 
 	self->Unlock ();
 
@@ -271,7 +271,7 @@ int MOAIDataBuffer::_load ( lua_State* L ) {
 	@opt	number detectZip		One of MOAIDataBuffer.NO_INFLATE, MOAIDataBuffer.FORCE_INFLATE, MOAIDataBuffer.INFLATE_ON_EXT
 	@opt	boolean inflateAsync	'true' to inflate on task thread. 'false' to inflate on subscriber thread. Default value is 'true.'
 	@opt	number windowBits		The window bits used in the DEFLATE algorithm.  Pass nil to use the default value.
-	@out	MOAIDataIOTask task	A new MOAIDataIOTask which indicates the status of the task.
+	@out	nil
 */
 int MOAIDataBuffer::_loadAsync ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDataBuffer, "USU" );
@@ -285,7 +285,7 @@ int MOAIDataBuffer::_loadAsync ( lua_State* L ) {
 	if ( !queue ) return 0;
 
 	MOAIDataIOTask* task = new MOAIDataIOTask ();
-	task->PushLuaUserdata ( state );
+	//task->PushLuaUserdata ( state );
 	task->Init ( filename, *self, MOAIDataIOTask::LOAD_ACTION );
 	task->SetCallback ( L, 4 );
 	
@@ -295,7 +295,7 @@ int MOAIDataBuffer::_loadAsync ( lua_State* L ) {
 	
 	task->Start ( *queue, MOAIMainThreadTaskSubscriber::Get ());
 
-	return 1;
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -326,7 +326,7 @@ int MOAIDataBuffer::_save ( lua_State* L ) {
 	@in		string filename			The path to the file that the data should be saved to.
 	@in		MOAITaskQueue queue		The queue to perform the saving operation.
 	@opt	function callback		The function to be called when the asynchronous operation is complete. The MOAIDataBuffer is passed as the first parameter.
-	@out	MOAIDataIOTask task		A new MOAIDataIOTask which indicates the status of the task.
+	@out	nil
 */
 int MOAIDataBuffer::_saveAsync ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDataBuffer, "USU" );
@@ -338,12 +338,11 @@ int MOAIDataBuffer::_saveAsync ( lua_State* L ) {
 
 	MOAIDataIOTask* task = new MOAIDataIOTask ();
 	task->Init ( filename, *self, MOAIDataIOTask::SAVE_ACTION );
-	task->PushLuaUserdata ( state );
 	task->SetCallback ( L, 4 );
 	
 	task->Start ( *queue, MOAIMainThreadTaskSubscriber::Get ());
 
-	return 1;
+	return 0;
 }
 
 //----------------------------------------------------------------//

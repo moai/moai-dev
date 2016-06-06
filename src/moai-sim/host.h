@@ -15,6 +15,17 @@ enum {
 	AKU_ORIENTATION_LANDSCAPE,
 };
 
+enum {
+	AKU_DISPLAY_LIST_DRAWING,
+	AKU_DISPLAY_LIST_LOADING,
+};
+
+enum {
+	AKU_DISPLAY_LIST_LOGIC_PHASE,
+	AKU_DISPLAY_LIST_LOADING_PHASE,
+	AKU_DISPLAY_LIST_DRAWING_PHASE,
+};
+
 // Callbacks
 typedef void ( *AKUEnterFullscreenModeFunc )	();
 typedef void ( *AKUExitFullscreenModeFunc )		();
@@ -32,6 +43,7 @@ AKU_API void			AKUSimContextInitialize			();
 // management api
 AKU_API void			AKUDetectFramebuffer			();
 AKU_API void			AKUDetectGfxContext				();
+AKU_API void			AKUDiscardGfxResources			();
 AKU_API double			AKUGetSimStep					();
 AKU_API int				AKUIsGfxBufferOpaque			();
 AKU_API void			AKUPause						( bool pause );
@@ -41,6 +53,15 @@ AKU_API void			AKUSetScreenDpi					( int dpi );
 AKU_API void			AKUSetScreenSize				( int width, int height );
 AKU_API void			AKUSetViewSize					( int width, int height );
 AKU_API void			AKUUpdate						();
+
+// display list
+AKU_API void			AKUDisplayListBeginPhase		( int phase );
+AKU_API void			AKUDisplayListEnable			( int list );
+AKU_API void			AKUDisplayListEndPhase			( int phase );
+AKU_API bool			AKUDisplayListHasContent		( int list );
+AKU_API bool			AKUDisplayListIsEnabled			( int list );
+AKU_API void			AKUDisplayListProcess			( int list );
+AKU_API void			AKUDisplayListPublishAndReset	();
 
 // callback management
 AKU_API void			AKUSetFunc_EnterFullscreenMode	( AKUEnterFullscreenModeFunc func );

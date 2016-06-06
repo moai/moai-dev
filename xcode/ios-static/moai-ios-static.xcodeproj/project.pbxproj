@@ -39,23 +39,23 @@
 		CD4DF2BF1A12E35B00E9A523 /* libmoai-ios-zl-crypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4DF2B21A12E35B00E9A523 /* libmoai-ios-zl-crypto.a */; };
 		CD4DF2C01A12E35B00E9A523 /* libmoai-ios-zl-vfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4DF2B31A12E35B00E9A523 /* libmoai-ios-zl-vfs.a */; };
 		CD4DF2C11A12E35B00E9A523 /* libmoai-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4DF2B41A12E35B00E9A523 /* libmoai-ios.a */; };
-		CD76CB6E1BD4B288008AB56C /* libmoai-ios-image-jpg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD76CB6A1BD4B288008AB56C /* libmoai-ios-image-jpg.a */; settings = {ASSET_TAGS = (); }; };
-		CD76CB6F1BD4B288008AB56C /* libmoai-ios-image-png.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD76CB6B1BD4B288008AB56C /* libmoai-ios-image-png.a */; settings = {ASSET_TAGS = (); }; };
-		CD76CB701BD4B288008AB56C /* libmoai-ios-image-pvr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD76CB6C1BD4B288008AB56C /* libmoai-ios-image-pvr.a */; settings = {ASSET_TAGS = (); }; };
-		CD76CB711BD4B288008AB56C /* libmoai-ios-image-webp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD76CB6D1BD4B288008AB56C /* libmoai-ios-image-webp.a */; settings = {ASSET_TAGS = (); }; };
+		CD76CB6E1BD4B288008AB56C /* libmoai-ios-image-jpg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD76CB6A1BD4B288008AB56C /* libmoai-ios-image-jpg.a */; };
+		CD76CB6F1BD4B288008AB56C /* libmoai-ios-image-png.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD76CB6B1BD4B288008AB56C /* libmoai-ios-image-png.a */; };
+		CD76CB701BD4B288008AB56C /* libmoai-ios-image-pvr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD76CB6C1BD4B288008AB56C /* libmoai-ios-image-pvr.a */; };
+		CD76CB711BD4B288008AB56C /* libmoai-ios-image-webp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD76CB6D1BD4B288008AB56C /* libmoai-ios-image-webp.a */; };
 		CD795FEB17F09B9F006AEB47 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795FEA17F09B9F006AEB47 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CD79ECBF1B1FAB2100863789 /* lua in Resources */ = {isa = PBXBuildFile; fileRef = CD79ECBE1B1FAB2100863789 /* lua */; };
 		CD79ECC11B1FAB5200863789 /* libmoai-ios-http-server.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD79ECC01B1FAB5200863789 /* libmoai-ios-http-server.a */; };
-		CD8317851BED415C00745C8A /* libmoai-ios-3rdparty-contrib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD83177B1BED415C00745C8A /* libmoai-ios-3rdparty-contrib.a */; settings = {ASSET_TAGS = (); }; };
-		CD8317861BED415C00745C8A /* libmoai-ios-3rdparty-expat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD83177C1BED415C00745C8A /* libmoai-ios-3rdparty-expat.a */; settings = {ASSET_TAGS = (); }; };
-		CD8317871BED415C00745C8A /* libmoai-ios-3rdparty-freetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD83177D1BED415C00745C8A /* libmoai-ios-3rdparty-freetype.a */; settings = {ASSET_TAGS = (); }; };
-		CD8317881BED415C00745C8A /* libmoai-ios-3rdparty-jannson.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD83177E1BED415C00745C8A /* libmoai-ios-3rdparty-jannson.a */; settings = {ASSET_TAGS = (); }; };
-		CD8317891BED415C00745C8A /* libmoai-ios-3rdparty-liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD83177F1BED415C00745C8A /* libmoai-ios-3rdparty-liblua.a */; settings = {ASSET_TAGS = (); }; };
-		CD83178A1BED415C00745C8A /* libmoai-ios-3rdparty-libtess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD8317801BED415C00745C8A /* libmoai-ios-3rdparty-libtess.a */; settings = {ASSET_TAGS = (); }; };
-		CD83178B1BED415C00745C8A /* libmoai-ios-3rdparty-sfmt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD8317811BED415C00745C8A /* libmoai-ios-3rdparty-sfmt.a */; settings = {ASSET_TAGS = (); }; };
-		CD83178C1BED415C00745C8A /* libmoai-ios-3rdparty-tinyxml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD8317821BED415C00745C8A /* libmoai-ios-3rdparty-tinyxml.a */; settings = {ASSET_TAGS = (); }; };
-		CD83178D1BED415C00745C8A /* libmoai-ios-3rdparty-tlsf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD8317831BED415C00745C8A /* libmoai-ios-3rdparty-tlsf.a */; settings = {ASSET_TAGS = (); }; };
-		CD83178E1BED415C00745C8A /* libmoai-ios-3rdparty-zlib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD8317841BED415C00745C8A /* libmoai-ios-3rdparty-zlib.a */; settings = {ASSET_TAGS = (); }; };
+		CD8317851BED415C00745C8A /* libmoai-ios-3rdparty-contrib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD83177B1BED415C00745C8A /* libmoai-ios-3rdparty-contrib.a */; };
+		CD8317861BED415C00745C8A /* libmoai-ios-3rdparty-expat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD83177C1BED415C00745C8A /* libmoai-ios-3rdparty-expat.a */; };
+		CD8317871BED415C00745C8A /* libmoai-ios-3rdparty-freetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD83177D1BED415C00745C8A /* libmoai-ios-3rdparty-freetype.a */; };
+		CD8317881BED415C00745C8A /* libmoai-ios-3rdparty-jannson.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD83177E1BED415C00745C8A /* libmoai-ios-3rdparty-jannson.a */; };
+		CD8317891BED415C00745C8A /* libmoai-ios-3rdparty-liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD83177F1BED415C00745C8A /* libmoai-ios-3rdparty-liblua.a */; };
+		CD83178A1BED415C00745C8A /* libmoai-ios-3rdparty-libtess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD8317801BED415C00745C8A /* libmoai-ios-3rdparty-libtess.a */; };
+		CD83178B1BED415C00745C8A /* libmoai-ios-3rdparty-sfmt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD8317811BED415C00745C8A /* libmoai-ios-3rdparty-sfmt.a */; };
+		CD83178C1BED415C00745C8A /* libmoai-ios-3rdparty-tinyxml.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD8317821BED415C00745C8A /* libmoai-ios-3rdparty-tinyxml.a */; };
+		CD83178D1BED415C00745C8A /* libmoai-ios-3rdparty-tlsf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD8317831BED415C00745C8A /* libmoai-ios-3rdparty-tlsf.a */; };
+		CD83178E1BED415C00745C8A /* libmoai-ios-3rdparty-zlib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD8317841BED415C00745C8A /* libmoai-ios-3rdparty-zlib.a */; };
 		CD9F769E1808DEDC0001EF0C /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD9F769D1808DEDC0001EF0C /* AdSupport.framework */; };
 		CDBA1E4F1B1E44FA00DCDC75 /* libmoai-ios-apple.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDBA1E4D1B1E44FA00DCDC75 /* libmoai-ios-apple.a */; };
 		CDBA1E501B1E44FA00DCDC75 /* libmoai-ios-movie.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDBA1E4E1B1E44FA00DCDC75 /* libmoai-ios-movie.a */; };
@@ -78,6 +78,10 @@
 		CDC963D11A12C6B000F9CA22 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDC963CA1A12C6B000F9CA22 /* main.mm */; };
 		CDC963D41A12C6B000F9CA22 /* MOAIAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDC963CC1A12C6B000F9CA22 /* MOAIAppDelegate.mm */; };
 		CDC963D71A12C6B000F9CA22 /* MOAIView.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDC963CE1A12C6B000F9CA22 /* MOAIView.mm */; };
+		CDDAD1781C8E56A200AA656F /* MOAICommandThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDDAD1711C8E56A200AA656F /* MOAICommandThread.mm */; };
+		CDDAD1791C8E56A200AA656F /* MOAIContextMgr.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDDAD1731C8E56A200AA656F /* MOAIContextMgr.mm */; };
+		CDDAD17A1C8E56A200AA656F /* MOAIRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDDAD1751C8E56A200AA656F /* MOAIRenderer.mm */; };
+		CDDAD17B1C8E56A200AA656F /* MOAIRendererAsync.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDDAD1771C8E56A200AA656F /* MOAIRendererAsync.mm */; };
 		CDFD7E1F1A08B16C00A94E6B /* aku_modules_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDFD7E191A08B16C00A94E6B /* aku_modules_ios.mm */; };
 		CDFD7E221A08B16C00A94E6B /* aku_modules_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDFD7E1A1A08B16C00A94E6B /* aku_modules_util.cpp */; };
 		CDFD7E251A08B16C00A94E6B /* aku_modules.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDFD7E1C1A08B16C00A94E6B /* aku_modules.cpp */; };
@@ -162,13 +166,21 @@
 		CDC963CC1A12C6B000F9CA22 /* MOAIAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIAppDelegate.mm; path = "../../src/host-ios/MOAIAppDelegate.mm"; sourceTree = "<group>"; };
 		CDC963CD1A12C6B000F9CA22 /* MOAIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIView.h; path = "../../src/host-ios/MOAIView.h"; sourceTree = "<group>"; };
 		CDC963CE1A12C6B000F9CA22 /* MOAIView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIView.mm; path = "../../src/host-ios/MOAIView.mm"; sourceTree = "<group>"; };
+		CDDAD1701C8E56A200AA656F /* MOAICommandThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAICommandThread.h; path = "../../src/host-ios/MOAICommandThread.h"; sourceTree = "<group>"; };
+		CDDAD1711C8E56A200AA656F /* MOAICommandThread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAICommandThread.mm; path = "../../src/host-ios/MOAICommandThread.mm"; sourceTree = "<group>"; };
+		CDDAD1721C8E56A200AA656F /* MOAIContextMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIContextMgr.h; path = "../../src/host-ios/MOAIContextMgr.h"; sourceTree = "<group>"; };
+		CDDAD1731C8E56A200AA656F /* MOAIContextMgr.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIContextMgr.mm; path = "../../src/host-ios/MOAIContextMgr.mm"; sourceTree = "<group>"; };
+		CDDAD1741C8E56A200AA656F /* MOAIRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIRenderer.h; path = "../../src/host-ios/MOAIRenderer.h"; sourceTree = "<group>"; };
+		CDDAD1751C8E56A200AA656F /* MOAIRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIRenderer.mm; path = "../../src/host-ios/MOAIRenderer.mm"; sourceTree = "<group>"; };
+		CDDAD1761C8E56A200AA656F /* MOAIRendererAsync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIRendererAsync.h; path = "../../src/host-ios/MOAIRendererAsync.h"; sourceTree = "<group>"; };
+		CDDAD1771C8E56A200AA656F /* MOAIRendererAsync.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIRendererAsync.mm; path = "../../src/host-ios/MOAIRendererAsync.mm"; sourceTree = "<group>"; };
 		CDFD7E181A08B16C00A94E6B /* aku_modules_ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_ios.h; path = "../../src/host-modules/aku_modules_ios.h"; sourceTree = SOURCE_ROOT; };
 		CDFD7E191A08B16C00A94E6B /* aku_modules_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = aku_modules_ios.mm; path = "../../src/host-modules/aku_modules_ios.mm"; sourceTree = SOURCE_ROOT; };
 		CDFD7E1A1A08B16C00A94E6B /* aku_modules_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aku_modules_util.cpp; path = "../../src/host-modules/aku_modules_util.cpp"; sourceTree = SOURCE_ROOT; };
 		CDFD7E1B1A08B16C00A94E6B /* aku_modules_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_util.h; path = "../../src/host-modules/aku_modules_util.h"; sourceTree = SOURCE_ROOT; };
 		CDFD7E1C1A08B16C00A94E6B /* aku_modules.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aku_modules.cpp; path = "../../src/host-modules/aku_modules.cpp"; sourceTree = SOURCE_ROOT; };
 		CDFD7E1D1A08B16C00A94E6B /* aku_modules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules.h; path = "../../src/host-modules/aku_modules.h"; sourceTree = SOURCE_ROOT; };
-		CDFD7E4C1A08BC2700A94E6B /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = "../../3rdparty/facebook-ios-sdk-4.5.1/FBSDKCoreKit.framework"; path = "../../3rdparty/facebook-ios-sdk-4.5.1/FBSDKLoginKit.framework"; path = "../../3rdparty/facebook-ios-sdk-4.5.1/FBSDKShareKit.framework";sourceTree = "<group>"; };
+		CDFD7E4C1A08BC2700A94E6B /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = "../../3rdparty/facebook-ios-sdk-4.5.1/FBSDKShareKit.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -360,6 +372,14 @@
 				CDC963CA1A12C6B000F9CA22 /* main.mm */,
 				CDC963CB1A12C6B000F9CA22 /* MOAIAppDelegate.h */,
 				CDC963CC1A12C6B000F9CA22 /* MOAIAppDelegate.mm */,
+				CDDAD1701C8E56A200AA656F /* MOAICommandThread.h */,
+				CDDAD1711C8E56A200AA656F /* MOAICommandThread.mm */,
+				CDDAD1721C8E56A200AA656F /* MOAIContextMgr.h */,
+				CDDAD1731C8E56A200AA656F /* MOAIContextMgr.mm */,
+				CDDAD1741C8E56A200AA656F /* MOAIRenderer.h */,
+				CDDAD1751C8E56A200AA656F /* MOAIRenderer.mm */,
+				CDDAD1761C8E56A200AA656F /* MOAIRendererAsync.h */,
+				CDDAD1771C8E56A200AA656F /* MOAIRendererAsync.mm */,
 				CDC963CD1A12C6B000F9CA22 /* MOAIView.h */,
 				CDC963CE1A12C6B000F9CA22 /* MOAIView.mm */,
 			);
@@ -481,9 +501,13 @@
 			files = (
 				CDC963D41A12C6B000F9CA22 /* MOAIAppDelegate.mm in Sources */,
 				CDFD7E251A08B16C00A94E6B /* aku_modules.cpp in Sources */,
+				CDDAD1791C8E56A200AA656F /* MOAIContextMgr.mm in Sources */,
 				CDC963D71A12C6B000F9CA22 /* MOAIView.mm in Sources */,
+				CDDAD1781C8E56A200AA656F /* MOAICommandThread.mm in Sources */,
 				CDFD7E221A08B16C00A94E6B /* aku_modules_util.cpp in Sources */,
 				CDFD7E1F1A08B16C00A94E6B /* aku_modules_ios.mm in Sources */,
+				CDDAD17B1C8E56A200AA656F /* MOAIRendererAsync.mm in Sources */,
+				CDDAD17A1C8E56A200AA656F /* MOAIRenderer.mm in Sources */,
 				CDC963D11A12C6B000F9CA22 /* main.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -517,6 +541,8 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
+					_DEBUG,
+					DEBUG,
 					"AKU_WITH_APPLE=1",
 					"AKU_WITH_IOS=1",
 				);
@@ -549,6 +575,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
+					NDEBUG,
 					"AKU_WITH_APPLE=1",
 					"AKU_WITH_IOS=1",
 				);

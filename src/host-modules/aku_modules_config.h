@@ -21,6 +21,10 @@
 		#define AKU_WITH_FMOD_EX 0
 	#endif
 
+	#ifndef AKU_WITH_HARFBUZZ
+		#define AKU_WITH_HARFBUZZ 0
+	#endif
+
 	#ifndef AKU_WITH_HARNESS
 		#define AKU_WITH_HARNESS 0
 	#endif

@@ -86,6 +86,7 @@
 		#include <crtdbg.h>
     #endif
 	
+	#include <io.h>
 	#include <direct.h>
 
 	#ifndef PATH_MAX
@@ -134,6 +135,7 @@
 	#include <algorithm>
 	#include <cstdio>
 	#include <cstdlib>
+	#include <fstream>
 	#include <map>
 	#include <set>
 	#include <string>

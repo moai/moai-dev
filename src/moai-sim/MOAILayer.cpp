@@ -6,7 +6,7 @@
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIFrameBufferTexture.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAILayer.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIPartitionResultMgr.h>
@@ -212,10 +212,10 @@ int	MOAILayer::_getPropViewList ( lua_State* L ) {
 		u32 sortMode			= state.GetValue < u32 >( 2, self->mSortMode );
 		bool sortInViewSpace	= state.GetValue < bool >( 3, self->mSortInViewSpace );
 		
-		sortScale [ 0 ]			= state.GetValue < bool >( 4, self->mSortScale [ 0 ]);
-		sortScale [ 1 ]			= state.GetValue < bool >( 5, self->mSortScale [ 1 ]);
-		sortScale [ 2 ]			= state.GetValue < bool >( 6, self->mSortScale [ 2 ]);
-		sortScale [ 3 ]			= state.GetValue < bool >( 7, self->mSortScale [ 3 ]);
+		sortScale [ 0 ]			= state.GetValue < float >( 4, self->mSortScale [ 0 ]);
+		sortScale [ 1 ]			= state.GetValue < float >( 5, self->mSortScale [ 1 ]);
+		sortScale [ 2 ]			= state.GetValue < float >( 6, self->mSortScale [ 2 ]);
+		sortScale [ 3 ]			= state.GetValue < float >( 7, self->mSortScale [ 3 ]);
 		
 		ZLMatrix4x4 viewMtx = self->GetViewMtx ();
 		ZLMatrix4x4 invViewProjMtx = viewMtx;
@@ -754,7 +754,7 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 	if ( !this->mViewport ) return;
 	if ( this->IsClear ()) return;
 	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
 	
 	MOAIViewport& viewport = *this->mViewport;
@@ -762,32 +762,25 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 	
 	renderMgr.SetCamera ( this->mCamera );
 	renderMgr.SetViewport ( this->mViewport );
-	
-	// TODO: leaving this here for now (Moai SDK 1.7) but we need to move/remove it soon
-	gfxDevice.ResetState ();
 
 	// TODO:
 	ZLMatrix4x4 mtx;
 	mtx.Init ( this->mLocalToWorldMtx );
 	// TODO:
-	//mtx.Append ( gfxDevice.GetWorldToWndMtx ( 1.0f, 1.0f ));
+	//mtx.Append ( gfxMgr.GetWorldToWndMtx ( 1.0f, 1.0f ));
 	mtx.Transform ( viewportRect );
 
-	gfxDevice.SetViewRect ( viewportRect );
-	gfxDevice.SetScissorRect ( viewportRect );
+	gfxMgr.mGfxState.SetViewRect ( viewportRect );
+	gfxMgr.mGfxState.SetScissorRect ( viewportRect );
 	this->ClearSurface ();
 	
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX );
 	
 	ZLMatrix4x4 view = this->GetViewMtx ();
 	ZLMatrix4x4 proj = this->GetProjectionMtx ();
 	
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM, view );
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, proj );
-	
-	// recompute the frustum
-	gfxDevice.UpdateViewVolume ();
+	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::VIEW_MTX, view );
+	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::PROJ_MTX, proj );
 	
 	this->RenderTable ( this->mUnderlayTable );
 	
@@ -797,7 +790,7 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 		if ( !interfaceMask ) return;
 		
 		MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
-		const ZLFrustum& viewVolume = gfxDevice.GetViewVolume ();
+		const ZLFrustum& viewVolume = gfxMgr.mGfxState.GetViewVolume ();
 		
 		u32 totalResults = 0;
 		
@@ -825,19 +818,19 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 		buffer.Sort ( this->mSortMode );
 		
 		// set up the ambient color
-		gfxDevice.SetAmbientColor ( this->mColor );
+		gfxMgr.mGfxState.SetAmbientColor ( this->mColor );
 		
 		// figure out the correct LOD factor
-		float lod = this->mLODFactor * this->GetLinkedValue ( MOAILayerAttr::Pack ( ATTR_LOD ), 1.0f );
+		float lodFactor = this->mLODFactor * this->GetLinkedValue ( MOAILayerAttr::Pack ( ATTR_LOD ), 1.0f );
 		
-		this->DrawProps ( buffer, lod );
+		this->DrawProps ( buffer, lodFactor );
 		
 		if ( this->mShowDebugLines ) {
 			
 			// clear the ambient color and bind vector drawing
-			gfxDevice.SetAmbientColor ( 1.0f, 1.0f, 1.0f, 1.0f );
+			gfxMgr.mGfxState.SetAmbientColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 			MOAIDraw::Get ().Bind ();
-			this->DrawPropsDebug ( buffer, lod );
+			this->DrawPropsDebug ( buffer, lodFactor );
 		}
 	}
 	

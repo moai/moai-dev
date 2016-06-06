@@ -1,10 +1,13 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
+#include "pch.h"
+#include <moai-util/MOAILuaUtil.h>
+
+SUPPRESS_EMPTY_FILE_WARNING
 
 #ifndef MOAI_WITH_LUAJIT
-#include "pch.h"
+
 #include <lundump.h>
-#include <moai-util/MOAILuaUtil.h>
 
 //================================================================//
 // MOAILuaHeader
@@ -27,31 +30,80 @@ void MOAILuaHeader::Init () {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaHeader::Read ( ZLStream& stream ) {
+bool MOAILuaHeader::IsBytecode () {
 
-	this->mSignature			= stream.Read < u32 >( 0 );
-	this->mVersion				= stream.Read < u8 >( 0 );
-	this->mFormat				= stream.Read < u8 >( 0 );
-	this->mByteOrder			= stream.Read < u8 >( 0 );
-	this->mSizeOfInt			= stream.Read < u8 >( 0 );
-	this->mSizeOfSizeT			= stream.Read < u8 >( 0 );
-	this->mSizeOfInstruction	= stream.Read < u8 >( 0 );
-	this->mSizeOfLuaNumber		= stream.Read < u8 >( 0 );
-	this->mTypeOfLuaNumber		= stream.Read < u8 >( 0 );
+	return this->mSignature == SIGNATURE;
 }
 
 //----------------------------------------------------------------//
-void MOAILuaHeader::Write ( ZLStream& stream ) const {
+bool MOAILuaHeader::IsCompatible ( const MOAILuaHeader& check ) const {
 
-	stream.Write < u32 >( this->mSignature );
-	stream.Write < u8 >( this->mVersion );
-	stream.Write < u8 >( this->mFormat );
-	stream.Write < u8 >( this->mByteOrder );
-	stream.Write < u8 >( this->mSizeOfInt );
-	stream.Write < u8 >( this->mSizeOfSizeT );
-	stream.Write < u8 >( this->mSizeOfInstruction );
-	stream.Write < u8 >( this->mSizeOfLuaNumber );
-	stream.Write < u8 >( this->mTypeOfLuaNumber );
+	return ( memcmp ( this, &check, sizeof ( MOAILuaHeader )) == 0 );
+}
+
+//----------------------------------------------------------------//
+MOAILuaHeader::MOAILuaHeader () :
+	mSignature ( 0 ) {
+}
+
+//----------------------------------------------------------------//
+MOAILuaHeader::~MOAILuaHeader () {
+}
+
+//----------------------------------------------------------------//
+ZLResultCode MOAILuaHeader::Read ( ZLStream& stream ) {
+
+	ZLResultCodeAccumulator result;
+
+	result = stream.Read < u32 >( this->mSignature, 0 );
+	result = stream.Read < u8 >( this->mVersion, 0 );
+	result = stream.Read < u8 >( this->mFormat, 0 );
+	result = stream.Read < u8 >( this->mByteOrder,  0 );
+	result = stream.Read < u8 >( this->mSizeOfInt, 0 );
+	result = stream.Read < u8 >( this->mSizeOfSizeT, 0 );
+	result = stream.Read < u8 >( this->mSizeOfInstruction, 0 );
+	result = stream.Read < u8 >( this->mSizeOfLuaNumber, 0 );
+	result = stream.Read < u8 >( this->mTypeOfLuaNumber, 0 );
+	
+	return result;
+}
+
+//----------------------------------------------------------------//
+ZLResultCode MOAILuaHeader::Read ( void* buffer, size_t size ) {
+
+	if ( sizeof ( MOAILuaHeader ) <= size ) {
+		memcpy ( this, buffer, sizeof ( MOAILuaHeader ));
+		return ZL_OK;
+	}
+	return ZL_ERROR;
+}
+
+//----------------------------------------------------------------//
+ZLResultCode MOAILuaHeader::Write ( ZLStream& stream ) const {
+
+	ZLResultCodeAccumulator result;
+
+	result = stream.Write < u32 >( this->mSignature ).mCode;
+	result = stream.Write < u8 >( this->mVersion ).mCode;
+	result = stream.Write < u8 >( this->mFormat ).mCode;
+	result = stream.Write < u8 >( this->mByteOrder ).mCode;
+	result = stream.Write < u8 >( this->mSizeOfInt ).mCode;
+	result = stream.Write < u8 >( this->mSizeOfSizeT ).mCode;
+	result = stream.Write < u8 >( this->mSizeOfInstruction ).mCode;
+	result = stream.Write < u8 >( this->mSizeOfLuaNumber ).mCode;
+	result = stream.Write < u8 >( this->mTypeOfLuaNumber ).mCode;
+	
+	return result;
+}
+
+//----------------------------------------------------------------//
+ZLResultCode MOAILuaHeader::Write ( void* buffer, size_t size ) {
+
+	if ( sizeof ( MOAILuaHeader ) <= size ) {
+		memcpy ( buffer, this, sizeof ( MOAILuaHeader ));
+		return ZL_OK;
+	}
+	return ZL_ERROR;
 }
 
 //================================================================//
@@ -100,32 +152,43 @@ int MOAILuaUtil::_convert ( lua_State* L ) {
 	@text	Read the Lua bytecode header.
 	
 	@in		string bytecode
-	@out	table header
+	@out	table header		Returns 'nil' is no valid signature is found.
 */
 int MOAILuaUtil::_getHeader ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAILuaUtil, "S" )
-	
-	size_t bufflen;
-	cc8* buffer = lua_tolstring ( L, -1, &bufflen );
-	
-	ZLByteStream stream;
-	stream.SetBuffer ( buffer, bufflen, bufflen );
+	MOAI_LUA_SETUP_SINGLE ( MOAILuaUtil, "" )
 	
 	MOAILuaHeader header;
-	header.Read ( stream );
 	
-	lua_newtable ( state );
-	state.SetField ( -1, "signature",			header.mSignature );
-	state.SetField ( -1, "version",				header.mVersion );
-	state.SetField ( -1, "format",				header.mFormat );
-	state.SetField ( -1, "byteOrder",			header.mByteOrder );
-	state.SetField ( -1, "sizeOfInt",			header.mSizeOfInt );
-	state.SetField ( -1, "sizeOfSizeT",			header.mSizeOfSizeT );
-	state.SetField ( -1, "sizeOfInstruction",	header.mSizeOfInstruction );
-	state.SetField ( -1, "sizeOfLuaNumber",		header.mSizeOfLuaNumber );
-	state.SetField ( -1, "typeOfNumber",		header.mTypeOfLuaNumber );
+	if ( state.IsType ( 1, LUA_TSTRING )) {
 	
-	return 1;
+		size_t bufflen;
+		cc8* buffer = lua_tolstring ( L, -1, &bufflen );
+	
+		ZLByteStream stream;
+		stream.SetBuffer ( buffer, bufflen, bufflen );
+	
+		header.Read ( stream );
+	}
+	else {
+		header.Init ();
+	}
+	
+	if ( header.mSignature == MOAILuaHeader::SIGNATURE ) {
+	
+		lua_newtable ( state );
+		state.SetField ( -1, "signature",			header.mSignature );
+		state.SetField ( -1, "version",				header.mVersion );
+		state.SetField ( -1, "format",				header.mFormat );
+		state.SetField ( -1, "byteOrder",			header.mByteOrder );
+		state.SetField ( -1, "sizeOfInt",			header.mSizeOfInt );
+		state.SetField ( -1, "sizeOfSizeT",			header.mSizeOfSizeT );
+		state.SetField ( -1, "sizeOfInstruction",	header.mSizeOfInstruction );
+		state.SetField ( -1, "sizeOfLuaNumber",		header.mSizeOfLuaNumber );
+		state.SetField ( -1, "typeOfNumber",		header.mTypeOfLuaNumber );
+		
+		return 1;
+	}
+	return 0;
 }
 
 //================================================================//
@@ -141,7 +204,7 @@ bool MOAILuaUtil::Convert ( const MOAILuaHeader& dstFormat, ZLStream& srcStream,
 	srcFormat.Read ( srcStream );
 	
 	if ( memcmp ( &srcFormat, &dstFormat, sizeof ( MOAILuaHeader )) == 0 ) {
-		srcStream.Seek ( base, SEEK_SET );
+		srcStream.Seek (( long )base, SEEK_SET );
 		return false;
 	}
 	
@@ -262,10 +325,10 @@ s64 MOAILuaUtil::ConvertInt ( const MOAILuaHeader& srcFormat, const MOAILuaHeade
 //----------------------------------------------------------------//
 void MOAILuaUtil::ConvertString ( const MOAILuaHeader& srcFormat, const MOAILuaHeader& dstFormat, ZLStream& srcStream, ZLStream& dstStream ) {
 
-	size_t size = 0;
+	u64 size = 0;
 	srcStream.ReadBytes ( &size, srcFormat.mSizeOfSizeT ); // TODO: respect byte order
 	dstStream.WriteBytes ( &size, dstFormat.mSizeOfSizeT );
-	dstStream.WriteStream ( srcStream, size );
+	dstStream.WriteStream ( srcStream, ( size_t ) size );
 }
 
 //----------------------------------------------------------------//

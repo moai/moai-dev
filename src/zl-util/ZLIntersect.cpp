@@ -118,8 +118,6 @@ u32 ZLSect::PlaneToPlane ( const ZLPlane3D& p0, const ZLPlane3D& p1, ZLVec3D& lo
 
 	vec = ZLVec3D::Cross ( p0.mNorm, p1.mNorm );
     if ( vec.LengthSqrd () < FLT_EPSILON ) return SECT_PARALLEL;
-
-	u32 component;
 	
 	float absX = ABS ( vec.mX );
 	float absY = ABS ( vec.mY );

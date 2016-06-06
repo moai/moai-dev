@@ -13,8 +13,6 @@
 @interface MOAIView : UIView {
 @private
 }
-    @property ( readonly, nonatomic ) int multisample;
-    @property ( readonly, nonatomic ) BOOL multisampleEnabled;
 
     //----------------------------------------------------------------//
 	-( void )       application                             :( UIApplication* )application didFailToRegisterForRemoteNotificationsWithError:( NSError* )error;

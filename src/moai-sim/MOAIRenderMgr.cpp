@@ -2,8 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIGfxDevice.h>
-#include <moai-sim/MOAIGfxResourceMgr.h>
+#include <moai-sim/MOAIGfxMgr.h>
+#include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIRenderMgr.h>
 
 //================================================================//
@@ -26,8 +26,8 @@ int MOAIRenderMgr::_getBufferTable ( lua_State* L ) {
 */	
 int MOAIRenderMgr::_getPerformanceDrawCount ( lua_State* L ) {
 
-	MOAIRenderMgr& device = MOAIRenderMgr::Get ();
-	lua_pushnumber ( L, device.mLastDrawCount );
+	MOAIRenderMgr& gfxMgr = MOAIRenderMgr::Get ();
+	lua_pushnumber ( L, gfxMgr.mLastDrawCount );
 
 	return 1;
 }
@@ -44,8 +44,8 @@ int MOAIRenderMgr::_setBufferTable ( lua_State* L ) {
 // TODO: doxygen
 int MOAIRenderMgr::_getRenderCount ( lua_State* L ) {
 
-	MOAIRenderMgr& device = MOAIRenderMgr::Get ();
-	lua_pushnumber ( L, device.mRenderCounter );
+	MOAIRenderMgr& gfxMgr = MOAIRenderMgr::Get ();
+	lua_pushnumber ( L, gfxMgr.mRenderCounter );
 
 	return 1;
 }
@@ -178,25 +178,28 @@ void MOAIRenderMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIRenderMgr::Render () {
 
-	zglBegin ();
-
-	MOAIGfxResourceMgr::Get ().Update ();
+	ZLGfxDevice::Begin ();
 
 	// Measure performance
 	double startTime = ZLDeviceTime::GetTimeInSeconds ();
+	
+	//gfxMgr.ResetDrawCount ();
 
-	MOAIGfxDevice& device = MOAIGfxDevice::Get ();
-	device.ResetDrawCount ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+
+	ZLGfx& gfx = gfxMgr.mPipelineMgr.SelectDrawingAPI ( MOAIGfxPipelineClerk::DRAWING_PIPELINE );
+
+	ZGL_COMMENT ( gfx, "RENDER MGR RENDER" );
 
 	if ( this->mBufferTable ) {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		state.Push ( this->mBufferTable );
 		this->RenderTable ( state, -1 );
 		state.Pop ( 1 );
-	}	
+	}
 	
-	device.GetDefaultFrameBuffer ()->Render ();
-	this->mLastDrawCount = MOAIGfxDevice::Get ().GetDrawCount ();
+	gfxMgr.mGfxState.GetDefaultFrameBuffer ()->Render ();
+	//this->mLastDrawCount = MOAIGfxMgr::Get ().GetDrawCount ();
 	this->mRenderCounter++;
 	
 	// Measure performance
@@ -206,7 +209,10 @@ void MOAIRenderMgr::Render () {
 	
 	this->mFrameBuffer = 0;
 	
-	zglEnd ();
+	gfxMgr.mVertexCache.FlushBufferedPrims (); // TODO: need to do this here?
+	gfxMgr.mGfxState.UnbindAll ();
+	
+	ZLGfxDevice::End ();
 }
 
 //----------------------------------------------------------------//

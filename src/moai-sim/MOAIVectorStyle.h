@@ -114,7 +114,7 @@ public:
 	GET_SET_CONST ( u32, FillExtraID, mFillExtraID )
 	GET_SET_CONST ( u32, StrokeExtraID, mStrokeExtraID )
 	
-	GET_SET_CONST ( u32, MergeNormals, mMergeNormals )
+	GET_SET_CONST ( float, MergeNormals, mMergeNormals )
 	
 	//----------------------------------------------------------------//
 	void		Default						();

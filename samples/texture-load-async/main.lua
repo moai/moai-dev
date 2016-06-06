@@ -6,7 +6,7 @@
 
 MOAISim.openWindow ( 'test', 320, 480 )
 
-ioThread = MOAITaskThread.new ()
+ioThread = MOAITaskQueue.new ()
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
@@ -29,4 +29,3 @@ layer:insertProp ( prop )
 
 data = MOAIDataBuffer.new ()
 data:loadAsync ( 'moai.png', ioThread, function () texture:load ( data ) data:clear () end )
-

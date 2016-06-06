@@ -36,7 +36,7 @@ void MOAITaskSubscriber::Publish () {
 		this->mMutex.Unlock ();
 
 		task->Publish ();
-		task->LatchRelease ();
+		task->Release ();
 	}
 
 	double curTime = ZLDeviceTime::GetTimeInSeconds ();
@@ -55,7 +55,7 @@ void MOAITaskSubscriber::Publish () {
 		this->mMutex.Unlock ();
 
 		task->Publish ();
-		task->LatchRelease ();
+		task->Release ();
 
 		curTime = ZLDeviceTime::GetTimeInSeconds ();
 		timeElapsed = curTime - startTime;

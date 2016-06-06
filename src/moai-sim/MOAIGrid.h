@@ -21,7 +21,7 @@ class MOAIGrid :
 	public MOAIGridSpace {
 private:
 
-	ZLLeanArray < u32 > mTiles;
+	ZLLeanArray < u32 > mTiles; // TODO: fix size
 
 	//----------------------------------------------------------------//
 	static int		_clearTileFlags		( lua_State* L );

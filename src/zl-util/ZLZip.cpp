@@ -58,7 +58,7 @@ int ZLZip::Deflate ( ZLStream& source, ZLStream& dest, int level ) {
 
     // compress until end of file
     do {
-		strm.avail_in = source.ReadBytes ( in, CHUNKSIZE );
+		strm.avail_in = ( uInt )source.ReadBytes ( in, CHUNKSIZE );
 		strm.next_in = ( Bytef* )in;
 
 		flush = source.IsAtEnd () ? Z_FINISH : Z_NO_FLUSH;
@@ -152,7 +152,7 @@ int ZLZip::Inflate ( ZLStream& source, ZLStream& dest ) {
 
 	/* decompress until deflate stream ends or end of file */
 	do {
-		strm.avail_in = source.ReadBytes ( in, CHUNKSIZE );
+		strm.avail_in = ( uInt )source.ReadBytes ( in, CHUNKSIZE );
         strm.next_in = ( Bytef* )in;
         
 		if ( strm.avail_in == 0 ) break;

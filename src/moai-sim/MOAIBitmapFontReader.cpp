@@ -298,6 +298,8 @@ int MOAIBitmapFontReader::RenderGlyph ( MOAIImage& image, float x, float y, cons
 		MOAIImage::FILTER_LINEAR,
 		blendFunc
 	);
+	
+	return OK;
 }
 
 //----------------------------------------------------------------//

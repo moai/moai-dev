@@ -25,8 +25,14 @@
 
 #include "pch.h"
 
+SUPPRESS_EMPTY_FILE_WARNING
+
+#ifndef _WIN32
+
 #include <zl-util/ZLDeviceTime.h>
 #include <zl-util/zl_socket.h>
+#include <luasocket-2.0.2/src/io.h>
+#include <luasocket-2.0.2/src/usocket.h>
 
 #ifdef ZL_SOCKET_POLL
 
@@ -444,3 +450,5 @@ int zl_socket_waitfd ( zl_socket n, int sw, double tm ) {
 	if ( sw == WAITFD_C && FD_ISSET ( n, &rfds )) return IO_CLOSED;
 	return IO_DONE;
 }
+
+#endif

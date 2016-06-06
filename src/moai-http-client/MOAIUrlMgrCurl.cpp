@@ -168,7 +168,7 @@ void MOAIUrlMgrCurl::ProcessHandle () {
 	int stillRunning;
 	while ( CURLM_CALL_MULTI_PERFORM == curl_multi_perform ( multiHandle, &stillRunning ));
 
-	this->mMore = stillRunning;
+	this->mMore = stillRunning == 1 ? true : false;
 }
 
 //----------------------------------------------------------------//

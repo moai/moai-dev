@@ -78,7 +78,7 @@ int MOAIMemStream::_getString ( lua_State* L ) {
 			free ( str );
 		}
 		
-		self->Seek ( cursor, SEEK_SET );
+		self->Seek (( long )cursor, SEEK_SET );
 		return 1;
 	}
 	return 0;

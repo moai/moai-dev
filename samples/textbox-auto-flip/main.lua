@@ -9,7 +9,7 @@ MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX, 1, 1, 1, 1, 1 )
 MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_BASELINES, 1, 1, 0, 0, 1 )
 MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_GLYPHS, 1, 0.5, 0.5, 0.5, 1 )
 MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_GLYPH_BOUNDS, 1, 1, 0, 1, 1 )
-MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_LAYOUT, 1, 0, 0, 1, 1 )
+MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_LINES_LAYOUT_BOUNDS, 1, 0, 0, 1, 1 )
 
 camera = MOAICamera2D.new ()
 

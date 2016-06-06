@@ -3,6 +3,8 @@
 
 #include "pch.h"
 
+SUPPRESS_EMPTY_FILE_WARNING
+
 #ifdef _WIN32
 #include <zl-util/ZLAdapterInfo.h>
 

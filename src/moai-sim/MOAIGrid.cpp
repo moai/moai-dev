@@ -359,7 +359,7 @@ void MOAIGrid::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) 
 //----------------------------------------------------------------//
 void MOAIGrid::SetTile ( u32 addr, u32 tile ) {
 
-	u32 size = this->mTiles.Size ();
+	u32 size = ( u32 )this->mTiles.Size (); // TODO: cast
 
 	if ( size ) {
 		addr = addr % this->mTiles.Size ();

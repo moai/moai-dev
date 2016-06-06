@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIGridFancy.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIMaterialBatch.h>
 
 //================================================================//
@@ -332,8 +332,8 @@ void MOAIGridFancy::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, MOAIMater
 	float tileWidth = this->GetTileWidth ();
 	float tileHeight = this->GetTileHeight ();
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	ZLColorVec penColor = gfxDevice.GetPenColor();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	ZLColorVec penColor = gfxMgr.mGfxState.GetPenColor();
 
 	for ( int y = c0.mY; y <= c1.mY; ++y ) {
 		for ( int x = c0.mX; x <= c1.mX; ++x ) {
@@ -348,10 +348,10 @@ void MOAIGridFancy::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, MOAIMater
 			ZLVec2D loc = this->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
 
 			if ( color ) {
-				gfxDevice.SetPenColor ( penColor * this->GetPalette ( color ).ScaleAlpha ( alpha ) );
+				gfxMgr.mGfxState.SetPenColor ( penColor * this->GetPalette ( color ).ScaleAlpha ( alpha ) );
 			}
 			else {
-				gfxDevice.SetPenColor ( penColor * ZLColorVec ( 1.0, 1.0, 1.0, alpha ) );
+				gfxMgr.mGfxState.SetPenColor ( penColor * ZLColorVec ( 1.0, 1.0, 1.0, alpha ) );
 			}
 			
 			offset.mX	= loc.mX;
@@ -363,7 +363,7 @@ void MOAIGridFancy::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, MOAIMater
 		}
 	}
 	
-	gfxDevice.SetPenColor(penColor);
+	gfxMgr.mGfxState.SetPenColor(penColor);
 }
 
 //----------------------------------------------------------------//
@@ -496,7 +496,7 @@ void MOAIGridFancy::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGridFancy::SetColor ( u32 addr, u32 value ) {
 
-	u32 size = this->mColors.Size ();
+	u32 size = ( u32 )this->mColors.Size ();
 
 	if ( size ) {
 		addr = addr % size;
@@ -520,7 +520,7 @@ void MOAIGridFancy::SetColor ( int xTile, int yTile, u32 value ) {
 //----------------------------------------------------------------//
 void MOAIGridFancy::SetAlpha ( u32 addr, float value ) {
 
-	u32 size = this->mAlphas.Size ();
+	u32 size = ( u32 )this->mAlphas.Size ();
 
 	if ( size ) {
 		addr = addr % size;
@@ -531,7 +531,7 @@ void MOAIGridFancy::SetAlpha ( u32 addr, float value ) {
 //----------------------------------------------------------------//
 void MOAIGridFancy::SetScale ( u32 addr, float value ) {
 
-	u32 size = this->mScales.Size ();
+	u32 size = ( u32 )this->mScales.Size ();
 
 	if ( size ) {
 		addr = addr % size;
@@ -544,7 +544,7 @@ void MOAIGridFancy::SetPalette ( u32 addr, const ZLColorVec &color ) {
 
 	/* attempt to make palette large enough for this */
 	this->mColorPalette.Grow ( addr, 1, ZLColorVec ( 1.0, 1.0, 1.0, 1.0 ) );
-	u32 size = this->mColorPalette.Size ();
+	u32 size = ( u32 )this->mColorPalette.Size ();
 
 	if ( size ) {
 		addr = addr % size;

@@ -38,7 +38,7 @@ local curveIndex = 1
 
 function onDraw ( index, xOff, yOff, xFlip, yFlip )
 
-	MOAIGfxDevice.setPenColor ( 1, 0, 0, 1 )
+	MOAIGfxMgr.setPenColor ( 1, 0, 0, 1 )
 	MOAIDraw.drawAnimCurve ( makeCurve ( curveTypes [ curveIndex ].value ), 100 )
 	if curveIndex ~= prevIndex then
 		print ( string.format ( "%i of %i: %s", curveIndex, #curveTypes, curveTypes [ curveIndex ].name ))

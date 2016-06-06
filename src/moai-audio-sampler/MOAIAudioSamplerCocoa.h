@@ -32,7 +32,7 @@ private:
 
 	MOAILuaSharedPtr < MOAIStream >			mStream;
 	u32										mStreamFormat;
-	size_t									mEventFrequency;
+	size_t									mSampleSize;
 	size_t									mSamplesWritten;
 
 	//----------------------------------------------------------------//
@@ -40,7 +40,6 @@ private:
 	static int		_init					( lua_State* L );
 	static int		_pause					( lua_State* L );
 	static int		_resume					( lua_State* L );
-	static int		_setEventFrequency		( lua_State* L );
 	static int		_setStream				( lua_State* L );
 	static int		_start					( lua_State* L );
     static int		_stop					( lua_State* L );

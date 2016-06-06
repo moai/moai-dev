@@ -13,22 +13,22 @@ class MOAITaskSubscriber;
 // MOAITask
 //================================================================//
 class MOAITask :
-	public virtual MOAILuaObject {
+	public virtual MOAIObject {
 private:
 
-	friend class MOAITaskQueue;
 	friend class MOAITaskSubscriber;
+	friend class MOAITaskQueue;
 
 	u32						mPriority;
 	MOAITaskQueue*			mQueue;
 	MOAITaskSubscriber*		mSubscriber;
-	MOAILuaMemberRef		mOnFinish;
-	MOAILuaStrongRef		mLatch;
+	//MOAILuaMemberRef		mOnFinish;
+	//MOAILuaStrongRef		mLatch;
 
 	ZLLeanLink < MOAITask* >	mLink;
 
 	//----------------------------------------------------------------//
-	static int		_setCallback		( lua_State* L );
+	//static int		_setCallback		( lua_State* L );
 
 	//----------------------------------------------------------------//
 	virtual void	Execute				() = 0;
@@ -54,8 +54,8 @@ public:
 	GET_SET ( u32, Priority, mPriority )
 	
 	//----------------------------------------------------------------//
-	void			LatchRelease			();
-	void			LatchRetain				();
+	//void			LatchRelease			();
+	//void			LatchRetain				();
 					MOAITask				();
 	virtual			~MOAITask				();
 	void			RegisterLuaClass		( MOAILuaState& state );

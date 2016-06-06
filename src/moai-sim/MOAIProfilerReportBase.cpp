@@ -117,7 +117,8 @@ void MOAIProfilerReportBase::EnterScope ( const ZLHashedString& name ) {
 
 //----------------------------------------------------------------//
 void MOAIProfilerReportBase::LeaveScope ( const ZLHashedString& name, const u64 startTimeMicroSec, const u32 durationMicroSec ) {
-	
+	UNUSED ( name ); // TODO: find out why zl assert undef isn't handling this
+
 	// Sanity check
 	assert ( mCurrentEntry->mName == name );
 

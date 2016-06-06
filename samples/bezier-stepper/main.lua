@@ -41,7 +41,7 @@ end
 
 function onDraw ()
 
-	MOAIGfxDevice.setPenColor ( 1, 0, 1, 1 )
+	MOAIGfxMgr.setPenColor ( 1, 0, 1, 1 )
 
 	local v1 = points [ 1 ]
 	for i = 2, #points do
@@ -50,7 +50,7 @@ function onDraw ()
 		v1 = v2
 	end
 
-	MOAIGfxDevice.setPenColor ( 1, 0, 0, 1 )
+	MOAIGfxMgr.setPenColor ( 1, 0, 0, 1 )
 
 	for i, v in ipairs ( points ) do
 		MOAIDraw.drawCircle ( v.x, v.y, 2, 8 )

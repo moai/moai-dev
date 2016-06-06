@@ -55,7 +55,7 @@ color1:moveColor ( 0, 1, 0, 1, 2 )
 shader:setAttrLink ( 4, color1, MOAIColor.COLOR_TRAIT )
 
 MOAISim.openWindow ( "test", 640, 480 )
-MOAIGfxDevice.setClearColor ( 1, 1, 1, 1 )
+MOAIGfxMgr.setClearColor ( 1, 1, 1, 1 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 640, 480 )

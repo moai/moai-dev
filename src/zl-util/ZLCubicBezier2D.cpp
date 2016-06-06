@@ -269,7 +269,7 @@ void ZLCubicBezierFlattener2D::Init ( const ZLCubicBezier2D& curve, float flatne
 	// cribbed from https://github.com/rougier/gl-bezier
 
 	this->mFlatness = flatness;
-	this->mAngleInRadians = angle * D2R;
+	this->mAngleInRadians = ( float )( angle * D2R );
 
 	this->mCurveIdx = 0;
 	this->mVertexIdx = 0;

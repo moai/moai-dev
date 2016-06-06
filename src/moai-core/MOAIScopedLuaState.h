@@ -21,6 +21,7 @@ private:
 public:
 
 	//----------------------------------------------------------------//
+	int				GetLocalTop				();
 	void			PinTop					();
 	void			PinTop					( int top );
 	void			Set						( lua_State* L );

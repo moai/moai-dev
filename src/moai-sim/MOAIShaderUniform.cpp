@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIColor.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIShaderUniform.h>
 
 //================================================================//
@@ -60,13 +61,13 @@ void MOAIShaderUniformBuffer::Default () {
 		case MOAIShaderUniformBuffer::UNIFORM_MATRIX_F3: {
 			ZLMatrix3x3 mtx;
 			mtx.Ident ();
-			this->SetValue ( mtx, false );
+			this->SetValue ( mtx );
 			break;
 		}
 		case MOAIShaderUniformBuffer::UNIFORM_MATRIX_F4: {
 			ZLMatrix4x4 mtx;
 			mtx.Ident ();
-			this->SetValue ( mtx, false );
+			this->SetValue ( mtx );
 			break;
 		}
 		default: {
@@ -122,14 +123,11 @@ void MOAIShaderUniformBuffer::GetValue ( MOAIAttrOp& attrOp ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderUniformBuffer::SetBuffer ( void* buffer, size_t size, bool check ) {
+u32 MOAIShaderUniformBuffer::SetBuffer ( void* buffer, size_t size ) {
 
-	if ( check ) {
-		if ( memcmp ( this->mBuffer, buffer, size ) == 0 ) return false;
-	}
-
+	if ( memcmp ( this->mBuffer, buffer, size ) == 0 ) return 0;
 	memcpy ( this->mBuffer, buffer, size );
-	return true;
+	return MOAIShaderUniform::UNIFORM_FLAG_DIRTY;
 }
 
 //----------------------------------------------------------------//
@@ -163,30 +161,30 @@ void MOAIShaderUniformBuffer::SetType ( u32 type ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderUniformBuffer::SetValue ( float value ) {
+u32 MOAIShaderUniformBuffer::SetValue ( float value ) {
 
-	bool check = this->mFloat != value;
+	u32 flags = this->mFloat != value ? MOAIShaderUniform::UNIFORM_FLAG_DIRTY : 0;
 	this->mFloat = value;
-	return check;
+	return flags;
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderUniformBuffer::SetValue ( int value ) {
+u32 MOAIShaderUniformBuffer::SetValue ( int value ) {
 
-	bool check = this->mInt != value;
+	u32 flags = this->mInt != value ? MOAIShaderUniform::UNIFORM_FLAG_DIRTY : 0;
 	this->mInt = value;
-	return check;
+	return flags;
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderUniformBuffer::SetValue ( const MOAIAttrOp& attrOp, bool check ) {
+u32 MOAIShaderUniformBuffer::SetValue ( const MOAIAttrOp& attrOp ) {
 
 	switch ( attrOp.GetTypeHint ()) {
 
 		case MOAIAttrOp::ATTR_TYPE_COLOR: {
 			ZLColorVec* color = attrOp.GetValue < ZLColorVec* >( 0 );
 			if ( color ) {
-				return this->SetValue ( *color, check );
+				return this->SetValue ( *color );
 			}
 			break;
 		}
@@ -201,7 +199,7 @@ bool MOAIShaderUniformBuffer::SetValue ( const MOAIAttrOp& attrOp, bool check ) 
 		case MOAIAttrOp::ATTR_TYPE_TRANSFORM: {
 			ZLAffine3D* affine = attrOp.GetValue < ZLAffine3D* >( 0 );
 			if ( affine ) {
-				return this->SetValue ( *affine, check );
+				return this->SetValue ( *affine );
 			}
 			break;
 		}
@@ -209,11 +207,11 @@ bool MOAIShaderUniformBuffer::SetValue ( const MOAIAttrOp& attrOp, bool check ) 
 			// TODO:
 		}
 	}
-	return false;
+	return 0;
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderUniformBuffer::SetValue ( const ZLColorVec& value, bool check ) {
+u32 MOAIShaderUniformBuffer::SetValue ( const ZLColorVec& value ) {
 
 	float m [ 4 ];
 
@@ -222,11 +220,11 @@ bool MOAIShaderUniformBuffer::SetValue ( const ZLColorVec& value, bool check ) {
 	m [ 2 ]		= value.mB;
 	m [ 3 ]		= value.mA;
 
-	return this->SetBuffer ( m, sizeof ( m ), check );
+	return this->SetBuffer ( m, sizeof ( m ));
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderUniformBuffer::SetValue ( const ZLAffine3D& value, bool check ) {
+u32 MOAIShaderUniformBuffer::SetValue ( const ZLAffine3D& value ) {
 
 	assert (( this->mType == UNIFORM_MATRIX_F3 ) || ( this->mType == UNIFORM_MATRIX_F4 ));
 
@@ -246,7 +244,7 @@ bool MOAIShaderUniformBuffer::SetValue ( const ZLAffine3D& value, bool check ) {
 		m [ 7 ]    = value.m [ AffineElem3D::C1_R2 ];
 		m [ 8 ]    = value.m [ AffineElem3D::C2_R2 ];
 
-		return this->SetBuffer ( m, sizeof ( m ), check );
+		return this->SetBuffer ( m, sizeof ( m ));
 	}
 
 	float m [ 16 ];
@@ -271,11 +269,11 @@ bool MOAIShaderUniformBuffer::SetValue ( const ZLAffine3D& value, bool check ) {
 	m [ 14 ]	= 0.0f;
 	m [ 15 ]	= 1.0f;
 
-	return this->SetBuffer ( m, sizeof ( m ), check );
+	return this->SetBuffer ( m, sizeof ( m ));
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderUniformBuffer::SetValue ( const ZLMatrix4x4& value, bool check ) {
+u32 MOAIShaderUniformBuffer::SetValue ( const ZLMatrix4x4& value ) {
 
 	assert (( this->mType == UNIFORM_MATRIX_F3 ) || ( this->mType == UNIFORM_MATRIX_F4 ));
 
@@ -295,7 +293,7 @@ bool MOAIShaderUniformBuffer::SetValue ( const ZLMatrix4x4& value, bool check ) 
 		m [ 7 ]    = value.m [ ZLMatrix4x4::C1_R2 ];
 		m [ 8 ]    = value.m [ ZLMatrix4x4::C2_R2 ];
 
-		return this->SetBuffer ( m, sizeof ( m ), check );
+		return this->SetBuffer ( m, sizeof ( m ));
 	}
 
 	float m [ 16 ];
@@ -320,11 +318,11 @@ bool MOAIShaderUniformBuffer::SetValue ( const ZLMatrix4x4& value, bool check ) 
 	m [ 14 ]	= value.m [ ZLMatrix4x4::C2_R3 ];
 	m [ 15 ]	= value.m [ ZLMatrix4x4::C3_R3 ];
 
-	return this->SetBuffer ( m, sizeof ( m ), check );
+	return this->SetBuffer ( m, sizeof ( m ));
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderUniformBuffer::SetValue ( const ZLMatrix3x3& value, bool check ) {
+u32 MOAIShaderUniformBuffer::SetValue ( const ZLMatrix3x3& value ) {
 
 	assert (( this->mType == UNIFORM_MATRIX_F3 ) || ( this->mType == UNIFORM_MATRIX_F4 ));
 
@@ -344,7 +342,7 @@ bool MOAIShaderUniformBuffer::SetValue ( const ZLMatrix3x3& value, bool check ) 
 		m [ 7 ]    = value.m [ ZLMatrix3x3::C1_R2 ];
 		m [ 8 ]    = value.m [ ZLMatrix3x3::C2_R2 ];
 
-		return this->SetBuffer ( m, sizeof ( m ), check );
+		return this->SetBuffer ( m, sizeof ( m ));
 	}
 	
 	float m [ 16 ];
@@ -369,15 +367,15 @@ bool MOAIShaderUniformBuffer::SetValue ( const ZLMatrix3x3& value, bool check ) 
 	m [ 14 ]	= 0.0f;
 	m [ 15 ]	= 1.0f;
 
-	return this->SetBuffer ( m, sizeof ( m ), check );
+	return this->SetBuffer ( m, sizeof ( m ));
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderUniformBuffer::SetValue ( const MOAIShaderUniformBuffer& uniformBuffer, bool check ) {
+u32 MOAIShaderUniformBuffer::SetValue ( const MOAIShaderUniformBuffer& uniformBuffer ) {
 
 	if ( this->mType == UNIFORM_FLOAT ) return this->SetValue ( uniformBuffer.mFloat );
 	if (( this->mType == UNIFORM_INDEX ) || ( this->mType == UNIFORM_INT )) return this->SetValue ( uniformBuffer.mInt );
-	return this->SetBuffer ( uniformBuffer.mBuffer, this->mBuffer.Size (), check );
+	return this->SetBuffer ( uniformBuffer.mBuffer, this->mBuffer.Size ());
 }
 
 //================================================================//
@@ -389,30 +387,42 @@ void MOAIShaderUniform::Bind () {
 
 	if ( this->mAddr == ZGL_INVALID_UNIFORM_ADDR ) return;
 
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+
 	switch ( this->mType ) {
 
 		case UNIFORM_FLOAT:
-			zglUniform1f ( this->mAddr, this->mFloat );
+			gfx.Uniform1f ( this->mAddr, this->mFloat );
 			break;
 
 		case UNIFORM_INDEX:
-			zglUniform1i ( this->mAddr, this->mInt - 1 );
+			gfx.Uniform1i ( this->mAddr, this->mInt - 1 );
 			break;
 
 		case UNIFORM_INT:
-			zglUniform1i ( this->mAddr, this->mInt );
+			gfx.Uniform1i ( this->mAddr, this->mInt );
 			break;
 
 		case UNIFORM_MATRIX_F3:
-    		zglUniformMatrix3fv ( this->mAddr, 1, false, ( float* )this->mBuffer.Data ());
+    		gfx.UniformMatrix3fv ( this->mAddr, 1, false, ( float* )this->mBuffer.Data ());
     		break;
 
 		case UNIFORM_MATRIX_F4:
-			zglUniformMatrix4fv ( this->mAddr, 1, false, ( float* )this->mBuffer.Data ());
+			gfx.UniformMatrix4fv ( this->mAddr, 1, false, ( float* )this->mBuffer.Data ());
 			break;
 
 		case UNIFORM_VECTOR_F4:
-			zglUniform4fv ( this->mAddr, 1, ( float* )this->mBuffer.Data ());
+			gfx.Uniform4fv ( this->mAddr, 1, ( float* )this->mBuffer.Data ());
 			break;
 	}
+}
+
+//----------------------------------------------------------------//
+MOAIShaderUniform::MOAIShaderUniform () :
+	mAddr ( ZGL_INVALID_UNIFORM_ADDR ),
+	mFlags ( UNIFORM_FLAG_DIRTY ) {
+}
+
+//----------------------------------------------------------------//
+MOAIShaderUniform::~MOAIShaderUniform () {
 }

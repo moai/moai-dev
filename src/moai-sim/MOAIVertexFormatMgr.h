@@ -20,8 +20,9 @@ public:
 		XYZWNNNC,
 		XYZWNNNUVC,
 		TOTAL_FORMATS,
-		UNKNOWN_FORMAT			= 0xffffffff,
 	};
+
+	static const u32 UNKNOWN_FORMAT = 0xffffffff;
 
 private:
 	

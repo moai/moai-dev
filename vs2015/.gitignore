@@ -1,0 +1,15 @@
+.vs/
+bin/
+ipch/
+Win32/
+x64/
+Debug*/
+Release*/
+CodeAnalyst/
+*.vcproj
+*.opendb
+*.opensdf
+*.user
+*.ncb
+*.suo
+*.sdf

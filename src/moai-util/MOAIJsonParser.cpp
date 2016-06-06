@@ -36,7 +36,7 @@ void _jsonArrayToLua ( lua_State* L, json_t* json ) {
 		
 		if ( value ) {
 		
-			lua_pushnumber ( L, i + 1 );
+			lua_pushnumber ( L, ( lua_Number )( i + 1 ));
 			_jsonToLua ( L, value );
 			lua_settable ( L, -3 );
 		}

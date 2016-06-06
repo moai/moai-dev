@@ -8,12 +8,7 @@
 
 #include <moai-http-client/MOAIHttpTaskBase.h>
 
-#define  CURL_STATICLIB
-#define  CURL_DISABLE_LDAP
-
-extern "C" {
-	#include <curl/curl.h>
-}
+#include <curl/curl.h>
 
 //================================================================//
 // MOAIHttpTaskCurl

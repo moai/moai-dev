@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIImageTexture.h>
 
 //================================================================//
@@ -40,8 +40,13 @@ int MOAIImageTexture::_updateRegion ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIImageTexture::MOAIImageTexture () :
-	mStatus ( INVALID ) {
+void MOAIImageTexture::OnClearDirty () {
+
+	this->mRegion.Clear ();
+}
+
+//----------------------------------------------------------------//
+MOAIImageTexture::MOAIImageTexture () {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAISingleTexture )
@@ -56,21 +61,27 @@ MOAIImageTexture::~MOAIImageTexture () {
 }
 
 //----------------------------------------------------------------//
-void MOAIImageTexture::OnGPUBind () {
-
-	if ( this->mStatus == INVALID ) {
-		this->UpdateTextureFromImage ( *this, this->mRegion );
-		this->mStatus = VALID;
-	}
-	MOAISingleTexture::OnGPUBind ();
-}
-
-//----------------------------------------------------------------//
 bool MOAIImageTexture::OnGPUCreate () {
 
 	if ( !this->IsOK ()) return false;
-	this->mStatus = VALID;
-	return this->CreateTextureFromImage ( *this );
+	
+	this->mRegion.Clear ();
+	if ( this->CreateTextureFromImage ( *this )) {
+		return this->OnGPUUpdate ();
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
+bool MOAIImageTexture::OnGPUUpdate () {
+
+	bool result = true;
+
+	if ( this->mRegion.Area () > 0 ) {
+		result = this->UpdateTextureFromImage ( *this, this->mRegion );
+		this->mRegion.Clear ();
+	}
+	return result && MOAISingleTexture::OnGPUUpdate ();
 }
 
 //----------------------------------------------------------------//
@@ -78,7 +89,6 @@ void MOAIImageTexture::OnImageStatusChanged	( bool isOK ) {
 
 	if ( isOK ) {
 		this->FinishInit ();
-		this->DoCPUAffirm ();
 	}
 }
 
@@ -118,7 +128,7 @@ void MOAIImageTexture::SerializeOut ( MOAILuaState& state, MOAISerializer& seria
 void MOAIImageTexture::UpdateRegion () {
 	
 	this->mRegion = this->GetRect ();
-	this->mStatus = INVALID;
+	this->ScheduleForGPUUpdate ();
 }
 
 //----------------------------------------------------------------//
@@ -127,11 +137,12 @@ void MOAIImageTexture::UpdateRegion ( ZLIntRect rect ) {
 	rect.Bless ();
 	this->GetRect ().Clip ( rect );
 	
-	if ( this->mStatus == VALID ) {
-		this->mRegion = rect;
-	}
-	else {
+	if ( this->GetState () == STATE_NEEDS_GPU_UPDATE ) {
 		this->mRegion.Grow ( rect );
 	}
-	this->mStatus = INVALID;
+	else {
+		this->mRegion = rect;
+	}
+	
+	this->ScheduleForGPUUpdate ();
 }
