@@ -524,7 +524,7 @@ char* zl_fgets ( char* string, int length, ZLFILE* fp ) {
 wchar_t zl_fgetwc(ZLFILE* fp) {
 	UNUSED(fp);
 	assert(0); // TODO:
-	return -1;
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -912,7 +912,7 @@ wchar_t	zl_ungetwc(wchar_t character, ZLFILE* fp) {
 	UNUSED(character);
 	UNUSED(fp);
 	assert(0);
-	return -1;
+	return 0;
 }
 
 //----------------------------------------------------------------//

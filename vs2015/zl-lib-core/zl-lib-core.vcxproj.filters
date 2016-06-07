@@ -500,5 +500,8 @@
     <ClCompile Include="..\..\src\zl-util\ZLRingAdapter.cpp">
       <Filter>stream</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\zl-util\ZLPolygon2D.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

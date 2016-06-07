@@ -25,6 +25,7 @@
 
 SUPPRESS_EMPTY_FILE_WARNING
 
+#include "pch.h"
 #ifdef _WIN32
 
 /*=========================================================================*\
@@ -37,9 +38,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 * RCS ID: $Id: wsocket.c,v 1.36 2007/06/11 23:44:54 diego Exp $
 \*=========================================================================*/
 
-#include "pch.h"
 
-SUPPRESS_EMPTY_FILE_WARNING
 
 #include <string.h>
 
@@ -81,6 +80,10 @@ int zl_socket_close(void) {
 #define WAITFD_E        4
 #define WAITFD_C        (WAITFD_E|WAITFD_W)
 
+/* disable warning for "conditional expression is constant." win 8.1 winsock.h has a while(0) for FD_SET*/
+#pragma warning( push )
+#pragma warning( disable : 4127 ) 
+
 int zl_socket_waitfd(zl_socket* ps, int sw, double tm) {
     int ret;
     fd_set rfds, wfds, efds, *rp = NULL, *wp = NULL, *ep = NULL;
@@ -107,6 +110,7 @@ int zl_socket_waitfd(zl_socket* ps, int sw, double tm) {
     if (sw == WAITFD_C && FD_ISSET(*ps, &efds)) return ZL_IO_CLOSED;
     return ZL_IO_DONE;
 }
+#pragma warning( pop )
 
 /*-------------------------------------------------------------------------*\
 * Put socket into blocking mode

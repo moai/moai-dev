@@ -12,9 +12,10 @@ class ZLCleanup {
 protected:
 
 	typedef void ( TYPE::*SelectorType )();
-
-	TYPE*			mTarget;
+	
 	SelectorType	mSelector;
+	TYPE*			mTarget;
+	
 
 public:
 
