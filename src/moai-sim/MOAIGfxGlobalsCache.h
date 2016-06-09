@@ -152,14 +152,12 @@ public:
 	
 	const ZLFrustum&		GetViewVolume				();
 	
-							MOAIGfxGlobalsCache				();
-							~MOAIGfxGlobalsCache			();
+							MOAIGfxGlobalsCache			();
+							~MOAIGfxGlobalsCache		();
 
 	void					SetAmbientColor				( u32 color );
 	void					SetAmbientColor				( const ZLColorVec& colorVec );
 	void					SetAmbientColor				( float r, float g, float b, float a );
-
-	void					SetBufferSize				( u32 width, u32 height );
 
 	void					SetMtx						( u32 transformID );
 	void					SetMtx						( u32 transformID, const ZLAffine3D& transform );
