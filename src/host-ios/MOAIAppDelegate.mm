@@ -61,7 +61,22 @@
         
         [ mMoaiView moaiInit ];
         [ mMoaiView setWorkingDirectory:[[ NSBundle mainBundle ] resourcePath ]];
-        [ mMoaiView run:@"main.lua" ];
+        
+        // Lua Main is optional. if it is defined and left blank, the value should be the empty string.
+        // In the case of an empty string, no lua main will be run. This is by design.
+        NSString* luaMain = [[ NSBundle mainBundle ] objectForInfoDictionaryKey:@"Lua Main" ];
+        
+        if ( luaMain ) {
+            // Lua Main is defined...
+            if ([ luaMain length ]) {
+                // Lua Main has a value, so use it
+                [ mMoaiView run:luaMain ];
+            }
+        }
+        else {
+            // if Lua Main is not defined in the plist at all, use the default (main.lua)
+            [ mMoaiView run:@"main.lua" ];
+        }
         
         // check to see if the app was lanuched from a remote notification
         // these keeps the old behavior, in which we 'fall back' on remote notifications
