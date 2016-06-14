@@ -31,7 +31,7 @@
 
 //#include <OpenGL/gl.h>
 //#include <OpenGL/glext.h>
-#include <zl-gfx/ZLGfx-gles.h>
+//#include <zl-gfx/ZLGfx-gles.h>
 
 #define UNUSED(p) (( void )p)
 
@@ -639,7 +639,7 @@ void MainLoop () {
 		renderThread.Stop ();
 	#else
 	
-		SDL_GL_DeleteContext ( context );
+		//SDL_GL_DeleteContext ( context );  removing context here leaves the window and it explodes with gl error during glflush
 	#endif
 }
 
