@@ -86,6 +86,33 @@ void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 }
 
 //----------------------------------------------------------------//
+void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLRect& rect, u32 planeID, u32 interfaceMask, u32 queryMask ) {
+
+	float halfSize = this->mCellSize * 0.5f;
+
+	MOAICellCoord coord0 = this->mGridSpace.GetCellCoord ( rect.mXMin - halfSize, rect.mYMin - halfSize );
+	MOAICellCoord coord1 = this->mGridSpace.GetCellCoord ( rect.mXMax + halfSize, rect.mYMax + halfSize );
+
+	int xTotal = coord1.mX - coord0.mX + 1;
+	int yTotal = coord1.mY - coord0.mY + 1;
+	
+	int width = this->mGridSpace.GetWidth ();
+	int height = this->mGridSpace.GetHeight ();
+	
+	if ( xTotal > width ) xTotal = width;
+	if ( yTotal > height ) yTotal = height;
+
+	for ( int y = 0; y < yTotal; ++y ) {
+		for ( int x = 0; x < xTotal; ++x ) {
+			
+			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord0.mX + x, coord0.mY + y );
+			u32 addr = this->mGridSpace.GetCellAddr ( offset );
+			this->mCells [ addr ].GatherProps ( results, ignoreProp, rect, interfaceMask, queryMask );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLBox& box, u32 planeID, u32 interfaceMask, u32 queryMask ) {
 
 	float halfSize = this->mCellSize * 0.5f;

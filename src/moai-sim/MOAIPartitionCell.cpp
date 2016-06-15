@@ -85,6 +85,22 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const 
 }
 
 //----------------------------------------------------------------//
+void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignoreProp, const ZLRect& rect, u32 interfaceMask, u32 queryMask ) {
+
+	PropIt propIt = this->mProps.Head ();
+	for ( ; propIt; propIt = propIt->Next ()) {
+		MOAIProp* prop = propIt->Data ();
+		
+		if (( prop != ignoreProp ) && ( prop->mInterfaceMask & interfaceMask ) && ( prop->mQueryMask & queryMask )) {
+			ZLRect bounds = prop->mWorldBounds.GetRect ( ZLBox::PLANE_XY );
+			if ( bounds.Overlap ( rect )) {
+				prop->AddToSortBuffer ( results );
+			}
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignoreProp, const ZLBox& box, u32 interfaceMask, u32 queryMask ) {
 
 	PropIt propIt = this->mProps.Head ();
