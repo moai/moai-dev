@@ -386,6 +386,8 @@ void MOAITouchSensor::ParseEvent ( ZLStream& eventStream ) {
 
 	if ( eventType == TOUCH_CANCEL ) {
 		
+		printf ( "TOUCHES CANCELLED\n" );
+		
 		// for now, TOUCH_CANCEL clobbers all touches
 		this->ClearState ();
 		
@@ -409,10 +411,14 @@ void MOAITouchSensor::ParseEvent ( ZLStream& eventStream ) {
 		// see if there's already a record for this touch event
 		u32 idx = this->FindTouch ( touch.mTouchID );
 		
+		printf ( "FOUND TOUCH: %d\n", idx );
+		
 		if ( eventType == TOUCH_DOWN ) { // TOUCH_DOWN or TOUCH_MOVE
 			
 			// if it's a new touch, this is really a TOUCH_DOWN
 			if ( idx == UNKNOWN_TOUCH ) {
+				
+				printf ( "TOUCH DOWN: %d\n", idx );
 				
 				// if we're maxed out on touches, this touch will be ignored until something
 				// frees up. after that it will be counted as a TOUCH_DOWN
@@ -423,6 +429,8 @@ void MOAITouchSensor::ParseEvent ( ZLStream& eventStream ) {
 				touch.mTapCount = CheckLingerList ( touch.mX, touch.mY, touch.mTime ) + 1;
 
 				touch.mState = IS_DOWN | DOWN;
+				
+				this->PrintStacks ();
 			}
 			else {
 			
@@ -433,6 +441,8 @@ void MOAITouchSensor::ParseEvent ( ZLStream& eventStream ) {
 			}
 		}
 		else if ( idx != UNKNOWN_TOUCH ) {
+			
+			printf ( "TOUCH UP: %d\n", idx );
 			
 			// we know about the touch and it's not a TOUCH_DOWN, so it must be a TOUCH_UP
 			
@@ -449,6 +459,8 @@ void MOAITouchSensor::ParseEvent ( ZLStream& eventStream ) {
 			touch.mState |= UP;
 			touch.mTouchID = 0;
 			touch.mTapCount = CheckLingerList ( touch.mX, touch.mY, touch.mTime );
+			
+			this->PrintStacks ();
 		}
 		
 		if ( idx != UNKNOWN_TOUCH ) {
@@ -566,15 +578,22 @@ void MOAITouchSensor::ResetState () {
 			this->mAllocStack [ this->mTop ] = idx;
 		}
 		else {
-			touch.mState &= ~( DOWN | UP );	
+			touch.mState &= ~( DOWN | UP );
 			this->mActiveStack [ j++ ] = this->mActiveStack [ i ];
 		}
 	}
+	
+	if ( top != this->mTop ) {
+		printf ( "REMOVED TOUCH(ES)\n" );
+	}
+	
+	assert ( j == top );
 	
 	bool changed = true;
 	float time = ( float ) ZLDeviceTime::GetTimeInSeconds () - mTapTime;
 
 	while ( changed ) {
+	
 		changed = false;
 		top = this->mLingerTop;
 
@@ -593,4 +612,7 @@ void MOAITouchSensor::ResetState () {
 	if ( this->mTop == 0 && this->mLingerTop == 0 ) {
 		this->ClearState ();
 	}
+	
+	this->PrintStacks ();
+	
 }
