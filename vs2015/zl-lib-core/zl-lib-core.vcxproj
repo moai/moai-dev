@@ -330,6 +330,7 @@
     <ClCompile Include="..\..\src\zl-util\ZLHexAdapter.cpp" />
     <ClCompile Include="..\..\src\zl-util\ZLHexDump.cpp" />
     <ClCompile Include="..\..\src\zl-util\ZLLog.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLPolygon2D.cpp" />
     <ClCompile Include="..\..\src\zl-util\ZLRefCountedObject.cpp" />
     <ClCompile Include="..\..\src\zl-util\ZLRingAdapter.cpp" />
     <ClCompile Include="..\..\src\zl-util\ZLSample.cpp" />

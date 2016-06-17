@@ -23,6 +23,8 @@
 // modifications Copyright (c) 2014 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+#include "pch.h"
+
 SUPPRESS_EMPTY_FILE_WARNING
 
 #ifdef _WIN32
@@ -36,10 +38,6 @@ SUPPRESS_EMPTY_FILE_WARNING
 *
 * RCS ID: $Id: wsocket.c,v 1.36 2007/06/11 23:44:54 diego Exp $
 \*=========================================================================*/
-
-#include "pch.h"
-
-SUPPRESS_EMPTY_FILE_WARNING
 
 #include <string.h>
 

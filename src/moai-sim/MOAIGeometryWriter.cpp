@@ -645,7 +645,7 @@ void MOAIGeometryWriter::OffsetIndices ( ZLStream& idxStream, s32 offset ) {
 		idxStream.Write < u32 >(( u32 )( idx + offset ));
 	}
 
-	idxStream.Seek ( idxStreamBase, SEEK_SET );
+	idxStream.Seek (( long )idxStreamBase, SEEK_SET );
 }
 
 //----------------------------------------------------------------//

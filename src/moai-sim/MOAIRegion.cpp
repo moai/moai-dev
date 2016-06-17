@@ -91,7 +91,7 @@ int MOAIRegion::_convexHull ( lua_State* L ) {
 			}
 		}
 		
-		stream->Seek ( resetCursor, SEEK_SET );
+		stream->Seek (( long )resetCursor, SEEK_SET );
 	}
 	return 0;
 }

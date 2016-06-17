@@ -87,6 +87,7 @@ void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 
 //----------------------------------------------------------------//
 void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLRect& rect, u32 planeID, u32 interfaceMask, u32 queryMask ) {
+	UNUSED ( planeID );
 
 	float halfSize = this->mCellSize * 0.5f;
 
