@@ -545,7 +545,7 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	
 	size_t totalLevels = this->mLevels.Size ();
 	for ( size_t i = 0; i < totalLevels; ++i ) {
-		this->mLevels [ i ].GatherProps ( results, ignoreProp, rect, this->mPlaneID, interfaceMask, queryMask );
+		this->mLevels [ i ].GatherProps ( results, ignoreProp, rect, interfaceMask, queryMask );
 	}
 	this->mBiggies.GatherProps ( results, ignoreProp, rect, interfaceMask, queryMask );
 	this->mGlobals.GatherProps ( results, ignoreProp, interfaceMask, queryMask );
