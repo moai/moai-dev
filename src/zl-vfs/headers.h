@@ -141,4 +141,23 @@ extern int					zl_vprintf				( const char* format, va_list arg );
 	}
 #endif
 
+#ifdef  __cplusplus
+
+namespace std {
+
+	//----------------------------------------------------------------//
+	void*	zl_calloc		( std::size_t num, std::size_t size );
+	void	zl_free			( void* ptr );
+	void*	zl_malloc		( std::size_t size );
+	void*	zl_realloc		( void* ptr, std::size_t new_size );
+
+	//----------------------------------------------------------------//
+	template < class ForwardIterator, class T >
+	ForwardIterator zl_remove ( ForwardIterator first, ForwardIterator last, const T& val ) {
+		return remove ( first, last, val );
+	}
+}
+
+#endif
+
 #endif
