@@ -164,18 +164,12 @@
     <ClInclude Include="..\..\src\moai-sim\MOAIMultiTexture.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAINode.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAINodeMgr.h" />
-    <ClInclude Include="..\..\src\moai-sim\MOAIPartition.h" />
-    <ClInclude Include="..\..\src\moai-sim\MOAIPartitionCell.h" />
-    <ClInclude Include="..\..\src\moai-sim\MOAIPartitionLevel.h" />
-    <ClInclude Include="..\..\src\moai-sim\MOAIPartitionResultBuffer.h" />
-    <ClInclude Include="..\..\src\moai-sim\MOAIPartitionResultMgr.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIPath.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIPathFinder.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIPathGraph.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIPathStepper.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIPathTerrainDeck.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIPinTransform.h" />
-    <ClInclude Include="..\..\src\moai-sim\MOAIProp.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIQuadBrush.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIRegion.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIRenderable.h" />
@@ -488,6 +482,24 @@
     <ClInclude Include="..\..\src\moai-sim\MOAITextStyleParser.h">
       <Filter>text</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\moai-sim\MOAIPartition.h">
+      <Filter>partition</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moai-sim\MOAIPartitionCell.h">
+      <Filter>partition</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moai-sim\MOAIPartitionLevel.h">
+      <Filter>partition</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moai-sim\MOAIPartitionResultBuffer.h">
+      <Filter>partition</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moai-sim\MOAIPartitionResultMgr.h">
+      <Filter>partition</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moai-sim\MOAIProp.h">
+      <Filter>partition</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\moai-sim\MOAIVertexArray.cpp" />
@@ -519,18 +531,12 @@
     <ClCompile Include="..\..\src\moai-sim\MOAIMultiTexture.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAINode.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAINodeMgr.cpp" />
-    <ClCompile Include="..\..\src\moai-sim\MOAIPartition.cpp" />
-    <ClCompile Include="..\..\src\moai-sim\MOAIPartitionCell.cpp" />
-    <ClCompile Include="..\..\src\moai-sim\MOAIPartitionLevel.cpp" />
-    <ClCompile Include="..\..\src\moai-sim\MOAIPartitionResultBuffer.cpp" />
-    <ClCompile Include="..\..\src\moai-sim\MOAIPartitionResultMgr.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIPath.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIPathFinder.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIPathGraph.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIPathStepper.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIPathTerrainDeck.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIPinTransform.cpp" />
-    <ClCompile Include="..\..\src\moai-sim\MOAIProp.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIQuadBrush.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIRegion.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIRenderable.cpp" />
@@ -840,6 +846,24 @@
     </ClCompile>
     <ClCompile Include="..\..\src\moai-sim\MOAITextStyleParser.cpp">
       <Filter>text</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moai-sim\MOAIPartition.cpp">
+      <Filter>partition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moai-sim\MOAIPartitionCell.cpp">
+      <Filter>partition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moai-sim\MOAIPartitionLevel.cpp">
+      <Filter>partition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moai-sim\MOAIPartitionResultBuffer.cpp">
+      <Filter>partition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moai-sim\MOAIPartitionResultMgr.cpp">
+      <Filter>partition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moai-sim\MOAIProp.cpp">
+      <Filter>partition</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

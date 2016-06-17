@@ -508,21 +508,6 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 }
 
 //----------------------------------------------------------------//
-u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask, u32 queryMask ) {
-	
-	results.Reset ();
-	
-	size_t totalLevels = this->mLevels.Size ();
-	for ( size_t i = 0; i < totalLevels; ++i ) {
-		this->mLevels [ i ].GatherProps ( results, ignoreProp, point, orientation, interfaceMask, queryMask );
-	}
-	this->mBiggies.GatherProps ( results, ignoreProp, point, orientation, interfaceMask, queryMask );
-	this->mGlobals.GatherProps ( results, ignoreProp, point, orientation, interfaceMask, queryMask );
-	
-	return results.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
-}
-
-//----------------------------------------------------------------//
 u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLVec3D& point, u32 interfaceMask, u32 queryMask ) {
 	
 	results.Reset ();
@@ -533,6 +518,21 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	}
 	this->mBiggies.GatherProps ( results, ignoreProp, point, interfaceMask, queryMask );
 	this->mGlobals.GatherProps ( results, ignoreProp, interfaceMask, queryMask );
+	
+	return results.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
+}
+
+//----------------------------------------------------------------//
+u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask, u32 queryMask ) {
+	
+	results.Reset ();
+	
+	size_t totalLevels = this->mLevels.Size ();
+	for ( size_t i = 0; i < totalLevels; ++i ) {
+		this->mLevels [ i ].GatherProps ( results, ignoreProp, point, orientation, interfaceMask, queryMask );
+	}
+	this->mBiggies.GatherProps ( results, ignoreProp, point, orientation, interfaceMask, queryMask );
+	this->mGlobals.GatherProps ( results, ignoreProp, point, orientation, interfaceMask, queryMask );
 	
 	return results.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
 }
