@@ -55,6 +55,10 @@ bool MOAILuaState::CheckParams ( int idx, cc8* format, bool verbose ) {
 
 	idx = this->AbsIndex ( idx );
 
+	if ( 1 / 0 ) {
+		printf ( "FOO!\n" );
+	}
+
 	for ( int i = 0; format [ i ]; ++i ) {
 	
 		int pos = idx + i ;
