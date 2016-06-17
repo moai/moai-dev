@@ -13,7 +13,7 @@ protected:
 
 	typedef void ( TYPE::*SelectorType )();
 
-	SelectorType	mSelector;
+	SelectorType	mSelector; // NOTE: this member *must* be first in the class (vs2015)
 	TYPE*			mTarget;
 	
 public:
