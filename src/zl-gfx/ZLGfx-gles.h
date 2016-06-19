@@ -78,12 +78,16 @@
 #endif
 
 #ifdef MOAI_OS_HTML
+  #define GL_GLEXT_PROTOTYPES 1
 	#include <GLES/gl.h>
 	#include <GLES/glext.h>
 	#include <GLES2/gl2.h>
 	#include <GLES2/gl2ext.h>
 	#define MOAI_OS_NACL 1
 	#define GL_RGBA8 GL_RGBA8_OES
+	#define glBindVertexArray glBindVertexArrayOES
+  #define glGenVertexArrays glGenVertexArraysOES
+  #define glDeleteVertexArrays glDeleteVertexArraysOES
 #endif
 
 #ifdef MOAI_OS_BLACKBERRY

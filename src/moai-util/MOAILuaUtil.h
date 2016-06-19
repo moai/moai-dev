@@ -3,7 +3,7 @@
 #ifndef	MOAILUAUTIL_H
 #define	MOAILUAUTIL_H
 
-#ifndef MOAI_WITH_LUAJIT //can't convert luajit bytecode
+
 
 //================================================================//
 // MOAILuaHeader
@@ -69,5 +69,5 @@ public:
 };
 
 #endif
-#endif
+
 

@@ -5,7 +5,7 @@
 
 SUPPRESS_EMPTY_FILE_WARNING
 
-#ifndef MOAI_WITH_LUAJIT
+
 
 #include <lundump.h>
 
@@ -356,4 +356,3 @@ void MOAILuaUtil::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
-#endif 
