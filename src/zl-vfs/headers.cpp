@@ -931,31 +931,3 @@ int zl_vprintf ( const char* format, va_list arg ) {
 
 	return zl_vfprintf ( zl_stdout, format, arg );
 }
-
-//================================================================//
-// srd
-//================================================================//
-
-//----------------------------------------------------------------//
-void* std::zl_calloc ( std::size_t num, std::size_t size ) {
-
-	return zl_calloc (( size_t )num, ( size_t )size );
-}
-
-//----------------------------------------------------------------//
-void std::zl_free ( void* ptr ) {
-
-	zl_free ( ptr );
-}
-
-//----------------------------------------------------------------//
-void* std::zl_malloc ( std::size_t size ) {
-
-	return zl_malloc (( size_t )size );
-}
-
-//----------------------------------------------------------------//
-void* std::zl_realloc ( void* ptr, std::size_t new_size ) {
-
-	return zl_realloc ( ptr, ( size_t )new_size );
-}
