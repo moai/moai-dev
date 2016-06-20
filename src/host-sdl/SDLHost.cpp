@@ -630,7 +630,7 @@ void MainLoop () {
 		if ( delta < frameDelta ) {
 			SDL_Delay ( frameDelta - delta );
 		}
-		lastFrame = SDL_GetTicks();
+		lastFrame = SDL_GetTicks ();
 	}
 	
 	#if GFX_ASYNC
@@ -639,6 +639,7 @@ void MainLoop () {
 		renderThread.Stop ();
 	#else
 	
+		AKUDeleteContext ( AKUGetContext ());
 		SDL_GL_DeleteContext ( context );
 	#endif
 }
