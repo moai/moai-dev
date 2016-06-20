@@ -426,7 +426,7 @@ u32 MOAIAssimpMesh::ReadVertices ( const MOAIVertexFormat& format, ZLStream& str
 				format.WriteColor ( stream, color.r, color.g, color.b, color.a );
 			}
 			else {
-				format.WriteColor ( stream, 0xff0000ff );
+				format.WriteColor ( stream, 0xffffffff );
 			}
 
 			if ( mesh->HasTextureCoords ( 0 )) {

@@ -308,7 +308,7 @@ MOAIAssimpScene::~MOAIAssimpScene () {
 //----------------------------------------------------------------//
 void MOAIAssimpScene::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "CONVERT_TO_LEFT_SPACE",			( u32 )aiProcess_ConvertToLeftHanded );
+	state.SetField ( -1, "CONVERT_TO_LEFT_HANDED",			( u32 )aiProcess_ConvertToLeftHanded );
 	state.SetField ( -1, "TARGET_REALTIME_FAST",			( u32 )aiProcessPreset_TargetRealtime_Fast );
 	state.SetField ( -1, "TARGET_REALTIME_QUALITY",			( u32 )aiProcessPreset_TargetRealtime_MaxQuality );
 	state.SetField ( -1, "TARGET_REALTIME_MAX_QUALITY",		( u32 )aiProcessPreset_TargetRealtime_Quality );
