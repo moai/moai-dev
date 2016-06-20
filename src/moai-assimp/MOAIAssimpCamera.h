@@ -20,14 +20,14 @@ class MOAIAssimpCamera :
 	public virtual MOAILuaObject {
 private:
 
-	aiCamera*		mAssimpCamera;
+	aiCamera*		mAssimpCamera; // TODO: danger here; need to keep track of these in the scene and invalidate them
 	MOAICamera*		mMoaiCamera;
 	unsigned int	mIndex;
 	STLString		mName;
 	aiVector3D		mScaling;
 	aiVector3D		mPosition;
 	aiQuaternion	mRotation;
-	aiNode*			mNode;
+	aiNode*			mNode; // TODO: isn't this the same as the camera?
 	
 	//----------------------------------------------------------------//
 	static int		_getAspect					( lua_State* L );

@@ -207,6 +207,59 @@
     <ClInclude Include="..\..\3rdparty\assimp\code\XFileParser.h" />
     <ClInclude Include="..\..\3rdparty\assimp\code\XGLLoader.h" />
     <ClInclude Include="..\..\3rdparty\assimp\code\XMLTools.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\clipper\clipper.hpp" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\ConvertUTF\ConvertUTF.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\irrXML\CXMLReaderImpl.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\irrXML\heapsort.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\irrXML\irrArray.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\irrXML\irrString.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\irrXML\irrTypes.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\irrXML\irrXML.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\openddlparser\include\openddlparser\DDLNode.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\openddlparser\include\openddlparser\OpenDDLCommon.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\openddlparser\include\openddlparser\OpenDDLExport.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\openddlparser\include\openddlparser\OpenDDLParser.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\openddlparser\include\openddlparser\OpenDDLParserUtils.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\openddlparser\include\openddlparser\Value.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\poly2tri\poly2tri\common\shapes.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\poly2tri\poly2tri\common\utils.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\poly2tri\poly2tri\poly2tri.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\poly2tri\poly2tri\sweep\advancing_front.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\poly2tri\poly2tri\sweep\cdt.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\poly2tri\poly2tri\sweep\sweep.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\poly2tri\poly2tri\sweep\sweep_context.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\allocators.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\document.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\encodedstream.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\encodings.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\error\en.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\error\error.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\filereadstream.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\filewritestream.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\internal\biginteger.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\internal\diyfp.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\internal\dtoa.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\internal\ieee754.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\internal\itoa.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\internal\meta.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\internal\pow10.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\internal\stack.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\internal\strfunc.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\internal\strtod.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\internal\swap.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\memorybuffer.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\memorystream.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\msinttypes\inttypes.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\msinttypes\stdint.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\pointer.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\prettywriter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\rapidjson.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\reader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\stringbuffer.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\writer.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\unzip\crypt.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\unzip\ioapi.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\unzip\unzip.h" />
     <ClInclude Include="..\..\3rdparty\assimp\include\assimp\ai_assert.h" />
     <ClInclude Include="..\..\3rdparty\assimp\include\assimp\anim.h" />
     <ClInclude Include="..\..\3rdparty\assimp\include\assimp\camera.h" />
@@ -414,6 +467,21 @@
     <ClCompile Include="..\..\3rdparty\assimp\code\XFileImporter.cpp" />
     <ClCompile Include="..\..\3rdparty\assimp\code\XFileParser.cpp" />
     <ClCompile Include="..\..\3rdparty\assimp\code\XGLLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\clipper\clipper.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\ConvertUTF\ConvertUTF.c" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\irrXML\irrXML.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\openddlparser\code\DDLNode.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\openddlparser\code\OpenDDLCommon.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\openddlparser\code\OpenDDLExport.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\openddlparser\code\OpenDDLParser.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\openddlparser\code\Value.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\poly2tri\poly2tri\common\shapes.cc" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\poly2tri\poly2tri\sweep\advancing_front.cc" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\poly2tri\poly2tri\sweep\cdt.cc" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\poly2tri\poly2tri\sweep\sweep.cc" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\poly2tri\poly2tri\sweep\sweep_context.cc" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\unzip\ioapi.c" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\unzip\unzip.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{EEB0E2FC-4B26-49D4-98C6-0BF34C44AC2E}</ProjectGuid>
@@ -483,15 +551,13 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\assimp;..\..\3rdparty\assimp\include;..\..\3rdparty\assimp\contrib\rapidjson\include;..\..\3rdparty\zlib-1.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;ASSIMP_BUILD_NO_C4D_IMPORTER;ASSIMP_BUILD_NO_OPENGEX_EXPORTER;ASSIMP_BUILD_NO_OPENGEX_IMPORTER;ASSIMP_BUILD_NO_OWN_ZLIB;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\assimp;..\..\3rdparty\assimp\include;..\..\3rdparty\assimp\contrib\openddlparser\include;..\..\3rdparty\assimp\contrib\rapidjson\include;..\..\3rdparty\zlib-1.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;OPENDDL_STATIC_LIBARY;ASSIMP_BUILD_NO_C4D_IMPORTER;ASSIMP_BUILD_NO_OPENGEX_EXPORTER;ASSIMP_BUILD_NO_OPENGEX_IMPORTER;ASSIMP_BUILD_NO_OWN_ZLIB;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <CompileAs>CompileAsCpp</CompileAs>
-      <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <ForcedUsingFiles>%(ForcedUsingFiles)</ForcedUsingFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -511,16 +577,14 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\assimp;..\..\3rdparty\assimp\include;..\..\3rdparty\assimp\contrib\rapidjson\include;..\..\3rdparty\zlib-1.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;ASSIMP_BUILD_NO_C4D_IMPORTER;ASSIMP_BUILD_NO_OPENGEX_EXPORTER;ASSIMP_BUILD_NO_OPENGEX_IMPORTER;ASSIMP_BUILD_NO_OWN_ZLIB;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\assimp;..\..\3rdparty\assimp\include;..\..\3rdparty\assimp\contrib\openddlparser\include;..\..\3rdparty\assimp\contrib\rapidjson\include;..\..\3rdparty\zlib-1.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;OPENDDL_STATIC_LIBARY;ASSIMP_BUILD_NO_C4D_IMPORTER;ASSIMP_BUILD_NO_OPENGEX_EXPORTER;ASSIMP_BUILD_NO_OPENGEX_IMPORTER;ASSIMP_BUILD_NO_OWN_ZLIB;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
       <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <CompileAs>CompileAsCpp</CompileAs>
-      <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <DisableSpecificWarnings>4267 </DisableSpecificWarnings>
@@ -535,15 +599,13 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\assimp;..\..\3rdparty\assimp\include;..\..\3rdparty\assimp\contrib\rapidjson\include;..\..\3rdparty\zlib-1.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;ASSIMP_BUILD_NO_C4D_IMPORTER;ASSIMP_BUILD_NO_OPENGEX_EXPORTER;ASSIMP_BUILD_NO_OPENGEX_IMPORTER;ASSIMP_BUILD_NO_OWN_ZLIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\assimp;..\..\3rdparty\assimp\include;..\..\3rdparty\assimp\contrib\openddlparser\include;..\..\3rdparty\assimp\contrib\rapidjson\include;..\..\3rdparty\zlib-1.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;OPENDDL_STATIC_LIBARY;ASSIMP_BUILD_NO_C4D_IMPORTER;ASSIMP_BUILD_NO_OPENGEX_EXPORTER;ASSIMP_BUILD_NO_OPENGEX_IMPORTER;ASSIMP_BUILD_NO_OWN_ZLIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <DebugInformationFormat>
       </DebugInformationFormat>
-      <CompileAs>CompileAsCpp</CompileAs>
-      <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <ForcedUsingFiles>%(ForcedUsingFiles)</ForcedUsingFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -566,15 +628,13 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\assimp;..\..\3rdparty\assimp\include;..\..\3rdparty\assimp\contrib\rapidjson\include;..\..\3rdparty\zlib-1.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;ASSIMP_BUILD_NO_C4D_IMPORTER;ASSIMP_BUILD_NO_OPENGEX_EXPORTER;ASSIMP_BUILD_NO_OPENGEX_IMPORTER;ASSIMP_BUILD_NO_OWN_ZLIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\assimp;..\..\3rdparty\assimp\include;..\..\3rdparty\assimp\contrib\openddlparser\include;..\..\3rdparty\assimp\contrib\rapidjson\include;..\..\3rdparty\zlib-1.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;OPENDDL_STATIC_LIBARY;ASSIMP_BUILD_NO_C4D_IMPORTER;ASSIMP_BUILD_NO_OPENGEX_EXPORTER;ASSIMP_BUILD_NO_OPENGEX_IMPORTER;ASSIMP_BUILD_NO_OWN_ZLIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
       <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <CompileAs>CompileAsCpp</CompileAs>
-      <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <DisableSpecificWarnings>4267 </DisableSpecificWarnings>

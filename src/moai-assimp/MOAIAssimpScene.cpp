@@ -151,7 +151,6 @@ int MOAIAssimpScene::_getCameras ( lua_State* L ) {
 		}
 		return 1;
 	}
-
 	return 0;
 }
 

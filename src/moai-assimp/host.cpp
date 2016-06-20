@@ -4,27 +4,16 @@
 #include "pch.h"
 #include <moai-assimp/host.h>
 #include <moai-assimp/headers.h>
-#include <moai-assimp/MOAIAssimpMesh.h>
 #include <moai-assimp/MOAIAssimpCamera.h>
+#include <moai-assimp/MOAIAssimpMesh.h>
+#include <moai-assimp/MOAIAssimpScene.h>
 
 //================================================================//
-// AKUBulletPhysics
+// AKUAssimp
 //================================================================//
-
-//----------------------------------------------------------------//
-void AKUAssimpAppFinalize () {
-}
-
-//----------------------------------------------------------------//
-void AKUAssimpAppInitialize () {
-}
 
 //----------------------------------------------------------------//
 void AKUAssimpContextInitialize () {
-
-//    REGISTER_LUA_CLASS ( MOAIImporterFactory )
-//    REGISTER_LUA_CLASS ( MOAIImporterSingleton )
-
 
     REGISTER_LUA_CLASS ( MOAIAssimpScene  )
     REGISTER_LUA_CLASS ( MOAIAssimpMesh   )
