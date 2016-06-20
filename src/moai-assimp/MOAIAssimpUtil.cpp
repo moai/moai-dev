@@ -39,7 +39,7 @@ void MOAIAssimpUtil::PushColorVector ( lua_State* L  , aiColor4D colorVector ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAssimpUtil::PushFace( lua_State* L , const aiMesh* currentMesh ) {
+void MOAIAssimpUtil::PushFace ( lua_State* L , const aiMesh* currentMesh ) {
 
 	lua_newtable ( L );
 	for( int i = 0 ; i < ( int )currentMesh->mNumFaces ; i++ ) {
@@ -50,19 +50,19 @@ void MOAIAssimpUtil::PushFace( lua_State* L , const aiMesh* currentMesh ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAssimpUtil::PushMesh( lua_State* L , const aiMesh* currentMesh ) {
+void MOAIAssimpUtil::PushMesh ( lua_State* L , const aiMesh* currentMesh ) {
 
 	MOAIAssimpUtil::PushVectorArray ( L, currentMesh->mVertices, currentMesh->mNumVertices, false );
 }
 
 //----------------------------------------------------------------//
-void MOAIAssimpUtil::PushNormalsArray( lua_State* L , const aiMesh* currentMesh ) {
+void MOAIAssimpUtil::PushNormalsArray ( lua_State* L , const aiMesh* currentMesh ) {
 
 	MOAIAssimpUtil::PushVectorArray ( L, currentMesh->mNormals, currentMesh->mNumVertices, true );
 }
 
 //----------------------------------------------------------------//
-void MOAIAssimpUtil::PushTangentsArray( lua_State* L , const aiMesh* currentMesh ) {
+void MOAIAssimpUtil::PushTangentsArray ( lua_State* L , const aiMesh* currentMesh ) {
 
 	MOAIAssimpUtil::PushVectorArray ( L, currentMesh->mTangents, currentMesh->mNumVertices, true );
 }

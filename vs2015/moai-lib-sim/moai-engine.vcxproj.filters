@@ -609,12 +609,6 @@
     <ClInclude Include="..\..\src\moai-sim\MOAIMaterialBatch.h">
       <Filter>gfx</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\moai-sim\MOAIVertexFormat.h">
-      <Filter>gfx</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moai-sim\MOAIVertexFormatMgr.h">
-      <Filter>gfx</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\moai-sim\MOAISurfaceSampler2D.h">
       <Filter>collision</Filter>
     </ClInclude>
@@ -623,6 +617,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moai-sim\MOAIProp.h">
       <Filter>partition</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moai-sim\MOAIVertexFormatMgr.h">
+      <Filter>mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moai-sim\MOAIVertexFormat.h">
+      <Filter>mesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1090,12 +1090,6 @@
     <ClCompile Include="..\..\src\moai-sim\MOAIMaterialBatch.cpp">
       <Filter>gfx</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moai-sim\MOAIVertexFormat.cpp">
-      <Filter>gfx</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moai-sim\MOAIVertexFormatMgr.cpp">
-      <Filter>gfx</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\moai-sim\MOAISurfaceSampler2D.cpp">
       <Filter>collision</Filter>
     </ClCompile>
@@ -1104,6 +1098,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\moai-sim\MOAIProp.cpp">
       <Filter>partition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moai-sim\MOAIVertexFormatMgr.cpp">
+      <Filter>mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moai-sim\MOAIVertexFormat.cpp">
+      <Filter>mesh</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

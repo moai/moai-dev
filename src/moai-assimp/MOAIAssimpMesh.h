@@ -21,22 +21,25 @@ private:
 	STLString			mName;
 	uint				mIndex;
 
+	//----------------------------------------------------------------//
+	static int			_countBones					( lua_State* L );
+	static int			_countFaces					( lua_State* L );
 	static int			_countColorChannels			( lua_State* L );
 	static int			_countUVChannels			( lua_State* L );
-	static int			_countVertices				( lua_State* L );
 	static int			_countUVs					( lua_State* L );
-	static int			_countFaces					( lua_State* L );
-	static int			_countBones					( lua_State* L );
-	static int			_getName					( lua_State* L );
-	static int			_getPrimitiveType			( lua_State* L );
-	static int			_getMeshData				( lua_State* L );
-	static int			_getFacesData				( lua_State* L );
-	static int			_getUVData					( lua_State* L );
-	static int			_getNormalsData				( lua_State* L );
-	static int			_getVertexColorData			( lua_State* L );
-	static int			_getTangentsData			( lua_State* L );
+	static int			_countVertices				( lua_State* L );
 	static int			_getBitangentsData			( lua_State* L );
+	static int			_getFacesData				( lua_State* L );
+	static int			_getIndices					( lua_State* L );
 	static int			_getMaterialIndex			( lua_State* L );
+	static int			_getName					( lua_State* L );
+	static int			_getNormalsData				( lua_State* L );
+	static int			_getPrimitiveType			( lua_State* L );
+	static int			_getTangentsData			( lua_State* L );
+	static int			_getUVData					( lua_State* L );
+	static int			_getVertexColorData			( lua_State* L );
+	static int			_getVertexData				( lua_State* L );
+	static int			_getVertices				( lua_State* L );
 
 public:
 
@@ -49,6 +52,8 @@ public:
 	//----------------------------------------------------------------//
 					MOAIAssimpMesh				();
 					~MOAIAssimpMesh				();
+	u32				ReadIndices					( ZLStream& stream, u32 indexSize );
+	u32				ReadVertices				( const MOAIVertexFormat& format, ZLStream& stream );
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
 };

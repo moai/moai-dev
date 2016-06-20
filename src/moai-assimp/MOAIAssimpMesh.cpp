@@ -104,6 +104,46 @@ int MOAIAssimpMesh::_getFacesData ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAssimpMesh::_getIndices ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
+
+	const aiMesh* mesh = self->mMesh;
+	if ( !( mesh && ( mesh->mPrimitiveTypes == aiPrimitiveType_TRIANGLE ))) return 0;
+
+	u32 nIndices = mesh->mNumFaces * 3;
+
+	if ( nIndices ) {
+	
+		u32 indexSize = state.GetValue < u32 >( 3, 4 );
+
+		ZLStream* stream;
+
+		MOAIIndexBuffer* idxBuffer = state.GetLuaObject < MOAIIndexBuffer >( 2, false );
+
+		if ( idxBuffer ) {
+
+			idxBuffer->SetIndexSize ( indexSize );
+			idxBuffer->Reserve ( nIndices * indexSize );
+			idxBuffer->Seek ( 0, SEEK_SET );
+			stream = idxBuffer;
+		}
+		else {
+		
+			stream = state.GetLuaObject < MOAIStream >( 2, false );
+		}
+	
+		if ( stream ) {
+
+			self->ReadIndices ( *stream, indexSize );
+		}
+	}
+	
+	state.Push ( nIndices );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getMaterialIndex
 	@text	Returns a mesh's index to a scene material table
 
@@ -115,23 +155,6 @@ int MOAIAssimpMesh::_getMaterialIndex ( lua_State *L ) {
 
 	if (( self->mMesh != NULL )) {
 		lua_pushinteger ( state , self->mMesh->mMaterialIndex );
-		return 1;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	getMeshData
-	@text	Returns a table that contains position vertices
-
-	@in		MOAIImportFactory self
-	@out	a Table that contain position vertices
-*/
-int MOAIAssimpMesh::_getMeshData ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
-
-	if ( self->mMesh != NULL && self->mMesh->HasPositions ()) {
-		MOAIAssimpUtil::PushMesh ( state, self->mMesh );
 		return 1;
 	}
 	return 0;
@@ -185,10 +208,11 @@ int MOAIAssimpMesh::_getNormalsData ( lua_State* L ) {
 int MOAIAssimpMesh::_getPrimitiveType ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 
-	unsigned int primitiveTyoe = self->mMesh->mPrimitiveTypes;
+	unsigned int primitiveType = self->mMesh->mPrimitiveTypes;
 
+	// TODO: mesh can contain multiple primitive types; see assimp docs
 	if ( self->mMesh != NULL ) {
-		switch( primitiveTyoe) {
+		switch ( primitiveType ) {
 			case aiPrimitiveType_POINT:
 				lua_pushinteger ( state, ( u32 )ZGL_PRIM_POINTS );
 				break;
@@ -264,6 +288,66 @@ int MOAIAssimpMesh::_getVertexColorData ( lua_State *L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	getVertexData
+	@text	Returns a table that contains position vertices
+
+	@in		MOAIImportFactory self
+	@out	a Table that contain position vertices
+*/
+int MOAIAssimpMesh::_getVertexData ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
+
+	if ( self->mMesh != NULL && self->mMesh->HasPositions ()) {
+		MOAIAssimpUtil::PushMesh ( state, self->mMesh );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAssimpMesh::_getVertices ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
+
+	const aiMesh* mesh = self->mMesh;
+	if ( !mesh ) return 0;
+
+	u32 nVertices = self->mMesh->HasPositions () ? ( u32 )mesh->mNumVertices : 0;
+
+	if ( nVertices ) {
+	
+		MOAIVertexFormat* format = state.GetLuaObject < MOAIVertexFormat >( -1, true );
+		if ( !format ) return 0;
+
+		u32 vertexSize = format->GetVertexSize ();
+		u32 bufferSize = vertexSize * nVertices;
+
+		ZLStream* stream;
+
+		MOAIVertexBuffer* vtxBuffer = state.GetLuaObject < MOAIVertexBuffer >( 2, false );
+
+		if ( vtxBuffer ) {
+		
+			vtxBuffer->Reserve ( bufferSize );
+			vtxBuffer->Seek ( 0, SEEK_SET );
+			stream = vtxBuffer;
+		}
+		else {
+		
+			stream = state.GetLuaObject < MOAIStream >( 2, false );
+		}
+	
+		if ( stream ) {
+
+			self->ReadVertices ( *format, *stream );
+		}
+	}
+	
+	state.Push ( nVertices );
+	return 1;
+}
+
 //================================================================//
 // MOAIAssimpMesh
 //================================================================//
@@ -280,6 +364,81 @@ MOAIAssimpMesh::MOAIAssimpMesh () :
 
 //----------------------------------------------------------------//
 MOAIAssimpMesh::~MOAIAssimpMesh () {
+}
+
+//----------------------------------------------------------------//
+u32 MOAIAssimpMesh::ReadIndices ( ZLStream& stream, u32 indexSize ) {
+
+	const aiMesh* mesh = this->mMesh;
+	if ( !( mesh && ( mesh->mPrimitiveTypes == aiPrimitiveType_TRIANGLE ))) return 0;
+
+	u32 nIndices = mesh->mNumFaces * 3;
+
+	if ( nIndices > 0 ) {
+
+		size_t base = stream.GetCursor ();
+
+		for ( u32 i = 0; i < mesh->mNumFaces; ++i ) {
+				
+			aiFace& face = mesh->mFaces [ i ];
+			assert ( face.mNumIndices == 3 );
+
+			for ( u32 j = 0; j < 3; ++j ) {
+			
+				u32 index = ( u32 )face.mIndices [ j ];
+
+				if ( indexSize == 4 ) {
+					stream.Write < u32 >( index );
+				}
+				else {
+					stream.Write < u16 >(( u16 )index );
+				}
+			}
+		}
+
+		//stream.SetCursor ( base );
+	}
+
+	return nIndices;
+}
+
+//----------------------------------------------------------------//
+u32 MOAIAssimpMesh::ReadVertices ( const MOAIVertexFormat& format, ZLStream& stream ) {
+
+	const aiMesh* mesh = this->mMesh;
+	if ( !mesh ) return 0;
+
+	u32 nVerts = ( u32 )mesh->mNumVertices;
+
+	if ( nVerts > 0 ) {
+
+		size_t base = stream.GetCursor ();
+
+		for ( u32 i = 0; i < nVerts; ++i ) {
+				
+			format.SeekVertex ( stream, base, i );
+
+			aiVector3D vertex = mesh->mVertices [ i ];
+			format.WriteCoord ( stream, vertex.x, vertex.y, vertex.z, 1.0f );
+
+			if ( mesh->HasVertexColors ( 0 )) {
+				aiColor4D color = mesh->mColors [ 0 ][ i ];
+				format.WriteColor ( stream, color.r, color.g, color.b, color.a );
+			}
+			else {
+				format.WriteColor ( stream, 0xff0000ff );
+			}
+
+			if ( mesh->HasTextureCoords ( 0 )) {
+				aiVector3D uvw = mesh->mTextureCoords [ 0 ][ i ];
+				format.WriteUV ( stream, uvw.x, uvw.y, uvw.z );
+			}
+		}
+
+		//stream.SetCursor ( base );
+	}
+
+	return nVerts;
 }
 
 //----------------------------------------------------------------//
@@ -304,14 +463,16 @@ void MOAIAssimpMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getNumVertices",				_countVertices },
 		{ "getBitangentsData",			_getBitangentsData },
 		{ "getFacesData",				_getFacesData },
+		{ "getIndices",					_getIndices },
 		{ "getMaterialIndex",			_getMaterialIndex },
-		{ "getMeshData",				_getMeshData },
 		{ "getName",					_getName },
 		{ "getNormalsData",				_getNormalsData },
 		{ "getPrimitiveType",			_getPrimitiveType },
 		{ "getTangentsData",			_getTangentsData },
 		{ "getUVData",					_getUVData },
 		{ "getVertexColorData",			_getVertexColorData },
+		{ "getVertexData",				_getVertexData },
+		{ "getVertices",				_getVertices },
 		{ NULL, NULL }
 	};
 
