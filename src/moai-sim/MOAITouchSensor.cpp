@@ -263,13 +263,6 @@ int MOAITouchSensor::_up ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAITouchSensor::EnqueueTouchEvent ( u8 deviceID, u8 sensorID, u32 touchID, bool down, float x, float y ) {
 
-	if ( down ) {
-		printf ( "ENQUEUE TOUCH DOWN: %x\n", touchID );
-	}
-	else {
-		printf ( "ENQUEUE TOUCH: %x\n", touchID );
-	}
-
 	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
 	if ( inputMgr.WriteEventHeader < MOAITouchSensor >( deviceID, sensorID )) {
 	
@@ -420,10 +413,6 @@ void MOAITouchSensor::ParseEvent ( ZLStream& eventStream ) {
 		// see if there's already a record for this touch event
 		u32 idx = this->FindTouch ( touch.mTouchID );
 		
-		if ( idx != UNKNOWN_TOUCH ) {
-			printf ( "FOUND TOUCH: %x->%d\n", touch.mTouchID, idx );
-		}
-		
 		if ( eventType == TOUCH_DOWN ) { // TOUCH_DOWN or TOUCH_MOVE
 			
 			// if it's a new touch, this is really a TOUCH_DOWN
@@ -459,7 +448,7 @@ void MOAITouchSensor::ParseEvent ( ZLStream& eventStream ) {
 		}
 		else if ( idx != UNKNOWN_TOUCH ) {
 			
-			printf ( "TOUCH UP: %d\n", idx );
+			printf ( "TOUCH UP: %x->%d\n", touch.mTouchID, idx );
 			
 			// we know about the touch and it's not a TOUCH_DOWN, so it must be a TOUCH_UP
 			
