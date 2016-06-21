@@ -411,7 +411,7 @@ void MOAITouchSensor::ParseEvent ( ZLStream& eventStream ) {
 		// see if there's already a record for this touch event
 		u32 idx = this->FindTouch ( touch.mTouchID );
 		
-		printf ( "FOUND TOUCH: %d\n", idx );
+		printf ( "FOUND TOUCH: %d->%d\n", idx, touch.mTouchID );
 		
 		if ( eventType == TOUCH_DOWN ) { // TOUCH_DOWN or TOUCH_MOVE
 			
@@ -423,7 +423,10 @@ void MOAITouchSensor::ParseEvent ( ZLStream& eventStream ) {
 				// if we're maxed out on touches, this touch will be ignored until something
 				// frees up. after that it will be counted as a TOUCH_DOWN
 				idx = this->AddTouch ();
-				if ( idx == UNKNOWN_TOUCH ) return;
+				if ( idx == UNKNOWN_TOUCH ) {
+					printf ( "COUND NOT ADD TOUCH\n" );
+					return;
+				}
 				
 				// see if we touched down in a linger
 				touch.mTapCount = CheckLingerList ( touch.mX, touch.mY, touch.mTime ) + 1;
@@ -514,7 +517,8 @@ void MOAITouchSensor::PrintStacks () {
 		}
 		
 		if ( this->mActiveStack [ i ] < MAX_TOUCHES ) {
-			stacks.write ( "%d", ( int )this->mActiveStack [ i ]);
+			int touch = ( int )this->mActiveStack [ i ];
+			stacks.write ( "%d(%d)", touch, this->mTouches [ touch ].mTouchID );
 		}
 		else {
 			stacks.write ( "-" );
