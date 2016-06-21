@@ -2910,6 +2910,19 @@
 		CD78109A187CAA2D008B9C0A /* MOAITextStyleMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD781093187CAA2D008B9C0A /* MOAITextStyleMap.cpp */; };
 		CD78109B187CAA2D008B9C0A /* MOAITextStyleMap.h in Headers */ = {isa = PBXBuildFile; fileRef = CD781094187CAA2D008B9C0A /* MOAITextStyleMap.h */; };
 		CD78109C187CAA2D008B9C0A /* MOAITextStyleMap.h in Headers */ = {isa = PBXBuildFile; fileRef = CD781094187CAA2D008B9C0A /* MOAITextStyleMap.h */; };
+		CD7852DF1D18C79A003F15D0 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7852D21D18C79A003F15D0 /* headers.h */; };
+		CD7852E01D18C79A003F15D0 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7852D31D18C79A003F15D0 /* host.cpp */; };
+		CD7852E11D18C79A003F15D0 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7852D41D18C79A003F15D0 /* host.h */; };
+		CD7852E21D18C79A003F15D0 /* MOAIAssimpCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7852D51D18C79A003F15D0 /* MOAIAssimpCamera.cpp */; };
+		CD7852E31D18C79A003F15D0 /* MOAIAssimpCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7852D61D18C79A003F15D0 /* MOAIAssimpCamera.h */; };
+		CD7852E41D18C79A003F15D0 /* MOAIAssimpMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7852D71D18C79A003F15D0 /* MOAIAssimpMesh.cpp */; };
+		CD7852E51D18C79A003F15D0 /* MOAIAssimpMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7852D81D18C79A003F15D0 /* MOAIAssimpMesh.h */; };
+		CD7852E61D18C79A003F15D0 /* MOAIAssimpScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7852D91D18C79A003F15D0 /* MOAIAssimpScene.cpp */; };
+		CD7852E71D18C79A003F15D0 /* MOAIAssimpScene.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7852DA1D18C79A003F15D0 /* MOAIAssimpScene.h */; };
+		CD7852E81D18C79A003F15D0 /* MOAIAssimpUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7852DB1D18C79A003F15D0 /* MOAIAssimpUtil.cpp */; };
+		CD7852E91D18C79A003F15D0 /* MOAIAssimpUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7852DC1D18C79A003F15D0 /* MOAIAssimpUtil.h */; };
+		CD7852EA1D18C79A003F15D0 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7852DD1D18C79A003F15D0 /* pch.cpp */; };
+		CD7852EB1D18C79A003F15D0 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7852DE1D18C79A003F15D0 /* pch.h */; };
 		CD8078A01831C3B500E658D9 /* SFMT-params11213.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF71731BB90009E233E /* SFMT-params11213.h */; };
 		CD8078A11831C3B500E658D9 /* SFMT-params44497.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF91731BB90009E233E /* SFMT-params44497.h */; };
 		CD8078B01831C3B500E658D9 /* SFMT-params1279.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF41731BB90009E233E /* SFMT-params1279.h */; };
@@ -7538,6 +7551,21 @@
 		CD781092187CAA2D008B9C0A /* MOAITextStyleCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextStyleCache.h; sourceTree = "<group>"; };
 		CD781093187CAA2D008B9C0A /* MOAITextStyleMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextStyleMap.cpp; sourceTree = "<group>"; };
 		CD781094187CAA2D008B9C0A /* MOAITextStyleMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextStyleMap.h; sourceTree = "<group>"; };
+		CD7852BE1D18C648003F15D0 /* libmoai-osx-3rdparty-assimp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-3rdparty-assimp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD7852CD1D18C669003F15D0 /* libmoai-osx-assimp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-assimp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD7852D21D18C79A003F15D0 /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = headers.h; path = "moai-assimp/headers.h"; sourceTree = "<group>"; };
+		CD7852D31D18C79A003F15D0 /* host.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = host.cpp; path = "moai-assimp/host.cpp"; sourceTree = "<group>"; };
+		CD7852D41D18C79A003F15D0 /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-assimp/host.h"; sourceTree = "<group>"; };
+		CD7852D51D18C79A003F15D0 /* MOAIAssimpCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIAssimpCamera.cpp; path = "moai-assimp/MOAIAssimpCamera.cpp"; sourceTree = "<group>"; };
+		CD7852D61D18C79A003F15D0 /* MOAIAssimpCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAssimpCamera.h; path = "moai-assimp/MOAIAssimpCamera.h"; sourceTree = "<group>"; };
+		CD7852D71D18C79A003F15D0 /* MOAIAssimpMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIAssimpMesh.cpp; path = "moai-assimp/MOAIAssimpMesh.cpp"; sourceTree = "<group>"; };
+		CD7852D81D18C79A003F15D0 /* MOAIAssimpMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAssimpMesh.h; path = "moai-assimp/MOAIAssimpMesh.h"; sourceTree = "<group>"; };
+		CD7852D91D18C79A003F15D0 /* MOAIAssimpScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIAssimpScene.cpp; path = "moai-assimp/MOAIAssimpScene.cpp"; sourceTree = "<group>"; };
+		CD7852DA1D18C79A003F15D0 /* MOAIAssimpScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAssimpScene.h; path = "moai-assimp/MOAIAssimpScene.h"; sourceTree = "<group>"; };
+		CD7852DB1D18C79A003F15D0 /* MOAIAssimpUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIAssimpUtil.cpp; path = "moai-assimp/MOAIAssimpUtil.cpp"; sourceTree = "<group>"; };
+		CD7852DC1D18C79A003F15D0 /* MOAIAssimpUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAssimpUtil.h; path = "moai-assimp/MOAIAssimpUtil.h"; sourceTree = "<group>"; };
+		CD7852DD1D18C79A003F15D0 /* pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pch.cpp; path = "moai-assimp/pch.cpp"; sourceTree = "<group>"; };
+		CD7852DE1D18C79A003F15D0 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pch.h; path = "moai-assimp/pch.h"; sourceTree = "<group>"; };
 		CD795CBB17F08459006AEB47 /* SDL_assert_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDL_assert_c.h; path = "../../3rdparty/sdl2-2.0.4/src/SDL_assert_c.h"; sourceTree = "<group>"; };
 		CD795CBC17F08459006AEB47 /* SDL_assert.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = SDL_assert.c; path = "../../3rdparty/sdl2-2.0.4/src/SDL_assert.c"; sourceTree = "<group>"; };
 		CD795CBD17F08459006AEB47 /* SDL_error_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDL_error_c.h; path = "../../3rdparty/sdl2-2.0.4/src/SDL_error_c.h"; sourceTree = "<group>"; };
@@ -8416,6 +8444,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD7852B81D18C648003F15D0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD7852C71D18C669003F15D0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD807B441831C3B500E658D9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -8639,6 +8681,7 @@
 		032409EE13564CAF000ADC60 /* 3rd party */ = {
 			isa = PBXGroup;
 			children = (
+				CD7851291D18C2AF003F15D0 /* assimp */,
 				032409EF13564CAF000ADC60 /* box2d */,
 				03240A7613564CAF000ADC60 /* contrib */,
 				03240B1313564CB0000ADC60 /* expat */,
@@ -8858,6 +8901,7 @@
 				CDBA13101A30561B007503F3 /* config */,
 				CDBA13111A305622007503F3 /* config-default */,
 				CD257B241A6253F70057A53A /* moai-apple */,
+				CD7852D11D18C761003F15D0 /* moai-assimp */,
 				CDA0D9F61A01AFC3002B71B6 /* moai-audio-sampler */,
 				89BE74A2173AD2FA00DFE837 /* moai-box2d */,
 				89BE6ACA173975E500DFE837 /* moai-core */,
@@ -8974,6 +9018,8 @@
 				CD8316C91BED3C1800745C8A /* libmoai-ios-3rdparty-liblua.a */,
 				CD320DDA1C5179B000AD5E5C /* libmoai-ios-harfbuzz.a */,
 				CD320F5D1C517A0E00AD5E5C /* libmoai-osx-harfbuzz.a */,
+				CD7852BE1D18C648003F15D0 /* libmoai-osx-3rdparty-assimp.a */,
+				CD7852CD1D18C669003F15D0 /* libmoai-osx-assimp.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -11795,6 +11841,57 @@
 			);
 			name = pqueue;
 			path = "../../3rdparty/openssl-1.0.0m/crypto/pqueue";
+			sourceTree = "<group>";
+		};
+		CD7851291D18C2AF003F15D0 /* assimp */ = {
+			isa = PBXGroup;
+			children = (
+				CD7852CF1D18C712003F15D0 /* code */,
+				CD7852D01D18C719003F15D0 /* contrib */,
+				CD7852CE1D18C6BD003F15D0 /* include */,
+			);
+			name = assimp;
+			sourceTree = "<group>";
+		};
+		CD7852CE1D18C6BD003F15D0 /* include */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = include;
+			sourceTree = "<group>";
+		};
+		CD7852CF1D18C712003F15D0 /* code */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = code;
+			sourceTree = "<group>";
+		};
+		CD7852D01D18C719003F15D0 /* contrib */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = contrib;
+			sourceTree = "<group>";
+		};
+		CD7852D11D18C761003F15D0 /* moai-assimp */ = {
+			isa = PBXGroup;
+			children = (
+				CD7852D21D18C79A003F15D0 /* headers.h */,
+				CD7852D31D18C79A003F15D0 /* host.cpp */,
+				CD7852D41D18C79A003F15D0 /* host.h */,
+				CD7852D51D18C79A003F15D0 /* MOAIAssimpCamera.cpp */,
+				CD7852D61D18C79A003F15D0 /* MOAIAssimpCamera.h */,
+				CD7852D71D18C79A003F15D0 /* MOAIAssimpMesh.cpp */,
+				CD7852D81D18C79A003F15D0 /* MOAIAssimpMesh.h */,
+				CD7852D91D18C79A003F15D0 /* MOAIAssimpScene.cpp */,
+				CD7852DA1D18C79A003F15D0 /* MOAIAssimpScene.h */,
+				CD7852DB1D18C79A003F15D0 /* MOAIAssimpUtil.cpp */,
+				CD7852DC1D18C79A003F15D0 /* MOAIAssimpUtil.h */,
+				CD7852DD1D18C79A003F15D0 /* pch.cpp */,
+				CD7852DE1D18C79A003F15D0 /* pch.h */,
+			);
+			name = "moai-assimp";
 			sourceTree = "<group>";
 		};
 		CD795CBA17F0834F006AEB47 /* sdl */ = {
@@ -15166,6 +15263,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD78512B1D18C648003F15D0 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD7852C01D18C669003F15D0 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD7852E31D18C79A003F15D0 /* MOAIAssimpCamera.h in Headers */,
+				CD7852E11D18C79A003F15D0 /* host.h in Headers */,
+				CD7852EB1D18C79A003F15D0 /* pch.h in Headers */,
+				CD7852E51D18C79A003F15D0 /* MOAIAssimpMesh.h in Headers */,
+				CD7852E91D18C79A003F15D0 /* MOAIAssimpUtil.h in Headers */,
+				CD7852E71D18C79A003F15D0 /* MOAIAssimpScene.h in Headers */,
+				CD7852DF1D18C79A003F15D0 /* headers.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD80789F1831C3B500E658D9 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -16499,6 +16617,40 @@
 			productReference = CD70C20E18449935005CEBC0 /* libmoai-ios-kontagent.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		CD78512A1D18C648003F15D0 /* libmoai-osx-3rdparty-assimp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD7852B91D18C648003F15D0 /* Build configuration list for PBXNativeTarget "libmoai-osx-3rdparty-assimp" */;
+			buildPhases = (
+				CD78512B1D18C648003F15D0 /* Headers */,
+				CD7852011D18C648003F15D0 /* Sources */,
+				CD7852B81D18C648003F15D0 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-osx-3rdparty-assimp";
+			productName = OpenUSLS;
+			productReference = CD7852BE1D18C648003F15D0 /* libmoai-osx-3rdparty-assimp.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		CD7852BF1D18C669003F15D0 /* libmoai-osx-assimp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD7852C81D18C669003F15D0 /* Build configuration list for PBXNativeTarget "libmoai-osx-assimp" */;
+			buildPhases = (
+				CD7852C01D18C669003F15D0 /* Headers */,
+				CD7852C41D18C669003F15D0 /* Sources */,
+				CD7852C71D18C669003F15D0 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-osx-assimp";
+			productName = OpenUSLS;
+			productReference = CD7852CD1D18C669003F15D0 /* libmoai-osx-assimp.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		CD80789E1831C3B500E658D9 /* libmoai-osx-3rdparty-crypto */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD807B451831C3B500E658D9 /* Build configuration list for PBXNativeTarget "libmoai-osx-3rdparty-crypto" */;
@@ -17106,10 +17258,12 @@
 				CDF287EC17ED41CF00FD4F59 /* libmoai-ios-zl-vfs */,
 				0324E2B11356485F000ADC60 /* libmoai-osx */,
 				CD1845231A626BD500FCCCE0 /* libmoai-osx-apple */,
+				CD78512A1D18C648003F15D0 /* libmoai-osx-3rdparty-assimp */,
 				0324E2A81356485F000ADC60 /* libmoai-osx-3rdparty-core */,
 				CD80789E1831C3B500E658D9 /* libmoai-osx-3rdparty-crypto */,
 				CD32B3C119F9EDD10059D019 /* libmoai-osx-3rdparty-sdl */,
 				CDA0DC161A01B184002B71B6 /* libmoai-osx-audio-sampler */,
+				CD7852BF1D18C669003F15D0 /* libmoai-osx-assimp */,
 				89BE725E173AD29200DFE837 /* libmoai-osx-box2d */,
 				CD95D48D1831D4E20080C34E /* libmoai-osx-crypto */,
 				CDDD30941574AE0F00C410A0 /* libmoai-osx-fmod-designer */,
@@ -18933,6 +19087,26 @@
 			files = (
 				CD70C2141844999E005CEBC0 /* host.mm in Sources */,
 				CD70C2161844999E005CEBC0 /* MOAIKontagentIOS.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD7852011D18C648003F15D0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD7852C41D18C669003F15D0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD7852E01D18C79A003F15D0 /* host.cpp in Sources */,
+				CD7852E61D18C79A003F15D0 /* MOAIAssimpScene.cpp in Sources */,
+				CD7852E21D18C79A003F15D0 /* MOAIAssimpCamera.cpp in Sources */,
+				CD7852EA1D18C79A003F15D0 /* pch.cpp in Sources */,
+				CD7852E41D18C79A003F15D0 /* MOAIAssimpMesh.cpp in Sources */,
+				CD7852E81D18C79A003F15D0 /* MOAIAssimpUtil.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -25455,6 +25629,328 @@
 			};
 			name = Distribution;
 		};
+		CD7852BA1D18C648003F15D0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_ALTIVEC_EXTENSIONS = YES;
+				GCC_ENABLE_SSE3_EXTENSIONS = YES;
+				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"\"/usr/X11R6/include\"",
+					"$(inherited)",
+				);
+				PRODUCT_NAME = "moai-osx-3rdparty-assimp";
+				SDKROOT = macosx;
+				WARNING_CFLAGS = "-w";
+			};
+			name = Debug;
+		};
+		CD7852BB1D18C648003F15D0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_ALTIVEC_EXTENSIONS = YES;
+				GCC_ENABLE_SSE3_EXTENSIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_STRICT_ALIASING = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"\"/usr/X11R6/include\"",
+					"$(inherited)",
+				);
+				PRODUCT_NAME = "moai-osx-3rdparty-assimp";
+				SDKROOT = macosx;
+				WARNING_CFLAGS = "-w";
+			};
+			name = Release;
+		};
+		CD7852BC1D18C648003F15D0 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_ALTIVEC_EXTENSIONS = YES;
+				GCC_ENABLE_SSE3_EXTENSIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_STRICT_ALIASING = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"\"/usr/X11R6/include\"",
+					"$(inherited)",
+				);
+				PRODUCT_NAME = "moai-osx-3rdparty-assimp";
+				SDKROOT = macosx;
+				WARNING_CFLAGS = "-w";
+			};
+			name = AdHoc;
+		};
+		CD7852BD1D18C648003F15D0 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_ALTIVEC_EXTENSIONS = YES;
+				GCC_ENABLE_SSE3_EXTENSIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_STRICT_ALIASING = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"\"/usr/X11R6/include\"",
+					"$(inherited)",
+				);
+				PRODUCT_NAME = "moai-osx-3rdparty-assimp";
+				SDKROOT = macosx;
+				WARNING_CFLAGS = "-w";
+			};
+			name = Distribution;
+		};
+		CD7852C91D18C669003F15D0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-osx-assimp";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		CD7852CA1D18C669003F15D0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-osx-assimp";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		CD7852CB1D18C669003F15D0 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-osx-assimp";
+				SDKROOT = macosx;
+			};
+			name = AdHoc;
+		};
+		CD7852CC1D18C669003F15D0 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-osx-assimp";
+				SDKROOT = macosx;
+			};
+			name = Distribution;
+		};
 		CD807B461831C3B500E658D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -30630,6 +31126,28 @@
 				CD70C20B18449935005CEBC0 /* Release */,
 				CD70C20C18449935005CEBC0 /* AdHoc */,
 				CD70C20D18449935005CEBC0 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CD7852B91D18C648003F15D0 /* Build configuration list for PBXNativeTarget "libmoai-osx-3rdparty-assimp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD7852BA1D18C648003F15D0 /* Debug */,
+				CD7852BB1D18C648003F15D0 /* Release */,
+				CD7852BC1D18C648003F15D0 /* AdHoc */,
+				CD7852BD1D18C648003F15D0 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CD7852C81D18C669003F15D0 /* Build configuration list for PBXNativeTarget "libmoai-osx-assimp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD7852C91D18C669003F15D0 /* Debug */,
+				CD7852CA1D18C669003F15D0 /* Release */,
+				CD7852CB1D18C669003F15D0 /* AdHoc */,
+				CD7852CC1D18C669003F15D0 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
