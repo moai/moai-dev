@@ -19,8 +19,6 @@
 #include <set>
 #include <map>
 
-using namespace std;
-
 // stream
 #include <fstream>
 #include <iostream>

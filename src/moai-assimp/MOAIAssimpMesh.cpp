@@ -376,8 +376,6 @@ u32 MOAIAssimpMesh::ReadIndices ( ZLStream& stream, u32 indexSize ) {
 
 	if ( nIndices > 0 ) {
 
-		size_t base = stream.GetCursor ();
-
 		for ( u32 i = 0; i < mesh->mNumFaces; ++i ) {
 				
 			aiFace& face = mesh->mFaces [ i ];
@@ -395,8 +393,6 @@ u32 MOAIAssimpMesh::ReadIndices ( ZLStream& stream, u32 indexSize ) {
 				}
 			}
 		}
-
-		//stream.SetCursor ( base );
 	}
 
 	return nIndices;

@@ -257,7 +257,7 @@ ZLResultCode MOAIAssimpScene::Load ( cc8* filename, u32 postProcessingFlags ) {
 
 	// If the import failed, report it
 	if ( !this->mScene ) {
-		printf ( this->mImporter->GetErrorString ());
+		printf ( "%s", this->mImporter->GetErrorString ());
 		this->Clear ();
 		return ZL_ERROR;
 	}
@@ -283,7 +283,7 @@ ZLResultCode MOAIAssimpScene::Load ( const MOAIAssimpScene& scene, u32 postProce
 	}
 
 	if ( !this->mScene ) {
-		printf ( this->mImporter->GetErrorString ());
+		printf ( "%s", this->mImporter->GetErrorString ());
 		this->Clear ();
 		return ZL_ERROR;
 	}

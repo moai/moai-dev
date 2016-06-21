@@ -2091,8 +2091,8 @@ void MOAIImage::DrawLine(int p1x, int p1y, int p2x, int p2y, u32 color)
 	
 	// Swap points if p1 is on the right of p2
     if ( p1x > p2x ) {
-        swap ( p1x, p2x );
-        swap ( p1y, p2y );
+        std::swap ( p1x, p2x );
+        std::swap ( p1y, p2y );
     }
 	
     // Handle trivial cases separately for algorithm speed up.
@@ -2101,7 +2101,7 @@ void MOAIImage::DrawLine(int p1x, int p1y, int p2x, int p2y, u32 color)
 	
 		// Swap y-coordinates if p1 is above p2
         if (p1y > p2y) {
-            swap ( p1y, p2y );
+            std::swap ( p1y, p2y );
         }
 		
         x = p1x;

@@ -6,18 +6,16 @@
 
 #include <list>
 
-using namespace std;
-
 //================================================================//
 // STLList
 //================================================================//
 template < typename TYPE >
 class STLList :
-	public list < TYPE > {
+	public std::list < TYPE > {
 public:
 
-	typedef typename list < TYPE >::iterator iterator;
-	typedef typename list < TYPE >::reverse_iterator reverse_iterator;
+	typedef typename std::list < TYPE >::iterator iterator;
+	typedef typename std::list < TYPE >::reverse_iterator reverse_iterator;
 
 	//----------------------------------------------------------------//
 	bool contains ( const TYPE& type ) {

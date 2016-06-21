@@ -22,7 +22,7 @@
 STLString& STLString::assign ( cc8* str ) {
 
 	if ( str ) {
-		this->string::assign ( str );
+		this->std::string::assign ( str );
 	}
 	else {
 		this->clear ();

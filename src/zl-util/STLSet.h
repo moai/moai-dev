@@ -6,14 +6,12 @@
 
 #include <set>
 
-using namespace std;
-
 //================================================================//
 // STLSet
 //================================================================//
-template < typename KEY, typename COMPARE = less < KEY > >
+template < typename KEY, typename COMPARE = std::less < KEY > >
 class STLSet :
-	public set < KEY, COMPARE > {
+	public std::set < KEY, COMPARE > {
 public:
 
 	//----------------------------------------------------------------//

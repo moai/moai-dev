@@ -353,7 +353,7 @@ void ZLParser::RetrieveToken ( ZLDfaToken* token, ZLLexStream* scanner ) {
 			assert ( edge.mCharSetID < this->mCGT->mCharSetTable.Size ());
 			ZLCgtCharSet& charSet = this->mCGT->mCharSetTable [ edge.mCharSetID ];
 			
-			if ( charSet.mCharacters.find (( char )lookahead ) != string::npos ) {
+			if ( charSet.mCharacters.find (( char )lookahead ) != STLString::npos ) {
 				dfaState = &this->mCGT->mDFAStateTable [ edge.mTargetStateID ];
 				transition = true;
 				break;
