@@ -20847,7 +20847,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				CXX = "$(SRCROOT)/../util/ccache-clang++";
-				DEAD_CODE_STRIPPING = NO;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -20974,7 +20973,6 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
-				STRIP_STYLE = debugging;
 				USER_HEADER_SEARCH_PATHS = "";
 				VALIDATE_PRODUCT = YES;
 				WARNING_CFLAGS = (
@@ -21018,7 +21016,7 @@
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
-				STRIP_STYLE = "non-global";
+				STRIP_STYLE = all;
 			};
 			name = Debug;
 		};
@@ -21050,7 +21048,7 @@
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
-				STRIP_STYLE = "non-global";
+				STRIP_STYLE = all;
 			};
 			name = Release;
 		};
@@ -21137,6 +21135,7 @@
 				PRODUCT_NAME = "moai-ios-sim";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -21168,6 +21167,7 @@
 				PRODUCT_NAME = "moai-ios-sim";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -21199,6 +21199,7 @@
 				PRODUCT_NAME = "moai-ios-sim";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -21230,6 +21231,7 @@
 				PRODUCT_NAME = "moai-ios-sim";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -21549,6 +21551,7 @@
 				PRODUCT_NAME = "moai-ios-box2d";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -21580,6 +21583,7 @@
 				PRODUCT_NAME = "moai-ios-box2d";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -21611,6 +21615,7 @@
 				PRODUCT_NAME = "moai-ios-box2d";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -21642,6 +21647,7 @@
 				PRODUCT_NAME = "moai-ios-box2d";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -21813,6 +21819,7 @@
 				PRODUCT_NAME = "moai-ios-http-client";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -21844,6 +21851,7 @@
 				PRODUCT_NAME = "moai-ios-http-client";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -21875,6 +21883,7 @@
 				PRODUCT_NAME = "moai-ios-http-client";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -21906,6 +21915,7 @@
 				PRODUCT_NAME = "moai-ios-http-client";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -21937,6 +21947,7 @@
 				PRODUCT_NAME = "moai-ios-http-server";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -21968,6 +21979,7 @@
 				PRODUCT_NAME = "moai-ios-http-server";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -21999,6 +22011,7 @@
 				PRODUCT_NAME = "moai-ios-http-server";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -22030,6 +22043,7 @@
 				PRODUCT_NAME = "moai-ios-http-server";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -22182,7 +22196,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				CXX = "$(SRCROOT)/../util/ccache-clang++";
-				DEAD_CODE_STRIPPING = NO;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -22310,7 +22323,6 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
-				STRIP_STYLE = debugging;
 				USER_HEADER_SEARCH_PATHS = "";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "";
 				VALIDATE_PRODUCT = YES;
@@ -22328,6 +22340,7 @@
 				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -22338,6 +22351,7 @@
 				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -22401,6 +22415,7 @@
 				PRODUCT_NAME = "moai-ios-untz";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -22432,6 +22447,7 @@
 				PRODUCT_NAME = "moai-ios-untz";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -22597,6 +22613,7 @@
 				PRODUCT_NAME = "moai-ios-apple";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Debug;
 		};
@@ -22628,6 +22645,7 @@
 				PRODUCT_NAME = "moai-ios-apple";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Release;
 		};
@@ -22659,6 +22677,7 @@
 				PRODUCT_NAME = "moai-ios-apple";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = AdHoc;
 		};
@@ -22690,6 +22709,7 @@
 				PRODUCT_NAME = "moai-ios-apple";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Distribution;
 		};
@@ -22727,6 +22747,7 @@
 				PRODUCT_NAME = "moai-ios-adcolony";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Debug;
 		};
@@ -22759,6 +22780,7 @@
 				PRODUCT_NAME = "moai-ios-adcolony";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Release;
 		};
@@ -22791,6 +22813,7 @@
 				PRODUCT_NAME = "moai-ios-adcolony";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = AdHoc;
 		};
@@ -22823,6 +22846,7 @@
 				PRODUCT_NAME = "moai-ios-adcolony";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Distribution;
 		};
@@ -22859,6 +22883,7 @@
 				PRODUCT_NAME = "moai-ios-harfbuzz";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -22896,6 +22921,7 @@
 				PRODUCT_NAME = "moai-ios-harfbuzz";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -22933,6 +22959,7 @@
 				PRODUCT_NAME = "moai-ios-harfbuzz";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -22970,6 +22997,7 @@
 				PRODUCT_NAME = "moai-ios-harfbuzz";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -23501,6 +23529,7 @@
 				PRODUCT_NAME = "moai-ios-crypto";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -23532,6 +23561,7 @@
 				PRODUCT_NAME = "moai-ios-crypto";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -23563,6 +23593,7 @@
 				PRODUCT_NAME = "moai-ios-crypto";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -23594,6 +23625,7 @@
 				PRODUCT_NAME = "moai-ios-crypto";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -23632,6 +23664,7 @@
 				PRODUCT_NAME = "moai-ios-mobile-app-tracker";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Debug;
 		};
@@ -23664,6 +23697,7 @@
 				PRODUCT_NAME = "moai-ios-mobile-app-tracker";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Release;
 		};
@@ -23696,6 +23730,7 @@
 				PRODUCT_NAME = "moai-ios-mobile-app-tracker";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = AdHoc;
 		};
@@ -23728,6 +23763,7 @@
 				PRODUCT_NAME = "moai-ios-mobile-app-tracker";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Distribution;
 		};
@@ -23765,6 +23801,7 @@
 				PRODUCT_NAME = "moai-ios-urban-airship";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Debug;
 		};
@@ -23797,6 +23834,7 @@
 				PRODUCT_NAME = "moai-ios-urban-airship";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Release;
 		};
@@ -23829,6 +23867,7 @@
 				PRODUCT_NAME = "moai-ios-urban-airship";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = AdHoc;
 		};
@@ -23861,6 +23900,7 @@
 				PRODUCT_NAME = "moai-ios-urban-airship";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Distribution;
 		};
@@ -23895,6 +23935,7 @@
 				PRODUCT_NAME = "moai-ios-fmod-ex";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -23930,6 +23971,7 @@
 				PRODUCT_NAME = "moai-ios-fmod-ex";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -23965,6 +24007,7 @@
 				PRODUCT_NAME = "moai-ios-fmod-ex";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -24000,6 +24043,7 @@
 				PRODUCT_NAME = "moai-ios-fmod-ex";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -24607,6 +24651,7 @@
 				PRODUCT_NAME = "moai-ios-image-jpg";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -24638,6 +24683,7 @@
 				PRODUCT_NAME = "moai-ios-image-jpg";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -24669,6 +24715,7 @@
 				PRODUCT_NAME = "moai-ios-image-jpg";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -24700,6 +24747,7 @@
 				PRODUCT_NAME = "moai-ios-image-jpg";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -24731,6 +24779,7 @@
 				PRODUCT_NAME = "moai-ios-image-png";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -24762,6 +24811,7 @@
 				PRODUCT_NAME = "moai-ios-image-png";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -24793,6 +24843,7 @@
 				PRODUCT_NAME = "moai-ios-image-png";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -24824,6 +24875,7 @@
 				PRODUCT_NAME = "moai-ios-image-png";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -24855,6 +24907,7 @@
 				PRODUCT_NAME = "moai-ios-image-pvr";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -24886,6 +24939,7 @@
 				PRODUCT_NAME = "moai-ios-image-pvr";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -24917,6 +24971,7 @@
 				PRODUCT_NAME = "moai-ios-image-pvr";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -24948,6 +25003,7 @@
 				PRODUCT_NAME = "moai-ios-image-pvr";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -24979,6 +25035,7 @@
 				PRODUCT_NAME = "moai-ios-image-webp";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -25010,6 +25067,7 @@
 				PRODUCT_NAME = "moai-ios-image-webp";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -25041,6 +25099,7 @@
 				PRODUCT_NAME = "moai-ios-image-webp";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -25072,6 +25131,7 @@
 				PRODUCT_NAME = "moai-ios-image-webp";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -25110,6 +25170,7 @@
 				PRODUCT_NAME = "moai-ios-crittercism";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Debug;
 		};
@@ -25142,6 +25203,7 @@
 				PRODUCT_NAME = "moai-ios-crittercism";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Release;
 		};
@@ -25174,6 +25236,7 @@
 				PRODUCT_NAME = "moai-ios-crittercism";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = AdHoc;
 		};
@@ -25206,6 +25269,7 @@
 				PRODUCT_NAME = "moai-ios-crittercism";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Distribution;
 		};
@@ -25307,6 +25371,7 @@
 				PRODUCT_NAME = "moai-ios-flurry";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Debug;
 		};
@@ -25339,6 +25404,7 @@
 				PRODUCT_NAME = "moai-ios-flurry";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Release;
 		};
@@ -25371,6 +25437,7 @@
 				PRODUCT_NAME = "moai-ios-flurry";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = AdHoc;
 		};
@@ -25403,6 +25470,7 @@
 				PRODUCT_NAME = "moai-ios-flurry";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Distribution;
 		};
@@ -25440,6 +25508,7 @@
 				PRODUCT_NAME = "moai-ios-kontagent";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Debug;
 		};
@@ -25472,6 +25541,7 @@
 				PRODUCT_NAME = "moai-ios-kontagent";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Release;
 		};
@@ -25504,6 +25574,7 @@
 				PRODUCT_NAME = "moai-ios-kontagent";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = AdHoc;
 		};
@@ -25536,6 +25607,7 @@
 				PRODUCT_NAME = "moai-ios-kontagent";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Distribution;
 		};
@@ -25812,6 +25884,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-expat";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -25849,6 +25922,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-expat";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -25886,6 +25960,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-expat";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -25923,6 +25998,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-expat";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -25960,6 +26036,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-jannson";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -25997,6 +26074,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-jannson";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -26034,6 +26112,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-jannson";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -26071,6 +26150,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-jannson";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -26108,6 +26188,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-tinyxml";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -26145,6 +26226,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-tinyxml";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -26182,6 +26264,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-tinyxml";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -26219,6 +26302,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-tinyxml";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -26257,6 +26341,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-zlib";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -26295,6 +26380,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-zlib";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -26333,6 +26419,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-zlib";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -26371,6 +26458,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-zlib";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -26408,6 +26496,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-sfmt";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -26445,6 +26534,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-sfmt";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -26482,6 +26572,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-sfmt";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -26519,6 +26610,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-sfmt";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -26556,6 +26648,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-tlsf";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -26593,6 +26686,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-tlsf";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -26630,6 +26724,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-tlsf";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -26667,6 +26762,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-tlsf";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -26704,6 +26800,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-freetype";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -26741,6 +26838,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-freetype";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -26778,6 +26876,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-freetype";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -26815,6 +26914,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-freetype";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -26852,6 +26952,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-contrib";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -26889,6 +26990,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-contrib";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -26926,6 +27028,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-contrib";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -26963,6 +27066,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-contrib";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -27000,6 +27104,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-libtess";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -27037,6 +27142,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-libtess";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -27074,6 +27180,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-libtess";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -27111,6 +27218,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-libtess";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -27148,6 +27256,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-liblua";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -27185,6 +27294,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-liblua";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -27222,6 +27332,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-liblua";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -27259,6 +27370,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-liblua";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -27445,6 +27557,7 @@
 				PRODUCT_NAME = "moai-ios-audio-sampler";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Debug;
 		};
@@ -27477,6 +27590,7 @@
 				PRODUCT_NAME = "moai-ios-audio-sampler";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Release;
 		};
@@ -27509,6 +27623,7 @@
 				PRODUCT_NAME = "moai-ios-audio-sampler";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = AdHoc;
 		};
@@ -27541,6 +27656,7 @@
 				PRODUCT_NAME = "moai-ios-audio-sampler";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Distribution;
 		};
@@ -27726,6 +27842,7 @@
 				PRODUCT_NAME = "moai-ios-billing";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Debug;
 		};
@@ -27758,6 +27875,7 @@
 				PRODUCT_NAME = "moai-ios-billing";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Release;
 		};
@@ -27790,6 +27908,7 @@
 				PRODUCT_NAME = "moai-ios-billing";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = AdHoc;
 		};
@@ -27822,6 +27941,7 @@
 				PRODUCT_NAME = "moai-ios-billing";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Distribution;
 		};
@@ -27859,6 +27979,7 @@
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Debug;
 		};
@@ -27891,6 +28012,7 @@
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Release;
 		};
@@ -27923,6 +28045,7 @@
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = AdHoc;
 		};
@@ -27955,6 +28078,7 @@
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Distribution;
 		};
@@ -27997,6 +28121,7 @@
 				PRODUCT_NAME = "moai-ios-facebook";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Debug;
 		};
@@ -28034,6 +28159,7 @@
 				PRODUCT_NAME = "moai-ios-facebook";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Release;
 		};
@@ -28071,6 +28197,7 @@
 				PRODUCT_NAME = "moai-ios-facebook";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = AdHoc;
 		};
@@ -28108,6 +28235,7 @@
 				PRODUCT_NAME = "moai-ios-facebook";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Distribution;
 		};
@@ -28145,6 +28273,7 @@
 				PRODUCT_NAME = "moai-ios-gamecenter";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Debug;
 		};
@@ -28177,6 +28306,7 @@
 				PRODUCT_NAME = "moai-ios-gamecenter";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Release;
 		};
@@ -28209,6 +28339,7 @@
 				PRODUCT_NAME = "moai-ios-gamecenter";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = AdHoc;
 		};
@@ -28241,6 +28372,7 @@
 				PRODUCT_NAME = "moai-ios-gamecenter";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Distribution;
 		};
@@ -28278,6 +28410,7 @@
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Debug;
 		};
@@ -28310,6 +28443,7 @@
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Release;
 		};
@@ -28342,6 +28476,7 @@
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = AdHoc;
 		};
@@ -28374,6 +28509,7 @@
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Distribution;
 		};
@@ -28411,6 +28547,7 @@
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Debug;
 		};
@@ -28443,6 +28580,7 @@
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Release;
 		};
@@ -28475,6 +28613,7 @@
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = AdHoc;
 		};
@@ -28507,6 +28646,7 @@
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Distribution;
 		};
@@ -28544,6 +28684,7 @@
 				PRODUCT_NAME = "moai-ios-movie";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Debug;
 		};
@@ -28576,6 +28717,7 @@
 				PRODUCT_NAME = "moai-ios-movie";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Release;
 		};
@@ -28608,6 +28750,7 @@
 				PRODUCT_NAME = "moai-ios-movie";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = AdHoc;
 		};
@@ -28640,6 +28783,7 @@
 				PRODUCT_NAME = "moai-ios-movie";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Distribution;
 		};
@@ -28649,6 +28793,7 @@
 				PRODUCT_NAME = "moai-ios-zl-crypto";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -28659,6 +28804,7 @@
 				PRODUCT_NAME = "moai-ios-zl-crypto";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -28669,6 +28815,7 @@
 				PRODUCT_NAME = "moai-ios-zl-crypto";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -28679,6 +28826,7 @@
 				PRODUCT_NAME = "moai-ios-zl-crypto";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -28710,6 +28858,7 @@
 				PRODUCT_NAME = "moai-ios-luaext";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -28741,6 +28890,7 @@
 				PRODUCT_NAME = "moai-ios-luaext";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -28847,6 +28997,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-crypto";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -28880,6 +29031,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-crypto";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -28913,6 +29065,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-crypto";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -28946,6 +29099,7 @@
 				PRODUCT_NAME = "moai-ios-3rdparty-crypto";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -28983,6 +29137,7 @@
 				PRODUCT_NAME = "moai-ios-motion";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Debug;
 		};
@@ -29014,6 +29169,7 @@
 				PRODUCT_NAME = "moai-ios-motion";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Release;
 		};
@@ -29045,6 +29201,7 @@
 				PRODUCT_NAME = "moai-ios-motion";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = AdHoc;
 		};
@@ -29076,6 +29233,7 @@
 				PRODUCT_NAME = "moai-ios-motion";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 			};
 			name = Distribution;
 		};
@@ -29110,6 +29268,7 @@
 				PRODUCT_NAME = "moai-ios-fmod-designer";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -29145,6 +29304,7 @@
 				PRODUCT_NAME = "moai-ios-fmod-designer";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -29180,6 +29340,7 @@
 				PRODUCT_NAME = "moai-ios-fmod-designer";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -29215,6 +29376,7 @@
 				PRODUCT_NAME = "moai-ios-fmod-designer";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -29538,6 +29700,7 @@
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -29549,6 +29712,7 @@
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -29560,6 +29724,7 @@
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -29571,6 +29736,7 @@
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -29583,7 +29749,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				CXX = "$(SRCROOT)/../util/ccache-clang++";
-				DEAD_CODE_STRIPPING = NO;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -29711,7 +29876,6 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
-				STRIP_STYLE = debugging;
 				USER_HEADER_SEARCH_PATHS = "";
 				VALIDATE_PRODUCT = YES;
 				WARNING_CFLAGS = (
@@ -29750,7 +29914,7 @@
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
-				STRIP_STYLE = "non-global";
+				STRIP_STYLE = all;
 			};
 			name = Distribution;
 		};
@@ -29781,6 +29945,7 @@
 				PRODUCT_NAME = "moai-ios-luaext";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -29812,6 +29977,7 @@
 				PRODUCT_NAME = "moai-ios-untz";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -29822,6 +29988,7 @@
 				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -29982,7 +30149,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				CXX = "$(SRCROOT)/../util/ccache-clang++";
-				DEAD_CODE_STRIPPING = NO;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -30109,7 +30275,6 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
-				STRIP_STYLE = debugging;
 				USER_HEADER_SEARCH_PATHS = "";
 				VALIDATE_PRODUCT = YES;
 				WARNING_CFLAGS = (
@@ -30148,7 +30313,7 @@
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
-				STRIP_STYLE = "non-global";
+				STRIP_STYLE = all;
 			};
 			name = AdHoc;
 		};
@@ -30179,6 +30344,7 @@
 				PRODUCT_NAME = "moai-ios-luaext";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -30210,6 +30376,7 @@
 				PRODUCT_NAME = "moai-ios-untz";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -30220,6 +30387,7 @@
 				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
