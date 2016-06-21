@@ -8,6 +8,14 @@
 const float MOAITouchSensor::DEFAULT_TAPTIME = 0.6f;
 const float MOAITouchSensor::DEFAULT_TAPMARGIN = 50.0f;
 
+//#define MOAI_TOUCH_SENSOR_DEBUG_LOG
+
+#ifdef MOAI_TOUCH_SENSOR_DEBUG_LOG
+	#define DEBUG_LOG(format,...) ZLLog ( format, ##__VA_ARGS__ )
+#else
+	#define DEBUG_LOG
+#endif
+
 //================================================================//
 // lua
 //================================================================//
@@ -281,6 +289,8 @@ void MOAITouchSensor::EnqueueTouchEvent ( u8 deviceID, u8 sensorID, u32 touchID,
 //----------------------------------------------------------------//
 void MOAITouchSensor::EnqueueTouchEventCancel ( u8 deviceID, u8 sensorID ) {
 
+	DEBUG_LOG ( "ENQUEUE TOUCHES CANCELLED\n" );
+
 	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
 	if ( inputMgr.WriteEventHeader < MOAITouchSensor >( deviceID, sensorID )) {
 		inputMgr.Write < u32 >( TOUCH_CANCEL );
@@ -305,8 +315,6 @@ u32 MOAITouchSensor::AddTouch () {
 		idx = this->mAllocStack [ this->mTop ];
 		this->mActiveStack [ this->mTop ] = idx;
 		this->mTop++;
-		
-		//this->PrintStacks ();
 	}
 	return idx;
 }
@@ -386,6 +394,8 @@ void MOAITouchSensor::ParseEvent ( ZLStream& eventStream ) {
 
 	if ( eventType == TOUCH_CANCEL ) {
 		
+		DEBUG_LOG ( "TOUCHES CANCELLED\n" );
+		
 		// for now, TOUCH_CANCEL clobbers all touches
 		this->ClearState ();
 		
@@ -414,15 +424,28 @@ void MOAITouchSensor::ParseEvent ( ZLStream& eventStream ) {
 			// if it's a new touch, this is really a TOUCH_DOWN
 			if ( idx == UNKNOWN_TOUCH ) {
 				
+				DEBUG_LOG ( "TOUCH DOWN: " );
+				
 				// if we're maxed out on touches, this touch will be ignored until something
 				// frees up. after that it will be counted as a TOUCH_DOWN
 				idx = this->AddTouch ();
-				if ( idx == UNKNOWN_TOUCH ) return;
+				if ( idx == UNKNOWN_TOUCH ) {
+					DEBUG_LOG ( "COUND NOT ADD TOUCH\n" );
+					return;
+				}
+				
+				DEBUG_LOG ( "%x->%d\n", touch.mTouchID, idx );
 				
 				// see if we touched down in a linger
 				touch.mTapCount = CheckLingerList ( touch.mX, touch.mY, touch.mTime ) + 1;
 
 				touch.mState = IS_DOWN | DOWN;
+				
+				this->mTouches [ idx ] = touch;
+				
+				#ifdef MOAI_TOUCH_SENSOR_DEBUG_LOG
+					this->PrintStacks ();
+				#endif
 			}
 			else {
 			
@@ -433,6 +456,8 @@ void MOAITouchSensor::ParseEvent ( ZLStream& eventStream ) {
 			}
 		}
 		else if ( idx != UNKNOWN_TOUCH ) {
+			
+			DEBUG_LOG ( "TOUCH UP: %x->%d\n", touch.mTouchID, idx );
 			
 			// we know about the touch and it's not a TOUCH_DOWN, so it must be a TOUCH_UP
 			
@@ -447,8 +472,11 @@ void MOAITouchSensor::ParseEvent ( ZLStream& eventStream ) {
 
 			touch.mState &= ~IS_DOWN;
 			touch.mState |= UP;
-			touch.mTouchID = 0;
 			touch.mTapCount = CheckLingerList ( touch.mX, touch.mY, touch.mTime );
+			
+			#ifdef MOAI_TOUCH_SENSOR_DEBUG_LOG
+				this->PrintStacks ();
+			#endif
 		}
 		
 		if ( idx != UNKNOWN_TOUCH ) {
@@ -487,7 +515,12 @@ void MOAITouchSensor::PrintStacks () {
 			stacks.write ( " " );
 		}
 	
-		stacks.write ( "%d", ( int )this->mAllocStack [ i ]);
+		if ( i < this->mTop ) {
+			stacks.write ( "-" );
+		}
+		else {
+			stacks.write ( "%d", ( int )this->mAllocStack [ i ]);
+		}
 	}
 	
 	stacks.write ( " ] [" );
@@ -501,8 +534,9 @@ void MOAITouchSensor::PrintStacks () {
 			stacks.write ( " " );
 		}
 		
-		if ( this->mActiveStack [ i ] < MAX_TOUCHES ) {
-			stacks.write ( "%d", ( int )this->mActiveStack [ i ]);
+		if ( i < this->mTop ) {
+			int touch = ( int )this->mActiveStack [ i ];
+			stacks.write ( "%d(%x)", touch, this->mTouches [ touch ].mTouchID );
 		}
 		else {
 			stacks.write ( "-" );
@@ -511,7 +545,7 @@ void MOAITouchSensor::PrintStacks () {
 	
 	stacks.write ( " ]\n" );
 	
-	ZLLogF ( ZLLog::CONSOLE, stacks.c_str ());
+	ZLLog ( stacks.c_str ());
 }
 
 //----------------------------------------------------------------//
@@ -566,15 +600,24 @@ void MOAITouchSensor::ResetState () {
 			this->mAllocStack [ this->mTop ] = idx;
 		}
 		else {
-			touch.mState &= ~( DOWN | UP );	
+			touch.mState &= ~( DOWN | UP );
 			this->mActiveStack [ j++ ] = this->mActiveStack [ i ];
 		}
 	}
+	
+	#ifdef MOAI_TOUCH_SENSOR_DEBUG_LOG
+		if ( top != this->mTop ) {
+			DEBUG_LOG ( "REMOVED TOUCH(ES)\n" );
+			this->PrintStacks ();
+		}
+		assert ( j == this->mTop );
+	#endif
 	
 	bool changed = true;
 	float time = ( float ) ZLDeviceTime::GetTimeInSeconds () - mTapTime;
 
 	while ( changed ) {
+	
 		changed = false;
 		top = this->mLingerTop;
 
