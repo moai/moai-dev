@@ -1277,6 +1277,12 @@ void MOAILuaState::Push ( MOAILuaRef& ref ) {
 }
 
 //----------------------------------------------------------------//
+void MOAILuaState::Push ( MOAILuaMemberRef& ref ) {
+
+	ref.PushRef ( *this );
+}
+
+//----------------------------------------------------------------//
 void MOAILuaState::Push ( const void* value ) {
 
 	lua_pushlightuserdata ( this->mState, ( void* )value );

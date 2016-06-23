@@ -7,7 +7,7 @@
 #ifndef MOAIASSIMPCAMERA_H
 #define MOAIASSIMPCAMERA_H
 
-#include <moai-core/MOAILua.h>
+#include <moai-assimp/MOAIAssimpSceneMember.h>
 #include <moai-sim/MOAICamera.h>
 #include <assimp/camera.h>
 #include <assimp/scene.h>
@@ -17,21 +17,17 @@
 //================================================================//
 // TODO: doxygen
 class MOAIAssimpCamera :
-	public virtual MOAILuaObject {
+	public MOAIAssimpSceneMember {
 private:
 
 	aiCamera*		mAssimpCamera; // TODO: danger here; need to keep track of these in the scene and invalidate them
 	MOAICamera*		mMoaiCamera;
-	unsigned int	mIndex;
-	STLString		mName;
 	aiVector3D		mScaling;
 	aiVector3D		mPosition;
 	aiQuaternion	mRotation;
-	aiNode*			mNode; // TODO: isn't this the same as the camera?
 	
 	//----------------------------------------------------------------//
 	static int		_getAspect					( lua_State* L );
-	static int		_getCameraName				( lua_State* L );
 	static int		_getFarClipPlane			( lua_State* L );
 	static int		_getHorizontalFOV			( lua_State* L );
 	static int		_getLocationVector			( lua_State* L );
@@ -52,10 +48,6 @@ private:
 	float			CalculateYaw				( aiQuaternion quaternion );
 
 public:
-
-	GET_SET ( u32, Index, mIndex )
-	GET_SET ( STLString, Name, mName )
-	GET_SET ( aiNode*, Node, mNode )
 
 	DECL_LUA_FACTORY ( MOAIAssimpCamera )
 

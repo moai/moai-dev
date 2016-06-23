@@ -36,8 +36,18 @@ aiScene:load ( 'collada/duck.dae',
 )
 
 local aiMeshes = aiScene:getMeshes ()
+local aiMaterials = aiScene:getMaterials ()
 
-for i, aiMesh in ipairs ( aiMeshes or {}) do
+for i, aiMaterial in ipairs ( aiMaterials ) do
+
+	print ( 'FOUND A MATERIALS!' )
+
+	local json = MOAIJsonParser.encode ( aiMaterial, MOAIJsonParser.JSON_INDENT + MOAIJsonParser.JSON_SORT_KEYS )
+	print ( json )
+	print ()
+end
+
+for i, aiMesh in ipairs ( aiMeshes ) do
 
 	print ( 'FOUND A MESH!' )
 

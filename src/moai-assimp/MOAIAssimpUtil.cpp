@@ -9,9 +9,60 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+cc8* MOAIAssimpUtil::EnumToString_aiTextureMapMode ( aiTextureMapMode mode ) {
+
+	switch ( mode ) {
+		case aiTextureMapMode_Wrap:			return "WRAP";
+		case aiTextureMapMode_Clamp:		return "CLAMP";
+		case aiTextureMapMode_Decal:		return "DECAL";
+		case aiTextureMapMode_Mirror:		return "MIRROR";
+		default:							return "UNKNOWN";
+	}
+}
+
+//----------------------------------------------------------------//
+cc8* MOAIAssimpUtil::EnumToString_aiTextureMapping ( aiTextureMapping mapping ) {
+
+	switch ( mapping ) {
+		case aiTextureMapping_UV:			return "UV";
+		case aiTextureMapping_SPHERE:		return "SPHERE";
+		case aiTextureMapping_CYLINDER:		return "CYLINDER";
+		case aiTextureMapping_BOX:			return "BOX";
+		case aiTextureMapping_PLANE:		return "PLANE";
+		case aiTextureMapping_OTHER:		return "OTHER";
+		default:							return "UNKNOWN";
+	}
+}
+
+//----------------------------------------------------------------//
+cc8* MOAIAssimpUtil::EnumToString_aiTextureOp ( aiTextureOp op ) {
+
+	switch ( op ) {
+		case aiTextureOp_Multiply:			return "MULTIPLY";
+		case aiTextureOp_Add:				return "ADD";
+		case aiTextureOp_Subtract:			return "SUBTRACT";
+		case aiTextureOp_Divide:			return "DIVIDE";
+		case aiTextureOp_SmoothAdd:			return "SMOOTH_ADD";
+		case aiTextureOp_SignedAdd:			return "SIGNED_ADD";
+		default:							return "UNKNOWN";
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIAssimpUtil::PushBitangentsArray( lua_State* L , const aiMesh* currentMesh ) {
 
 	MOAIAssimpUtil::PushVectorArray ( L, currentMesh->mBitangents, currentMesh->mNumVertices, true );
+}
+
+//----------------------------------------------------------------//
+void MOAIAssimpUtil::PushColor ( lua_State* L, aiColor3D colorVector ) {
+
+	MOAILuaState state ( L );
+
+	lua_newtable ( L );
+	state.SetField ( -1, "r", colorVector.r );
+	state.SetField ( -1, "g", colorVector.g );
+	state.SetField ( -1, "b", colorVector.b );
 }
 
 //----------------------------------------------------------------//
@@ -65,6 +116,53 @@ void MOAIAssimpUtil::PushNormalsArray ( lua_State* L , const aiMesh* currentMesh
 void MOAIAssimpUtil::PushTangentsArray ( lua_State* L , const aiMesh* currentMesh ) {
 
 	MOAIAssimpUtil::PushVectorArray ( L, currentMesh->mTangents, currentMesh->mNumVertices, true );
+}
+
+//----------------------------------------------------------------//
+void MOAIAssimpUtil::PushTexture ( lua_State* L, aiMaterial* material, aiTextureType type, size_t idx ) {
+
+	aiString path;
+	aiTextureMapping mapping;
+	uint uvindex;
+	float blend;
+	aiTextureOp op;
+	aiTextureMapMode mapmode [ 3 ];
+
+	material->GetTexture (
+		type,
+		( uint )idx,
+		&path,
+		&mapping,
+		&uvindex,
+		&blend,
+		&op,
+		mapmode
+	);
+
+	MOAILuaState state ( L );
+
+	lua_newtable ( L );
+	state.SetField ( -1, "path",		path.C_Str ());
+	state.SetField ( -1, "mapping",		MOAIAssimpUtil::EnumToString_aiTextureMapping ( mapping ));
+	state.SetField ( -1, "uvindex",		uvindex );
+	state.SetField ( -1, "blend",		blend );
+	state.SetField ( -1, "op",			MOAIAssimpUtil::EnumToString_aiTextureOp ( op ));
+	state.SetField ( -1, "mapmode_u",	MOAIAssimpUtil::EnumToString_aiTextureMapMode ( mapmode [ 0 ]));
+	state.SetField ( -1, "mapmode_v",	MOAIAssimpUtil::EnumToString_aiTextureMapMode ( mapmode [ 1 ]));
+	state.SetField ( -1, "mapmode_w",	MOAIAssimpUtil::EnumToString_aiTextureMapMode ( mapmode [ 2 ]));
+}
+
+//----------------------------------------------------------------//
+void MOAIAssimpUtil::PushTextureStack ( lua_State* L, aiMaterial* material, aiTextureType type ) {
+
+	lua_newtable ( L );
+	
+	size_t nTextures = material->GetTextureCount ( type );
+	for ( size_t i = 0; i < nTextures; ++i ) {
+		lua_pushnumber ( L, ( lua_Number )( i + 1 ));
+		MOAIAssimpUtil::PushTexture ( L, material, type, i );
+		lua_settable ( L, -3 );
+	}
 }
 
 //----------------------------------------------------------------//

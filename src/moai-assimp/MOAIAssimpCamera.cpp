@@ -16,15 +16,7 @@
 int MOAIAssimpCamera::_getAspect ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
-	lua_pushnumber(  state , self->mAssimpCamera ? self->mAssimpCamera->mAspect : 0.0f );
-	return 1;
-}
-
-//----------------------------------------------------------------//
-int MOAIAssimpCamera::_getCameraName ( lua_State *L ) {
-	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
-
-	lua_pushstring ( state , self->mName.c_str ());
+	lua_pushnumber(  state, self->mScene ? self->mAssimpCamera->mAspect : 0.0f );
 	return 1;
 }
 
@@ -32,7 +24,7 @@ int MOAIAssimpCamera::_getCameraName ( lua_State *L ) {
 int MOAIAssimpCamera::_getFarClipPlane ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
-	lua_pushnumber(  state , self->mAssimpCamera ? self->mAssimpCamera->mClipPlaneFar : 0.0f );
+	lua_pushnumber(  state, self->mScene ? self->mAssimpCamera->mClipPlaneFar : 0.0f );
 	return 1;
 }
 
@@ -40,7 +32,7 @@ int MOAIAssimpCamera::_getFarClipPlane ( lua_State *L ) {
 int MOAIAssimpCamera::_getHorizontalFOV ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
-	lua_pushnumber(  state , self->mAssimpCamera ? self->mAssimpCamera->mHorizontalFOV : 0.0f );
+	lua_pushnumber(  state, self->mScene ? self->mAssimpCamera->mHorizontalFOV : 0.0f );
 	return 1;
 }
 
@@ -48,8 +40,8 @@ int MOAIAssimpCamera::_getHorizontalFOV ( lua_State *L ) {
 int MOAIAssimpCamera::_getLocationVector ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
-	if ( self->mAssimpCamera ) {
-		MOAIAssimpUtil::PushVector ( state , self->mAssimpCamera->mPosition );
+	if ( self->mScene ) {
+		MOAIAssimpUtil::PushVector ( state, self->mAssimpCamera->mPosition );
 		return 1;
 	}
 	return 0;
@@ -59,8 +51,8 @@ int MOAIAssimpCamera::_getLocationVector ( lua_State *L ) {
 int MOAIAssimpCamera::_getLookAtVector ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
-	if ( self->mAssimpCamera ) {
-		MOAIAssimpUtil::PushVector ( state , self->mAssimpCamera->mLookAt );
+	if ( self->mScene ) {
+		MOAIAssimpUtil::PushVector ( state, self->mAssimpCamera->mLookAt );
 		return 1;
 	}
 	return 0;
@@ -70,7 +62,7 @@ int MOAIAssimpCamera::_getLookAtVector ( lua_State *L ) {
 int MOAIAssimpCamera::_getMoaiCamera ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
-	if ( self->mMoaiCamera ) {
+	if ( self->mScene && self->mMoaiCamera ) {
 		self->mMoaiCamera->PushLuaUserdata ( state );
 		return 1;
 	}
@@ -81,7 +73,7 @@ int MOAIAssimpCamera::_getMoaiCamera ( lua_State *L ) {
 int MOAIAssimpCamera::_getNearClipPlane ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
-	lua_pushnumber(  state , self->mAssimpCamera ? self->mAssimpCamera->mClipPlaneNear : 0.0f );
+	lua_pushnumber(  state , self->mScene ? self->mAssimpCamera->mClipPlaneNear : 0.0f );
 	return 1;
 }
 
@@ -89,7 +81,7 @@ int MOAIAssimpCamera::_getNearClipPlane ( lua_State *L ) {
 int MOAIAssimpCamera::_getPitchAngle ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
-	lua_pushnumber ( state , self->mAssimpCamera ? self->CalculatePitch ( self->mRotation) * R2D : 0.0f );
+	lua_pushnumber ( state , self->mScene ? self->CalculatePitch ( self->mRotation) * R2D : 0.0f );
 	return 1;
 }
 
@@ -97,8 +89,8 @@ int MOAIAssimpCamera::_getPitchAngle ( lua_State *L ) {
 int MOAIAssimpCamera::_getPositionVector ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
-	if ( self->mAssimpCamera ) {
-		MOAIAssimpUtil::PushVector ( state , self->mAssimpCamera->mPosition );
+	if ( self->mScene ) {
+		MOAIAssimpUtil::PushVector ( state, self->mAssimpCamera->mPosition );
 		return 1;
 	}
 	return 0;
@@ -108,7 +100,7 @@ int MOAIAssimpCamera::_getPositionVector ( lua_State *L ) {
 int MOAIAssimpCamera::_getRollAngle ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
-	lua_pushnumber ( state , self->mAssimpCamera ? self->CalculateRoll ( self->mRotation) * R2D : 0.0f );
+	lua_pushnumber ( state , self->mScene ? self->CalculateRoll ( self->mRotation) * R2D : 0.0f );
 	return 1;
 }
 
@@ -116,7 +108,7 @@ int MOAIAssimpCamera::_getRollAngle ( lua_State *L ) {
 int MOAIAssimpCamera::_getRotationQuaternion ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
-	if ( self->mAssimpCamera ) {
+	if ( self->mScene ) {
 
 		lua_newtable( state );
 		lua_newtable( state );
@@ -137,8 +129,8 @@ int MOAIAssimpCamera::_getRotationQuaternion ( lua_State *L ) {
 int MOAIAssimpCamera::_getScalingVector ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
-	if ( self->mAssimpCamera ) {
-		MOAIAssimpUtil::PushVector ( state , self->mScaling );
+	if ( self->mScene ) {
+		MOAIAssimpUtil::PushVector ( state, self->mScaling );
 		return 1;
 	}
 	return 0;
@@ -148,8 +140,8 @@ int MOAIAssimpCamera::_getScalingVector ( lua_State *L ) {
 int MOAIAssimpCamera::_getUpVector ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
-	if ( self->mAssimpCamera ) {
-		MOAIAssimpUtil::PushVector ( state , self->mAssimpCamera->mUp );
+	if ( self->mScene ) {
+		MOAIAssimpUtil::PushVector ( state, self->mAssimpCamera->mUp );
 		return 1;
 	}
 	return 0;
@@ -159,7 +151,7 @@ int MOAIAssimpCamera::_getUpVector ( lua_State *L ) {
 int MOAIAssimpCamera::_getYawAngle ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
-	lua_pushnumber ( state , self->mAssimpCamera ? self->CalculateYaw ( self->mRotation) * R2D : 0.0f );
+	lua_pushnumber ( state , self->mScene ? self->CalculateYaw ( self->mRotation) * R2D : 0.0f );
 	return 1;
 }
 
@@ -190,7 +182,7 @@ float MOAIAssimpCamera::CalculateYaw ( aiQuaternion quaternion ) {
 MOAIAssimpCamera::MOAIAssimpCamera () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAILuaObject )
+		RTTI_EXTEND ( MOAIAssimpSceneMember )
 	RTTI_END
 }
 
@@ -200,15 +192,17 @@ MOAIAssimpCamera::~MOAIAssimpCamera () {
 
 //----------------------------------------------------------------//
 void MOAIAssimpCamera::RegisterLuaClass ( MOAILuaState& state ) {
-	UNUSED ( state );
+
+	MOAIAssimpSceneMember::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIAssimpCamera::RegisterLuaFuncs ( MOAILuaState& state ) {
 
+	MOAIAssimpSceneMember::RegisterLuaFuncs ( state );
+
 	luaL_Reg regTable [] = {
-		{ "getCameraName",			_getCameraName },
-		{ "getAspect",			_getAspect },
+		{ "getAspect",				_getAspect },
 		{ "getFarClipPlane",		_getFarClipPlane },
 		{ "getNearClipPlane",		_getNearClipPlane },
 		{ "getHorizontalFOV",		_getHorizontalFOV },

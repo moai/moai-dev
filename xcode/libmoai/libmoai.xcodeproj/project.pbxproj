@@ -2390,6 +2390,8 @@
 		CD4C417E180A9D0B00C02381 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD4C4176180A9D0300C02381 /* host.mm */; };
 		CD4C417F180A9D0B00C02381 /* MOAIUrbanAirshipIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4C4177180A9D0300C02381 /* MOAIUrbanAirshipIOS.h */; };
 		CD4C4180180A9D0B00C02381 /* MOAIUrbanAirshipIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD4C4178180A9D0300C02381 /* MOAIUrbanAirshipIOS.mm */; };
+		CD4E00FD1D1B300200FC2F16 /* MOAIAssimpSceneMember.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4E00FB1D1B300200FC2F16 /* MOAIAssimpSceneMember.cpp */; };
+		CD4E00FE1D1B300200FC2F16 /* MOAIAssimpSceneMember.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4E00FC1D1B300200FC2F16 /* MOAIAssimpSceneMember.h */; };
 		CD515F8C1BCDBC7A000718FB /* PVRTArray.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3024C41A68F34E00CCEE32 /* PVRTArray.h */; };
 		CD515F8D1BCDBC7A000718FB /* PVRTDecompress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3024C51A68F34E00CCEE32 /* PVRTDecompress.cpp */; };
 		CD515F8E1BCDBC7A000718FB /* PVRTDecompress.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3024C61A68F34E00CCEE32 /* PVRTDecompress.h */; };
@@ -7276,6 +7278,8 @@
 		CD4C4176180A9D0300C02381 /* host.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = host.mm; path = "moai-ios-urban-airship/host.mm"; sourceTree = "<group>"; };
 		CD4C4177180A9D0300C02381 /* MOAIUrbanAirshipIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUrbanAirshipIOS.h; path = "moai-ios-urban-airship/MOAIUrbanAirshipIOS.h"; sourceTree = "<group>"; };
 		CD4C4178180A9D0300C02381 /* MOAIUrbanAirshipIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIUrbanAirshipIOS.mm; path = "moai-ios-urban-airship/MOAIUrbanAirshipIOS.mm"; sourceTree = "<group>"; };
+		CD4E00FB1D1B300200FC2F16 /* MOAIAssimpSceneMember.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIAssimpSceneMember.cpp; path = "moai-assimp/MOAIAssimpSceneMember.cpp"; sourceTree = "<group>"; };
+		CD4E00FC1D1B300200FC2F16 /* MOAIAssimpSceneMember.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAssimpSceneMember.h; path = "moai-assimp/MOAIAssimpSceneMember.h"; sourceTree = "<group>"; };
 		CD5089F9155E3A1B0002FC3B /* libmoai-ios-fmod-ex.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-fmod-ex.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD515F1E1BCDB440000718FB /* libmoai-osx-image-jpg.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-image-jpg.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD515F2D1BCDB45B000718FB /* libmoai-osx-image-png.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-image-png.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -13207,6 +13211,8 @@
 				CD7852D81D18C79A003F15D0 /* MOAIAssimpMesh.h */,
 				CD7852D91D18C79A003F15D0 /* MOAIAssimpScene.cpp */,
 				CD7852DA1D18C79A003F15D0 /* MOAIAssimpScene.h */,
+				CD4E00FB1D1B300200FC2F16 /* MOAIAssimpSceneMember.cpp */,
+				CD4E00FC1D1B300200FC2F16 /* MOAIAssimpSceneMember.h */,
 				CD7852DB1D18C79A003F15D0 /* MOAIAssimpUtil.cpp */,
 				CD7852DC1D18C79A003F15D0 /* MOAIAssimpUtil.h */,
 				CD7852DD1D18C79A003F15D0 /* pch.cpp */,
@@ -17053,6 +17059,7 @@
 				CD7852E51D18C79A003F15D0 /* MOAIAssimpMesh.h in Headers */,
 				CD7852E91D18C79A003F15D0 /* MOAIAssimpUtil.h in Headers */,
 				CD7852E71D18C79A003F15D0 /* MOAIAssimpScene.h in Headers */,
+				CD4E00FE1D1B300200FC2F16 /* MOAIAssimpSceneMember.h in Headers */,
 				CD7852DF1D18C79A003F15D0 /* headers.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -21049,6 +21056,7 @@
 				CD7852EA1D18C79A003F15D0 /* pch.cpp in Sources */,
 				CD7852E41D18C79A003F15D0 /* MOAIAssimpMesh.cpp in Sources */,
 				CD7852E81D18C79A003F15D0 /* MOAIAssimpUtil.cpp in Sources */,
+				CD4E00FD1D1B300200FC2F16 /* MOAIAssimpSceneMember.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

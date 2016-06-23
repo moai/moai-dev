@@ -14,7 +14,7 @@
 int MOAIAssimpMesh::_countBones ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 
-	lua_pushinteger ( state , self->mMesh && self->mMesh->HasBones () ? self->mMesh->mNumBones : 0 );
+	lua_pushinteger ( state , self->mScene && self->mMesh->HasBones () ? self->mMesh->mNumBones : 0 );
 	return 1;
 }
 
@@ -23,7 +23,7 @@ int MOAIAssimpMesh::_countBones ( lua_State *L ) {
 int MOAIAssimpMesh::_countColorChannels ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 
-	lua_pushinteger ( state , self->mMesh ? self->mMesh->GetNumColorChannels () : 0 );
+	lua_pushinteger ( state , self->mScene ? self->mMesh->GetNumColorChannels () : 0 );
 	return 1;
 }
 
@@ -32,7 +32,7 @@ int MOAIAssimpMesh::_countColorChannels ( lua_State *L ) {
 int MOAIAssimpMesh::_countFaces ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 
-	lua_pushinteger ( state , self->mMesh && self->mMesh->HasFaces () ? self->mMesh->mNumFaces : 0 );
+	lua_pushinteger ( state , self->mScene && self->mMesh->HasFaces () ? self->mMesh->mNumFaces : 0 );
 	return 1;
 }
 
@@ -41,7 +41,7 @@ int MOAIAssimpMesh::_countFaces ( lua_State *L ) {
 int MOAIAssimpMesh::_countUVChannels ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 
-	lua_pushinteger ( state , self->mMesh ? self->mMesh->GetNumUVChannels () : 0 );
+	lua_pushinteger ( state , self->mScene ? self->mMesh->GetNumUVChannels () : 0 );
 	return 1;
 }
 
@@ -51,7 +51,7 @@ int MOAIAssimpMesh::_countUVs ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 
 	u32 channel  = state.GetValue < u32 >( 2, 0 );
-	lua_pushinteger ( state, self->mMesh && channel < self->mMesh->GetNumUVChannels () ? self->mMesh->mNumUVComponents [ channel ] : 0 );
+	lua_pushinteger ( state, self->mScene && channel < self->mMesh->GetNumUVChannels () ? self->mMesh->mNumUVComponents [ channel ] : 0 );
 	return 1;
 }
 
@@ -65,7 +65,7 @@ int MOAIAssimpMesh::_countUVs ( lua_State *L ) {
 int MOAIAssimpMesh::_countVertices ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 
-	lua_pushinteger ( state , self->mMesh && self->mMesh->HasPositions () ? self->mMesh->mNumVertices : 0 );
+	lua_pushinteger ( state , self->mScene && self->mMesh->HasPositions () ? self->mMesh->mNumVertices : 0 );
 	return 1;
 }
 
@@ -79,7 +79,7 @@ int MOAIAssimpMesh::_countVertices ( lua_State* L ) {
 int MOAIAssimpMesh::_getBitangentsData ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 
-	if (( self->mMesh != NULL ) && ( self->mMesh->HasTangentsAndBitangents ())) {
+	if ( self->mScene && self->mMesh->HasTangentsAndBitangents ()) {
 		MOAIAssimpUtil::PushBitangentsArray ( state , self->mMesh );
 		return 1;
 	}
@@ -96,7 +96,7 @@ int MOAIAssimpMesh::_getBitangentsData ( lua_State* L ) {
 int MOAIAssimpMesh::_getFacesData ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 
-	if (( self->mMesh != NULL ) && ( self->mMesh->HasNormals ())) {
+	if ( self->mScene && self->mMesh->HasNormals ()) {
 		MOAIAssimpUtil::PushFace ( state , self->mMesh);
 		return 1;
 	}
@@ -109,7 +109,7 @@ int MOAIAssimpMesh::_getIndices ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 
 	const aiMesh* mesh = self->mMesh;
-	if ( !( mesh && ( mesh->mPrimitiveTypes == aiPrimitiveType_TRIANGLE ))) return 0;
+	if ( !( self->mScene && mesh && ( mesh->mPrimitiveTypes == aiPrimitiveType_TRIANGLE ))) return 0;
 
 	u32 nIndices = mesh->mNumFaces * 3;
 
@@ -153,37 +153,11 @@ int MOAIAssimpMesh::_getIndices ( lua_State* L ) {
 int MOAIAssimpMesh::_getMaterialIndex ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 
-	if (( self->mMesh != NULL )) {
+	if ( self->mScene ) {
 		lua_pushinteger ( state , self->mMesh->mMaterialIndex );
 		return 1;
 	}
 	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	getName
-	@text	Return mesh's name
-
-	@in		MOAIAssimpMesh self
-	@out	string containing a mesh's name or nil
-*/
-int MOAIAssimpMesh::_getName ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
-
-	if (( self->mMesh != NULL ) && ( self->mName != NULL )) {
-		if ( std::strlen ( self->mName ) != 0 ) {
-			lua_pushstring ( state , self->GetName ());
-		}
-		else {
-			char indexString [ 33 ];
-			sprintf ( indexString,"mesh_%d", self->mIndex );
-			lua_pushstring ( state , indexString );
-		}
-	}
-	else {
-		lua_pushnil ( state );
-	}
-	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -196,7 +170,7 @@ int MOAIAssimpMesh::_getName ( lua_State* L ) {
 int MOAIAssimpMesh::_getNormalsData ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 
-	if (( self->mMesh ) != NULL && ( self->mMesh->HasNormals ())) {
+	if ( self->mScene && self->mMesh->HasNormals ()) {
 		MOAIAssimpUtil::PushNormalsArray ( state, self->mMesh );
 		return 1;
 	}
@@ -211,7 +185,7 @@ int MOAIAssimpMesh::_getPrimitiveType ( lua_State *L ) {
 	unsigned int primitiveType = self->mMesh->mPrimitiveTypes;
 
 	// TODO: mesh can contain multiple primitive types; see assimp docs
-	if ( self->mMesh != NULL ) {
+	if ( self->mScene ) {
 		switch ( primitiveType ) {
 			case aiPrimitiveType_POINT:
 				lua_pushinteger ( state, ( u32 )ZGL_PRIM_POINTS );
@@ -243,7 +217,7 @@ int MOAIAssimpMesh::_getPrimitiveType ( lua_State *L ) {
 int MOAIAssimpMesh::_getTangentsData ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 
-	if (( self->mMesh != NULL ) && ( self->mMesh->HasTangentsAndBitangents ())) {
+	if ( self->mScene && self->mMesh->HasTangentsAndBitangents ()) {
 		MOAIAssimpUtil::PushTangentsArray ( state , self->mMesh );
 		return 1;
 	}
@@ -262,7 +236,7 @@ int MOAIAssimpMesh::_getUVData ( lua_State* L ) {
 
 	u32 channel  = state.GetValue < u32 >( 2, 0 );
 
-	if (( self->mMesh != NULL ) && ( channel < self->mMesh->GetNumUVChannels ()) && ( self->mMesh->HasTextureCoords ( channel ))) {
+	if ( self->mScene && ( channel < self->mMesh->GetNumUVChannels ()) && ( self->mMesh->HasTextureCoords ( channel ))) {
 		MOAIAssimpUtil::PushUVChannelArray ( state, self->mMesh->mTextureCoords [ channel ], self->mMesh->mNumVertices, self->mMesh->mNumUVComponents [ channel ]);
 		return 1;
 	}
@@ -281,7 +255,7 @@ int MOAIAssimpMesh::_getVertexColorData ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "UN" )
 	u32 channel  = state.GetValue < u32 >( 2, 0 );
 
-	if (( self->mMesh != NULL ) && ( channel < self->mMesh->GetNumColorChannels ()) && ( self->mMesh->HasVertexColors ( channel ))) {
+	if ( self->mScene && ( channel < self->mMesh->GetNumColorChannels ()) && ( self->mMesh->HasVertexColors ( channel ))) {
 		MOAIAssimpUtil::PushColorsChannelArray ( state , self->mMesh->mColors [ channel ], self->mMesh->mNumVertices );
 		return 1;
 	}
@@ -298,7 +272,7 @@ int MOAIAssimpMesh::_getVertexColorData ( lua_State *L ) {
 int MOAIAssimpMesh::_getVertexData ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 
-	if ( self->mMesh != NULL && self->mMesh->HasPositions ()) {
+	if ( self->mScene && self->mMesh->HasPositions ()) {
 		MOAIAssimpUtil::PushMesh ( state, self->mMesh );
 		return 1;
 	}
@@ -311,7 +285,7 @@ int MOAIAssimpMesh::_getVertices ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 
 	const aiMesh* mesh = self->mMesh;
-	if ( !mesh ) return 0;
+	if ( !( self->mScene && mesh )) return 0;
 
 	u32 nVertices = self->mMesh->HasPositions () ? ( u32 )mesh->mNumVertices : 0;
 
@@ -354,11 +328,10 @@ int MOAIAssimpMesh::_getVertices ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAIAssimpMesh::MOAIAssimpMesh () :
-	mMesh ( 0 ),
-	mIndex (( uint )-1 ) {
+	mMesh ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAILuaObject )
+		RTTI_EXTEND ( MOAIAssimpSceneMember )
 	RTTI_END
 }
 
@@ -440,23 +413,21 @@ u32 MOAIAssimpMesh::ReadVertices ( const MOAIVertexFormat& format, ZLStream& str
 //----------------------------------------------------------------//
 void MOAIAssimpMesh::RegisterLuaClass ( MOAILuaState& state ) {
 
-	luaL_Reg regTable [] = {
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
+	MOAIAssimpSceneMember::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIAssimpMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 
+	MOAIAssimpSceneMember::RegisterLuaClass ( state );
+
 	luaL_Reg regTable [] = {
-		{ "getNumBones",				_countBones },
-		{ "getNumFaces",				_countFaces },
-		{ "getNumColorChannels",		_countColorChannels },
-		{ "getNumUVChannels",			_countUVChannels },
-		{ "getNumUVs",					_countUVs },
-		{ "getNumVertices",				_countVertices },
+		{ "countBones",					_countBones },
+		{ "countColorChannels",			_countColorChannels },
+		{ "countFaces",					_countFaces },
+		{ "countUVChannels",			_countUVChannels },
+		{ "countUVs",					_countUVs },
+		{ "countVertices",				_countVertices },
 		{ "getBitangentsData",			_getBitangentsData },
 		{ "getFacesData",				_getFacesData },
 		{ "getIndices",					_getIndices },

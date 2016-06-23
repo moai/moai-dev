@@ -6,9 +6,10 @@
 
 #include "pch.h"
 
-#include <moai-assimp/MOAIAssimpScene.h>
-#include <moai-assimp/MOAIAssimpMesh.h>
 #include <moai-assimp/MOAIAssimpCamera.h>
+#include <moai-assimp/MOAIAssimpMesh.h>
+#include <moai-assimp/MOAIAssimpScene.h>
+#include <moai-assimp/MOAIAssimpUtil.h>
 
 #include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIIndexBuffer.h>
@@ -62,7 +63,7 @@ int MOAIAssimpScene::_countAnimations ( lua_State* L ) {
 int MOAIAssimpScene::_countCameras ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
 
-	lua_pushinteger( state , self->mScene && self->mScene->HasCameras () ? self->mScene->mNumCameras : 0 );
+	lua_pushinteger( state , self->mScene ? self->mScene->mNumCameras : 0 );
 	return 1;
 }
 
@@ -76,7 +77,7 @@ int MOAIAssimpScene::_countCameras ( lua_State* L ) {
 int MOAIAssimpScene::_countLights ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
 
-	lua_pushinteger( state , self->mScene && self->mScene->HasLights () ? self->mScene->mNumLights : 0 );
+	lua_pushinteger( state , self->mScene ? self->mScene->mNumLights : 0 );
 	return 1;
 }
 
@@ -90,7 +91,7 @@ int MOAIAssimpScene::_countLights ( lua_State* L ) {
 int MOAIAssimpScene::_countMaterials ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
 
-	lua_pushinteger ( state , self->mScene && self->mScene->HasMaterials () ? self->mScene->mNumMaterials : 0 );
+	lua_pushinteger ( state , self->mScene ? self->mScene->mNumMaterials : 0 );
 	return 1;
 }
 
@@ -104,7 +105,7 @@ int MOAIAssimpScene::_countMaterials ( lua_State* L ) {
 int MOAIAssimpScene::_countMeshes ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
 
-	lua_pushinteger ( state, self->mScene && self->mScene->HasMeshes () ? self->mScene->mNumMeshes : 0 );
+	lua_pushinteger ( state, self->mScene ? self->mScene->mNumMeshes : 0 );
 	return 1;
 }
 
@@ -118,36 +119,54 @@ int MOAIAssimpScene::_countMeshes ( lua_State* L ) {
 int MOAIAssimpScene::_countTextures ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
 
-	lua_pushinteger ( state , self->mScene && self->mScene->HasTextures() ? self->mScene->mNumTextures : 0 );
+	lua_pushinteger ( state , self->mScene ? self->mScene->mNumTextures : 0 );
 	return 1;
 }
 
 //----------------------------------------------------------------//
-/**	@name	getCameras
-	@text	Returns a Table that contains MOAIAssimpCamera objects
-
-	@in		MOAIImportFactory self
-	@out	a Table that contain MOAIAssimpCamera objects
-*/
+// TODO: doxygen
 int MOAIAssimpScene::_getCameras ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
 
-	if ( self->mScene && self->mScene->HasCameras ()) {
-		
-		lua_newtable(  state );
+	if ( !self->mScene ) return 0;
 
-		for ( int i = 0; i < ( int )self->mScene->mNumCameras; i++ ) {
+	if ( state.IsType ( 2, LUA_TNUMBER )) {
+		state.Push ( self->GetCamera ( state.GetValue < u32 >( 2, 0 )));
+	}
+	else {
 
-			aiCamera* currentCamera = self->mScene->mCameras [ i ];
+		lua_newtable ( state );
+		for ( size_t i = 0; i < self->mScene->mNumCameras; ++i ) {
+			state.SetFieldByIndex ( -1, ( int )i + 1, self->GetCamera ( i ));
+		}
+	}
+	return 1;
+}
 
-			MOAIAssimpCamera* camera = new MOAIAssimpCamera ();
-			camera->SetNode ( self->mScene->mRootNode->FindNode ( currentCamera->mName.C_Str ()));
-			camera->SetCamera ( currentCamera );
-			camera->SetIndex ( i );
-			camera->SetName ( currentCamera->mName.C_Str ());
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAssimpScene::_getMaterials ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
 
-			camera->PushLuaUserdata(state);
-			lua_rawseti ( L , -2 , i + 1 );
+	if ( !self->mScene ) return 0;
+
+	if ( state.IsType ( 2, LUA_TNUMBER )) {
+	
+		MOAILuaMemberRef* material = self->GetMaterial ( state.GetValue < u32 >( 2, 0 ));
+		if ( material ) {
+			state.Push ( *material );
+			return 1;
+		}
+	}
+	else {
+	
+		lua_newtable ( state );
+		for ( size_t i = 0; i < self->mScene->mNumMaterials; ++i ) {
+
+			MOAILuaMemberRef* material = self->GetMaterial ( i );
+			assert ( material );
+			
+			state.SetFieldByIndex ( -1, ( int )i + 1, *material );
 		}
 		return 1;
 	}
@@ -155,34 +174,23 @@ int MOAIAssimpScene::_getCameras ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMeshes
-	@text	Returns a Table that contains MOAIAssimpMesh objects
-
-	@in		MOAIImportFactory self
-	@out	a Table that contain MOAIAssimpMesh objects
-*/
+// TODO: doxygen
 int MOAIAssimpScene::_getMeshes ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
 
-	if ( self->mScene && self->mScene->HasMeshes ()) {
+	if ( !self->mScene ) return 0;
+
+	if ( state.IsType ( 2, LUA_TNUMBER )) {
+		state.Push ( self->GetMesh ( state.GetValue < u32 >( 2, 0 )));
+	}
+	else {
 
 		lua_newtable ( state );
-
-		for ( int i = 0; i < ( int )self->mScene->mNumMeshes; i++ ) {
-
-			aiMesh* currentMesh = self->mScene->mMeshes [ i ];
-
-			MOAIAssimpMesh* mesh = new MOAIAssimpMesh();
-			mesh->SetMesh ( currentMesh);
-			mesh->SetIndex ( i );
-			mesh->SetName ( currentMesh->mName.C_Str ());
-
-			mesh->PushLuaUserdata ( state );
-			lua_rawseti ( L , -2 , i + 1 );
+		for ( size_t i = 0; i < self->mScene->mNumMeshes; ++i ) {
+			state.SetFieldByIndex ( -1, ( int )i + 1, self->GetMesh ( i ));
 		}
-		return 1;
 	}
-	return 0;
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -234,12 +242,211 @@ int MOAIAssimpScene::_load ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIAssimpScene::Clear () {
 
+	// do this first; LuaRelease may delete scene members
+	SceneMembersIt sceneMembersIt = this->mSceneMembers.begin ();
+	for ( ; sceneMembersIt != this->mSceneMembers.end (); ++sceneMembersIt ) {
+		( *sceneMembersIt )->DetachFromScene ();
+	}
+	this->mSceneMembers.clear ();
+
+	// now safe to release the scene members
+	for ( size_t i = 0; i < this->mCameras.Size (); ++i ) {
+		this->LuaRelease ( this->mCameras [ i ]);
+	}
+	this->mCameras.Clear ();
+
+	for ( size_t i = 0; i < this->mMaterials.Size (); ++i ) {
+		this->mMaterials [ i ].Clear ();
+	}
+	this->mMaterials.Clear ();
+
+	for ( size_t i = 0; i < this->mMeshes.Size (); ++i ) {
+		this->LuaRelease ( this->mMeshes [ i ]);
+	}
+	this->mMeshes.Clear ();
+
 	if ( this->mImporter ) {
 		this->mImporter->FreeScene ();
 		delete ( this->mImporter );
 	}
 	this->mImporter = 0;
 	this->mScene = 0;
+}
+
+//----------------------------------------------------------------//
+MOAIAssimpCamera* MOAIAssimpScene::GetCamera ( size_t idx ) {
+
+	if ( !this->mScene ) return 0;
+	if ( this->mScene->mNumCameras <= idx ) return 0;
+	
+	this->mCameras.Resize ( this->mScene->mNumCameras, 0 );
+	
+	MOAIAssimpCamera* camera = this->mCameras [ idx ];
+	if ( !camera ) {
+	
+		aiCamera* currentCamera = this->mScene->mCameras [ idx ];
+	
+		camera = new MOAIAssimpCamera ();
+		camera->SetNode ( this->mScene->mRootNode->FindNode ( currentCamera->mName.C_Str ()));
+		camera->SetCamera ( currentCamera );
+		camera->SetIndex ( idx );
+		camera->SetName ( currentCamera->mName.C_Str ());
+		
+		this->LuaRetain ( camera );
+		this->mCameras [ idx ] = camera;
+		
+		this->mSceneMembers.push_back ( camera );
+	}
+	return camera;
+}
+
+//----------------------------------------------------------------//
+MOAIAssimpMesh* MOAIAssimpScene::GetMesh ( size_t idx ) {
+
+	if ( !this->mScene ) return 0;
+	if ( this->mScene->mNumMeshes <= idx ) return 0;
+	
+	this->mMeshes.Resize ( this->mScene->mNumMeshes, 0 );
+	
+	MOAIAssimpMesh* mesh = this->mMeshes [ idx ];
+	if ( !mesh ) {
+	
+		aiMesh* currentMesh = this->mScene->mMeshes [ idx ];
+
+		mesh = new MOAIAssimpMesh ();
+		mesh->SetScene ( this->mScene );
+		mesh->SetMesh ( currentMesh );
+		mesh->SetIndex ( idx );
+		mesh->SetName ( currentMesh->mName.C_Str ());
+
+		this->LuaRetain ( mesh );
+		this->mMeshes [ idx ] = mesh;
+		
+		this->mSceneMembers.push_back ( mesh );
+	}
+	return mesh;
+}
+
+//----------------------------------------------------------------//
+MOAILuaMemberRef* MOAIAssimpScene::GetMaterial ( size_t idx ) {
+
+	if ( !this->mScene ) return 0;
+	if ( this->mScene->mNumMaterials <= idx ) return 0;
+	
+	if ( this->mMaterials.Size () == 0 ) {
+		this->mMaterials.Init ( this->mScene->mNumMaterials );
+	}
+	assert ( this->mMaterials.Size () == this->mScene->mNumMaterials );
+	
+	MOAILuaMemberRef& ref = this->mMaterials [ idx ];
+	
+	if ( ref == false ) {
+	
+		aiMaterial* currentMaterial = this->mScene->mMaterials [ idx ];
+	
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		
+		lua_newtable ( state );
+		
+		aiString	name;
+		aiColor3D	color;
+		int			intVal;
+		float		floatVal;
+		
+		currentMaterial->Get ( AI_MATKEY_NAME, name );
+		state.SetField ( -1, "NAME", name.C_Str ());
+	
+		currentMaterial->Get ( AI_MATKEY_TWOSIDED, intVal );
+		state.SetField ( -1, "TWOSIDED", intVal == 1 ? true : false );
+		
+		currentMaterial->Get ( AI_MATKEY_SHADING_MODEL, intVal );
+		state.SetField ( -1, "SHADING_MODEL", ( u32 )intVal );
+		
+		currentMaterial->Get ( AI_MATKEY_ENABLE_WIREFRAME, intVal );
+		state.SetField ( -1, "ENABLE_WIREFRAME", intVal == 1 ? true : false );
+	
+		currentMaterial->Get ( AI_MATKEY_BLEND_FUNC, intVal );
+		state.SetField ( -1, "BLEND_MODE", ( u32 )intVal );
+
+		currentMaterial->Get ( AI_MATKEY_OPACITY, floatVal );
+		state.SetField ( -1, "OPACITY", floatVal );
+		
+		currentMaterial->Get ( AI_MATKEY_BUMPSCALING, floatVal );
+		state.SetField ( -1, "BUMPSCALING", floatVal );
+
+		currentMaterial->Get ( AI_MATKEY_SHININESS, floatVal );
+		state.SetField ( -1, "SHININESS", floatVal );
+
+		currentMaterial->Get ( AI_MATKEY_SHININESS_STRENGTH, floatVal );
+		state.SetField ( -1, "SHININESS_STRENGTH", floatVal );
+
+		currentMaterial->Get ( AI_MATKEY_REFLECTIVITY, floatVal );
+		state.SetField ( -1, "REFLECTIVITY", floatVal );
+
+		currentMaterial->Get ( AI_MATKEY_REFRACTI, floatVal );
+		state.SetField ( -1, "REFRACTION_INDEX", floatVal );
+
+		currentMaterial->Get ( AI_MATKEY_COLOR_DIFFUSE, color );
+		MOAIAssimpUtil::PushColor ( state, color );
+		lua_setfield ( state, -2, "COLOR_DIFFUSE" );
+		
+		currentMaterial->Get ( AI_MATKEY_COLOR_AMBIENT, color );
+		MOAIAssimpUtil::PushColor ( state, color );
+		lua_setfield ( state, -2, "COLOR_AMBIENT" );
+
+		currentMaterial->Get ( AI_MATKEY_COLOR_SPECULAR, color );
+		MOAIAssimpUtil::PushColor ( state, color );
+		lua_setfield ( state, -2, "COLOR_SPECULAR" );
+
+		currentMaterial->Get ( AI_MATKEY_COLOR_EMISSIVE, color );
+		MOAIAssimpUtil::PushColor ( state, color );
+		lua_setfield ( state, -2, "COLOR_EMISSIVE" );
+
+		currentMaterial->Get ( AI_MATKEY_COLOR_TRANSPARENT, color );
+		MOAIAssimpUtil::PushColor ( state, color );
+		lua_setfield ( state, -2, "COLOR_TRANSPARENT" );
+		
+		currentMaterial->Get ( AI_MATKEY_COLOR_REFLECTIVE, color );
+		MOAIAssimpUtil::PushColor ( state, color );
+		lua_setfield ( state, -2, "COLOR_REFLECTIVE" );
+		
+		MOAIAssimpUtil::PushTextureStack ( state, currentMaterial, aiTextureType_DIFFUSE );
+		lua_setfield ( state, -2, "TEXTURE_DIFFUSE" );
+		
+		MOAIAssimpUtil::PushTextureStack ( state, currentMaterial, aiTextureType_SPECULAR );
+		lua_setfield ( state, -2, "TEXTURE_SPECULAR" );
+		
+		MOAIAssimpUtil::PushTextureStack ( state, currentMaterial, aiTextureType_AMBIENT );
+		lua_setfield ( state, -2, "TEXTURE_AMBIENT" );
+		
+		MOAIAssimpUtil::PushTextureStack ( state, currentMaterial, aiTextureType_EMISSIVE );
+		lua_setfield ( state, -2, "TEXTURE_EMISSIVE" );
+		
+		MOAIAssimpUtil::PushTextureStack ( state, currentMaterial, aiTextureType_HEIGHT );
+		lua_setfield ( state, -2, "TEXTURE_HEIGHT" );
+		
+		MOAIAssimpUtil::PushTextureStack ( state, currentMaterial, aiTextureType_NORMALS );
+		lua_setfield ( state, -2, "TEXTURE_NORMALS" );
+		
+		MOAIAssimpUtil::PushTextureStack ( state, currentMaterial, aiTextureType_SHININESS );
+		lua_setfield ( state, -2, "TEXTURE_SHININESS" );
+		
+		MOAIAssimpUtil::PushTextureStack ( state, currentMaterial, aiTextureType_OPACITY );
+		lua_setfield ( state, -2, "TEXTURE_OPACITY" );
+		
+		MOAIAssimpUtil::PushTextureStack ( state, currentMaterial, aiTextureType_DISPLACEMENT );
+		lua_setfield ( state, -2, "TEXTURE_DISPLACEMENT" );
+		
+		MOAIAssimpUtil::PushTextureStack ( state, currentMaterial, aiTextureType_LIGHTMAP );
+		lua_setfield ( state, -2, "TEXTURE_LIGHTMAP" );
+		
+		MOAIAssimpUtil::PushTextureStack ( state, currentMaterial, aiTextureType_REFLECTION );
+		lua_setfield ( state, -2, "TEXTURE_REFLECTION" );
+		
+		ref.SetRef ( *this, state, -1 );
+		state.Pop ();
+	}
+	return &ref;
 }
 
 //----------------------------------------------------------------//
@@ -352,6 +559,7 @@ void MOAIAssimpScene::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "countMeshes",			_countMeshes },
 		{ "countTextures",			_countTextures },
 		{ "getCameras",				_getCameras },
+		{ "getMaterials",			_getMaterials },
 		{ "getMeshes",				_getMeshes },
 		{ "load",					_load },
 		{ NULL, NULL }

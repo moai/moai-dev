@@ -7,7 +7,9 @@
 #ifndef MOAIASSIMPSCENE_H
 #define MOAIASSIMPSCENE_H
 
-#include <moai-assimp/MOAIAssimpMesh.h>
+class MOAIAssimpCamera;
+class MOAIAssimpMesh;
+class MOAIAssimpSceneMember;
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -23,6 +25,13 @@ private:
 	const aiScene*		mScene;
 	Assimp::Importer*	mImporter;
 
+	ZLLeanArray < MOAILuaMemberRef >	mMaterials;
+	ZLLeanArray < MOAIAssimpCamera* >	mCameras;
+	ZLLeanArray < MOAIAssimpMesh* >		mMeshes;
+	
+	typedef STLList < MOAIAssimpSceneMember* >::iterator	SceneMembersIt;
+	STLList < MOAIAssimpSceneMember* >						mSceneMembers;
+
 	//----------------------------------------------------------------//
 	static int			_clear						( lua_State* L );
 	static int			_countAnimations			( lua_State* L );
@@ -32,6 +41,7 @@ private:
 	static int			_countMeshes				( lua_State* L );
 	static int			_countTextures				( lua_State* L );
 	static int			_getCameras					( lua_State* L );
+	static int			_getMaterials				( lua_State* L );
 	static int			_getMeshes					( lua_State* L );
 	static int			_load						( lua_State* L );
 
@@ -40,13 +50,16 @@ public:
 	DECL_LUA_FACTORY ( MOAIAssimpScene )
 
 	//----------------------------------------------------------------//
-	void							Clear							();
-	ZLResultCode					Load							( cc8* filename, u32 postProcessingFlags = 0 );
-	ZLResultCode					Load							( const MOAIAssimpScene& scene, u32 postProcessingFlags = 0 );
-									MOAIAssimpScene					();
-									~MOAIAssimpScene				();
-	void							RegisterLuaClass				( MOAILuaState& state );
-	void							RegisterLuaFuncs				( MOAILuaState& state );
+	void					Clear					();
+	MOAIAssimpCamera*		GetCamera				( size_t idx );
+	MOAILuaMemberRef*		GetMaterial				( size_t idx );
+	MOAIAssimpMesh*			GetMesh					( size_t idx );
+	ZLResultCode			Load					( cc8* filename, u32 postProcessingFlags = 0 );
+	ZLResultCode			Load					( const MOAIAssimpScene& scene, u32 postProcessingFlags = 0 );
+							MOAIAssimpScene			();
+							~MOAIAssimpScene		();
+	void					RegisterLuaClass		( MOAILuaState& state );
+	void					RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif
