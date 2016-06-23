@@ -5,7 +5,9 @@
 #define	MOAIXMLWRITER_H
 
 #if MOAI_WITH_TINYXML
-#include <tinyxml.h>
+
+typedef int* MOAITiXmlElement;
+typedef int* MOAITiXmlDocument;
 
 //================================================================//
 // MOAIXmlWriter
@@ -17,13 +19,15 @@ class MOAIXmlWriter {
 private:
 	
 	// current working node
-	TiXmlElement*				mCurrent;
+	//TiXmlElement*				mCurrent;
+	MOAITiXmlElement				mCurrent;
 
 	// document
-	TiXmlDocument				mDoc;
+	//TiXmlDocument				mDoc;
+	MOAITiXmlDocument				mDoc;
 
 	// list of nodes; used as a stack
-	STLList < TiXmlElement* >	mNodes;
+	STLList < MOAITiXmlElement >	mNodes;
 
 	//----------------------------------------------------------------//
 	//TODO: Add lua binding
