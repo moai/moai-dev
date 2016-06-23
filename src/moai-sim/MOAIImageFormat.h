@@ -39,10 +39,12 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-	virtual bool		CheckHeader					( const void* buffer ) = 0;
+	virtual bool		CheckHeader					( const void* buffer );
 	virtual bool		CreateTexture				( MOAISingleTexture& texture, const void* data, size_t size );
-	virtual size_t		GetHeaderSize				() = 0;
+	virtual size_t		GetHeaderSize				();
+	virtual size_t		GetHeaderGuessSize			();
 	virtual bool		GetTextureInfo				( ZLStream& stream, MOAITextureInfo& info );
+	virtual bool		GuessHeader					( const void* buffer );
 						MOAIImageFormat				();
 	virtual				~MOAIImageFormat			();
 	virtual bool		ReadImage					( MOAIImage& image, ZLStream& stream, u32 transform );

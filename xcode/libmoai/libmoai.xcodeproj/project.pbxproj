@@ -4362,6 +4362,34 @@
 		CDA0DCCB1A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = CDA0DCC41A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.h */; };
 		CDA0DCCC1A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDA0DCC51A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.mm */; };
 		CDA0DCCD1A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDA0DCC51A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.mm */; };
+		CDA1D06B1D1B75B20006C5E5 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5161561BCDC0BD000718FB /* host.h */; };
+		CDA1D06C1D1B75B20006C5E5 /* MOAIImageFormatPng.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5161581BCDC0BD000718FB /* MOAIImageFormatPng.h */; };
+		CDA1D06D1D1B75B20006C5E5 /* pngconf.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B5B13564CB0000ADC60 /* pngconf.h */; };
+		CDA1D06E1D1B75B20006C5E5 /* png.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B5A13564CB0000ADC60 /* png.h */; };
+		CDA1D06F1D1B75B20006C5E5 /* pngpriv.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B6013564CB0000ADC60 /* pngpriv.h */; };
+		CDA1D0711D1B75B20006C5E5 /* pngtrans.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B6713564CB0000ADC60 /* pngtrans.c */; };
+		CDA1D0721D1B75B20006C5E5 /* pngwrite.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B6913564CB0000ADC60 /* pngwrite.c */; };
+		CDA1D0731D1B75B20006C5E5 /* pngwtran.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B6A13564CB0000ADC60 /* pngwtran.c */; };
+		CDA1D0741D1B75B20006C5E5 /* pngerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B5C13564CB0000ADC60 /* pngerror.c */; };
+		CDA1D0751D1B75B20006C5E5 /* pngmem.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B5E13564CB0000ADC60 /* pngmem.c */; };
+		CDA1D0761D1B75B20006C5E5 /* pngrio.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B6213564CB0000ADC60 /* pngrio.c */; };
+		CDA1D0771D1B75B20006C5E5 /* png.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B5913564CB0000ADC60 /* png.c */; };
+		CDA1D0781D1B75B20006C5E5 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5161551BCDC0BD000718FB /* host.cpp */; };
+		CDA1D0791D1B75B20006C5E5 /* pngwio.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B6813564CB0000ADC60 /* pngwio.c */; };
+		CDA1D07A1D1B75B20006C5E5 /* pngset.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B6513564CB0000ADC60 /* pngset.c */; };
+		CDA1D07B1D1B75B20006C5E5 /* pngpread.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B5F13564CB0000ADC60 /* pngpread.c */; };
+		CDA1D07C1D1B75B20006C5E5 /* pngget.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B5D13564CB0000ADC60 /* pngget.c */; };
+		CDA1D07D1D1B75B20006C5E5 /* pngread.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B6113564CB0000ADC60 /* pngread.c */; };
+		CDA1D07E1D1B75B20006C5E5 /* pngrutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B6413564CB0000ADC60 /* pngrutil.c */; };
+		CDA1D07F1D1B75B20006C5E5 /* pngwutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B6B13564CB0000ADC60 /* pngwutil.c */; };
+		CDA1D0801D1B75B20006C5E5 /* pngrtran.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B6313564CB0000ADC60 /* pngrtran.c */; };
+		CDA1D0811D1B75B20006C5E5 /* MOAIImageFormatPng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5161571BCDC0BD000718FB /* MOAIImageFormatPng.cpp */; };
+		CDA1D08B1D1B75DE0006C5E5 /* tga_reader.c in Sources */ = {isa = PBXBuildFile; fileRef = CDA1D0891D1B75DE0006C5E5 /* tga_reader.c */; };
+		CDA1D0921D1B76360006C5E5 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA1D08E1D1B76360006C5E5 /* host.cpp */; };
+		CDA1D0931D1B76360006C5E5 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CDA1D08F1D1B76360006C5E5 /* host.h */; };
+		CDA1D0941D1B76360006C5E5 /* MOAIImageFormatTga.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA1D0901D1B76360006C5E5 /* MOAIImageFormatTga.cpp */; };
+		CDA1D0951D1B76360006C5E5 /* MOAIImageFormatTga.h in Headers */ = {isa = PBXBuildFile; fileRef = CDA1D0911D1B76360006C5E5 /* MOAIImageFormatTga.h */; };
+		CDA1D0CF1D1BE5CF0006C5E5 /* tga_reader.h in Headers */ = {isa = PBXBuildFile; fileRef = CDA1D0CE1D1BE5CF0006C5E5 /* tga_reader.h */; };
 		CDADCCF81A3576A10029FEDA /* MOAITrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDADCCF61A3576A10029FEDA /* MOAITrace.cpp */; };
 		CDADCCF91A3576A10029FEDA /* MOAITrace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDADCCF61A3576A10029FEDA /* MOAITrace.cpp */; };
 		CDADCCFA1A3576A10029FEDA /* MOAITrace.h in Headers */ = {isa = PBXBuildFile; fileRef = CDADCCF71A3576A10029FEDA /* MOAITrace.h */; };
@@ -8855,6 +8883,13 @@
 		CDA0DCC31A01B6F4002B71B6 /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-audio-sampler/host.h"; sourceTree = "<group>"; };
 		CDA0DCC41A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAudioSamplerCocoa.h; path = "moai-audio-sampler/MOAIAudioSamplerCocoa.h"; sourceTree = "<group>"; };
 		CDA0DCC51A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIAudioSamplerCocoa.mm; path = "moai-audio-sampler/MOAIAudioSamplerCocoa.mm"; sourceTree = "<group>"; };
+		CDA1D0881D1B75B20006C5E5 /* libmoai-osx-image-tga.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-image-tga.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDA1D0891D1B75DE0006C5E5 /* tga_reader.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tga_reader.c; path = ../../3rdparty/TGAReader/src/c/tga_reader.c; sourceTree = "<group>"; };
+		CDA1D08E1D1B76360006C5E5 /* host.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = host.cpp; path = "moai-image-tga/host.cpp"; sourceTree = "<group>"; };
+		CDA1D08F1D1B76360006C5E5 /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-image-tga/host.h"; sourceTree = "<group>"; };
+		CDA1D0901D1B76360006C5E5 /* MOAIImageFormatTga.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIImageFormatTga.cpp; path = "moai-image-tga/MOAIImageFormatTga.cpp"; sourceTree = "<group>"; };
+		CDA1D0911D1B76360006C5E5 /* MOAIImageFormatTga.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIImageFormatTga.h; path = "moai-image-tga/MOAIImageFormatTga.h"; sourceTree = "<group>"; };
+		CDA1D0CE1D1BE5CF0006C5E5 /* tga_reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tga_reader.h; path = "../../3rdparty/TGAReader-config/tga_reader.h"; sourceTree = "<group>"; };
 		CDA4B7AE1808AC61000129F9 /* libmoai-ios-billing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-billing.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDA4B8241808AC6E000129F9 /* libmoai-ios-chartboost.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-chartboost.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDA4B89A1808AC82000129F9 /* libmoai-ios-facebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-facebook.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -9490,6 +9525,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CDA1D0821D1B75B20006C5E5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CDA4B7A81808AC61000129F9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -9636,6 +9678,7 @@
 				CD795CBA17F0834F006AEB47 /* sdl */,
 				B0FC2A0616F4004900796249 /* sfmt */,
 				03240BA213564CB0000ADC60 /* sqlite */,
+				CDA1D0681D1B75850006C5E5 /* targa */,
 				03240BA613564CB0000ADC60 /* tinyxml */,
 				07658749145CD04800723A7D /* tlsf */,
 				CD07C10013A14B5100C9386C /* untz */,
@@ -9841,6 +9884,7 @@
 				CD515F4D1BCDBB5D000718FB /* moai-image-jpg */,
 				CD515F4F1BCDBB6F000718FB /* moai-image-png */,
 				CD515F4E1BCDBB67000718FB /* moai-image-pvr */,
+				CDA1D08D1D1B761D0006C5E5 /* moai-image-tga */,
 				CD515F4C1BCDBB52000718FB /* moai-image-webp */,
 				CD2B7C2E17FA564B00EBA2DB /* moai-ios */,
 				CD27BDFF191D9E04000A7770 /* moai-ios-adcolony */,
@@ -9947,6 +9991,7 @@
 				CD320F5D1C517A0E00AD5E5C /* libmoai-osx-harfbuzz.a */,
 				CD7852BE1D18C648003F15D0 /* libmoai-osx-3rdparty-assimp.a */,
 				CD7852CD1D18C669003F15D0 /* libmoai-osx-assimp.a */,
+				CDA1D0881D1B75B20006C5E5 /* libmoai-osx-image-tga.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -14363,6 +14408,26 @@
 			name = "moai-audio-sampler";
 			sourceTree = "<group>";
 		};
+		CDA1D0681D1B75850006C5E5 /* targa */ = {
+			isa = PBXGroup;
+			children = (
+				CDA1D0891D1B75DE0006C5E5 /* tga_reader.c */,
+				CDA1D0CE1D1BE5CF0006C5E5 /* tga_reader.h */,
+			);
+			name = targa;
+			sourceTree = "<group>";
+		};
+		CDA1D08D1D1B761D0006C5E5 /* moai-image-tga */ = {
+			isa = PBXGroup;
+			children = (
+				CDA1D08E1D1B76360006C5E5 /* host.cpp */,
+				CDA1D08F1D1B76360006C5E5 /* host.h */,
+				CDA1D0901D1B76360006C5E5 /* MOAIImageFormatTga.cpp */,
+				CDA1D0911D1B76360006C5E5 /* MOAIImageFormatTga.h */,
+			);
+			name = "moai-image-tga";
+			sourceTree = "<group>";
+		};
 		CDA4B7331808AB19000129F9 /* moai-ios-billing */ = {
 			isa = PBXGroup;
 			children = (
@@ -15083,6 +15148,7 @@
 				CDADCCFA1A3576A10029FEDA /* MOAITrace.h in Headers */,
 				89BE6CFE1739A42500DFE837 /* host.h in Headers */,
 				CD0BB63F1B0D22AC00399FCB /* MOAILuaUtil.h in Headers */,
+				CDA1D0CF1D1BE5CF0006C5E5 /* tga_reader.h in Headers */,
 				89BE6D021739A42500DFE837 /* MOAIDataBuffer.h in Headers */,
 				89BE6D061739A42500DFE837 /* MOAIDataBufferStream.h in Headers */,
 				89BE6D0A1739A42500DFE837 /* MOAIDataIOTask.h in Headers */,
@@ -17416,6 +17482,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CDA1D06A1D1B75B20006C5E5 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDA1D0951D1B76360006C5E5 /* MOAIImageFormatTga.h in Headers */,
+				CDA1D0931D1B76360006C5E5 /* host.h in Headers */,
+				CDA1D06B1D1B75B20006C5E5 /* host.h in Headers */,
+				CDA1D06C1D1B75B20006C5E5 /* MOAIImageFormatPng.h in Headers */,
+				CDA1D06D1D1B75B20006C5E5 /* pngconf.h in Headers */,
+				CDA1D06E1D1B75B20006C5E5 /* png.h in Headers */,
+				CDA1D06F1D1B75B20006C5E5 /* pngpriv.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CDA4B73A1808AC61000129F9 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -18686,6 +18766,23 @@
 			productReference = CDA0DCA31A01B184002B71B6 /* libmoai-osx-audio-sampler.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		CDA1D0691D1B75B20006C5E5 /* libmoai-osx-image-tga */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CDA1D0831D1B75B20006C5E5 /* Build configuration list for PBXNativeTarget "libmoai-osx-image-tga" */;
+			buildPhases = (
+				CDA1D06A1D1B75B20006C5E5 /* Headers */,
+				CDA1D0701D1B75B20006C5E5 /* Sources */,
+				CDA1D0821D1B75B20006C5E5 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-osx-image-tga";
+			productName = OpenUSLS;
+			productReference = CDA1D0881D1B75B20006C5E5 /* libmoai-osx-image-tga.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		CDA4B7391808AC61000129F9 /* libmoai-ios-billing */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CDA4B7A91808AC61000129F9 /* Build configuration list for PBXNativeTarget "libmoai-ios-billing" */;
@@ -19054,6 +19151,7 @@
 				CD515F101BCDB440000718FB /* libmoai-osx-image-jpg */,
 				CD515F1F1BCDB45B000718FB /* libmoai-osx-image-png */,
 				CD515F2E1BCDB467000718FB /* libmoai-osx-image-pvr */,
+				CDA1D0691D1B75B20006C5E5 /* libmoai-osx-image-tga */,
 				CD515F3D1BCDB473000718FB /* libmoai-osx-image-webp */,
 				CDD06BD5139882D900AB0420 /* libmoai-osx-luaext */,
 				CD42F2D61A60A7CC001B6D72 /* libmoai-osx-sdl */,
@@ -21841,6 +21939,33 @@
 			files = (
 				CDA0DCC71A01B6F4002B71B6 /* host.cpp in Sources */,
 				CDA0DCCD1A01B6F4002B71B6 /* MOAIAudioSamplerCocoa.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDA1D0701D1B75B20006C5E5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDA1D0711D1B75B20006C5E5 /* pngtrans.c in Sources */,
+				CDA1D08B1D1B75DE0006C5E5 /* tga_reader.c in Sources */,
+				CDA1D0721D1B75B20006C5E5 /* pngwrite.c in Sources */,
+				CDA1D0731D1B75B20006C5E5 /* pngwtran.c in Sources */,
+				CDA1D0741D1B75B20006C5E5 /* pngerror.c in Sources */,
+				CDA1D0941D1B76360006C5E5 /* MOAIImageFormatTga.cpp in Sources */,
+				CDA1D0751D1B75B20006C5E5 /* pngmem.c in Sources */,
+				CDA1D0761D1B75B20006C5E5 /* pngrio.c in Sources */,
+				CDA1D0771D1B75B20006C5E5 /* png.c in Sources */,
+				CDA1D0781D1B75B20006C5E5 /* host.cpp in Sources */,
+				CDA1D0791D1B75B20006C5E5 /* pngwio.c in Sources */,
+				CDA1D07A1D1B75B20006C5E5 /* pngset.c in Sources */,
+				CDA1D07B1D1B75B20006C5E5 /* pngpread.c in Sources */,
+				CDA1D07C1D1B75B20006C5E5 /* pngget.c in Sources */,
+				CDA1D0921D1B76360006C5E5 /* host.cpp in Sources */,
+				CDA1D07D1D1B75B20006C5E5 /* pngread.c in Sources */,
+				CDA1D07E1D1B75B20006C5E5 /* pngrutil.c in Sources */,
+				CDA1D07F1D1B75B20006C5E5 /* pngwutil.c in Sources */,
+				CDA1D0801D1B75B20006C5E5 /* pngrtran.c in Sources */,
+				CDA1D0811D1B75B20006C5E5 /* MOAIImageFormatPng.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -30062,6 +30187,170 @@
 			};
 			name = Distribution;
 		};
+		CDA1D0841D1B75B20006C5E5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"../../3rdparty/TGAReader-config",
+					../../3rdparty/TGAReader/src/c,
+				);
+				PRODUCT_NAME = "moai-osx-image-tga";
+				SDKROOT = macosx;
+				WARNING_CFLAGS = "-w";
+			};
+			name = Debug;
+		};
+		CDA1D0851D1B75B20006C5E5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"../../3rdparty/TGAReader-config",
+					../../3rdparty/TGAReader/src/c,
+				);
+				PRODUCT_NAME = "moai-osx-image-tga";
+				SDKROOT = macosx;
+				WARNING_CFLAGS = "-w";
+			};
+			name = Release;
+		};
+		CDA1D0861D1B75B20006C5E5 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"../../3rdparty/TGAReader-config",
+					../../3rdparty/TGAReader/src/c,
+				);
+				PRODUCT_NAME = "moai-osx-image-tga";
+				SDKROOT = macosx;
+				WARNING_CFLAGS = "-w";
+			};
+			name = AdHoc;
+		};
+		CDA1D0871D1B75B20006C5E5 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"../../3rdparty/TGAReader-config",
+					../../3rdparty/TGAReader/src/c,
+				);
+				PRODUCT_NAME = "moai-osx-image-tga";
+				SDKROOT = macosx;
+				WARNING_CFLAGS = "-w";
+			};
+			name = Distribution;
+		};
 		CDA4B7AA1808AC61000129F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -33313,6 +33602,17 @@
 				CDA0DCA01A01B184002B71B6 /* Release */,
 				CDA0DCA11A01B184002B71B6 /* AdHoc */,
 				CDA0DCA21A01B184002B71B6 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CDA1D0831D1B75B20006C5E5 /* Build configuration list for PBXNativeTarget "libmoai-osx-image-tga" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CDA1D0841D1B75B20006C5E5 /* Debug */,
+				CDA1D0851D1B75B20006C5E5 /* Release */,
+				CDA1D0861D1B75B20006C5E5 /* AdHoc */,
+				CDA1D0871D1B75B20006C5E5 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

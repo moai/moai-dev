@@ -30,7 +30,7 @@ vertexFormat:declareUV ( 2, MOAIVertexFormat.GL_FLOAT, 2 )
 vertexFormat:declareColor ( 3, MOAIVertexFormat.GL_UNSIGNED_BYTE )
 
 aiScene = MOAIAssimpScene.new ()
-aiScene:load ( 'collada/duck.dae',
+aiScene:load ( '../../3rdparty/assimp/test/models/collada/duck.dae',
 	MOAIAssimpScene.TRIANGULATE,
 	MOAIAssimpScene.FLIP_UVS
 )
@@ -65,7 +65,7 @@ for i, aiMesh in ipairs ( aiMeshes ) do
 	mesh:setBounds ( vbo:computeBounds ( vertexFormat ))
 	mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
 	mesh:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.MESH_SHADER ))
-	mesh:setTexture ( 'collada/duckCM.png' )
+	mesh:setTexture ( '../../3rdparty/assimp/test/models/collada/duckCM.tga' )
 	
 	local prop = MOAIProp.new ()
 	prop:setDeck ( mesh )

@@ -23,7 +23,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	MOAIImageFormat*		FindFormat					( cc8* name );
-	MOAIImageFormat*		FindFormat					( ZLStream& stream );
+	MOAIImageFormat*		FindFormat					( ZLStream& stream, cc8* name = 0 );
 							MOAIImageFormatMgr			();
 							~MOAIImageFormatMgr			();
 	

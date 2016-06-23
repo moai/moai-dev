@@ -2955,7 +2955,7 @@ bool MOAIImage::Load ( cc8* filename, u32 transform ) {
 	
 	ZLFileStream stream;
 	if ( stream.OpenRead ( filename )) {
-		this->Load ( stream, transform );
+		this->Load ( stream, transform ); // TODO: use file extension as name
 		stream.Close ();
 		this->OnImageStatusChanged ( this->IsOK ());
 	}
@@ -2972,7 +2972,7 @@ bool MOAIImage::Load ( ZLStream& stream, u32 transform ) {
 
 	this->Clear ();
 	
-	MOAIImageFormat* format = MOAIImageFormatMgr::Get ().FindFormat ( stream );
+	MOAIImageFormat* format = MOAIImageFormatMgr::Get ().FindFormat ( stream ); // TODO: make use of name
 	if ( format ) {
 		format->ReadImage ( *this, stream, transform );
 		this->OnImageStatusChanged ( this->IsOK ());

@@ -70,6 +70,10 @@
 	#include <moai-image-pvr/host.h>
 #endif
 
+#if AKU_WITH_IMAGE_TGA
+	#include <moai-image-tga/host.h>
+#endif
+
 #if AKU_WITH_IMAGE_WEBP
 	#include <moai-image-webp/host.h>
 #endif

@@ -23,6 +23,12 @@ void MOAIImageFormat::CleanupTexture ( MOAISingleTexture& texture ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIImageFormat::CheckHeader ( const void* buffer ) {
+
+	return false;
+}
+
+//----------------------------------------------------------------//
 bool MOAIImageFormat::CreateTexture ( MOAISingleTexture& texture, const void* data, size_t size ) {
 	UNUSED ( texture );
 	UNUSED ( data );
@@ -44,6 +50,18 @@ void* MOAIImageFormat::GetBitmapMutable ( MOAIImage& image ) const {
 }
 
 //----------------------------------------------------------------//
+size_t MOAIImageFormat::GetHeaderSize () {
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+size_t MOAIImageFormat::GetHeaderGuessSize () {
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 const void* MOAIImageFormat::GetRowAddr ( const MOAIImage& image, u32 y ) const {
 
 	return image.GetRowAddr ( y );
@@ -60,6 +78,12 @@ bool MOAIImageFormat::GetTextureInfo ( ZLStream& stream, MOAITextureInfo& info )
 	UNUSED ( stream );
 	UNUSED ( info );
 	
+	return false;
+}
+
+//----------------------------------------------------------------//
+bool MOAIImageFormat::GuessHeader ( const void* buffer ) {
+
 	return false;
 }
 

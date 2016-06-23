@@ -57,6 +57,10 @@
 		#define AKU_WITH_IMAGE_PVR 1
 	#endif
 
+	#ifndef AKU_WITH_IMAGE_TGA
+		#define AKU_WITH_IMAGE_TGA 0
+	#endif
+
 	#ifndef AKU_WITH_IMAGE_WEBP
 		#define AKU_WITH_IMAGE_WEBP 1
 	#endif

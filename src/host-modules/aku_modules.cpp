@@ -275,6 +275,10 @@ int AKUModulesContextInitialize () {
 		AKUImagePvrContextInitialize ();
 	#endif
 
+	#if AKU_WITH_IMAGE_TGA
+		AKUImageTgaContextInitialize ();
+	#endif
+
 	#if AKU_WITH_IMAGE_WEBP
 		AKUImageWebPContextInitialize ();
 	#endif
