@@ -90,7 +90,7 @@
 		mWidth = 0;
 		mHeight = 0;
 
-        glBindFramebufferOES ( GL_FRAMEBUFFER_OES, nil );
+        glBindFramebufferOES ( GL_FRAMEBUFFER_OES, 0 );
 
 		// set us up the frame buffers
 	    glGenFramebuffersOES ( 1, &mFramebuffer );
