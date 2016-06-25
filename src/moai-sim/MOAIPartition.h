@@ -73,9 +73,10 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			Clear					();
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
 	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
 	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLVec3D& point, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, ZLRect rect, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
 	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, ZLBox box, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
 	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLFrustum& frustum, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
 	void			InsertProp				( MOAIProp& prop );

@@ -618,7 +618,7 @@ int zl_fputs ( const char* string, ZLFILE* fp ) {
 
 	if (( fp == 0 ) || ( fp == zl_stdout )) {
 
-		zl_puts ( string );
+		zl_printf ( "%s", string );
 	}
 	else {
 

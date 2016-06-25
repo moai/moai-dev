@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIPath.h>
-#include <moai-sim/MOAIGfxMgr.h>
 
 #define DEFAULT_FLATNESS 0.125f
 #define DEFAULT_ANGLE 15.0f

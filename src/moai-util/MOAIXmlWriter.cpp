@@ -7,6 +7,8 @@
 SUPPRESS_EMPTY_FILE_WARNING
 #if MOAI_WITH_TINYXML
 
+#include <tinyxml.h>
+
 //================================================================//
 // local
 //================================================================//
@@ -18,27 +20,27 @@ SUPPRESS_EMPTY_FILE_WARNING
 //----------------------------------------------------------------//
 void MOAIXmlWriter::AddAttribute ( cc8* name, cc8* value ) {
 
-	if ( mCurrent ) {
+	if ( this->mCurrent ) {
 
-		mCurrent->SetAttribute ( name, value );
+		(( TiXmlElement* )this->mCurrent )->SetAttribute ( name, value );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIXmlWriter::AddAttribute ( cc8* name, int value ) {
 	
-	if ( mCurrent ) {
+	if ( this->mCurrent ) {
 
-		mCurrent->SetAttribute ( name, value );
+		(( TiXmlElement* )this->mCurrent )->SetAttribute ( name, value );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIXmlWriter::AddAttribute ( cc8* name, double value ) {
 	
-	if ( mCurrent ) {
+	if ( this->mCurrent ) {
 
-		mCurrent->SetDoubleAttribute ( name, value );
+		(( TiXmlElement* )this->mCurrent )->SetDoubleAttribute ( name, value );
 	}
 }
 
@@ -46,16 +48,16 @@ void MOAIXmlWriter::AddAttribute ( cc8* name, double value ) {
 void MOAIXmlWriter::AddElement ( cc8* name ) {
 
     TiXmlElement* newEle = new TiXmlElement ( name );
-	if ( mCurrent ) {
+	if ( this->mCurrent ) {
 		
-		mNodes.push_back ( mCurrent );
-		mCurrent->LinkEndChild ( newEle );
+		mNodes.push_back ( this->mCurrent );
+		(( TiXmlElement* )this->mCurrent )->LinkEndChild ( newEle );
 
 	} else {
 
-		mDoc.LinkEndChild ( newEle );
+		(( TiXmlDocument* )this->mDoc )->LinkEndChild ( newEle );
 	}
-	mCurrent = newEle;
+	this->mCurrent = ( MOAITiXmlElement )newEle;
 }
 
 //----------------------------------------------------------------//
@@ -64,7 +66,7 @@ void MOAIXmlWriter::AddText ( cc8* text ) {
 	if ( mCurrent ) {
 		
 		TiXmlText* textEle = new TiXmlText ( text );
-		mCurrent->LinkEndChild ( textEle );
+		(( TiXmlElement* )this->mCurrent )->LinkEndChild ( textEle );
 	}
 }
 
@@ -85,21 +87,23 @@ void MOAIXmlWriter::CloseElement ( ) {
 MOAIXmlWriter::MOAIXmlWriter () :
 	mCurrent ( 0 ) {
 
-	TiXmlDeclaration* decl = new TiXmlDeclaration ( "1.0", "UTF-8", "");
-	mDoc.LinkEndChild ( decl );
+	TiXmlDocument* doc = new TiXmlDocument ();
+	doc->LinkEndChild ( new TiXmlDeclaration ( "1.0", "UTF-8", "" ));
+	this->mDoc = ( MOAITiXmlDocument )doc;
 }
 
 //----------------------------------------------------------------//
 MOAIXmlWriter::~MOAIXmlWriter () {
 
 	// once nodes are passed off to tiny xml, it cleans up memory in the following call.
-	mDoc.Clear ();
+	(( TiXmlDocument* )this->mDoc )->Clear ();
+	delete (( TiXmlDocument* )this->mDoc );
 }
 
 //----------------------------------------------------------------//
 void MOAIXmlWriter::SaveDocument ( cc8* filename ) {
 
-	mDoc.SaveFile ( filename );
+	(( TiXmlDocument* )this->mDoc )->SaveFile ( filename );
 }
 
 #endif

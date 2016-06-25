@@ -19,6 +19,11 @@ int MOAILuaObject::_gc ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 	MOAILuaObject* self = ( MOAILuaObject* )state.GetPtrUserData ( 1 );
+	
+	//edgecase: ignore _gc() called by previous Lua Userdata
+	self->mActiveUserdataCount -- ;
+	if ( self->mActiveUserdataCount > 0 ) return 0;
+	
 	self->mCollected = true;
 	
 	if ( MOAILuaRuntime::IsValid ()) {
@@ -223,6 +228,7 @@ void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 	// and take a weak ref back to the userdata	
 	this->mUserdata.SetRef ( state, -1 );
 	assert ( this->mUserdata );
+	this->mActiveUserdataCount ++;
 	
 	// NOTE: we have to do this *after* mUserdata has been initialized as LuaRetain calls PushLuaUserdata
 	// which in turn calls BindToLua if there is no mUserdata...
@@ -315,7 +321,10 @@ void MOAILuaObject::LuaRelease ( MOAILuaObject* object ) {
 				u32 count = state.GetValue < u32 >( -1, 0 ); // get the count (or 0)
 				lua_pop ( state, 1 ); // pop the old count
 				
-				if ( count == 0 ) return; // do nothing
+				if ( count == 0 ) {
+					lua_pop ( state, 2 ); // pop userdata && ref table
+					return; // do nothing
+				}
 				
 				if ( count > 1 ) {
 					lua_pushnumber ( state, count - 1 ); // push the new count
@@ -327,6 +336,7 @@ void MOAILuaObject::LuaRelease ( MOAILuaObject* object ) {
 				// this should make the object eligible for garbage collection
 				lua_settable ( state, -3 ); // save it in the table
 			}
+			lua_pop ( state, 1 ); //pop ref table
 		}
 	}
 	
@@ -364,12 +374,14 @@ void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 			lua_pushnumber ( state, count + 1 ); // push the new count
 			lua_settable ( state, -3 ); // save it in the table
 		}
+		lua_pop ( state, 1 ); //pop ref table
 	}
 }
 
 //----------------------------------------------------------------//
 MOAILuaObject::MOAILuaObject ():
-	mCollected ( false ) {
+	mCollected ( false ),
+	mActiveUserdataCount ( 0 ) {
 	RTTI_SINGLE ( RTTIBase )
 	
 	if ( MOAILuaRuntime::IsValid ()) {

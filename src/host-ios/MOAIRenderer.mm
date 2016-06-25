@@ -306,7 +306,7 @@
         float scale = 1;
 
 		if ([[ UIScreen mainScreen ] respondsToSelector:@selector ( scale )]) {
-			scale = [[ UIScreen mainScreen ] scale];
+			scale = [[ UIScreen mainScreen ] scale ];
 		}
     
         CGSize size = layer.bounds.size;

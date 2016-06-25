@@ -427,11 +427,11 @@ public:
 
 		m[C1_R0]	= (cz*sy*sx)+(-sz*cx);
 		m[C1_R1]	= (sz*sy*sx)+(cz*cx);
-		m[C1_R2]	= cy;
+		m[C1_R2]	= ( cy * sx );
 
 		m[C2_R0]	= (cz*sy*cx)+(-sz*-sx);
 		m[C2_R1]	= (sz*sy*cx)+(cz*-sx);
-		m[C2_R2]	= cy;
+		m[C2_R2]	= ( cy * cx );
 
 		m[C3_R0]	= 0.0f;
 		m[C3_R1]	= 0.0f;

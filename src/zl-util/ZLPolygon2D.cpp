@@ -359,7 +359,7 @@ ZLSizeResult ZLPolygon2D::MonotoneChain ( ZLVec2D* hull, ZLVec2D* points, size_t
 				radixBuffer [ i ].mKey = ZLFloat::FloatToIntKey (( p.mX * ( float )nPoints ) + p.mY ); // sort by x then y
 			}
 
-			radixBuffer = RadixSort32 < ZLRadixVec2D >( radixBuffer, swapBuffer, nPoints );
+			radixBuffer = RadixSort32 < ZLRadixVec2D >( radixBuffer, swapBuffer, ( u32 )nPoints );
 			
 			for ( size_t i = 0; i < nPoints; ++i ) {
 				points [ i ] = radixBuffer [ i ].mData;

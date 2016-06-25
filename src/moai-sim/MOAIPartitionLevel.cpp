@@ -38,15 +38,6 @@ void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask, u32 queryMask ) {
-	
-	size_t totalCells = this->mCells.Size ();
-	for ( size_t i = 0; i < totalCells; ++i ) {
-		this->mCells [ i ].GatherProps ( results, ignoreProp, point, orientation, interfaceMask, queryMask );
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLVec3D& point, u32 planeID, u32 interfaceMask, u32 queryMask ) {
 
 	ZLVec2D cellPoint ( 0.0f, 0.0f );
@@ -81,6 +72,43 @@ void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord.mX + x, coord.mY - y );
 			int addr = this->mGridSpace.GetCellAddr ( offset );
 			this->mCells [ addr ].GatherProps ( results, ignoreProp, point, interfaceMask, queryMask );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask, u32 queryMask ) {
+	
+	// TODO: this is so lazy; fix it to use the plane and step through the proper cells
+	size_t totalCells = this->mCells.Size ();
+	for ( size_t i = 0; i < totalCells; ++i ) {
+		this->mCells [ i ].GatherProps ( results, ignoreProp, point, orientation, interfaceMask, queryMask );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLRect& rect, u32 interfaceMask, u32 queryMask ) {
+
+	float halfSize = this->mCellSize * 0.5f;
+
+	MOAICellCoord coord0 = this->mGridSpace.GetCellCoord ( rect.mXMin - halfSize, rect.mYMin - halfSize );
+	MOAICellCoord coord1 = this->mGridSpace.GetCellCoord ( rect.mXMax + halfSize, rect.mYMax + halfSize );
+
+	int xTotal = coord1.mX - coord0.mX + 1;
+	int yTotal = coord1.mY - coord0.mY + 1;
+	
+	int width = this->mGridSpace.GetWidth ();
+	int height = this->mGridSpace.GetHeight ();
+	
+	if ( xTotal > width ) xTotal = width;
+	if ( yTotal > height ) yTotal = height;
+
+	for ( int y = 0; y < yTotal; ++y ) {
+		for ( int x = 0; x < xTotal; ++x ) {
+			
+			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord0.mX + x, coord0.mY + y );
+			u32 addr = this->mGridSpace.GetCellAddr ( offset );
+			this->mCells [ addr ].GatherProps ( results, ignoreProp, rect, interfaceMask, queryMask );
 		}
 	}
 }

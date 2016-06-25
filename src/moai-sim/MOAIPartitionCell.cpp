@@ -40,21 +40,6 @@ void MOAIPartitionCell::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLev
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignoreProp, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask, u32 queryMask ) {
-	PropIt propIt = this->mProps.Head ();
-	for ( ; propIt; propIt = propIt->Next ()) {
-		MOAIProp* prop = propIt->Data ();
-		
-		float t;
-		if (( prop != ignoreProp ) && ( prop->mInterfaceMask & interfaceMask ) && ( prop->mQueryMask & queryMask )) {
-			if ( !ZLSect::RayToBox( prop->mWorldBounds, point, orientation, t )) {
-				prop->AddToSortBuffer ( results, ZLFloat::FloatToIntKey ( t ));
-			}
-		}
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignoreProp, u32 interfaceMask, u32 queryMask ) {
 	
 	PropIt propIt = this->mProps.Head ();
@@ -79,6 +64,37 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const 
 				if ( prop->Inside ( point, 0.0f )) {
 					prop->AddToSortBuffer ( results );
 				}
+			}
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignoreProp, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask, u32 queryMask ) {
+	PropIt propIt = this->mProps.Head ();
+	for ( ; propIt; propIt = propIt->Next ()) {
+		MOAIProp* prop = propIt->Data ();
+		
+		float t;
+		if (( prop != ignoreProp ) && ( prop->mInterfaceMask & interfaceMask ) && ( prop->mQueryMask & queryMask )) {
+			if ( !ZLSect::RayToBox( prop->mWorldBounds, point, orientation, t )) {
+				prop->AddToSortBuffer ( results, ZLFloat::FloatToIntKey ( t ));
+			}
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignoreProp, const ZLRect& rect, u32 interfaceMask, u32 queryMask ) {
+
+	PropIt propIt = this->mProps.Head ();
+	for ( ; propIt; propIt = propIt->Next ()) {
+		MOAIProp* prop = propIt->Data ();
+		
+		if (( prop != ignoreProp ) && ( prop->mInterfaceMask & interfaceMask ) && ( prop->mQueryMask & queryMask )) {
+			ZLRect bounds = prop->mWorldBounds.GetRect ( ZLBox::PLANE_XY );
+			if ( bounds.Overlap ( rect )) {
+				prop->AddToSortBuffer ( results );
 			}
 		}
 	}
