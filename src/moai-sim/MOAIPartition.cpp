@@ -39,7 +39,7 @@ int MOAIPartition::_getInterfaceMask ( lua_State* L ) {
 	if ( typeID ) {
 		interfaceMask = self->GetInterfaceMask ( typeID );
 	}
-	state.Push ( typeID );
+	state.Push ( interfaceMask );
 	return 1;
 }
 

@@ -289,8 +289,6 @@ int MOAIBitmapFontReader::RenderGlyph ( MOAIImage& image, float x, float y, cons
 	destRect.mXMax = destRect.mXMin + ( int )bitmapGlyph.mSrcRect.Width ();
 	destRect.mYMax = destRect.mYMin + ( int )bitmapGlyph.mSrcRect.Height ();
 	
-	y -= bitmapGlyph.mBase;
-	
 	image.CopyRect (
 		this->mCurrentPage->mImage,
 		bitmapGlyph.mSrcRect,

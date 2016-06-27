@@ -191,10 +191,6 @@ int MOAIImage::_convolve ( lua_State* L ) {
 				state.Pop ();
 			}
 			
-			for ( int x = 0; x < kernelWidth * kernelHeight; ++x ) {
-				printf ( "kernel: %f\n", kernel [ x ]);
-			}
-			
 			if ( normalize ) {
 				ZLFloat::Normalize ( kernel, kernelWidth * kernelHeight );
 			}

@@ -704,8 +704,7 @@ void MOAIVertexFormat::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seri
 		this->mAttributeIDsByUse [ i ].Init ( nAttributesByUse );
 		
 		for ( u32 j = 0; j < nAttributesByUse; ++j ) {
-		
-			u32 attributeID = this->mAttributeIDsByUse [ i ][ j ];
+			
 			this->mAttributeIDsByUse [ i ][ j ] = state.GetField < u32 >( -1, j + 1, 0 );
 		}
 		state.Pop ();

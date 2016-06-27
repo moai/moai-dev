@@ -39,7 +39,7 @@ bool MOAIImageFormatTga::GuessHeader ( const void* buffer ) {
 	uint	width			= ( uint )bytes [ 12 ] + (( uint )bytes [ 13 ] * 256 );
 	uint	height			= ( uint )bytes [ 14 ] + (( uint )bytes [ 15 ] * 256 );
 	uint	pixelSize		= ( uint )bytes [ 16 ];
-	uint	attBits			= ( uint )bytes [ 17 ] & 0xf;
+	//uint	attBits			= ( uint )bytes [ 17 ] & 0xf;
 	uint	intrLve			= (( uint )bytes [ 17 ] & 0xc0 ) >> 6;
 
 	if ( !(( coMapType == 0 ) || ( coMapType == 1 ))) return false;
