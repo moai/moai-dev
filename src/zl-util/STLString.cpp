@@ -206,10 +206,10 @@ void STLString::write_var ( cc8* format, va_list args ) {
 	char buffer [ 1024 ];
 	char* str = zl_vsnprintf_alloc ( buffer, sizeof ( buffer ), format, args );
 	
-	this->append ( buffer );
+	this->append ( str );
 	
 	if ( buffer != str ) {
-		free ( buffer );
+		free ( str );
 	}
 }
 
