@@ -231,7 +231,6 @@ MOAISerializerBase::ObjID MOAISerializer::AffirmMemberID ( MOAILuaState& state, 
 		
 		MOAISerializerObjectInfo& objectInfo = this->mObjectInfoTable [ memberID ];
 		
-		u32 top = state.GetTop ();
 		this->PushLuaUserdata ( state );
 		
 		if ( state.GetFieldWithType ( -1, "getObjectTables", LUA_TFUNCTION )) {
@@ -249,7 +248,6 @@ MOAISerializerBase::ObjID MOAISerializer::AffirmMemberID ( MOAILuaState& state, 
 			}
 		}
 		state.Pop ( 1 );
-		top = state.GetTop ();
 	}
 	else if ( state.IsType ( idx, LUA_TTABLE )) {
 		

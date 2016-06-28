@@ -5,6 +5,7 @@
 #define	ZLPARSER_H
 
 #include <zl-util/STLList.h>
+#include <zl-util/STLString.h>
 #include <zl-util/ZLCgt.h>
 
 class ZLLexStream;
@@ -16,12 +17,12 @@ class ZLSyntaxNode;
 class ZLDfaToken {
 public:
 
-	ZLCgtSymbol		mSymbol;		// Copy of symbol this token matches
-	string			mData;			// The token string
-	u16				mLALRStateID;	// ID of the state
-	ZLSyntaxNode*	mSyntaxNode;
+	ZLCgtSymbol			mSymbol;		// Copy of symbol this token matches
+	STLString			mData;			// The token string
+	u16					mLALRStateID;	// ID of the state
+	ZLSyntaxNode*		mSyntaxNode;
 	
-	u32				mLine;
+	u32					mLine;
 	
 	//----------------------------------------------------------------//
 	ZLDfaToken ();

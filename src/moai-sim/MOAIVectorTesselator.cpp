@@ -1257,9 +1257,9 @@ void MOAIVectorTesselator::WriteVertex ( ZLStream& stream, MOAIVertexFormat& for
 		stream.SetCursor ( base );
 	}
 	
-	format.WriteCoord ( stream, x, y, z, 1.0f );
-	format.WriteColor ( stream, color );
-	format.WriteNormal ( stream, xn, yn, zn );
+	format.WriteCoord ( stream, 0, x, y, z, 1.0f );
+	format.WriteColor ( stream, 0, color );
+	format.WriteNormal ( stream, 0, xn, yn, zn );
 	
 	// next vertex
 	format.SeekVertex ( stream, base, 1 );

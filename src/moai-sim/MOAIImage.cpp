@@ -191,10 +191,6 @@ int MOAIImage::_convolve ( lua_State* L ) {
 				state.Pop ();
 			}
 			
-			for ( int x = 0; x < kernelWidth * kernelHeight; ++x ) {
-				printf ( "kernel: %f\n", kernel [ x ]);
-			}
-			
 			if ( normalize ) {
 				ZLFloat::Normalize ( kernel, kernelWidth * kernelHeight );
 			}
@@ -2091,8 +2087,8 @@ void MOAIImage::DrawLine(int p1x, int p1y, int p2x, int p2y, u32 color)
 	
 	// Swap points if p1 is on the right of p2
     if ( p1x > p2x ) {
-        swap ( p1x, p2x );
-        swap ( p1y, p2y );
+        std::swap ( p1x, p2x );
+        std::swap ( p1y, p2y );
     }
 	
     // Handle trivial cases separately for algorithm speed up.
@@ -2101,7 +2097,7 @@ void MOAIImage::DrawLine(int p1x, int p1y, int p2x, int p2y, u32 color)
 	
 		// Swap y-coordinates if p1 is above p2
         if (p1y > p2y) {
-            swap ( p1y, p2y );
+            std::swap ( p1y, p2y );
         }
 		
         x = p1x;
@@ -2955,7 +2951,7 @@ bool MOAIImage::Load ( cc8* filename, u32 transform ) {
 	
 	ZLFileStream stream;
 	if ( stream.OpenRead ( filename )) {
-		this->Load ( stream, transform );
+		this->Load ( stream, transform ); // TODO: use file extension as name
 		stream.Close ();
 		this->OnImageStatusChanged ( this->IsOK ());
 	}
@@ -2972,7 +2968,7 @@ bool MOAIImage::Load ( ZLStream& stream, u32 transform ) {
 
 	this->Clear ();
 	
-	MOAIImageFormat* format = MOAIImageFormatMgr::Get ().FindFormat ( stream );
+	MOAIImageFormat* format = MOAIImageFormatMgr::Get ().FindFormat ( stream ); // TODO: make use of name
 	if ( format ) {
 		format->ReadImage ( *this, stream, transform );
 		this->OnImageStatusChanged ( this->IsOK ());

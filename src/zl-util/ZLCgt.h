@@ -30,10 +30,10 @@ private:
 		CGT_ERROR,
 	};
 
-	u16		mID;
-	string	mName;
-	u16		mKind;
-	u32		mLineNo;
+	u16				mID;
+	STLString		mName;
+	u16				mKind;
+	u32				mLineNo;
 };
 
 //================================================================//
@@ -45,7 +45,7 @@ private:
 	friend class ZLCgt;
 	friend class ZLParser;
 	
-	string	mCharacters;
+	STLString		mCharacters;
 };
 
 //================================================================//
@@ -135,14 +135,14 @@ private:
 	friend class ZLParser;
 
 	//----------------------------------------------------------------//
-	// Header & grammer info
-	string	mHeader;
-	string	mName;
-	string	mVersion;
-	string	mAuthor;
-	string	mAbout;
-	bool	mCaseSensitive;
-	u16		mLALRStartSymbol;
+	// header & grammer info
+	STLString		mHeader;
+	STLString		mName;
+	STLString		mVersion;
+	STLString		mAuthor;
+	STLString		mAbout;
+	bool			mCaseSensitive;
+	u16				mLALRStartSymbol;
 
 	//----------------------------------------------------------------//
 	// Initial States

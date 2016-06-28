@@ -103,10 +103,10 @@ void ZLGfxDevice::Initialize () {
 		}
 	#endif
 
-	string version = ZLGfxDevice::GetString ( ZGL_STRING_VERSION );
+	STLString version = ZLGfxDevice::GetString ( ZGL_STRING_VERSION );
 	std::transform ( version.begin (), version.end(), version.begin(), ::tolower );
 	
-	string gles = "opengl es";
+	STLString gles = "opengl es";
 
 	if ( version.find ( gles ) != version.npos ) {
 		isOpenGLES = true;

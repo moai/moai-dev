@@ -4,8 +4,9 @@
 #ifndef MOAILUASTATE_H
 #define MOAILUASTATE_H
 
-class MOAILuaRef;
+class MOAILuaMemberRef;
 class MOAILuaObject;
+class MOAILuaRef;
 
 //================================================================//
 // MOAILuaState
@@ -119,6 +120,7 @@ public:
 	void			Push						( lua_CFunction value );
 	void			Push						( MOAILuaObject* luaObject );
 	void			Push						( MOAILuaRef& ref );
+	void			Push						( MOAILuaMemberRef& ref );
 	void			Push						( const void* value );
 	void			Push						( void* data, size_t size );
 	

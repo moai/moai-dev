@@ -4,3 +4,9 @@
 [submodule "3rdparty/kissfft"]
 	path = 3rdparty/kissfft
 	url = https://github.com/itdaniher/kissfft.git
+[submodule "3rdparty/assimp"]
+	path = 3rdparty/assimp
+	url = https://github.com/assimp/assimp.git
+[submodule "3rdparty/TGAReader"]
+	path = 3rdparty/TGAReader
+	url = https://github.com/npedotnet/TGAReader.git

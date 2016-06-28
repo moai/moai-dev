@@ -6,15 +6,13 @@
 
 #include <vector>
 
-using namespace std;
-
 //================================================================//
 // STLArray
 //================================================================//
 // stub to match rest of stl extensions
 template < typename TYPE >
 class STLArray :
-	public vector < TYPE > {
+	public std::vector < TYPE > {
 public:
 };
 

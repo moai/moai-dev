@@ -6,17 +6,15 @@
 
 #include <map>
 
-using namespace std;
-
 //================================================================//
 // STLMap
 //================================================================//
-template < typename KEY, typename TYPE, typename COMPARE = less < KEY > >
+template < typename KEY, typename TYPE, typename COMPARE = std::less < KEY > >
 class STLMap :
-	public map < KEY, TYPE, COMPARE > {
+	public std::map < KEY, TYPE, COMPARE > {
 public:
 
-	typedef typename map < KEY, TYPE, COMPARE >::iterator iterator;
+	typedef typename std::map < KEY, TYPE, COMPARE >::iterator iterator;
 
 	//----------------------------------------------------------------//
 	bool contains ( const KEY& key ) const {
@@ -39,7 +37,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	STLMap ( const COMPARE& comp ) :
-		map < KEY, TYPE, COMPARE >( comp ) {
+		std::map < KEY, TYPE, COMPARE >( comp ) {
 	}
 };
 
@@ -48,10 +46,10 @@ public:
 //================================================================//
 template < typename KEY, typename TYPE, typename COMPARE >
 class STLMap < KEY, TYPE*, COMPARE > :
-	public map < KEY, TYPE*, COMPARE > {
+	public std::map < KEY, TYPE*, COMPARE > {
 public:
 
-	typedef typename map < KEY, TYPE* >::iterator iterator;
+	typedef typename std::map < KEY, TYPE* >::iterator iterator;
 
 	//----------------------------------------------------------------//
 	bool contains ( const KEY& key ) const {

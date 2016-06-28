@@ -193,6 +193,10 @@ int AKUModulesContextInitialize () {
 		AKUAppleContextInitialize ();
 	#endif
 
+	#if AKU_WITH_ASSIMP
+		AKUAssimpContextInitialize ();
+	#endif
+
     #if AKU_WITH_AUDIO_SAMPLER
 		AKUAudioSamplerContextInitialize ();
 	#endif
@@ -269,6 +273,10 @@ int AKUModulesContextInitialize () {
 
 	#if AKU_WITH_IMAGE_PVR
 		AKUImagePvrContextInitialize ();
+	#endif
+
+	#if AKU_WITH_IMAGE_TGA
+		AKUImageTgaContextInitialize ();
 	#endif
 
 	#if AKU_WITH_IMAGE_WEBP

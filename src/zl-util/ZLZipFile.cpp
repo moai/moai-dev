@@ -54,12 +54,12 @@ bool ZLZipEntry::SerializeIn ( ZLStream& stream ) {
 		u32 crc32;
 		
 		//crc-32						4 bytes
-		if ( sigOrCRC == 0x04034b50 ) {
-			crc32 = stream.Read < u32 >( 0 );
-		}
-		else {
-			crc32 = sigOrCRC;
-		}
+//		if ( sigOrCRC == 0x04034b50 ) {
+//			crc32 = stream.Read < u32 >( 0 );
+//		}
+//		else {
+//			crc32 = sigOrCRC;
+//		}
 		
 		//u32 compressedSize = stream.Read < u32 >(); //compressed size				4 bytes
 		//u32 uncompressedSize = stream.Read < u32 >(); //uncompressed size			4 bytes

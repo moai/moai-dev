@@ -404,12 +404,10 @@ MOAILuaObject::~MOAILuaObject () {
 			this->mUserdata.PushRef ( state );
 			
 			u32 top = state.GetTop ();
-			bool isUserdata = state.IsType ( top, LUA_TUSERDATA );
 			
 			MOAILuaRuntime::Get ().PurgeUserdata ( state, -1 );
 			
 			top = state.GetTop ();
-			isUserdata = state.IsType ( top, LUA_TUSERDATA );
 			
 			if ( lua_getmetatable ( state, -1 )) {
 				lua_pushnil ( state );
@@ -418,7 +416,6 @@ MOAILuaObject::~MOAILuaObject () {
 			}
 			
 			top = state.GetTop ();
-			isUserdata = state.IsType ( top, LUA_TUSERDATA );
 			
 			// and the ref table
 			lua_pushnil ( state );

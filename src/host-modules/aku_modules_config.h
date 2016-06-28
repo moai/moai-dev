@@ -5,6 +5,10 @@
 		#define AKU_WITH_APPLE 0
 	#endif
 
+	#ifndef AKU_WITH_ASSIMP
+		#define AKU_WITH_ASSIMP 0
+	#endif
+
 	#ifndef AKU_WITH_BOX2D
 		#define AKU_WITH_BOX2D 1
 	#endif
@@ -51,6 +55,10 @@
 
 	#ifndef AKU_WITH_IMAGE_PVR
 		#define AKU_WITH_IMAGE_PVR 1
+	#endif
+
+	#ifndef AKU_WITH_IMAGE_TGA
+		#define AKU_WITH_IMAGE_TGA 0
 	#endif
 
 	#ifndef AKU_WITH_IMAGE_WEBP

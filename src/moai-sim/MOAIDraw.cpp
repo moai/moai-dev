@@ -216,16 +216,16 @@ void MOAIDraw::EndDrawString () {
 
 		numPasses = 2;		
 		gfxMgr.mGfxState.SetPenColor ( 0, 0, 0, 1 );
-		offsetX = shadowOffsetX;
-		offsetY = shadowOffsetY;
+		//offsetX = shadowOffsetX;
+		//offsetY = shadowOffsetY;
 	}
 
 	for ( u32 pass = 0; pass < numPasses; pass++ ) {
 
 		if ( pass == 1 || numPasses == 1 ) {
 			gfxMgr.mGfxState.SetPenColor ( penColor );
-			offsetX = 0;
-			offsetY = 0;
+			//offsetX = 0;
+			//offsetY = 0;
 		}
 
 		//STLList < GlyphPlacement >::const_iterator it;

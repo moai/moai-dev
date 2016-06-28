@@ -14,9 +14,12 @@
 	#include <moai-android/host.h>
 #endif
 
-
 #if AKU_WITH_APPLE
 	#include <moai-apple/host.h>
+#endif
+
+#if AKU_WITH_ASSIMP
+	#include <moai-assimp/host.h>
 #endif
 
 #if AKU_WITH_AUDIO_SAMPLER
@@ -65,6 +68,10 @@
 
 #if AKU_WITH_IMAGE_PVR
 	#include <moai-image-pvr/host.h>
+#endif
+
+#if AKU_WITH_IMAGE_TGA
+	#include <moai-image-tga/host.h>
 #endif
 
 #if AKU_WITH_IMAGE_WEBP

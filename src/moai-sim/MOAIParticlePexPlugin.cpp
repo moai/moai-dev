@@ -503,7 +503,7 @@ void MOAIParticlePexPlugin::Parse ( cc8* filename, MOAIParticlePexPlugin& plugin
 		
 		plugin.mSize = 0;
 		// round up the children
-		STLSet < string > children;
+		STLSet < STLString > children;
 		TiXmlElement* childElement = node->FirstChildElement ();
 		
 		for ( ; childElement; childElement = childElement->NextSiblingElement ()) {

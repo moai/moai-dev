@@ -160,8 +160,8 @@ u32 MOAIProfilerReport::Visitor_FinalizeEntries ( MOAIProfilerEntryBase* entry, 
 
 			numValidSamples++;
 
-			curEntry->mMinDurationMicroSec = min ( curEntry->mMinDurationMicroSec, durationMicroSec );
-			curEntry->mMaxDurationMicroSec = max ( curEntry->mMaxDurationMicroSec, durationMicroSec );
+			curEntry->mMinDurationMicroSec = MIN ( curEntry->mMinDurationMicroSec, durationMicroSec );
+			curEntry->mMaxDurationMicroSec = MAX ( curEntry->mMaxDurationMicroSec, durationMicroSec );
 			averageDurationMicorSec += (float) durationMicroSec;
 		}
 	}
