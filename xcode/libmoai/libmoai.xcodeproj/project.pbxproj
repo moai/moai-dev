@@ -23217,7 +23217,6 @@
 					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
 					"\"../../3rdparty/libtess2/include\"",
-					"\"../../3rdparty/assimp/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "";
@@ -24282,7 +24281,6 @@
 					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
 					"\"../../3rdparty/libtess2/include\"",
-					"\"../../3rdparty/assimp/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "";
@@ -27015,6 +27013,10 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					../../3rdparty/assimp/include,
+				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-assimp";
 				SDKROOT = macosx;
@@ -27051,6 +27053,10 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					../../3rdparty/assimp/include,
+				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-assimp";
 				SDKROOT = macosx;
@@ -27087,6 +27093,10 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					../../3rdparty/assimp/include,
+				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-assimp";
 				SDKROOT = macosx;
@@ -30575,7 +30585,6 @@
 					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
 					"\"../../3rdparty/libtess2/include\"",
-					"\"../../3rdparty/assimp/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "";

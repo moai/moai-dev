@@ -1,8 +1,6 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include "pch.h"
-
 #import <moai-apple/MOAIReachability.h>
 #import <moai-apple/MOAIReachabilityMgr.h>
 #import <moai-apple/NSData+MOAILib.h>
