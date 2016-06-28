@@ -1,12 +1,11 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#import "pch.h"
 #import "host.h"
 #import "headers.h"
 
 #import <contrib/MOAIOpenUDID.h>
-#import <moai-sim/MOAIGfxMgr.h>
+#import <moai-sim/headers.h>
 
 #if AKU_WITH_IFA
 	#import <AdSupport/ASIdentifierManager.h>

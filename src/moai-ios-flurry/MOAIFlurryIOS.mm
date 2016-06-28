@@ -1,7 +1,6 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include "pch.h"
 #import <moai-ios/headers.h>
 #import <moai-ios-flurry/MOAIFlurryIOS.h>
 #import <Flurry.h>

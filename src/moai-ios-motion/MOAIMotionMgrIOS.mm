@@ -1,11 +1,7 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include "pch.h"
-
 #include <moai-ios-motion/MOAIMotionMgrIOS.h>
-#include <moai-sim/MOAIVectorSensor.h>
-
 
 #import <CoreLocation/CoreLocation.h>
 #import <CoreMotion/CoreMotion.h>

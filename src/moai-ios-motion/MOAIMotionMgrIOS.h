@@ -4,8 +4,7 @@
 #ifndef	MOAIMOTIONMANAGERIOS_H
 #define	MOAIMOTIONMANAGERIOS_H
 
-#include <moai-core/headers.h>
-#include <moai-sim/MOAIAction.h>
+#include <moai-sim/headers.h>
 
 @class CLLocationManager;
 @class CMMotionManager;
