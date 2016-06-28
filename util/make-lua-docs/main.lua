@@ -508,7 +508,7 @@ os.execute ( 'doxygen ' .. DOXYFILE_TMP )
 MOAIFileSystem.deleteFile ( DOXYFILE_TMP )
 
 local concat = function ( ... )
-	return table.concat ( arg )
+	return table.concat ( {...} )
 end
 
 REPLACE_IN_HTML = {
