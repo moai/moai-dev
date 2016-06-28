@@ -48,7 +48,7 @@
     -( void )           bindFramebuffer;
     -( void )           closeGraphicsContext;
     -( void )           createContext               :( CAEAGLLayer* )layer;
-    -( bool )           createBuffers               :( CAEAGLLayer* )layer :( int )multisample;
+    -( BOOL )           createBuffers               :( CAEAGLLayer* )layer :( int )multisample;
     -( void )           deleteBuffers;
     -( void )           openGraphicsContext;
     -( BOOL )           sizeChanged                 :( CAEAGLLayer* )layer;
