@@ -289,7 +289,7 @@ MOAIAssimpCamera* MOAIAssimpScene::GetCamera ( size_t idx ) {
 		camera = new MOAIAssimpCamera ();
 		camera->SetNode ( this->mScene->mRootNode->FindNode ( currentCamera->mName.C_Str ()));
 		camera->SetCamera ( currentCamera );
-		camera->SetIndex ( idx );
+		camera->SetIndex (( uint )idx );
 		camera->SetName ( currentCamera->mName.C_Str ());
 		
 		this->LuaRetain ( camera );
@@ -316,7 +316,7 @@ MOAIAssimpMesh* MOAIAssimpScene::GetMesh ( size_t idx ) {
 		mesh = new MOAIAssimpMesh ();
 		mesh->SetScene ( this->mScene );
 		mesh->SetMesh ( currentMesh );
-		mesh->SetIndex ( idx );
+		mesh->SetIndex (( uint )idx );
 		mesh->SetName ( currentMesh->mName.C_Str ());
 
 		this->LuaRetain ( mesh );

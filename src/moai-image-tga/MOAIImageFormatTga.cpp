@@ -122,14 +122,14 @@ bool MOAIImageFormatTga::ReadImage ( MOAIImage& image, ZLStream& stream, u32 tra
 	void* buffer = malloc ( bufferSize );
 	stream.ReadBytes ( buffer, bufferSize );
 
+	u32 width	= ( u32 )tgaGetWidth (( u8* )buffer );
+	u32 height	= ( u32 )tgaGetHeight (( u8* )buffer );
+
 	void* pixels = tgaRead (( u8* )buffer, TGA_READER_ABGR );
-	
+
 	free ( buffer );
 	
 	if ( pixels ) {
-	
-		u32 width		= ( u32 )tgaGetWidth (( u8* )buffer );
-		u32 height		= ( u32 )tgaGetHeight (( u8* )buffer );
 
 		image.Init ( pixels, width, height, ZLColor::RGBA_8888 );
 		image.Transform ( transform );

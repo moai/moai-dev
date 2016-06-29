@@ -50,8 +50,8 @@ bool ZLZipEntry::SerializeIn ( ZLStream& stream ) {
 	
 	if ( this->mBitFlag & BIT_HAS_DESCRIPTOR ) {
 		
-		u32 sigOrCRC = stream.Read < u32 >( 0 );
-		u32 crc32;
+//		u32 sigOrCRC = stream.Read < u32 >( 0 );
+//		u32 crc32;
 		
 		//crc-32						4 bytes
 //		if ( sigOrCRC == 0x04034b50 ) {

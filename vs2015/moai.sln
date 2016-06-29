@@ -153,6 +153,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "assimp", "assimp\assimp.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "moai-lib-assimp", "moai-lib-assimp\moai-lib-assimp.vcxproj", "{A90989F3-8C14-487B-9127-C89A9D53630C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "moai-lib-image-tga", "moai-lib-image-tga\moai-lib-image-tga.vcxproj", "{18093173-A50D-42A3-9066-1301BF1F5D14}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -673,6 +675,14 @@ Global
 		{A90989F3-8C14-487B-9127-C89A9D53630C}.Release|Win32.Build.0 = Release|Win32
 		{A90989F3-8C14-487B-9127-C89A9D53630C}.Release|x64.ActiveCfg = Release|x64
 		{A90989F3-8C14-487B-9127-C89A9D53630C}.Release|x64.Build.0 = Release|x64
+		{18093173-A50D-42A3-9066-1301BF1F5D14}.Debug|Win32.ActiveCfg = Debug|Win32
+		{18093173-A50D-42A3-9066-1301BF1F5D14}.Debug|Win32.Build.0 = Debug|Win32
+		{18093173-A50D-42A3-9066-1301BF1F5D14}.Debug|x64.ActiveCfg = Debug|x64
+		{18093173-A50D-42A3-9066-1301BF1F5D14}.Debug|x64.Build.0 = Debug|x64
+		{18093173-A50D-42A3-9066-1301BF1F5D14}.Release|Win32.ActiveCfg = Release|Win32
+		{18093173-A50D-42A3-9066-1301BF1F5D14}.Release|Win32.Build.0 = Release|Win32
+		{18093173-A50D-42A3-9066-1301BF1F5D14}.Release|x64.ActiveCfg = Release|x64
+		{18093173-A50D-42A3-9066-1301BF1F5D14}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -742,10 +752,11 @@ Global
 		{6DE5E8C5-E477-4CEE-8824-73E3C3C483DE} = {3C05055B-3444-43CB-8793-D469F0D40706}
 		{EEB0E2FC-4B26-49D4-98C6-0BF34C44AC2E} = {3C05055B-3444-43CB-8793-D469F0D40706}
 		{A90989F3-8C14-487B-9127-C89A9D53630C} = {E2D67AF9-792C-4F3B-B969-4914EFF4B03F}
+		{18093173-A50D-42A3-9066-1301BF1F5D14} = {E2D67AF9-792C-4F3B-B969-4914EFF4B03F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		AMDCaPersistentConfig = Debug|Win32
-		AMDCaPersistentStartup = moai (Utilities\moai)
 		AMDCaProjectFile = C:\Documents and Settings\Patrick\My Documents\git\moai\vs2008\CodeAnalyst\moai.caw
+		AMDCaPersistentStartup = moai (Utilities\moai)
+		AMDCaPersistentConfig = Debug|Win32
 	EndGlobalSection
 EndGlobal
