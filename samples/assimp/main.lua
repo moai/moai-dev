@@ -4,6 +4,9 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+--FILENAME = '../../3rdparty/assimp/test/models-nonbsd/ogre/ogresdk/ninja.mesh'
+FILENAME = '../../3rdparty/assimp/test/models/collada/duck.dae'
+
 MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_MODEL_BOUNDS, 2, 1, 1, 1 )
 MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
 
@@ -25,12 +28,15 @@ camera:setLoc ( 0, 0, camera:getFocalLength ( 320 ))
 layer:setCamera ( camera )
 
 local vertexFormat = MOAIVertexFormat.new ()
-vertexFormat:declareCoord ( 1, MOAIVertexFormat.GL_FLOAT, 3 )
-vertexFormat:declareUV ( 2, MOAIVertexFormat.GL_FLOAT, 2 )
-vertexFormat:declareColor ( 3, MOAIVertexFormat.GL_UNSIGNED_BYTE )
+vertexFormat:declareCoord ()
+vertexFormat:declareUV ()
+vertexFormat:declareColor ()
+vertexFormat:declareBoneIndices ()
+vertexFormat:declareBoneWeights ()
+vertexFormat:declareBoneCount ()
 
 aiScene = MOAIAssimpScene.new ()
-aiScene:load ( '../../3rdparty/assimp/test/models/collada/duck.dae',
+aiScene:load ( FILENAME,
 	MOAIAssimpScene.TRIANGULATE,
 	MOAIAssimpScene.FLIP_UVS
 )

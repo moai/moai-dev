@@ -313,8 +313,8 @@ int MOAIAssimpMesh::_getVertices ( lua_State* L ) {
 		}
 	
 		if ( stream ) {
-
-			self->ReadVertices ( *format, *stream );
+			bool renormalizeBones = state.GetValue < bool >( 3, true );
+			self->ReadVertices ( *format, *stream, renormalizeBones );
 		}
 	}
 	
@@ -372,12 +372,102 @@ u32 MOAIAssimpMesh::ReadIndices ( ZLStream& stream, u32 indexSize ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIAssimpMesh::ReadVertices ( const MOAIVertexFormat& format, ZLStream& stream ) {
+u32 MOAIAssimpMesh::ReadVertices ( const MOAIVertexFormat& format, ZLStream& stream, bool renormalizeBones ) {
 
 	const aiMesh* mesh = this->mMesh;
 	if ( !mesh ) return 0;
 
 	u32 nVerts = ( u32 )mesh->mNumVertices;
+	u32 nBones = ( u32 )mesh->mNumBones;
+	
+	void*	boneBuffer = 0;
+	float*	boneWeights = 0;
+	float*	boneIndices = 0;
+	u32*	boneCounts = 0;
+
+	u32 nBonesPerVertex = format.CountBones ();
+
+	if ( nBonesPerVertex && nBones ) {
+		
+		size_t boneBufferSize = nVerts * nBonesPerVertex * sizeof ( float ) * 2;
+		
+		boneBuffer = malloc ( boneBufferSize + ( nVerts * sizeof ( u32 )));
+		if ( !boneBuffer ) return 0; // TODO: report error
+		
+		memset ( boneBuffer, 0, boneBufferSize );
+		
+		boneIndices = ( float* )boneBuffer;
+		boneWeights = ( float* )(( size_t )boneBuffer + ( boneBufferSize >> 1 ));
+		boneCounts = ( u32* )(( size_t )boneBuffer + boneBufferSize );
+		
+		for ( u32 i = 0; i < nBones; ++i ) {
+		
+			aiBone* bone = mesh->mBones [ i ];
+			assert ( bone );
+			
+			for ( u32 j = 0; j < bone->mNumWeights; ++j ) {
+				
+				const aiVertexWeight& vertexWeight = bone->mWeights [ j ];
+				
+				assert (( u32 )vertexWeight.mVertexId < nVerts );
+				size_t vertexBase = ( u32 )vertexWeight.mVertexId * nBonesPerVertex;
+				
+				float* indices = &boneIndices [ vertexBase ];
+				float* weights = &boneWeights [ vertexBase ];
+				
+				u32 bestComponent = ( u32 )-1;
+				float bestWeight = vertexWeight.mWeight;
+				
+				u32 boneCountThisVertex = nBonesPerVertex; // asume the max
+				
+				for ( u32 k = 0; k < nBonesPerVertex; ++k ) {
+				
+					float weight = weights [ k ];
+					
+					if ( weight < bestWeight ) {
+						bestWeight = weight;
+						bestComponent = k;
+					}
+					
+					if ( bestWeight == 0.0f ) {
+						boneCountThisVertex = k + 1; // found a zero weight, so that is the count
+						break;
+					}
+				}
+				
+				if ( bestComponent < nBonesPerVertex ) {
+					
+					indices [ bestComponent ] = ( float )vertexWeight.mVertexId;
+					weights [ bestComponent ] = vertexWeight.mWeight;
+					boneCounts [ vertexWeight.mVertexId ] = boneCountThisVertex;
+				}
+				else {
+					ZLLog_Warning ( "WARNING: too many bones for vertex %d (%d max per vertex)\n", vertexWeight.mVertexId, nBonesPerVertex );
+					continue;
+				}
+			}
+		}
+		
+		if ( renormalizeBones ) {
+		
+			for ( u32 i = 0; i < nVerts; ++i ) {
+			
+				size_t vertexBase = i * nBonesPerVertex;
+				float* weights = &boneWeights [ vertexBase ];
+				
+				float sumWeights = 0.0f;
+				for ( u32 j = 0; ( j < nBonesPerVertex ) && ( weights [ j ] > 0.0f ); ++j ) {
+					sumWeights += weights [ j ];
+				}
+				
+				float normalize = 1.0f / sumWeights;
+				
+				for ( u32 j = 0; ( j < nBonesPerVertex ) && ( weights [ j ] > 0.0f ); ++j ) {
+					weights [ j ] *= normalize;
+				}
+			}
+		}
+	}
 
 	if ( nVerts > 0 ) {
 
@@ -402,11 +492,24 @@ u32 MOAIAssimpMesh::ReadVertices ( const MOAIVertexFormat& format, ZLStream& str
 				aiVector3D uvw = mesh->mTextureCoords [ 0 ][ i ];
 				format.WriteUV ( stream, 0, uvw.x, uvw.y, uvw.z );
 			}
+			
+			if ( boneBuffer ) {
+			
+				size_t vertexBase = i * nBonesPerVertex;
+				
+				float* indices = &boneIndices [ vertexBase ];
+				float* weights = &boneWeights [ vertexBase ];
+				
+				format.WriteBones ( stream, indices, weights, nBonesPerVertex ); // TODO: report errors
+				format.WriteBoneCount ( stream, 0, boneCounts [ i ]);
+			}
 		}
-
-		//stream.SetCursor ( base );
 	}
 
+	if ( boneBuffer ) {
+		free ( boneBuffer );
+	}
+	
 	return nVerts;
 }
 

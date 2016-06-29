@@ -27017,7 +27017,6 @@
 					"$(inherited)",
 					../../3rdparty/assimp/include,
 				);
-				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-assimp";
 				SDKROOT = macosx;
 			};
@@ -27057,7 +27056,6 @@
 					"$(inherited)",
 					../../3rdparty/assimp/include,
 				);
-				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-assimp";
 				SDKROOT = macosx;
 			};
@@ -27097,7 +27095,6 @@
 					"$(inherited)",
 					../../3rdparty/assimp/include,
 				);
-				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-assimp";
 				SDKROOT = macosx;
 			};

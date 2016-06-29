@@ -36,6 +36,7 @@ public:
 		// these are the known attribute types
 		ATTRIBUTE_BONE_INDICES,		// i
 		ATTRIBUTE_BONE_WEIGHTS,		// w
+		ATTRIBUTE_BONE_COUNT,		// k
 		ATTRIBUTE_COLOR,			// c
 		ATTRIBUTE_COORD,			// x
 		ATTRIBUTE_NORMAL,			// n
@@ -43,9 +44,6 @@ public:
 		ATTRIBUTE_USER,				// u
 		
 		TOTAL_ATTRIBUTE_TYPES,
-		
-		// custom uses
-		//VERTEX_USE_TUPLE,
 	};
 
 private:
@@ -71,8 +69,9 @@ private:
 	//----------------------------------------------------------------//
 	static int					_clear							( lua_State* L );
 	static int					_declareAttribute				( lua_State* L );
-	static int					_declareBoneIndex				( lua_State* L );
-	static int					_declareBoneWeight				( lua_State* L );
+	static int					_declareBoneCount				( lua_State* L );
+	static int					_declareBoneIndices				( lua_State* L );
+	static int					_declareBoneWeights				( lua_State* L );
 	static int					_declareColor					( lua_State* L );
 	static int					_declareCoord					( lua_State* L );
 	static int					_declareNormal					( lua_State* L );
@@ -85,9 +84,11 @@ private:
 	static u32					GetLuaIndexForUseID				( u32 useID );
 	static u32					GetUseIDForLuaIndex				( u32 idx );
 	static size_t				PackAttribute					( void* buffer, const ZLVec4D& coord, const MOAIVertexAttribute& attribute );
+	size_t						ReadComponents					( ZLStream& stream, u32 useID, float* components, size_t size ) const;
 	static ZLVec4D				UnpackAttribute					( const void* buffer, const MOAIVertexAttribute& attribute, float yFallback, float zFallback, float wFallback );
 	static ZLVec4D				UnpackCoord						( const void* buffer, const MOAIVertexAttribute& attribute );
 	void						Unbind							() const;
+	size_t						WriteComponents					( ZLStream& stream, u32 useID, const float* components, size_t size ) const;
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
@@ -133,10 +134,11 @@ public:
 	bool						ComputeBounds					( ZLBox& bounds, const void* buffer, size_t size ) const;
 	bool						ComputeBounds					( ZLBox& bounds, ZLStream& stream, size_t size ) const;
 	
-	u32							CountBones						() const;
 	u32							CountAttributesByUse			( u32 useID ) const;
 	u32							CountAttributeComponents		( u32 attrIdx ) const;
 	u32							CountAttributeComponents		( u32 useID, u32 idx ) const;
+	u32							CountBones						() const;
+	u32							CountComponentsByUse			( u32 useID ) const;
 
 	void						DeclareAttribute				( u32 index, u32 type, u32 size, u32 use, bool normalized );
 								MOAIVertexFormat				();
@@ -148,7 +150,8 @@ public:
 	
 	ZLVec4D						ReadAttribute					( ZLStream& stream, u32 attrIdx, float yFallback, float zFallback, float wFallback ) const;
 	ZLVec4D						ReadAttribute					( ZLStream& stream, u32 useID, u32 idx, float yFallback, float zFallback, float wFallback ) const;
-	void						ReadBones						( ZLStream& stream, u32 idx, float* indices, float* weights, size_t size ) const;
+	u32							ReadBoneCount					( ZLStream& stream, u32 idx ) const;
+	size_t						ReadBones						( ZLStream& stream, float* indices, float* weights, size_t size ) const;
 	ZLColorVec					ReadColor						( ZLStream& stream, u32 idx ) const;
 	ZLVec4D						ReadCoord						( ZLStream& stream, u32 idx ) const;
 	ZLVec3D						ReadNormal						( ZLStream& stream, u32 idx ) const;
@@ -165,7 +168,8 @@ public:
 	void						WriteAhead						( ZLStream& stream ) const; // writes an empty vertex as a placeholder
 	void						WriteAttribute					( ZLStream& stream, u32 attrIdx, float x, float y, float z, float w ) const;
 	void						WriteAttribute					( ZLStream& stream, u32 useID, u32 idx, float x, float y, float z, float w ) const;
-	void						WriteBones						( ZLStream& stream, u32 idx, const float* indices, const float* weights, size_t size );
+	void						WriteBoneCount					( ZLStream& stream, u32 idx, u32 count ) const;
+	size_t						WriteBones						( ZLStream& stream, const float* indices, const float* weights, size_t size ) const;
 	void						WriteColor						( ZLStream& stream, u32 idx, u32 color ) const;
 	void						WriteColor						( ZLStream& stream, u32 idx, float r, float g, float b, float a ) const;
 	void						WriteCoord						( ZLStream& stream, u32 idx, float x, float y, float z, float w ) const;
