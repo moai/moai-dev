@@ -11,9 +11,6 @@ class MOAIAssimpCamera;
 class MOAIAssimpMesh;
 class MOAIAssimpSceneMember;
 
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-
 //================================================================//
 // MOAIAssimpScene
 //================================================================//

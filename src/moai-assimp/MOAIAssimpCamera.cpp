@@ -4,9 +4,6 @@
 #include "pch.h"
 #include <moai-assimp/MOAIAssimpCamera.h>
 #include <moai-assimp/MOAIAssimpUtil.h>
-#include <assimp/matrix4x4.h>
-#include <assimp/vector3.h>
-#include <assimp/quaternion.h>
 
 //================================================================//
 // lua

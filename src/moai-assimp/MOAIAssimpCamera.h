@@ -9,8 +9,6 @@
 
 #include <moai-assimp/MOAIAssimpSceneMember.h>
 #include <moai-sim/MOAICamera.h>
-#include <assimp/camera.h>
-#include <assimp/scene.h>
 
 //================================================================//
 // MOAIAssimpCamera

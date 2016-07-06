@@ -7,8 +7,6 @@
 #ifndef MOAIASSIMPUTIL_H
 #define MOAIASSIMPUTIL_H
 
-#include <assimp/mesh.h>
-
 //================================================================//
 // MOAIAssimpMesh
 //================================================================//

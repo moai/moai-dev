@@ -9,9 +9,6 @@
 
 class MOAIAssimpScene;
 
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-
 //================================================================//
 // MOAIAssimpSceneMember
 //================================================================//

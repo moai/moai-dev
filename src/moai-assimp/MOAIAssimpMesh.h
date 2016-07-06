@@ -8,7 +8,6 @@
 #define MOAIASSIMPMESH_H
 
 #include <moai-assimp/MOAIAssimpSceneMember.h>
-#include <assimp/mesh.h>
 
 //================================================================//
 // MOAIAssimpMesh
