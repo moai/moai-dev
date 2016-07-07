@@ -19,6 +19,11 @@
 //----------------------------------------------------------------//
 #ifdef _WIN32
 	int CALLBACK WinMain ( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow ) {
+		(( void )hInstance );
+		(( void )hPrevInstance );
+		(( void )lpCmdLine );
+		(( void )nCmdShow );
+
 		int argc = __argc;
 		char** argv = __argv;
 

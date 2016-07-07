@@ -209,7 +209,7 @@ void MOAITimer::DoStep ( float step ) {
 	float t0 = this->mTime;
 	this->mTime += step * this->mSpeed * this->mDirection;
 	
-	float t1 = this->mTime;
+	//float t1 = this->mTime;
 	//float result = 0.0f;
 	
 	switch ( this->mMode ) {

@@ -209,8 +209,8 @@ void MOAIDraw::EndDrawString () {
 	bool drawDropShadows = fabsf ( shadowOffsetX ) > 0.0001 && fabsf ( shadowOffsetY ) > 0.0001;
 
 	u32 numPasses = 1;
-	float offsetX = 0;
-	float offsetY = 0;
+	//float offsetX = 0;
+	//float offsetY = 0;
 	ZLColorVec penColor = gfxMgr.mGfxState.GetPenColor ();
 	if ( drawDropShadows ) {
 

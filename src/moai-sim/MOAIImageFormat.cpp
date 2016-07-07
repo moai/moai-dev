@@ -24,6 +24,7 @@ void MOAIImageFormat::CleanupTexture ( MOAISingleTexture& texture ) {
 
 //----------------------------------------------------------------//
 bool MOAIImageFormat::CheckHeader ( const void* buffer ) {
+	UNUSED ( buffer );
 
 	return false;
 }
@@ -83,6 +84,7 @@ bool MOAIImageFormat::GetTextureInfo ( ZLStream& stream, MOAITextureInfo& info )
 
 //----------------------------------------------------------------//
 bool MOAIImageFormat::GuessHeader ( const void* buffer ) {
+	UNUSED ( buffer );
 
 	return false;
 }

@@ -10,6 +10,7 @@
 //----------------------------------------------------------------//
 // placeholder
 int MOAIUntzSystem::_getDeviceCount ( lua_State* L ) {
+	UNUSED ( L );
 	
 	//UInt32 deviceCount = UNTZ::System::get ()->getDeviceCount ();
 	//lua_pushnumber ( L, deviceCount );
@@ -35,6 +36,7 @@ int MOAIUntzSystem::_getDeviceInfo ( lua_State* L ) {
 //----------------------------------------------------------------//
 // placeholder
 int MOAIUntzSystem::_getOptions ( lua_State* L ) {
+	UNUSED ( L );
 
 	//UInt32 options = UNTZ::System::get ()->getOptions ();
 	//lua_pushnumber ( L, options );
