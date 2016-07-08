@@ -119,10 +119,15 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalManifestDependencies>
+      </AdditionalManifestDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /yr "$(OutDir)$(TargetFileName)" "..\..\bin\$(Platform)\$(Configuration)\"</Command>
     </PostBuildEvent>
+    <Manifest>
+      <AdditionalManifestFiles>DeclareDPIAware.manifest</AdditionalManifestFiles>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
@@ -161,10 +166,15 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalManifestDependencies>
+      </AdditionalManifestDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /yr "$(OutDir)$(TargetFileName)" "..\..\bin\$(Platform)\$(Configuration)\"</Command>
     </PostBuildEvent>
+    <Manifest>
+      <AdditionalManifestFiles>DeclareDPIAware.manifest</AdditionalManifestFiles>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -198,10 +208,15 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalManifestDependencies>
+      </AdditionalManifestDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /yr "$(OutDir)$(TargetFileName)" "..\..\bin\$(Platform)\$(Configuration)\"</Command>
     </PostBuildEvent>
+    <Manifest>
+      <AdditionalManifestFiles>DeclareDPIAware.manifest</AdditionalManifestFiles>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Midl>
@@ -237,10 +252,15 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalManifestDependencies>
+      </AdditionalManifestDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /yr "$(OutDir)$(TargetFileName)" "..\..\bin\$(Platform)\$(Configuration)\"</Command>
     </PostBuildEvent>
+    <Manifest>
+      <AdditionalManifestFiles>DeclareDPIAware.manifest</AdditionalManifestFiles>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ProjectReference Include="..\assimp\assimp.vcxproj">
