@@ -84,13 +84,7 @@ int MOAIVertexArray::_reserveVertexBuffers ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	setVertexBuffer
-	@text	Set the vertex buffer to render.
-	
-	@in		MOAIVertexArray self
-	@in		MOAIGfxBuffer vertexBuffer
-	@out	nil
-*/
+// TODO: doxygen
 int MOAIVertexArray::_setVertexBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexArray, "U" )
 	
