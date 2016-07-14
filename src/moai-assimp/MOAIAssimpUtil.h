@@ -18,11 +18,14 @@ namespace MOAIAssimpUtil {
 	cc8*			EnumToString_aiTextureMapping		( aiTextureMapping mapping );
 	cc8*			EnumToString_aiTextureOp			( aiTextureOp op );
 	void			PushBitangentsArray					( lua_State* L, const aiMesh* currentMesh );
+	void			PushBonesArray						( lua_State* L, const aiMesh* currentMesh );
 	void			PushColor							( lua_State* L, aiColor3D colorVector );
 	void			PushColorsChannelArray				( lua_State* L, aiColor4D* colorCoords, size_t numColorVectors );
 	void			PushColorVector						( lua_State* L, aiColor4D colorVector );
 	void			PushFace							( lua_State* L, const aiMesh* currentMesh );
+	void			PushMatrix							( lua_State* L, const aiMatrix4x4& matrix );
 	void			PushMesh							( lua_State* L, const aiMesh* currentMesh );
+	void			PushNode							( lua_State* L, const aiNode* node );
 	void			PushNormalsArray					( lua_State* L, const aiMesh* currentMesh );
 	void			PushTexture							( lua_State* L, aiMaterial* material, aiTextureType type, size_t idx );
 	void			PushTextureStack					( lua_State* L, aiMaterial* material, aiTextureType type );

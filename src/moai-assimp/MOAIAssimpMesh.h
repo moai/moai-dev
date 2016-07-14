@@ -27,6 +27,7 @@ private:
 	static int			_countUVs					( lua_State* L );
 	static int			_countVertices				( lua_State* L );
 	static int			_getBitangentsData			( lua_State* L );
+	static int			_getBones					( lua_State* L );
 	static int			_getFacesData				( lua_State* L );
 	static int			_getIndices					( lua_State* L );
 	static int			_getMaterialIndex			( lua_State* L );

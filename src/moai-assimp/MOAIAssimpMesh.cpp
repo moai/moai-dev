@@ -87,6 +87,18 @@ int MOAIAssimpMesh::_getBitangentsData ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAssimpMesh::_getBones ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
+
+	if ( self->mScene && self->mMesh->HasBones ()) {
+		MOAIAssimpUtil::PushBonesArray ( state, self->mMesh );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	gethFacesData
 	@text	Returns a table that contains vertex indices
 
@@ -154,7 +166,7 @@ int MOAIAssimpMesh::_getMaterialIndex ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 
 	if ( self->mScene ) {
-		lua_pushinteger ( state , self->mMesh->mMaterialIndex );
+		lua_pushinteger ( state , self->mMesh->mMaterialIndex + 1 );
 		return 1;
 	}
 	return 0;
@@ -532,6 +544,7 @@ void MOAIAssimpMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "countUVs",					_countUVs },
 		{ "countVertices",				_countVertices },
 		{ "getBitangentsData",			_getBitangentsData },
+		{ "getBones",					_getBones },
 		{ "getFacesData",				_getFacesData },
 		{ "getIndices",					_getIndices },
 		{ "getMaterialIndex",			_getMaterialIndex },

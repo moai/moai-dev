@@ -95,7 +95,8 @@ bool MOAIImageFormatTga::GuessHeader ( const void* buffer ) {
 		if ( coMapType != 1 || colorSize == 0 ) return false;
 	}
 	else {
-		if ( coMapType != 0 || colorSize != 0 ) return false;
+		// TODO: ?
+		//if ( coMapType != 0 || colorSize == 0 ) return false;
 	}
 
 	if ( coMapType != 0 && pixelSize > 16 ) return false;

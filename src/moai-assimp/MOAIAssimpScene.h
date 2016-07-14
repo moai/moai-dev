@@ -40,6 +40,7 @@ private:
 	static int			_getCameras					( lua_State* L );
 	static int			_getMaterials				( lua_State* L );
 	static int			_getMeshes					( lua_State* L );
+	static int			_getRootNode				( lua_State* L );
 	static int			_load						( lua_State* L );
 
 public:

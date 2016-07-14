@@ -191,6 +191,20 @@ int MOAIAssimpScene::_getMeshes ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAssimpScene::_getRootNode ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
+
+	if ( !self->mScene ) return 0;
+
+	if ( self->mScene->mRootNode ) {
+		MOAIAssimpUtil::PushNode ( L, self->mScene->mRootNode );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	load
 	@text	Loads a 3D scene file. May be passed a filename or an existing
 			file to reload with new processing. The preprocessing flags
@@ -558,6 +572,7 @@ void MOAIAssimpScene::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getCameras",				_getCameras },
 		{ "getMaterials",			_getMaterials },
 		{ "getMeshes",				_getMeshes },
+		{ "getRootNode",			_getRootNode },
 		{ "load",					_load },
 		{ NULL, NULL }
 	};
