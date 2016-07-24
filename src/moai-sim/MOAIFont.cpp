@@ -838,11 +838,11 @@ void MOAIFont::RenderGlyph ( MOAIGlyph& glyph ) {
 void MOAIFont::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 
-	this->mFilename = state.GetField ( -1, "mFilename", this->mFilename );
-	this->mFlags = state.GetField ( -1, "mFlags", this->mFlags );
-	this->mDefaultSize = state.GetField ( -1, "mDefaultSize", this->mDefaultSize );
+	this->mFilename = state.GetFieldValue ( -1, "mFilename", this->mFilename );
+	this->mFlags = state.GetFieldValue ( -1, "mFlags", this->mFlags );
+	this->mDefaultSize = state.GetFieldValue ( -1, "mDefaultSize", this->mDefaultSize );
 	
-	if ( state.GetFieldWithType ( -1, "mGlyphSets", LUA_TTABLE )) {
+	if ( state.PushFieldWithType ( -1, "mGlyphSets", LUA_TTABLE )) {
 
 		u32 itr = state.PushTableItr ( -1 );
 		while ( state.TableItrNext ( itr )) {

@@ -23,6 +23,52 @@ int MOAIShader::_setProgram ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+int MOAIShader::_setUniform ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIShader, "U" )
+
+	u32 uniform = state.GetValue ( 2, 1 ) - 1;
+	
+	if ( uniform < self->mUniformBuffers.Size ()) {
+
+		int size = state.GetTop () - 2;
+		
+		if ( size < 4 ) {
+		
+			ZLVec4D vec = state.GetValue < ZLVec4D >( 2, ZLVec4D::ZERO );
+			
+			self->mUniformBuffers [ uniform ].SetValue ( vec );
+		}
+		else {
+
+			ZLMatrix4x4 mtx = ZLMatrix4x4::IDENT;
+
+			switch ( size ) {
+			
+				case 6:
+					self->mUniformBuffers [ uniform ].SetValue ( ZLMatrix4x4 ( state.GetValue < ZLAffine2D >( 3, ZLAffine2D::IDENT )));
+					break;
+				
+				case 9:
+					self->mUniformBuffers [ uniform ].SetValue ( ZLMatrix4x4 ( state.GetValue < ZLMatrix3x3 >( 3, ZLMatrix3x3::IDENT )));
+					break;
+				
+				case 12:
+					self->mUniformBuffers [ uniform ].SetValue ( ZLMatrix4x4 ( state.GetValue < ZLAffine3D >( 3, ZLAffine3D::IDENT )));
+					break;
+				
+				case 16:
+					self->mUniformBuffers [ uniform ].SetValue ( state.GetValue < ZLMatrix4x4 >( 3, ZLMatrix4x4::IDENT ));
+					break;
+				
+				default:
+					MOAILogF ( L, ZLLog::LOG_ERROR, "Error setting matrix. Did not recognize number of paramaters (6, 9, 12 or 16)." );
+			}
+		}
+	}
+	return 0;
+}
+
 //================================================================//
 // MOAIShader
 //================================================================//
@@ -51,7 +97,7 @@ bool MOAIShader::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 	switch ( op ) {
 
 		case MOAIAttrOp::CHECK:
-			this->mUniformBuffers [ attrID ].GetFlags ( attrOp );
+			attrOp.SetFlags ( MOAIAttrOp::ATTR_WRITE );
 			return true;
 
 		case MOAIAttrOp::SET:
@@ -60,10 +106,6 @@ bool MOAIShader::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 		case MOAIAttrOp::ADD:
 			this->mUniformBuffers [ attrID ].AddValue ( attrOp );
-			return true;
-		
-		case MOAIAttrOp::GET:
-			this->mUniformBuffers [ attrID ].GetValue ( attrOp );
 			return true;
 	}
 
@@ -97,6 +139,7 @@ void MOAIShader::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "setProgram",					_setProgram },
+		{ "setUniform",					_setUniform },
 		{ NULL, NULL }
 	};
 	luaL_register ( state, 0, regTable );
@@ -115,9 +158,11 @@ void MOAIShader::SetProgram ( MOAIShaderProgram* program ) {
 		
 		for ( size_t i = 0; i < nUniforms; ++i ) {
 
+			MOAIShaderUniform& uniform = program->mUniforms [ i ];
 			MOAIShaderUniformBuffer& uniformBuffer = this->mUniformBuffers [ i ];
-			uniformBuffer.SetType ( program->mUniforms [ i ].GetType ());
-			uniformBuffer.SetValue ( program->mDefaults [ i ]);
+			
+			uniformBuffer.Init ( uniform.mType, uniform.mWidth );
+			uniformBuffer.Default ();
 		}
 	}
 }

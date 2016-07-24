@@ -58,7 +58,7 @@ void ZLQuaternion::Get ( ZLMatrix4x4& m ) const {
 	
 	ZLAffine3D affine;
 	this->Get ( affine );
-	m.Init ( affine );
+	m = ZLMatrix4x4 ( affine );
 }
 
 //----------------------------------------------------------------//

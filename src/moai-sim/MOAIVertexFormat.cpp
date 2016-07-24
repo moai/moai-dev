@@ -725,33 +725,33 @@ size_t MOAIVertexFormat::SeekVertex ( ZLStream& stream, size_t base, size_t vert
 void MOAIVertexFormat::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 
-	this->mTotalAttributes		= state.GetField < u32 >( -1, "mTotalAttributes", 0 );
-	this->mVertexSize			= state.GetField < u32 >( -1, "mVertexSize", 0 );
+	this->mTotalAttributes		= state.GetFieldValue < u32 >( -1, "mTotalAttributes", 0 );
+	this->mVertexSize			= state.GetFieldValue < u32 >( -1, "mVertexSize", 0 );
 
 	this->mAttributes.Init ( this->mTotalAttributes );
 
-	state.GetField ( -1, "mAttributes" );
+	state.PushField ( -1, "mAttributes" );
 	for ( u32 i = 0; i < this->mTotalAttributes; ++i ) {
 		
 		MOAIVertexAttribute& attribute = this->mAttributes [ i ];
 		
-		state.GetField ( -1, i + 1 );
+		state.PushField ( -1, i + 1 );
 		
-		attribute.mIndex			= state.GetField < u32 >( -1, "mIndex", 0 );
-		attribute.mSize				= state.GetField < u32 >( -1, "mSize", 0 );
-		attribute.mType				= state.GetField < u32 >( -1, "mType", 0 );
-		attribute.mNormalized		= state.GetField < bool >( -1, "mNormalized", 0 );
-		attribute.mOffset			= state.GetField < u32 >( -1, "mOffset", 0 );
+		attribute.mIndex			= state.GetFieldValue < u32 >( -1, "mIndex", 0 );
+		attribute.mSize				= state.GetFieldValue < u32 >( -1, "mSize", 0 );
+		attribute.mType				= state.GetFieldValue < u32 >( -1, "mType", 0 );
+		attribute.mNormalized		= state.GetFieldValue < bool >( -1, "mNormalized", 0 );
+		attribute.mOffset			= state.GetFieldValue < u32 >( -1, "mOffset", 0 );
 		
 		state.Pop ();
 	}
-	lua_pop ( state, 1 );
+	state.Pop ();
 	
-	state.GetField ( -1, "mAttributeUseTable" );
+	state.PushField ( -1, "mAttributeUseTable" );
 	for ( u32 i = 0; i < TOTAL_ATTRIBUTE_TYPES; ++i ) {
 		
 		u32 luaUseIdx = MOAIVertexFormat::GetLuaIndexForUseID ( i );
-		state.GetField ( -1, luaUseIdx );
+		state.PushField ( -1, luaUseIdx );
 		
 		u32 nAttributesByUse = ( u32 )state.GetTableSize ( -1 );
 		this->mTotalAttributesByUse [ i ] = nAttributesByUse;
@@ -759,7 +759,7 @@ void MOAIVertexFormat::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seri
 		
 		for ( u32 j = 0; j < nAttributesByUse; ++j ) {
 			
-			this->mAttributeIDsByUse [ i ][ j ] = state.GetField < u32 >( -1, j + 1, 0 );
+			this->mAttributeIDsByUse [ i ][ j ] = state.GetFieldValue < u32 >( -1, j + 1, 0 );
 		}
 		state.Pop ();
 	}

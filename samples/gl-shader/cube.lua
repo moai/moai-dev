@@ -4,23 +4,20 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
---MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_MODEL_BOUNDS, 2, 1, 1, 1 )
---MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
+module ( 'cube', package.seeall )
 
-MOAISim.openWindow ( "test", 320, 480 )
+--==============================================================
+-- interface
+--==============================================================
 
-viewport = MOAIViewport.new ()
-viewport:setSize ( 320, 480 )
-viewport:setScale ( 320, 480 )
+			makeBoxMesh					= nil
+			makeCube					= nil
 
-layer = MOAILayer.new ()
-layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+--==============================================================
+-- implementation
+--==============================================================
 
-camera = MOAICamera.new ()
-camera:setLoc ( 0, 0, camera:getFocalLength ( 320 ))
-layer:setCamera ( camera )
-
+----------------------------------------------------------------
 local function addPoint ( points, x, y, z )
 
 	local point = {}
@@ -31,6 +28,7 @@ local function addPoint ( points, x, y, z )
 	table.insert ( points, point )
 end
 
+----------------------------------------------------------------
 local function vec_cross(p1,p2)
 	local ret = {}
 	ret.x = p1.y * p2.z - p1.z * p2.y
@@ -39,6 +37,7 @@ local function vec_cross(p1,p2)
 	return ret
 end
 
+----------------------------------------------------------------
 local function vec_add(p1,p2)
 	local ret = {}
 	ret.x = p1.x + p2.x
@@ -47,6 +46,7 @@ local function vec_add(p1,p2)
 	return ret
 end
 
+----------------------------------------------------------------
 local function vec_scale(const,p1)
 	local ret = {}
 	ret.x = p1.x * const
@@ -55,6 +55,7 @@ local function vec_scale(const,p1)
 	return ret
 end
 
+----------------------------------------------------------------
 local function vec_sub(p1,p2)
 	local ret = {}
 	ret.x = p1.x - p2.x
@@ -63,14 +64,17 @@ local function vec_sub(p1,p2)
 	return ret
 end
 
+----------------------------------------------------------------
 local function vec_length(p1)
 	return math.sqrt(p1.x*p1.x + p1.y*p1.y + p1.z*p1.z)
 end
 
+----------------------------------------------------------------
 local function vec_normalize(p1)
 	return vec_scale(1/vec_length(p1),p1)
 end
 
+----------------------------------------------------------------
 function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
 
 	local function pushPoint ( points, x, y, z )
@@ -143,43 +147,12 @@ function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
 	writeFace ( vbo, p [ 5 ], p [ 6 ], p [ 2 ], p [ 1 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
 	writeFace ( vbo, p [ 5 ], p [ 1 ], p [ 4 ], p [ 8 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
 	writeFace ( vbo, p [ 2 ], p [ 6 ], p [ 7 ], p [ 3 ], uv [ 1 ], uv [ 2 ], uv [ 3 ], uv [ 4 ])
-
-	local file = assert ( io.open ( 'shader.vsh', mode ))
-	local vsh = file:read ( '*all' )
-	file:close ()
-
-	file = assert ( io.open ( 'shader.fsh', mode ))
-	local fsh = file:read ( '*all' )
-	file:close ()
-
-	local program = MOAIShaderProgram.new ()
-
-	program:setVertexAttribute( 1, 'position' )
-	program:setVertexAttribute( 2, 'normal' )
-	program:setVertexAttribute( 3, 'uv' )
-	program:setVertexAttribute( 4, 'color' )
-	
-	program:reserveUniforms ( 2 )
-	program:declareUniform ( 1, 'worldViewProj', MOAIShaderProgram.UNIFORM_TYPE_FLOAT, MOAIShaderProgram.UNIFORM_WIDTH_MATRIX_4X4 )
-	program:declareUniform ( 2, 'worldNorm', MOAIShaderProgram.UNIFORM_TYPE_FLOAT, MOAIShaderProgram.UNIFORM_WIDTH_MATRIX_3X3 )
-
-	program:reserveGlobals ( 2 )
-	program:setGlobal ( 1, 1, MOAIShaderProgram.GLOBAL_WORLD_VIEW_PROJ )
-	program:setGlobal ( 2, 2, MOAIShaderProgram.GLOBAL_WORLD_NORMAL )
-	
-	program:load ( vsh, fsh )
-
-	local shader = MOAIShader.new ()
-	shader:setProgram ( program )
 	
 	local mesh = MOAIMesh.new ()
 
 	mesh:setVertexBuffer ( vbo, vertexFormat )
 	mesh:setTotalElements ( vbo:countElements ( vertexFormat ))
 	mesh:setBounds ( vbo:computeBounds ( vertexFormat ))
-
-	mesh:setShader ( shader )
-	mesh:setTexture ( texture )
 	mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
 
 	return mesh
@@ -190,11 +163,3 @@ function makeCube ( size, texture )
 	size = size * 0.5
 	return makeBoxMesh ( -size, -size, -size, size, size, size, texture )
 end
-
-local mesh = makeCube ( 128, 'moai.png' )
-
-prop = MOAIProp.new ()
-prop:setDeck ( mesh )
-prop:moveRot ( 360, 360, 0, 12 )
-prop:setCullMode ( MOAIProp.CULL_BACK )
-layer:insertProp ( prop )

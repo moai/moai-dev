@@ -121,7 +121,7 @@ void MOAIScriptNode::NamedAttrAdd ( u32 attrID, MOAIAttrOp &attrOp ) {
 				
 				MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 				this->PushMemberTable ( state );
-				float cur = state.GetField < float >( -1, attrName, 0.0f );
+				float cur = state.GetFieldValue < float >( -1, attrName, 0.0f );
 				state.SetField ( -1, attrName, cur + value );
 			}
 			break;
@@ -132,7 +132,7 @@ void MOAIScriptNode::NamedAttrAdd ( u32 attrID, MOAIAttrOp &attrOp ) {
 			if ( value != 0 ) {
 				MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 				this->PushMemberTable ( state );
-				int cur = state.GetField < int >( -1, attrName, 0 );
+				int cur = state.GetFieldValue < int >( -1, attrName, 0 );
 				state.SetField ( -1, attrName, cur + value );
 			}
 			break;
@@ -147,7 +147,7 @@ void MOAIScriptNode::NamedAttrGet ( u32 attrID, MOAIAttrOp &attrOp ) {
 	
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	this->PushMemberTable ( state );
-	state.GetField ( -1, attrName );
+	state.PushField ( -1, attrName );
 	
 	if ( state.IsType ( -1, LUA_TNUMBER )) {
 		
@@ -196,7 +196,7 @@ void MOAIScriptNode::NamedAttrSet ( u32 attrID, MOAIAttrOp &attrOp ) {
 			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 			source->PushMemberTable ( state );
 			this->PushMemberTable ( state );
-			state.GetField ( -2, sourceField );
+			state.PushField ( -2, sourceField );
 			
 			lua_setfield ( state, -2, attrName );
 			

@@ -364,7 +364,7 @@ void MOAIStretchPatch2D::SerializeIn ( MOAILuaState& state, MOAIDeserializer& se
 	UNUSED ( state );
 	UNUSED ( serializer );
 
-//	STLString path = state.GetField ( -1, "mPath", "" );
+//	STLString path = state.GetFieldValue ( -1, "mPath", "" );
 //	
 //	if ( path.size ()) {
 //		USFilename filename;

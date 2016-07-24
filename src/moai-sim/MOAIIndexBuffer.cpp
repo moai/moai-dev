@@ -211,7 +211,7 @@ void MOAIIndexBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIIndexBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	MOAIGfxBuffer::SerializeIn ( state, serializer );
 	
-	this->mIndexSize = state.GetField < u32 >( -1, "mIndexSize", 0 );
+	this->mIndexSize = state.GetFieldValue < u32 >( -1, "mIndexSize", 0 );
 }
 
 //----------------------------------------------------------------//

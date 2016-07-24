@@ -320,13 +320,13 @@ void MOAIGfxBuffer::ReserveVBOs ( u32 gpuBuffers ) {
 void MOAIGfxBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 
-	u32 totalVBOs		= state.GetField < u32 >( -1, "mTotalVBOs", 0 );
-	u32 size			= state.GetField < u32 >( -1, "mSize", 0 );
+	u32 totalVBOs		= state.GetFieldValue < u32 >( -1, "mTotalVBOs", 0 );
+	u32 size			= state.GetFieldValue < u32 >( -1, "mSize", 0 );
 
 	this->Reserve ( size );
 	this->ReserveVBOs ( totalVBOs );
 	
-	state.GetField ( -1, "mData" );
+	state.PushField ( -1, "mData" );
 	if ( state.IsType ( -1, LUA_TSTRING )) {
 		
 		STLString zipString = lua_tostring ( state, -1 );

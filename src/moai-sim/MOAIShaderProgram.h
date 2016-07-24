@@ -75,7 +75,6 @@ protected:
 	STLMap < u32, STLString > mAttributeMap;
 
 	ZLLeanArray < MOAIShaderUniform >			mUniforms; // these are the actual uniforms
-	ZLLeanArray < MOAIShaderUniformBuffer >		mDefaults;
 	ZLLeanArray < MOAIShaderProgramGlobal >		mGlobals;
 
 	u32											mGlobalsMask;
@@ -83,9 +82,7 @@ protected:
 	//----------------------------------------------------------------//
 	static int		_clearUniform				( lua_State* L );
 	static int		_declareUniform				( lua_State* L );
-	static int		_declareUniformFloat		( lua_State* L );
-	static int		_declareUniformInt			( lua_State* L );
-	static int		_declareUniformSampler		( lua_State* L );
+	//static int		_declareUniformSampler		( lua_State* L );
 	static int		_load						( lua_State* L );
 	static int		_reserveGlobals				( lua_State* L );
 	static int		_reserveUniforms			( lua_State* L );
@@ -129,9 +126,7 @@ public:
 	void			ClearUniform				( u32 idx );
 	void			ClearUniforms				();
 	void			DeleteShaders				();
-	void			DeclareUniform				( u32 idx, cc8* name, u32 type );
-	void			DeclareUniform				( u32 idx, cc8* name, u32 type, float value );
-	void			DeclareUniform				( u32 idx, cc8* name, u32 type, int value );
+	void			DeclareUniform				( u32 idx, cc8* name, u32 type, u32 width = 0 );
 	u32				GetGlobalsMask				();
 					MOAIShaderProgram			();
 					~MOAIShaderProgram			();

@@ -142,7 +142,21 @@ const ZLMatrix4x4& MOAIGfxGlobalsCache::GetMtx ( u32 transformID ) {
 		case WORLD_MTX:
 			
 			return this->mVertexTransforms [ WORLD_MTX ];
+		
+		case WORLD_NORMAL_MTX:
 			
+			if ( this->mDirtyFlags & WORLD_NORMAL_MTX_MASK ) {
+			
+				ZLMatrix3x3 mtx = ZLMatrix3x3 ( this->GetMtx ( WORLD_MTX ));
+				mtx.Inverse ();
+				mtx.Transpose ();
+			
+				this->mVertexTransforms [ WORLD_NORMAL_MTX ] = ZLMatrix4x4 ( mtx );
+				
+				this->mDirtyFlags &= ~ID_TO_FLAG ( WORLD_NORMAL_MTX );
+			}
+			return this->mVertexTransforms [ WORLD_NORMAL_MTX ];
+		
 		case WORLD_VIEW_MTX:
 			
 			if ( this->mDirtyFlags & WORLD_VIEW_MTX_MASK ) {
@@ -153,7 +167,21 @@ const ZLMatrix4x4& MOAIGfxGlobalsCache::GetMtx ( u32 transformID ) {
 				this->mDirtyFlags &= ~ID_TO_FLAG ( WORLD_VIEW_MTX );
 			}
 			return this->mVertexTransforms [ WORLD_VIEW_MTX ];
+		
+		case WORLD_VIEW_NORMAL_MTX:
 			
+			if ( this->mDirtyFlags & WORLD_VIEW_NORMAL_MTX_MASK ) {
+			
+				ZLMatrix3x3 mtx = ZLMatrix3x3 ( this->GetMtx ( WORLD_VIEW_MTX ));
+				mtx.Inverse ();
+				mtx.Transpose ();
+			
+				this->mVertexTransforms [ WORLD_VIEW_NORMAL_MTX ] = ZLMatrix4x4 ( mtx );
+				
+				this->mDirtyFlags &= ~ID_TO_FLAG ( WORLD_VIEW_NORMAL_MTX );
+			}
+			return this->mVertexTransforms [ WORLD_VIEW_NORMAL_MTX ];
+		
 		case WORLD_VIEW_PROJ_MTX:
 			
 			if ( this->mDirtyFlags & WORLD_VIEW_PROJ_MTX_MASK ) {
@@ -164,6 +192,20 @@ const ZLMatrix4x4& MOAIGfxGlobalsCache::GetMtx ( u32 transformID ) {
 				this->mDirtyFlags &= ~ID_TO_FLAG ( WORLD_VIEW_PROJ_MTX);
 			}
 			return this->mVertexTransforms [ WORLD_VIEW_PROJ_MTX ];
+		
+		case WORLD_VIEW_PROJ_NORMAL_MTX:
+			
+			if ( this->mDirtyFlags & WORLD_VIEW_PROJ_NORMAL_MTX_MASK ) {
+			
+				ZLMatrix3x3 mtx = ZLMatrix3x3 ( this->GetMtx ( WORLD_VIEW_PROJ_MTX ));
+				mtx.Inverse ();
+				mtx.Transpose ();
+			
+				this->mVertexTransforms [ WORLD_VIEW_PROJ_NORMAL_MTX ] = ZLMatrix4x4 ( mtx );
+				
+				this->mDirtyFlags &= ~ID_TO_FLAG ( WORLD_VIEW_PROJ_NORMAL_MTX );
+			}
+			return this->mVertexTransforms [ WORLD_VIEW_PROJ_NORMAL_MTX ];
 	}
 	
 	assert ( false );
@@ -291,9 +333,7 @@ void MOAIGfxGlobalsCache::SetMtx ( u32 transformID ) {
 //----------------------------------------------------------------//
 void MOAIGfxGlobalsCache::SetMtx ( u32 transformID, const ZLAffine3D& transform ) {
 
-	ZLMatrix4x4 mtx;
-	mtx.Init ( transform );
-	this->SetMtx ( transformID, mtx );
+	this->SetMtx ( transformID, ZLMatrix4x4 ( transform ));
 }
 
 //----------------------------------------------------------------//
@@ -323,16 +363,7 @@ void MOAIGfxGlobalsCache::SetMtx ( u32 transformID, const ZLMatrix4x4& mtx ) {
 			dirtyMask = WORLD_MTX_DIRTY_MASK;
 			break;
 	
-		case INVERSE_PROJ_MTX:
-		case INVERSE_UV_MTX:
-		case INVERSE_VIEW_MTX:
-		case INVERSE_VIEW_PROJ_MTX:
-		case INVERSE_WORLD_MTX:
-		case INVERSE_WORLD_VIEW_MTX:
-		case INVERSE_WORLD_VIEW_PROJ_MTX:
-		case VIEW_PROJ_MTX:
-		case WORLD_VIEW_MTX:
-		case WORLD_VIEW_PROJ_MTX:
+		default:
 		
 			assert ( false ); // read only
 			return;

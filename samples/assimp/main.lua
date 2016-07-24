@@ -5,26 +5,29 @@
 ----------------------------------------------------------------
 
 --FILENAME = '../../3rdparty/assimp/test/models-nonbsd/ogre/ogresdk/ninja.mesh'
-FILENAME = '../../3rdparty/assimp/test/models/collada/duck.dae'
+--FILENAME = '../../3rdparty/assimp/test/models/collada/duck.dae'
+FILENAME = 'boblampclean.md5mesh'
 
-MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_MODEL_BOUNDS, 2, 1, 1, 1 )
-MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
+--MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_MODEL_BOUNDS, 2, 1, 1, 1 )
+--MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
 
-MOAISim.openWindow ( "test", 320, 480 )
+MOAISim.openWindow ( "test", 1024, 1024 )
+MOAIGfxMgr.setClearColor ( 0.5, 0.5, 0.5, 1 )
 
 frameBuffer = MOAIGfxMgr.getFrameBuffer ()
 frameBuffer:setClearDepth ( true )
 
 viewport = MOAIViewport.new ()
-viewport:setSize ( 320, 480 )
-viewport:setScale ( 320, 480 )
+viewport:setSize ( 1024, 1024 )
+viewport:setScale ( 1024, 1024 )
 
 layer = MOAILayer.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 camera = MOAICamera.new ()
-camera:setLoc ( 0, 0, camera:getFocalLength ( 320 ))
+--camera:setLoc ( 0, 0, camera:getFocalLength ( 320 ))
+camera:setLoc ( 0, 0, camera:getFocalLength ( 100 ))
 layer:setCamera ( camera )
 
 local vertexFormat = MOAIVertexFormat.new ()
@@ -43,19 +46,40 @@ aiScene:load ( FILENAME,
 
 local aiMeshes = aiScene:getMeshes ()
 local aiMaterials = aiScene:getMaterials ()
+local aiRootNode = aiScene:getRootNode ()
+
+--if aiRootNode then
+--	local json = MOAIJsonParser.encode ( aiRootNode, MOAIJsonParser.JSON_INDENT + MOAIJsonParser.JSON_SORT_KEYS )
+--	print ( json )
+--end
+
+local textures = {}
 
 for i, aiMaterial in ipairs ( aiMaterials ) do
 
-	print ( 'FOUND A MATERIALS!' )
+	local path = aiMaterial.TEXTURE_DIFFUSE [ 1 ].path
+	print ( path )
 
-	local json = MOAIJsonParser.encode ( aiMaterial, MOAIJsonParser.JSON_INDENT + MOAIJsonParser.JSON_SORT_KEYS )
-	print ( json )
-	print ()
+	local texture = MOAITexture.new ()
+	texture:load ( path )
+
+	textures [ i ] = texture
+
+	--local json = MOAIJsonParser.encode ( aiMaterial, MOAIJsonParser.JSON_INDENT + MOAIJsonParser.JSON_SORT_KEYS )
+	--print ( json )
+	--print ()
 end
 
 for i, aiMesh in ipairs ( aiMeshes ) do
 
 	print ( 'FOUND A MESH!' )
+
+	local aiBones = aiMesh:getBones ()
+
+	if aiBones then
+		local json = MOAIJsonParser.encode ( aiBones, MOAIJsonParser.JSON_INDENT + MOAIJsonParser.JSON_SORT_KEYS )
+		print ( json )
+	end
 
 	local vbo = MOAIVertexBuffer.new ()
 	local ibo = MOAIIndexBuffer.new ()
@@ -71,13 +95,16 @@ for i, aiMesh in ipairs ( aiMeshes ) do
 	mesh:setBounds ( vbo:computeBounds ( vertexFormat ))
 	mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
 	mesh:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.MESH_SHADER ))
-	mesh:setTexture ( '../../3rdparty/assimp/test/models/collada/duckCM.tga' )
+	--mesh:setTexture ( '../../3rdparty/assimp/test/models/collada/duckCM.tga' )
+	mesh:setTexture ( textures [ aiMesh:getMaterialIndex ()])
 	
 	local prop = MOAIProp.new ()
 	prop:setDeck ( mesh )
-	prop:setLoc ( 0, -80, 0 )
-	prop:setRot ( 0, -90, 0 )
-	prop:moveRot ( 0, 360, 0, 6 )
+	prop:setRot ( -90, 0, 0 )
+	prop:setLoc ( 0, -40, 0 )
+	--prop:setLoc ( 0, -80, 0 )
+	--prop:setRot ( 0, -90, 0 )
+	--prop:moveRot ( 0, 360, 0, 6 )
 	prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
 	prop:setDepthTest ( MOAIGraphicsProp.DEPTH_TEST_LESS )
 	layer:insertProp ( prop )

@@ -61,25 +61,25 @@ int MOAIFmodEventMgr::_init ( lua_State* L ) {
 
     FMODDesigner::SoundInitParams params = FMODDesigner::SoundInitParams();
 
-    params.m_soundMemoryMB = state.GetField < u32 >( -1, "soundMemoryMB", 32 );
-    params.m_rsxMemoryMB = state.GetField < u32 > ( -1, "rsxMemoryMB", 0 );
-    params.m_voiceLRUBufferMB = state.GetField < u32 > ( -1, "voiceLRUBufferMB", 0 );
-    params.m_voiceLRUMaxMB = state.GetField < u32 > ( -1, "voiceLRUMaxMB", 0 );
-    params.m_nVirtualChannels = state.GetField < u32 > ( -1, "nVirtualChannels", 256 );
-    params.m_nRealChannels = state.GetField < u32 > ( -1, "nRealChannels", 32 );
-    params.m_nPCMCodecs = state.GetField < u32 > ( -1, "nPCMCodecs", 16 );    
-    params.m_nADPCMCodecs = state.GetField < u32 > ( -1, "nADPCMCodecs", 32 );
-    params.m_nCompressedCodecs = state.GetField < u32 > ( -1, "nCompressedCodecs", 32 );
-    params.m_nMaxInputChannels = state.GetField < u32 > ( -1, "nMaxInputChannels", 6 );
-    params.m_enableSoundSystem = state.GetField < bool > ( -1, "enableSoundSystem", true );
-    params.m_enableDistantLowpass = state.GetField < bool > ( -1, "enableDistantLowpass", false );
-    params.m_enableEnvironmentalReverb = state.GetField < bool > ( -1, "enableEnvironmentalReverb", true );
-    params.m_enableNear2DBlend = state.GetField < bool > ( -1, "enableNear2DBlend", false );
-    params.m_enableAuditioning = state.GetField < bool > ( -1, "enableAuditioning", false );
-    params.m_enableProfiling = state.GetField < bool > ( -1, "enableProfiling", false );
-    params.m_enableFsCallbacks = state.GetField < bool > ( -1, "enableFsCallbacks", false );
-    params.m_disableSound = state.GetField < bool > ( -1, "disableSound", false );
-    params.m_dopplerScale = state.GetField < float > ( -1, "dopplerScale", 0.f );
+    params.m_soundMemoryMB				= state.GetFieldValue < u32 >( -1, "soundMemoryMB", 32 );
+    params.m_rsxMemoryMB				= state.GetFieldValue < u32 >( -1, "rsxMemoryMB", 0 );
+    params.m_voiceLRUBufferMB			= state.GetFieldValue < u32 >( -1, "voiceLRUBufferMB", 0 );
+    params.m_voiceLRUMaxMB				= state.GetFieldValue < u32 >( -1, "voiceLRUMaxMB", 0 );
+    params.m_nVirtualChannels			= state.GetFieldValue < u32 >( -1, "nVirtualChannels", 256 );
+    params.m_nRealChannels				= state.GetFieldValue < u32 >( -1, "nRealChannels", 32 );
+    params.m_nPCMCodecs					= state.GetFieldValue < u32 >( -1, "nPCMCodecs", 16 );
+    params.m_nADPCMCodecs				= state.GetFieldValue < u32 >( -1, "nADPCMCodecs", 32 );
+    params.m_nCompressedCodecs			= state.GetFieldValue < u32 >( -1, "nCompressedCodecs", 32 );
+    params.m_nMaxInputChannels			= state.GetFieldValue < u32 >( -1, "nMaxInputChannels", 6 );
+    params.m_enableSoundSystem			= state.GetFieldValue < bool >( -1, "enableSoundSystem", true );
+    params.m_enableDistantLowpass		= state.GetFieldValue < bool >( -1, "enableDistantLowpass", false );
+    params.m_enableEnvironmentalReverb	= state.GetFieldValue < bool >( -1, "enableEnvironmentalReverb", true );
+    params.m_enableNear2DBlend			= state.GetFieldValue < bool >( -1, "enableNear2DBlend", false );
+    params.m_enableAuditioning			= state.GetFieldValue < bool >( -1, "enableAuditioning", false );
+    params.m_enableProfiling			= state.GetFieldValue < bool >( -1, "enableProfiling", false );
+    params.m_enableFsCallbacks			= state.GetFieldValue < bool >( -1, "enableFsCallbacks", false );
+    params.m_disableSound				= state.GetFieldValue < bool >( -1, "disableSound", false );
+    params.m_dopplerScale				= state.GetFieldValue < float >( -1, "dopplerScale", 0.f );
 
     const bool b = FMODDesigner::tEventManager.Init ( params );
     lua_pushboolean ( L, b );

@@ -726,7 +726,7 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 			
 			ZLAffine3D billboardMtx;
 			billboardMtx.Init ( camera->GetBillboardMtx ());
-			worldDrawingMtx.Init ( this->GetBillboardMtx ( billboardMtx ));
+			worldDrawingMtx = ZLMatrix4x4 ( this->GetBillboardMtx ( billboardMtx ));
 			break;
 		}
 		
@@ -739,7 +739,7 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 			invViewProj.Append ( proj );
 			invViewProj.Inverse ();
 			
-			worldDrawingMtx.Init ( this->GetLocalToWorldMtx ());
+			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
 			
 			// world space location for prop
 			ZLVec3D worldLoc;
@@ -798,7 +798,7 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 			mtx.Translate ( this->mPiv.mX, this->mPiv.mY, this->mPiv.mZ );
 			billboardMtx.Append ( mtx );
 			
-			worldDrawingMtx.Init ( this->GetLocalToWorldMtx ());
+			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
 			worldDrawingMtx.Prepend ( billboardMtx );
 		
 			break;
@@ -811,7 +811,7 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 			ZLMatrix4x4 viewProjMtx = camera->GetWorldToWndMtx ( *viewport );
 			
 			ZLMatrix4x4 localToWorldMtx;
-			worldDrawingMtx.Init (this->GetLocalToWorldMtx ());
+			worldDrawingMtx = ZLMatrix4x4 (this->GetLocalToWorldMtx ());
 			
 			// TODO: check that pivot is supported correctly
 			ZLVec3D loc;
@@ -831,7 +831,7 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 		case BILLBOARD_NONE:
 		default:
 		
-			worldDrawingMtx.Init ( this->GetLocalToWorldMtx ());
+			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
 	}
 	
 	return worldDrawingMtx;

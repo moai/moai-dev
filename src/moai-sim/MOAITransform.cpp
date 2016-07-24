@@ -1138,16 +1138,16 @@ void MOAITransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAITransform::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 	
-	this->mPiv.mX = state.GetField < float >( -1, "mPiv.mX", 0.0f );
-	this->mPiv.mY = state.GetField < float >( -1, "mPiv.mY", 0.0f );
+	this->mPiv.mX		= state.GetFieldValue < float >( -1, "mPiv.mX", 0.0f );
+	this->mPiv.mY		= state.GetFieldValue < float >( -1, "mPiv.mY", 0.0f );
 	
-	this->mLoc.mX = state.GetField < float >( -1, "mLoc.mX", 0.0f );
-	this->mLoc.mY = state.GetField < float >( -1, "mLoc.mY", 0.0f );
+	this->mLoc.mX		= state.GetFieldValue < float >( -1, "mLoc.mX", 0.0f );
+	this->mLoc.mY		= state.GetFieldValue < float >( -1, "mLoc.mY", 0.0f );
 	
-	this->mScale.mX = state.GetField < float >( -1, "mScale.mX", 1.0f );
-	this->mScale.mY = state.GetField < float >( -1, "mScale.mY", 1.0f );
+	this->mScale.mX		= state.GetFieldValue < float >( -1, "mScale.mX", 1.0f );
+	this->mScale.mY		= state.GetFieldValue < float >( -1, "mScale.mY", 1.0f );
 	
-	this->mRot.mZ = state.GetField < float >( -1, "mDegrees", 0.0f );
+	this->mRot.mZ		= state.GetFieldValue < float >( -1, "mDegrees", 0.0f );
 }
 
 //----------------------------------------------------------------//

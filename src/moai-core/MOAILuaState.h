@@ -52,15 +52,12 @@ public:
 	ZLBox			GetBox						( int idx );
 	ZLColorVec		GetColor					( int idx, float r, float g, float b, float a );
 	u32				GetColor32					( int idx, float r, float g, float b, float a );
-	void			GetField					( int idx, cc8* name );
-	void			GetField					( int idx, int key );
-	STLString		GetField					( int idx, cc8* key, cc8* value );
-	STLString		GetField					( int idx, int key, cc8* value );
-	STLString		GetField					( int idx, cc8* key, const STLString& value );
-	STLString		GetField					( int idx, int key, const STLString& value );
-	bool			GetFieldWithType			( int idx, cc8* name, int type );
-	bool			GetFieldWithType			( int idx, int key, int type );
-	bool			GetSubfieldWithType			( int idx, cc8* format, int type, ... );
+	
+//	STLString		GetField					( int idx, cc8* key, cc8* value );
+//	STLString		GetField					( int idx, int key, cc8* value );
+//	STLString		GetField					( int idx, cc8* key, const STLString& value );
+//	STLString		GetField					( int idx, int key, const STLString& value );
+	
 	static cc8*		GetLuaTypeName				( int type );
 	void*			GetPtrUserData				( int idx );
 	STLString		GetStackDump				();
@@ -75,8 +72,8 @@ public:
 	STLString		GetValue					( int idx, cc8* value );
 	bool			HasField					( int idx, cc8* name );
 	bool			HasField					( int idx, int key );
-	bool			HasField					( int idx, cc8* name, int type );
-	bool			HasField					( int idx, int name, int type );
+	bool			HasFieldWithType			( int idx, cc8* name, int type );
+	bool			HasFieldWithType			( int idx, int name, int type );
 	bool			HasKeys						( int idx );
 	bool			HexDecode					( int idx );
 	bool			HexEncode					( int idx );
@@ -125,6 +122,13 @@ public:
 	void			Push						( void* data, size_t size );
 	
 	void			PushPtrUserData				( void* ptr );
+	
+	void			PushField					( int idx, cc8* name );
+	void			PushField					( int idx, int key );
+	bool			PushFieldWithType			( int idx, cc8* name, int type );
+	bool			PushFieldWithType			( int idx, int key, int type );
+	bool			PushSubfieldWithType			( int idx, cc8* format, int type, ... );
+	
 	int				PushTableItr				( int idx );
 	void			RegisterModule				( int idx, cc8* name, bool autoLoad );
 	void			RegisterModule				( lua_CFunction loader, cc8* name, bool autoload );
@@ -157,8 +161,8 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	template < typename TYPE > TYPE						GetField			( int idx, int key, TYPE value );
-	template < typename TYPE > TYPE						GetField			( int idx, cc8* key, TYPE value );
+	template < typename TYPE > TYPE						GetFieldValue		( int idx, int key, TYPE value );
+	template < typename TYPE > TYPE						GetFieldValue		( int idx, cc8* key, TYPE value );
 	template < typename TYPE > TYPE*					GetLuaObject		( int idx, bool verbose );
 	template < typename TYPE > TYPE*					GetLuaObject		( int idx, cc8* name, bool verbose );
 	template < typename TYPE > ZLMetaRect < TYPE >		GetRect				( int idx, TYPE value = 0 );
@@ -173,27 +177,27 @@ public:
 	template < typename TYPE > void						SetGlobal			( cc8* key, TYPE value );
 	template < typename TYPE > void						WriteArray			( int size, TYPE* values );
 	
-	//----------------------------------------------------------------//
-	template < typename TYPE >
-	TYPE GetFieldValue ( int idx, cc8* key, TYPE value ) {
-	
-		this->GetField ( idx, key );
-		TYPE result = this->GetValue < TYPE >( -1, value );
-		this->Pop ();
-		
-		return result;
-	}
-	
-	//----------------------------------------------------------------//
-	template < typename TYPE >
-	TYPE GetFieldValue ( int idx, int key, TYPE value ) {
-	
-		this->GetField ( idx, key );
-		TYPE result = this->GetValue < TYPE >( -1, value );
-		this->Pop ();
-		
-		return result;
-	}
+//	//----------------------------------------------------------------//
+//	template < typename TYPE >
+//	TYPE GetFieldValue ( int idx, cc8* key, TYPE value ) {
+//	
+//		this->PushField ( idx, key );
+//		TYPE result = this->GetValue < TYPE >( -1, value );
+//		this->Pop ();
+//		
+//		return result;
+//	}
+//	
+//	//----------------------------------------------------------------//
+//	template < typename TYPE >
+//	TYPE GetFieldValue ( int idx, int key, TYPE value ) {
+//	
+//		this->PushField ( idx, key );
+//		TYPE result = this->GetValue < TYPE >( -1, value );
+//		this->Pop ();
+//		
+//		return result;
+//	}
 };
 
 //----------------------------------------------------------------//
@@ -212,8 +216,13 @@ template <> u64				MOAILuaState::GetValue < u64 >				( int idx, const u64 value 
 template <> const void*		MOAILuaState::GetValue < const void* >		( int idx, const void* value );
 template <> ZLBox			MOAILuaState::GetValue < ZLBox >			( int idx, const ZLBox value );
 template <> ZLColorVec		MOAILuaState::GetValue < ZLColorVec >		( int idx, const ZLColorVec value );
+template <> ZLAffine2D		MOAILuaState::GetValue < ZLAffine2D >		( int idx, const ZLAffine2D value );
+template <> ZLAffine3D		MOAILuaState::GetValue < ZLAffine3D >		( int idx, const ZLAffine3D value );
+template <> ZLMatrix3x3		MOAILuaState::GetValue < ZLMatrix3x3 >		( int idx, const ZLMatrix3x3 value );
+template <> ZLMatrix4x4		MOAILuaState::GetValue < ZLMatrix4x4 >		( int idx, const ZLMatrix4x4 value );
 template <> ZLRect			MOAILuaState::GetValue < ZLRect >			( int idx, const ZLRect value );
 template <> ZLVec2D			MOAILuaState::GetValue < ZLVec2D >			( int idx, const ZLVec2D value );
 template <> ZLVec3D			MOAILuaState::GetValue < ZLVec3D >			( int idx, const ZLVec3D value );
+template <> ZLVec4D			MOAILuaState::GetValue < ZLVec4D >			( int idx, const ZLVec4D value );
 
 #endif

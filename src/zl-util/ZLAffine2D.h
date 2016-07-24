@@ -17,6 +17,8 @@ template < typename TYPE >
 class ZLMetaAffine2D {
 public:
 
+	static const ZLMetaAffine2D < TYPE > IDENT;
+
 	enum {
 		C0_R0	=	0,
 		C0_R1,
@@ -74,6 +76,12 @@ public:
 		
 		return heading;
 	}
+	
+	//----------------------------------------------------------------//
+	static int GetIndex ( int row, int col ) {
+	
+		return ( col * 3 ) + row;
+	}
 
 	//----------------------------------------------------------------//
 	TYPE GetRot () const {
@@ -126,7 +134,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Ident () {
+	ZLMetaAffine2D < TYPE >& Ident () {
 
 		m [ C0_R0 ]	= 1;
 		m [ C0_R1 ]	= 0;
@@ -136,6 +144,8 @@ public:
 		
 		m [ C2_R0 ]	= 0;
 		m [ C2_R1 ]	= 0;
+		
+		return *this;
 	}
 
 	//----------------------------------------------------------------//
@@ -340,6 +350,12 @@ public:
 
 		m [ C2_R0 ]	= ( xSc * cz * xTr ) + ( -sz * yTr );
 		m [ C2_R1 ]	= ( ySc * sz * xTr ) + ( cz * yTr );
+	}
+
+	//----------------------------------------------------------------//
+	void SetElement ( int c, int r, TYPE value ) const {
+
+		m [ ( c * 3 ) + r ] = value;
 	}
 
 	//----------------------------------------------------------------//
@@ -553,6 +569,9 @@ public:
 	ZLMetaAffine2D () {
 	}
 };
+
+template < typename TYPE >
+const ZLMetaAffine2D < TYPE > ZLMetaAffine2D < TYPE >::IDENT = ZLMetaAffine2D < TYPE >().Ident ();
 
 typedef ZLMetaAffine2D < float > ZLAffine2D;
 typedef ZLMetaAffine2D < double > ZLAffine2D64;

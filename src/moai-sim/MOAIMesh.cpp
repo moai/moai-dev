@@ -250,26 +250,26 @@ void MOAIMesh::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer )
 
 	MOAIVertexArray::SerializeIn ( state, serializer );
 
-	this->SetIndexBuffer ( serializer.MemberIDToObject < MOAIIndexBuffer >( state.GetField < MOAISerializer::ObjID >( -1, "mIndexBuffer", 0 )));
+	this->SetIndexBuffer ( serializer.MemberIDToObject < MOAIIndexBuffer >( state.GetFieldValue < MOAISerializer::ObjID >( -1, "mIndexBuffer", 0 )));
 	
-	this->mTotalElements = state.GetField < u32 >( -1, "mTotalElements", 0 );
+	this->mTotalElements = state.GetFieldValue < u32 >( -1, "mTotalElements", 0 );
 	
-	this->mHasBounds = state.GetField < bool >( -1, "mHasBounds", 0 );
+	this->mHasBounds = state.GetFieldValue < bool >( -1, "mHasBounds", 0 );
 	
-	if ( state.GetFieldWithType ( -1, "mBounds", LUA_TTABLE )) {
+	if ( state.PushFieldWithType ( -1, "mBounds", LUA_TTABLE )) {
 		
-		this->mBounds.mMin.mX	= state.GetField < float >( -1, "mMinX", 0 );
-		this->mBounds.mMin.mY	= state.GetField < float >( -1, "mMinY", 0 );
-		this->mBounds.mMin.mZ	= state.GetField < float >( -1, "mMinZ", 0 );
+		this->mBounds.mMin.mX	= state.GetFieldValue < float >( -1, "mMinX", 0 );
+		this->mBounds.mMin.mY	= state.GetFieldValue < float >( -1, "mMinY", 0 );
+		this->mBounds.mMin.mZ	= state.GetFieldValue < float >( -1, "mMinZ", 0 );
 		
-		this->mBounds.mMax.mX	= state.GetField < float >( -1, "mMaxX", 0 );
-		this->mBounds.mMax.mY	= state.GetField < float >( -1, "mMaxY", 0 );
-		this->mBounds.mMax.mZ	= state.GetField < float >( -1, "mMaxZ", 0 );
+		this->mBounds.mMax.mX	= state.GetFieldValue < float >( -1, "mMaxX", 0 );
+		this->mBounds.mMax.mY	= state.GetFieldValue < float >( -1, "mMaxY", 0 );
+		this->mBounds.mMax.mZ	= state.GetFieldValue < float >( -1, "mMaxZ", 0 );
 		
 		state.Pop ();
 	}
 	
-	this->mPenWidth = state.GetField < float >( -1, "mPenWidth", 0 );
+	this->mPenWidth = state.GetFieldValue < float >( -1, "mPenWidth", 0 );
 }
 
 //----------------------------------------------------------------//

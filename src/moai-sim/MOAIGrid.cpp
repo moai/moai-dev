@@ -315,7 +315,7 @@ void MOAIGrid::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer )
 	this->MOAIGridSpace::SerializeIn ( state, serializer );
 	this->mTiles.Init ( this->MOAIGridSpace::GetTotalCells ());
 
-	state.GetField ( -1, "mData" );
+	state.PushField ( -1, "mData" );
 
 	if ( state.IsType ( -1, LUA_TSTRING )) {
 		
