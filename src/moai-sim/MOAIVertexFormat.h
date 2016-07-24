@@ -114,7 +114,7 @@ private:
 		
 		return ZLVec4D (
 				(( float )((( TYPE* )buffer )[ 0 ]) / normalize ),
-				components > 2 ? (( float )((( TYPE* )buffer )[ 1 ]) / normalize ) : yFallback,
+				components > 1 ? (( float )((( TYPE* )buffer )[ 1 ]) / normalize ) : yFallback,
 				components > 2 ? (( float )((( TYPE* )buffer )[ 2 ]) / normalize ) : zFallback,
 				components > 3 ? (( float )((( TYPE* )buffer )[ 3 ]) / normalize ) : wFallback
 		);
