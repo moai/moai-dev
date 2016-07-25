@@ -104,7 +104,7 @@ int	MOAIAnim::_setLink ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIAnim::Apply ( float t ) {
 	
-	MOAIAttrOp attrOp;
+	MOAIAttribute attr;
 	
 	u32 total = ( u32 )this->mLinks.Size ();
 	for ( u32 i = 0; i < total; ++i ) {
@@ -116,8 +116,8 @@ void MOAIAnim::Apply ( float t ) {
 		if ( curve && target ) {
 			
 			if ( !link.mRelative ) {
-				curve->GetValue ( attrOp, t );
-				target->ApplyAttrOp ( link.mAttrID, attrOp, MOAIAttrOp::SET );
+				curve->GetValue ( attr, t );
+				target->ApplyAttrOp ( link.mAttrID, attr, MOAIAttribute::SET );
 			}
 			target->ScheduleUpdate ();
 		}
@@ -132,7 +132,7 @@ void MOAIAnim::Apply ( float t0, float t1 ) {
 		return;
 	}
 	
-	MOAIAttrOp attrOp;
+	MOAIAttribute attr;
 	
 	u32 total = ( u32 )this->mLinks.Size ();
 	for ( u32 i = 0; i < total; ++i ) {
@@ -144,12 +144,12 @@ void MOAIAnim::Apply ( float t0, float t1 ) {
 		if ( curve && target ) {
 			
 			if ( link.mRelative ) {
-				curve->GetDelta ( attrOp, t0, t1 );
-				target->ApplyAttrOp ( link.mAttrID, attrOp, MOAIAttrOp::ADD );
+				curve->GetDelta ( attr, t0, t1 );
+				target->ApplyAttrOp ( link.mAttrID, attr, MOAIAttribute::ADD );
 			}
 			else {
-				curve->GetValue ( attrOp, t1 );
-				target->ApplyAttrOp ( link.mAttrID, attrOp, MOAIAttrOp::SET );
+				curve->GetValue ( attr, t1 );
+				target->ApplyAttrOp ( link.mAttrID, attr, MOAIAttribute::SET );
 			}
 			target->ScheduleUpdate ();
 		}

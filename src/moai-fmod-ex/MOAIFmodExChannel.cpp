@@ -199,13 +199,13 @@ int MOAIFmodExChannel::_stop ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIFmodExChannel::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+bool MOAIFmodExChannel::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( MOAIFmodExChannelAttr::Check ( attrID )) {
 		attrID = UNPACK_ATTR ( attrID );
 
 		if ( attrID == ATTR_VOLUME ) {
-			this->mVolume = attrOp.Apply ( this->mVolume, op, MOAIAttrOp::ATTR_READ_WRITE );
+			this->mVolume = attr.Apply ( this->mVolume, op, MOAIAttribute::ATTR_READ_WRITE );
 			this->SetVolume ( this->mVolume );
 			return true;
 		}

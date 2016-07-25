@@ -205,25 +205,30 @@ MOAIColor* MOAIColor::AffirmColor ( MOAILuaState& state, int idx ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIColor::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+bool MOAIColor::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( MOAIColorAttr::Check ( attrID )) {
 
 		switch ( UNPACK_ATTR ( attrID )) {
+		
 			case ATTR_R_COL:
-				this->mR = ZLFloat::Clamp ( attrOp.Apply ( this->mR, op, MOAIAttrOp::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				this->mR = ZLFloat::Clamp ( attr.Apply ( this->mR, op, MOAIAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );
 				return true;
+				
 			case ATTR_G_COL:
-				this->mG = ZLFloat::Clamp ( attrOp.Apply ( this->mG, op, MOAIAttrOp::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				this->mG = ZLFloat::Clamp ( attr.Apply ( this->mG, op, MOAIAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );
 				return true;
+				
 			case ATTR_B_COL:
-				this->mB = ZLFloat::Clamp ( attrOp.Apply ( this->mB, op, MOAIAttrOp::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				this->mB = ZLFloat::Clamp ( attr.Apply ( this->mB, op, MOAIAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );
 				return true;
+				
 			case ATTR_A_COL:
-				this->mA = ZLFloat::Clamp ( attrOp.Apply ( this->mA, op, MOAIAttrOp::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				this->mA = ZLFloat::Clamp ( attr.Apply ( this->mA, op, MOAIAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );
 				return true;
+				
 			case COLOR_TRAIT:
-				attrOp.ApplyNoAdd ( this->mColor, op, MOAIAttrOp::ATTR_READ );
+				attr.ApplyNoAdd ( this->mColor, op, MOAIAttribute::ATTR_READ );
 				return true;
 		}
 	}
@@ -262,13 +267,13 @@ void MOAIColor::OnDepNodeUpdate () {
 
 	this->mColor = *this;
 	
-	MOAIAttrOp attrOp;
-	if ( this->PullLinkedAttr ( MOAIColorAttr::Pack ( INHERIT_COLOR ), attrOp )) {
-		this->mColor.Modulate ( attrOp.GetValue ( ZLColorVec::WHITE ));
+	MOAIAttribute attr;
+	if ( this->PullLinkedAttr ( MOAIColorAttr::Pack ( INHERIT_COLOR ), attr )) {
+		this->mColor.Modulate ( attr.GetValue ( ZLColorVec::WHITE ));
 	}
 	
-	if ( this->PullLinkedAttr ( MOAIColorAttr::Pack ( ADD_COLOR ), attrOp )) {
-		this->mColor.Add ( attrOp.GetValue ( ZLColorVec::WHITE ));
+	if ( this->PullLinkedAttr ( MOAIColorAttr::Pack ( ADD_COLOR ), attr )) {
+		this->mColor.Add ( attr.GetValue ( ZLColorVec::WHITE ));
 	}
 }
 

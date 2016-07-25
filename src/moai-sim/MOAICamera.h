@@ -66,7 +66,7 @@ public:
 	GET_SET ( u32, Type, mType )
 	
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	bool			ApplyAttrOp				( u32 attrID, MOAIAttribute& attr, u32 op );
 	ZLMatrix4x4		GetBillboardMtx			() const;
 	float			GetFocalLength			( float width ) const;
 	ZLMatrix4x4		GetProjMtx				( const MOAIViewport& viewport ) const;

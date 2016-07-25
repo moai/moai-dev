@@ -158,7 +158,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void							AddToSortBuffer			( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
-	bool							ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	bool							ApplyAttrOp				( u32 attrID, MOAIAttribute& attr, u32 op );
 	void							GetGridBoundsInView		( MOAICellCoord& c0, MOAICellCoord& c1 ); // TODO: this shoudln't be here
 	u32								GetModelBounds			( ZLBox& bounds );
 	MOAIPartition*					GetPartitionTrait		();

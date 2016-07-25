@@ -68,7 +68,7 @@ int MOAIEaseDriver::_setLink ( lua_State* L ) {
 	
 	if ( source ) {
 	
-		u32 sourceAttrID	= state.GetValue < u32 >( 6, MOAIAttrOp::NULL_ATTR );
+		u32 sourceAttrID	= state.GetValue < u32 >( 6, MOAIAttribute::NULL_ATTR );
 		u32 mode			= state.GetValue < u32 >( 7, ZLInterpolate::kSmooth );
 		
 		self->SetLink ( idx, dest, destAttrID, source, sourceAttrID, mode );
@@ -116,7 +116,7 @@ void MOAIEaseDriver::OnUpdate ( double step ) {
 	float c1 = this->GetCycle ();
 	float t1 = ZLFloat::Clamp ( this->GetNormalizedTime () - c1, 0.0f, 1.0f );
 
-	MOAIAttrOp adder;
+	MOAIAttribute adder;
 
 	size_t total = this->mLinks.Size ();
 	for ( size_t i = 0; i < total; ++i ) {
@@ -154,7 +154,7 @@ void MOAIEaseDriver::OnUpdate ( double step ) {
 			
 			if ( delta != 0.0f ) {
 				adder.SetValue ( delta );
-				link.mDest->ApplyAttrOp ( link.mDestAttrID, adder, MOAIAttrOp::ADD );
+				link.mDest->ApplyAttrOp ( link.mDestAttrID, adder, MOAIAttribute::ADD );
 				link.mDest->ScheduleUpdate ();
 			}
 		}
@@ -276,7 +276,7 @@ void MOAIEaseDriver::SetLink ( u32 idx, MOAINode* dest, u32 destAttrID, float v1
 		MOAIEaseDriverLink& link = this->mLinks [ idx ];
 
 		link.mSource.Set ( *this, 0 );
-		link.mSourceAttrID	= MOAIAttrOp::NULL_ATTR;
+		link.mSourceAttrID	= MOAIAttribute::NULL_ATTR;
 
 		link.mDest.Set ( *this, dest );
 		link.mDestAttrID	= destAttrID;

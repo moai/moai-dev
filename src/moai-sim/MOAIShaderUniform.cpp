@@ -11,22 +11,22 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIShaderUniformBuffer::AddValue ( const MOAIAttrOp& attrOp ) {
+void MOAIShaderUniformBuffer::AddValue ( const MOAIAttribute& attr ) {
 
-	switch ( attrOp.GetTypeID ()) {
+	switch ( attr.GetTypeID ()) {
 
-		case MOAIAttrOp::ATTR_TYPE_FLOAT_32: {
+		case MOAIAttribute::ATTR_TYPE_FLOAT_32: {
 
-			float value = attrOp.GetValue ( 0.0f );
+			float value = attr.GetValue ( 0.0f );
 
 			if ( value != 0.0f ) {
 				this->mFloat += value;
 			}
 			break;
 		}
-		case MOAIAttrOp::ATTR_TYPE_INT_32: {
+		case MOAIAttribute::ATTR_TYPE_INT_32: {
 
-			int value = ( int )attrOp.GetValue ( 0 );
+			int value = ( int )attr.GetValue ( 0 );
 
 			if ( value != 0 ) {
 				this->mInt += value;
@@ -161,39 +161,39 @@ u32 MOAIShaderUniformBuffer::SetValue ( s32 value ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIShaderUniformBuffer::SetValue ( const MOAIAttrOp& attrOp ) {
+u32 MOAIShaderUniformBuffer::SetValue ( const MOAIAttribute& attr ) {
 
-	switch ( attrOp.GetTypeID ()) {
+	switch ( attr.GetTypeID ()) {
 
-		case MOAIAttrOp::ATTR_TYPE_COLOR_VEC_4: {
-			ZLColorVec color = attrOp.GetValue ( ZLColorVec::WHITE );
+		case MOAIAttribute::ATTR_TYPE_COLOR_VEC_4: {
+			ZLColorVec color = attr.GetValue ( ZLColorVec::WHITE );
 			return this->SetValue ( color );
 		}
 		
-		case MOAIAttrOp::ATTR_TYPE_FLOAT_32: {
-			return this->SetValue (( float )attrOp.GetValue ( 0.0f ));
+		case MOAIAttribute::ATTR_TYPE_FLOAT_32: {
+			return this->SetValue (( float )attr.GetValue ( 0.0f ));
 			break;
 		}
 		
-		case MOAIAttrOp::ATTR_TYPE_INT_32: {
-			return this->SetValue (( int )attrOp.GetValue ( 0 ));
+		case MOAIAttribute::ATTR_TYPE_INT_32: {
+			return this->SetValue (( int )attr.GetValue ( 0 ));
 			break;
 		}
 		
-		case MOAIAttrOp::ATTR_TYPE_AFFINE_3D: {
-			return this->SetValue ( attrOp.GetValue ( ZLAffine3D::IDENT ));
+		case MOAIAttribute::ATTR_TYPE_AFFINE_3D: {
+			return this->SetValue ( attr.GetValue ( ZLAffine3D::IDENT ));
 		}
 		
-		case MOAIAttrOp::ATTR_TYPE_MATRIX_3X3: {
-			return this->SetValue ( attrOp.GetValue ( ZLMatrix3x3::IDENT ));
+		case MOAIAttribute::ATTR_TYPE_MATRIX_3X3: {
+			return this->SetValue ( attr.GetValue ( ZLMatrix3x3::IDENT ));
 		}
 		
-		case MOAIAttrOp::ATTR_TYPE_MATRIX_4X4: {
-			return this->SetValue ( attrOp.GetValue ( ZLMatrix4x4::IDENT ));
+		case MOAIAttribute::ATTR_TYPE_MATRIX_4X4: {
+			return this->SetValue ( attr.GetValue ( ZLMatrix4x4::IDENT ));
 		}
 		
-		case MOAIAttrOp::ATTR_TYPE_VEC_3: {
-			ZLVec3D vec3 = attrOp.GetValue ( ZLVec3D::ORIGIN );
+		case MOAIAttribute::ATTR_TYPE_VEC_3: {
+			ZLVec3D vec3 = attr.GetValue ( ZLVec3D::ORIGIN );
 			ZLVec4D vec4 ( vec3.mX, vec3.mY, vec3.mZ, 0.0f );
 			return this->SetValue ( vec4 );
 

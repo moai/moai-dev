@@ -33,11 +33,11 @@ public:
 	DECL_LUA_FACTORY ( MOAIAnimCurveQuat )
 	
 	//----------------------------------------------------------------//
-	void			ApplyValueAttrOp		( MOAIAttrOp& attrOp, u32 op );
-	void			GetDelta				( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const;
+	void			ApplyValueAttrOp		( MOAIAttribute& attr, u32 op );
+	void			GetDelta				( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const;
 	ZLQuaternion	GetValue				( float time ) const;
-	void			GetValue				( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) const;
-	void			GetZero					( MOAIAttrOp& attrOp ) const;
+	void			GetValue				( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const;
+	void			GetZero					( MOAIAttribute& attr ) const;
 					MOAIAnimCurveQuat		();
 					~MOAIAnimCurveQuat		();
 	void			OnDepNodeUpdate			();

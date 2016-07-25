@@ -69,7 +69,7 @@ public:
 	GET ( ZLVec3D, WorldLoc, mLocalToWorldMtx.GetTranslation ())
 	
 	//----------------------------------------------------------------//
-	bool					ApplyAttrOp					( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	bool					ApplyAttrOp					( u32 attrID, MOAIAttribute& attr, u32 op );
 	virtual void			BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx ) = 0;
 	const ZLAffine3D&		GetLocalToWorldMtx			() const;
 	const ZLAffine3D*		GetLocTrait					() const;

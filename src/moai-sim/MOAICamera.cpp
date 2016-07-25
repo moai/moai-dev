@@ -311,17 +311,17 @@ int MOAICamera::_setType ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAICamera::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+bool MOAICamera::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( MOAICameraAttr::Check ( attrID )) {
 
 		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_FOV:
-				this->mFieldOfView = attrOp.Apply ( this->mFieldOfView, op, MOAIAttrOp::ATTR_READ_WRITE );
+				this->mFieldOfView = attr.Apply ( this->mFieldOfView, op, MOAIAttribute::ATTR_READ_WRITE );
 				return true;
 		}
 	}
-	return MOAITransform::ApplyAttrOp ( attrID, attrOp, op );
+	return MOAITransform::ApplyAttrOp ( attrID, attr, op );
 }
 
 //----------------------------------------------------------------//

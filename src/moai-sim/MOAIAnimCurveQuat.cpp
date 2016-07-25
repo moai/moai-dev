@@ -79,9 +79,9 @@ int MOAIAnimCurveQuat::_setKey ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveQuat::ApplyValueAttrOp ( MOAIAttrOp& attrOp, u32 op ) {
+void MOAIAnimCurveQuat::ApplyValueAttrOp ( MOAIAttribute& attr, u32 op ) {
 
-	this->mValue = attrOp.Apply ( this->mValue, op, MOAIAttrOp::ATTR_READ_WRITE );
+	this->mValue = attr.Apply ( this->mValue, op, MOAIAttribute::ATTR_READ_WRITE );
 }
 
 //----------------------------------------------------------------//
@@ -101,14 +101,14 @@ ZLQuaternion MOAIAnimCurveQuat::GetCurveDelta () const {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveQuat::GetDelta ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const {
+void MOAIAnimCurveQuat::GetDelta ( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const {
 
 	ZLQuaternion v0 = this->GetValue ( span0 );
 	ZLQuaternion v1 = this->GetValue ( span1 );
 	
 	v1.Sub ( v0 );
 	
-	attrOp.SetValue ( v1 );
+	attr.SetValue ( v1 );
 }
 
 //----------------------------------------------------------------//
@@ -140,15 +140,15 @@ ZLQuaternion MOAIAnimCurveQuat::GetValue ( const MOAIAnimKeySpan& span ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveQuat::GetValue ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) const {
+void MOAIAnimCurveQuat::GetValue ( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const {
 
-	attrOp.SetValue ( this->GetValue ( span ));
+	attr.SetValue ( this->GetValue ( span ));
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveQuat::GetZero ( MOAIAttrOp& attrOp ) const {
+void MOAIAnimCurveQuat::GetZero ( MOAIAttribute& attr ) const {
 
-	attrOp.SetValue ( ZLQuaternion ( 0.0f, 0.0f, 0.0f, 0.0f ));
+	attr.SetValue ( ZLQuaternion ( 0.0f, 0.0f, 0.0f, 0.0f ));
 }
 
 //----------------------------------------------------------------//

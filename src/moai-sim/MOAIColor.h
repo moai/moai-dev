@@ -57,7 +57,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	static MOAIColor*	AffirmColor			( MOAILuaState& state, int idx );
-	bool				ApplyAttrOp			( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	bool				ApplyAttrOp			( u32 attrID, MOAIAttribute& attr, u32 op );
 	ZLColorVec			GetColorTrait		();
 	bool				IsClear				();
 						MOAIColor			();

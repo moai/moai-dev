@@ -58,7 +58,7 @@ public:
 	//----------------------------------------------------------------//
 				MOAIFmodEventInstance	();
 	virtual		~MOAIFmodEventInstance	();
-    bool		ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+    bool		ApplyAttrOp				( u32 attrID, MOAIAttribute& attr, u32 op );
     void        OnDepNodeUpdate         ();
 	void		RegisterLuaClass		( MOAILuaState& state );
 	void		RegisterLuaFuncs		( MOAILuaState& state );

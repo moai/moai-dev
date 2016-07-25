@@ -88,24 +88,24 @@ MOAIShader* MOAIShader::AffirmShader ( MOAILuaState& state, int idx ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIShader::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+bool MOAIShader::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 
-	attrID = ( attrID & MOAIAttrOp::ATTR_ID_MASK ) - 1;
+	attrID = ( attrID & MOAIAttribute::ATTR_ID_MASK ) - 1;
 
 	if ( attrID >= this->mUniformBuffers.Size ()) return false;
 
 	switch ( op ) {
 
-		case MOAIAttrOp::CHECK:
-			attrOp.SetFlags ( MOAIAttrOp::ATTR_WRITE );
+		case MOAIAttribute::CHECK:
+			attr.SetFlags ( MOAIAttribute::ATTR_WRITE );
 			return true;
 
-		case MOAIAttrOp::SET:
-			this->mUniformBuffers [ attrID ].SetValue ( attrOp );
+		case MOAIAttribute::SET:
+			this->mUniformBuffers [ attrID ].SetValue ( attr );
 			return true;
 
-		case MOAIAttrOp::ADD:
-			this->mUniformBuffers [ attrID ].AddValue ( attrOp );
+		case MOAIAttribute::ADD:
+			this->mUniformBuffers [ attrID ].AddValue ( attr );
 			return true;
 	}
 

@@ -180,13 +180,13 @@ int MOAITimer::_toggleDirection ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAITimer::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+bool MOAITimer::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( MOAITimerAttr::Check ( attrID )) {
 		attrID = UNPACK_ATTR ( attrID );
 		
 		if ( attrID == ATTR_TIME ) {
-			attrOp.Apply ( this->GetTime (), op, MOAIAttrOp::ATTR_READ );
+			attr.Apply ( this->GetTime (), op, MOAIAttribute::ATTR_READ );
 			return true;
 		}
 	}

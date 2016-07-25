@@ -11,9 +11,9 @@
 	}
 
 //================================================================//
-// MOAIAttrOp
+// MOAIAttribute
 //================================================================//
-class MOAIAttrOp  {
+class MOAIAttribute  {
 protected:
 
 	static const size_t MAX_SIZE = sizeof ( ZLMatrix4x4 );
@@ -339,14 +339,14 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	MOAIAttrOp () :
+	MOAIAttribute () :
 		mAttrTypeID ( 0 ),
 		mVariantTypeID ( 0 ),
 		mFlags ( 0 ) {
 	}
 	
 	//----------------------------------------------------------------//
-	~MOAIAttrOp () {
+	~MOAIAttribute () {
 	}
 	
 	//----------------------------------------------------------------//

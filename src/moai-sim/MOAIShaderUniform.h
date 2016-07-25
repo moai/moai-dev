@@ -56,14 +56,14 @@ public:
 	GET ( u32, Width, mWidth )
 
 	//----------------------------------------------------------------//
-	void		AddValue					( const MOAIAttrOp& attrOp );
+	void		AddValue					( const MOAIAttribute& attr );
 	void		Default						();
 	bool		Init						( u32 type, u32 width = 1 );
 				MOAIShaderUniformBuffer		();
 				~MOAIShaderUniformBuffer	();
 	u32			SetValue					( float value );
 	u32			SetValue					( s32 value );
-	u32			SetValue					( const MOAIAttrOp& attrOp );
+	u32			SetValue					( const MOAIAttribute& attr );
 	u32			SetValue					( const MOAIShaderUniformBuffer& uniformBuffer );
 	u32			SetValue					( const ZLColorVec& value );
 	u32			SetValue					( const ZLIntVec4D& value );

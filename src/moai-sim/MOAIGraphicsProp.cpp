@@ -577,7 +577,7 @@ u32 MOAIGraphicsProp::AffirmInterfaceMask ( MOAIPartition& partition ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGraphicsProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+bool MOAIGraphicsProp::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( MOAIGraphicsPropAttr::Check ( attrID )) {
 		
@@ -585,32 +585,32 @@ bool MOAIGraphicsProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 		
 			// TODO: fix this conflict with material batch concept
 			case ATTR_SHADER:
-				//this->mShader.Set ( *this, attrOp.ApplyNoAdd < MOAIShader* >( this->mShader, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_VARIANT ));
+				//this->mShader.Set ( *this, attr.ApplyNoAdd < MOAIShader* >( this->mShader, op, MOAIAttribute::ATTR_READ_WRITE, MOAIAttribute::ATTR_TYPE_VARIANT ));
 				return true;
 				
 			case ATTR_SCISSOR_RECT:
-				this->mScissorRect.Set ( *this, attrOp.ApplyVariantNoAdd < MOAIScissorRect* >( this->mScissorRect, op, MOAIAttrOp::ATTR_READ_WRITE ));
+				this->mScissorRect.Set ( *this, attr.ApplyVariantNoAdd < MOAIScissorRect* >( this->mScissorRect, op, MOAIAttribute::ATTR_READ_WRITE ));
 				return true;
 
 			case ATTR_BLEND_MODE:
-				attrOp.ApplyVariantNoAdd < MOAIBlendMode >( this->mBlendMode, op, MOAIAttrOp::ATTR_READ_WRITE );
+				attr.ApplyVariantNoAdd < MOAIBlendMode >( this->mBlendMode, op, MOAIAttribute::ATTR_READ_WRITE );
 				return true;
 				
 			case ATTR_LOCAL_VISIBLE:
-				this->SetVisible ( ZLFloat::ToBoolean ( attrOp.ApplyNoAdd ( ZLFloat::FromBoolean (( this->mFlags & FLAGS_LOCAL_VISIBLE ) != 0 ), op, MOAIAttrOp::ATTR_READ_WRITE )));
+				this->SetVisible ( ZLFloat::ToBoolean ( attr.ApplyNoAdd ( ZLFloat::FromBoolean (( this->mFlags & FLAGS_LOCAL_VISIBLE ) != 0 ), op, MOAIAttribute::ATTR_READ_WRITE )));
 				return true;
 				
 			case ATTR_VISIBLE:
-				attrOp.ApplyNoAdd ( ZLFloat::FromBoolean ( this->IsVisible ()), op , MOAIAttrOp::ATTR_READ );
+				attr.ApplyNoAdd ( ZLFloat::FromBoolean ( this->IsVisible ()), op , MOAIAttribute::ATTR_READ );
 				return true;
 			//case FRAME_TRAIT:
-			//	attrOp.Apply < ZLBox >( &this->mFrame, op, MOAIAttrOp::ATTR_READ );
+			//	attr.Apply < ZLBox >( &this->mFrame, op, MOAIAttribute::ATTR_READ );
 			//	return true;
 		}
 	}
 	
-	if ( MOAIColor::ApplyAttrOp ( attrID, attrOp, op )) return true;
-	return MOAIProp::ApplyAttrOp ( attrID, attrOp, op );
+	if ( MOAIColor::ApplyAttrOp ( attrID, attr, op )) return true;
+	return MOAIProp::ApplyAttrOp ( attrID, attr, op );
 }
 
 //----------------------------------------------------------------//

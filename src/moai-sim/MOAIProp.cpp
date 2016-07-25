@@ -567,21 +567,21 @@ void MOAIProp::AddToSortBuffer ( MOAIPartitionResultBuffer& buffer, u32 key ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+bool MOAIProp::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( MOAIPropAttr::Check ( attrID )) {
 		
 		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_INDEX:
-				this->mIndex = ZLFloat::ToIndex ( attrOp.Apply (( s32 )this->mIndex, op, MOAIAttrOp::ATTR_READ_WRITE ));
+				this->mIndex = ZLFloat::ToIndex ( attr.Apply (( s32 )this->mIndex, op, MOAIAttribute::ATTR_READ_WRITE ));
 				return true;
 			case ATTR_PARTITION:
-				this->SetPartition ( attrOp.ApplyVariantNoAdd < MOAIPartition* >( this->GetPartition (), op, MOAIAttrOp::ATTR_READ_WRITE ));
+				this->SetPartition ( attr.ApplyVariantNoAdd < MOAIPartition* >( this->GetPartition (), op, MOAIAttribute::ATTR_READ_WRITE ));
 				return true;
 		}
 	}
 	
-	return MOAITransform::ApplyAttrOp ( attrID, attrOp, op );
+	return MOAITransform::ApplyAttrOp ( attrID, attr, op );
 }
 
 //----------------------------------------------------------------//
