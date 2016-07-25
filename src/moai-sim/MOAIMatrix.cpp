@@ -14,22 +14,9 @@
 int MOAIMatrix::_getMatrix ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMatrix, "U" )
 	
-	state.Push ( self->m [ ZLAffine3D::C0_R0 ]);
-	state.Push ( self->m [ ZLAffine3D::C1_R0 ]);
-	state.Push ( self->m [ ZLAffine3D::C2_R0 ]);
-	state.Push ( self->m [ ZLAffine3D::C3_R0 ]);
+	state.Push ( ZLMatrix4x4 ( *( ZLAffine3D* )self ));
 	
-	state.Push ( self->m [ ZLAffine3D::C0_R1 ]);
-	state.Push ( self->m [ ZLAffine3D::C1_R1 ]);
-	state.Push ( self->m [ ZLAffine3D::C2_R1 ]);
-	state.Push ( self->m [ ZLAffine3D::C3_R1 ]);
-	
-	state.Push ( self->m [ ZLAffine3D::C0_R2 ]);
-	state.Push ( self->m [ ZLAffine3D::C1_R2 ]);
-	state.Push ( self->m [ ZLAffine3D::C2_R2 ]);
-	state.Push ( self->m [ ZLAffine3D::C3_R2 ]);
-	
-	return 12;
+	return 16;
 }
 
 //----------------------------------------------------------------//
@@ -37,15 +24,22 @@ int MOAIMatrix::_getMatrix ( lua_State* L ) {
 int MOAIMatrix::_setMatrix ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMatrix, "U" )
 	
-	ZLMatrix4x4 mtx;
+	size_t size = state.GetTop () - 1;
 	
-	mtx.Ident ();
-	
-	mtx = state.GetValue < ZLMatrix4x4 >( 2, mtx );
-	
-	mtx.Print ();
-	
-	self->Init ( mtx );
+	switch ( size ) {
+			
+		case 9:
+			*( ZLAffine3D* )self = ZLAffine3D ( state.GetValue < ZLMatrix3x3 >( 2, ZLMatrix3x3::IDENT ));
+			break;
+			
+		case 12:
+			*( ZLAffine3D* )self = state.GetValue < ZLAffine3D >( 2, ZLAffine3D::IDENT );
+			break;
+			
+		case 16:
+			*( ZLAffine3D* )self = ZLAffine3D ( state.GetValue < ZLMatrix4x4 >( 2, ZLMatrix4x4::IDENT ));
+			break;
+	}
 	
 	self->ScheduleUpdate ();
 	

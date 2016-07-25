@@ -100,7 +100,7 @@ int MOAIAnimCurve::_setKey ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIAnimCurve::ApplyValueAttrOp ( MOAIAttrOp& attrOp, u32 op ) {
 
-	this->mValue = attrOp.Apply ( this->mValue, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
+	this->mValue = attrOp.Apply ( this->mValue, op, MOAIAttrOp::ATTR_READ_WRITE );
 }
 
 //----------------------------------------------------------------//
@@ -151,7 +151,7 @@ void MOAIAnimCurve::GetDelta ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span0,
 	float v0 = this->GetValue ( span0 );
 	float v1 = this->GetValue ( span1 );
 	
-	attrOp.SetValue < float >( v1 - v0, MOAIAttrOp::ATTR_TYPE_FLOAT );
+	attrOp.SetValue ( v1 - v0 );
 }
 
 //----------------------------------------------------------------//
@@ -185,7 +185,7 @@ float MOAIAnimCurve::GetValue ( const MOAIAnimKeySpan& span ) const {
 //----------------------------------------------------------------//
 void MOAIAnimCurve::GetValue ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) const {
 
-	attrOp.SetValue < float >( this->GetValue ( span ), MOAIAttrOp::ATTR_TYPE_FLOAT );
+	attrOp.SetValue ( this->GetValue ( span ));
 }
 
 //----------------------------------------------------------------//
@@ -242,7 +242,7 @@ void MOAIAnimCurve::GetValueRange ( float t0, float t1, float &min, float &max )
 //----------------------------------------------------------------//
 void MOAIAnimCurve::GetZero ( MOAIAttrOp& attrOp ) const {
 
-	attrOp.SetValue < float >( 0.0f, MOAIAttrOp::ATTR_TYPE_FLOAT );
+	attrOp.SetValue ( 0.0f );
 }
 
 //----------------------------------------------------------------//

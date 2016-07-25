@@ -299,7 +299,7 @@ int MOAINode::_setAttr ( lua_State* L ) {
 	if ( self->CheckAttrExists ( attrID )) {
 	
 		MOAIAttrOp setter;
-		setter.SetValue ( value, MOAIAttrOp::ATTR_TYPE_FLOAT );
+		setter.SetValue ( value );
 	
 		self->ClearAttrLink ( attrID );
 		self->ApplyAttrOp ( attrID, setter, MOAIAttrOp::SET );

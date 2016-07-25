@@ -81,7 +81,7 @@ int MOAIAnimCurveQuat::_setKey ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIAnimCurveQuat::ApplyValueAttrOp ( MOAIAttrOp& attrOp, u32 op ) {
 
-	this->mValue = attrOp.Apply < ZLQuaternion >( this->mValue, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_QUATERNION );
+	this->mValue = attrOp.Apply ( this->mValue, op, MOAIAttrOp::ATTR_READ_WRITE );
 }
 
 //----------------------------------------------------------------//
@@ -95,7 +95,7 @@ ZLQuaternion MOAIAnimCurveQuat::GetCurveDelta () const {
 		delta.Sub ( this->mSamples [ 0 ]);
 	}
 	else {
-		delta.Set ( 0.0f, 0.0f, 0.0f, 0.0f );
+		delta = ZLQuaternion ( 0.0f, 0.0f, 0.0f, 0.0f );
 	}
 	return delta;
 }
@@ -108,7 +108,7 @@ void MOAIAnimCurveQuat::GetDelta ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& sp
 	
 	v1.Sub ( v0 );
 	
-	attrOp.SetValue < ZLQuaternion >( v1, MOAIAttrOp::ATTR_TYPE_QUATERNION );
+	attrOp.SetValue ( v1 );
 }
 
 //----------------------------------------------------------------//
@@ -142,15 +142,13 @@ ZLQuaternion MOAIAnimCurveQuat::GetValue ( const MOAIAnimKeySpan& span ) const {
 //----------------------------------------------------------------//
 void MOAIAnimCurveQuat::GetValue ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) const {
 
-	attrOp.SetValue < ZLQuaternion >( this->GetValue ( span ), MOAIAttrOp::ATTR_TYPE_QUATERNION );
+	attrOp.SetValue ( this->GetValue ( span ));
 }
 
 //----------------------------------------------------------------//
 void MOAIAnimCurveQuat::GetZero ( MOAIAttrOp& attrOp ) const {
 
-	ZLQuaternion quat;
-	quat.Set ( 0.0f, 0.0f, 0.0f, 0.0f );
-	attrOp.SetValue < ZLQuaternion >( quat, MOAIAttrOp::ATTR_TYPE_QUATERNION );
+	attrOp.SetValue ( ZLQuaternion ( 0.0f, 0.0f, 0.0f, 0.0f ));
 }
 
 //----------------------------------------------------------------//
@@ -201,6 +199,6 @@ void MOAIAnimCurveQuat::ReserveSamples ( u32 total ) {
 void MOAIAnimCurveQuat::SetSample ( u32 id, float x, float y, float z ) {
 
 	if ( id < this->mKeys.Size ()) {
-		this->mSamples [ id ].Set ( x, y, z );
+		this->mSamples [ id ] = ZLQuaternion ( x, y, z );
 	}
 }

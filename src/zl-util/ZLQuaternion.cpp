@@ -23,6 +23,14 @@ float ZLQuaternion::Dot ( const ZLQuaternion& rhs ) const {
 //----------------------------------------------------------------//
 void ZLQuaternion::Get ( ZLAffine3D& m ) const {
 	
+	ZLMatrix3x3 affine;
+	this->Get ( affine );
+	m = ZLAffine3D ( affine );
+}
+
+//----------------------------------------------------------------//
+void ZLQuaternion::Get ( ZLMatrix3x3& m ) const {
+	
 	float x2 = mV.mX + mV.mX;
 	float y2 = mV.mY + mV.mY;
 	float z2 = mV.mZ + mV.mZ;
@@ -36,29 +44,25 @@ void ZLQuaternion::Get ( ZLAffine3D& m ) const {
 	float wy = mS * y2;
 	float wz = mS * z2;
 
-	m.m [ ZLAffine3D::C0_R0 ] = 1.0f - ( yy + zz );
-	m.m [ ZLAffine3D::C0_R1 ] = xy - wz;
-	m.m [ ZLAffine3D::C0_R2 ] = xz + wy;
+	m.m [ ZLMatrix3x3::C0_R0 ] = 1.0f - ( yy + zz );
+	m.m [ ZLMatrix3x3::C0_R1 ] = xy - wz;
+	m.m [ ZLMatrix3x3::C0_R2 ] = xz + wy;
 
-	m.m [ ZLAffine3D::C1_R0 ] = xy + wz;
-	m.m [ ZLAffine3D::C1_R1 ] = 1.0f - ( xx + zz );
-	m.m [ ZLAffine3D::C1_R2 ] = yz - wx;
+	m.m [ ZLMatrix3x3::C1_R0 ] = xy + wz;
+	m.m [ ZLMatrix3x3::C1_R1 ] = 1.0f - ( xx + zz );
+	m.m [ ZLMatrix3x3::C1_R2 ] = yz - wx;
 
-	m.m [ ZLAffine3D::C2_R0 ] = xz - wy;
-	m.m [ ZLAffine3D::C2_R1 ] = yz + wx;
-	m.m [ ZLAffine3D::C2_R2 ] = 1.0f - ( xx + yy );
-
-	m.m [ ZLAffine3D::C3_R0 ] = 0.0f;
-	m.m [ ZLAffine3D::C3_R1 ] = 0.0f;
-	m.m [ ZLAffine3D::C3_R2 ] = 0.0f;
+	m.m [ ZLMatrix3x3::C2_R0 ] = xz - wy;
+	m.m [ ZLMatrix3x3::C2_R1 ] = yz + wx;
+	m.m [ ZLMatrix3x3::C2_R2 ] = 1.0f - ( xx + yy );
 }
 
 //----------------------------------------------------------------//
 void ZLQuaternion::Get ( ZLMatrix4x4& m ) const {
 	
-	ZLAffine3D affine;
-	this->Get ( affine );
-	m = ZLMatrix4x4 ( affine );
+	ZLMatrix3x3 mtx3x3;
+	this->Get ( mtx3x3 );
+	m = ZLMatrix4x4 ( mtx3x3 );
 }
 
 //----------------------------------------------------------------//
@@ -81,6 +85,7 @@ void ZLQuaternion::Get ( ZLVec3D& axis, float& angle ) const {
 	}
 }
 
+//----------------------------------------------------------------//
 void ZLQuaternion::Get ( float& x, float& y, float& z ) const {
 
 	float sz_xy = 2.0f * ( mS * mV.mZ + mV.mX * mV.mY );
@@ -191,106 +196,6 @@ void ZLQuaternion::Scale ( float rhs ) {
 }
 
 //----------------------------------------------------------------//
-void ZLQuaternion::Set ( const ZLAffine3D& m ) {
-
-	float trace = m.m [ ZLAffine3D::C0_R0 ] + m.m [ ZLAffine3D::C1_R1 ] + m.m [ ZLAffine3D::C2_R2 ] + 1.0f;
-
-	if ( trace > 1.001f ) {
-		
-		float sqr = 2.0f * sqrtf ( trace );
-		mS = 0.25f * sqr;
-		mV.mX = ( m.m [ ZLAffine3D::C2_R1 ] - m.m [ ZLAffine3D::C1_R2 ] ) / sqr;
-		mV.mY = ( m.m [ ZLAffine3D::C0_R1 ] - m.m [ ZLAffine3D::C2_R1 ] ) / sqr;
-		mV.mZ = ( m.m [ ZLAffine3D::C1_R0 ] - m.m [ ZLAffine3D::C0_R1 ] ) / sqr;
-	}
-	else {
-		
-		if (( m.m [ ZLAffine3D::C0_R0 ] > m.m [ ZLAffine3D::C1_R1 ] ) && ( m.m [ ZLAffine3D::C0_R0 ] > m.m [ ZLAffine3D::C2_R2 ] )) {
-	  
-			float sqr = ( float ) sqrt( 1.0 + m.m [ ZLAffine3D::C0_R0 ] - m.m [ ZLAffine3D::C1_R1 ] - m.m [ ZLAffine3D::C2_R2 ] ) * 2; // S=4*qx
-			mS = ( m.m [ ZLAffine3D::C2_R1 ] - m.m [ ZLAffine3D::C1_R2 ] ) / sqr;
-			mV.mX = 0.25f * sqr;
-			mV.mY = ( m.m [ ZLAffine3D::C0_R1 ] + m.m [ ZLAffine3D::C1_R0 ] ) / sqr; 
-	    	mV.mZ = ( m.m [ ZLAffine3D::C0_R2 ] + m.m [ ZLAffine3D::C2_R0 ] ) / sqr; 
-		}
-		else if ( m.m [ ZLAffine3D::C1_R1 ] > m.m [ ZLAffine3D::C2_R2 ] ) {
-	
-			float sqr = ( float ) sqrt( 1.0 + m.m [ ZLAffine3D::C1_R1 ] - m.m [ ZLAffine3D::C0_R0 ] - m.m [ ZLAffine3D::C2_R2 ] ) * 2; // S=4*qy
-			mS = ( m.m [ ZLAffine3D::C0_R2 ] - m.m [ ZLAffine3D::C2_R0 ] ) / sqr;
-			mV.mX = ( m.m [ ZLAffine3D::C0_R1 ] + m.m [ ZLAffine3D::C1_R0 ] ) / sqr;
-			mV.mY = 0.25f * sqr;
-			mV.mZ = ( m.m [ ZLAffine3D::C1_R2 ] + m.m [ ZLAffine3D::C2_R1 ] ) / sqr;
-		}
-		else {
-			
-			float sqr = ( float ) sqrt( 1.0 + m.m [ ZLAffine3D::C2_R2 ] - m.m [ ZLAffine3D::C0_R0 ] - m.m [ ZLAffine3D::C1_R1 ] ) * 2; // S=4*qz
-			mS = ( m.m [ ZLAffine3D::C1_R0 ] - m.m [ ZLAffine3D::C0_R1 ] ) / sqr;
-			mV.mX = ( m.m [ ZLAffine3D::C0_R2 ] + m.m [ ZLAffine3D::C2_R0 ] ) / sqr;
-			mV.mY = ( m.m [ ZLAffine3D::C1_R2 ] + m.m [ ZLAffine3D::C2_R1 ] ) / sqr;
-			mV.mZ = 0.25f * sqr;
-		}
-	}
-	
-	this->Normalize ();
-}
-
-//----------------------------------------------------------------//
-void ZLQuaternion::Set ( const ZLMatrix4x4& m ) {
-
-	ZLAffine3D affine;
-	affine.Init ( m );
-	this->Set ( affine );
-}
-
-//----------------------------------------------------------------//
-void ZLQuaternion::Set ( const ZLVec3D& axis, float angle ) {
-
-	angle *= ( float )D2R;
-
-	float s = ( float ) sin ( angle / 2.0f );
-
-	mS = ( float ) cos ( angle / 2.0f );
-	mV.mX = axis.mX * s;
-	mV.mY = axis.mY * s;
-	mV.mZ = axis.mZ * s;
-}
-
-//----------------------------------------------------------------//
-void ZLQuaternion::Set ( float x, float y, float z ) {
-	
-	x *= ( float )D2R;
-	y *= ( float )D2R;
-	z *= ( float )D2R;
-	
-	float cx = Cos ( x / 2.0f );
-	float cy = Cos ( y / 2.0f );
-	float cz = Cos ( z / 2.0f );
-	
-	float sx = Sin ( x / 2.0f );
-	float sy = Sin ( y / 2.0f );
-	float sz = Sin ( z / 2.0f );
-	
-	float cycz = cy * cz;
-	float sysz = sy * sz;
-	float sycz = sy * cz;
-	float cysz = cy * sz;
-
-	mS		= ( cx * cycz ) - ( sx * sysz );
-	mV.mX	= ( sx * sycz ) + ( cx * cysz );
-	mV.mY	= ( sx * cycz ) + ( cx * sysz );
-	mV.mZ	= ( cx * sycz ) - ( sx * cysz );
-}
-
-//----------------------------------------------------------------//
-void ZLQuaternion::Set ( float s, float x, float y, float z ) {
-
-	mS = s;
-	mV.mX = x;
-	mV.mY = y;
-	mV.mZ = z;
-}
-
-//----------------------------------------------------------------//
 void ZLQuaternion::Slerp ( ZLQuaternion q0, ZLQuaternion q1, float t ) {
 	
 	float floatRound = q0.Dot ( q1 );
@@ -326,8 +231,7 @@ void ZLQuaternion::Sub ( const ZLQuaternion& rhs ) {
 //----------------------------------------------------------------//
 ZLVec3D ZLQuaternion::Transform ( ZLVec3D loc ) const {
 
-	ZLQuaternion r;
-	r.Set ( 0.0f, loc.mX, loc.mY, loc.mZ );
+	ZLQuaternion r ( 0.0f, loc.mX, loc.mY, loc.mZ );
 	
 	ZLQuaternion inv;
 	inv = *this;
@@ -337,4 +241,112 @@ ZLVec3D ZLQuaternion::Transform ( ZLVec3D loc ) const {
 	inv.Multiply( *this );
 	
 	return inv.mV;
+}
+
+//----------------------------------------------------------------//
+ZLQuaternion::ZLQuaternion () {
+}
+
+//----------------------------------------------------------------//
+ZLQuaternion::ZLQuaternion ( const ZLAffine3D& m ) {
+
+	*this = ZLQuaternion ( ZLMatrix3x3 ( m ));
+}
+
+//----------------------------------------------------------------//
+ZLQuaternion::ZLQuaternion ( const ZLMatrix3x3& m ) {
+
+	float trace = m.m [ ZLMatrix3x3::C0_R0 ] + m.m [ ZLMatrix3x3::C1_R1 ] + m.m [ ZLMatrix3x3::C2_R2 ] + 1.0f;
+
+	if ( trace > 1.001f ) {
+		
+		float sqr = 2.0f * sqrtf ( trace );
+		mS = 0.25f * sqr;
+		mV.mX = ( m.m [ ZLMatrix3x3::C2_R1 ] - m.m [ ZLMatrix3x3::C1_R2 ] ) / sqr;
+		mV.mY = ( m.m [ ZLMatrix3x3::C0_R1 ] - m.m [ ZLMatrix3x3::C2_R1 ] ) / sqr;
+		mV.mZ = ( m.m [ ZLMatrix3x3::C1_R0 ] - m.m [ ZLMatrix3x3::C0_R1 ] ) / sqr;
+	}
+	else {
+		
+		if (( m.m [ ZLMatrix3x3::C0_R0 ] > m.m [ ZLMatrix3x3::C1_R1 ] ) && ( m.m [ ZLMatrix3x3::C0_R0 ] > m.m [ ZLMatrix3x3::C2_R2 ] )) {
+	  
+			float sqr = ( float ) sqrt( 1.0 + m.m [ ZLMatrix3x3::C0_R0 ] - m.m [ ZLMatrix3x3::C1_R1 ] - m.m [ ZLMatrix3x3::C2_R2 ] ) * 2; // S=4*qx
+			mS = ( m.m [ ZLMatrix3x3::C2_R1 ] - m.m [ ZLMatrix3x3::C1_R2 ] ) / sqr;
+			mV.mX = 0.25f * sqr;
+			mV.mY = ( m.m [ ZLMatrix3x3::C0_R1 ] + m.m [ ZLMatrix3x3::C1_R0 ] ) / sqr;
+	    	mV.mZ = ( m.m [ ZLMatrix3x3::C0_R2 ] + m.m [ ZLMatrix3x3::C2_R0 ] ) / sqr;
+		}
+		else if ( m.m [ ZLMatrix3x3::C1_R1 ] > m.m [ ZLMatrix3x3::C2_R2 ] ) {
+	
+			float sqr = ( float ) sqrt( 1.0 + m.m [ ZLMatrix3x3::C1_R1 ] - m.m [ ZLMatrix3x3::C0_R0 ] - m.m [ ZLMatrix3x3::C2_R2 ] ) * 2; // S=4*qy
+			mS = ( m.m [ ZLMatrix3x3::C0_R2 ] - m.m [ ZLMatrix3x3::C2_R0 ] ) / sqr;
+			mV.mX = ( m.m [ ZLMatrix3x3::C0_R1 ] + m.m [ ZLMatrix3x3::C1_R0 ] ) / sqr;
+			mV.mY = 0.25f * sqr;
+			mV.mZ = ( m.m [ ZLMatrix3x3::C1_R2 ] + m.m [ ZLMatrix3x3::C2_R1 ] ) / sqr;
+		}
+		else {
+			
+			float sqr = ( float ) sqrt( 1.0 + m.m [ ZLMatrix3x3::C2_R2 ] - m.m [ ZLMatrix3x3::C0_R0 ] - m.m [ ZLMatrix3x3::C1_R1 ] ) * 2; // S=4*qz
+			mS = ( m.m [ ZLMatrix3x3::C1_R0 ] - m.m [ ZLMatrix3x3::C0_R1 ] ) / sqr;
+			mV.mX = ( m.m [ ZLMatrix3x3::C0_R2 ] + m.m [ ZLMatrix3x3::C2_R0 ] ) / sqr;
+			mV.mY = ( m.m [ ZLMatrix3x3::C1_R2 ] + m.m [ ZLMatrix3x3::C2_R1 ] ) / sqr;
+			mV.mZ = 0.25f * sqr;
+		}
+	}
+	
+	this->Normalize ();
+}
+
+//----------------------------------------------------------------//
+ZLQuaternion::ZLQuaternion ( const ZLMatrix4x4& m ) {
+
+	*this = ZLQuaternion ( ZLMatrix3x3 ( m ));
+}
+
+//----------------------------------------------------------------//
+ZLQuaternion::ZLQuaternion ( const ZLVec3D& axis, float angle ) {
+
+	angle *= ( float )D2R;
+
+	float s = ( float ) sin ( angle / 2.0f );
+
+	mS = ( float ) cos ( angle / 2.0f );
+	mV.mX = axis.mX * s;
+	mV.mY = axis.mY * s;
+	mV.mZ = axis.mZ * s;
+}
+
+//----------------------------------------------------------------//
+ZLQuaternion::ZLQuaternion ( float x, float y, float z ) {
+	
+	x *= ( float )D2R;
+	y *= ( float )D2R;
+	z *= ( float )D2R;
+	
+	float cx = Cos ( x / 2.0f );
+	float cy = Cos ( y / 2.0f );
+	float cz = Cos ( z / 2.0f );
+	
+	float sx = Sin ( x / 2.0f );
+	float sy = Sin ( y / 2.0f );
+	float sz = Sin ( z / 2.0f );
+	
+	float cycz = cy * cz;
+	float sysz = sy * sz;
+	float sycz = sy * cz;
+	float cysz = cy * sz;
+
+	mS		= ( cx * cycz ) - ( sx * sysz );
+	mV.mX	= ( sx * sycz ) + ( cx * cysz );
+	mV.mY	= ( sx * cycz ) + ( cx * sysz );
+	mV.mZ	= ( cx * sycz ) - ( sx * cysz );
+}
+
+//----------------------------------------------------------------//
+ZLQuaternion::ZLQuaternion ( float s, float x, float y, float z ) {
+
+	mS = s;
+	mV.mX = x;
+	mV.mY = y;
+	mV.mZ = z;
 }

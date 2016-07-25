@@ -13,9 +13,9 @@
 //----------------------------------------------------------------//
 void MOAIShaderUniformBuffer::AddValue ( const MOAIAttrOp& attrOp ) {
 
-	switch ( attrOp.GetTypeHint ()) {
+	switch ( attrOp.GetTypeID ()) {
 
-		case MOAIAttrOp::ATTR_TYPE_FLOAT: {
+		case MOAIAttrOp::ATTR_TYPE_FLOAT_32: {
 
 			float value = attrOp.GetValue ( 0.0f );
 
@@ -24,7 +24,7 @@ void MOAIShaderUniformBuffer::AddValue ( const MOAIAttrOp& attrOp ) {
 			}
 			break;
 		}
-		case MOAIAttrOp::ATTR_TYPE_INT: {
+		case MOAIAttrOp::ATTR_TYPE_INT_32: {
 
 			int value = ( int )attrOp.GetValue ( 0 );
 
@@ -163,37 +163,39 @@ u32 MOAIShaderUniformBuffer::SetValue ( s32 value ) {
 //----------------------------------------------------------------//
 u32 MOAIShaderUniformBuffer::SetValue ( const MOAIAttrOp& attrOp ) {
 
-	switch ( attrOp.GetTypeHint ()) {
+	switch ( attrOp.GetTypeID ()) {
 
-		case MOAIAttrOp::ATTR_TYPE_COLOR: {
-			ZLColorVec* color = attrOp.GetValue < ZLColorVec* >( 0 );
-			if ( color ) {
-				return this->SetValue ( *color );
-			}
-			break;
+		case MOAIAttrOp::ATTR_TYPE_COLOR_VEC_4: {
+			ZLColorVec color = attrOp.GetValue ( ZLColorVec::WHITE );
+			return this->SetValue ( color );
 		}
-		case MOAIAttrOp::ATTR_TYPE_FLOAT: {
+		
+		case MOAIAttrOp::ATTR_TYPE_FLOAT_32: {
 			return this->SetValue (( float )attrOp.GetValue ( 0.0f ));
 			break;
 		}
-		case MOAIAttrOp::ATTR_TYPE_INT: {
+		
+		case MOAIAttrOp::ATTR_TYPE_INT_32: {
 			return this->SetValue (( int )attrOp.GetValue ( 0 ));
 			break;
 		}
-		case MOAIAttrOp::ATTR_TYPE_TRANSFORM: {
-			ZLAffine3D* affine = attrOp.GetValue < ZLAffine3D* >( 0 );
-			if ( affine ) {
-				return this->SetValue ( ZLMatrix4x4 ( *affine ));
-			}
-			break;
+		
+		case MOAIAttrOp::ATTR_TYPE_AFFINE_3D: {
+			return this->SetValue ( attrOp.GetValue ( ZLAffine3D::IDENT ));
 		}
-		case MOAIAttrOp::ATTR_TYPE_VECTOR: {
-			ZLVec3D* vec3 = attrOp.GetValue < ZLVec3D* >( 0 );
-			if ( vec3 ) {
-				ZLVec4D vec4 ( vec3->mX, vec3->mY, vec3->mZ, 0.0f );
-				return this->SetValue ( vec4 );
-			}
-			break;
+		
+		case MOAIAttrOp::ATTR_TYPE_MATRIX_3X3: {
+			return this->SetValue ( attrOp.GetValue ( ZLMatrix3x3::IDENT ));
+		}
+		
+		case MOAIAttrOp::ATTR_TYPE_MATRIX_4X4: {
+			return this->SetValue ( attrOp.GetValue ( ZLMatrix4x4::IDENT ));
+		}
+		
+		case MOAIAttrOp::ATTR_TYPE_VEC_3: {
+			ZLVec3D vec3 = attrOp.GetValue ( ZLVec3D::ORIGIN );
+			ZLVec4D vec4 ( vec3.mX, vec3.mY, vec3.mZ, 0.0f );
+			return this->SetValue ( vec4 );
 
 		}
 	}
@@ -247,31 +249,58 @@ u32 MOAIShaderUniformBuffer::SetValue ( const ZLIntVec4D& value ) {
 }
 
 //----------------------------------------------------------------//
+u32 MOAIShaderUniformBuffer::SetValue ( const ZLAffine2D& value ) {
+
+	if ( this->mWidth == 9 ) {
+	
+		return this->SetValue ( ZLMatrix3x3 ( value ));
+	}
+	else if ( this->mWidth == 16 ) {
+
+		return this->SetValue ( ZLMatrix4x4 ( value ));
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+u32 MOAIShaderUniformBuffer::SetValue ( const ZLAffine3D& value ) {
+
+	if ( this->mWidth == 9 ) {
+	
+		return this->SetValue ( ZLMatrix3x3 ( value ));
+	}
+	else if ( this->mWidth == 16 ) {
+
+		return this->SetValue ( ZLMatrix4x4 ( value ));
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+u32 MOAIShaderUniformBuffer::SetValue ( const ZLMatrix3x3& value ) {
+
+	if ( this->mWidth == 9 ) {
+	
+		return this->SetBuffer ( value.m, 9 );
+	}
+	else if ( this->mWidth == 16 ) {
+
+		return this->SetValue ( ZLMatrix4x4 ( value ));
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 u32 MOAIShaderUniformBuffer::SetValue ( const ZLMatrix4x4& value ) {
 
 	if ( this->mWidth == 9 ) {
 	
-		float m [ 9 ];
-
-		m [ 0 ]    = value.m [ ZLMatrix4x4::C0_R0 ];
-		m [ 1 ]    = value.m [ ZLMatrix4x4::C0_R1 ];
-		m [ 2 ]    = value.m [ ZLMatrix4x4::C0_R2 ];
-
-		m [ 3 ]    = value.m [ ZLMatrix4x4::C1_R0 ];
-		m [ 4 ]    = value.m [ ZLMatrix4x4::C1_R1 ];
-		m [ 5 ]    = value.m [ ZLMatrix4x4::C1_R2 ];
-
-		m [ 6 ]    = value.m [ ZLMatrix4x4::C2_R0 ];
-		m [ 7 ]    = value.m [ ZLMatrix4x4::C2_R1 ];
-		m [ 8 ]    = value.m [ ZLMatrix4x4::C2_R2 ];
-
-		return this->SetBuffer ( m, 9 );
+		return this->SetValue ( ZLMatrix3x3 ( value ));
 	}
 	else if ( this->mWidth == 16 ) {
 
 		return this->SetBuffer ( value.m, 16 );
 	}
-	
 	return 0;
 }
 

@@ -82,7 +82,7 @@ protected:
 		
 		MOAIAttrOp attrOp;
 		if ( this->PullLinkedAttr ( attrID, attrOp )) {
-			return attrOp.GetValue < TYPE >( value );
+			return attrOp.GetValue ( value );
 		}
 		return value;
 	}
@@ -149,7 +149,7 @@ public:
 		if ( attrID != MOAIAttrOp::NULL_ATTR ) {
 			MOAIAttrOp getter;
 			this->ApplyAttrOp ( attrID, getter, MOAIAttrOp::GET );
-			value = getter.GetValue < TYPE >( value );
+			value = getter.GetValue ( value );
 		}
 		return value;
 	}

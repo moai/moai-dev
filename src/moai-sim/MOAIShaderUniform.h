@@ -67,6 +67,9 @@ public:
 	u32			SetValue					( const MOAIShaderUniformBuffer& uniformBuffer );
 	u32			SetValue					( const ZLColorVec& value );
 	u32			SetValue					( const ZLIntVec4D& value );
+	u32			SetValue					( const ZLAffine2D& value );
+	u32			SetValue					( const ZLAffine3D& value );
+	u32			SetValue					( const ZLMatrix3x3& value );
 	u32			SetValue					( const ZLMatrix4x4& value );
 	u32			SetValue					( const ZLVec4D& value );
 };

@@ -589,19 +589,19 @@ bool MOAIGraphicsProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 				return true;
 				
 			case ATTR_SCISSOR_RECT:
-				this->mScissorRect.Set ( *this, attrOp.ApplyNoAdd < MOAIScissorRect* >( this->mScissorRect, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_VARIANT ));
+				this->mScissorRect.Set ( *this, attrOp.ApplyVariantNoAdd < MOAIScissorRect* >( this->mScissorRect, op, MOAIAttrOp::ATTR_READ_WRITE ));
 				return true;
 
 			case ATTR_BLEND_MODE:
-				attrOp.ApplyNoAdd < MOAIBlendMode >( this->mBlendMode, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_VARIANT );
+				attrOp.ApplyVariantNoAdd < MOAIBlendMode >( this->mBlendMode, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 				
 			case ATTR_LOCAL_VISIBLE:
-				this->SetVisible ( ZLFloat::ToBoolean ( attrOp.ApplyNoAdd ( ZLFloat::FromBoolean (( this->mFlags & FLAGS_LOCAL_VISIBLE ) != 0 ), op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT )));
+				this->SetVisible ( ZLFloat::ToBoolean ( attrOp.ApplyNoAdd ( ZLFloat::FromBoolean (( this->mFlags & FLAGS_LOCAL_VISIBLE ) != 0 ), op, MOAIAttrOp::ATTR_READ_WRITE )));
 				return true;
 				
 			case ATTR_VISIBLE:
-				attrOp.ApplyNoAdd ( ZLFloat::FromBoolean ( this->IsVisible ()), op , MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				attrOp.ApplyNoAdd ( ZLFloat::FromBoolean ( this->IsVisible ()), op , MOAIAttrOp::ATTR_READ );
 				return true;
 			//case FRAME_TRAIT:
 			//	attrOp.Apply < ZLBox >( &this->mFrame, op, MOAIAttrOp::ATTR_READ );
@@ -724,9 +724,7 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 	
 		case BILLBOARD_NORMAL: {
 			
-			ZLAffine3D billboardMtx;
-			billboardMtx.Init ( camera->GetBillboardMtx ());
-			worldDrawingMtx = ZLMatrix4x4 ( this->GetBillboardMtx ( billboardMtx ));
+			worldDrawingMtx = ZLMatrix4x4 ( this->GetBillboardMtx ( ZLAffine3D ( camera->GetBillboardMtx ())));
 			break;
 		}
 		

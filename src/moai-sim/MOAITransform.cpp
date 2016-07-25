@@ -882,63 +882,77 @@ bool MOAITransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 	if ( MOAITransformAttr::Check ( attrID )) {
 
 		switch ( UNPACK_ATTR ( attrID )) {
+		
 			case ATTR_X_PIV:
-				this->mPiv.mX = attrOp.Apply ( this->mPiv.mX, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				this->mPiv.mX = attrOp.Apply ( this->mPiv.mX, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
+				
 			case ATTR_Y_PIV:
-				this->mPiv.mY = attrOp.Apply ( this->mPiv.mY, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				this->mPiv.mY = attrOp.Apply ( this->mPiv.mY, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
+				
 			case ATTR_Z_PIV:
-				this->mPiv.mZ = attrOp.Apply ( this->mPiv.mZ, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				this->mPiv.mZ = attrOp.Apply ( this->mPiv.mZ, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
+				
 			case ATTR_X_LOC:
-				this->mLoc.mX = attrOp.Apply ( this->mLoc.mX, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				this->mLoc.mX = attrOp.Apply ( this->mLoc.mX, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
+				
 			case ATTR_Y_LOC:
-				this->mLoc.mY = attrOp.Apply ( this->mLoc.mY, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				this->mLoc.mY = attrOp.Apply ( this->mLoc.mY, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
+				
 			case ATTR_Z_LOC:
-				this->mLoc.mZ = attrOp.Apply ( this->mLoc.mZ, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				this->mLoc.mZ = attrOp.Apply ( this->mLoc.mZ, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
+				
 			case ATTR_X_ROT:
-				this->mRot.mX = attrOp.Apply ( this->mRot.mX, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				this->mRot.mX = attrOp.Apply ( this->mRot.mX, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
+				
 			case ATTR_Y_ROT:
-				this->mRot.mY = attrOp.Apply ( this->mRot.mY, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				this->mRot.mY = attrOp.Apply ( this->mRot.mY, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
+				
 			case ATTR_Z_ROT:
-				this->mRot.mZ = attrOp.Apply ( this->mRot.mZ, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				this->mRot.mZ = attrOp.Apply ( this->mRot.mZ, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
+				
 			case ATTR_X_SCL:
-				this->mScale.mX = attrOp.Apply ( this->mScale.mX, op, MOAIAttrOp::ATTR_READ_WRITE , MOAIAttrOp::ATTR_TYPE_FLOAT);
+				this->mScale.mX = attrOp.Apply ( this->mScale.mX, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
+				
 			case ATTR_Y_SCL:
-				this->mScale.mY = attrOp.Apply ( this->mScale.mY, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				this->mScale.mY = attrOp.Apply ( this->mScale.mY, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
+				
 			case ATTR_Z_SCL:
-				this->mScale.mZ = attrOp.Apply ( this->mScale.mZ, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				this->mScale.mZ = attrOp.Apply ( this->mScale.mZ, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
+				
 			case ATTR_ROTATE_QUAT: {
+			
 				// TODO: cache rotation as quat to support read/write, delta adds?
-				ZLQuaternion quat;
+
 				attrOp.SetFlags ( MOAIAttrOp::ATTR_READ_WRITE );
 
 				if ( op == MOAIAttrOp::ADD ) {
 
-					quat.Set ( this->mRot.mX, this->mRot.mY, this->mRot.mZ );
-					quat = attrOp.Apply < ZLQuaternion >( quat, op, MOAIAttrOp::ATTR_WRITE, MOAIAttrOp::ATTR_TYPE_QUATERNION );
+					ZLQuaternion quat ( this->mRot.mX, this->mRot.mY, this->mRot.mZ );
+					quat = attrOp.Apply ( quat, op, MOAIAttrOp::ATTR_WRITE );
 					quat.Get ( this->mRot.mX, this->mRot.mY, this->mRot.mZ );
 				}
 				else if ( op != MOAIAttrOp::CHECK ) {
 
-					quat.Set ( 0.0f, 0.0f, 0.0f, 0.0f );
-					quat = attrOp.Apply < ZLQuaternion >( quat, op, MOAIAttrOp::ATTR_WRITE, MOAIAttrOp::ATTR_TYPE_QUATERNION );
+					ZLQuaternion quat ( 0.0f, 0.0f, 0.0f, 0.0f );
+					quat = attrOp.Apply ( quat, op, MOAIAttrOp::ATTR_WRITE );
 					quat.Get ( this->mRot.mX, this->mRot.mY, this->mRot.mZ );
 				}
 				return true;
 			}
 			case ATTR_TRANSLATE:
-				this->mLoc = attrOp.Apply < ZLVec3D >( this->mLoc, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_VECTOR );
+				this->mLoc = attrOp.Apply ( this->mLoc, op, MOAIAttrOp::ATTR_READ_WRITE );
 				return true;
 		}
 	}

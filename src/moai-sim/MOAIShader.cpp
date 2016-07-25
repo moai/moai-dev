@@ -46,15 +46,15 @@ int MOAIShader::_setUniform ( lua_State* L ) {
 			switch ( size ) {
 			
 				case 6:
-					self->mUniformBuffers [ uniform ].SetValue ( ZLMatrix4x4 ( state.GetValue < ZLAffine2D >( 3, ZLAffine2D::IDENT )));
+					self->mUniformBuffers [ uniform ].SetValue ( state.GetValue < ZLAffine2D >( 3, ZLAffine2D::IDENT ));
 					break;
 				
 				case 9:
-					self->mUniformBuffers [ uniform ].SetValue ( ZLMatrix4x4 ( state.GetValue < ZLMatrix3x3 >( 3, ZLMatrix3x3::IDENT )));
+					self->mUniformBuffers [ uniform ].SetValue ( state.GetValue < ZLMatrix3x3 >( 3, ZLMatrix3x3::IDENT ));
 					break;
 				
 				case 12:
-					self->mUniformBuffers [ uniform ].SetValue ( ZLMatrix4x4 ( state.GetValue < ZLAffine3D >( 3, ZLAffine3D::IDENT )));
+					self->mUniformBuffers [ uniform ].SetValue ( state.GetValue < ZLAffine3D >( 3, ZLAffine3D::IDENT ));
 					break;
 				
 				case 16:

@@ -573,10 +573,10 @@ bool MOAIProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 		
 		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_INDEX:
-				this->mIndex = ZLFloat::ToIndex ( attrOp.Apply (( float )this->mIndex, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_INT ));
+				this->mIndex = ZLFloat::ToIndex ( attrOp.Apply (( s32 )this->mIndex, op, MOAIAttrOp::ATTR_READ_WRITE ));
 				return true;
 			case ATTR_PARTITION:
-				this->SetPartition ( attrOp.ApplyNoAdd < MOAIPartition* >( this->GetPartition (), op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_VARIANT ));
+				this->SetPartition ( attrOp.ApplyVariantNoAdd < MOAIPartition* >( this->GetPartition (), op, MOAIAttrOp::ATTR_READ_WRITE ));
 				return true;
 		}
 	}

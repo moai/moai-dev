@@ -78,7 +78,7 @@ int MOAIAnimCurveVec::_setKey ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIAnimCurveVec::ApplyValueAttrOp ( MOAIAttrOp& attrOp, u32 op ) {
 
-	this->mValue = attrOp.Apply < ZLVec3D >( this->mValue, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_VECTOR );
+	this->mValue = attrOp.Apply ( this->mValue, op, MOAIAttrOp::ATTR_READ_WRITE );
 }
 
 //----------------------------------------------------------------//
@@ -105,7 +105,7 @@ void MOAIAnimCurveVec::GetDelta ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& spa
 	
 	v1.Sub ( v0 );
 	
-	attrOp.SetValue < ZLVec3D >( v1, MOAIAttrOp::ATTR_TYPE_VECTOR );
+	attrOp.SetValue ( v1 );
 }
 
 //----------------------------------------------------------------//
@@ -141,14 +141,14 @@ ZLVec3D MOAIAnimCurveVec::GetValue ( const MOAIAnimKeySpan& span ) const {
 //----------------------------------------------------------------//
 void MOAIAnimCurveVec::GetValue ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) const {
 
-	attrOp.SetValue < ZLVec3D >( this->GetValue ( span ), MOAIAttrOp::ATTR_TYPE_VECTOR );
+	attrOp.SetValue ( this->GetValue ( span ));
 }
 
 //----------------------------------------------------------------//
 void MOAIAnimCurveVec::GetZero ( MOAIAttrOp& attrOp ) const {
 
 	ZLVec3D zero ( 0.0f, 0.0f, 0.0f );
-	attrOp.SetValue < ZLVec3D >( zero, MOAIAttrOp::ATTR_TYPE_VECTOR );
+	attrOp.SetValue ( zero );
 }
 
 //----------------------------------------------------------------//

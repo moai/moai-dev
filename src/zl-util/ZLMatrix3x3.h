@@ -459,6 +459,23 @@ public:
 
 	//----------------------------------------------------------------//
 	template < typename PARAM_TYPE >
+	ZLMetaMatrix3x3 ( const ZLMetaAffine3D < PARAM_TYPE >& mtx ) {
+
+		m[C0_R0]	= ( TYPE )mtx.m[AffineElem3D::C0_R0];
+		m[C0_R1]	= ( TYPE )mtx.m[AffineElem3D::C0_R1];
+		m[C0_R2]	= ( TYPE )mtx.m[AffineElem3D::C0_R2];
+		
+		m[C1_R0]	= ( TYPE )mtx.m[AffineElem3D::C1_R0];
+		m[C1_R1]	= ( TYPE )mtx.m[AffineElem3D::C1_R1];
+		m[C1_R2]	= ( TYPE )mtx.m[AffineElem3D::C1_R2];
+		
+		m[C2_R0]	= ( TYPE )mtx.m[AffineElem3D::C2_R0];
+		m[C2_R1]	= ( TYPE )mtx.m[AffineElem3D::C2_R1];
+		m[C2_R2]	= ( TYPE )mtx.m[AffineElem3D::C2_R2];
+	}
+
+	//----------------------------------------------------------------//
+	template < typename PARAM_TYPE >
 	ZLMetaMatrix3x3 ( const ZLMetaMatrix3x3 < PARAM_TYPE >& mtx ) {
 
 		m[C0_R0]	= ( TYPE )mtx.m[C0_R0];

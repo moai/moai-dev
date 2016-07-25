@@ -117,6 +117,16 @@ public:
 class ZLColorVec {
 public:
 
+	static const ZLColorVec WHITE;
+	static const ZLColorVec BLACK;
+	static const ZLColorVec CLEAR;
+	static const ZLColorVec RED;
+	static const ZLColorVec GREEN;
+	static const ZLColorVec BLUE;
+	static const ZLColorVec YELLOW;
+	static const ZLColorVec CYAN;
+	static const ZLColorVec MAGENTA;
+
 	float	mR;
 	float	mG;
 	float	mB;

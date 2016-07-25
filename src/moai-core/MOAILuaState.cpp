@@ -1219,6 +1219,77 @@ void MOAILuaState::Push ( const ZLColorVec& value ) {
 }
 
 //----------------------------------------------------------------//
+void MOAILuaState::Push ( const ZLAffine2D& value ) {
+
+	lua_pushnumber ( this->mState, value.m [ ZLAffine2D::C0_R0 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLAffine2D::C1_R0 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLAffine2D::C2_R0 ]);
+	
+	lua_pushnumber ( this->mState, value.m [ ZLAffine2D::C0_R1 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLAffine2D::C1_R1 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLAffine2D::C2_R1 ]);
+}
+
+//----------------------------------------------------------------//
+void MOAILuaState::Push ( const ZLAffine3D& value ) {
+
+	lua_pushnumber ( this->mState, value.m [ ZLAffine3D::C0_R0 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLAffine3D::C1_R0 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLAffine3D::C2_R0 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLAffine3D::C3_R0 ]);
+	
+	lua_pushnumber ( this->mState, value.m [ ZLAffine3D::C0_R1 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLAffine3D::C1_R1 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLAffine3D::C2_R1 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLAffine3D::C3_R1 ]);
+	
+	lua_pushnumber ( this->mState, value.m [ ZLAffine3D::C0_R2 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLAffine3D::C1_R2 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLAffine3D::C2_R2 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLAffine3D::C3_R2 ]);
+}
+
+//----------------------------------------------------------------//
+void MOAILuaState::Push ( const ZLMatrix3x3& value ) {
+
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix3x3::C0_R0 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix3x3::C1_R0 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix3x3::C2_R0 ]);
+	
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix3x3::C0_R1 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix3x3::C1_R1 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix3x3::C2_R1 ]);
+	
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix3x3::C0_R2 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix3x3::C1_R2 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix3x3::C2_R2 ]);
+}
+
+//----------------------------------------------------------------//
+void MOAILuaState::Push ( const ZLMatrix4x4& value ) {
+
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix4x4::C0_R0 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix4x4::C1_R0 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix4x4::C2_R0 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix4x4::C3_R0 ]);
+	
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix4x4::C0_R1 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix4x4::C1_R1 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix4x4::C2_R1 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix4x4::C3_R1 ]);
+	
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix4x4::C0_R2 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix4x4::C1_R2 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix4x4::C2_R2 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix4x4::C3_R2 ]);
+	
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix4x4::C0_R3 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix4x4::C1_R3 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix4x4::C2_R3 ]);
+	lua_pushnumber ( this->mState, value.m [ ZLMatrix4x4::C3_R3 ]);
+}
+
+//----------------------------------------------------------------//
 void MOAILuaState::Push ( const ZLRect& value ) {
 
 	lua_pushnumber ( this->mState, value.mXMin );
@@ -1240,6 +1311,15 @@ void MOAILuaState::Push ( const ZLVec3D& value ) {
 	lua_pushnumber ( this->mState, value.mX );
 	lua_pushnumber ( this->mState, value.mY );
 	lua_pushnumber ( this->mState, value.mZ );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaState::Push ( const ZLVec4D& value ) {
+
+	lua_pushnumber ( this->mState, value.mX );
+	lua_pushnumber ( this->mState, value.mY );
+	lua_pushnumber ( this->mState, value.mZ );
+	lua_pushnumber ( this->mState, value.mW );
 }
 
 //----------------------------------------------------------------//

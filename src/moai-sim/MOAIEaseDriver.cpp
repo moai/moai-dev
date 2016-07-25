@@ -153,7 +153,7 @@ void MOAIEaseDriver::OnUpdate ( double step ) {
 			}
 			
 			if ( delta != 0.0f ) {
-				adder.SetValue ( delta, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				adder.SetValue ( delta );
 				link.mDest->ApplyAttrOp ( link.mDestAttrID, adder, MOAIAttrOp::ADD );
 				link.mDest->ScheduleUpdate ();
 			}

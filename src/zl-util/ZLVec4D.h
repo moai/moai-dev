@@ -52,6 +52,12 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	ZLMetaVec4D ( const ZLVec3D& vec, float w ) :
+		ZLMetaVec3D < TYPE >( vec ),
+		mW ( w ) {
+	}
+
+	//----------------------------------------------------------------//
 	ZLMetaVec4D ( float x, float y, float z, float w ) :
 		ZLMetaVec3D < TYPE >( x, y, z ),
 		mW ( w ) {

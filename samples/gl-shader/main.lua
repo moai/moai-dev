@@ -52,6 +52,9 @@ prop:setDeck ( mesh )
 prop:setCullMode ( MOAIProp.CULL_BACK )
 layer:insertProp ( prop )
 
+moaiMatrix = MOAIMatrix:new ()
+shader:setAttrLink ( 1, moaiMatrix, MOAIMatrix.TRANSFORM_TRAIT )
+
 local m = matrix.create ()
 local i = 0
 
@@ -60,7 +63,8 @@ main = function ()
 	while true do
 		m:set ( matrix.rotateX ( i ))
 		m:append ( matrix.rotateY ( i ))
-		shader:setUniform ( 1, m:get ())
+		moaiMatrix:setMatrix ( m:get ())
+		--shader:setUniform ( 1, m:get ())
 		i = ( i + 1 ) % 360
 		coroutine.yield ()
 	end

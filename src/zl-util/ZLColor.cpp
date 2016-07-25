@@ -1036,6 +1036,16 @@ u32 ZLColor::Swizzle ( u32 c0, u32 sw ) {
 // ZLColorVec
 //================================================================//
 
+const ZLColorVec ZLColorVec::WHITE		= ZLColorVec ( 1.0f, 1.0f, 1.0f, 1.0f );
+const ZLColorVec ZLColorVec::BLACK		= ZLColorVec ( 0.0f, 0.0f, 0.0f, 1.0f );
+const ZLColorVec ZLColorVec::CLEAR		= ZLColorVec ( 0.0f, 0.0f, 0.0f, 0.0f );
+const ZLColorVec ZLColorVec::RED		= ZLColorVec ( 1.0f, 0.0f, 0.0f, 1.0f );
+const ZLColorVec ZLColorVec::GREEN		= ZLColorVec ( 0.0f, 1.0f, 0.0f, 1.0f );
+const ZLColorVec ZLColorVec::BLUE		= ZLColorVec ( 0.0f, 0.0f, 1.0f, 1.0f );
+const ZLColorVec ZLColorVec::YELLOW		= ZLColorVec ( 1.0f, 1.0f, 0.0f, 1.0f );
+const ZLColorVec ZLColorVec::CYAN		= ZLColorVec ( 0.0f, 1.0f, 1.0f, 1.0f );
+const ZLColorVec ZLColorVec::MAGENTA	= ZLColorVec ( 1.0f, 0.0f, 1.0f, 1.0f );
+
 //----------------------------------------------------------------//
 void ZLColorVec::Add ( const ZLColorVec& c ) {
 
