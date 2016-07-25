@@ -4,7 +4,7 @@
 #ifndef	MOAINODE_H
 #define	MOAINODE_H
 
-#include <moai-sim/MOAIAttrOp.h>
+#include <moai-sim/MOAIAttribute.h>
 
 #define PACK_ATTR(type,attrID)	\
 	( MOAINode::PackAttrID < type >( type::attrID ))

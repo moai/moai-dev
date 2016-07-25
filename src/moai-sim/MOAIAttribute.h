@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIATTROP_H
-#define	MOAIATTROP_H
+#ifndef	MOAIATTRIBUTE_H
+#define	MOAIATTRIBUTE_H
 
 #define ATTR_OP_DECLARE_SETTER(type,typeID)			\
 	inline void SetValue ( const type& value ) {	\
