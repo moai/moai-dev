@@ -28,6 +28,13 @@ void ZLPlane2D::Init ( const ZLVec2D& p1, const ZLVec2D& p2 ) {
 }
 
 //----------------------------------------------------------------//
+void ZLPlane2D::Init ( const ZLVec2D& n, float d ) {
+
+	this->mNorm = n;
+	this->mDist = d;
+}
+
+//----------------------------------------------------------------//
 void ZLPlane2D::Init ( float xn, float yn, float d ) {
 
 	this->mNorm.Init ( xn, yn );

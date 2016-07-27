@@ -18,6 +18,7 @@ class ZLPlane2D {
 	//----------------------------------------------------------------//
 	void	Flip			();
 	void	Init			( const ZLVec2D& p1, const ZLVec2D& p2 );	// From a line segment
+	void	Init			( const ZLVec2D& n, float d );
 	void	Init			( float xn, float yn, float d );
 			ZLPlane2D		() {};
 			~ZLPlane2D		() {};

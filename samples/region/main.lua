@@ -15,6 +15,7 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 region = MOAIRegion.new ()
+
 region:reservePolygons ( 5 )
 
 poly, x, y = 1, -100, 0

@@ -65,6 +65,35 @@ int MOAIRegion::_clear ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIRegion::_clipToPlane ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIRegion, "U" )
+	
+	MOAIRegion* region	= state.GetLuaObject < MOAIRegion >( 2, false );
+	
+	if ( region ) {
+	
+		float xn	= state.GetValue < float >( 3, 0.0f );
+		float yn	= state.GetValue < float >( 4, 0.0f );
+		float d		= state.GetValue < float >( 5, 0.0f );
+		
+		ZLVec2D n ( xn, yn );
+		float len = n.Length ();
+		
+		if ( len > 0.0f ) {
+		
+			n.Scale ( 1.0f / len );
+			
+			ZLPlane2D p;
+			p.Init ( xn, yn, d );
+			
+			self->Clip ( *region, p );
+		}
+	}
+	return 0.0f;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIRegion::_convexHull ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRegion, "U" )
 
@@ -97,6 +126,7 @@ int MOAIRegion::_convexHull ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIRegion::_copy ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRegion, "UU" )
 
@@ -109,6 +139,7 @@ int MOAIRegion::_copy ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIRegion::_countPolygons ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRegion, "U" )
 	
@@ -117,6 +148,7 @@ int MOAIRegion::_countPolygons ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIRegion::_cull ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRegion, "U" )
 	
@@ -565,6 +597,47 @@ void MOAIRegion::Clear () {
 }
 
 //----------------------------------------------------------------//
+void MOAIRegion::Clip ( const MOAIRegion& region, ZLPlane2D plane ) {
+
+	ZLMemStream clippedPolyVerts;
+	ZLMemStream clippedPolySizes;
+
+	for ( size_t i = 0; i < region.mPolygons.Size (); ++i ) {
+	
+		ZLPolygon2D& poly = region.mPolygons [ i ];
+		poly.Clip ( plane, clippedPolyVerts, clippedPolySizes );
+	}
+	
+	this->Clear ();
+	
+	size_t nPolygons = clippedPolySizes.GetLength () / sizeof ( size_t );
+	
+	if ( nPolygons ) {
+	
+		clippedPolyVerts.Seek ( 0, SEEK_SET );
+		clippedPolySizes.Seek ( 0, SEEK_SET );
+		
+		this->ReservePolygons ( nPolygons );
+		
+		for ( size_t i = 0; i < nPolygons; ++i ) {
+
+			size_t polySize = clippedPolySizes.Read < size_t >( 0 );
+			
+			ZLPolygon2D& poly = this->mPolygons [ i ];
+			poly.ReserveVertices ( polySize );
+			
+			for ( size_t j = 0; j < polySize; ++j ) {
+			
+				ZLVec2D vert = clippedPolyVerts.Read < ZLVec2D >( ZLVec2D ( 0.0f, 0.0f ));
+				poly.SetVert ( j, vert.mX, vert.mY );
+			}
+		}
+		
+		this->Bless ();
+	}
+}
+
+//----------------------------------------------------------------//
 int MOAIRegion::CombineAndTesselate ( const MOAIRegion& regionA, const MOAIRegion& regionB, int windingRule ) {
 
 	SafeTesselator tess;
@@ -704,7 +777,7 @@ void MOAIRegion::DrawDebug () const {
 				gfxMgr.mGfxState.SetPenWidth ( 1.0f );
 				break;
 			}
-			case ZLPolygon2D::POLY_COMPLEX_BIT: {
+			case ZLPolygon2D::POLY_COMPLEX: {
 				gfxMgr.mGfxState.SetPenColor ( POLY_COMPLEX_COLOR );
 				gfxMgr.mGfxState.SetPenWidth ( 1.0f );
 				break;
@@ -1026,6 +1099,7 @@ void MOAIRegion::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "bless",				_bless },
 		{ "boolean",			_boolean },
 		{ "clear",				_clear },
+		{ "clipToPlane",		_clipToPlane },
 		{ "convexHull",			_convexHull },
 		{ "copy",				_copy },
 		{ "countPolygons",		_countPolygons },

@@ -346,7 +346,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	// angle between vector and (1.0f,0.0f) in radians
+	// angle between vector and (1.0f,0.0f) in radians (both vectors must already be normalized)
 	float Radians () const {
 		
 		float r = ASin ( ABS ( this->mY ));
@@ -358,7 +358,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	// angle between vectors in radians
+	// angle between vectors in radians (both vectors must already be normalized)
 	float Radians ( const ZLMetaVec2D < TYPE >& v ) const {
 		
 		float dot = this->Dot ( v );

@@ -25,6 +25,7 @@ private:
 	static int		_bless				( lua_State* L );
 	static int		_boolean			( lua_State* L );
 	static int		_clear				( lua_State* L );
+	static int		_clipToPlane		( lua_State* L );
 	static int		_convexHull			( lua_State* L );
 	static int		_copy				( lua_State* L );
 	static int		_countPolygons		( lua_State* L );
@@ -79,6 +80,7 @@ public:
 	void					BooleanOr				( const MOAIRegion& regionA, const MOAIRegion& regionB );
 	void					BooleanXor				( const MOAIRegion& regionA, const MOAIRegion& regionB );
 	void					Clear					();
+	void					Clip					( const MOAIRegion& region, ZLPlane2D plane );
 	int						CombineAndTesselate		( const MOAIRegion& regionA, const MOAIRegion& regionB, int windingRule );
 	ZLSizeResult			ConvexHull				( ZLStream& vtxStream, size_t nVerts );
 	void					Copy					( const MOAIRegion& region );
