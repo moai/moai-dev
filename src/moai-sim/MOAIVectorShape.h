@@ -15,10 +15,10 @@ class SafeTesselator;
 class MOAIVectorShape {
 protected:
 
-	static const int		NVP			= 3;
+	static const int	NVP						= 3;
 
-	MOAIVectorStyle			mStyle;
-	bool					mCanGroup;
+	MOAIVectorStyle		mStyle;
+	bool				mCanGroup;
 
 	//----------------------------------------------------------------//
 	void				CopyBoundaries				( SafeTesselator& dest, SafeTesselator* src );
@@ -41,8 +41,8 @@ public:
 	virtual				~MOAIVectorShape			();
 	virtual bool		SetVertices					( const ZLVec2D* vertices, u32 total, bool closed );
 	
-	int					Tesselate					( MOAIVectorTesselator& drawing, SafeTesselator& tess );
-	int					Tesselate					( MOAIVectorTesselator& drawing, ZLStream& vertexStream, ZLStream& indexStream, MOAIVertexFormat& format );
+	int					Tesselate					( MOAIVectorTesselator& drawing, SafeTesselator& tess, u32 flags );
+	int					Tesselate					( MOAIVectorTesselator& drawing, ZLStream& vertexStream, ZLStream& indexStream, MOAIVertexFormat& format, u32 flags );
 };
 
 #endif

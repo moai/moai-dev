@@ -32,6 +32,7 @@ private:
 	static int		_cull				( lua_State* L );
 	static int		_drawDebug			( lua_State* L );
 	static int		_edge				( lua_State* L );
+	static int		_findExtremity		( lua_State* L );
 	static int		_getDistance		( lua_State* L );
 	static int		_getPolygon			( lua_State* L );
 	static int		_getTriangles		( lua_State* L );
@@ -89,6 +90,7 @@ public:
 	void					Cull					( const MOAIRegion& region, u32 flag, bool checkArea = false, float minArea = 0.0f );
 	void					DrawDebug				() const;
 	void					Edge					( const MOAIRegion& region, const ZLVec2D& offset );
+	bool					FindExtremity			( ZLVec2D n, ZLVec2D& e );
 	bool					GetDistance				( const ZLVec2D& point, float& d ) const;
 	bool					GetDistance				( const ZLVec2D& point, float& d, ZLVec2D& p ) const;
 	ZLPolygon2D&			GetPolygon				( u32 idx );

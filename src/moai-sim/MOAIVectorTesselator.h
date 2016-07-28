@@ -102,6 +102,10 @@ private:
 	void			WriteVertex				( ZLStream& stream, MOAIVertexFormat& format, float x, float y, float z, float xn, float yn, float zn, u32 color, u32 vertexExtraID );
 	
 public:
+
+	static const u32	TESSELATE_FILLS			= 0x01;
+	static const u32	TESSELATE_STROKES		= 0x02;
+	static const u32	TESSELATE_ALL			= TESSELATE_FILLS | TESSELATE_STROKES;
 	
 	DECL_LUA_FACTORY ( MOAIVectorTesselator )
 	
@@ -135,10 +139,10 @@ public:
 	void				RegisterLuaFuncs			( MOAILuaState& state );
 	void				ReserveVertexExtras			( u32 total, size_t size );
 	void				SetVertexExtra				( u32 idx, void* extra, size_t size );
-	int					Tesselate					( SafeTesselator& tess );
-	int					Tesselate					( MOAIRegion& region );
-	int					Tesselate					( ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format );
-	int					Tesselate					( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, MOAIVertexFormat& format, u32 idxSizeInBytes );
+	int					Tesselate					( SafeTesselator& tess, u32 flags = TESSELATE_ALL );
+	int					Tesselate					( MOAIRegion& region, u32 flags = TESSELATE_ALL );
+	int					Tesselate					( ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, u32 flags = TESSELATE_ALL );
+	int					Tesselate					( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, MOAIVertexFormat& format, u32 idxSizeInBytes, u32 flags = TESSELATE_ALL );
 	void				WriteSkirt					( SafeTesselator& tess, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, const MOAIVectorStyle& style, const ZLColorVec& fillColor, u32 vertexExtraID );
 	void				WriteTriangles				( SafeTesselator& tess, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, const MOAIVectorStyle& style, float z, u32 color, u32 vertexExtraID );
 };

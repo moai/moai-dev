@@ -149,17 +149,17 @@ void MOAIVectorShape::StrokeBoundaries ( SafeTesselator& tess, SafeTesselator& o
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, SafeTesselator& tess ) {
+int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, SafeTesselator& tess, u32 flags ) {
 	UNUSED ( drawing );
 
 	int error = 0;
 	
-	if ( this->mStyle.GetFillStyle () == MOAIVectorStyle::FILL_SOLID ) {
+	if (( flags & MOAIVectorTesselator::TESSELATE_FILLS ) && ( this->mStyle.GetFillStyle () == MOAIVectorStyle::FILL_SOLID )) {
 		error = this->AddFillContours ( tess );
 		if ( error ) return error;
 	}
 	
-	if (( this->mStyle.GetStrokeStyle () != MOAIVectorStyle::STROKE_NONE ) && ( this->mStyle.GetStrokeWidth () > 0.0f )) {
+	if (( flags & MOAIVectorTesselator::TESSELATE_STROKES ) && ( this->mStyle.GetStrokeStyle () != MOAIVectorStyle::STROKE_NONE ) && ( this->mStyle.GetStrokeWidth () > 0.0f )) {
 		error = this->AddStrokeContours ( tess, true, true );
 		if ( error ) return error;
 	}
@@ -168,7 +168,7 @@ int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, SafeTesselator& 
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format ) {
+int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, u32 flags ) {
 	
 	u32 fillExtraID = this->mStyle.GetFillExtraID ();
 	u32 strokeExtraID = this->mStyle.GetStrokeExtraID ();
@@ -183,7 +183,7 @@ int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vtxStr
 	// fill solid w/o stroke
 	// no fill, just stroke
 	
-	if ( isFilled ) {
+	if (( flags & MOAIVectorTesselator::TESSELATE_FILLS ) && isFilled ) {
 	
 		// only draw the skirt if we are *not* stroked
 		if ( isExtruded && !isStroked ) {
@@ -210,7 +210,7 @@ int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vtxStr
 		drawing.WriteTriangles ( triangles, vtxStream, idxStream, format, this->mStyle, this->mStyle.GetExtrude () + this->mStyle.GetZOffset (), this->mStyle.mFillColor.PackRGBA (), fillExtraID );
 	}
 	
-	if ( isStroked ) {
+	if (( flags & MOAIVectorTesselator::TESSELATE_STROKES ) && isStroked ) {
 		
 		if ( isExtruded ) {
 			

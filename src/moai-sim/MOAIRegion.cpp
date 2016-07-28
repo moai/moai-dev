@@ -68,7 +68,7 @@ int MOAIRegion::_clear ( lua_State* L ) {
 int MOAIRegion::_clipToPlane ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRegion, "U" )
 	
-	MOAIRegion* region	= state.GetLuaObject < MOAIRegion >( 2, false );
+	MOAIRegion* region = state.GetLuaObject < MOAIRegion >( 2, false );
 	
 	if ( region ) {
 	
@@ -185,6 +185,23 @@ int MOAIRegion::_edge ( lua_State* L ) {
 	
 	if ( region ) {
 		self->Edge ( *region, point );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIRegion::_findExtremity ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIRegion, "UNN" )
+
+	ZLVec2D n = state.GetValue < ZLVec2D >( 2, ZLVec2D ( 0.0f, 0.0f ));
+	ZLVec2D e;
+	
+	if ( self->FindExtremity ( n, e )) {
+	
+		state.Push ( e.mX );
+		state.Push ( e.mY );
+		
+		return 2;
 	}
 	return 0;
 }
@@ -581,7 +598,7 @@ void MOAIRegion::BooleanNot ( const MOAIRegion& regionA, const MOAIRegion& regio
 void MOAIRegion::BooleanOr ( const MOAIRegion& regionA, const MOAIRegion& regionB ) {
 
 	this->CombineAndTesselate ( regionA, regionB, TESS_WINDING_POSITIVE );
-	this->Print ();
+	//this->Print ();
 }
 
 //----------------------------------------------------------------//
@@ -869,6 +886,41 @@ void MOAIRegion::Edge ( const MOAIRegion& region, const ZLVec2D& offset ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIRegion::FindExtremity ( ZLVec2D n, ZLVec2D& e ) {
+
+	n.NormSafe ();
+
+	bool		found = false;
+	float		bestDist;
+	ZLVec2D		bestVert;
+
+	size_t size = this->mPolygons.Size ();
+	for ( size_t i = 0; i < size; ++i ) {
+		ZLPolygon2D& polygon = this->mPolygons [ i ];
+		
+		size_t nVerts = polygon.GetSize ();
+		for ( size_t j = 0; j < nVerts; ++j ) {
+			
+			ZLVec2D vert = polygon.GetVertex ( j );
+			
+			float d = n.Dot ( vert );
+
+			if (( !found ) || ( d > bestDist )) {
+			
+				bestVert = vert;
+				bestDist = d;
+				found = true;
+			}
+		}
+	}
+	
+	if ( found ) {
+		e = bestVert;
+	}
+	return found;
+}
+
+//----------------------------------------------------------------//
 bool MOAIRegion::GetDistance ( const ZLVec2D& point, float& d ) const {
 
 	ZLVec2D unused;
@@ -1106,6 +1158,7 @@ void MOAIRegion::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "cull",				_cull },
 		{ "drawDebug",			_drawDebug },
 		{ "edge",				_edge },
+		{ "findExtremity",		_findExtremity },
 		{ "getDistance",		_getDistance },
 		{ "getPolygon",			_getPolygon },
 		{ "getTriangles",		_getTriangles },
