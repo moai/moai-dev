@@ -14,6 +14,17 @@
 // ZLPolygon2D
 //================================================================//
 class ZLPolygon2D {
+private:
+
+	struct ClipVert {
+		ZLVec2D		mPoint;
+		bool		mIntersection;
+		float		mTangent;				// distance along surface of plane (use to sort)
+		ClipVert*	mNextVert;
+		ClipVert*	mNextIntersection;		// next in sorted list
+		ClipVert*	mOtherEnd;
+	};
+	
 public:
 
 	static const u32 POLY_KNOWN_BIT			= 0x01;

@@ -190,15 +190,6 @@ size_t ZLPolygon2D::Clip ( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, Z
 	if ( !( this->mInfo & ZLPolygon2D::POLY_KNOWN_BIT )) return 0;
 	if ( this->mInfo & ( ZLPolygon2D::POLY_COMPLEX_BIT | ZLPolygon2D::POLY_CORRUPT_BIT )) return 0;
 
-	struct ClipVert {
-		ZLVec2D		mPoint;
-		bool		mIntersection;
-		float		mTangent;				// distance along surface of plane (use to sort)
-		ClipVert*	mNextVert;
-		ClipVert*	mNextIntersection;		// next in sorted list
-		ClipVert*	mOtherEnd;
-	};
-	
 	size_t maxIntersections = pointsFront * 2;
 	size_t maxVerts = pointsFront + maxIntersections;
 	
