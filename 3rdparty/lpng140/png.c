@@ -1,8 +1,8 @@
 
 /* png.c - location for general purpose libpng functions
  *
- * Last changed in libpng 1.4.0 [January 3, 2010]
- * Copyright (c) 1998-2010 Glenn Randers-Pehrson
+ * Last changed in libpng 1.4.15 [February 12, 2015]
+ * Copyright (c) 1998-2002,2004,2006-2015 Glenn Randers-Pehrson
  * (Version 0.96 Copyright (c) 1996, 1997 Andreas Dilger)
  * (Version 0.88 Copyright (c) 1995, 1996 Guy Eric Schalnat, Group 42, Inc.)
  *
@@ -17,31 +17,31 @@
 #include "pngpriv.h"
 
 /* Generate a compiler error if there is an old png.h in the search path. */
-typedef version_1_4_0 Your_png_h_is_not_version_1_4_0;
-
-/* Version information for C files.  This had better match the version
- * string defined in png.h.
- */
+typedef version_1_4_19 Your_png_h_is_not_version_1_4_19;
 
 /* Tells libpng that we have already handled the first "num_bytes" bytes
  * of the PNG file signature.  If the PNG data is embedded into another
  * stream we can set num_bytes = 8 so that libpng will not attempt to read
  * or write any of the magic bytes before it starts on the IHDR.
  */
-
 #ifdef PNG_READ_SUPPORTED
 void PNGAPI
 png_set_sig_bytes(png_structp png_ptr, int num_bytes)
 {
+   unsigned int nb = (unsigned int)num_bytes;
+
    png_debug(1, "in png_set_sig_bytes");
 
    if (png_ptr == NULL)
       return;
 
-   if (num_bytes > 8)
+   if (num_bytes < 0)
+      nb = 0;
+
+   if (nb > 8)
       png_error(png_ptr, "Too many bytes for PNG signature");
 
-   png_ptr->sig_bytes = (png_byte)(num_bytes < 0 ? 0 : num_bytes);
+   png_ptr->sig_bytes = (png_byte)nb;
 }
 
 /* Checks whether the supplied bytes match the PNG signature.  We allow
@@ -78,12 +78,16 @@ voidpf /* PRIVATE */
 png_zalloc(voidpf png_ptr, uInt items, uInt size)
 {
    png_voidp ptr;
-   png_structp p=(png_structp)png_ptr;
-   png_uint_32 save_flags=p->flags;
+   png_structp p;
+   png_uint_32 save_flags;
    png_alloc_size_t num_bytes;
 
    if (png_ptr == NULL)
       return (NULL);
+
+   p=(png_structp)png_ptr;
+   save_flags=p->flags;
+
    if (items > PNG_UINT_32_MAX/size)
    {
      png_warning (p, "Potential overflow in png_zalloc()");
@@ -220,6 +224,8 @@ png_info_init_3(png_infopp ptr_ptr, png_size_t png_info_struct_size)
       png_destroy_struct(info_ptr);
       info_ptr = (png_infop)png_create_struct(PNG_STRUCT_INFO);
       *ptr_ptr = info_ptr;
+      if (info_ptr == NULL)
+         return;
    }
 
    /* Set everything to 0 */
@@ -514,6 +520,7 @@ png_convert_to_rfc1123(png_structp png_ptr, png_timep ptime)
 
    if (png_ptr == NULL)
       return (NULL);
+
    if (png_ptr->time_buffer == NULL)
    {
       png_ptr->time_buffer = (png_charp)png_malloc(png_ptr, (png_uint_32)(29*
@@ -524,7 +531,7 @@ png_convert_to_rfc1123(png_structp png_ptr, png_timep ptime)
    {
       char near_time_buf[29];
       png_snprintf6(near_time_buf, 29, "%d %s %d %02d:%02d:%02d +0000",
-          ptime->day % 32, short_months[(ptime->month - 1) % 12],
+          ptime->day % 32, short_months[(ptime->month - 1U) % 12],
           ptime->year, ptime->hour % 24, ptime->minute % 60,
           ptime->second % 61);
       png_memcpy(png_ptr->time_buffer, near_time_buf,
@@ -532,7 +539,7 @@ png_convert_to_rfc1123(png_structp png_ptr, png_timep ptime)
    }
 #else
    png_snprintf6(png_ptr->time_buffer, 29, "%d %s %d %02d:%02d:%02d +0000",
-       ptime->day % 32, short_months[(ptime->month - 1) % 12],
+       ptime->day % 32, short_months[(ptime->month - 1U) % 12],
        ptime->year, ptime->hour % 24, ptime->minute % 60,
        ptime->second % 61);
 #endif
@@ -543,22 +550,23 @@ png_convert_to_rfc1123(png_structp png_ptr, png_timep ptime)
 #endif /* defined(PNG_READ_SUPPORTED) || defined(PNG_WRITE_SUPPORTED) */
 
 png_charp PNGAPI
-png_get_copyright(png_structp png_ptr)
+png_get_copyright(png_const_structp png_ptr)
 {
-   png_ptr = png_ptr;  /* Silence compiler warning about unused png_ptr */
+   PNG_UNUSED(png_ptr)  /* Silence compiler warning about unused png_ptr */
 #ifdef PNG_STRING_COPYRIGHT
       return PNG_STRING_COPYRIGHT
 #else
 #ifdef __STDC__
    return ((png_charp) PNG_STRING_NEWLINE \
-     "libpng version 1.4.0 - January 3, 2010" PNG_STRING_NEWLINE \
-     "Copyright (c) 1998-2010 Glenn Randers-Pehrson" PNG_STRING_NEWLINE \
+     "libpng version 1.4.19 - December 17, 2015" PNG_STRING_NEWLINE \
+     "Copyright (c) 1998-2002,2004,2006-2015 Glenn Randers-Pehrson" \
+     PNG_STRING_NEWLINE \
      "Copyright (c) 1996-1997 Andreas Dilger" PNG_STRING_NEWLINE \
      "Copyright (c) 1995-1996 Guy Eric Schalnat, Group 42, Inc." \
      PNG_STRING_NEWLINE);
 #else
-      return ((png_charp) "libpng version 1.4.0 - January 3, 2010\
-      Copyright (c) 1998-2010 Glenn Randers-Pehrson\
+   return ((png_charp) "libpng version 1.4.19 - December 17, 2015\
+      Copyright (c) 1998-2002,2004,2006-2015 Glenn Randers-Pehrson\
       Copyright (c) 1996-1997 Andreas Dilger\
       Copyright (c) 1995-1996 Guy Eric Schalnat, Group 42, Inc.");
 #endif
@@ -574,23 +582,23 @@ png_get_copyright(png_structp png_ptr)
  * it is guaranteed that png.c uses the correct version of png.h.
  */
 png_charp PNGAPI
-png_get_libpng_ver(png_structp png_ptr)
+png_get_libpng_ver(png_const_structp png_ptr)
 {
    /* Version of *.c files used when building libpng */
-   png_ptr = png_ptr;  /* Silence compiler warning about unused png_ptr */
+   PNG_UNUSED(png_ptr)  /* Silence compiler warning about unused png_ptr */
    return ((png_charp) PNG_LIBPNG_VER_STRING);
 }
 
 png_charp PNGAPI
-png_get_header_ver(png_structp png_ptr)
+png_get_header_ver(png_const_structp png_ptr)
 {
    /* Version of *.h files used when building libpng */
-   png_ptr = png_ptr;  /* Silence compiler warning about unused png_ptr */
+   PNG_UNUSED(png_ptr)  /* Silence compiler warning about unused png_ptr */
    return ((png_charp) PNG_LIBPNG_VER_STRING);
 }
 
 png_charp PNGAPI
-png_get_header_version(png_structp png_ptr)
+png_get_header_version(png_const_structp png_ptr)
 {
    /* Returns longer string containing both version and date */
    png_ptr = png_ptr;  /* Silence compiler warning about unused png_ptr */
@@ -622,7 +630,9 @@ png_handle_as_unknown(png_structp png_ptr, png_bytep chunk_name)
    return 0;
 }
 #endif
+#endif /* defined(PNG_READ_SUPPORTED) || defined(PNG_WRITE_SUPPORTED) */
 
+#ifdef PNG_READ_SUPPORTED
 /* This function, added to libpng-1.0.6g, is untested. */
 int PNGAPI
 png_reset_zstream(png_structp png_ptr)
@@ -631,7 +641,7 @@ png_reset_zstream(png_structp png_ptr)
       return Z_STREAM_ERROR;
    return (inflateReset(&png_ptr->zstream));
 }
-#endif /* defined(PNG_READ_SUPPORTED) || defined(PNG_WRITE_SUPPORTED) */
+#endif /* PNG_READ_SUPPORTED */
 
 /* This function was added to libpng-1.0.7 */
 png_uint_32 PNGAPI
@@ -676,7 +686,7 @@ png_convert_size(size_t size)
 */
 
 void /* PRIVATE */
-png_64bit_product (long v1, long v2, unsigned long *hi_product,
+png_64bit_product(long v1, long v2, unsigned long *hi_product,
    unsigned long *lo_product)
 {
    int a, b, c, d;
@@ -723,14 +733,14 @@ png_check_cHRM_fixed(png_structp png_ptr,
         "Ignoring attempt to set negative chromaticity value");
       ret = 0;
    }
-   if (white_x > (png_fixed_point) PNG_UINT_31_MAX ||
-       white_y > (png_fixed_point) PNG_UINT_31_MAX ||
-         red_x > (png_fixed_point) PNG_UINT_31_MAX ||
-         red_y > (png_fixed_point) PNG_UINT_31_MAX ||
-       green_x > (png_fixed_point) PNG_UINT_31_MAX ||
-       green_y > (png_fixed_point) PNG_UINT_31_MAX ||
-        blue_x > (png_fixed_point) PNG_UINT_31_MAX ||
-        blue_y > (png_fixed_point) PNG_UINT_31_MAX )
+   if (white_x >= (png_fixed_point) PNG_UINT_31_MAX ||
+       white_y >= (png_fixed_point) PNG_UINT_31_MAX ||
+         red_x >= (png_fixed_point) PNG_UINT_31_MAX ||
+         red_y >= (png_fixed_point) PNG_UINT_31_MAX ||
+       green_x >= (png_fixed_point) PNG_UINT_31_MAX ||
+       green_y >= (png_fixed_point) PNG_UINT_31_MAX ||
+        blue_x >= (png_fixed_point) PNG_UINT_31_MAX ||
+        blue_y >= (png_fixed_point) PNG_UINT_31_MAX )
    {
       png_warning(png_ptr,
         "Ignoring attempt to set chromaticity value exceeding 21474.83");
@@ -772,6 +782,17 @@ png_check_cHRM_fixed(png_structp png_ptr,
 #endif /* PNG_CHECK_cHRM_SUPPORTED */
 #endif /* PNG_cHRM_SUPPORTED */
 
+#ifdef __GNUC__
+/* This exists solely to work round a warning from GNU C. */
+static int /* PRIVATE */
+png_gt(size_t a, size_t b)
+{
+    return a > b;
+}
+#else
+#   define png_gt(a,b) ((a) > (b))
+#endif
+
 void /* PRIVATE */
 png_check_IHDR(png_structp png_ptr,
    png_uint_32 width, png_uint_32 height, int bit_depth,
@@ -787,9 +808,31 @@ png_check_IHDR(png_structp png_ptr,
       error = 1;
    }
 
-   if (height == 0)
+   if (width > PNG_UINT_31_MAX)
    {
-      png_warning(png_ptr, "Image height is zero in IHDR");
+      png_warning(png_ptr, "Invalid image width in IHDR");
+      error = 1;
+   }
+
+   if (png_gt(((width + 7) & (~7)),
+       ((PNG_UINT_32_MAX /* Changed to PNG_SIZE_MAX here in libpng-1.5.21 */
+           - 48        /* big_row_buf hack */
+           - 1)        /* filter byte */
+           / 8)        /* 8-byte RGBA pixels */
+           - 1))       /* extra max_pixel_depth pad */
+   {
+      /* The size of the row must be within the limits of this architecture.
+       * Because the read code can perform arbitrary transformations the
+       * maximum size is checked here.  Because the code in png_read_start_row
+       * adds extra space "for safety's sake" in several places a conservative
+       * limit is used here.
+       *
+       * NOTE: it would be far better to check the size that is actually used,
+       * but the effect in the real world is minor and the changes are more
+       * extensive, therefore much more dangerous and much more difficult to
+       * write in a way that avoids compiler warnings.
+       */
+      png_warning(png_ptr, "Image width is too large for this architecture");
       error = 1;
    }
 
@@ -803,6 +846,18 @@ png_check_IHDR(png_structp png_ptr,
       error = 1;
    }
 
+   if (height == 0)
+   {
+      png_warning(png_ptr, "Image height is zero in IHDR");
+      error = 1;
+   }
+
+   if (height > PNG_UINT_31_MAX)
+   {
+      png_warning(png_ptr, "Invalid image height in IHDR");
+      error = 1;
+   }
+
 #ifdef PNG_SET_USER_LIMITS_SUPPORTED
    if (height > png_ptr->user_height_max || height > PNG_USER_HEIGHT_MAX)
 #else
@@ -812,26 +867,6 @@ png_check_IHDR(png_structp png_ptr,
       png_warning(png_ptr, "Image height exceeds user limit in IHDR");
       error = 1;
    }
-
-   if (width > PNG_UINT_31_MAX)
-   {
-      png_warning(png_ptr, "Invalid image width in IHDR");
-      error = 1;
-   }
-
-   if ( height > PNG_UINT_31_MAX)
-   {
-      png_warning(png_ptr, "Invalid image height in IHDR");
-      error = 1;
-   }
-
-   if ( width > (PNG_UINT_32_MAX
-                 >> 3)      /* 8-byte RGBA pixels */
-                 - 64       /* bigrowbuf hack */
-                 - 1        /* filter byte */
-                 - 7*8      /* rounding of width to multiple of 8 pixels */
-                 - 8)       /* extra max_pixel_depth pad */
-      png_warning(png_ptr, "Width is too large for libpng to process pixels");
 
    /* Check other values */
    if (bit_depth != 1 && bit_depth != 2 && bit_depth != 4 &&
