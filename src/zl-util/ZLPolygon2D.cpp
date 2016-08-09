@@ -151,8 +151,6 @@ void ZLPolygon2D::Clear () {
 
 //----------------------------------------------------------------//
 size_t ZLPolygon2D::Clip ( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, ZLStream& clippedPolySizes ) {
-
-	printf ( "CLIP!\n" );
 	
 	size_t polySize = this->mVertices.Size ();
 	if ( !polySize ) return 0;
@@ -253,10 +251,6 @@ size_t ZLPolygon2D::Clip ( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, Z
 			// result should never *not* be SECT_HIT
 			if ( setResult == ZLSect::SECT_HIT ) {
 			
-				if ( !inFront ) {
-					printf ( "begin loop\n" );
-				}
-			
 				bool newVert = (( t > 0.0f ) || ( nClipVerts == 0 ));
 			
 				struct ClipVert& clipVert = clipVerts [ newVert ? nClipVerts++ : nClipVerts ];
@@ -276,14 +270,11 @@ size_t ZLPolygon2D::Clip ( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, Z
 				sortKey.mData = &clipVert;
 				sortKey.mKey = ZLFloat::FloatToIntKey ( clipVert.mTangent );
 				
-				printf ( "intersection: %f %f\n", clipVert.mPoint.mX, clipVert.mPoint.mY );
-				
 				if ( nextInFront ) {
 					loopStart = &clipVert;
 					prevVert = &clipVert;
 				}
 				else {
-					printf ( "end loop\n" );
 					clipVert.mOtherEnd = loopStart;
 					loopStart->mOtherEnd = &clipVert;
 					prevVert->mNextVert = &clipVert;
@@ -304,8 +295,6 @@ size_t ZLPolygon2D::Clip ( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, Z
 			
 			prevVert->mNextVert = &clipVert;
 			prevVert = &clipVert;
-			
-			printf ( "clip vert: %f %f\n", v1.mX, v1.mY );
 		}
 		
 		inFront = nextInFront;
@@ -316,11 +305,9 @@ size_t ZLPolygon2D::Clip ( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, Z
 
 	sortBuffer = RadixSort32 < ZLRadixKey32 < struct ClipVert* > >( sortBuffer, swapBuffer, ( u32 )nIntersections );
 	
-	printf ( "sorted intersections\n" );
 	for ( size_t i = 0; i < nIntersections; ++i ) {
 	
 		struct ClipVert* intersection = sortBuffer [ i ].mData;
-		printf ( "%f %f\n", intersection->mPoint.mX, intersection->mPoint.mY );
 		
 		if ( intersection->mNextVert ) {
 		
@@ -348,8 +335,6 @@ size_t ZLPolygon2D::Clip ( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, Z
 		sortBuffer [ i - 1 ].mData->mNextIntersection = sortBuffer [ i ].mData;
 	}
 	
-	printf ( "polygon\n" );
-	
 	size_t clippedPolySize = 0;
 	bool newIntersection = true;
 	
@@ -361,8 +346,6 @@ size_t ZLPolygon2D::Clip ( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, Z
 		
 		clippedPolyVerts.Write < ZLVec2D >( cursor->mPoint );
 		clippedPolySize++;
-		
-		printf ( "%f %f\n", cursor->mPoint.mX, cursor->mPoint.mY );
 		
 		if ( newIntersection ) {
 		

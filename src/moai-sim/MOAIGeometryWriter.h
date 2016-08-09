@@ -42,6 +42,7 @@ private:
 	static int			_offsetIndices			( lua_State* L );
 	static int			_pruneVertices			( lua_State* L );
 	static int			_snapCoords				( lua_State* L );
+	static int			_translateCoords		( lua_State* L );
 	static int			_writeBox				( lua_State* L );
 	static int			_writeCone				( lua_State* L );
 	static int			_writeCube				( lua_State* L );
@@ -80,6 +81,7 @@ public:
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	static void			SnapCoords				( const MOAIVertexFormat& format, ZLStream& stream, float xSnap, float ySnap, float zSnap );
+	static void			TranslateCoords			( const MOAIVertexFormat& format, ZLStream& stream, float xOff, float yOff, float zOff );
 	static void			WriteBox				( const MOAIVertexFormat& format, ZLStream& stream, const ZLBox& box );
 	static void			WriteCylinder			( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec2D& r0, const ZLVec2D& r1 );
 	static void			WriteIcoSphere			( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& r );

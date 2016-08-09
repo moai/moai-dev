@@ -314,11 +314,30 @@ int MOAIGeometryWriter::_snapCoords ( lua_State* L ) {
 	
 	if ( format && stream  ) {
 	
-		float xSnap = state.GetValue < float >( 2, 0.0f );
-		float ySnap = state.GetValue < float >( 3, xSnap );
-		float zSnap = state.GetValue < float >( 4, ySnap );
+		float xSnap = state.GetValue < float >( 3, 0.0f );
+		float ySnap = state.GetValue < float >( 4, xSnap );
+		float zSnap = state.GetValue < float >( 5, ySnap );
 	
 		MOAIGeometryWriter::SnapCoords ( *format, *stream, xSnap, ySnap, zSnap );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGeometryWriter::_translateCoords ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
+	
+	MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 1, true );
+	MOAIStream* stream			= state.GetLuaObject < MOAIStream >( 2, true );
+	
+	if ( format && stream  ) {
+	
+		float xOff = state.GetValue < float >( 3, 0.0f );
+		float yOff = state.GetValue < float >( 4, 0.0f );
+		float zOff = state.GetValue < float >( 5, 0.0f );
+	
+		MOAIGeometryWriter::TranslateCoords ( *format, *stream, xOff, yOff, zOff );
 	}
 	return 0;
 }
@@ -748,6 +767,7 @@ void MOAIGeometryWriter::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "offsetIndices",			_offsetIndices },
 		{ "pruneVertices",			_pruneVertices },
 		{ "snapCoords",				_snapCoords },
+		{ "translateCoords",		_translateCoords },
 		{ "writeBox",				_writeBox },
 		{ "writeCone",				_writeCone },
 		{ "writeCube",				_writeCube },
@@ -780,6 +800,27 @@ void MOAIGeometryWriter::SnapCoords ( const MOAIVertexFormat& format, ZLStream& 
 		coord.mX = xSnap == 0.0f ? coord.mX : floorf (( coord.mX / xSnap ) + 0.5f ) * xSnap;
 		coord.mY = ySnap == 0.0f ? coord.mY : floorf (( coord.mY / ySnap ) + 0.5f ) * ySnap;
 		coord.mZ = zSnap == 0.0f ? coord.mZ : floorf (( coord.mZ / zSnap ) + 0.5f ) * zSnap;
+		
+		format.WriteCoord ( stream, 0, coord.mX, coord.mY, coord.mZ, coord.mW );
+	}
+	stream.SetCursor ( base );
+}
+
+//----------------------------------------------------------------//
+void MOAIGeometryWriter::TranslateCoords ( const MOAIVertexFormat& format, ZLStream& stream, float xOff, float yOff, float zOff ) {
+	
+	size_t base = stream.GetCursor ();
+	u32 total = ( u32 )(( stream.GetLength () - base ) / format.GetVertexSize ());
+	
+	for ( u32 i = 0; i < total; ++i ) {
+		
+		format.SeekVertex ( stream, base, i );
+		
+		ZLVec4D coord = format.ReadCoord ( stream, 0 );
+		
+		coord.mX += xOff;
+		coord.mY += yOff;
+		coord.mZ += zOff;
 		
 		format.WriteCoord ( stream, 0, coord.mX, coord.mY, coord.mZ, coord.mW );
 	}
