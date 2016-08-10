@@ -15,17 +15,31 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 original = MOAIRegion.new ()
---original:reservePolygons ( 1 )
 
 --[[
-original:reserveVertices ( 1, 6 )
+original:reservePolygons ( 1 )
+
+original:reserveVertices ( 1, 4 )
 original:setVertex ( 1, 1, -100, -100 )
-original:setVertex ( 1, 2, -100, 100 )
-original:setVertex ( 1, 3, 0, 50 )
-original:setVertex ( 1, 4, 100, 100 )
-original:setVertex ( 1, 5, 100, -100 )
-original:setVertex ( 1, 6, 0, -50 )
+original:setVertex ( 1, 2, 100, 100 )
+original:setVertex ( 1, 3, -100, 100 )
+original:setVertex ( 1, 4, 100, -100 )
 ]]--
+
+--[[
+original:reserveVertices ( 1, 10 )
+original:setVertex ( 1, 1, -100, 100 )
+original:setVertex ( 1, 2, -100, 0 )
+original:setVertex ( 1, 3, -100, -100 )
+original:setVertex ( 1, 4, 0, -50 )
+original:setVertex ( 1, 5, 0, -50 )
+original:setVertex ( 1, 6, 100, -100 )
+original:setVertex ( 1, 7, 100, 0 )
+original:setVertex ( 1, 8, 100, 100 )
+original:setVertex ( 1, 9, 0, 50 )
+original:setVertex ( 1, 10, 0, 50 )
+]]--
+
 --[[
 original:reserveVertices ( 1, 6 )
 original:setVertex ( 1, 1, -100, -100 )
@@ -35,6 +49,7 @@ original:setVertex ( 1, 4, 100, 100 )
 original:setVertex ( 1, 5, 0, 50 )
 original:setVertex ( 1, 6, -100, 100 )
 ]]--
+
 --[[
 poly, x, y = 1, 0, -100
 original:reserveVertices ( poly, 4 )
@@ -105,7 +120,7 @@ layer:insertProp ( prop )
 
 region = MOAIRegion.new ()
 
-local a = 0
+local a = 0 -- 315
 local d = 0
 
 main = function ()
@@ -143,7 +158,7 @@ main = function ()
 			xn = -math.sin ( r )
 			yn = math.cos ( r )
 
-			print ( 'clip', d, a )
+			--print ( 'clip', d, a )
 			region:clipToPlane ( original, xn, yn, d )
 
 			clip = false

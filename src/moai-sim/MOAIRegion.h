@@ -5,6 +5,7 @@
 #define MOAIREGION_H
 
 class MOAIIndexBuffer;
+class MOAITransform;
 class MOAIVertexBuffer;
 class MOAIVertexFormat;
 
@@ -25,7 +26,7 @@ private:
 	static int		_bless				( lua_State* L );
 	static int		_boolean			( lua_State* L );
 	static int		_clear				( lua_State* L );
-	static int		_clipToPlane		( lua_State* L );
+	static int		_clip				( lua_State* L );
 	static int		_convexHull			( lua_State* L );
 	static int		_copy				( lua_State* L );
 	static int		_countPolygons		( lua_State* L );
@@ -51,6 +52,7 @@ private:
 	static int		_translate			( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void					Read					( ZLStream& verts, ZLStream& polySizes );
 	bool					ShouldCull				( const ZLPolygon2D& poly, u32 flag, bool checkArea, float minArea );
 
 public:
@@ -82,6 +84,7 @@ public:
 	void					BooleanXor				( const MOAIRegion& regionA, const MOAIRegion& regionB );
 	void					Clear					();
 	void					Clip					( const MOAIRegion& region, ZLPlane2D plane );
+	void					Clip					( const MOAIRegion& region, const MOAIRegion& clip, const ZLAffine3D* mtx = 0 );
 	int						CombineAndTesselate		( const MOAIRegion& regionA, const MOAIRegion& regionB, int windingRule );
 	ZLSizeResult			ConvexHull				( ZLStream& vtxStream, size_t nVerts );
 	void					Copy					( const MOAIRegion& region );

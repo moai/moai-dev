@@ -193,10 +193,7 @@ public:
 	//----------------------------------------------------------------//
 	bool Equals ( const ZLMetaVec2D < TYPE >& point ) const {
 		
-		if ( mX != point.mX ) return false;
-		if ( mY != point.mY ) return false;
-		
-		return true;
+		return (( mX == point.mX ) && ( mY == point.mY ));
 	}
 	
 	//----------------------------------------------------------------//

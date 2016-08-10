@@ -1117,6 +1117,8 @@
 		CD1BF8AA1940564E0066877A /* MOAIBox2DMotorJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF8A71940564E0066877A /* MOAIBox2DMotorJoint.cpp */; };
 		CD1BF8AB1940564E0066877A /* MOAIBox2DMotorJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF8A81940564E0066877A /* MOAIBox2DMotorJoint.h */; };
 		CD1BF8AC1940564E0066877A /* MOAIBox2DMotorJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF8A81940564E0066877A /* MOAIBox2DMotorJoint.h */; };
+		CD1C93441D512D92008174BC /* ZLPolygon2D-clip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1C93431D512D92008174BC /* ZLPolygon2D-clip.cpp */; };
+		CD1C93451D512D93008174BC /* ZLPolygon2D-clip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1C93431D512D92008174BC /* ZLPolygon2D-clip.cpp */; };
 		CD23665C180A5454006A7236 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD52323F1808ADDA00B81720 /* host.h */; };
 		CD23665D180A5454006A7236 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD5232401808ADDA00B81720 /* host.mm */; };
 		CD23665E180A5454006A7236 /* MOAIChartBoostIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5232411808ADDA00B81720 /* MOAIChartBoostIOS.h */; };
@@ -6976,6 +6978,7 @@
 		CD1BF8A21940512A0066877A /* lcrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lcrypto.h; path = "../../3rdparty/luacrypto-0.3.2/src/lcrypto.h"; sourceTree = "<group>"; };
 		CD1BF8A71940564E0066877A /* MOAIBox2DMotorJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIBox2DMotorJoint.cpp; sourceTree = "<group>"; };
 		CD1BF8A81940564E0066877A /* MOAIBox2DMotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIBox2DMotorJoint.h; sourceTree = "<group>"; };
+		CD1C93431D512D92008174BC /* ZLPolygon2D-clip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "ZLPolygon2D-clip.cpp"; sourceTree = "<group>"; };
 		CD218F8413A7FD6E008337E7 /* ls_sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ls_sqlite3.c; path = "../../3rdparty/luasql-2.2.0/src/ls_sqlite3.c"; sourceTree = SOURCE_ROOT; };
 		CD218F8513A7FD6E008337E7 /* luasql.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = luasql.c; path = "../../3rdparty/luasql-2.2.0/src/luasql.c"; sourceTree = SOURCE_ROOT; };
 		CD218F8613A7FD6E008337E7 /* luasql.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luasql.h; path = "../../3rdparty/luasql-2.2.0/src/luasql.h"; sourceTree = SOURCE_ROOT; };
@@ -10985,6 +10988,7 @@
 				89BE68FE173974FC00DFE837 /* ZLPlane.h */,
 				89BE68FF173974FC00DFE837 /* ZLPolar.cpp */,
 				89BE6900173974FC00DFE837 /* ZLPolar.h */,
+				CD1C93431D512D92008174BC /* ZLPolygon2D-clip.cpp */,
 				CDB73B651D00026D00B0E75A /* ZLPolygon2D.cpp */,
 				89BE6901173974FC00DFE837 /* ZLPolygon2D.h */,
 				89BE6902173974FC00DFE837 /* ZLPolyScanner.h */,
@@ -20011,6 +20015,7 @@
 				CD2FB1DE1C473B72005F8D8D /* ZLGfxDevice.cpp in Sources */,
 				89BE69F3173974FD00DFE837 /* ZLHexDump.cpp in Sources */,
 				89BE69F7173974FD00DFE837 /* ZLHexAdapter.cpp in Sources */,
+				CD1C93441D512D92008174BC /* ZLPolygon2D-clip.cpp in Sources */,
 				CD2FB1A61C473ABE005F8D8D /* ZLRefCountedObject.cpp in Sources */,
 				89BE69FF173974FD00DFE837 /* ZLInterpolate.cpp in Sources */,
 				CDE440161AC0D27600C745DB /* ZLFrustumFitter.cpp in Sources */,
@@ -20090,6 +20095,7 @@
 				CD2FB1EC1C473B76005F8D8D /* ZLGfxDevice.cpp in Sources */,
 				89BE69F4173974FD00DFE837 /* ZLHexDump.cpp in Sources */,
 				89BE69F8173974FD00DFE837 /* ZLHexAdapter.cpp in Sources */,
+				CD1C93451D512D93008174BC /* ZLPolygon2D-clip.cpp in Sources */,
 				CD2FB1AB1C473AC4005F8D8D /* ZLRefCountedObject.cpp in Sources */,
 				89BE6A00173974FD00DFE837 /* ZLInterpolate.cpp in Sources */,
 				CDE440171AC0D27600C745DB /* ZLFrustumFitter.cpp in Sources */,
