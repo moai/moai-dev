@@ -27,13 +27,14 @@ protected:
 	friend class MOAIShaderProgram;
 
 	MOAILuaSharedPtr < MOAIShaderProgram >		mProgram;
-	ZLLeanArray < MOAIShaderUniformBuffer >		mUniformBuffers;
+	ZLLeanArray < u8 >							mUniformBuffer;
 
 	//----------------------------------------------------------------//
 	static int				_setProgram						( lua_State* L );
 	static int				_setUniform						( lua_State* L );
 	
 	//----------------------------------------------------------------//
+	MOAIShaderUniform*		GetUniform				( u32 uniformID );
 	void					UpdateAndBindUniforms	();
 
 public:

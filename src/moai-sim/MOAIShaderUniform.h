@@ -11,33 +11,39 @@ class MOAIColor;
 class MOAITransformBase;
 
 //================================================================//
-// MOAIShaderUniformBuffer
+// MOAIShaderUniform
 //================================================================//
-class MOAIShaderUniformBuffer {
+class MOAIShaderUniform {
 protected:
 
 	static const size_t MAX_BUFFER_WIDTH = 16; // 4x4 matrix
+	static const size_t ELEMENT_SIZE = 4;
 
 	friend class MOAIShader;
 	friend class MOAIShaderProgram;
 
-	u32		mType;			// type of element
-	u32		mWidth;			// number of elements
-	
-	ZLLeanArray < u8 > mBuffer;
-
-	union {
-		float	mFloat;
-		s32		mInt;
-	};
+	STLString		mName;
+	u32				mType;				// type of element
+	u32				mWidth;				// number of elements (ELEMENT_SIZE bytes each)
+	u32				mCount;				// size of array
+	size_t			mSize;				// size in bytes
+	size_t			mCPUBase;			// offset in CPU buffer
+	u32				mGPUBase;			// this is resolved when linking the shader
+	u32				mFlagsBase;			// index of the first flag
 
 	//----------------------------------------------------------------//
-	void		Clear				();
-	void		ClearValue			();
-	u32			SetBuffer			( const s32* buffer, u32 width );
-	u32			SetBuffer			( const float* buffer, u32 width );
+	void*			GetUniformBuffer	( void* buffer, u32 index );
+	const void*		GetUniformBuffer	( const void* buffer, u32 index );
+	u32				SetRawValue			( void* buffer, u32 index, const void* srcBuffer );
+	u32				SetValue			( void* buffer, u32 index, const s32* srcBuffer );
+	u32				SetValue			( void* buffer, u32 index, const float* srcBuffer );
 
 public:
+
+	enum {
+		UNIFORM_FLAG_DIRTY		= 0x01,
+		UNIFORM_FLAG_GLOBAL		= 0x02,
+	};
 
 	enum {
 		UNIFORM_TYPE_FLOAT,
@@ -56,53 +62,27 @@ public:
 	GET ( u32, Width, mWidth )
 
 	//----------------------------------------------------------------//
-	void		AddValue					( const MOAIAttribute& attr );
-	void		Default						();
-	bool		Init						( u32 type, u32 width = 1 );
-				MOAIShaderUniformBuffer		();
-				~MOAIShaderUniformBuffer	();
-	u32			SetValue					( float value );
-	u32			SetValue					( s32 value );
-	u32			SetValue					( const MOAIAttribute& attr );
-	u32			SetValue					( const MOAIShaderUniformBuffer& uniformBuffer );
-	u32			SetValue					( const ZLColorVec& value );
-	u32			SetValue					( const ZLIntVec4D& value );
-	u32			SetValue					( const ZLAffine2D& value );
-	u32			SetValue					( const ZLAffine3D& value );
-	u32			SetValue					( const ZLMatrix3x3& value );
-	u32			SetValue					( const ZLMatrix4x4& value );
-	u32			SetValue					( const ZLVec4D& value );
-};
+	void		AddValue				( void* buffer, u32 index, const MOAIAttribute& attr );
+	void		Bind					( const void* buffer, u32 index );
+	u32			CopyValue				( void* buffer, const void* srcBuffer, u32 index );
+	void		Default					( void* buffer );
+	bool		Init					( u32 type, u32 width = 1, u32 count = 1 );
+				MOAIShaderUniform		();
+				~MOAIShaderUniform		();
+	u32			SetValue				( void* buffer, u32 index, float value );
+	u32			SetValue				( void* buffer, u32 index, s32 value );
+	u32			SetValue				( void* buffer, u32 index, const MOAIAttribute& attr );
+	u32			SetValue				( void* buffer, u32 index, const ZLColorVec& value );
+	u32			SetValue				( void* buffer, u32 index, const ZLIntVec4D& value );
+	u32			SetValue				( void* buffer, u32 index, const ZLAffine2D& value );
+	u32			SetValue				( void* buffer, u32 index, const ZLAffine3D& value );
+	u32			SetValue				( void* buffer, u32 index, const ZLMatrix3x3& value );
+	u32			SetValue				( void* buffer, u32 index, const ZLMatrix4x4& value );
+	u32			SetValue				( void* buffer, u32 index, const ZLVec4D& value );
 
-//================================================================//
-// MOAIShaderUniform
-//================================================================//
-class MOAIShaderUniform :
-	public MOAIShaderUniformBuffer {
-private:
-
-	friend class MOAIShader;
-	friend class MOAIShaderProgram;
-
-	STLString		mName;
-	u32				mAddr;			// this is resolved when linking the shader
-	u32				mFlags;			// used by MOAIShaderProgram
-
-public:
-
-	enum {
-		UNIFORM_FLAG_DIRTY		= 0x01,
-		UNIFORM_FLAG_GLOBAL		= 0x02,
-	};
-
-	//----------------------------------------------------------------//
-	void		Bind				();
-				MOAIShaderUniform	();
-				~MOAIShaderUniform	();
-	
 	//----------------------------------------------------------------//
 	inline bool IsValid () {
-		return this->mAddr != ZGL_INVALID_UNIFORM_ADDR;
+		return ( this->mGPUBase != ZGL_INVALID_UNIFORM_ADDR );
 	}
 };
 

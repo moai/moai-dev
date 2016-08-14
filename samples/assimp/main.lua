@@ -6,7 +6,7 @@
 
 --FILENAME = '../../3rdparty/assimp/test/models-nonbsd/ogre/ogresdk/ninja.mesh'
 --FILENAME = '../../3rdparty/assimp/test/models/collada/duck.dae'
-FILENAME = 'boblampclean.md5mesh'
+FILENAME = '../temp/assimp/boblampclean.md5mesh'
 
 --MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_MODEL_BOUNDS, 2, 1, 1, 1 )
 --MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
@@ -38,15 +38,35 @@ vertexFormat:declareBoneIndices ()
 vertexFormat:declareBoneWeights ()
 vertexFormat:declareBoneCount ()
 
+local program = MOAIShaderProgram.new ()
+
+program:setVertexAttribute ( 1, 'position' )
+--program:setVertexAttribute( 2, 'normal' )
+program:setVertexAttribute ( 2, 'uv' )
+program:setVertexAttribute ( 3, 'color' )
+
+program:reserveUniforms ( 2 )
+program:declareUniform ( 1, 'world', MOAIShaderProgram.UNIFORM_TYPE_FLOAT, MOAIShaderProgram.UNIFORM_WIDTH_MATRIX_4X4 )
+program:declareUniform ( 2, 'viewProj', MOAIShaderProgram.UNIFORM_TYPE_FLOAT, MOAIShaderProgram.UNIFORM_WIDTH_MATRIX_4X4 )
+
+program:reserveGlobals ( 2 )
+program:setGlobal ( 1, MOAIShaderProgram.GLOBAL_WORLD, 1 )
+program:setGlobal ( 2, MOAIShaderProgram.GLOBAL_VIEW_PROJ, 2 )
+
+program:load ( MOAIFileSystem.loadFile ( 'shader.vsh' ), MOAIFileSystem.loadFile ( 'shader.fsh' ))
+
+local shader = MOAIShader.new ()
+shader:setProgram ( program )
+
 aiScene = MOAIAssimpScene.new ()
 aiScene:load ( FILENAME,
 	MOAIAssimpScene.TRIANGULATE,
 	MOAIAssimpScene.FLIP_UVS
 )
 
-local aiMeshes = aiScene:getMeshes ()
-local aiMaterials = aiScene:getMaterials ()
-local aiRootNode = aiScene:getRootNode ()
+local aiMeshes		= aiScene:getMeshes ()
+local aiMaterials	= aiScene:getMaterials ()
+local aiRootNode	= aiScene:getRootNode ()
 
 --if aiRootNode then
 --	local json = MOAIJsonParser.encode ( aiRootNode, MOAIJsonParser.JSON_INDENT + MOAIJsonParser.JSON_SORT_KEYS )
@@ -57,7 +77,7 @@ local textures = {}
 
 for i, aiMaterial in ipairs ( aiMaterials ) do
 
-	local path = aiMaterial.TEXTURE_DIFFUSE [ 1 ].path
+	local path = '../temp/assimp/' .. aiMaterial.TEXTURE_DIFFUSE [ 1 ].path
 	print ( path )
 
 	local texture = MOAITexture.new ()
@@ -94,7 +114,7 @@ for i, aiMesh in ipairs ( aiMeshes ) do
 	mesh:setTotalElements ( nIndices )
 	mesh:setBounds ( vbo:computeBounds ( vertexFormat ))
 	mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
-	mesh:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.MESH_SHADER ))
+	mesh:setShader ( shader )
 	--mesh:setTexture ( '../../3rdparty/assimp/test/models/collada/duckCM.tga' )
 	mesh:setTexture ( textures [ aiMesh:getMaterialIndex ()])
 	
@@ -104,7 +124,7 @@ for i, aiMesh in ipairs ( aiMeshes ) do
 	prop:setLoc ( 0, -40, 0 )
 	--prop:setLoc ( 0, -80, 0 )
 	--prop:setRot ( 0, -90, 0 )
-	--prop:moveRot ( 0, 360, 0, 6 )
+	prop:moveRot ( 0, 360, 0, 6 )
 	prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
 	prop:setDepthTest ( MOAIGraphicsProp.DEPTH_TEST_LESS )
 	layer:insertProp ( prop )

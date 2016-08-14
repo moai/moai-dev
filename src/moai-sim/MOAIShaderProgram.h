@@ -22,8 +22,9 @@ private:
 
 	friend class MOAIShaderProgram;
 
-	u32		mUniformID;
 	u32		mGlobalID;
+	u32		mUniformID;
+	u32		mIndex;
 };
 
 //================================================================//
@@ -74,70 +75,62 @@ protected:
 	typedef STLMap < u32, STLString >::iterator AttributeMapIt;
 	STLMap < u32, STLString > mAttributeMap;
 
-	ZLLeanArray < MOAIShaderUniform >			mUniforms; // these are the actual uniforms
+	ZLLeanArray < MOAIShaderUniform >			mUniforms;
+	ZLLeanArray < u8 >							mUniformBuffer;
+	ZLLeanArray < u8 >							mUniformFlags;
+	
+	u32											mMaxCount;
+	
 	ZLLeanArray < MOAIShaderProgramGlobal >		mGlobals;
-
+	
 	u32											mGlobalsMask;
 
 	//----------------------------------------------------------------//
-	static int		_clearUniform				( lua_State* L );
-	static int		_declareUniform				( lua_State* L );
-	//static int		_declareUniformSampler		( lua_State* L );
-	static int		_load						( lua_State* L );
-	static int		_reserveGlobals				( lua_State* L );
-	static int		_reserveUniforms			( lua_State* L );
-	static int		_setGlobal					( lua_State* L );
-	static int		_setVertexAttribute			( lua_State* L );
+	static int			_declareUniform				( lua_State* L );
+	static int			_getAttributeID				( lua_State* L );
+	static int			_load						( lua_State* L );
+	static int			_reserveGlobals				( lua_State* L );
+	static int			_reserveUniforms			( lua_State* L );
+	static int			_setGlobal					( lua_State* L );
+	static int			_setVertexAttribute			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			ApplyGlobals				();
-	void			BindUniforms				();
-	ZLGfxHandle*	CompileShader				( u32 type, cc8* source );
-	bool			OnCPUCreate					();
-	void			OnCPUDestroy				();
-	void			OnGfxEvent					( u32 event, void* userdata );
-	void			OnGPUBind					();
-	bool			OnGPUCreate					();
-	void			OnGPUDeleteOrDiscard		( bool shouldDelete );
-	void			OnGPUUnbind					();
-	bool			OnGPUUpdate					();
-	void			OnUniformLocation			( u32 addr, void* userdata );
+	void				ApplyGlobals				();
+	void				BindUniforms				();
+	ZLGfxHandle*		CompileShader				( u32 type, cc8* source );
+	MOAIShaderUniform*	GetUniform					( u32 uniformID );
+	MOAIShaderUniform*	GetUniformForAttributeID	( u32 attrID, u32& index );
+	bool				OnCPUCreate					();
+	void				OnCPUDestroy				();
+	void				OnGfxEvent					( u32 event, void* userdata );
+	void				OnGPUBind					();
+	bool				OnGPUCreate					();
+	void				OnGPUDeleteOrDiscard		( bool shouldDelete );
+	void				OnGPUUnbind					();
+	bool				OnGPUUpdate					();
+	void				OnUniformLocation			( u32 addr, void* userdata );
 	
 public:
 
 	DECL_LUA_FACTORY ( MOAIShaderProgram )
 
-//	enum {
-//		GLOBAL_PEN_COLOR,
-//		GLOBAL_VIEW_PROJ,
-//		GLOBAL_VIEW_WIDTH,
-//		GLOBAL_VIEW_HEIGHT,
-//		GLOBAL_VIEW_HALF_WIDTH,
-//		GLOBAL_VIEW_HALF_HEIGHT,
-//		GLOBAL_WORLD,
-//		GLOBAL_WORLD_INVERSE,
-//		GLOBAL_WORLD_VIEW,
-//		GLOBAL_WORLD_VIEW_INVERSE,
-//		GLOBAL_WORLD_VIEW_PROJ,
-//	};
-
 	//----------------------------------------------------------------//
-	void			Clear						();
-	void			ClearUniform				( u32 idx );
-	void			ClearUniforms				();
-	void			DeleteShaders				();
-	void			DeclareUniform				( u32 idx, cc8* name, u32 type, u32 width = 0 );
-	u32				GetGlobalsMask				();
-					MOAIShaderProgram			();
-					~MOAIShaderProgram			();
-	void			RegisterLuaClass			( MOAILuaState& state );
-	void			RegisterLuaFuncs			( MOAILuaState& state );
-	void			ReserveAttributes			( u32 nAttributes );
-	void			ReserveGlobals				( u32 nGlobals );
-	void			ReserveUniforms				( u32 nUniforms );
-	void			SetGlobal					( u32 idx, u32 uniformID, u32 globalID );
-	void			SetSource					( cc8* vshSource, cc8* fshSource );
-	void			SetVertexAttribute			( u32 idx, cc8* attribute );
+	void				Clear						();
+	//void				ClearUniforms				();
+	void				DeleteShaders				();
+	void				DeclareUniform				( u32 idx, cc8* name, u32 type, u32 width = 1, u32 count = 1 );
+	u32					GetAttributeID				( u32 uniformID, u32 index );
+	u32					GetGlobalsMask				();
+	void				Load						( cc8* vshSource, cc8* fshSource );
+						MOAIShaderProgram			();
+						~MOAIShaderProgram			();
+	void				RegisterLuaClass			( MOAILuaState& state );
+	void				RegisterLuaFuncs			( MOAILuaState& state );
+	void				ReserveAttributes			( u32 nAttributes );
+	void				ReserveGlobals				( u32 nGlobals );
+	void				ReserveUniforms				( u32 nUniforms );
+	void				SetGlobal					( u32 idx, u32 globalID, u32 uniformID, u32 index );
+	void				SetVertexAttribute			( u32 idx, cc8* attribute );
 };
 
 #endif

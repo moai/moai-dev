@@ -27,17 +27,20 @@ int MOAIShader::_setProgram ( lua_State* L ) {
 int MOAIShader::_setUniform ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShader, "U" )
 
-	u32 uniform = state.GetValue ( 2, 1 ) - 1;
-	
-	if ( uniform < self->mUniformBuffers.Size ()) {
+	u32 uniformID	= state.GetValue < u32 >( 2, 1 ) - 1;
+	u32 index		= state.GetValue < u32 >( 3, 1 ) - 1;
 
-		int size = state.GetTop () - 2;
+	MOAIShaderUniform* uniform = self->GetUniform ( uniformID );
+	
+	if ( uniform ) {
+
+		int size = state.GetTop () - 3;
 		
 		if ( size < 4 ) {
 		
-			ZLVec4D vec = state.GetValue < ZLVec4D >( 2, ZLVec4D::ZERO );
+			ZLVec4D vec = state.GetValue < ZLVec4D >( 3, ZLVec4D::ZERO );
 			
-			self->mUniformBuffers [ uniform ].SetValue ( vec );
+			uniform->SetValue ( self->mUniformBuffer, index, vec );
 		}
 		else {
 
@@ -46,19 +49,19 @@ int MOAIShader::_setUniform ( lua_State* L ) {
 			switch ( size ) {
 			
 				case 6:
-					self->mUniformBuffers [ uniform ].SetValue ( state.GetValue < ZLAffine2D >( 3, ZLAffine2D::IDENT ));
+					uniform->SetValue ( self->mUniformBuffer, index, state.GetValue < ZLAffine2D >( 3, ZLAffine2D::IDENT ));
 					break;
 				
 				case 9:
-					self->mUniformBuffers [ uniform ].SetValue ( state.GetValue < ZLMatrix3x3 >( 3, ZLMatrix3x3::IDENT ));
+					uniform->SetValue ( self->mUniformBuffer, index, state.GetValue < ZLMatrix3x3 >( 3, ZLMatrix3x3::IDENT ));
 					break;
 				
 				case 12:
-					self->mUniformBuffers [ uniform ].SetValue ( state.GetValue < ZLAffine3D >( 3, ZLAffine3D::IDENT ));
+					uniform->SetValue ( self->mUniformBuffer, index, state.GetValue < ZLAffine3D >( 3, ZLAffine3D::IDENT ));
 					break;
 				
 				case 16:
-					self->mUniformBuffers [ uniform ].SetValue ( state.GetValue < ZLMatrix4x4 >( 3, ZLMatrix4x4::IDENT ));
+					uniform->SetValue ( self->mUniformBuffer, index, state.GetValue < ZLMatrix4x4 >( 3, ZLMatrix4x4::IDENT ));
 					break;
 				
 				default:
@@ -90,26 +93,36 @@ MOAIShader* MOAIShader::AffirmShader ( MOAILuaState& state, int idx ) {
 //----------------------------------------------------------------//
 bool MOAIShader::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 
-	attrID = ( attrID & MOAIAttribute::ATTR_ID_MASK ) - 1;
+	if ( this->mProgram ) {
 
-	if ( attrID >= this->mUniformBuffers.Size ()) return false;
+		u32 index = 0;
+		MOAIShaderUniform* uniform = this->mProgram->GetUniformForAttributeID (( attrID & MOAIAttribute::ATTR_ID_MASK ) - 1, index );
+		
+		if ( uniform ) {
 
-	switch ( op ) {
+			switch ( op ) {
 
-		case MOAIAttribute::CHECK:
-			attr.SetFlags ( MOAIAttribute::ATTR_WRITE );
-			return true;
+				case MOAIAttribute::CHECK:
+					attr.SetFlags ( MOAIAttribute::ATTR_WRITE );
+					return true;
 
-		case MOAIAttribute::SET:
-			this->mUniformBuffers [ attrID ].SetValue ( attr );
-			return true;
+				case MOAIAttribute::SET:
+					uniform->SetValue ( this->mUniformBuffer, index, attr );
+					return true;
 
-		case MOAIAttribute::ADD:
-			this->mUniformBuffers [ attrID ].AddValue ( attr );
-			return true;
+				case MOAIAttribute::ADD:
+					uniform->AddValue ( this->mUniformBuffer, index, attr );
+					return true;
+			}
+		}
 	}
-
 	return false;
+}
+
+//----------------------------------------------------------------//
+MOAIShaderUniform* MOAIShader::GetUniform ( u32 uniformID ) {
+
+	return this->mProgram ? this->mProgram->GetUniform ( uniformID ) : 0;
 }
 
 //----------------------------------------------------------------//
@@ -148,21 +161,16 @@ void MOAIShader::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIShader::SetProgram ( MOAIShaderProgram* program ) {
 
-	this->mUniformBuffers.Clear ();
+	this->mUniformBuffer.Clear ();
 	this->mProgram.Set ( *this, program );
 	
 	if ( program ) {
 		
-		size_t nUniforms = program->mUniforms.Size ();
-		this->mUniformBuffers.Init ( nUniforms );
+		this->mUniformBuffer.Init ( program->mUniformBuffer.Size ());
 		
+		size_t nUniforms = program->mUniforms.Size ();
 		for ( size_t i = 0; i < nUniforms; ++i ) {
-
-			MOAIShaderUniform& uniform = program->mUniforms [ i ];
-			MOAIShaderUniformBuffer& uniformBuffer = this->mUniformBuffers [ i ];
-			
-			uniformBuffer.Init ( uniform.mType, uniform.mWidth );
-			uniformBuffer.Default ();
+			program->mUniforms [ i ].Default ( this->mUniformBuffer );
 		}
 	}
 }
@@ -173,17 +181,25 @@ void MOAIShader::UpdateAndBindUniforms () {
 	MOAIShaderProgram* program = this->mProgram;
 
 	if ( program ) {
-		
+	
+		program->ApplyGlobals ();
+	
 		size_t nUniforms = program->mUniforms.Size ();
 		
 		for ( size_t i = 0; i < nUniforms; ++i ) {
+		
 			MOAIShaderUniform& uniform = program->mUniforms [ i ];
-			if (( uniform.mFlags & MOAIShaderUniform::UNIFORM_FLAG_GLOBAL ) == 0 ) {
-				uniform.mFlags |= uniform.SetValue ( this->mUniformBuffers [ i ]);
+			
+			for ( u32 j = 0; j < uniform.mCount; ++j ) {
+			
+				u8& flag = program->mUniformFlags [ uniform.mFlagsBase + j ];
+			
+				if (( flag & MOAIShaderUniform::UNIFORM_FLAG_GLOBAL ) == 0 ) {
+					flag |= uniform.CopyValue ( program->mUniformBuffer, this->mUniformBuffer, j );
+				}
+				flag &= ~MOAIShaderUniform::UNIFORM_FLAG_GLOBAL;
 			}
 		}
-		
-		program->ApplyGlobals ();
 		program->BindUniforms ();
 	}
 }

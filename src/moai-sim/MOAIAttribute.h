@@ -167,6 +167,16 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
+	inline bool GetValue ( const bool& value ) const {
+
+		switch ( this->mAttrTypeID ) {
+			case ATTR_TYPE_FLOAT_32:	return *( float* )this->mBuffer == 0.0f ? false : true;
+			case ATTR_TYPE_INT_32:		return *( s32* )this->mBuffer == 0 ? false : true;
+			default:					return value;
+		}
+	}
+	
+	//----------------------------------------------------------------//
 	inline ZLColorVec GetValue ( const ZLColorVec& value ) const {
 		
 		switch ( this->mAttrTypeID ) {
