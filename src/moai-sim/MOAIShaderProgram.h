@@ -20,11 +20,38 @@ class MOAIShader;
 class MOAIShaderProgramGlobal {
 private:
 
+	friend class MOAIShader;
+	friend class MOAIShaderGlobals;
 	friend class MOAIShaderProgram;
 
 	u32		mGlobalID;
 	u32		mUniformID;
 	u32		mIndex;
+
+public:
+
+	//----------------------------------------------------------------//
+		MOAIShaderProgramGlobal		();
+};
+
+//================================================================//
+// MOAIShaderGlobals
+//================================================================//
+class MOAIShaderGlobals {
+protected:
+
+	ZLLeanArray < MOAIShaderProgramGlobal >		mGlobals;
+
+	//----------------------------------------------------------------//
+	int		ReserveGlobals			( lua_State* L, int idx );
+	int		SetGlobal				( lua_State* L, int idx );
+
+public:
+
+	//----------------------------------------------------------------//
+	void	CopyGlobals				( const MOAIShaderGlobals& globals );
+	void	ReserveGlobals			( u32 nGlobals );
+	void	SetGlobal				( u32 idx, u32 globalID, u32 uniformID, u32 index );
 };
 
 //================================================================//
@@ -55,7 +82,8 @@ private:
 	@const	GLOBAL_WORLD_VIEW_PROJ
 */
 class MOAIShaderProgram :
-	public MOAIGfxResource {
+	public MOAIGfxResource,
+	public MOAIShaderGlobals {
 protected:
 
 	friend class MOAIShader;
@@ -76,33 +104,22 @@ protected:
 	STLMap < u32, STLString > mAttributeMap;
 
 	ZLLeanArray < MOAIShaderUniform >			mUniforms;
-	ZLLeanArray < u8 >							mUniformBuffer;
-	ZLLeanArray < u8 >							mUniformFlags;
-	
-	u32											mMaxCount;
-	
-	ZLLeanArray < MOAIShaderProgramGlobal >		mGlobals;
 	
 	u32											mGlobalsMask;
 
 	//----------------------------------------------------------------//
 	static int			_declareUniform				( lua_State* L );
-	static int			_getAttributeID				( lua_State* L );
 	static int			_load						( lua_State* L );
 	static int			_reserveGlobals				( lua_State* L );
 	static int			_reserveUniforms			( lua_State* L );
-	static int			_setGlobal					( lua_State* L );
 	static int			_setVertexAttribute			( lua_State* L );
+	static int			_setGlobal					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				ApplyGlobals				();
-	void				BindUniforms				();
 	ZLGfxHandle*		CompileShader				( u32 type, cc8* source );
 	MOAIShaderUniform*	GetUniform					( u32 uniformID );
-	MOAIShaderUniform*	GetUniformForAttributeID	( u32 attrID, u32& index );
 	bool				OnCPUCreate					();
 	void				OnCPUDestroy				();
-	void				OnGfxEvent					( u32 event, void* userdata );
 	void				OnGPUBind					();
 	bool				OnGPUCreate					();
 	void				OnGPUDeleteOrDiscard		( bool shouldDelete );
@@ -119,7 +136,6 @@ public:
 	//void				ClearUniforms				();
 	void				DeleteShaders				();
 	void				DeclareUniform				( u32 idx, cc8* name, u32 type, u32 width = 1, u32 count = 1 );
-	u32					GetAttributeID				( u32 uniformID, u32 index );
 	u32					GetGlobalsMask				();
 	void				Load						( cc8* vshSource, cc8* fshSource );
 						MOAIShaderProgram			();
@@ -127,9 +143,7 @@ public:
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
 	void				ReserveAttributes			( u32 nAttributes );
-	void				ReserveGlobals				( u32 nGlobals );
 	void				ReserveUniforms				( u32 nUniforms );
-	void				SetGlobal					( u32 idx, u32 globalID, u32 uniformID, u32 index );
 	void				SetVertexAttribute			( u32 idx, cc8* attribute );
 };
 

@@ -10,26 +10,71 @@
 #include <moai-sim/MOAITransformBase.h>
 
 //================================================================//
-// local
+// MOAIShaderProgramGlobal
+//================================================================//
+	
+//----------------------------------------------------------------//
+MOAIShaderProgramGlobal::MOAIShaderProgramGlobal () :
+	mGlobalID ( INVALID_INDEX ),
+	mUniformID ( INVALID_INDEX ),
+	mIndex ( 0 ) {
+}
+
+//================================================================//
+// MOAIShaderGlobals
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@lua	clearUniform
-	@text	Clears a uniform mapping.
+void MOAIShaderGlobals::CopyGlobals ( const MOAIShaderGlobals& globals ) {
 
-	@in		MOAIShaderProgram self
-	@in		number idx
-	@out	nil
-*/
-//int MOAIShaderProgram::_clearUniform ( lua_State* L ) {
-//	MOAI_LUA_SETUP ( MOAIShaderProgram, "UN" )
-//
-//	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
-//
-//	self->ClearUniform ( idx );
-//
-//	return 0;
-//}
+	this->mGlobals.CloneFrom ( globals.mGlobals );
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderGlobals::ReserveGlobals ( u32 nGlobals ) {
+
+	this->mGlobals.Init ( nGlobals );
+}
+
+//----------------------------------------------------------------//
+int MOAIShaderGlobals::ReserveGlobals ( lua_State* L, int idx ) {
+
+	MOAILuaState state ( L );
+
+	u32 nGlobals = state.GetValue < u32 >( idx, 0 );
+	this->ReserveGlobals ( nGlobals );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderGlobals::SetGlobal ( u32 idx, u32 globalID, u32 uniformID, u32 index ) {
+	
+	MOAIShaderProgramGlobal& global = this->mGlobals [ idx ];
+	
+	global.mUniformID	= uniformID;
+	global.mIndex		= index;
+	global.mGlobalID	= globalID;
+}
+
+//----------------------------------------------------------------//
+int MOAIShaderGlobals::SetGlobal ( lua_State* L, int idx ) {
+
+	MOAILuaState state ( L );
+
+	u32 globalIdx	= state.GetValue < u32 >( idx, 1 ) - 1;
+	u32 globalID	= state.GetValue < u32 >( idx + 1, INVALID_INDEX );
+	u32 uniformID	= state.GetValue < u32 >( idx + 2, 1 ) - 1;
+	u32 index		= state.GetValue < u32 >( idx + 3, 1 ) - 1;
+	
+	this->SetGlobal ( globalIdx, globalID, uniformID, index );
+
+	return 0;
+}
+
+//================================================================//
+// local
+//================================================================//
 
 //----------------------------------------------------------------//
 /**	@lua	declareUniform
@@ -59,43 +104,6 @@ int MOAIShaderProgram::_declareUniform ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIShaderProgram::_getAttributeID ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIShaderProgram, "UN" )
-
-	u32 uniformID		= state.GetValue < u32 >( 2, 1 ) - 1;
-	u32 index			= state.GetValue < u32 >( 3, 1 ) - 1;
-	
-	state.Push ( self->GetAttributeID ( uniformID, index ));
-
-	return 1;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	declareUniformSampler
-	@text	Declares an uniform to be used as a texture unit index. This uniform is
-			internally an int, but when loaded into the shader the number one is subtracted
-			from its value. This allows the user to maintain consistency with Lua's
-			convention of indexing from one.
-
-	@in		MOAIShaderProgram self
-	@in		number idx
-	@in		string name
-	@opt	number textureUnit		Default value is 1.
-	@out	nil
-*/
-//int MOAIShaderProgram::_declareUniformSampler ( lua_State* L ) {
-//	MOAI_LUA_SETUP ( MOAIShaderProgram, "UNSN" )
-//
-//	u32 idx				= state.GetValue < u32 >( 2, 1 ) - 1;
-//	STLString name		= state.GetValue < cc8* >( 3, "" );
-//
-//	self->DeclareUniform ( idx, name, MOAIShaderUniform::UNIFORM_TYPE_INDEX, 1 );
-//	
-//	return 0;
-//}
-
-//----------------------------------------------------------------//
 /**	@lua	load
 	@text	Load a shader program.
 
@@ -120,10 +128,7 @@ int MOAIShaderProgram::_load ( lua_State* L ) {
 int MOAIShaderProgram::_reserveGlobals ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShaderProgram, "U" )
 
-	u32 nGlobals = state.GetValue < u32 >( 2, 0 );
-	self->ReserveGlobals ( nGlobals );
-
-	return 0;
+	return self->ReserveGlobals ( L, 2 );
 }
 
 //----------------------------------------------------------------//
@@ -147,15 +152,8 @@ int MOAIShaderProgram::_reserveUniforms ( lua_State* L ) {
 // TODO: doxygen
 int MOAIShaderProgram::_setGlobal ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShaderProgram, "UNNN" )
-
-	u32 idx			= state.GetValue < u32 >( 2, 1 ) - 1;
-	u32 globalID	= state.GetValue < u32 >( 3, INVALID_INDEX );
-	u32 uniformID	= state.GetValue < u32 >( 4, 1 ) - 1;
-	u32 index		= state.GetValue < u32 >( 5, 1 ) - 1;
 	
-	self->SetGlobal ( idx, globalID, uniformID, index );
-
-	return 0;
+	return self->SetGlobal ( L, 2);
 }
 
 //----------------------------------------------------------------//
@@ -181,98 +179,6 @@ int MOAIShaderProgram::_setVertexAttribute ( lua_State* L ) {
 //================================================================//
 // MOAIShaderProgram
 //================================================================//
-
-//----------------------------------------------------------------//
-void MOAIShaderProgram::ApplyGlobals () {
-
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	
-	ZLRect viewRect = gfxMgr.mGfxState.GetViewRect ();
-
-	// NOTE: matrices are submitted *column major*; it is up to the shader to transform vertices correctly
-	// vert * matrix implicitely transposes the matrix; martix * vert uses the matrix as submitted
-
-	for ( u32 i = 0; i < this->mGlobals.Size (); ++i ) {
-	
-		const MOAIShaderProgramGlobal& global = this->mGlobals [ i ];
-		
-		if ( global.mUniformID == INVALID_INDEX ) continue;
-		
-		MOAIShaderUniform& uniform = this->mUniforms [ global.mUniformID ];
-		u8& flag = this->mUniformFlags [ uniform.mFlagsBase + global.mIndex ];
-		flag |= MOAIShaderUniform::UNIFORM_FLAG_GLOBAL;
-		
-		if ( global.mGlobalID < MOAIGfxGlobalsCache::TOTAL_MATRICES ) {
-		
-			flag |= uniform.SetValue ( this->mUniformBuffer, global.mIndex, gfxMgr.mGfxState.GetMtx ( global.mGlobalID ));
-		}
-		else {
-		
-			switch ( global.mGlobalID ) {
-				
-				case MOAIGfxGlobalsCache::PEN_COLOR:
-				
-					flag |= uniform.SetValue ( this->mUniformBuffer, global.mIndex, gfxMgr.mGfxState.GetFinalColor ());
-					break;
-				
-				case MOAIGfxGlobalsCache::VIEW_HALF_HEIGHT:
-				
-					flag |= uniform.SetValue ( this->mUniformBuffer, global.mIndex, viewRect.Height () * 0.5f );
-					break;
-					
-				case MOAIGfxGlobalsCache::VIEW_HALF_WIDTH: {
-				
-					flag |= uniform.SetValue ( this->mUniformBuffer, global.mIndex, viewRect.Width () * 0.5f );
-					break;
-				}
-				case MOAIGfxGlobalsCache::VIEW_HEIGHT:
-				
-					flag |= uniform.SetValue ( this->mUniformBuffer, global.mIndex, viewRect.Height ());
-					break;
-					
-				case MOAIGfxGlobalsCache::VIEW_WIDTH:
-				
-					flag |= uniform.SetValue ( this->mUniformBuffer, global.mIndex, viewRect.Width ());
-					break;
-			}
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgram::BindUniforms () {
-	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	
-	bool flushed = false;
-	
-	for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
-		MOAIShaderUniform& uniform = this->mUniforms [ i ];
-		
-		if ( uniform.IsValid ()) {
-			for ( u32 j = 0; j < uniform.mCount; ++j ) {
-			
-				// NOTE: dirty flag will be cleared only after GFX_EVENT_UPDATED_UNIFORMS
-			
-				if ( this->mUniformFlags [ uniform.mFlagsBase + j ] & MOAIShaderUniform::UNIFORM_FLAG_DIRTY ) {
-				
-					if ( !flushed ) {
-						gfxMgr.mGfxState.GfxStateWillChange ();
-						flushed = true;
-					}
-					uniform.Bind ( this->mUniformBuffer, j );
-				}
-			}
-		}
-	}
-	
-	// in multi-threaded gfx mode, drawing frames may get dropped. for this reason, we
-	// only clear the dirty flag once we're sure a draw frame has been completed.
-	if ( flushed ) {
-		ZLGfx& gfx = gfxMgr.GetDrawingAPI ();
-		gfx.Event ( this, GFX_EVENT_UPDATED_UNIFORMS, 0 );
-	}
-}
 
 //----------------------------------------------------------------//
 void MOAIShaderProgram::Clear () {
@@ -330,12 +236,6 @@ void MOAIShaderProgram::DeclareUniform ( u32 idx, cc8* name, u32 type, u32 width
 }
 
 //----------------------------------------------------------------//
-u32 MOAIShaderProgram::GetAttributeID ( u32 uniformID, u32 index ) {
-
-	return ( uniformID * this->mMaxCount ) + index;
-}
-
-//----------------------------------------------------------------//
 u32 MOAIShaderProgram::GetGlobalsMask () {
 
 	if ( this->mGlobals.Size () && !this->mGlobalsMask ) {
@@ -354,38 +254,12 @@ MOAIShaderUniform* MOAIShaderProgram::GetUniform ( u32 uniformID ) {
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniform* MOAIShaderProgram::GetUniformForAttributeID ( u32 attrID, u32& index ) {
-
-	u32 uniformID = attrID / this->mMaxCount;
-	MOAIShaderUniform* uniform = this->GetUniform ( uniformID );
-	index = attrID - ( uniformID * this->mMaxCount );
-	return uniform;
-}
-
-//----------------------------------------------------------------//
 void MOAIShaderProgram::Load ( cc8* vshSource, cc8* fshSource ) {
 
 	if ( vshSource && fshSource ) {
 
 		this->mVertexShaderSource = vshSource;
 		this->mFragmentShaderSource = fshSource;
-
-		size_t size = 0;
-		u32 flags = 0;
-		for ( size_t i = 0; i < this->mUniforms.Size (); ++i ) {
-			
-			MOAIShaderUniform& uniform = this->mUniforms [ i ];
-			
-			uniform.mCPUBase = size;
-			uniform.mFlagsBase = flags;
-			
-			size += uniform.mSize;
-			flags += uniform.mCount;
-			
-			this->mMaxCount = this->mMaxCount < uniform.mCount ? uniform.mCount : this->mMaxCount;
-		}
-		this->mUniformBuffer.Init ( size );
-		this->mUniformFlags.Init ( flags );
 		
 		this->FinishInit ();
 	}
@@ -396,7 +270,6 @@ MOAIShaderProgram::MOAIShaderProgram () :
 	mProgram ( 0 ),
 	mVertexShader ( 0 ),
 	mFragmentShader ( 0 ),
-	mMaxCount ( 0 ),
 	mGlobalsMask ( 0 ) {
 
 	RTTI_BEGIN
@@ -418,20 +291,6 @@ bool MOAIShaderProgram::OnCPUCreate () {
 
 //----------------------------------------------------------------//
 void MOAIShaderProgram::OnCPUDestroy () {
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgram::OnGfxEvent ( u32 event, void* userdata ) {
-
-	if ( event == GFX_EVENT_UPDATED_UNIFORMS ) {
-	
-		// getting this event proves that the draw frame was completed. so now
-		// it's safe to clear the dirty flag.
-	
-		memset ( this->mUniformFlags.Data (), 0, this->mUniformFlags.BufferSize ());
-	}
-	
-	MOAIGfxResource::OnGfxEvent ( event, userdata );
 }
 
 //----------------------------------------------------------------//
@@ -472,11 +331,6 @@ bool MOAIShaderProgram::OnGPUCreate () {
 		MOAIShaderUniform& uniform = this->mUniforms [ i ];
 		gfx.GetUniformLocation ( this->mProgram, uniform.mName, this, ( void* )(( size_t )i )); // TODO: cast?
 		
-	}
-
-	// everything is dirty!
-	for ( u32 i; i < this->mUniformFlags.Size (); ++i ) {
-		this->mUniformFlags [ i ] |= MOAIShaderUniform::UNIFORM_FLAG_DIRTY;
 	}
 
 	gfx.Delete ( this->mVertexShader );
@@ -564,7 +418,6 @@ void MOAIShaderProgram::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "declareUniform",				_declareUniform },
-		{ "getAttributeID",				_getAttributeID },
 		{ "load",						_load },
 		{ "reserveGlobals",				_reserveGlobals },
 		{ "reserveUniforms",			_reserveUniforms },
@@ -576,49 +429,9 @@ void MOAIShaderProgram::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgram::ReserveGlobals ( u32 nGlobals ) {
-
-	// clear out the old globals (if any)
-	for ( size_t i = 0; i < this->mGlobals.Size (); ++i ) {
-		this->SetGlobal (( u32 )i, INVALID_INDEX, 0, INVALID_INDEX ); // TODO: cast
-	}
-
-	this->mGlobals.Init ( nGlobals );
-	
-	for ( size_t i = 0; i < nGlobals; ++i ) {
-		this->mGlobals [ i ].mGlobalID = INVALID_INDEX;
-		this->mGlobals [ i ].mUniformID = INVALID_INDEX;
-		this->mGlobals [ i ].mIndex = 0;
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIShaderProgram::ReserveUniforms ( u32 nUniforms ) {
 
 	this->mUniforms.Init ( nUniforms );
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgram::SetGlobal ( u32 idx, u32 globalID, u32 uniformID, u32 index ) {
-
-	for ( size_t i = 0; i < this->mGlobals.Size (); ++i ) {
-	
-		MOAIShaderProgramGlobal& global = this->mGlobals [ i ];
-	
-		if ( global.mUniformID == uniformID ) {
-			global.mUniformID		= INVALID_INDEX;
-			global.mIndex			= 0;
-			global.mGlobalID		= INVALID_INDEX;
-		}
-	}
-	
-	MOAIShaderProgramGlobal& global = this->mGlobals [ idx ];
-	
-	global.mUniformID	= uniformID;
-	global.mIndex		= index;
-	global.mGlobalID	= globalID;
-	
-	this->mGlobalsMask = 0;
 }
 
 //----------------------------------------------------------------//
