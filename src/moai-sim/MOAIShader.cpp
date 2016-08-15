@@ -59,11 +59,10 @@ int MOAIShader::_setUniform ( lua_State* L ) {
 	u32 uniformID	= state.GetValue < u32 >( 2, 1 ) - 1;
 	u32 index		= state.GetValue < u32 >( 3, 1 ) - 1;
 
-	MOAIShaderUniform* uniform = self->GetUniform ( uniformID );
+	void* element;
+	MOAIShaderUniform* uniform = self->GetUniform ( uniformID, index, element );
 	
 	if ( uniform ) {
-
-		MOAIShaderUniformInstance& instance = self->mUniformInstances [ uniformID ];
 
 		int size = state.GetTop () - 3;
 		
@@ -71,7 +70,7 @@ int MOAIShader::_setUniform ( lua_State* L ) {
 		
 			ZLVec4D vec = state.GetValue < ZLVec4D >( 3, ZLVec4D::ZERO );
 			
-			uniform->SetValue ( instance, index, vec );
+			uniform->SetValue ( element, vec );
 		}
 		else {
 
@@ -80,19 +79,19 @@ int MOAIShader::_setUniform ( lua_State* L ) {
 			switch ( size ) {
 			
 				case 6:
-					uniform->SetValue ( instance, index, state.GetValue < ZLAffine2D >( 3, ZLAffine2D::IDENT ));
+					uniform->SetValue ( element, state.GetValue < ZLAffine2D >( 3, ZLAffine2D::IDENT ));
 					break;
 				
 				case 9:
-					uniform->SetValue ( instance, index, state.GetValue < ZLMatrix3x3 >( 3, ZLMatrix3x3::IDENT ));
+					uniform->SetValue ( element, state.GetValue < ZLMatrix3x3 >( 3, ZLMatrix3x3::IDENT ));
 					break;
 				
 				case 12:
-					uniform->SetValue ( instance, index, state.GetValue < ZLAffine3D >( 3, ZLAffine3D::IDENT ));
+					uniform->SetValue ( element, state.GetValue < ZLAffine3D >( 3, ZLAffine3D::IDENT ));
 					break;
 				
 				case 16:
-					uniform->SetValue ( instance, index, state.GetValue < ZLMatrix4x4 >( 3, ZLMatrix4x4::IDENT ));
+					uniform->SetValue ( element, state.GetValue < ZLMatrix4x4 >( 3, ZLMatrix4x4::IDENT ));
 					break;
 				
 				default:
@@ -125,15 +124,12 @@ MOAIShader* MOAIShader::AffirmShader ( MOAILuaState& state, int idx ) {
 bool MOAIShader::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( this->mProgram ) {
-
-		u32 uniformID = ( attrID & MOAIAttribute::ATTR_ID_MASK ) - 1;
-		u32 index = 0;
-		MOAIShaderUniform* uniform = this->GetUniformForAttributeID ( uniformID, index );
+		
+		void* element;
+		MOAIShaderUniform* uniform = this->GetUniformForAttributeID ( attrID, element );
 		
 		if ( uniform ) {
 		
-			MOAIShaderUniformInstance& instance = this->mUniformInstances [ uniformID ];
-
 			switch ( op ) {
 
 				case MOAIAttribute::CHECK:
@@ -141,11 +137,11 @@ bool MOAIShader::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 					return true;
 
 				case MOAIAttribute::SET:
-					uniform->SetValue ( instance, index, attr );
+					uniform->SetValue ( element, attr );
 					return true;
 
 				case MOAIAttribute::ADD:
-					uniform->AddValue ( instance, index, attr );
+					uniform->AddValue ( element, attr );
 					return true;
 			}
 		}
@@ -169,14 +165,13 @@ void MOAIShader::ApplyGlobals () {
 		
 		if ( global.mUniformID == INVALID_INDEX ) continue;
 		
-		MOAIShaderUniform* uniform = this->GetUniform ( global.mUniformID );
+		void* element;
+		MOAIShaderUniform* uniform = this->GetUniform ( global.mUniformID, global.mIndex, element );
 		if ( !uniform ) continue;
-		
-		MOAIShaderUniformInstance& instance = this->mUniformInstances [global.mUniformID ];
 		
 		if ( global.mGlobalID < MOAIGfxGlobalsCache::TOTAL_MATRICES ) {
 		
-			uniform->SetValue ( instance, global.mIndex, gfxMgr.mGfxState.GetMtx ( global.mGlobalID ));
+			uniform->SetValue ( element, gfxMgr.mGfxState.GetMtx ( global.mGlobalID ));
 		}
 		else {
 		
@@ -184,27 +179,27 @@ void MOAIShader::ApplyGlobals () {
 				
 				case MOAIGfxGlobalsCache::PEN_COLOR:
 				
-					uniform->SetValue ( instance, global.mIndex, gfxMgr.mGfxState.GetFinalColor ());
+					uniform->SetValue ( element, gfxMgr.mGfxState.GetFinalColor ());
 					break;
 				
 				case MOAIGfxGlobalsCache::VIEW_HALF_HEIGHT:
 				
-					uniform->SetValue ( instance, global.mIndex, viewRect.Height () * 0.5f );
+					uniform->SetValue ( element, viewRect.Height () * 0.5f );
 					break;
 					
 				case MOAIGfxGlobalsCache::VIEW_HALF_WIDTH: {
 				
-					uniform->SetValue ( instance, global.mIndex, viewRect.Width () * 0.5f );
+					uniform->SetValue ( element, viewRect.Width () * 0.5f );
 					break;
 				}
 				case MOAIGfxGlobalsCache::VIEW_HEIGHT:
 				
-					uniform->SetValue ( instance, global.mIndex, viewRect.Height ());
+					uniform->SetValue ( element, viewRect.Height ());
 					break;
 					
 				case MOAIGfxGlobalsCache::VIEW_WIDTH:
 				
-					uniform->SetValue ( instance, global.mIndex, viewRect.Width ());
+					uniform->SetValue ( element, viewRect.Width ());
 					break;
 			}
 		}
@@ -228,14 +223,14 @@ void MOAIShader::BindUniforms () {
 		
 			MOAIShaderUniformInstance& instance = this->mUniformInstances [ i ];
 		
-			for ( u32 j = 0; j < instance.mCount; ++j ) {
+			//for ( u32 j = 0; j < instance.mCount; ++j ) {
 				
 				if ( !flushed ) {
 					gfxMgr.mGfxState.GfxStateWillChange ();
 					flushed = true;
 				}
-				uniform->Bind ( instance, j );
-			}
+				uniform->Bind ( instance );
+			//}
 		}
 	}
 }
@@ -253,12 +248,24 @@ MOAIShaderUniform* MOAIShader::GetUniform ( u32 uniformID ) {
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniform* MOAIShader::GetUniformForAttributeID ( u32 attrID, u32& index ) {
+MOAIShaderUniform* MOAIShader::GetUniform ( u32 uniformID, u32 index, void*& element ) {
 
-	u32 uniformID = attrID / this->mMaxCount;
-	MOAIShaderUniform* uniform = this->GetUniform ( uniformID );
-	index = attrID - ( uniformID * this->mMaxCount );
+	MOAIShaderUniform* uniform = 0;
+
+	if ( this->mProgram ) {
+		uniform = this->mProgram->GetUniform ( uniformID );
+		element = uniform ? uniform->GetElement ( this->mUniformInstances [ uniformID ], index ) : 0;
+	}
 	return uniform;
+}
+
+//----------------------------------------------------------------//
+MOAIShaderUniform* MOAIShader::GetUniformForAttributeID ( u32 attrID, void*& element) {
+
+	u32 uniformID = (( attrID & MOAIAttribute::ATTR_ID_MASK ) - 1 ) / this->mMaxCount;
+	u32 index = attrID - ( uniformID * this->mMaxCount );
+	
+	return this->GetUniform ( uniformID, index, element );
 }
 
 //----------------------------------------------------------------//

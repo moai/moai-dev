@@ -115,8 +115,8 @@ public:
 	void					TexImage2D					( u32 level, u32 internalFormat, u32 width, u32 height, u32 format, u32 type, ZLSharedConstBuffer* buffer );
 	void					TexParameteri				( u32 pname, s32 param );
 	void					TexSubImage2D				( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, u32 format, u32 type, ZLSharedConstBuffer* buffer );
-	void					UniformFloat				( u32 location, u32 width, const float* value );
-	void					UniformInt					( u32 location, u32 width, const s32* value );
+	void					UniformFloat				( u32 location, u32 index, u32 width, u32 count, const float* value );
+	void					UniformInt					( u32 location, u32 index, u32 width, u32 count, const s32* value );
 	void					UseProgram					( ZLGfxHandle* program );
 	void					VertexAttribPointer			( u32 index, u32 size, u32 type, bool normalized, u32 stride, ZLSharedConstBuffer* buffer, size_t offset );
 	void					Viewport					( s32 x, s32 y, u32 w, u32 h );

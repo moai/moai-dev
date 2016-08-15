@@ -231,7 +231,7 @@ void MOAIShaderProgram::DeclareUniform ( u32 idx, cc8* name, u32 type, u32 width
 
 		MOAIShaderUniform& uniform = this->mUniforms [ idx ];
 		uniform.mName = name;
-		uniform.Init ( type, width );
+		uniform.Init ( type, width, count );
 	}
 }
 

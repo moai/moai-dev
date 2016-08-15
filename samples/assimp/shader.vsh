@@ -11,13 +11,12 @@ attribute vec4 color;
 varying vec4 colorVarying;
 varying vec2 uvVarying;
 
-uniform mat4 world;
-uniform mat4 viewProj;
+uniform mat4 transforms [ 2 ];
 uniform mat4 bones [ MAX_BONES ];
 
 void main () {
 
-    gl_Position = viewProj * world * position;
+    gl_Position = transforms [ 1 ] * transforms [ 0 ] * position;
 	uvVarying = uv;
 	colorVarying = color;
 }

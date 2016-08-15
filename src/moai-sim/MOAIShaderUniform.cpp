@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIShaderUniform::AddValue ( MOAIShaderUniformInstance& instance, u32 index, const MOAIAttribute& attr ) {
+void MOAIShaderUniform::AddValue ( void* element, const MOAIAttribute& attr ) {
 
 	switch ( attr.GetTypeID ()) {
 
@@ -20,7 +20,7 @@ void MOAIShaderUniform::AddValue ( MOAIShaderUniformInstance& instance, u32 inde
 			float value = attr.GetValue ( 0.0f );
 
 			if ( value != 0.0f ) {
-				*( float* )this->GetUniformBuffer ( instance, index ) += value;
+				*( float* )element += value;
 			}
 			break;
 		}
@@ -29,7 +29,7 @@ void MOAIShaderUniform::AddValue ( MOAIShaderUniformInstance& instance, u32 inde
 			int value = ( int )attr.GetValue ( 0 );
 
 			if ( value != 0 ) {
-				*( s32* )this->GetUniformBuffer ( instance, index ) += value;
+				*( s32* )element += value;
 			}
 			break;
 		}
@@ -37,7 +37,7 @@ void MOAIShaderUniform::AddValue ( MOAIShaderUniformInstance& instance, u32 inde
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniform::Bind ( const MOAIShaderUniformInstance& instance, u32 index ) {
+void MOAIShaderUniform::Bind ( MOAIShaderUniformInstance& instance ) {
 
 	if ( this->mGPUBase == ZGL_INVALID_UNIFORM_ADDR ) return;
 
@@ -45,11 +45,11 @@ void MOAIShaderUniform::Bind ( const MOAIShaderUniformInstance& instance, u32 in
 
 	if ( this->mType == UNIFORM_TYPE_FLOAT ) {
 
-		gfx.UniformFloat ( this->mGPUBase, this->mWidth, ( float* )this->GetUniformBuffer ( instance, index ));
+		gfx.UniformFloat ( this->mGPUBase, 0, this->mWidth, instance.mCount, ( float* )instance.mBuffer );
 	}
 	else if ( this->mType == UNIFORM_TYPE_INT ) {
 		
-		gfx.UniformInt ( this->mGPUBase, this->mWidth, ( s32* )this->GetUniformBuffer ( instance, index ));
+		gfx.UniformInt ( this->mGPUBase, 0, this->mWidth, instance.mCount, ( s32* )instance.mBuffer );
 	}
 }
 
@@ -59,13 +59,13 @@ void MOAIShaderUniform::Default ( MOAIShaderUniformInstance& instance ) const {
 	if ( this->mWidth == 9 ) {
 	
 		for ( u32 i = 0; i < this->mCount; ++i ) {
-			this->SetValue ( instance, i, ZLMatrix3x3::IDENT );
+			this->SetValue ( this->GetElement ( instance, i ), ZLMatrix3x3::IDENT );
 		}
 	}
 	else if ( this->mWidth == 16 ) {
 	
 		for ( u32 i = 0; i < this->mCount; ++i ) {
-			this->SetValue ( instance, i, ZLMatrix4x4::IDENT );
+			this->SetValue ( this->GetElement ( instance, i ), ZLMatrix4x4::IDENT );
 		}
 	}
 	else {
@@ -75,13 +75,13 @@ void MOAIShaderUniform::Default ( MOAIShaderUniformInstance& instance ) const {
 }
 
 //----------------------------------------------------------------//
-void* MOAIShaderUniform::GetUniformBuffer ( MOAIShaderUniformInstance& instance, u32 index ) const {
+void* MOAIShaderUniform::GetElement ( MOAIShaderUniformInstance& instance, u32 index ) const {
 
 	return ( void* )(( size_t )instance.mBuffer + ( this->mWidth * ELEMENT_SIZE * index ));
 }
 
 //----------------------------------------------------------------//
-const void* MOAIShaderUniform::GetUniformBuffer ( const MOAIShaderUniformInstance& instance, u32 index ) const {
+const void* MOAIShaderUniform::GetElement ( const MOAIShaderUniformInstance& instance, u32 index ) const {
 
 	return ( const void* )(( size_t )instance.mBuffer + ( this->mWidth * ELEMENT_SIZE * index ));
 }
@@ -107,13 +107,13 @@ MOAIShaderUniform::~MOAIShaderUniform () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniform::SetRawValue ( MOAIShaderUniformInstance& instance, u32 index, const void* srcBuffer ) const {
+void MOAIShaderUniform::SetRawValue ( void* element, const void* srcBuffer ) const {
 	
-	memcpy ( this->GetUniformBuffer ( instance, index ), srcBuffer, this->mWidth * ELEMENT_SIZE );
+	memcpy ( element, srcBuffer, this->mWidth * ELEMENT_SIZE );
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniform::SetValue ( MOAIShaderUniformInstance& instance, u32 index, const s32* srcBuffer ) const {
+void MOAIShaderUniform::SetValue ( void* element, const s32* srcBuffer ) const {
 
 	if ( this->mType == UNIFORM_TYPE_FLOAT ) {
 	
@@ -122,13 +122,13 @@ void MOAIShaderUniform::SetValue ( MOAIShaderUniformInstance& instance, u32 inde
 		
 			fBuffer [ i ] = ( float )srcBuffer [ i ];
 		}
-		return this->SetRawValue ( instance, index, fBuffer );
+		return this->SetRawValue ( element, fBuffer );
 	}
-	return this->SetRawValue ( instance, index, srcBuffer );
+	return this->SetRawValue ( element, srcBuffer );
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniform::SetValue ( MOAIShaderUniformInstance& instance, u32 index, const float* srcBuffer ) const {
+void MOAIShaderUniform::SetValue ( void* element, const float* srcBuffer ) const {
 
 	if ( this->mType == UNIFORM_TYPE_INT ) {
 	
@@ -137,83 +137,83 @@ void MOAIShaderUniform::SetValue ( MOAIShaderUniformInstance& instance, u32 inde
 		
 			iBuffer [ i ] = ( s32 )srcBuffer [ i ];
 		}
-		return this->SetRawValue ( instance, index, iBuffer );
+		return this->SetRawValue ( element, iBuffer );
 	}
-	return this->SetRawValue ( instance, index, srcBuffer );
+	return this->SetRawValue ( element, srcBuffer );
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniform::SetValue ( MOAIShaderUniformInstance& instance, u32 index, float value ) const {
+void MOAIShaderUniform::SetValue ( void* element, float value ) const {
 
 	if ( this->mType == MOAIShaderUniform::UNIFORM_TYPE_INT ) {
-		this->SetValue ( instance, index, ( s32 )value );
+		this->SetValue ( element, ( s32 )value );
 		return;
 	}
 	
-	*( float* )this->GetUniformBuffer ( instance, index ) = value;
+	*( float* )element = value;
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniform::SetValue ( MOAIShaderUniformInstance& instance, u32 index, s32 value ) const {
+void MOAIShaderUniform::SetValue ( void* element, s32 value ) const {
 
 	if ( this->mType == MOAIShaderUniform::UNIFORM_TYPE_FLOAT ) {
-		this->SetValue ( instance, index, ( float )value );
+		this->SetValue ( element, ( float )value );
 		return;
 	}
 
-	*( s32* )this->GetUniformBuffer ( instance, index ) = value;
+	*( s32* )element = value;
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniform::SetValue ( MOAIShaderUniformInstance& instance, u32 index, const MOAIAttribute& attr ) const {
+void MOAIShaderUniform::SetValue ( void* element, const MOAIAttribute& attr ) const {
 
 	switch ( attr.GetTypeID ()) {
 
 		case MOAIAttribute::ATTR_TYPE_COLOR_VEC_4: {
 			ZLColorVec color = attr.GetValue ( ZLColorVec::WHITE );
-			this->SetValue ( instance, index, color );
+			this->SetValue ( element, color );
 			break;
 		}
 		
 		case MOAIAttribute::ATTR_TYPE_FLOAT_32: {
-			this->SetValue ( instance, index, ( float )attr.GetValue ( 0.0f ));
+			this->SetValue ( element, ( float )attr.GetValue ( 0.0f ));
 			break;
 		}
 		
 		case MOAIAttribute::ATTR_TYPE_INT_32: {
-			return this->SetValue ( instance, index, ( int )attr.GetValue ( 0 ));
+			return this->SetValue ( element, ( int )attr.GetValue ( 0 ));
 			break;
 		}
 		
 		case MOAIAttribute::ATTR_TYPE_AFFINE_3D: {
-			this->SetValue ( instance, index, attr.GetValue ( ZLAffine3D::IDENT ));
+			this->SetValue ( element, attr.GetValue ( ZLAffine3D::IDENT ));
 			break;
 		}
 		
 		case MOAIAttribute::ATTR_TYPE_MATRIX_3X3: {
-			this->SetValue ( instance, index, attr.GetValue ( ZLMatrix3x3::IDENT ));
+			this->SetValue ( element, attr.GetValue ( ZLMatrix3x3::IDENT ));
 			break;
 		}
 		
 		case MOAIAttribute::ATTR_TYPE_MATRIX_4X4: {
-			this->SetValue ( instance, index, attr.GetValue ( ZLMatrix4x4::IDENT ));
+			this->SetValue ( element, attr.GetValue ( ZLMatrix4x4::IDENT ));
 			break;
 		}
 		
 		case MOAIAttribute::ATTR_TYPE_VEC_3: {
 			ZLVec3D vec3 = attr.GetValue ( ZLVec3D::ORIGIN );
 			ZLVec4D vec4 ( vec3.mX, vec3.mY, vec3.mZ, 0.0f );
-			this->SetValue ( instance, index, vec4 );
+			this->SetValue ( element, vec4 );
 			break;
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniform::SetValue ( MOAIShaderUniformInstance& instance, u32 index, const ZLColorVec& value ) const {
+void MOAIShaderUniform::SetValue ( void* element, const ZLColorVec& value ) const {
 
 	if ( this->mWidth == 1 ) {
-		this->SetValue ( instance, index, value.mR ); // TODO: this right?
+		this->SetValue ( element, value.mR ); // TODO: this right?
 		return;
 	}
 
@@ -224,14 +224,14 @@ void MOAIShaderUniform::SetValue ( MOAIShaderUniformInstance& instance, u32 inde
 	m [ 2 ]		= value.mB;
 	m [ 3 ]		= value.mA;
 
-	this->SetValue ( instance, index, m );
+	this->SetValue ( element, m );
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniform::SetValue ( MOAIShaderUniformInstance& instance, u32 index, const ZLIntVec4D& value ) const {
+void MOAIShaderUniform::SetValue ( void* element, const ZLIntVec4D& value ) const {
 
 	if ( this->mWidth == 1 ) {
-		this->SetValue ( instance, index, value.mX );
+		this->SetValue ( element, value.mX );
 		return;
 	}
 
@@ -242,66 +242,66 @@ void MOAIShaderUniform::SetValue ( MOAIShaderUniformInstance& instance, u32 inde
 	m [ 2 ]		= value.mZ;
 	m [ 3 ]		= value.mW;
 
-	this->SetValue ( instance, index, m );
+	this->SetValue ( element, m );
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniform::SetValue ( MOAIShaderUniformInstance& instance, u32 index, const ZLAffine2D& value ) const {
+void MOAIShaderUniform::SetValue ( void* element, const ZLAffine2D& value ) const {
 
 	if ( this->mWidth == 9 ) {
 	
-		this->SetValue ( instance, index, ZLMatrix3x3 ( value ));
+		this->SetValue ( element, ZLMatrix3x3 ( value ));
 	}
 	else if ( this->mWidth == 16 ) {
 
-		this->SetValue ( instance, index, ZLMatrix4x4 ( value ));
+		this->SetValue ( element, ZLMatrix4x4 ( value ));
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniform::SetValue ( MOAIShaderUniformInstance& instance, u32 index, const ZLAffine3D& value ) const {
+void MOAIShaderUniform::SetValue ( void* element, const ZLAffine3D& value ) const {
 
 	if ( this->mWidth == 9 ) {
 	
-		return this->SetValue ( instance, index, ZLMatrix3x3 ( value ));
+		return this->SetValue ( element, ZLMatrix3x3 ( value ));
 	}
 	else if ( this->mWidth == 16 ) {
 
-		return this->SetValue ( instance, index, ZLMatrix4x4 ( value ));
+		return this->SetValue ( element, ZLMatrix4x4 ( value ));
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniform::SetValue ( MOAIShaderUniformInstance& instance, u32 index, const ZLMatrix3x3& value ) const {
+void MOAIShaderUniform::SetValue ( void* element, const ZLMatrix3x3& value ) const {
 
 	if ( this->mWidth == 9 ) {
 	
-		return this->SetValue ( instance, index, value.m );
+		return this->SetValue ( element, value.m );
 	}
 	else if ( this->mWidth == 16 ) {
 
-		return this->SetValue ( instance, index, ZLMatrix4x4 ( value ));
+		return this->SetValue ( element, ZLMatrix4x4 ( value ));
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniform::SetValue ( MOAIShaderUniformInstance& instance, u32 index, const ZLMatrix4x4& value ) const {
+void MOAIShaderUniform::SetValue ( void* element, const ZLMatrix4x4& value ) const {
 
 	if ( this->mWidth == 9 ) {
 	
-		return this->SetValue ( instance, index, ZLMatrix3x3 ( value ));
+		return this->SetValue ( element, ZLMatrix3x3 ( value ));
 	}
 	else if ( this->mWidth == 16 ) {
 
-		return this->SetValue ( instance, index, value.m );
+		return this->SetValue ( element, value.m );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniform::SetValue ( MOAIShaderUniformInstance& instance, u32 index, const ZLVec4D& value ) const {
+void MOAIShaderUniform::SetValue ( void* element, const ZLVec4D& value ) const {
 
 	if ( this->mWidth == 1 ) {
-		this->SetValue ( instance, index, value.mX );
+		this->SetValue ( element, value.mX );
 		return;
 	}
 
@@ -312,5 +312,5 @@ void MOAIShaderUniform::SetValue ( MOAIShaderUniformInstance& instance, u32 inde
 	m [ 2 ]		= value.mZ;
 	m [ 3 ]		= value.mW;
 
-	this->SetValue ( instance, index, m );
+	this->SetValue ( element, m );
 }

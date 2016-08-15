@@ -550,19 +550,19 @@ void ZLGfxLogger::TexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 width
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::UniformFloat ( u32 location, u32 width, const float* value ) {
+void ZLGfxLogger::UniformFloat ( u32 location, u32 index, u32 width, u32 count, const float* value ) {
 
 	if ( width <= 4 ) {
 
-		this->PrintLine ( "glUniform*fv - location: %d width: %d\n", location, width );
+		this->PrintLine ( "glUniform*fv - location: %d index: %d width: %d count: %d\n", location, index, width, count );
 	}
 	else if ( width == 9 ) {
 	
-		this->PrintLine ( "glUniformMatrix3fv - location: %d\n", location );
+		this->PrintLine ( "glUniformMatrix3fv - location: %d index: %d count: %d\n", location, index, count );
 	}
 	else if ( width == 16 ) {
 	
-		this->PrintLine ( "glUniformMatrix4fv - location: %d\n", location );
+		this->PrintLine ( "glUniformMatrix4fv - location: %d index: %d count: %d\n", location, index, count );
 	}
 	
 	this->PrintLine ( " value: " );
@@ -573,9 +573,9 @@ void ZLGfxLogger::UniformFloat ( u32 location, u32 width, const float* value ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::UniformInt ( u32 location, u32 width, const s32* value ) {
+void ZLGfxLogger::UniformInt ( u32 location, u32 index, u32 width, u32 count, const s32* value ) {
 
-	this->PrintLine ( "glUniform*iv - location: %d width: %d\n", location, width );
+	this->PrintLine ( "glUniform*iv - location: %d index: %d width: %d count: %d\n", location, index, width, count );
 
 	for ( u32 i = 0; i < 1; ++i ) {
 		const s32* v = &value [ i * width ];

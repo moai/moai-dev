@@ -875,27 +875,31 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			case ZLGFX_UNIFORM_FLOAT: {
 			
 				u32 location = this->mStream->Read < u32 >( 0 );
+				u32 index = this->mStream->Read < u32 >( 0 );
 				u32 width = this->mStream->Read < u32 >( 0 );
+				u32 count = this->mStream->Read < u32 >( 0 );
 				
-				assert ( width < 4 );
+				assert ( width < 16 );
 				
-				float vec [ 4 ];
+				float vec [ 16 ];
 				this->mStream->ReadBytes ( vec, sizeof ( float ) * width );
 			
-				draw.UniformFloat ( location, width, vec );
+				draw.UniformFloat ( location, index, width, count, vec );
 				break;
 			}
 			case ZLGFX_UNIFORM_INT: {
 			
 				u32 location = this->mStream->Read < u32 >( 0 );
+				u32 index = this->mStream->Read < u32 >( 0 );
 				u32 width = this->mStream->Read < u32 >( 0 );
+				u32 count = this->mStream->Read < u32 >( 0 );
 				
-				assert ( width < 4 );
+				assert ( width < 16 );
 				
-				s32 vec [ 4 ];
+				s32 vec [ 16 ];
 				this->mStream->ReadBytes ( vec, sizeof ( s32 ) * width );
 			
-				draw.UniformInt ( location, width, vec );
+				draw.UniformInt ( location, index, width, count, vec );
 				break;
 			}
 			case ZLGFX_USE_PROGRAM: {
@@ -1357,22 +1361,28 @@ void ZLGfxRetained::TexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 wid
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::UniformFloat ( u32 location, u32 width, const float* value ) {
+void ZLGfxRetained::UniformFloat ( u32 location, u32 index, u32 width, u32 count, const float* value ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( ZLGFX_UNIFORM_FLOAT );
 	this->mStream->Write < u32 >( location );
+	this->mStream->Write < u32 >( index );
+	this->mStream->Write < u32 >( width );
+	this->mStream->Write < u32 >( count );
 	this->mStream->WriteBytes ( value, sizeof ( float ) * width );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::UniformInt ( u32 location, u32 width, const s32* value ) {
+void ZLGfxRetained::UniformInt ( u32 location, u32 index, u32 width, u32 count, const s32* value ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( ZLGFX_UNIFORM_INT );
 	this->mStream->Write < u32 >( location );
+	this->mStream->Write < u32 >( index );
+	this->mStream->Write < u32 >( width );
+	this->mStream->Write < u32 >( count );
 	this->mStream->WriteBytes ( value, sizeof ( s32 ) * width );
 }
 

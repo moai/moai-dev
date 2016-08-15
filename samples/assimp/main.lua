@@ -45,13 +45,12 @@ program:setVertexAttribute ( 1, 'position' )
 program:setVertexAttribute ( 2, 'uv' )
 program:setVertexAttribute ( 3, 'color' )
 
-program:reserveUniforms ( 2 )
-program:declareUniform ( 1, 'world', MOAIShaderProgram.UNIFORM_TYPE_FLOAT, MOAIShaderProgram.UNIFORM_WIDTH_MATRIX_4X4 )
-program:declareUniform ( 2, 'viewProj', MOAIShaderProgram.UNIFORM_TYPE_FLOAT, MOAIShaderProgram.UNIFORM_WIDTH_MATRIX_4X4 )
+program:reserveUniforms ( 1 )
+program:declareUniform ( 1, 'transforms', MOAIShaderProgram.UNIFORM_TYPE_FLOAT, MOAIShaderProgram.UNIFORM_WIDTH_MATRIX_4X4, 2 )
 
 program:reserveGlobals ( 2 )
-program:setGlobal ( 1, MOAIShaderProgram.GLOBAL_WORLD, 1 )
-program:setGlobal ( 2, MOAIShaderProgram.GLOBAL_VIEW_PROJ, 2 )
+program:setGlobal ( 1, MOAIShaderProgram.GLOBAL_WORLD, 1, 1 )
+program:setGlobal ( 2, MOAIShaderProgram.GLOBAL_VIEW_PROJ, 1, 2 )
 
 program:load ( MOAIFileSystem.loadFile ( 'shader.vsh' ), MOAIFileSystem.loadFile ( 'shader.fsh' ))
 

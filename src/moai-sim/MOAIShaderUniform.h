@@ -42,11 +42,9 @@ protected:
 	u32				mGPUBase;			// this is resolved when linking the shader
 
 	//----------------------------------------------------------------//
-	void*			GetUniformBuffer	( MOAIShaderUniformInstance& instance, u32 index ) const;
-	const void*		GetUniformBuffer	( const MOAIShaderUniformInstance& instance, u32 index ) const;
-	void			SetRawValue			( MOAIShaderUniformInstance& instance, u32 index, const void* srcBuffer ) const;
-	void			SetValue			( MOAIShaderUniformInstance& instance, u32 index, const s32* srcBuffer ) const;
-	void			SetValue			( MOAIShaderUniformInstance& instance, u32 index, const float* srcBuffer ) const;
+	void			SetRawValue			( void* element, const void* srcBuffer ) const;
+	void			SetValue			( void* element, const s32* srcBuffer ) const;
+	void			SetValue			( void* element, const float* srcBuffer ) const;
 
 public:
 
@@ -67,22 +65,24 @@ public:
 	GET ( u32, Width, mWidth )
 
 	//----------------------------------------------------------------//
-	void		AddValue				( MOAIShaderUniformInstance& instance, u32 index, const MOAIAttribute& attr );
-	void		Bind					( const MOAIShaderUniformInstance& instance, u32 index );
-	void		Default					( MOAIShaderUniformInstance& instance ) const;
-	bool		Init					( u32 type, u32 width = 1, u32 count = 1 );
-				MOAIShaderUniform		();
-				~MOAIShaderUniform		();
-	void		SetValue				( MOAIShaderUniformInstance& instance, u32 index, float value ) const;
-	void		SetValue				( MOAIShaderUniformInstance& instance, u32 index, s32 value ) const;
-	void		SetValue				( MOAIShaderUniformInstance& instance, u32 index, const MOAIAttribute& attr ) const;
-	void		SetValue				( MOAIShaderUniformInstance& instance, u32 index, const ZLColorVec& value ) const;
-	void		SetValue				( MOAIShaderUniformInstance& instance, u32 index, const ZLIntVec4D& value ) const;
-	void		SetValue				( MOAIShaderUniformInstance& instance, u32 index, const ZLAffine2D& value ) const;
-	void		SetValue				( MOAIShaderUniformInstance& instance, u32 index, const ZLAffine3D& value ) const;
-	void		SetValue				( MOAIShaderUniformInstance& instance, u32 index, const ZLMatrix3x3& value ) const;
-	void		SetValue				( MOAIShaderUniformInstance& instance, u32 index, const ZLMatrix4x4& value ) const;
-	void		SetValue				( MOAIShaderUniformInstance& instance, u32 index, const ZLVec4D& value ) const;
+	void			AddValue				( void* element, const MOAIAttribute& attr );
+	void			Bind					( MOAIShaderUniformInstance& instance );
+	void			Default					( MOAIShaderUniformInstance& instance ) const;
+	void*			GetElement				( MOAIShaderUniformInstance& instance, u32 index ) const;
+	const void*		GetElement				( const MOAIShaderUniformInstance& instance, u32 index ) const;
+	bool			Init					( u32 type, u32 width = 1, u32 count = 1 );
+					MOAIShaderUniform		();
+					~MOAIShaderUniform		();
+	void			SetValue				( void* element, float value ) const;
+	void			SetValue				( void* element, s32 value ) const;
+	void			SetValue				( void* element, const MOAIAttribute& attr ) const;
+	void			SetValue				( void* element, const ZLColorVec& value ) const;
+	void			SetValue				( void* element, const ZLIntVec4D& value ) const;
+	void			SetValue				( void* element, const ZLAffine2D& value ) const;
+	void			SetValue				( void* element, const ZLAffine3D& value ) const;
+	void			SetValue				( void* element, const ZLMatrix3x3& value ) const;
+	void			SetValue				( void* element, const ZLMatrix4x4& value ) const;
+	void			SetValue				( void* element, const ZLVec4D& value ) const;
 
 	//----------------------------------------------------------------//
 	inline bool IsValid () {

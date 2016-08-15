@@ -190,8 +190,8 @@ public:
 	virtual void					TexImage2D					( u32 level, u32 internalFormat, u32 width, u32 height, u32 format, u32 type, ZLSharedConstBuffer* buffer ) = 0;
 	virtual void					TexParameteri				( u32 pname, s32 param ) = 0;
 	virtual void					TexSubImage2D				( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, u32 format, u32 type, ZLSharedConstBuffer* buffer ) = 0;
-	virtual void					UniformFloat				( u32 location, u32 width, const float* value ) = 0;
-	virtual void					UniformInt					( u32 location, u32 width, const s32* value ) = 0;
+	virtual void					UniformFloat				( u32 location, u32 index, u32 width, u32 count, const float* value ) = 0;
+	virtual void					UniformInt					( u32 location, u32 index, u32 width, u32 count, const s32* value ) = 0;
 	virtual void					UseProgram					( ZLGfxHandle* program ) = 0;
 	virtual void					VertexAttribPointer			( u32 index, u32 size, u32 type, bool normalized, u32 stride, ZLSharedConstBuffer* buffer, size_t offset ) = 0;
 	virtual void					Viewport					( s32 x, s32 y, u32 w, u32 h ) = 0;

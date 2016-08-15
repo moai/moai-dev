@@ -680,64 +680,64 @@ void ZLGfxImmediate::TexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 wi
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::UniformFloat ( u32 location, u32 width, const float* value ) {
+void ZLGfxImmediate::UniformFloat ( u32 location, u32 index, u32 width, u32 count, const float* value ) {
 
 	switch ( width ) {
 	
 		case 1:
-			glUniform1fv (( GLint )location, 1, ( const GLfloat* )value );
+			glUniform1fv (( GLint )( location + index ), count, ( const GLfloat* )value );
 			GL_LOG_ERRORS ( "glUniform1fv" )
 			break;
 			
 		case 2:
-			glUniform2fv (( GLint )location, 1, ( const GLfloat* )value );
+			glUniform2fv (( GLint )( location + index ), count, ( const GLfloat* )value );
 			GL_LOG_ERRORS ( "glUniform2fv" )
 			break;
 			
 		case 3:
-			glUniform3fv (( GLint )location, 1, ( const GLfloat* )value );
+			glUniform3fv (( GLint )( location + index ), count, ( const GLfloat* )value );
 			GL_LOG_ERRORS ( "glUniform3fv" )
 			break;
 			
 		case 4:
-			glUniform4fv (( GLint )location, 1, ( const GLfloat* )value );
+			glUniform4fv (( GLint )( location + index ), count, ( const GLfloat* )value );
 			GL_LOG_ERRORS ( "glUniform4fv" )
 			break;
 		
 		case 9:
-			glUniformMatrix3fv (( GLint )location, 1, GL_FALSE, ( const GLfloat* )value );
+			glUniformMatrix3fv (( GLint )( location + ( index * 3 )), count, GL_FALSE, ( const GLfloat* )value );
 			GL_LOG_ERRORS ( "glUniformMatrix3fv" )
 			break;
 		
 		case 16:
-			glUniformMatrix4fv (( GLint )location, 1, GL_FALSE, ( const GLfloat* )value );
+			glUniformMatrix4fv (( GLint )( location + ( index * 4 )), count, GL_FALSE, ( const GLfloat* )value );
 			GL_LOG_ERRORS ( "glUniformMatrix4fv" )
 			break;
 	}
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::UniformInt ( u32 location, u32 width, const s32* value ) {
+void ZLGfxImmediate::UniformInt ( u32 location, u32 index, u32 width, u32 count, const s32* value ) {
 
 	switch ( width ) {
 	
 		case 1:
-			glUniform1iv (( GLint )location, 1, ( const GLint* )value );
+			glUniform1iv (( GLint )location, count, ( const GLint* )value );
 			GL_LOG_ERRORS ( "glUniform1iv" )
 			break;
 			
 		case 2:
-			glUniform2iv (( GLint )location, 1, ( const GLint* )value );
+			glUniform2iv (( GLint )location, count, ( const GLint* )value );
 			GL_LOG_ERRORS ( "glUniform2iv" )
 			break;
 			
 		case 3:
-			glUniform3iv (( GLint )location, 1, ( const GLint* )value );
+			glUniform3iv (( GLint )location, count, ( const GLint* )value );
 			GL_LOG_ERRORS ( "glUniform3iv" )
 			break;
 			
 		case 4:
-			glUniform4iv (( GLint )location, 1, ( const GLint* )value );
+			glUniform4iv (( GLint )location, count, ( const GLint* )value );
 			GL_LOG_ERRORS ( "glUniform4iv" )
 			break;
 	}

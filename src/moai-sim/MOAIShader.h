@@ -39,7 +39,8 @@ protected:
 	void					BindUniforms				();
 	u32						GetAttributeID				( u32 uniformID, u32 index );
 	MOAIShaderUniform*		GetUniform					( u32 uniformID );
-	MOAIShaderUniform*		GetUniformForAttributeID	( u32 attrID, u32& index );
+	MOAIShaderUniform*		GetUniform					( u32 uniformID, u32 index, void*& element );
+	MOAIShaderUniform*		GetUniformForAttributeID	( u32 attrID, void*& element );
 	void					UpdateAndBindUniforms		();
 
 public:
