@@ -813,7 +813,7 @@ ZLAffine2D MOAILuaState::GetValue < ZLAffine2D >( int idx, const ZLAffine2D valu
 
 	ZLAffine2D mtx;
 	
-	for ( int row = 0; row < 3; ++row ) {
+	for ( int row = 0; row < 2; ++row ) {
 		for ( int col = 0; col < 3; ++col ) {
 	
 			int element = ZLAffine2D::GetIndex ( row, col );
@@ -830,10 +830,10 @@ ZLAffine3D MOAILuaState::GetValue < ZLAffine3D >( int idx, const ZLAffine3D valu
 	ZLAffine3D mtx;
 	
 	for ( int row = 0; row < 3; ++row ) {
-		for ( int col = 0; col < 3; ++col ) {
+		for ( int col = 0; col < 4; ++col ) {
 	
 			int element = ZLAffine3D::GetIndex ( row, col );
-			mtx.m [ element ] = this->GetValue < float >( idx + ( row * 3 ) + col, value.m [ element ]);
+			mtx.m [ element ] = this->GetValue < float >( idx + ( row * 4 ) + col, value.m [ element ]);
 		}
 	}	
 	return mtx;

@@ -29,15 +29,28 @@ int MOAIShader::_getAttributeID ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIShader::_reserveGlobals ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIShaderProgram, "U" )
+	MOAI_LUA_SETUP ( MOAIShader, "U" )
 
 	return self->ReserveGlobals ( L, 2 );
 }
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIShader::_resizeUniformArray ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIShader, "UN" )
+	
+	u32 uniformID		= state.GetValue < u32 >( 2, 1 ) - 1;
+	u32 count			= state.GetValue < u32 >( 3, 0 );
+	
+	self->ResizeUniformArray ( uniformID, count );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIShader::_setGlobal ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIShaderProgram, "UNNN" )
+	MOAI_LUA_SETUP ( MOAIShader, "UNNN" )
 	
 	return self->SetGlobal ( L, 2);
 }
@@ -58,6 +71,8 @@ int MOAIShader::_setUniform ( lua_State* L ) {
 
 	u32 uniformID	= state.GetValue < u32 >( 2, 1 ) - 1;
 	u32 index		= state.GetValue < u32 >( 3, 1 ) - 1;
+
+	self->Bless ();
 
 	void* element;
 	MOAIShaderUniform* uniform = self->GetUniform ( uniformID, index, element );
@@ -124,6 +139,8 @@ MOAIShader* MOAIShader::AffirmShader ( MOAILuaState& state, int idx ) {
 bool MOAIShader::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( this->mProgram ) {
+		
+		this->Bless ();
 		
 		void* element;
 		MOAIShaderUniform* uniform = this->GetUniformForAttributeID ( attrID, element );
@@ -223,14 +240,49 @@ void MOAIShader::BindUniforms () {
 		
 			MOAIShaderUniformInstance& instance = this->mUniformInstances [ i ];
 		
-			//for ( u32 j = 0; j < instance.mCount; ++j ) {
-				
-				if ( !flushed ) {
-					gfxMgr.mGfxState.GfxStateWillChange ();
-					flushed = true;
-				}
-				uniform->Bind ( instance );
-			//}
+			if ( !flushed ) {
+				gfxMgr.mGfxState.GfxStateWillChange ();
+				flushed = true;
+			}
+			uniform->Bind ( instance );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIShader::Bless () {
+
+	if ( this->mMaxCount ) return;
+
+	this->mUniformBuffer.Clear ();
+	
+	if ( this->mProgram ) {
+		
+		size_t nUniforms = this->mProgram->mUniforms.Size ();
+		
+		size_t size = 0;
+		
+		for ( size_t i = 0; i < nUniforms; ++i ) {
+			
+			const MOAIShaderUniform& uniform = this->mProgram->mUniforms [ i ];
+			MOAIShaderUniformInstance& instance = this->mUniformInstances [ i ];
+			
+			instance.mBuffer = ( void* )size;
+			
+			size += uniform.mWidth * instance.mCount * MOAIShaderUniform::ELEMENT_SIZE;
+			
+			this->mMaxCount = this->mMaxCount < instance.mCount ? instance.mCount : this->mMaxCount;
+		}
+		
+		this->mUniformBuffer.Init ( size );
+		
+		for ( size_t i = 0; i < nUniforms; ++i ) {
+		
+			const MOAIShaderUniform& uniform = this->mProgram->mUniforms [ i ];
+			MOAIShaderUniformInstance& instance = this->mUniformInstances [ i ];
+			
+			instance.mBuffer = ( void* )(( size_t )instance.mBuffer + ( size_t )this->mUniformBuffer.Data ());
+			uniform.Default ( instance );
 		}
 	}
 }
@@ -238,6 +290,7 @@ void MOAIShader::BindUniforms () {
 //----------------------------------------------------------------//
 u32 MOAIShader::GetAttributeID ( u32 uniformID, u32 index ) {
 
+	this->Bless ();
 	return ( uniformID * this->mMaxCount ) + index;
 }
 
@@ -252,17 +305,18 @@ MOAIShaderUniform* MOAIShader::GetUniform ( u32 uniformID, u32 index, void*& ele
 
 	MOAIShaderUniform* uniform = 0;
 
-	if ( this->mProgram ) {
-		uniform = this->mProgram->GetUniform ( uniformID );
-		element = uniform ? uniform->GetElement ( this->mUniformInstances [ uniformID ], index ) : 0;
-	}
+	uniform = this->GetUniform ( uniformID );
+	element = uniform ? uniform->GetElement ( this->mUniformInstances [ uniformID ], index ) : 0;
+
 	return uniform;
 }
 
 //----------------------------------------------------------------//
 MOAIShaderUniform* MOAIShader::GetUniformForAttributeID ( u32 attrID, void*& element) {
 
-	u32 uniformID = (( attrID & MOAIAttribute::ATTR_ID_MASK ) - 1 ) / this->mMaxCount;
+	attrID = attrID & MOAIAttribute::ATTR_ID_MASK;
+
+	u32 uniformID = attrID / this->mMaxCount;
 	u32 index = attrID - ( uniformID * this->mMaxCount );
 	
 	return this->GetUniform ( uniformID, index, element );
@@ -296,12 +350,22 @@ void MOAIShader::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getAttributeID",				_getAttributeID },
 		{ "reserveGlobals",				_reserveGlobals },
+		{ "resizeUniformArray",			_resizeUniformArray },
 		{ "setGlobal",					_setGlobal },
 		{ "setProgram",					_setProgram },
 		{ "setUniform",					_setUniform },
 		{ NULL, NULL }
 	};
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIShader::ResizeUniformArray ( u32 uniformID, u32 count ) {
+
+	if ( uniformID < this->mUniformInstances.Size ()) {
+		this->mUniformInstances [ uniformID ].mCount = count;
+		this->mMaxCount = 0;
+	}
 }
 
 //----------------------------------------------------------------//
@@ -319,30 +383,13 @@ void MOAIShader::SetProgram ( MOAIShaderProgram* program ) {
 		size_t nUniforms = program->mUniforms.Size ();
 		this->mUniformInstances.Init ( nUniforms );
 		
-		size_t size = 0;
-		
 		for ( size_t i = 0; i < nUniforms; ++i ) {
 			
 			const MOAIShaderUniform& uniform = program->mUniforms [ i ];
 			MOAIShaderUniformInstance& instance = this->mUniformInstances [ i ];
 			
-			instance.mBuffer = ( void* )size;
+			instance.mBuffer = 0;
 			instance.mCount = uniform.mCount;
-			
-			size += uniform.mWidth * instance.mCount * MOAIShaderUniform::ELEMENT_SIZE;
-			
-			this->mMaxCount = this->mMaxCount < instance.mCount ? instance.mCount : this->mMaxCount;
-		}
-		
-		this->mUniformBuffer.Init ( size );
-		
-		for ( size_t i = 0; i < nUniforms; ++i ) {
-		
-			const MOAIShaderUniform& uniform = program->mUniforms [ i ];
-			MOAIShaderUniformInstance& instance = this->mUniformInstances [ i ];
-			
-			instance.mBuffer = ( void* )(( size_t )instance.mBuffer + ( size_t )this->mUniformBuffer.Data ());
-			uniform.Default ( instance );
 		}
 		
 		this->CopyGlobals ( *program );
@@ -353,7 +400,7 @@ void MOAIShader::SetProgram ( MOAIShaderProgram* program ) {
 void MOAIShader::UpdateAndBindUniforms () {
 
 	if ( this->mProgram ) {
-	
+		this->Bless ();
 		this->ApplyGlobals ();
 		this->BindUniforms ();
 	}

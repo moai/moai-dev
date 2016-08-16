@@ -30,6 +30,7 @@ protected:
 	//----------------------------------------------------------------//
 	static int				_getAttributeID			( lua_State* L );
 	static int				_reserveGlobals			( lua_State* L );
+	static int				_resizeUniformArray		( lua_State* L );
 	static int				_setGlobal				( lua_State* L );
 	static int				_setProgram				( lua_State* L );
 	static int				_setUniform				( lua_State* L );
@@ -52,10 +53,12 @@ public:
 	//----------------------------------------------------------------//
 	static MOAIShader*		AffirmShader			( MOAILuaState& state, int idx );
 	bool					ApplyAttrOp				( u32 attrID, MOAIAttribute& attr, u32 op );
+	void					Bless					();
 							MOAIShader				();
 							~MOAIShader				();
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
+	void					ResizeUniformArray		( u32 uniformID, u32 count );
 	void					SetProgram				( MOAIShaderProgram* program );
 };
 

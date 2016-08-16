@@ -430,7 +430,7 @@ u32 MOAIAssimpMesh::ReadVertices ( const MOAIVertexFormat& format, ZLStream& str
 				u32 bestComponent = ( u32 )-1;
 				float bestWeight = vertexWeight.mWeight;
 				
-				u32 boneCountThisVertex = nBonesPerVertex; // asume the max
+				u32 boneCountThisVertex = nBonesPerVertex; // assume the max
 				
 				for ( u32 k = 0; k < nBonesPerVertex; ++k ) {
 				
@@ -449,7 +449,7 @@ u32 MOAIAssimpMesh::ReadVertices ( const MOAIVertexFormat& format, ZLStream& str
 				
 				if ( bestComponent < nBonesPerVertex ) {
 					
-					indices [ bestComponent ] = ( float )vertexWeight.mVertexId;
+					indices [ bestComponent ] = ( float )i;
 					weights [ bestComponent ] = vertexWeight.mWeight;
 					boneCounts [ vertexWeight.mVertexId ] = boneCountThisVertex;
 				}
@@ -511,6 +511,16 @@ u32 MOAIAssimpMesh::ReadVertices ( const MOAIVertexFormat& format, ZLStream& str
 				
 				float* indices = &boneIndices [ vertexBase ];
 				float* weights = &boneWeights [ vertexBase ];
+				
+//				printf ( "indices " );
+//				for ( u32 i = 0; i < nBonesPerVertex; ++i ) {
+//					printf ( " %g", indices [ i ]);
+//				}
+//				printf ( " " );
+//				for ( u32 i = 0; i < nBonesPerVertex; ++i ) {
+//					printf ( " %g", weights [ i ]);
+//				}
+//				printf ( "\n" );
 				
 				format.WriteBones ( stream, indices, weights, nBonesPerVertex ); // TODO: report errors
 				format.WriteBoneCount ( stream, 0, boneCounts [ i ]);

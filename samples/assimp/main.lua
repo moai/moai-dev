@@ -4,6 +4,12 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+local printAsJson = function ( t )
+	if t then
+		print ( t and MOAIJsonParser.encode ( t, MOAIJsonParser.JSON_INDENT + MOAIJsonParser.JSON_SORT_KEYS ))
+	end
+end
+
 --FILENAME = '../../3rdparty/assimp/test/models-nonbsd/ogre/ogresdk/ninja.mesh'
 --FILENAME = '../../3rdparty/assimp/test/models/collada/duck.dae'
 FILENAME = '../temp/assimp/boblampclean.md5mesh'
@@ -36,26 +42,26 @@ vertexFormat:declareUV ()
 vertexFormat:declareColor ()
 vertexFormat:declareBoneIndices ()
 vertexFormat:declareBoneWeights ()
-vertexFormat:declareBoneCount ()
+--vertexFormat:declareBoneCount ()
 
 local program = MOAIShaderProgram.new ()
 
 program:setVertexAttribute ( 1, 'position' )
---program:setVertexAttribute( 2, 'normal' )
 program:setVertexAttribute ( 2, 'uv' )
 program:setVertexAttribute ( 3, 'color' )
+program:setVertexAttribute ( 4, 'boneIndices' )
+program:setVertexAttribute ( 5, 'boneWeights' )
+program:setVertexAttribute ( 6, 'boneCount' )
 
-program:reserveUniforms ( 1 )
+program:reserveUniforms ( 2 )
 program:declareUniform ( 1, 'transforms', MOAIShaderProgram.UNIFORM_TYPE_FLOAT, MOAIShaderProgram.UNIFORM_WIDTH_MATRIX_4X4, 2 )
+program:declareUniform ( 2, 'bones', MOAIShaderProgram.UNIFORM_TYPE_FLOAT, MOAIShaderProgram.UNIFORM_WIDTH_MATRIX_4X4, 1 )
 
 program:reserveGlobals ( 2 )
 program:setGlobal ( 1, MOAIShaderProgram.GLOBAL_WORLD, 1, 1 )
 program:setGlobal ( 2, MOAIShaderProgram.GLOBAL_VIEW_PROJ, 1, 2 )
 
 program:load ( MOAIFileSystem.loadFile ( 'shader.vsh' ), MOAIFileSystem.loadFile ( 'shader.fsh' ))
-
-local shader = MOAIShader.new ()
-shader:setProgram ( program )
 
 aiScene = MOAIAssimpScene.new ()
 aiScene:load ( FILENAME,
@@ -67,10 +73,45 @@ local aiMeshes		= aiScene:getMeshes ()
 local aiMaterials	= aiScene:getMaterials ()
 local aiRootNode	= aiScene:getRootNode ()
 
---if aiRootNode then
---	local json = MOAIJsonParser.encode ( aiRootNode, MOAIJsonParser.JSON_INDENT + MOAIJsonParser.JSON_SORT_KEYS )
---	print ( json )
---end
+--print ( 'NODEZ!' )
+--printAsJson ( aiRootNode )
+
+makeTransform = function ( mtx )
+
+	print ( mtx [ 1 ][ 1 ], mtx [ 1 ][ 2 ], mtx [ 1 ][ 3 ], mtx [ 1 ][ 4 ])
+	print ( mtx [ 2 ][ 1 ], mtx [ 2 ][ 2 ], mtx [ 2 ][ 3 ], mtx [ 2 ][ 4 ])
+	print ( mtx [ 3 ][ 1 ], mtx [ 3 ][ 2 ], mtx [ 3 ][ 3 ], mtx [ 3 ][ 4 ])
+
+	local transform = MOAIMatrix.new ()
+	transform:setMatrix (
+		mtx [ 1 ][ 1 ], mtx [ 1 ][ 2 ], mtx [ 1 ][ 3 ], mtx [ 1 ][ 4 ],
+		mtx [ 2 ][ 1 ], mtx [ 2 ][ 2 ], mtx [ 2 ][ 3 ], mtx [ 2 ][ 4 ],
+		mtx [ 3 ][ 1 ], mtx [ 3 ][ 2 ], mtx [ 3 ][ 3 ], mtx [ 3 ][ 4 ]
+	)
+	return transform
+end
+
+local buildTransformTree
+buildTransformTree = function ( aiNode, directory )
+
+	--print ( aiNode.name )
+
+	local transform = makeTransform ( aiNode.transformation )
+
+	if directory and aiNode.name then
+		directory [ aiNode.name ] = transform
+	end
+
+	for i, aiChild in ipairs ( aiNode.children or {}) do
+		local child = buildTransformTree ( aiChild, directory )
+		child:setParent ( transform )
+	end
+
+	return transform
+end
+
+nodeDirectory = {}
+local root = buildTransformTree ( aiRootNode, nodeDirectory )
 
 local textures = {}
 
@@ -95,9 +136,24 @@ for i, aiMesh in ipairs ( aiMeshes ) do
 
 	local aiBones = aiMesh:getBones ()
 
-	if aiBones then
-		local json = MOAIJsonParser.encode ( aiBones, MOAIJsonParser.JSON_INDENT + MOAIJsonParser.JSON_SORT_KEYS )
-		print ( json )
+	local shader = MOAIShader.new ()
+	shader:setProgram ( program )
+	shader:resizeUniformArray ( 2, #aiBones )
+
+	local bones = {}
+
+	--print ( 'BONEZ!' )
+	--printAsJson ( aiBones )
+
+	for i, aiBone in ipairs ( aiBones ) do
+
+		print ( 'BONE', i )
+
+		local bone = makeTransform ( aiBone.offsetMatrix )
+		bone:setParent ( nodeDirectory [ aiBone.name ])
+		bones [ i ] = bone
+
+		shader:setAttrLink ( shader:getAttributeID ( 2, i ), bone, MOAIMatrix.TRANSFORM_TRAIT )
 	end
 
 	local vbo = MOAIVertexBuffer.new ()
@@ -114,15 +170,12 @@ for i, aiMesh in ipairs ( aiMeshes ) do
 	mesh:setBounds ( vbo:computeBounds ( vertexFormat ))
 	mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
 	mesh:setShader ( shader )
-	--mesh:setTexture ( '../../3rdparty/assimp/test/models/collada/duckCM.tga' )
 	mesh:setTexture ( textures [ aiMesh:getMaterialIndex ()])
 	
 	local prop = MOAIProp.new ()
 	prop:setDeck ( mesh )
-	prop:setRot ( -90, 0, 0 )
+	--prop:setRot ( -90, 0, 0 )
 	prop:setLoc ( 0, -40, 0 )
-	--prop:setLoc ( 0, -80, 0 )
-	--prop:setRot ( 0, -90, 0 )
 	prop:moveRot ( 0, 360, 0, 6 )
 	prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
 	prop:setDepthTest ( MOAIGraphicsProp.DEPTH_TEST_LESS )

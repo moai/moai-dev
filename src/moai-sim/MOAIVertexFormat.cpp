@@ -52,7 +52,7 @@ int MOAIVertexFormat::_declareBoneCount ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 	
 	u32 index			= state.GetValue < u32 >( 2, 0 ) - 1;
-	u32 type			= state.GetValue < u32 >( 3, ZGL_TYPE_BYTE );
+	u32 type			= state.GetValue < u32 >( 3, ZGL_TYPE_UNSIGNED_BYTE );
 	
 	self->DeclareAttribute ( index, type, 1, ATTRIBUTE_BONE_COUNT, false );
 	
@@ -65,7 +65,7 @@ int MOAIVertexFormat::_declareBoneIndices ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 	
 	u32 index			= state.GetValue < u32 >( 2, 0 ) - 1;
-	u32 type			= state.GetValue < u32 >( 3, ZGL_TYPE_BYTE );
+	u32 type			= state.GetValue < u32 >( 3, ZGL_TYPE_UNSIGNED_BYTE );
 	u32 size			= state.GetValue < u32 >( 4, 4 );
 	
 	self->DeclareAttribute ( index, type, size, ATTRIBUTE_BONE_INDICES, false );
@@ -100,7 +100,7 @@ int MOAIVertexFormat::_declareColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 
 	u32 index			= state.GetValue < u32 >( 2, 0 ) - 1;
-	u32 type			= state.GetValue < u32 >( 3, ZGL_TYPE_BYTE );
+	u32 type			= state.GetValue < u32 >( 3, ZGL_TYPE_UNSIGNED_BYTE );
 	
 	self->DeclareAttribute ( index, type, COLOR_SIZE, ATTRIBUTE_COLOR, true );
 
