@@ -42,6 +42,17 @@ int MOAIAnimCurveBase::_reserveKeys ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAnimCurveBase::_setTime ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAnimCurveBase, "UN" );
+
+	self->mTime = state.GetValue < float >( 2, 0.0f );
+	self->ScheduleUpdate ();
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setWrapMode
 	@text	Sets the wrap mode for values above 1.0 and below 0.0.
 			CLAMP sets all values above and below 1.0 and 0.0 to
@@ -217,6 +228,7 @@ void MOAIAnimCurveBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getLength",			_getLength },
 		{ "reserveKeys",		_reserveKeys },
+		{ "setTime",			_setTime },
 		{ "setWrapMode",		_setWrapMode },
 		{ NULL, NULL }
 	};

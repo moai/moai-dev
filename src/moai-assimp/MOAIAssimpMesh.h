@@ -17,7 +17,7 @@ class MOAIAssimpMesh :
 	public MOAIAssimpSceneMember {
 private:
 
-	const aiMesh*		mMesh; // TODO: danger here; need to keep track of these in the scene and invalidate them
+	const aiMesh*		mMesh;
 
 	//----------------------------------------------------------------//
 	static int			_countBones					( lua_State* L );

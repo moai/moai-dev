@@ -873,6 +873,20 @@ ZLMatrix4x4 MOAILuaState::GetValue < ZLMatrix4x4 >( int idx, const ZLMatrix4x4 v
 
 //----------------------------------------------------------------//
 template <>
+ZLQuaternion MOAILuaState::GetValue < ZLQuaternion >( int idx, const ZLQuaternion value ) {
+
+	ZLQuaternion quat;
+		
+	quat.mV.mX	= this->GetValue < float >( idx + 0, value.mV.mX );
+	quat.mV.mY	= this->GetValue < float >( idx + 1, value.mV.mY );
+	quat.mV.mZ	= this->GetValue < float >( idx + 2, value.mV.mZ );
+	quat.mS		= this->GetValue < float >( idx + 3, value.mS );
+	
+	return quat;
+}
+
+//----------------------------------------------------------------//
+template <>
 ZLRect MOAILuaState::GetValue < ZLRect >( int idx, const ZLRect value ) {
 
 	ZLRect rect = value;

@@ -12,13 +12,13 @@
 // ZLQuaternion
 //================================================================//
 class ZLQuaternion {
-private:
+public:
 	friend class MOAITest_USQuaternion;
+
+	static const ZLQuaternion IDENT;
 
 	float		mS;
 	ZLVec3D		mV;
-
-public:
 
 	//----------------------------------------------------------------//
 	ZLQuaternion operator + ( const ZLQuaternion& v ) const {
@@ -42,7 +42,6 @@ public:
 	void			Get					( ZLMatrix4x4& m ) const;
 	void			Get					( ZLVec3D& axis, float& angle ) const;
 	void			Get					( float& x, float& y, float& z ) const;
-	void			Identity			();
 	void			Inverse				();
 	float			Length				() const;
 	float			LengthSquared		() const;
@@ -54,7 +53,7 @@ public:
 	ZLVec3D			Transform			( ZLVec3D loc ) const;
 					ZLQuaternion		();
 					ZLQuaternion		( const ZLAffine3D& m );
-					ZLQuaternion		( const ZLMatrix3x3& m );
+					ZLQuaternion		( ZLMatrix3x3 m );
 					ZLQuaternion		( const ZLMatrix4x4& m );
 					ZLQuaternion		( const ZLVec3D& axis, float angle );
 					ZLQuaternion		( float x, float y, float z ); // set from Euler angles

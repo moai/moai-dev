@@ -225,6 +225,7 @@ template <> ZLAffine2D		MOAILuaState::GetValue < ZLAffine2D >		( int idx, const 
 template <> ZLAffine3D		MOAILuaState::GetValue < ZLAffine3D >		( int idx, const ZLAffine3D value );
 template <> ZLMatrix3x3		MOAILuaState::GetValue < ZLMatrix3x3 >		( int idx, const ZLMatrix3x3 value );
 template <> ZLMatrix4x4		MOAILuaState::GetValue < ZLMatrix4x4 >		( int idx, const ZLMatrix4x4 value );
+template <> ZLQuaternion	MOAILuaState::GetValue < ZLQuaternion >		( int idx, const ZLQuaternion value );
 template <> ZLRect			MOAILuaState::GetValue < ZLRect >			( int idx, const ZLRect value );
 template <> ZLVec2D			MOAILuaState::GetValue < ZLVec2D >			( int idx, const ZLVec2D value );
 template <> ZLVec3D			MOAILuaState::GetValue < ZLVec3D >			( int idx, const ZLVec3D value );

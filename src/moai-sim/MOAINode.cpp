@@ -762,6 +762,7 @@ void MOAINode::SetAttrLink ( int attrID, MOAINode* srcNode, int srcAttrID ) {
 	link->mSourceAttrID = srcAttrID;
 	link->Update ();
 	
+	this->ScheduleUpdate ();
 	this->ActivateOnLink ( *srcNode );
 }
 
@@ -785,6 +786,7 @@ void MOAINode::SetNodeLink ( MOAINode& srcNode ) {
 		this->mPullLinks = link;
 		link->mPullable = true;
 		
+		this->ScheduleUpdate ();
 		this->ActivateOnLink ( srcNode );
 	}
 }

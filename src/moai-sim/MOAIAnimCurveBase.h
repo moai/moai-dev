@@ -65,6 +65,7 @@ protected:
 	//----------------------------------------------------------------//
 	static int			_getLength			( lua_State* L );
 	static int			_reserveKeys		( lua_State* L );
+	static int			_setTime			( lua_State* L );
 	static int			_setWrapMode		( lua_State* L );
 
 	//----------------------------------------------------------------//

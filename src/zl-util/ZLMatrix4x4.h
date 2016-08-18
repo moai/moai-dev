@@ -465,7 +465,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void Print ( u32 level = ZLLog::LOG_REPORT, FILE* file = ZLLog::CONSOLE ) {
+	void Print ( u32 level = ZLLog::LOG_REPORT, FILE* file = ZLLog::CONSOLE ) const {
 	
 		ZLLog::LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R0 ], m [ C1_R0 ], m [ C2_R0 ], m [ C3_R0 ]);
 		ZLLog::LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R1 ], m [ C1_R1 ], m [ C2_R1 ], m [ C3_R1 ]);
@@ -985,7 +985,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Translate ( ZLMetaVec3D < TYPE >& trn ) {
+	void Translate ( const ZLMetaVec3D < TYPE >& trn ) {
 
 		Translate (	trn.mX,	trn.mY,	trn.mZ );
 	}

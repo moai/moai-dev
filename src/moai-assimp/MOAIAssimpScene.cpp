@@ -6,6 +6,7 @@
 
 #include "pch.h"
 
+#include <moai-assimp/MOAIAssimpAnimation.h>
 #include <moai-assimp/MOAIAssimpCamera.h>
 #include <moai-assimp/MOAIAssimpMesh.h>
 #include <moai-assimp/MOAIAssimpScene.h>
@@ -117,6 +118,26 @@ int MOAIAssimpScene::_countTextures ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
 
 	lua_pushinteger ( state , self->mScene ? self->mScene->mNumTextures : 0 );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAssimpScene::_getAnimations ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
+
+	if ( !self->mScene ) return 0;
+
+	if ( state.IsType ( 2, LUA_TNUMBER )) {
+		state.Push ( self->GetAnimation ( state.GetValue < u32 >( 2, 0 )));
+	}
+	else {
+
+		lua_newtable ( state );
+		for ( size_t i = 0; i < self->mScene->mNumAnimations; ++i ) {
+			state.SetFieldByIndex ( -1, ( int )i + 1, self->GetAnimation ( i ));
+		}
+	}
 	return 1;
 }
 
@@ -285,6 +306,32 @@ void MOAIAssimpScene::Clear () {
 }
 
 //----------------------------------------------------------------//
+MOAIAssimpAnimation* MOAIAssimpScene::GetAnimation ( size_t idx ) {
+
+	if ( !this->mScene ) return 0;
+	if ( this->mScene->mNumAnimations <= idx ) return 0;
+	
+	this->mAnimations.Resize ( this->mScene->mNumAnimations, 0 );
+	
+	MOAIAssimpAnimation* animation = this->mAnimations [ idx ];
+	if ( !animation ) {
+	
+		aiAnimation* aiAnimation = this->mScene->mAnimations [ idx ];
+		
+		animation = new MOAIAssimpAnimation ();
+		animation->SetScene ( this->mScene );
+		animation->SetAnimation ( aiAnimation );
+		animation->SetName ( aiAnimation->mName.C_Str ());
+		
+		this->LuaRetain ( animation );
+		this->mAnimations [ idx ] = animation;
+		
+		this->mSceneMembers.push_back ( animation );
+	}
+	return animation;
+}
+
+//----------------------------------------------------------------//
 MOAIAssimpCamera* MOAIAssimpScene::GetCamera ( size_t idx ) {
 
 	if ( !this->mScene ) return 0;
@@ -298,6 +345,7 @@ MOAIAssimpCamera* MOAIAssimpScene::GetCamera ( size_t idx ) {
 		aiCamera* currentCamera = this->mScene->mCameras [ idx ];
 	
 		camera = new MOAIAssimpCamera ();
+		camera->SetScene ( this->mScene );
 		camera->SetNode ( this->mScene->mRootNode->FindNode ( currentCamera->mName.C_Str ()));
 		camera->SetCamera ( currentCamera );
 		camera->SetIndex (( uint )idx );
@@ -569,6 +617,7 @@ void MOAIAssimpScene::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "countMaterials",			_countMaterials },
 		{ "countMeshes",			_countMeshes },
 		{ "countTextures",			_countTextures },
+		{ "getAnimations",			_getAnimations },
 		{ "getCameras",				_getCameras },
 		{ "getMaterials",			_getMaterials },
 		{ "getMeshes",				_getMeshes },

@@ -21,6 +21,16 @@ int MOAIMatrix::_getMatrix ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIMatrix::_invert ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIMatrix, "U" )
+	
+	self->Inverse ();
+	self->ScheduleUpdate ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIMatrix::_setMatrix ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMatrix, "U" )
 	
@@ -51,6 +61,23 @@ int MOAIMatrix::_setMatrix ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+bool MOAIMatrix::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	// TODO: these values may need to be cached for performance reasons
+	if ( MOAIMatrix::MOAIMatrixAttr::Check ( attrID )) {
+
+		switch ( UNPACK_ATTR ( attrID )) {
+			
+			case ATTR_MATRIX:
+			
+				*( ZLAffine3D* )this = attr.ApplyNoAdd < ZLAffine3D >( *( ZLAffine3D* )this, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+		}
+	}
+	return MOAITransformBase::ApplyAttrOp ( attrID, attr, op );
+}
+
+//----------------------------------------------------------------//
 void MOAIMatrix::BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
 
 	localToWorldMtx = *this;
@@ -74,6 +101,8 @@ MOAIMatrix::~MOAIMatrix () {
 void MOAIMatrix::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAITransformBase::RegisterLuaClass ( state );
+	
+	state.SetField ( -1, "ATTR_MATRIX",	MOAIMatrixAttr::Pack ( ATTR_MATRIX ));
 }
 
 //----------------------------------------------------------------//
@@ -83,6 +112,7 @@ void MOAIMatrix::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "getMatrix",			_getMatrix },
+		{ "invert",				_invert },
 		{ "setMatrix",			_setMatrix },
 		{ NULL, NULL }
 	};

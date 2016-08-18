@@ -87,15 +87,12 @@ void MOAIAnimCurveQuat::ApplyValueAttrOp ( MOAIAttribute& attr, u32 op ) {
 //----------------------------------------------------------------//
 ZLQuaternion MOAIAnimCurveQuat::GetCurveDelta () const {
 
-	ZLQuaternion delta;
+	ZLQuaternion delta = ZLQuaternion::IDENT;
 
 	u32 size = ( u32 )this->mKeys.Size ();
 	if ( size > 1 ) {
 		delta = this->mSamples [ size - 1 ];
 		delta.Sub ( this->mSamples [ 0 ]);
-	}
-	else {
-		delta = ZLQuaternion ( 0.0f, 0.0f, 0.0f, 0.0f );
 	}
 	return delta;
 }
@@ -156,7 +153,7 @@ MOAIAnimCurveQuat::MOAIAnimCurveQuat () {
 	
 	RTTI_SINGLE ( MOAIAnimCurveBase )
 	
-	this->mValue.Identity ();
+	this->mValue = ZLQuaternion::IDENT;
 }
 
 //----------------------------------------------------------------//

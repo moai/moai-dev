@@ -4,6 +4,8 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+MOAISim.setGCActive ( false )
+
 local printAsJson = function ( t )
 	if t then
 		print ( t and MOAIJsonParser.encode ( t, MOAIJsonParser.JSON_INDENT + MOAIJsonParser.JSON_SORT_KEYS ))
@@ -69,18 +71,21 @@ aiScene:load ( FILENAME,
 	MOAIAssimpScene.FLIP_UVS
 )
 
+print ( 'ANIMATIONS', aiScene:countAnimations ())
+
 local aiMeshes		= aiScene:getMeshes ()
 local aiMaterials	= aiScene:getMaterials ()
 local aiRootNode	= aiScene:getRootNode ()
+local aiAnimations	= aiScene:getAnimations ()
 
 --print ( 'NODEZ!' )
 --printAsJson ( aiRootNode )
 
 makeTransform = function ( mtx )
 
-	print ( mtx [ 1 ][ 1 ], mtx [ 1 ][ 2 ], mtx [ 1 ][ 3 ], mtx [ 1 ][ 4 ])
-	print ( mtx [ 2 ][ 1 ], mtx [ 2 ][ 2 ], mtx [ 2 ][ 3 ], mtx [ 2 ][ 4 ])
-	print ( mtx [ 3 ][ 1 ], mtx [ 3 ][ 2 ], mtx [ 3 ][ 3 ], mtx [ 3 ][ 4 ])
+	--print ( mtx [ 1 ][ 1 ], mtx [ 1 ][ 2 ], mtx [ 1 ][ 3 ], mtx [ 1 ][ 4 ])
+	--print ( mtx [ 2 ][ 1 ], mtx [ 2 ][ 2 ], mtx [ 2 ][ 3 ], mtx [ 2 ][ 4 ])
+	--print ( mtx [ 3 ][ 1 ], mtx [ 3 ][ 2 ], mtx [ 3 ][ 3 ], mtx [ 3 ][ 4 ])
 
 	local transform = MOAIMatrix.new ()
 	transform:setMatrix (
@@ -94,9 +99,11 @@ end
 local buildTransformTree
 buildTransformTree = function ( aiNode, directory )
 
-	--print ( aiNode.name )
+	print ( aiNode.name )
 
 	local transform = makeTransform ( aiNode.transformation )
+	--local control = MOAIMatrix.new ()
+	--control:setParent ( transform )
 
 	if directory and aiNode.name then
 		directory [ aiNode.name ] = transform
@@ -112,6 +119,53 @@ end
 
 nodeDirectory = {}
 local root = buildTransformTree ( aiRootNode, nodeDirectory )
+
+local invRoot = MOAIMatrix.new ()
+invRoot:setMatrix ( root:getMatrix ())
+invRoot:invert ()
+root:setParent ( invRoot )
+
+printMatrix = function ( r1c1, r1c2, r1c3, r1c4, r2c1, r2c2, r2c3, r2c4, r3c1, r3c2, r3c3, r3c4 )
+
+	print ( r1c1, r1c2, r1c3, r1c4 )
+	print ( r2c1, r2c2, r2c3, r2c4 )
+	print ( r3c1, r3c2, r3c3, r3c4 )
+end
+
+timer = MOAITimer.new ()
+
+if aiAnimations [ 1 ] then
+
+	local aiAnimation = aiAnimations [ 1 ]
+
+	local curves = {}
+	local nChannels = aiAnimation:countChannels ()
+	local duration = aiAnimation:getDuration ()
+
+	--nChannels = 0
+
+	timer:setSpan ( 0, duration )
+	timer:setMode ( MOAITimer.LOOP )
+	timer:start ()
+
+	for j = 1, nChannels do
+		local channelName = aiAnimation:getChannelName ( j )
+		if not curves [ channelName ] then
+
+			local curve = aiAnimation:getAnimCurve ( j )
+			curves [ channelName ] = curve
+
+			curve:setAttrLink ( MOAIAnimCurve.ATTR_TIME, timer, MOAITimer.ATTR_TIME )
+
+			local node = nodeDirectory [ channelName ]
+			if node then
+				node:setAttrLink ( MOAIMatrix.ATTR_MATRIX, curve, MOAIAnimCurve.ATTR_VALUE )
+			end
+		end
+	end
+
+	aiAnimation.curves = curves
+end
 
 local textures = {}
 
@@ -147,7 +201,7 @@ for i, aiMesh in ipairs ( aiMeshes ) do
 
 	for i, aiBone in ipairs ( aiBones ) do
 
-		print ( 'BONE', i )
+		--print ( 'BONE', i )
 
 		local bone = makeTransform ( aiBone.offsetMatrix )
 		bone:setParent ( nodeDirectory [ aiBone.name ])
@@ -174,9 +228,9 @@ for i, aiMesh in ipairs ( aiMeshes ) do
 	
 	local prop = MOAIProp.new ()
 	prop:setDeck ( mesh )
-	--prop:setRot ( -90, 0, 0 )
+	prop:setRot ( -90, 0, 0 )
 	prop:setLoc ( 0, -40, 0 )
-	prop:moveRot ( 0, 360, 0, 6 )
+	--prop:moveRot ( 0, 360, 0, 6 )
 	prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
 	prop:setDepthTest ( MOAIGraphicsProp.DEPTH_TEST_LESS )
 	layer:insertProp ( prop )

@@ -16,23 +16,30 @@ class MOAIMatrix :
 protected:
 
 	//----------------------------------------------------------------//
-	static int			_getMatrix					( lua_State* L );
-	static int			_setMatrix					( lua_State* L );
+	static int		_getMatrix				( lua_State* L );
+	static int		_invert					( lua_State* L );
+	static int		_setMatrix				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	virtual void		BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );
+	virtual void	BuildLocalToWorldMtx	( ZLAffine3D& localToWorldMtx );
 
 public:
 
 	DECL_LUA_FACTORY ( MOAIMatrix )
+	DECL_ATTR_HELPER ( MOAIMatrix )
+	
+	enum {
+		ATTR_MATRIX,
+	};
 	
 	//----------------------------------------------------------------//
-						MOAIMatrix					();
-						~MOAIMatrix					();
-	void				RegisterLuaClass			( MOAILuaState& state );
-	void				RegisterLuaFuncs			( MOAILuaState& state );
-	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
-	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
+	bool			ApplyAttrOp				( u32 attrID, MOAIAttribute& attr, u32 op );
+					MOAIMatrix				();
+					~MOAIMatrix				();
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

@@ -271,6 +271,20 @@ void MOAIAssimpUtil::PushNormalsArray ( lua_State* L , const aiMesh* currentMesh
 }
 
 //----------------------------------------------------------------//
+void MOAIAssimpUtil::PushQuaternion ( lua_State* L, aiQuaternion quaternion ) {
+
+	lua_newtable ( L );
+	lua_pushnumber( L , quaternion.x );
+	lua_rawseti( L , -2 , 1 );
+	lua_pushnumber( L , quaternion.y );
+	lua_rawseti( L , -2 , 2 );
+	lua_pushnumber( L , quaternion.z );
+	lua_rawseti( L , -2 , 3 );
+	lua_pushnumber( L , quaternion.w );
+	lua_rawseti( L , -2 , 4 );
+}
+
+//----------------------------------------------------------------//
 void MOAIAssimpUtil::PushTangentsArray ( lua_State* L , const aiMesh* currentMesh ) {
 
 	MOAIAssimpUtil::PushVectorArray ( L, currentMesh->mTangents, currentMesh->mNumVertices, true );

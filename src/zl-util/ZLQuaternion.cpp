@@ -6,6 +6,8 @@
 // ZLQuaternion
 //================================================================//
 
+const ZLQuaternion ZLQuaternion::IDENT = ZLQuaternion ( 1.0f, 0.0f, 0.0f, 0.0f );
+
 //----------------------------------------------------------------//
 void ZLQuaternion::Add ( const ZLQuaternion& rhs ) {
 	
@@ -55,6 +57,8 @@ void ZLQuaternion::Get ( ZLMatrix3x3& m ) const {
 	m.m [ ZLMatrix3x3::C2_R0 ] = xz - wy;
 	m.m [ ZLMatrix3x3::C2_R1 ] = yz + wx;
 	m.m [ ZLMatrix3x3::C2_R2 ] = 1.0f - ( xx + yy );
+	
+	m.Transpose ();
 }
 
 //----------------------------------------------------------------//
@@ -125,15 +129,6 @@ void ZLQuaternion::Get ( float& x, float& y, float& z ) const {
 }
 
 //----------------------------------------------------------------//
-void ZLQuaternion::Identity() {
-	
-	mS = 1.0f;
-	mV.mX = 0.0f;
-	mV.mY = 0.0f;
-	mV.mZ = 0.0f;
-}
-
-//----------------------------------------------------------------//
 void ZLQuaternion::Inverse () {
 	
 	float length = Length ();
@@ -180,6 +175,7 @@ void ZLQuaternion::Multiply ( const ZLQuaternion& rhs ) {
 void ZLQuaternion::Normalize() {
 	
 	float length = Length ();
+	
 	mS /= length;
 	mV.mX /= length;
 	mV.mY /= length;
@@ -254,7 +250,9 @@ ZLQuaternion::ZLQuaternion ( const ZLAffine3D& m ) {
 }
 
 //----------------------------------------------------------------//
-ZLQuaternion::ZLQuaternion ( const ZLMatrix3x3& m ) {
+ZLQuaternion::ZLQuaternion ( ZLMatrix3x3 m ) {
+
+	m.Transpose ();
 
 	float trace = m.m [ ZLMatrix3x3::C0_R0 ] + m.m [ ZLMatrix3x3::C1_R1 ] + m.m [ ZLMatrix3x3::C2_R2 ] + 1.0f;
 

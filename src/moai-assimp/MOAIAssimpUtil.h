@@ -27,6 +27,7 @@ namespace MOAIAssimpUtil {
 	void			PushMesh							( lua_State* L, const aiMesh* currentMesh );
 	void			PushNode							( lua_State* L, const aiNode* node );
 	void			PushNormalsArray					( lua_State* L, const aiMesh* currentMesh );
+	void			PushQuaternion						( lua_State* L, aiQuaternion quaternion );
 	void			PushTexture							( lua_State* L, aiMaterial* material, aiTextureType type, size_t idx );
 	void			PushTextureStack					( lua_State* L, aiMaterial* material, aiTextureType type );
 	void			PushTangentsArray					( lua_State* L, const aiMesh* currentMesh );
