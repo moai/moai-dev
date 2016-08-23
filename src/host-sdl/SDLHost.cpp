@@ -439,6 +439,9 @@ void Init ( int argc, char** argv ) {
 //----------------------------------------------------------------//
 void MainLoop () {
 	
+	SDL_GL_SetAttribute ( SDL_GL_MULTISAMPLEBUFFERS, 1 );
+	SDL_GL_SetAttribute ( SDL_GL_MULTISAMPLESAMPLES, 16 );
+	
 	#if GFX_ASYNC
 	
 		WorkerThreadInfo loadingThread;
