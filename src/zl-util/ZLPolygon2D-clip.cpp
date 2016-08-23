@@ -280,6 +280,7 @@ public:
 				
 				size_t clippedPolyVertsStart = clippedPolyVerts.GetCursor ();
 				
+				ZLVec2D first = *current;
 				ZLVec2D vtx = *current;
 				clippedPolyVerts.Write ( vtx );
 				
@@ -318,7 +319,13 @@ public:
 				}
 				while ( !current->mVisited );
 
-				clippedPolySizes.Write (( size_t )(( clippedPolyVerts.GetCursor () - clippedPolyVertsStart ) / sizeof ( ZLVec2D )));
+				size_t polySize = ( size_t )(( clippedPolyVerts.GetCursor () - clippedPolyVertsStart ) / sizeof ( ZLVec2D ));
+
+				if ( vtx.Equals ( first )) {
+					polySize = polySize - 1;
+				}
+
+				clippedPolySizes.Write ( polySize );
 				polyCount++;
 			}
 			

@@ -115,7 +115,6 @@ public:
 	void					SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void					SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void					SetWinding				( u32 winding );
-	void					SetWinding				( u32 oldWinding, u32 newWinding );
 	void					Snap					( const MOAIRegion& region, float xSnap, float ySnap );
 	void					Stroke					( const MOAIRegion& region, float exterior, bool strokeExterior, float interior, bool strokeInterior );
 	int						Tesselate				( const MOAIRegion& region, int windingRule );

@@ -418,9 +418,19 @@ int MOAIRegion::_setVertex ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIRegion::_setWinding ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIRegion, "U" )
+	MOAI_LUA_SETUP ( MOAIRegion, "UU" )
 	
+	MOAIRegion* region		= state.GetLuaObject < MOAIRegion >( 2, false );
+	
+	if ( region ) {
+		
+		if ( self != region ) {
+			self->Copy ( *region );
+		}
+		self->SetWinding ( state.GetValue < u32 >( 3, WINDING_ANTICLOCKWISE ));
+	}
 	return 0;
 }
 
@@ -1180,6 +1190,9 @@ void MOAIRegion::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "MAKE_CONVEX",					( u32 )ZLPolygon2D::IS_CONVEX );
 	state.SetField ( -1, "MAKE_CONCAVE",				( u32 )ZLPolygon2D::IS_CONCAVE );
+	
+	state.SetField ( -1, "WINDING_CLOCKWISE",			( u32 )WINDING_CLOCKWISE );
+	state.SetField ( -1, "WINDING_ANTICLOCKWISE",		( u32 )WINDING_ANTICLOCKWISE );
 }
 
 //----------------------------------------------------------------//
@@ -1285,6 +1298,20 @@ void MOAIRegion::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer 
 		state.Push (( u32 )i + 1 );
 		lua_pushlstring ( state, ( cc8* )poly.GetVertices (), poly.GetSize () * sizeof ( ZLVec2D ));
 		lua_settable ( state, -3 );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIRegion::SetWinding ( u32 winding ) {
+
+	size_t nPolys = this->mPolygons.Size ();
+	for ( size_t i = 0; i < nPolys; ++i ) {
+		ZLPolygon2D& poly = this->mPolygons [ i ];
+		
+		if ((( winding == WINDING_CLOCKWISE ) && poly.Check ( ZLPolygon2D::IS_ANTICLOCKWISE )) ||
+			(( winding == WINDING_ANTICLOCKWISE ) && poly.Check ( ZLPolygon2D::IS_CLOCKWISE ))) {
+			poly.ReverseWinding ();
+		}
 	}
 }
 
