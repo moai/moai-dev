@@ -135,6 +135,30 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	void Frustum ( TYPE left, TYPE top, TYPE right, TYPE bottom, TYPE zn, TYPE zf ) {
+		
+		m [ C0_R0 ] = ( zn + zn ) / ( right - left );
+		m [ C0_R1 ] = 0;
+		m [ C0_R2 ] = 0;
+		m [ C0_R3 ] = 0;
+		
+		m [ C1_R0 ] = 0;
+		m [ C1_R1 ] = ( zn + zn ) / ( top - bottom );
+		m [ C1_R2 ] = 0;
+		m [ C1_R3 ] = 0;
+		
+		m [ C2_R0 ] = ( right + left ) / ( right - left );
+		m [ C2_R1 ] = ( top + bottom ) / ( top - bottom );
+		m [ C2_R2 ] = -( zf + zn ) / ( zf - zn );
+		m [ C2_R3 ] = -1;
+		
+		m [ C3_R0 ] = 0;
+		m [ C3_R1 ] = 0;
+		m [ C3_R2 ] = -( 2 * zf * zn ) / ( zf - zn );
+		m [ C3_R3 ] = 0;
+	}
+
+	//----------------------------------------------------------------//
 	TYPE GetElement ( int c, int r ) const {
 
 		return m [ ( c * 4 ) + r ];

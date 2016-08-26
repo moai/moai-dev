@@ -356,7 +356,7 @@ ZLMatrix4x4 MOAICamera::GetProjMtx ( const MOAIViewport& viewport ) const {
 	
 	// project
 	
-	ZLVec2D viewScale = viewport.GetScale ();
+	ZLVec2D viewScale = viewport.GetScale (); // TODO: bit confusing in the 3d; clarify
 	
 	switch ( this->mType ) {
 	
@@ -370,13 +370,14 @@ ZLMatrix4x4 MOAICamera::GetProjMtx ( const MOAIViewport& viewport ) const {
 		}
 		case CAMERA_TYPE_3D: {
 			
-			float xs = Cot (( this->mFieldOfView * ( float )D2R ) / 2.0f );
-			float ys = xs * viewport.GetAspect ();
+			float xs = Tan (( this->mFieldOfView * ( float )D2R ) / 2.0f ) * this->mNearPlane;
+			float ys = xs / viewport.GetAspect ();
 			
 			xs *= viewScale.mX;
 			ys *= viewScale.mY;
+
+			mtx.Frustum ( -xs, ys, xs, -ys, this->mNearPlane, this->mFarPlane );
 			
-			mtx.Perspective ( xs, ys, this->mNearPlane, this->mFarPlane );
 			break;
 		}
 		case CAMERA_TYPE_WINDOW:
