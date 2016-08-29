@@ -311,24 +311,23 @@ int MOAICamera::_setType ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAICamera::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+bool MOAICamera::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( MOAICameraAttr::Check ( attrID )) {
 
 		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_FOV:
-				this->mFieldOfView = attrOp.Apply ( this->mFieldOfView, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				this->mFieldOfView = attr.Apply ( this->mFieldOfView, op, MOAIAttribute::ATTR_READ_WRITE );
 				return true;
 		}
 	}
-	return MOAITransform::ApplyAttrOp ( attrID, attrOp, op );
+	return MOAITransform::ApplyAttrOp ( attrID, attr, op );
 }
 
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAICamera::GetBillboardMtx () const {
 
-	ZLMatrix4x4 mtx;
-	mtx.Init ( this->GetLocalToWorldMtx ());
+	ZLMatrix4x4 mtx ( this->GetLocalToWorldMtx ());
 	mtx.m [ ZLMatrix4x4::C3_R0 ] = 0.0f;
 	mtx.m [ ZLMatrix4x4::C3_R1 ] = 0.0f;
 	mtx.m [ ZLMatrix4x4::C3_R2 ] = 0.0f;
@@ -412,9 +411,7 @@ ZLMatrix4x4 MOAICamera::GetProjMtxInv ( const MOAIViewport& viewport ) const {
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAICamera::GetViewMtx () const {
 
-	ZLMatrix4x4 mtx;
-	mtx.Init ( this->GetWorldToLocalMtx ());
-	return mtx;
+	return ZLMatrix4x4 ( this->GetWorldToLocalMtx ());
 }
 
 //----------------------------------------------------------------//

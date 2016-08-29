@@ -1273,7 +1273,7 @@ void MOAIRegion::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer
 	for ( size_t i = 0; i < nPolys; ++i ) {
 		ZLPolygon2D& poly = this->mPolygons [ i ];
 	
-		state.GetField ( -1, ( int )( i + 1 )); // TODO: cast
+		state.PushField ( -1, ( int )( i + 1 )); // TODO: cast
 	
 		size_t len = 0;
 		const void* vertices = lua_tolstring ( state, -1, &len );

@@ -110,11 +110,8 @@ private:
 		ZLGFX_TEX_PARAMETERI,
 		ZLGFX_TEX_SUB_IMAGE_2D,
 		
-		ZLGFX_UNIFORM_1F,
-		ZLGFX_UNIFORM_1I,
-		ZLGFX_UNIFORM_4FV,
-		ZLGFX_UNIFORM_MATRIX_3FV,
-		ZLGFX_UNIFORM_MATRIX_4FV,
+		ZLGFX_UNIFORM_FLOAT,
+		ZLGFX_UNIFORM_INT,
 		
 		ZLGFX_USE_PROGRAM,
 		ZLGFX_VERTEX_ATTRIB_POINTER,
@@ -237,11 +234,8 @@ public:
 	void					TexImage2D					( u32 level, u32 internalFormat, u32 width, u32 height, u32 format, u32 type, ZLSharedConstBuffer* buffer );
 	void					TexParameteri				( u32 pname, s32 param );
 	void					TexSubImage2D				( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, u32 format, u32 type, ZLSharedConstBuffer* buffer );
-	void					Uniform1f					( u32 location, float v0 );
-	void					Uniform1i					( u32 location, s32 v0 );
-	void					Uniform4fv					( u32 location, u32 count, const float* value );
-	void					UniformMatrix3fv			( u32 location, u32 count, bool transpose, const float* mtx );
-	void					UniformMatrix4fv			( u32 location, u32 count, bool transpose, const float* mtx );
+	void					UniformFloat				( u32 location, u32 index, u32 width, u32 count, const float* value );
+	void					UniformInt					( u32 location, u32 index, u32 width, u32 count, const s32* value );
 	void					UseProgram					( ZLGfxHandle* program );
 	void					VertexAttribPointer			( u32 index, u32 size, u32 type, bool normalized, u32 stride, ZLSharedConstBuffer* buffer, size_t offset );
 	void					Viewport					( s32 x, s32 y, u32 w, u32 h );

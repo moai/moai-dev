@@ -148,7 +148,7 @@ json_t* _luaToJSONArray ( lua_State* L, int idx ) {
 	bool more = true;
 	for ( int key = 1; more; ++key ) {
 		
-		state.GetField ( idx, key );
+		state.PushField ( idx, key );
 		json_t* value = _luaToJSON ( state, -1 );
 		lua_pop ( state, 1 );
 		

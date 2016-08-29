@@ -79,36 +79,33 @@ int MOAIAnimCurveQuat::_setKey ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveQuat::ApplyValueAttrOp ( MOAIAttrOp& attrOp, u32 op ) {
+void MOAIAnimCurveQuat::ApplyValueAttrOp ( MOAIAttribute& attr, u32 op ) {
 
-	this->mValue = attrOp.Apply < ZLQuaternion >( this->mValue, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_QUATERNION );
+	this->mValue = attr.Apply ( this->mValue, op, MOAIAttribute::ATTR_READ_WRITE );
 }
 
 //----------------------------------------------------------------//
 ZLQuaternion MOAIAnimCurveQuat::GetCurveDelta () const {
 
-	ZLQuaternion delta;
+	ZLQuaternion delta = ZLQuaternion::IDENT;
 
 	u32 size = ( u32 )this->mKeys.Size ();
 	if ( size > 1 ) {
 		delta = this->mSamples [ size - 1 ];
 		delta.Sub ( this->mSamples [ 0 ]);
 	}
-	else {
-		delta.Set ( 0.0f, 0.0f, 0.0f, 0.0f );
-	}
 	return delta;
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveQuat::GetDelta ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const {
+void MOAIAnimCurveQuat::GetDelta ( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const {
 
 	ZLQuaternion v0 = this->GetValue ( span0 );
 	ZLQuaternion v1 = this->GetValue ( span1 );
 	
 	v1.Sub ( v0 );
 	
-	attrOp.SetValue < ZLQuaternion >( v1, MOAIAttrOp::ATTR_TYPE_QUATERNION );
+	attr.SetValue ( v1 );
 }
 
 //----------------------------------------------------------------//
@@ -140,17 +137,15 @@ ZLQuaternion MOAIAnimCurveQuat::GetValue ( const MOAIAnimKeySpan& span ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveQuat::GetValue ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) const {
+void MOAIAnimCurveQuat::GetValue ( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const {
 
-	attrOp.SetValue < ZLQuaternion >( this->GetValue ( span ), MOAIAttrOp::ATTR_TYPE_QUATERNION );
+	attr.SetValue ( this->GetValue ( span ));
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveQuat::GetZero ( MOAIAttrOp& attrOp ) const {
+void MOAIAnimCurveQuat::GetZero ( MOAIAttribute& attr ) const {
 
-	ZLQuaternion quat;
-	quat.Set ( 0.0f, 0.0f, 0.0f, 0.0f );
-	attrOp.SetValue < ZLQuaternion >( quat, MOAIAttrOp::ATTR_TYPE_QUATERNION );
+	attr.SetValue ( ZLQuaternion ( 0.0f, 0.0f, 0.0f, 0.0f ));
 }
 
 //----------------------------------------------------------------//
@@ -158,7 +153,7 @@ MOAIAnimCurveQuat::MOAIAnimCurveQuat () {
 	
 	RTTI_SINGLE ( MOAIAnimCurveBase )
 	
-	this->mValue.Identity ();
+	this->mValue = ZLQuaternion::IDENT;
 }
 
 //----------------------------------------------------------------//
@@ -201,6 +196,6 @@ void MOAIAnimCurveQuat::ReserveSamples ( u32 total ) {
 void MOAIAnimCurveQuat::SetSample ( u32 id, float x, float y, float z ) {
 
 	if ( id < this->mKeys.Size ()) {
-		this->mSamples [ id ].Set ( x, y, z );
+		this->mSamples [ id ] = ZLQuaternion ( x, y, z );
 	}
 }

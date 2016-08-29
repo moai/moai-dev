@@ -187,7 +187,7 @@ public:
 
 	//----------------------------------------------------------------//
 	MOAIMaterialBatch*		AffirmMaterialBatch			();
-	bool					ApplyAttrOp					( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	bool					ApplyAttrOp					( u32 attrID, MOAIAttribute& attr, u32 op );
 	virtual void			Draw						( int subPrimID, float lod );
 	virtual void			DrawDebug					( int subPrimID, float lod );
 	bool					Inside						( ZLVec3D vec, float pad );

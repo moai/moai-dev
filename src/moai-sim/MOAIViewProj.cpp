@@ -54,16 +54,15 @@ ZLMatrix4x4 MOAIViewProj::GetWorldToWndMtx ( const MOAIViewport* viewport, const
 	ZLMatrix4x4 worldToWnd;
 	
 	if ( viewport ) {
-			worldToWnd = MOAIViewProj::GetViewMtx ( camera, parallax );
-			worldToWnd.Append ( MOAIViewProj::GetProjectionMtx ( viewport, camera ));
-			worldToWnd.Append ( viewport->GetNormToWndMtx ());
+		worldToWnd = MOAIViewProj::GetViewMtx ( camera, parallax );
+		worldToWnd.Append ( MOAIViewProj::GetProjectionMtx ( viewport, camera ));
+		worldToWnd.Append ( viewport->GetNormToWndMtx ());
 	}
 	else {
-			worldToWnd.Ident ();
+		worldToWnd.Ident ();
 	}
 	
-	ZLMatrix4x4 mtx;
-	mtx.Init ( localToWorldMtx );
+	ZLMatrix4x4 mtx ( localToWorldMtx );
 	worldToWnd.Append ( mtx );
 	
 	return worldToWnd;

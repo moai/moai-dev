@@ -82,10 +82,8 @@ MOAICameraAnchor2D::~MOAICameraAnchor2D () {
 //----------------------------------------------------------------//
 void MOAICameraAnchor2D::OnDepNodeUpdate () {
 	
-	const ZLAffine3D* inherit = this->GetLinkedValue < ZLAffine3D* >( MOAICameraAnchor2DAttr::Pack ( INHERIT_LOC ), 0 );
-	if ( inherit ) {
-		this->mLoc = inherit->GetTranslation ();
-	}
+	const ZLAffine3D inherit = this->GetLinkedValue ( MOAICameraAnchor2DAttr::Pack ( INHERIT_LOC ), ZLAffine3D::IDENT );
+	this->mLoc = inherit.GetTranslation ();
 }
 
 //----------------------------------------------------------------//

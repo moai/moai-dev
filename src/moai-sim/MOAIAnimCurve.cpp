@@ -98,9 +98,9 @@ int MOAIAnimCurve::_setKey ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAnimCurve::ApplyValueAttrOp ( MOAIAttrOp& attrOp, u32 op ) {
+void MOAIAnimCurve::ApplyValueAttrOp ( MOAIAttribute& attr, u32 op ) {
 
-	this->mValue = attrOp.Apply ( this->mValue, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
+	this->mValue = attr.Apply ( this->mValue, op, MOAIAttribute::ATTR_READ_WRITE );
 }
 
 //----------------------------------------------------------------//
@@ -146,12 +146,12 @@ float MOAIAnimCurve::GetCurveDelta () const {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurve::GetDelta ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const {
+void MOAIAnimCurve::GetDelta ( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const {
 
 	float v0 = this->GetValue ( span0 );
 	float v1 = this->GetValue ( span1 );
 	
-	attrOp.SetValue < float >( v1 - v0, MOAIAttrOp::ATTR_TYPE_FLOAT );
+	attr.SetValue ( v1 - v0 );
 }
 
 //----------------------------------------------------------------//
@@ -183,9 +183,9 @@ float MOAIAnimCurve::GetValue ( const MOAIAnimKeySpan& span ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurve::GetValue ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) const {
+void MOAIAnimCurve::GetValue ( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const {
 
-	attrOp.SetValue < float >( this->GetValue ( span ), MOAIAttrOp::ATTR_TYPE_FLOAT );
+	attr.SetValue ( this->GetValue ( span ));
 }
 
 //----------------------------------------------------------------//
@@ -240,9 +240,9 @@ void MOAIAnimCurve::GetValueRange ( float t0, float t1, float &min, float &max )
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurve::GetZero ( MOAIAttrOp& attrOp ) const {
+void MOAIAnimCurve::GetZero ( MOAIAttribute& attr ) const {
 
-	attrOp.SetValue < float >( 0.0f, MOAIAttrOp::ATTR_TYPE_FLOAT );
+	attr.SetValue ( 0.0f );
 }
 
 //----------------------------------------------------------------//

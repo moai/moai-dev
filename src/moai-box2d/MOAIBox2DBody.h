@@ -66,7 +66,7 @@ private:
 	static int		_setType				( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	bool			ApplyAttrOp				( u32 attrID, MOAIAttribute& attr, u32 op );
 	void			BuildLocalToWorldMtx	( ZLAffine3D& localToWorldMtx );
 	void			Clear					();
 	void			SetBody					( b2Body* body );

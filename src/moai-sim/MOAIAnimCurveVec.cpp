@@ -76,9 +76,9 @@ int MOAIAnimCurveVec::_setKey ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveVec::ApplyValueAttrOp ( MOAIAttrOp& attrOp, u32 op ) {
+void MOAIAnimCurveVec::ApplyValueAttrOp ( MOAIAttribute& attr, u32 op ) {
 
-	this->mValue = attrOp.Apply < ZLVec3D >( this->mValue, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_VECTOR );
+	this->mValue = attr.Apply ( this->mValue, op, MOAIAttribute::ATTR_READ_WRITE );
 }
 
 //----------------------------------------------------------------//
@@ -98,14 +98,14 @@ ZLVec3D MOAIAnimCurveVec::GetCurveDelta () const {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveVec::GetDelta ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const {
+void MOAIAnimCurveVec::GetDelta ( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const {
 
 	ZLVec3D v0 = this->GetValue ( span0 );
 	ZLVec3D v1 = this->GetValue ( span1 );
 	
 	v1.Sub ( v0 );
 	
-	attrOp.SetValue < ZLVec3D >( v1, MOAIAttrOp::ATTR_TYPE_VECTOR );
+	attr.SetValue ( v1 );
 }
 
 //----------------------------------------------------------------//
@@ -139,16 +139,16 @@ ZLVec3D MOAIAnimCurveVec::GetValue ( const MOAIAnimKeySpan& span ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveVec::GetValue ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) const {
+void MOAIAnimCurveVec::GetValue ( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const {
 
-	attrOp.SetValue < ZLVec3D >( this->GetValue ( span ), MOAIAttrOp::ATTR_TYPE_VECTOR );
+	attr.SetValue ( this->GetValue ( span ));
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveVec::GetZero ( MOAIAttrOp& attrOp ) const {
+void MOAIAnimCurveVec::GetZero ( MOAIAttribute& attr ) const {
 
 	ZLVec3D zero ( 0.0f, 0.0f, 0.0f );
-	attrOp.SetValue < ZLVec3D >( zero, MOAIAttrOp::ATTR_TYPE_VECTOR );
+	attr.SetValue ( zero );
 }
 
 //----------------------------------------------------------------//

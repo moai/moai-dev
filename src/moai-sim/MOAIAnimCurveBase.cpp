@@ -42,6 +42,17 @@ int MOAIAnimCurveBase::_reserveKeys ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAnimCurveBase::_setTime ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAnimCurveBase, "UN" );
+
+	self->mTime = state.GetValue < float >( 2, 0.0f );
+	self->ScheduleUpdate ();
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setWrapMode
 	@text	Sets the wrap mode for values above 1.0 and below 0.0.
 			CLAMP sets all values above and below 1.0 and 0.0 to
@@ -69,16 +80,16 @@ int	MOAIAnimCurveBase::_setWrapMode	( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIAnimCurveBase::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+bool MOAIAnimCurveBase::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( MOAIAnimCurveBaseAttr::Check ( attrID )) {
 
 		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_TIME:
-				this->mTime = attrOp.Apply ( this->mTime, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				this->mTime = attr.Apply ( this->mTime, op, MOAIAttribute::ATTR_READ_WRITE );
 				return true;
 			case ATTR_VALUE:
-				this->ApplyValueAttrOp ( attrOp, op );
+				this->ApplyValueAttrOp ( attr, op );
 				return true;
 		}
 	}
@@ -108,17 +119,17 @@ u32 MOAIAnimCurveBase::FindKeyID ( float time ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveBase::GetDelta ( MOAIAttrOp& attrOp, float t0, float t1 ) {
+void MOAIAnimCurveBase::GetDelta ( MOAIAttribute& attr, float t0, float t1 ) {
 	
 	if (( t0 == t1 ) || ( this->mKeys.Size () < 2 )) {
-		this->GetZero ( attrOp );
+		this->GetZero ( attr );
 	}
 	else {
 
 		MOAIAnimKeySpan s0 = this->GetSpan ( t0 );
 		MOAIAnimKeySpan s1 = this->GetSpan ( t1 );
 		
-		this->GetDelta ( attrOp, s0, s1 );
+		this->GetDelta ( attr, s0, s1 );
 	}
 }
 
@@ -175,10 +186,10 @@ MOAIAnimKeySpan MOAIAnimCurveBase::GetSpan ( float time ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveBase::GetValue ( MOAIAttrOp& attrOp, float time ) {
+void MOAIAnimCurveBase::GetValue ( MOAIAttribute& attr, float time ) {
 	
 	MOAIAnimKeySpan span = this->GetSpan ( time );
-	this->GetValue ( attrOp, span );
+	this->GetValue ( attr, span );
 }
 
 //----------------------------------------------------------------//
@@ -217,6 +228,7 @@ void MOAIAnimCurveBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getLength",			_getLength },
 		{ "reserveKeys",		_reserveKeys },
+		{ "setTime",			_setTime },
 		{ "setWrapMode",		_setWrapMode },
 		{ NULL, NULL }
 	};

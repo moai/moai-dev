@@ -26,7 +26,7 @@ MOAIEventSource::~MOAIEventSource () {
 bool MOAIEventSource::PushListener ( u32 eventID, MOAILuaState& state ) {
 
 	if ( this->PushListenerTable ( state )) {
-		if ( state.GetFieldWithType ( -1, eventID, LUA_TFUNCTION )) {
+		if ( state.PushFieldWithType ( -1, eventID, LUA_TFUNCTION )) {
 			lua_replace ( state, -2 );
 			return true;
 		}

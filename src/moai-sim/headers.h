@@ -11,9 +11,10 @@
 #include <moai-sim/MOAIAnim.h>
 #include <moai-sim/MOAIAnimCurve.h>
 #include <moai-sim/MOAIAnimCurveBase.h>
+#include <moai-sim/MOAIAnimCurveBone.h>
 #include <moai-sim/MOAIAnimCurveQuat.h>
 #include <moai-sim/MOAIAnimCurveVec.h>
-#include <moai-sim/MOAIAttrOp.h>
+#include <moai-sim/MOAIAttribute.h>
 #include <moai-sim/MOAIBlendMode.h>
 #include <moai-sim/MOAIBoundsDeck.h>
 //#include <moai-sim/MOAIBspBuilder2D.h>

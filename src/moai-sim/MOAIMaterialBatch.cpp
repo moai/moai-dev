@@ -459,7 +459,7 @@ void MOAIMaterialBatch::SetHitMaskScalar ( MOAILuaState& state, u32 idx ) {
 		materialIdx = state.GetValue < u32 >( idx++, 1 ) - 1;
 	}
 	
-	ZLColorVec scalar = state.GetValue < ZLColorVec >( idx, ZLColorVec ( 1.0f, 1.0f, 1.0f, 1.0f ));
+	ZLColorVec scalar = state.GetValue < ZLColorVec >( idx, ZLColorVec::WHITE );
 	this->SetHitMaskScalar ( materialIdx, scalar.PackRGBA ());
 }
 

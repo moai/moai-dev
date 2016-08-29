@@ -233,7 +233,7 @@ MOAISerializerBase::ObjID MOAISerializer::AffirmMemberID ( MOAILuaState& state, 
 		
 		this->PushLuaUserdata ( state );
 		
-		if ( state.GetFieldWithType ( -1, "getObjectTables", LUA_TFUNCTION )) {
+		if ( state.PushFieldWithType ( -1, "getObjectTables", LUA_TFUNCTION )) {
 		
 			lua_pushvalue ( state, -2 );
 			lua_pushvalue ( state, idx );

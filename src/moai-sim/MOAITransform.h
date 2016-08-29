@@ -135,7 +135,7 @@ public:
 	GET_SET ( u32, EulerOrder, mEulerOrder )
 	
 	//----------------------------------------------------------------//
-	bool					ApplyAttrOp					( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	bool					ApplyAttrOp					( u32 attrID, MOAIAttribute& attr, u32 op );
 	ZLAffine3D				GetBillboardMtx				( const ZLAffine3D& faceCameraMtx ) const;
 							MOAITransform				();
 							~MOAITransform				();

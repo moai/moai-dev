@@ -34,14 +34,14 @@ public:
 	DECL_LUA_FACTORY ( MOAIAnimCurve )
 	
 	//----------------------------------------------------------------//
-	void			ApplyValueAttrOp	( MOAIAttrOp& attrOp, u32 op );
+	void			ApplyValueAttrOp	( MOAIAttribute& attr, u32 op );
 	void			Draw				( u32 resolution ) const;
-	void			GetDelta			( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const;
+	void			GetDelta			( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const;
 	float			GetSample			( u32 id );
 	float			GetValue			( float time ) const;
-	void			GetValue			( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) const;
+	void			GetValue			( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const;
 	void			GetValueRange		( float t0, float t1, float &min, float &max );
-	void			GetZero				( MOAIAttrOp& attrOp ) const;
+	void			GetZero				( MOAIAttribute& attr ) const;
 					MOAIAnimCurve		();
 					~MOAIAnimCurve		();
 	void			OnDepNodeUpdate		();

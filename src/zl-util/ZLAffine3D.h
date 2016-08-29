@@ -4,6 +4,7 @@
 #ifndef ZLAFFINE3D_H
 #define ZLAFFINE3D_H
 
+#include <zl-util/ZLLog.h>
 #include <zl-util/ZLMathConsts.h>
 #include <zl-util/ZLMatrix.h>
 #include <zl-util/ZLRect.h>
@@ -17,6 +18,8 @@
 template < typename TYPE >
 class ZLMetaAffine3D {
 public:
+
+	static const ZLMetaAffine3D < TYPE > IDENT;
 
 	enum {
 		C0_R0	=	0,
@@ -107,6 +110,12 @@ public:
 		heading.NormSafe ();
 		
 		return heading;
+	}
+
+	//----------------------------------------------------------------//
+	static int GetIndex ( int row, int col ) {
+	
+		return ( col * 3 ) + row;
 	}
 
 	//----------------------------------------------------------------//
@@ -207,7 +216,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Ident () {
+	ZLMetaAffine3D& Ident () {
 
 		m [ C0_R0 ]	= 1;
 		m [ C0_R1 ]	= 0;
@@ -224,6 +233,8 @@ public:
 		m [ C3_R0 ]	= 0;
 		m [ C3_R1 ]	= 0;
 		m [ C3_R2 ]	= 0;
+		
+		return *this;
 	}
 
 	//----------------------------------------------------------------//
@@ -231,27 +242,6 @@ public:
 	void Init ( const ZLMetaAffine3D < PARAM_TYPE >& mtx ) {
 
 		memcpy ( m, mtx.m, sizeof ( m ));
-	}
-
-	//----------------------------------------------------------------//
-	template < typename PARAM_TYPE >
-	void Init ( const ZLMetaMatrix4x4 < PARAM_TYPE >& mtx ) {
-		
-		m[C0_R0]	= ( TYPE )mtx.m[MatrixElem4x4::C0_R0];
-		m[C0_R1]	= ( TYPE )mtx.m[MatrixElem4x4::C0_R1];
-		m[C0_R2]	= ( TYPE )mtx.m[MatrixElem4x4::C0_R2];
-		
-		m[C1_R0]	= ( TYPE )mtx.m[MatrixElem4x4::C1_R0];
-		m[C1_R1]	= ( TYPE )mtx.m[MatrixElem4x4::C1_R1];
-		m[C1_R2]	= ( TYPE )mtx.m[MatrixElem4x4::C1_R2];
-		
-		m[C2_R0]	= ( TYPE )mtx.m[MatrixElem4x4::C2_R0];
-		m[C2_R1]	= ( TYPE )mtx.m[MatrixElem4x4::C2_R1];
-		m[C2_R2]	= ( TYPE )mtx.m[MatrixElem4x4::C2_R2];
-		
-		m[C3_R0]	= ( TYPE )mtx.m[MatrixElem4x4::C3_R0];
-		m[C3_R1]	= ( TYPE )mtx.m[MatrixElem4x4::C3_R1];
-		m[C3_R2]	= ( TYPE )mtx.m[MatrixElem4x4::C3_R2];
 	}
 
 	//----------------------------------------------------------------//
@@ -377,6 +367,14 @@ public:
 						( mtx1.m[C1_R2] * mtx2.m[C3_R1] )	+
 						( mtx1.m[C2_R2] * mtx2.m[C3_R2] )	+
 						( mtx1.m[C3_R2] );
+	}
+
+	//----------------------------------------------------------------//
+	void Print ( u32 level = ZLLog::LOG_REPORT, FILE* file = ZLLog::CONSOLE ) const {
+	
+		ZLLog::LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R0 ], m [ C1_R0 ], m [ C2_R0 ], m [ C3_R0 ]);
+		ZLLog::LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R1 ], m [ C1_R1 ], m [ C2_R1 ], m [ C3_R1 ]);
+		ZLLog::LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R2 ], m [ C1_R2 ], m [ C2_R2 ], m [ C3_R2 ]);
 	}
 
 	//----------------------------------------------------------------//
@@ -628,6 +626,12 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	void SetElement ( int c, int r, TYPE value ) const {
+
+		m [ ( c * 3 ) + r ] = value;
+	}
+
+	//----------------------------------------------------------------//
 	void Shear ( TYPE yx, TYPE zx, TYPE xy, TYPE zy, TYPE xz, TYPE yz ) {
 
 		m[C0_R0]	= 1;
@@ -855,7 +859,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Translate ( ZLMetaVec3D < TYPE >& trn ) {
+	void Translate ( const ZLMetaVec3D < TYPE >& trn ) {
 
 		Translate (	trn.mX,	trn.mY,	trn.mZ );
 	}
@@ -883,7 +887,52 @@ public:
 	//----------------------------------------------------------------//
 	ZLMetaAffine3D () {
 	}
+	
+	//----------------------------------------------------------------//
+	template < typename PARAM_TYPE >
+	ZLMetaAffine3D ( const ZLMetaMatrix3x3 < PARAM_TYPE >& mtx ) {
+
+		m[C0_R0]	= ( TYPE )mtx.m[MatrixElem3x3::C0_R0];
+		m[C0_R1]	= ( TYPE )mtx.m[MatrixElem3x3::C0_R1];
+		m[C0_R2]	= ( TYPE )mtx.m[MatrixElem3x3::C0_R2];
+		
+		m[C1_R0]	= ( TYPE )mtx.m[MatrixElem3x3::C1_R0];
+		m[C1_R1]	= ( TYPE )mtx.m[MatrixElem3x3::C1_R1];
+		m[C1_R2]	= ( TYPE )mtx.m[MatrixElem3x3::C1_R2];
+		
+		m[C2_R0]	= ( TYPE )mtx.m[MatrixElem3x3::C2_R0];
+		m[C2_R1]	= ( TYPE )mtx.m[MatrixElem3x3::C2_R1];
+		m[C2_R2]	= ( TYPE )mtx.m[MatrixElem3x3::C2_R2];
+		
+		m[C3_R0]	= 0;
+		m[C3_R1]	= 0;
+		m[C3_R2]	= 0;
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename PARAM_TYPE >
+	ZLMetaAffine3D ( const ZLMetaMatrix4x4 < PARAM_TYPE >& mtx ) {
+		
+		m[C0_R0]	= ( TYPE )mtx.m[MatrixElem4x4::C0_R0];
+		m[C0_R1]	= ( TYPE )mtx.m[MatrixElem4x4::C0_R1];
+		m[C0_R2]	= ( TYPE )mtx.m[MatrixElem4x4::C0_R2];
+		
+		m[C1_R0]	= ( TYPE )mtx.m[MatrixElem4x4::C1_R0];
+		m[C1_R1]	= ( TYPE )mtx.m[MatrixElem4x4::C1_R1];
+		m[C1_R2]	= ( TYPE )mtx.m[MatrixElem4x4::C1_R2];
+		
+		m[C2_R0]	= ( TYPE )mtx.m[MatrixElem4x4::C2_R0];
+		m[C2_R1]	= ( TYPE )mtx.m[MatrixElem4x4::C2_R1];
+		m[C2_R2]	= ( TYPE )mtx.m[MatrixElem4x4::C2_R2];
+		
+		m[C3_R0]	= ( TYPE )mtx.m[MatrixElem4x4::C3_R0];
+		m[C3_R1]	= ( TYPE )mtx.m[MatrixElem4x4::C3_R1];
+		m[C3_R2]	= ( TYPE )mtx.m[MatrixElem4x4::C3_R2];
+	}
 };
+
+template < typename TYPE >
+const ZLMetaAffine3D < TYPE > ZLMetaAffine3D < TYPE >::IDENT = ZLMetaAffine3D < TYPE >().Ident ();
 
 typedef ZLMetaAffine3D < float > ZLAffine3D;
 typedef ZLMetaAffine3D < double > ZLAffine3D64;

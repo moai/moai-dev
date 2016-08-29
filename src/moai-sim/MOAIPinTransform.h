@@ -42,7 +42,7 @@ public:
 		
 	//----------------------------------------------------------------//
 		
-	virtual bool	ApplyAttrOp					( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	virtual bool	ApplyAttrOp					( u32 attrID, MOAIAttribute& attr, u32 op );
 					MOAIPinTransform			();
 					~MOAIPinTransform			();
 	void			RegisterLuaClass			( MOAILuaState& state );

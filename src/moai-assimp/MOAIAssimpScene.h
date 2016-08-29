@@ -7,6 +7,7 @@
 #ifndef MOAIASSIMPSCENE_H
 #define MOAIASSIMPSCENE_H
 
+class MOAIAssimpAnimation;
 class MOAIAssimpCamera;
 class MOAIAssimpMesh;
 class MOAIAssimpSceneMember;
@@ -22,9 +23,10 @@ private:
 	const aiScene*		mScene;
 	Assimp::Importer*	mImporter;
 
-	ZLLeanArray < MOAILuaMemberRef >	mMaterials;
-	ZLLeanArray < MOAIAssimpCamera* >	mCameras;
-	ZLLeanArray < MOAIAssimpMesh* >		mMeshes;
+	ZLLeanArray < MOAIAssimpAnimation* >	mAnimations;
+	ZLLeanArray < MOAIAssimpCamera* >		mCameras;
+	ZLLeanArray < MOAILuaMemberRef >		mMaterials;
+	ZLLeanArray < MOAIAssimpMesh* >			mMeshes;
 	
 	typedef STLList < MOAIAssimpSceneMember* >::iterator	SceneMembersIt;
 	STLList < MOAIAssimpSceneMember* >						mSceneMembers;
@@ -37,6 +39,7 @@ private:
 	static int			_countMaterials				( lua_State* L );
 	static int			_countMeshes				( lua_State* L );
 	static int			_countTextures				( lua_State* L );
+	static int			_getAnimations				( lua_State* L );
 	static int			_getCameras					( lua_State* L );
 	static int			_getMaterials				( lua_State* L );
 	static int			_getMeshes					( lua_State* L );
@@ -49,6 +52,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void					Clear					();
+	MOAIAssimpAnimation*	GetAnimation			( size_t idx );
 	MOAIAssimpCamera*		GetCamera				( size_t idx );
 	MOAILuaMemberRef*		GetMaterial				( size_t idx );
 	MOAIAssimpMesh*			GetMesh					( size_t idx );

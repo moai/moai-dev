@@ -872,57 +872,34 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				
 				break;
 			}
-			case ZLGFX_UNIFORM_1F: {
-			
-				draw.Uniform1f (
-					this->mStream->Read < u32 >( 0 ),
-					this->mStream->Read < float >( 0 )
-				);
-				break;
-			}
-			case ZLGFX_UNIFORM_1I: {
-			
-				draw.Uniform1i (
-					this->mStream->Read < u32 >( 0 ),
-					this->mStream->Read < s32 >( 0 )
-				);
-				break;
-			}
-			case ZLGFX_UNIFORM_4FV: {
+			case ZLGFX_UNIFORM_FLOAT: {
 			
 				u32 location = this->mStream->Read < u32 >( 0 );
+				u32 index = this->mStream->Read < u32 >( 0 );
+				u32 width = this->mStream->Read < u32 >( 0 );
 				u32 count = this->mStream->Read < u32 >( 0 );
 				
-				float vec [ 4 ];
-				this->mStream->ReadBytes ( vec, sizeof ( float ) * 4 );
+				assert ( width < 16 );
+				
+				float vec [ 16 ];
+				this->mStream->ReadBytes ( vec, sizeof ( float ) * width );
 			
-				draw.Uniform4fv ( location, count, vec );
+				draw.UniformFloat ( location, index, width, count, vec );
 				break;
 			}
-			case ZLGFX_UNIFORM_MATRIX_3FV: {
-				
-				u32 location = this->mStream->Read < u32 >( 0 );
-				u32 count = this->mStream->Read < u32 >( 0 );
-				bool transpose = this->mStream->Read < bool >( false );
-				
-				float mtx [ 9 ];
-				this->mStream->ReadBytes ( &mtx, sizeof ( float ) * 9 );
-				
-				draw.UniformMatrix3fv ( location, count, transpose, mtx );
-				
-				break;
-			}
-			case ZLGFX_UNIFORM_MATRIX_4FV: {
-				
-				u32 location = this->mStream->Read < u32 >( 0 );
-				u32 count = this->mStream->Read < u32 >( 0 );
-				bool transpose = this->mStream->Read < bool >( false );
-				
-				float mtx [ 16 ];
-				this->mStream->ReadBytes ( &mtx, sizeof ( float ) * 16 );
-				
-				draw.UniformMatrix4fv ( location, count, transpose, mtx );
+			case ZLGFX_UNIFORM_INT: {
 			
+				u32 location = this->mStream->Read < u32 >( 0 );
+				u32 index = this->mStream->Read < u32 >( 0 );
+				u32 width = this->mStream->Read < u32 >( 0 );
+				u32 count = this->mStream->Read < u32 >( 0 );
+				
+				assert ( width < 16 );
+				
+				s32 vec [ 16 ];
+				this->mStream->ReadBytes ( vec, sizeof ( s32 ) * width );
+			
+				draw.UniformInt ( location, index, width, count, vec );
 				break;
 			}
 			case ZLGFX_USE_PROGRAM: {
@@ -1384,58 +1361,29 @@ void ZLGfxRetained::TexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 wid
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::Uniform1f ( u32 location, float v0 ) {
+void ZLGfxRetained::UniformFloat ( u32 location, u32 index, u32 width, u32 count, const float* value ) {
 
 	assert ( this->mStream );
 
-	this->mStream->Write < u32 >( ZLGFX_UNIFORM_1F );
+	this->mStream->Write < u32 >( ZLGFX_UNIFORM_FLOAT );
 	this->mStream->Write < u32 >( location );
-	this->mStream->Write < float >( v0 );
-}
-
-//----------------------------------------------------------------//
-void ZLGfxRetained::Uniform1i ( u32 location, s32 v0 ) {
-
-	assert ( this->mStream );
-
-	this->mStream->Write < u32 >( ZLGFX_UNIFORM_1I );
-	this->mStream->Write < u32 >( location );
-	this->mStream->Write < s32 >( v0 );
-}
-
-//----------------------------------------------------------------//
-void ZLGfxRetained::Uniform4fv ( u32 location, u32 count, const float* value ) {
-
-	assert ( this->mStream );
-
-	this->mStream->Write < u32 >( ZLGFX_UNIFORM_4FV );
-	this->mStream->Write < u32 >( location );
+	this->mStream->Write < u32 >( index );
+	this->mStream->Write < u32 >( width );
 	this->mStream->Write < u32 >( count );
-	this->mStream->WriteBytes ( value, sizeof ( float ) * 4 );
+	this->mStream->WriteBytes ( value, sizeof ( float ) * width );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::UniformMatrix3fv ( u32 location, u32 count, bool transpose, const float* mtx ) {
+void ZLGfxRetained::UniformInt ( u32 location, u32 index, u32 width, u32 count, const s32* value ) {
 
 	assert ( this->mStream );
 
-	this->mStream->Write < u32 >( ZLGFX_UNIFORM_MATRIX_3FV );
+	this->mStream->Write < u32 >( ZLGFX_UNIFORM_INT );
 	this->mStream->Write < u32 >( location );
+	this->mStream->Write < u32 >( index );
+	this->mStream->Write < u32 >( width );
 	this->mStream->Write < u32 >( count );
-	this->mStream->Write < bool >( transpose );
-	this->mStream->WriteBytes ( mtx, sizeof ( float ) * 9 );
-}
-
-//----------------------------------------------------------------//
-void ZLGfxRetained::UniformMatrix4fv ( u32 location, u32 count, bool transpose, const float* mtx ) {
-
-	assert ( this->mStream );
-
-	this->mStream->Write < u32 >( ZLGFX_UNIFORM_MATRIX_4FV );
-	this->mStream->Write < u32 >( location );
-	this->mStream->Write < u32 >( count );
-	this->mStream->Write < bool >( transpose );
-	this->mStream->WriteBytes ( mtx, sizeof ( float ) * 16 );
+	this->mStream->WriteBytes ( value, sizeof ( s32 ) * width );
 }
 
 //----------------------------------------------------------------//

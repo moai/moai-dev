@@ -277,18 +277,18 @@ void MOAIVertexArray::ReserveVertexBuffers ( u32 total ) {
 //----------------------------------------------------------------//
 void MOAIVertexArray::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
-	u32 totalVAOs = state.GetField < u32 >( -1, "mTotalVAOs", 0 );
+	u32 totalVAOs = state.GetFieldValue < u32 >( -1, "mTotalVAOs", 0 );
 	this->ReserveVAOs ( totalVAOs );
 	
-	u32 totalVertexBuffers = state.GetField < u32 >( -1, "mTotalVertexBuffers", 0 );
+	u32 totalVertexBuffers = state.GetFieldValue < u32 >( -1, "mTotalVertexBuffers", 0 );
 	this->ReserveVertexBuffers ( totalVertexBuffers );
 	
-	if ( state.GetFieldWithType ( -1, "mVertexBuffers", LUA_TTABLE )) {
+	if ( state.PushFieldWithType ( -1, "mVertexBuffers", LUA_TTABLE )) {
 		int itr = state.PushTableItr ( -1 );
 		for ( u32 i = 0; state.TableItrNext ( itr ); ++i ) {
 			if ( state.IsType ( -1, LUA_TTABLE )) {
-				MOAIVertexBuffer* buffer = serializer.MemberIDToObject < MOAIVertexBuffer >( state.GetField < MOAISerializer::ObjID >( -1, "mBuffer", 0 ));
-				MOAIVertexFormat* format = serializer.MemberIDToObject < MOAIVertexFormat >( state.GetField < MOAISerializer::ObjID >( -1, "mFormat", 0 ));
+				MOAIVertexBuffer* buffer = serializer.MemberIDToObject < MOAIVertexBuffer >( state.GetFieldValue < MOAISerializer::ObjID >( -1, "mBuffer", 0 ));
+				MOAIVertexFormat* format = serializer.MemberIDToObject < MOAIVertexFormat >( state.GetFieldValue < MOAISerializer::ObjID >( -1, "mFormat", 0 ));
 				this->SetVertexBuffer ( i, buffer, format );
 			}
 		}

@@ -86,9 +86,7 @@ ZLRect MOAIScissorRect::GetScissorRect ( const ZLMatrix4x4& worldToWndMtx ) cons
 	vtx3D [ 3 ].mY = this->mRect.mYMin;
 	vtx3D [ 3 ].mZ = 0.0f;
 
-	ZLMatrix4x4 mtx;
-	
-	mtx.Init ( this->GetLocalToWorldMtx ());
+	ZLMatrix4x4 mtx ( this->GetLocalToWorldMtx ());
 	mtx.Append ( worldToWndMtx );
 	
 	mtx.Project ( vtx3D [ 0 ]);

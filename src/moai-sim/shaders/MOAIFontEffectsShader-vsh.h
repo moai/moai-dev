@@ -7,7 +7,7 @@
 #define SHADER(str) #str
 
 static cc8* _fontEffectsShaderVSH = SHADER (
-									 
+		
 	attribute vec4 position;
 	attribute vec2 uv;
 	attribute vec4 color;

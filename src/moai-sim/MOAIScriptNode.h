@@ -38,12 +38,12 @@ public:
 	DECL_LUA_FACTORY ( MOAIScriptNode )
 	
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	bool			ApplyAttrOp				( u32 attrID, MOAIAttribute& attr, u32 op );
 					MOAIScriptNode			();
 					~MOAIScriptNode			();
-	void			NamedAttrAdd			( u32 attrID, MOAIAttrOp& attrOp );
-	void			NamedAttrGet			( u32 attrID, MOAIAttrOp& attrOp );
-	void			NamedAttrSet			( u32 attrID, MOAIAttrOp& attrOp );
+	void			NamedAttrAdd			( u32 attrID, MOAIAttribute& attr );
+	void			NamedAttrGet			( u32 attrID, MOAIAttribute& attr );
+	void			NamedAttrSet			( u32 attrID, MOAIAttribute& attr );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };

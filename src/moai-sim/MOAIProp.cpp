@@ -567,21 +567,21 @@ void MOAIProp::AddToSortBuffer ( MOAIPartitionResultBuffer& buffer, u32 key ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+bool MOAIProp::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( MOAIPropAttr::Check ( attrID )) {
 		
 		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_INDEX:
-				this->mIndex = ZLFloat::ToIndex ( attrOp.Apply (( float )this->mIndex, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_INT ));
+				this->mIndex = ZLFloat::ToIndex ( attr.Apply (( s32 )this->mIndex, op, MOAIAttribute::ATTR_READ_WRITE ));
 				return true;
 			case ATTR_PARTITION:
-				this->SetPartition ( attrOp.ApplyNoAdd < MOAIPartition* >( this->GetPartition (), op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_VARIANT ));
+				this->SetPartition ( attr.ApplyVariantNoAdd < MOAIPartition* >( this->GetPartition (), op, MOAIAttribute::ATTR_READ_WRITE ));
 				return true;
 		}
 	}
 	
-	return MOAITransform::ApplyAttrOp ( attrID, attrOp, op );
+	return MOAITransform::ApplyAttrOp ( attrID, attr, op );
 }
 
 //----------------------------------------------------------------//
@@ -867,8 +867,8 @@ void MOAIProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer )
 	
 	MOAITransform::SerializeIn ( state, serializer );
 	
-	this->mDeck.Set ( *this, serializer.MemberIDToObject < MOAIDeck >( state.GetField < MOAISerializerBase::ObjID >( -1, "mDeck", 0 )));
-	this->mGrid.Set ( *this, serializer.MemberIDToObject < MOAIGrid >( state.GetField < MOAISerializerBase::ObjID >( -1, "mGrid", 0 )));
+	this->mDeck.Set ( *this, serializer.MemberIDToObject < MOAIDeck >( state.GetFieldValue < MOAISerializerBase::ObjID >( -1, "mDeck", 0 )));
+	this->mGrid.Set ( *this, serializer.MemberIDToObject < MOAIGrid >( state.GetFieldValue < MOAISerializerBase::ObjID >( -1, "mGrid", 0 )));
 }
 
 //----------------------------------------------------------------//

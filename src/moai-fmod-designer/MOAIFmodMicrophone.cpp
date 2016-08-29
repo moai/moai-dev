@@ -49,9 +49,9 @@ void MOAIFmodMicrophone::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIFmodMicrophone::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+bool MOAIFmodMicrophone::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
     
-    bool bReturn = MOAITransform::ApplyAttrOp ( attrID, attrOp, op );    
+    bool bReturn = MOAITransform::ApplyAttrOp ( attrID, attr, op );    
 
     if ( MOAIFmodMicrophoneAttr::Check ( attrID ) )
     {   

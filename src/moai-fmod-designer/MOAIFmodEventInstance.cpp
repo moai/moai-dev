@@ -555,9 +555,9 @@ void MOAIFmodEventInstance::SetInstanceLoc ( ZLVec3D& vPos )
 }
 
 //----------------------------------------------------------------//
-bool MOAIFmodEventInstance::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+bool MOAIFmodEventInstance::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
     
-    bool bReturn = MOAITransform::ApplyAttrOp ( attrID, attrOp, op );    
+    bool bReturn = MOAITransform::ApplyAttrOp ( attrID, attr, op );    
 
     if ( MOAIFmodEventInstanceAttr::Check ( attrID ) )
     {

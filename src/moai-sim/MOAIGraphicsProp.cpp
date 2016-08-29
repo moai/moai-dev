@@ -577,7 +577,7 @@ u32 MOAIGraphicsProp::AffirmInterfaceMask ( MOAIPartition& partition ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGraphicsProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+bool MOAIGraphicsProp::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( MOAIGraphicsPropAttr::Check ( attrID )) {
 		
@@ -585,33 +585,33 @@ bool MOAIGraphicsProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 		
 			// TODO: fix this conflict with material batch concept
 			case ATTR_SHADER:
-				//this->mShader.Set ( *this, attrOp.ApplyNoAdd < MOAIShader* >( this->mShader, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_VARIANT ));
+				//this->mShader.Set ( *this, attr.ApplyNoAdd < MOAIShader* >( this->mShader, op, MOAIAttribute::ATTR_READ_WRITE, MOAIAttribute::ATTR_TYPE_VARIANT ));
 				return true;
 				
 			case ATTR_SCISSOR_RECT:
-				this->mScissorRect.Set ( *this, attrOp.ApplyNoAdd < MOAIScissorRect* >( this->mScissorRect, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_VARIANT ));
+				this->mScissorRect.Set ( *this, attr.ApplyVariantNoAdd < MOAIScissorRect* >( this->mScissorRect, op, MOAIAttribute::ATTR_READ_WRITE ));
 				return true;
 
 			case ATTR_BLEND_MODE:
-				attrOp.ApplyNoAdd < MOAIBlendMode >( this->mBlendMode, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_VARIANT );
+				attr.ApplyVariantNoAdd < MOAIBlendMode >( this->mBlendMode, op, MOAIAttribute::ATTR_READ_WRITE );
 				return true;
 				
 			case ATTR_LOCAL_VISIBLE:
-				this->SetVisible ( ZLFloat::ToBoolean ( attrOp.ApplyNoAdd ( ZLFloat::FromBoolean (( this->mFlags & FLAGS_LOCAL_VISIBLE ) != 0 ), op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT )));
+				this->SetVisible ( ZLFloat::ToBoolean ( attr.ApplyNoAdd ( ZLFloat::FromBoolean (( this->mFlags & FLAGS_LOCAL_VISIBLE ) != 0 ), op, MOAIAttribute::ATTR_READ_WRITE )));
 				return true;
 				
 			case ATTR_VISIBLE:
-				attrOp.ApplyNoAdd ( ZLFloat::FromBoolean ( this->IsVisible ()), op , MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				attr.ApplyNoAdd ( ZLFloat::FromBoolean ( this->IsVisible ()), op , MOAIAttribute::ATTR_READ );
 				return true;
 			
 			//case FRAME_TRAIT:
-			//	attrOp.Apply < ZLBox >( &this->mFrame, op, MOAIAttrOp::ATTR_READ );
+			//	attr.Apply < ZLBox >( &this->mFrame, op, MOAIAttribute::ATTR_READ );
 			//	return true;
 		}
 	}
 	
-	if ( MOAIColor::ApplyAttrOp ( attrID, attrOp, op )) return true;
-	return MOAIProp::ApplyAttrOp ( attrID, attrOp, op );
+	if ( MOAIColor::ApplyAttrOp ( attrID, attr, op )) return true;
+	return MOAIProp::ApplyAttrOp ( attrID, attr, op );
 }
 
 //----------------------------------------------------------------//
@@ -726,14 +726,13 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 	
 		case BILLBOARD_NORMAL: {
 			
-			ZLAffine3D billboardMtx;
-			billboardMtx.Init ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::INVERSE_VIEW_MTX )); // inv view mtx sans translation
+			ZLAffine3D billboardMtx ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::INVERSE_VIEW_MTX )); // inv view mtx sans translation
 			
 			billboardMtx.m [ ZLAffine3D::C3_R0 ] = 0.0f;
 			billboardMtx.m [ ZLAffine3D::C3_R1 ] = 0.0f;
 			billboardMtx.m [ ZLAffine3D::C3_R2 ] = 0.0f;
 			
-			worldDrawingMtx.Init ( this->GetBillboardMtx ( billboardMtx ));
+			worldDrawingMtx = ZLMatrix4x4 ( this->GetBillboardMtx ( billboardMtx ));
 			break;
 		}
 		
@@ -747,7 +746,7 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 			//invViewProj.Append ( proj );
 			//invViewProj.Inverse ();
 			
-			worldDrawingMtx.Init ( this->GetLocalToWorldMtx ());
+			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
 			
 			// world space location for prop
 			ZLVec3D worldLoc;
@@ -783,8 +782,7 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 		case BILLBOARD_COMPASS: {
 		
 			//const ZLAffine3D& cameraMtx = camera->GetLocalToWorldMtx (); // inv view mtx
-			ZLAffine3D cameraMtx;
-			cameraMtx.Init ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::INVERSE_VIEW_MTX ));
+			ZLAffine3D cameraMtx ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::INVERSE_VIEW_MTX ));
 			//ZLVec3D cameraZ = cameraMtx.GetZAxis ();
 			ZLVec3D	cameraY = cameraMtx.GetYAxis ();
 			
@@ -810,7 +808,7 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 			mtx.Translate ( this->mPiv.mX, this->mPiv.mY, this->mPiv.mZ );
 			billboardMtx.Append ( mtx );
 			
-			worldDrawingMtx.Init ( this->GetLocalToWorldMtx ());
+			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
 			worldDrawingMtx.Prepend ( billboardMtx );
 		
 			break;
@@ -825,8 +823,7 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 			ZLMatrix4x4 viewProjMtx;
 			viewProjMtx.Ident (); // TODO
 			
-			ZLMatrix4x4 localToWorldMtx;
-			worldDrawingMtx.Init ( this->GetLocalToWorldMtx ());
+			ZLMatrix4x4 localToWorldMtx ( this->GetLocalToWorldMtx ());
 			
 			// TODO: check that pivot is supported correctly
 			ZLVec3D loc;
@@ -846,7 +843,7 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 		case BILLBOARD_NONE:
 		default:
 		
-			worldDrawingMtx.Init ( this->GetLocalToWorldMtx ());
+			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
 	}
 	
 	return worldDrawingMtx;

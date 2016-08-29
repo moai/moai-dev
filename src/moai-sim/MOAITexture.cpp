@@ -388,7 +388,7 @@ void MOAITexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAITexture::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	MOAISingleTexture::SerializeIn ( state, serializer );
 	
-	STLString path = state.GetField ( -1, "mPath", "" );
+	STLString path = state.GetFieldValue ( -1, "mPath", "" );
 	
 	if ( path.size ()) {
 		this->Init ( path, DEFAULT_TRANSFORM ); // TODO: serialization

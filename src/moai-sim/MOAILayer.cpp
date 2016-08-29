@@ -145,11 +145,11 @@ int MOAILayer::_getFitting3D ( lua_State* L ) {
 			
 				ZLVec3D loc;
 				
-				loc.mX = state.GetField < float >( -1, "x", 0.0f );
-				loc.mY = state.GetField < float >( -1, "y", 0.0f );
-				loc.mZ = state.GetField < float >( -1, "z", 0.0f );
+				loc.mX = state.GetFieldValue < float >( -1, "x", 0.0f );
+				loc.mY = state.GetFieldValue < float >( -1, "y", 0.0f );
+				loc.mZ = state.GetFieldValue < float >( -1, "z", 0.0f );
 				
-				float r = state.GetField < float >( -1, "r", 0.0f );
+				float r = state.GetFieldValue < float >( -1, "r", 0.0f );
 				
 				fitter.FitPoint( loc, r );
 				
@@ -760,8 +760,7 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 	MOAIViewport& viewport = *this->mViewport;
 	ZLRect viewportRect = viewport;
 
-	ZLMatrix4x4 mtx;
-	mtx.Init ( this->mLocalToWorldMtx );
+	ZLMatrix4x4 mtx ( this->mLocalToWorldMtx );
 	mtx.Transform ( viewportRect );
 
 	gfxMgr.mGfxState.SetViewRect ( viewportRect );

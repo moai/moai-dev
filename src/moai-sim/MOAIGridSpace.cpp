@@ -1121,20 +1121,20 @@ void MOAIGridSpace::OnResize () {
 void MOAIGridSpace::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 	
-	this->mXOff			= state.GetField ( -1, "mXOff", this->mXOff );
-	this->mYOff			= state.GetField ( -1, "mYOff", this->mYOff );
+	this->mXOff			= state.GetFieldValue ( -1, "mXOff", this->mXOff );
+	this->mYOff			= state.GetFieldValue ( -1, "mYOff", this->mYOff );
 	
-	this->mCellWidth	= state.GetField ( -1, "mCellWidth", this->mCellWidth );
-	this->mCellHeight	= state.GetField ( -1, "mCellHeight", this->mCellHeight );
+	this->mCellWidth	= state.GetFieldValue ( -1, "mCellWidth", this->mCellWidth );
+	this->mCellHeight	= state.GetFieldValue ( -1, "mCellHeight", this->mCellHeight );
 	
-	this->mTileWidth	= state.GetField ( -1, "mTileWidth", this->mTileWidth );
-	this->mTileHeight	= state.GetField ( -1, "mTileHeight", this->mTileHeight );
+	this->mTileWidth	= state.GetFieldValue ( -1, "mTileWidth", this->mTileWidth );
+	this->mTileHeight	= state.GetFieldValue ( -1, "mTileHeight", this->mTileHeight );
 	
-	this->mWidth		= state.GetField ( -1, "mWidth", this->mWidth );
-	this->mHeight		= state.GetField ( -1, "mHeight", this->mHeight );
+	this->mWidth		= state.GetFieldValue ( -1, "mWidth", this->mWidth );
+	this->mHeight		= state.GetFieldValue ( -1, "mHeight", this->mHeight );
 	
-	this->mShape		= state.GetField ( -1, "mShape", this->mShape );
-	this->mRepeat		= state.GetField ( -1, "mRepeat", this->mRepeat );
+	this->mShape		= state.GetFieldValue ( -1, "mShape", this->mShape );
+	this->mRepeat		= state.GetFieldValue ( -1, "mRepeat", this->mRepeat );
 }
 
 //----------------------------------------------------------------//

@@ -160,7 +160,7 @@ int MOAIImage::_convolve ( lua_State* L ) {
 	
 		MOAIImage* image = new MOAIImage ();
 	
-		state.GetField ( 2, 1 );
+		state.PushField ( 2, 1 );
 	
 		if ( state.IsType ( -1, LUA_TNUMBER )) {
 		
@@ -184,7 +184,7 @@ int MOAIImage::_convolve ( lua_State* L ) {
 			
 			for ( int y = 0; y < kernelWidth; ++y ) {
 				
-				state.GetField ( 2, y + 1 );
+				state.PushField ( 2, y + 1 );
 				for ( int x = 0; x < kernelWidth; ++x ) {
 					kernel [( y * kernelWidth ) + x ] = state.GetFieldValue < float >( -1, x + 1, 0.0f );
 				}
@@ -227,7 +227,7 @@ int MOAIImage::_convolve1D ( lua_State* L ) {
 	
 		MOAIImage* image = new MOAIImage ();
 	
-		state.GetField ( 2, 1 );
+		state.PushField ( 2, 1 );
 	
 		if ( state.IsType ( -1, LUA_TNUMBER )) {
 		

@@ -14,22 +14,19 @@
 int MOAIMatrix::_getMatrix ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMatrix, "U" )
 	
-	state.Push ( self->m [ ZLAffine3D::C0_R0 ]);
-	state.Push ( self->m [ ZLAffine3D::C1_R0 ]);
-	state.Push ( self->m [ ZLAffine3D::C2_R0 ]);
-	state.Push ( self->m [ ZLAffine3D::C3_R0 ]);
+	state.Push ( ZLMatrix4x4 ( *( ZLAffine3D* )self ));
 	
-	state.Push ( self->m [ ZLAffine3D::C0_R1 ]);
-	state.Push ( self->m [ ZLAffine3D::C1_R1 ]);
-	state.Push ( self->m [ ZLAffine3D::C2_R1 ]);
-	state.Push ( self->m [ ZLAffine3D::C3_R1 ]);
+	return 16;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIMatrix::_invert ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIMatrix, "U" )
 	
-	state.Push ( self->m [ ZLAffine3D::C0_R2 ]);
-	state.Push ( self->m [ ZLAffine3D::C1_R2 ]);
-	state.Push ( self->m [ ZLAffine3D::C2_R2 ]);
-	state.Push ( self->m [ ZLAffine3D::C3_R2 ]);
-	
-	return 12;
+	self->Inverse ();
+	self->ScheduleUpdate ();
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -37,20 +34,22 @@ int MOAIMatrix::_getMatrix ( lua_State* L ) {
 int MOAIMatrix::_setMatrix ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMatrix, "U" )
 	
-	self->m [ ZLAffine3D::C0_R0 ]	= state.GetValue < float >( 2, 1.0f );
-	self->m [ ZLAffine3D::C1_R0 ]	= state.GetValue < float >( 3, 0.0f );
-	self->m [ ZLAffine3D::C2_R0 ]	= state.GetValue < float >( 4, 0.0f );
-	self->m [ ZLAffine3D::C3_R0 ]	= state.GetValue < float >( 5, 0.0f );
+	size_t size = state.GetTop () - 1;
 	
-	self->m [ ZLAffine3D::C0_R1 ]	= state.GetValue < float >( 6, 0.0f );
-	self->m [ ZLAffine3D::C1_R1 ]	= state.GetValue < float >( 7, 1.0f );
-	self->m [ ZLAffine3D::C2_R1 ]	= state.GetValue < float >( 8, 0.0f );
-	self->m [ ZLAffine3D::C3_R1 ]	= state.GetValue < float >( 9, 0.0f );
-	
-	self->m [ ZLAffine3D::C0_R2 ]	= state.GetValue < float >( 10, 0.0f );
-	self->m [ ZLAffine3D::C1_R2 ]	= state.GetValue < float >( 11, 0.0f );
-	self->m [ ZLAffine3D::C2_R2 ]	= state.GetValue < float >( 12, 1.0f );
-	self->m [ ZLAffine3D::C3_R2 ]	= state.GetValue < float >( 13, 0.0f );
+	switch ( size ) {
+			
+		case 9:
+			*( ZLAffine3D* )self = ZLAffine3D ( state.GetValue < ZLMatrix3x3 >( 2, ZLMatrix3x3::IDENT ));
+			break;
+			
+		case 12:
+			*( ZLAffine3D* )self = state.GetValue < ZLAffine3D >( 2, ZLAffine3D::IDENT );
+			break;
+			
+		case 16:
+			*( ZLAffine3D* )self = ZLAffine3D ( state.GetValue < ZLMatrix4x4 >( 2, ZLMatrix4x4::IDENT ));
+			break;
+	}
 	
 	self->ScheduleUpdate ();
 	
@@ -60,6 +59,23 @@ int MOAIMatrix::_setMatrix ( lua_State* L ) {
 //================================================================//
 // MOAIMatrix
 //================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIMatrix::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	// TODO: these values may need to be cached for performance reasons
+	if ( MOAIMatrix::MOAIMatrixAttr::Check ( attrID )) {
+
+		switch ( UNPACK_ATTR ( attrID )) {
+			
+			case ATTR_MATRIX:
+			
+				*( ZLAffine3D* )this = attr.ApplyNoAdd < ZLAffine3D >( *( ZLAffine3D* )this, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+		}
+	}
+	return MOAITransformBase::ApplyAttrOp ( attrID, attr, op );
+}
 
 //----------------------------------------------------------------//
 void MOAIMatrix::BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
@@ -85,6 +101,8 @@ MOAIMatrix::~MOAIMatrix () {
 void MOAIMatrix::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAITransformBase::RegisterLuaClass ( state );
+	
+	state.SetField ( -1, "ATTR_MATRIX",	MOAIMatrixAttr::Pack ( ATTR_MATRIX ));
 }
 
 //----------------------------------------------------------------//
@@ -94,6 +112,7 @@ void MOAIMatrix::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "getMatrix",			_getMatrix },
+		{ "invert",				_invert },
 		{ "setMatrix",			_setMatrix },
 		{ NULL, NULL }
 	};

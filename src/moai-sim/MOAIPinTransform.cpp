@@ -42,17 +42,17 @@ int MOAIPinTransform::_init ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIPinTransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+bool MOAIPinTransform::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( MOAIPinTransformAttr::Check ( attrID )) {
 		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_FRONT:
-				attrOp.Apply ( this->mFront, op, MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				attr.Apply ( this->mFront, op, MOAIAttribute::ATTR_READ );
 				return true;
 		}
 	}
 	
-	return MOAITransform::ApplyAttrOp ( attrID, attrOp, op );
+	return MOAITransform::ApplyAttrOp ( attrID, attr, op );
 }
 
 //----------------------------------------------------------------//

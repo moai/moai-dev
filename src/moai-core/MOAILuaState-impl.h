@@ -10,9 +10,9 @@
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-TYPE MOAILuaState::GetField ( int idx, int key, TYPE value ) {
+TYPE MOAILuaState::GetFieldValue ( int idx, int key, TYPE value ) {
 
-	this->GetField ( idx, key );
+	this->PushField ( idx, key );
 	value = this->GetValue < TYPE >( -1, value );
 	this->Pop ( 1 );
 	
@@ -21,9 +21,9 @@ TYPE MOAILuaState::GetField ( int idx, int key, TYPE value ) {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-TYPE MOAILuaState::GetField ( int idx, cc8* key, TYPE value ) {
+TYPE MOAILuaState::GetFieldValue ( int idx, cc8* key, TYPE value ) {
 
-	this->GetField ( idx, key );
+	this->PushField ( idx, key );
 	value = this->GetValue < TYPE >( -1, value );
 	this->Pop ( 1 );
 	
@@ -52,7 +52,7 @@ TYPE* MOAILuaState::GetLuaObject ( int idx, bool verbose ) {
 template < typename TYPE >
 TYPE* MOAILuaState::GetLuaObject ( int idx, cc8* name, bool verbose ) {
 	
-	if ( this->GetFieldWithType ( idx, name, LUA_TUSERDATA )) {
+	if ( this->PushFieldWithType ( idx, name, LUA_TUSERDATA )) {
 		
 		MOAILuaObject* luaData = ( MOAILuaObject* )this->GetPtrUserData ( -1 );
 		this->Pop ( 1 );
@@ -160,7 +160,7 @@ template < typename TYPE >
 void MOAILuaState::ReadArray ( int size, TYPE* values, TYPE value ) {
 
 	for ( int i = 0; i < size; ++i ) {
-		values [ i ] = this->GetField ( -1, i + 1, value );
+		values [ i ] = this->GetFieldValue ( -1, i + 1, value );
 	}
 }
 

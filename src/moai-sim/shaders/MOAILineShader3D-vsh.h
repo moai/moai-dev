@@ -17,7 +17,7 @@ static cc8* _lineShader3DVSH = SHADER (
 	varying LOWP vec4 colorVarying;
 
 	void main () {
-		gl_Position = position * transform;
+		gl_Position = transform * position;
 		colorVarying = color * ucolor;
 	}
 );

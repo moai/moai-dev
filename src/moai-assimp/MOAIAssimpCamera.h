@@ -18,7 +18,7 @@ class MOAIAssimpCamera :
 	public MOAIAssimpSceneMember {
 private:
 
-	aiCamera*		mAssimpCamera; // TODO: danger here; need to keep track of these in the scene and invalidate them
+	aiCamera*		mAssimpCamera;
 	MOAICamera*		mMoaiCamera;
 	aiVector3D		mScaling;
 	aiVector3D		mPosition;

@@ -29,7 +29,7 @@ int MOAIAdColonyIOS::_init ( lua_State* L ) {
 	NSMutableArray* zones = [[[ NSMutableArray alloc ] init ] autorelease ];
 	if ( state.IsType ( 2, LUA_TTABLE )) {
 		for ( int key = 1; ; ++key ) {
-			state.GetField ( 2, key );
+			state.PushField ( 2, key );
 			cc8* value = state.GetValue < cc8* >( -1, 0 );
 			lua_pop ( state, 1 );
 			

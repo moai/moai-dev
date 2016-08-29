@@ -56,6 +56,7 @@ void MOAIAssimpSceneMember::DetachFromScene () {
 
 //----------------------------------------------------------------//
 MOAIAssimpSceneMember::MOAIAssimpSceneMember () :
+	mNode ( 0 ),
 	mScene ( 0 ),
 	mIndex (( uint )-1 ) {
 	
