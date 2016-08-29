@@ -953,22 +953,23 @@ ZLMatrix4x4 MOAITextLabel::GetWorldDrawingMtx () {
 		
 		MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
 		
-		MOAICamera* camera = renderMgr.GetCamera ();
-		if ( camera ) {
+		//MOAICamera* camera = renderMgr.GetCamera ();
+		//if ( camera ) {
 		
 			// TODO: this is a bunch of getting and re-calculating drawing matrices
 			// would be better to cache these in a drawing intent that gets passed
 			// down from the renderer
 		
-			MOAIViewport* viewport = renderMgr.GetViewport ();
-			assert ( viewport );
-			ZLMatrix4x4 viewProj = camera->GetViewProjMtx ( *viewport );
+			//MOAIViewport* viewport = renderMgr.GetViewport ();
+			//assert ( viewport );
+			//ZLMatrix4x4 viewProj = camera->GetViewProjMtx ( *viewport );
+			ZLMatrix4x4 viewProj = MOAIGfxMgr::Get ().mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_PROJ_MTX );
 
 			ZLVec3D upVec = worldDrawingMtx.GetYAxis ();
 
 			viewProj.TransformVec ( upVec );
 
-			// For text flipping when orbiting around the map. Tilting should not affect this
+			// For text flipping when orbiting. Tilting should not affect this
 			if ( upVec.mY > 0.0f ) {
 
 				ZLMatrix4x4 flip;
@@ -987,7 +988,7 @@ ZLMatrix4x4 MOAITextLabel::GetWorldDrawingMtx () {
 				}
 				worldDrawingMtx.Prepend ( flip );
 			}
-		}
+		//}
 	}
 	
 	return worldDrawingMtx;

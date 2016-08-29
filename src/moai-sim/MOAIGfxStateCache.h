@@ -56,21 +56,22 @@ protected:
 	bool									mScissorEnabled;
 	ZLRect									mScissorRect;
 	
-	MOAIShader*								mShader;
-	MOAIShaderProgram*						mShaderProgram;
+	MOAISharedPtr < MOAIShader >			mShader;
+	MOAISharedPtr < MOAIShaderProgram >		mShaderProgram;
 	
-	ZLLeanArray < MOAISingleTexture* >		mTextureUnits;
-	u32										mActiveTextures;
+	ZLLeanArray < MOAISharedPtr < MOAISingleTexture > >		mTextureUnits;
+	u32														mActiveTextures;
 
-	MOAIFrameBuffer*						mCurrentFrameBuffer;
-	MOAIIndexBuffer*						mCurrentIdxBuffer;
-	MOAITextureBase*						mCurrentTexture;
-	MOAIVertexArray*						mCurrentVtxArray;
-	MOAIVertexBuffer*						mCurrentVtxBuffer;
-	MOAIVertexFormat*						mCurrentVtxFormat;
+	MOAISharedPtr < MOAIFrameBuffer >		mCurrentFrameBuffer;
+	MOAISharedPtr < MOAIIndexBuffer >		mCurrentIdxBuffer;
+	MOAISharedPtr < MOAITextureBase >		mCurrentTexture;
+	MOAISharedPtr < MOAIVertexArray >		mCurrentVtxArray;
+	MOAISharedPtr < MOAIVertexBuffer >		mCurrentVtxBuffer;
+	MOAISharedPtr < MOAIVertexFormat >		mCurrentVtxFormat;
 
 	ZLRect									mViewRect;
 
+	// don't think these need to be lua shared pointers...
 	MOAILuaSharedPtr < MOAIFrameBuffer >	mDefaultFrameBuffer;
 	MOAILuaSharedPtr < MOAITexture >		mDefaultTexture;
 

@@ -440,11 +440,12 @@ void MOAIFrameBuffer::Render () {
 		state.Pop ( 1 );
 	}
 
-	gfxMgr.mVertexCache.FlushBufferedPrims ();
+	gfxMgr.mVertexCache.FlushBufferedPrims (); // do we need to do this if we aren't reading pixels?
 
 	// since we're doing this on the render thread, set it every time until we get a callback
 	if ( this->mGrabNextFrame ) {
 
+		// remember, if we're not in immediate mode, this schedules a pixel read for later
 		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 		gfx.ReadPixels ( 0, 0, this->mBufferWidth, this->mBufferHeight, ZGL_PIXEL_FORMAT_RGBA, ZGL_PIXEL_TYPE_UNSIGNED_BYTE, 4, this, 0 );
 	}

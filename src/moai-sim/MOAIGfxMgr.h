@@ -62,9 +62,6 @@ private:
 	static int			_getViewSize				( lua_State* L );
 	static int			_purgeResources				( lua_State* L );
 	static int			_renewResources				( lua_State* L );
-	static int			_setDefaultTexture			( lua_State* L );
-	static int			_setPenColor				( lua_State* L );
-	static int			_setPenWidth				( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void				OnGlobalsFinalize			();

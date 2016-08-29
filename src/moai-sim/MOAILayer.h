@@ -58,6 +58,7 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_clear					( lua_State* L );
+	static int		_draw					( lua_State* L );
 	static int		_getCamera				( lua_State* L );
 	static int		_getFitting				( lua_State* L );
 	static int		_getFitting3D			( lua_State* L );
@@ -88,13 +89,12 @@ private:
 	void			AffirmPartition			();
 	void			DrawProps				( MOAIPartitionResultBuffer& buffer, float lod );
 	void			DrawPropsDebug			( MOAIPartitionResultBuffer& buffer, float lod );
-	ZLMatrix4x4		GetProjectionMtx		() const;
-	ZLMatrix4x4		GetViewMtx				() const;
+	//ZLMatrix4x4		GetProjectionMtx		() const;
+	//ZLMatrix4x4		GetViewMtx				() const;
 	void			RenderTable				( MOAILuaRef& ref );
 	void			RenderTable				( MOAILuaState& state, int idx );
 
 public:
-	
 	
 	DECL_ATTR_HELPER ( MOAILayer )
 
@@ -121,7 +121,7 @@ public:
 	u32					OnGetModelBounds		( ZLBox& bounds );
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
-	void				Render					();
+	void				Render					(); // TODO: simplify all this; no reason to have both Draw and Render everywhere
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };

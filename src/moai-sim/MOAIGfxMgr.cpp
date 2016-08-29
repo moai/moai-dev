@@ -125,76 +125,6 @@ int MOAIGfxMgr::_renewResources ( lua_State* L ) {
 	return 0;
 }
 
-//----------------------------------------------------------------//
-/**	@lua	setDefaultTexture
-	@text	Specify a fallback texture to use when textures are
-			unavailable (pending load, missing or in error state).
-	
-	@in		MOAITexture texture
-	@out	MOAITexture texture		Texture that was passed in or created.
-*/
-int MOAIGfxMgr::_setDefaultTexture ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-
-	MOAITexture* texture = state.GetLuaObject < MOAITexture >( 1, false );
-	
-	if ( !texture ) {
-		texture = new MOAITexture ();
-		if ( !texture->Init ( state, 1 )) {
-			// TODO: report error
-			delete texture;
-			texture = 0;
-		}
-	}
-
-	gfxMgr.mGfxState.SetDefaultTexture ( gfxMgr, texture );
-
-	if ( texture ) {
-		texture->PushLuaUserdata ( state );
-		return 1;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setPenColor
-
-	@in		number r
-	@in		number g
-	@in		number b
-	@opt	number a	Default value is 1.
-	@out	nil
-*/
-int MOAIGfxMgr::_setPenColor ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-
-	float r = state.GetValue < float >( 1, 1.0f );
-	float g = state.GetValue < float >( 2, 1.0f );
-	float b = state.GetValue < float >( 3, 1.0f );
-	float a = state.GetValue < float >( 4, 1.0f );
-
-	MOAIGfxMgr::Get ().mGfxState.SetPenColor ( r, g, b, a );
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setPenWidth
-
-	@in		number width
-	@out	nil
-*/
-int MOAIGfxMgr::_setPenWidth ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-
-	float width = state.GetValue < float >( 1, 1.0f );
-	MOAIGfxMgr::Get ().mGfxState.SetPenWidth ( width );
-	return 0;
-}
-
 //================================================================//
 // MOAIGfxMgr
 //================================================================//
@@ -344,10 +274,7 @@ void MOAIGfxMgr::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getViewSize",				_getViewSize },
 		{ "purgeResources",				_purgeResources },
 		{ "renewResources",				_renewResources },
-		{ "setDefaultTexture",			_setDefaultTexture },
 		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIGfxMgr > },
-		{ "setPenColor",				_setPenColor },
-		{ "setPenWidth",				_setPenWidth },
 		{ NULL, NULL }
 	};
 

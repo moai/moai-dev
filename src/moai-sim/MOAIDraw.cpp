@@ -4,14 +4,16 @@
 #include "pch.h"
 #include <moai-sim/MOAIAnimCurve.h>
 #include <moai-sim/MOAIDraw.h>
+#include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIGfxBuffer.h>
 #include <moai-sim/MOAIGfxMgr.h>
+#include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
+#include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAITexture.h>
+#include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIQuadBrush.h>
-
-#include <moai-sim/MOAIFont.h>
 
 #define DEFAULT_ELLIPSE_STEPS 64
 
@@ -255,6 +257,107 @@ void MOAIDraw::EndDrawString () {
 //================================================================//
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDraw::_bindFrameBuffer ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	
+	MOAIGfxMgr::Get ().mGfxState.BindFrameBuffer ( state.GetLuaObject < MOAIFrameBuffer >( 1, false ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDraw::_bindIndexBuffer ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	
+	MOAIGfxMgr::Get ().mGfxState.BindIndexBuffer ( state.GetLuaObject < MOAIIndexBuffer >( 1, false ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDraw::_bindShader ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	
+	MOAIGfxMgr::Get ().mGfxState.BindShader ( state.GetLuaObject < MOAIShader >( 1, false ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDraw::_bindTexture ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	
+	MOAIGfxMgr::Get ().mGfxState.BindTexture ( state.GetLuaObject < MOAITexture >( 1, false ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDraw::_bindVertexArray ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	
+	MOAIGfxMgr::Get ().mGfxState.BindVertexArray ( state.GetLuaObject < MOAIVertexArray >( 1, false ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDraw::_bindVertexBuffer ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	
+	MOAIGfxMgr::Get ().mGfxState.BindVertexBuffer ( state.GetLuaObject < MOAIVertexBuffer >( 1, false ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDraw::_bindVertexFormat ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	
+	MOAIGfxMgr::Get ().mGfxState.BindVertexFormat ( state.GetLuaObject < MOAIVertexFormat >( 1, false ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDraw::_clear ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+
+	u32 clearFlags = gfxMgr.mGfxState.GetClearFlags ();
+
+	if ( clearFlags & ZGL_CLEAR_COLOR_BUFFER_BIT ) {
+	
+		const ZLColorVec& clearColor = gfxMgr.mGfxState.GetClearColor ();
+		
+		MOAIGfxMgr::GetDrawingAPI ().ClearColor (
+			clearColor.mR,
+			clearColor.mG,
+			clearColor.mB,
+			clearColor.mA
+		);
+	}
+	
+	// TODO
+	//if ( clearFlags & ZGL_CLEAR_DEPTH_BUFFER_BIT ) {
+	//}
+
+	gfxMgr.ClearSurface ( clearFlags );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIDraw::_drawAnimCurve ( lua_State* L ) {
 
 	MOAILuaState state ( L );
@@ -750,6 +853,131 @@ int MOAIDraw::_setBlendMode ( lua_State* L ) {
 	else {
 		gfxMgr.mGfxState.SetBlendMode();
 	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDraw::_setClearColor ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+
+	u32 clearFlags = gfxMgr.mGfxState.GetClearFlags () & ~ZGL_CLEAR_COLOR_BUFFER_BIT;
+	ZLColorVec clearColor ( 0.0f, 0.0f, 0.0f, 1.0f );
+
+	MOAIColor* color = state.GetLuaObject < MOAIColor >( 1, true );
+	if ( color ) {
+		clearColor = *color;
+		clearFlags |= ZGL_CLEAR_COLOR_BUFFER_BIT;
+	}
+
+	if ( state.GetTop () > 1 ) {
+	
+		float r = state.GetValue < float >( 1, 0.0f );
+		float g = state.GetValue < float >( 2, 0.0f );
+		float b = state.GetValue < float >( 3, 0.0f );
+		float a = state.GetValue < float >( 4, 1.0f );
+		
+		clearColor.Set ( r, g, b, a );
+		clearFlags |= ZGL_CLEAR_COLOR_BUFFER_BIT;
+	}
+	
+	gfxMgr.mGfxState.SetClearColor ( clearColor );
+	gfxMgr.mGfxState.SetClearFlags ( clearFlags );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDraw::_setClearDepth ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+
+	u32 clearFlags = gfxMgr.mGfxState.GetClearFlags () & ~ZGL_CLEAR_DEPTH_BUFFER_BIT;
+	double clearDepth = 0.0f;
+	
+	if ( state.IsType ( 1, LUA_TNUMBER )) {
+	
+		clearDepth = state.GetValue < double >( 1, 0.0 );
+		clearFlags |= ZGL_CLEAR_DEPTH_BUFFER_BIT;
+	}
+	
+	gfxMgr.mGfxState.SetClearDepth ( clearDepth );
+	gfxMgr.mGfxState.SetClearFlags ( clearFlags );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	setDefaultTexture
+	@text	Specify a fallback texture to use when textures are
+			unavailable (pending load, missing or in error state).
+	
+	@in		MOAITexture texture
+	@out	MOAITexture texture		Texture that was passed in or created.
+*/
+int MOAIDraw::_setDefaultTexture ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+
+	MOAITexture* texture = state.GetLuaObject < MOAITexture >( 1, false );
+	
+	if ( !texture ) {
+		texture = new MOAITexture ();
+		if ( !texture->Init ( state, 1 )) {
+			// TODO: report error
+			delete texture;
+			texture = 0;
+		}
+	}
+
+	gfxMgr.mGfxState.SetDefaultTexture ( gfxMgr, texture );
+
+	if ( texture ) {
+		texture->PushLuaUserdata ( state );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	setPenColor
+
+	@in		number r
+	@in		number g
+	@in		number b
+	@opt	number a	Default value is 1.
+	@out	nil
+*/
+int MOAIDraw::_setPenColor ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	float r = state.GetValue < float >( 1, 1.0f );
+	float g = state.GetValue < float >( 2, 1.0f );
+	float b = state.GetValue < float >( 3, 1.0f );
+	float a = state.GetValue < float >( 4, 1.0f );
+
+	MOAIGfxMgr::Get ().mGfxState.SetPenColor ( r, g, b, a );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	setPenWidth
+
+	@in		number width
+	@out	nil
+*/
+int MOAIDraw::_setPenWidth ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	float width = state.GetValue < float >( 1, 1.0f );
+	MOAIGfxMgr::Get ().mGfxState.SetPenWidth ( width );
 	return 0;
 }
 
@@ -1426,6 +1654,14 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 
 	luaL_Reg regTable [] = {
+		{ "bindFrameBuffer",		_bindFrameBuffer },
+		{ "bindIndexBuffer",		_bindIndexBuffer },
+		{ "bindShader",				_bindShader },
+		{ "bindTexture",			_bindTexture },
+		{ "bindVertexArray",		_bindVertexArray },
+		{ "bindVertexBuffer",		_bindVertexBuffer },
+		{ "bindVertexFormat",		_bindVertexFormat },
+		{ "clear",					_clear },
 		{ "drawAnimCurve",			_drawAnimCurve },
 		//{ "drawAxisGrid",			_drawAxisGrid }, // TODO
 		{ "drawBezierCurve",		_drawBezierCurve },
@@ -1447,6 +1683,13 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "fillFan",				_fillFan },
 		{ "fillRect",				_fillRect },
 		{ "setBlendMode",			_setBlendMode },
+		{ "setClearColor",			_setClearColor },
+		{ "setClearDepth",			_setClearDepth },
+		{ "setDefaultTexture",		_setDefaultTexture },
+		{ "setPenColor",			_setPenColor },
+		{ "setPenWidth",			_setPenWidth },
+		//{ "setScissorRect",			_setScissorRect },
+		
 		{ NULL, NULL }
 	};
 

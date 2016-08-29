@@ -14,6 +14,7 @@
 #include <moai-sim/MOAIRenderMgr.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITransform.h>
+#include <moai-sim/MOAIViewProj.h>
 
 //================================================================//
 // local
@@ -32,6 +33,15 @@ int MOAILayer::_clear ( lua_State* L ) {
 	if ( self->mPartition ) {
 		self->mPartition->Clear ();
 	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAILayer::_draw ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
+
+	self->Render ();
 	return 0;
 }
 
@@ -202,7 +212,7 @@ int	MOAILayer::_getPartition ( lua_State* L ) {
 int	MOAILayer::_getPropViewList ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "U" )
 	
-	if ( self->mPartition ) {
+	if ( self->mPartition && self->mViewport ) {
 		
 		u32 interfaceMask = self->mPartition->GetInterfaceMask < MOAIGraphicsProp >();
 		if ( !interfaceMask ) return 0;
@@ -217,9 +227,9 @@ int	MOAILayer::_getPropViewList ( lua_State* L ) {
 		sortScale [ 2 ]			= state.GetValue < float >( 6, self->mSortScale [ 2 ]);
 		sortScale [ 3 ]			= state.GetValue < float >( 7, self->mSortScale [ 3 ]);
 		
-		ZLMatrix4x4 viewMtx = self->GetViewMtx ();
+		ZLMatrix4x4 viewMtx = MOAIViewProj::GetViewMtx ( self->mCamera, self->mParallax );
 		ZLMatrix4x4 invViewProjMtx = viewMtx;
-		invViewProjMtx.Append ( self->GetProjectionMtx ());
+		invViewProjMtx.Append ( MOAIViewProj::GetProjectionMtx ( self->mViewport, self->mCamera ));
 		invViewProjMtx.Inverse ();
 	
 		ZLFrustum viewVolume;
@@ -641,18 +651,9 @@ int MOAILayer::_wndToWorldRay ( lua_State* L ) {
 		origin.mX = cameraLoc.mX;
 		origin.mY = cameraLoc.mY;
 		origin.mZ = cameraLoc.mZ;
-		
-//		ZLMetaMatrix4x4 < double > foo;
-//		foo.Init ( wndToWorld );
-//		
-//		ZLMetaVec4D < double > comp;
-//		comp.Init ( 0.0, 0.0, -1.0, 1.0 );
-//		foo.Project ( comp );
-//		printf ( "%f %f %f\n", comp.mX, comp.mY, comp.mZ );
 	}
 	else {
 		origin = loc;
-		//origin.Init ( loc.mX, loc.mY, -1.0f, 1.0f );
 		wndToWorld.Project ( origin );
 	}
 	
@@ -755,32 +756,21 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 	if ( this->IsClear ()) return;
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
 	
 	MOAIViewport& viewport = *this->mViewport;
 	ZLRect viewportRect = viewport;
-	
-	renderMgr.SetCamera ( this->mCamera );
-	renderMgr.SetViewport ( this->mViewport );
 
-	// TODO:
 	ZLMatrix4x4 mtx;
 	mtx.Init ( this->mLocalToWorldMtx );
-	// TODO:
-	//mtx.Append ( gfxMgr.GetWorldToWndMtx ( 1.0f, 1.0f ));
 	mtx.Transform ( viewportRect );
 
 	gfxMgr.mGfxState.SetViewRect ( viewportRect );
 	gfxMgr.mGfxState.SetScissorRect ( viewportRect );
 	this->ClearSurface ();
 	
+	gfxMgr.mGfxState.SetViewProj ( this->mViewport, this->mCamera, this->mParallax );
+	
 	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX );
-	
-	ZLMatrix4x4 view = this->GetViewMtx ();
-	ZLMatrix4x4 proj = this->GetProjectionMtx ();
-	
-	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::VIEW_MTX, view );
-	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::PROJ_MTX, proj );
 	
 	this->RenderTable ( this->mUnderlayTable );
 	
@@ -804,7 +794,7 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 		if ( !totalResults ) return;
 		
 		if ( this->mSortInViewSpace ) {
-			buffer.Transform ( view, false );
+			buffer.Transform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_MTX ), false );
 		}
 		
 		buffer.GenerateKeys (
@@ -900,59 +890,15 @@ MOAIPartition* MOAILayer::GetPartition () {
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAILayer::GetProjectionMtx () const {
-	
-	return this->mCamera ? this->mCamera->GetProjMtx ( *this->mViewport ) : this->mViewport->GetProjMtx ();
-}
-
-//----------------------------------------------------------------//
-ZLMatrix4x4 MOAILayer::GetViewMtx () const {
-	
-	ZLMatrix4x4 view;
-	
-	if ( this->mCamera ) {
-		
-		view = this->mCamera->GetViewMtx ();
-		view.m [ ZLMatrix4x4::C3_R0 ] *= this->mParallax.mX;
-		view.m [ ZLMatrix4x4::C3_R1 ] *= this->mParallax.mY;
-		view.m [ ZLMatrix4x4::C3_R2 ] *= this->mParallax.mZ;
-	}
-	else {
-		view.Ident ();
-	}
-	
-	return view;
-}
-
-//----------------------------------------------------------------//
 ZLMatrix4x4 MOAILayer::GetWndToWorldMtx () const {
 
-	ZLMatrix4x4 wndToWorld = this->GetWorldToWndMtx ();
-	wndToWorld.Inverse ();
-	return wndToWorld;
+	MOAIViewProj::GetWndToWorldMtx ( this->mViewport, this->mCamera, this->mLocalToWorldMtx, this->mParallax );
 }
 
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAILayer::GetWorldToWndMtx () const {
 
-	//ZLMatrix4x4 worldToWnd = this->mCamera ? this->mCamera->GetWorldToWndMtx ( *this->mViewport ) : this->mViewport->GetNormToWndMtx ();
-	
-	ZLMatrix4x4 worldToWnd;
-	
-	if ( this->mViewport ) {
-			worldToWnd = this->GetViewMtx ();
-			worldToWnd.Append ( this->GetProjectionMtx ());
-			worldToWnd.Append ( this->mViewport->GetNormToWndMtx ());
-	}
-	else {
-			worldToWnd.Ident ();
-	}
-	
-	ZLMatrix4x4 mtx;
-	mtx.Init ( this->mLocalToWorldMtx );
-	worldToWnd.Append ( mtx );
-	
-	return worldToWnd;
+	MOAIViewProj::GetWorldToWndMtx ( this->mViewport, this->mCamera, this->mLocalToWorldMtx, this->mParallax );
 }
 
 //----------------------------------------------------------------//
@@ -1028,6 +974,7 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "clear",					_clear },
+		{ "draw",					_draw },
 		{ "getCamera",				_getCamera },
 		{ "getFitting",				_getFitting },
 		{ "getFitting3D",			_getFitting3D },

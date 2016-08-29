@@ -147,6 +147,7 @@
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 #include <moai-sim/MOAIViewport.h>
+#include <moai-sim/MOAIViewProj.h>
 #include <moai-sim/MOAIWheelSensor.h>
 
 // text stuff here for now

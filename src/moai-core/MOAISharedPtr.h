@@ -21,6 +21,11 @@ protected:
 	}
 	
 	//----------------------------------------------------------------//
+	inline const TYPE* Get () const {
+		return this->mObject;
+	}
+	
+	//----------------------------------------------------------------//
 	void Set ( TYPE* assign ) {
 
 		if ( this->mObject != assign ) {
@@ -43,6 +48,11 @@ public:
 	inline operator bool () {
 		return this->Get () != 0;
 	};
+	
+	//----------------------------------------------------------------//
+	inline operator bool () const {
+		return this->Get () != 0;
+	};
 
 	//----------------------------------------------------------------//
 	inline TYPE& operator * () {
@@ -50,12 +60,27 @@ public:
 	};
 
 	//----------------------------------------------------------------//
+	inline const TYPE& operator * () const {
+		return *this->Get ();
+	};
+
+	//----------------------------------------------------------------//
 	inline TYPE* operator -> () {
+		return this->Get ();
+	};
+	
+	//----------------------------------------------------------------//
+	inline const TYPE* operator -> () const {
 		return this->Get ();
 	};
 
 	//----------------------------------------------------------------//
 	inline operator TYPE* () {
+		return this->Get ();
+	};
+
+	//----------------------------------------------------------------//
+	inline operator const TYPE* () const {
 		return this->Get ();
 	};
 

@@ -40,8 +40,6 @@ private:
 	MOAILuaStrongRef	mBufferTable;
 	
 	// the current render state
-	MOAIViewport*		mViewport;
-	MOAICamera*			mCamera;
 	MOAIFrameBuffer*	mFrameBuffer;
 	MOAIRenderable*		mRenderable;
 	
@@ -73,8 +71,6 @@ public:
 	GET ( double, RenderDuration, mRenderDuration )
 	GET ( double, RenderTime, mRenderTime )
 	
-	GET_SET ( MOAICamera*, Camera, mCamera )
-	GET_SET ( MOAIViewport*, Viewport, mViewport )
 	GET_SET ( MOAIFrameBuffer*, FrameBuffer, mFrameBuffer )
 	GET_SET ( MOAIRenderable*, Renderable, mRenderable )
 	

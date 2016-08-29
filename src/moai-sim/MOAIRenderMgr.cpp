@@ -144,8 +144,6 @@ MOAIRenderMgr::MOAIRenderMgr () :
 	mRenderCounter ( 0 ),
 	mRenderDuration ( 1.0 / 60.0 ),
 	mRenderTime ( 0.0 ),
-	mViewport ( 0 ),
-	mCamera ( 0 ),
 	mFrameBuffer ( 0 ),
 	mRenderable ( 0 ) {
 	
@@ -164,6 +162,7 @@ void MOAIRenderMgr::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getPerformanceDrawCount",	_getPerformanceDrawCount },
 		{ "getRenderCount",				_getRenderCount },
 		{ "setBufferTable",				_setBufferTable },
+		{ "setRenderCallback",			_setBufferTable },
 		{ NULL, NULL }
 	};
 
@@ -198,7 +197,7 @@ void MOAIRenderMgr::Render () {
 		state.Pop ( 1 );
 	}
 	
-	gfxMgr.mGfxState.GetDefaultFrameBuffer ()->Render ();
+	//gfxMgr.mGfxState.GetDefaultFrameBuffer ()->Render ();
 	//this->mLastDrawCount = MOAIGfxMgr::Get ().GetDrawCount ();
 	this->mRenderCounter++;
 	
@@ -226,22 +225,28 @@ void MOAIRenderMgr::RenderTable ( MOAILuaState& state, int idx ) {
 		
 		lua_rawgeti ( state, idx, n++ );
 		
-		int valType = lua_type ( state, -1 );
-			
-		if ( valType == LUA_TUSERDATA ) {
-			MOAIFrameBuffer* frameBuffer = state.GetLuaObject < MOAIFrameBuffer >( -1, false );
-			if ( frameBuffer ) {
-				this->mFrameBuffer = frameBuffer;
-				frameBuffer->Render ();
-			}
-		}
-		else if ( valType == LUA_TTABLE ) {
-			this->RenderTable ( state, -1 );
-		}
-		else {
-			n = 0;
-		}
+		switch ( lua_type ( state, -1 )) {
 		
+			case LUA_TFUNCTION:
+				state.CopyToTop ( -1 );
+				state.DebugCall ( 0, 0 );
+				break;
+		
+			case LUA_TTABLE:
+				this->RenderTable ( state, -1 );
+				break;
+			
+			case LUA_TUSERDATA: {
+				MOAIFrameBuffer* frameBuffer = state.GetLuaObject < MOAIFrameBuffer >( -1, false );
+				if ( frameBuffer ) {
+					this->mFrameBuffer = frameBuffer;
+					frameBuffer->Render ();
+				}
+				break;
+			}
+			default:
+				n = 0;
+		}
 		lua_pop ( state, 1 );
 	}
 }

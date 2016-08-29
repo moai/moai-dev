@@ -603,6 +603,7 @@ bool MOAIGraphicsProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 			case ATTR_VISIBLE:
 				attrOp.ApplyNoAdd ( ZLFloat::FromBoolean ( this->IsVisible ()), op , MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_FLOAT );
 				return true;
+			
 			//case FRAME_TRAIT:
 			//	attrOp.Apply < ZLBox >( &this->mFrame, op, MOAIAttrOp::ATTR_READ );
 			//	return true;
@@ -711,33 +712,40 @@ void MOAIGraphicsProp::DrawDebug ( int subPrimID, float lod ) {
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
 
-	MOAIViewport* viewport = renderMgr.GetViewport ();
-	MOAICamera* camera = renderMgr.GetCamera ();
+	//MOAIViewport* viewport = renderMgr.GetViewport ();
+	//MOAICamera* camera = renderMgr.GetCamera ();
 	
-	u32 billboard = camera ? this->mBillboard : BILLBOARD_NONE;
+	//u32 billboard = camera ? this->mBillboard : BILLBOARD_NONE;
 
 	ZLMatrix4x4 worldDrawingMtx;
 
-	switch ( billboard ) {
+	switch ( this->mBillboard ) {
 	
 		case BILLBOARD_NORMAL: {
 			
 			ZLAffine3D billboardMtx;
-			billboardMtx.Init ( camera->GetBillboardMtx ());
+			billboardMtx.Init ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::INVERSE_VIEW_MTX )); // inv view mtx sans translation
+			
+			billboardMtx.m [ ZLAffine3D::C3_R0 ] = 0.0f;
+			billboardMtx.m [ ZLAffine3D::C3_R1 ] = 0.0f;
+			billboardMtx.m [ ZLAffine3D::C3_R2 ] = 0.0f;
+			
 			worldDrawingMtx.Init ( this->GetBillboardMtx ( billboardMtx ));
 			break;
 		}
 		
 		case BILLBOARD_ORTHO: {
 		
-			ZLMatrix4x4 view = camera->GetViewMtx ();
-			ZLMatrix4x4 proj = camera->GetProjMtx ( *viewport );
+			const ZLMatrix4x4& view = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_MTX ); // camera->GetViewMtx ();
+			const ZLMatrix4x4& proj = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::PROJ_MTX ); // camera->GetProjMtx ( *viewport );
+			const ZLMatrix4x4& invViewProj = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::INVERSE_VIEW_PROJ_MTX );
 			
-			ZLMatrix4x4 invViewProj = view;
-			invViewProj.Append ( proj );
-			invViewProj.Inverse ();
+			//ZLMatrix4x4 invViewProj = view;
+			//invViewProj.Append ( proj );
+			//invViewProj.Inverse ();
 			
 			worldDrawingMtx.Init ( this->GetLocalToWorldMtx ());
 			
@@ -754,14 +762,16 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 			view.Transform ( worldLoc );
 			proj.Project ( worldLoc );
 			
-			viewport->GetProjMtxInv ().Transform ( worldLoc );
+			// TODO: matrix voodoo
 			
-			view.m [ ZLMatrix4x4::C3_R0 ] = worldLoc.mX;
-			view.m [ ZLMatrix4x4::C3_R1 ] = worldLoc.mY;
-			view.m [ ZLMatrix4x4::C3_R2 ] = 0.0f;
-			
-			proj = viewport->GetProjMtx ();
-			proj.m [ ZLMatrix4x4::C2_R2 ] = 0.0f;
+//			viewport->GetProjMtxInv ().Transform ( worldLoc );
+//			
+//			view.m [ ZLMatrix4x4::C3_R0 ] = worldLoc.mX;
+//			view.m [ ZLMatrix4x4::C3_R1 ] = worldLoc.mY;
+//			view.m [ ZLMatrix4x4::C3_R2 ] = 0.0f;
+//			
+//			proj = viewport->GetProjMtx ();
+//			proj.m [ ZLMatrix4x4::C2_R2 ] = 0.0f;
 			
 			worldDrawingMtx.Append ( view );
 			worldDrawingMtx.Append ( proj );
@@ -772,7 +782,9 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 		
 		case BILLBOARD_COMPASS: {
 		
-			const ZLAffine3D& cameraMtx = camera->GetLocalToWorldMtx ();
+			//const ZLAffine3D& cameraMtx = camera->GetLocalToWorldMtx (); // inv view mtx
+			ZLAffine3D cameraMtx;
+			cameraMtx.Init ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::INVERSE_VIEW_MTX ));
 			//ZLVec3D cameraZ = cameraMtx.GetZAxis ();
 			ZLVec3D	cameraY = cameraMtx.GetYAxis ();
 			
@@ -808,10 +820,13 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 			
 			//MOAIGfxMgr::Get ().GetWorldToWndMtx ();
 			
-			ZLMatrix4x4 viewProjMtx = camera->GetWorldToWndMtx ( *viewport );
+			//ZLMatrix4x4 viewProjMtx = camera->GetWorldToWndMtx ( *viewport );
+			
+			ZLMatrix4x4 viewProjMtx;
+			viewProjMtx.Ident (); // TODO
 			
 			ZLMatrix4x4 localToWorldMtx;
-			worldDrawingMtx.Init (this->GetLocalToWorldMtx ());
+			worldDrawingMtx.Init ( this->GetLocalToWorldMtx ());
 			
 			// TODO: check that pivot is supported correctly
 			ZLVec3D loc;

@@ -3,9 +3,12 @@
 
 #include "pch.h"
 
+#include <moai-sim/MOAICamera.h>
 #include <moai-sim/MOAIGfxGlobalsCache.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIShaderUniform.h>
+#include <moai-sim/MOAIViewport.h>
+#include <moai-sim/MOAIViewProj.h>
 
 //================================================================//
 // MOAIGfxGlobalsCache
@@ -242,6 +245,8 @@ MOAIGfxGlobalsCache::MOAIGfxGlobalsCache () :
 	mDirtyFlags ( 0 ),
 	mShaderFlags ( 0 ),
 	mFinalColor32 ( 0xffffffff ),
+	mClearFlags ( 0 ),
+	mClearDepth ( 0.0 ),
 	mBufferWidth ( 0 ),
 	mBufferHeight ( 0 ) {
 
@@ -253,6 +258,7 @@ MOAIGfxGlobalsCache::MOAIGfxGlobalsCache () :
 	this->mAmbientColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
 	this->mFinalColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
 	this->mPenColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
+	this->mClearColor.Set ( 0.0f, 0.0f, 0.0f, 1.0f );
 }
 
 //----------------------------------------------------------------//
@@ -365,6 +371,16 @@ void MOAIGfxGlobalsCache::SetPenColor ( float r, float g, float b, float a ) {
 
 	this->mPenColor.Set ( r, g, b, a );
 	this->UpdateFinalColor ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxGlobalsCache::SetViewProj ( MOAIViewport* viewport, MOAICamera* camera, const ZLVec3D& parallax ) {
+
+	ZLMatrix4x4 view = MOAIViewProj::GetViewMtx ( camera, parallax );
+	ZLMatrix4x4 proj = MOAIViewProj::GetProjectionMtx ( viewport, camera );
+	
+	this->SetMtx ( MOAIGfxGlobalsCache::VIEW_MTX, view );
+	this->SetMtx ( MOAIGfxGlobalsCache::PROJ_MTX, proj );
 }
 
 //----------------------------------------------------------------//

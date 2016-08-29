@@ -46,8 +46,6 @@ public:
 	ZLVec2D			GetScale				() const;
 	ZLVec2D			GetUnits				() const;
 	ZLMatrix4x4		GetWndToNormMtx			() const;
-	//ZLMatrix4x4		GetWndToWorldMtx		( const ZLMatrix4x4& view ) const;
-	//ZLMatrix4x4		GetWorldToWndMtx		( const ZLMatrix4x4& view ) const;
 					MOAIViewport			();
 					~MOAIViewport			();
 	void			RegisterLuaClass		( MOAILuaState& state );

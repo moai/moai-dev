@@ -115,6 +115,10 @@ protected:
 	ZLColorVec				mFinalColor;
 	u32						mFinalColor32;
 	
+	u32						mClearFlags;
+	ZLColorVec				mClearColor;
+	double					mClearDepth;
+	
 	u32						mBufferWidth;
 	u32						mBufferHeight;
 	
@@ -130,6 +134,10 @@ public:
 	GET ( u32, FinalColor32, mFinalColor32 )
 
 	GET_SET ( u32, ShaderFlags, mShaderFlags )
+	
+	GET_SET ( u32, ClearFlags, mClearFlags )
+	GET_SET ( ZLColorVec&, ClearColor, mClearColor )
+	GET_SET ( double, ClearDepth, mClearDepth )
 
 	//----------------------------------------------------------------//
 	
@@ -166,6 +174,8 @@ public:
 	void					SetPenColor					( u32 color );
 	void					SetPenColor					( const ZLColorVec& colorVec );
 	void					SetPenColor					( float r, float g, float b, float a );
+	
+	void					SetViewProj					( MOAIViewport* viewport, MOAICamera* camera, const ZLVec3D& parallax = ZLVec3D::AXIS );
 	
 	//----------------------------------------------------------------//
 	static inline u32 GetAttrFlagForID ( u32 globalID ) {

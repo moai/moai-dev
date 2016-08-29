@@ -24,6 +24,14 @@ class MOAIDraw :
 private:
 
 	//----------------------------------------------------------------//
+	static int				_bindFrameBuffer	( lua_State* L );
+	static int				_bindIndexBuffer	( lua_State* L );
+	static int				_bindShader			( lua_State* L );
+	static int				_bindTexture		( lua_State* L );
+	static int				_bindVertexArray	( lua_State* L );
+	static int				_bindVertexBuffer	( lua_State* L );
+	static int				_bindVertexFormat	( lua_State* L );
+	static int				_clear				( lua_State* L );
 	static int				_drawAnimCurve		( lua_State* L );
 	static int				_drawAxisGrid		( lua_State* L );
 	static int				_drawBezierCurve	( lua_State* L );
@@ -45,6 +53,12 @@ private:
 	static int				_fillFan			( lua_State* L );
 	static int				_fillRect			( lua_State* L );
 	static int				_setBlendMode		( lua_State* L );
+	static int				_setClearColor		( lua_State* L );
+	static int				_setClearDepth		( lua_State* L );
+	static int				_setDefaultTexture	( lua_State* L );
+	static int				_setPenColor		( lua_State* L );
+	static int				_setPenWidth		( lua_State* L );
+	//static int				_setScissorRect		( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	static void			DrawLuaParams			( lua_State* L, u32 primType );

@@ -336,15 +336,7 @@ MOAIGfxStateCache::MOAIGfxStateCache () :
 	mBlendEnabled ( 0 ),
 	mPenWidth ( 1.0f ),
 	mScissorEnabled ( false ),
-	mShader ( 0 ),
-	mShaderProgram ( 0 ),
 	mActiveTextures ( 0 ),
-	mCurrentFrameBuffer ( 0 ),
-	mCurrentIdxBuffer ( 0 ),
-	mCurrentTexture ( 0 ),
-	mCurrentVtxArray ( 0 ),
-	mCurrentVtxBuffer ( 0 ),
-	mCurrentVtxFormat ( 0 ),
 	mClient ( 0 ) {
 	
 	this->mScissorRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );

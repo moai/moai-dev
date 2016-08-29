@@ -94,11 +94,11 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIFrameBuffer )
 	
-	GET			( u32, BufferWidth, mBufferWidth )
-	GET			( u32, BufferHeight, mBufferHeight )
+	GET_CONST	( u32, BufferWidth, mBufferWidth )
+	GET_CONST	( u32, BufferHeight, mBufferHeight )
 	GET_SET		( float, BufferScale, mBufferScale )
 	GET_SET		( bool, Landscape, mLandscape )
-	GET			( u32, RenderCounter, mRenderCounter )
+	GET_CONST	( u32, RenderCounter, mRenderCounter )
 	
 	//----------------------------------------------------------------//
 	void				DetectGLFrameBufferID		();
