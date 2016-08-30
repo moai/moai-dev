@@ -50,13 +50,13 @@ bool MOAIStandardDeck::Contains ( u32 idx, const ZLVec2D& vec ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIStandardDeck::Draw ( u32 idx, MOAIMaterialBatch& materials ) {
+void MOAIStandardDeck::Draw ( u32 idx, MOAIMaterialBatch* materials ) {
 
 	this->Draw ( idx, materials, ZLVec3D::ORIGIN, ZLVec3D::AXIS );
 }
 
 //----------------------------------------------------------------//
-void MOAIStandardDeck::Draw ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
+void MOAIStandardDeck::Draw ( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale ) {
 	
 	if ( !idx || ( idx & MOAITileFlags::HIDDEN )) return;
 	
@@ -67,7 +67,7 @@ void MOAIStandardDeck::Draw ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D off
 }
 
 //----------------------------------------------------------------//
-void MOAIStandardDeck::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
+void MOAIStandardDeck::DrawIndex ( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale ) {
 	UNUSED ( idx );
 	UNUSED ( materials );
 	UNUSED ( offset );
@@ -123,7 +123,7 @@ void MOAIStandardDeck::GetCollisionShape ( MOAICollisionShape& shape ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIStandardDeck::Inside ( u32 idx, MOAIMaterialBatch& materials, u32 granularity, ZLVec3D vec, float pad ) {
+bool MOAIStandardDeck::Inside ( u32 idx, MOAIMaterialBatch* materials, u32 granularity, ZLVec3D vec, float pad ) {
 	UNUSED ( idx );
 	UNUSED ( materials );
 	UNUSED ( granularity );
@@ -171,12 +171,6 @@ void MOAIStandardDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-MOAIMaterialBatch& MOAIStandardDeck::ResolveMaterialBatch ( MOAIMaterialBatch* override ) {
-
-	return override ? *override : *this;
 }
 
 //----------------------------------------------------------------//

@@ -342,7 +342,7 @@ void MOAISelectionMesh::ClearSelection ( u32 set, size_t base, size_t top ) {
 }
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
+void MOAISelectionMesh::DrawIndex ( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale ) {
 	UNUSED ( offset );
 	UNUSED ( scale );
 	

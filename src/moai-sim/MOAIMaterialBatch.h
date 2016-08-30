@@ -84,8 +84,8 @@ public:
 	void				Clear						();
 	MOAIMaterial*		GetMaterial					( u32 idx );
 	MOAIMaterial*		GetMaterial					( u32 materialID, u32 deckIndex );
-	bool				LoadGfxState				( MOAIMaterialBatch* fallback, u32 idx, u32 defaultShader );
-	bool				LoadGfxState				( MOAIMaterialBatch* fallback, u32 materialID, u32 deckIndex, u32 defaultShader );
+	bool				LoadGfxState				( MOAIMaterialBatch* override, u32 idx, u32 defaultShader );
+	bool				LoadGfxState				( MOAIMaterialBatch* override, u32 materialID, u32 deckIndex, u32 defaultShader );
 						MOAIMaterialBatch			();
 	virtual				~MOAIMaterialBatch			();
 	MOAIMaterial*		RawGetMaterial				( u32 idx );
@@ -111,10 +111,10 @@ public:
 	void				SetTexture					( u32 idx, MOAITextureBase* texture );
 	MOAITextureBase*	SetTexture					( MOAILuaState& state, u32 idx );
 	size_t				Size						();
-	bool				TestHit						( MOAIMaterialBatch* fallback, u32 idx, float x, float y );
-	bool				TestHit						( MOAIMaterialBatch* fallback, u32 materialID, u32 deckIndex, float x, float y );
-	bool				TestHit						( MOAIMaterialBatch* fallback, u32 idx, u32 granularity, const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x, float y ); // in local (model) space of the quad
-	bool				TestHit						( MOAIMaterialBatch* fallback, u32 materialID, u32 deckIndex, u32 granularity, const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x, float y ); // in local (model) space of the quad
+	bool				TestHit						( MOAIMaterialBatch* override, u32 idx, float x, float y );
+	bool				TestHit						( MOAIMaterialBatch* override, u32 materialID, u32 deckIndex, float x, float y );
+	bool				TestHit						( MOAIMaterialBatch* override, u32 idx, u32 granularity, const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x, float y ); // in local (model) space of the quad
+	bool				TestHit						( MOAIMaterialBatch* override, u32 materialID, u32 deckIndex, u32 granularity, const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x, float y ); // in local (model) space of the quad
 };
 
 #endif

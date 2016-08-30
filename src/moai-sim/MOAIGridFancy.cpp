@@ -324,7 +324,7 @@ int MOAIGridFancy::_setPalette ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGridFancy::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, MOAIMaterialBatch& materials, const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
+void MOAIGridFancy::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, MOAIMaterialBatch* materials, const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
 
 	ZLVec3D offset	= ZLVec3D::ORIGIN;
 	ZLVec3D scale	= ZLVec3D::AXIS;

@@ -47,7 +47,7 @@ public:
 	u32				GetTile				( int xTile, int yTile );
 					MOAIGrid			();
 					~MOAIGrid			();
-	virtual	void	Draw				( MOAIDeck* deck, MOAIDeckRemapper* remapper, MOAIMaterialBatch& materials, const MOAICellCoord &c0, const MOAICellCoord &c1 );
+	virtual	void	Draw				( MOAIDeck* deck, MOAIDeckRemapper* remapper, MOAIMaterialBatch* materials, const MOAICellCoord &c0, const MOAICellCoord &c1 );
 	void			Fill				( u32 value );
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );

@@ -382,8 +382,6 @@ void MOAIParticleSystem::Draw ( int subPrimID, float lod ) {
 	this->LoadGfxState ();
 	this->LoadUVTransform ();
 
-	MOAIMaterialBatch& materials = this->mDeck->ResolveMaterialBatch ( this->mMaterialBatch );
-
 	ZLAffine3D drawingMtx;
 	ZLAffine3D spriteMtx;
 	
@@ -415,7 +413,7 @@ void MOAIParticleSystem::Draw ( int subPrimID, float lod ) {
 		
 		gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX, drawingMtx );
 		
-		this->mDeck->Draw ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex + ( u32 )sprite.mGfxID ), materials );
+		this->mDeck->Draw ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex + ( u32 )sprite.mGfxID ), this->mMaterialBatch );
 	}
 }
 

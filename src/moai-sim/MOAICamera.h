@@ -71,11 +71,9 @@ public:
 	float			GetFocalLength			( float width ) const;
 	ZLMatrix4x4		GetProjMtx				( const MOAIViewport& viewport ) const;
 	ZLMatrix4x4		GetProjMtxInv			( const MOAIViewport& viewport ) const;
-	ZLMatrix4x4		GetViewMtx				() const;
-	ZLMatrix4x4		GetViewProjMtx			( const MOAIViewport& viewport ) const;
+	ZLMatrix4x4		GetViewMtx				( const ZLVec3D& parallax = ZLVec3D::AXIS ) const;
+	ZLMatrix4x4		GetViewProjMtx			( const MOAIViewport& viewport, const ZLVec3D& parallax ) const;
 	ZLVec3D			GetViewVector			() const;
-	ZLMatrix4x4		GetWndToWorldMtx		( const MOAIViewport& viewport ) const;
-	ZLMatrix4x4		GetWorldToWndMtx		( const MOAIViewport& viewport ) const;
 					MOAICamera				();
 					~MOAICamera				();
 	void			RegisterLuaClass		( MOAILuaState& state );

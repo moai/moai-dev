@@ -765,10 +765,10 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 
 	gfxMgr.mGfxState.SetViewRect ( viewportRect );
 	gfxMgr.mGfxState.SetScissorRect ( viewportRect );
+	
 	this->ClearSurface ();
 	
 	gfxMgr.mGfxState.SetViewProj ( this->mViewport, this->mCamera, this->mParallax );
-	
 	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX );
 	
 	this->RenderTable ( this->mUnderlayTable );

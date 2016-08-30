@@ -28,11 +28,11 @@ public:
 		INVERSE_WORLD_MTX,
 		INVERSE_WORLD_VIEW_MTX,
 		INVERSE_WORLD_VIEW_PROJ_MTX,
-		PROJ_MTX,
-		UV_MTX,
-		VIEW_MTX,
+		PROJ_MTX,						// settable
+		UV_MTX,							// settable
+		VIEW_MTX,						// settable
 		VIEW_PROJ_MTX,
-		WORLD_MTX,
+		WORLD_MTX,						// settable
 		WORLD_NORMAL_MTX,
 		WORLD_VIEW_MTX,
 		WORLD_VIEW_NORMAL_MTX,
@@ -49,7 +49,7 @@ public:
 		VIEW_HEIGHT,
 		VIEW_WIDTH,
 		
-		TOTAL_GLOBALS,
+		TOTAL_GLOBALS, // MUST NOT EXCEED 32 GLOBALS FOR NOW
 	};
 	
 	static const u32 TOTAL_MATRICES = PEN_COLOR;
@@ -174,6 +174,8 @@ public:
 	ZLMatrix4x4				GetWndToWorldMtx			( const ZLRect& wndRect );
 	
 	const ZLFrustum&		GetViewVolume				();
+	
+	bool					IsInputMtx					( u32 transformID );
 	
 							MOAIGfxGlobalsCache			();
 							~MOAIGfxGlobalsCache		();

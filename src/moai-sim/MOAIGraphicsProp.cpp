@@ -28,6 +28,18 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIGraphicsProp::_draw ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+	
+	u32 subPrimID		= state.GetValue < u32 >( 2, NO_SUBPRIM_ID );
+	float lodFactor		= state.GetValue < float >( 3, 1.0f );
+	
+	self->Draw ( subPrimID, lodFactor );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIGraphicsProp::_getBillboard ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
 	
@@ -625,9 +637,7 @@ void MOAIGraphicsProp::Draw ( int subPrimID, float lod ) {
 	this->LoadGfxState ();
 	this->LoadVertexTransform ();
 	this->LoadUVTransform ();
-	
-	MOAIMaterialBatch& materials = this->mDeck->ResolveMaterialBatch ( this->mMaterialBatch );
-	
+		
 	if ( this->mGrid ) {
 	
 		MOAIGrid& grid = *this->mGrid;
@@ -639,10 +649,10 @@ void MOAIGraphicsProp::Draw ( int subPrimID, float lod ) {
 		else {
 			c0 = c1 = grid.GetCellCoord ( subPrimID );
 		}
-		grid.Draw ( this->mDeck, this->mRemapper, materials, c0, c1 );
+		grid.Draw ( this->mDeck, this->mRemapper, this->mMaterialBatch, c0, c1 );
 	}
 	else {
-		this->mDeck->Draw ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), materials );
+		this->mDeck->Draw ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), this->mMaterialBatch );
 	}
 }
 
@@ -860,8 +870,7 @@ bool MOAIGraphicsProp::Inside ( ZLVec3D vec, float pad ) {
 	// TODO: handle grids
 	if ( passTrivial && this->mDeck && ( this->mHitGranularity > HIT_TEST_COARSE )) {
 	
-		MOAIMaterialBatch& materials = this->mDeck->ResolveMaterialBatch ( this->mMaterialBatch );
-		return this->mDeck->Inside ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), materials, this->mHitGranularity, vec, pad );
+		return this->mDeck->Inside ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), this->mMaterialBatch, this->mHitGranularity, vec, pad );
 	}
 	return passTrivial;
 }
@@ -1029,6 +1038,7 @@ void MOAIGraphicsProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIColor::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
+		{ "draw",					_draw },
 		{ "getBillboard",			_getBillboard },
 		{ "getBlendEquation",		_getBlendEquation },
 		{ "getBlendMode",			_getBlendMode },

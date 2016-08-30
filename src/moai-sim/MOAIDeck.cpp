@@ -23,6 +23,21 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDeck::_draw ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIDeck, "U" )
+
+	u32 index						= state.GetValue < u32 >( 2, 1 );
+	MOAIMaterialBatch* materials	= state.GetLuaObject < MOAIMaterialBatch >( 3, false );
+	ZLVec3D offset					= state.GetValue < ZLVec3D >( 4, ZLVec3D::ORIGIN );
+	ZLVec3D scale					= state.GetValue < ZLVec3D >( 7, ZLVec3D::AXIS );
+
+	self->Draw ( index, materials, offset, scale );
+
+	return 0;
+}
+
+
 //----------------------------------------------------------------//
 /**	@lua	setBoundsDeck
 	@text	Set or clear the bounds override deck.
@@ -95,13 +110,13 @@ bool MOAIDeck::Contains ( u32 idx, const ZLVec2D& vec ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::Draw ( u32 idx, MOAIMaterialBatch& materials ) {
+void MOAIDeck::Draw ( u32 idx, MOAIMaterialBatch* materials ) {
 
 	this->Draw ( idx, materials, ZLVec3D::ORIGIN, ZLVec3D::AXIS );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::Draw ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
+void MOAIDeck::Draw ( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale ) {
 	
 	if ( !idx || ( idx & MOAITileFlags::HIDDEN )) return;
 	
@@ -112,7 +127,7 @@ void MOAIDeck::Draw ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLV
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
+void MOAIDeck::DrawIndex ( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale ) {
 	UNUSED ( idx );
 	UNUSED ( materials );
 	UNUSED ( offset );
@@ -126,7 +141,7 @@ void MOAIDeck::GetCollisionShape ( MOAICollisionShape& shape ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIDeck::Inside ( u32 idx, MOAIMaterialBatch& materials, u32 granularity, ZLVec3D vec, float pad ) {
+bool MOAIDeck::Inside ( u32 idx, MOAIMaterialBatch* materials, u32 granularity, ZLVec3D vec, float pad ) {
 	UNUSED ( idx );
 	UNUSED ( materials );
 	UNUSED ( granularity );
@@ -158,6 +173,7 @@ void MOAIDeck::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "draw",					_draw },
 		{ "getBounds",				_getBounds },
 		{ NULL, NULL }
 	};

@@ -79,6 +79,7 @@ class MOAIGraphicsProp :
 private:
 	
 	//----------------------------------------------------------------//
+	static int		_draw					( lua_State* L );
 	static int		_getBillboard			( lua_State* L );
 	static int		_getBlendEquation		( lua_State* L );
 	static int		_getBlendMode			( lua_State* L );

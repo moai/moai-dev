@@ -184,9 +184,9 @@ ZLBox MOAIGfxQuad2D::ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuad2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
+void MOAIGfxQuad2D::DrawIndex ( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale ) {
 	
-	if ( !materials.LoadGfxState ( this, idx, MOAIShaderMgr::DECK2D_SHADER )) return;
+	if ( !this->LoadGfxState ( materials, idx, MOAIShaderMgr::DECK2D_SHADER )) return;
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIQuadBrush::BindVertexFormat ( gfxMgr.mVertexCache );
@@ -198,10 +198,10 @@ void MOAIGfxQuad2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D o
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxQuad2D::Inside ( u32 idx, MOAIMaterialBatch& materials, u32 granularity, ZLVec3D vec, float pad ) {
+bool MOAIGfxQuad2D::Inside ( u32 idx, MOAIMaterialBatch* materials, u32 granularity, ZLVec3D vec, float pad ) {
 	UNUSED ( pad );
 
-	return materials.TestHit ( this, idx, granularity, this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
+	return this->TestHit ( materials, idx, granularity, this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
 }
 
 //----------------------------------------------------------------//

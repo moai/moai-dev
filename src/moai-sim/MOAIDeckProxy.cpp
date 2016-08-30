@@ -50,7 +50,7 @@ bool MOAIDeckProxy::Contains ( u32 idx, const ZLVec2D& vec ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckProxy::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
+void MOAIDeckProxy::DrawIndex ( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale ) {
 
 	if ( this->mDeck ) {
 		this->DrawIndex ( idx, materials, offset, scale );
@@ -87,7 +87,7 @@ ZLBox MOAIDeckProxy::GetItemBounds ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIDeckProxy::Inside ( u32 idx, MOAIMaterialBatch& materials, u32 granularity, ZLVec3D vec, float pad ) {
+bool MOAIDeckProxy::Inside ( u32 idx, MOAIMaterialBatch* materials, u32 granularity, ZLVec3D vec, float pad ) {
 
 	return this->mDeck ? this->mDeck->Inside ( idx, materials, granularity, vec, pad ) : false;
 }
@@ -123,11 +123,4 @@ void MOAIDeckProxy::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-MOAIMaterialBatch& MOAIDeckProxy::ResolveMaterialBatch ( MOAIMaterialBatch* override ) {
-
-	assert ( this->mDeck );
-	return this->mDeck->ResolveMaterialBatch ( override );
 }

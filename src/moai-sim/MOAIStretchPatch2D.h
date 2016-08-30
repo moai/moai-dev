@@ -66,8 +66,8 @@ public:
 	DECL_LUA_FACTORY ( MOAIStretchPatch2D )
 	
 	//----------------------------------------------------------------//
-	using MOAIDeck::DrawIndex;
-	void			DrawIndex				( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
+	//using MOAIDeck::DrawIndex;
+	void			DrawIndex				( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale );
 					MOAIStretchPatch2D		();
 					~MOAIStretchPatch2D		();
 	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );

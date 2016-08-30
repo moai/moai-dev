@@ -317,16 +317,16 @@ MOAIMaterial* MOAIMaterialBatch::GetMaterial ( u32 materialID, u32 deckIndex ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIMaterialBatch::LoadGfxState ( MOAIMaterialBatch* fallback, u32 idx, u32 defaultShader ) {
+bool MOAIMaterialBatch::LoadGfxState ( MOAIMaterialBatch* override, u32 idx, u32 defaultShader ) {
 
-	return this->LoadGfxState ( fallback, UNKNOWN, idx, defaultShader );
+	return this->LoadGfxState ( override, UNKNOWN, idx, defaultShader );
 }
 
 //----------------------------------------------------------------//
-bool MOAIMaterialBatch::LoadGfxState ( MOAIMaterialBatch* fallback, u32 materialID, u32 deckIndex, u32 defaultShader ) {
+bool MOAIMaterialBatch::LoadGfxState ( MOAIMaterialBatch* override, u32 materialID, u32 deckIndex, u32 defaultShader ) {
 
-	MOAIMaterial* primary = this->GetMaterial ( materialID, deckIndex );
-	MOAIMaterial* secondary = ( fallback && ( this != fallback )) ? fallback->GetMaterial ( materialID, deckIndex ) : 0;
+	MOAIMaterial* primary = ( override && ( this != override )) ? override->GetMaterial ( materialID, deckIndex ) : 0;
+	MOAIMaterial* secondary = this->GetMaterial ( materialID, deckIndex );
 
 	if ( primary ) {
 		return primary->LoadGfxState ( secondary, defaultShader );
@@ -570,20 +570,20 @@ size_t MOAIMaterialBatch::Size () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIMaterialBatch::TestHit ( MOAIMaterialBatch* fallback, u32 idx, float x, float y ) {
+bool MOAIMaterialBatch::TestHit ( MOAIMaterialBatch* override, u32 idx, float x, float y ) {
 
-	return this->TestHit ( fallback, UNKNOWN, idx, x, y );
+	return this->TestHit ( override, UNKNOWN, idx, x, y );
 }
 
 //----------------------------------------------------------------//
-bool MOAIMaterialBatch::TestHit ( MOAIMaterialBatch* fallback, u32 materialID, u32 deckIndex, float x, float y ) {
+bool MOAIMaterialBatch::TestHit ( MOAIMaterialBatch* override, u32 materialID, u32 deckIndex, float x, float y ) {
 
-	MOAIMaterial* primary = this->GetMaterial ( materialID, deckIndex );
+	MOAIMaterial* primary = ( override && ( this != override )) ? override->GetMaterial ( materialID, deckIndex ) : 0;
 	if ( primary && primary->mHitMask ) {
 		return primary->TestHit ( x, y );
 	}
 	
-	MOAIMaterial* secondary = ( fallback && ( this != fallback )) ? fallback->GetMaterial ( materialID, deckIndex ) : 0;
+	MOAIMaterial* secondary = this->GetMaterial ( materialID, deckIndex );
 	if ( secondary && secondary->mHitMask ) {
 		return secondary->TestHit ( x, y );
 	}
@@ -592,24 +592,24 @@ bool MOAIMaterialBatch::TestHit ( MOAIMaterialBatch* fallback, u32 materialID, u
 }
 
 //----------------------------------------------------------------//
-bool MOAIMaterialBatch::TestHit ( MOAIMaterialBatch* fallback, u32 idx, u32 granularity, const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x, float y ) {
+bool MOAIMaterialBatch::TestHit ( MOAIMaterialBatch* override, u32 idx, u32 granularity, const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x, float y ) {
 
-	return this->TestHit ( fallback, UNKNOWN, idx, granularity, modelQuad, uvQuad, x, y );
+	return this->TestHit ( override, UNKNOWN, idx, granularity, modelQuad, uvQuad, x, y );
 }
 
 //----------------------------------------------------------------//
-bool MOAIMaterialBatch::TestHit ( MOAIMaterialBatch* fallback, u32 materialID, u32 deckIndex, u32 granularity, const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x, float y ) {
+bool MOAIMaterialBatch::TestHit ( MOAIMaterialBatch* override, u32 materialID, u32 deckIndex, u32 granularity, const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x, float y ) {
 
 	if ( granularity == MOAIProp::HIT_TEST_COARSE ) return true;
 
 	ZLVec2D uv;
 
 	if ( ZLQuad::RemapCoord ( modelQuad, uvQuad, 0, x, y, uv)) {
-		return granularity == MOAIProp::HIT_TEST_FINE ? this->TestHit ( fallback, materialID, deckIndex, uv.mX, uv.mY ) : true;
+		return granularity == MOAIProp::HIT_TEST_FINE ? this->TestHit ( override, materialID, deckIndex, uv.mX, uv.mY ) : true;
 	}
 	
 	if ( ZLQuad::RemapCoord ( modelQuad, uvQuad, 1, x, y, uv)) {
-		return granularity == MOAIProp::HIT_TEST_FINE ? this->TestHit ( fallback, materialID, deckIndex, uv.mX, uv.mY ) : true;
+		return granularity == MOAIProp::HIT_TEST_FINE ? this->TestHit ( override, materialID, deckIndex, uv.mX, uv.mY ) : true;
 	}
 
 	return false;

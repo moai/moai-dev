@@ -59,6 +59,7 @@ public:
 //	STLString		GetField					( int idx, int key, const STLString& value );
 	
 	static cc8*		GetLuaTypeName				( int type );
+	ZLMatrix4x4		GetMatrix					( int idx, size_t size );
 	void*			GetPtrUserData				( int idx );
 	STLString		GetStackDump				();
 	STLString		GetStackTrace				( cc8* title, int level );

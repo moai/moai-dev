@@ -60,12 +60,11 @@ public:
 	using MOAIDeck::DrawIndex;
 	
 	//----------------------------------------------------------------//
-	void					DrawIndex				( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
+	void					DrawIndex				( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale );
 							MOAIGridDeck2D			();
 							~MOAIGridDeck2D			();
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
-	MOAIMaterialBatch&		ResolveMaterialBatch	( MOAIMaterialBatch* override );
 	void					SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void					SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };

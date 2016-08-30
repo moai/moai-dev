@@ -399,7 +399,7 @@ size_t MOAIGrid::StreamTilesOut ( ZLStream* stream ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGrid::Draw ( MOAIDeck* deck, MOAIDeckRemapper* remapper, MOAIMaterialBatch& materials, const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
+void MOAIGrid::Draw ( MOAIDeck* deck, MOAIDeckRemapper* remapper, MOAIMaterialBatch* materials, const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
 
 	ZLVec3D offset	= ZLVec3D::ORIGIN;
 	ZLVec3D scale	= ZLVec3D::AXIS;

@@ -56,9 +56,12 @@ private:
 	static int				_setClearColor		( lua_State* L );
 	static int				_setClearDepth		( lua_State* L );
 	static int				_setDefaultTexture	( lua_State* L );
+	static int				_setMatrix			( lua_State* L );
 	static int				_setPenColor		( lua_State* L );
 	static int				_setPenWidth		( lua_State* L );
-	//static int				_setScissorRect		( lua_State* L );
+	static int				_setScissorRect		( lua_State* L );
+	static int				_setViewProj		( lua_State* L );
+	static int				_setViewRect		( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	static void			DrawLuaParams			( lua_State* L, u32 primType );

@@ -38,24 +38,23 @@ protected:
 	static int				_setBoundsDeck				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void					DrawIndex					( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
+	void					DrawIndex					( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale );
 	void					SetBoundsDirty				();
 
 public:
 	
 	//----------------------------------------------------------------//
 	bool					Contains					( u32 idx, const ZLVec2D& vec );
-	void					Draw						( u32 idx, MOAIMaterialBatch& materials );
-	void					Draw						( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
+	void					Draw						( u32 idx, MOAIMaterialBatch* materials );
+	void					Draw						( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale );
 	ZLBox					GetBounds					();
 	ZLBox					GetBounds					( u32 idx );
 	void					GetCollisionShape			( MOAICollisionShape& shape );
-	bool					Inside						( u32 idx, MOAIMaterialBatch& materials, u32 granularity, ZLVec3D vec, float pad );
+	bool					Inside						( u32 idx, MOAIMaterialBatch* materials, u32 granularity, ZLVec3D vec, float pad );
 							MOAIStandardDeck			();
 							~MOAIStandardDeck			();
 	void					RegisterLuaClass			( MOAILuaState& state );
 	void					RegisterLuaFuncs			( MOAILuaState& state );
-	MOAIMaterialBatch&		ResolveMaterialBatch		( MOAIMaterialBatch* override );
 };
 
 #endif

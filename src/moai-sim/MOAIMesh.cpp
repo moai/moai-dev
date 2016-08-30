@@ -104,17 +104,17 @@ ZLBox MOAIMesh::ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
+void MOAIMesh::DrawIndex ( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale ) {
 
 	this->DrawIndex ( idx, 0, materials, offset, scale );
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
+void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale ) {
 	UNUSED ( offset );
 	UNUSED ( scale );
 
-	if ( !materials.LoadGfxState ( this, idx, MOAIShaderMgr::MESH_SHADER )) return;
+	if ( !this->LoadGfxState ( materials, idx, MOAIShaderMgr::MESH_SHADER )) return;
 
 	// TODO: make use of offset and scale
 

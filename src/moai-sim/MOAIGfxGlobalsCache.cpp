@@ -283,6 +283,12 @@ const ZLFrustum& MOAIGfxGlobalsCache::GetViewVolume () {
 }
 
 //----------------------------------------------------------------//
+bool MOAIGfxGlobalsCache::IsInputMtx ( u32 transformID ) {
+
+	return (( transformID == WORLD_MTX ) || ( transformID == VIEW_MTX ) || ( transformID == PROJ_MTX ) || ( transformID == UV_MTX ));
+}
+
+//----------------------------------------------------------------//
 MOAIGfxGlobalsCache::MOAIGfxGlobalsCache () :
 	mDirtyFlags ( 0 ),
 	mShaderFlags ( 0 ),

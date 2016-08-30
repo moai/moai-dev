@@ -37,7 +37,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIScriptDeck )
 	
 	//----------------------------------------------------------------//
-	void			DrawIndex				( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
+	void			DrawIndex				( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale );
 					MOAIScriptDeck			();
 					~MOAIScriptDeck			();
 	void			RegisterLuaClass		( MOAILuaState& state );

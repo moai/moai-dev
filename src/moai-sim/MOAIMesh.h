@@ -74,8 +74,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	void				ClearBounds					();
-	void				DrawIndex					( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
-	void				DrawIndex					( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
+	void				DrawIndex					( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale );
+	void				DrawIndex					( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale );
 						MOAIMesh					();
 						~MOAIMesh					();
 	void				RegisterLuaClass			( MOAILuaState& state );

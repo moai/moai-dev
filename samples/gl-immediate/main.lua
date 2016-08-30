@@ -14,33 +14,53 @@ layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
-gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "../resources/moai.png" )
-gfxQuad:setRect ( -128, -128, 128, 128 )
-gfxQuad:setUVRect ( 0, 0, 1, 1 )
+gfxQuad1 = MOAIGfxQuad2D.new ()
+gfxQuad1:setTexture ( "../resources/moai.png" )
+gfxQuad1:setRect ( -128, -128, 128, 128 )
+gfxQuad1:setUVRect ( 0, 0, 1, 1 )
 
-prop = MOAIProp2D.new ()
-prop:setDeck ( gfxQuad )
-layer:insertProp ( prop )
-prop:moveRot ( 360, 5 )
+prop1 = MOAIProp2D.new ()
+prop1:setDeck ( gfxQuad1 )
+layer:insertProp ( prop1 )
+prop1:moveRot ( 360, 5 )
 
-gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "../resources/test.png" )
-gfxQuad:setRect ( -128, -128, 128, 128 )
-gfxQuad:setUVRect ( 0, 0, 1, 1 )
+gfxQuad2 = MOAIGfxQuad2D.new ()
+gfxQuad2:setTexture ( "../resources/test.png" )
+gfxQuad2:setRect ( -128, -128, 128, 128 )
+gfxQuad2:setUVRect ( 0, 0, 1, 1 )
 
-prop = MOAIProp2D.new ()
-prop:setDeck ( gfxQuad )
-prop:setColor ( 1, 1, 1, 0 )
-layer:insertProp ( prop )
-prop:moveRot ( -360, 5 )
+prop2 = MOAIProp2D.new ()
+prop2:setDeck ( gfxQuad2 )
+prop2:setColor ( 1, 1, 1, 0 )
+layer:insertProp ( prop2 )
+prop2:moveRot ( -360, 5 )
 
 onRender = function ()
+
+	MOAIDraw.setViewRect ( viewport )
+	MOAIDraw.setScissorRect ( viewport )
 
 	MOAIDraw.setClearColor ( 1, 1, 1, 1 )
 	MOAIDraw.setClearDepth ( 0 )
 	MOAIDraw.clear ()
-	layer:draw ()
+
+	MOAIDraw.setViewProj ( viewport )
+
+	--prop1:draw ()
+	--prop2:draw ()
+
+	MOAIDraw.setBlendMode ( MOAIGraphicsProp.BLEND_NORMAL )
+
+	MOAIDraw.setPenColor ( 1, 1, 1, 1 )
+	MOAIDraw.setMatrix ( MOAIDraw.WORLD_MATRIX, prop1 )
+	gfxQuad1:draw ()
+
+	MOAIDraw.setPenColor ( 1, 1, 1, 0 )
+	MOAIDraw.setMatrix ( MOAIDraw.WORLD_MATRIX, prop2 )
+	gfxQuad2:draw ()
+
+	--layer:draw ()
 end
 
 MOAIRenderMgr.setRenderCallback ({ onRender })
+

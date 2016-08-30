@@ -53,7 +53,7 @@ protected:
 //	void				BooleanXor					( u32 set, u32 a, u32 b );
 	void				ChangeSpanSet				( MOAISelectionSpan* span, u32 set );
 	void				Clear						();
-	void				DrawIndex					( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
+	void				DrawIndex					( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale );
 	void				FixOverlaps					( MOAISelectionSpan* span );
 	void				FreeSpan					( MOAISelectionSpan* span );
 	MOAISelectionSpan*	InsertSpan					( MOAISelectionSpan* span, MOAISelectionSpan* prevInMaster, MOAISelectionSpan* prevInSet );

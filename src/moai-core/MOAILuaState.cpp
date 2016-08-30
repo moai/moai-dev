@@ -468,6 +468,27 @@ cc8* MOAILuaState::GetLuaTypeName ( int type ) {
 }
 
 //----------------------------------------------------------------//
+ZLMatrix4x4 MOAILuaState::GetMatrix ( int idx, size_t size ) {
+
+	switch ( size ) {
+			
+		case 6:
+			return  ZLMatrix4x4 ( this->GetValue < ZLAffine2D >( idx, ZLAffine2D::IDENT ));
+		
+		case 9:
+			return  ZLMatrix4x4 ( this->GetValue < ZLMatrix3x3 >( idx, ZLMatrix3x3::IDENT ));
+		
+		case 12:
+			return  ZLMatrix4x4 ( this->GetValue < ZLAffine3D >( idx, ZLAffine3D::IDENT ));
+		
+		case 16:
+			return this->GetValue < ZLMatrix4x4 >( idx, ZLMatrix4x4::IDENT );
+	}
+	
+	return ZLMatrix4x4::IDENT;
+}
+
+//----------------------------------------------------------------//
 void* MOAILuaState::GetPtrUserData ( int idx ) {
 
 	void* ptr = 0;

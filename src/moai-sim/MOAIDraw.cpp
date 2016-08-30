@@ -12,7 +12,9 @@
 #include <moai-sim/MOAIVertexFormatMgr.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAITexture.h>
+#include <moai-sim/MOAITransformBase.h>
 #include <moai-sim/MOAIVertexBuffer.h>
+#include <moai-sim/MOAIViewport.h>
 #include <moai-sim/MOAIQuadBrush.h>
 
 #define DEFAULT_ELLIPSE_STEPS 64
@@ -846,8 +848,11 @@ int MOAIDraw::_setBlendMode ( lua_State* L ) {
 		}
 		else {
 
-			u32 blendMode = state.GetValue < u32 >( 1, MOAIBlendMode::BLEND_NORMAL );
-			gfxMgr.mGfxState.SetBlendMode (( const MOAIBlendMode& )blendMode);
+			u32 blendModeID = state.GetValue < u32 >( 1, MOAIBlendMode::BLEND_NORMAL );
+			
+			MOAIBlendMode blendMode;
+			blendMode.SetBlend ( blendModeID );
+			gfxMgr.mGfxState.SetBlendMode ( blendMode );
 		}
 	}
 	else {
@@ -945,6 +950,33 @@ int MOAIDraw::_setDefaultTexture ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDraw::_setMatrix ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	
+	u32 matrixID = state.GetValue < u32 >( 1, MOAIGfxGlobalsCache::WORLD_MTX );
+
+	if ( gfxMgr.mGfxState.IsInputMtx( matrixID )) {
+	
+		if ( state.IsType ( 2, LUA_TUSERDATA )) {
+		
+			MOAITransformBase* transform = state.GetLuaObject < MOAITransformBase >( 2, true );
+			if ( transform ) {
+				gfxMgr.mGfxState.SetMtx ( matrixID, transform->GetLocalToWorldMtx ());
+			}
+		}
+		else {
+			int size = state.GetTop () - 2;
+			ZLMatrix4x4 mtx = state.GetMatrix ( 2, size );
+			gfxMgr.mGfxState.SetMtx ( matrixID, mtx );
+		}
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setPenColor
 
 	@in		number r
@@ -978,6 +1010,67 @@ int MOAIDraw::_setPenWidth ( lua_State* L ) {
 
 	float width = state.GetValue < float >( 1, 1.0f );
 	MOAIGfxMgr::Get ().mGfxState.SetPenWidth ( width );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDraw::_setScissorRect ( lua_State* L ) {
+
+	// TODO: fix this code duplication from _setViewRect
+
+	MOAILuaState state ( L );
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	
+	if ( state.IsType ( 1, LUA_TUSERDATA )) {
+		MOAIViewport* viewport = state.GetLuaObject < MOAIViewport >( 1, true );
+		if ( viewport ) {
+			gfxMgr.mGfxState.SetScissorRect ( *viewport );
+		}
+	}
+	else {
+		ZLRect rect;
+		rect.Init ( 0, 0, gfxMgr.mGfxState.GetBufferWidth (), gfxMgr.mGfxState.GetBufferHeight ());
+		rect = state.GetValue < ZLRect >( 1, rect );
+		gfxMgr.mGfxState.SetScissorRect ( rect );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDraw::_setViewProj ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	
+	MOAIViewport* viewport = state.GetLuaObject < MOAIViewport >( 1, false );
+	MOAICamera* camera = state.GetLuaObject < MOAICamera >( 2, false );
+	
+	MOAIGfxMgr::Get ().mGfxState.SetViewProj ( viewport, camera );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDraw::_setViewRect ( lua_State* L ) {
+
+	// TODO: fix this code duplication from _setScissorRect
+
+	MOAILuaState state ( L );
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	
+	if ( state.IsType ( 1, LUA_TUSERDATA )) {
+		MOAIViewport* viewport = state.GetLuaObject < MOAIViewport >( 1, true );
+		if ( viewport ) {
+			gfxMgr.mGfxState.SetViewRect ( *viewport );
+		}
+	}
+	else {
+		ZLRect rect;
+		rect.Init ( 0, 0, gfxMgr.mGfxState.GetBufferWidth (), gfxMgr.mGfxState.GetBufferHeight ());
+		rect = state.GetValue < ZLRect >( 1, rect );
+		gfxMgr.mGfxState.SetViewRect ( rect );
+	}
 	return 0;
 }
 
@@ -1653,6 +1746,11 @@ MOAIDraw::~MOAIDraw () {
 void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 
+	state.SetField ( -1, "PROJ_MATRIX",					( u32 )MOAIGfxGlobalsCache::PROJ_MTX );
+	state.SetField ( -1, "UV_MATRIX",					( u32 )MOAIGfxGlobalsCache::UV_MTX );
+	state.SetField ( -1, "VIEW_MATRIX",					( u32 )MOAIGfxGlobalsCache::VIEW_MTX );
+	state.SetField ( -1, "WORLD_MATRIX",				( u32 )MOAIGfxGlobalsCache::WORLD_MTX );
+
 	luaL_Reg regTable [] = {
 		{ "bindFrameBuffer",		_bindFrameBuffer },
 		{ "bindIndexBuffer",		_bindIndexBuffer },
@@ -1686,9 +1784,12 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setClearColor",			_setClearColor },
 		{ "setClearDepth",			_setClearDepth },
 		{ "setDefaultTexture",		_setDefaultTexture },
+		{ "setMatrix",				_setMatrix },
 		{ "setPenColor",			_setPenColor },
 		{ "setPenWidth",			_setPenWidth },
-		//{ "setScissorRect",			_setScissorRect },
+		{ "setScissorRect",			_setScissorRect },
+		{ "setViewProj",			_setViewProj },
+		{ "setViewRect",			_setViewRect },
 		
 		{ NULL, NULL }
 	};

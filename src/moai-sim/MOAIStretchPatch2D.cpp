@@ -175,13 +175,13 @@ ZLBox MOAIStretchPatch2D::ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
+void MOAIStretchPatch2D::DrawIndex ( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale ) {
 	UNUSED ( offset );
 	UNUSED ( scale );
 	
 	// TODO: make use of offset and scale
 	
-	if ( !materials.LoadGfxState ( this, idx - 1, MOAIShaderMgr::DECK2D_SHADER )) return;
+	if ( !this->LoadGfxState ( materials, idx - 1, MOAIShaderMgr::DECK2D_SHADER )) return;
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIQuadBrush::BindVertexFormat ( gfxMgr.mVertexCache );

@@ -153,7 +153,7 @@ ZLBox MOAIGridDeck2D::ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGridDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
+void MOAIGridDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale ) {
 	
 	u32 size = ( u32 )this->mBrushes.Size ();
 	if ( !size ) return;
@@ -176,6 +176,8 @@ void MOAIGridDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D 
 	
 	offset.mX = offset.mX - ( c0.mX * tileWidth ) + brush.mOffset.mX;
 	offset.mY = offset.mY - ( c0.mY * tileHeight ) + brush.mOffset.mY;
+	
+	materials = materials ? materials : this;
 	
 	for ( int y = c0.mY; y <= c1.mY; ++y ) {
 		for ( int x = c0.mX; x <= c1.mX; ++x ) {
@@ -256,12 +258,6 @@ void MOAIGridDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-MOAIMaterialBatch& MOAIGridDeck2D::ResolveMaterialBatch ( MOAIMaterialBatch* override ) {
-
-	return override ? *override : ( this->mDeck ? this->mDeck->ResolveMaterialBatch ( override ) : *this );
 }
 
 //----------------------------------------------------------------//
