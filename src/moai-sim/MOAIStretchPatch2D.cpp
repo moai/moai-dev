@@ -184,7 +184,7 @@ void MOAIStretchPatch2D::DrawIndex ( u32 idx, MOAIMaterialBatch* materials, ZLVe
 	if ( !this->LoadGfxState ( materials, idx - 1, MOAIShaderMgr::DECK2D_SHADER )) return;
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	MOAIQuadBrush::BindVertexFormat ( gfxMgr.mVertexCache );
+	MOAIQuadBrush::BindVertexFormat ();
 	
 	ZLMatrix4x4 worldTransform = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_MTX );
 	ZLVec3D stretch = worldTransform.GetStretch ();

@@ -233,7 +233,7 @@ void MOAITextLayout::Draw ( u32 reveal, MOAIShader* defaultShader, bool useSprit
 	if ( reveal ) {
 		
 		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-		MOAIQuadBrush::BindVertexFormat ( gfxMgr.mVertexCache );
+		MOAIQuadBrush::BindVertexFormat ();
 
 		ZLColorVec baseColor = gfxMgr.mGfxState.GetPenColor ();
 		ZLColorVec blendColor;

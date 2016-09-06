@@ -40,7 +40,7 @@ onRender = function ()
 	MOAIDraw.setViewRect ( viewport )
 	MOAIDraw.setScissorRect ( viewport )
 
-	MOAIDraw.setClearColor ( 1, 1, 1, 1 )
+	MOAIDraw.setClearColor ( 0, 0, 0, 1 )
 	MOAIDraw.setClearDepth ( 0 )
 	MOAIDraw.clear ()
 
@@ -51,13 +51,16 @@ onRender = function ()
 
 	MOAIDraw.setBlendMode ( MOAIGraphicsProp.BLEND_NORMAL )
 
-	MOAIDraw.setPenColor ( 1, 1, 1, 1 )
+	MOAIDraw.setPenColor ( 1, 0, 0, 1 )
 	MOAIDraw.setMatrix ( MOAIDraw.WORLD_MATRIX, prop1 )
-	gfxQuad1:draw ()
 
-	MOAIDraw.setPenColor ( 1, 1, 1, 0 )
-	MOAIDraw.setMatrix ( MOAIDraw.WORLD_MATRIX, prop2 )
-	gfxQuad2:draw ()
+	MOAIDraw.fillRect ( -128, -128, 128, 128 )
+
+	--gfxQuad1:draw ()
+
+	--MOAIDraw.setPenColor ( 1, 1, 1, 0 )
+	--MOAIDraw.setMatrix ( MOAIDraw.WORLD_MATRIX, prop2 )
+	--gfxQuad2:draw ()
 
 	--layer:draw ()
 end

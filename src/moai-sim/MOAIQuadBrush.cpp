@@ -11,9 +11,9 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIQuadBrush::BindVertexFormat ( MOAIGfxVertexCache& vertexCache ) {
+void MOAIQuadBrush::BindVertexFormat () {
 	
-	vertexCache.BindBufferedDrawing ( MOAIVertexFormatMgr::XYZWUVC );
+	MOAIGfxMgr::Get ().mGfxState.SetVertexFormat ( MOAIVertexFormatMgr::XYZWUVC );
 }
 
 //----------------------------------------------------------------//

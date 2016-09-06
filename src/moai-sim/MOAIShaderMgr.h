@@ -27,7 +27,7 @@ class MOAIShaderMgr :
 	public MOAIGlobalClass < MOAIShaderMgr, MOAILuaObject > {
 public:
 
-	enum {
+	enum Preset {
 		DECK2D_SHADER,
 		DECK2D_SNAPPING_SHADER,
 		DECK2D_TEX_ONLY_SHADER,

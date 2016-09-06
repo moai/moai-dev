@@ -29,8 +29,8 @@ void MOAIVertexArrayItem::Bind ( bool useVAOs ) {
 		
 		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
+		gfxMgr.mGfxState.SetVertexFormat ( this->mFormat );
 		gfxMgr.mGfxState.BindVertexBuffer ( this->mBuffer );
-		gfxMgr.mGfxState.BindVertexFormat ( this->mFormat );
 	}
 }
 
@@ -56,8 +56,8 @@ void MOAIVertexArrayItem::Unbind () {
 	
 		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
+		gfxMgr.mGfxState.SetVertexFormat ();
 		gfxMgr.mGfxState.BindVertexBuffer ();
-		gfxMgr.mGfxState.BindVertexFormat ();
 	}
 }
 

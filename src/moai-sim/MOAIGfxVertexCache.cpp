@@ -18,17 +18,25 @@
 #include <moai-sim/MOAIVertexFormatMgr.h>
 #include <moai-sim/MOAIViewport.h>
 
+//#define MOAIGFXVERTEXCACHE_DEBUG_LOG
+
+#ifdef MOAIGFXVERTEXCACHE_DEBUG_LOG
+	#define DEBUG_LOG printf
+#else
+	#define DEBUG_LOG(...)
+#endif
+
 //================================================================//
 // MOAIGfxVertexCache
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxVertexCache::BeginPrim () {
+bool MOAIGfxVertexCache::BeginPrim () {
 
 	// TODO: this was commented out to deal with prims improperly batching in Vavius's
 	// spine implementation. this code did not handle indexed prims correctly. the
 	// fix was to introduce BeginPrimIndexed (). The TODO is to make sure that the
-	// original behavior is preserved, and to see if there's way to reconcile these
+	// original behavior is preserved, and to see if there's a way to reconcile these
 	// ideas (to get back to one BeginPrim () to handle both cases).
 
 //	if ( this->mPrimSize ) {
@@ -48,58 +56,62 @@ void MOAIGfxVertexCache::BeginPrim () {
 		this->FlushBufferedPrims ();
 	}
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	gfxMgr.mGfxState.SetShaderFlags ( gfxMgr.mGfxState.GetShaderGlobalsMask ());
-	gfxMgr.mGfxState.SetClient ( this );
+	if ( this->mVertexSize ) {
 	
-	this->mUseIdxBuffer = false;
+		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+		gfxMgr.mGfxState.SetShaderFlags ( gfxMgr.mGfxState.GetShaderGlobalsMask ());
+		gfxMgr.mGfxState.SetClient ( this );
+		
+		this->mUseIdxBuffer = false;
+		
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxVertexCache::BeginPrim ( u32 primType, u32 primSize ) {
+bool MOAIGfxVertexCache::BeginPrim ( u32 primType, u32 primSize ) {
 
 	this->SetPrimType ( primType, primSize );
-	this->BeginPrim ();
+	return this->BeginPrim ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxVertexCache::BeginPrimIndexed ( u32 primType, u32 vtxCount, u32 idxCount ) {
+bool MOAIGfxVertexCache::BeginPrimIndexed ( u32 primType, u32 vtxCount, u32 idxCount ) {
+	
+	DEBUG_LOG ( "BEGIN INDEXED PRIM: %d %d %d\n", primType, vtxCount, idxCount );
+	
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	
+	// these will get bound later, just before drawing; clear them for now
+	gfxMgr.mGfxState.BindIndexBuffer ();
+	gfxMgr.mGfxState.BindVertexBuffer ();
+	
+	gfxMgr.mGfxState.ApplyStateChanges (); // must happen here in case there needs to be a flush
 	
 	this->SetPrimType ( primType );
 	
-	if ( !this->mUseIdxBuffer ||
-		(( this->mTotalIndices + idxCount ) > this->mMaxIndices ) ||
-		(( this->mTotalVertices + vtxCount ) > this->mMaxVertices )) {
+	if ( this->mVertexSize ) {
 		
-		this->FlushBufferedPrims ();
+		if ( !this->mUseIdxBuffer ||
+			(( this->mTotalIndices + idxCount ) > this->mMaxIndices ) ||
+			(( this->mTotalVertices + vtxCount ) > this->mMaxVertices )) {
+			
+			this->FlushBufferedPrims ();
+		}
+		
+		gfxMgr.mGfxState.SetShaderFlags ( gfxMgr.mGfxState.GetShaderGlobalsMask ());
+		gfxMgr.mGfxState.SetClient ( this );
+		
+		this->mUseIdxBuffer		= true;
+		this->mIndexBase		= ( u16 )( this->mTotalVertices );
+		
+		this->mTotalIndices	   += idxCount;
+		this->mTotalVertices   += vtxCount;
+		
+		return true;
 	}
-	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	gfxMgr.mGfxState.SetShaderFlags ( gfxMgr.mGfxState.GetShaderGlobalsMask ());
-	gfxMgr.mGfxState.SetClient ( this );
-	
-	this->mUseIdxBuffer		= true;
-	this->mIndexBase		= ( u16 )( this->mTotalVertices );
-	
-	this->mTotalIndices	   += idxCount;
-	this->mTotalVertices   += vtxCount;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxVertexCache::BindBufferedDrawing ( MOAIVertexFormat& format ) {
-	
-	this->mVertexFormat = &format;
-	this->mVertexSize = format.GetVertexSize ();
-	this->UpdateLimits ();
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxVertexCache::BindBufferedDrawing ( u32 preset ) {
-
-	MOAIVertexFormat* format = MOAIVertexFormatMgr::Get ().GetFormat ( preset );
-	
-	assert ( format );
-	this->BindBufferedDrawing ( *format );
+	return false;
 }
 
 //----------------------------------------------------------------//
@@ -116,60 +128,39 @@ void MOAIGfxVertexCache::EndPrim () {
 
 //----------------------------------------------------------------//
 void MOAIGfxVertexCache::EndPrimIndexed () {
-	
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxVertexCache::FlushBufferedPrims () {
 
-	if (( !this->mIsDrawing ) && this->mVertexFormat && this->mVertexSize ) {
+	if ( this->mVtxBuffer->GetCursor () == 0 ) return;
+
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	gfxMgr.mGfxState.SuspendChanges (); // don't apply any pending state changes;
+
+	if ( !this->mIsDrawing ) {
+	
+		DEBUG_LOG ( "FLUSH BUFFERED PRIMS\n" );
 	
 		this->mIsDrawing = true;
 		
 		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+		
+		u32 count = 0;
 		
 		if ( this->mUseIdxBuffer ) {
-			
-			u32 count = ( u32 )( this->mIdxBuffer->GetCursor () / INDEX_SIZE );
-			
-			if ( count > 0 ) {
-				
-				this->mVtxBuffer->OnGPUUpdate ();
-				this->mIdxBuffer->OnGPUUpdate ();
-				
-				//gfxCache.BindVertexFormat ();
-				
-				gfxMgr.mGfxState.BindVertexBuffer ( this->mVtxBuffer );
-				gfxMgr.mGfxState.BindVertexFormat ( this->mVertexFormat, true );
-				gfxMgr.mGfxState.BindIndexBuffer ( this->mIdxBuffer );
-				
-				gfxMgr.mGfxState.UpdateAndBindUniforms ();
-
-				ZLSharedConstBuffer* buffer = gfx.CopyBuffer ( this->mIdxBuffer->GetBuffer ());
-
-				gfx.DrawElements ( this->mPrimType, count, ZGL_TYPE_UNSIGNED_SHORT, buffer, 0 );
-				//this->mDrawCount++;
-			}
+			count = ( u32 )( this->mIdxBuffer->GetCursor () / INDEX_SIZE );
 		}
 		else {
-			
-			u32 count = this->mPrimSize ? this->mPrimCount * this->mPrimSize : ( u32 )( this->mVtxBuffer->GetCursor () / this->mVertexSize );
-			
-			if ( count > 0 ) {
-				
-				this->mVtxBuffer->OnGPUUpdate ();
-				
-				//gfxCache.BindVertexFormat ();
-				
-				gfxMgr.mGfxState.BindVertexBuffer ( this->mVtxBuffer );
-				gfxMgr.mGfxState.BindVertexFormat ( this->mVertexFormat, true );
-				
-				gfxMgr.mGfxState.UpdateAndBindUniforms ();
-				
-				gfx.DrawArrays ( this->mPrimType, 0, count );
-				//this->mDrawCount++;
-			}
+			count = this->mPrimSize ? this->mPrimCount * this->mPrimSize : ( u32 )( this->mVtxBuffer->GetCursor () / this->mVertexSize );
+		}
+		
+		if ( count > 0 ) {
+		
+			gfxMgr.mGfxState.BindIndexBuffer ( this->mIdxBuffer );
+			gfxMgr.mGfxState.BindVertexBuffer ( this->mVtxBuffer );
+		
+			gfxMgr.mGfxState.DrawPrims ( this->mPrimType, 0, count );
 		}
 		
 		this->mIsDrawing = false;
@@ -187,6 +178,8 @@ void MOAIGfxVertexCache::FlushBufferedPrims () {
 		
 		gfxMgr.mGfxState.SetShaderFlags ( 0 );
 	}
+	
+	gfxMgr.mGfxState.ResumeChanges (); // business as usual
 }
 
 //----------------------------------------------------------------//
@@ -200,8 +193,8 @@ void MOAIGfxVertexCache::InitBuffers () {
 		this->mVtxBuffer->Reserve ( DEFAULT_VERTEX_BUFFER_SIZE );
 		this->mIdxBuffer->Reserve ( DEFAULT_INDEX_BUFFER_SIZE );
 		
-		this->mVtxBuffer->SetCopyOnUpdate ( true );
-		this->mIdxBuffer->SetCopyOnUpdate ( true );
+		this->mVtxBuffer->SetCopyOnBind ( true );
+		this->mIdxBuffer->SetCopyOnBind ( true );
 	}
 }
 
@@ -220,7 +213,6 @@ MOAIGfxVertexCache::MOAIGfxVertexCache () :
 	mPrimType ( 0xffffffff ),
 	mTotalVertices ( 0 ),
 	mTotalIndices ( 0 ),
-	mVertexFormat ( 0 ),
 	mApplyVertexTransform ( false ),
 	mApplyUVTransform ( false ),
 	mVertexColor32 ( 0xffffffff ) {
@@ -375,16 +367,27 @@ void MOAIGfxVertexCache::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* uv ) {
 //----------------------------------------------------------------//
 void MOAIGfxVertexCache::UpdateLimits () {
 	
-	u32 primSize	= this->mPrimSize ? this->mPrimSize : 1;
-	u32 vertexSize	= this->mVertexSize ? this->mVertexSize : 1;
+	MOAIVertexFormat* format = MOAIGfxMgr::Get ().mGfxState.GetCurrentVtxFormat ();
 	
-	this->mMaxIndices	= ( u32 )( this->mIdxBuffer->GetSize () / INDEX_SIZE );
-	this->mMaxVertices	= ( u32 )( this->mVtxBuffer->GetSize () / vertexSize );
+	if ( format ) {
 	
-	u32 maxElements		= MIN ( this->mMaxIndices, this->mMaxVertices );
-	this->mMaxPrims		= ( u32 )( maxElements / primSize );
+		this->mVertexSize = format->GetVertexSize ();
+		
+		u32 primSize	= this->mPrimSize ? this->mPrimSize : 1;
+		u32 vertexSize	= this->mVertexSize ? this->mVertexSize : 1;
+		
+		this->mMaxIndices	= ( u32 )( this->mIdxBuffer->GetSize () / INDEX_SIZE );
+		this->mMaxVertices	= ( u32 )( this->mVtxBuffer->GetSize () / vertexSize );
+		
+		u32 maxElements		= MIN ( this->mMaxIndices, this->mMaxVertices );
+		this->mMaxPrims		= ( u32 )( maxElements / primSize );
+	}
+	else {
+		
+		this->mVertexSize	= 0;
+	}
 }
-	
+
 //----------------------------------------------------------------//
 void MOAIGfxVertexCache::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv ) {
 

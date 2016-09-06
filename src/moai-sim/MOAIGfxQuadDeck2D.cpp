@@ -413,7 +413,7 @@ void MOAIGfxQuadDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch* materials, ZLVec
 		if ( !this->LoadGfxState ( materials, this->mMaterialIDs [ itemIdx ], idx, MOAIShaderMgr::DECK2D_SHADER )) return;
 
 		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-		MOAIQuadBrush::BindVertexFormat ( gfxMgr.mVertexCache );
+		MOAIQuadBrush::BindVertexFormat ();
 		
 		gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
 		gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_MTX ));

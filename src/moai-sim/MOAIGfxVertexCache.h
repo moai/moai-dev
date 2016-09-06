@@ -59,7 +59,7 @@ protected:
 	u32							mTotalIndices;
 	u16							mIndexBase;
 
-	MOAIVertexFormat*			mVertexFormat;
+	//MOAIVertexFormat*			mVertexFormat;
 
 	bool						mApplyVertexTransform;
 	ZLMatrix4x4					mVertexTransform;
@@ -78,12 +78,9 @@ protected:
 public:
 	
 	//----------------------------------------------------------------//
-	void			BeginPrim						();
-	void			BeginPrim						( u32 primType, u32 primSize = 0 );
-	void			BeginPrimIndexed				( u32 primType, u32 vtxCount, u32 idxCount );
-	
-	void			BindBufferedDrawing				( MOAIVertexFormat& format );
-	void			BindBufferedDrawing				( u32 preset );
+	bool			BeginPrim						();
+	bool			BeginPrim						( u32 primType, u32 primSize = 0 );
+	bool			BeginPrimIndexed				( u32 primType, u32 vtxCount, u32 idxCount );
 	
 	void			EndPrim							();
 	void			EndPrimIndexed					();

@@ -191,13 +191,23 @@ void MOAIRenderMgr::Render () {
 	ZGL_COMMENT ( gfx, "RENDER MGR RENDER" );
 
 	if ( this->mBufferTable ) {
+	
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		state.Push ( this->mBufferTable );
-		this->RenderTable ( state, -1 );
-		state.Pop ( 1 );
+		
+		if ( state.IsType ( -1, LUA_TFUNCTION )) {
+			state.DebugCall ( 0, 0 );
+		}
+		else {
+			this->RenderTable ( state, -1 );
+			state.Pop ( 1 );
+			gfxMgr.mGfxState.GetDefaultFrameBuffer ()->Render ();
+		}
+	}
+	else {
+		gfxMgr.mGfxState.GetDefaultFrameBuffer ()->Render ();
 	}
 	
-	//gfxMgr.mGfxState.GetDefaultFrameBuffer ()->Render ();
 	//this->mLastDrawCount = MOAIGfxMgr::Get ().GetDrawCount ();
 	this->mRenderCounter++;
 	

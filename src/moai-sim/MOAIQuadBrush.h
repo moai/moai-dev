@@ -25,7 +25,7 @@ public:
 	ZLQuad	mUVQuad;
 
 	//----------------------------------------------------------------//
-	static void			BindVertexFormat	( MOAIGfxVertexCache& vertexCache );
+	static void			BindVertexFormat	();
 	void				Draw				();
 	void				Draw				( float xOff, float yOff, float zOff );
 	void				Draw				( float xOff, float yOff, float zOff, float xScale, float yScale );

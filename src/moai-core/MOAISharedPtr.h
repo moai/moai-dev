@@ -47,52 +47,52 @@ public:
 	//----------------------------------------------------------------//
 	inline operator bool () {
 		return this->Get () != 0;
-	};
+	}
 	
 	//----------------------------------------------------------------//
 	inline operator bool () const {
 		return this->Get () != 0;
-	};
+	}
 
 	//----------------------------------------------------------------//
 	inline TYPE& operator * () {
 		return *this->Get ();
-	};
+	}
 
 	//----------------------------------------------------------------//
 	inline const TYPE& operator * () const {
 		return *this->Get ();
-	};
+	}
 
 	//----------------------------------------------------------------//
 	inline TYPE* operator -> () {
 		return this->Get ();
-	};
+	}
 	
 	//----------------------------------------------------------------//
 	inline const TYPE* operator -> () const {
 		return this->Get ();
-	};
+	}
 
 	//----------------------------------------------------------------//
 	inline operator TYPE* () {
 		return this->Get ();
-	};
+	}
 
 	//----------------------------------------------------------------//
 	inline operator const TYPE* () const {
 		return this->Get ();
-	};
+	}
 
 	//----------------------------------------------------------------//
 	inline void operator = ( TYPE* assign ) {
 		this->Set ( assign );
-	};
+	}
 
 	//----------------------------------------------------------------//
 	inline void operator = ( const MOAISharedPtr < TYPE >& assign ) {
 		this->Set ( assign.mObject );
-	};
+	}
 
 	//----------------------------------------------------------------//
 	MOAISharedPtr () :
@@ -103,13 +103,13 @@ public:
 	MOAISharedPtr ( TYPE* assign ) :
 		mObject ( 0 ) {
 		this->Set ( assign );
-	};
+	}
 
 	//----------------------------------------------------------------//
 	MOAISharedPtr ( const MOAISharedPtr < TYPE >& assign ) :
 		mObject ( 0 ) {
 		this->Set ( assign.mObject );
-	};
+	}
 	
 	//----------------------------------------------------------------//
 	~MOAISharedPtr () {

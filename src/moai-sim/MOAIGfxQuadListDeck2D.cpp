@@ -371,7 +371,7 @@ void MOAIGfxQuadListDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch* materials, Z
 		size_t itemIdx = idx % size;
 
 		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-		MOAIQuadBrush::BindVertexFormat ( gfxMgr.mVertexCache );
+		MOAIQuadBrush::BindVertexFormat ();
 		
 		gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
 		gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_MTX ));

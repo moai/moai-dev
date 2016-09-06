@@ -13,7 +13,7 @@ class MOAIVertexFormatMgr :
 	public MOAIGlobalClass < MOAIVertexFormatMgr, MOAILuaObject > {
 public:
 
-	enum {
+	enum Preset {
 		XYZC,
 		XYZWC,
 		XYZWUVC,

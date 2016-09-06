@@ -14,6 +14,8 @@
 #include <moai-sim/MOAITexture.h>
 #include <moai-sim/MOAITransformBase.h>
 #include <moai-sim/MOAIVertexBuffer.h>
+#include <moai-sim/MOAIVertexFormat.h>
+#include <moai-sim/MOAIVertexFormatMgr.h>
 #include <moai-sim/MOAIViewport.h>
 #include <moai-sim/MOAIQuadBrush.h>
 
@@ -200,7 +202,7 @@ void MOAIDraw::EndDrawString () {
 	
 	gfxMgr.mGfxState.SetBlendMode ( ZGL_BLEND_FACTOR_ONE, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
 	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_MTX ));
-	MOAIQuadBrush::BindVertexFormat ( gfxMgr.mVertexCache );
+	MOAIQuadBrush::BindVertexFormat ();
 
 	// Get the context data
 	assert( g_CurrentTextDrawContext );
@@ -284,7 +286,19 @@ int MOAIDraw::_bindShader ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 	
-	MOAIGfxMgr::Get ().mGfxState.BindShader ( state.GetLuaObject < MOAIShader >( 1, false ));
+	switch ( lua_type ( state, 1 )) {
+	
+		case LUA_TUSERDATA:
+			MOAIGfxMgr::Get ().mGfxState.BindShader ( state.GetLuaObject < MOAIShader >( 1, true ));
+			break;
+		
+		case LUA_TNUMBER:
+			MOAIGfxMgr::Get ().mGfxState.BindShader (( MOAIShaderMgr::Preset )state.GetValue < u32 >( 1, MOAIShaderMgr::LINE_SHADER ));
+			break;
+		
+		default:
+			MOAIGfxMgr::Get ().mGfxState.BindShader ();
+	}
 	return 0;
 }
 
@@ -324,7 +338,20 @@ int MOAIDraw::_bindVertexFormat ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 	
-	MOAIGfxMgr::Get ().mGfxState.BindVertexFormat ( state.GetLuaObject < MOAIVertexFormat >( 1, false ));
+	switch ( lua_type ( state, 1 )) {
+	
+		case LUA_TUSERDATA:
+			MOAIGfxMgr::Get ().mGfxState.SetVertexFormat ( state.GetLuaObject < MOAIVertexFormat >( 1, true ));
+			break;
+		
+		case LUA_TNUMBER:
+			MOAIGfxMgr::Get ().mGfxState.SetVertexFormat (( MOAIVertexFormatMgr::Preset )state.GetValue < u32 >( 1, MOAIVertexFormatMgr::XYZWC ));
+			break;
+		
+		default:
+			MOAIGfxMgr::Get ().mGfxState.SetVertexFormat ();
+			break;
+	}
 	return 0;
 }
 
@@ -1085,8 +1112,7 @@ bool MOAIDraw::Bind () {
 	
 	if ( !gfxMgr.mGfxState.BindTexture ()) return false;
 	if ( !gfxMgr.mGfxState.BindShader ( MOAIShaderMgr::LINE_SHADER )) return false;
-	
-	gfxMgr.mVertexCache.BindBufferedDrawing ( MOAIVertexFormatMgr::XYZWC );
+	gfxMgr.mGfxState.SetVertexFormat ( MOAIVertexFormatMgr::XYZWC );
 	
 	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
 	gfxMgr.mVertexCache.SetUVTransform ( MOAIGfxMgr::Get ().mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_MTX ));
@@ -1680,7 +1706,7 @@ void MOAIDraw::DrawTexture ( float left, float top, float right, float bottom, M
 		const ZLColorVec& orgColor = gfxMgr.mGfxState.GetPenColor ();
 		gfxMgr.mGfxState.SetPenColor ( 1, 1, 1, 1 );
 		
-		MOAIQuadBrush::BindVertexFormat ( gfxMgr.mVertexCache );
+		MOAIQuadBrush::BindVertexFormat ();
 
 		MOAIQuadBrush quad;
 		quad.SetVerts ( left, top, right, bottom );

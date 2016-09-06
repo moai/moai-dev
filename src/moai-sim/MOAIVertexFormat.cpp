@@ -204,13 +204,9 @@ MOAIVertexFormat* MOAIVertexFormat::AffirmVertexFormat ( MOAILuaState& state, in
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormat::Bind ( ZLSharedConstBuffer* buffer, bool copyBuffer ) const {
+void MOAIVertexFormat::Bind ( ZLSharedConstBuffer* buffer ) const {
 
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-
-	if ( copyBuffer ) {
-		buffer = gfx.CopyBuffer ( buffer );
-	}
 
 	for ( u32 i = 0; i < this->mTotalAttributes; ++i ) {
 		
@@ -410,6 +406,15 @@ void MOAIVertexFormat::DeclareAttribute ( u32 index, u32 type, u32 size, u32 use
 		this->mAttributeIDsByUse [ use ].Grow ( idx + 1 );
 		this->mAttributeIDsByUse [ use ][ idx ] = attrIdx;
 	}
+}
+
+//----------------------------------------------------------------//
+const MOAIVertexAttribute* MOAIVertexFormat::GetAttributeByUse ( u32 useID, u32 attrIndex ) const {
+
+	if ( attrIndex < this->mTotalAttributesByUse [ useID ]) {
+		return &this->mAttributes [ this->mAttributeIDsByUse [ useID ][ attrIndex ]];
+	}
+	return 0;
 }
 
 //----------------------------------------------------------------//

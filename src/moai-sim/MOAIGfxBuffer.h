@@ -50,6 +50,7 @@ protected:
 
 	bool							mUseVBOs;
 	bool							mCopyOnUpdate;
+	bool							mCopyOnBind;
 
 	//----------------------------------------------------------------//
 	static int				_copyFromStream			( lua_State* L );
@@ -59,7 +60,7 @@ protected:
 	static int				_scheduleFlush			( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	//void					BindVertexFormat		( MOAIVertexFormat* format );
+	ZLSharedConstBuffer*	GetBufferForBind		( ZLGfx& gfx );
 	bool					OnCPUCreate				();
 	void					OnCPUDestroy			();
 	void					OnGPUBind				();
@@ -72,13 +73,14 @@ public:
 	GET ( size_t, BufferCount, mVBOs.Size ())
 	GET ( u32, Target, mTarget )
 	GET_SET ( bool, CopyOnUpdate, mCopyOnUpdate )
+	SET ( bool, CopyOnBind, mCopyOnBind )
 	
 	IS ( UsingVBOs, mUseVBOs, true )
 	
 	//----------------------------------------------------------------//
 	void						Clear					();
 	void						CopyFromStream			( ZLStream& stream );
-	ZLSharedConstBuffer*		GetBuffer				();
+	bool						CopyOnBind				();
 								MOAIGfxBuffer			();
 								~MOAIGfxBuffer			();
 	bool						OnGPUUpdate				();

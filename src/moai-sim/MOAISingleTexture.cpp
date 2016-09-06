@@ -359,7 +359,7 @@ void MOAISingleTexture::OnGPUBind () {
 //----------------------------------------------------------------//
 void MOAISingleTexture::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 
-	if ( this->mGLTexID  && MOAIGfxMgr::IsValid ()) {
+	if ( this->mGLTexID && MOAIGfxMgr::IsValid ()) {
 		MOAIGfxMgr::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
 	}
 	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mGLTexID, shouldDelete );

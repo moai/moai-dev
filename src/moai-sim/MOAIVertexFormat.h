@@ -8,9 +8,7 @@
 // MOAIVertexAttribute
 //================================================================//
 class MOAIVertexAttribute {
-private:
-
-	friend class MOAIVertexFormat;
+public:
 	
 	u32			mIndex;
 	u32			mSize;
@@ -79,7 +77,7 @@ private:
 	static int					_getVertexSize					( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void						Bind							( ZLSharedConstBuffer* buffer, bool copyBuffer ) const;
+	void						Bind							( ZLSharedConstBuffer* buffer ) const;
 	static u32					GetComponentSize				( u32 size, u32 type );
 	static u32					GetLuaIndexForUseID				( u32 useID );
 	static u32					GetUseIDForLuaIndex				( u32 idx );
@@ -141,6 +139,9 @@ public:
 	u32							CountComponentsByUse			( u32 useID ) const;
 
 	void						DeclareAttribute				( u32 index, u32 type, u32 size, u32 use, bool normalized );
+	
+	const MOAIVertexAttribute*	GetAttributeByUse				( u32 useID, u32 attrIndex ) const;
+	
 								MOAIVertexFormat				();
 								~MOAIVertexFormat				();
 	

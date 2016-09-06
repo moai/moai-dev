@@ -101,10 +101,6 @@ int MOAIGfxBuffer::_scheduleFlush ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-//void MOAIGfxBuffer::BindVertexFormat ( MOAIVertexFormat* format ) {
-//}
-
-//----------------------------------------------------------------//
 void MOAIGfxBuffer::Clear () {
 
 	this->ZLCopyOnWrite::Free ();
@@ -126,9 +122,18 @@ void MOAIGfxBuffer::CopyFromStream ( ZLStream& stream ) {
 }
 
 //----------------------------------------------------------------//
-ZLSharedConstBuffer* MOAIGfxBuffer::GetBuffer () {
+bool MOAIGfxBuffer::CopyOnBind () {
 
-	return this->mUseVBOs ? 0 : this->ZLCopyOnWrite::GetSharedConstBuffer ();
+	return !this->mUseVBOs && this->mCopyOnBind;
+}
+
+//----------------------------------------------------------------//
+ZLSharedConstBuffer* MOAIGfxBuffer::GetBufferForBind ( ZLGfx& gfx ) {
+
+	if ( this->mUseVBOs ) return 0;
+
+	ZLSharedConstBuffer* buffer = this->ZLCopyOnWrite::GetSharedConstBuffer ();
+	return this->mCopyOnBind ? gfx.CopyBuffer ( buffer ) : buffer;
 }
 
 //----------------------------------------------------------------//
@@ -137,7 +142,8 @@ MOAIGfxBuffer::MOAIGfxBuffer () :
 	mTarget ( ZGL_BUFFER_TARGET_ARRAY ),
 	mLoader ( 0 ),
 	mUseVBOs ( false ),
-	mCopyOnUpdate ( false ) {
+	mCopyOnUpdate ( false ),
+	mCopyOnBind ( false ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIGfxResource )

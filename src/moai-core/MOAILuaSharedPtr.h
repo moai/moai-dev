@@ -75,6 +75,16 @@ public:
 	};
 
 	//----------------------------------------------------------------//
+	inline bool operator == ( const MOAILuaSharedPtr < TYPE >& other ) const {
+		return this->mObject == other.mObject;
+	}
+	
+	//----------------------------------------------------------------//
+	inline bool operator != ( const MOAILuaSharedPtr < TYPE >& other ) const {
+		return this->mObject != other.mObject;
+	}
+
+	//----------------------------------------------------------------//
 	inline bool PushRef ( MOAILuaState& state ) {
 	
 		if ( this->mObject ) {
