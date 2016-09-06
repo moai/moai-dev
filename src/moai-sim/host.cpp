@@ -180,8 +180,6 @@ void AKUPause ( bool pause ) {
 //----------------------------------------------------------------//
 void AKURender () {
 
-	MOAIGfxMgr::Get ().mPipelineMgr.ResetDrawingAPIs ();
-	MOAIGfxMgr::Get ().mResourceMgr.Update ();
 	MOAIRenderMgr::Get ().Render ();
 }
 

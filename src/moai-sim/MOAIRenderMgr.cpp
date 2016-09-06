@@ -177,18 +177,20 @@ void MOAIRenderMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIRenderMgr::Render () {
 
-	ZLGfxDevice::Begin ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+
+	gfxMgr.mPipelineMgr.ResetDrawingAPIs ();
+	gfxMgr.mResourceMgr.Update ();
 
 	// Measure performance
 	double startTime = ZLDeviceTime::GetTimeInSeconds ();
 	
 	//gfxMgr.ResetDrawCount ();
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	ZLGfx* gfx = gfxMgr.mPipelineMgr.SelectDrawingAPI ( MOAIGfxPipelineClerk::DRAWING_PIPELINE );
+	if ( !gfx ) return;
 
-	ZLGfx& gfx = gfxMgr.mPipelineMgr.SelectDrawingAPI ( MOAIGfxPipelineClerk::DRAWING_PIPELINE );
-
-	ZGL_COMMENT ( gfx, "RENDER MGR RENDER" );
+	ZGL_COMMENT ( *gfx, "RENDER MGR RENDER" );
 
 	if ( this->mBufferTable ) {
 	
@@ -220,8 +222,6 @@ void MOAIRenderMgr::Render () {
 	
 	gfxMgr.mVertexCache.FlushBufferedPrims (); // TODO: need to do this here?
 	gfxMgr.mGfxState.UnbindAll ();
-	
-	ZLGfxDevice::End ();
 }
 
 //----------------------------------------------------------------//

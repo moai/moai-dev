@@ -161,8 +161,6 @@ void MOAIGfxMgr::DetectContext () {
 
 	this->mHasContext = true;
 	
-	ZLGfxDevice::Begin ();
-	
 	ZLGfxDevice::Initialize ();
 	
 	u32 maxTextureUnits = ZLGfxDevice::GetCap ( ZGL_CAPS_MAX_TEXTURE_UNITS );
@@ -178,18 +176,12 @@ void MOAIGfxMgr::DetectContext () {
 	MOAIShaderMgr::Get ().AffirmAll ();
 	
 	mResourceMgr.RenewResources ();
-	
-	ZLGfxDevice::End ();
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxMgr::DetectFramebuffer () {
 	
-	ZLGfxDevice::Begin ();
-	
 	this->mGfxState.GetDefaultFrameBuffer ()->DetectGLFrameBufferID ();
-	
-	ZLGfxDevice::End ();
 }
 
 //----------------------------------------------------------------//

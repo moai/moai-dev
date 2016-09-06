@@ -12,19 +12,6 @@ class MOAIVertexFormat;
 #define GFX_PIPELINE_LOGGING_FOLDER "renderlogs"
 
 //================================================================//
-// MOAIGfxPipelinePair
-//================================================================//
-class MOAIGfxPipelinePair {
-private:
-
-	friend class MOAIGfxPipeline;
-	friend class MOAIGfxPipelineClerk;
-	
-	ZLGfxRetained	mCritical;
-	ZLGfxRetained	mOptional;
-};
-
-//================================================================//
 // MOAIGfxPipeline
 //================================================================//
 class MOAIGfxPipeline {
@@ -32,15 +19,15 @@ private:
 
 	friend class MOAIGfxPipelineClerk;
 
-	ZLLeanArray < MOAIGfxPipelinePair* > mDisplayPairs;
-	ZLLeanStack < MOAIGfxPipelinePair* > mFreeDisplayPairs;
-	ZLLeanStack < MOAIGfxPipelinePair* > mFinishedDisplayPairs;
+	ZLLeanArray < ZLGfxRetained* > mDisplayLists;
+	ZLLeanStack < ZLGfxRetained* > mFreeDisplayLists;
+	ZLLeanStack < ZLGfxRetained* > mFinishedDisplayLists;
 
 	enum {
 		PIPELINE_CPU,			// busy on the main thread
 		PIPELINE_PENDING,		// waiting for the graphics thread
 		PIPELINE_GPU,			// busy on the graphics thread
-		PIPELINE_TOTAL,
+		PIPELINE_TOTAL_STAGES,
 	};
 
 	enum {
@@ -48,21 +35,20 @@ private:
 		GPU_PHASE,
 	};
 
-	MOAIGfxPipelinePair* mPipeline [ PIPELINE_TOTAL ];
-	bool mHasContent;
+	ZLGfxRetained* mPipeline [ PIPELINE_TOTAL_STAGES ];
 
 	size_t		mRenderCount;
 	bool		mEnableLogging;
 
 	//----------------------------------------------------------------//
-	MOAIGfxPipelinePair*	GetPair						();
+	ZLGfxRetained*			GetDisplayList				();
 	bool					HasContent					();
 							MOAIGfxPipeline				();
 							~MOAIGfxPipeline			();
 	void					PhaseBegin					( u32 phase );
 	void					PhaseEnd					( u32 phase );
 	void					PublishAndReset				();
-	void					ReleasePair					( MOAIGfxPipelinePair* pair );
+	void					ReleaseDisplayList			( ZLGfxRetained* list );
 };
 
 //================================================================//
@@ -93,7 +79,7 @@ protected:
 	//----------------------------------------------------------------//
 	void				BeginPhase					( u32 list, u32 phase );
 	void				EndPhase					( u32 list, u32 phase );
-	void				LogPipelineRender			( ZLGfxRetained& gfx, size_t renderCount, cc8* name, cc8* flavor );
+	void				LogPipelineRender			( ZLGfxRetained& gfx, size_t renderCount, cc8* name );
 
 public:
 	
@@ -113,13 +99,13 @@ public:
 	void				EndPhase					( u32 phase );
 	bool				HasContent					( u32 pipelineID );
 	bool				IsPipelineEnabled			( u32 pipelineID );
-						MOAIGfxPipelineClerk			();
-	virtual				~MOAIGfxPipelineClerk			();
+						MOAIGfxPipelineClerk		();
+	virtual				~MOAIGfxPipelineClerk		();
 	void				ProcessPipeline				( u32 pipelineID );
 	void				PublishAndReset				( u32 pipelineID );
 	void				ResetDrawingAPIs			();
-	ZLGfx&				SelectDrawingAPI			();
-	ZLGfx&				SelectDrawingAPI			( u32 pipelineID, bool critical = false );
+	ZLGfx*				SelectDrawingAPI			();
+	ZLGfx*				SelectDrawingAPI			( u32 pipelineID );
 };
 
 #endif

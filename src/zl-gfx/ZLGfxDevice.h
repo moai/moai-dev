@@ -11,9 +11,6 @@ class ZLGfxDevice {
 public:
 
 	//----------------------------------------------------------------//
-	static void				Begin					();
-	static void				End						();
-	static void				Finalize				();
 	static u32				GetCap					( u32 cap );
 	ZLGfxHandle*			GetCurrentFramebuffer	();
 	static u32				GetError				();
