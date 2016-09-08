@@ -22,6 +22,7 @@
 	
 	@in		MOAIGfxBuffer self
 	@in		MOAIStream stream
+	@opt	number length
 	@out	nil
 */
 int MOAIGfxBuffer::_copyFromStream ( lua_State* L ) {
@@ -29,7 +30,9 @@ int MOAIGfxBuffer::_copyFromStream ( lua_State* L ) {
 	
 	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
 	if ( stream ) {
-		self->CopyFromStream ( *stream );
+	
+		size_t size = state.GetValue < u32 >( 3, ( u32 )( stream->GetLength () - stream->GetCursor () ));
+		self->CopyFromStream ( *stream, size );
 	}
 	return 0;
 }
@@ -116,9 +119,8 @@ void MOAIGfxBuffer::Clear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::CopyFromStream ( ZLStream& stream ) {
+void MOAIGfxBuffer::CopyFromStream ( ZLStream& stream, size_t size ) {
 
-	size_t size = stream.GetLength () - stream.GetCursor ();
 	this->Reserve (( u32 )size );
 	this->WriteStream ( stream );
 	

@@ -46,14 +46,16 @@ int MOAIIndexBuffer::_copyFromStream ( lua_State* L ) {
 	MOAIIndexBuffer* idxBuffer = state.GetLuaObject < MOAIIndexBuffer >( 2, false );
 	if ( idxBuffer ) {
 	
-		self->CopyFromStream ( *idxBuffer, idxBuffer->mIndexSize );
+		size_t size = state.GetValue < u32 >( 3, ( u32 )( idxBuffer->GetLength () - idxBuffer->GetCursor () ));
+		self->CopyFromStream ( *idxBuffer, size, idxBuffer->mIndexSize );
 	}
 	else {
 	
 		MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
 		if ( stream ) {
-			u32 srcInputSizeInBytes = state.GetValue ( 3, 4 );
-			self->CopyFromStream ( *stream, srcInputSizeInBytes );
+			size_t size = state.GetValue < u32 >( 3, ( u32 )( stream->GetLength () - stream->GetCursor () ));
+			u32 srcInputSizeInBytes = state.GetValue ( 4, 4 );
+			self->CopyFromStream ( *stream, size, srcInputSizeInBytes );
 		}
 	}
 	return 0;
@@ -125,12 +127,9 @@ int MOAIIndexBuffer::_setIndexSize ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIIndexBuffer::CopyFromStream ( ZLStream& stream, u32 srcInputSizeInBytes ) {
+void MOAIIndexBuffer::CopyFromStream ( ZLStream& stream, size_t size, u32 srcInputSizeInBytes ) {
 
-	u32 idxSizeInBytes = this->mIndexSize;
-
-	u32 size = ( u32 )( stream.GetLength () - stream.GetCursor ());
-	
+	u32 idxSizeInBytes = this->mIndexSize;	
 	u32 totalIndices = ( u32 )( size / srcInputSizeInBytes );
 	
 	this->Reserve ( totalIndices * idxSizeInBytes );

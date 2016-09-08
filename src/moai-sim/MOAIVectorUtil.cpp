@@ -66,7 +66,7 @@ u32 SafeTesselator::GetTriangles ( MOAIVertexFormat& format, ZLStream& vtxStream
 	}
 
 	// idx stream is 32-bits, so divide by 4 to get total indices written
-	return ( u32 )(( idxStream.GetLength () - idxCursor ) >> 2 ); // TODO: cast
+	return ( u32 )(( idxStream.GetCursor () - idxCursor ) >> 2 ); // TODO: cast
 }
 
 //----------------------------------------------------------------//
@@ -77,7 +77,7 @@ u32 SafeTesselator::GetTriangles ( MOAIVertexFormat& format, MOAIVertexBuffer& v
 
 	this->GetTriangles ( format, vtxStream, idxStream );
 	
-	return MOAIGeometryWriter::GetMesh ( format, vtxStream, idxStream, vtxBuffer, idxBuffer, idxSizeInBytes );
+	return MOAIGeometryWriter::GetMesh ( format, vtxStream, vtxStream.GetLength (), idxStream, idxStream.GetLength (), vtxBuffer, idxBuffer, idxSizeInBytes );
 }
 
 //------------------------------------------------------------------//

@@ -667,14 +667,9 @@ void MOAIFont::ProcessGlyphs () {
 			glyph.mNext = glyphSet.mGlyphs;
 			glyphSet.mGlyphs = &glyph;
 			
-			u8 foo [ 2 ];
-			foo [ 0 ] = ( u8 )glyph.GetCode ();
-			foo [ 1 ] = 0;
-			//printf ( "%s\n", foo );
-			
 			fontReader->SelectGlyph ( glyph.mCode );
 			fontReader->GetGlyphMetrics ( glyph );
-			
+						
 			// place and render the glyph
 			this->RenderGlyph ( glyph );
 		}

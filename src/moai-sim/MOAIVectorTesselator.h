@@ -97,10 +97,8 @@ private:
 	static int		_worldToDrawingVec		( lua_State* L );
 
 	//----------------------------------------------------------------//
-	u32				CountVertices			( const MOAIVertexFormat& format, ZLStream& vtxStream );
 	u32				PushShape				( MOAIVectorShape* shape );
-	void			WriteVertex				( ZLStream& stream, MOAIVertexFormat& format, float x, float y, float z, float xn, float yn, float zn, u32 color, u32 vertexExtraID );
-	
+		
 public:
 
 	static const u32	TESSELATE_FILLS			= 0x01;
@@ -118,6 +116,7 @@ public:
 	void				Clear						();
 	void				ClearShapes					();
 	void				ClearTransforms				();
+	u32					CountVertices				( const MOAIVertexFormat& format, ZLStream& vtxStream );
 	int					Finish						();
 						MOAIVectorTesselator		();
 						~MOAIVectorTesselator		();
@@ -145,6 +144,7 @@ public:
 	int					Tesselate					( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, MOAIVertexFormat& format, u32 idxSizeInBytes, u32 flags = TESSELATE_ALL );
 	void				WriteSkirt					( SafeTesselator& tess, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, const MOAIVectorStyle& style, const ZLColorVec& fillColor, u32 vertexExtraID );
 	void				WriteTriangles				( SafeTesselator& tess, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, const MOAIVectorStyle& style, float z, u32 color, u32 vertexExtraID );
+	void				WriteVertex					( ZLStream& stream, MOAIVertexFormat& format, float x, float y, float z, float xn, float yn, float zn, u32 color, u32 vertexExtraID );
 };
 
 #endif

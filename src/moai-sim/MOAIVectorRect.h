@@ -15,6 +15,15 @@ private:
 
 	ZLRect			mRect;
 
+	enum {
+		FASTTRACK_OK,
+		FASTTRACK_FALLBACK,
+		FASTTRACK_SKIP,
+	};
+
+	//----------------------------------------------------------------//
+	int				CheckFastTrack			( MOAIVectorTesselator& drawing, u32 flags );
+
 public:
 	
 	//----------------------------------------------------------------//
@@ -24,7 +33,8 @@ public:
 	bool			IsClosed				();
 					MOAIVectorRect			();
 					~MOAIVectorRect			();
-	
+	int				Tesselate				( MOAIVectorTesselator& drawing, MOAIRegion& region, u32 flags );
+	int				Tesselate				( MOAIVectorTesselator& drawing, ZLStream& vertexStream, ZLStream& indexStream, MOAIVertexFormat& format, u32 flags );
 };
 
 #endif

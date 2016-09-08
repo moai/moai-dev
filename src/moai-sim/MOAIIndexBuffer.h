@@ -33,7 +33,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIIndexBuffer )
 	
 	//----------------------------------------------------------------//
-	void			CopyFromStream			( ZLStream& stream, u32 srcInputSizeInBytes );
+	void			CopyFromStream			( ZLStream& stream, size_t size, u32 srcInputSizeInBytes );
 					MOAIIndexBuffer			();
 					~MOAIIndexBuffer		();
 	void			PrintIndices			();
