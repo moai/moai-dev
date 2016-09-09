@@ -222,6 +222,8 @@ void MOAIRenderMgr::Render () {
 	
 	gfxMgr.mVertexCache.FlushBufferedPrims (); // TODO: need to do this here?
 	gfxMgr.mGfxState.UnbindAll ();
+	
+	gfxMgr.mVertexCache.Reset ();
 }
 
 //----------------------------------------------------------------//

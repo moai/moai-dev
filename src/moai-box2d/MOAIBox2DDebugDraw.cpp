@@ -35,7 +35,7 @@ void MOAIBox2DDebugDraw::DrawPolygon ( const b2Vec2* vertices, int32 vertexCount
 	
 	gfxMgr.mGfxState.SetPenColor ( color.r, color.g, color.b, 1.0f );
 
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_LOOP );
+	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_LOOP, vertexCount );
 	for ( int32 i = 0; i < vertexCount; ++i ) {
 		this->WriteVtx ( gfxMgr.mVertexCache, vertices [ i ].x, vertices [ i ].y );
 	}
@@ -51,7 +51,7 @@ void MOAIBox2DDebugDraw::DrawSolidPolygon ( const b2Vec2* vertices, int32 vertex
 	
 	gfxMgr.mGfxState.SetPenColor ( 0.5f * color.r, 0.5f * color.g, 0.5f * color.b, 0.5f );
 
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_TRIANGLE_FAN );
+	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_TRIANGLE_FAN, vertexCount );
 	for ( int32 i = 0; i < vertexCount; ++i ) {
 		this->WriteVtx ( gfxMgr.mVertexCache, vertices [ i ].x, vertices [ i ].y );
 	}
@@ -60,7 +60,7 @@ void MOAIBox2DDebugDraw::DrawSolidPolygon ( const b2Vec2* vertices, int32 vertex
 	gfxMgr.mGfxState.SetBlendMode ();
 	gfxMgr.mGfxState.SetPenColor ( color.r, color.g, color.b, 1.0f );
 	
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_LOOP );
+	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_LOOP, vertexCount );
 	for (int32 i = 0; i < vertexCount; ++i) {
 		this->WriteVtx ( gfxMgr.mVertexCache, vertices [ i ].x, vertices [ i ].y );
 	}
@@ -77,7 +77,7 @@ void MOAIBox2DDebugDraw::DrawCircle ( const b2Vec2& center, float32 radius, cons
 	const float32 k_segments = 16.0f;
 	const float32 k_increment = 2.0f * b2_pi / k_segments;
 	
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_LOOP );
+	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_LOOP, k_segments );
 	float32 theta = 0.0f;
 	for ( int32 i = 0; i < k_segments; ++i ) {
 		b2Vec2 v = center + radius * b2Vec2 ( cosf ( theta ), sinf ( theta ));
@@ -98,7 +98,7 @@ void MOAIBox2DDebugDraw::DrawSolidCircle ( const b2Vec2& center, float32 radius,
 	const float32 k_segments = 16.0f;
 	const float32 k_increment = 2.0f * b2_pi / k_segments;
 	
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_TRIANGLE_FAN );
+	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_TRIANGLE_FAN, k_segments );
 	float32 theta = 0.0f;
 	for (int32 i = 0; i < k_segments; ++i) {
 		b2Vec2 v = center + radius * b2Vec2(cosf(theta), sinf(theta));
@@ -110,7 +110,7 @@ void MOAIBox2DDebugDraw::DrawSolidCircle ( const b2Vec2& center, float32 radius,
 	gfxMgr.mGfxState.SetBlendMode ();
 	gfxMgr.mGfxState.SetPenColor ( color.r, color.g, color.b, 1.0f );
 
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_LOOP );
+	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_LOOP, k_segments );
 	theta = 0.0f;
 	for (int32 i = 0; i < k_segments; ++i)
 	{
@@ -121,7 +121,7 @@ void MOAIBox2DDebugDraw::DrawSolidCircle ( const b2Vec2& center, float32 radius,
 	gfxMgr.mVertexCache.EndPrim ();
 
 	b2Vec2 p = center + radius * axis;
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINES );
+	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINES, 2 );
 		this->WriteVtx ( gfxMgr.mVertexCache, center.x, center.y );
 		this->WriteVtx ( gfxMgr.mVertexCache, p.x, p.y );
 	gfxMgr.mVertexCache.EndPrim ();
@@ -134,7 +134,7 @@ void MOAIBox2DDebugDraw::DrawSegment ( const b2Vec2& p1, const b2Vec2& p2, const
 	
 	gfxMgr.mGfxState.SetPenColor ( color.r, color.g, color.b, 1.0f );
 
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINES );
+	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINES, 2 );
 		this->WriteVtx ( gfxMgr.mVertexCache, p1.x, p1.y );
 		this->WriteVtx ( gfxMgr.mVertexCache, p2.x, p2.y );
 	gfxMgr.mVertexCache.EndPrim ();
@@ -149,7 +149,7 @@ void MOAIBox2DDebugDraw::DrawTransform ( const b2Transform& xf ) {
 	const float32 k_axisScale = 0.4f;
 	
 	gfxMgr.mGfxState.SetPenColor ( 1.0f, 0.0f, 0.0f, 1.0f );
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINES );
+	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINES, 2 );
 	
 		this->WriteVtx ( gfxMgr.mVertexCache, p1.x, p1.y );
 		
@@ -159,7 +159,7 @@ void MOAIBox2DDebugDraw::DrawTransform ( const b2Transform& xf ) {
 	gfxMgr.mVertexCache.EndPrim();
 
 	gfxMgr.mGfxState.SetPenColor ( 0.0f, 1.0f, 0.0f, 1.0f );
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINES );
+	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINES, 2 );
 
 		this->WriteVtx ( gfxMgr.mVertexCache, p1.x, p1.y );
 		
@@ -176,7 +176,7 @@ void MOAIBox2DDebugDraw::DrawPoint ( const b2Vec2& p, float32 size, const b2Colo
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	gfxMgr.mGfxState.SetPenColor ( color.r, color.g, color.b, 1.0f );
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_POINTS );
+	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_POINTS, 1 );
 	this->WriteVtx ( gfxMgr.mVertexCache, p.x, p.y );
 	gfxMgr.mVertexCache.EndPrim ();
 }
@@ -187,7 +187,7 @@ void MOAIBox2DDebugDraw::DrawAABB ( b2AABB* aabb, const b2Color& c ) {
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	gfxMgr.mGfxState.SetPenColor ( c.r, c.g, c.b, 1.0f );
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_LOOP );
+	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_LOOP, 4 );
 		this->WriteVtx ( gfxMgr.mVertexCache, aabb->lowerBound.x, aabb->lowerBound.y );
 		this->WriteVtx ( gfxMgr.mVertexCache, aabb->upperBound.x, aabb->lowerBound.y );
 		this->WriteVtx ( gfxMgr.mVertexCache, aabb->upperBound.x, aabb->upperBound.y );

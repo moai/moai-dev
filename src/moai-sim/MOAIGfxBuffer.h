@@ -50,7 +50,6 @@ protected:
 
 	bool							mUseVBOs;
 	bool							mCopyOnUpdate;
-	bool							mCopyOnBind;
 
 	//----------------------------------------------------------------//
 	static int				_copyFromStream			( lua_State* L );
@@ -73,14 +72,12 @@ public:
 	GET ( size_t, BufferCount, mVBOs.Size ())
 	GET ( u32, Target, mTarget )
 	GET_SET ( bool, CopyOnUpdate, mCopyOnUpdate )
-	SET ( bool, CopyOnBind, mCopyOnBind )
 	
 	IS ( UsingVBOs, mUseVBOs, true )
 	
 	//----------------------------------------------------------------//
 	void						Clear					();
 	void						CopyFromStream			( ZLStream& stream );
-	bool						CopyOnBind				();
 								MOAIGfxBuffer			();
 								~MOAIGfxBuffer			();
 	bool						OnGPUUpdate				();

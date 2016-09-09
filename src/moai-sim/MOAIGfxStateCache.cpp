@@ -237,8 +237,7 @@ bool MOAIGfxStateCache::BindIndexBuffer ( MOAIIndexBuffer* buffer ) {
 	else {
 	
 		this->mPendingState.mIdxBuffer = buffer;
-		bool copyOnBind = buffer ? buffer->CopyOnBind () : false;
-		this->mDirtyFlags = (( this->mActiveState.mIdxBuffer != buffer ) || copyOnBind ) ? ( this->mDirtyFlags | INDEX_BUFFER ) : ( this->mDirtyFlags & ~INDEX_BUFFER );
+		this->mDirtyFlags = ( this->mActiveState.mIdxBuffer == buffer ) ? ( this->mDirtyFlags & ~INDEX_BUFFER ) : ( this->mDirtyFlags | INDEX_BUFFER );
 	}
 
 	return buffer ? buffer->IsReady () : true;
@@ -433,8 +432,7 @@ bool MOAIGfxStateCache::BindVertexBuffer ( MOAIVertexBuffer* buffer ) {
 	else {
 	
 		this->mPendingState.mVtxBuffer = buffer;
-		bool copyOnBind = buffer ? buffer->CopyOnBind () : false;
-		this->mDirtyFlags = (( this->mActiveState.mVtxBuffer != buffer ) || copyOnBind ) ? ( this->mDirtyFlags | VERTEX_BUFFER ) : ( this->mDirtyFlags & ~VERTEX_BUFFER );
+		this->mDirtyFlags = ( this->mActiveState.mVtxBuffer == buffer ) ? ( this->mDirtyFlags & ~VERTEX_BUFFER ) : ( this->mDirtyFlags | VERTEX_BUFFER );
 	}
 	
 	return buffer ? buffer->IsReady () : true;

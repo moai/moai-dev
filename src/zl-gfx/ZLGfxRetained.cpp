@@ -8,50 +8,6 @@
 #include <zl-gfx/ZLGfxRetained.h>
 
 //================================================================//
-// ZLClonedGfxBuffer
-//================================================================//
-class ZLClonedGfxBuffer :
-	public ZLSharedConstBuffer {
-private:
-
-	friend class ZLGfxRetained;
-
-	void*				mBuffer;
-	size_t				mSize;
-	bool				mLocal;
-
-public:
-
-	GET_CONST ( void*, ConstData, mBuffer )
-	GET ( size_t, Size, mSize )
-	
-	//----------------------------------------------------------------//
-	void Delete () {
-	
-		if ( !this->mLocal ) {
-			if ( this->mBuffer ) {
-				free ( this->mBuffer );
-			}
-			delete this;
-		}
-		else {
-			this->~ZLClonedGfxBuffer (); // placement delete
-		}
-	}
-	
-	//----------------------------------------------------------------//
-	ZLClonedGfxBuffer () :
-		mBuffer ( 0 ),
-		mSize ( 0 ),
-		mLocal ( false ) {
-	}
-	
-	//----------------------------------------------------------------//
-	~ZLClonedGfxBuffer () {
-	}
-};
-
-//================================================================//
 // ZLGfxRetainedListenerRecord
 //================================================================//
 
@@ -280,47 +236,6 @@ void ZLGfxRetained::CompressedTexImage2D ( u32 level, u32 internalFormat, u32 wi
 	this->mStream->Write < u32 >( height );
 	this->mStream->Write < u32 >( imageSize );
 	this->mStream->Write < ZLSharedConstBuffer* >( buffer );
-}
-
-//----------------------------------------------------------------//
-ZLSharedConstBuffer* ZLGfxRetained::CopyBuffer ( ZLSharedConstBuffer* buffer ) {
-
-	if ( buffer ) {
-	
-		ZLClonedGfxBuffer* copy = 0;
-	
-		size_t bufferSize = buffer->GetSize ();
-		size_t containerSize = sizeof ( ZLClonedGfxBuffer );
-		size_t totalSize = bufferSize + containerSize;
-		
-		if (( this->mBufferTop + totalSize ) <= this->mBufferSize ) {
-		
-			copy = ( ZLClonedGfxBuffer* )(( size_t )this->mBuffer + this->mBufferTop );
-			new ( copy ) ZLClonedGfxBuffer (); // placement new
-			this->mBufferTop += containerSize;
-			
-			void* bufferCopy = ( void* )(( size_t )this->mBuffer + this->mBufferTop );
-			this->mBufferTop += bufferSize;
-			
-			copy->mSize = bufferSize;
-			copy->mBuffer = bufferCopy;
-			copy->mLocal = true;
-		}
-		else {
-	
-			copy = new ZLClonedGfxBuffer ();
-			copy->mSize = buffer->GetSize ();
-			copy->mBuffer = malloc ( copy->mSize );
-			copy->mLocal = false;
-		}
-		
-		memcpy ( copy->mBuffer, buffer->GetConstData (), bufferSize );
-		buffer = copy;
-		
-		this->mAllocated += totalSize;
-		this->mMaxAllocated = this->mMaxAllocated < this->mAllocated ? this->mAllocated : this->mMaxAllocated;
-	}
-	return buffer;
 }
 
 //----------------------------------------------------------------//
@@ -1255,22 +1170,6 @@ void ZLGfxRetained::Reset () {
 		ZLRefCountedObject* object = this->mReleaseStack.Pop ();
 		object->Release ();
 	}
-	
-	if ( this->mBufferSize < this->mMaxAllocated ) {
-	
-		if ( this->mBuffer ) {
-			free ( this->mBuffer );
-		}
-		
-		size_t paddedSize = 1;
-		while ( paddedSize < this->mMaxAllocated ) paddedSize = paddedSize << 0x01;
-		
-		this->mBufferSize = paddedSize;
-		this->mBuffer = malloc ( paddedSize );
-	}
-	
-	this->mAllocated = 0;
-	this->mBufferTop = 0;
 }
 
 //----------------------------------------------------------------//
@@ -1446,18 +1345,9 @@ ZLGfxListenerRecord& ZLGfxRetained::WriteListenerRecord ( ZLGfxListener* listene
 
 //----------------------------------------------------------------//
 ZLGfxRetained::ZLGfxRetained () :
-	mStream ( &this->mMemStream ),
-	mBuffer ( 0 ),
-	mBufferSize ( 0 ),
-	mBufferTop ( 0 ),
-	mAllocated ( 0 ),
-	mMaxAllocated ( 0 ) {
+	mStream ( &this->mMemStream ) {
 }
 
 //----------------------------------------------------------------//
 ZLGfxRetained::~ZLGfxRetained () {
-
-	if ( this->mBuffer ) {
-		free ( this->mBuffer );
-	}
 }

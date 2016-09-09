@@ -122,18 +122,14 @@ void MOAIGfxBuffer::CopyFromStream ( ZLStream& stream ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxBuffer::CopyOnBind () {
-
-	return !this->mUseVBOs && this->mCopyOnBind;
-}
-
-//----------------------------------------------------------------//
 ZLSharedConstBuffer* MOAIGfxBuffer::GetBufferForBind ( ZLGfx& gfx ) {
 
-	if ( this->mUseVBOs ) return 0;
+	return this->mUseVBOs ? 0 : this->ZLCopyOnWrite::GetSharedConstBuffer ();
 
-	ZLSharedConstBuffer* buffer = this->ZLCopyOnWrite::GetSharedConstBuffer ();
-	return this->mCopyOnBind ? gfx.CopyBuffer ( buffer ) : buffer;
+//	if ( this->mUseVBOs ) return 0;
+//
+//	ZLSharedConstBuffer* buffer = this->ZLCopyOnWrite::GetSharedConstBuffer ();
+//	return this->mCopyOnBind ? gfx.CopyBuffer ( buffer ) : buffer;
 }
 
 //----------------------------------------------------------------//
@@ -142,8 +138,7 @@ MOAIGfxBuffer::MOAIGfxBuffer () :
 	mTarget ( ZGL_BUFFER_TARGET_ARRAY ),
 	mLoader ( 0 ),
 	mUseVBOs ( false ),
-	mCopyOnUpdate ( false ),
-	mCopyOnBind ( false ) {
+	mCopyOnUpdate ( false ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIGfxResource )
@@ -197,9 +192,9 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 			
 				ZLSharedConstBuffer* buffer = this->GetCursor () ? this->GetSharedConstBuffer () : 0;
 				
-				if ( this->mCopyOnUpdate ) {
-					buffer = gfx.CopyBuffer ( buffer );
-				}
+//				if ( this->mCopyOnUpdate ) {
+//					buffer = gfx.CopyBuffer ( buffer );
+//				}
 			
 				gfx.BindBuffer ( this->mTarget, vbo );
 				gfx.BufferData ( this->mTarget, this->GetLength (), buffer, 0, hint );
@@ -253,9 +248,9 @@ bool MOAIGfxBuffer::OnGPUUpdate () {
 		
 		ZLSharedConstBuffer* buffer = this->GetSharedConstBuffer ();
 		
-		if ( this->mCopyOnUpdate ) {
-			buffer = gfx.CopyBuffer ( buffer );
-		}
+//		if ( this->mCopyOnUpdate ) {
+//			buffer = gfx.CopyBuffer ( buffer );
+//		}
 		
 		gfx.BindBuffer ( this->mTarget, vbo );
 		gfx.BufferSubData ( this->mTarget, 0, this->GetCursor (), buffer, 0 );

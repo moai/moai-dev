@@ -121,13 +121,6 @@ private:
 	ZLMemStream		mMemStream;
 	ZLStream*		mStream;
 
-	void*			mBuffer;
-	size_t			mBufferSize;
-	size_t			mBufferTop;
-	
-	size_t			mAllocated;
-	size_t			mMaxAllocated;
-
 	ZLLeanStack < ZLRefCountedObject*, 32 >				mReleaseStack;
 	ZLLeanStack < ZLGfxListenerRecord, 32 >				mListenerRecords;
 
@@ -172,7 +165,7 @@ public:
 	void					CompileShader				( ZLGfxHandle* shader, bool log );
 	void					CompressedTexImage2D		( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, ZLSharedConstBuffer* buffer );
 	
-	ZLSharedConstBuffer*	CopyBuffer					( ZLSharedConstBuffer* buffer );
+	//ZLSharedConstBuffer*	CopyBuffer					( ZLSharedConstBuffer* buffer );
 	
 	ZLGfxHandle*			CreateBuffer				();
 	ZLGfxHandle*			CreateFramebuffer			();

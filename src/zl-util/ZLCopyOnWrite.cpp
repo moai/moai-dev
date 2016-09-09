@@ -203,7 +203,7 @@ ZLSizeResult ZLCopyOnWrite::SetLength ( size_t length ) {
 
 		length = length > internal->mLength ? internal->mLength : length;
 		
-		if ( length< internal->mLength ) {
+		if ( length < internal->mLength ) {
 			this->Invalidate ();
 		}
 		internal->mLength = length;

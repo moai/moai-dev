@@ -38,28 +38,19 @@ protected:
 	static const size_t DEFAULT_INDEX_BUFFER_SIZE	= 0x1000;
 
 	bool						mIsDrawing;
-	bool						mUseIdxBuffer;
-
+	
 	MOAIVertexBuffer*			mVtxBuffer;
 	MOAIIndexBuffer*			mIdxBuffer;
 	
-	u32							mVertexSize;
-
-	u32							mMaxVertices;
-	u32							mMaxIndices;
-	u32							mMaxPrims;
-
-	u32							mPrimCount;
-	u32							mPrimSize;
-//	u32							mPrimTopIdx;
-//	u32							mPrimTopVtx;
-	u32							mPrimType;
+	u32							mVtxBase; // offsets the vertex in drawprims *or* the index when writing indexed prims
+	u32							mIdxBase; // this is the offset to the first index for the next call to draw prims
 	
-	u32							mTotalVertices;
-	u32							mTotalIndices;
-	u16							mIndexBase;
+	u32							mVtxSize;
 
-	//MOAIVertexFormat*			mVertexFormat;
+	u32							mPrimType;
+	bool						mFlushOnPrimEnd;
+	bool						mUseIdxBuffer;
+	u32							mPrimCount;
 
 	bool						mApplyVertexTransform;
 	ZLMatrix4x4					mVertexTransform;
@@ -69,21 +60,23 @@ protected:
 
 	ZLColorVec					mVertexColor;
 	u32							mVertexColor32;
-
+	
 	//----------------------------------------------------------------//
 	void			OnGfxStateWillChange			();
 	void			TransformAndWriteQuad			( ZLVec4D* vtx, ZLVec2D* uv );
-	void			UpdateLimits					();
 
 public:
 	
-	//----------------------------------------------------------------//
-	bool			BeginPrim						();
-	bool			BeginPrim						( u32 primType, u32 primSize = 0 );
-	bool			BeginPrimIndexed				( u32 primType, u32 vtxCount, u32 idxCount );
+	enum {
+		CONTINUE_OK,
+		CONTINUE_ROLLOVER,
+		CONTINUE_FAIL,
+	};
 	
+	//----------------------------------------------------------------//
+	bool			BeginPrim						( u32 primType, u32 vtxCount, u32 idxCount = 0 );
+	u32				ContinuePrim					( u32 vtxCount, u32 idxCount = 0 );
 	void			EndPrim							();
-	void			EndPrimIndexed					();
 	
 	void			FlushBufferedPrims				();
 	
@@ -92,7 +85,7 @@ public:
 					MOAIGfxVertexCache				();
 					~MOAIGfxVertexCache				();
 
-	void			SetPrimType						( u32 primType, u32 primSize = 0 );
+	void			Reset							();
 
 	void			SetUVTransform					();
 	void			SetUVTransform					( const ZLMatrix4x4& uvTransform );
@@ -131,7 +124,7 @@ public:
 	inline void WriteIndex ( u16 index ) {
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		this->mIdxBuffer->Write < u16 >( this->mIndexBase + index );
+		this->mIdxBuffer->Write < u16 >( this->mVtxBase + index );
 	}
 	
 	//----------------------------------------------------------------//

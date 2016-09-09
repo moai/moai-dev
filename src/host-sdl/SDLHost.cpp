@@ -57,7 +57,7 @@ namespace InputSensorID {
 }
 
 // run with multithreaded host or not
-#define GFX_ASYNC 1
+//#define GFX_ASYNC 1
 
 // counters for testing async timing issues (dropped frames)
 static const int SIM_UPDATE_INTERVAL		= 1;

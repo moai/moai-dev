@@ -214,10 +214,10 @@ void ZLGfxImmediate::CompressedTexImage2D ( u32 level, u32 internalFormat, u32 w
 }
 
 //----------------------------------------------------------------//
-ZLSharedConstBuffer* ZLGfxImmediate::CopyBuffer ( ZLSharedConstBuffer* buffer ) {
-
-	return buffer;
-}
+//ZLSharedConstBuffer* ZLGfxImmediate::CopyBuffer ( ZLSharedConstBuffer* buffer ) {
+//
+//	return buffer;
+//}
 
 //----------------------------------------------------------------//
 ZLGfxHandle* ZLGfxImmediate::Create ( ZLGfxHandle* handle, u32 param ) {

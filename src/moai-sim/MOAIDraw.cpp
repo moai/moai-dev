@@ -22,17 +22,50 @@
 #define DEFAULT_ELLIPSE_STEPS 64
 
 //================================================================//
-// MOAIDrawVertexWriter2D
+// MOAIDrawVertexLineStripWriter2D
 //================================================================//
-class MOAIDrawVertexWriter2D :
+class MOAIDrawVertexLineStripWriter2D :
 	public ZLAbstractVertexWriter2D {
+private:
+
+	u32				mVertexCount;
+	ZLVec2D			mLastVertex;
+	MOAIGfxMgr&		mGfxMgr;
+
 public:
 
 	//----------------------------------------------------------------//
+	void Begin () {
+	
+		this->mVertexCount = 0;
+		this->mGfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_STRIP, 1 );
+	}
+	
+	//----------------------------------------------------------------//
+	MOAIDrawVertexLineStripWriter2D () :
+		mGfxMgr ( MOAIGfxMgr::Get ()) {
+	}
+
+	//----------------------------------------------------------------//
 	void WriteVertex ( const ZLVec2D& v ) {
-		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-		gfxMgr.mVertexCache.WriteVtx ( v.mX, v.mY );
-		gfxMgr.mVertexCache.WritePenColor4b ();
+		
+		if (( this->mVertexCount > 0 ) && ( this->mGfxMgr.mVertexCache.ContinuePrim ( 1 ) == MOAIGfxVertexCache::CONTINUE_ROLLOVER )) {
+
+			// if we roll over, repeat the last vertex to start a new line strip
+			this->mGfxMgr.mVertexCache.WriteVtx ( this->mLastVertex.mX, this->mLastVertex.mY );
+			this->mGfxMgr.mVertexCache.WritePenColor4b ();
+		}
+		
+		this->mGfxMgr.mVertexCache.WriteVtx ( v.mX, v.mY );
+		this->mGfxMgr.mVertexCache.WritePenColor4b ();
+		
+		this->mLastVertex = v;
+	}
+	
+	//----------------------------------------------------------------//
+	void End () {
+	
+		this->mGfxMgr.mVertexCache.EndPrim ();
 	}
 };
 
@@ -1261,11 +1294,11 @@ void MOAIDraw::DrawBoxOutline ( const ZLBox& box ) {
 void MOAIDraw::DrawBezierCurve ( const ZLCubicBezier2D& bezier ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	MOAIDrawVertexWriter2D writer;
+	MOAIDrawVertexLineStripWriter2D writer;
 	
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_STRIP );
+	writer.Begin ();
 		bezier.Flatten ( writer );
-	gfxMgr.mVertexCache.EndPrim ();
+	writer.End ();
 }
 
 //----------------------------------------------------------------//
@@ -1312,7 +1345,7 @@ void MOAIDraw::DrawEllipseFill ( float x, float y, float xRad, float yRad, u32 s
 	float angle = ( float )TWOPI / ( float )steps;
 	float angleStep = ( float )PI;
 	
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_TRIANGLE_FAN );
+	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_TRIANGLE_FAN, steps );
 	
 	for ( u32 i = 0; i < steps; ++i, angleStep += angle ) {
 		gfxMgr.mVertexCache.WriteVtx (
@@ -1342,7 +1375,7 @@ void MOAIDraw::DrawEllipseOutline ( float x, float y, float xRad, float yRad, u3
 	float step = ( float )TWOPI / ( float )steps;
 	float angle = ( float )PI;
 	
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_LOOP );
+	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_LOOP, steps );
 	
 	for ( u32 i = 0; i < steps; ++i, angle += step ) {
 		gfxMgr.mVertexCache.WriteVtx (
@@ -1423,9 +1456,7 @@ void MOAIDraw::DrawLine ( float x0, float y0, float z0, float x1, float y1, floa
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	gfxMgr.mVertexCache.SetPrimType ( ZGL_PRIM_LINE_STRIP );
-
-	gfxMgr.mVertexCache.BeginPrim ();
+	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINES, 2 );
 	
 		gfxMgr.mVertexCache.WriteVtx ( x0, y0, z0 );
 		gfxMgr.mVertexCache.WritePenColor4b ();
@@ -1444,7 +1475,7 @@ void MOAIDraw::DrawLuaParams ( lua_State* L, u32 primType ) {
 
 	u32 total = state.GetTop () >> 1;
 	
-	gfxMgr.mVertexCache.BeginPrim ( primType );
+	gfxMgr.mVertexCache.BeginPrim ( primType, total );
 	
 	for ( u32 i = 0; i < total; ++i ) {
 		
@@ -1470,7 +1501,9 @@ void MOAIDraw::DrawLuaArray ( lua_State* L, u32 primType ) {
 	float x = 0.0f;
 	float y = 0.0f;
 	
-	gfxMgr.mVertexCache.BeginPrim ( primType );
+	size_t size = state.GetTableSize ( -1 ) >> 2;
+	
+	gfxMgr.mVertexCache.BeginPrim ( primType, size );
 
 	u32 counter = 0;
 	lua_pushnil ( L );
@@ -1502,9 +1535,7 @@ void MOAIDraw::DrawPoint ( float x, float y ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	gfxMgr.mVertexCache.SetPrimType ( ZGL_PRIM_POINTS );
-
-	gfxMgr.mVertexCache.BeginPrim ();
+	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_POINTS, 1 );
 		gfxMgr.mVertexCache.WriteVtx ( x, y, 0.0f );
 		gfxMgr.mVertexCache.WritePenColor4b ();
 	gfxMgr.mVertexCache.EndPrim ();
@@ -1515,11 +1546,10 @@ void MOAIDraw::DrawPolyOutline ( const ZLPolygon2D& poly ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	gfxMgr.mVertexCache.SetPrimType ( ZGL_PRIM_LINE_LOOP );
-	
 	size_t size = poly.GetSize ();
 
-	gfxMgr.mVertexCache.BeginPrim ();
+	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_LOOP, size );
+
 	for ( u32 i = 0; i < size; ++i ) {
 		const ZLVec2D& v0 = poly.GetVertex ( i );
 		gfxMgr.mVertexCache.WriteVtx ( v0.mX, v0.mY, 0.0f );
@@ -1564,7 +1594,7 @@ void MOAIDraw::DrawRay ( float x, float y, float dx, float dy ) {
 		
 		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 		
-		gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINES );
+		gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINES, 2 );
 		
 			gfxMgr.mVertexCache.WriteVtx ( p0.mX, p0.mY, 0.0f );
 			gfxMgr.mVertexCache.WritePenColor4b ();
@@ -1616,7 +1646,7 @@ void MOAIDraw::DrawRectFill ( float left, float top, float right, float bottom, 
 	
 	if ( asTriStrip ) {
 
-		gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_TRIANGLE_STRIP );
+		gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_TRIANGLE_STRIP, 4 );
 	
 			gfxMgr.mVertexCache.WriteVtx ( left, top, 0.0f );
 			gfxMgr.mVertexCache.WritePenColor4b ();
@@ -1634,9 +1664,10 @@ void MOAIDraw::DrawRectFill ( float left, float top, float right, float bottom, 
 	}
 	else {
 		
-		// Tri 1
-		gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_TRIANGLES );
+		
+		gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_TRIANGLES, 6 );
 	
+			// Tri 1
 			gfxMgr.mVertexCache.WriteVtx ( left, top, 0.0f );
 			gfxMgr.mVertexCache.WritePenColor4b ();
 		
@@ -1645,12 +1676,8 @@ void MOAIDraw::DrawRectFill ( float left, float top, float right, float bottom, 
 		
 			gfxMgr.mVertexCache.WriteVtx ( right, bottom, 0.0f );
 			gfxMgr.mVertexCache.WritePenColor4b ();
-			
-		gfxMgr.mVertexCache.EndPrim ();
-		
-		// Tri 2
-		gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_TRIANGLES );
 
+			// Tri 2
 			gfxMgr.mVertexCache.WriteVtx ( right, bottom, 0.0f );
 			gfxMgr.mVertexCache.WritePenColor4b ();
 
@@ -1675,7 +1702,7 @@ void MOAIDraw::DrawRectOutline ( float left, float top, float right, float botto
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_LOOP );
+	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_LOOP, 4 );
 	
 		gfxMgr.mVertexCache.WriteVtx ( left, top, 0.0f );
 		gfxMgr.mVertexCache.WritePenColor4b ();
@@ -1726,9 +1753,7 @@ void MOAIDraw::DrawVertexArray ( const ZLVec3D* verts, u32 count, u32 color, u32
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	gfxMgr.mGfxState.SetPenColor ( color );
-	gfxMgr.mVertexCache.SetPrimType ( primType );
-	
-	gfxMgr.mVertexCache.BeginPrim ();
+	gfxMgr.mVertexCache.BeginPrim ( primType, count );
 	
 	for ( u32 i = 0; i < count; ++i ) {
 		const ZLVec3D& vtx = verts [ i ];
@@ -1745,9 +1770,7 @@ void MOAIDraw::DrawVertexArray2D ( const float* verts, u32 count, u32 color, u32
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	gfxMgr.mGfxState.SetPenColor ( color );
-	gfxMgr.mVertexCache.SetPrimType ( primType );
-	
-	gfxMgr.mVertexCache.BeginPrim ();
+	gfxMgr.mVertexCache.BeginPrim ( primType, count );
 	
 	for ( u32 i = 0; i < count; ++i ) {
 		u32 v = i << 1;
