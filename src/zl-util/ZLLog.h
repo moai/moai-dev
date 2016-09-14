@@ -8,6 +8,25 @@
 	#define ZL_DEFAULT_LOG_LEVEL 1 // log warnings
 #endif
 
+typedef void ( *ZLLogFunc )( u32 level, cc8* format, va_list args, void* userdata );
+
+//================================================================//
+// ZLLogContext
+//================================================================//
+class ZLLogContext {
+private:
+
+	friend class ZLLog;
+
+	u32			mLogLevel;
+	FILE*		mConsoleRedirect;
+	ZLLogFunc	mLogFunc;
+	void*		mLogFuncUserdata;
+	
+	//----------------------------------------------------------------//
+				ZLLogContext			();
+};
+
 //================================================================//
 // ZLLog
 //================================================================//
@@ -29,27 +48,24 @@ public:
 
 private:
 
-	static u32		sLogLevel;
-	static FILE*	sConsoleRedirect;
+	static ZLThreadLocalPtr < ZLLogContext > sContext;
 
-	typedef void ( *LogFunc )( u32 level, cc8* format, va_list args, void* userdata );
-	
-	static LogFunc	sLogFunc;
-	static void*	sLogFuncUserdata;
+	//----------------------------------------------------------------//
+	static ZLLogContext*	AffirmContext	();
 
 public:
 
 	//----------------------------------------------------------------//
-	static u32		GetLogLevel		();
-	
-	static bool		IsEnabled		( u32 level );
-	
-	static void		LogF			( u32 level, FILE* file, cc8* format, ... );
-	static void		LogV			( u32 level, FILE* file, cc8* format, va_list args );
+	static void				ClearContext	();
+	static u32				GetLogLevel		();
+	static bool				IsEnabled		( u32 level );
 
-	static void		SetLogFunc		( LogFunc logFunc, void* userdata );
-	static void		SetLogLevel		( u32 level );
-	static void		SetRedirect		( FILE* file );
+	static void				LogF			( u32 level, FILE* file, cc8* format, ... );
+	static void				LogV			( u32 level, FILE* file, cc8* format, va_list args );
+
+	static void				SetLogFunc		( ZLLogFunc logFunc, void* userdata );
+	static void				SetLogLevel		( u32 level );
+	static void				SetRedirect		( FILE* file );
 };
 
 #define ZLLog(format,...)					ZLLog::LogF ( ZLLog::LOG_REPORT, ZLLog::CONSOLE, format, ##__VA_ARGS__ )

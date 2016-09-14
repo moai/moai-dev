@@ -4409,6 +4409,8 @@
 		CDB718B31A44E7FE003DFFBA /* zl_usocket.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB718AB1A44E7FE003DFFBA /* zl_usocket.h */; };
 		CDB73B661D00026D00B0E75A /* ZLPolygon2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB73B651D00026D00B0E75A /* ZLPolygon2D.cpp */; };
 		CDB73B671D00026D00B0E75A /* ZLPolygon2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB73B651D00026D00B0E75A /* ZLPolygon2D.cpp */; };
+		CDBE9A411D88C32D00444344 /* ZLThreadLocalPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBE9A3E1D88C32D00444344 /* ZLThreadLocalPtr.h */; };
+		CDBE9A421D88C32D00444344 /* ZLThreadLocalPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBE9A3E1D88C32D00444344 /* ZLThreadLocalPtr.h */; };
 		CDC097E71AE9C7BF002E325F /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC097E31AE9C7BF002E325F /* host.h */; };
 		CDC097E81AE9C7BF002E325F /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDC097E41AE9C7BF002E325F /* host.mm */; };
 		CDC097E91AE9C7BF002E325F /* MOAIMoviePlayerIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC097E51AE9C7BF002E325F /* MOAIMoviePlayerIOS.h */; };
@@ -8922,6 +8924,7 @@
 		CDBA13121A305641007503F3 /* moai_config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_config.h; path = "config-default/moai_config.h"; sourceTree = "<group>"; };
 		CDBA13131A305641007503F3 /* moai_version_author.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_version_author.h; path = "config-default/moai_version_author.h"; sourceTree = "<group>"; };
 		CDBA13161A30564B007503F3 /* moai_version_author.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_version_author.h; path = config/moai_version_author.h; sourceTree = "<group>"; };
+		CDBE9A3E1D88C32D00444344 /* ZLThreadLocalPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLThreadLocalPtr.h; sourceTree = "<group>"; };
 		CDC097E11AE9C72E002E325F /* libmoai-ios-movie.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-movie.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDC097E31AE9C7BF002E325F /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-ios-movie/host.h"; sourceTree = "<group>"; };
 		CDC097E41AE9C7BF002E325F /* host.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = host.mm; path = "moai-ios-movie/host.mm"; sourceTree = "<group>"; };
@@ -10278,6 +10281,7 @@
 				89BE693A173974FD00DFE837 /* zl_util.cpp */,
 				89BE693B173974FD00DFE837 /* zl_util.h */,
 				89BE693C173974FD00DFE837 /* zl_vfscanf.cpp */,
+				CDBE9A3E1D88C32D00444344 /* ZLThreadLocalPtr.h */,
 				89BE693D173974FD00DFE837 /* ZLVfsDirectoryItr.cpp */,
 				89BE693E173974FD00DFE837 /* ZLVfsDirectoryItr.h */,
 				89BE693F173974FD00DFE837 /* ZLVfsFile.cpp */,
@@ -16799,6 +16803,7 @@
 				CD34A24F19C7D77A00BFF405 /* assert.h in Headers */,
 				CD6D74C017EE415D00964415 /* headers.h in Headers */,
 				CD6D74C117EE415D00964415 /* pch.h in Headers */,
+				CDBE9A421D88C32D00444344 /* ZLThreadLocalPtr.h in Headers */,
 				CD6D74C217EE415D00964415 /* zl_mutex.h in Headers */,
 				CD6D74C317EE415D00964415 /* zl_replace.h in Headers */,
 				CD6D74C417EE415D00964415 /* zl_replace_locale.h in Headers */,
@@ -17828,6 +17833,7 @@
 				CDF2886217ED41CF00FD4F59 /* ZLVfsFileSystem.h in Headers */,
 				CDF2886317ED41CF00FD4F59 /* ZLVfsVirtualPath.h in Headers */,
 				CDF2886417ED41CF00FD4F59 /* ZLVfsZipArchive.h in Headers */,
+				CDBE9A411D88C32D00444344 /* ZLThreadLocalPtr.h in Headers */,
 				CDF2886517ED41CF00FD4F59 /* ZLVfsZipStream.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

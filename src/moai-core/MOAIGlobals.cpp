@@ -83,28 +83,32 @@ MOAIGlobals::~MOAIGlobals () {
 // MOAIGlobalsMgr
 //================================================================//
 
-MOAIGlobalsMgr::GlobalsSet* MOAIGlobalsMgr::sGlobalsSet = 0;
-MOAIGlobals* MOAIGlobalsMgr::sInstance = 0;
+ZLThreadLocalPtr < MOAIGlobalsMgr::GlobalsSet >		MOAIGlobalsMgr::sGlobalsSet;
+ZLThreadLocalPtr < MOAIGlobals >					MOAIGlobalsMgr::sInstance;
 
 //----------------------------------------------------------------//
 bool MOAIGlobalsMgr::Check ( MOAIGlobals* globals ) {
 
-	return sGlobalsSet->contains ( globals );
+	GlobalsSet* globalSet = sGlobalsSet.Get ();
+	return globalSet ? globalSet->contains ( globals ) : false;
 }
 
 //----------------------------------------------------------------//
 MOAIGlobals* MOAIGlobalsMgr::Create () {
 	
-	if ( !sGlobalsSet ) {
-		sGlobalsSet = new GlobalsSet ();
+	GlobalsSet* globalSet = sGlobalsSet.Get ();
+	
+	if ( !globalSet ) {
+		globalSet = new GlobalsSet ();
+		sGlobalsSet.Set ( globalSet );
 	}
 
 	MOAIGlobals* globals = new MOAIGlobals ();
 	
 	ZLLog_DebugF ( ZLLog::CONSOLE, "MOAIGlobalsMgr: new context %p\n", globals );
 	
-	sGlobalsSet->insert ( globals );
-	sInstance = globals;
+	globalSet->insert ( globals );
+	sInstance.Set ( globals );
 
 	return globals;
 }
@@ -114,21 +118,22 @@ void MOAIGlobalsMgr::Delete ( MOAIGlobals* globals ) {
 	
 	ZLLog_DebugF ( ZLLog::CONSOLE, "MOAIGlobalsMgr: deleting context %p\n", globals );
 	
-	MOAIGlobals* prevInstance = sInstance;
+	GlobalsSet* globalSet = sGlobalsSet.Get ();
+	MOAIGlobals* prevInstance = sInstance.Get ();
 	
-	if ( sGlobalsSet ) {
-		if ( sGlobalsSet->contains ( globals )) {
+	if ( globalSet ) {
+		if ( globalSet->contains ( globals )) {
 			
-			sInstance = globals;
+			sInstance.Set ( globals );
 			delete globals;
-			sGlobalsSet->erase ( globals );
-			sInstance = 0;
+			globalSet->erase ( globals );
+			sInstance.Set ( 0 );
 		}
 	}
 	
 	// don't set this to nil until *after* deleting it!
-	if ( prevInstance == globals ) {
-		sInstance = prevInstance;
+	if ( prevInstance != globals ) {
+		sInstance.Set ( prevInstance );
 	}
 }
 
@@ -137,29 +142,34 @@ void MOAIGlobalsMgr::Finalize () {
 
 	ZLLog_DebugF ( ZLLog::CONSOLE, "MOAIGlobalsMgr: finalizing\n" );
 
-    if ( sGlobalsSet ) {
+	GlobalsSet* globalSet = sGlobalsSet.Get ();
 
-        GlobalsSetIt globalsIt = sGlobalsSet->begin ();
-        for ( ; globalsIt != sGlobalsSet->end (); ++globalsIt ) {
-            sInstance = *globalsIt;
+    if ( globalSet ) {
+
+        GlobalsSetIt globalsIt = globalSet->begin ();
+        for ( ; globalsIt != globalSet->end (); ++globalsIt ) {
+		
+			MOAIGlobals* instance = *globalsIt;
 			
-			ZLLog_DebugF ( ZLLog::CONSOLE, "MOAIGlobalsMgr: deleting context %p\n", sInstance );
+            sInstance.Set ( instance );
 			
-            delete sInstance;
+			ZLLog_DebugF ( ZLLog::CONSOLE, "MOAIGlobalsMgr: deleting context %p\n", instance );
+			
+            delete instance;
         }
         
-        sGlobalsSet->clear ();
-        sInstance = 0;
+        globalSet->clear ();
+        sInstance.Set ( 0 );
         
-        delete sGlobalsSet;
-        sGlobalsSet = 0;
+        delete globalSet;
+        sGlobalsSet.Set ( 0 );
     }
 }
 
 //----------------------------------------------------------------//
 MOAIGlobals* MOAIGlobalsMgr::Get () {
 
-	return sInstance;
+	return sInstance.Get ();
 }
 
 //----------------------------------------------------------------//
@@ -167,8 +177,8 @@ MOAIGlobals* MOAIGlobalsMgr::Set ( MOAIGlobals* globals ) {
 
 //	ZLLog_DebugF ( ZLLog::CONSOLE, "MOAIGlobalsMgr: setting context %p\n", globals );
 
-	MOAIGlobals* prev = sInstance;
-	sInstance = globals;
+	MOAIGlobals* prev = sInstance.Get ();
+	sInstance.Set ( globals );
 	return prev;
 }
 

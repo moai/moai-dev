@@ -9,6 +9,8 @@
 #include <zl-vfs/zl_mutex.h>
 #include <zl-vfs/zl_util.h>
 
+#include <zl-vfs/ZLThreadLocalPtr.h>
+
 #ifdef  __cplusplus
 	extern "C" {
 #endif

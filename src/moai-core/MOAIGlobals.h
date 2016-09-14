@@ -174,8 +174,8 @@ private:
 	typedef STLSet < MOAIGlobals* >::iterator GlobalsSetIt;
 	typedef STLSet < MOAIGlobals* > GlobalsSet;
 
-	static GlobalsSet* sGlobalsSet;
-	static MOAIGlobals* sInstance;
+	static ZLThreadLocalPtr < GlobalsSet >		sGlobalsSet;
+	static ZLThreadLocalPtr < MOAIGlobals >		sInstance;
 
 	//----------------------------------------------------------------//
 							MOAIGlobalsMgr			();
