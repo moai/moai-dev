@@ -28,7 +28,7 @@ void MOAIVertexArrayItem::Bind ( bool useVAOs ) {
 		assert (( useVAOs && this->mBuffer->IsUsingVBOs ()) || ( !useVAOs )); // buffer objects must use VBOs to work with VAOs
 		
 		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	
+		
 		gfxMgr.mGfxState.BindVertexBuffer ( this->mBuffer );
 		gfxMgr.mGfxState.BindVertexFormat ( this->mFormat );
 	}
@@ -123,6 +123,18 @@ void MOAIVertexArray::BindVertexArrayItems () {
 	for ( size_t i = 0; i < totalVBOs; ++i ) {
 		this->mVertexBuffers [ i ].Bind ( this->mUseVAOs );
 	}
+}
+
+//----------------------------------------------------------------//
+MOAIVertexBuffer* MOAIVertexArray::GetVertexBuffer ( u32 idx ) {
+
+	return idx < this->mVertexBuffers.Size () ? this->mVertexBuffers [ idx ].mBuffer : ( MOAIVertexBuffer* )0;
+}
+
+//----------------------------------------------------------------//
+MOAIVertexFormat* MOAIVertexArray::GetVertexFormat ( u32 idx ) {
+
+	return idx < this->mVertexBuffers.Size () ? this->mVertexBuffers [ idx ].mFormat : ( MOAIVertexFormat* )0;
 }
 
 //----------------------------------------------------------------//

@@ -127,6 +127,12 @@ int MOAIIndexBuffer::_setIndexSize ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+u32 MOAIIndexBuffer::CountIndices () {
+
+	return this->GetLength () / this->mIndexSize;
+}
+
+//----------------------------------------------------------------//
 void MOAIIndexBuffer::CopyFromStream ( ZLStream& stream, size_t size, u32 srcInputSizeInBytes ) {
 
 	u32 idxSizeInBytes = this->mIndexSize;	
@@ -153,6 +159,13 @@ void MOAIIndexBuffer::CopyFromStream ( ZLStream& stream, size_t size, u32 srcInp
 		}
 	}
 	this->ScheduleForGPUUpdate ();
+}
+
+//----------------------------------------------------------------//
+u32 MOAIIndexBuffer::GetIndex ( u32 element ) {
+
+	const void* data = this->ZLCopyOnWrite::GetBuffer ();
+	return this->mIndexSize == 4 ? (( const u32* )data )[ element ] : (( const u16* )data )[ element ];
 }
 
 //----------------------------------------------------------------//

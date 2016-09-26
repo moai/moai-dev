@@ -180,18 +180,13 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	TYPE GetComp ( const u8 idx ) const {
+	TYPE GetComponent ( int idx ) const {
 
 		switch ( idx ) {
-			
-			case 0:
-				return this->mX;
-			
-			case 1:
-				return this->mY;
-			
-			default:
-				return this->mZ;
+			case 0:		return this->mX;
+			case 1:		return this->mY;
+			case 2:		return this->mZ;
+			default:	return 0;
 		}
 	}
 

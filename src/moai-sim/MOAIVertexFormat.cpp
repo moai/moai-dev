@@ -413,6 +413,22 @@ void MOAIVertexFormat::DeclareAttribute ( u32 index, u32 type, u32 size, u32 use
 }
 
 //----------------------------------------------------------------//
+const MOAIVertexAttribute& MOAIVertexFormat::GetAttribute ( u32 attrIdx ) {
+
+	assert ( attrIdx < this->mAttributes.Size ());
+	return this->mAttributes [ attrIdx ];
+}
+
+//----------------------------------------------------------------//
+const MOAIVertexAttribute& MOAIVertexFormat::GetAttributeByUse ( u32 useID, u32 idx ) {
+
+	assert ( useID < TOTAL_ATTRIBUTE_TYPES );
+	assert ( idx < this->mAttributeIDsByUse [ useID ].Size ());
+	
+	return this->mAttributes [ this->mAttributeIDsByUse [ useID ][ idx ]];
+}
+
+//----------------------------------------------------------------//
 u32 MOAIVertexFormat::GetComponentSize ( u32 size, u32 type ) {
 
 	u32 bytes;
@@ -605,7 +621,6 @@ ZLVec4D MOAIVertexFormat::ReadAttribute ( ZLStream& stream, u32 attrIdx, float y
 //----------------------------------------------------------------//
 ZLVec4D MOAIVertexFormat::ReadAttribute ( ZLStream& stream, u32 useID, u32 idx, float yFallback, float zFallback, float wFallback ) const {
 
-	
 	if ( idx < this->mTotalAttributesByUse [ useID ]) {
 		return this->ReadAttribute ( stream, this->mAttributeIDsByUse [ useID ][ idx ], yFallback, zFallback, wFallback);
 	}
