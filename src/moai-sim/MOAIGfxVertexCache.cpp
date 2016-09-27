@@ -149,7 +149,9 @@ void MOAIGfxVertexCache::FlushBufferedPrims () {
 		
 		if ( count > 0 ) {
 		
-			gfxMgr.mGfxState.BindIndexBuffer ( this->mIdxBuffer );
+			if ( this->mUseIdxBuffer ) {
+				gfxMgr.mGfxState.BindIndexBuffer ( this->mIdxBuffer );
+			}
 			gfxMgr.mGfxState.BindVertexBuffer ( this->mVtxBuffer );
 		
 			gfxMgr.mGfxState.DrawPrims ( this->mPrimType, offset, count );
