@@ -1842,6 +1842,7 @@
 					"\"../../src/config-default\"",
 					"\"../../3rdparty/sdl2-2.0.4/include\"",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wall";
@@ -1915,6 +1916,7 @@
 					"\"../../src/config-default\"",
 					"\"../../3rdparty/sdl2-2.0.4/include\"",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
