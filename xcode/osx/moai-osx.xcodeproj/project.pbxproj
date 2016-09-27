@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0300CF5F140DC53C00ABCC5B /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC63135643FD000ADC60 /* libSystem.dylib */; };
-		0300CF60140DC53C00ABCC5B /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA2B137807E40093EE68 /* libcrypto.dylib */; };
-		0300CF61140DC53C00ABCC5B /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA311378080E0093EE68 /* libssl.dylib */; };
 		0300CF66140DC53C00ABCC5B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7AF913DF7E9B00F2DEDE /* CoreFoundation.framework */; };
 		0300CF67140DC53C00ABCC5B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7AFF13DF7EF200F2DEDE /* Carbon.framework */; };
 		0300CF68140DC53C00ABCC5B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */; };
@@ -823,8 +821,6 @@
 				CDFD8FBE1AD8653C0003F415 /* libmoai-osx-zl-crypto.a in Frameworks */,
 				CDFD8FBF1AD8653C0003F415 /* libmoai-osx-zl-vfs.a in Frameworks */,
 				CD096FD218E0FFE300A36EDD /* libstdc++.dylib in Frameworks */,
-				0300CF60140DC53C00ABCC5B /* libcrypto.dylib in Frameworks */,
-				0300CF61140DC53C00ABCC5B /* libssl.dylib in Frameworks */,
 				0300CF5F140DC53C00ABCC5B /* libSystem.dylib in Frameworks */,
 				0300CF7B140DC61000ABCC5B /* AudioToolbox.framework in Frameworks */,
 				0300CF94140DC65100ABCC5B /* AudioUnit.framework in Frameworks */,
@@ -1057,7 +1053,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = NO;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "moai-osx" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1786,8 +1782,19 @@
 		03B080970F708135005CD8E5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -1821,6 +1828,7 @@
 				GCC_WARN_PROTOTYPE_CONVERSION = YES;
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
@@ -1843,8 +1851,19 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					_DEBUG,
@@ -1882,6 +1901,7 @@
 				GCC_WARN_PROTOTYPE_CONVERSION = YES;
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
