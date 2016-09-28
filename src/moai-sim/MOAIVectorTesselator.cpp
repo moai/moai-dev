@@ -98,8 +98,7 @@ int MOAIVectorTesselator::_finish ( lua_State* L ) {
 	
 	int error = self->Finish ();
 	
-	//bool hasContent = self->mVtxStream.GetLength () > 0;
-	bool hasContent = self->mShapeStack.Size () > 0;
+	bool hasContent = self->mShapeStack.GetTop () > 0;
 	
 	state.Push ( error );
 	state.Push ( hasContent );

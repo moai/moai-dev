@@ -373,6 +373,10 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& mater
 				size_t indexSizeInBytes = this->mIndexBuffer->GetIndexSize ();
 				
 				for ( ; span; span = span->mNext ) {
+				
+					if ( span->mBase == span->mTop ) continue;
+					assert (( span->mBase < span->mTop ) && ( span->mTop <= this->mTotalElements ));
+				
 					gfx.DrawElements (
 						this->mPrimType,
 						( u32 )( span->mTop - span->mBase ),
@@ -385,7 +389,12 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch& mater
 			}
 		}
 		else {
+		
 			for ( ; span; span = span->mNext ) {
+			
+				if ( span->mBase == span->mTop ) continue;
+				assert (( span->mBase < span->mTop ) && ( span->mTop <= this->mTotalElements ));
+			
 				gfx.DrawArrays ( this->mPrimType, ( u32 )span->mBase, ( u32 )( span->mTop - span->mBase ));
 			}
 		}

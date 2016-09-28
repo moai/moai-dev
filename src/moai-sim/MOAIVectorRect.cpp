@@ -42,11 +42,11 @@ int MOAIVectorRect::AddStrokeContours ( SafeTesselator& tess, bool inside, bool 
 //----------------------------------------------------------------//
 int MOAIVectorRect::CheckFastTrack ( MOAIVectorTesselator& drawing, u32 flags ) {
 
+	if (( this->mStyle.GetStrokeStyle () != MOAIVectorStyle::STROKE_NONE ) && ( this->mStyle.GetStrokeWidth () > 0.0f )) return FASTTRACK_FALLBACK;
+
 	if ( !( flags & MOAIVectorTesselator::TESSELATE_FILLS )) return FASTTRACK_SKIP;
 	
 	if ( this->mStyle.GetFillStyle () != MOAIVectorStyle::FILL_SOLID ) return FASTTRACK_SKIP;
-
-	if (( this->mStyle.GetStrokeStyle () != MOAIVectorStyle::STROKE_NONE ) && ( this->mStyle.GetStrokeWidth () > 0.0f )) return FASTTRACK_FALLBACK;
 
 	ZLAffine2D& drawingToWorldMtx = this->mStyle.mDrawingToWorld;
 	if (( drawingToWorldMtx.m [ ZLAffine2D::C0_R1 ] != 0.0f ) || ( drawingToWorldMtx.m [ ZLAffine2D::C1_R0 ] != 0.0f )) return FASTTRACK_FALLBACK;
@@ -79,7 +79,7 @@ int MOAIVectorRect::Tesselate ( MOAIVectorTesselator& drawing, MOAIRegion& regio
 	int fastTrack = this->CheckFastTrack ( drawing, flags );
 	
 	if ( fastTrack == FASTTRACK_SKIP ) return 0;
-	if ( fastTrack == FASTTRACK_FALLBACK ) return -1;
+	if ( fastTrack == FASTTRACK_FALLBACK ) return MOAIVectorShape::Tesselate ( drawing, region, flags );
 	
 	ZLAffine2D& drawingToWorldMtx = this->mStyle.mDrawingToWorld;
 		
