@@ -6,7 +6,6 @@
 
 #include <zl-util/ZLMathConsts.h>
 #include <zl-util/ZLTrig.h>
-#include <zl-util/ZLVec3D.h>
 
 template < typename TYPE > class tVec3;
 
@@ -43,6 +42,12 @@ template < typename TYPE > class tVec3;
 template < typename TYPE >
 class ZLMetaVec2D {
 public:
+
+	static const ZLMetaVec2D < TYPE >	X_AXIS;
+	static const ZLMetaVec2D < TYPE >	Y_AXIS;
+
+	static const ZLMetaVec2D < TYPE >	ORIGIN;		// all 0's
+	static const ZLMetaVec2D < TYPE >	AXIS;		// all 1's
 
 	TYPE	mX;
 	TYPE	mY;
@@ -475,6 +480,12 @@ public:
 	
 	DECLARE_UNARY_WITH_SCALAR ( ZLMetaVec2D < TYPE >, Scale )
 };
+
+template < typename TYPE > const ZLMetaVec2D < TYPE > ZLMetaVec2D < TYPE >::X_AXIS ( 1, 0 );
+template < typename TYPE > const ZLMetaVec2D < TYPE > ZLMetaVec2D < TYPE >::Y_AXIS ( 0, 1 );
+
+template < typename TYPE > const ZLMetaVec2D < TYPE > ZLMetaVec2D < TYPE >::ORIGIN ( 0, 0 );
+template < typename TYPE > const ZLMetaVec2D < TYPE > ZLMetaVec2D < TYPE >::AXIS ( 1, 1 );
 
 typedef ZLMetaVec2D < int > ZLIntVec2D;
 typedef ZLMetaVec2D < float > ZLVec2D;

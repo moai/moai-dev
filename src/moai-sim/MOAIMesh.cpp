@@ -231,6 +231,58 @@ int MOAIMesh::_buildTernaryTree ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIMesh::_getPrimsForPoint ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIMesh, "U" )
+	
+	// TODO: this is a naive first pass. need to use the partition if one has been created.
+	
+	MOAIMeshPrimReader primReader;
+	
+	bool is3D = state.CheckParams ( 2, "NNN", false );
+	
+	ZLVec3D point = state.GetValue < ZLVec3D >( 2, ZLVec3D::ORIGIN );
+
+	u32 totalPrims = 0;
+
+	ZLBox meshBounds = self->GetBounds ();
+	if ((( is3D ) && meshBounds.Contains ( point )) || meshBounds.Contains ( point, ZLBox::PLANE_XY )) {
+		
+		if ( primReader.Init ( *self, 0 )) {
+		
+			u32 totalMeshPrims = primReader.GetTotalPrims ();
+			
+			for ( u32 i = 0; i < totalMeshPrims; ++i ) {
+			
+				MOAIMeshPrimCoords prim;
+				if ( primReader.GetPrimCoords ( i, prim )) {
+					
+					if ((
+						( is3D )
+						&&
+						ZLBarycentric::PointInTriangle (
+							prim.mCoords [ 0 ],
+							prim.mCoords [ 1 ],
+							prim.mCoords [ 2 ],
+							point ))
+						||
+						ZLBarycentric::PointInTriangle (
+							prim.mCoords [ 0 ].Vec2D (),
+							prim.mCoords [ 1 ].Vec2D (),
+							prim.mCoords [ 2 ].Vec2D (),
+							point.Vec2D ())
+						) {
+					
+						state.Push ( i + 1 );
+						totalPrims++;
+					}
+				}
+			}
+		}
+	}
+	return totalPrims;
+}
+
+//----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIMesh::_printPartition ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "U" )
@@ -458,7 +510,8 @@ void MOAIMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "buildQuadTree",				_buildQuadTree },
-		{ "buildTernaryTree",			_buildTernaryTree },		
+		{ "buildTernaryTree",			_buildTernaryTree },
+		{ "getPrimsForPoint",			_getPrimsForPoint },
 		{ "printPartition",				_printPartition },
 		{ "reserveVAOs",				_reserveVAOs },
 		{ "reserveVertexBuffers",		_reserveVertexBuffers },

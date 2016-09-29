@@ -4,7 +4,7 @@
 #ifndef ZLVEC3D_H
 #define	ZLVEC3D_H
 
-template < typename TYPE > class ZLMetaVec2D;
+#include <zl-util/ZLVec2D.h>
 
 //================================================================//
 // ZLMetaVec3D
@@ -445,6 +445,12 @@ public:
 		mX = mX - ( vec.mX * scale );
 		mY = mY - ( vec.mY * scale );
 		mZ = mZ - ( vec.mZ * scale );
+	}
+	
+	//----------------------------------------------------------------//
+	ZLMetaVec2D < TYPE > Vec2D () const {
+	
+		return ZLMetaVec2D < TYPE >( this->mX, this->mY );
 	}
 
 	//----------------------------------------------------------------//

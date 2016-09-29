@@ -4,7 +4,7 @@
 #ifndef	ZLPLANE_H
 #define	ZLPLANE_H
 
-#include <zl-util/ZLVec2D.h>
+#include <zl-util/ZLVec3D.h>
 
 //================================================================//
 // ZLPlane2D
