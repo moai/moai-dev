@@ -31,6 +31,7 @@
 		0711070513C637F000EE7C53 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0711070413C637F000EE7C53 /* CoreTelephony.framework */; };
 		078990891DA2AE3B00C10F08 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 078990881DA2AE3B00C10F08 /* LaunchScreen.xib */; };
 		079530CE1447A0FF00143A72 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 079530CD1447A0FF00143A72 /* MediaPlayer.framework */; };
+		07EE04D71DA2BC77001A5A8F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0789905C1DA224B700C10F08 /* Images.xcassets */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
@@ -1415,6 +1416,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD6F1F4E1A79CE1800E772A0 /* lua in Resources */,
+				07EE04D71DA2BC77001A5A8F /* Images.xcassets in Resources */,
 				078990891DA2AE3B00C10F08 /* LaunchScreen.xib in Resources */,
 				CD30078A1A12D87400C9CD1D /* main.lua in Resources */,
 			);
@@ -1590,6 +1592,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CXX = "$(SRCROOT)/ccache-clang++";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = moai;
@@ -1605,6 +1608,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CXX = "$(SRCROOT)/ccache-clang++";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = moai;
