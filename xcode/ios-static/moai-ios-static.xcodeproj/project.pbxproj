@@ -40,10 +40,10 @@
 		CD4DF2BF1A12E35B00E9A523 /* libmoai-ios-zl-crypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4DF2B21A12E35B00E9A523 /* libmoai-ios-zl-crypto.a */; };
 		CD4DF2C01A12E35B00E9A523 /* libmoai-ios-zl-vfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4DF2B31A12E35B00E9A523 /* libmoai-ios-zl-vfs.a */; };
 		CD4DF2C11A12E35B00E9A523 /* libmoai-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4DF2B41A12E35B00E9A523 /* libmoai-ios.a */; };
-		CD76CB6E1BD4B288008AB56C /* libmoai-ios-image-jpg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD76CB6A1BD4B288008AB56C /* libmoai-ios-image-jpg.a */; settings = {ASSET_TAGS = (); }; };
-		CD76CB6F1BD4B288008AB56C /* libmoai-ios-image-png.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD76CB6B1BD4B288008AB56C /* libmoai-ios-image-png.a */; settings = {ASSET_TAGS = (); }; };
-		CD76CB701BD4B288008AB56C /* libmoai-ios-image-pvr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD76CB6C1BD4B288008AB56C /* libmoai-ios-image-pvr.a */; settings = {ASSET_TAGS = (); }; };
-		CD76CB711BD4B288008AB56C /* libmoai-ios-image-webp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD76CB6D1BD4B288008AB56C /* libmoai-ios-image-webp.a */; settings = {ASSET_TAGS = (); }; };
+		CD76CB6E1BD4B288008AB56C /* libmoai-ios-image-jpg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD76CB6A1BD4B288008AB56C /* libmoai-ios-image-jpg.a */; };
+		CD76CB6F1BD4B288008AB56C /* libmoai-ios-image-png.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD76CB6B1BD4B288008AB56C /* libmoai-ios-image-png.a */; };
+		CD76CB701BD4B288008AB56C /* libmoai-ios-image-pvr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD76CB6C1BD4B288008AB56C /* libmoai-ios-image-pvr.a */; };
+		CD76CB711BD4B288008AB56C /* libmoai-ios-image-webp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD76CB6D1BD4B288008AB56C /* libmoai-ios-image-webp.a */; };
 		CD795FEB17F09B9F006AEB47 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795FEA17F09B9F006AEB47 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CD79ECBF1B1FAB2100863789 /* lua in Resources */ = {isa = PBXBuildFile; fileRef = CD79ECBE1B1FAB2100863789 /* lua */; };
 		CD79ECC11B1FAB5200863789 /* libmoai-ios-http-server.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD79ECC01B1FAB5200863789 /* libmoai-ios-http-server.a */; };
@@ -374,7 +374,7 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 			};
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MoaiSample" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "moai-ios-static" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -547,7 +547,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MoaiSample" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "moai-ios-static" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
