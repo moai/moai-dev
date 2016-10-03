@@ -780,10 +780,10 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				CD6F1F4D1A79CE1800E772A0 /* lua */,
-				03CC905513B3C1B700B2724C /* Info.plist */,
-				CD3007891A12D87400C9CD1D /* main.lua */,
 				0789905C1DA224B700C10F08 /* Images.xcassets */,
+				03CC905513B3C1B700B2724C /* Info.plist */,
+				CD6F1F4D1A79CE1800E772A0 /* lua */,
+				CD3007891A12D87400C9CD1D /* main.lua */,
 			);
 			name = Resources;
 			sourceTree = "<group>";

@@ -20072,7 +20072,9 @@
 		0379C5941333ECD800E89DDC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"MOAI_KEEP_ASSERT=1",
@@ -20108,7 +20110,9 @@
 		0379C5951333ECD800E89DDC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"MOAI_KEEP_ASSERT=1",
@@ -20285,6 +20289,8 @@
 		03C2F6F6104DE131009A2D5D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -20320,6 +20326,8 @@
 		03C2F6F7104DE131009A2D5D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -20406,6 +20414,8 @@
 		89BE6F02173AD06700DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20436,6 +20446,8 @@
 		89BE6F03173AD06700DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20466,6 +20478,8 @@
 		89BE6F04173AD06700DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20496,6 +20510,8 @@
 		89BE6F05173AD06700DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20822,6 +20838,8 @@
 		89BE749D173AD2B600DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20852,6 +20870,8 @@
 		89BE749E173AD2B600DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20882,6 +20902,8 @@
 		89BE749F173AD2B600DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20912,6 +20934,8 @@
 		89BE74A0173AD2B600DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21086,6 +21110,8 @@
 		89BE75F3173C126100DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21116,6 +21142,8 @@
 		89BE75F4173C126100DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21146,6 +21174,8 @@
 		89BE75F5173C126100DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21176,6 +21206,8 @@
 		89BE75F6173C126100DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21206,6 +21238,8 @@
 		89BE7682173C15F100DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21236,6 +21270,8 @@
 		89BE7683173C15F100DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21266,6 +21302,8 @@
 		89BE7684173C15F100DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21296,6 +21334,8 @@
 		89BE7685173C15F100DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21610,6 +21650,8 @@
 		CD04ACB214725568009C20E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
@@ -21619,6 +21661,8 @@
 		CD04ACB314725568009C20E5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
@@ -21660,6 +21704,8 @@
 		CD07C3CB13A182AA00C9386C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21690,6 +21736,8 @@
 		CD07C3CC13A182AA00C9386C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21854,6 +21902,8 @@
 		CD257B9E1A6255380057A53A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -21889,6 +21939,8 @@
 		CD257B9F1A6255380057A53A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -21919,6 +21971,8 @@
 		CD257BA01A6255380057A53A /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -21949,6 +22003,8 @@
 		CD257BA11A6255380057A53A /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -22438,6 +22494,8 @@
 		CD4C3A7D180A623200C02381 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22468,6 +22526,8 @@
 		CD4C3A7E180A623200C02381 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22498,6 +22558,8 @@
 		CD4C3A7F180A623200C02381 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22528,6 +22590,8 @@
 		CD4C3A80180A623200C02381 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22816,6 +22880,8 @@
 		CD5089F5155E3A1B0002FC3B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22850,6 +22916,8 @@
 		CD5089F6155E3A1B0002FC3B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22884,6 +22952,8 @@
 		CD5089F7155E3A1B0002FC3B /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22918,6 +22988,8 @@
 		CD5089F8155E3A1B0002FC3B /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23544,6 +23616,8 @@
 		CD515F5A1BCDBBEC000718FB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23574,6 +23648,8 @@
 		CD515F5B1BCDBBEC000718FB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23604,6 +23680,8 @@
 		CD515F5C1BCDBBEC000718FB /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23634,6 +23712,8 @@
 		CD515F5D1BCDBBEC000718FB /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23664,6 +23744,8 @@
 		CD515F691BCDBBF8000718FB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23694,6 +23776,8 @@
 		CD515F6A1BCDBBF8000718FB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23724,6 +23808,8 @@
 		CD515F6B1BCDBBF8000718FB /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23754,6 +23840,8 @@
 		CD515F6C1BCDBBF8000718FB /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23784,6 +23872,8 @@
 		CD515F781BCDBC00000718FB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23814,6 +23904,8 @@
 		CD515F791BCDBC00000718FB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23844,6 +23936,8 @@
 		CD515F7A1BCDBC00000718FB /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23874,6 +23968,8 @@
 		CD515F7B1BCDBC00000718FB /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23904,6 +24000,8 @@
 		CD515F871BCDBC08000718FB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23934,6 +24032,8 @@
 		CD515F881BCDBC08000718FB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23964,6 +24064,8 @@
 		CD515F891BCDBC08000718FB /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23994,6 +24096,8 @@
 		CD515F8A1BCDBC08000718FB /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -25158,6 +25262,8 @@
 		CDA4B7AA1808AC61000129F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -25194,6 +25300,8 @@
 		CDA4B7AB1808AC61000129F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -25225,6 +25333,8 @@
 		CDA4B7AC1808AC61000129F9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -25256,6 +25366,8 @@
 		CDA4B7AD1808AC61000129F9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -25948,6 +26060,8 @@
 		CDC097DD1AE9C72E002E325F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -25984,6 +26098,8 @@
 		CDC097DE1AE9C72E002E325F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -26015,6 +26131,8 @@
 		CDC097DF1AE9C72E002E325F /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -26046,6 +26164,8 @@
 		CDC097E01AE9C72E002E325F /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -26077,6 +26197,8 @@
 		CDC1237F17FA804C00FB64BB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				PRODUCT_NAME = "moai-ios-zl-crypto";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
@@ -26086,6 +26208,8 @@
 		CDC1238017FA804C00FB64BB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				PRODUCT_NAME = "moai-ios-zl-crypto";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
@@ -26095,6 +26219,8 @@
 		CDC1238117FA804C00FB64BB /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				PRODUCT_NAME = "moai-ios-zl-crypto";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
@@ -26104,6 +26230,8 @@
 		CDC1238217FA804C00FB64BB /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				PRODUCT_NAME = "moai-ios-zl-crypto";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
@@ -26113,6 +26241,8 @@
 		CDD06BCE1398822500AB0420 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -26143,6 +26273,8 @@
 		CDD06BCF1398822500AB0420 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -26247,7 +26379,9 @@
 		CDD480CD17FA78AE00525B77 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -26279,7 +26413,9 @@
 		CDD480CE17FA78AE00525B77 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -26311,7 +26447,9 @@
 		CDD480CF17FA78AE00525B77 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -26343,7 +26481,9 @@
 		CDD480D017FA78AE00525B77 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -26375,6 +26515,8 @@
 		CDD781C61A11631E00AD133E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -26410,6 +26552,8 @@
 		CDD781C71A11631E00AD133E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -26440,6 +26584,8 @@
 		CDD781C81A11631E00AD133E /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -26470,6 +26616,8 @@
 		CDD781C91A11631E00AD133E /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -26956,6 +27104,8 @@
 		CDF288B817ED41CF00FD4F59 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
@@ -26966,6 +27116,8 @@
 		CDF288B917ED41CF00FD4F59 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
@@ -26976,6 +27128,8 @@
 		CDF288BA17ED41CF00FD4F59 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
@@ -26986,6 +27140,8 @@
 		CDF288BB17ED41CF00FD4F59 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
@@ -27137,6 +27293,8 @@
 		E90D02C014D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -27167,7 +27325,9 @@
 		E90D02C114D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"MOAI_KEEP_ASSERT=1",
@@ -27203,6 +27363,8 @@
 		E90D02C214D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -27233,6 +27395,8 @@
 		E90D02C414D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -27263,6 +27427,8 @@
 		E90D02C514D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
@@ -27564,6 +27730,8 @@
 		E9C405C6150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -27594,7 +27762,9 @@
 		E9C405C7150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"MOAI_KEEP_ASSERT=1",
@@ -27630,6 +27800,8 @@
 		E9C405CA150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -27660,6 +27832,8 @@
 		E9C405CC150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -27690,6 +27864,8 @@
 		E9C405CD150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ios/ccache-clang";
+				CXX = "$(SRCROOT)/../ios/ccache-clang++";
 				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
