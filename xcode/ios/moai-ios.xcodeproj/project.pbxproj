@@ -749,13 +749,14 @@
 			name = views;
 			sourceTree = "<group>";
 		};
-		080E96DDFE201D6D7F000001 /* Classes */ = {
+		080E96DDFE201D6D7F000001 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				CDC963C91A12C68F00F9CA22 /* moai */,
 				CDFD7DFA1A08B15200A94E6B /* modules */,
 				075E54041DA1B61800C81E07 /* views */,
 			);
+			name = Sources;
 			path = Classes;
 			sourceTree = SOURCE_ROOT;
 		};
@@ -771,7 +772,7 @@
 			isa = PBXGroup;
 			children = (
 				03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */,
-				080E96DDFE201D6D7F000001 /* Classes */,
+				080E96DDFE201D6D7F000001 /* Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
