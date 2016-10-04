@@ -10,6 +10,7 @@
 #include <zl-util/ZLTrig.h>
 #include <zl-util/ZLVec2D.h>
 #include <zl-util/ZLVec3D.h>
+#include <zl-util/ZLVec4D.h>
 
 //================================================================//
 // ZLMetaAffine3D
@@ -687,6 +688,32 @@ public:
 					(( PARAM_TYPE )m[C1_R2] *	vec.mY ) +
 					(( PARAM_TYPE )m[C2_R2] *	vec.mZ ) +
 					(( PARAM_TYPE )m[C3_R2]);
+		
+		vec.mX = x;
+		vec.mY = y;
+	}
+
+	//----------------------------------------------------------------//
+	template < typename PARAM_TYPE >
+	void Transform ( ZLMetaVec4D < PARAM_TYPE >& vec ) const {
+
+		PARAM_TYPE x;
+		PARAM_TYPE y;
+		
+		x =			(( PARAM_TYPE )m[C0_R0] *	vec.mX ) +
+					(( PARAM_TYPE )m[C1_R0] *	vec.mY ) +
+					(( PARAM_TYPE )m[C2_R0] *	vec.mZ ) +
+					(( PARAM_TYPE )m[C3_R0] *	vec.mW );
+		
+		y =			(( PARAM_TYPE )m[C0_R1] *	vec.mX ) +
+					(( PARAM_TYPE )m[C1_R1] *	vec.mY ) +
+					(( PARAM_TYPE )m[C2_R1] *	vec.mZ ) +
+					(( PARAM_TYPE )m[C3_R1] *	vec.mW );
+		
+		vec.mZ =	(( PARAM_TYPE )m[C0_R2] *	vec.mX ) +
+					(( PARAM_TYPE )m[C1_R2] *	vec.mY ) +
+					(( PARAM_TYPE )m[C2_R2] *	vec.mZ ) +
+					(( PARAM_TYPE )m[C3_R2] *	vec.mW );
 		
 		vec.mX = x;
 		vec.mY = y;

@@ -944,7 +944,7 @@ ZLVec2D MOAILuaState::GetValue < ZLVec2D >( int idx, const ZLVec2D value ) {
 template <>
 ZLVec3D MOAILuaState::GetValue < ZLVec3D >( int idx, const ZLVec3D value ) {
 
-	if ( this->CheckParams ( idx, "NN", false )) {
+	if ( this->CheckParams ( idx, "NNN", false )) {
 	
 		ZLVec3D vec;
 		
@@ -1252,6 +1252,15 @@ void MOAILuaState::Push ( const ZLVec3D& value ) {
 	lua_pushnumber ( this->mState, value.mX );
 	lua_pushnumber ( this->mState, value.mY );
 	lua_pushnumber ( this->mState, value.mZ );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaState::Push ( const ZLVec4D& value ) {
+
+	lua_pushnumber ( this->mState, value.mX );
+	lua_pushnumber ( this->mState, value.mY );
+	lua_pushnumber ( this->mState, value.mZ );
+	lua_pushnumber ( this->mState, value.mW );
 }
 
 //----------------------------------------------------------------//

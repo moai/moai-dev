@@ -111,7 +111,9 @@ protected:
 	static int			_buildQuadTree				( lua_State* L );
 	static int			_buildTernaryTree			( lua_State* L );
 	static int			_getPrimsForPoint			( lua_State* L );
+	static int			_intersectRay				( lua_State* L );
 	static int			_printPartition				( lua_State* L );
+	static int			_readPrimCoords				( lua_State* L );
 	static int			_setBounds					( lua_State* L );
 	static int			_setIndexBuffer				( lua_State* L );
 	static int			_setPenWidth				( lua_State* L );

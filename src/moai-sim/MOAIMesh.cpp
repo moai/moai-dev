@@ -235,6 +235,7 @@ int MOAIMesh::_getPrimsForPoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "U" )
 	
 	// TODO: this is a naive first pass. need to use the partition if one has been created.
+	// TODO: handle all prim types or bail if not triangles
 	
 	MOAIMeshPrimReader primReader;
 	
@@ -248,11 +249,12 @@ int MOAIMesh::_getPrimsForPoint ( lua_State* L ) {
 	if ((( is3D ) && meshBounds.Contains ( point )) || meshBounds.Contains ( point, ZLBox::PLANE_XY )) {
 		
 		if ( primReader.Init ( *self, 0 )) {
-		
-			u32 totalMeshPrims = primReader.GetTotalPrims ();
 			
-			for ( u32 i = 0; i < totalMeshPrims; ++i ) {
+			u32 basePrim = state.GetValue < u32 >( 5, 1 ) - 1;
+			u32 nPrims = state.GetValue < u32 >( 6, primReader.GetTotalPrims ());
 			
+			for ( u32 i = basePrim; i < nPrims; ++i ) {
+				
 				MOAIMeshPrimCoords prim;
 				if ( primReader.GetPrimCoords ( i, prim )) {
 					
@@ -284,11 +286,99 @@ int MOAIMesh::_getPrimsForPoint ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIMesh::_intersectRay ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIMesh, "U" )
+	
+	// TODO: this is a naive first pass. need to use the partition if one has been created.
+	// TODO: handle all prim types or bail if not triangles
+	
+	MOAIMeshPrimReader primReader;
+	
+	ZLVec3D loc		= state.GetValue < ZLVec3D >( 2, ZLVec3D::ORIGIN );
+	ZLVec3D vec		= state.GetValue < ZLVec3D >( 5, ZLVec3D::ORIGIN );
+	
+	bool hasHit;
+	float bestTime;
+	ZLVec3D bestHit;
+	
+	if ( primReader.Init ( *self, 0 )) {
+	
+		u32 totalMeshPrims = primReader.GetTotalPrims ();
+		
+		for ( u32 i = 0; i < totalMeshPrims; ++i ) {
+		
+			MOAIMeshPrimCoords prim;
+			if ( primReader.GetPrimCoords ( i, prim )) {
+				
+				float time;
+				ZLVec3D hit;
+				
+				if ( ZLSect::VecToTriangle ( loc, vec, prim.mCoords [ 0 ], prim.mCoords [ 1 ], prim.mCoords [ 2 ], time, hit ) == ZLSect::SECT_HIT ) {
+				
+					if (( !hasHit ) || ( time < bestTime )) {
+						bestTime = time;
+						bestHit = hit;
+						hasHit = true;
+					}
+				}
+			}
+		}
+	}
+	
+	if ( hasHit ) {
+		state.Push ( bestTime );
+		state.Push ( bestHit );
+		return 4;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIMesh::_printPartition ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "U" )
 
 	if ( self->mPartition ) {
 		self->mPartition->Print ();
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIMesh::_readPrimCoords ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIMesh, "U" )
+
+	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
+	
+	if ( stream ) {
+	
+		u32 basePrimID = state.GetValue < u32 >( 3, 1 ) - 1;
+		u32 nPrims = state.GetValue < u32 >( 4, 1 );
+
+		MOAIMeshPrimReader primReader;
+		
+		if ( primReader.Init ( *self, 0 )) {
+			
+			for ( u32 i = 0; i < nPrims; ++i ) {
+			
+				MOAIMeshPrimCoords prim;
+				if ( primReader.GetPrimCoords ( i, prim )) {
+					
+					stream->Write < ZLVec3D >( prim.mCoords [ 0 ]);
+					
+					if ( prim.mPrimSize > 1 ) {
+					
+						stream->Write < ZLVec3D >( prim.mCoords [ 1 ]);
+						
+						if ( prim.mPrimSize > 2 ) {
+						
+							stream->Write < ZLVec3D >( prim.mCoords [ 2 ]);
+						}
+					}
+				}
+			}
+		}
 	}
 	return 0;
 }
@@ -512,7 +602,9 @@ void MOAIMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "buildQuadTree",				_buildQuadTree },
 		{ "buildTernaryTree",			_buildTernaryTree },
 		{ "getPrimsForPoint",			_getPrimsForPoint },
+		{ "intersectRay",				_intersectRay },
 		{ "printPartition",				_printPartition },
+		{ "readPrimCoords",				_readPrimCoords },
 		{ "reserveVAOs",				_reserveVAOs },
 		{ "reserveVertexBuffers",		_reserveVertexBuffers },
 		{ "setBounds",					_setBounds },
