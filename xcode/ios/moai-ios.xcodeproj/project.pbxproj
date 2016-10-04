@@ -968,9 +968,6 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 				TargetAttributes = {
-					1D6058900D05DD3D006BFB54 = {
-						DevelopmentTeam = BUD786NAA6;
-					};
 					CDF389E71A51CEC700BDEB4D = {
 						CreatedOnToolsVersion = 6.1.1;
 					};
@@ -1589,11 +1586,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CC = "$(SRCROOT)/ccache-clang";
+				CC = "$(SRCROOT)/../ccache-clang";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CXX = "$(SRCROOT)/ccache-clang++";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = moai;
@@ -1605,11 +1603,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CC = "$(SRCROOT)/ccache-clang";
+				CC = "$(SRCROOT)/../ccache-clang";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CXX = "$(SRCROOT)/ccache-clang++";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = moai;
