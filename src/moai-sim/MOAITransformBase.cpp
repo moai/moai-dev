@@ -289,7 +289,7 @@ int MOAITransformBase::_worldToModel ( lua_State* L ) {
 	loc.mX = state.GetValue < float >( 2, 0.0f );
 	loc.mY = state.GetValue < float >( 3, 0.0f );
 	loc.mZ = state.GetValue < float >( 4, 0.0f );
-	loc.mW = state.GetValue < float >( 5, 0.0f );
+	loc.mW = state.GetValue < float >( 5, 1.0f );
 
 	ZLAffine3D worldToModel = self->GetWorldToLocalMtx ();
 	worldToModel.Transform ( loc );
