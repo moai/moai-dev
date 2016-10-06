@@ -363,7 +363,7 @@ int MOAIMesh::_readPrimCoords ( lua_State* L ) {
 			for ( u32 i = 0; i < nPrims; ++i ) {
 			
 				MOAIMeshPrimCoords prim;
-				if ( primReader.GetPrimCoords ( i, prim )) {
+				if ( primReader.GetPrimCoords ( basePrimID + i, prim )) {
 					
 					stream->Write < ZLVec3D >( prim.mCoords [ 0 ]);
 					
