@@ -297,7 +297,7 @@ int MOAIMesh::_intersectRay ( lua_State* L ) {
 	ZLVec3D loc		= state.GetValue < ZLVec3D >( 2, ZLVec3D::ORIGIN );
 	ZLVec3D vec		= state.GetValue < ZLVec3D >( 5, ZLVec3D::ORIGIN );
 	
-	bool hasHit;
+	bool hasHit = false;
 	float bestTime;
 	ZLVec3D bestHit;
 	
