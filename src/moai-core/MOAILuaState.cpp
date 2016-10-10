@@ -927,34 +927,26 @@ ZLRect MOAILuaState::GetValue < ZLRect >( int idx, const ZLRect value ) {
 //----------------------------------------------------------------//
 template <>
 ZLVec2D MOAILuaState::GetValue < ZLVec2D >( int idx, const ZLVec2D value ) {
-
-	if ( this->CheckParams ( idx, "NN", false )) {
 	
-		ZLVec2D vec;
-		
-		vec.mX			= ( float )lua_tonumber ( this->mState, idx + 0 );
-		vec.mY			= ( float )lua_tonumber ( this->mState, idx + 1 );
-		
-		return vec;
-	}
-	return value;
+	ZLVec2D vec;
+	
+	vec.mX	= this->GetValue < float >( idx + 0, value.mX );
+	vec.mY	= this->GetValue < float >( idx + 1, value.mY );
+	
+	return vec;
 }
 
 //----------------------------------------------------------------//
 template <>
 ZLVec3D MOAILuaState::GetValue < ZLVec3D >( int idx, const ZLVec3D value ) {
 
-	if ( this->CheckParams ( idx, "NNN", false )) {
+	ZLVec3D vec;
 	
-		ZLVec3D vec;
-		
-		vec.mX			= ( float )lua_tonumber ( this->mState, idx + 0 );
-		vec.mY			= ( float )lua_tonumber ( this->mState, idx + 1 );
-		vec.mZ			= ( float )lua_tonumber ( this->mState, idx + 2 );
-		
-		return vec;
-	}
-	return value;
+	vec.mX	= this->GetValue < float >( idx + 0, value.mX );
+	vec.mY	= this->GetValue < float >( idx + 1, value.mY );
+	vec.mZ	= this->GetValue < float >( idx + 2, value.mZ );
+	
+	return vec;
 }
 
 //----------------------------------------------------------------//
