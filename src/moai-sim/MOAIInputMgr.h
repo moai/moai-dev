@@ -21,6 +21,11 @@ private:
 
 	static const size_t CHUNK_SIZE = 256;
 
+	enum {
+		INPUT_EVENT,
+		FINISHED_UPDATE,
+	};
+
 	ZLLeanStack < MOAIInputDevice*, 8 > mDevices;
 
 	double	mTimebase;				// used to position timestamps against sim timeline
@@ -38,6 +43,8 @@ private:
 
 	MOAILuaSharedPtr < MOAIStream > mRecorder;
 	bool mPlayback;
+	
+	MOAILuaStrongRef	mEventCallback;
 
 	//----------------------------------------------------------------//
 	static int			_autoTimestamp				( lua_State* L );
@@ -45,12 +52,14 @@ private:
 	static int			_discardEvents				( lua_State* L );
 	static int			_playback					( lua_State* L );
 	static int			_setAutosuspend				( lua_State* L );
+	static int			_setEventCallback			( lua_State* L );
 	static int			_setRecorder				( lua_State* L );
 	static int			_suspendEvents				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	bool				CanWrite					();
 	bool				CheckSensor					( u8 deviceID, u8 sensorID, u32 type );
+	void				InvokeCallback				( u32 event, double timestamp );
 	size_t				ParseEvents					( ZLStream& stream, double timestep );
 	void				Record						( size_t size );
 	bool				WriteEventHeader			( u8 deviceID, u8 sensorID, u32 type );

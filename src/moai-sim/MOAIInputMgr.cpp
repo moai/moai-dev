@@ -69,6 +69,15 @@ int MOAIInputMgr::_setAutosuspend ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIInputMgr::_setEventCallback ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIInputMgr, "" )
+	
+	self->mEventCallback.SetRef ( state, 1 );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAIInputMgr::_setRecorder ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIInputMgr, "" )
 	
@@ -167,6 +176,18 @@ MOAISensor* MOAIInputMgr::GetSensor ( u8 deviceID, u8 sensorID ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIInputMgr::InvokeCallback ( u32 event, double timestamp ) {
+
+	if ( this->mEventCallback ) {
+		
+		MOAIScopedLuaState state = this->mEventCallback.GetSelf ();
+		lua_pushnumber ( state, event );
+		lua_pushnumber ( state, timestamp );
+		state.DebugCall ( 2, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
 bool MOAIInputMgr::IsDone () {
 	return false;
 }
@@ -228,8 +249,13 @@ size_t MOAIInputMgr::ParseEvents ( ZLStream& stream, double timestep ) {
 		sensor->mTimestamp = timestamp;
 		sensor->ParseEvent ( stream );
 		
+		this->InvokeCallback ( INPUT_EVENT, timestamp );
+		
 		cursor = stream.GetCursor ();
 	}
+	
+	this->InvokeCallback ( FINISHED_UPDATE, ZLDeviceTime::GetTimeInSeconds () - this->mTimebase );
+	
 	return cursor;
 }
 
@@ -246,12 +272,17 @@ void MOAIInputMgr::Record ( size_t size ) {
 //----------------------------------------------------------------//
 void MOAIInputMgr::RegisterLuaClass ( MOAILuaState& state ) {
 
+	state.SetField ( -1, "INPUT_EVENT",			( u32 )INPUT_EVENT );
+	state.SetField ( -1, "FINISHED_UPDATE",		( u32 )FINISHED_UPDATE );
+
+
 	luaL_Reg regTable [] = {
 		{ "autoTimestamp",		_autoTimestamp },
 		{ "deferEvents",		_deferEvents },
 		{ "discardEvents",		_discardEvents },
 		{ "playback",			_playback },
 		{ "setAutosuspend",		_setAutosuspend },
+		{ "setEventCallback",	_setEventCallback },
 		{ "setRecorder",		_setRecorder },
 		{ "suspendEvents",		_suspendEvents },
 		{ NULL, NULL }
