@@ -4,7 +4,6 @@
 #ifndef	MOAIVECTORUTIL_H
 #define	MOAIVECTORUTIL_H
 
-#include <tesselator.h>
 #include <moai-sim/MOAIVectorStyle.h>
 
 class MOAIIndexBuffer;

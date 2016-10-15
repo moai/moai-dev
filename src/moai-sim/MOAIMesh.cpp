@@ -3,6 +3,8 @@
 
 #include "pch.h"
 
+#include <tesselator.h>
+
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIGrid.h>

@@ -9,6 +9,7 @@
 #include <moai-sim/MOAIVertexFormatMgr.h>
 #include <signal.h>
 #include <setjmp.h>
+#include <tesselator.h>
 
 #ifdef MOAI_COMPILER_MSVC
 	#pragma warning ( disable : 4611 )
