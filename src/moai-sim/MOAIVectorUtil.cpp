@@ -7,7 +7,6 @@
 #include <moai-sim/MOAIVectorUtil.h>
 #include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
-#include <tesselator.h>
 #include <signal.h>
 #include <setjmp.h>
 
@@ -22,9 +21,9 @@
 const ZLVec3D SafeTesselator::sNormal = ZLVec3D ( 0.0f, 0.0f, 1.0f );
 
 //----------------------------------------------------------------//
-void SafeTesselator::AddContour ( int size, const void* vertices, int stride, size_t numVertices ) {
+void SafeTesselator::AddContour ( int numComponents, const void* vertices, int stride, size_t numVertices ) {
 	
-	tessAddContour ( this->mTess, size, vertices, stride, ( int )numVertices ); // TODO: check overflow
+	tessAddContour ( this->mTess, numComponents, vertices, stride, ( int )numVertices ); // TODO: check overflow
 }
 
 //----------------------------------------------------------------//

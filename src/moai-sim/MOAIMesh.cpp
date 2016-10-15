@@ -11,9 +11,11 @@
 #include <moai-sim/MOAIMeshSparseQuadTree.h>
 #include <moai-sim/MOAIMeshTernaryTree.h>
 #include <moai-sim/MOAIProp.h>
+#include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAITextureBase.h>
+#include <moai-sim/MOAIVectorUtil.h>
 #include <moai-sim/MOAIVertexFormat.h>
 
 //================================================================//
@@ -282,6 +284,50 @@ int MOAIMesh::_getPrimsForPoint ( lua_State* L ) {
 		}
 	}
 	return totalPrims;
+}
+
+//----------------------------------------------------------------//
+int MOAIMesh::_getRegionForPrim ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIMesh, "U" )
+
+	// TODO: non-triangle meshes? need to support or error out
+
+	u32 basePrimID = state.GetValue < u32 >( 2, 1 ) - 1;
+	u32 nPrims = state.GetValue < u32 >( 3, 1 );
+
+	SafeTesselator tesselator;
+
+	MOAIMeshPrimReader primReader;
+	
+	if ( primReader.Init ( *self, 0 )) {
+		
+		for ( u32 i = 0; i < nPrims; ++i ) {
+		
+			MOAIMeshPrimCoords prim;
+			if ( primReader.GetPrimCoords ( basePrimID + i, prim )) {
+				
+				assert ( prim.mPrimSize == 3 );
+				
+				ZLVec2D triangle [ 3 ];
+				
+				triangle [ 0 ] = prim.mCoords [ 0 ].Vec2D ();
+				triangle [ 1 ] = prim.mCoords [ 1 ].Vec2D ();
+				triangle [ 2 ] = prim.mCoords [ 2 ].Vec2D ();
+				
+				tesselator.AddContour ( 2, triangle, sizeof ( ZLVec2D ), 3 );
+			}
+		}
+	}
+	
+	tesselator.Tesselate ( TESS_WINDING_NONZERO, TESS_BOUNDARY_CONTOURS, 0, 0 );
+
+	MOAIRegion* region = state.GetLuaObject < MOAIRegion >( 4, false );
+	region = region ? region : new MOAIRegion ();
+
+	region->Copy ( tesselator );
+
+	state.Push ( region );
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -602,6 +648,7 @@ void MOAIMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "buildQuadTree",				_buildQuadTree },
 		{ "buildTernaryTree",			_buildTernaryTree },
 		{ "getPrimsForPoint",			_getPrimsForPoint },
+		{ "getRegionForPrim",			_getRegionForPrim },
 		{ "intersectRay",				_intersectRay },
 		{ "printPartition",				_printPartition },
 		{ "readPrimCoords",				_readPrimCoords },
