@@ -235,8 +235,6 @@ enum {
 		
         CGRect screenRect = [ MOAIView getScreenBoundsFromCurrentOrientation:[[ UIScreen mainScreen ] bounds ]];
 		CGFloat scale = [[ UIScreen mainScreen ] scale ];
-		CGFloat screenWidth = screenRect.size.width * scale;
-		CGFloat screenHeight = screenRect.size.height * scale;
 		
 		AKUSetScreenDpi ([ self guessScreenDpi ]);
         
