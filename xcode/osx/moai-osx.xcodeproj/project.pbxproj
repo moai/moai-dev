@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0300CF5F140DC53C00ABCC5B /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC63135643FD000ADC60 /* libSystem.dylib */; };
-		0300CF60140DC53C00ABCC5B /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA2B137807E40093EE68 /* libcrypto.dylib */; };
-		0300CF61140DC53C00ABCC5B /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA311378080E0093EE68 /* libssl.dylib */; };
 		0300CF66140DC53C00ABCC5B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7AF913DF7E9B00F2DEDE /* CoreFoundation.framework */; };
 		0300CF67140DC53C00ABCC5B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7AFF13DF7EF200F2DEDE /* Carbon.framework */; };
 		0300CF68140DC53C00ABCC5B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */; };
@@ -17,6 +15,7 @@
 		0300CF94140DC65100ABCC5B /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0300CF93140DC65100ABCC5B /* AudioUnit.framework */; };
 		4C623B6415246B10008E4436 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
 		4C623B6615246B25008E4436 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6515246B25008E4436 /* CoreServices.framework */; };
+		B319C9911DBFF96600A6C621 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B319C9901DBFF96600A6C621 /* JavaScriptCore.framework */; };
 		CD096FD218E0FFE300A36EDD /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD096FD118E0FFE300A36EDD /* libstdc++.dylib */; };
 		CD1845BD1A626F0300FCCCE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1845BC1A626F0300FCCCE0 /* SystemConfiguration.framework */; };
 		CD2E46C51C5181A3008E22A1 /* libmoai-osx-harfbuzz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1F44E81BDEBB7800F5CF59 /* libmoai-osx-harfbuzz.a */; };
@@ -752,6 +751,8 @@
 		4C623B6315246B10008E4436 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		4C623B6515246B25008E4436 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		66D9680B14047B7100017919 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = ../../../../../../../usr/lib/libz.dylib; sourceTree = "<group>"; };
+		B319C95D1DBFF95800A6C621 /* libcommonCrypto.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcommonCrypto.tbd; path = usr/lib/system/libcommonCrypto.tbd; sourceTree = SDKROOT; };
+		B319C9901DBFF96600A6C621 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		CD096FD118E0FFE300A36EDD /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		CD1845BC1A626F0300FCCCE0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		CD323B031A8040CB00E2FEBB /* SDLJoystick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDLJoystick.cpp; path = "../../src/host-sdl/SDLJoystick.cpp"; sourceTree = "<group>"; };
@@ -797,6 +798,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B319C9911DBFF96600A6C621 /* JavaScriptCore.framework in Frameworks */,
 				CDFD8FC01AD8653C0003F415 /* libmoai-osx.a in Frameworks */,
 				CD6E274D1D19157000792933 /* libmoai-osx-3rdparty-assimp.a in Frameworks */,
 				CDFD8FB11AD8653C0003F415 /* libmoai-osx-3rdparty-core.a in Frameworks */,
@@ -823,8 +825,6 @@
 				CDFD8FBE1AD8653C0003F415 /* libmoai-osx-zl-crypto.a in Frameworks */,
 				CDFD8FBF1AD8653C0003F415 /* libmoai-osx-zl-vfs.a in Frameworks */,
 				CD096FD218E0FFE300A36EDD /* libstdc++.dylib in Frameworks */,
-				0300CF60140DC53C00ABCC5B /* libcrypto.dylib in Frameworks */,
-				0300CF61140DC53C00ABCC5B /* libssl.dylib in Frameworks */,
 				0300CF5F140DC53C00ABCC5B /* libSystem.dylib in Frameworks */,
 				0300CF7B140DC61000ABCC5B /* AudioToolbox.framework in Frameworks */,
 				0300CF94140DC65100ABCC5B /* AudioUnit.framework in Frameworks */,
@@ -868,6 +868,8 @@
 		CD2FDE8613542E9F00B814DF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B319C9901DBFF96600A6C621 /* JavaScriptCore.framework */,
+				B319C95D1DBFF95800A6C621 /* libcommonCrypto.tbd */,
 				CDF2380E1CAA731C00A45E31 /* CoreVideo.framework */,
 				CDFD8FA11AD8653C0003F415 /* libmoai-osx-3rdparty-core.a */,
 				CDFD8FA21AD8653C0003F415 /* libmoai-osx-3rdparty-crypto.a */,
@@ -1770,6 +1772,10 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1779,6 +1785,10 @@
 			buildSettings = {
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
