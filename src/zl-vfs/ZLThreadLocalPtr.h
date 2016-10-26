@@ -17,37 +17,53 @@ private:
 
 	pthread_key_t	mKey;
 
+#ifdef ANDROID
+	TYPE*			mValue;
+#endif
+
 public:
 
 	//----------------------------------------------------------------//
 	TYPE* Get () {
-	
-		TYPE** ref = ( TYPE** )pthread_getspecific ( this->mKey );
-		return ref ? *ref : 0;
+
+		#ifdef ANDROID
+			return this->mValue;
+		#else
+			TYPE** ref = ( TYPE** )pthread_getspecific ( this->mKey );
+			return ref ? *ref : 0;
+		#endif
 	}
 
 	//----------------------------------------------------------------//
 	void Set ( TYPE* assign ) {
 	
-		TYPE** ref = ( TYPE** )pthread_getspecific ( this->mKey );
-		if ( !ref ) {
-			ref = ( TYPE** )malloc ( sizeof ( TYPE* ));
-			pthread_setspecific ( this->mKey, ref );
-		}
-		assert ( ref );
-		*ref = assign;
+		#ifdef ANDROID
+			this->mValue = assign;
+		#else
+			TYPE** ref = ( TYPE** )pthread_getspecific ( this->mKey );
+			if ( !ref ) {
+				ref = ( TYPE** )malloc ( sizeof ( TYPE* ));
+				pthread_setspecific ( this->mKey, ref );
+			}
+			assert ( ref );
+			*ref = assign;
+		#endif
 	}
 
 	//----------------------------------------------------------------//
 	ZLThreadLocalPtr () {
 	
-		pthread_key_create ( &this->mKey, NULL );
+		#ifndef ANDROID
+			pthread_key_create ( &this->mKey, NULL );
+		#endif
 	}
 	
 	//----------------------------------------------------------------//
 	~ZLThreadLocalPtr () {
 	
-		pthread_key_delete ( this->mKey );
+		#ifndef ANDROID
+			pthread_key_delete ( this->mKey );
+		#endif
 	}
 };
 
