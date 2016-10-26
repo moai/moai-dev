@@ -176,6 +176,13 @@ MOAISensor* MOAIInputMgr::GetSensor ( u8 deviceID, u8 sensorID ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIInputMgr::HasEvents () {
+
+	// TODO: this ignores the case where there are pending events that would not be processed until after the current frame
+	return this->GetCursor () > 0;
+}
+
+//----------------------------------------------------------------//
 void MOAIInputMgr::InvokeCallback ( u32 event, double timestamp ) {
 
 	if ( this->mEventCallback ) {

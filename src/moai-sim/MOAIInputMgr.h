@@ -78,6 +78,7 @@ public:
 	void				FlushEvents					( double skip );
 	MOAIInputDevice*	GetDevice					( u8 deviceID );
 	MOAISensor*			GetSensor					( u8 deviceID, u8 sensorID );
+	bool				HasEvents					();
 	bool				IsDone						();
 						MOAIInputMgr				();
 						~MOAIInputMgr				();
