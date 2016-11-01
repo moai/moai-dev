@@ -118,7 +118,7 @@
 	@const OS_BRAND_UNAVAILABLE		Signifies that the operating system cannot be determined
 */
 class MOAIEnvironment :
-	public MOAIGlobalClass < MOAIEnvironment, MOAIGlobalEventSource > {
+	public ZLContextClass < MOAIEnvironment, MOAIGlobalEventSource > {
 private:
 	
 	//----------------------------------------------------------------//

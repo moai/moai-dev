@@ -9,7 +9,7 @@
 //================================================================//
 // TODO: doxygen
 class MOAIMath :
-	public MOAIGlobalClass < MOAIMath, MOAILuaObject > {
+	public ZLContextClass < MOAIMath, MOAILuaObject > {
 private:
 	
 	#ifdef MOAI_WITH_SFMT

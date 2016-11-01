@@ -36,7 +36,7 @@
 	@const	INTERFACE_ORIENTATION_LANDSCAPE_RIGHT		Interface orientation UIInterfaceOrientationLandscapeRight.
 */
 class MOAIAppIOS :
-	public MOAIGlobalClass < MOAIAppIOS, MOAIGlobalEventSource > {
+	public ZLContextClass < MOAIAppIOS, MOAIGlobalEventSource > {
 private:
 	
 	typedef STLMap < STLString, u32 >::iterator NotificationListenerMapIt;

@@ -33,7 +33,7 @@ class MOAIViewport;
 	@const	EVENT_RESIZE
 */
 class MOAIGfxMgr :
-	public MOAIGlobalClass < MOAIGfxMgr, MOAIGlobalEventSource > {
+	public ZLContextClass < MOAIGfxMgr, MOAIGlobalEventSource > {
 public:
 	
 	enum {

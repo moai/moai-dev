@@ -42,7 +42,7 @@ public:
 	@text	Methods for reading and converting Lua bytecode.
 */
 class MOAILuaUtil :
-	public MOAIGlobalClass < MOAILuaUtil, MOAILuaObject > {
+	public ZLContextClass < MOAILuaUtil, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//

@@ -12,7 +12,7 @@
 // MOAIReachabilityMgr
 //================================================================//
 class MOAIReachabilityMgr :
-	public MOAIGlobalClass < MOAIReachabilityMgr > {
+	public ZLContextClass < MOAIReachabilityMgr > {
 private:
 	
 	MOAIReachabilityListener*	mReachabilityListener;

@@ -16,7 +16,7 @@
 	@text	Wrapper for WebAppTracker interface.
 */
 class MOAIMobileAppTrackerIOS :
-	public MOAIGlobalClass < MOAIMobileAppTrackerIOS, MOAILuaObject > {
+	public ZLContextClass < MOAIMobileAppTrackerIOS, MOAILuaObject > {
 private:
 
 	MOAIMobileAppTrackerDelegate* mDelegate;

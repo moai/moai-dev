@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-core/MOAIRtti.h>
+#include <zl-util/ZLRtti.h>
 
 //================================================================//
 // RTTIRecord

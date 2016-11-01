@@ -4,7 +4,6 @@
 #ifndef	MOAILUACLASS_H
 #define	MOAILUACLASS_H
 
-#include <moai-core/MOAIGlobals.h>
 #include <moai-core/MOAILuaObject.h>
 
 class MOAILuaState;
@@ -30,7 +29,7 @@ type::RegisterLuaType ();
 // MOAILuaClass
 //================================================================//
 class MOAILuaClass :
-	public MOAIGlobalClassBase {
+	public ZLContextClassBase {
 protected:
 
 	bool				mIsSingleton;

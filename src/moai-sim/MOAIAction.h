@@ -14,7 +14,7 @@ class MOAIActionTree;
 // MOAIActionStackMgr
 //================================================================//
 class MOAIActionStackMgr :
-	public MOAIGlobalClass < MOAIActionStackMgr > {
+	public ZLContextClass < MOAIActionStackMgr > {
 private:
 	
 	ZLLeanStack < MOAIAction* > mStack;

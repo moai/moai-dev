@@ -16,7 +16,7 @@
 // MOAIChartBoostIOS
 //================================================================//
 class MOAIChartBoostIOS :
-	public MOAIGlobalClass < MOAIChartBoostIOS, MOAIGlobalEventSource > {
+	public ZLContextClass < MOAIChartBoostIOS, MOAIGlobalEventSource > {
 private:
 
 	MoaiChartBoostDelegate*	mDelegate;

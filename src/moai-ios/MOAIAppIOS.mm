@@ -544,7 +544,7 @@ void MOAIAppIOS::RegisterNotificationListeners () {
 	this->mNotificationListenerMap [ "UIApplicationWillResignActiveNotification" ] = WILL_RESIGN_ACTIVE;
 	this->mNotificationListenerMap [ "UIApplicationWillTerminateNotification" ] = WILL_TERMINATE;
 
-	MOAIGlobals* context = MOAIGlobalsMgr::Get ();
+	ZLContexts* context = ZLContextsMgr::Get ();
 
 	NotificationListenerMapIt notificationIt = this->mNotificationListenerMap.begin ();
 	for ( ; notificationIt != this->mNotificationListenerMap.end (); ++notificationIt ) {
@@ -559,10 +559,10 @@ void MOAIAppIOS::RegisterNotificationListeners () {
 				
 				ZLLog_DebugF ( ZLLog::CONSOLE, "MOAIAppIOS: received notification '%s'\n", [ notification.name UTF8String ]);
 				
-				MOAIScopedContext scopedContext;
+				ZLScopedContext scopedContext;
 				
-				if ( !MOAIGlobalsMgr::Check ( context )) return;
-				MOAIGlobalsMgr::Set ( context );
+				if ( !ZLContextsMgr::Check ( context )) return;
+				ZLContextsMgr::Set ( context );
 				
 				this->InvokeListener ( eventID );
 				

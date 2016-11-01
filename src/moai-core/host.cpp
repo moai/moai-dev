@@ -13,7 +13,7 @@
 class AKUContext {
 public:
 
-	MOAIGlobals*		mGlobals;
+	ZLContexts*			mGlobals;
 	void*				mUserdata;
 	MOAILuaStrongRef	mLuaFunc;
 	
@@ -21,14 +21,14 @@ public:
 	AKUContext () :
 		mUserdata ( 0 ) {
 		
-		this->mGlobals = MOAIGlobalsMgr::Create ();
+		this->mGlobals = ZLContextsMgr::Create ();
 	}
 	
 	//----------------------------------------------------------------//
 	~AKUContext () {
 	
 		if ( this->mGlobals ) {
-			MOAIGlobalsMgr::Delete ( this->mGlobals );
+			ZLContextsMgr::Delete ( this->mGlobals );
 			this->mGlobals = 0;
 		}
 	}
@@ -294,7 +294,7 @@ AKUContextID AKUCreateContext () {
 	sContextID = ++sContextIDCounter;
 	( *sContextMap )[ sContextID ] = sContext;
 
-	MOAIGlobalsMgr::Set ( sContext->mGlobals  );
+	ZLContextsMgr::Set ( sContext->mGlobals );
 
 	MOAILuaRuntime::Affirm ();
 	MOAITrace::Affirm ();
@@ -327,6 +327,13 @@ void AKUDeleteContext ( AKUContextID contextID ) {
 	
 	AKUSetContext ( contextID );
 	if ( !sContext ) return;
+	
+	// TODO: move to higher level context cleanup; ZLContexts should not know about this
+	MOAILuaRuntime::Get ().Close (); // call this ahead of everything to purge all the Lua bindings
+	
+	// Lua runtime gets special treatment
+	//u32 luaRuntimeID = ZLContextID < MOAILuaRuntime >::GetID ();
+	//this->mGlobals [ luaRuntimeID ].mIsValid = false;
 	
 	sContextMap->erase ( contextID );
 	delete sContext;
@@ -440,10 +447,10 @@ int AKUSetContext ( AKUContextID contextID ) {
 		sContext = sContextMap->value_for_key ( contextID );
 		
 		if ( sContext ) {
-			MOAIGlobalsMgr::Set ( sContext->mGlobals );
+			ZLContextsMgr::Set ( sContext->mGlobals );
 			return 0;
 		}
-		MOAIGlobalsMgr::Set ( 0 );
+		ZLContextsMgr::Set ( 0 );
 		return -1;
 	}
 	return 0;

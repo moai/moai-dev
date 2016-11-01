@@ -24,7 +24,7 @@ class MOAIShaderProgram;
 	@const MESH_SHADER
 */
 class MOAIShaderMgr :
-	public MOAIGlobalClass < MOAIShaderMgr, MOAILuaObject > {
+	public ZLContextClass < MOAIShaderMgr, MOAILuaObject > {
 public:
 
 	enum {

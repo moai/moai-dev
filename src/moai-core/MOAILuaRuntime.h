@@ -4,9 +4,6 @@
 #ifndef MOAILUARUNTIME_H
 #define MOAILUARUNTIME_H
 
-//#include <moai-core/MOAIEventSource.h>
-#include <moai-core/MOAIGlobals.h>
-
 #include <moai-core/MOAILuaClass.h>
 #include <moai-core/MOAILuaObject.h>
 #include <moai-core/MOAILuaRef.h>
@@ -56,7 +53,7 @@ private:
 // MOAILuaRuntime
 //================================================================//
 class MOAILuaRuntime :
-	public MOAIGlobalClass < MOAILuaRuntime, MOAILuaObject > {
+	public ZLContextClass < MOAILuaRuntime, MOAILuaObject > {
 public:
 
 	typedef void ( *TracebackFunc ) ( const char* message, struct lua_State* L, int level );

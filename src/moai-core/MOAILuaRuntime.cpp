@@ -506,6 +506,7 @@ void MOAILuaRuntime::Close () {
 		lua_close ( this->mState );
 		this->mState = 0;
 	}
+	this->InvalidateContext ();
 }
 
 //----------------------------------------------------------------//

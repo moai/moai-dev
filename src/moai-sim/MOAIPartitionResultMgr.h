@@ -10,7 +10,7 @@
 // MOAIPartitionResultMgr
 //================================================================//
 class MOAIPartitionResultMgr :
-	public MOAIGlobalClass < MOAIPartitionResultMgr > {
+	public ZLContextClass < MOAIPartitionResultMgr > {
 private:
 	
 	MOAIPartitionResultBuffer	mBuffer;

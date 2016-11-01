@@ -31,7 +31,7 @@ class MOAIVertexFormat;
 			by finding redundant vertices.
 */
 class MOAIGeometryWriter :
-	public MOAIGlobalClass < MOAIGeometryWriter, MOAILuaObject > {
+	public ZLContextClass < MOAIGeometryWriter, MOAILuaObject > {
 private:
 	
 	//----------------------------------------------------------------//

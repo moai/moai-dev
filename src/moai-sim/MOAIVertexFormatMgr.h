@@ -10,7 +10,7 @@
 // MOAIVertexFormatMgr
 //================================================================//
 class MOAIVertexFormatMgr :
-	public MOAIGlobalClass < MOAIVertexFormatMgr, MOAILuaObject > {
+	public ZLContextClass < MOAIVertexFormatMgr, MOAILuaObject > {
 public:
 
 	enum {

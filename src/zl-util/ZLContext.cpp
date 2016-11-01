@@ -3,57 +3,58 @@
 
 #include "pch.h"
 
-#include <moai-core/MOAILuaRuntime.h>
-#include <moai-core/MOAIGlobals.h>
+#include <zl-util/ZLContext.h>
+#include <zl-util/ZLLog.h>
 
 //================================================================//
-// MOAIGlobalClassBase
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAIGlobalClassBase::OnGlobalsFinalize () {
-}
-
-//----------------------------------------------------------------//
-void MOAIGlobalClassBase::OnGlobalsInitialize () {
-}
-
-//----------------------------------------------------------------//
-MOAIGlobalClassBase::MOAIGlobalClassBase () {
-}
-
-//----------------------------------------------------------------//
-MOAIGlobalClassBase::~MOAIGlobalClassBase () {
-}
-
-//================================================================//
-// MOAIGlobals
+// ZLContextClassBase
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIGlobals::MOAIGlobals () {
+void ZLContextClassBase::OnGlobalsFinalize () {
 }
 
 //----------------------------------------------------------------//
-MOAIGlobals::~MOAIGlobals () {
+void ZLContextClassBase::OnGlobalsInitialize () {
+}
 
-	ZLLog_DebugF ( ZLLog::CONSOLE, "MOAIGlobals::~MOAIGlobals %p\n", this );
+//----------------------------------------------------------------//
+ZLContextClassBase::ZLContextClassBase () {
+}
+
+//----------------------------------------------------------------//
+ZLContextClassBase::~ZLContextClassBase () {
+}
+
+//================================================================//
+// ZLContexts
+//================================================================//
+
+//----------------------------------------------------------------//
+ZLContexts::ZLContexts () {
+}
+
+//----------------------------------------------------------------//
+ZLContexts::~ZLContexts () {
+
+	ZLLog_DebugF ( ZLLog::CONSOLE, "ZLContexts::~ZLContexts %p\n", this );
 
 	size_t total = this->mGlobals.Size ();
 	
-	MOAILuaRuntime::Get ().Close (); // call this ahead of everything to purge all the Lua bindings
+	// TODO: move to higher level context cleanup; ZLContexts should not know about this
+	//MOAILuaRuntime::Get ().Close (); // call this ahead of everything to purge all the Lua bindings
 	
 	// Lua runtime gets special treatment
-	u32 luaRuntimeID = MOAIGlobalID < MOAILuaRuntime >::GetID ();
-	this->mGlobals [ luaRuntimeID ].mIsValid = false;
+	//u32 luaRuntimeID = ZLContextID < MOAILuaRuntime >::GetID ();
+	//this->mGlobals [ luaRuntimeID ].mIsValid = false;
 	
 	// finalize everything
 	for ( size_t i = 1; i <= total; ++i ) {
-		MOAIGlobalPair& pair = this->mGlobals [ total - i ];
-		MOAIGlobalClassBase* global = pair.mGlobalBase;
+		ZLContextPair& pair = this->mGlobals [ total - i ];
+		ZLContextClassBase* global = pair.mGlobalBase;
 
 		if ( global ) {
-			ZLLog_DebugF ( ZLLog::CONSOLE, "MOAIGlobals: finalizing global %p\n", global );
+			ZLLog_DebugF ( ZLLog::CONSOLE, "ZLContexts: finalizing global %p\n", global );
 			global->OnGlobalsFinalize ();
 		}
 	}
@@ -61,40 +62,40 @@ MOAIGlobals::~MOAIGlobals () {
 	// mark everything as invalid
 	for ( size_t i = 1; i <= total; ++i ) {
 	
-		MOAIGlobalPair& pair = this->mGlobals [ total - i ];
-		ZLLog_DebugF ( ZLLog::CONSOLE, "MOAIGlobals: invalidating global %p\n", pair.mGlobalBase );
+		ZLContextPair& pair = this->mGlobals [ total - i ];
+		ZLLog_DebugF ( ZLLog::CONSOLE, "ZLContexts: invalidating global %p\n", pair.mGlobalBase );
 	
 		pair.mIsValid = false;
 	}
 
 	// and officially delete everything
 	for ( size_t i = 1; i <= total; ++i ) {
-		MOAIGlobalPair& pair = this->mGlobals [ total - i ];
-		MOAIGlobalClassBase* global = pair.mGlobalBase;
+		ZLContextPair& pair = this->mGlobals [ total - i ];
+		ZLContextClassBase* global = pair.mGlobalBase;
 
 		if ( global ) {
-			ZLLog_DebugF ( ZLLog::CONSOLE, "MOAIGlobals: deleting global %p\n", global );
+			ZLLog_DebugF ( ZLLog::CONSOLE, "ZLContexts: deleting global %p\n", global );
 			delete global;
 		}
 	}
 }
 
 //================================================================//
-// MOAIGlobalsMgr
+// ZLContextsMgr
 //================================================================//
 
-ZLThreadLocalPtr < MOAIGlobalsMgr::GlobalsSet >		MOAIGlobalsMgr::sGlobalsSet;
-ZLThreadLocalPtr < MOAIGlobals >					MOAIGlobalsMgr::sInstance;
+ZLThreadLocalPtr < ZLContextsMgr::GlobalsSet >		ZLContextsMgr::sGlobalsSet;
+ZLThreadLocalPtr < ZLContexts >						ZLContextsMgr::sInstance;
 
 //----------------------------------------------------------------//
-bool MOAIGlobalsMgr::Check ( MOAIGlobals* globals ) {
+bool ZLContextsMgr::Check ( ZLContexts* globals ) {
 
 	GlobalsSet* globalSet = sGlobalsSet.Get ();
 	return globalSet ? globalSet->contains ( globals ) : false;
 }
 
 //----------------------------------------------------------------//
-MOAIGlobals* MOAIGlobalsMgr::Create () {
+ZLContexts* ZLContextsMgr::Create () {
 	
 	GlobalsSet* globalSet = sGlobalsSet.Get ();
 	
@@ -103,9 +104,9 @@ MOAIGlobals* MOAIGlobalsMgr::Create () {
 		sGlobalsSet.Set ( globalSet );
 	}
 
-	MOAIGlobals* globals = new MOAIGlobals ();
+	ZLContexts* globals = new ZLContexts ();
 	
-	ZLLog_DebugF ( ZLLog::CONSOLE, "MOAIGlobalsMgr: new context %p\n", globals );
+	ZLLog_DebugF ( ZLLog::CONSOLE, "ZLContextsMgr: new context %p\n", globals );
 	
 	globalSet->insert ( globals );
 	sInstance.Set ( globals );
@@ -114,12 +115,12 @@ MOAIGlobals* MOAIGlobalsMgr::Create () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGlobalsMgr::Delete ( MOAIGlobals* globals ) {
+void ZLContextsMgr::Delete ( ZLContexts* globals ) {
 	
-	ZLLog_DebugF ( ZLLog::CONSOLE, "MOAIGlobalsMgr: deleting context %p\n", globals );
+	ZLLog_DebugF ( ZLLog::CONSOLE, "ZLContextsMgr: deleting context %p\n", globals );
 	
 	GlobalsSet* globalSet = sGlobalsSet.Get ();
-	MOAIGlobals* prevInstance = sInstance.Get ();
+	ZLContexts* prevInstance = sInstance.Get ();
 	
 	if ( globalSet ) {
 		if ( globalSet->contains ( globals )) {
@@ -138,9 +139,9 @@ void MOAIGlobalsMgr::Delete ( MOAIGlobals* globals ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGlobalsMgr::Finalize () {
+void ZLContextsMgr::Finalize () {
 
-	ZLLog_DebugF ( ZLLog::CONSOLE, "MOAIGlobalsMgr: finalizing\n" );
+	ZLLog_DebugF ( ZLLog::CONSOLE, "ZLContextsMgr: finalizing\n" );
 
 	GlobalsSet* globalSet = sGlobalsSet.Get ();
 
@@ -149,11 +150,11 @@ void MOAIGlobalsMgr::Finalize () {
         GlobalsSetIt globalsIt = globalSet->begin ();
         for ( ; globalsIt != globalSet->end (); ++globalsIt ) {
 		
-			MOAIGlobals* instance = *globalsIt;
+			ZLContexts* instance = *globalsIt;
 			
             sInstance.Set ( instance );
 			
-			ZLLog_DebugF ( ZLLog::CONSOLE, "MOAIGlobalsMgr: deleting context %p\n", instance );
+			ZLLog_DebugF ( ZLLog::CONSOLE, "ZLContextsMgr: deleting context %p\n", instance );
 			
             delete instance;
         }
@@ -167,47 +168,47 @@ void MOAIGlobalsMgr::Finalize () {
 }
 
 //----------------------------------------------------------------//
-MOAIGlobals* MOAIGlobalsMgr::Get () {
+ZLContexts* ZLContextsMgr::Get () {
 
 	return sInstance.Get ();
 }
 
 //----------------------------------------------------------------//
-MOAIGlobals* MOAIGlobalsMgr::Set ( MOAIGlobals* globals ) {
+ZLContexts* ZLContextsMgr::Set ( ZLContexts* globals ) {
 
-//	ZLLog_DebugF ( ZLLog::CONSOLE, "MOAIGlobalsMgr: setting context %p\n", globals );
+//	ZLLog_DebugF ( ZLLog::CONSOLE, "ZLContextsMgr: setting context %p\n", globals );
 
-	MOAIGlobals* prev = sInstance.Get ();
+	ZLContexts* prev = sInstance.Get ();
 	sInstance.Set ( globals );
 	return prev;
 }
 
 //----------------------------------------------------------------//
-MOAIGlobalsMgr::MOAIGlobalsMgr () {
+ZLContextsMgr::ZLContextsMgr () {
 }
 
 //----------------------------------------------------------------//
-MOAIGlobalsMgr::~MOAIGlobalsMgr () {
+ZLContextsMgr::~ZLContextsMgr () {
 }
 
 //================================================================//
-// MOAIScopedContext
+// ZLScopedContext
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIScopedContext::Clear () {
+void ZLScopedContext::Clear () {
 
 	this->mOriginalContext = 0;
 }
 
 //----------------------------------------------------------------//
-MOAIScopedContext::MOAIScopedContext () {
+ZLScopedContext::ZLScopedContext () {
 
-	this->mOriginalContext = MOAIGlobalsMgr::Get ();
+	this->mOriginalContext = ZLContextsMgr::Get ();
 }
 
 //----------------------------------------------------------------//
-MOAIScopedContext::~MOAIScopedContext () {
+ZLScopedContext::~ZLScopedContext () {
 
-	MOAIGlobalsMgr::Set ( this->mOriginalContext );
+	ZLContextsMgr::Set ( this->mOriginalContext );
 }

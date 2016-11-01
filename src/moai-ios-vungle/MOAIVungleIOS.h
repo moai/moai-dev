@@ -15,7 +15,7 @@
 // MOAIVungleIOS
 //================================================================//
 class MOAIVungleIOS :
-	public MOAIGlobalClass < MOAIVungleIOS, MOAIGlobalEventSource > {
+	public ZLContextClass < MOAIVungleIOS, MOAIGlobalEventSource > {
 private:
 
 	MOAIVungleDelegate*		mDelegate;
