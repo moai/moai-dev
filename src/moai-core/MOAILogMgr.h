@@ -102,7 +102,7 @@ public:
 		if ( this->mTypeCheckLuaParams && typeStr ) {
 			if ( !state.CheckParams ( 1, typeStr, true )) return 0;
 		}
-		return ZLContextsMgr::Get ()->GetGlobal < TYPE >();
+		return ZLContextMgr::Get ()->GetGlobal < TYPE >();
 	}
 };
 

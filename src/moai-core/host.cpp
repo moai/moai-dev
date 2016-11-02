@@ -10,10 +10,10 @@
 //================================================================//
 // AKUContext
 //================================================================//
-class AKUContext {
+class AKUContext :
+	public ZLContextClass < AKUContext >{
 public:
 
-	ZLContexts*			mGlobals;
 	void*				mUserdata;
 	MOAILuaStrongRef	mLuaFunc;
 	
@@ -21,26 +21,26 @@ public:
 	AKUContext () :
 		mUserdata ( 0 ) {
 		
-		this->mGlobals = ZLContextsMgr::Create ();
+		//this->mGlobals = ZLContextMgr::Create ();
 	}
 	
 	//----------------------------------------------------------------//
 	~AKUContext () {
 	
-		if ( this->mGlobals ) {
-			ZLContextsMgr::Delete ( this->mGlobals );
-			this->mGlobals = 0;
-		}
+//		if ( this->mGlobals ) {
+//			ZLContextMgr::Delete ( this->mGlobals );
+//			this->mGlobals = 0;
+//		}
 	}
 };
 
-typedef STLMap < AKUContextID, AKUContext* >::iterator ContextMapIt;
-typedef STLMap < AKUContextID, AKUContext* > ContextMap;
-
-static ContextMap*		sContextMap = 0;
-static AKUContextID		sContextIDCounter = 0;
-static AKUContextID		sContextID = 0;
-static AKUContext*		sContext = 0;
+//typedef STLMap < AKUContextID, AKUContext* >::iterator ContextMapIt;
+//typedef STLMap < AKUContextID, AKUContext* > ContextMap;
+//
+//static ContextMap*		sContextMap = 0;
+//static AKUContextID		sContextIDCounter = 0;
+//static AKUContextID		sContextID = 0;
+//static AKUContext*		sContext = 0;
 
 //================================================================//
 // local
@@ -71,9 +71,11 @@ int _debugCallWithArgs ( MOAILuaState& state, int totalArgs, int asParams ) {
 //----------------------------------------------------------------//
 int _loadContextFunc ( MOAILuaState& state ) {
 
-	if ( sContext && sContext->mLuaFunc ) {
-		state.Push ( sContext->mLuaFunc );
-		sContext->mLuaFunc.Clear ();
+	AKUContext& akuContext = AKUContext::Get ();
+
+	if ( akuContext.mLuaFunc ) {
+		state.Push ( akuContext.mLuaFunc );
+		akuContext.mLuaFunc.Clear ();
 		return AKU_OK;
 	}
 	
@@ -136,8 +138,9 @@ int _loadFuncFromBuffer ( MOAIDataBuffer& buffer, cc8* chunkname, int compressed
 		return AKU_ERROR;
 	}
 	
-	sContext->mLuaFunc.SetRef ( state, -2 );
-	assert ( !sContext->mLuaFunc.IsNil ());
+	AKUContext& akuContext = AKUContext::Get ();
+	akuContext.mLuaFunc.SetRef ( state, -2 );
+	assert ( !akuContext.mLuaFunc.IsNil ());
 	return AKU_OK;
 }
 
@@ -177,16 +180,18 @@ void _setupArgs ( MOAILuaState& state, char* exeName, char* scriptName, int asPa
 //----------------------------------------------------------------//
 void AKUAppFinalize () {
 
-	if ( sContextMap ) {
-
-		ContextMapIt contextMapIt = sContextMap->begin ();
-		for ( ; contextMapIt != sContextMap->end (); ++contextMapIt ) {
-			AKUContext* context = contextMapIt->second;
-			delete context;
-		}
-		delete sContextMap;
-		sContextMap = 0;
-	}
+//	if ( sContextMap ) {
+//
+//		ContextMapIt contextMapIt = sContextMap->begin ();
+//		for ( ; contextMapIt != sContextMap->end (); ++contextMapIt ) {
+//			AKUContext* context = contextMapIt->second;
+//			delete context;
+//		}
+//		delete sContextMap;
+//		sContextMap = 0;
+//	}
+	
+	ZLContextMgr::Finalize ();
 	
 	zl_cleanup ();
 }
@@ -212,7 +217,7 @@ void AKUAppInitialize () {
 	srand (( u32 )time ( 0 ));
 	zl_init ();
 	
-	sContextMap = new ContextMap;
+	//sContextMap = new ContextMap;
 }
 
 //----------------------------------------------------------------//
@@ -266,7 +271,8 @@ int AKUCallFuncWithArgString ( char* exeName, char* scriptName, char* args, int 
 //----------------------------------------------------------------//
 int AKUCheckContext ( AKUContextID contextID ) {
 	
-	return sContextMap->contains ( contextID ) ? 0 : -1;
+	//return sContextMap->contains ( contextID ) ? 0 : -1;
+	return ZLContextMgr::Check (( ZLContext* )contextID );
 }
 
 //----------------------------------------------------------------//
@@ -283,18 +289,20 @@ void AKUClearMemPool () {
 //----------------------------------------------------------------//
 int AKUCountContexts () {
 
-	return sContextMap ? ( int )sContextMap->size () : 0;
+	return ( int )ZLContextMgr::CountContexts ();
 }
 
 //----------------------------------------------------------------//
 AKUContextID AKUCreateContext () {
 
-	sContext = new AKUContext;
-	
-	sContextID = ++sContextIDCounter;
-	( *sContextMap )[ sContextID ] = sContext;
+	ZLContext* context = ZLContextMgr::Create ();
 
-	ZLContextsMgr::Set ( sContext->mGlobals );
+	AKUContext::Affirm ();
+	
+//	sContextID = ++sContextIDCounter;
+//	( *sContextMap )[ sContextID ] = sContext;
+//
+//	ZLContextMgr::Set ( sContext->mGlobals );
 
 	MOAILuaRuntime::Affirm ();
 	MOAITrace::Affirm ();
@@ -319,24 +327,21 @@ AKUContextID AKUCreateContext () {
 
 	MOAIEnvironment::Get ().DetectEnvironment ();
 
-	return sContextIDCounter;
+	return ( AKUContextID )context;
 }
 
 //----------------------------------------------------------------//
 void AKUDeleteContext ( AKUContextID contextID ) {
 	
+	ZLContext* context = ( ZLContext* )contextID;
+	
 	AKUSetContext ( contextID );
-	if ( !sContext ) return;
+	if ( !context ) return;
 	
-	// TODO: move to higher level context cleanup; ZLContexts should not know about this
-	MOAILuaRuntime::Get ().Close (); // call this ahead of everything to purge all the Lua bindings
+	// MOAILusRuntime needs to clean up first; release all of the lua state and lua-bound objects
+	MOAILuaRuntime::Get ().Close (); // call this ahead of everything to purge all the Lua bindings!
 	
-	// Lua runtime gets special treatment
-	//u32 luaRuntimeID = ZLContextID < MOAILuaRuntime >::GetID ();
-	//this->mGlobals [ luaRuntimeID ].mIsValid = false;
-	
-	sContextMap->erase ( contextID );
-	delete sContext;
+	ZLContextMgr::Delete ( context );
 	
 	AKUSetContext ( 0 );
 }
@@ -344,14 +349,14 @@ void AKUDeleteContext ( AKUContextID contextID ) {
 //----------------------------------------------------------------//
 AKUContextID AKUGetContext () {
 	
-	return sContextID;
+	return ( AKUContextID )ZLContextMgr::Get ();
 }
 
 //----------------------------------------------------------------//
 void* AKUGetUserdata () {
 	
-	if ( sContext ) {
-		return sContext->mUserdata;
+	if ( AKUContext::IsValid ()) {
+		return AKUContext::Get ().mUserdata;
 	}
 	return 0;
 }
@@ -359,10 +364,7 @@ void* AKUGetUserdata () {
 //----------------------------------------------------------------//
 lua_State* AKUGetLuaState () {
 
-	lua_State* lua_state = NULL;
-	lua_state = MOAILuaRuntime::Get ().State ();
-
-	return lua_state;
+	return MOAILuaRuntime::Get ().State ();
 }
 
 //----------------------------------------------------------------//
@@ -397,7 +399,7 @@ void AKUInitMemPool ( size_t bytes ) {
 //----------------------------------------------------------------//
 int AKULoadFuncFromBuffer ( void* data, size_t size, const char* chunkname, int compressed ) {
 
-	sContext->mLuaFunc.Clear ();
+	AKUContext::Get ().mLuaFunc.Clear ();
 
 	MOAIDataBuffer buffer;
 	buffer.Load ( data, size );
@@ -408,7 +410,7 @@ int AKULoadFuncFromBuffer ( void* data, size_t size, const char* chunkname, int 
 //----------------------------------------------------------------//
 int AKULoadFuncFromFile ( const char* filename ) {
 
-	sContext->mLuaFunc.Clear ();
+	AKUContext::Get ().mLuaFunc.Clear ();
 
 	if ( !ZLFileSys::CheckFileExists ( filename )) {
 		ZLLog_ErrorF ( ZLLog::CONSOLE, "Could not find file %s \n", filename );
@@ -441,19 +443,27 @@ int AKUMountVirtualDirectory ( char const* virtualPath, char const* archive ) {
 //----------------------------------------------------------------//
 int AKUSetContext ( AKUContextID contextID ) {
 	
-	if ( sContextID != contextID ) {
-		
-		sContextID = contextID;
-		sContext = sContextMap->value_for_key ( contextID );
-		
-		if ( sContext ) {
-			ZLContextsMgr::Set ( sContext->mGlobals );
-			return 0;
-		}
-		ZLContextsMgr::Set ( 0 );
-		return -1;
+//	if ( sContextID != contextID ) {
+//		
+//		sContextID = contextID;
+//		sContext = sContextMap->value_for_key ( contextID );
+//		
+//		if ( sContext ) {
+//			ZLContextMgr::Set ( sContext->mGlobals );
+//			return 0;
+//		}
+//		ZLContextMgr::Set ( 0 );
+//		return -1;
+//	}
+	
+	ZLContext* context = ( ZLContext* )contextID;
+	
+	if ( ZLContextMgr::Check ( context )) {
+		ZLContextMgr::Set (( ZLContext* )contextID );
+		return 0;
 	}
-	return 0;
+	ZLContextMgr::Set ( 0 );
+	return -1;
 }
 
 //----------------------------------------------------------------//
@@ -465,14 +475,14 @@ void AKUSetFunc_ErrorTraceback ( AKUErrorTracebackFunc func ) {
 //----------------------------------------------------------------//
 void AKUSetLogLevel ( int logLevel ) {
 
-	ZLLog::SetLogLevel ( logLevel );
+	ZLLog::Get ().SetLogLevel ( logLevel );
 }
 
 //----------------------------------------------------------------//
 void AKUSetUserdata ( void* userdata ) {
 
-	if ( sContext ) {
-		sContext->mUserdata = userdata;
+	if ( AKUContext::IsValid ()) {
+		AKUContext::Get ().mUserdata = userdata;
 	}
 }
 

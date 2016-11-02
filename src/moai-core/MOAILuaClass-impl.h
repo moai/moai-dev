@@ -50,9 +50,9 @@ int MOAILuaFactoryClass < TYPE >::_new ( lua_State* L ) {
 //----------------------------------------------------------------//
 template < typename TYPE >
 MOAILuaFactoryClass < TYPE >& MOAILuaFactoryClass < TYPE >::Get () {
-	MOAILuaFactoryClass < TYPE >* typeClass = ZLContextsMgr::Get ()->GetGlobal < MOAILuaFactoryClass >();
+	MOAILuaFactoryClass < TYPE >* typeClass = ZLContextMgr::Get ()->GetGlobal < MOAILuaFactoryClass >();
 	if ( !typeClass ) {
-		typeClass = ZLContextsMgr::Get ()->AffirmGlobal < MOAILuaFactoryClass >();
+		typeClass = ZLContextMgr::Get ()->AffirmGlobal < MOAILuaFactoryClass >();
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		TYPE type;
 		typeClass->InitLuaFactoryClass ( type, state );
@@ -95,7 +95,7 @@ template < typename TYPE >
 int MOAILuaSingletonClass < TYPE >::_getClassName ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
-	MOAILuaObject* singleton = ZLContextsMgr::Get ()->GetGlobal < TYPE >();
+	MOAILuaObject* singleton = ZLContextMgr::Get ()->GetGlobal < TYPE >();
 	state.Push ( singleton->TypeName ());
 	return 1;
 }
@@ -115,13 +115,13 @@ int MOAILuaSingletonClass < TYPE >::_getTypeID ( lua_State* L ) {
 //----------------------------------------------------------------//
 template < typename TYPE >
 MOAILuaSingletonClass < TYPE >& MOAILuaSingletonClass < TYPE >::Get () {
-	return *ZLContextsMgr::Get ()->AffirmGlobal < MOAILuaSingletonClass >();
+	return *ZLContextMgr::Get ()->AffirmGlobal < MOAILuaSingletonClass >();
 }
 
 //----------------------------------------------------------------//
 template < typename TYPE >
 MOAILuaObject* MOAILuaSingletonClass < TYPE >::GetSingleton () {
-	return ZLContextsMgr::Get ()->AffirmGlobal < TYPE >();
+	return ZLContextMgr::Get ()->AffirmGlobal < TYPE >();
 }
 
 //----------------------------------------------------------------//

@@ -68,7 +68,7 @@
 
 	[ self stopListener ];
 
-	ZLContexts* context = ZLContextsMgr::Get ();
+	ZLContext* context = ZLContextMgr::Get ();
 
 	mObserver = [[ NSNotificationCenter defaultCenter ]
 		addObserverForName:kReachabilityChangedNotification
@@ -78,8 +78,8 @@
 		
 			ZLScopedContext scopedContext;
 
-			if ( !ZLContextsMgr::Check ( context )) return;
-			ZLContextsMgr::Set ( context );
+			if ( !ZLContextMgr::Check ( context )) return;
+			ZLContextMgr::Set ( context );
 			
 			NSLog ( @"%@", notification.name );
 			

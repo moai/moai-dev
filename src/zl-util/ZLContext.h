@@ -11,9 +11,9 @@
 #include <zl-vfs/ZLThreadLocalPtr.h>
 
 //================================================================//
-// ZLContextIDBase
+// ZLContextClassIDBase
 //================================================================//
-class ZLContextIDBase {
+class ZLContextClassIDBase {
 protected:
 
 	//----------------------------------------------------------------//
@@ -24,11 +24,11 @@ protected:
 };
 
 //================================================================//
-// ZLContextID
+// ZLContextClassID
 //================================================================//
 template < typename	TYPE >
-class ZLContextID :
-	public ZLContextIDBase {
+class ZLContextClassID :
+	public ZLContextClassIDBase {
 public:
 	
 	//----------------------------------------------------------------//
@@ -45,7 +45,7 @@ public:
 class ZLContextClassBase {
 protected:
 
-	friend class ZLContexts;
+	friend class ZLContext;
 
 	//----------------------------------------------------------------//
 	virtual void			OnGlobalsFinalize			();
@@ -55,11 +55,11 @@ protected:
 };
 
 //================================================================//
-// ZLContextPairBase
+// ZLContextPair
 //================================================================//
 class ZLContextPair {
 protected:
-	friend class ZLContexts;
+	friend class ZLContext;
 
 	ZLContextClassBase*			mGlobalBase;
 	void*						mGlobal;
@@ -68,12 +68,12 @@ protected:
 };
 
 //================================================================//
-// ZLContexts
+// ZLContext
 //================================================================//
-class ZLContexts {
+class ZLContext {
 private:
 
-	friend class ZLContextsMgr;
+	friend class ZLContextMgr;
 
 	enum {
 		CHUNK_SIZE = 32,
@@ -82,8 +82,8 @@ private:
 	ZLLeanArray < ZLContextPair >	mGlobals;
 
 	//----------------------------------------------------------------//
-				ZLContexts			();
-				~ZLContexts			();
+				ZLContext			();
+				~ZLContext			();
 
 public:
 	
@@ -91,10 +91,10 @@ public:
 	template < typename TYPE >
 	TYPE* AffirmGlobal () {
 		
-		u32 id = ZLContextID < TYPE >::GetID ();
+		u32 id = ZLContextClassID < TYPE >::GetID ();
 		
 		if ( this->mGlobals.Size () <= id ) {
-
+		
 			ZLContextPair pair;
 			pair.mGlobalBase	= 0;
 			pair.mGlobal		= 0;
@@ -105,12 +105,12 @@ public:
 		}
 		
 		if ( !this->mGlobals [ id ].mGlobal ) {
-		
+			
 			// NOTE: other (new) globals may be accessed in the constructor, particularly
 			// if a Lua binding is created via LuaRetain. this may trigger a reallocation
 			// of the globals array, which will invalidate pointers and references. for this
 			// reason, we need to get 'pair' *after* the constructor.
-		
+			
 			TYPE* global = new TYPE;
 			
 			ZLContextPair& pair = this->mGlobals [ id ];
@@ -134,7 +134,7 @@ public:
 	template < typename TYPE >
 	TYPE* GetGlobal () {
 		
-		u32 id = ZLContextID < TYPE >::GetID ();
+		u32 id = ZLContextClassID < TYPE >::GetID ();
 		if ( id < this->mGlobals.Size ()) {
 			ZLContextPair& pair = this->mGlobals [ id ];
 			if ( pair.mIsValid ) {
@@ -148,7 +148,7 @@ public:
 	template < typename TYPE >
 	void Invalidate () {
 		
-		u32 id = ZLContextID < TYPE >::GetID ();
+		u32 id = ZLContextClassID < TYPE >::GetID ();
 		
 		if ( id < this->mGlobals.Size ()) {
 			this->mGlobals [ id ].mIsValid = false;
@@ -159,7 +159,7 @@ public:
 	template < typename TYPE >
 	bool IsValid () {
 		
-		u32 id = ZLContextID < TYPE >::GetID ();
+		u32 id = ZLContextClassID < TYPE >::GetID ();
 		
 		if ( id < this->mGlobals.Size ()) {
 			return this->mGlobals [ id ].mIsValid;
@@ -171,7 +171,7 @@ public:
 	template < typename TYPE >
 	void ProxyGlobal ( TYPE& proxy ) {
 		
-		u32 id = ZLContextID < TYPE >::GetID ();
+		u32 id = ZLContextClassID < TYPE >::GetID ();
 		if ( id < this->mGlobals.Size ()) {
 			this->mGlobals [ id ].mProxy = &proxy;
 		}
@@ -179,32 +179,33 @@ public:
 };
 
 //================================================================//
-// ZLContextsMgr
+// ZLContextMgr
 //================================================================//
-class ZLContextsMgr {
+class ZLContextMgr {
 private:
 
 	friend class ZLContextClassBase;
 
-	typedef STLSet < ZLContexts* >::iterator GlobalsSetIt;
-	typedef STLSet < ZLContexts* > GlobalsSet;
+	typedef STLSet < ZLContext* >::iterator GlobalsSetIt;
+	typedef STLSet < ZLContext* > GlobalsSet;
 
 	static ZLThreadLocalPtr < GlobalsSet >		sGlobalsSet;
-	static ZLThreadLocalPtr < ZLContexts >		sInstance;
+	static ZLThreadLocalPtr < ZLContext >		sInstance;
 
 	//----------------------------------------------------------------//
-							ZLContextsMgr			();
-							~ZLContextsMgr			();
+							ZLContextMgr			();
+							~ZLContextMgr			();
 
 public:
 
 	//----------------------------------------------------------------//
-	static bool				Check					( ZLContexts* globals );
-	static ZLContexts*		Create					();
-	static void				Delete					( ZLContexts* globals );
+	static bool				Check					( ZLContext* globals );
+	static u32				CountContexts			();
+	static ZLContext*		Create					();
+	static void				Delete					( ZLContext* globals );
 	static void				Finalize				();
-	static ZLContexts*		Get						();
-	static ZLContexts*		Set						( ZLContexts* globals );
+	static ZLContext*		Get						();
+	static ZLContext*		Set						( ZLContext* globals );
 };
 
 //================================================================//
@@ -221,36 +222,36 @@ public:
 	
 	//----------------------------------------------------------------//
 	inline static TYPE& Affirm () {
-		assert ( ZLContextsMgr::Get ());
-		TYPE* global = ZLContextsMgr::Get ()->AffirmGlobal < TYPE >();
+		assert ( ZLContextMgr::Get ());
+		TYPE* global = ZLContextMgr::Get ()->AffirmGlobal < TYPE >();
 		assert ( global );
 		return *global;
 	}
 	
 	//----------------------------------------------------------------//
 	inline static TYPE& Get () {
-		assert ( ZLContextsMgr::Get ());
-		TYPE* global = ZLContextsMgr::Get ()->GetGlobal < TYPE >();
+		assert ( ZLContextMgr::Get ());
+		TYPE* global = ZLContextMgr::Get ()->GetGlobal < TYPE >();
 		assert ( global );
 		return *global;
 	}
 	
 	//----------------------------------------------------------------//
 	void InvalidateContext () {
-		assert ( ZLContextsMgr::Get ());
-		ZLContextsMgr::Get ()->Invalidate < TYPE >();
+		assert ( ZLContextMgr::Get ());
+		ZLContextMgr::Get ()->Invalidate < TYPE >();
 	}
 	
 	//----------------------------------------------------------------//
 	inline static bool IsValid () {
-		assert ( ZLContextsMgr::Get ());
-		return ZLContextsMgr::Get ()->IsValid < TYPE >();
+		assert ( ZLContextMgr::Get ());
+		return ZLContextMgr::Get ()->IsValid < TYPE >();
 	}
 	
 	//----------------------------------------------------------------//
 	inline static void Proxy ( TYPE& proxy ) {
-		assert ( ZLContextsMgr::Get ());
-		ZLContextsMgr::Get ()->ProxyGlobal < TYPE >( proxy );
+		assert ( ZLContextMgr::Get ());
+		ZLContextMgr::Get ()->ProxyGlobal < TYPE >( proxy );
 	}
 };
 
@@ -260,7 +261,7 @@ public:
 class ZLScopedContext {
 private:
 
-	ZLContexts*		mOriginalContext;
+	ZLContext*		mOriginalContext;
 
 public:
 	

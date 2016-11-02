@@ -31,7 +31,7 @@
 
 struct lua_State;
 typedef struct lua_State lua_State;
-typedef int AKUContextID;
+typedef void* AKUContextID;
 
 enum {
 	AKU_AS_ARGS		= 0,

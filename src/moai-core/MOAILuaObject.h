@@ -88,7 +88,7 @@ public:
 	template < typename TYPE, lua_CFunction FUNC >
 	static int WrapInstanceFuncAsGlobal ( lua_State* L ) {
 	
-		TYPE* type = ZLContextsMgr::Get ()->GetGlobal < TYPE >();
+		TYPE* type = ZLContextMgr::Get ()->GetGlobal < TYPE >();
 		assert ( type );
 		return InjectAndCall ( FUNC, type, L );
 	}
