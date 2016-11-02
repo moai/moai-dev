@@ -22,7 +22,7 @@
 	@const	BACK_BUTTON_PRESSED		Event code indicating that the physical device back button was pressed.
 */
 class MOAIAppAndroid :
-	public MOAIGlobalClass < MOAIAppAndroid, MOAIGlobalEventSource > {
+	public ZLContextClass < MOAIAppAndroid, MOAIGlobalEventSource > {
 private:
 
 	//----------------------------------------------------------------//

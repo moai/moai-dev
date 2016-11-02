@@ -28,7 +28,7 @@
 	@const	REMOTE_NOTIFICATION_ALERT					Notification type alerts. Unused.
 */
 class MOAINotificationsAndroid :
-	public MOAIGlobalClass < MOAINotificationsAndroid, MOAILuaObject > {
+	public ZLContextClass < MOAINotificationsAndroid, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//
