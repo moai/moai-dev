@@ -6,8 +6,6 @@
 
 #include <pthread.h>
 
-#ifdef __cplusplus
-
 //================================================================//
 // ZLThreadLocal
 //================================================================//
@@ -17,55 +15,38 @@ private:
 
 	pthread_key_t	mKey;
 
-#ifdef ANDROID
-	TYPE*			mValue;
-#endif
-
 public:
 
 	//----------------------------------------------------------------//
 	TYPE* Get () {
 
-		#ifdef ANDROID
-			return this->mValue;
-		#else
-			TYPE** ref = ( TYPE** )pthread_getspecific ( this->mKey );
-			return ref ? *ref : 0;
-		#endif
+		TYPE** ref = ( TYPE** )pthread_getspecific ( this->mKey );
+		return ref ? *ref : 0;
 	}
 
 	//----------------------------------------------------------------//
 	void Set ( TYPE* assign ) {
-	
-		#ifdef ANDROID
-			this->mValue = assign;
-		#else
-			TYPE** ref = ( TYPE** )pthread_getspecific ( this->mKey );
-			if ( !ref ) {
-				ref = ( TYPE** )malloc ( sizeof ( TYPE* ));
-				pthread_setspecific ( this->mKey, ref );
-			}
-			assert ( ref );
-			*ref = assign;
-		#endif
+
+		TYPE** ref = ( TYPE** )pthread_getspecific ( this->mKey );
+		if ( !ref ) {
+			ref = ( TYPE** )malloc ( sizeof ( TYPE* ));
+			pthread_setspecific ( this->mKey, ref );
+		}
+		assert ( ref );
+		*ref = assign;
 	}
 
 	//----------------------------------------------------------------//
 	ZLThreadLocalPtr () {
 	
-		#ifndef ANDROID
-			pthread_key_create ( &this->mKey, NULL );
-		#endif
+		pthread_key_create ( &this->mKey, NULL );
 	}
 	
 	//----------------------------------------------------------------//
 	~ZLThreadLocalPtr () {
 	
-		#ifndef ANDROID
-			pthread_key_delete ( this->mKey );
-		#endif
+		pthread_key_delete ( this->mKey );
 	}
 };
 
-#endif
 #endif
