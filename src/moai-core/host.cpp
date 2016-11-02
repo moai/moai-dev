@@ -295,6 +295,8 @@ int AKUCountContexts () {
 //----------------------------------------------------------------//
 AKUContextID AKUCreateContext () {
 
+	assert ( sizeof ( void* ) <= sizeof ( AKU_CONTEXT_ID_TYPE ));
+
 	ZLContext* context = ZLContextMgr::Create ();
 
 	AKUContext::Affirm ();
