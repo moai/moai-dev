@@ -30,7 +30,7 @@
 #endif
 
 #ifndef AKU_CONTEXT_ID_TYPE
-	#define AKU_CONTEXT_ID_TYPE size_t
+	#define AKU_CONTEXT_ID_TYPE void*
 #endif
 
 struct lua_State;

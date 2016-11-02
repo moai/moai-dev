@@ -458,14 +458,8 @@ int AKUSetContext ( AKUContextID contextID ) {
 //		return -1;
 //	}
 	
-	ZLContext* context = ( ZLContext* )contextID;
-	
-	if ( ZLContextMgr::Check ( context )) {
-		ZLContextMgr::Set (( ZLContext* )contextID );
-		return 0;
-	}
-	ZLContextMgr::Set ( 0 );
-	return -1;
+    ZLContextMgr::Set (( ZLContext* )contextID );
+        return 0;
 }
 
 //----------------------------------------------------------------//
