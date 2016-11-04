@@ -458,8 +458,10 @@ int AKUSetContext ( AKUContextID contextID ) {
 //		return -1;
 //	}
 	
+	// TODO: restore check for valid context (once work is done to share ZLContextMgr's
+	// context set across multiple threads).
     ZLContextMgr::Set (( ZLContext* )contextID );
-        return 0;
+	return 0;
 }
 
 //----------------------------------------------------------------//
