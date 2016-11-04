@@ -18,7 +18,7 @@
 // MOAIAdColonyIOS
 //================================================================//
 class MOAIAdColonyIOS :
-public MOAIGlobalClass < MOAIAdColonyIOS, MOAILuaObject >,
+public ZLContextClass < MOAIAdColonyIOS, MOAILuaObject >,
 public MOAIGlobalEventSource {
 private:
 	

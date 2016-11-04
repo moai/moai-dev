@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <zl-util/ZLBarycentric.h>
 #include <zl-util/ZLDistance.h>
 #include <zl-util/ZLIntersect.h>
 #include <zl-util/ZLTrig.h>
@@ -373,6 +374,19 @@ u32 ZLSect::VecToSphere ( float& t0, float& t1, const ZLVec3D& loc, const ZLVec3
 	}
 
 	return SECT_PARALLEL;
+}
+
+//----------------------------------------------------------------//
+u32 ZLSect::VecToTriangle ( const ZLVec3D& loc, const ZLVec3D& vec, const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2, float& t, ZLVec3D& result ) {
+
+	ZLPlane3D plane;
+	plane.Init ( v0, v1, v2 );
+
+	if ( ZLSect::VecToPlane ( loc, vec, plane, t, result ) == SECT_HIT ) {
+		
+		if ( ZLBarycentric::PointInTriangle ( v0, v1, v2, result )) return SECT_HIT;
+	}
+	return SECT_HIT_OUT_OF_RANGE;
 }
 
 //----------------------------------------------------------------//

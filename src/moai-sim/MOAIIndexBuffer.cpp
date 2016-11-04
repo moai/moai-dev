@@ -46,14 +46,16 @@ int MOAIIndexBuffer::_copyFromStream ( lua_State* L ) {
 	MOAIIndexBuffer* idxBuffer = state.GetLuaObject < MOAIIndexBuffer >( 2, false );
 	if ( idxBuffer ) {
 	
-		self->CopyFromStream ( *idxBuffer, idxBuffer->mIndexSize );
+		size_t size = state.GetValue < u32 >( 3, ( u32 )( idxBuffer->GetLength () - idxBuffer->GetCursor () ));
+		self->CopyFromStream ( *idxBuffer, size, idxBuffer->mIndexSize );
 	}
 	else {
 	
 		MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
 		if ( stream ) {
-			u32 srcInputSizeInBytes = state.GetValue ( 3, 4 );
-			self->CopyFromStream ( *stream, srcInputSizeInBytes );
+			size_t size = state.GetValue < u32 >( 3, ( u32 )( stream->GetLength () - stream->GetCursor () ));
+			u32 srcInputSizeInBytes = state.GetValue ( 4, 4 );
+			self->CopyFromStream ( *stream, size, srcInputSizeInBytes );
 		}
 	}
 	return 0;
@@ -125,12 +127,15 @@ int MOAIIndexBuffer::_setIndexSize ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIIndexBuffer::CopyFromStream ( ZLStream& stream, u32 srcInputSizeInBytes ) {
+u32 MOAIIndexBuffer::CountIndices () {
 
-	u32 idxSizeInBytes = this->mIndexSize;
+	return this->GetLength () / this->mIndexSize;
+}
 
-	u32 size = ( u32 )( stream.GetLength () - stream.GetCursor ());
-	
+//----------------------------------------------------------------//
+void MOAIIndexBuffer::CopyFromStream ( ZLStream& stream, size_t size, u32 srcInputSizeInBytes ) {
+
+	u32 idxSizeInBytes = this->mIndexSize;	
 	u32 totalIndices = ( u32 )( size / srcInputSizeInBytes );
 	
 	this->Reserve ( totalIndices * idxSizeInBytes );
@@ -154,6 +159,13 @@ void MOAIIndexBuffer::CopyFromStream ( ZLStream& stream, u32 srcInputSizeInBytes
 		}
 	}
 	this->ScheduleForGPUUpdate ();
+}
+
+//----------------------------------------------------------------//
+u32 MOAIIndexBuffer::GetIndex ( u32 element ) {
+
+	const void* data = this->ZLCopyOnWrite::GetBuffer ();
+	return this->mIndexSize == 4 ? (( const u32* )data )[ element ] : (( const u16* )data )[ element ];
 }
 
 //----------------------------------------------------------------//

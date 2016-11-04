@@ -9,15 +9,17 @@
 // assert
 //================================================================//
 
-jmp_buf* sAssertEnv = 0;
+ZLThreadLocalPtr < jmp_buf > sAssertEnv;
 
 //----------------------------------------------------------------//
 void zl_handle_assert ( const char* condition, const char* funcname, const char* filename, int lineno ) {
 
 	zl_printf ( "Assertion (%s) failed in function %s, %s (%d)\n", condition, funcname, filename, lineno );
 	
-	if ( sAssertEnv ) {
-		longjmp ( *sAssertEnv, 1 );
+	jmp_buf* assertEnv = sAssertEnv.Get ();
+	
+	if ( assertEnv ) {
+		longjmp ( *assertEnv, 1 );
 	}
 	#ifndef NDEBUG
 		abort ();
@@ -27,9 +29,11 @@ void zl_handle_assert ( const char* condition, const char* funcname, const char*
 //----------------------------------------------------------------//
 jmp_buf* zl_set_assert_jmp_buf ( jmp_buf* env ) {
 
-	if ( sAssertEnv ) {
-		free ( sAssertEnv );
+	jmp_buf* assertEnv = sAssertEnv.Get ();
+
+	if ( assertEnv ) {
+		free ( assertEnv );
 	}
-	sAssertEnv = env;
+	sAssertEnv.Set ( env );
 	return env;
 }

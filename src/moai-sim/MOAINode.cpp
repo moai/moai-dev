@@ -773,6 +773,7 @@ void MOAINode::SetNodeLink ( MOAINode& srcNode ) {
 	MOAIDepLink* link = this->FindNodeLink ( srcNode );
 	
 	if ( !link ) {
+	
 		link = new MOAIDepLink ();
 
 		link->mSourceNode = &srcNode;
@@ -786,5 +787,6 @@ void MOAINode::SetNodeLink ( MOAINode& srcNode ) {
 		link->mPullable = true;
 		
 		this->ActivateOnLink ( srcNode );
+		this->ScheduleUpdate ();
 	}
 }

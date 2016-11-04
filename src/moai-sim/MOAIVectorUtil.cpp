@@ -7,9 +7,9 @@
 #include <moai-sim/MOAIVectorUtil.h>
 #include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
-#include <tesselator.h>
 #include <signal.h>
 #include <setjmp.h>
+#include <tesselator.h>
 
 #ifdef MOAI_COMPILER_MSVC
 	#pragma warning ( disable : 4611 )
@@ -22,9 +22,9 @@
 const ZLVec3D SafeTesselator::sNormal = ZLVec3D ( 0.0f, 0.0f, 1.0f );
 
 //----------------------------------------------------------------//
-void SafeTesselator::AddContour ( int size, const void* vertices, int stride, size_t numVertices ) {
+void SafeTesselator::AddContour ( int numComponents, const void* vertices, int stride, size_t numVertices ) {
 	
-	tessAddContour ( this->mTess, size, vertices, stride, ( int )numVertices ); // TODO: check overflow
+	tessAddContour ( this->mTess, numComponents, vertices, stride, ( int )numVertices ); // TODO: check overflow
 }
 
 //----------------------------------------------------------------//
@@ -66,7 +66,7 @@ u32 SafeTesselator::GetTriangles ( MOAIVertexFormat& format, ZLStream& vtxStream
 	}
 
 	// idx stream is 32-bits, so divide by 4 to get total indices written
-	return ( u32 )(( idxStream.GetLength () - idxCursor ) >> 2 ); // TODO: cast
+	return ( u32 )(( idxStream.GetCursor () - idxCursor ) >> 2 ); // TODO: cast
 }
 
 //----------------------------------------------------------------//
@@ -77,7 +77,7 @@ u32 SafeTesselator::GetTriangles ( MOAIVertexFormat& format, MOAIVertexBuffer& v
 
 	this->GetTriangles ( format, vtxStream, idxStream );
 	
-	return MOAIGeometryWriter::GetMesh ( format, vtxStream, idxStream, vtxBuffer, idxBuffer, idxSizeInBytes );
+	return MOAIGeometryWriter::GetMesh ( format, vtxStream, vtxStream.GetLength (), idxStream, idxStream.GetLength (), vtxBuffer, idxBuffer, idxSizeInBytes );
 }
 
 //------------------------------------------------------------------//

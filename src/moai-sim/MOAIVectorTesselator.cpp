@@ -98,8 +98,7 @@ int MOAIVectorTesselator::_finish ( lua_State* L ) {
 	
 	int error = self->Finish ();
 	
-	//bool hasContent = self->mVtxStream.GetLength () > 0;
-	bool hasContent = self->mShapeStack.Size () > 0;
+	bool hasContent = self->mShapeStack.GetTop () > 0;
 	
 	state.Push ( error );
 	state.Push ( hasContent );
@@ -647,7 +646,7 @@ void MOAIVectorTesselator::ClearTransforms () {
 //----------------------------------------------------------------//
 u32 MOAIVectorTesselator::CountVertices ( const MOAIVertexFormat& format, ZLStream& vtxStream ) {
 
-	return ( u32 )( vtxStream.GetLength () / format.GetVertexSize ()); // TODO: cast
+	return ( u32 )( vtxStream.GetCursor () / format.GetVertexSize ()); // TODO: cast
 }
 
 //----------------------------------------------------------------//
@@ -1007,20 +1006,31 @@ int MOAIVectorTesselator::Tesselate ( SafeTesselator& tess, u32 flags ) {
 //----------------------------------------------------------------//
 int MOAIVectorTesselator::Tesselate ( MOAIRegion& region, u32 flags ) {
 
-	SafeTesselator tess;
-	if ( !this->Tesselate ( tess, flags )) return 0;
+	region.Clear ();
+	bool useTess = true;
 	
-	int error = tess.Tesselate (( int )this->mStyle.mWindingRule, TESS_BOUNDARY_CONTOURS, 0, 0 );
+	if ( this->mShapeStack.GetTop () == 1 ) {
 
-	if ( !error ) {
-		
-		region.Copy ( tess );
-		region.Transform ( region, this->mStyle.mDrawingToWorld );
-		region.Bless ();
-		
-		return ( int )region.GetSize (); // TODO: cast
+		useTess = this->mShapeStack [ 0 ]->Tesselate ( *this, region, flags ) != 0;
 	}
-	return 0;
+
+	if ( useTess ) {
+		
+		region.Clear ();
+	
+		SafeTesselator tess;
+		if ( !this->Tesselate ( tess, flags )) return 0;
+		
+		int error = tess.Tesselate (( int )this->mStyle.mWindingRule, TESS_BOUNDARY_CONTOURS, 0, 0 );
+
+		if ( !error ) {
+			region.Copy ( tess );
+			region.Transform ( region, this->mStyle.mDrawingToWorld );
+			region.Bless ();
+		}
+	}
+	
+	return ( int )region.GetSize (); // TODO: cast
 }
 
 //----------------------------------------------------------------//
@@ -1029,7 +1039,7 @@ int MOAIVectorTesselator::Tesselate ( ZLStream& vtxStream, ZLStream& idxStream, 
 	int error = this->Finish ();
 	if ( error ) return -1;
 
-	int base = ( int )idxStream.GetLength (); // TODO: cast
+	int base = ( int )idxStream.GetCursor(); // TODO: cast
 
 	this->mDepthOffset = 0.0f;
 
@@ -1040,7 +1050,7 @@ int MOAIVectorTesselator::Tesselate ( ZLStream& vtxStream, ZLStream& idxStream, 
 	}
 	
 	// idx stream is 32-bits, so divide by 4 to get total indices
-	return ( int )(( idxStream.GetLength () - base ) >> 2 ); // TODO: cast
+	return ( int )(( idxStream.GetCursor () - base ) >> 2 ); // TODO: cast
 }
 
 //----------------------------------------------------------------//
@@ -1052,7 +1062,7 @@ int MOAIVectorTesselator::Tesselate ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuff
 	int totalIndices = this->Tesselate ( vtxStream, idxStream, format, flags );
 	
 	if ( totalIndices > 0 ) {
-		return MOAIGeometryWriter::GetMesh ( format, vtxStream, idxStream, vtxBuffer, idxBuffer, idxSizeInBytes );
+		return MOAIGeometryWriter::GetMesh ( format, vtxStream, vtxStream.GetLength (), idxStream, idxStream.GetLength (), vtxBuffer, idxBuffer, idxSizeInBytes );
 	}
 	
 	// something went wrong, return error code

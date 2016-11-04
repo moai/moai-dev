@@ -31,7 +31,7 @@
 	@const	REQUEST_RESPONSE_FAILED		Event code for failed graph request responses.
 */
 class MOAIFacebookIOS :
-	public MOAIGlobalClass < MOAIFacebookIOS, MOAILuaObject >,
+	public ZLContextClass < MOAIFacebookIOS, MOAILuaObject >,
 	public MOAIGlobalEventSource {
 private:
 	

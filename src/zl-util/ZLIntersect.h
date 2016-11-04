@@ -45,6 +45,7 @@ namespace ZLSect {
 	u32		VecToPlane			( const ZLVec3D& loc, const ZLVec3D& vec, const ZLPlane3D& p, ZLVec3D& result );
 	u32		VecToPlane			( const ZLVec3D& loc, const ZLVec3D& vec, const ZLPlane3D& p, float& t, ZLVec3D& result );
 	u32		VecToSphere			( float& t0, float& t1, const ZLVec3D& loc, const ZLVec3D& vec, const ZLVec3D& sphereLoc, float radius );
+	u32		VecToTriangle		( const ZLVec3D& loc, const ZLVec3D& vec, const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2, float& t, ZLVec3D& result );
 	u32		VecToUnitCircle		( float& t0, float& t1, const ZLVec2D& loc, const ZLVec2D& vec );
 	u32		VecToUnitSphere		( float& t0, float& t1, const ZLVec3D& loc, const ZLVec3D& vec );
 	u32		XAxisToPlane		( float y, const ZLPlane2D& p, float& t );

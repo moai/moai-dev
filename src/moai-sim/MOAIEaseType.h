@@ -45,7 +45,7 @@
 	@const	BACK_SMOOTH		
 */
 class MOAIEaseType :
-	public MOAIGlobalClass < MOAIEaseType, MOAILuaObject > {
+	public ZLContextClass < MOAIEaseType, MOAILuaObject > {
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIEaseType )

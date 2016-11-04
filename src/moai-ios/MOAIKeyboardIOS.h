@@ -75,7 +75,7 @@
 	@const	RETURN_KEY_SEND
 */
 class MOAIKeyboardIOS :
-	public MOAIGlobalClass < MOAIKeyboardIOS, MOAIGlobalEventSource > {
+	public ZLContextClass < MOAIKeyboardIOS, MOAIGlobalEventSource > {
 private:
 
 	enum {

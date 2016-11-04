@@ -116,6 +116,7 @@ public:
 	void			Push						( const ZLRect& value );
 	void			Push						( const ZLVec2D& value );
 	void			Push						( const ZLVec3D& value );
+	void			Push						( const ZLVec4D& value );
 	
 	void			Push						( lua_CFunction value );
 	void			Push						( MOAILuaObject* luaObject );

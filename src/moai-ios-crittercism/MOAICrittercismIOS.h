@@ -17,7 +17,7 @@
 			all mobile platforms.
 */
 class MOAICrittercismIOS :
-	public MOAIGlobalClass < MOAICrittercismIOS, MOAILuaObject > {
+	public ZLContextClass < MOAICrittercismIOS, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//

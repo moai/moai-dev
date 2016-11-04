@@ -10,6 +10,12 @@
 #include <zl-vfs/zl_util.h>
 
 #ifdef  __cplusplus
+	#include <zl-util/ZLContext.h>
+	#include <zl-util/ZLRtti.h>
+	#include <zl-vfs/ZLThreadLocalPtr.h>
+#endif
+
+#ifdef  __cplusplus
 	extern "C" {
 #endif
 

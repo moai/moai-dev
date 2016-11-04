@@ -32,7 +32,7 @@
 	@const	TAPJOY_VIDEO_STATUS_UNABLE_TO_PLAY_VIDEO			Error code for playback error. Unused.
 */
 class MOAITapjoyIOS :
-	public MOAIGlobalClass < MOAITapjoyIOS, MOAIGlobalEventSource > {
+	public ZLContextClass < MOAITapjoyIOS, MOAIGlobalEventSource > {
 private:
 
 	MOAITapjoyIOSVideoAdDelegate* mVideoAdDelegate;

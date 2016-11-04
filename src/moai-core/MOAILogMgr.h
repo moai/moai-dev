@@ -4,7 +4,6 @@
 #ifndef	MOAILOGMGR_H
 #define	MOAILOGMGR_H
 
-#include <moai-core/MOAIGlobals.h>
 #include <moai-core/MOAILua.h>
 
 #define MOAI_LUA_SETUP(type,str)												\
@@ -46,7 +45,7 @@ private:
 	@const LOG_DEBUG	Debug level
 */
 class MOAILogMgr :
-	public MOAIGlobalClass < MOAILogMgr, MOAILuaObject > {
+	public ZLContextClass < MOAILogMgr, MOAILuaObject > {
 private:
 
 	typedef STLMap < u32, MOAILogMessage >::iterator MessageMapIt;
@@ -103,7 +102,7 @@ public:
 		if ( this->mTypeCheckLuaParams && typeStr ) {
 			if ( !state.CheckParams ( 1, typeStr, true )) return 0;
 		}
-		return MOAIGlobalsMgr::Get ()->GetGlobal < TYPE >();
+		return ZLContextMgr::Get ()->GetGlobal < TYPE >();
 	}
 };
 

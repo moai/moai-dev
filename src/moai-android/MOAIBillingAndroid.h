@@ -35,7 +35,7 @@
 	@const	BILLING_PURCHASE_STATE_ITEM_REFUNDED		Purchase state code for a refunded/revoked purchase.
 */
 class MOAIBillingAndroid :
-	public MOAIGlobalClass < MOAIBillingAndroid, MOAILuaObject > {
+	public ZLContextClass < MOAIBillingAndroid, MOAILuaObject > {
 private:
 		
 	static cc8*	_luaParseTable 	( lua_State* L, int idx );

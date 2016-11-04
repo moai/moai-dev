@@ -20,7 +20,7 @@ namespace FMOD {
 	@text	FMOD singleton.
 */
 class MOAIFmodEx :
-	public MOAIGlobalClass < MOAIFmodEx, MOAILuaObject > {
+	public ZLContextClass < MOAIFmodEx, MOAILuaObject > {
 private:
 
 	FMOD::System* mSoundSys;

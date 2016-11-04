@@ -22,7 +22,7 @@
 */
 
 class MOAIKeyboardAndroid :
-	public MOAIGlobalClass < MOAIKeyboardAndroid, MOAIGlobalEventSource > {
+	public ZLContextClass < MOAIKeyboardAndroid, MOAIGlobalEventSource > {
 
 private:
 

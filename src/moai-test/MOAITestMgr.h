@@ -15,7 +15,7 @@
 //================================================================//
 // TODO: doxygen
 class MOAITestMgr :
-	public MOAIGlobalClass < MOAITestMgr, MOAILuaObject > {
+	public ZLContextClass < MOAITestMgr, MOAILuaObject > {
 private:
 
 	STLSet < STLString > mFilter;

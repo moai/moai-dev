@@ -18,7 +18,7 @@
 			MOAIMoviePlayer on all mobile platforms.
 */
 class MOAIMoviePlayerIOS :
-	public MOAIGlobalClass < MOAIMoviePlayerIOS, MOAILuaObject > {
+	public ZLContextClass < MOAIMoviePlayerIOS, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//

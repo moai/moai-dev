@@ -14,7 +14,7 @@
 //================================================================//
 // TODO: 3rdparty doxygen
 class MOAIUrbanAirshipIOS :
-	public MOAIGlobalClass < MOAIUrbanAirshipIOS, MOAILuaObject > {
+	public ZLContextClass < MOAIUrbanAirshipIOS, MOAILuaObject > {
 private:
 
 	UAConfig* mConfig;

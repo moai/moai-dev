@@ -77,7 +77,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void						Clear					();
-	void						CopyFromStream			( ZLStream& stream );
+	void						CopyFromStream			( ZLStream& stream, size_t size );
 	ZLSharedConstBuffer*		GetBuffer				();
 								MOAIGfxBuffer			();
 								~MOAIGfxBuffer			();

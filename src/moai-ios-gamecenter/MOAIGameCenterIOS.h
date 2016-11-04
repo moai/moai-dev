@@ -24,7 +24,7 @@
 	@const	PLAYERSCOPE_FRIENDS		Get leaderboard scores only for active player's friends.
 */
 class MOAIGameCenterIOS :
-	public MOAIGlobalClass < MOAIGameCenterIOS, MOAILuaObject > {
+	public ZLContextClass < MOAIGameCenterIOS, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//

@@ -4,7 +4,6 @@
 #ifndef	MOAILUACLASS_IMPL_H
 #define	MOAILUACLASS_IMPL_H
 
-#include <moai-core/MOAIGlobals.h>
 #include <moai-core/MOAILuaClass.h>
 #include <moai-core/MOAILuaRuntime.h>
 
@@ -51,9 +50,9 @@ int MOAILuaFactoryClass < TYPE >::_new ( lua_State* L ) {
 //----------------------------------------------------------------//
 template < typename TYPE >
 MOAILuaFactoryClass < TYPE >& MOAILuaFactoryClass < TYPE >::Get () {
-	MOAILuaFactoryClass < TYPE >* typeClass = MOAIGlobalsMgr::Get ()->GetGlobal < MOAILuaFactoryClass >();
+	MOAILuaFactoryClass < TYPE >* typeClass = ZLContextMgr::Get ()->GetGlobal < MOAILuaFactoryClass >();
 	if ( !typeClass ) {
-		typeClass = MOAIGlobalsMgr::Get ()->AffirmGlobal < MOAILuaFactoryClass >();
+		typeClass = ZLContextMgr::Get ()->AffirmGlobal < MOAILuaFactoryClass >();
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		TYPE type;
 		typeClass->InitLuaFactoryClass ( type, state );
@@ -96,7 +95,7 @@ template < typename TYPE >
 int MOAILuaSingletonClass < TYPE >::_getClassName ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
-	MOAILuaObject* singleton = MOAIGlobalsMgr::Get ()->GetGlobal < TYPE >();
+	MOAILuaObject* singleton = ZLContextMgr::Get ()->GetGlobal < TYPE >();
 	state.Push ( singleton->TypeName ());
 	return 1;
 }
@@ -116,13 +115,13 @@ int MOAILuaSingletonClass < TYPE >::_getTypeID ( lua_State* L ) {
 //----------------------------------------------------------------//
 template < typename TYPE >
 MOAILuaSingletonClass < TYPE >& MOAILuaSingletonClass < TYPE >::Get () {
-	return *MOAIGlobalsMgr::Get ()->AffirmGlobal < MOAILuaSingletonClass >();
+	return *ZLContextMgr::Get ()->AffirmGlobal < MOAILuaSingletonClass >();
 }
 
 //----------------------------------------------------------------//
 template < typename TYPE >
 MOAILuaObject* MOAILuaSingletonClass < TYPE >::GetSingleton () {
-	return MOAIGlobalsMgr::Get ()->AffirmGlobal < TYPE >();
+	return ZLContextMgr::Get ()->AffirmGlobal < TYPE >();
 }
 
 //----------------------------------------------------------------//

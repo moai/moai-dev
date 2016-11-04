@@ -29,9 +29,13 @@
 	#endif
 #endif
 
+#ifndef AKU_CONTEXT_ID_TYPE
+	#define AKU_CONTEXT_ID_TYPE void*
+#endif
+
 struct lua_State;
 typedef struct lua_State lua_State;
-typedef int AKUContextID;
+typedef AKU_CONTEXT_ID_TYPE AKUContextID;
 
 enum {
 	AKU_AS_ARGS		= 0,

@@ -11,7 +11,7 @@
 // MOAIDialogSDL
 //================================================================//
 class MOAIDialogSDL :
-	public MOAIGlobalClass < MOAIDialogSDL, MOAILuaObject > {
+	public ZLContextClass < MOAIDialogSDL, MOAILuaObject > {
 private:
 
 	SDL_Window*		mWindow;

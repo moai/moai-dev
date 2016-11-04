@@ -1,15 +1,19 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGLOBALS_H
-#define	MOAIGLOBALS_H
+#ifndef	ZLCONTEXT_H
+#define	ZLCONTEXT_H
 
-#include <moai-core/MOAIRtti.h>
+#include <zl-common/zl_types.h>
+#include <zl-util/STLSet.h>
+#include <zl-util/ZLLeanArray.h>
+#include <zl-util/ZLRtti.h>
+#include <zl-vfs/ZLThreadLocalPtr.h>
 
 //================================================================//
-// MOAIGlobalIDBase
+// ZLContextClassIDBase
 //================================================================//
-class MOAIGlobalIDBase {
+class ZLContextClassIDBase {
 protected:
 
 	//----------------------------------------------------------------//
@@ -20,11 +24,11 @@ protected:
 };
 
 //================================================================//
-// MOAIGlobalID
+// ZLContextClassID
 //================================================================//
 template < typename	TYPE >
-class MOAIGlobalID :
-	public MOAIGlobalIDBase {
+class ZLContextClassID :
+	public ZLContextClassIDBase {
 public:
 	
 	//----------------------------------------------------------------//
@@ -36,50 +40,50 @@ public:
 };
 
 //================================================================//
-// MOAIGlobalClassBase
+// ZLContextClassBase
 //================================================================//
-class MOAIGlobalClassBase {
+class ZLContextClassBase {
 protected:
 
-	friend class MOAIGlobals;
+	friend class ZLContext;
 
 	//----------------------------------------------------------------//
 	virtual void			OnGlobalsFinalize			();
 	virtual void			OnGlobalsInitialize			();
-							MOAIGlobalClassBase			();
-	virtual					~MOAIGlobalClassBase		();
+							ZLContextClassBase			();
+	virtual					~ZLContextClassBase			();
 };
 
 //================================================================//
-// MOAIGlobalPairBase
+// ZLContextPair
 //================================================================//
-class MOAIGlobalPair {
+class ZLContextPair {
 protected:
-	friend class MOAIGlobals;
+	friend class ZLContext;
 
-	MOAIGlobalClassBase*		mGlobalBase;
+	ZLContextClassBase*			mGlobalBase;
 	void*						mGlobal;
 	void*						mProxy;
 	bool						mIsValid;
 };
 
 //================================================================//
-// MOAIGlobals
+// ZLContext
 //================================================================//
-class MOAIGlobals {
+class ZLContext {
 private:
 
-	friend class MOAIGlobalsMgr;
+	friend class ZLContextMgr;
 
 	enum {
 		CHUNK_SIZE = 32,
 	};
 
-	ZLLeanArray < MOAIGlobalPair >	mGlobals;
+	ZLLeanArray < ZLContextPair >	mGlobals;
 
 	//----------------------------------------------------------------//
-				MOAIGlobals			();
-				~MOAIGlobals		();
+				ZLContext			();
+				~ZLContext			();
 
 public:
 	
@@ -87,11 +91,11 @@ public:
 	template < typename TYPE >
 	TYPE* AffirmGlobal () {
 		
-		u32 id = MOAIGlobalID < TYPE >::GetID ();
+		u32 id = ZLContextClassID < TYPE >::GetID ();
 		
 		if ( this->mGlobals.Size () <= id ) {
-
-			MOAIGlobalPair pair;
+		
+			ZLContextPair pair;
 			pair.mGlobalBase	= 0;
 			pair.mGlobal		= 0;
 			pair.mProxy			= 0;
@@ -101,15 +105,15 @@ public:
 		}
 		
 		if ( !this->mGlobals [ id ].mGlobal ) {
-		
+			
 			// NOTE: other (new) globals may be accessed in the constructor, particularly
 			// if a Lua binding is created via LuaRetain. this may trigger a reallocation
 			// of the globals array, which will invalidate pointers and references. for this
 			// reason, we need to get 'pair' *after* the constructor.
-		
+			
 			TYPE* global = new TYPE;
 			
-			MOAIGlobalPair& pair = this->mGlobals [ id ];
+			ZLContextPair& pair = this->mGlobals [ id ];
 			
 			pair.mGlobalBase	= global;
 			pair.mGlobal		= global;
@@ -130,9 +134,9 @@ public:
 	template < typename TYPE >
 	TYPE* GetGlobal () {
 		
-		u32 id = MOAIGlobalID < TYPE >::GetID ();
+		u32 id = ZLContextClassID < TYPE >::GetID ();
 		if ( id < this->mGlobals.Size ()) {
-			MOAIGlobalPair& pair = this->mGlobals [ id ];
+			ZLContextPair& pair = this->mGlobals [ id ];
 			if ( pair.mIsValid ) {
 				return ( TYPE* )( pair.mProxy ? pair.mProxy : pair.mGlobal );
 			}
@@ -142,9 +146,20 @@ public:
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
+	void Invalidate () {
+		
+		u32 id = ZLContextClassID < TYPE >::GetID ();
+		
+		if ( id < this->mGlobals.Size ()) {
+			this->mGlobals [ id ].mIsValid = false;
+		}
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
 	bool IsValid () {
 		
-		u32 id = MOAIGlobalID < TYPE >::GetID ();
+		u32 id = ZLContextClassID < TYPE >::GetID ();
 		
 		if ( id < this->mGlobals.Size ()) {
 			return this->mGlobals [ id ].mIsValid;
@@ -156,97 +171,104 @@ public:
 	template < typename TYPE >
 	void ProxyGlobal ( TYPE& proxy ) {
 		
-		u32 id = MOAIGlobalID < TYPE >::GetID ();
+		u32 id = ZLContextClassID < TYPE >::GetID ();
 		if ( id < this->mGlobals.Size ()) {
-			this->mGlobals [ id ].mProxy	= &proxy;
+			this->mGlobals [ id ].mProxy = &proxy;
 		}
 	}
 };
 
 //================================================================//
-// MOAIGlobalsMgr
+// ZLContextMgr
 //================================================================//
-class MOAIGlobalsMgr {
+class ZLContextMgr {
 private:
 
-	friend class MOAIGlobalClassBase;
+	friend class ZLContextClassBase;
 
-	typedef STLSet < MOAIGlobals* >::iterator GlobalsSetIt;
-	typedef STLSet < MOAIGlobals* > GlobalsSet;
+	typedef STLSet < ZLContext* >::iterator GlobalsSetIt;
+	typedef STLSet < ZLContext* > GlobalsSet;
 
-	static GlobalsSet* sGlobalsSet;
-	static MOAIGlobals* sInstance;
+	static ZLThreadLocalPtr < GlobalsSet >		sGlobalsSet;
+	static ZLThreadLocalPtr < ZLContext >		sInstance;
 
 	//----------------------------------------------------------------//
-							MOAIGlobalsMgr			();
-							~MOAIGlobalsMgr			();
+							ZLContextMgr			();
+							~ZLContextMgr			();
 
 public:
 
 	//----------------------------------------------------------------//
-	static bool				Check					( MOAIGlobals* globals );
-	static MOAIGlobals*		Create					();
-	static void				Delete					( MOAIGlobals* globals );
+	static bool				Check					( ZLContext* globals );
+	static u32				CountContexts			();
+	static ZLContext*		Create					();
+	static void				Delete					( ZLContext* globals );
 	static void				Finalize				();
-	static MOAIGlobals*		Get						();
-	static MOAIGlobals*		Set						( MOAIGlobals* globals );
+	static ZLContext*		Get						();
+	static ZLContext*		Set						( ZLContext* globals );
 };
 
 //================================================================//
-// MOAIGlobalClass
+// ZLContextClass
 //================================================================//
-/**	@lua	MOAIGlobalClass
+/**	@lua	ZLContextClass
 	@text	Base class for Moai singletons.
 */
 template < typename TYPE, typename SUPER = RTTIBase >
-class MOAIGlobalClass :
-	public virtual MOAIGlobalClassBase,
+class ZLContextClass :
+	public virtual ZLContextClassBase,
 	public virtual SUPER {
 public:
 	
 	//----------------------------------------------------------------//
 	inline static TYPE& Affirm () {
-		assert ( MOAIGlobalsMgr::Get ());
-		TYPE* global = MOAIGlobalsMgr::Get ()->AffirmGlobal < TYPE >();
+		assert ( ZLContextMgr::Get ());
+		TYPE* global = ZLContextMgr::Get ()->AffirmGlobal < TYPE >();
 		assert ( global );
 		return *global;
 	}
 	
 	//----------------------------------------------------------------//
 	inline static TYPE& Get () {
-		assert ( MOAIGlobalsMgr::Get ());
-		TYPE* global = MOAIGlobalsMgr::Get ()->GetGlobal < TYPE >();
+		assert ( ZLContextMgr::Get ());
+		TYPE* global = ZLContextMgr::Get ()->GetGlobal < TYPE >();
 		assert ( global );
 		return *global;
 	}
 	
 	//----------------------------------------------------------------//
+	void InvalidateContext () {
+		assert ( ZLContextMgr::Get ());
+		ZLContextMgr::Get ()->Invalidate < TYPE >();
+	}
+	
+	//----------------------------------------------------------------//
 	inline static bool IsValid () {
-		assert ( MOAIGlobalsMgr::Get ());
-		return MOAIGlobalsMgr::Get ()->IsValid < TYPE >();
+		assert ( ZLContextMgr::Get ());
+		return ZLContextMgr::Get ()->IsValid < TYPE >();
 	}
 	
 	//----------------------------------------------------------------//
 	inline static void Proxy ( TYPE& proxy ) {
-		assert ( MOAIGlobalsMgr::Get ());
-		MOAIGlobalsMgr::Get ()->ProxyGlobal < TYPE >( proxy );
+		assert ( ZLContextMgr::Get ());
+		ZLContextMgr::Get ()->ProxyGlobal < TYPE >( proxy );
 	}
 };
 
 //================================================================//
-// MOAIScopedContext
+// ZLScopedContext
 //================================================================//
-class MOAIScopedContext {
+class ZLScopedContext {
 private:
 
-	MOAIGlobals*		mOriginalContext;
+	ZLContext*		mOriginalContext;
 
 public:
 	
 	//----------------------------------------------------------------//
 	void				Clear						();
-						MOAIScopedContext			();
-						~MOAIScopedContext			();
+						ZLScopedContext				();
+						~ZLScopedContext			();
 };
 
 #endif

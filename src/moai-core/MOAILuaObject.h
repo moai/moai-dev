@@ -4,7 +4,6 @@
 #ifndef	MOAILUAOBJECT_H
 #define	MOAILUAOBJECT_H
 
-#include <moai-core/MOAIGlobals.h>
 #include <moai-core/MOAILuaRef.h>
 #include <moai-core/MOAIObject.h>
 
@@ -89,7 +88,7 @@ public:
 	template < typename TYPE, lua_CFunction FUNC >
 	static int WrapInstanceFuncAsGlobal ( lua_State* L ) {
 	
-		TYPE* type = MOAIGlobalsMgr::Get ()->GetGlobal < TYPE >();
+		TYPE* type = ZLContextMgr::Get ()->GetGlobal < TYPE >();
 		assert ( type );
 		return InjectAndCall ( FUNC, type, L );
 	}
