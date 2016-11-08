@@ -6,6 +6,8 @@
 #include <zl-util/ZLContext.h>
 #include <zl-util/ZLLog.h>
 
+//#define ZL_ENABLE_CONTEXT_DEBUG_LOG
+
 //================================================================//
 // ZLContextClassBase
 //================================================================//
@@ -39,9 +41,10 @@ ZLContext::~ZLContext () {
 
 	// get the log object here, since it will be markes as invalid with all the others below
 	// no longer safe to use the ZLLog macros
-	ZLLog& log = ZLLog::Get ();
-
-	log.LogF ( ZLLog::LOG_DEBUG, ZLLog::CONSOLE, "ZLContext::~ZLContext %p\n", this );
+	#ifdef ZL_ENABLE_CONTEXT_DEBUG_LOG
+		ZLLog& log = ZLLog::Get ();
+		log.LogF ( ZLLog::LOG_DEBUG, ZLLog::CONSOLE, "ZLContext::~ZLContext %p\n", this );
+	#endif
 
 	size_t total = this->mGlobals.Size ();
 	
@@ -58,7 +61,11 @@ ZLContext::~ZLContext () {
 		ZLContextClassBase* global = pair.mGlobalBase;
 
 		if ( global ) {
-			log.LogF ( ZLLog::LOG_DEBUG, ZLLog::CONSOLE, "ZLContext: finalizing global %p\n", global );
+		
+			#ifdef ZL_ENABLE_CONTEXT_DEBUG_LOG
+				log.LogF ( ZLLog::LOG_DEBUG, ZLLog::CONSOLE, "ZLContext: finalizing global %p\n", global );
+			#endif
+			
 			global->OnGlobalsFinalize ();
 		}
 	}
@@ -67,7 +74,10 @@ ZLContext::~ZLContext () {
 	for ( size_t i = 1; i <= total; ++i ) {
 	
 		ZLContextPair& pair = this->mGlobals [ total - i ];
-		log.LogF ( ZLLog::LOG_DEBUG, ZLLog::CONSOLE, "ZLContext: invalidating global %p\n", pair.mGlobalBase );
+		
+		#ifdef ZL_ENABLE_CONTEXT_DEBUG_LOG
+			log.LogF ( ZLLog::LOG_DEBUG, ZLLog::CONSOLE, "ZLContext: invalidating global %p\n", pair.mGlobalBase );
+		#endif
 	
 		pair.mIsValid = false;
 	}
@@ -78,7 +88,11 @@ ZLContext::~ZLContext () {
 		ZLContextClassBase* global = pair.mGlobalBase;
 
 		if ( global ) {
-			log.LogF ( ZLLog::LOG_DEBUG, ZLLog::CONSOLE, "ZLContext: deleting global %p\n", global );
+		
+			#ifdef ZL_ENABLE_CONTEXT_DEBUG_LOG
+				log.LogF ( ZLLog::LOG_DEBUG, ZLLog::CONSOLE, "ZLContext: deleting global %p\n", global );
+			#endif
+			
 			delete global;
 		}
 	}
