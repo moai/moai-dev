@@ -480,6 +480,7 @@ void MOAIGeometryWriter::ApplyColor ( const MOAIVertexFormat& format, ZLStream& 
 		format.SeekVertex ( vtxStream, base, i );
 		MOAIGeometryWriter::WriteColor ( format, vtxStream, mode, color.mR, color.mG, color.mB, color.mA );
 	}
+	format.SeekVertex ( vtxStream, base, total );
 }
 
 //----------------------------------------------------------------//
@@ -499,6 +500,7 @@ void MOAIGeometryWriter::ApplyColor ( const MOAIVertexFormat& format, ZLStream& 
 			MOAIGeometryWriter::WriteColor ( format, vtxStream, mode, color.mR, color.mG, color.mB, color.mA );
 		}
 	}
+	format.SeekVertex ( vtxStream, base, total );
 }
 
 //----------------------------------------------------------------//
@@ -552,6 +554,8 @@ void MOAIGeometryWriter::ApplyLightFromImage ( const MOAIVertexFormat& format, Z
 
 		MOAIGeometryWriter::WriteColor ( format, vtxStream, mode, color.mR, color.mG, color.mB, color.mA * alpha );
 	}
+	
+	format.SeekVertex ( vtxStream, base, total );
 }
 
 //----------------------------------------------------------------//
@@ -592,6 +596,8 @@ void MOAIGeometryWriter::ApplyLinearGradient ( const MOAIVertexFormat& format, Z
 		}
 		MOAIGeometryWriter::WriteColor ( format, vtxStream, mode, color.mR, color.mG, color.mB, color.mA );
 	}
+	
+	format.SeekVertex ( vtxStream, base, total );
 }
 
 //----------------------------------------------------------------//
