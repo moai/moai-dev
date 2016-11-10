@@ -27,8 +27,7 @@ private:
 		VERTEX_SIZE = 16,
 	};
 
-	ZLLeanStack < MOAIVectorShape*, 64 >	mDirectory; // TODO: should use a chunked array or something
-	ZLLeanStack < MOAIVectorShape*, 16 >	mShapeStack; // TODO: ditto
+	ZLLeanStack < MOAIVectorShape*, 16 >	mShapeStack;
 	
 	ZLLeanStack < ZLVec2D, 32 >				mVertexStack;
 	bool									mPolyClosed;
@@ -97,7 +96,7 @@ private:
 	static int		_worldToDrawingVec		( lua_State* L );
 
 	//----------------------------------------------------------------//
-	u32				PushShape				( MOAIVectorShape* shape );
+	void			PushShape				( MOAIVectorShape* shape );
 		
 public:
 

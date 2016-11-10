@@ -623,14 +623,13 @@ void MOAIVectorTesselator::Clear () {
 //----------------------------------------------------------------//
 void MOAIVectorTesselator::ClearShapes () {
 
-	for ( u32 i = 0; i < this->mDirectory.GetTop (); ++i ) {
-		MOAIVectorShape* shape = this->mDirectory [ i ];
+	for ( u32 i = 0; i < this->mShapeStack.GetTop (); ++i ) {
+		MOAIVectorShape* shape = this->mShapeStack [ i ];
 		if ( shape ) {
 			delete shape;
 		}
 	}
 	
-	this->mDirectory.Reset ();
 	this->mShapeStack.Reset ();
 	this->mVertexStack.Reset ();
 }
@@ -816,16 +815,10 @@ void MOAIVectorTesselator::PushScale ( float x, float y ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIVectorTesselator::PushShape ( MOAIVectorShape* shape ) {
+void MOAIVectorTesselator::PushShape ( MOAIVectorShape* shape ) {
 
 	shape->mStyle = this->mStyle;
-
-	u32 tag = ( u32 )this->mDirectory.GetTop (); // TODO: cast
-
-	this->mDirectory.Push ( shape );
 	this->mShapeStack.Push ( shape );
-	
-	return tag;
 }
 
 //----------------------------------------------------------------//
