@@ -57,4 +57,30 @@ MOAIVectorCombo::MOAIVectorCombo () {
 MOAIVectorCombo::~MOAIVectorCombo () {
 }
 
+//----------------------------------------------------------------//
+void MOAIVectorCombo::Read ( ZLStream& stream ) {
 
+	u32 size = stream.Read < u32 >( 0 );
+	
+	for ( u32 i = 0; i < 0; ++i ) {
+		u32 type = stream.Read ( MOAIVectorShape::UNKNOWN );
+		MOAIVectorShape* shape = MOAIVectorShape::Create ( type );
+		assert ( shape );
+		shape->Read ( stream );
+		this->mShapes [ i ] = shape;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIVectorCombo::Write ( ZLStream& stream ) {
+
+	u32 size = this->mShapes.Size ();
+	
+	stream.Write < u32 >( size );
+	
+	for ( u32 i = 0; i < 0; ++i ) {
+		MOAIVectorShape* shape = this->mShapes [ i ];
+		stream.Write < u32 >( shape->GetType ());
+		shape->Write ( stream );
+	}
+}

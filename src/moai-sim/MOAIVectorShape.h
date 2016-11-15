@@ -9,6 +9,9 @@
 class MOAIVertexFormat;
 class SafeTesselator;
 
+#define MOAI_VECTOR_SHAPE_DECL_TYPE(type)	\
+	u8 GetType () { return type; }
+
 //================================================================//
 // MOAIVectorShape
 //================================================================//
@@ -27,23 +30,41 @@ protected:
 
 public:
 
+	enum {
+		COMBO,
+		ELLIPSE,
+		POLY,
+		RECT,
+		UNKNOWN,
+	};
+
 	friend class MOAIVectorTesselator;
 
 	GET_SET ( MOAIVectorStyle&, Style, mStyle );
 	
 	//----------------------------------------------------------------//
-	virtual int			AddFillContours				( SafeTesselator& tess ); // TODO: should add status codes to make the meaning ot these return values clear
-	virtual int			AddStrokeContours			( SafeTesselator& tess, bool inside, bool outside );
-	bool				CanGroup					();
-	virtual bool		GroupShapes					( MOAIVectorShape** shapes, u32 total );
-	virtual bool		IsClosed					() = 0;
-						MOAIVectorShape				();
-	virtual				~MOAIVectorShape			();
-	virtual bool		SetVertices					( const ZLVec2D* vertices, u32 total, bool closed );
+	virtual int					AddFillContours				( SafeTesselator& tess ); // TODO: should add status codes to make the meaning ot these return values clear
+	virtual int					AddStrokeContours			( SafeTesselator& tess, bool inside, bool outside );
+	bool						CanGroup					();
 	
-	virtual int			Tesselate					( MOAIVectorTesselator& drawing, MOAIRegion& region, u32 flags );
-	virtual int			Tesselate					( MOAIVectorTesselator& drawing, SafeTesselator& tess, u32 flags );
-	virtual int			Tesselate					( MOAIVectorTesselator& drawing, ZLStream& vertexStream, ZLStream& indexStream, MOAIVertexFormat& format, u32 flags );
+	static MOAIVectorShape*		Create						( u32 type );
+	
+	virtual u8					GetType						() = 0;
+	
+	virtual bool				GroupShapes					( MOAIVectorShape** shapes, u32 total );
+	virtual bool				IsClosed					() = 0;
+								MOAIVectorShape				();
+	virtual						~MOAIVectorShape			();
+	
+	virtual void				Read						( ZLStream& stream ) = 0;
+	
+	virtual bool				SetVertices					( const ZLVec2D* vertices, u32 total, bool closed );
+	
+	virtual int					Tesselate					( MOAIVectorTesselator& drawing, MOAIRegion& region, u32 flags );
+	virtual int					Tesselate					( MOAIVectorTesselator& drawing, SafeTesselator& tess, u32 flags );
+	virtual int					Tesselate					( MOAIVectorTesselator& drawing, ZLStream& vertexStream, ZLStream& indexStream, MOAIVertexFormat& format, u32 flags );
+	
+	virtual void				Write						( ZLStream& stream ) = 0;
 };
 
 #endif

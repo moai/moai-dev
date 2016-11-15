@@ -46,6 +46,7 @@ private:
 	static int		_readDouble			( lua_State* L );
 	static int		_readFloat			( lua_State* L );
 	static int		_readFormat			( lua_State* L );
+	static int		_readString			( lua_State* L );
 	static int		_readU8				( lua_State* L );
 	static int		_readU16			( lua_State* L );
 	static int		_readU32			( lua_State* L );
@@ -60,6 +61,7 @@ private:
 	static int		_writeFloat			( lua_State* L );
 	static int		_writeFormat		( lua_State* L );
 	static int		_writeStream		( lua_State* L );
+	static int		_writeString		( lua_State* L );
 	static int		_writeU8			( lua_State* L );
 	static int		_writeU16			( lua_State* L );
 	static int		_writeU32			( lua_State* L );

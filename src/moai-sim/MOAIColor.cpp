@@ -127,7 +127,7 @@ int MOAIColor::_seekColor ( lua_State* L ) {
 	}
 	
 	ZLColorVec color = state.GetColor ( 2, 0.0f, 0.0f, 0.0f, 0.0f );
-	if ( !color.Compare ( *self )) {
+	if ( !color.IsEqual ( *self )) {
 		self->Set ( color.mR, color.mG, color.mB, color.mA );
 		self->ScheduleUpdate ();
 	}
@@ -150,7 +150,7 @@ int MOAIColor::_setColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIColor, "UNNN" )
 
 	ZLColorVec color = state.GetColor ( 2, 0.0f, 0.0f, 0.0f, 1.0f );
-	if ( !color.Compare ( *self )) {
+	if ( !color.IsEqual ( *self )) {
 		self->Set ( color.mR, color.mG, color.mB, color.mA );
 		self->ScheduleUpdate ();
 	}

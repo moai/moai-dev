@@ -21,6 +21,25 @@
 #include <tesselator.h>
 
 //================================================================//
+// MOAIVectorTesselatorWriter
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAIVectorTesselatorWriter::MOAIVectorTesselatorWriter () :
+	mFlushStyle ( true ) {
+	
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
+}
+
+//----------------------------------------------------------------//
+MOAIVectorTesselatorWriter::~MOAIVectorTesselatorWriter () {
+
+	this->mStream.Set ( *this, 0 );
+}
+
+//================================================================//
 // MOAIVectorDrawingVertexWriter
 //================================================================//
 class MOAIVectorDrawingVertexWriter :
@@ -121,6 +140,23 @@ int MOAIVectorTesselator::_getTransform ( lua_State* L ) {
 	state.Push ( drawingToWorld.m [ ZLAffine2D::C2_R1 ]);
 	
 	return 6;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorTesselator::_openWriter ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
+
+	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, false );
+	
+	if ( stream ) {
+		MOAIVectorTesselatorWriter* writer = new MOAIVectorTesselatorWriter ();
+		
+		writer->mStream.Set ( *writer, stream );
+		state.Push ( writer );
+		
+		return 1;
+	}
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -288,6 +324,18 @@ int MOAIVectorTesselator::_pushVertex ( lua_State* L ) {
 	
 	self->PushVertex ( x, y );
 	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorTesselator::_readShapes ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
+	
+	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, false );
+	
+	if ( stream ) {
+		self->ReadShapes ( *stream );
+	}
 	return 0;
 }
 
@@ -605,6 +653,18 @@ int MOAIVectorTesselator::_worldToDrawingVec ( lua_State* L ) {
 	return 2;
 }
 
+//----------------------------------------------------------------//
+int MOAIVectorTesselator::_writeShapes ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
+	
+	MOAIVectorTesselatorWriter* writer = state.GetLuaObject < MOAIVectorTesselatorWriter >( 2, true );
+	
+	if ( writer ) {
+		self->WriteShapes ( *writer );
+	}
+	return 0;
+}
+
 //================================================================//
 // MOAIVectorTesselator
 //================================================================//
@@ -870,6 +930,80 @@ void MOAIVectorTesselator::PushVertex ( float x, float y ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIVectorTesselator::ReadShapes ( ZLStream& stream ) {
+
+	this->ClearShapes ();
+	this->ClearTransforms ();
+
+	#define CMD_CASE(cmd, type, member, fallback)										\
+		case MOAIVectorTesselatorWriter::cmd:											\
+			this->mStyle.member = stream.Read < type >(( type )fallback );				\
+			break;
+
+	u32 cmd;
+
+	do {
+	
+		cmd = stream.Read < u32 >( MOAIVectorTesselatorWriter::VECTOR_CMD_DONE ).Value ();
+	
+		switch ( cmd ) {
+		
+			CMD_CASE ( STYLE_CMD_FILL,					u8,				mFillStyle,				MOAIVectorStyle::FILL_SOLID )
+			CMD_CASE ( STYLE_CMD_FILL_COLOR,			u32,			mFillColor,				0xffffffff )
+			CMD_CASE ( STYLE_CMD_LINE,					u8,				mLineStyle,				MOAIVectorStyle::LINE_NONE )
+			CMD_CASE ( STYLE_CMD_LINE_COLOR,			u32,			mLineColor,				0xffffffff )
+			CMD_CASE ( STYLE_CMD_LINE_WIDTH,			float,			mLineWidth,				1.0f )
+			CMD_CASE ( STYLE_CMD_STROKE,				u8,				mStrokeStyle,			MOAIVectorStyle::STROKE_NONE )
+			CMD_CASE ( STYLE_CMD_STROKE_COLOR,			u32,			mStrokeColor,			0xffffffff )
+			CMD_CASE ( STYLE_CMD_STROKE_WIDTH,			float,			mStrokeWidth,			1.0f )
+			CMD_CASE ( STYLE_CMD_STROKE_DEPTH_BIAS,		float,			mStrokeDepthBias,		0.0f )
+			CMD_CASE ( STYLE_CMD_JOIN,					u8,				mJoinStyle,				MOAIVectorStyle::JOIN_MITER )
+			CMD_CASE ( STYLE_CMD_CAP,					u8,				mCapStyle,				MOAIVectorStyle::CAP_BUTT )
+			CMD_CASE ( STYLE_CMD_MITER_LIMIT,			float,			mMiterLimit,			5.0f )
+			CMD_CASE ( STYLE_CMD_WINDING_RULE,			u8,				mWindingRule,			TESS_WINDING_ODD )
+			CMD_CASE ( STYLE_CMD_CIRCLE_RESOLUTION,		u16,			mCircleResolution,		MOAIVectorStyle::DEFAULT_CIRCLE_RESOLUTION )
+			CMD_CASE ( STYLE_CMD_EXTRUDE,				float,			mExtrude,				0.0f )
+			CMD_CASE ( STYLE_CMD_Z_OFFSET,				float,			mZOffset,				0.0f )
+			CMD_CASE ( STYLE_CMD_LIGHT_VEC,				ZLVec3D,		mLightVec,				ZLVec3D::ORIGIN )
+			CMD_CASE ( STYLE_CMD_LIGHT_COLOR,			u32,			mLightColor,			0xffffffff )
+			CMD_CASE ( STYLE_CMD_LIGHT_CURVE,			u8,				mLightCurve,			ZLInterpolate::kLinear )
+			CMD_CASE ( STYLE_CMD_SHADOW_COLOR,			u32,			mShadowColor,			0xff000000 )
+			CMD_CASE ( STYLE_CMD_SHADOW_CURVE,			u8,				mShadowCurve,			ZLInterpolate::kLinear )
+			CMD_CASE ( STYLE_CMD_FILL_EXTRA_ID,			u32,			mFillExtraID,			0 )
+			CMD_CASE ( STYLE_CMD_STROKE_EXTRA_ID,		u32,			mStrokeExtraID,			0 )
+			CMD_CASE ( STYLE_CMD_MERGE_NORMALS,			float,			mMergeNormals,			0.0f )
+			
+			case MOAIVectorTesselatorWriter::STYLE_CMD_DRAWING_TO_WORLD:
+			
+				this->mStyle.mDrawingToWorld = stream.Read ( this->mStyle.mDrawingToWorld );
+				this->mStyle.mWorldToDrawing.Inverse ( this->mStyle.mDrawingToWorld );
+				
+				break;
+			
+			case MOAIVectorTesselatorWriter::VECTOR_CMD_SHAPE_STACK: {
+			
+				u32 nShapes = stream.Read < u32 >( 0 );
+				for ( u32 i = 0; i < nShapes; ++i ) {
+				
+					u32 shapeType = stream.Read < u32 >( MOAIVectorShape::UNKNOWN );
+					if ( shapeType != MOAIVectorShape::UNKNOWN ) {
+					
+						MOAIVectorShape* shape = MOAIVectorShape::Create ( shapeType );
+						assert ( shape );
+						shape->Read ( stream );
+						this->PushShape ( shape );
+					}
+				}
+				break;
+			}
+			default:
+				break;
+		}
+	}
+	while ( cmd != MOAIVectorTesselatorWriter::VECTOR_CMD_DONE );
+}
+
+//----------------------------------------------------------------//
 void MOAIVectorTesselator::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "FILL_NONE",					( u32 )MOAIVectorStyle::FILL_NONE );
@@ -913,6 +1047,7 @@ void MOAIVectorTesselator::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "drawingToWorldVec",		_drawingToWorldVec },
 		{ "finish",					_finish },
 		{ "getTransform",			_getTransform },
+		{ "openWriter",				_openWriter },
 		{ "pushBezierVertices",		_pushBezierVertices },
 		{ "pushCombo",				_pushCombo },
 		{ "pushEllipse",			_pushEllipse },
@@ -925,6 +1060,7 @@ void MOAIVectorTesselator::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "pushTransform",			_pushTransform },
 		{ "pushTranslate",			_pushTranslate },
 		{ "pushVertex",				_pushVertex },
+		{ "readShapes",				_readShapes },
 		{ "reserveVertexExtras",	_reserveVertexExtras },
 		{ "setCapStyle",			_setCapStyle },
 		{ "setCircleResolution",	_setCircleResolution },
@@ -956,6 +1092,7 @@ void MOAIVectorTesselator::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "tesselate",				_tesselate },
 		{ "worldToDrawing",			_worldToDrawing },
 		{ "worldToDrawingVec",		_worldToDrawingVec },
+		{ "writeShapes",			_writeShapes },
 		{ NULL, NULL }
 	};
 
@@ -1060,6 +1197,64 @@ int MOAIVectorTesselator::Tesselate ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuff
 	
 	// something went wrong, return error code
 	return totalIndices;
+}
+
+//----------------------------------------------------------------//
+void MOAIVectorTesselator::WriteShapes ( MOAIVectorTesselatorWriter& writer ) {
+
+	MOAIStream& stream = *writer.mStream;
+
+	bool forceWrite = writer.mFlushStyle;
+	writer.mFlushStyle = false;
+
+	#define WRITE_STYLE_CMD(cmd, type, member)										\
+		if ( forceWrite || ( this->mStyle.member != writer.mStyle.member )) {		\
+			stream.Write < u8 >(( u8 )MOAIVectorTesselatorWriter::cmd );			\
+			stream.Write < type >(( type )this->mStyle.member );					\
+			writer.mStyle.member = this->mStyle.member;								\
+		}
+
+	WRITE_STYLE_CMD ( STYLE_CMD_FILL,					u8,				mFillStyle )
+	WRITE_STYLE_CMD ( STYLE_CMD_FILL_COLOR,				u32,			mFillColor )
+	WRITE_STYLE_CMD ( STYLE_CMD_LINE,					u8,				mLineStyle )
+	WRITE_STYLE_CMD ( STYLE_CMD_LINE_COLOR,				u32,			mLineColor )
+	WRITE_STYLE_CMD ( STYLE_CMD_LINE_WIDTH,				float,			mLineWidth )
+	WRITE_STYLE_CMD ( STYLE_CMD_STROKE,					u8,				mStrokeStyle )
+	WRITE_STYLE_CMD ( STYLE_CMD_STROKE_COLOR,			u32,			mStrokeColor )
+	WRITE_STYLE_CMD ( STYLE_CMD_STROKE_WIDTH,			float,			mStrokeWidth )
+	WRITE_STYLE_CMD ( STYLE_CMD_STROKE_DEPTH_BIAS,		float,			mStrokeDepthBias )
+	WRITE_STYLE_CMD ( STYLE_CMD_JOIN,					u8,				mJoinStyle )
+	WRITE_STYLE_CMD ( STYLE_CMD_CAP,					u8,				mCapStyle )
+	WRITE_STYLE_CMD ( STYLE_CMD_MITER_LIMIT,			float,			mMiterLimit )
+	WRITE_STYLE_CMD ( STYLE_CMD_WINDING_RULE,			u8,				mWindingRule )
+	WRITE_STYLE_CMD ( STYLE_CMD_CIRCLE_RESOLUTION,		u16,			mCircleResolution )
+	WRITE_STYLE_CMD ( STYLE_CMD_EXTRUDE,				float,			mExtrude )
+	WRITE_STYLE_CMD ( STYLE_CMD_Z_OFFSET,				float,			mZOffset )
+	WRITE_STYLE_CMD ( STYLE_CMD_LIGHT_VEC,				ZLVec3D,		mLightVec )
+	WRITE_STYLE_CMD ( STYLE_CMD_LIGHT_COLOR,			u32,			mLightColor )
+	WRITE_STYLE_CMD ( STYLE_CMD_LIGHT_CURVE,			u8,				mLightCurve )
+	WRITE_STYLE_CMD ( STYLE_CMD_SHADOW_COLOR,			u32,			mShadowColor )
+	WRITE_STYLE_CMD ( STYLE_CMD_SHADOW_CURVE,			u8,				mShadowCurve )
+	WRITE_STYLE_CMD ( STYLE_CMD_DRAWING_TO_WORLD,		ZLAffine2D,		mDrawingToWorld )
+	WRITE_STYLE_CMD ( STYLE_CMD_FILL_EXTRA_ID,			u32,			mFillExtraID )
+	WRITE_STYLE_CMD ( STYLE_CMD_STROKE_EXTRA_ID,		u32,			mStrokeExtraID )
+	WRITE_STYLE_CMD ( STYLE_CMD_MERGE_NORMALS,			float,			mMergeNormals )
+
+	u32 nShapes = this->mShapeStack.GetTop ();
+
+	if ( nShapes ) {
+
+		stream.Write < u32 >( MOAIVectorTesselatorWriter::VECTOR_CMD_SHAPE_STACK );
+		stream.Write < u32 >( nShapes );
+		
+		for ( u32 i = 0; i < nShapes; ++i ) {
+		
+			MOAIVectorShape* shape = this->mShapeStack [ i ];
+			stream.Write < u8 >( shape->GetType ());
+			shape->Write ( stream );
+		}
+	}
+	stream.Write < u32 >( MOAIVectorTesselatorWriter::VECTOR_CMD_DONE );
 }
 
 //----------------------------------------------------------------//

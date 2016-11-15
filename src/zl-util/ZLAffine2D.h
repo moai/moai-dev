@@ -33,6 +33,16 @@ public:
 	TYPE	m [ SIZE ];
 
 	//----------------------------------------------------------------//
+	bool operator == ( const ZLMetaAffine2D < TYPE >& rhs ) const {
+		return this->IsSame ( rhs );
+	}
+	
+	//----------------------------------------------------------------//
+	bool operator != ( const ZLMetaAffine2D < TYPE >& rhs ) const {
+		return !this->IsSame ( rhs );
+	}
+
+	//----------------------------------------------------------------//
 	void Append ( const ZLMetaAffine2D < TYPE >& mtx ) {
 
 		ZLMetaAffine2D < TYPE > temp;

@@ -62,6 +62,11 @@ class ZLResultBase {
 public:
 
 	ZLResultCode	mCode;
+	
+	//----------------------------------------------------------------//
+	inline ZLResultCode Code () const {
+		return this->mCode;
+	}
 };
 
 //================================================================//
@@ -77,6 +82,11 @@ public:
 	//----------------------------------------------------------------//
 	inline operator const TYPE& () const {
 		assert ( this->mCode == ZL_OK );
+		return this->mValue;
+	}
+	
+	//----------------------------------------------------------------//
+	inline TYPE Value () const {
 		return this->mValue;
 	}
 };

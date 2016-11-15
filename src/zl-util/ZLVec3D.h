@@ -25,6 +25,16 @@ public:
 	TYPE	mZ;
 
 	//----------------------------------------------------------------//
+	bool operator == ( const ZLMetaVec3D < TYPE >& rhs ) const {
+		return (( this->mX == rhs.mX ) && ( this->mY == rhs.mY ) && ( this->mZ == rhs.mZ ));
+	}
+	
+	//----------------------------------------------------------------//
+	bool operator != ( const ZLMetaVec3D < TYPE >& rhs ) const {
+		return (( this->mX != rhs.mX ) || ( this->mY != rhs.mY ) || ( this->mZ != rhs.mZ ));
+	}
+
+	//----------------------------------------------------------------//
 	ZLMetaVec3D < TYPE > operator + ( const ZLMetaVec3D < TYPE >& v ) const {
 		ZLMetaVec3D < TYPE > result;
 		result.mX = this->mX + v.mX;

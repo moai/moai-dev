@@ -56,3 +56,19 @@ MOAIVectorEllipse::MOAIVectorEllipse () {
 //----------------------------------------------------------------//
 MOAIVectorEllipse::~MOAIVectorEllipse () {
 }
+
+//----------------------------------------------------------------//
+void MOAIVectorEllipse::Read ( ZLStream& stream ) {
+
+	this->mLoc = stream.Read < ZLVec2D >( ZLVec2D::ORIGIN );
+	this->mXRad = stream.Read < float >( 0.0f );
+	this->mYRad = stream.Read < float >( 0.0f );
+}
+
+//----------------------------------------------------------------//
+void MOAIVectorEllipse::Write ( ZLStream& stream ) {
+	
+	stream.Write < ZLVec2D >( this->mLoc );
+	stream.Write < float >( this->mXRad );
+	stream.Write < float >( this->mYRad );
+}

@@ -14,6 +14,61 @@ class MOAIVertexFormat;
 class SafeTesselator;
 
 //================================================================//
+// MOAIVectorTesselatorWriter
+//================================================================//
+// TODO: doxygen
+class MOAIVectorTesselatorWriter :
+	public MOAILuaObject {
+private:
+
+	friend class MOAIVectorTesselator;
+
+	enum {
+		STYLE_CMD_FILL,
+		STYLE_CMD_FILL_COLOR,
+		STYLE_CMD_LINE,
+		STYLE_CMD_LINE_COLOR,
+		STYLE_CMD_LINE_WIDTH,
+		STYLE_CMD_STROKE,
+		STYLE_CMD_STROKE_COLOR,
+		STYLE_CMD_STROKE_WIDTH,
+		STYLE_CMD_STROKE_DEPTH_BIAS,
+		STYLE_CMD_JOIN,
+		STYLE_CMD_CAP,
+		STYLE_CMD_MITER_LIMIT,
+		STYLE_CMD_WINDING_RULE,
+		STYLE_CMD_CIRCLE_RESOLUTION,
+		STYLE_CMD_EXTRUDE,
+		STYLE_CMD_Z_OFFSET,
+		STYLE_CMD_LIGHT_VEC,
+		STYLE_CMD_LIGHT_COLOR,
+		STYLE_CMD_LIGHT_CURVE,
+		STYLE_CMD_SHADOW_COLOR,
+		STYLE_CMD_SHADOW_CURVE,
+		STYLE_CMD_DRAWING_TO_WORLD,
+		STYLE_CMD_FILL_EXTRA_ID,
+		STYLE_CMD_STROKE_EXTRA_ID,
+		STYLE_CMD_MERGE_NORMALS,
+		
+		VECTOR_CMD_SHAPE_STACK,
+		VECTOR_CMD_DONE,
+	};
+
+	bool				mFlushStyle;
+	MOAIVectorStyle		mStyle;
+	
+	MOAILuaSharedPtr < MOAIStream > mStream;
+
+public:
+
+	DECL_LUA_OPAQUE ( MOAIVectorTesselatorWriter )
+
+	//----------------------------------------------------------------//
+				MOAIVectorTesselatorWriter			();
+				~MOAIVectorTesselatorWriter			();
+};
+
+//================================================================//
 // MOAIVectorTesselator
 //================================================================//
 /**	@lua	MOAIVectorTessalator
@@ -51,6 +106,7 @@ private:
 	static int		_drawingToWorldVec		( lua_State* L );
 	static int		_finish					( lua_State* L );
 	static int		_getTransform			( lua_State* L );
+	static int		_openWriter				( lua_State* L );
 	static int		_pushBezierVertices		( lua_State* L );
 	static int		_pushCombo				( lua_State* L );
 	static int		_pushEllipse			( lua_State* L );
@@ -63,6 +119,7 @@ private:
 	static int		_pushTransform			( lua_State* L );
 	static int		_pushTranslate			( lua_State* L );
 	static int		_pushVertex				( lua_State* L );
+	static int		_readShapes				( lua_State* L );
 	static int		_reserveVertexExtras	( lua_State* L );
 	static int		_setCapStyle			( lua_State* L );
 	static int		_setCircleResolution	( lua_State* L );
@@ -94,6 +151,7 @@ private:
 	static int		_tesselate				( lua_State* L );
 	static int		_worldToDrawing			( lua_State* L );
 	static int		_worldToDrawingVec		( lua_State* L );
+	static int		_writeShapes			( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			PushShape				( MOAIVectorShape* shape );
@@ -133,6 +191,7 @@ public:
 	void				PushTransform				( float a, float b, float c, float d, float tx, float ty );
 	void				PushTranslate				( float x, float y);
 	void				PushVertex					( float x, float y );
+	void				ReadShapes					( ZLStream& stream );
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
 	void				ReserveVertexExtras			( u32 total, size_t size );
@@ -141,6 +200,7 @@ public:
 	int					Tesselate					( MOAIRegion& region, u32 flags = TESSELATE_ALL );
 	int					Tesselate					( ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, u32 flags = TESSELATE_ALL );
 	int					Tesselate					( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, MOAIVertexFormat& format, u32 idxSizeInBytes, u32 flags = TESSELATE_ALL );
+	void				WriteShapes					( MOAIVectorTesselatorWriter& writer );
 	void				WriteSkirt					( SafeTesselator& tess, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, const MOAIVectorStyle& style, const ZLColorVec& fillColor, u32 vertexExtraID );
 	void				WriteTriangles				( SafeTesselator& tess, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, const MOAIVectorStyle& style, float z, u32 color, u32 vertexExtraID );
 	void				WriteVertex					( ZLStream& stream, MOAIVertexFormat& format, float x, float y, float z, float xn, float yn, float zn, u32 color, u32 vertexExtraID );

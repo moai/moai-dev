@@ -44,6 +44,16 @@ public:
 	TYPE m [ SIZE ];
 
 	//----------------------------------------------------------------//
+	bool operator == ( const ZLMetaMatrix4x4 < TYPE >& rhs ) const {
+		return this->IsSame ( rhs );
+	}
+	
+	//----------------------------------------------------------------//
+	bool operator != ( const ZLMetaMatrix4x4 < TYPE >& rhs ) const {
+		return !this->IsSame ( rhs );
+	}
+
+	//----------------------------------------------------------------//
 	void Append	( const ZLMetaMatrix4x4 < TYPE >& mtx ) {
 
 		ZLMetaMatrix4x4 < TYPE > temp;

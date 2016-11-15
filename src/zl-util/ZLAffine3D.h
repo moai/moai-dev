@@ -40,6 +40,16 @@ public:
 	};
 
 	TYPE	m [ SIZE ];
+	
+	//----------------------------------------------------------------//
+	bool operator == ( const ZLMetaAffine3D < TYPE >& rhs ) const {
+		return this->IsSame ( rhs );
+	}
+	
+	//----------------------------------------------------------------//
+	bool operator != ( const ZLMetaAffine3D < TYPE >& rhs ) const {
+		return !this->IsSame ( rhs );
+	}
 
 	//----------------------------------------------------------------//
 	void Append ( const ZLMetaAffine3D < TYPE >& mtx ) {

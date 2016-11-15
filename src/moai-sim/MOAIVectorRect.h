@@ -26,6 +26,8 @@ private:
 
 public:
 	
+	MOAI_VECTOR_SHAPE_DECL_TYPE ( MOAIVectorShape::RECT )
+	
 	//----------------------------------------------------------------//
 	int				AddFillContours			( SafeTesselator& tess );
 	int				AddStrokeContours		( SafeTesselator& tess, bool inside, bool outside );
@@ -33,8 +35,10 @@ public:
 	bool			IsClosed				();
 					MOAIVectorRect			();
 					~MOAIVectorRect			();
+	void			Read					( ZLStream& stream );
 	int				Tesselate				( MOAIVectorTesselator& drawing, MOAIRegion& region, u32 flags );
 	int				Tesselate				( MOAIVectorTesselator& drawing, ZLStream& vertexStream, ZLStream& indexStream, MOAIVertexFormat& format, u32 flags );
+	void			Write					( ZLStream& stream );
 };
 
 #endif

@@ -20,6 +20,8 @@ private:
 	float			mYRad;
 
 public:
+
+	MOAI_VECTOR_SHAPE_DECL_TYPE ( MOAIVectorShape::ELLIPSE )
 	
 	//----------------------------------------------------------------//
 	int				AddFillContours			( SafeTesselator& tess );
@@ -28,7 +30,8 @@ public:
 	bool			IsClosed				();
 					MOAIVectorEllipse		();
 					~MOAIVectorEllipse		();
-	
+	void			Read					( ZLStream& stream );
+	void			Write					( ZLStream& stream );
 };
 
 #endif

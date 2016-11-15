@@ -224,6 +224,7 @@ ZLStringResult ZLStream::ReadString ( size_t size ) {
 	STLString str;
 
 	const unsigned int MAX_HEAP_ALLOC = 1024;
+	
 	if ( size ) {
 
 		char* buffer;

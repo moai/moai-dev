@@ -8,21 +8,25 @@
 
 class MOAILuaState;
 
-#define DECL_LUA_ABSTRACT(type)									\
-MOAILuaClass* GetLuaClass () { return 0; }						\
+#define DECL_LUA_ABSTRACT(type)					\
+MOAILuaClass* GetLuaClass () { return 0; }		\
 cc8* TypeName () const { return #type; }
 
-#define DECL_LUA_FACTORY(type) \
+#define DECL_LUA_FACTORY(type)															\
 MOAILuaClass* GetLuaClass () { return &MOAILuaFactoryClass < type >::Get (); }			\
 static void RegisterLuaType () { MOAILuaFactoryClass < type >::Get ().Register (); }	\
 cc8* TypeName () const { return #type; }
 
-#define DECL_LUA_SINGLETON(type) \
+#define DECL_LUA_OPAQUE(type)															\
+MOAILuaClass* GetLuaClass () { return &MOAILuaFactoryClass < type >::Get (); }			\
+cc8* TypeName () const { return #type; }
+
+#define DECL_LUA_SINGLETON(type)														\
 MOAILuaClass* GetLuaClass () { return &MOAILuaSingletonClass < type >::Get (); }		\
 static void RegisterLuaType () { MOAILuaSingletonClass < type >::Get ().Register (); }	\
 cc8* TypeName () const { return #type; }
 
-#define REGISTER_LUA_CLASS(type) \
+#define REGISTER_LUA_CLASS(type)	\
 type::RegisterLuaType ();
 
 //================================================================//

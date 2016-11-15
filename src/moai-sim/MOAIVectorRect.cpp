@@ -74,6 +74,12 @@ MOAIVectorRect::~MOAIVectorRect () {
 }
 
 //----------------------------------------------------------------//
+void MOAIVectorRect::Read ( ZLStream& stream ) {
+
+	this->mRect = stream.Read < ZLRect >( this->mRect );
+}
+
+//----------------------------------------------------------------//
 int MOAIVectorRect::Tesselate ( MOAIVectorTesselator& drawing, MOAIRegion& region, u32 flags ) {
 
 	int fastTrack = this->CheckFastTrack ( drawing, flags );
@@ -187,5 +193,12 @@ int MOAIVectorRect::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vertexS
 		indexStream.Write < u32 >( base + 0 ); indexStream.Write < u32 >( base + 1 ); indexStream.Write < u32 >( base + 2 );
 		indexStream.Write < u32 >( base + 0 ); indexStream.Write < u32 >( base + 2 ); indexStream.Write < u32 >( base + 3 );
 	}
+
 	return 0;
+}
+
+//----------------------------------------------------------------//
+void MOAIVectorRect::Write ( ZLStream& stream ) {
+
+	stream.Write < ZLRect >( this->mRect );
 }

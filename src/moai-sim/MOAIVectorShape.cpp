@@ -2,6 +2,10 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-sim/MOAIVectorCombo.h>
+#include <moai-sim/MOAIVectorEllipse.h>
+#include <moai-sim/MOAIVectorPoly.h>
+#include <moai-sim/MOAIVectorRect.h>
 #include <moai-sim/MOAIVectorTesselator.h>
 #include <moai-sim/MOAIVectorShape.h>
 #include <moai-sim/MOAIVectorUtil.h>
@@ -89,6 +93,19 @@ void MOAIVectorShape::CopyBoundaries ( SafeTesselator& dest, SafeTesselator* src
 		int b = elems [( i * 2 )];
 		int n = elems [( i * 2 ) + 1 ];
 		dest.AddContour ( 2, &verts [ b * 2 ], sizeof ( float ) * 2, n );
+	}
+}
+
+//----------------------------------------------------------------//
+MOAIVectorShape* MOAIVectorShape::Create ( u32 type ) {
+
+	switch ( type ) {
+		case COMBO:		return new MOAIVectorCombo ();
+		case ELLIPSE:	return new MOAIVectorEllipse ();
+		case POLY:		return new MOAIVectorPoly ();
+		case RECT:		return new MOAIVectorRect ();
+		case UNKNOWN:
+		default:		return 0;
 	}
 }
 
