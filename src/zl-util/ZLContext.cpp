@@ -167,8 +167,6 @@ void ZLContextMgr::Delete ( ZLContext* globals ) {
 //----------------------------------------------------------------//
 void ZLContextMgr::Finalize () {
 
-	ZLLog_DebugF ( ZLLog::CONSOLE, "ZLContextMgr: finalizing\n" );
-
 	GlobalsSet* globalSet = sGlobalsSet.Get ();
 
     if ( globalSet ) {
@@ -179,8 +177,6 @@ void ZLContextMgr::Finalize () {
 			ZLContext* instance = *globalsIt;
 			
             sInstance.Set ( instance );
-			
-			ZLLog_DebugF ( ZLLog::CONSOLE, "ZLContextMgr: deleting context %p\n", instance );
 			
             delete instance;
         }
