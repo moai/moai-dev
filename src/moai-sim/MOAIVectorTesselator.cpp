@@ -980,19 +980,16 @@ void MOAIVectorTesselator::ReadShapes ( ZLStream& stream ) {
 				
 				break;
 			
-			case MOAIVectorTesselatorWriter::VECTOR_CMD_SHAPE_STACK: {
+			case MOAIVectorTesselatorWriter::VECTOR_CMD_SHAPE: {
 			
-				u32 nShapes = stream.Read < u32 >( 0 );
-				for ( u32 i = 0; i < nShapes; ++i ) {
 				
-					u32 shapeType = stream.Read < u32 >( MOAIVectorShape::UNKNOWN );
-					if ( shapeType != MOAIVectorShape::UNKNOWN ) {
-					
-						MOAIVectorShape* shape = MOAIVectorShape::Create ( shapeType );
-						assert ( shape );
-						shape->Read ( stream );
-						this->PushShape ( shape );
-					}
+				u32 shapeType = stream.Read < u32 >( MOAIVectorShape::UNKNOWN );
+				if ( shapeType != MOAIVectorShape::UNKNOWN ) {
+				
+					MOAIVectorShape* shape = MOAIVectorShape::Create ( shapeType );
+					assert ( shape );
+					shape->Read ( stream );
+					this->PushShape ( shape );
 				}
 				break;
 			}
@@ -1208,48 +1205,48 @@ void MOAIVectorTesselator::WriteShapes ( MOAIVectorTesselatorWriter& writer ) {
 	writer.mFlushStyle = false;
 
 	#define WRITE_STYLE_CMD(cmd, type, member)										\
-		if ( forceWrite || ( this->mStyle.member != writer.mStyle.member )) {		\
+		if ( forceWrite || ( shape->mStyle.member != writer.mStyle.member )) {		\
 			stream.Write < u8 >(( u8 )MOAIVectorTesselatorWriter::cmd );			\
-			stream.Write < type >(( type )this->mStyle.member );					\
-			writer.mStyle.member = this->mStyle.member;								\
+			stream.Write < type >(( type )shape->mStyle.member );					\
+			writer.mStyle.member = shape->mStyle.member;								\
 		}
 
-	WRITE_STYLE_CMD ( STYLE_CMD_FILL,					u8,				mFillStyle )
-	WRITE_STYLE_CMD ( STYLE_CMD_FILL_COLOR,				u32,			mFillColor )
-	WRITE_STYLE_CMD ( STYLE_CMD_LINE,					u8,				mLineStyle )
-	WRITE_STYLE_CMD ( STYLE_CMD_LINE_COLOR,				u32,			mLineColor )
-	WRITE_STYLE_CMD ( STYLE_CMD_LINE_WIDTH,				float,			mLineWidth )
-	WRITE_STYLE_CMD ( STYLE_CMD_STROKE,					u8,				mStrokeStyle )
-	WRITE_STYLE_CMD ( STYLE_CMD_STROKE_COLOR,			u32,			mStrokeColor )
-	WRITE_STYLE_CMD ( STYLE_CMD_STROKE_WIDTH,			float,			mStrokeWidth )
-	WRITE_STYLE_CMD ( STYLE_CMD_STROKE_DEPTH_BIAS,		float,			mStrokeDepthBias )
-	WRITE_STYLE_CMD ( STYLE_CMD_JOIN,					u8,				mJoinStyle )
-	WRITE_STYLE_CMD ( STYLE_CMD_CAP,					u8,				mCapStyle )
-	WRITE_STYLE_CMD ( STYLE_CMD_MITER_LIMIT,			float,			mMiterLimit )
-	WRITE_STYLE_CMD ( STYLE_CMD_WINDING_RULE,			u8,				mWindingRule )
-	WRITE_STYLE_CMD ( STYLE_CMD_CIRCLE_RESOLUTION,		u16,			mCircleResolution )
-	WRITE_STYLE_CMD ( STYLE_CMD_EXTRUDE,				float,			mExtrude )
-	WRITE_STYLE_CMD ( STYLE_CMD_Z_OFFSET,				float,			mZOffset )
-	WRITE_STYLE_CMD ( STYLE_CMD_LIGHT_VEC,				ZLVec3D,		mLightVec )
-	WRITE_STYLE_CMD ( STYLE_CMD_LIGHT_COLOR,			u32,			mLightColor )
-	WRITE_STYLE_CMD ( STYLE_CMD_LIGHT_CURVE,			u8,				mLightCurve )
-	WRITE_STYLE_CMD ( STYLE_CMD_SHADOW_COLOR,			u32,			mShadowColor )
-	WRITE_STYLE_CMD ( STYLE_CMD_SHADOW_CURVE,			u8,				mShadowCurve )
-	WRITE_STYLE_CMD ( STYLE_CMD_DRAWING_TO_WORLD,		ZLAffine2D,		mDrawingToWorld )
-	WRITE_STYLE_CMD ( STYLE_CMD_FILL_EXTRA_ID,			u32,			mFillExtraID )
-	WRITE_STYLE_CMD ( STYLE_CMD_STROKE_EXTRA_ID,		u32,			mStrokeExtraID )
-	WRITE_STYLE_CMD ( STYLE_CMD_MERGE_NORMALS,			float,			mMergeNormals )
-
+	
 	u32 nShapes = this->mShapeStack.GetTop ();
 
 	if ( nShapes ) {
 
-		stream.Write < u32 >( MOAIVectorTesselatorWriter::VECTOR_CMD_SHAPE_STACK );
-		stream.Write < u32 >( nShapes );
-		
 		for ( u32 i = 0; i < nShapes; ++i ) {
 		
 			MOAIVectorShape* shape = this->mShapeStack [ i ];
+			
+			WRITE_STYLE_CMD ( STYLE_CMD_FILL,					u8,				mFillStyle )
+			WRITE_STYLE_CMD ( STYLE_CMD_FILL_COLOR,				u32,			mFillColor )
+			WRITE_STYLE_CMD ( STYLE_CMD_LINE,					u8,				mLineStyle )
+			WRITE_STYLE_CMD ( STYLE_CMD_LINE_COLOR,				u32,			mLineColor )
+			WRITE_STYLE_CMD ( STYLE_CMD_LINE_WIDTH,				float,			mLineWidth )
+			WRITE_STYLE_CMD ( STYLE_CMD_STROKE,					u8,				mStrokeStyle )
+			WRITE_STYLE_CMD ( STYLE_CMD_STROKE_COLOR,			u32,			mStrokeColor )
+			WRITE_STYLE_CMD ( STYLE_CMD_STROKE_WIDTH,			float,			mStrokeWidth )
+			WRITE_STYLE_CMD ( STYLE_CMD_STROKE_DEPTH_BIAS,		float,			mStrokeDepthBias )
+			WRITE_STYLE_CMD ( STYLE_CMD_JOIN,					u8,				mJoinStyle )
+			WRITE_STYLE_CMD ( STYLE_CMD_CAP,					u8,				mCapStyle )
+			WRITE_STYLE_CMD ( STYLE_CMD_MITER_LIMIT,			float,			mMiterLimit )
+			WRITE_STYLE_CMD ( STYLE_CMD_WINDING_RULE,			u8,				mWindingRule )
+			WRITE_STYLE_CMD ( STYLE_CMD_CIRCLE_RESOLUTION,		u16,			mCircleResolution )
+			WRITE_STYLE_CMD ( STYLE_CMD_EXTRUDE,				float,			mExtrude )
+			WRITE_STYLE_CMD ( STYLE_CMD_Z_OFFSET,				float,			mZOffset )
+			WRITE_STYLE_CMD ( STYLE_CMD_LIGHT_VEC,				ZLVec3D,		mLightVec )
+			WRITE_STYLE_CMD ( STYLE_CMD_LIGHT_COLOR,			u32,			mLightColor )
+			WRITE_STYLE_CMD ( STYLE_CMD_LIGHT_CURVE,			u8,				mLightCurve )
+			WRITE_STYLE_CMD ( STYLE_CMD_SHADOW_COLOR,			u32,			mShadowColor )
+			WRITE_STYLE_CMD ( STYLE_CMD_SHADOW_CURVE,			u8,				mShadowCurve )
+			WRITE_STYLE_CMD ( STYLE_CMD_DRAWING_TO_WORLD,		ZLAffine2D,		mDrawingToWorld )
+			WRITE_STYLE_CMD ( STYLE_CMD_FILL_EXTRA_ID,			u32,			mFillExtraID )
+			WRITE_STYLE_CMD ( STYLE_CMD_STROKE_EXTRA_ID,		u32,			mStrokeExtraID )
+			WRITE_STYLE_CMD ( STYLE_CMD_MERGE_NORMALS,			float,			mMergeNormals )
+			
+			stream.Write < u32 >( MOAIVectorTesselatorWriter::VECTOR_CMD_SHAPE );
 			stream.Write < u8 >( shape->GetType ());
 			shape->Write ( stream );
 		}
