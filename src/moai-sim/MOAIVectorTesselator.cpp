@@ -657,10 +657,11 @@ int MOAIVectorTesselator::_worldToDrawingVec ( lua_State* L ) {
 int MOAIVectorTesselator::_writeShapes ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	MOAIVectorTesselatorWriter* writer = state.GetLuaObject < MOAIVectorTesselatorWriter >( 2, true );
+	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, false );
+	MOAIVectorTesselatorWriter* writer = state.GetLuaObject < MOAIVectorTesselatorWriter >( 3, false );
 	
 	if ( writer ) {
-		self->WriteShapes ( *writer );
+		self->WriteShapes ( *stream, writer );
 	}
 	return 0;
 }
@@ -940,11 +941,11 @@ void MOAIVectorTesselator::ReadShapes ( ZLStream& stream ) {
 			this->mStyle.member = stream.Read < type >(( type )fallback );				\
 			break;
 
-	u32 cmd;
+	u8 cmd;
 
 	do {
 	
-		cmd = stream.Read < u32 >( MOAIVectorTesselatorWriter::VECTOR_CMD_DONE ).Value ();
+		cmd = stream.Read < u8 >( MOAIVectorTesselatorWriter::VECTOR_CMD_DONE ).Value ();
 	
 		switch ( cmd ) {
 		
@@ -983,7 +984,7 @@ void MOAIVectorTesselator::ReadShapes ( ZLStream& stream ) {
 			case MOAIVectorTesselatorWriter::VECTOR_CMD_SHAPE: {
 			
 				
-				u32 shapeType = stream.Read < u32 >( MOAIVectorShape::UNKNOWN );
+				u8 shapeType = stream.Read < u8 >( MOAIVectorShape::UNKNOWN );
 				if ( shapeType != MOAIVectorShape::UNKNOWN ) {
 				
 					MOAIVectorShape* shape = MOAIVectorShape::Create ( shapeType );
@@ -1197,18 +1198,19 @@ int MOAIVectorTesselator::Tesselate ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuff
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::WriteShapes ( MOAIVectorTesselatorWriter& writer ) {
+void MOAIVectorTesselator::WriteShapes ( ZLStream& stream, MOAIVectorTesselatorWriter* writer ) {
 
-	MOAIStream& stream = *writer.mStream;
+	MOAIVectorTesselatorWriter defaultWriter;
+	writer = writer ? writer : &defaultWriter;
 
-	bool forceWrite = writer.mFlushStyle;
-	writer.mFlushStyle = false;
+	bool forceWrite = writer->mFlushStyle;
+	writer->mFlushStyle = false;
 
 	#define WRITE_STYLE_CMD(cmd, type, member)										\
-		if ( forceWrite || ( shape->mStyle.member != writer.mStyle.member )) {		\
+		if ( forceWrite || ( this->mStyle.member != writer->mStyle.member )) {		\
 			stream.Write < u8 >(( u8 )MOAIVectorTesselatorWriter::cmd );			\
-			stream.Write < type >(( type )shape->mStyle.member );					\
-			writer.mStyle.member = shape->mStyle.member;								\
+			stream.Write < type >(( type )this->mStyle.member );					\
+			writer->mStyle.member = this->mStyle.member;							\
 		}
 
 	
@@ -1246,12 +1248,12 @@ void MOAIVectorTesselator::WriteShapes ( MOAIVectorTesselatorWriter& writer ) {
 			WRITE_STYLE_CMD ( STYLE_CMD_STROKE_EXTRA_ID,		u32,			mStrokeExtraID )
 			WRITE_STYLE_CMD ( STYLE_CMD_MERGE_NORMALS,			float,			mMergeNormals )
 			
-			stream.Write < u32 >( MOAIVectorTesselatorWriter::VECTOR_CMD_SHAPE );
+			stream.Write < u8 >( MOAIVectorTesselatorWriter::VECTOR_CMD_SHAPE );
 			stream.Write < u8 >( shape->GetType ());
 			shape->Write ( stream );
 		}
 	}
-	stream.Write < u32 >( MOAIVectorTesselatorWriter::VECTOR_CMD_DONE );
+	stream.Write < u8 >( MOAIVectorTesselatorWriter::VECTOR_CMD_DONE );
 }
 
 //----------------------------------------------------------------//

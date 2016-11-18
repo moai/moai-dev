@@ -194,6 +194,19 @@ int MOAIStream::_read32 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	readBoolean
+	@text	Reads an 8-bit boolean value from the stream.
+	
+	@in		MOAIStream self
+	@out	number value		Value from the stream.
+	@out	number size			Number of bytes successfully read.
+*/
+int MOAIStream::_readBoolean ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIStream, "U" );
+	return self->ReadValues < bool >( state, 2 );
+}
+
+//----------------------------------------------------------------//
 /**	@lua	readDouble
 	@text	Reads a 64-bit floating point value from the stream.
 	
@@ -240,7 +253,7 @@ int MOAIStream::_readFormat ( lua_State* L ) {
 int MOAIStream::_readString ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 
-	size_t len = state.GetValue < u32 >( 2, 0 );
+	size_t len = self->Read < u32 >( 0 );
 	assert ( len < 1024 ); // TODO: should be defined somewhere
 	
 	char* buffer = ( char* )alloca ( len + 1 );
@@ -389,6 +402,19 @@ int MOAIStream::_write16 ( lua_State* L ) {
 int MOAIStream::_write32 ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	return self->WriteValues < s32 >( state, 2 );
+}
+
+//----------------------------------------------------------------//
+/**	@lua	writeBoolean
+	@text	Writes an 8-bit boolean value to the stream.
+	
+	@in		MOAIStream self
+	@in		boolean value		Value to write.
+	@out	number size			Number of bytes successfully written.
+*/
+int MOAIStream::_writeBoolean ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIStream, "U" );
+	return self->WriteValues < bool >( state, 2 );
 }
 
 //----------------------------------------------------------------//
@@ -739,6 +765,7 @@ void MOAIStream::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "read8",				_read8 },
 		{ "read16",				_read16 },
 		{ "read32",				_read32 },
+		{ "readBoolean",		_readBoolean },
 		{ "readDouble",			_readDouble },
 		{ "readFloat",			_readFloat },
 		{ "readFormat",			_readFormat },
@@ -752,6 +779,7 @@ void MOAIStream::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "write8",				_write8 },
 		{ "write16",			_write16 },
 		{ "write32",			_write32 },
+		{ "writeBoolean",		_writeBoolean },
 		{ "writeColor32",		_writeColor32 },
 		{ "writeDouble",		_writeDouble },
 		{ "writeFloat",			_writeFloat },

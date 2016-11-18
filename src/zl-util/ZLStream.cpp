@@ -205,9 +205,15 @@ ZLSizeResult ZLStream::Print ( cc8* format, va_list args ) {
 }
 
 //----------------------------------------------------------------//
+template <> ZLResult < bool > ZLStream::Read < bool >() {
+	ZLResult < u8 > result = this->Read < u8 >( 0 );
+	ZL_RETURN_BOOL_RESULT ( result.mValue != 0, result.mCode );
+}
+
+//----------------------------------------------------------------//
 template <> ZLResult < bool > ZLStream::Read < bool >( bool value ) {
 	ZLResult < u8 > result = this->Read < u8 >( value ? 1 : 0 );
-   ZL_RETURN_BOOL_RESULT ( result.mValue > 0, result.mCode );
+	ZL_RETURN_BOOL_RESULT ( result.mValue != 0, result.mCode );
 }
 
 //----------------------------------------------------------------//

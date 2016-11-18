@@ -200,7 +200,7 @@ public:
 	int					Tesselate					( MOAIRegion& region, u32 flags = TESSELATE_ALL );
 	int					Tesselate					( ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, u32 flags = TESSELATE_ALL );
 	int					Tesselate					( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, MOAIVertexFormat& format, u32 idxSizeInBytes, u32 flags = TESSELATE_ALL );
-	void				WriteShapes					( MOAIVectorTesselatorWriter& writer );
+	void				WriteShapes					( ZLStream& stream, MOAIVectorTesselatorWriter* writer = 0 );
 	void				WriteSkirt					( SafeTesselator& tess, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, const MOAIVectorStyle& style, const ZLColorVec& fillColor, u32 vertexExtraID );
 	void				WriteTriangles				( SafeTesselator& tess, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, const MOAIVectorStyle& style, float z, u32 color, u32 vertexExtraID );
 	void				WriteVertex					( ZLStream& stream, MOAIVertexFormat& format, float x, float y, float z, float xn, float yn, float zn, u32 color, u32 vertexExtraID );
