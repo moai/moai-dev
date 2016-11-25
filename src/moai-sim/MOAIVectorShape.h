@@ -10,7 +10,7 @@ class MOAIVertexFormat;
 class SafeTesselator;
 
 #define MOAI_VECTOR_SHAPE_DECL_TYPE(type)	\
-	u8 GetType () { return type; }
+	u8 GetType () const { return type; }
 
 //================================================================//
 // MOAIVectorShape
@@ -39,6 +39,7 @@ public:
 	};
 
 	friend class MOAIVectorTesselator;
+	friend class MOAIVectorTesselatorWriter;
 
 	GET_SET ( MOAIVectorStyle&, Style, mStyle );
 	
@@ -49,14 +50,14 @@ public:
 	
 	static MOAIVectorShape*		Create						( u32 type );
 	
-	virtual u8					GetType						() = 0;
+	virtual u8					GetType						() const = 0;
 	
 	virtual bool				GroupShapes					( MOAIVectorShape** shapes, u32 total );
 	virtual bool				IsClosed					() = 0;
 								MOAIVectorShape				();
 	virtual						~MOAIVectorShape			();
 	
-	virtual void				Read						( ZLStream& stream ) = 0;
+	virtual void				Read						( ZLStream& stream, MOAIVectorTesselatorWriter& writer ) = 0;
 	
 	virtual bool				SetVertices					( const ZLVec2D* vertices, u32 total, bool closed );
 	
@@ -64,7 +65,7 @@ public:
 	virtual int					Tesselate					( MOAIVectorTesselator& drawing, SafeTesselator& tess, u32 flags );
 	virtual int					Tesselate					( MOAIVectorTesselator& drawing, ZLStream& vertexStream, ZLStream& indexStream, MOAIVertexFormat& format, u32 flags );
 	
-	virtual void				Write						( ZLStream& stream ) = 0;
+	virtual void				Write						( ZLStream& stream, MOAIVectorTesselatorWriter& writer ) const = 0;
 };
 
 #endif

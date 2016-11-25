@@ -128,7 +128,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	inline operator u32 () {
+	inline operator u32 () const {
 		return this->PackRGBA ();
 	}
 	

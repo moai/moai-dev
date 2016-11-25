@@ -96,7 +96,8 @@ MOAIVectorPoly::~MOAIVectorPoly () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorPoly::Read ( ZLStream& stream ) {
+void MOAIVectorPoly::Read ( ZLStream& stream, MOAIVectorTesselatorWriter& writer ) {
+	UNUSED ( writer );
 
 	u16 size = stream.Read < u16 >( 0 );
 	
@@ -105,7 +106,6 @@ void MOAIVectorPoly::Read ( ZLStream& stream ) {
 	for ( u16 i = 0; i < size; ++i ) {
 		this->mVertices [ i ] = stream.Read < ZLVec2D >( ZLVec2D::ORIGIN );
 	}
-	
 	this->mIsClosed = stream.Read < bool >( false );
 }
 
@@ -121,7 +121,8 @@ bool MOAIVectorPoly::SetVertices ( const ZLVec2D* vertices, u32 total, bool clos
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorPoly::Write ( ZLStream& stream ) {
+void MOAIVectorPoly::Write ( ZLStream& stream, MOAIVectorTesselatorWriter& writer ) const {
+	UNUSED ( writer );
 	
 	u16 size = ( u16 )this->mVertices.Size ();
 	

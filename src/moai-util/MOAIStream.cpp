@@ -255,15 +255,18 @@ int MOAIStream::_readString ( lua_State* L ) {
 
 	size_t len = self->Read < u32 >( 0 );
 	assert ( len < 1024 ); // TODO: should be defined somewhere
-	
-	char* buffer = ( char* )alloca ( len + 1 );
 
-	self->ReadBytes ( buffer, len );
-	buffer [ len ] = 0;
+	if ( len > 0 ) {
+		char* buffer = ( char* )alloca ( len + 1 );
 
-	lua_pushlstring ( L, buffer, len );
-	
-	return 1;
+		self->ReadBytes ( buffer, len );
+		buffer [ len ] = 0;
+
+		lua_pushlstring ( L, buffer, len );
+		
+		return 1;
+	}
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -524,18 +527,16 @@ int MOAIStream::_writeStream ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIStream::_writeString ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIStream, "US" );
+	MOAI_LUA_SETUP ( MOAIStream, "U" );
 
 	size_t len;
 	cc8* str = lua_tolstring ( state, 2, &len );
 	
 	size_t result = 0;
 	
-	if ( len > 0 ) {
-		
-		self->Write < u32 >(( u32 )len ); // TODO: assert on overflow; report error
-		result = self->WriteBytes ( str, len );
-	}
+	self->Write < u32 >(( u32 )len ); // TODO: assert on overflow; report error
+	result = self->WriteBytes ( str, len );
+
 	state.Push (( u32 )result ); // TODO: overflow?
 	return 1;
 }

@@ -74,7 +74,8 @@ MOAIVectorRect::~MOAIVectorRect () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorRect::Read ( ZLStream& stream ) {
+void MOAIVectorRect::Read ( ZLStream& stream, MOAIVectorTesselatorWriter& writer ) {
+	UNUSED ( writer );
 
 	this->mRect = stream.Read < ZLRect >( this->mRect );
 }
@@ -198,7 +199,8 @@ int MOAIVectorRect::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vertexS
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorRect::Write ( ZLStream& stream ) {
+void MOAIVectorRect::Write ( ZLStream& stream, MOAIVectorTesselatorWriter& writer ) const {
+	UNUSED ( writer );
 
 	stream.Write < ZLRect >( this->mRect );
 }

@@ -25,8 +25,8 @@ public:
 	bool			GroupShapes				( MOAIVectorShape** shapes, u32 total );
 					MOAIVectorCombo			();
 					~MOAIVectorCombo		();
-	void			Read					( ZLStream& stream );
-	void			Write					( ZLStream& stream );
+	void			Read					( ZLStream& stream, MOAIVectorTesselatorWriter& writer );
+	void			Write					( ZLStream& stream, MOAIVectorTesselatorWriter& writer ) const;
 };
 
 #endif

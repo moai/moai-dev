@@ -26,9 +26,9 @@ public:
 	bool			IsClosed				();
 					MOAIVectorPoly			();
 					~MOAIVectorPoly			();
-	void			Read					( ZLStream& stream );
+	void			Read					( ZLStream& stream, MOAIVectorTesselatorWriter& writer );
 	bool			SetVertices				( const ZLVec2D* vertices, u32 total, bool closed );
-	void			Write					( ZLStream& stream );
+	void			Write					( ZLStream& stream, MOAIVectorTesselatorWriter& writer ) const;
 };
 
 #endif

@@ -55,32 +55,35 @@ MOAIVectorCombo::MOAIVectorCombo () {
 
 //----------------------------------------------------------------//
 MOAIVectorCombo::~MOAIVectorCombo () {
-}
 
-//----------------------------------------------------------------//
-void MOAIVectorCombo::Read ( ZLStream& stream ) {
-
-	u32 size = stream.Read < u32 >( 0 );
+	u32 size = this->mShapes.Size ();
 	
-	for ( u32 i = 0; i < 0; ++i ) {
-		u32 type = stream.Read ( MOAIVectorShape::UNKNOWN );
-		MOAIVectorShape* shape = MOAIVectorShape::Create ( type );
-		assert ( shape );
-		shape->Read ( stream );
-		this->mShapes [ i ] = shape;
+	for ( u32 i = 0; i < size; ++i ) {
+		delete this->mShapes [ i ];
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorCombo::Write ( ZLStream& stream ) {
+void MOAIVectorCombo::Read ( ZLStream& stream, MOAIVectorTesselatorWriter& writer ) {
+
+	u32 size = ( u32 )stream.Read < u16 >( 0 );
+	this->mShapes.Init ( size );
+	
+	for ( u32 i = 0; i < size; ++i ) {
+		MOAIVectorShape* shape = writer.ReadShape ( stream );
+		this->mShapes [ i ] = shape;
+	}
+	this->mCanGroup = false;
+}
+
+//----------------------------------------------------------------//
+void MOAIVectorCombo::Write ( ZLStream& stream, MOAIVectorTesselatorWriter& writer ) const {
 
 	u32 size = this->mShapes.Size ();
+	stream.Write < u16 >(( u16 )size );
 	
-	stream.Write < u32 >( size );
-	
-	for ( u32 i = 0; i < 0; ++i ) {
+	for ( u32 i = 0; i < size; ++i ) {
 		MOAIVectorShape* shape = this->mShapes [ i ];
-		stream.Write < u32 >( shape->GetType ());
-		shape->Write ( stream );
+		writer.WriteShape ( stream, *shape );
 	}
 }

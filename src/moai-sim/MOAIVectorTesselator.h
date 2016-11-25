@@ -56,16 +56,16 @@ private:
 
 	bool				mFlushStyle;
 	MOAIVectorStyle		mStyle;
-	
-	MOAILuaSharedPtr < MOAIStream > mStream;
 
 public:
 
 	DECL_LUA_OPAQUE ( MOAIVectorTesselatorWriter )
 
 	//----------------------------------------------------------------//
-				MOAIVectorTesselatorWriter			();
-				~MOAIVectorTesselatorWriter			();
+							MOAIVectorTesselatorWriter			();
+							~MOAIVectorTesselatorWriter			();
+	MOAIVectorShape*		ReadShape							( ZLStream& stream );
+	void					WriteShape							( ZLStream& stream, const MOAIVectorShape& shape );
 };
 
 //================================================================//
@@ -101,10 +101,12 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_clearShapes			( lua_State* L );
+	static int		_clearStyles			( lua_State* L );
 	static int		_clearTransforms		( lua_State* L );
 	static int		_drawingToWorld			( lua_State* L );
 	static int		_drawingToWorldVec		( lua_State* L );
 	static int		_finish					( lua_State* L );
+	static int		_getExtrude				( lua_State* L );
 	static int		_getTransform			( lua_State* L );
 	static int		_openWriter				( lua_State* L );
 	static int		_pushBezierVertices		( lua_State* L );

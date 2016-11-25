@@ -30,8 +30,8 @@ public:
 	bool			IsClosed				();
 					MOAIVectorEllipse		();
 					~MOAIVectorEllipse		();
-	void			Read					( ZLStream& stream );
-	void			Write					( ZLStream& stream );
+	void			Read					( ZLStream& stream, MOAIVectorTesselatorWriter& writer );
+	void			Write					( ZLStream& stream, MOAIVectorTesselatorWriter& writer ) const;
 };
 
 #endif
