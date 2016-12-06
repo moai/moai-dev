@@ -908,8 +908,8 @@ bool MOAIRegion::FindExtremity ( ZLVec2D n, ZLVec2D& e ) {
 	n.NormSafe ();
 
 	bool		found = false;
-	float		bestDist;
-	ZLVec2D		bestVert;
+	float		bestDist = 0.0f;
+	ZLVec2D		bestVert ( 0.0f, 0.0f );
 
 	size_t size = this->mPolygons.Size ();
 	for ( size_t i = 0; i < size; ++i ) {

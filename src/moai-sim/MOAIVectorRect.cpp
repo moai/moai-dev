@@ -41,6 +41,7 @@ int MOAIVectorRect::AddStrokeContours ( SafeTesselator& tess, bool inside, bool 
 
 //----------------------------------------------------------------//
 int MOAIVectorRect::CheckFastTrack ( MOAIVectorTesselator& drawing, u32 flags ) {
+	UNUSED ( drawing );
 
 	if (( this->mStyle.GetStrokeStyle () != MOAIVectorStyle::STROKE_NONE ) && ( this->mStyle.GetStrokeWidth () > 0.0f )) return FASTTRACK_FALLBACK;
 
@@ -88,22 +89,22 @@ int MOAIVectorRect::Tesselate ( MOAIVectorTesselator& drawing, MOAIRegion& regio
 	if ( fastTrack == FASTTRACK_SKIP ) return 0;
 	if ( fastTrack == FASTTRACK_FALLBACK ) return MOAIVectorShape::Tesselate ( drawing, region, flags );
 	
-	ZLAffine2D& drawingToWorldMtx = this->mStyle.mDrawingToWorld;
+	//ZLAffine2D& drawingToWorldMtx = this->mStyle.mDrawingToWorld;
 		
-	ZLVec2D min ( this->mRect.mXMin, this->mRect.mYMin );
-	ZLVec2D max ( this->mRect.mXMax, this->mRect.mYMax );
+	ZLVec2D minVec ( this->mRect.mXMin, this->mRect.mYMin );
+	ZLVec2D maxVec ( this->mRect.mXMax, this->mRect.mYMax );
 	
-	this->mStyle.mDrawingToWorld.Transform ( min );
-	this->mStyle.mDrawingToWorld.Transform ( max );
+	this->mStyle.mDrawingToWorld.Transform ( minVec );
+	this->mStyle.mDrawingToWorld.Transform ( maxVec );
 
 	region.ReservePolygons ( 1 );
 	ZLPolygon2D& poly = region.GetPolygon ( 0 );
 	
 	poly.ReserveVertices ( 4 );
-	poly.SetVert ( 0, ZLVec2D ( min.mX, min.mY ));
-	poly.SetVert ( 1, ZLVec2D ( max.mX, min.mY ));
-	poly.SetVert ( 2, ZLVec2D ( max.mX, max.mY ));
-	poly.SetVert ( 3, ZLVec2D ( min.mX, max.mY ));
+	poly.SetVert ( 0, ZLVec2D ( minVec.mX, minVec.mY ));
+	poly.SetVert ( 1, ZLVec2D ( maxVec.mX, minVec.mY ));
+	poly.SetVert ( 2, ZLVec2D ( maxVec.mX, maxVec.mY ));
+	poly.SetVert ( 3, ZLVec2D ( minVec.mX, maxVec.mY ));
 
 	region.Bless ();
 	
@@ -120,11 +121,11 @@ int MOAIVectorRect::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vertexS
 
 	ZLAffine2D& drawingToWorldMtx = this->mStyle.mDrawingToWorld;
 		
-	ZLVec2D min ( this->mRect.mXMin, this->mRect.mYMin );
-	ZLVec2D max ( this->mRect.mXMax, this->mRect.mYMax );
+	ZLVec2D minVec ( this->mRect.mXMin, this->mRect.mYMin );
+	ZLVec2D maxVec ( this->mRect.mXMax, this->mRect.mYMax );
 	
-	this->mStyle.mDrawingToWorld.Transform ( min );
-	this->mStyle.mDrawingToWorld.Transform ( max );
+	this->mStyle.mDrawingToWorld.Transform ( minVec );
+	this->mStyle.mDrawingToWorld.Transform ( maxVec );
 	
 	float xAxis = drawingToWorldMtx.m [ ZLAffine2D::C0_R0 ] < 0.0f ? -1.0f : 1.0f;
 	float yAxis = drawingToWorldMtx.m [ ZLAffine2D::C1_R1 ] < 0.0f ? -1.0f : 1.0f;
@@ -135,12 +136,11 @@ int MOAIVectorRect::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vertexS
 	u32 base			= drawing.CountVertices ( format, vertexStream );
 	
 	u32 fillExtraID		= this->mStyle.GetFillExtraID ();
-	u32 strokeExtraID	= this->mStyle.GetStrokeExtraID ();
 	
-	drawing.WriteVertex ( vertexStream, format, min.mX, min.mY, zt, 0.0f, 0.0f, 1.0f, fillColor, fillExtraID );
-	drawing.WriteVertex ( vertexStream, format, max.mX, min.mY, zt, 0.0f, 0.0f, 1.0f, fillColor, fillExtraID );
-	drawing.WriteVertex ( vertexStream, format, max.mX, max.mY, zt, 0.0f, 0.0f, 1.0f, fillColor, fillExtraID );
-	drawing.WriteVertex ( vertexStream, format, min.mX, max.mY, zt, 0.0f, 0.0f, 1.0f, fillColor, fillExtraID );
+	drawing.WriteVertex ( vertexStream, format, minVec.mX, minVec.mY, zt, 0.0f, 0.0f, 1.0f, fillColor, fillExtraID );
+	drawing.WriteVertex ( vertexStream, format, maxVec.mX, minVec.mY, zt, 0.0f, 0.0f, 1.0f, fillColor, fillExtraID );
+	drawing.WriteVertex ( vertexStream, format, maxVec.mX, maxVec.mY, zt, 0.0f, 0.0f, 1.0f, fillColor, fillExtraID );
+	drawing.WriteVertex ( vertexStream, format, minVec.mX, maxVec.mY, zt, 0.0f, 0.0f, 1.0f, fillColor, fillExtraID );
 	
 	indexStream.Write < u32 >( base + 0 ); indexStream.Write < u32 >( base + 1 ); indexStream.Write < u32 >( base + 2 );
 	indexStream.Write < u32 >( base + 0 ); indexStream.Write < u32 >( base + 2 ); indexStream.Write < u32 >( base + 3 );
@@ -153,10 +153,10 @@ int MOAIVectorRect::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vertexS
 		// bottom
 		base = drawing.CountVertices ( format, vertexStream );
 		
-		drawing.WriteVertex ( vertexStream, format, min.mX, min.mY, zb, 0.0f, -yAxis, 0.0f, fillColor, fillExtraID );
-		drawing.WriteVertex ( vertexStream, format, max.mX, min.mY, zb, 0.0f, -yAxis, 0.0f, fillColor, fillExtraID );
-		drawing.WriteVertex ( vertexStream, format, max.mX, min.mY, zt, 0.0f, -yAxis, 0.0f, fillColor, fillExtraID );
-		drawing.WriteVertex ( vertexStream, format, min.mX, min.mY, zt, 0.0f, -yAxis, 0.0f, fillColor, fillExtraID );
+		drawing.WriteVertex ( vertexStream, format, minVec.mX, minVec.mY, zb, 0.0f, -yAxis, 0.0f, fillColor, fillExtraID );
+		drawing.WriteVertex ( vertexStream, format, maxVec.mX, minVec.mY, zb, 0.0f, -yAxis, 0.0f, fillColor, fillExtraID );
+		drawing.WriteVertex ( vertexStream, format, maxVec.mX, minVec.mY, zt, 0.0f, -yAxis, 0.0f, fillColor, fillExtraID );
+		drawing.WriteVertex ( vertexStream, format, minVec.mX, minVec.mY, zt, 0.0f, -yAxis, 0.0f, fillColor, fillExtraID );
 		
 		indexStream.Write < u32 >( base + 0 ); indexStream.Write < u32 >( base + 1 ); indexStream.Write < u32 >( base + 2 );
 		indexStream.Write < u32 >( base + 0 ); indexStream.Write < u32 >( base + 2 ); indexStream.Write < u32 >( base + 3 );
@@ -164,10 +164,10 @@ int MOAIVectorRect::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vertexS
 		// right
 		base = drawing.CountVertices ( format, vertexStream );
 		
-		drawing.WriteVertex ( vertexStream, format, max.mX, min.mY, zb, xAxis, 1.0f, 0.0f, fillColor, fillExtraID );
-		drawing.WriteVertex ( vertexStream, format, max.mX, max.mY, zb, xAxis, 1.0f, 0.0f, fillColor, fillExtraID );
-		drawing.WriteVertex ( vertexStream, format, max.mX, max.mY, zt, xAxis, 1.0f, 0.0f, fillColor, fillExtraID );
-		drawing.WriteVertex ( vertexStream, format, max.mX, min.mY, zt, xAxis, 1.0f, 0.0f, fillColor, fillExtraID );
+		drawing.WriteVertex ( vertexStream, format, maxVec.mX, minVec.mY, zb, xAxis, 1.0f, 0.0f, fillColor, fillExtraID );
+		drawing.WriteVertex ( vertexStream, format, maxVec.mX, maxVec.mY, zb, xAxis, 1.0f, 0.0f, fillColor, fillExtraID );
+		drawing.WriteVertex ( vertexStream, format, maxVec.mX, maxVec.mY, zt, xAxis, 1.0f, 0.0f, fillColor, fillExtraID );
+		drawing.WriteVertex ( vertexStream, format, maxVec.mX, minVec.mY, zt, xAxis, 1.0f, 0.0f, fillColor, fillExtraID );
 		
 		indexStream.Write < u32 >( base + 0 ); indexStream.Write < u32 >( base + 1 ); indexStream.Write < u32 >( base + 2 );
 		indexStream.Write < u32 >( base + 0 ); indexStream.Write < u32 >( base + 2 ); indexStream.Write < u32 >( base + 3 );
@@ -175,10 +175,10 @@ int MOAIVectorRect::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vertexS
 		// top
 		base = drawing.CountVertices ( format, vertexStream );
 		
-		drawing.WriteVertex ( vertexStream, format, max.mX, max.mY, zb, 0.0f, yAxis, 0.0f, fillColor, fillExtraID );
-		drawing.WriteVertex ( vertexStream, format, min.mX, max.mY, zb, 0.0f, yAxis, 0.0f, fillColor, fillExtraID );
-		drawing.WriteVertex ( vertexStream, format, min.mX, max.mY, zt, 0.0f, yAxis, 0.0f, fillColor, fillExtraID );
-		drawing.WriteVertex ( vertexStream, format, max.mX, max.mY, zt, 0.0f, yAxis, 0.0f, fillColor, fillExtraID );
+		drawing.WriteVertex ( vertexStream, format, maxVec.mX, maxVec.mY, zb, 0.0f, yAxis, 0.0f, fillColor, fillExtraID );
+		drawing.WriteVertex ( vertexStream, format, minVec.mX, maxVec.mY, zb, 0.0f, yAxis, 0.0f, fillColor, fillExtraID );
+		drawing.WriteVertex ( vertexStream, format, minVec.mX, maxVec.mY, zt, 0.0f, yAxis, 0.0f, fillColor, fillExtraID );
+		drawing.WriteVertex ( vertexStream, format, maxVec.mX, maxVec.mY, zt, 0.0f, yAxis, 0.0f, fillColor, fillExtraID );
 		
 		indexStream.Write < u32 >( base + 0 ); indexStream.Write < u32 >( base + 1 ); indexStream.Write < u32 >( base + 2 );
 		indexStream.Write < u32 >( base + 0 ); indexStream.Write < u32 >( base + 2 ); indexStream.Write < u32 >( base + 3 );
@@ -186,10 +186,10 @@ int MOAIVectorRect::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vertexS
 		// left
 		base = drawing.CountVertices ( format, vertexStream );
 		
-		drawing.WriteVertex ( vertexStream, format, min.mX, max.mY, zb, -xAxis, 1.0f, 0.0f, fillColor, fillExtraID );
-		drawing.WriteVertex ( vertexStream, format, min.mX, min.mY, zb, -xAxis, 1.0f, 0.0f, fillColor, fillExtraID );
-		drawing.WriteVertex ( vertexStream, format, min.mX, min.mY, zt, -xAxis, 1.0f, 0.0f, fillColor, fillExtraID );
-		drawing.WriteVertex ( vertexStream, format, min.mX, max.mY, zt, -xAxis, 1.0f, 0.0f, fillColor, fillExtraID );
+		drawing.WriteVertex ( vertexStream, format, minVec.mX, maxVec.mY, zb, -xAxis, 1.0f, 0.0f, fillColor, fillExtraID );
+		drawing.WriteVertex ( vertexStream, format, minVec.mX, minVec.mY, zb, -xAxis, 1.0f, 0.0f, fillColor, fillExtraID );
+		drawing.WriteVertex ( vertexStream, format, minVec.mX, minVec.mY, zt, -xAxis, 1.0f, 0.0f, fillColor, fillExtraID );
+		drawing.WriteVertex ( vertexStream, format, minVec.mX, maxVec.mY, zt, -xAxis, 1.0f, 0.0f, fillColor, fillExtraID );
 		
 		indexStream.Write < u32 >( base + 0 ); indexStream.Write < u32 >( base + 1 ); indexStream.Write < u32 >( base + 2 );
 		indexStream.Write < u32 >( base + 0 ); indexStream.Write < u32 >( base + 2 ); indexStream.Write < u32 >( base + 3 );

@@ -626,9 +626,6 @@ MOAIMesh* MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream
 
 //----------------------------------------------------------------//
 u32 MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream& vtxStream, size_t vtxStreamLength, ZLStream& idxStream, size_t idxStreamLength, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes ) {
-
-	size_t vtxStreamBase = vtxStream.GetCursor ();
-	size_t idxStreamBase = idxStream.GetCursor ();
 	
 	vtxStream.Seek ( 0, SEEK_SET );
 	idxStream.Seek ( 0, SEEK_SET );
@@ -673,8 +670,6 @@ MOAIGeometryWriter::~MOAIGeometryWriter () {
 //----------------------------------------------------------------//
 void MOAIGeometryWriter::OffsetIndices ( ZLStream& idxStream, size_t length, s32 offset ) {
 
-	size_t idxStreamBase = idxStream.GetCursor ();
-
 	size_t totalIdx = length >> 2;
 	if ( !totalIdx ) return;
 
@@ -690,7 +685,6 @@ void MOAIGeometryWriter::OffsetIndices ( ZLStream& idxStream, size_t length, s32
 void MOAIGeometryWriter::PruneVertices ( const MOAIVertexFormat& format, MOAIStream& vtxStream, MOAIStream& idxStream ) {
 
 	size_t vtxStreamBase = vtxStream.GetCursor ();
-	size_t idxStreamBase = idxStream.GetCursor ();
 
 	u32 vtxSize = format.GetVertexSize ();
 	size_t inputVtxCount = ( vtxStream.GetLength () - vtxStreamBase ) / vtxSize;

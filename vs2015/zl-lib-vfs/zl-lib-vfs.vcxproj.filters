@@ -13,6 +13,7 @@
     <ClCompile Include="..\..\src\zl-vfs\ZLVfsVirtualPath.cpp" />
     <ClCompile Include="..\..\src\zl-vfs\ZLVfsZipArchive.cpp" />
     <ClCompile Include="..\..\src\zl-vfs\ZLVfsZipStream.cpp" />
+    <ClCompile Include="..\..\src\zl-vfs\ZLThreadLocalPtr_windows.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\zl-vfs\assert.h" />
@@ -38,6 +39,7 @@
     <ClInclude Include="..\..\src\zl-common\zl_types.h">
       <Filter>common</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\zl-vfs\ZLThreadLocalPtr.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="common">

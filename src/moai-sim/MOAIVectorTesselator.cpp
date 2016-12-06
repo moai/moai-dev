@@ -480,7 +480,7 @@ int MOAIVectorTesselator::_reserveVertexExtras ( lua_State* L ) {
 int MOAIVectorTesselator::_setCapStyle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 
-	self->mStyle.mCapStyle = state.GetValue < u32 >( 2, MOAIVectorStyle::CAP_BUTT );
+	self->mStyle.mCapStyle = ( u8 )state.GetValue < u32 >( 2, MOAIVectorStyle::CAP_BUTT );
 	return 0;
 }
 
@@ -488,7 +488,7 @@ int MOAIVectorTesselator::_setCapStyle ( lua_State* L ) {
 int MOAIVectorTesselator::_setCircleResolution ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	self->mStyle.mCircleResolution = state.GetValue < u32 >( 2, MOAIVectorStyle::DEFAULT_CIRCLE_RESOLUTION );
+	self->mStyle.mCircleResolution = ( u16 )state.GetValue < u32 >( 2, MOAIVectorStyle::DEFAULT_CIRCLE_RESOLUTION );
 	return 0;
 }
 
@@ -521,7 +521,7 @@ int MOAIVectorTesselator::_setFillColor ( lua_State* L ) {
 int MOAIVectorTesselator::_setFillStyle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 
-	self->mStyle.mFillStyle = state.GetValue < u32 >( 2, MOAIVectorStyle::FILL_NONE );
+	self->mStyle.mFillStyle = ( u8 )state.GetValue < u32 >( 2, MOAIVectorStyle::FILL_NONE );
 	return 0;
 }
 
@@ -537,7 +537,7 @@ int MOAIVectorTesselator::_setFillExtra ( lua_State* L ) {
 int MOAIVectorTesselator::_setJoinStyle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 
-	self->mStyle.mJoinStyle = state.GetValue < u32 >( 2, MOAIVectorStyle::JOIN_MITER );
+	self->mStyle.mJoinStyle = ( u8 )state.GetValue < u32 >( 2, MOAIVectorStyle::JOIN_MITER );
 	return 0;
 }
 
@@ -553,7 +553,7 @@ int MOAIVectorTesselator::_setLightColor ( lua_State* L ) {
 int MOAIVectorTesselator::_setLightCurve ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 
-	self->mStyle.mLightCurve = state.GetValue < u32 >( 2, ZLInterpolate::kLinear );
+	self->mStyle.mLightCurve = ( u8 )state.GetValue < u32 >( 2, ZLInterpolate::kLinear );
 	return 0;
 }
 
@@ -580,7 +580,7 @@ int MOAIVectorTesselator::_setLineColor ( lua_State* L ) {
 int MOAIVectorTesselator::_setLineStyle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	self->mStyle.mLineStyle = state.GetValue < u32 >( 2, MOAIVectorStyle::LINE_NONE );
+	self->mStyle.mLineStyle = ( u8 )state.GetValue < u32 >( 2, MOAIVectorStyle::LINE_NONE );
 	return 0;
 }
 
@@ -628,7 +628,7 @@ int MOAIVectorTesselator::_setShadowColor ( lua_State* L ) {
 int MOAIVectorTesselator::_setShadowCurve ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 
-	self->mStyle.mShadowCurve = state.GetValue < u32 >( 2, ZLInterpolate::kLinear );
+	self->mStyle.mShadowCurve = ( u8 )state.GetValue < u32 >( 2, ZLInterpolate::kLinear );
 	return 0;
 }
 
@@ -660,7 +660,7 @@ int MOAIVectorTesselator::_setStrokeExtra ( lua_State* L ) {
 int MOAIVectorTesselator::_setStrokeStyle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	self->mStyle.mStrokeStyle = state.GetValue < u32 >( 2, MOAIVectorStyle::STROKE_CENTER );
+	self->mStyle.mStrokeStyle = ( u8 )state.GetValue < u32 >( 2, MOAIVectorStyle::STROKE_CENTER );
 	return 0;
 }
 
@@ -698,7 +698,7 @@ int MOAIVectorTesselator::_setVertexExtra ( lua_State* L ) {
 int MOAIVectorTesselator::_setWindingRule ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
-	self->mStyle.mWindingRule = state.GetValue < u32 >( 2, ( u32 )TESS_WINDING_ODD );
+	self->mStyle.mWindingRule = ( u8 )state.GetValue < u32 >( 2, ( u32 )TESS_WINDING_ODD );
 	return 0;
 }
 

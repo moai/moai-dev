@@ -660,8 +660,8 @@ size_t ZLPolygon2D::Clip ( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, Z
 	GHVertexFactory vtxFactory;
 	vtxFactory.SetBuffer ( buffer, bufferSize, bufferSize );
 	
-	bool sourceForwards = true;
-	bool clipForwards = true;
+	//bool sourceForwards = true;
+	//bool clipForwards = true;
 	
 	GHPolygon ghSourcePolygon ( vtxFactory, *this );
 	GHPolygon ghClipPolygon ( vtxFactory );
@@ -735,8 +735,8 @@ size_t ZLPolygon2D::Clip ( const ZLPolygon2D& poly, const ZLAffine3D* mtx, ZLStr
 	GHVertexFactory vtxFactory;
 	vtxFactory.SetBuffer ( buffer, bufferSize, bufferSize );
 	
-	bool sourceForwards = true;
-	bool clipForwards = true;
+	//bool sourceForwards = true;
+	//bool clipForwards = true;
 	
 	GHPolygon ghSourcePolygon ( vtxFactory, *this );
 	GHPolygon ghClipPolygon ( vtxFactory, poly );

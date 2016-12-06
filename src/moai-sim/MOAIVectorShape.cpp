@@ -167,6 +167,9 @@ void MOAIVectorShape::StrokeBoundaries ( SafeTesselator& tess, SafeTesselator& o
 
 //----------------------------------------------------------------//
 int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, MOAIRegion& region, u32 flags ) {
+	UNUSED ( drawing );
+	UNUSED ( region );
+	UNUSED ( flags );
 
 	return 1;
 }

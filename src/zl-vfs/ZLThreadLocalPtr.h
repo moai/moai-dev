@@ -4,48 +4,37 @@
 #ifndef ZLTHREADLOCALPTR_H
 #define ZLTHREADLOCALPTR_H
 
-#include <pthread.h>
+//================================================================//
+// ZLThreadLocalBase
+//================================================================//
+class ZLThreadLocalBase {
+protected:
+
+	void*	mKey;
+
+	//----------------------------------------------------------------//
+	void*		GetPtr					();
+	void		SetPtr					( void* value );
+				ZLThreadLocalBase		();
+				~ZLThreadLocalBase		();
+};
 
 //================================================================//
 // ZLThreadLocal
 //================================================================//
 template < typename TYPE >
-class ZLThreadLocalPtr {
-private:
-
-	pthread_key_t	mKey;
-
+class ZLThreadLocalPtr :
+	protected ZLThreadLocalBase {
 public:
 
 	//----------------------------------------------------------------//
 	TYPE* Get () {
-
-		TYPE** ref = ( TYPE** )pthread_getspecific ( this->mKey );
-		return ref ? *ref : 0;
+		return ( TYPE* )this->GetPtr ();
 	}
 
 	//----------------------------------------------------------------//
 	void Set ( TYPE* assign ) {
-
-		TYPE** ref = ( TYPE** )pthread_getspecific ( this->mKey );
-		if ( !ref ) {
-			ref = ( TYPE** )malloc ( sizeof ( TYPE* ));
-			pthread_setspecific ( this->mKey, ref );
-		}
-		assert ( ref );
-		*ref = assign;
-	}
-
-	//----------------------------------------------------------------//
-	ZLThreadLocalPtr () {
-	
-		pthread_key_create ( &this->mKey, NULL );
-	}
-	
-	//----------------------------------------------------------------//
-	~ZLThreadLocalPtr () {
-	
-		pthread_key_delete ( this->mKey );
+		this->SetPtr ( assign );
 	}
 };
 

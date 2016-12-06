@@ -95,7 +95,7 @@ public:
 	GET_SET_CONST ( float, MiterLimit, mMiterLimit )
 	
 	GET_SET_CONST ( u8, WindingRule, mWindingRule )
-	GET_SET_CONST ( u8, CircleResolution, mCircleResolution )
+	GET_SET_CONST ( u16, CircleResolution, mCircleResolution )
 	
 	GET_SET_CONST ( float, Extrude, mExtrude )
 	GET_SET_CONST ( float, ZOffset, mZOffset )
