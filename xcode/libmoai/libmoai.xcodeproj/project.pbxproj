@@ -4468,6 +4468,10 @@
 		CDCDD02E1A23F233008779B5 /* xmltok_ns.c in Sources */ = {isa = PBXBuildFile; fileRef = CDCDD0081A23F233008779B5 /* xmltok_ns.c */; };
 		CDCDD0301A23F233008779B5 /* xmltok.c in Sources */ = {isa = PBXBuildFile; fileRef = CDCDD0091A23F233008779B5 /* xmltok.c */; };
 		CDCDD0321A23F233008779B5 /* xmltok.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDD00A1A23F233008779B5 /* xmltok.h */; };
+		CDCE61551DFB78B50088B2AB /* ZLThreadLocalPtr_pthreads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCE61541DFB78B50088B2AB /* ZLThreadLocalPtr_pthreads.cpp */; };
+		CDCE61561DFB78B50088B2AB /* ZLThreadLocalPtr_pthreads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCE61541DFB78B50088B2AB /* ZLThreadLocalPtr_pthreads.cpp */; };
+		CDCE61581DFB79C30088B2AB /* ZLThreadLocalPtr_windows.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCE61571DFB79C30088B2AB /* ZLThreadLocalPtr_windows.cpp */; };
+		CDCE61591DFB79C30088B2AB /* ZLThreadLocalPtr_windows.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCE61571DFB79C30088B2AB /* ZLThreadLocalPtr_windows.cpp */; };
 		CDD06DB01398838D00AB0420 /* auxiliar.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D8E1398838D00AB0420 /* auxiliar.c */; };
 		CDD06DB11398838D00AB0420 /* auxiliar.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D8F1398838D00AB0420 /* auxiliar.h */; };
 		CDD06DB21398838D00AB0420 /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D901398838D00AB0420 /* buffer.c */; };
@@ -8985,6 +8989,8 @@
 		CDCDD0081A23F233008779B5 /* xmltok_ns.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xmltok_ns.c; path = "../../3rdparty/expat-2.1.0/lib/xmltok_ns.c"; sourceTree = "<group>"; };
 		CDCDD0091A23F233008779B5 /* xmltok.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xmltok.c; path = "../../3rdparty/expat-2.1.0/lib/xmltok.c"; sourceTree = "<group>"; };
 		CDCDD00A1A23F233008779B5 /* xmltok.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xmltok.h; path = "../../3rdparty/expat-2.1.0/lib/xmltok.h"; sourceTree = "<group>"; };
+		CDCE61541DFB78B50088B2AB /* ZLThreadLocalPtr_pthreads.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLThreadLocalPtr_pthreads.cpp; sourceTree = "<group>"; };
+		CDCE61571DFB79C30088B2AB /* ZLThreadLocalPtr_windows.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLThreadLocalPtr_windows.cpp; sourceTree = "<group>"; };
 		CDD06BD01398822500AB0420 /* libmoai-ios-luaext.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-luaext.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD06D87139882D900AB0420 /* libmoai-osx-luaext.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-luaext.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD06D8E1398838D00AB0420 /* auxiliar.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = auxiliar.c; path = "../../3rdparty/luasocket-2.0.2/src/auxiliar.c"; sourceTree = SOURCE_ROOT; };
@@ -10293,6 +10299,8 @@
 				89BE693A173974FD00DFE837 /* zl_util.cpp */,
 				89BE693B173974FD00DFE837 /* zl_util.h */,
 				89BE693C173974FD00DFE837 /* zl_vfscanf.cpp */,
+				CDCE61541DFB78B50088B2AB /* ZLThreadLocalPtr_pthreads.cpp */,
+				CDCE61571DFB79C30088B2AB /* ZLThreadLocalPtr_windows.cpp */,
 				CDBE9A3E1D88C32D00444344 /* ZLThreadLocalPtr.h */,
 				89BE693D173974FD00DFE837 /* ZLVfsDirectoryItr.cpp */,
 				89BE693E173974FD00DFE837 /* ZLVfsDirectoryItr.h */,
@@ -20963,9 +20971,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDCE61561DFB78B50088B2AB /* ZLThreadLocalPtr_pthreads.cpp in Sources */,
 				CD6D751417EE415D00964415 /* headers.cpp in Sources */,
 				CD6D751517EE415D00964415 /* pch.cpp in Sources */,
 				CD6D751617EE415D00964415 /* zl_mutex.cpp in Sources */,
+				CDCE61591DFB79C30088B2AB /* ZLThreadLocalPtr_windows.cpp in Sources */,
 				CD6D751717EE415D00964415 /* zl_util.cpp in Sources */,
 				CD6D751817EE415D00964415 /* zl_vfscanf.cpp in Sources */,
 				CD6D751917EE415D00964415 /* ZLVfsDirectoryItr.cpp in Sources */,
@@ -22752,9 +22762,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDCE61551DFB78B50088B2AB /* ZLThreadLocalPtr_pthreads.cpp in Sources */,
 				CDF288AB17ED41CF00FD4F59 /* headers.cpp in Sources */,
 				CDF288AC17ED41CF00FD4F59 /* pch.cpp in Sources */,
 				CDF288AD17ED41CF00FD4F59 /* zl_mutex.cpp in Sources */,
+				CDCE61581DFB79C30088B2AB /* ZLThreadLocalPtr_windows.cpp in Sources */,
 				CDF288AE17ED41CF00FD4F59 /* zl_util.cpp in Sources */,
 				CDF288AF17ED41CF00FD4F59 /* zl_vfscanf.cpp in Sources */,
 				CDF288B017ED41CF00FD4F59 /* ZLVfsDirectoryItr.cpp in Sources */,
