@@ -20,7 +20,7 @@ class MOAIVertexFormat;
 			See MOAIScriptDeck.
 */
 class MOAIDraw :
-	public MOAIGlobalClass < MOAIDraw, MOAILuaObject > {
+	public ZLContextClass < MOAIDraw, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//

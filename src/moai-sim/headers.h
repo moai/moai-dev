@@ -71,6 +71,9 @@
 #include <moai-sim/MOAIMaterialBatch.h>
 #include <moai-sim/MOAIMatrix.h>
 #include <moai-sim/MOAIMesh.h>
+#include <moai-sim/MOAIMeshPartition.h>
+#include <moai-sim/MOAIMeshSparseQuadTree.h>
+#include <moai-sim/MOAIMeshTernaryTree.h>
 #include <moai-sim/MOAIMotionSensor.h>
 #include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAINode.h>

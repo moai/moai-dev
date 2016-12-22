@@ -126,6 +126,18 @@ void MOAIVertexArray::BindVertexArrayItems () {
 }
 
 //----------------------------------------------------------------//
+MOAIVertexBuffer* MOAIVertexArray::GetVertexBuffer ( u32 idx ) {
+
+	return idx < this->mVertexBuffers.Size () ? this->mVertexBuffers [ idx ].mBuffer : ( MOAIVertexBuffer* )0;
+}
+
+//----------------------------------------------------------------//
+MOAIVertexFormat* MOAIVertexArray::GetVertexFormat ( u32 idx ) {
+
+	return idx < this->mVertexBuffers.Size () ? this->mVertexBuffers [ idx ].mFormat : ( MOAIVertexFormat* )0;
+}
+
+//----------------------------------------------------------------//
 MOAIVertexArray::MOAIVertexArray () :
 	mUseVAOs ( false ) {
 

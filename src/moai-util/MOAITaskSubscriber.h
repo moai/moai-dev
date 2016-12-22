@@ -58,7 +58,7 @@ public:
 // thread has its own task subscriber.
 class MOAIMainThreadTaskSubscriber :
 	public MOAITaskSubscriber,
-	public MOAIGlobalClass < MOAIMainThreadTaskSubscriber > {
+	public ZLContextClass < MOAIMainThreadTaskSubscriber > {
 }; 
 
 #endif

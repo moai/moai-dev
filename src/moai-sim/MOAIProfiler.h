@@ -12,7 +12,7 @@
 // MOAIProfiler
 //================================================================//
 class MOAIProfiler :
-	public MOAIGlobalClass < MOAIProfiler > {
+	public ZLContextClass < MOAIProfiler > {
 private:
 
 	enum {

@@ -29,7 +29,7 @@ class MOAIViewport;
 			indexed from 1.
 */
 class MOAIRenderMgr :
-	public MOAIGlobalClass < MOAIRenderMgr, MOAILuaObject > {
+	public ZLContextClass < MOAIRenderMgr, MOAILuaObject > {
 private:
 
 	u32				mLastDrawCount; // draw count for last frame.

@@ -1,8 +1,10 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIRTTI_H
-#define	MOAIRTTI_H
+#ifndef	ZLRTTI_H
+#define	ZLRTTI_H
+
+#include <zl-common/zl_types.h>
 
 class RTTILinkBase;
 class RTTIRecord;

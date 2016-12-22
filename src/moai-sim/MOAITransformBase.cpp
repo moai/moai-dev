@@ -221,26 +221,29 @@ int	MOAITransformBase::_getWorldZNormal ( lua_State* L ) {
 	@opt	number x			Default value is 0.
 	@opt	number y			Default value is 0.
 	@opt	number z			Default value is 0.
+	@opt	number w			Default value is 1.
 	@out	number x
 	@out	number y
 	@out	number z
+	@out	number w
 */
 int MOAITransformBase::_modelToWorld ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
 
 	self->ForceUpdate ();
 
-	ZLVec3D loc;
+	ZLVec4D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );
 	loc.mY = state.GetValue < float >( 3, 0.0f );
 	loc.mZ = state.GetValue < float >( 4, 0.0f );
+	loc.mW = state.GetValue < float >( 5, 1.0f );
 
 	ZLAffine3D modelToWorld = self->GetLocalToWorldMtx ();
 	modelToWorld.Transform ( loc );
 
 	state.Push ( loc );
 
-	return 3;
+	return 4;
 }
 
 //----------------------------------------------------------------//
@@ -271,26 +274,29 @@ int MOAITransformBase::_setParent ( lua_State* L ) {
 	@opt	number x			Default value is 0.
 	@opt	number y			Default value is 0.
 	@opt	number z			Default value is 0.
+	@opt	number w			Default value is 1.
 	@out	number x
 	@out	number y
 	@out	number z
+	@out	number w
 */
 int MOAITransformBase::_worldToModel ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
 
 	self->ForceUpdate ();
 
-	ZLVec3D loc;
+	ZLVec4D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );
 	loc.mY = state.GetValue < float >( 3, 0.0f );
 	loc.mZ = state.GetValue < float >( 4, 0.0f );
+	loc.mW = state.GetValue < float >( 5, 1.0f );
 
 	ZLAffine3D worldToModel = self->GetWorldToLocalMtx ();
 	worldToModel.Transform ( loc );
 
 	state.Push ( loc );
 
-	return 3;
+	return 4;
 }
 
 //================================================================//

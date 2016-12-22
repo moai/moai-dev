@@ -47,6 +47,16 @@ public:
 	TYPE m [ SIZE ];
 
 	//----------------------------------------------------------------//
+	bool operator == ( const ZLMetaMatrix4x4 < TYPE >& rhs ) const {
+		return this->IsSame ( rhs );
+	}
+	
+	//----------------------------------------------------------------//
+	bool operator != ( const ZLMetaMatrix4x4 < TYPE >& rhs ) const {
+		return !this->IsSame ( rhs );
+	}
+
+	//----------------------------------------------------------------//
 	void Append	( const ZLMetaMatrix4x4 < TYPE >& mtx ) {
 
 		ZLMetaMatrix4x4 < TYPE > temp;
@@ -491,10 +501,10 @@ public:
 	//----------------------------------------------------------------//
 	void Print ( u32 level = ZLLog::LOG_REPORT, FILE* file = ZLLog::CONSOLE ) const {
 	
-		ZLLog::LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R0 ], m [ C1_R0 ], m [ C2_R0 ], m [ C3_R0 ]);
-		ZLLog::LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R1 ], m [ C1_R1 ], m [ C2_R1 ], m [ C3_R1 ]);
-		ZLLog::LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R2 ], m [ C1_R2 ], m [ C2_R2 ], m [ C3_R2 ]);
-		ZLLog::LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R3 ], m [ C1_R3 ], m [ C2_R3 ], m [ C3_R3 ]);
+		ZLLog::Get ().LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R0 ], m [ C1_R0 ], m [ C2_R0 ], m [ C3_R0 ]);
+		ZLLog::Get ().LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R1 ], m [ C1_R1 ], m [ C2_R1 ], m [ C3_R1 ]);
+		ZLLog::Get ().LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R2 ], m [ C1_R2 ], m [ C2_R2 ], m [ C3_R2 ]);
+		ZLLog::Get ().LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R3 ], m [ C1_R3 ], m [ C2_R3 ], m [ C3_R3 ]);
 	}
 
 	//----------------------------------------------------------------//

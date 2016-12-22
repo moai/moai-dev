@@ -10,7 +10,7 @@
 // MOAIImageFormatMgr
 //================================================================//
 class MOAIImageFormatMgr :
-	public MOAIGlobalClass < MOAIImageFormatMgr > {
+	public ZLContextClass < MOAIImageFormatMgr > {
 public:
 
 	typedef STLMap < u32, MOAIImageFormat* >::iterator FormatIt;

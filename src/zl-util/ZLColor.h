@@ -133,15 +133,55 @@ public:
 	float	mA;
 	
 	//----------------------------------------------------------------//
+	inline void operator = ( u32 color ) {
+		this->SetRGBA ( color );
+	}
+	
+	//----------------------------------------------------------------//
+	inline operator u32 () const {
+		return this->PackRGBA ();
+	}
+	
+	//----------------------------------------------------------------//
+	bool operator == ( const ZLColorVec& rhs ) const {
+		return this->IsEqual ( rhs );
+	}
+	
+	//----------------------------------------------------------------//
+	bool operator != ( const ZLColorVec& rhs ) const {
+		return !this->IsEqual ( rhs );
+	}
+	
+	//----------------------------------------------------------------//
+	ZLColorVec operator * ( const float other ) const {
+		return ZLColorVec (
+			this->mR * other,
+			this->mG * other,
+			this->mB * other,
+			this->mA
+		);
+	}
+	
+	//----------------------------------------------------------------//
+	ZLColorVec operator * ( const ZLColorVec &other ) const {
+		return ZLColorVec (
+			this->mR * other.mR,
+			this->mG * other.mG,
+			this->mB * other.mB,
+			this->mA * other.mA
+		);
+	}
+	
+	//----------------------------------------------------------------//
 	void			Add					( const ZLColorVec& c );
 	void			AddAndClamp			( const ZLColorVec& c );
 	void			Clamp				();
-	bool			Compare				( const ZLColorVec& c );
-	bool			Compare				( const ZLColorVec& c, float res );
 	void			FromHSV				( float h, float s, float v );
 	void			FromYUV				( float y, float u, float v);
 	float			GetLuma				() const;
 	bool			IsClear				() const;
+	bool			IsEqual				( const ZLColorVec& c ) const;
+	bool			IsEqual				( const ZLColorVec& c, float res ) const;
 	bool			IsOpaque			() const;
 	void			Lerp				( u32 mode, const ZLColorVec& v0, const ZLColorVec& v1, float t );
 	void			Modulate			( const ZLColorVec& v0 );
@@ -160,43 +200,23 @@ public:
 					ZLColorVec			( float r, float g, float b, float a );
 	
 	//----------------------------------------------------------------//
-	bool operator!=(const ZLColorVec &other) const {
-		return ((this->mR != other.mR) ||
-		        (this->mG != other.mG) ||
-		        (this->mB != other.mB) ||
-		        (this->mA != other.mA));
+	ZLColorVec ScaleAlpha ( const float other ) const {
+		return ZLColorVec (
+			this->mR,
+			this->mG,
+			this->mB,
+			this->mA * other
+		);
 	}
 	
 	//----------------------------------------------------------------//
-	ZLColorVec operator*(const ZLColorVec &other) const {
-		return ZLColorVec(this->mR * other.mR,
-		        	  this->mG * other.mG,
-		        	  this->mB * other.mB,
-		        	  this->mA * other.mA);
-	}
-	
-	//----------------------------------------------------------------//
-	ZLColorVec ScaleColor(const float other) const {
-		return ZLColorVec(this->mR * other,
-		        	  this->mG * other,
-		        	  this->mB * other,
-		        	  this->mA);
-	}
-	
-	//----------------------------------------------------------------//
-	ZLColorVec ScaleAlpha(const float other) const {
-		return ZLColorVec(this->mR,
-		        	  this->mG,
-		        	  this->mB,
-		        	  this->mA * other);
-	}
-	
-	//----------------------------------------------------------------//
-	ZLColorVec operator*(const float other) const {
-		return ZLColorVec(this->mR * other,
-		        	  this->mG * other,
-		        	  this->mB * other,
-		        	  this->mA);
+	ZLColorVec ScaleColor ( const float other ) const {
+		return ZLColorVec (
+			this->mR * other,
+			this->mG * other,
+			this->mB * other,
+			this->mA
+		);
 	}
 };
 

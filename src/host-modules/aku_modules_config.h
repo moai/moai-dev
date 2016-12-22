@@ -41,8 +41,9 @@
 		#define AKU_WITH_HTTP_SERVER 0
 	#endif
 
+	// TODO: fix on iOS; should be AKU_WITH_IOS_IFA
 	#ifndef AKU_WITH_IFA // technically not a module; just configuration
-		#define AKU_WITH_IFA 1
+		#define AKU_WITH_IFA 0
 	#endif
 
 	#ifndef AKU_WITH_IMAGE_JPG

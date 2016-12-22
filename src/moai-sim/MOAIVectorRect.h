@@ -15,7 +15,18 @@ private:
 
 	ZLRect			mRect;
 
+	enum {
+		FASTTRACK_OK,
+		FASTTRACK_FALLBACK,
+		FASTTRACK_SKIP,
+	};
+
+	//----------------------------------------------------------------//
+	int				CheckFastTrack			( MOAIVectorTesselator& drawing, u32 flags );
+
 public:
+	
+	MOAI_VECTOR_SHAPE_DECL_TYPE ( MOAIVectorShape::RECT )
 	
 	//----------------------------------------------------------------//
 	int				AddFillContours			( SafeTesselator& tess );
@@ -24,7 +35,10 @@ public:
 	bool			IsClosed				();
 					MOAIVectorRect			();
 					~MOAIVectorRect			();
-	
+	void			Read					( ZLStream& stream, MOAIVectorTesselatorWriter& writer );
+	int				Tesselate				( MOAIVectorTesselator& drawing, MOAIRegion& region, u32 flags );
+	int				Tesselate				( MOAIVectorTesselator& drawing, ZLStream& vertexStream, ZLStream& indexStream, MOAIVertexFormat& format, u32 flags );
+	void			Write					( ZLStream& stream, MOAIVectorTesselatorWriter& writer ) const;
 };
 
 #endif

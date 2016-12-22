@@ -90,7 +90,7 @@ int MOAILogMgr::_log ( lua_State* L ) {
 	STLString log;
 	log.write ( "[%s-%d] %s", token, level, msg );
 
-	ZLLog::LogF ( level, ZLLog::CONSOLE, "%s", log.c_str ());	// Caller's string may contain % and should NOT be used as a format to LogF
+	ZLLog::Get ().LogF ( level, ZLLog::CONSOLE, "%s", log.c_str ());	// Caller's string may contain % and should NOT be used as a format to LogF
 
 	return 0;
 }
@@ -151,7 +151,7 @@ int MOAILogMgr::_setLogLevel ( lua_State* L ) {
 	MOAILuaState state ( L );
 
 	u32 level = state.GetValue < u32 >( 1, ZLLog::LOG_NONE );
-	ZLLog::SetLogLevel ( level );
+	ZLLog::Get ().SetLogLevel ( level );
 
 	return 0;
 }
@@ -183,7 +183,7 @@ void MOAILogMgr::CloseFile () {
 	if ( this->mFile ) {
 		fclose ( this->mFile );
 		this->mFile = 0;
-		ZLLog::SetRedirect ( 0 );
+		ZLLog::Get ().SetRedirect ( 0 );
 	}
 }
 
@@ -222,24 +222,24 @@ void MOAILogMgr::LogV ( lua_State *L, u32 level, u32 messageID, va_list args ) {
 //----------------------------------------------------------------//
 void MOAILogMgr::LogV ( lua_State *L, u32 level, cc8* message, va_list args ) {
 
-	if ( ZLLog::IsEnabled ( level )) {
+	if ( ZLLog::Get ().IsEnabled ( level )) {
 
 		if ( L ) {
-			ZLLog::LogF ( level, ZLLog::CONSOLE, "----------------------------------------------------------------\n" );
+			ZLLog::Get ().LogF ( level, ZLLog::CONSOLE, "----------------------------------------------------------------\n" );
 		}
 
-		ZLLog::LogV ( level, ZLLog::CONSOLE, message, args );
+		ZLLog::Get ().LogV ( level, ZLLog::CONSOLE, message, args );
 		
 		size_t msgSize = strlen ( message );
 		if ( msgSize && ( message [ msgSize - 1 ] != '\n' )) {
-			ZLLog::LogF ( level, ZLLog::CONSOLE, "\n" );
+			ZLLog::Get ().LogF ( level, ZLLog::CONSOLE, "\n" );
 		}
 		
 		if ( L ) {
-			ZLLog::LogF ( level, ZLLog::CONSOLE, "\n" );
+			ZLLog::Get ().LogF ( level, ZLLog::CONSOLE, "\n" );
 			MOAILuaState state ( L );
 			state.LogStackTrace ( level, ZLLog::CONSOLE, NULL, 0 );
-			ZLLog::LogF ( level, ZLLog::CONSOLE, "\n" );
+			ZLLog::Get ().LogF ( level, ZLLog::CONSOLE, "\n" );
 		}
 	}
 }
@@ -275,7 +275,7 @@ void MOAILogMgr::OpenFile ( cc8* filename ) {
 	FILE* file = fopen ( filename, "w" );
 	if ( file ) {
 		this->mFile = file;
-		ZLLog::SetRedirect ( file );
+		ZLLog::Get ().SetRedirect ( file );
 	}
 }
 

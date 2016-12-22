@@ -12,28 +12,24 @@
 // ZLLog
 //================================================================//
 
-FILE* const			ZLLog::CONSOLE				= 0;
-u32					ZLLog::sLogLevel			= ZL_DEFAULT_LOG_LEVEL;
-FILE*				ZLLog::sConsoleRedirect		= 0;
-ZLLog::LogFunc		ZLLog::sLogFunc				= 0;
-void*				ZLLog::sLogFuncUserdata		= 0;
+FILE* const ZLLog::CONSOLE = 0;
 
 //----------------------------------------------------------------//
 u32 ZLLog::GetLogLevel () {
 
-	return sLogLevel;
+	return this->mLogLevel;
 }
 
 //----------------------------------------------------------------//
 bool ZLLog::IsEnabled ( u32 level ) {
 
-	return ( sLogLevel <= level );
+	return this->mLogLevel <= level;
 }
 
 //----------------------------------------------------------------//
 void ZLLog::LogF ( u32 level, FILE* file, cc8* format, ... ) {
-
-	if ( sLogLevel <= level ) {
+	
+	if ( this->mLogLevel <= level ) {
 
 		va_list args;
 		va_start ( args, format );
@@ -46,16 +42,16 @@ void ZLLog::LogF ( u32 level, FILE* file, cc8* format, ... ) {
 
 //----------------------------------------------------------------//
 void ZLLog::LogV ( u32 level, FILE* file, cc8* format, va_list args ) {
+
+	if ( this->mLogLevel <= level ) {
 	
-	if ( sLogLevel <= level ) {
-	
-		if ( sLogFunc ) {
+		if ( this->mLogFunc ) {
 		
-			sLogFunc ( level, format, args, sLogFuncUserdata );
+			this->mLogFunc ( level, format, args, this->mLogFuncUserdata );
 		}
 		else {
 		
-			file = file ? file : ( sConsoleRedirect ? sConsoleRedirect : CONSOLE );
+			file = file ? file : ( this->mConsoleRedirect ? this->mConsoleRedirect : CONSOLE );
 
 			if ( file ) {
 				zl_vfprintf (( FILE* )file, format, args );
@@ -68,21 +64,34 @@ void ZLLog::LogV ( u32 level, FILE* file, cc8* format, va_list args ) {
 }
 
 //----------------------------------------------------------------//
-void ZLLog::SetLogFunc	( LogFunc logFunc, void* userdata ) {
+void ZLLog::SetLogFunc	( ZLLogFunc logFunc, void* userdata ) {
 
-	sLogFunc = logFunc;
-	sLogFuncUserdata = userdata;
+	this->mLogFunc = logFunc;
+	this->mLogFuncUserdata = userdata;
 }
 
 //----------------------------------------------------------------//
 void ZLLog::SetLogLevel ( u32 level ) {
 
 	assert ( level <= LOG_NONE );
-	sLogLevel = level;
+	
+	this->mLogLevel = level;
 }
 
 //----------------------------------------------------------------//
 void ZLLog::SetRedirect ( FILE* file ) {
 
-	sConsoleRedirect = file;
+	this->mConsoleRedirect = file;
+}
+
+//----------------------------------------------------------------//
+ZLLog::ZLLog () :
+	mLogLevel ( ZLLog::LOG_NONE ),
+	mConsoleRedirect ( 0 ),
+	mLogFunc ( 0 ),
+	mLogFuncUserdata ( 0 ) {
+}
+
+//----------------------------------------------------------------//
+ZLLog::~ZLLog () {
 }

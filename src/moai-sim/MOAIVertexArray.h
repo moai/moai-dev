@@ -66,6 +66,8 @@ public:
 	IS ( UsingVAOs, mUseVAOs, true )
 	
 	//----------------------------------------------------------------//
+	MOAIVertexBuffer*	GetVertexBuffer				( u32 idx );
+	MOAIVertexFormat*	GetVertexFormat				( u32 idx );
 						MOAIVertexArray				();
 						~MOAIVertexArray			();
 	void				RegisterLuaClass			( MOAILuaState& state );

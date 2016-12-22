@@ -4,7 +4,7 @@
 #ifndef ZLVEC3D_H
 #define	ZLVEC3D_H
 
-template < typename TYPE > class ZLMetaVec2D;
+#include <zl-util/ZLVec2D.h>
 
 //================================================================//
 // ZLMetaVec3D
@@ -23,6 +23,16 @@ public:
 	TYPE	mX;
 	TYPE	mY;
 	TYPE	mZ;
+
+	//----------------------------------------------------------------//
+	bool operator == ( const ZLMetaVec3D < TYPE >& rhs ) const {
+		return (( this->mX == rhs.mX ) && ( this->mY == rhs.mY ) && ( this->mZ == rhs.mZ ));
+	}
+	
+	//----------------------------------------------------------------//
+	bool operator != ( const ZLMetaVec3D < TYPE >& rhs ) const {
+		return (( this->mX != rhs.mX ) || ( this->mY != rhs.mY ) || ( this->mZ != rhs.mZ ));
+	}
 
 	//----------------------------------------------------------------//
 	ZLMetaVec3D < TYPE > operator + ( const ZLMetaVec3D < TYPE >& v ) const {
@@ -180,18 +190,13 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	TYPE GetComp ( const u8 idx ) const {
+	TYPE GetComponent ( int idx ) const {
 
 		switch ( idx ) {
-			
-			case 0:
-				return this->mX;
-			
-			case 1:
-				return this->mY;
-			
-			default:
-				return this->mZ;
+			case 0:		return this->mX;
+			case 1:		return this->mY;
+			case 2:		return this->mZ;
+			default:	return 0;
 		}
 	}
 
@@ -450,6 +455,12 @@ public:
 		mX = mX - ( vec.mX * scale );
 		mY = mY - ( vec.mY * scale );
 		mZ = mZ - ( vec.mZ * scale );
+	}
+	
+	//----------------------------------------------------------------//
+	ZLMetaVec2D < TYPE > Vec2D () const {
+	
+		return ZLMetaVec2D < TYPE >( this->mX, this->mY );
 	}
 
 	//----------------------------------------------------------------//

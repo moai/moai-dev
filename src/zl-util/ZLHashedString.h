@@ -52,12 +52,12 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool operator == ( const ZLHashedString& rhs ) const {
-		return GetHash() == rhs.GetHash();
+		return this->GetHash () == rhs.GetHash ();
 	}
 	
 	//----------------------------------------------------------------//
 	bool operator != ( const ZLHashedString& rhs ) const {
-		return GetHash() != rhs.GetHash();
+		return this->GetHash () != rhs.GetHash ();
 	}
 };
 

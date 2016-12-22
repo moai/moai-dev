@@ -13,7 +13,7 @@
 	@text	Wrapper for Flurry interface.
 */
 class MOAIFlurryIOS :
-	public MOAIGlobalClass < MOAIFlurryIOS, MOAILuaObject > {
+	public ZLContextClass < MOAIFlurryIOS, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//

@@ -16,6 +16,8 @@ private:
 	ZLLeanArray < MOAIVectorShape* > mShapes;
 
 public:
+
+	MOAI_VECTOR_SHAPE_DECL_TYPE ( MOAIVectorShape::COMBO )
 	
 	//----------------------------------------------------------------//
 	int				AddFillContours			( SafeTesselator& tess );
@@ -23,6 +25,8 @@ public:
 	bool			GroupShapes				( MOAIVectorShape** shapes, u32 total );
 					MOAIVectorCombo			();
 					~MOAIVectorCombo		();
+	void			Read					( ZLStream& stream, MOAIVectorTesselatorWriter& writer );
+	void			Write					( ZLStream& stream, MOAIVectorTesselatorWriter& writer ) const;
 };
 
 #endif

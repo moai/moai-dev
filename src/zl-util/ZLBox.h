@@ -34,7 +34,7 @@ public:
 	void		GetFitting		( const ZLBox& target, ZLVec3D& offset, ZLVec3D& scale ) const; // gets mapping from self to target
 	float		GetMaxExtent	() const;
 	float		GetRadius		() const;
-	ZLRect		GetRect			( u32 plane ) const;
+	ZLRect		GetRect			( u32 plane = PLANE_XY ) const;
 	void		Grow			( const ZLBox& box );
 	void		Grow			( const ZLVec3D& vec );
 	void		Inflate			( float size );

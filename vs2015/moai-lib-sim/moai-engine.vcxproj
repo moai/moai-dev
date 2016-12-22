@@ -100,6 +100,9 @@
     <ClInclude Include="..\..\src\moai-sim\MOAIMaterialBatch.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIMatrix.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIMesh.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIMeshPartition.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIMeshSparseQuadTree.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIMeshTernaryTree.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIMotionSensor.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIMultiTexture.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAINode.h" />
@@ -284,6 +287,8 @@
     <ClCompile Include="..\..\src\moai-sim\MOAIMaterialBatch.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIMatrix.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIMesh.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIMeshSparseQuadTree.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIMeshTernaryTree.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIMotionSensor.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIMultiTexture.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAINode.cpp" />

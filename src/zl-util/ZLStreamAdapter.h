@@ -60,7 +60,7 @@ public:
 	size_t					GetCursor				();
 	size_t					GetLength				();
 	bool					IsAtEnd					();
-	ZLResultCode			Open					( ZLStream* stream );
+	ZLResultCode			Open					( ZLStream* stream = 0 );
 							ZLStreamAdapter			();
 							~ZLStreamAdapter		();
 };

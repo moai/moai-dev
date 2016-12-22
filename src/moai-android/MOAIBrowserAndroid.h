@@ -15,7 +15,7 @@
 			Exposed to Lua via MOAIBrowser on all mobile platforms.
 */
 class MOAIBrowserAndroid :
-	public MOAIGlobalClass < MOAIBrowserAndroid, MOAILuaObject >,
+	public ZLContextClass < MOAIBrowserAndroid, MOAILuaObject >,
 	public JniUtils {
 private:
 

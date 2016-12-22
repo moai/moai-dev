@@ -20,7 +20,7 @@ namespace FMODDesigner {
 	@text	Event Manager singleton that provides an interface to all implemented FMOD Designer features. 
 */
 class MOAIFmodEventMgr :
-	public MOAIGlobalClass < MOAIFmodEventMgr, MOAILuaObject > {
+	public ZLContextClass < MOAIFmodEventMgr, MOAILuaObject > {
 private:
 	MOAIFmodMicrophone*                         mMic;
     STLMap< STLString, FMODDesigner::Event >    mEventList;

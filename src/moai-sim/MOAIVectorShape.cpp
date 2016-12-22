@@ -2,6 +2,10 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-sim/MOAIVectorCombo.h>
+#include <moai-sim/MOAIVectorEllipse.h>
+#include <moai-sim/MOAIVectorPoly.h>
+#include <moai-sim/MOAIVectorRect.h>
 #include <moai-sim/MOAIVectorTesselator.h>
 #include <moai-sim/MOAIVectorShape.h>
 #include <moai-sim/MOAIVectorUtil.h>
@@ -93,6 +97,19 @@ void MOAIVectorShape::CopyBoundaries ( SafeTesselator& dest, SafeTesselator* src
 }
 
 //----------------------------------------------------------------//
+MOAIVectorShape* MOAIVectorShape::Create ( u32 type ) {
+
+	switch ( type ) {
+		case COMBO:		return new MOAIVectorCombo ();
+		case ELLIPSE:	return new MOAIVectorEllipse ();
+		case POLY:		return new MOAIVectorPoly ();
+		case RECT:		return new MOAIVectorRect ();
+		case UNKNOWN:
+		default:		return 0;
+	}
+}
+
+//----------------------------------------------------------------//
 bool MOAIVectorShape::GroupShapes ( MOAIVectorShape** shapes, u32 total ) {
 	UNUSED ( shapes );
 	UNUSED ( total );
@@ -146,6 +163,15 @@ void MOAIVectorShape::StrokeBoundaries ( SafeTesselator& tess, SafeTesselator& o
 
 		this->Stroke ( tess, ( const ZLVec2D* )&verts [ b * 2 ], n, width, forward, interior );
 	}
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, MOAIRegion& region, u32 flags ) {
+	UNUSED ( drawing );
+	UNUSED ( region );
+	UNUSED ( flags );
+
+	return 1;
 }
 
 //----------------------------------------------------------------//

@@ -55,6 +55,35 @@ MOAIVectorCombo::MOAIVectorCombo () {
 
 //----------------------------------------------------------------//
 MOAIVectorCombo::~MOAIVectorCombo () {
+
+	u32 size = this->mShapes.Size ();
+	
+	for ( u32 i = 0; i < size; ++i ) {
+		delete this->mShapes [ i ];
+	}
 }
 
+//----------------------------------------------------------------//
+void MOAIVectorCombo::Read ( ZLStream& stream, MOAIVectorTesselatorWriter& writer ) {
 
+	u32 size = ( u32 )stream.Read < u16 >( 0 );
+	this->mShapes.Init ( size );
+	
+	for ( u32 i = 0; i < size; ++i ) {
+		MOAIVectorShape* shape = writer.ReadShape ( stream );
+		this->mShapes [ i ] = shape;
+	}
+	this->mCanGroup = false;
+}
+
+//----------------------------------------------------------------//
+void MOAIVectorCombo::Write ( ZLStream& stream, MOAIVectorTesselatorWriter& writer ) const {
+
+	u32 size = this->mShapes.Size ();
+	stream.Write < u16 >(( u16 )size );
+	
+	for ( u32 i = 0; i < size; ++i ) {
+		MOAIVectorShape* shape = this->mShapes [ i ];
+		writer.WriteShape ( stream, *shape );
+	}
+}

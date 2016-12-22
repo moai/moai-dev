@@ -42,23 +42,23 @@ public:
 		CAP_SQUARE,
 	};
 
-	u32					mFillStyle;
+	u8					mFillStyle;
 	ZLColorVec			mFillColor;
 	
-	u32					mLineStyle;
+	u8					mLineStyle;
 	ZLColorVec			mLineColor;
 	float				mLineWidth;
 	
-	u32					mStrokeStyle;
+	u8					mStrokeStyle;
 	ZLColorVec			mStrokeColor;
 	float				mStrokeWidth;
 	float				mStrokeDepthBias;
-	u32					mJoinStyle;
-	u32					mCapStyle;
+	u8					mJoinStyle;
+	u8					mCapStyle;
 	float				mMiterLimit;
 	
-	u32					mWindingRule;
-	u32					mCircleResolution;
+	u8					mWindingRule;
+	u16					mCircleResolution;
 	
 	float				mExtrude;
 	float				mZOffset;
@@ -66,10 +66,10 @@ public:
 	ZLVec3D				mLightVec;
 	
 	ZLColorVec			mLightColor;
-	u32					mLightCurve;
+	u8					mLightCurve;
 	
 	ZLColorVec			mShadowColor;
-	u32					mShadowCurve;
+	u8					mShadowCurve;
 	
 	ZLAffine2D			mDrawingToWorld;
 	ZLAffine2D			mWorldToDrawing;
@@ -79,23 +79,23 @@ public:
 	
 	float				mMergeNormals; // in degrees - 0 to 180; 0 will not be merged
 	
-	GET_SET_CONST ( u32, FillStyle, mFillStyle )
+	GET_SET_CONST ( u8, FillStyle, mFillStyle )
 	GET_SET_CONST ( ZLColorVec&, FillColor, mFillColor )
 	
-	GET_SET_CONST ( u32, LineStyle, mLineStyle )
+	GET_SET_CONST ( u8, LineStyle, mLineStyle )
 	GET_SET_CONST ( ZLColorVec&, LineColor, mLineColor )
 	GET_SET_CONST ( float, LineWidth, mLineWidth )
 	
-	GET_SET_CONST ( u32, StrokeStyle, mStrokeStyle )
+	GET_SET_CONST ( u8, StrokeStyle, mStrokeStyle )
 	GET_SET_CONST ( ZLColorVec&, StrokeColor, mStrokeColor )
 	GET_SET_CONST ( float, StrokeWidth, mStrokeWidth )
 	GET_SET_CONST ( float, StrokeDepthBias, mStrokeDepthBias )
-	GET_SET_CONST ( u32, JoinStyle, mJoinStyle )
-	GET_SET_CONST ( u32, CapStyle, mCapStyle )
+	GET_SET_CONST ( u8, JoinStyle, mJoinStyle )
+	GET_SET_CONST ( u8, CapStyle, mCapStyle )
 	GET_SET_CONST ( float, MiterLimit, mMiterLimit )
 	
-	GET_SET_CONST ( u32, WindingRule, mWindingRule )
-	GET_SET_CONST ( u32, CircleResolution, mCircleResolution )
+	GET_SET_CONST ( u8, WindingRule, mWindingRule )
+	GET_SET_CONST ( u16, CircleResolution, mCircleResolution )
 	
 	GET_SET_CONST ( float, Extrude, mExtrude )
 	GET_SET_CONST ( float, ZOffset, mZOffset )
@@ -103,10 +103,10 @@ public:
 	GET_SET_CONST ( ZLVec3D&, LightVec, mLightVec )
 	
 	GET_SET_CONST ( ZLColorVec&, LightColor, mLightColor )
-	GET_SET_CONST ( u32, LightCurve, mLightCurve );
+	GET_SET_CONST ( u8, LightCurve, mLightCurve );
 	
 	GET_SET_CONST ( ZLColorVec&, ShadowColor, mShadowColor )
-	GET_SET_CONST ( u32, ShadowCurve, mShadowCurve )
+	GET_SET_CONST ( u8, ShadowCurve, mShadowCurve )
 	
 	GET_SET_CONST ( ZLAffine2D&, DrawingToWorld, mDrawingToWorld )
 	GET_SET_CONST ( ZLAffine2D&, WorldToDrawing, mWorldToDrawing )

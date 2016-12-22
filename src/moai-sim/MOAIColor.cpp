@@ -84,6 +84,20 @@ int MOAIColor::_moveColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIColor::_packRGBA ( lua_State* L ) {
+	MOAI_LUA_SETUP_CLASS ( "" )
+
+	float r		= state.GetValue < float >( 1, 1.0f );
+	float g		= state.GetValue < float >( 2, 1.0f );
+	float b		= state.GetValue < float >( 3, 1.0f );
+	float a		= state.GetValue < float >( 4, 1.0f );
+
+	state.Push ( ZLColor::PackRGBA ( r, g, b, a ));
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	seekColor
 	@text	Animate the color by applying a delta. Delta is computed
 			given a target value. Creates and returns a MOAIEaseDriver
@@ -127,7 +141,7 @@ int MOAIColor::_seekColor ( lua_State* L ) {
 	}
 	
 	ZLColorVec color = state.GetColor ( 2, 0.0f, 0.0f, 0.0f, 0.0f );
-	if ( !color.Compare ( *self )) {
+	if ( !color.IsEqual ( *self )) {
 		self->Set ( color.mR, color.mG, color.mB, color.mA );
 		self->ScheduleUpdate ();
 	}
@@ -150,7 +164,7 @@ int MOAIColor::_setColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIColor, "UNNN" )
 
 	ZLColorVec color = state.GetColor ( 2, 0.0f, 0.0f, 0.0f, 1.0f );
-	if ( !color.Compare ( *self )) {
+	if ( !color.IsEqual ( *self )) {
 		self->Set ( color.mR, color.mG, color.mB, color.mA );
 		self->ScheduleUpdate ();
 	}
@@ -176,6 +190,20 @@ int MOAIColor::_setParent ( lua_State* L ) {
 	//MOAILogF ( state, MOAILogMessages::MOAI_FunctionDeprecated_S, "setParent" );
 	
 	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIColor::_unpackRGBA ( lua_State* L ) {
+	MOAI_LUA_SETUP_CLASS ( "" )
+
+	u32 rgba = state.GetValue < u32 >( 1, 0xffffffff );
+
+	ZLColorVec color;
+	color.SetRGBA ( rgba );
+
+	state.Push ( color );
+	return 4;
 }
 
 //================================================================//
@@ -290,6 +318,14 @@ void MOAIColor::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "ADD_COLOR", MOAIColorAttr::Pack ( ADD_COLOR ));
 	state.SetField ( -1, "INHERIT_COLOR", MOAIColorAttr::Pack ( INHERIT_COLOR ));
 	state.SetField ( -1, "COLOR_TRAIT", MOAIColorAttr::Pack ( COLOR_TRAIT ));
+	
+	luaL_Reg regTable [] = {
+		{ "packRGBA",				_packRGBA },
+		{ "unpackRGBA",				_unpackRGBA },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

@@ -53,13 +53,13 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	static ZLMetaVec3D < TYPE > CartesianToBarycentric ( const ZLMetaVec3D < TYPE >& v0, const ZLMetaVec3D < TYPE >& v1, const ZLMetaVec3D < TYPE >& v2, const ZLMetaVec2D < TYPE >& cart ) {
-	
+	static ZLMetaVec3D < TYPE > CartesianToBarycentric ( const ZLMetaVec3D < TYPE >& v0, const ZLMetaVec3D < TYPE >& v1, const ZLMetaVec3D < TYPE >& v2, const ZLMetaVec3D < TYPE >& cart ) {
+		
 		ZLMetaVec3D < TYPE > bary;
 	
-		ZLMetaVec3D < TYPE > e0 ( v1.mX - v0.mX, v1.mY - v0.mY );
-		ZLMetaVec3D < TYPE > e1 ( v2.mX - v0.mX, v2.mY - v0.mY );
-		ZLMetaVec3D < TYPE > e2 ( cart.mX - v0.mX, cart.mY - v0.mY );
+		ZLMetaVec3D < TYPE > e0 ( v1.mX - v0.mX, v1.mY - v0.mY, v1.mZ - v0.mZ );
+		ZLMetaVec3D < TYPE > e1 ( v2.mX - v0.mX, v2.mY - v0.mY, v2.mZ - v0.mZ );
+		ZLMetaVec3D < TYPE > e2 ( cart.mX - v0.mX, cart.mY - v0.mY, cart.mZ - v0.mZ );
 		
 		TYPE d00 = e0.Dot ( e0 );
 		TYPE d01 = e0.Dot ( e1 );
@@ -74,6 +74,18 @@ public:
 		bary.mZ = 1 - bary.mX - bary.mY;
 
 		return bary;
+	}
+	
+	//----------------------------------------------------------------//
+	static bool PointInTriangle ( const ZLMetaVec2D < TYPE >& v0, const ZLMetaVec2D < TYPE >& v1, const ZLMetaVec2D < TYPE >& v2, const ZLMetaVec2D < TYPE >& point ) {
+		
+		return ZLMetaBarycentric::BarycentricIsInside ( ZLMetaBarycentric::CartesianToBarycentric ( v0, v1, v2, point ));
+	}
+	
+	//----------------------------------------------------------------//
+	static bool PointInTriangle ( const ZLMetaVec3D < TYPE >& v0, const ZLMetaVec3D < TYPE >& v1, const ZLMetaVec3D < TYPE >& v2, const ZLMetaVec3D < TYPE >& point ) {
+		
+		return ZLMetaBarycentric::BarycentricIsInside ( ZLMetaBarycentric::CartesianToBarycentric ( v0, v1, v2, point ));
 	}
 };
 

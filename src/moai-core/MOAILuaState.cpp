@@ -1117,7 +1117,7 @@ bool MOAILuaState::LogErrors ( u32 level, FILE* file, int status ) {
 		cc8* error = lua_tostring ( this->mState, -1 );
 		if ( error ) {
 			STLString msg = lua_tostring ( this->mState, -1 );
-			ZLLog::LogF ( level, file, "-- %s\n", msg.c_str ());
+			ZLLog::Get ().LogF ( level, file, "-- %s\n", msg.c_str ());
 		}
 		lua_pop ( this->mState, 1 ); // pop error message
 		return true;
@@ -1128,13 +1128,13 @@ bool MOAILuaState::LogErrors ( u32 level, FILE* file, int status ) {
 //----------------------------------------------------------------//
 void MOAILuaState::LogStackDump ( u32 level, FILE* file ) {
 	STLString stackDump = this->GetStackDump ();
-	ZLLog::LogF ( level, file, stackDump );
+	ZLLog::Get ().LogF ( level, file, stackDump );
 }
 
 //----------------------------------------------------------------//
 void MOAILuaState::LogStackTrace ( u32 level, FILE* file, cc8* title, int stackLevel ) {
 	STLString stackTrace = this->GetStackTrace ( title, stackLevel );
-	ZLLog::LogF ( level, file, stackTrace.str ());
+	ZLLog::Get ().LogF ( level, file, stackTrace.str ());
 }
 
 //----------------------------------------------------------------//

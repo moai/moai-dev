@@ -20,7 +20,7 @@
 	@const	DIALOG_RESULT_CANCEL	Result code when the dialog is dismissed by pressing the cancel button.
 */
 class MOAIDialogAndroid :
-	public MOAIGlobalClass < MOAIDialogAndroid, MOAILuaObject > {
+	public ZLContextClass < MOAIDialogAndroid, MOAILuaObject > {
 private:
 
 	MOAILuaStrongRef	mDialogCallback;

@@ -11,6 +11,7 @@
 #include <zl-util/ZLTrig.h>
 #include <zl-util/ZLVec2D.h>
 #include <zl-util/ZLVec3D.h>
+#include <zl-util/ZLVec4D.h>
 
 //================================================================//
 // ZLMetaAffine3D
@@ -42,6 +43,16 @@ public:
 	};
 
 	TYPE	m [ SIZE ];
+	
+	//----------------------------------------------------------------//
+	bool operator == ( const ZLMetaAffine3D < TYPE >& rhs ) const {
+		return this->IsSame ( rhs );
+	}
+	
+	//----------------------------------------------------------------//
+	bool operator != ( const ZLMetaAffine3D < TYPE >& rhs ) const {
+		return !this->IsSame ( rhs );
+	}
 
 	//----------------------------------------------------------------//
 	void Append ( const ZLMetaAffine3D < TYPE >& mtx ) {
@@ -372,9 +383,9 @@ public:
 	//----------------------------------------------------------------//
 	void Print ( u32 level = ZLLog::LOG_REPORT, FILE* file = ZLLog::CONSOLE ) const {
 	
-		ZLLog::LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R0 ], m [ C1_R0 ], m [ C2_R0 ], m [ C3_R0 ]);
-		ZLLog::LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R1 ], m [ C1_R1 ], m [ C2_R1 ], m [ C3_R1 ]);
-		ZLLog::LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R2 ], m [ C1_R2 ], m [ C2_R2 ], m [ C3_R2 ]);
+		ZLLog::Get ().LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R0 ], m [ C1_R0 ], m [ C2_R0 ], m [ C3_R0 ]);
+		ZLLog::Get ().LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R1 ], m [ C1_R1 ], m [ C2_R1 ], m [ C3_R1 ]);
+		ZLLog::Get ().LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R2 ], m [ C1_R2 ], m [ C2_R2 ], m [ C3_R2 ]);
 	}
 
 	//----------------------------------------------------------------//
@@ -691,6 +702,32 @@ public:
 					(( PARAM_TYPE )m[C1_R2] *	vec.mY ) +
 					(( PARAM_TYPE )m[C2_R2] *	vec.mZ ) +
 					(( PARAM_TYPE )m[C3_R2]);
+		
+		vec.mX = x;
+		vec.mY = y;
+	}
+
+	//----------------------------------------------------------------//
+	template < typename PARAM_TYPE >
+	void Transform ( ZLMetaVec4D < PARAM_TYPE >& vec ) const {
+
+		PARAM_TYPE x;
+		PARAM_TYPE y;
+		
+		x =			(( PARAM_TYPE )m[C0_R0] *	vec.mX ) +
+					(( PARAM_TYPE )m[C1_R0] *	vec.mY ) +
+					(( PARAM_TYPE )m[C2_R0] *	vec.mZ ) +
+					(( PARAM_TYPE )m[C3_R0] *	vec.mW );
+		
+		y =			(( PARAM_TYPE )m[C0_R1] *	vec.mX ) +
+					(( PARAM_TYPE )m[C1_R1] *	vec.mY ) +
+					(( PARAM_TYPE )m[C2_R1] *	vec.mZ ) +
+					(( PARAM_TYPE )m[C3_R1] *	vec.mW );
+		
+		vec.mZ =	(( PARAM_TYPE )m[C0_R2] *	vec.mX ) +
+					(( PARAM_TYPE )m[C1_R2] *	vec.mY ) +
+					(( PARAM_TYPE )m[C2_R2] *	vec.mZ ) +
+					(( PARAM_TYPE )m[C3_R2] *	vec.mW );
 		
 		vec.mX = x;
 		vec.mY = y;
