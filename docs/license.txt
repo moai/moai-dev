@@ -487,7 +487,7 @@ The Original Code is Moai SDK
 The Original Developer is the Initial Developer.  The Initial Developer of the
 Original Code is Zipline Games, Inc.
 
-All portions of the code written by Zipline Games are Copyright (c) 2010-2011
+All portions of the code written by Zipline Games are Copyright (c) 2010-2017
 Zipline Games, Inc. All Rights Reserved.
 
 EXHIBIT B. Attribution Information
@@ -500,10 +500,9 @@ Attribution Phrase: Made with Moai
 
 Attribution URL: http://getmoai.com
 
-Graphic Image as provided in the Covered Code:
-http://getmoai.com/moailogo.png
+Graphic Image as provided in the Covered Code: moai-dev/docs/aiitribution images/
 
-Attribution Copyright Notice: Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+Attribution Copyright Notice: Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 
 An Alternative Image incorporating all four attributions is available at http://getmoai.com/madewithmoai
 

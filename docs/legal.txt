@@ -8,7 +8,7 @@ Software in the '3rdparty' folder is covered under separate licenses as provided
  COPYRIGHT AND ATTRIBUTION NOTICES
 =========================================
 
-Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 
 Made with Moai
 
