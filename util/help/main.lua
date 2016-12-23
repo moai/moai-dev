@@ -2,13 +2,11 @@
 -- args
 --==============================================================
 
-local UTIL_DIR = string.format ( '%s%s/', MOAI_SDK_HOME, 'util' )
-
 ----------------------------------------------------------------
 local checkHelp = function ( command )
 
-	if command then
-		local filename = string.format ( '%s%s/help.txt', UTIL_DIR, command )
+	if command and COMMANDS [ command ] then
+		local filename = string.format ( '%s/help.txt', COMMANDS [ command ])
 		return MOAIFileSystem.checkFileExists ( filename ), filename
 	end
 
@@ -42,9 +40,13 @@ else
 	print ( 'pito - the MOAI toolbelt - general usage:' )
 	print ()
 
-	local directories = MOAIFileSystem.listDirectories ( UTIL_DIR )
+	local sorted = {}
+	for command in pairs ( COMMANDS ) do
+		table.insert ( sorted, command )
+	end
+	table.sort ( sorted )
 
-	for i, directory in ipairs ( directories ) do
-		printHelp ( directory )
+	for i, command in ipairs ( sorted ) do
+		printHelp ( command )
 	end
 end

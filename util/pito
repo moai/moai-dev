@@ -27,6 +27,7 @@ then
         fi
     ;;
     Linux*)
+        # TODO: make this work?
         MOAI_BUILD_SCRIPT="bin/build-linux.sh"
     ;;
     *)
