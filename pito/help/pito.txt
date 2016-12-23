@@ -1,0 +1,15 @@
+pito - the MOAI toolbelt
+
+Pito commands are utilities written in Lua. Each command is held in a folder. The name of the folder is used as the name as the command. Each command folder contains a main.lua and an optional help.txt. Pito will scan its folder for command folders and add them to the command set.
+
+Pito may be extended with additional commands by adding configuration files and additional command folders in folders above the moai-dev/pito folder. Pito will search from moai-dev/pito all the way up to the root folder, looking for configuration files and additional command folders along the way.
+
+Configuration files are specially named files that contain paths to additional command folders delimited by spaces, commas or semicolors.
+
+Pito searches each parent folder for the following, in this order:
+
+pito/           -- an additional folder of pito commands
+.pito           -- a configuration file containing a list of paths to command folders
+.pito.local     -- a configuration file containing a list of paths to command folders
+
+As command folders are found, the commands are scanned and added to the command set. Through this mechanism, commands may be overridden. .pito.local is provided as an alternative configuration file name that may be omitted from version control if local command overrides are required.

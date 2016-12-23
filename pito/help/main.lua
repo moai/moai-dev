@@ -1,9 +1,13 @@
 --==============================================================
--- args
+-- util
 --==============================================================
 
+local checkHelp				= nil
+local printCommandHelp		= nil
+local printHelpFile			= nil
+
 ----------------------------------------------------------------
-local checkHelp = function ( command )
+checkHelp = function ( command )
 
 	if command and COMMANDS [ command ] then
 		local filename = string.format ( '%s/help.txt', COMMANDS [ command ])
@@ -14,31 +18,41 @@ local checkHelp = function ( command )
 end
 
 ----------------------------------------------------------------
-local printHelp = function ( command )
+printCommandHelp = function ( command )
 
 	local exists, filename = checkHelp ( command )
 
 	if exists then
-
-		local help = MOAIFileSystem.loadFile ( filename )
-
-		if help then
-			help = string.match ( help, '^%s*(.-)%s*$' )
-			print ( help )
-			print ()
-		end
+		printHelpFile ( filename )
 	end
 end
 
+----------------------------------------------------------------
+printHelpFile = function ( filename )
+
+	local help = MOAIFileSystem.loadFile ( filename )
+
+	if help then
+		help = string.match ( help, '^%s*(.-)%s*$' )
+		print ( help )
+		print ()
+	end
+end
+
+--==============================================================
+-- main
+--==============================================================
+
 command = arg [ 4 ]
+
+print ()
 
 if checkHelp ( command ) then
 
-	printHelp ( command )
+	printCommandHelp ( command )
 else
 
-	print ( 'pito - the MOAI toolbelt - general usage:' )
-	print ()
+	printHelpFile ( 'pito.txt' )
 
 	local sorted = {}
 	for command in pairs ( COMMANDS ) do
@@ -47,6 +61,6 @@ else
 	table.sort ( sorted )
 
 	for i, command in ipairs ( sorted ) do
-		printHelp ( command )
+		printCommandHelp ( command )
 	end
 end
