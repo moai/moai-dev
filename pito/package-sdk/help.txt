@@ -1,2 +1,0 @@
-pito package-sdk
-    Create the standard release of the MOAI SDK.
