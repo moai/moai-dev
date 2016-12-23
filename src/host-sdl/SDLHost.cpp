@@ -31,7 +31,7 @@
 
 //#include <OpenGL/gl.h>
 //#include <OpenGL/glext.h>
-#include <zl-gfx/ZLGfx-gles.h>
+//#include <zl-gfx/ZLGfx-gles.h>
 
 #define UNUSED(p) (( void )p)
 
@@ -443,7 +443,7 @@ void MainLoop () {
 	SDL_GL_SetAttribute ( SDL_GL_MULTISAMPLESAMPLES, 16 );
 
 //	SDL_GL_SetAttribute ( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
-//    SDL_GL_SetAttribute ( SDL_GL_CONTEXT_MINOR_VERSION, 2 );
+//	SDL_GL_SetAttribute ( SDL_GL_CONTEXT_MINOR_VERSION, 2 );
 //	SDL_GL_SetAttribute ( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
 	
 	#if GFX_ASYNC
@@ -458,9 +458,9 @@ void MainLoop () {
 	
 	#else
 	
-		SDL_GLContext context = SDL_GL_CreateContext ( sWindow );
+		//SDL_GLContext context = SDL_GL_CreateContext ( sWindow );
+		SDL_GL_CreateContext ( sWindow );
 		SDL_GL_SetSwapInterval ( 1 );
-	
 		AKUDetectGfxContext ();
 	
 	#endif
@@ -647,7 +647,12 @@ void MainLoop () {
 	#else
 	
 		AKUDeleteContext ( AKUGetContext ());
-		SDL_GL_DeleteContext ( context );
+
+		//SDL_GL_DeleteContext ( context );  removing context here leaves the window and it explodes with gl error during glflush
+
+		// TODO: presumably the context needs to be deleted?
+		// TODO: what happens in multi-threaded mode?
+
 	#endif
 }
 
