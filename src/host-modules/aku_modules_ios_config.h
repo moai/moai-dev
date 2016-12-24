@@ -10,7 +10,7 @@
 	#endif
 
 	#ifndef AKU_WITH_IOS_BILLING
-		#define AKU_WITH_IOS_BILLING 1
+		#define AKU_WITH_IOS_BILLING 0
 	#endif
 
 	#ifndef AKU_WITH_IOS_CHARTBOOST
