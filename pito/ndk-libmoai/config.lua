@@ -39,7 +39,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/moai-adcolony.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/moai-adcolony.mk',
 		},
 		
 		JAVA = {
@@ -60,7 +60,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/moai-android.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/moai-android.mk',
 		},
 		
 		JAVA = {
@@ -89,8 +89,8 @@ MODULES = {
 		},
 	
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/3rdparty-box2d.mk',
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/moai-box2d.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/3rdparty-box2d.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/moai-box2d.mk',
 		},
 		
 		JAVA = {
@@ -109,7 +109,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/moai-chartboost.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/moai-chartboost.mk',
 		},
 		
 		JAVA = {
@@ -130,7 +130,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/moai-crittercism.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/moai-crittercism.mk',
 		},
 		
 		JAVA = {
@@ -155,12 +155,12 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/3rdparty-crypto-a.mk',
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/3rdparty-crypto-b.mk',
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/3rdparty-crypto-c.mk',
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/3rdparty-crypto-d.mk',
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/zl-crypto.mk',
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/moai-crypto.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/3rdparty-crypto-a.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/3rdparty-crypto-b.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/3rdparty-crypto-c.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/3rdparty-crypto-d.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/zl-crypto.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/moai-crypto.mk',
 		},
 		
 		JAVA = {
@@ -179,7 +179,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/moai-deltadna.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/moai-deltadna.mk',
 		},
 		
 		JAVA = {
@@ -200,7 +200,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/moai-facebook.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/moai-facebook.mk',
 		},
 		
 		JAVA = {
@@ -222,7 +222,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/moai-flurry.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/moai-flurry.mk',
 		},
 		
 		JAVA = {
@@ -247,7 +247,7 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/moai-fmod-ex.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/moai-fmod-ex.mk',
 		},
 		
 		JAVA = {
@@ -267,7 +267,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/moai-google-play-services.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/moai-google-play-services.mk',
 		},
 		
 		JAVA = {
@@ -315,10 +315,10 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/3rdparty-c-ares.mk',
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/3rdparty-curl.mk',
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/3rdparty-ssl.mk',
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/moai-http-client.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/3rdparty-c-ares.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/3rdparty-curl.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/3rdparty-ssl.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/moai-http-client.mk',
 		},
 		
 		JAVA = {
@@ -338,8 +338,8 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/3rdparty-mongoose.mk',
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/moai-http-server.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/3rdparty-mongoose.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/moai-http-server.mk',
 		},
 		
 		JAVA = {
@@ -359,8 +359,8 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/3rdparty-jpg.mk',
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/moai-image-jpg.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/3rdparty-jpg.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/moai-image-jpg.mk',
 		},
 		
 		JAVA = {
@@ -380,8 +380,8 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/3rdparty-png.mk',
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/moai-image-png.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/3rdparty-png.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/moai-image-png.mk',
 		},
 		
 		JAVA = {
@@ -401,8 +401,8 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/3rdparty-pvr.mk',
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/moai-image-pvr.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/3rdparty-pvr.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/moai-image-pvr.mk',
 		},
 		
 		JAVA = {
@@ -422,8 +422,8 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/3rdparty-webp.mk',
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/moai-image-webp.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/3rdparty-webp.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/moai-image-webp.mk',
 		},
 		
 		JAVA = {
@@ -448,7 +448,7 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/moai-luaext.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/moai-luaext.mk',
 		},
 		
 		JAVA = {
@@ -464,20 +464,20 @@ MODULES = {
 		NAMESPACE = 'com.ziplinegames.moai',
 		
 		HEADER_SEARCH_PATHS = {
-			'$(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/include',
-			'$(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/include/freetype',
-			'$(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/include/freetype2',
-			'$(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/builds',
-			'$(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/src',
-			'$(MOAI_SDK_HOME)/3rdparty/freetype-2.4.4/config',
+			'$(MOAI_SDK_HOME)/3rdparty/freetype-2.7/include',
+			'$(MOAI_SDK_HOME)/3rdparty/freetype-2.7/include/freetype',
+			'$(MOAI_SDK_HOME)/3rdparty/freetype-2.7/include/freetype2',
+			'$(MOAI_SDK_HOME)/3rdparty/freetype-2.7/builds',
+			'$(MOAI_SDK_HOME)/3rdparty/freetype-2.7/src',
+			'$(MOAI_SDK_HOME)/3rdparty/freetype-2.7/config',
 			'$(MOAI_SDK_HOME)/3rdparty/libtess2/Include',
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/3rdparty-freetype.mk',
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/3rdparty-tess.mk',
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/zl-gfx.mk',
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/moai-sim.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/3rdparty-freetype.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/3rdparty-tess.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/zl-gfx.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/moai-sim.mk',
 		},
 		
 		JAVA = {
@@ -496,7 +496,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/moai-tapjoy.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/moai-tapjoy.mk',
 		},
 		
 		JAVA = {
@@ -517,7 +517,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/moai-twitter.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/moai-twitter.mk',
 		},
 		
 		JAVA = {
@@ -543,10 +543,10 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/3rdparty-ogg.mk',
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/3rdparty-vorbis.mk',
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/3rdparty-untz.mk',
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/moai-untz.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/3rdparty-ogg.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/3rdparty-vorbis.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/3rdparty-untz.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/moai-untz.mk',
 		},
 		
 		JAVA = {
@@ -565,7 +565,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ndk-libmoai/modules/moai-vungle.mk',
+			'$(MOAI_SDK_HOME)/pito/ndk-libmoai/modules/moai-vungle.mk',
 		},
 		
 		JAVA = {

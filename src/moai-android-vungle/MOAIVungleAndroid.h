@@ -11,7 +11,7 @@
 // MOAIVungleAndroid
 //================================================================//
 class MOAIVungleAndroid :
-	public MOAIGlobalClass < MOAIVungleAndroid, MOAIGlobalEventSource >,
+	public ZLContextClass < MOAIVungleAndroid, MOAIGlobalEventSource >,
 	public JniUtils {
 private:
 

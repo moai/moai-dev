@@ -12,7 +12,7 @@
 /**	@lua	MOAITstoreWallAndroid
 */
 class MOAITstoreWallAndroid :
-	public MOAIGlobalClass < MOAITstoreWallAndroid, MOAILuaObject > {
+	public ZLContextClass < MOAITstoreWallAndroid, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//

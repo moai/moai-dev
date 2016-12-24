@@ -11,7 +11,7 @@
 // MOAIChartBoostAndroid
 //================================================================//
 class MOAIChartBoostAndroid :
-	public MOAIGlobalClass < MOAIChartBoostAndroid, MOAIGlobalEventSource >,
+	public ZLContextClass < MOAIChartBoostAndroid, MOAIGlobalEventSource >,
 	public JniUtils {
 private:
 	

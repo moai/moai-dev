@@ -13,7 +13,7 @@
 	@text	Wrapper for Google Play services.
 */
 class MOAIGooglePlayServicesAndroid :
-	public MOAIGlobalClass < MOAIGooglePlayServicesAndroid, MOAILuaObject > {
+	public ZLContextClass < MOAIGooglePlayServicesAndroid, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//

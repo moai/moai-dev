@@ -24,7 +24,7 @@
 	@const	SESSION_DID_NOT_LOGIN		Event code for a failed (or canceled) Facebook login.
 */
 class MOAIFacebookAndroid :
-	public MOAIGlobalClass < MOAIFacebookAndroid, MOAIGlobalEventSource >,
+	public ZLContextClass < MOAIFacebookAndroid, MOAIGlobalEventSource >,
 	public JniUtils {
 private:
 

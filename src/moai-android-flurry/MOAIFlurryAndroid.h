@@ -11,7 +11,7 @@
 // MOAIFlurryAndroid
 //================================================================//
 class MOAIFlurryAndroid :
-	public MOAIGlobalClass < MOAIFlurryAndroid, MOAILuaObject >,
+	public ZLContextClass < MOAIFlurryAndroid, MOAILuaObject >,
 	public JniUtils {
 private:
 

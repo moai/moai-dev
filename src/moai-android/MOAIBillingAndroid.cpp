@@ -644,7 +644,7 @@ int MOAIBillingAndroid::_requestProductsSync ( lua_State* L ) {
 		int numEntries = 0;
 		for ( int key = 1; ; ++key ) {
 
-			state.GetField ( 1, key );
+			state.PushField ( 1, key );
 			cc8* value = _luaParseTable ( state, -1 );
 			lua_pop ( state, 1 );
 
@@ -658,7 +658,7 @@ int MOAIBillingAndroid::_requestProductsSync ( lua_State* L ) {
 		jskus = env->NewObjectArray ( numEntries, env->FindClass( "java/lang/String" ), 0 );
 		for ( int key = 1; ; ++key ) {
 
-			state.GetField ( 1, key );
+			state.PushField ( 1, key );
 			cc8* value = _luaParseTable ( state, -1 );
 			lua_pop ( state, 1 );
 

@@ -41,13 +41,13 @@ int MOAITwitterAndroid::_init ( lua_State* L ) {
 	jclass twitter = env->FindClass ( "com/moaisdk/twitter/MoaiTwitter" );
     if ( twitter == NULL ) {
 
-		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find java class %s", "com/moaisdk/twitter/MoaiTwitter" );
+		ZLLog::Get ().LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find java class %s", "com/moaisdk/twitter/MoaiTwitter" );
     } else {
 
     	jmethodID init = env->GetStaticMethodID ( twitter, "init", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
    		if ( init == NULL ) {
 
-			ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find static java method %s", "init" );
+			ZLLog::Get ().LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find static java method %s", "init" );
 		} else {
 
 			env->CallStaticVoidMethod ( twitter, init, ( jstring )jconsumerKey, ( jstring )jconsumerSecret, ( jstring )jcallbackUrl);
@@ -72,13 +72,13 @@ int MOAITwitterAndroid::_login ( lua_State *L ) {
 	jclass twitter = env->FindClass ( "com/moaisdk/twitter/MoaiTwitter" );
     if ( twitter == NULL ) {
 
-		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find java class %s", "com/moaisdk/twitter/MoaiTwitter" );
+		ZLLog::Get ().LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find java class %s", "com/moaisdk/twitter/MoaiTwitter" );
     } else {
 
     	jmethodID login = env->GetStaticMethodID ( twitter, "login", "()V" );
     	if ( login == NULL ) {
 
-			ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find static java method %s", "login" );
+			ZLLog::Get ().LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find static java method %s", "login" );
     	} else {
 
 			env->CallStaticVoidMethod ( twitter, login);
@@ -103,13 +103,13 @@ int MOAITwitterAndroid::_isLoggedIn ( lua_State *L ) {
 	jclass twitter = env->FindClass ( "com/moaisdk/twitter/MoaiTwitter" );
     if ( twitter == NULL ) {
 
-		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find java class %s", "com/moaisdk/twitter/MoaiTwitter" );
+		ZLLog::Get ().LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find java class %s", "com/moaisdk/twitter/MoaiTwitter" );
     } else {
 
     	jmethodID isLoggedIn = env->GetStaticMethodID ( twitter, "isLoggedIn", "()Z" );
     	if ( isLoggedIn  == NULL ) {
 
-			ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find static java method %s", "isLoggedIn" );
+			ZLLog::Get ().LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find static java method %s", "isLoggedIn" );
     	} else {
 
 			jboolean isUserLoggedIn = env->CallStaticBooleanMethod ( twitter, isLoggedIn );
@@ -143,13 +143,13 @@ int MOAITwitterAndroid::_setAccessToken ( lua_State* L ) {
 	jclass twitter = env->FindClass ( "com/moaisdk/twitter/MoaiTwitter" );
     if ( twitter == NULL ) {
 
-		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find java class %s", "com/moaisdk/twitter/MoaiTwitter" );
+		ZLLog::Get ().LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find java class %s", "com/moaisdk/twitter/MoaiTwitter" );
     } else {
 
     	jmethodID setAccessToken = env->GetStaticMethodID ( twitter, "setAccessToken", "(Ljava/lang/String;Ljava/lang/String;)V" );
    		if ( setAccessToken == NULL ) {
 
-			ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find static java method %s", "setAccessToken" );
+			ZLLog::Get ().LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find static java method %s", "setAccessToken" );
 		} else {
 
 			env->CallStaticVoidMethod ( twitter, setAccessToken, ( jstring )jtoken, ( jstring )jtokenSecret );
@@ -179,13 +179,13 @@ int MOAITwitterAndroid::_sendTweet ( lua_State* L ) {
 	jclass twitter = env->FindClass ( "com/moaisdk/twitter/MoaiTwitter" );
     if ( twitter == NULL ) {
 
-		ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find java class %s", "com/moaisdk/twitter/MoaiTwitter" );
+		ZLLog::Get ().LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find java class %s", "com/moaisdk/twitter/MoaiTwitter" );
     } else {
 
     	jmethodID sendTweet = env->GetStaticMethodID ( twitter, "sendTweet", "(Ljava/lang/String;)V" );
    		if ( sendTweet == NULL ) {
 
-			ZLLog::LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find static java method %s", "sendTweet" );
+			ZLLog::Get ().LogF ( 1, ZLLog::CONSOLE, "MOAITwitterAndroid: Unable to find static java method %s", "sendTweet" );
 		} else {
 
 			env->CallStaticVoidMethod ( twitter, sendTweet, ( jstring )jtext );

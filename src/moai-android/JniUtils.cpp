@@ -282,7 +282,7 @@ jobjectArray JniUtils::StringArrayFromLua ( lua_State* L, int index ) {
 
     int numEntries = 0;
     for ( int key = 1; ; ++key ) {
-        state.GetField ( index, key );
+        state.PushField ( index, key );
         cc8* value = state.GetValue < cc8* >( -1, 0 );
         lua_pop ( state, 1 );
 
@@ -295,7 +295,7 @@ jobjectArray JniUtils::StringArrayFromLua ( lua_State* L, int index ) {
     jobjectArray array = this->Env ()->NewObjectArray ( numEntries, this->Env ()->FindClass( "java/lang/String" ), 0 );
     for ( int key = 1; ; ++key ) {
 
-        state.GetField ( index, key );
+        state.PushField ( index, key );
         cc8* value = state.GetValue < cc8* >( -1, 0 );
         lua_pop ( state, 1 );
 

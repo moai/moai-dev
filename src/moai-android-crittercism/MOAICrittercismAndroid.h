@@ -16,7 +16,7 @@
 			all mobile platforms.
 */
 class MOAICrittercismAndroid :
-	public MOAIGlobalClass < MOAICrittercismAndroid, MOAILuaObject > {
+	public ZLContextClass < MOAICrittercismAndroid, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//
