@@ -25,29 +25,26 @@ android {
     }
 }
 
-task ( 'cleanLuaScripts',type: Delete) {
+task ( 'cleanLuaScripts', type: Delete ) {
     delete 'src/main/assets/lua'
 }
 
-task ( 'cleanLibraries',type: Delete) {
+task ( 'cleanLibraries', type: Delete ) {
     delete 'src/main/jniLibs'
 }
 
-task ( 'copyLuaScripts', type: Copy ){
+task ( 'copyLuaScripts', type: Copy ) {
     from '../../samples/anim-curve'
     into 'src/main/assets/lua'
 }
 
-task ( 'copyLibraries', type: Copy ){
+task ( 'copyLibraries', type: Copy ) {
     from '../../android-ndk/libs'
     into 'src/main/jniLibs'
 }
 
-//clean.dependsOn cleanLuaScripts
-//clean.dependsOn cleanLibraries
-
-preBuild.dependsOn cleanLuaScripts
-preBuild.dependsOn cleanLibraries
+clean.dependsOn cleanLuaScripts
+clean.dependsOn cleanLibraries
 
 preBuild.dependsOn copyLuaScripts
 preBuild.dependsOn copyLibraries
