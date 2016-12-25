@@ -154,6 +154,12 @@
 	}
 
 	//----------------------------------------------------------------//
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUDetectFramebuffer ( JNIEnv* env, jclass obj ) {
+
+		AKUDetectFramebuffer ();
+	}
+
+	//----------------------------------------------------------------//
 	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUDetectGfxContext ( JNIEnv* env, jclass obj ) {
 
 		AKUDetectGfxContext ();

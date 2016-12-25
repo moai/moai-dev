@@ -37,7 +37,7 @@ public class MoaiView extends GLSurfaceView {
 	private int 		mWidth;
 	
     //----------------------------------------------------------------//
-	public MoaiView ( Context context, int width, int height, int glesVersion ) {
+	public MoaiView ( Context context, int moaiContext, int width, int height, int glesVersion ) {
 
 		super ( context );
 		
@@ -66,7 +66,7 @@ public class MoaiView extends GLSurfaceView {
 			}
 		};
 		setEGLConfigChooser(8 , 8, 8, 8, 16, 0);
-        setRenderer ( new MoaiRenderer ());
+        setRenderer ( new MoaiRenderer ( moaiContext ));
 		onPause (); // Pause rendering until restarted by the activity lifecycle.		
 	}
 	
@@ -189,8 +189,16 @@ public class MoaiView extends GLSurfaceView {
 	//================================================================//
 	// MoaiRenderer
 	//================================================================//
-	
 	private class MoaiRenderer implements GLSurfaceView.Renderer {
+
+        private int     mMoaiContext;
+
+        //----------------------------------------------------------------//
+        public MoaiRenderer ( int moaiContext ) {
+
+            super ();
+            mMoaiContext = moaiContext;
+        }
 
 	    //----------------------------------------------------------------//
 		@Override
@@ -207,6 +215,7 @@ public class MoaiView extends GLSurfaceView {
 
 			setScreenDimensions ( width, height );
 			Moai.setViewSize ( mWidth, mHeight );
+            Moai.detectFramebuffer ();
 		}
         
 	    //----------------------------------------------------------------//
@@ -215,6 +224,7 @@ public class MoaiView extends GLSurfaceView {
 
 			MoaiLog.i ( "MoaiRenderer onSurfaceCreated: surface CREATED" );
 
+            Moai.setContext ( mMoaiContext );
 			Moai.detectGraphicsContext ();
 		}
 	}

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.moaisdk.casinowonders" >
+    package="com.moaisdk.moai" >
 
     <application
         android:allowBackup="true"
@@ -31,118 +31,6 @@
 
         <receiver android:name="com.moaisdk.core.MoaiLocalNotificationReceiver"></receiver>
 
-        <!-- EXTERNAL DECLARATIONS: Placeholder (DO NOT MOVE OR REMOVE) -->
-
-        <!-- Crittercism -->
-        <!--
-        <activity android:name="com.crittercism.FeedbackActivity"/>
-        <activity android:name="com.crittercism.FeedbackCreateActivity"/>
-        <activity android:name="com.crittercism.FeedbackDetailsActivity"/>
-        <activity android:name="com.crittercism.NotificationActivity"/>
-        <service android:name="com.crittercism.service.CrittercismService" android:process="com.crittercism.service" android:exported="true">
-            <intent-filter><action android:name="com.crittercism.service.CrittercismService" /></intent-filter>
-        </service>
-        -->
-
-        <!-- Google Play Services -->
-        <!--<meta-data android:name="com.google.android.gms.games.APP_ID" android:value="@string/gms_app_id" />-->
-
-        <!-- Amazon Billing (Amazon App Store) IAP -->
-        <!--
-        <receiver android:name="com.amazon.inapp.purchasing.ResponseReceiver">
-            <intent-filter>
-                <action android:name="com.amazon.inapp.purchasing.NOTIFY" android:permission="com.amazon.inapp.purchasing.Permission.NOTIFY" />
-            </intent-filter>
-        </receiver>
-        -->
-
-        <!-- Tapjoy -->
-        <!--
-        <activity
-            android:name="com.tapjoy.TJCOffersWebView"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
-        <activity
-            android:name="com.tapjoy.TapjoyFullScreenAdWebView"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
-        <activity
-            android:name="com.tapjoy.TapjoyDailyRewardAdWebView"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
-        <activity
-            android:name="com.tapjoy.TapjoyVideoView"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
-        <activity
-            android:name="com.tapjoy.TJAdUnitView"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
-            android:hardwareAccelerated="true" />
-        <activity
-            android:name="com.tapjoy.mraid.view.ActionHandler"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
-        <activity
-            android:name="com.tapjoy.mraid.view.Browser"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
-        -->
-
-        <!-- Facebook -->
-        <activity android:name="com.facebook.FacebookActivity"
-                  android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-                  android:theme="@android:style/Theme.Translucent.NoTitleBar"
-                  android:label="@string/app_name" />
-
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/fb_app_id"/>
-
-        <!-- AdColony -->
-        <!--
-        <activity android:name="com.jirbo.adcolony.AdColonyOverlay"
-                  android:configChanges="keyboardHidden|orientation|screenSize"
-                  android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
-
-        <activity android:name="com.jirbo.adcolony.AdColonyFullscreen"
-                  android:configChanges="keyboardHidden|orientation|screenSize"
-                  android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
-
-        <activity android:name="com.jirbo.adcolony.AdColonyBrowser"
-                  android:configChanges="keyboardHidden|orientation|screenSize"
-                  android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
-        -->
-
-        <!-- Google Push (C2DM) Messaging -->
-        <receiver android:name="com.moaisdk.googlepush.MoaiGooglePushReceiver" android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <category android:name="com.moaisdk.moai" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                <category android:name="com.moaisdk.moai" />
-            </intent-filter>
-        </receiver>
-
-        <!-- ChartBoost -->
-        <!--
-        <activity 
-            android:name="com.chartboost.sdk.CBImpressionActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:excludeFromRecents="true" />
-        -->
-
-        <!-- Flurry -->
-        <!--
-        <activity
-            android:name="com.flurry.android.FlurryFullscreenTakeoverActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize">
-        </activity>
-        -->
-
-        <!-- Vungle -->
-        <!--
-        <activity
-            android:name="com.vungle.sdk.VungleAdvert"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-        <service android:name="com.vungle.sdk.VungleIntentService"/>
-        -->
-
     </application>
 
     <uses-sdk android:minSdkVersion="8"/>
@@ -150,64 +38,6 @@
     <!-- Moai -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- EXTERNAL PERMISSIONS: Placeholder (DO NOT MOVE OR REMOVE) -->
-
-    <!-- DeltaDNA -->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
-    <!-- Crittercism -->
-    <!--
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-     -->
-
-    <!-- Tapjoy -->
-    <!--
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    -->
-
-    <!-- Facebook -->
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- AdColony -->
-    <!--
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    -->
-
-    <!-- Google Push (C2DM) Messaging -->
-    <permission android:name="com.ziplinegames.moai.permission.C2D_MESSAGE" android:protectionLevel="signature" />
-    <uses-permission android:name="com.ziplinegames.moai.permission.C2D_MESSAGE" />
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-
-    <!-- ChartBoost -->
-    <!--
-    <uses-permission android:name="android.permission.INTERNET" />
-    -->
-
-    <!-- Flurry -->
-    <!--
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    -->
-
-    <!-- Google Billing (Android Market) IAP -->
-    <uses-permission android:name="com.android.vending.BILLING" />
-
-    <!-- Vungle -->
-    <!--
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    -->
 
     <supports-screens
             android:smallScreens="false"

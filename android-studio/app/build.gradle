@@ -34,7 +34,7 @@ task ( 'cleanLibraries',type: Delete) {
 }
 
 task ( 'copyLuaScripts', type: Copy ){
-    from '../../samples/anim-basic'
+    from '../../samples/anim-curve'
     into 'src/main/assets/lua'
 }
 
@@ -43,11 +43,12 @@ task ( 'copyLibraries', type: Copy ){
     into 'src/main/jniLibs'
 }
 
-//clean.dependsOn cleanLibmoai
-clean.dependsOn cleanLuaScripts
-clean.dependsOn cleanLibraries
+//clean.dependsOn cleanLuaScripts
+//clean.dependsOn cleanLibraries
 
-//preBuild.dependsOn buildLibmoai
+preBuild.dependsOn cleanLuaScripts
+preBuild.dependsOn cleanLibraries
+
 preBuild.dependsOn copyLuaScripts
 preBuild.dependsOn copyLibraries
 

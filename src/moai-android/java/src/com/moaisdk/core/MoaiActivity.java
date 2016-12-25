@@ -92,7 +92,7 @@ public class MoaiActivity extends Activity {
 		Moai.onCreate ( this );
 
 		MoaiLog.i ( "createContext" );
-		Moai.createContext ();
+		int moaiContext = Moai.createContext ();
 
 		MoaiLog.i ( "init" );
 		Moai.init ();
@@ -133,7 +133,7 @@ public class MoaiActivity extends Activity {
 		Display display = (( WindowManager ) getSystemService ( Context.WINDOW_SERVICE )).getDefaultDisplay ();
 		ConfigurationInfo info = (( ActivityManager ) getSystemService ( Context.ACTIVITY_SERVICE )).getDeviceConfigurationInfo ();
 
-	    mMoaiView = new MoaiView ( this, display.getWidth (), display.getHeight (), info.reqGlEsVersion );
+	    mMoaiView = new MoaiView ( this, moaiContext, display.getWidth (), display.getHeight (), info.reqGlEsVersion );
 		mSensorManager = ( SensorManager ) getSystemService ( Context.SENSOR_SERVICE );
 		mLocationManager = (LocationManager) getSystemService ( Context.LOCATION_SERVICE );
 
@@ -147,7 +147,7 @@ public class MoaiActivity extends Activity {
 		con.addView ( MoaiKeyboard.getEditText ());
 		
 		MoaiLog.i ( "MoaiActivity onCreate: Running game scripts" );
-		Moai.runScript ( "bootstrap.lua" ); // TODO: this should be set from a string resource or a manifest entry
+		Moai.runScript ( "main.lua" ); // TODO: this should be set from a string resource or a manifest entry
 		Moai.invokeListener ( Moai.ListenerEvent.ACTIVITY_ON_CREATE );
     }
 
