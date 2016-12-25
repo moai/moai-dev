@@ -34,24 +34,14 @@ task ( 'cleanLibraries',type: Delete) {
 }
 
 task ( 'copyLuaScripts', type: Copy ){
-    from '../../../samples/anim-curve'
+    from '../../samples/anim-basic'
     into 'src/main/assets/lua'
 }
 
 task ( 'copyLibraries', type: Copy ){
-    from '../../../ndk/libmoai/libs'
+    from '../../android-ndk/libs'
     into 'src/main/jniLibs'
 }
-
-//task cleanLibmoai ( type: Exec ) {
-//    workingDir "$projectDir/../../../ndk"
-//    commandLine 'sh', './ndk/libmoai-clean.sh'
-//}
-
-//task buildLibmoai ( type: Exec ) {
-//    workingDir "$projectDir/../../../ndk"
-//    commandLine 'sh', './libmoai-build.sh'
-//}
 
 //clean.dependsOn cleanLibmoai
 clean.dependsOn cleanLuaScripts
@@ -65,18 +55,4 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile project(':core')
-    //compile project(':adcolony')
-    //compile project(':amazonbilling')
-    //compile project(':chartboost')
-    //compile project(':crittercism')
-    //compile project(':deltadna')
-    //compile project(':facebook')
-    //compile project(':flurry')
-    //compile project(':fortumo')
-    //compile project(':googlebilling')
-    //compile project(':googleplayservices')
-    //compile project(':googlepush')
-    //compile project(':tapjoy')
-    //compile project(':twitter')
-    //compile project(':vungle')
 }
