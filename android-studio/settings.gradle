@@ -1,0 +1,46 @@
+include ':app'
+
+include ':core'
+project(':core').projectDir = new File('../../src/moai-android/java')
+
+//include ':adcolony'
+//project(':adcolony').projectDir = new File('../../src/moai-android-adcolony/java')
+
+//include ':amazonbilling'
+//project(':amazonbilling').projectDir = new File('../../src/moai-android-amazon-billing/java')
+
+//include ':chartboost'
+//project(':chartboost').projectDir = new File('../../src/moai-android-chartboost/java')
+
+//include ':crittercism'
+//project(':crittercism').projectDir = new File('../../src/moai-android-crittercism/java')
+
+//include ':deltadna'
+//project(':deltadna').projectDir = new File('../../src/moai-android-deltadna/java')
+
+//include ':facebook'
+//project(':facebook').projectDir = new File('../../src/moai-android-facebook/java')
+
+//include ':flurry'
+//project(':flurry').projectDir = new File('../../src/moai-android-flurry/java')
+
+//include ':fortumo'
+//project(':fortumo').projectDir = new File('../../src/moai-android-fortumo/java')
+
+//include ':googlebilling'
+//project(':googlebilling').projectDir = new File('../../src/moai-android-google-billing/java')
+
+//include ':googleplayservices'
+//project(':googleplayservices').projectDir = new File('../../src/moai-android-google-play-services/java')
+
+//include ':googlepush'
+//project(':googlepush').projectDir = new File('../../src/moai-android-google-push/java')
+
+//include ':tapjoy'
+//project(':tapjoy').projectDir = new File('../../src/moai-android-tapjoy/java')
+
+//include ':twitter'
+//project(':twitter').projectDir = new File('../../src/moai-android-twitter/java')
+
+//include ':vungle'
+////project(':vungle').projectDir = new File('../../src/moai-android-vungle/java')

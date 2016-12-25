@@ -1,2 +1,0 @@
-<!-- Google Billing (Android Market) IAP -->
-<uses-permission android:name="com.android.vending.BILLING" />

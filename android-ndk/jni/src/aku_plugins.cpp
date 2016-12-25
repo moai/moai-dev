@@ -1,43 +1,39 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include <zl-common/zl_platform.h>
-#include <host-modules/aku_modules_android.h>
+#include <string.h>
+#include <host-modules/aku_plugins.h>
+
+// Copy this file and add your own module initalizers to it. Link the copy to your host
+// instead of this version. This is an easier way to add custom modules to the host
+// without having to copy and change the source of the host itself.
+
 
 //================================================================//
 // implementation
 //================================================================//
 
 //----------------------------------------------------------------//
-void AKUModulesAndroidAppFinalize () {
-
-	#if AKU_WITH_ANDROID
-		AKUAndroidAppFinalize ();
-	#endif
+void AKUPluginsAppFinalize () {
+	
 }
 
 //----------------------------------------------------------------//
-void AKUModulesAndroidAppInitialize () {
-
-	#if AKU_WITH_ANDROID
-		AKUAndroidAppInitialize ();
-	#endif
+void AKUPluginsAppInitialize () {
+	
 }
 
 //----------------------------------------------------------------//
-void AKUModulesAndroidContextInitialize () {
-
-	#if AKU_WITH_ANDROID
-		AKUAndroidContextInitialize ();
-	#endif
+void AKUPluginsContextInitialize () {
+	
 }
 
 //----------------------------------------------------------------//
-void AKUModulesAndroidPause ( bool pause ) {
-	UNUSED ( pause );
+void AKUPluginsPause ( bool pause ) {
+	
 }
 
-
 //----------------------------------------------------------------//
-void AKUModulesAndroidUpdate () {
+void AKUPluginsUpdate () {
+	
 }
