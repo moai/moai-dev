@@ -14,7 +14,7 @@ end
 
 --FILENAME = '../../3rdparty/assimp/test/models-nonbsd/ogre/ogresdk/ninja.mesh'
 --FILENAME = '../../3rdparty/assimp/test/models/collada/duck.dae'
-FILENAME = '../temp/assimp/boblampclean.md5mesh'
+FILENAME = '../../../moai-content/guard/boblampclean.md5mesh'
 
 --MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_MODEL_BOUNDS, 2, 1, 1, 1 )
 --MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
@@ -171,7 +171,7 @@ local textures = {}
 
 for i, aiMaterial in ipairs ( aiMaterials ) do
 
-	local path = '../temp/assimp/' .. aiMaterial.TEXTURE_DIFFUSE [ 1 ].path
+	local path = '../../../moai-content/guard/' .. aiMaterial.TEXTURE_DIFFUSE [ 1 ].path
 	print ( path )
 
 	local texture = MOAITexture.new ()
