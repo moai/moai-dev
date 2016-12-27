@@ -86,7 +86,7 @@ void ZLLog::SetRedirect ( FILE* file ) {
 
 //----------------------------------------------------------------//
 ZLLog::ZLLog () :
-	mLogLevel ( ZLLog::LOG_NONE ),
+	mLogLevel ( ZLLog::LOG_DEBUG ),
 	mConsoleRedirect ( 0 ),
 	mLogFunc ( 0 ),
 	mLogFuncUserdata ( 0 ) {

@@ -83,7 +83,7 @@ int MOAIShader::_setUniform ( lua_State* L ) {
 		
 		if ( size < 4 ) {
 		
-			ZLVec4D vec = state.GetValue < ZLVec4D >( 3, ZLVec4D::ZERO );
+			ZLVec4D vec = state.GetValue < ZLVec4D >( 4, ZLVec4D::ZERO );
 			
 			uniform->SetValue ( element, vec );
 		}
@@ -94,19 +94,19 @@ int MOAIShader::_setUniform ( lua_State* L ) {
 			switch ( size ) {
 			
 				case 6:
-					uniform->SetValue ( element, state.GetValue < ZLAffine2D >( 3, ZLAffine2D::IDENT ));
+					uniform->SetValue ( element, state.GetValue < ZLAffine2D >( 4, ZLAffine2D::IDENT ));
 					break;
 				
 				case 9:
-					uniform->SetValue ( element, state.GetValue < ZLMatrix3x3 >( 3, ZLMatrix3x3::IDENT ));
+					uniform->SetValue ( element, state.GetValue < ZLMatrix3x3 >( 4, ZLMatrix3x3::IDENT ));
 					break;
 				
 				case 12:
-					uniform->SetValue ( element, state.GetValue < ZLAffine3D >( 3, ZLAffine3D::IDENT ));
+					uniform->SetValue ( element, state.GetValue < ZLAffine3D >( 4, ZLAffine3D::IDENT ));
 					break;
 				
 				case 16:
-					uniform->SetValue ( element, state.GetValue < ZLMatrix4x4 >( 3, ZLMatrix4x4::IDENT ));
+					uniform->SetValue ( element, state.GetValue < ZLMatrix4x4 >( 4, ZLMatrix4x4::IDENT ));
 					break;
 				
 				default:

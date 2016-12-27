@@ -258,8 +258,6 @@ bool MOAIGfxStateCache::BindShader ( MOAIShader* shader ) {
 	
 		MOAIGfxState& active = this->mActiveState;
 	
-		active.mShader = shader;
-	
 		if ( active.mShaderProgram != program ) {
 
 			DEBUG_LOG ( "  binding shader program: %p\n", program );
@@ -270,6 +268,7 @@ bool MOAIGfxStateCache::BindShader ( MOAIShader* shader ) {
 				active.mShaderProgram->Unbind ();
 			}
 			
+			active.mShader = shader;
 			active.mShaderProgram = program;
 			
 			if ( program ) {
