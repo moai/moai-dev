@@ -82,15 +82,16 @@ bool MOAIGfxStateCache::BindShader ( MOAIShader* shader ) {
 	// later on we will re-bind the current shader's uniforms, the caching
 	// of which is controlled by the shader program.
 	
-	this->mShader = shader;
+	bool result = true;
 	
-	if ( this->mShader ) {
+	if ( shader ) {
 	
-		if ( !this->BindShaderProgram ( shader->GetProgram ())) return false;
-		
-		return true;
+		result = this->BindShaderProgram ( shader->GetProgram ());
+		this->mShader = result ? shader : 0;
+		return result;
 	}
 	
+	this->mShader = 0;
 	return this->BindShaderProgram (( MOAIShaderProgram* )0 );
 }
 
