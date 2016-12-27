@@ -268,19 +268,20 @@ bool MOAIGfxStateCache::BindShader ( MOAIShader* shader ) {
 				active.mShaderProgram->Unbind ();
 			}
 			
-			active.mShader = shader;
 			active.mShaderProgram = program;
 			
 			if ( program ) {
 				program->Bind ();
 			}
 		}
+		
+		active.mShader = shader;
 	}
 	else {
 	
 		this->mPendingState.mShader = shader;
 		this->mPendingState.mShaderProgram = program;
-		this->mDirtyFlags = ( this->mActiveState.mShaderProgram == program ) ? ( this->mDirtyFlags & ~SHADER ) : ( this->mDirtyFlags | SHADER );
+		this->mDirtyFlags = (( this->mActiveState.mShader == shader ) && ( this->mActiveState.mShaderProgram == program )) ? ( this->mDirtyFlags & ~SHADER ) : ( this->mDirtyFlags | SHADER );
 	}
 	
 	return program ? program->IsReady () : true;

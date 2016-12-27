@@ -186,7 +186,8 @@ end
 
 for i, aiMesh in ipairs ( aiMeshes ) do
 
-	print ( 'FOUND A MESH!' )
+	local meshName = aiMesh:getName ()
+	print ( 'FOUND A MESH!', meshName )
 
 	local aiBones = aiMesh:getBones ()
 
@@ -233,5 +234,6 @@ for i, aiMesh in ipairs ( aiMeshes ) do
 	--prop:moveRot ( 0, 360, 0, 6 )
 	prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
 	prop:setDepthTest ( MOAIGraphicsProp.DEPTH_TEST_LESS )
+
 	layer:insertProp ( prop )
 end
