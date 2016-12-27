@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0300CF5F140DC53C00ABCC5B /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC63135643FD000ADC60 /* libSystem.dylib */; };
-		0300CF60140DC53C00ABCC5B /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA2B137807E40093EE68 /* libcrypto.dylib */; };
-		0300CF61140DC53C00ABCC5B /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA311378080E0093EE68 /* libssl.dylib */; };
 		0300CF66140DC53C00ABCC5B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7AF913DF7E9B00F2DEDE /* CoreFoundation.framework */; };
 		0300CF67140DC53C00ABCC5B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7AFF13DF7EF200F2DEDE /* Carbon.framework */; };
 		0300CF68140DC53C00ABCC5B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */; };
@@ -775,8 +773,6 @@
 				CDFD8FBF1AD8653C0003F415 /* libmoai-osx-zl-vfs.a in Frameworks */,
 				CDFD8FC01AD8653C0003F415 /* libmoai-osx.a in Frameworks */,
 				CD096FD218E0FFE300A36EDD /* libstdc++.dylib in Frameworks */,
-				0300CF60140DC53C00ABCC5B /* libcrypto.dylib in Frameworks */,
-				0300CF61140DC53C00ABCC5B /* libssl.dylib in Frameworks */,
 				0300CF5F140DC53C00ABCC5B /* libSystem.dylib in Frameworks */,
 				0300CF7B140DC61000ABCC5B /* AudioToolbox.framework in Frameworks */,
 				0300CF94140DC65100ABCC5B /* AudioUnit.framework in Frameworks */,
