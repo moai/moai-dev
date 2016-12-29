@@ -891,13 +891,13 @@ MOAIPartition* MOAILayer::GetPartition () {
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAILayer::GetWndToWorldMtx () const {
 
-	MOAIViewProj::GetWndToWorldMtx ( this->mViewport, this->mCamera, this->mLocalToWorldMtx, this->mParallax );
+	return MOAIViewProj::GetWndToWorldMtx ( this->mViewport, this->mCamera, this->mLocalToWorldMtx, this->mParallax );
 }
 
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAILayer::GetWorldToWndMtx () const {
 
-	MOAIViewProj::GetWorldToWndMtx ( this->mViewport, this->mCamera, this->mLocalToWorldMtx, this->mParallax );
+	return MOAIViewProj::GetWorldToWndMtx ( this->mViewport, this->mCamera, this->mLocalToWorldMtx, this->mParallax );
 }
 
 //----------------------------------------------------------------//

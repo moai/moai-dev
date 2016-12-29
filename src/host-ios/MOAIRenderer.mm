@@ -256,7 +256,7 @@
     -( void ) render {
         
         if ( mFrameIsReady ) return;
-        if ( !AKUDisplayListHasContent ( AKU_DISPLAY_LIST_DRAWING )) return;
+        //if ( !AKUDisplayListHasContent ( AKU_DISPLAY_LIST_DRAWING )) return;
         
         [ self openGraphicsContext ];
         [ self bindFramebuffer ];

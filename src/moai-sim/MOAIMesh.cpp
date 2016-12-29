@@ -540,8 +540,6 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch* mater
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	if ( gfxMgr.mGfxState.BindVertexArray ( this )) {
 
-		//ZLGfx& gfx = gfxMgr.GetDrawingAPI ();
-
 		// I am super lazy, so set this up here instead of adding if's below
 		MOAIMeshSpan defaultSpan;
 		if ( !span ) {
@@ -553,32 +551,17 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch* mater
 		
 		gfxMgr.mGfxState.SetPenWidth ( this->mPenWidth );
 		
-		//gfxMgr.mGfxState.UpdateAndBindUniforms ();
-		
 		if ( this->mIndexBuffer ) {
 			
 			// TODO: turns out we can bind this inside the VAO as well. so there.
 			if ( gfxMgr.mGfxState.BindIndexBuffer ( this->mIndexBuffer )) {
 			
-
-				// this was in 2.0; loop below was commented out
-				//gfxMgr.mGfxState.DrawPrims ( this->mPrimType, span->mBase, ( u32 )( span->mTop - span->mBase ));
-
 				for ( ; span; span = span->mNext ) {
 				
 					if ( span->mBase == span->mTop ) continue;
 					assert (( span->mBase < span->mTop ) && ( span->mTop <= this->mTotalElements ));
 				
 					gfxMgr.mGfxState.DrawPrims ( this->mPrimType, span->mBase, ( u32 )( span->mTop - span->mBase ));
-				
-					// now handled by gfx state DrawPrims call
-//					gfx.DrawElements (
-//						this->mPrimType,
-//						( u32 )( span->mTop - span->mBase ),
-//						indexSizeInBytes == 2 ? ZGL_TYPE_UNSIGNED_SHORT : ZGL_TYPE_UNSIGNED_INT,
-//						this->mIndexBuffer->GetBuffer (),
-//						span->mBase * indexSizeInBytes
-//					);
 				}
 
 				gfxMgr.mGfxState.BindIndexBuffer ();
@@ -592,9 +575,6 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch* mater
 				assert (( span->mBase < span->mTop ) && ( span->mTop <= this->mTotalElements ));
 			
 				gfxMgr.mGfxState.DrawPrims ( this->mPrimType, span->mBase, ( u32 )( span->mTop - span->mBase ));
-				
-				// now handled by gfx state DrawPrims call
-				//gfx.DrawArrays ( this->mPrimType, ( u32 )span->mBase, ( u32 )( span->mTop - span->mBase ));
 			}
 		}
 		gfxMgr.mGfxState.BindVertexArray ();

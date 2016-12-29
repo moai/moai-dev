@@ -137,11 +137,11 @@ protected:
 
 public:
 	
-	GET ( MOAIBlendMode, BlendMode, this->mCurrentState->mBlendMode )
-	GET ( bool, DepthMask, this->mCurrentState->mDepthMask )
-	GET ( MOAIFrameBuffer*, CurrentFrameBuffer, this->mCurrentState->mFrameBuffer )
-	GET ( MOAIVertexFormat*, CurrentVtxFormat, this->mCurrentState->mVtxFormat )
-	GET ( const ZLRect&, ViewRect, this->mCurrentState->mViewRect )
+	GET ( MOAIBlendMode, BlendMode, mCurrentState->mBlendMode )
+	GET ( bool, DepthMask, mCurrentState->mDepthMask )
+	GET ( MOAIFrameBuffer*, CurrentFrameBuffer, mCurrentState->mFrameBuffer )
+	GET ( MOAIVertexFormat*, CurrentVtxFormat, mCurrentState->mVtxFormat )
+	GET ( const ZLRect&, ViewRect, mCurrentState->mViewRect )
 	GET ( MOAIFrameBuffer*, DefaultFrameBuffer, mDefaultFrameBuffer )
 	GET ( MOAITexture*, DefaultTexture, mDefaultTexture )
 	

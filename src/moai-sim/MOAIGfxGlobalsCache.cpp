@@ -15,20 +15,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxGlobalsCache::CheckGlobalsAndFlush () {
-
-	bool needsFlush = ( this->mDirtyFlags & this->mShaderFlags ) != 0;
-	
-	// we only set these in the first place to trip the shader flags (if any); can clear these here
-	this->mDirtyFlags &= ~( BASE_ATTRS_MASK );
-	
-	// flush if ya gotta
-	if ( needsFlush ) {
-		this->GfxStateWillChange ();
-	}
-}
-
-//----------------------------------------------------------------//
 ZLMatrix4x4 MOAIGfxGlobalsCache::GetNormToWndMtx () {
 
 	return this->GetNormToWndMtx ( this->GetViewRect ());
@@ -141,7 +127,20 @@ const ZLMatrix4x4& MOAIGfxGlobalsCache::GetMtx ( u32 transformID ) {
 				this->mDirtyFlags &= ~ID_TO_FLAG ( VIEW_PROJ_MTX );
 			}
 			return this->mVertexTransforms [ VIEW_PROJ_MTX ];
+		
+		case INVERSE_WINDOW_MTX:
 			
+			if ( this->mDirtyFlags & INVERSE_WINDOW_MTX_MASK ) {
+			
+				this->mVertexTransforms [ INVERSE_WINDOW_MTX ].Inverse ( this->GetMtx ( WINDOW_MTX ));
+				this->mDirtyFlags &= ~ID_TO_FLAG ( INVERSE_WINDOW_MTX );
+			}
+			return this->mVertexTransforms [ INVERSE_WINDOW_MTX ];
+		
+		case WINDOW_MTX:
+			
+			return this->mVertexTransforms [ WINDOW_MTX ];
+		
 		case WORLD_MTX:
 			
 			return this->mVertexTransforms [ WORLD_MTX ];
@@ -335,6 +334,20 @@ void MOAIGfxGlobalsCache::SetAmbientColor ( float r, float g, float b, float a )
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxGlobalsCache::SetDirtyFlags ( u32 dirtyFlags ) {
+
+	bool needsFlush = ( dirtyFlags & this->mShaderFlags ) != 0;
+	
+	// flush if ya gotta
+	if ( needsFlush ) {
+		this->GfxStateWillChange ();
+	}
+	
+	// we only set these in the first place to trip the shader flags (if any); can clear these here
+	this->mDirtyFlags = dirtyFlags & ~( BASE_ATTRS_MASK );
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxGlobalsCache::SetMtx ( u32 transformID ) {
 
 	ZLMatrix4x4 mtx;
@@ -370,6 +383,11 @@ void MOAIGfxGlobalsCache::SetMtx ( u32 transformID, const ZLMatrix4x4& mtx ) {
 			dirtyMask = VIEW_MTX_DIRTY_MASK;
 			break;
 			
+		case WINDOW_MTX:
+		
+			dirtyMask = WINDOW_MTX_DIRTY_MASK;
+			break;
+			
 		case WORLD_MTX:
 		
 			dirtyMask = WORLD_MTX_DIRTY_MASK;
@@ -382,11 +400,10 @@ void MOAIGfxGlobalsCache::SetMtx ( u32 transformID, const ZLMatrix4x4& mtx ) {
 	}
 	
 	if ( !this->mVertexTransforms [ transformID ].IsSame ( mtx )) {
-		this->mVertexTransforms [ transformID ] = mtx;
-		this->mDirtyFlags |= dirtyMask;
-	}
 	
-	this->CheckGlobalsAndFlush ();
+		this->SetDirtyFlags ( this->mDirtyFlags | dirtyMask );
+		this->mVertexTransforms [ transformID ] = mtx;
+	}
 }
 
 //----------------------------------------------------------------//
@@ -418,6 +435,7 @@ void MOAIGfxGlobalsCache::SetViewProj ( MOAIViewport* viewport, MOAICamera* came
 	
 	this->SetMtx ( MOAIGfxGlobalsCache::VIEW_MTX, view );
 	this->SetMtx ( MOAIGfxGlobalsCache::PROJ_MTX, proj );
+	this->SetMtx ( MOAIGfxGlobalsCache::WINDOW_MTX, viewport ? viewport->GetProjMtx () : ZLMatrix4x4::IDENT );
 }
 
 //----------------------------------------------------------------//
@@ -432,14 +450,13 @@ void MOAIGfxGlobalsCache::UpdateFinalColor () {
 	
 	if ( this->mFinalColor32 != finalColor ) {
 		
+		this->SetDirtyFlags ( this->mDirtyFlags |= PEN_COLOR_DIRTY_MASK );
+		
 		this->mFinalColor32 = finalColor;
-		this->mDirtyFlags |= PEN_COLOR_DIRTY_MASK;
 		
 		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 		
 		gfxMgr.mVertexCache.mVertexColor = this->mFinalColor;
 		gfxMgr.mVertexCache.mVertexColor32 = this->mFinalColor32;
-		
-		this->CheckGlobalsAndFlush ();
 	}
 }

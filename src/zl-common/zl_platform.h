@@ -101,7 +101,7 @@
 	#endif
 #endif
 
-#if defined ( MOAI_OS_LINUX ) || defined ( MOAI_OS_OSX )
+#ifndef MOAI_OS_WINDOWS
 	#define MOAI_HAS_UNISTD
 	#include <unistd.h>
 #endif

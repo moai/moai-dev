@@ -182,6 +182,7 @@ void MOAIGfxMgr::DetectContext () {
 void MOAIGfxMgr::DetectFramebuffer () {
 	
 	this->mGfxState.GetDefaultFrameBuffer ()->DetectGLFrameBufferID ();
+	this->mGfxState.BindFrameBuffer ();
 }
 
 //----------------------------------------------------------------//
@@ -231,7 +232,7 @@ MOAIGfxMgr::MOAIGfxMgr () :
 MOAIGfxMgr::~MOAIGfxMgr () {
 
 	this->mGfxState.SetDefaultFrameBuffer ( *this, 0 );
-	this->mGfxState.SetDefaultFrameBuffer ( *this, 0 );
+	this->mGfxState.SetDefaultTexture ( *this, 0 );
 }
 
 //----------------------------------------------------------------//

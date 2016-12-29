@@ -258,11 +258,13 @@ bool MOAIGfxStateCache::BindShader ( MOAIShader* shader ) {
 	
 		MOAIGfxState& active = this->mActiveState;
 	
+		if (( active.mShaderProgram != program ) || ( active.mShader != shader )) {
+			this->GfxStateWillChange ();
+		}
+	
 		if ( active.mShaderProgram != program ) {
 
 			DEBUG_LOG ( "  binding shader program: %p\n", program );
-
-			this->GfxStateWillChange ();
 			
 			if ( active.mShaderProgram ) {
 				active.mShaderProgram->Unbind ();
@@ -274,7 +276,7 @@ bool MOAIGfxStateCache::BindShader ( MOAIShader* shader ) {
 				program->Bind ();
 			}
 		}
-		
+
 		active.mShader = shader;
 	}
 	else {
@@ -376,6 +378,8 @@ bool MOAIGfxStateCache::BindVertexArray ( MOAIVertexArray* vtxArray ) {
 	
 			DEBUG_LOG ( "  binding vertex array: %p\n", vtxArray );
 	
+			this->SetVertexFormat ();
+	
 			if ( active.mVtxArray ) {
 				active.mVtxArray->Unbind ();
 			}
@@ -389,7 +393,7 @@ bool MOAIGfxStateCache::BindVertexArray ( MOAIVertexArray* vtxArray ) {
 	}
 	else {
 
-		this->SetVertexFormat ();
+		//this->SetVertexFormat ();
 		this->mPendingState.mVtxArray = vtxArray;
 		this->mDirtyFlags = ( this->mActiveState.mVtxArray == vtxArray ) ? ( this->mDirtyFlags & ~VERTEX_ARRAY ) : ( this->mDirtyFlags | VERTEX_ARRAY );
 	}
@@ -456,13 +460,21 @@ void MOAIGfxStateCache::DrawPrims ( u32 primType, u32 base, u32 count ) {
 
 	if ( shader && ( this->mActiveState.mVtxBuffer || this->mActiveState.mVtxArray )) {
 		
+		shader->GetProgram ()->Bind ();
 		shader->UpdateAndBindUniforms ();
-				
+		
 		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 		
 		MOAIIndexBuffer* idxBuffer = this->mActiveState.mIdxBuffer;
 		
 		if ( idxBuffer ) {
+		
+			//gfx.Enable ( ZGL_PIPELINE_CULL );
+			//gfx.CullFace ( ZGL_CULL_FRONT );
+			
+			//gfx.Enable ( ZGL_PIPELINE_DEPTH );
+			//gfx.DepthFunc ( ZGL_DEPTH_LESS );
+			//gfx.DepthMask ( false );
 		
 			DEBUG_LOG ( "drawing prims with index and vertex buffer\n" );
 			
@@ -586,7 +598,7 @@ void MOAIGfxStateCache::ResetState () {
 	// turn off blending
 	gfx.Disable ( ZGL_PIPELINE_BLEND );
 	pending.mBlendEnabled = false;
-	active.mBlendEnabled = 0;
+	active.mBlendEnabled = false;
 	
 	// disable backface culling
 	gfx.Disable ( ZGL_PIPELINE_CULL );
@@ -821,7 +833,7 @@ void MOAIGfxStateCache::SetDepthFunc ( int depthFunc ) {
 	else {
 	
 		this->mPendingState.mDepthFunc = depthFunc;
-		this->mDirtyFlags = ( this->mActiveState.mDepthFunc == depthFunc ) ? ( this->mDirtyFlags & ~DEPTH_MODE ) : ( this->mDirtyFlags | DEPTH_MODE );
+		this->mDirtyFlags = (( this->mActiveState.mDepthFunc == depthFunc ) && ( this->mActiveState.mDepthMask == this->mPendingState.mDepthMask )) ? ( this->mDirtyFlags & ~DEPTH_MODE ) : ( this->mDirtyFlags | DEPTH_MODE );
 	}
 }
 
@@ -845,7 +857,7 @@ void MOAIGfxStateCache::SetDepthMask ( bool depthMask ) {
 	else {
 
 		this->mPendingState.mDepthMask = depthMask;
-		this->mDirtyFlags = ( this->mActiveState.mDepthMask == depthMask ) ? ( this->mDirtyFlags & ~DEPTH_MODE ) : ( this->mDirtyFlags | DEPTH_MODE );
+		this->mDirtyFlags = (( this->mActiveState.mDepthMask == depthMask ) && ( this->mActiveState.mDepthFunc == this->mPendingState.mDepthFunc )) ? ( this->mDirtyFlags & ~DEPTH_MODE ) : ( this->mDirtyFlags | DEPTH_MODE );
 	}
 }
 

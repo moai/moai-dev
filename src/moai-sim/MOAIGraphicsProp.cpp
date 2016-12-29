@@ -725,11 +725,6 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
 
-	//MOAIViewport* viewport = renderMgr.GetViewport ();
-	//MOAICamera* camera = renderMgr.GetCamera ();
-	
-	//u32 billboard = camera ? this->mBillboard : BILLBOARD_NONE;
-
 	ZLMatrix4x4 worldDrawingMtx;
 
 	switch ( this->mBillboard ) {
@@ -747,14 +742,13 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 		}
 		
 		case BILLBOARD_ORTHO: {
-		
-			const ZLMatrix4x4& view = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_MTX ); // camera->GetViewMtx ();
-			const ZLMatrix4x4& proj = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::PROJ_MTX ); // camera->GetProjMtx ( *viewport );
-			const ZLMatrix4x4& invViewProj = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::INVERSE_VIEW_PROJ_MTX );
 			
-			//ZLMatrix4x4 invViewProj = view;
-			//invViewProj.Append ( proj );
-			//invViewProj.Inverse ();
+			const ZLMatrix4x4& proj				= gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::PROJ_MTX );
+			const ZLMatrix4x4& invViewProj		= gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::INVERSE_VIEW_PROJ_MTX );
+			const ZLMatrix4x4& invWindowMtx		= gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::INVERSE_WINDOW_MTX );
+			
+			ZLMatrix4x4 view					= gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_MTX );
+			ZLMatrix4x4 windowMtx				= gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WINDOW_MTX );
 			
 			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
 			
@@ -764,26 +758,33 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 			worldLoc.mY = worldDrawingMtx.m [ ZLMatrix4x4::C3_R1 ];
 			worldLoc.mZ = worldDrawingMtx.m [ ZLMatrix4x4::C3_R2 ];
 			
+			// view and project the location
+			view.Transform ( worldLoc );	// perspective view
+			proj.Project ( worldLoc );		// perspective projection
+			
+			// now we're going to "unproject" the poing back, going from window space to *ortho* space
+			// this is as though we had projected the point using a 2D window matrix instead of the camera matrix
+			
+			invWindowMtx.Transform ( worldLoc );
+
+			// prop will start at the origin; will be moved by camera after rotation
 			worldDrawingMtx.m [ ZLMatrix4x4::C3_R0 ] = 0.0f;
 			worldDrawingMtx.m [ ZLMatrix4x4::C3_R1 ] = 0.0f;
 			worldDrawingMtx.m [ ZLMatrix4x4::C3_R2 ] = 0.0f;
-			
-			view.Transform ( worldLoc );
-			proj.Project ( worldLoc );
-			
-			// TODO: matrix voodoo
-			
-//			viewport->GetProjMtxInv ().Transform ( worldLoc );
-//			
-//			view.m [ ZLMatrix4x4::C3_R0 ] = worldLoc.mX;
-//			view.m [ ZLMatrix4x4::C3_R1 ] = worldLoc.mY;
-//			view.m [ ZLMatrix4x4::C3_R2 ] = 0.0f;
-//			
-//			proj = viewport->GetProjMtx ();
-//			proj.m [ ZLMatrix4x4::C2_R2 ] = 0.0f;
+
+			// keep camera rotation, but replace translation with "projected" location of prop
+			view.m [ ZLMatrix4x4::C3_R0 ] = worldLoc.mX;
+			view.m [ ZLMatrix4x4::C3_R1 ] = worldLoc.mY;
+			view.m [ ZLMatrix4x4::C3_R2 ] = 0.0f;
 			
 			worldDrawingMtx.Append ( view );
-			worldDrawingMtx.Append ( proj );
+			
+			// apply the 2D "window" projection to get our final transform
+			windowMtx.m [ ZLMatrix4x4::C2_R2 ] = 0.0f;
+			worldDrawingMtx.Append ( windowMtx );
+			
+			// now roll everything back given the current view/proj
+			// this will be applied once more by the pipeline, thus cancelling itself out and leaving us with the previous transform
 			worldDrawingMtx.Append ( invViewProj );
 			
 			break;

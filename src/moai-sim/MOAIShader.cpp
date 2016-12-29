@@ -314,7 +314,7 @@ MOAIShaderUniform* MOAIShader::GetUniform ( u32 uniformID, u32 index, void*& ele
 //----------------------------------------------------------------//
 MOAIShaderUniform* MOAIShader::GetUniformForAttributeID ( u32 attrID, void*& element) {
 
-	attrID = attrID & MOAIAttribute::ATTR_ID_MASK;
+	attrID = ( attrID & MOAIAttribute::ATTR_ID_MASK ) - 1;
 
 	u32 uniformID = attrID / this->mMaxCount;
 	u32 index = attrID - ( uniformID * this->mMaxCount );
