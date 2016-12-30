@@ -10,3 +10,6 @@
 [submodule "3rdparty/TGAReader"]
 	path = 3rdparty/TGAReader
 	url = https://github.com/npedotnet/TGAReader.git
+[submodule "3rdparty/google-test"]
+	path = 3rdparty/google-test
+	url = https://github.com/google/googletest.git

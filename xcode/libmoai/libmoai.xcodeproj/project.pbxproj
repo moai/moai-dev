@@ -5263,6 +5263,147 @@
 		CDD5D69C1C260DFD0070237E /* ZLCubicBezier2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD5D6991C260DFD0070237E /* ZLCubicBezier2D.cpp */; };
 		CDD5D69D1C260DFD0070237E /* ZLCubicBezier2D.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD5D69A1C260DFD0070237E /* ZLCubicBezier2D.h */; };
 		CDD5D69E1C260DFD0070237E /* ZLCubicBezier2D.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD5D69A1C260DFD0070237E /* ZLCubicBezier2D.h */; };
+		CDD812C81E16FE7100996311 /* b2Draw.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7A0194050520066877A /* b2Draw.h */; };
+		CDD812C91E16FE7100996311 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE74A3173AD2FA00DFE837 /* headers.h */; };
+		CDD812CA1E16FE7100996311 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE74A5173AD2FA00DFE837 /* host.h */; };
+		CDD812CB1E16FE7100996311 /* MOAIBox2DArbiter.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE74A7173AD2FA00DFE837 /* MOAIBox2DArbiter.h */; };
+		CDD812CC1E16FE7100996311 /* b2ContactSolver.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7C2194050520066877A /* b2ContactSolver.h */; };
+		CDD812CD1E16FE7100996311 /* b2Math.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7A3194050520066877A /* b2Math.h */; };
+		CDD812CE1E16FE7100996311 /* b2PolygonAndCircleContact.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7C8194050520066877A /* b2PolygonAndCircleContact.h */; };
+		CDD812CF1E16FE7100996311 /* b2WeldJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7E1194050530066877A /* b2WeldJoint.h */; };
+		CDD812D01E16FE7100996311 /* MOAIBox2DBody.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE74A9173AD2FA00DFE837 /* MOAIBox2DBody.h */; };
+		CDD812D11E16FE7100996311 /* b2BlockAllocator.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF79E194050520066877A /* b2BlockAllocator.h */; };
+		CDD812D21E16FE7100996311 /* b2StackAllocator.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7A7194050520066877A /* b2StackAllocator.h */; };
+		CDD812D31E16FE7100996311 /* b2Island.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7B2194050520066877A /* b2Island.h */; };
+		CDD812D41E16FE7100996311 /* MOAIBox2DDebugDraw.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE74AB173AD2FA00DFE837 /* MOAIBox2DDebugDraw.h */; };
+		CDD812D51E16FE7100996311 /* b2FrictionJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7CF194050520066877A /* b2FrictionJoint.h */; };
+		CDD812D61E16FE7100996311 /* b2Collision.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF78B194050520066877A /* b2Collision.h */; };
+		CDD812D71E16FE7100996311 /* b2CircleShape.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF796194050520066877A /* b2CircleShape.h */; };
+		CDD812D81E16FE7100996311 /* b2DynamicTree.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF78F194050520066877A /* b2DynamicTree.h */; };
+		CDD812D91E16FE7100996311 /* b2EdgeAndPolygonContact.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7C6194050520066877A /* b2EdgeAndPolygonContact.h */; };
+		CDD812DA1E16FE7100996311 /* MOAIBox2DDistanceJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE74AD173AD2FA00DFE837 /* MOAIBox2DDistanceJoint.h */; };
+		CDD812DB1E16FE7100996311 /* MOAIBox2DFixture.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE74AF173AD2FA00DFE837 /* MOAIBox2DFixture.h */; };
+		CDD812DC1E16FE7100996311 /* b2ChainAndCircleContact.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7BA194050520066877A /* b2ChainAndCircleContact.h */; };
+		CDD812DD1E16FE7100996311 /* b2BroadPhase.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF786194050510066877A /* b2BroadPhase.h */; };
+		CDD812DE1E16FE7100996311 /* b2Contact.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7C0194050520066877A /* b2Contact.h */; };
+		CDD812DF1E16FE7100996311 /* b2GrowableStack.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7A1194050520066877A /* b2GrowableStack.h */; };
+		CDD812E01E16FE7100996311 /* b2PolygonContact.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7CA194050520066877A /* b2PolygonContact.h */; };
+		CDD812E11E16FE7100996311 /* b2PrismaticJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7D9194050520066877A /* b2PrismaticJoint.h */; };
+		CDD812E21E16FE7100996311 /* b2TimeStep.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7B3194050520066877A /* b2TimeStep.h */; };
+		CDD812E31E16FE7100996311 /* MOAIBox2DFrictionJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE74B1173AD2FA00DFE837 /* MOAIBox2DFrictionJoint.h */; };
+		CDD812E41E16FE7100996311 /* b2RopeJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7DF194050520066877A /* b2RopeJoint.h */; };
+		CDD812E51E16FE7100996311 /* b2PolygonShape.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF79A194050520066877A /* b2PolygonShape.h */; };
+		CDD812E61E16FE7100996311 /* b2Settings.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7A5194050520066877A /* b2Settings.h */; };
+		CDD812E71E16FE7100996311 /* b2PulleyJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7DB194050520066877A /* b2PulleyJoint.h */; };
+		CDD812E81E16FE7100996311 /* b2Joint.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7D3194050520066877A /* b2Joint.h */; };
+		CDD812E91E16FE7100996311 /* b2TimeOfImpact.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF791194050520066877A /* b2TimeOfImpact.h */; };
+		CDD812EA1E16FE7100996311 /* b2Fixture.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7B0194050520066877A /* b2Fixture.h */; };
+		CDD812EB1E16FE7100996311 /* b2WheelJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7E3194050530066877A /* b2WheelJoint.h */; };
+		CDD812EC1E16FE7100996311 /* b2ChainAndPolygonContact.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7BC194050520066877A /* b2ChainAndPolygonContact.h */; };
+		CDD812ED1E16FE7100996311 /* b2Body.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7AC194050520066877A /* b2Body.h */; };
+		CDD812EE1E16FE7100996311 /* MOAIBox2DGearJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE74B3173AD2FA00DFE837 /* MOAIBox2DGearJoint.h */; };
+		CDD812EF1E16FE7100996311 /* MOAIBox2DJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE74B5173AD2FA00DFE837 /* MOAIBox2DJoint.h */; };
+		CDD812F01E16FE7100996311 /* MOAIBox2DMouseJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE74B7173AD2FA00DFE837 /* MOAIBox2DMouseJoint.h */; };
+		CDD812F11E16FE7100996311 /* b2MouseJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7D7194050520066877A /* b2MouseJoint.h */; };
+		CDD812F21E16FE7100996311 /* MOAIBox2DPrismaticJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE74B9173AD2FA00DFE837 /* MOAIBox2DPrismaticJoint.h */; };
+		CDD812F31E16FE7100996311 /* b2MotorJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7D5194050520066877A /* b2MotorJoint.h */; };
+		CDD812F41E16FE7100996311 /* b2EdgeShape.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF798194050520066877A /* b2EdgeShape.h */; };
+		CDD812F51E16FE7100996311 /* b2DistanceJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7CD194050520066877A /* b2DistanceJoint.h */; };
+		CDD812F61E16FE7100996311 /* MOAIBox2DPulleyJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE74BB173AD2FA00DFE837 /* MOAIBox2DPulleyJoint.h */; };
+		CDD812F71E16FE7100996311 /* MOAIBox2DRevoluteJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE74BD173AD2FA00DFE837 /* MOAIBox2DRevoluteJoint.h */; };
+		CDD812F81E16FE7100996311 /* b2Timer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7A9194050520066877A /* b2Timer.h */; };
+		CDD812F91E16FE7100996311 /* MOAIBox2DRopeJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE74BF173AD2FA00DFE837 /* MOAIBox2DRopeJoint.h */; };
+		CDD812FA1E16FE7100996311 /* b2GearJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7D1194050520066877A /* b2GearJoint.h */; };
+		CDD812FB1E16FE7100996311 /* b2Shape.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF79B194050520066877A /* b2Shape.h */; };
+		CDD812FC1E16FE7100996311 /* MOAIBox2DWeldJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE74C1173AD2FA00DFE837 /* MOAIBox2DWeldJoint.h */; };
+		CDD812FD1E16FE7100996311 /* b2ContactManager.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7AE194050520066877A /* b2ContactManager.h */; };
+		CDD812FE1E16FE7100996311 /* b2ChainShape.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF794194050520066877A /* b2ChainShape.h */; };
+		CDD812FF1E16FE7100996311 /* Box2D.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF783194050510066877A /* Box2D.h */; };
+		CDD813001E16FE7100996311 /* MOAIBox2DWheelJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE74C3173AD2FA00DFE837 /* MOAIBox2DWheelJoint.h */; };
+		CDD813011E16FE7100996311 /* b2CircleContact.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7BE194050520066877A /* b2CircleContact.h */; };
+		CDD813021E16FE7100996311 /* MOAIBox2DWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE74C5173AD2FA00DFE837 /* MOAIBox2DWorld.h */; };
+		CDD813031E16FE7100996311 /* b2WorldCallbacks.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7B7194050520066877A /* b2WorldCallbacks.h */; };
+		CDD813041E16FE7100996311 /* MOAIBox2DMotorJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF8A81940564E0066877A /* MOAIBox2DMotorJoint.h */; };
+		CDD813051E16FE7100996311 /* b2EdgeAndCircleContact.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7C4194050520066877A /* b2EdgeAndCircleContact.h */; };
+		CDD813061E16FE7100996311 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE74C7173AD2FA00DFE837 /* pch.h */; };
+		CDD813071E16FE7100996311 /* b2Rope.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7E6194050530066877A /* b2Rope.h */; };
+		CDD813081E16FE7100996311 /* b2Distance.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF78D194050520066877A /* b2Distance.h */; };
+		CDD813091E16FE7100996311 /* b2World.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7B5194050520066877A /* b2World.h */; };
+		CDD8130A1E16FE7100996311 /* b2RevoluteJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1BF7DD194050520066877A /* b2RevoluteJoint.h */; };
+		CDD8130C1E16FE7100996311 /* b2Settings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7A4194050520066877A /* b2Settings.cpp */; };
+		CDD8130D1E16FE7100996311 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE74A4173AD2FA00DFE837 /* host.cpp */; };
+		CDD8130E1E16FE7100996311 /* b2Math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7A2194050520066877A /* b2Math.cpp */; };
+		CDD8130F1E16FE7100996311 /* MOAIBox2DArbiter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE74A6173AD2FA00DFE837 /* MOAIBox2DArbiter.cpp */; };
+		CDD813101E16FE7100996311 /* b2ContactSolver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7C1194050520066877A /* b2ContactSolver.cpp */; };
+		CDD813111E16FE7100996311 /* b2PrismaticJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7D8194050520066877A /* b2PrismaticJoint.cpp */; };
+		CDD813121E16FE7100996311 /* b2RopeJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7DE194050520066877A /* b2RopeJoint.cpp */; };
+		CDD813131E16FE7100996311 /* b2CollideEdge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF788194050520066877A /* b2CollideEdge.cpp */; };
+		CDD813141E16FE7100996311 /* b2ChainShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF793194050520066877A /* b2ChainShape.cpp */; };
+		CDD813151E16FE7100996311 /* b2CollidePolygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF789194050520066877A /* b2CollidePolygon.cpp */; };
+		CDD813161E16FE7100996311 /* b2StackAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7A6194050520066877A /* b2StackAllocator.cpp */; };
+		CDD813171E16FE7100996311 /* b2CollideCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF787194050520066877A /* b2CollideCircle.cpp */; };
+		CDD813181E16FE7100996311 /* b2WheelJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7E2194050530066877A /* b2WheelJoint.cpp */; };
+		CDD813191E16FE7100996311 /* b2PolygonShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF799194050520066877A /* b2PolygonShape.cpp */; };
+		CDD8131A1E16FE7100996311 /* b2World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7B4194050520066877A /* b2World.cpp */; };
+		CDD8131B1E16FE7100996311 /* MOAIBox2DBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE74A8173AD2FA00DFE837 /* MOAIBox2DBody.cpp */; };
+		CDD8131C1E16FE7100996311 /* MOAIBox2DDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE74AA173AD2FA00DFE837 /* MOAIBox2DDebugDraw.cpp */; };
+		CDD8131D1E16FE7100996311 /* b2WorldCallbacks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7B6194050520066877A /* b2WorldCallbacks.cpp */; };
+		CDD8131E1E16FE7100996311 /* b2FrictionJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7CE194050520066877A /* b2FrictionJoint.cpp */; };
+		CDD8131F1E16FE7100996311 /* MOAIBox2DDistanceJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE74AC173AD2FA00DFE837 /* MOAIBox2DDistanceJoint.cpp */; };
+		CDD813201E16FE7100996311 /* b2ChainAndPolygonContact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7BB194050520066877A /* b2ChainAndPolygonContact.cpp */; };
+		CDD813211E16FE7100996311 /* MOAIBox2DFixture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE74AE173AD2FA00DFE837 /* MOAIBox2DFixture.cpp */; };
+		CDD813221E16FE7100996311 /* MOAIBox2DFrictionJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE74B0173AD2FA00DFE837 /* MOAIBox2DFrictionJoint.cpp */; };
+		CDD813231E16FE7100996311 /* b2CircleContact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7BD194050520066877A /* b2CircleContact.cpp */; };
+		CDD813241E16FE7100996311 /* MOAIBox2DGearJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE74B2173AD2FA00DFE837 /* MOAIBox2DGearJoint.cpp */; };
+		CDD813251E16FE7100996311 /* b2PolygonAndCircleContact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7C7194050520066877A /* b2PolygonAndCircleContact.cpp */; };
+		CDD813261E16FE7100996311 /* MOAIBox2DJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE74B4173AD2FA00DFE837 /* MOAIBox2DJoint.cpp */; };
+		CDD813271E16FE7100996311 /* MOAIBox2DMouseJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE74B6173AD2FA00DFE837 /* MOAIBox2DMouseJoint.cpp */; };
+		CDD813281E16FE7100996311 /* MOAIBox2DPrismaticJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE74B8173AD2FA00DFE837 /* MOAIBox2DPrismaticJoint.cpp */; };
+		CDD813291E16FE7100996311 /* b2MotorJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7D4194050520066877A /* b2MotorJoint.cpp */; };
+		CDD8132A1E16FE7100996311 /* b2Distance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF78C194050520066877A /* b2Distance.cpp */; };
+		CDD8132B1E16FE7100996311 /* MOAIBox2DPulleyJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE74BA173AD2FA00DFE837 /* MOAIBox2DPulleyJoint.cpp */; };
+		CDD8132C1E16FE7100996311 /* b2DistanceJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7CC194050520066877A /* b2DistanceJoint.cpp */; };
+		CDD8132D1E16FE7100996311 /* b2BlockAllocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF79D194050520066877A /* b2BlockAllocator.cpp */; };
+		CDD8132E1E16FE7100996311 /* b2Collision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF78A194050520066877A /* b2Collision.cpp */; };
+		CDD8132F1E16FE7100996311 /* b2EdgeAndPolygonContact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7C5194050520066877A /* b2EdgeAndPolygonContact.cpp */; };
+		CDD813301E16FE7100996311 /* MOAIBox2DMotorJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF8A71940564E0066877A /* MOAIBox2DMotorJoint.cpp */; };
+		CDD813311E16FE7100996311 /* b2Fixture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7AF194050520066877A /* b2Fixture.cpp */; };
+		CDD813321E16FE7100996311 /* b2Rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7E5194050530066877A /* b2Rope.cpp */; };
+		CDD813331E16FE7100996311 /* MOAIBox2DRevoluteJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE74BC173AD2FA00DFE837 /* MOAIBox2DRevoluteJoint.cpp */; };
+		CDD813341E16FE7100996311 /* MOAIBox2DRopeJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE74BE173AD2FA00DFE837 /* MOAIBox2DRopeJoint.cpp */; };
+		CDD813351E16FE7100996311 /* MOAIBox2DWeldJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE74C0173AD2FA00DFE837 /* MOAIBox2DWeldJoint.cpp */; };
+		CDD813361E16FE7100996311 /* b2RevoluteJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7DC194050520066877A /* b2RevoluteJoint.cpp */; };
+		CDD813371E16FE7100996311 /* MOAIBox2DWheelJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE74C2173AD2FA00DFE837 /* MOAIBox2DWheelJoint.cpp */; };
+		CDD813381E16FE7100996311 /* b2Body.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7AB194050520066877A /* b2Body.cpp */; };
+		CDD813391E16FE7100996311 /* b2TimeOfImpact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF790194050520066877A /* b2TimeOfImpact.cpp */; };
+		CDD8133A1E16FE7100996311 /* MOAIBox2DWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE74C4173AD2FA00DFE837 /* MOAIBox2DWorld.cpp */; };
+		CDD8133B1E16FE7100996311 /* b2MouseJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7D6194050520066877A /* b2MouseJoint.cpp */; };
+		CDD8133C1E16FE7100996311 /* b2Timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7A8194050520066877A /* b2Timer.cpp */; };
+		CDD8133D1E16FE7100996311 /* b2GearJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7D0194050520066877A /* b2GearJoint.cpp */; };
+		CDD8133E1E16FE7100996311 /* b2EdgeAndCircleContact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7C3194050520066877A /* b2EdgeAndCircleContact.cpp */; };
+		CDD8133F1E16FE7100996311 /* b2Contact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7BF194050520066877A /* b2Contact.cpp */; };
+		CDD813401E16FE7100996311 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE74C6173AD2FA00DFE837 /* pch.cpp */; };
+		CDD813411E16FE7100996311 /* b2CircleShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF795194050520066877A /* b2CircleShape.cpp */; };
+		CDD813421E16FE7100996311 /* b2EdgeShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF797194050520066877A /* b2EdgeShape.cpp */; };
+		CDD813431E16FE7100996311 /* b2WeldJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7E0194050530066877A /* b2WeldJoint.cpp */; };
+		CDD813441E16FE7100996311 /* b2ContactManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7AD194050520066877A /* b2ContactManager.cpp */; };
+		CDD813451E16FE7100996311 /* b2Island.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7B1194050520066877A /* b2Island.cpp */; };
+		CDD813461E16FE7100996311 /* b2Draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF79F194050520066877A /* b2Draw.cpp */; };
+		CDD813471E16FE7100996311 /* b2ChainAndCircleContact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7B9194050520066877A /* b2ChainAndCircleContact.cpp */; };
+		CDD813481E16FE7100996311 /* b2DynamicTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF78E194050520066877A /* b2DynamicTree.cpp */; };
+		CDD813491E16FE7100996311 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF785194050510066877A /* b2BroadPhase.cpp */; };
+		CDD8134A1E16FE7100996311 /* b2PolygonContact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7C9194050520066877A /* b2PolygonContact.cpp */; };
+		CDD8134B1E16FE7100996311 /* b2Joint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7D2194050520066877A /* b2Joint.cpp */; };
+		CDD8134C1E16FE7100996311 /* b2PulleyJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1BF7DA194050520066877A /* b2PulleyJoint.cpp */; };
+		CDD8135D1E16FF1500996311 /* gtest_main.cc in Sources */ = {isa = PBXBuildFile; fileRef = CDD813531E16FF1500996311 /* gtest_main.cc */; };
+		CDD8135F1E16FF1500996311 /* gtest-death-test.cc in Sources */ = {isa = PBXBuildFile; fileRef = CDD813551E16FF1500996311 /* gtest-death-test.cc */; };
+		CDD813601E16FF1500996311 /* gtest-filepath.cc in Sources */ = {isa = PBXBuildFile; fileRef = CDD813561E16FF1500996311 /* gtest-filepath.cc */; };
+		CDD813611E16FF1500996311 /* gtest-internal-inl.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD813571E16FF1500996311 /* gtest-internal-inl.h */; };
+		CDD813621E16FF1500996311 /* gtest-port.cc in Sources */ = {isa = PBXBuildFile; fileRef = CDD813581E16FF1500996311 /* gtest-port.cc */; };
+		CDD813631E16FF1500996311 /* gtest-printers.cc in Sources */ = {isa = PBXBuildFile; fileRef = CDD813591E16FF1500996311 /* gtest-printers.cc */; };
+		CDD813641E16FF1500996311 /* gtest-test-part.cc in Sources */ = {isa = PBXBuildFile; fileRef = CDD8135A1E16FF1500996311 /* gtest-test-part.cc */; };
+		CDD813651E16FF1500996311 /* gtest-typed-test.cc in Sources */ = {isa = PBXBuildFile; fileRef = CDD8135B1E16FF1500996311 /* gtest-typed-test.cc */; };
+		CDD813661E16FF1500996311 /* gtest.cc in Sources */ = {isa = PBXBuildFile; fileRef = CDD8135C1E16FF1500996311 /* gtest.cc */; };
 		CDDAF4661C2FC5AA00F10946 /* ZLSample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDDAF4621C2F3D7C00F10946 /* ZLSample.cpp */; };
 		CDDAF4671C2FC5AA00F10946 /* ZLSample.h in Headers */ = {isa = PBXBuildFile; fileRef = CDDAF4631C2F3D7C00F10946 /* ZLSample.h */; };
 		CDDAF4681C2FC5AD00F10946 /* ZLSample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDDAF4621C2F3D7C00F10946 /* ZLSample.cpp */; };
@@ -8738,6 +8879,16 @@
 		CDD781CD1A11635F00AD133E /* host.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = host.mm; path = "moai-ios-motion/host.mm"; sourceTree = "<group>"; };
 		CDD781CE1A11635F00AD133E /* MOAIMotionMgrIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIMotionMgrIOS.h; path = "moai-ios-motion/MOAIMotionMgrIOS.h"; sourceTree = "<group>"; };
 		CDD781CF1A11635F00AD133E /* MOAIMotionMgrIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIMotionMgrIOS.mm; path = "moai-ios-motion/MOAIMotionMgrIOS.mm"; sourceTree = "<group>"; };
+		CDD813521E16FE7100996311 /* libmoai-osx-google-test.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-google-test.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDD813531E16FF1500996311 /* gtest_main.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gtest_main.cc; path = "../../3rdparty/google-test/googletest/src/gtest_main.cc"; sourceTree = "<group>"; };
+		CDD813551E16FF1500996311 /* gtest-death-test.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "gtest-death-test.cc"; path = "../../3rdparty/google-test/googletest/src/gtest-death-test.cc"; sourceTree = "<group>"; };
+		CDD813561E16FF1500996311 /* gtest-filepath.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "gtest-filepath.cc"; path = "../../3rdparty/google-test/googletest/src/gtest-filepath.cc"; sourceTree = "<group>"; };
+		CDD813571E16FF1500996311 /* gtest-internal-inl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "gtest-internal-inl.h"; path = "../../3rdparty/google-test/googletest/src/gtest-internal-inl.h"; sourceTree = "<group>"; };
+		CDD813581E16FF1500996311 /* gtest-port.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "gtest-port.cc"; path = "../../3rdparty/google-test/googletest/src/gtest-port.cc"; sourceTree = "<group>"; };
+		CDD813591E16FF1500996311 /* gtest-printers.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "gtest-printers.cc"; path = "../../3rdparty/google-test/googletest/src/gtest-printers.cc"; sourceTree = "<group>"; };
+		CDD8135A1E16FF1500996311 /* gtest-test-part.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "gtest-test-part.cc"; path = "../../3rdparty/google-test/googletest/src/gtest-test-part.cc"; sourceTree = "<group>"; };
+		CDD8135B1E16FF1500996311 /* gtest-typed-test.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "gtest-typed-test.cc"; path = "../../3rdparty/google-test/googletest/src/gtest-typed-test.cc"; sourceTree = "<group>"; };
+		CDD8135C1E16FF1500996311 /* gtest.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gtest.cc; path = "../../3rdparty/google-test/googletest/src/gtest.cc"; sourceTree = "<group>"; };
 		CDDAF4621C2F3D7C00F10946 /* ZLSample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLSample.cpp; sourceTree = "<group>"; };
 		CDDAF4631C2F3D7C00F10946 /* ZLSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLSample.h; sourceTree = "<group>"; };
 		CDDB553E1CFC15E9009E82D8 /* ZLCleanup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLCleanup.h; sourceTree = "<group>"; };
@@ -9250,6 +9401,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CDD8134D1E16FE7100996311 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CDF288B617ED41CF00FD4F59 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -9268,6 +9426,7 @@
 				03240A7613564CAF000ADC60 /* contrib */,
 				03240B1313564CB0000ADC60 /* expat */,
 				03240B2713564CB0000ADC60 /* freetype */,
+				CDD812C51E16FE3D00996311 /* google-test */,
 				CD320F671C517AAA00AD5E5C /* harfbuzz */,
 				CD218F9013A7FD8F008337E7 /* jansson */,
 				0795291A1447907100143A72 /* jpeg-8c */,
@@ -9573,6 +9732,7 @@
 				CD7852BE1D18C648003F15D0 /* libmoai-osx-3rdparty-assimp.a */,
 				CD7852CD1D18C669003F15D0 /* libmoai-osx-assimp.a */,
 				CDA1D0881D1B75B20006C5E5 /* libmoai-osx-image-tga.a */,
+				CDD813521E16FE7100996311 /* libmoai-osx-google-test.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -13975,6 +14135,22 @@
 			name = "moai-ios-motion";
 			sourceTree = "<group>";
 		};
+		CDD812C51E16FE3D00996311 /* google-test */ = {
+			isa = PBXGroup;
+			children = (
+				CDD813531E16FF1500996311 /* gtest_main.cc */,
+				CDD813551E16FF1500996311 /* gtest-death-test.cc */,
+				CDD813561E16FF1500996311 /* gtest-filepath.cc */,
+				CDD813571E16FF1500996311 /* gtest-internal-inl.h */,
+				CDD813581E16FF1500996311 /* gtest-port.cc */,
+				CDD813591E16FF1500996311 /* gtest-printers.cc */,
+				CDD8135A1E16FF1500996311 /* gtest-test-part.cc */,
+				CDD8135B1E16FF1500996311 /* gtest-typed-test.cc */,
+				CDD8135C1E16FF1500996311 /* gtest.cc */,
+			);
+			name = "google-test";
+			sourceTree = "<group>";
+		};
 		CDE36E4D1A5F4DAB0095E863 /* image */ = {
 			isa = PBXGroup;
 			children = (
@@ -16957,6 +17133,81 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CDD812C71E16FE7100996311 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDD812C81E16FE7100996311 /* b2Draw.h in Headers */,
+				CDD812C91E16FE7100996311 /* headers.h in Headers */,
+				CDD812CA1E16FE7100996311 /* host.h in Headers */,
+				CDD813611E16FF1500996311 /* gtest-internal-inl.h in Headers */,
+				CDD812CB1E16FE7100996311 /* MOAIBox2DArbiter.h in Headers */,
+				CDD812CC1E16FE7100996311 /* b2ContactSolver.h in Headers */,
+				CDD812CD1E16FE7100996311 /* b2Math.h in Headers */,
+				CDD812CE1E16FE7100996311 /* b2PolygonAndCircleContact.h in Headers */,
+				CDD812CF1E16FE7100996311 /* b2WeldJoint.h in Headers */,
+				CDD812D01E16FE7100996311 /* MOAIBox2DBody.h in Headers */,
+				CDD812D11E16FE7100996311 /* b2BlockAllocator.h in Headers */,
+				CDD812D21E16FE7100996311 /* b2StackAllocator.h in Headers */,
+				CDD812D31E16FE7100996311 /* b2Island.h in Headers */,
+				CDD812D41E16FE7100996311 /* MOAIBox2DDebugDraw.h in Headers */,
+				CDD812D51E16FE7100996311 /* b2FrictionJoint.h in Headers */,
+				CDD812D61E16FE7100996311 /* b2Collision.h in Headers */,
+				CDD812D71E16FE7100996311 /* b2CircleShape.h in Headers */,
+				CDD812D81E16FE7100996311 /* b2DynamicTree.h in Headers */,
+				CDD812D91E16FE7100996311 /* b2EdgeAndPolygonContact.h in Headers */,
+				CDD812DA1E16FE7100996311 /* MOAIBox2DDistanceJoint.h in Headers */,
+				CDD812DB1E16FE7100996311 /* MOAIBox2DFixture.h in Headers */,
+				CDD812DC1E16FE7100996311 /* b2ChainAndCircleContact.h in Headers */,
+				CDD812DD1E16FE7100996311 /* b2BroadPhase.h in Headers */,
+				CDD812DE1E16FE7100996311 /* b2Contact.h in Headers */,
+				CDD812DF1E16FE7100996311 /* b2GrowableStack.h in Headers */,
+				CDD812E01E16FE7100996311 /* b2PolygonContact.h in Headers */,
+				CDD812E11E16FE7100996311 /* b2PrismaticJoint.h in Headers */,
+				CDD812E21E16FE7100996311 /* b2TimeStep.h in Headers */,
+				CDD812E31E16FE7100996311 /* MOAIBox2DFrictionJoint.h in Headers */,
+				CDD812E41E16FE7100996311 /* b2RopeJoint.h in Headers */,
+				CDD812E51E16FE7100996311 /* b2PolygonShape.h in Headers */,
+				CDD812E61E16FE7100996311 /* b2Settings.h in Headers */,
+				CDD812E71E16FE7100996311 /* b2PulleyJoint.h in Headers */,
+				CDD812E81E16FE7100996311 /* b2Joint.h in Headers */,
+				CDD812E91E16FE7100996311 /* b2TimeOfImpact.h in Headers */,
+				CDD812EA1E16FE7100996311 /* b2Fixture.h in Headers */,
+				CDD812EB1E16FE7100996311 /* b2WheelJoint.h in Headers */,
+				CDD812EC1E16FE7100996311 /* b2ChainAndPolygonContact.h in Headers */,
+				CDD812ED1E16FE7100996311 /* b2Body.h in Headers */,
+				CDD812EE1E16FE7100996311 /* MOAIBox2DGearJoint.h in Headers */,
+				CDD812EF1E16FE7100996311 /* MOAIBox2DJoint.h in Headers */,
+				CDD812F01E16FE7100996311 /* MOAIBox2DMouseJoint.h in Headers */,
+				CDD812F11E16FE7100996311 /* b2MouseJoint.h in Headers */,
+				CDD812F21E16FE7100996311 /* MOAIBox2DPrismaticJoint.h in Headers */,
+				CDD812F31E16FE7100996311 /* b2MotorJoint.h in Headers */,
+				CDD812F41E16FE7100996311 /* b2EdgeShape.h in Headers */,
+				CDD812F51E16FE7100996311 /* b2DistanceJoint.h in Headers */,
+				CDD812F61E16FE7100996311 /* MOAIBox2DPulleyJoint.h in Headers */,
+				CDD812F71E16FE7100996311 /* MOAIBox2DRevoluteJoint.h in Headers */,
+				CDD812F81E16FE7100996311 /* b2Timer.h in Headers */,
+				CDD812F91E16FE7100996311 /* MOAIBox2DRopeJoint.h in Headers */,
+				CDD812FA1E16FE7100996311 /* b2GearJoint.h in Headers */,
+				CDD812FB1E16FE7100996311 /* b2Shape.h in Headers */,
+				CDD812FC1E16FE7100996311 /* MOAIBox2DWeldJoint.h in Headers */,
+				CDD812FD1E16FE7100996311 /* b2ContactManager.h in Headers */,
+				CDD812FE1E16FE7100996311 /* b2ChainShape.h in Headers */,
+				CDD812FF1E16FE7100996311 /* Box2D.h in Headers */,
+				CDD813001E16FE7100996311 /* MOAIBox2DWheelJoint.h in Headers */,
+				CDD813011E16FE7100996311 /* b2CircleContact.h in Headers */,
+				CDD813021E16FE7100996311 /* MOAIBox2DWorld.h in Headers */,
+				CDD813031E16FE7100996311 /* b2WorldCallbacks.h in Headers */,
+				CDD813041E16FE7100996311 /* MOAIBox2DMotorJoint.h in Headers */,
+				CDD813051E16FE7100996311 /* b2EdgeAndCircleContact.h in Headers */,
+				CDD813061E16FE7100996311 /* pch.h in Headers */,
+				CDD813071E16FE7100996311 /* b2Rope.h in Headers */,
+				CDD813081E16FE7100996311 /* b2Distance.h in Headers */,
+				CDD813091E16FE7100996311 /* b2World.h in Headers */,
+				CDD8130A1E16FE7100996311 /* b2RevoluteJoint.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CDF287ED17ED41CF00FD4F59 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -17918,6 +18169,23 @@
 			productReference = CDD781CA1A11631E00AD133E /* libmoai-ios-motion.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		CDD812C61E16FE7100996311 /* libmoai-osx-google-test */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CDD8134E1E16FE7100996311 /* Build configuration list for PBXNativeTarget "libmoai-osx-google-test" */;
+			buildPhases = (
+				CDD812C71E16FE7100996311 /* Headers */,
+				CDD8130B1E16FE7100996311 /* Sources */,
+				CDD8134D1E16FE7100996311 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-osx-google-test";
+			productName = OpenUSLS;
+			productReference = CDD813521E16FE7100996311 /* libmoai-osx-google-test.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		CDF287EC17ED41CF00FD4F59 /* libmoai-ios-zl-vfs */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CDF288B717ED41CF00FD4F59 /* Build configuration list for PBXNativeTarget "libmoai-ios-zl-vfs" */;
@@ -18009,6 +18277,7 @@
 				CD7852BF1D18C669003F15D0 /* libmoai-osx-assimp */,
 				89BE725E173AD29200DFE837 /* libmoai-osx-box2d */,
 				CD95D48D1831D4E20080C34E /* libmoai-osx-crypto */,
+				CDD812C61E16FE7100996311 /* libmoai-osx-google-test */,
 				CD320DDB1C517A0E00AD5E5C /* libmoai-osx-harfbuzz */,
 				89BE75BE173C121800DFE837 /* libmoai-osx-http-client */,
 				89BE7687173C160E00DFE837 /* libmoai-osx-http-server */,
@@ -21432,6 +21701,86 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CDD8130B1E16FE7100996311 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDD8130C1E16FE7100996311 /* b2Settings.cpp in Sources */,
+				CDD8130D1E16FE7100996311 /* host.cpp in Sources */,
+				CDD8130E1E16FE7100996311 /* b2Math.cpp in Sources */,
+				CDD8130F1E16FE7100996311 /* MOAIBox2DArbiter.cpp in Sources */,
+				CDD813621E16FF1500996311 /* gtest-port.cc in Sources */,
+				CDD813101E16FE7100996311 /* b2ContactSolver.cpp in Sources */,
+				CDD813111E16FE7100996311 /* b2PrismaticJoint.cpp in Sources */,
+				CDD813121E16FE7100996311 /* b2RopeJoint.cpp in Sources */,
+				CDD813131E16FE7100996311 /* b2CollideEdge.cpp in Sources */,
+				CDD813141E16FE7100996311 /* b2ChainShape.cpp in Sources */,
+				CDD813151E16FE7100996311 /* b2CollidePolygon.cpp in Sources */,
+				CDD813161E16FE7100996311 /* b2StackAllocator.cpp in Sources */,
+				CDD813171E16FE7100996311 /* b2CollideCircle.cpp in Sources */,
+				CDD813661E16FF1500996311 /* gtest.cc in Sources */,
+				CDD813181E16FE7100996311 /* b2WheelJoint.cpp in Sources */,
+				CDD813191E16FE7100996311 /* b2PolygonShape.cpp in Sources */,
+				CDD8131A1E16FE7100996311 /* b2World.cpp in Sources */,
+				CDD8131B1E16FE7100996311 /* MOAIBox2DBody.cpp in Sources */,
+				CDD8131C1E16FE7100996311 /* MOAIBox2DDebugDraw.cpp in Sources */,
+				CDD8131D1E16FE7100996311 /* b2WorldCallbacks.cpp in Sources */,
+				CDD8131E1E16FE7100996311 /* b2FrictionJoint.cpp in Sources */,
+				CDD8131F1E16FE7100996311 /* MOAIBox2DDistanceJoint.cpp in Sources */,
+				CDD813201E16FE7100996311 /* b2ChainAndPolygonContact.cpp in Sources */,
+				CDD813211E16FE7100996311 /* MOAIBox2DFixture.cpp in Sources */,
+				CDD813221E16FE7100996311 /* MOAIBox2DFrictionJoint.cpp in Sources */,
+				CDD813231E16FE7100996311 /* b2CircleContact.cpp in Sources */,
+				CDD813241E16FE7100996311 /* MOAIBox2DGearJoint.cpp in Sources */,
+				CDD813251E16FE7100996311 /* b2PolygonAndCircleContact.cpp in Sources */,
+				CDD8135F1E16FF1500996311 /* gtest-death-test.cc in Sources */,
+				CDD813261E16FE7100996311 /* MOAIBox2DJoint.cpp in Sources */,
+				CDD813271E16FE7100996311 /* MOAIBox2DMouseJoint.cpp in Sources */,
+				CDD813281E16FE7100996311 /* MOAIBox2DPrismaticJoint.cpp in Sources */,
+				CDD813291E16FE7100996311 /* b2MotorJoint.cpp in Sources */,
+				CDD8132A1E16FE7100996311 /* b2Distance.cpp in Sources */,
+				CDD8132B1E16FE7100996311 /* MOAIBox2DPulleyJoint.cpp in Sources */,
+				CDD813631E16FF1500996311 /* gtest-printers.cc in Sources */,
+				CDD8135D1E16FF1500996311 /* gtest_main.cc in Sources */,
+				CDD8132C1E16FE7100996311 /* b2DistanceJoint.cpp in Sources */,
+				CDD8132D1E16FE7100996311 /* b2BlockAllocator.cpp in Sources */,
+				CDD8132E1E16FE7100996311 /* b2Collision.cpp in Sources */,
+				CDD8132F1E16FE7100996311 /* b2EdgeAndPolygonContact.cpp in Sources */,
+				CDD813301E16FE7100996311 /* MOAIBox2DMotorJoint.cpp in Sources */,
+				CDD813311E16FE7100996311 /* b2Fixture.cpp in Sources */,
+				CDD813321E16FE7100996311 /* b2Rope.cpp in Sources */,
+				CDD813331E16FE7100996311 /* MOAIBox2DRevoluteJoint.cpp in Sources */,
+				CDD813341E16FE7100996311 /* MOAIBox2DRopeJoint.cpp in Sources */,
+				CDD813641E16FF1500996311 /* gtest-test-part.cc in Sources */,
+				CDD813351E16FE7100996311 /* MOAIBox2DWeldJoint.cpp in Sources */,
+				CDD813601E16FF1500996311 /* gtest-filepath.cc in Sources */,
+				CDD813361E16FE7100996311 /* b2RevoluteJoint.cpp in Sources */,
+				CDD813371E16FE7100996311 /* MOAIBox2DWheelJoint.cpp in Sources */,
+				CDD813381E16FE7100996311 /* b2Body.cpp in Sources */,
+				CDD813391E16FE7100996311 /* b2TimeOfImpact.cpp in Sources */,
+				CDD8133A1E16FE7100996311 /* MOAIBox2DWorld.cpp in Sources */,
+				CDD8133B1E16FE7100996311 /* b2MouseJoint.cpp in Sources */,
+				CDD8133C1E16FE7100996311 /* b2Timer.cpp in Sources */,
+				CDD8133D1E16FE7100996311 /* b2GearJoint.cpp in Sources */,
+				CDD8133E1E16FE7100996311 /* b2EdgeAndCircleContact.cpp in Sources */,
+				CDD8133F1E16FE7100996311 /* b2Contact.cpp in Sources */,
+				CDD813401E16FE7100996311 /* pch.cpp in Sources */,
+				CDD813411E16FE7100996311 /* b2CircleShape.cpp in Sources */,
+				CDD813651E16FF1500996311 /* gtest-typed-test.cc in Sources */,
+				CDD813421E16FE7100996311 /* b2EdgeShape.cpp in Sources */,
+				CDD813431E16FE7100996311 /* b2WeldJoint.cpp in Sources */,
+				CDD813441E16FE7100996311 /* b2ContactManager.cpp in Sources */,
+				CDD813451E16FE7100996311 /* b2Island.cpp in Sources */,
+				CDD813461E16FE7100996311 /* b2Draw.cpp in Sources */,
+				CDD813471E16FE7100996311 /* b2ChainAndCircleContact.cpp in Sources */,
+				CDD813481E16FE7100996311 /* b2DynamicTree.cpp in Sources */,
+				CDD813491E16FE7100996311 /* b2BroadPhase.cpp in Sources */,
+				CDD8134A1E16FE7100996311 /* b2PolygonContact.cpp in Sources */,
+				CDD8134B1E16FE7100996311 /* b2Joint.cpp in Sources */,
+				CDD8134C1E16FE7100996311 /* b2PulleyJoint.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CDF2886617ED41CF00FD4F59 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -21917,6 +22266,7 @@
 					"\"../../3rdparty/sdl2-2.0.4/include\"",
 					"\"../../3rdparty/sfmt-1.4\"",
 					"\"../../3rdparty/libtess2/include\"",
+					"\"../../3rdparty/google-test/googletest/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "";
@@ -22989,6 +23339,7 @@
 					"\"../../3rdparty/sdl2-2.0.4/include\"",
 					"\"../../3rdparty/sfmt-1.4\"",
 					"\"../../3rdparty/libtess2/include\"",
+					"\"../../3rdparty/google-test/googletest/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "";
@@ -27422,6 +27773,129 @@
 			};
 			name = "Release-NoSymbols";
 		};
+		CDD8134F1E16FE7100996311 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"../../3rdparty/google-test/googletest\"",
+				);
+				OTHER_CFLAGS = "";
+				PRODUCT_NAME = "moai-osx-google-test";
+				SDKROOT = macosx;
+				WARNING_CFLAGS = "-w";
+			};
+			name = Debug;
+		};
+		CDD813501E16FE7100996311 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"../../3rdparty/google-test/googletest\"",
+				);
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PRODUCT_NAME = "moai-osx-google-test";
+				SDKROOT = macosx;
+				WARNING_CFLAGS = "-w";
+			};
+			name = Release;
+		};
+		CDD813511E16FE7100996311 /* Release-NoSymbols */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"../../3rdparty/google-test/googletest\"",
+				);
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PRODUCT_NAME = "moai-osx-google-test";
+				SDKROOT = macosx;
+				WARNING_CFLAGS = "-w";
+			};
+			name = "Release-NoSymbols";
+		};
 		CDF288B817ED41CF00FD4F59 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -27584,6 +28058,7 @@
 					"\"../../3rdparty/sdl2-2.0.4/include\"",
 					"\"../../3rdparty/sfmt-1.4\"",
 					"\"../../3rdparty/libtess2/include\"",
+					"\"../../3rdparty/google-test/googletest/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "";
@@ -28442,6 +28917,16 @@
 				CDD781C61A11631E00AD133E /* Debug */,
 				CDD781C71A11631E00AD133E /* Release */,
 				CDD781C91A11631E00AD133E /* Release-NoSymbols */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CDD8134E1E16FE7100996311 /* Build configuration list for PBXNativeTarget "libmoai-osx-google-test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CDD8134F1E16FE7100996311 /* Debug */,
+				CDD813501E16FE7100996311 /* Release */,
+				CDD813511E16FE7100996311 /* Release-NoSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
