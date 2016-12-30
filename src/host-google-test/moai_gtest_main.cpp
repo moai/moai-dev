@@ -9,19 +9,53 @@
 #include <stdlib.h>
 #include <gtest/gtest.h>
 
-TEST ( SquareRootTest, PositiveNos ) {
-    EXPECT_EQ ( 18.0, sqrt ( 324.0 ));
-    EXPECT_EQ ( 25.4, sqrt ( 645.16 ));
-    EXPECT_EQ ( 50.3321, sqrt ( 2533.310224 ));
-}
+#include <moai-core/host.h>
+#include <moai-sdl/host.h>
+#include <host-modules/aku_modules.h>
+
+//================================================================//
+// GTESTMoaiContext
+//================================================================//
+class GTESTMoaiContext: public ::testing::Test {
+public:
+
+	AKUContextID	mContext;
+
+	//----------------------------------------------------------------//
+	GTESTMoaiContext () :
+		mContext ( 0 ) {
+	}
+	
+	//----------------------------------------------------------------//
+	~GTESTMoaiContext () {
+	}
  
-TEST ( SquareRootTest, ZeroAndNegativeNos ) {
-    ASSERT_EQ ( 0.0, sqrt ( 0.0 ));
-    ASSERT_EQ ( -1, sqrt ( -22.0 ));
+	//----------------------------------------------------------------//
+	void SetUp () {
+	
+		this->mContext = AKUCreateContext ();
+	}
+ 
+	//----------------------------------------------------------------//
+	void TearDown () {
+	
+		AKUDeleteContext ( this->mContext );
+	}
+};
+
+//----------------------------------------------------------------//
+TEST_F ( GTESTMoaiContext, MoaiContextTest ) {
+	ASSERT_TRUE ( this->mContext != 0 );
 }
 
 //----------------------------------------------------------------//
 int main ( int argc, char **argv ) {
-  ::testing::InitGoogleTest ( &argc, argv );
-  return RUN_ALL_TESTS ();
+	::testing::InitGoogleTest ( &argc, argv );
+	
+	AKUAppInitialize ();
+	
+	int result = RUN_ALL_TESTS ();
+	
+	AKUAppFinalize ();
+	return result;
 }
