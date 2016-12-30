@@ -49,7 +49,7 @@ private:
 	friend class MOAIGfxMgr;
 	friend class MOAIGfxPipelineClerk;
 	friend class MOAIGfxStateCache;
-
+	
 	static const u32 COLOR_SIZE				= 4;
 	static const u32 NORMAL_SIZE			= 3;
 	static const u32 NULL_INDEX				= 0xffffffff;

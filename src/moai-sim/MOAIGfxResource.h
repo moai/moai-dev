@@ -21,7 +21,7 @@ private:
 	friend class MOAIGfxPipelineClerk;
 	friend class MOAIGfxStateCache;
 	friend class MOAIGfxResourceClerk;
-
+	
 	u32					mState;
 	u32					mLastRenderCount;
 

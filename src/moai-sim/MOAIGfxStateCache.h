@@ -21,8 +21,32 @@ class MOAISingleTexture;
 class MOAITextureBase;
 class MOAIVertexArray;
 class MOAIVertexBuffer;
+class MOAIVertexBufferWithFormat;
 class MOAIVertexFormat;
 class MOAIViewport;
+
+//================================================================//
+// MOAIVertexBufferWithFormat
+//================================================================//
+class MOAIVertexBufferWithFormat {
+private:
+	
+	ZLSharedConstBuffer*						mBoundVtxBuffer;
+	bool										mIsBound;
+
+	friend class MOAIGfxStateCache;
+
+public:
+
+	MOAILuaSharedPtr < MOAIVertexBuffer >		mBuffer;
+	MOAILuaSharedPtr < MOAIVertexFormat >		mFormat;
+	
+	//----------------------------------------------------------------//
+				MOAIVertexBufferWithFormat		();
+				~MOAIVertexBufferWithFormat		();
+	void		SetBufferAndFormat				( MOAILuaObject& owner, MOAIVertexBuffer* buffer, MOAIVertexFormat* format );
+	
+};
 
 //================================================================//
 // MOAIGfxStateCacheClient
@@ -86,6 +110,7 @@ class MOAIGfxStateCache :
 protected:
 
 	friend class MOAIGfxVertexCache;
+	friend class MOAIVertexArray;
 
 	// right now we just test every flag for an update in a for loop.
 	// these flags ordered roughly by (guessed) call frequency just so we can bail out of the
@@ -95,7 +120,7 @@ protected:
 	enum {
 		TEXTURE					= 1 << 0,
 		SHADER					= 1 << 1,
-		VERTEX_FORMAT			= 1 << 2,	// must come before vertex buffer
+		VERTEX_FORMAT			= 1 << 2, // must come *before* vertex buffer
 		VERTEX_BUFFER			= 1 << 3,
 		INDEX_BUFFER			= 1 << 4,
 		VERTEX_ARRAY			= 1 << 5,
@@ -130,10 +155,12 @@ protected:
 	MOAIGfxStateCacheClient*				mClient;
 
 	//----------------------------------------------------------------//
-	void			ApplyStateChange			( u32 stateID );
-	void			ApplyStateChanges			();
-	void			ResumeChanges				();
-	void			SuspendChanges				();
+	void			ApplyStateChange				( u32 stateID );
+	void			ApplyStateChanges				();
+	void			BindVertexBufferWithFormat		( MOAIVertexBufferWithFormat& buffer, bool useVAOs );
+	void			ResumeChanges					();
+	void			SuspendChanges					();
+	void			UnbindVertexBufferWithFormat	( MOAIVertexBufferWithFormat& buffer );
 
 public:
 	

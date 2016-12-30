@@ -16,52 +16,6 @@
 #include <moai-sim/MOAIVertexFormat.h>
 
 //================================================================//
-// MOAIVertexArrayItem
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAIVertexArrayItem::Bind ( bool useVAOs ) {
-	UNUSED ( useVAOs ); // TODO: why isn't zl's assert redefine taking care of this?
-
-	if ( this->mBuffer && this->mFormat ) {
-		
-		assert (( useVAOs && this->mBuffer->IsUsingVBOs ()) || ( !useVAOs )); // buffer objects must use VBOs to work with VAOs
-		
-		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	
-		gfxMgr.mGfxState.SetVertexFormat ( this->mFormat );
-		gfxMgr.mGfxState.BindVertexBuffer ( this->mBuffer );
-	}
-}
-
-//----------------------------------------------------------------//
-MOAIVertexArrayItem::MOAIVertexArrayItem () {
-}
-
-//----------------------------------------------------------------//
-MOAIVertexArrayItem::~MOAIVertexArrayItem () {
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexArrayItem::SetBufferAndFormat ( MOAIVertexArray& owner, MOAIVertexBuffer* buffer, MOAIVertexFormat* format ) {
-
-	this->mBuffer.Set ( owner, buffer );
-	this->mFormat.Set ( owner, format );
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexArrayItem::Unbind () {
-
-	if ( this->mBuffer && this->mFormat ) {
-	
-		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	
-		gfxMgr.mGfxState.SetVertexFormat ();
-		gfxMgr.mGfxState.BindVertexBuffer ();
-	}
-}
-
-//================================================================//
 // local
 //================================================================//
 
@@ -119,9 +73,11 @@ bool MOAIVertexArray::AffirmVertexBuffers ( u32 idx ) {
 //----------------------------------------------------------------//
 void MOAIVertexArray::BindVertexArrayItems () {
 
+	MOAIGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+
 	size_t totalVBOs = this->mVertexBuffers.Size ();
 	for ( size_t i = 0; i < totalVBOs; ++i ) {
-		this->mVertexBuffers [ i ].Bind ( this->mUseVAOs );
+		gfxState.BindVertexBufferWithFormat ( this->mVertexBuffers [ i ], this->mUseVAOs );
 	}
 }
 
@@ -338,8 +294,10 @@ void MOAIVertexArray::SetVertexBuffer ( u32 idx, MOAIVertexBuffer* vtxBuffer, MO
 //----------------------------------------------------------------//
 void MOAIVertexArray::UnbindVertexArrayItems () {
 
+	MOAIGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+
 	size_t totalVBOs = this->mVertexBuffers.Size ();
 	for ( size_t i = 0; i < totalVBOs; ++i ) {
-		this->mVertexBuffers [ i ].Unbind ();
+		gfxState.UnbindVertexBufferWithFormat ( this->mVertexBuffers [ i ]);
 	}
 }

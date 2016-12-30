@@ -35,6 +35,7 @@ protected:
 	
 	friend class MOAIGfxPipelineClerk;
 	friend class MOAIGfxStateCache;
+	friend class MOAIVertexArrayItem;
 	
 	enum {
 		UPDATE_MODE_MAPBUFFER,

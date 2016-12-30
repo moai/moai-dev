@@ -8,24 +8,8 @@
 
 class MOAIVertexArray;
 class MOAIVertexBuffer;
+class MOAIVertexBufferWithFormat;
 class MOAIVertexFormat;
-
-//================================================================//
-// MOAIVertexArrayItem
-//================================================================//
-class MOAIVertexArrayItem {
-public:
-	
-	MOAILuaSharedPtr < MOAIVertexBuffer >		mBuffer;
-	MOAILuaSharedPtr < MOAIVertexFormat >		mFormat;
-	
-	//----------------------------------------------------------------//
-	void		Bind					( bool useVAOs );
-				MOAIVertexArrayItem		();
-				~MOAIVertexArrayItem	();
-	void		SetBufferAndFormat		( MOAIVertexArray& owner, MOAIVertexBuffer* buffer, MOAIVertexFormat* format );
-	void		Unbind					();
-};
 
 //================================================================//
 // MOAIVertexArray
@@ -35,10 +19,10 @@ class MOAIVertexArray :
 	public MOAIGfxResource {
 protected:
 
-	ZLLeanArray < ZLGfxHandle* >			mVAOs; // vertex array objects to bind all the vertex and buffer state
-	u32										mCurrentVAO;
+	ZLLeanArray < ZLGfxHandle* >					mVAOs; // vertex array objects to bind all the vertex and buffer state
+	u32												mCurrentVAO;
 
-	ZLLeanArray < MOAIVertexArrayItem >		mVertexBuffers;
+	ZLLeanArray < MOAIVertexBufferWithFormat >		mVertexBuffers;
 
 	bool				mUseVAOs;
 

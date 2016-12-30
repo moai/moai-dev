@@ -28,6 +28,29 @@
 #endif
 
 //================================================================//
+// MOAIVertexBufferWithFormat
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAIVertexBufferWithFormat::MOAIVertexBufferWithFormat () :
+	mBoundVtxBuffer ( 0 ),
+	mIsBound ( false ) {
+}
+
+//----------------------------------------------------------------//
+MOAIVertexBufferWithFormat::~MOAIVertexBufferWithFormat () {
+
+	assert ( !this->mIsBound );
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexBufferWithFormat::SetBufferAndFormat ( MOAILuaObject& owner, MOAIVertexBuffer* buffer, MOAIVertexFormat* format ) {
+
+	this->mBuffer.Set ( owner, buffer );
+	this->mFormat.Set ( owner, format );
+}
+
+//================================================================//
 // MOAIGfxStateCacheClient
 //================================================================//
 
@@ -139,6 +162,7 @@ void MOAIGfxStateCache::ApplyStateChange ( u32 stateID ) {
 		
 		case VERTEX_BUFFER:
 			
+			this->mActiveState.mVtxFormat = this->mPendingState.mVtxFormat;
 			this->BindVertexBuffer ( this->mPendingState.mVtxBuffer );
 			break;
 		
@@ -378,8 +402,6 @@ bool MOAIGfxStateCache::BindVertexArray ( MOAIVertexArray* vtxArray ) {
 	
 			DEBUG_LOG ( "  binding vertex array: %p\n", vtxArray );
 	
-			this->SetVertexFormat ();
-	
 			if ( active.mVtxArray ) {
 				active.mVtxArray->Unbind ();
 			}
@@ -387,13 +409,21 @@ bool MOAIGfxStateCache::BindVertexArray ( MOAIVertexArray* vtxArray ) {
 			active.mVtxArray = vtxArray;
 			
 			if ( vtxArray ) {
+								
+				this->BindVertexBuffer (); // force the unbind in case it hasn't happened yet
+			
 				vtxArray->Bind ();
 			}
 		}
 	}
 	else {
 
-		//this->SetVertexFormat ();
+		if ( vtxArray ) {
+			this->mPendingState.mVtxBuffer = 0;
+			this->mPendingState.mVtxFormat = 0;
+			this->mDirtyFlags &= ~VERTEX_BUFFER;
+		}
+
 		this->mPendingState.mVtxArray = vtxArray;
 		this->mDirtyFlags = ( this->mActiveState.mVtxArray == vtxArray ) ? ( this->mDirtyFlags & ~VERTEX_ARRAY ) : ( this->mDirtyFlags | VERTEX_ARRAY );
 	}
@@ -406,10 +436,12 @@ bool MOAIGfxStateCache::BindVertexBuffer ( MOAIVertexBuffer* buffer ) {
 	if ( this->mApplyingStateChanges ) {
 	
 		MOAIGfxState& active = this->mActiveState;
-		MOAIVertexFormat* format = active.mVtxFormat;
+		
 		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 		
 		ZLSharedConstBuffer* bufferForBind = buffer ? buffer->GetBufferForBind ( gfx ) : 0;
+		
+		MOAIVertexFormat* format = active.mVtxFormat;
 		
 		if (( active.mVtxBuffer != buffer ) || ( this->mBoundVtxBuffer != bufferForBind )) {
 
@@ -418,28 +450,60 @@ bool MOAIGfxStateCache::BindVertexBuffer ( MOAIVertexBuffer* buffer ) {
 			DEBUG_LOG ( "  binding vertex buffer: (%p)\n", buffer );
 
 			if ( active.mVtxBuffer ) {
-				active.mVtxBuffer->Unbind ();
+				assert ( active.mVtxFormat );
+				active.mVtxFormat->Unbind ();
 			}
 			
 			active.mVtxBuffer = 0;
 			this->mBoundVtxBuffer = 0;
-		
+			
 			if ( format && buffer ) {
 				
+				this->BindVertexArray (); // force the unbind in case it hasn't happened yet
+				
 				buffer->Bind ();
+				format->Bind ( bufferForBind );
+				buffer->Unbind ();
+				
 				active.mVtxBuffer = buffer;
 				this->mBoundVtxBuffer = bufferForBind;
-				format->Bind ( bufferForBind );
 			}
 		}
 	}
 	else {
+	
+		if ( buffer ) {
+			this->mPendingState.mVtxArray = 0;
+			this->mDirtyFlags &= ~VERTEX_ARRAY;
+		}
 	
 		this->mPendingState.mVtxBuffer = buffer;
 		this->mDirtyFlags = ( this->mActiveState.mVtxBuffer == buffer ) ? ( this->mDirtyFlags & ~VERTEX_BUFFER ) : ( this->mDirtyFlags | VERTEX_BUFFER );
 	}
 	
 	return buffer ? buffer->IsReady () : true;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateCache::BindVertexBufferWithFormat ( MOAIVertexBufferWithFormat& bufferWithFormat, bool useVAOs ) {
+
+	MOAIVertexBuffer* buffer = bufferWithFormat.mBuffer;
+	MOAIVertexFormat* format = bufferWithFormat.mFormat;
+
+	assert ( !bufferWithFormat.mIsBound );
+	assert ( buffer && format );
+	assert (( useVAOs && buffer->IsUsingVBOs ()) || ( !useVAOs )); // buffer objects must use VBOs to work with VAOs
+	
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+	
+	ZLSharedConstBuffer* bufferForBind = buffer->GetBufferForBind ( gfx );
+	
+	buffer->Bind ();
+	format->Bind ( bufferForBind );
+	buffer->Unbind ();
+	
+	bufferWithFormat.mBoundVtxBuffer = bufferForBind;
+	bufferWithFormat.mIsBound = true;
 }
 
 //----------------------------------------------------------------//
@@ -971,7 +1035,7 @@ void MOAIGfxStateCache::SetVertexFormat ( MOAIVertexFormatMgr::Preset preset ) {
 void MOAIGfxStateCache::SetVertexFormat ( MOAIVertexFormat* format ) {
 
 	if ( this->mApplyingStateChanges ) {
-	
+		
 		MOAIGfxState& active = this->mActiveState;
 		
 		if ( active.mVtxFormat != format ) {
@@ -980,10 +1044,12 @@ void MOAIGfxStateCache::SetVertexFormat ( MOAIVertexFormat* format ) {
 		
 			this->GfxStateWillChange ();
 			
-			if ( active.mVtxFormat ) {
+			if ( active.mVtxFormat && active.mVtxBuffer ) {
 				active.mVtxFormat->Unbind ();
 			}
+			
 			active.mVtxFormat = format;
+			active.mVtxBuffer = 0; // must be set in a later step
 		}
 	}
 	else {
@@ -1063,4 +1129,16 @@ void MOAIGfxStateCache::UnbindAll () {
 	this->SetVertexFormat ();
 	
 	ZGL_COMMENT ( gfx, "" );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateCache::UnbindVertexBufferWithFormat ( MOAIVertexBufferWithFormat& bufferWithFormat ) {
+
+	assert ( bufferWithFormat.mIsBound );
+	assert ( bufferWithFormat.mBuffer && bufferWithFormat.mFormat );
+		
+	bufferWithFormat.mFormat->Unbind ();
+	bufferWithFormat.mBoundVtxBuffer = 0;
+		
+	bufferWithFormat.mIsBound = false;
 }
