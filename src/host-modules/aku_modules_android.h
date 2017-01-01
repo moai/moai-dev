@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	AKU_MODULES_ANDROID_H

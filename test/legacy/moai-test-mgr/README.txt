@@ -92,7 +92,7 @@ Here’s a basic C++ test:
 
  
 
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAITEST_SAMPLE_H
