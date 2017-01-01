@@ -79,7 +79,8 @@
 		CDD813CB1E16FFA900996311 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1845BC1A626F0300FCCCE0 /* SystemConfiguration.framework */; };
 		CDD813F71E16FFE900996311 /* libmoai-osx-google-test.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDD813F41E16FFA900996311 /* libmoai-osx-google-test.a */; };
 		CDD813FA1E1700D900996311 /* moai_gtest_main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD813F91E1700D900996311 /* moai_gtest_main.cpp */; };
-		CDD813FD1E17333700996311 /* moai_gtest_lua_binding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD813FC1E17333700996311 /* moai_gtest_lua_binding.cpp */; };
+		CDD813FD1E17333700996311 /* moai_gtest_lua_lifecycle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD813FC1E17333700996311 /* moai_gtest_lua_lifecycle.cpp */; };
+		CDD813FF1E190DDD00996311 /* moai_gtest_ZLQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD813FE1E190DDD00996311 /* moai_gtest_ZLQuaternion.cpp */; };
 		CDF2380F1CAA731C00A45E31 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDF2380E1CAA731C00A45E31 /* CoreVideo.framework */; };
 		CDF238111CAA7DAC00A45E31 /* SDLHost-osx.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDF238101CAA7DAC00A45E31 /* SDLHost-osx.mm */; };
 		CDFD8FB11AD8653C0003F415 /* libmoai-osx-3rdparty-core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFD8FA11AD8653C0003F415 /* libmoai-osx-3rdparty-core.a */; };
@@ -897,7 +898,8 @@
 		CDD813D01E16FFA900996311 /* moai-test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-test"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD813F91E1700D900996311 /* moai_gtest_main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moai_gtest_main.cpp; path = "../../src/host-google-test/moai_gtest_main.cpp"; sourceTree = "<group>"; };
 		CDD813FB1E1732D300996311 /* moai_gtest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = moai_gtest.h; path = "../../src/host-google-test/moai_gtest.h"; sourceTree = "<group>"; };
-		CDD813FC1E17333700996311 /* moai_gtest_lua_binding.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moai_gtest_lua_binding.cpp; path = "../../src/host-google-test/moai_gtest_lua_binding.cpp"; sourceTree = "<group>"; };
+		CDD813FC1E17333700996311 /* moai_gtest_lua_lifecycle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moai_gtest_lua_lifecycle.cpp; path = "../../src/host-google-test/moai_gtest_lua_lifecycle.cpp"; sourceTree = "<group>"; };
+		CDD813FE1E190DDD00996311 /* moai_gtest_ZLQuaternion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moai_gtest_ZLQuaternion.cpp; path = "../../src/host-google-test/moai_gtest_ZLQuaternion.cpp"; sourceTree = "<group>"; };
 		CDF2380E1CAA731C00A45E31 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		CDF238101CAA7DAC00A45E31 /* SDLHost-osx.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "SDLHost-osx.mm"; path = "../../src/host-sdl/SDLHost-osx.mm"; sourceTree = "<group>"; };
 		CDFD8FA11AD8653C0003F415 /* libmoai-osx-3rdparty-core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-3rdparty-core.a"; path = "../../../../Library/Developer/Xcode/DerivedData/MoaiSample-cqdbxugpyrgpwegimkiivzlhrioj/Build/Products/Debug/libmoai-osx-3rdparty-core.a"; sourceTree = "<group>"; };
@@ -1107,9 +1109,10 @@
 		CDD813F81E17007C00996311 /* host-google-test */ = {
 			isa = PBXGroup;
 			children = (
-				CDD813FC1E17333700996311 /* moai_gtest_lua_binding.cpp */,
-				CDD813F91E1700D900996311 /* moai_gtest_main.cpp */,
 				CDD813FB1E1732D300996311 /* moai_gtest.h */,
+				CDD813FC1E17333700996311 /* moai_gtest_lua_lifecycle.cpp */,
+				CDD813F91E1700D900996311 /* moai_gtest_main.cpp */,
+				CDD813FE1E190DDD00996311 /* moai_gtest_ZLQuaternion.cpp */,
 			);
 			name = "host-google-test";
 			sourceTree = "<group>";
@@ -1763,7 +1766,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CDD813FD1E17333700996311 /* moai_gtest_lua_binding.cpp in Sources */,
+				CDD813FD1E17333700996311 /* moai_gtest_lua_lifecycle.cpp in Sources */,
+				CDD813FF1E190DDD00996311 /* moai_gtest_ZLQuaternion.cpp in Sources */,
 				CDD813FA1E1700D900996311 /* moai_gtest_main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

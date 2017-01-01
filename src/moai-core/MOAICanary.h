@@ -12,8 +12,9 @@ class MOAIObject;
 class MOAICanary {
 protected:
 
-	u32				mRefCount;
-	u32				mStrongRefs;
+	u32				mObjectRefCount;	// strong refs to the object
+	u32				mCanaryRefCount;	// refs to the canary; may exceed strong refs
+	
 	MOAIObject*		mObject;
 
 	//----------------------------------------------------------------//	

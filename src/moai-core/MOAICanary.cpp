@@ -38,19 +38,19 @@ void MOAICanary::Release ( bool strong ) {
 
 	if ( strong ) {
 	
-		if ( this->mStrongRefs ) {
-			--this->mStrongRefs;
+		if ( this->mObjectRefCount ) {
+			--this->mObjectRefCount;
 		}
 		
 		if ( this->mObject ) {
-			this->mObject->OnRelease ( this->mStrongRefs );
+			this->mObject->OnRelease ( this->mObjectRefCount );
 		}
 	}
 	
-	if ( this->mRefCount ) {
-		--this->mRefCount;
+	if ( this->mCanaryRefCount ) {
+		--this->mCanaryRefCount;
 		
-		if ( this->mRefCount == 0 ) {
+		if ( this->mCanaryRefCount == 0 ) {
 			delete this;
 		}
 	}
@@ -59,20 +59,20 @@ void MOAICanary::Release ( bool strong ) {
 //----------------------------------------------------------------//
 void MOAICanary::Retain ( bool strong ) {
 
-	++this->mRefCount;
+	++this->mCanaryRefCount;
 	if ( strong ) {
-		++this->mStrongRefs;
+		++this->mObjectRefCount;
 		
 		if ( this->mObject ) {
-			this->mObject->OnRetain ( this->mStrongRefs );
+			this->mObject->OnRetain ( this->mObjectRefCount );
 		}
 	}
 }
 
 //----------------------------------------------------------------//
 MOAICanary::MOAICanary () :
-	mRefCount ( 0 ),
-	mStrongRefs ( 0 ),
+	mObjectRefCount ( 0 ),
+	mCanaryRefCount ( 0 ),
 	mObject ( 0 ) {
 }
 

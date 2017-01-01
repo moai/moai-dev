@@ -53,7 +53,7 @@ public:
 };
 
 //----------------------------------------------------------------//
-TEST_F ( GTESTMoaiContext, MoaiTestLuaBindings ) {
+TEST_F ( GTESTMoaiContext, MOAILuaLifecycle ) {
 	ASSERT_TRUE ( this->mContext != 0 );
 
 	REGISTER_LUA_CLASS ( GTESTMoaiLuaBoundClass )
@@ -91,5 +91,82 @@ TEST_F ( GTESTMoaiContext, MoaiTestLuaBindings ) {
 		MOAILuaRuntime::Get ().ForceGarbageCollection ();
 		
 		state.Pop ();
+	}
+	
+	{
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	
+		luaL_loadstring ( state, "return GTESTMoaiLuaBoundClass.new ()" );
+		
+		state.DebugCall ( 0, 1 );
+		GTESTMoaiLuaBoundClass* test = state.GetLuaObject < GTESTMoaiLuaBoundClass >( -1, false );
+		ASSERT_TRUE ( test != 0 );
+		
+		test->Track ( memberTable, "test" );
+		state.Pop ();
+		
+		MOAILuaRuntime::Get ().ForceGarbageCollection ();
+		ASSERT_FALSE ( memberTable.contains ( "test" ));
+	}
+	
+	{
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	
+		GTESTMoaiLuaBoundClass* test = new GTESTMoaiLuaBoundClass ();
+		test->Track ( memberTable, "test" );
+		state.Push ( test );
+		state.Pop ();
+		
+		MOAILuaRuntime::Get ().ForceGarbageCollection ();
+		ASSERT_FALSE ( memberTable.contains ( "test" ));
+	}
+	
+	{
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		
+		GTESTMoaiLuaBoundClass* test = new GTESTMoaiLuaBoundClass ();
+		test->Track ( memberTable, "test" );
+		test->Retain ();
+		test->Release ();
+		
+		ASSERT_FALSE ( memberTable.contains ( "test" ));
+	}
+	
+	{
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		
+		GTESTMoaiLuaBoundClass* test = new GTESTMoaiLuaBoundClass ();
+		test->Track ( memberTable, "test" );
+		state.Push ( test );
+		
+		test->Retain ();
+		test->Release ();
+		
+		state.Pop ();
+		
+		ASSERT_TRUE ( memberTable.contains ( "test" ));
+		
+		MOAILuaRuntime::Get ().ForceGarbageCollection ();
+		
+		ASSERT_FALSE ( memberTable.contains ( "test" ));
+	}
+	
+	{
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		
+		GTESTMoaiLuaBoundClass* test = new GTESTMoaiLuaBoundClass ();
+		test->Track ( memberTable, "test" );
+		state.Push ( test );
+		
+		test->Retain ();
+		
+		state.Pop ();
+		
+		MOAILuaRuntime::Get ().ForceGarbageCollection ();
+		ASSERT_TRUE ( memberTable.contains ( "test" ));
+		
+		test->Release ();
+		
+		ASSERT_FALSE ( memberTable.contains ( "test" ));
 	}
 }

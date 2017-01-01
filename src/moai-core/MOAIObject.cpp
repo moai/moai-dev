@@ -23,19 +23,19 @@ MOAICanary* MOAIObject::AffirmCanary () {
 u32 MOAIObject::GetRefCount () {
 
 	if ( this->mCanary ) {
-		return this->mCanary->mStrongRefs;
+		return this->mCanary->mObjectRefCount;
 	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
-bool MOAIObject::IsInScope () {
-
-	if ( this->mCanary ) {
-		return ( this->mCanary->mStrongRefs > 0 );
-	}
-	return false;
-}
+//bool MOAIObject::IsInScope () {
+//
+//	if ( this->mCanary ) {
+//		return ( this->mCanary->mObjectRefCount > 0 );
+//	}
+//	return false;
+//}
 
 //----------------------------------------------------------------//
 void MOAIObject::OnRelease ( u32 refCount ) {

@@ -21,7 +21,6 @@ class MOAILuaObject :
 	public virtual MOAIObject {
 private:
 
-	bool					mCollected;
 	u32						mActiveUserdataCount;
 	MOAILuaWeakRef			mUserdata;		// ref to userdata (weak)
 	MOAILuaStrongRef		mFinalizer;		// ref to finalizer (strong)
@@ -82,7 +81,6 @@ public:
 	virtual void			RegisterLuaFuncs			( MOAILuaState& state );
 	virtual	void			SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	virtual	void			SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
-	bool					WasCollected				();
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE, lua_CFunction FUNC >

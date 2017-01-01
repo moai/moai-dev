@@ -183,7 +183,7 @@ void MOAILuaMemberRef::Clear () {
 
 	if ( this->mRefID != LUA_NOREF ) {
 
-		if (( !this->mOwner->mCollected ) && MOAILuaRuntime::IsValid ()) {
+		if ( this->mOwner->IsBound () && MOAILuaRuntime::IsValid ()) {
 			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 			if ( this->mOwner->PushRefTable ( state )) {
 				luaL_unref ( state, -1, this->mRefID );

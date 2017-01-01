@@ -26,7 +26,7 @@ public:
 	//----------------------------------------------------------------//
 	MOAICanary*		AffirmCanary		();
 	u32				GetRefCount			();
-	bool			IsInScope			();
+	//bool			IsInScope			();
 	void			Release				();
 	void			Retain				();
 					MOAIObject			();

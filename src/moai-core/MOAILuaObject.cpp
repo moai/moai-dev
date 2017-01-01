@@ -20,14 +20,12 @@ int MOAILuaObject::_gc ( lua_State* L ) {
 	MOAILuaState state ( L );
 	MOAILuaObject* self = ( MOAILuaObject* )state.GetPtrUserData ( 1 );
 	
-	//edgecase: ignore _gc() called by previous Lua Userdata
-	self->mActiveUserdataCount -- ;
+	//edgecase: ignore _gc() called by previous Lua userdata
+	self->mActiveUserdataCount--;
 	if ( self->mActiveUserdataCount > 0 ) return 0;
 	
-	self->mCollected = true;
-	
 	if ( MOAILuaRuntime::IsValid ()) {
-	
+		
 		if ( self->mFinalizer ) {
 			self->mFinalizer.PushRef ( state );
 			if ( state.IsType ( -1, LUA_TFUNCTION )) {
@@ -45,6 +43,8 @@ int MOAILuaObject::_gc ( lua_State* L ) {
 		if ( MOAILuaRuntime::Get ().mReportGC ) {
 			printf ( "GC %s <%p>\n", self->TypeName (), self );
 		}
+		
+		self->mUserdata.Clear ();
 	}
 	
 	if ( self->GetRefCount () == 0 ) {
@@ -228,7 +228,7 @@ void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 	// and take a weak ref back to the userdata	
 	this->mUserdata.SetRef ( state, -1 );
 	assert ( this->mUserdata );
-	this->mActiveUserdataCount ++;
+	this->mActiveUserdataCount++;
 	
 	// NOTE: we have to do this *after* mUserdata has been initialized as LuaRetain calls PushLuaUserdata
 	// which in turn calls BindToLua if there is no mUserdata...
@@ -311,7 +311,7 @@ void MOAILuaObject::LuaRelease ( MOAILuaObject* object ) {
 
 	if ( !object ) return;
 	
-	if (( !this->mCollected ) && MOAILuaRuntime::IsValid ()) {
+	if (( this->IsBound ()) && MOAILuaRuntime::IsValid ()) {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		if ( this->PushRefTable ( state )) {
 			if ( object->PushLuaUserdata ( state )) {
@@ -379,8 +379,7 @@ void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 }
 
 //----------------------------------------------------------------//
-MOAILuaObject::MOAILuaObject ():
-	mCollected ( false ),
+MOAILuaObject::MOAILuaObject () :
 	mActiveUserdataCount ( 0 ) {
 	RTTI_SINGLE ( RTTIBase )
 	
@@ -397,7 +396,7 @@ MOAILuaObject::~MOAILuaObject () {
 		MOAILuaRuntime::Get ().DeregisterObject ( *this );
 		
 		// TODO: change from both patrick's fork and the community branch; double check
-		if (( !this->mCollected ) && this->mUserdata ) {
+		if ( this->IsBound () && this->mUserdata ) {
 			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 			
 			// clear out the gc
@@ -470,7 +469,7 @@ void MOAILuaObject::OnRelease ( u32 refCount ) {
 	// is, then refcount can remain 0 and the object will be
 	// collected by the Lua GC.
 
-	if ( this->mCollected && ( refCount == 0 )) {
+	if (( !this->IsBound ()) && ( refCount == 0 )) {
 		// no Lua binding and no references, so
 		// go ahead and kill this turkey
 		delete this;
@@ -622,9 +621,4 @@ void MOAILuaObject::SetMemberTable ( MOAILuaState& state, int idx ) {
 	
 	this->MakeLuaBinding ( state );
 	state.Pop ( 1 );
-}
-
-//----------------------------------------------------------------//
-bool MOAILuaObject::WasCollected () {
-	return this->mCollected;
 }

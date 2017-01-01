@@ -761,6 +761,8 @@ void MOAILuaRuntime::FindLuaRefs ( lua_State* L, int idx, FILE* file, STLString 
 //----------------------------------------------------------------//
 void MOAILuaRuntime::ForceGarbageCollection () {
 
+	this->PurgeUserdataCache ();
+
 	lua_State* L = this->mState;
 
 	// Make sure that anything that can be collected, is. Note: we collect
