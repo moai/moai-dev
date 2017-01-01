@@ -53,8 +53,8 @@ bool MOAIGfxVertexCache::BeginPrim ( u32 primType, u32 vtxCount, u32 idxCount ) 
 	}
 	
 	// these will get bound later, just before drawing; clear them for now
-	gfxMgr.mGfxState.BindIndexBuffer ();
-	gfxMgr.mGfxState.BindVertexBuffer ();
+	gfxMgr.mGfxState.SetIndexBuffer ();
+	gfxMgr.mGfxState.SetVertexBuffer ();
 	
 	gfxMgr.mGfxState.ApplyStateChanges (); // must happen here in case there needs to be a flush
 
@@ -150,9 +150,9 @@ void MOAIGfxVertexCache::FlushBufferedPrims () {
 		if ( count > 0 ) {
 		
 			if ( this->mUseIdxBuffer ) {
-				gfxMgr.mGfxState.BindIndexBuffer ( this->mIdxBuffer );
+				gfxMgr.mGfxState.SetIndexBuffer ( this->mIdxBuffer );
 			}
-			gfxMgr.mGfxState.BindVertexBuffer ( this->mVtxBuffer );
+			gfxMgr.mGfxState.SetVertexBuffer ( this->mVtxBuffer );
 		
 			gfxMgr.mGfxState.DrawPrims ( this->mPrimType, offset, count );
 		}
@@ -209,12 +209,6 @@ MOAIGfxVertexCache::MOAIGfxVertexCache () :
 
 //----------------------------------------------------------------//
 MOAIGfxVertexCache::~MOAIGfxVertexCache () {
-
-	if ( this->mVtxBuffer ) {
-	
-		delete this->mVtxBuffer;
-		delete this->mIdxBuffer;
-	}
 }
 
 //----------------------------------------------------------------//

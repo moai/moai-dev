@@ -1,28 +1,41 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAISHAREDPTR_H
-#define	MOAISHAREDPTR_H
+#ifndef	ZLWEAKPTR_H
+#define	ZLWEAKPTR_H
 
-#include <moai-core/MOAICanary.h>
+#include <zl-util/ZLRefCountedObject.h>
 
 //================================================================//
-// MOAISharedPtr
+// ZLWeakPtr
 //================================================================//
 template < typename TYPE >
-class MOAISharedPtr {
+class ZLWeakPtr {
 protected:
 
-	TYPE*		mObject;
+	TYPE*							mObject;
+	ZLRefCountedObjectHandle*		mHandle;
 	
 	//----------------------------------------------------------------//
 	inline TYPE* Get () {
-		return this->mObject;
+	
+		if ( this->mHandle ) {
+			if ( this->mHandle->IsValid ()) {
+				return this->mObject;
+			}
+			this->Release ();
+		}
+		return 0;
 	}
 	
 	//----------------------------------------------------------------//
-	inline const TYPE* Get () const {
-		return this->mObject;
+	void Release () {
+	
+		if ( this->mHandle ) {
+			this->mHandle->Release ();
+			this->mObject = 0;
+			this->mHandle = 0;
+		}
 	}
 	
 	//----------------------------------------------------------------//
@@ -30,15 +43,12 @@ protected:
 
 		if ( this->mObject != assign ) {
 
-			if ( this->mObject ) {
-				this->mObject->Release ();
-			}
+			this->Release ();
 
 			if ( assign ) {
-				assign->Retain ();
+				this->mObject = assign;
+				this->mHandle = assign->GetHandle ();
 			}
-			
-			this->mObject = assign;
 		}
 	}
 
@@ -47,73 +57,44 @@ public:
 	//----------------------------------------------------------------//
 	inline operator bool () {
 		return this->Get () != 0;
-	}
-	
-	//----------------------------------------------------------------//
-	inline operator bool () const {
-		return this->Get () != 0;
-	}
+	};
 
 	//----------------------------------------------------------------//
 	inline TYPE& operator * () {
 		return *this->Get ();
-	}
-
-	//----------------------------------------------------------------//
-	inline const TYPE& operator * () const {
-		return *this->Get ();
-	}
+	};
 
 	//----------------------------------------------------------------//
 	inline TYPE* operator -> () {
 		return this->Get ();
-	}
-	
-	//----------------------------------------------------------------//
-	inline const TYPE* operator -> () const {
-		return this->Get ();
-	}
+	};
 
 	//----------------------------------------------------------------//
 	inline operator TYPE* () {
 		return this->Get ();
-	}
-
-	//----------------------------------------------------------------//
-	inline operator const TYPE* () const {
-		return this->Get ();
-	}
+	};
 
 	//----------------------------------------------------------------//
 	inline void operator = ( TYPE* assign ) {
 		this->Set ( assign );
+	};
+
+	//----------------------------------------------------------------//
+	ZLWeakPtr () :
+		mObject ( 0 ),
+		mHandle ( 0 ) {
 	}
 
 	//----------------------------------------------------------------//
-	inline void operator = ( const MOAISharedPtr < TYPE >& assign ) {
-		this->Set ( assign.mObject );
-	}
-
-	//----------------------------------------------------------------//
-	MOAISharedPtr () :
-		mObject ( 0 ) {
-	}
-
-	//----------------------------------------------------------------//
-	MOAISharedPtr ( TYPE* assign ) :
-		mObject ( 0 ) {
+	ZLWeakPtr ( TYPE* assign ) :
+		mObject ( 0 ),
+		mHandle ( 0 ) {
 		this->Set ( assign );
-	}
-
-	//----------------------------------------------------------------//
-	MOAISharedPtr ( const MOAISharedPtr < TYPE >& assign ) :
-		mObject ( 0 ) {
-		this->Set ( assign.mObject );
-	}
+	};
 	
 	//----------------------------------------------------------------//
-	~MOAISharedPtr () {
-		this->Set ( 0 );
+	~ZLWeakPtr () {
+		this->Release ();
 	}
 };
 

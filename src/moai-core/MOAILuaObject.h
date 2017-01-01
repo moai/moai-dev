@@ -5,7 +5,6 @@
 #define	MOAILUAOBJECT_H
 
 #include <moai-core/MOAILuaRef.h>
-#include <moai-core/MOAIObject.h>
 
 class MOAIDeserializer;
 class MOAILuaClass;
@@ -18,7 +17,8 @@ class MOAISerializer;
 // MOAILuaObject
 //================================================================//
 class MOAILuaObject :
-	public virtual MOAIObject {
+	public virtual RTTIBase,
+	public virtual ZLRefCountedObject {
 private:
 
 	u32						mActiveUserdataCount;

@@ -54,13 +54,13 @@ void ZLGfxLogger::BindRenderbuffer ( ZLGfxHandle* handle ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::BindTexture ( ZLGfxHandle* handle ) {
+void ZLGfxLogger::SetTexture ( ZLGfxHandle* handle ) {
 
 	this->PrintLine ( "glBindTexture - handle: %d\n", DEREF_HANDLE ( handle ));
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::BindVertexArray ( ZLGfxHandle* handle ) {
+void ZLGfxLogger::SetVertexArray ( ZLGfxHandle* handle ) {
 
 	this->PrintLine ( "glBindVertexArray - handle: %d\n", DEREF_HANDLE ( handle ));
 }

@@ -26,14 +26,14 @@ private:
 		UNKNOWN,
 	};
 	
-	ZLGfxListenerHandle*	mListenerHandle;
-	void*					mUserdata;
+	ZLWeakPtr < ZLGfxListener >		mListener;
+	void*							mUserdata;
 	
-	u32						mCallbackID;
-	u32						mEvent;
-	u32						mUniformAddr;
+	u32								mCallbackID;
+	u32								mEvent;
+	u32								mUniformAddr;
 	
-	ZLCopyOnWrite			mCopyOnWrite;
+	ZLCopyOnWrite					mCopyOnWrite;
 
 public:
 
@@ -121,8 +121,8 @@ private:
 	ZLMemStream		mMemStream;
 	ZLStream*		mStream;
 
-	ZLLeanStack < ZLRefCountedObject*, 32 >				mReleaseStack;
-	ZLLeanStack < ZLGfxListenerRecord, 32 >				mListenerRecords;
+	ZLLeanStack < ZLRefCountedObject*, 32 >			mReleaseStack;
+	ZLLeanStack < ZLGfxListenerRecord, 32 >			mListenerRecords;
 
 	//----------------------------------------------------------------//
 	ZLGfxHandle*			Create						( ZLGfxHandle* handle, u32 param );
@@ -146,8 +146,8 @@ public:
 	void					BindBuffer					( u32 target, ZLGfxHandle* handle );
 	void					BindFramebuffer				( u32 target, ZLGfxHandle* handle );
 	void					BindRenderbuffer			( ZLGfxHandle* handle );
-	void					BindTexture					( ZLGfxHandle* handle );
-	void					BindVertexArray				( ZLGfxHandle* handle );
+	void					SetTexture					( ZLGfxHandle* handle );
+	void					SetVertexArray				( ZLGfxHandle* handle );
 	
 	void					BlendFunc					( u32 sourceFactor, u32 destFactor );
 	void					BlendMode					( u32 mode );

@@ -341,7 +341,7 @@ void MOAILuaObject::LuaRelease ( MOAILuaObject* object ) {
 	}
 	
 	// this will take the ref count to zero, but if the object hasn't been collected it *won't* get deleted
-	// thanks to the override of MOAIObject OnRelease ()
+	// thanks to the override of ZLRefCountedObject::OnRelease ()
 	object->Release ();
 }
 

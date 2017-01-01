@@ -39,9 +39,6 @@ protected:
 
 	bool						mIsDrawing;
 	
-	MOAIVertexBuffer*			mVtxBuffer;
-	MOAIIndexBuffer*			mIdxBuffer;
-	
 	u32							mVtxBase; // offsets the vertex in drawprims *or* the index when writing indexed prims
 	u32							mIdxBase; // this is the offset to the first index for the next call to draw prims
 	
@@ -60,6 +57,9 @@ protected:
 
 	ZLColorVec					mVertexColor;
 	u32							mVertexColor32;
+	
+	ZLStrongPtr < MOAIVertexBuffer >		mVtxBuffer;
+	ZLStrongPtr < MOAIIndexBuffer >		mIdxBuffer;
 	
 	//----------------------------------------------------------------//
 	void			OnGfxStateWillChange			();

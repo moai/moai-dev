@@ -57,8 +57,6 @@ void MOAIImageLoadTask::Init ( MOAIDataBuffer& data, MOAIImage& target, u32 tran
 MOAIImageLoadTask::MOAIImageLoadTask () :
 	mDataBuffer ( 0 ),
 	mTarget ( 0 ) {
-	
-	RTTI_SINGLE ( MOAITask )
 }
 
 //----------------------------------------------------------------//

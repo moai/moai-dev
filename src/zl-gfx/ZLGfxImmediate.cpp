@@ -63,14 +63,14 @@ void ZLGfxImmediate::BindRenderbuffer ( ZLGfxHandle* handle ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::BindTexture ( ZLGfxHandle* handle ) {
+void ZLGfxImmediate::SetTexture ( ZLGfxHandle* handle ) {
 
 	glBindTexture ( GL_TEXTURE_2D, handle ? handle->mGLID : 0 );
 	GL_LOG_ERRORS ( "glBindTexture" )
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::BindVertexArray ( ZLGfxHandle* handle ) {
+void ZLGfxImmediate::SetVertexArray ( ZLGfxHandle* handle ) {
 
 	#if defined( MOAI_OS_ANDROID ) || defined( MOAI_OS_HTML )
 		return;

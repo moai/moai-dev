@@ -9,7 +9,8 @@
 #include <zl-util/ZLMatrix3x3.h>
 #include <zl-util/ZLMatrix4x4.h>
 #include <zl-util/ZLRefCountedObject.h>
-#include <zl-util/ZLSharedHandle.h>
+#include <zl-util/ZLSharedBuffer.h>
+#include <zl-util/ZLWeakPtr.h>
 
 class ZLCopyOnWrite;
 
@@ -69,7 +70,7 @@ public:
 // ZLGfxListener
 //================================================================//
 class ZLGfxListener :
-	public ZLSharedHandleTarget < ZLGfxListener > {
+	public ZLRefCountedObject {
 private:
 
 	GET ( ZLGfxListener*, HandleTarget, this )
@@ -84,7 +85,7 @@ public:
 	virtual					~ZLGfxListener			();
 };
 
-typedef ZLSharedHandle < ZLGfxListener > ZLGfxListenerHandle;
+typedef ZLWeakPtr < ZLGfxListener > ZLGfxListenerHandle;
 
 //================================================================//
 // ZLGfx
@@ -111,8 +112,8 @@ public:
 	virtual void					BindBuffer					( u32 target, ZLGfxHandle* buffer ) = 0;
 	virtual void					BindFramebuffer				( u32 target, ZLGfxHandle* frameBuffer ) = 0;
 	virtual void					BindRenderbuffer			( ZLGfxHandle* renderbuffer ) = 0;
-	virtual void					BindTexture					( ZLGfxHandle* texID ) = 0;
-	virtual void					BindVertexArray				( ZLGfxHandle* vertexArrayID ) = 0;
+	virtual void					SetTexture					( ZLGfxHandle* texID ) = 0;
+	virtual void					SetVertexArray				( ZLGfxHandle* vertexArrayID ) = 0;
 	
 	virtual void					BlendFunc					( u32 sourceFactor, u32 destFactor ) = 0;
 	virtual void					BlendMode					( u32 mode ) = 0;

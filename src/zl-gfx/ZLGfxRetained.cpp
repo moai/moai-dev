@@ -13,7 +13,6 @@
 
 //----------------------------------------------------------------//
 ZLGfxListenerRecord::ZLGfxListenerRecord () :
-	mListenerHandle ( 0 ),
 	mUserdata ( 0 ),
 	mCallbackID ( UNKNOWN ),
 	mEvent ( 0 ),
@@ -92,7 +91,7 @@ void ZLGfxRetained::BindRenderbuffer ( ZLGfxHandle* handle ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::BindTexture ( ZLGfxHandle* handle ) {
+void ZLGfxRetained::SetTexture ( ZLGfxHandle* handle ) {
 
 	assert ( this->mStream );
 
@@ -101,7 +100,7 @@ void ZLGfxRetained::BindTexture ( ZLGfxHandle* handle ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::BindVertexArray ( ZLGfxHandle* handle ) {
+void ZLGfxRetained::SetVertexArray ( ZLGfxHandle* handle ) {
 
 	assert ( this->mStream );
 
@@ -392,14 +391,14 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			}
 			case ZLGFX_BIND_TEXTURE: {
 			
-				draw.BindTexture (
+				draw.SetTexture (
 					this->mStream->Read < ZLGfxHandle* >( 0 )
 				);
 				break;
 			}
 			case ZLGFX_BIND_VERTEX_ARRAY: {
 			
-				draw.BindVertexArray (
+				draw.SetVertexArray (
 					this->mStream->Read < ZLGfxHandle* >( 0 )
 				);
 				break;
@@ -1072,7 +1071,7 @@ void ZLGfxRetained::PublishEvents () {
 	
 		ZLGfxListenerRecord& record = this->mListenerRecords [ i ];
 		
-		ZLGfxListener* listener = record.mListenerHandle->GetTarget ();
+		ZLGfxListener* listener = record.mListener;
 		if ( listener ) {
 		
 			switch ( record.mCallbackID ) {
@@ -1157,14 +1156,18 @@ void ZLGfxRetained::Reset () {
 
 	assert ( this->mStream );
 
-	if ( this->mListenerRecords.GetTop () > 0 ) {
+	size_t totalListeners = this->mListenerRecords.GetTop ();
+	if ( totalListeners > 0 ) {
+	
 		this->Abandon ();
-		this->mListenerRecords.Reset ();
+		
+		for ( size_t i = 0; i < totalListeners; ++i ) {
+			this->mListenerRecords [ i ].mListener = 0;
+		}
 	}
+	this->mListenerRecords.Reset ();
 
 	this->mStream->Seek ( 0, SEEK_SET );
-	
-	this->mListenerRecords.Reset ();
 	
 	while ( this->mReleaseStack.GetTop ()) {
 		ZLRefCountedObject* object = this->mReleaseStack.Pop ();
@@ -1325,14 +1328,11 @@ void ZLGfxRetained::Viewport ( s32 x, s32 y, u32 w, u32 h ) {
 
 //----------------------------------------------------------------//
 ZLGfxListenerRecord& ZLGfxRetained::WriteListenerRecord ( ZLGfxListener* listener, void* userdata ) {
-
-	ZLGfxListenerHandle* listenerHandle = listener->GetRetainedHandle ();
-	this->mReleaseStack.Push ( listenerHandle );
 	
 	u32 idx = ( u32 )this->mListenerRecords.GetTop ();
 	ZLGfxListenerRecord& record = this->mListenerRecords.Push ();
 
-	record.mListenerHandle		= listenerHandle;
+	record.mListener			= listener;
 	record.mUserdata			= userdata;
 	record.mCallbackID			= ZLGfxListenerRecord::UNKNOWN;
 	record.mEvent				= 0;

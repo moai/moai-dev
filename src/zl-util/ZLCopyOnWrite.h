@@ -5,6 +5,7 @@
 #define ZLCOPYONWRITE_H
 
 #include <zl-util/ZLRefCountedObject.h>
+#include <zl-util/ZLSharedBuffer.h>
 #include <zl-util/ZLStream.h>
 
 //================================================================//

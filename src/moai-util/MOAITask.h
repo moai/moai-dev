@@ -13,7 +13,7 @@ class MOAITaskSubscriber;
 // MOAITask
 //================================================================//
 class MOAITask :
-	public virtual MOAIObject {
+	public virtual ZLRefCountedObject {
 private:
 
 	friend class MOAITaskSubscriber;

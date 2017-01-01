@@ -125,7 +125,7 @@ void MOAIVertexArray::OnGPUBind () {
 	if ( this->mUseVAOs && this->mVAOs.Size ()) {
 	
 		ZLGfxHandle* vao = this->mVAOs [ this->mCurrentVAO ];
-		MOAIGfxMgr::GetDrawingAPI ().BindVertexArray ( vao );
+		MOAIGfxMgr::GetDrawingAPI ().SetVertexArray ( vao );
 	}
 	else {
 		this->BindVertexArrayItems ();
@@ -170,7 +170,7 @@ void MOAIVertexArray::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 void MOAIVertexArray::OnGPUUnbind () {
 
 	if ( this->mUseVAOs ) {
-		MOAIGfxMgr::GetDrawingAPI ().BindVertexArray ( 0 );
+		MOAIGfxMgr::GetDrawingAPI ().SetVertexArray ( 0 );
 	}
 	else {
 		this->UnbindVertexArrayItems ();
@@ -188,9 +188,9 @@ bool MOAIVertexArray::OnGPUUpdate () {
 	
 	if ( vao ) {
 		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-		gfx.BindVertexArray ( vao );
+		gfx.SetVertexArray ( vao );
 		this->BindVertexArrayItems ();
-		gfx.BindVertexArray ( 0 );
+		gfx.SetVertexArray ( 0 );
 		return true;
 	}
 	return false;

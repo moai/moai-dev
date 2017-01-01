@@ -231,7 +231,7 @@ void MOAIDraw::EndDrawString () {
 	//glGetIntegerv ( GL_BLEND_DST, &orgDestBlend );
 
 	// Apply render state
-	if ( !gfxMgr.mGfxState.BindShader ( MOAIShaderMgr::FONT_SHADER )) return;
+	if ( !gfxMgr.mGfxState.SetShader ( MOAIShaderMgr::FONT_SHADER )) return;
 	
 	gfxMgr.mGfxState.SetBlendMode ( ZGL_BLEND_FACTOR_ONE, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
 	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_MTX ));
@@ -299,7 +299,7 @@ int MOAIDraw::_bindFrameBuffer ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 	
-	MOAIGfxMgr::Get ().mGfxState.BindFrameBuffer ( state.GetLuaObject < MOAIFrameBuffer >( 1, false ));
+	MOAIGfxMgr::Get ().mGfxState.SetFrameBuffer ( state.GetLuaObject < MOAIFrameBuffer >( 1, false ));
 	return 0;
 }
 
@@ -309,7 +309,7 @@ int MOAIDraw::_bindIndexBuffer ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 	
-	MOAIGfxMgr::Get ().mGfxState.BindIndexBuffer ( state.GetLuaObject < MOAIIndexBuffer >( 1, false ));
+	MOAIGfxMgr::Get ().mGfxState.SetIndexBuffer ( state.GetLuaObject < MOAIIndexBuffer >( 1, false ));
 	return 0;
 }
 
@@ -322,15 +322,15 @@ int MOAIDraw::_bindShader ( lua_State* L ) {
 	switch ( lua_type ( state, 1 )) {
 	
 		case LUA_TUSERDATA:
-			MOAIGfxMgr::Get ().mGfxState.BindShader ( state.GetLuaObject < MOAIShader >( 1, true ));
+			MOAIGfxMgr::Get ().mGfxState.SetShader ( state.GetLuaObject < MOAIShader >( 1, true ));
 			break;
 		
 		case LUA_TNUMBER:
-			MOAIGfxMgr::Get ().mGfxState.BindShader (( MOAIShaderMgr::Preset )state.GetValue < u32 >( 1, MOAIShaderMgr::LINE_SHADER ));
+			MOAIGfxMgr::Get ().mGfxState.SetShader (( MOAIShaderMgr::Preset )state.GetValue < u32 >( 1, MOAIShaderMgr::LINE_SHADER ));
 			break;
 		
 		default:
-			MOAIGfxMgr::Get ().mGfxState.BindShader ();
+			MOAIGfxMgr::Get ().mGfxState.SetShader ();
 	}
 	return 0;
 }
@@ -341,7 +341,7 @@ int MOAIDraw::_bindTexture ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 	
-	MOAIGfxMgr::Get ().mGfxState.BindTexture ( state.GetLuaObject < MOAITexture >( 1, false ));
+	MOAIGfxMgr::Get ().mGfxState.SetTexture ( state.GetLuaObject < MOAITexture >( 1, false ));
 	return 0;
 }
 
@@ -351,7 +351,7 @@ int MOAIDraw::_bindVertexArray ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 	
-	MOAIGfxMgr::Get ().mGfxState.BindVertexArray ( state.GetLuaObject < MOAIVertexArray >( 1, false ));
+	MOAIGfxMgr::Get ().mGfxState.SetVertexArray ( state.GetLuaObject < MOAIVertexArray >( 1, false ));
 	return 0;
 }
 
@@ -361,7 +361,7 @@ int MOAIDraw::_bindVertexBuffer ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 	
-	MOAIGfxMgr::Get ().mGfxState.BindVertexBuffer ( state.GetLuaObject < MOAIVertexBuffer >( 1, false ));
+	MOAIGfxMgr::Get ().mGfxState.SetVertexBuffer ( state.GetLuaObject < MOAIVertexBuffer >( 1, false ));
 	return 0;
 }
 
@@ -1143,8 +1143,8 @@ bool MOAIDraw::Bind () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
-	if ( !gfxMgr.mGfxState.BindTexture ()) return false;
-	if ( !gfxMgr.mGfxState.BindShader ( MOAIShaderMgr::LINE_SHADER )) return false;
+	if ( !gfxMgr.mGfxState.SetTexture ()) return false;
+	if ( !gfxMgr.mGfxState.SetShader ( MOAIShaderMgr::LINE_SHADER )) return false;
 	gfxMgr.mGfxState.SetVertexFormat ( MOAIVertexFormatMgr::XYZWC );
 	
 	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
@@ -1727,8 +1727,8 @@ void MOAIDraw::DrawTexture ( float left, float top, float right, float bottom, M
 	if ( texture ) {
 
 //		gfxMgr.SetBlendMode ( ZGL_BLEND_FACTOR_ONE, ZGL_BLEND_FACTOR_ZERO );
-		if ( !gfxMgr.mGfxState.BindTexture ( texture )) return;
-		if ( !gfxMgr.mGfxState.BindShader ( MOAIShaderMgr::DECK2D_SHADER )) return;
+		if ( !gfxMgr.mGfxState.SetTexture ( texture )) return;
+		if ( !gfxMgr.mGfxState.SetShader ( MOAIShaderMgr::DECK2D_SHADER )) return;
 
 		const ZLColorVec& orgColor = gfxMgr.mGfxState.GetPenColor ();
 		gfxMgr.mGfxState.SetPenColor ( 1, 1, 1, 1 );

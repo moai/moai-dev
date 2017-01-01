@@ -135,16 +135,13 @@ ZLContext* ZLContextMgr::Create () {
 	sInstance.Set ( globals );
 	
 	ZLLog::Affirm ();
-	ZLLog_DebugF ( ZLLog::CONSOLE, "ZLContextMgr: new context %p\n", globals );
 
 	return globals;
 }
 
 //----------------------------------------------------------------//
 void ZLContextMgr::Delete ( ZLContext* globals ) {
-	
-	ZLLog_DebugF ( ZLLog::CONSOLE, "ZLContextMgr: deleting context %p\n", globals );
-	
+		
 	GlobalsSet* globalSet = sGlobalsSet.Get ();
 	ZLContext* prevInstance = sInstance.Get ();
 	

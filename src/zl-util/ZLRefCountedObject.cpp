@@ -2,42 +2,71 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <math.h>
 
 #include <zl-util/ZLRefCountedObject.h>
+
+//================================================================//
+// ZLRefCountedObjectHandle
+//================================================================//
+
+//----------------------------------------------------------------//
+ZLRefCountedObject* ZLRefCountedObjectHandle::GetObject () {
+
+	return this->mObject;
+}
+
+//----------------------------------------------------------------//
+bool ZLRefCountedObjectHandle::IsValid () {
+
+	return ( this->mObject != 0 );
+}
+
+//----------------------------------------------------------------//
+ZLRefCountedObjectHandle::ZLRefCountedObjectHandle () :
+	mObject ( 0 ) {
+}
+
+//----------------------------------------------------------------//
+ZLRefCountedObjectHandle::~ZLRefCountedObjectHandle () {
+
+	if ( this->mObject ) {
+		this->mObject->mHandle = 0;
+	}
+}
 
 //================================================================//
 // ZLRefCountedObject
 //================================================================//
 
 //----------------------------------------------------------------//
-void ZLRefCountedObject::Delete () {
+void ZLRefCountedObject::Abandon () {
 
-	delete ( this );
-}
-
-//----------------------------------------------------------------//
-void ZLRefCountedObject::Release () {
-
-	if ( this->mRefCount > 0 ) {
-		this->mRefCount--;
-	}
-	
-	if ( this->mRefCount == 0 ) {
-		this->Delete ();
+	if ( this->mHandle ) {
+		this->mHandle->mObject = 0;
 	}
 }
 
 //----------------------------------------------------------------//
-void ZLRefCountedObject::Retain () {
+ZLRefCountedObjectHandle* ZLRefCountedObject::GetHandle () {
 
-	this->mRefCount++;
+	if ( !this->mHandle ) {
+		this->mHandle = new ZLRefCountedObjectHandle ();
+		this->mHandle->mObject = this;
+	}
+	else {
+		this->mHandle->Retain ();
+	}
+	return this->mHandle;
 }
 
 //----------------------------------------------------------------//
 ZLRefCountedObject::ZLRefCountedObject () :
-	mRefCount ( 0 ) {
+	mHandle ( 0 ) {
 }
 
 //----------------------------------------------------------------//
 ZLRefCountedObject::~ZLRefCountedObject () {
+
+	this->Abandon ();
 }

@@ -33,8 +33,8 @@ public:
 	void					BindBuffer					( u32 target, ZLGfxHandle* handle );
 	void					BindFramebuffer				( u32 target, ZLGfxHandle* handle );
 	void					BindRenderbuffer			( ZLGfxHandle* handle );
-	void					BindTexture					( ZLGfxHandle* handle );
-	void					BindVertexArray				( ZLGfxHandle* handle );
+	void					SetTexture					( ZLGfxHandle* handle );
+	void					SetVertexArray				( ZLGfxHandle* handle );
 	
 	void					BlendFunc					( u32 sourceFactor, u32 destFactor );
 	void					BlendMode					( u32 mode );

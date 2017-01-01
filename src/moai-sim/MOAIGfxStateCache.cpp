@@ -122,12 +122,12 @@ void MOAIGfxStateCache::ApplyStateChange ( u32 stateID ) {
 
 		case FRAME_BUFFER:
 		
-			this->BindFrameBuffer ( this->mPendingState.mFrameBuffer );
+			this->SetFrameBuffer ( this->mPendingState.mFrameBuffer );
 			break;
 		
 		case INDEX_BUFFER:
 		
-			this->BindIndexBuffer ( this->mPendingState.mIdxBuffer );
+			this->SetIndexBuffer ( this->mPendingState.mIdxBuffer );
 			break;
 		
 		case PEN_WIDTH:
@@ -147,23 +147,23 @@ void MOAIGfxStateCache::ApplyStateChange ( u32 stateID ) {
 		
 		case SHADER:
 		
-			this->BindShader ( this->mPendingState.mShader );
+			this->SetShader ( this->mPendingState.mShader );
 			break;
 		
 		case TEXTURE:
 		
-			this->BindTexture ( this->mPendingState.mTextureSet );
+			this->SetTexture ( this->mPendingState.mTextureSet );
 			break;
 		
 		case VERTEX_ARRAY:
 		
-			this->BindVertexArray ( this->mPendingState.mVtxArray );
+			this->SetVertexArray ( this->mPendingState.mVtxArray );
 			break;
 		
 		case VERTEX_BUFFER:
 			
 			this->mActiveState.mVtxFormat = this->mPendingState.mVtxFormat;
-			this->BindVertexBuffer ( this->mPendingState.mVtxBuffer );
+			this->SetVertexBuffer ( this->mPendingState.mVtxBuffer );
 			break;
 		
 		case VERTEX_FORMAT:
@@ -200,288 +200,6 @@ void MOAIGfxStateCache::ApplyStateChanges () {
 		this->mCurrentState = &this->mPendingState;
 		this->ResumeChanges ();
 	}
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxStateCache::BindFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
-
-	if ( this->mApplyingStateChanges ) {
-	
-		MOAIGfxState& active = this->mActiveState;
-
-		if ( active.mFrameBuffer != frameBuffer ) {
-			
-			DEBUG_LOG ( "  binding frame buffer: %p\n", frameBuffer );
-			
-			this->GfxStateWillChange ();
-			
-			MOAIGfxMgr::GetDrawingAPI ().BindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, frameBuffer->mGLFrameBufferID );
-			active.mFrameBuffer = frameBuffer;
-		}
-	}
-	else {
-
-		frameBuffer = frameBuffer ? frameBuffer : this->mDefaultFrameBuffer;
-		this->mPendingState.mFrameBuffer = frameBuffer;
-		this->mDirtyFlags = ( this->mActiveState.mFrameBuffer == frameBuffer ) ? ( this->mDirtyFlags & ~FRAME_BUFFER ) : ( this->mDirtyFlags | FRAME_BUFFER );
-	}
-	
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxStateCache::BindIndexBuffer ( MOAIIndexBuffer* buffer ) {
-	
-	if ( this->mApplyingStateChanges ) {
-	
-		MOAIGfxState& active = this->mActiveState;
-		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-		
-		ZLSharedConstBuffer* bufferForBind = buffer ? buffer->GetBufferForBind ( gfx ) : 0;
-	
-		if (( active.mIdxBuffer != buffer ) || ( this->mBoundIdxBuffer != bufferForBind )) {
-		
-			this->GfxStateWillChange ();
-		
-			DEBUG_LOG ( "  binding index buffer: %p\n", buffer );
-			
-			if ( active.mIdxBuffer ) {
-				active.mIdxBuffer->Unbind ();
-			}
-			
-			active.mIdxBuffer = buffer;
-			this->mBoundIdxBuffer = 0;
-			
-			if ( buffer ) {
-				buffer->Bind ();
-				this->mBoundIdxBuffer = bufferForBind;
-			}
-		}
-	}
-	else {
-	
-		this->mPendingState.mIdxBuffer = buffer;
-		this->mDirtyFlags = ( this->mActiveState.mIdxBuffer == buffer ) ? ( this->mDirtyFlags & ~INDEX_BUFFER ) : ( this->mDirtyFlags | INDEX_BUFFER );
-	}
-
-	return buffer ? buffer->IsReady () : true;
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxStateCache::BindShader ( MOAIShaderMgr::Preset preset ) {
-
-	return this->BindShader ( MOAIShaderMgr::Get ().GetShader ( preset ));
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxStateCache::BindShader ( MOAIShader* shader ) {
-
-	MOAIShaderProgram* program = shader ? shader->GetProgram () : 0;
-
-	if ( this->mApplyingStateChanges ) {
-	
-		MOAIGfxState& active = this->mActiveState;
-	
-		if (( active.mShaderProgram != program ) || ( active.mShader != shader )) {
-			this->GfxStateWillChange ();
-		}
-	
-		if ( active.mShaderProgram != program ) {
-
-			DEBUG_LOG ( "  binding shader program: %p\n", program );
-			
-			if ( active.mShaderProgram ) {
-				active.mShaderProgram->Unbind ();
-			}
-			
-			active.mShaderProgram = program;
-			
-			if ( program ) {
-				program->Bind ();
-			}
-		}
-
-		active.mShader = shader;
-	}
-	else {
-	
-		this->mPendingState.mShader = shader;
-		this->mPendingState.mShaderProgram = program;
-		this->mDirtyFlags = (( this->mActiveState.mShader == shader ) && ( this->mActiveState.mShaderProgram == program )) ? ( this->mDirtyFlags & ~SHADER ) : ( this->mDirtyFlags | SHADER );
-	}
-	
-	return program ? program->IsReady () : true;
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxStateCache::BindTexture ( MOAITextureBase* textureSet ) {
-
-	if ( this->mApplyingStateChanges ) {
-	
-		MOAIGfxState& active = this->mActiveState;
-		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-	
-		if ( active.mTextureSet != textureSet ) {
-
-			this->GfxStateWillChange ();
-
-			DEBUG_LOG ( "  binding texture set: %p\n", textureSet );
-
-			active.mTextureSet = textureSet;
-
-			u32 unitsEnabled = 0;
-
-			if ( textureSet ) {
-
-				unitsEnabled = textureSet->CountActiveUnits ();
-				
-				// bind or unbind textues depending on state of texture set
-				for ( u32 i = 0; i < unitsEnabled; ++i ) {
-					
-					MOAISingleTexture* currentTexture = this->mTextureUnits [ i ];
-					MOAISingleTexture* bindTexture = textureSet->GetTextureForUnit ( i );
-				
-					if ( bindTexture && ( !bindTexture->IsReady ())) {
-						bindTexture = this->mDefaultTexture;
-					}
-					
-					if ( currentTexture != bindTexture ) {
-						
-						gfx.ActiveTexture ( i );
-						
-						if ( currentTexture ) {
-							currentTexture->Unbind ();
-						}
-						
-						this->mTextureUnits [ i ] = bindTexture;
-						
-						if ( bindTexture ) {
-							DEBUG_LOG ( "    binding texture: %d %p\n", i, bindTexture );
-							bindTexture->Bind ();
-						}
-					}
-				}
-			}
-			
-			// unbind/disable any excess textures
-			for ( u32 i = unitsEnabled; i < this->mActiveTextures; ++i ) {
-			
-				MOAISingleTexture* currentTexture = this->mTextureUnits [ i ];
-			
-				if ( currentTexture ) {
-					gfx.ActiveTexture ( i );
-					currentTexture->Unbind ();
-					this->mTextureUnits [ i ] = 0;
-				}
-			}
-
-			this->mActiveTextures = unitsEnabled;
-			gfx.ActiveTexture ( 0 );
-		}
-	
-	}
-	else {
-
-		this->mPendingState.mTextureSet = textureSet;
-		this->mDirtyFlags = ( this->mActiveState.mTextureSet == textureSet ) ? ( this->mDirtyFlags & ~TEXTURE ) : ( this->mDirtyFlags | TEXTURE );
-	}
-	
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxStateCache::BindVertexArray ( MOAIVertexArray* vtxArray ) {
-
-	if ( this->mApplyingStateChanges ) {
-		
-		MOAIGfxState& active = this->mActiveState;
-		
-		if ( active.mVtxArray != vtxArray ) {
-	
-			this->GfxStateWillChange ();
-	
-			DEBUG_LOG ( "  binding vertex array: %p\n", vtxArray );
-	
-			if ( active.mVtxArray ) {
-				active.mVtxArray->Unbind ();
-			}
-			
-			active.mVtxArray = vtxArray;
-			
-			if ( vtxArray ) {
-								
-				this->BindVertexBuffer (); // force the unbind in case it hasn't happened yet
-			
-				vtxArray->Bind ();
-			}
-		}
-	}
-	else {
-
-		if ( vtxArray ) {
-			this->mPendingState.mVtxBuffer = 0;
-			this->mPendingState.mVtxFormat = 0;
-			this->mDirtyFlags &= ~VERTEX_BUFFER;
-		}
-
-		this->mPendingState.mVtxArray = vtxArray;
-		this->mDirtyFlags = ( this->mActiveState.mVtxArray == vtxArray ) ? ( this->mDirtyFlags & ~VERTEX_ARRAY ) : ( this->mDirtyFlags | VERTEX_ARRAY );
-	}
-	return vtxArray ? vtxArray->IsReady () : true;
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxStateCache::BindVertexBuffer ( MOAIVertexBuffer* buffer ) {
-
-	if ( this->mApplyingStateChanges ) {
-	
-		MOAIGfxState& active = this->mActiveState;
-		
-		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-		
-		ZLSharedConstBuffer* bufferForBind = buffer ? buffer->GetBufferForBind ( gfx ) : 0;
-		
-		MOAIVertexFormat* format = active.mVtxFormat;
-		
-		if (( active.mVtxBuffer != buffer ) || ( this->mBoundVtxBuffer != bufferForBind )) {
-
-			this->GfxStateWillChange ();
-
-			DEBUG_LOG ( "  binding vertex buffer: (%p)\n", buffer );
-
-			if ( active.mVtxBuffer ) {
-				assert ( active.mVtxFormat );
-				active.mVtxFormat->Unbind ();
-			}
-			
-			active.mVtxBuffer = 0;
-			this->mBoundVtxBuffer = 0;
-			
-			if ( format && buffer ) {
-				
-				this->BindVertexArray (); // force the unbind in case it hasn't happened yet
-				
-				buffer->Bind ();
-				format->Bind ( bufferForBind );
-				buffer->Unbind ();
-				
-				active.mVtxBuffer = buffer;
-				this->mBoundVtxBuffer = bufferForBind;
-			}
-		}
-	}
-	else {
-	
-		if ( buffer ) {
-			this->mPendingState.mVtxArray = 0;
-			this->mDirtyFlags &= ~VERTEX_ARRAY;
-		}
-	
-		this->mPendingState.mVtxBuffer = buffer;
-		this->mDirtyFlags = ( this->mActiveState.mVtxBuffer == buffer ) ? ( this->mDirtyFlags & ~VERTEX_BUFFER ) : ( this->mDirtyFlags | VERTEX_BUFFER );
-	}
-	
-	return buffer ? buffer->IsReady () : true;
 }
 
 //----------------------------------------------------------------//
@@ -692,7 +410,7 @@ void MOAIGfxStateCache::ResetState () {
 	// TODO: seems like overkill
 	for ( size_t i = 0; i < this->mTextureUnits.Size (); ++i ){
 		gfx.ActiveTexture (( u32 )i );
-		gfx.BindTexture ( 0 );
+		gfx.SetTexture ( 0 );
 		this->mTextureUnits [ i ] = 0;
 	}
 	this->mActiveTextures = 0;
@@ -926,6 +644,71 @@ void MOAIGfxStateCache::SetDepthMask ( bool depthMask ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIGfxStateCache::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
+
+	if ( this->mApplyingStateChanges ) {
+	
+		MOAIGfxState& active = this->mActiveState;
+
+		if ( active.mFrameBuffer != frameBuffer ) {
+			
+			DEBUG_LOG ( "  binding frame buffer: %p\n", frameBuffer );
+			
+			this->GfxStateWillChange ();
+			
+			MOAIGfxMgr::GetDrawingAPI ().BindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, frameBuffer->mGLFrameBufferID );
+			active.mFrameBuffer = frameBuffer;
+		}
+	}
+	else {
+
+		frameBuffer = frameBuffer ? frameBuffer : this->mDefaultFrameBuffer;
+		this->mPendingState.mFrameBuffer = frameBuffer;
+		this->mDirtyFlags = ( this->mActiveState.mFrameBuffer == frameBuffer ) ? ( this->mDirtyFlags & ~FRAME_BUFFER ) : ( this->mDirtyFlags | FRAME_BUFFER );
+	}
+	
+	return true;
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxStateCache::SetIndexBuffer ( MOAIIndexBuffer* buffer ) {
+	
+	if ( this->mApplyingStateChanges ) {
+	
+		MOAIGfxState& active = this->mActiveState;
+		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+		
+		ZLSharedConstBuffer* bufferForBind = buffer ? buffer->GetBufferForBind ( gfx ) : 0;
+	
+		if (( active.mIdxBuffer != buffer ) || ( this->mBoundIdxBuffer != bufferForBind )) {
+		
+			this->GfxStateWillChange ();
+		
+			DEBUG_LOG ( "  binding index buffer: %p\n", buffer );
+			
+			if ( active.mIdxBuffer ) {
+				active.mIdxBuffer->Unbind ();
+			}
+			
+			active.mIdxBuffer = buffer;
+			this->mBoundIdxBuffer = 0;
+			
+			if ( buffer ) {
+				buffer->Bind ();
+				this->mBoundIdxBuffer = bufferForBind;
+			}
+		}
+	}
+	else {
+	
+		this->mPendingState.mIdxBuffer = buffer;
+		this->mDirtyFlags = ( this->mActiveState.mIdxBuffer == buffer ) ? ( this->mDirtyFlags & ~INDEX_BUFFER ) : ( this->mDirtyFlags | INDEX_BUFFER );
+	}
+
+	return buffer ? buffer->IsReady () : true;
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxStateCache::SetPenWidth ( float penWidth ) {
 
 	if ( this->mApplyingStateChanges ) {
@@ -1026,6 +809,223 @@ void MOAIGfxStateCache::SetScissorRect ( ZLRect rect ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIGfxStateCache::SetShader ( MOAIShaderMgr::Preset preset ) {
+
+	return this->SetShader ( MOAIShaderMgr::Get ().GetShader ( preset ));
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxStateCache::SetShader ( MOAIShader* shader ) {
+
+	MOAIShaderProgram* program = shader ? shader->GetProgram () : 0;
+
+	if ( this->mApplyingStateChanges ) {
+	
+		MOAIGfxState& active = this->mActiveState;
+	
+		if (( active.mShaderProgram != program ) || ( active.mShader != shader )) {
+			this->GfxStateWillChange ();
+		}
+	
+		if ( active.mShaderProgram != program ) {
+
+			DEBUG_LOG ( "  binding shader program: %p\n", program );
+			
+			if ( active.mShaderProgram ) {
+				active.mShaderProgram->Unbind ();
+			}
+			
+			active.mShaderProgram = program;
+			
+			if ( program ) {
+				program->Bind ();
+			}
+		}
+
+		active.mShader = shader;
+	}
+	else {
+	
+		this->mPendingState.mShader = shader;
+		this->mPendingState.mShaderProgram = program;
+		this->mDirtyFlags = (( this->mActiveState.mShader == shader ) && ( this->mActiveState.mShaderProgram == program )) ? ( this->mDirtyFlags & ~SHADER ) : ( this->mDirtyFlags | SHADER );
+	}
+	
+	return program ? program->IsReady () : true;
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxStateCache::SetTexture ( MOAITextureBase* textureSet ) {
+
+	if ( this->mApplyingStateChanges ) {
+	
+		MOAIGfxState& active = this->mActiveState;
+		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+	
+		if ( active.mTextureSet != textureSet ) {
+
+			this->GfxStateWillChange ();
+
+			DEBUG_LOG ( "  binding texture set: %p\n", textureSet );
+
+			active.mTextureSet = textureSet;
+
+			u32 unitsEnabled = 0;
+
+			if ( textureSet ) {
+
+				unitsEnabled = textureSet->CountActiveUnits ();
+				
+				// bind or unbind textues depending on state of texture set
+				for ( u32 i = 0; i < unitsEnabled; ++i ) {
+					
+					MOAISingleTexture* currentTexture = this->mTextureUnits [ i ];
+					MOAISingleTexture* bindTexture = textureSet->GetTextureForUnit ( i );
+				
+					if ( bindTexture && ( !bindTexture->IsReady ())) {
+						bindTexture = this->mDefaultTexture;
+					}
+					
+					if ( currentTexture != bindTexture ) {
+						
+						gfx.ActiveTexture ( i );
+						
+						if ( currentTexture ) {
+							currentTexture->Unbind ();
+						}
+						
+						this->mTextureUnits [ i ] = bindTexture;
+						
+						if ( bindTexture ) {
+							DEBUG_LOG ( "    binding texture: %d %p\n", i, bindTexture );
+							bindTexture->Bind ();
+						}
+					}
+				}
+			}
+			
+			// unbind/disable any excess textures
+			for ( u32 i = unitsEnabled; i < this->mActiveTextures; ++i ) {
+			
+				MOAISingleTexture* currentTexture = this->mTextureUnits [ i ];
+			
+				if ( currentTexture ) {
+					gfx.ActiveTexture ( i );
+					currentTexture->Unbind ();
+					this->mTextureUnits [ i ] = 0;
+				}
+			}
+
+			this->mActiveTextures = unitsEnabled;
+			gfx.ActiveTexture ( 0 );
+		}
+	
+	}
+	else {
+
+		this->mPendingState.mTextureSet = textureSet;
+		this->mDirtyFlags = ( this->mActiveState.mTextureSet == textureSet ) ? ( this->mDirtyFlags & ~TEXTURE ) : ( this->mDirtyFlags | TEXTURE );
+	}
+	
+	return true;
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxStateCache::SetVertexArray ( MOAIVertexArray* vtxArray ) {
+
+	if ( this->mApplyingStateChanges ) {
+		
+		MOAIGfxState& active = this->mActiveState;
+		
+		if ( active.mVtxArray != vtxArray ) {
+	
+			this->GfxStateWillChange ();
+	
+			DEBUG_LOG ( "  binding vertex array: %p\n", vtxArray );
+	
+			if ( active.mVtxArray ) {
+				active.mVtxArray->Unbind ();
+			}
+			
+			active.mVtxArray = vtxArray;
+			
+			if ( vtxArray ) {
+								
+				this->SetVertexBuffer (); // force the unbind in case it hasn't happened yet
+			
+				vtxArray->Bind ();
+			}
+		}
+	}
+	else {
+
+		if ( vtxArray ) {
+			this->mPendingState.mVtxBuffer = 0;
+			this->mPendingState.mVtxFormat = 0;
+			this->mDirtyFlags &= ~VERTEX_BUFFER;
+		}
+
+		this->mPendingState.mVtxArray = vtxArray;
+		this->mDirtyFlags = ( this->mActiveState.mVtxArray == vtxArray ) ? ( this->mDirtyFlags & ~VERTEX_ARRAY ) : ( this->mDirtyFlags | VERTEX_ARRAY );
+	}
+	return vtxArray ? vtxArray->IsReady () : true;
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxStateCache::SetVertexBuffer ( MOAIVertexBuffer* buffer ) {
+
+	if ( this->mApplyingStateChanges ) {
+	
+		MOAIGfxState& active = this->mActiveState;
+		
+		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+		
+		ZLSharedConstBuffer* bufferForBind = buffer ? buffer->GetBufferForBind ( gfx ) : 0;
+		
+		MOAIVertexFormat* format = active.mVtxFormat;
+		
+		if (( active.mVtxBuffer != buffer ) || ( this->mBoundVtxBuffer != bufferForBind )) {
+
+			this->GfxStateWillChange ();
+
+			DEBUG_LOG ( "  binding vertex buffer: (%p)\n", buffer );
+
+			if ( active.mVtxBuffer ) {
+				assert ( active.mVtxFormat );
+				active.mVtxFormat->Unbind ();
+			}
+			
+			active.mVtxBuffer = 0;
+			this->mBoundVtxBuffer = 0;
+			
+			if ( format && buffer ) {
+				
+				this->SetVertexArray (); // force the unbind in case it hasn't happened yet
+				
+				buffer->Bind ();
+				format->Bind ( bufferForBind );
+				buffer->Unbind ();
+				
+				active.mVtxBuffer = buffer;
+				this->mBoundVtxBuffer = bufferForBind;
+			}
+		}
+	}
+	else {
+	
+		if ( buffer ) {
+			this->mPendingState.mVtxArray = 0;
+			this->mDirtyFlags &= ~VERTEX_ARRAY;
+		}
+	
+		this->mPendingState.mVtxBuffer = buffer;
+		this->mDirtyFlags = ( this->mActiveState.mVtxBuffer == buffer ) ? ( this->mDirtyFlags & ~VERTEX_BUFFER ) : ( this->mDirtyFlags | VERTEX_BUFFER );
+	}
+	
+	return buffer ? buffer->IsReady () : true;
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxStateCache::SetVertexFormat ( MOAIVertexFormatMgr::Preset preset ) {
 
 	this->SetVertexFormat ( MOAIVertexFormatMgr::Get ().GetFormat ( preset ));
@@ -1120,12 +1120,12 @@ void MOAIGfxStateCache::UnbindAll () {
 
 	ZGL_COMMENT ( gfx, "GFX UNBIND ALL" );
 
-	this->BindFrameBuffer ();
-	this->BindIndexBuffer ();
-	this->BindShader ();
-	this->BindTexture ();
-	this->BindVertexArray ();
-	this->BindVertexBuffer ();
+	this->SetFrameBuffer ();
+	this->SetIndexBuffer ();
+	this->SetShader ();
+	this->SetTexture ();
+	this->SetVertexArray ();
+	this->SetVertexBuffer ();
 	this->SetVertexFormat ();
 	
 	ZGL_COMMENT ( gfx, "" );

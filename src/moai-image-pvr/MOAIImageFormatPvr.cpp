@@ -302,7 +302,7 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 	ZLGfxHandle* glTexID = gfx.CreateTexture ();
 	if ( glTexID ) {
 
-		gfx.BindTexture ( glTexID );
+		gfx.SetTexture ( glTexID );
 		
 		size_t textureSize = 0;
 		

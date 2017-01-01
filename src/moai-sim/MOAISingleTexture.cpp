@@ -239,7 +239,7 @@ bool MOAISingleTexture::CreateTextureFromImage ( MOAIImage& srcImage ) {
 			return false;
 	}
 
-	gfx.BindTexture ( this->mGLTexID );
+	gfx.SetTexture ( this->mGLTexID );
 
 	gfx.TexImage2D (
 		0,
@@ -353,7 +353,7 @@ void MOAISingleTexture::OnGfxEvent ( u32 event, void* userdata ) {
 //----------------------------------------------------------------//
 void MOAISingleTexture::OnGPUBind () {
 
-	MOAIGfxMgr::GetDrawingAPI ().BindTexture ( this->mGLTexID );
+	MOAIGfxMgr::GetDrawingAPI ().SetTexture ( this->mGLTexID );
 }
 
 //----------------------------------------------------------------//
@@ -368,7 +368,7 @@ void MOAISingleTexture::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 //----------------------------------------------------------------//
 void MOAISingleTexture::OnGPUUnbind () {
 
-	MOAIGfxMgr::GetDrawingAPI ().BindTexture ( 0 );
+	MOAIGfxMgr::GetDrawingAPI ().SetTexture ( 0 );
 }
 
 //----------------------------------------------------------------//
@@ -513,7 +513,7 @@ bool MOAISingleTexture::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rec
 	// otherwise create a new texture from the image
 	if ( this->mGLTexID ) {
 
-		gfx.BindTexture ( this->mGLTexID );
+		gfx.SetTexture ( this->mGLTexID );
 
 		rect.Bless ();
 		ZLIntRect imageRect = image.GetRect ();

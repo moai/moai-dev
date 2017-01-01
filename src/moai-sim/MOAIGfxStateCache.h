@@ -83,15 +83,15 @@ protected:
 	bool									mScissorEnabled;
 	ZLRect									mScissorRect;
 	
-	MOAISharedPtr < MOAIShader >			mShader;
-	MOAISharedPtr < MOAIShaderProgram >		mShaderProgram;
+	ZLStrongPtr < MOAIShader >			mShader;
+	ZLStrongPtr < MOAIShaderProgram >		mShaderProgram;
 
-	MOAISharedPtr < MOAIFrameBuffer >		mFrameBuffer;
-	MOAISharedPtr < MOAIIndexBuffer >		mIdxBuffer;
-	MOAISharedPtr < MOAITextureBase >		mTextureSet;
-	MOAISharedPtr < MOAIVertexArray >		mVtxArray;
-	MOAISharedPtr < MOAIVertexBuffer >		mVtxBuffer;
-	MOAISharedPtr < MOAIVertexFormat >		mVtxFormat;
+	ZLStrongPtr < MOAIFrameBuffer >		mFrameBuffer;
+	ZLStrongPtr < MOAIIndexBuffer >		mIdxBuffer;
+	ZLStrongPtr < MOAITextureBase >		mTextureSet;
+	ZLStrongPtr < MOAIVertexArray >		mVtxArray;
+	ZLStrongPtr < MOAIVertexBuffer >		mVtxBuffer;
+	ZLStrongPtr < MOAIVertexFormat >		mVtxFormat;
 
 	// TODO: multithread will impact caching of buffer behavior as gfx.Copy () may produce a different result each time it is called
 
@@ -146,7 +146,7 @@ protected:
 	MOAILuaSharedPtr < MOAIFrameBuffer >	mDefaultFrameBuffer;
 	MOAILuaSharedPtr < MOAITexture >		mDefaultTexture;
 
-	ZLLeanArray < MOAISharedPtr < MOAISingleTexture > >		mTextureUnits;
+	ZLLeanArray < ZLStrongPtr < MOAISingleTexture > >		mTextureUnits;
 	u32														mActiveTextures;
 
 	ZLSharedConstBuffer*					mBoundIdxBuffer;
@@ -173,14 +173,6 @@ public:
 	GET ( MOAITexture*, DefaultTexture, mDefaultTexture )
 	
 	//----------------------------------------------------------------//
-	bool			BindFrameBuffer				( MOAIFrameBuffer* frameBuffer = 0 );
-	bool			BindIndexBuffer				( MOAIIndexBuffer* buffer = 0 );
-	bool			BindShader					( MOAIShaderMgr::Preset preset );
-	bool			BindShader					( MOAIShader* shader = 0 );
-	bool			BindTexture					( MOAITextureBase* textureSet = 0 );
-	bool			BindVertexArray				( MOAIVertexArray* vtxArray = 0 );
-	bool			BindVertexBuffer			( MOAIVertexBuffer* buffer = 0 ); // must be called *after* BindVertexFormat
-	
 	size_t			CountTextureUnits			();
 	
 	void			DrawPrims					( u32 primType, u32 base, u32 count );
@@ -218,11 +210,20 @@ public:
 	void			SetDepthFunc				( int depthFunc );
 	void			SetDepthMask				( bool depthMask );
 	
+	bool			SetFrameBuffer				( MOAIFrameBuffer* frameBuffer = 0 );
+	bool			SetIndexBuffer				( MOAIIndexBuffer* buffer = 0 );
+		
 	void			SetPenWidth					( float penWidth );
 	
 	void			SetScissorRect				();
 	void			SetScissorRect				( ZLRect rect );
 	
+	bool			SetShader					( MOAIShaderMgr::Preset preset );
+	bool			SetShader					( MOAIShader* shader = 0 );
+	bool			SetTexture					( MOAITextureBase* textureSet = 0 );
+	
+	bool			SetVertexArray				( MOAIVertexArray* vtxArray = 0 );
+	bool			SetVertexBuffer				( MOAIVertexBuffer* buffer = 0 ); // must be called *after* BindVertexFormat
 	void			SetVertexFormat				( MOAIVertexFormatMgr::Preset preset );
 	void			SetVertexFormat				( MOAIVertexFormat* format = 0 );
 	

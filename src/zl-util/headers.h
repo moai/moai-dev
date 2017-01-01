@@ -78,13 +78,15 @@
 #include <zl-util/ZLRadixSort32.h>
 #include <zl-util/ZLRect.h>
 #include <zl-util/ZLRefCountedObject.h>
+#include <zl-util/ZLRefCountedObjectBase.h>
 #include <zl-util/ZLResult.h>
 #include <zl-util/ZLRhombus.h>
 #include <zl-util/ZLRingAdapter.h>
 #include <zl-util/ZLSample.h>
-#include <zl-util/ZLSharedHandle.h>
+#include <zl-util/ZLSharedBuffer.h>
 #include <zl-util/ZLStream.h>
 #include <zl-util/ZLStreamAdapter.h>
+#include <zl-util/ZLStrongPtr.h>
 #include <zl-util/ZLSurface2D.h>
 #include <zl-util/ZLSyntaxNode.h>
 #include <zl-util/ZLSyntaxScanner.h>
@@ -96,6 +98,7 @@
 #include <zl-util/ZLVec2D.h>
 #include <zl-util/ZLVec3D.h>
 #include <zl-util/ZLVec4D.h>
+#include <zl-util/ZLWeakPtr.h>
 #include <zl-util/ZLXmlReader.h>
 #include <zl-util/ZLZip.h>
 #include <zl-util/ZLZipFile.h>
