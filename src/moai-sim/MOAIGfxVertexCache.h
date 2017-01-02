@@ -58,7 +58,7 @@ protected:
 	ZLColorVec					mVertexColor;
 	u32							mVertexColor32;
 	
-	ZLStrongPtr < MOAIVertexBuffer >		mVtxBuffer;
+	ZLStrongPtr < MOAIVertexBuffer >	mVtxBuffer;
 	ZLStrongPtr < MOAIIndexBuffer >		mIdxBuffer;
 	
 	//----------------------------------------------------------------//
@@ -92,7 +92,6 @@ public:
 	void			SetVertexTransform				();
 	void			SetVertexTransform				( const ZLMatrix4x4& vertexTransform );
 
-	//void			UnbindBufferedDrawing			();
 	void			WriteQuad						( const ZLVec2D* vtx, const ZLVec2D* uv );
 	void			WriteQuad						( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff );
 	void			WriteQuad						( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale );

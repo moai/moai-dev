@@ -83,13 +83,13 @@ protected:
 	bool									mScissorEnabled;
 	ZLRect									mScissorRect;
 	
-	ZLStrongPtr < MOAIShader >			mShader;
+	ZLStrongPtr < MOAIShader >				mShader;
 	ZLStrongPtr < MOAIShaderProgram >		mShaderProgram;
 
-	ZLStrongPtr < MOAIFrameBuffer >		mFrameBuffer;
-	ZLStrongPtr < MOAIIndexBuffer >		mIdxBuffer;
-	ZLStrongPtr < MOAITextureBase >		mTextureSet;
-	ZLStrongPtr < MOAIVertexArray >		mVtxArray;
+	ZLStrongPtr < MOAIFrameBuffer >			mFrameBuffer;
+	ZLStrongPtr < MOAIIndexBuffer >			mIdxBuffer;
+	ZLStrongPtr < MOAITextureBase >			mTextureSet;
+	ZLStrongPtr < MOAIVertexArray >			mVtxArray;
 	ZLStrongPtr < MOAIVertexBuffer >		mVtxBuffer;
 	ZLStrongPtr < MOAIVertexFormat >		mVtxFormat;
 
