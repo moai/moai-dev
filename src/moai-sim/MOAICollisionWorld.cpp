@@ -11,7 +11,6 @@
 #include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIPartitionResultMgr.h>
-#include <moai-sim/MOAIProp.h>
 
 //================================================================//
 // local

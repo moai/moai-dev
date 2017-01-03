@@ -12,7 +12,6 @@
 #include <moai-sim/MOAIMesh.h>
 #include <moai-sim/MOAIMeshSparseQuadTree.h>
 #include <moai-sim/MOAIMeshTernaryTree.h>
-#include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>

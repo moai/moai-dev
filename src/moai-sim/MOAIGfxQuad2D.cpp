@@ -6,7 +6,6 @@
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxQuad2D.h>
 #include <moai-sim/MOAIMultiTexture.h>
-#include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITransformBase.h>
@@ -140,13 +139,13 @@ int MOAIGfxQuad2D::_setUVRect ( lua_State* L ) {
 	@text	Apply the given MOAITransform to all the vertices in the deck.
 	
 	@in		MOAIGfxQuad2D self
-	@in		MOAITransform transform
+	@in		MOAITransformBase transform
 	@out	nil
 */
 int MOAIGfxQuad2D::_transform ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuad2D, "UU" )
 	
-	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 2, true );
+	MOAITransformBase* transform = state.GetLuaObject < MOAITransformBase >( 2, true );
 	if ( transform ) {
 		transform->ForceUpdate ();
 		self->Transform ( transform->GetLocalToWorldMtx ());
@@ -166,7 +165,7 @@ int MOAIGfxQuad2D::_transform ( lua_State* L ) {
 int MOAIGfxQuad2D::_transformUV ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuad2D, "UU" )
 	
-	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 2, true );
+	MOAITransformBase* transform = state.GetLuaObject < MOAITransformBase >( 2, true );
 	if ( transform ) {
 		transform->ForceUpdate ();
 		self->TransformUV ( transform->GetLocalToWorldMtx ());

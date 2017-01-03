@@ -5,7 +5,6 @@
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAINodeMgr.h>
-#include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAIRenderMgr.h>

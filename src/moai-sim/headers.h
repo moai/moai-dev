@@ -107,7 +107,6 @@
 //#include <moai-sim/MOAIProfilerReportBase.h>
 //#include <moai-sim/MOAIProfilerReportBox.h>
 //#include <moai-sim/MOAIProfilerScope.h>
-#include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAIRenderable.h>

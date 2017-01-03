@@ -31,7 +31,7 @@ class MOAIPartitionHull;
 	@attr	ATTR_PARTITION
 */
 class MOAIPartitionHull :
-	public MOAITransform {
+	public virtual MOAITransform {
 private:
 
 	friend class MOAIPartition;
@@ -80,6 +80,15 @@ private:
 	static int			_setQueryMask				( lua_State* L );
 	static int			_setRemapper				( lua_State* L );
 
+	//----------------------------------------------------------------//
+	virtual void		MOAIPartitionHull_AddToSortBuffer			( MOAIPartitionResultBuffer& buffer, u32 key = 0 ) = 0;
+	virtual u32			MOAIPartitionHull_AffirmInterfaceMask		( MOAIPartition& partition ) = 0;
+	virtual void		MOAIPartitionHull_BoundsDidChange			();
+	virtual u32			MOAIPartitionHull_GetModelBounds			( ZLBox& bounds ) = 0; // get the prop bounds in model space
+	virtual bool		MOAIPartitionHull_Inside					( ZLVec3D vec, float pad );
+	virtual bool		MOAIPartitionHull_PrepareForInsertion		( const MOAIPartition& partition );
+	virtual void		MOAIPartitionHull_WasRemovedFromPartition	();
+
 protected:
 
 	u32										mFlags;
@@ -99,15 +108,6 @@ protected:
 	void				UpdateWorldBounds			( u32 status );
 	void				UpdateWorldBounds			( const ZLBox& bounds, u32 status ); // update bounds in world space
 	void				WasRemovedFromPartition		();
-
-	//----------------------------------------------------------------//
-	virtual void		MOAIPartitionHull_AddToSortBuffer			( MOAIPartitionResultBuffer& buffer, u32 key = 0 ) = 0;
-	virtual u32			MOAIPartitionHull_AffirmInterfaceMask		( MOAIPartition& partition ) = 0;
-	virtual void		MOAIPartitionHull_BoundsDidChange			();
-	virtual u32			MOAIPartitionHull_GetModelBounds			( ZLBox& bounds ) = 0; // get the prop bounds in model space
-	virtual bool		MOAIPartitionHull_Inside					( ZLVec3D vec, float pad );
-	virtual bool		MOAIPartitionHull_PrepareForInsertion		( const MOAIPartition& partition );
-	virtual void		MOAIPartitionHull_WasRemovedFromPartition	();
 	
 public:
 

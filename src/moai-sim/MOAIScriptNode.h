@@ -16,7 +16,7 @@
 			point attributes.
 */
 class MOAIScriptNode :
-	public MOAINode {
+	public virtual MOAINode {
 private:
 
 	MOAILuaMemberRef mOnUpdate;

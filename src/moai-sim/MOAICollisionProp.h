@@ -4,8 +4,7 @@
 #ifndef	MOAICOLLISIONFACET_H
 #define	MOAICOLLISIONFACET_H
 
-#include <moai-sim/MOAIProp.h>
-#include <moai-sim/MOAITransform.h>
+#include <moai-sim/MOAIPartitionHull.h>
 
 class MOAICollisionShape;
 class MOAICollisionProp;
@@ -62,7 +61,7 @@ private:
 //================================================================//
 // TODO: doxygen
 class MOAICollisionProp:
-	public MOAIProp {
+	public MOAIPartitionHull {
 private:
 	
 	friend class MOAICollisionWorld;
@@ -93,8 +92,10 @@ private:
 	bool					IsActive				();
 	
 	//----------------------------------------------------------------//
+	void					MOAIPartitionHull_AddToSortBuffer			( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
 	u32						MOAIPartitionHull_AffirmInterfaceMask		( MOAIPartition& partition );
 	void					MOAIPartitionHull_BoundsDidChange			();
+	u32						MOAIPartitionHull_GetModelBounds			( ZLBox& bounds );
 	bool					MOAIPartitionHull_PrepareForInsertion		( const MOAIPartition& partition );
 	void					MOAIPartitionHull_WasRemovedFromPartition	();
 	

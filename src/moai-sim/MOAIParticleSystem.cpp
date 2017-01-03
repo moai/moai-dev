@@ -413,7 +413,7 @@ void MOAIParticleSystem::Draw ( int subPrimID, float lod ) {
 		
 		gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX, drawingMtx );
 		
-		this->mDeck->Draw ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex + ( u32 )sprite.mGfxID ), this->mMaterialBatch );
+		this->mDeck->Draw ( this->mIndex + ( u32 )sprite.mGfxID, this->mMaterialBatch );
 	}
 }
 
@@ -607,7 +607,7 @@ bool MOAIParticleSystem::PushSprite ( const AKUParticleSprite& sprite ) {
 		this->mSprites [ idx ] = sprite;
 		
 		// TODO: need to take rotation into account
-		ZLBox bounds = this->mDeck->GetBounds ( MOAIDeckRemapper::Remap ( this->mRemapper, sprite.mGfxID ));
+		ZLBox bounds = this->mDeck->GetBounds ( sprite.mGfxID );
 		
 		ZLVec3D offset ( sprite.mXLoc, sprite.mYLoc, 0.0f );
 		ZLVec3D scale ( sprite.mXScl, sprite.mYScl, 0.0f );

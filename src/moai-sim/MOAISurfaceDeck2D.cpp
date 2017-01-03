@@ -5,10 +5,34 @@
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIGrid.h>
-#include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAISurfaceDeck2D.h>
 #include <moai-sim/MOAISurfaceSampler2D.h>
 #include <moai-sim/MOAITransformBase.h>
+
+//----------------------------------------------------------------//
+//void MOAIProp::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
+//	UNUSED ( sampler );
+
+	//if ( !this->mDeck ) return;
+	//
+	//sampler.SetSourcePrim ( this );
+	//
+	//if ( this->mGrid ) {
+	//	
+	//	ZLRect localRect = sampler.GetLocalRect ();
+	//	
+	//	MOAICellCoord c0;
+	//	MOAICellCoord c1;
+	//	
+	//	ZLRect deckBounds = this->mDeck->GetBounds ().GetRect( ZLBox::PLANE_XY );
+
+	//	this->mGrid->GetBoundsInRect ( localRect, c0, c1, deckBounds );
+	//	//this->mDeck->GatherSurfaces ( *this->mGrid, this->mRemapper, this->mGridScale, c0, c1, sampler );
+	//}
+	//else {
+	//	//this->mDeck->GatherSurfaces ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), sampler );
+	//}
+//}
 
 //================================================================//
 // local

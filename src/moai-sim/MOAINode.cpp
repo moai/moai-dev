@@ -7,9 +7,6 @@
 #include <moai-sim/MOAINodeMgr.h>
 #include <moai-sim/MOAISim.h>
 
-// TODO: remove when setParent is removed
-#include <moai-sim/MOAIProp.h>
-
 //================================================================//
 // MOAIDepLink
 //================================================================//

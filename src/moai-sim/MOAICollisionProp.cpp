@@ -106,7 +106,7 @@ MOAICollisionProp::MOAICollisionProp () :
 	mCollisionWorld ( 0 ) {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIProp )
+		RTTI_EXTEND ( MOAIPartitionHull )
 	RTTI_END
 	
 	this->mActiveListLink.Data ( this );
@@ -130,7 +130,7 @@ bool MOAICollisionProp::RefineOverlap ( const MOAICollisionProp& other, MOAIOver
 //----------------------------------------------------------------//
 void MOAICollisionProp::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	MOAIProp::RegisterLuaClass ( state );
+	MOAIPartitionHull::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "OVERLAP_EVENTS_ON_UPDATE",		( u32 )OVERLAP_EVENTS_ON_UPDATE );
 	state.SetField ( -1, "OVERLAP_EVENTS_CONTINUOUS",		( u32 )OVERLAP_EVENTS_CONTINUOUS );
@@ -144,7 +144,7 @@ void MOAICollisionProp::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAICollisionProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIProp::RegisterLuaFuncs ( state );
+	MOAIPartitionHull::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "getOverlaps",		_getOverlaps },
@@ -160,18 +160,24 @@ void MOAICollisionProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAICollisionProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
-	MOAIProp::SerializeIn ( state, serializer );
+	MOAIPartitionHull::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAICollisionProp::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	
-	MOAIProp::SerializeOut ( state, serializer );
+	MOAIPartitionHull::SerializeOut ( state, serializer );
 }
 
 //================================================================//
 // MOAICollisionProp virtual
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAICollisionProp::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionResultBuffer& buffer, u32 key ) {
+
+	buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->GetPriority (), this->GetWorldLoc (), this->GetBounds ());
+}
 
 //----------------------------------------------------------------//
 u32 MOAICollisionProp::MOAIPartitionHull_AffirmInterfaceMask ( MOAIPartition& partition ) {
@@ -185,6 +191,13 @@ void MOAICollisionProp::MOAIPartitionHull_BoundsDidChange () {
 	if ( this->mCollisionWorld && this->mOverlapFlags ) {
 		this->mCollisionWorld->MakeActive ( *this );
 	}
+}
+
+//----------------------------------------------------------------//
+u32 MOAICollisionProp::MOAIPartitionHull_GetModelBounds ( ZLBox& bounds ) {
+	UNUSED ( bounds );
+
+	return MOAIPartitionHull::BOUNDS_GLOBAL;
 }
 
 //----------------------------------------------------------------//

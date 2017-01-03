@@ -5,7 +5,6 @@
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIBoundsDeck.h>
 #include <moai-sim/MOAIGrid.h>
-#include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITransformBase.h>
 

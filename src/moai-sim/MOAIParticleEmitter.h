@@ -8,7 +8,7 @@
 #include <moai-sim/MOAITransform.h>
 
 class MOAIParticleSystem;
-class MOAIProp;
+class MOAIPartitionHull;
 
 //================================================================//
 // MOAIParticleEmitter
@@ -40,8 +40,7 @@ protected:
 	u32		mParticleState;
 
 	MOAILuaSharedPtr < MOAIParticleSystem > mSystem;
-	
-	MOAILuaSharedPtr < MOAIProp > mMaskProp;
+	MOAILuaSharedPtr < MOAIPartitionHull > mMaskProp;
 
 	//----------------------------------------------------------------//
 	static int		_setAngle				( lua_State* L );

@@ -7,7 +7,6 @@
 #include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGrid.h>
-#include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAITextureBase.h>

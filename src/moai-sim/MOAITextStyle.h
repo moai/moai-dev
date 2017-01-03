@@ -54,7 +54,7 @@ public:
 			section of text in a text box using a style escape.
 */
 class MOAITextStyle :
-	public MOAINode,
+	public virtual MOAINode,
 	public MOAITextStyleState {
 private:
 

@@ -11,7 +11,7 @@
 class MOAICollisionProp;
 class MOAIOverlapInfo;
 class MOAIPartition;
-class MOAIProp;
+class MOAIPartitionHull;
 
 //================================================================//
 // MOAICollisionWorld
@@ -56,9 +56,9 @@ private:
 	void				InvalidateOverlaps		( MOAICollisionProp& prop, u32 nextPass );
 	void				MakeActive				( MOAICollisionProp& prop0 );
 	void				MakeInactive			( MOAICollisionProp& prop0 );
-	void				OnPropInserted			( MOAIProp& prop );	
-	void				OnPropRemoved			( MOAIProp& prop );	
-	void				OnPropUpdated			( MOAIProp& prop );
+	void				OnPropInserted			( MOAIPartitionHull& prop );
+	void				OnPropRemoved			( MOAIPartitionHull& prop );
+	void				OnPropUpdated			( MOAIPartitionHull& prop );
 	void				OnUpdate				( double step );
 	void				ProcessOverlaps			();
 	void				PruneOverlaps			( MOAICollisionProp& prop );

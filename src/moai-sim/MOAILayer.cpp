@@ -10,7 +10,6 @@
 #include <moai-sim/MOAILayer.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIPartitionResultMgr.h>
-#include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAIRenderMgr.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITransform.h>
@@ -158,10 +157,10 @@ int MOAILayer::_getFitting3D ( lua_State* L ) {
 			
 			case LUA_TUSERDATA: {
 			
-				MOAIProp* prop = state.GetLuaObject < MOAIProp >( -1, true );
+				MOAIPartitionHull* hull = state.GetLuaObject < MOAIPartitionHull >( -1, true );
 		
-				if ( prop ) {
-					ZLBox bounds = prop->GetBounds ();
+				if ( hull ) {
+					ZLBox bounds = hull->GetBounds ();
 					
 					ZLVec3D center;
 					bounds.GetCenter ( center );
@@ -316,44 +315,44 @@ int MOAILayer::_getViewport ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@lua	insertProp
-	@text	Adds a prop to the layer's partition.
+	@text	Adds a hull to the layer's partition.
 	
 	@in		MOAILayer self
-	@in		MOAIProp prop
+	@in		MOAIPartitionHull hull
 	@out	nil
 */
 int	MOAILayer::_insertProp ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 
-	MOAIProp* prop = state.GetLuaObject < MOAIProp >( 2, true );
-	if ( !prop ) return 0;
-	if ( prop == self ) return 0;
+	MOAIPartitionHull* hull = state.GetLuaObject < MOAIPartitionHull >( 2, true );
+	if ( !hull ) return 0;
+	if ( hull == self ) return 0;
 
 	self->AffirmPartition ();
-	self->mPartition->InsertHull ( *prop );
-	prop->ScheduleUpdate ();
+	self->mPartition->InsertHull ( *hull );
+	hull->ScheduleUpdate ();
 
 	return 0;
 }
 
 //----------------------------------------------------------------//
 /**	@lua	removeProp
-	@text	Removes a prop from the layer's partition.
+	@text	Removes a hull from the layer's partition.
 	
 	@in		MOAILayer self
-	@in		MOAIProp prop
+	@in		MOAIPartitionHull hull
 	@out	nil
 */
 int	MOAILayer::_removeProp ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 
-	MOAIProp* prop = state.GetLuaObject < MOAIProp >( 2, true );
-	if ( !prop ) return 0;
-	if ( prop == self ) return 0;
+	MOAIPartitionHull* hull = state.GetLuaObject < MOAIPartitionHull >( 2, true );
+	if ( !hull ) return 0;
+	if ( hull == self ) return 0;
 
 	if ( self->mPartition ) {
-		self->mPartition->RemoveHull ( *prop );
-		prop->ScheduleUpdate ();
+		self->mPartition->RemoveHull ( *hull );
+		hull->ScheduleUpdate ();
 	}
 
 	return 0;
@@ -445,7 +444,7 @@ int MOAILayer::_setParallax ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@lua	setPartition
 	@text	Sets a partition for the layer to use. The layer will automatically
-			create a partition when the first prop is added if no partition
+			create a partition when the first hull is added if no partition
 			has been set.
 	
 	@in		MOAILayer self
@@ -775,7 +774,7 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 	
 	if ( this->mPartition ) {
 		
-		u32 interfaceMask = this->mPartition->GetInterfaceMask < MOAIGraphicsProp >();
+		u32 interfaceMask = this->mPartition->GetInterfaceMask < MOAIAbstractDrawable >();
 		if ( !interfaceMask ) return;
 		
 		MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
@@ -834,14 +833,14 @@ void MOAILayer::DrawProps ( MOAIPartitionResultBuffer& buffer, float lod ) {
 	if ( this->mLODMode == LOD_FROM_PROP_SORT_Z ) {
 		for ( u32 i = 0; i < totalResults; ++i ) {
 			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-			MOAIGraphicsProp* graphicsProp = result->AsType < MOAIGraphicsProp >();
+			MOAIAbstractDrawable* graphicsProp = result->AsType < MOAIAbstractDrawable >();
 			graphicsProp->Draw ( result->mSubPrimID, result->mLoc.mZ * lod );
 		}
 	}
 	else {
 		for ( u32 i = 0; i < totalResults; ++i ) {
 			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-			MOAIGraphicsProp* graphicsProp = result->AsType < MOAIGraphicsProp >();
+			MOAIAbstractDrawable* graphicsProp = result->AsType < MOAIAbstractDrawable >();
 			graphicsProp->Draw ( result->mSubPrimID, lod );
 		}
 	}
@@ -855,14 +854,14 @@ void MOAILayer::DrawPropsDebug ( MOAIPartitionResultBuffer& buffer, float lod ) 
 	if ( this->mLODMode == LOD_FROM_PROP_SORT_Z ) {
 		for ( u32 i = 0; i < totalResults; ++i ) {
 			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-			MOAIGraphicsProp* graphicsProp = result->AsType < MOAIGraphicsProp >();
+			MOAIAbstractDrawable* graphicsProp = result->AsType < MOAIAbstractDrawable >();
 			graphicsProp->DrawDebug ( result->mSubPrimID, result->mLoc.mZ );
 		}
 	}
 	else {
 		for ( u32 i = 0; i < totalResults; ++i ) {
 			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-			MOAIGraphicsProp* graphicsProp = result->AsType < MOAIGraphicsProp >();
+			MOAIAbstractDrawable* graphicsProp = result->AsType < MOAIAbstractDrawable >();
 			graphicsProp->DrawDebug ( result->mSubPrimID, lod );
 		}
 	}
@@ -915,7 +914,7 @@ MOAILayer::MOAILayer () :
 		RTTI_EXTEND ( MOAIClearableView )
 	RTTI_END
 	
-	//this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
+	//this->SetMask ( MOAIPartitionHull::CAN_DRAW | MOAIPartitionHull::CAN_DRAW_DEBUG );
 	this->SetClearFlags ( 0 );
 }
 
@@ -933,9 +932,9 @@ u32 MOAILayer::OnGetModelBounds ( ZLBox& bounds ) {
 	if ( this->mViewport ) {
 		ZLRect frame = this->mViewport->GetRect ();
 		bounds.Init ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
-		return MOAIProp::BOUNDS_OK;
+		return MOAIPartitionHull::BOUNDS_OK;
 	}
-	return MOAIProp::BOUNDS_EMPTY;
+	return MOAIPartitionHull::BOUNDS_EMPTY;
 }
 
 //----------------------------------------------------------------//
@@ -1008,7 +1007,7 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAILayer::Render () {
 	
-	this->Draw ( MOAIProp::NO_SUBPRIM_ID, 0.0f );
+	this->Draw ( MOAIPartitionHull::NO_SUBPRIM_ID, 0.0f );
 }
 
 //----------------------------------------------------------------//

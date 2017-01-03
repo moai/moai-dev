@@ -5,7 +5,6 @@
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIGfxQuadListDeck2D.h>
-#include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITransformBase.h>
@@ -294,7 +293,7 @@ int MOAIGfxQuadListDeck2D::_setUVRect ( lua_State* L ) {
 int MOAIGfxQuadListDeck2D::_transform ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UU" )
 	
-	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 2, true );
+	MOAITransformBase* transform = state.GetLuaObject < MOAITransformBase >( 2, true );
 	if ( transform ) {
 		transform->ForceUpdate ();
 		self->Transform ( transform->GetLocalToWorldMtx ());
@@ -314,7 +313,7 @@ int MOAIGfxQuadListDeck2D::_transform ( lua_State* L ) {
 int MOAIGfxQuadListDeck2D::_transformUV ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UU" )
 	
-	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 2, true );
+	MOAITransformBase* transform = state.GetLuaObject < MOAITransformBase >( 2, true );
 	if ( transform ) {
 		transform->ForceUpdate ();
 		self->TransformUV ( transform->GetLocalToWorldMtx ());

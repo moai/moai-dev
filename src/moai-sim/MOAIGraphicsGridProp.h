@@ -1,10 +1,10 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGRAPHICSPROP_H
-#define	MOAIGRAPHICSPROP_H
+#ifndef	MOAIGRAPHICSGRIDPROP_H
+#define	MOAIGRAPHICSGRIDPROP_H
 
-#include <moai-sim/MOAIIndexedPropBase.h>
+#include <moai-sim/MOAIGridPropBase.h>
 #include <moai-sim/MOAIGraphicsPropBase.h>
 
 class MOAICellCoord;
@@ -25,11 +25,11 @@ class MOAISurfaceSampler2D;
 class MOAISingleTexture;
 
 //================================================================//
-// MOAIGraphicsProp
+// MOAIGraphicsGridProp
 //================================================================//
 // TODO: doxygen
-class MOAIGraphicsProp :
-	public MOAIIndexedPropBase,
+class MOAIGraphicsGridProp :
+	public MOAIGridPropBase,
 	public MOAIGraphicsPropBase {
 private:
 
@@ -38,16 +38,16 @@ private:
 
 	//----------------------------------------------------------------//
 	void					MOAIAbstractDrawable_Draw					( int subPrimID, float lod );
+	void					MOAIPartitionHull_AddToSortBuffer			( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
 	u32						MOAIPartitionHull_GetModelBounds			( ZLBox& bounds ); // get the prop bounds in model space
-	bool					MOAIPartitionHull_Inside					( ZLVec3D vec, float pad );
 
 public:
 
-	DECL_LUA_FACTORY ( MOAIGraphicsProp )
+	DECL_LUA_FACTORY ( MOAIGraphicsGridProp )
 
 	//----------------------------------------------------------------//
-							MOAIGraphicsProp			();
-	virtual					~MOAIGraphicsProp			();
+							MOAIGraphicsGridProp		();
+	virtual					~MOAIGraphicsGridProp		();
 	void					OnDepNodeUpdate				();
 	void					RegisterLuaClass			( MOAILuaState& state );
 	void					RegisterLuaFuncs			( MOAILuaState& state );

@@ -71,7 +71,7 @@ int MOAIParticleEmitter::_setMagnitude ( lua_State* L ) {
 int MOAIParticleEmitter::_setMask ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleEmitter, "U" )
 	
-	self->mMaskProp.Set ( *self, state.GetLuaObject < MOAIProp >( 2, true ));
+	self->mMaskProp.Set ( *self, state.GetLuaObject < MOAIPartitionHull >( 2, true ));
 	
 	return 0;
 }

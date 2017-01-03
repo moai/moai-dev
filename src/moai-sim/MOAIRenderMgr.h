@@ -9,7 +9,6 @@
 
 class MOAICamera;
 class MOAIFrameBuffer;
-class MOAIProp;
 class MOAIRenderable;
 class MOAIViewport;
 

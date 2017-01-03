@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIGrid.h>
-#include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIStretchPatch2D.h>

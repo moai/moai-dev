@@ -6,7 +6,7 @@
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIMaterialBatch.h>
-#include <moai-sim/MOAIProp.h>
+#include <moai-sim/MOAIPartitionHull.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAITexture.h>
@@ -600,16 +600,16 @@ bool MOAIMaterialBatch::TestHit ( MOAIMaterialBatch* override, u32 idx, u32 gran
 //----------------------------------------------------------------//
 bool MOAIMaterialBatch::TestHit ( MOAIMaterialBatch* override, u32 materialID, u32 deckIndex, u32 granularity, const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x, float y ) {
 
-	if ( granularity == MOAIProp::HIT_TEST_COARSE ) return true;
+	if ( granularity == MOAIPartitionHull::HIT_TEST_COARSE ) return true;
 
 	ZLVec2D uv;
 
 	if ( ZLQuad::RemapCoord ( modelQuad, uvQuad, 0, x, y, uv)) {
-		return granularity == MOAIProp::HIT_TEST_FINE ? this->TestHit ( override, materialID, deckIndex, uv.mX, uv.mY ) : true;
+		return granularity == MOAIPartitionHull::HIT_TEST_FINE ? this->TestHit ( override, materialID, deckIndex, uv.mX, uv.mY ) : true;
 	}
 	
 	if ( ZLQuad::RemapCoord ( modelQuad, uvQuad, 1, x, y, uv)) {
-		return granularity == MOAIProp::HIT_TEST_FINE ? this->TestHit ( override, materialID, deckIndex, uv.mX, uv.mY ) : true;
+		return granularity == MOAIPartitionHull::HIT_TEST_FINE ? this->TestHit ( override, materialID, deckIndex, uv.mX, uv.mY ) : true;
 	}
 
 	return false;

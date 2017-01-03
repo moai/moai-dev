@@ -26,8 +26,8 @@ class MOAIViewport;
 	@const	FITTING_MODE_MASK
 */
 class MOAICameraFitter2D :
-	public MOAIAction,
-	public MOAINode {
+	public virtual MOAIAction,
+	public virtual MOAINode {
 private:
 
 	MOAILuaSharedPtr < MOAITransform >	mCamera;

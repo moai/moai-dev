@@ -5,7 +5,7 @@
 #define	MOAITEXTLABEL_H
 
 #include <moai-sim/MOAIAction.h>
-#include <moai-sim/MOAIGraphicsProp.h>
+#include <moai-sim/MOAIGraphicsPropBase.h>
 #include <moai-sim/MOAITextLayoutRules.h>
 #include <moai-sim/MOAITextLayout.h>
 #include <moai-sim/MOAITextStyle.h>
@@ -124,16 +124,14 @@ class MOAIFont;
 	@const	WORD_BREAK_CHAR
 */
 class MOAITextLabel :
-	public MOAIGraphicsProp,
+	public MOAIGraphicsPropBase,
 	public MOAIAction {
 private:
 
-	bool				mNeedsLayout;
-
-protected:
-
 	static const u32 REVEAL_ALL = 0xffffffff;
 	static const float DEFAULT_SPOOL_SPEED;
+	
+	bool					mNeedsLayout;
 	
 	float					mSpool;
 	float					mSpeed;
@@ -201,7 +199,6 @@ protected:
 	void				BuildLocalToWorldMtx	( ZLAffine3D& localToWorldMtx );
 	ZLMatrix4x4			GetWorldDrawingMtx		();
 	void				OnDepNodeUpdate			();
-	u32					OnGetModelBounds		( ZLBox& bounds );
 	void				OnUpdate				( double step );
 	void				ResetLayout				();
 	void				ScheduleLayout			();
@@ -209,13 +206,16 @@ protected:
 	virtual void		RefreshLayout			();
 	virtual void		RefreshStyleGlyphs		();
 
+	//----------------------------------------------------------------//
+	void				MOAIAbstractDrawable_Draw				( int subPrimID, float lod );
+	void				MOAIAbstractDrawable_DrawDebug			( int subPrimID, float lod );
+	u32					MOAIPartitionHull_GetModelBounds		( ZLBox& bounds );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAITextLabel )
 	
 	//----------------------------------------------------------------//
-	void				Draw					( int subPrimID, float lod );
-	void				DrawDebug				( int subPrimID, float lod );
 	bool				IsDone					();
 						MOAITextLabel			();
 						~MOAITextLabel			();

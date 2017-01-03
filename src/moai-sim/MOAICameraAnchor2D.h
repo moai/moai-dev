@@ -16,7 +16,7 @@ class MOAITransformBase;
 			MOAICameraFitter2D.
 */
 class MOAICameraAnchor2D :
-	public MOAINode {
+	public virtual MOAINode {
 private:
 
 	ZLRect							mRect;

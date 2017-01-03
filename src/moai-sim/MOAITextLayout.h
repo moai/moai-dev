@@ -5,7 +5,6 @@
 #define	MOAITEXTLAYOUT_H
 
 #include <moai-sim/MOAIAction.h>
-#include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAITextShaper.h>
 #include <moai-sim/MOAITextStyle.h>
 #include <moai-sim/MOAITextStyleParser.h>
