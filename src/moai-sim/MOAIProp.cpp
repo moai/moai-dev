@@ -28,40 +28,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@lua	getBounds
-	@text	Return the prop's local bounds or 'nil' if prop bounds is
-			global or missing. The bounds are in model space and will
-			be overridden by the prop's bounds if it's been set (using
-			setBounds ())
-	
-	@in		MOAIProp self
-	@out	number xMin
-	@out	number yMin
-	@out	number zMin
-	@out	number xMax
-	@out	number yMax
-	@out	number zMax
-*/
-int MOAIProp::_getBounds ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-	
-	ZLBox bounds;
-
-	u32 status = self->GetModelBounds ( bounds );
-	if ( status != BOUNDS_OK ) return 0;
-
-	state.Push ( bounds.mMin.mX );
-	state.Push ( bounds.mMin.mY );
-	state.Push ( bounds.mMin.mZ );
-	
-	state.Push ( bounds.mMax.mX );
-	state.Push ( bounds.mMax.mY );
-	state.Push ( bounds.mMax.mZ );
-
-	return 6;
-}
-
-//----------------------------------------------------------------//
 /**	@lua	getDeck
 	@text	Get the deck.
                
@@ -76,30 +42,6 @@ int MOAIProp::_getDeck ( lua_State* L ) {
 		return 1;
 	}
 	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	getDims
-	@text	Return the prop's width and height or 'nil' if prop rect is global.
-               
-	@in		MOAIProp self
-	@out	number width		X max - X min
-	@out	number height		Y max - Y min
-	@out	number depth		Z max - Z min
-*/
-int MOAIProp::_getDims ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-
-	ZLBox bounds;
-
-	u32 status = self->GetModelBounds ( bounds );
-	if ( status != BOUNDS_OK ) return 0;
- 
-	state.Push ( bounds.mMax.mX - bounds.mMin.mX );
-	state.Push ( bounds.mMax.mY - bounds.mMin.mY );
-	state.Push ( bounds.mMax.mZ - bounds.mMin.mZ );
- 
-	return 3;
 }
 
 //----------------------------------------------------------------//
@@ -135,178 +77,6 @@ int MOAIProp::_getIndex ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	getPartition
-	@text	Returns the partition prop is currently held in.
-	
-	@in		MOAILayer self
-	@out	MOAIPartition partition
-*/
-int	MOAIProp::_getPartition ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-
-	if ( self->mPartition ) {
-		self->mPartition->PushLuaUserdata ( state );
-		return 1;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	getPriority
-	@text	Returns the current priority of the node or 'nil' if the
-			priority is uninitialized.
-	
-	@in		MOAIProp self
-	@out	number priority		The node's priority or nil.
-*/
-int MOAIProp::_getPriority ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-	
-	if ( self->mPriority != UNKNOWN_PRIORITY ) {
-		lua_pushnumber ( state, self->mPriority );
-		return 1;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	getWorldBounds
-	@text	Return the prop's world bounds or 'nil' if prop bounds is
-			global or missing.
-	
-	@in		MOAIProp self
-	@out	number xMin
-	@out	number yMin
-	@out	number zMin
-	@out	number xMax
-	@out	number yMax
-	@out	number zMax
-*/
-int MOAIProp::_getWorldBounds ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-	
-	self->ForceUpdate ();
-	
-	if ( self->mPartition->IsGlobal ( *self )) return 0;
-	if ( self->mPartition->IsEmpty ( *self )) return 0;
-	
-	ZLBox bounds = self->mWorldBounds;
-
-	state.Push ( bounds.mMin.mX );
-	state.Push ( bounds.mMin.mY );
-	state.Push ( bounds.mMin.mZ );
-	
-	state.Push ( bounds.mMax.mX );
-	state.Push ( bounds.mMax.mY );
-	state.Push ( bounds.mMax.mZ );
-
-	return 6;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIProp::_getWorldBoundsCenter ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-	
-	self->ForceUpdate ();
-	
-	if ( self->mPartition->IsGlobal ( *self )) return 0;
-	if ( self->mPartition->IsEmpty ( *self )) return 0;
-	
-	ZLBox bounds = self->mWorldBounds;
-	
-	ZLVec3D center;
-	bounds.GetCenter ( center );
-
-	state.Push ( center.mX );
-	state.Push ( center.mY );
-	state.Push ( center.mZ );
-
-	return 3;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	inside
-	@text	Returns true if the given world space point falls inside
-			the prop's bounds.
-	
-	@in		MOAIProp self
-	@in		number x
-	@in		number y
-	@in		number z
-	@opt	number pad			Pad the hit bounds (in the prop's local space)
-	@out	boolean isInside
-*/
-int	MOAIProp::_inside ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-
-	ZLVec3D vec;
-	vec.mX	= state.GetValue < float >( 2, 0.0f );
-	vec.mY	= state.GetValue < float >( 3, 0.0f );
-	vec.mZ	= state.GetValue < float >( 4, 0.0f );
-
-	float pad = state.GetValue < float >( 5, 0.0f );
-
-	bool result = self->Inside ( vec, pad );
-	lua_pushboolean ( state, result );
-	
-	return 1;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setBounds
-	@text	Sets or clears the partition bounds override.
-	
-	@overload	Clear the bounds override.
-	
-		@in		MOAIProp self
-		@out	nil
-	
-	@overload	Set the bounds override.
-	
-		@in		MOAIProp self
-		@in		number xMin
-		@in		number yMin
-		@in		number zMin
-		@in		number xMax
-		@in		number yMax
-		@in		number zMax
-		@out	nil
-*/
-int MOAIProp::_setBounds ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-
-	if ( state.CheckParams ( 2, "NNNNNN", false )) {
-
-		self->mBoundsOverride = state.GetBox ( 2 );
-		self->mFlags |= FLAGS_OVERRIDE_BOUNDS;
-	}
-	else {
-		self->mFlags &= ~FLAGS_OVERRIDE_BOUNDS;
-	}
-	
-	self->ScheduleUpdate ();
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIProp::_setBoundsPad ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-
-	self->mBoundsPad.mX	= state.GetValue < float >( 2, 0.0f );
-	self->mBoundsPad.mY	= state.GetValue < float >( 3, 0.0f );
-	self->mBoundsPad.mZ	= state.GetValue < float >( 4, 0.0f );
-
-	bool pad = (( self->mBoundsPad.mX != 0.0f ) || ( self->mBoundsPad.mY != 0.0f ) || ( self->mBoundsPad.mZ != 0.0f ));
-	self->mFlags = pad ? ( self->mFlags | FLAGS_PAD_BOUNDS ) : ( self->mFlags & ~FLAGS_PAD_BOUNDS );
-
-	self->ScheduleUpdate ();
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@lua	setDeck
 	@text	Sets or clears the deck to be indexed by the prop.
 	
@@ -319,49 +89,6 @@ int MOAIProp::_setDeck ( lua_State* L ) {
 
 	self->mDeck.Set ( *self, state.GetLuaObject < MOAIDeck >( 2, true ));
 	self->ScheduleUpdate ();
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setExpandForSort
-	@text	Used when drawing with a layout scheme (i.e. MOAIGrid).
-			Expanding for sort causes the prop to emit a sub-prim
-			for each component of the layout. For example, when
-			attaching a MOAIGrid to a prop, each cell of the grid
-			will be added to the render queue for sorting against
-			all other props and sub-prims. This is obviously less
-			efficient, but still more efficient then using an
-			separate prop for each cell or object.
-	
-	@in		MOAIProp self
-	@in		boolean expandForSort	Default value is false.
-	@out	nil
-*/
-int MOAIProp::_setExpandForSort ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-
-	bool expandForSort = state.GetValue < bool >( 2, false );
-
-	if ( expandForSort ) {
-		self->mFlags |= FLAGS_EXPAND_FOR_SORT;
-	}
-	else {
-		self->mFlags &= ~FLAGS_EXPAND_FOR_SORT;
-	}
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: macro
-int MOAIProp::_setFlag ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-
-	u32 flag		= state.GetValue < u32 >( 2, 0 );
-	bool set		= state.GetValue < bool >( 3, true );
-
-	self->mFlags = set ? self->mFlags |= flag : self->mFlags &= flag;
-
 	return 0;
 }
 
@@ -405,26 +132,6 @@ int MOAIProp::_setGridScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	setHitGranularity
-	@text	Specify the granularity to use when performing a hit test. This is a hint to the implementation
-			as to how much processing to allocate to a given test. The default value is MOAIProp.HIT_TEST_COARSE,
-			which will cause only the deck or prop bounds to be used. A setting of MOAIProp.HIT_TEST_MEDIUM or
-			MOAIProp.HIT_TEST_FINE is implementation dependent on the deck, but 'medium' usually means to test
-			against the geometry of the deck and 'fine' means to test against both the geometry and the pixels
-			of the hit mask (if any).
-	
-	@in		MOAIProp self
-	@opt	int granularity		One of MOAIProp.HIT_TEST_COARSE, MOAIProp.HIT_TEST_MEDIUM, MOAIProp.HIT_TEST_FINE. Default is MOAIProp.HIT_TEST_COARSE.
-	@out	nil
-*/
-int MOAIProp::_setHitGranularity ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-
-	self->mHitGranularity = state.GetValue < u32 >( 2, HIT_TEST_COARSE );
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@lua	setIndex
 	@text	Set the prop's index into its deck.
 	
@@ -438,62 +145,6 @@ int MOAIProp::_setIndex ( lua_State* L ) {
 	self->mIndex = state.GetValue < u32 >( 2, 1 );
 	self->ScheduleUpdate ();
 
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIProp::_setLayer ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-	
-	MOAILayer* layer = state.GetLuaObject < MOAILayer >( 2, true );
-	self->SetPartition ( layer ? layer->GetPartition () : 0 );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIProp::_setPartition ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-	
-	MOAIPartition* partition = state.GetLuaObject < MOAIPartition >( 2, true );
-	self->SetPartition ( partition );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setPriority
-	@text	Sets or clears the node's priority. Clear the priority
-			to have MOAIPartition automatically assign a priority
-			to a node when it is added.
-	
-	@in		MOAIProp self
-	@opt	number priority		Default value is nil.
-	@out	nil
-*/
-int MOAIProp::_setPriority ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-	
-	if ( state.IsType ( 2, LUA_TNUMBER )) {
-		self->mPriority = ( s32 )state.GetValue < int >( 2, 0 );
-	}
-	else {
-		self->mPriority = UNKNOWN_PRIORITY;
-		if ( self->mPartition ) {
-			self->mPartition->AffirmPriority ( *self );
-		}
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIProp::_setQueryMask ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp, "U" )
-
-	self->mQueryMask = state.GetValue < u32 >( 2, 0 );
 	return 0;
 }
 
@@ -520,7 +171,132 @@ int MOAIProp::_setRemapper ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIProp::AddToSortBuffer ( MOAIPartitionResultBuffer& buffer, u32 key ) {
+bool MOAIProp::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	if ( MOAIPropAttr::Check ( attrID )) {
+		
+		switch ( UNPACK_ATTR ( attrID )) {
+			case ATTR_INDEX:
+				this->mIndex = ZLFloat::ToIndex ( attr.Apply (( s32 )this->mIndex, op, MOAIAttribute::ATTR_READ_WRITE ));
+				return true;
+		}
+	}
+	
+	return MOAIPartitionHull::ApplyAttrOp ( attrID, attr, op );
+}
+
+//----------------------------------------------------------------//
+//void MOAIProp::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
+//	UNUSED ( sampler );
+
+	//if ( !this->mDeck ) return;
+	//
+	//sampler.SetSourcePrim ( this );
+	//
+	//if ( this->mGrid ) {
+	//	
+	//	ZLRect localRect = sampler.GetLocalRect ();
+	//	
+	//	MOAICellCoord c0;
+	//	MOAICellCoord c1;
+	//	
+	//	ZLRect deckBounds = this->mDeck->GetBounds ().GetRect( ZLBox::PLANE_XY );
+
+	//	this->mGrid->GetBoundsInRect ( localRect, c0, c1, deckBounds );
+	//	//this->mDeck->GatherSurfaces ( *this->mGrid, this->mRemapper, this->mGridScale, c0, c1, sampler );
+	//}
+	//else {
+	//	//this->mDeck->GatherSurfaces ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), sampler );
+	//}
+//}
+
+//----------------------------------------------------------------//
+void MOAIProp::GetGridBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
+
+	const ZLFrustum& frustum = MOAIGfxMgr::Get ().mGfxState.GetViewVolume ();
+	
+	ZLRect viewRect;
+	if ( frustum.GetXYSectRect ( this->GetWorldToLocalMtx (), viewRect )) {
+	
+		// TODO: need to take into account perspective and truncate rect based on horizon
+		// TODO: consider bringing back poly to tile scanline converter...
+
+		ZLRect deckBounds = this->mDeck->GetBounds ().GetRect ( ZLBox::PLANE_XY );
+
+		this->mGrid->GetBoundsInRect ( viewRect, c0, c1, deckBounds );
+	}
+}
+
+//----------------------------------------------------------------//
+MOAIProp::MOAIProp () :
+	mIndex ( 1 ),
+	mGridScale ( 1.0f, 1.0f ) {
+	
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAIPartitionHull )
+	RTTI_END
+}
+
+//----------------------------------------------------------------//
+MOAIProp::~MOAIProp () {
+	
+	this->mDeck.Set ( *this, 0 );
+	this->mRemapper.Set ( *this, 0 );
+	this->mGrid.Set ( *this, 0 );
+}
+
+//----------------------------------------------------------------//
+void MOAIProp::RegisterLuaClass ( MOAILuaState& state ) {
+	
+	MOAIPartitionHull::RegisterLuaClass ( state );
+	
+	state.SetField ( -1, "ATTR_INDEX",					MOAIPropAttr::Pack ( ATTR_INDEX ));
+}
+
+//----------------------------------------------------------------//
+void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
+	
+	MOAIPartitionHull::RegisterLuaFuncs ( state );
+
+	luaL_Reg regTable [] = {
+		{ "getDeck",				_getDeck },
+		{ "getGrid",				_getGrid },
+		{ "getIndex",				_getIndex },
+		{ "setDeck",				_setDeck },
+		{ "setGrid",				_setGrid },
+		{ "setGridScale",			_setGridScale },
+		{ "setIndex",				_setIndex },
+		{ "setRemapper",			_setRemapper },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+	
+	MOAIPartitionHull::SerializeIn ( state, serializer );
+	
+	this->mDeck.Set ( *this, serializer.MemberIDToObject < MOAIDeck >( state.GetFieldValue < MOAISerializerBase::ObjID >( -1, "mDeck", 0 )));
+	this->mGrid.Set ( *this, serializer.MemberIDToObject < MOAIGrid >( state.GetFieldValue < MOAISerializerBase::ObjID >( -1, "mGrid", 0 )));
+}
+
+//----------------------------------------------------------------//
+void MOAIProp::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+	
+	MOAIPartitionHull::SerializeOut ( state, serializer );
+	
+	state.SetField ( -1, "mDeck", serializer.AffirmMemberID ( this->mDeck ));
+	state.SetField ( -1, "mGrid", serializer.AffirmMemberID ( this->mGrid ));
+}
+
+//================================================================//
+// MOAIProp virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIProp::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionResultBuffer& buffer, u32 key ) {
 
 	if (( this->mFlags & FLAGS_EXPAND_FOR_SORT ) && this->mGrid && this->mDeck ) {
 		
@@ -532,7 +308,7 @@ void MOAIProp::AddToSortBuffer ( MOAIPartitionResultBuffer& buffer, u32 key ) {
 		MOAICellCoord c0;
 		MOAICellCoord c1;
 		
-		// TODO: this needs to be pushed up one level to GatherProps
+		// TODO: this needs to be pushed up one level to GatherHulls
 		// should not assume anything about the view or rendering
 		// only need to do this if we have a frustum - will break
 		// expected results for other queries
@@ -562,221 +338,12 @@ void MOAIProp::AddToSortBuffer ( MOAIPartitionResultBuffer& buffer, u32 key ) {
 		}
 	}
 	else {
-		buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->mPriority, this->GetWorldLoc (), this->GetBounds ());
+		buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->GetPriority (), this->GetWorldLoc (), this->GetBounds ());
 	}
 }
 
 //----------------------------------------------------------------//
-bool MOAIProp::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
-
-	if ( MOAIPropAttr::Check ( attrID )) {
-		
-		switch ( UNPACK_ATTR ( attrID )) {
-			case ATTR_INDEX:
-				this->mIndex = ZLFloat::ToIndex ( attr.Apply (( s32 )this->mIndex, op, MOAIAttribute::ATTR_READ_WRITE ));
-				return true;
-			case ATTR_PARTITION:
-				this->SetPartition ( attr.ApplyVariantNoAdd < MOAIPartition* >( this->GetPartition (), op, MOAIAttribute::ATTR_READ_WRITE ));
-				return true;
-		}
-	}
-	
-	return MOAITransform::ApplyAttrOp ( attrID, attr, op );
-}
-
-//----------------------------------------------------------------//
-//void MOAIProp::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
-//	UNUSED ( sampler );
-
-	//if ( !this->mDeck ) return;
-	//
-	//sampler.SetSourcePrim ( this );
-	//
-	//if ( this->mGrid ) {
-	//	
-	//	ZLRect localRect = sampler.GetLocalRect ();
-	//	
-	//	MOAICellCoord c0;
-	//	MOAICellCoord c1;
-	//	
-	//	ZLRect deckBounds = this->mDeck->GetBounds ().GetRect( ZLBox::PLANE_XY );
-
-	//	this->mGrid->GetBoundsInRect ( localRect, c0, c1, deckBounds );
-	//	//this->mDeck->GatherSurfaces ( *this->mGrid, this->mRemapper, this->mGridScale, c0, c1, sampler );
-	//}
-	//else {
-	//	//this->mDeck->GatherSurfaces ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), sampler );
-	//}
-//}
-
-//----------------------------------------------------------------//
-bool MOAIProp::GetCellRect ( ZLRect* cellRect, ZLRect* paddedRect ) {
-
-	if ( !( cellRect || paddedRect )) return false;
-	
-	if ( this->mLevel ) {
-	
-		ZLVec3D center;
-		this->mWorldBounds.GetCenter ( center );
-		
-		MOAICellCoord coord = this->mLevel->mGridSpace.GetCellCoord ( center.mX, center.mY );
-		ZLRect rect = this->mLevel->mGridSpace.GetCellRect ( coord );
-		
-		if ( cellRect ) {
-			*cellRect = rect;
-		}
-		
-		if ( paddedRect ) {
-			rect.Inflate ( this->mLevel->mCellSize * 0.5f );
-			*paddedRect = rect;
-		}
-		return true;
-	}
-	
-	if ( cellRect ) {
-		cellRect->Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-	}
-	
-	if ( paddedRect ) {
-		paddedRect->Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-	}
-	
-	return false;
-}
-
-//----------------------------------------------------------------//
-void MOAIProp::GetGridBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
-
-	const ZLFrustum& frustum = MOAIGfxMgr::Get ().mGfxState.GetViewVolume ();
-	
-	ZLRect viewRect;
-	if ( frustum.GetXYSectRect ( this->GetWorldToLocalMtx (), viewRect )) {
-	
-		// TODO: need to take into account perspective and truncate rect based on horizon
-		// TODO: consider bringing back poly to tile scanline converter...
-
-		ZLRect deckBounds = this->mDeck->GetBounds ().GetRect ( ZLBox::PLANE_XY );
-
-		this->mGrid->GetBoundsInRect ( viewRect, c0, c1, deckBounds );
-	}
-}
-
-//----------------------------------------------------------------//
-u32 MOAIProp::GetModelBounds ( ZLBox& bounds ) {
-
-	if ( this->mFlags & FLAGS_PARTITION_GLOBAL ) {
-		return BOUNDS_GLOBAL;
-	}
-
-	u32 status = BOUNDS_EMPTY;
-
-	if ( this->mFlags & FLAGS_OVERRIDE_BOUNDS ) {
-		bounds = this->mBoundsOverride;
-		status = BOUNDS_OK;
-	}
-	else {
-		status = this->OnGetModelBounds ( bounds );
-	}
-	
-	if (( status == BOUNDS_OK ) && ( this->mFlags & FLAGS_PAD_BOUNDS )) {
-		bounds.Pad ( this->mBoundsPad.mX, this->mBoundsPad.mY, this->mBoundsPad.mZ );
-	}
-
-	return status;
-}
-
-//----------------------------------------------------------------//
-MOAIPartition* MOAIProp::GetPartitionTrait () {
-
-	return this->mPartition;
-}
-
-//----------------------------------------------------------------//
-bool MOAIProp::Inside ( ZLVec3D vec, float pad ) {
-
-	ZLAffine3D worldToLocal = this->GetWorldToLocalMtx ();
-	worldToLocal.Transform ( vec );
-	
-	return this->InsideModelBounds ( vec, pad );
-}
-
-//----------------------------------------------------------------//
-bool MOAIProp::InsideModelBounds ( const ZLVec3D& vec, float pad ) {
-
-	ZLBox bounds;
-
-	u32 status = this->GetModelBounds ( bounds );
-	
-	if ( status == BOUNDS_EMPTY ) return false;
-	
-	bool passTrivial = false;
-	
-	if ( status == BOUNDS_GLOBAL ) {
-		passTrivial = true;
-	}
-	else {
-		bounds.Bless ();
-		bounds.Inflate ( pad );
-		if ( pad != 0 ) bounds.Bless ();
-		passTrivial = bounds.Contains ( vec );
-	}
-	return passTrivial;
-}
-
-//----------------------------------------------------------------//
-MOAIProp::MOAIProp () :
-	mPartition ( 0 ),
-	mCell ( 0 ),
-	mLevel ( 0 ),
-	mNextResult ( 0 ),
-	mInterfaceMask ( 0 ),
-	mQueryMask ( 0xffffffff ),
-	mPriority ( UNKNOWN_PRIORITY ),
-	mBoundsStatus ( BOUNDS_EMPTY ),
-	mFlags ( 0 ),
-	mIndex ( 1 ),
-	mGridScale ( 1.0f, 1.0f ),
-	mBoundsPad ( 0.0f, 0.0f, 0.0f ),
-	mHitGranularity ( HIT_TEST_COARSE ) {
-	
-	RTTI_BEGIN
-		RTTI_EXTEND ( MOAITransform )
-	RTTI_END
-	
-	this->mLinkInCell.Data ( this );
-	this->mWorldBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
-}
-
-//----------------------------------------------------------------//
-MOAIProp::~MOAIProp () {
-
-	// MOAIPartition retains member props so it *should* be impossible
-	// to destruct a prop without first removing it
-	assert ( !this->mPartition );
-	assert ( !this->mCell );
-	
-	this->mDeck.Set ( *this, 0 );
-	this->mRemapper.Set ( *this, 0 );
-	this->mGrid.Set ( *this, 0 );
-}
-
-//----------------------------------------------------------------//
-void MOAIProp::OnDepNodeUpdate () {
-	
-	MOAITransform::OnDepNodeUpdate ();
-	
-	ZLBox propBounds;
-	u32 propBoundsStatus = this->GetModelBounds ( propBounds );
-	
-	// update the prop location in the partition
-	if ( propBoundsStatus == BOUNDS_OK ) {
-		propBounds.Transform ( this->mLocalToWorldMtx );
-	}
-	this->UpdateWorldBounds ( propBounds, propBoundsStatus );
-}
-
-//----------------------------------------------------------------//
-u32 MOAIProp::OnGetModelBounds ( ZLBox& bounds ) {
+u32 MOAIProp::MOAIPartitionHull_GetModelBounds ( ZLBox& bounds ) {
 	
 	if ( this->mGrid ) {
 		
@@ -794,137 +361,4 @@ u32 MOAIProp::OnGetModelBounds ( ZLBox& bounds ) {
 	}
 	
 	return BOUNDS_EMPTY;
-}
-
-//----------------------------------------------------------------//
-void MOAIProp::OnBoundsChanged () {
-}
-
-//----------------------------------------------------------------//
-void MOAIProp::OnRemoved () {
-}
-
-//----------------------------------------------------------------//
-bool MOAIProp::PrepareForInsertion ( const MOAIPartition& partition ) {
-	UNUSED ( partition );
-	return true;
-}
-
-//----------------------------------------------------------------//
-void MOAIProp::RegisterLuaClass ( MOAILuaState& state ) {
-	
-	MOAITransform::RegisterLuaClass ( state );
-	
-	state.SetField ( -1, "ATTR_INDEX",					MOAIPropAttr::Pack ( ATTR_INDEX ));
-	state.SetField ( -1, "ATTR_PARTITION",				MOAIPropAttr::Pack ( ATTR_PARTITION ));
-	
-	state.SetField ( -1, "FLAGS_EXPAND_FOR_SORT",		( u32 )FLAGS_EXPAND_FOR_SORT );
-	state.SetField ( -1, "FLAGS_PARTITION_GLOBAL",		( u32 )FLAGS_PARTITION_GLOBAL );
-	
-	state.SetField ( -1, "HIT_TEST_COARSE",			( u32 )HIT_TEST_COARSE );
-	state.SetField ( -1, "HIT_TEST_MEDIUM",			( u32 )HIT_TEST_MEDIUM );
-	state.SetField ( -1, "HIT_TEST_FINE",			( u32 )HIT_TEST_FINE );
-}
-
-//----------------------------------------------------------------//
-void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
-	
-	MOAITransform::RegisterLuaFuncs ( state );
-
-	luaL_Reg regTable [] = {
-		{ "getBounds",				_getBounds },
-		{ "getDeck",				_getDeck },
-		{ "getDims",				_getDims },
-		{ "getGrid",				_getGrid },
-		{ "getIndex",				_getIndex },
-		{ "getPartition",			_getPartition },
-		{ "getPriority",			_getPriority },
-		{ "getWorldBounds",			_getWorldBounds },
-		{ "getWorldBoundsCenter",	_getWorldBoundsCenter },
-		{ "inside",					_inside },
-		{ "setBounds",				_setBounds },
-		{ "setBoundsPad",			_setBoundsPad },
-		{ "setDeck",				_setDeck },
-		{ "setExpandForSort",		_setExpandForSort },
-		{ "setFlag",				_setFlag },
-		{ "setGrid",				_setGrid },
-		{ "setGridScale",			_setGridScale },
-		{ "setHitGranularity",		_setHitGranularity },
-		{ "setIndex",				_setIndex },
-		{ "setLayer",				_setLayer },
-		{ "setPartition",			_setPartition },
-		{ "setPriority",			_setPriority },
-		{ "setQueryMask",			_setQueryMask },
-		{ "setRemapper",			_setRemapper },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	
-	MOAITransform::SerializeIn ( state, serializer );
-	
-	this->mDeck.Set ( *this, serializer.MemberIDToObject < MOAIDeck >( state.GetFieldValue < MOAISerializerBase::ObjID >( -1, "mDeck", 0 )));
-	this->mGrid.Set ( *this, serializer.MemberIDToObject < MOAIGrid >( state.GetFieldValue < MOAISerializerBase::ObjID >( -1, "mGrid", 0 )));
-}
-
-//----------------------------------------------------------------//
-void MOAIProp::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	
-	MOAITransform::SerializeOut ( state, serializer );
-	
-	state.SetField ( -1, "mDeck", serializer.AffirmMemberID ( this->mDeck ));
-	state.SetField ( -1, "mGrid", serializer.AffirmMemberID ( this->mGrid ));
-}
-
-//----------------------------------------------------------------//
-void MOAIProp::SetPartition ( MOAIPartition* partition ) {
-
-	if ( partition != this->mPartition ) {
-		if ( partition ) {
-			partition->InsertProp ( *this );
-		}
-		else if ( this->mPartition ) {
-			this->mPartition->RemoveProp ( *this );
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIProp::UpdateWorldBounds ( u32 status ) {
-
-	ZLBox bounds;
-	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
-
-	if ( status == BOUNDS_OK ) {
-		status = BOUNDS_EMPTY;
-	}
-	this->UpdateWorldBounds ( bounds, status );
-}
-
-//----------------------------------------------------------------//
-void MOAIProp::UpdateWorldBounds ( const ZLBox& bounds, u32 status ) {
-
-	MOAIPartitionCell* prevCell = this->mCell;
-	ZLBox prevBounds = this->mWorldBounds;
-
-	this->mWorldBounds = bounds;
-	this->mWorldBounds.Bless ();
-	
-	this->mBoundsStatus = status;
-
-	if (( status == BOUNDS_OK ) && this->mWorldBounds.IsPoint ()) {
-		status = BOUNDS_EMPTY;
-	}
-
-	if ( this->mPartition ) {
-		this->mPartition->UpdateProp ( *this, status );
-		
-		if (( prevCell != this->mCell ) || ( !prevBounds.IsSame ( this->mWorldBounds ))) {
-			this->OnBoundsChanged ();
-		}
-	}
 }

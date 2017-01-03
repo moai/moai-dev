@@ -583,12 +583,6 @@ MOAIMaterialBatch* MOAIGraphicsProp::AffirmMaterialBatch () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIGraphicsProp::AffirmInterfaceMask ( MOAIPartition& partition ) {
-
-	return partition.AffirmInterfaceMask < MOAIGraphicsProp >();
-}
-
-//----------------------------------------------------------------//
 bool MOAIGraphicsProp::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( MOAIGraphicsPropAttr::Check ( attrID )) {
@@ -676,7 +670,7 @@ void MOAIGraphicsProp::DrawDebug ( int subPrimID, float lod ) {
 	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
 	
 	ZLBox modelBounds;
-	this->OnGetModelBounds ( modelBounds );
+	this->GetModelBounds ( modelBounds );
 	
 	if ( debugLines.Bind ( MOAIDebugLines::PROP_MODEL_AXIS )) {
 		draw.DrawBoxAxis ( modelBounds );
@@ -858,22 +852,6 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 	}
 	
 	return worldDrawingMtx;
-}
-
-//----------------------------------------------------------------//
-bool MOAIGraphicsProp::Inside ( ZLVec3D vec, float pad ) {
-
-	ZLAffine3D worldToLocal = this->GetWorldToLocalMtx ();
-	worldToLocal.Transform ( vec );
-
-	bool passTrivial = this->InsideModelBounds ( vec, pad );
-	
-	// TODO: handle grids
-	if ( passTrivial && this->mDeck && ( this->mHitGranularity > HIT_TEST_COARSE )) {
-	
-		return this->mDeck->Inside ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), this->mMaterialBatch, this->mHitGranularity, vec, pad );
-	}
-	return passTrivial;
 }
 
 //----------------------------------------------------------------//
@@ -1101,4 +1079,30 @@ void MOAIGraphicsProp::SetVisible ( bool visible ) {
 
 	this->mFlags = visible ? this->mFlags | FLAGS_LOCAL_VISIBLE : this->mFlags & ~FLAGS_LOCAL_VISIBLE;
 	this->ScheduleUpdate ();
+}
+
+//================================================================//
+// MOAIGraphicsProp virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+u32 MOAIGraphicsProp::MOAIPartitionHull_AffirmInterfaceMask ( MOAIPartition& partition ) {
+
+	return partition.AffirmInterfaceMask < MOAIGraphicsProp >();
+}
+
+//----------------------------------------------------------------//
+bool MOAIGraphicsProp::MOAIPartitionHull_Inside ( ZLVec3D vec, float pad ) {
+
+	ZLAffine3D worldToLocal = this->GetWorldToLocalMtx ();
+	worldToLocal.Transform ( vec );
+
+	bool passTrivial = this->InsideModelBounds ( vec, pad );
+	
+	// TODO: handle grids
+	if ( passTrivial && this->mDeck && ( this->mHitGranularity > HIT_TEST_COARSE )) {
+	
+		return this->mDeck->Inside ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), this->mMaterialBatch, this->mHitGranularity, vec, pad );
+	}
+	return passTrivial;
 }

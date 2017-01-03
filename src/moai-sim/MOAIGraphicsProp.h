@@ -133,11 +133,14 @@ protected:
 	float									mLODMax;
 
 	//----------------------------------------------------------------//
-	u32						AffirmInterfaceMask			( MOAIPartition& partition );
 	virtual ZLMatrix4x4		GetWorldDrawingMtx			(); // factors in billboard flags
 	void					LoadGfxState				();
 	void					LoadUVTransform				();
 	void					LoadVertexTransform			();
+
+	//----------------------------------------------------------------//
+	u32						MOAIPartitionHull_AffirmInterfaceMask		( MOAIPartition& partition );
+	bool					MOAIPartitionHull_Inside					( ZLVec3D vec, float pad );
 
 public:
 
@@ -191,7 +194,6 @@ public:
 	bool					ApplyAttrOp					( u32 attrID, MOAIAttribute& attr, u32 op );
 	virtual void			Draw						( int subPrimID, float lod );
 	virtual void			DrawDebug					( int subPrimID, float lod );
-	bool					Inside						( ZLVec3D vec, float pad );
 	bool					IsVisible					(); // just check the visibility flags
 	bool					IsVisible					( float lod ); // check the visibility flags *and* the LOD
 							MOAIGraphicsProp			();

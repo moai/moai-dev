@@ -71,12 +71,6 @@ int MOAICollisionProp::_setOverlapFlags ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-u32 MOAICollisionProp::AffirmInterfaceMask ( MOAIPartition& partition ) {
-
-	return partition.AffirmInterfaceMask < MOAICollisionProp >();
-}
-
-//----------------------------------------------------------------//
 void MOAICollisionProp::ClearOverlapLink ( MOAICollisionProp& other ) {
 
 	MOAIPropOverlapLink* cursor = this->mOverlapLinks;
@@ -120,26 +114,6 @@ MOAICollisionProp::MOAICollisionProp () :
 
 //----------------------------------------------------------------//
 MOAICollisionProp::~MOAICollisionProp () {
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionProp::OnBoundsChanged () {
-	
-	if ( this->mCollisionWorld && this->mOverlapFlags ) {
-		this->mCollisionWorld->MakeActive ( *this );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionProp::OnRemoved () {
-
-	this->mCollisionWorld = 0;
-}
-
-//----------------------------------------------------------------//
-bool MOAICollisionProp::PrepareForInsertion ( const MOAIPartition& partition ) {
-	UNUSED ( partition );
-	return true;
 }
 
 //----------------------------------------------------------------//
@@ -193,4 +167,34 @@ void MOAICollisionProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& ser
 void MOAICollisionProp::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	
 	MOAIProp::SerializeOut ( state, serializer );
+}
+
+//================================================================//
+// MOAICollisionProp virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+u32 MOAICollisionProp::MOAIPartitionHull_AffirmInterfaceMask ( MOAIPartition& partition ) {
+
+	return partition.AffirmInterfaceMask < MOAICollisionProp >();
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionProp::MOAIPartitionHull_BoundsDidChange () {
+	
+	if ( this->mCollisionWorld && this->mOverlapFlags ) {
+		this->mCollisionWorld->MakeActive ( *this );
+	}
+}
+
+//----------------------------------------------------------------//
+bool MOAICollisionProp::MOAIPartitionHull_PrepareForInsertion ( const MOAIPartition& partition ) {
+	UNUSED ( partition );
+	return true;
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionProp::MOAIPartitionHull_WasRemovedFromPartition () {
+
+	this->mCollisionWorld = 0;
 }

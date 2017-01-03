@@ -7,7 +7,7 @@
 class MOAIPartition;
 class MOAIPartitionLevel;
 class MOAIPartitionResultBuffer;
-class MOAIProp;
+class MOAIPartitionHull;
 
 //================================================================//
 // MOAIPartitionCell
@@ -17,22 +17,22 @@ private:
 	
 	friend class MOAIPartition;
 	friend class MOAIPartitionLevel;
-	friend class MOAIProp;
+	friend class MOAIPartitionHull;
 	
-	typedef ZLLeanList < MOAIProp* >::Iterator PropIt;
-	ZLLeanList < MOAIProp* > mProps;
+	typedef ZLLeanList < MOAIPartitionHull* >::Iterator HullIt;
+	ZLLeanList < MOAIPartitionHull* > mHulls;
 
 	//----------------------------------------------------------------//
 	void			Clear					();
 	void			ExtractProps			( MOAIPartitionCell& cell, MOAIPartitionLevel* level );
-	void			GatherProps				( MOAIPartitionResultBuffer& results, const MOAIProp* ignoreProp, u32 interfaceMask, u32 queryMask );
-	void			GatherProps				( MOAIPartitionResultBuffer& results, const MOAIProp* ignoreProp, const ZLVec3D& point, u32 interfaceMask, u32 queryMask );
-	void			GatherProps				( MOAIPartitionResultBuffer& results, const MOAIProp* ignoreProp, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask, u32 queryMask );
-	void			GatherProps				( MOAIPartitionResultBuffer& results, const MOAIProp* ignoreProp, const ZLRect& rect, u32 interfaceMask, u32 queryMask );
-	void			GatherProps				( MOAIPartitionResultBuffer& results, const MOAIProp* ignoreProp, const ZLBox& box, u32 interfaceMask, u32 queryMask );
-	void			GatherProps				( MOAIPartitionResultBuffer& results, const MOAIProp* ignoreProp, const ZLFrustum& frustum, u32 interfaceMask, u32 queryMask );
-	void			InsertProp				( MOAIProp& prop );
-	void			RemoveProp				( MOAIProp& prop );
+	void			GatherHulls				( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, u32 interfaceMask, u32 queryMask );
+	void			GatherHulls				( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLVec3D& point, u32 interfaceMask, u32 queryMask );
+	void			GatherHulls				( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask, u32 queryMask );
+	void			GatherHulls				( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLRect& rect, u32 interfaceMask, u32 queryMask );
+	void			GatherHulls				( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLBox& box, u32 interfaceMask, u32 queryMask );
+	void			GatherHulls				( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLFrustum& frustum, u32 interfaceMask, u32 queryMask );
+	void			InsertHull				( MOAIPartitionHull& hull );
+	void			RemoveHull				( MOAIPartitionHull& hull );
 	void			ScheduleProps			(); // schedule all props in cell for update
 					
 public:

@@ -23,7 +23,7 @@ int MOAICollisionWorld::_insertProp ( lua_State* L ) {
 	
 	MOAICollisionProp* prop = state.GetLuaObject < MOAICollisionProp >( 2, true );
 	if ( prop ) {
-		self->InsertProp ( *prop );
+		self->InsertHull ( *prop );
 	}
 	return 0;
 }
@@ -237,13 +237,13 @@ void MOAICollisionWorld::DrawCollisionProp ( MOAICollisionProp& prop ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionWorld::InsertProp ( MOAICollisionProp& prop ) {
+void MOAICollisionWorld::InsertHull ( MOAICollisionProp& prop ) {
 
 	if ( prop.mCollisionWorld != this ) {
 	
 		// clears out the old collision world (if any )
 		if ( prop.mCollisionWorld ) {
-			prop.mCollisionWorld->RemoveProp ( prop );
+			prop.mCollisionWorld->RemoveHull ( prop );
 		}
 		
 		if ( this->mPartition ) {
@@ -349,12 +349,12 @@ void MOAICollisionWorld::ProcessOverlaps () {
 		// this gives us the coarse filter based on world space bounds
 		// TODO: find a way to utilize overlap flags?
 		MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
-		u32 totalResults = this->mPartition->GatherProps ( buffer, &prop, prop.GetBounds (), interfaceMask );
+		u32 totalResults = this->mPartition->GatherHulls ( buffer, &prop, prop.GetBounds (), interfaceMask );
 		
 		for ( u32 i = 0; i < totalResults; ++i ) {
 		
 			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-			MOAICollisionProp* otherProp = result->mProp->AsType < MOAICollisionProp >();
+			MOAICollisionProp* otherProp = result->AsType < MOAICollisionProp >();
 			
 			if ( !otherProp ) continue;
 			if ( !( prop.mGroupMask & otherProp->mGroupMask )) continue;
@@ -463,7 +463,7 @@ void MOAICollisionWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionWorld::RemoveProp ( MOAICollisionProp& prop ) {
+void MOAICollisionWorld::RemoveHull ( MOAICollisionProp& prop ) {
 
 	assert ( prop.mCollisionWorld == this );
 	assert ( this->mPartition );
@@ -471,7 +471,7 @@ void MOAICollisionWorld::RemoveProp ( MOAICollisionProp& prop ) {
 	this->ClearOverlaps ( prop );
 	this->MakeInactive ( prop );
 	
-	this->mPartition->RemoveProp ( prop );
+	this->mPartition->RemoveHull ( prop );
 }
 
 //----------------------------------------------------------------//

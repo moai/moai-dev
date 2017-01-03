@@ -89,12 +89,14 @@ private:
 	static int				_setOverlapFlags		( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	u32						AffirmInterfaceMask		( MOAIPartition& partition );
 	void					ClearOverlapLink		( MOAICollisionProp& other );
 	bool					IsActive				();
-	void					OnBoundsChanged			();
-	void					OnRemoved				();
-	bool					PrepareForInsertion		( const MOAIPartition& partition );
+	
+	//----------------------------------------------------------------//
+	u32						MOAIPartitionHull_AffirmInterfaceMask		( MOAIPartition& partition );
+	void					MOAIPartitionHull_BoundsDidChange			();
+	bool					MOAIPartitionHull_PrepareForInsertion		( const MOAIPartition& partition );
+	void					MOAIPartitionHull_WasRemovedFromPartition	();
 	
 public:
 
