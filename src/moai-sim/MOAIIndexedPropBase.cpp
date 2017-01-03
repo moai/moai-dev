@@ -51,9 +51,9 @@ int MOAIIndexedPropBase::_setIndex ( lua_State* L ) {
 MOAIIndexedPropBase::MOAIIndexedPropBase () :
 	mIndex ( 1 ) {
 	
-//	RTTI_BEGIN
-//		RTTI_EXTEND ( MOAIPartitionHull )
-//	RTTI_END
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAIDeckPropBase )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

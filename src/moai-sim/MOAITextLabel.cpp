@@ -1006,7 +1006,6 @@ void MOAITextLabel::RefreshStyleGlyphs () {
 //----------------------------------------------------------------//
 void MOAITextLabel::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIPartitionHull::RegisterLuaClass ( state );
 	MOAIGraphicsPropBase::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass ( state );
 
@@ -1029,7 +1028,6 @@ void MOAITextLabel::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITextLabel::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIPartitionHull::RegisterLuaFuncs ( state );
 	MOAIGraphicsPropBase::RegisterLuaFuncs ( state );
 	MOAIAction::RegisterLuaFuncs ( state );
 	
@@ -1092,7 +1090,6 @@ void MOAITextLabel::ScheduleLayout () {
 //----------------------------------------------------------------//
 void MOAITextLabel::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
-	MOAIPartitionHull::SerializeIn ( state, serializer );
 	MOAIGraphicsPropBase::SerializeIn ( state, serializer );
 	MOAIAction::SerializeIn ( state, serializer );
 }
@@ -1100,7 +1097,6 @@ void MOAITextLabel::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seriali
 //----------------------------------------------------------------//
 void MOAITextLabel::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
-	MOAIPartitionHull::SerializeOut ( state, serializer );
 	MOAIGraphicsPropBase::SerializeOut ( state, serializer );
 	MOAIAction::SerializeOut ( state, serializer );
 }
@@ -1226,7 +1222,6 @@ void MOAITextLabel::MOAINode_Update () {
 
 	this->Refresh ();
 	MOAIGraphicsPropBase::MOAINode_Update ();
-	MOAIPartitionHull::MOAINode_Update ();
 }
 
 //----------------------------------------------------------------//

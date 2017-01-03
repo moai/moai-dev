@@ -37,24 +37,6 @@ int MOAIDeck::_draw ( lua_State* L ) {
 	return 0;
 }
 
-
-//----------------------------------------------------------------//
-/**	@lua	setBoundsDeck
-	@text	Set or clear the bounds override deck.
-	
-	@in		MOAIDeck self
-	@opt	MOAIBoundsDeck boundsDeck
-	@out	nil
-*/
-int MOAIDeck::_setBoundsDeck ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "U" )
-	
-	self->mBoundsDeck.Set ( *self, state.GetLuaObject < MOAIBoundsDeck >( 2, true ));
-	
-	return 0;
-}
-
-
 //----------------------------------------------------------------//
 /**	@lua	getBounds
 	@text	Return bounds for an item or the maximum bounds for the
@@ -96,6 +78,22 @@ int MOAIDeck::_getBounds ( lua_State* L ) {
 	
 	state.Push ( box );
 	return 6;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	setBoundsDeck
+	@text	Set or clear the bounds override deck.
+	
+	@in		MOAIDeck self
+	@opt	MOAIBoundsDeck boundsDeck
+	@out	nil
+*/
+int MOAIDeck::_setBoundsDeck ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIDeck, "U" )
+	
+	self->mBoundsDeck.Set ( *self, state.GetLuaObject < MOAIBoundsDeck >( 2, true ));
+	
+	return 0;
 }
 
 //================================================================//

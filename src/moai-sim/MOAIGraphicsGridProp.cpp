@@ -36,9 +36,7 @@
 MOAIGraphicsGridProp::MOAIGraphicsGridProp () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeckPropBase )
 		RTTI_EXTEND ( MOAIGridPropBase )
-		RTTI_EXTEND ( MOAIPartitionHull )
 		RTTI_EXTEND ( MOAIGraphicsPropBase )
 	RTTI_END
 }
@@ -50,7 +48,6 @@ MOAIGraphicsGridProp::~MOAIGraphicsGridProp () {
 //----------------------------------------------------------------//
 void MOAIGraphicsGridProp::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	MOAIPartitionHull::RegisterLuaClass ( state );
 	MOAIGridPropBase::RegisterLuaClass ( state );
 	MOAIGraphicsPropBase::RegisterLuaClass ( state );
 }
@@ -58,7 +55,6 @@ void MOAIGraphicsGridProp::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGraphicsGridProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIPartitionHull::RegisterLuaFuncs ( state );
 	MOAIGridPropBase::RegisterLuaFuncs ( state );
 	MOAIGraphicsPropBase::RegisterLuaFuncs ( state );
 }
@@ -66,7 +62,6 @@ void MOAIGraphicsGridProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGraphicsGridProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
-	MOAIPartitionHull::SerializeIn ( state, serializer );
 	MOAIGridPropBase::SerializeIn ( state, serializer );
 	MOAIGraphicsPropBase::SerializeIn ( state, serializer );
 }
@@ -74,7 +69,6 @@ void MOAIGraphicsGridProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& 
 //----------------------------------------------------------------//
 void MOAIGraphicsGridProp::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	
-	MOAIPartitionHull::SerializeOut ( state, serializer );
 	MOAIGridPropBase::SerializeOut ( state, serializer );
 	MOAIGraphicsPropBase::SerializeOut ( state, serializer );
 }
@@ -100,7 +94,7 @@ void MOAIGraphicsGridProp::MOAIAbstractDrawable_Draw ( int subPrimID, float lod 
 	MOAICellCoord c0, c1;
 
 	if ( subPrimID == MOAIPartitionHull::NO_SUBPRIM_ID ) {
-		this->GetGridBoundsInView ( c0, c1 );
+		this->GetGridBoundsInView ( this->GetWorldToLocalMtx (), c0, c1 );
 	}
 	else {
 		c0 = c1 = grid.GetCellCoord ( subPrimID );
@@ -120,7 +114,6 @@ bool MOAIGraphicsGridProp::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& att
 void MOAIGraphicsGridProp::MOAINode_Update () {
 	
 	MOAIGraphicsPropBase::MOAINode_Update ();
-	MOAIPartitionHull::MOAINode_Update ();
 }
 
 //----------------------------------------------------------------//
@@ -140,7 +133,7 @@ void MOAIGraphicsGridProp::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionResu
 		// should not assume anything about the view or rendering
 		// only need to do this if we have a frustum - will break
 		// expected results for other queries
-		this->GetGridBoundsInView ( c0, c1 );
+		this->GetGridBoundsInView ( this->GetWorldToLocalMtx (), c0, c1 );
 
 		for ( int y = c0.mY; y <= c1.mY; ++y ) {
 			for ( int x = c0.mX; x <= c1.mX; ++x ) {

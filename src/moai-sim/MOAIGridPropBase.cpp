@@ -65,6 +65,8 @@ int MOAIGridPropBase::_setGridScale ( lua_State* L ) {
 	self->mGridScale.mX = state.GetValue < float >( 2, 1.0f );
 	self->mGridScale.mY = state.GetValue < float >( 3, 1.0f );
 	
+	self->ScheduleUpdate ();
+	
 	return 0;
 }
 
@@ -98,12 +100,13 @@ int MOAIGridPropBase::_setGridScale ( lua_State* L ) {
 //}
 
 //----------------------------------------------------------------//
-void MOAIGridPropBase::GetGridBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
+void MOAIGridPropBase::GetGridBoundsInView ( const ZLAffine3D& worldToLocalMtx, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 
 	const ZLFrustum& frustum = MOAIGfxMgr::Get ().mGfxState.GetViewVolume ();
 	
 	ZLRect viewRect;
-	if ( frustum.GetXYSectRect ( this->GetWorldToLocalMtx (), viewRect )) {
+	//if ( frustum.GetXYSectRect ( this->GetWorldToLocalMtx (), viewRect )) {
+	if ( frustum.GetXYSectRect ( worldToLocalMtx, viewRect )) {
 	
 		// TODO: need to take into account perspective and truncate rect based on horizon
 		// TODO: consider bringing back poly to tile scanline converter...
@@ -119,7 +122,7 @@ MOAIGridPropBase::MOAIGridPropBase () :
 	mGridScale ( 1.0f, 1.0f ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIPartitionHull )
+		RTTI_EXTEND ( MOAIDeckPropBase )
 	RTTI_END
 }
 
@@ -132,13 +135,13 @@ MOAIGridPropBase::~MOAIGridPropBase () {
 //----------------------------------------------------------------//
 void MOAIGridPropBase::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	MOAIPartitionHull::RegisterLuaClass ( state );
+	MOAIDeckPropBase::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIGridPropBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	//MOAIPartitionHull::RegisterLuaFuncs ( state );
+	MOAIDeckPropBase::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "getGrid",				_getGrid },
@@ -153,18 +156,16 @@ void MOAIGridPropBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGridPropBase::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
-	MOAIPartitionHull::SerializeIn ( state, serializer );
+	MOAIDeckPropBase::SerializeIn ( state, serializer );
 	
-	//this->mDeck.Set ( *this, serializer.MemberIDToObject < MOAIDeck >( state.GetFieldValue < MOAISerializerBase::ObjID >( -1, "mDeck", 0 )));
 	this->mGrid.Set ( *this, serializer.MemberIDToObject < MOAIGrid >( state.GetFieldValue < MOAISerializerBase::ObjID >( -1, "mGrid", 0 )));
 }
 
 //----------------------------------------------------------------//
 void MOAIGridPropBase::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	
-	MOAIPartitionHull::SerializeOut ( state, serializer );
+	MOAIDeckPropBase::SerializeOut ( state, serializer );
 	
-	//state.SetField ( -1, "mDeck", serializer.AffirmMemberID ( this->mDeck ));
 	state.SetField ( -1, "mGrid", serializer.AffirmMemberID ( this->mGrid ));
 }
 

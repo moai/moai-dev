@@ -23,7 +23,7 @@ class MOAIDeck;
 	@attr	ATTR_PARTITION
 */
 class MOAIDeckPropBase :
-	public virtual MOAIPartitionHull {
+	public virtual MOAINode {
 private:
 	
 	//----------------------------------------------------------------//

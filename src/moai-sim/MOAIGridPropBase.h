@@ -53,9 +53,9 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-	void				GetGridBoundsInView		( MOAICellCoord& c0, MOAICellCoord& c1 ); // TODO: this shoudln't be here
-						MOAIGridPropBase				();
-	virtual				~MOAIGridPropBase				();
+	void				GetGridBoundsInView		( const ZLAffine3D& worldToLocalMtx, MOAICellCoord& c0, MOAICellCoord& c1 ); // TODO: this shoudln't be here
+						MOAIGridPropBase		();
+	virtual				~MOAIGridPropBase		();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );

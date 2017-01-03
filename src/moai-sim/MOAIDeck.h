@@ -52,6 +52,7 @@ public:
 	virtual ZLBox					GetBounds					( u32 idx ) = 0;
 	virtual void					GetCollisionShape			( MOAICollisionShape& shape ) = 0;
 	virtual bool					Inside						( u32 idx, MOAIMaterialBatch* materials, u32 granularity, ZLVec3D vec, float pad ) = 0;
+
 									MOAIDeck					();
 									~MOAIDeck					();
 	void							RegisterLuaClass			( MOAILuaState& state );

@@ -92,9 +92,9 @@ public:
 */
 class MOAIGraphicsPropBase :
 	public virtual MOAIPartitionHull,
-	public MOAIColor,
-	public MOAIRenderable,
-	public MOAIAbstractDrawable {
+	public virtual MOAIColor,
+	public virtual MOAIRenderable,
+	public virtual MOAIAbstractDrawable {
 private:
 	
 	//----------------------------------------------------------------//

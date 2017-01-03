@@ -36,9 +36,7 @@
 MOAIGraphicsProp::MOAIGraphicsProp () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeckPropBase )
 		RTTI_EXTEND ( MOAIIndexedPropBase )
-		RTTI_EXTEND ( MOAIPartitionHull )
 		RTTI_EXTEND ( MOAIGraphicsPropBase )
 	RTTI_END
 }
@@ -50,7 +48,6 @@ MOAIGraphicsProp::~MOAIGraphicsProp () {
 //----------------------------------------------------------------//
 void MOAIGraphicsProp::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	MOAIPartitionHull::RegisterLuaClass ( state );
 	MOAIIndexedPropBase::RegisterLuaClass ( state );
 	MOAIGraphicsPropBase::RegisterLuaClass ( state );
 }
@@ -58,7 +55,7 @@ void MOAIGraphicsProp::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGraphicsProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIPartitionHull::RegisterLuaFuncs ( state );
+	
 	MOAIIndexedPropBase::RegisterLuaFuncs ( state );
 	MOAIGraphicsPropBase::RegisterLuaFuncs ( state );
 }
@@ -66,7 +63,6 @@ void MOAIGraphicsProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGraphicsProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
-	MOAIPartitionHull::SerializeIn ( state, serializer );
 	MOAIIndexedPropBase::SerializeIn ( state, serializer );
 	MOAIGraphicsPropBase::SerializeIn ( state, serializer );
 }
@@ -74,7 +70,6 @@ void MOAIGraphicsProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seri
 //----------------------------------------------------------------//
 void MOAIGraphicsProp::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	
-	MOAIPartitionHull::SerializeOut ( state, serializer );
 	MOAIIndexedPropBase::SerializeOut ( state, serializer );
 	MOAIGraphicsPropBase::SerializeOut ( state, serializer );
 }
@@ -103,7 +98,6 @@ bool MOAIGraphicsProp::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u
 	
 	if ( MOAIIndexedPropBase::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
 	if ( MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
-	if ( MOAIPartitionHull::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
 	return false;
 }
 
@@ -111,7 +105,6 @@ bool MOAIGraphicsProp::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u
 void MOAIGraphicsProp::MOAINode_Update () {
 	
 	MOAIGraphicsPropBase::MOAINode_Update ();
-	MOAIPartitionHull::MOAINode_Update ();
 }
 
 //----------------------------------------------------------------//

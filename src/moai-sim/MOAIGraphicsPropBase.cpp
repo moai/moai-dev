@@ -793,6 +793,7 @@ MOAIGraphicsPropBase::MOAIGraphicsPropBase () :
 	mLODMax ( 0.0f ){
 	
 	RTTI_BEGIN
+		RTTI_EXTEND ( MOAIPartitionHull )
 		RTTI_EXTEND ( MOAIColor )
 		RTTI_EXTEND ( MOAIRenderable )
 		RTTI_EXTEND ( MOAIAbstractDrawable )
@@ -812,6 +813,7 @@ MOAIGraphicsPropBase::~MOAIGraphicsPropBase () {
 //----------------------------------------------------------------//
 void MOAIGraphicsPropBase::RegisterLuaClass ( MOAILuaState& state ) {
 	
+	MOAIPartitionHull::RegisterLuaClass ( state );
 	MOAIColor::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "ATTR_SHADER",					MOAIGraphicsPropBaseAttr::Pack ( ATTR_SHADER ));
@@ -870,6 +872,7 @@ void MOAIGraphicsPropBase::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGraphicsPropBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
+	MOAIPartitionHull::RegisterLuaFuncs ( state );
 	MOAIColor::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
@@ -919,6 +922,7 @@ void MOAIGraphicsPropBase::SerializeIn ( MOAILuaState& state, MOAIDeserializer& 
 	
 	MOAIColor::SerializeIn ( state, serializer );
 	MOAIRenderable::SerializeIn ( state, serializer );
+	MOAIPartitionHull::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
@@ -926,6 +930,7 @@ void MOAIGraphicsPropBase::SerializeOut ( MOAILuaState& state, MOAISerializer& s
 	
 	MOAIColor::SerializeOut ( state, serializer );
 	MOAIRenderable::SerializeOut ( state, serializer );
+	MOAIPartitionHull::SerializeOut ( state, serializer );
 }
 
 //----------------------------------------------------------------//
@@ -1037,12 +1042,15 @@ bool MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& att
 	}
 	
 	if ( MOAIColor::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+	if ( MOAIPartitionHull::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+	return false;
 }
 
 //----------------------------------------------------------------//
 void MOAIGraphicsPropBase::MOAINode_Update () {
 	
 	MOAIColor::MOAINode_Update ();
+	MOAIPartitionHull::MOAINode_Update ();
 	
 	bool visible = ZLFloat::ToBoolean ( this->GetLinkedValue ( MOAIGraphicsPropBaseAttr::Pack ( INHERIT_VISIBLE ), 1.0f ));
 	this->mDisplayFlags = visible && ( this->mDisplayFlags & FLAGS_LOCAL_VISIBLE ) ? this->mDisplayFlags | FLAGS_VISIBLE : this->mDisplayFlags & ~FLAGS_VISIBLE ;
