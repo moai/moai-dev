@@ -973,21 +973,6 @@ void MOAITextLabel::NextPage ( bool reveal ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLabel::OnDepNodeUpdate () {
-
-	this->Refresh ();
-	MOAIGraphicsPropBase::OnDepNodeUpdate ();
-	MOAIPartitionHull::OnDepNodeUpdate ();
-}
-
-//----------------------------------------------------------------//
-void MOAITextLabel::OnUpdate ( double step ) {
-	
-	this->mSpool += ( float )( this->mSpeed * step );
-	this->mReveal = ( u32 )this->mSpool;
-}
-
-//----------------------------------------------------------------//
 void MOAITextLabel::Refresh () {
 
 	if ( this->mStyleCache.CheckStylesChanged ()) {
@@ -1137,7 +1122,7 @@ void MOAITextLabel::SetText ( cc8* text ) {
 }
 
 //================================================================//
-// MOAITextLabel virtual
+// ::implementation::
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -1227,6 +1212,21 @@ void MOAITextLabel::MOAIAbstractDrawable_DrawDebug ( int subPrimID, float lod ) 
 			}
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAITextLabel::MOAIAction_Update ( double step ) {
+	
+	this->mSpool += ( float )( this->mSpeed * step );
+	this->mReveal = ( u32 )this->mSpool;
+}
+
+//----------------------------------------------------------------//
+void MOAITextLabel::MOAINode_Update () {
+
+	this->Refresh ();
+	MOAIGraphicsPropBase::MOAINode_Update ();
+	MOAIPartitionHull::MOAINode_Update ();
 }
 
 //----------------------------------------------------------------//

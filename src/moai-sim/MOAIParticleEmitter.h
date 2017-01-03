@@ -59,6 +59,9 @@ protected:
 	ZLVec3D			GetRandomVec			( float minAngle, float maxAngle, float min, float max );
 	bool			MaskParticle			( const ZLVec3D& loc );
 
+	//----------------------------------------------------------------//
+	void			MOAINode_Update			();
+
 public:
 	
 	enum {
@@ -76,7 +79,6 @@ public:
 	bool			IsDone					();
 					MOAIParticleEmitter		();
 					~MOAIParticleEmitter	();
-	void			OnDepNodeUpdate			();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );

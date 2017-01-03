@@ -583,43 +583,6 @@ MOAIMaterialBatch* MOAIGraphicsPropBase::AffirmMaterialBatch () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGraphicsPropBase::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
-
-	if ( MOAIGraphicsPropBaseAttr::Check ( attrID )) {
-		
-		switch ( UNPACK_ATTR ( attrID )) {
-		
-			// TODO: fix this conflict with material batch concept
-			case ATTR_SHADER:
-				//this->mShader.Set ( *this, attr.ApplyNoAdd < MOAIShader* >( this->mShader, op, MOAIAttribute::ATTR_READ_WRITE, MOAIAttribute::ATTR_TYPE_VARIANT ));
-				return true;
-				
-			case ATTR_SCISSOR_RECT:
-				this->mScissorRect.Set ( *this, attr.ApplyVariantNoAdd < MOAIScissorRect* >( this->mScissorRect, op, MOAIAttribute::ATTR_READ_WRITE ));
-				return true;
-
-			case ATTR_BLEND_MODE:
-				attr.ApplyVariantNoAdd < MOAIBlendMode >( this->mBlendMode, op, MOAIAttribute::ATTR_READ_WRITE );
-				return true;
-				
-			case ATTR_LOCAL_VISIBLE:
-				this->SetVisible ( ZLFloat::ToBoolean ( attr.ApplyNoAdd ( ZLFloat::FromBoolean (( this->mDisplayFlags & FLAGS_LOCAL_VISIBLE ) != 0 ), op, MOAIAttribute::ATTR_READ_WRITE )));
-				return true;
-				
-			case ATTR_VISIBLE:
-				attr.ApplyNoAdd ( ZLFloat::FromBoolean ( this->IsVisible ()), op , MOAIAttribute::ATTR_READ );
-				return true;
-			
-			//case FRAME_TRAIT:
-			//	attr.Apply < ZLBox >( &this->mFrame, op, MOAIAttribute::ATTR_READ );
-			//	return true;
-		}
-	}
-	
-	if ( MOAIColor::ApplyAttrOp ( attrID, attr, op )) return true;
-}
-
-//----------------------------------------------------------------//
 ZLMatrix4x4 MOAIGraphicsPropBase::GetWorldDrawingMtx () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
@@ -847,15 +810,6 @@ MOAIGraphicsPropBase::~MOAIGraphicsPropBase () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGraphicsPropBase::OnDepNodeUpdate () {
-	
-	MOAIColor::OnDepNodeUpdate ();
-	
-	bool visible = ZLFloat::ToBoolean ( this->GetLinkedValue ( MOAIGraphicsPropBaseAttr::Pack ( INHERIT_VISIBLE ), 1.0f ));
-	this->mDisplayFlags = visible && ( this->mDisplayFlags & FLAGS_LOCAL_VISIBLE ) ? this->mDisplayFlags | FLAGS_VISIBLE : this->mDisplayFlags & ~FLAGS_VISIBLE ;
-}
-
-//----------------------------------------------------------------//
 void MOAIGraphicsPropBase::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAIColor::RegisterLuaClass ( state );
@@ -982,20 +936,8 @@ void MOAIGraphicsPropBase::SetVisible ( bool visible ) {
 }
 
 //================================================================//
-// MOAIGraphicsPropBase virtual
+// ::implementation::
 //================================================================//
-
-//----------------------------------------------------------------//
-void MOAIGraphicsPropBase::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionResultBuffer& buffer, u32 key ) {
-
-	buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->GetPriority (), this->GetWorldLoc (), this->GetBounds ());
-}
-
-//----------------------------------------------------------------//
-u32 MOAIGraphicsPropBase::MOAIPartitionHull_AffirmInterfaceMask ( MOAIPartition& partition ) {
-
-	return partition.AffirmInterfaceMask < MOAIAbstractDrawable >();
-}
 
 //----------------------------------------------------------------//
 void MOAIGraphicsPropBase::MOAIAbstractDrawable_DrawDebug ( int subPrimID, float lod ) {
@@ -1058,4 +1000,62 @@ void MOAIGraphicsPropBase::MOAIAbstractDrawable_DrawDebug ( int subPrimID, float
 			}
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+bool MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	if ( MOAIGraphicsPropBaseAttr::Check ( attrID )) {
+		
+		switch ( UNPACK_ATTR ( attrID )) {
+		
+			// TODO: fix this conflict with material batch concept
+			case ATTR_SHADER:
+				//this->mShader.Set ( *this, attr.ApplyNoAdd < MOAIShader* >( this->mShader, op, MOAIAttribute::ATTR_READ_WRITE, MOAIAttribute::ATTR_TYPE_VARIANT ));
+				return true;
+				
+			case ATTR_SCISSOR_RECT:
+				this->mScissorRect.Set ( *this, attr.ApplyVariantNoAdd < MOAIScissorRect* >( this->mScissorRect, op, MOAIAttribute::ATTR_READ_WRITE ));
+				return true;
+
+			case ATTR_BLEND_MODE:
+				attr.ApplyVariantNoAdd < MOAIBlendMode >( this->mBlendMode, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_LOCAL_VISIBLE:
+				this->SetVisible ( ZLFloat::ToBoolean ( attr.ApplyNoAdd ( ZLFloat::FromBoolean (( this->mDisplayFlags & FLAGS_LOCAL_VISIBLE ) != 0 ), op, MOAIAttribute::ATTR_READ_WRITE )));
+				return true;
+				
+			case ATTR_VISIBLE:
+				attr.ApplyNoAdd ( ZLFloat::FromBoolean ( this->IsVisible ()), op , MOAIAttribute::ATTR_READ );
+				return true;
+			
+			//case FRAME_TRAIT:
+			//	attr.Apply < ZLBox >( &this->mFrame, op, MOAIAttribute::ATTR_READ );
+			//	return true;
+		}
+	}
+	
+	if ( MOAIColor::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+}
+
+//----------------------------------------------------------------//
+void MOAIGraphicsPropBase::MOAINode_Update () {
+	
+	MOAIColor::MOAINode_Update ();
+	
+	bool visible = ZLFloat::ToBoolean ( this->GetLinkedValue ( MOAIGraphicsPropBaseAttr::Pack ( INHERIT_VISIBLE ), 1.0f ));
+	this->mDisplayFlags = visible && ( this->mDisplayFlags & FLAGS_LOCAL_VISIBLE ) ? this->mDisplayFlags | FLAGS_VISIBLE : this->mDisplayFlags & ~FLAGS_VISIBLE ;
+}
+
+//----------------------------------------------------------------//
+void MOAIGraphicsPropBase::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionResultBuffer& buffer, u32 key ) {
+
+	buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->GetPriority (), this->GetWorldLoc (), this->GetBounds ());
+}
+
+//----------------------------------------------------------------//
+u32 MOAIGraphicsPropBase::MOAIPartitionHull_AffirmInterfaceMask ( MOAIPartition& partition ) {
+
+	return partition.AffirmInterfaceMask < MOAIAbstractDrawable >();
 }

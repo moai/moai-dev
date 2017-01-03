@@ -393,24 +393,6 @@ u32 MOAIPartitionHull::AffirmInterfaceMask ( MOAIPartition& partition ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIPartitionHull::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
-
-	if ( MOAIPartitionHullAttr::Check ( attrID )) {
-		
-		switch ( UNPACK_ATTR ( attrID )) {
-//			case ATTR_INDEX:
-//				this->mIndex = ZLFloat::ToIndex ( attr.Apply (( s32 )this->mIndex, op, MOAIAttribute::ATTR_READ_WRITE ));
-//				return true;
-			case ATTR_PARTITION:
-				this->SetPartition ( attr.ApplyVariantNoAdd < MOAIPartition* >( this->GetPartition (), op, MOAIAttribute::ATTR_READ_WRITE ));
-				return true;
-		}
-	}
-	
-	return MOAITransform::ApplyAttrOp ( attrID, attr, op );
-}
-
-//----------------------------------------------------------------//
 void MOAIPartitionHull::BoundsDidChange () {
 
 	this->MOAIPartitionHull_BoundsDidChange ();
@@ -567,21 +549,6 @@ MOAIPartitionHull::~MOAIPartitionHull () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionHull::OnDepNodeUpdate () {
-	
-	MOAITransform::OnDepNodeUpdate ();
-	
-	ZLBox propBounds;
-	u32 propBoundsStatus = this->GetModelBounds ( propBounds );
-	
-	// update the prop location in the partition
-	if ( propBoundsStatus == BOUNDS_OK ) {
-		propBounds.Transform ( this->mLocalToWorldMtx );
-	}
-	this->UpdateWorldBounds ( propBounds, propBoundsStatus );
-}
-
-//----------------------------------------------------------------//
 bool MOAIPartitionHull::PrepareForInsertion ( const MOAIPartition& partition ) {
 
 	return this->MOAIPartitionHull_PrepareForInsertion ( partition );
@@ -698,8 +665,38 @@ void MOAIPartitionHull::WasRemovedFromPartition () {
 }
 
 //================================================================//
-// MOAIPartitionHull virtual
+// ::implementation::
 //================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIPartitionHull::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	if ( MOAIPartitionHullAttr::Check ( attrID )) {
+		
+		switch ( UNPACK_ATTR ( attrID )) {;
+			case ATTR_PARTITION:
+				this->SetPartition ( attr.ApplyVariantNoAdd < MOAIPartition* >( this->GetPartition (), op, MOAIAttribute::ATTR_READ_WRITE ));
+				return true;
+		}
+	}
+	
+	return MOAITransform::MOAINode_ApplyAttrOp ( attrID, attr, op );
+}
+
+//----------------------------------------------------------------//
+void MOAIPartitionHull::MOAINode_Update () {
+	
+	MOAITransform::MOAINode_Update ();
+	
+	ZLBox propBounds;
+	u32 propBoundsStatus = this->GetModelBounds ( propBounds );
+	
+	// update the prop location in the partition
+	if ( propBoundsStatus == BOUNDS_OK ) {
+		propBounds.Transform ( this->mLocalToWorldMtx );
+	}
+	this->UpdateWorldBounds ( propBounds, propBoundsStatus );
+}
 
 //----------------------------------------------------------------//
 void MOAIPartitionHull::MOAIPartitionHull_BoundsDidChange () {

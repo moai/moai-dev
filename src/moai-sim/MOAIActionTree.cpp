@@ -110,18 +110,6 @@ MOAIActionTree::~MOAIActionTree () {
 }
 
 //----------------------------------------------------------------//
-void MOAIActionTree::OnLostChild ( MOAIAction* child ) {
-	if ( this->mRoot == child ) {
-		this->mRoot = 0;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIActionTree::OnUpdate ( double step ) {
-	UNUSED ( step );
-}
-
-//----------------------------------------------------------------//
 void MOAIActionTree::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
@@ -158,4 +146,20 @@ void MOAIActionTree::SetRoot ( MOAIAction* root ) {
 void MOAIActionTree::Update ( double step ) {
 
 	this->MOAIAction::Update ( *this, step );
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIActionTree::MOAIAction_DidLoseChild ( MOAIAction* child ) {
+	if ( this->mRoot == child ) {
+		this->mRoot = 0;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIActionTree::MOAIAction_Update ( double step ) {
+	UNUSED ( step );
 }

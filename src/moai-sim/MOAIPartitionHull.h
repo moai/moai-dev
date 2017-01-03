@@ -102,12 +102,15 @@ protected:
 	void				AddToSortBuffer				( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
 	u32					AffirmInterfaceMask			( MOAIPartition& partition );
 	void				BoundsDidChange				();
-	void				OnDepNodeUpdate				();
 	bool				PrepareForInsertion			( const MOAIPartition& partition );
 	u32					ResolveModelBounds			( ZLBox& bounds );
 	void				UpdateWorldBounds			( u32 status );
 	void				UpdateWorldBounds			( const ZLBox& bounds, u32 status ); // update bounds in world space
 	void				WasRemovedFromPartition		();
+	
+	//----------------------------------------------------------------//
+	bool				MOAINode_ApplyAttrOp						( u32 attrID, MOAIAttribute& attr, u32 op );
+	void				MOAINode_Update								();
 	
 public:
 
@@ -151,7 +154,6 @@ public:
 	GET ( ZLVec3D,		BoundsMin,			mWorldBounds.mMin )
 
 	//----------------------------------------------------------------//
-	bool				ApplyAttrOp				( u32 attrID, MOAIAttribute& attr, u32 op );
 	u32					GetModelBounds			( ZLBox& bounds ); // get the prop bounds in model space
 	MOAIPartition*		GetPartitionTrait		();
 	bool				GetCellRect				( ZLRect* cellRect, ZLRect* paddedRect = 0 );

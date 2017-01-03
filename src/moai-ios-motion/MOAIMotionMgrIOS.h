@@ -43,7 +43,9 @@ private:
 
 	//----------------------------------------------------------------//
 	bool				IsDone							();
-	void				OnUpdate						( double step );
+	
+	//----------------------------------------------------------------//
+	void				MOAIAction_Update				( double step );
 
 public:
 	

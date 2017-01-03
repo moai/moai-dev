@@ -28,6 +28,9 @@ private:
 	//----------------------------------------------------------------//
 	float			GetCurveDelta		() const;
 	float			GetValue			( const MOAIAnimKeySpan& span ) const;
+	
+	//----------------------------------------------------------------//
+	void			MOAINode_Update		();
 
 public:
 	
@@ -44,7 +47,6 @@ public:
 	void			GetZero				( MOAIAttribute& attr ) const;
 					MOAIAnimCurve		();
 					~MOAIAnimCurve		();
-	void			OnDepNodeUpdate		();
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			ReserveSamples		( u32 total );

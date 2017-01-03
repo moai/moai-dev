@@ -55,19 +55,6 @@ MOAIParticleTimedEmitter::~MOAIParticleTimedEmitter () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleTimedEmitter::OnUpdate ( double step ) {
-
-	this->mTime += ( float )step;
-	if ( !this->mSystem ) return;
-	if ( this->mTime < this->mEmitTime ) return;
-	
-	u32 emission = this->GetRandomEmission ();
-	this->Surge ( emission );
-	
-	this->mEmitTime = this->mTime + this->GetRandomFrequency ();
-}
-
-//----------------------------------------------------------------//
 void MOAIParticleTimedEmitter::RegisterLuaClass ( MOAILuaState& state ) {
 
 	this->MOAIParticleEmitter::RegisterLuaClass ( state );
@@ -91,4 +78,21 @@ void MOAIParticleTimedEmitter::SetFrequencyRange ( float min, float max ) {
 
 	this->mMinFrequency = min;
 	this->mMaxFrequency = max;
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIParticleTimedEmitter::MOAIAction_Update ( double step ) {
+
+	this->mTime += ( float )step;
+	if ( !this->mSystem ) return;
+	if ( this->mTime < this->mEmitTime ) return;
+	
+	u32 emission = this->GetRandomEmission ();
+	this->Surge ( emission );
+	
+	this->mEmitTime = this->mTime + this->GetRandomFrequency ();
 }

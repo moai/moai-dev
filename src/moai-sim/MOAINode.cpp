@@ -383,6 +383,12 @@ void MOAINode::Activate ( MOAINode& activator ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAINode::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	this->MOAINode_ApplyAttrOp ( attrID, attr, op );
+}
+
+//----------------------------------------------------------------//
 void MOAINode::ActivateOnLink ( MOAINode& srcNode ) {
 
 	if ( this->mState != STATE_IDLE ) {
@@ -401,15 +407,6 @@ void MOAINode::ActivateOnLink ( MOAINode& srcNode ) {
 			}
 		}
 	}
-}
-
-//----------------------------------------------------------------//
-bool MOAINode::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
-	UNUSED ( attrID );
-	UNUSED ( attr );
-	UNUSED ( op );
-	
-	return false;
 }
 
 //----------------------------------------------------------------//
@@ -474,7 +471,7 @@ void MOAINode::DepNodeUpdate () {
 		this->PullAttributes ();
 
 		InvokeListenerWithSelf ( EVENT_NODE_PRE_UPDATE );
-		this->OnDepNodeUpdate ();
+		this->MOAINode_Update ();
 		InvokeListenerWithSelf ( EVENT_NODE_POST_UPDATE );
 		
 		this->mState = STATE_ACTIVE;
@@ -568,10 +565,6 @@ MOAINode::~MOAINode () {
 	if (( this->mState != STATE_IDLE ) && ( MOAINodeMgr::IsValid ())) {
 		MOAINodeMgr::Get ().Remove ( *this );
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAINode::OnDepNodeUpdate () {
 }
 
 //----------------------------------------------------------------//
@@ -788,4 +781,21 @@ void MOAINode::SetNodeLink ( MOAINode& srcNode ) {
 		this->ActivateOnLink ( srcNode );
 		this->ScheduleUpdate ();
 	}
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAINode::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+	UNUSED ( attrID );
+	UNUSED ( attr );
+	UNUSED ( op );
+	
+	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAINode::MOAINode_Update () {
 }

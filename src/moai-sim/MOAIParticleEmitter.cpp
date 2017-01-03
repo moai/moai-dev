@@ -279,30 +279,6 @@ MOAIParticleEmitter::~MOAIParticleEmitter () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleEmitter::OnDepNodeUpdate () {
-
-	MOAITransform::OnDepNodeUpdate ();
-	
-	if ( this->mSystem ) {
-
-		ZLVec3D loc;
-		ZLVec3D vec;
-		for ( u32 i = 0; i < this->mEmission; ++i ) {
-			this->GetRandomParticle ( loc, vec );
-			this->mLocalToWorldMtx.Transform ( loc );
-			
-			if ( this->MaskParticle ( loc )) {
-			
-				this->mLocalToWorldMtx.TransformVec ( vec );
-				this->mSystem->PushParticle ( loc.mX, loc.mY, vec.mX, vec.mY, this->mParticleState );
-			}
-		}
-	}
-	
-	this->mEmission = 0;
-}
-
-//----------------------------------------------------------------//
 void MOAIParticleEmitter::RegisterLuaClass ( MOAILuaState& state ) {
 
 	this->MOAITransform::RegisterLuaClass ( state );
@@ -371,4 +347,32 @@ void MOAIParticleEmitter::Surge ( u32 total ) {
 	
 	this->mEmission += total;
 	this->ScheduleUpdate ();
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIParticleEmitter::MOAINode_Update () {
+
+	MOAITransform::MOAINode_Update ();
+	
+	if ( this->mSystem ) {
+
+		ZLVec3D loc;
+		ZLVec3D vec;
+		for ( u32 i = 0; i < this->mEmission; ++i ) {
+			this->GetRandomParticle ( loc, vec );
+			this->mLocalToWorldMtx.Transform ( loc );
+			
+			if ( this->MaskParticle ( loc )) {
+			
+				this->mLocalToWorldMtx.TransformVec ( vec );
+				this->mSystem->PushParticle ( loc.mX, loc.mY, vec.mX, vec.mY, this->mParticleState );
+			}
+		}
+	}
+	
+	this->mEmission = 0;
 }

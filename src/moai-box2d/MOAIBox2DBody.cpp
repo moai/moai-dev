@@ -1035,38 +1035,6 @@ int MOAIBox2DBody::_setType ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIBox2DBody::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
-
-	// TODO: these values may need to be cached for performance reasons
-	if ( MOAITransform::MOAITransformAttr::Check ( attrID )) {
-	
-		const b2Transform & xform = mBody->GetTransform();
-		
-		switch ( UNPACK_ATTR ( attrID )) {
-		
-			case MOAITransform::ATTR_X_LOC: {
-				float x = attr.Apply ( xform.p.x, op, MOAIAttribute::ATTR_READ_WRITE ) * this->GetUnitsToMeters ();
-				mBody->SetTransform ( b2Vec2( x, xform.p.y), xform.q.GetAngle() );
-				return true;
-			}
-				
-			case MOAITransform::ATTR_Y_LOC: {
-				float y = attr.Apply ( xform.p.y, op, MOAIAttribute::ATTR_READ_WRITE ) * this->GetUnitsToMeters ();
-				mBody->SetTransform ( b2Vec2( xform.p.x, y ), xform.q.GetAngle() );
-				return true;
-			}
-				
-			case MOAITransform::ATTR_Z_ROT: {
-				float angle = attr.Apply ( xform.q.GetAngle(), op, MOAIAttribute::ATTR_READ_WRITE );
-				mBody->SetTransform ( xform.p,  ( float )((angle * D2R) + M_PI_4 ));
-				return true;
-			}
-		}
-	}
-	return MOAITransformBase::ApplyAttrOp (attrID, attr, op );
-}
-
-//----------------------------------------------------------------//
 void MOAIBox2DBody::BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
 	UNUSED ( localToWorldMtx );
 }
@@ -1090,29 +1058,6 @@ MOAIBox2DBody::MOAIBox2DBody () :
 
 //----------------------------------------------------------------//
 MOAIBox2DBody::~MOAIBox2DBody () {
-}
-
-//----------------------------------------------------------------//
-void MOAIBox2DBody::OnDepNodeUpdate () {
-
-	if ( this->mBody ) {
-		
-		b2Transform transform = this->mBody->GetTransform ();
-		float scale = 1.0f / this->GetUnitsToMeters ();
-		
-		float* m = this->mLocalToWorldMtx.m;
-		
-		m [ ZLAffine3D::C0_R0 ] = ( float )transform.q.GetXAxis().x;
-		m [ ZLAffine3D::C0_R1 ] = ( float )transform.q.GetXAxis().y;
-
-		m [ ZLAffine3D::C1_R0 ] = ( float )transform.q.GetYAxis().x;
-		m [ ZLAffine3D::C1_R1 ] = ( float )transform.q.GetYAxis().y;
-
-		m [ ZLAffine3D::C3_R0 ] = ( float )transform.p.x * scale;
-		m [ ZLAffine3D::C3_R1 ] = ( float )transform.p.y * scale;
-		
-		this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
-	}
 }
 
 //----------------------------------------------------------------//
@@ -1179,4 +1124,63 @@ void MOAIBox2DBody::SetBody ( b2Body* body ) {
 
 	this->mBody = body;
 	body->SetUserData ( this );
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIBox2DBody::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	// TODO: these values may need to be cached for performance reasons
+	if ( MOAITransform::MOAITransformAttr::Check ( attrID )) {
+	
+		const b2Transform & xform = mBody->GetTransform();
+		
+		switch ( UNPACK_ATTR ( attrID )) {
+		
+			case MOAITransform::ATTR_X_LOC: {
+				float x = attr.Apply ( xform.p.x, op, MOAIAttribute::ATTR_READ_WRITE ) * this->GetUnitsToMeters ();
+				mBody->SetTransform ( b2Vec2( x, xform.p.y), xform.q.GetAngle() );
+				return true;
+			}
+				
+			case MOAITransform::ATTR_Y_LOC: {
+				float y = attr.Apply ( xform.p.y, op, MOAIAttribute::ATTR_READ_WRITE ) * this->GetUnitsToMeters ();
+				mBody->SetTransform ( b2Vec2( xform.p.x, y ), xform.q.GetAngle() );
+				return true;
+			}
+				
+			case MOAITransform::ATTR_Z_ROT: {
+				float angle = attr.Apply ( xform.q.GetAngle(), op, MOAIAttribute::ATTR_READ_WRITE );
+				mBody->SetTransform ( xform.p,  ( float )((angle * D2R) + M_PI_4 ));
+				return true;
+			}
+		}
+	}
+	return MOAITransformBase::MOAINode_ApplyAttrOp (attrID, attr, op );
+}
+
+//----------------------------------------------------------------//
+void MOAIBox2DBody::MOAINode_Update () {
+
+	if ( this->mBody ) {
+		
+		b2Transform transform = this->mBody->GetTransform ();
+		float scale = 1.0f / this->GetUnitsToMeters ();
+		
+		float* m = this->mLocalToWorldMtx.m;
+		
+		m [ ZLAffine3D::C0_R0 ] = ( float )transform.q.GetXAxis().x;
+		m [ ZLAffine3D::C0_R1 ] = ( float )transform.q.GetXAxis().y;
+
+		m [ ZLAffine3D::C1_R0 ] = ( float )transform.q.GetYAxis().x;
+		m [ ZLAffine3D::C1_R1 ] = ( float )transform.q.GetYAxis().y;
+
+		m [ ZLAffine3D::C3_R0 ] = ( float )transform.p.x * scale;
+		m [ ZLAffine3D::C3_R1 ] = ( float )transform.p.y * scale;
+		
+		this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
+	}
 }

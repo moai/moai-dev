@@ -927,17 +927,6 @@ MOAILayer::~MOAILayer () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAILayer::OnGetModelBounds ( ZLBox& bounds ) {
-	
-	if ( this->mViewport ) {
-		ZLRect frame = this->mViewport->GetRect ();
-		bounds.Init ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
-		return MOAIPartitionHull::BOUNDS_OK;
-	}
-	return MOAIPartitionHull::BOUNDS_EMPTY;
-}
-
-//----------------------------------------------------------------//
 void MOAILayer::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIGraphicsProp::RegisterLuaClass ( state );
@@ -1071,3 +1060,19 @@ void MOAILayer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer 
 void MOAILayer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	MOAIGraphicsProp::SerializeOut ( state, serializer );
 }
+
+//================================================================//
+// MOAILayer virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+u32 MOAILayer::MOAIPartitionHull_GetModelBounds ( ZLBox& bounds ) {
+	
+	if ( this->mViewport ) {
+		ZLRect frame = this->mViewport->GetRect ();
+		bounds.Init ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
+		return MOAIPartitionHull::BOUNDS_OK;
+	}
+	return MOAIPartitionHull::BOUNDS_EMPTY;
+}
+

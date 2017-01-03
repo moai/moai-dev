@@ -32,6 +32,9 @@ private:
 	void					GetValue			( const MOAIAnimKeySpan& span, ZLVec3D& pos, ZLQuaternion& rot, ZLVec3D& scl ) const;
 	void					ReserveSamples		( u32 total );
 
+	//----------------------------------------------------------------//
+	void					MOAINode_Update		();
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIAnimCurveBone )
@@ -44,7 +47,6 @@ public:
 	void			GetZero					( MOAIAttribute& attr ) const;
 					MOAIAnimCurveBone		();
 					~MOAIAnimCurveBone		();
-	void			OnDepNodeUpdate			();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			SetSamplePosition		( u32 idx, float x, float y, float z );

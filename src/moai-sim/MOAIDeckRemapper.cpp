@@ -74,17 +74,6 @@ int MOAIDeckRemapper::_setRemap ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIDeckRemapper::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
-
-	attrID -=1;
-	if (( attrID >= this->mBase ) && ( attrID < this->mRemap.Size ())) {
-		this->mRemap [ attrID ] = ZLFloat::ToIndex ( attr.Apply (( float )this->mRemap [ attrID ], op, MOAIAttribute::ATTR_READ_WRITE ));
-		return true;
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
 MOAIDeckRemapper::MOAIDeckRemapper () :
 	mBase ( 0 ) {
 	
@@ -137,3 +126,17 @@ u32 MOAIDeckRemapper::Remap ( const MOAIDeckRemapper* remapper, u32 idx ) {
 	return remapper ? remapper->Remap ( idx ) : idx;
 }
 
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIDeckRemapper::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	attrID -=1;
+	if (( attrID >= this->mBase ) && ( attrID < this->mRemap.Size ())) {
+		this->mRemap [ attrID ] = ZLFloat::ToIndex ( attr.Apply (( float )this->mRemap [ attrID ], op, MOAIAttribute::ATTR_READ_WRITE ));
+		return true;
+	}
+	return false;
+}

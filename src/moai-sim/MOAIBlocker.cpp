@@ -40,10 +40,6 @@ MOAIBlocker::~MOAIBlocker () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBlocker::OnUnblock () {
-}
-
-//----------------------------------------------------------------//
 void MOAIBlocker::RemoveBlocked ( MOAIBlocker* blocked ) {
 
 	MOAIBlocker* list = 0;
@@ -57,7 +53,7 @@ void MOAIBlocker::RemoveBlocked ( MOAIBlocker* blocked ) {
 		if ( temp == blocked ) {
 			temp->mBlocker = 0;
 			temp->mNextBlocked = 0;
-			temp->OnUnblock ();
+			temp->MOAIBlocker_Unblock ();
 		}
 		else {
 			temp->mNextBlocked = list;
@@ -96,4 +92,12 @@ void MOAIBlocker::UnblockSelf () {
 	if ( this->mBlocker ) {
 		this->mBlocker->RemoveBlocked ( this );
 	}
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIBlocker::MOAIBlocker_Unblock () {
 }

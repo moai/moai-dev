@@ -347,7 +347,7 @@ int MOAIAction::_update ( lua_State* L ) {
     MOAI_LUA_SETUP ( MOAIAction, "U" )
     
     double step = state.GetValue < double >( 2, MOAISim::Get ().GetStep ());
-    self->OnUpdate ( step );
+    self->MOAIAction_Update ( step );
     
     return 0;
 }
@@ -383,7 +383,7 @@ void MOAIAction::Attach ( MOAIAction* parent, bool defer ) {
 		}
 		
 		oldParent->mChildren.Remove ( this->mLink );
-		oldParent->OnLostChild ( this );
+		oldParent->MOAIAction_DidLoseChild ( this );
 		
 		// TODO: hmmm...
 		this->UnblockSelf ();
@@ -394,7 +394,7 @@ void MOAIAction::Attach ( MOAIAction* parent, bool defer ) {
 	}
 	
 	if ( oldParent && ( !parent )) {
-		this->OnStop ();
+		this->MOAIAction_Stop ();
 	}
 	
 	if ( parent ) {
@@ -415,7 +415,7 @@ void MOAIAction::Attach ( MOAIAction* parent, bool defer ) {
 	
 	if (( !oldParent ) && parent ) {
 		if ( !( this->mActionFlags & FLAGS_IS_PAUSED )) {
-			this->OnStart ();
+			this->MOAIAction_Start ();
 		}
 	}
 
@@ -475,11 +475,6 @@ bool MOAIAction::IsPaused () {
 }
 
 //----------------------------------------------------------------//
-STLString MOAIAction::GetDebugInfo() const {
-	return TypeName();
-}
-
-//----------------------------------------------------------------//
 MOAIAction::MOAIAction () :
 	mPass ( 0 ),
 	mParent ( 0 ),
@@ -499,35 +494,6 @@ MOAIAction::MOAIAction () :
 MOAIAction::~MOAIAction () {
 
 	this->ClearChildren ();
-}
-
-//----------------------------------------------------------------//
-void MOAIAction::OnLostChild ( MOAIAction* child ) {
-	UNUSED ( child );
-}
-
-//----------------------------------------------------------------//
-void MOAIAction::OnStart () {
-
-	this->InvokeListenerWithSelf ( EVENT_START );
-}
-
-//----------------------------------------------------------------//
-void MOAIAction::OnStop () {
-
-	this->InvokeListenerWithSelf ( EVENT_STOP );
-}
-
-//----------------------------------------------------------------//
-void MOAIAction::OnUnblock () {
-
-	// TODO: does this make sense?
-	this->mPass = 0;
-}
-
-//----------------------------------------------------------------//
-void MOAIAction::OnUpdate ( double step ) {
-	UNUSED ( step );
 }
 
 //----------------------------------------------------------------//
@@ -610,13 +576,13 @@ void MOAIAction::Update ( MOAIActionTree& tree, double step ) {
 	this->mActionFlags |= FLAGS_IS_UPDATING;
 	
 	this->InvokeListenerWithSelf ( EVENT_ACTION_PRE_UPDATE );
-	this->OnUpdate ( step );
+	this->MOAIAction_Update ( step );
 	this->InvokeListenerWithSelf ( EVENT_ACTION_POST_UPDATE );
 
 	if ( profilingEnabled ) {
 		double elapsed = ZLDeviceTime::GetTimeInSeconds () - t0;
 		if ( elapsed >= 0.005 ) {
-			STLString debugInfo = this->GetDebugInfo();
+			STLString debugInfo = this->MOAIAction_GetDebugInfo ();
 			MOAILogF ( 0, ZLLog::LOG_STATUS, MOAILogMessages::MOAIAction_Profile_PSFF, this, this->TypeName (), debugInfo.c_str(), step * 1000, elapsed * 1000 );
 		}
 	}
@@ -676,4 +642,42 @@ void MOAIAction::Stop () {
 
 	this->Detach ();
 	this->mActionFlags &= ~FLAGS_IS_PAUSED;
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIAction::MOAIAction_DidLoseChild ( MOAIAction* child ) {
+	UNUSED ( child );
+}
+
+//----------------------------------------------------------------//
+STLString MOAIAction::MOAIAction_GetDebugInfo () const {
+	return TypeName();
+}
+
+//----------------------------------------------------------------//
+void MOAIAction::MOAIAction_Start () {
+
+	this->InvokeListenerWithSelf ( EVENT_START );
+}
+
+//----------------------------------------------------------------//
+void MOAIAction::MOAIAction_Stop () {
+
+	this->InvokeListenerWithSelf ( EVENT_STOP );
+}
+
+//----------------------------------------------------------------//
+void MOAIAction::MOAIAction_Update ( double step ) {
+	UNUSED ( step );
+}
+
+//----------------------------------------------------------------//
+void MOAIAction::MOAIBlocker_Unblock () {
+
+	// TODO: does this make sense?
+	this->mPass = 0;
 }

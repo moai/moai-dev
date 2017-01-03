@@ -33,14 +33,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIGraphicsGridProp::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
-	
-	if ( MOAIGraphicsPropBase::ApplyAttrOp ( attrID, attr, op )) return true;
-	if ( MOAIPartitionHull::ApplyAttrOp ( attrID, attr, op )) return true;
-	return false;
-}
-
-//----------------------------------------------------------------//
 MOAIGraphicsGridProp::MOAIGraphicsGridProp () {
 	
 	RTTI_BEGIN
@@ -53,13 +45,6 @@ MOAIGraphicsGridProp::MOAIGraphicsGridProp () {
 
 //----------------------------------------------------------------//
 MOAIGraphicsGridProp::~MOAIGraphicsGridProp () {
-}
-
-//----------------------------------------------------------------//
-void MOAIGraphicsGridProp::OnDepNodeUpdate () {
-	
-	MOAIGraphicsPropBase::OnDepNodeUpdate ();
-	MOAIPartitionHull::OnDepNodeUpdate ();
 }
 
 //----------------------------------------------------------------//
@@ -95,7 +80,7 @@ void MOAIGraphicsGridProp::SerializeOut ( MOAILuaState& state, MOAISerializer& s
 }
 
 //================================================================//
-// MOAIGraphicsGridProp virtual
+// ::implementation::
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -121,6 +106,21 @@ void MOAIGraphicsGridProp::MOAIAbstractDrawable_Draw ( int subPrimID, float lod 
 		c0 = c1 = grid.GetCellCoord ( subPrimID );
 	}
 	grid.Draw ( this->mDeck, 0, this->mMaterialBatch, c0, c1 );
+}
+
+//----------------------------------------------------------------//
+bool MOAIGraphicsGridProp::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+	
+	if ( MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+	if ( MOAIPartitionHull::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAIGraphicsGridProp::MOAINode_Update () {
+	
+	MOAIGraphicsPropBase::MOAINode_Update ();
+	MOAIPartitionHull::MOAINode_Update ();
 }
 
 //----------------------------------------------------------------//

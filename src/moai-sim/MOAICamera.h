@@ -43,6 +43,9 @@ private:
 	//----------------------------------------------------------------//
 	void			LookAt					( float x, float y, float z );
 	
+	//----------------------------------------------------------------//
+	bool			MOAINode_ApplyAttrOp	( u32 attrID, MOAIAttribute& attr, u32 op );
+	
 public:
 	
 	enum {
@@ -66,7 +69,6 @@ public:
 	GET_SET ( u32, Type, mType )
 	
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp				( u32 attrID, MOAIAttribute& attr, u32 op );
 	ZLMatrix4x4		GetBillboardMtx			() const;
 	float			GetFocalLength			( float width ) const;
 	ZLMatrix4x4		GetProjMtx				( const MOAIViewport& viewport ) const;

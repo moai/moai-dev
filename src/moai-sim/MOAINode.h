@@ -70,10 +70,13 @@ private:
 	void			PullAttributes		();
 	void			RemoveDepLink		( MOAIDepLink& link );
 
+	//----------------------------------------------------------------//
+	virtual bool	MOAINode_ApplyAttrOp				( u32 attrID, MOAIAttribute& attr, u32 op );
+	virtual void	MOAINode_Update						();
+
 protected:
 
 	//----------------------------------------------------------------//
-	virtual void	OnDepNodeUpdate		();
 	bool			PullLinkedAttr		( u32 attrID, MOAIAttribute& attr );
 
 	//----------------------------------------------------------------//
@@ -120,7 +123,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Activate				( MOAINode& activator );
-	virtual bool	ApplyAttrOp				( u32 attrID, MOAIAttribute& attr, u32 op );
+	bool			ApplyAttrOp				( u32 attrID, MOAIAttribute& attr, u32 op );
 	bool			CheckAttrExists			( u32 attrID );
 	void			ClearAttrLink			( int attrID );
 	void			ClearNodeLink			( MOAINode& srcNode );

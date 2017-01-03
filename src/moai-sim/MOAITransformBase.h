@@ -43,6 +43,10 @@ protected:
 	static int	_setParent			( lua_State* L );
 	static int	_worldToModel		( lua_State* L );
 
+	//----------------------------------------------------------------//
+	bool		MOAINode_ApplyAttrOp		( u32 attrID, MOAIAttribute& attr, u32 op );
+	void		MOAINode_Update				();
+
 public:
 	
 	DECL_ATTR_HELPER ( MOAITransformBase )
@@ -69,7 +73,6 @@ public:
 	GET ( ZLVec3D, WorldLoc, mLocalToWorldMtx.GetTranslation ())
 	
 	//----------------------------------------------------------------//
-	bool					ApplyAttrOp					( u32 attrID, MOAIAttribute& attr, u32 op );
 	virtual void			BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx ) = 0;
 	const ZLAffine3D&		GetLocalToWorldMtx			() const;
 	const ZLAffine3D*		GetLocTrait					() const;
@@ -77,7 +80,6 @@ public:
 	const ZLAffine3D&		GetWorldToLocalMtx			() const;
 							MOAITransformBase			();
 							~MOAITransformBase			();
-	void					OnDepNodeUpdate				();
 	void					RegisterLuaClass			( MOAILuaState& state );
 	void					RegisterLuaFuncs			( MOAILuaState& state );
 };

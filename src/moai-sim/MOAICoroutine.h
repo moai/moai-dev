@@ -41,12 +41,13 @@ private:
 	static int			_step					( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void				OnStart					();
-	void				OnStop					();
 	int					Resume					( float step );
-
-protected:
-	STLString			GetDebugInfo			() const;
+	
+	//----------------------------------------------------------------//
+	STLString			MOAIAction_GetDebugInfo		() const;
+	void				MOAIAction_Start			();
+	void				MOAIAction_Stop				();
+	void				MOAIAction_Update			( double step );
 
 public:
 	
@@ -57,7 +58,6 @@ public:
 	bool				IsDone					();
 						MOAICoroutine			();
 						~MOAICoroutine			();
-	void				OnUpdate				( double step );
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 };

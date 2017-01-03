@@ -33,7 +33,7 @@ class MOAIAnimCurve;
 class MOAITimer :
 	public virtual MOAINode,
 	public MOAIAction {
-private:
+protected:
 
 	MOAILuaSharedPtr < MOAIAnimCurve > mCurve;
 
@@ -58,6 +58,11 @@ private:
 	void			OnEndSpan					();
 	void			OnKeyframe					( u32 idx, float time, float value );
 	void			OnLoop						();
+
+	//----------------------------------------------------------------//
+	void			MOAIAction_Start			();
+	void			MOAIAction_Update			( double step );
+	bool			MOAINode_ApplyAttrOp		( u32 attrID, MOAIAttribute& attr, u32 op );
 
 protected:
 
@@ -99,7 +104,6 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp			( u32 attrID, MOAIAttribute& attr, u32 op );
 	void			DoStep				( float step );
 	float			GetCycle			();
 	float			GetLength			();
@@ -108,9 +112,6 @@ public:
 	bool			IsDone				();
 					MOAITimer			();
 					~MOAITimer			();
-	void			OnDepNodeUpdate		();
-	void			OnStart				();
-	void			OnUpdate			( double step );
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			SetSpan				( float span );

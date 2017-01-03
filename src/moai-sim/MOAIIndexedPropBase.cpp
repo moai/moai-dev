@@ -48,19 +48,6 @@ int MOAIIndexedPropBase::_setIndex ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIIndexedPropBase::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
-
-	if ( MOAIIndexedPropBaseAttr::Check ( attrID )) {
-		
-		switch ( UNPACK_ATTR ( attrID )) {
-			case ATTR_INDEX:
-				this->mIndex = ZLFloat::ToIndex ( attr.Apply (( s32 )this->mIndex, op, MOAIAttribute::ATTR_READ_WRITE ));
-				return true;
-		}
-	}
-}
-
-//----------------------------------------------------------------//
 MOAIIndexedPropBase::MOAIIndexedPropBase () :
 	mIndex ( 1 ) {
 	
@@ -105,4 +92,21 @@ void MOAIIndexedPropBase::SerializeIn ( MOAILuaState& state, MOAIDeserializer& s
 void MOAIIndexedPropBase::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
 	MOAIDeckPropBase::SerializeOut ( state, serializer );
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIIndexedPropBase::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	if ( MOAIIndexedPropBaseAttr::Check ( attrID )) {
+		
+		switch ( UNPACK_ATTR ( attrID )) {
+			case ATTR_INDEX:
+				this->mIndex = ZLFloat::ToIndex ( attr.Apply (( s32 )this->mIndex, op, MOAIAttribute::ATTR_READ_WRITE ));
+				return true;
+		}
+	}
 }

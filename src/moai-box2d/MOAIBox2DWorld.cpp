@@ -1161,24 +1161,6 @@ MOAIBox2DWorld::~MOAIBox2DWorld () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DWorld::OnUpdate ( double step ) {
-	
-	this->mLock = true;
-	this->mWorld->Step (( float32 )step, this->mVelocityIterations, this->mPositionIterations );
-	this->mLock = false;
-	
-	this->Destroy ();
-	
-	b2Body* body = this->mWorld->GetBodyList ();
-	for ( ; body; body = body->GetNext ()) {
-		if ( body->IsActive () && body->IsAwake ()) {
-			MOAIBox2DBody* moaiBody = ( MOAIBox2DBody* )body->GetUserData ();
-			moaiBody->ScheduleUpdate ();
-		}
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIBox2DWorld::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIAction::RegisterLuaClass ( state );
@@ -1300,4 +1282,26 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DJoint& joint ) {
 		joint.mDestroy = true;
 	}
 	this->Destroy ();
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIBox2DWorld::MOAIAction_Update ( double step ) {
+	
+	this->mLock = true;
+	this->mWorld->Step (( float32 )step, this->mVelocityIterations, this->mPositionIterations );
+	this->mLock = false;
+	
+	this->Destroy ();
+	
+	b2Body* body = this->mWorld->GetBodyList ();
+	for ( ; body; body = body->GetNext ()) {
+		if ( body->IsActive () && body->IsAwake ()) {
+			MOAIBox2DBody* moaiBody = ( MOAIBox2DBody* )body->GetUserData ();
+			moaiBody->ScheduleUpdate ();
+		}
+	}
 }

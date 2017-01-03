@@ -34,12 +34,11 @@ class MOAIGraphicsProp :
 private:
 
 	//----------------------------------------------------------------//
-	bool					ApplyAttrOp					( u32 attrID, MOAIAttribute& attr, u32 op );
-
-	//----------------------------------------------------------------//
-	void					MOAIAbstractDrawable_Draw					( int subPrimID, float lod );
-	u32						MOAIPartitionHull_GetModelBounds			( ZLBox& bounds ); // get the prop bounds in model space
-	bool					MOAIPartitionHull_Inside					( ZLVec3D vec, float pad );
+	void					MOAIAbstractDrawable_Draw				( int subPrimID, float lod );
+	bool					MOAINode_ApplyAttrOp					( u32 attrID, MOAIAttribute& attr, u32 op );
+	void					MOAINode_Update							();
+	u32						MOAIPartitionHull_GetModelBounds		( ZLBox& bounds ); // get the prop bounds in model space
+	bool					MOAIPartitionHull_Inside				( ZLVec3D vec, float pad );
 
 public:
 
@@ -48,7 +47,6 @@ public:
 	//----------------------------------------------------------------//
 							MOAIGraphicsProp			();
 	virtual					~MOAIGraphicsProp			();
-	void					OnDepNodeUpdate				();
 	void					RegisterLuaClass			( MOAILuaState& state );
 	void					RegisterLuaFuncs			( MOAILuaState& state );
 	void					SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );

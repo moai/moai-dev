@@ -28,6 +28,9 @@ private:
 	ZLVec3D			GetCurveDelta		() const;
 	ZLVec3D			GetValue			( const MOAIAnimKeySpan& span ) const;
 
+	//----------------------------------------------------------------//
+	void			MOAINode_Update			();
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIAnimCurveVec )
@@ -40,7 +43,6 @@ public:
 	void			GetZero					( MOAIAttribute& attr ) const;
 					MOAIAnimCurveVec		();
 					~MOAIAnimCurveVec		();
-	void			OnDepNodeUpdate			();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			ReserveSamples			( u32 total );

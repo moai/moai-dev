@@ -163,12 +163,6 @@ MOAIAnimCurveVec::~MOAIAnimCurveVec () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveVec::OnDepNodeUpdate () {
-
-	this->mValue = this->GetValue ( this->mTime );
-}
-
-//----------------------------------------------------------------//
 void MOAIAnimCurveVec::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIAnimCurveBase::RegisterLuaClass ( state );
@@ -200,4 +194,14 @@ void MOAIAnimCurveVec::SetSample ( u32 id, const ZLVec3D& value ) {
 	if ( id < this->mKeys.Size ()) {
 		this->mSamples [ id ] = value;
 	}
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIAnimCurveVec::MOAINode_Update () {
+
+	this->mValue = this->GetValue ( this->mTime );
 }

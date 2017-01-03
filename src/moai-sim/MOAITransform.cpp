@@ -877,89 +877,6 @@ int MOAITransform::_setShearByZ ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAITransform::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
-
-	if ( MOAITransformAttr::Check ( attrID )) {
-
-		switch ( UNPACK_ATTR ( attrID )) {
-		
-			case ATTR_X_PIV:
-				this->mPiv.mX = attr.Apply ( this->mPiv.mX, op, MOAIAttribute::ATTR_READ_WRITE );
-				return true;
-				
-			case ATTR_Y_PIV:
-				this->mPiv.mY = attr.Apply ( this->mPiv.mY, op, MOAIAttribute::ATTR_READ_WRITE );
-				return true;
-				
-			case ATTR_Z_PIV:
-				this->mPiv.mZ = attr.Apply ( this->mPiv.mZ, op, MOAIAttribute::ATTR_READ_WRITE );
-				return true;
-				
-			case ATTR_X_LOC:
-				this->mLoc.mX = attr.Apply ( this->mLoc.mX, op, MOAIAttribute::ATTR_READ_WRITE );
-				return true;
-				
-			case ATTR_Y_LOC:
-				this->mLoc.mY = attr.Apply ( this->mLoc.mY, op, MOAIAttribute::ATTR_READ_WRITE );
-				return true;
-				
-			case ATTR_Z_LOC:
-				this->mLoc.mZ = attr.Apply ( this->mLoc.mZ, op, MOAIAttribute::ATTR_READ_WRITE );
-				return true;
-				
-			case ATTR_X_ROT:
-				this->mRot.mX = attr.Apply ( this->mRot.mX, op, MOAIAttribute::ATTR_READ_WRITE );
-				return true;
-				
-			case ATTR_Y_ROT:
-				this->mRot.mY = attr.Apply ( this->mRot.mY, op, MOAIAttribute::ATTR_READ_WRITE );
-				return true;
-				
-			case ATTR_Z_ROT:
-				this->mRot.mZ = attr.Apply ( this->mRot.mZ, op, MOAIAttribute::ATTR_READ_WRITE );
-				return true;
-				
-			case ATTR_X_SCL:
-				this->mScale.mX = attr.Apply ( this->mScale.mX, op, MOAIAttribute::ATTR_READ_WRITE );
-				return true;
-				
-			case ATTR_Y_SCL:
-				this->mScale.mY = attr.Apply ( this->mScale.mY, op, MOAIAttribute::ATTR_READ_WRITE );
-				return true;
-				
-			case ATTR_Z_SCL:
-				this->mScale.mZ = attr.Apply ( this->mScale.mZ, op, MOAIAttribute::ATTR_READ_WRITE );
-				return true;
-				
-			case ATTR_ROTATE_QUAT: {
-			
-				// TODO: cache rotation as quat to support read/write, delta adds?
-
-				attr.SetFlags ( MOAIAttribute::ATTR_READ_WRITE );
-
-				if ( op == MOAIAttribute::ADD ) {
-
-					ZLQuaternion quat ( this->mRot.mX, this->mRot.mY, this->mRot.mZ );
-					quat = attr.Apply ( quat, op, MOAIAttribute::ATTR_WRITE );
-					quat.Get ( this->mRot.mX, this->mRot.mY, this->mRot.mZ );
-				}
-				else if ( op != MOAIAttribute::CHECK ) {
-
-					ZLQuaternion quat ( 0.0f, 0.0f, 0.0f, 0.0f );
-					quat = attr.Apply ( quat, op, MOAIAttribute::ATTR_WRITE );
-					quat.Get ( this->mRot.mX, this->mRot.mY, this->mRot.mZ );
-				}
-				return true;
-			}
-			case ATTR_TRANSLATE:
-				this->mLoc = attr.Apply ( this->mLoc, op, MOAIAttribute::ATTR_READ_WRITE );
-				return true;
-		}
-	}
-	return MOAITransformBase::ApplyAttrOp ( attrID, attr, op );
-}
-
-//----------------------------------------------------------------//
 void MOAITransform::BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
 
 	float xRot = ClampEuler ( this->mRot.mX ) * ( float )D2R;
@@ -1212,3 +1129,89 @@ void MOAITransform::SetScl ( float x, float y, float z ) {
 	this->mScale.mZ = z;
 }
 
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAITransform::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	if ( MOAITransformAttr::Check ( attrID )) {
+
+		switch ( UNPACK_ATTR ( attrID )) {
+		
+			case ATTR_X_PIV:
+				this->mPiv.mX = attr.Apply ( this->mPiv.mX, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_Y_PIV:
+				this->mPiv.mY = attr.Apply ( this->mPiv.mY, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_Z_PIV:
+				this->mPiv.mZ = attr.Apply ( this->mPiv.mZ, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_X_LOC:
+				this->mLoc.mX = attr.Apply ( this->mLoc.mX, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_Y_LOC:
+				this->mLoc.mY = attr.Apply ( this->mLoc.mY, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_Z_LOC:
+				this->mLoc.mZ = attr.Apply ( this->mLoc.mZ, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_X_ROT:
+				this->mRot.mX = attr.Apply ( this->mRot.mX, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_Y_ROT:
+				this->mRot.mY = attr.Apply ( this->mRot.mY, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_Z_ROT:
+				this->mRot.mZ = attr.Apply ( this->mRot.mZ, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_X_SCL:
+				this->mScale.mX = attr.Apply ( this->mScale.mX, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_Y_SCL:
+				this->mScale.mY = attr.Apply ( this->mScale.mY, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_Z_SCL:
+				this->mScale.mZ = attr.Apply ( this->mScale.mZ, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_ROTATE_QUAT: {
+			
+				// TODO: cache rotation as quat to support read/write, delta adds?
+
+				attr.SetFlags ( MOAIAttribute::ATTR_READ_WRITE );
+
+				if ( op == MOAIAttribute::ADD ) {
+
+					ZLQuaternion quat ( this->mRot.mX, this->mRot.mY, this->mRot.mZ );
+					quat = attr.Apply ( quat, op, MOAIAttribute::ATTR_WRITE );
+					quat.Get ( this->mRot.mX, this->mRot.mY, this->mRot.mZ );
+				}
+				else if ( op != MOAIAttribute::CHECK ) {
+
+					ZLQuaternion quat ( 0.0f, 0.0f, 0.0f, 0.0f );
+					quat = attr.Apply ( quat, op, MOAIAttribute::ATTR_WRITE );
+					quat.Get ( this->mRot.mX, this->mRot.mY, this->mRot.mZ );
+				}
+				return true;
+			}
+			case ATTR_TRANSLATE:
+				this->mLoc = attr.Apply ( this->mLoc, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+		}
+	}
+	return MOAITransformBase::MOAINode_ApplyAttrOp ( attrID, attr, op );
+}

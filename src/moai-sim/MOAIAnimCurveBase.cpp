@@ -80,23 +80,6 @@ int	MOAIAnimCurveBase::_setWrapMode	( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIAnimCurveBase::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
-
-	if ( MOAIAnimCurveBaseAttr::Check ( attrID )) {
-
-		switch ( UNPACK_ATTR ( attrID )) {
-			case ATTR_TIME:
-				this->mTime = attr.Apply ( this->mTime, op, MOAIAttribute::ATTR_READ_WRITE );
-				return true;
-			case ATTR_VALUE:
-				this->ApplyValueAttrOp ( attr, op );
-				return true;
-		}
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
 void MOAIAnimCurveBase::Clear () {
 
 	this->mKeys.Clear ();
@@ -309,4 +292,25 @@ float MOAIAnimCurveBase::WrapTime ( float t, float &repeat ) const {
 	}
 
 	return result;
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIAnimCurveBase::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	if ( MOAIAnimCurveBaseAttr::Check ( attrID )) {
+
+		switch ( UNPACK_ATTR ( attrID )) {
+			case ATTR_TIME:
+				this->mTime = attr.Apply ( this->mTime, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+			case ATTR_VALUE:
+				this->ApplyValueAttrOp ( attr, op );
+				return true;
+		}
+	}
+	return false;
 }

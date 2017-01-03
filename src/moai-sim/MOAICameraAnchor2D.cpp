@@ -80,13 +80,6 @@ MOAICameraAnchor2D::~MOAICameraAnchor2D () {
 }
 
 //----------------------------------------------------------------//
-void MOAICameraAnchor2D::OnDepNodeUpdate () {
-	
-	const ZLAffine3D inherit = this->GetLinkedValue ( MOAICameraAnchor2DAttr::Pack ( INHERIT_LOC ), ZLAffine3D::IDENT );
-	this->mLoc = inherit.GetTranslation ();
-}
-
-//----------------------------------------------------------------//
 void MOAICameraAnchor2D::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAINode::RegisterLuaClass ( state );
@@ -108,3 +101,13 @@ void MOAICameraAnchor2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAICameraAnchor2D::MOAINode_Update () {
+	
+	const ZLAffine3D inherit = this->GetLinkedValue ( MOAICameraAnchor2DAttr::Pack ( INHERIT_LOC ), ZLAffine3D::IDENT );
+	this->mLoc = inherit.GetTranslation ();
+}

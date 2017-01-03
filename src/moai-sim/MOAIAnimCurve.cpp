@@ -257,12 +257,6 @@ MOAIAnimCurve::~MOAIAnimCurve () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurve::OnDepNodeUpdate () {
-
-	this->mValue = this->GetValue ( this->mTime );
-}
-
-//----------------------------------------------------------------//
 void MOAIAnimCurve::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIAnimCurveBase::RegisterLuaClass ( state );
@@ -295,4 +289,14 @@ void MOAIAnimCurve::SetSample ( u32 id, float value ) {
 	if ( id < this->mKeys.Size ()) {
 		this->mSamples [ id ] = value;
 	}
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIAnimCurve::MOAINode_Update () {
+
+	this->mValue = this->GetValue ( this->mTime );
 }

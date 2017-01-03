@@ -180,20 +180,6 @@ int MOAITimer::_toggleDirection ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAITimer::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
-
-	if ( MOAITimerAttr::Check ( attrID )) {
-		attrID = UNPACK_ATTR ( attrID );
-		
-		if ( attrID == ATTR_TIME ) {
-			attr.Apply ( this->GetTime (), op, MOAIAttribute::ATTR_READ );
-			return true;
-		}
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
 void MOAITimer::DoStep ( float step ) {
 
 	if ( step == 0.0f ) return;
@@ -464,10 +450,6 @@ void MOAITimer::OnBeginSpan () {
 }
 
 //----------------------------------------------------------------//
-void MOAITimer::OnDepNodeUpdate () {
-}
-
-//----------------------------------------------------------------//
 void MOAITimer::OnEndSpan () {
 	
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
@@ -499,28 +481,6 @@ void MOAITimer::OnLoop () {
 	if ( this->PushListenerAndSelf ( EVENT_TIMER_LOOP, state )) {
 		state.DebugCall ( 1, 0 );
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAITimer::OnStart () {
-	MOAIAction::OnStart ();
-
-	if( this->mDirection > 0.0f ) {
-		this->mTime = this->mStartTime;
-	}
-	else {
-		this->mTime = this->mEndTime;
-	}
-	this->mCycle = 0.0f;
-	this->mTimesExecuted = 0.0f;
-	
-	this->OnBeginSpan ();
-}
-
-//----------------------------------------------------------------//
-void MOAITimer::OnUpdate ( double step ) {
-
-	this->DoStep (( float )step ); // TODO: change everything to doubles
 }
 
 //----------------------------------------------------------------//
@@ -669,4 +629,44 @@ void MOAITimer::ToggleDirection () {
 			this->mDirection = -1.0f;
 			break;
 	}
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAITimer::MOAIAction_Start () {
+	MOAIAction::MOAIAction_Start ();
+
+	if( this->mDirection > 0.0f ) {
+		this->mTime = this->mStartTime;
+	}
+	else {
+		this->mTime = this->mEndTime;
+	}
+	this->mCycle = 0.0f;
+	this->mTimesExecuted = 0.0f;
+	
+	this->OnBeginSpan ();
+}
+
+//----------------------------------------------------------------//
+void MOAITimer::MOAIAction_Update ( double step ) {
+
+	this->DoStep (( float )step ); // TODO: change everything to doubles
+}
+
+//----------------------------------------------------------------//
+bool MOAITimer::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	if ( MOAITimerAttr::Check ( attrID )) {
+		attrID = UNPACK_ATTR ( attrID );
+		
+		if ( attrID == ATTR_TIME ) {
+			attr.Apply ( this->GetTime (), op, MOAIAttribute::ATTR_READ );
+			return true;
+		}
+	}
+	return false;
 }

@@ -375,20 +375,6 @@ int MOAIUntzSound::_stop ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIUntzSound::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
-
-	if ( MOAIUntzSoundAttr::Check ( attrID )) {
-		attrID = UNPACK_ATTR ( attrID );
-
-		if ( attrID == ATTR_VOLUME ) {
-			this->mSound->setVolume ( attr.Apply ( this->mSound->getVolume (), op, MOAIAttribute::ATTR_READ_WRITE ));
-			return true;
-		}
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
 MOAIUntzSound::MOAIUntzSound () :
 	mSound ( 0 ),
 	mFilename ( 0 ),
@@ -443,3 +429,20 @@ void MOAIUntzSound::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIUntzSound::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	if ( MOAIUntzSoundAttr::Check ( attrID )) {
+		attrID = UNPACK_ATTR ( attrID );
+
+		if ( attrID == ATTR_VOLUME ) {
+			this->mSound->setVolume ( attr.Apply ( this->mSound->getVolume (), op, MOAIAttribute::ATTR_READ_WRITE ));
+			return true;
+		}
+	}
+	return false;
+}

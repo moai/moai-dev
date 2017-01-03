@@ -28,28 +28,21 @@ class MOAISurfaceSampler2D;
 class MOAIProp;
 
 //================================================================//
-// MOAIProp
+// MOAIIndexedPropBase
 //================================================================//
-/**	@lua	MOAIProp
-	@text	Base class for props.
-	
-	@attr	ATTR_INDEX
-	@attr	ATTR_PARTITION
-*/
+// TODO: doxygen
 class MOAIIndexedPropBase :
 	public virtual MOAIDeckPropBase {
-private:
+protected:
+	
+	u32				mIndex;
 	
 	//----------------------------------------------------------------//
 	static int		_getIndex					( lua_State* L );
 	static int		_setIndex					( lua_State* L );
 
-protected:
-
-	u32				mIndex;
-
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp					( u32 attrID, MOAIAttribute& attr, u32 op );
+	bool			MOAINode_ApplyAttrOp		( u32 attrID, MOAIAttribute& attr, u32 op );
 
 public:
 

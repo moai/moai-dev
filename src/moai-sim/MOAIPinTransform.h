@@ -29,7 +29,8 @@ private:
 	static int		_init						( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			OnDepNodeUpdate				();
+	bool			MOAINode_ApplyAttrOp		( u32 attrID, MOAIAttribute& attr, u32 op );
+	void			MOAINode_Update				();
 
 public:
 	
@@ -41,8 +42,6 @@ public:
 	};
 		
 	//----------------------------------------------------------------//
-		
-	virtual bool	ApplyAttrOp					( u32 attrID, MOAIAttribute& attr, u32 op );
 					MOAIPinTransform			();
 					~MOAIPinTransform			();
 	void			RegisterLuaClass			( MOAILuaState& state );

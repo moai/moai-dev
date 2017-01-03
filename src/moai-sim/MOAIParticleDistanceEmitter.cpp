@@ -72,9 +72,47 @@ MOAIParticleDistanceEmitter::~MOAIParticleDistanceEmitter () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleDistanceEmitter::OnDepNodeUpdate () {
+void MOAIParticleDistanceEmitter::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAITransform::OnDepNodeUpdate ();
+	this->MOAIParticleEmitter::RegisterLuaClass ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleDistanceEmitter::RegisterLuaFuncs ( MOAILuaState& state ) {
+	
+	this->MOAIParticleEmitter::RegisterLuaFuncs ( state );
+	
+	luaL_Reg regTable [] = {
+		{ "reset",					_reset },
+		{ "setDistance",			_setDistance },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleDistanceEmitter::SetDistanceRange ( float min, float max ) {
+
+	this->mMinDistance = min;
+	this->mMaxDistance = max;
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIParticleDistanceEmitter::MOAIAction_Update ( double step ) {
+	UNUSED ( step );
+	
+	this->ScheduleUpdate ();
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleDistanceEmitter::MOAINode_Update () {
+
+	MOAITransform::MOAINode_Update ();
 
 	if ( !this->mSystem ) {
 		this->mReset = true;
@@ -150,38 +188,4 @@ void MOAIParticleDistanceEmitter::OnDepNodeUpdate () {
 			this->mEmitDistance = this->GetRandomDistance ();
 		}
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleDistanceEmitter::OnUpdate ( double step ) {
-	UNUSED ( step );
-	
-	this->ScheduleUpdate ();
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleDistanceEmitter::RegisterLuaClass ( MOAILuaState& state ) {
-
-	this->MOAIParticleEmitter::RegisterLuaClass ( state );
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleDistanceEmitter::RegisterLuaFuncs ( MOAILuaState& state ) {
-	
-	this->MOAIParticleEmitter::RegisterLuaFuncs ( state );
-	
-	luaL_Reg regTable [] = {
-		{ "reset",					_reset },
-		{ "setDistance",			_setDistance },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleDistanceEmitter::SetDistanceRange ( float min, float max ) {
-
-	this->mMinDistance = min;
-	this->mMaxDistance = max;
 }

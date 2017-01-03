@@ -314,13 +314,6 @@ MOAICollisionWorld::~MOAICollisionWorld () {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionWorld::OnUpdate ( double step ) {
-	UNUSED ( step );
-
-	this->ProcessOverlaps ();
-}
-
-//----------------------------------------------------------------//
 void MOAICollisionWorld::ProcessOverlaps () {
 
 	if ( !this->mPartition ) return;
@@ -542,4 +535,15 @@ void MOAICollisionWorld::SerializeIn ( MOAILuaState& state, MOAIDeserializer& se
 void MOAICollisionWorld::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	MOAIAction::SerializeOut ( state, serializer );
 	MOAIRenderable::SerializeOut ( state, serializer );
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAICollisionWorld::MOAIAction_Update ( double step ) {
+	UNUSED ( step );
+
+	this->ProcessOverlaps ();
 }

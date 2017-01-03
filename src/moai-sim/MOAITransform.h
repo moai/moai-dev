@@ -86,6 +86,9 @@ protected:
 	virtual void	BuildLocalToWorldMtx	( ZLAffine3D& localToWorldMtx );
 	static float	ClampEuler				( float r );
 
+	//----------------------------------------------------------------//
+	bool			MOAINode_ApplyAttrOp	( u32 attrID, MOAIAttribute& attr, u32 op );
+
 public:
 
 	DECL_LUA_FACTORY ( MOAITransform )
@@ -135,7 +138,6 @@ public:
 	GET_SET ( u32, EulerOrder, mEulerOrder )
 	
 	//----------------------------------------------------------------//
-	bool					ApplyAttrOp					( u32 attrID, MOAIAttribute& attr, u32 op );
 	ZLAffine3D				GetBillboardMtx				( const ZLAffine3D& faceCameraMtx ) const;
 							MOAITransform				();
 							~MOAITransform				();

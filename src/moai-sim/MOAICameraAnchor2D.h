@@ -9,7 +9,7 @@
 class MOAITransformBase;
 
 //================================================================//
-// MOAIProp
+// MOAICameraAnchor2D
 //================================================================//
 /**	@lua	MOAICameraAnchor2D
 	@text	Attaches fitting information to a transform. Used by
@@ -19,8 +19,8 @@ class MOAICameraAnchor2D :
 	public virtual MOAINode {
 private:
 
-	ZLRect							mRect;
-	ZLVec3D							mLoc;
+	ZLRect			mRect;
+	ZLVec3D			mLoc;
 	
 	//----------------------------------------------------------------//
 	static int		_setParent				( lua_State* L );
@@ -28,7 +28,9 @@ private:
 
 	//----------------------------------------------------------------//
 	ZLRect			GetRect					();
-	void			OnDepNodeUpdate			();
+	
+	//----------------------------------------------------------------//
+	void			MOAINode_Update			();
 
 public:
 

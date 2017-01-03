@@ -59,11 +59,13 @@ private:
 	void				OnPropInserted			( MOAIPartitionHull& prop );
 	void				OnPropRemoved			( MOAIPartitionHull& prop );
 	void				OnPropUpdated			( MOAIPartitionHull& prop );
-	void				OnUpdate				( double step );
 	void				ProcessOverlaps			();
 	void				PruneOverlaps			( MOAICollisionProp& prop );
 	void				Render					();
 	void				RemoveHull				( MOAICollisionProp& prop );
+
+	//----------------------------------------------------------------//
+	void				MOAIAction_Update		( double step );
 
 public:
 	

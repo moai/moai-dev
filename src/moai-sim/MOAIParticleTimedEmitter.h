@@ -27,7 +27,9 @@ private:
 	
 	//----------------------------------------------------------------//
 	float			GetRandomFrequency		();
-	void			OnUpdate				( double step );
+	
+	//----------------------------------------------------------------//
+	void			MOAIAction_Update		( double step );
 
 public:
 	

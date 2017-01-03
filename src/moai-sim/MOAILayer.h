@@ -94,6 +94,9 @@ private:
 	void			RenderTable				( MOAILuaRef& ref );
 	void			RenderTable				( MOAILuaState& state, int idx );
 
+	//----------------------------------------------------------------//
+	u32				MOAIPartitionHull_GetModelBounds		( ZLBox& bounds );
+
 public:
 	
 	DECL_ATTR_HELPER ( MOAILayer )
@@ -118,7 +121,6 @@ public:
 	ZLMatrix4x4			GetWorldToWndMtx		() const;
 						MOAILayer				();
 						~MOAILayer				();
-	u32					OnGetModelBounds		( ZLBox& bounds );
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				Render					(); // TODO: simplify all this; no reason to have both Draw and Render everywhere

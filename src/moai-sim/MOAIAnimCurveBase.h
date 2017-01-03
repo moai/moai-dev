@@ -69,12 +69,15 @@ protected:
 	static int			_setWrapMode		( lua_State* L );
 
 	//----------------------------------------------------------------//
-	virtual void		ApplyValueAttrOp	( MOAIAttribute& attr, u32 op ) = 0;
-	virtual void		GetDelta			( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const = 0;
-	MOAIAnimKeySpan		GetSpan				( float time ) const;
-	virtual void		GetValue			( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const = 0;
-	virtual void		GetZero				( MOAIAttribute& attr ) const = 0;
-	virtual void		ReserveSamples		( u32 total ) = 0;
+	virtual void		ApplyValueAttrOp		( MOAIAttribute& attr, u32 op ) = 0;
+	virtual void		GetDelta				( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const = 0;
+	MOAIAnimKeySpan		GetSpan					( float time ) const;
+	virtual void		GetValue				( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const = 0;
+	virtual void		GetZero					( MOAIAttribute& attr ) const = 0;
+	virtual void		ReserveSamples			( u32 total ) = 0;
+
+	//----------------------------------------------------------------//
+	bool				MOAINode_ApplyAttrOp	( u32 attrID, MOAIAttribute& attr, u32 op );
 
 public:
 	
@@ -94,7 +97,6 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	bool				ApplyAttrOp				( u32 attrID, MOAIAttribute& attr, u32 op );
 	void				Clear					();
 	virtual void		Draw					( u32 resolution ) const;
 	u32					FindKeyID				( float time ) const;

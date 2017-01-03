@@ -497,45 +497,6 @@ MOAICameraFitter2D::~MOAICameraFitter2D () {
 }
 
 //----------------------------------------------------------------//
-void MOAICameraFitter2D::OnDepNodeUpdate () {
-
-	this->UpdateFit ();
-	this->UpdateTarget ();
-	
-	if ( this->mCamera ) {
-		
-		float d = 1.0f - ZLFloat::Clamp ( this->mDamper, 0.0f, 1.0f );
-		
-		ZLVec3D loc = this->mCamera->GetLoc ();
-		float scale = this->mCamera->GetScl ().mX;
-		
-		loc.mX += ( this->mTargetLoc.mX - loc.mX ) * d;
-		loc.mY += ( this->mTargetLoc.mY - loc.mY ) * d;
-		scale += ( this->mTargetScale - scale ) * d;
-		
-		ZLVec3D scaleVec;
-		scaleVec.Init ( scale, scale, 1.0f );
-		this->mCamera->SetScl ( scaleVec );
-		this->mCamera->SetLoc ( loc );
-		this->mCamera->ScheduleUpdate ();
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAICameraFitter2D::OnUpdate ( double step ) {
-	UNUSED ( step );
-	
-	this->ScheduleUpdate ();
-	
-	// make sure all the anchors are ahead of fitter in the update schedule
-	AnchorIt anchorIt = this->mAnchors.begin ();	
-	for ( ; anchorIt != this->mAnchors.end (); ++anchorIt ) {
-		MOAICameraAnchor2D* anchor = *anchorIt;
-		anchor->Activate ( *this );
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAICameraFitter2D::RemoveAnchor ( MOAICameraAnchor2D& anchor ) {
 
 	if ( this->mAnchors.contains ( &anchor )) {
@@ -679,4 +640,47 @@ void MOAICameraFitter2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAICameraFitter2D::MOAIAction_Update ( double step ) {
+	UNUSED ( step );
+	
+	this->ScheduleUpdate ();
+	
+	// make sure all the anchors are ahead of fitter in the update schedule
+	AnchorIt anchorIt = this->mAnchors.begin ();	
+	for ( ; anchorIt != this->mAnchors.end (); ++anchorIt ) {
+		MOAICameraAnchor2D* anchor = *anchorIt;
+		anchor->Activate ( *this );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAICameraFitter2D::MOAINode_Update () {
+
+	this->UpdateFit ();
+	this->UpdateTarget ();
+	
+	if ( this->mCamera ) {
+		
+		float d = 1.0f - ZLFloat::Clamp ( this->mDamper, 0.0f, 1.0f );
+		
+		ZLVec3D loc = this->mCamera->GetLoc ();
+		float scale = this->mCamera->GetScl ().mX;
+		
+		loc.mX += ( this->mTargetLoc.mX - loc.mX ) * d;
+		loc.mY += ( this->mTargetLoc.mY - loc.mY ) * d;
+		scale += ( this->mTargetScale - scale ) * d;
+		
+		ZLVec3D scaleVec;
+		scaleVec.Init ( scale, scale, 1.0f );
+		this->mCamera->SetScl ( scaleVec );
+		this->mCamera->SetLoc ( loc );
+		this->mCamera->ScheduleUpdate ();
+	}
 }

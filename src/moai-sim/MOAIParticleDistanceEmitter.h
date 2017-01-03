@@ -31,8 +31,10 @@ private:
 	
 	//----------------------------------------------------------------//
 	float			GetRandomDistance		();
-	void			OnDepNodeUpdate			();
-	void			OnUpdate				( double step );
+	
+	//----------------------------------------------------------------//
+	void			MOAIAction_Update		( double step );
+	void			MOAINode_Update			();
 
 public:
 	

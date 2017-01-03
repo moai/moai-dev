@@ -163,6 +163,9 @@ protected:
 	void					LoadUVTransform				();
 	void					LoadVertexTransform			();
 
+	//----------------------------------------------------------------//
+	bool					MOAINode_ApplyAttrOp		( u32 attrID, MOAIAttribute& attr, u32 op );
+	void					MOAINode_Update				();
 
 public:
 
@@ -213,12 +216,10 @@ public:
 
 	//----------------------------------------------------------------//
 	MOAIMaterialBatch*		AffirmMaterialBatch			();
-	bool					ApplyAttrOp					( u32 attrID, MOAIAttribute& attr, u32 op );
 	bool					IsVisible					(); // just check the visibility flags
 	bool					IsVisible					( float lod ); // check the visibility flags *and* the LOD
 							MOAIGraphicsPropBase		();
 	virtual					~MOAIGraphicsPropBase		();
-	void					OnDepNodeUpdate				();
 	void					RegisterLuaClass			( MOAILuaState& state );
 	void					RegisterLuaFuncs			( MOAILuaState& state );
 	void					Render						();

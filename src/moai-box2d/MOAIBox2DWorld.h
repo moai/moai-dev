@@ -120,6 +120,9 @@ private:
 	void			ScheduleDestruction		( MOAIBox2DFixture& fixture );
 	void			ScheduleDestruction		( MOAIBox2DJoint& joint );
 
+	//----------------------------------------------------------------//
+	void			MOAIAction_Update		( double step );
+
 public:
 	
 	friend class MOAIBox2DBody;
@@ -145,7 +148,6 @@ public:
 	bool			IsLocked				();
 					MOAIBox2DWorld			();
 					~MOAIBox2DWorld			();
-	void			OnUpdate				( double step );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			Render					();

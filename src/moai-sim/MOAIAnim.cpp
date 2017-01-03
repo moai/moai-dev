@@ -188,16 +188,6 @@ MOAIAnim::~MOAIAnim () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnim::OnUpdate ( double step ) {
-
-	float t0 = this->GetTime ();
-	this->DoStep (( float )step );
-	float t1 = this->GetTime ();
-	
-	this->Apply ( t0, t1 );
-}
-
-//----------------------------------------------------------------//
 void MOAIAnim::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAITimer::RegisterLuaClass ( state );
@@ -245,5 +235,19 @@ void MOAIAnim::SetLink ( u32 linkID, MOAIAnimCurveBase* curve, MOAINode* target,
 		this->mLength = length;
 	}
 	this->mEndTime = this->mLength;
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIAnim::MOAIAction_Update ( double step ) {
+
+	float t0 = this->GetTime ();
+	this->DoStep (( float )step );
+	float t1 = this->GetTime ();
+	
+	this->Apply ( t0, t1 );
 }
 

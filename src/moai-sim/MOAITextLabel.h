@@ -198,8 +198,6 @@ private:
 	//----------------------------------------------------------------//
 	void				BuildLocalToWorldMtx	( ZLAffine3D& localToWorldMtx );
 	ZLMatrix4x4			GetWorldDrawingMtx		();
-	void				OnDepNodeUpdate			();
-	void				OnUpdate				( double step );
 	void				ResetLayout				();
 	void				ScheduleLayout			();
 	void				Refresh					();
@@ -207,9 +205,11 @@ private:
 	virtual void		RefreshStyleGlyphs		();
 
 	//----------------------------------------------------------------//
-	void				MOAIAbstractDrawable_Draw				( int subPrimID, float lod );
-	void				MOAIAbstractDrawable_DrawDebug			( int subPrimID, float lod );
-	u32					MOAIPartitionHull_GetModelBounds		( ZLBox& bounds );
+	void				MOAIAbstractDrawable_Draw			( int subPrimID, float lod );
+	void				MOAIAbstractDrawable_DrawDebug		( int subPrimID, float lod );
+	void				MOAIAction_Update					( double step );
+	void				MOAINode_Update						();
+	u32					MOAIPartitionHull_GetModelBounds	( ZLBox& bounds );
 
 public:
 	

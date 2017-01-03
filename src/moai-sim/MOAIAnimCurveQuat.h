@@ -28,6 +28,9 @@ private:
 	ZLQuaternion	GetCurveDelta		() const;
 	ZLQuaternion	GetValue			( const MOAIAnimKeySpan& span ) const;
 
+	//----------------------------------------------------------------//
+	void			MOAINode_Update		();
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIAnimCurveQuat )
@@ -40,7 +43,6 @@ public:
 	void			GetZero					( MOAIAttribute& attr ) const;
 					MOAIAnimCurveQuat		();
 					~MOAIAnimCurveQuat		();
-	void			OnDepNodeUpdate			();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			ReserveSamples			( u32 total );

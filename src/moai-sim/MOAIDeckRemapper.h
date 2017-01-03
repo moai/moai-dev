@@ -29,12 +29,14 @@ protected:
 	static int		_setBase				( lua_State* L );
 	static int		_setRemap				( lua_State* L );
 
+	//----------------------------------------------------------------//
+	bool			MOAINode_ApplyAttrOp	( u32 attrID, MOAIAttribute& attr, u32 op );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIDeckRemapper )
 	
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp				( u32 attrID, MOAIAttribute& attr, u32 op );
 					MOAIDeckRemapper		();
 					~MOAIDeckRemapper		();
 	void			RegisterLuaClass		( MOAILuaState& state );

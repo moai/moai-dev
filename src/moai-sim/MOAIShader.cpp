@@ -136,37 +136,6 @@ MOAIShader* MOAIShader::AffirmShader ( MOAILuaState& state, int idx ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIShader::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
-
-	if ( this->mProgram ) {
-		
-		this->Bless ();
-		
-		void* element;
-		MOAIShaderUniform* uniform = this->GetUniformForAttributeID ( attrID, element );
-		
-		if ( uniform ) {
-		
-			switch ( op ) {
-
-				case MOAIAttribute::CHECK:
-					attr.SetFlags ( MOAIAttribute::ATTR_WRITE );
-					return true;
-
-				case MOAIAttribute::SET:
-					uniform->SetValue ( element, attr );
-					return true;
-
-				case MOAIAttribute::ADD:
-					uniform->AddValue ( element, attr );
-					return true;
-			}
-		}
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
 void MOAIShader::ApplyGlobals () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
@@ -404,4 +373,39 @@ void MOAIShader::UpdateAndBindUniforms () {
 		this->ApplyGlobals ();
 		this->BindUniforms ();
 	}
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIShader::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	if ( this->mProgram ) {
+		
+		this->Bless ();
+		
+		void* element;
+		MOAIShaderUniform* uniform = this->GetUniformForAttributeID ( attrID, element );
+		
+		if ( uniform ) {
+		
+			switch ( op ) {
+
+				case MOAIAttribute::CHECK:
+					attr.SetFlags ( MOAIAttribute::ATTR_WRITE );
+					return true;
+
+				case MOAIAttribute::SET:
+					uniform->SetValue ( element, attr );
+					return true;
+
+				case MOAIAttribute::ADD:
+					uniform->AddValue ( element, attr );
+					return true;
+			}
+		}
+	}
+	return false;
 }

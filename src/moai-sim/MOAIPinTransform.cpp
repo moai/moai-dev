@@ -42,20 +42,6 @@ int MOAIPinTransform::_init ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIPinTransform::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
-
-	if ( MOAIPinTransformAttr::Check ( attrID )) {
-		switch ( UNPACK_ATTR ( attrID )) {
-			case ATTR_FRONT:
-				attr.Apply ( this->mFront, op, MOAIAttribute::ATTR_READ );
-				return true;
-		}
-	}
-	
-	return MOAITransform::ApplyAttrOp ( attrID, attr, op );
-}
-
-//----------------------------------------------------------------//
 MOAIPinTransform::MOAIPinTransform () :
 	mFront ( 1.0f ) {
 	
@@ -67,27 +53,6 @@ MOAIPinTransform::~MOAIPinTransform () {
 
 	this->mSourceLayer.Set ( *this, 0 );
 	this->mDestLayer.Set ( *this, 0 );
-}
-
-//----------------------------------------------------------------//
-void MOAIPinTransform::OnDepNodeUpdate () {
-	
-	MOAITransform::OnDepNodeUpdate ();
-	
-	if ( !( this->mSourceLayer && this->mDestLayer )) return;
-	
-	ZLVec3D loc = this->mLocalToWorldMtx.GetTranslation ();
-	
-	ZLMatrix4x4 mtx;
-	
-	this->mSourceLayer->GetWorldToWndMtx ().Project ( loc );
-	this->mDestLayer->GetWndToWorldMtx ().Transform ( loc );
-	
-	this->mLocalToWorldMtx.Translate ( loc.mX, loc.mY, loc.mZ );
-	this->mWorldToLocalMtx.Translate ( -loc.mX, -loc.mY, -loc.mZ );
-	
-	// Z component is at the back of the NDC's near plane
-	this->mFront = loc.mZ < -1.0f ? 0.0f : 1.0f;
 }
 
 //----------------------------------------------------------------//
@@ -108,4 +73,43 @@ void MOAIPinTransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIPinTransform::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	if ( MOAIPinTransformAttr::Check ( attrID )) {
+		switch ( UNPACK_ATTR ( attrID )) {
+			case ATTR_FRONT:
+				attr.Apply ( this->mFront, op, MOAIAttribute::ATTR_READ );
+				return true;
+		}
+	}
+	
+	return MOAITransform::MOAINode_ApplyAttrOp ( attrID, attr, op );
+}
+
+//----------------------------------------------------------------//
+void MOAIPinTransform::MOAINode_Update () {
+	
+	MOAITransform::MOAINode_Update ();
+	
+	if ( !( this->mSourceLayer && this->mDestLayer )) return;
+	
+	ZLVec3D loc = this->mLocalToWorldMtx.GetTranslation ();
+	
+	ZLMatrix4x4 mtx;
+	
+	this->mSourceLayer->GetWorldToWndMtx ().Project ( loc );
+	this->mDestLayer->GetWndToWorldMtx ().Transform ( loc );
+	
+	this->mLocalToWorldMtx.Translate ( loc.mX, loc.mY, loc.mZ );
+	this->mWorldToLocalMtx.Translate ( -loc.mX, -loc.mY, -loc.mZ );
+	
+	// Z component is at the back of the NDC's near plane
+	this->mFront = loc.mZ < -1.0f ? 0.0f : 1.0f;
 }

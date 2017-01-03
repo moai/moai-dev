@@ -39,6 +39,10 @@ protected:
 	static int		_setParent			( lua_State* L );
 	static int		_unpackRGBA			( lua_State* L );
 
+	//----------------------------------------------------------------//
+	bool			MOAINode_ApplyAttrOp		( u32 attrID, MOAIAttribute& attr, u32 op );
+	void			MOAINode_Update				();
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIColor )
@@ -59,12 +63,10 @@ public:
 	
 	//----------------------------------------------------------------//
 	static MOAIColor*	AffirmColor			( MOAILuaState& state, int idx );
-	bool				ApplyAttrOp			( u32 attrID, MOAIAttribute& attr, u32 op );
 	ZLColorVec			GetColorTrait		();
 	bool				IsClear				();
 						MOAIColor			();
 						~MOAIColor			();
-	void				OnDepNodeUpdate		();
 	void				RegisterLuaClass	( MOAILuaState& state );
 	void				RegisterLuaFuncs	( MOAILuaState& state );
 };

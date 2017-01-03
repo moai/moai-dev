@@ -17,8 +17,10 @@ private:
 
 	//----------------------------------------------------------------//
 	void				AddBlocked				( MOAIBlocker* blocked );
-	virtual void		OnUnblock				();
 	void				RemoveBlocked			( MOAIBlocker* blocked );
+
+	//----------------------------------------------------------------//
+	virtual void		MOAIBlocker_Unblock		();
 
 public:
 

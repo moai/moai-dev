@@ -44,6 +44,9 @@ protected:
 	MOAIShaderUniform*		GetUniformForAttributeID	( u32 attrID, void*& element );
 	void					UpdateAndBindUniforms		();
 
+	//----------------------------------------------------------------//
+	bool					MOAINode_ApplyAttrOp		( u32 attrID, MOAIAttribute& attr, u32 op );
+
 public:
 
 	DECL_LUA_FACTORY ( MOAIShader )
@@ -52,7 +55,6 @@ public:
 
 	//----------------------------------------------------------------//
 	static MOAIShader*		AffirmShader			( MOAILuaState& state, int idx );
-	bool					ApplyAttrOp				( u32 attrID, MOAIAttribute& attr, u32 op );
 	void					Bless					();
 							MOAIShader				();
 							~MOAIShader				();

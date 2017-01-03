@@ -23,6 +23,9 @@ protected:
 	//----------------------------------------------------------------//
 	virtual void	BuildLocalToWorldMtx	( ZLAffine3D& localToWorldMtx );
 
+	//----------------------------------------------------------------//
+	bool			MOAINode_ApplyAttrOp	( u32 attrID, MOAIAttribute& attr, u32 op );
+
 public:
 
 	DECL_LUA_FACTORY ( MOAIMatrix )
@@ -33,7 +36,6 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp				( u32 attrID, MOAIAttribute& attr, u32 op );
 					MOAIMatrix				();
 					~MOAIMatrix				();
 	void			RegisterLuaClass		( MOAILuaState& state );

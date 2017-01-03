@@ -304,7 +304,94 @@ int MOAITransformBase::_worldToModel ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAITransformBase::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+const ZLAffine3D& MOAITransformBase::GetLocalToWorldMtx () const {
+
+	return this->mLocalToWorldMtx;
+}
+
+//----------------------------------------------------------------//
+const ZLAffine3D* MOAITransformBase::GetLocTrait () const {
+
+	return &this->mLocalToWorldMtx;
+}
+
+//----------------------------------------------------------------//
+const ZLAffine3D* MOAITransformBase::GetTransformTrait () const {
+
+	return &this->mLocalToWorldMtx;
+}
+
+//----------------------------------------------------------------//
+const ZLAffine3D& MOAITransformBase::GetWorldToLocalMtx () const {
+
+	return this->mWorldToLocalMtx;
+}
+
+//----------------------------------------------------------------//
+MOAITransformBase::MOAITransformBase () {
+	
+	RTTI_SINGLE ( MOAINode )
+	
+	this->mLocalToWorldMtx.Ident ();
+	this->mWorldToLocalMtx.Ident ();
+}
+
+//----------------------------------------------------------------//
+MOAITransformBase::~MOAITransformBase () {
+}
+
+//----------------------------------------------------------------//
+void MOAITransformBase::RegisterLuaClass ( MOAILuaState& state ) {
+	
+	MOAINode::RegisterLuaClass ( state );
+	
+	state.SetField ( -1, "ATTR_WORLD_X_LOC",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_X_LOC ));
+	state.SetField ( -1, "ATTR_WORLD_Y_LOC",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Y_LOC ));
+	state.SetField ( -1, "ATTR_WORLD_Z_LOC",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Z_LOC ));
+	state.SetField ( -1, "ATTR_WORLD_Z_ROT",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Z_ROT ));
+	state.SetField ( -1, "ATTR_WORLD_X_SCL",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_X_SCL ));
+	state.SetField ( -1, "ATTR_WORLD_Y_SCL",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Y_SCL ));
+	state.SetField ( -1, "ATTR_WORLD_Z_SCL",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Z_SCL ));
+	state.SetField ( -1, "TRANSFORM_TRAIT",		MOAITransformBaseAttr::Pack ( TRANSFORM_TRAIT ));
+	
+	state.SetField ( -1, "INHERIT_LOC",			MOAITransformBaseAttr::Pack ( INHERIT_LOC ));
+	state.SetField ( -1, "INHERIT_TRANSFORM",	MOAITransformBaseAttr::Pack ( INHERIT_TRANSFORM ));
+}
+
+//----------------------------------------------------------------//
+void MOAITransformBase::RegisterLuaFuncs ( MOAILuaState& state ) {
+	
+	MOAINode::RegisterLuaFuncs ( state );
+	
+	luaL_Reg regTable [] = {
+		{ "getWorldDir",		_getWorldDir },
+		{ "getWorldLoc",		_getWorldLoc },
+		{ "getWorldRot",		_getWorldRot },
+		{ "getWorldScl",		_getWorldScl },
+		
+		{ "getWorldXAxis",		_getWorldXAxis },
+		{ "getWorldYAxis",		_getWorldYAxis },
+		{ "getWorldZAxis",		_getWorldZAxis },
+		
+		{ "getWorldXNormal",	_getWorldXNormal },
+		{ "getWorldYNormal",	_getWorldYNormal },
+		{ "getWorldZNormal",	_getWorldZNormal },
+		
+		{ "modelToWorld",		_modelToWorld },
+		{ "setParent",			_setParent },
+		{ "worldToModel",		_worldToModel },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAITransformBase::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 
 	// TODO: these values may need to be cached for performance reasons
 	if ( MOAITransformBaseAttr::Check ( attrID )) {
@@ -371,44 +458,7 @@ bool MOAITransformBase::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) 
 }
 
 //----------------------------------------------------------------//
-const ZLAffine3D& MOAITransformBase::GetLocalToWorldMtx () const {
-
-	return this->mLocalToWorldMtx;
-}
-
-//----------------------------------------------------------------//
-const ZLAffine3D* MOAITransformBase::GetLocTrait () const {
-
-	return &this->mLocalToWorldMtx;
-}
-
-//----------------------------------------------------------------//
-const ZLAffine3D* MOAITransformBase::GetTransformTrait () const {
-
-	return &this->mLocalToWorldMtx;
-}
-
-//----------------------------------------------------------------//
-const ZLAffine3D& MOAITransformBase::GetWorldToLocalMtx () const {
-
-	return this->mWorldToLocalMtx;
-}
-
-//----------------------------------------------------------------//
-MOAITransformBase::MOAITransformBase () {
-	
-	RTTI_SINGLE ( MOAINode )
-	
-	this->mLocalToWorldMtx.Ident ();
-	this->mWorldToLocalMtx.Ident ();
-}
-
-//----------------------------------------------------------------//
-MOAITransformBase::~MOAITransformBase () {
-}
-
-//----------------------------------------------------------------//
-void MOAITransformBase::OnDepNodeUpdate () {
+void MOAITransformBase::MOAINode_Update () {
 	
 	this->BuildLocalToWorldMtx ( this->mLocalToWorldMtx );
 	
@@ -434,50 +484,4 @@ void MOAITransformBase::OnDepNodeUpdate () {
 	}
 	
 	this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
-}
-
-//----------------------------------------------------------------//
-void MOAITransformBase::RegisterLuaClass ( MOAILuaState& state ) {
-	
-	MOAINode::RegisterLuaClass ( state );
-	
-	state.SetField ( -1, "ATTR_WORLD_X_LOC",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_X_LOC ));
-	state.SetField ( -1, "ATTR_WORLD_Y_LOC",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Y_LOC ));
-	state.SetField ( -1, "ATTR_WORLD_Z_LOC",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Z_LOC ));
-	state.SetField ( -1, "ATTR_WORLD_Z_ROT",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Z_ROT ));
-	state.SetField ( -1, "ATTR_WORLD_X_SCL",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_X_SCL ));
-	state.SetField ( -1, "ATTR_WORLD_Y_SCL",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Y_SCL ));
-	state.SetField ( -1, "ATTR_WORLD_Z_SCL",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Z_SCL ));
-	state.SetField ( -1, "TRANSFORM_TRAIT",		MOAITransformBaseAttr::Pack ( TRANSFORM_TRAIT ));
-	
-	state.SetField ( -1, "INHERIT_LOC",			MOAITransformBaseAttr::Pack ( INHERIT_LOC ));
-	state.SetField ( -1, "INHERIT_TRANSFORM",	MOAITransformBaseAttr::Pack ( INHERIT_TRANSFORM ));
-}
-
-//----------------------------------------------------------------//
-void MOAITransformBase::RegisterLuaFuncs ( MOAILuaState& state ) {
-	
-	MOAINode::RegisterLuaFuncs ( state );
-	
-	luaL_Reg regTable [] = {
-		{ "getWorldDir",		_getWorldDir },
-		{ "getWorldLoc",		_getWorldLoc },
-		{ "getWorldRot",		_getWorldRot },
-		{ "getWorldScl",		_getWorldScl },
-		
-		{ "getWorldXAxis",		_getWorldXAxis },
-		{ "getWorldYAxis",		_getWorldYAxis },
-		{ "getWorldZAxis",		_getWorldZAxis },
-		
-		{ "getWorldXNormal",	_getWorldXNormal },
-		{ "getWorldYNormal",	_getWorldYNormal },
-		{ "getWorldZNormal",	_getWorldZNormal },
-		
-		{ "modelToWorld",		_modelToWorld },
-		{ "setParent",			_setParent },
-		{ "worldToModel",		_worldToModel },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
 }

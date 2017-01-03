@@ -28,17 +28,15 @@ private:
 	static int		_setCallback			( lua_State* L );
 	static int		_setAttrName			( lua_State* L );
 
-protected:
-
 	//----------------------------------------------------------------//
-	void			OnDepNodeUpdate			();
+	bool			MOAINode_ApplyAttrOp	( u32 attrID, MOAIAttribute& attr, u32 op );
+	void			MOAINode_Update			();
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIScriptNode )
 	
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp				( u32 attrID, MOAIAttribute& attr, u32 op );
 					MOAIScriptNode			();
 					~MOAIScriptNode			();
 	void			NamedAttrAdd			( u32 attrID, MOAIAttribute& attr );

@@ -68,8 +68,10 @@ private:
 	void					EnqueueParticle			( MOAIParticle& particle );
 	AKUParticleSprite*		GetTopSprite			();
 	MOAIParticleState*		GetState				( u32 id );
-	u32						OnGetModelBounds		( ZLBox& bounds );
-	void					OnUpdate				( double step );
+	
+	//----------------------------------------------------------------//
+	void					MOAIAction_Update						( double step );
+	u32						MOAIPartitionHull_GetModelBounds		( ZLBox& bounds );
 
 public:
 

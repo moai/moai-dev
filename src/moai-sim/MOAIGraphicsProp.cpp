@@ -33,15 +33,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIGraphicsProp::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
-	
-	if ( MOAIIndexedPropBase::ApplyAttrOp ( attrID, attr, op )) return true;
-	if ( MOAIGraphicsPropBase::ApplyAttrOp ( attrID, attr, op )) return true;
-	if ( MOAIPartitionHull::ApplyAttrOp ( attrID, attr, op )) return true;
-	return false;
-}
-
-//----------------------------------------------------------------//
 MOAIGraphicsProp::MOAIGraphicsProp () {
 	
 	RTTI_BEGIN
@@ -54,13 +45,6 @@ MOAIGraphicsProp::MOAIGraphicsProp () {
 
 //----------------------------------------------------------------//
 MOAIGraphicsProp::~MOAIGraphicsProp () {
-}
-
-//----------------------------------------------------------------//
-void MOAIGraphicsProp::OnDepNodeUpdate () {
-	
-	MOAIGraphicsPropBase::OnDepNodeUpdate ();
-	MOAIPartitionHull::OnDepNodeUpdate ();
 }
 
 //----------------------------------------------------------------//
@@ -96,7 +80,7 @@ void MOAIGraphicsProp::SerializeOut ( MOAILuaState& state, MOAISerializer& seria
 }
 
 //================================================================//
-// MOAIGraphicsProp virtual
+// ::implementation::
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -112,6 +96,22 @@ void MOAIGraphicsProp::MOAIAbstractDrawable_Draw ( int subPrimID, float lod ) {
 	this->LoadUVTransform ();
 	
 	this->mDeck->Draw ( this->mIndex, this->mMaterialBatch );
+}
+
+//----------------------------------------------------------------//
+bool MOAIGraphicsProp::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+	
+	if ( MOAIIndexedPropBase::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+	if ( MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+	if ( MOAIPartitionHull::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAIGraphicsProp::MOAINode_Update () {
+	
+	MOAIGraphicsPropBase::MOAINode_Update ();
+	MOAIPartitionHull::MOAINode_Update ();
 }
 
 //----------------------------------------------------------------//

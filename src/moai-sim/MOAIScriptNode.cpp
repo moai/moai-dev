@@ -66,40 +66,6 @@ int MOAIScriptNode::_setAttrName ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIScriptNode::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
-	attrID = UNPACK_ATTR(attrID) - 1;
-	
-	if ( attrID >= this->mAttributes.Size()) {
-		return false;
-	}
-	
-	if ( this->mAttrNames [ attrID ] == 0 ) {
-		this->mAttributes [ attrID ] = attr.Apply ( this->mAttributes [ attrID ], op, MOAIAttribute::ATTR_READ_WRITE );
-		return true;
-	}
-	else {
-		switch ( op ) {
-			case MOAIAttribute::CHECK:
-				attr.SetFlags ( MOAIAttribute::ATTR_READ_WRITE );
-				break;
-				
-			case MOAIAttribute::ADD:
-				this->NamedAttrAdd ( attrID, attr );
-				break;
-				
-			case MOAIAttribute::SET:
-				this->NamedAttrSet ( attrID, attr );
-				break;
-				
-			case MOAIAttribute::GET:
-				this->NamedAttrGet ( attrID, attr );
-				break;
-		}
-		return true;
-	}
-}
-
-//----------------------------------------------------------------//
 MOAIScriptNode::MOAIScriptNode () {
 	
 	RTTI_SINGLE ( MOAINode )
@@ -206,19 +172,6 @@ void MOAIScriptNode::NamedAttrSet ( u32 attrID, MOAIAttribute &attr ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIScriptNode::OnDepNodeUpdate () {
-
-	if ( this->mOnUpdate ) {
-		
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		if ( this->mOnUpdate.PushRef ( state )) {
-			this->PushLuaUserdata ( state );
-			state.DebugCall ( 1, 0 );
-		}
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIScriptNode::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAINode::RegisterLuaClass ( state );
@@ -237,4 +190,55 @@ void MOAIScriptNode::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIScriptNode::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+	attrID = UNPACK_ATTR(attrID) - 1;
+	
+	if ( attrID >= this->mAttributes.Size()) {
+		return false;
+	}
+	
+	if ( this->mAttrNames [ attrID ] == 0 ) {
+		this->mAttributes [ attrID ] = attr.Apply ( this->mAttributes [ attrID ], op, MOAIAttribute::ATTR_READ_WRITE );
+		return true;
+	}
+	else {
+		switch ( op ) {
+			case MOAIAttribute::CHECK:
+				attr.SetFlags ( MOAIAttribute::ATTR_READ_WRITE );
+				break;
+				
+			case MOAIAttribute::ADD:
+				this->NamedAttrAdd ( attrID, attr );
+				break;
+				
+			case MOAIAttribute::SET:
+				this->NamedAttrSet ( attrID, attr );
+				break;
+				
+			case MOAIAttribute::GET:
+				this->NamedAttrGet ( attrID, attr );
+				break;
+		}
+		return true;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIScriptNode::MOAINode_Update () {
+
+	if ( this->mOnUpdate ) {
+		
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		if ( this->mOnUpdate.PushRef ( state )) {
+			this->PushLuaUserdata ( state );
+			state.DebugCall ( 1, 0 );
+		}
+	}
 }

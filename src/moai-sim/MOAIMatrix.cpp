@@ -61,23 +61,6 @@ int MOAIMatrix::_setMatrix ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIMatrix::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
-
-	// TODO: these values may need to be cached for performance reasons
-	if ( MOAIMatrix::MOAIMatrixAttr::Check ( attrID )) {
-
-		switch ( UNPACK_ATTR ( attrID )) {
-			
-			case ATTR_MATRIX:
-			
-				*( ZLAffine3D* )this = attr.ApplyNoAdd < ZLAffine3D >( *( ZLAffine3D* )this, op, MOAIAttribute::ATTR_READ_WRITE );
-				return true;
-		}
-	}
-	return MOAITransformBase::ApplyAttrOp ( attrID, attr, op );
-}
-
-//----------------------------------------------------------------//
 void MOAIMatrix::BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
 
 	localToWorldMtx = *this;
@@ -130,4 +113,25 @@ void MOAIMatrix::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer
 void MOAIMatrix::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIMatrix::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	// TODO: these values may need to be cached for performance reasons
+	if ( MOAIMatrix::MOAIMatrixAttr::Check ( attrID )) {
+
+		switch ( UNPACK_ATTR ( attrID )) {
+			
+			case ATTR_MATRIX:
+			
+				*( ZLAffine3D* )this = attr.ApplyNoAdd < ZLAffine3D >( *( ZLAffine3D* )this, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+		}
+	}
+	return MOAITransformBase::MOAINode_ApplyAttrOp ( attrID, attr, op );
 }

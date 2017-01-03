@@ -311,20 +311,6 @@ int MOAICamera::_setType ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAICamera::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
-
-	if ( MOAICameraAttr::Check ( attrID )) {
-
-		switch ( UNPACK_ATTR ( attrID )) {
-			case ATTR_FOV:
-				this->mFieldOfView = attr.Apply ( this->mFieldOfView, op, MOAIAttribute::ATTR_READ_WRITE );
-				return true;
-		}
-	}
-	return MOAITransform::ApplyAttrOp ( attrID, attr, op );
-}
-
-//----------------------------------------------------------------//
 ZLMatrix4x4 MOAICamera::GetBillboardMtx () const {
 
 	ZLMatrix4x4 mtx ( this->GetLocalToWorldMtx ());
@@ -513,4 +499,22 @@ void MOAICamera::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAICamera::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	if ( MOAICameraAttr::Check ( attrID )) {
+
+		switch ( UNPACK_ATTR ( attrID )) {
+			case ATTR_FOV:
+				this->mFieldOfView = attr.Apply ( this->mFieldOfView, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+		}
+	}
+	return MOAITransform::MOAINode_ApplyAttrOp ( attrID, attr, op );
 }

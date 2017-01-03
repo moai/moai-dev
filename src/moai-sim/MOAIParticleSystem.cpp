@@ -485,60 +485,6 @@ MOAIParticleSystem::~MOAIParticleSystem () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIParticleSystem::OnGetModelBounds ( ZLBox& bounds ) {
-
-	if ( this->mSpriteTop ) {
-		bounds = this->mParticleBounds;
-		return BOUNDS_OK;
-	}
-	return BOUNDS_EMPTY;
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleSystem::OnUpdate ( double step ) {
-
-	bool schedule = ( this->mSpriteTop > 0 );
-
-	// clear out the sprites
-	this->mSpriteTop = 0;
-
-	this->mParticleBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
-
-	// if particles
-	if ( this->mHead ) {
-
-		// grab the head then clear out the queue
-		MOAIParticle* cursor = this->mHead;
-		this->ClearQueue ();
-		
-		// update the particles and rebuild the queue
-		while ( cursor ) {
-			MOAIParticle* particle = cursor;
-			cursor = cursor->mNext;
-			
-			// update the particle
-			if ( particle->mState ) {
-				particle->mState->ProcessParticle ( *this, *particle,( float )step );
-			}
-			
-			// if is still to be killed, move it to the free list, else put it back in the queue
-			if ( !particle->mState ) {
-				particle->mNext = this->mFree;
-				this->mFree = particle;
-			}
-			else {
-				// and put it back in the queue
-				this->EnqueueParticle ( *particle );
-			}
-		}
-	}
-	
-	if ( schedule || this->mSpriteTop ) {
-		this->ScheduleUpdate ();
-	}
-}
-
-//----------------------------------------------------------------//
 bool MOAIParticleSystem::PushParticle ( float x, float y ) {
 	
 	return this->PushParticle ( x, y, 0.0f, 0.0f, 0 );
@@ -725,4 +671,62 @@ void MOAIParticleSystem::SerializeOut ( MOAILuaState& state, MOAISerializer& ser
 
 	MOAIGraphicsProp::SerializeOut ( state, serializer );
 	MOAIAction::SerializeOut ( state, serializer );
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIParticleSystem::MOAIAction_Update ( double step ) {
+
+	bool schedule = ( this->mSpriteTop > 0 );
+
+	// clear out the sprites
+	this->mSpriteTop = 0;
+
+	this->mParticleBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+
+	// if particles
+	if ( this->mHead ) {
+
+		// grab the head then clear out the queue
+		MOAIParticle* cursor = this->mHead;
+		this->ClearQueue ();
+		
+		// update the particles and rebuild the queue
+		while ( cursor ) {
+			MOAIParticle* particle = cursor;
+			cursor = cursor->mNext;
+			
+			// update the particle
+			if ( particle->mState ) {
+				particle->mState->ProcessParticle ( *this, *particle,( float )step );
+			}
+			
+			// if is still to be killed, move it to the free list, else put it back in the queue
+			if ( !particle->mState ) {
+				particle->mNext = this->mFree;
+				this->mFree = particle;
+			}
+			else {
+				// and put it back in the queue
+				this->EnqueueParticle ( *particle );
+			}
+		}
+	}
+	
+	if ( schedule || this->mSpriteTop ) {
+		this->ScheduleUpdate ();
+	}
+}
+
+//----------------------------------------------------------------//
+u32 MOAIParticleSystem::MOAIPartitionHull_GetModelBounds ( ZLBox& bounds ) {
+
+	if ( this->mSpriteTop ) {
+		bounds = this->mParticleBounds;
+		return BOUNDS_OK;
+	}
+	return BOUNDS_EMPTY;
 }

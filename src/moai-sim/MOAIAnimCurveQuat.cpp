@@ -161,12 +161,6 @@ MOAIAnimCurveQuat::~MOAIAnimCurveQuat () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveQuat::OnDepNodeUpdate () {
-
-	this->mValue = this->GetValue ( this->mTime );
-}
-
-//----------------------------------------------------------------//
 void MOAIAnimCurveQuat::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIAnimCurveBase::RegisterLuaClass ( state );
@@ -198,4 +192,14 @@ void MOAIAnimCurveQuat::SetSample ( u32 id, float x, float y, float z ) {
 	if ( id < this->mKeys.Size ()) {
 		this->mSamples [ id ] = ZLQuaternion ( x, y, z );
 	}
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIAnimCurveQuat::MOAINode_Update () {
+
+	this->mValue = this->GetValue ( this->mTime );
 }

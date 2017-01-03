@@ -27,10 +27,12 @@ private:
 	MOAIAction* mRoot;
 
 	//----------------------------------------------------------------//
-	MOAIAction*			AffirmRoot				();
-	void				OnLostChild				( MOAIAction* child );
-	void				OnUpdate				( double step );
-	void				SetRoot					( MOAIAction* root );
+	MOAIAction*			AffirmRoot					();
+	void				SetRoot						( MOAIAction* root );
+
+	//----------------------------------------------------------------//
+	void				MOAIAction_DidLoseChild		( MOAIAction* child );
+	void				MOAIAction_Update			( double step );
 
 protected:
 
