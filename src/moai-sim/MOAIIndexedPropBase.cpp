@@ -109,4 +109,5 @@ bool MOAIIndexedPropBase::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr
 				return true;
 		}
 	}
+	return false;
 }

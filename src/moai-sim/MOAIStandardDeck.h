@@ -49,7 +49,6 @@ public:
 	void					Draw						( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale );
 	ZLBox					GetBounds					();
 	ZLBox					GetBounds					( u32 idx );
-	void					GetCollisionShape			( MOAICollisionShape& shape );
 	bool					Inside						( u32 idx, MOAIMaterialBatch* materials, u32 granularity, ZLVec3D vec, float pad );
 							MOAIStandardDeck			();
 							~MOAIStandardDeck			();

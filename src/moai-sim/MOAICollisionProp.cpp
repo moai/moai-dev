@@ -88,6 +88,66 @@ void MOAICollisionProp::ClearOverlapLink ( MOAICollisionProp& other ) {
 }
 
 //----------------------------------------------------------------//
+void MOAICollisionProp::DrawDebug () {
+
+	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
+
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	
+	MOAIDraw& draw = MOAIDraw::Get ();
+	UNUSED ( draw ); // mystery warning in vs2008
+	
+	draw.Bind ();
+
+	if ( debugLines.Bind ( MOAIDebugLines::PROP_WORLD_BOUNDS )) {
+		gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_PROJ_MTX ));
+		draw.DrawBoxOutline ( this->GetBounds ());
+	}
+
+	bool visible = false;
+	
+	if ( this->IsActive ()) {
+		
+		if ( this->mOverlapLinks ) {
+			visible = debugLines.Bind ( MOAIDebugLines::COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS );
+		}
+		
+		if ( this->mTouched == this->mOverlapPass && !visible ) {
+			visible = debugLines.Bind ( MOAIDebugLines::COLLISION_ACTIVE_TOUCHED_PROP_BOUNDS );
+		}
+		
+		if ( !visible ) {
+			visible = debugLines.Bind ( MOAIDebugLines::COLLISION_ACTIVE_PROP_BOUNDS );
+		}
+	}
+	
+	if ( this->mOverlapLinks && !visible ) {
+		visible = debugLines.Bind ( MOAIDebugLines::COLLISION_OVERLAP_PROP_BOUNDS );
+	}
+	
+	if ( visible ) {
+		
+		MOAICollisionShape* shape = this->GetCollisionShape ();
+		
+		if ( shape ) {
+			const ZLAffine3D& localToWorldMtx = this->GetLocalToWorldMtx ();
+			gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX, localToWorldMtx );
+			shape->Draw ( localToWorldMtx );
+		}
+		else {
+			gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_PROJ_MTX ));
+			draw.DrawBoxOutline ( this->GetBounds ());
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+MOAICollisionShape* MOAICollisionProp::GetCollisionShape () {
+
+	return this->mDeck ? this->mDeck->GetCollisionShape ( this->mIndex - 1 ) : 0;
+}
+
+//----------------------------------------------------------------//
 bool MOAICollisionProp::IsActive () {
 
 	return this->mActiveListLink.List () != 0;
@@ -107,6 +167,7 @@ MOAICollisionProp::MOAICollisionProp () :
 
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIPartitionHull )
+		RTTI_EXTEND ( MOAIIndexedPropBase )
 	RTTI_END
 	
 	this->mActiveListLink.Data ( this );
@@ -117,13 +178,34 @@ MOAICollisionProp::~MOAICollisionProp () {
 }
 
 //----------------------------------------------------------------//
-bool MOAICollisionProp::RefineOverlap ( const MOAICollisionProp& other, MOAIOverlapInfo& info ) const {
+bool MOAICollisionProp::RefineOverlap ( MOAICollisionProp& other, MOAIOverlapInfo& info ) {
 	UNUSED ( other );
 
 	// TODO: actually pay attention to OVERLAP_GRANULARITY_FINE and OVERLAP_CALCULATE_BOUNDS
 	info.mHasBounds = false;
 	
-	// yeah, refining not so much...
+	MOAICollisionShape* shape0 = this->GetCollisionShape ();
+	MOAICollisionShape* shape1 = other.GetCollisionShape ();
+	
+	if ( shape0 || shape1 ) {
+	
+		if ( shape0 && shape1 ) {
+		
+			return shape0->Overlap ( *shape1, *this, other, info.mBounds );
+		}
+		else if ( shape0 ){
+		
+			ZLBox bounds;
+			other.GetModelBounds ( bounds );
+			return shape0->Overlap ( bounds, *this, other, info.mBounds );
+		}
+		else if ( shape1 ) {
+		
+			ZLBox bounds;
+			this->GetModelBounds ( bounds );
+			return shape1->Overlap ( bounds, other, *this, info.mBounds );
+		}
+	}
 	return true;
 }
 
@@ -131,6 +213,7 @@ bool MOAICollisionProp::RefineOverlap ( const MOAICollisionProp& other, MOAIOver
 void MOAICollisionProp::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAIPartitionHull::RegisterLuaClass ( state );
+	MOAIIndexedPropBase::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "OVERLAP_EVENTS_ON_UPDATE",		( u32 )OVERLAP_EVENTS_ON_UPDATE );
 	state.SetField ( -1, "OVERLAP_EVENTS_CONTINUOUS",		( u32 )OVERLAP_EVENTS_CONTINUOUS );
@@ -145,6 +228,7 @@ void MOAICollisionProp::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAICollisionProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIPartitionHull::RegisterLuaFuncs ( state );
+	MOAIIndexedPropBase::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "getOverlaps",		_getOverlaps },
@@ -161,17 +245,33 @@ void MOAICollisionProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAICollisionProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
 	MOAIPartitionHull::SerializeIn ( state, serializer );
+	MOAIIndexedPropBase::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAICollisionProp::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	
 	MOAIPartitionHull::SerializeOut ( state, serializer );
+	MOAIIndexedPropBase::SerializeOut ( state, serializer );
 }
 
 //================================================================//
 // MOAICollisionProp virtual
 //================================================================//
+
+//----------------------------------------------------------------//
+bool MOAICollisionProp::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	if ( MOAIIndexedPropBase::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+	if ( MOAIPartitionHull::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionProp::MOAINode_Update () {
+	
+	MOAIPartitionHull::MOAINode_Update ();
+}
 
 //----------------------------------------------------------------//
 void MOAICollisionProp::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionResultBuffer& buffer, u32 key ) {
@@ -197,7 +297,12 @@ void MOAICollisionProp::MOAIPartitionHull_BoundsDidChange () {
 u32 MOAICollisionProp::MOAIPartitionHull_GetModelBounds ( ZLBox& bounds ) {
 	UNUSED ( bounds );
 
-	return MOAIPartitionHull::BOUNDS_GLOBAL;
+	MOAICollisionShape* shape = this->GetCollisionShape ();
+	if ( shape ) {
+		bounds = shape->GetBounds ();
+		return MOAIPartitionHull::BOUNDS_OK;
+	}
+	return MOAIPartitionHull::BOUNDS_EMPTY;
 }
 
 //----------------------------------------------------------------//

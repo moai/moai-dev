@@ -30,6 +30,7 @@ ZLBox MOAIMeshPrimCoords::GetBounds () {
 	bounds.Init ( this->mCoords [ 0 ]);
 	
 	if ( this->mPrimSize > 1 ) {
+	
 		bounds.Grow ( this->mCoords [ 1 ]);
 	
 		if ( this->mPrimSize > 2 ) {

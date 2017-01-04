@@ -4,6 +4,7 @@
 #ifndef	MOAICOLLISIONFACET_H
 #define	MOAICOLLISIONFACET_H
 
+#include <moai-sim/MOAIIndexedPropBase.h>
 #include <moai-sim/MOAIPartitionHull.h>
 
 class MOAICollisionShape;
@@ -60,8 +61,9 @@ private:
 // MOAICollisionProp
 //================================================================//
 // TODO: doxygen
-class MOAICollisionProp:
-	public MOAIPartitionHull {
+class MOAICollisionProp :
+	public MOAIPartitionHull,
+	public MOAIIndexedPropBase {
 private:
 	
 	friend class MOAICollisionWorld;
@@ -92,6 +94,8 @@ private:
 	bool					IsActive				();
 	
 	//----------------------------------------------------------------//
+	bool					MOAINode_ApplyAttrOp						( u32 attrID, MOAIAttribute& attr, u32 op );
+	void					MOAINode_Update								();
 	void					MOAIPartitionHull_AddToSortBuffer			( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
 	u32						MOAIPartitionHull_AffirmInterfaceMask		( MOAIPartition& partition );
 	void					MOAIPartitionHull_BoundsDidChange			();
@@ -114,9 +118,11 @@ public:
 	static const u32 DEFAULT_OVERLAP_FLAGS			= 0;
 
 	//----------------------------------------------------------------//
+	void					DrawDebug				();
+	MOAICollisionShape*		GetCollisionShape		();
 							MOAICollisionProp		();
 	virtual					~MOAICollisionProp		();
-	bool					RefineOverlap			( const MOAICollisionProp& other, MOAIOverlapInfo& info ) const;
+	bool					RefineOverlap			( MOAICollisionProp& other, MOAIOverlapInfo& info );
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
 	void					SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );

@@ -117,12 +117,6 @@ ZLBox MOAIStandardDeck::GetBounds ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIStandardDeck::GetCollisionShape ( MOAICollisionShape& shape ) {
-
-	shape.Set ();
-}
-
-//----------------------------------------------------------------//
 bool MOAIStandardDeck::Inside ( u32 idx, MOAIMaterialBatch* materials, u32 granularity, ZLVec3D vec, float pad ) {
 	UNUSED ( idx );
 	UNUSED ( materials );

@@ -26,6 +26,7 @@
 #include <zl-util/ZLBox.h>
 #include <zl-util/ZLByteStream.h>
 #include <zl-util/ZLCgt.h>
+#include <zl-util/ZLCircle.h>
 #include <zl-util/ZLCleanup.h>
 #include <zl-util/ZLColor.h>
 #include <zl-util/ZLCopyOnWrite.h>
@@ -84,6 +85,7 @@
 #include <zl-util/ZLRingAdapter.h>
 #include <zl-util/ZLSample.h>
 #include <zl-util/ZLSharedBuffer.h>
+#include <zl-util/ZLSphere.h>
 #include <zl-util/ZLStream.h>
 #include <zl-util/ZLStreamAdapter.h>
 #include <zl-util/ZLStrongPtr.h>

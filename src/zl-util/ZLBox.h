@@ -35,8 +35,8 @@ public:
 	float		GetMaxExtent	() const;
 	float		GetRadius		() const;
 	ZLRect		GetRect			( u32 plane = PLANE_XY ) const;
-	void		Grow			( const ZLBox& box );
-	void		Grow			( const ZLVec3D& vec );
+	void		Grow			( const ZLBox& box, bool first = false );
+	void		Grow			( const ZLVec3D& vec, bool first = false );
 	void		Inflate			( float size );
 	void		Init			( const ZLBox& box );
 	void		Init			( const ZLPrism& prism );

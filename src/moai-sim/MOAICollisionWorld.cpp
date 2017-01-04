@@ -203,39 +203,6 @@ void MOAICollisionWorld::DoCallback ( u32 eventID, MOAICollisionProp& prop0, MOA
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionWorld::DrawCollisionProp ( MOAICollisionProp& prop ) {
-
-	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
-	MOAIDraw& draw = MOAIDraw::Get ();
-	UNUSED ( draw ); // mystery warning in vs2008
-
-	bool visible = false;
-	
-	if ( prop.IsActive ()) {
-		
-		if ( prop.mOverlapLinks ) {
-			visible = debugLines.Bind ( MOAIDebugLines::COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS );
-		}
-		
-		if ( prop.mTouched == this->mOverlapPass && !visible ) {
-			visible = debugLines.Bind ( MOAIDebugLines::COLLISION_ACTIVE_TOUCHED_PROP_BOUNDS );
-		}
-		
-		if ( !visible ) {
-			visible = debugLines.Bind ( MOAIDebugLines::COLLISION_ACTIVE_PROP_BOUNDS );
-		}
-	}
-	
-	if ( prop.mOverlapLinks && !visible ) {
-		visible = debugLines.Bind ( MOAIDebugLines::COLLISION_OVERLAP_PROP_BOUNDS );
-	}
-	
-	if ( visible ) {
-		draw.DrawBoxOutline ( prop.GetBounds ());
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAICollisionWorld::InsertHull ( MOAICollisionProp& prop ) {
 
 	if ( prop.mCollisionWorld != this ) {
@@ -519,7 +486,8 @@ void MOAICollisionWorld::Render () {
 		MOAICollisionProp& prop = *cursor;
 		cursor = cursor->mNextInDrawList;
 		
-		this->DrawCollisionProp ( prop );
+		prop.DrawDebug ();
+		
 		prop.mInDrawList = false;
 		prop.mNextInDrawList = 0;
 	}

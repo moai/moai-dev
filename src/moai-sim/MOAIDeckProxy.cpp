@@ -72,14 +72,6 @@ ZLBox MOAIDeckProxy::GetBounds ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckProxy::GetCollisionShape ( MOAICollisionShape& shape ) {
-
-	if ( this->mDeck ) {
-		this->GetCollisionShape ( shape );
-	}
-}
-
-//----------------------------------------------------------------//
 ZLBox MOAIDeckProxy::GetItemBounds ( u32 idx ) {
 
 	assert ( this->mDeck );
@@ -123,4 +115,17 @@ void MOAIDeckProxy::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAICollisionShape* MOAIDeckProxy::MOAIDeck_GetCollisionShape ( u32 idx ) {
+
+	if ( this->mDeck ) {
+		return this->mDeck->GetCollisionShape ( idx );
+	}
+	return 0;
 }

@@ -22,6 +22,7 @@
 #include <moai-sim/MOAICamera.h>
 #include <moai-sim/MOAICameraAnchor2D.h>
 #include <moai-sim/MOAICameraFitter2D.h>
+#include <moai-sim/MOAICollisionDeck.h>
 #include <moai-sim/MOAICollisionProp.h>
 #include <moai-sim/MOAICollisionShape.h>
 #include <moai-sim/MOAICollisionWorld.h>
@@ -78,6 +79,7 @@
 #include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAINode.h>
 #include <moai-sim/MOAINodeMgr.h>
+#include <moai-sim/MOAIOverlap.h>
 #include <moai-sim/MOAIParticle.h>
 #include <moai-sim/MOAIParticleCallbackPlugin.h>
 #include <moai-sim/MOAIParticleDistanceEmitter.h>

@@ -124,24 +124,25 @@ void MOAIDebugLines::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_register( state, 0, regTable );
 	
-	state.SetField ( -1, "COLLISION_ACTIVE_PROP_BOUNDS",			( u32 )COLLISION_ACTIVE_PROP_BOUNDS );
-	state.SetField ( -1, "COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS",	( u32 )COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS );
-	state.SetField ( -1, "COLLISION_ACTIVE_TOUCHED_PROP_BOUNDS",	( u32 )COLLISION_ACTIVE_TOUCHED_PROP_BOUNDS );
-	state.SetField ( -1, "COLLISION_OVERLAP_PROP_BOUNDS",			( u32 )COLLISION_OVERLAP_PROP_BOUNDS );
-	state.SetField ( -1, "PARTITION_CELLS",							( u32 )PARTITION_CELLS );
-	state.SetField ( -1, "PARTITION_PADDED_CELLS",					( u32 )PARTITION_PADDED_CELLS );
-	state.SetField ( -1, "PROP_MODEL_AXIS",							( u32 )PROP_MODEL_AXIS );
-	state.SetField ( -1, "PROP_MODEL_DIAGONALS",					( u32 )PROP_MODEL_DIAGONALS );
-	state.SetField ( -1, "PROP_MODEL_BOUNDS",						( u32 )PROP_MODEL_BOUNDS );
-	state.SetField ( -1, "PROP_WORLD_BOUNDS",						( u32 )PROP_WORLD_BOUNDS );
-	state.SetField ( -1, "TEXT_BOX",								( u32 )TEXT_BOX );
-	state.SetField ( -1, "TEXT_BOX_BASELINES",						( u32 )TEXT_BOX_BASELINES );
-	state.SetField ( -1, "TEXT_BOX_GLYPH_BOUNDS",					( u32 )TEXT_BOX_GLYPH_BOUNDS );
-	state.SetField ( -1, "TEXT_BOX_GLYPHS",							( u32 )TEXT_BOX_GLYPHS );
-	state.SetField ( -1, "TEXT_BOX_LAYOUT_BOUNDS",					( u32 )TEXT_BOX_LAYOUT_BOUNDS );
-	state.SetField ( -1, "TEXT_BOX_LIMITS",							( u32 )TEXT_BOX_LIMITS );
-	state.SetField ( -1, "TEXT_BOX_LINES_GLYPH_BOUNDS",				( u32 )TEXT_BOX_LINES_GLYPH_BOUNDS );
-	state.SetField ( -1, "TEXT_BOX_LINES_LAYOUT_BOUNDS",			( u32 )TEXT_BOX_LINES_LAYOUT_BOUNDS );
+	state.SetField ( -1, "COLLISION_ACTIVE_PROP_BOUNDS",					( u32 )COLLISION_ACTIVE_PROP_BOUNDS );
+	state.SetField ( -1, "COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS",			( u32 )COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS );
+	state.SetField ( -1, "COLLISION_ACTIVE_TOUCHED_PROP_BOUNDS",			( u32 )COLLISION_ACTIVE_TOUCHED_PROP_BOUNDS );
+	state.SetField ( -1, "COLLISION_OVERLAP_PROP_BOUNDS",					( u32 )COLLISION_OVERLAP_PROP_BOUNDS );
+	state.SetField ( -1, "COLLISION_PROP_BOUNDS",							( u32 )COLLISION_PROP_BOUNDS );
+	state.SetField ( -1, "PARTITION_CELLS",									( u32 )PARTITION_CELLS );
+	state.SetField ( -1, "PARTITION_PADDED_CELLS",							( u32 )PARTITION_PADDED_CELLS );
+	state.SetField ( -1, "PROP_MODEL_AXIS",									( u32 )PROP_MODEL_AXIS );
+	state.SetField ( -1, "PROP_MODEL_DIAGONALS",							( u32 )PROP_MODEL_DIAGONALS );
+	state.SetField ( -1, "PROP_MODEL_BOUNDS",								( u32 )PROP_MODEL_BOUNDS );
+	state.SetField ( -1, "PROP_WORLD_BOUNDS",								( u32 )PROP_WORLD_BOUNDS );
+	state.SetField ( -1, "TEXT_BOX",										( u32 )TEXT_BOX );
+	state.SetField ( -1, "TEXT_BOX_BASELINES",								( u32 )TEXT_BOX_BASELINES );
+	state.SetField ( -1, "TEXT_BOX_GLYPH_BOUNDS",							( u32 )TEXT_BOX_GLYPH_BOUNDS );
+	state.SetField ( -1, "TEXT_BOX_GLYPHS",									( u32 )TEXT_BOX_GLYPHS );
+	state.SetField ( -1, "TEXT_BOX_LAYOUT_BOUNDS",							( u32 )TEXT_BOX_LAYOUT_BOUNDS );
+	state.SetField ( -1, "TEXT_BOX_LIMITS",									( u32 )TEXT_BOX_LIMITS );
+	state.SetField ( -1, "TEXT_BOX_LINES_GLYPH_BOUNDS",						( u32 )TEXT_BOX_LINES_GLYPH_BOUNDS );
+	state.SetField ( -1, "TEXT_BOX_LINES_LAYOUT_BOUNDS",					( u32 )TEXT_BOX_LINES_LAYOUT_BOUNDS );
 }
 
 //----------------------------------------------------------------//

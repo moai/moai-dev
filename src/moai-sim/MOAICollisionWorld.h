@@ -50,7 +50,6 @@ private:
 	void				ClearOverlaps			( MOAICollisionProp& prop );
 	void				DoCallback				( u32 eventID, MOAICollisionProp& prop0, MOAICollisionProp& prop1 );
 	void				DoCallback				( u32 eventID, MOAICollisionProp& prop0, MOAICollisionProp& prop1, const MOAIOverlapInfo& overlapInfo );
-	void				DrawCollisionProp		( MOAICollisionProp& prop );
 	void				InsertHull				( MOAICollisionProp& prop );
 	bool				IsDone					();
 	void				InvalidateOverlaps		( MOAICollisionProp& prop, u32 nextPass );

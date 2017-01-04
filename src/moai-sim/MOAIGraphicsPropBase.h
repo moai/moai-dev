@@ -11,7 +11,6 @@
 #include <moai-sim/MOAITransform.h>
 
 class MOAICellCoord;
-class MOAICollisionShape;
 class MOAIDeck;
 class MOAIDeckRemapper;
 class MOAIGrid;

@@ -101,6 +101,12 @@ int MOAIDeck::_setBoundsDeck ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+ZLBox MOAIDeck::ComputeMaxBounds () {
+
+	return this->GetBounds ( 0 );
+}
+
+//----------------------------------------------------------------//
 bool MOAIDeck::Contains ( u32 idx, const ZLVec2D& vec ) {
 	
 	ZLRect bounds = this->GetBounds ( idx ).GetRect ( ZLBox::PLANE_XY );
@@ -133,9 +139,29 @@ void MOAIDeck::DrawIndex ( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::GetCollisionShape ( MOAICollisionShape& shape ) {
+ZLBox MOAIDeck::GetBounds () {
 
-	shape.Set ();
+	return this->GetBounds ( 0 );
+}
+
+//----------------------------------------------------------------//
+ZLBox MOAIDeck::GetBounds ( u32 idx ) {
+
+	return this->GetItemBounds ( idx );
+}
+
+//----------------------------------------------------------------//
+ZLBox MOAIDeck::GetItemBounds ( u32 idx ) {
+
+	ZLBox bounds;
+	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+	return bounds;
+}
+
+//----------------------------------------------------------------//
+MOAICollisionShape* MOAIDeck::GetCollisionShape ( u32 idx ) {
+
+	return MOAIDeck_GetCollisionShape ( idx );
 }
 
 //----------------------------------------------------------------//
@@ -177,4 +203,15 @@ void MOAIDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAICollisionShape* MOAIDeck::MOAIDeck_GetCollisionShape ( u32 idx ) {
+	UNUSED ( idx );
+
+	return 0;
 }
