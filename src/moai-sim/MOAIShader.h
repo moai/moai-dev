@@ -34,6 +34,7 @@ protected:
 	static int				_setGlobal				( lua_State* L );
 	static int				_setProgram				( lua_State* L );
 	static int				_setUniform				( lua_State* L );
+	static int				_setUniformComponent	( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void					ApplyGlobals				();
@@ -42,6 +43,7 @@ protected:
 	MOAIShaderUniform*		GetUniform					( u32 uniformID );
 	MOAIShaderUniform*		GetUniform					( u32 uniformID, u32 index, void*& element );
 	MOAIShaderUniform*		GetUniformForAttributeID	( u32 attrID, void*& element );
+	void					SetUniform					( lua_State* L, int idx, u32 uniformID, u32 index );
 	void					UpdateAndBindUniforms		();
 
 	//----------------------------------------------------------------//
