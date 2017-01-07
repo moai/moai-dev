@@ -4,8 +4,6 @@
 #ifndef	MOAISURFACEDECK2D_H
 #define	MOAISURFACEDECK2D_H
 
-#include <moai-sim/MOAIStandardDeck.h>
-
 //================================================================//
 // MOAISurfaceBrush2D
 //================================================================//

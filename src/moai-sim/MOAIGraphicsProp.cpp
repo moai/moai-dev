@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <moai-sim/MOAICamera.h>
 #include <moai-sim/MOAIDeck.h>
-#include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGraphicsProp.h>
@@ -90,7 +89,8 @@ void MOAIGraphicsProp::MOAIAbstractDrawable_Draw ( int subPrimID, float lod ) {
 	this->LoadVertexTransform ();
 	this->LoadUVTransform ();
 	
-	this->mDeck->Draw ( this->mIndex, this->mMaterialBatch );
+	//this->mDeck->Draw ( this->mIndex, this->mMaterialBatch );
+	this->mDeck->Draw ( this->mIndex );
 }
 
 //----------------------------------------------------------------//
@@ -127,9 +127,11 @@ bool MOAIGraphicsProp::MOAIPartitionHull_Inside ( ZLVec3D vec, float pad ) {
 	bool passTrivial = this->InsideModelBounds ( vec, pad );
 	
 	// TODO: handle grids
+	// TODO: handle padding
 	if ( passTrivial && this->mDeck && ( this->mHitGranularity > HIT_TEST_COARSE )) {
 	
-		return this->mDeck->Inside ( this->mIndex, this->mMaterialBatch, this->mHitGranularity, vec, pad );
+		//return this->mDeck->Inside ( this->mIndex, this->mMaterialBatch, this->mHitGranularity, vec, pad );
+		return this->mDeck->Overlap ( this->mIndex, vec, this->mHitGranularity, 0 );
 	}
 	return passTrivial;
 }

@@ -61,6 +61,7 @@ public:
 	static cc8*		GetLuaTypeName				( int type );
 	ZLMatrix4x4		GetMatrix					( int idx, size_t size );
 	void*			GetPtrUserData				( int idx );
+	ZLQuad			GetQuad						( int idx );
 	STLString		GetStackDump				();
 	STLString		GetStackTrace				( cc8* title, int level );
 	int				GetLuaThreadStatus			( int idx );

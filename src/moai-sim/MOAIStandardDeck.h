@@ -29,8 +29,6 @@ class MOAIStandardDeck :
 	public virtual MOAIMaterialBatch {
 protected:
 
-	MOAILuaSharedPtr < MOAIBoundsDeck > mBoundsDeck; // bounds override
-
 	ZLBox	mMaxBounds;
 	bool	mBoundsDirty;
 	

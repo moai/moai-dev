@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <float.h>
 #include <moai-sim/MOAIDeck.h>
-#include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIParticleState.h>
 #include <moai-sim/MOAIParticleSystem.h>
@@ -413,7 +412,8 @@ void MOAIParticleSystem::Draw ( int subPrimID, float lod ) {
 		
 		gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX, drawingMtx );
 		
-		this->mDeck->Draw ( this->mIndex + ( u32 )sprite.mGfxID, this->mMaterialBatch );
+		//this->mDeck->Draw ( this->mIndex + ( u32 )sprite.mGfxID, this->mMaterialBatch );
+		this->mDeck->Draw ( this->mIndex + ( u32 )sprite.mGfxID );
 	}
 }
 

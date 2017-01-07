@@ -15,7 +15,6 @@
 class MOAICellCoord;
 class MOAICollisionProp;
 class MOAIDeck;
-class MOAIDeckRemapper;
 class MOAIGrid;
 class MOAILayoutFrame;
 class MOAIOverlapPrim2D;

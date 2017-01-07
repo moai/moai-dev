@@ -4,6 +4,7 @@
 #ifndef	MOAIMESH_H
 #define	MOAIMESH_H
 
+#include <moai-sim/MOAIGraphicsDeckBase.h>
 #include <moai-sim/MOAIVertexArray.h>
 
 class MOAIIndexBuffer;
@@ -89,7 +90,7 @@ public:
 	@const	GL_TRIANGLE_STRIP
 */
 class MOAIMesh :
-	public MOAIStandardDeck,
+	public MOAIGraphicsDeckBase,
 	public MOAIVertexArray {
 protected:
 

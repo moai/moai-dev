@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIScriptDeck.h>
-#include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGrid.h>

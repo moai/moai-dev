@@ -596,7 +596,7 @@ MOAIMesh::MOAIMesh () :
 	mPartition ( 0 ) {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIStandardDeck )
+		RTTI_EXTEND ( MOAIGraphicsDeckBase )
 		RTTI_EXTEND ( MOAIVertexArray )
 	RTTI_END
 	
@@ -612,7 +612,7 @@ MOAIMesh::~MOAIMesh () {
 //----------------------------------------------------------------//
 void MOAIMesh::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIStandardDeck::RegisterLuaClass ( state );
+	MOAIGraphicsDeckBase::RegisterLuaClass ( state );
 	MOAIVertexArray::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "GL_POINTS",			( u32 )ZGL_PRIM_POINTS );
@@ -632,7 +632,7 @@ void MOAIMesh::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIStandardDeck::RegisterLuaFuncs ( state );
+	MOAIGraphicsDeckBase::RegisterLuaFuncs ( state );
 	MOAIVertexArray::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
@@ -678,6 +678,7 @@ void MOAIMesh::ReserveVertexBuffers ( u32 total ) {
 //----------------------------------------------------------------//
 void MOAIMesh::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
+	MOAIGraphicsDeckBase::SerializeIn ( state, serializer );
 	MOAIVertexArray::SerializeIn ( state, serializer );
 
 	this->SetIndexBuffer ( serializer.MemberIDToObject < MOAIIndexBuffer >( state.GetFieldValue < MOAISerializer::ObjID >( -1, "mIndexBuffer", 0 )));
@@ -705,6 +706,7 @@ void MOAIMesh::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer )
 //----------------------------------------------------------------//
 void MOAIMesh::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
+	MOAIGraphicsDeckBase::SerializeOut ( state, serializer );
 	MOAIVertexArray::SerializeOut ( state, serializer );
 
 	state.SetField ( -1, "mIndexBuffer", serializer.AffirmMemberID ( this->mIndexBuffer ));

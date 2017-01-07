@@ -10,7 +10,7 @@
 class MOAITileFlags {
 public:
 	
-	static const u32 ZROT				= 0x10000000;
+	static const u32 ROT_90				= 0x10000000;
 	static const u32 XFLIP				= 0x20000000;
 	static const u32 YFLIP				= 0x40000000;
 	static const u32 HIDDEN				= 0x80000000;

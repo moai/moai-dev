@@ -4,8 +4,6 @@
 #ifndef	MOAIGRIDDECK2D_H
 #define	MOAIGRIDDECK2D_H
 
-#include <moai-sim/MOAIStandardDeck.h>
-
 //================================================================//
 // MOAIGridDeckBrush
 //================================================================//
@@ -40,14 +38,12 @@ private:
 	
 	MOAILuaSharedPtr < MOAIGrid > mGrid;
 	MOAILuaSharedPtr < MOAIDeck > mDeck;
-	MOAILuaSharedPtr < MOAIDeckRemapper > mRemapper;
 	
 	//----------------------------------------------------------------//
 	static int		_reserveBrushes			( lua_State* L );
 	static int		_setBrush				( lua_State* L );
 	static int		_setDeck				( lua_State* L );
 	static int		_setGrid				( lua_State* L );
-	static int		_setRemapper			( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	ZLBox					ComputeMaxBounds		();

@@ -10,7 +10,6 @@
 class MOAICellCoord;
 class MOAICollisionShape;
 class MOAIDeck;
-class MOAIDeckRemapper;
 class MOAIGrid;
 class MOAILayoutFrame;
 class MOAIMaterialBatch;
@@ -34,23 +33,29 @@ class MOAIGraphicsGridProp :
 private:
 
 	//----------------------------------------------------------------//
-	void					MOAIAbstractDrawable_Draw				( int subPrimID, float lod );
-	bool					MOAINode_ApplyAttrOp					( u32 attrID, MOAIAttribute& attr, u32 op );
-	void					MOAINode_Update							();
-	void					MOAIPartitionHull_AddToSortBuffer		( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
-	u32						MOAIPartitionHull_GetModelBounds		( ZLBox& bounds ); // get the prop bounds in model space
+	ZLAffine3D		Append									( const ZLAffine3D& mtx, const ZLAffine3D& append );
+	ZLAffine3D		AppendFlip								( const ZLAffine3D& mtx, const ZLAffine3D& append );
+	ZLAffine3D		AppendFlipRot90							( const ZLAffine3D& mtx, const ZLAffine3D& append );
+	void			DrawGrid								( const MOAICellCoord &c0, const MOAICellCoord &c1 );
+
+	//----------------------------------------------------------------//
+	void			MOAIAbstractDrawable_Draw				( int subPrimID, float lod );
+	bool			MOAINode_ApplyAttrOp					( u32 attrID, MOAIAttribute& attr, u32 op );
+	void			MOAINode_Update							();
+	void			MOAIPartitionHull_AddToSortBuffer		( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
+	u32				MOAIPartitionHull_GetModelBounds		( ZLBox& bounds ); // get the prop bounds in model space
 
 public:
 
 	DECL_LUA_FACTORY ( MOAIGraphicsGridProp )
 
 	//----------------------------------------------------------------//
-							MOAIGraphicsGridProp		();
-	virtual					~MOAIGraphicsGridProp		();
-	void					RegisterLuaClass			( MOAILuaState& state );
-	void					RegisterLuaFuncs			( MOAILuaState& state );
-	void					SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
-	void					SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
+					MOAIGraphicsGridProp		();
+	virtual			~MOAIGraphicsGridProp		();
+	void			RegisterLuaClass			( MOAILuaState& state );
+	void			RegisterLuaFuncs			( MOAILuaState& state );
+	void			SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
+	void			SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

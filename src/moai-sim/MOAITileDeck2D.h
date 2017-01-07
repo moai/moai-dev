@@ -4,8 +4,6 @@
 #ifndef	MOAITILEDECK2D_H
 #define	MOAITILEDECK2D_H
 
-#include <moai-sim/MOAIStandardDeck.h>
-
 class MOAISingleTexture;
 
 //================================================================//

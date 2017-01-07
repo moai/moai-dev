@@ -4,8 +4,6 @@
 #ifndef	MOAISTRETCHPATCH2D_H
 #define	MOAISTRETCHPATCH2D_H
 
-#include <moai-sim/MOAIStandardDeck.h>
-
 class MOAISingleTexture;
 
 //================================================================//

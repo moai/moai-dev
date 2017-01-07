@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <moai-sim/MOAICamera.h>
 #include <moai-sim/MOAIDeck.h>
-#include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGraphicsPropBase.h>

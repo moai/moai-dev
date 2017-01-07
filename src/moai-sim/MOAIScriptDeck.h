@@ -4,8 +4,6 @@
 #ifndef	MOAISCRIPTDECK_H
 #define	MOAISCRIPTDECK_H
 
-#include <moai-sim/MOAIStandardDeck.h>
-
 //================================================================//
 // MOAIScriptDeck
 //================================================================//

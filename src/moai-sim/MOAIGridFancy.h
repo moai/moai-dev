@@ -47,7 +47,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIGridFancy )
 	
 	//----------------------------------------------------------------//
-	void			Draw				( MOAIDeck *deck, MOAIDeckRemapper *remapper, MOAIMaterialBatch* materials, const MOAICellCoord &c0, const MOAICellCoord &c1 );
+	void			Draw				( MOAIDeck *deck, MOAIMaterialBatch* materials, const MOAICellCoord &c0, const MOAICellCoord &c1 );
 	void			FillAlpha			( float value );
 	void			FillColor			( u32 value );
 	void			FillScale			( float value );

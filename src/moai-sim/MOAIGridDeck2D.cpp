@@ -2,7 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIGridDeck2D.h>
@@ -107,24 +106,6 @@ int MOAIGridDeck2D::_setGrid ( lua_State* L ) {
 	MOAIGrid* grid = state.GetLuaObject < MOAIGrid >( 2, true );
 	self->mGrid.Set ( *self, grid );
 	self->SetBoundsDirty ();
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setRemapper
-	@text	Sets or clears the remapper (for remapping index values
-			held in the grid).
-	
-	@in		MOAIGridDeck2D self
-	@opt	MOAIDeckRemapper remapper		Default value is nil.
-	@out	nil
-*/
-int MOAIGridDeck2D::_setRemapper ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGridDeck2D, "U" )
-	
-	MOAIDeckRemapper* remapper = state.GetLuaObject < MOAIDeckRemapper >( 2, true );
-	self->mRemapper.Set ( *self, remapper );
 	
 	return 0;
 }

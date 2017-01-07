@@ -2,7 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIMaterialBatch.h>
 
@@ -251,7 +250,36 @@ void MOAIGrid::Fill ( u32 value ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIGrid::GetTile ( int xTile, int yTile ) {
+void MOAIGrid::Draw ( MOAIDeck* deck, MOAIMaterialBatch* materials, const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
+
+	ZLVec3D offset	= ZLVec3D::ORIGIN;
+	ZLVec3D scale	= ZLVec3D::AXIS;
+	
+	float tileWidth = this->GetTileWidth ();
+	float tileHeight = this->GetTileHeight ();
+	
+	for ( int y = c0.mY; y <= c1.mY; ++y ) {
+		for ( int x = c0.mX; x <= c1.mX; ++x ) {
+			
+			MOAICellCoord wrap = this->WrapCellCoord ( x, y );
+			u32 idx = this->GetTile ( wrap.mX, wrap.mY );
+			
+			MOAICellCoord coord ( x, y );
+			ZLVec2D loc = this->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
+
+			offset.mX	= loc.mX;
+			offset.mY	= loc.mY;
+			scale.mX	= tileWidth;
+			scale.mY	= tileHeight;
+
+			//deck->Draw ( idx, materials, offset, scale );
+			deck->Draw ( idx );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+u32 MOAIGrid::GetTile ( int xTile, int yTile ) const {
 
 	MOAICellCoord coord ( xTile, yTile );
 	if ( this->IsValidCoord ( coord )) {
@@ -396,32 +424,4 @@ size_t MOAIGrid::StreamTilesOut ( ZLStream* stream ) {
 
 	size_t size = this->mTiles.Size () * sizeof ( u32 );
 	return stream->WriteBytes ( this->mTiles, size );
-}
-
-//----------------------------------------------------------------//
-void MOAIGrid::Draw ( MOAIDeck* deck, MOAIDeckRemapper* remapper, MOAIMaterialBatch* materials, const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
-
-	ZLVec3D offset	= ZLVec3D::ORIGIN;
-	ZLVec3D scale	= ZLVec3D::AXIS;
-	
-	float tileWidth = this->GetTileWidth ();
-	float tileHeight = this->GetTileHeight ();
-	
-	for ( int y = c0.mY; y <= c1.mY; ++y ) {
-		for ( int x = c0.mX; x <= c1.mX; ++x ) {
-			
-			MOAICellCoord wrap = this->WrapCellCoord ( x, y );
-			u32 idx = this->GetTile ( wrap.mX, wrap.mY );
-			
-			MOAICellCoord coord ( x, y );
-			ZLVec2D loc = this->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
-
-			offset.mX	= loc.mX;
-			offset.mY	= loc.mY;
-			scale.mX	= tileWidth;
-			scale.mY	= tileHeight;
-
-			deck->Draw ( MOAIDeckRemapper::Remap ( remapper, idx ), materials, offset, scale );
-		}
-	}
 }

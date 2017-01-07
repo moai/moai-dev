@@ -7,7 +7,6 @@
 #include <moai-sim/MOAIGridSpace.h>
 #include <moai-sim/MOAIDeck.h>
 
-class MOAIDeckRemapper;
 class MOAIMaterialBatch;
 
 //================================================================//
@@ -44,11 +43,11 @@ public:
 	DECL_LUA_FACTORY ( MOAIGrid )
 	
 	//----------------------------------------------------------------//
-	u32				GetTile				( int xTile, int yTile );
+	virtual	void	Draw				( MOAIDeck* deck, MOAIMaterialBatch* materials, const MOAICellCoord &c0, const MOAICellCoord &c1 );
+	void			Fill				( u32 value );
+	u32				GetTile				( int xTile, int yTile ) const;
 					MOAIGrid			();
 					~MOAIGrid			();
-	virtual	void	Draw				( MOAIDeck* deck, MOAIDeckRemapper* remapper, MOAIMaterialBatch* materials, const MOAICellCoord &c0, const MOAICellCoord &c1 );
-	void			Fill				( u32 value );
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			RowFromString		( u32 rowID, cc8* str );

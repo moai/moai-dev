@@ -2,10 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIBoundsDeck.h>
 #include <moai-sim/MOAICollisionShape.h>
 #include <moai-sim/MOAIDeck.h>
-#include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIGrid.h>
@@ -28,11 +26,11 @@ int MOAIDeck::_draw ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDeck, "U" )
 
 	u32 index						= state.GetValue < u32 >( 2, 1 );
-	MOAIMaterialBatch* materials	= state.GetLuaObject < MOAIMaterialBatch >( 3, false );
-	ZLVec3D offset					= state.GetValue < ZLVec3D >( 4, ZLVec3D::ORIGIN );
-	ZLVec3D scale					= state.GetValue < ZLVec3D >( 7, ZLVec3D::AXIS );
+	//MOAIMaterialBatch* materials	= state.GetLuaObject < MOAIMaterialBatch >( 3, false );
+	//ZLVec3D offset					= state.GetValue < ZLVec3D >( 4, ZLVec3D::ORIGIN );
+	//ZLVec3D scale					= state.GetValue < ZLVec3D >( 7, ZLVec3D::AXIS );
 
-	self->Draw ( index, materials, offset, scale );
+	self->Draw ( index );
 
 	return 0;
 }
@@ -80,82 +78,40 @@ int MOAIDeck::_getBounds ( lua_State* L ) {
 	return 6;
 }
 
-//----------------------------------------------------------------//
-/**	@lua	setBoundsDeck
-	@text	Set or clear the bounds override deck.
-	
-	@in		MOAIDeck self
-	@opt	MOAIBoundsDeck boundsDeck
-	@out	nil
-*/
-int MOAIDeck::_setBoundsDeck ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeck, "U" )
-	
-	self->mBoundsDeck.Set ( *self, state.GetLuaObject < MOAIBoundsDeck >( 2, true ));
-	
-	return 0;
-}
-
 //================================================================//
 // MOAIDeck
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLBox MOAIDeck::ComputeMaxBounds () {
+void MOAIDeck::Draw ( u32 idx ) {
+
+	this->MOAIDeck_Draw ( idx );
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAIDeck::GetBounds () {
 
 	return this->GetBounds ( 0 );
-}
-
-//----------------------------------------------------------------//
-bool MOAIDeck::Contains ( u32 idx, const ZLVec2D& vec ) {
 	
-	ZLRect bounds = this->GetBounds ( idx ).GetRect ( ZLBox::PLANE_XY );
-	return bounds.Contains ( vec );
-}
-
-//----------------------------------------------------------------//
-void MOAIDeck::Draw ( u32 idx, MOAIMaterialBatch* materials ) {
-
-	this->Draw ( idx, materials, ZLVec3D::ORIGIN, ZLVec3D::AXIS );
-}
-
-//----------------------------------------------------------------//
-void MOAIDeck::Draw ( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale ) {
+	if ( this->mBoundsDirty ) {
 	
-	if ( !idx || ( idx & MOAITileFlags::HIDDEN )) return;
-	
-	scale.mX = ( idx & MOAITileFlags::XFLIP ) ? -scale.mX : scale.mX;
-	scale.mY = ( idx & MOAITileFlags::YFLIP ) ? -scale.mY : scale.mY;
-	
-	this->DrawIndex ( idx & MOAITileFlags::CODE_MASK, materials, offset, scale );
+		this->mMaxBounds = this->MOAIDeck_ComputeMaxBounds ();
+		
+		// flip and expand to account for flip flags
+		//ZLBox bounds = this->mMaxBounds;
+		//bounds.Scale ( -1.0f );
+		//bounds.Bless ();
+		
+		//this->mMaxBounds.Grow ( bounds );
+		this->mBoundsDirty = false;
+	}
+	return this->mMaxBounds;
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::DrawIndex ( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale ) {
-	UNUSED ( idx );
-	UNUSED ( materials );
-	UNUSED ( offset );
-	UNUSED ( scale );
-}
+ZLBounds MOAIDeck::GetBounds ( u32 idx ) {
 
-//----------------------------------------------------------------//
-ZLBox MOAIDeck::GetBounds () {
-
-	return this->GetBounds ( 0 );
-}
-
-//----------------------------------------------------------------//
-ZLBox MOAIDeck::GetBounds ( u32 idx ) {
-
-	return this->GetItemBounds ( idx );
-}
-
-//----------------------------------------------------------------//
-ZLBox MOAIDeck::GetItemBounds ( u32 idx ) {
-
-	ZLBox bounds;
-	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
-	return bounds;
+	return this->MOAIDeck_GetBounds ( idx );
 }
 
 //----------------------------------------------------------------//
@@ -165,19 +121,14 @@ MOAICollisionShape* MOAIDeck::GetCollisionShape ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIDeck::Inside ( u32 idx, MOAIMaterialBatch* materials, u32 granularity, ZLVec3D vec, float pad ) {
-	UNUSED ( idx );
-	UNUSED ( materials );
-	UNUSED ( granularity );
-	UNUSED ( vec );
-	UNUSED ( pad );
-	
-	// we've passed the trivial reject; if we don't have a more finely grained test, return 'true'
-	return true;
+MOAIMaterialBatch* MOAIDeck::GetMaterialBatch () {
+
+	return this->MOAIDeck_GetMaterialBatch ();
 }
 
 //----------------------------------------------------------------//
-MOAIDeck::MOAIDeck () {
+MOAIDeck::MOAIDeck () :
+	mBoundsDirty ( true ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
@@ -186,6 +137,18 @@ MOAIDeck::MOAIDeck () {
 
 //----------------------------------------------------------------//
 MOAIDeck::~MOAIDeck () {
+}
+
+//----------------------------------------------------------------//
+bool MOAIDeck::Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
+
+	return this->Overlap ( idx, vec, granularity, result );
+}
+
+//----------------------------------------------------------------//
+bool MOAIDeck::Overlap ( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
+
+	return this->Overlap ( idx, vec, granularity, result );
 }
 
 //----------------------------------------------------------------//
@@ -205,13 +168,61 @@ void MOAIDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
+//----------------------------------------------------------------//
+void MOAIDeck::SetBoundsDirty () {
+
+	this->mBoundsDirty = true;
+}
+
 //================================================================//
 // ::implementation::
 //================================================================//
+
+//----------------------------------------------------------------//
+ZLBounds MOAIDeck::MOAIDeck_ComputeMaxBounds () {
+
+	return ZLBounds::EMPTY;
+}
+
+//----------------------------------------------------------------//
+void MOAIDeck::MOAIDeck_Draw ( u32 idx ) {
+	UNUSED ( idx );
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAIDeck::MOAIDeck_GetBounds ( u32 idx ) {
+	UNUSED ( idx );
+
+	return ZLBounds::EMPTY;
+}
 
 //----------------------------------------------------------------//
 MOAICollisionShape* MOAIDeck::MOAIDeck_GetCollisionShape ( u32 idx ) {
 	UNUSED ( idx );
 
 	return 0;
+}
+
+//----------------------------------------------------------------//
+MOAIMaterialBatch* MOAIDeck::MOAIDeck_GetMaterialBatch () {
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+bool MOAIDeck::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
+	UNUSED ( result );
+	UNUSED ( granularity );
+	
+	ZLBounds bounds = this->GetBounds ( idx );
+	return (( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) && bounds.Contains ( ZLVec3D ( vec.mY, vec.mY, 0.0f ), ZLBox::PLANE_XY ));
+}
+
+//----------------------------------------------------------------//
+bool MOAIDeck::MOAIDeck_Overlap ( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
+	UNUSED ( result );
+	UNUSED ( granularity );
+	
+	ZLBounds bounds = this->GetBounds ( idx );
+	return (( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) && bounds.Contains ( vec ));
 }

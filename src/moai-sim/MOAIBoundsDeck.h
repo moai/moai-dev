@@ -4,7 +4,6 @@
 #ifndef	MOAIBOUNDSDECK_H
 #define	MOAIBOUNDSDECK_H
 
-#include <moai-sim/MOAIStandardDeck.h>
 #include <moai-sim/MOAIQuadBrush.h>
 
 class MOAISingleTexture;

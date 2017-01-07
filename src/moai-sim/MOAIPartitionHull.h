@@ -9,7 +9,6 @@
 class MOAICellCoord;
 class MOAICollisionProp;
 class MOAIDeck;
-class MOAIDeckRemapper;
 class MOAIGrid;
 class MOAILayoutFrame;
 class MOAIOverlapPrim2D;
@@ -119,10 +118,11 @@ public:
 	static const s32 UNKNOWN_PRIORITY	= 0x80000000;
 	static const int NO_SUBPRIM_ID		= 0xffffffff;
 	
+	// these are implementation dependent; use them as hints
 	enum {
-		HIT_TEST_COARSE,	// no hit test will be performed; only the prop's bounds will be used
-		HIT_TEST_MEDIUM,	// implementation dependent
-		HIT_TEST_FINE,		// implementation dependent
+		HIT_TEST_COARSE,	// object bounds in world space
+		HIT_TEST_MEDIUM,	// individual geometry elements in model space
+		HIT_TEST_FINE,		// pixel-level granularity
 	};
 	
 	enum {

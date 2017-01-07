@@ -9,7 +9,6 @@
 
 class MOAICellCoord;
 class MOAIDeck;
-class MOAIDeckRemapper;
 class MOAIGrid;
 class MOAILayoutFrame;
 class MOAIMaterialBatch;

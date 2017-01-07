@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <moai-sim/MOAICamera.h>
 #include <moai-sim/MOAIDeck.h>
-#include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGraphicsGridProp.h>
@@ -22,6 +21,68 @@
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAIViewport.h>
 
+
+
+	//----------------------------------------------------------------//
+	ZLAffine3D MOAIGraphicsGridProp::Append ( const ZLAffine3D& mtx, const ZLAffine3D& append ) {
+
+		ZLAffine3D result;
+
+		result.m [ ZLAffine3D::C0_R0 ]	=	( append.m [ ZLAffine3D::C0_R0 ] * mtx.m [ ZLAffine3D::C0_R0 ])	+
+											( append.m [ ZLAffine3D::C1_R0 ] * mtx.m [ ZLAffine3D::C0_R1 ])	+
+											( append.m [ ZLAffine3D::C2_R0 ] * mtx.m [ ZLAffine3D::C0_R2 ]);
+		
+		result.m [ ZLAffine3D::C0_R1 ]	=	( append.m [ ZLAffine3D::C0_R1 ] * mtx.m [ ZLAffine3D::C0_R0 ])	+
+											( append.m [ ZLAffine3D::C1_R1 ] * mtx.m [ ZLAffine3D::C0_R1 ])	+
+											( append.m [ ZLAffine3D::C2_R1 ] * mtx.m [ ZLAffine3D::C0_R2 ]);
+		
+		result.m [ ZLAffine3D::C0_R2 ]	=	( append.m [ ZLAffine3D::C0_R2 ] * mtx.m [ ZLAffine3D::C0_R0 ])	+
+											( append.m [ ZLAffine3D::C1_R2 ] * mtx.m [ ZLAffine3D::C0_R1 ])	+
+											( append.m [ ZLAffine3D::C2_R2 ] * mtx.m [ ZLAffine3D::C0_R2 ]);
+
+		result.m [ ZLAffine3D::C1_R0 ]	=	( append.m [ ZLAffine3D::C0_R0 ] * mtx.m [ ZLAffine3D::C1_R0 ])	+
+											( append.m [ ZLAffine3D::C1_R0 ] * mtx.m [ ZLAffine3D::C1_R1 ])	+
+											( append.m [ ZLAffine3D::C2_R0 ] * mtx.m [ ZLAffine3D::C1_R2 ]);
+		
+		result.m [ ZLAffine3D::C1_R1 ]	=	( append.m [ ZLAffine3D::C0_R1 ] * mtx.m [ ZLAffine3D::C1_R0 ])	+
+											( append.m [ ZLAffine3D::C1_R1 ] * mtx.m [ ZLAffine3D::C1_R1 ])	+
+											( append.m [ ZLAffine3D::C2_R1 ] * mtx.m [ ZLAffine3D::C1_R2 ]);
+		
+		result.m [ ZLAffine3D::C1_R2 ]	=	( append.m [ ZLAffine3D::C0_R2 ] * mtx.m [ ZLAffine3D::C1_R0 ])	+
+											( append.m [ ZLAffine3D::C1_R2 ] * mtx.m [ ZLAffine3D::C1_R1 ])	+
+											( append.m [ ZLAffine3D::C2_R2 ] * mtx.m [ ZLAffine3D::C1_R2 ]);
+		
+		result.m [ ZLAffine3D::C2_R0 ]	=	( append.m [ ZLAffine3D::C0_R0 ] * mtx.m [ ZLAffine3D::C2_R0 ])	+
+											( append.m [ ZLAffine3D::C1_R0 ] * mtx.m [ ZLAffine3D::C2_R1 ])	+
+											( append.m [ ZLAffine3D::C2_R0 ] * mtx.m [ ZLAffine3D::C2_R2 ]);
+		
+		result.m [ ZLAffine3D::C2_R1 ]	=	( append.m [ ZLAffine3D::C0_R1 ] * mtx.m [ ZLAffine3D::C2_R0 ])	+
+											( append.m [ ZLAffine3D::C1_R1 ] * mtx.m [ ZLAffine3D::C2_R1 ])	+
+											( append.m [ ZLAffine3D::C2_R1 ] * mtx.m [ ZLAffine3D::C2_R2 ]);
+		
+		result.m [ ZLAffine3D::C2_R2 ]	=	( append.m [ ZLAffine3D::C0_R2 ] * mtx.m [ ZLAffine3D::C2_R0 ])	+
+											( append.m [ ZLAffine3D::C1_R2 ] * mtx.m [ ZLAffine3D::C2_R1 ])	+
+											( append.m [ ZLAffine3D::C2_R2 ] * mtx.m [ ZLAffine3D::C2_R2 ]);
+		
+		result.m [ ZLAffine3D::C3_R0 ]	=	( append.m [ ZLAffine3D::C0_R0 ] * mtx.m [ ZLAffine3D::C3_R0 ])	+
+											( append.m [ ZLAffine3D::C1_R0 ] * mtx.m [ ZLAffine3D::C3_R1 ])	+
+											( append.m [ ZLAffine3D::C2_R0 ] * mtx.m [ ZLAffine3D::C3_R2 ])	+
+											( append.m [ ZLAffine3D::C3_R0 ]);
+		
+		result.m [ ZLAffine3D::C3_R1 ]	=	( append.m [ ZLAffine3D::C0_R1 ] * mtx.m [ ZLAffine3D::C3_R0 ])	+
+											( append.m [ ZLAffine3D::C1_R1 ] * mtx.m [ ZLAffine3D::C3_R1 ])	+
+											( append.m [ ZLAffine3D::C2_R1 ] * mtx.m [ ZLAffine3D::C3_R2 ])	+
+											( append.m [ ZLAffine3D::C3_R1 ]);
+		
+		result.m [ ZLAffine3D::C3_R2 ]	=	( append.m [ ZLAffine3D::C0_R2 ] * mtx.m [ ZLAffine3D::C3_R0 ])	+
+											( append.m [ ZLAffine3D::C1_R2 ] * mtx.m [ ZLAffine3D::C3_R1 ])	+
+											( append.m [ ZLAffine3D::C2_R2 ] * mtx.m [ ZLAffine3D::C3_R2 ])	+
+											( append.m [ ZLAffine3D::C3_R2 ]);
+		
+		return result;
+	}
+
+
 //================================================================//
 // local
 //================================================================//
@@ -31,6 +92,144 @@
 //================================================================//
 // MOAIGraphicsGridProp
 //================================================================//
+
+//----------------------------------------------------------------//
+ZLAffine3D MOAIGraphicsGridProp::AppendFlip ( const ZLAffine3D& mtx, const ZLAffine3D& append ) {
+
+	// s 0 0 x
+	// 0 s 0 y
+	// 0 0 1 0
+
+	ZLAffine3D result;
+
+	result.m [ ZLAffine3D::C0_R0 ]	=	( append.m [ ZLAffine3D::C0_R0 ] * mtx.m [ ZLAffine3D::C0_R0 ]);
+	result.m [ ZLAffine3D::C0_R1 ]	=	( append.m [ ZLAffine3D::C0_R1 ] * mtx.m [ ZLAffine3D::C0_R0 ]);
+	result.m [ ZLAffine3D::C0_R2 ]	=	( append.m [ ZLAffine3D::C0_R2 ] * mtx.m [ ZLAffine3D::C0_R0 ]);
+
+	result.m [ ZLAffine3D::C1_R0 ]	=	( append.m [ ZLAffine3D::C1_R0 ] * mtx.m [ ZLAffine3D::C1_R1 ]);
+	result.m [ ZLAffine3D::C1_R1 ]	=	( append.m [ ZLAffine3D::C1_R1 ] * mtx.m [ ZLAffine3D::C1_R1 ]);
+	result.m [ ZLAffine3D::C1_R2 ]	=	( append.m [ ZLAffine3D::C1_R2 ] * mtx.m [ ZLAffine3D::C1_R1 ]);
+	
+	result.m [ ZLAffine3D::C2_R0 ]	=	append.m [ ZLAffine3D::C2_R0 ];
+	result.m [ ZLAffine3D::C2_R1 ]	=	append.m [ ZLAffine3D::C2_R1 ];
+	result.m [ ZLAffine3D::C2_R2 ]	=	append.m [ ZLAffine3D::C2_R2 ];
+	
+	result.m [ ZLAffine3D::C3_R0 ]	=	( append.m [ ZLAffine3D::C0_R0 ] * mtx.m [ ZLAffine3D::C3_R0 ])	+
+										( append.m [ ZLAffine3D::C1_R0 ] * mtx.m [ ZLAffine3D::C3_R1 ])	+
+										( append.m [ ZLAffine3D::C3_R0 ]);
+	
+	result.m [ ZLAffine3D::C3_R1 ]	=	( append.m [ ZLAffine3D::C0_R1 ] * mtx.m [ ZLAffine3D::C3_R0 ])	+
+										( append.m [ ZLAffine3D::C1_R1 ] * mtx.m [ ZLAffine3D::C3_R1 ])	+
+										( append.m [ ZLAffine3D::C3_R1 ]);
+	
+	result.m [ ZLAffine3D::C3_R2 ]	=	( append.m [ ZLAffine3D::C0_R2 ] * mtx.m [ ZLAffine3D::C3_R0 ])	+
+										( append.m [ ZLAffine3D::C1_R2 ] * mtx.m [ ZLAffine3D::C3_R1 ])	+
+										( append.m [ ZLAffine3D::C3_R2 ]);
+	
+	return result;
+}
+
+//----------------------------------------------------------------//
+ZLAffine3D MOAIGraphicsGridProp::AppendFlipRot90 ( const ZLAffine3D& mtx, const ZLAffine3D& append ) {
+
+	// 0 s 0 z
+	// s 0 0 y
+	// 0 0 1 0
+
+	ZLAffine3D result;
+
+	result.m [ ZLAffine3D::C0_R0 ]	=	( append.m [ ZLAffine3D::C1_R0 ] * mtx.m [ ZLAffine3D::C0_R1 ]);
+	result.m [ ZLAffine3D::C0_R1 ]	=	( append.m [ ZLAffine3D::C1_R1 ] * mtx.m [ ZLAffine3D::C0_R1 ]);
+	result.m [ ZLAffine3D::C0_R2 ]	=	( append.m [ ZLAffine3D::C1_R2 ] * mtx.m [ ZLAffine3D::C0_R1 ]);
+
+	result.m [ ZLAffine3D::C1_R0 ]	=	( append.m [ ZLAffine3D::C0_R0 ] * mtx.m [ ZLAffine3D::C1_R0 ]);
+	result.m [ ZLAffine3D::C1_R1 ]	=	( append.m [ ZLAffine3D::C0_R1 ] * mtx.m [ ZLAffine3D::C1_R0 ]);
+	result.m [ ZLAffine3D::C1_R2 ]	=	( append.m [ ZLAffine3D::C0_R2 ] * mtx.m [ ZLAffine3D::C1_R0 ]);
+	
+	result.m [ ZLAffine3D::C2_R0 ]	=	append.m [ ZLAffine3D::C2_R0 ];
+	result.m [ ZLAffine3D::C2_R1 ]	=	append.m [ ZLAffine3D::C2_R1 ];
+	result.m [ ZLAffine3D::C2_R2 ]	=	append.m [ ZLAffine3D::C2_R2 ];
+	
+	result.m [ ZLAffine3D::C3_R0 ]	=	( append.m [ ZLAffine3D::C0_R0 ] * mtx.m [ ZLAffine3D::C3_R0 ])	+
+										( append.m [ ZLAffine3D::C1_R0 ] * mtx.m [ ZLAffine3D::C3_R1 ])	+
+										( append.m [ ZLAffine3D::C3_R0 ]);
+	
+	result.m [ ZLAffine3D::C3_R1 ]	=	( append.m [ ZLAffine3D::C0_R1 ] * mtx.m [ ZLAffine3D::C3_R0 ])	+
+										( append.m [ ZLAffine3D::C1_R1 ] * mtx.m [ ZLAffine3D::C3_R1 ])	+
+										( append.m [ ZLAffine3D::C3_R1 ]);
+	
+	result.m [ ZLAffine3D::C3_R2 ]	=	( append.m [ ZLAffine3D::C0_R2 ] * mtx.m [ ZLAffine3D::C3_R0 ])	+
+										( append.m [ ZLAffine3D::C1_R2 ] * mtx.m [ ZLAffine3D::C3_R1 ])	+
+										( append.m [ ZLAffine3D::C3_R2 ]);
+	
+	return result;
+}
+
+//----------------------------------------------------------------//
+void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
+
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	const ZLAffine3D& modelToWorldMtx = this->GetWorldDrawingMtx ();
+
+	ZLVec3D offset	= ZLVec3D::ORIGIN;
+	ZLVec3D scale	= ZLVec3D::AXIS;
+	
+	assert ( this->mGrid );
+	const MOAIGrid& grid = *this->mGrid;
+	
+	float tileWidth = grid.GetTileWidth ();
+	float tileHeight = grid.GetTileHeight ();
+	
+	for ( int y = c0.mY; y <= c1.mY; ++y ) {
+		for ( int x = c0.mX; x <= c1.mX; ++x ) {
+			
+			MOAICellCoord wrap = grid.WrapCellCoord ( x, y );
+			u32 idx = grid.GetTile ( wrap.mX, wrap.mY );
+			
+			if ( !idx || ( idx & MOAITileFlags::HIDDEN )) continue;
+			
+			MOAICellCoord coord ( x, y );
+			ZLVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
+
+			float xScale = ( idx & MOAITileFlags::XFLIP ) ? -tileWidth : tileWidth;
+			float yScale = ( idx & MOAITileFlags::YFLIP ) ? -tileHeight : tileHeight;
+
+			ZLAffine3D mtx = modelToWorldMtx;
+
+			mtx.m [ ZLAffine3D::C0_R2 ]	= 0.0f;
+			mtx.m [ ZLAffine3D::C1_R2 ]	= 0.0f;
+
+			mtx.m [ ZLAffine3D::C3_R0 ]	= loc.mX;
+			mtx.m [ ZLAffine3D::C3_R1 ]	= loc.mY;
+			mtx.m [ ZLAffine3D::C3_R2 ]	= 0.0f;
+
+			if ( idx & MOAITileFlags::ROT_90 ) {
+
+				mtx.m [ ZLAffine3D::C0_R0 ]	= 0.0f;
+				mtx.m [ ZLAffine3D::C0_R1 ]	= yScale;
+				
+				mtx.m [ ZLAffine3D::C1_R0 ]	= -xScale;
+				mtx.m [ ZLAffine3D::C1_R1 ]	= 0.0f;
+				
+				mtx = this->Append ( mtx, modelToWorldMtx );
+			}
+			else {
+			
+				mtx.m [ ZLAffine3D::C0_R0 ]	= xScale;
+				mtx.m [ ZLAffine3D::C0_R1 ]	= 0.0f;
+
+				mtx.m [ ZLAffine3D::C1_R0 ]	= 0.0f;
+				mtx.m [ ZLAffine3D::C1_R1 ]	= yScale;
+				
+				mtx = this->AppendFlip ( mtx, modelToWorldMtx );
+			}
+
+			gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX, mtx );
+			
+			this->mDeck->Draw (( idx & MOAITileFlags::CODE_MASK ) - 1 );
+		}
+	}
+}
 
 //----------------------------------------------------------------//
 MOAIGraphicsGridProp::MOAIGraphicsGridProp () {
@@ -87,19 +286,18 @@ void MOAIGraphicsGridProp::MOAIAbstractDrawable_Draw ( int subPrimID, float lod 
 	if ( !this->mGrid ) return;
 
 	this->LoadGfxState ();
-	this->LoadVertexTransform ();
+	//this->LoadVertexTransform ();
 	this->LoadUVTransform ();
 	
-	MOAIGrid& grid = *this->mGrid;
 	MOAICellCoord c0, c1;
 
 	if ( subPrimID == MOAIPartitionHull::NO_SUBPRIM_ID ) {
 		this->GetGridBoundsInView ( this->GetWorldToLocalMtx (), c0, c1 );
 	}
 	else {
-		c0 = c1 = grid.GetCellCoord ( subPrimID );
+		c0 = c1 = this->mGrid->GetCellCoord ( subPrimID );
 	}
-	grid.Draw ( this->mDeck, 0, this->mMaterialBatch, c0, c1 );
+	this->DrawGrid ( c0, c1 );
 }
 
 //----------------------------------------------------------------//

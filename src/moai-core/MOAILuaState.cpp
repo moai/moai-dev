@@ -500,6 +500,23 @@ void* MOAILuaState::GetPtrUserData ( int idx ) {
 }
 
 //----------------------------------------------------------------//
+ZLQuad MOAILuaState::GetQuad ( int idx ) {
+
+	ZLQuad quad;
+	
+	quad.mV [ 0 ].mX = this->GetValue < float >( idx + 0, 0.0f );
+	quad.mV [ 0 ].mY = this->GetValue < float >( idx + 1, 0.0f );
+	quad.mV [ 1 ].mX = this->GetValue < float >( idx + 2, 0.0f );
+	quad.mV [ 1 ].mY = this->GetValue < float >( idx + 3, 0.0f );
+	quad.mV [ 2 ].mX = this->GetValue < float >( idx + 4, 0.0f );
+	quad.mV [ 2 ].mY = this->GetValue < float >( idx + 5, 0.0f );
+	quad.mV [ 3 ].mX = this->GetValue < float >( idx + 6, 0.0f );
+	quad.mV [ 3 ].mY = this->GetValue < float >( idx + 7, 0.0f );
+	
+	return quad;
+}
+
+//----------------------------------------------------------------//
 STLString MOAILuaState::GetStackDump () {
 
 	STLString out;

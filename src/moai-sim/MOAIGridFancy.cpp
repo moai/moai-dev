@@ -2,7 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIGridFancy.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIMaterialBatch.h>
@@ -324,7 +323,7 @@ int MOAIGridFancy::_setPalette ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGridFancy::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, MOAIMaterialBatch* materials, const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
+void MOAIGridFancy::Draw ( MOAIDeck *deck, MOAIMaterialBatch* materials, const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
 
 	ZLVec3D offset	= ZLVec3D::ORIGIN;
 	ZLVec3D scale	= ZLVec3D::AXIS;
@@ -359,7 +358,8 @@ void MOAIGridFancy::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, MOAIMater
 			scale.mX	= tileWidth * tileScale;
 			scale.mY	= tileHeight * tileScale;
 			
-			deck->Draw ( MOAIDeckRemapper::Remap ( remapper, idx ), materials, offset, scale );
+			//deck->Draw ( idx, materials, offset, scale );
+			deck->Draw ( idx );
 		}
 	}
 	

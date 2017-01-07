@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <moai-sim/MOAIBoundsDeck.h>
 #include <moai-sim/MOAICollisionShape.h>
-#include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIGrid.h>
@@ -12,7 +11,6 @@
 #include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
-#include <moai-sim/MOAIStandardDeck.h>
 #include <moai-sim/MOAISurfaceSampler2D.h>
 #include <moai-sim/MOAITexture.h>
 #include <moai-sim/MOAITextureBase.h>

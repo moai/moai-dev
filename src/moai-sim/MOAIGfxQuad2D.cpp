@@ -33,18 +33,7 @@
 int MOAIGfxQuad2D::_setQuad ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuad2D, "UNNNNNNNN" )
 
-	ZLQuad quad;
-	
-	quad.mV [ 0 ].mX = state.GetValue < float >( 2, 0.0f );
-	quad.mV [ 0 ].mY = state.GetValue < float >( 3, 0.0f );
-	quad.mV [ 1 ].mX = state.GetValue < float >( 4, 0.0f );
-	quad.mV [ 1 ].mY = state.GetValue < float >( 5, 0.0f );
-	quad.mV [ 2 ].mX = state.GetValue < float >( 6, 0.0f );
-	quad.mV [ 2 ].mY = state.GetValue < float >( 7, 0.0f );
-	quad.mV [ 3 ].mX = state.GetValue < float >( 8, 0.0f );
-	quad.mV [ 3 ].mY = state.GetValue < float >( 9, 0.0f );
-
-	self->mQuad.SetVerts ( quad.mV [ 0 ], quad.mV [ 1 ], quad.mV [ 2 ], quad.mV [ 3 ]);
+	self->mQuad.mModelQuad = state.GetQuad ( 2 );
 	self->SetBoundsDirty ();
 
 	return 0;
@@ -94,19 +83,7 @@ int MOAIGfxQuad2D::_setRect ( lua_State* L ) {
 int MOAIGfxQuad2D::_setUVQuad ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuad2D, "UNNNNNNNN" )
 
-	ZLQuad quad;
-	
-	quad.mV [ 0 ].mX = state.GetValue < float >( 2, 0.0f );
-	quad.mV [ 0 ].mY = state.GetValue < float >( 3, 0.0f );
-	quad.mV [ 1 ].mX = state.GetValue < float >( 4, 0.0f );
-	quad.mV [ 1 ].mY = state.GetValue < float >( 5, 0.0f );
-	quad.mV [ 2 ].mX = state.GetValue < float >( 6, 0.0f );
-	quad.mV [ 2 ].mY = state.GetValue < float >( 7, 0.0f );
-	quad.mV [ 3 ].mX = state.GetValue < float >( 8, 0.0f );
-	quad.mV [ 3 ].mY = state.GetValue < float >( 9, 0.0f );
-
-	self->mQuad.SetUVs ( quad.mV [ 0 ], quad.mV [ 1 ], quad.mV [ 2 ], quad.mV [ 3 ]);
-	
+	self->mQuad.mUVQuad = state.GetQuad ( 2 );
 	return 0;
 }
 
@@ -178,45 +155,10 @@ int MOAIGfxQuad2D::_transformUV ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLBox MOAIGfxQuad2D::ComputeMaxBounds () {
-	return this->GetItemBounds ( 0 );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxQuad2D::DrawIndex ( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale ) {
-	
-	if ( !this->LoadGfxState ( materials, idx, MOAIShaderMgr::DECK2D_SHADER )) return;
-	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	MOAIQuadBrush::BindVertexFormat ();
-	
-	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
-	gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_MTX ));
-	
-	this->mQuad.Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY );
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxQuad2D::Inside ( u32 idx, MOAIMaterialBatch* materials, u32 granularity, ZLVec3D vec, float pad ) {
-	UNUSED ( pad );
-
-	return this->TestHit ( materials, idx, granularity, this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
-}
-
-//----------------------------------------------------------------//
-ZLBox MOAIGfxQuad2D::GetItemBounds ( u32 idx ) {
-	UNUSED ( idx );
-	ZLBox bounds;
-	ZLRect rect = this->mQuad.GetVtxBounds ();
-	bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );	
-	return bounds;
-}
-
-//----------------------------------------------------------------//
 MOAIGfxQuad2D::MOAIGfxQuad2D () {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIStandardDeck )
+		RTTI_EXTEND ( MOAIGraphicsDeckBase )
 	RTTI_END
 	
 	// set up rects to draw a unit tile centered at the origin
@@ -231,16 +173,13 @@ MOAIGfxQuad2D::~MOAIGfxQuad2D () {
 //----------------------------------------------------------------//
 void MOAIGfxQuad2D::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIStandardDeck::RegisterLuaClass ( state );
-	
-	state.SetField ( -1, "FILTER_POINT",	( u32 )ZGL_SAMPLE_NEAREST );
-	state.SetField ( -1, "FILTER_BILERP",	( u32 )ZGL_SAMPLE_LINEAR );
+	MOAIGraphicsDeckBase::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxQuad2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIStandardDeck::RegisterLuaFuncs ( state );
+	MOAIGraphicsDeckBase::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "setQuad",			_setQuad },
@@ -256,6 +195,18 @@ void MOAIGfxQuad2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxQuad2D::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+
+	MOAIGraphicsDeckBase::SerializeIn ( state, serializer );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxQuad2D::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+
+	MOAIGraphicsDeckBase::SerializeOut ( state, serializer );
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxQuad2D::Transform ( const ZLAffine3D& mtx ) {
 
 	this->mQuad.TransformVerts ( mtx );
@@ -265,4 +216,58 @@ void MOAIGfxQuad2D::Transform ( const ZLAffine3D& mtx ) {
 void MOAIGfxQuad2D::TransformUV ( const ZLAffine3D& mtx ) {
 
 	this->mQuad.TransformUVs ( mtx );
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+ZLBounds MOAIGfxQuad2D::MOAIDeck_ComputeMaxBounds () {
+
+	return this->GetBounds ( 0 );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxQuad2D::MOAIDeck_Draw ( u32 idx ) {
+
+	if ( !this->GetMaterialBatch ()->LoadGfxState ( 0, idx, MOAIShaderMgr::DECK2D_SHADER )) return;
+	
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIQuadBrush::BindVertexFormat ();
+	
+	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
+	gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_MTX ));
+	
+	this->mQuad.Draw ();
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAIGfxQuad2D::MOAIDeck_GetBounds ( u32 idx ) {
+	UNUSED ( idx );
+	ZLBounds bounds;
+	ZLRect rect = this->mQuad.GetVtxBounds ();
+	bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );
+	bounds.mStatus = rect.Area () == 0.0f ? ZLBounds::ZL_BOUNDS_EMPTY : ZLBounds::ZL_BOUNDS_OK;
+	return bounds;
+}
+
+//----------------------------------------------------------------//
+MOAICollisionShape* MOAIGfxQuad2D::MOAIDeck_GetCollisionShape ( u32 idx ) {
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxQuad2D::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
+
+	// TODO: handle granularity
+
+	return this->GetMaterialBatch ()->TestHit ( this, idx, granularity, this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxQuad2D::MOAIDeck_Overlap ( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
+
+	// TODO: handle granularity
+
+	return (( vec.mZ == 0.0f ) && this->MOAIDeck_Overlap ( idx, vec, granularity, result ));
 }
