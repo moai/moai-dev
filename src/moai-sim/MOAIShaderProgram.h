@@ -63,23 +63,6 @@ public:
 			MOAIShader instances. The shader program holds the graphics
 			resource, and the shader instances apply the (non-global)
 			uniform values.
-
-	@const	UNIFORM_FLOAT
-	@const	UNIFORM_INDEX
-	@const	UNIFORM_INT
-	@const	UNIFORM_MATRIX_F3
-	@const	UNIFORM_MATRIX_F4
-	@const	UNIFORM_VECTOR_F4
-	
-	@const	GLOBAL_VIEW_PROJ
-	@const	GLOBAL_VIEW_PROJ
-	@const	GLOBAL_VIEW_WIDTH
-	@const	GLOBAL_VIEW_HEIGHT
-	@const	GLOBAL_WORLD
-	@const	GLOBAL_WORLD_INVERSE
-	@const	GLOBAL_WORLD_VIEW
-	@const	GLOBAL_WORLD_VIEW_INVERSE
-	@const	GLOBAL_WORLD_VIEW_PROJ
 */
 class MOAIShaderProgram :
 	public MOAIGfxResource,

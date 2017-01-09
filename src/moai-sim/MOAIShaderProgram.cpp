@@ -90,7 +90,7 @@ int MOAIShaderGlobals::SetGlobal ( lua_State* L, int idx ) {
 	@out	nil
 */
 int MOAIShaderProgram::_declareUniform ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIShaderProgram, "UNS" )
+	MOAI_LUA_SETUP ( MOAIShaderProgram, "UNSN" )
 
 	u32 idx				= state.GetValue < u32 >( 2, 1 ) - 1;
 	STLString name		= state.GetValue < cc8* >( 3, "" );
