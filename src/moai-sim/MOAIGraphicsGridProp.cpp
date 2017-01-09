@@ -21,68 +21,6 @@
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAIViewport.h>
 
-
-
-	//----------------------------------------------------------------//
-	ZLAffine3D MOAIGraphicsGridProp::Append ( const ZLAffine3D& mtx, const ZLAffine3D& append ) {
-
-		ZLAffine3D result;
-
-		result.m [ ZLAffine3D::C0_R0 ]	=	( append.m [ ZLAffine3D::C0_R0 ] * mtx.m [ ZLAffine3D::C0_R0 ])	+
-											( append.m [ ZLAffine3D::C1_R0 ] * mtx.m [ ZLAffine3D::C0_R1 ])	+
-											( append.m [ ZLAffine3D::C2_R0 ] * mtx.m [ ZLAffine3D::C0_R2 ]);
-		
-		result.m [ ZLAffine3D::C0_R1 ]	=	( append.m [ ZLAffine3D::C0_R1 ] * mtx.m [ ZLAffine3D::C0_R0 ])	+
-											( append.m [ ZLAffine3D::C1_R1 ] * mtx.m [ ZLAffine3D::C0_R1 ])	+
-											( append.m [ ZLAffine3D::C2_R1 ] * mtx.m [ ZLAffine3D::C0_R2 ]);
-		
-		result.m [ ZLAffine3D::C0_R2 ]	=	( append.m [ ZLAffine3D::C0_R2 ] * mtx.m [ ZLAffine3D::C0_R0 ])	+
-											( append.m [ ZLAffine3D::C1_R2 ] * mtx.m [ ZLAffine3D::C0_R1 ])	+
-											( append.m [ ZLAffine3D::C2_R2 ] * mtx.m [ ZLAffine3D::C0_R2 ]);
-
-		result.m [ ZLAffine3D::C1_R0 ]	=	( append.m [ ZLAffine3D::C0_R0 ] * mtx.m [ ZLAffine3D::C1_R0 ])	+
-											( append.m [ ZLAffine3D::C1_R0 ] * mtx.m [ ZLAffine3D::C1_R1 ])	+
-											( append.m [ ZLAffine3D::C2_R0 ] * mtx.m [ ZLAffine3D::C1_R2 ]);
-		
-		result.m [ ZLAffine3D::C1_R1 ]	=	( append.m [ ZLAffine3D::C0_R1 ] * mtx.m [ ZLAffine3D::C1_R0 ])	+
-											( append.m [ ZLAffine3D::C1_R1 ] * mtx.m [ ZLAffine3D::C1_R1 ])	+
-											( append.m [ ZLAffine3D::C2_R1 ] * mtx.m [ ZLAffine3D::C1_R2 ]);
-		
-		result.m [ ZLAffine3D::C1_R2 ]	=	( append.m [ ZLAffine3D::C0_R2 ] * mtx.m [ ZLAffine3D::C1_R0 ])	+
-											( append.m [ ZLAffine3D::C1_R2 ] * mtx.m [ ZLAffine3D::C1_R1 ])	+
-											( append.m [ ZLAffine3D::C2_R2 ] * mtx.m [ ZLAffine3D::C1_R2 ]);
-		
-		result.m [ ZLAffine3D::C2_R0 ]	=	( append.m [ ZLAffine3D::C0_R0 ] * mtx.m [ ZLAffine3D::C2_R0 ])	+
-											( append.m [ ZLAffine3D::C1_R0 ] * mtx.m [ ZLAffine3D::C2_R1 ])	+
-											( append.m [ ZLAffine3D::C2_R0 ] * mtx.m [ ZLAffine3D::C2_R2 ]);
-		
-		result.m [ ZLAffine3D::C2_R1 ]	=	( append.m [ ZLAffine3D::C0_R1 ] * mtx.m [ ZLAffine3D::C2_R0 ])	+
-											( append.m [ ZLAffine3D::C1_R1 ] * mtx.m [ ZLAffine3D::C2_R1 ])	+
-											( append.m [ ZLAffine3D::C2_R1 ] * mtx.m [ ZLAffine3D::C2_R2 ]);
-		
-		result.m [ ZLAffine3D::C2_R2 ]	=	( append.m [ ZLAffine3D::C0_R2 ] * mtx.m [ ZLAffine3D::C2_R0 ])	+
-											( append.m [ ZLAffine3D::C1_R2 ] * mtx.m [ ZLAffine3D::C2_R1 ])	+
-											( append.m [ ZLAffine3D::C2_R2 ] * mtx.m [ ZLAffine3D::C2_R2 ]);
-		
-		result.m [ ZLAffine3D::C3_R0 ]	=	( append.m [ ZLAffine3D::C0_R0 ] * mtx.m [ ZLAffine3D::C3_R0 ])	+
-											( append.m [ ZLAffine3D::C1_R0 ] * mtx.m [ ZLAffine3D::C3_R1 ])	+
-											( append.m [ ZLAffine3D::C2_R0 ] * mtx.m [ ZLAffine3D::C3_R2 ])	+
-											( append.m [ ZLAffine3D::C3_R0 ]);
-		
-		result.m [ ZLAffine3D::C3_R1 ]	=	( append.m [ ZLAffine3D::C0_R1 ] * mtx.m [ ZLAffine3D::C3_R0 ])	+
-											( append.m [ ZLAffine3D::C1_R1 ] * mtx.m [ ZLAffine3D::C3_R1 ])	+
-											( append.m [ ZLAffine3D::C2_R1 ] * mtx.m [ ZLAffine3D::C3_R2 ])	+
-											( append.m [ ZLAffine3D::C3_R1 ]);
-		
-		result.m [ ZLAffine3D::C3_R2 ]	=	( append.m [ ZLAffine3D::C0_R2 ] * mtx.m [ ZLAffine3D::C3_R0 ])	+
-											( append.m [ ZLAffine3D::C1_R2 ] * mtx.m [ ZLAffine3D::C3_R1 ])	+
-											( append.m [ ZLAffine3D::C2_R2 ] * mtx.m [ ZLAffine3D::C3_R2 ])	+
-											( append.m [ ZLAffine3D::C3_R2 ]);
-		
-		return result;
-	}
-
-
 //================================================================//
 // local
 //================================================================//

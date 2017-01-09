@@ -250,35 +250,6 @@ void MOAIGrid::Fill ( u32 value ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGrid::Draw ( MOAIDeck* deck, MOAIMaterialBatch* materials, const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
-
-	ZLVec3D offset	= ZLVec3D::ORIGIN;
-	ZLVec3D scale	= ZLVec3D::AXIS;
-	
-	float tileWidth = this->GetTileWidth ();
-	float tileHeight = this->GetTileHeight ();
-	
-	for ( int y = c0.mY; y <= c1.mY; ++y ) {
-		for ( int x = c0.mX; x <= c1.mX; ++x ) {
-			
-			MOAICellCoord wrap = this->WrapCellCoord ( x, y );
-			u32 idx = this->GetTile ( wrap.mX, wrap.mY );
-			
-			MOAICellCoord coord ( x, y );
-			ZLVec2D loc = this->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
-
-			offset.mX	= loc.mX;
-			offset.mY	= loc.mY;
-			scale.mX	= tileWidth;
-			scale.mY	= tileHeight;
-
-			//deck->Draw ( idx, materials, offset, scale );
-			deck->Draw ( idx );
-		}
-	}
-}
-
-//----------------------------------------------------------------//
 u32 MOAIGrid::GetTile ( int xTile, int yTile ) const {
 
 	MOAICellCoord coord ( xTile, yTile );
@@ -303,6 +274,8 @@ MOAIGrid::~MOAIGrid () {
 
 //----------------------------------------------------------------//
 void MOAIGrid::OnResize () {
+
+	// TODO: this should be smarter
 
 	this->mTiles.Init ( this->GetTotalCells ());
 	this->mTiles.Fill ( 0 );

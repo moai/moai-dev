@@ -254,6 +254,8 @@ ZLBounds MOAIGfxQuad2D::MOAIDeck_GetBounds ( u32 idx ) {
 
 //----------------------------------------------------------------//
 MOAICollisionShape* MOAIGfxQuad2D::MOAIDeck_GetCollisionShape ( u32 idx ) {
+
+	return 0;
 }
 
 //----------------------------------------------------------------//

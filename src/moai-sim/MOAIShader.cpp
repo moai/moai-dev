@@ -351,7 +351,7 @@ void MOAIShader::SetUniform ( lua_State* L, int idx, u32 uniformID, u32 index ) 
 		
 		int size = (( state.GetTop () - idx ) + 1 );
 		
-		if ( size < 4 ) {
+		if ( size <= 4 ) {
 		
 			ZLVec4D vec = state.GetValue < ZLVec4D >( idx, ZLVec4D::ZERO );
 			

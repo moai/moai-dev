@@ -20,7 +20,7 @@ class MOAIGrid :
 	public MOAIGridSpace {
 private:
 
-	ZLLeanArray < u32 > mTiles; // TODO: fix size
+	ZLLeanArray < u32 >			mTiles; // TODO: fix size
 
 	//----------------------------------------------------------------//
 	static int		_clearTileFlags		( lua_State* L );
@@ -34,8 +34,9 @@ private:
 	static int		_streamTilesOut		( lua_State* L );
 	static int		_toggleTileFlags	( lua_State* L );
 
-	//----------------------------------------------------------------//
 protected:
+
+	//----------------------------------------------------------------//
 	void			OnResize			();
 
 public:
@@ -43,7 +44,6 @@ public:
 	DECL_LUA_FACTORY ( MOAIGrid )
 	
 	//----------------------------------------------------------------//
-	virtual	void	Draw				( MOAIDeck* deck, MOAIMaterialBatch* materials, const MOAICellCoord &c0, const MOAICellCoord &c1 );
 	void			Fill				( u32 value );
 	u32				GetTile				( int xTile, int yTile ) const;
 					MOAIGrid			();
