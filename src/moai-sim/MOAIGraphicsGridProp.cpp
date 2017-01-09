@@ -94,21 +94,24 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLAffine3D MOAIGraphicsGridProp::AppendFlip ( const ZLAffine3D& mtx, const ZLAffine3D& append ) {
+ZLAffine3D MOAIGraphicsGridProp::AppendRot90SclTr ( const ZLAffine3D& mtx, const ZLAffine3D& append ) {
 
-	// s 0 0 x
-	// 0 s 0 y
+	// don't need a general purpose matrix mult to handle just scale and offset.
+	// can omit a lot of the multiplications.
+
+	// 0 s 0 z
+	// s 0 0 y
 	// 0 0 1 0
 
 	ZLAffine3D result;
 
-	result.m [ ZLAffine3D::C0_R0 ]	=	( append.m [ ZLAffine3D::C0_R0 ] * mtx.m [ ZLAffine3D::C0_R0 ]);
-	result.m [ ZLAffine3D::C0_R1 ]	=	( append.m [ ZLAffine3D::C0_R1 ] * mtx.m [ ZLAffine3D::C0_R0 ]);
-	result.m [ ZLAffine3D::C0_R2 ]	=	( append.m [ ZLAffine3D::C0_R2 ] * mtx.m [ ZLAffine3D::C0_R0 ]);
+	result.m [ ZLAffine3D::C0_R0 ]	=	( append.m [ ZLAffine3D::C1_R0 ] * mtx.m [ ZLAffine3D::C0_R1 ]);
+	result.m [ ZLAffine3D::C0_R1 ]	=	( append.m [ ZLAffine3D::C1_R1 ] * mtx.m [ ZLAffine3D::C0_R1 ]);
+	result.m [ ZLAffine3D::C0_R2 ]	=	( append.m [ ZLAffine3D::C1_R2 ] * mtx.m [ ZLAffine3D::C0_R1 ]);
 
-	result.m [ ZLAffine3D::C1_R0 ]	=	( append.m [ ZLAffine3D::C1_R0 ] * mtx.m [ ZLAffine3D::C1_R1 ]);
-	result.m [ ZLAffine3D::C1_R1 ]	=	( append.m [ ZLAffine3D::C1_R1 ] * mtx.m [ ZLAffine3D::C1_R1 ]);
-	result.m [ ZLAffine3D::C1_R2 ]	=	( append.m [ ZLAffine3D::C1_R2 ] * mtx.m [ ZLAffine3D::C1_R1 ]);
+	result.m [ ZLAffine3D::C1_R0 ]	=	( append.m [ ZLAffine3D::C0_R0 ] * mtx.m [ ZLAffine3D::C1_R0 ]);
+	result.m [ ZLAffine3D::C1_R1 ]	=	( append.m [ ZLAffine3D::C0_R1 ] * mtx.m [ ZLAffine3D::C1_R0 ]);
+	result.m [ ZLAffine3D::C1_R2 ]	=	( append.m [ ZLAffine3D::C0_R2 ] * mtx.m [ ZLAffine3D::C1_R0 ]);
 	
 	result.m [ ZLAffine3D::C2_R0 ]	=	append.m [ ZLAffine3D::C2_R0 ];
 	result.m [ ZLAffine3D::C2_R1 ]	=	append.m [ ZLAffine3D::C2_R1 ];
@@ -130,21 +133,24 @@ ZLAffine3D MOAIGraphicsGridProp::AppendFlip ( const ZLAffine3D& mtx, const ZLAff
 }
 
 //----------------------------------------------------------------//
-ZLAffine3D MOAIGraphicsGridProp::AppendFlipRot90 ( const ZLAffine3D& mtx, const ZLAffine3D& append ) {
+ZLAffine3D MOAIGraphicsGridProp::AppendSclTr ( const ZLAffine3D& mtx, const ZLAffine3D& append ) {
 
-	// 0 s 0 z
-	// s 0 0 y
+	// don't need a general purpose matrix mult to handle just scale and offset.
+	// can omit a lot of the multiplications.
+
+	// s 0 0 x
+	// 0 s 0 y
 	// 0 0 1 0
 
 	ZLAffine3D result;
 
-	result.m [ ZLAffine3D::C0_R0 ]	=	( append.m [ ZLAffine3D::C1_R0 ] * mtx.m [ ZLAffine3D::C0_R1 ]);
-	result.m [ ZLAffine3D::C0_R1 ]	=	( append.m [ ZLAffine3D::C1_R1 ] * mtx.m [ ZLAffine3D::C0_R1 ]);
-	result.m [ ZLAffine3D::C0_R2 ]	=	( append.m [ ZLAffine3D::C1_R2 ] * mtx.m [ ZLAffine3D::C0_R1 ]);
+	result.m [ ZLAffine3D::C0_R0 ]	=	( append.m [ ZLAffine3D::C0_R0 ] * mtx.m [ ZLAffine3D::C0_R0 ]);
+	result.m [ ZLAffine3D::C0_R1 ]	=	( append.m [ ZLAffine3D::C0_R1 ] * mtx.m [ ZLAffine3D::C0_R0 ]);
+	result.m [ ZLAffine3D::C0_R2 ]	=	( append.m [ ZLAffine3D::C0_R2 ] * mtx.m [ ZLAffine3D::C0_R0 ]);
 
-	result.m [ ZLAffine3D::C1_R0 ]	=	( append.m [ ZLAffine3D::C0_R0 ] * mtx.m [ ZLAffine3D::C1_R0 ]);
-	result.m [ ZLAffine3D::C1_R1 ]	=	( append.m [ ZLAffine3D::C0_R1 ] * mtx.m [ ZLAffine3D::C1_R0 ]);
-	result.m [ ZLAffine3D::C1_R2 ]	=	( append.m [ ZLAffine3D::C0_R2 ] * mtx.m [ ZLAffine3D::C1_R0 ]);
+	result.m [ ZLAffine3D::C1_R0 ]	=	( append.m [ ZLAffine3D::C1_R0 ] * mtx.m [ ZLAffine3D::C1_R1 ]);
+	result.m [ ZLAffine3D::C1_R1 ]	=	( append.m [ ZLAffine3D::C1_R1 ] * mtx.m [ ZLAffine3D::C1_R1 ]);
+	result.m [ ZLAffine3D::C1_R2 ]	=	( append.m [ ZLAffine3D::C1_R2 ] * mtx.m [ ZLAffine3D::C1_R1 ]);
 	
 	result.m [ ZLAffine3D::C2_R0 ]	=	append.m [ ZLAffine3D::C2_R0 ];
 	result.m [ ZLAffine3D::C2_R1 ]	=	append.m [ ZLAffine3D::C2_R1 ];
@@ -211,7 +217,7 @@ void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoo
 				mtx.m [ ZLAffine3D::C1_R0 ]	= -xScale;
 				mtx.m [ ZLAffine3D::C1_R1 ]	= 0.0f;
 				
-				mtx = this->Append ( mtx, modelToWorldMtx );
+				mtx = this->AppendRot90SclTr ( mtx, modelToWorldMtx );
 			}
 			else {
 			
@@ -221,7 +227,7 @@ void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoo
 				mtx.m [ ZLAffine3D::C1_R0 ]	= 0.0f;
 				mtx.m [ ZLAffine3D::C1_R1 ]	= yScale;
 				
-				mtx = this->AppendFlip ( mtx, modelToWorldMtx );
+				mtx = this->AppendSclTr ( mtx, modelToWorldMtx );
 			}
 
 			gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX, mtx );

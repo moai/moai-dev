@@ -34,8 +34,8 @@ private:
 
 	//----------------------------------------------------------------//
 	ZLAffine3D		Append									( const ZLAffine3D& mtx, const ZLAffine3D& append );
-	ZLAffine3D		AppendFlip								( const ZLAffine3D& mtx, const ZLAffine3D& append );
-	ZLAffine3D		AppendFlipRot90							( const ZLAffine3D& mtx, const ZLAffine3D& append );
+	ZLAffine3D		AppendRot90SclTr						( const ZLAffine3D& mtx, const ZLAffine3D& append );
+	ZLAffine3D		AppendSclTr								( const ZLAffine3D& mtx, const ZLAffine3D& append );
 	void			DrawGrid								( const MOAICellCoord &c0, const MOAICellCoord &c1 );
 
 	//----------------------------------------------------------------//
