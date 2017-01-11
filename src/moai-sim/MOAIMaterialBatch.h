@@ -24,9 +24,7 @@ class MOAITextureBase;
 class MOAIMaterialBatch :
 	public virtual MOAILuaObject {
 private:
-	
-	friend class MOAIMaterialBatchHolder;
-	
+		
 	u32								mIndexBatchSize;
 	ZLLeanArray < MOAIMaterial >	mMaterials;
 	
@@ -60,7 +58,9 @@ private:
 		size_t totalMaterials = this->mMaterials.Size ();
 		return ( totalMaterials && ( this->mIndexBatchSize > 0 )) ? ((( u32 )( idx / this->mIndexBatchSize )) % totalMaterials ) : 0;
 	}
-	
+
+public:
+
 	//----------------------------------------------------------------//
 	int					ClearBlendMode				( MOAILuaState& state, int idx );
 	int					ClearCullMode				( MOAILuaState& state, int idx );
