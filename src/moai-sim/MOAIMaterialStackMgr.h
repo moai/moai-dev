@@ -26,7 +26,7 @@ public:
 						MOAIMaterialStackMgr			();
 						~MOAIMaterialStackMgr			();
 	void				Pop								();
-	void				Push							( MOAIMaterial* material );
+	void				Push							( const MOAIMaterial* material );
 };
 
 //================================================================//
@@ -47,7 +47,7 @@ public:
 						MOAIScopedMaterialStack			();
 						~MOAIScopedMaterialStack		();
 	void				Pop								();
-	void				Push							( MOAIMaterial* material );
+	void				Push							( const MOAIMaterial* material );
 };
 
 #endif

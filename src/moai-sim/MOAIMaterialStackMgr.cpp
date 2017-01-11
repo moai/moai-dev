@@ -51,7 +51,7 @@ void MOAIMaterialStackMgr::Pop () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialStackMgr::Push ( MOAIMaterial* material ) {
+void MOAIMaterialStackMgr::Push ( const MOAIMaterial* material ) {
 
 	MOAIMaterial& top = this->mStack.Top ();
 	MOAIMaterial& push = this->mStack.Push ( top );
@@ -107,7 +107,7 @@ void MOAIScopedMaterialStack::Pop () {
 }
 
 //----------------------------------------------------------------//
-void MOAIScopedMaterialStack::Push ( MOAIMaterial* material ) {
+void MOAIScopedMaterialStack::Push ( const MOAIMaterial* material ) {
 
 	this->mMaterialStack.Push ( material );
 }

@@ -21,11 +21,13 @@ public:
 	int				mDestFactor;
 
 	//----------------------------------------------------------------//
+	void			Init				( MOAILuaState& state, int idx );
 	void			SetBlend			( u32 blend );
 	void			SetBlend			( int equation, int srcFactor, int dstFactor );
 					MOAIBlendMode		();
 					MOAIBlendMode		( int equation, int srcFactor, int dstFactor );
 					~MOAIBlendMode		();
+	int				Push				( MOAILuaState& state ) const;
 	
 	//----------------------------------------------------------------//
 	inline bool IsSame ( const MOAIBlendMode& blendMode ) {

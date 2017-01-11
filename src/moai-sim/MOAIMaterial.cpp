@@ -56,7 +56,7 @@ void MOAIMaterial::ClearTexture () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterial::Compose ( MOAIMaterial& material ) {
+void MOAIMaterial::Compose ( const MOAIMaterial& material ) {
 
 	u32 available = ~this->mFlags & material.mFlags;
 

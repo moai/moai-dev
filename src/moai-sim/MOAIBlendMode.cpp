@@ -10,6 +10,43 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIBlendMode::Init ( MOAILuaState& state, int idx ) {
+
+	u32 materialID = 0;
+	u32 stackSize = state.GetStackSize ( idx );
+
+	if (( stackSize == 2 ) || ( stackSize == 4 )) {
+		materialID = state.GetValue < u32 >( idx++, 1 ) - 1;
+	}
+
+	MOAIBlendMode blendMode;
+
+	if ( state.CheckParams ( idx, "NNN" )) {
+
+		u32 equation	= state.GetValue < u32 >( idx++, ZGL_BLEND_MODE_ADD );
+		u32 srcFactor	= state.GetValue < u32 >( idx++, 0 );
+		u32 dstFactor	= state.GetValue < u32 >( idx, 0 );
+		
+		this->SetBlend ( equation, srcFactor, dstFactor );
+	}
+	else {
+		
+		u32 preset = state.GetValue < u32 >( idx, MOAIBlendMode::BLEND_NORMAL );
+		this->SetBlend ( preset );
+	}
+}
+
+//----------------------------------------------------------------//
+int MOAIBlendMode::Push ( MOAILuaState& state ) const {
+
+	state.Push ( this->mEquation );
+	state.Push ( this->mSourceFactor );
+	state.Push ( this->mDestFactor );
+	
+	return 3;
+}
+
+//----------------------------------------------------------------//
 void MOAIBlendMode::SetBlend ( u32 blend ) {
 	
 	switch ( blend ) {

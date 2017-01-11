@@ -73,8 +73,10 @@
 #include <moai-sim/MOAILocationSensor.h>
 #include <moai-sim/MOAIMaterial.h>
 #include <moai-sim/MOAIMaterialBatch.h>
-#include <moai-sim/MOAIMaterialBatchholder.h>
+#include <moai-sim/MOAIMaterialBatchHolder.h>
 #include <moai-sim/MOAIMaterialBatchHolderMixIn.h>
+#include <moai-sim/MOAIMaterialHolder.h>
+#include <moai-sim/MOAIMaterialHolderMixIn.h>
 #include <moai-sim/MOAIMaterialStackMgr.h>
 #include <moai-sim/MOAIMatrix.h>
 #include <moai-sim/MOAIMesh.h>

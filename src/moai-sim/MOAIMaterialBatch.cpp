@@ -435,12 +435,7 @@ int MOAIMaterialBatch::GetBlendMode ( MOAILuaState& state, int idx ) {
 
 	MOAIMaterial* material = this->RawGetMaterial ( state.GetValue < u32 >( idx, 1 ) - 1 );
 	if ( material ) {
-	
-		state.Push ( material->mBlendMode.mEquation );
-		state.Push ( material->mBlendMode.mSourceFactor );
-		state.Push ( material->mBlendMode.mDestFactor );
-		
-		return 3;
+		return material->mBlendMode.Push ( state );
 	}
 	return 0;
 }
@@ -613,20 +608,7 @@ void MOAIMaterialBatch::SetBlendMode ( MOAILuaState& state, int idx ) {
 	}
 
 	MOAIBlendMode blendMode;
-
-	if ( state.CheckParams ( idx, "NNN" )) {
-
-		u32 equation	= state.GetValue < u32 >( idx++, ZGL_BLEND_MODE_ADD );
-		u32 srcFactor	= state.GetValue < u32 >( idx++, 0 );
-		u32 dstFactor	= state.GetValue < u32 >( idx, 0 );
-		
-		blendMode.SetBlend ( equation, srcFactor, dstFactor );
-	}
-	else {
-		
-		u32 preset = state.GetValue < u32 >( idx, MOAIBlendMode::BLEND_NORMAL );
-		blendMode.SetBlend ( preset );
-	}
+	blendMode.Init ( state, idx );
 
 	this->SetBlendMode ( materialID, blendMode );
 }
@@ -644,7 +626,6 @@ void MOAIMaterialBatch::SetCullMode ( MOAILuaState& state, int idx ) {
 	if ( state.GetStackSize ( idx ) == 2 ) {
 		materialID = state.GetValue < u32 >( idx++, 1 ) - 1;
 	}
-	
 	this->SetCullMode ( materialID, state.GetValue < u32 >( idx, 0 ));
 }
 

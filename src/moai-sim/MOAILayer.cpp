@@ -8,6 +8,7 @@
 #include <moai-sim/MOAIFrameBufferTexture.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAILayer.h>
+#include <moai-sim/MOAIMaterialStackMgr.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIPartitionResultMgr.h>
 #include <moai-sim/MOAIRenderMgr.h>
@@ -811,7 +812,12 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 		// figure out the correct LOD factor
 		float lodFactor = this->mLODFactor * this->GetLinkedValue ( MOAILayerAttr::Pack ( ATTR_LOD ), 1.0f );
 		
+		MOAIScopedMaterialStack materialStack;
+		materialStack.Push ( this->GetMaterial ());
+		
 		this->DrawProps ( buffer, lodFactor );
+		
+		materialStack.Pop ();
 		
 		if ( this->mShowDebugLines ) {
 			

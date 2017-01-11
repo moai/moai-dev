@@ -43,6 +43,10 @@ private:
 
 public:
 
+	GET_CONST ( MOAIBlendMode&, BlendMode, mBlendMode );
+	GET ( int, CullMode, mCullMode );
+	GET ( int, DepthTest, mDepthTest );
+	GET ( bool, DepthMask, mDepthMask );
 	GET ( MOAIShader*, Shader, mShader );
 	GET ( MOAITextureBase*, Texture, mTexture );
 
@@ -54,7 +58,7 @@ public:
 	void			ClearDepthTest			();
 	void			ClearShader				();
 	void			ClearTexture			();
-	void			Compose					( MOAIMaterial& material );
+	void			Compose					( const MOAIMaterial& material );
 	void			LoadGfxState			( MOAIShader* defaultShader = 0 );
 					MOAIMaterial			();
 					~MOAIMaterial			();
