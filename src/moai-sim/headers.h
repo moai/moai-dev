@@ -44,9 +44,6 @@
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxPipelineClerk.h>
 #include <moai-sim/MOAIGfxStateCache.h>
-#include <moai-sim/MOAIGfxQuad2D.h>
-//#include <moai-sim/MOAIGfxQuadDeck2D.h>
-#include <moai-sim/MOAIGfxQuadListDeck2D.h>
 #include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIGfxVertexCache.h>
 #include <moai-sim/MOAIGraphicsProp.h>
@@ -133,6 +130,7 @@
 #include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAISingleTexture.h>
 #include <moai-sim/MOAISpanList.h>
+#include <moai-sim/MOAISpriteDeck2D.h>
 //#include <moai-sim/MOAIStretchPatch2D.h>
 //#include <moai-sim/MOAISurfaceDeck2D.h>
 #include <moai-sim/MOAITexture.h>

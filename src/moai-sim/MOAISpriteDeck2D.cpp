@@ -3,10 +3,10 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGrid.h>
-#include <moai-sim/MOAIGfxQuadListDeck2D.h>
+#include <moai-sim/MOAISpriteDeck2D.h>
 #include <moai-sim/MOAIMaterialStackMgr.h>
 #include <moai-sim/MOAIShaderMgr.h>
-#include <moai-sim/MOAITextureBase.h>
+#include <moai-sim/MOAITexture.h>
 #include <moai-sim/MOAITransformBase.h>
 
 //================================================================//
@@ -18,7 +18,7 @@
 	@text	Get model space quad given a deck index. 
 			Vertex order is clockwiese from upper left.
 	
-	@in		MOAIGfxQuadDeck2D self
+	@in		MOAISpriteDeck2D self
 	@in		number idx	Index of the quad.
 	@out	number x0
 	@out	number y0
@@ -29,8 +29,8 @@
 	@out	number x3
 	@out	number y3
 */
-int MOAIGfxQuadListDeck2D::_getQuad ( lua_State *L ) {
-	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "U" )
+int MOAISpriteDeck2D::_getQuad ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "U" )
 	
 	u32 quadID = 0;
 	u32 idx = 2;
@@ -46,15 +46,15 @@ int MOAIGfxQuadListDeck2D::_getQuad ( lua_State *L ) {
 /**	@lua	getRect
 	@text	Set model space quad given a valid deck index and a rect.
 	
-	@in		MOAIGfxQuadDeck2D self
+	@in		MOAISpriteDeck2D self
 	@in		number idx	Index of the quad.
 	@out	number xMin
 	@out	number yMin
 	@out	number xMax
 	@out	number yMax
 */
-int MOAIGfxQuadListDeck2D::_getRect ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UN" )
+int MOAISpriteDeck2D::_getRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "UN" )
 	
 	u32 rectID = 0;
 	u32 idx = 2;
@@ -71,7 +71,7 @@ int MOAIGfxQuadListDeck2D::_getRect ( lua_State* L ) {
 	@text	Get UV model space quad given a valid deck index.
 			Vertex order is clockwise from upper left.
 
-	@in		MOAIGfxQuadDeck2D self
+	@in		MOAISpriteDeck2D self
 	@in		number idx	Index of the quad.
 	@out	number u0
 	@out	number v0
@@ -82,8 +82,8 @@ int MOAIGfxQuadListDeck2D::_getRect ( lua_State* L ) {
 	@out	number u3
 	@out	number v3
 */
-int MOAIGfxQuadListDeck2D::_getUVQuad ( lua_State *L ) {
-	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UN" )
+int MOAISpriteDeck2D::_getUVQuad ( lua_State *L ) {
+	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "UN" )
 	
 	u32 quadID = 0;
 	u32 idx = 2;
@@ -99,15 +99,15 @@ int MOAIGfxQuadListDeck2D::_getUVQuad ( lua_State *L ) {
 /**	@lua	getUVRect
 	@text	Get UV model space quad given a valid deck index.
 	
-	@in		MOAIGfxQuadDeck2D self
+	@in		MOAISpriteDeck2D self
 	@in		number idx	Index of the quad.
 	@out	number xMin
 	@out	number yMin
 	@out	number xMax
 	@out	number yMax
 */
-int MOAIGfxQuadListDeck2D::_getUVRect ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "U" )
+int MOAISpriteDeck2D::_getUVRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "U" )
 	
 	u32 rectID = 0;
 	u32 idx = 2;
@@ -123,12 +123,12 @@ int MOAIGfxQuadListDeck2D::_getUVRect ( lua_State* L ) {
 /**	@lua	reserveQuads
 	@text	Reserve quads.
 	
-	@in		MOAIGfxQuadListDeck2D self
+	@in		MOAISpriteDeck2D self
 	@in		number nQuads
 	@out	nil
 */
-int MOAIGfxQuadListDeck2D::_reserveQuads ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UN" )
+int MOAISpriteDeck2D::_reserveQuads ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "UN" )
 
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->ReserveQuads ( total );
@@ -140,12 +140,12 @@ int MOAIGfxQuadListDeck2D::_reserveQuads ( lua_State* L ) {
 /**	@lua	reserveSprites
 	@text	Reserve sprites.
 	
-	@in		MOAIGfxQuadListDeck2D self
+	@in		MOAISpriteDeck2D self
 	@in		number nPairs
 	@out	nil
 */
-int MOAIGfxQuadListDeck2D::_reserveSprites ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UN" )
+int MOAISpriteDeck2D::_reserveSprites ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "UN" )
 
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->ReservePairs ( total );
@@ -157,12 +157,12 @@ int MOAIGfxQuadListDeck2D::_reserveSprites ( lua_State* L ) {
 /**	@lua	reserveSpriteLists
 	@text	Reserve quad lists.
 	
-	@in		MOAIGfxQuadListDeck2D self
+	@in		MOAISpriteDeck2D self
 	@in		number nLists
 	@out	nil
 */
-int MOAIGfxQuadListDeck2D::_reserveSpriteLists ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UN" )
+int MOAISpriteDeck2D::_reserveSpriteLists ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "UN" )
 
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->ReserveLists ( total );
@@ -174,12 +174,12 @@ int MOAIGfxQuadListDeck2D::_reserveSpriteLists ( lua_State* L ) {
 /**	@lua	reserveUVQuads
 	@text	Reserve UV quads.
 	
-	@in		MOAIGfxQuadListDeck2D self
+	@in		MOAISpriteDeck2D self
 	@in		number nUVQuads
 	@out	nil
 */
-int MOAIGfxQuadListDeck2D::_reserveUVQuads ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UN" )
+int MOAISpriteDeck2D::_reserveUVQuads ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "UN" )
 
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->ReserveUVQuads ( total );
@@ -192,7 +192,7 @@ int MOAIGfxQuadListDeck2D::_reserveUVQuads ( lua_State* L ) {
 	@text	Set model space quad given a valid deck index. Vertex order is
 			clockwise from upper left (xMin, yMax)
 	
-	@in		MOAIGfxQuadListDeck2D self
+	@in		MOAISpriteDeck2D self
 	@in		number idx	Index of the quad.
 	@in		number x0
 	@in		number y0
@@ -204,8 +204,8 @@ int MOAIGfxQuadListDeck2D::_reserveUVQuads ( lua_State* L ) {
 	@in		number y3
 	@out	nil
 */
-int MOAIGfxQuadListDeck2D::_setQuad ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "U" )
+int MOAISpriteDeck2D::_setQuad ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "U" )
 
 	u32 quadID = 0;
 	u32 idx = 2;
@@ -225,7 +225,7 @@ int MOAIGfxQuadListDeck2D::_setQuad ( lua_State* L ) {
 /**	@lua	setRect
 	@text	Set model space quad given a valid deck index and a rect.
 	
-	@in		MOAIGfxQuadListDeck2D self
+	@in		MOAISpriteDeck2D self
 	@in		number idx	Index of the quad.
 	@in		number xMin
 	@in		number yMin
@@ -233,8 +233,8 @@ int MOAIGfxQuadListDeck2D::_setQuad ( lua_State* L ) {
 	@in		number yMax
 	@out	nil
 */
-int MOAIGfxQuadListDeck2D::_setRect ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "U" )
+int MOAISpriteDeck2D::_setRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "U" )
 
 	u32 rectID = 0;
 	u32 idx = 2;
@@ -254,15 +254,15 @@ int MOAIGfxQuadListDeck2D::_setRect ( lua_State* L ) {
 /**	@lua	setSprite
 	@text	Associates a quad with its UV coordinates.
 	
-	@in		MOAIGfxQuadListDeck2D self
+	@in		MOAISpriteDeck2D self
 	@in		number idx
 	@in		number uvQuadID
 	@in		number quadID
 	@opt	number materialID
 	@out	nil
 */
-int MOAIGfxQuadListDeck2D::_setSprite ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNN" )
+int MOAISpriteDeck2D::_setSprite ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "UNNN" )
 
 	u32 idx			= state.GetValue < u32 >( 2, 1 ) - 1;
 	u32 uvQuadID	= state.GetValue < u32 >( 3, 1 ) - 1;
@@ -281,14 +281,14 @@ int MOAIGfxQuadListDeck2D::_setSprite ( lua_State* L ) {
 			a list with base 3 and a run of 4 would display pair 3, 4, 5,
 			and 6.
 	
-	@in		MOAIGfxQuadListDeck2D self
+	@in		MOAISpriteDeck2D self
 	@in		number idx
 	@in		number basePairID	The base pair of the list.
 	@in		number totalPairs	The run of the list - total pairs to display (including base).
 	@out	nil
 */
-int MOAIGfxQuadListDeck2D::_setSpriteList ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNN" )
+int MOAISpriteDeck2D::_setSpriteList ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "UNNN" )
 
 	u32 idx			= state.GetValue < u32 >( 2, 1 ) - 1;
 	u32 basePairID	= state.GetValue < u32 >( 3, 1 ) - 1;
@@ -304,7 +304,7 @@ int MOAIGfxQuadListDeck2D::_setSpriteList ( lua_State* L ) {
 	@text	Set UV space quad given a valid deck index. Vertex order is
 			clockwise from upper left (xMin, yMax)
 	
-	@in		MOAIGfxQuadListDeck2D self
+	@in		MOAISpriteDeck2D self
 	@in		number idx	Index of the quad.
 	@in		number x0
 	@in		number y0
@@ -316,8 +316,8 @@ int MOAIGfxQuadListDeck2D::_setSpriteList ( lua_State* L ) {
 	@in		number y3
 	@out	nil
 */
-int MOAIGfxQuadListDeck2D::_setUVQuad ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "U" )
+int MOAISpriteDeck2D::_setUVQuad ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "U" )
 
 	u32 quadID = 0;
 	u32 idx = 2;
@@ -336,7 +336,7 @@ int MOAIGfxQuadListDeck2D::_setUVQuad ( lua_State* L ) {
 /**	@lua	setUVRect
 	@text	Set UV space quad given a valid deck index and a rect.
 	
-	@in		MOAIGfxQuadListDeck2D self
+	@in		MOAISpriteDeck2D self
 	@in		number idx	Index of the quad.
 	@in		number xMin
 	@in		number yMin
@@ -344,8 +344,8 @@ int MOAIGfxQuadListDeck2D::_setUVQuad ( lua_State* L ) {
 	@in		number yMax
 	@out	nil
 */
-int MOAIGfxQuadListDeck2D::_setUVRect ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "U" )
+int MOAISpriteDeck2D::_setUVRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "U" )
 
 	u32 rectID = 0;
 	u32 idx = 2;
@@ -364,12 +364,12 @@ int MOAIGfxQuadListDeck2D::_setUVRect ( lua_State* L ) {
 /**	@lua	transform
 	@text	Apply the given MOAITransform to all the vertices in the deck.
 	
-	@in		MOAIGfxQuadListDeck2D self
+	@in		MOAISpriteDeck2D self
 	@in		MOAITransform transform
 	@out	nil
 */
-int MOAIGfxQuadListDeck2D::_transform ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UU" )
+int MOAISpriteDeck2D::_transform ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "UU" )
 	
 	MOAITransformBase* transform = state.GetLuaObject < MOAITransformBase >( 2, true );
 	if ( transform ) {
@@ -384,12 +384,12 @@ int MOAIGfxQuadListDeck2D::_transform ( lua_State* L ) {
 /**	@lua	transformUV
 	@text	Apply the given MOAITransform to all the uv coordinates in the deck.
 	
-	@in		MOAIGfxQuadListDeck2D self
+	@in		MOAISpriteDeck2D self
 	@in		MOAITransform transform
 	@out	nil
 */
-int MOAIGfxQuadListDeck2D::_transformUV ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UU" )
+int MOAISpriteDeck2D::_transformUV ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "UU" )
 	
 	MOAITransformBase* transform = state.GetLuaObject < MOAITransformBase >( 2, true );
 	if ( transform ) {
@@ -400,11 +400,47 @@ int MOAIGfxQuadListDeck2D::_transformUV ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAIGfxQuadListDeck2D
+// MOAISpriteDeck2D
 //================================================================//
 
 //----------------------------------------------------------------//
-//bool MOAIGfxQuadListDeck2D::Contains ( u32 idx, const ZLVec2D& vec ) {
+MOAIDeck* MOAISpriteDeck2D::AffirmDeck ( MOAILuaState& state, int idx ) {
+
+	MOAIDeck* deck = state.GetLuaObject < MOAIDeck >( idx, false );
+	if ( deck ) return deck;
+	
+	MOAITextureBase* textureBase = MOAITexture::AffirmTexture ( state, idx );
+	
+	if ( textureBase ) {
+	
+		MOAISingleTexture* texture = textureBase->GetTextureForUnit ( 0 );
+		
+		if ( texture ) {
+			
+			MOAISpriteDeck2D* quadDeck = new MOAISpriteDeck2D ();
+			MOAIMaterialBatch* batch = quadDeck->AffirmMaterialBatch ();
+		
+			assert ( quadDeck );
+			assert ( batch );
+			
+			batch->SetTexture ( 0, textureBase );
+			
+			int hWidth = ( int )( texture->GetWidth () / 2 );
+			int hHeight = ( int )( texture->GetHeight () / 2 );
+			
+			ZLRect rect;
+			rect.Init ( -hWidth, -hHeight, hWidth, hHeight );
+			quadDeck->SetRect( 0, rect );
+			
+			return quadDeck;
+		}
+		delete textureBase;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+//bool MOAISpriteDeck2D::Contains ( u32 idx, const ZLVec2D& vec ) {
 //	
 //	size_t size = this->mSpriteLists.Size ();
 //	if ( size ) {
@@ -423,7 +459,7 @@ int MOAIGfxQuadListDeck2D::_transformUV ( lua_State* L ) {
 //}
 
 //----------------------------------------------------------------//
-//bool MOAIGfxQuadListDeck2D::Inside ( u32 idx, MOAIMaterialBatch* materials, u32 granularity, ZLVec3D vec, float pad ) {
+//bool MOAISpriteDeck2D::Inside ( u32 idx, MOAIMaterialBatch* materials, u32 granularity, ZLVec3D vec, float pad ) {
 //	UNUSED ( pad );
 //
 //	u32 size = ( u32 )this->mSpriteLists.Size (); // TODO: cast
@@ -442,7 +478,7 @@ int MOAIGfxQuadListDeck2D::_transformUV ( lua_State* L ) {
 //}
 
 //----------------------------------------------------------------//
-MOAIGfxQuadListDeck2D::MOAIGfxQuadListDeck2D () {
+MOAISpriteDeck2D::MOAISpriteDeck2D () {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIDeck )
@@ -451,18 +487,18 @@ MOAIGfxQuadListDeck2D::MOAIGfxQuadListDeck2D () {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxQuadListDeck2D::~MOAIGfxQuadListDeck2D () {
+MOAISpriteDeck2D::~MOAISpriteDeck2D () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAISpriteDeck2D::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAIDeck::RegisterLuaClass ( state );
 	MOAIMaterialBatchHolder::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAISpriteDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAIDeck::RegisterLuaFuncs ( state );
 	MOAIMaterialBatchHolder::RegisterLuaFuncs ( state );
@@ -491,13 +527,13 @@ void MOAIGfxQuadListDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::ReserveLists ( u32 total ) {
+void MOAISpriteDeck2D::ReserveLists ( u32 total ) {
 
 	this->mSpriteLists.Init ( total );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::ReservePairs ( u32 total ) {
+void MOAISpriteDeck2D::ReservePairs ( u32 total ) {
 
 	this->mSprites.Init ( total );
 	
@@ -509,33 +545,33 @@ void MOAIGfxQuadListDeck2D::ReservePairs ( u32 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::ReserveQuads ( u32 total ) {
+void MOAISpriteDeck2D::ReserveQuads ( u32 total ) {
 
 	this->mQuads.Init ( total );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::ReserveUVQuads ( u32 total ) {
+void MOAISpriteDeck2D::ReserveUVQuads ( u32 total ) {
 
 	this->mUVQuads.Init ( total );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAISpriteDeck2D::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
 	MOAIDeck::SerializeIn ( state, serializer );
 	MOAIMaterialBatchHolder::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAISpriteDeck2D::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
 	MOAIDeck::SerializeOut ( state, serializer );
 	MOAIMaterialBatchHolder::SerializeOut ( state, serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::SetList ( u32 idx, u32 basePairID, u32 totalPairs ) {
+void MOAISpriteDeck2D::SetList ( u32 idx, u32 basePairID, u32 totalPairs ) {
 	
 	this->mSpriteLists.Grow ( idx + 1 );
 	MOAISpriteList& sprite = this->mSpriteLists [ idx ];
@@ -545,7 +581,7 @@ void MOAIGfxQuadListDeck2D::SetList ( u32 idx, u32 basePairID, u32 totalPairs ) 
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::SetPair ( u32 idx, u32 uvQuadID, u32 quadID, u32 materialID ) {
+void MOAISpriteDeck2D::SetPair ( u32 idx, u32 uvQuadID, u32 quadID, u32 materialID ) {
 	
 	this->mSprites.Grow ( idx + 1 );
 	MOAISprite& spritePair = this->mSprites [ idx ];
@@ -556,35 +592,35 @@ void MOAIGfxQuadListDeck2D::SetPair ( u32 idx, u32 uvQuadID, u32 quadID, u32 mat
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::SetQuad ( u32 idx, ZLQuad& quad ) {
+void MOAISpriteDeck2D::SetQuad ( u32 idx, ZLQuad& quad ) {
 
 	this->mQuads.Grow ( idx + 1 );
 	this->mQuads [ idx ] = quad;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::SetRect ( u32 idx, ZLRect& rect ) {
+void MOAISpriteDeck2D::SetRect ( u32 idx, ZLRect& rect ) {
 
 	this->mQuads.Grow ( idx + 1 );
 	this->mQuads [ idx ].Init ( rect );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::SetUVQuad ( u32 idx, ZLQuad& quad ) {
+void MOAISpriteDeck2D::SetUVQuad ( u32 idx, ZLQuad& quad ) {
 
 	this->mUVQuads.Grow ( idx + 1 );
 	this->mUVQuads [ idx ] = quad;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::SetUVRect ( u32 idx, ZLRect& rect ) {
+void MOAISpriteDeck2D::SetUVRect ( u32 idx, ZLRect& rect ) {
 
 	this->mUVQuads.Grow ( idx + 1 );
 	this->mUVQuads [ idx ].Init ( rect );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::Transform ( const ZLAffine3D& mtx ) {
+void MOAISpriteDeck2D::Transform ( const ZLAffine3D& mtx ) {
 
 	size_t total = this->mQuads.Size ();
 	for ( size_t i = 0; i < total; ++i ) {
@@ -593,7 +629,7 @@ void MOAIGfxQuadListDeck2D::Transform ( const ZLAffine3D& mtx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::TransformUV ( const ZLAffine3D& mtx ) {
+void MOAISpriteDeck2D::TransformUV ( const ZLAffine3D& mtx ) {
 
 	size_t total = this->mQuads.Size ();
 	for ( size_t i = 0; i < total; ++i ) {
@@ -606,7 +642,7 @@ void MOAIGfxQuadListDeck2D::TransformUV ( const ZLAffine3D& mtx ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLBounds MOAIGfxQuadListDeck2D::MOAIDeck_ComputeMaxBounds () {
+ZLBounds MOAISpriteDeck2D::MOAIDeck_ComputeMaxBounds () {
 
 	size_t size = this->mQuads.Size ();
 	
@@ -627,7 +663,7 @@ ZLBounds MOAIGfxQuadListDeck2D::MOAIDeck_ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::MOAIDeck_Draw ( u32 idx ) {
+void MOAISpriteDeck2D::MOAIDeck_Draw ( u32 idx ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIQuadBrush::BindVertexFormat ();
@@ -709,7 +745,7 @@ void MOAIGfxQuadListDeck2D::MOAIDeck_Draw ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-ZLBounds MOAIGfxQuadListDeck2D::MOAIDeck_GetBounds ( u32 idx ) {
+ZLBounds MOAISpriteDeck2D::MOAIDeck_GetBounds ( u32 idx ) {
 
 	ZLBounds bounds = ZLBounds::EMPTY;
 
@@ -758,13 +794,13 @@ ZLBounds MOAIGfxQuadListDeck2D::MOAIDeck_GetBounds ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-MOAICollisionShape* MOAIGfxQuadListDeck2D::MOAIDeck_GetCollisionShape ( u32 idx ) {
+MOAICollisionShape* MOAISpriteDeck2D::MOAIDeck_GetCollisionShape ( u32 idx ) {
 
 	return 0;
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxQuadListDeck2D::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
+bool MOAISpriteDeck2D::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
 
 	// TODO: handle granularity
 
@@ -774,7 +810,7 @@ bool MOAIGfxQuadListDeck2D::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxQuadListDeck2D::MOAIDeck_Overlap ( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
+bool MOAISpriteDeck2D::MOAIDeck_Overlap ( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
 
 	// TODO: handle granularity
 

@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDeckPropBase.h>
+#include <moai-sim/MOAISpriteDeck2D.h>
 
 //================================================================//
 // local
@@ -37,8 +38,15 @@ int MOAIDeckPropBase::_getDeck ( lua_State* L ) {
 int MOAIDeckPropBase::_setDeck ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDeckPropBase, "U" )
 
-	self->mDeck.Set ( *self, state.GetLuaObject < MOAIDeck >( 2, true ));
+	MOAIDeck* deck = MOAISpriteDeck2D::AffirmDeck ( state, 2 );
+
+	self->mDeck.Set ( *self, deck );
 	self->ScheduleUpdate ();
+	
+	if ( deck ) {
+		state.Push ( deck );
+		return 1;
+	}
 	return 0;
 }
 

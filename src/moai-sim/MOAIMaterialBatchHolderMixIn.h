@@ -321,15 +321,6 @@ protected:
 	}
 
 	//----------------------------------------------------------------//
-	MOAIMaterialBatch* AffirmMaterialBatch () {
-
-		if ( !this->mMaterialBatch ) {
-			this->mMaterialBatch.Set ( *this, new MOAIMaterialBatch );
-		}
-		return this->mMaterialBatch;
-	}
-
-	//----------------------------------------------------------------//
 	MOAIMaterialBatchHolderMixIn () {
 	}
 	
@@ -371,6 +362,15 @@ protected:
 	}
 
 public:
+
+	//----------------------------------------------------------------//
+	MOAIMaterialBatch* AffirmMaterialBatch () {
+
+		if ( !this->mMaterialBatch ) {
+			this->mMaterialBatch.Set ( *this, new MOAIMaterialBatch );
+		}
+		return this->mMaterialBatch;
+	}
 
 	//----------------------------------------------------------------//
 	MOAIMaterial* GetMaterial ( u32 idx = 0 ) {

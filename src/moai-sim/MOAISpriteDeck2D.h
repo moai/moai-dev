@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXQUADLISTDECK2D_H
-#define	MOAIGFXQUADLISTDECK2D_H
+#ifndef	MOAISPRITEDECK2D_H
+#define	MOAISPRITEDECK2D_H
 
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIMaterialBatchHolder.h>
@@ -14,7 +14,7 @@
 class MOAISprite {
 private:
 
-	friend class MOAIGfxQuadListDeck2D;
+	friend class MOAISpriteDeck2D;
 
 	u32		mUVQuadID;
 	u32		mQuadID;
@@ -27,22 +27,22 @@ private:
 class MOAISpriteList {
 private:
 
-	friend class MOAIGfxQuadListDeck2D;
+	friend class MOAISpriteDeck2D;
 
 	u32		mBaseSprite;
 	u32		mTotalSprites;
 };
 
 //================================================================//
-// MOAIGfxQuadListDeck2D
+// MOAISpriteDeck2D
 //================================================================//
-/**	@lua	MOAIGfxQuadListDeck2D
+/**	@lua	MOAISpriteDeck2D
 	@text	Deck of lists of textured quads. UV and model space quads are
 			specified independently and associated via pairs. Pairs are referenced
 			by lists sequentially. There may be multiple pairs with the same
 			UV/model quad indices if geometry is used in multiple lists.
 */
-class MOAIGfxQuadListDeck2D :
+class MOAISpriteDeck2D :
 	public MOAIDeck,
 	public MOAIMaterialBatchHolder {
 private:
@@ -80,14 +80,15 @@ private:
 
 public:
 	
-	DECL_LUA_FACTORY ( MOAIGfxQuadListDeck2D )
+	DECL_LUA_FACTORY ( MOAISpriteDeck2D )
 	
 	//----------------------------------------------------------------//
+	static MOAIDeck*	AffirmDeck					( MOAILuaState& state, int idx );
 	bool				Contains					( u32 idx, const ZLVec2D& vec );
 	void				DrawIndex					( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale );
 	bool				Inside						( u32 idx, MOAIMaterialBatch* materials, u32 granularity, ZLVec3D vec, float pad );
-						MOAIGfxQuadListDeck2D		();
-						~MOAIGfxQuadListDeck2D		();
+						MOAISpriteDeck2D			();
+						~MOAISpriteDeck2D			();
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
 	void				ReserveLists				( u32 total );
