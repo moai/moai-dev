@@ -229,8 +229,7 @@ void MOAIGraphicsGridProp::MOAIAbstractDrawable_Draw ( int subPrimID, float lod 
 	if ( this->IsClear ()) return;
 	if ( !this->mGrid ) return;
 
-	this->LoadGfxState ();
-	//this->LoadVertexTransform ();
+	this->PushGfxState ();
 	this->LoadUVTransform ();
 	
 	MOAICellCoord c0, c1;
@@ -242,6 +241,8 @@ void MOAIGraphicsGridProp::MOAIAbstractDrawable_Draw ( int subPrimID, float lod 
 		c0 = c1 = this->mGrid->GetCellCoord ( subPrimID );
 	}
 	this->DrawGrid ( c0, c1 );
+	
+	this->PopGfxState ();
 }
 
 //----------------------------------------------------------------//

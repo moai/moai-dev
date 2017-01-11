@@ -533,7 +533,7 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch* mater
 	UNUSED ( offset );
 	UNUSED ( scale );
 
-	if ( !this->LoadGfxState ( materials, idx, MOAIShaderMgr::MESH_SHADER )) return;
+	//if ( !this->LoadGfxState ( materials, idx, MOAIShaderMgr::MESH_SHADER )) return;
 
 	// TODO: make use of offset and scale
 
@@ -596,7 +596,8 @@ MOAIMesh::MOAIMesh () :
 	mPartition ( 0 ) {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIGraphicsDeckBase )
+		RTTI_EXTEND ( MOAIDeck )
+		RTTI_EXTEND ( MOAIMaterialBatchHolder )
 		RTTI_EXTEND ( MOAIVertexArray )
 	RTTI_END
 	
@@ -612,7 +613,8 @@ MOAIMesh::~MOAIMesh () {
 //----------------------------------------------------------------//
 void MOAIMesh::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIGraphicsDeckBase::RegisterLuaClass ( state );
+	MOAIDeck::RegisterLuaFuncs ( state );
+	MOAIMaterialBatchHolder::RegisterLuaClass ( state );
 	MOAIVertexArray::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "GL_POINTS",			( u32 )ZGL_PRIM_POINTS );
@@ -632,7 +634,8 @@ void MOAIMesh::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIGraphicsDeckBase::RegisterLuaFuncs ( state );
+	MOAIDeck::RegisterLuaFuncs ( state );
+	MOAIMaterialBatchHolder::RegisterLuaFuncs ( state );
 	MOAIVertexArray::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
@@ -678,7 +681,8 @@ void MOAIMesh::ReserveVertexBuffers ( u32 total ) {
 //----------------------------------------------------------------//
 void MOAIMesh::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
-	MOAIGraphicsDeckBase::SerializeIn ( state, serializer );
+	MOAIDeck::SerializeIn ( state, serializer );
+	MOAIMaterialBatchHolder::SerializeIn ( state, serializer );
 	MOAIVertexArray::SerializeIn ( state, serializer );
 
 	this->SetIndexBuffer ( serializer.MemberIDToObject < MOAIIndexBuffer >( state.GetFieldValue < MOAISerializer::ObjID >( -1, "mIndexBuffer", 0 )));
@@ -706,7 +710,8 @@ void MOAIMesh::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer )
 //----------------------------------------------------------------//
 void MOAIMesh::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
-	MOAIGraphicsDeckBase::SerializeOut ( state, serializer );
+	MOAIDeck::SerializeOut ( state, serializer );
+	MOAIMaterialBatchHolder::SerializeOut ( state, serializer );
 	MOAIVertexArray::SerializeOut ( state, serializer );
 
 	state.SetField ( -1, "mIndexBuffer", serializer.AffirmMemberID ( this->mIndexBuffer ));

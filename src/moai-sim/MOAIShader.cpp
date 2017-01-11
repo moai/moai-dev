@@ -349,7 +349,7 @@ void MOAIShader::SetUniform ( lua_State* L, int idx, u32 uniformID, u32 index ) 
 	
 	if ( uniform ) {
 		
-		int size = (( state.GetTop () - idx ) + 1 );
+		int size = state.GetStackSize ( idx );
 		
 		if ( size <= 4 ) {
 		

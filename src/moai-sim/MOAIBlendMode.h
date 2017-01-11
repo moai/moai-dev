@@ -21,12 +21,10 @@ public:
 	int				mDestFactor;
 
 	//----------------------------------------------------------------//
-	//void			Bind				();
-	static void		GetBlendFactors		( u32 blend, int& srcFactor, int& dstFactor );
 	void			SetBlend			( u32 blend );
-	void			SetBlend			( int srcFactor, int dstFactor );
-	void			SetBlendEquation	( int equation );
+	void			SetBlend			( int equation, int srcFactor, int dstFactor );
 					MOAIBlendMode		();
+					MOAIBlendMode		( int equation, int srcFactor, int dstFactor );
 					~MOAIBlendMode		();
 	
 	//----------------------------------------------------------------//

@@ -121,12 +121,6 @@ MOAICollisionShape* MOAIDeck::GetCollisionShape ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-MOAIMaterialBatch* MOAIDeck::GetMaterialBatch () {
-
-	return this->MOAIDeck_GetMaterialBatch ();
-}
-
-//----------------------------------------------------------------//
 MOAIDeck::MOAIDeck () :
 	mBoundsDirty ( true ) {
 	
@@ -199,12 +193,6 @@ ZLBounds MOAIDeck::MOAIDeck_GetBounds ( u32 idx ) {
 //----------------------------------------------------------------//
 MOAICollisionShape* MOAIDeck::MOAIDeck_GetCollisionShape ( u32 idx ) {
 	UNUSED ( idx );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-MOAIMaterialBatch* MOAIDeck::MOAIDeck_GetMaterialBatch () {
 
 	return 0;
 }

@@ -63,6 +63,7 @@ public:
 	void*			GetPtrUserData				( int idx );
 	ZLQuad			GetQuad						( int idx );
 	STLString		GetStackDump				();
+	int				GetStackSize				( int idx );
 	STLString		GetStackTrace				( cc8* title, int level );
 	int				GetLuaThreadStatus			( int idx );
 	int				GetLuaThreadStatus			( lua_State* thread );

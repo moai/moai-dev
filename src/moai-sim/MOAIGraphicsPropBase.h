@@ -7,6 +7,7 @@
 #include <moai-sim/MOAIBlendMode.h>
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIPartitionHull.h>
+#include <moai-sim/MOAIMaterialBatchHolder.h>
 #include <moai-sim/MOAIRenderable.h>
 #include <moai-sim/MOAITransform.h>
 
@@ -92,37 +93,19 @@ class MOAIGraphicsPropBase :
 	public virtual MOAIPartitionHull,
 	public virtual MOAIColor,
 	public virtual MOAIRenderable,
-	public virtual MOAIAbstractDrawable {
+	public virtual MOAIAbstractDrawable,
+	public virtual MOAIMaterialBatchHolder {
 private:
 	
 	//----------------------------------------------------------------//
 	static int		_draw					( lua_State* L );
 	static int		_getBillboard			( lua_State* L );
-	static int		_getBlendEquation		( lua_State* L );
-	static int		_getBlendMode			( lua_State* L );
-	static int		_getCullMode			( lua_State* L );
-	static int		_getDepthMask			( lua_State* L );
-	static int		_getDepthTest			( lua_State* L );
-	static int		_getIndexBatchSize		( lua_State* L );
-	static int		_getMaterialBatch		( lua_State* L );
 	static int		_getScissorRect			( lua_State* L );
-	static int		_getShader				( lua_State* L );
-	static int		_getTexture				( lua_State* L );
 	static int		_isVisible				( lua_State* L );
-	static int		_reserveMaterials		( lua_State* L );
 	static int		_setBillboard			( lua_State* L );
-	static int		_setBlendEquation		( lua_State* L );
-	static int		_setBlendMode			( lua_State* L );
-	static int		_setCullMode			( lua_State* L );
-	static int		_setDepthMask			( lua_State* L );
-	static int		_setDepthTest			( lua_State* L );
-	static int		_setIndexBatchSize		( lua_State* L );
 	static int		_setLODLimits			( lua_State* L );
-	static int		_setMaterialBatch		( lua_State* L );
 	static int		_setParent				( lua_State* L );
 	static int		_setScissorRect			( lua_State* L );
-	static int		_setShader				( lua_State* L );
-	static int		_setTexture				( lua_State* L );
 	static int		_setUVTransform			( lua_State* L );
 	static int		_setVisible				( lua_State* L );
 
@@ -141,15 +124,8 @@ protected:
 	u32										mDisplayFlags;
 	
 	// TODO: these should all be attributes
-	MOAILuaSharedPtr < MOAIMaterialBatch >	mMaterialBatch;
 	MOAILuaSharedPtr < MOAITransformBase >	mUVTransform;
 	MOAILuaSharedPtr < MOAIScissorRect >	mScissorRect;
-	
-	// TODO: this crap should move to the material
-	int										mCullMode;
-	int										mDepthTest;
-	bool									mDepthMask;
-	MOAIBlendMode							mBlendMode;
 	
 	u32										mLODFlags;
 	float									mLODMin;
@@ -157,9 +133,10 @@ protected:
 
 	//----------------------------------------------------------------//
 	virtual ZLMatrix4x4		GetWorldDrawingMtx			(); // factors in billboard flags
-	void					LoadGfxState				();
 	void					LoadUVTransform				();
 	void					LoadVertexTransform			();
+	void					PopGfxState					();
+	void					PushGfxState				();
 
 	//----------------------------------------------------------------//
 	bool					MOAINode_ApplyAttrOp		( u32 attrID, MOAIAttribute& attr, u32 op );
@@ -179,8 +156,6 @@ public:
 	};
 
 	enum {
-		ATTR_SHADER,
-		ATTR_BLEND_MODE,
 		ATTR_SCISSOR_RECT,
 		
 		ATTR_LOCAL_VISIBLE,		// direct access to the prop's 'local' visbility setting
@@ -206,10 +181,6 @@ public:
 	static const u32 DEFAULT_FLAGS = FLAGS_LOCAL_VISIBLE | FLAGS_VISIBLE;
 	static const u32 DEFAULT_LOD_FLAGS	= 0;
 
-	GET_SET ( int, CullMode, mCullMode )
-	GET_SET ( int, DepthTest, mDepthTest )
-	GET_SET ( bool, DepthMask, mDepthMask )
-	GET_SET ( const MOAIBlendMode&, BlendMode, mBlendMode )
 	GET_SET ( u32, LODFlags, mLODFlags )
 
 	//----------------------------------------------------------------//

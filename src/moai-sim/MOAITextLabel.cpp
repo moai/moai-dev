@@ -936,7 +936,7 @@ MOAITextLabel::MOAITextLabel () :
 	this->mStyleCache.SetOwner ( this );
 	this->mLayoutRules.SetOwner ( this );
 
-	this->mBlendMode.SetBlend ( ZGL_BLEND_FACTOR_SRC_ALPHA, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
+	//this->mBlendMode.SetBlend ( ZGL_BLEND_FACTOR_SRC_ALPHA, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
 }
 
 //----------------------------------------------------------------//
@@ -1132,20 +1132,22 @@ void MOAITextLabel::MOAIAbstractDrawable_Draw ( int subPrimID, float lod ) {
 		
 		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-		this->LoadGfxState ();
+		this->PushGfxState ();
 		this->LoadVertexTransform ();
 		this->LoadUVTransform ();
 	
 		gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
 		gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_MTX ));
 		
-		MOAIShader* shader = this->mMaterialBatch ? this->mMaterialBatch->RawGetShader ( 0 ) : 0;
-		bool useSpriteShaders = !shader;
-		
-		if ( useSpriteShaders ) {
-			shader = MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::FONT_SNAPPING_SHADER );
-		}
-		this->mLayout.Draw ( this->mReveal, shader, useSpriteShaders );
+//		MOAIShader* shader = this->mMaterialBatch ? this->mMaterialBatch->RawGetShader ( 0 ) : 0;
+//		bool useSpriteShaders = !shader;
+//		
+//		if ( useSpriteShaders ) {
+//			shader = MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::FONT_SNAPPING_SHADER );
+//		}
+//		this->mLayout.Draw ( this->mReveal, shader, useSpriteShaders );
+
+		this->PopGfxState ();
 	}
 }
 

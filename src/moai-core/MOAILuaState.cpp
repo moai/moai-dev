@@ -566,6 +566,12 @@ STLString MOAILuaState::GetStackDump () {
 }
 
 //----------------------------------------------------------------//
+int MOAILuaState::GetStackSize ( int idx ) {
+
+	return (( this->GetTop () - idx ) + 1 );
+}
+
+//----------------------------------------------------------------//
 STLString MOAILuaState::GetStackTrace ( cc8* title, int level ) {
 
 	int firstpart = 1;  /* still before eventual `...' */

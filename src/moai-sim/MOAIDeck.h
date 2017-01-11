@@ -42,7 +42,6 @@ protected:
 	static int				_getBounds						( lua_State* L );
 
 	//----------------------------------------------------------------//
-	MOAIMaterialBatch*		GetMaterialBatch				();
 	void					SetBoundsDirty					();
 
 	//----------------------------------------------------------------//
@@ -50,7 +49,6 @@ protected:
 	virtual void					MOAIDeck_Draw					( u32 idx );
 	virtual ZLBounds				MOAIDeck_GetBounds				( u32 idx );
 	virtual MOAICollisionShape*		MOAIDeck_GetCollisionShape		( u32 idx );
-	virtual MOAIMaterialBatch*		MOAIDeck_GetMaterialBatch		();
 	virtual bool					MOAIDeck_Overlap				( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
 	virtual bool					MOAIDeck_Overlap				( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
 

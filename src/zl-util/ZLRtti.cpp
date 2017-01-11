@@ -52,6 +52,8 @@ void RTTIRecord::Inherit ( RTTIRecord& record, void* ptr, ptrdiff_t offset ) {
 			}
 		}
 		
+		assert ( this->mTypeCount < MAX );
+		
 		this->mTypeSet [ this->mTypeCount ] = &record;
 		this->mJumpTable [ this->mTypeCount ] = offset;
 		this->mTypeCount++;

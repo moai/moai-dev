@@ -242,6 +242,7 @@ void MOAIGfxStateCache::DrawPrims ( u32 primType, u32 base, u32 count ) {
 
 	if ( shader && ( this->mActiveState.mVtxBuffer || this->mActiveState.mVtxArray )) {
 		
+		// need to do this here?
 		shader->GetProgram ()->Bind ();
 		shader->UpdateAndBindUniforms ();
 		
@@ -509,8 +510,7 @@ void MOAIGfxStateCache::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 void MOAIGfxStateCache::SetBlendMode ( int srcFactor, int dstFactor, int equation ) {
 
 	MOAIBlendMode blendMode;
-	blendMode.SetBlend ( srcFactor, dstFactor );
-	blendMode.SetBlendEquation( equation );
+	blendMode.SetBlend ( equation, srcFactor, dstFactor );
 	
 	this->SetBlendMode ( blendMode );
 }

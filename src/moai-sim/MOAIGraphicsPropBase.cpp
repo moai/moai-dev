@@ -9,7 +9,7 @@
 #include <moai-sim/MOAIGraphicsPropBase.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAILayoutFrame.h>
-#include <moai-sim/MOAIMaterialBatch.h>
+#include <moai-sim/MOAIMaterialStackMgr.h>
 #include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIRenderMgr.h>
@@ -47,84 +47,6 @@ int MOAIGraphicsPropBase::_getBillboard ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIGraphicsPropBase::_getBlendEquation ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
-	
-	state.Push ( self->mBlendMode.mEquation );
-	return 1;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIGraphicsPropBase::_getBlendMode ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
-	
-	state.Push ( self->mBlendMode.mSourceFactor );
-	state.Push ( self->mBlendMode.mDestFactor );
-	return 2;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIGraphicsPropBase::_getCullMode ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
-	
-	state.Push ( self->mCullMode );
-	return 1;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIGraphicsPropBase::_getDepthMask ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
-	
-	state.Push ( self->mDepthMask );
-	return 1;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIGraphicsPropBase::_getDepthTest ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
-	
-	state.Push ( self->mDepthTest );
-	return 1;
-}
-
-//----------------------------------------------------------------//
-/**	@name	getIndexBatchSize
-	@text	Return the index batch size of the material batch attached
-			to the prop.
-	
-	@in		MOAIGraphicsPropBase self
-	@out	number indexBatchSize		Returns nil if no material batch is attached.
-*/
-int MOAIGraphicsPropBase::_getIndexBatchSize ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
-	
-	if ( self->mMaterialBatch ) {
-		state.Push ( self->mMaterialBatch->GetIndexBatchSize ());
-		return 1;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	getMaterialBatch
-	@text	Return the material batch attached to the prop.
-	
-	@in		MOAIGraphicsPropBase self
-	@out	MOAIMaterialBatch materialBatch
-*/
-int MOAIGraphicsPropBase::_getMaterialBatch ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
-	
-	self->mMaterialBatch.PushRef ( state );
-	return 1;
-}
-
-//----------------------------------------------------------------//
 /**	@name	getScissorRect
 	@text	Retrieve the prop's scissor rect.
 	
@@ -136,46 +58,6 @@ int MOAIGraphicsPropBase::_getScissorRect ( lua_State* L ) {
 	
 	if ( self->mScissorRect ) {
 		self->mScissorRect->PushLuaUserdata ( state );
-		return 1;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	getShader
-	@text	Get the shader at the given index in the prop's material batch,
-			ignoring the material's index batch size. If no material batch is
-			attached to the prop then nil will be returned.
-	
-	@in		MOAIGraphicsPropBase self
-	@opt	number idx				Default value is 1.
-	@out	MOAIShader shader		Or nil if none exists.
-*/
-int MOAIGraphicsPropBase::_getShader ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
-	
-	if ( self->mMaterialBatch ) {
-		state.Push ( self->mMaterialBatch->RawGetShader ( state.GetValue < u32 >( 2, 1 ) - 1 ));
-		return 1;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	getTexture
-	@text	Get the texture at the given index in the prop's material batch,
-			ignoring the material's index batch size. If no material batch is
-			attached to the prop then nil will be returned.
-	
-	@in		MOAIGraphicsPropBase self
-	@opt	number idx				Default value is 1.
-	@out	MOAITexture texture		Or nil if none exists.
-*/
-int MOAIGraphicsPropBase::_getTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
-	
-	if ( self->mMaterialBatch ) {
-		state.Push ( self->mMaterialBatch->RawGetTexture ( state.GetValue < u32 >( 2, 1 ) - 1 ));
 		return 1;
 	}
 	return 0;
@@ -202,23 +84,6 @@ int	MOAIGraphicsPropBase::_isVisible ( lua_State* L ) {
 		lua_pushboolean ( state, self->IsVisible ());
 	}
 	return 1;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	reserveMaterials
-	@text	Reserve materials in the prop's material batch (and creates a
-			material batch if none exists).
-	
-	@in		MOAIGraphicsPropBase self
-	@in		number count
-	@out	nil
-*/
-int MOAIGraphicsPropBase::_reserveMaterials ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
-	
-	MOAIMaterialBatch* materialBatch = self->AffirmMaterialBatch ();
-	materialBatch->Reserve ( state.GetValue < u32 >( 2, 0 ));
-	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -253,152 +118,6 @@ int MOAIGraphicsPropBase::_setBillboard ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/** @lua	setBlendEquation
-	@text	Set the blend equation. This determines how the srcFactor and dstFactor values set with setBlendMode are interpreted.
-
-	@overload	Reset the blend function to GL_FUNC_ADD.
-
-		@in		MOAIGraphicsPropBase self
-		@out	nil
-
-	@overload	Set the blend equation.
-
-		@in		MOAIGraphicsPropBase self
-		@in		number equation				One of GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT.
-		@out	nil
-	
-*/
-int MOAIGraphicsPropBase::_setBlendEquation ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
-
-	if ( state.IsType ( 2, LUA_TNUMBER )) {
-		u32 equation = state.GetValue < u32 >( 2, ZGL_BLEND_MODE_ADD );
-		self->mBlendMode.SetBlendEquation ( equation );
-	}
-	else {
-		self->mBlendMode.SetBlendEquation ( ZGL_BLEND_MODE_ADD );
-	}
-	
-	self->ScheduleUpdate ();
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/** @lua	setBlendMode
-	@text	Set the blend mode.
-
-	@overload	Reset the blend mode to MOAIGraphicsPropBase.BLEND_NORMAL (equivalent to src = GL_ONE, dst = GL_ONE_MINUS_SRC_ALPHA). This will reset the blend function to GL_FUNC_ADD.
-
-		@in		MOAIGraphicsPropBase self
-		@out	nil
-
-	@overload	Set blend mode using one of the Moai presets. This will reset the blend function to GL_FUNC_ADD.
-
-		@in		MOAIGraphicsPropBase self
-		@in		number mode					One of MOAIGraphicsPropBase.BLEND_NORMAL, MOAIGraphicsPropBase.BLEND_ADD, MOAIGraphicsPropBase.BLEND_MULTIPLY.
-		@out	nil
-	
-	@overload	Set blend mode using OpenGL source and dest factors. OpenGl blend factor constants are exposed as members of MOAIGraphicsPropBase.
-				See the OpenGL documentation for an explanation of blending constants.
-
-		@in		MOAIGraphicsPropBase self
-		@in		number srcFactor
-		@in		number dstFactor
-		@out	nil
-*/
-int MOAIGraphicsPropBase::_setBlendMode ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
-
-	if ( state.IsType ( 2, LUA_TNUMBER )) {
-		if ( state.IsType ( 3, LUA_TNUMBER )) {
-		
-			u32 srcFactor = state.GetValue < u32 >( 2, 0 );
-			u32 dstFactor = state.GetValue < u32 >( 3, 0 );
-			self->mBlendMode.SetBlend ( srcFactor, dstFactor );
-		}
-		else {
-			
-			u32 blendMode = state.GetValue < u32 >( 2, MOAIBlendMode::BLEND_NORMAL );
-			self->mBlendMode.SetBlend ( blendMode );
-		}
-	}
-	else {
-		self->mBlendMode.SetBlend ( MOAIBlendMode::BLEND_NORMAL );
-	}
-	
-	self->ScheduleUpdate ();
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setCullMode
-	@text	Sets and enables face culling.
-	
-	@in		MOAIGraphicsPropBase self
-	@opt	number cullMode			Default value is MOAIGraphicsPropBase.CULL_NONE.
-	@out	nil
-*/
-int MOAIGraphicsPropBase::_setCullMode ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
-	
-	self->mCullMode = state.GetValue < int >( 2, 0 );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setDepthMask
-	@text	Disables or enables depth writing.
-	
-	@in		MOAIGraphicsPropBase self
-	@opt	boolean depthMask		Default value is true.
-	@out	nil
-*/
-int MOAIGraphicsPropBase::_setDepthMask ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
-	
-	self->mDepthMask = state.GetValue < bool >( 2, true );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setDepthTest
-	@text	Sets and enables depth testing (assuming depth buffer is present).
-	
-	@in		MOAIGraphicsPropBase self
-	@opt	number depthFunc		Default value is MOAIGraphicsPropBase.DEPTH_TEST_DISABLE.
-	@out	nil
-*/
-int MOAIGraphicsPropBase::_setDepthTest ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
-	
-	self->mDepthTest = state.GetValue < int >( 2, 0 );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setIndexBatchSize
-	@text	Sets and index batch size of the associated matrial batch (and creates
-			a material batch if none exists).
-	
-	@in		MOAIGraphicsPropBase self
-	@opt	number indexBatchSize
-	@out	nil
-*/
-int MOAIGraphicsPropBase::_setIndexBatchSize ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
-	
-	MOAIMaterialBatch* materialBatch = self->AffirmMaterialBatch ();
-	materialBatch->SetIndexBatchSize ( state.GetValue < u32 >( 2, 1 ));
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIGraphicsPropBase::_setLODLimits ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
@@ -416,22 +135,6 @@ int MOAIGraphicsPropBase::_setLODLimits ( lua_State* L ) {
 	}
 
 	self->mLODFlags = flags;
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setMaterialBatch
-	@text	Sets the prop's material batch.
-	
-	@in		MOAIGraphicsPropBase self
-	@opt	MOAIMaterialBatch materialBatch
-	@out	nil
-*/
-int MOAIGraphicsPropBase::_setMaterialBatch ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
-	
-	self->mMaterialBatch.Set ( *self, state.GetLuaObject < MOAIMaterialBatch >( 2, true ));
-	
 	return 0;
 }
 
@@ -475,66 +178,6 @@ int MOAIGraphicsPropBase::_setScissorRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	setShader
-	@text	Sets a shader in the associated material batch. Creates a
-			material batch is none exists. Index batch size is ignored.
-			
-			If no value for 'idx' is provided, then the shader or shader
-			preset is expected as the first paramater, and idx defaults to 1.
-	
-	@overload
-	
-		@in		MOAIGraphicsPropBase self
-		@in		number idx
-		@in		variant shader			Overloaded to accept a MOAIShader or a shader preset.
-		@out	MOAIShader shader		The shader that was set or created.
-	
-	@overload
-	
-		@in		MOAIGraphicsPropBase self
-		@in		variant shader			Overloaded to accept a MOAIShader or a shader preset.
-		@out	MOAIShader shader		The shader that was set or created.
-*/
-int MOAIGraphicsPropBase::_setShader ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
-	
-	MOAIMaterialBatch* materialBatch = self->AffirmMaterialBatch ();
-	state.Push ( materialBatch->SetShader ( state, 2 ));
-	
-	return 1;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setTexture
-	@text	Sets a texture in the associated material batch. Creates a
-			material batch is none exists. Index batch size is ignored.
-			
-			If no value for 'idx' is provided, then the texture or filename
-			is expected as the first paramater, and idx defaults to 1.
-	
-	@overload
-	
-		@in		MOAIGraphicsPropBase self
-		@in		number idx
-		@in		variant texture			Overloaded to accept a filename, MOAITexture, MOAIImage, MOAIStream or MOAIDataBuffer.
-		@out	MOAITexture texture		The texture that was set or created.
-	
-	@overload
-	
-		@in		MOAIGraphicsPropBase self
-		@in		variant texture			Overloaded to accept a filename, MOAITexture, MOAIImage, MOAIStream or MOAIDataBuffer.
-		@out	MOAITexture texture		The texture that was set or created.
-*/
-int MOAIGraphicsPropBase::_setTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
-	
-	MOAIMaterialBatch* materialBatch = self->AffirmMaterialBatch ();
-	state.Push ( materialBatch->SetTexture ( state, 2 ));
-	
-	return 1;
-}
-
-//----------------------------------------------------------------//
 /**	@lua	setUVTransform
 	@text	Sets or clears the prop's UV transform.
 	
@@ -571,15 +214,6 @@ int MOAIGraphicsPropBase::_setVisible ( lua_State* L ) {
 //================================================================//
 // MOAIGraphicsPropBase
 //================================================================//
-
-//----------------------------------------------------------------//
-MOAIMaterialBatch* MOAIGraphicsPropBase::AffirmMaterialBatch () {
-
-	if ( !this->mMaterialBatch ) {
-		this->mMaterialBatch.Set ( *this, new MOAIMaterialBatch );
-	}
-	return this->mMaterialBatch;
-}
 
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAIGraphicsPropBase::GetWorldDrawingMtx () {
@@ -741,26 +375,6 @@ bool MOAIGraphicsPropBase::IsVisible ( float lod ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGraphicsPropBase::LoadGfxState () {
-
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-
-	gfxMgr.mGfxState.SetPenColor ( this->mColor );
-	gfxMgr.mGfxState.SetCullFunc ( this->mCullMode );
-	gfxMgr.mGfxState.SetDepthFunc ( this->mDepthTest );
-	gfxMgr.mGfxState.SetDepthMask ( this->mDepthMask );
-	gfxMgr.mGfxState.SetBlendMode ( this->mBlendMode );
-	
-	if ( this->mScissorRect ) {
-		ZLRect scissorRect = this->mScissorRect->GetScissorRect ( gfxMgr.mGfxState.GetWorldToWndMtx ());
-		gfxMgr.mGfxState.SetScissorRect ( scissorRect );
-	}
-	else {
-		gfxMgr.mGfxState.SetScissorRect ();
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIGraphicsPropBase::LoadUVTransform () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
@@ -784,9 +398,6 @@ void MOAIGraphicsPropBase::LoadVertexTransform () {
 //----------------------------------------------------------------//
 MOAIGraphicsPropBase::MOAIGraphicsPropBase () :
 	mBillboard ( BILLBOARD_NONE ),
-	mCullMode ( 0 ),
-	mDepthTest ( 0 ),
-	mDepthMask ( true ),
 	mLODFlags ( DEFAULT_LOD_FLAGS ),
 	mLODMin ( 0.0f ),
 	mLODMax ( 0.0f ){
@@ -796,6 +407,7 @@ MOAIGraphicsPropBase::MOAIGraphicsPropBase () :
 		RTTI_EXTEND ( MOAIColor )
 		RTTI_EXTEND ( MOAIRenderable )
 		RTTI_EXTEND ( MOAIAbstractDrawable )
+		RTTI_EXTEND ( MOAIMaterialBatchHolder )
 	RTTI_END
 	
 	this->mDisplayFlags = DEFAULT_FLAGS;
@@ -806,7 +418,30 @@ MOAIGraphicsPropBase::~MOAIGraphicsPropBase () {
 	
 	this->mUVTransform.Set ( *this, 0 );
 	this->mScissorRect.Set ( *this, 0 );
-	this->mMaterialBatch.Set ( *this, 0 );
+}
+
+//----------------------------------------------------------------//
+void MOAIGraphicsPropBase::PopGfxState () {
+
+	MOAIMaterialStackMgr::Get ().Pop ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGraphicsPropBase::PushGfxState () {
+
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+
+	gfxMgr.mGfxState.SetPenColor ( this->mColor );
+
+	MOAIMaterialStackMgr::Get ().Push ( this->GetMaterial ());
+	
+	if ( this->mScissorRect ) {
+		ZLRect scissorRect = this->mScissorRect->GetScissorRect ( gfxMgr.mGfxState.GetWorldToWndMtx ());
+		gfxMgr.mGfxState.SetScissorRect ( scissorRect );
+	}
+	else {
+		gfxMgr.mGfxState.SetScissorRect ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -814,9 +449,8 @@ void MOAIGraphicsPropBase::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAIPartitionHull::RegisterLuaClass ( state );
 	MOAIColor::RegisterLuaClass ( state );
+	MOAIMaterialBatchHolder::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "ATTR_SHADER",					MOAIGraphicsPropBaseAttr::Pack ( ATTR_SHADER ));
-	state.SetField ( -1, "ATTR_BLEND_MODE",				MOAIGraphicsPropBaseAttr::Pack ( ATTR_BLEND_MODE ));
 	state.SetField ( -1, "ATTR_SCISSOR_RECT",			MOAIGraphicsPropBaseAttr::Pack ( ATTR_SCISSOR_RECT ));
 
 	state.SetField ( -1, "ATTR_LOCAL_VISIBLE",			MOAIGraphicsPropBaseAttr::Pack ( ATTR_LOCAL_VISIBLE ));
@@ -873,35 +507,17 @@ void MOAIGraphicsPropBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIPartitionHull::RegisterLuaFuncs ( state );
 	MOAIColor::RegisterLuaFuncs ( state );
+	MOAIMaterialBatchHolder::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "draw",					_draw },
 		{ "getBillboard",			_getBillboard },
-		{ "getBlendEquation",		_getBlendEquation },
-		{ "getBlendMode",			_getBlendMode },
-		{ "getCullMode",			_getCullMode },
-		{ "getDepthMask",			_getDepthMask },
-		{ "getDepthTest",			_getDepthTest },
-		{ "getIndexBatchSize",		_getIndexBatchSize },
-		{ "getMaterialBatch",		_getMaterialBatch },
 		{ "getScissorRect",			_getScissorRect },
-		{ "getShader",				_getShader },
-		{ "getTexture",				_getTexture },
 		{ "isVisible",				_isVisible },
-		{ "reserveMaterials",		_reserveMaterials },
 		{ "setBillboard",			_setBillboard },
-		{ "setBlendEquation",		_setBlendEquation },
-		{ "setBlendMode",			_setBlendMode },
-		{ "setCullMode",			_setCullMode },
-		{ "setDepthMask",			_setDepthMask },
-		{ "setDepthTest",			_setDepthTest },
-		{ "setIndexBatchSize",		_setIndexBatchSize },
 		{ "setLODLimits",			_setLODLimits },
-		{ "setMaterialBatch",		_setMaterialBatch },
 		{ "setParent",				_setParent },
 		{ "setScissorRect",			_setScissorRect },
-		{ "setShader",				_setShader },
-		{ "setTexture",				_setTexture },
 		{ "setUVTransform",			_setUVTransform },
 		{ "setVisible",				_setVisible },
 		{ NULL, NULL }
@@ -922,6 +538,7 @@ void MOAIGraphicsPropBase::SerializeIn ( MOAILuaState& state, MOAIDeserializer& 
 	MOAIColor::SerializeIn ( state, serializer );
 	MOAIRenderable::SerializeIn ( state, serializer );
 	MOAIPartitionHull::SerializeIn ( state, serializer );
+	MOAIMaterialBatchHolder::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
@@ -930,6 +547,7 @@ void MOAIGraphicsPropBase::SerializeOut ( MOAILuaState& state, MOAISerializer& s
 	MOAIColor::SerializeOut ( state, serializer );
 	MOAIRenderable::SerializeOut ( state, serializer );
 	MOAIPartitionHull::SerializeOut ( state, serializer );
+	MOAIMaterialBatchHolder::SerializeOut ( state, serializer );
 }
 
 //----------------------------------------------------------------//
@@ -1012,18 +630,9 @@ bool MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& att
 	if ( MOAIGraphicsPropBaseAttr::Check ( attrID )) {
 		
 		switch ( UNPACK_ATTR ( attrID )) {
-		
-			// TODO: fix this conflict with material batch concept
-			case ATTR_SHADER:
-				//this->mShader.Set ( *this, attr.ApplyNoAdd < MOAIShader* >( this->mShader, op, MOAIAttribute::ATTR_READ_WRITE, MOAIAttribute::ATTR_TYPE_VARIANT ));
-				return true;
 				
 			case ATTR_SCISSOR_RECT:
 				this->mScissorRect.Set ( *this, attr.ApplyVariantNoAdd < MOAIScissorRect* >( this->mScissorRect, op, MOAIAttribute::ATTR_READ_WRITE ));
-				return true;
-
-			case ATTR_BLEND_MODE:
-				attr.ApplyVariantNoAdd < MOAIBlendMode >( this->mBlendMode, op, MOAIAttribute::ATTR_READ_WRITE );
 				return true;
 				
 			case ATTR_LOCAL_VISIBLE:

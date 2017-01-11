@@ -65,7 +65,7 @@ public:
 class RTTIRecord {
 private:
 
-	static const u32 MAX = 16;
+	static const u32 MAX = 32;
 
 	RTTILinkBase*	mLinks [ MAX ];
 	u32				mLinkCount;

@@ -4,7 +4,8 @@
 #ifndef	MOAIGFXQUAD2D_H
 #define	MOAIGFXQUAD2D_H
 
-#include <moai-sim/MOAIGraphicsDeckBase.h>
+#include <moai-sim/MOAIDeck.h>
+#include <moai-sim/MOAIMaterialBatchHolder.h>
 #include <moai-sim/MOAIQuadBrush.h>
 
 //================================================================//
@@ -14,7 +15,8 @@
 	@text	Single textured quad.
 */
 class MOAIGfxQuad2D :
-	public MOAIGraphicsDeckBase {
+	public MOAIDeck,
+	public MOAIMaterialBatchHolder {
 private:
 
 	MOAIQuadBrush mQuad;

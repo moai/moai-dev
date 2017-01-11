@@ -378,7 +378,7 @@ void MOAIParticleSystem::Draw ( int subPrimID, float lod ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
-	this->LoadGfxState ();
+	this->PushGfxState ();
 	this->LoadUVTransform ();
 
 	ZLAffine3D drawingMtx;
@@ -415,6 +415,8 @@ void MOAIParticleSystem::Draw ( int subPrimID, float lod ) {
 		//this->mDeck->Draw ( this->mIndex + ( u32 )sprite.mGfxID, this->mMaterialBatch );
 		this->mDeck->Draw ( this->mIndex + ( u32 )sprite.mGfxID );
 	}
+	
+	this->PopGfxState ();
 }
 
 //----------------------------------------------------------------//

@@ -9,7 +9,7 @@
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAILayoutFrame.h>
-#include <moai-sim/MOAIMaterialBatch.h>
+#include <moai-sim/MOAIMaterialStackMgr.h>
 #include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIRenderMgr.h>
@@ -85,12 +85,13 @@ void MOAIGraphicsProp::MOAIAbstractDrawable_Draw ( int subPrimID, float lod ) {
 	if ( !this->mDeck ) return;
 	if ( this->IsClear ()) return;
 
-	this->LoadGfxState ();
+	this->PushGfxState ();
 	this->LoadVertexTransform ();
 	this->LoadUVTransform ();
 	
-	//this->mDeck->Draw ( this->mIndex, this->mMaterialBatch );
 	this->mDeck->Draw ( this->mIndex );
+	
+	this->PopGfxState ();
 }
 
 //----------------------------------------------------------------//

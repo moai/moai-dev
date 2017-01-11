@@ -5,6 +5,7 @@
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxQuad2D.h>
+#include <moai-sim/MOAIMaterialStackMgr.h>
 #include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAITextureBase.h>
@@ -158,7 +159,8 @@ int MOAIGfxQuad2D::_transformUV ( lua_State* L ) {
 MOAIGfxQuad2D::MOAIGfxQuad2D () {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIGraphicsDeckBase )
+		RTTI_EXTEND ( MOAIDeck )
+		RTTI_EXTEND ( MOAIMaterialBatchHolder )
 	RTTI_END
 	
 	// set up rects to draw a unit tile centered at the origin
@@ -173,13 +175,15 @@ MOAIGfxQuad2D::~MOAIGfxQuad2D () {
 //----------------------------------------------------------------//
 void MOAIGfxQuad2D::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIGraphicsDeckBase::RegisterLuaClass ( state );
+	MOAIDeck::RegisterLuaClass ( state );
+	MOAIMaterialBatchHolder::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxQuad2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIGraphicsDeckBase::RegisterLuaFuncs ( state );
+	MOAIDeck::RegisterLuaFuncs ( state );
+	MOAIMaterialBatchHolder::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "setQuad",			_setQuad },
@@ -197,13 +201,15 @@ void MOAIGfxQuad2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGfxQuad2D::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
-	MOAIGraphicsDeckBase::SerializeIn ( state, serializer );
+	MOAIDeck::SerializeIn ( state, serializer );
+	MOAIMaterialBatchHolder::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxQuad2D::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
-	MOAIGraphicsDeckBase::SerializeOut ( state, serializer );
+	MOAIDeck::SerializeOut ( state, serializer );
+	MOAIMaterialBatchHolder::SerializeOut ( state, serializer );
 }
 
 //----------------------------------------------------------------//
@@ -231,13 +237,15 @@ ZLBounds MOAIGfxQuad2D::MOAIDeck_ComputeMaxBounds () {
 //----------------------------------------------------------------//
 void MOAIGfxQuad2D::MOAIDeck_Draw ( u32 idx ) {
 
-	if ( !this->GetMaterialBatch ()->LoadGfxState ( 0, idx, MOAIShaderMgr::DECK2D_SHADER )) return;
-	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIQuadBrush::BindVertexFormat ();
 	
 	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
 	gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_MTX ));
+	
+	MOAIScopedMaterialStack materialStack;
+	materialStack.Push ( this->GetMaterial ( idx ));
+	materialStack.LoadGfxState ( MOAIShaderMgr::DECK2D_SHADER );
 	
 	this->mQuad.Draw ();
 }
@@ -263,7 +271,9 @@ bool MOAIGfxQuad2D::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granular
 
 	// TODO: handle granularity
 
-	return this->GetMaterialBatch ()->TestHit ( this, idx, granularity, this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
+	//return this->GetMaterialBatch ()->TestHit ( this, idx, granularity, this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
+	
+	return true;
 }
 
 //----------------------------------------------------------------//
