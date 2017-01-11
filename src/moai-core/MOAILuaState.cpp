@@ -1256,7 +1256,7 @@ void MOAILuaState::Push ( u64 value ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaState::Push ( const ZLBox& value ) {
+int MOAILuaState::Push ( const ZLBox& value ) {
 
 	lua_pushnumber ( this->mState, value.mMin.mX );
 	lua_pushnumber ( this->mState, value.mMin.mY );
@@ -1265,19 +1265,23 @@ void MOAILuaState::Push ( const ZLBox& value ) {
 	lua_pushnumber ( this->mState, value.mMax.mX );
 	lua_pushnumber ( this->mState, value.mMax.mY );
 	lua_pushnumber ( this->mState, value.mMax.mZ );
+	
+	return 6;
 }
 
 //----------------------------------------------------------------//
-void MOAILuaState::Push ( const ZLColorVec& value ) {
+int MOAILuaState::Push ( const ZLColorVec& value ) {
 
 	lua_pushnumber ( this->mState, value.mR );
 	lua_pushnumber ( this->mState, value.mG );
 	lua_pushnumber ( this->mState, value.mB );
 	lua_pushnumber ( this->mState, value.mA );
+	
+	return 4;
 }
 
 //----------------------------------------------------------------//
-void MOAILuaState::Push ( const ZLAffine2D& value ) {
+int MOAILuaState::Push ( const ZLAffine2D& value ) {
 
 	lua_pushnumber ( this->mState, value.m [ ZLAffine2D::C0_R0 ]);
 	lua_pushnumber ( this->mState, value.m [ ZLAffine2D::C1_R0 ]);
@@ -1286,10 +1290,12 @@ void MOAILuaState::Push ( const ZLAffine2D& value ) {
 	lua_pushnumber ( this->mState, value.m [ ZLAffine2D::C0_R1 ]);
 	lua_pushnumber ( this->mState, value.m [ ZLAffine2D::C1_R1 ]);
 	lua_pushnumber ( this->mState, value.m [ ZLAffine2D::C2_R1 ]);
+	
+	return 6;
 }
 
 //----------------------------------------------------------------//
-void MOAILuaState::Push ( const ZLAffine3D& value ) {
+int MOAILuaState::Push ( const ZLAffine3D& value ) {
 
 	lua_pushnumber ( this->mState, value.m [ ZLAffine3D::C0_R0 ]);
 	lua_pushnumber ( this->mState, value.m [ ZLAffine3D::C1_R0 ]);
@@ -1305,10 +1311,12 @@ void MOAILuaState::Push ( const ZLAffine3D& value ) {
 	lua_pushnumber ( this->mState, value.m [ ZLAffine3D::C1_R2 ]);
 	lua_pushnumber ( this->mState, value.m [ ZLAffine3D::C2_R2 ]);
 	lua_pushnumber ( this->mState, value.m [ ZLAffine3D::C3_R2 ]);
+	
+	return 12;
 }
 
 //----------------------------------------------------------------//
-void MOAILuaState::Push ( const ZLMatrix3x3& value ) {
+int MOAILuaState::Push ( const ZLMatrix3x3& value ) {
 
 	lua_pushnumber ( this->mState, value.m [ ZLMatrix3x3::C0_R0 ]);
 	lua_pushnumber ( this->mState, value.m [ ZLMatrix3x3::C1_R0 ]);
@@ -1321,10 +1329,12 @@ void MOAILuaState::Push ( const ZLMatrix3x3& value ) {
 	lua_pushnumber ( this->mState, value.m [ ZLMatrix3x3::C0_R2 ]);
 	lua_pushnumber ( this->mState, value.m [ ZLMatrix3x3::C1_R2 ]);
 	lua_pushnumber ( this->mState, value.m [ ZLMatrix3x3::C2_R2 ]);
+	
+	return 9;
 }
 
 //----------------------------------------------------------------//
-void MOAILuaState::Push ( const ZLMatrix4x4& value ) {
+int MOAILuaState::Push ( const ZLMatrix4x4& value ) {
 
 	lua_pushnumber ( this->mState, value.m [ ZLMatrix4x4::C0_R0 ]);
 	lua_pushnumber ( this->mState, value.m [ ZLMatrix4x4::C1_R0 ]);
@@ -1345,39 +1355,64 @@ void MOAILuaState::Push ( const ZLMatrix4x4& value ) {
 	lua_pushnumber ( this->mState, value.m [ ZLMatrix4x4::C1_R3 ]);
 	lua_pushnumber ( this->mState, value.m [ ZLMatrix4x4::C2_R3 ]);
 	lua_pushnumber ( this->mState, value.m [ ZLMatrix4x4::C3_R3 ]);
+	
+	return 16;
 }
 
 //----------------------------------------------------------------//
-void MOAILuaState::Push ( const ZLRect& value ) {
+int MOAILuaState::Push ( const ZLQuad& value ) {
+
+	lua_pushnumber ( this->mState, value.mV [ 0 ].mX );
+	lua_pushnumber ( this->mState, value.mV [ 0 ].mY );
+	lua_pushnumber ( this->mState, value.mV [ 1 ].mX );
+	lua_pushnumber ( this->mState, value.mV [ 1 ].mY );
+	lua_pushnumber ( this->mState, value.mV [ 2 ].mX );
+	lua_pushnumber ( this->mState, value.mV [ 2 ].mY );
+	lua_pushnumber ( this->mState, value.mV [ 3 ].mX );
+	lua_pushnumber ( this->mState, value.mV [ 3 ].mY );
+	
+	return 8;
+}
+
+//----------------------------------------------------------------//
+int MOAILuaState::Push ( const ZLRect& value ) {
 
 	lua_pushnumber ( this->mState, value.mXMin );
 	lua_pushnumber ( this->mState, value.mYMin );
 	lua_pushnumber ( this->mState, value.mXMax );
 	lua_pushnumber ( this->mState, value.mYMax );
+	
+	return 4;
 }
 
 //----------------------------------------------------------------//
-void MOAILuaState::Push ( const ZLVec2D& value ) {
+int MOAILuaState::Push ( const ZLVec2D& value ) {
 
 	lua_pushnumber ( this->mState, value.mX );
 	lua_pushnumber ( this->mState, value.mY );
+	
+	return 2;
 }
 
 //----------------------------------------------------------------//
-void MOAILuaState::Push ( const ZLVec3D& value ) {
+int MOAILuaState::Push ( const ZLVec3D& value ) {
 
 	lua_pushnumber ( this->mState, value.mX );
 	lua_pushnumber ( this->mState, value.mY );
 	lua_pushnumber ( this->mState, value.mZ );
+	
+	return 3;
 }
 
 //----------------------------------------------------------------//
-void MOAILuaState::Push ( const ZLVec4D& value ) {
+int MOAILuaState::Push ( const ZLVec4D& value ) {
 
 	lua_pushnumber ( this->mState, value.mX );
 	lua_pushnumber ( this->mState, value.mY );
 	lua_pushnumber ( this->mState, value.mZ );
 	lua_pushnumber ( this->mState, value.mW );
+	
+	return 4;
 }
 
 //----------------------------------------------------------------//

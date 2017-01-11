@@ -20,13 +20,14 @@ private:
 public:
 
 	//----------------------------------------------------------------//
-	void				Clear							();
-	void				LoadGfxState					( u32 defaultShader );
-	void				LoadGfxState					( MOAIShader* defaultShader = 0 );
-						MOAIMaterialStackMgr			();
-						~MOAIMaterialStackMgr			();
-	void				Pop								();
-	void				Push							( const MOAIMaterial* material );
+	void					Clear							();
+	void					LoadGfxState					( u32 defaultShader );
+	void					LoadGfxState					( MOAIShader* defaultShader = 0 );
+							MOAIMaterialStackMgr			();
+							~MOAIMaterialStackMgr			();
+	void					Pop								();
+	void					Push							( const MOAIMaterial* material );
+	const MOAIMaterial&		Top								();
 };
 
 //================================================================//
@@ -41,13 +42,14 @@ private:
 public:
 
 	//----------------------------------------------------------------//
-	void				Clear							();
-	void				LoadGfxState					( u32 defaultShader );
-	void				LoadGfxState					( MOAIShader* defaultShader = 0 );
-						MOAIScopedMaterialStack			();
-						~MOAIScopedMaterialStack		();
-	void				Pop								();
-	void				Push							( const MOAIMaterial* material );
+	void					Clear							();
+	void					LoadGfxState					( u32 defaultShader );
+	void					LoadGfxState					( MOAIShader* defaultShader = 0 );
+							MOAIScopedMaterialStack			();
+							~MOAIScopedMaterialStack		();
+	void					Pop								();
+	void					Push							( const MOAIMaterial* material );
+	const MOAIMaterial&		Top								();
 };
 
 #endif

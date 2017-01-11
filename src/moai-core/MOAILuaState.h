@@ -111,16 +111,17 @@ public:
 	void			Push						( u32 value );
 	void			Push						( u64 value );
 	
-	void			Push						( const ZLBox& value );
-	void			Push						( const ZLColorVec& value );
-	void			Push						( const ZLAffine2D& value );
-	void			Push						( const ZLAffine3D& value );
-	void			Push						( const ZLMatrix3x3& value );
-	void			Push						( const ZLMatrix4x4& value );
-	void			Push						( const ZLRect& value );
-	void			Push						( const ZLVec2D& value );
-	void			Push						( const ZLVec3D& value );
-	void			Push						( const ZLVec4D& value );
+	int				Push						( const ZLBox& value );
+	int				Push						( const ZLColorVec& value );
+	int				Push						( const ZLAffine2D& value );
+	int				Push						( const ZLAffine3D& value );
+	int				Push						( const ZLMatrix3x3& value );
+	int				Push						( const ZLMatrix4x4& value );
+	int				Push						( const ZLQuad& value );
+	int				Push						( const ZLRect& value );
+	int				Push						( const ZLVec2D& value );
+	int				Push						( const ZLVec3D& value );
+	int				Push						( const ZLVec4D& value );
 	
 	void			Push						( lua_CFunction value );
 	void			Push						( MOAILuaObject* luaObject );

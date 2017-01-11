@@ -98,6 +98,12 @@ void MOAIMaterial::Compose ( const MOAIMaterial& material ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIMaterial::LoadGfxState ( u32 defaultShader ) {
+
+	this->LoadGfxState ( MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::DECK2D_SHADER ));
+}
+
+//----------------------------------------------------------------//
 void MOAIMaterial::LoadGfxState ( MOAIShader* defaultShader ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();

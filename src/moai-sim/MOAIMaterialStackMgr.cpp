@@ -23,7 +23,7 @@ void MOAIMaterialStackMgr::Clear () {
 //----------------------------------------------------------------//
 void MOAIMaterialStackMgr::LoadGfxState ( u32 defaultShader ) {
 
-	this->LoadGfxState ( MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::DECK2D_SHADER ));
+	this->mStack.Top ().LoadGfxState ( defaultShader );
 }
 
 //----------------------------------------------------------------//
@@ -59,6 +59,12 @@ void MOAIMaterialStackMgr::Push ( const MOAIMaterial* material ) {
 	if ( material ) {
 		push.Compose ( *material );
 	}
+}
+
+//----------------------------------------------------------------//
+const MOAIMaterial& MOAIMaterialStackMgr::Top () {
+
+	return this->mStack.Top ();
 }
 
 //================================================================//
@@ -110,4 +116,10 @@ void MOAIScopedMaterialStack::Pop () {
 void MOAIScopedMaterialStack::Push ( const MOAIMaterial* material ) {
 
 	this->mMaterialStack.Push ( material );
+}
+
+//----------------------------------------------------------------//
+const MOAIMaterial& MOAIScopedMaterialStack::Top () {
+
+	return this->mMaterialStack.Top ();
 }
