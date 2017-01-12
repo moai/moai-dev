@@ -665,8 +665,8 @@ ZLBounds MOAISpriteDeck2D::MOAIDeck_ComputeMaxBounds () {
 //----------------------------------------------------------------//
 void MOAISpriteDeck2D::MOAIDeck_Draw ( u32 idx ) {
 
-	MOAIMaterialStackScope materialStackScope;
-	MOAIMaterialStackMgr& materialStack = materialStackScope;
+	MOAIMaterialStackMgr& materialStack = MOAIMaterialStackMgr::Get ();
+	materialStack.Push (); // push a copy of the current material; will modify this in the loop below
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIQuadBrush::BindVertexFormat ();
@@ -678,56 +678,58 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( u32 idx ) {
 	size_t totalSpriteLists		= this->mSpriteLists.Size ();
 	size_t totalQuads			= this->mQuads.Size ();
 	
-	if ( totalQuads ) {
-	
-		if ( totalSprites ) {
+	if ( totalSprites ) {
 
-			u32 base;
-			u32 top;
-			
-			if ( totalSpriteLists ) {
-			
-				MOAISpriteList& spriteList = this->mSpriteLists [ idx % totalSpriteLists ];
-				base = spriteList.mBaseSprite;
-				top = base + spriteList.mTotalSprites;
-			}
-			else {
-			
-				base = idx % totalSprites;
-				top = base + 1;
-			}
-			
-			u32 materialID = MOAIMaterialBatch::UNKNOWN;
-			materialStack.Push (); // push a copy of the current material; will modify this in the loop below
-			
-			for ( size_t i = base; i < top; ++i ) {
-				
-				MOAISprite spritePair = this->mSprites [ i % totalSprites ];
-				
-				if (( i == base ) || ( materialID != spritePair.mMaterialID )) {
-				
-					materialID = spritePair.mMaterialID;
-					
-					MOAIMaterial* spriteMaterial = this->GetMaterial ( materialID );
-					if ( spriteMaterial ) {
-						
-						materialStack.Compose ( *spriteMaterial );
-						materialStack.SetShader ( MOAIShaderMgr::DECK2D_SHADER );
-						materialStack.LoadGfxState ();
-					}
-				}
-				
-				MOAIQuadBrush glQuad;
-				glQuad.mUVQuad = this->mUVQuads [ spritePair.mUVQuadID ];
-				glQuad.mModelQuad = this->mQuads [ spritePair.mQuadID ];
-				glQuad.Draw ();
-			}
+		u32 base;
+		u32 top;
+		
+		if ( totalSpriteLists ) {
+		
+			MOAISpriteList& spriteList = this->mSpriteLists [ idx % totalSpriteLists ];
+			base = spriteList.mBaseSprite;
+			top = base + spriteList.mTotalSprites;
 		}
 		else {
 		
+			base = idx % totalSprites;
+			top = base + 1;
+		}
+		
+		u32 materialID = MOAIMaterialBatch::UNKNOWN;
+		
+		
+		for ( size_t i = base; i < top; ++i ) {
+			
+			MOAISprite spritePair = this->mSprites [ i % totalSprites ];
+			
+			if (( i == base ) || ( materialID != spritePair.mMaterialID )) {
+			
+				materialID = spritePair.mMaterialID;
+				
+				MOAIMaterial* spriteMaterial = this->GetMaterial ( materialID );
+				if ( spriteMaterial ) {
+					
+					materialStack.Compose ( *spriteMaterial );
+					materialStack.SetShader ( MOAIShaderMgr::DECK2D_SHADER );
+					materialStack.LoadGfxState ();
+				}
+			}
+			
+			MOAIQuadBrush glQuad;
+			glQuad.mUVQuad = this->mUVQuads [ spritePair.mUVQuadID ];
+			glQuad.mModelQuad = this->mQuads [ spritePair.mQuadID ];
+			glQuad.Draw ();
+		}
+	}
+	else {
+		
+		MOAIQuadBrush quadBrush;
+		MOAIMaterial* material = 0;
+		
+		if ( totalQuads ) {
+		
 			size_t itemIdx = idx % totalQuads;
-
-			MOAIQuadBrush quadBrush;
+			material = this->GetMaterial ( itemIdx );
 
 			quadBrush.mModelQuad = this->mQuads [ itemIdx ];
 
@@ -737,26 +739,23 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( u32 idx ) {
 			else {
 				quadBrush.mUVQuad.Init ( 0.0f, 1.0f, 1.0f, 0.0f );
 			}
-		
-			materialStack.Push ( this->GetMaterial ( itemIdx ));
-			materialStack.SetShader ( MOAIShaderMgr::DECK2D_SHADER );
-			materialStack.LoadGfxState ();
-			
-			quadBrush.Draw ();
 		}
-	}
-	else {
-	
-		materialStack.Push ( this->GetMaterial ());
+		else {
+		
+			material = this->GetMaterial ();
+			
+			quadBrush.mModelQuad.Init ( -0.5f, -0.5f, 0.5f, 0.5f );
+			quadBrush.mUVQuad.Init ( 0.0f, 1.0f, 1.0f, 0.0f );
+		}
+		
+		materialStack.Compose ( material );
 		materialStack.SetShader ( MOAIShaderMgr::DECK2D_SHADER );
 		materialStack.LoadGfxState ();
 		
-		MOAIQuadBrush quadBrush;
-		quadBrush.mModelQuad.Init ( -0.5f, -0.5f, 0.5f, 0.5f );
-		quadBrush.mUVQuad.Init ( 0.0f, 1.0f, 1.0f, 0.0f );
-		
 		quadBrush.Draw ();
 	}
+	
+	materialStack.Pop ();
 }
 
 //----------------------------------------------------------------//

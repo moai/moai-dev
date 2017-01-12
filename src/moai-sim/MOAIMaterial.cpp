@@ -145,6 +145,14 @@ void MOAIMaterial::Compose ( const MOAIMaterial& material ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIMaterial::Compose ( const MOAIMaterial* material ) {
+
+	if ( material ) {
+		this->Compose ( *material );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIMaterial::LoadGfxState () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();

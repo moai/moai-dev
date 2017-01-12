@@ -65,6 +65,7 @@ public:
 	void			ClearShader				();
 	void			ClearTexture			();
 	void			Compose					( const MOAIMaterial& material );
+	void			Compose					( const MOAIMaterial* material );
 	void			LoadGfxState			();
 					MOAIMaterial			();
 					~MOAIMaterial			();
