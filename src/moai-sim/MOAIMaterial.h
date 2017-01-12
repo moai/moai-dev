@@ -13,7 +13,7 @@
 // MOAIMaterial
 //================================================================//
 class MOAIMaterial {
-private:
+protected:
 	
 	friend class MOAIMaterialBatch;
 	
@@ -31,10 +31,11 @@ private:
 	};
 	
 	static const u32	DRAW_FLAGS	= BLEND_MODE_FLAG | CULL_MODE_FLAG | DEPTH_MASK_FLAG | DEPTH_TEST_FLAG;
+	static const u32	ALL_FLAGS	= MAX_FLAG - 1;
 	
 	MOAIShader*			mShader;
 	MOAITextureBase*	mTexture;
-	MOAIImage*			mHitMask; // this shoud be its own thing
+	//MOAIImage*			mHitMask; // this shoud be its own thing
 
 	MOAIBlendMode		mBlendMode;
 	int					mCullMode;
@@ -42,6 +43,9 @@ private:
 	bool				mDepthMask;
 
 	u32					mFlags;
+
+	//----------------------------------------------------------------//
+	void			Clear					( u32 flags );
 
 public:
 
@@ -52,13 +56,8 @@ public:
 	GET ( MOAIShader*, Shader, mShader );
 	GET ( MOAITextureBase*, Texture, mTexture );
 
-	// TODO: Compose () is really the concern of the material stack. no
-	// reason for MOAIMaterial to know about it. the idiom of copying
-	// materials and compising them is too heavy for the amount of
-	// work the stack is going to do.
-
 	//----------------------------------------------------------------//
-	void			ClearAll				();
+	void			Clear					();
 	void			ClearBlendMode			();
 	void			ClearCullMode			();
 	void			ClearDepthMask			();
@@ -66,14 +65,14 @@ public:
 	void			ClearShader				();
 	void			ClearTexture			();
 	void			Compose					( const MOAIMaterial& material );
-	void			LoadGfxState			( u32 defaultShader );
-	void			LoadGfxState			( MOAIShader* defaultShader = 0 );
+	void			LoadGfxState			();
 					MOAIMaterial			();
 					~MOAIMaterial			();
 	void			SetBlendMode			( const MOAIBlendMode& blendMode );
 	void			SetCullMode				( int cullMode );
 	void			SetDepthMask			( bool depthMask );
 	void			SetDepthTest			( int depthTest );
+	void			SetShader				( u32 shaderID );
 	void			SetShader				( MOAIShader* shader );
 	void			SetTexture				( MOAITextureBase* texture );
 	bool			StateWillChange			( const MOAIMaterial& material );

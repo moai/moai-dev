@@ -7,35 +7,38 @@
 #include <moai-sim/MOAIShaderMgr.h>
 
 //================================================================//
+// MOAIMaterialStackScope
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAIMaterialStackScope::MOAIMaterialStackScope () :
+	mMaterialStack ( MOAIMaterialStackMgr::Get ()) {
+	
+	this->mRestoreTop = this->mMaterialStack.mStack.GetTop ();
+}
+
+//----------------------------------------------------------------//
+MOAIMaterialStackScope::~MOAIMaterialStackScope () {
+
+	u32 top = this->mMaterialStack.mStack.GetTop ();
+	for ( ; top > this->mRestoreTop; --top ) {
+		this->mMaterialStack.Pop ();
+	}
+}
+
+//================================================================//
 // MOAIMaterialStackMgr
 //================================================================//
 
 //----------------------------------------------------------------//
 void MOAIMaterialStackMgr::Clear () {
 
-	while ( this->mStack.GetTop () > 1 ) {
-	
-		// do it this way so the destructors get called
-		this->mStack.Pop ();
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIMaterialStackMgr::LoadGfxState ( u32 defaultShader ) {
-
-	this->mStack.Top ().LoadGfxState ( defaultShader );
-}
-
-//----------------------------------------------------------------//
-void MOAIMaterialStackMgr::LoadGfxState ( MOAIShader* defaultShader ) {
-
-	this->mStack.Top ().LoadGfxState ( defaultShader );
+	this->mStack.Reset ();
+	this->MOAIMaterial::Clear ();
 }
 
 //----------------------------------------------------------------//
 MOAIMaterialStackMgr::MOAIMaterialStackMgr () {
-	
-	this->mStack.Push ();
 }
 
 //----------------------------------------------------------------//
@@ -46,80 +49,21 @@ MOAIMaterialStackMgr::~MOAIMaterialStackMgr () {
 void MOAIMaterialStackMgr::Pop () {
 
 	if ( this->mStack.GetTop () > 1 ) {
-		this->mStack.Pop ();
+		u32 flags = this->mStack.Pop ();
+		this->MOAIMaterial::Clear ( ~flags );
+	}
+	else {
+		this->mStack.Reset ();
+		this->MOAIMaterial::Clear ();
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIMaterialStackMgr::Push ( const MOAIMaterial* material ) {
-
-	MOAIMaterial& top = this->mStack.Top ();
-	MOAIMaterial& push = this->mStack.Push ( top );
+	
+	this->mStack.Push ( this->mFlags );
 	
 	if ( material ) {
-		push.Compose ( *material );
+		this->Compose ( *material );
 	}
-}
-
-//----------------------------------------------------------------//
-const MOAIMaterial& MOAIMaterialStackMgr::Top () {
-
-	return this->mStack.Top ();
-}
-
-//================================================================//
-// MOAIScopedMaterialStack
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAIScopedMaterialStack::Clear () {
-
-	this->mMaterialStack.Clear ();
-	this->mRestoreTop = this->mMaterialStack.mStack.GetTop ();
-}
-
-//----------------------------------------------------------------//
-void MOAIScopedMaterialStack::LoadGfxState ( u32 defaultShader ) {
-
-	this->mMaterialStack.LoadGfxState ( defaultShader );
-}
-
-//----------------------------------------------------------------//
-void MOAIScopedMaterialStack::LoadGfxState ( MOAIShader* defaultShader ) {
-
-	this->mMaterialStack.LoadGfxState ( defaultShader );
-}
-
-//----------------------------------------------------------------//
-MOAIScopedMaterialStack::MOAIScopedMaterialStack () :
-	mMaterialStack ( MOAIMaterialStackMgr::Get ()) {
-	
-	this->mRestoreTop = this->mMaterialStack.mStack.GetTop ();
-}
-
-//----------------------------------------------------------------//
-MOAIScopedMaterialStack::~MOAIScopedMaterialStack () {
-
-	u32 top = this->mMaterialStack.mStack.GetTop ();
-	for ( ; top > this->mRestoreTop; --top ) {
-		this->mMaterialStack.Pop ();
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIScopedMaterialStack::Pop () {
-
-	this->mMaterialStack.Pop ();
-}
-
-//----------------------------------------------------------------//
-void MOAIScopedMaterialStack::Push ( const MOAIMaterial* material ) {
-
-	this->mMaterialStack.Push ( material );
-}
-
-//----------------------------------------------------------------//
-const MOAIMaterial& MOAIScopedMaterialStack::Top () {
-
-	return this->mMaterialStack.Top ();
 }

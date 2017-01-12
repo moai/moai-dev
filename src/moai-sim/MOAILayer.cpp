@@ -812,7 +812,7 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 		// figure out the correct LOD factor
 		float lodFactor = this->mLODFactor * this->GetLinkedValue ( MOAILayerAttr::Pack ( ATTR_LOD ), 1.0f );
 		
-		MOAIScopedMaterialStack materialStack;
+		MOAIMaterialStackMgr& materialStack = MOAIMaterialStackMgr::Get ();
 		materialStack.Push ( this->GetMaterial ());
 		
 		this->DrawProps ( buffer, lodFactor );

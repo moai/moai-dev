@@ -319,7 +319,7 @@ void MOAIMaterialBatch::Clear () {
 	
 		this->LuaRelease ( material.mShader );
 		this->LuaRelease ( material.mTexture );
-		this->LuaRelease ( material.mHitMask );
+		//this->LuaRelease ( material.mHitMask );
 	}
 	this->mMaterials.Clear ();
 }

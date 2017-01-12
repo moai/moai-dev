@@ -63,7 +63,7 @@ protected:
 	// TODO: doxygen
 	static int _clearMaterial ( lua_State* L ) {
 		MOAI_LUA_SETUP ( TYPE, "U" )
-		self->mMaterial.ClearAll ();
+		self->mMaterial.Clear ();
 		return 0;
 	}
 

@@ -6,38 +6,12 @@
 
 #include <moai-sim/MOAIMaterial.h>
 
-//================================================================//
-// MOAIMaterialStackMgr
-//================================================================//
-class MOAIMaterialStackMgr :
-	public ZLContextClass < MOAIMaterialStackMgr > {
-private:
-	
-	// TODO: this could be a lot more efficient; look into
-	// just keeping a stack of flags. there is too much copying
-	// of MOAIMaterial in this model.
-	
-	friend class MOAIScopedMaterialStack;
-	
-	ZLLeanStack < MOAIMaterial, 8 >		mStack;
-
-public:
-
-	//----------------------------------------------------------------//
-	void					Clear							();
-	void					LoadGfxState					( u32 defaultShader );
-	void					LoadGfxState					( MOAIShader* defaultShader = 0 );
-							MOAIMaterialStackMgr			();
-							~MOAIMaterialStackMgr			();
-	void					Pop								();
-	void					Push							( const MOAIMaterial* material );
-	const MOAIMaterial&		Top								();
-};
+class MOAIMaterialStackMgr;
 
 //================================================================//
-// MOAIScopedMaterialStack
+// MOAIMaterialStackScope
 //================================================================//
-class MOAIScopedMaterialStack {
+class MOAIMaterialStackScope {
 private:
 
 	MOAIMaterialStackMgr&	mMaterialStack;
@@ -45,15 +19,39 @@ private:
 
 public:
 
+	GET ( MOAIMaterialStackMgr&, MaterialStack, mMaterialStack )
+
+	//----------------------------------------------------------------//
+	operator MOAIMaterialStackMgr& () {
+	
+		return this->mMaterialStack;
+	}
+
+	//----------------------------------------------------------------//
+							MOAIMaterialStackScope			();
+							~MOAIMaterialStackScope			();
+};
+
+//================================================================//
+// MOAIMaterialStackMgr
+//================================================================//
+class MOAIMaterialStackMgr :
+	public ZLContextClass < MOAIMaterialStackMgr >,
+	public MOAIMaterial {
+private:
+	
+	friend class MOAIMaterialStackScope;
+	
+	ZLLeanStack < u32, 8 >	mStack;
+
+public:
+
 	//----------------------------------------------------------------//
 	void					Clear							();
-	void					LoadGfxState					( u32 defaultShader );
-	void					LoadGfxState					( MOAIShader* defaultShader = 0 );
-							MOAIScopedMaterialStack			();
-							~MOAIScopedMaterialStack		();
+							MOAIMaterialStackMgr			();
+							~MOAIMaterialStackMgr			();
 	void					Pop								();
-	void					Push							( const MOAIMaterial* material );
-	const MOAIMaterial&		Top								();
+	void					Push							( const MOAIMaterial* material = 0 );
 };
 
 #endif

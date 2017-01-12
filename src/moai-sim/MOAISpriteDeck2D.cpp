@@ -665,6 +665,9 @@ ZLBounds MOAISpriteDeck2D::MOAIDeck_ComputeMaxBounds () {
 //----------------------------------------------------------------//
 void MOAISpriteDeck2D::MOAIDeck_Draw ( u32 idx ) {
 
+	MOAIMaterialStackScope materialStackScope;
+	MOAIMaterialStackMgr& materialStack = materialStackScope;
+
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIQuadBrush::BindVertexFormat ();
 	
@@ -695,7 +698,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( u32 idx ) {
 			}
 			
 			u32 materialID = MOAIMaterialBatch::UNKNOWN;
-			const MOAIMaterial& baseMaterial = MOAIMaterialStackMgr::Get ().Top ();
+			materialStack.Push (); // push a copy of the current material; will modify this in the loop below
 			
 			for ( size_t i = base; i < top; ++i ) {
 				
@@ -707,10 +710,10 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( u32 idx ) {
 					
 					MOAIMaterial* spriteMaterial = this->GetMaterial ( materialID );
 					if ( spriteMaterial ) {
-					
-						MOAIMaterial material = baseMaterial;
-						material.Compose ( *spriteMaterial);
-						material.LoadGfxState ( MOAIShaderMgr::DECK2D_SHADER );
+						
+						materialStack.Compose ( *spriteMaterial );
+						materialStack.SetShader ( MOAIShaderMgr::DECK2D_SHADER );
+						materialStack.LoadGfxState ();
 					}
 				}
 				
@@ -735,18 +738,18 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( u32 idx ) {
 				quadBrush.mUVQuad.Init ( 0.0f, 1.0f, 1.0f, 0.0f );
 			}
 		
-			MOAIScopedMaterialStack materialStack;
 			materialStack.Push ( this->GetMaterial ( itemIdx ));
-			materialStack.LoadGfxState ( MOAIShaderMgr::DECK2D_SHADER );
-		
+			materialStack.SetShader ( MOAIShaderMgr::DECK2D_SHADER );
+			materialStack.LoadGfxState ();
+			
 			quadBrush.Draw ();
 		}
 	}
 	else {
 	
-		MOAIScopedMaterialStack materialStack;
 		materialStack.Push ( this->GetMaterial ());
-		materialStack.LoadGfxState ( MOAIShaderMgr::DECK2D_SHADER );
+		materialStack.SetShader ( MOAIShaderMgr::DECK2D_SHADER );
+		materialStack.LoadGfxState ();
 		
 		MOAIQuadBrush quadBrush;
 		quadBrush.mModelQuad.Init ( -0.5f, -0.5f, 0.5f, 0.5f );
