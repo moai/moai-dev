@@ -1122,10 +1122,10 @@ void MOAITextLabel::SetText ( cc8* text ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITextLabel::MOAIAbstractDrawable_Draw ( int subPrimID, float lod ) {
+void MOAITextLabel::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 	
-	if ( !this->IsVisible ( lod )) return;
+	if ( !this->IsVisible ()) return;
 	if ( this->IsClear ()) return;
 	
 	if ( this->mReveal ) {
@@ -1152,13 +1152,12 @@ void MOAITextLabel::MOAIAbstractDrawable_Draw ( int subPrimID, float lod ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLabel::MOAIAbstractDrawable_DrawDebug ( int subPrimID, float lod ) {
+void MOAITextLabel::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
-	UNUSED ( lod );
 
-	MOAIGraphicsPropBase::DrawDebug ( subPrimID, lod );
+	MOAIGraphicsPropBase::DrawDebug ( subPrimID );
 
-	if ( !this->IsVisible ( lod )) return;
+	if ( !this->IsVisible ()) return;
 	if ( this->IsClear ()) return;
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();

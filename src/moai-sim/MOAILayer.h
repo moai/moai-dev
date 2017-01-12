@@ -87,8 +87,8 @@ private:
 	
 	//----------------------------------------------------------------//
 	void			AffirmPartition			();
-	void			DrawProps				( MOAIPartitionResultBuffer& buffer, float lod );
-	void			DrawPropsDebug			( MOAIPartitionResultBuffer& buffer, float lod );
+	void			DrawProps				( MOAIPartitionResultBuffer& buffer );
+	void			DrawPropsDebug			( MOAIPartitionResultBuffer& buffer);
 	//ZLMatrix4x4		GetProjectionMtx		() const;
 	//ZLMatrix4x4		GetViewMtx				() const;
 	void			RenderTable				( MOAILuaRef& ref );
@@ -114,7 +114,7 @@ public:
 	DECL_LUA_FACTORY ( MOAILayer )
 	
 	//----------------------------------------------------------------//
-	void				Draw					( int subPrimID, float lod  );
+	void				Draw					( int subPrimID  );
 	float				GetFitting				( ZLRect& worldRect, float hPad, float vPad );
 	MOAIPartition*		GetPartition			();
 	ZLMatrix4x4			GetWndToWorldMtx		() const;

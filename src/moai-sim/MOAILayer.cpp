@@ -747,9 +747,8 @@ void MOAILayer::AffirmPartition () {
 #include <moai-sim/MOAIVertexFormatMgr.h>
 
 //----------------------------------------------------------------//
-void MOAILayer::Draw ( int subPrimID, float lod  ) {
+void MOAILayer::Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
-	UNUSED ( lod );
     
    	if ( !this->IsVisible ()) return;
 	if ( !this->mViewport ) return;
@@ -815,7 +814,7 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 		MOAIMaterialStackMgr& materialStack = MOAIMaterialStackMgr::Get ();
 		materialStack.Push ( this->GetMaterial ());
 		
-		this->DrawProps ( buffer, lodFactor );
+		this->DrawProps ( buffer );
 		
 		materialStack.Pop ();
 		
@@ -824,7 +823,7 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 			// clear the ambient color and bind vector drawing
 			gfxMgr.mGfxState.SetAmbientColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 			MOAIDraw::Get ().Bind ();
-			this->DrawPropsDebug ( buffer, lodFactor );
+			this->DrawPropsDebug ( buffer );
 		}
 	}
 	
@@ -832,44 +831,26 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILayer::DrawProps ( MOAIPartitionResultBuffer& buffer, float lod ) {
+void MOAILayer::DrawProps ( MOAIPartitionResultBuffer& buffer ) {
 
 	u32 totalResults = buffer.GetTotalResults ();
 
-	if ( this->mLODMode == LOD_FROM_PROP_SORT_Z ) {
-		for ( u32 i = 0; i < totalResults; ++i ) {
-			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-			MOAIAbstractDrawable* graphicsProp = result->AsType < MOAIAbstractDrawable >();
-			graphicsProp->Draw ( result->mSubPrimID, result->mLoc.mZ * lod );
-		}
-	}
-	else {
-		for ( u32 i = 0; i < totalResults; ++i ) {
-			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-			MOAIAbstractDrawable* graphicsProp = result->AsType < MOAIAbstractDrawable >();
-			graphicsProp->Draw ( result->mSubPrimID, lod );
-		}
+	for ( u32 i = 0; i < totalResults; ++i ) {
+		MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
+		MOAIAbstractDrawable* graphicsProp = result->AsType < MOAIAbstractDrawable >();
+		graphicsProp->Draw ( result->mSubPrimID );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAILayer::DrawPropsDebug ( MOAIPartitionResultBuffer& buffer, float lod ) {
+void MOAILayer::DrawPropsDebug ( MOAIPartitionResultBuffer& buffer ) {
 
 	u32 totalResults = buffer.GetTotalResults ();
 
-	if ( this->mLODMode == LOD_FROM_PROP_SORT_Z ) {
-		for ( u32 i = 0; i < totalResults; ++i ) {
-			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-			MOAIAbstractDrawable* graphicsProp = result->AsType < MOAIAbstractDrawable >();
-			graphicsProp->DrawDebug ( result->mSubPrimID, result->mLoc.mZ );
-		}
-	}
-	else {
-		for ( u32 i = 0; i < totalResults; ++i ) {
-			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-			MOAIAbstractDrawable* graphicsProp = result->AsType < MOAIAbstractDrawable >();
-			graphicsProp->DrawDebug ( result->mSubPrimID, lod );
-		}
+	for ( u32 i = 0; i < totalResults; ++i ) {
+		MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
+		MOAIAbstractDrawable* graphicsProp = result->AsType < MOAIAbstractDrawable >();
+		graphicsProp->DrawDebug ( result->mSubPrimID );
 	}
 }
 
@@ -1002,7 +983,7 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAILayer::Render () {
 	
-	this->Draw ( MOAIPartitionHull::NO_SUBPRIM_ID, 0.0f );
+	this->Draw ( MOAIPartitionHull::NO_SUBPRIM_ID );
 }
 
 //----------------------------------------------------------------//

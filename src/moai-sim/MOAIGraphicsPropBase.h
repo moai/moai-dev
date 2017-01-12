@@ -34,14 +34,14 @@ class MOAIAbstractDrawable :
 private:
 
 	//----------------------------------------------------------------//
-	virtual void		MOAIAbstractDrawable_Draw				( int subPrimID, float lod ) = 0;
-	virtual void		MOAIAbstractDrawable_DrawDebug			( int subPrimID, float lod ) = 0;
+	virtual void		MOAIAbstractDrawable_Draw				( int subPrimID ) = 0;
+	virtual void		MOAIAbstractDrawable_DrawDebug			( int subPrimID ) = 0;
 
 public:
 
 	//----------------------------------------------------------------//
-	void		Draw			( int subPrimID, float lod ) { MOAIAbstractDrawable_Draw ( subPrimID, lod ); }
-	void		DrawDebug		( int subPrimID, float lod ) { MOAIAbstractDrawable_DrawDebug ( subPrimID, lod ); }
+	void		Draw			( int subPrimID ) { MOAIAbstractDrawable_Draw ( subPrimID = MOAIPartitionHull::NO_SUBPRIM_ID ); }
+	void		DrawDebug		( int subPrimID ) { MOAIAbstractDrawable_DrawDebug ( subPrimID = MOAIPartitionHull::NO_SUBPRIM_ID ); }
 };
 
 //================================================================//
@@ -103,14 +103,13 @@ private:
 	static int		_getScissorRect			( lua_State* L );
 	static int		_isVisible				( lua_State* L );
 	static int		_setBillboard			( lua_State* L );
-	static int		_setLODLimits			( lua_State* L );
 	static int		_setParent				( lua_State* L );
 	static int		_setScissorRect			( lua_State* L );
 	static int		_setUVTransform			( lua_State* L );
 	static int		_setVisible				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			MOAIAbstractDrawable_DrawDebug				( int subPrimID, float lod );
+	void			MOAIAbstractDrawable_DrawDebug				( int subPrimID );
 	void			MOAIPartitionHull_AddToSortBuffer			( MOAIPartitionResultBuffer& buffer, u32 key );
 	u32				MOAIPartitionHull_AffirmInterfaceMask		( MOAIPartition& partition );
 
@@ -126,10 +125,6 @@ protected:
 	// TODO: these should all be attributes
 	MOAILuaSharedPtr < MOAITransformBase >	mUVTransform;
 	MOAILuaSharedPtr < MOAIScissorRect >	mScissorRect;
-	
-	u32										mLODFlags;
-	float									mLODMin;
-	float									mLODMax;
 
 	//----------------------------------------------------------------//
 	virtual ZLMatrix4x4		GetWorldDrawingMtx			(); // factors in billboard flags
@@ -173,20 +168,11 @@ public:
 		FLAGS_VISIBLE				= 0x02, // this is a composite of FLAGS_LOCAL_VISIBLE plus the parent's ATTR_VISIBLE
 	};
 
-	enum {
-		LOD_FLAGS_MIN_LIMIT			= 0x01,
-		LOD_FLAGS_MAX_LIMIT			= 0x02,
-	};
-
-	static const u32 DEFAULT_FLAGS = FLAGS_LOCAL_VISIBLE | FLAGS_VISIBLE;
-	static const u32 DEFAULT_LOD_FLAGS	= 0;
-
-	GET_SET ( u32, LODFlags, mLODFlags )
+	static const u32 DEFAULT_FLAGS = FLAGS_LOCAL_VISIBLE | FLAGS_VISIBLE;;
 
 	//----------------------------------------------------------------//
 	MOAIMaterialBatch*		AffirmMaterialBatch			();
-	bool					IsVisible					(); // just check the visibility flags
-	bool					IsVisible					( float lod ); // check the visibility flags *and* the LOD
+	bool					IsVisible					();
 							MOAIGraphicsPropBase		();
 	virtual					~MOAIGraphicsPropBase		();
 	void					RegisterLuaClass			( MOAILuaState& state );

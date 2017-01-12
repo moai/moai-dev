@@ -31,9 +31,8 @@ int MOAIGraphicsPropBase::_draw ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
 	
 	u32 subPrimID		= state.GetValue < u32 >( 2, MOAIPartitionHull::NO_SUBPRIM_ID );
-	float lodFactor		= state.GetValue < float >( 3, 1.0f );
 	
-	self->Draw ( subPrimID, lodFactor );
+	self->Draw ( subPrimID );
 	return 0;
 }
 
@@ -78,7 +77,7 @@ int	MOAIGraphicsPropBase::_isVisible ( lua_State* L ) {
 
 	if ( state.IsType ( 2, LUA_TNUMBER )) {
 		float lod = state.GetValue < float >( 2, 0.0f );
-		lua_pushboolean ( state, self->IsVisible ( lod ));
+		lua_pushboolean ( state, self->IsVisible ());
 	}
 	else {
 		lua_pushboolean ( state, self->IsVisible ());
@@ -114,27 +113,6 @@ int MOAIGraphicsPropBase::_setBillboard ( lua_State* L ) {
 	else {
 		self->mBillboard = state.GetValue < u32 >( 2, BILLBOARD_NONE );
 	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIGraphicsPropBase::_setLODLimits ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
-	
-	u32 flags = 0;
-	
-	if ( state.IsType ( 2, LUA_TNUMBER )) {
-		self->mLODMin = state.GetValue < float >( 2, 0.0f );
-		flags |= LOD_FLAGS_MIN_LIMIT;
-	}
-	
-	if ( state.IsType ( 3, LUA_TNUMBER )) {
-		self->mLODMax = state.GetValue < float >( 3, 0.0f );
-		flags |= LOD_FLAGS_MAX_LIMIT;
-	}
-
-	self->mLODFlags = flags;
 	return 0;
 }
 
@@ -362,19 +340,6 @@ bool MOAIGraphicsPropBase::IsVisible () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGraphicsPropBase::IsVisible ( float lod ) {
-
-	if ( this->IsVisible ()) {
-	
-		if (( this->mLODFlags & LOD_FLAGS_MIN_LIMIT ) && ( lod < this->mLODMin )) return false;
-		if (( this->mLODFlags & LOD_FLAGS_MAX_LIMIT ) && ( lod > this->mLODMax )) return false;
-	
-		return true;
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
 void MOAIGraphicsPropBase::LoadUVTransform () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
@@ -397,10 +362,7 @@ void MOAIGraphicsPropBase::LoadVertexTransform () {
 
 //----------------------------------------------------------------//
 MOAIGraphicsPropBase::MOAIGraphicsPropBase () :
-	mBillboard ( BILLBOARD_NONE ),
-	mLODFlags ( DEFAULT_LOD_FLAGS ),
-	mLODMin ( 0.0f ),
-	mLODMax ( 0.0f ){
+	mBillboard ( BILLBOARD_NONE ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIPartitionHull )
@@ -515,7 +477,6 @@ void MOAIGraphicsPropBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getScissorRect",			_getScissorRect },
 		{ "isVisible",				_isVisible },
 		{ "setBillboard",			_setBillboard },
-		{ "setLODLimits",			_setLODLimits },
 		{ "setParent",				_setParent },
 		{ "setScissorRect",			_setScissorRect },
 		{ "setUVTransform",			_setUVTransform },
@@ -529,7 +490,7 @@ void MOAIGraphicsPropBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGraphicsPropBase::Render () {
 
-	this->Draw ( MOAIPartitionHull::NO_SUBPRIM_ID, 0.0f );
+	this->Draw ( MOAIPartitionHull::NO_SUBPRIM_ID );
 }
 
 //----------------------------------------------------------------//
@@ -562,9 +523,8 @@ void MOAIGraphicsPropBase::SetVisible ( bool visible ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGraphicsPropBase::MOAIAbstractDrawable_DrawDebug ( int subPrimID, float lod ) {
+void MOAIGraphicsPropBase::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
-	UNUSED ( lod );
 
 	if ( this->GetBoundsStatus () != BOUNDS_OK ) return;
 

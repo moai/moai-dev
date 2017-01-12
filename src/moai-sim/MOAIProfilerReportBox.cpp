@@ -340,7 +340,7 @@ int MOAIProfilerReportBox::_disableProfiling ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIProfilerReportBox::Draw ( int subPrimID, float lod ) {
+void MOAIProfilerReportBox::Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 	UNUSED ( lod );
 	

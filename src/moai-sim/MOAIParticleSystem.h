@@ -87,7 +87,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIParticleSystem )
 
 	//----------------------------------------------------------------//
-	void			Draw					( int subPrimID, float lod );
+	void			Draw					( int subPrimID );
 	bool			IsDone					();
 					MOAIParticleSystem		();
 					~MOAIParticleSystem		();
