@@ -5,6 +5,7 @@
 #include <moai-sim/MOAICamera.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDebugLines.h>
+#include <moai-sim/MOAIFancyGrid.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGraphicsGridProp.h>
 #include <moai-sim/MOAIGrid.h>
@@ -113,22 +114,27 @@ ZLAffine3D MOAIGraphicsGridProp::AppendSclTr ( const ZLAffine3D& mtx, const ZLAf
 void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	const ZLAffine3D& modelToWorldMtx = this->GetWorldDrawingMtx ();
 
 	ZLVec3D offset	= ZLVec3D::ORIGIN;
 	ZLVec3D scale	= ZLVec3D::AXIS;
 	
 	assert ( this->mGrid );
-	const MOAIGrid& grid = *this->mGrid;
+	MOAIGrid& grid = *this->mGrid;
 	
 	float tileWidth = grid.GetTileWidth ();
 	float tileHeight = grid.GetTileHeight ();
 	
+	// is this grid fancy?
+	MOAIFancyGrid* fancyGrid = this->mGrid->AsType < MOAIFancyGrid >();
+	
+	const ZLAffine3D& modelToWorldMtx = this->GetWorldDrawingMtx ();
+	ZLColorVec penColor = gfxMgr.mGfxState.GetPenColor ();
+	
 	for ( int y = c0.mY; y <= c1.mY; ++y ) {
 		for ( int x = c0.mX; x <= c1.mX; ++x ) {
 			
-			MOAICellCoord wrap = grid.WrapCellCoord ( x, y );
-			u32 idx = grid.GetTile ( wrap.mX, wrap.mY );
+			int addr = grid.GetCellAddr ( x, y );
+			u32 idx = grid.GetTile ( addr );
 			
 			if ( !idx || ( idx & MOAITileFlags::HIDDEN )) continue;
 			
@@ -169,6 +175,10 @@ void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoo
 			}
 
 			gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX, mtx );
+			
+			if ( fancyGrid ) {
+				gfxMgr.mGfxState.SetPenColor ( penColor * fancyGrid->GetTileColor ( addr ));
+			}
 			
 			this->mDeck->Draw (( idx & MOAITileFlags::CODE_MASK ) - 1 );
 		}
@@ -227,7 +237,6 @@ void MOAIGraphicsGridProp::MOAIAbstractDrawable_Draw ( int subPrimID, float lod 
 	if ( !this->IsVisible ( lod )) return;
 	if ( !this->mDeck ) return;
 	if ( this->IsClear ()) return;
-	if ( !this->mGrid ) return;
 
 	this->PushGfxState ();
 	this->LoadUVTransform ();
@@ -240,6 +249,7 @@ void MOAIGraphicsGridProp::MOAIAbstractDrawable_Draw ( int subPrimID, float lod 
 	else {
 		c0 = c1 = this->mGrid->GetCellCoord ( subPrimID );
 	}
+	
 	this->DrawGrid ( c0, c1 );
 	
 	this->PopGfxState ();

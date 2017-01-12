@@ -250,6 +250,18 @@ void MOAIGrid::Fill ( u32 value ) {
 }
 
 //----------------------------------------------------------------//
+u32 MOAIGrid::GetTile ( int addr ) const {
+
+	u32 size = ( u32 )this->mTiles.Size (); // TODO: cast
+
+	if ( size ) {
+		addr = addr % size;
+		return this->mTiles [ addr ];
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 u32 MOAIGrid::GetTile ( int xTile, int yTile ) const {
 
 	MOAICellCoord coord ( xTile, yTile );
@@ -358,12 +370,12 @@ void MOAIGrid::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) 
 }
 
 //----------------------------------------------------------------//
-void MOAIGrid::SetTile ( u32 addr, u32 tile ) {
+void MOAIGrid::SetTile ( int addr, u32 tile ) {
 
 	u32 size = ( u32 )this->mTiles.Size (); // TODO: cast
 
 	if ( size ) {
-		addr = addr % this->mTiles.Size ();
+		addr = addr % size;
 		this->mTiles [ addr ] = tile;
 	}
 }

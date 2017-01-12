@@ -32,9 +32,9 @@ private:
 	
 	static const u32	DRAW_FLAGS	= BLEND_MODE_FLAG | CULL_MODE_FLAG | DEPTH_MASK_FLAG | DEPTH_TEST_FLAG;
 	
-	ZLStrongPtr < MOAIShader >			mShader;
-	ZLStrongPtr < MOAITextureBase >		mTexture;
-	ZLStrongPtr < MOAIImage >			mHitMask; // this shoud be its own thing
+	MOAIShader*			mShader;
+	MOAITextureBase*	mTexture;
+	MOAIImage*			mHitMask; // this shoud be its own thing
 
 	MOAIBlendMode		mBlendMode;
 	int					mCullMode;

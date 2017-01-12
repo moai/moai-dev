@@ -667,6 +667,7 @@ void MOAIMaterialBatch::SetHitMask ( u32 idx, MOAIImage* mask ) {
 	UNUSED ( mask );
 
 	//this->AffirmMaterial ( idx ).SetHitMask ( mask );
+	//this->LuaRetain ( mask );
 }
 
 //----------------------------------------------------------------//
@@ -692,6 +693,7 @@ void MOAIMaterialBatch::SetShader ( u32 idx, u32 shaderID ) {
 void MOAIMaterialBatch::SetShader ( u32 idx, MOAIShader* shader ) {
 
 	this->AffirmMaterial ( idx ).SetShader ( shader );
+	this->LuaRetain ( shader );
 }
 
 //----------------------------------------------------------------//
@@ -711,6 +713,7 @@ MOAIShader* MOAIMaterialBatch::SetShader ( MOAILuaState& state, int idx ) {
 void MOAIMaterialBatch::SetTexture ( u32 idx, MOAITextureBase* texture ) {
 
 	this->AffirmMaterial ( idx ).SetTexture ( texture );
+	this->LuaRetain ( texture );
 }
 
 //----------------------------------------------------------------//

@@ -742,6 +742,18 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( u32 idx ) {
 			quadBrush.Draw ();
 		}
 	}
+	else {
+	
+		MOAIScopedMaterialStack materialStack;
+		materialStack.Push ( this->GetMaterial ());
+		materialStack.LoadGfxState ( MOAIShaderMgr::DECK2D_SHADER );
+		
+		MOAIQuadBrush quadBrush;
+		quadBrush.mModelQuad.Init ( -0.5f, -0.5f, 0.5f, 0.5f );
+		quadBrush.mUVQuad.Init ( 0.0f, 1.0f, 1.0f, 0.0f );
+		
+		quadBrush.Draw ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -790,6 +802,8 @@ ZLBounds MOAISpriteDeck2D::MOAIDeck_GetBounds ( u32 idx ) {
 		}
 	}
 
+	bounds.Init ( -0.5f, -0.5f, 0.0f, 0.5f, 0.5f, 0.0f );
+	bounds.mStatus = ZLBounds::ZL_BOUNDS_OK;
 	return bounds;
 }
 

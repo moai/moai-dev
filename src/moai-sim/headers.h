@@ -36,6 +36,7 @@
 #include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIEaseDriver.h>
 #include <moai-sim/MOAIEaseType.h>
+#include <moai-sim/MOAIFancyGrid.h>
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIFrameBufferTexture.h>
 #include <moai-sim/MOAIGeometryWriter.h>
@@ -50,7 +51,6 @@
 #include <moai-sim/MOAIGraphicsGridProp.h>
 #include <moai-sim/MOAIGrid.h>
 //#include <moai-sim/MOAIGridDeck2D.h>
-//#include <moai-sim/MOAIGridFancy.h>
 #include <moai-sim/MOAIGridPathGraph.h>
 #include <moai-sim/MOAIGridSpace.h>
 #include <moai-sim/MOAIImage.h>

@@ -32,8 +32,6 @@ class MOAIGraphicsGridProp :
 	public MOAIGraphicsPropBase {
 private:
 
-	// TODO: support MOAIGridFancy features here
-
 	//----------------------------------------------------------------//
 	ZLAffine3D		AppendRot90SclTr						( const ZLAffine3D& mtx, const ZLAffine3D& append );
 	ZLAffine3D		AppendSclTr								( const ZLAffine3D& mtx, const ZLAffine3D& append );

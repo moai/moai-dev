@@ -14,11 +14,10 @@ layer = MOAILayer.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
-gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "../resources/moai.png" )
-gfxQuad:setRect ( -64, -64, 64, 64 )
+spriteDeck = MOAISpriteDeck2D.new ()
+spriteDeck:setTexture ( '../resources/moai.png' )
+spriteDeck:setRect ( -64, -64, 64, 64 )
 
 prop = MOAIGraphicsProp.new ()
-prop:setDeck ( gfxQuad )
+prop:setDeck ( spriteDeck )
 layer:insertProp ( prop )
-

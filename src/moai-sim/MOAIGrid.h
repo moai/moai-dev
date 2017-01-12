@@ -45,6 +45,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			Fill				( u32 value );
+	u32				GetTile				( int addr ) const;
 	u32				GetTile				( int xTile, int yTile ) const;
 					MOAIGrid			();
 					~MOAIGrid			();
@@ -54,7 +55,7 @@ public:
 	STLString		RowToString			( u32 rowID );
 	void			SerializeIn			( MOAILuaState& state, MOAIDeserializer& serializer );
 	void			SerializeOut		( MOAILuaState& state, MOAISerializer& serializer );
-	void			SetTile				( u32 addr, u32 tile );
+	void			SetTile				( int addr, u32 tile );
 	void			SetTile				( int xTile, int yTile, u32 tile );
 	size_t			StreamTilesIn		( ZLStream* stream );
 	size_t			StreamTilesOut		( ZLStream* stream );
