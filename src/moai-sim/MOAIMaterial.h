@@ -17,6 +17,8 @@ private:
 	
 	friend class MOAIMaterialBatch;
 	
+	static const MOAIMaterial DEFAULT_MATERIAL;
+	
 	enum {
 		BLEND_MODE_FLAG		= 0x01 << 0,
 		CULL_MODE_FLAG		= 0x01 << 1,

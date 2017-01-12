@@ -8,29 +8,20 @@ MOAISim.openWindow ( "test", 320, 480 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
-viewport:setScale ( 320, -480 )
+viewport:setScale ( 320, 480 )
 
 layer = MOAILayer.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
-gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "../resources/moai.png" )
-gfxQuad:setRect ( -128, -128, 128, 128 )
-gfxQuad:setUVRect ( 0, 0, 1, 1 )
-
 prop = MOAIProp.new ()
-prop:setDeck ( gfxQuad )
+prop:setDeck ( '../resources/moai.png' )
 layer:insertProp ( prop )
 prop:moveRot ( 0, 0, 360, 5 )
 
-gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "../resources/test.png" )
-gfxQuad:setRect ( -128, -128, 128, 128 )
-gfxQuad:setUVRect ( 0, 0, 1, 1 )
-
 prop = MOAIProp.new ()
-prop:setDeck ( gfxQuad )
+prop:setDeck ( '../resources/test.png' )
 prop:setColor ( 1, 1, 1, 0 )
+prop:setScl ( 2, 2, 1 )
 layer:insertProp ( prop )
 prop:moveRot ( 0, 0, -360, 5 )

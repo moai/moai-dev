@@ -13,6 +13,8 @@
 // MOAIMaterial
 //================================================================//
 
+const MOAIMaterial MOAIMaterial::DEFAULT_MATERIAL;
+
 //----------------------------------------------------------------//
 void MOAIMaterial::ClearAll () {
 
@@ -108,42 +110,17 @@ void MOAIMaterial::LoadGfxState ( MOAIShader* defaultShader ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	if ( this->mFlags ) {
-
-		if ( this->mFlags & DRAW_FLAGS ) {
-
-			if ( this->mFlags & BLEND_MODE_FLAG ) {
-				gfxMgr.mGfxState.SetBlendMode ( this->mBlendMode );
-			}
-			
-			if ( this->mFlags & CULL_MODE_FLAG ) {
-				gfxMgr.mGfxState.SetCullFunc ( this->mCullMode );
-			}
-			
-			if ( this->mFlags & DEPTH_MASK_FLAG ) {
-				gfxMgr.mGfxState.SetDepthMask ( this->mDepthMask );
-			}
-			
-			if ( this->mFlags & DEPTH_TEST_FLAG ) {
-				gfxMgr.mGfxState.SetDepthFunc ( this->mDepthTest );
-			}
-		}
-		
-		if ( this->mFlags & ( SHADER_FLAG | TEXTURE_FLAG )) {
-		
-			if ( this->mFlags & SHADER_FLAG ) {
-				gfxMgr.mGfxState.SetShader ( this->mShader );
-			}
-			
-			if ( this->mFlags & TEXTURE_FLAG ) {
-				gfxMgr.mGfxState.SetTexture ( this->mTexture );
-			}
-		}
-	}
+	gfxMgr.mGfxState.SetBlendMode (( this->mFlags & BLEND_MODE_FLAG ) ? this->mBlendMode : DEFAULT_MATERIAL.mBlendMode );
 	
-	if ( !( this->mFlags & SHADER_FLAG ) && defaultShader ) {
-		gfxMgr.mGfxState.SetShader ( defaultShader );
-	}
+	gfxMgr.mGfxState.SetCullFunc (( this->mFlags & CULL_MODE_FLAG ) ? this->mCullMode : DEFAULT_MATERIAL.mCullMode );
+	
+	gfxMgr.mGfxState.SetDepthMask (( this->mFlags & DEPTH_MASK_FLAG ) ? this->mDepthMask : DEFAULT_MATERIAL.mDepthMask );
+	
+	gfxMgr.mGfxState.SetDepthFunc (( this->mFlags & DEPTH_TEST_FLAG ) ? this->mDepthTest : DEFAULT_MATERIAL.mDepthTest );
+	
+	gfxMgr.mGfxState.SetShader (( this->mFlags & SHADER_FLAG ) ? ( MOAIShader* )this->mShader : defaultShader );
+
+	gfxMgr.mGfxState.SetTexture (( this->mFlags & TEXTURE_FLAG ) ? ( MOAITextureBase* )this->mTexture : 0 );
 }
 
 //----------------------------------------------------------------//

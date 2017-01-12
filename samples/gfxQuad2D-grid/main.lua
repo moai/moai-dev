@@ -4,6 +4,28 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+local fsh = [[  
+ 
+    void main () {
+        gl_FragColor = vec4 ( 1.0, 0.0, 0.0, 1.0 );
+    }
+]]
+
+local vsh = [[ 
+
+    attribute vec4 position;
+ 
+    void main () { 
+        gl_Position = position;          
+    }
+]]
+
+local program = MOAIShaderProgram.new ()
+program:load ( vsh, fsh )
+
+local shader = MOAIShader.new ()
+shader:setProgram ( program )
+
 MOAISim.openWindow ( "test", 320, 480 )
 
 viewport = MOAIViewport.new ()
