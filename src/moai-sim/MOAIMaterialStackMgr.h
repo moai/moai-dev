@@ -13,6 +13,10 @@ class MOAIMaterialStackMgr :
 	public ZLContextClass < MOAIMaterialStackMgr > {
 private:
 	
+	// TODO: this could be a lot more efficient; look into
+	// just keeping a stack of flags. there is too much copying
+	// of MOAIMaterial in this model.
+	
 	friend class MOAIScopedMaterialStack;
 	
 	ZLLeanStack < MOAIMaterial, 8 >		mStack;

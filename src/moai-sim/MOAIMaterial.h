@@ -52,6 +52,11 @@ public:
 	GET ( MOAIShader*, Shader, mShader );
 	GET ( MOAITextureBase*, Texture, mTexture );
 
+	// TODO: Compose () is really the concern of the material stack. no
+	// reason for MOAIMaterial to know about it. the idiom of copying
+	// materials and compising them is too heavy for the amount of
+	// work the stack is going to do.
+
 	//----------------------------------------------------------------//
 	void			ClearAll				();
 	void			ClearBlendMode			();
