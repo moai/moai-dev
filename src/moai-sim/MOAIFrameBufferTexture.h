@@ -32,6 +32,7 @@ private:
 	static int			_init					( lua_State* L );
 	
 	//----------------------------------------------------------------//
+	void				OnGPUBind					();
 	bool				OnGPUCreate					();
 	void				OnGPUDeleteOrDiscard		( bool shouldDelete );
 
@@ -48,7 +49,6 @@ public:
 						~MOAIFrameBufferTexture		();
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
-	void				Render						();
 	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
 };

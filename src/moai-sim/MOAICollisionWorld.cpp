@@ -265,7 +265,7 @@ MOAICollisionWorld::MOAICollisionWorld () :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIAction )
-		RTTI_EXTEND ( MOAIRenderable )
+		RTTI_EXTEND ( MOAIDrawable )
 	RTTI_END
 }
 
@@ -397,7 +397,6 @@ void MOAICollisionWorld::PruneOverlaps ( MOAICollisionProp& prop ) {
 void MOAICollisionWorld::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIAction::RegisterLuaClass ( state );
-	MOAIRenderable::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "OVERLAP_BEGIN",				( u32 )OVERLAP_BEGIN );
 	state.SetField ( -1, "OVERLAP_END",					( u32 )OVERLAP_END );
@@ -408,7 +407,6 @@ void MOAICollisionWorld::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAICollisionWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIAction::RegisterLuaFuncs ( state );
-	MOAIRenderable::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "insertProp",			_insertProp },
@@ -434,7 +432,29 @@ void MOAICollisionWorld::RemoveHull ( MOAICollisionProp& prop ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionWorld::Render () {
+void MOAICollisionWorld::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+	MOAIAction::SerializeIn ( state, serializer );
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionWorld::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+	MOAIAction::SerializeOut ( state, serializer );
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAICollisionWorld::MOAIAction_Update ( double step ) {
+	UNUSED ( step );
+
+	this->ProcessOverlaps ();
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionWorld::MOAIDrawable_Draw ( int subPrimID ) {
+	UNUSED ( subPrimID );
 
 	//MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
 	MOAIDraw& draw = MOAIDraw::Get ();
@@ -491,27 +511,4 @@ void MOAICollisionWorld::Render () {
 		prop.mInDrawList = false;
 		prop.mNextInDrawList = 0;
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionWorld::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAIAction::SerializeIn ( state, serializer );
-	MOAIRenderable::SerializeIn ( state, serializer );
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionWorld::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAIAction::SerializeOut ( state, serializer );
-	MOAIRenderable::SerializeOut ( state, serializer );
-}
-
-//================================================================//
-// ::implementation::
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAICollisionWorld::MOAIAction_Update ( double step ) {
-	UNUSED ( step );
-
-	this->ProcessOverlaps ();
 }

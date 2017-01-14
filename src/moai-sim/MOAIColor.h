@@ -63,7 +63,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	static MOAIColor*	AffirmColor			( MOAILuaState& state, int idx );
-	ZLColorVec			GetColorTrait		();
+	ZLColorVec			GetColorTrait		() const;
 	bool				IsClear				();
 						MOAIColor			();
 						~MOAIColor			();

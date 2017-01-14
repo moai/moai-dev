@@ -4,11 +4,10 @@
 #ifndef	MOAIGRAPHICSPROPBASE_H
 #define	MOAIGRAPHICSPROPBASE_H
 
-#include <moai-sim/MOAIBlendMode.h>
 #include <moai-sim/MOAIColor.h>
+#include <moai-sim/MOAIDrawable.h>
 #include <moai-sim/MOAIPartitionHull.h>
 #include <moai-sim/MOAIMaterialBatchHolder.h>
-#include <moai-sim/MOAIRenderable.h>
 #include <moai-sim/MOAITransform.h>
 
 class MOAICellCoord;
@@ -25,24 +24,6 @@ class MOAIScissorRect;
 class MOAIShader;
 class MOAISurfaceSampler2D;
 class MOAISingleTexture;
-
-//================================================================//
-// MOAIAbstractDrawable
-//================================================================//
-class MOAIAbstractDrawable :
-	public virtual RTTIBase {
-private:
-
-	//----------------------------------------------------------------//
-	virtual void		MOAIAbstractDrawable_Draw				( int subPrimID ) = 0;
-	virtual void		MOAIAbstractDrawable_DrawDebug			( int subPrimID ) = 0;
-
-public:
-
-	//----------------------------------------------------------------//
-	void		Draw			( int subPrimID ) { MOAIAbstractDrawable_Draw ( subPrimID = MOAIPartitionHull::NO_SUBPRIM_ID ); }
-	void		DrawDebug		( int subPrimID ) { MOAIAbstractDrawable_DrawDebug ( subPrimID = MOAIPartitionHull::NO_SUBPRIM_ID ); }
-};
 
 //================================================================//
 // MOAIGraphicsPropBase
@@ -92,8 +73,7 @@ public:
 class MOAIGraphicsPropBase :
 	public virtual MOAIPartitionHull,
 	public virtual MOAIColor,
-	public virtual MOAIRenderable,
-	public virtual MOAIAbstractDrawable,
+	public virtual MOAIDrawable,
 	public virtual MOAIMaterialBatchHolder {
 private:
 	
@@ -109,20 +89,16 @@ private:
 	static int		_setVisible				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			MOAIAbstractDrawable_DrawDebug				( int subPrimID );
+	void			MOAIDrawable_DrawDebug						( int subPrimID );
 	void			MOAIPartitionHull_AddToSortBuffer			( MOAIPartitionResultBuffer& buffer, u32 key );
 	u32				MOAIPartitionHull_AffirmInterfaceMask		( MOAIPartition& partition );
 
 protected:
 
-	// TODO: Most of these members should be moved into a latch or
-	// a subclass. 2D apps will rarely use these so they make
-	// MOAIGraphicsPropBase heavier than it needs to be.
-
 	u32										mBillboard;
 	u32										mDisplayFlags;
 	
-	// TODO: these should all be attributes
+	// TODO: should be attributes?
 	MOAILuaSharedPtr < MOAITransformBase >	mUVTransform;
 	MOAILuaSharedPtr < MOAIScissorRect >	mScissorRect;
 

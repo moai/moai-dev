@@ -12,8 +12,10 @@
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIPartitionResultMgr.h>
 #include <moai-sim/MOAIRenderMgr.h>
+#include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITransform.h>
+#include <moai-sim/MOAIVertexFormatMgr.h>
 #include <moai-sim/MOAIViewProj.h>
 
 //================================================================//
@@ -385,26 +387,6 @@ int MOAILayer::_setCamera ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
-int MOAILayer::_setLODFactor ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer, "U" )
-	
-	self->mLODFactor	= state.GetValue < float >( 2, 1.0f );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAILayer::_setLODMode ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer, "U" )
-	
-	self->mLODMode		= state.GetValue < u32 >( 2, LOD_CONSTANT );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@lua	setOverlayTable
 	@text	Set or clear the table of renderables to be drawn on
 			top of the layer.
@@ -416,7 +398,7 @@ int MOAILayer::_setLODMode ( lua_State* L ) {
 int MOAILayer::_setOverlayTable ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "U" )
 	
-	self->mOverlayTable.SetRef ( state, 2 );
+	self->mOverlayTable.SetRef ( *self, state, 2 );
 
 	return 0;
 }
@@ -533,7 +515,7 @@ int	MOAILayer::_setSortScale ( lua_State* L ) {
 int MOAILayer::_setUnderlayTable ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "U" )
 	
-	self->mUnderlayTable.SetRef ( state, 2 );
+	self->mUnderlayTable.SetRef ( *self, state, 2 );
 
 	return 0;
 }
@@ -732,7 +714,7 @@ int MOAILayer::_worldToWnd ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAINode
+// MOAILayer
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -743,91 +725,56 @@ void MOAILayer::AffirmPartition () {
 	}
 }
 
-#include <moai-sim/MOAIShaderMgr.h>
-#include <moai-sim/MOAIVertexFormatMgr.h>
-
 //----------------------------------------------------------------//
-void MOAILayer::Draw ( int subPrimID ) {
-	UNUSED ( subPrimID );
-    
-   	if ( !this->IsVisible ()) return;
-	if ( !this->mViewport ) return;
-	if ( this->IsClear ()) return;
-	
+void MOAILayer::DrawPartition ( MOAIPartition& partition ) {
+
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	
-	MOAIViewport& viewport = *this->mViewport;
-	ZLRect viewportRect = viewport;
 
-	ZLMatrix4x4 mtx ( this->mLocalToWorldMtx );
-	mtx.Transform ( viewportRect );
-
-	gfxMgr.mGfxState.SetViewRect ( viewportRect );
-	gfxMgr.mGfxState.SetScissorRect ( viewportRect );
+	u32 interfaceMask = partition.GetInterfaceMask < MOAIDrawable >();
+	if ( !interfaceMask ) return;
 	
-	this->ClearSurface ();
+	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
+	const ZLFrustum& viewVolume = gfxMgr.mGfxState.GetViewVolume ();
 	
-	gfxMgr.mGfxState.SetViewProj ( this->mViewport, this->mCamera, this->mParallax );
-	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX );
+	u32 totalResults = 0;
 	
-	this->RenderTable ( this->mUnderlayTable );
-	
-	if ( this->mPartition ) {
-		
-		u32 interfaceMask = this->mPartition->GetInterfaceMask < MOAIAbstractDrawable >();
-		if ( !interfaceMask ) return;
-		
-		MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
-		const ZLFrustum& viewVolume = gfxMgr.mGfxState.GetViewVolume ();
-		
-		u32 totalResults = 0;
-		
-		if ( this->mPartitionCull2D ) {
-			totalResults = this->mPartition->GatherHulls ( buffer, 0, viewVolume.mAABB, interfaceMask );
-		}
-		else {
-			totalResults = this->mPartition->GatherHulls ( buffer, 0, viewVolume, interfaceMask );
-		}
-		
-		if ( !totalResults ) return;
-		
-		if ( this->mSortInViewSpace ) {
-			buffer.Transform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_MTX ), false );
-		}
-		
-		buffer.GenerateKeys (
-			this->mSortMode,
-			this->mSortScale [ 0 ],
-			this->mSortScale [ 1 ],
-			this->mSortScale [ 2 ],
-			this->mSortScale [ 3 ]
-		);
-		
-		buffer.Sort ( this->mSortMode );
-		
-		// set up the ambient color
-		gfxMgr.mGfxState.SetAmbientColor ( this->mColor );
-		
-		// figure out the correct LOD factor
-		float lodFactor = this->mLODFactor * this->GetLinkedValue ( MOAILayerAttr::Pack ( ATTR_LOD ), 1.0f );
-		
-		MOAIMaterialStackMgr& materialStack = MOAIMaterialStackMgr::Get ();
-		materialStack.Push ( this->GetMaterial ());
-		
-		this->DrawProps ( buffer );
-		
-		materialStack.Pop ();
-		
-		if ( this->mShowDebugLines ) {
-			
-			// clear the ambient color and bind vector drawing
-			gfxMgr.mGfxState.SetAmbientColor ( 1.0f, 1.0f, 1.0f, 1.0f );
-			MOAIDraw::Get ().Bind ();
-			this->DrawPropsDebug ( buffer );
-		}
+	if ( this->mPartitionCull2D ) {
+		totalResults = partition.GatherHulls ( buffer, 0, viewVolume.mAABB, interfaceMask );
+	}
+	else {
+		totalResults = partition.GatherHulls ( buffer, 0, viewVolume, interfaceMask );
 	}
 	
-	this->RenderTable ( this->mOverlayTable );
+	if ( !totalResults ) return;
+	
+	if ( this->mSortInViewSpace ) {
+		buffer.Transform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_MTX ), false );
+	}
+	
+	buffer.GenerateKeys (
+		this->mSortMode,
+		this->mSortScale [ 0 ],
+		this->mSortScale [ 1 ],
+		this->mSortScale [ 2 ],
+		this->mSortScale [ 3 ]
+	);
+	
+	buffer.Sort ( this->mSortMode );
+	
+	MOAIMaterialStackMgr& materialStack = MOAIMaterialStackMgr::Get ();
+	materialStack.Push ( this->GetMaterial ());
+	
+	this->DrawProps ( buffer );
+	
+	materialStack.Pop ();
+	
+	if ( this->mShowDebugLines ) {
+		
+		// clear the ambient color and bind vector drawing
+		gfxMgr.mGfxState.SetAmbientColor ( 1.0f, 1.0f, 1.0f, 1.0f );
+		MOAIDraw::Get ().Bind ();
+		this->DrawPropsDebug ( buffer );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -837,7 +784,7 @@ void MOAILayer::DrawProps ( MOAIPartitionResultBuffer& buffer ) {
 
 	for ( u32 i = 0; i < totalResults; ++i ) {
 		MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-		MOAIAbstractDrawable* graphicsProp = result->AsType < MOAIAbstractDrawable >();
+		MOAIDrawable* graphicsProp = result->AsType < MOAIDrawable >();
 		graphicsProp->Draw ( result->mSubPrimID );
 	}
 }
@@ -849,7 +796,7 @@ void MOAILayer::DrawPropsDebug ( MOAIPartitionResultBuffer& buffer ) {
 
 	for ( u32 i = 0; i < totalResults; ++i ) {
 		MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-		MOAIAbstractDrawable* graphicsProp = result->AsType < MOAIAbstractDrawable >();
+		MOAIDrawable* graphicsProp = result->AsType < MOAIDrawable >();
 		graphicsProp->DrawDebug ( result->mSubPrimID );
 	}
 }
@@ -892,17 +839,12 @@ MOAILayer::MOAILayer () :
 	mShowDebugLines ( true ),
 	mSortMode ( MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING ),
 	mSortInViewSpace ( false ),
-	mLODMode ( LOD_FROM_PROP_SORT_Z ),
-	mLODFactor ( 1.0f ),
 	mPartitionCull2D ( true ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIGraphicsProp )
-		RTTI_EXTEND ( MOAIClearableView )
+		RTTI_EXTEND ( MOAIRenderPassBase )
 	RTTI_END
-	
-	//this->SetMask ( MOAIPartitionHull::CAN_DRAW | MOAIPartitionHull::CAN_DRAW_DEBUG );
-	this->SetClearFlags ( 0 );
 }
 
 //----------------------------------------------------------------//
@@ -910,16 +852,13 @@ MOAILayer::~MOAILayer () {
 
 	this->mCamera.Set ( *this, 0 );
 	this->mViewport.Set ( *this, 0 );
-	this->mPartition.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
 void MOAILayer::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIGraphicsProp::RegisterLuaClass ( state );
-	MOAIClearableView::RegisterLuaClass ( state );
-	
-	state.SetField ( -1, "ATTR_LOD",						MOAILayerAttr::Pack ( ATTR_LOD ));
+	MOAIRenderPassBase::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "SORT_NONE",						( u32 )MOAIPartitionResultBuffer::SORT_NONE );
 	state.SetField ( -1, "SORT_ISO",						( u32 )MOAIPartitionResultBuffer::SORT_ISO );
@@ -935,16 +874,13 @@ void MOAILayer::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "SORT_VECTOR_DESCENDING",			( u32 )MOAIPartitionResultBuffer::SORT_VECTOR_DESCENDING );
 	state.SetField ( -1, "SORT_DIST_SQUARED_ASCENDING",		( u32 )MOAIPartitionResultBuffer::SORT_DIST_SQUARED_ASCENDING );
 	state.SetField ( -1, "SORT_DIST_SQUARED_DESCENDING",	( u32 )MOAIPartitionResultBuffer::SORT_DIST_SQUARED_DESCENDING );
-	
-	state.SetField ( -1, "LOD_CONSTANT",					( u32 )MOAILayer::LOD_CONSTANT );
-	state.SetField ( -1, "LOD_FROM_PROP_SORT_Z",			( u32 )MOAILayer::LOD_FROM_PROP_SORT_Z );
 }
 
 //----------------------------------------------------------------//
 void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIGraphicsProp::RegisterLuaFuncs ( state );
-	MOAIClearableView::RegisterLuaFuncs ( state );
+	MOAIRenderPassBase::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "clear",					_clear },
@@ -960,8 +896,6 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "insertProp",				_insertProp },
 		{ "removeProp",				_removeProp },
 		{ "setCamera",				_setCamera },
-		{ "setLODFactor",			_setLODFactor },
-		{ "setLODMode",				_setLODMode },
 		{ "setOverlayTable",		_setOverlayTable },
 		{ "setParallax",			_setParallax },
 		{ "setPartition",			_setPartition },
@@ -981,64 +915,6 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILayer::Render () {
-	
-	this->Draw ( MOAIPartitionHull::NO_SUBPRIM_ID );
-}
-
-//----------------------------------------------------------------//
-void MOAILayer::RenderTable ( MOAILuaRef& ref ) {
-
-	if ( ref ) {
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		state.Push ( ref );
-		this->RenderTable ( state, -1 );
-		state.Pop ( 1 );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAILayer::RenderTable ( MOAILuaState& state, int idx ) {
-
-	idx = state.AbsIndex ( idx );
-
-	int n = 1;
-	while ( n ) {
-		
-		lua_rawgeti ( state, idx, n++ );
-		
-		int valType = lua_type ( state, -1 );
-		
-		switch ( valType ) {
-		
-			case LUA_TUSERDATA: {
-				MOAIRenderable* renderable = state.GetLuaObject < MOAIRenderable >( -1, false );
-				if ( renderable ) {
-					renderable->Render ();
-				}
-				break;
-			}
-			case LUA_TTABLE:
-				this->RenderTable ( state, -1 );
-				break;
-			
-			case LUA_TFUNCTION: {
-			
-				MOAIDraw::Bind ();
-			
-				state.CopyToTop ( -1 );
-				state.DebugCall ( 0, 0 );
-				break;
-			}
-			default:
-				n = 0;
-		}
-		
-		lua_pop ( state, 1 );
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAILayer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	MOAIGraphicsProp::SerializeIn ( state, serializer );
 }
@@ -1053,6 +929,46 @@ void MOAILayer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer )
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAILayer::MOAIDrawable_Draw ( int subPrimID ) {
+	UNUSED ( subPrimID );
+    
+   	if ( !this->IsVisible ()) return;
+	if ( !this->mViewport ) return;
+	if ( this->IsClear ()) return;
+	
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	
+	gfxMgr.mGfxState.SetFrameBuffer ( this->GetFrameBuffer ());
+	
+	MOAIViewport& viewport = *this->mViewport;
+	ZLRect viewportRect = viewport;
+
+	ZLMatrix4x4 mtx ( this->mLocalToWorldMtx );
+	mtx.Transform ( viewportRect );
+
+	gfxMgr.mGfxState.SetViewRect ( viewportRect );
+	gfxMgr.mGfxState.SetScissorRect ( viewportRect );
+	
+	this->ClearSurface ();
+	
+	gfxMgr.mGfxState.SetViewProj ( this->mViewport, this->mCamera, this->mParallax );
+	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX );
+	
+	// set up the ambient color
+	gfxMgr.mGfxState.SetAmbientColor ( this->mColor );
+	
+	MOAIDrawable::Draw ( this->mUnderlayTable );
+	
+	if ( this->mPartition ) {
+		this->DrawPartition ( *this->mPartition );
+	}
+	
+	MOAIDrawable::Draw ( this->mOverlayTable );
+	
+	gfxMgr.mGfxState.SetFrameBuffer ( this->GetFrameBuffer ());
+}
+
+//----------------------------------------------------------------//
 u32 MOAILayer::MOAIPartitionHull_GetModelBounds ( ZLBox& bounds ) {
 	
 	if ( this->mViewport ) {
@@ -1062,4 +978,3 @@ u32 MOAILayer::MOAIPartitionHull_GetModelBounds ( ZLBox& bounds ) {
 	}
 	return MOAIPartitionHull::BOUNDS_EMPTY;
 }
-

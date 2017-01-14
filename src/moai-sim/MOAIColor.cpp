@@ -233,7 +233,7 @@ MOAIColor* MOAIColor::AffirmColor ( MOAILuaState& state, int idx ) {
 }
 
 //----------------------------------------------------------------//
-ZLColorVec MOAIColor::GetColorTrait () {
+ZLColorVec MOAIColor::GetColorTrait () const {
 
 	return this->mColor;
 }

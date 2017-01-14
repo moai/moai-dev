@@ -102,114 +102,6 @@ if MOAIJsonParser then
 end
 
 --============================================================--
--- MOAIRenderMgr
---============================================================--
-MOAIRenderMgr.extend (
-
-	'MOAIRenderMgr',
-	
-	----------------------------------------------------------------
-	function ( class, superClass )
-	
-		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-		-- extend the class
-		function class.affirmRenderTable ()
-		
-			local renderTable = class.getRenderTable ()
-			if not renderTable then
-				renderTable = {}
-				class.setRenderTable ( renderTable )
-			end
-			
-			return renderTable
-		end
-
-		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-		function class.clearRenderStack ()
-			class.setRenderTable ( nil )
-		end
-		
-		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-		function class.grabNextFrame (image, callback)
-			local frameBuffer = MOAIGfxMgr.getFrameBuffer ()
-			frameBuffer:grabNextFrame ( image, callback )
-		end
-		
-		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-		function class.getRenderTable ()
-			local frameBuffer = MOAIGfxMgr.getFrameBuffer ()
-			return frameBuffer:getRenderTable ()
-		end
-		
-		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-		function class.popRenderPass ()
-
-			local renderTable = class.affirmRenderTable ()
-			table.remove ( renderTable )
-		end
-		
-		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-		function class.pushRenderPass ( pass )
-
-			local renderTable = class.affirmRenderTable ()
-			table.insert ( renderTable, pass )
-		end
-		
-		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-		function class.removeRenderPass ( pass )
-
-			local renderTable = class.affirmRenderTable ()
-			for i, cursor in ipairs ( renderTable ) do
-				if cursor == pass then
-					table.remove ( renderTable, i )
-					break
-				end
-			end
-		end
-		
-		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-		function class.setRenderTable ( renderTable )
-		
-			local frameBuffer = MOAIGfxMgr.getFrameBuffer ()
-			frameBuffer:setRenderTable ( renderTable )
-		end
-	end
-)
-
---============================================================--
--- MOAISim
---============================================================--
-MOAISim.extend (
-
-	'MOAISim',
-	
-	----------------------------------------------------------------
-	function ( class, superClass )
-
-		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-		-- extend the class
-		function class.clearRenderStack ()
-			MOAIRenderMgr.clearRenderStack ()
-		end
-		
-		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-		function class.popRenderPass ()
-			MOAIRenderMgr.popRenderPass ()
-		end
-		
-		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-		function class.pushRenderPass ( pass )
-			MOAIRenderMgr.pushRenderPass ( pass )
-		end
-		
-		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-		function class.removeRenderPass ( pass )
-			MOAIRenderMgr.removeRenderPass ( pass )
-		end 
-	end
-)
-
---============================================================--
 -- MOAIScriptNode
 --============================================================--
 MOAIScriptNode.extend (
@@ -277,24 +169,6 @@ MOAITextLabel.extend (
 )
 
 --============================================================--
--- MOAIGfxMgr
---============================================================--
-MOAIGfxMgr.extend (
-
-	'MOAIGfxMgr',
-	
-	----------------------------------------------------------------
-	function ( class, superClass )
-
-		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-		-- extend the class
-		function class.setClearColor ( ... )
-			MOAIGfxMgr.getFrameBuffer():setClearColor ( ... )
-		end
-	end
-)
-
---============================================================--
 -- MOAIXmlParser
 --============================================================--
 if MOAIXmlParser then
@@ -337,24 +211,20 @@ end
 -- renames
 --============================================================--
 
-MOAIGfxDevice		= MOAIGfxMgr
-
 MOAIHashWriter		= MOAIHashWriterCrypto or MOAIHashWriter
-MOAITextBox			= MOAITextLabel
-MOAIThread			= MOAICoroutine
 
 MOAIProp			= MOAIGraphicsProp
 
 MOAIStreamReader	= MOAIStreamAdapter
 MOAIStreamWriter	= MOAIStreamAdapter
 
---============================================================--
--- Cross Platform
---============================================================--
-
 if MOAISim.forceGC then
     MOAISim.forceGarbageCollection = MOAISim.forceGC
 end
+
+--============================================================--
+-- Cross Platform
+--============================================================--
 
 MOAIApp = MOAIApp or MOAIAppAndroid or MOAIAppIOS
 MOAIAudioSampler = MOAIAudioSampler or MOAIAudioSamplerCocoa or MOAIAudioSamplerAndroid

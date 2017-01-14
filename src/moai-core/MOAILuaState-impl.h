@@ -183,7 +183,7 @@ void MOAILuaState::SetFieldByIndex ( int idx, int key, TYPE value ) {
 		idx = this->AbsIndex ( idx );
 		this->Push ( key );
 		this->Push ( value );
-		lua_settable( this->mState, idx );
+		lua_settable ( this->mState, idx );
 	}
 }
 

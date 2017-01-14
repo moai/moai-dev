@@ -7,19 +7,16 @@
 #include <moai-sim/MOAIEaseDriver.h>
 #include <moai-sim/MOAIImage.h>
 
-class MOAICamera;
-class MOAIFrameBuffer;
-class MOAIRenderable;
-class MOAIViewport;
+class MOAIRenderPass;
 
 //================================================================//
 // MOAIRenderMgr
 //================================================================//
 /**	@lua	MOAIRenderMgr
-	@text	MOAIRenderMgr is responsible for drawing a list of MOAIRenderable
-			objects. MOAIRenderable is the base class for any object that can be
+	@text	MOAIRenderMgr is responsible for drawing a list of MOAIDrawable
+			objects. MOAIDrawable is the base class for any object that can be
 			drawn. This includes MOAIProp and MOAILayer. To use MOAIRenderMgr
-			pass a table of MOAIRenderable objects to MOAIRenderMgr.setRenderTable ().
+			pass a table of MOAIDrawable objects to MOAIRenderMgr.setRenderTable ().
 			The table will usually be a stack of MOAILayer objects. The contents of
 			the table will be rendered the next time a frame is drawn. Note that the
 			table must be an array starting with index 1. Objects will be rendered
@@ -36,28 +33,13 @@ private:
 	double			mRenderDuration;
 	double			mRenderTime;
 	
-	MOAILuaStrongRef	mBufferTable;
-	
-	// the current render state
-	MOAIFrameBuffer*	mFrameBuffer;
-	MOAIRenderable*		mRenderable;
+	MOAILuaStrongRef	mRenderRoot;
 	
 	//----------------------------------------------------------------//
-	static int		_getBufferTable				( lua_State* L );
 	static int		_getPerformanceDrawCount    ( lua_State* L );
 	static int		_getRenderCount				( lua_State* L );
-	static int		_setBufferTable				( lua_State* L );
-	
-	//----------------------------------------------------------------//
-	#ifdef DOXYGEN
-		static int		_clearRenderStack			( lua_State* L );
-		static int		_grabNextFrame				( lua_State* L );
-		static int		_getRenderTable				( lua_State* L );
-		static int		_popRenderPass				( lua_State* L );
-		static int		_pushRenderPass				( lua_State* L );
-		static int		_removeRenderPass			( lua_State* L );
-		static int		_setRenderTable				( lua_State* L );
-	#endif
+	static int		_getRender					( lua_State* L );
+	static int		_setRender					( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			RenderTable					( MOAILuaState& state, int idx );
@@ -70,12 +52,13 @@ public:
 	GET ( double, RenderDuration, mRenderDuration )
 	GET ( double, RenderTime, mRenderTime )
 	
-	GET_SET ( MOAIFrameBuffer*, FrameBuffer, mFrameBuffer )
-	GET_SET ( MOAIRenderable*, Renderable, mRenderable )
+	//GET_SET ( MOAIFrameBuffer*, FrameBuffer, mFrameBuffer )
+	//GET_SET ( MOAIDrawable*, Drawable, mDrawable )
 	
 	//----------------------------------------------------------------//
 					MOAIRenderMgr				();
 					~MOAIRenderMgr				();
+	void			PushDrawable				( MOAILuaObject* drawable );
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
 	void			Render						();

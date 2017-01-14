@@ -367,8 +367,8 @@ MOAIGraphicsPropBase::MOAIGraphicsPropBase () :
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIPartitionHull )
 		RTTI_EXTEND ( MOAIColor )
-		RTTI_EXTEND ( MOAIRenderable )
-		RTTI_EXTEND ( MOAIAbstractDrawable )
+		RTTI_EXTEND ( MOAIDrawable )
+		RTTI_EXTEND ( MOAIDrawable )
 		RTTI_EXTEND ( MOAIMaterialBatchHolder )
 	RTTI_END
 	
@@ -497,7 +497,6 @@ void MOAIGraphicsPropBase::Render () {
 void MOAIGraphicsPropBase::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
 	MOAIColor::SerializeIn ( state, serializer );
-	MOAIRenderable::SerializeIn ( state, serializer );
 	MOAIPartitionHull::SerializeIn ( state, serializer );
 	MOAIMaterialBatchHolder::SerializeIn ( state, serializer );
 }
@@ -506,7 +505,6 @@ void MOAIGraphicsPropBase::SerializeIn ( MOAILuaState& state, MOAIDeserializer& 
 void MOAIGraphicsPropBase::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	
 	MOAIColor::SerializeOut ( state, serializer );
-	MOAIRenderable::SerializeOut ( state, serializer );
 	MOAIPartitionHull::SerializeOut ( state, serializer );
 	MOAIMaterialBatchHolder::SerializeOut ( state, serializer );
 }
@@ -523,7 +521,37 @@ void MOAIGraphicsPropBase::SetVisible ( bool visible ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGraphicsPropBase::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
+bool MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	if ( MOAIGraphicsPropBaseAttr::Check ( attrID )) {
+		
+		switch ( UNPACK_ATTR ( attrID )) {
+				
+			case ATTR_SCISSOR_RECT:
+				this->mScissorRect.Set ( *this, attr.ApplyVariantNoAdd < MOAIScissorRect* >( this->mScissorRect, op, MOAIAttribute::ATTR_READ_WRITE ));
+				return true;
+				
+			case ATTR_LOCAL_VISIBLE:
+				this->SetVisible ( ZLFloat::ToBoolean ( attr.ApplyNoAdd ( ZLFloat::FromBoolean (( this->mDisplayFlags & FLAGS_LOCAL_VISIBLE ) != 0 ), op, MOAIAttribute::ATTR_READ_WRITE )));
+				return true;
+				
+			case ATTR_VISIBLE:
+				attr.ApplyNoAdd ( ZLFloat::FromBoolean ( this->IsVisible ()), op , MOAIAttribute::ATTR_READ );
+				return true;
+			
+			//case FRAME_TRAIT:
+			//	attr.Apply < ZLBox >( &this->mFrame, op, MOAIAttribute::ATTR_READ );
+			//	return true;
+		}
+	}
+	
+	if ( MOAIColor::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+	if ( MOAIPartitionHull::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAIGraphicsPropBase::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
 	if ( this->GetBoundsStatus () != BOUNDS_OK ) return;
@@ -585,36 +613,6 @@ void MOAIGraphicsPropBase::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
-
-	if ( MOAIGraphicsPropBaseAttr::Check ( attrID )) {
-		
-		switch ( UNPACK_ATTR ( attrID )) {
-				
-			case ATTR_SCISSOR_RECT:
-				this->mScissorRect.Set ( *this, attr.ApplyVariantNoAdd < MOAIScissorRect* >( this->mScissorRect, op, MOAIAttribute::ATTR_READ_WRITE ));
-				return true;
-				
-			case ATTR_LOCAL_VISIBLE:
-				this->SetVisible ( ZLFloat::ToBoolean ( attr.ApplyNoAdd ( ZLFloat::FromBoolean (( this->mDisplayFlags & FLAGS_LOCAL_VISIBLE ) != 0 ), op, MOAIAttribute::ATTR_READ_WRITE )));
-				return true;
-				
-			case ATTR_VISIBLE:
-				attr.ApplyNoAdd ( ZLFloat::FromBoolean ( this->IsVisible ()), op , MOAIAttribute::ATTR_READ );
-				return true;
-			
-			//case FRAME_TRAIT:
-			//	attr.Apply < ZLBox >( &this->mFrame, op, MOAIAttribute::ATTR_READ );
-			//	return true;
-		}
-	}
-	
-	if ( MOAIColor::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
-	if ( MOAIPartitionHull::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
-	return false;
-}
-
-//----------------------------------------------------------------//
 void MOAIGraphicsPropBase::MOAINode_Update () {
 	
 	MOAIColor::MOAINode_Update ();
@@ -633,5 +631,5 @@ void MOAIGraphicsPropBase::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionResu
 //----------------------------------------------------------------//
 u32 MOAIGraphicsPropBase::MOAIPartitionHull_AffirmInterfaceMask ( MOAIPartition& partition ) {
 
-	return partition.AffirmInterfaceMask < MOAIAbstractDrawable >();
+	return partition.AffirmInterfaceMask < MOAIDrawable >();
 }

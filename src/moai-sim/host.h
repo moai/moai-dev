@@ -45,7 +45,6 @@ AKU_API void			AKUDetectFramebuffer			();
 AKU_API void			AKUDetectGfxContext				();
 AKU_API void			AKUDiscardGfxResources			();
 AKU_API double			AKUGetSimStep					();
-AKU_API int				AKUIsGfxBufferOpaque			();
 AKU_API void			AKUPause						( bool pause );
 AKU_API void			AKURender						();
 AKU_API void			AKUSetOrientation				( int orientation );

@@ -1127,7 +1127,7 @@ MOAIBox2DWorld::MOAIBox2DWorld () :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIAction )
-		RTTI_EXTEND ( MOAIRenderable )
+		RTTI_EXTEND ( MOAIDrawable )
 	RTTI_END
 	
 	this->mArbiter.Set ( *this, new MOAIBox2DArbiter ( *this ));
@@ -1164,7 +1164,6 @@ MOAIBox2DWorld::~MOAIBox2DWorld () {
 void MOAIBox2DWorld::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIAction::RegisterLuaClass ( state );
-	MOAIRenderable::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "DEBUG_DRAW_SHAPES", ( u32 )DEBUG_DRAW_SHAPES );
 	state.SetField ( -1, "DEBUG_DRAW_JOINTS", ( u32 )DEBUG_DRAW_JOINTS );
@@ -1179,7 +1178,6 @@ void MOAIBox2DWorld::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIBox2DWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIAction::RegisterLuaFuncs ( state );
-	MOAIRenderable::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "addBody",					_addBody },
@@ -1214,21 +1212,6 @@ void MOAIBox2DWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIBox2DWorld::Render () {
-
-	if ( this->mDebugDraw && MOAIDraw::Bind ()) {
-		
-		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-		
-		gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX );
-		gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_PROJ_MTX ));
-		
-		this->mDebugDraw->mScale = 1.0f / this->mUnitsToMeters;
-		this->mWorld->DrawDebugData ();
-	}
 }
 
 //----------------------------------------------------------------//
@@ -1303,5 +1286,21 @@ void MOAIBox2DWorld::MOAIAction_Update ( double step ) {
 			MOAIBox2DBody* moaiBody = ( MOAIBox2DBody* )body->GetUserData ();
 			moaiBody->ScheduleUpdate ();
 		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIBox2DWorld::MOAIDrawable_Draw ( int subPrimID ) {
+	UNUSED ( subPrimID );
+
+	if ( this->mDebugDraw && MOAIDraw::Bind ()) {
+		
+		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+		
+		gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX );
+		gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_PROJ_MTX ));
+		
+		this->mDebugDraw->mScale = 1.0f / this->mUnitsToMeters;
+		this->mWorld->DrawDebugData ();
 	}
 }

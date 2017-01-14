@@ -182,7 +182,6 @@ public:
 	bool			IsClear				() const;
 	bool			IsEqual				( const ZLColorVec& c ) const;
 	bool			IsEqual				( const ZLColorVec& c, float res ) const;
-	bool			IsOpaque			() const;
 	void			Lerp				( u32 mode, const ZLColorVec& v0, const ZLColorVec& v1, float t );
 	void			Modulate			( const ZLColorVec& v0 );
 	u32				PackRGBA			() const;

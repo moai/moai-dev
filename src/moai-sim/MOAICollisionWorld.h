@@ -6,7 +6,7 @@
 
 #include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAICollisionProp.h>
-#include <moai-sim/MOAIRenderable.h>
+#include <moai-sim/MOAIDrawable.h>
 
 class MOAICollisionProp;
 class MOAIOverlapInfo;
@@ -18,7 +18,7 @@ class MOAIPartitionHull;
 //================================================================//
 class MOAICollisionWorld :
 	public MOAIAction,
-	public MOAIRenderable {
+	public MOAIDrawable {
 private:
 
 	friend class MOAICollisionProp;
@@ -65,6 +65,7 @@ private:
 
 	//----------------------------------------------------------------//
 	void				MOAIAction_Update		( double step );
+	void				MOAIDrawable_Draw		( int subPrimID );
 
 public:
 	

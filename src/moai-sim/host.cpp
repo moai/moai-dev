@@ -161,12 +161,6 @@ double AKUGetSimStep () {
 }
 
 //----------------------------------------------------------------//
-int AKUIsGfxBufferOpaque () {
-
-	return MOAIGfxMgr::Get ().IsOpaque ();
-}
-
-//----------------------------------------------------------------//
 void AKUPause ( bool pause ) {
 
 	if ( pause ) {
@@ -417,7 +411,6 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIAnimCurveBone )
 	REGISTER_LUA_CLASS ( MOAIAnimCurveQuat )
 	REGISTER_LUA_CLASS ( MOAIAnimCurveVec )
-	//REGISTER_LUA_CLASS ( MOAIBoundsDeck )
 	//REGISTER_LUA_CLASS ( MOAIBspBuilder2D )
 	REGISTER_LUA_CLASS ( MOAIButtonSensor )
 	REGISTER_LUA_CLASS ( MOAICamera )
@@ -480,6 +473,7 @@ void AKUSimContextInitialize () {
 	//REGISTER_LUA_CLASS ( MOAIProfilerReportBox )
 	REGISTER_LUA_CLASS ( MOAIRegion )
 	REGISTER_LUA_CLASS ( MOAIRenderMgr )
+	REGISTER_LUA_CLASS ( MOAIRenderPass )
 	REGISTER_LUA_CLASS ( MOAIScissorRect )
 	//REGISTER_LUA_CLASS ( MOAIScriptDeck )
 	REGISTER_LUA_CLASS ( MOAIScriptNode )

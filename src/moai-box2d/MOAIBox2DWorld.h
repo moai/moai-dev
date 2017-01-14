@@ -61,7 +61,7 @@ public:
 */
 class MOAIBox2DWorld :
 	public MOAIAction,
-	public MOAIRenderable,
+	public MOAIDrawable,
 	public b2DestructionListener {
 private:
 
@@ -122,6 +122,7 @@ private:
 
 	//----------------------------------------------------------------//
 	void			MOAIAction_Update		( double step );
+	void			MOAIDrawable_Draw		( int subPrimID );
 
 public:
 	
@@ -150,7 +151,6 @@ public:
 					~MOAIBox2DWorld			();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			Render					();
 };
 
 #endif

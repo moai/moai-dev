@@ -34,6 +34,7 @@
 #include <moai-sim/MOAIDeckProxyBase.h>
 //#include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDraw.h>
+#include <moai-sim/MOAIDrawable.h>
 #include <moai-sim/MOAIEaseDriver.h>
 #include <moai-sim/MOAIEaseType.h>
 #include <moai-sim/MOAIFancyGrid.h>
@@ -116,8 +117,9 @@
 //#include <moai-sim/MOAIProfilerScope.h>
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIRegion.h>
-#include <moai-sim/MOAIRenderable.h>
 #include <moai-sim/MOAIRenderMgr.h>
+#include <moai-sim/MOAIRenderPass.h>
+#include <moai-sim/MOAIRenderPassBase.h>
 #include <moai-sim/MOAIScissorRect.h>
 //#include <moai-sim/MOAIScriptDeck.h>
 #include <moai-sim/MOAIScriptNode.h>

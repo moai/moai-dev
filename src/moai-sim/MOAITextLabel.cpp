@@ -1122,7 +1122,14 @@ void MOAITextLabel::SetText ( cc8* text ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITextLabel::MOAIAbstractDrawable_Draw ( int subPrimID ) {
+void MOAITextLabel::MOAIAction_Update ( double step ) {
+	
+	this->mSpool += ( float )( this->mSpeed * step );
+	this->mReveal = ( u32 )this->mSpool;
+}
+
+//----------------------------------------------------------------//
+void MOAITextLabel::MOAIDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 	
 	if ( !this->IsVisible ()) return;
@@ -1152,7 +1159,7 @@ void MOAITextLabel::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLabel::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
+void MOAITextLabel::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
 	MOAIGraphicsPropBase::DrawDebug ( subPrimID );
@@ -1209,13 +1216,6 @@ void MOAITextLabel::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 			}
 		}
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAITextLabel::MOAIAction_Update ( double step ) {
-	
-	this->mSpool += ( float )( this->mSpeed * step );
-	this->mReveal = ( u32 )this->mSpool;
 }
 
 //----------------------------------------------------------------//

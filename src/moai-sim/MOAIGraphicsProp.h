@@ -32,7 +32,7 @@ class MOAIGraphicsProp :
 private:
 
 	//----------------------------------------------------------------//
-	void					MOAIAbstractDrawable_Draw				( int subPrimID );
+	void					MOAIDrawable_Draw						( int subPrimID );
 	bool					MOAINode_ApplyAttrOp					( u32 attrID, MOAIAttribute& attr, u32 op );
 	void					MOAINode_Update							();
 	u32						MOAIPartitionHull_GetModelBounds		( ZLBox& bounds ); // get the prop bounds in model space

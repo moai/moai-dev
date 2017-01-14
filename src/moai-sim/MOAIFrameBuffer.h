@@ -8,38 +8,6 @@ class MOAIColor;
 class MOAIImage;
 
 //================================================================//
-// MOAIClearableView
-//================================================================//
-class MOAIClearableView :
-	public virtual MOAILuaObject {
-private:
-
-	u32				mClearFlags;
-	u32				mClearColor;
-	MOAIColor*		mClearColorNode;
-
-	//----------------------------------------------------------------//
-	static int		_setClearColor			( lua_State* L );
-	static int		_setClearDepth			( lua_State* L );
-
-	//----------------------------------------------------------------//
-	
-
-public:
-
-	GET_SET ( u32, ClearFlags, mClearFlags );
-
-	//----------------------------------------------------------------//
-	void			ClearSurface			();
-	bool			IsOpaque				() const;
-					MOAIClearableView		();
-					~MOAIClearableView		();
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			SetClearColor			( MOAIColor* color );
-};
-
-//================================================================//
 // MOAIFrameBuffer
 //================================================================//
 /**	@lua	MOAIFrameBuffer
@@ -55,7 +23,7 @@ public:
 			indexed from 1.
 */
 class MOAIFrameBuffer :
-	public MOAIClearableView,
+	public virtual MOAILuaObject,
 	public virtual ZLGfxListener {
 protected:
 	
@@ -67,24 +35,18 @@ protected:
 	float				mBufferScale;
 	bool				mLandscape;
 	
+	bool				mNeedsClear;
+	
 	ZLGfxHandle*		mGLFrameBufferID;
 
-	bool				mGrabNextFrame;
-	MOAILuaMemberRef	mOnFrameFinish;
-	MOAILuaSharedPtr < MOAIImage > mFrameImage;
-
-	u32					mRenderCounter;	// increments every render
-	u32					mLastDrawCount;
-	MOAILuaStrongRef	mRenderTable;
+	bool								mGrabNextFrame;
+	MOAILuaMemberRef					mOnFrameFinish;
+	MOAILuaSharedPtr < MOAIImage >		mFrameImage;
 
 	//----------------------------------------------------------------//
 	static int			_getGrabbedImage			( lua_State* L );
-	static int			_getPerformanceDrawCount    ( lua_State* L );
-	static int			_getRenderTable				( lua_State* L );
 	static int			_grabNextFrame				( lua_State* L );
 	static int			_isPendingGrab				( lua_State* L );
-	static int			_setRenderTable				( lua_State* L );
-	
 
 	//----------------------------------------------------------------//
 	void				OnReadPixels				( const ZLCopyOnWrite& buffer, void* userdata );
@@ -98,7 +60,6 @@ public:
 	GET_CONST	( u32, BufferHeight, mBufferHeight )
 	GET_SET		( float, BufferScale, mBufferScale )
 	GET_SET		( bool, Landscape, mLandscape )
-	GET_CONST	( u32, RenderCounter, mRenderCounter )
 	
 	//----------------------------------------------------------------//
 	void				DetectGLFrameBufferID		();
@@ -106,11 +67,12 @@ public:
 	void				GrabImage					( MOAIImage* image );
 						MOAIFrameBuffer				();
 						~MOAIFrameBuffer			();
+	bool				NeedsClear					() const;
+	void				NeedsClear					( bool needsClear );
 	void				SetBufferSize				( u32 width, u32 height );
 	void				SetGLFrameBufferID			( ZLGfxHandle* frameBufferID );
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
-	virtual void		Render						();
 	ZLRect				WndRectToDevice				( ZLRect rect ) const;
 };
 

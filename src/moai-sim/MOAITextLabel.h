@@ -205,9 +205,9 @@ private:
 	virtual void		RefreshStyleGlyphs		();
 
 	//----------------------------------------------------------------//
-	void				MOAIAbstractDrawable_Draw			( int subPrimID );
-	void				MOAIAbstractDrawable_DrawDebug		( int subPrimID );
 	void				MOAIAction_Update					( double step );
+	void				MOAIDrawable_Draw					( int subPrimID );
+	void				MOAIDrawable_DrawDebug				( int subPrimID );
 	void				MOAINode_Update						();
 	u32					MOAIPartitionHull_GetModelBounds	( ZLBox& bounds );
 

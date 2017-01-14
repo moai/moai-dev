@@ -1173,12 +1173,6 @@ bool ZLColorVec::IsEqual ( const ZLColorVec& c, float res ) const {
 }
 
 //----------------------------------------------------------------//
-bool ZLColorVec::IsOpaque () const {
-
-	return ( this->mA >= 1.0f );
-}
-
-//----------------------------------------------------------------//
 void ZLColorVec::Lerp ( u32 mode, const ZLColorVec& v0, const ZLColorVec& v1, float t ) {
 
 	this->mR = ZLInterpolate::Interpolate ( mode, v0.mR, v1.mR, t );

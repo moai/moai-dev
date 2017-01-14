@@ -7,6 +7,7 @@
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIPartition.h>
+#include <moai-sim/MOAIRenderPassBase.h>
 #include <moai-sim/MOAIViewport.h>
 
 class MOAIBox2DWorld;
@@ -34,23 +35,20 @@ class MOAICpSpace;
 */
 class MOAILayer :
 	public virtual MOAIGraphicsProp,
-	public MOAIClearableView {
+	public virtual MOAIRenderPassBase {
 private:
 
 	MOAILuaSharedPtr < MOAICamera >			mCamera;
 	MOAILuaSharedPtr < MOAIViewport >		mViewport;
 	MOAILuaSharedPtr < MOAIPartition >		mPartition;
 
-	MOAILuaStrongRef						mOverlayTable;
-	MOAILuaStrongRef						mUnderlayTable;
+	MOAILuaMemberRef		mUnderlayTable;
+	MOAILuaMemberRef		mOverlayTable;
 
 	ZLVec3D		mParallax;
 	bool		mShowDebugLines;
 	u32			mSortMode;
 	bool		mSortInViewSpace;
-	
-	u32			mLODMode;
-	float		mLODFactor;
 
 	float		mSortScale [ 4 ];
 
@@ -63,15 +61,13 @@ private:
 	static int		_getFitting				( lua_State* L );
 	static int		_getFitting3D			( lua_State* L );
 	static int		_getPartition			( lua_State* L );
-	static int		_getPropViewList		( lua_State* L );
+	static int		_getPropViewList		( lua_State* L ); // TODO: update and restore this
 	static int		_getSortMode			( lua_State* L );
 	static int		_getSortScale			( lua_State* L );
 	static int		_getViewport			( lua_State* L );
 	static int		_insertProp				( lua_State* L );
 	static int		_removeProp				( lua_State* L );
 	static int		_setCamera				( lua_State* L );
-	static int		_setLODFactor			( lua_State* L );
-	static int		_setLODMode				( lua_State* L );
 	static int		_setOverlayTable		( lua_State* L );
 	static int		_setParallax			( lua_State* L );
 	static int		_setPartition			( lua_State* L );
@@ -87,34 +83,19 @@ private:
 	
 	//----------------------------------------------------------------//
 	void			AffirmPartition			();
+	void			DrawPartition			( MOAIPartition& partition );
 	void			DrawProps				( MOAIPartitionResultBuffer& buffer );
 	void			DrawPropsDebug			( MOAIPartitionResultBuffer& buffer);
-	//ZLMatrix4x4		GetProjectionMtx		() const;
-	//ZLMatrix4x4		GetViewMtx				() const;
-	void			RenderTable				( MOAILuaRef& ref );
-	void			RenderTable				( MOAILuaState& state, int idx );
 
 	//----------------------------------------------------------------//
+	void			MOAIDrawable_Draw						( int subPrimID );
 	u32				MOAIPartitionHull_GetModelBounds		( ZLBox& bounds );
 
 public:
-	
-	DECL_ATTR_HELPER ( MOAILayer )
-
-	enum {
-		ATTR_LOD,
-		TOTAL_ATTR,
-	};
-	
-	enum {
-		LOD_CONSTANT,				// use the LOD factor
-		LOD_FROM_PROP_SORT_Z,		// use the prop's Z coordinate multiplied by the LOD factor in the sort results list (enable view space sort for depth)
-	};
-	
+		
 	DECL_LUA_FACTORY ( MOAILayer )
 	
 	//----------------------------------------------------------------//
-	void				Draw					( int subPrimID  );
 	float				GetFitting				( ZLRect& worldRect, float hPad, float vPad );
 	MOAIPartition*		GetPartition			();
 	ZLMatrix4x4			GetWndToWorldMtx		() const;
@@ -123,7 +104,6 @@ public:
 						~MOAILayer				();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
-	void				Render					(); // TODO: simplify all this; no reason to have both Draw and Render everywhere
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };

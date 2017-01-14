@@ -85,6 +85,13 @@ MOAIFrameBufferTexture::~MOAIFrameBufferTexture () {
 }
 
 //----------------------------------------------------------------//
+void MOAIFrameBufferTexture::OnGPUBind () {
+
+	this->NeedsClear ( true );
+	MOAISingleTexture::OnGPUBind ();
+}
+
+//----------------------------------------------------------------//
 bool MOAIFrameBufferTexture::OnGPUCreate () {
 	
 	if ( !( this->mWidth && this->mHeight && ( this->mColorFormat || this->mDepthFormat || this->mStencilFormat ))) {
@@ -198,12 +205,6 @@ void MOAIFrameBufferTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferTexture::Render () {
-
-	MOAIFrameBuffer::Render ();
 }
 
 //----------------------------------------------------------------//

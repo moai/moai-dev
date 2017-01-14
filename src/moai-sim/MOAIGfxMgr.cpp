@@ -145,6 +145,9 @@ void MOAIGfxMgr::ClearSurface ( u32 clearFlags ) {
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
 	if ( clearFlags ) {
+	
+		this->mVertexCache.FlushBufferedPrims ();
+	
 		if (( clearFlags & ZGL_CLEAR_DEPTH_BUFFER_BIT ) && !this->mGfxState.GetDepthMask ()) {
 			gfx.DepthMask ( true );
 			gfx.Clear ( clearFlags );
@@ -183,13 +186,6 @@ void MOAIGfxMgr::DetectFramebuffer () {
 	
 	this->mGfxState.GetDefaultFrameBuffer ()->DetectGLFrameBufferID ();
 	this->mGfxState.SetFrameBuffer ();
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxMgr::IsOpaque () {
-	
-	assert ( this->mGfxState.GetDefaultFrameBuffer ());
-	return this->mGfxState.GetDefaultFrameBuffer ()->IsOpaque ();
 }
 
 //----------------------------------------------------------------//

@@ -38,7 +38,7 @@ private:
 	void			DrawGrid								( const MOAICellCoord &c0, const MOAICellCoord &c1 );
 
 	//----------------------------------------------------------------//
-	void			MOAIAbstractDrawable_Draw				( int subPrimID );
+	void			MOAIDrawable_Draw						( int subPrimID );
 	bool			MOAINode_ApplyAttrOp					( u32 attrID, MOAIAttribute& attr, u32 op );
 	void			MOAINode_Update							();
 	void			MOAIPartitionHull_AddToSortBuffer		( MOAIPartitionResultBuffer& buffer, u32 key = 0 );

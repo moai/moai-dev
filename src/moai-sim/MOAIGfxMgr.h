@@ -94,7 +94,6 @@ public:
 	void			DetectContext			();
 	void			DetectFramebuffer		();
 	
-	bool			IsOpaque				();
 	u32				LogErrors				();
 	
 					MOAIGfxMgr				();
