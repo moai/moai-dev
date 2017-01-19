@@ -5,6 +5,7 @@
 #include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAIActionTree.h>
 #include <moai-sim/MOAISim.h>
+#include <moai-sim/strings.h>
 
 //================================================================//
 // MOAIActionStackMgr

@@ -5,6 +5,7 @@
 #define	MOAI_SIM_HEADERS_H
 
 #include <moai-sim/pch.h>
+#include <moai-sim/strings.h>
 
 #include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAIActionTree.h>

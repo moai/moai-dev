@@ -6,6 +6,7 @@
 #include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAISingleTexture.h>
+#include <moai-sim/strings.h>
 
 //================================================================//
 // local

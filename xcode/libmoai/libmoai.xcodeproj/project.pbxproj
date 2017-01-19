@@ -2655,6 +2655,8 @@
 		CD5F97051C2BD279000FA476 /* kiss_fft.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5F96FE1C2BD279000FA476 /* kiss_fft.h */; };
 		CD5F97061C2BD279000FA476 /* kissfft.hh in Headers */ = {isa = PBXBuildFile; fileRef = CD5F96FF1C2BD279000FA476 /* kissfft.hh */; };
 		CD5F97071C2BD279000FA476 /* kissfft.hh in Headers */ = {isa = PBXBuildFile; fileRef = CD5F96FF1C2BD279000FA476 /* kissfft.hh */; };
+		CD63A5DC1E30D99A00A26F6B /* strings.h in Headers */ = {isa = PBXBuildFile; fileRef = CD63A5DB1E30D99A00A26F6B /* strings.h */; };
+		CD63A5DD1E30D99A00A26F6B /* strings.h in Headers */ = {isa = PBXBuildFile; fileRef = CD63A5DB1E30D99A00A26F6B /* strings.h */; };
 		CD67B45C1B264C51004298CF /* MOAISelectionMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD67B45B1B264C51004298CF /* MOAISelectionMesh.h */; };
 		CD67B45D1B264C51004298CF /* MOAISelectionMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD67B45B1B264C51004298CF /* MOAISelectionMesh.h */; };
 		CD6891C91DC93D510086B16B /* ZLRtti.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD6891C71DC93D510086B16B /* ZLRtti.cpp */; };
@@ -7198,6 +7200,7 @@
 		CD5F96FD1C2BD279000FA476 /* kiss_fft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = kiss_fft.c; path = ../../3rdparty/kissfft/kiss_fft.c; sourceTree = "<group>"; };
 		CD5F96FE1C2BD279000FA476 /* kiss_fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kiss_fft.h; path = ../../3rdparty/kissfft/kiss_fft.h; sourceTree = "<group>"; };
 		CD5F96FF1C2BD279000FA476 /* kissfft.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = kissfft.hh; path = ../../3rdparty/kissfft/kissfft.hh; sourceTree = "<group>"; };
+		CD63A5DB1E30D99A00A26F6B /* strings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = strings.h; sourceTree = "<group>"; };
 		CD67B45B1B264C51004298CF /* MOAISelectionMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAISelectionMesh.h; sourceTree = "<group>"; };
 		CD67B45E1B264C9C004298CF /* MOAIDeckProxyBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIDeckProxyBase.cpp; sourceTree = "<group>"; };
 		CD67B45F1B264C9C004298CF /* MOAIDeckProxyBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDeckProxyBase.h; sourceTree = "<group>"; };
@@ -10099,6 +10102,7 @@
 				89BE6FF2173AD0CA00DFE837 /* MOAISim.h */,
 				89BE7022173AD0CB00DFE837 /* pch.cpp */,
 				89BE7023173AD0CB00DFE837 /* pch.h */,
+				CD63A5DB1E30D99A00A26F6B /* strings.h */,
 			);
 			path = "moai-sim";
 			sourceTree = "<group>";
@@ -14808,6 +14812,7 @@
 				CD4C3E14180A63BB00C02381 /* MOAIDebugLines.h in Headers */,
 				CD4C3E6C180A63BB00C02381 /* MOAIParticleCallbackPlugin.h in Headers */,
 				CD48CF241A12F8F70029F932 /* MOAIRegion.h in Headers */,
+				CD63A5DC1E30D99A00A26F6B /* strings.h in Headers */,
 				CD4C3E84180A63BB00C02381 /* MOAIPartitionLevel.h in Headers */,
 				CD4C3ED4180A63BB00C02381 /* MOAITextureBase.h in Headers */,
 				CD4C3E8E180A63BB00C02381 /* MOAIPathTerrainDeck.h in Headers */,
@@ -14952,6 +14957,7 @@
 				CD4C409B180A63C200C02381 /* MOAINodeMgr.h in Headers */,
 				CD4C4127180A63C200C02381 /* MOAIVertexFormat.h in Headers */,
 				CD4C40EB180A63C200C02381 /* MOAIShader.h in Headers */,
+				CD63A5DD1E30D99A00A26F6B /* strings.h in Headers */,
 				CD73A5FF188F0AD200DFACDB /* MOAICollisionProp.h in Headers */,
 				CD4C4067180A63C200C02381 /* MOAIGfxResource.h in Headers */,
 				CD4C40DF180A63C200C02381 /* MOAIDrawable.h in Headers */,

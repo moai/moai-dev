@@ -17,6 +17,7 @@
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 #include <moai-sim/MOAIViewport.h>
+#include <moai-sim/strings.h>
 
 //================================================================//
 // local

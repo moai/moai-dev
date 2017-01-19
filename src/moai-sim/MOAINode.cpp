@@ -6,6 +6,7 @@
 #include <moai-sim/MOAINode.h>
 #include <moai-sim/MOAINodeMgr.h>
 #include <moai-sim/MOAISim.h>
+#include <moai-sim/strings.h>
 
 //================================================================//
 // MOAIDepLink
