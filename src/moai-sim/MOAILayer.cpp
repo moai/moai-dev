@@ -852,6 +852,7 @@ MOAILayer::~MOAILayer () {
 
 	this->mCamera.Set ( *this, 0 );
 	this->mViewport.Set ( *this, 0 );
+	this->mPartition.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//

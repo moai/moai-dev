@@ -22209,6 +22209,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"../../src/zl-vfs\"",
+					"\"../../src/config\"",
 					"\"../../src/config-default\"",
 					"\"../../src\"",
 					"\"../../3rdparty\"",
@@ -23282,6 +23283,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"../../src/zl-vfs\"",
+					"\"../../src/config\"",
 					"\"../../src/config-default\"",
 					"\"../../src\"",
 					"\"../../3rdparty\"",
@@ -28001,6 +28003,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"../../src/zl-vfs\"",
+					"\"../../src/config\"",
 					"\"../../src/config-default\"",
 					"\"../../src\"",
 					"\"../../3rdparty\"",
