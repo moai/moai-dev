@@ -937,6 +937,8 @@ MOAITextLabel::MOAITextLabel () :
 	this->mLayoutRules.SetOwner ( this );
 
 	//this->mBlendMode.SetBlend ( ZGL_BLEND_FACTOR_SRC_ALPHA, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
+	
+	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAITextLabel >( TOTAL_DEBUG_LINE_STYLES );
 }
 
 //----------------------------------------------------------------//
@@ -1162,60 +1164,60 @@ void MOAITextLabel::MOAIDrawable_Draw ( int subPrimID ) {
 void MOAITextLabel::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
-	MOAIGraphicsPropBase::DrawDebug ( subPrimID );
-
-	if ( !this->IsVisible ()) return;
-	if ( this->IsClear ()) return;
-
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	
-	ZLMatrix4x4 worldDrawingMtx = this->GetWorldDrawingMtx ();
-	
-	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX, worldDrawingMtx );
-	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
-	
-	this->mLayout.DrawDebug ();
-	
-	MOAIDraw& draw = MOAIDraw::Get ();
-	UNUSED ( draw ); // mystery warning in vs2008
-	draw.Bind ();
-	
-	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
-	
-	if (( this->mLayout.mLayoutBounds.Area () > 0.0f ) && debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LAYOUT_BOUNDS )) {
-		
-		draw.DrawRectOutline ( this->mLayout.mLayoutBounds );
-	}
-	
-	if (( this->mLayout.mGlyphBounds.Area () > 0.0f ) && debugLines.Bind ( MOAIDebugLines::TEXT_BOX_GLYPH_BOUNDS )) {
-		
-		draw.DrawRectOutline ( this->mLayout.mGlyphBounds );
-	}
-	
-	ZLRect frame = this->mLayoutRules.GetFrame ();
-	
-	if ( frame.Area () > 0.0f ) {
-	
-		frame.Offset ( -this->mLayout.mXOffset, -this->mLayout.mYOffset );
-		
-		if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX )) {
-		
-			draw.DrawRectOutline ( frame );
-		}
-		
-		if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LIMITS )) {
-			
-			if ( this->mLayoutRules.GetLimitHeight ()) {
-				draw.DrawLine ( frame.mXMin, frame.mYMin, frame.mXMax, frame.mYMin );
-				draw.DrawLine ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMax );
-			}
-			
-			if ( this->mLayoutRules.GetLimitWidth ()) {
-				draw.DrawLine ( frame.mXMin, frame.mYMin, frame.mXMin, frame.mYMax );
-				draw.DrawLine ( frame.mXMax, frame.mYMin, frame.mXMax, frame.mYMax );
-			}
-		}
-	}
+//	MOAIGraphicsPropBase::DrawDebug ( subPrimID );
+//
+//	if ( !this->IsVisible ()) return;
+//	if ( this->IsClear ()) return;
+//
+//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+//	
+//	ZLMatrix4x4 worldDrawingMtx = this->GetWorldDrawingMtx ();
+//	
+//	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX, worldDrawingMtx );
+//	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
+//	
+//	this->mLayout.DrawDebug ();
+//	
+//	MOAIDraw& draw = MOAIDraw::Get ();
+//	UNUSED ( draw ); // mystery warning in vs2008
+//	draw.Bind ();
+//	
+//	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
+//	
+//	if (( this->mLayout.mLayoutBounds.Area () > 0.0f ) && debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LAYOUT_BOUNDS )) {
+//		
+//		draw.DrawRectOutline ( this->mLayout.mLayoutBounds );
+//	}
+//	
+//	if (( this->mLayout.mGlyphBounds.Area () > 0.0f ) && debugLines.Bind ( MOAIDebugLines::TEXT_BOX_GLYPH_BOUNDS )) {
+//		
+//		draw.DrawRectOutline ( this->mLayout.mGlyphBounds );
+//	}
+//	
+//	ZLRect frame = this->mLayoutRules.GetFrame ();
+//	
+//	if ( frame.Area () > 0.0f ) {
+//	
+//		frame.Offset ( -this->mLayout.mXOffset, -this->mLayout.mYOffset );
+//		
+//		if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX )) {
+//		
+//			draw.DrawRectOutline ( frame );
+//		}
+//		
+//		if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LIMITS )) {
+//			
+//			if ( this->mLayoutRules.GetLimitHeight ()) {
+//				draw.DrawLine ( frame.mXMin, frame.mYMin, frame.mXMax, frame.mYMin );
+//				draw.DrawLine ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMax );
+//			}
+//			
+//			if ( this->mLayoutRules.GetLimitWidth ()) {
+//				draw.DrawLine ( frame.mXMin, frame.mYMin, frame.mXMin, frame.mYMax );
+//				draw.DrawLine ( frame.mXMax, frame.mYMin, frame.mXMax, frame.mYMax );
+//			}
+//		}
+//	}
 }
 
 //----------------------------------------------------------------//

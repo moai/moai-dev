@@ -277,57 +277,57 @@ void MOAITextLayout::Draw ( u32 reveal, MOAIShader* defaultShader, bool useSprit
 //----------------------------------------------------------------//
 void MOAITextLayout::DrawDebug () {
 
-	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
-	
-	MOAIDraw& draw = MOAIDraw::Get ();
-	UNUSED ( draw ); // mystery warning in vs2008
-	
-	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_GLYPHS )) {
-	
-		size_t size = this->mSprites.GetTop ();
-		for ( size_t i = 0; i < size; ++i ) {
-			const MOAITextSprite& sprite = this->mSprites [ i ];
-			
-			// TODO: change up the way padding works - should be innate to the glyph
-			ZLRect glyphRect = sprite.mGlyph->GetGlyphRect ( sprite.mPen.mX, sprite.mPen.mY, sprite.mScale.mX, sprite.mScale.mY );
-			
-			const ZLRect& padding = sprite.mStyle->mPadding;
-			glyphRect.mXMin += padding.mXMin;
-			glyphRect.mYMin += padding.mYMin;
-			glyphRect.mXMax += padding.mXMax;
-			glyphRect.mYMax += padding.mYMax;
-			
-			draw.DrawRectOutline ( glyphRect );
-		}
-	}
-	
-	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LINES_GLYPH_BOUNDS )) {
-		
-		size_t totalLines = this->mLines.GetTop ();
-		for ( size_t i = 0; i < totalLines; ++i ) {
-			MOAITextLine& line = this->mLines [ i ];
-			draw.DrawRectOutline ( line.mGlyphBounds );
-		}
-	}
-	
-	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LINES_LAYOUT_BOUNDS )) {
-		
-		size_t totalLines = this->mLines.GetTop ();
-		for ( size_t i = 0; i < totalLines; ++i ) {
-			MOAITextLine& line = this->mLines [ i ];
-			draw.DrawRectOutline ( line.mLayoutBounds );
-		}
-	}
-	
-	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_BASELINES )) {
-		
-		size_t totalLines = this->mLines.GetTop ();
-		for ( size_t i = 0; i < totalLines; ++i ) {
-			MOAITextLine& line = this->mLines [ i ];
-			float y = line.mOrigin.mY;
-			draw.DrawLine ( line.mLayoutBounds.mXMin, y, line.mLayoutBounds.mXMax, y );
-		}
-	}
+//	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
+//	
+//	MOAIDraw& draw = MOAIDraw::Get ();
+//	UNUSED ( draw ); // mystery warning in vs2008
+//	
+//	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_GLYPHS )) {
+//	
+//		size_t size = this->mSprites.GetTop ();
+//		for ( size_t i = 0; i < size; ++i ) {
+//			const MOAITextSprite& sprite = this->mSprites [ i ];
+//			
+//			// TODO: change up the way padding works - should be innate to the glyph
+//			ZLRect glyphRect = sprite.mGlyph->GetGlyphRect ( sprite.mPen.mX, sprite.mPen.mY, sprite.mScale.mX, sprite.mScale.mY );
+//			
+//			const ZLRect& padding = sprite.mStyle->mPadding;
+//			glyphRect.mXMin += padding.mXMin;
+//			glyphRect.mYMin += padding.mYMin;
+//			glyphRect.mXMax += padding.mXMax;
+//			glyphRect.mYMax += padding.mYMax;
+//			
+//			draw.DrawRectOutline ( glyphRect );
+//		}
+//	}
+//	
+//	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LINES_GLYPH_BOUNDS )) {
+//		
+//		size_t totalLines = this->mLines.GetTop ();
+//		for ( size_t i = 0; i < totalLines; ++i ) {
+//			MOAITextLine& line = this->mLines [ i ];
+//			draw.DrawRectOutline ( line.mGlyphBounds );
+//		}
+//	}
+//	
+//	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LINES_LAYOUT_BOUNDS )) {
+//		
+//		size_t totalLines = this->mLines.GetTop ();
+//		for ( size_t i = 0; i < totalLines; ++i ) {
+//			MOAITextLine& line = this->mLines [ i ];
+//			draw.DrawRectOutline ( line.mLayoutBounds );
+//		}
+//	}
+//	
+//	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_BASELINES )) {
+//		
+//		size_t totalLines = this->mLines.GetTop ();
+//		for ( size_t i = 0; i < totalLines; ++i ) {
+//			MOAITextLine& line = this->mLines [ i ];
+//			float y = line.mOrigin.mY;
+//			draw.DrawLine ( line.mLayoutBounds.mXMin, y, line.mLayoutBounds.mXMax, y );
+//		}
+//	}
 }
 
 //----------------------------------------------------------------//

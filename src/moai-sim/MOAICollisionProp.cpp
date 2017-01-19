@@ -89,55 +89,55 @@ void MOAICollisionProp::ClearOverlapLink ( MOAICollisionProp& other ) {
 //----------------------------------------------------------------//
 void MOAICollisionProp::DrawDebug () {
 
-	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
-
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	
-	MOAIDraw& draw = MOAIDraw::Get ();
-	UNUSED ( draw ); // mystery warning in vs2008
-	
-	draw.Bind ();
-
-	if ( debugLines.Bind ( MOAIDebugLines::PROP_WORLD_BOUNDS )) {
-		gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_PROJ_MTX ));
-		draw.DrawBoxOutline ( this->GetBounds ());
-	}
-
-	bool visible = false;
-	
-	if ( this->IsActive ()) {
-		
-		if ( this->mOverlapLinks ) {
-			visible = debugLines.Bind ( MOAIDebugLines::COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS );
-		}
-		
-		if ( this->mTouched == this->mOverlapPass && !visible ) {
-			visible = debugLines.Bind ( MOAIDebugLines::COLLISION_ACTIVE_TOUCHED_PROP_BOUNDS );
-		}
-		
-		if ( !visible ) {
-			visible = debugLines.Bind ( MOAIDebugLines::COLLISION_ACTIVE_PROP_BOUNDS );
-		}
-	}
-	
-	if ( this->mOverlapLinks && !visible ) {
-		visible = debugLines.Bind ( MOAIDebugLines::COLLISION_OVERLAP_PROP_BOUNDS );
-	}
-	
-	if ( visible ) {
-		
-		MOAICollisionShape* shape = this->GetCollisionShape ();
-		
-		if ( shape ) {
-			const ZLAffine3D& localToWorldMtx = this->GetLocalToWorldMtx ();
-			gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX, localToWorldMtx );
-			shape->Draw ( localToWorldMtx );
-		}
-		else {
-			gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_PROJ_MTX ));
-			draw.DrawBoxOutline ( this->GetBounds ());
-		}
-	}
+//	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
+//
+//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+//	
+//	MOAIDraw& draw = MOAIDraw::Get ();
+//	UNUSED ( draw ); // mystery warning in vs2008
+//	
+//	draw.Bind ();
+//
+//	if ( debugLines.Bind ( MOAIDebugLines::PROP_WORLD_BOUNDS )) {
+//		gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_PROJ_MTX ));
+//		draw.DrawBoxOutline ( this->GetBounds ());
+//	}
+//
+//	bool visible = false;
+//	
+//	if ( this->IsActive ()) {
+//		
+//		if ( this->mOverlapLinks ) {
+//			visible = debugLines.Bind ( MOAIDebugLines::COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS );
+//		}
+//		
+//		if ( this->mTouched == this->mOverlapPass && !visible ) {
+//			visible = debugLines.Bind ( MOAIDebugLines::COLLISION_ACTIVE_TOUCHED_PROP_BOUNDS );
+//		}
+//		
+//		if ( !visible ) {
+//			visible = debugLines.Bind ( MOAIDebugLines::COLLISION_ACTIVE_PROP_BOUNDS );
+//		}
+//	}
+//	
+//	if ( this->mOverlapLinks && !visible ) {
+//		visible = debugLines.Bind ( MOAIDebugLines::COLLISION_OVERLAP_PROP_BOUNDS );
+//	}
+//	
+//	if ( visible ) {
+//		
+//		MOAICollisionShape* shape = this->GetCollisionShape ();
+//		
+//		if ( shape ) {
+//			const ZLAffine3D& localToWorldMtx = this->GetLocalToWorldMtx ();
+//			gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX, localToWorldMtx );
+//			shape->Draw ( localToWorldMtx );
+//		}
+//		else {
+//			gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_PROJ_MTX ));
+//			draw.DrawBoxOutline ( this->GetBounds ());
+//		}
+//	}
 }
 
 //----------------------------------------------------------------//
@@ -170,6 +170,8 @@ MOAICollisionProp::MOAICollisionProp () :
 	RTTI_END
 	
 	this->mActiveListLink.Data ( this );
+	
+	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAICollisionProp >( TOTAL_DEBUG_LINE_STYLES );
 }
 
 //----------------------------------------------------------------//

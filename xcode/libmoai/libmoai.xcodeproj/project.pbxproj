@@ -8726,6 +8726,8 @@
 		CDA1D0901D1B76360006C5E5 /* MOAIImageFormatTga.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIImageFormatTga.cpp; path = "moai-image-tga/MOAIImageFormatTga.cpp"; sourceTree = "<group>"; };
 		CDA1D0911D1B76360006C5E5 /* MOAIImageFormatTga.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIImageFormatTga.h; path = "moai-image-tga/MOAIImageFormatTga.h"; sourceTree = "<group>"; };
 		CDA1D0CE1D1BE5CF0006C5E5 /* tga_reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tga_reader.h; path = "../../3rdparty/TGAReader-config/tga_reader.h"; sourceTree = "<group>"; };
+		CDA860A01E3052C200F35CAC /* MOAIDebugLines-bak.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "MOAIDebugLines-bak.cpp"; sourceTree = "<group>"; };
+		CDA860A11E3052C200F35CAC /* MOAIDebugLines-bak.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOAIDebugLines-bak.h"; sourceTree = "<group>"; };
 		CDAC02BC192407E700392FAB /* MOAIHttpTaskNSURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIHttpTaskNSURL.h; sourceTree = "<group>"; };
 		CDAC02BD192407E700392FAB /* MOAIHttpTaskNSURL.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MOAIHttpTaskNSURL.mm; sourceTree = "<group>"; };
 		CDADCCF61A3576A10029FEDA /* MOAITrace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITrace.cpp; sourceTree = "<group>"; };
@@ -10067,10 +10069,11 @@
 				CDE9851B18975ADA001827F9 /* action */,
 				CDE43FF41AB7A8D000C745DB /* camera */,
 				CD8DD76419195F5A0088EA60 /* collision */,
+				CDA8609F1E30527100F35CAC /* debug lines */,
 				CDE9851818975AA7001827F9 /* deck */,
 				CDE9851918975AB6001827F9 /* font */,
 				CD13524B189738B000A39A74 /* graphics */,
-				CD2BA7A01B2A20BB0010C399 /* graphics cache */,
+				CD2BA7A01B2A20BB0010C399 /* graphics system */,
 				CD8DD76819195FFB0088EA60 /* grid */,
 				CDE36E4D1A5F4DAB0095E863 /* image */,
 				CD7F150318F5B13100BF74AE /* input */,
@@ -10083,6 +10086,7 @@
 				CD8DD76719195FDD0088EA60 /* profiler */,
 				CD1D85A61E1B5DFC0089FFAD /* prop */,
 				CD1D85BC1E1B63330089FFAD /* prop-graphics */,
+				CDA8609E1E304EC300F35CAC /* render pass */,
 				CDB718F51A4BA785003DFFBA /* shader */,
 				CDE9851A18975ABD001827F9 /* text */,
 				CD67857D189830DB007C7D2B /* texture */,
@@ -10463,23 +10467,13 @@
 				89BE6F31173AD0CA00DFE837 /* MOAIBlendMode.h */,
 				89BE6F42173AD0CA00DFE837 /* MOAIColor.cpp */,
 				89BE6F43173AD0CA00DFE837 /* MOAIColor.h */,
-				89BE6F48173AD0CA00DFE837 /* MOAIDebugLines.cpp */,
-				89BE6F49173AD0CA00DFE837 /* MOAIDebugLines.h */,
-				89BE6F4E173AD0CA00DFE837 /* MOAIDraw.cpp */,
-				89BE6F4F173AD0CA00DFE837 /* MOAIDraw.h */,
 				CD6A30C31E2A0F0000C926EE /* MOAIDrawable.cpp */,
 				89BE6FE2173AD0CA00DFE837 /* MOAIDrawable.h */,
 				89BE6F5B173AD0CA00DFE837 /* MOAIFrameBuffer.cpp */,
 				89BE6F5C173AD0CA00DFE837 /* MOAIFrameBuffer.h */,
-				89BE6F8D173AD0CA00DFE837 /* MOAILayer.cpp */,
-				89BE6F8E173AD0CA00DFE837 /* MOAILayer.h */,
 				89BE6FDF173AD0CA00DFE837 /* MOAIQuadBrush.cpp */,
 				89BE6FE0173AD0CA00DFE837 /* MOAIQuadBrush.h */,
 				89BE6FE5173AD0CA00DFE837 /* MOAIScissorRect.cpp */,
-				CD6A30BD1E29B57900C926EE /* MOAIRenderPass.cpp */,
-				CD6A30BE1E29B57900C926EE /* MOAIRenderPass.h */,
-				CD6A30C61E2A317D00C926EE /* MOAIRenderPassBase.cpp */,
-				CD6A30C71E2A317D00C926EE /* MOAIRenderPassBase.h */,
 				89BE6FE6173AD0CA00DFE837 /* MOAIScissorRect.h */,
 				89BE701E173AD0CB00DFE837 /* MOAIViewport.cpp */,
 				89BE701F173AD0CB00DFE837 /* MOAIViewport.h */,
@@ -10916,17 +10910,17 @@
 			name = "moai-ios";
 			sourceTree = "<group>";
 		};
-		CD2BA7A01B2A20BB0010C399 /* graphics cache */ = {
+		CD2BA7A01B2A20BB0010C399 /* graphics system */ = {
 			isa = PBXGroup;
 			children = (
+				89BE6F4E173AD0CA00DFE837 /* MOAIDraw.cpp */,
+				89BE6F4F173AD0CA00DFE837 /* MOAIDraw.h */,
 				CD2BA7941B2A16B00010C399 /* MOAIGfxGlobalsCache.cpp */,
 				CD2BA7951B2A16B00010C399 /* MOAIGfxGlobalsCache.h */,
 				89BE6F61173AD0CA00DFE837 /* MOAIGfxMgr.cpp */,
 				89BE6F62173AD0CA00DFE837 /* MOAIGfxMgr.h */,
 				CD2BA79A1B2A20A80010C399 /* MOAIGfxPipelineClerk.cpp */,
 				CD2BA79B1B2A20A80010C399 /* MOAIGfxPipelineClerk.h */,
-				89BE6FE3173AD0CA00DFE837 /* MOAIRenderMgr.cpp */,
-				89BE6FE4173AD0CA00DFE837 /* MOAIRenderMgr.h */,
 				89BE6F69173AD0CA00DFE837 /* MOAIGfxResource.cpp */,
 				89BE6F6A173AD0CA00DFE837 /* MOAIGfxResource.h */,
 				CD1AEB441A0F785C005512C8 /* MOAIGfxResourceClerk.cpp */,
@@ -10936,7 +10930,7 @@
 				CD2BA7A11B2A2D750010C399 /* MOAIGfxVertexCache.cpp */,
 				CD2BA7A21B2A2D750010C399 /* MOAIGfxVertexCache.h */,
 			);
-			name = "graphics cache";
+			name = "graphics system";
 			sourceTree = "<group>";
 		};
 		CD2E468B1C517FAC008E22A1 /* moai-harfbuzz */ = {
@@ -13957,6 +13951,32 @@
 				CDA1D0911D1B76360006C5E5 /* MOAIImageFormatTga.h */,
 			);
 			name = "moai-image-tga";
+			sourceTree = "<group>";
+		};
+		CDA8609E1E304EC300F35CAC /* render pass */ = {
+			isa = PBXGroup;
+			children = (
+				89BE6F8D173AD0CA00DFE837 /* MOAILayer.cpp */,
+				89BE6F8E173AD0CA00DFE837 /* MOAILayer.h */,
+				89BE6FE3173AD0CA00DFE837 /* MOAIRenderMgr.cpp */,
+				89BE6FE4173AD0CA00DFE837 /* MOAIRenderMgr.h */,
+				CD6A30BD1E29B57900C926EE /* MOAIRenderPass.cpp */,
+				CD6A30BE1E29B57900C926EE /* MOAIRenderPass.h */,
+				CD6A30C61E2A317D00C926EE /* MOAIRenderPassBase.cpp */,
+				CD6A30C71E2A317D00C926EE /* MOAIRenderPassBase.h */,
+			);
+			name = "render pass";
+			sourceTree = "<group>";
+		};
+		CDA8609F1E30527100F35CAC /* debug lines */ = {
+			isa = PBXGroup;
+			children = (
+				CDA860A01E3052C200F35CAC /* MOAIDebugLines-bak.cpp */,
+				CDA860A11E3052C200F35CAC /* MOAIDebugLines-bak.h */,
+				89BE6F48173AD0CA00DFE837 /* MOAIDebugLines.cpp */,
+				89BE6F49173AD0CA00DFE837 /* MOAIDebugLines.h */,
+			);
+			name = "debug lines";
 			sourceTree = "<group>";
 		};
 		CDB718A81A44E71D003DFFBA /* socket */ = {

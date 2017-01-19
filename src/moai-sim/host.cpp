@@ -396,7 +396,7 @@ void AKUSimContextInitialize () {
 	MOAIVertexFormatMgr::Affirm ();
 	MOAIShaderMgr::Affirm ();
 	MOAIDraw::Affirm ();
-	MOAIDebugLines::Affirm ();
+	MOAIDebugLinesMgr::Affirm ();
 	MOAIPartitionResultMgr::Affirm ();
 	MOAINodeMgr::Affirm ();
 	MOAIInputMgr::Affirm ();
@@ -422,7 +422,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIColor )
 	REGISTER_LUA_CLASS ( MOAICompassSensor )
 	REGISTER_LUA_CLASS ( MOAICoroutine )
-	REGISTER_LUA_CLASS ( MOAIDebugLines )
+	REGISTER_LUA_CLASS ( MOAIDebugLinesMgr )
 	//REGISTER_LUA_CLASS ( MOAIDeckRemapper )
 	REGISTER_LUA_CLASS ( MOAIDraw )
 	REGISTER_LUA_CLASS ( MOAIEaseDriver )

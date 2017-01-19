@@ -22,13 +22,13 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	TYPE* key_for_value ( const KEY& key ) {
+	TYPE value_for_key ( const KEY& key, TYPE fallback ) {
 	
 		iterator it = this->find ( key );
 		if ( it != this->end ()) {
-			return &it->second;
+			return it->second;
 		}
-		return 0;
+		return fallback;
 	}
 	
 	//----------------------------------------------------------------//
@@ -38,32 +38,6 @@ public:
 	//----------------------------------------------------------------//
 	STLMap ( const COMPARE& comp ) :
 		std::map < KEY, TYPE, COMPARE >( comp ) {
-	}
-};
-
-//================================================================//
-// STLMap < TYPE* >
-//================================================================//
-template < typename KEY, typename TYPE, typename COMPARE >
-class STLMap < KEY, TYPE*, COMPARE > :
-	public std::map < KEY, TYPE*, COMPARE > {
-public:
-
-	typedef typename std::map < KEY, TYPE* >::iterator iterator;
-
-	//----------------------------------------------------------------//
-	bool contains ( const KEY& key ) const {
-		return ( this->find ( key ) != this->end ());
-	}
-
-	//----------------------------------------------------------------//
-	TYPE* value_for_key ( const KEY& key ) {
-	
-		iterator it = this->find ( key );
-		if ( it != this->end ()) {
-			return it->second;
-		}
-		return 0;
 	}
 };
 

@@ -803,8 +803,11 @@ ZLBounds MOAISpriteDeck2D::MOAIDeck_GetBounds ( u32 idx ) {
 			bounds.mStatus = ZLBounds::ZL_BOUNDS_OK;
 		}
 	}
-
-	bounds.Init ( -0.5f, -0.5f, 0.0f, 0.5f, 0.5f, 0.0f );
+	else {
+	
+		bounds.Init ( -0.5f, -0.5f, 0.0f, 0.5f, 0.5f, 0.0f );
+	}
+	
 	bounds.mStatus = ZLBounds::ZL_BOUNDS_OK;
 	return bounds;
 }

@@ -236,7 +236,7 @@ ZLMatrix4x4 MOAIGraphicsPropBase::GetWorldDrawingMtx () {
 			view.Transform ( worldLoc );	// perspective view
 			proj.Project ( worldLoc );		// perspective projection
 			
-			// now we're going to "unproject" the poing back, going from window space to *ortho* space
+			// now we're going to "unproject" the point back, going from window space to *ortho* space
 			// this is as though we had projected the point using a 2D window matrix instead of the camera matrix
 			
 			invWindowMtx.Transform ( worldLoc );
@@ -373,6 +373,8 @@ MOAIGraphicsPropBase::MOAIGraphicsPropBase () :
 	RTTI_END
 	
 	this->mDisplayFlags = DEFAULT_FLAGS;
+	
+	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAIGraphicsPropBase >( TOTAL_DEBUG_LINE_STYLES );
 }
 
 //----------------------------------------------------------------//
@@ -412,6 +414,13 @@ void MOAIGraphicsPropBase::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIPartitionHull::RegisterLuaClass ( state );
 	MOAIColor::RegisterLuaClass ( state );
 	MOAIMaterialBatchHolder::RegisterLuaClass ( state );
+	
+	state.SetField ( -1, "DEBUG_DRAW_PARTITION_CELLS",			MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( DEBUG_DRAW_PARTITION_CELLS ));
+	state.SetField ( -1, "DEBUG_DRAW_PARTITION_PADDED_CELLS",	MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( DEBUG_DRAW_PARTITION_PADDED_CELLS ));
+	state.SetField ( -1, "DEBUG_DRAW_AXIS",						MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( DEBUG_DRAW_AXIS ));
+	state.SetField ( -1, "DEBUG_DRAW_DIAGONALS",				MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( DEBUG_DRAW_DIAGONALS ));
+	state.SetField ( -1, "DEBUG_DRAW_MODEL_BOUNDS",				MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( DEBUG_DRAW_MODEL_BOUNDS ));
+	state.SetField ( -1, "DEBUG_DRAW_WORLD_BOUNDS",				MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( DEBUG_DRAW_WORLD_BOUNDS ));
 	
 	state.SetField ( -1, "ATTR_SCISSOR_RECT",			MOAIGraphicsPropBaseAttr::Pack ( ATTR_SCISSOR_RECT ));
 
@@ -557,7 +566,9 @@ void MOAIGraphicsPropBase::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	if ( this->GetBoundsStatus () != BOUNDS_OK ) return;
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
+	
+	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
+	debugLines.SelectStyleSet < MOAIGraphicsPropBase >();
 	
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
@@ -571,26 +582,26 @@ void MOAIGraphicsPropBase::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	ZLBox modelBounds;
 	this->GetModelBounds ( modelBounds );
 	
-	if ( debugLines.Bind ( MOAIDebugLines::PROP_MODEL_AXIS )) {
+	if ( debugLines.Bind ( DEBUG_DRAW_AXIS )) {
 		draw.DrawBoxAxis ( modelBounds );
 	}
 	
-	if ( debugLines.Bind ( MOAIDebugLines::PROP_MODEL_DIAGONALS )) {
+	if ( debugLines.Bind ( DEBUG_DRAW_DIAGONALS )) {
 		draw.DrawBoxDiagonals ( modelBounds );
 	}
 	
-	if ( debugLines.Bind ( MOAIDebugLines::PROP_MODEL_BOUNDS )) {
+	if ( debugLines.Bind ( DEBUG_DRAW_MODEL_BOUNDS )) {
 		draw.DrawBoxOutline ( modelBounds );
 	}
 	
 	// clear out the world transform (draw in world space)
 	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_PROJ_MTX ));
 	
-	if ( debugLines.Bind ( MOAIDebugLines::PROP_WORLD_BOUNDS )) {
+	if ( debugLines.Bind ( DEBUG_DRAW_WORLD_BOUNDS )) {
 		draw.DrawBoxOutline ( this->GetBounds ());
 	}
 	
-	if ( debugLines.IsVisible ( MOAIDebugLines::PARTITION_CELLS ) || debugLines.IsVisible ( MOAIDebugLines::PARTITION_PADDED_CELLS )) {
+	if ( debugLines.IsVisible ( DEBUG_DRAW_PARTITION_CELLS ) || debugLines.IsVisible ( DEBUG_DRAW_PARTITION_CELLS )) {
 		
 		ZLRect cellRect;
 		ZLRect paddedRect;
@@ -598,13 +609,13 @@ void MOAIGraphicsPropBase::MOAIDrawable_DrawDebug ( int subPrimID ) {
 		if ( this->GetCellRect ( &cellRect, &paddedRect )) {
 			
 			if ( cellRect.Area () != 0.0f ) {
-				if ( debugLines.Bind ( MOAIDebugLines::PARTITION_CELLS )) {
+				if ( debugLines.Bind ( DEBUG_DRAW_PARTITION_CELLS )) {
 					draw.DrawRectOutline ( cellRect );
 				}
 			}
 			
 			if ( paddedRect.Area () != 0.0f ) {
-				if ( debugLines.Bind ( MOAIDebugLines::PARTITION_PADDED_CELLS )) {
+				if ( debugLines.Bind ( DEBUG_DRAW_PARTITION_PADDED_CELLS )) {
 					draw.DrawRectOutline ( paddedRect );
 				}
 			}

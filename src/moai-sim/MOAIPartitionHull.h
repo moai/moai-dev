@@ -90,12 +90,12 @@ private:
 
 protected:
 
-	u32										mFlags;
+	u32					mFlags;
 
-	ZLBox									mBoundsOverride;
-	ZLVec3D									mBoundsPad;
+	ZLBox				mBoundsOverride;
+	ZLVec3D				mBoundsPad;
 
-	u32										mHitGranularity;
+	u32					mHitGranularity;
 
 	//----------------------------------------------------------------//
 	void				AddToSortBuffer				( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
@@ -108,8 +108,8 @@ protected:
 	void				WasRemovedFromPartition		();
 	
 	//----------------------------------------------------------------//
-	bool				MOAINode_ApplyAttrOp						( u32 attrID, MOAIAttribute& attr, u32 op );
-	void				MOAINode_Update								();
+	bool				MOAINode_ApplyAttrOp		( u32 attrID, MOAIAttribute& attr, u32 op );
+	void				MOAINode_Update				();
 	
 public:
 
