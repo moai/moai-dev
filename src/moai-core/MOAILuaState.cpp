@@ -7,8 +7,8 @@
 #include <moai-core/MOAILuaRef.h>
 #include <moai-core/MOAILuaRuntime.h>
 #include <moai-core/MOAILuaState.h>
-#include <moai-core/MOAILogMessages.h>
 #include <moai-core/MOAILuaState-impl.h>
+#include <moai-core/MOAILogMgr.h>
 
 #define LEVELS1	12	// size of the first part of the stack
 #define LEVELS2	10	// size of the second part of the stack
@@ -130,7 +130,7 @@ bool MOAILuaState::CheckParams ( int idx, cc8* format, bool verbose ) {
 				cc8* expectedName = MOAILuaState::GetLuaTypeName ( expected );
 				cc8* gotName = MOAILuaState::GetLuaTypeName ( type );
 			
-				MOAILogF ( *this, ZLLog::LOG_ERROR, MOAILogMessages::MOAI_ParamTypeMismatch_DSS, pos, expectedName, gotName );
+				MOAILogF ( *this, ZLLog::LOG_ERROR, MOAISTRING_ParamTypeMismatch_DSS, pos, expectedName, gotName );
 			}
 			return false;
 		}
@@ -1621,7 +1621,7 @@ int MOAILuaState::RelIndex ( int idx ) {
 
 //----------------------------------------------------------------//
 void MOAILuaState::ReportBadCast ( int idx, cc8* typeName ) {
-	MOAILogF ( *this, ZLLog::LOG_ERROR, MOAILogMessages::MOAI_BadCast_DS, this->AbsIndex ( idx ), typeName );
+	MOAILogF ( *this, ZLLog::LOG_ERROR, MOAISTRING_BadCast_DS, this->AbsIndex ( idx ), typeName );
 }
 
 //----------------------------------------------------------------//

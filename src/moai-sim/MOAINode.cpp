@@ -135,7 +135,7 @@ int MOAINode::_getAttr ( lua_State* L ) {
 		return 1;
 	}
 	
-	MOAILogF ( L, ZLLog::LOG_ERROR, MOAILogMessages::MOAINode_AttributeNotFound );
+	MOAILogF ( L, ZLLog::LOG_ERROR, MOAISTRING_MOAINode_AttributeNotFound );
 	return 0;
 }
 
@@ -214,7 +214,7 @@ int MOAINode::_moveAttr ( lua_State* L ) {
 		return 1;
 	}
 	
-	MOAILogF ( L, ZLLog::LOG_ERROR, MOAILogMessages::MOAINode_AttributeNotFound );
+	MOAILogF ( L, ZLLog::LOG_ERROR, MOAISTRING_MOAINode_AttributeNotFound );
 	return 0;
 }
 
@@ -274,7 +274,7 @@ int MOAINode::_seekAttr ( lua_State* L ) {
 		return 1;
 	}
 	
-	MOAILogF ( L, ZLLog::LOG_ERROR, MOAILogMessages::MOAINode_AttributeNotFound );
+	MOAILogF ( L, ZLLog::LOG_ERROR, MOAISTRING_MOAINode_AttributeNotFound );
 	return 0;
 }
 
@@ -303,7 +303,7 @@ int MOAINode::_setAttr ( lua_State* L ) {
 		self->ScheduleUpdate ();
 	}
 	else {
-		MOAILogF ( L, ZLLog::LOG_ERROR, MOAILogMessages::MOAINode_AttributeNotFound );
+		MOAILogF ( L, ZLLog::LOG_ERROR, MOAISTRING_MOAINode_AttributeNotFound );
 	}
 	
 	return 0;
@@ -336,7 +336,7 @@ int MOAINode::_setAttrLink ( lua_State* L ) {
 		return 0;
 	}
 	
-	MOAILogF ( L, ZLLog::LOG_ERROR, MOAILogMessages::MOAINode_AttributeNotFound );
+	MOAILogF ( L, ZLLog::LOG_ERROR, MOAISTRING_MOAINode_AttributeNotFound );
 	return 0;
 }
 

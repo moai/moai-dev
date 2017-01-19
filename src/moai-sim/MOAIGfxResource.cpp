@@ -121,7 +121,7 @@ void MOAIGfxResource::Affirm () {
 u32 MOAIGfxResource::Bind () {
 
 //	if ( !MOAIGfxMgr::Get ().GetHasContext ()) {
-//		MOAILog ( 0, MOAILogMessages::MOAIGfxResource_MissingDevice );
+//		MOAILog ( 0, MOAISTRING_MOAIGfxResource_MissingDevice );
 //		return false;
 //	}
 

@@ -5,6 +5,7 @@
 #define	MOAI_CORE_HEADERS_H
 
 #include <moai-core/pch.h>
+#include <moai-core/strings.h>
 
 #include <moai-core/MOAILua.h>
 

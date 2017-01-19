@@ -77,7 +77,7 @@ void MOAIInputDevice::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getHardwareInfo",		_getHardwareInfo },
-		{ "new",					MOAILogMessages::_alertNewIsUnsupported },
+		{ "new",					MOAILuaObject::_alertNewIsUnsupported },
 		{ NULL, NULL }
 	};
 

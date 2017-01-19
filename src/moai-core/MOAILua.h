@@ -19,6 +19,5 @@
 #include <moai-core/MOAILuaClass-impl.h>
 
 #include <moai-core/MOAILogMgr.h>
-#include <moai-core/MOAILogMessages.h>
 
 #endif

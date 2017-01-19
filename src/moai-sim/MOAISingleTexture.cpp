@@ -183,7 +183,7 @@ bool MOAISingleTexture::CreateTextureFromImage ( MOAIImage& srcImage ) {
 
 	// warn if not a power of two (if we're supposed to generate mipmaps)
 	if ( this->ShouldGenerateMipmaps () && !image.IsPow2 ()) {
-		MOAILogF ( 0, ZLLog::LOG_WARNING, MOAILogMessages::MOAITexture_NonPowerOfTwo_SDD, ( cc8* )this->mDebugName, this->mWidth, this->mHeight );
+		MOAILogF ( 0, ZLLog::LOG_WARNING, MOAISTRING_MOAITexture_NonPowerOfTwo_SDD, ( cc8* )this->mDebugName, this->mWidth, this->mHeight );
 	}
 
 	// GL_ALPHA

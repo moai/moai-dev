@@ -66,7 +66,7 @@ int MOAIAnimCurveQuat::_setKey ( lua_State* L ) {
 	u32 mode		= state.GetValue < u32 >( 7, ZLInterpolate::kSmooth );
 	float weight	= state.GetValue < float >( 8, 1.0f );
 	
-	if ( MOAILogMessages::CheckIndexPlusOne ( index, self->mKeys.Size (), L )) {
+	if ( MOAILogMgr::CheckIndexPlusOne ( index, self->mKeys.Size (), L )) {
 		
 		self->SetKey ( index, time, mode, weight );
 		self->SetSample ( index, value.mX, value.mY, value.mZ );

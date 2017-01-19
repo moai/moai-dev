@@ -6,7 +6,6 @@
 #include <moai-core/MOAILuaState.h>
 #include <moai-core/MOAIScopedLuaState.h>
 #include <moai-core/MOAILuaRuntime.h>
-#include <moai-core/MOAILogMessages.h>
 #include <moai-core/MOAILuaState-impl.h>
 
 //================================================================//

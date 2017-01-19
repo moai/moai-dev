@@ -6,6 +6,7 @@
 #include <moai-core/MOAILua.h>
 #include <moai-core/MOAISerializer.h>
 #include <moai-core/MOAILuaState-impl.h>
+#include <moai-core/strings.h>
 
 #define FINALIZE_FUNC_NAME "finalize"
 #define MOAI_TAG "moai"
@@ -13,6 +14,13 @@
 //================================================================//
 // local
 //================================================================//
+
+//----------------------------------------------------------------//
+int MOAILuaObject::_alertNewIsUnsupported ( lua_State* L ) {
+
+	MOAILogF ( L, ZLLog::LOG_ERROR, MOAISTRING_NewIsUnsupported );
+	return 0;
+}
 
 //----------------------------------------------------------------//
 int MOAILuaObject::_gc ( lua_State* L ) {

@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <moai-core/MOAILogMgr.h>
-#include <moai-core/MOAILogMessages.h>
 
 #include <moai-core/MOAILuaState-impl.h>
 #include <moai-core/MOAILuaClass-impl.h>
@@ -114,32 +113,6 @@ int MOAILogMgr::_openFile ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	registerLogMessage
-	@text	Register a format string to handle a log message. Register
-			an empty string to hide messages.
-
-	@in		number messageID
-	@opt	string formatString		Default value is an empty string.
-	@opt	number level			One of MOAILogMgr.LOG_ERROR, MOAILogMgr.LOG_WARNING, MOAILogMgr.LOG_STATUS.
-									Default value is MOAILogMgr.LOG_STATUS.
-	@out	nil
-*/
-int MOAILogMgr::_registerLogMessage ( lua_State* L ) {
-	UNUSED ( L );
-
-	MOAILuaState state ( L );
-	if ( !state.CheckParams ( 1, "N" )) return 0;
-
-	u32 messageID		= state.GetValue < u32 >( 1, 0 );
-	cc8* formatString	= state.GetValue < cc8* >( 2, "" );
-	u32 level			= state.GetValue < u32 >( 3, ZLLog::LOG_STATUS );
-
-	MOAILogMgr::Get ().RegisterLogMessage ( messageID, level, formatString );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@lua	setLogLevel
 	@text	Set the logging level.
 
@@ -178,6 +151,57 @@ int MOAILogMgr::_setTypeCheckLuaParams ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+bool MOAILogMgr::CheckFileExists ( cc8* filename, lua_State* L ) {
+	
+	if ( ZLFileSys::CheckFileExists ( filename )) {
+		return true;
+	}
+	
+	STLString expand = ZLFileSys::GetAbsoluteFilePath ( filename );
+	MOAILogF ( L, ZLLog::LOG_ERROR, MOAISTRING_FileNotFound_S, expand.str ());
+	
+	return false;
+}
+
+//----------------------------------------------------------------//
+bool MOAILogMgr::CheckIndex ( size_t idx, size_t size, lua_State* L ) {
+
+	if ( size == 0 ) {
+		MOAILogF ( L, ZLLog::LOG_ERROR, MOAISTRING_IndexNoReserved );
+		return false;
+	}
+	else if ( !( idx < size )) {
+		MOAILogF ( L, ZLLog::LOG_ERROR, MOAISTRING_IndexOutOfRange_DDD, ( u32 )idx, 0, ( u32 )( size - 1 ));
+		return false;
+	}
+	return true;
+}
+
+//----------------------------------------------------------------//
+bool MOAILogMgr::CheckIndexPlusOne ( size_t idx, size_t size, lua_State* L ) {
+
+	if ( size == 0 ) {
+		MOAILogF ( L, ZLLog::LOG_ERROR, MOAISTRING_IndexNoReserved );
+		return false;
+	}
+	else if ( !( idx < size )) {
+		MOAILogF ( L, ZLLog::LOG_ERROR, MOAISTRING_IndexOutOfRange_DDD, idx + 1, 1, size );
+		return false;
+	}
+	return true;
+}
+
+//----------------------------------------------------------------//
+bool MOAILogMgr::CheckReserve ( size_t idx, size_t size, lua_State* L ) {
+
+	if ( !( idx < size )) {
+		MOAILogF ( L, ZLLog::LOG_ERROR, MOAISTRING_IndexNoReserved );
+		return false;
+	}
+	return true;
+}
+
+//----------------------------------------------------------------//
 void MOAILogMgr::CloseFile () {
 
 	if ( this->mFile ) {
@@ -185,17 +209,6 @@ void MOAILogMgr::CloseFile () {
 		this->mFile = 0;
 		ZLLog::Get ().SetRedirect ( 0 );
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAILogMgr::LogF ( lua_State *L, u32 level, u32 messageID, ... ) {
-
-	va_list args;
-	va_start ( args, messageID );
-
-	this->LogV ( L, level, messageID, args );
-
-	va_end ( args );
 }
 
 //----------------------------------------------------------------//
@@ -207,16 +220,6 @@ void MOAILogMgr::LogF ( lua_State *L, u32 level, cc8* message, ... ) {
 	this->LogV ( L, level, message, args );
 
 	va_end ( args );
-}
-
-//----------------------------------------------------------------//
-void MOAILogMgr::LogV ( lua_State *L, u32 level, u32 messageID, va_list args ) {
-
-	MessageMapIt messageMapIt = this->mMessageMap.find ( messageID );
-	if ( messageMapIt != this->mMessageMap.end ()) {
-		MOAILogMessage& message = messageMapIt->second;
-		this->LogV ( L, level, message.mFormatString, args );
-	}
 }
 
 //----------------------------------------------------------------//
@@ -279,20 +282,6 @@ void MOAILogMgr::OpenFile ( cc8* filename ) {
 	}
 }
 
-//----------------------------------------------------------------//
-void MOAILogMgr::RegisterLogMessage ( u32 messageID, u32 level, cc8* formatString ) {
-
-	if ( strlen ( formatString )) {
-
-		MOAILogMessage& message = this->mMessageMap [ messageID ];
-
-		message.mLevel = level;
-		message.mFormatString = formatString;
-	}
-	else {
-		this->mMessageMap.erase ( messageID );
-	}
-}
 
 //----------------------------------------------------------------//
 void MOAILogMgr::RegisterLuaClass ( MOAILuaState& state ) {
@@ -305,18 +294,15 @@ void MOAILogMgr::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "LOG_NONE",			( u32 )ZLLog::LOG_NONE );
 	state.SetField ( -1, "LOG_REPORT",			( u32 )ZLLog::LOG_REPORT );
 
-	MOAILogMessages::RegisterLogMessageIDs ( state );
-
 	luaL_Reg regTable[] = {
 		{ "closeFile",					_closeFile },
 		{ "log",						_log },
 		{ "isDebugBuild",				_isDebugBuild },
 		{ "openFile",					_openFile },
-		{ "registerLogMessage",			_registerLogMessage },
 		{ "setLogLevel",				_setLogLevel },
 		{ "setTypeCheckLuaParams",		_setTypeCheckLuaParams },
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }

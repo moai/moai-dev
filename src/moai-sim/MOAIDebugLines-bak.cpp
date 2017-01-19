@@ -122,7 +122,7 @@ void MOAIDebugLines::RegisterLuaClass ( MOAILuaState& state ) {
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 	
 	state.SetField ( -1, "COLLISION_ACTIVE_PROP_BOUNDS",					( u32 )COLLISION_ACTIVE_PROP_BOUNDS );
 	state.SetField ( -1, "COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS",			( u32 )COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS );

@@ -316,9 +316,7 @@ AKUContextID AKUCreateContext () {
 	luaRuntime.LoadLibs ();
 	
 	MOAIEnvironment::Affirm ();
-	
-	MOAILogMessages::RegisterDefaultLogMessages ();
-	
+		
 	REGISTER_LUA_CLASS ( MOAILuaRuntime )
 	REGISTER_LUA_CLASS ( MOAIEnvironment )
 	REGISTER_LUA_CLASS ( MOAIDeserializer )

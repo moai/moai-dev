@@ -102,7 +102,7 @@ int MOAIXmlParser::_parseFile ( lua_State* L ) {
 	
 	cc8* filename = lua_tostring ( state, 1 );
 	
-	if ( MOAILogMessages::CheckFileExists ( filename, L )) {
+	if ( MOAILogMgr::CheckFileExists ( filename, L )) {
 		TiXmlDocument doc;
 		doc.LoadFile ( filename );
 		MOAIXmlParser::Parse ( state, doc.RootElement ());
@@ -252,7 +252,7 @@ void MOAIXmlParser::RegisterLuaClass ( MOAILuaState& state ) {
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
@@ -269,7 +269,7 @@ void MOAIXmlParser::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }
 
 #endif

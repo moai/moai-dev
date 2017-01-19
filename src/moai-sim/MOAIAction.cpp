@@ -583,7 +583,7 @@ void MOAIAction::Update ( MOAIActionTree& tree, double step ) {
 		double elapsed = ZLDeviceTime::GetTimeInSeconds () - t0;
 		if ( elapsed >= 0.005 ) {
 			STLString debugInfo = this->MOAIAction_GetDebugInfo ();
-			MOAILogF ( 0, ZLLog::LOG_STATUS, MOAILogMessages::MOAIAction_Profile_PSFF, this, this->TypeName (), debugInfo.c_str(), step * 1000, elapsed * 1000 );
+			MOAILogF ( 0, ZLLog::LOG_STATUS, MOAISTRING_MOAIAction_Profile_PSFF, this, this->TypeName (), debugInfo.c_str(), step * 1000, elapsed * 1000 );
 		}
 	}
 	

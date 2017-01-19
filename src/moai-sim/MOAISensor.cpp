@@ -38,7 +38,7 @@ MOAISensor::~MOAISensor () {
 void MOAISensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
-		{ "new",					MOAILogMessages::_alertNewIsUnsupported },
+		{ "new",					MOAILuaObject::_alertNewIsUnsupported },
 		{ NULL, NULL }
 	};
 

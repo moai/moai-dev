@@ -121,13 +121,13 @@ int MOAIParticlePexPlugin::_load( lua_State* L ){
 
 	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "S" )) {							
-		MOAILogF ( L, ZLLog::LOG_ERROR, MOAILogMessages::MOAI_ParamTypeMismatch );		
+		MOAILogF ( L, ZLLog::LOG_ERROR, MOAISTRING_ParamTypeMismatch );		
 		return 0;													
 	}																
 		
 	cc8* xml = lua_tostring ( state, 1 );
 
-	if ( MOAILogMessages::CheckFileExists ( xml, L )) {
+	if ( MOAILogMgr::CheckFileExists ( xml, L )) {
 		TiXmlDocument doc;
 		doc.LoadFile ( xml );
 		MOAIParticlePexPlugin *particle = new MOAIParticlePexPlugin();
@@ -768,7 +768,7 @@ void MOAIParticlePexPlugin::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }
 
 #endif

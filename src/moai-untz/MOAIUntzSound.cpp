@@ -144,22 +144,23 @@ int MOAIUntzSound::_load ( lua_State* L ) {
 	}
 
 	MOAIUntzSampleBuffer* data = state.GetLuaObject < MOAIUntzSampleBuffer >( 2, false );
-	if(data)
-	{
-		self->mSound = UNTZ::Sound::create(data->GetSoundInfo(), data->GetSampleBuffer());
+	if ( data ) {
+	
+		self->mSound = UNTZ::Sound::create(data->GetSoundInfo (), data->GetSampleBuffer ());
 		self->mInMemory = true;
 	}
-	else if ( state.IsType( 2, LUA_TSTRING ) ) 
-	{
+	else if ( state.IsType( 2, LUA_TSTRING )) {
+	
 		cc8* filename = state.GetValue < cc8* >( 2, "" );
 		bool loadIntoMemory = state.GetValue < bool >( 3, true );	
 
 		self->mFilename = filename;
 		self->mInMemory = loadIntoMemory;
 		//printf ( "creating sound: %s - %s\n", self->mFilename.str(), (loadIntoMemory) ? "in memory" : "not in memory" );
-		if ( MOAILogMessages::CheckFileExists ( filename )) {
+		if ( MOAILogMgr::CheckFileExists ( filename )) {
 			self->mSound = UNTZ::Sound::create ( filename, loadIntoMemory );
-		} else {
+		}
+		else {
 			self->mSound = NULL;
 		}
 	}

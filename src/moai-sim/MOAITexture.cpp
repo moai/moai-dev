@@ -188,7 +188,7 @@ void MOAITexture::Init ( cc8* filename, u32 transform, cc8* debugname ) {
 
 	this->Clear ();
 	
-	if ( MOAILogMessages::CheckFileExists ( filename )) {
+	if ( MOAILogMgr::CheckFileExists ( filename )) {
 		
 		this->mFilename = ZLFileSys::GetAbsoluteFilePath ( filename );
 		if ( debugname ) {

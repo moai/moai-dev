@@ -133,7 +133,7 @@ int MOAIGraphicsPropBase::_setParent ( lua_State* L ) {
 	self->SetAttrLink ( PACK_ATTR ( MOAITransformBase, INHERIT_TRANSFORM ), parent, PACK_ATTR ( MOAITransformBase, TRANSFORM_TRAIT ));
 	self->SetAttrLink ( PACK_ATTR ( MOAIGraphicsPropBase, INHERIT_VISIBLE ), parent, PACK_ATTR ( MOAIGraphicsPropBase, ATTR_VISIBLE ));
 	
-	//MOAILogF ( state, MOAILogMessages::MOAI_FunctionDeprecated_S, "setParent" );
+	//MOAILogF ( state, MOAISTRING_FunctionDeprecated_S, "setParent" );
 	
 	return 0;
 }
