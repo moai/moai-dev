@@ -191,7 +191,7 @@ MOAIShaderProgram* MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 					program->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_TYPE_FLOAT, MOAIShaderUniform::UNIFORM_WIDTH_VEC_4 );
 					
 					program->ReserveGlobals ( 2 );
-					program->SetGlobal ( 0, MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX, 0, 0 );
+					program->SetGlobal ( 0, MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX, 0, 0 );
 					program->SetGlobal ( 1, MOAIGfxGlobalsCache::PEN_COLOR, 1, 0 );
 					
 					program->Load ( _lineShader3DVSH, _lineShader3DFSH );
@@ -209,7 +209,7 @@ MOAIShaderProgram* MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 					program->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_TYPE_FLOAT, MOAIShaderUniform::UNIFORM_WIDTH_VEC_4 );
 					
 					program->ReserveGlobals ( 2 );
-					program->SetGlobal ( 0, MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX, 0, 0 );
+					program->SetGlobal ( 0, MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX, 0, 0 );
 					program->SetGlobal ( 1, MOAIGfxGlobalsCache::PEN_COLOR, 1, 0 );
 					
 					program->Load ( _meshShaderVSH, _meshShaderFSH );

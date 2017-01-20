@@ -99,7 +99,7 @@ void MOAICollisionProp::DrawDebug () {
 //	draw.Bind ();
 //
 //	if ( debugLines.Bind ( MOAIDebugLines::PROP_WORLD_BOUNDS )) {
-//		gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_PROJ_MTX ));
+//		gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX ));
 //		draw.DrawBoxOutline ( this->GetBounds ());
 //	}
 //
@@ -130,11 +130,11 @@ void MOAICollisionProp::DrawDebug () {
 //		
 //		if ( shape ) {
 //			const ZLAffine3D& localToWorldMtx = this->GetLocalToWorldMtx ();
-//			gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX, localToWorldMtx );
+//			gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX, localToWorldMtx );
 //			shape->Draw ( localToWorldMtx );
 //		}
 //		else {
-//			gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_PROJ_MTX ));
+//			gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX ));
 //			draw.DrawBoxOutline ( this->GetBounds ());
 //		}
 //	}
@@ -170,8 +170,6 @@ MOAICollisionProp::MOAICollisionProp () :
 	RTTI_END
 	
 	this->mActiveListLink.Data ( this );
-	
-	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAICollisionProp >( TOTAL_DEBUG_LINE_STYLES );
 }
 
 //----------------------------------------------------------------//
@@ -215,6 +213,8 @@ void MOAICollisionProp::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAIPartitionHull::RegisterLuaClass ( state );
 	MOAIIndexedPropBase::RegisterLuaClass ( state );
+	
+	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAICollisionProp >( TOTAL_DEBUG_LINE_STYLES );
 	
 	state.SetField ( -1, "OVERLAP_EVENTS_ON_UPDATE",		( u32 )OVERLAP_EVENTS_ON_UPDATE );
 	state.SetField ( -1, "OVERLAP_EVENTS_CONTINUOUS",		( u32 )OVERLAP_EVENTS_CONTINUOUS );

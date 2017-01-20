@@ -874,7 +874,7 @@ ZLMatrix4x4 MOAITextLabel::GetWorldDrawingMtx () {
 			//MOAIViewport* viewport = renderMgr.GetViewport ();
 			//assert ( viewport );
 			//ZLMatrix4x4 viewProj = camera->GetViewProjMtx ( *viewport );
-			ZLMatrix4x4 viewProj = MOAIGfxMgr::Get ().mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_PROJ_MTX );
+			ZLMatrix4x4 viewProj = MOAIGfxMgr::Get ().mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX );
 
 			ZLVec3D upVec = worldDrawingMtx.GetYAxis ();
 
@@ -937,8 +937,6 @@ MOAITextLabel::MOAITextLabel () :
 	this->mLayoutRules.SetOwner ( this );
 
 	//this->mBlendMode.SetBlend ( ZGL_BLEND_FACTOR_SRC_ALPHA, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
-	
-	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAITextLabel >( TOTAL_DEBUG_LINE_STYLES );
 }
 
 //----------------------------------------------------------------//
@@ -1010,6 +1008,8 @@ void MOAITextLabel::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIGraphicsPropBase::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass ( state );
+
+	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAITextLabel >( TOTAL_DEBUG_LINE_STYLES );
 
 	state.SetField ( -1, "OVERRUN_MOVE_WORD",		( u32 )MOAITextLayoutRules::OVERRUN_MOVE_WORD );
 	state.SetField ( -1, "OVERRUN_SPLIT_WORD",		( u32 )MOAITextLayoutRules::OVERRUN_SPLIT_WORD );
@@ -1145,8 +1145,8 @@ void MOAITextLabel::MOAIDrawable_Draw ( int subPrimID ) {
 		this->LoadVertexTransform ();
 		this->LoadUVTransform ();
 	
-		gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
-		gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_MTX ));
+		gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX ));
+		gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_TO_MODEL_MTX ));
 		
 //		MOAIShader* shader = this->mMaterialBatch ? this->mMaterialBatch->RawGetShader ( 0 ) : 0;
 //		bool useSpriteShaders = !shader;
@@ -1173,8 +1173,8 @@ void MOAITextLabel::MOAIDrawable_DrawDebug ( int subPrimID ) {
 //	
 //	ZLMatrix4x4 worldDrawingMtx = this->GetWorldDrawingMtx ();
 //	
-//	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX, worldDrawingMtx );
-//	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
+//	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX, worldDrawingMtx );
+//	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX ));
 //	
 //	this->mLayout.DrawDebug ();
 //	

@@ -39,6 +39,7 @@ class MOAILayer :
 private:
 
 	MOAILuaSharedPtr < MOAICamera >			mCamera;
+	MOAILuaSharedPtr < MOAICamera >			mDebugCamera;
 	MOAILuaSharedPtr < MOAIViewport >		mViewport;
 	MOAILuaSharedPtr < MOAIPartition >		mPartition;
 
@@ -67,6 +68,7 @@ private:
 	static int		_getViewport			( lua_State* L );
 	static int		_insertProp				( lua_State* L );
 	static int		_removeProp				( lua_State* L );
+	static int		_setDebugCamera			( lua_State* L );
 	static int		_setCamera				( lua_State* L );
 	static int		_setOverlayTable		( lua_State* L );
 	static int		_setParallax			( lua_State* L );

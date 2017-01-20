@@ -36,7 +36,7 @@ void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_MTX ));
+	gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_TO_MODEL_MTX ));
 
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
@@ -51,7 +51,7 @@ void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
 			
 			case MOAIOverlap::BOX: {
 			
-				gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_PROJ_MTX ));
+				gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX ));
 			
 				ZLBox box = *( ZLBox* )shape->mPtr;
 				box.Transform ( localToWorldMtx );
@@ -60,7 +60,7 @@ void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
 			}
 			case MOAIOverlap::CIRCLE: {
 			
-				gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
+				gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX ));
 			
 				ZLCircle circle = *( ZLCircle* )shape->mPtr;
 				draw.DrawEllipseOutline ( circle.mCenter.mX, circle.mCenter.mY, circle.mRadius, circle.mRadius, 32 );
@@ -77,13 +77,13 @@ void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
 			
 			case MOAIOverlap::QUAD: {
 			
-				gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
+				gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX ));
 				draw.DrawQuad ( *( ZLQuad* )shape->mPtr );
 				break;
 			}
 			case MOAIOverlap::RECT: {
 			
-				gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_PROJ_MTX ));
+				gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX ));
 			
 				ZLRect rect = *( ZLRect* )shape->mPtr;
 				localToWorldMtx.Transform ( rect );

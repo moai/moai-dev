@@ -464,8 +464,8 @@ void MOAICollisionWorld::MOAIDrawable_Draw ( int subPrimID ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX );
-	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_PROJ_MTX ));
+	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX );
+	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX ));
 
 	MOAICollisionProp* drawList = 0;
 

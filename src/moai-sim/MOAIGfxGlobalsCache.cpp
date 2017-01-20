@@ -42,176 +42,244 @@ const ZLMatrix4x4& MOAIGfxGlobalsCache::GetMtx ( u32 transformID ) {
 
 	switch ( transformID ) {
 	
-		case INVERSE_PROJ_MTX:
+		case CLIP_TO_DISPLAY_MTX:
+	
+			if ( this->mDirtyFlags & CLIP_TO_DISPLAY_MTX_MASK ) {
+			
+				if ( this->mUseDebugMtx ) {
+			
+					this->mMatrices [ CLIP_TO_DISPLAY_MTX ] = this->GetMtx ( CLIP_TO_WORLD_MTX ); // back to world space
+					this->mMatrices [ CLIP_TO_DISPLAY_MTX ].Append ( this->GetMtx ( WORLD_TO_DISPLAY_MTX )); // and forward to display space
+				}
+				else {
+					this->mMatrices [ CLIP_TO_DISPLAY_MTX ].Ident ();
+				}
+				this->mDirtyFlags &= ~ID_TO_FLAG ( CLIP_TO_DISPLAY_MTX );
+			}
+			return this->mMatrices [ CLIP_TO_DISPLAY_MTX ];
+	
+		case CLIP_TO_MODEL_MTX:
+			
+			if ( this->mDirtyFlags & CLIP_TO_MODEL_MTX_MASK ) {
+			
+				this->mMatrices [ CLIP_TO_MODEL_MTX ].Inverse ( this->GetMtx ( MODEL_TO_CLIP_MTX ));
+				this->mDirtyFlags &= ~ID_TO_FLAG ( CLIP_TO_MODEL_MTX );
+			}
+			return this->mMatrices [ CLIP_TO_MODEL_MTX ];
+	
+		case CLIP_TO_VIEW_MTX:
 		
-			if ( this->mDirtyFlags & INVERSE_PROJ_MTX_MASK ) {
+			if ( this->mDirtyFlags & CLIP_TO_VIEW_MTX_MASK ) {
 			
-				this->mVertexTransforms [ INVERSE_PROJ_MTX ].Inverse ( this->GetMtx ( PROJ_MTX ));
-				this->mDirtyFlags &= ~ID_TO_FLAG ( INVERSE_PROJ_MTX );
+				this->mMatrices [ CLIP_TO_VIEW_MTX ].Inverse ( this->GetMtx ( VIEW_TO_CLIP_MTX ));
+				this->mDirtyFlags &= ~ID_TO_FLAG ( CLIP_TO_VIEW_MTX );
 			}
-			return this->mVertexTransforms [ INVERSE_PROJ_MTX ];
+			return this->mMatrices [ CLIP_TO_VIEW_MTX ];
+		
+		case CLIP_TO_WINDOW_MTX:
 			
-		case INVERSE_UV_MTX:
+			return this->mMatrices [ CLIP_TO_WINDOW_MTX ];
+		
+		case CLIP_TO_WORLD_MTX:
 			
-			if ( this->mDirtyFlags & INVERSE_UV_MTX_MASK ) {
+			if ( this->mDirtyFlags & CLIP_TO_WORLD_MTX_MASK ) {
 			
-				this->mVertexTransforms [ INVERSE_UV_MTX ].Inverse ( this->GetMtx ( UV_MTX ));
-				this->mDirtyFlags &= ~ID_TO_FLAG ( INVERSE_UV_MTX );
+				this->mMatrices [ CLIP_TO_WORLD_MTX ].Inverse ( this->GetMtx ( WORLD_TO_CLIP_MTX ));
+				this->mDirtyFlags &= ~ID_TO_FLAG ( CLIP_TO_WORLD_MTX );
 			}
-			return this->mVertexTransforms [ INVERSE_UV_MTX ];
+			return this->mMatrices [ CLIP_TO_WORLD_MTX ];
+		
+		case MODEL_TO_CLIP_MTX:
 			
-		case INVERSE_VIEW_MTX:
+			if ( this->mDirtyFlags & MODEL_TO_CLIP_MTX_MASK ) {
 			
-			if ( this->mDirtyFlags & INVERSE_VIEW_MTX_MASK ) {
-			
-				this->mVertexTransforms [ INVERSE_VIEW_MTX ].Inverse ( this->GetMtx ( VIEW_MTX ));
-				this->mDirtyFlags &= ~ID_TO_FLAG ( INVERSE_VIEW_MTX );
-			}
-			return this->mVertexTransforms [ INVERSE_VIEW_MTX ];
-			
-		case INVERSE_VIEW_PROJ_MTX:
-			
-			if ( this->mDirtyFlags & INVERSE_VIEW_PROJ_MTX_MASK ) {
-			
-				this->mVertexTransforms [ INVERSE_VIEW_PROJ_MTX ].Inverse ( this->GetMtx ( VIEW_PROJ_MTX ));
-				this->mDirtyFlags &= ~ID_TO_FLAG ( INVERSE_VIEW_PROJ_MTX );
-			}
-			return this->mVertexTransforms [ INVERSE_VIEW_PROJ_MTX ];
-			
-		case INVERSE_WORLD_MTX:
-			
-			if ( this->mDirtyFlags & INVERSE_WORLD_MTX_MASK ) {
-			
-				this->mVertexTransforms [ INVERSE_WORLD_MTX ].Inverse ( this->GetMtx ( WORLD_MTX ));
-				this->mDirtyFlags &= ~ID_TO_FLAG ( INVERSE_WORLD_MTX );
-			}
-			return this->mVertexTransforms [ INVERSE_WORLD_MTX ];
-			
-		case INVERSE_WORLD_VIEW_MTX:
-			
-			if ( this->mDirtyFlags & INVERSE_WORLD_VIEW_MTX_MASK ) {
-			
-				this->mVertexTransforms [ INVERSE_WORLD_VIEW_MTX ].Inverse ( this->GetMtx ( WORLD_VIEW_MTX ));
-				this->mDirtyFlags &= ~ID_TO_FLAG ( INVERSE_WORLD_VIEW_MTX );
-			}
-			return this->mVertexTransforms [ INVERSE_WORLD_VIEW_MTX ];
-			
-		case INVERSE_WORLD_VIEW_PROJ_MTX:
-			
-			if ( this->mDirtyFlags & INVERSE_WORLD_VIEW_PROJ_MTX_MASK ) {
-			
-				this->mVertexTransforms [ INVERSE_WORLD_VIEW_PROJ_MTX ].Inverse ( this->GetMtx ( WORLD_VIEW_PROJ_MTX ));
-				this->mDirtyFlags &= ~ID_TO_FLAG ( INVERSE_WORLD_VIEW_PROJ_MTX );
-			}
-			return this->mVertexTransforms [ INVERSE_WORLD_VIEW_PROJ_MTX ];
-			
-		case PROJ_MTX:
-			
-			return this->mVertexTransforms [ PROJ_MTX ];
-			
-		case UV_MTX:
-			
-			return this->mVertexTransforms [ UV_MTX ];
-			
-		case VIEW_MTX:
-			
-			return this->mVertexTransforms [ VIEW_MTX ];
-			
-		case VIEW_PROJ_MTX:
-			
-			if ( this->mDirtyFlags & VIEW_PROJ_MTX_MASK ) {
-			
-				this->mVertexTransforms [ VIEW_PROJ_MTX ] = this->mVertexTransforms [ VIEW_MTX ];
-				this->mVertexTransforms [ VIEW_PROJ_MTX ].Append ( this->mVertexTransforms [ PROJ_MTX ]);
+				this->mMatrices [ MODEL_TO_CLIP_MTX ] = this->mMatrices [ MODEL_TO_WORLD_MTX ];
+				this->mMatrices [ MODEL_TO_CLIP_MTX ].Append ( this->GetMtx ( WORLD_TO_CLIP_MTX ));
 				
-				this->mDirtyFlags &= ~ID_TO_FLAG ( VIEW_PROJ_MTX );
+				this->mDirtyFlags &= ~ID_TO_FLAG ( MODEL_TO_CLIP_MTX);
 			}
-			return this->mVertexTransforms [ VIEW_PROJ_MTX ];
+			return this->mMatrices [ MODEL_TO_CLIP_MTX ];
 		
-		case INVERSE_WINDOW_MTX:
+		case MODEL_TO_DISPLAY_MTX:
+	
+			if ( this->mDirtyFlags & MODEL_TO_DISPLAY_MTX_MASK ) {
 			
-			if ( this->mDirtyFlags & INVERSE_WINDOW_MTX_MASK ) {
+				if ( this->mUseDebugMtx ) {
 			
-				this->mVertexTransforms [ INVERSE_WINDOW_MTX ].Inverse ( this->GetMtx ( WINDOW_MTX ));
-				this->mDirtyFlags &= ~ID_TO_FLAG ( INVERSE_WINDOW_MTX );
+					this->mMatrices [ MODEL_TO_DISPLAY_MTX ] = this->GetMtx ( MODEL_TO_WORLD_MTX );
+					this->mMatrices [ MODEL_TO_DISPLAY_MTX ].Append ( this->GetMtx ( WORLD_TO_DISPLAY_MTX ));
+				}
+				else {
+					this->mMatrices [ MODEL_TO_DISPLAY_MTX ] = this->GetMtx ( MODEL_TO_CLIP_MTX );
+				}
+				this->mDirtyFlags &= ~ID_TO_FLAG ( MODEL_TO_DISPLAY_MTX );
 			}
-			return this->mVertexTransforms [ INVERSE_WINDOW_MTX ];
+			return this->mMatrices [ MODEL_TO_DISPLAY_MTX ];
 		
-		case WINDOW_MTX:
+		case MODEL_TO_VIEW_MTX:
 			
-			return this->mVertexTransforms [ WINDOW_MTX ];
+			if ( this->mDirtyFlags & MODEL_TO_VIEW_MTX_MASK ) {
+			
+				this->mMatrices [ MODEL_TO_VIEW_MTX ] = this->mMatrices [ MODEL_TO_WORLD_MTX ];
+				this->mMatrices [ MODEL_TO_VIEW_MTX ].Append ( this->mMatrices [ WORLD_TO_VIEW_MTX ]);
+				
+				this->mDirtyFlags &= ~ID_TO_FLAG ( MODEL_TO_VIEW_MTX );
+			}
+			return this->mMatrices [ MODEL_TO_VIEW_MTX ];
 		
-		case WORLD_MTX:
+		case MODEL_TO_UV_MTX:
 			
-			return this->mVertexTransforms [ WORLD_MTX ];
+			return this->mMatrices [ MODEL_TO_UV_MTX ];
 		
-		case WORLD_NORMAL_MTX:
+		case MODEL_TO_WORLD_MTX:
 			
-			if ( this->mDirtyFlags & WORLD_NORMAL_MTX_MASK ) {
+			return this->mMatrices [ MODEL_TO_WORLD_MTX ];
+		
+		case NORMALIZED_MODEL_TO_CLIP_MTX:
 			
-				ZLMatrix3x3 mtx = ZLMatrix3x3 ( this->GetMtx ( WORLD_MTX ));
+			if ( this->mDirtyFlags & NORMALIZED_MODEL_TO_CLIP_MTX_MASK ) {
+			
+				ZLMatrix3x3 mtx = ZLMatrix3x3 ( this->GetMtx ( MODEL_TO_CLIP_MTX ));
 				mtx.Inverse ();
 				mtx.Transpose ();
 			
-				this->mVertexTransforms [ WORLD_NORMAL_MTX ] = ZLMatrix4x4 ( mtx );
+				this->mMatrices [ NORMALIZED_MODEL_TO_CLIP_MTX ] = ZLMatrix4x4 ( mtx );
 				
-				this->mDirtyFlags &= ~ID_TO_FLAG ( WORLD_NORMAL_MTX );
+				this->mDirtyFlags &= ~ID_TO_FLAG ( NORMALIZED_MODEL_TO_CLIP_MTX );
 			}
-			return this->mVertexTransforms [ WORLD_NORMAL_MTX ];
+			return this->mMatrices [ NORMALIZED_MODEL_TO_CLIP_MTX ];
 		
-		case WORLD_VIEW_MTX:
+		case NORMALIZED_MODEL_TO_VIEW_MTX:
 			
-			if ( this->mDirtyFlags & WORLD_VIEW_MTX_MASK ) {
+			if ( this->mDirtyFlags & NORMALIZED_MODEL_TO_VIEW_MTX_MASK ) {
 			
-				this->mVertexTransforms [ WORLD_VIEW_MTX ] = this->mVertexTransforms [ WORLD_MTX ];
-				this->mVertexTransforms [ WORLD_VIEW_MTX ].Append ( this->mVertexTransforms [ VIEW_MTX ]);
-				
-				this->mDirtyFlags &= ~ID_TO_FLAG ( WORLD_VIEW_MTX );
-			}
-			return this->mVertexTransforms [ WORLD_VIEW_MTX ];
-		
-		case WORLD_VIEW_NORMAL_MTX:
-			
-			if ( this->mDirtyFlags & WORLD_VIEW_NORMAL_MTX_MASK ) {
-			
-				ZLMatrix3x3 mtx = ZLMatrix3x3 ( this->GetMtx ( WORLD_VIEW_MTX ));
+				ZLMatrix3x3 mtx = ZLMatrix3x3 ( this->GetMtx ( MODEL_TO_VIEW_MTX ));
 				mtx.Inverse ();
 				mtx.Transpose ();
 			
-				this->mVertexTransforms [ WORLD_VIEW_NORMAL_MTX ] = ZLMatrix4x4 ( mtx );
+				this->mMatrices [ NORMALIZED_MODEL_TO_VIEW_MTX ] = ZLMatrix4x4 ( mtx );
 				
-				this->mDirtyFlags &= ~ID_TO_FLAG ( WORLD_VIEW_NORMAL_MTX );
+				this->mDirtyFlags &= ~ID_TO_FLAG ( NORMALIZED_MODEL_TO_VIEW_MTX );
 			}
-			return this->mVertexTransforms [ WORLD_VIEW_NORMAL_MTX ];
+			return this->mMatrices [ NORMALIZED_MODEL_TO_VIEW_MTX ];
 		
-		case WORLD_VIEW_PROJ_MTX:
+		case NORMALIZED_MODEL_TO_WORLD_MTX:
 			
-			if ( this->mDirtyFlags & WORLD_VIEW_PROJ_MTX_MASK ) {
+			if ( this->mDirtyFlags & NORMALIZED_MODEL_TO_WORLD_MTX_MASK ) {
 			
-				this->mVertexTransforms [ WORLD_VIEW_PROJ_MTX ] = this->mVertexTransforms [ WORLD_MTX ];
-				this->mVertexTransforms [ WORLD_VIEW_PROJ_MTX ].Append ( this->GetMtx ( VIEW_PROJ_MTX ));
-				
-				this->mDirtyFlags &= ~ID_TO_FLAG ( WORLD_VIEW_PROJ_MTX);
-			}
-			return this->mVertexTransforms [ WORLD_VIEW_PROJ_MTX ];
-		
-		case WORLD_VIEW_PROJ_NORMAL_MTX:
-			
-			if ( this->mDirtyFlags & WORLD_VIEW_PROJ_NORMAL_MTX_MASK ) {
-			
-				ZLMatrix3x3 mtx = ZLMatrix3x3 ( this->GetMtx ( WORLD_VIEW_PROJ_MTX ));
+				ZLMatrix3x3 mtx = ZLMatrix3x3 ( this->GetMtx ( MODEL_TO_WORLD_MTX ));
 				mtx.Inverse ();
 				mtx.Transpose ();
 			
-				this->mVertexTransforms [ WORLD_VIEW_PROJ_NORMAL_MTX ] = ZLMatrix4x4 ( mtx );
+				this->mMatrices [ NORMALIZED_MODEL_TO_WORLD_MTX ] = ZLMatrix4x4 ( mtx );
 				
-				this->mDirtyFlags &= ~ID_TO_FLAG ( WORLD_VIEW_PROJ_NORMAL_MTX );
+				this->mDirtyFlags &= ~ID_TO_FLAG ( NORMALIZED_MODEL_TO_WORLD_MTX );
 			}
-			return this->mVertexTransforms [ WORLD_VIEW_PROJ_NORMAL_MTX ];
+			return this->mMatrices [ NORMALIZED_MODEL_TO_WORLD_MTX ];
+		
+		case UV_TO_MODEL_MTX:
+			
+			if ( this->mDirtyFlags & UV_TO_MODEL_MTX_MASK ) {
+			
+				this->mMatrices [ UV_TO_MODEL_MTX ].Inverse ( this->GetMtx ( MODEL_TO_UV_MTX ));
+				this->mDirtyFlags &= ~ID_TO_FLAG ( UV_TO_MODEL_MTX );
+			}
+			return this->mMatrices [ UV_TO_MODEL_MTX ];
+		
+		
+		case VIEW_TO_CLIP_MTX:
+			
+			return this->mMatrices [ VIEW_TO_CLIP_MTX ];
+		
+		case VIEW_TO_DISPLAY_MTX:
+	
+			if ( this->mDirtyFlags & VIEW_TO_DISPLAY_MTX_MASK ) {
+			
+				if ( this->mUseDebugMtx ) {
+					
+					this->mMatrices [ VIEW_TO_DISPLAY_MTX ].Inverse ( this->GetMtx ( VIEW_TO_WORLD_MTX )); // back to world space
+					this->mMatrices [ VIEW_TO_DISPLAY_MTX ].Append ( this->GetMtx ( WORLD_TO_DISPLAY_MTX )); // and forward to display space
+				}
+				else {
+					this->mMatrices [ VIEW_TO_DISPLAY_MTX ] = this->GetMtx ( VIEW_TO_CLIP_MTX );
+				}
+				this->mDirtyFlags &= ~ID_TO_FLAG ( VIEW_TO_DISPLAY_MTX );
+			}
+			return this->mMatrices [ VIEW_TO_DISPLAY_MTX ];
+		
+		case VIEW_TO_MODEL_MTX:
+			
+			if ( this->mDirtyFlags & VIEW_TO_MODEL_MTX_MASK ) {
+			
+				this->mMatrices [ VIEW_TO_MODEL_MTX ].Inverse ( this->GetMtx ( MODEL_TO_VIEW_MTX ));
+				this->mDirtyFlags &= ~ID_TO_FLAG ( VIEW_TO_MODEL_MTX );
+			}
+			return this->mMatrices [ VIEW_TO_MODEL_MTX ];
+		
+		case VIEW_TO_WORLD_MTX:
+			
+			if ( this->mDirtyFlags & VIEW_TO_WORLD_MTX_MASK ) {
+			
+				this->mMatrices [ VIEW_TO_WORLD_MTX ].Inverse ( this->GetMtx ( WORLD_TO_VIEW_MTX ));
+				this->mDirtyFlags &= ~ID_TO_FLAG ( VIEW_TO_WORLD_MTX );
+			}
+			return this->mMatrices [ VIEW_TO_WORLD_MTX ];
+		
+		case WINDOW_TO_CLIP_MTX:
+			
+			if ( this->mDirtyFlags & WINDOW_TO_CLIP_MTX_MASK ) {
+			
+				this->mMatrices [ WINDOW_TO_CLIP_MTX ].Inverse ( this->GetMtx ( CLIP_TO_WINDOW_MTX ));
+				this->mDirtyFlags &= ~ID_TO_FLAG ( WINDOW_TO_CLIP_MTX );
+			}
+			return this->mMatrices [ WINDOW_TO_CLIP_MTX ];
+		
+		case WORLD_TO_CLIP_MTX:
+			
+			if ( this->mDirtyFlags & WORLD_TO_CLIP_MTX_MASK ) {
+			
+				this->mMatrices [ WORLD_TO_CLIP_MTX ] = this->mMatrices [ WORLD_TO_VIEW_MTX ];
+				this->mMatrices [ WORLD_TO_CLIP_MTX ].Append ( this->mMatrices [ VIEW_TO_CLIP_MTX ]);
+				
+				this->mDirtyFlags &= ~ID_TO_FLAG ( WORLD_TO_CLIP_MTX );
+			}
+			return this->mMatrices [ WORLD_TO_CLIP_MTX ];
+		
+		case WORLD_TO_DEBUG_MTX:
+			
+			return this->mMatrices [ WORLD_TO_DEBUG_MTX ];
+		
+		case WORLD_TO_DISPLAY_MTX:
+	
+			if ( this->mDirtyFlags & WORLD_TO_DISPLAY_MTX_MASK ) {
+			
+				if ( this->mUseDebugMtx ) {
+			
+					this->mMatrices [ WORLD_TO_DISPLAY_MTX ] = this->GetMtx ( WORLD_TO_DEBUG_MTX );
+				}
+				else {
+					this->mMatrices [ WORLD_TO_DISPLAY_MTX ] = this->GetMtx ( WORLD_TO_CLIP_MTX );
+				}
+				this->mDirtyFlags &= ~ID_TO_FLAG ( WORLD_TO_DISPLAY_MTX );
+			}
+			return this->mMatrices [ WORLD_TO_DISPLAY_MTX ];
+		
+		case WORLD_TO_MODEL_MTX:
+			
+			if ( this->mDirtyFlags & WORLD_TO_MODEL_MTX_MASK ) {
+			
+				this->mMatrices [ WORLD_TO_MODEL_MTX ].Inverse ( this->GetMtx ( MODEL_TO_WORLD_MTX ));
+				this->mDirtyFlags &= ~ID_TO_FLAG ( WORLD_TO_MODEL_MTX );
+			}
+			return this->mMatrices [ WORLD_TO_MODEL_MTX ];
+			
+		case WORLD_TO_VIEW_MTX:
+			
+			return this->mMatrices [ WORLD_TO_VIEW_MTX ];
 	}
 	
 	assert ( false );
-	return this->mVertexTransforms [ WORLD_MTX ];
+	return this->mMatrices [ MODEL_TO_WORLD_MTX ];
 }
 
 //----------------------------------------------------------------//
@@ -223,7 +291,7 @@ ZLMatrix4x4 MOAIGfxGlobalsCache::GetWorldToWndMtx () {
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAIGfxGlobalsCache::GetWorldToWndMtx ( const ZLRect& wndRect ) {
 
-	ZLMatrix4x4 worldToWnd = this->GetMtx ( VIEW_PROJ_MTX );
+	ZLMatrix4x4 worldToWnd = this->GetMtx ( WORLD_TO_CLIP_MTX );
 	worldToWnd.Append ( MOAIGfxGlobalsCache::GetNormToWndMtx ( wndRect ));
 	
 	return worldToWnd;
@@ -264,7 +332,7 @@ ZLMatrix4x4 MOAIGfxGlobalsCache::GetWndToWorldMtx ( const ZLRect& wndRect ) {
 	ZLMatrix4x4 wndToWorld = MOAIGfxGlobalsCache::GetWndToNormMtx ( wndRect );
 	
 	// inv viewproj
-	ZLMatrix4x4 mtx = this->GetMtx ( VIEW_PROJ_MTX );
+	ZLMatrix4x4 mtx = this->GetMtx ( WORLD_TO_CLIP_MTX );
 	mtx.Inverse ();
 	wndToWorld.Append ( mtx );
 	
@@ -275,7 +343,7 @@ ZLMatrix4x4 MOAIGfxGlobalsCache::GetWndToWorldMtx ( const ZLRect& wndRect ) {
 const ZLFrustum& MOAIGfxGlobalsCache::GetViewVolume () {
 
 	if ( this->mDirtyFlags & VIEW_VOLUME_MASK ) {
-		this->mViewVolume.Init ( this->GetMtx ( INVERSE_VIEW_PROJ_MTX ));
+		this->mViewVolume.Init ( this->GetMtx ( CLIP_TO_WORLD_MTX ));
 		this->mDirtyFlags &= ~VIEW_VOLUME_MASK;
 	}
 	return this->mViewVolume;
@@ -284,7 +352,7 @@ const ZLFrustum& MOAIGfxGlobalsCache::GetViewVolume () {
 //----------------------------------------------------------------//
 bool MOAIGfxGlobalsCache::IsInputMtx ( u32 transformID ) {
 
-	return (( transformID == WORLD_MTX ) || ( transformID == VIEW_MTX ) || ( transformID == PROJ_MTX ) || ( transformID == UV_MTX ));
+	return (( transformID == MODEL_TO_WORLD_MTX ) || ( transformID == WORLD_TO_VIEW_MTX ) || ( transformID == VIEW_TO_CLIP_MTX ) || ( transformID == MODEL_TO_UV_MTX ));
 }
 
 //----------------------------------------------------------------//
@@ -294,11 +362,12 @@ MOAIGfxGlobalsCache::MOAIGfxGlobalsCache () :
 	mFinalColor32 ( 0xffffffff ),
 	mClearFlags ( 0 ),
 	mClearDepth ( 0.0 ),
-	mBufferWidth ( 0 ),
-	mBufferHeight ( 0 ) {
+	mUseDebugMtx ( false ) {
+
+	assert ( TOTAL_GLOBALS < MAX_GLOBALS );
 
 	for ( u32 i = 0; i < TOTAL_MATRICES; ++i ) {
-		this->mVertexTransforms [ i ].Ident ();
+		this->mMatrices [ i ].Ident ();
 		this->mDirtyFlags = 0;
 	}
 	
@@ -331,6 +400,12 @@ void MOAIGfxGlobalsCache::SetAmbientColor ( float r, float g, float b, float a )
 
 	this->mAmbientColor.Set ( r, g, b, a );
 	this->UpdateFinalColor ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxGlobalsCache::SetDebug ( MOAIViewport* viewport, MOAICamera* camera ) {
+
+	this->SetMtx ( WORLD_TO_DEBUG_MTX, MOAIViewProj::GetDebugMtx ( viewport, camera ));
 }
 
 //----------------------------------------------------------------//
@@ -368,29 +443,38 @@ void MOAIGfxGlobalsCache::SetMtx ( u32 transformID, const ZLMatrix4x4& mtx ) {
 
 	switch ( transformID ) {
 	
-		case PROJ_MTX:
+		case VIEW_TO_CLIP_MTX:
 		
-			dirtyMask = PROJ_MTX_DIRTY_MASK;
+			dirtyMask = VIEW_TO_CLIP_MTX_DIRTY_MASK;
 			break;
 			
-		case UV_MTX:
+		case MODEL_TO_UV_MTX:
 		
-			dirtyMask = UV_MTX_DIRTY_MASK;
+			dirtyMask = MODEL_TO_UV_MTX_DIRTY_MASK;
 			break;
 			
-		case VIEW_MTX:
+		case WORLD_TO_DEBUG_MTX:
 		
-			dirtyMask = VIEW_MTX_DIRTY_MASK;
+			this->mUseDebugMtx = !( mtx.IsIdent () || mtx.IsSame ( this->mMatrices [ WORLD_TO_VIEW_MTX ]));
+		
+			dirtyMask = WORLD_TO_DEBUG_MTX_DIRTY_MASK;
 			break;
 			
-		case WINDOW_MTX:
+		case WORLD_TO_VIEW_MTX:
+			
+			this->mUseDebugMtx = !( this->mMatrices [ WORLD_TO_DEBUG_MTX ].IsIdent () || mtx.IsSame ( this->mMatrices [ WORLD_TO_DEBUG_MTX ]));
 		
-			dirtyMask = WINDOW_MTX_DIRTY_MASK;
+			dirtyMask = WORLD_TO_VIEW_MTX_DIRTY_MASK;
 			break;
 			
-		case WORLD_MTX:
+		case CLIP_TO_WINDOW_MTX:
 		
-			dirtyMask = WORLD_MTX_DIRTY_MASK;
+			dirtyMask = CLIP_TO_WINDOW_MTX_DIRTY_MASK;
+			break;
+			
+		case MODEL_TO_WORLD_MTX:
+		
+			dirtyMask = MODEL_TO_WORLD_MTX_DIRTY_MASK;
 			break;
 	
 		default:
@@ -398,11 +482,11 @@ void MOAIGfxGlobalsCache::SetMtx ( u32 transformID, const ZLMatrix4x4& mtx ) {
 			assert ( false ); // read only
 			return;
 	}
-	
-	if ( !this->mVertexTransforms [ transformID ].IsSame ( mtx )) {
+		
+	if ( !this->mMatrices [ transformID ].IsSame ( mtx )) {
 	
 		this->SetDirtyFlags ( this->mDirtyFlags | dirtyMask );
-		this->mVertexTransforms [ transformID ] = mtx;
+		this->mMatrices [ transformID ] = mtx;
 	}
 }
 
@@ -433,9 +517,9 @@ void MOAIGfxGlobalsCache::SetViewProj ( MOAIViewport* viewport, MOAICamera* came
 	ZLMatrix4x4 view = MOAIViewProj::GetViewMtx ( camera, parallax );
 	ZLMatrix4x4 proj = MOAIViewProj::GetProjectionMtx ( viewport, camera );
 	
-	this->SetMtx ( MOAIGfxGlobalsCache::VIEW_MTX, view );
-	this->SetMtx ( MOAIGfxGlobalsCache::PROJ_MTX, proj );
-	this->SetMtx ( MOAIGfxGlobalsCache::WINDOW_MTX, viewport ? viewport->GetProjMtx () : ZLMatrix4x4::IDENT );
+	this->SetMtx ( MOAIGfxGlobalsCache::WORLD_TO_VIEW_MTX, view );
+	this->SetMtx ( MOAIGfxGlobalsCache::VIEW_TO_CLIP_MTX, proj );
+	this->SetMtx ( MOAIGfxGlobalsCache::CLIP_TO_WINDOW_MTX, viewport ? viewport->GetProjMtx () : ZLMatrix4x4::IDENT );
 }
 
 //----------------------------------------------------------------//

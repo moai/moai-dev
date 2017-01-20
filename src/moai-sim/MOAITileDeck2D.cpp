@@ -245,8 +245,8 @@ void MOAITileDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch* materials, ZLVec3D 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIQuadBrush::BindVertexFormat ();
 	
-	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
-	gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_MTX ));
+	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX ));
+	gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_TO_MODEL_MTX ));
 	
 	MOAICellCoord coord = this->GetCellCoord ( idx );
 	ZLRect uvRect = this->GetTileRect ( coord );

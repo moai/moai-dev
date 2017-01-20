@@ -17,29 +17,53 @@ class MOAIGfxGlobalsCache :
 	public MOAIGfxStateCache {
 public:
 
+	// MUST NOT EXCEED 32 GLOBALS FOR NOW
+	
+	static const u32 MAX_GLOBALS = 32; // used to trip an assert
+
 	// GLOBAL IDs
 	enum {
 	
 		// NOTE: GROUP ALL MATRICES TOGETHER
-		INVERSE_PROJ_MTX,
-		INVERSE_UV_MTX,
-		INVERSE_VIEW_MTX,
-		INVERSE_VIEW_PROJ_MTX,
-		INVERSE_WINDOW_MTX,
-		INVERSE_WORLD_MTX,
-		INVERSE_WORLD_VIEW_MTX,
-		INVERSE_WORLD_VIEW_PROJ_MTX,
-		PROJ_MTX,						// settable
-		UV_MTX,							// settable
-		VIEW_MTX,						// settable
-		VIEW_PROJ_MTX,
-		WINDOW_MTX,						// settable
-		WORLD_MTX,						// settable
-		WORLD_NORMAL_MTX,
-		WORLD_VIEW_MTX,
-		WORLD_VIEW_NORMAL_MTX,
-		WORLD_VIEW_PROJ_MTX,
-		WORLD_VIEW_PROJ_NORMAL_MTX,
+		
+		// settable matrices
+		
+		CLIP_TO_WINDOW_MTX,						// WINDOW_MTX
+		MODEL_TO_UV_MTX,						// UV_MTX
+		MODEL_TO_WORLD_MTX,						// WORLD_MTX
+		VIEW_TO_CLIP_MTX,						// PROJ_MTX
+		WORLD_TO_DEBUG_MTX,
+		WORLD_TO_VIEW_MTX,						// VIEW_MTX
+		
+		// derived matrices
+		
+		CLIP_TO_DISPLAY_MTX,
+		CLIP_TO_MODEL_MTX,						// INVERSE_WORLD_VIEW_PROJ_MTX
+		CLIP_TO_VIEW_MTX,						// INVERSE_PROJ_MTX
+		CLIP_TO_WORLD_MTX,						// INVERSE_VIEW_PROJ_MTX
+		
+		MODEL_TO_CLIP_MTX,						// WORLD_VIEW_PROJ_MTX
+		MODEL_TO_DISPLAY_MTX,
+		
+		MODEL_TO_VIEW_MTX,						// WORLD_VIEW_MTX
+		
+		NORMALIZED_MODEL_TO_CLIP_MTX,			// WORLD_VIEW_PROJ_NORMAL_MTX
+		NORMALIZED_MODEL_TO_VIEW_MTX,			// WORLD_VIEW_NORMAL_MTX
+		NORMALIZED_MODEL_TO_WORLD_MTX,			// WORLD_NORMAL_MTX
+		
+		UV_TO_MODEL_MTX,						// INVERSE_UV_MTX
+		
+		VIEW_TO_DISPLAY_MTX,
+		VIEW_TO_MODEL_MTX,						// INVERSE_WORLD_VIEW_MTX
+		VIEW_TO_WORLD_MTX,						// INVERSE_VIEW_MTX
+		
+		WINDOW_TO_CLIP_MTX,						// INVERSE_WINDOW_MTX
+		
+		WORLD_TO_CLIP_MTX,						// VIEW_PROJ_MTX
+		
+		WORLD_TO_DISPLAY_MTX,
+		WORLD_TO_MODEL_MTX,						// INVERSE_WORLD_MTX
+		
 		
 		// NOTE: WHATEVER FOLLOWS THIS *MUST* BE ALIASED AS TOTAL_MATRICES (BELOW)
 		
@@ -51,7 +75,7 @@ public:
 		VIEW_HEIGHT,
 		VIEW_WIDTH,
 		
-		TOTAL_GLOBALS, // MUST NOT EXCEED 32 GLOBALS FOR NOW
+		TOTAL_GLOBALS,
 	};
 	
 	static const u32 TOTAL_MATRICES = PEN_COLOR;
@@ -60,73 +84,93 @@ public:
 
 	enum {
 	
-		INVERSE_PROJ_MTX_MASK				= ID_TO_FLAG ( INVERSE_PROJ_MTX ),
-		INVERSE_UV_MTX_MASK					= ID_TO_FLAG ( INVERSE_UV_MTX ),
-		INVERSE_VIEW_MTX_MASK				= ID_TO_FLAG ( INVERSE_VIEW_MTX ),
-		INVERSE_VIEW_PROJ_MTX_MASK			= ID_TO_FLAG ( INVERSE_VIEW_PROJ_MTX ),
-		INVERSE_WINDOW_MTX_MASK				= ID_TO_FLAG ( INVERSE_WINDOW_MTX ),
-		INVERSE_WORLD_MTX_MASK				= ID_TO_FLAG ( INVERSE_WORLD_MTX ),
-		INVERSE_WORLD_VIEW_MTX_MASK			= ID_TO_FLAG ( INVERSE_WORLD_VIEW_MTX ),
-		INVERSE_WORLD_VIEW_PROJ_MTX_MASK	= ID_TO_FLAG ( INVERSE_WORLD_VIEW_PROJ_MTX ),
-		VIEW_PROJ_MTX_MASK					= ID_TO_FLAG ( VIEW_PROJ_MTX ),
-		VIEW_VOLUME_MASK					= ID_TO_FLAG ( VIEW_VOLUME ),
-		
-		WORLD_NORMAL_MTX_MASK				= ID_TO_FLAG ( WORLD_NORMAL_MTX ),
-		WORLD_VIEW_MTX_MASK					= ID_TO_FLAG ( WORLD_VIEW_MTX ),
-		WORLD_VIEW_NORMAL_MTX_MASK			= ID_TO_FLAG ( WORLD_VIEW_NORMAL_MTX ),
-		WORLD_VIEW_PROJ_MTX_MASK			= ID_TO_FLAG ( WORLD_VIEW_PROJ_MTX ),
-		WORLD_VIEW_PROJ_NORMAL_MTX_MASK		= ID_TO_FLAG ( WORLD_VIEW_PROJ_NORMAL_MTX ),
+		// masks for all the non-settable (derived) matrices
 	
-		BASE_ATTRS_MASK						= ID_TO_FLAG ( PROJ_MTX )
-											| ID_TO_FLAG ( UV_MTX )
-											| ID_TO_FLAG ( VIEW_MTX )
-											| ID_TO_FLAG ( WINDOW_MTX )
-											| ID_TO_FLAG ( WORLD_MTX )
-											| ID_TO_FLAG ( PEN_COLOR ),
+		CLIP_TO_DISPLAY_MTX_MASK				= ID_TO_FLAG ( CLIP_TO_DISPLAY_MTX ),
+		CLIP_TO_MODEL_MTX_MASK					= ID_TO_FLAG ( CLIP_TO_MODEL_MTX ),
+		CLIP_TO_VIEW_MTX_MASK					= ID_TO_FLAG ( CLIP_TO_VIEW_MTX ),
+		CLIP_TO_WORLD_MTX_MASK					= ID_TO_FLAG ( CLIP_TO_WORLD_MTX ),
+		MODEL_TO_CLIP_MTX_MASK					= ID_TO_FLAG ( MODEL_TO_CLIP_MTX ),
+		MODEL_TO_DISPLAY_MTX_MASK				= ID_TO_FLAG ( MODEL_TO_DISPLAY_MTX ),
+		MODEL_TO_VIEW_MTX_MASK					= ID_TO_FLAG ( MODEL_TO_VIEW_MTX ),
+		NORMALIZED_MODEL_TO_CLIP_MTX_MASK		= ID_TO_FLAG ( NORMALIZED_MODEL_TO_CLIP_MTX ),
+		NORMALIZED_MODEL_TO_VIEW_MTX_MASK		= ID_TO_FLAG ( NORMALIZED_MODEL_TO_VIEW_MTX ),
+		NORMALIZED_MODEL_TO_WORLD_MTX_MASK		= ID_TO_FLAG ( NORMALIZED_MODEL_TO_WORLD_MTX ),
+		PEN_COLOR_DIRTY_MASK					= ID_TO_FLAG ( PEN_COLOR ),
+		UV_TO_MODEL_MTX_MASK					= ID_TO_FLAG ( UV_TO_MODEL_MTX ),
+		VIEW_TO_MODEL_MTX_MASK					= ID_TO_FLAG ( VIEW_TO_MODEL_MTX ),
+		VIEW_TO_DISPLAY_MTX_MASK				= ID_TO_FLAG ( VIEW_TO_DISPLAY_MTX ),
+		VIEW_TO_WORLD_MTX_MASK					= ID_TO_FLAG ( VIEW_TO_WORLD_MTX ),
+		VIEW_VOLUME_MASK						= ID_TO_FLAG ( VIEW_VOLUME ),
+		WINDOW_TO_CLIP_MTX_MASK					= ID_TO_FLAG ( WINDOW_TO_CLIP_MTX ),
+		WORLD_TO_CLIP_MTX_MASK					= ID_TO_FLAG ( WORLD_TO_CLIP_MTX ),
+		WORLD_TO_DISPLAY_MTX_MASK				= ID_TO_FLAG ( WORLD_TO_DISPLAY_MTX ),
+		WORLD_TO_MODEL_MTX_MASK					= ID_TO_FLAG ( WORLD_TO_MODEL_MTX ),
 		
-		PEN_COLOR_DIRTY_MASK				= ID_TO_FLAG ( PEN_COLOR ),
+		// for each settable matrix, here are the masks they will dirty
 		
-		PROJ_MTX_DIRTY_MASK					= ID_TO_FLAG ( PROJ_MTX )
-											| ID_TO_FLAG ( INVERSE_PROJ_MTX )
-											| ID_TO_FLAG ( INVERSE_VIEW_PROJ_MTX )
-											| ID_TO_FLAG ( INVERSE_WORLD_VIEW_PROJ_MTX )
-											| ID_TO_FLAG ( VIEW_PROJ_MTX )
-											| ID_TO_FLAG ( WORLD_VIEW_PROJ_MTX )
-											| ID_TO_FLAG ( WORLD_VIEW_PROJ_NORMAL_MTX )
-											| ID_TO_FLAG ( VIEW_VOLUME ),
+		CLIP_TO_WINDOW_MTX_DIRTY_MASK			= ID_TO_FLAG ( CLIP_TO_WINDOW_MTX )
+												| ID_TO_FLAG ( WINDOW_TO_CLIP_MTX ),
 		
-		UV_MTX_DIRTY_MASK					= ID_TO_FLAG ( UV_MTX )
-											| ID_TO_FLAG ( INVERSE_UV_MTX ),
+		MODEL_TO_UV_MTX_DIRTY_MASK				= ID_TO_FLAG ( MODEL_TO_UV_MTX )
+												| ID_TO_FLAG ( UV_TO_MODEL_MTX ),
 		
-		VIEW_MTX_DIRTY_MASK					= ID_TO_FLAG ( VIEW_MTX )
-											| ID_TO_FLAG ( INVERSE_VIEW_MTX )
-											| ID_TO_FLAG ( INVERSE_VIEW_PROJ_MTX )
-											| ID_TO_FLAG ( INVERSE_WORLD_VIEW_MTX )
-											| ID_TO_FLAG ( INVERSE_WORLD_VIEW_PROJ_MTX )
-											| ID_TO_FLAG ( VIEW_PROJ_MTX )
-											| ID_TO_FLAG ( WORLD_VIEW_MTX )
-											| ID_TO_FLAG ( WORLD_VIEW_NORMAL_MTX )
-											| ID_TO_FLAG ( WORLD_VIEW_PROJ_MTX )
-											| ID_TO_FLAG ( WORLD_VIEW_PROJ_NORMAL_MTX )
-											| ID_TO_FLAG ( VIEW_VOLUME ),
+		MODEL_TO_WORLD_MTX_DIRTY_MASK			= ID_TO_FLAG ( CLIP_TO_MODEL_MTX )
+												| ID_TO_FLAG ( MODEL_TO_CLIP_MTX )
+												| ID_TO_FLAG ( MODEL_TO_DISPLAY_MTX )
+												| ID_TO_FLAG ( MODEL_TO_VIEW_MTX )
+												| ID_TO_FLAG ( MODEL_TO_WORLD_MTX )
+												| ID_TO_FLAG ( NORMALIZED_MODEL_TO_CLIP_MTX )
+												| ID_TO_FLAG ( NORMALIZED_MODEL_TO_VIEW_MTX )
+												| ID_TO_FLAG ( NORMALIZED_MODEL_TO_WORLD_MTX )
+												| ID_TO_FLAG ( VIEW_TO_MODEL_MTX )
+												| ID_TO_FLAG ( WORLD_TO_MODEL_MTX ),
 		
-		WINDOW_MTX_DIRTY_MASK				= ID_TO_FLAG ( WINDOW_MTX )
-											| ID_TO_FLAG ( INVERSE_WINDOW_MTX ),
+		VIEW_TO_CLIP_MTX_DIRTY_MASK				= ID_TO_FLAG ( CLIP_TO_MODEL_MTX )
+												| ID_TO_FLAG ( CLIP_TO_VIEW_MTX )
+												| ID_TO_FLAG ( CLIP_TO_WORLD_MTX )
+												| ID_TO_FLAG ( MODEL_TO_CLIP_MTX )
+												| ID_TO_FLAG ( MODEL_TO_DISPLAY_MTX )
+												| ID_TO_FLAG ( NORMALIZED_MODEL_TO_CLIP_MTX )
+												| ID_TO_FLAG ( VIEW_TO_CLIP_MTX )
+												| ID_TO_FLAG ( VIEW_TO_DISPLAY_MTX )
+												| ID_TO_FLAG ( VIEW_VOLUME )
+												| ID_TO_FLAG ( WORLD_TO_CLIP_MTX )
+												| ID_TO_FLAG ( WORLD_TO_DISPLAY_MTX ),
 		
-		WORLD_MTX_DIRTY_MASK				= ID_TO_FLAG ( WORLD_MTX )
-											| ID_TO_FLAG ( INVERSE_WORLD_MTX )
-											| ID_TO_FLAG ( INVERSE_WORLD_VIEW_MTX )
-											| ID_TO_FLAG ( INVERSE_WORLD_VIEW_PROJ_MTX )
-											| ID_TO_FLAG ( WORLD_NORMAL_MTX )
-											| ID_TO_FLAG ( WORLD_VIEW_MTX )
-											| ID_TO_FLAG ( WORLD_VIEW_NORMAL_MTX )
-											| ID_TO_FLAG ( WORLD_VIEW_PROJ_MTX )
-											| ID_TO_FLAG ( WORLD_VIEW_PROJ_NORMAL_MTX ),
+		WORLD_TO_DEBUG_MTX_DIRTY_MASK			= ID_TO_FLAG ( CLIP_TO_DISPLAY_MTX )
+												| ID_TO_FLAG ( MODEL_TO_DISPLAY_MTX )
+												| ID_TO_FLAG ( VIEW_TO_DISPLAY_MTX )
+												| ID_TO_FLAG ( WORLD_TO_DISPLAY_MTX ),
+		
+		WORLD_TO_VIEW_MTX_DIRTY_MASK			= ID_TO_FLAG ( CLIP_TO_MODEL_MTX )
+												| ID_TO_FLAG ( CLIP_TO_WORLD_MTX )
+												| ID_TO_FLAG ( MODEL_TO_CLIP_MTX )
+												| ID_TO_FLAG ( MODEL_TO_VIEW_MTX )
+												| ID_TO_FLAG ( NORMALIZED_MODEL_TO_CLIP_MTX )
+												| ID_TO_FLAG ( NORMALIZED_MODEL_TO_VIEW_MTX )
+												| ID_TO_FLAG ( VIEW_TO_DISPLAY_MTX )
+												| ID_TO_FLAG ( VIEW_TO_MODEL_MTX )
+												| ID_TO_FLAG ( VIEW_TO_WORLD_MTX )
+												| ID_TO_FLAG ( VIEW_VOLUME )
+												| ID_TO_FLAG ( WORLD_TO_CLIP_MTX )
+												| ID_TO_FLAG ( WORLD_TO_DISPLAY_MTX )
+												| ID_TO_FLAG ( WORLD_TO_VIEW_MTX ),
+
+		// user to clear dirty flags for the base attributes (only used to trigger shader updates)
+		
+		BASE_ATTRS_MASK							= ID_TO_FLAG ( MODEL_TO_UV_MTX )
+												| ID_TO_FLAG ( MODEL_TO_WORLD_MTX )
+												| ID_TO_FLAG ( CLIP_TO_WINDOW_MTX )
+												| ID_TO_FLAG ( PEN_COLOR )
+												| ID_TO_FLAG ( VIEW_TO_CLIP_MTX )
+												| ID_TO_FLAG ( WORLD_TO_DEBUG_MTX )
+												| ID_TO_FLAG ( WORLD_TO_VIEW_MTX ),
 	};
 
 protected:
 	
-	ZLMatrix4x4				mVertexTransforms [ TOTAL_MATRICES ]; // composition of VIEW and PROJ matrices via CPU
+	ZLMatrix4x4				mMatrices [ TOTAL_MATRICES ]; // composition of VIEW and PROJ matrices via CPU
 	u32						mDirtyFlags;
 	u32						mShaderFlags;
 	
@@ -141,8 +185,7 @@ protected:
 	ZLColorVec				mClearColor;
 	double					mClearDepth;
 	
-	u32						mBufferWidth;
-	u32						mBufferHeight;
+	bool					mUseDebugMtx;
 	
 	//----------------------------------------------------------------//
 	void					SetDirtyFlags				( u32 dirtyFlags );
@@ -190,6 +233,8 @@ public:
 	void					SetAmbientColor				( u32 color );
 	void					SetAmbientColor				( const ZLColorVec& colorVec );
 	void					SetAmbientColor				( float r, float g, float b, float a );
+
+	void					SetDebug					( MOAIViewport* viewport, MOAICamera* camera );
 
 	void					SetMtx						( u32 transformID );
 	void					SetMtx						( u32 transformID, const ZLAffine3D& transform );

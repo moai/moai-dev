@@ -410,7 +410,7 @@ void MOAIParticleSystem::Draw ( int subPrimID ) {
 		drawingMtx = this->GetLocalToWorldMtx ();
 		drawingMtx.Prepend ( spriteMtx );
 		
-		gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX, drawingMtx );
+		gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX, drawingMtx );
 		
 		//this->mDeck->Draw ( this->mIndex + ( u32 )sprite.mGfxID, this->mMaterialBatch );
 		this->mDeck->Draw ( this->mIndex + ( u32 )sprite.mGfxID );

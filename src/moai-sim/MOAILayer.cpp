@@ -362,6 +362,16 @@ int	MOAILayer::_removeProp ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAILayer::_setDebugCamera ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
+
+	self->mDebugCamera.Set ( *self, state.GetLuaObject < MOAICamera >( 2, true ));
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setCamera
 	@text	Sets a camera for the layer. If no camera is supplied,
 			layer will render using the identity matrix as view/proj.
@@ -748,7 +758,7 @@ void MOAILayer::DrawPartition ( MOAIPartition& partition ) {
 	if ( !totalResults ) return;
 	
 	if ( this->mSortInViewSpace ) {
-		buffer.Transform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_MTX ), false );
+		buffer.Transform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_VIEW_MTX ), false );
 	}
 	
 	buffer.GenerateKeys (
@@ -774,6 +784,9 @@ void MOAILayer::DrawPartition ( MOAIPartition& partition ) {
 		//gfxMgr.mGfxState.SetAmbientColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 		//MOAIDraw::Get ().Bind ();
 		this->DrawPropsDebug ( buffer );
+		if ( this->mCamera ) {
+			this->mCamera->DrawDebug ();
+		}
 	}
 }
 
@@ -851,6 +864,7 @@ MOAILayer::MOAILayer () :
 MOAILayer::~MOAILayer () {
 
 	this->mCamera.Set ( *this, 0 );
+	this->mDebugCamera.Set ( *this, 0 );
 	this->mViewport.Set ( *this, 0 );
 	this->mPartition.Set ( *this, 0 );
 }
@@ -896,6 +910,7 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getViewport",			_getViewport },
 		{ "insertProp",				_insertProp },
 		{ "removeProp",				_removeProp },
+		{ "setDebugCamera",			_setDebugCamera },
 		{ "setCamera",				_setCamera },
 		{ "setOverlayTable",		_setOverlayTable },
 		{ "setParallax",			_setParallax },
@@ -953,7 +968,8 @@ void MOAILayer::MOAIDrawable_Draw ( int subPrimID ) {
 	this->ClearSurface ();
 	
 	gfxMgr.mGfxState.SetViewProj ( this->mViewport, this->mCamera, this->mParallax );
-	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX );
+	gfxMgr.mGfxState.SetDebug ( this->mViewport, this->mDebugCamera );
+	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX );
 	
 	// set up the ambient color
 	gfxMgr.mGfxState.SetAmbientColor ( this->mColor );

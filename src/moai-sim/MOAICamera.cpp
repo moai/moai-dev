@@ -3,12 +3,16 @@
 
 #include "pch.h"
 #include <moai-sim/MOAICamera.h>
-#include <moai-sim/MOAISim.h>
+#include <moai-sim/MOAIDebugLines.h>
+#include <moai-sim/MOAIDraw.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIViewport.h>
 
-#define DEFAULT_HFOV 60.0f
-#define DEFAULT_NEAR_PLANE 1.0f
-#define DEFAULT_FAR_PLANE 10000.0f
+#define DEFAULT_HFOV			60.0f
+#define DEFAULT_NEAR_PLANE		1.0f
+#define DEFAULT_FAR_PLANE		10000.0f
+
+#define RETICLE_RADIUS			0.125f
 
 //================================================================//
 // local
@@ -311,6 +315,40 @@ int MOAICamera::_setType ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAICamera::DrawDebug () {
+
+	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
+	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAICamera >())) return;
+	
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	
+	MOAIDraw& draw = MOAIDraw::Get ();
+	UNUSED ( draw ); // mystery warning in vs2008
+	
+	draw.Bind ();
+	
+	ZLRect viewRect = gfxMgr.mGfxState.GetViewRect ();
+	float aspect = viewRect.Width () / viewRect.Height ();
+	
+	ZLMatrix4x4 mtx = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::CLIP_TO_DISPLAY_MTX );
+	
+	gfxMgr.mVertexCache.SetVertexTransform ( mtx ); // draw in device space
+	
+	if ( debugLines.Bind ( DEBUG_DRAW_FRAME )) {
+		draw.DrawRectOutline ( -1.0f, -1.0f, 1.0f, 1.0f );
+	}
+	
+	mtx.m [ ZLMatrix4x4::C1_R1 ] *= viewRect.Width () / viewRect.Height ();
+	gfxMgr.mVertexCache.SetVertexTransform ( mtx );
+	
+	if ( debugLines.Bind ( DEBUG_DRAW_RETICLE )) {
+		draw.DrawEllipseOutline ( 0.0f, 0.0f, RETICLE_RADIUS, RETICLE_RADIUS, 64 );
+		draw.DrawLine ( -RETICLE_RADIUS, 0.0f, RETICLE_RADIUS, 0.0f );
+		draw.DrawLine ( 0.0f, -RETICLE_RADIUS, 0.0f, RETICLE_RADIUS );
+	}
+}
+
+//----------------------------------------------------------------//
 ZLMatrix4x4 MOAICamera::GetBillboardMtx () const {
 
 	ZLMatrix4x4 mtx ( this->GetLocalToWorldMtx ());
@@ -395,6 +433,12 @@ ZLMatrix4x4 MOAICamera::GetProjMtxInv ( const MOAIViewport& viewport ) const {
 }
 
 //----------------------------------------------------------------//
+ZLMatrix4x4 MOAICamera::GetViewMtx () const {
+
+	return ZLMatrix4x4 ( this->GetWorldToLocalMtx ());
+}
+
+//----------------------------------------------------------------//
 ZLMatrix4x4 MOAICamera::GetViewMtx ( const ZLVec3D& parallax ) const {
 
 	ZLMatrix4x4 view ( this->GetWorldToLocalMtx ());
@@ -454,7 +498,7 @@ MOAICamera::MOAICamera () :
 	mFieldOfView ( DEFAULT_HFOV ),
 	mNearPlane ( DEFAULT_NEAR_PLANE ),
 	mFarPlane ( DEFAULT_FAR_PLANE ),
-	mType ( CAMERA_TYPE_3D ) {
+	mType ( CAMERA_TYPE_WINDOW ) {
 
 	RTTI_SINGLE ( MOAITransform )
 	
@@ -467,7 +511,14 @@ MOAICamera::~MOAICamera () {
 
 //----------------------------------------------------------------//
 void MOAICamera::RegisterLuaClass ( MOAILuaState& state ) {
+
 	MOAITransform::RegisterLuaClass ( state );
+	
+	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAICamera >( TOTAL_DEBUG_LINE_STYLES );
+	
+	state.SetField ( -1, "DEBUG_DRAW_CAMERA_MASTER",			MOAIDebugLinesMgr::Pack < MOAICamera >( -1 ));
+	state.SetField ( -1, "DEBUG_DRAW_FRAME",					MOAIDebugLinesMgr::Pack < MOAICamera >( DEBUG_DRAW_FRAME ));
+	state.SetField ( -1, "DEBUG_DRAW_RETICLE",					MOAIDebugLinesMgr::Pack < MOAICamera >( DEBUG_DRAW_RETICLE ));
 	
 	state.SetField ( -1, "ATTR_FOV",			MOAICameraAttr::Pack ( ATTR_FOV ));
 	

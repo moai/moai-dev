@@ -389,18 +389,18 @@ void MOAIShaderProgram::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "UNIFORM_WIDTH_MATRIX_3X3",			( u32 )MOAIShaderUniform::UNIFORM_WIDTH_MATRIX_3X3 );
 	state.SetField ( -1, "UNIFORM_WIDTH_MATRIX_4X4",			( u32 )MOAIShaderUniform::UNIFORM_WIDTH_MATRIX_4X4 );
 	
-	state.SetField ( -1, "GLOBAL_WORLD_INVERSE",				( u32 )MOAIGfxGlobalsCache::INVERSE_WORLD_MTX );
-	state.SetField ( -1, "GLOBAL_WORLD_VIEW_INVERSE",			( u32 )MOAIGfxGlobalsCache::INVERSE_WORLD_VIEW_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_INVERSE",				( u32 )MOAIGfxGlobalsCache::WORLD_TO_MODEL_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_VIEW_INVERSE",			( u32 )MOAIGfxGlobalsCache::VIEW_TO_MODEL_MTX );
 	
-	state.SetField ( -1, "GLOBAL_PROJ",							( u32 )MOAIGfxGlobalsCache::PROJ_MTX );
-	state.SetField ( -1, "GLOBAL_VIEW",							( u32 )MOAIGfxGlobalsCache::VIEW_MTX );
-	state.SetField ( -1, "GLOBAL_VIEW_PROJ",					( u32 )MOAIGfxGlobalsCache::VIEW_PROJ_MTX );
-	state.SetField ( -1, "GLOBAL_WORLD",						( u32 )MOAIGfxGlobalsCache::WORLD_MTX );
-	state.SetField ( -1, "GLOBAL_WORLD_NORMAL",					( u32 )MOAIGfxGlobalsCache::WORLD_NORMAL_MTX );
-	state.SetField ( -1, "GLOBAL_WORLD_VIEW",					( u32 )MOAIGfxGlobalsCache::WORLD_VIEW_MTX );
-	state.SetField ( -1, "GLOBAL_WORLD_VIEW_NORMAL",			( u32 )MOAIGfxGlobalsCache::WORLD_VIEW_NORMAL_MTX );
-	state.SetField ( -1, "GLOBAL_WORLD_VIEW_PROJ",				( u32 )MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX );
-	state.SetField ( -1, "GLOBAL_WORLD_VIEW_PROJ_NORMAL",		( u32 )MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_NORMAL_MTX );
+	state.SetField ( -1, "GLOBAL_PROJ",							( u32 )MOAIGfxGlobalsCache::VIEW_TO_CLIP_MTX );
+	state.SetField ( -1, "GLOBAL_VIEW",							( u32 )MOAIGfxGlobalsCache::WORLD_TO_VIEW_MTX );
+	state.SetField ( -1, "GLOBAL_VIEW_PROJ",					( u32 )MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD",						( u32 )MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_NORMAL",					( u32 )MOAIGfxGlobalsCache::NORMALIZED_MODEL_TO_WORLD_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_VIEW",					( u32 )MOAIGfxGlobalsCache::MODEL_TO_VIEW_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_VIEW_NORMAL",			( u32 )MOAIGfxGlobalsCache::NORMALIZED_MODEL_TO_VIEW_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_VIEW_PROJ",				( u32 )MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_VIEW_PROJ_NORMAL",		( u32 )MOAIGfxGlobalsCache::NORMALIZED_MODEL_TO_CLIP_MTX );
 	
 	state.SetField ( -1, "GLOBAL_PEN_COLOR",					( u32 )MOAIGfxGlobalsCache::PEN_COLOR );
 	
