@@ -19,6 +19,8 @@ viewport:setScale ( 320, 480 )
 
 camera = MOAICamera.new ()
 
+--camera:moveRot ( 0, 0, 45, 5 )
+
 partition = MOAIPartition.new ()
 partition:reserveLevels ( 3 )
 partition:setLevel ( 1, 256, 4, 4 )

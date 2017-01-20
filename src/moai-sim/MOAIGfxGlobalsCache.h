@@ -148,14 +148,14 @@ public:
 															);
 	
 	static const u64 VIEW_TO_CLIP_MTX_DIRTY_MASK			= PRIMARY_TO_FULL_MASK (
-																  ID_TO_FLAG ( MODEL_TO_CLIP_MTX )
+																  ID_TO_FLAG ( CLIP_TO_DISPLAY_MTX )
+																| ID_TO_FLAG ( MODEL_TO_CLIP_MTX )
 																| ID_TO_FLAG ( MODEL_TO_DISPLAY_MTX )
 																| ID_TO_FLAG ( VIEW_TO_CLIP_MTX )
 																| ID_TO_FLAG ( VIEW_TO_DISPLAY_MTX )
 																| ID_TO_FLAG ( VIEW_VOLUME )
 																| ID_TO_FLAG ( WORLD_TO_CLIP_MTX )
 															);
-		
 	
 	static const u64 WORLD_TO_DISPLAY_MTX_DIRTY_MASK		= PRIMARY_TO_FULL_MASK (
 																  ID_TO_FLAG ( CLIP_TO_DISPLAY_MTX )
@@ -164,7 +164,8 @@ public:
 															);
 	
 	static const u64 WORLD_TO_VIEW_MTX_DIRTY_MASK			= PRIMARY_TO_FULL_MASK (
-																  ID_TO_FLAG ( MODEL_TO_CLIP_MTX )
+																  ID_TO_FLAG ( CLIP_TO_DISPLAY_MTX )
+																| ID_TO_FLAG ( MODEL_TO_CLIP_MTX )
 																| ID_TO_FLAG ( MODEL_TO_VIEW_MTX )
 																| ID_TO_FLAG ( VIEW_TO_DISPLAY_MTX )
 																| ID_TO_FLAG ( VIEW_VOLUME )
@@ -174,15 +175,13 @@ public:
 
 	// user to clear dirty flags for the base attributes (only used to trigger shader updates)
 		
-	static const u64 BASE_ATTRS_MASK						= PRIMARY_TO_FULL_MASK (
-																  ID_TO_FLAG ( MODEL_TO_UV_MTX )
+	static const u64 BASE_ATTRS_MASK						=	  ID_TO_FLAG ( MODEL_TO_UV_MTX )
 																| ID_TO_FLAG ( MODEL_TO_WORLD_MTX )
 																| ID_TO_FLAG ( CLIP_TO_WINDOW_MTX )
 																| ID_TO_FLAG ( PEN_COLOR )
 																| ID_TO_FLAG ( VIEW_TO_CLIP_MTX )
 																| ID_TO_FLAG ( WORLD_TO_DISPLAY_MTX )
-																| ID_TO_FLAG ( WORLD_TO_VIEW_MTX )
-															);
+																| ID_TO_FLAG ( WORLD_TO_VIEW_MTX );
 
 protected:
 
