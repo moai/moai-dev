@@ -8726,8 +8726,6 @@
 		CDA1D0901D1B76360006C5E5 /* MOAIImageFormatTga.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIImageFormatTga.cpp; path = "moai-image-tga/MOAIImageFormatTga.cpp"; sourceTree = "<group>"; };
 		CDA1D0911D1B76360006C5E5 /* MOAIImageFormatTga.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIImageFormatTga.h; path = "moai-image-tga/MOAIImageFormatTga.h"; sourceTree = "<group>"; };
 		CDA1D0CE1D1BE5CF0006C5E5 /* tga_reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tga_reader.h; path = "../../3rdparty/TGAReader-config/tga_reader.h"; sourceTree = "<group>"; };
-		CDA860A01E3052C200F35CAC /* MOAIDebugLines-bak.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "MOAIDebugLines-bak.cpp"; sourceTree = "<group>"; };
-		CDA860A11E3052C200F35CAC /* MOAIDebugLines-bak.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOAIDebugLines-bak.h"; sourceTree = "<group>"; };
 		CDAC02BC192407E700392FAB /* MOAIHttpTaskNSURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIHttpTaskNSURL.h; sourceTree = "<group>"; };
 		CDAC02BD192407E700392FAB /* MOAIHttpTaskNSURL.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MOAIHttpTaskNSURL.mm; sourceTree = "<group>"; };
 		CDADCCF61A3576A10029FEDA /* MOAITrace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITrace.cpp; sourceTree = "<group>"; };
@@ -10084,7 +10082,6 @@
 				CD8DD76A191960A20088EA60 /* pathfinding */,
 				CD8DD76719195FDD0088EA60 /* profiler */,
 				CD1D85A61E1B5DFC0089FFAD /* prop */,
-				CD1D85BC1E1B63330089FFAD /* prop-graphics */,
 				CDA8609E1E304EC300F35CAC /* render pass */,
 				CDB718F51A4BA785003DFFBA /* shader */,
 				CDE9851A18975ABD001827F9 /* text */,
@@ -10794,25 +10791,18 @@
 			children = (
 				CD1D85BD1E1B672C0089FFAD /* MOAIDeckPropBase.cpp */,
 				CD1D85BE1E1B672C0089FFAD /* MOAIDeckPropBase.h */,
-				CD1D85A71E1B5EDD0089FFAD /* MOAIGridPropBase.cpp */,
-				CD1D85A81E1B5EDD0089FFAD /* MOAIGridPropBase.h */,
-				CD1D85A91E1B5EDD0089FFAD /* MOAIIndexedPropBase.cpp */,
-				CD1D85AA1E1B5EDD0089FFAD /* MOAIIndexedPropBase.h */,
-			);
-			name = prop;
-			sourceTree = "<group>";
-		};
-		CD1D85BC1E1B63330089FFAD /* prop-graphics */ = {
-			isa = PBXGroup;
-			children = (
 				CD1D85C31E1B87440089FFAD /* MOAIGraphicsGridProp.cpp */,
 				CD1D85C41E1B87440089FFAD /* MOAIGraphicsGridProp.h */,
 				CD73A604188F0AEC00DFACDB /* MOAIGraphicsProp.cpp */,
 				CD73A605188F0AEC00DFACDB /* MOAIGraphicsProp.h */,
 				CD1D85B61E1B631C0089FFAD /* MOAIGraphicsPropBase.cpp */,
 				CD1D85B71E1B631C0089FFAD /* MOAIGraphicsPropBase.h */,
+				CD1D85A71E1B5EDD0089FFAD /* MOAIGridPropBase.cpp */,
+				CD1D85A81E1B5EDD0089FFAD /* MOAIGridPropBase.h */,
+				CD1D85A91E1B5EDD0089FFAD /* MOAIIndexedPropBase.cpp */,
+				CD1D85AA1E1B5EDD0089FFAD /* MOAIIndexedPropBase.h */,
 			);
-			name = "prop-graphics";
+			name = prop;
 			sourceTree = "<group>";
 		};
 		CD218F8213A7FD18008337E7 /* luacurl */ = {
@@ -13971,8 +13961,6 @@
 		CDA8609F1E30527100F35CAC /* debug lines */ = {
 			isa = PBXGroup;
 			children = (
-				CDA860A01E3052C200F35CAC /* MOAIDebugLines-bak.cpp */,
-				CDA860A11E3052C200F35CAC /* MOAIDebugLines-bak.h */,
 				89BE6F48173AD0CA00DFE837 /* MOAIDebugLines.cpp */,
 				89BE6F49173AD0CA00DFE837 /* MOAIDebugLines.h */,
 			);

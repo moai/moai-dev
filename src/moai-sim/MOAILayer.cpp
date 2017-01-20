@@ -768,11 +768,11 @@ void MOAILayer::DrawPartition ( MOAIPartition& partition ) {
 	
 	materialStack.Pop ();
 	
-	if ( this->mShowDebugLines ) {
+	if ( MOAIDebugLinesMgr::Get ().IsVisible () && this->mShowDebugLines ) {
 		
 		// clear the ambient color and bind vector drawing
-		gfxMgr.mGfxState.SetAmbientColor ( 1.0f, 1.0f, 1.0f, 1.0f );
-		MOAIDraw::Get ().Bind ();
+		//gfxMgr.mGfxState.SetAmbientColor ( 1.0f, 1.0f, 1.0f, 1.0f );
+		//MOAIDraw::Get ().Bind ();
 		this->DrawPropsDebug ( buffer );
 	}
 }
@@ -784,8 +784,8 @@ void MOAILayer::DrawProps ( MOAIPartitionResultBuffer& buffer ) {
 
 	for ( u32 i = 0; i < totalResults; ++i ) {
 		MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-		MOAIDrawable* graphicsProp = result->AsType < MOAIDrawable >();
-		graphicsProp->Draw ( result->mSubPrimID );
+		MOAIDrawable* drawable = result->AsType < MOAIDrawable >();
+		drawable->Draw ( result->mSubPrimID );
 	}
 }
 
@@ -796,8 +796,8 @@ void MOAILayer::DrawPropsDebug ( MOAIPartitionResultBuffer& buffer ) {
 
 	for ( u32 i = 0; i < totalResults; ++i ) {
 		MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-		MOAIDrawable* graphicsProp = result->AsType < MOAIDrawable >();
-		graphicsProp->DrawDebug ( result->mSubPrimID );
+		MOAIDrawable* drawable = result->AsType < MOAIDrawable >();
+		drawable->DrawDebug ( result->mSubPrimID );
 	}
 }
 

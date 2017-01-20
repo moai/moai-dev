@@ -37,7 +37,11 @@ public:
 class MOAIDebugLineStyleSet {
 private:
 	
+	friend class MOAIDebugLinesMgr;
+	
 	ZLLeanArray < MOAIDebugLineStyle > mLineStyles;
+	
+	bool					mShowDebugLines;
 
 public:
 
@@ -58,22 +62,24 @@ private:
 
 	static const u32	STYLE_SET_ID_SHIFT	= 16;
 	static const u32	STYLE_SET_ID_MASK	= 0xffff0000;
-	static const u32	STYLE_ID_MASK		= 0xC000ffff;
+	static const u32	STYLE_ID_MASK		= 0x0000ffff;
 
 	typedef STLMap < u32, MOAIDebugLineStyleSet* >::iterator StyleSetIt;
 	STLMap < u32, MOAIDebugLineStyleSet* >	mStyleSets;
 
 	MOAIDebugLineStyleSet*	mActiveStyleSet;
+	bool					mShowDebugLines;
 
 	//----------------------------------------------------------------//
 	static int				_setStyle				( lua_State* L );
+	static int				_showDebugLines			( lua_State* L );
 
 	//----------------------------------------------------------------//
 	static u32				GetSetID				( u32 packedID );
 	MOAIDebugLineStyle*		GetStyle				( u32 styleID );
 	static u32				GetStyleID				( u32 packedID );
 	void					ReserveStyleSet			( u32 setID, u32 size );
-	void					SelectStyleSet			( u32 setID );
+	bool					SelectStyleSet			( u32 setID );
 	void					SetStyle				( u32 styleID );
 	void					SetStyle				( u32 styleID, float size, u32 color );
 
@@ -83,6 +89,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool			Bind					( u32 styleID );
+	bool			IsVisible				();
 	bool			IsVisible				( u32 styleID );
 					MOAIDebugLinesMgr		();
 					~MOAIDebugLinesMgr		();
@@ -104,9 +111,9 @@ public:
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	void SelectStyleSet () {
+	bool SelectStyleSet () {
 	
-		this->SelectStyleSet ( ZLTypeID < TYPE >::GetID ());
+		return this->SelectStyleSet ( ZLTypeID < TYPE >::GetID ());
 	}
 };
 

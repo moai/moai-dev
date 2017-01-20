@@ -16,11 +16,12 @@ void MOAIGfxResourceClerk::DeleteOrDiscardHandle ( ZLGfxHandle*& handle, bool sh
 
 	if ( handle ) {
 		if ( shouldDelete && MOAIGfxMgr::IsValid ()) {
-		
 			MOAIGfxMgr::Get ().mResourceMgr.mDeleterStack.Push ( handle );
-			return;
 		}
-		ZLGfx::Discard ( handle );
+		else {
+			ZLGfx::Discard ( handle );
+		}
+		handle = 0;
 	}
 }
 

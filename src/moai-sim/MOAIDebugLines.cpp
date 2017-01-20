@@ -33,7 +33,8 @@ MOAIDebugLineStyle* MOAIDebugLineStyleSet::GetStyle ( u32 styleID ) {
 }
 
 //----------------------------------------------------------------//
-MOAIDebugLineStyleSet::MOAIDebugLineStyleSet () {
+MOAIDebugLineStyleSet::MOAIDebugLineStyleSet () :
+	mShowDebugLines ( true ) {
 }
 
 //----------------------------------------------------------------//
@@ -80,12 +81,34 @@ int MOAIDebugLinesMgr::_setStyle ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDebugLinesMgr::_showDebugLines ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIDebugLinesMgr, "" )
+
+	if ( state.IsType ( 1, LUA_TNUMBER )) {
+	
+		u32 packedID = state.GetValue < u32 >( 1, 0 );
+		
+		MOAIDebugLineStyleSet* styleSet = self->mStyleSets.value_for_key ( MOAIDebugLinesMgr::GetSetID ( packedID ), 0 );
+		if ( styleSet ) {
+			styleSet->mShowDebugLines = state.GetValue < bool >( 2, true );
+		}
+	}
+	else {
+		self->mShowDebugLines = state.GetValue < bool >( 1, true );
+	}
+	return 0;
+}
+
 //================================================================//
 // MOAIDebugLinesMgr
 //================================================================//
 
 //----------------------------------------------------------------//
 bool MOAIDebugLinesMgr::Bind ( u32 styleID ) {
+
+	if ( !this->mShowDebugLines ) return false;
 
 	MOAIDebugLineStyle* style = this->GetStyle ( styleID );
 	if ( style && ( style->mDisplay == MOAIDebugLineStyle::DISPLAY_VISIBLE )) {
@@ -118,8 +141,16 @@ u32 MOAIDebugLinesMgr::GetStyleID ( u32 packedID ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIDebugLinesMgr::IsVisible () {
+
+	return this->mShowDebugLines;
+}
+
+//----------------------------------------------------------------//
 bool MOAIDebugLinesMgr::IsVisible ( u32 styleID ) {
 
+	if ( !this->mShowDebugLines ) return false;
+	
 	MOAIDebugLineStyle* style = this->GetStyle ( styleID );
 	if ( style ) {
 		return style->mDisplay == MOAIDebugLineStyle::DISPLAY_VISIBLE;
@@ -128,7 +159,8 @@ bool MOAIDebugLinesMgr::IsVisible ( u32 styleID ) {
 
 //----------------------------------------------------------------//
 MOAIDebugLinesMgr::MOAIDebugLinesMgr () :
-	mActiveStyleSet ( 0 ) {
+	mActiveStyleSet ( 0 ),
+	mShowDebugLines ( true ) {
 
 	RTTI_SINGLE ( MOAILuaObject )
 }
@@ -147,6 +179,7 @@ void MOAIDebugLinesMgr::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable[] = {
 		{ "setStyle",			_setStyle },
+		{ "showDebugLines",		_showDebugLines },
 		{ NULL, NULL }
 	};
 
@@ -167,9 +200,10 @@ void MOAIDebugLinesMgr::ReserveStyleSet ( u32 setID, u32 size ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDebugLinesMgr::SelectStyleSet ( u32 setID ) {
+bool MOAIDebugLinesMgr::SelectStyleSet ( u32 setID ) {
 
 	this->mActiveStyleSet = this->mStyleSets.value_for_key ( setID, 0 );
+	return this->mActiveStyleSet && this->mActiveStyleSet->mShowDebugLines;
 }
 
 //----------------------------------------------------------------//
