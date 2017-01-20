@@ -18,7 +18,6 @@ namespace MOAIViewProj {
 	//----------------------------------------------------------------//
 	
 	// won't need these after the merge with 2.0 as matrix classes have static const idents.
-	ZLMatrix4x4			GetDebugMtx				( const MOAIViewport* viewport, const MOAICamera* camera );
 	ZLMatrix4x4			GetProjectionMtx		( const MOAIViewport* viewport, const MOAICamera* camera );
 	ZLMatrix4x4			GetViewMtx				( const MOAICamera* camera );
 	ZLMatrix4x4			GetViewMtx				( const MOAICamera* camera, const ZLVec3D& parallax );

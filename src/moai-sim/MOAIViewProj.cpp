@@ -11,17 +11,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIViewProj::GetDebugMtx ( const MOAIViewport* viewport, const MOAICamera* camera ) {
-
-	if ( viewport && camera ) {
-		ZLMatrix4x4 mtx = camera->GetViewMtx ();
-		mtx.Append ( camera->GetProjMtx ( *viewport ));
-		return mtx;
-	}
-	return ZLMatrix4x4::IDENT;
-}
-
-//----------------------------------------------------------------//
 ZLMatrix4x4 MOAIViewProj::GetProjectionMtx ( const MOAIViewport* viewport, const MOAICamera* camera ) {
 
 	return camera ? camera->GetProjMtx ( *viewport ) : ( viewport ? viewport->GetProjMtx () : ZLMatrix4x4::IDENT );
