@@ -5,6 +5,10 @@
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAITileFlags.h>
 
+SUPPRESS_EMPTY_FILE_WARNING
+
+#if 0
+
 //================================================================//
 // local
 //================================================================//
@@ -215,3 +219,5 @@ bool MOAIDeckRemapper::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u
 	}
 	return false;
 }
+
+#endif

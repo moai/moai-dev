@@ -9,6 +9,10 @@
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITransformBase.h>
 
+SUPPRESS_EMPTY_FILE_WARNING
+
+#if 0
+
 //================================================================//
 // local
 //================================================================//
@@ -415,3 +419,5 @@ void MOAIStretchPatch2D::UpdateParams () {
 	
 	this->mNeedsUpdate = false;
 }
+
+#endif

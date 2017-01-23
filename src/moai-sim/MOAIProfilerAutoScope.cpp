@@ -9,6 +9,10 @@
 	#pragma optimize ( "", on ) 
 #endif
 
+SUPPRESS_EMPTY_FILE_WARNING
+
+#if 0
+
 //================================================================//
 // MOAIProfilerAutoScope
 //================================================================//
@@ -36,4 +40,6 @@ MOAIProfilerAutoScope::~MOAIProfilerAutoScope () {
 	
 #if defined ( MOAI_OS_WINDOWS )
 	#pragma optimize ( "", off ) 
+#endif
+
 #endif

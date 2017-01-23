@@ -8,6 +8,10 @@
 	#pragma optimize ( "", on ) 
 #endif
 
+SUPPRESS_EMPTY_FILE_WARNING
+
+#if 0
+
 //================================================================//
 // MOAIProfilerEntry
 //================================================================//
@@ -92,3 +96,4 @@ void MOAIProfilerEntry::SwapWith ( MOAIProfilerEntryBase& otherBase ) {
 	#pragma optimize ( "", off ) 
 #endif
 
+#endif

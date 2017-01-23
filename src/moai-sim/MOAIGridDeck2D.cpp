@@ -8,6 +8,10 @@
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITransformBase.h>
 
+SUPPRESS_EMPTY_FILE_WARNING
+
+#if 0
+
 //================================================================//
 // MOAIGridDeckBrush
 //================================================================//
@@ -251,3 +255,5 @@ void MOAIGridDeck2D::SerializeOut ( MOAILuaState& state, MOAISerializer& seriali
 
 	MOAIDeck::SerializeOut ( state, serializer );
 }
+
+#endif

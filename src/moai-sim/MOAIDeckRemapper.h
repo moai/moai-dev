@@ -7,6 +7,8 @@
 #include <moai-sim/MOAIDeckProxyBase.h>
 #include <moai-sim/MOAINode.h>
 
+#if 0
+
 //	@lua	MOAIBoundsDeck
 //	@text	<p>Deck of bounding boxes. Bounding boxes are allocated in
 //			a separate array from that used for box indices. The index
@@ -72,4 +74,5 @@ public:
 	void				RegisterLuaFuncs				( MOAILuaState& state );
 };
 
+#endif
 #endif

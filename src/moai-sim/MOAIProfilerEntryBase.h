@@ -4,6 +4,8 @@
 #ifndef	MOAIPROFILERENTRYBASE_H
 #define	MOAIPROFILERENTRYBASE_H
 
+#if 0
+
 //================================================================//
 // MOAIProfilerEntryBase
 //================================================================//
@@ -39,4 +41,5 @@ public:
 	void						SortChildren			();
 };
 
+#endif
 #endif

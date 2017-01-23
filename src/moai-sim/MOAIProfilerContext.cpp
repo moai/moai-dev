@@ -9,6 +9,10 @@
 	#pragma optimize ( "", on ) 
 #endif
 
+SUPPRESS_EMPTY_FILE_WARNING
+
+#if 0
+
 //================================================================//
 // MOAIProfilerContext
 //================================================================//
@@ -262,4 +266,6 @@ void MOAIProfilerContext::UnlockProfileReport () {
 
 #if defined ( MOAI_OS_WINDOWS )
 	#pragma optimize ( "", off ) 
+#endif
+
 #endif

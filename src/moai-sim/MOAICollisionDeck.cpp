@@ -121,6 +121,8 @@ bool MOAICollisionDeck::Inside ( u32 idx, MOAIMaterialBatch* materials, u32 gran
 //		return this->TestHit ( materials, idx, granularity, quadBrush.mModelQuad, quadBrush.mUVQuad, vec.mX, vec.mY );
 //	}
 //	return false;
+
+	return false;
 }
 
 //----------------------------------------------------------------//

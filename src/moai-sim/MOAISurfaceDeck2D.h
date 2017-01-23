@@ -4,6 +4,8 @@
 #ifndef	MOAISURFACEDECK2D_H
 #define	MOAISURFACEDECK2D_H
 
+#if 0
+
 //================================================================//
 // MOAISurfaceBrush2D
 //================================================================//
@@ -56,4 +58,5 @@ public:
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
+#endif
 #endif

@@ -221,6 +221,7 @@ u32 MOAIFancyGrid::GetColor ( int xTile, int yTile ) const {
 	if ( this->IsValidCoord ( coord )) {
 		return this->GetColor ( this->GetCellAddr ( coord ));
 	}
+	return 0;
 }
 
 //----------------------------------------------------------------//

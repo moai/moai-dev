@@ -8,6 +8,10 @@
 #include <moai-sim/MOAISurfaceSampler2D.h>
 #include <moai-sim/MOAITransformBase.h>
 
+SUPPRESS_EMPTY_FILE_WARNING
+
+#if 0
+
 //----------------------------------------------------------------//
 //void MOAIProp::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 //	UNUSED ( sampler );
@@ -346,3 +350,5 @@ void MOAISurfaceDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_register ( state, 0, regTable );
 }
+
+#endif

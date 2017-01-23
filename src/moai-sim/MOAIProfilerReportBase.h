@@ -6,6 +6,8 @@
 
 #include <moai-sim/MOAIProfilerEntryBase.h>
 
+#if 0
+
 //================================================================//
 // MOAIProfilerReportBase
 //================================================================//
@@ -84,4 +86,5 @@ public:
 	virtual void		TraverseProfileEntries		( EntryCallbackPtr callback, void* userData );
 };
 
+#endif
 #endif

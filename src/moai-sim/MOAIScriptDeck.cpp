@@ -12,6 +12,10 @@
 #include <moai-sim/MOAITransform.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 
+SUPPRESS_EMPTY_FILE_WARNING
+
+#if 0
+
 //================================================================//
 // local
 //================================================================//
@@ -199,3 +203,5 @@ void MOAIScriptDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_register ( state, 0, regTable );
 }
+
+#endif

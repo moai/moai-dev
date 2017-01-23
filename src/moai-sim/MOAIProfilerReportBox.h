@@ -7,6 +7,8 @@
 #include <moai-sim/MOAIProfiler.h>
 #include <moai-sim/MOAIProfilerEntry.h>
 
+#if 0
+
 class MOAIFont;
 
 //================================================================//
@@ -126,4 +128,5 @@ public:
 	void				SetRect					( float left, float top, float right, float bottom );
 };
 
+#endif
 #endif

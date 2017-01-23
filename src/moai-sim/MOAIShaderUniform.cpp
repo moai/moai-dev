@@ -92,6 +92,8 @@ bool MOAIShaderUniform::Init ( u32 type, u32 width, u32 count ) {
 	this->mType		= type;
 	this->mWidth	= width;
 	this->mCount	= count;
+	
+	return true;
 }
 
 //----------------------------------------------------------------//

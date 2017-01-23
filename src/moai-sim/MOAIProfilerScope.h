@@ -7,6 +7,8 @@
 #include <moai-sim/MOAIProfilerReport.h>
 #include <moai-sim/MOAIProfilerAutoScope.h>
 
+#if 0
+
 //================================================================//
 // MOAIProfilerScope
 //================================================================//
@@ -31,4 +33,5 @@ public:
 				MOAIProfilerScope		( const ZLHashedString& name = ZLHashedString::Empty );
 };
 
+#endif
 #endif

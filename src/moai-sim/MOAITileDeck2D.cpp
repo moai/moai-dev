@@ -9,6 +9,10 @@
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITransformBase.h>
 
+SUPPRESS_EMPTY_FILE_WARNING
+
+#if 0
+
 //================================================================//
 // local
 //================================================================//
@@ -346,3 +350,5 @@ void MOAITileDeck2D::TransformUV ( const ZLAffine3D& mtx ) {
 
 	this->mQuad.TransformUVs ( mtx );
 }
+
+#endif

@@ -6,6 +6,8 @@
 
 class MOAISingleTexture;
 
+#if 0
+
 //================================================================//
 // MOAITileDeck2D
 //================================================================//
@@ -50,4 +52,5 @@ public:
 	void			TransformUV				( const ZLAffine3D& mtx );
 };
 
+#endif
 #endif

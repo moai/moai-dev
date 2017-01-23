@@ -6,6 +6,8 @@
 
 class MOAISingleTexture;
 
+#if 0 
+
 //================================================================//
 // MOAIStretchPatchSpan
 //================================================================//
@@ -74,4 +76,5 @@ public:
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
+#endif
 #endif

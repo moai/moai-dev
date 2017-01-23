@@ -8,6 +8,8 @@
 #include <moai-sim/MOAIProfilerContext.h>
 #include <moai-sim/MOAIProfilerScope.h>
 
+#if 0
+
 //================================================================//
 // MOAIProfiler
 //================================================================//
@@ -44,4 +46,5 @@ public:
 	void						UnlockProfileReport			( u32 index );
 };
 
+#endif
 #endif

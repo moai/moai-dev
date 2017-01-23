@@ -4,6 +4,8 @@
 #ifndef	MOAISCRIPTDECK_H
 #define	MOAISCRIPTDECK_H
 
+#if 0
+
 //================================================================//
 // MOAIScriptDeck
 //================================================================//
@@ -42,4 +44,5 @@ public:
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
+#endif
 #endif

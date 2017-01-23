@@ -22,6 +22,10 @@
 	#pragma optimize( "", on )
 #endif
 
+SUPPRESS_EMPTY_FILE_WARNING
+
+#if 0
+
 //================================================================//
 // constants
 //================================================================//
@@ -844,4 +848,6 @@ void MOAIProfilerReportBox::_GetMemoryStats ( u32& availableMainMem, u32& usedMa
 
 #if defined ( MOAI_OS_WINDOWS )
 #pragma optimize( "", off ) 
+#endif
+
 #endif

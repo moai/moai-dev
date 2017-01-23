@@ -4,6 +4,8 @@
 #ifndef	MOAIHITMASK_H
 #define	MOAIHITMASK_H
 
+#if 0
+
 //================================================================//
 // MOAIMaterial
 //================================================================//
@@ -30,4 +32,5 @@ public:
 	bool		TestHit					( const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x, float y ); // in local (model) space of the quad
 };
 
+#endif
 #endif

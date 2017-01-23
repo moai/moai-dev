@@ -8,6 +8,10 @@
 	#pragma optimize ( "", on ) 
 #endif
 
+SUPPRESS_EMPTY_FILE_WARNING
+
+#if 0
+
 //================================================================//
 // MOAIProfilerEntryBase
 //================================================================//
@@ -161,4 +165,6 @@ void MOAIProfilerEntryBase::SwapChildren ( MOAIProfilerEntryBase& left, MOAIProf
 
 #if defined ( MOAI_OS_WINDOWS )
 	#pragma optimize ( "", off ) 
+#endif
+
 #endif

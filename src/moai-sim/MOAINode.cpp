@@ -386,7 +386,7 @@ void MOAINode::Activate ( MOAINode& activator ) {
 //----------------------------------------------------------------//
 bool MOAINode::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 
-	this->MOAINode_ApplyAttrOp ( attrID, attr, op );
+	return this->MOAINode_ApplyAttrOp ( attrID, attr, op );
 }
 
 //----------------------------------------------------------------//

@@ -155,6 +155,7 @@ bool MOAIDebugLinesMgr::IsVisible ( u32 styleID ) {
 	if ( style ) {
 		return style->mDisplay == MOAIDebugLineStyle::DISPLAY_VISIBLE;
 	}
+	return false;
 }
 
 //----------------------------------------------------------------//

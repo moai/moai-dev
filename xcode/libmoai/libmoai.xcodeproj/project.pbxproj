@@ -22240,6 +22240,7 @@
 					"-DNS_BLOCK_ASSERTIONS=1",
 					"-include",
 					"\"../../src/zl-vfs/zl_replace.h\"",
+					"-Werror=return-type",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
@@ -23314,6 +23315,7 @@
 				OTHER_CFLAGS = (
 					"-include",
 					"\"../../src/zl-vfs/zl_replace.h\"",
+					"-Werror=return-type",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
@@ -28034,6 +28036,7 @@
 					"-DNS_BLOCK_ASSERTIONS=1",
 					"-include",
 					"\"../../src/zl-vfs/zl_replace.h\"",
+					"-Werror=return-type",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";

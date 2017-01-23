@@ -6,6 +6,8 @@
 
 #include <moai-sim/MOAIProfilerEntryBase.h>
 
+#if 0
+
 //================================================================//
 // MOAIProfilerEntry
 //================================================================//
@@ -43,4 +45,5 @@ public:
 	void				Reset						();
 };
 
+#endif
 #endif

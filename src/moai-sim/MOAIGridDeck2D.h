@@ -4,6 +4,8 @@
 #ifndef	MOAIGRIDDECK2D_H
 #define	MOAIGRIDDECK2D_H
 
+#if 0
+
 //================================================================//
 // MOAIGridDeckBrush
 //================================================================//
@@ -65,4 +67,5 @@ public:
 	void					SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };
 
+#endif
 #endif

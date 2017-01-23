@@ -12,6 +12,10 @@
 #include <moai-sim/MOAITexture.h>
 #include <moai-sim/MOAITextureBase.h>
 
+SUPPRESS_EMPTY_FILE_WARNING
+
+#if 0
+
 //================================================================//
 // MOAIMaterial
 //================================================================//
@@ -788,3 +792,5 @@ bool MOAIMaterialBatch::TestHit ( MOAIMaterialBatch* override, u32 materialID, u
 
 	return false;
 }
+
+#endif
