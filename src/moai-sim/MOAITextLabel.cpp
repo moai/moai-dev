@@ -1228,9 +1228,11 @@ void MOAITextLabel::MOAINode_Update () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAITextLabel::MOAIPartitionHull_GetModelBounds ( ZLBox& bounds ) {
+ZLBounds MOAITextLabel::MOAIPartitionHull_GetModelBounds () {
 	
 	this->Refresh ();
+
+	ZLBounds bounds = ZLBounds::EMPTY;
 
 	ZLRect textBounds; // the tight fitting bounds of the text (if any: may be empty)
 	bool hasBounds = this->mLayout.GetBounds ( textBounds );
@@ -1250,18 +1252,16 @@ u32 MOAITextLabel::MOAIPartitionHull_GetModelBounds ( ZLBox& bounds ) {
 			textBounds.mYMin = textFrame.mYMin;
 			textBounds.mYMax = textFrame.mYMax;
 		}
-	
-		bounds.Init ( textBounds.mXMin, textBounds.mYMax, textBounds.mXMax, textBounds.mYMin, 0.0f, 0.0f );
-		return MOAIPartitionHull::BOUNDS_OK;
+		
+		bounds.Init ( textBounds );
 	}
 	else {
 	
 		// if the text bounds are empty, then *both* frame axis must be in use for the rect to be valid
 		if ( limitWidth && limitHeight ) {
-			bounds.Init ( textFrame.mXMin, textFrame.mYMax, textFrame.mXMax, textFrame.mYMin, 0.0f, 0.0f );
-			return MOAIPartitionHull::BOUNDS_OK;
+			bounds.Init ( textFrame );
 		}
 	}
 	
-	return MOAIPartitionHull::BOUNDS_EMPTY;
+	return bounds;
 }

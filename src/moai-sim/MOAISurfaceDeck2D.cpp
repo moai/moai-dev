@@ -351,4 +351,53 @@ void MOAISurfaceDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+ZLBounds MOAISurfaceDeck2D::MOAIDeck_ComputeMaxBounds () {
+
+	return ZLBounds::EMPTY;
+}
+
+//----------------------------------------------------------------//
+void MOAISurfaceDeck2D::MOAIDeck_Draw ( u32 idx ) {
+	UNUSED ( idx );
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAISurfaceDeck2D::MOAIDeck_GetBounds ( u32 idx ) {
+	UNUSED ( idx );
+
+	return ZLBounds::EMPTY;
+}
+
+//----------------------------------------------------------------//
+MOAICollisionShape* MOAISurfaceDeck2D::MOAIDeck_GetCollisionShape ( u32 idx ) {
+	UNUSED ( idx );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+bool MOAISurfaceDeck2D::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
+	UNUSED ( idx );
+	UNUSED ( vec );
+	UNUSED ( granularity );
+	UNUSED ( result );
+
+	return false;
+}
+
+//----------------------------------------------------------------//
+bool MOAISurfaceDeck2D::MOAIDeck_Overlap ( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
+	UNUSED ( idx );
+	UNUSED ( vec );
+	UNUSED ( granularity );
+	UNUSED ( result );
+
+	return false;
+}
+
 #endif

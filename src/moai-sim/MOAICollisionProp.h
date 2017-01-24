@@ -99,7 +99,7 @@ private:
 	void					MOAIPartitionHull_AddToSortBuffer			( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
 	u32						MOAIPartitionHull_AffirmInterfaceMask		( MOAIPartition& partition );
 	void					MOAIPartitionHull_BoundsDidChange			();
-	u32						MOAIPartitionHull_GetModelBounds			( ZLBox& bounds );
+	ZLBounds				MOAIPartitionHull_GetModelBounds			();
 	bool					MOAIPartitionHull_PrepareForInsertion		( const MOAIPartition& partition );
 	void					MOAIPartitionHull_WasRemovedFromPartition	();
 	

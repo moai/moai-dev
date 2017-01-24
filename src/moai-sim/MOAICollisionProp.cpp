@@ -194,14 +194,12 @@ bool MOAICollisionProp::RefineOverlap ( MOAICollisionProp& other, MOAIOverlapInf
 		}
 		else if ( shape0 ){
 		
-			ZLBox bounds;
-			other.GetModelBounds ( bounds );
+			ZLBounds bounds = other.GetModelBounds ();
 			return shape0->Overlap ( bounds, *this, other, info.mBounds );
 		}
 		else if ( shape1 ) {
 		
-			ZLBox bounds;
-			this->GetModelBounds ( bounds );
+			ZLBounds bounds = this->GetModelBounds ();
 			return shape1->Overlap ( bounds, other, *this, info.mBounds );
 		}
 	}
@@ -277,7 +275,7 @@ void MOAICollisionProp::MOAINode_Update () {
 //----------------------------------------------------------------//
 void MOAICollisionProp::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionResultBuffer& buffer, u32 key ) {
 
-	buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->GetPriority (), this->GetWorldLoc (), this->GetBounds ());
+	buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->GetPriority (), this->GetWorldLoc (), this->GetWorldBounds ());
 }
 
 //----------------------------------------------------------------//
@@ -295,15 +293,15 @@ void MOAICollisionProp::MOAIPartitionHull_BoundsDidChange () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAICollisionProp::MOAIPartitionHull_GetModelBounds ( ZLBox& bounds ) {
-	UNUSED ( bounds );
+ZLBounds MOAICollisionProp::MOAIPartitionHull_GetModelBounds () {
 
 	MOAICollisionShape* shape = this->GetCollisionShape ();
 	if ( shape ) {
-		bounds = shape->GetBounds ();
-		return MOAIPartitionHull::BOUNDS_OK;
+		ZLBounds bounds;
+		bounds.Init ( shape->GetBounds ());
+		return bounds;
 	}
-	return MOAIPartitionHull::BOUNDS_EMPTY;
+	return ZLBounds::EMPTY;
 }
 
 //----------------------------------------------------------------//

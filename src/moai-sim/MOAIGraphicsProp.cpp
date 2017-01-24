@@ -109,14 +109,9 @@ void MOAIGraphicsProp::MOAINode_Update () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIGraphicsProp::MOAIPartitionHull_GetModelBounds ( ZLBox& bounds ) {
+ZLBounds MOAIGraphicsProp::MOAIPartitionHull_GetModelBounds () {
 	
-	if ( this->mDeck ) {
-	
-		bounds = this->mDeck->GetBounds ( this->mIndex - 1 );
-		return BOUNDS_OK;
-	}
-	return BOUNDS_EMPTY;
+	return this->mDeck ? this->mDeck->GetBounds ( this->mIndex - 1 ) : ZLBounds::EMPTY;
 }
 
 //----------------------------------------------------------------//

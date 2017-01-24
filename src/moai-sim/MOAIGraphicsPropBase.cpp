@@ -564,7 +564,7 @@ bool MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& att
 void MOAIGraphicsPropBase::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
-	if ( this->GetBoundsStatus () != BOUNDS_OK ) return;
+	if ( this->GetWorldBoundsStatus () != ZLBounds::ZL_BOUNDS_OK ) return;
 
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAIGraphicsPropBase >())) return;
@@ -580,8 +580,9 @@ void MOAIGraphicsPropBase::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	
 	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::MODEL_TO_DISPLAY_MTX ));
 	
-	ZLBox modelBounds;
-	this->GetModelBounds ( modelBounds );
+	ZLBounds modelBounds = this->GetModelBounds ();
+	
+	// TODO: check bounds status
 	
 	if ( debugLines.Bind ( DEBUG_DRAW_AXIS )) {
 		draw.DrawBoxAxis ( modelBounds );
@@ -599,7 +600,7 @@ void MOAIGraphicsPropBase::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_DISPLAY_MTX ));
 	
 	if ( debugLines.Bind ( DEBUG_DRAW_WORLD_BOUNDS )) {
-		draw.DrawBoxOutline ( this->GetBounds ());
+		draw.DrawBoxOutline ( this->GetWorldBounds ());
 	}
 	
 	if ( debugLines.IsVisible ( DEBUG_DRAW_PARTITION_CELLS ) || debugLines.IsVisible ( DEBUG_DRAW_PARTITION_CELLS )) {
@@ -637,7 +638,7 @@ void MOAIGraphicsPropBase::MOAINode_Update () {
 //----------------------------------------------------------------//
 void MOAIGraphicsPropBase::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionResultBuffer& buffer, u32 key ) {
 
-	buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->GetPriority (), this->GetWorldLoc (), this->GetBounds ());
+	buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->GetPriority (), this->GetWorldLoc (), this->GetWorldBounds ());
 }
 
 //----------------------------------------------------------------//

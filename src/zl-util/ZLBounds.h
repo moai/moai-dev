@@ -25,8 +25,13 @@ public:
 	u32			mStatus;
 	
 	//----------------------------------------------------------------//
-				ZLBounds			();
-				ZLBounds			( u32 status );
+	void		Init					( const ZLBox& box );
+	void		Init					( const ZLRect& rect );
+	void		Init					( float left, float top, float right, float bottom, float back = 0.0f, float front = 0.0f );
+	void		UpdateStatus			();
+				ZLBounds				();
+				ZLBounds				( u32 status );
+				ZLBounds				( const ZLRect& rect );
 };
 
 #endif

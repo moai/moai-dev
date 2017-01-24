@@ -749,21 +749,22 @@ void MOAIPartition::SetLevel ( int levelID, float cellSize, int width, int heigh
 }
 
 //----------------------------------------------------------------//
-void MOAIPartition::UpdateProp ( MOAIPartitionHull& hull, u32 status ) {
+void MOAIPartition::UpdateHull ( MOAIPartitionHull& hull ) {
 
 	// clear out the level; level will be re-calculated below
 	// also: hull.mLevel is *only* for debug drawing 
 	hull.mLevel = 0;
+	
+	u32 status = hull.mWorldBounds.mStatus;
 
 	// status is not 'OK' so hull is either global or empty
-	if ( status != MOAIPartitionHull::BOUNDS_OK ) {
-		
-		if ( status == MOAIPartitionHull::BOUNDS_GLOBAL ) {
-			this->mGlobals.InsertHull ( hull );
-		}
-		else {
-			this->mEmpties.InsertHull ( hull );
-		}
+	if ( status == ZLBounds::ZL_BOUNDS_GLOBAL ) {
+		this->mGlobals.InsertHull ( hull );
+		return;
+	}
+	
+	if ( status == ZLBounds::ZL_BOUNDS_EMPTY ) {
+		this->mEmpties.InsertHull ( hull );
 		return;
 	}
 

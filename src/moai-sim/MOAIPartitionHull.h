@@ -50,8 +50,7 @@ private:
 	u32							mQueryMask;
 	s32							mPriority;
 	
-	ZLBox						mWorldBounds;
-	u32							mBoundsStatus;
+	ZLBounds					mWorldBounds;
 	
 	//----------------------------------------------------------------//
 	static int			_getBounds					( lua_State* L );
@@ -83,7 +82,7 @@ private:
 	virtual void		MOAIPartitionHull_AddToSortBuffer			( MOAIPartitionResultBuffer& buffer, u32 key = 0 ) = 0;
 	virtual u32			MOAIPartitionHull_AffirmInterfaceMask		( MOAIPartition& partition ) = 0;
 	virtual void		MOAIPartitionHull_BoundsDidChange			();
-	virtual u32			MOAIPartitionHull_GetModelBounds			( ZLBox& bounds ) = 0; // get the prop bounds in model space
+	virtual ZLBounds	MOAIPartitionHull_GetModelBounds			() = 0; // get the prop bounds in model space
 	virtual bool		MOAIPartitionHull_Inside					( ZLVec3D vec, float pad );
 	virtual bool		MOAIPartitionHull_PrepareForInsertion		( const MOAIPartition& partition );
 	virtual void		MOAIPartitionHull_WasRemovedFromPartition	();
@@ -103,8 +102,8 @@ protected:
 	void				BoundsDidChange				();
 	bool				PrepareForInsertion			( const MOAIPartition& partition );
 	u32					ResolveModelBounds			( ZLBox& bounds );
-	void				UpdateWorldBounds			( u32 status );
-	void				UpdateWorldBounds			( const ZLBox& bounds, u32 status ); // update bounds in world space
+	//void				UpdateWorldBounds			( u32 status );
+	void				UpdateWorldBounds			( const ZLBounds& bounds ); // update bounds in world space
 	void				WasRemovedFromPartition		();
 	
 	//----------------------------------------------------------------//
@@ -124,12 +123,6 @@ public:
 		HIT_TEST_MEDIUM,	// individual geometry elements in model space
 		HIT_TEST_FINE,		// pixel-level granularity
 	};
-	
-	enum {
-		BOUNDS_EMPTY,
-		BOUNDS_GLOBAL,
-		BOUNDS_OK,
-	};
 
 	enum {
 		//ATTR_INDEX,
@@ -148,13 +141,13 @@ public:
 	GET ( s32,				Priority,		mPriority )
 	GET ( MOAIPartition*,	Partition,		mPartition )
 	
-	GET ( u32,			BoundsStatus,		mBoundsStatus )
-	GET ( ZLBox,		Bounds,				mWorldBounds )
-	GET ( ZLVec3D,		BoundsMax,			mWorldBounds.mMax )
-	GET ( ZLVec3D,		BoundsMin,			mWorldBounds.mMin )
+	GET ( ZLBounds,		WorldBounds,			mWorldBounds )
+	GET ( ZLVec3D,		WorldBoundsMax,			mWorldBounds.mMax )
+	GET ( ZLVec3D,		WorldBoundsMin,			mWorldBounds.mMin )
+	GET ( u32,			WorldBoundsStatus,		mWorldBounds.mStatus )
 
 	//----------------------------------------------------------------//
-	u32					GetModelBounds			( ZLBox& bounds ); // get the prop bounds in model space
+	ZLBounds			GetModelBounds			(); // get the prop bounds in model space
 	MOAIPartition*		GetPartitionTrait		();
 	bool				GetCellRect				( ZLRect* cellRect, ZLRect* paddedRect = 0 );
 	bool				Inside					( ZLVec3D vec, float pad );

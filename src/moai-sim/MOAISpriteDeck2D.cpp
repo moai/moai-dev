@@ -655,7 +655,7 @@ ZLBounds MOAISpriteDeck2D::MOAIDeck_ComputeMaxBounds () {
 		}
 		
 		ZLBounds bounds;
-		bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );
+		bounds.Init ( rect );
 		bounds.mStatus = ZLBounds::ZL_BOUNDS_OK;
 		return bounds;
 	}
@@ -666,7 +666,6 @@ ZLBounds MOAISpriteDeck2D::MOAIDeck_ComputeMaxBounds () {
 void MOAISpriteDeck2D::MOAIDeck_Draw ( u32 idx ) {
 
 	MOAIMaterialStackMgr& materialStack = MOAIMaterialStackMgr::Get ();
-	materialStack.Push (); // push a copy of the current material; will modify this in the loop below
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIQuadBrush::BindVertexFormat ();
@@ -709,9 +708,10 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( u32 idx ) {
 				MOAIMaterial* spriteMaterial = this->GetMaterial ( materialID );
 				if ( spriteMaterial ) {
 					
-					materialStack.Compose ( *spriteMaterial );
-					materialStack.SetShader ( MOAIShaderMgr::DECK2D_SHADER );
-					materialStack.LoadGfxState ();
+					MOAIMaterial material = materialStack;
+					material.Compose ( *spriteMaterial );
+					material.SetShader ( MOAIShaderMgr::DECK2D_SHADER );
+					material.LoadGfxState ();
 				}
 			}
 			
@@ -748,14 +748,14 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( u32 idx ) {
 			quadBrush.mUVQuad.Init ( 0.0f, 1.0f, 1.0f, 0.0f );
 		}
 		
-		materialStack.Compose ( material );
+		materialStack.Push ( material );
 		materialStack.SetShader ( MOAIShaderMgr::DECK2D_SHADER );
 		materialStack.LoadGfxState ();
 		
 		quadBrush.Draw ();
+		
+		materialStack.Pop ();
 	}
-	
-	materialStack.Pop ();
 }
 
 //----------------------------------------------------------------//
@@ -793,22 +793,19 @@ ZLBounds MOAISpriteDeck2D::MOAIDeck_GetBounds ( u32 idx ) {
 				MOAISprite sprite = this->mSprites [ i % totalSprites ];
 				rect.Grow ( this->mQuads [ sprite.mQuadID ].GetBounds (), i > 0 );
 			}
-			bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );
-			bounds.mStatus = ZLBounds::ZL_BOUNDS_OK;
+			bounds.Init ( rect );
 		}
 		else {
 		
 			ZLRect rect = this->mQuads [ idx % totalQuads ].GetBounds ();
-			bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );
-			bounds.mStatus = ZLBounds::ZL_BOUNDS_OK;
+			bounds.Init ( rect );
 		}
 	}
 	else {
 	
-		bounds.Init ( -0.5f, -0.5f, 0.0f, 0.5f, 0.5f, 0.0f );
+		bounds.Init ( -0.5f, 0.5f, 0.5f, -0.5f );
 	}
 	
-	bounds.mStatus = ZLBounds::ZL_BOUNDS_OK;
 	return bounds;
 }
 

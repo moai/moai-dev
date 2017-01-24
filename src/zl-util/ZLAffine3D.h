@@ -63,28 +63,28 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void AppendOffsetScale ( const ZLMetaVec3D < TYPE >& offset, const ZLMetaVec3D < TYPE >& scale ) {
-		
-		ZLMetaAffine3D < TYPE > temp;
-		
-		temp.m[C0_R0]	=	m[C0_R0] * scale.mX;
-		temp.m[C0_R1]	=	m[C0_R1] * scale.mX;
-		temp.m[C0_R2]	=	m[C0_R2] * scale.mX;
-		
-		temp.m[C1_R0]	=	m[C1_R0] * scale.mY;
-		temp.m[C1_R1]	=	m[C1_R1] * scale.mY;
-		temp.m[C1_R2]	=	m[C1_R2] * scale.mY;
-		
-		temp.m[C2_R0]	=	m[C2_R0] * scale.mZ;
-		temp.m[C2_R1]	=	m[C2_R1] * scale.mZ;
-		temp.m[C2_R2]	=	m[C2_R2] * scale.mZ;
-		
-		temp.m[C3_R0]	=	m[C3_R0] + offset.mX;
-		temp.m[C3_R1]	=	m[C3_R1] + offset.mY;
-		temp.m[C3_R2]	=	m[C3_R2] + offset.mZ;
-		
-		this->Init ( temp );
-	}
+//	void AppendOffsetScale ( const ZLMetaVec3D < TYPE >& offset, const ZLMetaVec3D < TYPE >& scale ) {
+//		
+//		ZLMetaAffine3D < TYPE > temp;
+//		
+//		temp.m[C0_R0]	=	m[C0_R0] * scale.mX;
+//		temp.m[C0_R1]	=	m[C0_R1] * scale.mX;
+//		temp.m[C0_R2]	=	m[C0_R2] * scale.mX;
+//		
+//		temp.m[C1_R0]	=	m[C1_R0] * scale.mY;
+//		temp.m[C1_R1]	=	m[C1_R1] * scale.mY;
+//		temp.m[C1_R2]	=	m[C1_R2] * scale.mY;
+//		
+//		temp.m[C2_R0]	=	m[C2_R0] * scale.mZ;
+//		temp.m[C2_R1]	=	m[C2_R1] * scale.mZ;
+//		temp.m[C2_R2]	=	m[C2_R2] * scale.mZ;
+//		
+//		temp.m[C3_R0]	=	m[C3_R0] + offset.mX;
+//		temp.m[C3_R1]	=	m[C3_R1] + offset.mY;
+//		temp.m[C3_R2]	=	m[C3_R2] + offset.mZ;
+//		
+//		this->Init ( temp );
+//	}
 
 	//----------------------------------------------------------------//
 	void GetBasis ( ZLMetaVec3D < TYPE >& xAxis, ZLMetaVec3D < TYPE >& yAxis, ZLMetaVec3D < TYPE >& zAxis ) const {
@@ -397,25 +397,103 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void PrependOffsetScale ( const ZLMetaVec3D < TYPE >& offset, const ZLMetaVec3D < TYPE >& scale ) {
-		
-		ZLMetaAffine3D < TYPE > temp;
-		
-		temp.m[C0_R0]	=	scale.mX * m[C0_R0];
-		temp.m[C0_R1]	=	scale.mY * m[C0_R1];
-		temp.m[C0_R2]	=	scale.mZ * m[C0_R2];
+//	void PrependOffsetScale ( const ZLMetaVec3D < TYPE >& offset, const ZLMetaVec3D < TYPE >& scale ) {
+//		
+//		ZLMetaAffine3D < TYPE > temp;
+//		
+//		temp.m[C0_R0]	=	scale.mX * m[C0_R0];
+//		temp.m[C0_R1]	=	scale.mY * m[C0_R1];
+//		temp.m[C0_R2]	=	scale.mZ * m[C0_R2];
+//
+//		temp.m[C1_R0]	=	scale.mX * m[C1_R0];
+//		temp.m[C1_R1]	=	scale.mY * m[C1_R1];
+//		temp.m[C1_R2]	=	scale.mZ * m[C1_R2];
+//		
+//		temp.m[C2_R0]	=	scale.mX * m[C2_R0];
+//		temp.m[C2_R1]	=	scale.mY * m[C2_R1];
+//		temp.m[C2_R2]	=	scale.mZ * m[C2_R2];
+//		
+//		temp.m[C3_R0]	=	offset.mX + m[C3_R0];
+//		temp.m[C3_R1]	=	offset.mY + m[C3_R1];
+//		temp.m[C3_R2]	=	offset.mZ + m[C3_R2];
+//		
+//		this->Init ( temp );
+//	}
 
-		temp.m[C1_R0]	=	scale.mX * m[C1_R0];
-		temp.m[C1_R1]	=	scale.mY * m[C1_R1];
-		temp.m[C1_R2]	=	scale.mZ * m[C1_R2];
+	//----------------------------------------------------------------//
+	void PrependRot90SclTr2D ( float xScl, float yScl, float xOff, float yOff ) {
+
+		// don't need a general purpose matrix mult to handle just scale and offset.
+		// can omit a lot of the multiplications.
+
+		// 0 s 0 z
+		// s 0 0 y
+		// 0 0 1 0
+
+		ZLMetaAffine3D < TYPE > temp;
+
+		temp.m [ C0_R0 ]	=	( m [ C1_R0 ] * yScl );
+		temp.m [ C0_R1 ]	=	( m [ C1_R1 ] * yScl );
+		temp.m [ C0_R2 ]	=	( m [ C1_R2 ] * yScl );
+
+		temp.m [ C1_R0 ]	=	( m [ C0_R0 ] * -xScl );
+		temp.m [ C1_R1 ]	=	( m [ C0_R1 ] * -xScl );
+		temp.m [ C1_R2 ]	=	( m [ C0_R2 ] * -xScl );
 		
-		temp.m[C2_R0]	=	scale.mX * m[C2_R0];
-		temp.m[C2_R1]	=	scale.mY * m[C2_R1];
-		temp.m[C2_R2]	=	scale.mZ * m[C2_R2];
+		temp.m [ C2_R0 ]	=	m [ C2_R0 ];
+		temp.m [ C2_R1 ]	=	m [ C2_R1 ];
+		temp.m [ C2_R2 ]	=	m [ C2_R2 ];
 		
-		temp.m[C3_R0]	=	offset.mX + m[C3_R0];
-		temp.m[C3_R1]	=	offset.mY + m[C3_R1];
-		temp.m[C3_R2]	=	offset.mZ + m[C3_R2];
+		temp.m [ C3_R0 ]	=	( m [ C0_R0 ] * xOff )	+
+								( m [ C1_R0 ] * yOff )	+
+								( m [ C3_R0 ]);
+		
+		temp.m [ C3_R1 ]	=	( m [ C0_R1 ] * xOff )	+
+								( m [ C1_R1 ] * yOff )	+
+								( m [ C3_R1 ]);
+		
+		temp.m [ C3_R2 ]	=	( m [ C0_R2 ] * xOff )	+
+								( m [ C1_R2 ] * yOff )	+
+								( m [ C3_R2 ]);
+		
+		this->Init ( temp );
+	}
+
+	//----------------------------------------------------------------//
+	void PrependSclTr2D ( float xScl, float yScl, float xOff, float yOff ) {
+
+		// don't need a general purpose matrix mult to handle just scale and offset.
+		// can omit a lot of the multiplications.
+
+		// s 0 0 x
+		// 0 s 0 y
+		// 0 0 1 0
+
+		ZLMetaAffine3D < TYPE > temp;
+
+		temp.m [ C0_R0 ]	=	( m [ C0_R0 ] * xScl );
+		temp.m [ C0_R1 ]	=	( m [ C0_R1 ] * xScl );
+		temp.m [ C0_R2 ]	=	( m [ C0_R2 ] * xScl );
+
+		temp.m [ C1_R0 ]	=	( m [ C1_R0 ] * yScl );
+		temp.m [ C1_R1 ]	=	( m [ C1_R1 ] * yScl );
+		temp.m [ C1_R2 ]	=	( m [ C1_R2 ] * yScl );
+		
+		temp.m [ C2_R0 ]	=	m [ C2_R0 ];
+		temp.m [ C2_R1 ]	=	m [ C2_R1 ];
+		temp.m [ C2_R2 ]	=	m [ C2_R2 ];
+		
+		temp.m [ C3_R0 ]	=	( m [ C0_R0 ] * xOff )	+
+								( m [ C1_R0 ] * yOff )	+
+								( m [ C3_R0 ]);
+		
+		temp.m [ C3_R1 ]	=	( m [ C0_R1 ] * xOff )	+
+								( m [ C1_R1 ] * yOff )	+
+								( m [ C3_R1 ]);
+		
+		temp.m [ C3_R2 ]	=	( m [ C0_R2 ] * xOff )	+
+								( m [ C1_R2 ] * yOff )	+
+								( m [ C3_R2 ]);
 		
 		this->Init ( temp );
 	}

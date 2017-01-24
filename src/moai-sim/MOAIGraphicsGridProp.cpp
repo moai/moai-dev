@@ -33,82 +33,82 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLAffine3D MOAIGraphicsGridProp::AppendRot90SclTr ( const ZLAffine3D& mtx, const ZLAffine3D& append ) {
-
-	// don't need a general purpose matrix mult to handle just scale and offset.
-	// can omit a lot of the multiplications.
-
-	// 0 s 0 z
-	// s 0 0 y
-	// 0 0 1 0
-
-	ZLAffine3D result;
-
-	result.m [ ZLAffine3D::C0_R0 ]	=	( append.m [ ZLAffine3D::C1_R0 ] * mtx.m [ ZLAffine3D::C0_R1 ]);
-	result.m [ ZLAffine3D::C0_R1 ]	=	( append.m [ ZLAffine3D::C1_R1 ] * mtx.m [ ZLAffine3D::C0_R1 ]);
-	result.m [ ZLAffine3D::C0_R2 ]	=	( append.m [ ZLAffine3D::C1_R2 ] * mtx.m [ ZLAffine3D::C0_R1 ]);
-
-	result.m [ ZLAffine3D::C1_R0 ]	=	( append.m [ ZLAffine3D::C0_R0 ] * mtx.m [ ZLAffine3D::C1_R0 ]);
-	result.m [ ZLAffine3D::C1_R1 ]	=	( append.m [ ZLAffine3D::C0_R1 ] * mtx.m [ ZLAffine3D::C1_R0 ]);
-	result.m [ ZLAffine3D::C1_R2 ]	=	( append.m [ ZLAffine3D::C0_R2 ] * mtx.m [ ZLAffine3D::C1_R0 ]);
-	
-	result.m [ ZLAffine3D::C2_R0 ]	=	append.m [ ZLAffine3D::C2_R0 ];
-	result.m [ ZLAffine3D::C2_R1 ]	=	append.m [ ZLAffine3D::C2_R1 ];
-	result.m [ ZLAffine3D::C2_R2 ]	=	append.m [ ZLAffine3D::C2_R2 ];
-	
-	result.m [ ZLAffine3D::C3_R0 ]	=	( append.m [ ZLAffine3D::C0_R0 ] * mtx.m [ ZLAffine3D::C3_R0 ])	+
-										( append.m [ ZLAffine3D::C1_R0 ] * mtx.m [ ZLAffine3D::C3_R1 ])	+
-										( append.m [ ZLAffine3D::C3_R0 ]);
-	
-	result.m [ ZLAffine3D::C3_R1 ]	=	( append.m [ ZLAffine3D::C0_R1 ] * mtx.m [ ZLAffine3D::C3_R0 ])	+
-										( append.m [ ZLAffine3D::C1_R1 ] * mtx.m [ ZLAffine3D::C3_R1 ])	+
-										( append.m [ ZLAffine3D::C3_R1 ]);
-	
-	result.m [ ZLAffine3D::C3_R2 ]	=	( append.m [ ZLAffine3D::C0_R2 ] * mtx.m [ ZLAffine3D::C3_R0 ])	+
-										( append.m [ ZLAffine3D::C1_R2 ] * mtx.m [ ZLAffine3D::C3_R1 ])	+
-										( append.m [ ZLAffine3D::C3_R2 ]);
-	
-	return result;
-}
+//ZLAffine3D MOAIGraphicsGridProp::AppendRot90SclTr ( const ZLAffine3D& mtx, const ZLAffine3D& append ) {
+//
+//	// don't need a general purpose matrix mult to handle just scale and offset.
+//	// can omit a lot of the multiplications.
+//
+//	// 0 s 0 z
+//	// s 0 0 y
+//	// 0 0 1 0
+//
+//	ZLAffine3D result;
+//
+//	result.m [ ZLAffine3D::C0_R0 ]	=	( append.m [ ZLAffine3D::C1_R0 ] * mtx.m [ ZLAffine3D::C0_R1 ]);
+//	result.m [ ZLAffine3D::C0_R1 ]	=	( append.m [ ZLAffine3D::C1_R1 ] * mtx.m [ ZLAffine3D::C0_R1 ]);
+//	result.m [ ZLAffine3D::C0_R2 ]	=	( append.m [ ZLAffine3D::C1_R2 ] * mtx.m [ ZLAffine3D::C0_R1 ]);
+//
+//	result.m [ ZLAffine3D::C1_R0 ]	=	( append.m [ ZLAffine3D::C0_R0 ] * mtx.m [ ZLAffine3D::C1_R0 ]);
+//	result.m [ ZLAffine3D::C1_R1 ]	=	( append.m [ ZLAffine3D::C0_R1 ] * mtx.m [ ZLAffine3D::C1_R0 ]);
+//	result.m [ ZLAffine3D::C1_R2 ]	=	( append.m [ ZLAffine3D::C0_R2 ] * mtx.m [ ZLAffine3D::C1_R0 ]);
+//	
+//	result.m [ ZLAffine3D::C2_R0 ]	=	append.m [ ZLAffine3D::C2_R0 ];
+//	result.m [ ZLAffine3D::C2_R1 ]	=	append.m [ ZLAffine3D::C2_R1 ];
+//	result.m [ ZLAffine3D::C2_R2 ]	=	append.m [ ZLAffine3D::C2_R2 ];
+//	
+//	result.m [ ZLAffine3D::C3_R0 ]	=	( append.m [ ZLAffine3D::C0_R0 ] * mtx.m [ ZLAffine3D::C3_R0 ])	+
+//										( append.m [ ZLAffine3D::C1_R0 ] * mtx.m [ ZLAffine3D::C3_R1 ])	+
+//										( append.m [ ZLAffine3D::C3_R0 ]);
+//	
+//	result.m [ ZLAffine3D::C3_R1 ]	=	( append.m [ ZLAffine3D::C0_R1 ] * mtx.m [ ZLAffine3D::C3_R0 ])	+
+//										( append.m [ ZLAffine3D::C1_R1 ] * mtx.m [ ZLAffine3D::C3_R1 ])	+
+//										( append.m [ ZLAffine3D::C3_R1 ]);
+//	
+//	result.m [ ZLAffine3D::C3_R2 ]	=	( append.m [ ZLAffine3D::C0_R2 ] * mtx.m [ ZLAffine3D::C3_R0 ])	+
+//										( append.m [ ZLAffine3D::C1_R2 ] * mtx.m [ ZLAffine3D::C3_R1 ])	+
+//										( append.m [ ZLAffine3D::C3_R2 ]);
+//	
+//	return result;
+//}
 
 //----------------------------------------------------------------//
-ZLAffine3D MOAIGraphicsGridProp::AppendSclTr ( const ZLAffine3D& mtx, const ZLAffine3D& append ) {
-
-	// don't need a general purpose matrix mult to handle just scale and offset.
-	// can omit a lot of the multiplications.
-
-	// s 0 0 x
-	// 0 s 0 y
-	// 0 0 1 0
-
-	ZLAffine3D result;
-
-	result.m [ ZLAffine3D::C0_R0 ]	=	( append.m [ ZLAffine3D::C0_R0 ] * mtx.m [ ZLAffine3D::C0_R0 ]);
-	result.m [ ZLAffine3D::C0_R1 ]	=	( append.m [ ZLAffine3D::C0_R1 ] * mtx.m [ ZLAffine3D::C0_R0 ]);
-	result.m [ ZLAffine3D::C0_R2 ]	=	( append.m [ ZLAffine3D::C0_R2 ] * mtx.m [ ZLAffine3D::C0_R0 ]);
-
-	result.m [ ZLAffine3D::C1_R0 ]	=	( append.m [ ZLAffine3D::C1_R0 ] * mtx.m [ ZLAffine3D::C1_R1 ]);
-	result.m [ ZLAffine3D::C1_R1 ]	=	( append.m [ ZLAffine3D::C1_R1 ] * mtx.m [ ZLAffine3D::C1_R1 ]);
-	result.m [ ZLAffine3D::C1_R2 ]	=	( append.m [ ZLAffine3D::C1_R2 ] * mtx.m [ ZLAffine3D::C1_R1 ]);
-	
-	result.m [ ZLAffine3D::C2_R0 ]	=	append.m [ ZLAffine3D::C2_R0 ];
-	result.m [ ZLAffine3D::C2_R1 ]	=	append.m [ ZLAffine3D::C2_R1 ];
-	result.m [ ZLAffine3D::C2_R2 ]	=	append.m [ ZLAffine3D::C2_R2 ];
-	
-	result.m [ ZLAffine3D::C3_R0 ]	=	( append.m [ ZLAffine3D::C0_R0 ] * mtx.m [ ZLAffine3D::C3_R0 ])	+
-										( append.m [ ZLAffine3D::C1_R0 ] * mtx.m [ ZLAffine3D::C3_R1 ])	+
-										( append.m [ ZLAffine3D::C3_R0 ]);
-	
-	result.m [ ZLAffine3D::C3_R1 ]	=	( append.m [ ZLAffine3D::C0_R1 ] * mtx.m [ ZLAffine3D::C3_R0 ])	+
-										( append.m [ ZLAffine3D::C1_R1 ] * mtx.m [ ZLAffine3D::C3_R1 ])	+
-										( append.m [ ZLAffine3D::C3_R1 ]);
-	
-	result.m [ ZLAffine3D::C3_R2 ]	=	( append.m [ ZLAffine3D::C0_R2 ] * mtx.m [ ZLAffine3D::C3_R0 ])	+
-										( append.m [ ZLAffine3D::C1_R2 ] * mtx.m [ ZLAffine3D::C3_R1 ])	+
-										( append.m [ ZLAffine3D::C3_R2 ]);
-	
-	return result;
-}
+//ZLAffine3D MOAIGraphicsGridProp::AppendSclTr ( const ZLAffine3D& mtx, const ZLAffine3D& append ) {
+//
+//	// don't need a general purpose matrix mult to handle just scale and offset.
+//	// can omit a lot of the multiplications.
+//
+//	// s 0 0 x
+//	// 0 s 0 y
+//	// 0 0 1 0
+//
+//	ZLAffine3D result;
+//
+//	result.m [ ZLAffine3D::C0_R0 ]	=	( append.m [ ZLAffine3D::C0_R0 ] * mtx.m [ ZLAffine3D::C0_R0 ]);
+//	result.m [ ZLAffine3D::C0_R1 ]	=	( append.m [ ZLAffine3D::C0_R1 ] * mtx.m [ ZLAffine3D::C0_R0 ]);
+//	result.m [ ZLAffine3D::C0_R2 ]	=	( append.m [ ZLAffine3D::C0_R2 ] * mtx.m [ ZLAffine3D::C0_R0 ]);
+//
+//	result.m [ ZLAffine3D::C1_R0 ]	=	( append.m [ ZLAffine3D::C1_R0 ] * mtx.m [ ZLAffine3D::C1_R1 ]);
+//	result.m [ ZLAffine3D::C1_R1 ]	=	( append.m [ ZLAffine3D::C1_R1 ] * mtx.m [ ZLAffine3D::C1_R1 ]);
+//	result.m [ ZLAffine3D::C1_R2 ]	=	( append.m [ ZLAffine3D::C1_R2 ] * mtx.m [ ZLAffine3D::C1_R1 ]);
+//	
+//	result.m [ ZLAffine3D::C2_R0 ]	=	append.m [ ZLAffine3D::C2_R0 ];
+//	result.m [ ZLAffine3D::C2_R1 ]	=	append.m [ ZLAffine3D::C2_R1 ];
+//	result.m [ ZLAffine3D::C2_R2 ]	=	append.m [ ZLAffine3D::C2_R2 ];
+//	
+//	result.m [ ZLAffine3D::C3_R0 ]	=	( append.m [ ZLAffine3D::C0_R0 ] * mtx.m [ ZLAffine3D::C3_R0 ])	+
+//										( append.m [ ZLAffine3D::C1_R0 ] * mtx.m [ ZLAffine3D::C3_R1 ])	+
+//										( append.m [ ZLAffine3D::C3_R0 ]);
+//	
+//	result.m [ ZLAffine3D::C3_R1 ]	=	( append.m [ ZLAffine3D::C0_R1 ] * mtx.m [ ZLAffine3D::C3_R0 ])	+
+//										( append.m [ ZLAffine3D::C1_R1 ] * mtx.m [ ZLAffine3D::C3_R1 ])	+
+//										( append.m [ ZLAffine3D::C3_R1 ]);
+//	
+//	result.m [ ZLAffine3D::C3_R2 ]	=	( append.m [ ZLAffine3D::C0_R2 ] * mtx.m [ ZLAffine3D::C3_R0 ])	+
+//										( append.m [ ZLAffine3D::C1_R2 ] * mtx.m [ ZLAffine3D::C3_R1 ])	+
+//										( append.m [ ZLAffine3D::C3_R2 ]);
+//	
+//	return result;
+//}
 
 //----------------------------------------------------------------//
 void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
@@ -146,32 +146,11 @@ void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoo
 
 			ZLAffine3D mtx = modelToWorldMtx;
 
-			mtx.m [ ZLAffine3D::C0_R2 ]	= 0.0f;
-			mtx.m [ ZLAffine3D::C1_R2 ]	= 0.0f;
-
-			mtx.m [ ZLAffine3D::C3_R0 ]	= loc.mX;
-			mtx.m [ ZLAffine3D::C3_R1 ]	= loc.mY;
-			mtx.m [ ZLAffine3D::C3_R2 ]	= 0.0f;
-
 			if ( idx & MOAITileFlags::ROT_90 ) {
-
-				mtx.m [ ZLAffine3D::C0_R0 ]	= 0.0f;
-				mtx.m [ ZLAffine3D::C0_R1 ]	= yScale;
-				
-				mtx.m [ ZLAffine3D::C1_R0 ]	= -xScale;
-				mtx.m [ ZLAffine3D::C1_R1 ]	= 0.0f;
-				
-				mtx = this->AppendRot90SclTr ( mtx, modelToWorldMtx );
+				mtx.PrependRot90SclTr2D ( xScale, yScale, loc.mX, loc.mY );
 			}
 			else {
-			
-				mtx.m [ ZLAffine3D::C0_R0 ]	= xScale;
-				mtx.m [ ZLAffine3D::C0_R1 ]	= 0.0f;
-
-				mtx.m [ ZLAffine3D::C1_R0 ]	= 0.0f;
-				mtx.m [ ZLAffine3D::C1_R1 ]	= yScale;
-				
-				mtx = this->AppendSclTr ( mtx, modelToWorldMtx );
+				mtx.PrependSclTr2D ( xScale, yScale, loc.mX, loc.mY );
 			}
 
 			gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX, mtx );
@@ -307,26 +286,26 @@ void MOAIGraphicsGridProp::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionResu
 				mtx.Transform ( loc );
 				bounds.Transform ( mtx );
 				
-				buffer.PushResult ( *this, key, subPrimID, this->GetPriority (), loc, this->GetBounds ()); // TODO: should use tile bounds for expand mode
+				buffer.PushResult ( *this, key, subPrimID, this->GetPriority (), loc, this->GetWorldBounds ()); // TODO: should use tile bounds for expand mode
 			}
 		}
 	}
 	else {
-		buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->GetPriority (), this->GetWorldLoc (), this->GetBounds ());
+		buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->GetPriority (), this->GetWorldLoc (), this->GetWorldBounds ());
 	}
 }
 
 //----------------------------------------------------------------//
-u32 MOAIGraphicsGridProp::MOAIPartitionHull_GetModelBounds ( ZLBox& bounds ) {
+ZLBounds MOAIGraphicsGridProp::MOAIPartitionHull_GetModelBounds () {
 	
 	if ( this->mGrid ) {
 		
 		if ( this->mGrid->GetRepeat ()) {
-			return BOUNDS_GLOBAL;
+			return ZLBounds::GLOBAL;
 		}
-		ZLRect rect = this->mGrid->GetBounds ();
-		bounds.Init ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax, 0.0f, 0.0f );
-		return this->mGrid->GetRepeat () ? BOUNDS_GLOBAL : BOUNDS_OK;
+		ZLBounds bounds;
+		bounds.Init ( this->mGrid->GetBounds ());
+		return bounds;
 	}
-	return BOUNDS_EMPTY;
+	return ZLBounds::EMPTY;
 }

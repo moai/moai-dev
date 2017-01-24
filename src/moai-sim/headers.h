@@ -36,6 +36,7 @@
 //#include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIDrawable.h>
+#include <moai-sim/MOAIDrawDeck.h>
 #include <moai-sim/MOAIEaseDriver.h>
 #include <moai-sim/MOAIEaseType.h>
 #include <moai-sim/MOAIFancyGrid.h>
@@ -52,7 +53,6 @@
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIGraphicsGridProp.h>
 #include <moai-sim/MOAIGrid.h>
-//#include <moai-sim/MOAIGridDeck2D.h>
 #include <moai-sim/MOAIGridPathGraph.h>
 #include <moai-sim/MOAIGridSpace.h>
 #include <moai-sim/MOAIImage.h>
@@ -82,6 +82,7 @@
 #include <moai-sim/MOAIMeshPartition.h>
 #include <moai-sim/MOAIMeshSparseQuadTree.h>
 #include <moai-sim/MOAIMeshTernaryTree.h>
+#include <moai-sim/MOAIMetaTileDeck2D.h>
 #include <moai-sim/MOAIMotionSensor.h>
 #include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAINode.h>
@@ -122,7 +123,6 @@
 #include <moai-sim/MOAIRenderPass.h>
 #include <moai-sim/MOAIRenderPassBase.h>
 #include <moai-sim/MOAIScissorRect.h>
-//#include <moai-sim/MOAIScriptDeck.h>
 #include <moai-sim/MOAIScriptNode.h>
 #include <moai-sim/MOAISelectionMesh.h>
 #include <moai-sim/MOAISensor.h>
@@ -134,11 +134,11 @@
 #include <moai-sim/MOAISingleTexture.h>
 #include <moai-sim/MOAISpanList.h>
 #include <moai-sim/MOAISpriteDeck2D.h>
-//#include <moai-sim/MOAIStretchPatch2D.h>
-//#include <moai-sim/MOAISurfaceDeck2D.h>
+#include <moai-sim/MOAIStretchPatch2D.h>
+#include <moai-sim/MOAISurfaceDeck2D.h>
 #include <moai-sim/MOAITexture.h>
 #include <moai-sim/MOAITextureBase.h>
-//#include <moai-sim/MOAITileDeck2D.h>
+#include <moai-sim/MOAITileDeck2D.h>
 #include <moai-sim/MOAITileFlags.h>
 #include <moai-sim/MOAITimer.h>
 #include <moai-sim/MOAITouchSensor.h>

@@ -71,7 +71,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	void					MOAIAction_Update						( double step );
-	u32						MOAIPartitionHull_GetModelBounds		( ZLBox& bounds );
+	ZLBounds				MOAIPartitionHull_GetModelBounds		();
 
 public:
 

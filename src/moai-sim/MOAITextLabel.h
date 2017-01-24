@@ -209,7 +209,7 @@ private:
 	void				MOAIDrawable_Draw					( int subPrimID );
 	void				MOAIDrawable_DrawDebug				( int subPrimID );
 	void				MOAINode_Update						();
-	u32					MOAIPartitionHull_GetModelBounds	( ZLBox& bounds );
+	ZLBounds			MOAIPartitionHull_GetModelBounds	();
 
 public:
 	

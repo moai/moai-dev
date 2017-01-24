@@ -3,15 +3,12 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGrid.h>
+#include <moai-sim/MOAIMaterialStackMgr.h>
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAITileDeck2D.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITransformBase.h>
-
-SUPPRESS_EMPTY_FILE_WARNING
-
-#if 0
 
 //================================================================//
 // local
@@ -235,56 +232,11 @@ int MOAITileDeck2D::_transformUV ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLBox MOAITileDeck2D::ComputeMaxBounds () {
-	return this->GetItemBounds ( 0 );
-}
-
-//----------------------------------------------------------------//
-void MOAITileDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale ) {
-
-	idx = idx - 1;
-
-	if ( !this->LoadGfxState ( materials, idx, MOAIShaderMgr::DECK2D_SHADER )) return;
-	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	MOAIQuadBrush::BindVertexFormat ();
-	
-	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX ));
-	gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_TO_MODEL_MTX ));
-	
-	MOAICellCoord coord = this->GetCellCoord ( idx );
-	ZLRect uvRect = this->GetTileRect ( coord );
-	
-	float uScale = ( uvRect.mXMax - uvRect.mXMin );
-	float vScale = -( uvRect.mYMax - uvRect.mYMin );
-	
-	float uOff = uvRect.mXMin + ( 0.5f * uScale );
-	float vOff = uvRect.mYMin - ( 0.5f * vScale );
-	
-	this->mQuad.Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY, uOff, vOff, uScale, vScale );
-}
-
-//----------------------------------------------------------------//
-ZLBox MOAITileDeck2D::GetItemBounds ( u32 idx ) {
-	UNUSED ( idx );
-	ZLBox bounds;
-	ZLRect rect = this->mQuad.GetVtxBounds ();
-	bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );	
-	return bounds;
-}
-
-//----------------------------------------------------------------//
-bool MOAITileDeck2D::Inside ( u32 idx, MOAIMaterialBatch* materials, u32 granularity, ZLVec3D vec, float pad ) {
-	UNUSED ( pad );
-
-	return this->TestHit ( materials, idx, granularity, this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
-}
-
-//----------------------------------------------------------------//
 MOAITileDeck2D::MOAITileDeck2D () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIStandardDeck )
+		RTTI_EXTEND ( MOAIDeck )
+		RTTI_EXTEND ( MOAIMaterialBatchHolder )
 		RTTI_EXTEND ( MOAIGridSpace )
 	RTTI_END
 	
@@ -299,14 +251,16 @@ MOAITileDeck2D::~MOAITileDeck2D () {
 //----------------------------------------------------------------//
 void MOAITileDeck2D::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIStandardDeck::RegisterLuaClass ( state );
+	MOAIDeck::RegisterLuaClass ( state );
+	MOAIMaterialBatchHolder::RegisterLuaClass ( state );
 	MOAIGridSpace::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAITileDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIStandardDeck::RegisterLuaFuncs ( state );
+	MOAIDeck::RegisterLuaFuncs ( state );
+	MOAIMaterialBatchHolder::RegisterLuaFuncs ( state );
 	MOAIGridSpace::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
@@ -351,4 +305,76 @@ void MOAITileDeck2D::TransformUV ( const ZLAffine3D& mtx ) {
 	this->mQuad.TransformUVs ( mtx );
 }
 
-#endif
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+ZLBounds MOAITileDeck2D::MOAIDeck_ComputeMaxBounds () {
+
+	return this->MOAIDeck::GetBounds ( 0 );
+}
+
+//----------------------------------------------------------------//
+void MOAITileDeck2D::MOAIDeck_Draw ( u32 idx ) {
+	UNUSED ( idx );
+	
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIQuadBrush::BindVertexFormat ();
+	
+	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX ));
+	gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_TO_MODEL_MTX ));
+	
+	MOAICellCoord coord = this->GetCellCoord ( idx );
+	ZLRect uvRect = this->GetTileRect ( coord );
+	
+	float uScale = ( uvRect.mXMax - uvRect.mXMin );
+	float vScale = -( uvRect.mYMax - uvRect.mYMin );
+	
+	float uOff = uvRect.mXMin + ( 0.5f * uScale );
+	float vOff = uvRect.mYMin - ( 0.5f * vScale );
+	
+	MOAIMaterialStackMgr& materialStack = MOAIMaterialStackMgr::Get ();
+	materialStack.Push ( this->GetMaterial ( idx ));
+	materialStack.SetShader ( MOAIShaderMgr::DECK2D_SHADER );
+	materialStack.LoadGfxState ();
+	
+	this->mQuad.Draw ( 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, uOff, vOff, uScale, vScale );
+	
+	materialStack.Pop ();
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAITileDeck2D::MOAIDeck_GetBounds ( u32 idx ) {
+	UNUSED ( idx );
+	
+	return ZLBounds ( this->mQuad.GetVtxBounds ());
+}
+
+//----------------------------------------------------------------//
+MOAICollisionShape* MOAITileDeck2D::MOAIDeck_GetCollisionShape ( u32 idx ) {
+	UNUSED ( idx );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+bool MOAITileDeck2D::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
+	UNUSED ( idx );
+	UNUSED ( vec );
+	UNUSED ( granularity );
+	UNUSED ( result );
+
+	return false;
+}
+
+//----------------------------------------------------------------//
+bool MOAITileDeck2D::MOAIDeck_Overlap ( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
+	UNUSED ( idx );
+	UNUSED ( vec );
+	UNUSED ( granularity );
+	UNUSED ( result );
+
+	//return this->TestHit ( materials, idx, granularity, this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
+	return false;
+}

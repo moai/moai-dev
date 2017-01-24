@@ -71,12 +71,12 @@ private:
 	static int	_transformUV			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	virtual ZLBounds				MOAIDeck_ComputeMaxBounds		();
-	virtual void					MOAIDeck_Draw					( u32 idx );
-	virtual ZLBounds				MOAIDeck_GetBounds				( u32 idx );
-	virtual MOAICollisionShape*		MOAIDeck_GetCollisionShape		( u32 idx );
-	virtual bool					MOAIDeck_Overlap				( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
-	virtual bool					MOAIDeck_Overlap				( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
+	ZLBounds				MOAIDeck_ComputeMaxBounds		();
+	void					MOAIDeck_Draw					( u32 idx );
+	ZLBounds				MOAIDeck_GetBounds				( u32 idx );
+	MOAICollisionShape*		MOAIDeck_GetCollisionShape		( u32 idx );
+	bool					MOAIDeck_Overlap				( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
+	bool					MOAIDeck_Overlap				( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
 
 public:
 	

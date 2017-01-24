@@ -65,7 +65,7 @@ private:
 	virtual void	OnPropUpdated			( MOAIPartitionHull& hull );
 	void			PrepareRebuild			();
 	void			Rebuild					();
-	void			UpdateProp				( MOAIPartitionHull& hull, u32 status );
+	void			UpdateHull				( MOAIPartitionHull& hull );
 
 public:
 	

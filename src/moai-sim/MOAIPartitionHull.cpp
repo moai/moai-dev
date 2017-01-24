@@ -43,10 +43,8 @@
 int MOAIPartitionHull::_getBounds ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartitionHull, "U" )
 	
-	ZLBox bounds;
-
-	u32 status = self->GetModelBounds ( bounds );
-	if ( status != BOUNDS_OK ) return 0;
+	ZLBounds bounds = self->GetModelBounds ();
+	if ( bounds.mStatus != ZLBounds::ZL_BOUNDS_OK ) return 0;
 
 	state.Push ( bounds.mMin.mX );
 	state.Push ( bounds.mMin.mY );
@@ -71,10 +69,8 @@ int MOAIPartitionHull::_getBounds ( lua_State* L ) {
 int MOAIPartitionHull::_getDims ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartitionHull, "U" )
 
-	ZLBox bounds;
-
-	u32 status = self->GetModelBounds ( bounds );
-	if ( status != BOUNDS_OK ) return 0;
+	ZLBounds bounds = self->GetModelBounds ();
+	if ( bounds.mStatus != ZLBounds::ZL_BOUNDS_OK ) return 0;
  
 	state.Push ( bounds.mMax.mX - bounds.mMin.mX );
 	state.Push ( bounds.mMax.mY - bounds.mMin.mY );
@@ -457,27 +453,26 @@ bool MOAIPartitionHull::GetCellRect ( ZLRect* cellRect, ZLRect* paddedRect ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIPartitionHull::GetModelBounds ( ZLBox& bounds ) {
+ZLBounds MOAIPartitionHull::GetModelBounds () {
 
 	if ( this->mFlags & FLAGS_PARTITION_GLOBAL ) {
-		return BOUNDS_GLOBAL;
+		return ZLBounds::GLOBAL;
 	}
 
-	u32 status = BOUNDS_EMPTY;
+	ZLBounds bounds = ZLBounds::EMPTY;
 
 	if ( this->mFlags & FLAGS_OVERRIDE_BOUNDS ) {
-		bounds = this->mBoundsOverride;
-		status = BOUNDS_OK;
+		bounds.Init ( this->mBoundsOverride );
 	}
 	else {
-		status = this->MOAIPartitionHull_GetModelBounds ( bounds );
+		bounds = this->MOAIPartitionHull_GetModelBounds ();
 	}
 	
-	if (( status == BOUNDS_OK ) && ( this->mFlags & FLAGS_PAD_BOUNDS )) {
+	if (( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) && ( this->mFlags & FLAGS_PAD_BOUNDS )) {
 		bounds.Pad ( this->mBoundsPad.mX, this->mBoundsPad.mY, this->mBoundsPad.mZ );
 	}
 
-	return status;
+	return bounds;
 }
 
 //----------------------------------------------------------------//
@@ -495,15 +490,13 @@ bool MOAIPartitionHull::Inside ( ZLVec3D vec, float pad ) {
 //----------------------------------------------------------------//
 bool MOAIPartitionHull::InsideModelBounds ( const ZLVec3D& vec, float pad ) {
 
-	ZLBox bounds;
-
-	u32 status = this->GetModelBounds ( bounds );
+	ZLBounds bounds = this->GetModelBounds ();
 	
-	if ( status == BOUNDS_EMPTY ) return false;
+	if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_EMPTY ) return false;
 	
 	bool passTrivial = false;
 	
-	if ( status == BOUNDS_GLOBAL ) {
+	if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_GLOBAL ) {
 		passTrivial = true;
 	}
 	else {
@@ -524,7 +517,6 @@ MOAIPartitionHull::MOAIPartitionHull () :
 	mInterfaceMask ( 0 ),
 	mQueryMask ( 0xffffffff ),
 	mPriority ( UNKNOWN_PRIORITY ),
-	mBoundsStatus ( BOUNDS_EMPTY ),
 	mFlags ( 0 ),
 	mBoundsPad ( 0.0f, 0.0f, 0.0f ),
 	mHitGranularity ( HIT_TEST_COARSE ) {
@@ -621,34 +613,33 @@ void MOAIPartitionHull::SetPartition ( MOAIPartition* partition ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionHull::UpdateWorldBounds ( u32 status ) {
-
-	ZLBox bounds;
-	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
-
-	if ( status == BOUNDS_OK ) {
-		status = BOUNDS_EMPTY;
-	}
-	this->UpdateWorldBounds ( bounds, status );
-}
+//void MOAIPartitionHull::UpdateWorldBounds ( u32 status ) {
+//
+//	ZLBox bounds;
+//	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+//
+//	if ( status == ZLBounds::ZL_BOUNDS_OK ) {
+//		status = ZLBounds::ZL_BOUNDS_EMPTY;
+//	}
+//	this->UpdateWorldBounds ( bounds, status );
+//}
 
 //----------------------------------------------------------------//
-void MOAIPartitionHull::UpdateWorldBounds ( const ZLBox& bounds, u32 status ) {
+void MOAIPartitionHull::UpdateWorldBounds ( const ZLBounds& bounds ) {
 
 	MOAIPartitionCell* prevCell = this->mCell;
 	ZLBox prevBounds = this->mWorldBounds;
 
 	this->mWorldBounds = bounds;
 	this->mWorldBounds.Bless ();
-	
-	this->mBoundsStatus = status;
 
-	if (( status == BOUNDS_OK ) && this->mWorldBounds.IsPoint ()) {
-		status = BOUNDS_EMPTY;
+	if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) {
+		this->mWorldBounds.UpdateStatus ();
 	}
 
 	if ( this->mPartition ) {
-		this->mPartition->UpdateProp ( *this, status );
+		
+		this->mPartition->UpdateHull ( *this );
 		
 		if (( prevCell != this->mCell ) || ( !prevBounds.IsSame ( this->mWorldBounds ))) {
 			this->BoundsDidChange ();
@@ -686,14 +677,13 @@ void MOAIPartitionHull::MOAINode_Update () {
 	
 	MOAITransform::MOAINode_Update ();
 	
-	ZLBox propBounds;
-	u32 propBoundsStatus = this->GetModelBounds ( propBounds );
+	ZLBounds bounds = this->GetModelBounds ();
 	
 	// update the prop location in the partition
-	if ( propBoundsStatus == BOUNDS_OK ) {
-		propBounds.Transform ( this->mLocalToWorldMtx );
+	if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) {
+		bounds.Transform ( this->mLocalToWorldMtx );
 	}
-	this->UpdateWorldBounds ( propBounds, propBoundsStatus );
+	this->UpdateWorldBounds ( bounds );
 }
 
 //----------------------------------------------------------------//

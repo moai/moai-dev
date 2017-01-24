@@ -724,11 +724,12 @@ void MOAIParticleSystem::MOAIAction_Update ( double step ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIParticleSystem::MOAIPartitionHull_GetModelBounds ( ZLBox& bounds ) {
+ZLBounds MOAIParticleSystem::MOAIPartitionHull_GetModelBounds () {
 
 	if ( this->mSpriteTop ) {
-		bounds = this->mParticleBounds;
-		return BOUNDS_OK;
+		ZLBounds bounds;
+		bounds.Init ( this->mParticleBounds );
+		return bounds;
 	}
-	return BOUNDS_EMPTY;
+	return ZLBounds::EMPTY;
 }

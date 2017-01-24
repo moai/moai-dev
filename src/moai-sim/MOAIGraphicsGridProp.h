@@ -42,7 +42,7 @@ private:
 	bool			MOAINode_ApplyAttrOp					( u32 attrID, MOAIAttribute& attr, u32 op );
 	void			MOAINode_Update							();
 	void			MOAIPartitionHull_AddToSortBuffer		( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
-	u32				MOAIPartitionHull_GetModelBounds		( ZLBox& bounds ); // get the prop bounds in model space
+	ZLBounds		MOAIPartitionHull_GetModelBounds		(); // get the prop bounds in model space
 
 public:
 

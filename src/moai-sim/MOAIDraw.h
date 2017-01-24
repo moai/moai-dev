@@ -17,7 +17,7 @@ class MOAIVertexFormat;
 //================================================================//
 /**	@lua	MOAIDraw
 	@text	Singleton for performing immediate mode drawing operations.
-			See MOAIScriptDeck.
+			See MOAIDrawDeck.
 */
 class MOAIDraw :
 	public ZLContextClass < MOAIDraw, MOAILuaObject > {
