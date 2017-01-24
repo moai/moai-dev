@@ -14,7 +14,7 @@ gViewport = MOAIViewport.new ()
 gViewport:setSize ( 640, 480 )
 gViewport:setScale ( 640, 480 )
 
-gWorldLayer = MOAILayer2D.new ()
+gWorldLayer = MOAILayer.new ()
 gWorldLayer:setViewport ( gViewport )
 MOAISim.pushRenderPass ( gWorldLayer )
 

@@ -17,10 +17,10 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 1024, 1024 )
 viewport:setScale ( 1024, 1024 )
 
-layer = MOAILayer2D.new ()
+layer = MOAILayer.new ()
 layer:setViewport ( viewport )
 layer:setCamera ( camera )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 text1 = 'This quick brown fox jumped over the something something.'
 --text2 = 'Two lines\nof text...\nor NOT!'

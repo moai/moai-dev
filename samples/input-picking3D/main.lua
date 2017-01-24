@@ -21,7 +21,7 @@ frameBuffer:setClearDepth ( true )
 frameBuffer:setClearColor ( 0, 0, 0, 1 )
 
 layer = MOAILayer.new ()
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( SCREEN_WIDTH, SCREEN_HEIGHT )

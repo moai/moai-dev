@@ -10,9 +10,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 256, 512 )
 viewport:setScale ( 256, -512 )
 
-layer = MOAILayer2D.new ()
+layer = MOAILayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 pvrs = {
 

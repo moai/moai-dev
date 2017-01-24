@@ -126,10 +126,10 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( fla.width, fla.height )
 viewport:setScale ( fla.width, -fla.height )
 
-layer = MOAILayer2D.new ()
+layer = MOAILayer.new ()
 layer:setViewport ( viewport )
 
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 MOAISim.openWindow ( "flash", fla.width, fla.height )
 
 MOAIGfxMgr.setClearColor ( 1, 1, 1, 1 )

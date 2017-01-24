@@ -10,9 +10,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 544, 272 )
 viewport:setScale ( 544, 272 )
 
-layer = MOAILayer2D.new ()
+layer = MOAILayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 grid = MOAIGrid.new ()
 grid:initDiamondGrid ( 8, 16, 64, 32 )

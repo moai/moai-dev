@@ -11,9 +11,9 @@ viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, -480 )
 viewport:setOffset ( -1, 1 )
 
-layer = MOAILayer2D.new ()
+layer = MOAILayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 grid = MOAIGrid.new ()
 grid:setSize ( 8, 8, 32, 32 )

@@ -28,9 +28,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( w, h )
 viewport:setScale ( w, -h )
 
-layer = MOAILayer2D.new ()
+layer = MOAILayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 hw = w * 0.5
 hh = h * 0.5

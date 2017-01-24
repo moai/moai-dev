@@ -43,9 +43,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( width, height )
 viewport:setScale ( width, -height )
 
-layer = MOAILayer2D.new ()
+layer = MOAILayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 sdfTexture = MOAITexture.new ()
 sdfTexture:load ( image )

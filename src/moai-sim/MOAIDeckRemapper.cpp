@@ -5,10 +5,6 @@
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAITileFlags.h>
 
-SUPPRESS_EMPTY_FILE_WARNING
-
-#if 0
-
 //================================================================//
 // local
 //================================================================//
@@ -29,7 +25,7 @@ int MOAIDeckRemapper::_reserve ( lua_State* L ) {
 	self->mRemap.Init ( size );
 	
 	for ( u32 i = 0; i < size; ++i ) {
-		self->mRemap [ i ] = i + 1;
+		self->mRemap [ i ] = i;
 	}
 	return 0;
 }
@@ -53,55 +49,6 @@ int MOAIDeckRemapper::_setBase ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	setBounds
-	@text	Set the dimensions of a bounding box at a given index.
-	
-	@in		MOAIBoundsDeck self
-	@in		number idx
-	@in		number xMin
-	@in		number yMin
-	@in		number zMin
-	@in		number xMax
-	@in		number yMax
-	@in		number zMax
-	@out	nil
-*/
-//int	MOAIBoundsDeck::_setBounds ( lua_State* L ) {
-//	MOAI_LUA_SETUP ( MOAIBoundsDeck, "UN" )
-//	
-//	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
-//	
-//	if ( idx < self->mBoundsArray.Size ()) {
-//		ZLBox bounds = state.GetBox ( 3 );
-//		bounds.Bless ();
-//		self->mBoundsArray [ idx ] = bounds;
-//		self->SetBoundsDirty ();
-//	}
-//	return 0;
-//}
-
-//----------------------------------------------------------------//
-/**	@lua	setIndex
-	@text	Associate a deck index with a bounding box.
-	
-	@in		MOAIBoundsDeck self
-	@in		number idx
-	@in		number boundsID
-	@out	nil
-*/
-//int	MOAIBoundsDeck::_setIndex ( lua_State* L ) {
-//	MOAI_LUA_SETUP ( MOAIBoundsDeck, "UN" )
-//	
-//	u32 idx			= state.GetValue < u32 >( 2, 1 ) - 1;
-//	u32 boundsID	= state.GetValue < u32 >( 3, 1 ) - 1;
-//	
-//	if ( idx < self->mIndexMap.Size ()) {
-//		self->mIndexMap [ idx ] = boundsID;
-//	}
-//	return 0;
-//}
-
-//----------------------------------------------------------------//
 /**	@lua	setRemap
 	@text	Remap a single index to a new value.
 	
@@ -113,11 +60,16 @@ int MOAIDeckRemapper::_setBase ( lua_State* L ) {
 int MOAIDeckRemapper::_setRemap ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDeckRemapper, "UN" )
 
-	u32 idx		= state.GetValue < u32 >( 2, 1 ) - 1;
+	u32 idx		= state.GetValue < u32 >( 2, 1 );
 	u32 remap	= state.GetValue < u32 >( 3, idx );
 	
-	if ( idx < self->mRemap.Size ()) {
-		self->mRemap [ idx ] = remap;
+	idx			= idx - 1;
+	remap		= remap - 1;
+	
+	u32 code = idx - self->mBase;
+	
+	if ( code < self->mRemap.Size ()) {
+		self->mRemap [ code ] = remap;
 	}
 	return 0;
 }
@@ -127,37 +79,12 @@ int MOAIDeckRemapper::_setRemap ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-//ZLBox MOAIBoundsDeck::ComputeMaxBounds () {
-//
-//	ZLBox bounds;
-//
-//	size_t size = this->mBoundsArray.Size ();
-//	if ( size == 0 ) {
-//		bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
-//	}
-//	else {
-//		this->mMaxBounds = this->mBoundsArray [ 0 ];
-//		for ( size_t i = 1; i < size; ++i ) {
-//			bounds.Grow ( this->mBoundsArray [ i ]);
-//		}
-//	}
-//	return bounds;
-//}
-
-//----------------------------------------------------------------//
-//ZLBox MOAIBoundsDeck::GetItemBounds ( u32 idx ) {
-//
-//	idx = ( idx - 1 ) % this->mIndexMap.Size ();
-//	idx = this->mIndexMap [ idx ] % this->mBoundsArray.Size ();
-//	return this->mBoundsArray [ idx ];
-//}
-
-//----------------------------------------------------------------//
 MOAIDeckRemapper::MOAIDeckRemapper () :
 	mBase ( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAINode )
+		RTTI_EXTEND ( MOAIDeckProxy )
 	RTTI_END
 }
 
@@ -169,12 +96,14 @@ MOAIDeckRemapper::~MOAIDeckRemapper () {
 void MOAIDeckRemapper::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAINode::RegisterLuaClass ( state );
+	MOAIDeckProxy::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIDeckRemapper::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAINode::RegisterLuaFuncs ( state );
+	MOAIDeckProxy::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "reserve",			_reserve },
@@ -186,38 +115,26 @@ void MOAIDeckRemapper::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
-//----------------------------------------------------------------//
-u32 MOAIDeckRemapper::Remap ( u32 idx ) const {
-
-	u32 code = ( idx & MOAITileFlags::CODE_MASK ) - 1;
-
-	if (( code >= this->mBase ) && ( code < this->mRemap.Size ())) {
-	
-		u32 flags = idx & MOAITileFlags::FLAGS_MASK;
-		return ( this->mRemap [ code ] ^ ( flags & MOAITileFlags::FLIP_MASK )) | ( flags & MOAITileFlags::HIDDEN );
-	}
-	return idx;
-}
-
-//----------------------------------------------------------------//
-u32 MOAIDeckRemapper::Remap ( const MOAIDeckRemapper* remapper, u32 idx ) {
-
-	return remapper ? remapper->Remap ( idx ) : idx;
-}
-
 //================================================================//
 // ::implementation::
 //================================================================//
 
 //----------------------------------------------------------------//
+u32 MOAIDeckRemapper::MOAIDeckProxy_Remap ( u32 idx ) {
+
+	u32 code = idx - this->mBase;
+	
+	return ( code < this->mRemap.Size ()) ? this->mRemap [ code ] : idx;
+}
+
+//----------------------------------------------------------------//
 bool MOAIDeckRemapper::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 
-	attrID -=1;
-	if (( attrID >= this->mBase ) && ( attrID < this->mRemap.Size ())) {
-		this->mRemap [ attrID ] = ZLFloat::ToIndex ( attr.Apply (( float )this->mRemap [ attrID ], op, MOAIAttribute::ATTR_READ_WRITE ));
+	u32 code = attrID - this->mBase - 1;
+
+	if ( code < this->mRemap.Size ()) {
+		this->mRemap [ code ] = ZLFloat::ToIndex ( attr.Apply (( float )this->mRemap [ code ], op, MOAIAttribute::ATTR_READ_WRITE )) - 1;
 		return true;
 	}
 	return false;
 }
-
-#endif

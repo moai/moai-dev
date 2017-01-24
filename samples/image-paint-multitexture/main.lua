@@ -34,9 +34,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( VIEW_WIDTH, VIEW_HEIGHT )
 viewport:setScale ( VIEW_WIDTH, -VIEW_HEIGHT )
 
-layer = MOAILayer2D.new ()
+layer = MOAILayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 file = assert ( io.open ( 'shader.vsh', mode ))
 vsh = file:read ( '*all' )

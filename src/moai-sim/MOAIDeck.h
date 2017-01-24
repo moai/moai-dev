@@ -30,6 +30,8 @@ class MOAIDeck :
 	public virtual MOAILuaObject {
 protected:
 
+	friend class MOAIDeckProxy;
+
 	enum {
 		NO_CONTENT = 0xffffffff,
 	};

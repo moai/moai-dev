@@ -75,9 +75,9 @@ viewport:setSize ( 256, 256 )
 viewport:setOffset ( -1, -1 )
 viewport:setScale ( 10, 10 )
 
-layer = MOAILayer2D.new ()
+layer = MOAILayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 scriptDeck = MOAIScriptDeck.new ()
 scriptDeck:setRect ( 0, 0, 10, 10 )

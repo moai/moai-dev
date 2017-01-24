@@ -10,9 +10,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 256, 256 )
 viewport:setScale ( 256, 256 )
 
-layer = MOAILayer2D.new ()
+layer = MOAILayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 image = MOAIImage.new ()
 --image:init ( 256, 256, MOAIImage.COLOR_FMT_A_8 )

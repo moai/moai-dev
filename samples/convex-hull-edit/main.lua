@@ -10,10 +10,10 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 512, 512 )
 viewport:setScale ( 512, 512 )
 
-layer = MOAILayer2D.new ()
+layer = MOAILayer.new ()
 layer:setViewport ( viewport )
 layer:setClearColor ( 1, 1, 1, 1 )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 drawPoints = function ( stream )
 

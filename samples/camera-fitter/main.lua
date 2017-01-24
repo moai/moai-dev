@@ -12,10 +12,10 @@ viewport:setScale ( 320, 480 )
 
 camera = MOAICamera2D.new ()
 
-layer = MOAILayer2D.new ()
+layer = MOAILayer.new ()
 layer:setViewport ( viewport )
 layer:setCamera ( camera )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 fitter = MOAICameraFitter2D.new ()
 fitter:setViewport ( viewport )

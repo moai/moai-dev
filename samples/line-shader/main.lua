@@ -12,7 +12,7 @@ viewport:setScale ( 520, 680 )
 
 layer = MOAILayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 camera = MOAICamera.new ()
 camera:setFieldOfView ( 65.0 )

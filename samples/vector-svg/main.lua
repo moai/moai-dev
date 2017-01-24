@@ -6,7 +6,7 @@
 
 svg = require ( 'svg' )
 
-layer = MOAILayer2D.new ()
+layer = MOAILayer.new ()
 
 onProp = function ( prop, style )
 
@@ -45,4 +45,4 @@ viewport:setScale ( width, -height )
 viewport:setOffset ( -1, 1 )
 
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()

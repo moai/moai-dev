@@ -31,9 +31,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( VIEW_WIDTH, VIEW_HEIGHT )
 viewport:setScale ( VIEW_WIDTH, -VIEW_HEIGHT )
 
-layer = MOAILayer2D.new ()
+layer = MOAILayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 draw = MOAIImage.new ()
 draw:load ( 'moai.png' )

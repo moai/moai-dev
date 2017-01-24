@@ -17,9 +17,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 640, 960 )
 viewport:setScale ( 320, 480 )
 
-layer = MOAILayer2D.new ()
+layer = MOAILayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( "maneki.png" )

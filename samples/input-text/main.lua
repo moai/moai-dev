@@ -11,9 +11,9 @@ local viewport = MOAIViewport.new ()
 viewport:setSize ( 480, 100 )
 viewport:setScale ( 480, 100 )
 
-local layer = MOAILayer2D.new ()
+local layer = MOAILayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 local font = MOAIFont.new ()
 font:loadFromTTF ( 'VL-PGothic.ttf' )

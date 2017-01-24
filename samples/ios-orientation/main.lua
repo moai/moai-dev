@@ -15,9 +15,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( viewWidth, viewHeight )
 viewport:setScale ( viewWidth, viewHeight )
 
-layer = MOAILayer2D.new ()
+layer = MOAILayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( "moai.png" )

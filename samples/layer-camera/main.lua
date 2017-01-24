@@ -16,10 +16,10 @@ camera:moveLoc ( 128, 0, 3 )
 camera:moveRot ( 180, 3 )
 camera:moveScl ( 1, 1, 3 )
 
-layer = MOAILayer2D.new ()
+layer = MOAILayer.new ()
 layer:setViewport ( viewport )
 layer:setCamera ( camera )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( "moai.png" )

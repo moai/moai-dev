@@ -16,7 +16,7 @@ viewport:setScale ( 320, 480 )
 layer = MOAILayer.new ()
 layer:setViewport ( viewport )
 layer:setPartitionCull2D ( false )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 camera = MOAICamera.new ()
 camera:setLoc ( 0, 0, camera:getFocalLength ( 320 ))

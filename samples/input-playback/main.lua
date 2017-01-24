@@ -20,8 +20,8 @@ end
 
 MOAISim.openWindow ( 'test', 320, 480 )
 
-layer = MOAILayer2D.new ()
-MOAISim.pushRenderPass ( layer )
+layer = MOAILayer.new ()
+layer:pushRenderPass ()
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )

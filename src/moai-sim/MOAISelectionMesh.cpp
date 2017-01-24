@@ -518,7 +518,7 @@ MOAISelectionMesh::MOAISelectionMesh () :
 	mMesh ( 0 ) {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeckProxyBase )
+		RTTI_EXTEND ( MOAIDeckProxy )
 	RTTI_END
 }
 
@@ -564,13 +564,13 @@ void MOAISelectionMesh::PrintSelections () {
 //----------------------------------------------------------------//
 void MOAISelectionMesh::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIDeckProxyBase::RegisterLuaClass ( state );
+	MOAIDeckProxy::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAISelectionMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIDeckProxyBase::RegisterLuaFuncs ( state );
+	MOAIDeckProxy::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "addSelection",			_addSelection },
@@ -597,11 +597,11 @@ void MOAISelectionMesh::ReserveSelections ( u32 total ) {
 //----------------------------------------------------------------//
 void MOAISelectionMesh::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
-	MOAIDeckProxyBase::SerializeIn ( state, serializer );
+	MOAIDeckProxy::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAISelectionMesh::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
-	MOAIDeckProxyBase::SerializeOut ( state, serializer );
+	MOAIDeckProxy::SerializeOut ( state, serializer );
 }

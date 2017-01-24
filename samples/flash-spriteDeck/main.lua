@@ -12,10 +12,10 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 128, 128 )
 viewport:setScale ( 128, -128 )
 
-layer = MOAILayer2D.new ()
+layer = MOAILayer.new ()
 layer:setViewport ( viewport )
 
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 MOAISim.openWindow ( "flash-spriteDeck", 128, 128 )
 
 local spriteLibs = dofile ( 'flash-spriteDeck.fla.lua' )

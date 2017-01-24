@@ -19,7 +19,7 @@ function initFrameBuffer ()
 	viewport:setSize ( 256, 256 )
 	viewport:setScale ( 256, 256 )
 
-	local layer = MOAILayer2D.new ()
+	local layer = MOAILayer.new ()
 	layer:setViewport ( viewport )
 	
 	local prop = MOAIProp2D.new ()
@@ -50,10 +50,10 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, -480 )
 
-layer = MOAILayer2D.new ()
+layer = MOAILayer.new ()
 layer:setViewport ( viewport )
 
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )

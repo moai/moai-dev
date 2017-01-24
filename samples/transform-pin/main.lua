@@ -11,7 +11,7 @@ viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, -480 )
 
 --set up the world layer
-worldLayer = MOAILayer2D.new ()
+worldLayer = MOAILayer.new ()
 worldLayer:setViewport ( viewport )
 MOAISim.pushRenderPass ( worldLayer )
 
@@ -34,7 +34,7 @@ worldLayer:insertProp ( prop )
 prop:moveRot ( 360, 3 )
 
 --set up the hud layer
-hudLayer = MOAILayer2D.new ()
+hudLayer = MOAILayer.new ()
 hudLayer:setViewport ( viewport )
 MOAISim.pushRenderPass ( hudLayer )
 

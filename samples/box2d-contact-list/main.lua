@@ -16,10 +16,10 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( width, height )
 viewport:setScale (width / (width/640), height / (height/480))
 
-layer = MOAILayer2D.new ()
+layer = MOAILayer.new ()
 layer:setPartition( MOAIPartition.new() )
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 function onCollide ( event )
 

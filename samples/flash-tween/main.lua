@@ -174,10 +174,10 @@ viewport:setSize ( fla.width, fla.height )
 viewport:setScale ( fla.width, -fla.height )
 viewport:setOffset ( -1, 1 )
 
-layer = MOAILayer2D.new ()
+layer = MOAILayer.new ()
 layer:setViewport ( viewport )
 
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 MOAISim.openWindow ( "flash", fla.width, fla.height )
 
 flash = parseFlash ( fla )

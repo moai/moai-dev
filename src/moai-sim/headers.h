@@ -32,8 +32,8 @@
 #include <moai-sim/MOAICoroutine.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIDeck.h>
-#include <moai-sim/MOAIDeckProxyBase.h>
-//#include <moai-sim/MOAIDeckRemapper.h>
+#include <moai-sim/MOAIDeckProxy.h>
+#include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIDrawable.h>
 #include <moai-sim/MOAIDrawDeck.h>

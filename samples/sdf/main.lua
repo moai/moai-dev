@@ -35,7 +35,7 @@ makeLayerWithDeckItem = function ( deck, idx, pad, viewWidth, viewHeight )
 	viewport:setSize ( viewWidth, viewHeight )
 	viewport:setScale ( viewWidth, viewHeight )
 
-	local layer = MOAILayer2D.new ()
+	local layer = MOAILayer.new ()
 	layer:setViewport ( viewport )
 	
 	local prop = MOAIProp2D.new ()
@@ -97,7 +97,7 @@ main = function ()
 	local layer, prop = makeLayerWithDeckItem ( gfxQuad, 1, 0, WIN_WIDTH, WIN_HEIGHT )
 	layer:setClearColor ( 1, 1, 1, 1 )
 
-	MOAISim.pushRenderPass ( layer )
+	layer:pushRenderPass ()
 
 end
 

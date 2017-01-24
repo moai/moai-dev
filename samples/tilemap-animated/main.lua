@@ -6,8 +6,8 @@
 
 MOAISim.openWindow ( "test", 256, 256 )
 
-layer = MOAILayer2D.new ()
-MOAISim.pushRenderPass ( layer )
+layer = MOAILayer.new ()
+layer:pushRenderPass ()
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 256, 256 )
@@ -15,7 +15,7 @@ viewport:setScale ( 256, 256 )
 layer:setViewport ( viewport )
 
 tileDeck = MOAITileDeck2D.new ()
-tileDeck:setTexture ( "numbers.png" )
+tileDeck:setTexture ( '../resources/numbers.png' )
 tileDeck:setSize ( 8, 8 )
 tileDeck:setRect ( -0.5, 0.5, 0.5, -0.5 )
 
@@ -33,15 +33,15 @@ grid:setRow ( 7, 	0x00000031, 0x40000001, 0x00000033, 0x00000034, 0x00000035, 0x
 grid:setRow ( 8, 	0x40000001, 0x0000003a, 0x0000003b, 0x0000003c, 0x0000003d, 0x0000003e, 0x0000003f, 0x60000001 )
 
 remapper = MOAIDeckRemapper.new ()
+remapper:setDeck ( tileDeck )
 remapper:reserve ( 64 )
 
-prop = MOAIProp2D.new ()
-prop:setDeck ( tileDeck )
+prop = MOAIGraphicsGridProp.new ()
+prop:setDeck ( remapper )
 prop:setGrid ( grid )
-prop:setRemapper ( remapper )
-prop:setLoc ( -128, 128 )
-prop:setScl ( 1, -1 )
-layer:insertProp ( prop )
+prop:setLoc ( -128, 128, 0 )
+prop:setScl ( 1, -1, 1 )
+prop:setLayer ( layer )
 
 curve = MOAIAnimCurve.new ()
 

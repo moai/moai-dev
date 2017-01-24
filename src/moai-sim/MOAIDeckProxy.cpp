@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <moai-sim/MOAICollisionShape.h>
 #include <moai-sim/MOAIDeck.h>
-#include <moai-sim/MOAIDeckProxyBase.h>
+#include <moai-sim/MOAIDeckProxy.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIGrid.h>
@@ -23,19 +23,19 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIDeckProxyBase::_setDeck ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeckProxyBase, "U" )
+int MOAIDeckProxy::_setDeck ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIDeckProxy, "U" )
 	
 	self->mDeck.Set ( *self, state.GetLuaObject < MOAIDeck >( 2, true ));
 	return 0;
 }
 
 //================================================================//
-// MOAIDeckProxyBase
+// MOAIDeckProxy
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIDeckProxyBase::MOAIDeckProxyBase () {
+MOAIDeckProxy::MOAIDeckProxy () {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIDeck )
@@ -43,19 +43,19 @@ MOAIDeckProxyBase::MOAIDeckProxyBase () {
 }
 
 //----------------------------------------------------------------//
-MOAIDeckProxyBase::~MOAIDeckProxyBase () {
+MOAIDeckProxy::~MOAIDeckProxy () {
 
 	this->mDeck.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckProxyBase::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIDeckProxy::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIDeck::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckProxyBase::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIDeckProxy::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAIDeck::RegisterLuaFuncs ( state );
 
@@ -68,13 +68,13 @@ void MOAIDeckProxyBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckProxyBase::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIDeckProxy::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
 	MOAIDeck::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckProxyBase::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIDeckProxy::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
 	MOAIDeck::SerializeOut ( state, serializer );
 }
@@ -84,10 +84,45 @@ void MOAIDeckProxyBase::SerializeOut ( MOAILuaState& state, MOAISerializer& seri
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAICollisionShape* MOAIDeckProxyBase::MOAIDeck_GetCollisionShape ( u32 idx ) {
+ZLBounds MOAIDeckProxy::MOAIDeck_ComputeMaxBounds () {
+
+	return this->mDeck ? this->mDeck->MOAIDeck_ComputeMaxBounds () : ZLBounds::ZL_BOUNDS_EMPTY;
+}
+
+//----------------------------------------------------------------//
+void MOAIDeckProxy::MOAIDeck_Draw ( u32 idx ) {
 
 	if ( this->mDeck ) {
-		return this->mDeck->GetCollisionShape ( idx );
+		this->mDeck->MOAIDeck_Draw ( this->MOAIDeckProxy_Remap ( idx ));
 	}
-	return 0;
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAIDeckProxy::MOAIDeck_GetBounds ( u32 idx ) {
+
+	return this->mDeck ? this->mDeck->MOAIDeck_GetBounds ( this->MOAIDeckProxy_Remap ( idx )) : ZLBounds::ZL_BOUNDS_EMPTY;
+}
+
+//----------------------------------------------------------------//
+MOAICollisionShape* MOAIDeckProxy::MOAIDeck_GetCollisionShape ( u32 idx ) {
+
+	return this->mDeck ? this->mDeck->MOAIDeck_GetCollisionShape ( this->MOAIDeckProxy_Remap ( idx )) : 0;
+}
+
+//----------------------------------------------------------------//
+bool MOAIDeckProxy::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
+
+	return this->mDeck ? this->mDeck->MOAIDeck_Overlap ( this->MOAIDeckProxy_Remap ( idx ), vec, granularity, result ) : false;
+}
+
+//----------------------------------------------------------------//
+bool MOAIDeckProxy::MOAIDeck_Overlap ( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
+
+	return this->mDeck ? this->mDeck->MOAIDeck_Overlap ( this->MOAIDeckProxy_Remap ( idx ), vec, granularity, result ) : false;
+}
+
+//----------------------------------------------------------------//
+u32 MOAIDeckProxy::MOAIDeckProxy_Remap ( u32 idx ) {
+
+	return idx;
 }

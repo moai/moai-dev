@@ -43,7 +43,7 @@ viewport:setScale ( 320, 320 )
 layer = MOAILayer.new ()
 layer:setViewport ( viewport )
 
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 ----------------------------------------------------------------
 -- test shader on prop

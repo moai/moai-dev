@@ -4,7 +4,7 @@
 #ifndef	MOAISELECTIONMESH_H
 #define	MOAISELECTIONMESH_H
 
-#include <moai-sim/MOAIDeckProxyBase.h>
+#include <moai-sim/MOAIDeckProxy.h>
 #include <moai-sim/MOAIMesh.h>
 
 //================================================================//
@@ -27,7 +27,7 @@ private:
 //================================================================//
 // TODO: doxygen
 class MOAISelectionMesh :
-	public MOAIDeckProxyBase {
+	public MOAIDeckProxy {
 protected:
 
 	ZLLeanPool < MOAISelectionSpan, 16 >	mSpanPool;
