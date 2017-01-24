@@ -101,6 +101,8 @@ void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
 
 //----------------------------------------------------------------//
 MOAICollisionShape::MOAICollisionShape () {
+
+	this->mBounds = ZLBounds::EMPTY;
 }
 
 //----------------------------------------------------------------//

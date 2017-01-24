@@ -12,7 +12,7 @@ viewport:setScale ( 320, 480 )
 
 layer = MOAILayer.new ()
 layer:setViewport ( viewport )
-layer:pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 tileDeck = MOAITileDeck2D.new ()
 tileDeck:setTexture ( '../resources/test.png' )

@@ -90,42 +90,6 @@ MOAICollisionShape& MOAICollisionDeck::AffirmShape ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionDeck::DrawIndex ( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale ) {
-
-//	u32 size = ( u32 )this->mQuads.Size ();
-//	if ( size ) {
-//
-//		idx = idx - 1;
-//		u32 itemIdx = idx % size;
-//
-//		if ( !this->LoadGfxState ( materials, this->mMaterialIDs [ itemIdx ], idx, MOAIShaderMgr::DECK2D_SHADER )) return;
-//
-//		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-//		MOAIQuadBrush::BindVertexFormat ();
-//		
-//		gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX ));
-//		gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_TO_MODEL_MTX ));
-//		
-//		this->mQuads [ itemIdx ].Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY  );
-//	}
-}
-
-//----------------------------------------------------------------//
-bool MOAICollisionDeck::Inside ( u32 idx, MOAIMaterialBatch* materials, u32 granularity, ZLVec3D vec, float pad ) {
-	UNUSED ( pad );
-
-//	u32 size = ( u32 )this->mQuads.Size ();
-//	if ( size ) {
-//		idx = ( idx - 1 ) % size;
-//		const MOAIQuadBrush& quadBrush = this->mQuads [ idx ];
-//		return this->TestHit ( materials, idx, granularity, quadBrush.mModelQuad, quadBrush.mUVQuad, vec.mX, vec.mY );
-//	}
-//	return false;
-
-	return false;
-}
-
-//----------------------------------------------------------------//
 MOAICollisionDeck::MOAICollisionDeck () {
 
 	RTTI_BEGIN
@@ -194,7 +158,44 @@ void MOAICollisionDeck::SetQuad ( u32 idx, const ZLQuad& quad ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+ZLBounds MOAICollisionDeck::MOAIDeck_ComputeMaxBounds () {
+
+	return this->MOAIDeck::GetBounds ( 0 );
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionDeck::MOAIDeck_Draw ( u32 idx ) {
+	UNUSED ( idx );
+	
+//	u32 size = ( u32 )this->mQuads.Size ();
+//	if ( size ) {
+//
+//		idx = idx - 1;
+//		u32 itemIdx = idx % size;
+//
+//		if ( !this->LoadGfxState ( materials, this->mMaterialIDs [ itemIdx ], idx, MOAIShaderMgr::DECK2D_SHADER )) return;
+//
+//		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+//		MOAIQuadBrush::BindVertexFormat ();
+//		
+//		gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX ));
+//		gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_TO_MODEL_MTX ));
+//		
+//		this->mQuads [ itemIdx ].Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY  );
+//	}
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAICollisionDeck::MOAIDeck_GetBounds ( u32 idx ) {
+	
+	assert ( idx < this->mShapes.Size ());
+
+	return this->mShapes [ idx ]->GetBounds ();
+}
+
+//----------------------------------------------------------------//
 MOAICollisionShape* MOAICollisionDeck::MOAIDeck_GetCollisionShape ( u32 idx ) {
+	UNUSED ( idx );
 
 	if ( idx < this->mShapes.Size ()) {
 		return this->mShapes [ idx ];
@@ -203,9 +204,30 @@ MOAICollisionShape* MOAICollisionDeck::MOAIDeck_GetCollisionShape ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-ZLBox MOAICollisionDeck::GetItemBounds ( u32 idx ) {
+bool MOAICollisionDeck::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
+	UNUSED ( idx );
+	UNUSED ( vec );
+	UNUSED ( granularity );
+	UNUSED ( result );
 
-	assert ( idx < this->mShapes.Size ());
+	//	u32 size = ( u32 )this->mQuads.Size ();
+	//	if ( size ) {
+	//		idx = ( idx - 1 ) % size;
+	//		const MOAIQuadBrush& quadBrush = this->mQuads [ idx ];
+	//		return this->TestHit ( materials, idx, granularity, quadBrush.mModelQuad, quadBrush.mUVQuad, vec.mX, vec.mY );
+	//	}
+	//	return false;
 
-	return this->mShapes [ idx ]->GetBounds ();
+	return false;
+}
+
+//----------------------------------------------------------------//
+bool MOAICollisionDeck::MOAIDeck_Overlap ( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
+	UNUSED ( idx );
+	UNUSED ( vec );
+	UNUSED ( granularity );
+	UNUSED ( result );
+
+	//return this->TestHit ( materials, idx, granularity, this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
+	return false;
 }

@@ -4,12 +4,11 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
-
-MOAIDebugLines.setStyle ( MOAIDebugLines.COLLISION_ACTIVE_PROP_BOUNDS, 2, 0, 0, 1 )
-MOAIDebugLines.setStyle ( MOAIDebugLines.COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS, 2, 1, 1, 1 )
-MOAIDebugLines.setStyle ( MOAIDebugLines.COLLISION_ACTIVE_TOUCHED_PROP_BOUNDS, 2, 1, 0, 0 )
-MOAIDebugLines.setStyle ( MOAIDebugLines.COLLISION_OVERLAP_PROP_BOUNDS, 2, 0, 1, 0 )
+MOAIDebugLinesMgr.setStyle ( MOAICollisionProp.DEBUG_DRAW_COLLISION_ACTIVE_PROP_BOUNDS, 2, 0, 0, 1 )
+MOAIDebugLinesMgr.setStyle ( MOAICollisionProp.DEBUG_DRAW_COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS, 2, 1, 1, 1 )
+MOAIDebugLinesMgr.setStyle ( MOAICollisionProp.DEBUG_DRAW_COLLISION_ACTIVE_TOUCHED_PROP_BOUNDS, 2, 1, 0, 0 )
+MOAIDebugLinesMgr.setStyle ( MOAICollisionProp.DEBUG_DRAW_COLLISION_OVERLAP_PROP_BOUNDS, 2, 0, 1, 0 )
+MOAIDebugLinesMgr.setStyle ( MOAICollisionProp.DEBUG_DRAW_COLLISION_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
 
 MOAISim.openWindow ( "test", 320, 480 )
 
@@ -41,13 +40,12 @@ layer = MOAILayer.new ()
 layer:setPartition ( partition )
 layer:setViewport ( viewport )
 layer:setOverlayTable ({ world })
+layer:pushRenderPass ()
 
-MOAISim.pushRenderPass ( layer )
-
-gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( '../resources/moai.png' )
-gfxQuad:setRect ( -64, -64, 64, 64 )
-gfxQuad:setUVRect ( 0, 0, 1, 1 )
+spriteDeck = MOAISpriteDeck2D.new ()
+spriteDeck:setTexture ( '../resources/moai.png' )
+spriteDeck:setRect ( -64, -64, 64, 64 )
+spriteDeck:setUVRect ( 0, 0, 1, 1 )
 
 --font = MOAIFont.new ()
 --font:loadFromTTF ( '../resources/arial-rounded.TTF' )
@@ -81,7 +79,7 @@ end
 makePropWithColl = function ( x, y, group )
 
 	local prop = MOAIGraphicsProp.new ()
-	prop:setDeck ( gfxQuad )
+	prop:setDeck ( spriteDeck )
 	return ready ( prop, x, y, group )
 end
 

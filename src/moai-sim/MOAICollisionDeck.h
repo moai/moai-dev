@@ -28,17 +28,18 @@ private:
 	MOAICollisionShape&		AffirmShape						( u32 idx );
 	
 	//----------------------------------------------------------------//
+	ZLBounds				MOAIDeck_ComputeMaxBounds		();
+	void					MOAIDeck_Draw					( u32 idx );
+	ZLBounds				MOAIDeck_GetBounds				( u32 idx );
 	MOAICollisionShape*		MOAIDeck_GetCollisionShape		( u32 idx );
-	
-	ZLBox					GetItemBounds					( u32 idx );
+	bool					MOAIDeck_Overlap				( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
+	bool					MOAIDeck_Overlap				( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
 	
 public:
 	
 	DECL_LUA_FACTORY ( MOAICollisionDeck )
 	
 	//----------------------------------------------------------------//
-	void			DrawIndex				( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale );
-	bool			Inside					( u32 idx, MOAIMaterialBatch* materials, u32 granularity, ZLVec3D vec, float pad );
 					MOAICollisionDeck		();
 					~MOAICollisionDeck		();
 	void			RegisterLuaClass		( MOAILuaState& state );

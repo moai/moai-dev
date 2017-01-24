@@ -12,7 +12,7 @@ viewport:setScale ( 320, 480 )
 
 layer = MOAILayer.new ()
 layer:setViewport ( viewport )
-layer:pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 stretchPatch = MOAIStretchPatch2D.new ()
 stretchPatch:setTexture ( '../resources/moai.png' )

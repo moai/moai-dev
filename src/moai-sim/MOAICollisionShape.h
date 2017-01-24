@@ -15,7 +15,7 @@ class MOAICollisionShape :
 	public ZLRefCountedObject {
 private:
 
-	ZLBox			mBounds;
+	ZLBounds		mBounds;
 	
 	ZLLeanArray < MOAIOverlapShape* >	mShapes;
 
@@ -24,7 +24,7 @@ private:
 
 public:
 	
-	GET ( ZLBox&, Bounds, mBounds )
+	GET ( ZLBounds&, Bounds, mBounds )
 	
 	//----------------------------------------------------------------//
 	void			Clear					();
