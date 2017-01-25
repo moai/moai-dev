@@ -68,6 +68,7 @@
 #include <moai-sim/MOAIKeyCodeEnum.h>
 #include <moai-sim/MOAIKeyboardSensor.h>
 #include <moai-sim/MOAILayer.h>
+#include <moai-sim/MOAILayerBase.h>
 #include <moai-sim/MOAILayoutFrame.h>
 #include <moai-sim/MOAILocationSensor.h>
 #include <moai-sim/MOAIMaterial.h>
@@ -138,6 +139,7 @@
 #include <moai-sim/MOAISpriteDeck2D.h>
 #include <moai-sim/MOAIStretchPatch2D.h>
 #include <moai-sim/MOAISurfaceDeck2D.h>
+#include <moai-sim/MOAITableLayer.h>
 #include <moai-sim/MOAITexture.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITileDeck2D.h>

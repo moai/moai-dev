@@ -9,18 +9,18 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDrawable::Draw ( MOAILuaMemberRef& ref ) {
+void MOAIDrawable::Draw ( MOAILuaMemberRef& ref, bool debug ) {
 
 	if ( ref ) {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		state.Push ( ref );
-		MOAIDrawable::Draw ( state, -1 );
+		MOAIDrawable::Draw ( state, -1, debug );
 		state.Pop ( 1 );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawable::Draw ( MOAILuaState& state, int idx ) {
+void MOAIDrawable::Draw ( MOAILuaState& state, int idx, bool debug ) {
 
 	idx = state.AbsIndex ( idx );
 	int valType = lua_type ( state, idx );
@@ -30,8 +30,14 @@ void MOAIDrawable::Draw ( MOAILuaState& state, int idx ) {
 		case LUA_TUSERDATA: {
 		
 			MOAIDrawable* drawable = state.GetLuaObject < MOAIDrawable >( idx, false );
+			
 			if ( drawable ) {
-				drawable->Draw ();
+				if ( debug ) {
+					drawable->DrawDebug ();
+				}
+				else {
+					drawable->Draw ();
+				}
 			}
 			break;
 		}
@@ -41,7 +47,7 @@ void MOAIDrawable::Draw ( MOAILuaState& state, int idx ) {
 			size_t tableSize = state.GetTableSize ( idx );
 			for ( size_t i = 0; i < tableSize; ++i ) {
 				lua_rawgeti ( state, idx, i + 1 );
-				MOAIDrawable::Draw ( state, -1 );
+				MOAIDrawable::Draw ( state, -1, debug );
 				lua_pop ( state, 1 );
 			}
 			break;

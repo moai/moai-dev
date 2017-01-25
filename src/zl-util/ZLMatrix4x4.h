@@ -57,6 +57,15 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	template < typename PARAM_TYPE >
+	void Append	( const ZLMetaAffine3D < PARAM_TYPE >& mtx ) {
+
+		ZLMetaMatrix4x4 < TYPE > temp;
+		temp.Multiply (	*this, ZLMetaMatrix4x4 < TYPE >( mtx ));
+		this->Init ( temp );
+	}
+
+	//----------------------------------------------------------------//
 	void Append	( const ZLMetaMatrix4x4 < TYPE >& mtx ) {
 
 		ZLMetaMatrix4x4 < TYPE > temp;
@@ -464,6 +473,15 @@ public:
 		m [ C3_R1 ] = 0;
 		m [ C3_R2 ] = -( zf + zn ) / ( zf - zn );
 		m [ C3_R3 ] = 1;
+	}
+
+	//----------------------------------------------------------------//
+	template < typename PARAM_TYPE >
+	void Prepend	( const ZLMetaAffine3D < PARAM_TYPE >& mtx ) {
+
+		ZLMetaMatrix4x4 < TYPE > temp;
+		temp.Multiply (	ZLMetaMatrix4x4 < TYPE >( mtx ), *this );
+		this->Init ( temp );
 	}
 
 	//----------------------------------------------------------------//

@@ -1,20 +1,24 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIRENDERPASS_H
-#define	MOAIRENDERPASS_H
+#ifndef	MOAITABLELAYER_H
+#define	MOAITABLELAYER_H
 
+#include <moai-sim/MOAIFrameBuffer.h>
+#include <moai-sim/MOAIGraphicsProp.h>
+#include <moai-sim/MOAILayerBase.h>
+#include <moai-sim/MOAIPartitionHolder.h>
 #include <moai-sim/MOAIRenderPassBase.h>
+#include <moai-sim/MOAIViewport.h>
 
-class MOAIColor;
-class MOAIFrameBuffer;
-class MOAIPartition;
+class MOAICamera;
 
 //================================================================//
-// MOAIRenderPass
+// MOAITableLayer
 //================================================================//
-class MOAIRenderPass :
-	public virtual MOAIRenderPassBase {
+// TODO: doxygen
+class MOAITableLayer :
+	public virtual MOAILayerBase {
 private:
 
 	MOAILuaMemberRef	mRenderTable;
@@ -24,17 +28,19 @@ private:
 	static int			_setRenderTable			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				MOAIDrawable_Draw		( int subPrimID );
+	void				MOAILayerBase_Draw		( int subPrimID );
 
 public:
-
-	DECL_LUA_FACTORY ( MOAIRenderPass )
-
+	
+	DECL_LUA_FACTORY ( MOAITableLayer )
+	
 	//----------------------------------------------------------------//
-						MOAIRenderPass			();
-						~MOAIRenderPass			();
+						MOAITableLayer		();
+						~MOAITableLayer		();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
+	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

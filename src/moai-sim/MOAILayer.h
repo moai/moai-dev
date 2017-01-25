@@ -6,13 +6,12 @@
 
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIGraphicsProp.h>
+#include <moai-sim/MOAILayerBase.h>
 #include <moai-sim/MOAIPartitionHolder.h>
 #include <moai-sim/MOAIRenderPassBase.h>
 #include <moai-sim/MOAIViewport.h>
 
-class MOAIBox2DWorld;
 class MOAICamera;
-class MOAICpSpace;
 
 //================================================================//
 // MOAILayer
@@ -34,20 +33,10 @@ class MOAICpSpace;
 	@const	SORT_VECTOR_DESCENDING
 */
 class MOAILayer :
-	public virtual MOAIGraphicsProp,
 	public virtual MOAIPartitionHolder,
-	public virtual MOAIRenderPassBase {
+	public virtual MOAILayerBase {
 private:
 
-	MOAILuaSharedPtr < MOAICamera >			mCamera;
-	MOAILuaSharedPtr < MOAICamera >			mDebugCamera;
-	MOAILuaSharedPtr < MOAIViewport >		mViewport;
-
-	MOAILuaMemberRef		mUnderlayTable;
-	MOAILuaMemberRef		mOverlayTable;
-
-	ZLVec3D		mParallax;
-	bool		mShowDebugLines;
 	u32			mSortMode;
 	bool		mSortInViewSpace;
 
@@ -57,51 +46,32 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_draw					( lua_State* L );
-	static int		_getCamera				( lua_State* L );
-	static int		_getFitting				( lua_State* L );
-	static int		_getFitting3D			( lua_State* L );
 	static int		_getPropViewList		( lua_State* L ); // TODO: update and restore this
 	static int		_getSortMode			( lua_State* L );
 	static int		_getSortScale			( lua_State* L );
-	static int		_getViewport			( lua_State* L );
-	static int		_setDebugCamera			( lua_State* L );
-	static int		_setCamera				( lua_State* L );
-	static int		_setOverlayTable		( lua_State* L );
-	static int		_setParallax			( lua_State* L );
 	static int		_setPartitionCull2D		( lua_State* L );
 	static int		_setSortMode			( lua_State* L );
 	static int		_setSortScale			( lua_State* L );
-	static int		_setUnderlayTable		( lua_State* L );
-	static int		_setViewport			( lua_State* L );
-	static int		_showDebugLines			( lua_State* L );
-	static int		_wndToWorld				( lua_State* L );
-	static int		_wndToWorldRay			( lua_State* L );
-	static int		_worldToWnd				( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			AffirmPartition			();
 	void			DrawPartition			( MOAIPartition& partition );
 	void			DrawProps				( MOAIPartitionResultBuffer& buffer );
 	void			DrawPropsDebug			( MOAIPartitionResultBuffer& buffer);
 
 	//----------------------------------------------------------------//
-	void			MOAIDrawable_Draw						( int subPrimID );
-	ZLBounds		MOAIPartitionHull_GetModelBounds		();
+	void			MOAILayerBase_Draw		( int subPrimID );
 
 public:
 		
 	DECL_LUA_FACTORY ( MOAILayer )
 	
 	//----------------------------------------------------------------//
-	float				GetFitting				( ZLRect& worldRect, float hPad, float vPad );
-	ZLMatrix4x4			GetWndToWorldMtx		() const;
-	ZLMatrix4x4			GetWorldToWndMtx		() const;
-						MOAILayer				();
-						~MOAILayer				();
-	void				RegisterLuaClass		( MOAILuaState& state );
-	void				RegisterLuaFuncs		( MOAILuaState& state );
-	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
-	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
+					MOAILayer				();
+					~MOAILayer				();
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

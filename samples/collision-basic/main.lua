@@ -39,7 +39,7 @@ layer:pushRenderPass ()
 
 debugLayer = MOAILayer.new ()
 debugLayer:setViewport ( viewport )
-debugLayer:setPartition ( world )
+debugLayer:usePartition ( world )
 debugLayer:pushRenderPass ()
 
 spriteDeck = MOAISpriteDeck2D.new ()

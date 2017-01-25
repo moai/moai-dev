@@ -31,7 +31,7 @@ class MOAIPartitionHull;
 */
 class MOAIPartitionHull :
 	public virtual MOAITransform {
-private:
+protected:
 
 	friend class MOAIPartition;
 	friend class MOAIPartitionCell;
@@ -51,7 +51,7 @@ private:
 	s32							mPriority;
 	
 	ZLBounds					mWorldBounds;
-	
+
 	//----------------------------------------------------------------//
 	static int			_getBounds					( lua_State* L );
 	static int			_getDeck					( lua_State* L );
