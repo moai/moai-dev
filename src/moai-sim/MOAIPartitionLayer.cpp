@@ -323,9 +323,13 @@ void MOAIPartitionLayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "draw",					_draw },
+		{ "getLayerPartition",		MOAIPartitionHolder::_getPartition },
+		{ "getPartition",			MOAILayerBase::_getPartition },
 		{ "getPropViewList",		_getPropViewList },
 		{ "getSortMode",			_getSortMode },
 		{ "getSortScale",			_getSortScale },
+		{ "setLayerPartition",		MOAIPartitionHolder::_setPartition },
+		{ "setPartition",			MOAILayerBase::_setPartition },
 		{ "setPartitionCull2D",		_setPartitionCull2D },
 		{ "setSortMode",			_setSortMode },
 		{ "setSortScale",			_setSortScale },

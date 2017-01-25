@@ -18,7 +18,8 @@ protected:
 
 	//----------------------------------------------------------------//
 	static int			_clear						( lua_State* L );
-	static int			_usePartition				( lua_State* L );
+	static int			_getPartition				( lua_State* L );
+	static int			_setPartition				( lua_State* L );
 
 public:
 	
