@@ -212,7 +212,7 @@ end
 --============================================================--
 
 MOAIHashWriter		= MOAIHashWriterCrypto or MOAIHashWriter
-
+MOAILayer			= MOAIPartitionLayer
 MOAIProp			= MOAIGraphicsProp
 
 MOAIStreamReader	= MOAIStreamAdapter

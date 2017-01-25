@@ -27,7 +27,7 @@
 /**	@lua	getRenderTable
 	@text	Get the table of renderables to be drawn.
 	
-	@in		MOAILayer self
+	@in		MOAITableLayer self
 	@out	table renderTable
 */
 int MOAITableLayer::_getRenderTable ( lua_State* L ) {
@@ -41,7 +41,7 @@ int MOAITableLayer::_getRenderTable ( lua_State* L ) {
 /**	@lua	setTable
 	@text	Set or clear the table of renderables to be drawn.
 	
-	@in		MOAILayer self
+	@in		MOAITableLayer self
 	@opt	table renderTable
 	@out	nil
 */

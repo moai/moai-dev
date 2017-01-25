@@ -67,7 +67,6 @@
 #include <moai-sim/MOAIKeyCode.h>
 #include <moai-sim/MOAIKeyCodeEnum.h>
 #include <moai-sim/MOAIKeyboardSensor.h>
-#include <moai-sim/MOAILayer.h>
 #include <moai-sim/MOAILayerBase.h>
 #include <moai-sim/MOAILayoutFrame.h>
 #include <moai-sim/MOAILocationSensor.h>
@@ -104,6 +103,7 @@
 #include <moai-sim/MOAIPartitionCell.h>
 #include <moai-sim/MOAIPartitionHolder.h>
 #include <moai-sim/MOAIPartitionHull.h>
+#include <moai-sim/MOAIPartitionLayer.h>
 #include <moai-sim/MOAIPartitionLevel.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIPartitionResultMgr.h>

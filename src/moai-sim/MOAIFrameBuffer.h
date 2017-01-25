@@ -13,9 +13,9 @@ class MOAIImage;
 /**	@lua	MOAIFrameBuffer
 	@text	MOAIFrameBuffer is responsible for drawing a list of MOAIRenderable
 			objects. MOAIRenderable is the base class for any object that can be
-			drawn. This includes MOAIProp and MOAILayer. To use MOAIFrameBuffer
+			drawn. This includes MOAIProp and MOAIPartitionLayer. To use MOAIFrameBuffer
 			pass a table of MOAIRenderable objects to setRenderTable ().
-			The table will usually be a stack of MOAILayer objects. The contents of
+			The table will usually be a stack of MOAIPartitionLayer objects. The contents of
 			the table will be rendered the next time a frame is drawn. Note that the
 			table must be an array starting with index 1. Objects will be rendered
 			counting from the base index until 'nil' is encountered. The render

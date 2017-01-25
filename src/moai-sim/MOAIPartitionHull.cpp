@@ -7,7 +7,6 @@
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGrid.h>
-#include <moai-sim/MOAILayer.h>
 #include <moai-sim/MOAILayoutFrame.h>
 #include <moai-sim/MOAIRenderMgr.h>
 #include <moai-sim/MOAIPartition.h>
@@ -84,7 +83,7 @@ int MOAIPartitionHull::_getDims ( lua_State* L ) {
 /**	@lua	getPartition
 	@text	Returns the partition prop is currently held in.
 	
-	@in		MOAILayer self
+	@in		MOAIPartitionHull self
 	@out	MOAIPartition partition
 */
 int	MOAIPartitionHull::_getPartition ( lua_State* L ) {

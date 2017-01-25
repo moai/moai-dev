@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAILAYER_H
-#define	MOAILAYER_H
+#ifndef	MOAIPARTITIONLAYER_H
+#define	MOAIPARTITIONLAYER_H
 
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIGraphicsProp.h>
@@ -14,9 +14,9 @@
 class MOAICamera;
 
 //================================================================//
-// MOAILayer
+// MOAIPartitionLayer
 //================================================================//
-/**	@lua	MOAILayer
+/**	@lua	MOAIPartitionLayer
 	@text	Scene controls class.
 	
 	@const	SORT_NONE
@@ -32,7 +32,7 @@ class MOAICamera;
 	@const	SORT_VECTOR_ASCENDING
 	@const	SORT_VECTOR_DESCENDING
 */
-class MOAILayer :
+class MOAIPartitionLayer :
 	public virtual MOAIPartitionHolder,
 	public virtual MOAILayerBase {
 private:
@@ -63,11 +63,11 @@ private:
 
 public:
 		
-	DECL_LUA_FACTORY ( MOAILayer )
+	DECL_LUA_FACTORY ( MOAIPartitionLayer )
 	
 	//----------------------------------------------------------------//
-					MOAILayer				();
-					~MOAILayer				();
+					MOAIPartitionLayer				();
+					~MOAIPartitionLayer				();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
