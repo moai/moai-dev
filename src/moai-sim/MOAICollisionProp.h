@@ -62,8 +62,9 @@ private:
 //================================================================//
 // TODO: doxygen
 class MOAICollisionProp :
-	public MOAIPartitionHull,
-	public MOAIIndexedPropBase {
+	public virtual MOAIPartitionHull,
+	public virtual MOAIDrawable,
+	public virtual MOAIIndexedPropBase {
 private:
 	
 	friend class MOAICollisionWorld;
@@ -74,9 +75,6 @@ private:
 	MOAIPropOverlapLink*				mOverlapLinks;		// singly-linked list of links to overlaps with this prop (if caching)
 	
 	ZLLeanLink < MOAICollisionProp* >	mActiveListLink;	// link in collision world's list of props with overlaps or in need of update
-	
-	bool								mInDrawList;
-	MOAICollisionProp*					mNextInDrawList;
 	
 	bool								mStayActive;
 	u32									mTouched;
@@ -94,6 +92,7 @@ private:
 	bool					IsActive				();
 	
 	//----------------------------------------------------------------//
+	void					MOAIDrawable_DrawDebug						( int subPrimID );
 	bool					MOAINode_ApplyAttrOp						( u32 attrID, MOAIAttribute& attr, u32 op );
 	void					MOAINode_Update								();
 	void					MOAIPartitionHull_AddToSortBuffer			( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
@@ -127,7 +126,6 @@ public:
 	static const u32 DEFAULT_OVERLAP_FLAGS			= 0;
 
 	//----------------------------------------------------------------//
-	void					DrawDebug				();
 	MOAICollisionShape*		GetCollisionShape		();
 							MOAICollisionProp		();
 	virtual					~MOAICollisionProp		();

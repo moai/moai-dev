@@ -35,8 +35,12 @@ world:start ()
 
 layer = MOAILayer.new ()
 layer:setViewport ( viewport )
-layer:setOverlayTable ({ world })
 layer:pushRenderPass ()
+
+debugLayer = MOAILayer.new ()
+debugLayer:setViewport ( viewport )
+debugLayer:setPartition ( world )
+debugLayer:pushRenderPass ()
 
 spriteDeck = MOAISpriteDeck2D.new ()
 spriteDeck:setTexture ( '../resources/moai.png' )

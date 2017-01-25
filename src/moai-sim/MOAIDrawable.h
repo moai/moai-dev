@@ -14,8 +14,8 @@ class MOAIDrawable :
 private:
 
 	//----------------------------------------------------------------//
-	virtual void		MOAIDrawable_Draw				( int subPrimID ) = 0;
-	virtual void		MOAIDrawable_DrawDebug			( int subPrimID ) {};
+	virtual void		MOAIDrawable_Draw				( int subPrimID );
+	virtual void		MOAIDrawable_DrawDebug			( int subPrimID );
 
 public:
 

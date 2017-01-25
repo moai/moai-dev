@@ -54,3 +54,17 @@ void MOAIDrawable::Draw ( MOAILuaState& state, int idx ) {
 			break;
 	}
 }
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIDrawable::MOAIDrawable_Draw ( int subPrimID ) {
+	UNUSED ( subPrimID );
+}
+
+//----------------------------------------------------------------//
+void MOAIDrawable::MOAIDrawable_DrawDebug ( int subPrimID ) {
+	UNUSED ( subPrimID );
+}

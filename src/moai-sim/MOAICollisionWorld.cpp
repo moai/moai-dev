@@ -396,61 +396,61 @@ void MOAICollisionWorld::MOAIAction_Update ( double step ) {
 void MOAICollisionWorld::MOAIDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
-	//MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
-	MOAIDraw& draw = MOAIDraw::Get ();
-	UNUSED ( draw ); // mystery warning in vs2008
-
-	draw.Bind ();
-
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-
-	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX );
-	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX ));
-
-	MOAICollisionProp* drawList = 0;
-
-	OverlapListIt overlapIt = this->mOverlapList.Head ();
-	for ( ; overlapIt; overlapIt = overlapIt->Next ()) {
-		MOAIPropOverlap& overlap = *overlapIt->Data ();
-	
-		MOAICollisionProp& prop0 = *overlap.mLeft.mOther;
-		MOAICollisionProp& prop1 = *overlap.mRight.mOther;
-	
-		if ( !prop0.mInDrawList ) {
-			prop0.mNextInDrawList = drawList;
-			prop0.mInDrawList = true;
-			drawList = &prop0;
-		}
-		
-		if ( !prop1.mInDrawList ) {
-			prop1.mNextInDrawList = drawList;
-			prop1.mInDrawList = true;
-			drawList = &prop1;
-		}
-	}
-	
-	ActiveListIt activeIt = this->mActiveList.Head ();
-	for ( ; activeIt; activeIt = activeIt->Next ()) {
-		MOAICollisionProp& prop = *activeIt->Data ();
-		
-		if ( !prop.mInDrawList ) {
-			prop.mInDrawList = true;
-			prop.mNextInDrawList = drawList;
-			drawList = &prop;
-		}
-	}
-	
-	MOAICollisionProp* cursor = drawList;
-	while ( cursor ) {
-	
-		MOAICollisionProp& prop = *cursor;
-		cursor = cursor->mNextInDrawList;
-		
-		prop.DrawDebug ();
-		
-		prop.mInDrawList = false;
-		prop.mNextInDrawList = 0;
-	}
+//	//MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
+//	MOAIDraw& draw = MOAIDraw::Get ();
+//	UNUSED ( draw ); // mystery warning in vs2008
+//
+//	draw.Bind ();
+//
+//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+//
+//	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX );
+//	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX ));
+//
+//	MOAICollisionProp* drawList = 0;
+//
+//	OverlapListIt overlapIt = this->mOverlapList.Head ();
+//	for ( ; overlapIt; overlapIt = overlapIt->Next ()) {
+//		MOAIPropOverlap& overlap = *overlapIt->Data ();
+//	
+//		MOAICollisionProp& prop0 = *overlap.mLeft.mOther;
+//		MOAICollisionProp& prop1 = *overlap.mRight.mOther;
+//	
+//		if ( !prop0.mInDrawList ) {
+//			prop0.mNextInDrawList = drawList;
+//			prop0.mInDrawList = true;
+//			drawList = &prop0;
+//		}
+//		
+//		if ( !prop1.mInDrawList ) {
+//			prop1.mNextInDrawList = drawList;
+//			prop1.mInDrawList = true;
+//			drawList = &prop1;
+//		}
+//	}
+//	
+//	ActiveListIt activeIt = this->mActiveList.Head ();
+//	for ( ; activeIt; activeIt = activeIt->Next ()) {
+//		MOAICollisionProp& prop = *activeIt->Data ();
+//		
+//		if ( !prop.mInDrawList ) {
+//			prop.mInDrawList = true;
+//			prop.mNextInDrawList = drawList;
+//			drawList = &prop;
+//		}
+//	}
+//	
+//	MOAICollisionProp* cursor = drawList;
+//	while ( cursor ) {
+//	
+//		MOAICollisionProp& prop = *cursor;
+//		cursor = cursor->mNextInDrawList;
+//		
+//		prop.DrawDebug ();
+//		
+//		prop.mInDrawList = false;
+//		prop.mNextInDrawList = 0;
+//	}
 }
 
 //----------------------------------------------------------------//

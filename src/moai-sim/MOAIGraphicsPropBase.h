@@ -157,7 +157,6 @@ public:
 	static const u32 DEFAULT_FLAGS = FLAGS_LOCAL_VISIBLE | FLAGS_VISIBLE;;
 
 	//----------------------------------------------------------------//
-	MOAIMaterialBatch*		AffirmMaterialBatch			();
 	bool					IsVisible					();
 							MOAIGraphicsPropBase		();
 	virtual					~MOAIGraphicsPropBase		();
