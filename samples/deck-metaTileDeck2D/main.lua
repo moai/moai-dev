@@ -45,6 +45,6 @@ gridDeck:setDeck ( tileDeck )
 prop = MOAIGraphicsProp.new ()
 prop:setDeck ( gridDeck )
 prop:setScl ( 1, -1, 1 )
-prop:setLayer ( layer )
+prop:setPartition ( layer )
 
 prop:moveRot ( 0, 0, 360, 3 )

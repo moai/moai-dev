@@ -43,4 +43,4 @@ spriteDeck:setSpriteList ( 1, 1, 4 )
 
 prop = MOAIGraphicsProp.new ()
 prop:setDeck ( spriteDeck )
-prop:setLayer ( layer )
+prop:setPartition ( layer )

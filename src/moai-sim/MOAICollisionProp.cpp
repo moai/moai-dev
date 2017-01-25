@@ -263,7 +263,7 @@ void MOAICollisionProp::SerializeOut ( MOAILuaState& state, MOAISerializer& seri
 }
 
 //================================================================//
-// MOAICollisionProp virtual
+// ::implementation::
 //================================================================//
 
 //----------------------------------------------------------------//

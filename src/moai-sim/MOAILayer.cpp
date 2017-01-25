@@ -9,6 +9,7 @@
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAILayer.h>
 #include <moai-sim/MOAIMaterialStackMgr.h>
+#include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIPartitionResultMgr.h>
 #include <moai-sim/MOAIRenderMgr.h>
@@ -21,22 +22,6 @@
 //================================================================//
 // local
 //================================================================//
-
-//----------------------------------------------------------------//
-/**	@lua	clear
-	@text	Remove all props from the layer's partition.
-	
-	@in		MOAILayer self
-	@out	nil
-*/
-int MOAILayer::_clear ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer, "U" )
-
-	if ( self->mPartition ) {
-		self->mPartition->Clear ();
-	}
-	return 0;
-}
 
 //----------------------------------------------------------------//
 // TODO: doxygen
@@ -184,21 +169,6 @@ int MOAILayer::_getFitting3D ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	getPartition
-	@text	Returns the partition currently attached to this layer.
-	
-	@in		MOAILayer self
-	@out	MOAIPartition partition
-*/
-int	MOAILayer::_getPartition ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer, "U" )
-
-	self->AffirmPartition ();
-	self->mPartition->PushLuaUserdata ( state );
-	return 1;
-}
-
-//----------------------------------------------------------------//
 /**	@lua	getPropViewList
 	@text	Return a list of props gathered and sorted by layer.
 	
@@ -214,9 +184,11 @@ int	MOAILayer::_getPartition ( lua_State* L ) {
 int	MOAILayer::_getPropViewList ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "U" )
 	
-	if ( self->mPartition && self->mViewport ) {
+	MOAIPartition* partition = self->MOAIPartitionHolder::mPartition;
+	
+	if ( partition && self->mViewport ) {
 		
-		u32 interfaceMask = self->mPartition->GetInterfaceMask < MOAIGraphicsProp >();
+		u32 interfaceMask = partition->GetInterfaceMask < MOAIGraphicsProp >();
 		if ( !interfaceMask ) return 0;
 		
 		float sortScale [ 4 ];
@@ -242,10 +214,10 @@ int	MOAILayer::_getPropViewList ( lua_State* L ) {
 		u32 totalResults = 0;
 		
 		if ( self->mPartitionCull2D ) {
-			totalResults = self->mPartition->GatherHulls ( buffer, 0, viewVolume.mAABB, interfaceMask );
+			totalResults = partition->GatherHulls ( buffer, 0, viewVolume.mAABB, interfaceMask );
 		}
 		else {
-			totalResults = self->mPartition->GatherHulls ( buffer, 0, viewVolume, interfaceMask );
+			totalResults = partition->GatherHulls ( buffer, 0, viewVolume, interfaceMask );
 		}
 		
 		if ( !totalResults ) return 0;
@@ -317,51 +289,6 @@ int MOAILayer::_getViewport ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	insertProp
-	@text	Adds a hull to the layer's partition.
-	
-	@in		MOAILayer self
-	@in		MOAIPartitionHull hull
-	@out	nil
-*/
-int	MOAILayer::_insertProp ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer, "UU" )
-
-	MOAIPartitionHull* hull = state.GetLuaObject < MOAIPartitionHull >( 2, true );
-	if ( !hull ) return 0;
-	if ( hull == self ) return 0;
-
-	self->AffirmPartition ();
-	self->mPartition->InsertHull ( *hull );
-	hull->ScheduleUpdate ();
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	removeProp
-	@text	Removes a hull from the layer's partition.
-	
-	@in		MOAILayer self
-	@in		MOAIPartitionHull hull
-	@out	nil
-*/
-int	MOAILayer::_removeProp ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer, "UU" )
-
-	MOAIPartitionHull* hull = state.GetLuaObject < MOAIPartitionHull >( 2, true );
-	if ( !hull ) return 0;
-	if ( hull == self ) return 0;
-
-	if ( self->mPartition ) {
-		self->mPartition->RemoveHull ( *hull );
-		hull->ScheduleUpdate ();
-	}
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
 // TODO: doxygen
 int MOAILayer::_setDebugCamera ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "U" )
@@ -430,24 +357,6 @@ int MOAILayer::_setParallax ( lua_State* L ) {
 	self->mParallax.mX = state.GetValue < float >( 2, 1.0f );
 	self->mParallax.mY = state.GetValue < float >( 3, 1.0f );
 	self->mParallax.mZ = state.GetValue < float >( 4, 1.0f );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setPartition
-	@text	Sets a partition for the layer to use. The layer will automatically
-			create a partition when the first hull is added if no partition
-			has been set.
-	
-	@in		MOAILayer self
-	@in		MOAIPartition partition
-	@out	nil
-*/
-int MOAILayer::_setPartition ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer, "UU" )
-
-	self->mPartition.Set ( *self, state.GetLuaObject < MOAIPartition >( 2, true ));
 
 	return 0;
 }
@@ -728,14 +637,6 @@ int MOAILayer::_worldToWnd ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAILayer::AffirmPartition () {
-
-	if ( !this->mPartition ) {
-		this->mPartition.Set ( *this, new MOAIPartition ());
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAILayer::DrawPartition ( MOAIPartition& partition ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
@@ -828,13 +729,6 @@ float MOAILayer::GetFitting ( ZLRect& worldRect, float hPad, float vPad ) {
 }
 
 //----------------------------------------------------------------//
-MOAIPartition* MOAILayer::GetPartition () {
-
-	this->AffirmPartition ();
-	return this->mPartition;
-}
-
-//----------------------------------------------------------------//
 ZLMatrix4x4 MOAILayer::GetWndToWorldMtx () const {
 
 	return MOAIViewProj::GetWndToWorldMtx ( this->mViewport, this->mCamera, this->mLocalToWorldMtx, this->mParallax );
@@ -856,6 +750,7 @@ MOAILayer::MOAILayer () :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIGraphicsProp )
+		RTTI_EXTEND ( MOAIPartitionHolder )
 		RTTI_EXTEND ( MOAIRenderPassBase )
 	RTTI_END
 }
@@ -866,13 +761,13 @@ MOAILayer::~MOAILayer () {
 	this->mCamera.Set ( *this, 0 );
 	this->mDebugCamera.Set ( *this, 0 );
 	this->mViewport.Set ( *this, 0 );
-	this->mPartition.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
 void MOAILayer::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIGraphicsProp::RegisterLuaClass ( state );
+	MOAIPartitionHolder::RegisterLuaClass ( state );
 	MOAIRenderPassBase::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "SORT_NONE",						( u32 )MOAIPartitionResultBuffer::SORT_NONE );
@@ -895,26 +790,22 @@ void MOAILayer::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIGraphicsProp::RegisterLuaFuncs ( state );
+	MOAIPartitionHolder::RegisterLuaFuncs ( state );
 	MOAIRenderPassBase::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
-		{ "clear",					_clear },
 		{ "draw",					_draw },
 		{ "getCamera",				_getCamera },
 		{ "getFitting",				_getFitting },
 		{ "getFitting3D",			_getFitting3D },
-		{ "getPartition",			_getPartition },
 		{ "getPropViewList",		_getPropViewList },
 		{ "getSortMode",			_getSortMode },
 		{ "getSortScale",			_getSortScale },
 		{ "getViewport",			_getViewport },
-		{ "insertProp",				_insertProp },
-		{ "removeProp",				_removeProp },
 		{ "setDebugCamera",			_setDebugCamera },
 		{ "setCamera",				_setCamera },
 		{ "setOverlayTable",		_setOverlayTable },
 		{ "setParallax",			_setParallax },
-		{ "setPartition",			_setPartition },
 		{ "setPartitionCull2D",		_setPartitionCull2D },
 		{ "setSortMode",			_setSortMode },
 		{ "setSortScale",			_setSortScale },
@@ -941,7 +832,7 @@ void MOAILayer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer )
 }
 
 //================================================================//
-// MOAILayer virtual
+// ::implementation::
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -975,8 +866,8 @@ void MOAILayer::MOAIDrawable_Draw ( int subPrimID ) {
 	
 	MOAIDrawable::Draw ( this->mUnderlayTable );
 	
-	if ( this->mPartition ) {
-		this->DrawPartition ( *this->mPartition );
+	if ( this->MOAIPartitionHolder::mPartition ) {
+		this->DrawPartition ( *this->MOAIPartitionHolder::mPartition );
 	}
 	
 	MOAIDrawable::Draw ( this->mOverlayTable );

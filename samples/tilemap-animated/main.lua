@@ -41,7 +41,7 @@ prop:setDeck ( remapper )
 prop:setGrid ( grid )
 prop:setLoc ( -128, 128, 0 )
 prop:setScl ( 1, -1, 1 )
-prop:setLayer ( layer )
+prop:setPartition ( layer )
 
 curve = MOAIAnimCurve.new ()
 

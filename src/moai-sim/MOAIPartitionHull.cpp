@@ -11,6 +11,7 @@
 #include <moai-sim/MOAILayoutFrame.h>
 #include <moai-sim/MOAIRenderMgr.h>
 #include <moai-sim/MOAIPartition.h>
+#include <moai-sim/MOAIPartitionHolder.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIPartitionHull.h>
 #include <moai-sim/MOAIScissorRect.h>
@@ -316,22 +317,14 @@ int MOAIPartitionHull::_setHitGranularity ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIPartitionHull::_setLayer ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartitionHull, "U" )
-	
-	MOAILayer* layer = state.GetLuaObject < MOAILayer >( 2, true );
-	self->SetPartition ( layer ? layer->GetPartition () : 0 );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
 int MOAIPartitionHull::_setPartition ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartitionHull, "U" )
 	
-	MOAIPartition* partition = state.GetLuaObject < MOAIPartition >( 2, true );
+	MOAIPartitionHolder* holder = state.GetLuaObject < MOAIPartitionHolder >( 2, false );
+	MOAIPartition* partition = holder ? holder->GetPartition () : state.GetLuaObject < MOAIPartition >( 2, true );
+	
 	self->SetPartition ( partition );
+	self->ScheduleUpdate ();
 	
 	return 0;
 }
@@ -577,7 +570,6 @@ void MOAIPartitionHull::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setExpandForSort",		_setExpandForSort },
 		{ "setFlag",				_setFlag },
 		{ "setHitGranularity",		_setHitGranularity },
-		{ "setLayer",				_setLayer },
 		{ "setPartition",			_setPartition },
 		{ "setPriority",			_setPriority },
 		{ "setQueryMask",			_setQueryMask },

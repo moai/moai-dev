@@ -20,4 +20,4 @@ spriteDeck:setRect ( -64, -64, 64, 64 )
 
 prop = MOAIGraphicsProp.new ()
 prop:setDeck ( spriteDeck )
-prop:setLayer ( layer )
+prop:setPartition ( layer )

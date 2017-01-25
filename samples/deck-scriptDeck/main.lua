@@ -59,6 +59,6 @@ drawDeck:setDrawCallback ( onDraw )
 
 prop = MOAIGraphicsProp.new ()
 prop:setDeck ( drawDeck )
-prop:setLayer ( layer )
+prop:setPartition ( layer )
 
 prop:moveRot ( 0, 0, 360, 1.5 )

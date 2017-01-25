@@ -50,8 +50,8 @@ private:
 	static int		_hullListForPoint		( lua_State* L );
 	static int		_hullListForRay			( lua_State* L );
 	static int		_hullListForRect		( lua_State* L );
-	static int		_insertHull				( lua_State* L );
-	static int		_removeHull				( lua_State* L );
+	//static int		_insertHull				( lua_State* L );
+	//static int		_removeHull				( lua_State* L );
 	static int		_reserveLevels			( lua_State* L );
 	static int		_setLevel				( lua_State* L );
 	static int		_setPlane				( lua_State* L );
@@ -60,12 +60,14 @@ private:
 	u32				AffirmInterfaceMask		( u32 typeID );
 	void			AffirmPriority			( MOAIPartitionHull& hull );
 	u32				GetInterfaceMask		( u32 typeID ) const;
-	virtual void	OnPropInserted			( MOAIPartitionHull& hull );	
-	virtual void	OnPropRemoved			( MOAIPartitionHull& hull );	
-	virtual void	OnPropUpdated			( MOAIPartitionHull& hull );
 	void			PrepareRebuild			();
 	void			Rebuild					();
 	void			UpdateHull				( MOAIPartitionHull& hull );
+
+	//----------------------------------------------------------------//
+	virtual void	MOAIPartition_OnInsertHull		( MOAIPartitionHull& hull );
+	virtual void	MOAIPartition_OnRemoveHull		( MOAIPartitionHull& hull );
+	virtual void	MOAIPartition_OnUpdateHull		( MOAIPartitionHull& hull );
 
 public:
 	

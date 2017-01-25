@@ -346,17 +346,17 @@ int MOAIPartition::_hullListForRect ( lua_State* L ) {
 	@in		MOAIPartitionHull hull
 	@out	nil
 */
-int MOAIPartition::_insertHull ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartition, "UU" )
-
-	MOAIPartitionHull* hull = state.GetLuaObject < MOAIPartitionHull >( 2, true );
-	if ( !hull ) return 0;
-
-	self->InsertHull ( *hull );
-	hull->ScheduleUpdate ();
-
-	return 0;
-}
+//int MOAIPartition::_insertHull ( lua_State* L ) {
+//	MOAI_LUA_SETUP ( MOAIPartition, "UU" )
+//
+//	MOAIPartitionHull* hull = state.GetLuaObject < MOAIPartitionHull >( 2, true );
+//	if ( !hull ) return 0;
+//
+//	self->InsertHull ( *hull );
+//	hull->ScheduleUpdate ();
+//
+//	return 0;
+//}
 
 //----------------------------------------------------------------//
 /**	@lua	removeHull
@@ -366,17 +366,17 @@ int MOAIPartition::_insertHull ( lua_State* L ) {
 	@in		MOAIPartitionHull hull
 	@out	nil
 */
-int MOAIPartition::_removeHull ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartition, "UU" )
-
-	MOAIPartitionHull* hull = state.GetLuaObject < MOAIPartitionHull >( 2, true );
-	if ( !hull ) return 0;
-
-	self->RemoveHull ( *hull );
-	hull->ScheduleUpdate ();
-
-	return 0;
-}
+//int MOAIPartition::_removeHull ( lua_State* L ) {
+//	MOAI_LUA_SETUP ( MOAIPartition, "UU" )
+//
+//	MOAIPartitionHull* hull = state.GetLuaObject < MOAIPartitionHull >( 2, true );
+//	if ( !hull ) return 0;
+//
+//	self->RemoveHull ( *hull );
+//	hull->ScheduleUpdate ();
+//
+//	return 0;
+//}
 
 //----------------------------------------------------------------//
 /**	@lua	reserveLevels
@@ -622,7 +622,7 @@ void MOAIPartition::InsertHull ( MOAIPartitionHull& hull ) {
 		hull.mInterfaceMask = interfaceMask;
 		hull.ScheduleUpdate ();
 		
-		this->OnPropInserted ( hull );
+		this->MOAIPartition_OnInsertHull ( hull );
 	}
 }
 
@@ -649,21 +649,6 @@ MOAIPartition::MOAIPartition () :
 //----------------------------------------------------------------//
 MOAIPartition::~MOAIPartition () {
 	this->Clear ();
-}
-
-//----------------------------------------------------------------//
-void MOAIPartition::OnPropInserted ( MOAIPartitionHull& hull ) {
-	UNUSED ( hull );
-}
-
-//----------------------------------------------------------------//	
-void MOAIPartition::OnPropRemoved ( MOAIPartitionHull& hull ) {
-	UNUSED ( hull );
-}
-
-//----------------------------------------------------------------//
-void MOAIPartition::OnPropUpdated ( MOAIPartitionHull& hull ) {
-	UNUSED ( hull );
 }
 
 //----------------------------------------------------------------//
@@ -705,8 +690,8 @@ void MOAIPartition::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "hullListForPoint",			_hullListForPoint },
 		{ "hullListForRay",				_hullListForRay },
 		{ "hullListForRect",			_hullListForRect },
-		{ "insertHull",					_insertHull },
-		{ "removeHull",					_removeHull },
+		//{ "insertHull",					_insertHull },
+		//{ "removeHull",					_removeHull },
 		{ "reserveLevels",				_reserveLevels },
 		{ "setLevel",					_setLevel },
 		{ "setPlane",					_setPlane },
@@ -727,7 +712,7 @@ void MOAIPartition::RemoveHull ( MOAIPartitionHull& hull ) {
 
 	hull.mPartition = 0;
 	hull.mInterfaceMask = 0;
-	this->OnPropRemoved ( hull );
+	this->MOAIPartition_OnRemoveHull ( hull );
 
 	this->LuaRelease ( &hull );
 }
@@ -813,4 +798,23 @@ void MOAIPartition::SetPlane ( u32 planeID ) {
 	this->PrepareRebuild ();
 	this->mPlaneID = planeID;
 	this->Rebuild ();
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIPartition::MOAIPartition_OnInsertHull ( MOAIPartitionHull& hull ) {
+	UNUSED ( hull );
+}
+
+//----------------------------------------------------------------//	
+void MOAIPartition::MOAIPartition_OnRemoveHull ( MOAIPartitionHull& hull ) {
+	UNUSED ( hull );
+}
+
+//----------------------------------------------------------------//
+void MOAIPartition::MOAIPartition_OnUpdateHull ( MOAIPartitionHull& hull ) {
+	UNUSED ( hull );
 }

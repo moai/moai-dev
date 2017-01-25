@@ -8,7 +8,6 @@
 #include <moai-sim/MOAICollisionWorld.h>
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIPartitionResultMgr.h>
 
@@ -17,17 +16,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-int MOAICollisionWorld::_insertProp ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAICollisionWorld, "U" )
-	
-	MOAICollisionProp* prop = state.GetLuaObject < MOAICollisionProp >( 2, true );
-	if ( prop ) {
-		self->InsertHull ( *prop );
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAICollisionWorld::_processOverlaps ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICollisionWorld, "U" )
 
@@ -41,14 +30,6 @@ int MOAICollisionWorld::_setCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICollisionWorld, "U" )
 	
 	self->mCallback.SetRef ( state, 2 );
-	return 0;
-}
-
-//----------------------------------------------------------------//
-int MOAICollisionWorld::_setPartition ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAICollisionWorld, "U" )
-
-	self->mPartition.Set ( *self, state.GetLuaObject < MOAIPartition >( 2, true ));
 	return 0;
 }
 
@@ -203,33 +184,6 @@ void MOAICollisionWorld::DoCallback ( u32 eventID, MOAICollisionProp& prop0, MOA
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionWorld::InsertHull ( MOAICollisionProp& prop ) {
-
-	if ( prop.mCollisionWorld != this ) {
-	
-		// clears out the old collision world (if any )
-		if ( prop.mCollisionWorld ) {
-			prop.mCollisionWorld->RemoveHull ( prop );
-		}
-		
-		if ( this->mPartition ) {
-			
-			// must be set before calling set partition
-			prop.mCollisionWorld = this;
-		
-			// this will invoke PrepareForInsertion () on the prop, which
-			// will verify that the prop's collision world matchs 'this'
-			prop.SetPartition ( this->mPartition );
-			
-			// now activate the prop
-			if ( prop.mOverlapFlags ) {
-				this->MakeActive ( prop );
-			}
-		}
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAICollisionWorld::InvalidateOverlaps ( MOAICollisionProp& prop, u32 nextPass ) {
 
 	MOAIPropOverlapLink* cursor = prop.mOverlapLinks;
@@ -266,6 +220,7 @@ MOAICollisionWorld::MOAICollisionWorld () :
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIAction )
 		RTTI_EXTEND ( MOAIDrawable )
+		RTTI_EXTEND ( MOAIPartition )
 	RTTI_END
 }
 
@@ -277,13 +232,10 @@ MOAICollisionWorld::~MOAICollisionWorld () {
 		this->mOverlapList.Remove ( overlap->mOverlapListLink );
 		this->mOverlapPool.Free ( overlap );
 	}
-	this->mPartition.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
 void MOAICollisionWorld::ProcessOverlaps () {
-
-	if ( !this->mPartition ) return;
 
 	u32 thisPass = this->mOverlapPass;
 	u32 nextPass = thisPass + 1;
@@ -303,12 +255,12 @@ void MOAICollisionWorld::ProcessOverlaps () {
 		MOAICollisionProp& prop = *activeIt->Data ();
 		this->InvalidateOverlaps ( prop, nextPass );
 		
-		u32 interfaceMask = this->mPartition->GetInterfaceMask < MOAICollisionProp >();
+		u32 interfaceMask = this->GetInterfaceMask < MOAICollisionProp >();
 		
 		// this gives us the coarse filter based on world space bounds
 		// TODO: find a way to utilize overlap flags?
 		MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
-		u32 totalResults = this->mPartition->GatherHulls ( buffer, &prop, prop.GetWorldBounds (), interfaceMask );
+		u32 totalResults = this->GatherHulls ( buffer, &prop, prop.GetWorldBounds (), interfaceMask );
 		
 		for ( u32 i = 0; i < totalResults; ++i ) {
 		
@@ -397,6 +349,7 @@ void MOAICollisionWorld::PruneOverlaps ( MOAICollisionProp& prop ) {
 void MOAICollisionWorld::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIAction::RegisterLuaClass ( state );
+	MOAIPartition::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "OVERLAP_BEGIN",				( u32 )OVERLAP_BEGIN );
 	state.SetField ( -1, "OVERLAP_END",					( u32 )OVERLAP_END );
@@ -407,28 +360,15 @@ void MOAICollisionWorld::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAICollisionWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIAction::RegisterLuaFuncs ( state );
+	MOAIPartition::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
-		{ "insertProp",			_insertProp },
 		{ "processOverlaps",	_processOverlaps },
 		{ "setCallback",		_setCallback },
-		{ "setPartition",		_setPartition },
 		{ NULL, NULL }
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionWorld::RemoveHull ( MOAICollisionProp& prop ) {
-
-	assert ( prop.mCollisionWorld == this );
-	assert ( this->mPartition );
-	
-	this->ClearOverlaps ( prop );
-	this->MakeInactive ( prop );
-	
-	this->mPartition->RemoveHull ( prop );
 }
 
 //----------------------------------------------------------------//
@@ -511,4 +451,40 @@ void MOAICollisionWorld::MOAIDrawable_Draw ( int subPrimID ) {
 		prop.mInDrawList = false;
 		prop.mNextInDrawList = 0;
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionWorld::MOAIPartition_OnInsertHull ( MOAIPartitionHull& hull ) {
+
+	MOAICollisionProp* prop = hull.AsType < MOAICollisionProp >();
+
+	if ( prop && ( prop->mCollisionWorld != this )) {
+	
+		// must be set before calling set partition
+		prop->mCollisionWorld = this;
+	
+		// now activate the prop
+		if ( prop->mOverlapFlags ) {
+			this->MakeActive ( *prop );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionWorld::MOAIPartition_OnRemoveHull ( MOAIPartitionHull& hull ) {
+
+	MOAICollisionProp* prop = hull.AsType < MOAICollisionProp >();
+
+	if ( prop ) {
+		assert ( prop->mCollisionWorld == this );
+		
+		this->ClearOverlaps ( *prop );
+		this->MakeInactive ( *prop );
+		prop->mCollisionWorld = 0;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionWorld::MOAIPartition_OnUpdateHull ( MOAIPartitionHull& hull ) {
+	UNUSED ( hull );
 }

@@ -7,10 +7,10 @@
 #include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAICollisionProp.h>
 #include <moai-sim/MOAIDrawable.h>
+#include <moai-sim/MOAIPartition.h>
 
 class MOAICollisionProp;
 class MOAIOverlapInfo;
-class MOAIPartition;
 class MOAIPartitionHull;
 
 //================================================================//
@@ -18,7 +18,8 @@ class MOAIPartitionHull;
 //================================================================//
 class MOAICollisionWorld :
 	public MOAIAction,
-	public MOAIDrawable {
+	public MOAIDrawable,
+	public MOAIPartition {
 private:
 
 	friend class MOAICollisionProp;
@@ -34,15 +35,12 @@ private:
 	
 	ZLLeanPool < MOAIPropOverlap > mOverlapPool;
 
-	MOAILuaSharedPtr < MOAIPartition > mPartition;
-
 	MOAILuaStrongRef mCallback;
 
 	//----------------------------------------------------------------//
 	static int			_insertProp				( lua_State* L );
 	static int			_processOverlaps		( lua_State* L );
 	static int			_setCallback			( lua_State* L );
-	static int			_setPartition			( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void				AffirmOverlap			( MOAICollisionProp& prop0, MOAICollisionProp& prop1, const MOAIOverlapInfo& overlapInfo );
@@ -50,7 +48,6 @@ private:
 	void				ClearOverlaps			( MOAICollisionProp& prop );
 	void				DoCallback				( u32 eventID, MOAICollisionProp& prop0, MOAICollisionProp& prop1 );
 	void				DoCallback				( u32 eventID, MOAICollisionProp& prop0, MOAICollisionProp& prop1, const MOAIOverlapInfo& overlapInfo );
-	void				InsertHull				( MOAICollisionProp& prop );
 	bool				IsDone					();
 	void				InvalidateOverlaps		( MOAICollisionProp& prop, u32 nextPass );
 	void				MakeActive				( MOAICollisionProp& prop0 );
@@ -64,8 +61,11 @@ private:
 	void				RemoveHull				( MOAICollisionProp& prop );
 
 	//----------------------------------------------------------------//
-	void				MOAIAction_Update		( double step );
-	void				MOAIDrawable_Draw		( int subPrimID );
+	void				MOAIAction_Update				( double step );
+	void				MOAIDrawable_Draw				( int subPrimID );
+	void				MOAIPartition_OnInsertHull		( MOAIPartitionHull& hull );
+	void				MOAIPartition_OnRemoveHull		( MOAIPartitionHull& hull );
+	void				MOAIPartition_OnUpdateHull		( MOAIPartitionHull& hull );
 
 public:
 	

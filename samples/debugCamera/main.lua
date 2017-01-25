@@ -39,7 +39,7 @@ spriteDeck:setRect ( -64, -64, 64, 64 )
 
 prop = MOAIProp.new ()
 prop:setDeck ( spriteDeck )
-prop:setLayer ( layer )
+prop:setPartition ( layer )
 
 prop:setLoc ( -64, 64, 0 )
 prop:moveLoc ( 128, -128, 0, 3 )

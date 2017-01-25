@@ -21,4 +21,4 @@ tileDeck:setRect ( -64, -64, 64, 64 )
 
 prop = MOAIGraphicsProp.new ()
 prop:setDeck ( tileDeck )
-prop:setLayer ( layer )
+prop:setPartition ( layer )

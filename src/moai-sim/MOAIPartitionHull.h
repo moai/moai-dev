@@ -72,7 +72,6 @@ private:
 	static int			_setGridScale				( lua_State* L );
 	static int			_setHitGranularity			( lua_State* L );
 	static int			_setIndex					( lua_State* L );
-	static int			_setLayer					( lua_State* L );
 	static int			_setPartition				( lua_State* L );
 	static int			_setPriority				( lua_State* L );
 	static int			_setQueryMask				( lua_State* L );

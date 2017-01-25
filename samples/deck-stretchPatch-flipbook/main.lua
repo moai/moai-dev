@@ -37,7 +37,7 @@ stretchPatch:setRect ( -64, -64, 64, 64 )
 
 prop = MOAIGraphicsProp.new ()
 prop:setDeck ( stretchPatch )
-prop:setLayer ( layer )
+prop:setPartition ( layer )
 
 curve = MOAIAnimCurve.new ()
 

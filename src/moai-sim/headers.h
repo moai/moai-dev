@@ -101,6 +101,8 @@
 #include <moai-sim/MOAIParticleTimedEmitter.h>
 #include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionCell.h>
+#include <moai-sim/MOAIPartitionHolder.h>
+#include <moai-sim/MOAIPartitionHull.h>
 #include <moai-sim/MOAIPartitionLevel.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIPartitionResultMgr.h>

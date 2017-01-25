@@ -16,8 +16,6 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, -480 )
 
-partition = MOAIPartition.new ()
-
 onOverlap = function ( event, prop1, prop2 )
 	
 	local eventName
@@ -32,12 +30,10 @@ onOverlap = function ( event, prop1, prop2 )
 end
 
 world = MOAICollisionWorld.new ()
-world:setPartition ( partition )
 world:setCallback ( onOverlap )
 world:start ()
 
 layer = MOAILayer.new ()
-layer:setPartition ( partition )
 layer:setViewport ( viewport )
 layer:setOverlayTable ({ world })
 layer:pushRenderPass ()
@@ -61,17 +57,13 @@ collDeck:setQuad ( 1,
 
 ready = function ( prop, x, y, group )
 
-	layer:insertProp ( prop )
-	prop:setLoc ( x, y )
-	
 	local coll = MOAICollisionProp.new ()
 	coll:setParent ( prop )
 	coll:setDeck ( collDeck )
 	--coll:setOverlapFlags ( MOAICollisionProp.OVERLAP_EVENTS_ON_UPDATE + MOAICollisionProp.OVERLAP_EVENTS_LIFECYCLE )
 	coll:setOverlapFlags ( MOAICollisionProp.OVERLAP_EVENTS_LIFECYCLE )
 	coll:setGroupMask ( group or MOAICollisionProp.GROUP_MASK_ALL )
-	
-	world:insertProp ( coll )
+	coll:setPartition ( world )
 	
 	return prop, coll
 end
@@ -80,6 +72,8 @@ makePropWithColl = function ( x, y, group )
 
 	local prop = MOAIGraphicsProp.new ()
 	prop:setDeck ( spriteDeck )
+	prop:setPartition ( layer )
+	prop:setLoc ( x, y )
 	return ready ( prop, x, y, group )
 end
 

@@ -33,7 +33,7 @@ stretchPatch:setRect ( -64, -64, 64, 64 )
 
 prop = MOAIGraphicsProp.new ()
 prop:setDeck ( stretchPatch )
-prop:setLayer ( layer )
+prop:setPartition ( layer )
 
 prop:setLoc ( -128, 0, 0 )
 prop:moveScl ( 1, 1, 0, 3 )
@@ -57,7 +57,7 @@ stretchPatch:setRect ( -64, -64, 64, 64 )
 
 prop = MOAIGraphicsProp.new ()
 prop:setDeck ( stretchPatch )
-prop:setLayer ( layer )
+prop:setPartition ( layer )
 
 prop:setLoc ( 128, 0, 0 )
 prop:moveScl ( 1, 1, 0, 3 )
