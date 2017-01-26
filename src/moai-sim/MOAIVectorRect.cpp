@@ -164,10 +164,10 @@ int MOAIVectorRect::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vertexS
 		// right
 		base = drawing.CountVertices ( format, vertexStream );
 		
-		drawing.WriteVertex ( vertexStream, format, maxVec.mX, minVec.mY, zb, xAxis, 1.0f, 0.0f, fillColor, fillExtraID );
-		drawing.WriteVertex ( vertexStream, format, maxVec.mX, maxVec.mY, zb, xAxis, 1.0f, 0.0f, fillColor, fillExtraID );
-		drawing.WriteVertex ( vertexStream, format, maxVec.mX, maxVec.mY, zt, xAxis, 1.0f, 0.0f, fillColor, fillExtraID );
-		drawing.WriteVertex ( vertexStream, format, maxVec.mX, minVec.mY, zt, xAxis, 1.0f, 0.0f, fillColor, fillExtraID );
+		drawing.WriteVertex ( vertexStream, format, maxVec.mX, minVec.mY, zb, xAxis, 0.0f, 0.0f, fillColor, fillExtraID );
+		drawing.WriteVertex ( vertexStream, format, maxVec.mX, maxVec.mY, zb, xAxis, 0.0f, 0.0f, fillColor, fillExtraID );
+		drawing.WriteVertex ( vertexStream, format, maxVec.mX, maxVec.mY, zt, xAxis, 0.0f, 0.0f, fillColor, fillExtraID );
+		drawing.WriteVertex ( vertexStream, format, maxVec.mX, minVec.mY, zt, xAxis, 0.0f, 0.0f, fillColor, fillExtraID );
 		
 		indexStream.Write < u32 >( base + 0 ); indexStream.Write < u32 >( base + 1 ); indexStream.Write < u32 >( base + 2 );
 		indexStream.Write < u32 >( base + 0 ); indexStream.Write < u32 >( base + 2 ); indexStream.Write < u32 >( base + 3 );
@@ -186,10 +186,10 @@ int MOAIVectorRect::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vertexS
 		// left
 		base = drawing.CountVertices ( format, vertexStream );
 		
-		drawing.WriteVertex ( vertexStream, format, minVec.mX, maxVec.mY, zb, -xAxis, 1.0f, 0.0f, fillColor, fillExtraID );
-		drawing.WriteVertex ( vertexStream, format, minVec.mX, minVec.mY, zb, -xAxis, 1.0f, 0.0f, fillColor, fillExtraID );
-		drawing.WriteVertex ( vertexStream, format, minVec.mX, minVec.mY, zt, -xAxis, 1.0f, 0.0f, fillColor, fillExtraID );
-		drawing.WriteVertex ( vertexStream, format, minVec.mX, maxVec.mY, zt, -xAxis, 1.0f, 0.0f, fillColor, fillExtraID );
+		drawing.WriteVertex ( vertexStream, format, minVec.mX, maxVec.mY, zb, -xAxis, 0.0f, 0.0f, fillColor, fillExtraID );
+		drawing.WriteVertex ( vertexStream, format, minVec.mX, minVec.mY, zb, -xAxis, 0.0f, 0.0f, fillColor, fillExtraID );
+		drawing.WriteVertex ( vertexStream, format, minVec.mX, minVec.mY, zt, -xAxis, 0.0f, 0.0f, fillColor, fillExtraID );
+		drawing.WriteVertex ( vertexStream, format, minVec.mX, maxVec.mY, zt, -xAxis, 0.0f, 0.0f, fillColor, fillExtraID );
 		
 		indexStream.Write < u32 >( base + 0 ); indexStream.Write < u32 >( base + 1 ); indexStream.Write < u32 >( base + 2 );
 		indexStream.Write < u32 >( base + 0 ); indexStream.Write < u32 >( base + 2 ); indexStream.Write < u32 >( base + 3 );
