@@ -233,8 +233,8 @@ enum {
 		AKUReserveInputDeviceSensors	( MOAI_INPUT_DEVICE, TOTAL_SENSORS );
 		AKUSetInputDeviceTouch			( MOAI_INPUT_DEVICE, MOAI_TOUCH_SENSOR,		"touch" );
 		
-        CGRect screenRect = [ MOAIView getScreenBoundsFromCurrentOrientation:[[ UIScreen mainScreen ] bounds ]];
-		CGFloat scale = [[ UIScreen mainScreen ] scale ];
+        //CGRect screenRect = [ MOAIView getScreenBoundsFromCurrentOrientation:[[ UIScreen mainScreen ] bounds ]];
+		//CGFloat scale = [[ UIScreen mainScreen ] scale ];
 		
 		AKUSetScreenDpi ([ self guessScreenDpi ]);
         
