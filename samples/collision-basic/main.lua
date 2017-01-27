@@ -8,6 +8,7 @@ MOAIDebugLinesMgr.setStyle ( MOAICollisionProp.DEBUG_DRAW_COLLISION_ACTIVE_PROP_
 MOAIDebugLinesMgr.setStyle ( MOAICollisionProp.DEBUG_DRAW_COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS, 2, 1, 1, 1 )
 MOAIDebugLinesMgr.setStyle ( MOAICollisionProp.DEBUG_DRAW_COLLISION_ACTIVE_TOUCHED_PROP_BOUNDS, 2, 1, 0, 0 )
 MOAIDebugLinesMgr.setStyle ( MOAICollisionProp.DEBUG_DRAW_COLLISION_OVERLAP_PROP_BOUNDS, 2, 0, 1, 0 )
+MOAIDebugLinesMgr.setStyle ( MOAICollisionProp.DEBUG_DRAW_COLLISION_OVERLAPS, 4, 1, 0, 1 )
 MOAIDebugLinesMgr.setStyle ( MOAICollisionProp.DEBUG_DRAW_COLLISION_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
 
 MOAISim.openWindow ( "test", 320, 480 )
@@ -39,7 +40,7 @@ layer:pushRenderPass ()
 
 debugLayer = MOAILayer.new ()
 debugLayer:setViewport ( viewport )
-debugLayer:usePartition ( world )
+debugLayer:setLayerPartition ( world )
 debugLayer:pushRenderPass ()
 
 spriteDeck = MOAISpriteDeck2D.new ()
@@ -65,8 +66,8 @@ ready = function ( prop, x, y, group )
 	coll:setParent ( prop )
 	coll:setDeck ( collDeck )
 	--coll:setOverlapFlags ( MOAICollisionProp.OVERLAP_EVENTS_ON_UPDATE + MOAICollisionProp.OVERLAP_EVENTS_LIFECYCLE )
-	coll:setOverlapFlags ( MOAICollisionProp.OVERLAP_EVENTS_LIFECYCLE )
-	coll:setGroupMask ( group or MOAICollisionProp.GROUP_MASK_ALL )
+	coll:setOverlapFlags ( MOAICollisionProp.OVERLAP_EVENTS_LIFECYCLE + MOAICollisionProp.OVERLAP_CALCULATE_BOUNDS )
+	--coll:setGroupMask ( group or MOAICollisionProp.CATEGORY_MASK_ALL )
 	coll:setPartition ( world )
 	
 	return prop, coll
@@ -122,14 +123,12 @@ main = function ()
 	
 	while true do
 		
-		if prop1.coll:hasOverlaps () then
-			print ( prop1, 'overlaps:' )
-			print ( prop1.coll:getOverlaps ())
+		if coll1:hasOverlaps () then
+			print ( coll1, 'overlaps:', coll1:getOverlaps ())
 		end
 		
-		if prop2.coll:hasOverlaps () then
-			print ( prop2, 'overlaps:' )
-			print ( prop2.coll:getOverlaps ())
+		if coll2:hasOverlaps () then
+			print ( coll2, 'overlaps:', coll2:getOverlaps ())
 		end
 		
 		coroutine.yield ()

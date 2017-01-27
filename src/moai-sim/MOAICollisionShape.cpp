@@ -100,6 +100,62 @@ void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
 }
 
 //----------------------------------------------------------------//
+void MOAICollisionShape::FindOverlaps ( const ZLBox& otherBounds, MOAIOverlapHandler& handler  ) const {
+
+	MOAIOverlapBox otherShape;
+	otherShape.mShape = otherBounds;
+	otherShape.mBounds = otherBounds;
+
+	size_t selfShapeCount = this->mShapes.Size ();
+
+	if ( selfShapeCount == 1 ) {
+	
+		MOAIOverlap::Overlap ( *this->mShapes [ 0 ], otherShape, handler );
+	}
+	else {
+	
+		for ( size_t i = 0; i < selfShapeCount; ++i ) {
+			MOAIOverlap::Overlap ( *this->mShapes [ i ], otherShape, handler );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionShape::FindOverlaps ( const MOAICollisionShape& otherShape, MOAIOverlapHandler& handler  ) const {
+
+	size_t selfShapeCount = this->mShapes.Size ();
+	size_t otherShapeCount = otherShape.mShapes.Size ();
+	
+	if (( selfShapeCount == 1 ) || ( otherShapeCount == 1 )) {
+	
+		if (( selfShapeCount == 1 ) && ( otherShapeCount == 1 )) {
+		
+			MOAIOverlap::Overlap ( *this->mShapes [ 0 ], *otherShape.mShapes [ 0 ], handler );
+		}
+		else if ( otherShapeCount == 1 ) {
+		
+			for ( size_t i = 0; i < selfShapeCount; ++i ) {
+				MOAIOverlap::Overlap ( *this->mShapes [ i ], *otherShape.mShapes [ 0 ], handler );
+			}
+		}
+		else {
+		
+			for ( size_t i = 0; i < otherShapeCount; ++i ) {
+				MOAIOverlap::Overlap ( *this->mShapes [ 0 ], *otherShape.mShapes [ i ], handler );
+			}
+		}
+	}
+	else {
+	
+		for ( size_t i = 0; i < selfShapeCount; ++i ) {
+			for ( size_t j = 0; j < otherShapeCount; ++j ) {
+				MOAIOverlap::Overlap ( *this->mShapes [ i ], *otherShape.mShapes [ j ], handler );
+			}
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 MOAICollisionShape::MOAICollisionShape () {
 
 	this->mBounds = ZLBounds::EMPTY;
@@ -109,79 +165,6 @@ MOAICollisionShape::MOAICollisionShape () {
 MOAICollisionShape::~MOAICollisionShape () {
 
 	this->Clear ();
-}
-
-//----------------------------------------------------------------//
-bool MOAICollisionShape::Overlap ( const ZLBox& otherBounds, const MOAITransformBase& selfTransform, const MOAITransformBase& otherTransform, ZLBox& bounds ) const {
-
-	MOAIOverlapBox otherShape;
-	otherShape.mType = MOAIOverlap::BOX;
-	otherShape.mShape = otherBounds;
-	otherShape.mBounds = otherBounds;
-
-	size_t selfShapeCount = this->mShapes.Size ();
-
-	bool result;
-
-	if ( selfShapeCount == 1 ) {
-	
-		return MOAIOverlap::Overlap ( *this->mShapes [ 0 ], otherShape, selfTransform, otherTransform, bounds );
-	}
-	else {
-	
-		for ( size_t i = 0; i < selfShapeCount; ++i ) {
-			if ( MOAIOverlap::Overlap ( *this->mShapes [ i ], otherShape, selfTransform, otherTransform, bounds )) {
-				result = true;
-			}
-		}
-	}
-	
-	return result;
-}
-
-//----------------------------------------------------------------//
-bool MOAICollisionShape::Overlap ( const MOAICollisionShape& otherShape, const MOAITransformBase& selfTransform, const MOAITransformBase& otherTransform, ZLBox& bounds ) const {
-
-	size_t selfShapeCount = this->mShapes.Size ();
-	size_t otherShapeCount = otherShape.mShapes.Size ();
-	
-	bool result = false;
-	
-	if (( selfShapeCount == 1 ) || ( otherShapeCount == 1 )) {
-	
-		if (( selfShapeCount == 1 ) && ( otherShapeCount == 1 )) {
-		
-			return MOAIOverlap::Overlap ( *this->mShapes [ 0 ], *otherShape.mShapes [ 0 ], selfTransform, otherTransform, bounds );
-		}
-		else if ( otherShapeCount == 1 ) {
-		
-			for ( size_t i = 0; i < selfShapeCount; ++i ) {
-				if ( MOAIOverlap::Overlap ( *this->mShapes [ i ], *otherShape.mShapes [ 0 ], selfTransform, otherTransform, bounds )) {
-					result = true;
-				}
-			}
-		}
-		else {
-		
-			for ( size_t i = 0; i < otherShapeCount; ++i ) {
-				if ( MOAIOverlap::Overlap ( *this->mShapes [ 0 ], *otherShape.mShapes [ i ], selfTransform, otherTransform, bounds )) {
-					result = true;
-				}
-			}
-		}
-	}
-	else {
-	
-		for ( size_t i = 0; i < selfShapeCount; ++i ) {
-			for ( size_t j = 0; j < otherShapeCount; ++j ) {
-				if ( MOAIOverlap::Overlap ( *this->mShapes [ i ], *otherShape.mShapes [ j ], selfTransform, otherTransform, bounds )) {
-					result = true;
-				}
-			}
-		}
-	}
-	
-	return result;
 }
 
 //----------------------------------------------------------------//

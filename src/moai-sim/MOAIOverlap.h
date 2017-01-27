@@ -4,6 +4,7 @@
 #ifndef	MOAIOVERLAP_H
 #define	MOAIOVERLAP_H
 
+class MOAIOverlapHandler;
 class MOAITransformBase;
 
 #define COLLISION_COMBO_CODE(shapeType0, shapeType1) (( 0x00000001 << shapeType0 ) | ( 0x00010000 << shapeType1 ))
@@ -13,6 +14,10 @@ class MOAITransformBase;
 //================================================================//
 class MOAIOverlapShape {
 public:
+
+	u32			mCategory;
+	u32			mMask;
+	u32			mIdentifier;
 
 	u32			mType;
 	void*		mPtr;
@@ -43,7 +48,8 @@ public:
 	};
 
 	//----------------------------------------------------------------//
-	static bool		Overlap					( const MOAIOverlapShape& selfShape, const MOAIOverlapShape& otherShape, const MOAITransformBase& selfTransform, const MOAITransformBase& otherTransform, ZLBox& bounds );
+	static void		Overlap					( const MOAIOverlapShape& shape0, const MOAIOverlapShape& shape1, MOAIOverlapHandler& handler );
+	static bool		Overlap					( const MOAIOverlapShape& shape0, const MOAIOverlapShape& shape1, const MOAITransformBase& t0, const MOAITransformBase& t1, bool calculateBounds, ZLBounds& bounds );
 
 private:
 
@@ -88,33 +94,33 @@ private:
 	static const u32 SPHERE__SPHERE			= COLLISION_COMBO_CODE ( SPHERE, SPHERE );
 
 	//----------------------------------------------------------------//
-	static bool		Overlap					( const ZLBox& p0, const ZLBox& p1, const MOAITransformBase& t0, const MOAITransformBase& t1, ZLBox& bounds );
-	static bool		Overlap					( const ZLBox& p0, const ZLFrustum& p1, const MOAITransformBase& t0, const MOAITransformBase& t1, ZLBox& bounds );
-	static bool		Overlap					( const ZLBox& p0, const ZLPrism& p1, const MOAITransformBase& t0, const MOAITransformBase& t1, ZLBox& bounds );
-	static bool		Overlap					( const ZLBox& p0, const ZLSphere& p1, const MOAITransformBase& t0, const MOAITransformBase& t1, ZLBox& bounds );
+	static bool		Overlap			( const ZLBox& p0, const ZLBox& p1,					const MOAITransformBase& t0, const MOAITransformBase& t1, bool calculateBounds, ZLBounds& bounds );
+	static bool		Overlap			( const ZLBox& p0, const ZLFrustum& p1,				const MOAITransformBase& t0, const MOAITransformBase& t1, bool calculateBounds, ZLBounds& bounds );
+	static bool		Overlap			( const ZLBox& p0, const ZLPrism& p1,				const MOAITransformBase& t0, const MOAITransformBase& t1, bool calculateBounds, ZLBounds& bounds );
+	static bool		Overlap			( const ZLBox& p0, const ZLSphere& p1,				const MOAITransformBase& t0, const MOAITransformBase& t1, bool calculateBounds, ZLBounds& bounds );
 	
-	static bool		Overlap					( const ZLCircle& p0, const ZLCircle& p1, const MOAITransformBase& t0, const MOAITransformBase& t1, ZLBox& bounds );
-	static bool		Overlap					( const ZLCircle& p0, const ZLPolygon2D& p1, const MOAITransformBase& t0, const MOAITransformBase& t1, ZLBox& bounds );
-	static bool		Overlap					( const ZLCircle& p0, const ZLQuad& p1, const MOAITransformBase& t0, const MOAITransformBase& t1, ZLBox& bounds );
-	static bool		Overlap					( const ZLCircle& p0, const ZLRect& p1, const MOAITransformBase& t0, const MOAITransformBase& t1, ZLBox& bounds );
+	static bool		Overlap			( const ZLCircle& p0, const ZLCircle& p1,			const MOAITransformBase& t0, const MOAITransformBase& t1, bool calculateBounds, ZLBounds& bounds );
+	static bool		Overlap			( const ZLCircle& p0, const ZLPolygon2D& p1,		const MOAITransformBase& t0, const MOAITransformBase& t1, bool calculateBounds, ZLBounds& bounds );
+	static bool		Overlap			( const ZLCircle& p0, const ZLQuad& p1,				const MOAITransformBase& t0, const MOAITransformBase& t1, bool calculateBounds, ZLBounds& bounds );
+	static bool		Overlap			( const ZLCircle& p0, const ZLRect& p1,				const MOAITransformBase& t0, const MOAITransformBase& t1, bool calculateBounds, ZLBounds& bounds );
 
-	static bool		Overlap					( const ZLFrustum& p0, const ZLFrustum& p1, const MOAITransformBase& t0, const MOAITransformBase& t1, ZLBox& bounds );
-	static bool		Overlap					( const ZLFrustum& p0, const ZLPrism& p1, const MOAITransformBase& t0, const MOAITransformBase& t1, ZLBox& bounds );
-	static bool		Overlap					( const ZLFrustum& p0, const ZLSphere& p1, const MOAITransformBase& t0, const MOAITransformBase& t1, ZLBox& bounds );
+	static bool		Overlap			( const ZLFrustum& p0, const ZLFrustum& p1,			const MOAITransformBase& t0, const MOAITransformBase& t1, bool calculateBounds, ZLBounds& bounds );
+	static bool		Overlap			( const ZLFrustum& p0, const ZLPrism& p1,			const MOAITransformBase& t0, const MOAITransformBase& t1, bool calculateBounds, ZLBounds& bounds );
+	static bool		Overlap			( const ZLFrustum& p0, const ZLSphere& p1,			const MOAITransformBase& t0, const MOAITransformBase& t1, bool calculateBounds, ZLBounds& bounds );
 
-	static bool		Overlap					( const ZLPolygon2D& p0, const ZLPolygon2D& p1, const MOAITransformBase& t0, const MOAITransformBase& t1, ZLBox& bounds );
-	static bool		Overlap					( const ZLPolygon2D& p0, const ZLQuad& p1, const MOAITransformBase& t0, const MOAITransformBase& t1, ZLBox& bounds );
-	static bool		Overlap					( const ZLPolygon2D& p0, const ZLRect& p1, const MOAITransformBase& t0, const MOAITransformBase& t1, ZLBox& bounds );
+	static bool		Overlap			( const ZLPolygon2D& p0, const ZLPolygon2D& p1,		const MOAITransformBase& t0, const MOAITransformBase& t1, bool calculateBounds, ZLBounds& bounds );
+	static bool		Overlap			( const ZLPolygon2D& p0, const ZLQuad& p1,			const MOAITransformBase& t0, const MOAITransformBase& t1, bool calculateBounds, ZLBounds& bounds );
+	static bool		Overlap			( const ZLPolygon2D& p0, const ZLRect& p1,			const MOAITransformBase& t0, const MOAITransformBase& t1, bool calculateBounds, ZLBounds& bounds );
 	
-	static bool		Overlap					( const ZLPrism& p0, const ZLPrism& p1, const MOAITransformBase& t0, const MOAITransformBase& t1, ZLBox& bounds );
-	static bool		Overlap					( const ZLPrism& p0, const ZLSphere& p1, const MOAITransformBase& t0, const MOAITransformBase& t1, ZLBox& bounds );
+	static bool		Overlap			( const ZLPrism& p0, const ZLPrism& p1,				const MOAITransformBase& t0, const MOAITransformBase& t1, bool calculateBounds, ZLBounds& bounds );
+	static bool		Overlap			( const ZLPrism& p0, const ZLSphere& p1,			const MOAITransformBase& t0, const MOAITransformBase& t1, bool calculateBounds, ZLBounds& bounds );
 	
-	static bool		Overlap					( const ZLQuad& p0, const ZLQuad& p1, const MOAITransformBase& t0, const MOAITransformBase& t1, ZLBox& bounds );
-	static bool		Overlap					( const ZLQuad& p0, const ZLRect& p1, const MOAITransformBase& t0, const MOAITransformBase& t1, ZLBox& bounds );
+	static bool		Overlap			( const ZLQuad& p0, const ZLQuad& p1,				const MOAITransformBase& t0, const MOAITransformBase& t1, bool calculateBounds, ZLBounds& bounds );
+	static bool		Overlap			( const ZLQuad& p0, const ZLRect& p1,				const MOAITransformBase& t0, const MOAITransformBase& t1, bool calculateBounds, ZLBounds& bounds );
 
-	static bool		Overlap					( const ZLRect& p0, const ZLRect& p1, const MOAITransformBase& t0, const MOAITransformBase& t1, ZLBox& bounds );
+	static bool		Overlap			( const ZLRect& p0, const ZLRect& p1,				const MOAITransformBase& t0, const MOAITransformBase& t1, bool calculateBounds, ZLBounds& bounds );
 
-	static bool		Overlap					( const ZLSphere& p0, const ZLSphere& p1, const MOAITransformBase& t0, const MOAITransformBase& t1, ZLBox& bounds );
+	static bool		Overlap			( const ZLSphere& p0, const ZLSphere& p1,			const MOAITransformBase& t0, const MOAITransformBase& t1, bool calculateBounds, ZLBounds& bounds );
 };
 
 #define DECLARE_OVERLAP_SHAPE(name, shapeClass, typeID)			\

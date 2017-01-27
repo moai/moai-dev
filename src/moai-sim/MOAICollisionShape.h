@@ -6,6 +6,7 @@
 
 #include <moai-sim/MOAIOverlap.h>
 
+class MOAIOverlapHandler;
 class MOAITransformBase;
 
 //================================================================//
@@ -29,10 +30,10 @@ public:
 	//----------------------------------------------------------------//
 	void			Clear					();
 	void			Draw					( const ZLAffine3D& localToWorldMtx );
+	void			FindOverlaps			( const ZLBox& otherBounds, MOAIOverlapHandler& handler ) const;
+	void			FindOverlaps			( const MOAICollisionShape& otherShape, MOAIOverlapHandler& handler ) const;
 					MOAICollisionShape		();
 					~MOAICollisionShape		();
-	bool			Overlap					( const ZLBox& otherBounds, const MOAITransformBase& selfTransform, const MOAITransformBase& otherTransform, ZLBox& bounds ) const;
-	bool			Overlap					( const MOAICollisionShape& otherShape, const MOAITransformBase& selfTransform, const MOAITransformBase& otherTransform, ZLBox& bounds ) const;
 	void			ReserveShapes			( u32 totalShapes );
 	void			Set						( u32 idx, const ZLBox& box );
 	void			Set						( u32 idx, const ZLQuad& quad );

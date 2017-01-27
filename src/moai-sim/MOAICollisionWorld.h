@@ -9,9 +9,32 @@
 #include <moai-sim/MOAIDrawable.h>
 #include <moai-sim/MOAIPartition.h>
 
-class MOAICollisionProp;
-class MOAIOverlapInfo;
 class MOAIPartitionHull;
+class MOAICollisionWorld;
+
+//================================================================//
+// MOAIOverlapHandler
+//================================================================//
+class MOAIOverlapHandler {
+private:
+
+	friend class MOAICollisionWorld;
+
+	MOAICollisionProp&			mProp0;
+	MOAICollisionProp&			mProp1;
+
+public:
+	
+	const MOAITransformBase&	mTransform0;
+	const MOAITransformBase&	mTransform1;
+	
+	ZLBounds					mBounds;
+	bool						mCalculateBounds;
+	
+	//----------------------------------------------------------------//
+					MOAIOverlapHandler		( MOAICollisionProp& prop0, MOAICollisionProp& prop1 );
+	void			HandleOverlap			();
+};
 
 //================================================================//
 // MOAICollisionWorld
@@ -23,6 +46,7 @@ class MOAICollisionWorld :
 private:
 
 	friend class MOAICollisionProp;
+	friend class MOAIOverlapHandler;
 
 	bool	mUpdated;
 	u32		mOverlapPass;
@@ -43,18 +67,16 @@ private:
 	static int			_setCallback			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				AffirmOverlap			( MOAICollisionProp& prop0, MOAICollisionProp& prop1, const MOAIOverlapInfo& overlapInfo );
+	void				AffirmOverlap			( MOAICollisionProp& prop0, u32 type0, MOAICollisionProp& prop1, u32 type1, const ZLBounds& bounds );
 	void				ClearOverlap			( MOAICollisionProp& prop0, MOAICollisionProp& prop1 );
 	void				ClearOverlaps			( MOAICollisionProp& prop );
 	void				DoCallback				( u32 eventID, MOAICollisionProp& prop0, MOAICollisionProp& prop1 );
-	void				DoCallback				( u32 eventID, MOAICollisionProp& prop0, MOAICollisionProp& prop1, const MOAIOverlapInfo& overlapInfo );
+	void				DoCallback				( u32 eventID, MOAICollisionProp& prop0, MOAICollisionProp& prop1, const ZLBounds& bounds );
+	void				HandleOverlap			( MOAICollisionProp& prop0, u32 type0, MOAICollisionProp& prop1, u32 type1, const ZLBounds& bounds );
 	bool				IsDone					();
 	void				InvalidateOverlaps		( MOAICollisionProp& prop, u32 nextPass );
 	void				MakeActive				( MOAICollisionProp& prop0 );
 	void				MakeInactive			( MOAICollisionProp& prop0 );
-	void				OnPropInserted			( MOAIPartitionHull& prop );
-	void				OnPropRemoved			( MOAIPartitionHull& prop );
-	void				OnPropUpdated			( MOAIPartitionHull& prop );
 	void				ProcessOverlaps			();
 	void				PruneOverlaps			( MOAICollisionProp& prop );
 	void				Render					();
@@ -78,6 +100,9 @@ public:
 	};
 	
 	static const u32 OVERLAP_PASS_INIT = 0;
+	
+	GET ( u32, CurrentPass, mOverlapPass )
+	GET ( u32, NextPass, ( mOverlapPass + 1 ))
 	
 	//----------------------------------------------------------------//
 					MOAICollisionWorld		();
