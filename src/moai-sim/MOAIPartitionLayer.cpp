@@ -249,7 +249,9 @@ void MOAIPartitionLayer::DrawPartition ( MOAIPartition& partition ) {
 	
 	if ( MOAIDebugLinesMgr::Get ().IsVisible () && this->mShowDebugLines ) {
 		
+		partition.DrawDebugBack ();
 		this->DrawPropsDebug ( buffer );
+		partition.DrawDebugFront ();
 	}
 }
 
@@ -287,6 +289,11 @@ MOAIPartitionLayer::MOAIPartitionLayer () :
 		RTTI_EXTEND ( MOAIPartitionHolder )
 		RTTI_EXTEND ( MOAILayerBase )
 	RTTI_END
+	
+	this->mSortScale [ 0 ] = 0.0f;
+	this->mSortScale [ 1 ] = 0.0f;
+	this->mSortScale [ 2 ] = 0.0f;
+	this->mSortScale [ 3 ] = 1.0f;
 }
 
 //----------------------------------------------------------------//

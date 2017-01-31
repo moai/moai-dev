@@ -7,11 +7,11 @@
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAILayerBase.h>
-#include <moai-sim/MOAIPartitionHolder.h>
 #include <moai-sim/MOAIRenderPassBase.h>
 #include <moai-sim/MOAIViewport.h>
 
 class MOAICamera;
+class MOAIPartition;
 
 //================================================================//
 // MOAITableLayer
@@ -35,8 +35,8 @@ public:
 	DECL_LUA_FACTORY ( MOAITableLayer )
 	
 	//----------------------------------------------------------------//
-						MOAITableLayer		();
-						~MOAITableLayer		();
+						MOAITableLayer			();
+						~MOAITableLayer			();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );

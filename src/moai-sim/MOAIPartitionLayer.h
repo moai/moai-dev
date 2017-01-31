@@ -66,8 +66,8 @@ public:
 	DECL_LUA_FACTORY ( MOAIPartitionLayer )
 	
 	//----------------------------------------------------------------//
-					MOAIPartitionLayer				();
-					~MOAIPartitionLayer				();
+					MOAIPartitionLayer		();
+					~MOAIPartitionLayer		();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );

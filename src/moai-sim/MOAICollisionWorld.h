@@ -7,6 +7,7 @@
 #include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAICollisionProp.h>
 #include <moai-sim/MOAIDrawable.h>
+#include <moai-sim/MOAIDrawShapeRetained.h>
 #include <moai-sim/MOAIPartition.h>
 
 class MOAIPartitionHull;
@@ -40,9 +41,9 @@ public:
 // MOAICollisionWorld
 //================================================================//
 class MOAICollisionWorld :
-	public MOAIAction,
-	public MOAIDrawable,
-	public MOAIPartition {
+	public virtual MOAIAction,
+	public virtual MOAIDrawShapeRetained,
+	public virtual MOAIPartition {
 private:
 
 	friend class MOAICollisionProp;
@@ -83,11 +84,11 @@ private:
 	void				RemoveHull				( MOAICollisionProp& prop );
 
 	//----------------------------------------------------------------//
-	void				MOAIAction_Update				( double step );
-	void				MOAIDrawable_Draw				( int subPrimID );
-	void				MOAIPartition_OnInsertHull		( MOAIPartitionHull& hull );
-	void				MOAIPartition_OnRemoveHull		( MOAIPartitionHull& hull );
-	void				MOAIPartition_OnUpdateHull		( MOAIPartitionHull& hull );
+	void				MOAIAction_Update					( double step );
+	void				MOAIPartition_DrawDebugFront		();
+	void				MOAIPartition_OnInsertHull			( MOAIPartitionHull& hull );
+	void				MOAIPartition_OnRemoveHull			( MOAIPartitionHull& hull );
+	void				MOAIPartition_OnUpdateHull			( MOAIPartitionHull& hull );
 
 public:
 	

@@ -798,7 +798,8 @@ void MOAIRegion::DrawDebug () const {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	MOAIDraw::Bind ();
+	MOAIDraw& draw = MOAIDraw::Get ();
+	draw.Bind ();
 
 	size_t nPolys = this->mPolygons.Size ();
 	for ( size_t i = 0; i < nPolys; ++i ) {
@@ -843,7 +844,7 @@ void MOAIRegion::DrawDebug () const {
 			}
 		}
 		
-		MOAIDraw::DrawPolyOutline ( poly );
+		draw.DrawPolyOutline ( poly );
 	}
 }
 

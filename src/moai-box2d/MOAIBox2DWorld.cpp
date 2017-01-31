@@ -1293,7 +1293,7 @@ void MOAIBox2DWorld::MOAIAction_Update ( double step ) {
 void MOAIBox2DWorld::MOAIDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
-	if ( this->mDebugDraw && MOAIDraw::Bind ()) {
+	if ( this->mDebugDraw && MOAIDraw::Get ().Bind ()) {
 		
 		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 		

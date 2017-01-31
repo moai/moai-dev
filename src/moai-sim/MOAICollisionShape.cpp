@@ -78,7 +78,7 @@ void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
 			case MOAIOverlap::QUAD: {
 			
 				gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX ));
-				draw.DrawQuad ( *( ZLQuad* )shape->mPtr );
+				draw.DrawQuadOutline ( *( ZLQuad* )shape->mPtr );
 				break;
 			}
 			case MOAIOverlap::RECT: {

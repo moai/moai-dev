@@ -127,7 +127,7 @@ void MOAIDrawDeck::MOAIDeck_Draw ( u32 idx ) {
 	
 	if ( this->mOnDraw ) {
 	
-		MOAIDraw::Bind ();
+		MOAIDraw::Get ().Bind ();
 	
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		this->mOnDraw.PushRef ( state );

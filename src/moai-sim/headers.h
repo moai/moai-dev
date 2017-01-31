@@ -37,6 +37,9 @@
 #include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIDrawable.h>
 #include <moai-sim/MOAIDrawDeck.h>
+#include <moai-sim/MOAIDrawShape.h>
+#include <moai-sim/MOAIDrawShapeImmediate.h>
+#include <moai-sim/MOAIDrawShapeRetained.h>
 #include <moai-sim/MOAIEaseDriver.h>
 #include <moai-sim/MOAIEaseType.h>
 #include <moai-sim/MOAIFancyGrid.h>

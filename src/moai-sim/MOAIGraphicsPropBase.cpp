@@ -5,6 +5,7 @@
 #include <moai-sim/MOAICamera.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDebugLines.h>
+#include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGraphicsPropBase.h>
 #include <moai-sim/MOAIGrid.h>

@@ -3,6 +3,9 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIDrawable.h>
+#include <moai-sim/MOAIGfxMgr.h>
+#include <moai-sim/MOAIPartition.h>
+#include <moai-sim/MOAIPartitionResultMgr.h>
 
 //================================================================//
 // MOAIDrawable

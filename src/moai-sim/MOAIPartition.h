@@ -65,6 +65,8 @@ private:
 	void			UpdateHull				( MOAIPartitionHull& hull );
 
 	//----------------------------------------------------------------//
+	virtual void	MOAIPartition_DrawDebugBack		();
+	virtual void	MOAIPartition_DrawDebugFront	();
 	virtual void	MOAIPartition_OnInsertHull		( MOAIPartitionHull& hull );
 	virtual void	MOAIPartition_OnRemoveHull		( MOAIPartitionHull& hull );
 	virtual void	MOAIPartition_OnUpdateHull		( MOAIPartitionHull& hull );
@@ -75,6 +77,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			Clear					();
+	void			DrawDebugBack			();
+	void			DrawDebugFront			();
 	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
 	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, const ZLVec3D& point, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
 	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );

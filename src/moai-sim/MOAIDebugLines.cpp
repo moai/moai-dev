@@ -3,9 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIDebugLines.h>
-#include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIShaderMgr.h>
-#include <moai-sim/MOAIVertexFormatMgr.h>
+#include <moai-sim/MOAIDraw.h>
 
 //================================================================//
 // MOAIDebugLineStyle
@@ -108,15 +106,19 @@ int MOAIDebugLinesMgr::_showDebugLines ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAIDebugLinesMgr::Bind ( u32 styleID ) {
 
+	return this->Bind ( styleID, MOAIDraw::Get ());
+}
+
+//----------------------------------------------------------------//
+bool MOAIDebugLinesMgr::Bind ( u32 styleID, MOAIDrawShape& draw ) {
+
 	if ( !this->mShowDebugLines ) return false;
 
 	MOAIDebugLineStyle* style = this->GetStyle ( styleID );
 	if ( style && ( style->mDisplay == MOAIDebugLineStyle::DISPLAY_VISIBLE )) {
 
-		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-
-		gfxMgr.mGfxState.SetPenColor ( style->mColor );
-		gfxMgr.mGfxState.SetPenWidth ( style->mSize );
+		draw.SetPenColor ( style->mColor );
+		draw.SetPenWidth ( style->mSize );
 		return true;
 	}
 	return false;

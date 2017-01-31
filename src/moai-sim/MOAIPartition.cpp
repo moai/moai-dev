@@ -492,6 +492,19 @@ void MOAIPartition::Clear () {
 }
 
 //----------------------------------------------------------------//
+void MOAIPartition::DrawDebugBack () {
+
+	this->MOAIPartition_DrawDebugBack ();
+}
+
+//----------------------------------------------------------------//
+void MOAIPartition::DrawDebugFront () {
+
+	this->MOAIPartition_DrawDebugFront ();
+}
+
+
+//----------------------------------------------------------------//
 u32 MOAIPartition::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, u32 interfaceMask, u32 queryMask ) {
 	
 	results.Reset ();
@@ -803,6 +816,14 @@ void MOAIPartition::SetPlane ( u32 planeID ) {
 //================================================================//
 // ::implementation::
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAIPartition::MOAIPartition_DrawDebugBack () {
+}
+
+//----------------------------------------------------------------//
+void MOAIPartition::MOAIPartition_DrawDebugFront () {
+}
 
 //----------------------------------------------------------------//
 void MOAIPartition::MOAIPartition_OnInsertHull ( MOAIPartitionHull& hull ) {

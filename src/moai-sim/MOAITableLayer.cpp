@@ -9,7 +9,7 @@
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAITableLayer.h>
 #include <moai-sim/MOAIMaterialStackMgr.h>
-#include <moai-sim/MOAIPartition.h>
+#include <moai-sim/MOAIPartitionHolder.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIPartitionResultMgr.h>
 #include <moai-sim/MOAIRenderMgr.h>
