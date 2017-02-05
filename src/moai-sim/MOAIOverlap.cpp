@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-sim/MOAICollision.h>
 #include <moai-sim/MOAICollisionWorld.h>
 #include <moai-sim/MOAIOverlap.h>
 #include <moai-sim/MOAIDraw.h>
@@ -9,11 +10,76 @@
 #include <moai-sim/MOAITransformBase.h>
 
 //================================================================//
-// MOAIOverlap
+// MOAIOverlap FindContactPoint
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIOverlap::Overlap ( const MOAIOverlapShape& shape0, const MOAIOverlapShape& shape1, MOAIOverlapHandler& handler ) {
+void MOAIOverlap::FindContactPoints ( MOAIContactPointAccumulator2D& accumulator, const MOAIOverlapShape& shape0, const MOAIOverlapShape& shape1, const MOAITransformBase& t0, const MOAITransformBase& t1 ) {
+
+	switch ( COLLISION_COMBO_CODE ( shape0.mType, shape1.mType )) {
+	
+		case QUAD__QUAD:			FindContactPoints ( *( ZLQuad* )shape0.mPtr, *( ZLQuad* )shape1.mPtr, t0, t1, accumulator );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIOverlap::FindContactPoints ( const ZLQuad& p0, const ZLQuad& p1, const MOAITransformBase& t0, const MOAITransformBase& t1, MOAIContactPointAccumulator2D& accumulator ) {
+
+	ZLQuad tq0 = p0;
+	tq0.Transform ( t0.GetLocalToWorldMtx ());
+
+	ZLQuad tq1 = p1;
+	tq1.Transform ( t1.GetLocalToWorldMtx ());
+
+	MOAICollision::FindContactPoints ( tq0.mV, 4, tq1.mV, 4, accumulator );
+}
+
+//================================================================//
+// MOAIOverlap FindInterval
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIOverlap::FindInterval ( MOAIVectorAccumulator& accumulator, const MOAIOverlapShape& shape0, const MOAIOverlapShape& shape1, const MOAITransformBase& t0, const MOAITransformBase& t1 ) {
+
+	ZLVec3D interval = ZLVec3D::ORIGIN;
+
+	if ( FindInterval ( shape0, shape1, t0, t1, interval )) {
+	
+		accumulator.Accumulate ( interval.mX, interval.mY, interval.mZ );
+	}
+}
+
+//----------------------------------------------------------------//
+bool MOAIOverlap::FindInterval ( const MOAIOverlapShape& shape0, const MOAIOverlapShape& shape1, const MOAITransformBase& t0, const MOAITransformBase& t1, ZLVec3D& interval ) {
+
+	switch ( COLLISION_COMBO_CODE ( shape0.mType, shape1.mType )) {
+	
+		case QUAD__QUAD:			return FindInterval ( *( ZLQuad* )shape0.mPtr, *( ZLQuad* )shape1.mPtr, t0, t1, interval );
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
+bool MOAIOverlap::FindInterval ( const ZLQuad& p0, const ZLQuad& p1, const MOAITransformBase& t0, const MOAITransformBase& t1, ZLVec3D& interval ) {
+
+	ZLQuad tq0 = p0;
+	tq0.Transform ( t0.GetLocalToWorldMtx ());
+
+	ZLQuad tq1 = p1;
+	tq1.Transform ( t1.GetLocalToWorldMtx ());
+
+	ZLVec2D interval2D;
+	bool result = MOAICollision::FindOverlapInterval ( tq0.mV, 4, tq1.mV, 4, interval2D );
+	interval.Init ( interval2D.mX, interval2D.mY, 0.0f );
+	return result;
+}
+
+//================================================================//
+// MOAIOverlap Overlap
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIOverlap::Overlap ( MOAIOverlapHandler& handler, const MOAIOverlapShape& shape0, const MOAIOverlapShape& shape1 ) {
 	
 	if ( Overlap ( shape0, shape1, handler.mTransform0, handler.mTransform1, handler.mCalculateBounds, handler.mBounds )) {
 	

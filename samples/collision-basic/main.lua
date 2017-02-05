@@ -4,6 +4,15 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+--[[
+
+arcade style collision proof of concept. motivation is to provide an alternative
+to box2d for arcade style games (top down scrollers and platformers). in particular,
+platformers can benefit from a tighter integration of physics and terrain. will
+also allow instancing of collision objects through tilemaps.
+
+]]--
+
 MOAIDebugLinesMgr.setStyle ( MOAICollisionProp.DEBUG_DRAW_COLLISION_ACTIVE_PROP_BOUNDS, 2, 0, 0, 1 )
 MOAIDebugLinesMgr.setStyle ( MOAICollisionProp.DEBUG_DRAW_COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS, 2, 1, 1, 1 )
 MOAIDebugLinesMgr.setStyle ( MOAICollisionProp.DEBUG_DRAW_COLLISION_ACTIVE_TOUCHED_PROP_BOUNDS, 2, 1, 0, 0 )
@@ -15,7 +24,7 @@ MOAISim.openWindow ( "test", 320, 480 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
-viewport:setScale ( 320, -480 )
+viewport:setScale ( 320, 480 )
 
 onOverlap = function ( event, prop1, prop2 )
 	
@@ -30,111 +39,128 @@ onOverlap = function ( event, prop1, prop2 )
 	if event == MOAICollisionWorld.OVERLAP_END then print () end
 end
 
+camera = MOAICamera.new ()
+
 world = MOAICollisionWorld.new ()
 world:setCallback ( onOverlap )
 world:start ()
 
-layer = MOAILayer.new ()
-layer:setViewport ( viewport )
-layer:pushRenderPass ()
-
 debugLayer = MOAILayer.new ()
 debugLayer:setViewport ( viewport )
 debugLayer:setLayerPartition ( world )
+debugLayer:setCamera ( camera )
 debugLayer:pushRenderPass ()
-
-spriteDeck = MOAISpriteDeck2D.new ()
-spriteDeck:setTexture ( '../resources/moai.png' )
-spriteDeck:setRect ( -64, -64, 64, 64 )
-spriteDeck:setUVRect ( 0, 0, 1, 1 )
-
---font = MOAIFont.new ()
---font:loadFromTTF ( '../resources/arial-rounded.TTF' )
 
 collDeck = MOAICollisionDeck.new ()
 collDeck:reserveShapes ( 1 )
+collDeck:setQuad ( 1,
+	-64, -64,
+	64, -64,
+	64, 64,
+	-64, 64
+)
+--[[
 collDeck:setQuad ( 1,
 	0, 64,
 	-64, 0,
 	0, -64,
 	64, 0
 )
+]]--
 
-ready = function ( prop, x, y, group )
+makePropWithColl = function ()
 
 	local coll = MOAICollisionProp.new ()
 	coll:setParent ( prop )
 	coll:setDeck ( collDeck )
+	coll:setOverlapFlags ( 0 )
 	--coll:setOverlapFlags ( MOAICollisionProp.OVERLAP_EVENTS_ON_UPDATE + MOAICollisionProp.OVERLAP_EVENTS_LIFECYCLE )
-	coll:setOverlapFlags ( MOAICollisionProp.OVERLAP_EVENTS_LIFECYCLE + MOAICollisionProp.OVERLAP_CALCULATE_BOUNDS )
+	--coll:setOverlapFlags ( MOAICollisionProp.OVERLAP_EVENTS_LIFECYCLE + MOAICollisionProp.OVERLAP_CALCULATE_BOUNDS )
 	--coll:setGroupMask ( group or MOAICollisionProp.CATEGORY_MASK_ALL )
 	coll:setPartition ( world )
-	
-	return prop, coll
+
+	return coll
 end
 
-makePropWithColl = function ( x, y, group )
+local coll2 = makePropWithColl ()
+coll2:setLoc ( 0, 0, 0 )
+--coll2:setRot ( 0, 0, 45 )
 
-	local prop = MOAIGraphicsProp.new ()
-	prop:setDeck ( spriteDeck )
-	prop:setPartition ( layer )
-	prop:setLoc ( x, y )
-	return ready ( prop, x, y, group )
-end
+local coll3 = makePropWithColl ()
+coll3:setLoc ( -128, 0, 0 )
+--coll3:setRot ( 0, 0, 45 )
 
---[[
-makeTextWithColl = function ( text, size, x, y, group )
+local coll4 = makePropWithColl ()
+coll4:setLoc ( 128, 0, 0 )
+--coll4:setRot ( 0, 0, 45 )
 
-	local label = MOAITextLabel.new ()
-	label:setString ( text )
-	label:setFont ( font )
-	label:setTextSize ( size )
-	label:setAlignment ( MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY )
-	layer:insertProp ( label )
+local coll1 = makePropWithColl ()
+coll1:setLoc ( 0, 160, 0 )
+--coll1:setLoc ( -64, 0, 0 )
+--coll1:setLoc ( 32, 128, 0 )
+--coll1:setScl ( 0.25, 1, 1)
 
-	return ready ( label, x, y, group )
-end
-]]--
+--camera:setParent ( coll1 )
+camera:setAttrLink ( MOAITransform.INHERIT_LOC, coll1, MOAITransform.TRANSFORM_TRAIT )
 
-local prop1, coll1 = makePropWithColl ( -70, 30 )
-local prop2, coll2 = makePropWithColl ( 70, -30 )
-
---collDeck:setBox ( 1, -64, -64, 0, 64, 64, 0 )
-
---coll1:setBounds ( prop1:getBounds ())
---coll1:setDeck ( collDeck )
---coll2:setBounds ( prop1:getBounds ())
-
---local prop1 = makeTextWithColl ( 'TEXTY TEXT\nTEXT\nTEXTERSON', 22, -70, 0, 1 )
---local prop2 = makeTextWithColl ( 'TEXTY TEXT\nTEXT\nTEXTERSON', 22, 70, 0, 1 )
---local prop3 = makeTextWithColl ( 'TEXTY TEXT\nTEXT\nTEXTERSON', 22, 0, 0, 2 )
-
---prop1:moveRot ( 0, 0, 360, 5 )
---prop2:moveRot ( 0, 0, -360, 5 )
-
-prop1:moveLoc ( 35, 0, 0, 5 )
-prop1:moveRot ( 0, 0, 45, 5 )
-
-prop2:moveLoc ( -35, 0, 0, 5 )
-prop2:moveRot ( 0, 0, 45, 5 )
-
---[[
 main = function ()
-	
+
+	local keyboard = MOAIInputMgr.device.keyboard
+
+	--local ACC = 2
+	--local DAMP = 0
+	local ACC = 0.25
+	local DAMP = 0.95
+	local xd = 0
+	local yd = 0
 	while true do
-		
-		if coll1:hasOverlaps () then
-			print ( coll1, 'overlaps:', coll1:getOverlaps ())
+
+		if keyboard:keyIsDown ( MOAIKeyCode.SPACE ) then
+			xd = 2
+			yd = 2
+			DAMP = 1
 		end
-		
-		if coll2:hasOverlaps () then
-			print ( coll2, 'overlaps:', coll2:getOverlaps ())
+
+		if keyboard:keyIsDown ( MOAIKeyCode.RIGHT ) then
+			xd = xd + ACC
 		end
-		
+
+		if keyboard:keyIsDown ( MOAIKeyCode.LEFT ) then
+			xd = xd - ACC
+		end
+
+		if keyboard:keyIsDown ( MOAIKeyCode.UP ) then
+			yd = yd + ACC
+		end
+
+		if keyboard:keyIsDown ( MOAIKeyCode.DOWN ) then
+			yd = yd - ACC
+		end
+
+		coll1:collisionMove ( xd, yd, 0 )
+		--coll1:collisionMove ( 1, 0, 0 )
+
+		xd = xd * DAMP
+		yd = yd * DAMP
+
+		xd = math.abs ( xd ) >= 0.01 and xd or 0
+		yd = math.abs ( yd ) >= 0.01 and yd or 0
+
+		local rd = 0
+
+		if keyboard:keyIsDown ( 'p' ) then
+			rd = rd - 1
+		end
+
+		if keyboard:keyIsDown ( 'o' ) then
+			rd = rd + 1
+		end
+
+		coll2:moveRot ( 0, 0, rd )
+
 		coroutine.yield ()
 	end
 end
 
 thread = MOAICoroutine.new ()
 thread:run ( main )
-]]--

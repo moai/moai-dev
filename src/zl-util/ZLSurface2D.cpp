@@ -187,7 +187,7 @@ ZLVec2D USSurface2D::GetNorm ( const ZLVec2D& e0, const ZLVec2D& e1 ) {
 
 	norm = e0;
 	norm.Sub ( e1 );
-	norm.Rotate90Anticlockwise ();
+	norm.Rotate90Clockwise ();
 	norm.Norm ();
 	
 	return norm;
@@ -331,7 +331,7 @@ void USSurface2D::Init ( const ZLVec2D& e0, const ZLVec2D& e1 ) {
 	this->ZLPlane2D::Init ( e0, e1 );
 	
 	this->mTangent = this->mNorm;
-	this->mTangent.Rotate90Anticlockwise ();
+	this->mTangent.Rotate90Clockwise ();
 	
 	this->mP0 = this->mTangent.Dot ( e0 );
 	this->mP1 = this->mTangent.Dot ( e1 );

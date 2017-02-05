@@ -148,7 +148,7 @@ void MOAIVectorUtil::ComputeLineJoins ( MOAIVectorLineJoin* joins, const ZLVec2D
 		
 		joins [ i ].mEdgeVec = n;
 		
-		n.Rotate90Anticlockwise ();
+		n.Rotate90Clockwise ();
 		n.Scale ( scale );
 		
 		joins [ i ].mEdgeNorm = n;

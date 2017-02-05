@@ -13,6 +13,37 @@
 #include <moai-sim/MOAIPartitionResultMgr.h>
 
 //================================================================//
+// MOAIVectorAccumulator
+//================================================================//
+	
+//----------------------------------------------------------------//
+void MOAIVectorAccumulator::Accumulate ( float x, float y, float z ) {
+
+	this->mAccumulator.mX += x;
+	this->mAccumulator.mY += y;
+	this->mAccumulator.mZ += z;
+	
+	this->mCount += 1.0f;
+}
+
+//----------------------------------------------------------------//
+ZLVec3D MOAIVectorAccumulator::GetAverage () {
+
+	if ( this->mCount > 0.0f ) {
+		ZLVec3D average = this->mAccumulator;
+		average.Scale ( 1.0f / this->mCount );
+		return average;
+	}
+	return ZLVec3D::ORIGIN;
+}
+
+//----------------------------------------------------------------//
+MOAIVectorAccumulator::MOAIVectorAccumulator () :
+	mAccumulator ( ZLVec3D::ORIGIN ),
+	mCount ( 0.0f ) {
+}
+
+//================================================================//
 // MOAIOverlapHandler
 //================================================================//
 
@@ -40,17 +71,17 @@ MOAIOverlapHandler::MOAIOverlapHandler ( MOAICollisionProp& prop0, MOAICollision
 	
 		if ( shape0 && shape1 ) {
 		
-			shape0->FindOverlaps ( *shape1, *this );
+			shape0->FindOverlaps ( *this, *shape1 );
 		}
 		else if ( shape0 ){
 		
 			ZLBounds bounds = prop1.GetModelBounds ();
-			shape0->FindOverlaps ( bounds, *this );
+			shape0->FindOverlaps ( *this, bounds );
 		}
 		else if ( shape1 ) {
 		
 			ZLBounds bounds = prop0.GetModelBounds ();
-			shape1->FindOverlaps ( bounds, *this );
+			shape1->FindOverlaps ( *this, bounds );
 		}
 	}
 	else {
@@ -62,7 +93,7 @@ MOAIOverlapHandler::MOAIOverlapHandler ( MOAICollisionProp& prop0, MOAICollision
 		shape1.mShape = prop1.GetModelBounds ();;
 		shape1.mBounds = shape1.mShape;
 		
-		MOAIOverlap::Overlap ( shape0, shape1, *this );
+		MOAIOverlap::Overlap ( *this, shape0, shape1 );
 	}
 }
 

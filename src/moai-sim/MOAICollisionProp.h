@@ -10,8 +10,12 @@
 class MOAICollisionShape;
 class MOAICollisionProp;
 class MOAICollisionWorld;
+class MOAIContactPoint2D;
+class MOAIContactPointAccumulator2D;
+class MOAIDrawShape;
 class MOAIOverlapHandler;
 class MOAIPropOverlap;
+class MOAIVectorAccumulator;
 
 //================================================================//
 // MOAIPropOverlapLink
@@ -76,6 +80,7 @@ private:
 	MOAICollisionWorld*					mCollisionWorld;
 	
 	//----------------------------------------------------------------//
+	static int				_collisionMove			( lua_State* L );
 	static int				_getOverlaps			( lua_State* L );
 	static int				_hasOverlaps			( lua_State* L );
 	//static int				_setGroupMask			( lua_State* L );
@@ -83,7 +88,12 @@ private:
 	
 	//----------------------------------------------------------------//
 	void					ClearOverlapLink		( MOAIPropOverlap& overlap );
+	static void				DrawContactPoints		( MOAIDrawShape& draw, const MOAIContactPoint2D* contacts, u32 nContacts );
+	void					FindContactPoints		( MOAIContactPointAccumulator2D& accumulator, MOAICollisionProp& other );
+	void					FindOverlapInterval		( MOAIVectorAccumulator& accumulator, MOAICollisionProp& other );
+	void					GatherContactPoints		( MOAIContactPointAccumulator2D& accumulator, const ZLBox& worldBounds );
 	bool					IsActive				();
+	void					Move					( ZLVec3D move );
 	
 	//----------------------------------------------------------------//
 	void					MOAIDrawable_DrawDebug						( int subPrimID );

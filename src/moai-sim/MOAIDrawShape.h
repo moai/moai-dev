@@ -24,6 +24,8 @@ public:
 	void			DrawBoxAxis					( const ZLBox& box );
 	void			DrawBoxDiagonals			( const ZLBox& box );
 	void			DrawBoxOutline				( const ZLBox& box );
+	void			DrawCircleFill				( float x, float y, float radius, u32 steps );
+	void			DrawCircleOutline			( float x, float y, float radius, u32 steps );
 	void			DrawEllipseFill				( const ZLRect& rect, u32 steps );
 	void			DrawEllipseFill				( float x, float y, float xRad, float yRad, u32 steps );
 	void			DrawEllipseOutline			( const ZLRect& rect, u32 steps );
@@ -37,6 +39,7 @@ public:
 	void			DrawPoint					( float x, float y, float z = 0.0f );
 	void			DrawPolyOutline				( const ZLPolygon2D& poly );
 	void			DrawQuadOutline				( const ZLQuad& quad );
+	void			DrawRay						( float x, float y, float dx, float dy, float length );
 	void			DrawRectEdges				( ZLRect rect, u32 edges );
 	void			DrawRectFill				( ZLRect rect );
 	void			DrawRectFill				( float left, float top, float right, float bottom );

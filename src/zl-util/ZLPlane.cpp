@@ -21,7 +21,7 @@ void ZLPlane2D::Init ( const ZLVec2D& p1, const ZLVec2D& p2 ) {
 	this->mNorm = p2;
 	this->mNorm.Sub ( p1 );
 	
-	this->mNorm.Rotate90Anticlockwise ();
+	this->mNorm.Rotate90Clockwise ();
 	this->mNorm.Norm ();
 
 	this->mDist = -this->mNorm.Dot ( p1 );

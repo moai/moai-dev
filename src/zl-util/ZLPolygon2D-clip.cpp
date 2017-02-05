@@ -179,7 +179,7 @@ public:
 					ZLVec2D edgeTangent = cursor->mNeighbor->mTangent;
 					
 					ZLVec2D edgeNormal = edgeTangent;
-					edgeNormal.Rotate90Clockwise ();
+					edgeNormal.Rotate90Anticlockwise ();
 					
 					DEBUG_LOG ( "edge: (%g, %g)\n", edgeTangent.mX, edgeTangent.mY );
 					
@@ -588,7 +588,7 @@ public:
 		this->mSourceTangent = sourceVertex.mTangent;
 		
 		this->mClipTangent = clipPlane.mNorm;
-		this->mClipTangent.Rotate90Anticlockwise ();
+		this->mClipTangent.Rotate90Clockwise ();
 		
 		if ( ZLDist::PointToPlane2D ( v0, clipPlane ) == 0.0f ) {
 			

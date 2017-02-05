@@ -402,16 +402,16 @@ public:
 	void Rotate90Anticlockwise () {
 	
 		float temp = this->mX;
-		this->mX = this->mY;
-		this->mY = -temp;
+		this->mX = -this->mY;
+		this->mY = temp;
 	}
 	
 	//----------------------------------------------------------------//
 	void Rotate90Clockwise () {
 	
 		float temp = this->mX;
-		this->mX = -this->mY;
-		this->mY = temp;
+		this->mX = this->mY;
+		this->mY = -temp;
 	}
 	
 	//----------------------------------------------------------------//

@@ -253,7 +253,7 @@ float ZLPolygon2D::GetCorner ( size_t idx, ZLVec2D* normal ) {
 	ZLVec2D n = e0;
 	n.Add ( e1 );
 	n.Norm ();
-	n.Rotate90Anticlockwise ();
+	n.Rotate90Clockwise ();
 	
 	if ( normal ) {
 		*normal = n;
@@ -298,7 +298,7 @@ bool ZLPolygon2D::GetDistance ( const ZLVec2D& point, float& d, ZLVec2D& p ) con
 			// snap the point onto the edge
 			
 			// edge normal
-			n.Rotate90Anticlockwise ();
+			n.Rotate90Clockwise ();
 			n.NormSafe ();
 			
 			// snap

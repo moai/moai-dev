@@ -870,7 +870,7 @@ void MOAIRegion::Edge ( const MOAIRegion& region, const ZLVec2D& offset ) {
 			ZLVec2D edgeVec = contour [ 1 ];
 			edgeVec.Sub ( contour [ 0 ]);
 			
-			edgeVec.Rotate90Clockwise ();
+			edgeVec.Rotate90Anticlockwise ();
 			if ( edgeVec.Dot ( offset ) < 0.0f ) {
 			
 				ZLVec2D swap = contour [ 0 ];

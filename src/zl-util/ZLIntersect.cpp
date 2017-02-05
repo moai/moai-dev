@@ -104,7 +104,7 @@ u32 ZLSect::PlaneToPlane ( const ZLPlane2D& p0, const ZLPlane2D& p1, ZLVec2D& lo
 	loc.Scale ( -p0.mDist );
 
 	ZLVec2D vec = p0.mNorm;
-	vec.Rotate90Clockwise ();
+	vec.Rotate90Anticlockwise ();
 	
 	float t;
 	u32 result = ZLSect::VecToPlane ( loc, vec, p1, t );

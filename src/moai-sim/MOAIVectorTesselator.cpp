@@ -1344,7 +1344,7 @@ void MOAIVectorTesselator::WriteSkirt ( SafeTesselator& tess, ZLStream& vtxStrea
 			
 			ZLVec2D e = v1;
 			e.Sub ( v0 );
-			e.Rotate90Clockwise ();
+			e.Rotate90Anticlockwise ();
 			e.Norm ();
 			
 			faceNormals [ j ] = e;

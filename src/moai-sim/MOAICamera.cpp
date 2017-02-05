@@ -78,7 +78,7 @@ int MOAICamera::_getFloorMove ( lua_State* L ) {
 	
 	// TODO: double check this
 	ZLVec2D r ( v.mX, v.mY );
-	r.Rotate90Clockwise ();
+	r.Rotate90Anticlockwise ();
 	h.Init ( r.mX, r.mY, 0.0f );
 	
 	h.Scale ( x );

@@ -52,6 +52,18 @@ void MOAIDrawShape::DrawBoxOutline ( const ZLBox& box ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIDrawShape::DrawCircleFill ( float x, float y, float radius, u32 steps ) {
+
+	this->DrawEllipseFill ( x, y, radius, radius, steps );
+}
+
+//----------------------------------------------------------------//
+void MOAIDrawShape::DrawCircleOutline ( float x, float y, float radius, u32 steps ) {
+
+	this->DrawEllipseOutline ( x, y, radius, radius, steps );
+}
+
+//----------------------------------------------------------------//
 void MOAIDrawShape::DrawEllipseFill ( const ZLRect& rect, u32 steps ) {
 
 	float xRad = ( rect.mXMax - rect.mXMin ) * 0.5f;
@@ -180,6 +192,12 @@ void MOAIDrawShape::DrawQuadOutline ( const ZLQuad& quad ) {
 	this->DrawLine ( quad.mV [ 1 ].mX, quad.mV [ 1 ].mY, quad.mV [ 2 ].mX, quad.mV [ 2 ].mY );
 	this->DrawLine ( quad.mV [ 2 ].mX, quad.mV [ 2 ].mY, quad.mV [ 3 ].mX, quad.mV [ 3 ].mY );
 	this->DrawLine ( quad.mV [ 3 ].mX, quad.mV [ 3 ].mY, quad.mV [ 0 ].mX, quad.mV [ 0 ].mY );
+}
+
+//----------------------------------------------------------------//
+void MOAIDrawShape::DrawRay ( float x, float y, float dx, float dy, float length ) {
+
+	this->DrawLine ( x, y, x + ( dx * length ), y + ( dy * length ));
 }
 
 //----------------------------------------------------------------//
