@@ -221,6 +221,14 @@ void ZLBox::Grow ( const ZLBox& box, bool first ) {
 }
 
 //----------------------------------------------------------------//
+void ZLBox::Grow ( const ZLRect& rect, bool first, u32 plane ) {
+
+	ZLBox grow;
+	grow.Init ( rect, plane );
+	this->Grow ( rect, first );
+}
+
+//----------------------------------------------------------------//
 void ZLBox::Grow ( const ZLVec3D& vec, bool first ) {
 
 	if ( first ) {

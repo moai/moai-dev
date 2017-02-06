@@ -36,6 +36,7 @@ public:
 	float		GetRadius		() const;
 	ZLRect		GetRect			( u32 plane = PLANE_XY ) const;
 	void		Grow			( const ZLBox& box, bool first = false );
+	void		Grow			( const ZLRect& rect, bool first = false, u32 plane = PLANE_XY );
 	void		Grow			( const ZLVec3D& vec, bool first = false );
 	void		Inflate			( float size );
 	void		Init			( const ZLBox& box );

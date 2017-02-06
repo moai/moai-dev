@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-sim/MOAICollisionPrims.h>
 #include <moai-sim/MOAICollisionProp.h>
 #include <moai-sim/MOAICollisionShape.h>
 #include <moai-sim/MOAICollisionWorld.h>
@@ -12,36 +13,14 @@
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIPartitionResultMgr.h>
 
-//================================================================//
-// MOAIVectorAccumulator
-//================================================================//
-	
-//----------------------------------------------------------------//
-void MOAIVectorAccumulator::Accumulate ( float x, float y, float z ) {
+// uncomment me to debug log
+//#define MOAICOLLISIONWORLD_DEBUG
 
-	this->mAccumulator.mX += x;
-	this->mAccumulator.mY += y;
-	this->mAccumulator.mZ += z;
-	
-	this->mCount += 1.0f;
-}
-
-//----------------------------------------------------------------//
-ZLVec3D MOAIVectorAccumulator::GetAverage () {
-
-	if ( this->mCount > 0.0f ) {
-		ZLVec3D average = this->mAccumulator;
-		average.Scale ( 1.0f / this->mCount );
-		return average;
-	}
-	return ZLVec3D::ORIGIN;
-}
-
-//----------------------------------------------------------------//
-MOAIVectorAccumulator::MOAIVectorAccumulator () :
-	mAccumulator ( ZLVec3D::ORIGIN ),
-	mCount ( 0.0f ) {
-}
+#ifdef MOAICOLLISIONWORLD_DEBUG
+	#define DEBUG_LOG printf
+#else
+	#define DEBUG_LOG(...)
+#endif
 
 //================================================================//
 // MOAIOverlapHandler
@@ -64,43 +43,18 @@ MOAIOverlapHandler::MOAIOverlapHandler ( MOAICollisionProp& prop0, MOAICollision
 
 	// TODO: this should all be handled by collition iterators within the shapes
 	// TODO: shapes may be complex - compound shapes, grids, etc.
-	MOAICollisionShape* shape0 = prop0.GetCollisionShape ();
-	MOAICollisionShape* shape1 = prop1.GetCollisionShape ();
 	
-	if ( shape0 || shape1 ) {
-	
-		if ( shape0 && shape1 ) {
-		
-			shape0->FindOverlaps ( *this, *shape1 );
-		}
-		else if ( shape0 ){
-		
-			ZLBounds bounds = prop1.GetModelBounds ();
-			shape0->FindOverlaps ( *this, bounds );
-		}
-		else if ( shape1 ) {
-		
-			ZLBounds bounds = prop0.GetModelBounds ();
-			shape1->FindOverlaps ( *this, bounds );
-		}
-	}
-	else {
-		MOAIOverlapBox shape0;
-		shape0.mShape = prop0.GetModelBounds ();;
-		shape0.mBounds = shape0.mShape;
-		
-		MOAIOverlapBox shape1;
-		shape1.mShape = prop1.GetModelBounds ();;
-		shape1.mBounds = shape1.mShape;
-		
-		MOAIOverlap::Overlap ( *this, shape0, shape1 );
-	}
+	MOAICollisionProp::Process ( *this, prop0, prop1 );
 }
 
-//----------------------------------------------------------------//
-void MOAIOverlapHandler::HandleOverlap () {
+//================================================================//
+// ::implementation::
+//================================================================//
 
-	this->mProp0.mCollisionWorld->HandleOverlap ( this->mProp0, 0, this->mProp1, 0, this->mBounds );
+//----------------------------------------------------------------//
+void MOAIOverlapHandler::MOAIOverlap_OnOverlap ( const ZLBounds& bounds ) {
+
+	this->mProp0.mCollisionWorld->HandleOverlap ( this->mProp0, 0, this->mProp1, 0, bounds );
 }
 
 //================================================================//

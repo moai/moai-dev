@@ -4,6 +4,7 @@
 #ifndef	ZLBOUNDS_H
 #define	ZLBOUNDS_H
 
+#include <zl-util/ZLAccessors.h>
 #include <zl-util/ZLBox.h>
 
 //================================================================//
@@ -23,6 +24,8 @@ public:
 	};
 
 	u32			mStatus;
+
+	IS ( Empty, mStatus, ZL_BOUNDS_EMPTY )
 	
 	//----------------------------------------------------------------//
 	void		Init					( const ZLBox& box );

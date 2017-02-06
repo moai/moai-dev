@@ -4,6 +4,7 @@
 #ifndef	MOAICOLLISIONFACET_H
 #define	MOAICOLLISIONFACET_H
 
+#include <moai-sim/MOAICollisionPrims.h>
 #include <moai-sim/MOAIIndexedPropBase.h>
 #include <moai-sim/MOAIPartitionHull.h>
 
@@ -13,6 +14,7 @@ class MOAICollisionWorld;
 class MOAIContactPoint2D;
 class MOAIContactPointAccumulator2D;
 class MOAIDrawShape;
+class MOAIMoveConstraint2D;
 class MOAIOverlapHandler;
 class MOAIPropOverlap;
 class MOAIVectorAccumulator;
@@ -88,12 +90,12 @@ private:
 	
 	//----------------------------------------------------------------//
 	void					ClearOverlapLink		( MOAIPropOverlap& overlap );
-	static void				DrawContactPoints		( MOAIDrawShape& draw, const MOAIContactPoint2D* contacts, u32 nContacts );
-	void					FindContactPoints		( MOAIContactPointAccumulator2D& accumulator, MOAICollisionProp& other );
-	void					FindOverlapInterval		( MOAIVectorAccumulator& accumulator, MOAICollisionProp& other );
-	void					GatherContactPoints		( MOAIContactPointAccumulator2D& accumulator, const ZLBox& worldBounds );
+	static void				DrawContactPoints		( MOAIDrawShape& draw, const MOAIMoveConstraint2D* contacts, u32 nContacts );
+	void					GatherAndProcess		( MOAIOverlapShapeVisitor& visitor, const ZLBox& worldBounds );
 	bool					IsActive				();
 	void					Move					( ZLVec3D move );
+	void					Process					( MOAIOverlapShapeVisitor& visitor, MOAICollisionProp& other );
+	static void				Process					( MOAIOverlapShapeVisitor& visitor, MOAICollisionProp& prop0, MOAICollisionProp& prop1 );
 	
 	//----------------------------------------------------------------//
 	void					MOAIDrawable_DrawDebug						( int subPrimID );
@@ -131,13 +133,13 @@ public:
 	static const u32 DEFAULT_OVERLAP_FLAGS			= 0;
 
 	//----------------------------------------------------------------//
-	MOAICollisionShape*		GetCollisionShape		();
-							MOAICollisionProp		();
-	virtual					~MOAICollisionProp		();
-	void					RegisterLuaClass		( MOAILuaState& state );
-	void					RegisterLuaFuncs		( MOAILuaState& state );
-	void					SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
-	void					SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
+	MOAICollisionShape*			GetCollisionShape				();
+								MOAICollisionProp				();
+	virtual						~MOAICollisionProp				();
+	void						RegisterLuaClass				( MOAILuaState& state );
+	void						RegisterLuaFuncs				( MOAILuaState& state );
+	void						SerializeIn						( MOAILuaState& state, MOAIDeserializer& serializer );
+	void						SerializeOut					( MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

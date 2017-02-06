@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAICamera.h>
+#include <moai-sim/MOAICollisionProp.h>
 #include <moai-sim/MOAICollisionShape.h>
 #include <moai-sim/MOAICollisionWorld.h>
 #include <moai-sim/MOAIDeck.h>
@@ -11,11 +12,13 @@
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAILayoutFrame.h>
-#include <moai-sim/MOAIRenderMgr.h>
+#include <moai-sim/MOAIMoveConstraint2D.h>
+#include <moai-sim/MOAIOverlap.h>
+#include <moai-sim/MOAIOverlapResolver.h>
 #include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionResultMgr.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
-#include <moai-sim/MOAICollisionProp.h>
+#include <moai-sim/MOAIRenderMgr.h>
 #include <moai-sim/MOAIScissorRect.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
@@ -23,6 +26,15 @@
 #include <moai-sim/MOAITexture.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAIViewport.h>
+
+// uncomment me to debug log
+//#define MOAICOLLISIONPROP_DEBUG
+
+#ifdef MOAICOLLISIONPROP_DEBUG
+	#define DEBUG_LOG printf
+#else
+	#define DEBUG_LOG(...)
+#endif
 
 //================================================================//
 // local
@@ -101,13 +113,13 @@ void MOAICollisionProp::ClearOverlapLink ( MOAIPropOverlap& overlap ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionProp::DrawContactPoints ( MOAIDrawShape& draw, const MOAIContactPoint2D* contacts, u32 nContacts ) {
+void MOAICollisionProp::DrawContactPoints ( MOAIDrawShape& draw, const MOAIMoveConstraint2D* contacts, u32 nContacts ) {
 
 	draw.SetPenWidth ( 1.0f );
 
 	for ( u32 i = 0; i < nContacts; ++i ) {
 	
-		const MOAIContactPoint2D& contact = contacts [ i ];
+		const MOAIMoveConstraint2D& contact = contacts [ i ];
 	
 		ZLVec3D point ( contact.mPoint.mX, contact.mPoint.mY, 0.0f );
 		ZLVec3D normal ( contact.mNormal.mX, contact.mNormal.mY, 0.0f );
@@ -119,22 +131,22 @@ void MOAICollisionProp::DrawContactPoints ( MOAIDrawShape& draw, const MOAIConta
 		
 		switch ( contact.mType ) {
 		
-			case MOAIContactPoint2D::LEAVING:
+			case MOAIMoveConstraint2D::LEAVING:
 
 				draw.SetPenColor ( ZLColor::PackRGBA ( 1.0f, 0.0f, 1.0f, 1.0f ));
 				break;
 				
-			case MOAIContactPoint2D::CROSSING:
+			case MOAIMoveConstraint2D::CROSSING:
 
 				draw.SetPenColor ( ZLColor::PackRGBA ( 1.0f, 0.0f, 0.0f, 1.0f ));
 				break;
 				
-			case MOAIContactPoint2D::PARALLEL:
+			case MOAIMoveConstraint2D::PARALLEL:
 
 				draw.SetPenColor ( ZLColor::PackRGBA ( 0.0f, 1.0f, 1.0f, 1.0f ));
 				break;
 				
-			case MOAIContactPoint2D::CORNER:
+			case MOAIMoveConstraint2D::CORNER:
 				
 				draw.SetPenColor ( ZLColor::PackRGBA ( 0.85f, 0.0f, 1.0f, 1.0f ));
 				draw.DrawRay ( point.mX, point.mY, cornerTangent.mX, cornerTangent.mY, 48.0f );
@@ -151,33 +163,7 @@ void MOAICollisionProp::DrawContactPoints ( MOAIDrawShape& draw, const MOAIConta
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionProp::FindContactPoints ( MOAIContactPointAccumulator2D& accumulator, MOAICollisionProp& other ) {
-
-	MOAICollisionShape* shape0 = this->GetCollisionShape ();
-	MOAICollisionShape* shape1 = other.GetCollisionShape ();
-	
-	if ( shape0 && shape1 ) {
-	
-		shape0->FindContactPoints ( accumulator, *shape1, *this, other );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionProp::FindOverlapInterval ( MOAIVectorAccumulator& accumulator, MOAICollisionProp& other ) {
-
-	MOAICollisionShape* shape0 = this->GetCollisionShape ();
-	MOAICollisionShape* shape1 = other.GetCollisionShape ();
-	
-	if ( shape0 && shape1 ) {
-	
-		shape0->FindOverlapInterval ( accumulator, *shape1, *this, other );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionProp::GatherContactPoints ( MOAIContactPointAccumulator2D& accumulator, const ZLBox& worldBounds ) {
-
-	accumulator.Reset ();
+void MOAICollisionProp::GatherAndProcess ( MOAIOverlapShapeVisitor& visitor, const ZLBox& worldBounds ) {
 
 	MOAICollisionWorld& world = *this->mCollisionWorld;
 
@@ -187,9 +173,10 @@ void MOAICollisionProp::GatherContactPoints ( MOAIContactPointAccumulator2D& acc
 	
 	for ( u32 i = 0; i < totalResults; ++i ) {
 		MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-		MOAICollisionProp* otherProp = result->AsType < MOAICollisionProp >();
-		if ( !otherProp ) continue;
-		this->FindContactPoints ( accumulator, *otherProp );
+		MOAICollisionProp* other = result->AsType < MOAICollisionProp >();
+		if ( !other ) continue;
+		
+		this->Process ( visitor, *other );
 	}
 }
 
@@ -241,15 +228,9 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 	// later.
 
 	static u32 MAX_PASSES = 8;
-
-	MOAICollisionWorld& world = *this->mCollisionWorld;
-
-	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
-	u32 interfaceMask = world.GetInterfaceMask < MOAICollisionProp >();
-	u32 totalResults = 0;
 	
-	MOAIContactPoint2D* contacts = ( MOAIContactPoint2D* )alloca ( 128 * sizeof ( MOAIContactPoint2D ));
-	MOAIContactPointAccumulator2D contactAccumulator ( contacts, 128 );
+	MOAIMoveConstraint2D* contacts = ( MOAIMoveConstraint2D* )alloca ( 128 * sizeof ( MOAIMoveConstraint2D ));
+	MOAIMoveConstraintAccumulator2D contactAccumulator ( contacts, 128 );
 	
 	ZLVec2D moveNorm ( move.mX, move.mY );
 	float moveLength = moveNorm.NormSafe ();
@@ -261,23 +242,25 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 			// find best contact points
 			
 			float bestPushDot = 2.0f;
-			const MOAIContactPoint2D* bestPushContact = 0;
+			const MOAIMoveConstraint2D* bestPushContact = 0;
 			
 			float bestPullDot = 2.0f;
-			const MOAIContactPoint2D* bestPullContact = 0;
+			const MOAIMoveConstraint2D* bestPullContact = 0;
 		
 			// find contacts
 			ZLBox worldBounds = this->GetWorldBounds ();
 			worldBounds.Inflate ( 10.0f ); // TODO: epsilon
 		
-			this->GatherContactPoints ( contactAccumulator, worldBounds );
+			contactAccumulator.Reset ();
+			this->GatherAndProcess ( contactAccumulator, worldBounds );
 			u32 nContacts = contactAccumulator.Top ();
 			
 			for ( u32 i = 0; i < nContacts; ++i ) {
-				const MOAIContactPoint2D& contact = contacts [ i ];
+			
+				const MOAIMoveConstraint2D& contact = contacts [ i ];
 				
 				// ignore corner contacts if they are behind the move
-				if ( contact.mType == MOAIContactPoint2D::CORNER ) {
+				if ( contact.mType == MOAIMoveConstraint2D::CORNER ) {
 					if ( !(( moveNorm.Dot ( contact.mCornerTangent ) > -EPSILON ) && ( moveNorm.Dot ( contact.mEdgeNormal ) > -EPSILON ))) continue;
 				}
 				
@@ -301,7 +284,7 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 				}
 			}
 
-			const MOAIContactPoint2D* bestContact = 0;
+			const MOAIMoveConstraint2D* bestContact = 0;
 
 			if ( bestPushContact ) {
 
@@ -309,7 +292,6 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 				if ( bestPushDot <= ( EPSILON - 1.0f )) {
 					break;
 				}
-				printf ( "PUSH\n" );
 				bestContact = bestPushContact;
 			}
 			else if ( bestPullContact ) {
@@ -318,19 +300,12 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 				if ( bestPullDot >= ( 1.0f - EPSILON )) {
 					break;
 				}
-				printf ( "PULL\n" );
 				bestContact = bestPullContact;
 			}
 			else if ( nContacts ) {
 			
 				break;
 			}
-
-			//if ( bestContact && ( bestContact->mType == MOAIContactPoint2D::CORNER )) break;
-
-//			if ( nContacts && !bestContact ) {
-//				printf ( "FLY FLY!\n" );
-//			}
 
 			ZLVec2D stepMoveNorm;
 			float stepMoveLength;
@@ -346,12 +321,12 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 				float maxMove = duh > 0.0f ? bestContact->mPosD : bestContact->mNegD;
 				stepMoveLength = moveLength < maxMove ? moveLength : maxMove;
 				
-				printf ( "----> STEP: (%g, %g) EDGE (%g, %g) MAX MOVE: %g\n",
+				DEBUG_LOG ( "----> STEP: (%g, %g) EDGE (%g, %g) MAX MOVE: %g\n",
 					move.mX, move.mY,
 					bestContact->mTangent.mX, bestContact->mTangent.mY,
 					maxMove
 				);
-				printf ( "\n" );
+				DEBUG_LOG ( "\n" );
 			}
 			else {
 			
@@ -377,18 +352,16 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 	
 	MOAICollisionProp::DrawContactPoints ( *this->mCollisionWorld, contacts, contactAccumulator.Top ());
 	
+//	this->mLoc.Add ( move );
+//	this->MOAITransformBase::MOAINode_Update ();
+//	this->MOAIPartitionHull::MOAINode_Update ();
+	
 	// resolve overlaps
-	totalResults = world.GatherHulls ( buffer, this, this->GetWorldBounds (), interfaceMask );
+	MOAIOverlapResolver overlapResolver;
+	this->GatherAndProcess ( overlapResolver, this->GetWorldBounds ());
 	
-	MOAIVectorAccumulator accumulator;
+	ZLVec3D resolveOverlaps = overlapResolver.GetResult ();
 	
-	for ( u32 i = 0; i < totalResults; ++i ) {
-		MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-		MOAICollisionProp* otherProp = result->AsType < MOAICollisionProp >();
-		if ( !otherProp ) continue;
-		this->FindOverlapInterval ( accumulator, *otherProp );
-	}
-	ZLVec3D resolveOverlaps = accumulator.GetAverage ();
 	this->mLoc.Add ( resolveOverlaps );
 	this->ScheduleUpdate ();
 
@@ -410,6 +383,52 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 		move.Norm ();
 		move.Scale ( radius );
 		draw.DrawLine ( this->mLoc.mX, this->mLoc.mY, this->mLoc.mX + move.mX, this->mLoc.mY + move.mY );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionProp::Process ( MOAIOverlapShapeVisitor& visitor, MOAICollisionProp& other ) {
+
+	MOAICollisionProp::Process ( visitor, *this, other );
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionProp::Process ( MOAIOverlapShapeVisitor& visitor, MOAICollisionProp& prop0, MOAICollisionProp& prop1 ) {
+
+	const MOAICollisionShape* shape0 = prop0.GetCollisionShape ();
+	const MOAICollisionShape* shape1 = prop1.GetCollisionShape ();
+	
+	ZLAffine3D t0 = prop0.GetLocalToWorldMtx ();
+	ZLAffine3D t1 = prop1.GetLocalToWorldMtx ();
+	
+	if ( shape0 || shape1 ) {
+	
+		if ( shape0 && shape1 ) {
+		
+			shape0->Process ( visitor, *shape1, t0, t1 );
+		}
+		else if ( shape0 ){
+		
+			ZLBounds bounds = prop1.GetModelBounds ();
+			shape0->Process ( visitor, bounds, t0, t1 );
+		}
+		else if ( shape1 ) {
+		
+			ZLBounds bounds = prop0.GetModelBounds ();
+			shape0->Process ( visitor, bounds, t0, t1 );
+		}
+	}
+	else {
+	
+		MOAIOverlapBox shape0;
+		shape0.mShape = prop0.GetModelBounds ();;
+		shape0.mBounds = shape0.mShape;
+		
+		MOAIOverlapBox shape1;
+		shape1.mShape = prop1.GetModelBounds ();;
+		shape1.mBounds = shape1.mShape;
+		
+		visitor.Process ( shape0, shape1, t0, t1 );
 	}
 }
 

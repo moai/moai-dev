@@ -4,11 +4,11 @@
 #ifndef	MOAICOLLISIONSHAPE_H
 #define	MOAICOLLISIONSHAPE_H
 
-#include <moai-sim/MOAIOverlap.h>
-
-class MOAIOverlapHandler;
-class MOAITransformBase;
-class MOAIVectorAccumulator;
+class MOAIOverlap;
+class MOAIOverlapResolver;
+class MOAIOverlapShape;
+class MOAIOverlapShapeVisitor;
+class MOAIMoveConstraintAccumulator2D;
 
 //================================================================//
 // MOAICollisionShape
@@ -31,10 +31,9 @@ public:
 	//----------------------------------------------------------------//
 	void			Clear							();
 	void			Draw							( const ZLAffine3D& localToWorldMtx );
-	void			FindContactPoints				( MOAIContactPointAccumulator2D& accumulator, MOAICollisionShape& otherShape, const MOAITransformBase& t0, const MOAITransformBase& t1 );
-	void			FindOverlapInterval				( MOAIVectorAccumulator& accumulator, MOAICollisionShape& otherShape, const MOAITransformBase& t0, const MOAITransformBase& t1 );
-	void			FindOverlaps					( MOAIOverlapHandler& handler, const ZLBox& otherBounds ) const;
-	void			FindOverlaps					( MOAIOverlapHandler& handler, const MOAICollisionShape& otherShape ) const;
+	void			Process							( MOAIOverlapShapeVisitor& visitor, const ZLBox& otherBounds, const ZLAffine3D& t0, const ZLAffine3D& t1 ) const;
+	void			Process							( MOAIOverlapShapeVisitor& visitor, const MOAICollisionShape& otherShape, const ZLAffine3D& t0, const ZLAffine3D& t1 ) const;
+	static void		Process							( MOAIOverlapShapeVisitor& visitor, const MOAICollisionShape& shape0, const MOAICollisionShape& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 );
 					MOAICollisionShape				();
 					~MOAICollisionShape				();
 	void			ReserveShapes					( u32 totalShapes );

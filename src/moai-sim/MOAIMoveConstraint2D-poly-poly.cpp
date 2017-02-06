@@ -2,87 +2,23 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAICollision.h>
-#include <moai-sim/MOAICollisionWorld.h>
+#include <moai-sim/MOAIMoveConstraint2D.h>
 
-// TODO: all this will eventualy be componetized and tidied up; just a scratch area for now.
+// uncomment me to debug log
+//#define MOAIMOVECONSTRAINT2D_DEBUG
+
+#ifdef MOAIMOVECONSTRAINT2D_DEBUG
+	#define DEBUG_LOG printf
+#else
+	#define DEBUG_LOG(...)
+#endif
 
 //================================================================//
-// MOAICollision
+// MOAIMoveConstraintAccumulator2D
 //================================================================//
 
 //----------------------------------------------------------------//
-void CalculateInterval ( const ZLVec2D* poly, size_t nPoly, const ZLVec2D& axis, float& min, float& max ) {
-	
-    min = max = axis.Dot ( poly [ 0 ]);
-	
-    for ( size_t i = 0; i < nPoly; ++i ) {
-
-        float d = axis.Dot ( poly [ i ]);
-        if ( d < min ) {
-			min = d;
-		}
-        else if ( d > max ) {
-			max = d;
-		}
-    } 
-}
-
-//----------------------------------------------------------------//
-// return false if no overlap OR find the shortist displays poly has to move (along N) to no longer overlap poly1
-bool AxisSeparatePolygon ( const ZLVec2D* poly0, size_t nPoly0, const ZLVec2D* poly1, size_t nPoly1, const ZLVec2D& axis, float& t ) {
-
-    float min0, max0;
-    float min1, max1; 
-
-    CalculateInterval ( poly0, nPoly0, axis, min0, max0 );
-    CalculateInterval ( poly1, nPoly1, axis, min1, max1 );
-
-	if (( max1 <= min0 ) || ( max0 <= min1 )) return false; // no overlap
-
-    float d0 = max1 - min0; // if overlapped, d0 < 0
-    float d1 = min1 - max0; // if overlapped, d1 > 0
-
-	t = ABS ( d0 ) < ABS ( d1 ) ? d0 : d1;
-	return true;
-}
-
-//----------------------------------------------------------------//
-// return false if no overlap OR find the shortist displays poly has to move (along N) to no longer overlap poly1
-bool AxisSeparatePolygons ( const ZLVec2D* poly0, size_t nPoly0, const ZLVec2D* poly1, size_t nPoly1, ZLVec2D& outN, float& outT ) {
-
-	bool first = true;
-	float bestT = 0.0f;
-	ZLVec2D bestN ( 0.0f, 0.0f );
-
-	for ( size_t i = 0; i < nPoly0; i++ ) {
-	
-		// get the edge normal
-		ZLVec2D e0 = poly0 [ i ];
-        ZLVec2D e1 = poly0 [( i + 1 ) % nPoly0 ];
-        ZLVec2D e = e1 - e0;
-        ZLVec2D n = ZLVec2D ( -e.mY, e.mX );
-		n.Norm ();
-		
-		float t;
-		
-		if ( !AxisSeparatePolygon ( poly0, nPoly0, poly1, nPoly1, n, t )) return false;
-		
-		if (( first ) || ( ABS ( t ) < ABS ( bestT ))) {
-			bestT = t;
-			bestN = n;
-			first = false;
-		}
-	}
-	
-	outN = bestN;
-	outT = bestT;
-	
-	return true;
-}
-
-//----------------------------------------------------------------//
-void MOAICollision::FindContactPoints ( const ZLVec2D* poly0, size_t nPoly0, const ZLVec2D* poly1, size_t nPoly1, MOAIContactPointAccumulator2D& accumulator ) {
+void MOAIMoveConstraintAccumulator2D::FindConstraints ( const ZLVec2D* poly0, size_t nPoly0, const ZLVec2D* poly1, size_t nPoly1 ) {
 
 	if (( nPoly0 < 3 ) || ( nPoly1 < 2 )) return;
 
@@ -142,7 +78,7 @@ void MOAICollision::FindContactPoints ( const ZLVec2D* poly0, size_t nPoly0, con
 		float innerD0 = d0 - PAD;
 		float outerD0 = d0 + PAD;
 	
-		printf ( "EDGE N: (%g, %g) V: (%g, %g)->(%g, %g)\n", n0.mX, n0.mY, v0.mX, v0.mY, v1.mX, v1.mY );
+		DEBUG_LOG ( "EDGE N: (%g, %g) V: (%g, %g)->(%g, %g)\n", n0.mX, n0.mY, v0.mX, v0.mY, v1.mX, v1.mY );
 	
 		for ( size_t j = 0; j < nPoly1; j++ ) {
 		
@@ -192,7 +128,7 @@ void MOAICollision::FindContactPoints ( const ZLVec2D* poly0, size_t nPoly0, con
 						ZLVec2D cornerTangent = bodyVertexNormals [ i ];
 						cornerTangent.Rotate90Clockwise ();
 						
-						accumulator.PushCorner ( v3, invE0, invN0, v0, v1, slideNormal, cornerTangent );
+						this->PushCorner ( v3, invE0, invN0, v0, v1, slideNormal, cornerTangent );
 					}
 					else if ( ve2 >= ( ve1 - CORNER_PAD )) {
 						
@@ -202,7 +138,7 @@ void MOAICollision::FindContactPoints ( const ZLVec2D* poly0, size_t nPoly0, con
 						ZLVec2D cornerTangent = bodyVertexNormals [( i + 1 ) % nPoly0 ];
 						cornerTangent.Rotate90Anticlockwise ();
 						
-						accumulator.PushCorner ( v2, invE0, invN0, v0, v1, slideNormal, cornerTangent );
+						this->PushCorner ( v2, invE0, invN0, v0, v1, slideNormal, cornerTangent );
 					}
 					else {
 					
@@ -214,7 +150,7 @@ void MOAICollision::FindContactPoints ( const ZLVec2D* poly0, size_t nPoly0, con
 							ZLVec2D cornerTangent = bodyVertexNormals [ i ];
 							cornerTangent.Rotate90Clockwise ();
 
-							accumulator.PushCorner ( v0, invE0, invN0, v2, v3, slideNormal, cornerTangent );
+							this->PushCorner ( v0, invE0, invN0, v2, v3, slideNormal, cornerTangent );
 						}
 					
 						if (( ve1 <= ve3 ) && ( ve1 >= ( ve3 - CORNER_PAD ))) {
@@ -225,7 +161,7 @@ void MOAICollision::FindContactPoints ( const ZLVec2D* poly0, size_t nPoly0, con
 							ZLVec2D cornerTangent = bodyVertexNormals [( i + 1 ) % nPoly0 ];
 							cornerTangent.Rotate90Anticlockwise ();
 							
-							accumulator.PushCorner ( v1, invE0, invN0, v2, v3, slideNormal, cornerTangent );
+							this->PushCorner ( v1, invE0, invN0, v2, v3, slideNormal, cornerTangent );
 						}
 					}
 				}
@@ -316,7 +252,7 @@ void MOAICollision::FindContactPoints ( const ZLVec2D* poly0, size_t nPoly0, con
 											( !front && ( n0.Dot ( n1 ) < EPSILON ))
 										) {
 											// surface facing edge
-											accumulator.PushCorner ( s, e1, n1, v2, v3, n0, cornerTangent );
+											this->PushCorner ( s, e1, n1, v2, v3, n0, cornerTangent );
 										}
 									}
 									else {
@@ -325,7 +261,7 @@ void MOAICollision::FindContactPoints ( const ZLVec2D* poly0, size_t nPoly0, con
 										if ( n0.Dot ( n1 ) > -EPSILON ) {
 										
 											// surface facing *away* from edge
-											accumulator.PushCorner ( s, wallTangent, wallNorm, s, nextCorner, wallTangent, cornerTangent );
+											this->PushCorner ( s, wallTangent, wallNorm, s, nextCorner, wallTangent, cornerTangent );
 										}
 									}
 								}
@@ -333,36 +269,15 @@ void MOAICollision::FindContactPoints ( const ZLVec2D* poly0, size_t nPoly0, con
 						}
 						else {
 							// leaving
-							accumulator.Push ( s, invE0, invN0, v0, v1, MOAIContactPoint2D::LEAVING );
+							this->Push ( s, invE0, invN0, v0, v1, MOAIMoveConstraint2D::LEAVING );
 						}
 					}
 					else {
 						// crossing
-						accumulator.Push ( s, e1, n1, v2, v3, MOAIContactPoint2D::CROSSING );
+						this->Push ( s, e1, n1, v2, v3, MOAIMoveConstraint2D::CROSSING );
 					}
 				}
 			}
 		}
 	}
-}
-
-//----------------------------------------------------------------//
-// return false if no overlap OR find the shortist displays poly has to move (along N) to no longer overlap poly1
-bool MOAICollision::FindOverlapInterval ( const ZLVec2D* poly0, size_t nPoly0, const ZLVec2D* poly1, size_t nPoly1, ZLVec2D& interval ) {
-
-	float t0, t1;
-	ZLVec2D n0, n1;
-
-	if ( !AxisSeparatePolygons ( poly0, nPoly0, poly1, nPoly1, n0, t0 )) return false;
-	if ( !AxisSeparatePolygons ( poly1, nPoly1, poly0, nPoly0, n1, t1 )) return false;
-	
-	if ( ABS ( t0 ) < ABS ( t1 )) {
-		interval = n0;
-		interval.Scale ( t0 );
-	}
-	else {
-		interval = n1;
-		interval.Scale ( -t1 );
-	}	
-	return true;
 }

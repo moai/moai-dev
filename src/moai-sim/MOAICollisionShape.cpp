@@ -2,9 +2,13 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-sim/MOAICollisionPrims.h>
 #include <moai-sim/MOAICollisionShape.h>
 #include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIGfxMgr.h>
+#include <moai-sim/MOAIMoveConstraint2D.h>
+#include <moai-sim/MOAIOverlap.h>
+#include <moai-sim/MOAIOverlapResolver.h>
 #include <moai-sim/MOAITransformBase.h>
 
 //================================================================//
@@ -49,7 +53,7 @@ void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
 	
 		switch ( shape->mType ) {
 			
-			case MOAIOverlap::BOX: {
+			case MOAICollisionConsts::BOX: {
 			
 				gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX ));
 			
@@ -58,7 +62,7 @@ void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
 				draw.DrawBoxOutline ( box );
 				break;
 			}
-			case MOAIOverlap::CIRCLE: {
+			case MOAICollisionConsts::CIRCLE: {
 			
 				gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX ));
 			
@@ -66,22 +70,22 @@ void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
 				draw.DrawEllipseOutline ( circle.mCenter.mX, circle.mCenter.mY, circle.mRadius, circle.mRadius, 32 );
 				break;
 			}
-			case MOAIOverlap::FRUSTUM:
+			case MOAICollisionConsts::FRUSTUM:
 				break;
 			
-			case MOAIOverlap::POLYGON:
+			case MOAICollisionConsts::POLYGON:
 				break;
 			
-			case MOAIOverlap::PRISM:
+			case MOAICollisionConsts::PRISM:
 				break;
 			
-			case MOAIOverlap::QUAD: {
+			case MOAICollisionConsts::QUAD: {
 			
 				gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX ));
 				draw.DrawQuadOutline ( *( ZLQuad* )shape->mPtr );
 				break;
 			}
-			case MOAIOverlap::RECT: {
+			case MOAICollisionConsts::RECT: {
 			
 				gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX ));
 			
@@ -90,7 +94,7 @@ void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
 				draw.DrawRectOutline ( rect );
 				break;
 			}
-			case MOAIOverlap::SPHERE:
+			case MOAICollisionConsts::SPHERE:
 				break;
 			
 			default:
@@ -100,77 +104,7 @@ void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionShape::FindContactPoints ( MOAIContactPointAccumulator2D& accumulator, MOAICollisionShape& otherShape, const MOAITransformBase& t0, const MOAITransformBase& t1 ) {
-
-	size_t selfShapeCount = this->mShapes.Size ();
-	size_t otherShapeCount = otherShape.mShapes.Size ();
-	
-	if (( selfShapeCount == 1 ) || ( otherShapeCount == 1 )) {
-	
-		if (( selfShapeCount == 1 ) && ( otherShapeCount == 1 )) {
-		
-			MOAIOverlap::FindContactPoints ( accumulator, *this->mShapes [ 0 ], *otherShape.mShapes [ 0 ], t0, t1 );
-		}
-		else if ( otherShapeCount == 1 ) {
-		
-			for ( size_t i = 0; i < selfShapeCount; ++i ) {
-				MOAIOverlap::FindContactPoints ( accumulator,  *this->mShapes [ i ], *otherShape.mShapes [ 0 ], t0, t1 );
-			}
-		}
-		else {
-		
-			for ( size_t i = 0; i < otherShapeCount; ++i ) {
-				MOAIOverlap::FindContactPoints ( accumulator, *this->mShapes [ 0 ], *otherShape.mShapes [ i ], t0, t1 );
-			}
-		}
-	}
-	else {
-	
-		for ( size_t i = 0; i < selfShapeCount; ++i ) {
-			for ( size_t j = 0; j < otherShapeCount; ++j ) {
-				MOAIOverlap::FindContactPoints ( accumulator, *this->mShapes [ i ], *otherShape.mShapes [ j ], t0, t1 );
-			}
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionShape::FindOverlapInterval ( MOAIVectorAccumulator& accumulator, MOAICollisionShape& otherShape, const MOAITransformBase& t0, const MOAITransformBase& t1 ) {
-
-	size_t selfShapeCount = this->mShapes.Size ();
-	size_t otherShapeCount = otherShape.mShapes.Size ();
-	
-	if (( selfShapeCount == 1 ) || ( otherShapeCount == 1 )) {
-	
-		if (( selfShapeCount == 1 ) && ( otherShapeCount == 1 )) {
-		
-			MOAIOverlap::FindInterval ( accumulator, *this->mShapes [ 0 ], *otherShape.mShapes [ 0 ], t0, t1 );
-		}
-		else if ( otherShapeCount == 1 ) {
-		
-			for ( size_t i = 0; i < selfShapeCount; ++i ) {
-				MOAIOverlap::FindInterval ( accumulator,  *this->mShapes [ i ], *otherShape.mShapes [ 0 ], t0, t1 );
-			}
-		}
-		else {
-		
-			for ( size_t i = 0; i < otherShapeCount; ++i ) {
-				MOAIOverlap::FindInterval ( accumulator, *this->mShapes [ 0 ], *otherShape.mShapes [ i ], t0, t1 );
-			}
-		}
-	}
-	else {
-	
-		for ( size_t i = 0; i < selfShapeCount; ++i ) {
-			for ( size_t j = 0; j < otherShapeCount; ++j ) {
-				MOAIOverlap::FindInterval ( accumulator, *this->mShapes [ i ], *otherShape.mShapes [ j ], t0, t1 );
-			}
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionShape::FindOverlaps ( MOAIOverlapHandler& handler, const ZLBox& otherBounds ) const {
+void MOAICollisionShape::Process ( MOAIOverlapShapeVisitor& visitor, const ZLBox& otherBounds, const ZLAffine3D& t0, const ZLAffine3D& t1 ) const {
 
 	MOAIOverlapBox otherShape;
 	otherShape.mShape = otherBounds;
@@ -180,46 +114,52 @@ void MOAICollisionShape::FindOverlaps ( MOAIOverlapHandler& handler, const ZLBox
 
 	if ( selfShapeCount == 1 ) {
 	
-		MOAIOverlap::Overlap ( handler, *this->mShapes [ 0 ], otherShape );
+		visitor.Process ( *this->mShapes [ 0 ], otherShape, t0, t1 );
 	}
 	else {
 	
 		for ( size_t i = 0; i < selfShapeCount; ++i ) {
-			MOAIOverlap::Overlap ( handler, *this->mShapes [ i ], otherShape );
+			visitor.Process ( *this->mShapes [ i ], otherShape, t0, t1 );
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionShape::FindOverlaps ( MOAIOverlapHandler& handler, const MOAICollisionShape& otherShape ) const {
+void MOAICollisionShape::Process ( MOAIOverlapShapeVisitor& visitor, const MOAICollisionShape& otherShape, const ZLAffine3D& t0, const ZLAffine3D& t1 ) const {
 
-	size_t selfShapeCount = this->mShapes.Size ();
-	size_t otherShapeCount = otherShape.mShapes.Size ();
+	MOAICollisionShape::Process ( visitor, *this, otherShape, t0, t1 );
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionShape::Process ( MOAIOverlapShapeVisitor& visitor, const MOAICollisionShape& shape0, const MOAICollisionShape& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 ) {
+
+	size_t shapeCount0 = shape0.mShapes.Size ();
+	size_t shapeCount1 = shape1.mShapes.Size ();
 	
-	if (( selfShapeCount == 1 ) || ( otherShapeCount == 1 )) {
+	if (( shapeCount0 == 1 ) || ( shapeCount1 == 1 )) {
 	
-		if (( selfShapeCount == 1 ) && ( otherShapeCount == 1 )) {
+		if (( shapeCount0 == 1 ) && ( shapeCount1 == 1 )) {
 		
-			MOAIOverlap::Overlap ( handler, *this->mShapes [ 0 ], *otherShape.mShapes [ 0 ]);
+			visitor.Process ( *shape0.mShapes [ 0 ], *shape1.mShapes [ 0 ], t0, t1 );
 		}
-		else if ( otherShapeCount == 1 ) {
+		else if ( shapeCount1 == 1 ) {
 		
-			for ( size_t i = 0; i < selfShapeCount; ++i ) {
-				MOAIOverlap::Overlap ( handler, *this->mShapes [ i ], *otherShape.mShapes [ 0 ]);
+			for ( size_t i = 0; i < shapeCount0; ++i ) {
+				visitor.Process ( *shape0.mShapes [ i ], *shape1.mShapes [ 0 ], t0, t1 );
 			}
 		}
 		else {
 		
-			for ( size_t i = 0; i < otherShapeCount; ++i ) {
-				MOAIOverlap::Overlap ( handler, *this->mShapes [ 0 ], *otherShape.mShapes [ i ]);
+			for ( size_t i = 0; i < shapeCount1; ++i ) {
+				visitor.Process ( *shape0.mShapes [ 0 ], *shape1.mShapes [ i ], t0, t1 );
 			}
 		}
 	}
 	else {
 	
-		for ( size_t i = 0; i < selfShapeCount; ++i ) {
-			for ( size_t j = 0; j < otherShapeCount; ++j ) {
-				MOAIOverlap::Overlap ( handler, *this->mShapes [ i ], *otherShape.mShapes [ j ]);
+		for ( size_t i = 0; i < shapeCount0; ++i ) {
+			for ( size_t j = 0; j < shapeCount1; ++j ) {
+				visitor.Process ( *shape0.mShapes [ i ], *shape1.mShapes [ j ], t0, t1 );
 			}
 		}
 	}

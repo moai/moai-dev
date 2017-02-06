@@ -16,8 +16,8 @@
 #define SET(type,name,member) \
 	inline void Set##name ( type value ) { member = value; }
 
-#define Can(name,member,value) const \
-	inline bool Can##name () { return member == value; }
+//#define Can(name,member,value) const \
+//	inline bool Can##name () { return member == value; }
 
 #define HAS(name,member,value) const \
 	inline bool Has##name () { return member == value; }
