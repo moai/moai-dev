@@ -6,8 +6,8 @@
 
 class MOAIOverlap;
 class MOAIOverlapResolver;
-class MOAIOverlapShape;
-class MOAIOverlapShapeVisitor;
+class MOAICollisionPrim;
+class MOAICollisionPrimVisitor;
 class MOAIMoveConstraintAccumulator2D;
 
 //================================================================//
@@ -19,7 +19,7 @@ private:
 
 	ZLBounds		mBounds;
 	
-	ZLLeanArray < MOAIOverlapShape* >	mShapes;
+	ZLLeanArray < MOAICollisionPrim* >	mShapes;
 
 	//----------------------------------------------------------------//
 	void			Bless					();
@@ -31,9 +31,9 @@ public:
 	//----------------------------------------------------------------//
 	void			Clear							();
 	void			Draw							( const ZLAffine3D& localToWorldMtx );
-	void			Process							( MOAIOverlapShapeVisitor& visitor, const ZLBox& otherBounds, const ZLAffine3D& t0, const ZLAffine3D& t1 ) const;
-	void			Process							( MOAIOverlapShapeVisitor& visitor, const MOAICollisionShape& otherShape, const ZLAffine3D& t0, const ZLAffine3D& t1 ) const;
-	static void		Process							( MOAIOverlapShapeVisitor& visitor, const MOAICollisionShape& shape0, const MOAICollisionShape& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 );
+	void			Process							( MOAICollisionPrimVisitor& visitor, const ZLBox& otherBounds, const ZLAffine3D& t0, const ZLAffine3D& t1 ) const;
+	void			Process							( MOAICollisionPrimVisitor& visitor, const MOAICollisionShape& otherShape, const ZLAffine3D& t0, const ZLAffine3D& t1 ) const;
+	static void		Process							( MOAICollisionPrimVisitor& visitor, const MOAICollisionShape& shape0, const MOAICollisionShape& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 );
 					MOAICollisionShape				();
 					~MOAICollisionShape				();
 	void			ReserveShapes					( u32 totalShapes );

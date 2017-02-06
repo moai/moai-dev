@@ -4,13 +4,13 @@
 #ifndef	MOAIOVERLAPRESOLVER_H
 #define	MOAIOVERLAPRESOLVER_H
 
-#include <moai-sim/MOAICollisionPrims.h>
+#include <moai-sim/MOAICollisionPrim.h>
 
 //================================================================//
 // MOAIOverlapResolver
 //================================================================//
 class MOAIOverlapResolver :
-	public MOAIOverlapShapeVisitor {
+	public MOAICollisionPrimVisitor {
 private:
 
 	ZLVec3D			mAccumulator;
@@ -21,7 +21,7 @@ private:
 	bool			Separate					( const ZLVec2D* poly0, size_t nPoly0, const ZLVec2D* poly1, size_t nPoly1 );
 
 	//----------------------------------------------------------------//
-	void			MOAIOverlapShapeVisitor_Process			( const MOAIOverlapShape& shape0, const MOAIOverlapShape& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 );
+	void			MOAICollisionPrimVisitor_Process			( const MOAICollisionPrim& shape0, const MOAICollisionPrim& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 );
 
 public:
 

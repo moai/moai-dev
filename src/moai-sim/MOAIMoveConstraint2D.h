@@ -4,7 +4,7 @@
 #ifndef	MOAIMOVECONSTRAINT2D_H
 #define	MOAIMOVECONSTRAINT2D_H
 
-#include <moai-sim/MOAICollisionPrims.h>
+#include <moai-sim/MOAICollisionPrim.h>
 
 //================================================================//
 // MOAIMoveConstraint2D
@@ -35,7 +35,7 @@ public:
 // MOAIMoveConstraintAccumulator2D
 //================================================================//
 class MOAIMoveConstraintAccumulator2D :
-	public MOAIOverlapShapeVisitor {
+	public MOAICollisionPrimVisitor {
 private:
 
 	MOAIMoveConstraint2D*	mContacts;
@@ -48,7 +48,7 @@ private:
 	void		PushCorner							( const ZLVec2D& point, const ZLVec2D& tangent, const ZLVec2D& normal, const ZLVec2D& v0, const ZLVec2D& v1, const ZLVec2D& edgeNormal, const ZLVec2D& cornerTangent );
 
 	//----------------------------------------------------------------//
-	void		MOAIOverlapShapeVisitor_Process			( const MOAIOverlapShape& shape0, const MOAIOverlapShape& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 );
+	void		MOAICollisionPrimVisitor_Process			( const MOAICollisionPrim& shape0, const MOAICollisionPrim& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 );
 
 
 

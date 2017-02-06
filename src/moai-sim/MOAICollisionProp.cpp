@@ -163,7 +163,7 @@ void MOAICollisionProp::DrawContactPoints ( MOAIDrawShape& draw, const MOAIMoveC
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionProp::GatherAndProcess ( MOAIOverlapShapeVisitor& visitor, const ZLBox& worldBounds ) {
+void MOAICollisionProp::GatherAndProcess ( MOAICollisionPrimVisitor& visitor, const ZLBox& worldBounds ) {
 
 	MOAICollisionWorld& world = *this->mCollisionWorld;
 
@@ -387,13 +387,13 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionProp::Process ( MOAIOverlapShapeVisitor& visitor, MOAICollisionProp& other ) {
+void MOAICollisionProp::Process ( MOAICollisionPrimVisitor& visitor, MOAICollisionProp& other ) {
 
 	MOAICollisionProp::Process ( visitor, *this, other );
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionProp::Process ( MOAIOverlapShapeVisitor& visitor, MOAICollisionProp& prop0, MOAICollisionProp& prop1 ) {
+void MOAICollisionProp::Process ( MOAICollisionPrimVisitor& visitor, MOAICollisionProp& prop0, MOAICollisionProp& prop1 ) {
 
 	const MOAICollisionShape* shape0 = prop0.GetCollisionShape ();
 	const MOAICollisionShape* shape1 = prop1.GetCollisionShape ();

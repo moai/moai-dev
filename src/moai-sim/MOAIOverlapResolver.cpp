@@ -61,7 +61,7 @@ bool MOAIOverlapResolver::Separate ( const ZLQuad& p0, const ZLQuad& p1, const Z
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIOverlapResolver::MOAIOverlapShapeVisitor_Process ( const MOAIOverlapShape& shape0, const MOAIOverlapShape& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 ) {
+void MOAIOverlapResolver::MOAICollisionPrimVisitor_Process ( const MOAICollisionPrim& shape0, const MOAICollisionPrim& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 ) {
 
 	switch ( COLLISION_COMBO_CODE ( shape0.mType, shape1.mType )) {
 	

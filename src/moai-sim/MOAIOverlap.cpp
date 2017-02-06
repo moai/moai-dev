@@ -235,12 +235,7 @@ bool MOAIOverlap::Overlap ( const ZLSphere& p0, const ZLSphere& p1, const ZLAffi
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIOverlap::MOAIOverlap_OnOverlap ( const ZLBounds& bounds ) {
-	UNUSED ( bounds );
-}
-
-//----------------------------------------------------------------//
-void MOAIOverlap::MOAIOverlapShapeVisitor_Process ( const MOAIOverlapShape& shape0, const MOAIOverlapShape& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 ) {
+void MOAIOverlap::MOAICollisionPrimVisitor_Process ( const MOAICollisionPrim& shape0, const MOAICollisionPrim& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 ) {
 
 	switch ( COLLISION_COMBO_CODE ( shape0.mType, shape1.mType )) {
 	
@@ -284,4 +279,9 @@ void MOAIOverlap::MOAIOverlapShapeVisitor_Process ( const MOAIOverlapShape& shap
 		case SPHERE__PRISM:			Overlap ( *( ZLPrism* )shape1.mPtr, *( ZLSphere* )shape0.mPtr,			t1, t0 );
 		case SPHERE__SPHERE:		Overlap ( *( ZLSphere* )shape0.mPtr, *( ZLSphere* )shape1.mPtr,			t0, t1 );
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIOverlap::MOAIOverlap_OnOverlap ( const ZLBounds& bounds ) {
+	UNUSED ( bounds );
 }

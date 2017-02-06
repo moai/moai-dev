@@ -128,7 +128,7 @@ u32 MOAIMoveConstraintAccumulator2D::Top () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMoveConstraintAccumulator2D::MOAIOverlapShapeVisitor_Process ( const MOAIOverlapShape& shape0, const MOAIOverlapShape& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 ) {
+void MOAIMoveConstraintAccumulator2D::MOAICollisionPrimVisitor_Process ( const MOAICollisionPrim& shape0, const MOAICollisionPrim& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 ) {
 
 	switch ( COLLISION_COMBO_CODE ( shape0.mType, shape1.mType )) {
 	

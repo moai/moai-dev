@@ -1,23 +1,23 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAICOLLISIONPRIMS_H
-#define	MOAICOLLISIONPRIMS_H
+#ifndef	MOAICOLLISIONPRIM_H
+#define	MOAICOLLISIONPRIM_H
 
 #include <moai-sim/MOAICollisionConsts.h>
 
 #define DECLARE_OVERLAP_SHAPE(name, shapeClass, typeID)			\
 class MOAIOverlap##name :										\
-	public MOAIOverlapShape {									\
+	public MOAICollisionPrim {									\
 public:															\
 	shapeClass	mShape;											\
 	MOAIOverlap##name () { mType = typeID; mPtr = &mShape; }	\
 };
 
 //================================================================//
-// MOAIOverlapShape
+// MOAICollisionPrim
 //================================================================//
-class MOAIOverlapShape {
+class MOAICollisionPrim {
 public:
 
 	u32			mCategory;
@@ -30,20 +30,20 @@ public:
 };
 
 //================================================================//
-// MOAIOverlapShapeVisitor
+// MOAICollisionPrimVisitor
 //================================================================//
-class MOAIOverlapShapeVisitor {
+class MOAICollisionPrimVisitor {
 protected:
 
 	//----------------------------------------------------------------//
-	virtual void		MOAIOverlapShapeVisitor_Process			( const MOAIOverlapShape& shape0, const MOAIOverlapShape& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 ) = 0;
+	virtual void		MOAICollisionPrimVisitor_Process			( const MOAICollisionPrim& shape0, const MOAICollisionPrim& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 ) = 0;
 
 public:
 
 	//----------------------------------------------------------------//
-	void Process ( const MOAIOverlapShape& shape0, const MOAIOverlapShape& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 ) {
+	void Process ( const MOAICollisionPrim& shape0, const MOAICollisionPrim& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 ) {
 	
-		this->MOAIOverlapShapeVisitor_Process ( shape0, shape1, t0, t1 );
+		this->MOAICollisionPrimVisitor_Process ( shape0, shape1, t0, t1 );
 	}
 };
 

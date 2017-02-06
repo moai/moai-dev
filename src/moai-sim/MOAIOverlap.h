@@ -4,27 +4,27 @@
 #ifndef	MOAIOVERLAP_H
 #define	MOAIOVERLAP_H
 
-#include <moai-sim/MOAICollisionPrims.h>
+#include <moai-sim/MOAICollisionPrim.h>
 
 //================================================================//
 // MOAIOverlap
 //================================================================//
 class MOAIOverlap :
-	public MOAIOverlapShapeVisitor {
+	public MOAICollisionPrimVisitor {
 protected:
 
 	bool			mCalculateBounds;
 
 	//----------------------------------------------------------------//
+	void			MOAICollisionPrimVisitor_Process		( const MOAICollisionPrim& shape0, const MOAICollisionPrim& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 );
 	void			MOAIOverlap_OnOverlap					( const ZLBounds& bounds );
-	void			MOAIOverlapShapeVisitor_Process			( const MOAIOverlapShape& shape0, const MOAIOverlapShape& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 );
 
 public:
 	
 	//----------------------------------------------------------------//
 					MOAIOverlap				();
 	
-	bool			Overlap					( const MOAIOverlapShape& shape0, const MOAIOverlapShape& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 );
+	bool			Overlap					( const MOAICollisionPrim& shape0, const MOAICollisionPrim& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 );
 	
 	bool			Overlap					( const ZLBox& p0, const ZLBox& p1,					const ZLAffine3D& t0, const ZLAffine3D& t1 );
 	bool			Overlap					( const ZLBox& p0, const ZLFrustum& p1,				const ZLAffine3D& t0, const ZLAffine3D& t1 );

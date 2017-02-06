@@ -4,7 +4,7 @@
 #ifndef	MOAICOLLISIONFACET_H
 #define	MOAICOLLISIONFACET_H
 
-#include <moai-sim/MOAICollisionPrims.h>
+#include <moai-sim/MOAICollisionPrim.h>
 #include <moai-sim/MOAIIndexedPropBase.h>
 #include <moai-sim/MOAIPartitionHull.h>
 
@@ -91,11 +91,11 @@ private:
 	//----------------------------------------------------------------//
 	void					ClearOverlapLink		( MOAIPropOverlap& overlap );
 	static void				DrawContactPoints		( MOAIDrawShape& draw, const MOAIMoveConstraint2D* contacts, u32 nContacts );
-	void					GatherAndProcess		( MOAIOverlapShapeVisitor& visitor, const ZLBox& worldBounds );
+	void					GatherAndProcess		( MOAICollisionPrimVisitor& visitor, const ZLBox& worldBounds );
 	bool					IsActive				();
 	void					Move					( ZLVec3D move );
-	void					Process					( MOAIOverlapShapeVisitor& visitor, MOAICollisionProp& other );
-	static void				Process					( MOAIOverlapShapeVisitor& visitor, MOAICollisionProp& prop0, MOAICollisionProp& prop1 );
+	void					Process					( MOAICollisionPrimVisitor& visitor, MOAICollisionProp& other );
+	static void				Process					( MOAICollisionPrimVisitor& visitor, MOAICollisionProp& prop0, MOAICollisionProp& prop1 );
 	
 	//----------------------------------------------------------------//
 	void					MOAIDrawable_DrawDebug						( int subPrimID );

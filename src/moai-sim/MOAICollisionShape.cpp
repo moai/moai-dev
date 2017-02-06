@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAICollisionPrims.h>
+#include <moai-sim/MOAICollisionPrim.h>
 #include <moai-sim/MOAICollisionShape.h>
 #include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIGfxMgr.h>
@@ -49,7 +49,7 @@ void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
 	
 	for ( u32 i = 0; i < this->mShapes.Size (); ++i ) {
 	
-		MOAIOverlapShape* shape = this->mShapes [ i ];
+		MOAICollisionPrim* shape = this->mShapes [ i ];
 	
 		switch ( shape->mType ) {
 			
@@ -104,7 +104,7 @@ void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionShape::Process ( MOAIOverlapShapeVisitor& visitor, const ZLBox& otherBounds, const ZLAffine3D& t0, const ZLAffine3D& t1 ) const {
+void MOAICollisionShape::Process ( MOAICollisionPrimVisitor& visitor, const ZLBox& otherBounds, const ZLAffine3D& t0, const ZLAffine3D& t1 ) const {
 
 	MOAIOverlapBox otherShape;
 	otherShape.mShape = otherBounds;
@@ -125,13 +125,13 @@ void MOAICollisionShape::Process ( MOAIOverlapShapeVisitor& visitor, const ZLBox
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionShape::Process ( MOAIOverlapShapeVisitor& visitor, const MOAICollisionShape& otherShape, const ZLAffine3D& t0, const ZLAffine3D& t1 ) const {
+void MOAICollisionShape::Process ( MOAICollisionPrimVisitor& visitor, const MOAICollisionShape& otherShape, const ZLAffine3D& t0, const ZLAffine3D& t1 ) const {
 
 	MOAICollisionShape::Process ( visitor, *this, otherShape, t0, t1 );
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionShape::Process ( MOAIOverlapShapeVisitor& visitor, const MOAICollisionShape& shape0, const MOAICollisionShape& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 ) {
+void MOAICollisionShape::Process ( MOAICollisionPrimVisitor& visitor, const MOAICollisionShape& shape0, const MOAICollisionShape& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 ) {
 
 	size_t shapeCount0 = shape0.mShapes.Size ();
 	size_t shapeCount1 = shape1.mShapes.Size ();
