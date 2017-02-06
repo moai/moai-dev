@@ -81,15 +81,15 @@ u32 ZLSect::LineToLine ( const ZLVec2D& p0, const ZLVec2D& p1, const ZLVec2D& q0
 
 	// TODO: this one ignores colinear lines. provide an alternative method that cares about colinear lines.
 
-	ZLVec2D r = ZLVec2D::Sub ( p1, p0 ); // a0, b0
-	ZLVec2D s = ZLVec2D::Sub ( q1, q0 ); // a1, b1
+	ZLVec2D r = p1 - p0; // a0, b0
+	ZLVec2D s = q1 - q0; // a1, b1
 
 	float det = ZLVec2D::Cross ( r, s ); // c0
 
 	// parallel
 	if ( det == 0 ) return SECT_PARALLEL;
 
-	ZLVec2D m = ZLVec2D::Sub ( q0, p0 );
+	ZLVec2D m = q0 - p0;
 
 	t = ZLVec2D::Cross ( m, s ) / det;
 	float u = ZLVec2D::Cross ( m, r ) / det;

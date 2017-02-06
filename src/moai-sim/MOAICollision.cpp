@@ -60,7 +60,7 @@ bool AxisSeparatePolygons ( const ZLVec2D* poly0, size_t nPoly0, const ZLVec2D* 
 		// get the edge normal
 		ZLVec2D e0 = poly0 [ i ];
         ZLVec2D e1 = poly0 [( i + 1 ) % nPoly0 ];
-        ZLVec2D e = ZLVec2D::Sub ( e1, e0 );
+        ZLVec2D e = e1 - e0;
         ZLVec2D n = ZLVec2D ( -e.mY, e.mX );
 		n.Norm ();
 		
@@ -84,6 +84,8 @@ bool AxisSeparatePolygons ( const ZLVec2D* poly0, size_t nPoly0, const ZLVec2D* 
 //----------------------------------------------------------------//
 void MOAICollision::FindContactPoints ( const ZLVec2D* poly0, size_t nPoly0, const ZLVec2D* poly1, size_t nPoly1, MOAIContactPointAccumulator2D& accumulator ) {
 
+	if (( nPoly0 < 3 ) || ( nPoly1 < 2 )) return;
+
 	// rename: contact points -> move constraints
 	// this needs a lot of refinement.
 	// see if we can generate fewer constraints.
@@ -92,18 +94,40 @@ void MOAICollision::FindContactPoints ( const ZLVec2D* poly0, size_t nPoly0, con
 	
 	// also: worth generating or storing edge normals for body?
 
-	static const float PAD = 0.01f;
+	static const float PAD = 0.001f;
 	static const float CORNER_PAD = 0.01f;
 
+	ZLVec2D* bodyEdges			= ( ZLVec2D* )alloca ( nPoly0 * sizeof ( ZLVec2D ));
+	ZLVec2D* bodyEdgeNormals	= ( ZLVec2D* )alloca ( nPoly0 * sizeof ( ZLVec2D ));
+	ZLVec2D* bodyVertexNormals	= ( ZLVec2D* )alloca ( nPoly0 * sizeof ( ZLVec2D ));
+
+	// calculate all the body's edges and normals up front
 	for ( size_t i = 0; i < nPoly0; i++ ) {
 	
-		// calculate edge
+		ZLVec2D& edge = bodyEdges [ i ];
+		ZLVec2D& edgeNormal = bodyEdgeNormals [ i ];
+		
+		edge = poly0 [( i + 1 ) % nPoly0 ] - poly0 [ i ];
+		edge.Norm ();
+		edgeNormal = edge;
+		edgeNormal.Rotate90Clockwise ();
+	}
+
+	// calculate the body's vertex normals
+	for ( size_t i = 0; i < nPoly0; i++ ) {
+		ZLVec2D& vertexNormal = bodyVertexNormals [ i ];
+		vertexNormal = bodyEdgeNormals [( i + ( nPoly0 - 1 )) % nPoly0 ] + bodyEdgeNormals [ i ];
+		vertexNormal.Norm ();
+	}
+
+	for ( size_t i = 0; i < nPoly0; i++ ) {
+		
 		ZLVec2D v0 = poly0 [ i ];
         ZLVec2D v1 = poly0 [( i + 1 ) % nPoly0 ];
-        ZLVec2D e0 = ZLVec2D::Sub ( v1, v0 );
-		e0.Norm ();
-        ZLVec2D n0 = e0;
-		n0.Rotate90Clockwise ();
+		ZLVec2D e0 = bodyEdges [ i ];
+		ZLVec2D n0 = bodyEdgeNormals [ i ];
+		
+		//if ( n0.mY > ( EPSILON - 1.0f )) continue;
 		
 		ZLVec2D invE0 = e0;
 		invE0.Invert ();
@@ -134,7 +158,7 @@ void MOAICollision::FindContactPoints ( const ZLVec2D* poly0, size_t nPoly0, con
 				ext = v2;
 			}
 			
-			ZLVec2D e1 = ZLVec2D::Sub ( v3, v2 );
+			ZLVec2D e1 = v3 - v2;
 			
 			if (( p1 < innerD0 ) || ( outerD0 < p0 )) continue; // edge is fully inside or outside; ignore it
 			
@@ -158,73 +182,50 @@ void MOAICollision::FindContactPoints ( const ZLVec2D* poly0, size_t nPoly0, con
 				
 				if (( ve2 <= ( ve1 + PAD )) && ( ve3 >= ( ve0 - PAD ))) {
 					
-					//if ( n0.mY != -1.0f ) continue;
-					
 					// overlap
 					
 					if ( ve3 <= ( ve0 + CORNER_PAD )) {
-					
 
-						ZLVec2D wallNorm = ZLVec2D::Sub ( v1, poly0 [( i + 2 ) % nPoly0 ] );
-						wallNorm.Norm ();
-						wallNorm.Rotate90Clockwise ();
-						wallNorm.Add ( n0 );
-						wallNorm.Norm ();
-						wallNorm.Rotate90Clockwise ();
+						ZLVec2D slideNormal = n0;
+						slideNormal.Rotate90Clockwise ();
+
+						ZLVec2D cornerTangent = bodyVertexNormals [ i ];
+						cornerTangent.Rotate90Clockwise ();
 						
-						accumulator.PushCorner ( v3, invE0, invN0, v0, v1, wallNorm );
+						accumulator.PushCorner ( v3, invE0, invN0, v0, v1, slideNormal, cornerTangent );
 					}
 					else if ( ve2 >= ( ve1 - CORNER_PAD )) {
-					
-						ZLVec2D wallNorm = ZLVec2D::Sub ( poly0 [( i + ( nPoly0 - 1 )) % nPoly0 ], v0 );
-						wallNorm.Norm ();
-						wallNorm.Rotate90Clockwise ();
-						wallNorm.Add ( n0 );
-						wallNorm.Norm ();
-						wallNorm.Rotate90Anticlockwise ();
-					
-						accumulator.PushCorner ( v2, invE0, invN0, v0, v1, wallNorm );
+						
+						ZLVec2D slideNormal = n0;
+						slideNormal.Rotate90Anticlockwise ();
+						
+						ZLVec2D cornerTangent = bodyVertexNormals [( i + 1 ) % nPoly0 ];
+						cornerTangent.Rotate90Anticlockwise ();
+						
+						accumulator.PushCorner ( v2, invE0, invN0, v0, v1, slideNormal, cornerTangent );
 					}
 					else {
 					
-						if ( ve0 < ve2 ) {
-							//accumulator.Push ( v2, invE0, invN0, v0, v1, MOAIContactPoint2D::PARALLEL );
-						}
-						else if ( ve0 <= ( ve2 + CORNER_PAD )) {
-						
-							ZLVec2D wallNorm = ZLVec2D::Sub ( v1, poly0 [( i + 2 ) % nPoly0 ] );
-							wallNorm.Norm ();
-							wallNorm.Rotate90Clockwise ();
-							wallNorm.Add ( n0 );
-							wallNorm.Norm ();
-							wallNorm.Rotate90Clockwise ();
-						
+						if (( ve0 >= ve2 ) && ( ve0 <= ( ve2 + CORNER_PAD ))) {
 							
-						
-							//accumulator.PushCorner ( v0, invE0, invN0, v2, v3, invE0 );
-							accumulator.PushCorner ( v0, invE0, invN0, v2, v3, wallNorm );
-						}
-						else if ( ve0 < ( ve3 - CORNER_PAD )) {
-							//accumulator.Push ( v0, invE0, invN0, v3, v2, MOAIContactPoint2D::PARALLEL );
+							ZLVec2D slideNormal = n0;
+							slideNormal.Rotate90Clockwise ();
+							
+							ZLVec2D cornerTangent = bodyVertexNormals [ i ];
+							cornerTangent.Rotate90Clockwise ();
+
+							accumulator.PushCorner ( v0, invE0, invN0, v2, v3, slideNormal, cornerTangent );
 						}
 					
-						if ( ve1 > ve3 ) {
-							//accumulator.Push ( v3, invE0, invN0, v0, v1, MOAIContactPoint2D::PARALLEL );
-						}
-						else if ( ve1 >= ( ve3 - CORNER_PAD )) {
-						
-							ZLVec2D wallNorm = ZLVec2D::Sub ( poly0 [( i + ( nPoly0 - 1 )) % nPoly0 ], v0 );
-							wallNorm.Norm ();
-							wallNorm.Rotate90Clockwise ();
-							wallNorm.Add ( n0 );
-							wallNorm.Norm ();
-							wallNorm.Rotate90Anticlockwise ();
-						
-							//accumulator.PushCorner ( v1, invE0, invN0, v2, v3, e0 );
-							accumulator.PushCorner ( v1, invE0, invN0, v2, v3, wallNorm );
-						}
-						else if ( ve1 > ( ve2 + CORNER_PAD )) {
-							//accumulator.Push ( v1, invE0, invN0, v3, v2, MOAIContactPoint2D::PARALLEL );
+						if (( ve1 <= ve3 ) && ( ve1 >= ( ve3 - CORNER_PAD ))) {
+							
+							ZLVec2D slideNormal = n0;
+							slideNormal.Rotate90Anticlockwise ();
+							
+							ZLVec2D cornerTangent = bodyVertexNormals [( i + 1 ) % nPoly0 ];
+							cornerTangent.Rotate90Anticlockwise ();
+							
+							accumulator.PushCorner ( v1, invE0, invN0, v2, v3, slideNormal, cornerTangent );
 						}
 					}
 				}
@@ -268,30 +269,34 @@ void MOAICollision::FindContactPoints ( const ZLVec2D* poly0, size_t nPoly0, con
 								ZLVec2D wallTangent;
 								ZLVec2D wallNorm;
 								
+								ZLVec2D cornerTangent;
+								
 								if ( ve2 <= ( ve0 + CORNER_PAD )) {
 									// v0
 									corner = v0;
 									nextCorner = poly0 [( i + ( nPoly0 - 1 )) % nPoly0 ];
-									wallTangent = ZLVec2D::Sub ( v0, nextCorner );
-									wallTangent.Norm ();
+									wallTangent = bodyEdges [( i + ( nPoly0 - 1 )) % nPoly0 ];
 									wallNorm = wallTangent;
 									wallNorm.Rotate90Anticlockwise ();
+									
+									cornerTangent = bodyVertexNormals [ i ];
+									cornerTangent.Rotate90Anticlockwise ();
 								}
 								else {
 									// v1
 									corner = v1;
 									nextCorner = poly0 [( i + 2 ) % nPoly0 ];
-									wallTangent = ZLVec2D::Sub ( v1, nextCorner );
-									wallTangent.Norm ();
+									wallTangent = bodyEdges [( i + 1 ) % nPoly0 ];
+									wallTangent.Invert ();
 									wallNorm = wallTangent;
 									wallNorm.Rotate90Clockwise ();
+									
+									cornerTangent = bodyVertexNormals [( i + 1 ) % nPoly0 ];
+									cornerTangent.Rotate90Clockwise ();
 								}
 								
-								ZLVec2D cornerTangent = ZLVec2D::Add ( n0, wallNorm );
-								cornerTangent.Norm ();
-								
 								// get the ray from the corner to the exterior point.
-								ZLVec2D ray = ZLVec2D::Sub ( ext, s );
+								ZLVec2D ray = ext - s;
 								
 								// make sure we're in front of the body edge
 								if ( n0.Dot ( ray ) > -EPSILON ) {
@@ -310,11 +315,8 @@ void MOAICollision::FindContactPoints ( const ZLVec2D* poly0, size_t nPoly0, con
 											( front && ( wallNorm.Dot ( n1 ) >= 0.0f )) ||
 											( !front && ( n0.Dot ( n1 ) < EPSILON ))
 										) {
-										
-										//if ( n0.Dot ( n1 ) < EPSILON ) {
-			
 											// surface facing edge
-											accumulator.PushCorner ( s, e1, n1, v2, v3, cornerTangent );
+											accumulator.PushCorner ( s, e1, n1, v2, v3, n0, cornerTangent );
 										}
 									}
 									else {
@@ -323,7 +325,7 @@ void MOAICollision::FindContactPoints ( const ZLVec2D* poly0, size_t nPoly0, con
 										if ( n0.Dot ( n1 ) > -EPSILON ) {
 										
 											// surface facing *away* from edge
-											accumulator.PushCorner ( s, wallTangent, wallNorm, s, nextCorner, cornerTangent );
+											accumulator.PushCorner ( s, wallTangent, wallNorm, s, nextCorner, wallTangent, cornerTangent );
 										}
 									}
 								}

@@ -284,7 +284,7 @@ bool ZLPolygon2D::GetDistance ( const ZLVec2D& point, float& d, ZLVec2D& p ) con
 		ZLVec2D& e1 = this->mVertices [( i + 1 ) % totalVerts ];
 	
 		// get the edge vector
-		ZLVec2D n = ZLVec2D::Sub ( e1, e0 );
+		ZLVec2D n = e1 - e0;
 		
 		// distance of edges and point along edge
 		float edgeDist0		= n.Dot ( e0 );

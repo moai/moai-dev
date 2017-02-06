@@ -111,8 +111,9 @@ void MOAICollisionProp::DrawContactPoints ( MOAIDrawShape& draw, const MOAIConta
 	
 		ZLVec3D point ( contact.mPoint.mX, contact.mPoint.mY, 0.0f );
 		ZLVec3D normal ( contact.mNormal.mX, contact.mNormal.mY, 0.0f );
-		ZLVec3D cornerTangent ( contact.mCornerTangent.mX, contact.mCornerTangent.mY, 0.0f );
-	
+		const ZLVec2D cornerTangent = contact.mCornerTangent;
+		const ZLVec2D edgeNormal = contact.mEdgeNormal;
+		
 		draw.SetPenColor ( ZLColor::PackRGBA ( 0.0f, 1.0f, 0.0f, 1.0f ));
 		draw.DrawRay ( point.mX, point.mY, normal.mX, normal.mY, 32.0f );
 		
@@ -137,6 +138,9 @@ void MOAICollisionProp::DrawContactPoints ( MOAIDrawShape& draw, const MOAIConta
 				
 				draw.SetPenColor ( ZLColor::PackRGBA ( 0.85f, 0.0f, 1.0f, 1.0f ));
 				draw.DrawRay ( point.mX, point.mY, cornerTangent.mX, cornerTangent.mY, 48.0f );
+			
+				draw.SetPenColor ( ZLColor::PackRGBA ( 1.0f, 0.0f, 0.0f, 1.0f ));
+				draw.DrawRay ( point.mX, point.mY, edgeNormal.mX, edgeNormal.mY, 32.0f );
 			
 				draw.SetPenColor ( ZLColor::PackRGBA ( 1.0f, 1.0f, 0.0f, 1.0f ));
 				break;
@@ -239,8 +243,6 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 	static u32 MAX_PASSES = 8;
 
 	MOAICollisionWorld& world = *this->mCollisionWorld;
-	MOAIDrawShapeRetained& draw = *this->mCollisionWorld;
-	draw.SetPenWidth ( 1.0f );
 
 	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
 	u32 interfaceMask = world.GetInterfaceMask < MOAICollisionProp >();
@@ -262,7 +264,6 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 			const MOAIContactPoint2D* bestPushContact = 0;
 			
 			float bestPullDot = 2.0f;
-			float farthestPull = 0.0f;
 			const MOAIContactPoint2D* bestPullContact = 0;
 		
 			// find contacts
@@ -277,8 +278,7 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 				
 				// ignore corner contacts if they are behind the move
 				if ( contact.mType == MOAIContactPoint2D::CORNER ) {
-					if ( moveNorm.Dot ( contact.mCornerTangent ) < -EPSILON ) continue;
-					//if ( moveNorm.Dot ( contact.mCornerTangent ) < EPSILON ) continue;
+					if ( !(( moveNorm.Dot ( contact.mCornerTangent ) > -EPSILON ) && ( moveNorm.Dot ( contact.mEdgeNormal ) > -EPSILON ))) continue;
 				}
 				
 				float d = moveNorm.Dot ( contact.mNormal );
@@ -293,36 +293,9 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 				}
 				else {
 
-//					// heading out of - pull
-//					if ( d < bestPullDot ) {
-//						bestPullContact = &contact;
-//						bestPullDot = d;
-//					}
-
-					bool take = false;
-					float dist = moveNorm.Dot ( contact.mPoint );
-					
-					if ( !bestPullContact ) {
-					
-						take = true;
-					}
-					else {
-					
-						if ( farthestPull < ( dist + EPSILON )) {
-						
-							take = true;
-						
-						}
-						else if ( ABS ( farthestPull - dist ) < EPSILON ) {
-						
-							take = ( d < bestPullDot );
-						}
-					}
-					
 					// heading out of - pull
-					if ( take ) {
+					if ( d < bestPullDot ) {
 						bestPullContact = &contact;
-						farthestPull = dist;
 						bestPullDot = d;
 					}
 				}
@@ -336,6 +309,7 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 				if ( bestPushDot <= ( EPSILON - 1.0f )) {
 					break;
 				}
+				printf ( "PUSH\n" );
 				bestContact = bestPushContact;
 			}
 			else if ( bestPullContact ) {
@@ -344,8 +318,15 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 				if ( bestPullDot >= ( 1.0f - EPSILON )) {
 					break;
 				}
+				printf ( "PULL\n" );
 				bestContact = bestPullContact;
 			}
+			else if ( nContacts ) {
+			
+				break;
+			}
+
+			//if ( bestContact && ( bestContact->mType == MOAIContactPoint2D::CORNER )) break;
 
 //			if ( nContacts && !bestContact ) {
 //				printf ( "FLY FLY!\n" );
@@ -360,7 +341,9 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 				stepMoveNorm.PerpProject ( bestContact->mNormal );
 				stepMoveNorm.Norm ();
 				
-				float maxMove = stepMoveNorm.Dot ( bestContact->mTangent ) > 0.0f ? bestContact->mPosD : bestContact->mNegD;
+				float duh = stepMoveNorm.Dot ( bestContact->mTangent );
+				
+				float maxMove = duh > 0.0f ? bestContact->mPosD : bestContact->mNegD;
 				stepMoveLength = moveLength < maxMove ? moveLength : maxMove;
 				
 				printf ( "----> STEP: (%g, %g) EDGE (%g, %g) MAX MOVE: %g\n",
@@ -410,12 +393,22 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 	this->ScheduleUpdate ();
 
 	if ( move.LengthSqrd () && this->mCollisionWorld ) {
-			
+		
+		MOAIDrawShapeRetained& draw = *this->mCollisionWorld;
+		
+		draw.SetPenWidth ( 1.0f );
 		draw.SetPenColor ( ZLColor::PackRGBA ( 1.0f, 1.0f, 0.0f, 1.0f ));
-		draw.DrawCircleOutline ( this->mLoc.mX, this->mLoc.mY, 32.0f, 16 );
+		
+		ZLRect worldRect = this->GetWorldBounds ().GetRect ();
+		float width = worldRect.Width ();
+		float height = worldRect.Height ();
+		
+		float radius = ( width < height ? width : height ) * 0.25f;
+		
+		draw.DrawCircleOutline ( this->mLoc.mX, this->mLoc.mY, radius, 32 );
 		
 		move.Norm ();
-		move.Scale ( 32.0f );
+		move.Scale ( radius );
 		draw.DrawLine ( this->mLoc.mX, this->mLoc.mY, this->mLoc.mX + move.mX, this->mLoc.mY + move.mY );
 	}
 }

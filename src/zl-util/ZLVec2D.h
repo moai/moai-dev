@@ -69,6 +69,22 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	ZLMetaVec2D < TYPE > operator * ( float scalar ) const {
+		ZLMetaVec2D < TYPE > result;
+		result.mX = this->mX * scalar;
+		result.mY = this->mY * scalar;
+		return result;
+	}
+	
+	//----------------------------------------------------------------//
+	ZLMetaVec2D < TYPE > operator / ( float scalar ) const {
+		ZLMetaVec2D < TYPE > result;
+		result.mX = this->mX * scalar;
+		result.mY = this->mY * scalar;
+		return result;
+	}
+
+	//----------------------------------------------------------------//
 	void Abs () {
 		mX = mX < 0.0f ? -mX : mX;
 		mY = mY < 0.0f ? -mY : mY;
@@ -443,14 +459,14 @@ public:
 	
 	//----------------------------------------------------------------//
 	//  V = V - point
-	void Sub ( const ZLMetaVec2D < TYPE >& point ) { 
+	void Sub ( const ZLMetaVec2D < TYPE >& point ) {
 		mX -= point.mX;
 		mY -= point.mY;
 	}
 
 	//----------------------------------------------------------------//
 	// V = V - ( point * scale )
-	void Sub ( const ZLMetaVec2D < TYPE >& point, TYPE scale ) { 
+	void Sub ( const ZLMetaVec2D < TYPE >& point, TYPE scale ) {
 		mX -= point.mX * scale;
 		mY -= point.mY * scale;
 	}
@@ -469,10 +485,8 @@ public:
 	~ZLMetaVec2D () {
 	}
 	
-	DECLARE_BINARY ( ZLMetaVec2D < TYPE >, Add )
 	DECLARE_BINARY ( ZLMetaVec2D < TYPE >, Mid )
 	DECLARE_BINARY ( ZLMetaVec2D < TYPE >, Mul )
-	DECLARE_BINARY ( ZLMetaVec2D < TYPE >, Sub )
 	
 	DECLARE_BINARY_WITH_SCALAR ( ZLMetaVec2D < TYPE >, Add )
 	DECLARE_BINARY_WITH_SCALAR ( ZLMetaVec2D < TYPE >, Lerp )

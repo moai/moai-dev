@@ -84,21 +84,21 @@ end
 
 local coll2 = makePropWithColl ()
 coll2:setLoc ( 0, 0, 0 )
---coll2:setRot ( 0, 0, 45 )
+coll2:setRot ( 0, 0, 45 )
 
 local coll3 = makePropWithColl ()
 coll3:setLoc ( -128, 0, 0 )
---coll3:setRot ( 0, 0, 45 )
+coll3:setRot ( 0, 0, 45 )
 
 local coll4 = makePropWithColl ()
 coll4:setLoc ( 128, 0, 0 )
---coll4:setRot ( 0, 0, 45 )
+coll4:setRot ( 0, 0, 45 )
 
 local coll1 = makePropWithColl ()
 coll1:setLoc ( 0, 160, 0 )
 --coll1:setLoc ( -64, 0, 0 )
 --coll1:setLoc ( 32, 128, 0 )
---coll1:setScl ( 0.25, 1, 1)
+coll1:setScl ( 0.5, 0.5, 1 )
 
 --camera:setParent ( coll1 )
 camera:setAttrLink ( MOAITransform.INHERIT_LOC, coll1, MOAITransform.TRANSFORM_TRAIT )
@@ -107,10 +107,10 @@ main = function ()
 
 	local keyboard = MOAIInputMgr.device.keyboard
 
-	--local ACC = 2
-	--local DAMP = 0
-	local ACC = 0.25
-	local DAMP = 0.95
+	local ACC = 6
+	local DAMP = 0
+	--local ACC = 0.15
+	--local DAMP = 0.97
 	local xd = 0
 	local yd = 0
 	while true do
@@ -157,6 +157,18 @@ main = function ()
 		end
 
 		coll2:moveRot ( 0, 0, rd )
+
+		local s = 0.0
+
+		if keyboard:keyIsDown ( 'a' ) then
+			s = s - 0.01
+		end
+
+		if keyboard:keyIsDown ( 's' ) then
+			s = s + 0.01
+		end
+
+		coll2:moveScl ( s, s, 0 )
 
 		coroutine.yield ()
 	end

@@ -30,6 +30,8 @@ public:
 	ZLVec2D		mPoint;
 	ZLVec2D		mTangent;
 	ZLVec2D		mNormal;
+	
+	ZLVec2D		mEdgeNormal;
 	ZLVec2D		mCornerTangent;
 	
 	float		mNegD; // the negative distance the point can travel along the tangent before reach the end
@@ -111,10 +113,11 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void PushCorner ( const ZLVec2D& point, const ZLVec2D& tangent, const ZLVec2D& normal, const ZLVec2D& v0, const ZLVec2D& v1, ZLVec2D cornerTangent ) {
+	void PushCorner ( const ZLVec2D& point, const ZLVec2D& tangent, const ZLVec2D& normal, const ZLVec2D& v0, const ZLVec2D& v1, const ZLVec2D& edgeNormal, const ZLVec2D& cornerTangent ) {
 	
 		if ( this->mTop < this->mMax ) {
 			this->Push ( point, tangent, normal, v0, v1, MOAIContactPoint2D::CORNER );
+			this->mContacts [ this->mTop - 1 ].mEdgeNormal = edgeNormal;
 			this->mContacts [ this->mTop - 1 ].mCornerTangent = cornerTangent;
 		}
 	}
