@@ -141,10 +141,12 @@ MOAINotificationsIOS::~MOAINotificationsIOS () {
 //----------------------------------------------------------------//
 void MOAINotificationsIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "REMOTE_NOTIFICATION_NONE",					( u32 )UIRemoteNotificationTypeNone );
-	state.SetField ( -1, "REMOTE_NOTIFICATION_BADGE",					( u32 )UIRemoteNotificationTypeBadge );
-	state.SetField ( -1, "REMOTE_NOTIFICATION_SOUND",					( u32 )UIRemoteNotificationTypeSound );
-	state.SetField ( -1, "REMOTE_NOTIFICATION_ALERT",					( u32 )UIRemoteNotificationTypeAlert );
+// The below types have been deprecated. If they are still required, a new solution is required.
+// _registerForRemoteNotifications has been updated to not take a notification type.
+//	state.SetField ( -1, "REMOTE_NOTIFICATION_NONE",					( u32 )UIRemoteNotificationTypeNone );
+//	state.SetField ( -1, "REMOTE_NOTIFICATION_BADGE",					( u32 )UIRemoteNotificationTypeBadge );
+//	state.SetField ( -1, "REMOTE_NOTIFICATION_SOUND",					( u32 )UIRemoteNotificationTypeSound );
+//	state.SetField ( -1, "REMOTE_NOTIFICATION_ALERT",					( u32 )UIRemoteNotificationTypeAlert );
 
 	state.SetField ( -1, "LOCAL_NOTIFICATION_MESSAGE_RECEIVED", 		( u32 )LOCAL_NOTIFICATION_MESSAGE_RECEIVED );
 	state.SetField ( -1, "REMOTE_NOTIFICATION_REGISTRATION_COMPLETE", 	( u32 )REMOTE_NOTIFICATION_REGISTRATION_COMPLETE );
