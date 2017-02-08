@@ -61,7 +61,6 @@ int MOAINotificationsIOS::_localNotificationInSeconds ( lua_State* L ) {
 /**	@lua	registerForRemoteNotifications
 	@text	Register to receive remote notifications.
 			
-	@in		integer	types			A mask of requested notification types. See Apple documentation.
 	@out 	nil
 */
 int MOAINotificationsIOS::_registerForRemoteNotifications ( lua_State* L ) {
@@ -69,7 +68,7 @@ int MOAINotificationsIOS::_registerForRemoteNotifications ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
 	UIApplication* application = [ UIApplication sharedApplication ];
-	[ application registerForRemoteNotificationTypes:( UIRemoteNotificationType )state.GetValue < u32 >( 1, ( u32 )UIRemoteNotificationTypeNone ) ];
+	[ application registerForRemoteNotifications ];
 	
 	return 0;
 }
