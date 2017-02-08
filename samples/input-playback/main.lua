@@ -20,7 +20,7 @@ end
 
 MOAISim.openWindow ( 'test', 320, 480 )
 
-layer = MOAILayer.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:pushRenderPass ()
 
 viewport = MOAIViewport.new ()

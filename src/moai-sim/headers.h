@@ -72,8 +72,8 @@
 #include <moai-sim/MOAIKeyCode.h>
 #include <moai-sim/MOAIKeyCodeEnum.h>
 #include <moai-sim/MOAIKeyboardSensor.h>
-#include <moai-sim/MOAILayerBase.h>
 #include <moai-sim/MOAILayoutFrame.h>
+#include <moai-sim/MOAILayer.h>
 #include <moai-sim/MOAILocationSensor.h>
 #include <moai-sim/MOAIMaterial.h>
 #include <moai-sim/MOAIMaterialBatch.h>
@@ -110,7 +110,7 @@
 #include <moai-sim/MOAIPartitionCell.h>
 #include <moai-sim/MOAIPartitionHolder.h>
 #include <moai-sim/MOAIPartitionHull.h>
-#include <moai-sim/MOAIPartitionLayer.h>
+#include <moai-sim/MOAIPartitionViewLayer.h>
 #include <moai-sim/MOAIPartitionLevel.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIPartitionResultMgr.h>
@@ -130,8 +130,6 @@
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAIRenderMgr.h>
-#include <moai-sim/MOAIRenderPass.h>
-#include <moai-sim/MOAIRenderPassBase.h>
 #include <moai-sim/MOAIScissorRect.h>
 #include <moai-sim/MOAIScriptNode.h>
 #include <moai-sim/MOAISelectionMesh.h>
@@ -147,6 +145,7 @@
 #include <moai-sim/MOAIStretchPatch2D.h>
 #include <moai-sim/MOAISurfaceDeck2D.h>
 #include <moai-sim/MOAITableLayer.h>
+#include <moai-sim/MOAITableViewLayer.h>
 #include <moai-sim/MOAITexture.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITileDeck2D.h>
@@ -170,6 +169,7 @@
 #include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
+#include <moai-sim/MOAIViewLayer.h>
 #include <moai-sim/MOAIViewport.h>
 #include <moai-sim/MOAIViewProj.h>
 #include <moai-sim/MOAIWheelSensor.h>

@@ -45,7 +45,7 @@ world = MOAICollisionWorld.new ()
 world:setCallback ( onOverlap )
 world:start ()
 
-debugLayer = MOAILayer.new ()
+debugLayer = MOAIPartitionViewLayer.new ()
 debugLayer:setViewport ( viewport )
 debugLayer:setLayerPartition ( world )
 debugLayer:setCamera ( camera )

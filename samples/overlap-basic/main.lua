@@ -34,11 +34,11 @@ world = MOAICollisionWorld.new ()
 world:setCallback ( onOverlap )
 world:start ()
 
-layer = MOAILayer.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:pushRenderPass ()
 
-debugLayer = MOAILayer.new ()
+debugLayer = MOAIPartitionViewLayer.new ()
 debugLayer:setViewport ( viewport )
 debugLayer:setLayerPartition ( world )
 debugLayer:pushRenderPass ()

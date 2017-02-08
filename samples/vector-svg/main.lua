@@ -6,7 +6,7 @@
 
 svg = require ( 'svg' )
 
-layer = MOAILayer.new ()
+layer = MOAIPartitionViewLayer.new ()
 
 onProp = function ( prop, style )
 

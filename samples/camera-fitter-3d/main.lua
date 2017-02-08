@@ -22,7 +22,7 @@ YMAX = 460
 viewport = MOAIViewport.new ()
 viewport:setSize ( XMIN, YMIN, XMAX, YMAX )
 
-layer = MOAILayer.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:setClearColor ( 1, 1, 1, 1 )
 layer:pushRenderPass ()
@@ -31,7 +31,7 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 960, 480 )
 viewport:setScale ( 960, 480 )
 
-layer = MOAILayer.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:pushRenderPass ()
 

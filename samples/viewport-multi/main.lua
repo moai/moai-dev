@@ -12,7 +12,7 @@ local function makeLayer ( x, y, w, h, r, g, b, a )
 	viewport:setSize ( x, y, x + w, y + h )
 	viewport:setScale ( w, -h )
 
-	local layer = MOAILayer.new ()
+	local layer = MOAIPartitionViewLayer.new ()
 	layer:setViewport ( viewport )
 	layer:setClearColor ( r, g, b, a )
 	layer:pushRenderPass ()

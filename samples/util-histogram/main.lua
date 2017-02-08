@@ -12,8 +12,8 @@ table.insert ( objects, MOAIProp.new ())
 table.insert ( objects, MOAIProp.new ())
 table.insert ( objects, MOAIProp.new ())
 
-table.insert ( objects, MOAILayer.new ())
-table.insert ( objects, MOAILayer.new ())
+table.insert ( objects, MOAIPartitionViewLayer.new ())
+table.insert ( objects, MOAIPartitionViewLayer.new ())
 
 table.insert ( objects, MOAITransform.new ())
 

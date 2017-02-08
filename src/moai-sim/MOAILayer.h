@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIRENDERPASSBASE_H
-#define	MOAIRENDERPASSBASE_H
+#ifndef	MOAILAYER_H
+#define	MOAILAYER_H
 
 #include <moai-sim/MOAIDrawable.h>
 
@@ -11,9 +11,9 @@ class MOAIFrameBuffer;
 class MOAIPartition;
 
 //================================================================//
-// MOAIRenderPass
+// MOAILayer
 //================================================================//
-class MOAIRenderPassBase :
+class MOAILayer :
 	public virtual MOAILuaObject,
 	public virtual MOAIDrawable {
 private:
@@ -52,8 +52,8 @@ public:
 
 	//----------------------------------------------------------------//
 	MOAIFrameBuffer*	GetFrameBuffer			();
-						MOAIRenderPassBase		();
-						~MOAIRenderPassBase		();
+						MOAILayer		();
+						~MOAILayer		();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				SetClearColor			( MOAIColor* color );

@@ -1,22 +1,22 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIPARTITIONLAYER_H
-#define	MOAIPARTITIONLAYER_H
+#ifndef	MOAIPARTITIONVIEWLAYER_H
+#define	MOAIPARTITIONVIEWLAYER_H
 
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIGraphicsProp.h>
-#include <moai-sim/MOAILayerBase.h>
+#include <moai-sim/MOAIViewLayer.h>
 #include <moai-sim/MOAIPartitionHolder.h>
-#include <moai-sim/MOAIRenderPassBase.h>
+#include <moai-sim/MOAILayer.h>
 #include <moai-sim/MOAIViewport.h>
 
 class MOAICamera;
 
 //================================================================//
-// MOAIPartitionLayer
+// MOAIPartitionViewLayer
 //================================================================//
-/**	@lua	MOAIPartitionLayer
+/**	@lua	MOAIPartitionViewLayer
 	@text	Scene controls class.
 	
 	@const	SORT_NONE
@@ -32,9 +32,9 @@ class MOAICamera;
 	@const	SORT_VECTOR_ASCENDING
 	@const	SORT_VECTOR_DESCENDING
 */
-class MOAIPartitionLayer :
+class MOAIPartitionViewLayer :
 	public virtual MOAIPartitionHolder,
-	public virtual MOAILayerBase {
+	public virtual MOAIViewLayer {
 private:
 
 	u32			mSortMode;
@@ -59,15 +59,15 @@ private:
 	void			DrawPropsDebug			( MOAIPartitionResultBuffer& buffer);
 
 	//----------------------------------------------------------------//
-	void			MOAILayerBase_Draw		( int subPrimID );
+	void			MOAIViewLayer_Draw		();
 
 public:
 		
-	DECL_LUA_FACTORY ( MOAIPartitionLayer )
+	DECL_LUA_FACTORY ( MOAIPartitionViewLayer )
 	
 	//----------------------------------------------------------------//
-					MOAIPartitionLayer		();
-					~MOAIPartitionLayer		();
+					MOAIPartitionViewLayer		();
+					~MOAIPartitionViewLayer		();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );

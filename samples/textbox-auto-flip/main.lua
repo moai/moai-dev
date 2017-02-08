@@ -17,7 +17,7 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 1024, 1024 )
 viewport:setScale ( 1024, 1024 )
 
-layer = MOAILayer.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:setCamera ( camera )
 layer:pushRenderPass ()

@@ -10,7 +10,7 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 544, 272 )
 viewport:setScale ( 544, 272 )
 
-layer = MOAILayer.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:pushRenderPass ()
 

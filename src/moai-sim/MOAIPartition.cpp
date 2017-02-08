@@ -52,7 +52,7 @@ int MOAIPartition::_getInterfaceMask ( lua_State* L ) {
 	@in		number x
 	@in		number y
 	@in		number z
-	@opt	number sortMode			One of the MOAIPartitionLayer sort modes. Default value is SORT_PRIORITY_ASCENDING.
+	@opt	number sortMode			One of the MOAIPartitionViewLayer sort modes. Default value is SORT_PRIORITY_ASCENDING.
 	@opt	number xScale			X scale for vector sort. Default value is 0.
 	@opt	number yScale			Y scale for vector sort. Default value is 0.
 	@opt	number zScale			Z scale for vector sort. Default value is 0.
@@ -152,7 +152,7 @@ int MOAIPartition::_hullForRay ( lua_State* L ) {
 	@text	Returns all props.
 	
 	@in		MOAIPartition self
-	@opt	number sortMode			One of the MOAIPartitionLayer sort modes. Default value is SORT_NONE.
+	@opt	number sortMode			One of the MOAIPartitionViewLayer sort modes. Default value is SORT_NONE.
 	@opt	number xScale			X scale for vector sort. Default value is 0.
 	@opt	number yScale			Y scale for vector sort. Default value is 0.
 	@opt	number zScale			Z scale for vector sort. Default value is 0.
@@ -193,7 +193,7 @@ int MOAIPartition::_hullList ( lua_State* L ) {
 	@in		number x
 	@in		number y
 	@in		number z
-	@opt	number sortMode			One of the MOAIPartitionLayer sort modes. Default value is SORT_NONE.
+	@opt	number sortMode			One of the MOAIPartitionViewLayer sort modes. Default value is SORT_NONE.
 	@opt	number xScale			X scale for vector sort. Default value is 0.
 	@opt	number yScale			Y scale for vector sort. Default value is 0.
 	@opt	number zScale			Z scale for vector sort. Default value is 0.
@@ -242,7 +242,7 @@ int MOAIPartition::_hullListForPoint ( lua_State* L ) {
 	@in		number xdirection
 	@in		number ydirection
 	@in		number zdirection
-	@opt	number sortMode			One of the MOAIPartitionLayer sort modes. Default value is SORT_KEY_ASCENDING.
+	@opt	number sortMode			One of the MOAIPartitionViewLayer sort modes. Default value is SORT_KEY_ASCENDING.
 	@opt	number xScale			X scale for vector sort. Default value is 0.
 	@opt	number yScale			Y scale for vector sort. Default value is 0.
 	@opt	number zScale			Z scale for vector sort. Default value is 0.
@@ -296,7 +296,7 @@ int MOAIPartition::_hullListForRay ( lua_State* L ) {
 	@in		number yMin
 	@in		number xMax
 	@in		number yMax
-	@opt	number sortMode			One of the MOAIPartitionLayer sort modes. Default value is SORT_NONE.
+	@opt	number sortMode			One of the MOAIPartitionViewLayer sort modes. Default value is SORT_NONE.
 	@opt	number xScale			X scale for vector sort. Default value is 0.
 	@opt	number yScale			Y scale for vector sort. Default value is 0.
 	@opt	number zScale			Z scale for vector sort. Default value is 0.

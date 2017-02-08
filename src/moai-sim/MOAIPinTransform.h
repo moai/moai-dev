@@ -7,7 +7,7 @@
 #include <moai-sim/MOAITransform.h>
 #include <moai-sim/MOAINode.h>
 
-class MOAILayerBase;
+class MOAIViewLayer;
 
 //================================================================//
 // MOAIPinTransform
@@ -20,8 +20,8 @@ class MOAIPinTransform :
 	public MOAITransform {
 private:
 
-	MOAILuaSharedPtr < MOAILayerBase > mSourceLayer;
-	MOAILuaSharedPtr < MOAILayerBase > mDestLayer;
+	MOAILuaSharedPtr < MOAIViewLayer > mSourceLayer;
+	MOAILuaSharedPtr < MOAIViewLayer > mDestLayer;
 		
 	float			mFront;
 	

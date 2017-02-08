@@ -4,22 +4,18 @@
 #ifndef	MOAITABLELAYER_H
 #define	MOAITABLELAYER_H
 
-#include <moai-sim/MOAIFrameBuffer.h>
-#include <moai-sim/MOAIGraphicsProp.h>
-#include <moai-sim/MOAILayerBase.h>
-#include <moai-sim/MOAIRenderPassBase.h>
-#include <moai-sim/MOAIViewport.h>
+#include <moai-sim/MOAILayer.h>
 
-class MOAICamera;
+class MOAIColor;
+class MOAIFrameBuffer;
 class MOAIPartition;
 
 //================================================================//
 // MOAITableLayer
 //================================================================//
-// TODO: doxygen
 class MOAITableLayer :
-	public virtual MOAILayerBase {
-private:
+	public virtual MOAILayer {
+protected:
 
 	MOAILuaMemberRef	mRenderTable;
 
@@ -28,19 +24,17 @@ private:
 	static int			_setRenderTable			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				MOAILayerBase_Draw		( int subPrimID );
+	void				MOAIDrawable_Draw		( int subPrimID );
 
 public:
-	
+
 	DECL_LUA_FACTORY ( MOAITableLayer )
-	
+
 	//----------------------------------------------------------------//
 						MOAITableLayer			();
 						~MOAITableLayer			();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
-	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
-	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

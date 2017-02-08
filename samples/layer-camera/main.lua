@@ -16,7 +16,7 @@ camera:moveLoc ( 128, 0, 3 )
 camera:moveRot ( 180, 3 )
 camera:moveScl ( 1, 1, 3 )
 
-layer = MOAILayer.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:setCamera ( camera )
 layer:pushRenderPass ()

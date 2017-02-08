@@ -5,7 +5,7 @@
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResourceClerk.h>
-#include <moai-sim/MOAIRenderPassBase.h>
+#include <moai-sim/MOAILayer.h>
 #include <moai-sim/MOAIRenderMgr.h>
 
 //================================================================//
@@ -14,24 +14,24 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIRenderPassBase::_getClearMode ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIRenderPassBase, "U" )
+int MOAILayer::_getClearMode ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
 	state.Push ( self->mClearMode );
 	return 1;
 }
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIRenderPassBase::_getFrameBuffer ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIRenderPassBase, "U" )
+int MOAILayer::_getFrameBuffer ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
 	state.Push ( self->GetFrameBuffer ());
 	return 1;
 }
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIRenderPassBase::_pushRenderPass ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIRenderPassBase, "U" )
+int MOAILayer::_pushRenderPass ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
 	MOAIRenderMgr::Get ().PushDrawable ( self );
 	return 0;
 }
@@ -46,7 +46,7 @@ int MOAIRenderPassBase::_pushRenderPass ( lua_State* L ) {
 
 	@overload
 
-		@in		MOAIRenderPassBase self
+		@in		MOAILayer self
 		@opt	number red			The red value of the color.
 		@opt	number green		The green value of the color.
 		@opt	number blue			The blue value of the color.
@@ -55,12 +55,12 @@ int MOAIRenderPassBase::_pushRenderPass ( lua_State* L ) {
 	
 	@overload
 		
-		@in		MOAIRenderPassBase self
+		@in		MOAILayer self
 		@in		MOAIColor color
 		@out	nil
 */
-int MOAIRenderPassBase::_setClearColor ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIRenderPassBase, "U" )
+int MOAILayer::_setClearColor ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
 	
 	MOAIColor* color = state.GetLuaObject < MOAIColor >( 2, true );
 	if ( color ) {
@@ -92,12 +92,12 @@ int MOAIRenderPassBase::_setClearColor ( lua_State* L ) {
 			clear the depth buffer.  This function sets whether or not the depth
 			buffer should be cleared at the start of each frame.
 
-	@in		MOAIRenderPassBase self
+	@in		MOAILayer self
 	@in		boolean clearDepth	Whether to clear the depth buffer each frame.
 	@out	nil
 */
-int MOAIRenderPassBase::_setClearDepth ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIRenderPassBase, "U" )
+int MOAILayer::_setClearDepth ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
 	
 	bool clearDepth = state.GetValue < bool >( 2, false );
 	
@@ -112,16 +112,16 @@ int MOAIRenderPassBase::_setClearDepth ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIRenderPassBase::_setClearMode ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIRenderPassBase, "U" )
+int MOAILayer::_setClearMode ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
 	self->mClearMode = state.GetValue < u32 >( 2, CLEAR_ON_BUFFER_FLAG );
 	return 1;
 }
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIRenderPassBase::_setFrameBuffer ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIRenderPassBase, "U" )
+int MOAILayer::_setFrameBuffer ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
 	
 	MOAIFrameBuffer* frameBuffer = state.GetLuaObject < MOAIFrameBuffer >( 1, true );
 	state.Push ( frameBuffer );
@@ -129,11 +129,11 @@ int MOAIRenderPassBase::_setFrameBuffer ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAIRenderPassBase
+// MOAILayer
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIRenderPassBase::ClearSurface () {
+void MOAILayer::ClearSurface () {
 
 	MOAIFrameBuffer* frameBuffer = this->GetFrameBuffer ();
 	assert ( frameBuffer );
@@ -165,7 +165,7 @@ void MOAIRenderPassBase::ClearSurface () {
 }
 
 //----------------------------------------------------------------//
-MOAIFrameBuffer* MOAIRenderPassBase::GetFrameBuffer () {
+MOAIFrameBuffer* MOAILayer::GetFrameBuffer () {
 
 	// affirm the frame buffer
 	if ( !this->mFrameBuffer ) {
@@ -175,7 +175,7 @@ MOAIFrameBuffer* MOAIRenderPassBase::GetFrameBuffer () {
 }
 
 //----------------------------------------------------------------//
-MOAIRenderPassBase::MOAIRenderPassBase () :
+MOAILayer::MOAILayer () :
 	mClearFlags ( ZGL_CLEAR_COLOR_BUFFER_BIT | ZGL_CLEAR_DEPTH_BUFFER_BIT ),
 	mClearColor ( ZLColor::PackRGBA ( 0.0f, 0.0f, 0.0f, 1.0f )),
 	mClearMode ( CLEAR_ON_BUFFER_FLAG ) {
@@ -187,14 +187,14 @@ MOAIRenderPassBase::MOAIRenderPassBase () :
 }
 
 //----------------------------------------------------------------//
-MOAIRenderPassBase::~MOAIRenderPassBase () {
+MOAILayer::~MOAILayer () {
 
 	this->mClearColorNode.Set ( *this, 0 );
 	this->mFrameBuffer.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
-void MOAIRenderPassBase::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAILayer::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "CLEAR_ALWAYS",			( u32 )CLEAR_ALWAYS );
 	state.SetField ( -1, "CLEAR_NEVER",				( u32 )CLEAR_NEVER );
@@ -202,7 +202,7 @@ void MOAIRenderPassBase::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIRenderPassBase::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getClearMode",				_getClearMode },
@@ -219,7 +219,7 @@ void MOAIRenderPassBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIRenderPassBase::SetClearColor ( MOAIColor* color ) {
+void MOAILayer::SetClearColor ( MOAIColor* color ) {
 
 	if ( this->mClearColorNode != color ) {
 		this->mClearColorNode.Set ( *this, color );
@@ -227,7 +227,7 @@ void MOAIRenderPassBase::SetClearColor ( MOAIColor* color ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIRenderPassBase::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
+void MOAILayer::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 
 	this->mFrameBuffer.Set ( *this, frameBuffer ? frameBuffer : MOAIGfxMgr::Get ().mGfxState.GetDefaultFrameBuffer ());
 }

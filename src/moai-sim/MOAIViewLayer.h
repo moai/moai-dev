@@ -1,24 +1,24 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAILAYERBASE_H
-#define	MOAILAYERBASE_H
+#ifndef	MOAIVIEWLAYER_H
+#define	MOAIVIEWLAYER_H
 
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIPartitionHolder.h>
-#include <moai-sim/MOAIRenderPassBase.h>
+#include <moai-sim/MOAILayer.h>
 #include <moai-sim/MOAIViewport.h>
 
 class MOAICamera;
 
 //================================================================//
-// MOAILayerBase
+// MOAIViewLayer
 //================================================================//
 // TODO: doxygen
-class MOAILayerBase :
+class MOAIViewLayer :
 	public virtual MOAIGraphicsProp,
-	public virtual MOAIRenderPassBase {
+	public virtual MOAILayer {
 protected:
 
 	MOAILuaSharedPtr < MOAICamera >			mCamera;
@@ -44,19 +44,17 @@ protected:
 
 	//----------------------------------------------------------------//
 	void					MOAIDrawable_Draw					( int subPrimID );
-	virtual void			MOAILayerBase_Draw					( int subPrimID );
 	ZLBounds				MOAIPartitionHull_GetModelBounds	();
+	virtual void			MOAIViewLayer_Draw					() = 0;
 
 public:
-		
-	DECL_LUA_FACTORY ( MOAILayerBase )
-	
+
 	//----------------------------------------------------------------//
 	float					GetFitting				( ZLRect& worldRect, float hPad, float vPad );
 	ZLMatrix4x4				GetWndToWorldMtx		() const;
 	ZLMatrix4x4				GetWorldToWndMtx		() const;
-							MOAILayerBase			();
-							~MOAILayerBase			();
+							MOAIViewLayer			();
+							~MOAIViewLayer			();
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
 };

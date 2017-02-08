@@ -27,7 +27,7 @@ partition:setLevel ( 1, 256, 4, 4 )
 partition:setLevel ( 2, 128, 8, 8 )
 partition:setLevel ( 3, 96, 96, 12 )
 
-layer = MOAILayer.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:setCamera ( camera )
 layer:setPartition ( partition )

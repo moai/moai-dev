@@ -19,7 +19,7 @@ function initFrameBuffer ()
 	viewport:setSize ( 256, 256 )
 	viewport:setScale ( 256, 256 )
 
-	local layer = MOAILayer.new ()
+	local layer = MOAIPartitionViewLayer.new ()
 	layer:setViewport ( viewport )
 	
 	local prop = MOAIProp2D.new ()
@@ -50,7 +50,7 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, -480 )
 
-layer = MOAILayer.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 
 layer:pushRenderPass ()

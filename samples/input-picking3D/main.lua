@@ -20,7 +20,7 @@ frameBuffer = MOAIGfxMgr.getFrameBuffer ()
 frameBuffer:setClearDepth ( true )
 frameBuffer:setClearColor ( 0, 0, 0, 1 )
 
-layer = MOAILayer.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:pushRenderPass ()
 
 viewport = MOAIViewport.new ()

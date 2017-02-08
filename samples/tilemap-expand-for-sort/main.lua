@@ -6,8 +6,8 @@
 
 MOAISim.openWindow ( "test", 768, 768 )
 
-layer = MOAILayer.new ()
-layer:setSortMode ( MOAILayer2D.SORT_VECTOR_ASCENDING )
+layer = MOAIPartitionViewLayer.new ()
+layer:setSortMode ( MOAIPartitionViewLayer2D.SORT_VECTOR_ASCENDING )
 layer:setSortScale ( 0, 1, 10000 )
 layer:pushRenderPass ()
 

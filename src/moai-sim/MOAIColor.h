@@ -7,7 +7,7 @@
 #include <moai-sim/MOAINode.h>
 
 class MOAIDeck;
-class MOAIPartitionLayer;
+class MOAIPartitionViewLayer;
 
 //================================================================//
 // MOAIColor

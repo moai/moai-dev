@@ -10,7 +10,7 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 480 )
 
-layer = MOAILayer.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:pushRenderPass ()
 
@@ -32,6 +32,6 @@ addProp ( 56, 56 )
 addProp ( 0, 0 )
 
 -- sort using prop location in camera space
-layer:setSortMode ( MOAILayer2D.SORT_DIST_SQUARED_DESCENDING, true )
+layer:setSortMode ( MOAIPartitionViewLayer2D.SORT_DIST_SQUARED_DESCENDING, true )
 layer:setSortScale ( 0, 0, 0, 0 )
 

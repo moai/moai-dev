@@ -35,7 +35,7 @@ makeLayerWithDeckItem = function ( deck, idx, pad, viewWidth, viewHeight )
 	viewport:setSize ( viewWidth, viewHeight )
 	viewport:setScale ( viewWidth, viewHeight )
 
-	local layer = MOAILayer.new ()
+	local layer = MOAIPartitionViewLayer.new ()
 	layer:setViewport ( viewport )
 	
 	local prop = MOAIProp2D.new ()

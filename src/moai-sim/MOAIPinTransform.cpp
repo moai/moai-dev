@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAILayerBase.h>
+#include <moai-sim/MOAIViewLayer.h>
 #include <moai-sim/MOAIPinTransform.h>
 
 //================================================================//
@@ -17,18 +17,18 @@
 	
 	@in		MOAIPinTransform self
 	@in		MOAITransformBase sourceTransform
-	@in		MOAILayerBase sourceLayer
-	@in		MOAILayerBase destLayer
+	@in		MOAIViewLayer sourceLayer
+	@in		MOAIViewLayer destLayer
 	@out	nil
 */
 int MOAIPinTransform::_init ( lua_State* L ) {
 	
 	MOAI_LUA_SETUP ( MOAIPinTransform, "UUU" );
 	
-	MOAILayerBase* sourceLayer = state.GetLuaObject < MOAILayerBase >( 2, true );
+	MOAIViewLayer* sourceLayer = state.GetLuaObject < MOAIViewLayer >( 2, true );
 	if ( !sourceLayer ) return 0;
 	
-	MOAILayerBase* destLayer = state.GetLuaObject < MOAILayerBase >( 3, true );
+	MOAIViewLayer* destLayer = state.GetLuaObject < MOAIViewLayer >( 3, true );
 	if ( !destLayer ) return 0;
 	
 	self->SetDependentMember ( self->mSourceLayer, sourceLayer );
