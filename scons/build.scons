@@ -51,7 +51,7 @@ lua_sources = [ os.path.join( 'lua-5.1.3/src', src_file ) for src_file in [
 				  'print.c',
 ]]
 
-freetype_sources = [ os.path.join( 'freetype-2.4.4/src', src_file ) for src_file in [
+freetype_sources = [ os.path.join( 'freetype-2.7/src', src_file ) for src_file in [
 					'autofit/autofit.c',
 					'bdf/bdf.c',
 					'cff/cff.c',
@@ -567,7 +567,7 @@ nacl_env["CPPPATH"] = [ 'lua-5.1.3/src',
 						fmod_include,
 						'openssl-1.0.0d/include-android',
 						'openssl-1.0.0d/crypto',
-						'freetype-2.4.4/include',
+						'freetype-2.7/include',
 						'tlsf-2.0',
 						'sfmt-1.4',
 						'jpeg-8c',
