@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #include <moai-sim/MOAIImageFormat.h>
-#include <moai-sim/MOAISingleTexture.h>
+#include <moai-sim/MOAITextureBase.h>
 
 //================================================================//
 // MOAIImageFormat
@@ -17,7 +17,7 @@ void MOAIImageFormat::Alloc ( MOAIImage& image ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIImageFormat::CleanupTexture ( MOAISingleTexture& texture ) {
+void MOAIImageFormat::CleanupTexture ( MOAITextureBase& texture ) {
 
 	texture.CleanupOnError ();
 }
@@ -30,7 +30,7 @@ bool MOAIImageFormat::CheckHeader ( const void* buffer ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormat::CreateTexture ( MOAISingleTexture& texture, const void* data, size_t size ) {
+bool MOAIImageFormat::CreateTexture ( MOAITextureBase& texture, const void* data, size_t size ) {
 	UNUSED ( texture );
 	UNUSED ( data );
 	UNUSED ( size );
@@ -129,7 +129,7 @@ void MOAIImageFormat::SetPixelFormat ( MOAIImage& image, MOAIImage::PixelFormat 
 }
 
 //----------------------------------------------------------------//
-void MOAIImageFormat::SetTextureID ( MOAISingleTexture& texture, ZLGfxHandle* glTexID, int internalFormat, int pixelType, size_t textureSize ) {
+void MOAIImageFormat::SetTextureID ( MOAITextureBase& texture, ZLGfxHandle* glTexID, int internalFormat, int pixelType, size_t textureSize ) {
 
 	texture.SetTextureID ( glTexID, internalFormat, pixelType, textureSize );
 }

@@ -16,7 +16,7 @@ private:
 public:
 
 	//----------------------------------------------------------------//
-	bool			CreateTexture				( MOAISingleTexture& texture, const void* data, size_t size );
+	bool			CreateTexture				( MOAITextureBase& texture, const void* data, size_t size );
 	size_t			GetHeaderGuessSize			();
 	bool			GuessHeader					( const void* buffer );
 					MOAIImageFormatTga			();

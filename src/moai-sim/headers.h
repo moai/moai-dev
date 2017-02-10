@@ -74,12 +74,14 @@
 #include <moai-sim/MOAIKeyboardSensor.h>
 #include <moai-sim/MOAILayoutFrame.h>
 #include <moai-sim/MOAILayer.h>
+#include <moai-sim/MOAILight.h>
+#include <moai-sim/MOAILightFormat.h>
 #include <moai-sim/MOAILocationSensor.h>
 #include <moai-sim/MOAIMaterial.h>
+#include <moai-sim/MOAIMaterialBase.h>
 #include <moai-sim/MOAIMaterialBatch.h>
 #include <moai-sim/MOAIMaterialBatchHolder.h>
 #include <moai-sim/MOAIMaterialBatchHolderMixIn.h>
-#include <moai-sim/MOAIMaterialHolder.h>
 #include <moai-sim/MOAIMaterialHolderMixIn.h>
 #include <moai-sim/MOAIMaterialStackMgr.h>
 #include <moai-sim/MOAIMatrix.h>
@@ -90,7 +92,6 @@
 #include <moai-sim/MOAIMetaTileDeck2D.h>
 #include <moai-sim/MOAIMotionSensor.h>
 #include <moai-sim/MOAIMoveConstraint2D.h>
-#include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAINode.h>
 #include <moai-sim/MOAINodeMgr.h>
 #include <moai-sim/MOAIOverlap.h>
@@ -138,8 +139,10 @@
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIShaderProgram.h>
 #include <moai-sim/MOAIShaderUniform.h>
+#include <moai-sim/MOAIShaderUniformBuffer.h>
+#include <moai-sim/MOAIShaderUniformFormatter.h>
 #include <moai-sim/MOAISim.h>
-#include <moai-sim/MOAISingleTexture.h>
+#include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAISpanList.h>
 #include <moai-sim/MOAISpriteDeck2D.h>
 #include <moai-sim/MOAIStretchPatch2D.h>
@@ -147,7 +150,6 @@
 #include <moai-sim/MOAITableLayer.h>
 #include <moai-sim/MOAITableViewLayer.h>
 #include <moai-sim/MOAITexture.h>
-#include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITileDeck2D.h>
 #include <moai-sim/MOAITileFlags.h>
 #include <moai-sim/MOAITimer.h>

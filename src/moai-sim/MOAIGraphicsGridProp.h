@@ -21,7 +21,7 @@ class MOAIPartitionResultBuffer;
 class MOAIScissorRect;
 class MOAIShader;
 class MOAISurfaceSampler2D;
-class MOAISingleTexture;
+class MOAITextureBase;
 
 //================================================================//
 // MOAIGraphicsGridProp

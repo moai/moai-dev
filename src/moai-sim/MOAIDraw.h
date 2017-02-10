@@ -7,7 +7,7 @@
 #include <moai-sim/MOAIDrawShapeImmediate.h>
 
 class MOAIAnimCurve;
-class MOAISingleTexture;
+class MOAITextureBase;
 class MOAITexture;
 class MOAIFont;
 class MOAIGlyph;

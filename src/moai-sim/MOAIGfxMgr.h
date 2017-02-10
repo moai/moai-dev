@@ -16,11 +16,10 @@
 class MOAICamera;
 class MOAIFrameBuffer;
 class MOAIGfxResource;
-class MOAIMultiTexture;
 class MOAIShader;
 class MOAIShaderProgram;
 class MOAITexture;
-class MOAISingleTexture;
+class MOAITextureBase;
 class MOAIVertexFormat;
 class MOAIViewport;
 
@@ -71,7 +70,7 @@ public:
 	
 	friend class MOAIGfxResource;
 	friend class MOAIShaderProgram;
-	friend class MOAISingleTexture;
+	friend class MOAITextureBase;
 	
 	DECL_LUA_SINGLETON ( MOAIGfxMgr )
 	

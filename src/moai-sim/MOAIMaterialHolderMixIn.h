@@ -108,6 +108,14 @@ protected:
 
 	//----------------------------------------------------------------//
 	// TODO: doxygen
+	static int _getLight ( lua_State* L ) {
+		MOAI_LUA_SETUP ( TYPE, "UN" )
+		state.Push ( self->mMaterial.GetLight ( state.GetValue < u32 >( 1, 0xffffffff )));
+		return 1;
+	}
+
+	//----------------------------------------------------------------//
+	// TODO: doxygen
 	static int _getShader ( lua_State* L ) {
 		MOAI_LUA_SETUP ( TYPE, "U" )
 		state.Push ( self->mMaterial.GetShader ());
@@ -160,6 +168,19 @@ protected:
 
 	//----------------------------------------------------------------//
 	// TODO: doxygen
+	static int _setLight ( lua_State* L ) {
+		MOAI_LUA_SETUP ( TYPE, "U" )
+		
+		u32 globalID = state.GetValue < u32 >( 2, 0xffffffff );
+		MOAILight* light = state.GetLuaObject < MOAILight >( 3, true );
+		self->mMaterial.SetLight ( globalID, light );
+		state.Push ( light );
+		
+		return 1;
+	}
+
+	//----------------------------------------------------------------//
+	// TODO: doxygen
 	static int _setShader ( lua_State* L ) {
 		MOAI_LUA_SETUP ( TYPE, "U" )
 		
@@ -205,11 +226,13 @@ protected:
 			{ "getCullMode",			_getCullMode },
 			{ "getDepthMask",			_getDepthMask },
 			{ "getDepthTest",			_getDepthTest },
+			{ "getLight",				_getLight },
 			{ "getShader",				_getShader },
 			{ "getTexture",				_getTexture },
 			{ "setBlendMode",			_setBlendMode },
 			{ "setCullMode",			_setCullMode },
 			{ "setDepthMask",			_setDepthMask },
+			{ "setLight",				_setLight },
 			{ "setShader",				_setShader },
 			{ "setTexture",				_setTexture },
 			{ NULL, NULL }

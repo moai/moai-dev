@@ -7,11 +7,9 @@
 #include <moai-sim/MOAIFrameBufferTexture.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIIndexBuffer.h>
-#include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIShaderProgram.h>
-#include <moai-sim/MOAITexture.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAIVertexArray.h>
 #include <moai-sim/MOAIVertexBuffer.h>
@@ -150,11 +148,6 @@ void MOAIGfxStateCache::ApplyStateChange ( u32 stateID ) {
 			this->SetShader ( this->mPendingState.mShader );
 			break;
 		
-		case TEXTURE:
-		
-			this->SetTexture ( this->mPendingState.mTextureSet );
-			break;
-		
 		case VERTEX_ARRAY:
 		
 			this->SetVertexArray ( this->mPendingState.mVtxArray );
@@ -181,7 +174,7 @@ void MOAIGfxStateCache::ApplyStateChange ( u32 stateID ) {
 //----------------------------------------------------------------//
 void MOAIGfxStateCache::ApplyStateChanges () {
 
-	if ( this->mDirtyFlags && ( !this->mApplyingStateChanges )) {
+	if (( this->mDirtyFlags || this->mTextureDirtyFlags ) && ( !this->mApplyingStateChanges )) {
 		
 		this->SuspendChanges ();
 		this->mCurrentState = &this->mActiveState;
@@ -189,11 +182,24 @@ void MOAIGfxStateCache::ApplyStateChanges () {
 		u32 dirtyFlags = this->mDirtyFlags;
 		this->mDirtyFlags = 0;
 		
+		u32 textureDirtyFlags = this->mTextureDirtyFlags;
+		this->mTextureDirtyFlags = 0;
+		
 		DEBUG_LOG ( "APPLY STATE CHANGES\n" );
 
-		for ( u32 i = 1; i < END_STATE_FLAGS; i <<= 1 ) {
-			if ( dirtyFlags & i ) {
-				this->ApplyStateChange ( i );
+		if ( dirtyFlags ) {
+			for ( u32 i = 1; i < END_STATE_FLAGS; i <<= 1 ) {
+				if ( dirtyFlags & i ) {
+					this->ApplyStateChange ( i );
+				}
+			}
+		}
+		
+		if ( textureDirtyFlags ) {
+			for ( u32 i = 0; i < this->mTopDirtyTexture; ++i ) {
+				if ( textureDirtyFlags & ( 1 << i )) {
+					this->SetTexture ( this->mPendingState.mTextureUnits [ i ]);
+				}
 			}
 		}
 		
@@ -227,7 +233,7 @@ void MOAIGfxStateCache::BindVertexBufferWithFormat ( MOAIVertexBufferWithFormat&
 //----------------------------------------------------------------//
 size_t MOAIGfxStateCache::CountTextureUnits () {
 
-	return this->mTextureUnits.Size ();
+	return this->mActiveState.mTextureUnits.Size ();
 }
 
 //----------------------------------------------------------------//
@@ -242,22 +248,11 @@ void MOAIGfxStateCache::DrawPrims ( u32 primType, u32 base, u32 count ) {
 
 	if ( shader && ( this->mActiveState.mVtxBuffer || this->mActiveState.mVtxArray )) {
 		
-		// need to do this here?
-		shader->GetProgram ()->Bind ();
-		shader->UpdateAndBindUniforms ();
-		
 		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 		
 		MOAIIndexBuffer* idxBuffer = this->mActiveState.mIdxBuffer;
 		
 		if ( idxBuffer ) {
-		
-			//gfx.Enable ( ZGL_PIPELINE_CULL );
-			//gfx.CullFace ( ZGL_CULL_FRONT );
-			
-			//gfx.Enable ( ZGL_PIPELINE_DEPTH );
-			//gfx.DepthFunc ( ZGL_DEPTH_LESS );
-			//gfx.DepthMask ( false );
 		
 			DEBUG_LOG ( "drawing prims with index and vertex buffer\n" );
 			
@@ -294,14 +289,6 @@ u32 MOAIGfxStateCache::GetBufferWidth () const {
 //	assert ( this->mFrameBuffer );
 //	return this->mFrameBuffer->mBufferScale;
 //}
-
-//----------------------------------------------------------------//
-u32 MOAIGfxStateCache::GetShaderGlobalsMask () {
-
-	assert ( this->mCurrentState );
-	MOAIShaderProgram* program = this->mCurrentState->mShaderProgram;
-	return program ? program->GetGlobalsMask () : 0;
-}
 
 //----------------------------------------------------------------//
 float MOAIGfxStateCache::GetViewHeight () const {
@@ -343,16 +330,28 @@ float MOAIGfxStateCache::GetViewWidth () const {
 //----------------------------------------------------------------//
 void MOAIGfxStateCache::InitTextureUnits ( size_t nTextureUnits ) {
 
-	this->mTextureUnits.Init ( nTextureUnits );
-	this->mTextureUnits.Fill ( 0 );
+	if ( MAX_TEXTURE_UNITS < nTextureUnits ) {
+		ZLLog_Warning ( "Hardware textures units (%d) exceed Moai maximum supported texture units (%d)\n", nTextureUnits, MAX_TEXTURE_UNITS );
+		nTextureUnits = MAX_TEXTURE_UNITS;
+	}
+
+	this->mPendingState.mTextureUnits.Init ( nTextureUnits );
+	this->mPendingState.mTextureUnits.Fill ( 0 );
+	
+	this->mActiveState.mTextureUnits.Init ( nTextureUnits );
+	this->mActiveState.mTextureUnits.Fill ( 0 );
+	
+	this->mMaxTextureUnits = nTextureUnits;
 }
 
 //----------------------------------------------------------------//
 MOAIGfxStateCache::MOAIGfxStateCache () :
 	mCurrentState ( 0 ),
 	mDirtyFlags ( 0 ),
+	mTextureDirtyFlags ( 0 ),
+	mTopDirtyTexture ( 0 ),
+	mMaxTextureUnits ( 0 ),
 	mApplyingStateChanges ( 0 ),
-	mActiveTextures ( 0 ),
 	mClient ( 0 ),
 	mBoundIdxBuffer ( 0 ),
 	mBoundVtxBuffer ( 0 ) {
@@ -409,23 +408,22 @@ void MOAIGfxStateCache::ResetState () {
 	gfx.Disable ( ZGL_PIPELINE_SCISSOR );
 	
 	// TODO: seems like overkill
-	for ( size_t i = 0; i < this->mTextureUnits.Size (); ++i ){
+	for ( size_t i = 0; i < this->mMaxTextureUnits; ++i ){
 		gfx.ActiveTexture (( u32 )i );
 		gfx.SetTexture ( 0 );
-		this->mTextureUnits [ i ] = 0;
+		pending.mTextureUnits [ i ] = 0;
+		active.mTextureUnits [ i ] = 0;
 	}
-	this->mActiveTextures = 0;
-
+	gfx.ActiveTexture ( 0 );
+	
 	pending.mShaderProgram	= 0;
 	pending.mIdxBuffer		= 0;
-	pending.mTextureSet		= 0;
 	pending.mVtxArray		= 0;
 	pending.mVtxBuffer		= 0;
 	pending.mVtxFormat		= 0;
 	
 	active.mShaderProgram	= 0;
 	active.mIdxBuffer		= 0;
-	active.mTextureSet		= 0;
 	active.mVtxArray		= 0;
 	active.mVtxBuffer		= 0;
 	active.mVtxFormat		= 0;
@@ -435,6 +433,8 @@ void MOAIGfxStateCache::ResetState () {
 	gfx.BindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, pending.mFrameBuffer->mGLFrameBufferID );
 	
 	this->mDirtyFlags = 0;
+	this->mTextureDirtyFlags = 0;
+	this->mTopDirtyTexture = 0;
 	
 	ZGL_COMMENT ( gfx, "" );
 }
@@ -576,7 +576,7 @@ void MOAIGfxStateCache::SetDefaultFrameBuffer ( MOAILuaObject& owner, MOAIFrameB
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateCache::SetDefaultTexture ( MOAILuaObject& owner, MOAITexture* texture ) {
+void MOAIGfxStateCache::SetDefaultTexture ( MOAILuaObject& owner, MOAITextureBase* texture ) {
 
 	this->mDefaultTexture.Set ( owner, texture );
 }
@@ -839,6 +839,7 @@ bool MOAIGfxStateCache::SetShader ( MOAIShader* shader ) {
 			
 			if ( program ) {
 				program->Bind ();
+				shader->UpdateAndBindUniforms ();
 			}
 		}
 
@@ -855,76 +856,52 @@ bool MOAIGfxStateCache::SetShader ( MOAIShader* shader ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxStateCache::SetTexture ( MOAITextureBase* textureSet ) {
+bool MOAIGfxStateCache::SetTexture ( MOAITextureBase* texture, u32 textureUnit ) {
 
 	if ( this->mApplyingStateChanges ) {
 	
 		MOAIGfxState& active = this->mActiveState;
-		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 	
-		if ( active.mTextureSet != textureSet ) {
+		texture = texture && texture->IsReady () ? texture : this->mDefaultTexture;
+		MOAITextureBase* prevTexture = active.mTextureUnits [ textureUnit ];
+	
+		if ( prevTexture != texture ) {
+
+			ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
 			this->GfxStateWillChange ();
 
 			DEBUG_LOG ( "  binding texture set: %p\n", textureSet );
 
-			active.mTextureSet = textureSet;
+			gfx.ActiveTexture ( textureUnit );
 
-			u32 unitsEnabled = 0;
-
-			if ( textureSet ) {
-
-				unitsEnabled = textureSet->CountActiveUnits ();
-				
-				// bind or unbind textues depending on state of texture set
-				for ( u32 i = 0; i < unitsEnabled; ++i ) {
-					
-					MOAISingleTexture* currentTexture = this->mTextureUnits [ i ];
-					MOAISingleTexture* bindTexture = textureSet->GetTextureForUnit ( i );
-				
-					if ( bindTexture && ( !bindTexture->IsReady ())) {
-						bindTexture = this->mDefaultTexture;
-					}
-					
-					if ( currentTexture != bindTexture ) {
-						
-						gfx.ActiveTexture ( i );
-						
-						if ( currentTexture ) {
-							currentTexture->Unbind ();
-						}
-						
-						this->mTextureUnits [ i ] = bindTexture;
-						
-						if ( bindTexture ) {
-							DEBUG_LOG ( "    binding texture: %d %p\n", i, bindTexture );
-							bindTexture->Bind ();
-						}
-					}
-				}
+			if ( prevTexture ) {
+				prevTexture->Unbind ();
 			}
 			
-			// unbind/disable any excess textures
-			for ( u32 i = unitsEnabled; i < this->mActiveTextures; ++i ) {
+			active.mTextureUnits [ textureUnit ] = texture;
 			
-				MOAISingleTexture* currentTexture = this->mTextureUnits [ i ];
+			if ( texture ) {
 			
-				if ( currentTexture ) {
-					gfx.ActiveTexture ( i );
-					currentTexture->Unbind ();
-					this->mTextureUnits [ i ] = 0;
-				}
+				DEBUG_LOG ( "    binding texture: %d %p\n", i, bindTexture );
+				texture->Bind ();
 			}
 
-			this->mActiveTextures = unitsEnabled;
 			gfx.ActiveTexture ( 0 );
 		}
-	
 	}
 	else {
 
-		this->mPendingState.mTextureSet = textureSet;
-		this->mDirtyFlags = ( this->mActiveState.mTextureSet == textureSet ) ? ( this->mDirtyFlags & ~TEXTURE ) : ( this->mDirtyFlags | TEXTURE );
+		u32 mask = 1 << textureUnit;
+		this->mPendingState.mTextureUnits [ textureUnit ] = texture;
+		if ( this->mActiveState.mTextureUnits [ textureUnit ] == texture ) {
+		
+			this->mTextureDirtyFlags = this->mTextureDirtyFlags & ~mask;
+		}
+		else {
+			this->mTextureDirtyFlags = this->mTextureDirtyFlags | mask;
+			this->mTopDirtyTexture = textureUnit + 1;
+		}
 	}
 	
 	return true;

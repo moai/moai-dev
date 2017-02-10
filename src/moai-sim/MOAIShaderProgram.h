@@ -35,26 +35,6 @@ public:
 };
 
 //================================================================//
-// MOAIShaderGlobals
-//================================================================//
-class MOAIShaderGlobals {
-protected:
-
-	ZLLeanArray < MOAIShaderProgramGlobal >		mGlobals;
-
-	//----------------------------------------------------------------//
-	int		ReserveGlobals			( lua_State* L, int idx );
-	int		SetGlobal				( lua_State* L, int idx );
-
-public:
-
-	//----------------------------------------------------------------//
-	void	CopyGlobals				( const MOAIShaderGlobals& globals );
-	void	ReserveGlobals			( u32 nGlobals );
-	void	SetGlobal				( u32 idx, u32 globalID, u32 uniformID, u32 index );
-};
-
-//================================================================//
 // MOAIShaderProgram
 //================================================================//
 /**	@lua	MOAIShaderProgram
@@ -65,8 +45,7 @@ public:
 			uniform values.
 */
 class MOAIShaderProgram :
-	public MOAIGfxResource,
-	public MOAIShaderGlobals {
+	public MOAIGfxResource {
 protected:
 
 	friend class MOAIShader;
@@ -87,8 +66,7 @@ protected:
 	STLMap < u32, STLString > mAttributeMap;
 
 	ZLLeanArray < MOAIShaderUniform >			mUniforms;
-	
-	u32											mGlobalsMask;
+	ZLLeanArray < MOAIShaderProgramGlobal >		mGlobals;
 
 	//----------------------------------------------------------------//
 	static int			_declareUniform				( lua_State* L );
@@ -109,6 +87,8 @@ protected:
 	void				OnGPUUnbind					();
 	bool				OnGPUUpdate					();
 	void				OnUniformLocation			( u32 addr, void* userdata );
+	int					ReserveGlobals				( lua_State* L, int idx );
+	int					SetGlobal					( lua_State* L, int idx );
 	
 public:
 
@@ -119,14 +99,15 @@ public:
 	//void				ClearUniforms				();
 	void				DeleteShaders				();
 	void				DeclareUniform				( u32 idx, cc8* name, u32 type, u32 width = 1, u32 count = 1 );
-	u32					GetGlobalsMask				();
 	void				Load						( cc8* vshSource, cc8* fshSource );
 						MOAIShaderProgram			();
 						~MOAIShaderProgram			();
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
 	void				ReserveAttributes			( u32 nAttributes );
+	void				ReserveGlobals				( u32 nGlobals );
 	void				ReserveUniforms				( u32 nUniforms );
+	void				SetGlobal					( u32 idx, u32 globalID, u32 uniformID, u32 index );
 	void				SetVertexAttribute			( u32 idx, cc8* attribute );
 };
 

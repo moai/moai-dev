@@ -8,7 +8,7 @@
 
 class MOAIDynamicGlyphCachePage;
 class MOAIGlyphSet;
-class MOAISingleTexture;
+class MOAITextureBase;
 
 //================================================================//
 // MOAIGlyph
@@ -54,7 +54,7 @@ public:
 	GET_CONST ( MOAIGlyphSet&, Deck, *mDeck )
 	
 	//----------------------------------------------------------------//
-	void			Draw					( MOAISingleTexture& texture, float x, float y, float xScale, float yScale, const ZLRect& padding ) const;
+	void			Draw					( MOAITextureBase& texture, float x, float y, float xScale, float yScale, const ZLRect& padding ) const;
 	ZLRect			GetGlyphLogicalRect		( float x, float y, float xScale = 1.0f, float yScale = 1.0f ) const;
 	MOAIKernVec		GetKerning				( u32 name ) const;
 					MOAIGlyph				();

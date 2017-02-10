@@ -131,7 +131,7 @@ const ZLMatrix4x4& MOAIGfxGlobalsCache::GetPrimaryMtx ( u32 mtxID, u64 mtxFlag )
 		
 		case MODEL_TO_UV_MTX:
 			
-			return this->mMatrices [ MODEL_TO_UV_MTX_MASK ];
+			return this->mMatrices [ MODEL_TO_UV_MTX ];
 		
 		case MODEL_TO_VIEW_MTX:
 			
@@ -251,7 +251,14 @@ const ZLFrustum& MOAIGfxGlobalsCache::GetViewVolume () {
 //----------------------------------------------------------------//
 bool MOAIGfxGlobalsCache::IsInputMtx ( u32 mtxID ) {
 
-	return (( mtxID == MODEL_TO_WORLD_MTX ) || ( mtxID == WORLD_TO_VIEW_MTX ) || ( mtxID == VIEW_TO_CLIP_MTX ) || ( mtxID == MODEL_TO_UV_MTX ));
+	return (
+		( mtxID == CLIP_TO_WINDOW_MTX )		||
+		( mtxID == MODEL_TO_WORLD_MTX )		||
+		( mtxID == MODEL_TO_UV_MTX )		||
+		( mtxID == WORLD_TO_VIEW_MTX )		||
+		( mtxID == VIEW_TO_CLIP_MTX )		||
+		( mtxID == WORLD_TO_DISPLAY_MTX )
+	);
 }
 
 //----------------------------------------------------------------//
@@ -298,20 +305,6 @@ void MOAIGfxGlobalsCache::SetAmbientColor ( float r, float g, float b, float a )
 
 	this->mAmbientColor.Set ( r, g, b, a );
 	this->UpdateFinalColor ();
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxGlobalsCache::SetDirtyFlags ( u64 dirtyFlags ) {
-
-	bool needsFlush = ( dirtyFlags & this->mShaderFlags ) != 0;
-	
-	// flush if ya gotta
-	if ( needsFlush ) {
-		this->GfxStateWillChange ();
-	}
-	
-	// we only set these in the first place to trip the shader flags (if any); can clear these now
-	this->mDirtyFlags = dirtyFlags & ~( BASE_ATTRS_MASK );
 }
 
 //----------------------------------------------------------------//
@@ -373,7 +366,7 @@ void MOAIGfxGlobalsCache::SetMtx ( u32 mtxID, const ZLMatrix4x4& mtx ) {
 
 	if ( !this->mMatrices [ mtxID ].IsSame ( mtx )) {
 	
-		this->SetDirtyFlags ( this->mDirtyFlags | dirtyMask );
+		this->mDirtyFlags |= dirtyMask;
 		this->mMatrices [ mtxID ] = mtx;
 	}
 }
@@ -431,8 +424,6 @@ void MOAIGfxGlobalsCache::UpdateFinalColor () {
 	u32 finalColor = this->mFinalColor.PackRGBA ();
 	
 	if ( this->mFinalColor32 != finalColor ) {
-		
-		this->SetDirtyFlags ( this->mDirtyFlags |= PEN_COLOR_MASK );
 		
 		this->mFinalColor32 = finalColor;
 		

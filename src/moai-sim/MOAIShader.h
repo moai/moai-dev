@@ -4,6 +4,7 @@
 #ifndef	MOAISHADER_H
 #define	MOAISHADER_H
 
+#include <moai-sim/MOAIShaderUniformBuffer.h>
 #include <moai-sim/MOAIShaderProgram.h>
 
 //================================================================//
@@ -16,7 +17,7 @@
 */
 class MOAIShader :
 	public virtual MOAINode,
-	public MOAIShaderGlobals {
+	public MOAIShaderUniformBuffer {
 protected:
 
 	friend class MOAIGfxStateCache;
@@ -28,32 +29,28 @@ protected:
 	size_t										mMaxCount;
 
 	//----------------------------------------------------------------//
-	static int				_getAttributeID			( lua_State* L );
-	static int				_reserveGlobals			( lua_State* L );
-	static int				_resizeUniformArray		( lua_State* L );
-	static int				_setGlobal				( lua_State* L );
-	static int				_setProgram				( lua_State* L );
-	static int				_setUniform				( lua_State* L );
-	static int				_setUniformComponent	( lua_State* L );
+	static int				_getAttributeID				( lua_State* L );
+	static int				_resizeUniformArray			( lua_State* L );
+	static int				_setProgram					( lua_State* L );
+	static int				_setUniform					( lua_State* L );
+	static int				_setUniformArrayItem		( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void					ApplyGlobals				();
 	void					BindUniforms				();
-	u32						GetAttributeID				( u32 uniformID, u32 index );
-	MOAIShaderUniform*		GetUniform					( u32 uniformID );
-	MOAIShaderUniform*		GetUniform					( u32 uniformID, u32 index, void*& element );
-	MOAIShaderUniform*		GetUniformForAttributeID	( u32 attrID, void*& element );
-	void					SetUniform					( lua_State* L, int idx, u32 uniformID, u32 index );
 	void					UpdateAndBindUniforms		();
 
 	//----------------------------------------------------------------//
-	bool					MOAINode_ApplyAttrOp		( u32 attrID, MOAIAttribute& attr, u32 op );
+	bool								MOAINode_ApplyAttrOp						( u32 attrID, MOAIAttribute& attr, u32 op );
+	MOAIShaderUniformFormatter*			MOAIShaderUniformBuffer_GetUniform			( u32 uniformID, void*& buffer );
 
 public:
 
 	DECL_LUA_FACTORY ( MOAIShader )
 
 	GET ( MOAIShaderProgram*, Program, mProgram )
+	GET ( size_t, UniformBufferSize, mUniformBuffer.Size ())
+	GET_CONST ( void*, UniformBuffer, mUniformBuffer.Data ())
 
 	//----------------------------------------------------------------//
 	static MOAIShader*		AffirmShader			( MOAILuaState& state, int idx );

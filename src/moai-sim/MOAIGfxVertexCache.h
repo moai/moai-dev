@@ -11,11 +11,10 @@
 class MOAICamera;
 class MOAIFrameBuffer;
 class MOAIGfxResource;
-class MOAIMultiTexture;
 class MOAIShader;
 class MOAIShaderProgram;
 class MOAITexture;
-class MOAISingleTexture;
+class MOAITextureBase;
 class MOAIVertexFormat;
 class MOAIViewport;
 
@@ -36,6 +35,8 @@ protected:
 	
 	static const size_t DEFAULT_VERTEX_BUFFER_SIZE	= 0x8000;
 	static const size_t DEFAULT_INDEX_BUFFER_SIZE	= 0x1000;
+
+	static const size_t UNIFORM_BUFFER_CHUNK_SIZE	= 1024;
 
 	bool						mIsDrawing;
 	
@@ -61,8 +62,13 @@ protected:
 	ZLStrongPtr < MOAIVertexBuffer >	mVtxBuffer;
 	ZLStrongPtr < MOAIIndexBuffer >		mIdxBuffer;
 	
+	MOAIShader*					mCurrentShader;
+	void*						mUniformBuffer;
+	size_t						mUniformBufferSize;
+	
 	//----------------------------------------------------------------//
 	void			OnGfxStateWillChange			();
+	void			ResizeUniformBuffer				( size_t size );
 	void			TransformAndWriteQuad			( ZLVec4D* vtx, ZLVec2D* uv );
 
 public:

@@ -292,7 +292,7 @@ int MOAIFont::_setFilter ( lua_State* L ) {
 	int min = state.GetValue < int >( 2, ZGL_SAMPLE_LINEAR );
 	int mag = state.GetValue < int >( 3, min );
 	
-	MOAISingleTexture::CheckFilterModes ( min, mag );
+	MOAITextureBase::CheckFilterModes ( min, mag );
 	
 	self->mMinFilter = min;
 	self->mMagFilter = mag;
@@ -555,7 +555,7 @@ MOAIGlyphSet* MOAIFont::GetGlyphSet ( float size ) {
 }
 
 //----------------------------------------------------------------//
-MOAISingleTexture* MOAIFont::GetGlyphTexture ( MOAIGlyph& glyph ) {
+MOAITextureBase* MOAIFont::GetGlyphTexture ( MOAIGlyph& glyph ) {
 
 	assert ( this->mCache );
 	return this->mCache->GetGlyphTexture ( glyph );

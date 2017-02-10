@@ -40,6 +40,7 @@ private:
 	static int			_getDepthMask				( lua_State* L );
 	static int			_getDepthTest				( lua_State* L );
 	static int			_getIndexBatchSize			( lua_State* L );
+	static int			_getLight					( lua_State* L );
 	static int			_getShader					( lua_State* L );
 	static int			_getTexture					( lua_State* L );
 	static int			_reserveMaterials			( lua_State* L );
@@ -47,10 +48,15 @@ private:
 	static int			_setCullMode				( lua_State* L );
 	static int			_setDepthMask				( lua_State* L );
 	static int			_setDepthTest				( lua_State* L );
-	//static int			_setHitMask					( lua_State* L );
 	static int			_setIndexBatchSize			( lua_State* L );
+	static int			_setLight					( lua_State* L );
 	static int			_setShader					( lua_State* L );
 	static int			_setTexture					( lua_State* L );
+
+
+	//----------------------------------------------------------------//
+	static u32			GetMaterialID				( MOAILuaState& state, int& idx );
+	static u32			GetMaterialID				( MOAILuaState& state, int& idx, int stackSizeWithMaterialID );
 
 	//----------------------------------------------------------------//
 	inline u32 GetRawIndex ( u32 idx ) {
@@ -74,7 +80,7 @@ public:
 	int					GetCullMode					( MOAILuaState& state, int idx );
 	int					GetDepthMask				( MOAILuaState& state, int idx );
 	int					GetDepthTest				( MOAILuaState& state, int idx );
-	int					GetHitMask					( MOAILuaState& state, int idx );
+	int					GetLight					( MOAILuaState& state, int idx );
 	int					GetShader					( MOAILuaState& state, int idx );
 	int					GetTexture					( MOAILuaState& state, int idx );
 	MOAIMaterial*		RawGetMaterial				( u32 idx );
@@ -82,7 +88,7 @@ public:
 	void				SetCullMode					( MOAILuaState& state, int idx );
 	void				SetDepthMask				( MOAILuaState& state, int idx );
 	void				SetDepthTest				( MOAILuaState& state, int idx );
-	MOAIImage*			SetHitMask					( MOAILuaState& state, int idx );
+	MOAILight*			SetLight					( MOAILuaState& state, int idx );
 	MOAIShader*			SetShader					( MOAILuaState& state, int idx );
 	MOAITextureBase*	SetTexture					( MOAILuaState& state, int idx );
 
@@ -101,7 +107,6 @@ public:
 	void				ClearCullMode				( u32 idx );
 	void				ClearDepthMask				( u32 idx );
 	void				ClearDepthTest				( u32 idx );
-	void				ClearHitMask				( u32 idx );
 	void				ClearShader					( u32 idx );
 	void				ClearTexture				( u32 idx );
 	MOAIMaterial*		GetMaterial					( u32 idx );
@@ -116,7 +121,7 @@ public:
 	void				SetCullMode					( u32 idx, int cullMode );
 	void				SetDepthMask				( u32 idx, bool depthMask );
 	void				SetDepthTest				( u32 idx, int depthTest );
-	void				SetHitMask					( u32 idx, MOAIImage* mask );
+	void				SetLight					( u32 idx, u32 globalID, MOAILight* light );
 	void				SetShader					( u32 idx, u32 shaderID );
 	void				SetShader					( u32 idx, MOAIShader* shader );
 	void				SetTexture					( u32 idx, MOAITextureBase* texture );

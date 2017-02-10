@@ -68,10 +68,10 @@ public:
 	//----------------------------------------------------------------//
 					MOAIPartitionViewLayer		();
 					~MOAIPartitionViewLayer		();
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
-	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
+	void			RegisterLuaClass			( MOAILuaState& state );
+	void			RegisterLuaFuncs			( MOAILuaState& state );
+	void			SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
+	void			SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

@@ -4,79 +4,61 @@
 #ifndef	MOAIMATERIAL_H
 #define	MOAIMATERIAL_H
 
-#include <moai-sim/MOAIBlendMode.h>
-#include <moai-sim/MOAIImage.h>
-#include <moai-sim/MOAIShader.h>
-#include <moai-sim/MOAITextureBase.h>
+#include <moai-sim/MOAIMaterialBase.h>
+
+class MOAILight;
 
 //================================================================//
-// MOAIMaterial
+// MOAIMaterialLight
 //================================================================//
-class MOAIMaterial {
-protected:
-	
-	friend class MOAIMaterialBatch;
-	
-	static const MOAIMaterial DEFAULT_MATERIAL;
-	
-	enum {
-		BLEND_MODE_FLAG		= 0x01 << 0,
-		CULL_MODE_FLAG		= 0x01 << 1,
-		DEPTH_MASK_FLAG		= 0x01 << 2,
-		DEPTH_TEST_FLAG		= 0x01 << 3,
-		SHADER_FLAG			= 0x01 << 4,
-		TEXTURE_FLAG		= 0x01 << 5,
-		
-		MAX_FLAG			= 0x01 << 6,
-	};
-	
-	static const u32	DRAW_FLAGS	= BLEND_MODE_FLAG | CULL_MODE_FLAG | DEPTH_MASK_FLAG | DEPTH_TEST_FLAG;
-	static const u32	ALL_FLAGS	= MAX_FLAG - 1;
-	
-	MOAIShader*			mShader;
-	MOAITextureBase*	mTexture;
-	//MOAIImage*			mHitMask; // this shoud be its own thing
+class MOAIMaterialLight {
+private:
 
-	MOAIBlendMode		mBlendMode;
-	int					mCullMode;
-	int					mDepthTest;
-	bool				mDepthMask;
-
-	u32					mFlags;
-
-	//----------------------------------------------------------------//
-	void			Clear					( u32 flags );
+	friend class MOAIMaterial;
+	friend class MOAIMaterialStackMgr;
+	
+	static const u32 UNKNOWN_ID = ( u32 )-1;
+	
+	u32					mGlobalID;
+	MOAILight*			mLight;
 
 public:
 
-	GET_CONST ( MOAIBlendMode&, BlendMode, mBlendMode );
-	GET ( int, CullMode, mCullMode );
-	GET ( int, DepthTest, mDepthTest );
-	GET ( bool, DepthMask, mDepthMask );
-	GET ( MOAIShader*, Shader, mShader );
-	GET ( MOAITextureBase*, Texture, mTexture );
+	//----------------------------------------------------------------//
+	MOAIMaterialLight () :
+		mGlobalID ( UNKNOWN_ID ),
+		mLight ( 0 ) {
+	}
+};
+
+//================================================================//
+// MOAILightSet
+//================================================================//
+// TODO: doxygen
+class MOAIMaterial :
+	public MOAIMaterialBase {
+private:
+
+	friend class MOAIMaterialStackMgr;
+
+
+	ZLLeanArray < MOAIMaterialLight >	mEntries;
+	
+	//----------------------------------------------------------------//
+	//static int			_getLight					( lua_State* L );
+	//static int			_setLight					( lua_State* L );
+
+public:
+
+	//DECL_LUA_FACTORY ( MOAILightSet )
 
 	//----------------------------------------------------------------//
-	void			Clear					();
-	void			ClearBlendMode			();
-	void			ClearCullMode			();
-	void			ClearDepthMask			();
-	void			ClearDepthTest			();
-	void			ClearShader				();
-	void			ClearTexture			();
-	void			Compose					( const MOAIMaterial& material );
-	void			Compose					( const MOAIMaterial* material );
-	void			LoadGfxState			();
-					MOAIMaterial			();
-					~MOAIMaterial			();
-	void			SetBlendMode			( const MOAIBlendMode& blendMode );
-	void			SetCullMode				( int cullMode );
-	void			SetDepthMask			( bool depthMask );
-	void			SetDepthTest			( int depthTest );
-	void			SetShader				( u32 shaderID );
-	void			SetShader				( MOAIShader* shader );
-	void			SetTexture				( MOAITextureBase* texture );
-	bool			StateWillChange			( const MOAIMaterial& material );
+	void				ClearLights					( MOAILuaObject* owner = 0 );
+	MOAILight*			GetLight					( u32 globalID );
+						MOAIMaterial				();
+	virtual				~MOAIMaterial				();
+	void				ReserveLights				( u32 n );
+	void				SetLight					( u32 globalID, MOAILight* light, MOAILuaObject* owner = 0 );
 };
 
 #endif

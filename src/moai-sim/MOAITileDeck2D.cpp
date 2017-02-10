@@ -282,7 +282,7 @@ void MOAITileDeck2D::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serial
 
 	MOAIGridSpace::SerializeIn ( state, serializer );
 	
-	//this->mTexture.Set ( *this, serializer.MemberIDToObject < MOAISingleTexture >( state.GetFieldValue < MOAISerializerBase::ObjID >( -1, "mTexture", 0 )));
+	//this->mTexture.Set ( *this, serializer.MemberIDToObject < MOAITextureBase >( state.GetFieldValue < MOAISerializerBase::ObjID >( -1, "mTexture", 0 )));
 }
 
 //----------------------------------------------------------------//

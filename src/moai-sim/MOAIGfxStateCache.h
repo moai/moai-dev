@@ -13,11 +13,8 @@ class MOAICamera;
 class MOAIFrameBuffer;
 class MOAIGfxResource;
 class MOAIIndexBuffer;
-class MOAIMultiTexture;
 class MOAIShader;
 class MOAIShaderProgram;
-class MOAITexture;
-class MOAISingleTexture;
 class MOAITextureBase;
 class MOAIVertexArray;
 class MOAIVertexBuffer;
@@ -68,6 +65,8 @@ protected:
 class MOAIGfxState {
 protected:
 
+	// TODO: multithread will impact caching of buffer behavior as gfx.Copy () may produce a different result each time it is called
+
 	friend class MOAIGfxStateCache;
 
 	int										mCullFunc;
@@ -88,14 +87,13 @@ protected:
 
 	ZLStrongPtr < MOAIFrameBuffer >			mFrameBuffer;
 	ZLStrongPtr < MOAIIndexBuffer >			mIdxBuffer;
-	ZLStrongPtr < MOAITextureBase >			mTextureSet;
 	ZLStrongPtr < MOAIVertexArray >			mVtxArray;
 	ZLStrongPtr < MOAIVertexBuffer >		mVtxBuffer;
 	ZLStrongPtr < MOAIVertexFormat >		mVtxFormat;
 
-	// TODO: multithread will impact caching of buffer behavior as gfx.Copy () may produce a different result each time it is called
-
 	ZLRect									mViewRect;
+	
+	ZLLeanArray < ZLStrongPtr < MOAITextureBase > >		mTextureUnits ;
 	
 	//----------------------------------------------------------------//
 					MOAIGfxState			();
@@ -109,6 +107,8 @@ class MOAIGfxStateCache :
 	public virtual MOAILuaObject {
 protected:
 
+	static const u32 MAX_TEXTURE_UNITS = 32; // enough? will need more flags below if not.
+
 	friend class MOAIGfxVertexCache;
 	friend class MOAIVertexArray;
 
@@ -118,23 +118,25 @@ protected:
 	// a lot) then we'll have to look at a data structure for scheduling updates.
 	// note that some of these also have to be done in a certain order.
 	enum {
-		TEXTURE					= 1 << 0,
-		SHADER					= 1 << 1,
-		VERTEX_FORMAT			= 1 << 2, // must come *before* vertex buffer
-		VERTEX_BUFFER			= 1 << 3,
-		INDEX_BUFFER			= 1 << 4,
-		VERTEX_ARRAY			= 1 << 5,
-		DEPTH_MODE				= 1 << 6,
-		BLEND_MODE				= 1 << 7,
-		PEN_WIDTH				= 1 << 8,
-		CULL_FUNC				= 1 << 9,
-		FRAME_BUFFER			= 1 << 10,
-		VIEW_RECT				= 1 << 11,	// must come *after* frame buffer
-		SCISSOR_RECT			= 1 << 12,	// must come *after* frame buffer
-		END_STATE_FLAGS			= 1 << 13,
+		SHADER					= 1 << 0,
+		VERTEX_FORMAT			= 1 << 1, // must come *before* vertex buffer
+		VERTEX_BUFFER			= 1 << 2,
+		INDEX_BUFFER			= 1 << 3,
+		VERTEX_ARRAY			= 1 << 4,
+		DEPTH_MODE				= 1 << 5,
+		BLEND_MODE				= 1 << 6,
+		PEN_WIDTH				= 1 << 7,
+		CULL_FUNC				= 1 << 8,
+		FRAME_BUFFER			= 1 << 9,
+		VIEW_RECT				= 1 << 10,	// must come *after* frame buffer
+		SCISSOR_RECT			= 1 << 11,	// must come *after* frame buffer
+		END_STATE_FLAGS			= 1 << 12,
 	};
 	
 	u32										mDirtyFlags;
+	u32										mTextureDirtyFlags;
+	u32										mTopDirtyTexture;
+	u32										mMaxTextureUnits;
 	
 	u32										mApplyingStateChanges;
 
@@ -144,10 +146,7 @@ protected:
 
 	// don't think these need to be lua shared pointers...
 	MOAILuaSharedPtr < MOAIFrameBuffer >	mDefaultFrameBuffer;
-	MOAILuaSharedPtr < MOAITexture >		mDefaultTexture;
-
-	ZLLeanArray < ZLStrongPtr < MOAISingleTexture > >		mTextureUnits;
-	u32														mActiveTextures;
+	MOAILuaSharedPtr < MOAITextureBase >	mDefaultTexture;
 
 	ZLSharedConstBuffer*					mBoundIdxBuffer;
 	ZLSharedConstBuffer*					mBoundVtxBuffer;
@@ -167,10 +166,11 @@ public:
 	GET ( MOAIBlendMode, BlendMode, mCurrentState->mBlendMode )
 	GET ( bool, DepthMask, mCurrentState->mDepthMask )
 	GET ( MOAIFrameBuffer*, CurrentFrameBuffer, mCurrentState->mFrameBuffer )
+	GET ( MOAIShader*, CurrentShader, mCurrentState->mShader )
 	GET ( MOAIVertexFormat*, CurrentVtxFormat, mCurrentState->mVtxFormat )
 	GET ( const ZLRect&, ViewRect, mCurrentState->mViewRect )
 	GET ( MOAIFrameBuffer*, DefaultFrameBuffer, mDefaultFrameBuffer )
-	GET ( MOAITexture*, DefaultTexture, mDefaultTexture )
+	GET ( MOAITextureBase*, DefaultTexture, mDefaultTexture )
 	
 	//----------------------------------------------------------------//
 	size_t			CountTextureUnits			();
@@ -179,10 +179,7 @@ public:
 	
 	u32				GetBufferHeight				() const;
 	u32				GetBufferWidth				() const;
-	
-	//float			GetDeviceScale				();
-	u32				GetShaderGlobalsMask		();
-	
+		
 	float			GetViewHeight				() const;
 	float			GetViewWidth				() const;
 	
@@ -204,7 +201,7 @@ public:
 	void			SetCullFunc					( int cullFunc );
 	
 	void			SetDefaultFrameBuffer		( MOAILuaObject& owner, MOAIFrameBuffer* frameBuffer );
-	void			SetDefaultTexture			( MOAILuaObject& owner, MOAITexture* texture );
+	void			SetDefaultTexture			( MOAILuaObject& owner, MOAITextureBase* texture );
 	
 	void			SetDepthFunc				();
 	void			SetDepthFunc				( int depthFunc );
@@ -220,7 +217,7 @@ public:
 	
 	bool			SetShader					( MOAIShaderMgr::Preset preset );
 	bool			SetShader					( MOAIShader* shader = 0 );
-	bool			SetTexture					( MOAITextureBase* textureSet = 0 );
+	bool			SetTexture					( MOAITextureBase* texture = 0, u32 textureUnit = 0 );
 	
 	bool			SetVertexArray				( MOAIVertexArray* vtxArray = 0 );
 	bool			SetVertexBuffer				( MOAIVertexBuffer* buffer = 0 ); // must be called *after* BindVertexFormat

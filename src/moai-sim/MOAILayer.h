@@ -52,8 +52,8 @@ public:
 
 	//----------------------------------------------------------------//
 	MOAIFrameBuffer*	GetFrameBuffer			();
-						MOAILayer		();
-						~MOAILayer		();
+						MOAILayer				();
+						~MOAILayer				();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				SetClearColor			( MOAIColor* color );

@@ -8,7 +8,6 @@
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIGfxResourceClerk.h>
-#include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIShaderProgram.h>
@@ -39,38 +38,61 @@ bool MOAIGfxVertexCache::BeginPrim ( u32 primType, u32 vtxCount, u32 idxCount ) 
 	MOAIVertexFormat* format = gfxMgr.mGfxState.GetCurrentVtxFormat ();
 	
 	u32 vtxSize = format ? format->GetVertexSize () : 0;
+	if ( !vtxSize ) return false;
+	
+	bool useIdxBuffer = ( idxCount > 0 );
 
-	if (( this->mPrimType != primType ) || ( this->mVtxSize != vtxSize )) {
-
+	// flush if ya gotta
+	if (( this->mPrimType != primType ) || ( this->mVtxSize != vtxSize ) || ( this->mUseIdxBuffer != useIdxBuffer )) {
 		this->FlushBufferedPrims ();
-		
-		this->mPrimType = primType;
-		this->mVtxSize = vtxSize;
-		
-		if ( !vtxSize ) return false;
-		
-		this->mFlushOnPrimEnd = !(( primType == ZGL_PRIM_POINTS ) || ( primType == ZGL_PRIM_LINES ) || ( primType == ZGL_PRIM_TRIANGLES ));
 	}
+	this->mFlushOnPrimEnd = !(( primType == ZGL_PRIM_POINTS ) || ( primType == ZGL_PRIM_LINES ) || ( primType == ZGL_PRIM_TRIANGLES ));
 	
 	// these will get bound later, just before drawing; clear them for now
 	gfxMgr.mGfxState.SetIndexBuffer ();
 	gfxMgr.mGfxState.SetVertexBuffer ();
-	
 	gfxMgr.mGfxState.ApplyStateChanges (); // must happen here in case there needs to be a flush
-
-	gfxMgr.mGfxState.SetShaderFlags ( gfxMgr.mGfxState.GetShaderGlobalsMask ());
+	
+	// check to see if the shader uniforms changed
+	MOAIShader* shader = gfxMgr.mGfxState.GetCurrentShader ();
+	assert ( shader );
+	size_t uniformBufferSize = shader->GetUniformBufferSize ();
+	const void* uniformBuffer = shader->GetUniformBuffer ();
+	
+	if ( this->mCurrentShader ) {
+	
+		if ( uniformBufferSize ) {
+	
+			assert ( shader == this->mCurrentShader );
+			assert ( uniformBufferSize <= this->mUniformBufferSize );
+		
+			if ( memcmp ( this->mUniformBuffer, uniformBuffer, uniformBufferSize )) {
+				this->FlushBufferedPrims ();
+				memcpy ( this->mUniformBuffer, uniformBuffer, uniformBufferSize );
+			}
+		}
+	}
+	else {
+		
+		// take a snapshot of the uniform buffer
+		this->mCurrentShader = shader;
+		
+		if ( uniformBufferSize ) {
+			this->ResizeUniformBuffer ( uniformBufferSize );
+			memcpy ( this->mUniformBuffer, uniformBuffer, uniformBufferSize );
+		}
+	}
+	
 	gfxMgr.mGfxState.SetClient ( this );
 	
-	bool useIdxBuffer = ( idxCount > 0 );
-	if ( this->mUseIdxBuffer != useIdxBuffer ) {
-		this->FlushBufferedPrims ();
-		this->mUseIdxBuffer = useIdxBuffer;
-	}
+	// OK, *now* we can start to change the state
+	
+	this->mPrimType = primType;
+	this->mVtxSize = vtxSize;
+	this->mUseIdxBuffer = useIdxBuffer;
 
 	if ( useIdxBuffer ) {
-	
 		u32 vtxCursor = ( u32 )this->mVtxBuffer->GetCursor ();
-	
 		this->mVtxBase = vtxCursor / vtxSize;
 
 		// if we're on a boundary, bump on up to the next vert
@@ -78,7 +100,6 @@ bool MOAIGfxVertexCache::BeginPrim ( u32 primType, u32 vtxCount, u32 idxCount ) 
 			this->mVtxBase++;
 		}
 	}
-	
 	return this->ContinuePrim ( vtxCount, idxCount ) != CONTINUE_FAIL;
 }
 
@@ -167,6 +188,8 @@ void MOAIGfxVertexCache::FlushBufferedPrims () {
 		}
 	}
 	
+	this->mCurrentShader = 0;
+	
 	gfxMgr.mGfxState.ResumeChanges (); // business as usual
 }
 
@@ -199,7 +222,10 @@ MOAIGfxVertexCache::MOAIGfxVertexCache () :
 	mPrimCount ( 0 ),
 	mApplyVertexTransform ( false ),
 	mApplyUVTransform ( false ),
-	mVertexColor32 ( 0xffffffff ) {
+	mVertexColor32 ( 0xffffffff ),
+	mCurrentShader ( 0 ),
+	mUniformBuffer ( 0 ),
+	mUniformBufferSize ( 0 ) {
 	
 	this->mVertexTransform.Ident ();
 	this->mUVTransform.Ident ();
@@ -209,6 +235,8 @@ MOAIGfxVertexCache::MOAIGfxVertexCache () :
 
 //----------------------------------------------------------------//
 MOAIGfxVertexCache::~MOAIGfxVertexCache () {
+
+	this->ResizeUniformBuffer ( 0 );
 }
 
 //----------------------------------------------------------------//
@@ -225,6 +253,23 @@ void MOAIGfxVertexCache::Reset () {
 	
 	this->mVtxBase = 0;
 	this->mIdxBase = 0;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxVertexCache::ResizeUniformBuffer ( size_t size ) {
+
+	bool resize = size && ( size < this->mUniformBufferSize );
+
+	if ( this->mUniformBuffer ) {
+		free ( this->mUniformBuffer );
+		this->mUniformBuffer = 0;
+		this->mUniformBufferSize = 0;
+	}
+	
+	if ( resize ) {
+		this->mUniformBufferSize = (( size / UNIFORM_BUFFER_CHUNK_SIZE ) + 1 ) * UNIFORM_BUFFER_CHUNK_SIZE;
+		this->mUniformBuffer = malloc ( this->mUniformBufferSize );
+	}
 }
 
 //----------------------------------------------------------------//

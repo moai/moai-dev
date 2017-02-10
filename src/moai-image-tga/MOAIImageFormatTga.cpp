@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatTga::CreateTexture ( MOAISingleTexture& texture, const void* data, size_t size ) {
+bool MOAIImageFormatTga::CreateTexture ( MOAITextureBase& texture, const void* data, size_t size ) {
 	UNUSED ( texture );
 	UNUSED ( data );
 	UNUSED ( size );

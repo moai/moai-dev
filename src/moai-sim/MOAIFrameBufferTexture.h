@@ -5,7 +5,7 @@
 #define	MOAIFRAMEBUFFERTEXTURE_H
 
 #include <moai-sim/MOAIFrameBuffer.h>
-#include <moai-sim/MOAISingleTexture.h>
+#include <moai-sim/MOAITextureBase.h>
 
 //================================================================//
 // MOAIFrameBufferTexture
@@ -17,7 +17,7 @@
 */
 class MOAIFrameBufferTexture :
 	public MOAIFrameBuffer,
-	public MOAISingleTexture {
+	public MOAITextureBase {
 private:
 	
 	ZLGfxHandle*		mGLColorBufferID;
@@ -39,7 +39,7 @@ private:
 public:
 	
 	friend class MOAIGfxMgr;
-	friend class MOAISingleTexture;
+	friend class MOAITextureBase;
 	
 	DECL_LUA_FACTORY ( MOAIFrameBufferTexture )
 	

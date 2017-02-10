@@ -12,7 +12,7 @@ class MOAIIndexBuffer;
 class MOAIMesh;
 class MOAIMeshPartition;
 class MOAISelectionSpan;
-class MOAISingleTexture;
+class MOAITextureBase;
 class MOAIVertexAttribute;
 
 //================================================================//

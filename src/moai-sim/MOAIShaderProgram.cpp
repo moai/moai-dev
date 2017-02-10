@@ -21,58 +21,6 @@ MOAIShaderProgramGlobal::MOAIShaderProgramGlobal () :
 }
 
 //================================================================//
-// MOAIShaderGlobals
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAIShaderGlobals::CopyGlobals ( const MOAIShaderGlobals& globals ) {
-
-	this->mGlobals.CloneFrom ( globals.mGlobals );
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderGlobals::ReserveGlobals ( u32 nGlobals ) {
-
-	this->mGlobals.Init ( nGlobals );
-}
-
-//----------------------------------------------------------------//
-int MOAIShaderGlobals::ReserveGlobals ( lua_State* L, int idx ) {
-
-	MOAILuaState state ( L );
-
-	u32 nGlobals = state.GetValue < u32 >( idx, 0 );
-	this->ReserveGlobals ( nGlobals );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderGlobals::SetGlobal ( u32 idx, u32 globalID, u32 uniformID, u32 index ) {
-	
-	MOAIShaderProgramGlobal& global = this->mGlobals [ idx ];
-	
-	global.mUniformID	= uniformID;
-	global.mIndex		= index;
-	global.mGlobalID	= globalID;
-}
-
-//----------------------------------------------------------------//
-int MOAIShaderGlobals::SetGlobal ( lua_State* L, int idx ) {
-
-	MOAILuaState state ( L );
-
-	u32 globalIdx	= state.GetValue < u32 >( idx, 1 ) - 1;
-	u32 globalID	= state.GetValue < u32 >( idx + 1, INVALID_INDEX );
-	u32 uniformID	= state.GetValue < u32 >( idx + 2, 1 ) - 1;
-	u32 index		= state.GetValue < u32 >( idx + 3, 1 ) - 1;
-	
-	this->SetGlobal ( globalIdx, globalID, uniformID, index );
-
-	return 0;
-}
-
-//================================================================//
 // local
 //================================================================//
 
@@ -236,18 +184,6 @@ void MOAIShaderProgram::DeclareUniform ( u32 idx, cc8* name, u32 type, u32 width
 }
 
 //----------------------------------------------------------------//
-u32 MOAIShaderProgram::GetGlobalsMask () {
-
-	if ( this->mGlobals.Size () && !this->mGlobalsMask ) {
-		for ( u32 i = 0; i < this->mGlobals.Size (); ++i ) {
-			const MOAIShaderProgramGlobal& global = this->mGlobals [ i ];
-			this->mGlobalsMask |= MOAIGfxGlobalsCache::GetAttrFlagForID ( global.mGlobalID );
-		}
-	}
-	return this->mGlobalsMask;
-}
-
-//----------------------------------------------------------------//
 MOAIShaderUniform* MOAIShaderProgram::GetUniform ( u32 uniformID ) {
 
 	return uniformID < this->mUniforms.Size () ? &this->mUniforms [ uniformID ] : 0;
@@ -269,8 +205,7 @@ void MOAIShaderProgram::Load ( cc8* vshSource, cc8* fshSource ) {
 MOAIShaderProgram::MOAIShaderProgram () :
 	mProgram ( 0 ),
 	mVertexShader ( 0 ),
-	mFragmentShader ( 0 ),
-	mGlobalsMask ( 0 ) {
+	mFragmentShader ( 0 ) {
 
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIGfxResource )
@@ -478,9 +413,51 @@ void MOAIShaderProgram::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIShaderProgram::ReserveGlobals ( u32 nGlobals ) {
+
+	this->mGlobals.Init ( nGlobals );
+}
+
+//----------------------------------------------------------------//
+int MOAIShaderProgram::ReserveGlobals ( lua_State* L, int idx ) {
+
+	MOAILuaState state ( L );
+
+	u32 nGlobals = state.GetValue < u32 >( idx, 0 );
+	this->ReserveGlobals ( nGlobals );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 void MOAIShaderProgram::ReserveUniforms ( u32 nUniforms ) {
 
 	this->mUniforms.Init ( nUniforms );
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderProgram::SetGlobal ( u32 idx, u32 globalID, u32 uniformID, u32 index ) {
+	
+	MOAIShaderProgramGlobal& global = this->mGlobals [ idx ];
+	
+	global.mUniformID	= uniformID;
+	global.mIndex		= index;
+	global.mGlobalID	= globalID;
+}
+
+//----------------------------------------------------------------//
+int MOAIShaderProgram::SetGlobal ( lua_State* L, int idx ) {
+
+	MOAILuaState state ( L );
+
+	u32 globalIdx	= state.GetValue < u32 >( idx, 1 ) - 1;
+	u32 globalID	= state.GetValue < u32 >( idx + 1, INVALID_INDEX );
+	u32 uniformID	= state.GetValue < u32 >( idx + 2, 1 ) - 1;
+	u32 index		= state.GetValue < u32 >( idx + 3, 1 ) - 1;
+	
+	this->SetGlobal ( globalIdx, globalID, uniformID, index );
+
+	return 0;
 }
 
 //----------------------------------------------------------------//

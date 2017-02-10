@@ -409,32 +409,26 @@ MOAIDeck* MOAISpriteDeck2D::AffirmDeck ( MOAILuaState& state, int idx ) {
 	MOAIDeck* deck = state.GetLuaObject < MOAIDeck >( idx, false );
 	if ( deck ) return deck;
 	
-	MOAITextureBase* textureBase = MOAITexture::AffirmTexture ( state, idx );
-	
-	if ( textureBase ) {
-	
-		MOAISingleTexture* texture = textureBase->GetTextureForUnit ( 0 );
+	MOAITextureBase* texture = MOAITexture::AffirmTexture ( state, idx );
 		
-		if ( texture ) {
-			
-			MOAISpriteDeck2D* quadDeck = new MOAISpriteDeck2D ();
-			MOAIMaterialBatch* batch = quadDeck->AffirmMaterialBatch ();
+	if ( texture ) {
 		
-			assert ( quadDeck );
-			assert ( batch );
-			
-			batch->SetTexture ( 0, textureBase );
-			
-			int hWidth = ( int )( texture->GetWidth () / 2 );
-			int hHeight = ( int )( texture->GetHeight () / 2 );
-			
-			ZLRect rect;
-			rect.Init ( -hWidth, -hHeight, hWidth, hHeight );
-			quadDeck->SetRect( 0, rect );
-			
-			return quadDeck;
-		}
-		delete textureBase;
+		MOAISpriteDeck2D* quadDeck = new MOAISpriteDeck2D ();
+		MOAIMaterialBatch* batch = quadDeck->AffirmMaterialBatch ();
+	
+		assert ( quadDeck );
+		assert ( batch );
+		
+		batch->SetTexture ( 0, texture );
+		
+		int hWidth = ( int )( texture->GetWidth () / 2 );
+		int hHeight = ( int )( texture->GetHeight () / 2 );
+		
+		ZLRect rect;
+		rect.Init ( -hWidth, -hHeight, hWidth, hHeight );
+		quadDeck->SetRect( 0, rect );
+		
+		return quadDeck;
 	}
 	return 0;
 }
@@ -695,7 +689,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( u32 idx ) {
 		}
 		
 		u32 materialID = MOAIMaterialBatch::UNKNOWN;
-		
+		materialStack.Push (); // push an empty stack frame to facilitate "swap" below
 		
 		for ( size_t i = base; i < top; ++i ) {
 			
@@ -708,10 +702,10 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( u32 idx ) {
 				MOAIMaterial* spriteMaterial = this->GetMaterial ( materialID );
 				if ( spriteMaterial ) {
 					
-					MOAIMaterial material = materialStack;
-					material.Compose ( *spriteMaterial );
-					material.SetShader ( MOAIShaderMgr::DECK2D_SHADER );
-					material.LoadGfxState ();
+					materialStack.Pop ();
+					materialStack.Push ( spriteMaterial );
+					materialStack.SetShader ( MOAIShaderMgr::DECK2D_SHADER );
+					materialStack.LoadGfxState ();
 				}
 			}
 			
@@ -720,6 +714,8 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( u32 idx ) {
 			glQuad.mModelQuad = this->mQuads [ spritePair.mQuadID ];
 			glQuad.Draw ();
 		}
+		
+		materialStack.Pop ();
 	}
 	else {
 		

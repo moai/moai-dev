@@ -92,6 +92,13 @@ protected:
 	}
 
 	//----------------------------------------------------------------//
+	// TODO: doxygen
+	static int _getLight ( lua_State* L ) {
+		MOAI_LUA_SETUP ( TYPE, "U" )
+		return self->mMaterialBatch ? self->mMaterialBatch->GetLight ( state, 2 ) : 0;
+	}
+
+	//----------------------------------------------------------------//
 	/**	@name	getMaterialBatch
 		@text	Return the material batch attached to the prop.
 		
@@ -247,6 +254,16 @@ protected:
 	}
 
 	//----------------------------------------------------------------//
+	// TODO: doxygen
+	static int _setLight ( lua_State* L ) {
+		MOAI_LUA_SETUP ( TYPE, "U" )
+		
+		state.Push ( self->AffirmMaterialBatch ()->SetLight ( state, 2 ));
+		
+		return 1;
+	}
+
+	//----------------------------------------------------------------//
 	/**	@lua	setMaterialBatch
 		@text	Sets the prop's material batch.
 		
@@ -344,6 +361,7 @@ protected:
 			{ "getCullMode",			_getCullMode },
 			{ "getDepthMask",			_getDepthMask },
 			{ "getDepthTest",			_getDepthTest },
+			{ "getLight",				_getLight },
 			{ "getMaterialBatch",		_getMaterialBatch },
 			{ "getShader",				_getShader },
 			{ "getTexture",				_getTexture },
@@ -352,6 +370,7 @@ protected:
 			{ "setCullMode",			_setCullMode },
 			{ "setDepthMask",			_setDepthMask },
 			{ "setIndexBatchSize",		_setIndexBatchSize },
+			{ "setLight",				_setLight },
 			{ "setMaterialBatch",		_setMaterialBatch },
 			{ "setShader",				_setShader },
 			{ "setTexture",				_setTexture },

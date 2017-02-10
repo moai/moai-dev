@@ -72,7 +72,7 @@ MOAIFrameBufferTexture::MOAIFrameBufferTexture () :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIFrameBuffer )
-		RTTI_EXTEND ( MOAISingleTexture )
+		RTTI_EXTEND ( MOAITextureBase )
 	RTTI_END
  
 	this->mDebugName = "(texture from MOAIFrameBufferTexture)";
@@ -88,7 +88,7 @@ MOAIFrameBufferTexture::~MOAIFrameBufferTexture () {
 void MOAIFrameBufferTexture::OnGPUBind () {
 
 	this->NeedsClear ( true );
-	MOAISingleTexture::OnGPUBind ();
+	MOAITextureBase::OnGPUBind ();
 }
 
 //----------------------------------------------------------------//
@@ -183,21 +183,21 @@ void MOAIFrameBufferTexture::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mGLDepthBufferID, shouldDelete );
 	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mGLStencilBufferID, shouldDelete );
 
-	this->MOAISingleTexture::OnGPUDeleteOrDiscard ( shouldDelete );
+	this->MOAITextureBase::OnGPUDeleteOrDiscard ( shouldDelete );
 }
 
 //----------------------------------------------------------------//
 void MOAIFrameBufferTexture::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAIFrameBuffer::RegisterLuaClass ( state );
-	MOAISingleTexture::RegisterLuaClass ( state );
+	MOAITextureBase::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIFrameBufferTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAIFrameBuffer::RegisterLuaFuncs ( state );
-	MOAISingleTexture::RegisterLuaFuncs ( state );	
+	MOAITextureBase::RegisterLuaFuncs ( state );	
 
 	luaL_Reg regTable [] = {
 		{ "init",						_init },
@@ -209,10 +209,10 @@ void MOAIFrameBufferTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIFrameBufferTexture::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAISingleTexture::SerializeIn ( state, serializer );
+	MOAITextureBase::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAIFrameBufferTexture::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAISingleTexture::SerializeOut ( state, serializer );
+	MOAITextureBase::SerializeOut ( state, serializer );
 }

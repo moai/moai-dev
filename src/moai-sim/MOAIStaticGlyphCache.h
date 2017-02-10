@@ -32,7 +32,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	MOAIImage*			GetGlyphImage				( MOAIGlyph& glyph );
-	MOAISingleTexture*	GetGlyphTexture				( MOAIGlyph& glyph );
+	MOAITextureBase*	GetGlyphTexture				( MOAIGlyph& glyph );
 	MOAIImage*			GetImage					();
 	MOAITexture*		GetTexture					( u32 id );
 	bool				IsDynamic					();
