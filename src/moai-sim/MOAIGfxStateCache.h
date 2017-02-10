@@ -93,7 +93,7 @@ protected:
 
 	ZLRect									mViewRect;
 	
-	ZLLeanArray < ZLStrongPtr < MOAITextureBase > >		mTextureUnits ;
+	ZLLeanArray < ZLStrongPtr < MOAITextureBase > >		mTextureUnits;
 	
 	//----------------------------------------------------------------//
 					MOAIGfxState			();

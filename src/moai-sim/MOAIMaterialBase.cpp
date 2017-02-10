@@ -111,6 +111,9 @@ MOAIMaterialBase::MOAIMaterialBase () :
 
 //----------------------------------------------------------------//
 MOAIMaterialBase::~MOAIMaterialBase () {
+
+	ZLRelease ( this->mShader );
+	ZLRelease ( this->mTexture );
 }
 
 //----------------------------------------------------------------//
@@ -150,12 +153,18 @@ void MOAIMaterialBase::SetShader ( u32 shaderID ) {
 //----------------------------------------------------------------//
 void MOAIMaterialBase::SetShader ( MOAIShader* shader ) {
 
+	ZLRetain ( shader );
+	ZLRelease ( this->mShader );
+
 	this->mShader = shader;
 	this->mFlags |= SHADER_FLAG;
 }
 
 //----------------------------------------------------------------//
 void MOAIMaterialBase::SetTexture ( MOAITextureBase* texture ) {
+
+	ZLRetain ( texture );
+	ZLRelease ( this->mTexture );
 
 	this->mTexture = texture;
 	this->mFlags |= TEXTURE_FLAG;

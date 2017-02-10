@@ -7,27 +7,31 @@
 #include <moai-sim/MOAIMaterialBase.h>
 
 class MOAILight;
+class MOAITextureBase;
 
 //================================================================//
-// MOAIMaterialLight
+// MOAIMaterialNamedGlobal
 //================================================================//
-class MOAIMaterialLight {
+class MOAIMaterialNamedGlobal {
 private:
 
 	friend class MOAIMaterial;
 	friend class MOAIMaterialMgr;
 	
-	static const u32 UNKNOWN_ID = ( u32 )-1;
+	union {
+		MOAILight*			mLight;
+		MOAITextureBase*	mTexture;
+		void*				mPtr;
+	};
 	
-	u32					mGlobalID;
-	MOAILight*			mLight;
+	u32					mName;
 
 public:
 
 	//----------------------------------------------------------------//
-	MOAIMaterialLight () :
-		mGlobalID ( UNKNOWN_ID ),
-		mLight ( 0 ) {
+	MOAIMaterialNamedGlobal () :
+		mPtr ( 0 ),
+		mName ( 0 ) {
 	}
 };
 
@@ -41,24 +45,24 @@ private:
 
 	friend class MOAIMaterialMgr;
 
-
-	ZLLeanArray < MOAIMaterialLight >	mEntries;
+	ZLLeanArray < MOAIMaterialNamedGlobal >		mLights;
+	ZLLeanArray < MOAIMaterialNamedGlobal >		mTextures;
 	
 	//----------------------------------------------------------------//
-	//static int			_getLight					( lua_State* L );
-	//static int			_setLight					( lua_State* L );
+	MOAIMaterialNamedGlobal&	AffirmNamedGlobal		( ZLLeanArray < MOAIMaterialNamedGlobal >& array, u32 name );
+	MOAIMaterialNamedGlobal*	FindNamedGlobal			( ZLLeanArray < MOAIMaterialNamedGlobal >& array, u32 name );
 
 public:
 
-	//DECL_LUA_FACTORY ( MOAILightSet )
-
 	//----------------------------------------------------------------//
-	void				ClearLights					( MOAILuaObject* owner = 0 );
-	MOAILight*			GetLight					( u32 globalID );
+	MOAILight*			GetNamedLight				( u32 name );
+	MOAITextureBase*	GetNamedTexture				( u32 name );
 						MOAIMaterial				();
 	virtual				~MOAIMaterial				();
 	void				ReserveLights				( u32 n );
-	void				SetLight					( u32 globalID, MOAILight* light, MOAILuaObject* owner = 0 );
+	void				ReserveTextures				( u32 n );
+	void				SetNamedLight				( u32 name, MOAILight* light );
+	void				SetNamedTexture				( u32 name, MOAITextureBase* texture );
 };
 
 #endif

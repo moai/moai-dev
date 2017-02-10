@@ -2777,6 +2777,8 @@
 		CD792FAD1E4DB2DE00388A4B /* MOAIMaterialBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD792FAA1E4DB2DE00388A4B /* MOAIMaterialBase.cpp */; };
 		CD792FAE1E4DB2DE00388A4B /* MOAIMaterialBase.h in Headers */ = {isa = PBXBuildFile; fileRef = CD792FAB1E4DB2DE00388A4B /* MOAIMaterialBase.h */; };
 		CD792FAF1E4DB2DE00388A4B /* MOAIMaterialBase.h in Headers */ = {isa = PBXBuildFile; fileRef = CD792FAB1E4DB2DE00388A4B /* MOAIMaterialBase.h */; };
+		CD792FB11E4DEC4700388A4B /* ZLRefCountedObjectBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD792FB01E4DEC4700388A4B /* ZLRefCountedObjectBase.cpp */; };
+		CD792FB21E4DEC4700388A4B /* ZLRefCountedObjectBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD792FB01E4DEC4700388A4B /* ZLRefCountedObjectBase.cpp */; };
 		CD8078A01831C3B500E658D9 /* SFMT-params11213.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF71731BB90009E233E /* SFMT-params11213.h */; };
 		CD8078A11831C3B500E658D9 /* SFMT-params44497.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF91731BB90009E233E /* SFMT-params44497.h */; };
 		CD8078B01831C3B500E658D9 /* SFMT-params1279.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF41731BB90009E233E /* SFMT-params1279.h */; };
@@ -7981,6 +7983,7 @@
 		CD7852DE1D18C79A003F15D0 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pch.h; path = "moai-assimp/pch.h"; sourceTree = "<group>"; };
 		CD792FAA1E4DB2DE00388A4B /* MOAIMaterialBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIMaterialBase.cpp; sourceTree = "<group>"; };
 		CD792FAB1E4DB2DE00388A4B /* MOAIMaterialBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIMaterialBase.h; sourceTree = "<group>"; };
+		CD792FB01E4DEC4700388A4B /* ZLRefCountedObjectBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLRefCountedObjectBase.cpp; sourceTree = "<group>"; };
 		CD795CBB17F08459006AEB47 /* SDL_assert_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDL_assert_c.h; path = "../../3rdparty/sdl2-2.0.4/src/SDL_assert_c.h"; sourceTree = "<group>"; };
 		CD795CBC17F08459006AEB47 /* SDL_assert.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = SDL_assert.c; path = "../../3rdparty/sdl2-2.0.4/src/SDL_assert.c"; sourceTree = "<group>"; };
 		CD795CBD17F08459006AEB47 /* SDL_error_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDL_error_c.h; path = "../../3rdparty/sdl2-2.0.4/src/SDL_error_c.h"; sourceTree = "<group>"; };
@@ -10876,6 +10879,7 @@
 			children = (
 				CD1D859C1E1925650089FFAD /* ZLRefCountedObject.cpp */,
 				CD2FB19D1C473AB4005F8D8D /* ZLRefCountedObject.h */,
+				CD792FB01E4DEC4700388A4B /* ZLRefCountedObjectBase.cpp */,
 				CD1D85991E19241F0089FFAD /* ZLRefCountedObjectBase.h */,
 				CD1D85961E1923BD0089FFAD /* ZLSharedBuffer.h */,
 				CD1D85901E1922BD0089FFAD /* ZLStrongPtr.h */,
@@ -19338,6 +19342,7 @@
 				89BE6A45173974FD00DFE837 /* ZLQuaternion.cpp in Sources */,
 				89BE6A4F173974FD00DFE837 /* ZLRhombus.cpp in Sources */,
 				CD3FA6C01C3D087B003CC9F8 /* ZLRingAdapter.cpp in Sources */,
+				CD792FB11E4DEC4700388A4B /* ZLRefCountedObjectBase.cpp in Sources */,
 				89BE6A53173974FD00DFE837 /* ZLStream.cpp in Sources */,
 				89BE6A57173974FD00DFE837 /* ZLStreamAdapter.cpp in Sources */,
 				89BE6A5F173974FD00DFE837 /* ZLSurface2D.cpp in Sources */,
@@ -19420,6 +19425,7 @@
 				89BE6A46173974FD00DFE837 /* ZLQuaternion.cpp in Sources */,
 				89BE6A50173974FD00DFE837 /* ZLRhombus.cpp in Sources */,
 				CD3FA6C11C3D087B003CC9F8 /* ZLRingAdapter.cpp in Sources */,
+				CD792FB21E4DEC4700388A4B /* ZLRefCountedObjectBase.cpp in Sources */,
 				89BE6A54173974FD00DFE837 /* ZLStream.cpp in Sources */,
 				89BE6A58173974FD00DFE837 /* ZLStreamAdapter.cpp in Sources */,
 				89BE6A60173974FD00DFE837 /* ZLSurface2D.cpp in Sources */,

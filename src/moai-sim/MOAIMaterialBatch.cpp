@@ -329,13 +329,6 @@ MOAIMaterial& MOAIMaterialBatch::AffirmMaterial ( u32 idx ) {
 //----------------------------------------------------------------//
 void MOAIMaterialBatch::Clear () {
 
-	for ( u32 i = 0; i < this->mMaterials.Size (); ++i ) {
-		MOAIMaterial& material = this->mMaterials [ i ];
-	
-		this->LuaRelease ( material.mShader );
-		this->LuaRelease ( material.mTexture );
-		//this->LuaRelease ( material.mHitMask );
-	}
 	this->mMaterials.Clear ();
 }
 
@@ -489,7 +482,7 @@ int MOAIMaterialBatch::GetLight ( MOAILuaState& state, int idx ) {
 	}
 
 	MOAIMaterial* material = this->RawGetMaterial ( materialID );
-	state.Push (( MOAILight* )material->GetLight ( globalID ));
+	state.Push (( MOAILight* )material->GetNamedLight ( globalID ));
 	return 1;
 }
 
@@ -680,7 +673,7 @@ void MOAIMaterialBatch::SetDepthTest ( MOAILuaState& state, int idx ) {
 //----------------------------------------------------------------//
 void MOAIMaterialBatch::SetLight ( u32 idx, u32 globalID, MOAILight* light ) {
 
-	this->AffirmMaterial ( idx ).SetLight ( globalID, light, this );
+	this->AffirmMaterial ( idx ).SetNamedLight ( globalID, light );
 }
 
 //----------------------------------------------------------------//
@@ -729,7 +722,6 @@ void MOAIMaterialBatch::SetShader ( u32 idx, u32 shaderID ) {
 void MOAIMaterialBatch::SetShader ( u32 idx, MOAIShader* shader ) {
 
 	this->AffirmMaterial ( idx ).SetShader ( shader );
-	this->LuaRetain ( shader );
 }
 
 //----------------------------------------------------------------//
@@ -745,7 +737,6 @@ MOAIShader* MOAIMaterialBatch::SetShader ( MOAILuaState& state, int idx ) {
 void MOAIMaterialBatch::SetTexture ( u32 idx, MOAITextureBase* texture ) {
 
 	this->AffirmMaterial ( idx ).SetTexture ( texture );
-	this->LuaRetain ( texture );
 }
 
 //----------------------------------------------------------------//

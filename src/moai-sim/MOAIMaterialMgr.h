@@ -95,7 +95,8 @@ private:
 
 public:
 
-	static const u32 MAX_GLOBAL_LIGHTS = 256;
+	static const u32 MAX_GLOBAL_LIGHTS		= 256;
+	static const u32 MAX_GLOBAL_TEXTURES	= 32;
 
 	//----------------------------------------------------------------//
 	//void				Clear						();
@@ -113,6 +114,7 @@ public:
 	void				SetShader					( u32 shaderID );
 	void				SetShader					( MOAIShader* shader );
 	void				SetTexture					( MOAITextureBase* texture );
+	void				SetTexture					( u32 textureID, MOAITextureBase* texture );
 };
 
 #endif

@@ -59,4 +59,8 @@ public:
 	}
 };
 
+//----------------------------------------------------------------//
+void	ZLRelease		( ZLRefCountedObjectBase* object );
+void	ZLRetain		( ZLRefCountedObjectBase* object );
+
 #endif

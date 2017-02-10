@@ -8,51 +8,50 @@
 #include <moai-sim/MOAIMaterialMgr.h>
 
 //================================================================//
-// lua
-//================================================================//
-
-////----------------------------------------------------------------//
-//// TODO: doxygen
-//int MOAIMaterial::_getLight ( lua_State* L ) {
-//	MOAI_LUA_SETUP ( MOAIMaterial, "U" )
-//	MOAILight* light = self->GetLight ( state.GetValue ( 2, 0 ));
-//	state.Push ( light );
-//	return 1;
-//}
-//
-////----------------------------------------------------------------//
-//// TODO: doxygen
-//int MOAIMaterial::_setLight ( lua_State* L ) {
-//	MOAI_LUA_SETUP ( MOAIMaterial, "U" )
-//	return 0;
-//}
-
-//================================================================//
 // MOAIMaterial
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMaterial::ClearLights ( MOAILuaObject* owner ) {
-
-	for ( u32 i = 0; i < this->mEntries.Size (); ++i ) {
-		MOAIMaterialLight& entry = this->mEntries [ i ];
-		owner->LuaRelease ( entry.mLight );
+MOAIMaterialNamedGlobal& MOAIMaterial::AffirmNamedGlobal ( ZLLeanArray < MOAIMaterialNamedGlobal >& array, u32 name ) {
+	
+	MOAIMaterialNamedGlobal* global = this->FindNamedGlobal ( array, name );
+	
+	if ( !global ) {
+	
+		size_t idx = array.Size ();
+		array.Grow ( name, 1 );
+		MOAIMaterialNamedGlobal& global = array [ idx ];
+		
+		global.mName = name;
+		global.mPtr = 0;
 	}
-	this->mEntries.Clear ();
+	return *global;
 }
 
 //----------------------------------------------------------------//
-MOAILight* MOAIMaterial::GetLight ( u32 globalID ) {
-
-	if ( globalID < MOAIMaterialMgr::MAX_GLOBAL_LIGHTS ) {
-		for ( u32 i = 0; i < this->mEntries.Size (); ++i ) {
-			MOAIMaterialLight& entry = this->mEntries [ i ];
-			if ( entry.mGlobalID == globalID ) {
-				return entry.mLight;
-			}
+MOAIMaterialNamedGlobal* MOAIMaterial::FindNamedGlobal ( ZLLeanArray < MOAIMaterialNamedGlobal >& array, u32 name ) {
+	
+	for ( u32 i = 0; i < array.Size (); ++i ) {
+		MOAIMaterialNamedGlobal& global = array [ i ];
+		if ( global.mName == name ) {
+			return &global;
 		}
 	}
 	return 0;
+}
+
+//----------------------------------------------------------------//
+MOAILight* MOAIMaterial::GetNamedLight ( u32 name ) {
+
+	MOAIMaterialNamedGlobal* global = this->FindNamedGlobal ( this->mLights, name );
+	return global ? global->mLight : 0;
+}
+
+//----------------------------------------------------------------//
+MOAITextureBase* MOAIMaterial::GetNamedTexture ( u32 name ) {
+
+	MOAIMaterialNamedGlobal* global = this->FindNamedGlobal ( this->mTextures, name );
+	return global ? global->mTexture : 0;
 }
 
 //----------------------------------------------------------------//
@@ -62,36 +61,53 @@ MOAIMaterial::MOAIMaterial () {
 //----------------------------------------------------------------//
 MOAIMaterial::~MOAIMaterial () {
 
-	this->ClearLights ();
+	this->ReserveLights ( 0 );
+	this->ReserveTextures ( 0 );
 }
 
 //----------------------------------------------------------------//
 void MOAIMaterial::ReserveLights ( u32 n ) {
 
-	this->Clear ();
-	this->mEntries.Init ( n );
+	n = n < MOAIMaterialMgr::MAX_GLOBAL_LIGHTS ? n : MOAIMaterialMgr::MAX_GLOBAL_LIGHTS;
+
+	for ( u32 i = 0; i < this->mLights.Size (); ++i ) {
+		ZLRelease ( this->mLights [ i ].mLight );
+	}
+	this->mLights.Init ( n );
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterial::SetLight ( u32 globalID, MOAILight* light, MOAILuaObject* owner ) {
+void MOAIMaterial::ReserveTextures ( u32 n ) {
 
-	if ( globalID < MOAIMaterialMgr::MAX_GLOBAL_LIGHTS ) {
+	n = n < MOAIMaterialMgr::MAX_GLOBAL_TEXTURES ? n : MOAIMaterialMgr::MAX_GLOBAL_TEXTURES;
 
-		owner->LuaRetain ( light );
-		
-		for ( u32 i = 0; i < this->mEntries.Size (); ++i ) {
-			MOAIMaterialLight& entry = this->mEntries [ i ];
-			if ( entry.mGlobalID == globalID ) {
-				owner->LuaRelease ( entry.mLight );
-				entry.mLight = light;
-				return;
-			}
-		}
-		
-		size_t idx = this->mEntries.Size ();
-		this->mEntries.Grow ( globalID, 1 );
-		this->mEntries[ idx ].mGlobalID = globalID;
-		this->mEntries[ idx ].mLight = light;
+	for ( u32 i = 0; i < this->mTextures.Size (); ++i ) {
+		ZLRelease ( this->mTextures [ i ].mTexture );
+	}
+	this->mTextures.Init ( n );
+}
+
+
+//----------------------------------------------------------------//
+void MOAIMaterial::SetNamedLight ( u32 name, MOAILight* light ) {
+
+	if ( name < MOAIMaterialMgr::MAX_GLOBAL_LIGHTS ) {
+
+		ZLRetain ( light );
+		MOAIMaterialNamedGlobal& global = this->AffirmNamedGlobal ( this->mLights, name );
+		ZLRelease ( global.mLight );
+		global.mLight = light;
 	}
 }
 
+//----------------------------------------------------------------//
+void MOAIMaterial::SetNamedTexture ( u32 name, MOAITextureBase* texture ) {
+
+	if ( name < MOAIMaterialMgr::MAX_GLOBAL_TEXTURES ) {
+	
+		ZLRetain ( texture );
+		MOAIMaterialNamedGlobal& global = this->AffirmNamedGlobal ( this->mTextures, name );
+		ZLRelease ( global.mTexture );
+		global.mTexture = texture;
+	}
+}

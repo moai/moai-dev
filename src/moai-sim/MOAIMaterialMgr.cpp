@@ -81,11 +81,11 @@ void MOAIMaterialMgr::Compose ( const MOAIMaterial& material ) {
 		this->mFlags |= available;
 	}
 	
-	size_t nLights = material.mEntries.Size ();
+	size_t nLights = material.mLights.Size ();
 	for ( size_t i = 0; i < nLights; ++i ) {
 	
-		MOAIMaterialLight& materialLight = material.mEntries [ i ];
-		this->SetLight ( materialLight.mGlobalID, materialLight.mLight );
+		MOAIMaterialNamedGlobal& namedLight = material.mLights [ i ];
+		this->SetLight ( namedLight.mName, namedLight.mLight );
 	}
 }
 
@@ -261,4 +261,11 @@ void MOAIMaterialMgr::SetTexture ( MOAITextureBase* texture ) {
 		this->mTexture = texture;
 		this->mFlags |= TEXTURE_FLAG;
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIMaterialMgr::SetTexture ( u32 textureID, MOAITextureBase* texture ) {
+	
+	assert ( textureID < MAX_GLOBAL_TEXTURES );
+	this->SetGlobal ( this->mGlobalTextures [ textureID ], texture );
 }
