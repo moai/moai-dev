@@ -5,7 +5,7 @@
 
 #include <moai-sim/MOAILight.h>
 #include <moai-sim/MOAIMaterial.h>
-#include <moai-sim/MOAIMaterialStackMgr.h>
+#include <moai-sim/MOAIMaterialMgr.h>
 
 //================================================================//
 // lua
@@ -44,7 +44,7 @@ void MOAIMaterial::ClearLights ( MOAILuaObject* owner ) {
 //----------------------------------------------------------------//
 MOAILight* MOAIMaterial::GetLight ( u32 globalID ) {
 
-	if ( globalID < MOAIMaterialStackMgr::MAX_GLOBAL_LIGHTS ) {
+	if ( globalID < MOAIMaterialMgr::MAX_GLOBAL_LIGHTS ) {
 		for ( u32 i = 0; i < this->mEntries.Size (); ++i ) {
 			MOAIMaterialLight& entry = this->mEntries [ i ];
 			if ( entry.mGlobalID == globalID ) {
@@ -75,7 +75,7 @@ void MOAIMaterial::ReserveLights ( u32 n ) {
 //----------------------------------------------------------------//
 void MOAIMaterial::SetLight ( u32 globalID, MOAILight* light, MOAILuaObject* owner ) {
 
-	if ( globalID < MOAIMaterialStackMgr::MAX_GLOBAL_LIGHTS ) {
+	if ( globalID < MOAIMaterialMgr::MAX_GLOBAL_LIGHTS ) {
 
 		owner->LuaRetain ( light );
 		

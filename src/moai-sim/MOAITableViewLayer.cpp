@@ -8,7 +8,7 @@
 #include <moai-sim/MOAIFrameBufferTexture.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAITableViewLayer.h>
-#include <moai-sim/MOAIMaterialStackMgr.h>
+#include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIPartitionHolder.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIPartitionResultMgr.h>

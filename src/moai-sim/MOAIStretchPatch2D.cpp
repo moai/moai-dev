@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGrid.h>
-#include <moai-sim/MOAIMaterialStackMgr.h>
+#include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIStretchPatch2D.h>
@@ -395,7 +395,7 @@ void MOAIStretchPatch2D::MOAIDeck_Draw ( u32 idx ) {
 	gfxMgr.mVertexCache.SetVertexTransform ( noStretch );
 	gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_TO_MODEL_MTX ));
 	
-	MOAIMaterialStackMgr& materialStack = MOAIMaterialStackMgr::Get ();
+	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
 	materialStack.Push ( this->GetMaterial ( idx ));
 	materialStack.SetShader ( MOAIShaderMgr::DECK2D_SHADER );
 	materialStack.LoadGfxState ();

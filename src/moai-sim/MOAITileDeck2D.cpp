@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGrid.h>
-#include <moai-sim/MOAIMaterialStackMgr.h>
+#include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAITileDeck2D.h>
@@ -334,7 +334,7 @@ void MOAITileDeck2D::MOAIDeck_Draw ( u32 idx ) {
 	float uOff = uvRect.mXMin + ( 0.5f * uScale );
 	float vOff = uvRect.mYMin - ( 0.5f * vScale );
 	
-	MOAIMaterialStackMgr& materialStack = MOAIMaterialStackMgr::Get ();
+	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
 	materialStack.Push ( this->GetMaterial ( idx ));
 	materialStack.SetShader ( MOAIShaderMgr::DECK2D_SHADER );
 	materialStack.LoadGfxState ();

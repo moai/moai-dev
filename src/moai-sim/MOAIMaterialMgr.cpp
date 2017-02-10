@@ -5,7 +5,7 @@
 
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAILight.h>
-#include <moai-sim/MOAIMaterialStackMgr.h>
+#include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIShaderMgr.h>
 
 //================================================================//
@@ -14,7 +14,7 @@
 
 //----------------------------------------------------------------//
 MOAIMaterialStackScope::MOAIMaterialStackScope () :
-	mMaterialStack ( MOAIMaterialStackMgr::Get ()) {
+	mMaterialStack ( MOAIMaterialMgr::Get ()) {
 	
 	this->mRestoreTop = this->mMaterialStack.mStack.GetTop ();
 }
@@ -29,18 +29,18 @@ MOAIMaterialStackScope::~MOAIMaterialStackScope () {
 }
 
 //================================================================//
-// MOAIMaterialStackMgr
+// MOAIMaterialMgr
 //================================================================//
 
 //----------------------------------------------------------------//
-//void MOAIMaterialStackMgr::Clear () {
+//void MOAIMaterialMgr::Clear () {
 //
 //	this->mMaterialFlagsStack.Reset ();
 //	this->MOAIMaterial::Clear ();
 //}
 
 //----------------------------------------------------------------//
-void MOAIMaterialStackMgr::Compose ( const MOAIMaterial& material ) {
+void MOAIMaterialMgr::Compose ( const MOAIMaterial& material ) {
 
 	u32 available = ~this->mFlags & material.mFlags;
 
@@ -89,7 +89,7 @@ void MOAIMaterialStackMgr::Compose ( const MOAIMaterial& material ) {
 }
 
 //----------------------------------------------------------------//
-const MOAILight* MOAIMaterialStackMgr::GetLight ( u32 lightID ) {
+const MOAILight* MOAIMaterialMgr::GetLight ( u32 lightID ) {
 
 	assert ( lightID < MAX_GLOBAL_LIGHTS );
 	return this->mLightStateArray [ lightID ].mLight;
@@ -97,7 +97,7 @@ const MOAILight* MOAIMaterialStackMgr::GetLight ( u32 lightID ) {
 
 
 //----------------------------------------------------------------//
-void MOAIMaterialStackMgr::LoadGfxState () {
+void MOAIMaterialMgr::LoadGfxState () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
@@ -110,7 +110,7 @@ void MOAIMaterialStackMgr::LoadGfxState () {
 }
 
 //----------------------------------------------------------------//
-MOAIMaterialStackMgr::MOAIMaterialStackMgr () {
+MOAIMaterialMgr::MOAIMaterialMgr () {
 
 	this->mLightStateArray.Init ( MAX_GLOBAL_LIGHTS );
 	for ( u32 i = 0; i < MAX_GLOBAL_LIGHTS; ++i ) {
@@ -121,11 +121,11 @@ MOAIMaterialStackMgr::MOAIMaterialStackMgr () {
 }
 
 //----------------------------------------------------------------//
-MOAIMaterialStackMgr::~MOAIMaterialStackMgr () {
+MOAIMaterialMgr::~MOAIMaterialMgr () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialStackMgr::Pop () {
+void MOAIMaterialMgr::Pop () {
 
 	size_t stackTop = this->mStack.GetTop ();
 
@@ -155,7 +155,7 @@ void MOAIMaterialStackMgr::Pop () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialStackMgr::Push ( const MOAIMaterial* material ) {
+void MOAIMaterialMgr::Push ( const MOAIMaterial* material ) {
 	
 	MOAIMaterialStackFrame& frame = this->mStack.Push ();
 	
@@ -168,7 +168,7 @@ void MOAIMaterialStackMgr::Push ( const MOAIMaterial* material ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialStackMgr::SetBlendMode ( const MOAIBlendMode& blendMode ) {
+void MOAIMaterialMgr::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 
 	if ( !( this->mFlags & BLEND_MODE_FLAG )) {
 		this->mBlendMode = blendMode;
@@ -177,7 +177,7 @@ void MOAIMaterialStackMgr::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialStackMgr::SetCullMode ( int cullMode ) {
+void MOAIMaterialMgr::SetCullMode ( int cullMode ) {
 
 	if ( !( this->mFlags & CULL_MODE_FLAG )) {
 		this->mCullMode = cullMode;
@@ -186,7 +186,7 @@ void MOAIMaterialStackMgr::SetCullMode ( int cullMode ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialStackMgr::SetDepthMask ( bool depthMask ) {
+void MOAIMaterialMgr::SetDepthMask ( bool depthMask ) {
 
 	if ( !( this->mFlags & DEPTH_MASK_FLAG )) {
 		this->mDepthMask = depthMask;
@@ -195,7 +195,7 @@ void MOAIMaterialStackMgr::SetDepthMask ( bool depthMask ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialStackMgr::SetDepthTest ( int depthTest ) {
+void MOAIMaterialMgr::SetDepthTest ( int depthTest ) {
 
 	if ( !( this->mFlags & DEPTH_TEST_FLAG )) {
 		this->mDepthTest = depthTest;
@@ -204,7 +204,7 @@ void MOAIMaterialStackMgr::SetDepthTest ( int depthTest ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialStackMgr::SetLight ( u32 lightID, MOAILight* light ) {
+void MOAIMaterialMgr::SetLight ( u32 lightID, MOAILight* light ) {
 
 	assert ( lightID < MAX_GLOBAL_LIGHTS );
 
@@ -232,13 +232,13 @@ void MOAIMaterialStackMgr::SetLight ( u32 lightID, MOAILight* light ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialStackMgr::SetShader ( u32 shaderID ) {
+void MOAIMaterialMgr::SetShader ( u32 shaderID ) {
 
 	this->SetShader ( MOAIShaderMgr::Get ().GetShader ( shaderID ));
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialStackMgr::SetShader ( MOAIShader* shader ) {
+void MOAIMaterialMgr::SetShader ( MOAIShader* shader ) {
 
 	if ( !( this->mFlags & SHADER_FLAG )) {
 		this->mShader = shader;
@@ -247,7 +247,7 @@ void MOAIMaterialStackMgr::SetShader ( MOAIShader* shader ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialStackMgr::SetTexture ( MOAITextureBase* texture ) {
+void MOAIMaterialMgr::SetTexture ( MOAITextureBase* texture ) {
 
 	if ( !( this->mFlags & TEXTURE_FLAG )) {
 		this->mTexture = texture;

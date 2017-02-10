@@ -17,7 +17,7 @@ protected:
 
 	friend class MOAIMaterialBatch;
 	friend class MOAIMaterial;
-	friend class MOAIMaterialStackMgr;
+	friend class MOAIMaterialMgr;
 	
 	static const MOAIMaterialBase DEFAULT_MATERIAL;
 	

@@ -10,7 +10,7 @@
 #include <moai-sim/MOAIGraphicsPropBase.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAILayoutFrame.h>
-#include <moai-sim/MOAIMaterialStackMgr.h>
+#include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIRenderMgr.h>
@@ -386,7 +386,7 @@ MOAIGraphicsPropBase::~MOAIGraphicsPropBase () {
 //----------------------------------------------------------------//
 void MOAIGraphicsPropBase::PopGfxState () {
 
-	MOAIMaterialStackMgr::Get ().Pop ();
+	MOAIMaterialMgr::Get ().Pop ();
 }
 
 //----------------------------------------------------------------//
@@ -396,7 +396,7 @@ void MOAIGraphicsPropBase::PushGfxState () {
 
 	gfxMgr.mGfxState.SetPenColor ( this->mColor );
 
-	MOAIMaterialStackMgr::Get ().Push ( this->GetMaterial ());
+	MOAIMaterialMgr::Get ().Push ( this->GetMaterial ());
 	
 	if ( this->mScissorRect ) {
 		ZLRect scissorRect = this->mScissorRect->GetScissorRect ( gfxMgr.mGfxState.GetWorldToWndMtx ());

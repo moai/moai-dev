@@ -391,7 +391,7 @@ void AKUSimContextInitialize () {
 
 	//MOAIProfiler::Affirm ();
 	MOAIGfxMgr::Affirm ();
-	MOAIMaterialStackMgr::Affirm ();
+	MOAIMaterialMgr::Affirm ();
 	MOAIImageFormatMgr::Affirm ();
 	MOAIVertexFormatMgr::Affirm ();
 	MOAIShaderMgr::Affirm ();

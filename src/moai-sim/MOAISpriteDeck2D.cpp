@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAISpriteDeck2D.h>
-#include <moai-sim/MOAIMaterialStackMgr.h>
+#include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAITexture.h>
 #include <moai-sim/MOAITransformBase.h>
@@ -659,7 +659,7 @@ ZLBounds MOAISpriteDeck2D::MOAIDeck_ComputeMaxBounds () {
 //----------------------------------------------------------------//
 void MOAISpriteDeck2D::MOAIDeck_Draw ( u32 idx ) {
 
-	MOAIMaterialStackMgr& materialStack = MOAIMaterialStackMgr::Get ();
+	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIQuadBrush::BindVertexFormat ();

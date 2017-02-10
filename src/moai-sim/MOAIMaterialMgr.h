@@ -1,13 +1,13 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIMATERIALSTACKMGR_H
-#define	MOAIMATERIALSTACKMGR_H
+#ifndef	MOAIMATERIALMGR_H
+#define	MOAIMATERIALMGR_H
 
 #include <moai-sim/MOAIMaterial.h>
 
 class MOAILight;
-class MOAIMaterialStackMgr;
+class MOAIMaterialMgr;
 
 //================================================================//
 // MOAIMaterialStackScope
@@ -15,15 +15,15 @@ class MOAIMaterialStackMgr;
 class MOAIMaterialStackScope {
 private:
 
-	MOAIMaterialStackMgr&	mMaterialStack;
+	MOAIMaterialMgr&	mMaterialStack;
 	u32						mRestoreTop;
 
 public:
 
-	GET ( MOAIMaterialStackMgr&, MaterialStack, mMaterialStack )
+	GET ( MOAIMaterialMgr&, MaterialStack, mMaterialStack )
 
 	//----------------------------------------------------------------//
-	operator MOAIMaterialStackMgr& () {
+	operator MOAIMaterialMgr& () {
 	
 		return this->mMaterialStack;
 	}
@@ -39,7 +39,7 @@ public:
 class MOAIMaterialStackLightState {
 private:
 
-	friend MOAIMaterialStackMgr;
+	friend MOAIMaterialMgr;
 	
 	//u32				mFlags;
 	MOAILight*		mLight;
@@ -53,7 +53,7 @@ class MOAIMaterialStackRestoreCmd :
 	MOAIMaterialStackLightState {
 private:
 
-	friend MOAIMaterialStackMgr;
+	friend MOAIMaterialMgr;
 	
 	u32									mLightID;
 	MOAIMaterialStackRestoreCmd*		mNext;
@@ -65,17 +65,17 @@ private:
 class MOAIMaterialStackFrame {
 private:
 
-	friend MOAIMaterialStackMgr;
+	friend MOAIMaterialMgr;
 	
 	u32								mFlags;
 	MOAIMaterialStackRestoreCmd*	mRestoreList;
 };
 
 //================================================================//
-// MOAIMaterialStackMgr
+// MOAIMaterialMgr
 //================================================================//
-class MOAIMaterialStackMgr :
-	public ZLContextClass < MOAIMaterialStackMgr >,
+class MOAIMaterialMgr :
+	public ZLContextClass < MOAIMaterialMgr >,
 	public MOAIMaterialBase {
 private:
 	
@@ -96,8 +96,8 @@ public:
 	//void				Clear						();
 	const MOAILight*	GetLight					( u32 lightID );
 	void				LoadGfxState				();
-						MOAIMaterialStackMgr		();
-						~MOAIMaterialStackMgr		();
+						MOAIMaterialMgr		();
+						~MOAIMaterialMgr		();
 	void				Pop							();
 	void				Push						( const MOAIMaterial* material = 0 );
 	void				SetBlendMode				( const MOAIBlendMode& blendMode );

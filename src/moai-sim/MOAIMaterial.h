@@ -15,7 +15,7 @@ class MOAIMaterialLight {
 private:
 
 	friend class MOAIMaterial;
-	friend class MOAIMaterialStackMgr;
+	friend class MOAIMaterialMgr;
 	
 	static const u32 UNKNOWN_ID = ( u32 )-1;
 	
@@ -39,7 +39,7 @@ class MOAIMaterial :
 	public MOAIMaterialBase {
 private:
 
-	friend class MOAIMaterialStackMgr;
+	friend class MOAIMaterialMgr;
 
 
 	ZLLeanArray < MOAIMaterialLight >	mEntries;
