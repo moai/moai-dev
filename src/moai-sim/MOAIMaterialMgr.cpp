@@ -115,8 +115,8 @@ MOAIMaterialMgr::MOAIMaterialMgr () {
 
 	this->mGlobalLights.Init ( MAX_GLOBAL_LIGHTS );
 	for ( u32 i = 0; i < MAX_GLOBAL_LIGHTS; ++i ) {
-		MOAIGlobalLight& state = this->mGlobalLights [ i ];
-		state.mLight = 0;
+		MOAIMaterialGlobal& state = this->mGlobalLights [ i ];
+		state.mPtr = 0;
 		state.mStackDepth = 0;
 	}
 }
@@ -147,19 +147,13 @@ void MOAIMaterialMgr::Pop () {
 		while ( cursor ) {
 		
 			MOAIMaterialStackClearCmd* clearCmd = cursor;
-			
-			if ( clearCmd->mType == MOAIMaterialStackClearCmd::CLEAR_LIGHT_GLOBAL ) {
-			
-				this->mGlobalLights [ clearCmd->mGlobalID ].mLight = 0;
-				this->mGlobalLights [ clearCmd->mGlobalID ].mStackDepth = 0;
-			}
-			else {
-			
-				this->mGlobalTextures [ clearCmd->mGlobalID ].mTexture = 0;
-				this->mGlobalTextures [ clearCmd->mGlobalID ].mStackDepth = 0;
-			}
-			
 			cursor = cursor->mNext;
+			
+			MOAIMaterialGlobal* global = cursor->mGlobal;
+			
+			global->mPtr = 0;
+			global->mStackDepth = 0;
+			
 			this->mRestoreCmdPool.Free ( clearCmd );
 		}
 	}
@@ -215,31 +209,34 @@ void MOAIMaterialMgr::SetDepthTest ( int depthTest ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialMgr::SetLight ( u32 lightID, MOAILight* light ) {
-
-	assert ( lightID < MAX_GLOBAL_LIGHTS );
+void MOAIMaterialMgr::SetGlobal ( MOAIMaterialGlobal& global, void* ptr ) {
 
 	u32 stackDepth = ( u32 )this->mStack.GetTop ();
 	assert ( stackDepth );
 
-	MOAIGlobalLight& state = this->mGlobalLights [ lightID ];
-	if ( state.mStackDepth < stackDepth ) {
+	if ( global.mStackDepth < stackDepth ) {
 	
-		if ( state.mLight ) return; // don't overwrite lights
+		if ( global.mPtr ) return; // don't overwrite lights
 		
 		MOAIMaterialStackClearCmd* clearCmd = this->mRestoreCmdPool.Alloc ();
 		assert ( clearCmd );
 		
-		clearCmd->mGlobalID = lightID;
-		clearCmd->mType = MOAIMaterialStackClearCmd::CLEAR_LIGHT_GLOBAL;
+		clearCmd->mGlobal = &global;
 		
 		MOAIMaterialStackFrame& frame = this->mStack.Top ();
 		clearCmd->mNext = frame.mClearList;
 		frame.mClearList = clearCmd->mNext;
 	}
 	
-	state.mLight = light;
-	state.mStackDepth = stackDepth;
+	global.mPtr = ptr;
+	global.mStackDepth = stackDepth;
+}
+
+//----------------------------------------------------------------//
+void MOAIMaterialMgr::SetLight ( u32 lightID, MOAILight* light ) {
+
+	assert ( lightID < MAX_GLOBAL_LIGHTS );
+	this->SetGlobal ( this->mGlobalLights [ lightID ], light );
 }
 
 //----------------------------------------------------------------//

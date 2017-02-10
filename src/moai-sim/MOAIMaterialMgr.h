@@ -34,26 +34,19 @@ public:
 };
 
 //================================================================//
-// MOAIGlobalLight
+// MOAIMaterialGlobal
 //================================================================//
-class MOAIGlobalLight {
+class MOAIMaterialGlobal {
 private:
 
 	friend MOAIMaterialMgr;
 	
-	MOAILight*		mLight;
-	u32				mStackDepth;
-};
-
-//================================================================//
-// MOAIGlobalTexture
-//================================================================//
-class MOAIGlobalTexture {
-private:
-
-	friend MOAIMaterialMgr;
+	union {
+		MOAITextureBase*	mTexture;
+		MOAILight*			mLight;
+		void*				mPtr;
+	};
 	
-	MOAITextureBase*	mTexture;
 	u32					mStackDepth;
 };
 
@@ -65,13 +58,7 @@ private:
 
 	friend MOAIMaterialMgr;
 	
-	enum {
-		CLEAR_LIGHT_GLOBAL,
-		CLEAR_TEXTURE_GLOBAL,
-	};
-	
-	u32								mGlobalID;
-	u32								mType;
+	MOAIMaterialGlobal*				mGlobal;
 	MOAIMaterialStackClearCmd*		mNext;
 };
 
@@ -98,12 +85,13 @@ private:
 	friend class MOAIMaterialStackScope;
 
 	ZLLeanPool < MOAIMaterialStackClearCmd, 32 >		mRestoreCmdPool;
-	ZLLeanArray < MOAIGlobalLight >						mGlobalLights;
-	ZLLeanArray < MOAIGlobalTexture >					mGlobalTextures;
+	ZLLeanArray < MOAIMaterialGlobal >					mGlobalLights;
+	ZLLeanArray < MOAIMaterialGlobal >					mGlobalTextures;
 	ZLLeanStack < MOAIMaterialStackFrame, 8 >			mStack;
 
 	//----------------------------------------------------------------//
 	void				Compose						( const MOAIMaterial& material );
+	void				SetGlobal					( MOAIMaterialGlobal& global, void* ptr );
 
 public:
 
