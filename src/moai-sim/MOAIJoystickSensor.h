@@ -18,6 +18,10 @@ private:
 
 	float mX;
 	float mY;
+	// WHICH JOYSTICK IS IT?
+	int		mWhich;
+	// 1-BUTTON_DOWN, 2-BUTTON_UP, 3-AXIS, 4-NUM_JOYS, 5-JOY_ADD, 6-JOY_REMOVE, 7-NAME, 8-NUM_AXIS, 9-NUM_BUTTONS, 10-NUM_BALLS
+	int		mEvent; 
 	
 	MOAILuaStrongRef	mOnStick;
 
@@ -30,7 +34,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIJoystickSensor )
 
 	//----------------------------------------------------------------//
-	static void			EnqueueJoystickEvent	( u8 deviceID, u8 sensorID, float x, float y );
+	static void			EnqueueJoystickEvent	( u8 deviceID, u8 sensorID, float x, float y, int which, int event );
 						MOAIJoystickSensor		();
 						~MOAIJoystickSensor		();
 	void				ParseEvent				( ZLStream& eventStream );
