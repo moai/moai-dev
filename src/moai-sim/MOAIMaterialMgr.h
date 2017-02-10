@@ -16,7 +16,7 @@ class MOAIMaterialStackScope {
 private:
 
 	MOAIMaterialMgr&	mMaterialStack;
-	u32						mRestoreTop;
+	u32					mRestoreTop;
 
 public:
 
@@ -34,29 +34,45 @@ public:
 };
 
 //================================================================//
-// MOAIMaterialStackLightState
+// MOAIGlobalLight
 //================================================================//
-class MOAIMaterialStackLightState {
+class MOAIGlobalLight {
 private:
 
 	friend MOAIMaterialMgr;
 	
-	//u32				mFlags;
 	MOAILight*		mLight;
 	u32				mStackDepth;
 };
 
 //================================================================//
-// MOAIMaterialStackRestoreCmd
+// MOAIGlobalTexture
 //================================================================//
-class MOAIMaterialStackRestoreCmd :
-	MOAIMaterialStackLightState {
+class MOAIGlobalTexture {
 private:
 
 	friend MOAIMaterialMgr;
 	
-	u32									mLightID;
-	MOAIMaterialStackRestoreCmd*		mNext;
+	MOAITextureBase*	mTexture;
+	u32					mStackDepth;
+};
+
+//================================================================//
+// MOAIMaterialStackClearCmd
+//================================================================//
+class MOAIMaterialStackClearCmd {
+private:
+
+	friend MOAIMaterialMgr;
+	
+	enum {
+		CLEAR_LIGHT_GLOBAL,
+		CLEAR_TEXTURE_GLOBAL,
+	};
+	
+	u32								mGlobalID;
+	u32								mType;
+	MOAIMaterialStackClearCmd*		mNext;
 };
 
 //================================================================//
@@ -68,7 +84,7 @@ private:
 	friend MOAIMaterialMgr;
 	
 	u32								mFlags;
-	MOAIMaterialStackRestoreCmd*	mRestoreList;
+	MOAIMaterialStackClearCmd*		mClearList;
 };
 
 //================================================================//
@@ -81,8 +97,9 @@ private:
 	
 	friend class MOAIMaterialStackScope;
 
-	ZLLeanPool < MOAIMaterialStackRestoreCmd, 32 >		mRestoreCmdPool;
-	ZLLeanArray < MOAIMaterialStackLightState >			mLightStateArray;
+	ZLLeanPool < MOAIMaterialStackClearCmd, 32 >		mRestoreCmdPool;
+	ZLLeanArray < MOAIGlobalLight >						mGlobalLights;
+	ZLLeanArray < MOAIGlobalTexture >					mGlobalTextures;
 	ZLLeanStack < MOAIMaterialStackFrame, 8 >			mStack;
 
 	//----------------------------------------------------------------//
@@ -96,8 +113,8 @@ public:
 	//void				Clear						();
 	const MOAILight*	GetLight					( u32 lightID );
 	void				LoadGfxState				();
-						MOAIMaterialMgr		();
-						~MOAIMaterialMgr		();
+						MOAIMaterialMgr				();
+						~MOAIMaterialMgr			();
 	void				Pop							();
 	void				Push						( const MOAIMaterial* material = 0 );
 	void				SetBlendMode				( const MOAIBlendMode& blendMode );
