@@ -11,13 +11,15 @@
 	#define ZGL_DEVCAPS_PVR_TEXTURE 0
 #endif
 
+#define ZGL_FIRST_FLAG 0x70000000
+
 //================================================================//
 // gfx
 //================================================================//
 
 enum {
 
-	ZGL_BLEND_FACTOR_DST_ALPHA,
+	ZGL_BLEND_FACTOR_DST_ALPHA					= ZGL_FIRST_FLAG,
 	ZGL_BLEND_FACTOR_DST_COLOR,
 	ZGL_BLEND_FACTOR_ONE,
 	ZGL_BLEND_FACTOR_ONE_MINUS_DST_ALPHA,
@@ -47,6 +49,9 @@ enum {
 	ZGL_BUFFER_USAGE_STREAM_COPY,
 	ZGL_BUFFER_USAGE_STREAM_DRAW,
 	ZGL_BUFFER_USAGE_STREAM_READ,
+
+	ZGL_CAPS_MAX_TEXTURE_SIZE,
+	ZGL_CAPS_MAX_TEXTURE_UNITS,
 
 	ZGL_COMPOSE_MODULATE,
 
@@ -217,11 +222,8 @@ enum {
 
 	ZGL_WRAP_MODE_CLAMP,
 	ZGL_WRAP_MODE_REPEAT,
-};
-
-enum {
-	ZGL_CAPS_MAX_TEXTURE_SIZE,
-	ZGL_CAPS_MAX_TEXTURE_UNITS,
+	
+	ZGL_TOTAL_FLAGS,
 };
 
 enum {

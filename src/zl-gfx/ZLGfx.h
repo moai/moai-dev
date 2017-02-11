@@ -91,6 +91,7 @@ typedef ZLWeakPtr < ZLGfxListener > ZLGfxListenerHandle;
 // ZLGfx
 //================================================================//
 class ZLGfx {
+private:
 
 	friend class ZLGfxImmediate;
 	friend class ZLGfxRetained;
@@ -168,6 +169,8 @@ public:
 	
 	virtual ZLGfxHandle*			GetCurrentFramebuffer		() = 0;
 	virtual void					GetUniformLocation			( ZLGfxHandle* program, cc8* uniformName, ZLGfxListener* listener, void* userdata ) = 0;
+	
+	static bool						IsFlag						( u32 flag );
 	
 	virtual bool					IsImmediate					() = 0;
 	

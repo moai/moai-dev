@@ -10,19 +10,12 @@
 class MOAIBlendMode {
 public:
 	
-	enum {
-		BLEND_NORMAL,
-		BLEND_ADD,
-		BLEND_MULTIPLY,
-	};
-	
 	int				mEquation;
 	int				mSourceFactor;
 	int				mDestFactor;
 
 	//----------------------------------------------------------------//
 	void			Init				( MOAILuaState& state, int idx );
-	void			SetBlend			( u32 blend );
 	void			SetBlend			( int equation, int srcFactor, int dstFactor );
 					MOAIBlendMode		();
 					MOAIBlendMode		( int equation, int srcFactor, int dstFactor );

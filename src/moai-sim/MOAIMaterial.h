@@ -113,6 +113,7 @@ private:
 public:
 
 	//----------------------------------------------------------------//
+	void				Clear					();
 	MOAILight*			GetLight				( u32 name );
 	MOAITextureBase*	GetTexture				();
 	MOAITextureBase*	GetTexture				( u32 name );

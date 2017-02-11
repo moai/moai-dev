@@ -95,27 +95,13 @@ int MOAIMaterialBatch::_reserveMaterials ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-/** @lua	setBlendMode
-	@text	Set the blend mode.
+/** @lua	Set blend mode using OpenGL source and dest factors. OpenGl blend factor constants are exposed as members of MOAIMaterialBatch.
+			See the OpenGL documentation for an explanation of blending constants.
 
-	@overload	Reset the blend mode to MOAIMaterialBatch.BLEND_NORMAL (equivalent to src = GL_ONE, dst = GL_ONE_MINUS_SRC_ALPHA). This will reset the blend function to GL_FUNC_ADD.
-
-		@in		MOAIMaterialBatch self
-		@out	nil
-
-	@overload	Set blend mode using one of the Moai presets. This will reset the blend function to GL_FUNC_ADD.
-
-		@in		MOAIMaterialBatch self
-		@in		number mode					One of MOAIMaterialBatch.BLEND_NORMAL, MOAIMaterialBatch.BLEND_ADD, MOAIMaterialBatch.BLEND_MULTIPLY.
-		@out	nil
-	
-	@overload	Set blend mode using OpenGL source and dest factors. OpenGl blend factor constants are exposed as members of MOAIMaterialBatch.
-				See the OpenGL documentation for an explanation of blending constants.
-
-		@in		MOAIMaterialBatch self
-		@in		number srcFactor
-		@in		number dstFactor
-		@out	nil
+	@in		MOAIMaterialBatch self
+	@in		number srcFactor
+	@in		number dstFactor
+	@out	nil
 */
 int MOAIMaterialBatch::_setBlendMode ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
@@ -279,11 +265,23 @@ u32 MOAIMaterialBatch::GetMaterialID ( MOAILuaState& state, int& idx ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIMaterialBatch::GetMaterialID ( MOAILuaState& state, int& idx, int stackSizeWithMaterialID ) {
+u32 MOAIMaterialBatch::GetMaterialID ( MOAILuaState& state, int& idx, bool& set ) {
 
-	if ( state.GetStackSize ( idx ) == stackSizeWithMaterialID ) {
-		return state.GetValue < u32 >( idx++, 1 ) - 1;
+	set = false;
+	
+	if ( state.IsType ( idx, LUA_TNUMBER )) {
+	
+		u32 value = state.GetValue < u32 >( idx, 0 );
+		
+		if (( value == 0 ) || ZLGfx::IsFlag ( value )) {
+			set = true;
+			return 0;
+		}
+		idx++;
+		set = state.IsNil ( idx );
+		return value - 1;
 	}
+	set = state.IsNil ( idx );
 	return 0;
 }
 
@@ -385,6 +383,8 @@ void MOAIMaterialBatch::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIMaterialBatch::Reserve ( u32 n ) {
 
+	assert ( n < ZGL_FIRST_FLAG ); // probably don't need more than 0x70000000 materials...
+
 	this->Clear ();
 	this->mMaterials.Init ( n );
 }
@@ -418,17 +418,17 @@ void MOAIMaterialBatch::SetBlendMode ( u32 idx, const MOAIBlendMode& blendMode )
 //----------------------------------------------------------------//
 void MOAIMaterialBatch::SetBlendMode ( MOAILuaState& state, int idx ) {
 
-	u32 materialID = 0;
-	u32 stackSize = state.GetStackSize ( idx );
+	bool set;
+	u32 materialID = MOAIMaterialBatch::GetMaterialID ( state, idx, set );
 
-	if (( stackSize == 2 ) || ( stackSize == 4 )) {
-		materialID = state.GetValue < u32 >( idx++, 1 ) - 1;
+	if ( set ) {
+		MOAIBlendMode blendMode;
+		blendMode.Init ( state, idx );
+		this->SetBlendMode ( materialID, blendMode );
 	}
-
-	MOAIBlendMode blendMode;
-	blendMode.Init ( state, idx );
-
-	this->SetBlendMode ( materialID, blendMode );
+	else {
+		this->SetBlendMode ( materialID );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -448,8 +448,15 @@ void MOAIMaterialBatch::SetCullMode ( u32 idx, int cullMode ) {
 //----------------------------------------------------------------//
 void MOAIMaterialBatch::SetCullMode ( MOAILuaState& state, int idx ) {
 
-	u32 materialID = MOAIMaterialBatch::GetMaterialID ( state, idx, 2 );
-	this->SetCullMode ( materialID, state.GetValue < u32 >( idx, 0 ));
+	bool set;
+	u32 materialID = MOAIMaterialBatch::GetMaterialID ( state, idx, set );
+	
+	if ( set ) {
+		this->SetCullMode ( materialID, state.GetValue < u32 >( idx, 0 ));
+	}
+	else {
+		this->SetCullMode ( materialID );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -469,8 +476,15 @@ void MOAIMaterialBatch::SetDepthMask ( u32 idx, bool depthMask ) {
 //----------------------------------------------------------------//
 void MOAIMaterialBatch::SetDepthMask ( MOAILuaState& state, int idx ) {
 
-	u32 materialID = MOAIMaterialBatch::GetMaterialID ( state, idx, 2 );
-	this->SetDepthMask ( materialID, state.GetValue < u32 >( idx, 0 ));
+	bool set;
+	u32 materialID = MOAIMaterialBatch::GetMaterialID ( state, idx, set );
+	
+	if ( set ) {
+		this->SetDepthMask ( materialID, state.GetValue < bool >( idx, false ));
+	}
+	else {
+		this->SetDepthMask ( materialID );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -490,8 +504,15 @@ void MOAIMaterialBatch::SetDepthTest ( u32 idx, int depthTest ) {
 //----------------------------------------------------------------//
 void MOAIMaterialBatch::SetDepthTest ( MOAILuaState& state, int idx ) {
 
-	u32 materialID = MOAIMaterialBatch::GetMaterialID ( state, idx, 2 );
-	this->SetDepthTest ( materialID, state.GetValue < u32 >( idx, 0 ));
+	bool set;
+	u32 materialID = MOAIMaterialBatch::GetMaterialID ( state, idx, set );
+	
+	if ( set ) {
+		this->SetDepthTest ( materialID, state.GetValue < u32 >( idx, 0 ));
+	}
+	else {
+		this->SetDepthTest ( materialID );
+	}
 }
 
 //----------------------------------------------------------------//

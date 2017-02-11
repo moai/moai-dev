@@ -19,20 +19,13 @@ void MOAIBlendMode::Init ( MOAILuaState& state, int idx ) {
 		materialID = state.GetValue < u32 >( idx++, 1 ) - 1;
 	}
 
-	MOAIBlendMode blendMode;
-
 	if ( state.CheckParams ( idx, "NNN" )) {
 
 		u32 equation	= state.GetValue < u32 >( idx++, ZGL_BLEND_MODE_ADD );
-		u32 srcFactor	= state.GetValue < u32 >( idx++, 0 );
-		u32 dstFactor	= state.GetValue < u32 >( idx, 0 );
+		u32 srcFactor	= state.GetValue < u32 >( idx++, ZGL_BLEND_FACTOR_ONE );
+		u32 dstFactor	= state.GetValue < u32 >( idx, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
 		
 		this->SetBlend ( equation, srcFactor, dstFactor );
-	}
-	else {
-		
-		u32 preset = state.GetValue < u32 >( idx, MOAIBlendMode::BLEND_NORMAL );
-		this->SetBlend ( preset );
 	}
 }
 
@@ -44,31 +37,6 @@ int MOAIBlendMode::Push ( MOAILuaState& state ) const {
 	state.Push ( this->mDestFactor );
 	
 	return 3;
-}
-
-//----------------------------------------------------------------//
-void MOAIBlendMode::SetBlend ( u32 blend ) {
-	
-	switch ( blend ) {
-	
-		case BLEND_NORMAL:
-			this->mEquation			= ZGL_BLEND_MODE_ADD;
-			this->mSourceFactor		= ZGL_BLEND_FACTOR_ONE;
-			this->mDestFactor		= ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
-			break;
-
-		case BLEND_ADD:
-			this->mEquation			= ZGL_BLEND_MODE_ADD;
-			this->mSourceFactor		= ZGL_BLEND_FACTOR_SRC_ALPHA;
-			this->mDestFactor		= ZGL_BLEND_FACTOR_ONE;
-			break;
-
-		case BLEND_MULTIPLY:
-			this->mEquation			= ZGL_BLEND_MODE_ADD;
-			this->mSourceFactor		= ZGL_BLEND_FACTOR_DST_COLOR;
-			this->mDestFactor		= ZGL_BLEND_FACTOR_ZERO;
-			break;
-	}
 }
 
 //----------------------------------------------------------------//

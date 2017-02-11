@@ -12,6 +12,15 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIMaterial::Clear () {
+
+	this->ClearNamedGlobalList < MOAILight >( this->mLights );
+	this->ClearNamedGlobalList < MOAITextureBase >( this->mTextures );
+	
+	this->MOAIMaterialBase::Clear ();
+}
+
+//----------------------------------------------------------------//
 MOAILight* MOAIMaterial::GetLight ( u32 name ) {
 
 	MOAIMaterialNamedGlobal < MOAILight >* global = this->FindNamedGlobal < MOAILight >( this->mLights, name );
@@ -43,8 +52,7 @@ MOAIMaterial::MOAIMaterial () :
 //----------------------------------------------------------------//
 MOAIMaterial::~MOAIMaterial () {
 
-	this->ClearNamedGlobalList < MOAILight >( this->mLights );
-	this->ClearNamedGlobalList < MOAITextureBase >( this->mTextures );
+	this->Clear ();
 }
 
 //----------------------------------------------------------------//

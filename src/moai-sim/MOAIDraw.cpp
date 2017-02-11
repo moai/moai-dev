@@ -856,25 +856,13 @@ int MOAIDraw::_fillRect ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@lua	setBlendMode
-	@text	Sets the blend mode for drawing.
-	
-	@overload	Reset the blend mode to MOAIGraphicsProp.BLEND_NORMAL (equivalent to src = GL_ONE, dst = GL_ONE_MINUS_SRC_ALPHA). This will reset the blend function to GL_FUNC_ADD.
+	@text	Set blend mode using OpenGL source and dest factors. OpenGl blend factor constants are exposed as members of MOAIGraphicsProp.
+			See the OpenGL documentation for an explanation of blending constants.
 
-		@in		nil
-		@out	nil
-
-	@overload	Set blend mode using one of the Moai presets. This will reset the blend function to GL_FUNC_ADD.
-
-		@in		number mode					One of MOAIGraphicsProp.BLEND_NORMAL, MOAIGraphicsProp.BLEND_ADD, MOAIGraphicsProp.BLEND_MULTIPLY.
-		@out	nil
-	
-	@overload	Set blend mode using OpenGL source and dest factors. OpenGl blend factor constants are exposed as members of MOAIGraphicsProp.
-				See the OpenGL documentation for an explanation of blending constants.
-
-		@in		number srcFactor
-		@in		number dstFactor
-		@in		number equation
-		@out	nil
+	@in		number srcFactor
+	@in		number dstFactor
+	@in		number equation
+	@out	nil
 */
 int MOAIDraw::_setBlendMode ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
@@ -889,17 +877,9 @@ int MOAIDraw::_setBlendMode ( lua_State* L ) {
 			u32 equation = state.GetValue < u32 >( 3, 0 );
 			gfxMgr.mGfxState.SetBlendMode ( srcFactor, dstFactor, equation );
 		}
-		else {
-
-			u32 blendModeID = state.GetValue < u32 >( 1, MOAIBlendMode::BLEND_NORMAL );
-			
-			MOAIBlendMode blendMode;
-			blendMode.SetBlend ( blendModeID );
-			gfxMgr.mGfxState.SetBlendMode ( blendMode );
-		}
 	}
 	else {
-		gfxMgr.mGfxState.SetBlendMode();
+		gfxMgr.mGfxState.SetBlendMode ();
 	}
 	return 0;
 }

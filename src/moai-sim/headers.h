@@ -81,8 +81,7 @@
 #include <moai-sim/MOAIMaterialBase.h>
 #include <moai-sim/MOAIMaterialBatch.h>
 #include <moai-sim/MOAIMaterialBatchHolder.h>
-#include <moai-sim/MOAIMaterialBatchHolderMixIn.h>
-#include <moai-sim/MOAIMaterialHolderMixIn.h>
+#include <moai-sim/MOAIMaterialHolder.h>
 #include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIMatrix.h>
 #include <moai-sim/MOAIMesh.h>

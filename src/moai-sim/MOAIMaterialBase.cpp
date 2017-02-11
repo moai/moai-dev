@@ -18,6 +18,9 @@ const MOAIMaterialBase MOAIMaterialBase::DEFAULT_MATERIAL;
 //----------------------------------------------------------------//
 void MOAIMaterialBase::Clear () {
 
+	this->mShader = 0;
+	this->mTexture = 0;
+
 	*this = DEFAULT_MATERIAL;
 }
 

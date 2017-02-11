@@ -106,3 +106,9 @@ void ZLGfx::Discard ( ZLGfxHandle*& handle ) {
 		handle = 0;
 	}
 }
+
+//----------------------------------------------------------------//
+bool ZLGfx::IsFlag ( u32 flag ) {
+
+	return (( ZGL_FIRST_FLAG <= flag ) && ( flag < ZGL_TOTAL_FLAGS ));
+}

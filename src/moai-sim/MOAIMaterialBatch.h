@@ -49,7 +49,7 @@ private:
 
 	//----------------------------------------------------------------//
 	static u32			GetMaterialID				( MOAILuaState& state, int& idx );
-	static u32			GetMaterialID				( MOAILuaState& state, int& idx, int stackSizeWithMaterialID );
+	static u32			GetMaterialID				( MOAILuaState& state, int& idx, bool& set );
 	static u32			GetNamedGlobalID			( MOAILuaState& state, int& idx, u32& globalID );
 
 	//----------------------------------------------------------------//

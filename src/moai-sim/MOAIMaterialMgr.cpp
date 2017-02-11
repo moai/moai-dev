@@ -138,11 +138,11 @@ void MOAIMaterialMgr::Pop () {
 		MOAIMaterialStackFrame frame = this->mStack.Pop ();
 		
 		if ( stackTop > 1 ) {
-			this->MOAIMaterial::Clear ( ~frame.mFlags );
+			this->MOAIMaterialBase::Clear ( ~frame.mFlags );
 		}
 		else {
 			this->mStack.Reset ();
-			this->MOAIMaterial::Clear ();
+			this->MOAIMaterialBase::Clear ();
 		}
 		
 		MOAIMaterialStackClearCmd* cursor = frame.mClearList;

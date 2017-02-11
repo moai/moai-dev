@@ -34,10 +34,6 @@ class MOAITextureBase;
 	@const	FRAME_FROM_DECK
 	@const	FRAME_FROM_PARENT
 	@const	FRAME_FROM_SELF
-	
-	@const	BLEND_NORMAL
-	@const	BLEND_ADD
-	@const	BLEND_MULTIPLY
 
 	@const  GL_FUNC_ADD
 	@const  GL_FUNC_SUBTRACT
