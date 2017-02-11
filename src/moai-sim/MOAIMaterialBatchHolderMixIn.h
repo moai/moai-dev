@@ -20,48 +20,6 @@ class MOAIMaterialBatchHolderMixIn :
 protected:
 	
 	MOAILuaSharedPtr < MOAIMaterialBatch > mMaterialBatch;
-	
-	//----------------------------------------------------------------//
-	// TODO: doxygen
-	static int _clearBlendMode ( lua_State* L ) {
-		MOAI_LUA_SETUP ( TYPE, "U" )
-		return self->mMaterialBatch ? self->mMaterialBatch->ClearBlendMode ( state, 2 ) : 0;
-	}
-
-	//----------------------------------------------------------------//
-	// TODO: doxygen
-	static int _clearCullMode ( lua_State* L ) {
-		MOAI_LUA_SETUP ( TYPE, "U" )
-		return self->mMaterialBatch ? self->mMaterialBatch->ClearCullMode ( state, 2 ) : 0;
-	}
-
-	//----------------------------------------------------------------//
-	// TODO: doxygen
-	static int _clearDepthMask ( lua_State* L ) {
-		MOAI_LUA_SETUP ( TYPE, "U" )
-		return self->mMaterialBatch ? self->mMaterialBatch->ClearDepthMask ( state, 2 ) : 0;
-	}
-
-	//----------------------------------------------------------------//
-	// TODO: doxygen
-	static int _clearDepthTest ( lua_State* L ) {
-		MOAI_LUA_SETUP ( TYPE, "U" )
-		return self->mMaterialBatch ? self->mMaterialBatch->ClearDepthTest ( state, 2 ) : 0;
-	}
-
-	//----------------------------------------------------------------//
-	// TODO: doxygen
-	static int _clearShader ( lua_State* L ) {
-		MOAI_LUA_SETUP ( TYPE, "U" )
-		return self->mMaterialBatch ? self->mMaterialBatch->ClearShader ( state, 2 ) : 0;
-	}
-
-	//----------------------------------------------------------------//
-	// TODO: doxygen
-	static int _clearTexture ( lua_State* L ) {
-		MOAI_LUA_SETUP ( TYPE, "U" )
-		return self->mMaterialBatch ? self->mMaterialBatch->ClearTexture ( state, 2 ) : 0;
-	}
 
 	//----------------------------------------------------------------//
 	// TODO: doxygen
@@ -351,12 +309,6 @@ protected:
 	void RegisterLuaFuncs ( MOAILuaState& state ) {
 
 		luaL_Reg regTable [] = {
-			{ "clearBlendMode",			_clearBlendMode },
-			{ "clearCullMode",			_clearCullMode },
-			{ "clearDepthMask",			_clearDepthMask },
-			{ "clearDepthTest",			_clearDepthTest },
-			{ "clearShader",			_clearShader },
-			{ "clearTexture",			_clearTexture },
 			{ "getBlendMode",			_getBlendMode },
 			{ "getCullMode",			_getCullMode },
 			{ "getDepthMask",			_getDepthMask },

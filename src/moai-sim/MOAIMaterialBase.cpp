@@ -62,44 +62,6 @@ void MOAIMaterialBase::Clear ( u32 flags ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBase::ClearBlendMode () {
-
-	this->mFlags &= ~BLEND_MODE_FLAG;
-}
-
-//----------------------------------------------------------------//
-void MOAIMaterialBase::ClearCullMode () {
-
-	this->mFlags &= ~CULL_MODE_FLAG;
-}
-
-//----------------------------------------------------------------//
-void MOAIMaterialBase::ClearDepthMask () {
-
-	this->mFlags &= ~DEPTH_MASK_FLAG;
-}
-
-//----------------------------------------------------------------//
-void MOAIMaterialBase::ClearDepthTest () {
-
-	this->mFlags &= ~DEPTH_TEST_FLAG;
-}
-
-//----------------------------------------------------------------//
-void MOAIMaterialBase::ClearShader () {
-
-	this->mFlags &= ~SHADER_FLAG;
-	this->mShader = 0;
-}
-
-//----------------------------------------------------------------//
-void MOAIMaterialBase::ClearTexture () {
-
-	this->mFlags &= ~TEXTURE_FLAG;
-	this->mTexture = 0;
-}
-
-//----------------------------------------------------------------//
 MOAIMaterialBase::MOAIMaterialBase () :
 	mShader ( 0 ),
 	mTexture ( 0 ),
@@ -117,10 +79,22 @@ MOAIMaterialBase::~MOAIMaterialBase () {
 }
 
 //----------------------------------------------------------------//
+void MOAIMaterialBase::SetBlendMode () {
+
+	this->mFlags &= ~BLEND_MODE_FLAG;
+}
+
+//----------------------------------------------------------------//
 void MOAIMaterialBase::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 
 	this->mBlendMode = blendMode;
 	this->mFlags |= BLEND_MODE_FLAG;
+}
+
+//----------------------------------------------------------------//
+void MOAIMaterialBase::SetCullMode () {
+
+	this->mFlags &= ~CULL_MODE_FLAG;
 }
 
 //----------------------------------------------------------------//
@@ -131,10 +105,22 @@ void MOAIMaterialBase::SetCullMode ( int cullMode ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIMaterialBase::SetDepthMask () {
+
+	this->mFlags &= ~DEPTH_MASK_FLAG;
+}
+
+//----------------------------------------------------------------//
 void MOAIMaterialBase::SetDepthMask ( bool depthMask ) {
 
 	this->mDepthMask = depthMask;
 	this->mFlags |= DEPTH_MASK_FLAG;
+}
+
+//----------------------------------------------------------------//
+void MOAIMaterialBase::SetDepthTest () {
+
+	this->mFlags &= ~DEPTH_TEST_FLAG;
 }
 
 //----------------------------------------------------------------//
@@ -145,27 +131,39 @@ void MOAIMaterialBase::SetDepthTest ( int depthTest ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBase::SetShader ( u32 shaderID ) {
+void MOAIMaterialBase::SetShader () {
 
-	this->SetShader ( MOAIShaderMgr::Get ().GetShader ( shaderID ));
+	this->SetShader ( 0 );
 }
 
 //----------------------------------------------------------------//
 void MOAIMaterialBase::SetShader ( MOAIShader* shader ) {
 
-	ZLRetain ( shader );
-	ZLRelease ( this->mShader );
-
 	this->mShader = shader;
-	this->mFlags |= SHADER_FLAG;
+	
+	if ( shader ) {
+		this->mFlags |= SHADER_FLAG;
+	}
+	else {
+		this->mFlags &= ~SHADER_FLAG;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIMaterialBase::SetTexture () {
+
+	this->SetTexture ( 0 );
 }
 
 //----------------------------------------------------------------//
 void MOAIMaterialBase::SetTexture ( MOAITextureBase* texture ) {
 
-	ZLRetain ( texture );
-	ZLRelease ( this->mTexture );
-
 	this->mTexture = texture;
-	this->mFlags |= TEXTURE_FLAG;
+
+	if ( texture ) {
+		this->mFlags |= TEXTURE_FLAG;
+	}
+	else {
+		this->mFlags &= ~TEXTURE_FLAG;
+	}
 }

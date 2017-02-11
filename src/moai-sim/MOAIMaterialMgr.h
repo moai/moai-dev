@@ -85,8 +85,8 @@ private:
 	friend class MOAIMaterialStackScope;
 
 	ZLLeanPool < MOAIMaterialStackClearCmd, 32 >		mRestoreCmdPool;
-	ZLLeanArray < MOAIMaterialGlobal >					mGlobalLights;
-	ZLLeanArray < MOAIMaterialGlobal >					mGlobalTextures;
+	ZLLeanArray < MOAIMaterialGlobal >					mNamedLights;
+	ZLLeanArray < MOAIMaterialGlobal >					mNamedTextures;
 	ZLLeanStack < MOAIMaterialStackFrame, 8 >			mStack;
 
 	//----------------------------------------------------------------//

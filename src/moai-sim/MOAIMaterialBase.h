@@ -59,20 +59,19 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Clear						();
-	void			ClearBlendMode				();
-	void			ClearCullMode				();
-	void			ClearDepthMask				();
-	void			ClearDepthTest				();
-	void			ClearShader					();
-	void			ClearTexture				();
 					MOAIMaterialBase			();
 					~MOAIMaterialBase			();
+	void			SetBlendMode				();
 	void			SetBlendMode				( const MOAIBlendMode& blendMode );
+	void			SetCullMode					();
 	void			SetCullMode					( int cullMode );
+	void			SetDepthMask				();
 	void			SetDepthMask				( bool depthMask );
+	void			SetDepthTest				();
 	void			SetDepthTest				( int depthTest );
-	void			SetShader					( u32 shaderID );
+	void			SetShader					();
 	void			SetShader					( MOAIShader* shader );
+	void			SetTexture					();
 	void			SetTexture					( MOAITextureBase* texture );
 };
 

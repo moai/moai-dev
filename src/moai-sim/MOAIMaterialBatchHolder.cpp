@@ -25,10 +25,6 @@
 
 //----------------------------------------------------------------//
 MOAIMaterialBatchHolder::MOAIMaterialBatchHolder () {
-	
-//	RTTI_BEGIN
-//		RTTI_EXTEND ( MOAILuaObject )
-//	RTTI_END
 }
 
 //----------------------------------------------------------------//

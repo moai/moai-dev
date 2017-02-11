@@ -9,31 +9,28 @@
 class MOAILight;
 class MOAITextureBase;
 
+#define MOAI_UNKNOWN_MATERIAL_GLOBAL (( u32 )-1 )
+
 //================================================================//
 // MOAIMaterialNamedGlobal
 //================================================================//
+template < typename TYPE >
 class MOAIMaterialNamedGlobal {
 private:
 
 	friend class MOAIMaterial;
 	friend class MOAIMaterialMgr;
 	
-	union {
-		MOAILight*			mLight;
-		MOAITextureBase*	mTexture;
-		void*				mPtr;
-	};
-	
-	u32					mName;
+	u32							mName;
+	ZLStrongPtr < TYPE >		mValue;
+	MOAIMaterialNamedGlobal*	mNext;
 
 public:
 
-	static const u32	UNKNOWN_GLOBAL		= ( u32 )-1;
-
 	//----------------------------------------------------------------//
 	MOAIMaterialNamedGlobal () :
-		mPtr ( 0 ),
-		mName ( 0 ) {
+		mName ( MOAI_UNKNOWN_MATERIAL_GLOBAL ),
+		mNext ( 0 ) {
 	}
 };
 
@@ -47,12 +44,71 @@ private:
 
 	friend class MOAIMaterialMgr;
 
-	ZLLeanArray < MOAIMaterialNamedGlobal >		mLights;
-	ZLLeanArray < MOAIMaterialNamedGlobal >		mTextures;
+	MOAIMaterialNamedGlobal < MOAILight >*			mLights;
+	MOAIMaterialNamedGlobal < MOAITextureBase >*	mTextures;
 	
 	//----------------------------------------------------------------//
-	MOAIMaterialNamedGlobal&	AffirmNamedGlobal		( ZLLeanArray < MOAIMaterialNamedGlobal >& array, u32 name );
-	MOAIMaterialNamedGlobal*	FindNamedGlobal			( ZLLeanArray < MOAIMaterialNamedGlobal >& array, u32 name );
+	template < typename TYPE >
+	void ClearNamedGlobalList ( MOAIMaterialNamedGlobal < TYPE >*& list ) {
+
+		while ( list ) {
+		
+			MOAIMaterialNamedGlobal < TYPE >* global = list;
+			list = list->mNext;
+			delete global;
+		}
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	MOAIMaterialNamedGlobal < TYPE >* FindNamedGlobal ( MOAIMaterialNamedGlobal < TYPE >* list, u32 name ) {
+	
+		for ( ; list; list = list->mNext ) {
+			if ( list->mName == name ) return list;
+		}
+		return 0;
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	MOAIMaterialNamedGlobal < TYPE >* SetNamedGlobal ( MOAIMaterialNamedGlobal < TYPE >*& list, u32 name, TYPE* value ) {
+	
+		if ( value ) {
+	
+			MOAIMaterialNamedGlobal < TYPE >* global = this->FindNamedGlobal < TYPE >( list, name );
+			
+			if ( !global ) {
+			
+				global = new MOAIMaterialNamedGlobal < TYPE >();
+				
+				global->mName = name;
+				global->mValue = value;
+				global->mNext = list;
+				list = global;
+			}
+			return global;
+		}
+		else {
+		
+			MOAIMaterialNamedGlobal < TYPE >* cursor = list;
+			list = 0;
+			
+			while ( cursor ) {
+			
+				MOAIMaterialNamedGlobal < TYPE >* global = cursor;
+				cursor = cursor->mNext;
+				
+				if ( global->mName == name ) {
+					delete global;
+				}
+				else {
+					global->mNext = list;
+					list = global;
+				}
+			}
+		}
+		return 0;
+	}
 
 public:
 
@@ -62,10 +118,11 @@ public:
 	MOAITextureBase*	GetTexture				( u32 name );
 						MOAIMaterial			();
 	virtual				~MOAIMaterial			();
-	void				ReserveLights			( u32 n );
-	void				ReserveTextures			( u32 n );
+	void				SetLight				( u32 name );
 	void				SetLight				( u32 name, MOAILight* light );
+	void				SetTexture				();
 	void				SetTexture				( MOAITextureBase* texture );
+	void				SetTexture				( u32 name );
 	void				SetTexture				( u32 name, MOAITextureBase* texture );
 };
 

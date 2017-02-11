@@ -81,11 +81,14 @@ void MOAIMaterialMgr::Compose ( const MOAIMaterial& material ) {
 		this->mFlags |= available;
 	}
 	
-	size_t nLights = material.mLights.Size ();
-	for ( size_t i = 0; i < nLights; ++i ) {
+	MOAIMaterialNamedGlobal < MOAILight >* namedLightIt = material.mLights;
+	for ( ; namedLightIt; namedLightIt = namedLightIt->mNext ) {
+		this->SetLight ( namedLightIt->mName, namedLightIt->mValue );
+	}
 	
-		MOAIMaterialNamedGlobal& namedLight = material.mLights [ i ];
-		this->SetLight ( namedLight.mName, namedLight.mLight );
+	MOAIMaterialNamedGlobal < MOAITextureBase >* namedTexturelIt = material.mTextures;
+	for ( ; namedTexturelIt; namedTexturelIt = namedTexturelIt->mNext ) {
+		this->SetTexture ( namedTexturelIt->mName, namedTexturelIt->mValue );
 	}
 }
 
@@ -93,7 +96,7 @@ void MOAIMaterialMgr::Compose ( const MOAIMaterial& material ) {
 const MOAILight* MOAIMaterialMgr::GetLight ( u32 lightID ) {
 
 	assert ( lightID < MAX_GLOBAL_LIGHTS );
-	return this->mGlobalLights [ lightID ].mLight;
+	return this->mNamedLights [ lightID ].mLight;
 }
 
 
@@ -113,9 +116,9 @@ void MOAIMaterialMgr::LoadGfxState () {
 //----------------------------------------------------------------//
 MOAIMaterialMgr::MOAIMaterialMgr () {
 
-	this->mGlobalLights.Init ( MAX_GLOBAL_LIGHTS );
+	this->mNamedLights.Init ( MAX_GLOBAL_LIGHTS );
 	for ( u32 i = 0; i < MAX_GLOBAL_LIGHTS; ++i ) {
-		MOAIMaterialGlobal& state = this->mGlobalLights [ i ];
+		MOAIMaterialGlobal& state = this->mNamedLights [ i ];
 		state.mPtr = 0;
 		state.mStackDepth = 0;
 	}
@@ -236,7 +239,7 @@ void MOAIMaterialMgr::SetGlobal ( MOAIMaterialGlobal& global, void* ptr ) {
 void MOAIMaterialMgr::SetLight ( u32 lightID, MOAILight* light ) {
 
 	assert ( lightID < MAX_GLOBAL_LIGHTS );
-	this->SetGlobal ( this->mGlobalLights [ lightID ], light );
+	this->SetGlobal ( this->mNamedLights [ lightID ], light );
 }
 
 //----------------------------------------------------------------//
@@ -267,5 +270,5 @@ void MOAIMaterialMgr::SetTexture ( MOAITextureBase* texture ) {
 void MOAIMaterialMgr::SetTexture ( u32 textureID, MOAITextureBase* texture ) {
 	
 	assert ( textureID < MAX_GLOBAL_TEXTURES );
-	this->SetGlobal ( this->mGlobalTextures [ textureID ], texture );
+	this->SetGlobal ( this->mNamedTextures [ textureID ], texture );
 }

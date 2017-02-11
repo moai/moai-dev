@@ -18,62 +18,6 @@ class MOAIMaterialHolderMixIn :
 protected:
 	
 	MOAIMaterial mMaterial;
-	
-	//----------------------------------------------------------------//
-	// TODO: doxygen
-	static int _clearBlendMode ( lua_State* L ) {
-		MOAI_LUA_SETUP ( TYPE, "U" )
-		self->mMaterial.ClearBlendMode ();
-		return 0;
-	}
-
-	//----------------------------------------------------------------//
-	// TODO: doxygen
-	static int _clearCullMode ( lua_State* L ) {
-		MOAI_LUA_SETUP ( TYPE, "U" )
-		self->mMaterial.ClearCullMode ();
-		return 0;
-	}
-
-	//----------------------------------------------------------------//
-	// TODO: doxygen
-	static int _clearDepthMask ( lua_State* L ) {
-		MOAI_LUA_SETUP ( TYPE, "U" )
-		self->mMaterial.ClearDepthMask ();
-		return 0;
-	}
-
-	//----------------------------------------------------------------//
-	// TODO: doxygen
-	static int _clearDepthTest ( lua_State* L ) {
-		MOAI_LUA_SETUP ( TYPE, "U" )
-		self->mMaterial.ClearDepthTest ();
-		return 0;
-	}
-
-	//----------------------------------------------------------------//
-	// TODO: doxygen
-	static int _clearShader ( lua_State* L ) {
-		MOAI_LUA_SETUP ( TYPE, "U" )
-		self->mMaterial.ClearShader ();
-		return 0;
-	}
-
-	//----------------------------------------------------------------//
-	// TODO: doxygen
-	static int _clearMaterial ( lua_State* L ) {
-		MOAI_LUA_SETUP ( TYPE, "U" )
-		self->mMaterial.Clear ();
-		return 0;
-	}
-
-	//----------------------------------------------------------------//
-	// TODO: doxygen
-	static int _clearTexture ( lua_State* L ) {
-		MOAI_LUA_SETUP ( TYPE, "U" )
-		self->mMaterial.ClearTexture ();
-		return 0;
-	}
 
 	//----------------------------------------------------------------//
 	// TODO: doxygen
@@ -111,7 +55,7 @@ protected:
 	static int _getLight ( lua_State* L ) {
 		MOAI_LUA_SETUP ( TYPE, "UN" )
 		
-		u32 globalID = state.GetValue < u32 >( 2,  MOAIMaterialNamedGlobal::UNKNOWN_GLOBAL );
+		u32 globalID = state.GetValue < u32 >( 2,  MOAI_UNKNOWN_MATERIAL_GLOBAL );
 		state.Push ( self->mMaterial.GetLight ( globalID ));
 		return 1;
 	}
@@ -129,7 +73,7 @@ protected:
 	static int _getTexture ( lua_State* L ) {
 		MOAI_LUA_SETUP ( TYPE, "U" )
 		
-		u32 globalID = state.GetValue < u32 >( 2,  MOAIMaterialNamedGlobal::UNKNOWN_GLOBAL );
+		u32 globalID = state.GetValue < u32 >( 2,  MOAI_UNKNOWN_MATERIAL_GLOBAL );
 		state.Push ( self->mMaterial.GetTexture ( globalID ));
 		return 1;
 	}
@@ -175,7 +119,7 @@ protected:
 	static int _setLight ( lua_State* L ) {
 		MOAI_LUA_SETUP ( TYPE, "U" )
 		
-		u32 globalID = state.GetValue < u32 >( 2, MOAIMaterialNamedGlobal::UNKNOWN_GLOBAL );
+		u32 globalID = state.GetValue < u32 >( 2, MOAI_UNKNOWN_MATERIAL_GLOBAL );
 		MOAILight* light = state.GetLuaObject < MOAILight >( 3, true );
 		self->mMaterial.SetLight ( globalID, light );
 		state.Push ( light );
@@ -201,7 +145,7 @@ protected:
 		MOAI_LUA_SETUP ( TYPE, "U" )
 		
 		u32 idx = 2;
-		u32 globalID = MOAIMaterialNamedGlobal::UNKNOWN_GLOBAL;
+		u32 globalID = MOAI_UNKNOWN_MATERIAL_GLOBAL;
 		
 		if ( state.IsType ( 2, LUA_TNUMBER )) {
 			globalID = state.GetValue < u32 >( idx++, globalID );
@@ -226,13 +170,6 @@ protected:
 	void RegisterLuaFuncs ( MOAILuaState& state ) {
 
 		luaL_Reg regTable [] = {
-			{ "clearBlendMode",			_clearBlendMode },
-			{ "clearCullMode",			_clearCullMode },
-			{ "clearDepthMask",			_clearDepthMask },
-			{ "clearDepthTest",			_clearDepthTest },
-			{ "clearMaterial",			_clearMaterial },
-			{ "clearShader",			_clearShader },
-			{ "clearTexture",			_clearTexture },
 			{ "getBlendMode",			_getBlendMode },
 			{ "getCullMode",			_getCullMode },
 			{ "getDepthMask",			_getDepthMask },
