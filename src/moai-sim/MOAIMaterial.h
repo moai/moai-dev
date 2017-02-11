@@ -28,6 +28,8 @@ private:
 
 public:
 
+	static const u32	UNKNOWN_GLOBAL		= ( u32 )-1;
+
 	//----------------------------------------------------------------//
 	MOAIMaterialNamedGlobal () :
 		mPtr ( 0 ),
@@ -55,14 +57,16 @@ private:
 public:
 
 	//----------------------------------------------------------------//
-	MOAILight*			GetNamedLight				( u32 name );
-	MOAITextureBase*	GetNamedTexture				( u32 name );
-						MOAIMaterial				();
-	virtual				~MOAIMaterial				();
-	void				ReserveLights				( u32 n );
-	void				ReserveTextures				( u32 n );
-	void				SetNamedLight				( u32 name, MOAILight* light );
-	void				SetNamedTexture				( u32 name, MOAITextureBase* texture );
+	MOAILight*			GetLight				( u32 name );
+	MOAITextureBase*	GetTexture				();
+	MOAITextureBase*	GetTexture				( u32 name );
+						MOAIMaterial			();
+	virtual				~MOAIMaterial			();
+	void				ReserveLights			( u32 n );
+	void				ReserveTextures			( u32 n );
+	void				SetLight				( u32 name, MOAILight* light );
+	void				SetTexture				( MOAITextureBase* texture );
+	void				SetTexture				( u32 name, MOAITextureBase* texture );
 };
 
 #endif

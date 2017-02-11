@@ -468,21 +468,11 @@ int MOAIMaterialBatch::GetDepthTest ( MOAILuaState& state, int idx ) {
 //----------------------------------------------------------------//
 int MOAIMaterialBatch::GetLight ( MOAILuaState& state, int idx ) {
 
-	u32 materialID		= 0;
-	u32 globalID		= 0xffffffff;
-
-	if ( state.GetStackSize ( idx ) == 2 ) {
-	
-		materialID		= state.GetValue < u32 >( idx++, 1 ) - 1;
-		globalID		= state.GetValue < u32 >( idx++, globalID );
-	}
-	else {
-		
-		globalID		= state.GetValue < u32 >( idx, globalID );
-	}
+	u32 globalID;
+	u32 materialID = MOAIMaterialBatch::GetNamedGlobalID ( state, idx, globalID );
 
 	MOAIMaterial* material = this->RawGetMaterial ( materialID );
-	state.Push (( MOAILight* )material->GetNamedLight ( globalID ));
+	state.Push (( MOAILight* )material->GetLight ( globalID ));
 	return 1;
 }
 
@@ -511,6 +501,27 @@ u32 MOAIMaterialBatch::GetMaterialID ( MOAILuaState& state, int& idx, int stackS
 }
 
 //----------------------------------------------------------------//
+u32 MOAIMaterialBatch::GetNamedGlobalID ( MOAILuaState& state, int& idx, u32& globalID ) {
+
+	u32 materialID		= 0;
+	globalID			= MOAIMaterialNamedGlobal::UNKNOWN_GLOBAL;
+
+	if ( state.IsType ( idx, LUA_TNUMBER )) {
+	
+		if ( state.IsType ( idx + 1, LUA_TNUMBER )) {
+	
+			materialID		= state.GetValue < u32 >( idx++, 1 ) - 1;
+			globalID		= state.GetValue < u32 >( idx++, globalID );
+		}
+		else {
+			
+			materialID		= state.GetValue < u32 >( idx++, globalID );
+		}
+	}
+	return materialID;
+}
+
+//----------------------------------------------------------------//
 int MOAIMaterialBatch::GetShader ( MOAILuaState& state, int idx ) {
 
 	MOAIMaterial* material = this->RawGetMaterial ( state.GetValue < u32 >( idx, 1 ) - 1 );
@@ -523,13 +534,13 @@ int MOAIMaterialBatch::GetShader ( MOAILuaState& state, int idx ) {
 
 //----------------------------------------------------------------//
 int MOAIMaterialBatch::GetTexture ( MOAILuaState& state, int idx ) {
+	
+	u32 globalID;
+	u32 materialID = MOAIMaterialBatch::GetNamedGlobalID ( state, idx, globalID );
 
-	MOAIMaterial* material = this->RawGetMaterial ( state.GetValue < u32 >( idx, 1 ) - 1 );
-	if ( material && material->mTexture ) {
-		state.Push (( MOAITextureBase* )material->mTexture );
-		return 1;
-	}
-	return 0;
+	MOAIMaterial* material = this->RawGetMaterial ( materialID );
+	state.Push (( MOAITexture* )material->GetTexture ( globalID ));
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -673,42 +684,17 @@ void MOAIMaterialBatch::SetDepthTest ( MOAILuaState& state, int idx ) {
 //----------------------------------------------------------------//
 void MOAIMaterialBatch::SetLight ( u32 idx, u32 globalID, MOAILight* light ) {
 
-	this->AffirmMaterial ( idx ).SetNamedLight ( globalID, light );
+	this->AffirmMaterial ( idx ).SetLight ( globalID, light );
 }
 
 //----------------------------------------------------------------//
 MOAILight* MOAIMaterialBatch::SetLight ( MOAILuaState& state, int idx ) {
 
-	MOAILight* light = 0;
+	u32 globalID;
+	u32 materialID = MOAIMaterialBatch::GetNamedGlobalID ( state, idx, globalID );
 
-	if ( state.IsType ( idx, LUA_TNUMBER )) {
-
-		if ( state.GetStackSize ( idx ) == 3 ) {
-		
-			u32 materialID		= state.GetValue < u32 >( state, idx++ );
-			u32 globalID		= state.GetValue < u32 >( state, idx++ );
-			light				= state.GetLuaObject < MOAILight >( idx, true );
-			
-			this->SetLight ( materialID, globalID, light );
-		}
-		else if ( state.GetStackSize ( idx ) == 2 ) {
-			
-			if ( state.IsType ( idx, LUA_TNUMBER ))  {
-			
-				u32 materialID		= state.GetValue < u32 >( state, idx++ );
-				u32 globalID		= state.GetValue < u32 >( state, idx );
-				
-				this->SetLight ( materialID, globalID, 0 );
-			}
-			else {
-			
-				u32 globalID		= state.GetValue < u32 >( state, idx++ );
-				light				= state.GetLuaObject < MOAILight >( idx, true );
-				
-				this->SetLight ( 0, globalID, light );
-			}
-		}
-	}
+	MOAILight* light = state.GetLuaObject < MOAILight >( idx, true );
+	this->SetLight ( materialID, globalID, light );
 	return light;
 }
 
@@ -740,11 +726,19 @@ void MOAIMaterialBatch::SetTexture ( u32 idx, MOAITextureBase* texture ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIMaterialBatch::SetTexture ( u32 idx, u32 name, MOAITextureBase* texture ) {
+
+	this->AffirmMaterial ( idx ).SetTexture ( name, texture );
+}
+
+//----------------------------------------------------------------//
 MOAITextureBase* MOAIMaterialBatch::SetTexture ( MOAILuaState& state, int idx ) {
 	
-	u32 materialID = MOAIMaterialBatch::GetMaterialID ( state, idx );
+	u32 globalID;
+	u32 materialID = MOAIMaterialBatch::GetNamedGlobalID ( state, idx, globalID );
+
 	MOAITextureBase* texture = MOAITexture::AffirmTexture ( state, idx );
-	this->SetTexture ( materialID, texture );
+	this->SetTexture ( materialID, globalID, texture );
 	return texture;
 }
 

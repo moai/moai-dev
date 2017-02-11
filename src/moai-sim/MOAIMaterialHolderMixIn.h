@@ -110,7 +110,9 @@ protected:
 	// TODO: doxygen
 	static int _getLight ( lua_State* L ) {
 		MOAI_LUA_SETUP ( TYPE, "UN" )
-		state.Push ( self->mMaterial.GetLight ( state.GetValue < u32 >( 1, 0xffffffff )));
+		
+		u32 globalID = state.GetValue < u32 >( 2,  MOAIMaterialNamedGlobal::UNKNOWN_GLOBAL );
+		state.Push ( self->mMaterial.GetLight ( globalID ));
 		return 1;
 	}
 
@@ -126,7 +128,9 @@ protected:
 	// TODO: doxygen
 	static int _getTexture ( lua_State* L ) {
 		MOAI_LUA_SETUP ( TYPE, "U" )
-		state.Push ( self->mMaterial.GetTexture ());
+		
+		u32 globalID = state.GetValue < u32 >( 2,  MOAIMaterialNamedGlobal::UNKNOWN_GLOBAL );
+		state.Push ( self->mMaterial.GetTexture ( globalID ));
 		return 1;
 	}
 
@@ -171,7 +175,7 @@ protected:
 	static int _setLight ( lua_State* L ) {
 		MOAI_LUA_SETUP ( TYPE, "U" )
 		
-		u32 globalID = state.GetValue < u32 >( 2, 0xffffffff );
+		u32 globalID = state.GetValue < u32 >( 2, MOAIMaterialNamedGlobal::UNKNOWN_GLOBAL );
 		MOAILight* light = state.GetLuaObject < MOAILight >( 3, true );
 		self->mMaterial.SetLight ( globalID, light );
 		state.Push ( light );
@@ -196,8 +200,15 @@ protected:
 	static int _setTexture ( lua_State* L ) {
 		MOAI_LUA_SETUP ( TYPE, "U" )
 		
-		MOAITextureBase* texture = MOAITexture::AffirmTexture ( state, 2 );
-		self->mMaterial.SetTexture ( texture );
+		u32 idx = 2;
+		u32 globalID = MOAIMaterialNamedGlobal::UNKNOWN_GLOBAL;
+		
+		if ( state.IsType ( 2, LUA_TNUMBER )) {
+			globalID = state.GetValue < u32 >( idx++, globalID );
+		}
+		
+		MOAITextureBase* texture = MOAITexture::AffirmTexture ( state, idx );
+		self->mMaterial.SetTexture ( globalID, texture );
 		state.Push ( texture );
 		
 		return 1;
