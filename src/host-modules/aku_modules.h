@@ -98,6 +98,10 @@
 	#include <moai-util/host.h>
 #endif
 
+#if AKU_WITH_VR
+	#include <moai-vr/host.h>
+#endif
+
 //----------------------------------------------------------------//
 void		AKUModulesAppFinalize					();
 int			AKUModulesAppInitialize					();

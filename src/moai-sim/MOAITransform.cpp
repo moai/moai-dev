@@ -877,63 +877,6 @@ int MOAITransform::_setShearByZ ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITransform::BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
-
-	float xRot = ClampEuler ( this->mRot.mX ) * ( float )D2R;
-	float yRot = ClampEuler ( this->mRot.mY ) * ( float )D2R;
-	float zRot = ClampEuler ( this->mRot.mZ ) * ( float )D2R;
-
-	if ( this->mEulerOrder == EULER_XYZ ) {
-
-		localToWorldMtx.ScRoTr (
-			this->mScale.mX,
-			this->mScale.mY,
-			this->mScale.mZ,
-			xRot,
-			yRot,
-			zRot,
-			this->mLoc.mX,
-			this->mLoc.mY,
-			this->mLoc.mZ
-		);
-	}
-	else {
-	
-		localToWorldMtx.Scale ( this->mScale.mX, this->mScale.mY, this->mScale.mZ );
-	
-		ZLAffine3D euler [ 3 ];
-		
-		euler [ 0 ].RotateX ( xRot );
-		euler [ 1 ].RotateY ( yRot );
-		euler [ 2 ].RotateZ ( zRot );
-		
-		u32 idx = this->mEulerOrder & 0x03;
-		localToWorldMtx.Append ( euler [ idx ]);
-		
-		idx = ( this->mEulerOrder >> 0x02 ) & 0x03;
-		localToWorldMtx.Append ( euler [ idx ]);
-		
-		idx = ( this->mEulerOrder >> 0x04 ) & 0x03;
-		localToWorldMtx.Append ( euler [ idx ]);
-		
-		localToWorldMtx.m [ ZLAffine3D::C3_R0 ] = this->mLoc.mX;
-		localToWorldMtx.m [ ZLAffine3D::C3_R1 ] = this->mLoc.mY;
-		localToWorldMtx.m [ ZLAffine3D::C3_R2 ] = this->mLoc.mZ;
-	}
-	
-	ZLAffine3D shear;
-	shear.Shear ( this->mShearYX, this->mShearZX, this->mShearXY, this->mShearZY, this->mShearXZ, this->mShearYZ );
-	localToWorldMtx.Prepend ( shear );
-	
-	if (( this->mPiv.mX != 0.0f ) || ( this->mPiv.mY != 0.0f ) || ( this->mPiv.mZ != 0.0f )) {
-		
-		ZLAffine3D pivot;
-		pivot.Translate ( -this->mPiv.mX, -this->mPiv.mY, -this->mPiv.mZ );
-		localToWorldMtx.Prepend ( pivot );
-	}
-}
-
-//----------------------------------------------------------------//
 float MOAITransform::ClampEuler ( float r ) {
 
 	if ( r >= 360.0f ) {
@@ -1214,4 +1157,61 @@ bool MOAITransform::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 
 		}
 	}
 	return MOAITransformBase::MOAINode_ApplyAttrOp ( attrID, attr, op );
+}
+
+//----------------------------------------------------------------//
+void MOAITransform::MOAITransformBase_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
+
+	float xRot = ClampEuler ( this->mRot.mX ) * ( float )D2R;
+	float yRot = ClampEuler ( this->mRot.mY ) * ( float )D2R;
+	float zRot = ClampEuler ( this->mRot.mZ ) * ( float )D2R;
+
+	if ( this->mEulerOrder == EULER_XYZ ) {
+
+		localToWorldMtx.ScRoTr (
+			this->mScale.mX,
+			this->mScale.mY,
+			this->mScale.mZ,
+			xRot,
+			yRot,
+			zRot,
+			this->mLoc.mX,
+			this->mLoc.mY,
+			this->mLoc.mZ
+		);
+	}
+	else {
+	
+		localToWorldMtx.Scale ( this->mScale.mX, this->mScale.mY, this->mScale.mZ );
+	
+		ZLAffine3D euler [ 3 ];
+		
+		euler [ 0 ].RotateX ( xRot );
+		euler [ 1 ].RotateY ( yRot );
+		euler [ 2 ].RotateZ ( zRot );
+		
+		u32 idx = this->mEulerOrder & 0x03;
+		localToWorldMtx.Append ( euler [ idx ]);
+		
+		idx = ( this->mEulerOrder >> 0x02 ) & 0x03;
+		localToWorldMtx.Append ( euler [ idx ]);
+		
+		idx = ( this->mEulerOrder >> 0x04 ) & 0x03;
+		localToWorldMtx.Append ( euler [ idx ]);
+		
+		localToWorldMtx.m [ ZLAffine3D::C3_R0 ] = this->mLoc.mX;
+		localToWorldMtx.m [ ZLAffine3D::C3_R1 ] = this->mLoc.mY;
+		localToWorldMtx.m [ ZLAffine3D::C3_R2 ] = this->mLoc.mZ;
+	}
+	
+	ZLAffine3D shear;
+	shear.Shear ( this->mShearYX, this->mShearZX, this->mShearXY, this->mShearZY, this->mShearXZ, this->mShearYZ );
+	localToWorldMtx.Prepend ( shear );
+	
+	if (( this->mPiv.mX != 0.0f ) || ( this->mPiv.mY != 0.0f ) || ( this->mPiv.mZ != 0.0f )) {
+		
+		ZLAffine3D pivot;
+		pivot.Translate ( -this->mPiv.mX, -this->mPiv.mY, -this->mPiv.mZ );
+		localToWorldMtx.Prepend ( pivot );
+	}
 }

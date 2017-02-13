@@ -460,7 +460,7 @@ bool MOAITransformBase::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, 
 //----------------------------------------------------------------//
 void MOAITransformBase::MOAINode_Update () {
 	
-	this->BuildLocalToWorldMtx ( this->mLocalToWorldMtx );
+	this->MOAITransformBase_BuildLocalToWorldMtx ( this->mLocalToWorldMtx );
 	
 	MOAIAttribute attr;
 	if ( this->PullLinkedAttr ( MOAITransformBaseAttr::Pack ( INHERIT_TRANSFORM ), attr )) {

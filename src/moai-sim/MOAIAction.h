@@ -97,12 +97,14 @@ private:
 protected:
 
 	//----------------------------------------------------------------//
-	virtual void			MOAIAction_DidLoseChild		( MOAIAction* child );
-	virtual STLString		MOAIAction_GetDebugInfo		() const;
-	virtual void			MOAIAction_Start			();
-	virtual void			MOAIAction_Stop				();
-	virtual void			MOAIAction_Update			( double step );
-	void					MOAIBlocker_Unblock			();
+	virtual void			MOAIAction_DidLoseChild			( MOAIAction* child );
+	virtual STLString		MOAIAction_GetDebugInfo			() const;
+	virtual MOAIAction*		MOAIAction_GetDefaultParent		();
+	virtual bool			MOAIAction_IsDone				();
+	virtual void			MOAIAction_Start				();
+	virtual void			MOAIAction_Stop					();
+	virtual void			MOAIAction_Update				( double step );
+	void					MOAIBlocker_Unblock				();
 	
 public:
 	
@@ -127,7 +129,7 @@ public:
 	virtual MOAIAction*		GetDefaultParent		();
 	bool					IsActive				();
 	bool					IsBusy					();
-	virtual bool			IsDone					();
+	bool					IsDone					();
 	bool					IsPaused				();
 							MOAIAction				();
 							~MOAIAction				();

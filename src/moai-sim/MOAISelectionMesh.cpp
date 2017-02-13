@@ -356,7 +356,7 @@ void MOAISelectionMesh::DrawIndex ( u32 idx, MOAIMaterialBatch* materials, ZLVec
 	MOAIMeshSpan* span = this->mSets [ itemIdx ];
 	if ( !span ) return;
 
-	this->mMesh->DrawIndex ( idx, span, materials, offset, scale );
+	this->mMesh->DrawIndex ( idx, span );
 }
 
 //----------------------------------------------------------------//

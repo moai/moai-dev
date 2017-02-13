@@ -4,8 +4,8 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_MODEL_BOUNDS, 2, 1, 1, 1 )
-MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
+MOAIDebugLinesMgr.setStyle ( MOAIProp.DEBUG_DRAW_MODEL_BOUNDS, 2, 1, 1, 1 )
+MOAIDebugLinesMgr.setStyle ( MOAIProp.DEBUG_DRAW_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
 
 MOAISim.openWindow ( "test", 320, 480 )
 
@@ -18,6 +18,7 @@ layer:setViewport ( viewport )
 layer:pushRenderPass ()
 
 camera = MOAICamera.new ()
+camera:setType ( MOAICamera.CAMERA_TYPE_3D )
 camera:setLoc ( 0, 0, camera:getFocalLength ( 320 ))
 layer:setCamera ( camera )
 
@@ -107,10 +108,10 @@ function makeCube ( size, texture )
 	return makeBoxMesh ( -size, -size, -size, size, size, size, texture )
 end
 
-local mesh = makeCube ( 128, 'moai.png' )
+local mesh = makeCube ( 128, '../resources/moai.png' )
 
 prop = MOAIProp.new ()
 prop:setDeck ( mesh )
 prop:moveRot ( 360, 360, 0, 6 )
 prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
-layer:insertProp ( prop )
+prop:setPartition ( layer )

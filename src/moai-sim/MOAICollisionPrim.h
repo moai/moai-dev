@@ -41,6 +41,14 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
+	MOAICollisionPrimVisitor () {
+	}
+	
+	//----------------------------------------------------------------//
+	virtual ~MOAICollisionPrimVisitor () {
+	}
+
+	//----------------------------------------------------------------//
 	void Process ( const MOAICollisionPrim& shape0, const MOAICollisionPrim& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 ) {
 	
 		this->MOAICollisionPrimVisitor_Process ( shape0, shape1, t0, t1 );

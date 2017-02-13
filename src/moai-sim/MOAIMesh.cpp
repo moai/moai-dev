@@ -9,6 +9,7 @@
 #include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIIndexBuffer.h>
+#include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIMesh.h>
 #include <moai-sim/MOAIMeshSparseQuadTree.h>
 #include <moai-sim/MOAIMeshTernaryTree.h>
@@ -507,8 +508,7 @@ int MOAIMesh::_setTotalElements ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIMesh::ClearBounds () {
 
-	this->mHasBounds = false;
-	this->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+	this->mBounds = ZLBounds::EMPTY;
 }
 
 //----------------------------------------------------------------//
@@ -518,20 +518,13 @@ u32 MOAIMesh::CountPrims () const {
 }
 
 //----------------------------------------------------------------//
-ZLBox MOAIMesh::ComputeMaxBounds () {
-	return this->GetItemBounds ( 0 );
-}
+void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span ) {
 
-//----------------------------------------------------------------//
-void MOAIMesh::DrawIndex ( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale ) {
-
-	this->DrawIndex ( idx, 0, materials, offset, scale );
-}
-
-//----------------------------------------------------------------//
-void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale ) {
-	UNUSED ( offset );
-	UNUSED ( scale );
+	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
+	materialStack.Push ( this->GetMaterial ( idx ));
+	materialStack.SetShader ( MOAIShaderMgr::MESH_SHADER );
+	materialStack.LoadGfxState ();
+	materialStack.Pop ();
 
 	//if ( !this->LoadGfxState ( materials, idx, MOAIShaderMgr::MESH_SHADER )) return;
 
@@ -579,13 +572,6 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch* mater
 		}
 		gfxMgr.mGfxState.SetVertexArray ();
 	}
-}
-
-//----------------------------------------------------------------//
-ZLBox MOAIMesh::GetItemBounds ( u32 idx ) {
-	UNUSED ( idx );
-
-	return this->mBounds;
 }
 
 //----------------------------------------------------------------//
@@ -689,8 +675,6 @@ void MOAIMesh::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer )
 	
 	this->mTotalElements = state.GetFieldValue < u32 >( -1, "mTotalElements", 0 );
 	
-	this->mHasBounds = state.GetFieldValue < bool >( -1, "mHasBounds", 0 );
-	
 	if ( state.PushFieldWithType ( -1, "mBounds", LUA_TTABLE )) {
 		
 		this->mBounds.mMin.mX	= state.GetFieldValue < float >( -1, "mMinX", 0 );
@@ -700,6 +684,8 @@ void MOAIMesh::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer )
 		this->mBounds.mMax.mX	= state.GetFieldValue < float >( -1, "mMaxX", 0 );
 		this->mBounds.mMax.mY	= state.GetFieldValue < float >( -1, "mMaxY", 0 );
 		this->mBounds.mMax.mZ	= state.GetFieldValue < float >( -1, "mMaxZ", 0 );
+		
+		this->mBounds.UpdateStatus ();
 		
 		state.Pop ();
 	}
@@ -717,8 +703,6 @@ void MOAIMesh::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) 
 	state.SetField ( -1, "mIndexBuffer", serializer.AffirmMemberID ( this->mIndexBuffer ));
 	
 	state.SetField < u32 >( -1, "mTotalElements", this->mTotalElements );
-	
-	state.SetField < bool >( -1, "mHasBounds", this->mHasBounds );
 	
 	lua_newtable ( state );
 	
@@ -738,12 +722,34 @@ void MOAIMesh::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) 
 //----------------------------------------------------------------//
 void MOAIMesh::SetBounds ( const ZLBox& bounds ) {
 
-	this->mBounds = bounds;
-	this->mHasBounds = true;
+	this->mBounds.Init ( bounds );
 }
 
 //----------------------------------------------------------------//
 void MOAIMesh::SetIndexBuffer ( MOAIIndexBuffer* indexBuffer ) {
 
 	this->mIndexBuffer.Set ( *this, indexBuffer );
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+ZLBounds MOAIMesh::MOAIDeck_ComputeMaxBounds () {
+
+	return this->mBounds;
+}
+
+//----------------------------------------------------------------//
+void MOAIMesh::MOAIDeck_Draw ( u32 idx ) {
+
+	this->DrawIndex ( idx, 0 );
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAIMesh::MOAIDeck_GetBounds ( u32 idx ) {
+	UNUSED ( idx );
+
+	return this->mBounds;
 }

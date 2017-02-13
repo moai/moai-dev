@@ -844,18 +844,6 @@ int MOAITextLabel::_spool ( lua_State* L ) {
 const float MOAITextLabel::DEFAULT_SPOOL_SPEED = 24.0f;
 
 //----------------------------------------------------------------//
-void MOAITextLabel::BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
-
-	this->MOAITransform::BuildLocalToWorldMtx ( localToWorldMtx );
-
-	float yScale = this->mLayoutRules.GetYFlip () ? -1.0f : 1.0f;
-
-	ZLAffine3D mtx;
-	mtx.ScRoTr ( 1.0f, yScale, 1.0f, 0.0f, 0.0f, 0.0f, this->mLayout.mXOffset, this->mLayout.mYOffset, 0.0f );
-	localToWorldMtx.Prepend ( mtx );
-}
-
-//----------------------------------------------------------------//
 ZLMatrix4x4 MOAITextLabel::GetWorldDrawingMtx () {
 
 	ZLMatrix4x4 worldDrawingMtx = MOAIGraphicsPropBase::GetWorldDrawingMtx ();
@@ -1264,4 +1252,16 @@ ZLBounds MOAITextLabel::MOAIPartitionHull_GetModelBounds () {
 	}
 	
 	return bounds;
+}
+
+//----------------------------------------------------------------//
+void MOAITextLabel::MOAITransformBase_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
+
+	this->MOAITransform::MOAITransformBase_BuildLocalToWorldMtx ( localToWorldMtx );
+
+	float yScale = this->mLayoutRules.GetYFlip () ? -1.0f : 1.0f;
+
+	ZLAffine3D mtx;
+	mtx.ScRoTr ( 1.0f, yScale, 1.0f, 0.0f, 0.0f, 0.0f, this->mLayout.mXOffset, this->mLayout.mYOffset, 0.0f );
+	localToWorldMtx.Prepend ( mtx );
 }

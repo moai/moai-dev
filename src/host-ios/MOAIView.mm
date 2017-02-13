@@ -58,15 +58,17 @@ enum {
 @implementation MOAIView
 
     //----------------------------------------------------------------//
-    +( void ) appInitialize {
-
-        AKUAppInitialize ();
-
-        static const int length = 255;
-		char version [ length ];
-		AKUGetMoaiVersion ( version, length );
-		printf ( "%s\n", version );
-    }
+//    +( void ) appInitialize {
+//
+//        AKUAppInitialize ();
+//
+//        static const int length = 255;
+//		char version [ length ];
+//		AKUGetMoaiVersion ( version, length );
+//		printf ( "%s\n", version );
+//        
+//        AKUModulesAppInitialize ();
+//    }
 
     //----------------------------------------------------------------//
 	-( void ) application:( UIApplication* )application didFailToRegisterForRemoteNotificationsWithError:( NSError* )error {
@@ -85,6 +87,8 @@ enum {
 		char version [ length ];
 		AKUGetMoaiVersion ( version, length );
 		printf ( "%s\n", version );
+        
+        AKUModulesAppInitialize ();
         
         return YES;
     }
@@ -270,7 +274,7 @@ enum {
         
         AKUSetContext ( mAKUContext );
         AKUModulesUpdate ();
-        self.opaque = AKUIsGfxBufferOpaque () != 0;
+        //self.opaque = AKUIsGfxBufferOpaque () != 0; // TODO: this needs a 2.0 replacement
         
         [ mRenderer render ];
         

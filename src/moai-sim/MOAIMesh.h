@@ -101,8 +101,7 @@ protected:
 	MOAILuaSharedPtr < MOAIIndexBuffer > mIndexBuffer;
 
 	u32			mTotalElements;
-	bool		mHasBounds;
-	ZLBox		mBounds;
+	ZLBounds	mBounds;
 
 	u32			mPrimType;
 	
@@ -125,8 +124,9 @@ protected:
 	static int			_setTotalElements			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	ZLBox				ComputeMaxBounds			();
-	ZLBox				GetItemBounds				( u32 idx );
+	ZLBounds			MOAIDeck_ComputeMaxBounds		();
+	void				MOAIDeck_Draw					( u32 idx );
+	ZLBounds			MOAIDeck_GetBounds				( u32 idx );
 
 public:
 
@@ -138,8 +138,7 @@ public:
 	//----------------------------------------------------------------//
 	void				ClearBounds					();
 	u32					CountPrims					() const;
-	void				DrawIndex					( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale );
-	void				DrawIndex					( u32 idx, MOAIMeshSpan* span, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale );
+	void				DrawIndex					( u32 idx, MOAIMeshSpan* span );
 						MOAIMesh					();
 						~MOAIMesh					();
 	void				RegisterLuaClass			( MOAILuaState& state );

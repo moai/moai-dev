@@ -416,6 +416,10 @@ void MOAIGfxStateCache::ResetState () {
 	}
 	gfx.ActiveTexture ( 0 );
 	
+	if ( active.mVtxArray ) {
+		active.mVtxArray->Unbind ();
+	}
+	
 	pending.mShaderProgram	= 0;
 	pending.mIdxBuffer		= 0;
 	pending.mVtxArray		= 0;

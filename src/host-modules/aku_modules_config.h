@@ -90,4 +90,8 @@
 		#define AKU_WITH_UTIL 1
 	#endif
 
+	#ifndef AKU_WITH_VR
+		#define AKU_WITH_VR 0
+	#endif
+
 #endif

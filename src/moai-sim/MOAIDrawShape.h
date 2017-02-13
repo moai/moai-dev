@@ -48,7 +48,7 @@ public:
 	void			DrawTriangleFill			( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2 );
 	void			DrawTriangleOutline			( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2 );
 					MOAIDrawShape				();
-					~MOAIDrawShape				();
+	virtual			~MOAIDrawShape				();
 	void			SetPenColor					( u32 color );
 	void			SetPenWidth					( float width );
 };

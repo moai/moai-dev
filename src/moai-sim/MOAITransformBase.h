@@ -44,8 +44,9 @@ protected:
 	static int	_worldToModel		( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool		MOAINode_ApplyAttrOp		( u32 attrID, MOAIAttribute& attr, u32 op );
-	void		MOAINode_Update				();
+	bool				MOAINode_ApplyAttrOp						( u32 attrID, MOAIAttribute& attr, u32 op );
+	void				MOAINode_Update								();
+	virtual void		MOAITransformBase_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx ) = 0;
 
 public:
 	
@@ -73,7 +74,6 @@ public:
 	GET ( ZLVec3D, WorldLoc, mLocalToWorldMtx.GetTranslation ())
 	
 	//----------------------------------------------------------------//
-	virtual void			BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx ) = 0;
 	const ZLAffine3D&		GetLocalToWorldMtx			() const;
 	const ZLAffine3D*		GetLocTrait					() const;
 	const ZLAffine3D*		GetTransformTrait			() const;

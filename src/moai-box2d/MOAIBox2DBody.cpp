@@ -1035,11 +1035,6 @@ int MOAIBox2DBody::_setType ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIBox2DBody::BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
-	UNUSED ( localToWorldMtx );
-}
-
-//----------------------------------------------------------------//
 void MOAIBox2DBody::Destroy () {
 
 	b2World* world = this->mWorld->mWorld;
@@ -1183,4 +1178,9 @@ void MOAIBox2DBody::MOAINode_Update () {
 		
 		this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIBox2DBody::MOAITransformBase_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
+	UNUSED ( localToWorldMtx );
 }

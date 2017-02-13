@@ -448,7 +448,7 @@ void MOAIAction::Detach () {
 //----------------------------------------------------------------//
 MOAIAction* MOAIAction::GetDefaultParent () {
 
-	return 0;
+	return this->MOAIAction_GetDefaultParent ();
 }
 
 //----------------------------------------------------------------//
@@ -466,7 +466,7 @@ bool MOAIAction::IsBusy () {
 //----------------------------------------------------------------//
 bool MOAIAction::IsDone () {
 
-	return (( this->mActionFlags & FLAGS_AUTO_STOP ) && ( this->mChildren.Count () == 0 ));
+	return this->MOAIAction_IsDone ();
 }
 
 //----------------------------------------------------------------//
@@ -657,6 +657,18 @@ void MOAIAction::MOAIAction_DidLoseChild ( MOAIAction* child ) {
 //----------------------------------------------------------------//
 STLString MOAIAction::MOAIAction_GetDebugInfo () const {
 	return TypeName();
+}
+
+//----------------------------------------------------------------//
+MOAIAction* MOAIAction::MOAIAction_GetDefaultParent () {
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+bool MOAIAction::MOAIAction_IsDone () {
+
+	return (( this->mActionFlags & FLAGS_AUTO_STOP ) && ( this->mChildren.Count () == 0 ));
 }
 
 //----------------------------------------------------------------//

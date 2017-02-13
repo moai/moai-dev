@@ -1810,6 +1810,14 @@
 		CD4900DC141AB6EC00913D80 /* lzio.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490072141AB6EC00913D80 /* lzio.c */; };
 		CD4900DD141AB6EC00913D80 /* lzio.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490073141AB6EC00913D80 /* lzio.h */; };
 		CD4900DE141AB6EC00913D80 /* print.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490074141AB6EC00913D80 /* print.c */; };
+		CD4BCF2A1E51F1C5002306C2 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD792FFC1E51D73400388A4B /* host.cpp */; };
+		CD4BCF2B1E51F1C5002306C2 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD792FFD1E51D73400388A4B /* host.h */; };
+		CD4BCF2C1E51F1C5002306C2 /* MOAIHeadTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD792FFE1E51D73400388A4B /* MOAIHeadTransform.cpp */; };
+		CD4BCF2D1E51F1C5002306C2 /* MOAIHeadTransform.h in Headers */ = {isa = PBXBuildFile; fileRef = CD792FFF1E51D73400388A4B /* MOAIHeadTransform.h */; };
+		CD4BCF2E1E51F1C5002306C2 /* MOAIVrMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4BCF121E51ECA7002306C2 /* MOAIVrMgr.cpp */; };
+		CD4BCF2F1E51F1C5002306C2 /* MOAIVrMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4BCF131E51ECA7002306C2 /* MOAIVrMgr.h */; };
+		CD4BCF301E51F1C5002306C2 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4BCF0E1E51E9C4002306C2 /* pch.cpp */; };
+		CD4BCF311E51F1C5002306C2 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4BCF0F1E51E9C4002306C2 /* pch.h */; };
 		CD4C050F18500C18005B0520 /* MOAIVectorStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4C050C18500C18005B0520 /* MOAIVectorStyle.cpp */; };
 		CD4C051018500C18005B0520 /* MOAIVectorUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4C050D18500C18005B0520 /* MOAIVectorUtil.cpp */; };
 		CD4C051118500C18005B0520 /* MOAIVectorUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4C050E18500C18005B0520 /* MOAIVectorUtil.h */; };
@@ -7235,6 +7243,10 @@
 		CD490072141AB6EC00913D80 /* lzio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lzio.c; path = "../../3rdparty/lua-5.1.3/src/lzio.c"; sourceTree = SOURCE_ROOT; };
 		CD490073141AB6EC00913D80 /* lzio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lzio.h; path = "../../3rdparty/lua-5.1.3/src/lzio.h"; sourceTree = SOURCE_ROOT; };
 		CD490074141AB6EC00913D80 /* print.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = print.c; path = "../../3rdparty/lua-5.1.3/src/print.c"; sourceTree = SOURCE_ROOT; };
+		CD4BCF0E1E51E9C4002306C2 /* pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pch.cpp; path = "moai-vr/pch.cpp"; sourceTree = "<group>"; };
+		CD4BCF0F1E51E9C4002306C2 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pch.h; path = "moai-vr/pch.h"; sourceTree = "<group>"; };
+		CD4BCF121E51ECA7002306C2 /* MOAIVrMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIVrMgr.cpp; path = "moai-vr/MOAIVrMgr.cpp"; sourceTree = "<group>"; };
+		CD4BCF131E51ECA7002306C2 /* MOAIVrMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIVrMgr.h; path = "moai-vr/MOAIVrMgr.h"; sourceTree = "<group>"; };
 		CD4C050C18500C18005B0520 /* MOAIVectorStyle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVectorStyle.cpp; sourceTree = "<group>"; };
 		CD4C050D18500C18005B0520 /* MOAIVectorUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVectorUtil.cpp; sourceTree = "<group>"; };
 		CD4C050E18500C18005B0520 /* MOAIVectorUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVectorUtil.h; sourceTree = "<group>"; };
@@ -7985,6 +7997,11 @@
 		CD792FAB1E4DB2DE00388A4B /* MOAIMaterialBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIMaterialBase.h; sourceTree = "<group>"; };
 		CD792FB01E4DEC4700388A4B /* ZLRefCountedObjectBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLRefCountedObjectBase.cpp; sourceTree = "<group>"; };
 		CD792FB31E4F40E000388A4B /* MOAIMaterialHolder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIMaterialHolder.cpp; sourceTree = "<group>"; };
+		CD792FFB1E51D51800388A4B /* libmoai-ios-vr.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-vr.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD792FFC1E51D73400388A4B /* host.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = host.cpp; path = "moai-vr/host.cpp"; sourceTree = "<group>"; };
+		CD792FFD1E51D73400388A4B /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-vr/host.h"; sourceTree = "<group>"; };
+		CD792FFE1E51D73400388A4B /* MOAIHeadTransform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIHeadTransform.cpp; path = "moai-vr/MOAIHeadTransform.cpp"; sourceTree = "<group>"; };
+		CD792FFF1E51D73400388A4B /* MOAIHeadTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIHeadTransform.h; path = "moai-vr/MOAIHeadTransform.h"; sourceTree = "<group>"; };
 		CD795CBB17F08459006AEB47 /* SDL_assert_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDL_assert_c.h; path = "../../3rdparty/sdl2-2.0.4/src/SDL_assert_c.h"; sourceTree = "<group>"; };
 		CD795CBC17F08459006AEB47 /* SDL_assert.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = SDL_assert.c; path = "../../3rdparty/sdl2-2.0.4/src/SDL_assert.c"; sourceTree = "<group>"; };
 		CD795CBD17F08459006AEB47 /* SDL_error_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDL_error_c.h; path = "../../3rdparty/sdl2-2.0.4/src/SDL_error_c.h"; sourceTree = "<group>"; };
@@ -9317,6 +9334,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD792FF61E51D51800388A4B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD807B441831C3B500E658D9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -9732,6 +9756,7 @@
 				89BE6F19173AD0CA00DFE837 /* moai-sim */,
 				89BE6B5F17399FEB00DFE837 /* moai-untz */,
 				89BE6CC21739A42500DFE837 /* moai-util */,
+				CD792FB71E51D4B700388A4B /* moai-vr */,
 				89BE6887173974FC00DFE837 /* zl-common */,
 				CDC122D317FA802700FB64BB /* zl-crypto */,
 				89BE688A173974FC00DFE837 /* zl-gfx */,
@@ -9802,6 +9827,7 @@
 				CD7852CD1D18C669003F15D0 /* libmoai-osx-assimp.a */,
 				CDA1D0881D1B75B20006C5E5 /* libmoai-osx-image-tga.a */,
 				CDD813521E16FE7100996311 /* libmoai-osx-google-test.a */,
+				CD792FFB1E51D51800388A4B /* libmoai-ios-vr.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -12891,6 +12917,21 @@
 				CD7852DE1D18C79A003F15D0 /* pch.h */,
 			);
 			name = "moai-assimp";
+			sourceTree = "<group>";
+		};
+		CD792FB71E51D4B700388A4B /* moai-vr */ = {
+			isa = PBXGroup;
+			children = (
+				CD792FFC1E51D73400388A4B /* host.cpp */,
+				CD792FFD1E51D73400388A4B /* host.h */,
+				CD792FFE1E51D73400388A4B /* MOAIHeadTransform.cpp */,
+				CD792FFF1E51D73400388A4B /* MOAIHeadTransform.h */,
+				CD4BCF121E51ECA7002306C2 /* MOAIVrMgr.cpp */,
+				CD4BCF131E51ECA7002306C2 /* MOAIVrMgr.h */,
+				CD4BCF0E1E51E9C4002306C2 /* pch.cpp */,
+				CD4BCF0F1E51E9C4002306C2 /* pch.h */,
+			);
+			name = "moai-vr";
 			sourceTree = "<group>";
 		};
 		CD795CBA17F0834F006AEB47 /* sdl */ = {
@@ -16730,6 +16771,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD792FB91E51D51800388A4B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD4BCF2B1E51F1C5002306C2 /* host.h in Headers */,
+				CD4BCF2D1E51F1C5002306C2 /* MOAIHeadTransform.h in Headers */,
+				CD4BCF311E51F1C5002306C2 /* pch.h in Headers */,
+				CD4BCF2F1E51F1C5002306C2 /* MOAIVrMgr.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD80789F1831C3B500E658D9 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -17951,6 +18003,23 @@
 			productReference = CD7852CD1D18C669003F15D0 /* libmoai-osx-assimp.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		CD792FB81E51D51800388A4B /* libmoai-ios-vr */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD792FF71E51D51800388A4B /* Build configuration list for PBXNativeTarget "libmoai-ios-vr" */;
+			buildPhases = (
+				CD792FB91E51D51800388A4B /* Headers */,
+				CD792FC51E51D51800388A4B /* Sources */,
+				CD792FF61E51D51800388A4B /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-ios-vr";
+			productName = OpenUSLS;
+			productReference = CD792FFB1E51D51800388A4B /* libmoai-ios-vr.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		CD80789E1831C3B500E658D9 /* libmoai-osx-3rdparty-crypto */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD807B451831C3B500E658D9 /* Build configuration list for PBXNativeTarget "libmoai-osx-3rdparty-crypto" */;
@@ -18420,6 +18489,7 @@
 				CDC097D41AE9C72E002E325F /* libmoai-ios-movie */,
 				89BE6EF5173AD06700DFE837 /* libmoai-ios-sim */,
 				CD07C3A313A182AA00C9386C /* libmoai-ios-untz */,
+				CD792FB81E51D51800388A4B /* libmoai-ios-vr */,
 				CD04AABB14725568009C20E5 /* libmoai-ios-zl-core */,
 				CDC122D417FA804C00FB64BB /* libmoai-ios-zl-crypto */,
 				CDF287EC17ED41CF00FD4F59 /* libmoai-ios-zl-vfs */,
@@ -20413,6 +20483,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD792FC51E51D51800388A4B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD4BCF2C1E51F1C5002306C2 /* MOAIHeadTransform.cpp in Sources */,
+				CD4BCF2A1E51F1C5002306C2 /* host.cpp in Sources */,
+				CD4BCF2E1E51F1C5002306C2 /* MOAIVrMgr.cpp in Sources */,
+				CD4BCF301E51F1C5002306C2 /* pch.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD8079DE1831C3B500E658D9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -22330,16 +22411,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_POSTPROCESSING = YES;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"../../3rdparty/facebook-ios-sdk-4.5.1",
-					../../3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework,
-					"../../3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
-					"../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
-					../../3rdparty/kontagent_ios_v1.5.6,
-					"../../3rdparty/adcolony-2.2.4",
-				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
@@ -22440,6 +22513,7 @@
 					"\"../../3rdparty/sfmt-1.4\"",
 					"\"../../3rdparty/libtess2/include\"",
 					"\"../../3rdparty/google-test/googletest/include\"",
+					"\"../../3rdparty/gvr-ios-sdk/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "";
@@ -22455,7 +22529,6 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
-				USER_HEADER_SEARCH_PATHS = "";
 				VALIDATE_PRODUCT = YES;
 				WARNING_CFLAGS = (
 					"-Wall",
@@ -23403,17 +23476,9 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_POSTPROCESSING = YES;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"../../3rdparty/facebook-ios-sdk-4.5.1",
-					../../3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework,
-					"../../3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
-					"../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
-					../../3rdparty/kontagent_ios_v1.5.6,
-					"../../3rdparty/adcolony-2.2.4",
-				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
@@ -23515,6 +23580,7 @@
 					"\"../../3rdparty/sfmt-1.4\"",
 					"\"../../3rdparty/libtess2/include\"",
 					"\"../../3rdparty/google-test/googletest/include\"",
+					"\"../../3rdparty/gvr-ios-sdk/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "";
@@ -23530,7 +23596,6 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
-				USER_HEADER_SEARCH_PATHS = "";
 				VALIDATE_PRODUCT = YES;
 				WARNING_CFLAGS = (
 					"-Wall",
@@ -25601,6 +25666,117 @@
 				);
 				PRODUCT_NAME = "moai-osx-assimp";
 				SDKROOT = macosx;
+			};
+			name = "Release-NoSymbols";
+		};
+		CD792FF81E51D51800388A4B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					GVR_NO_CPP_WRAPPER,
+					MOAI_WITH_LIBGVR,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "moai-ios-vr";
+				SDKROOT = iphoneos;
+				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
+				WARNING_CFLAGS = "-w";
+			};
+			name = Debug;
+		};
+		CD792FF91E51D51800388A4B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					GVR_NO_CPP_WRAPPER,
+					MOAI_WITH_LIBGVR,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "moai-ios-vr";
+				SDKROOT = iphoneos;
+				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
+				WARNING_CFLAGS = "-w";
+			};
+			name = Release;
+		};
+		CD792FFA1E51D51800388A4B /* Release-NoSymbols */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					GVR_NO_CPP_WRAPPER,
+					MOAI_WITH_LIBGVR,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "moai-ios-vr";
+				SDKROOT = iphoneos;
+				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
+				WARNING_CFLAGS = "-w";
 			};
 			name = "Release-NoSymbols";
 		};
@@ -28125,16 +28301,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_POSTPROCESSING = NO;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"../../3rdparty/facebook-ios-sdk-4.5.1",
-					../../3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework,
-					"../../3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
-					"../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
-					../../3rdparty/kontagent_ios_v1.5.6,
-					"../../3rdparty/adcolony-2.2.4",
-				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
@@ -28236,6 +28404,7 @@
 					"\"../../3rdparty/sfmt-1.4\"",
 					"\"../../3rdparty/libtess2/include\"",
 					"\"../../3rdparty/google-test/googletest/include\"",
+					"\"../../3rdparty/gvr-ios-sdk/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "";
@@ -28251,7 +28420,6 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
-				USER_HEADER_SEARCH_PATHS = "";
 				VALIDATE_PRODUCT = YES;
 				WARNING_CFLAGS = (
 					"-Wall",
@@ -28875,6 +29043,16 @@
 				CD7852C91D18C669003F15D0 /* Debug */,
 				CD7852CA1D18C669003F15D0 /* Release */,
 				CD7852CC1D18C669003F15D0 /* Release-NoSymbols */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CD792FF71E51D51800388A4B /* Build configuration list for PBXNativeTarget "libmoai-ios-vr" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD792FF81E51D51800388A4B /* Debug */,
+				CD792FF91E51D51800388A4B /* Release */,
+				CD792FFA1E51D51800388A4B /* Release-NoSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -1,45 +1,40 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIMATRIX_H
-#define	MOAIMATRIX_H
+#ifndef	MOAIHEADTRANSFORM_H
+#define	MOAIHEADTRANSFORM_H
 
-#include <moai-sim/MOAITransformBase.h>
+#if MOAI_WITH_LIBGVR
 
 //================================================================//
-// MOAIMatrix
+// MOAIHeadTransform
 //================================================================//
 // TODO: doxygen
-class MOAIMatrix :
-	public MOAITransformBase,
+class MOAIHeadTransform :
+	public virtual MOAIAction,
+	public virtual MOAITransformBase,
 	public ZLAffine3D {
 protected:
 
 	//----------------------------------------------------------------//
-	static int		_getMatrix				( lua_State* L );
-	static int		_invert					( lua_State* L );
-	static int		_setMatrix				( lua_State* L );
+	static int		_pauseTracking				( lua_State* L );
+	static int		_recenterTracking			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool			MOAINode_ApplyAttrOp						( u32 attrID, MOAIAttribute& attr, u32 op );
+	bool			MOAIAction_IsDone							();
+	void			MOAIAction_Update							( double step );
 	void			MOAITransformBase_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );
 
 public:
 
-	DECL_LUA_FACTORY ( MOAIMatrix )
-	DECL_ATTR_HELPER ( MOAIMatrix )
-	
-	enum {
-		ATTR_MATRIX,
-	};
+	DECL_LUA_FACTORY ( MOAIHeadTransform )
 	
 	//----------------------------------------------------------------//
-					MOAIMatrix				();
-					~MOAIMatrix				();
+					MOAIHeadTransform		();
+					~MOAIHeadTransform		();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
-	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };
 
+#endif
 #endif

@@ -66,13 +66,13 @@ private:
 	static int		_setType				( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			BuildLocalToWorldMtx	( ZLAffine3D& localToWorldMtx );
 	void			Clear					();
 	void			SetBody					( b2Body* body );
 	
 	//----------------------------------------------------------------//
-	bool			MOAINode_ApplyAttrOp		( u32 attrID, MOAIAttribute& attr, u32 op );
-	void			MOAINode_Update				();
+	bool			MOAINode_ApplyAttrOp						( u32 attrID, MOAIAttribute& attr, u32 op );
+	void			MOAINode_Update								();
+	void			MOAITransformBase_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );
 
 public:
 	

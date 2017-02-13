@@ -61,12 +61,6 @@ int MOAIMatrix::_setMatrix ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMatrix::BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
-
-	localToWorldMtx = *this;
-}
-
-//----------------------------------------------------------------//
 MOAIMatrix::MOAIMatrix () {
 	
 	RTTI_BEGIN
@@ -134,4 +128,10 @@ bool MOAIMatrix::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op 
 		}
 	}
 	return MOAITransformBase::MOAINode_ApplyAttrOp ( attrID, attr, op );
+}
+
+//----------------------------------------------------------------//
+void MOAIMatrix::MOAITransformBase_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
+
+	localToWorldMtx = *this;
 }

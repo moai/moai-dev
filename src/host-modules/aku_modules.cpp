@@ -101,6 +101,10 @@ void AKUModulesAppFinalize () {
 		AKUUtilAppFinalize ();
 	#endif
 	
+	#if AKU_WITH_VR
+		AKUVrAppFinalize ();
+	#endif
+	
 	#if AKU_WITH_IOS
 		AKUModulesIosAppFinalize ();
 	#endif
@@ -167,6 +171,10 @@ int AKUModulesAppInitialize () {
 
 	#if AKU_WITH_UTIL
 		AKUUtilAppInitialize ();
+	#endif
+
+	#if AKU_WITH_VR
+		AKUVrAppInitialize ();
 	#endif
 
 	#if AKU_WITH_IOS
@@ -253,6 +261,10 @@ int AKUModulesContextInitialize () {
 		AKUUtilContextInitialize ();
 	#endif
 	
+	#if AKU_WITH_VR
+		AKUVrContextInitialize ();
+	#endif
+	
 	#if AKU_WITH_IOS
 		AKUModulesIosContextInitialize ();
 	#endif
@@ -317,6 +329,10 @@ void AKUModulesPause ( bool pause ) {
 		AKUUntzPause ( pause );
 	#endif
 	
+	#if AKU_WITH_VR
+		AKUVrPause ( pause );
+	#endif
+	
 	#if AKU_WITH_IOS
 		AKUModulesIosPause ( pause );
 	#endif
@@ -344,10 +360,6 @@ void AKUModulesUpdate () {
 	#if AKU_WITH_FMOD_EX
 		AKUFmodExUpdate ();
 	#endif
-
-	#if AKU_WITH_SIM
-		AKUUpdate ();
-	#endif
 	
 	#if AKU_WITH_IOS
 		AKUModulesIosUpdate ();
@@ -355,5 +367,14 @@ void AKUModulesUpdate () {
 	
 	#if AKU_WITH_PLUGINS
 		AKUPluginsUpdate ();
+	#endif
+	
+	#if AKU_WITH_VR
+		AKUVrUpdate ();
+	#endif
+	
+	// do this last
+	#if AKU_WITH_SIM
+		AKUUpdate ();
 	#endif
 }
