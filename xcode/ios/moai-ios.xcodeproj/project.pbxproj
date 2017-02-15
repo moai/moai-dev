@@ -129,6 +129,10 @@
 		CD4BCF671E5215EC002306C2 /* libCardboardSDK_armv7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4BCF631E5215EC002306C2 /* libCardboardSDK_armv7.a */; };
 		CD4BCF681E5215EC002306C2 /* libCardboardSDK_i386.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4BCF641E5215EC002306C2 /* libCardboardSDK_i386.a */; };
 		CD4BCF691E5215EC002306C2 /* libCardboardSDK_x86_64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4BCF651E5215EC002306C2 /* libCardboardSDK_x86_64.a */; };
+		CD4BCFB61E54299C002306C2 /* libmoai-ios-ar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4BCFB31E54295B002306C2 /* libmoai-ios-ar.a */; };
+		CD4BCFBA1E542AE3002306C2 /* libAR.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4BCFB71E542AE3002306C2 /* libAR.a */; };
+		CD4BCFBB1E542AE3002306C2 /* libARICP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4BCFB81E542AE3002306C2 /* libARICP.a */; };
+		CD4BCFBC1E542AE3002306C2 /* libARvideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4BCFB91E542AE3002306C2 /* libARvideo.a */; };
 		CD4C4163180A6A8600C02381 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4C4162180A6A8600C02381 /* MobileCoreServices.framework */; };
 		CD51622B1BCDDB31000718FB /* libmoai-ios-image-jpg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD51621C1BCDDB20000718FB /* libmoai-ios-image-jpg.a */; };
 		CD51622C1BCDDB31000718FB /* libmoai-ios-image-png.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD51621E1BCDDB20000718FB /* libmoai-ios-image-png.a */; };
@@ -183,6 +187,7 @@
 		CDC963D71A12C6B000F9CA22 /* MOAIView.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDC963CE1A12C6B000F9CA22 /* MOAIView.mm */; };
 		CDE655AE1C0AFA0E004493DD /* MOAIRendererAsync.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDE655AA1C0AFA0E004493DD /* MOAIRendererAsync.mm */; };
 		CDE655AF1C0AFA0E004493DD /* MOAICommandThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDE655AC1C0AFA0E004493DD /* MOAICommandThread.mm */; };
+		CDEE2AF01E54425000287648 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE2AEF1E54425000287648 /* Accelerate.framework */; };
 		CDFD7E1F1A08B16C00A94E6B /* aku_modules_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDFD7E191A08B16C00A94E6B /* aku_modules_ios.mm */; };
 		CDFD7E221A08B16C00A94E6B /* aku_modules_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDFD7E1A1A08B16C00A94E6B /* aku_modules_util.cpp */; };
 		CDFD7E251A08B16C00A94E6B /* aku_modules.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDFD7E1C1A08B16C00A94E6B /* aku_modules.cpp */; };
@@ -454,6 +459,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = CD792FB81E51D51800388A4B;
 			remoteInfo = "libmoai-ios-vr";
+		};
+		CD4BCFB21E54295B002306C2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD4BCF851E542277002306C2;
+			remoteInfo = "libmoai-ios-ar";
+		};
+		CD4BCFB41E542969002306C2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD4BCF751E542277002306C2;
+			remoteInfo = "libmoai-ios-ar";
 		};
 		CD5161E81BCDDB20000718FB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1051,7 +1070,7 @@
 		CD2600AC1C1D1C90009C7ADB /* MOAIRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIRenderer.h; path = "../../src/host-ios/MOAIRenderer.h"; sourceTree = "<group>"; };
 		CD2600AD1C1D1C90009C7ADB /* MOAIRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIRenderer.mm; path = "../../src/host-ios/MOAIRenderer.mm"; sourceTree = "<group>"; };
 		CD3007891A12D87400C9CD1D /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.lua; sourceTree = "<group>"; };
-		CD4BCEE61E51E4AE002306C2 /* moai-ar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "moai-ar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD4BCEE61E51E4AE002306C2 /* moai-arvr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "moai-arvr.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD4BCF321E51F32D002306C2 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		CD4BCF341E51F394002306C2 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		CD4BCF361E51F39A002306C2 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -1060,6 +1079,9 @@
 		CD4BCF631E5215EC002306C2 /* libCardboardSDK_armv7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCardboardSDK_armv7.a; path = "../../3rdparty/gvr-ios-sdk/lib/libCardboardSDK_armv7.a"; sourceTree = "<group>"; };
 		CD4BCF641E5215EC002306C2 /* libCardboardSDK_i386.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCardboardSDK_i386.a; path = "../../3rdparty/gvr-ios-sdk/lib/libCardboardSDK_i386.a"; sourceTree = "<group>"; };
 		CD4BCF651E5215EC002306C2 /* libCardboardSDK_x86_64.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCardboardSDK_x86_64.a; path = "../../3rdparty/gvr-ios-sdk/lib/libCardboardSDK_x86_64.a"; sourceTree = "<group>"; };
+		CD4BCFB71E542AE3002306C2 /* libAR.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAR.a; path = "../../3rdparty/artoolkit-ios-sdk/lib/libAR.a"; sourceTree = "<group>"; };
+		CD4BCFB81E542AE3002306C2 /* libARICP.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARICP.a; path = "../../3rdparty/artoolkit-ios-sdk/lib/libARICP.a"; sourceTree = "<group>"; };
+		CD4BCFB91E542AE3002306C2 /* libARvideo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARvideo.a; path = "../../3rdparty/artoolkit-ios-sdk/lib/libARvideo.a"; sourceTree = "<group>"; };
 		CD4C4162180A6A8600C02381 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		CD6F1F4D1A79CE1800E772A0 /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lua; sourceTree = "<group>"; };
 		CD795FEA17F09B9F006AEB47 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
@@ -1089,6 +1111,7 @@
 		CDE655AA1C0AFA0E004493DD /* MOAIRendererAsync.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIRendererAsync.mm; path = "../../src/host-ios/MOAIRendererAsync.mm"; sourceTree = "<group>"; };
 		CDE655AB1C0AFA0E004493DD /* MOAICommandThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAICommandThread.h; path = "../../src/host-ios/MOAICommandThread.h"; sourceTree = "<group>"; };
 		CDE655AC1C0AFA0E004493DD /* MOAICommandThread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAICommandThread.mm; path = "../../src/host-ios/MOAICommandThread.mm"; sourceTree = "<group>"; };
+		CDEE2AEF1E54425000287648 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		CDF389EE1A51D39000BDEB4D /* aku_modules_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_config.h; path = "../../src/host-modules/aku_modules_config.h"; sourceTree = "<group>"; };
 		CDF389EF1A51D39000BDEB4D /* aku_modules_ios_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_ios_config.h; path = "../../src/host-modules/aku_modules_ios_config.h"; sourceTree = "<group>"; };
 		CDFD7E181A08B16C00A94E6B /* aku_modules_ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_ios.h; path = "../../src/host-modules/aku_modules_ios.h"; sourceTree = SOURCE_ROOT; };
@@ -1161,6 +1184,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD4BCFBA1E542AE3002306C2 /* libAR.a in Frameworks */,
+				CD4BCFBB1E542AE3002306C2 /* libARICP.a in Frameworks */,
+				CD4BCFBC1E542AE3002306C2 /* libARvideo.a in Frameworks */,
 				CD4BCF661E5215EC002306C2 /* libCardboardSDK_arm64.a in Frameworks */,
 				CD4BCF671E5215EC002306C2 /* libCardboardSDK_armv7.a in Frameworks */,
 				CD4BCF681E5215EC002306C2 /* libCardboardSDK_i386.a in Frameworks */,
@@ -1178,6 +1204,7 @@
 				CD4BCEBB1E51E4AE002306C2 /* libmoai-ios-3rdparty-tlsf.a in Frameworks */,
 				CD4BCEBC1E51E4AE002306C2 /* libmoai-ios-3rdparty-zlib.a in Frameworks */,
 				CD4BCEBD1E51E4AE002306C2 /* libmoai-ios-apple.a in Frameworks */,
+				CD4BCFB61E54299C002306C2 /* libmoai-ios-ar.a in Frameworks */,
 				CD4BCEBE1E51E4AE002306C2 /* libmoai-ios-box2d.a in Frameworks */,
 				CD4BCEBF1E51E4AE002306C2 /* libmoai-ios-crypto.a in Frameworks */,
 				CD4BCEC01E51E4AE002306C2 /* libmoai-ios-http-client.a in Frameworks */,
@@ -1195,6 +1222,7 @@
 				CD4BCECB1E51E4AE002306C2 /* libmoai-ios-zl-core.a in Frameworks */,
 				CD4BCECC1E51E4AE002306C2 /* libmoai-ios-zl-crypto.a in Frameworks */,
 				CD4BCECD1E51E4AE002306C2 /* libmoai-ios-zl-vfs.a in Frameworks */,
+				CDEE2AF01E54425000287648 /* Accelerate.framework in Frameworks */,
 				CD4BCECE1E51E4AE002306C2 /* AdSupport.framework in Frameworks */,
 				CD4BCECF1E51E4AE002306C2 /* AudioToolbox.framework in Frameworks */,
 				CD4BCED01E51E4AE002306C2 /* AVFoundation.framework in Frameworks */,
@@ -1239,7 +1267,7 @@
 			isa = PBXGroup;
 			children = (
 				1D6058910D05DD3D006BFB54 /* moai.app */,
-				CD4BCEE61E51E4AE002306C2 /* moai-ar.app */,
+				CD4BCEE61E51E4AE002306C2 /* moai-arvr.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1285,10 +1313,14 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CD4BCFB71E542AE3002306C2 /* libAR.a */,
+				CD4BCFB81E542AE3002306C2 /* libARICP.a */,
+				CD4BCFB91E542AE3002306C2 /* libARvideo.a */,
 				CD4BCF621E5215EC002306C2 /* libCardboardSDK_arm64.a */,
 				CD4BCF631E5215EC002306C2 /* libCardboardSDK_armv7.a */,
 				CD4BCF641E5215EC002306C2 /* libCardboardSDK_i386.a */,
 				CD4BCF651E5215EC002306C2 /* libCardboardSDK_x86_64.a */,
+				CDEE2AEF1E54425000287648 /* Accelerate.framework */,
 				CD9F769D1808DEDC0001EF0C /* AdSupport.framework */,
 				03CC910B13B3C48400B2724C /* AudioToolbox.framework */,
 				CD236688180A5CFC006A7236 /* AVFoundation.framework */,
@@ -1322,7 +1354,6 @@
 			isa = PBXGroup;
 			children = (
 				CD598D1F1AD86F3500478C49 /* libmoai-ios.a */,
-				CD598D211AD86F3500478C49 /* libmoai-ios-apple.a */,
 				CD8317531BED3DAB00745C8A /* libmoai-ios-3rdparty-contrib.a */,
 				CD598D251AD86F3500478C49 /* libmoai-ios-3rdparty-crypto.a */,
 				CD8317551BED3DAB00745C8A /* libmoai-ios-3rdparty-expat.a */,
@@ -1334,6 +1365,8 @@
 				CD8317631BED3DAB00745C8A /* libmoai-ios-3rdparty-tinyxml.a */,
 				CD8317651BED3DAB00745C8A /* libmoai-ios-3rdparty-tlsf.a */,
 				CD8317671BED3DAB00745C8A /* libmoai-ios-3rdparty-zlib.a */,
+				CD598D211AD86F3500478C49 /* libmoai-ios-apple.a */,
+				CD4BCFB31E54295B002306C2 /* libmoai-ios-ar.a */,
 				CD598D291AD86F3500478C49 /* libmoai-ios-audio-sampler.a */,
 				CD598D2D1AD86F3500478C49 /* libmoai-ios-box2d.a */,
 				CD598D331AD86F3500478C49 /* libmoai-ios-crypto.a */,
@@ -1354,11 +1387,11 @@
 				CD598D571AD86F3500478C49 /* libmoai-ios-zl-crypto.a */,
 				CD598D591AD86F3500478C49 /* libmoai-ios-zl-vfs.a */,
 				CD598D5B1AD86F3500478C49 /* libmoai-osx.a */,
-				CD598D5D1AD86F3500478C49 /* libmoai-osx-apple.a */,
 				CD4659DF1E0E188A00F8527F /* libmoai-osx-3rdparty-assimp.a */,
 				CD598D5F1AD86F3500478C49 /* libmoai-osx-3rdparty-core.a */,
 				CD598D611AD86F3500478C49 /* libmoai-osx-3rdparty-crypto.a */,
 				CD598D631AD86F3500478C49 /* libmoai-osx-3rdparty-sdl.a */,
+				CD598D5D1AD86F3500478C49 /* libmoai-osx-apple.a */,
 				CD598D651AD86F3500478C49 /* libmoai-osx-audio-sampler.a */,
 				CD4659E11E0E188A00F8527F /* libmoai-osx-assimp.a */,
 				CD598D671AD86F3500478C49 /* libmoai-osx-box2d.a */,
@@ -1469,9 +1502,9 @@
 			productReference = 1D6058910D05DD3D006BFB54 /* moai.app */;
 			productType = "com.apple.product-type.application";
 		};
-		CD4BCE541E51E4AE002306C2 /* moai-ar */ = {
+		CD4BCE541E51E4AE002306C2 /* moai-arvr */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CD4BCEE31E51E4AE002306C2 /* Build configuration list for PBXNativeTarget "moai-ar" */;
+			buildConfigurationList = CD4BCEE31E51E4AE002306C2 /* Build configuration list for PBXNativeTarget "moai-arvr" */;
 			buildPhases = (
 				CD4BCE911E51E4AE002306C2 /* Assets Sync */,
 				CD4BCE921E51E4AE002306C2 /* Resources */,
@@ -1495,6 +1528,7 @@
 				CD4BCE6B1E51E4AE002306C2 /* PBXTargetDependency */,
 				CD4BCE6D1E51E4AE002306C2 /* PBXTargetDependency */,
 				CD4BCE6F1E51E4AE002306C2 /* PBXTargetDependency */,
+				CD4BCFB51E542969002306C2 /* PBXTargetDependency */,
 				CD4BCE711E51E4AE002306C2 /* PBXTargetDependency */,
 				CD4BCE731E51E4AE002306C2 /* PBXTargetDependency */,
 				CD4BCE751E51E4AE002306C2 /* PBXTargetDependency */,
@@ -1513,9 +1547,9 @@
 				CD4BCE8F1E51E4AE002306C2 /* PBXTargetDependency */,
 				CD4BCF0C1E51E780002306C2 /* PBXTargetDependency */,
 			);
-			name = "moai-ar";
+			name = "moai-arvr";
 			productName = MoaiSample;
-			productReference = CD4BCEE61E51E4AE002306C2 /* moai-ar.app */;
+			productReference = CD4BCEE61E51E4AE002306C2 /* moai-arvr.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1559,7 +1593,7 @@
 			targets = (
 				CDF389E71A51CEC700BDEB4D /* delete-app */,
 				1D6058900D05DD3D006BFB54 /* moai */,
-				CD4BCE541E51E4AE002306C2 /* moai-ar */,
+				CD4BCE541E51E4AE002306C2 /* moai-arvr */,
 			);
 		};
 /* End PBXProject section */
@@ -1612,6 +1646,13 @@
 			fileType = archive.ar;
 			path = "libmoai-osx-google-test.a";
 			remoteRef = CD4BCF091E51E4AF002306C2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CD4BCFB31E54295B002306C2 /* libmoai-ios-ar.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-ios-ar.a";
+			remoteRef = CD4BCFB21E54295B002306C2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CD51621C1BCDDB20000718FB /* libmoai-ios-image-jpg.a */ = {
@@ -2263,6 +2304,11 @@
 			name = "libmoai-ios-vr";
 			targetProxy = CD4BCF0B1E51E780002306C2 /* PBXContainerItemProxy */;
 		};
+		CD4BCFB51E542969002306C2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-ios-ar";
+			targetProxy = CD4BCFB41E542969002306C2 /* PBXContainerItemProxy */;
+		};
 		CD5161E91BCDDB20000718FB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "libmoai-ios-image-jpg";
@@ -2492,7 +2538,10 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LIBRARY_SEARCH_PATHS = "\"../../3rdparty/gvr-ios-sdk/lib\"";
+				LIBRARY_SEARCH_PATHS = (
+					"\"../../3rdparty/artoolkit-ios-sdk/lib\"",
+					"\"../../3rdparty/gvr-ios-sdk/lib\"",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-include",
@@ -2556,7 +2605,10 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LIBRARY_SEARCH_PATHS = "\"../../3rdparty/gvr-ios-sdk/lib\"";
+				LIBRARY_SEARCH_PATHS = (
+					"\"../../3rdparty/artoolkit-ios-sdk/lib\"",
+					"\"../../3rdparty/gvr-ios-sdk/lib\"",
+				);
 				OTHER_CFLAGS = (
 					"-include",
 					"\"zlcore/zl_replace.h\"",
@@ -2575,13 +2627,10 @@
 				DEVELOPMENT_TEAM = BUD786NAA6;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
+					AKU_WITH_AR,
 					AKU_WITH_VR,
 				);
 				INFOPLIST_FILE = Info.plist;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2596,13 +2645,10 @@
 				DEVELOPMENT_TEAM = BUD786NAA6;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
+					AKU_WITH_AR,
 					AKU_WITH_VR,
 				);
 				INFOPLIST_FILE = Info.plist;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2644,7 +2690,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CD4BCEE31E51E4AE002306C2 /* Build configuration list for PBXNativeTarget "moai-ar" */ = {
+		CD4BCEE31E51E4AE002306C2 /* Build configuration list for PBXNativeTarget "moai-arvr" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CD4BCEE41E51E4AE002306C2 /* Debug */,

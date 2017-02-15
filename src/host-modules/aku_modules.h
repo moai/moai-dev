@@ -18,6 +18,10 @@
 	#include <moai-apple/host.h>
 #endif
 
+#if AKU_WITH_AR
+	#include <moai-ar/host.h>
+#endif
+
 #if AKU_WITH_ASSIMP
 	#include <moai-assimp/host.h>
 #endif

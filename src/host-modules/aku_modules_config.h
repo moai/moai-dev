@@ -5,6 +5,10 @@
 		#define AKU_WITH_APPLE 0
 	#endif
 
+    #ifndef AKU_WITH_AR
+		#define AKU_WITH_AR 0
+	#endif
+
 	#ifndef AKU_WITH_ASSIMP
 		#define AKU_WITH_ASSIMP 0
 	#endif

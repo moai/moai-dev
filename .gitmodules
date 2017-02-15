@@ -16,3 +16,6 @@
 [submodule "3rdparty/gvr-ios-sdk"]
 	path = 3rdparty/gvr-ios-sdk
 	url = https://github.com/moai/gvr-ios-sdk.git
+[submodule "3rdparty/artoolkit-ios-sdk"]
+	path = 3rdparty/artoolkit-ios-sdk
+	url = https://github.com/moai/artoolkit-ios-sdk.git

@@ -53,6 +53,10 @@ void AKUModulesAppFinalize () {
 		AKUAppleAppFinalize ();
 	#endif
 
+    #if AKU_WITH_AR
+		AKUArAppFinalize ();
+	#endif
+
     #if AKU_WITH_AUDIO_SAMPLER
 		AKUAudioSamplerAppFinalize ();
 	#endif
@@ -123,6 +127,10 @@ int AKUModulesAppInitialize () {
 
     #if AKU_WITH_APPLE
 		AKUAppleAppInitialize ();
+	#endif
+
+    #if AKU_WITH_AR
+		AKUArAppInitialize ();
 	#endif
 
     #if AKU_WITH_AUDIO_SAMPLER
@@ -199,6 +207,10 @@ int AKUModulesContextInitialize () {
 
     #if AKU_WITH_APPLE
 		AKUAppleContextInitialize ();
+	#endif
+
+    #if AKU_WITH_AR
+		AKUArContextInitialize ();
 	#endif
 
 	#if AKU_WITH_ASSIMP
@@ -319,6 +331,10 @@ void AKUModulesPause ( bool pause ) {
 	
 	#if AKU_WITH_ANDROID
 		AKUModulesAndroidPause ( pause );
+	#endif
+
+    #if AKU_WITH_AR
+		AKUArPause ( pause );
 	#endif
 
 	#if AKU_WITH_SIM
