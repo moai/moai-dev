@@ -712,8 +712,6 @@
 		CD323B051A8040CB00E2FEBB /* SDLKeyCodeMapping.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDLKeyCodeMapping.cpp; path = "../../src/host-sdl/SDLKeyCodeMapping.cpp"; sourceTree = "<group>"; };
 		CD323B061A8040CB00E2FEBB /* SDLKeyCodeMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDLKeyCodeMapping.h; path = "../../src/host-sdl/SDLKeyCodeMapping.h"; sourceTree = "<group>"; };
 		CD6600651831CB5400D9862B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		CD74EA2B137807E40093EE68 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
-		CD74EA311378080E0093EE68 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = /usr/lib/libssl.dylib; sourceTree = "<absolute>"; };
 		CD795EF117F08E4B006AEB47 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		CD795EF317F08F4E006AEB47 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		CD795EF517F08F86006AEB47 /* ForceFeedback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ForceFeedback.framework; path = /System/Library/Frameworks/ForceFeedback.framework; sourceTree = "<absolute>"; };
@@ -834,8 +832,6 @@
 				CDFD8FAF1AD8653C0003F415 /* libmoai-osx-zl-vfs.a */,
 				CDFD8FB01AD8653C0003F415 /* libmoai-osx.a */,
 				CD096FD118E0FFE300A36EDD /* libstdc++.dylib */,
-				CD74EA2B137807E40093EE68 /* libcrypto.dylib */,
-				CD74EA311378080E0093EE68 /* libssl.dylib */,
 				0324CC63135643FD000ADC60 /* libSystem.dylib */,
 				66D9680B14047B7100017919 /* libz.dylib */,
 				CD795EF117F08E4B006AEB47 /* Cocoa.framework */,
