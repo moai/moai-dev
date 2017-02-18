@@ -4455,6 +4455,14 @@
 		CDD06DEB1398838D00AB0420 /* unix.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06DAA1398838D00AB0420 /* unix.h */; };
 		CDD06DEC1398838D00AB0420 /* usocket.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06DAC1398838D00AB0420 /* usocket.c */; };
 		CDD06DED1398838D00AB0420 /* usocket.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06DAD1398838D00AB0420 /* usocket.h */; };
+		CDD340201E5540AB0049EF72 /* MOAIVideoTexture.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD3401E1E5540AB0049EF72 /* MOAIVideoTexture.mm */; };
+		CDD340211E5540AB0049EF72 /* MOAIVideoTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD3401F1E5540AB0049EF72 /* MOAIVideoTexture.h */; };
+		CDD340291E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-fsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD340231E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-fsh.h */; };
+		CDD3402A1E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-vsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD340241E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-vsh.h */; };
+		CDD3402B1E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-fsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD340251E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-fsh.h */; };
+		CDD3402C1E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-vsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD340261E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-vsh.h */; };
+		CDD3402D1E56CA1F0049EF72 /* MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-fsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD340271E56CA1F0049EF72 /* MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-fsh.h */; };
+		CDD3402E1E56CA1F0049EF72 /* MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-vsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD340281E56CA1F0049EF72 /* MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-vsh.h */; };
 		CDD47BD617FA78AE00525B77 /* aes_locl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E4811377D9C10093EE68 /* aes_locl.h */; };
 		CDD47BDA17FA78AE00525B77 /* aes.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E4851377D9C10093EE68 /* aes.h */; };
 		CDD47BDB17FA78AE00525B77 /* camellia.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E4921377D9D40093EE68 /* camellia.h */; };
@@ -7135,8 +7143,6 @@
 		CD323B101A80530000E2FEBB /* MOAIDeck2DSnappingShader-vsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIDeck2DSnappingShader-vsh.h"; path = "shaders/MOAIDeck2DSnappingShader-vsh.h"; sourceTree = "<group>"; };
 		CD323B111A80530000E2FEBB /* MOAIDeck2DTexOnlyShader-fsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIDeck2DTexOnlyShader-fsh.h"; path = "shaders/MOAIDeck2DTexOnlyShader-fsh.h"; sourceTree = "<group>"; };
 		CD323B121A80530000E2FEBB /* MOAIDeck2DTexOnlyShader-vsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIDeck2DTexOnlyShader-vsh.h"; path = "shaders/MOAIDeck2DTexOnlyShader-vsh.h"; sourceTree = "<group>"; };
-		CD323B131A80530000E2FEBB /* MOAIFontEffectsShader-fsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIFontEffectsShader-fsh.h"; path = "shaders/MOAIFontEffectsShader-fsh.h"; sourceTree = "<group>"; };
-		CD323B141A80530000E2FEBB /* MOAIFontEffectsShader-vsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIFontEffectsShader-vsh.h"; path = "shaders/MOAIFontEffectsShader-vsh.h"; sourceTree = "<group>"; };
 		CD323B151A80530000E2FEBB /* MOAIFontShader-fsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIFontShader-fsh.h"; path = "shaders/MOAIFontShader-fsh.h"; sourceTree = "<group>"; };
 		CD323B161A80530000E2FEBB /* MOAIFontShader-vsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIFontShader-vsh.h"; path = "shaders/MOAIFontShader-vsh.h"; sourceTree = "<group>"; };
 		CD323B171A80530000E2FEBB /* MOAIFontSnappingShader-fsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MOAIFontSnappingShader-fsh.h"; path = "shaders/MOAIFontSnappingShader-fsh.h"; sourceTree = "<group>"; };
@@ -8961,6 +8967,14 @@
 		CDD06DAA1398838D00AB0420 /* unix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unix.h; path = "../../3rdparty/luasocket-2.0.2/src/unix.h"; sourceTree = SOURCE_ROOT; };
 		CDD06DAC1398838D00AB0420 /* usocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = usocket.c; path = "../../3rdparty/luasocket-2.0.2/src/usocket.c"; sourceTree = SOURCE_ROOT; };
 		CDD06DAD1398838D00AB0420 /* usocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = usocket.h; path = "../../3rdparty/luasocket-2.0.2/src/usocket.h"; sourceTree = SOURCE_ROOT; };
+		CDD3401E1E5540AB0049EF72 /* MOAIVideoTexture.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIVideoTexture.mm; path = "moai-ar/MOAIVideoTexture.mm"; sourceTree = "<group>"; };
+		CDD3401F1E5540AB0049EF72 /* MOAIVideoTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIVideoTexture.h; path = "moai-ar/MOAIVideoTexture.h"; sourceTree = "<group>"; };
+		CDD340231E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-fsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-fsh.h"; path = "moai-ar/shaders/MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-fsh.h"; sourceTree = "<group>"; };
+		CDD340241E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-vsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-vsh.h"; path = "moai-ar/shaders/MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-vsh.h"; sourceTree = "<group>"; };
+		CDD340251E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-fsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-fsh.h"; path = "moai-ar/shaders/MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-fsh.h"; sourceTree = "<group>"; };
+		CDD340261E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-vsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-vsh.h"; path = "moai-ar/shaders/MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-vsh.h"; sourceTree = "<group>"; };
+		CDD340271E56CA1F0049EF72 /* MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-fsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-fsh.h"; path = "moai-ar/shaders/MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-fsh.h"; sourceTree = "<group>"; };
+		CDD340281E56CA1F0049EF72 /* MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-vsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-vsh.h"; path = "moai-ar/shaders/MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-vsh.h"; sourceTree = "<group>"; };
 		CDD480D117FA78AE00525B77 /* libmoai-ios-3rdparty-crypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-3rdparty-crypto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD5D68D1C24DDF10070237E /* MOAIPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPath.cpp; sourceTree = "<group>"; };
 		CDD5D68E1C24DDF10070237E /* MOAIPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPath.h; sourceTree = "<group>"; };
@@ -11225,8 +11239,6 @@
 				CD323B101A80530000E2FEBB /* MOAIDeck2DSnappingShader-vsh.h */,
 				CD323B111A80530000E2FEBB /* MOAIDeck2DTexOnlyShader-fsh.h */,
 				CD323B121A80530000E2FEBB /* MOAIDeck2DTexOnlyShader-vsh.h */,
-				CD323B131A80530000E2FEBB /* MOAIFontEffectsShader-fsh.h */,
-				CD323B141A80530000E2FEBB /* MOAIFontEffectsShader-vsh.h */,
 				CD323B151A80530000E2FEBB /* MOAIFontShader-fsh.h */,
 				CD323B161A80530000E2FEBB /* MOAIFontShader-vsh.h */,
 				CD323B171A80530000E2FEBB /* MOAIFontSnappingShader-fsh.h */,
@@ -11317,10 +11329,13 @@
 		CD4BCF861E542724002306C2 /* moai-ar */ = {
 			isa = PBXGroup;
 			children = (
+				CDD340221E5675F10049EF72 /* shaders */,
 				CD4BCF871E542768002306C2 /* host.mm */,
 				CD4BCF881E542768002306C2 /* host.h */,
 				CD4BCF891E542768002306C2 /* MOAIMarkerMgr.mm */,
 				CD4BCF8A1E542768002306C2 /* MOAIMarkerMgr.h */,
+				CDD3401E1E5540AB0049EF72 /* MOAIVideoTexture.mm */,
+				CDD3401F1E5540AB0049EF72 /* MOAIVideoTexture.h */,
 				CD4BCF8B1E542768002306C2 /* pch.cpp */,
 				CD4BCF8C1E542768002306C2 /* pch.h */,
 			);
@@ -14328,6 +14343,19 @@
 			name = luacrypto;
 			sourceTree = "<group>";
 		};
+		CDD340221E5675F10049EF72 /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				CDD340231E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-fsh.h */,
+				CDD340241E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-vsh.h */,
+				CDD340251E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-fsh.h */,
+				CDD340261E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-vsh.h */,
+				CDD340271E56CA1F0049EF72 /* MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-fsh.h */,
+				CDD340281E56CA1F0049EF72 /* MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-vsh.h */,
+			);
+			name = shaders;
+			sourceTree = "<group>";
+		};
 		CDD7814C1A1162F400AD133E /* moai-ios-motion */ = {
 			isa = PBXGroup;
 			children = (
@@ -16292,9 +16320,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDD3402C1E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-vsh.h in Headers */,
+				CDD3402E1E56CA1F0049EF72 /* MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-vsh.h in Headers */,
 				CD4BCF921E542768002306C2 /* pch.h in Headers */,
 				CD4BCF8E1E542768002306C2 /* host.h in Headers */,
+				CDD340211E5540AB0049EF72 /* MOAIVideoTexture.h in Headers */,
+				CDD3402A1E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-vsh.h in Headers */,
 				CD4BCF901E542768002306C2 /* MOAIMarkerMgr.h in Headers */,
+				CDD3402D1E56CA1F0049EF72 /* MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-fsh.h in Headers */,
+				CDD3402B1E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-fsh.h in Headers */,
+				CDD340291E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-fsh.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19996,6 +20031,7 @@
 				CD4BCF911E542768002306C2 /* pch.cpp in Sources */,
 				CD4BCF8F1E542768002306C2 /* MOAIMarkerMgr.mm in Sources */,
 				CD4BCF8D1E542768002306C2 /* host.mm in Sources */,
+				CDD340201E5540AB0049EF72 /* MOAIVideoTexture.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

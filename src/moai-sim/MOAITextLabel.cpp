@@ -894,16 +894,6 @@ ZLMatrix4x4 MOAITextLabel::GetWorldDrawingMtx () {
 }
 
 //----------------------------------------------------------------//
-bool MOAITextLabel::IsDone () {
-
-	if ( this->IsActive ()) {
-		this->RefreshLayout ();
-		return ( this->mReveal >= this->mLayout.CountSprites ());
-	}
-	return true;
-}
-
-//----------------------------------------------------------------//
 MOAITextLabel::MOAITextLabel () :
 	mNeedsLayout ( false ),
 	mSpool ( 0.0f ),
@@ -1110,6 +1100,16 @@ void MOAITextLabel::SetText ( cc8* text ) {
 //================================================================//
 // ::implementation::
 //================================================================//
+
+//----------------------------------------------------------------//
+bool MOAITextLabel::MOAIAction_IsDone () {
+
+	if ( this->IsActive ()) {
+		this->RefreshLayout ();
+		return ( this->mReveal >= this->mLayout.CountSprites ());
+	}
+	return true;
+}
 
 //----------------------------------------------------------------//
 void MOAITextLabel::MOAIAction_Update ( double step ) {

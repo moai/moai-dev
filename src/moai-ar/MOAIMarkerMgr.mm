@@ -4,12 +4,23 @@
 #include "pch.h"
 
 #include <moai-ar/MOAIMarkerMgr.h>
+#include <moai-ar/MOAIVideoTexture.h>
+
+#include <moai-sim/shaders/MOAIDeck2DShader-fsh.h>
+#include <moai-sim/shaders/MOAIDeck2DShader-vsh.h>
+
+#include <moai-ar/shaders/MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-fsh.h>
+#include <moai-ar/shaders/MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-vsh.h>
+#include <moai-ar/shaders/MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-fsh.h>
+#include <moai-ar/shaders/MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-vsh.h>
+#include <moai-ar/shaders/MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-fsh.h>
+#include <moai-ar/shaders/MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-vsh.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #ifdef MOAI_WITH_ARTOOLKIT
 
 // uncomment me to debug log
-#define MOAIMARKERMGR_DEBUG
+//#define MOAIMARKERMGR_DEBUG
 
 #ifdef MOAIMARKERMGR_DEBUG
 	#define DEBUG_LOG printf
@@ -22,6 +33,16 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 // lua
 //================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIMarkerMgr::_getVideoDeck ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIMarkerMgr, "" )
+	
+	self->AffirmDeck ();
+	self->mVideoDeck.PushRef ( state );
+	return 1;
+}
 
 //----------------------------------------------------------------//
 // TODO: doxygen
@@ -46,6 +67,88 @@ int MOAIMarkerMgr::_stop ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIMarkerMgr::AffirmDeck () {
+
+	if (( this->mVideoPixelFormat != AR_PIXEL_FORMAT_INVALID ) && !this->mVideoDeck ) {
+
+		cc8* fsh = _deck2DShaderFSH;
+		cc8* vsh = _deck2DShaderVSH;
+		
+		switch ( this->mVideoPixelFormat ) {
+		
+			case AR_PIXEL_FORMAT_420f:
+				fsh = _videoShaderYCbCrITURec601FullRangeBiPlanarFSH;
+				vsh = _videoShaderYCbCrITURec601FullRangeBiPlanarVSH;
+				break;
+			
+			case AR_PIXEL_FORMAT_420v:
+				fsh = _videoShaderYCbCrITURec601VideoRangeBiPlanarFSH;
+				vsh = _videoShaderYCbCrITURec601VideoRangeBiPlanarVSH;
+				break;
+			
+			case AR_PIXEL_FORMAT_NV21:
+				fsh = _videoShaderYCrCbITURec601FullRangeBiPlanarFSH;
+				vsh = _videoShaderYCrCbITURec601FullRangeBiPlanarVSH;
+				break;
+				
+			default:
+				break;
+		}
+		
+		MOAIVideoTexture* texture0 = new MOAIVideoTexture ();
+		MOAIVideoTexture* texture1 = new MOAIVideoTexture ();
+		
+		texture0->Init ( MOAIVideoTexture::VIDEO_TEXTURE_PLANE_0, this->mVideoPixelFormat );
+		texture1->Init ( MOAIVideoTexture::VIDEO_TEXTURE_PLANE_1, this->mVideoPixelFormat );
+
+		MOAIShaderProgram* program = new MOAIShaderProgram ();
+		program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+		program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+		program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
+		program->Load ( vsh, fsh );
+
+		program->ReserveUniforms ( 2 );
+		program->DeclareUniform ( 0, "texture0", MOAIShaderUniformFormatter::UNIFORM_TYPE_INT, 1, 1 );
+		program->DeclareUniform ( 1, "texture1", MOAIShaderUniformFormatter::UNIFORM_TYPE_INT, 1, 1 );
+
+		program->ReserveTextures ( 2 );
+		program->SetTexture ( 0, texture0, 0 );
+		program->SetTexture ( 1, texture1, 1 );
+
+		MOAIShader* shader = new MOAIShader ();
+		shader->SetProgram ( program );
+		
+		shader->Bless ();
+		shader->SetUniform ( 0, 0 );
+		shader->SetUniform ( 1, 1 );
+		
+		int halfWidth = ( int )this->mVideoWidth / 2;
+		int halfHeight = ( int )this->mVideoHeight / 2;
+		
+		ZLRect frame;
+		frame.Init ( -halfWidth, -halfHeight, halfWidth, halfHeight );
+		
+		MOAISpriteDeck2D* deck = new MOAISpriteDeck2D ();
+		deck->ReserveQuads ( 1 );
+		deck->SetRect ( 0, frame );
+		deck->AffirmMaterialBatch ()->Reserve ( 1 );
+		
+		MOAIMaterial* material = deck->GetMaterial ( 0 );
+		assert ( material );
+		
+		material->SetShader ( shader );
+		//material->SetTexture ( 0, this->mVideoPlane0 );
+		//material->SetTexture ( 1, this->mVideoPlane1 );
+		
+		this->mVideoDeck.Set ( *this, deck );
+		this->mVideoShaderProgram.Set ( *this, program );
+		this->mVideoShader.Set ( *this, shader );
+		this->mVideoPlane0.Set ( *this, texture0 );
+		this->mVideoPlane1.Set ( *this, texture1 );
+	}
+}
+
+//----------------------------------------------------------------//
 MOAIMarkerMgr::MOAIMarkerMgr () :
 	mVideoPaused ( FALSE ),
 	mVideoParam ( 0 ),
@@ -53,11 +156,20 @@ MOAIMarkerMgr::MOAIMarkerMgr () :
 	mARPatternHandle ( 0 ),
 	mAR3DHandle ( 0 ),
 	mUseContPoseEstimation ( FALSE ),
-	mCameraParam ( 0 ) {
+	mCameraParam ( 0 ),
+	mVideoBuffer ( 0 ),
+	mVideoWidth ( 0 ),
+	mVideoHeight ( 0 ) {
 }
 
 //----------------------------------------------------------------//
 MOAIMarkerMgr::~MOAIMarkerMgr () {
+
+	this->mVideoDeck.Set ( *this, 0 );
+	this->mVideoShader.Set ( *this, 0 );
+	this->mVideoShaderProgram.Set ( *this, 0 );
+	this->mVideoPlane0.Set ( *this, 0 );
+	this->mVideoPlane1.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -117,15 +229,30 @@ void MOAIMarkerMgr::Stop () {
 //----------------------------------------------------------------//
 void MOAIMarkerMgr::ProcessFrame () {
 
-	AR2VideoBufferT* buffer = ar2VideoGetImage ( mVideoParam );
+	//this->FinishInit ();
+	//this->ScheduleForGPUUpdate ();
 
-	if ( buffer ) {
+	this->mVideoBuffer = ar2VideoGetImage ( mVideoParam );
+
+	if ( this->mVideoBuffer ) {
+
+		if ( this->mVideoBuffer->bufPlaneCount == 2 ) {
+			if ( this->mVideoPlane0 ) {
+				this->mVideoPlane0->UpdateBuffer ( this->mVideoBuffer->bufPlanes [ 0 ]);
+			}
+			if ( this->mVideoPlane1 ) {
+				this->mVideoPlane1->UpdateBuffer ( this->mVideoBuffer->bufPlanes [ 1 ]);
+			}
+		}
+		else {
+			this->mVideoPlane0->UpdateBuffer ( this->mVideoBuffer->buff );
+		}
 
 		ARdouble err;
 		int j, k;
 
 		// Detect the markers in the video frame.
-		if ( arDetectMarker ( mARHandle, buffer->buff ) < 0 ) return;
+		if ( arDetectMarker ( mARHandle, this->mVideoBuffer->buff ) < 0 ) return;
 		DEBUG_LOG ( "found %d marker(s).\n", mARHandle->marker_num );
 
 		// Check through the marker_info array for highest confidence
@@ -165,6 +292,8 @@ void MOAIMarkerMgr::ProcessFrame () {
 		//if ( mDelegate ) {
 		//	[ mDelegate cameraVideoTookPicture:self :buffer :( mPatternFound ? modelView : NULL )];
 		//}
+		
+		this->InvokeListener ( EVENT_UPDATE_FRAME );
 	}
 }
 
@@ -172,9 +301,13 @@ void MOAIMarkerMgr::ProcessFrame () {
 void MOAIMarkerMgr::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 
-	//state.SetField ( -1, "EVENT_FINALIZE",	( u32 )EVENT_FINALIZE );
+	state.SetField ( -1, "EVENT_UPDATE_FRAME",	( u32 )EVENT_UPDATE_FRAME );
+	state.SetField ( -1, "EVENT_VIDEO_START",	( u32 )EVENT_VIDEO_START );
 
 	luaL_Reg regTable [] = {
+		{ "getListener",			&MOAIGlobalEventSource::_getListener < MOAIMarkerMgr > },
+		{ "getVideoDeck",			_getVideoDeck },
+		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAIMarkerMgr > },
 		{ "start",					_start },
 		{ "stop",					_stop },
 		{ NULL, NULL }
@@ -191,6 +324,14 @@ void MOAIMarkerMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIMarkerMgr::VideoDidStart () {
 
+	// Get the format in which the camera is returning pixels.
+	this->mVideoPixelFormat = ar2VideoGetPixelFormat ( mVideoParam );
+	if ( this->mVideoPixelFormat == AR_PIXEL_FORMAT_INVALID ) {
+		DEBUG_LOG ( "Error: Camera is using unsupported pixel format.\n" );
+		//[ self stop ] ;
+		return;
+	}
+
 	// Find the size of the window.
 	int xsize, ysize;
 	if ( ar2VideoGetSize ( mVideoParam, &xsize, &ysize ) < 0 ) {
@@ -198,14 +339,9 @@ void MOAIMarkerMgr::VideoDidStart () {
 		this->Stop ();
 		return;
 	}
-
-	// Get the format in which the camera is returning pixels.
-	AR_PIXEL_FORMAT pixFormat = ar2VideoGetPixelFormat ( mVideoParam );
-	if ( pixFormat == AR_PIXEL_FORMAT_INVALID ) {
-		DEBUG_LOG ( "Error: Camera is using unsupported pixel format.\n" );
-		//[ self stop ] ;
-		return;
-	}
+	
+	this->mVideoWidth = ( u32 )xsize;
+	this->mVideoHeight = ( u32 )ysize;
 
 	// Work out if the front camera is being used. If it is, flip the viewing frustum for
 	// 3D drawing.
@@ -256,7 +392,7 @@ void MOAIMarkerMgr::VideoDidStart () {
 		return;
 	}
 
-	if ( arSetPixelFormat ( mARHandle, pixFormat ) < 0 ) {
+	if ( arSetPixelFormat ( mARHandle, this->mVideoPixelFormat ) < 0 ) {
 		DEBUG_LOG ( "Error: arSetPixelFormat.\n" );
 		this->Stop ();
 		return;
@@ -278,10 +414,8 @@ void MOAIMarkerMgr::VideoDidStart () {
 	}
 
 	// The camera will be started by -startRunLoop.
-	//videoDelegate = [[ ARVideoDelegate alloc ] init ];
 	MOAIArVideoListener* videoLIstener = [[ MOAIArVideoListener alloc ] init ];
 	[ cameraVideo setTookPictureDelegate:videoLIstener ];
-	//[ cameraVideo setTookPictureDelegateUserData:NULL ];
 
 	// Other ARToolKit setup. 
 	arSetMarkerExtractionMode ( mARHandle, AR_USE_TRACKING_HISTORY_V2 );
@@ -313,7 +447,7 @@ void MOAIMarkerMgr::VideoDidStart () {
 		return;
 	}
 
-	//[ mDelegate videoInitialized:self :pixFormat :flipV ];
+	this->InvokeListener ( EVENT_VIDEO_START );
 }
 
 //================================================================//

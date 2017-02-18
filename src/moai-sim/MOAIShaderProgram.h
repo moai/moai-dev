@@ -13,6 +13,7 @@
 #define		WEBGL_PREPROC		"precision mediump int;\n precision mediump float;\n"
 
 class MOAIShader;
+class MOAITextureBase;
 
 //================================================================//
 // MOAIShaderProgramGlobal
@@ -33,6 +34,25 @@ public:
 	//----------------------------------------------------------------//
 		MOAIShaderProgramGlobal		();
 };
+
+//================================================================//
+// MOAIShaderProgramTexture
+//================================================================//
+class MOAIShaderProgramTexture {
+private:
+
+	friend class MOAIShaderProgram;
+
+	u32				mName;
+	u32				mUnit;
+	ZLStrongPtr < MOAITextureBase > mTexture;
+
+public:
+
+	//----------------------------------------------------------------//
+		MOAIShaderProgramTexture	();
+};
+
 
 //================================================================//
 // MOAIShaderProgram
@@ -67,16 +87,20 @@ protected:
 
 	ZLLeanArray < MOAIShaderUniform >			mUniforms;
 	ZLLeanArray < MOAIShaderProgramGlobal >		mGlobals;
+	ZLLeanArray < MOAIShaderProgramTexture >	mTextures;
 
 	//----------------------------------------------------------------//
 	static int			_declareUniform				( lua_State* L );
 	static int			_load						( lua_State* L );
 	static int			_reserveGlobals				( lua_State* L );
+	static int			_reserveTextures			( lua_State* L );
 	static int			_reserveUniforms			( lua_State* L );
 	static int			_setVertexAttribute			( lua_State* L );
 	static int			_setGlobal					( lua_State* L );
+	static int			_setTexture					( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void				BindTextures				();
 	ZLGfxHandle*		CompileShader				( u32 type, cc8* source );
 	MOAIShaderUniform*	GetUniform					( u32 uniformID );
 	bool				OnCPUCreate					();
@@ -106,8 +130,11 @@ public:
 	void				RegisterLuaFuncs			( MOAILuaState& state );
 	void				ReserveAttributes			( u32 nAttributes );
 	void				ReserveGlobals				( u32 nGlobals );
+	void				ReserveTextures				( u32 nTextures );
 	void				ReserveUniforms				( u32 nUniforms );
 	void				SetGlobal					( u32 idx, u32 globalID, u32 uniformID, u32 index );
+	void				SetTexture					( u32 idx, u32 name, u32 unit );
+	void				SetTexture					( u32 idx, MOAITextureBase* texture, u32 unit );
 	void				SetVertexAttribute			( u32 idx, cc8* attribute );
 };
 

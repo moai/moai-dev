@@ -240,12 +240,6 @@ ZLVec3D MOAIParticleEmitter::GetRandomVec ( float minAngle, float maxAngle, floa
 }
 
 //----------------------------------------------------------------//
-bool MOAIParticleEmitter::IsDone () {
-
-	return false;
-}
-
-//----------------------------------------------------------------//
 bool MOAIParticleEmitter::MaskParticle ( const ZLVec3D& loc ) {
 
 	return this->mMaskProp ? this->mMaskProp->Inside ( loc, 0.0f ) : true;
@@ -352,6 +346,12 @@ void MOAIParticleEmitter::Surge ( u32 total ) {
 //================================================================//
 // ::implementation::
 //================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIParticleEmitter::MOAIAction_IsDone () {
+
+	return false;
+}
 
 //----------------------------------------------------------------//
 void MOAIParticleEmitter::MOAINode_Update () {

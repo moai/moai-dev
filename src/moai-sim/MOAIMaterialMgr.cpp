@@ -68,7 +68,7 @@ void MOAIMaterialMgr::Compose ( const MOAIMaterial& material ) {
 		}
 		
 		if ( available & ( SHADER_FLAG | TEXTURE_FLAG )) {
-		
+			
 			if ( available & SHADER_FLAG ) {
 				this->mShader = material.mShader;
 			}
@@ -109,8 +109,10 @@ void MOAIMaterialMgr::LoadGfxState () {
 	gfxMgr.mGfxState.SetCullFunc ( this->mCullMode );
 	gfxMgr.mGfxState.SetDepthMask ( this->mDepthMask );
 	gfxMgr.mGfxState.SetDepthFunc ( this->mDepthTest );
-	gfxMgr.mGfxState.SetShader ( this->mShader );
 	gfxMgr.mGfxState.SetTexture ( this->mTexture );
+	
+	// load shader last!
+	gfxMgr.mGfxState.SetShader ( this->mShader );
 }
 
 //----------------------------------------------------------------//

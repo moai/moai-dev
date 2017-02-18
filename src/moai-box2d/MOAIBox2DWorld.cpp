@@ -1101,12 +1101,6 @@ void MOAIBox2DWorld::Destroy () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIBox2DWorld::IsDone () {
-
-	return false;
-}
-
-//----------------------------------------------------------------//
 bool MOAIBox2DWorld::IsLocked () {
 
 	if ( this->mWorld ) {
@@ -1270,6 +1264,12 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DJoint& joint ) {
 //================================================================//
 // ::implementation::
 //================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIBox2DWorld::MOAIAction_IsDone () {
+
+	return false;
+}
 
 //----------------------------------------------------------------//
 void MOAIBox2DWorld::MOAIAction_Update ( double step ) {

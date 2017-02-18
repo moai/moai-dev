@@ -54,6 +54,7 @@ public:
 
 	//----------------------------------------------------------------//
 	static MOAIShader*		AffirmShader			( MOAILuaState& state, int idx );
+	void					BindTextures			();
 	void					Bless					();
 							MOAIShader				();
 							~MOAIShader				();

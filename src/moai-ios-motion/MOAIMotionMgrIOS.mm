@@ -273,12 +273,6 @@ void MOAIMotionMgrIOS::Init () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIMotionMgrIOS::IsDone () {
-
-	return false;
-}
-
-//----------------------------------------------------------------//
 MOAIMotionMgrIOS::MOAIMotionMgrIOS () :
 	mIsHeadingActive ( false ),
 	//mIsLocationActive ( false ),
@@ -360,6 +354,12 @@ void MOAIMotionMgrIOS::RegisterLuaClass ( MOAILuaState& state ) {
 //================================================================//
 // ::implementation::
 //================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIMotionMgrIOS::MOAIAction_IsDone () {
+
+	return false;
+}
 
 //----------------------------------------------------------------//
 void MOAIMotionMgrIOS::MOAIAction_Update ( double step ) {

@@ -42,9 +42,7 @@ private:
 	static int	_setMagnetometerActive					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool				IsDone							();
-	
-	//----------------------------------------------------------------//
+	bool				MOAIAction_IsDone				();
 	void				MOAIAction_Update				( double step );
 
 public:

@@ -92,11 +92,6 @@ MOAIAction* MOAIActionTree::GetDefaultParent () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIActionTree::IsDone () {
-	return false;
-}
-
-//----------------------------------------------------------------//
 MOAIActionTree::MOAIActionTree () :
 	mRoot ( 0 ),
 	mProfilingEnabled ( false ),
@@ -157,6 +152,11 @@ void MOAIActionTree::MOAIAction_DidLoseChild ( MOAIAction* child ) {
 	if ( this->mRoot == child ) {
 		this->mRoot = 0;
 	}
+}
+
+//----------------------------------------------------------------//
+bool MOAIActionTree::MOAIAction_IsDone () {
+	return false;
 }
 
 //----------------------------------------------------------------//

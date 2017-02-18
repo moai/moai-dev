@@ -79,7 +79,7 @@ public:
 	MOAIInputDevice*	GetDevice					( u8 deviceID );
 	MOAISensor*			GetSensor					( u8 deviceID, u8 sensorID );
 	bool				HasEvents					();
-	bool				IsDone						();
+	//bool				IsDone						();
 						MOAIInputMgr				();
 						~MOAIInputMgr				();
 	void				RegisterLuaClass			( MOAILuaState& state );

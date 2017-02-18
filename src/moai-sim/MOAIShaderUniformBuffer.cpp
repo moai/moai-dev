@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <moai-sim/MOAIAttribute.h>
 #include <moai-sim/MOAIShaderUniformBuffer.h>
-#include <moai-sim/MOAIShaderUniformFormatter.h>
 
 //================================================================//
 // MOAIShaderUniformBuffer

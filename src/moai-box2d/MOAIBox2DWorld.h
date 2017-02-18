@@ -121,6 +121,7 @@ private:
 	void			ScheduleDestruction		( MOAIBox2DJoint& joint );
 
 	//----------------------------------------------------------------//
+	bool			MOAIAction_IsDone		();
 	void			MOAIAction_Update		( double step );
 	void			MOAIDrawable_Draw		( int subPrimID );
 
@@ -145,7 +146,6 @@ public:
 	static const u32 DEBUG_DRAW_DEFAULT = DEBUG_DRAW_SHAPES | DEBUG_DRAW_JOINTS | DEBUG_DRAW_CENTERS;
 	
 	//----------------------------------------------------------------//
-	bool			IsDone					();
 	bool			IsLocked				();
 					MOAIBox2DWorld			();
 					~MOAIBox2DWorld			();

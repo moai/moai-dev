@@ -79,6 +79,7 @@ private:
 	void			UpdateTarget			();
 
 	//----------------------------------------------------------------//
+	bool			MOAIAction_IsDone		();
 	void			MOAIAction_Update		( double step );
 	void			MOAINode_Update			();
 
@@ -101,7 +102,6 @@ public:
 	void			AddAnchor				( MOAICameraAnchor2D& anchor );
 	void			Clear					();
 	float			GetFitDistance			();
-	bool			IsDone					();
 					MOAICameraFitter2D		();
 					~MOAICameraFitter2D		();
 	void			RegisterLuaClass		( MOAILuaState& state );

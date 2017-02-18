@@ -404,19 +404,6 @@ float MOAITimer::GetTime () {
 }
 
 //----------------------------------------------------------------//
-bool MOAITimer::IsDone () {
-
-	if ( this->mMode == NORMAL ) {
-		return (( this->mTime < this->mStartTime ) || ( this->mTime >= this->mEndTime ));
-	}
-	
-	if ( this->mMode == REVERSE ) {
-		return (( this->mTime <= this->mStartTime ) || ( this->mTime > this->mEndTime ));
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
 MOAITimer::MOAITimer () :
 	mTime ( 0.0f ),
 	mCycle ( 0.0f ),
@@ -634,6 +621,19 @@ void MOAITimer::ToggleDirection () {
 //================================================================//
 // ::implementation::
 //================================================================//
+
+//----------------------------------------------------------------//
+bool MOAITimer::MOAIAction_IsDone () {
+
+	if ( this->mMode == NORMAL ) {
+		return (( this->mTime < this->mStartTime ) || ( this->mTime >= this->mEndTime ));
+	}
+	
+	if ( this->mMode == REVERSE ) {
+		return (( this->mTime <= this->mStartTime ) || ( this->mTime > this->mEndTime ));
+	}
+	return false;
+}
 
 //----------------------------------------------------------------//
 void MOAITimer::MOAIAction_Start () {

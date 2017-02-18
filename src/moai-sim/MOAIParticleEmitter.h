@@ -60,6 +60,7 @@ protected:
 	bool			MaskParticle			( const ZLVec3D& loc );
 
 	//----------------------------------------------------------------//
+	bool			MOAIAction_IsDone		();
 	void			MOAINode_Update			();
 
 public:
@@ -76,7 +77,6 @@ public:
 	SET ( u32, ShapeID, mShapeID )
 
 	//----------------------------------------------------------------//
-	bool			IsDone					();
 					MOAIParticleEmitter		();
 					~MOAIParticleEmitter	();
 	void			RegisterLuaClass		( MOAILuaState& state );

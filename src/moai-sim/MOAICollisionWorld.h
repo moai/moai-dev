@@ -75,7 +75,6 @@ private:
 	void				DoCallback				( u32 eventID, MOAICollisionProp& prop0, MOAICollisionProp& prop1 );
 	void				DoCallback				( u32 eventID, MOAICollisionProp& prop0, MOAICollisionProp& prop1, const ZLBounds& bounds );
 	void				HandleOverlap			( MOAICollisionProp& prop0, u32 type0, MOAICollisionProp& prop1, u32 type1, const ZLBounds& bounds );
-	bool				IsDone					();
 	void				InvalidateOverlaps		( MOAICollisionProp& prop, u32 nextPass );
 	void				MakeActive				( MOAICollisionProp& prop0 );
 	void				MakeInactive			( MOAICollisionProp& prop0 );
@@ -85,6 +84,7 @@ private:
 	void				RemoveHull				( MOAICollisionProp& prop );
 
 	//----------------------------------------------------------------//
+	bool				MOAIAction_IsDone					();
 	void				MOAIAction_Update					( double step );
 	void				MOAIPartition_DrawDebugFront		();
 	void				MOAIPartition_OnInsertHull			( MOAIPartitionHull& hull );

@@ -258,15 +258,14 @@ void MOAIGfxVertexCache::Reset () {
 //----------------------------------------------------------------//
 void MOAIGfxVertexCache::ResizeUniformBuffer ( size_t size ) {
 
-	bool resize = size && ( size < this->mUniformBufferSize );
+	if ( size && ( this->mUniformBufferSize < size )) {
 
-	if ( this->mUniformBuffer ) {
-		free ( this->mUniformBuffer );
-		this->mUniformBuffer = 0;
-		this->mUniformBufferSize = 0;
-	}
-	
-	if ( resize ) {
+		if ( this->mUniformBuffer ) {
+			free ( this->mUniformBuffer );
+			this->mUniformBuffer = 0;
+			this->mUniformBufferSize = 0;
+		}
+
 		this->mUniformBufferSize = (( size / UNIFORM_BUFFER_CHUNK_SIZE ) + 1 ) * UNIFORM_BUFFER_CHUNK_SIZE;
 		this->mUniformBuffer = malloc ( this->mUniformBufferSize );
 	}

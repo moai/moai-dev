@@ -32,6 +32,7 @@ private:
 
 	//----------------------------------------------------------------//
 	void				MOAIAction_DidLoseChild		( MOAIAction* child );
+	bool				MOAIAction_IsDone			();
 	void				MOAIAction_Update			( double step );
 
 protected:
@@ -53,7 +54,6 @@ public:
 
 	//----------------------------------------------------------------//
 	MOAIAction*			GetDefaultParent		();
-	bool				IsDone					();
 						MOAIActionTree			();
 						~MOAIActionTree			();
 	void				RegisterLuaClass		( MOAILuaState& state );

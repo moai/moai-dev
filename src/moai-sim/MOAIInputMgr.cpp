@@ -195,9 +195,9 @@ void MOAIInputMgr::InvokeCallback ( u32 event, double timestamp ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIInputMgr::IsDone () {
-	return false;
-}
+//bool MOAIInputMgr::IsDone () {
+//	return false;
+//}
 
 //----------------------------------------------------------------//
 MOAIInputMgr::MOAIInputMgr () :

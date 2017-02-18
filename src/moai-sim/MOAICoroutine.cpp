@@ -211,12 +211,6 @@ MOAIAction* MOAICoroutine::GetDefaultParent () {
 }
 
 //----------------------------------------------------------------//
-bool MOAICoroutine::IsDone () {
-
-	return ( this->mRef == false );
-}
-
-//----------------------------------------------------------------//
 MOAICoroutine::MOAICoroutine () :
 	mState ( 0 ),
 	mNarg ( 0 ),
@@ -356,6 +350,12 @@ int MOAICoroutine::Resume ( float step ) {
 //----------------------------------------------------------------//
 STLString MOAICoroutine::MOAIAction_GetDebugInfo () const {
 	return mFuncName;
+}
+
+//----------------------------------------------------------------//
+bool MOAICoroutine::MOAIAction_IsDone () {
+
+	return ( this->mRef == false );
 }
 
 //----------------------------------------------------------------//

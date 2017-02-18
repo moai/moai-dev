@@ -4,8 +4,9 @@
 #ifndef	MOAIABSTRACTSHADERUNIFORMARRAY_H
 #define	MOAIABSTRACTSHADERUNIFORMARRAY_H
 
+#include <moai-sim/MOAIShaderUniformFormatter.h>
+
 class MOAIAttribute;
-class MOAIShaderUniformFormatter;
 
 //================================================================//
 // MOAIShaderUniformBuffer
@@ -29,6 +30,19 @@ public:
 										MOAIShaderUniformBuffer			();
 	virtual								~MOAIShaderUniformBuffer		();
 	void								SetUniform						( lua_State* L, int idx, u32 uniformID, u32 index );
+	
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	void SetUniform ( u32 uniformID, const TYPE& value ) {
+
+		void* element;
+		MOAIShaderUniformFormatter* uniform = this->GetUniform ( uniformID, 0, element );
+	
+		if ( uniform ) {
+			uniform->SetValue ( element, value );
+		}
+	}
 };
 
 #endif

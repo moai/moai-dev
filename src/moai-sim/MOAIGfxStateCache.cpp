@@ -198,7 +198,7 @@ void MOAIGfxStateCache::ApplyStateChanges () {
 		if ( textureDirtyFlags ) {
 			for ( u32 i = 0; i < this->mTopDirtyTexture; ++i ) {
 				if ( textureDirtyFlags & ( 1 << i )) {
-					this->SetTexture ( this->mPendingState.mTextureUnits [ i ]);
+					this->SetTexture ( this->mPendingState.mTextureUnits [ i ], i );
 				}
 			}
 		}
@@ -850,6 +850,10 @@ bool MOAIGfxStateCache::SetShader ( MOAIShader* shader ) {
 		active.mShader = shader;
 	}
 	else {
+	
+		if ( shader ) {
+			shader->BindTextures ();
+		}
 	
 		this->mPendingState.mShader = shader;
 		this->mPendingState.mShaderProgram = program;

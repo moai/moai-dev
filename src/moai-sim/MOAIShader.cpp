@@ -154,6 +154,14 @@ void MOAIShader::ApplyGlobals () {
 }
 
 //----------------------------------------------------------------//
+void MOAIShader::BindTextures () {
+
+	if ( this->mProgram ) {
+		this->mProgram->BindTextures ();
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIShader::BindUniforms () {
 	
 	MOAIShaderProgram* program = this->mProgram;

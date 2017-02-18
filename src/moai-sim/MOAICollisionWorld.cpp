@@ -268,12 +268,6 @@ void MOAICollisionWorld::InvalidateOverlaps ( MOAICollisionProp& prop, u32 nextP
 }
 
 //----------------------------------------------------------------//
-bool MOAICollisionWorld::IsDone () {
-
-	return false;
-}
-
-//----------------------------------------------------------------//
 void MOAICollisionWorld::MakeActive ( MOAICollisionProp& prop ) {
 
 	if ( !prop.mActiveListLink.List ()) {
@@ -435,6 +429,12 @@ void MOAICollisionWorld::SerializeOut ( MOAILuaState& state, MOAISerializer& ser
 //================================================================//
 // ::implementation::
 //================================================================//
+
+//----------------------------------------------------------------//
+bool MOAICollisionWorld::MOAIAction_IsDone () {
+
+	return false;
+}
 
 //----------------------------------------------------------------//
 void MOAICollisionWorld::MOAIAction_Update ( double step ) {

@@ -8,15 +8,33 @@
 
 #import <AR/ar.h>
 #import <AR/video.h>
-//#import <AR/gsub_es2.h>
 #import <AR/sys/CameraVideo.h>
+
+class MOAIVideoTexture;
+
+//================================================================//
+// MOAIMarker
+//================================================================//
+//class MOAIMarker {
+//private:
+//
+//public:
+//
+//};
 
 //================================================================//
 // MOAIMarkerMgr
 //================================================================//
 class MOAIMarkerMgr :
-	public ZLContextClass < MOAIMarkerMgr, MOAILuaObject > {
+	public ZLContextClass < MOAIMarkerMgr, MOAIGlobalEventSource > {
 private:
+
+	friend class MOAIVideoTexture;
+
+	enum {
+		VIDEO_TEXTURE_PLANE_0,
+		VIDEO_TEXTURE_PLANE_1,
+	};
 
 	BOOL                mVideoPaused;
     
@@ -37,19 +55,42 @@ private:
 
 	ARParamLT*          mCameraParam;
 	
-	//id < CameraVideoTookPictureDelegate > mCameraListener;
-
+	AR_PIXEL_FORMAT		mVideoPixelFormat;
+	u32					mVideoWidth;
+	u32					mVideoHeight;
+	
+	AR2VideoBufferT*						mVideoBuffer;
+	
+	MOAILuaSharedPtr < MOAISpriteDeck2D >	mVideoDeck;
+	MOAILuaSharedPtr < MOAIShader >			mVideoShader;
+	MOAILuaSharedPtr < MOAIShaderProgram >	mVideoShaderProgram;
+	MOAILuaSharedPtr < MOAIVideoTexture >	mVideoPlane0;
+	MOAILuaSharedPtr < MOAIVideoTexture >	mVideoPlane1;
+	
+	GET ( AR2VideoBufferT*, VideoBuffer, mVideoBuffer )
+	
 	//----------------------------------------------------------------//
+	static int			_getVideoDeck			( lua_State* L );
 	static int			_start					( lua_State* L );
 	static int			_stop					( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void				AffirmDeck				();
 	static void			StartCallback			( void* userData );
 	void				VideoDidStart			();
 
 public:
 
+	enum {
+		EVENT_UPDATE_FRAME,
+		EVENT_VIDEO_START,
+	};
+
 	DECL_LUA_SINGLETON ( MOAIMarkerMgr )
+
+	GET ( AR_PIXEL_FORMAT, VideoPixelFormat, mVideoPixelFormat )
+	GET ( u32, VideoWidth, mVideoWidth )
+	GET ( u32, VideoHeight, mVideoHeight )
 
 	//----------------------------------------------------------------//
 						MOAIMarkerMgr			();

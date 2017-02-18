@@ -467,12 +467,6 @@ float MOAICameraFitter2D::GetFitDistance () {
 }
 
 //----------------------------------------------------------------//
-bool MOAICameraFitter2D::IsDone () {
-
-	return false;
-}
-
-//----------------------------------------------------------------//
 MOAICameraFitter2D::MOAICameraFitter2D () :
 	mMin ( 0.0f ),
 	mDamper ( 0.0f ),
@@ -645,6 +639,12 @@ void MOAICameraFitter2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 //================================================================//
 // ::implementation::
 //================================================================//
+
+//----------------------------------------------------------------//
+bool MOAICameraFitter2D::MOAIAction_IsDone () {
+
+	return false;
+}
 
 //----------------------------------------------------------------//
 void MOAICameraFitter2D::MOAIAction_Update ( double step ) {

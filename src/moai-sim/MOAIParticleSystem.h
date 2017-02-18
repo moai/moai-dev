@@ -70,6 +70,7 @@ private:
 	MOAIParticleState*		GetState				( u32 id );
 	
 	//----------------------------------------------------------------//
+	bool					MOAIAction_IsDone						();
 	void					MOAIAction_Update						( double step );
 	ZLBounds				MOAIPartitionHull_GetModelBounds		();
 
@@ -88,7 +89,6 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Draw					( int subPrimID );
-	bool			IsDone					();
 					MOAIParticleSystem		();
 					~MOAIParticleSystem		();
 	bool			PushParticle			( float x, float y );

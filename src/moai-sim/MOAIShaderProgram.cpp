@@ -6,6 +6,7 @@
 #include <moai-sim/MOAIEaseDriver.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResourceClerk.h>
+#include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIShaderProgram.h>
 #include <moai-sim/MOAITransformBase.h>
 
@@ -18,6 +19,16 @@ MOAIShaderProgramGlobal::MOAIShaderProgramGlobal () :
 	mGlobalID ( INVALID_INDEX ),
 	mUniformID ( INVALID_INDEX ),
 	mIndex ( 0 ) {
+}
+
+//================================================================//
+// MOAIShaderProgramTexture
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAIShaderProgramTexture::MOAIShaderProgramTexture () :
+	mName ( MOAI_UNKNOWN_MATERIAL_GLOBAL ),
+	mUnit ( 0 ) {
 }
 
 //================================================================//
@@ -80,6 +91,15 @@ int MOAIShaderProgram::_reserveGlobals ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIShaderProgram::_reserveTextures ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIShaderProgram, "U" )
+
+	self->ReserveTextures ( state.GetValue < u32 >( 2, 0 ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	reserveUniforms
 	@text	Reserve shader uniforms.
 
@@ -101,7 +121,27 @@ int MOAIShaderProgram::_reserveUniforms ( lua_State* L ) {
 int MOAIShaderProgram::_setGlobal ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShaderProgram, "UNNN" )
 	
-	return self->SetGlobal ( L, 2);
+	return self->SetGlobal ( L, 2 );
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIShaderProgram::_setTexture ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIShaderProgram, "U" )
+	
+	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
+	u32 unit = state.GetValue < u32 >( 4, 1 ) - 1;
+	
+	if ( state.IsType ( 3, LUA_TUSERDATA )) {
+	
+		self->SetTexture ( idx, state.GetLuaObject < MOAITextureBase >( 3, true ), unit );
+	}
+	else {
+	
+		self->SetTexture ( idx, state.GetValue < u32 >( 3, MOAI_UNKNOWN_MATERIAL_GLOBAL ), unit );
+	}
+	
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -127,6 +167,21 @@ int MOAIShaderProgram::_setVertexAttribute ( lua_State* L ) {
 //================================================================//
 // MOAIShaderProgram
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAIShaderProgram::BindTextures () {
+
+	MOAIGfxMgr& gfx = MOAIGfxMgr::Get ();
+
+	size_t nTextures = this->mTextures.Size ();
+	for ( u32 i = 0; i < nTextures; ++i ) {
+	
+		MOAIShaderProgramTexture& shaderTexture = this->mTextures [ i ];
+		if ( shaderTexture.mTexture ) {
+			gfx.mGfxState.SetTexture ( shaderTexture.mTexture, shaderTexture.mUnit );
+		}
+	}
+}
 
 //----------------------------------------------------------------//
 void MOAIShaderProgram::Clear () {
@@ -265,7 +320,6 @@ bool MOAIShaderProgram::OnGPUCreate () {
 	for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
 		MOAIShaderUniform& uniform = this->mUniforms [ i ];
 		gfx.GetUniformLocation ( this->mProgram, uniform.mName, this, ( void* )(( size_t )i )); // TODO: cast?
-		
 	}
 
 	gfx.Delete ( this->mVertexShader );
@@ -404,8 +458,10 @@ void MOAIShaderProgram::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "declareUniform",				_declareUniform },
 		{ "load",						_load },
 		{ "reserveGlobals",				_reserveGlobals },
+		{ "reserveTextures",			_reserveTextures },
 		{ "reserveUniforms",			_reserveUniforms },
 		{ "setGlobal",					_setGlobal },
+		{ "setTexture",					_setTexture },
 		{ "setVertexAttribute",			_setVertexAttribute },
 		{ NULL, NULL }
 	};
@@ -427,6 +483,12 @@ int MOAIShaderProgram::ReserveGlobals ( lua_State* L, int idx ) {
 	this->ReserveGlobals ( nGlobals );
 
 	return 0;
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderProgram::ReserveTextures ( u32 nTextures ) {
+
+	this->mTextures.Init ( nTextures );
 }
 
 //----------------------------------------------------------------//
@@ -458,6 +520,30 @@ int MOAIShaderProgram::SetGlobal ( lua_State* L, int idx ) {
 	this->SetGlobal ( globalIdx, globalID, uniformID, index );
 
 	return 0;
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderProgram::SetTexture ( u32 idx, u32 name, u32 unit ) {
+
+	if ( idx < this->mTextures.Size ()) {
+	
+		MOAIShaderProgramTexture& shaderTexture = this->mTextures [ idx ];
+		shaderTexture.mName = name;
+		shaderTexture.mUnit = unit;
+		shaderTexture.mTexture = 0;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderProgram::SetTexture ( u32 idx, MOAITextureBase* texture, u32 unit ) {
+
+	if ( idx < this->mTextures.Size ()) {
+	
+		MOAIShaderProgramTexture& shaderTexture = this->mTextures [ idx ];
+		shaderTexture.mName = MOAI_UNKNOWN_MATERIAL_GLOBAL;
+		shaderTexture.mUnit = unit;
+		shaderTexture.mTexture = texture;
+	}
 }
 
 //----------------------------------------------------------------//

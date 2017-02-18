@@ -453,12 +453,6 @@ AKUParticleSprite* MOAIParticleSystem::GetTopSprite () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIParticleSystem::IsDone () {
-
-	return false;
-}
-
-//----------------------------------------------------------------//
 MOAIParticleSystem::MOAIParticleSystem () :
 	mParticleSize ( 0 ),
 	mCapParticles ( false ),
@@ -678,6 +672,12 @@ void MOAIParticleSystem::SerializeOut ( MOAILuaState& state, MOAISerializer& ser
 //================================================================//
 // ::implementation::
 //================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIParticleSystem::MOAIAction_IsDone () {
+
+	return false;
+}
 
 //----------------------------------------------------------------//
 void MOAIParticleSystem::MOAIAction_Update ( double step ) {

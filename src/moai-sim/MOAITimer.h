@@ -60,6 +60,7 @@ protected:
 	void			OnLoop						();
 
 	//----------------------------------------------------------------//
+	bool			MOAIAction_IsDone			();
 	void			MOAIAction_Start			();
 	void			MOAIAction_Update			( double step );
 	bool			MOAINode_ApplyAttrOp		( u32 attrID, MOAIAttribute& attr, u32 op );
@@ -109,7 +110,6 @@ public:
 	float			GetLength			();
 	float			GetNormalizedTime	();
 	float			GetTime				();
-	bool			IsDone				();
 					MOAITimer			();
 					~MOAITimer			();
 	void			RegisterLuaClass	( MOAILuaState& state );
