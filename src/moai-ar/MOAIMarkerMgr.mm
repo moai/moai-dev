@@ -35,6 +35,17 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
+int MOAIMarkerMgr::_getVideoCamera ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIMarkerMgr, "" )
+
+	if ( self->mVideoCamera ) {
+		self->mVideoCamera.PushRef ( state );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIMarkerMgr::_getVideoDeck ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIMarkerMgr, "" )
@@ -42,6 +53,16 @@ int MOAIMarkerMgr::_getVideoDeck ( lua_State* L ) {
 	self->AffirmDeck ();
 	self->mVideoDeck.PushRef ( state );
 	return 1;
+}
+
+//----------------------------------------------------------------//
+int MOAIMarkerMgr::_getVideoSize ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIMarkerMgr, "" )
+	
+	state.Push ( self->mVideoWidth );
+	state.Push ( self->mVideoHeight );
+
+	return 2;
 }
 
 //----------------------------------------------------------------//
@@ -166,6 +187,7 @@ MOAIMarkerMgr::~MOAIMarkerMgr () {
 	this->mVideoShaderProgram.Set ( *this, 0 );
 	this->mVideoPlane0.Set ( *this, 0 );
 	this->mVideoPlane1.Set ( *this, 0 );
+	this->mVideoCamera.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -280,14 +302,20 @@ void MOAIMarkerMgr::ProcessFrame () {
 			}
 			//arglCameraViewRHf ( mPatternTrans, modelView, VIEW_SCALEFACTOR );
 			mPatternFound = TRUE;
+			mUseContPoseEstimation = TRUE;
 		}
 		else {
 			mPatternFound = FALSE;
+			mUseContPoseEstimation = FALSE;
 		}
-
-		//if ( mDelegate ) {
-		//	[ mDelegate cameraVideoTookPicture:self :buffer :( mPatternFound ? modelView : NULL )];
-		//}
+		
+		this->UpdateMarkerMtx ();
+		this->UpdateVideoProjMtx ();
+		
+		ZLMatrix4x4 mtx = this->mViewMtx;
+		mtx.Append ( this->mProjMtx );
+		
+		this->mVideoCamera->SetProjMtx ( mtx );
 		
 		this->InvokeListener ( EVENT_UPDATE_FRAME );
 	}
@@ -302,7 +330,9 @@ void MOAIMarkerMgr::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getListener",			&MOAIGlobalEventSource::_getListener < MOAIMarkerMgr > },
+		{ "getVideoCamera",			_getVideoCamera },
 		{ "getVideoDeck",			_getVideoDeck },
+		{ "getVideoSize",			_getVideoSize },
 		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAIMarkerMgr > },
 		{ "start",					_start },
 		{ "stop",					_stop },
@@ -315,6 +345,135 @@ void MOAIMarkerMgr::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIMarkerMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAIMarkerMgr::UpdateMarkerMtx () {
+
+	this->mViewMtx.m [ 0 + 0 * 4 ] = this->mPatternTrans [ 0 ][ 0 ]; // R1C1
+    this->mViewMtx.m [ 0 + 1 * 4 ] = this->mPatternTrans [ 0 ][ 1 ]; // R1C2
+    this->mViewMtx.m [ 0 + 2 * 4 ] = this->mPatternTrans [ 0 ][ 2 ];
+    this->mViewMtx.m [ 0 + 3 * 4 ] = this->mPatternTrans [ 0 ][ 3 ];
+	
+    this->mViewMtx.m [ 1 + 0 * 4 ] = -this->mPatternTrans [ 1 ][ 0 ]; // R2
+    this->mViewMtx.m [ 1 + 1 * 4 ] = -this->mPatternTrans [ 1 ][ 1 ];
+    this->mViewMtx.m [ 1 + 2 * 4 ] = -this->mPatternTrans [ 1 ][ 2 ];
+    this->mViewMtx.m [ 1 + 3 * 4 ] = -this->mPatternTrans [ 1 ][ 3 ];
+	
+	this->mViewMtx.m [ 2 + 0 * 4 ] = -this->mPatternTrans [ 2 ][ 0 ]; // R3
+    this->mViewMtx.m [ 2 + 1 * 4 ] = -this->mPatternTrans [ 2 ][ 1 ];
+    this->mViewMtx.m [ 2 + 2 * 4 ] = -this->mPatternTrans [ 2 ][ 2 ];
+    this->mViewMtx.m [ 2 + 3 * 4 ] = -this->mPatternTrans [ 2 ][ 3 ];
+	
+	this->mViewMtx.m [ 3 + 0 * 4 ] = 0.0f;
+    this->mViewMtx.m [ 3 + 1 * 4 ] = 0.0f;
+    this->mViewMtx.m [ 3 + 2 * 4 ] = 0.0f;
+    this->mViewMtx.m [ 3 + 3 * 4 ] = 1.0f;
+	
+//    if (scale != 0.0f) {
+//        m_modelview[12] *= scale;
+//        m_modelview[13] *= scale;
+//        m_modelview[14] *= scale;
+//    }
+}
+
+//----------------------------------------------------------------//
+void MOAIMarkerMgr::UpdateVideoProjMtx () {
+
+	assert ( this->mVideoCamera );
+	assert ( this->mCameraParam );
+	
+	float near = this->mVideoCamera->GetNearPlane ();
+	float far = this->mVideoCamera->GetFarPlane ();
+	
+	const ARParam& cparam = this->mCameraParam->param;
+
+	float	icpara [ 3 ] [ 4];
+	float	trans [ 3 ][ 4 ];
+	float	p [ 3 ][ 3 ], q [ 4 ][ 4] ;
+	float	widthm1, heightm1;
+	int		i, j;
+
+	widthm1  = ( float )( cparam.xsize - 1 );
+	heightm1 = ( float )( cparam.ysize - 1 );
+
+	if ( arParamDecompMatf ( cparam.mat, icpara, trans ) < 0 ) {
+		printf("arglCameraFrustum(): arParamDecompMat() indicated parameter error.\n"); // Windows bug: when running multi-threaded, can't write to stderr!
+		return;
+	}
+	
+	for ( i = 0; i < 4; i++ ) {
+		icpara [ 1 ][ i ] = heightm1 * ( icpara [ 2 ][ i ]) - icpara [ 1 ][ i ];
+	}
+
+	for( i = 0; i < 3; i++ ) {
+		for( j = 0; j < 3; j++ ) {
+			p [ i ][ j ] = icpara [ i ][ j ] / icpara [ 2 ][ 2 ];
+		}
+	}
+	
+	q [ 0 ][ 0 ] = ( 2.0f * p [ 0 ][ 0 ] / widthm1 );
+	q [ 0 ][ 1 ] = ( 2.0f * p [ 0 ][ 1 ] / widthm1 );
+	q [ 0 ][ 2 ] = -(( 2.0f * p [ 0 ][ 2 ] / widthm1 )  - 1.0f );
+	q [ 0 ][ 3 ] = 0.0f;
+
+	q [ 1 ][ 0 ] = 0.0f;
+	q [ 1 ][ 1 ] = -( 2.0f * p [ 1 ][ 1 ] / heightm1 );
+	q [ 1 ][ 2 ] = -(( 2.0f * p [ 1 ][ 2 ] / heightm1 ) - 1.0f );
+	q [ 1 ][ 3 ] = 0.0f;
+
+	q [ 2 ][ 0 ] = 0.0f;
+	q [ 2 ][ 1 ] = 0.0f;
+	q [ 2 ][ 2 ] = ( far + near ) / ( near - far );
+	q [ 2 ][ 3 ] = 2.0f * far * near / ( near - far );
+
+	q [ 3 ][ 0 ] = 0.0f;
+	q [ 3 ][ 1 ] = 0.0f;
+	q [ 3 ][ 2 ] = -1.0f;
+	q [ 3 ][ 3 ] = 0.0f;
+
+	ZLMatrix4x4& proj = this->mProjMtx;
+
+	for ( i = 0; i < 4; i++ ) { // Row.
+	
+		// First 3 columns of the current row.
+		for ( j = 0; j < 3; j++ ) { // Column.
+			proj.m [ i + ( j * 4 )] =
+				q [ i ][ 0 ] * trans [ 0 ][ j ] +
+				q [ i ][ 1 ] * trans [ 1 ][ j ] +
+				q [ i ][ 2 ] * trans [ 2 ][ j ];
+		}
+		// Fourth column of the current row.
+		proj.m [ i + ( 3 * 4 )] =
+			q [ i ][ 0 ] * trans [ 0 ][ 3 ] +
+			q [ i ][ 1 ] * trans [ 1 ][ 3 ] +
+			q [ i ][ 2 ] * trans [ 2 ][ 3 ] +
+			q [ i ][ 3 ];
+	}
+	
+	ZLMatrix4x4 ir90;
+	
+	ir90.m [ ZLMatrix4x4::C0_R0 ] = 0.0f;
+	ir90.m [ ZLMatrix4x4::C0_R1 ] = -1.0f;
+	ir90.m [ ZLMatrix4x4::C0_R2 ] = 0.0f;
+	ir90.m [ ZLMatrix4x4::C0_R3 ] = 0.0f;
+	
+	ir90.m [ ZLMatrix4x4::C1_R0 ] = 1.0f;
+	ir90.m [ ZLMatrix4x4::C1_R1 ] = 0.0f;
+	ir90.m [ ZLMatrix4x4::C1_R2 ] = 0.0f;
+	ir90.m [ ZLMatrix4x4::C1_R3 ] = 0.0f;
+	
+	ir90.m [ ZLMatrix4x4::C2_R0 ] = 0.0f;
+	ir90.m [ ZLMatrix4x4::C2_R1 ] = 0.0f;
+	ir90.m [ ZLMatrix4x4::C2_R2 ] = 1.0f;
+	ir90.m [ ZLMatrix4x4::C2_R3 ] = 0.0f;
+	
+	ir90.m [ ZLMatrix4x4::C3_R0 ] = 0.0f;
+	ir90.m [ ZLMatrix4x4::C3_R1 ] = 0.0f;
+	ir90.m [ ZLMatrix4x4::C3_R2 ] = 0.0f;
+	ir90.m [ ZLMatrix4x4::C3_R3 ] = 1.0f;
+	
+	proj.Append ( ir90 );
 }
 
 //----------------------------------------------------------------//
@@ -441,6 +600,14 @@ void MOAIMarkerMgr::VideoDidStart () {
 		this->Stop ();
 		return;
 	}
+
+	this->mVideoCamera.Set ( *this, new MOAICamera ());
+	this->UpdateVideoProjMtx ();
+	
+	//GLfloat frustum [ 16 ];
+	//arglCameraFrustumRHf ( &this->mCameraParam->param, 1.0f, 5000.0f, frustum );
+    //[ glView setCameraLens:frustum ];
+    //glView.contentFlipV = flipV;
 
 	this->InvokeListener ( EVENT_VIDEO_START );
 }

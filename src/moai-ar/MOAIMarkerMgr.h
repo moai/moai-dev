@@ -66,17 +66,25 @@ private:
 	MOAILuaSharedPtr < MOAIShaderProgram >	mVideoShaderProgram;
 	MOAILuaSharedPtr < MOAIVideoTexture >	mVideoPlane0;
 	MOAILuaSharedPtr < MOAIVideoTexture >	mVideoPlane1;
+	MOAILuaSharedPtr < MOAICamera >			mVideoCamera;
 	
 	GET ( AR2VideoBufferT*, VideoBuffer, mVideoBuffer )
 	
+	ZLMatrix4x4 mViewMtx;
+	ZLMatrix4x4 mProjMtx;
+	
 	//----------------------------------------------------------------//
+	static int			_getVideoCamera			( lua_State* L );
 	static int			_getVideoDeck			( lua_State* L );
+	static int			_getVideoSize			( lua_State* L );
 	static int			_start					( lua_State* L );
 	static int			_stop					( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void				AffirmDeck				();
 	static void			StartCallback			( void* userData );
+	void				UpdateMarkerMtx			();
+	void				UpdateVideoProjMtx		();
 	void				VideoDidStart			();
 
 public:

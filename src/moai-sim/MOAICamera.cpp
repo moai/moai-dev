@@ -381,37 +381,44 @@ ZLMatrix4x4 MOAICamera::GetProjMtx ( const MOAIViewport& viewport ) const {
 	
 	ZLVec2D viewScale = viewport.GetScale (); // TODO: bit confusing in the 3d; clarify
 	
-	switch ( this->mType ) {
+	if ( this->mUseProjectionMtx ) {
 	
-		case CAMERA_TYPE_ORTHO: {
-			
-			float xs = ( 2.0f / viewport.Width ()) * viewScale.mX;
-			float ys = ( 2.0f / viewport.Height ()) * viewScale.mY;
-			
-			mtx.Ortho ( xs, ys, this->mNearPlane, this->mFarPlane );
-			break;
-		}
-		case CAMERA_TYPE_3D: {
-			
-			float xs = Tan (( this->mFieldOfView * ( float )D2R ) / 2.0f ) * this->mNearPlane;
-			float ys = xs / viewport.GetAspect ();
-			
-			xs *= viewScale.mX;
-			ys *= viewScale.mY;
+		mtx = this->mProjectionMtx;
+	}
+	else {
+		
+		switch ( this->mType ) {
+		
+			case CAMERA_TYPE_ORTHO: {
+				
+				float xs = ( 2.0f / viewport.Width ()) * viewScale.mX;
+				float ys = ( 2.0f / viewport.Height ()) * viewScale.mY;
+				
+				mtx.Ortho ( xs, ys, this->mNearPlane, this->mFarPlane );
+				break;
+			}
+			case CAMERA_TYPE_3D: {
+				
+				float xs = Tan (( this->mFieldOfView * ( float )D2R ) / 2.0f ) * this->mNearPlane;
+				float ys = xs / viewport.GetAspect ();
+				
+				xs *= viewScale.mX;
+				ys *= viewScale.mY;
 
-			mtx.Frustum ( -xs, ys, xs, -ys, this->mNearPlane, this->mFarPlane );
-			
-			break;
-		}
-		case CAMERA_TYPE_WINDOW:
-		default: {
-			
-			ZLRect rect = viewport.GetRect ();
-			
-			float xScale = ( 2.0f / rect.Width ()) * viewScale.mX;
-			float yScale = ( 2.0f / rect.Height ()) * viewScale.mY;
-			
-			mtx.Scale ( xScale, yScale, -1.0f );
+				mtx.Frustum ( -xs, ys, xs, -ys, this->mNearPlane, this->mFarPlane );
+				
+				break;
+			}
+			case CAMERA_TYPE_WINDOW:
+			default: {
+				
+				ZLRect rect = viewport.GetRect ();
+				
+				float xScale = ( 2.0f / rect.Width ()) * viewScale.mX;
+				float yScale = ( 2.0f / rect.Height ()) * viewScale.mY;
+				
+				mtx.Scale ( xScale, yScale, -1.0f );
+			}
 		}
 	}
 	
@@ -469,6 +476,7 @@ void MOAICamera::LookAt ( float x, float y, float z ) {
 
 //----------------------------------------------------------------//
 MOAICamera::MOAICamera () :
+	mUseProjectionMtx ( false ),
 	mFieldOfView ( DEFAULT_HFOV ),
 	mNearPlane ( DEFAULT_NEAR_PLANE ),
 	mFarPlane ( DEFAULT_FAR_PLANE ),
@@ -476,7 +484,7 @@ MOAICamera::MOAICamera () :
 
 	RTTI_SINGLE ( MOAITransform )
 	
-	//this->SetEulerOrder ( EULER_YXZ );
+	this->mProjectionMtx = ZLMatrix4x4::IDENT;
 }
 
 //----------------------------------------------------------------//
@@ -524,6 +532,20 @@ void MOAICamera::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAICamera::SetProjMtx () {
+
+	this->mProjectionMtx = ZLMatrix4x4::IDENT;
+	this->mUseProjectionMtx = false;
+}
+
+//----------------------------------------------------------------//
+void MOAICamera::SetProjMtx ( const ZLMatrix4x4& mtx ) {
+
+	this->mProjectionMtx = mtx;
+	this->mUseProjectionMtx = true;
 }
 
 //================================================================//

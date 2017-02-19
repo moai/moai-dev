@@ -18,6 +18,9 @@ class MOAICamera :
 	public virtual MOAITransform {
 private:
 
+	ZLMatrix4x4		mProjectionMtx;
+	bool			mUseProjectionMtx;
+
 	float			mFieldOfView;
 	float			mNearPlane;
 	float			mFarPlane;
@@ -85,6 +88,8 @@ public:
 					~MOAICamera				();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			SetProjMtx				();
+	void			SetProjMtx				( const ZLMatrix4x4& mtx );
 };
 
 #endif
