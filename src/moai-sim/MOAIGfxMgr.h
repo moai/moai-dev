@@ -13,7 +13,6 @@
 #include <moai-sim/MOAIGfxVertexCache.h>
 #include <moai-sim/MOAIImage.h>
 
-class MOAICamera;
 class MOAIFrameBuffer;
 class MOAIGfxResource;
 class MOAIShader;
@@ -21,7 +20,6 @@ class MOAIShaderProgram;
 class MOAITexture;
 class MOAITextureBase;
 class MOAIVertexFormat;
-class MOAIViewport;
 
 //================================================================//
 // MOAIGfxMgr

@@ -425,35 +425,9 @@ ZLMatrix4x4 MOAICamera::GetProjMtx ( const MOAIViewport& viewport ) const {
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAICamera::GetProjMtxInv ( const MOAIViewport& viewport ) const {
-
-	ZLMatrix4x4 mtx;
-	mtx.Inverse ( this->GetProjMtx ( viewport ));
-	return mtx;
-}
-
-//----------------------------------------------------------------//
 ZLMatrix4x4 MOAICamera::GetViewMtx () const {
 
 	return ZLMatrix4x4 ( this->GetWorldToLocalMtx ());
-}
-
-//----------------------------------------------------------------//
-ZLMatrix4x4 MOAICamera::GetViewMtx ( const ZLVec3D& parallax ) const {
-
-	ZLMatrix4x4 view ( this->GetWorldToLocalMtx ());
-	view.m [ ZLMatrix4x4::C3_R0 ] *= parallax.mX;
-	view.m [ ZLMatrix4x4::C3_R1 ] *= parallax.mY;
-	view.m [ ZLMatrix4x4::C3_R2 ] *= parallax.mZ;
-	return view;
-}
-
-//----------------------------------------------------------------//
-ZLMatrix4x4 MOAICamera::GetViewProjMtx ( const MOAIViewport& viewport, const ZLVec3D& parallax ) const {
-
-	ZLMatrix4x4 mtx = this->GetViewMtx ( parallax );
-	mtx.Append ( this->GetProjMtx ( viewport ));
-	return mtx;
 }
 
 //----------------------------------------------------------------//

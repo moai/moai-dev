@@ -9,7 +9,6 @@
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 
-class MOAICamera;
 class MOAIFrameBuffer;
 class MOAIGfxResource;
 class MOAIIndexBuffer;
@@ -20,7 +19,6 @@ class MOAIVertexArray;
 class MOAIVertexBuffer;
 class MOAIVertexBufferWithFormat;
 class MOAIVertexFormat;
-class MOAIViewport;
 
 //================================================================//
 // MOAIVertexBufferWithFormat

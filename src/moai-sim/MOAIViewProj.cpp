@@ -25,7 +25,15 @@ ZLMatrix4x4 MOAIViewProj::GetViewMtx ( const MOAICamera* camera ) {
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAIViewProj::GetViewMtx ( const MOAICamera* camera, const ZLVec3D& parallax ) {
 
-	return camera ? camera->GetViewMtx ( parallax ) : ZLMatrix4x4::IDENT;
+	if ( camera ) {
+	
+		ZLMatrix4x4 view ( camera->GetViewMtx ());
+		view.m [ ZLMatrix4x4::C3_R0 ] *= parallax.mX;
+		view.m [ ZLMatrix4x4::C3_R1 ] *= parallax.mY;
+		view.m [ ZLMatrix4x4::C3_R2 ] *= parallax.mZ;
+		return view;
+	}
+	return ZLMatrix4x4::IDENT;
 }
 
 //----------------------------------------------------------------//

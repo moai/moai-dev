@@ -11,8 +11,6 @@
 #include <moai-sim/MOAILayer.h>
 #include <moai-sim/MOAIViewport.h>
 
-class MOAICamera;
-
 //================================================================//
 // MOAIPartitionViewLayer
 //================================================================//

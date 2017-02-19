@@ -2,7 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAICamera.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIGfxMgr.h>
@@ -19,7 +18,6 @@
 #include <moai-sim/MOAISurfaceSampler2D.h>
 #include <moai-sim/MOAITexture.h>
 #include <moai-sim/MOAITextureBase.h>
-#include <moai-sim/MOAIViewport.h>
 
 //================================================================//
 // local

@@ -134,11 +134,7 @@ void MOAIMarkerMgr::AffirmDeck () {
 		deck->AffirmMaterialBatch ()->Reserve ( 1 );
 		
 		MOAIMaterial* material = deck->GetMaterial ( 0 );
-		assert ( material );
-		
 		material->SetShader ( shader );
-		//material->SetTexture ( 0, this->mVideoPlane0 );
-		//material->SetTexture ( 1, this->mVideoPlane1 );
 		
 		this->mVideoDeck.Set ( *this, deck );
 		this->mVideoShaderProgram.Set ( *this, program );
@@ -414,8 +410,7 @@ void MOAIMarkerMgr::VideoDidStart () {
 	}
 
 	// The camera will be started by -startRunLoop.
-	MOAIArVideoListener* videoLIstener = [[ MOAIArVideoListener alloc ] init ];
-	[ cameraVideo setTookPictureDelegate:videoLIstener ];
+	[ cameraVideo setTookPictureDelegate:[[ MOAIArVideoListener alloc ] init ]];
 
 	// Other ARToolKit setup. 
 	arSetMarkerExtractionMode ( mARHandle, AR_USE_TRACKING_HISTORY_V2 );

@@ -79,10 +79,7 @@ public:
 	ZLMatrix4x4		GetBillboardMtx			() const;
 	float			GetFocalLength			( float width ) const;
 	ZLMatrix4x4		GetProjMtx				( const MOAIViewport& viewport ) const;
-	ZLMatrix4x4		GetProjMtxInv			( const MOAIViewport& viewport ) const;
 	ZLMatrix4x4		GetViewMtx				() const;
-	ZLMatrix4x4		GetViewMtx				( const ZLVec3D& parallax ) const;
-	ZLMatrix4x4		GetViewProjMtx			( const MOAIViewport& viewport, const ZLVec3D& parallax ) const;
 	ZLVec3D			GetViewVector			() const;
 					MOAICamera				();
 					~MOAICamera				();

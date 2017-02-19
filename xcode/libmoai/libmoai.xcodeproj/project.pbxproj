@@ -10635,10 +10635,6 @@
 				89BE6FE0173AD0CA00DFE837 /* MOAIQuadBrush.h */,
 				89BE6FE5173AD0CA00DFE837 /* MOAIScissorRect.cpp */,
 				89BE6FE6173AD0CA00DFE837 /* MOAIScissorRect.h */,
-				89BE701E173AD0CB00DFE837 /* MOAIViewport.cpp */,
-				89BE701F173AD0CB00DFE837 /* MOAIViewport.h */,
-				CDCA75F31D717E7D00FFE537 /* MOAIViewProj.cpp */,
-				CDCA75F41D717E7D00FFE537 /* MOAIViewProj.h */,
 			);
 			name = graphics;
 			sourceTree = "<group>";
@@ -14407,6 +14403,10 @@
 				89BE6F3D173AD0CA00DFE837 /* MOAICameraAnchor2D.h */,
 				89BE6F3E173AD0CA00DFE837 /* MOAICameraFitter2D.cpp */,
 				89BE6F3F173AD0CA00DFE837 /* MOAICameraFitter2D.h */,
+				89BE701E173AD0CB00DFE837 /* MOAIViewport.cpp */,
+				89BE701F173AD0CB00DFE837 /* MOAIViewport.h */,
+				CDCA75F31D717E7D00FFE537 /* MOAIViewProj.cpp */,
+				CDCA75F41D717E7D00FFE537 /* MOAIViewProj.h */,
 			);
 			name = camera;
 			sourceTree = "<group>";
