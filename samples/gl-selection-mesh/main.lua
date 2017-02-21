@@ -6,20 +6,19 @@
 
 MOAISim.openWindow ( "test", 320, 480 )
 
-frameBuffer = MOAIGfxMgr.getFrameBuffer ()
-frameBuffer:setClearDepth ( true )
-
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 480 )
 
+camera = MOAICamera.new ()
+camera:setType ( MOAICamera.CAMERA_TYPE_3D )
+camera:setLoc ( 0, 0, camera:getFocalLength ( 320 ))
+
 layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:setPartitionCull2D ( false )
+layer:setClearDepth ( true )
 layer:pushRenderPass ()
-
-camera = MOAICamera.new ()
-camera:setLoc ( 0, 0, camera:getFocalLength ( 320 ))
 layer:setCamera ( camera )
 
 local function pushPoint ( points, x, y, z )
@@ -100,7 +99,7 @@ function makeMesh ()
 	writeCube ( vbo, 64, -64, 0, 32 )
 
 	local mesh = MOAIMesh.new ()
-	mesh:setTexture ( 'moai.png' )
+	mesh:setTexture ( '../resources/moai.png' )
 
 	mesh:setVertexBuffer ( vbo, vertexFormat )
 	mesh:setTotalElements ( vbo:countElements ( vertexFormat ))
@@ -124,7 +123,7 @@ end
 
 mesh:reserveSelections ( 4 )
 
-mesh:addSelection ( 1, 1, 36 )
+mesh:addSelection ( 1, 1, 37 )
 mesh:addSelection ( 2, 37, 37 + 36 )
 mesh:addSelection ( 3, 73, 73 + 36 )
 mesh:addSelection ( 4, 109, 109 + 36 )
@@ -136,9 +135,8 @@ local function makeProp ( idx )
 	prop:setIndex ( idx )
 	
 	prop:setDepthTest ( MOAIProp.DEPTH_TEST_LESS )
-
 	prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
-	layer:insertProp ( prop )
+	prop:setPartition ( layer )
 
 	return prop
 end

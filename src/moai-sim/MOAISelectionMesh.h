@@ -58,17 +58,20 @@ protected:
 	void				FreeSpan					( MOAISelectionSpan* span );
 	MOAISelectionSpan*	InsertSpan					( MOAISelectionSpan* span, MOAISelectionSpan* prevInMaster, MOAISelectionSpan* prevInSet );
 
+	//----------------------------------------------------------------//
+	void				MOAIDeck_Draw				( u32 idx );
+
 public:
-	
+
 //	enum {
 //		AND,
 //		OR,
 //		NOT,
 //		XOR,
 //	};
-	
+
 	DECL_LUA_FACTORY ( MOAISelectionMesh )
-	
+
 	//----------------------------------------------------------------//
 	void				AddSelection				( u32 set, size_t base, size_t top );
 	void				ClearSelection				( u32 set );

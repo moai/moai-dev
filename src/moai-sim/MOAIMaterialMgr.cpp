@@ -59,11 +59,11 @@ void MOAIMaterialMgr::Compose ( const MOAIMaterial& material ) {
 			}
 			
 			if ( available & DEPTH_MASK_FLAG ) {
-				this->mCullMode = material.mDepthMask;
+				this->mDepthMask = material.mDepthMask;
 			}
 			
 			if ( available & DEPTH_TEST_FLAG ) {
-				this->mCullMode = material.mDepthTest;
+				this->mDepthTest = material.mDepthTest;
 			}
 		}
 		

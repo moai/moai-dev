@@ -300,12 +300,11 @@ void MOAIShader::SetProgram ( MOAIShaderProgram* program ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShader::UpdateAndBindUniforms () {
+void MOAIShader::UpdateUniforms () {
 
 	if ( this->mProgram ) {
 		this->Bless ();
 		this->ApplyGlobals ();
-		this->BindUniforms ();
 	}
 }
 

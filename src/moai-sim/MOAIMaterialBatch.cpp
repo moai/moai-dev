@@ -370,6 +370,7 @@ void MOAIMaterialBatch::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setBlendMode",			_setBlendMode },
 		{ "setCullMode",			_setCullMode },
 		{ "setDepthMask",			_setDepthMask },
+		{ "setDepthTest",			_setDepthTest },
 		{ "setIndexBatchSize",		_setIndexBatchSize },
 		{ "setLight",				_setLight },
 		{ "setShader",				_setShader },

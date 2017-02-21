@@ -56,12 +56,14 @@ void MOAITableViewLayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAITableViewLayer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+
 	MOAITableLayer::SerializeIn ( state, serializer );
 	MOAIViewLayer::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAITableViewLayer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+
 	MOAITableLayer::SerializeOut ( state, serializer );
 	MOAIViewLayer::SerializeOut ( state, serializer );
 }

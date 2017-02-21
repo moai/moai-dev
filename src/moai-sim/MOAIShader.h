@@ -38,7 +38,7 @@ protected:
 	//----------------------------------------------------------------//
 	void					ApplyGlobals				();
 	void					BindUniforms				();
-	void					UpdateAndBindUniforms		();
+	void					UpdateUniforms				();
 
 	//----------------------------------------------------------------//
 	bool								MOAINode_ApplyAttrOp						( u32 attrID, MOAIAttribute& attr, u32 op );

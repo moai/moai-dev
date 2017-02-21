@@ -248,6 +248,8 @@ void MOAIGfxStateCache::DrawPrims ( u32 primType, u32 base, u32 count ) {
 
 	if ( shader && ( this->mActiveState.mVtxBuffer || this->mActiveState.mVtxArray )) {
 		
+		shader->BindUniforms ();
+		
 		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 		
 		MOAIIndexBuffer* idxBuffer = this->mActiveState.mIdxBuffer;
@@ -843,7 +845,6 @@ bool MOAIGfxStateCache::SetShader ( MOAIShader* shader ) {
 			
 			if ( program ) {
 				program->Bind ();
-				shader->UpdateAndBindUniforms ();
 			}
 		}
 
@@ -853,6 +854,7 @@ bool MOAIGfxStateCache::SetShader ( MOAIShader* shader ) {
 	
 		if ( shader ) {
 			shader->BindTextures ();
+			shader->UpdateUniforms ();
 		}
 	
 		this->mPendingState.mShader = shader;

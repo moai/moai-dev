@@ -206,6 +206,7 @@ void MOAIMaterialHolder::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setBlendMode",			_setBlendMode },
 		{ "setCullMode",			_setCullMode },
 		{ "setDepthMask",			_setDepthMask },
+		{ "setDepthTest",			_setDepthTest },
 		{ "setLight",				_setLight },
 		{ "setShader",				_setShader },
 		{ "setTexture",				_setTexture },
