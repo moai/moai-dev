@@ -99,7 +99,8 @@ int MOAIPartition::_propForPoint ( lua_State* L ) {
 	u32 interfaceMask	= state.GetValue < u32 >( 10, MASK_ANY );
 	u32 queryMask		= state.GetValue < u32 >( 11, MASK_ANY );
 
-	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
+	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
+	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
 	
 	u32 total = self->GatherProps ( buffer, 0, vec, interfaceMask, queryMask );
 	if ( total ) {
@@ -152,7 +153,8 @@ int MOAIPartition::_propForRay ( lua_State* L ) {
 	u32 interfaceMask	= state.GetValue < u32 >( 8, MASK_ANY );
 	u32 queryMask		= state.GetValue < u32 >( 9, MASK_ANY );
 	
-	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
+	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
+	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
 	
 	u32 total = self->GatherProps ( buffer, 0, vec, direction, interfaceMask, queryMask );
 
@@ -193,7 +195,8 @@ int MOAIPartition::_propList ( lua_State* L ) {
 	u32 interfaceMask	= state.GetValue < u32 >( 7, MASK_ANY );
 	u32 queryMask		= state.GetValue < u32 >( 8, MASK_ANY );
 
-	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
+	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
+	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
 
 	u32 total = self->GatherProps ( buffer, 0, interfaceMask, queryMask );
 	if ( total ) {
@@ -239,7 +242,8 @@ int MOAIPartition::_propListForPoint ( lua_State* L ) {
 	u32 interfaceMask	= state.GetValue < u32 >( 10, MASK_ANY );
 	u32 queryMask		= state.GetValue < u32 >( 11, MASK_ANY );
 
-	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
+	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
+	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
 
 	u32 total = self->GatherProps ( buffer, 0, vec, interfaceMask, queryMask );
 	if ( total ) {
@@ -294,7 +298,8 @@ int MOAIPartition::_propListForRay ( lua_State* L ) {
 	u32 interfaceMask	= state.GetValue < u32 >( 13, MASK_ANY );
 	u32 queryMask		= state.GetValue < u32 >( 14, MASK_ANY );
 	
-	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
+	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
+	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
 	
 	u32 total = self->GatherProps ( buffer, 0, vec, direction, interfaceMask, queryMask );
 
@@ -345,7 +350,8 @@ int MOAIPartition::_propListForRect ( lua_State* L ) {
 	u32 interfaceMask	= state.GetValue < u32 >( 11, MASK_ANY );
 	u32 queryMask		= state.GetValue < u32 >( 12, MASK_ANY );
 	
-	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
+	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
+	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
 	
 	u32 total = self->GatherProps ( buffer, 0, rect, interfaceMask, queryMask );
 	if ( total ) {
