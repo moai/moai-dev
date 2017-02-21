@@ -6,6 +6,45 @@
 
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 
+class MOAIPartitionResultMgr;
+
+//================================================================//
+// MOAIScopedPartitionResultBufferHandle
+//================================================================//
+class MOAIScopedPartitionResultBufferHandle {
+private:
+
+	friend class MOAIPartitionResultMgr;
+
+	MOAIPartitionResultMgr&			mMgr;
+	MOAIPartitionResultBuffer*		mBuffer;
+
+	//----------------------------------------------------------------//
+			MOAIScopedPartitionResultBufferHandle		( MOAIPartitionResultMgr& mgr );
+
+	//----------------------------------------------------------------//
+	inline void operator = ( const MOAIScopedPartitionResultBufferHandle& assign ) {
+		this->mBuffer = assign.mBuffer;
+		(( MOAIScopedPartitionResultBufferHandle& )assign ).mBuffer = 0;
+	}
+
+public:
+
+	//----------------------------------------------------------------//
+	MOAIPartitionResultBuffer&		Buffer										();
+									~MOAIScopedPartitionResultBufferHandle		();
+	
+	//----------------------------------------------------------------//
+	inline operator MOAIPartitionResultBuffer* () {
+		return this->mBuffer;
+	}
+	
+	//----------------------------------------------------------------//
+	inline operator MOAIPartitionResultBuffer& () {
+		return *this->mBuffer;
+	}
+};
+
 //================================================================//
 // MOAIPartitionResultMgr
 //================================================================//
@@ -13,15 +52,24 @@ class MOAIPartitionResultMgr :
 	public ZLContextClass < MOAIPartitionResultMgr > {
 private:
 	
+	friend class MOAIScopedPartitionResultBufferHandle;
+	
+	ZLLeanArray < MOAIPartitionResultBuffer* >	mBuffers;
+	ZLLeanStack < MOAIPartitionResultBuffer* >	mAvailable;
+	
 	MOAIPartitionResultBuffer	mBuffer;
+	
+	//----------------------------------------------------------------//
+	void			ReleaseBuffer					( MOAIPartitionResultBuffer* buffer );
 	
 public:
 	
-	GET ( MOAIPartitionResultBuffer&, Buffer, mBuffer )
+	typedef MOAIScopedPartitionResultBufferHandle Handle;
 	
 	//----------------------------------------------------------------//
-			MOAIPartitionResultMgr		();
-			~MOAIPartitionResultMgr		();
+	Handle			GetBufferHandle					();
+					MOAIPartitionResultMgr			();
+					~MOAIPartitionResultMgr			();
 };
 
 #endif

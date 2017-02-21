@@ -167,7 +167,9 @@ void MOAICollisionProp::GatherAndProcess ( MOAICollisionPrimVisitor& visitor, co
 
 	MOAICollisionWorld& world = *this->mCollisionWorld;
 
-	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
+	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
+	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
+	
 	u32 interfaceMask = world.GetInterfaceMask < MOAICollisionProp >();
 	u32 totalResults = world.GatherHulls ( buffer, this, worldBounds, interfaceMask );
 	
