@@ -10,6 +10,8 @@
 
 //----------------------------------------------------------------//
 MOAIPartitionResultBuffer& MOAIScopedPartitionResultBufferHandle::Buffer () {
+
+	return *this->mBuffer;
 }
 
 //----------------------------------------------------------------//
