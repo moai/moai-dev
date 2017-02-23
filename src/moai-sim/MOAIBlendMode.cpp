@@ -12,13 +12,6 @@
 //----------------------------------------------------------------//
 void MOAIBlendMode::Init ( MOAILuaState& state, int idx ) {
 
-	u32 materialID = 0;
-	u32 stackSize = state.GetStackSize ( idx );
-
-	if (( stackSize == 2 ) || ( stackSize == 4 )) {
-		materialID = state.GetValue < u32 >( idx++, 1 ) - 1;
-	}
-
 	if ( state.CheckParams ( idx, "NNN" )) {
 
 		u32 equation	= state.GetValue < u32 >( idx++, ZGL_BLEND_MODE_ADD );

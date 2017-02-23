@@ -95,9 +95,9 @@ protected:
 	static int			_reserveGlobals				( lua_State* L );
 	static int			_reserveTextures			( lua_State* L );
 	static int			_reserveUniforms			( lua_State* L );
-	static int			_setVertexAttribute			( lua_State* L );
 	static int			_setGlobal					( lua_State* L );
 	static int			_setTexture					( lua_State* L );
+	static int			_setVertexAttribute			( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void				BindTextures				();

@@ -620,7 +620,6 @@ void MOAIPartitionHull::UpdateWorldBounds ( const ZLBounds& bounds ) {
 	ZLBox prevBounds = this->mWorldBounds;
 
 	this->mWorldBounds = bounds;
-	this->mWorldBounds.Bless ();
 
 	if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) {
 		this->mWorldBounds.UpdateStatus ();

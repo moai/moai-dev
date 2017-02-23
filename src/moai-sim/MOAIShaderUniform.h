@@ -43,6 +43,7 @@ public:
 	//----------------------------------------------------------------//
 	void			Bind					( MOAIShaderUniformInstance& instance );
 	void			Default					( void* buffer ) const;
+	size_t			GetSize					() const;
 	void			Init					( u32 type, u32 width = 1, u32 count = 1 );
 					MOAIShaderUniform		();
 					~MOAIShaderUniform		();

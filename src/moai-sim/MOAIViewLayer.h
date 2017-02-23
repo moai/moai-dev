@@ -49,6 +49,8 @@ protected:
 
 public:
 
+	DECL_LUA_ABSTRACT ( MOAILayer )
+
 	//----------------------------------------------------------------//
 	float					GetFitting				( ZLRect& worldRect, float hPad, float vPad );
 	ZLMatrix4x4				GetWndToWorldMtx		() const;

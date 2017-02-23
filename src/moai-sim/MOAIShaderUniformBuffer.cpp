@@ -59,7 +59,7 @@ MOAIShaderUniformFormatter* MOAIShaderUniformBuffer::GetUniform ( u32 uniformID,
 //----------------------------------------------------------------//
 MOAIShaderUniformFormatter* MOAIShaderUniformBuffer::GetUniformForAttributeID ( u32 attrID, void*& buffer ) {
 
-	attrID = ( attrID & MOAIAttribute::ATTR_ID_MASK ) - 1;
+	attrID &= MOAIAttribute::ATTR_ID_MASK;
 
 	u32 uniformID = attrID / MAX_UNIFORM_ARRAY_SIZE;
 	u32 index = attrID - ( uniformID * MAX_UNIFORM_ARRAY_SIZE );

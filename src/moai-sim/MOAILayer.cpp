@@ -232,3 +232,19 @@ void MOAILayer::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 	this->mFrameBuffer.Set ( *this, frameBuffer ? frameBuffer : MOAIGfxMgr::Get ().mGfxState.GetDefaultFrameBuffer ());
 }
 
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAILayer::MOAIDrawable_Draw ( int subPrimID ) {
+	UNUSED ( subPrimID );
+
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+
+	gfxMgr.mGfxState.SetFrameBuffer ( this->GetFrameBuffer ());
+	
+	//disable scissor rect for clear
+	gfxMgr.mGfxState.SetScissorRect ();
+	this->ClearSurface ();
+}

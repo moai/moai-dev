@@ -212,15 +212,10 @@ end
 --============================================================--
 
 MOAIHashWriter		= MOAIHashWriterCrypto or MOAIHashWriter
-MOAILayer			= MOAIPartitionLayer
 MOAIProp			= MOAIGraphicsProp
 
 MOAIStreamReader	= MOAIStreamAdapter
 MOAIStreamWriter	= MOAIStreamAdapter
-
-if MOAISim.forceGC then
-    MOAISim.forceGarbageCollection = MOAISim.forceGC
-end
 
 --============================================================--
 -- Cross Platform

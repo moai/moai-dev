@@ -34,6 +34,12 @@ void MOAIShaderUniform::Default ( void* buffer ) const {
 }
 
 //----------------------------------------------------------------//
+size_t MOAIShaderUniform::GetSize () const {
+
+	return this->MOAIShaderUniformFormatter::GetSize () * this->mCount;
+}
+
+//----------------------------------------------------------------//
 void MOAIShaderUniform::Init ( u32 type, u32 width, u32 count ) {
 	
 	this->MOAIShaderUniformFormatter::Init ( type, width );
@@ -42,7 +48,8 @@ void MOAIShaderUniform::Init ( u32 type, u32 width, u32 count ) {
 
 //----------------------------------------------------------------//
 MOAIShaderUniform::MOAIShaderUniform () :
-	mCount ( 0 ) {
+	mCount ( 0 ),
+	mGPUBase (( u32 )-1 ) {
 }
 
 //----------------------------------------------------------------//

@@ -14,7 +14,7 @@ class MOAIAttribute;
 class MOAIShaderUniformBuffer {
 protected:
 
-	static const u32					MAX_UNIFORM_ARRAY_SIZE = 1024;
+	static const u32					MAX_UNIFORM_ARRAY_SIZE = 256;
 
 	//----------------------------------------------------------------//
 	virtual MOAIShaderUniformFormatter*			MOAIShaderUniformBuffer_GetUniform			( u32 uniformID, void*& buffer ) = 0;

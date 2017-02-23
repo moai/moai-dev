@@ -68,14 +68,12 @@ int MOAIGraphicsPropBase::_getScissorRect ( lua_State* L ) {
 			settings.
 	
 	@in		MOAIGraphicsPropBase self
-	@opt	number lod
 	@out	boolean isVisible		Indicates whether the prop is visible.
 */
 int	MOAIGraphicsPropBase::_isVisible ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
 
 	if ( state.IsType ( 2, LUA_TNUMBER )) {
-		float lod = state.GetValue < float >( 2, 0.0f );
 		lua_pushboolean ( state, self->IsVisible ());
 	}
 	else {

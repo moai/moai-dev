@@ -39,6 +39,9 @@ protected:
 	//----------------------------------------------------------------//
 	void			ClearSurface			();
 
+	//----------------------------------------------------------------//
+	void			MOAIDrawable_Draw		( int subPrimID );
+
 public:
 
 	GET_SET ( u32, ClearFlags, mClearFlags );
@@ -49,6 +52,8 @@ public:
 		CLEAR_ALWAYS,
 		CLEAR_ON_BUFFER_FLAG,
 	};
+	
+	DECL_LUA_FACTORY ( MOAILayer )
 
 	//----------------------------------------------------------------//
 	MOAIFrameBuffer*	GetFrameBuffer			();

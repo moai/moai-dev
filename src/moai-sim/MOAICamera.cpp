@@ -328,7 +328,7 @@ void MOAICamera::DrawDebug () {
 	draw.Bind ();
 	
 	ZLRect viewRect = gfxMgr.mGfxState.GetViewRect ();
-	float aspect = viewRect.Width () / viewRect.Height ();
+	//float aspect = viewRect.Width () / viewRect.Height ();
 	
 	ZLMatrix4x4 mtx = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::CLIP_TO_DISPLAY_MTX );
 	

@@ -218,7 +218,7 @@ void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition ) {
 	const ZLFrustum& viewVolume = gfxMgr.mGfxState.GetViewVolume ();
 	
 	u32 totalResults = 0;
-	
+		
 	if ( this->mPartitionCull2D ) {
 		totalResults = partition.GatherHulls ( buffer, 0, viewVolume.mAABB, interfaceMask );
 	}
