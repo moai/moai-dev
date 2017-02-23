@@ -144,21 +144,21 @@ MOAIMarkerMgr.setListener (
 
 MOAIMarkerMgr.setListener (
     MOAIMarkerMgr.EVENT_MARKER_BEGIN,
-    function ( markerID )
+    function ( patternID, markerID )
         prop:setPartition ( propLayer )
     end
 )
 
 MOAIMarkerMgr.setListener (
     MOAIMarkerMgr.EVENT_MARKER_END,
-    function ( markerID )
+    function ( patternID, markerID )
         prop:setPartition ()
     end
 )
 
 MOAIMarkerMgr.setListener (
     MOAIMarkerMgr.EVENT_MARKER_UPDATE,
-    function ( markerID )
+    function ( patternID, markerID )
         MOAIMarkerMgr.getMarkerMatrix ( markerID, marker )
     end
 )

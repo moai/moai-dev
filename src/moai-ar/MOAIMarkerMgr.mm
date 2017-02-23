@@ -259,18 +259,12 @@ void MOAIMarkerMgr::AffirmMarker ( ARMarkerInfo* markerInfo ) {
 	
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
-	if ( !bestMarker ) {
-		if ( this->PushListener ( EVENT_MARKER_BEGIN, state )) {
-			state.Push ( marker->mMarkerID + 1 );
-			state.DebugCall ( 1, 0 );
-		}
-	}
-	
 	if ( marker ) {
-		if ( this->PushListener ( EVENT_MARKER_UPDATE, state )) {
-			state.Push ( marker->mMarkerID + 1 );
-			state.DebugCall ( 1, 0 );
+	
+		if ( !bestMarker ) {
+			this->InvokeMarkerEvent ( *marker, EVENT_MARKER_BEGIN );
 		}
+		this->InvokeMarkerEvent ( *marker, EVENT_MARKER_UPDATE );
 	}
 }
 
@@ -282,6 +276,18 @@ void MOAIMarkerMgr::GetMarkerMatrix ( u32 markerID, MOAIMatrix& matrix ) {
 		MOAIMarker* marker = this->mMarkers [ markerID ];
 		matrix.Init ( marker->mTransform );
 		matrix.ScheduleUpdate ();
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIMarkerMgr::InvokeMarkerEvent ( MOAIMarker& marker, u32 event ) {
+
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+
+	if ( this->PushListener ( event, state )) {
+		state.Push ( marker.mPattern->mPatternID + 1 );
+		state.Push ( marker.mMarkerID + 1 );
+		state.DebugCall ( 2, 0 );
 	}
 }
 
@@ -383,16 +389,9 @@ void MOAIMarkerMgr::ProcessFrame () {
 		this->InvokeListener ( EVENT_UPDATE_FRAME );
 	}
 	
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	
 	while ( this->mStaleMarkers.Count ()) {
-	
 		MOAIMarker* marker = *this->mStaleMarkers.PopFront ();
-		
-		if ( this->PushListener ( EVENT_MARKER_END, state )) {
-			state.Push ( marker->mMarkerID + 1 );
-			state.DebugCall ( 1, 0 );
-		}
+		this->InvokeMarkerEvent ( *marker, EVENT_MARKER_END );
 		marker->mNext = this->mFreeMarkers;
 		this->mFreeMarkers = marker;
 	}

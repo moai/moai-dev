@@ -94,6 +94,7 @@ private:
 	//----------------------------------------------------------------//
 	void				AffirmDeck				();
 	void				AffirmMarker			( ARMarkerInfo* markerInfo );
+	void				InvokeMarkerEvent		( MOAIMarker& marker, u32 event );
 	static void			StartCallback			( void* userData );
 	void				UpdateVideoProjMtx		();
 	void				VideoDidStart			();
