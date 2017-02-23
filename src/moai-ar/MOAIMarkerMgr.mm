@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <moai-ar/MOAIMarker.h>
 #include <moai-ar/MOAIMarkerMgr.h>
 #include <moai-ar/MOAIVideoTexture.h>
 
@@ -35,6 +36,21 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIMarkerMgr::_getMarkerMatrix ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIMarkerMgr, "NU" )
+
+	u32 markerID			= state.GetValue < u32 >( 1, 1 ) - 1;
+	MOAIMatrix* matrix		= state.GetLuaObject < MOAIMatrix >( 2, true );
+	
+	if ( matrix ) {
+		self->GetMarkerMatrix ( markerID, *matrix );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIMarkerMgr::_getVideoCamera ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIMarkerMgr, "" )
 
@@ -56,6 +72,7 @@ int MOAIMarkerMgr::_getVideoDeck ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIMarkerMgr::_getVideoSize ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIMarkerMgr, "" )
 	
@@ -63,6 +80,19 @@ int MOAIMarkerMgr::_getVideoSize ( lua_State* L ) {
 	state.Push ( self->mVideoHeight );
 
 	return 2;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIMarkerMgr::_loadPattern ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIMarkerMgr, "SN" )
+	
+	cc8* filename		= state.GetValue < cc8* >( 1, "" );
+	double width		= state.GetValue < double >( 2, 0.0 );
+	
+	self->LoadPattern ( filename, width );
+	
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -166,17 +196,125 @@ void MOAIMarkerMgr::AffirmDeck () {
 }
 
 //----------------------------------------------------------------//
+void MOAIMarkerMgr::AffirmMarker ( ARMarkerInfo* markerInfo ) {
+
+	int patternID = markerInfo->id;
+	ZLVec2D position (( float )markerInfo->pos [ 0 ], ( float )markerInfo->pos [ 1 ]);
+
+	float bestDist = 0.0f;
+	MOAIMarker* bestMarker = 0;
+
+	MarkerIt cursor = this->mStaleMarkers.Head ();
+	for ( ; cursor; cursor = cursor->Next ()) {
+	
+		MOAIMarker* marker = cursor->Data ();
+	
+		if ( marker->mPattern->mPatternID == patternID ) {
+		
+			float distSquared = position.DistSqrd ( marker->mPosition );
+		
+			if ( !bestMarker || ( distSquared < bestDist )) {
+				bestMarker = marker;
+				bestDist = distSquared;
+			}
+		}
+	}
+
+	MOAIMarker* marker = bestMarker;
+
+	if ( marker ) {
+		
+		this->mStaleMarkers.Remove ( marker->mLink );
+	}
+	else {
+	
+		if ( this->mFreeMarkers ) {
+			marker = this->mFreeMarkers;
+			this->mFreeMarkers = marker->mNext;
+		}
+		else {
+			u32 idx = ( u32 )this->mMarkers.Size ();
+			marker = new MOAIMarker ( idx );
+			this->mMarkers.Grow ( idx + 1 );
+			this->mMarkers [ idx ] = marker;
+		}
+	}
+	
+	assert ( marker );
+	
+	MOAIPattern& pattern = this->mPatterns [ patternID ];
+
+	if ( marker->mPattern ) {
+		arGetTransMatSquareCont ( this->mAR3DHandle, markerInfo, marker->mPatternTrans, pattern.mPatternWidth, marker->mPatternTrans );
+	}
+	else {
+		arGetTransMatSquare ( this->mAR3DHandle, markerInfo, pattern.mPatternWidth, marker->mPatternTrans );
+	}
+
+	marker->mPattern = &pattern;
+	marker->mPosition = position;
+	marker->Update ();
+	marker->mNext = this->mActiveMarkers;
+	this->mActiveMarkers = marker;
+	
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	
+	if ( !bestMarker ) {
+		if ( this->PushListener ( EVENT_MARKER_BEGIN, state )) {
+			state.Push ( marker->mMarkerID + 1 );
+			state.DebugCall ( 1, 0 );
+		}
+	}
+	
+	if ( marker ) {
+		if ( this->PushListener ( EVENT_MARKER_UPDATE, state )) {
+			state.Push ( marker->mMarkerID + 1 );
+			state.DebugCall ( 1, 0 );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIMarkerMgr::GetMarkerMatrix ( u32 markerID, MOAIMatrix& matrix ) {
+
+	if ( markerID < this->mMarkers.Size ()) {
+	
+		MOAIMarker* marker = this->mMarkers [ markerID ];
+		matrix.Init ( marker->mTransform );
+		matrix.ScheduleUpdate ();
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIMarkerMgr::LoadPattern ( cc8* filename, double width ) {
+
+	if (( this->mARHandle && this->mARPatternHandle ) &&  ZLFileSys::CheckFileExists ( filename )) {
+	
+		int patternID = arPattLoad ( this->mARPatternHandle, filename );
+		
+		if ( patternID < 0 ) {
+			DEBUG_LOG ( "Error loading pattern file %s.\n", filename );
+			return;
+		}
+		MOAIPattern& pattern = this->mPatterns [ patternID ];
+		pattern.mPatternID = patternID;
+		pattern.mPatternWidth = width;
+	}
+}
+
+//----------------------------------------------------------------//
 MOAIMarkerMgr::MOAIMarkerMgr () :
 	mVideoPaused ( FALSE ),
 	mVideoParam ( 0 ),
 	mARHandle ( 0 ),
 	mARPatternHandle ( 0 ),
 	mAR3DHandle ( 0 ),
-	mUseContPoseEstimation ( FALSE ),
 	mCameraParam ( 0 ),
 	mVideoBuffer ( 0 ),
 	mVideoWidth ( 0 ),
-	mVideoHeight ( 0 ) {
+	mVideoHeight ( 0 ),
+	mActiveMarkers ( 0 ),
+	mFreeMarkers ( 0 ) {
 }
 
 //----------------------------------------------------------------//
@@ -188,6 +326,107 @@ MOAIMarkerMgr::~MOAIMarkerMgr () {
 	this->mVideoPlane0.Set ( *this, 0 );
 	this->mVideoPlane1.Set ( *this, 0 );
 	this->mVideoCamera.Set ( *this, 0 );
+	
+	this->mStaleMarkers.Clear ();
+	
+	for ( size_t i = 0; i < this->mMarkers.Size (); ++i ) {
+		delete ( this->mMarkers [ i ]);
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIMarkerMgr::ProcessFrame () {
+
+	MOAIMarker*	cursor = this->mActiveMarkers;
+	for ( ; cursor; cursor = cursor->mNext ) {
+		this->mStaleMarkers.PushBack ( cursor->mLink );
+	}
+	this->mActiveMarkers = 0;
+
+	this->mVideoBuffer = ar2VideoGetImage ( mVideoParam );
+
+	if ( this->mVideoBuffer ) {
+
+		if ( this->mVideoBuffer->bufPlaneCount == 2 ) {
+			if ( this->mVideoPlane0 ) {
+				this->mVideoPlane0->UpdateBuffer ( this->mVideoBuffer->bufPlanes [ 0 ]);
+			}
+			if ( this->mVideoPlane1 ) {
+				this->mVideoPlane1->UpdateBuffer ( this->mVideoBuffer->bufPlanes [ 1 ]);
+			}
+		}
+		else {
+			this->mVideoPlane0->UpdateBuffer ( this->mVideoBuffer->buff );
+		}
+
+		// Detect the markers in the video frame.
+		if ( arDetectMarker ( mARHandle, this->mVideoBuffer->buff ) < 0 ) return;
+		DEBUG_LOG ( "found %d marker(s).\n", mARHandle->marker_num );
+
+		// Check through the marker_info array for highest confidence
+		// visible marker matching our preferred pattern.
+		
+		for ( int j = 0; j < mARHandle->marker_num; j++ ) {
+		
+			DEBUG_LOG ( "   pattern: %d confidence: %g\n", mARHandle->markerInfo [ j ].id, mARHandle->markerInfo [ j ].cf );
+		
+			ARMarkerInfo* markerInfo = &mARHandle->markerInfo [ j ];
+			if ( markerInfo->cf > 0.8f ) {
+				this->AffirmMarker ( markerInfo );
+			}
+		}
+		
+		this->UpdateVideoProjMtx ();
+		this->mVideoCamera->SetProjMtx ( this->mProjMtx );
+		this->mVideoCamera->ScheduleUpdate ();
+		
+		this->InvokeListener ( EVENT_UPDATE_FRAME );
+	}
+	
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	
+	while ( this->mStaleMarkers.Count ()) {
+	
+		MOAIMarker* marker = *this->mStaleMarkers.PopFront ();
+		
+		if ( this->PushListener ( EVENT_MARKER_END, state )) {
+			state.Push ( marker->mMarkerID + 1 );
+			state.DebugCall ( 1, 0 );
+		}
+		marker->mNext = this->mFreeMarkers;
+		this->mFreeMarkers = marker;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIMarkerMgr::RegisterLuaClass ( MOAILuaState& state ) {
+	UNUSED ( state );
+
+	state.SetField ( -1, "EVENT_MARKER_BEGIN",	( u32 )EVENT_MARKER_BEGIN );
+	state.SetField ( -1, "EVENT_MARKER_END",	( u32 )EVENT_MARKER_END );
+	state.SetField ( -1, "EVENT_MARKER_UPDATE",	( u32 )EVENT_MARKER_UPDATE );
+	state.SetField ( -1, "EVENT_UPDATE_FRAME",	( u32 )EVENT_UPDATE_FRAME );
+	state.SetField ( -1, "EVENT_VIDEO_START",	( u32 )EVENT_VIDEO_START );
+
+	luaL_Reg regTable [] = {
+		{ "getMarkerMatrix",		_getMarkerMatrix },
+		{ "getListener",			&MOAIGlobalEventSource::_getListener < MOAIMarkerMgr > },
+		{ "getVideoCamera",			_getVideoCamera },
+		{ "getVideoDeck",			_getVideoDeck },
+		{ "getVideoSize",			_getVideoSize },
+		{ "loadPattern",			_loadPattern },
+		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAIMarkerMgr > },
+		{ "start",					_start },
+		{ "stop",					_stop },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIMarkerMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
+	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
@@ -242,139 +481,6 @@ void MOAIMarkerMgr::Stop () {
         ar2VideoClose ( mVideoParam );
         mVideoParam = NULL;
     }
-}
-
-//----------------------------------------------------------------//
-void MOAIMarkerMgr::ProcessFrame () {
-
-	//this->FinishInit ();
-	//this->ScheduleForGPUUpdate ();
-
-	this->mVideoBuffer = ar2VideoGetImage ( mVideoParam );
-
-	if ( this->mVideoBuffer ) {
-
-		if ( this->mVideoBuffer->bufPlaneCount == 2 ) {
-			if ( this->mVideoPlane0 ) {
-				this->mVideoPlane0->UpdateBuffer ( this->mVideoBuffer->bufPlanes [ 0 ]);
-			}
-			if ( this->mVideoPlane1 ) {
-				this->mVideoPlane1->UpdateBuffer ( this->mVideoBuffer->bufPlanes [ 1 ]);
-			}
-		}
-		else {
-			this->mVideoPlane0->UpdateBuffer ( this->mVideoBuffer->buff );
-		}
-
-		ARdouble err;
-		int j, k;
-
-		// Detect the markers in the video frame.
-		if ( arDetectMarker ( mARHandle, this->mVideoBuffer->buff ) < 0 ) return;
-		DEBUG_LOG ( "found %d marker(s).\n", mARHandle->marker_num );
-
-		// Check through the marker_info array for highest confidence
-		// visible marker matching our preferred pattern.
-		k = -1;
-		for ( j = 0; j < mARHandle->marker_num; j++ ) {
-			if ( mARHandle->markerInfo [ j ].id == mPatternID ) {
-				if ( k == -1 ) {
-					k = j;
-				}
-				else if ( mARHandle->markerInfo [ j ].cf > mARHandle->markerInfo [ k ].cf ) {
-					k = j;
-				}
-			}
-		}
-
-		float modelView [ 16 ];
-
-		if ( k != -1 ) {
-
-			DEBUG_LOG ( "marker %d matched pattern %d.\n", k, mPatternID );
-
-			// Get the transformation between the marker and the real camera into mPatternTrans.
-			if ( mPatternFound && mUseContPoseEstimation ) {
-				err = arGetTransMatSquareCont ( mAR3DHandle, &( mARHandle->markerInfo [ k ]), mPatternTrans, mPatternWidth, mPatternTrans );
-			}
-			else {
-				err = arGetTransMatSquare ( mAR3DHandle, &( mARHandle->markerInfo [ k ]), mPatternWidth, mPatternTrans );
-			}
-			//arglCameraViewRHf ( mPatternTrans, modelView, VIEW_SCALEFACTOR );
-			mPatternFound = TRUE;
-			mUseContPoseEstimation = TRUE;
-		}
-		else {
-			mPatternFound = FALSE;
-			mUseContPoseEstimation = FALSE;
-		}
-		
-		this->UpdateMarkerMtx ();
-		this->UpdateVideoProjMtx ();
-		
-		ZLMatrix4x4 mtx = this->mViewMtx;
-		mtx.Append ( this->mProjMtx );
-		
-		this->mVideoCamera->SetProjMtx ( mtx );
-		
-		this->InvokeListener ( EVENT_UPDATE_FRAME );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIMarkerMgr::RegisterLuaClass ( MOAILuaState& state ) {
-	UNUSED ( state );
-
-	state.SetField ( -1, "EVENT_UPDATE_FRAME",	( u32 )EVENT_UPDATE_FRAME );
-	state.SetField ( -1, "EVENT_VIDEO_START",	( u32 )EVENT_VIDEO_START );
-
-	luaL_Reg regTable [] = {
-		{ "getListener",			&MOAIGlobalEventSource::_getListener < MOAIMarkerMgr > },
-		{ "getVideoCamera",			_getVideoCamera },
-		{ "getVideoDeck",			_getVideoDeck },
-		{ "getVideoSize",			_getVideoSize },
-		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAIMarkerMgr > },
-		{ "start",					_start },
-		{ "stop",					_stop },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIMarkerMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
-	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
-void MOAIMarkerMgr::UpdateMarkerMtx () {
-
-	this->mViewMtx.m [ 0 + 0 * 4 ] = this->mPatternTrans [ 0 ][ 0 ]; // R1C1
-    this->mViewMtx.m [ 0 + 1 * 4 ] = this->mPatternTrans [ 0 ][ 1 ]; // R1C2
-    this->mViewMtx.m [ 0 + 2 * 4 ] = this->mPatternTrans [ 0 ][ 2 ];
-    this->mViewMtx.m [ 0 + 3 * 4 ] = this->mPatternTrans [ 0 ][ 3 ];
-	
-    this->mViewMtx.m [ 1 + 0 * 4 ] = -this->mPatternTrans [ 1 ][ 0 ]; // R2
-    this->mViewMtx.m [ 1 + 1 * 4 ] = -this->mPatternTrans [ 1 ][ 1 ];
-    this->mViewMtx.m [ 1 + 2 * 4 ] = -this->mPatternTrans [ 1 ][ 2 ];
-    this->mViewMtx.m [ 1 + 3 * 4 ] = -this->mPatternTrans [ 1 ][ 3 ];
-	
-	this->mViewMtx.m [ 2 + 0 * 4 ] = -this->mPatternTrans [ 2 ][ 0 ]; // R3
-    this->mViewMtx.m [ 2 + 1 * 4 ] = -this->mPatternTrans [ 2 ][ 1 ];
-    this->mViewMtx.m [ 2 + 2 * 4 ] = -this->mPatternTrans [ 2 ][ 2 ];
-    this->mViewMtx.m [ 2 + 3 * 4 ] = -this->mPatternTrans [ 2 ][ 3 ];
-	
-	this->mViewMtx.m [ 3 + 0 * 4 ] = 0.0f;
-    this->mViewMtx.m [ 3 + 1 * 4 ] = 0.0f;
-    this->mViewMtx.m [ 3 + 2 * 4 ] = 0.0f;
-    this->mViewMtx.m [ 3 + 3 * 4 ] = 1.0f;
-	
-//    if (scale != 0.0f) {
-//        m_modelview[12] *= scale;
-//        m_modelview[13] *= scale;
-//        m_modelview[14] *= scale;
-//    }
 }
 
 //----------------------------------------------------------------//
@@ -584,22 +690,13 @@ void MOAIMarkerMgr::VideoDidStart () {
 	}
 	arPattAttach ( mARHandle, mARPatternHandle );
 
-	// Load marker(s).
-	// Loading only 1 pattern in this example.
-	char *patt_name  = "hiro.patt";
-	if (( mPatternID = arPattLoad ( mARPatternHandle, patt_name )) < 0 ) {
-		DEBUG_LOG ( "Error loading pattern file %s.\n", patt_name );
-		this->Stop ();
-		return;
-	}
-	mPatternWidth = 40.0f;
-	mPatternFound = FALSE;
-
 	if ( ar2VideoCapStart ( mVideoParam ) != 0 ) {
 		DEBUG_LOG ( "Error: Unable to begin camera data capture.\n" );
 		this->Stop ();
 		return;
 	}
+
+	//this->mMarker.Set ( *this, new MOAIMatrix ());
 
 	this->mVideoCamera.Set ( *this, new MOAICamera ());
 	this->UpdateVideoProjMtx ();

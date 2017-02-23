@@ -2730,6 +2730,8 @@
 		CD6D751C17EE415D00964415 /* ZLVfsVirtualPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6943173974FD00DFE837 /* ZLVfsVirtualPath.cpp */; };
 		CD6D751D17EE415D00964415 /* ZLVfsZipArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6945173974FD00DFE837 /* ZLVfsZipArchive.cpp */; };
 		CD6D751E17EE415D00964415 /* ZLVfsZipStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6947173974FD00DFE837 /* ZLVfsZipStream.cpp */; };
+		CD6E82061E5ED7BD0001AC9B /* MOAIMarker.h in Headers */ = {isa = PBXBuildFile; fileRef = CD6E82041E5ED7BD0001AC9B /* MOAIMarker.h */; };
+		CD6E82071E5ED7BD0001AC9B /* MOAIMarker.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD6E82051E5ED7BD0001AC9B /* MOAIMarker.mm */; };
 		CD6ECF6C1A6E247C004813FF /* MOAIMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD6ECF6A1A6E247C004813FF /* MOAIMatrix.cpp */; };
 		CD6ECF6D1A6E247C004813FF /* MOAIMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD6ECF6A1A6E247C004813FF /* MOAIMatrix.cpp */; };
 		CD6ECF6E1A6E247C004813FF /* MOAIMatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = CD6ECF6B1A6E247C004813FF /* MOAIMatrix.h */; };
@@ -7324,6 +7326,8 @@
 		CD6AFDA31B1683F800A36954 /* MOAIGeometryWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGeometryWriter.cpp; sourceTree = "<group>"; };
 		CD6AFDA41B1683F800A36954 /* MOAIGeometryWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGeometryWriter.h; sourceTree = "<group>"; };
 		CD6D752517EE415D00964415 /* libmoai-osx-zl-vfs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zl-vfs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD6E82041E5ED7BD0001AC9B /* MOAIMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIMarker.h; path = "moai-ar/MOAIMarker.h"; sourceTree = "<group>"; };
+		CD6E82051E5ED7BD0001AC9B /* MOAIMarker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIMarker.mm; path = "moai-ar/MOAIMarker.mm"; sourceTree = "<group>"; };
 		CD6ECF6A1A6E247C004813FF /* MOAIMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIMatrix.cpp; sourceTree = "<group>"; };
 		CD6ECF6B1A6E247C004813FF /* MOAIMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIMatrix.h; sourceTree = "<group>"; };
 		CD73A5F8188F0AD200DFACDB /* MOAICollisionProp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICollisionProp.cpp; sourceTree = "<group>"; };
@@ -11328,10 +11332,12 @@
 				CDD340221E5675F10049EF72 /* shaders */,
 				CD4BCF871E542768002306C2 /* host.mm */,
 				CD4BCF881E542768002306C2 /* host.h */,
-				CD4BCF891E542768002306C2 /* MOAIMarkerMgr.mm */,
+				CD6E82041E5ED7BD0001AC9B /* MOAIMarker.h */,
+				CD6E82051E5ED7BD0001AC9B /* MOAIMarker.mm */,
 				CD4BCF8A1E542768002306C2 /* MOAIMarkerMgr.h */,
-				CDD3401E1E5540AB0049EF72 /* MOAIVideoTexture.mm */,
+				CD4BCF891E542768002306C2 /* MOAIMarkerMgr.mm */,
 				CDD3401F1E5540AB0049EF72 /* MOAIVideoTexture.h */,
+				CDD3401E1E5540AB0049EF72 /* MOAIVideoTexture.mm */,
 				CD4BCF8B1E542768002306C2 /* pch.cpp */,
 				CD4BCF8C1E542768002306C2 /* pch.h */,
 			);
@@ -16327,6 +16333,7 @@
 				CDD340211E5540AB0049EF72 /* MOAIVideoTexture.h in Headers */,
 				CDD3402A1E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-vsh.h in Headers */,
 				CD4BCF901E542768002306C2 /* MOAIMarkerMgr.h in Headers */,
+				CD6E82061E5ED7BD0001AC9B /* MOAIMarker.h in Headers */,
 				CDD3402D1E56CA1F0049EF72 /* MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-fsh.h in Headers */,
 				CDD3402B1E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-fsh.h in Headers */,
 				CDD340291E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-fsh.h in Headers */,
@@ -20031,6 +20038,7 @@
 				CD4BCF911E542768002306C2 /* pch.cpp in Sources */,
 				CD4BCF8F1E542768002306C2 /* MOAIMarkerMgr.mm in Sources */,
 				CD4BCF8D1E542768002306C2 /* host.mm in Sources */,
+				CD6E82071E5ED7BD0001AC9B /* MOAIMarker.mm in Sources */,
 				CDD340201E5540AB0049EF72 /* MOAIVideoTexture.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

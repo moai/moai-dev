@@ -93,7 +93,17 @@ function makeCube ( size, texture )
 	return makeBoxMesh ( -size, -size, -size, size, size, size, texture )
 end
 
-local mesh = makeCube ( 16, 'moai.png' )
+mesh = makeCube ( 16, 'moai.png' )
+
+marker = MOAIMatrix.new ()
+
+prop = MOAIProp.new ()
+prop:setDeck ( mesh )
+prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
+prop:setParent ( marker )
+prop:setLoc ( 0, 0, 8 )
+
+propLayer = MOAIPartitionViewLayer.new ()
 
 MOAIMarkerMgr.setListener (
 
@@ -101,6 +111,8 @@ MOAIMarkerMgr.setListener (
 
     function ()
 
+        MOAIMarkerMgr.loadPattern ( 'hiro.patt', 40.0 )
+        
         local VIEW_WIDTH, VIEW_HEIGHT = MOAIGfxMgr.getViewSize ()
         local VIDEO_HEIGHT, VIDEO_WIDTH = MOAIMarkerMgr.getVideoSize ()
         local VIDEO_ASPECT = ( VIDEO_HEIGHT / VIDEO_WIDTH )
@@ -124,16 +136,30 @@ MOAIMarkerMgr.setListener (
 
         local camera = MOAIMarkerMgr.getVideoCamera ()
 
-        local propLayer = MOAIPartitionViewLayer.new ()
         propLayer:setViewport ( viewport )
         propLayer:setCamera ( camera )
         propLayer:pushRenderPass ()
+    end
+)
 
-        local prop = MOAIProp.new ()
-        prop:setDeck ( mesh )
-        prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
+MOAIMarkerMgr.setListener (
+    MOAIMarkerMgr.EVENT_MARKER_BEGIN,
+    function ( markerID )
         prop:setPartition ( propLayer )
-        prop:setLoc ( 0, 0, 8 )
+    end
+)
+
+MOAIMarkerMgr.setListener (
+    MOAIMarkerMgr.EVENT_MARKER_END,
+    function ( markerID )
+        prop:setPartition ()
+    end
+)
+
+MOAIMarkerMgr.setListener (
+    MOAIMarkerMgr.EVENT_MARKER_UPDATE,
+    function ( markerID )
+        MOAIMarkerMgr.getMarkerMatrix ( markerID, marker )
     end
 )
 

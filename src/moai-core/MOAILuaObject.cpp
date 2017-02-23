@@ -611,8 +611,6 @@ void MOAILuaObject::SetInterfaceTable ( MOAILuaState& state, int idx ) {
 
 //----------------------------------------------------------------//
 void MOAILuaObject::SetMemberTable ( MOAILuaState& state, int idx ) {
-	UNUSED ( state );
-	UNUSED ( idx );
 
 	// TODO: what if object is a singleton?
 	assert ( !this->GetLuaClass ()->IsSingleton ()); // TODO: should actually set the member table, not just crash

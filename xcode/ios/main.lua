@@ -8,5 +8,5 @@ print ( 'HELLO FROM LUA' )
 
 if MOAIFileSystem.checkFileExists ( 'lua/main.lua' ) then
 	MOAIFileSystem.setWorkingDirectory ( 'lua' )
-	dofile ( 'main.lua' )
+	dofile ( 'main-ar.lua' )
 end
