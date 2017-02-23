@@ -16,6 +16,7 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_affirmPath					( lua_State* L );
+	static int		_blessFile					( lua_State* L );
 	static int		_checkFileExists			( lua_State* L );
 	static int		_checkPathExists			( lua_State* L );
 	static int		_copy						( lua_State* L );

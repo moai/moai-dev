@@ -38,6 +38,37 @@ int MOAIFileSystem::_affirmPath ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFileSystem::_blessFile ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	cc8* filename	= state.GetValue < cc8* >( 1, "" );
+	u32 timeout		= state.GetValue < u32 >( 2, 0 );
+	
+	bool exists = ZLFileSys::CheckFileExists ( filename );
+	bool opened = false;
+	
+	if ( exists ) {
+	
+		u32 count = 0;
+		while (( timeout == 0 ) || ( count < timeout )) {
+		
+			ZLFILE* file = ( ZLFILE* )zl_fopen ( filename, "rb" );
+			if ( file ) {
+				zl_fclose ( file );
+				opened = true;
+				break;
+			}
+			count++;
+		}
+	}
+	
+	state.Push ( exists );
+	state.Push ( opened );
+	return 2;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	checkFileExists
 	@text	Check for the existence of a file.
 
@@ -501,6 +532,7 @@ void MOAIFileSystem::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "affirmPath",					_affirmPath },
+		{ "blessFile",					_blessFile },
 		{ "checkFileExists",			_checkFileExists },
 		{ "checkPathExists",			_checkPathExists },
 		{ "copy",						_copy },

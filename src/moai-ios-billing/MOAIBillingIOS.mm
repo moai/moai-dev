@@ -44,8 +44,10 @@ int MOAIBillingIOS::_requestPaymentForProduct ( lua_State* L ) {
 	
 	if ( quantity ) {
 		
-		SKMutablePayment* payment = [ SKMutablePayment paymentWithProductIdentifier:[ NSString stringWithUTF8String:identifier ]];
+		SKMutablePayment* payment = [[ SKMutablePayment alloc ] init ];
+		payment.productIdentifier = [ NSString stringWithUTF8String:identifier ];
 		payment.quantity = quantity;
+		
 		[[ SKPaymentQueue defaultQueue ] addPayment:payment ];
 	}
 	
