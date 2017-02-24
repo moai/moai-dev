@@ -4,8 +4,8 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_MODEL_BOUNDS, 2, 1, 1, 1 )
-MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 2, 0.75, 0.75, 0.75 )
+MOAIDebugLinesMgr.setStyle ( MOAIProp.DEBUG_DRAW_MODEL_BOUNDS, 2, 1, 1, 1 )
+MOAIDebugLinesMgr.setStyle ( MOAIProp.DEBUG_DRAW_WORLD_BOUNDS, 2, 0.75, 0.75, 0.75 )
 
 print ( "hello, moai!" )
 
@@ -40,8 +40,8 @@ render:ease				( MOAIParticleScript.SPRITE_X_SCL, CONST ( 0.5 ), CONST ( 3 ), MO
 render:ease				( MOAIParticleScript.SPRITE_OPACITY, CONST ( 1 ), CONST ( 0 ), MOAIEaseType.EASE_OUT )
 
 ----------------------------------------------------------------
-texture = MOAIGfxQuad2D.new ()
-texture:setTexture ( "moai.png" )
+texture = MOAISpriteDeck2D.new ()
+texture:setTexture ( "../resources/moai.png" )
 texture:setRect ( -16, -16, 16, 16 )
 
 system = MOAIParticleSystem.new ()
@@ -51,7 +51,7 @@ system:reserveStates ( 2 )
 system:setDeck ( texture )
 system:setComputeBounds ( true )
 system:start ()
-layer:insertProp ( system )
+system:setPartition ( layer )
 
 state = MOAIParticleState.new ()
 state:setTerm ( 3, 3 )

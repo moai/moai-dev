@@ -13,43 +13,44 @@ viewport:setScale ( 320, -480 )
 --set up the world layer
 worldLayer = MOAIPartitionViewLayer.new ()
 worldLayer:setViewport ( viewport )
-MOAISim.pushRenderPass ( worldLayer )
+worldLayer:pushRenderPass ()
 
 -- set up the world camera
-camera = MOAICamera2D.new ()
-camera:moveLoc ( 0, -192, 3 )
-camera:moveScl ( 1, 1, 3 )
+camera = MOAICamera.new ()
+camera:moveLoc ( 0, -192, 0, 3 )
 worldLayer:setCamera ( camera )
 
 -- add a prop to the world
-gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "moai.png" )
+gfxQuad = MOAISpriteDeck2D.new ()
+gfxQuad:setTexture ( "../resources/moai.png" )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
-worldLayer:insertProp ( prop )
+prop:setPartition ( worldLayer )
 
-prop:moveRot ( 360, 3 )
+prop:moveRot ( 0, 0, 360, 3 )
+prop:moveLoc ( 64, 0, 0, 3 )
 
 --set up the hud layer
 hudLayer = MOAIPartitionViewLayer.new ()
 hudLayer:setViewport ( viewport )
-MOAISim.pushRenderPass ( hudLayer )
+hudLayer:pushRenderPass ()
 
 -- create the bridge
 pinTransform = MOAIPinTransform.new ()
 pinTransform:init ( worldLayer, hudLayer )
-pinTransform:setNodeLink ( prop )
+pinTransform:setParent ( prop )
 
 -- create the pin graphic and attach it to the pin transform
-gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "moai.png" )
+gfxQuad = MOAISpriteDeck2D.new ()
+gfxQuad:setTexture ( "../resources/moai.png" )
 gfxQuad:setRect ( -32, -32, 32, 32 )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
-pin = MOAIProp2D.new ()
+pin = MOAIProp.new ()
 pin:setDeck ( gfxQuad )
-pin:setAttrLink ( MOAIProp2D.INHERIT_LOC, pinTransform, MOAIProp2D.TRANSFORM_TRAIT )
-hudLayer:insertProp ( pin )
+pin:setAttrLink ( MOAIProp.INHERIT_LOC, pinTransform, MOAIProp.TRANSFORM_TRAIT )
+pin:setPartition ( hudLayer )
+

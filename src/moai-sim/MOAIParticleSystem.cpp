@@ -369,57 +369,6 @@ void MOAIParticleSystem::ClearQueue () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleSystem::Draw ( int subPrimID ) {
-	UNUSED ( subPrimID );
-
-	if ( !this->IsVisible ()) return;
-	if ( !this->mDeck ) return;
-	if ( this->IsClear ()) return;
-
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	
-	this->PushGfxState ();
-	this->LoadUVTransform ();
-
-	ZLAffine3D drawingMtx;
-	ZLAffine3D spriteMtx;
-	
-	u32 maxSprites = ( u32 )this->mSprites.Size ();
-	u32 total = this->mSpriteTop;
-	u32 base = 0;
-	if ( total > maxSprites ) {
-		base = total % maxSprites;
-		total = maxSprites;
-	}
-	
-	for ( u32 i = 0; i < total; ++i ) {
-
-		u32 idx;
-		if ( this->mDrawOrder == ORDER_NORMAL ) {
-			idx = ( base + i ) % maxSprites;
-		}
-		else {
-			idx = ( base + ( total - 1 - i )) % maxSprites;
-		}
-				
-		AKUParticleSprite& sprite = this->mSprites [ idx ];
-		gfxMgr.mGfxState.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
-		
-		spriteMtx.ScRoTr ( sprite.mXScl, sprite.mYScl, 1.0f, 0.0f, 0.0f, sprite.mZRot * ( float )D2R, sprite.mXLoc, sprite.mYLoc, 0.0f );
-		
-		drawingMtx = this->GetLocalToWorldMtx ();
-		drawingMtx.Prepend ( spriteMtx );
-		
-		gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX, drawingMtx );
-		
-		//this->mDeck->Draw ( this->mIndex + ( u32 )sprite.mGfxID, this->mMaterialBatch );
-		this->mDeck->Draw ( this->mIndex + ( u32 )sprite.mGfxID );
-	}
-	
-	this->PopGfxState ();
-}
-
-//----------------------------------------------------------------//
 void MOAIParticleSystem::EnqueueParticle ( MOAIParticle& particle ) {
 
 	if ( this->mTail ) {
@@ -721,6 +670,57 @@ void MOAIParticleSystem::MOAIAction_Update ( double step ) {
 	if ( schedule || this->mSpriteTop ) {
 		this->ScheduleUpdate ();
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleSystem::MOAIDrawable_Draw ( int subPrimID ) {
+	UNUSED ( subPrimID );
+
+	if ( !this->IsVisible ()) return;
+	if ( !this->mDeck ) return;
+	if ( this->IsClear ()) return;
+
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	
+	this->PushGfxState ();
+	this->LoadUVTransform ();
+
+	ZLAffine3D drawingMtx;
+	ZLAffine3D spriteMtx;
+	
+	u32 maxSprites = ( u32 )this->mSprites.Size ();
+	u32 total = this->mSpriteTop;
+	u32 base = 0;
+	if ( total > maxSprites ) {
+		base = total % maxSprites;
+		total = maxSprites;
+	}
+	
+	for ( u32 i = 0; i < total; ++i ) {
+
+		u32 idx;
+		if ( this->mDrawOrder == ORDER_NORMAL ) {
+			idx = ( base + i ) % maxSprites;
+		}
+		else {
+			idx = ( base + ( total - 1 - i )) % maxSprites;
+		}
+				
+		AKUParticleSprite& sprite = this->mSprites [ idx ];
+		gfxMgr.mGfxState.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
+		
+		spriteMtx.ScRoTr ( sprite.mXScl, sprite.mYScl, 1.0f, 0.0f, 0.0f, sprite.mZRot * ( float )D2R, sprite.mXLoc, sprite.mYLoc, 0.0f );
+		
+		drawingMtx = this->GetLocalToWorldMtx ();
+		drawingMtx.Prepend ( spriteMtx );
+		
+		gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX, drawingMtx );
+		
+		//this->mDeck->Draw ( this->mIndex + ( u32 )sprite.mGfxID, this->mMaterialBatch );
+		this->mDeck->Draw ( this->mIndex + ( u32 )sprite.mGfxID );
+	}
+	
+	this->PopGfxState ();
 }
 
 //----------------------------------------------------------------//

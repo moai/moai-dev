@@ -72,6 +72,7 @@ private:
 	//----------------------------------------------------------------//
 	bool					MOAIAction_IsDone						();
 	void					MOAIAction_Update						( double step );
+	void					MOAIDrawable_Draw						( int subPrimID );
 	ZLBounds				MOAIPartitionHull_GetModelBounds		();
 
 public:
@@ -88,7 +89,6 @@ public:
 	DECL_LUA_FACTORY ( MOAIParticleSystem )
 
 	//----------------------------------------------------------------//
-	void			Draw					( int subPrimID );
 					MOAIParticleSystem		();
 					~MOAIParticleSystem		();
 	bool			PushParticle			( float x, float y );
