@@ -310,6 +310,8 @@ bool MOAIMarkerMgr::GetMarkerPosition ( u32 markerID, ZLVec2D& position ) {
 		MOAIMarker* marker = this->mMarkers [ markerID ];
 		position = marker->mPosition;
 		
+		// TODO: figure out right way to deal with portrait mode; integrate with Moai's screen model for this
+		
 		float swap = position.mX;
 		position.mX = this->mVideoHeight - position.mY;
 		position.mY = swap;
