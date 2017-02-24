@@ -84,6 +84,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	static int			_getMarkerMatrix		( lua_State* L );
+	static int			_getMarkerPosition2D	( lua_State* L );
 	static int			_getVideoCamera			( lua_State* L );
 	static int			_getVideoDeck			( lua_State* L );
 	static int			_getVideoSize			( lua_State* L );
@@ -116,8 +117,9 @@ public:
 	GET ( u32, VideoHeight, mVideoHeight )
 
 	//----------------------------------------------------------------//
-	void			GetMarkerMatrix			( u32 markerID, MOAIMatrix& matrix );
-	void			LoadPattern				( cc8* filename, double width );
+	bool			GetMarkerMatrix			( u32 markerID, MOAIMatrix& matrix );
+	bool			GetMarkerPosition		( u32 markerID, ZLVec2D& position );
+	int				LoadPattern				( cc8* filename, double width );
 					MOAIMarkerMgr			();
 					~MOAIMarkerMgr			();
 	void			Pause					( bool pause );

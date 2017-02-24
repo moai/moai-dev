@@ -51,6 +51,22 @@ int MOAIMarkerMgr::_getMarkerMatrix ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIMarkerMgr::_getMarkerPosition2D ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIMarkerMgr, "N" )
+
+	u32 markerID			= state.GetValue < u32 >( 1, 1 ) - 1;
+	
+	ZLVec2D position;
+	if ( self->GetMarkerPosition ( markerID, position )) {
+		state.Push ( position.mX );
+		state.Push ( position.mY );
+		return 2;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIMarkerMgr::_getVideoCamera ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIMarkerMgr, "" )
 
@@ -90,8 +106,12 @@ int MOAIMarkerMgr::_loadPattern ( lua_State* L ) {
 	cc8* filename		= state.GetValue < cc8* >( 1, "" );
 	double width		= state.GetValue < double >( 2, 0.0 );
 	
-	self->LoadPattern ( filename, width );
+	int patternID = self->LoadPattern ( filename, width );
 	
+	if ( patternID >= 0 ) {
+		state.Push ( patternID );
+		return 1;
+	}
 	return 0;
 }
 
@@ -269,14 +289,34 @@ void MOAIMarkerMgr::AffirmMarker ( ARMarkerInfo* markerInfo ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMarkerMgr::GetMarkerMatrix ( u32 markerID, MOAIMatrix& matrix ) {
+bool MOAIMarkerMgr::GetMarkerMatrix ( u32 markerID, MOAIMatrix& matrix ) {
 
 	if ( markerID < this->mMarkers.Size ()) {
 	
 		MOAIMarker* marker = this->mMarkers [ markerID ];
 		matrix.Init ( marker->mTransform );
 		matrix.ScheduleUpdate ();
+		
+		return true;
 	}
+	return false;
+}
+
+//----------------------------------------------------------------//
+bool MOAIMarkerMgr::GetMarkerPosition ( u32 markerID, ZLVec2D& position ) {
+
+	if ( markerID < this->mMarkers.Size ()) {
+	
+		MOAIMarker* marker = this->mMarkers [ markerID ];
+		position = marker->mPosition;
+		
+		float swap = position.mX;
+		position.mX = this->mVideoHeight - position.mY;
+		position.mY = swap;
+		
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//
@@ -292,7 +332,7 @@ void MOAIMarkerMgr::InvokeMarkerEvent ( MOAIMarker& marker, u32 event ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMarkerMgr::LoadPattern ( cc8* filename, double width ) {
+int MOAIMarkerMgr::LoadPattern ( cc8* filename, double width ) {
 
 	if (( this->mARHandle && this->mARPatternHandle ) &&  ZLFileSys::CheckFileExists ( filename )) {
 	
@@ -300,12 +340,17 @@ void MOAIMarkerMgr::LoadPattern ( cc8* filename, double width ) {
 		
 		if ( patternID < 0 ) {
 			DEBUG_LOG ( "Error loading pattern file %s.\n", filename );
-			return;
 		}
-		MOAIPattern& pattern = this->mPatterns [ patternID ];
-		pattern.mPatternID = patternID;
-		pattern.mPatternWidth = width;
+		else {
+		
+			MOAIPattern& pattern = this->mPatterns [ patternID ];
+			pattern.mPatternID = patternID;
+			pattern.mPatternWidth = width;
+			
+			return patternID;
+		}
 	}
+	return -1;
 }
 
 //----------------------------------------------------------------//
@@ -409,6 +454,7 @@ void MOAIMarkerMgr::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getMarkerMatrix",		_getMarkerMatrix },
+		{ "getMarkerPosition2D",	_getMarkerPosition2D },
 		{ "getListener",			&MOAIGlobalEventSource::_getListener < MOAIMarkerMgr > },
 		{ "getVideoCamera",			_getVideoCamera },
 		{ "getVideoDeck",			_getVideoDeck },
