@@ -6,10 +6,11 @@
 #include <moai-sim/MOAIAnimCurve.h>
 #include <moai-sim/MOAICamera.h>
 #include <moai-sim/MOAIDeck.h>
+#include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIMaterialBatch.h>
+#include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAINodeMgr.h>
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIRenderMgr.h>
@@ -989,6 +990,16 @@ void MOAITextLabel::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAITextLabel >( TOTAL_DEBUG_LINE_STYLES );
 
+	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_MASTER",				MOAIDebugLinesMgr::Pack < MOAITextLabel >( -1 ));
+	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL",						MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL ));
+	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_BASELINES",				MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_BASELINES ));
+	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_GLYPH_BOUNDS",			MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_GLYPH_BOUNDS ));
+	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_GLYPHS",				MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_GLYPHS ));
+	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_LAYOUT_BOUNDS",			MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_LAYOUT_BOUNDS ));
+	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_LIMITS",				MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_LIMITS ));
+	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_LINES_GLYPH_BOUNDS",	MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_LINES_GLYPH_BOUNDS ));
+	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_LINES_LAYOUT_BOUNDS",	MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_LINES_LAYOUT_BOUNDS ));
+
 	state.SetField ( -1, "OVERRUN_MOVE_WORD",		( u32 )MOAITextLayoutRules::OVERRUN_MOVE_WORD );
 	state.SetField ( -1, "OVERRUN_SPLIT_WORD",		( u32 )MOAITextLayoutRules::OVERRUN_SPLIT_WORD );
 	state.SetField ( -1, "OVERRUN_TRUNCATE_WORD",	( u32 )MOAITextLayoutRules::OVERRUN_TRUNCATE_WORD );
@@ -1135,14 +1146,8 @@ void MOAITextLabel::MOAIDrawable_Draw ( int subPrimID ) {
 	
 		gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX ));
 		gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_TO_MODEL_MTX ));
-		
-//		MOAIShader* shader = this->mMaterialBatch ? this->mMaterialBatch->RawGetShader ( 0 ) : 0;
-//		bool useSpriteShaders = !shader;
-//		
-//		if ( useSpriteShaders ) {
-//			shader = MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::FONT_SNAPPING_SHADER );
-//		}
-//		this->mLayout.Draw ( this->mReveal, shader, useSpriteShaders );
+
+		this->mLayout.Draw ( this->mReveal );
 
 		this->PopGfxState ();
 	}
@@ -1152,60 +1157,60 @@ void MOAITextLabel::MOAIDrawable_Draw ( int subPrimID ) {
 void MOAITextLabel::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
-//	MOAIGraphicsPropBase::DrawDebug ( subPrimID );
-//
-//	if ( !this->IsVisible ()) return;
-//	if ( this->IsClear ()) return;
-//
-//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-//	
-//	ZLMatrix4x4 worldDrawingMtx = this->GetWorldDrawingMtx ();
-//	
-//	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX, worldDrawingMtx );
-//	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX ));
-//	
-//	this->mLayout.DrawDebug ();
-//	
-//	MOAIDraw& draw = MOAIDraw::Get ();
-//	UNUSED ( draw ); // mystery warning in vs2008
-//	draw.Bind ();
-//	
-//	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
-//	
-//	if (( this->mLayout.mLayoutBounds.Area () > 0.0f ) && debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LAYOUT_BOUNDS )) {
-//		
-//		draw.DrawRectOutline ( this->mLayout.mLayoutBounds );
-//	}
-//	
-//	if (( this->mLayout.mGlyphBounds.Area () > 0.0f ) && debugLines.Bind ( MOAIDebugLines::TEXT_BOX_GLYPH_BOUNDS )) {
-//		
-//		draw.DrawRectOutline ( this->mLayout.mGlyphBounds );
-//	}
-//	
-//	ZLRect frame = this->mLayoutRules.GetFrame ();
-//	
-//	if ( frame.Area () > 0.0f ) {
-//	
-//		frame.Offset ( -this->mLayout.mXOffset, -this->mLayout.mYOffset );
-//		
-//		if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX )) {
-//		
-//			draw.DrawRectOutline ( frame );
-//		}
-//		
-//		if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LIMITS )) {
-//			
-//			if ( this->mLayoutRules.GetLimitHeight ()) {
-//				draw.DrawLine ( frame.mXMin, frame.mYMin, frame.mXMax, frame.mYMin );
-//				draw.DrawLine ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMax );
-//			}
-//			
-//			if ( this->mLayoutRules.GetLimitWidth ()) {
-//				draw.DrawLine ( frame.mXMin, frame.mYMin, frame.mXMin, frame.mYMax );
-//				draw.DrawLine ( frame.mXMax, frame.mYMin, frame.mXMax, frame.mYMax );
-//			}
-//		}
-//	}
+	if ( !this->IsVisible ()) return;
+
+	MOAIGraphicsPropBase::MOAIDrawable_DrawDebug ( subPrimID );
+
+	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
+	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAITextLabel >())) return;
+
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	
+	ZLMatrix4x4 worldDrawingMtx = this->GetWorldDrawingMtx ();
+	
+	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX, worldDrawingMtx );
+	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX ));
+	
+	this->mLayout.DrawDebug ();
+	
+	MOAIDraw& draw = MOAIDraw::Get ();
+	UNUSED ( draw ); // mystery warning in vs2008
+	draw.Bind ();
+		
+	if (( this->mLayout.mLayoutBounds.Area () > 0.0f ) && debugLines.Bind ( DEBUG_DRAW_TEXT_LABEL_LAYOUT_BOUNDS )) {
+		
+		draw.DrawRectOutline ( this->mLayout.mLayoutBounds );
+	}
+	
+	if (( this->mLayout.mGlyphBounds.Area () > 0.0f ) && debugLines.Bind ( DEBUG_DRAW_TEXT_LABEL_GLYPH_BOUNDS )) {
+		
+		draw.DrawRectOutline ( this->mLayout.mGlyphBounds );
+	}
+	
+	ZLRect frame = this->mLayoutRules.GetFrame ();
+	
+	if ( frame.Area () > 0.0f ) {
+	
+		frame.Offset ( -this->mLayout.mXOffset, -this->mLayout.mYOffset );
+		
+		if ( debugLines.Bind ( DEBUG_DRAW_TEXT_LABEL )) {
+		
+			draw.DrawRectOutline ( frame );
+		}
+		
+		if ( debugLines.Bind ( DEBUG_DRAW_TEXT_LABEL_LIMITS )) {
+			
+			if ( this->mLayoutRules.GetLimitHeight ()) {
+				draw.DrawLine ( frame.mXMin, frame.mYMin, frame.mXMax, frame.mYMin );
+				draw.DrawLine ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMax );
+			}
+			
+			if ( this->mLayoutRules.GetLimitWidth ()) {
+				draw.DrawLine ( frame.mXMin, frame.mYMin, frame.mXMin, frame.mYMax );
+				draw.DrawLine ( frame.mXMax, frame.mYMin, frame.mXMax, frame.mYMax );
+			}
+		}
+	}
 }
 
 //----------------------------------------------------------------//

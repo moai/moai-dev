@@ -71,5 +71,12 @@ MOAIBlendMode::MOAIBlendMode () :
 }
 
 //----------------------------------------------------------------//
+MOAIBlendMode::MOAIBlendMode ( int equation, int srcFactor, int dstFactor ) :
+	mEquation ( equation ),
+	mSourceFactor ( srcFactor ),
+	mDestFactor ( dstFactor ) {
+}
+
+//----------------------------------------------------------------//
 MOAIBlendMode::~MOAIBlendMode () {
 }

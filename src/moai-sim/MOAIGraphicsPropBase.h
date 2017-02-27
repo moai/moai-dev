@@ -71,7 +71,7 @@ class MOAIGraphicsPropBase :
 	public virtual MOAIColor,
 	public virtual MOAIDrawable,
 	public virtual MOAIMaterialBatchHolder {
-private:
+protected:
 	
 	//----------------------------------------------------------------//
 	static int		_draw					( lua_State* L );

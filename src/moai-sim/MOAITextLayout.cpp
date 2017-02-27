@@ -6,11 +6,14 @@
 #include <moai-sim/MOAIAnimCurve.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDebugLines.h>
+#include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIGfxMgr.h>
+#include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAINodeMgr.h>
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIShaderMgr.h>
+#include <moai-sim/MOAITextLabel.h>
 #include <moai-sim/MOAITextLayoutRules.h>
 #include <moai-sim/MOAITextLayoutEngine.h>
 #include <moai-sim/MOAITextLayout.h>
@@ -228,9 +231,14 @@ size_t MOAITextLayout::CountSprites () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLayout::Draw ( u32 reveal, MOAIShader* defaultShader, bool useSpriteShaders ) {
+void MOAITextLayout::Draw ( u32 reveal ) {
 	
 	if ( reveal ) {
+		
+		MOAIMaterialMgr& materialMgr = MOAIMaterialMgr::Get ();
+		MOAIShader* currentShader = materialMgr.GetShader ();
+		bool useSpriteShaders = ( currentShader == 0 );
+		MOAIShader* defaultShader = MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::FONT_SNAPPING_SHADER );
 		
 		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 		MOAIQuadBrush::BindVertexFormat ();
@@ -239,12 +247,6 @@ void MOAITextLayout::Draw ( u32 reveal, MOAIShader* defaultShader, bool useSprit
 		ZLColorVec blendColor;
 		u32 rgba0 = 0xffffffff;
 		u32 rgba1 = 0xffffffff;
-		
-		if ( !useSpriteShaders ) {
-			if ( !gfxMgr.mGfxState.SetShader ( defaultShader )) return;
-		}
-
-		MOAIShader* currentShader = 0;
 
 		size_t size = this->mSprites.GetTop ();
 		for ( size_t i = 0; ( i < size ) && ( i < reveal ); ++i ) {
@@ -277,57 +279,58 @@ void MOAITextLayout::Draw ( u32 reveal, MOAIShader* defaultShader, bool useSprit
 //----------------------------------------------------------------//
 void MOAITextLayout::DrawDebug () {
 
-//	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
-//	
-//	MOAIDraw& draw = MOAIDraw::Get ();
-//	UNUSED ( draw ); // mystery warning in vs2008
-//	
-//	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_GLYPHS )) {
-//	
-//		size_t size = this->mSprites.GetTop ();
-//		for ( size_t i = 0; i < size; ++i ) {
-//			const MOAITextSprite& sprite = this->mSprites [ i ];
-//			
-//			// TODO: change up the way padding works - should be innate to the glyph
-//			ZLRect glyphRect = sprite.mGlyph->GetGlyphRect ( sprite.mPen.mX, sprite.mPen.mY, sprite.mScale.mX, sprite.mScale.mY );
-//			
-//			const ZLRect& padding = sprite.mStyle->mPadding;
-//			glyphRect.mXMin += padding.mXMin;
-//			glyphRect.mYMin += padding.mYMin;
-//			glyphRect.mXMax += padding.mXMax;
-//			glyphRect.mYMax += padding.mYMax;
-//			
-//			draw.DrawRectOutline ( glyphRect );
-//		}
-//	}
-//	
-//	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LINES_GLYPH_BOUNDS )) {
-//		
-//		size_t totalLines = this->mLines.GetTop ();
-//		for ( size_t i = 0; i < totalLines; ++i ) {
-//			MOAITextLine& line = this->mLines [ i ];
-//			draw.DrawRectOutline ( line.mGlyphBounds );
-//		}
-//	}
-//	
-//	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LINES_LAYOUT_BOUNDS )) {
-//		
-//		size_t totalLines = this->mLines.GetTop ();
-//		for ( size_t i = 0; i < totalLines; ++i ) {
-//			MOAITextLine& line = this->mLines [ i ];
-//			draw.DrawRectOutline ( line.mLayoutBounds );
-//		}
-//	}
-//	
-//	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_BASELINES )) {
-//		
-//		size_t totalLines = this->mLines.GetTop ();
-//		for ( size_t i = 0; i < totalLines; ++i ) {
-//			MOAITextLine& line = this->mLines [ i ];
-//			float y = line.mOrigin.mY;
-//			draw.DrawLine ( line.mLayoutBounds.mXMin, y, line.mLayoutBounds.mXMax, y );
-//		}
-//	}
+	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
+	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAITextLabel >())) return;
+	
+	MOAIDraw& draw = MOAIDraw::Get ();
+	UNUSED ( draw ); // mystery warning in vs2008
+	
+	if ( debugLines.Bind ( MOAITextLabel::DEBUG_DRAW_TEXT_LABEL_GLYPHS )) {
+	
+		size_t size = this->mSprites.GetTop ();
+		for ( size_t i = 0; i < size; ++i ) {
+			const MOAITextSprite& sprite = this->mSprites [ i ];
+			
+			// TODO: change up the way padding works - should be innate to the glyph
+			ZLRect glyphRect = sprite.mGlyph->GetGlyphRect ( sprite.mPen.mX, sprite.mPen.mY, sprite.mScale.mX, sprite.mScale.mY );
+			
+			const ZLRect& padding = sprite.mStyle->mPadding;
+			glyphRect.mXMin += padding.mXMin;
+			glyphRect.mYMin += padding.mYMin;
+			glyphRect.mXMax += padding.mXMax;
+			glyphRect.mYMax += padding.mYMax;
+			
+			draw.DrawRectOutline ( glyphRect );
+		}
+	}
+	
+	if ( debugLines.Bind ( MOAITextLabel::DEBUG_DRAW_TEXT_LABEL_LINES_GLYPH_BOUNDS )) {
+		
+		size_t totalLines = this->mLines.GetTop ();
+		for ( size_t i = 0; i < totalLines; ++i ) {
+			MOAITextLine& line = this->mLines [ i ];
+			draw.DrawRectOutline ( line.mGlyphBounds );
+		}
+	}
+	
+	if ( debugLines.Bind ( MOAITextLabel::DEBUG_DRAW_TEXT_LABEL_LINES_LAYOUT_BOUNDS )) {
+		
+		size_t totalLines = this->mLines.GetTop ();
+		for ( size_t i = 0; i < totalLines; ++i ) {
+			MOAITextLine& line = this->mLines [ i ];
+			draw.DrawRectOutline ( line.mLayoutBounds );
+		}
+	}
+	
+	if ( debugLines.Bind ( MOAITextLabel::DEBUG_DRAW_TEXT_LABEL_BASELINES )) {
+		
+		size_t totalLines = this->mLines.GetTop ();
+		for ( size_t i = 0; i < totalLines; ++i ) {
+			MOAITextLine& line = this->mLines [ i ];
+			float y = line.mOrigin.mY;
+			draw.DrawLine ( line.mLayoutBounds.mXMin, y, line.mLayoutBounds.mXMax, y );
+		}
+	}
 }
 
 //----------------------------------------------------------------//
