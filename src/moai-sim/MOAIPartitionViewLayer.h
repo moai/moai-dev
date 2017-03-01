@@ -44,7 +44,7 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_draw					( lua_State* L );
-	static int		_getPropViewList		( lua_State* L ); // TODO: update and restore this
+	static int		_getPropViewList		( lua_State* L );
 	static int		_getSortMode			( lua_State* L );
 	static int		_getSortScale			( lua_State* L );
 	static int		_setPartitionCull2D		( lua_State* L );

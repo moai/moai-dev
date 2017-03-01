@@ -109,7 +109,7 @@ const ZLMatrix4x4& MOAIGfxGlobalsCache::GetPrimaryMtx ( u32 mtxID, u64 mtxFlag )
 		
 		case CLIP_TO_WINDOW_MTX:
 			
-			return this->mMatrices [ CLIP_TO_WINDOW_MTX_MASK ];
+			return this->mMatrices [ mtxID ];
 		
 		case MODEL_TO_CLIP_MTX:
 			

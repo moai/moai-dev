@@ -29,7 +29,7 @@ class MOAITextureBase;
 class MOAIGraphicsProp :
 	public MOAIIndexedPropBase,
 	public MOAIGraphicsPropBase {
-private:
+protected:
 
 	//----------------------------------------------------------------//
 	void					MOAIDrawable_Draw						( int subPrimID );

@@ -301,9 +301,8 @@ ZLMatrix4x4 MOAIGraphicsPropBase::GetWorldDrawingMtx () {
 			//MOAIGfxMgr::Get ().GetWorldToWndMtx ();
 			
 			//ZLMatrix4x4 viewProjMtx = camera->GetWorldToWndMtx ( *viewport );
-			
-			ZLMatrix4x4 viewProjMtx;
-			viewProjMtx.Ident (); // TODO
+			ZLMatrix4x4 viewProjMtx = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX );
+			viewProjMtx.Append ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::CLIP_TO_WINDOW_MTX ));
 			
 			ZLMatrix4x4 localToWorldMtx ( this->GetLocalToWorldMtx ());
 			
@@ -557,7 +556,7 @@ bool MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& att
 void MOAIGraphicsPropBase::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
-	if ( this->GetWorldBoundsStatus () != ZLBounds::ZL_BOUNDS_OK ) return;
+	if ( this->GetWorldBoundsStatus () == ZLBounds::ZL_BOUNDS_EMPTY ) return;
 
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAIGraphicsPropBase >())) return;

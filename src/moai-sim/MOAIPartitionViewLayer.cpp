@@ -51,7 +51,7 @@ int	MOAIPartitionViewLayer::_getPropViewList ( lua_State* L ) {
 	
 	if ( partition && self->mViewport ) {
 		
-		u32 interfaceMask = partition->GetInterfaceMask < MOAIGraphicsProp >();
+		u32 interfaceMask = partition->GetInterfaceMask < MOAIDrawable >();
 		if ( !interfaceMask ) return 0;
 		
 		float sortScale [ 4 ];
