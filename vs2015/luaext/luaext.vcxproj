@@ -214,7 +214,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\3rdparty\luacrypto-0.3.2\src\lcrypto.c" />
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\auxiliar.c" />
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\buffer.c" />
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\except.c" />
@@ -239,7 +238,6 @@
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2-embed\luasocketscripts.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\3rdparty\luacrypto-0.3.2\src\lcrypto.h" />
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\auxiliar.h" />
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\buffer.h" />
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\except.h" />

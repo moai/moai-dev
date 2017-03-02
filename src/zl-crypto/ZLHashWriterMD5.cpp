@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <zl-crypto/ZLHashWriterMD5.h>
-#include <openssl/md5.h>
+#include <mbedtls/md5.h>
 
 //================================================================//
 // ZLHashWriterMD5

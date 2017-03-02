@@ -4,9 +4,6 @@
     <Filter Include="luasocket">
       <UniqueIdentifier>{4173dda7-cdf2-4384-a2e8-a9b96ddfe6a0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="luacrypto">
-      <UniqueIdentifier>{fb6c0066-ced3-4ea1-99c7-36ee378652e1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="luacurl">
       <UniqueIdentifier>{78b9c6a9-8f40-46e7-998b-0b5303713fd8}</UniqueIdentifier>
     </Filter>
@@ -78,9 +75,6 @@
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2-embed\luasocketscripts.c">
       <Filter>luasocket-embed</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\3rdparty\luacrypto-0.3.2\src\lcrypto.c">
-      <Filter>luacrypto</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\auxiliar.h">
@@ -136,9 +130,6 @@
     </ClInclude>
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2-embed\luasocketscripts.h">
       <Filter>luasocket-embed</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\luacrypto-0.3.2\src\lcrypto.h">
-      <Filter>luacrypto</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
