@@ -36,7 +36,11 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_enableAntiAliasing			( lua_State* L );
+	static int		_extractSystemFont			( lua_State* L );
 	static int		_setPenColor				( lua_State* L );
+
+	//----------------------------------------------------------------//
+	static void		ExtractSystemFont			( cc8* fontName, ZLStream& stream );
 
 public:
 	
