@@ -86,7 +86,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\tinyxml;..\..\3rdparty\expat-2.1.0\lib;..\..\3rdparty\ooid-0.99;..\..\3rdparty\openssl-1.0.0m\include-win32;..\..\3rdparty\openssl-1.0.0m\include;..\..\3rdparty\openssl-1.0.0m\crypto;..\..\3rdparty\openssl-1.0.0m\crypto\asn1;..\..\3rdparty\openssl-1.0.0m\crypto\evp;..\..\3rdparty\openssl-1.0.0m;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\tinyxml;..\..\3rdparty\expat-2.1.0\lib;..\..\3rdparty\ooid-0.99;..\..\3rdparty\mbedtls\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -120,7 +120,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\tinyxml;..\..\3rdparty\expat-2.1.0\lib;..\..\3rdparty\ooid-0.99;..\..\3rdparty\openssl-1.0.0m\include-win32;..\..\3rdparty\openssl-1.0.0m\include;..\..\3rdparty\openssl-1.0.0m\crypto;..\..\3rdparty\openssl-1.0.0m\crypto\asn1;..\..\3rdparty\openssl-1.0.0m\crypto\evp;..\..\3rdparty\openssl-1.0.0m;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\tinyxml;..\..\3rdparty\expat-2.1.0\lib;..\..\3rdparty\ooid-0.99;..\..\3rdparty\mbedtls\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -155,7 +155,7 @@
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>false</OmitFramePointers>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\tinyxml;..\..\3rdparty\expat-2.1.0\lib;..\..\3rdparty\ooid-0.99;..\..\3rdparty\openssl-1.0.0m\include-win32;..\..\3rdparty\openssl-1.0.0m\include;..\..\3rdparty\openssl-1.0.0m\crypto;..\..\3rdparty\openssl-1.0.0m\crypto\asn1;..\..\3rdparty\openssl-1.0.0m\crypto\evp;..\..\3rdparty\openssl-1.0.0m;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\tinyxml;..\..\3rdparty\expat-2.1.0\lib;..\..\3rdparty\ooid-0.99;..\..\3rdparty\mbedtls\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -196,7 +196,7 @@
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\tinyxml;..\..\3rdparty\expat-2.1.0\lib;..\..\3rdparty\ooid-0.99;..\..\3rdparty\openssl-1.0.0m\include-win32;..\..\3rdparty\openssl-1.0.0m\include;..\..\3rdparty\openssl-1.0.0m\crypto;..\..\3rdparty\openssl-1.0.0m\crypto\asn1;..\..\3rdparty\openssl-1.0.0m\crypto\evp;..\..\3rdparty\openssl-1.0.0m;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\tinyxml;..\..\3rdparty\expat-2.1.0\lib;..\..\3rdparty\ooid-0.99;..\..\3rdparty\mbedtls\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -224,6 +224,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\zl-crypto\headers.h" />
     <ClInclude Include="..\..\src\zl-crypto\pch.h" />
+    <ClInclude Include="..\..\src\zl-crypto\ZLHashWriterMbedTLS.h" />
     <ClInclude Include="..\..\src\zl-crypto\ZLHashWriterMD5.h" />
     <ClInclude Include="..\..\src\zl-crypto\ZLHashWriterSHA1.h" />
     <ClInclude Include="..\..\src\zl-crypto\ZLHashWriterSHA224.h" />
@@ -238,6 +239,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\src\zl-crypto\ZLHashWriterMbedTLS.cpp" />
     <ClCompile Include="..\..\src\zl-crypto\ZLHashWriterMD5.cpp" />
     <ClCompile Include="..\..\src\zl-crypto\ZLHashWriterSHA1.cpp" />
     <ClCompile Include="..\..\src\zl-crypto\ZLHashWriterSHA224.cpp" />
