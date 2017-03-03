@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <zl-crypto/ZLHashWriterMBedTLS.h>
+#include <zl-crypto/ZLHashWriterMbedTLS.h>
 #include <mbedtls/md.h>
 
 //================================================================//
