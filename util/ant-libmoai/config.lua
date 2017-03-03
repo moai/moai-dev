@@ -10,7 +10,7 @@ SETTINGS = {
 	LIB_NAME			= 'moai',
 	MY_ARM_MODE			= 'arm',
 	MY_ARM_ARCH			= 'armeabi-v7a arm64-v8a x86',
-	MY_APP_PLATFORM		= 'android-21',
+	MY_APP_PLATFORM		= 'android-19',
 }
 
 MODULES = {
@@ -148,17 +148,10 @@ MODULES = {
 		NAMESPACE = 'com.ziplinegames.moai',
 		
 		HEADER_SEARCH_PATHS = {
-			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include-android',
-			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include',
-			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m',
-			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto',
+			'$(MOAI_SDK_HOME)/3rdparty/mbedtls/include',
 		},
 		
 		MAKE = {
-			'$(MOAI_MODULES)/modules/3rdparty-crypto-a.mk',
-			'$(MOAI_MODULES)/modules/3rdparty-crypto-b.mk',
-			'$(MOAI_MODULES)/modules/3rdparty-crypto-c.mk',
-			'$(MOAI_MODULES)/modules/3rdparty-crypto-d.mk',
 			'$(MOAI_MODULES)/modules/zl-crypto.mk',
 			'$(MOAI_MODULES)/modules/moai-crypto.mk',
 		},
@@ -166,7 +159,7 @@ MODULES = {
 		JAVA = {
 		},
 
-		STATIC_LIBRARIES = 'libmoai-crypto libzl-crypto libcrypto-a libcrypto-b libcrypto-c libcrypto-d',
+		STATIC_LIBRARIES = 'libmoai-crypto libzl-crypto libmbedtls',
 	},
 
 	----------------------------------------------------------------
@@ -309,22 +302,20 @@ MODULES = {
 		HEADER_SEARCH_PATHS = {
 			'$(MOAI_SDK_HOME)/3rdparty/c-ares-1.7.5',
 			'$(MOAI_SDK_HOME)/3rdparty/c-ares-1.7.5/include-android',
-			'$(MOAI_SDK_HOME)/3rdparty/curl-7.19.7/include-android',
-			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include-android',
-			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include',
+			'$(MOAI_SDK_HOME)/3rdparty/curl/include',
 		},
 		
 		MAKE = {
 			'$(MOAI_MODULES)/modules/3rdparty-c-ares.mk',
 			'$(MOAI_MODULES)/modules/3rdparty-curl.mk',
-			'$(MOAI_MODULES)/modules/3rdparty-ssl.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-mbedtls.mk',
 			'$(MOAI_MODULES)/modules/moai-http-client.mk',
 		},
 		
 		JAVA = {
 		},
 
-		STATIC_LIBRARIES = 'libcares libcurl libssl libmoai-http-client',
+		STATIC_LIBRARIES = 'libcares libcurl libmbedtls libmoai-http-client',
 	},
 	
 	----------------------------------------------------------------
@@ -439,12 +430,7 @@ MODULES = {
 		NAMESPACE = 'com.ziplinegames.moai',
 		
 		HEADER_SEARCH_PATHS = {
-			'$(MOAI_SDK_HOME)/3rdparty/luacrypto-0.2.0/src',
-			'$(MOAI_SDK_HOME)/3rdparty/luacurl-1.2.1',
-			'$(MOAI_SDK_HOME)/3rdparty/luafilesystem-1.5.0/src',
-			'$(MOAI_SDK_HOME)/3rdparty/luasocket-2.0.2/src',
-			'$(MOAI_SDK_HOME)/3rdparty/luasocket-2.0.2-embed/src',
-			'$(MOAI_SDK_HOME)/3rdparty/luasql-2.2.0/src',
+
 		},
 		
 		MAKE = {
@@ -676,12 +662,9 @@ STATIC_LINK_ORDER = {
 	'libmongoose',
 	'libcurl',
 	'libcares',
-	'libssl',
+	'libmbedtls',
 	
-	'libcrypto-a',
-	'libcrypto-b',
-	'libcrypto-c',
-	'libcrypto-d',
+
 	
 	--vfs
 	--'libzl-vfs',
@@ -694,8 +677,4 @@ WHOLE_STATIC_LIBRARIES = {
 	'libmoai-android',
 	'libmoai-sim',
 	'libmoai-core',
-	'libcrypto-a',
-	'libcrypto-b',
-	'libcrypto-c',
-	'libcrypto-d',
 }

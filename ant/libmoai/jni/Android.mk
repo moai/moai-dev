@@ -46,7 +46,7 @@
 	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-contrib.mk
 	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-expat.mk
 	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-json.mk
-    MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-kissfft.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-kissfft.mk
 	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-lua.mk
 	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-sfmt.mk
 	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-sqlite.mk
@@ -106,14 +106,7 @@
 	#--------------------------------------------------------------#
 	# CRYPTO
 
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include-android
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto
-	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-crypto-a.mk
-	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-crypto-b.mk
-	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-crypto-c.mk
-	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-crypto-d.mk
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/mbedtls/include
 	MY_INCLUDES += $(MOAI_MODULES)/modules/zl-crypto.mk
 	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-crypto.mk
 
@@ -146,12 +139,10 @@
 
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/c-ares-1.7.5
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/c-ares-1.7.5/include-android
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/curl-7.19.7/include-android
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include-android
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/curl/include
 	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-c-ares.mk
 	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-curl.mk
-	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-ssl.mk
+	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-mbedtls.mk
 	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-http-client.mk
 
 	#--------------------------------------------------------------#
@@ -192,12 +183,7 @@
 	#--------------------------------------------------------------#
 	# LUAEXT
 
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luacrypto-0.2.0/src
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luacurl-1.2.1
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luafilesystem-1.5.0/src
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luasocket-2.0.2/src
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luasocket-2.0.2-embed/src
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/luasql-2.2.0/src
+	MY_HEADER_SEARCH_PATHS += 
 	MY_INCLUDES += $(MOAI_MODULES)/modules/moai-luaext.mk
 
 	#--------------------------------------------------------------#
