@@ -15,6 +15,8 @@
 		0300CF94140DC65100ABCC5B /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0300CF93140DC65100ABCC5B /* AudioUnit.framework */; };
 		4C623B6415246B10008E4436 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
 		4C623B6615246B25008E4436 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6515246B25008E4436 /* CoreServices.framework */; };
+		63F98C5A1E6B849C00A74124 /* libmoai-osx-3rdparty-crypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C8031AD8682200D6B83A /* libmoai-osx-3rdparty-crypto.a */; };
+		63F98C5B1E6B84B200A74124 /* liblibmoai-osx-3rdparty-mbedtls.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63F98C591E6B849C00A74124 /* liblibmoai-osx-3rdparty-mbedtls.a */; };
 		CD096FD218E0FFE300A36EDD /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD096FD118E0FFE300A36EDD /* libstdc++.dylib */; };
 		CD1845BD1A626F0300FCCCE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1845BC1A626F0300FCCCE0 /* SystemConfiguration.framework */; };
 		CD2E46C51C5181A3008E22A1 /* libmoai-osx-harfbuzz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1F44E81BDEBB7800F5CF59 /* libmoai-osx-harfbuzz.a */; };
@@ -35,7 +37,6 @@
 		CDF2380F1CAA731C00A45E31 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDF2380E1CAA731C00A45E31 /* CoreVideo.framework */; };
 		CDF238111CAA7DAC00A45E31 /* SDLHost-osx.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDF238101CAA7DAC00A45E31 /* SDLHost-osx.mm */; };
 		CDFD8FB11AD8653C0003F415 /* libmoai-osx-3rdparty-core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFD8FA11AD8653C0003F415 /* libmoai-osx-3rdparty-core.a */; };
-		CDFD8FB21AD8653C0003F415 /* libmoai-osx-3rdparty-crypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFD8FA21AD8653C0003F415 /* libmoai-osx-3rdparty-crypto.a */; };
 		CDFD8FB31AD8653C0003F415 /* libmoai-osx-3rdparty-sdl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFD8FA31AD8653C0003F415 /* libmoai-osx-3rdparty-sdl.a */; };
 		CDFD8FB41AD8653C0003F415 /* libmoai-osx-apple.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFD8FA41AD8653C0003F415 /* libmoai-osx-apple.a */; };
 		CDFD8FB51AD8653C0003F415 /* libmoai-osx-box2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFD8FA51AD8653C0003F415 /* libmoai-osx-box2d.a */; };
@@ -54,6 +55,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		63F98C581E6B849C00A74124 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 63F98BC61E6B809000A74124;
+			remoteInfo = "libmoai-osx-3rdparty-mbedtls";
+		};
 		CD1830711AECC0AC00D92E9E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
@@ -748,8 +756,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63F98C5B1E6B84B200A74124 /* liblibmoai-osx-3rdparty-mbedtls.a in Frameworks */,
+				63F98C5A1E6B849C00A74124 /* libmoai-osx-3rdparty-crypto.a in Frameworks */,
 				CDFD8FB11AD8653C0003F415 /* libmoai-osx-3rdparty-core.a in Frameworks */,
-				CDFD8FB21AD8653C0003F415 /* libmoai-osx-3rdparty-crypto.a in Frameworks */,
 				CDFD8FB31AD8653C0003F415 /* libmoai-osx-3rdparty-sdl.a in Frameworks */,
 				CDFD8FB41AD8653C0003F415 /* libmoai-osx-apple.a in Frameworks */,
 				CDFF5ADE1C29232600969B44 /* libmoai-osx-audio-sampler.a in Frameworks */,
@@ -942,6 +951,7 @@
 				CDE6C81D1AD8682200D6B83A /* libmoai-osx-zl-core.a */,
 				CDE6C81F1AD8682200D6B83A /* libmoai-osx-zl-crypto.a */,
 				CDE6C8211AD8682200D6B83A /* libmoai-osx-zl-vfs.a */,
+				63F98C591E6B849C00A74124 /* liblibmoai-osx-3rdparty-mbedtls.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1033,6 +1043,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		63F98C591E6B849C00A74124 /* liblibmoai-osx-3rdparty-mbedtls.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "liblibmoai-osx-3rdparty-mbedtls.a";
+			remoteRef = 63F98C581E6B849C00A74124 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		CD1F44E61BDEBB7800F5CF59 /* libmoai-ios-harfbuzz.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
