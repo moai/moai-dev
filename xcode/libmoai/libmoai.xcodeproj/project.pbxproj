@@ -17,7 +17,6 @@
 				CDBA1E4C1B1E443400DCDC75 /* PBXTargetDependency */,
 				3EDC16EC19F6DD37007A7775 /* PBXTargetDependency */,
 				3EDC16EE19F6DD37007A7775 /* PBXTargetDependency */,
-				CDFD7C2B1A0857EF00A94E6B /* PBXTargetDependency */,
 				CDFD7C2D1A0857EF00A94E6B /* PBXTargetDependency */,
 				CDFD7C2F1A0857EF00A94E6B /* PBXTargetDependency */,
 				3EDC16F419F6DD37007A7775 /* PBXTargetDependency */,
@@ -72,7 +71,6 @@
 				CDBA1E421B1E442500DCDC75 /* PBXTargetDependency */,
 				CDBA1E441B1E442500DCDC75 /* PBXTargetDependency */,
 				3E72B9AA19F703FA00A9DE30 /* PBXTargetDependency */,
-				CDB14A291A01CCFB008CEA54 /* PBXTargetDependency */,
 				3E72B9B819F703FA00A9DE30 /* PBXTargetDependency */,
 				3E72B9B619F703FA00A9DE30 /* PBXTargetDependency */,
 				CDB14A2F1A01CCFB008CEA54 /* PBXTargetDependency */,
@@ -340,6 +338,77 @@
 		63F98C631E6B876900A74124 /* ZLHashWriterMbedTLS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63F98C5D1E6B870500A74124 /* ZLHashWriterMbedTLS.cpp */; };
 		63F98C641E6B876C00A74124 /* ZLHashWriterMbedTLS.h in Headers */ = {isa = PBXBuildFile; fileRef = 63F98C5C1E6B870500A74124 /* ZLHashWriterMbedTLS.h */; };
 		63F98C651E6B876C00A74124 /* ZLHashWriterMbedTLS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 63F98C5D1E6B870500A74124 /* ZLHashWriterMbedTLS.cpp */; };
+		63F98C741E6B8C5B00A74124 /* aes.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AAA1E6B7E0100A74124 /* aes.c */; };
+		63F98C751E6B8C5B00A74124 /* aesni.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AAB1E6B7E0100A74124 /* aesni.c */; };
+		63F98C761E6B8C5B00A74124 /* arc4.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AAC1E6B7E0100A74124 /* arc4.c */; };
+		63F98C771E6B8C5B00A74124 /* asn1parse.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AAD1E6B7E0100A74124 /* asn1parse.c */; };
+		63F98C781E6B8C5B00A74124 /* asn1write.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AAE1E6B7E0100A74124 /* asn1write.c */; };
+		63F98C791E6B8C5B00A74124 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AAF1E6B7E0100A74124 /* base64.c */; };
+		63F98C7A1E6B8C5B00A74124 /* bignum.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AB01E6B7E0100A74124 /* bignum.c */; };
+		63F98C7B1E6B8C5B00A74124 /* blowfish.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AB11E6B7E0100A74124 /* blowfish.c */; };
+		63F98C7C1E6B8C5B00A74124 /* camellia.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AB21E6B7E0100A74124 /* camellia.c */; };
+		63F98C7D1E6B8C5B00A74124 /* ccm.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AB31E6B7E0100A74124 /* ccm.c */; };
+		63F98C7E1E6B8C5B00A74124 /* certs.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AB41E6B7E0100A74124 /* certs.c */; };
+		63F98C7F1E6B8C5B00A74124 /* cipher_wrap.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AB51E6B7E0100A74124 /* cipher_wrap.c */; };
+		63F98C801E6B8C5B00A74124 /* cipher.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AB61E6B7E0100A74124 /* cipher.c */; };
+		63F98C811E6B8C5B00A74124 /* cmac.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AB71E6B7E0100A74124 /* cmac.c */; };
+		63F98C821E6B8C5B00A74124 /* ctr_drbg.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AB81E6B7E0100A74124 /* ctr_drbg.c */; };
+		63F98C831E6B8C5B00A74124 /* debug.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AB91E6B7E0100A74124 /* debug.c */; };
+		63F98C841E6B8C5B00A74124 /* des.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98ABA1E6B7E0100A74124 /* des.c */; };
+		63F98C851E6B8C5B00A74124 /* dhm.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98ABB1E6B7E0100A74124 /* dhm.c */; };
+		63F98C861E6B8C5B00A74124 /* ecdh.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98ABC1E6B7E0100A74124 /* ecdh.c */; };
+		63F98C871E6B8C5B00A74124 /* ecdsa.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98ABD1E6B7E0100A74124 /* ecdsa.c */; };
+		63F98C881E6B8C5B00A74124 /* ecjpake.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98ABE1E6B7E0100A74124 /* ecjpake.c */; };
+		63F98C891E6B8C5B00A74124 /* ecp_curves.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98ABF1E6B7E0100A74124 /* ecp_curves.c */; };
+		63F98C8A1E6B8C5B00A74124 /* ecp.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AC01E6B7E0100A74124 /* ecp.c */; };
+		63F98C8B1E6B8C5B00A74124 /* entropy_poll.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AC11E6B7E0100A74124 /* entropy_poll.c */; };
+		63F98C8C1E6B8C5B00A74124 /* entropy.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AC21E6B7E0100A74124 /* entropy.c */; };
+		63F98C8D1E6B8C5B00A74124 /* error.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AC31E6B7E0100A74124 /* error.c */; };
+		63F98C8E1E6B8C5B00A74124 /* gcm.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AC41E6B7E0100A74124 /* gcm.c */; };
+		63F98C8F1E6B8C5B00A74124 /* havege.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AC51E6B7E0100A74124 /* havege.c */; };
+		63F98C901E6B8C5B00A74124 /* hmac_drbg.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AC61E6B7E0100A74124 /* hmac_drbg.c */; };
+		63F98C911E6B8C5B00A74124 /* md_wrap.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AC71E6B7E0100A74124 /* md_wrap.c */; };
+		63F98C921E6B8C5B00A74124 /* md.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AC81E6B7E0100A74124 /* md.c */; };
+		63F98C931E6B8C5B00A74124 /* md2.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AC91E6B7E0100A74124 /* md2.c */; };
+		63F98C941E6B8C5B00A74124 /* md4.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98ACA1E6B7E0100A74124 /* md4.c */; };
+		63F98C951E6B8C5B00A74124 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98ACB1E6B7E0100A74124 /* md5.c */; };
+		63F98C961E6B8C5B00A74124 /* memory_buffer_alloc.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98ACC1E6B7E0100A74124 /* memory_buffer_alloc.c */; };
+		63F98C971E6B8C5B00A74124 /* net_sockets.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98ACD1E6B7E0100A74124 /* net_sockets.c */; };
+		63F98C981E6B8C5B00A74124 /* oid.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98ACE1E6B7E0100A74124 /* oid.c */; };
+		63F98C991E6B8C5B00A74124 /* padlock.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98ACF1E6B7E0100A74124 /* padlock.c */; };
+		63F98C9A1E6B8C5B00A74124 /* pem.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AD01E6B7E0100A74124 /* pem.c */; };
+		63F98C9B1E6B8C5B00A74124 /* pk_wrap.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AD11E6B7E0100A74124 /* pk_wrap.c */; };
+		63F98C9C1E6B8C5B00A74124 /* pk.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AD21E6B7E0100A74124 /* pk.c */; };
+		63F98C9D1E6B8C5B00A74124 /* pkcs5.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AD31E6B7E0100A74124 /* pkcs5.c */; };
+		63F98C9E1E6B8C5B00A74124 /* pkcs11.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AD41E6B7E0100A74124 /* pkcs11.c */; };
+		63F98C9F1E6B8C5B00A74124 /* pkcs12.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AD51E6B7E0100A74124 /* pkcs12.c */; };
+		63F98CA01E6B8C5B00A74124 /* pkparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AD61E6B7E0100A74124 /* pkparse.c */; };
+		63F98CA11E6B8C5B00A74124 /* pkwrite.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AD71E6B7E0100A74124 /* pkwrite.c */; };
+		63F98CA21E6B8C5B00A74124 /* platform.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AD81E6B7E0100A74124 /* platform.c */; };
+		63F98CA31E6B8C5B00A74124 /* ripemd160.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AD91E6B7E0100A74124 /* ripemd160.c */; };
+		63F98CA41E6B8C5B00A74124 /* rsa.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98ADA1E6B7E0100A74124 /* rsa.c */; };
+		63F98CA51E6B8C5B00A74124 /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98ADB1E6B7E0100A74124 /* sha1.c */; };
+		63F98CA61E6B8C5B00A74124 /* sha256.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98ADC1E6B7E0100A74124 /* sha256.c */; };
+		63F98CA71E6B8C5B00A74124 /* sha512.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98ADD1E6B7E0100A74124 /* sha512.c */; };
+		63F98CA81E6B8C5B00A74124 /* ssl_cache.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98ADE1E6B7E0100A74124 /* ssl_cache.c */; };
+		63F98CA91E6B8C5B00A74124 /* ssl_ciphersuites.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98ADF1E6B7E0100A74124 /* ssl_ciphersuites.c */; };
+		63F98CAA1E6B8C5B00A74124 /* ssl_cli.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AE01E6B7E0100A74124 /* ssl_cli.c */; };
+		63F98CAB1E6B8C5B00A74124 /* ssl_cookie.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AE11E6B7E0100A74124 /* ssl_cookie.c */; };
+		63F98CAC1E6B8C5B00A74124 /* ssl_srv.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AE21E6B7E0100A74124 /* ssl_srv.c */; };
+		63F98CAD1E6B8C5B00A74124 /* ssl_ticket.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AE31E6B7E0100A74124 /* ssl_ticket.c */; };
+		63F98CAE1E6B8C5B00A74124 /* ssl_tls.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AE41E6B7E0100A74124 /* ssl_tls.c */; };
+		63F98CAF1E6B8C5B00A74124 /* threading.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AE51E6B7E0100A74124 /* threading.c */; };
+		63F98CB01E6B8C5B00A74124 /* timing.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AE61E6B7E0100A74124 /* timing.c */; };
+		63F98CB11E6B8C5B00A74124 /* version_features.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AE71E6B7E0100A74124 /* version_features.c */; };
+		63F98CB21E6B8C5B00A74124 /* version.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AE81E6B7E0100A74124 /* version.c */; };
+		63F98CB31E6B8C5B00A74124 /* x509_create.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AE91E6B7E0100A74124 /* x509_create.c */; };
+		63F98CB41E6B8C5B00A74124 /* x509_crl.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AEA1E6B7E0100A74124 /* x509_crl.c */; };
+		63F98CB51E6B8C5B00A74124 /* x509_crt.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AEB1E6B7E0100A74124 /* x509_crt.c */; };
+		63F98CB61E6B8C5B00A74124 /* x509_csr.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AEC1E6B7E0100A74124 /* x509_csr.c */; };
+		63F98CB71E6B8C5B00A74124 /* x509.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AED1E6B7E0100A74124 /* x509.c */; };
+		63F98CB81E6B8C5B00A74124 /* x509write_crt.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AEE1E6B7E0100A74124 /* x509write_crt.c */; };
+		63F98CB91E6B8C5B00A74124 /* x509write_csr.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AEF1E6B7E0100A74124 /* x509write_csr.c */; };
+		63F98CBA1E6B8C5B00A74124 /* xtea.c in Sources */ = {isa = PBXBuildFile; fileRef = 63F98AF01E6B7E0100A74124 /* xtea.c */; };
 		663704171612813D002D0D27 /* moai_whirlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 663704111612812C002D0D27 /* moai_whirlpool.h */; };
 		66E345471614CA710021FC4B /* moai_whirlpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 66E345451614CA710021FC4B /* moai_whirlpool.c */; };
 		89BE694A173974FD00DFE837 /* zl_platform.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6888173974FC00DFE837 /* zl_platform.h */; };
@@ -3071,50 +3140,6 @@
 		CD78109A187CAA2D008B9C0A /* MOAITextStyleMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD781093187CAA2D008B9C0A /* MOAITextStyleMap.cpp */; };
 		CD78109B187CAA2D008B9C0A /* MOAITextStyleMap.h in Headers */ = {isa = PBXBuildFile; fileRef = CD781094187CAA2D008B9C0A /* MOAITextStyleMap.h */; };
 		CD78109C187CAA2D008B9C0A /* MOAITextStyleMap.h in Headers */ = {isa = PBXBuildFile; fileRef = CD781094187CAA2D008B9C0A /* MOAITextStyleMap.h */; };
-		CD8078A01831C3B500E658D9 /* SFMT-params11213.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF71731BB90009E233E /* SFMT-params11213.h */; };
-		CD8078A11831C3B500E658D9 /* SFMT-params44497.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF91731BB90009E233E /* SFMT-params44497.h */; };
-		CD8078B01831C3B500E658D9 /* SFMT-params1279.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF41731BB90009E233E /* SFMT-params1279.h */; };
-		CD8078C41831C3B500E658D9 /* SFMT-params607.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF31731BB90009E233E /* SFMT-params607.h */; };
-		CD8078CA1831C3B500E658D9 /* SFMT-sse2.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFD1731BB90009E233E /* SFMT-sse2.h */; };
-		CD8078DB1831C3B500E658D9 /* SFMT-params132049.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFB1731BB90009E233E /* SFMT-params132049.h */; };
-		CD8078E61831C3B500E658D9 /* SFMT-params4253.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF61731BB90009E233E /* SFMT-params4253.h */; };
-		CD8079031831C3B500E658D9 /* ft2build.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2913564CB0000ADC60 /* ft2build.h */; };
-		CD8079041831C3B500E658D9 /* ftconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2A13564CB0000ADC60 /* ftconfig.h */; };
-		CD8079051831C3B500E658D9 /* ftheader.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2B13564CB0000ADC60 /* ftheader.h */; };
-		CD8079061831C3B500E658D9 /* ftmodule.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2C13564CB0000ADC60 /* ftmodule.h */; };
-		CD8079071831C3B500E658D9 /* ftoption.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2D13564CB0000ADC60 /* ftoption.h */; };
-		CD8079081831C3B500E658D9 /* ftstdlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B2E13564CB0000ADC60 /* ftstdlib.h */; };
-		CD8079121831C3B500E658D9 /* SFMT-params216091.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFC1731BB90009E233E /* SFMT-params216091.h */; };
-		CD8079181831C3B500E658D9 /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490041141AB6EC00913D80 /* lapi.h */; };
-		CD80791A1831C3B500E658D9 /* lauxlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490043141AB6EC00913D80 /* lauxlib.h */; };
-		CD80791B1831C3B500E658D9 /* lcode.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490046141AB6EC00913D80 /* lcode.h */; };
-		CD80791C1831C3B500E658D9 /* ldebug.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490049141AB6EC00913D80 /* ldebug.h */; };
-		CD80791D1831C3B500E658D9 /* ldo.h in Headers */ = {isa = PBXBuildFile; fileRef = CD49004B141AB6EC00913D80 /* ldo.h */; };
-		CD80791E1831C3B500E658D9 /* lfunc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD49004E141AB6EC00913D80 /* lfunc.h */; };
-		CD80791F1831C3B500E658D9 /* lgc.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490050141AB6EC00913D80 /* lgc.h */; };
-		CD8079201831C3B500E658D9 /* llex.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490054141AB6EC00913D80 /* llex.h */; };
-		CD8079211831C3B500E658D9 /* llimits.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490055141AB6EC00913D80 /* llimits.h */; };
-		CD8079221831C3B500E658D9 /* lmem.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490058141AB6EC00913D80 /* lmem.h */; };
-		CD8079231831C3B500E658D9 /* lobject.h in Headers */ = {isa = PBXBuildFile; fileRef = CD49005B141AB6EC00913D80 /* lobject.h */; };
-		CD8079241831C3B500E658D9 /* lopcodes.h in Headers */ = {isa = PBXBuildFile; fileRef = CD49005D141AB6EC00913D80 /* lopcodes.h */; };
-		CD8079251831C3B500E658D9 /* lparser.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490060141AB6EC00913D80 /* lparser.h */; };
-		CD8079261831C3B500E658D9 /* SFMT-params19937.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF81731BB90009E233E /* SFMT-params19937.h */; };
-		CD8079271831C3B500E658D9 /* lstate.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490062141AB6EC00913D80 /* lstate.h */; };
-		CD8079281831C3B500E658D9 /* lstring.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490064141AB6EC00913D80 /* lstring.h */; };
-		CD8079291831C3B500E658D9 /* ltable.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490067141AB6EC00913D80 /* ltable.h */; };
-		CD80792A1831C3B500E658D9 /* ltm.h in Headers */ = {isa = PBXBuildFile; fileRef = CD49006A141AB6EC00913D80 /* ltm.h */; };
-		CD80792B1831C3B500E658D9 /* lua.h in Headers */ = {isa = PBXBuildFile; fileRef = CD49006B141AB6EC00913D80 /* lua.h */; };
-		CD80792C1831C3B500E658D9 /* luaconf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD49006C141AB6EC00913D80 /* luaconf.h */; };
-		CD80792D1831C3B500E658D9 /* lualib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD49006D141AB6EC00913D80 /* lualib.h */; };
-		CD80792E1831C3B500E658D9 /* lundump.h in Headers */ = {isa = PBXBuildFile; fileRef = CD49006F141AB6EC00913D80 /* lundump.h */; };
-		CD80792F1831C3B500E658D9 /* lvm.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490071141AB6EC00913D80 /* lvm.h */; };
-		CD8079301831C3B500E658D9 /* lzio.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490073141AB6EC00913D80 /* lzio.h */; };
-		CD8079381831C3B500E658D9 /* SFMT.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFF1731BB90009E233E /* SFMT.h */; };
-		CD80793E1831C3B500E658D9 /* SFMT-params2281.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF51731BB90009E233E /* SFMT-params2281.h */; };
-		CD8079411831C3B500E658D9 /* SFMT-common.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF11731BB90009E233E /* SFMT-common.h */; };
-		CD8079811831C3B500E658D9 /* SFMT-params.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF21731BB90009E233E /* SFMT-params.h */; };
-		CD8079A11831C3B500E658D9 /* SFMT-alti.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF01731BB90009E233E /* SFMT-alti.h */; };
-		CD8079CA1831C3B500E658D9 /* SFMT-params86243.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFFA1731BB90009E233E /* SFMT-params86243.h */; };
 		CD8081E41831C76900E658D9 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC1238417FA808A00FB64BB /* headers.h */; };
 		CD8081E51831C76900E658D9 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC1238517FA808A00FB64BB /* pch.cpp */; };
 		CD8081E61831C76900E658D9 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC1238617FA808A00FB64BB /* pch.h */; };
@@ -4224,13 +4249,6 @@
 			remoteGlobalIDString = CDA4B9871808ACA6000129F9;
 			remoteInfo = "libmoai-ios-vungle";
 		};
-		CDB14A281A01CCFB008CEA54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CDD47B9417FA78AE00525B77;
-			remoteInfo = "libmoai-ios-3rdparty-crypto";
-		};
 		CDB14A2E1A01CCFB008CEA54 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -4357,13 +4375,6 @@
 			remoteGlobalIDString = CD515F7D1BCDBC08000718FB;
 			remoteInfo = "libmoai-ios-image-webp";
 		};
-		CDFD7C2A1A0857EF00A94E6B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CD80789E1831C3B500E658D9;
-			remoteInfo = "libmoai-osx-3rdparty-crypto";
-		};
 		CDFD7C2C1A0857EF00A94E6B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -4393,6 +4404,18 @@
 			remoteInfo = "libmoai-osx-luaext";
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		63F98C681E6B8B3100A74124 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		03240A7713564CAF000ADC60 /* moai_utf8.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = moai_utf8.c; path = ../../3rdparty/contrib/moai_utf8.c; sourceTree = SOURCE_ROOT; };
@@ -4728,9 +4751,10 @@
 		63F98B7A1E6B7E5400A74124 /* x509_csr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = x509_csr.h; path = ../../3rdparty/mbedtls/include/mbedtls/x509_csr.h; sourceTree = "<group>"; };
 		63F98B7B1E6B7E5400A74124 /* x509.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = x509.h; path = ../../3rdparty/mbedtls/include/mbedtls/x509.h; sourceTree = "<group>"; };
 		63F98B7C1E6B7E5400A74124 /* xtea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xtea.h; path = ../../3rdparty/mbedtls/include/mbedtls/xtea.h; sourceTree = "<group>"; };
-		63F98BC61E6B809000A74124 /* liblibmoai-osx-3rdparty-mbedtls.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liblibmoai-osx-3rdparty-mbedtls.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		63F98BC61E6B809000A74124 /* libmoai-osx-3rdparty-mbedtls.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-3rdparty-mbedtls.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63F98C5C1E6B870500A74124 /* ZLHashWriterMbedTLS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZLHashWriterMbedTLS.h; path = "zl-crypto/ZLHashWriterMbedTLS.h"; sourceTree = "<group>"; };
 		63F98C5D1E6B870500A74124 /* ZLHashWriterMbedTLS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZLHashWriterMbedTLS.cpp; path = "zl-crypto/ZLHashWriterMbedTLS.cpp"; sourceTree = "<group>"; };
+		63F98C6A1E6B8B3100A74124 /* libmoai-ios-3rdparty-mbedtls.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-3rdparty-mbedtls.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		663704111612812C002D0D27 /* moai_whirlpool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = moai_whirlpool.h; path = ../../3rdparty/contrib/moai_whirlpool.h; sourceTree = "<group>"; };
 		6671AE9C15915C1500B36122 /* RiffFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RiffFile.cpp; path = ../../3rdparty/untz/src/native/android/RiffFile.cpp; sourceTree = "<group>"; };
 		6671AE9D15915C1500B36122 /* WaveFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WaveFile.cpp; path = ../../3rdparty/untz/src/native/android/WaveFile.cpp; sourceTree = "<group>"; };
@@ -6259,7 +6283,6 @@
 		CD795E5D17F08689006AEB47 /* SDL_spinlock.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = SDL_spinlock.c; path = "../../3rdparty/sdl2-2.0.4/src/atomic/SDL_spinlock.c"; sourceTree = "<group>"; };
 		CD795EFE17F0901A006AEB47 /* mongoose.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mongoose.c; path = ../../3rdparty/mongoose/mongoose.c; sourceTree = "<group>"; };
 		CD795EFF17F0901A006AEB47 /* mongoose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mongoose.h; path = ../../3rdparty/mongoose/mongoose.h; sourceTree = "<group>"; };
-		CD807B4A1831C3B500E658D9 /* libmoai-osx-3rdparty-crypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-3rdparty-crypto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD807E981831C42100E658D9 /* libmoai-osx-zl-crypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zl-crypto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIIso8601DateFormatter.h; path = ../../3rdparty/contrib/MOAIIso8601DateFormatter.h; sourceTree = "<group>"; };
 		CD80F63E135BBCFF006B0683 /* MOAIIso8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOAIIso8601DateFormatter.m; path = ../../3rdparty/contrib/MOAIIso8601DateFormatter.m; sourceTree = "<group>"; };
@@ -6535,7 +6558,6 @@
 		CDD06DAA1398838D00AB0420 /* unix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unix.h; path = "../../3rdparty/luasocket-2.0.2/src/unix.h"; sourceTree = SOURCE_ROOT; };
 		CDD06DAC1398838D00AB0420 /* usocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = usocket.c; path = "../../3rdparty/luasocket-2.0.2/src/usocket.c"; sourceTree = SOURCE_ROOT; };
 		CDD06DAD1398838D00AB0420 /* usocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = usocket.h; path = "../../3rdparty/luasocket-2.0.2/src/usocket.h"; sourceTree = SOURCE_ROOT; };
-		CDD480D117FA78AE00525B77 /* libmoai-ios-3rdparty-crypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-3rdparty-crypto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD5D68D1C24DDF10070237E /* MOAIPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPath.cpp; sourceTree = "<group>"; };
 		CDD5D68E1C24DDF10070237E /* MOAIPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPath.h; sourceTree = "<group>"; };
 		CDD5D6931C24EB6A0070237E /* MOAIPathStepper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPathStepper.cpp; sourceTree = "<group>"; };
@@ -6695,6 +6717,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		63F98BC31E6B809000A74124 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63F98C671E6B8B3100A74124 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -6946,13 +6975,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CD807B441831C3B500E658D9 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CD807E921831C42100E658D9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -7115,13 +7137,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		CDD06D82139882D900AB0420 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CDD480CB17FA78AE00525B77 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -7457,7 +7472,6 @@
 				89BE769F173C160E00DFE837 /* libmoai-osx-http-server.a */,
 				CDF288BC17ED41CF00FD4F59 /* libmoai-ios-zl-vfs.a */,
 				CD6D752517EE415D00964415 /* libmoai-osx-zl-vfs.a */,
-				CDD480D117FA78AE00525B77 /* libmoai-ios-3rdparty-crypto.a */,
 				CDC1238317FA804C00FB64BB /* libmoai-ios-zl-crypto.a */,
 				CDA4B7AE1808AC61000129F9 /* libmoai-ios-billing.a */,
 				CDA4B8241808AC6E000129F9 /* libmoai-ios-chartboost.a */,
@@ -7469,7 +7483,6 @@
 				CD4C3A81180A623200C02381 /* libmoai-ios-crypto.a */,
 				CD4C413F180A667300C02381 /* libmoai-ios-mobile-app-tracker.a */,
 				CD4C4174180A9AEA00C02381 /* libmoai-ios-urban-airship.a */,
-				CD807B4A1831C3B500E658D9 /* libmoai-osx-3rdparty-crypto.a */,
 				CD807E981831C42100E658D9 /* libmoai-osx-zl-crypto.a */,
 				CD95D4A51831D4E20080C34E /* libmoai-osx-crypto.a */,
 				CD70C11C18441DD0005CEBC0 /* libmoai-ios-flurry.a */,
@@ -7503,7 +7516,8 @@
 				CD8316C91BED3C1800745C8A /* libmoai-ios-3rdparty-liblua.a */,
 				CD320DDA1C5179B000AD5E5C /* libmoai-ios-harfbuzz.a */,
 				CD320F5D1C517A0E00AD5E5C /* libmoai-osx-harfbuzz.a */,
-				63F98BC61E6B809000A74124 /* liblibmoai-osx-3rdparty-mbedtls.a */,
+				63F98BC61E6B809000A74124 /* libmoai-osx-3rdparty-mbedtls.a */,
+				63F98C6A1E6B8B3100A74124 /* libmoai-ios-3rdparty-mbedtls.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -12831,57 +12845,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CD80789F1831C3B500E658D9 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CD8078A01831C3B500E658D9 /* SFMT-params11213.h in Headers */,
-				CD8078A11831C3B500E658D9 /* SFMT-params44497.h in Headers */,
-				CD8078B01831C3B500E658D9 /* SFMT-params1279.h in Headers */,
-				CD8078C41831C3B500E658D9 /* SFMT-params607.h in Headers */,
-				CD8078CA1831C3B500E658D9 /* SFMT-sse2.h in Headers */,
-				CD8078DB1831C3B500E658D9 /* SFMT-params132049.h in Headers */,
-				CD8078E61831C3B500E658D9 /* SFMT-params4253.h in Headers */,
-				CD8079031831C3B500E658D9 /* ft2build.h in Headers */,
-				CD8079041831C3B500E658D9 /* ftconfig.h in Headers */,
-				CD8079051831C3B500E658D9 /* ftheader.h in Headers */,
-				CD8079061831C3B500E658D9 /* ftmodule.h in Headers */,
-				CD8079071831C3B500E658D9 /* ftoption.h in Headers */,
-				CD8079081831C3B500E658D9 /* ftstdlib.h in Headers */,
-				CD8079121831C3B500E658D9 /* SFMT-params216091.h in Headers */,
-				CD8079181831C3B500E658D9 /* lapi.h in Headers */,
-				CD80791A1831C3B500E658D9 /* lauxlib.h in Headers */,
-				CD80791B1831C3B500E658D9 /* lcode.h in Headers */,
-				CD80791C1831C3B500E658D9 /* ldebug.h in Headers */,
-				CD80791D1831C3B500E658D9 /* ldo.h in Headers */,
-				CD80791E1831C3B500E658D9 /* lfunc.h in Headers */,
-				CD80791F1831C3B500E658D9 /* lgc.h in Headers */,
-				CD8079201831C3B500E658D9 /* llex.h in Headers */,
-				CD8079211831C3B500E658D9 /* llimits.h in Headers */,
-				CD8079221831C3B500E658D9 /* lmem.h in Headers */,
-				CD8079231831C3B500E658D9 /* lobject.h in Headers */,
-				CD8079241831C3B500E658D9 /* lopcodes.h in Headers */,
-				CD8079251831C3B500E658D9 /* lparser.h in Headers */,
-				CD8079261831C3B500E658D9 /* SFMT-params19937.h in Headers */,
-				CD8079271831C3B500E658D9 /* lstate.h in Headers */,
-				CD8079281831C3B500E658D9 /* lstring.h in Headers */,
-				CD8079291831C3B500E658D9 /* ltable.h in Headers */,
-				CD80792A1831C3B500E658D9 /* ltm.h in Headers */,
-				CD80792B1831C3B500E658D9 /* lua.h in Headers */,
-				CD80792C1831C3B500E658D9 /* luaconf.h in Headers */,
-				CD80792D1831C3B500E658D9 /* lualib.h in Headers */,
-				CD80792E1831C3B500E658D9 /* lundump.h in Headers */,
-				CD80792F1831C3B500E658D9 /* lvm.h in Headers */,
-				CD8079301831C3B500E658D9 /* lzio.h in Headers */,
-				CD8079381831C3B500E658D9 /* SFMT.h in Headers */,
-				CD80793E1831C3B500E658D9 /* SFMT-params2281.h in Headers */,
-				CD8079411831C3B500E658D9 /* SFMT-common.h in Headers */,
-				CD8079811831C3B500E658D9 /* SFMT-params.h in Headers */,
-				CD8079A11831C3B500E658D9 /* SFMT-alti.h in Headers */,
-				CD8079CA1831C3B500E658D9 /* SFMT-params86243.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CD807DF91831C42100E658D9 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -13230,13 +13193,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CDD47B9517FA78AE00525B77 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CDD7814E1A11631E00AD133E /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -13399,7 +13355,24 @@
 			);
 			name = "libmoai-osx-3rdparty-mbedtls";
 			productName = "libmoai-osx-3rdparty-mbedtls";
-			productReference = 63F98BC61E6B809000A74124 /* liblibmoai-osx-3rdparty-mbedtls.a */;
+			productReference = 63F98BC61E6B809000A74124 /* libmoai-osx-3rdparty-mbedtls.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		63F98C691E6B8B3100A74124 /* libmoai-ios-3rdparty-mbedtls */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 63F98C701E6B8B3200A74124 /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty-mbedtls" */;
+			buildPhases = (
+				63F98C661E6B8B3100A74124 /* Sources */,
+				63F98C671E6B8B3100A74124 /* Frameworks */,
+				63F98C681E6B8B3100A74124 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-ios-3rdparty-mbedtls";
+			productName = "libmoai-ios-3rdparty-mbedtls";
+			productReference = 63F98C6A1E6B8B3100A74124 /* libmoai-ios-3rdparty-mbedtls.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		89BE6EF5173AD06700DFE837 /* libmoai-ios-sim */ = {
@@ -13997,23 +13970,6 @@
 			productReference = CD70C20E18449935005CEBC0 /* libmoai-ios-kontagent.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		CD80789E1831C3B500E658D9 /* libmoai-osx-3rdparty-crypto */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CD807B451831C3B500E658D9 /* Build configuration list for PBXNativeTarget "libmoai-osx-3rdparty-crypto" */;
-			buildPhases = (
-				CD80789F1831C3B500E658D9 /* Headers */,
-				CD8079DE1831C3B500E658D9 /* Sources */,
-				CD807B441831C3B500E658D9 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "libmoai-osx-3rdparty-crypto";
-			productName = OpenUSLS;
-			productReference = CD807B4A1831C3B500E658D9 /* libmoai-osx-3rdparty-crypto.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 		CD807DF81831C42100E658D9 /* libmoai-osx-zl-crypto */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD807E931831C42100E658D9 /* Build configuration list for PBXNativeTarget "libmoai-osx-zl-crypto" */;
@@ -14422,23 +14378,6 @@
 			productReference = CDD06D87139882D900AB0420 /* libmoai-osx-luaext.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		CDD47B9417FA78AE00525B77 /* libmoai-ios-3rdparty-crypto */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CDD480CC17FA78AE00525B77 /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty-crypto" */;
-			buildPhases = (
-				CDD47B9517FA78AE00525B77 /* Headers */,
-				CDD47D3417FA78AE00525B77 /* Sources */,
-				CDD480CB17FA78AE00525B77 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "libmoai-ios-3rdparty-crypto";
-			productName = OpenUSLS;
-			productReference = CDD480D117FA78AE00525B77 /* libmoai-ios-3rdparty-crypto.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 		CDD7814D1A11631E00AD133E /* libmoai-ios-motion */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CDD781C51A11631E00AD133E /* Build configuration list for PBXNativeTarget "libmoai-ios-motion" */;
@@ -14537,6 +14476,10 @@
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
 					};
+					63F98C691E6B8B3100A74124 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "libmoai" */;
@@ -14566,7 +14509,6 @@
 				03C2F6F3104DE130009A2D5D /* libmoai-ios */,
 				CD257B251A6255380057A53A /* libmoai-ios-apple */,
 				CD8315C81BED3AE900745C8A /* libmoai-ios-3rdparty-contrib */,
-				CDD47B9417FA78AE00525B77 /* libmoai-ios-3rdparty-crypto */,
 				CD830D741BED355500745C8A /* libmoai-ios-3rdparty-expat */,
 				CD83152D1BED3A8100745C8A /* libmoai-ios-3rdparty-freetype */,
 				CD830E4B1BED356D00745C8A /* libmoai-ios-3rdparty-jansson */,
@@ -14611,7 +14553,6 @@
 				0324E2B11356485F000ADC60 /* libmoai-osx */,
 				CD1845231A626BD500FCCCE0 /* libmoai-osx-apple */,
 				0324E2A81356485F000ADC60 /* libmoai-osx-3rdparty-core */,
-				CD80789E1831C3B500E658D9 /* libmoai-osx-3rdparty-crypto */,
 				CD32B3C119F9EDD10059D019 /* libmoai-osx-3rdparty-sdl */,
 				CDA0DC161A01B184002B71B6 /* libmoai-osx-audio-sampler */,
 				89BE725E173AD29200DFE837 /* libmoai-osx-box2d */,
@@ -14635,6 +14576,7 @@
 				3EDC16E519F6DD19007A7775 /* libmoai-osx-all */,
 				3EDC171119F6DE00007A7775 /* libmoai-ios-all */,
 				63F98BC51E6B809000A74124 /* libmoai-osx-3rdparty-mbedtls */,
+				63F98C691E6B8B3100A74124 /* libmoai-ios-3rdparty-mbedtls */,
 			);
 		};
 /* End PBXProject section */
@@ -14979,6 +14921,84 @@
 				63F98C431E6B847F00A74124 /* sha512.c in Sources */,
 				63F98C1D1E6B847F00A74124 /* cmac.c in Sources */,
 				63F98C1F1E6B847F00A74124 /* debug.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63F98C661E6B8B3100A74124 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63F98C9D1E6B8C5B00A74124 /* pkcs5.c in Sources */,
+				63F98C9C1E6B8C5B00A74124 /* pk.c in Sources */,
+				63F98CB71E6B8C5B00A74124 /* x509.c in Sources */,
+				63F98C931E6B8C5B00A74124 /* md2.c in Sources */,
+				63F98CAA1E6B8C5B00A74124 /* ssl_cli.c in Sources */,
+				63F98CB31E6B8C5B00A74124 /* x509_create.c in Sources */,
+				63F98CA51E6B8C5B00A74124 /* sha1.c in Sources */,
+				63F98C941E6B8C5B00A74124 /* md4.c in Sources */,
+				63F98C9F1E6B8C5B00A74124 /* pkcs12.c in Sources */,
+				63F98CBA1E6B8C5B00A74124 /* xtea.c in Sources */,
+				63F98C7D1E6B8C5B00A74124 /* ccm.c in Sources */,
+				63F98C8E1E6B8C5B00A74124 /* gcm.c in Sources */,
+				63F98C7B1E6B8C5B00A74124 /* blowfish.c in Sources */,
+				63F98CAE1E6B8C5B00A74124 /* ssl_tls.c in Sources */,
+				63F98C821E6B8C5B00A74124 /* ctr_drbg.c in Sources */,
+				63F98C851E6B8C5B00A74124 /* dhm.c in Sources */,
+				63F98C8F1E6B8C5B00A74124 /* havege.c in Sources */,
+				63F98C921E6B8C5B00A74124 /* md.c in Sources */,
+				63F98C891E6B8C5B00A74124 /* ecp_curves.c in Sources */,
+				63F98C961E6B8C5B00A74124 /* memory_buffer_alloc.c in Sources */,
+				63F98CB51E6B8C5B00A74124 /* x509_crt.c in Sources */,
+				63F98CA41E6B8C5B00A74124 /* rsa.c in Sources */,
+				63F98C8C1E6B8C5B00A74124 /* entropy.c in Sources */,
+				63F98C751E6B8C5B00A74124 /* aesni.c in Sources */,
+				63F98C8A1E6B8C5B00A74124 /* ecp.c in Sources */,
+				63F98C9E1E6B8C5B00A74124 /* pkcs11.c in Sources */,
+				63F98C761E6B8C5B00A74124 /* arc4.c in Sources */,
+				63F98C8B1E6B8C5B00A74124 /* entropy_poll.c in Sources */,
+				63F98CA01E6B8C5B00A74124 /* pkparse.c in Sources */,
+				63F98CB11E6B8C5B00A74124 /* version_features.c in Sources */,
+				63F98C9A1E6B8C5B00A74124 /* pem.c in Sources */,
+				63F98C791E6B8C5B00A74124 /* base64.c in Sources */,
+				63F98C7F1E6B8C5B00A74124 /* cipher_wrap.c in Sources */,
+				63F98C7A1E6B8C5B00A74124 /* bignum.c in Sources */,
+				63F98CA91E6B8C5B00A74124 /* ssl_ciphersuites.c in Sources */,
+				63F98C971E6B8C5B00A74124 /* net_sockets.c in Sources */,
+				63F98CB21E6B8C5B00A74124 /* version.c in Sources */,
+				63F98C871E6B8C5B00A74124 /* ecdsa.c in Sources */,
+				63F98CA81E6B8C5B00A74124 /* ssl_cache.c in Sources */,
+				63F98CA11E6B8C5B00A74124 /* pkwrite.c in Sources */,
+				63F98C781E6B8C5B00A74124 /* asn1write.c in Sources */,
+				63F98CA71E6B8C5B00A74124 /* sha512.c in Sources */,
+				63F98C951E6B8C5B00A74124 /* md5.c in Sources */,
+				63F98CB41E6B8C5B00A74124 /* x509_crl.c in Sources */,
+				63F98C741E6B8C5B00A74124 /* aes.c in Sources */,
+				63F98CA21E6B8C5B00A74124 /* platform.c in Sources */,
+				63F98C831E6B8C5B00A74124 /* debug.c in Sources */,
+				63F98C991E6B8C5B00A74124 /* padlock.c in Sources */,
+				63F98C841E6B8C5B00A74124 /* des.c in Sources */,
+				63F98C811E6B8C5B00A74124 /* cmac.c in Sources */,
+				63F98C981E6B8C5B00A74124 /* oid.c in Sources */,
+				63F98C861E6B8C5B00A74124 /* ecdh.c in Sources */,
+				63F98CA31E6B8C5B00A74124 /* ripemd160.c in Sources */,
+				63F98CAC1E6B8C5B00A74124 /* ssl_srv.c in Sources */,
+				63F98CA61E6B8C5B00A74124 /* sha256.c in Sources */,
+				63F98CB81E6B8C5B00A74124 /* x509write_crt.c in Sources */,
+				63F98C8D1E6B8C5B00A74124 /* error.c in Sources */,
+				63F98C9B1E6B8C5B00A74124 /* pk_wrap.c in Sources */,
+				63F98C7E1E6B8C5B00A74124 /* certs.c in Sources */,
+				63F98CAF1E6B8C5B00A74124 /* threading.c in Sources */,
+				63F98C771E6B8C5B00A74124 /* asn1parse.c in Sources */,
+				63F98C881E6B8C5B00A74124 /* ecjpake.c in Sources */,
+				63F98CB01E6B8C5B00A74124 /* timing.c in Sources */,
+				63F98C801E6B8C5B00A74124 /* cipher.c in Sources */,
+				63F98C7C1E6B8C5B00A74124 /* camellia.c in Sources */,
+				63F98C911E6B8C5B00A74124 /* md_wrap.c in Sources */,
+				63F98CB61E6B8C5B00A74124 /* x509_csr.c in Sources */,
+				63F98CB91E6B8C5B00A74124 /* x509write_csr.c in Sources */,
+				63F98C901E6B8C5B00A74124 /* hmac_drbg.c in Sources */,
+				63F98CAB1E6B8C5B00A74124 /* ssl_cookie.c in Sources */,
+				63F98CAD1E6B8C5B00A74124 /* ssl_ticket.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16519,13 +16539,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CD8079DE1831C3B500E658D9 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CD807E531831C42100E658D9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -16889,13 +16902,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CDD47D3417FA78AE00525B77 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CDD7818E1A11631E00AD133E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -17186,11 +17192,6 @@
 			target = CDA4B9871808ACA6000129F9 /* libmoai-ios-vungle */;
 			targetProxy = 63A2AD0F1D1AA13D008D5D59 /* PBXContainerItemProxy */;
 		};
-		CDB14A291A01CCFB008CEA54 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CDD47B9417FA78AE00525B77 /* libmoai-ios-3rdparty-crypto */;
-			targetProxy = CDB14A281A01CCFB008CEA54 /* PBXContainerItemProxy */;
-		};
 		CDB14A2F1A01CCFB008CEA54 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CD4C3A69180A623200C02381 /* libmoai-ios-crypto */;
@@ -17280,11 +17281,6 @@
 			isa = PBXTargetDependency;
 			target = CD515F7D1BCDBC08000718FB /* libmoai-ios-image-webp */;
 			targetProxy = CDD954291BD4AF4C001744F0 /* PBXContainerItemProxy */;
-		};
-		CDFD7C2B1A0857EF00A94E6B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CD80789E1831C3B500E658D9 /* libmoai-osx-3rdparty-crypto */;
-			targetProxy = CDFD7C2A1A0857EF00A94E6B /* PBXContainerItemProxy */;
 		};
 		CDFD7C2D1A0857EF00A94E6B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -17709,7 +17705,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-osx-3rdparty-mbedtls";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -17750,7 +17746,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-osx-3rdparty-mbedtls";
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -17791,8 +17787,171 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "moai-osx-3rdparty-mbedtls";
 				SDKROOT = macosx;
+			};
+			name = Distribution;
+		};
+		63F98C711E6B8B3200A74124 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					MBEDTLS_EXPORTS,
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "moai-ios-3rdparty-mbedtls";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		63F98C721E6B8B3200A74124 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_UNTZ,
+					"UNTZ_WITH_VORBIS=1",
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					"$(inherited)",
+					"MOAI_WITH_ARES=0",
+					"MOAI_WITH_LIBCURL=0",
+					"MOAI_WITH_OPENSSL=0",
+					"MOAI_WITH_NSURL=1",
+					HAVE_OT,
+					HAVE_CORETEXT,
+					HAVE_UCDN,
+					MBEDTLS_EXPORTS,
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "moai-ios-3rdparty-mbedtls";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		63F98C731E6B8B3200A74124 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_UNTZ,
+					"UNTZ_WITH_VORBIS=1",
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					"$(inherited)",
+					"MOAI_WITH_ARES=0",
+					"MOAI_WITH_LIBCURL=0",
+					"MOAI_WITH_OPENSSL=0",
+					"MOAI_WITH_NSURL=1",
+					HAVE_OT,
+					HAVE_CORETEXT,
+					HAVE_UCDN,
+					ZGL_ASSERT_ON_ERROR,
+					MBEDTLS_EXPORTS,
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "moai-ios-3rdparty-mbedtls";
+				SKIP_INSTALL = YES;
 			};
 			name = Distribution;
 		};
@@ -21255,141 +21414,6 @@
 			};
 			name = Distribution;
 		};
-		CD807B461831C3B500E658D9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_ALTIVEC_EXTENSIONS = YES;
-				GCC_ENABLE_SSE3_EXTENSIONS = YES;
-				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-					LUA_USE_MACOSX,
-					BN_CTX_DEBUG,
-					BN_DEBUG,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"\"/usr/X11R6/include\"",
-					"$(inherited)",
-				);
-				PRODUCT_NAME = "moai-osx-3rdparty-crypto";
-				SDKROOT = macosx;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Debug;
-		};
-		CD807B471831C3B500E658D9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_ALTIVEC_EXTENSIONS = YES;
-				GCC_ENABLE_SSE3_EXTENSIONS = YES;
-				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-					LUA_USE_MACOSX,
-				);
-				GCC_STRICT_ALIASING = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"\"/usr/X11R6/include\"",
-					"$(inherited)",
-				);
-				PRODUCT_NAME = "moai-osx-3rdparty-crypto";
-				SDKROOT = macosx;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Release;
-		};
-		CD807B491831C3B500E658D9 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_ALTIVEC_EXTENSIONS = YES;
-				GCC_ENABLE_SSE3_EXTENSIONS = YES;
-				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"${inherited}",
-					MACOSX,
-					LUA_USE_MACOSX,
-				);
-				GCC_STRICT_ALIASING = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"\"/usr/X11R6/include\"",
-					"$(inherited)",
-				);
-				PRODUCT_NAME = "moai-osx-3rdparty-crypto";
-				SDKROOT = macosx;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
 		CD807E941831C42100E658D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -23817,108 +23841,6 @@
 			};
 			name = Release;
 		};
-		CDD480CD17FA78AE00525B77 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_CXX0X_EXTENSIONS = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-3rdparty-crypto";
-				SDKROOT = iphoneos;
-				SEPARATE_STRIP = NO;
-				STRIP_STYLE = all;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Debug;
-		};
-		CDD480CE17FA78AE00525B77 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_CXX0X_EXTENSIONS = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-3rdparty-crypto";
-				SDKROOT = iphoneos;
-				SEPARATE_STRIP = NO;
-				STRIP_STYLE = all;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Release;
-		};
-		CDD480D017FA78AE00525B77 /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_CXX0X_EXTENSIONS = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-3rdparty-crypto";
-				SDKROOT = iphoneos;
-				SEPARATE_STRIP = NO;
-				STRIP_STYLE = all;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Distribution;
-		};
 		CDD781C61A11631E00AD133E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -24866,6 +24788,17 @@
 				63F98BCA1E6B809000A74124 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		63F98C701E6B8B3200A74124 /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty-mbedtls" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63F98C711E6B8B3200A74124 /* Debug */,
+				63F98C721E6B8B3200A74124 /* Release */,
+				63F98C731E6B8B3200A74124 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		89BE6F01173AD06700DFE837 /* Build configuration list for PBXNativeTarget "libmoai-ios-sim" */ = {
 			isa = XCConfigurationList;
@@ -25227,16 +25160,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CD807B451831C3B500E658D9 /* Build configuration list for PBXNativeTarget "libmoai-osx-3rdparty-crypto" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CD807B461831C3B500E658D9 /* Debug */,
-				CD807B471831C3B500E658D9 /* Release */,
-				CD807B491831C3B500E658D9 /* Distribution */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		CD807E931831C42100E658D9 /* Build configuration list for PBXNativeTarget "libmoai-osx-zl-crypto" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -25473,16 +25396,6 @@
 				CDD06D85139882D900AB0420 /* Debug */,
 				CDD06D86139882D900AB0420 /* Release */,
 				E90D02C814D5E12700DD75AA /* Distribution */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CDD480CC17FA78AE00525B77 /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty-crypto" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CDD480CD17FA78AE00525B77 /* Debug */,
-				CDD480CE17FA78AE00525B77 /* Release */,
-				CDD480D017FA78AE00525B77 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
