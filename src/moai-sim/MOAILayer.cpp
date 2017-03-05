@@ -225,7 +225,8 @@ int	MOAILayer::_getPropViewList ( lua_State* L ) {
 		ZLFrustum viewVolume;
 		viewVolume.Init ( invViewProjMtx );
 		
-		MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
+		MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
+		MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
 		
 		u32 totalResults = 0;
 		
@@ -789,7 +790,9 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 		u32 interfaceMask = this->mPartition->GetInterfaceMask < MOAIGraphicsProp >();
 		if ( !interfaceMask ) return;
 		
-		MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
+		MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
+		MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
+		
 		const ZLFrustum& viewVolume = gfxMgr.mGfxState.GetViewVolume ();
 		
 		u32 totalResults = 0;
