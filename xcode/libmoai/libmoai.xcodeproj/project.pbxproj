@@ -13,6 +13,7 @@
 			buildPhases = (
 			);
 			dependencies = (
+				634E06791E6D77A200F436C5 /* PBXTargetDependency */,
 				CDBA1E4A1B1E443400DCDC75 /* PBXTargetDependency */,
 				CDBA1E4C1B1E443400DCDC75 /* PBXTargetDependency */,
 				3EDC16EC19F6DD37007A7775 /* PBXTargetDependency */,
@@ -44,6 +45,7 @@
 			buildPhases = (
 			);
 			dependencies = (
+				634E06771E6D778A00F436C5 /* PBXTargetDependency */,
 				63A2ACE61D1AA13D008D5D59 /* PBXTargetDependency */,
 				63A2ACE81D1AA13D008D5D59 /* PBXTargetDependency */,
 				63A2ACEA1D1AA13D008D5D59 /* PBXTargetDependency */,
@@ -4101,6 +4103,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = CD6D745F17EE415D00964415;
 			remoteInfo = "libmoai-osx-zl-vfs";
+		};
+		634E06761E6D778A00F436C5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 63F98C691E6B8B3100A74124;
+			remoteInfo = "libmoai-ios-3rdparty-mbedtls";
+		};
+		634E06781E6D77A200F436C5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 63F98BC51E6B809000A74124;
+			remoteInfo = "libmoai-osx-3rdparty-mbedtls";
 		};
 		63A2ACE51D1AA13D008D5D59 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -17086,6 +17102,16 @@
 			isa = PBXTargetDependency;
 			target = CD6D745F17EE415D00964415 /* libmoai-osx-zl-vfs */;
 			targetProxy = 3EDC170F19F6DD37007A7775 /* PBXContainerItemProxy */;
+		};
+		634E06771E6D778A00F436C5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 63F98C691E6B8B3100A74124 /* libmoai-ios-3rdparty-mbedtls */;
+			targetProxy = 634E06761E6D778A00F436C5 /* PBXContainerItemProxy */;
+		};
+		634E06791E6D77A200F436C5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 63F98BC51E6B809000A74124 /* libmoai-osx-3rdparty-mbedtls */;
+			targetProxy = 634E06781E6D77A200F436C5 /* PBXContainerItemProxy */;
 		};
 		63A2ACE61D1AA13D008D5D59 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

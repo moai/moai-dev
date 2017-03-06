@@ -20,6 +20,7 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		43BA2EF317733819007DCDF0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43BA2EF217733819007DCDF0 /* CFNetwork.framework */; };
+		634E06731E6D763500F436C5 /* libmoai-ios-3rdparty-mbedtls.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 634E06721E6D763500F436C5 /* libmoai-ios-3rdparty-mbedtls.a */; };
 		665383F7160A8466003D5529 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 665383F6160A8466003D5529 /* MessageUI.framework */; };
 		CD236689180A5CFC006A7236 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD236688180A5CFC006A7236 /* AVFoundation.framework */; };
 		CD23668D180A5D40006A7236 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD23668C180A5D40006A7236 /* CoreMedia.framework */; };
@@ -27,7 +28,6 @@
 		CD236699180A5DC3006A7236 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD236698180A5DC3006A7236 /* EventKit.framework */; };
 		CD30078A1A12D87400C9CD1D /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = CD3007891A12D87400C9CD1D /* main.lua */; };
 		CD4C4163180A6A8600C02381 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4C4162180A6A8600C02381 /* MobileCoreServices.framework */; };
-		CD4DF2B61A12E35B00E9A523 /* libmoai-ios-3rdparty-crypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4DF2A91A12E35B00E9A523 /* libmoai-ios-3rdparty-crypto.a */; };
 		CD4DF2B71A12E35B00E9A523 /* libmoai-ios-billing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4DF2AA1A12E35B00E9A523 /* libmoai-ios-billing.a */; };
 		CD4DF2B81A12E35B00E9A523 /* libmoai-ios-box2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4DF2AB1A12E35B00E9A523 /* libmoai-ios-box2d.a */; };
 		CD4DF2B91A12E35B00E9A523 /* libmoai-ios-crypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4DF2AC1A12E35B00E9A523 /* libmoai-ios-crypto.a */; };
@@ -104,6 +104,7 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		43BA2EF217733819007DCDF0 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		634E06721E6D763500F436C5 /* libmoai-ios-3rdparty-mbedtls.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-3rdparty-mbedtls.a"; path = "../../lib/ios/libmoai-ios-3rdparty-mbedtls.a"; sourceTree = "<group>"; };
 		665383F6160A8466003D5529 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		CD236688180A5CFC006A7236 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		CD23668C180A5D40006A7236 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -111,7 +112,6 @@
 		CD236698180A5DC3006A7236 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		CD3007891A12D87400C9CD1D /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.lua; sourceTree = "<group>"; };
 		CD4C4162180A6A8600C02381 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		CD4DF2A91A12E35B00E9A523 /* libmoai-ios-3rdparty-crypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-3rdparty-crypto.a"; path = "../../lib/ios/libmoai-ios-3rdparty-crypto.a"; sourceTree = "<group>"; };
 		CD4DF2AA1A12E35B00E9A523 /* libmoai-ios-billing.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-billing.a"; path = "../../lib/ios/libmoai-ios-billing.a"; sourceTree = "<group>"; };
 		CD4DF2AB1A12E35B00E9A523 /* libmoai-ios-box2d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-box2d.a"; path = "../../lib/ios/libmoai-ios-box2d.a"; sourceTree = "<group>"; };
 		CD4DF2AC1A12E35B00E9A523 /* libmoai-ios-crypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-crypto.a"; path = "../../lib/ios/libmoai-ios-crypto.a"; sourceTree = "<group>"; };
@@ -188,9 +188,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				634E06731E6D763500F436C5 /* libmoai-ios-3rdparty-mbedtls.a in Frameworks */,
 				CD4DF2C11A12E35B00E9A523 /* libmoai-ios.a in Frameworks */,
 				CDBA1E4F1B1E44FA00DCDC75 /* libmoai-ios-apple.a in Frameworks */,
-				CD4DF2B61A12E35B00E9A523 /* libmoai-ios-3rdparty-crypto.a in Frameworks */,
 				CD4DF2B71A12E35B00E9A523 /* libmoai-ios-billing.a in Frameworks */,
 				CD4DF2B81A12E35B00E9A523 /* libmoai-ios-box2d.a in Frameworks */,
 				CD83178A1BED415C00745C8A /* libmoai-ios-3rdparty-libtess.a in Frameworks */,
@@ -333,8 +333,8 @@
 		CD4DF2A71A12E30E00E9A523 /* Moai */ = {
 			isa = PBXGroup;
 			children = (
+				634E06721E6D763500F436C5 /* libmoai-ios-3rdparty-mbedtls.a */,
 				CD83177B1BED415C00745C8A /* libmoai-ios-3rdparty-contrib.a */,
-				CD4DF2A91A12E35B00E9A523 /* libmoai-ios-3rdparty-crypto.a */,
 				CD83177C1BED415C00745C8A /* libmoai-ios-3rdparty-expat.a */,
 				CD83177D1BED415C00745C8A /* libmoai-ios-3rdparty-freetype.a */,
 				CD83177E1BED415C00745C8A /* libmoai-ios-3rdparty-jannson.a */,
