@@ -140,6 +140,8 @@
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/c-ares-1.7.5
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/c-ares-1.7.5/include-android
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/curl/include
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/src/custom-include/curl/android
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/src/custom-include/curl/android/curl
 	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-c-ares.mk
 	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-curl.mk
 	MY_INCLUDES += $(MOAI_MODULES)/modules/3rdparty-mbedtls.mk

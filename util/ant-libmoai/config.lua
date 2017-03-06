@@ -303,6 +303,8 @@ MODULES = {
 			'$(MOAI_SDK_HOME)/3rdparty/c-ares-1.7.5',
 			'$(MOAI_SDK_HOME)/3rdparty/c-ares-1.7.5/include-android',
 			'$(MOAI_SDK_HOME)/3rdparty/curl/include',
+			'$(MOAI_SDK_HOME)/src/custom-include/curl/android',
+			'$(MOAI_SDK_HOME)/src/custom-include/curl/android/curl',
 		},
 		
 		MAKE = {
