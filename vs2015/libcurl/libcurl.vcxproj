@@ -442,7 +442,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\c-ares-1.7.5;..\..\3rdparty\curl\lib;..\..\3rdparty\curl\include;..\..\3rdparty\mbedtls\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\c-ares-1.7.5;..\..\3rdparty\curl\lib;..\..\3rdparty\curl\include;..\..\3rdparty\mbedtls\include;..\..\src\custom-include\curl\windows;..\..\src\custom-include\curl\windows\curl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;BUILDING_LIBCURL;CURL_STATICLIB;USE_SSL;USE_MBEDTLS;CURL_DISABLE_LDAP;CURL_DISABLE_NTLM;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
