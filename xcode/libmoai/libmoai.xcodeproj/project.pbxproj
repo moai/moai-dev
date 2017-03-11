@@ -776,6 +776,8 @@
 		CD04AF0814725714009C20E5 /* zlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECA14725714009C20E5 /* zlib.h */; };
 		CD04AF0B14725714009C20E5 /* zutil.c in Sources */ = {isa = PBXBuildFile; fileRef = CD04AECB14725714009C20E5 /* zutil.c */; };
 		CD04AF0E14725714009C20E5 /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECC14725714009C20E5 /* zutil.h */; };
+		CD08DBD71E690B9D00443255 /* MOAIFreeTypeFontReader_apple.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD08DBD61E690B9D00443255 /* MOAIFreeTypeFontReader_apple.mm */; };
+		CD08DBD81E690B9D00443255 /* MOAIFreeTypeFontReader_apple.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD08DBD61E690B9D00443255 /* MOAIFreeTypeFontReader_apple.mm */; };
 		CD0BB63E1B0D22AC00399FCB /* MOAILuaUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD0BB63C1B0D22AC00399FCB /* MOAILuaUtil.cpp */; };
 		CD0BB63F1B0D22AC00399FCB /* MOAILuaUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0BB63D1B0D22AC00399FCB /* MOAILuaUtil.h */; };
 		CD0BB6401B0D22B900399FCB /* MOAILuaUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD0BB63C1B0D22AC00399FCB /* MOAILuaUtil.cpp */; };
@@ -6801,6 +6803,7 @@
 		CD07C3CD13A182AA00C9386C /* libmoai-ios-untz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-untz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD07C4E513A1918600C9386C /* libmoai-osx-untz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-untz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD07C53013A1954600C9386C /* Untz-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Untz-Prefix.pch"; path = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		CD08DBD61E690B9D00443255 /* MOAIFreeTypeFontReader_apple.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MOAIFreeTypeFontReader_apple.mm; sourceTree = "<group>"; };
 		CD0BB63C1B0D22AC00399FCB /* MOAILuaUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAILuaUtil.cpp; sourceTree = "<group>"; };
 		CD0BB63D1B0D22AC00399FCB /* MOAILuaUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAILuaUtil.h; sourceTree = "<group>"; };
 		CD14013D1A0C5F660065AEE7 /* MOAIInputMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIInputMgr.cpp; sourceTree = "<group>"; };
@@ -14488,6 +14491,7 @@
 				89BE6F59173AD0CA00DFE837 /* MOAIFontReader.cpp */,
 				89BE6F5A173AD0CA00DFE837 /* MOAIFontReader.h */,
 				89BE6F5F173AD0CA00DFE837 /* MOAIFreeTypeFontReader.cpp */,
+				CD08DBD61E690B9D00443255 /* MOAIFreeTypeFontReader_apple.mm */,
 				89BE6F60173AD0CA00DFE837 /* MOAIFreeTypeFontReader.h */,
 				89BE6F6B173AD0CA00DFE837 /* MOAIGlyph.cpp */,
 				89BE6F6C173AD0CA00DFE837 /* MOAIGlyph.h */,
@@ -18974,6 +18978,7 @@
 				CD4C3E36180A63BB00C02381 /* MOAIGlyph.cpp in Sources */,
 				CD4C3E23180A63BB00C02381 /* MOAIFont_bmfont.cpp in Sources */,
 				CD4C3DEA180A63BB00C02381 /* MOAIAction.cpp in Sources */,
+				CD08DBD71E690B9D00443255 /* MOAIFreeTypeFontReader_apple.mm in Sources */,
 				CD4C3E09180A63BB00C02381 /* MOAICameraFitter2D.cpp in Sources */,
 				CD4C3DFD180A63BB00C02381 /* MOAIBlocker.cpp in Sources */,
 				CD4C3E54180A63BB00C02381 /* MOAIJoystickSensor.cpp in Sources */,
@@ -19161,6 +19166,7 @@
 				CD4C40EA180A63C200C02381 /* MOAIShader.cpp in Sources */,
 				CD4C40E8180A63C200C02381 /* MOAISensor.cpp in Sources */,
 				CD4C4047180A63C200C02381 /* MOAIDeck.cpp in Sources */,
+				CD08DBD81E690B9D00443255 /* MOAIFreeTypeFontReader_apple.mm in Sources */,
 				CDF695561D63E7330045A020 /* MOAIAnimCurveBone.cpp in Sources */,
 				CD4C4128180A63C200C02381 /* MOAIVertexFormatMgr.cpp in Sources */,
 				CD4C40DC180A63C200C02381 /* MOAIQuadBrush.cpp in Sources */,
