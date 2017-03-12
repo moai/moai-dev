@@ -1047,6 +1047,7 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 					*r0 = v0;
 				}
 				break;
+			
 			case SIN: // RV
 
 				READ_ADDR   ( r0, bytecode );

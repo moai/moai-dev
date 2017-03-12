@@ -49,8 +49,8 @@ render2:rand			( MOAIParticleScript.SPRITE_GREEN, CONST ( 0.5 ), CONST ( 1 ))
 render2:set				( MOAIParticleScript.SPRITE_BLUE, 0 )
 
 ----------------------------------------------------------------
-texture = MOAIGfxQuad2D.new ()
-texture:setTexture ( "moai.png" )
+texture = MOAISpriteDeck2D.new ()
+texture:setTexture ( "../resources/moai.png" )
 texture:setRect ( -16, -16, 16, 16 )
 
 system = MOAIParticleSystem.new ()
@@ -59,7 +59,7 @@ system:reserveSprites ( 256 )
 system:reserveStates ( 2 )
 system:setDeck ( texture )
 system:start ()
-layer:insertProp ( system )
+system:setPartition ( layer )
 
 magnet = MOAIParticleForce.new ()
 magnet:initBasin ( 256, 64 )
