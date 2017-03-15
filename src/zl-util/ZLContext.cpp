@@ -39,7 +39,7 @@ ZLContext::ZLContext () {
 //----------------------------------------------------------------//
 ZLContext::~ZLContext () {
 
-	// get the log object here, since it will be markes as invalid with all the others below
+	// get the log object here, since it will be marked as invalid with all the others below
 	// no longer safe to use the ZLLog macros
 	#ifdef ZL_ENABLE_CONTEXT_DEBUG_LOG
 		ZLLog& log = ZLLog::Get ();
@@ -135,7 +135,10 @@ ZLContext* ZLContextMgr::Create () {
 	sInstance.Set ( globals );
 	
 	ZLLog::Affirm ();
-	ZLLog_DebugF ( ZLLog::CONSOLE, "ZLContextMgr: new context %p\n", globals );
+	
+	#ifdef ZL_ENABLE_CONTEXT_DEBUG_LOG
+		ZLLog_DebugF ( ZLLog::CONSOLE, "ZLContextMgr: new context %p\n", globals );
+	#endif
 
 	return globals;
 }
@@ -143,7 +146,9 @@ ZLContext* ZLContextMgr::Create () {
 //----------------------------------------------------------------//
 void ZLContextMgr::Delete ( ZLContext* globals ) {
 	
-	ZLLog_DebugF ( ZLLog::CONSOLE, "ZLContextMgr: deleting context %p\n", globals );
+	#ifdef ZL_ENABLE_CONTEXT_DEBUG_LOG
+		ZLLog_DebugF ( ZLLog::CONSOLE, "ZLContextMgr: deleting context %p\n", globals );
+	#endif
 	
 	GlobalsSet* globalSet = sGlobalsSet.Get ();
 	ZLContext* prevInstance = sInstance.Get ();
