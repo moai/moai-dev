@@ -128,11 +128,15 @@ int MOAIMarkerMgr::_getVideoSize ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIMarkerMgr::_loadKPMDataSet ( lua_State* L ) {
+int MOAIMarkerMgr::_loadKPMData ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIMarkerMgr, "S" )
 	
 	cc8* name = state.GetValue < cc8* >( 1, "" );
-	self->LoadKPMDataSet ( name );
+	int pageNo = self->LoadPatternKPM ( name );
+	if ( pageNo >= 0 ) {
+		state.Push ( pageNo );
+		return 1;
+	}
 	return 0;
 }
 
@@ -346,6 +350,12 @@ void MOAIMarkerMgr::ConvertTransform ( ZLAffine3D& mtx, float trans [ 3 ][ 4 ]) 
 }
 
 //----------------------------------------------------------------//
+AR2SurfaceSetT* MOAIMarkerMgr::GetKPMSurfaceSet ( int pageNo ) {
+
+	return pageNo < this->mKPMPatterns.Size () ? this->mKPMPatterns [ pageNo ].mSurfaceSet : 0;
+}
+
+//----------------------------------------------------------------//
 bool MOAIMarkerMgr::GetMarkerMatrix ( u32 markerID, MOAIMatrix& matrix ) {
 
 	if ( markerID < this->mMarkers.Size ()) {
@@ -423,63 +433,14 @@ void MOAIMarkerMgr::KPMDetect () {
 	}
 	
 	if ( bestResult ) {
-		//memcpy ( this->mKPMTrackingTrans, bestResult->camPose, sizeof ( this->mKPMTrackingTrans ));
+
+		AR2SurfaceSetT* surfaceSet = this->GetKPMSurfaceSet ( bestResult->pageNo );
+		assert ( surfaceSet );
 		
-//		for ( int j = 0; j < 3; j++) {
-//			for ( int k = 0; k < 4; k++) {
-//				this->mKPMTrackingTrans [ j ][ k ] = bestResult->camPose [ j ][ k ];
-//			}
-//		}
 		this->mKPMTrackingPage = bestResult->pageNo;
-		ar2SetInitTrans ( this->mKPMSurfaceSet, bestResult->camPose );
+		ar2SetInitTrans ( surfaceSet, bestResult->camPose );
 		this->UpdateKPM ( bestResult->camPose );
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAIMarkerMgr::LoadKPMDataSet ( cc8* name ) {
-
-	//cc8* filename = "pinball";
-
-	if (( this->mKPMSurfaceSet = ar2ReadSurfaceSet ( name, "fset", NULL )) == NULL ) return;
-	
-	// Get width and height in millimetres.
-	// Assume best scale (largest image) is first entry in array scale[index] (index is in range [0, surfaceSet->surface[0].imageSet->num - 1]).
-	if ( this->mKPMSurfaceSet->surface && this->mKPMSurfaceSet->surface [ 0 ].imageSet && this->mKPMSurfaceSet->surface [ 0 ].imageSet->scale ) {
-		AR2ImageT *image = this->mKPMSurfaceSet->surface [ 0 ].imageSet->scale [ 0 ];
-		this->mKPMMarkerWidth = image->xsize * 25.4f / image->dpi; // what is this magic number? why 25.4f?
-		this->mKPMMarkerHeight = image->ysize * 25.4f / image->dpi;
-	}
-	
-	//ar2FreeSurfaceSet ( &surfaceSet );
-
-	// If data was already loaded, stop KPM tracking thread and unload previously loaded data.
-    trackingThreadQuit ( &this->mThreadHandle );
-	
-    //for ( i = 0; i < PAGES_MAX; i++) this->mSurfaceSet [ i ] = NULL; // Discard weak-references.
-    
-    KpmRefDataSet* masterDataSet = NULL;
-	KpmRefDataSet* markerDataSet = NULL;
-	
-	DEBUG_LOG ( "Read %s.fset3\n", name );
-	if ( kpmLoadRefDataSet ( name, "fset3", &markerDataSet ) < 0 ) {
-		DEBUG_LOG ( "Error reading KPM data from %s.fset3", name );
-		return;
-	}
-
-	// set the market set page number (which is an ID) and merge it into the master set.
-	kpmChangePageNoOfRefDataSet ( markerDataSet, KpmChangePageNoAllPages, 666 );
-	kpmMergeRefDataSet ( &masterDataSet, &markerDataSet );
-	
-    if ( masterDataSet && ( kpmSetRefDataSet ( this->mKPMHandle, masterDataSet ) < 0 )) {
-        DEBUG_LOG ( "Error: kpmSetRefDataSet" );
-        return;
-    }
-    kpmDeleteRefDataSet ( &masterDataSet );
-    
-    // Start the KPM tracking thread.
-    this->mThreadHandle = trackingThreadInit ( this->mKPMHandle );
-    if ( !this->mThreadHandle ) return;
 }
 
 //----------------------------------------------------------------//
@@ -505,6 +466,47 @@ int MOAIMarkerMgr::LoadPattern ( cc8* filename, double width ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIMarkerMgr::LoadPatternKPM ( cc8* path ) {
+
+	STLString fullpath = ZLFileSys::GetAbsoluteFilePath ( path );
+	
+	AR2SurfaceSetT* surfaceSet = ar2ReadSurfaceSet ( fullpath, "fset", NULL );
+	if ( !surfaceSet ) return -1;
+	
+	size_t nPatterns = this->mKPMPatterns.Size ();
+	MOAIPatternKPM* kpmPattern = 0;
+	
+	for ( u32 i = 0; i < nPatterns; ++i ) {
+	
+		if ( !this->mKPMPatterns [ i ].mSurfaceSet ) {
+			kpmPattern = &this->mKPMPatterns [ i ];
+			break;
+		}
+	}
+	
+	if ( !kpmPattern ) {
+		this->mKPMPatterns.Grow ( nPatterns + 1 );
+		kpmPattern = &this->mKPMPatterns [ nPatterns ];
+		kpmPattern->mPageNo = nPatterns;
+	}
+
+	kpmPattern->mPath = path;
+	kpmPattern->mSurfaceSet = surfaceSet;
+	
+	// Get width and height in millimetres.
+	// Assume best scale (largest image) is first entry in array scale[index] (index is in range [0, surfaceSet->surface[0].imageSet->num - 1]).
+	if ( surfaceSet->surface && surfaceSet->surface [ 0 ].imageSet && surfaceSet->surface [ 0 ].imageSet->scale ) {
+		AR2ImageT *image = surfaceSet->surface [ 0 ].imageSet->scale [ 0 ];
+		kpmPattern->mWidth = image->xsize * 25.4f / image->dpi; // what is this magic number? why 25.4f?
+		kpmPattern->mHeight = image->ysize * 25.4f / image->dpi;
+	}
+	
+	this->mRefreshKPMData = true;
+	
+	return kpmPattern->mPageNo;
+}
+
+//----------------------------------------------------------------//
 MOAIMarkerMgr::MOAIMarkerMgr () :
 	mVideoPaused ( FALSE ),
 	mVideoParam ( 0 ),
@@ -516,12 +518,12 @@ MOAIMarkerMgr::MOAIMarkerMgr () :
 	mVideoBuffer ( 0 ),
 	mVideoWidth ( 0 ),
 	mVideoHeight ( 0 ),
+	mRefreshKPMData ( false ),
 	mActiveMarkers ( 0 ),
 	mFreeMarkers ( 0 ) {
 
 	this->mThreadHandle = 0;
     this->mKPMHandle = 0;
-	this->mKPMSurfaceSet = 0;
 	this->mKPMTrackingPage = -1;
 	this->mKPMTrackingState = TRACKING_STATE_IDLE;
 }
@@ -540,6 +542,10 @@ MOAIMarkerMgr::~MOAIMarkerMgr () {
 	
 	for ( size_t i = 0; i < this->mMarkers.Size (); ++i ) {
 		delete ( this->mMarkers [ i ]);
+	}
+	
+	for ( size_t i = 0; i < this->mKPMPatterns.Size (); ++i ) {
+		ar2FreeSurfaceSet ( &this->mKPMPatterns [ i ].mSurfaceSet );
 	}
 }
 
@@ -620,7 +626,10 @@ void MOAIMarkerMgr::ProcessFrame () {
 				float err;
 				float trans [ 3 ][ 4 ];
 				
-				if ( ar2Tracking ( this->mAR2Handle, this->mKPMSurfaceSet, this->mVideoBuffer->buff, trans, &err ) < 0 ) {
+				AR2SurfaceSetT* surfaceSet = this->GetKPMSurfaceSet ( this->mKPMTrackingPage );
+				assert ( surfaceSet );
+				
+				if ( ar2Tracking ( this->mAR2Handle, surfaceSet, this->mVideoBuffer->buff, trans, &err ) < 0 ) {
 					
 					this->mKPMTrackingState = TRACKING_STATE_IDLE;
 					this->InvokeKPMEvent ( EVENT_KPM_END );
@@ -641,6 +650,54 @@ void MOAIMarkerMgr::ProcessFrame () {
 		this->InvokeMarkerEvent ( *marker, EVENT_MARKER_END );
 		marker->mNext = this->mFreeMarkers;
 		this->mFreeMarkers = marker;
+	}
+	
+	this->RefreshKPMData ();
+}
+
+//----------------------------------------------------------------//
+void MOAIMarkerMgr::RefreshKPMData () {
+
+	// TODO: move all this garbage to the thread
+
+	if ( !this->mRefreshKPMData ) return;
+	this->mRefreshKPMData = false;
+	
+	// stop the old thread and throw it away
+    trackingThreadQuit ( &this->mThreadHandle );
+	this->mThreadHandle = 0;
+	
+	KpmRefDataSet* masterDataSet = NULL;
+	
+	for ( size_t i = 0; i < this->mKPMPatterns.Size (); ++i ) {
+	
+		MOAIPatternKPM& kpmPattern = this->mKPMPatterns [ i ];
+		
+		if ( kpmPattern.mSurfaceSet ) {
+		
+			KpmRefDataSet* markerDataSet = NULL;
+			
+			DEBUG_LOG ( "Read %s.fset3\n", kpmPattern.mPath );
+			if ( kpmLoadRefDataSet ( kpmPattern.mPath, "fset3", &markerDataSet ) < 0 ) {
+				DEBUG_LOG ( "Error reading KPM data from %s.fset3", name );
+				return;
+			}
+
+			// set the marker set page number (which is an ID) and merge it into the master set.
+			kpmChangePageNoOfRefDataSet ( markerDataSet, KpmChangePageNoAllPages, kpmPattern.mPageNo );
+			kpmMergeRefDataSet ( &masterDataSet, &markerDataSet );
+		}
+	}
+
+	// Start the KPM tracking thread.
+	if ( masterDataSet ) {
+		if ( kpmSetRefDataSet ( this->mKPMHandle, masterDataSet ) < 0 ) {
+			DEBUG_LOG ( "Error: kpmSetRefDataSet" );
+			return;
+		}
+		kpmDeleteRefDataSet ( &masterDataSet );
+		this->mThreadHandle = trackingThreadInit ( this->mKPMHandle );
+		if ( !this->mThreadHandle ) return;
 	}
 }
 
@@ -666,7 +723,7 @@ void MOAIMarkerMgr::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getVideoCamera",			_getVideoCamera },
 		{ "getVideoDeck",			_getVideoDeck },
 		{ "getVideoSize",			_getVideoSize },
-		{ "loadKPMDataSet",			_loadKPMDataSet },
+		{ "loadKPMData",			_loadKPMData },
 		{ "loadPattern",			_loadPattern },
 		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAIMarkerMgr > },
 		{ "start",					_start },
@@ -743,17 +800,22 @@ void MOAIMarkerMgr::Stop () {
 //----------------------------------------------------------------//
 void MOAIMarkerMgr::UpdateKPM ( float trans [ 3 ][ 4 ]) {
 
-	MOAIMarkerMgr::ConvertTransform ( this->mKPMTrackingMtx, trans );
+	if ( this->mKPMTrackingPage < this->mKPMPatterns.Size ()) {
 	
-	ZLAffine3D offset;
-	offset.Translate ( this->mKPMMarkerWidth * 0.5f, this->mKPMMarkerHeight * 0.5f, 0.0f );
-	this->mKPMTrackingMtx.Prepend ( offset );
+		MOAIPatternKPM& patternKPM = this->mKPMPatterns [ this->mKPMTrackingPage ];
+
+		MOAIMarkerMgr::ConvertTransform ( this->mKPMTrackingMtx, trans );
 	
-	ZLVec3D position = this->mKPMTrackingMtx.GetTranslation ();
-	this->mProjMtx.Project ( position );
+		ZLAffine3D offset;
+		offset.Translate ( patternKPM.mWidth * 0.5f, patternKPM.mHeight * 0.5f, 0.0f );
+		this->mKPMTrackingMtx.Prepend ( offset );
 	
-	this->mKPMTrackingPos.mX = (( this->mVideoWidth / 2.0f ) * position.mX );
-	this->mKPMTrackingPos.mY = (( this->mVideoHeight / 2.0f ) * position.mY );
+		ZLVec3D position = this->mKPMTrackingMtx.GetTranslation ();
+		this->mProjMtx.Project ( position );
+	
+		this->mKPMTrackingPos.mX = (( this->mVideoWidth / 2.0f ) * position.mX );
+		this->mKPMTrackingPos.mY = (( this->mVideoHeight / 2.0f ) * position.mY );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -972,6 +1034,8 @@ void MOAIMarkerMgr::VideoDidStart () {
     }
 
 	this->InvokeListener ( EVENT_VIDEO_START );
+	
+	this->RefreshKPMData ();
 }
 
 //================================================================//

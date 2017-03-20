@@ -52,6 +52,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+// TODO: implement this nicely using the ZL thread wrappers
+
 //================================================================//
 // TrackingThreadHandle
 //================================================================//

@@ -30,6 +30,21 @@ private:
 };
 
 //================================================================//
+// MOAIPatternKPM
+//================================================================//
+class MOAIPatternKPM {
+private:
+
+	friend class MOAIMarkerMgr;
+	
+	STLString			mPath;
+    ARdouble            mWidth;
+	ARdouble            mHeight;
+    int                 mPageNo;
+	AR2SurfaceSetT*		mSurfaceSet;
+};
+
+//================================================================//
 // MOAIMarkerMgr
 //================================================================//
 class MOAIMarkerMgr :
@@ -70,6 +85,9 @@ private:
 	typedef STLMap < int, MOAIPattern >::iterator	PatternIt;
 	STLMap < int, MOAIPattern >						mPatterns;
 	
+	ZLLeanArray < MOAIPatternKPM >			mKPMPatterns;
+	bool									mRefreshKPMData;
+	
 	typedef ZLLeanList < MOAIMarker* >::Iterator	MarkerIt;
 	
 	ZLLeanArray < MOAIMarker* >				mMarkers;
@@ -82,12 +100,8 @@ private:
 	// just a big kludge to get us through our demo; cleanup later
 	THREAD_HANDLE_T*	mThreadHandle;
     KpmHandle*			mKPMHandle;
-	AR2SurfaceSetT*		mKPMSurfaceSet;
 	int					mKPMTrackingPage;
 	int					mKPMTrackingState; // -2 Tracking not inited, -1 tracking inited OK, >= 0 tracking online on page.
-	
-	float				mKPMMarkerWidth;
-	float				mKPMMarkerHeight;
 	
 	ZLAffine3D			mKPMTrackingMtx;
 	ZLVec2D				mKPMTrackingPos;
@@ -108,7 +122,7 @@ private:
 	static int			_getVideoCamera			( lua_State* L );
 	static int			_getVideoDeck			( lua_State* L );
 	static int			_getVideoSize			( lua_State* L );
-	static int			_loadKPMDataSet			( lua_State* L );
+	static int			_loadKPMData			( lua_State* L );
 	static int			_loadPattern			( lua_State* L );
 	static int			_start					( lua_State* L );
 	static int			_stop					( lua_State* L );
@@ -116,10 +130,11 @@ private:
 	//----------------------------------------------------------------//
 	void				AffirmDeck				();
 	void				AffirmMarker			( ARMarkerInfo* markerInfo );
+	AR2SurfaceSetT*		GetKPMSurfaceSet		( int pageNo );
 	void				InvokeKPMEvent			( u32 event );
 	void				InvokeMarkerEvent		( MOAIMarker& marker, u32 event );
 	void				KPMDetect				();
-	void				LoadKPMDataSet			( cc8* name );
+	void				RefreshKPMData			();
 	static void			StartCallback			( void* userData );
 	void				UpdateKPM				( float trans [ 3 ][ 4 ]);
 	void				UpdateVideoProjMtx		();
@@ -149,6 +164,7 @@ public:
 	bool			GetMarkerMatrix			( u32 markerID, MOAIMatrix& matrix );
 	bool			GetMarkerPosition		( u32 markerID, ZLVec2D& position );
 	int				LoadPattern				( cc8* filename, double width );
+	int				LoadPatternKPM			( cc8* path );
 					MOAIMarkerMgr			();
 					~MOAIMarkerMgr			();
 	void			Pause					( bool pause );

@@ -117,7 +117,7 @@ MOAIMarkerMgr.setListener (
 
     function ()
 
-        MOAIMarkerMgr.loadKPMDataSet ( 'pinball' )
+        MOAIMarkerMgr.loadKPMData ( 'pinball' )
 
         MOAIMarkerMgr.loadPattern ( 'hiro.patt', 40.0 )
         
@@ -153,6 +153,7 @@ MOAIMarkerMgr.setListener (
 MOAIMarkerMgr.setListener (
     MOAIMarkerMgr.EVENT_KPM_BEGIN,
     function ( pageNo )
+        print ( 'EVENT_KPM_BEGIN', pageNo )
         kpmProp:setPartition ( propLayer )
     end
 )
@@ -160,6 +161,7 @@ MOAIMarkerMgr.setListener (
 MOAIMarkerMgr.setListener (
     MOAIMarkerMgr.EVENT_KPM_END,
     function ( pageNo )
+        print ( 'EVENT_KPM_END', pageNo )
         kpmProp:setPartition ()
     end
 )
@@ -168,13 +170,13 @@ MOAIMarkerMgr.setListener (
     MOAIMarkerMgr.EVENT_KPM_UPDATE,
     function ( pageNo )
         MOAIMarkerMgr.getKPMMatrix ( kpmPropMtx )
-        print ( MOAIMarkerMgr.getKPMPosition2D ())
     end
 )
 
 MOAIMarkerMgr.setListener (
     MOAIMarkerMgr.EVENT_MARKER_BEGIN,
     function ( patternID, markerID )
+        print ( 'EVENT_MARKER_BEGIN', markerID )
         patternProp:setPartition ( propLayer )
     end
 )
@@ -182,6 +184,7 @@ MOAIMarkerMgr.setListener (
 MOAIMarkerMgr.setListener (
     MOAIMarkerMgr.EVENT_MARKER_END,
     function ( patternID, markerID )
+        print ( 'EVENT_MARKER_BEGIN', markerID )
         patternProp:setPartition ()
     end
 )
@@ -190,7 +193,6 @@ MOAIMarkerMgr.setListener (
     MOAIMarkerMgr.EVENT_MARKER_UPDATE,
     function ( patternID, markerID )
         MOAIMarkerMgr.getMarkerMatrix ( markerID, patternPropMtx )
-        print ( MOAIMarkerMgr.getMarkerPosition2D ( markerID ))
     end
 )
 
