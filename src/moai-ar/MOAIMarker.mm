@@ -42,28 +42,7 @@ void MOAIMarker::Reset () {
 //----------------------------------------------------------------//
 void MOAIMarker::Update () {
 
-	ZLAffine3D& mtx = this->mTransform;
-
-	mtx.m [ ZLAffine3D::C0_R0 ] = this->mPatternTrans [ 0 ][ 0 ]; // R1C1
-    mtx.m [ ZLAffine3D::C1_R0 ] = this->mPatternTrans [ 0 ][ 1 ]; // R1C2
-    mtx.m [ ZLAffine3D::C2_R0 ] = this->mPatternTrans [ 0 ][ 2 ];
-    mtx.m [ ZLAffine3D::C3_R0 ] = this->mPatternTrans [ 0 ][ 3 ];
-	
-    mtx.m [ ZLAffine3D::C0_R1 ] = -this->mPatternTrans [ 1 ][ 0 ]; // R2
-    mtx.m [ ZLAffine3D::C1_R1 ] = -this->mPatternTrans [ 1 ][ 1 ];
-    mtx.m [ ZLAffine3D::C2_R1 ] = -this->mPatternTrans [ 1 ][ 2 ];
-    mtx.m [ ZLAffine3D::C3_R1 ] = -this->mPatternTrans [ 1 ][ 3 ];
-	
-	mtx.m [ ZLAffine3D::C0_R2 ] = -this->mPatternTrans [ 2 ][ 0 ]; // R3
-    mtx.m [ ZLAffine3D::C1_R2 ] = -this->mPatternTrans [ 2 ][ 1 ];
-    mtx.m [ ZLAffine3D::C2_R2 ] = -this->mPatternTrans [ 2 ][ 2 ];
-    mtx.m [ ZLAffine3D::C3_R2 ] = -this->mPatternTrans [ 2 ][ 3 ];
-	
-//    if (scale != 0.0f) {
-//        m_modelview[12] *= scale;
-//        m_modelview[13] *= scale;
-//        m_modelview[14] *= scale;
-//    }
+	MOAIMarkerMgr::ConvertTransform ( this->mTransform, this->mPatternTrans );
 }
 
 #endif

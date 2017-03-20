@@ -93,15 +93,21 @@ function makeCube ( size, texture )
 	return makeBoxMesh ( -size, -size, -size, size, size, size, texture )
 end
 
-mesh = makeCube ( 16, 'moai.png' )
+kpmPropMtx = MOAIMatrix.new ()
 
-marker = MOAIMatrix.new ()
+kpmProp = MOAIProp.new ()
+kpmProp:setDeck ( makeCube ( 64, 'test.png' ))
+kpmProp:setCullMode ( MOAIGraphicsProp.CULL_BACK )
+kpmProp:setParent ( kpmPropMtx )
+kpmProp:setLoc ( 0, 0, 32 )
 
-prop = MOAIProp.new ()
-prop:setDeck ( mesh )
-prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
-prop:setParent ( marker )
-prop:setLoc ( 0, 0, 8 )
+patternPropMtx = MOAIMatrix.new ()
+
+patternProp = MOAIProp.new ()
+patternProp:setDeck ( makeCube ( 16, 'moai.png' ))
+patternProp:setCullMode ( MOAIGraphicsProp.CULL_BACK )
+patternProp:setParent ( patternPropMtx )
+patternProp:setLoc ( 0, 0, 8 )
 
 propLayer = MOAIPartitionViewLayer.new ()
 
@@ -110,6 +116,8 @@ MOAIMarkerMgr.setListener (
     MOAIMarkerMgr.EVENT_VIDEO_START,
 
     function ()
+
+        MOAIMarkerMgr.loadKPMDataSet ( 'pinball' )
 
         MOAIMarkerMgr.loadPattern ( 'hiro.patt', 40.0 )
         
@@ -143,23 +151,46 @@ MOAIMarkerMgr.setListener (
 )
 
 MOAIMarkerMgr.setListener (
+    MOAIMarkerMgr.EVENT_KPM_BEGIN,
+    function ( pageNo )
+        kpmProp:setPartition ( propLayer )
+    end
+)
+
+MOAIMarkerMgr.setListener (
+    MOAIMarkerMgr.EVENT_KPM_END,
+    function ( pageNo )
+        kpmProp:setPartition ()
+    end
+)
+
+MOAIMarkerMgr.setListener (
+    MOAIMarkerMgr.EVENT_KPM_UPDATE,
+    function ( pageNo )
+        MOAIMarkerMgr.getKPMMatrix ( kpmPropMtx )
+        print ( MOAIMarkerMgr.getKPMPosition2D ())
+    end
+)
+
+MOAIMarkerMgr.setListener (
     MOAIMarkerMgr.EVENT_MARKER_BEGIN,
     function ( patternID, markerID )
-        prop:setPartition ( propLayer )
+        patternProp:setPartition ( propLayer )
     end
 )
 
 MOAIMarkerMgr.setListener (
     MOAIMarkerMgr.EVENT_MARKER_END,
     function ( patternID, markerID )
-        prop:setPartition ()
+        patternProp:setPartition ()
     end
 )
 
 MOAIMarkerMgr.setListener (
     MOAIMarkerMgr.EVENT_MARKER_UPDATE,
     function ( patternID, markerID )
-        MOAIMarkerMgr.getMarkerMatrix ( markerID, marker )
+        MOAIMarkerMgr.getMarkerMatrix ( markerID, patternPropMtx )
+        print ( MOAIMarkerMgr.getMarkerPosition2D ( markerID ))
     end
 )
 

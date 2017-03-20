@@ -8,7 +8,11 @@
 
 #import <AR/ar.h>
 #import <AR/video.h>
+#import <AR2/tracking.h>
 #import <AR/sys/CameraVideo.h>
+#import <KPM/kpm.h>
+
+#include "trackingThread.h"
 
 class MOAIMarker;
 class MOAIVideoTexture;
@@ -42,14 +46,9 @@ private:
 	BOOL                mVideoPaused;
     AR2VideoParamT*     mVideoParam;
     ARHandle*           mARHandle;
+	AR2HandleT*			mAR2Handle;
 	AR3DHandle*         mAR3DHandle;
     ARPattHandle*       mARPatternHandle;
-    
-    // Transformation matrix retrieval
-    //AR3DHandle*         mAR3DHandle;
-    //ARdouble            mPatternTrans [ 3 ][ 4 ];     // Per-marker, but we are using only 1 marker.
-    //int                 mPatternFound;                // Per-marker, but we are using only 1 marker.
-    //BOOL                mUseContPoseEstimation;
 
 	ARParamLT*          mCameraParam;
 	
@@ -78,16 +77,38 @@ private:
 	MOAIMarker*								mActiveMarkers;
 	MOAIMarker*								mFreeMarkers;
 	
-	ZLMatrix4x4 mProjMtx;
+	ZLMatrix4x4			mProjMtx;
+	
+	// just a big kludge to get us through our demo; cleanup later
+	THREAD_HANDLE_T*	mThreadHandle;
+    KpmHandle*			mKPMHandle;
+	AR2SurfaceSetT*		mKPMSurfaceSet;
+	int					mKPMTrackingPage;
+	int					mKPMTrackingState; // -2 Tracking not inited, -1 tracking inited OK, >= 0 tracking online on page.
+	
+	float				mKPMMarkerWidth;
+	float				mKPMMarkerHeight;
+	
+	ZLAffine3D			mKPMTrackingMtx;
+	ZLVec2D				mKPMTrackingPos;
+
+	enum {
+		TRACKING_STATE_IDLE,
+		TRACKING_STATE_DETECTING,
+		TRACKING_STATE_PAGE,
+	};
 	
 	GET ( AR2VideoBufferT*, VideoBuffer, mVideoBuffer )
 	
 	//----------------------------------------------------------------//
+	static int			_getKPMMatrix			( lua_State* L );
+	static int			_getKPMPosition2D		( lua_State* L );
 	static int			_getMarkerMatrix		( lua_State* L );
 	static int			_getMarkerPosition2D	( lua_State* L );
 	static int			_getVideoCamera			( lua_State* L );
 	static int			_getVideoDeck			( lua_State* L );
 	static int			_getVideoSize			( lua_State* L );
+	static int			_loadKPMDataSet			( lua_State* L );
 	static int			_loadPattern			( lua_State* L );
 	static int			_start					( lua_State* L );
 	static int			_stop					( lua_State* L );
@@ -95,14 +116,21 @@ private:
 	//----------------------------------------------------------------//
 	void				AffirmDeck				();
 	void				AffirmMarker			( ARMarkerInfo* markerInfo );
+	void				InvokeKPMEvent			( u32 event );
 	void				InvokeMarkerEvent		( MOAIMarker& marker, u32 event );
+	void				KPMDetect				();
+	void				LoadKPMDataSet			( cc8* name );
 	static void			StartCallback			( void* userData );
+	void				UpdateKPM				( float trans [ 3 ][ 4 ]);
 	void				UpdateVideoProjMtx		();
 	void				VideoDidStart			();
 
 public:
 
 	enum {
+		EVENT_KPM_BEGIN,
+		EVENT_KPM_END,
+		EVENT_KPM_UPDATE,
 		EVENT_MARKER_BEGIN,
 		EVENT_MARKER_END,
 		EVENT_MARKER_UPDATE,
@@ -117,6 +145,7 @@ public:
 	GET ( u32, VideoHeight, mVideoHeight )
 
 	//----------------------------------------------------------------//
+	static void		ConvertTransform		( ZLAffine3D& mtx, float trans [ 3 ][ 4 ]);
 	bool			GetMarkerMatrix			( u32 markerID, MOAIMatrix& matrix );
 	bool			GetMarkerPosition		( u32 markerID, ZLVec2D& position );
 	int				LoadPattern				( cc8* filename, double width );

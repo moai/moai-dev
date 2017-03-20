@@ -17,6 +17,8 @@
 #include <moai-ar/shaders/MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-fsh.h>
 #include <moai-ar/shaders/MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-vsh.h>
 
+#include "trackingThread.h"
+
 SUPPRESS_EMPTY_FILE_WARNING
 #ifdef MOAI_WITH_ARTOOLKIT
 
@@ -29,11 +31,37 @@ SUPPRESS_EMPTY_FILE_WARNING
 	#define DEBUG_LOG(...)
 #endif
 
+#define MOAIMARKERMGR_ERROR(msg,...) { ZLLog_ErrorF ( ZLLog::CONSOLE, msg, ##__VA_ARGS__ ); this->Stop (); return; }
+
 #define VIEW_SCALEFACTOR        1.0f
 
 //================================================================//
 // lua
 //================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIMarkerMgr::_getKPMMatrix ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIMarkerMgr, "U" )
+
+	MOAIMatrix* matrix = state.GetLuaObject < MOAIMatrix >( 1, true );
+	
+	if ( matrix ) {
+		matrix->Init ( self->mKPMTrackingMtx );
+		matrix->ScheduleUpdate ();
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIMarkerMgr::_getKPMPosition2D ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIMarkerMgr, "" )
+	
+	state.Push ( self->mKPMTrackingPos.mX );
+	state.Push ( self->mKPMTrackingPos.mY );
+	return 2;
+}
 
 //----------------------------------------------------------------//
 // TODO: doxygen
@@ -96,6 +124,16 @@ int MOAIMarkerMgr::_getVideoSize ( lua_State* L ) {
 	state.Push ( self->mVideoHeight );
 
 	return 2;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIMarkerMgr::_loadKPMDataSet ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIMarkerMgr, "S" )
+	
+	cc8* name = state.GetValue < cc8* >( 1, "" );
+	self->LoadKPMDataSet ( name );
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -226,7 +264,7 @@ void MOAIMarkerMgr::AffirmMarker ( ARMarkerInfo* markerInfo ) {
 
 	MarkerIt cursor = this->mStaleMarkers.Head ();
 	for ( ; cursor; cursor = cursor->Next ()) {
-	
+		
 		MOAIMarker* marker = cursor->Data ();
 	
 		if ( marker->mPattern->mPatternID == patternID ) {
@@ -289,6 +327,25 @@ void MOAIMarkerMgr::AffirmMarker ( ARMarkerInfo* markerInfo ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIMarkerMgr::ConvertTransform ( ZLAffine3D& mtx, float trans [ 3 ][ 4 ]) {
+
+	mtx.m [ ZLAffine3D::C0_R0 ] = trans [ 0 ][ 0 ]; // R1C1
+    mtx.m [ ZLAffine3D::C1_R0 ] = trans [ 0 ][ 1 ]; // R1C2
+    mtx.m [ ZLAffine3D::C2_R0 ] = trans [ 0 ][ 2 ];
+    mtx.m [ ZLAffine3D::C3_R0 ] = trans [ 0 ][ 3 ];
+	
+    mtx.m [ ZLAffine3D::C0_R1 ] = -trans [ 1 ][ 0 ]; // R2
+    mtx.m [ ZLAffine3D::C1_R1 ] = -trans [ 1 ][ 1 ];
+    mtx.m [ ZLAffine3D::C2_R1 ] = -trans [ 1 ][ 2 ];
+    mtx.m [ ZLAffine3D::C3_R1 ] = -trans [ 1 ][ 3 ];
+	
+	mtx.m [ ZLAffine3D::C0_R2 ] = -trans [ 2 ][ 0 ]; // R3
+    mtx.m [ ZLAffine3D::C1_R2 ] = -trans [ 2 ][ 1 ];
+    mtx.m [ ZLAffine3D::C2_R2 ] = -trans [ 2 ][ 2 ];
+    mtx.m [ ZLAffine3D::C3_R2 ] = -trans [ 2 ][ 3 ];
+}
+
+//----------------------------------------------------------------//
 bool MOAIMarkerMgr::GetMarkerMatrix ( u32 markerID, MOAIMatrix& matrix ) {
 
 	if ( markerID < this->mMarkers.Size ()) {
@@ -322,6 +379,17 @@ bool MOAIMarkerMgr::GetMarkerPosition ( u32 markerID, ZLVec2D& position ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIMarkerMgr::InvokeKPMEvent ( u32 event ) {
+
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+
+	if ( this->PushListener ( event, state )) {
+		state.Push ( this->mKPMTrackingPage );
+		state.DebugCall ( 1, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIMarkerMgr::InvokeMarkerEvent ( MOAIMarker& marker, u32 event ) {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
@@ -331,6 +399,87 @@ void MOAIMarkerMgr::InvokeMarkerEvent ( MOAIMarker& marker, u32 event ) {
 		state.Push ( marker.mMarkerID + 1 );
 		state.DebugCall ( 2, 0 );
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIMarkerMgr::KPMDetect () {
+	
+	this->mKPMTrackingPage = -1;
+	
+	KpmResult*		kpmResults = NULL;
+	KpmResult*		bestResult = NULL;
+	int				nResults;
+	
+	// kpmResult is an array of results. this sets our pointer to the
+	// array of expected results and returns the number of results.
+	// one of the more ridiculous API designs I've seen.
+    kpmGetResult ( this->mKPMHandle, &kpmResults, &nResults );
+	
+	for ( int i = 0; i < nResults; i++ ) {
+		KpmResult& result = kpmResults [ i ];
+		if (( result.camPoseF == 0 ) && ( !bestResult || ( result.error < bestResult->error ))) {
+			bestResult = &result;
+		}
+	}
+	
+	if ( bestResult ) {
+		//memcpy ( this->mKPMTrackingTrans, bestResult->camPose, sizeof ( this->mKPMTrackingTrans ));
+		
+//		for ( int j = 0; j < 3; j++) {
+//			for ( int k = 0; k < 4; k++) {
+//				this->mKPMTrackingTrans [ j ][ k ] = bestResult->camPose [ j ][ k ];
+//			}
+//		}
+		this->mKPMTrackingPage = bestResult->pageNo;
+		ar2SetInitTrans ( this->mKPMSurfaceSet, bestResult->camPose );
+		this->UpdateKPM ( bestResult->camPose );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIMarkerMgr::LoadKPMDataSet ( cc8* name ) {
+
+	//cc8* filename = "pinball";
+
+	if (( this->mKPMSurfaceSet = ar2ReadSurfaceSet ( name, "fset", NULL )) == NULL ) return;
+	
+	// Get width and height in millimetres.
+	// Assume best scale (largest image) is first entry in array scale[index] (index is in range [0, surfaceSet->surface[0].imageSet->num - 1]).
+	if ( this->mKPMSurfaceSet->surface && this->mKPMSurfaceSet->surface [ 0 ].imageSet && this->mKPMSurfaceSet->surface [ 0 ].imageSet->scale ) {
+		AR2ImageT *image = this->mKPMSurfaceSet->surface [ 0 ].imageSet->scale [ 0 ];
+		this->mKPMMarkerWidth = image->xsize * 25.4f / image->dpi; // what is this magic number? why 25.4f?
+		this->mKPMMarkerHeight = image->ysize * 25.4f / image->dpi;
+	}
+	
+	//ar2FreeSurfaceSet ( &surfaceSet );
+
+	// If data was already loaded, stop KPM tracking thread and unload previously loaded data.
+    trackingThreadQuit ( &this->mThreadHandle );
+	
+    //for ( i = 0; i < PAGES_MAX; i++) this->mSurfaceSet [ i ] = NULL; // Discard weak-references.
+    
+    KpmRefDataSet* masterDataSet = NULL;
+	KpmRefDataSet* markerDataSet = NULL;
+	
+	DEBUG_LOG ( "Read %s.fset3\n", name );
+	if ( kpmLoadRefDataSet ( name, "fset3", &markerDataSet ) < 0 ) {
+		DEBUG_LOG ( "Error reading KPM data from %s.fset3", name );
+		return;
+	}
+
+	// set the market set page number (which is an ID) and merge it into the master set.
+	kpmChangePageNoOfRefDataSet ( markerDataSet, KpmChangePageNoAllPages, 666 );
+	kpmMergeRefDataSet ( &masterDataSet, &markerDataSet );
+	
+    if ( masterDataSet && ( kpmSetRefDataSet ( this->mKPMHandle, masterDataSet ) < 0 )) {
+        DEBUG_LOG ( "Error: kpmSetRefDataSet" );
+        return;
+    }
+    kpmDeleteRefDataSet ( &masterDataSet );
+    
+    // Start the KPM tracking thread.
+    this->mThreadHandle = trackingThreadInit ( this->mKPMHandle );
+    if ( !this->mThreadHandle ) return;
 }
 
 //----------------------------------------------------------------//
@@ -360,6 +509,7 @@ MOAIMarkerMgr::MOAIMarkerMgr () :
 	mVideoPaused ( FALSE ),
 	mVideoParam ( 0 ),
 	mARHandle ( 0 ),
+	mAR2Handle ( 0 ),
 	mARPatternHandle ( 0 ),
 	mAR3DHandle ( 0 ),
 	mCameraParam ( 0 ),
@@ -368,6 +518,12 @@ MOAIMarkerMgr::MOAIMarkerMgr () :
 	mVideoHeight ( 0 ),
 	mActiveMarkers ( 0 ),
 	mFreeMarkers ( 0 ) {
+
+	this->mThreadHandle = 0;
+    this->mKPMHandle = 0;
+	this->mKPMSurfaceSet = 0;
+	this->mKPMTrackingPage = -1;
+	this->mKPMTrackingState = TRACKING_STATE_IDLE;
 }
 
 //----------------------------------------------------------------//
@@ -400,6 +556,10 @@ void MOAIMarkerMgr::ProcessFrame () {
 
 	if ( this->mVideoBuffer ) {
 
+		this->UpdateVideoProjMtx ();
+		this->mVideoCamera->SetProjMtx ( this->mProjMtx );
+		this->mVideoCamera->ScheduleUpdate ();
+
 		if ( this->mVideoBuffer->bufPlaneCount == 2 ) {
 			if ( this->mVideoPlane0 ) {
 				this->mVideoPlane0->UpdateBuffer ( this->mVideoBuffer->bufPlanes [ 0 ]);
@@ -413,25 +573,65 @@ void MOAIMarkerMgr::ProcessFrame () {
 		}
 
 		// Detect the markers in the video frame.
-		if ( arDetectMarker ( mARHandle, this->mVideoBuffer->buff ) < 0 ) return;
-		DEBUG_LOG ( "found %d marker(s).\n", mARHandle->marker_num );
-
-		// Check through the marker_info array for highest confidence
-		// visible marker matching our preferred pattern.
-		
-		for ( int j = 0; j < mARHandle->marker_num; j++ ) {
-		
-			DEBUG_LOG ( "   pattern: %d confidence: %g\n", mARHandle->markerInfo [ j ].id, mARHandle->markerInfo [ j ].cf );
-		
-			ARMarkerInfo* markerInfo = &mARHandle->markerInfo [ j ];
-			if ( markerInfo->cf > 0.8f ) {
-				this->AffirmMarker ( markerInfo );
+		if ( arDetectMarker ( mARHandle, this->mVideoBuffer->buff ) >= 0 ) {
+			
+			// Check through the marker_info array for highest confidence
+			// visible marker matching our preferred pattern.
+			for ( int j = 0; j < mARHandle->marker_num; j++ ) {
+				
+				//DEBUG_LOG ( "   pattern: %d confidence: %g\n", mARHandle->markerInfo [ j ].id, mARHandle->markerInfo [ j ].cf );
+				
+				ARMarkerInfo* markerInfo = &mARHandle->markerInfo [ j ];
+				if ( markerInfo->cf > 0.8f ) {
+					this->AffirmMarker ( markerInfo );
+				}
 			}
 		}
 		
-		this->UpdateVideoProjMtx ();
-		this->mVideoCamera->SetProjMtx ( this->mProjMtx );
-		this->mVideoCamera->ScheduleUpdate ();
+		// handle KPM tracking
+		if ( this->mThreadHandle ) {
+			
+			if ( this->mKPMTrackingState == TRACKING_STATE_IDLE ) {
+				DEBUG_LOG ( "START TRACKING THREAD.\n" );
+				trackingThreadStart ( this->mThreadHandle, this->mVideoBuffer->buff );
+				this->mKPMTrackingState = TRACKING_STATE_DETECTING;
+			}
+			
+			if ( this->mKPMTrackingState == TRACKING_STATE_DETECTING ) {
+			
+				if ( !trackingThreadIsBusy ( this->mThreadHandle )) {
+			
+					this->KPMDetect ();
+					
+					if ( this->mKPMTrackingPage >= 0 ) {
+						DEBUG_LOG ( "Detected page %d.\n", this->mKPMTrackingPage );
+						//ar2SetInitTrans ( this->mKPMSurfaceSet, this->mKPMTrackingTrans );
+						this->mKPMTrackingState = TRACKING_STATE_PAGE;
+						this->InvokeKPMEvent ( EVENT_KPM_BEGIN );
+					}
+					else {
+						this->mKPMTrackingState = TRACKING_STATE_IDLE;
+					}
+				}
+			}
+			
+			if ( this->mKPMTrackingState == TRACKING_STATE_PAGE ) {
+			
+				float err;
+				float trans [ 3 ][ 4 ];
+				
+				if ( ar2Tracking ( this->mAR2Handle, this->mKPMSurfaceSet, this->mVideoBuffer->buff, trans, &err ) < 0 ) {
+					
+					this->mKPMTrackingState = TRACKING_STATE_IDLE;
+					this->InvokeKPMEvent ( EVENT_KPM_END );
+				}
+				else {
+					DEBUG_LOG ( "Tracked page %d. err: %g\n", this->mKPMTrackingPage, err );
+					this->UpdateKPM ( trans );
+					this->InvokeKPMEvent ( EVENT_KPM_UPDATE );
+				}
+			}
+		}
 		
 		this->InvokeListener ( EVENT_UPDATE_FRAME );
 	}
@@ -448,6 +648,9 @@ void MOAIMarkerMgr::ProcessFrame () {
 void MOAIMarkerMgr::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 
+	state.SetField ( -1, "EVENT_KPM_BEGIN",		( u32 )EVENT_KPM_BEGIN );
+	state.SetField ( -1, "EVENT_KPM_END",		( u32 )EVENT_KPM_END );
+	state.SetField ( -1, "EVENT_KPM_UPDATE",	( u32 )EVENT_KPM_UPDATE );
 	state.SetField ( -1, "EVENT_MARKER_BEGIN",	( u32 )EVENT_MARKER_BEGIN );
 	state.SetField ( -1, "EVENT_MARKER_END",	( u32 )EVENT_MARKER_END );
 	state.SetField ( -1, "EVENT_MARKER_UPDATE",	( u32 )EVENT_MARKER_UPDATE );
@@ -455,12 +658,15 @@ void MOAIMarkerMgr::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "EVENT_VIDEO_START",	( u32 )EVENT_VIDEO_START );
 
 	luaL_Reg regTable [] = {
+		{ "getKPMMatrix",			_getKPMMatrix },
+		{ "getKPMPosition2D",		_getKPMPosition2D },
 		{ "getMarkerMatrix",		_getMarkerMatrix },
 		{ "getMarkerPosition2D",	_getMarkerPosition2D },
 		{ "getListener",			&MOAIGlobalEventSource::_getListener < MOAIMarkerMgr > },
 		{ "getVideoCamera",			_getVideoCamera },
 		{ "getVideoDeck",			_getVideoDeck },
 		{ "getVideoSize",			_getVideoSize },
+		{ "loadKPMDataSet",			_loadKPMDataSet },
 		{ "loadPattern",			_loadPattern },
 		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAIMarkerMgr > },
 		{ "start",					_start },
@@ -518,7 +724,11 @@ void MOAIMarkerMgr::Stop () {
         arDeleteHandle ( mARHandle );
         mARHandle = NULL;
     }
-    
+	
+	if ( mAR2Handle ) {
+        ar2DeleteHandle ( &mAR2Handle );
+    }
+	
     if ( mCameraParam ) {
         arParamLTFree ( &mCameraParam );
         mCameraParam = NULL;
@@ -528,6 +738,22 @@ void MOAIMarkerMgr::Stop () {
         ar2VideoClose ( mVideoParam );
         mVideoParam = NULL;
     }
+}
+
+//----------------------------------------------------------------//
+void MOAIMarkerMgr::UpdateKPM ( float trans [ 3 ][ 4 ]) {
+
+	MOAIMarkerMgr::ConvertTransform ( this->mKPMTrackingMtx, trans );
+	
+	ZLAffine3D offset;
+	offset.Translate ( this->mKPMMarkerWidth * 0.5f, this->mKPMMarkerHeight * 0.5f, 0.0f );
+	this->mKPMTrackingMtx.Prepend ( offset );
+	
+	ZLVec3D position = this->mKPMTrackingMtx.GetTranslation ();
+	this->mProjMtx.Project ( position );
+	
+	this->mKPMTrackingPos.mX = (( this->mVideoWidth / 2.0f ) * position.mX );
+	this->mKPMTrackingPos.mY = (( this->mVideoHeight / 2.0f ) * position.mY );
 }
 
 //----------------------------------------------------------------//
@@ -551,7 +777,7 @@ void MOAIMarkerMgr::UpdateVideoProjMtx () {
 	heightm1 = ( float )( cparam.ysize - 1 );
 
 	if ( arParamDecompMatf ( cparam.mat, icpara, trans ) < 0 ) {
-		printf("arglCameraFrustum(): arParamDecompMat() indicated parameter error.\n"); // Windows bug: when running multi-threaded, can't write to stderr!
+		DEBUG_LOG ( "arglCameraFrustum(): arParamDecompMat() indicated parameter error.\n" ); // Windows bug: when running multi-threaded, can't write to stderr!
 		return;
 	}
 	
@@ -632,20 +858,14 @@ void MOAIMarkerMgr::UpdateVideoProjMtx () {
 //----------------------------------------------------------------//
 void MOAIMarkerMgr::VideoDidStart () {
 
-	// Get the format in which the camera is returning pixels.
 	this->mVideoPixelFormat = ar2VideoGetPixelFormat ( mVideoParam );
 	if ( this->mVideoPixelFormat == AR_PIXEL_FORMAT_INVALID ) {
-		DEBUG_LOG ( "Error: Camera is using unsupported pixel format.\n" );
-		//[ self stop ] ;
-		return;
+		MOAIMARKERMGR_ERROR ( "Error: Camera is using unsupported pixel format.\n" );
 	}
 
-	// Find the size of the window.
 	int xsize, ysize;
 	if ( ar2VideoGetSize ( mVideoParam, &xsize, &ysize ) < 0 ) {
-		DEBUG_LOG ( "Error: ar2VideoGetSize.\n" );
-		this->Stop ();
-		return;
+		MOAIMARKERMGR_ERROR ( "Error: ar2VideoGetSize.\n" );
 	}
 	
 	this->mVideoWidth = ( u32 )xsize;
@@ -687,63 +907,33 @@ void MOAIMarkerMgr::VideoDidStart () {
 	DEBUG_LOG ( "*** Camera Parameter ***\n" );
 	arParamDisp ( &cparam );
 
-	if (( mCameraParam = arParamLTCreate ( &cparam, AR_PARAM_LT_DEFAULT_OFFSET )) == NULL ) {
-		DEBUG_LOG ( "Error: arParamLTCreate.\n" );
-		this->Stop ();
-		return;
-	}
+	if (( mCameraParam = arParamLTCreate ( &cparam, AR_PARAM_LT_DEFAULT_OFFSET )) == NULL )		MOAIMARKERMGR_ERROR ( "Error: arParamLTCreate.\n" );
+	if (( mARHandle = arCreateHandle ( mCameraParam )) == NULL )								MOAIMARKERMGR_ERROR ( "Error: arCreateHandle.\n" );
+	if ( arSetPixelFormat ( mARHandle, this->mVideoPixelFormat ) < 0 )							MOAIMARKERMGR_ERROR ( "Error: arSetPixelFormat.\n" );
+	if (( mAR3DHandle = ar3DCreateHandle ( &mCameraParam->param )) == NULL )					MOAIMARKERMGR_ERROR ( "Error: ar3DCreateHandle.\n" );
 
-	// AR init.
-	if (( mARHandle = arCreateHandle ( mCameraParam )) == NULL ) {
-		DEBUG_LOG ( "Error: arCreateHandle.\n" );
-		this->Stop ();
-		return;
-	}
-
-	if ( arSetPixelFormat ( mARHandle, this->mVideoPixelFormat ) < 0 ) {
-		DEBUG_LOG ( "Error: arSetPixelFormat.\n" );
-		this->Stop ();
-		return;
-	}
-
-	if (( mAR3DHandle = ar3DCreateHandle ( &mCameraParam->param )) == NULL ) {
-		DEBUG_LOG ( "Error: ar3DCreateHandle.\n" );
-		this->Stop ();
-		return;
+    if (!( this->mAR2Handle = ar2CreateHandle ( this->mCameraParam, this->mVideoPixelFormat, AR2_TRACKING_DEFAULT_THREAD_NUM ))) {
+		MOAIMARKERMGR_ERROR ( "Error: ar2CreateHandle.\n" );
 	}
 
 	// libARvideo on iPhone uses an underlying class called CameraVideo. Here, we
 	// access the instance of this class to get/set some special types of information.
 	CameraVideo* cameraVideo = ar2VideoGetNativeVideoInstanceiPhone ( mVideoParam->device.iPhone );
-	if ( !cameraVideo ) {
-		DEBUG_LOG ( "Error: Unable to set up AR camera: missing CameraVideo instance.\n" );
-		this->Stop ();
-		return;
-	}
+	if ( !cameraVideo ) MOAIMARKERMGR_ERROR ( "Error: arParamLTCreate.\n" );
 
-	// The camera will be started by -startRunLoop.
+	// the camera will be started by -startRunLoop.
 	[ cameraVideo setTookPictureDelegate:[[ MOAIArVideoListener alloc ] init ]];
 
 	// Other ARToolKit setup. 
 	arSetMarkerExtractionMode ( mARHandle, AR_USE_TRACKING_HISTORY_V2 );
-	//arSetMarkerExtractionMode ( mARHandle, AR_NOUSE_TRACKING_HISTORY );
 	//arSetLabelingThreshMode ( mARHandle, AR_LABELING_THRESH_MODE_MANUAL );
 
 	// Prepare ARToolKit to load patterns.
-	if ( !( mARPatternHandle = arPattCreateHandle ())) {
-		DEBUG_LOG ( "Error: arPattCreateHandle.\n" );
-		this->Stop ();
-		return;
-	}
+	if ( !( mARPatternHandle = arPattCreateHandle ())) MOAIMARKERMGR_ERROR ( "Error: arPattCreateHandle.\n" );
+
 	arPattAttach ( mARHandle, mARPatternHandle );
 
-	if ( ar2VideoCapStart ( mVideoParam ) != 0 ) {
-		DEBUG_LOG ( "Error: Unable to begin camera data capture.\n" );
-		this->Stop ();
-		return;
-	}
-
-	//this->mMarker.Set ( *this, new MOAIMatrix ());
+	if ( ar2VideoCapStart ( mVideoParam ) != 0 ) MOAIMARKERMGR_ERROR ( "Error: Unable to begin camera data capture.\n" );
 
 	this->mVideoCamera.Set ( *this, new MOAICamera ());
 	this->UpdateVideoProjMtx ();
@@ -752,6 +942,34 @@ void MOAIMarkerMgr::VideoDidStart () {
 	//arglCameraFrustumRHf ( &this->mCameraParam->param, 1.0f, 5000.0f, frustum );
     //[ glView setCameraLens:frustum ];
     //glView.contentFlipV = flipV;
+
+	mKPMHandle = kpmCreateHandle ( this->mCameraParam, this->mVideoPixelFormat );
+    if ( !this->mKPMHandle ) MOAIMARKERMGR_ERROR ( "Error: kpmCreateHandle.\n" );
+	
+	// TODO: what does any of this crap even mean?
+	
+    if ( threadGetCPU () <= 1 ) {
+
+        DEBUG_LOG ( "Using NFT tracking settings for a single CPU." );
+
+        ar2SetTrackingThresh ( mAR2Handle, 5.0 );
+        ar2SetSimThresh ( mAR2Handle, 0.50 );
+        ar2SetSearchFeatureNum ( mAR2Handle, 16 );
+        ar2SetSearchSize ( mAR2Handle, 6 );
+        ar2SetTemplateSize1 ( mAR2Handle, 6 );
+        ar2SetTemplateSize2 ( mAR2Handle, 6 );
+    }
+	else {
+
+        DEBUG_LOG ( "Using NFT tracking settings for more than one CPU." );
+
+        ar2SetTrackingThresh ( mAR2Handle, 5.0 );
+        ar2SetSimThresh ( mAR2Handle, 0.50 );
+        ar2SetSearchFeatureNum ( mAR2Handle, 16 );
+        ar2SetSearchSize ( mAR2Handle, 12 );
+        ar2SetTemplateSize1 ( mAR2Handle, 6 );
+        ar2SetTemplateSize2 ( mAR2Handle, 6 );
+    }
 
 	this->InvokeListener ( EVENT_VIDEO_START );
 }

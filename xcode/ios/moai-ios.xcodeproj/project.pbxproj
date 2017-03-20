@@ -130,9 +130,6 @@
 		CD4BCF681E5215EC002306C2 /* libCardboardSDK_i386.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4BCF641E5215EC002306C2 /* libCardboardSDK_i386.a */; };
 		CD4BCF691E5215EC002306C2 /* libCardboardSDK_x86_64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4BCF651E5215EC002306C2 /* libCardboardSDK_x86_64.a */; };
 		CD4BCFB61E54299C002306C2 /* libmoai-ios-ar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4BCFB31E54295B002306C2 /* libmoai-ios-ar.a */; };
-		CD4BCFBA1E542AE3002306C2 /* libAR.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4BCFB71E542AE3002306C2 /* libAR.a */; };
-		CD4BCFBB1E542AE3002306C2 /* libARICP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4BCFB81E542AE3002306C2 /* libARICP.a */; };
-		CD4BCFBC1E542AE3002306C2 /* libARvideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4BCFB91E542AE3002306C2 /* libARvideo.a */; };
 		CD4C4163180A6A8600C02381 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4C4162180A6A8600C02381 /* MobileCoreServices.framework */; };
 		CD51622B1BCDDB31000718FB /* libmoai-ios-image-jpg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD51621C1BCDDB20000718FB /* libmoai-ios-image-jpg.a */; };
 		CD51622C1BCDDB31000718FB /* libmoai-ios-image-png.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD51621E1BCDDB20000718FB /* libmoai-ios-image-png.a */; };
@@ -152,6 +149,7 @@
 		CD598D8C1AD86FA000478C49 /* libmoai-ios-zl-crypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD598D571AD86F3500478C49 /* libmoai-ios-zl-crypto.a */; };
 		CD598D8D1AD86FA000478C49 /* libmoai-ios-zl-vfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD598D591AD86F3500478C49 /* libmoai-ios-zl-vfs.a */; };
 		CD598D8E1AD86FA000478C49 /* libmoai-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD598D1F1AD86F3500478C49 /* libmoai-ios.a */; };
+		CD5C6C7C1E7D012500E93612 /* libmoai-ios-3rdparty-artoolkit5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD5C6C791E7D010400E93612 /* libmoai-ios-3rdparty-artoolkit5.a */; };
 		CD6F1F4E1A79CE1800E772A0 /* lua in Resources */ = {isa = PBXBuildFile; fileRef = CD6F1F4D1A79CE1800E772A0 /* lua */; };
 		CD795FEB17F09B9F006AEB47 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795FEA17F09B9F006AEB47 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CD8317681BED3DBC00745C8A /* libmoai-ios-3rdparty-contrib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD8317531BED3DAB00745C8A /* libmoai-ios-3rdparty-contrib.a */; };
@@ -782,6 +780,20 @@
 			remoteGlobalIDString = CD6D752517EE415D00964415;
 			remoteInfo = "libmoai-osx-zl-vfs";
 		};
+		CD5C6C781E7D010400E93612 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD5C6ACE1E7CFD7000E93612;
+			remoteInfo = "libmoai-ios-3rdparty-artoolkit5";
+		};
+		CD5C6C7A1E7D011600E93612 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD5C68441E7CFD7000E93612;
+			remoteInfo = "libmoai-ios-3rdparty-artoolkit5";
+		};
 		CD83170A1BED3DAB00745C8A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
@@ -1079,9 +1091,6 @@
 		CD4BCF631E5215EC002306C2 /* libCardboardSDK_armv7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCardboardSDK_armv7.a; path = "../../3rdparty/gvr-ios-sdk/lib/libCardboardSDK_armv7.a"; sourceTree = "<group>"; };
 		CD4BCF641E5215EC002306C2 /* libCardboardSDK_i386.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCardboardSDK_i386.a; path = "../../3rdparty/gvr-ios-sdk/lib/libCardboardSDK_i386.a"; sourceTree = "<group>"; };
 		CD4BCF651E5215EC002306C2 /* libCardboardSDK_x86_64.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCardboardSDK_x86_64.a; path = "../../3rdparty/gvr-ios-sdk/lib/libCardboardSDK_x86_64.a"; sourceTree = "<group>"; };
-		CD4BCFB71E542AE3002306C2 /* libAR.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAR.a; path = "../../3rdparty/artoolkit-ios-sdk/lib/libAR.a"; sourceTree = "<group>"; };
-		CD4BCFB81E542AE3002306C2 /* libARICP.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARICP.a; path = "../../3rdparty/artoolkit-ios-sdk/lib/libARICP.a"; sourceTree = "<group>"; };
-		CD4BCFB91E542AE3002306C2 /* libARvideo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libARvideo.a; path = "../../3rdparty/artoolkit-ios-sdk/lib/libARvideo.a"; sourceTree = "<group>"; };
 		CD4C4162180A6A8600C02381 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		CD6F1F4D1A79CE1800E772A0 /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lua; sourceTree = "<group>"; };
 		CD795FEA17F09B9F006AEB47 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
@@ -1184,14 +1193,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD4BCFBA1E542AE3002306C2 /* libAR.a in Frameworks */,
-				CD4BCFBB1E542AE3002306C2 /* libARICP.a in Frameworks */,
-				CD4BCFBC1E542AE3002306C2 /* libARvideo.a in Frameworks */,
 				CD4BCF661E5215EC002306C2 /* libCardboardSDK_arm64.a in Frameworks */,
 				CD4BCF671E5215EC002306C2 /* libCardboardSDK_armv7.a in Frameworks */,
 				CD4BCF681E5215EC002306C2 /* libCardboardSDK_i386.a in Frameworks */,
 				CD4BCF691E5215EC002306C2 /* libCardboardSDK_x86_64.a in Frameworks */,
 				CD4BCEB11E51E4AE002306C2 /* libmoai-ios.a in Frameworks */,
+				CD5C6C7C1E7D012500E93612 /* libmoai-ios-3rdparty-artoolkit5.a in Frameworks */,
 				CD4BCEB21E51E4AE002306C2 /* libmoai-ios-3rdparty-contrib.a in Frameworks */,
 				CD4BCEB31E51E4AE002306C2 /* libmoai-ios-3rdparty-crypto.a in Frameworks */,
 				CD4BCEB41E51E4AE002306C2 /* libmoai-ios-3rdparty-expat.a in Frameworks */,
@@ -1313,9 +1320,6 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CD4BCFB71E542AE3002306C2 /* libAR.a */,
-				CD4BCFB81E542AE3002306C2 /* libARICP.a */,
-				CD4BCFB91E542AE3002306C2 /* libARvideo.a */,
 				CD4BCF621E5215EC002306C2 /* libCardboardSDK_arm64.a */,
 				CD4BCF631E5215EC002306C2 /* libCardboardSDK_armv7.a */,
 				CD4BCF641E5215EC002306C2 /* libCardboardSDK_i386.a */,
@@ -1354,6 +1358,7 @@
 			isa = PBXGroup;
 			children = (
 				CD598D1F1AD86F3500478C49 /* libmoai-ios.a */,
+				CD5C6C791E7D010400E93612 /* libmoai-ios-3rdparty-artoolkit5.a */,
 				CD8317531BED3DAB00745C8A /* libmoai-ios-3rdparty-contrib.a */,
 				CD598D251AD86F3500478C49 /* libmoai-ios-3rdparty-crypto.a */,
 				CD8317551BED3DAB00745C8A /* libmoai-ios-3rdparty-expat.a */,
@@ -1516,6 +1521,7 @@
 			dependencies = (
 				CD4BCE551E51E4AE002306C2 /* PBXTargetDependency */,
 				CD4BCE571E51E4AE002306C2 /* PBXTargetDependency */,
+				CD5C6C7B1E7D011600E93612 /* PBXTargetDependency */,
 				CD4BCE591E51E4AE002306C2 /* PBXTargetDependency */,
 				CD4BCE5B1E51E4AE002306C2 /* PBXTargetDependency */,
 				CD4BCE5D1E51E4AE002306C2 /* PBXTargetDependency */,
@@ -1935,6 +1941,13 @@
 			remoteRef = CD598D7E1AD86F3500478C49 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		CD5C6C791E7D010400E93612 /* libmoai-ios-3rdparty-artoolkit5.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-ios-3rdparty-artoolkit5.a";
+			remoteRef = CD5C6C781E7D010400E93612 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		CD8317531BED3DAB00745C8A /* libmoai-ios-3rdparty-contrib.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -2328,6 +2341,11 @@
 			isa = PBXTargetDependency;
 			name = "libmoai-ios-image-webp";
 			targetProxy = CD5161EE1BCDDB20000718FB /* PBXContainerItemProxy */;
+		};
+		CD5C6C7B1E7D011600E93612 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-ios-3rdparty-artoolkit5";
+			targetProxy = CD5C6C7A1E7D011600E93612 /* PBXContainerItemProxy */;
 		};
 		CD83170B1BED3DAB00745C8A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

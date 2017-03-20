@@ -4,6 +4,8 @@
 #ifndef ZL_REPLACE_STDLIB_H
 #define ZL_REPLACE_STDLIB_H
 
+#ifndef ZL_PRESERVE_STDLIB
+
 #include <zl-vfs/headers.h>
 
 #ifdef  __cplusplus
@@ -30,4 +32,5 @@
 	}
 #endif
 
+#endif
 #endif

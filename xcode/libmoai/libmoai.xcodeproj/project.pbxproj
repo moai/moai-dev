@@ -2668,6 +2668,252 @@
 		CD5BFC011E3737370057CFDB /* MOAIStretchPatch2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6FF7173AD0CA00DFE837 /* MOAIStretchPatch2D.h */; };
 		CD5BFC021E3737370057CFDB /* MOAITileDeck2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE700A173AD0CB00DFE837 /* MOAITileDeck2D.cpp */; };
 		CD5BFC031E3737370057CFDB /* MOAITileDeck2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE700B173AD0CB00DFE837 /* MOAITileDeck2D.h */; };
+		CD5C681E1E7BA47D00E93612 /* trackingThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5C68151E7A216700E93612 /* trackingThread.cpp */; };
+		CD5C681F1E7BA47D00E93612 /* trackingThread.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C68161E7A216700E93612 /* trackingThread.h */; };
+		CD5C6B0B1E7CFF3C00E93612 /* ar3DCreateHandle.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6ADB1E7CFF3C00E93612 /* ar3DCreateHandle.c */; };
+		CD5C6B0C1E7CFF3C00E93612 /* ar3DUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6ADC1E7CFF3C00E93612 /* ar3DUtil.c */; };
+		CD5C6B0D1E7CFF3C00E93612 /* arCreateHandle.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6ADD1E7CFF3C00E93612 /* arCreateHandle.c */; };
+		CD5C6B0E1E7CFF3C00E93612 /* arDetectMarker.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6ADE1E7CFF3C00E93612 /* arDetectMarker.c */; };
+		CD5C6B0F1E7CFF3C00E93612 /* arDetectMarker2.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6ADF1E7CFF3C00E93612 /* arDetectMarker2.c */; };
+		CD5C6B101E7CFF3C00E93612 /* arFilterTransMat.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AE01E7CFF3C00E93612 /* arFilterTransMat.c */; };
+		CD5C6B111E7CFF3C00E93612 /* arGetLine.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AE11E7CFF3C00E93612 /* arGetLine.c */; };
+		CD5C6B121E7CFF3C00E93612 /* arGetMarkerInfo.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AE21E7CFF3C00E93612 /* arGetMarkerInfo.c */; };
+		CD5C6B131E7CFF3C00E93612 /* arGetTransMat.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AE31E7CFF3C00E93612 /* arGetTransMat.c */; };
+		CD5C6B141E7CFF3C00E93612 /* arGetTransMatStereo.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AE41E7CFF3C00E93612 /* arGetTransMatStereo.c */; };
+		CD5C6B151E7CFF3C00E93612 /* arImageProc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AE51E7CFF3C00E93612 /* arImageProc.c */; };
+		CD5C6B161E7CFF3C00E93612 /* arLabeling.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AE61E7CFF3C00E93612 /* arLabeling.c */; };
+		CD5C6B171E7CFF3C00E93612 /* arPattAttach.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AE71E7CFF3C00E93612 /* arPattAttach.c */; };
+		CD5C6B181E7CFF3C00E93612 /* arPattCreateHandle.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AE81E7CFF3C00E93612 /* arPattCreateHandle.c */; };
+		CD5C6B191E7CFF3C00E93612 /* arPattGetID.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AE91E7CFF3C00E93612 /* arPattGetID.c */; };
+		CD5C6B1A1E7CFF3C00E93612 /* arPattLoad.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AEA1E7CFF3C00E93612 /* arPattLoad.c */; };
+		CD5C6B1B1E7CFF3C00E93612 /* arPattSave.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AEB1E7CFF3C00E93612 /* arPattSave.c */; };
+		CD5C6B1C1E7CFF3C00E93612 /* arUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AEC1E7CFF3C00E93612 /* arUtil.c */; };
+		CD5C6B1D1E7CFF3C00E93612 /* mAlloc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AED1E7CFF3C00E93612 /* mAlloc.c */; };
+		CD5C6B1E1E7CFF3C00E93612 /* mAllocDup.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AEE1E7CFF3C00E93612 /* mAllocDup.c */; };
+		CD5C6B1F1E7CFF3C00E93612 /* mAllocInv.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AEF1E7CFF3C00E93612 /* mAllocInv.c */; };
+		CD5C6B201E7CFF3C00E93612 /* mAllocMul.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AF01E7CFF3C00E93612 /* mAllocMul.c */; };
+		CD5C6B211E7CFF3C00E93612 /* mAllocTrans.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AF11E7CFF3C00E93612 /* mAllocTrans.c */; };
+		CD5C6B221E7CFF3C00E93612 /* mAllocUnit.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AF21E7CFF3C00E93612 /* mAllocUnit.c */; };
+		CD5C6B231E7CFF3C00E93612 /* mDet.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AF31E7CFF3C00E93612 /* mDet.c */; };
+		CD5C6B241E7CFF3C00E93612 /* mDisp.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AF41E7CFF3C00E93612 /* mDisp.c */; };
+		CD5C6B251E7CFF3C00E93612 /* mDup.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AF51E7CFF3C00E93612 /* mDup.c */; };
+		CD5C6B261E7CFF3C00E93612 /* mFree.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AF61E7CFF3C00E93612 /* mFree.c */; };
+		CD5C6B271E7CFF3C00E93612 /* mInv.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AF71E7CFF3C00E93612 /* mInv.c */; };
+		CD5C6B281E7CFF3C00E93612 /* mMul.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AF81E7CFF3C00E93612 /* mMul.c */; };
+		CD5C6B291E7CFF3C00E93612 /* mPCA.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AF91E7CFF3C00E93612 /* mPCA.c */; };
+		CD5C6B2A1E7CFF3C00E93612 /* mSelfInv.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AFA1E7CFF3C00E93612 /* mSelfInv.c */; };
+		CD5C6B2B1E7CFF3C00E93612 /* mTrans.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AFB1E7CFF3C00E93612 /* mTrans.c */; };
+		CD5C6B2C1E7CFF3C00E93612 /* mUnit.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AFC1E7CFF3C00E93612 /* mUnit.c */; };
+		CD5C6B2D1E7CFF3C00E93612 /* paramChangeSize.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AFD1E7CFF3C00E93612 /* paramChangeSize.c */; };
+		CD5C6B2E1E7CFF3C00E93612 /* paramClear.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AFE1E7CFF3C00E93612 /* paramClear.c */; };
+		CD5C6B2F1E7CFF3C00E93612 /* paramDecomp.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6AFF1E7CFF3C00E93612 /* paramDecomp.c */; };
+		CD5C6B301E7CFF3C00E93612 /* paramDisp.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B001E7CFF3C00E93612 /* paramDisp.c */; };
+		CD5C6B311E7CFF3C00E93612 /* paramDistortion.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B011E7CFF3C00E93612 /* paramDistortion.c */; };
+		CD5C6B321E7CFF3C00E93612 /* paramFile.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B021E7CFF3C00E93612 /* paramFile.c */; };
+		CD5C6B331E7CFF3C00E93612 /* paramGetPerspective.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B031E7CFF3C00E93612 /* paramGetPerspective.c */; };
+		CD5C6B341E7CFF3C00E93612 /* paramLT.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B041E7CFF3C00E93612 /* paramLT.c */; };
+		CD5C6B351E7CFF3C00E93612 /* vAlloc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B051E7CFF3C00E93612 /* vAlloc.c */; };
+		CD5C6B361E7CFF3C00E93612 /* vDisp.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B061E7CFF3C00E93612 /* vDisp.c */; };
+		CD5C6B371E7CFF3C00E93612 /* vFree.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B071E7CFF3C00E93612 /* vFree.c */; };
+		CD5C6B381E7CFF3C00E93612 /* vHouse.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B081E7CFF3C00E93612 /* vHouse.c */; };
+		CD5C6B391E7CFF3C00E93612 /* vInnerP.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B091E7CFF3C00E93612 /* vInnerP.c */; };
+		CD5C6B3A1E7CFF3C00E93612 /* vTridiag.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B0A1E7CFF3C00E93612 /* vTridiag.c */; };
+		CD5C6B681E7CFF6E00E93612 /* coord.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B581E7CFF6E00E93612 /* coord.c */; };
+		CD5C6B691E7CFF6E00E93612 /* featureMap.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B591E7CFF6E00E93612 /* featureMap.c */; };
+		CD5C6B6A1E7CFF6E00E93612 /* featureSet.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B5A1E7CFF6E00E93612 /* featureSet.c */; };
+		CD5C6B6B1E7CFF6E00E93612 /* handle.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B5B1E7CFF6E00E93612 /* handle.c */; };
+		CD5C6B6C1E7CFF6E00E93612 /* imageSet.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B5C1E7CFF6E00E93612 /* imageSet.c */; };
+		CD5C6B6D1E7CFF6E00E93612 /* jpeg.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B5D1E7CFF6E00E93612 /* jpeg.c */; };
+		CD5C6B6E1E7CFF6E00E93612 /* marker.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B5E1E7CFF6E00E93612 /* marker.c */; };
+		CD5C6B6F1E7CFF6E00E93612 /* matching.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B5F1E7CFF6E00E93612 /* matching.c */; };
+		CD5C6B701E7CFF6E00E93612 /* matching2.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B601E7CFF6E00E93612 /* matching2.c */; };
+		CD5C6B711E7CFF6E00E93612 /* searchPoint.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B611E7CFF6E00E93612 /* searchPoint.c */; };
+		CD5C6B721E7CFF6E00E93612 /* selectTemplate.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B621E7CFF6E00E93612 /* selectTemplate.c */; };
+		CD5C6B731E7CFF6E00E93612 /* surface.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B631E7CFF6E00E93612 /* surface.c */; };
+		CD5C6B741E7CFF6E00E93612 /* template.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B641E7CFF6E00E93612 /* template.c */; };
+		CD5C6B751E7CFF6E00E93612 /* tracking.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B651E7CFF6E00E93612 /* tracking.c */; };
+		CD5C6B761E7CFF6E00E93612 /* tracking2d.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B661E7CFF6E00E93612 /* tracking2d.c */; };
+		CD5C6B771E7CFF6E00E93612 /* util.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B671E7CFF6E00E93612 /* util.c */; };
+		CD5C6B811E7CFF7800E93612 /* icpCalibStereo.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B781E7CFF7800E93612 /* icpCalibStereo.c */; };
+		CD5C6B821E7CFF7800E93612 /* icpCore.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B791E7CFF7800E93612 /* icpCore.c */; };
+		CD5C6B831E7CFF7800E93612 /* icpHandle.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B7A1E7CFF7800E93612 /* icpHandle.c */; };
+		CD5C6B841E7CFF7800E93612 /* icpPoint.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B7B1E7CFF7800E93612 /* icpPoint.c */; };
+		CD5C6B851E7CFF7800E93612 /* icpPointRobust.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B7C1E7CFF7800E93612 /* icpPointRobust.c */; };
+		CD5C6B861E7CFF7800E93612 /* icpStereoHandle.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B7D1E7CFF7800E93612 /* icpStereoHandle.c */; };
+		CD5C6B871E7CFF7800E93612 /* icpStereoPoint.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B7E1E7CFF7800E93612 /* icpStereoPoint.c */; };
+		CD5C6B881E7CFF7800E93612 /* icpStereoPointRobust.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B7F1E7CFF7800E93612 /* icpStereoPointRobust.c */; };
+		CD5C6B891E7CFF7800E93612 /* icpUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B801E7CFF7800E93612 /* icpUtil.c */; };
+		CD5C6B8E1E7CFF8100E93612 /* arMultiFreeConfig.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B8A1E7CFF8100E93612 /* arMultiFreeConfig.c */; };
+		CD5C6B8F1E7CFF8100E93612 /* arMultiGetTransMat.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B8B1E7CFF8100E93612 /* arMultiGetTransMat.c */; };
+		CD5C6B901E7CFF8100E93612 /* arMultiGetTransMatStereo.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B8C1E7CFF8100E93612 /* arMultiGetTransMatStereo.c */; };
+		CD5C6B911E7CFF8100E93612 /* arMultiReadConfigFile.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B8D1E7CFF8100E93612 /* arMultiReadConfigFile.c */; };
+		CD5C6B9A1E7CFF8E00E93612 /* kpmFopen.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B921E7CFF8E00E93612 /* kpmFopen.c */; };
+		CD5C6B9B1E7CFF8E00E93612 /* kpmFopen.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6B931E7CFF8E00E93612 /* kpmFopen.h */; };
+		CD5C6B9C1E7CFF8E00E93612 /* kpmHandle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B941E7CFF8E00E93612 /* kpmHandle.cpp */; };
+		CD5C6B9D1E7CFF8E00E93612 /* kpmMatching.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B951E7CFF8E00E93612 /* kpmMatching.cpp */; };
+		CD5C6B9E1E7CFF8E00E93612 /* kpmPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6B961E7CFF8E00E93612 /* kpmPrivate.h */; };
+		CD5C6B9F1E7CFF8E00E93612 /* kpmRefDataSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B971E7CFF8E00E93612 /* kpmRefDataSet.cpp */; };
+		CD5C6BA01E7CFF8E00E93612 /* kpmResult.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B981E7CFF8E00E93612 /* kpmResult.cpp */; };
+		CD5C6BA11E7CFF8E00E93612 /* kpmUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6B991E7CFF8E00E93612 /* kpmUtil.cpp */; };
+		CD5C6BBA1E7D001F00E93612 /* DoG_scale_invariant_detector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6BAB1E7D001F00E93612 /* DoG_scale_invariant_detector.cpp */; };
+		CD5C6BBB1E7D001F00E93612 /* DoG_scale_invariant_detector.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6BAC1E7D001F00E93612 /* DoG_scale_invariant_detector.h */; };
+		CD5C6BBC1E7D001F00E93612 /* gaussian_scale_space_pyramid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6BAD1E7D001F00E93612 /* gaussian_scale_space_pyramid.cpp */; };
+		CD5C6BBD1E7D001F00E93612 /* gaussian_scale_space_pyramid.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6BAE1E7D001F00E93612 /* gaussian_scale_space_pyramid.h */; };
+		CD5C6BBE1E7D001F00E93612 /* gradients.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6BAF1E7D001F00E93612 /* gradients.cpp */; };
+		CD5C6BBF1E7D001F00E93612 /* gradients.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6BB01E7D001F00E93612 /* gradients.h */; };
+		CD5C6BC01E7D001F00E93612 /* harris-inline.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6BB11E7D001F00E93612 /* harris-inline.h */; };
+		CD5C6BC11E7D001F00E93612 /* harris.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6BB21E7D001F00E93612 /* harris.cpp */; };
+		CD5C6BC21E7D001F00E93612 /* harris.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6BB31E7D001F00E93612 /* harris.h */; };
+		CD5C6BC31E7D001F00E93612 /* interpolate.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6BB41E7D001F00E93612 /* interpolate.h */; };
+		CD5C6BC41E7D001F00E93612 /* orientation_assignment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6BB51E7D001F00E93612 /* orientation_assignment.cpp */; };
+		CD5C6BC51E7D001F00E93612 /* orientation_assignment.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6BB61E7D001F00E93612 /* orientation_assignment.h */; };
+		CD5C6BC61E7D001F00E93612 /* pyramid-inline.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6BB71E7D001F00E93612 /* pyramid-inline.h */; };
+		CD5C6BC71E7D001F00E93612 /* pyramid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6BB81E7D001F00E93612 /* pyramid.cpp */; };
+		CD5C6BC81E7D001F00E93612 /* pyramid.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6BB91E7D001F00E93612 /* pyramid.h */; };
+		CD5C6BDF1E7D006700E93612 /* visual_database_facade.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6BDD1E7D006700E93612 /* visual_database_facade.cpp */; };
+		CD5C6BE01E7D006700E93612 /* visual_database_facade.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6BDE1E7D006700E93612 /* visual_database_facade.h */; };
+		CD5C6BEC1E7D006F00E93612 /* date_time.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6BE11E7D006F00E93612 /* date_time.cpp */; };
+		CD5C6BED1E7D006F00E93612 /* date_time.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6BE21E7D006F00E93612 /* date_time.h */; };
+		CD5C6BEE1E7D006F00E93612 /* error.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6BE31E7D006F00E93612 /* error.h */; };
+		CD5C6BEF1E7D006F00E93612 /* exception.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6BE41E7D006F00E93612 /* exception.h */; };
+		CD5C6BF01E7D006F00E93612 /* image_utils.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6BE51E7D006F00E93612 /* image_utils.h */; };
+		CD5C6BF11E7D006F00E93612 /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6BE61E7D006F00E93612 /* image.cpp */; };
+		CD5C6BF21E7D006F00E93612 /* image.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6BE71E7D006F00E93612 /* image.h */; };
+		CD5C6BF31E7D006F00E93612 /* logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6BE81E7D006F00E93612 /* logger.cpp */; };
+		CD5C6BF41E7D006F00E93612 /* logger.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6BE91E7D006F00E93612 /* logger.h */; };
+		CD5C6BF51E7D006F00E93612 /* timers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6BEA1E7D006F00E93612 /* timers.cpp */; };
+		CD5C6BF61E7D006F00E93612 /* timers.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6BEB1E7D006F00E93612 /* timers.h */; };
+		CD5C6BF91E7D007800E93612 /* homography_solver.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6BF71E7D007800E93612 /* homography_solver.h */; };
+		CD5C6BFA1E7D007800E93612 /* robust_homography.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6BF81E7D007800E93612 /* robust_homography.h */; };
+		CD5C6C0F1E7D008600E93612 /* binary_hierarchical_clustering.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6BFB1E7D008600E93612 /* binary_hierarchical_clustering.h */; };
+		CD5C6C101E7D008600E93612 /* feature_matcher-inline.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6BFC1E7D008600E93612 /* feature_matcher-inline.h */; };
+		CD5C6C111E7D008600E93612 /* feature_matcher.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6BFD1E7D008600E93612 /* feature_matcher.h */; };
+		CD5C6C121E7D008600E93612 /* feature_point.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6BFE1E7D008600E93612 /* feature_point.h */; };
+		CD5C6C151E7D008600E93612 /* feature_store.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C011E7D008600E93612 /* feature_store.h */; };
+		CD5C6C161E7D008600E93612 /* freak.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C021E7D008600E93612 /* freak.cpp */; };
+		CD5C6C171E7D008600E93612 /* freak.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C031E7D008600E93612 /* freak.h */; };
+		CD5C6C181E7D008600E93612 /* freak84-inline.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C041E7D008600E93612 /* freak84-inline.h */; };
+		CD5C6C191E7D008600E93612 /* hough_similarity_voting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C051E7D008600E93612 /* hough_similarity_voting.cpp */; };
+		CD5C6C1A1E7D008600E93612 /* hough_similarity_voting.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C061E7D008600E93612 /* hough_similarity_voting.h */; };
+		CD5C6C1B1E7D008600E93612 /* keyframe.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C071E7D008600E93612 /* keyframe.h */; };
+		CD5C6C1C1E7D008600E93612 /* kmedoids.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C081E7D008600E93612 /* kmedoids.h */; };
+		CD5C6C1D1E7D008600E93612 /* matcher_types.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C091E7D008600E93612 /* matcher_types.h */; };
+		CD5C6C201E7D008600E93612 /* visual_database_types.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C0C1E7D008600E93612 /* visual_database_types.h */; };
+		CD5C6C211E7D008600E93612 /* visual_database-inline.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C0D1E7D008600E93612 /* visual_database-inline.h */; };
+		CD5C6C221E7D008600E93612 /* visual_database.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C0E1E7D008600E93612 /* visual_database.h */; };
+		CD5C6C331E7D00A100E93612 /* cholesky_linear_solvers.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C231E7D00A100E93612 /* cholesky_linear_solvers.h */; };
+		CD5C6C341E7D00A100E93612 /* cholesky.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C241E7D00A100E93612 /* cholesky.h */; };
+		CD5C6C351E7D00A100E93612 /* geometry.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C251E7D00A100E93612 /* geometry.h */; };
+		CD5C6C361E7D00A100E93612 /* hamming.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C261E7D00A100E93612 /* hamming.h */; };
+		CD5C6C371E7D00A100E93612 /* homography.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C271E7D00A100E93612 /* homography.h */; };
+		CD5C6C381E7D00A100E93612 /* indexing.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C281E7D00A100E93612 /* indexing.h */; };
+		CD5C6C391E7D00A100E93612 /* linear_algebra.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C291E7D00A100E93612 /* linear_algebra.h */; };
+		CD5C6C3A1E7D00A100E93612 /* linear_solvers.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C2A1E7D00A100E93612 /* linear_solvers.h */; };
+		CD5C6C3B1E7D00A100E93612 /* math_io.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C2B1E7D00A100E93612 /* math_io.cpp */; };
+		CD5C6C3C1E7D00A100E93612 /* math_io.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C2C1E7D00A100E93612 /* math_io.h */; };
+		CD5C6C3D1E7D00A100E93612 /* math_utils.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C2D1E7D00A100E93612 /* math_utils.h */; };
+		CD5C6C3E1E7D00A100E93612 /* matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C2E1E7D00A100E93612 /* matrix.h */; };
+		CD5C6C3F1E7D00A100E93612 /* polynomial.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C2F1E7D00A100E93612 /* polynomial.h */; };
+		CD5C6C401E7D00A100E93612 /* quaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C301E7D00A100E93612 /* quaternion.h */; };
+		CD5C6C411E7D00A100E93612 /* rand.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C311E7D00A100E93612 /* rand.h */; };
+		CD5C6C421E7D00A100E93612 /* robustifiers.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C321E7D00A100E93612 /* robustifiers.h */; };
+		CD5C6C461E7D00A800E93612 /* feature_drawing.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C431E7D00A800E93612 /* feature_drawing.h */; };
+		CD5C6C471E7D00A800E93612 /* partial_sort.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C441E7D00A800E93612 /* partial_sort.h */; };
+		CD5C6C481E7D00A800E93612 /* point.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C451E7D00A800E93612 /* point.h */; };
+		CD5C6C4D1E7D00B700E93612 /* profile.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C491E7D00B700E93612 /* profile.c */; };
+		CD5C6C4E1E7D00B700E93612 /* thread_sub_winrt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C4A1E7D00B700E93612 /* thread_sub_winrt.cpp */; };
+		CD5C6C4F1E7D00B700E93612 /* thread_sub_winrt.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C4B1E7D00B700E93612 /* thread_sub_winrt.h */; };
+		CD5C6C501E7D00B700E93612 /* thread_sub.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C4C1E7D00B700E93612 /* thread_sub.c */; };
+		CD5C6C5E1E7D00C000E93612 /* video.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C551E7D00C000E93612 /* video.c */; };
+		CD5C6C5F1E7D00C000E93612 /* video2.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C561E7D00C000E93612 /* video2.c */; };
+		CD5C6C601E7D00C000E93612 /* videoAspectRatio.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C571E7D00C000E93612 /* videoAspectRatio.c */; };
+		CD5C6C621E7D00C000E93612 /* videoSaveImage.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C591E7D00C000E93612 /* videoSaveImage.c */; };
+		CD5C6C641E7D00C800E93612 /* videoDummy.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C631E7D00C800E93612 /* videoDummy.c */; };
+		CD5C6C661E7D00CF00E93612 /* videoImage.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C651E7D00CF00E93612 /* videoImage.c */; };
+		CD5C6C6F1E7D00DB00E93612 /* CameraVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C671E7D00DB00E93612 /* CameraVideo.m */; };
+		CD5C6C701E7D00DB00E93612 /* cparams.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C681E7D00DB00E93612 /* cparams.c */; };
+		CD5C6C711E7D00DB00E93612 /* cparams.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C691E7D00DB00E93612 /* cparams.h */; };
+		CD5C6C741E7D00DB00E93612 /* MovieVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C6C1E7D00DB00E93612 /* MovieVideo.m */; };
+		CD5C6C751E7D00DB00E93612 /* videoiPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C6D1E7D00DB00E93612 /* videoiPhone.m */; };
+		CD5C6C761E7D00DB00E93612 /* videoiPhoneCameraVideoTookPictureDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C6E1E7D00DB00E93612 /* videoiPhoneCameraVideoTookPictureDelegate.h */; };
+		CD5C6CCB1E7D120400E93612 /* arLabelingPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C7D1E7D120400E93612 /* arLabelingPrivate.h */; };
+		CD5C6CCC1E7D120400E93612 /* arLabelingSub.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C6C7E1E7D120400E93612 /* arLabelingSub.h */; };
+		CD5C6CCD1E7D120400E93612 /* arLabelingSubDBI3C.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C7F1E7D120400E93612 /* arLabelingSubDBI3C.c */; };
+		CD5C6CCE1E7D120400E93612 /* arLabelingSubDBI3C565.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C801E7D120400E93612 /* arLabelingSubDBI3C565.c */; };
+		CD5C6CCF1E7D120400E93612 /* arLabelingSubDBI3CA.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C811E7D120400E93612 /* arLabelingSubDBI3CA.c */; };
+		CD5C6CD01E7D120400E93612 /* arLabelingSubDBI3CA4444.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C821E7D120400E93612 /* arLabelingSubDBI3CA4444.c */; };
+		CD5C6CD11E7D120400E93612 /* arLabelingSubDBI3CA5551.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C831E7D120400E93612 /* arLabelingSubDBI3CA5551.c */; };
+		CD5C6CD21E7D120400E93612 /* arLabelingSubDBIA3C.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C841E7D120400E93612 /* arLabelingSubDBIA3C.c */; };
+		CD5C6CD31E7D120400E93612 /* arLabelingSubDBIC.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C851E7D120400E93612 /* arLabelingSubDBIC.c */; };
+		CD5C6CD41E7D120400E93612 /* arLabelingSubDBICY.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C861E7D120400E93612 /* arLabelingSubDBICY.c */; };
+		CD5C6CD51E7D120400E93612 /* arLabelingSubDBIYC.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C871E7D120400E93612 /* arLabelingSubDBIYC.c */; };
+		CD5C6CD61E7D120400E93612 /* arLabelingSubDBR3C.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C881E7D120400E93612 /* arLabelingSubDBR3C.c */; };
+		CD5C6CD71E7D120400E93612 /* arLabelingSubDBR3C565.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C891E7D120400E93612 /* arLabelingSubDBR3C565.c */; };
+		CD5C6CD81E7D120400E93612 /* arLabelingSubDBR3CA.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C8A1E7D120400E93612 /* arLabelingSubDBR3CA.c */; };
+		CD5C6CD91E7D120400E93612 /* arLabelingSubDBR3CA4444.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C8B1E7D120400E93612 /* arLabelingSubDBR3CA4444.c */; };
+		CD5C6CDA1E7D120400E93612 /* arLabelingSubDBR3CA5551.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C8C1E7D120400E93612 /* arLabelingSubDBR3CA5551.c */; };
+		CD5C6CDB1E7D120400E93612 /* arLabelingSubDBRA3C.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C8D1E7D120400E93612 /* arLabelingSubDBRA3C.c */; };
+		CD5C6CDC1E7D120400E93612 /* arLabelingSubDBRC.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C8E1E7D120400E93612 /* arLabelingSubDBRC.c */; };
+		CD5C6CDD1E7D120400E93612 /* arLabelingSubDBRCY.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C8F1E7D120400E93612 /* arLabelingSubDBRCY.c */; };
+		CD5C6CDE1E7D120400E93612 /* arLabelingSubDBRYC.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C901E7D120400E93612 /* arLabelingSubDBRYC.c */; };
+		CD5C6CDF1E7D120400E93612 /* arLabelingSubDBZ.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C911E7D120400E93612 /* arLabelingSubDBZ.c */; };
+		CD5C6CE01E7D120400E93612 /* arLabelingSubDWI3C.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C921E7D120400E93612 /* arLabelingSubDWI3C.c */; };
+		CD5C6CE11E7D120400E93612 /* arLabelingSubDWI3C565.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C931E7D120400E93612 /* arLabelingSubDWI3C565.c */; };
+		CD5C6CE21E7D120400E93612 /* arLabelingSubDWI3CA.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C941E7D120400E93612 /* arLabelingSubDWI3CA.c */; };
+		CD5C6CE31E7D120400E93612 /* arLabelingSubDWI3CA4444.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C951E7D120400E93612 /* arLabelingSubDWI3CA4444.c */; };
+		CD5C6CE41E7D120400E93612 /* arLabelingSubDWI3CA5551.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C961E7D120400E93612 /* arLabelingSubDWI3CA5551.c */; };
+		CD5C6CE51E7D120400E93612 /* arLabelingSubDWIA3C.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C971E7D120400E93612 /* arLabelingSubDWIA3C.c */; };
+		CD5C6CE61E7D120400E93612 /* arLabelingSubDWIC.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C981E7D120400E93612 /* arLabelingSubDWIC.c */; };
+		CD5C6CE71E7D120400E93612 /* arLabelingSubDWICY.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C991E7D120400E93612 /* arLabelingSubDWICY.c */; };
+		CD5C6CE81E7D120400E93612 /* arLabelingSubDWIYC.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C9A1E7D120400E93612 /* arLabelingSubDWIYC.c */; };
+		CD5C6CE91E7D120400E93612 /* arLabelingSubDWR3C.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C9B1E7D120400E93612 /* arLabelingSubDWR3C.c */; };
+		CD5C6CEA1E7D120400E93612 /* arLabelingSubDWR3C565.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C9C1E7D120400E93612 /* arLabelingSubDWR3C565.c */; };
+		CD5C6CEB1E7D120400E93612 /* arLabelingSubDWR3CA.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C9D1E7D120400E93612 /* arLabelingSubDWR3CA.c */; };
+		CD5C6CEC1E7D120400E93612 /* arLabelingSubDWR3CA4444.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C9E1E7D120400E93612 /* arLabelingSubDWR3CA4444.c */; };
+		CD5C6CED1E7D120400E93612 /* arLabelingSubDWR3CA5551.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6C9F1E7D120400E93612 /* arLabelingSubDWR3CA5551.c */; };
+		CD5C6CEE1E7D120400E93612 /* arLabelingSubDWRA3C.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CA01E7D120400E93612 /* arLabelingSubDWRA3C.c */; };
+		CD5C6CEF1E7D120400E93612 /* arLabelingSubDWRC.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CA11E7D120400E93612 /* arLabelingSubDWRC.c */; };
+		CD5C6CF01E7D120400E93612 /* arLabelingSubDWRCY.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CA21E7D120400E93612 /* arLabelingSubDWRCY.c */; };
+		CD5C6CF11E7D120400E93612 /* arLabelingSubDWRYC.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CA31E7D120400E93612 /* arLabelingSubDWRYC.c */; };
+		CD5C6CF21E7D120400E93612 /* arLabelingSubDWZ.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CA41E7D120400E93612 /* arLabelingSubDWZ.c */; };
+		CD5C6CF31E7D120400E93612 /* arLabelingSubEBI3C.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CA51E7D120400E93612 /* arLabelingSubEBI3C.c */; };
+		CD5C6CF41E7D120400E93612 /* arLabelingSubEBI3C565.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CA61E7D120400E93612 /* arLabelingSubEBI3C565.c */; };
+		CD5C6CF51E7D120400E93612 /* arLabelingSubEBI3CA.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CA71E7D120400E93612 /* arLabelingSubEBI3CA.c */; };
+		CD5C6CF61E7D120400E93612 /* arLabelingSubEBI3CA4444.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CA81E7D120400E93612 /* arLabelingSubEBI3CA4444.c */; };
+		CD5C6CF71E7D120400E93612 /* arLabelingSubEBI3CA5551.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CA91E7D120400E93612 /* arLabelingSubEBI3CA5551.c */; };
+		CD5C6CF81E7D120400E93612 /* arLabelingSubEBIA3C.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CAA1E7D120400E93612 /* arLabelingSubEBIA3C.c */; };
+		CD5C6CF91E7D120400E93612 /* arLabelingSubEBIC.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CAB1E7D120400E93612 /* arLabelingSubEBIC.c */; };
+		CD5C6CFA1E7D120400E93612 /* arLabelingSubEBICY.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CAC1E7D120400E93612 /* arLabelingSubEBICY.c */; };
+		CD5C6CFB1E7D120400E93612 /* arLabelingSubEBIYC.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CAD1E7D120400E93612 /* arLabelingSubEBIYC.c */; };
+		CD5C6CFC1E7D120400E93612 /* arLabelingSubEBR3C.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CAE1E7D120400E93612 /* arLabelingSubEBR3C.c */; };
+		CD5C6CFD1E7D120400E93612 /* arLabelingSubEBR3C565.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CAF1E7D120400E93612 /* arLabelingSubEBR3C565.c */; };
+		CD5C6CFE1E7D120400E93612 /* arLabelingSubEBR3CA.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CB01E7D120400E93612 /* arLabelingSubEBR3CA.c */; };
+		CD5C6CFF1E7D120400E93612 /* arLabelingSubEBR3CA4444.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CB11E7D120400E93612 /* arLabelingSubEBR3CA4444.c */; };
+		CD5C6D001E7D120400E93612 /* arLabelingSubEBR3CA5551.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CB21E7D120400E93612 /* arLabelingSubEBR3CA5551.c */; };
+		CD5C6D011E7D120400E93612 /* arLabelingSubEBRA3C.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CB31E7D120400E93612 /* arLabelingSubEBRA3C.c */; };
+		CD5C6D021E7D120400E93612 /* arLabelingSubEBRC.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CB41E7D120400E93612 /* arLabelingSubEBRC.c */; };
+		CD5C6D031E7D120400E93612 /* arLabelingSubEBRCY.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CB51E7D120400E93612 /* arLabelingSubEBRCY.c */; };
+		CD5C6D041E7D120400E93612 /* arLabelingSubEBRYC.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CB61E7D120400E93612 /* arLabelingSubEBRYC.c */; };
+		CD5C6D051E7D120400E93612 /* arLabelingSubEBZ.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CB71E7D120400E93612 /* arLabelingSubEBZ.c */; };
+		CD5C6D061E7D120400E93612 /* arLabelingSubEWI3C.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CB81E7D120400E93612 /* arLabelingSubEWI3C.c */; };
+		CD5C6D071E7D120400E93612 /* arLabelingSubEWI3C565.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CB91E7D120400E93612 /* arLabelingSubEWI3C565.c */; };
+		CD5C6D081E7D120400E93612 /* arLabelingSubEWI3CA.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CBA1E7D120400E93612 /* arLabelingSubEWI3CA.c */; };
+		CD5C6D091E7D120400E93612 /* arLabelingSubEWI3CA4444.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CBB1E7D120400E93612 /* arLabelingSubEWI3CA4444.c */; };
+		CD5C6D0A1E7D120400E93612 /* arLabelingSubEWI3CA5551.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CBC1E7D120400E93612 /* arLabelingSubEWI3CA5551.c */; };
+		CD5C6D0B1E7D120400E93612 /* arLabelingSubEWIA3C.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CBD1E7D120400E93612 /* arLabelingSubEWIA3C.c */; };
+		CD5C6D0C1E7D120400E93612 /* arLabelingSubEWIC.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CBE1E7D120400E93612 /* arLabelingSubEWIC.c */; };
+		CD5C6D0D1E7D120400E93612 /* arLabelingSubEWICY.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CBF1E7D120400E93612 /* arLabelingSubEWICY.c */; };
+		CD5C6D0E1E7D120400E93612 /* arLabelingSubEWIYC.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CC01E7D120400E93612 /* arLabelingSubEWIYC.c */; };
+		CD5C6D0F1E7D120400E93612 /* arLabelingSubEWR3C.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CC11E7D120400E93612 /* arLabelingSubEWR3C.c */; };
+		CD5C6D101E7D120400E93612 /* arLabelingSubEWR3C565.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CC21E7D120400E93612 /* arLabelingSubEWR3C565.c */; };
+		CD5C6D111E7D120400E93612 /* arLabelingSubEWR3CA.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CC31E7D120400E93612 /* arLabelingSubEWR3CA.c */; };
+		CD5C6D121E7D120400E93612 /* arLabelingSubEWR3CA4444.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CC41E7D120400E93612 /* arLabelingSubEWR3CA4444.c */; };
+		CD5C6D131E7D120400E93612 /* arLabelingSubEWR3CA5551.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CC51E7D120400E93612 /* arLabelingSubEWR3CA5551.c */; };
+		CD5C6D141E7D120400E93612 /* arLabelingSubEWRA3C.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CC61E7D120400E93612 /* arLabelingSubEWRA3C.c */; };
+		CD5C6D151E7D120400E93612 /* arLabelingSubEWRC.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CC71E7D120400E93612 /* arLabelingSubEWRC.c */; };
+		CD5C6D161E7D120400E93612 /* arLabelingSubEWRCY.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CC81E7D120400E93612 /* arLabelingSubEWRCY.c */; };
+		CD5C6D171E7D120400E93612 /* arLabelingSubEWRYC.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CC91E7D120400E93612 /* arLabelingSubEWRYC.c */; };
+		CD5C6D181E7D120400E93612 /* arLabelingSubEWZ.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6CCA1E7D120400E93612 /* arLabelingSubEWZ.c */; };
 		CD5F96F71C2BCD0D000FA476 /* MOAIFourier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5F96F51C2BCD0D000FA476 /* MOAIFourier.cpp */; };
 		CD5F96F81C2BCD0D000FA476 /* MOAIFourier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5F96F51C2BCD0D000FA476 /* MOAIFourier.cpp */; };
 		CD5F96F91C2BCD0D000FA476 /* MOAIFourier.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5F96F61C2BCD0D000FA476 /* MOAIFourier.h */; };
@@ -7301,6 +7547,261 @@
 		CD5161601BCDC0DA000718FB /* host.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-image-webp/host.h"; sourceTree = "<group>"; };
 		CD5161611BCDC0DA000718FB /* MOAIImageFormatWebP.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIImageFormatWebP.cpp; path = "moai-image-webp/MOAIImageFormatWebP.cpp"; sourceTree = "<group>"; };
 		CD5161621BCDC0DA000718FB /* MOAIImageFormatWebP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MOAIImageFormatWebP.h; path = "moai-image-webp/MOAIImageFormatWebP.h"; sourceTree = "<group>"; };
+		CD5C67E91E76734700E93612 /* MOAIAnimLoop.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAnimLoop.cpp; sourceTree = "<group>"; };
+		CD5C67EA1E76734700E93612 /* MOAIAnimLoop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAnimLoop.h; sourceTree = "<group>"; };
+		CD5C67EB1E76734700E93612 /* MOAIAnimMixer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAnimMixer.cpp; sourceTree = "<group>"; };
+		CD5C67EC1E76734700E93612 /* MOAIAnimMixer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAnimMixer.h; sourceTree = "<group>"; };
+		CD5C68151E7A216700E93612 /* trackingThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = trackingThread.cpp; path = "moai-ar/trackingThread.cpp"; sourceTree = "<group>"; };
+		CD5C68161E7A216700E93612 /* trackingThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = trackingThread.h; path = "moai-ar/trackingThread.h"; sourceTree = "<group>"; };
+		CD5C6ACE1E7CFD7000E93612 /* libmoai-ios-3rdparty-artoolkit5.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-3rdparty-artoolkit5.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD5C6ADB1E7CFF3C00E93612 /* ar3DCreateHandle.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ar3DCreateHandle.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/ar3DCreateHandle.c; sourceTree = "<group>"; };
+		CD5C6ADC1E7CFF3C00E93612 /* ar3DUtil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ar3DUtil.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/ar3DUtil.c; sourceTree = "<group>"; };
+		CD5C6ADD1E7CFF3C00E93612 /* arCreateHandle.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arCreateHandle.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arCreateHandle.c; sourceTree = "<group>"; };
+		CD5C6ADE1E7CFF3C00E93612 /* arDetectMarker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arDetectMarker.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arDetectMarker.c; sourceTree = "<group>"; };
+		CD5C6ADF1E7CFF3C00E93612 /* arDetectMarker2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arDetectMarker2.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arDetectMarker2.c; sourceTree = "<group>"; };
+		CD5C6AE01E7CFF3C00E93612 /* arFilterTransMat.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arFilterTransMat.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arFilterTransMat.c; sourceTree = "<group>"; };
+		CD5C6AE11E7CFF3C00E93612 /* arGetLine.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arGetLine.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arGetLine.c; sourceTree = "<group>"; };
+		CD5C6AE21E7CFF3C00E93612 /* arGetMarkerInfo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arGetMarkerInfo.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arGetMarkerInfo.c; sourceTree = "<group>"; };
+		CD5C6AE31E7CFF3C00E93612 /* arGetTransMat.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arGetTransMat.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arGetTransMat.c; sourceTree = "<group>"; };
+		CD5C6AE41E7CFF3C00E93612 /* arGetTransMatStereo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arGetTransMatStereo.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arGetTransMatStereo.c; sourceTree = "<group>"; };
+		CD5C6AE51E7CFF3C00E93612 /* arImageProc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arImageProc.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arImageProc.c; sourceTree = "<group>"; };
+		CD5C6AE61E7CFF3C00E93612 /* arLabeling.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabeling.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabeling.c; sourceTree = "<group>"; };
+		CD5C6AE71E7CFF3C00E93612 /* arPattAttach.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arPattAttach.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arPattAttach.c; sourceTree = "<group>"; };
+		CD5C6AE81E7CFF3C00E93612 /* arPattCreateHandle.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arPattCreateHandle.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arPattCreateHandle.c; sourceTree = "<group>"; };
+		CD5C6AE91E7CFF3C00E93612 /* arPattGetID.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arPattGetID.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arPattGetID.c; sourceTree = "<group>"; };
+		CD5C6AEA1E7CFF3C00E93612 /* arPattLoad.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arPattLoad.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arPattLoad.c; sourceTree = "<group>"; };
+		CD5C6AEB1E7CFF3C00E93612 /* arPattSave.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arPattSave.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arPattSave.c; sourceTree = "<group>"; };
+		CD5C6AEC1E7CFF3C00E93612 /* arUtil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arUtil.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arUtil.c; sourceTree = "<group>"; };
+		CD5C6AED1E7CFF3C00E93612 /* mAlloc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mAlloc.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/mAlloc.c; sourceTree = "<group>"; };
+		CD5C6AEE1E7CFF3C00E93612 /* mAllocDup.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mAllocDup.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/mAllocDup.c; sourceTree = "<group>"; };
+		CD5C6AEF1E7CFF3C00E93612 /* mAllocInv.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mAllocInv.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/mAllocInv.c; sourceTree = "<group>"; };
+		CD5C6AF01E7CFF3C00E93612 /* mAllocMul.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mAllocMul.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/mAllocMul.c; sourceTree = "<group>"; };
+		CD5C6AF11E7CFF3C00E93612 /* mAllocTrans.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mAllocTrans.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/mAllocTrans.c; sourceTree = "<group>"; };
+		CD5C6AF21E7CFF3C00E93612 /* mAllocUnit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mAllocUnit.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/mAllocUnit.c; sourceTree = "<group>"; };
+		CD5C6AF31E7CFF3C00E93612 /* mDet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mDet.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/mDet.c; sourceTree = "<group>"; };
+		CD5C6AF41E7CFF3C00E93612 /* mDisp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mDisp.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/mDisp.c; sourceTree = "<group>"; };
+		CD5C6AF51E7CFF3C00E93612 /* mDup.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mDup.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/mDup.c; sourceTree = "<group>"; };
+		CD5C6AF61E7CFF3C00E93612 /* mFree.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mFree.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/mFree.c; sourceTree = "<group>"; };
+		CD5C6AF71E7CFF3C00E93612 /* mInv.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mInv.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/mInv.c; sourceTree = "<group>"; };
+		CD5C6AF81E7CFF3C00E93612 /* mMul.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mMul.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/mMul.c; sourceTree = "<group>"; };
+		CD5C6AF91E7CFF3C00E93612 /* mPCA.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mPCA.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/mPCA.c; sourceTree = "<group>"; };
+		CD5C6AFA1E7CFF3C00E93612 /* mSelfInv.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mSelfInv.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/mSelfInv.c; sourceTree = "<group>"; };
+		CD5C6AFB1E7CFF3C00E93612 /* mTrans.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mTrans.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/mTrans.c; sourceTree = "<group>"; };
+		CD5C6AFC1E7CFF3C00E93612 /* mUnit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mUnit.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/mUnit.c; sourceTree = "<group>"; };
+		CD5C6AFD1E7CFF3C00E93612 /* paramChangeSize.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = paramChangeSize.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/paramChangeSize.c; sourceTree = "<group>"; };
+		CD5C6AFE1E7CFF3C00E93612 /* paramClear.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = paramClear.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/paramClear.c; sourceTree = "<group>"; };
+		CD5C6AFF1E7CFF3C00E93612 /* paramDecomp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = paramDecomp.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/paramDecomp.c; sourceTree = "<group>"; };
+		CD5C6B001E7CFF3C00E93612 /* paramDisp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = paramDisp.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/paramDisp.c; sourceTree = "<group>"; };
+		CD5C6B011E7CFF3C00E93612 /* paramDistortion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = paramDistortion.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/paramDistortion.c; sourceTree = "<group>"; };
+		CD5C6B021E7CFF3C00E93612 /* paramFile.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = paramFile.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/paramFile.c; sourceTree = "<group>"; };
+		CD5C6B031E7CFF3C00E93612 /* paramGetPerspective.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = paramGetPerspective.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/paramGetPerspective.c; sourceTree = "<group>"; };
+		CD5C6B041E7CFF3C00E93612 /* paramLT.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = paramLT.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/paramLT.c; sourceTree = "<group>"; };
+		CD5C6B051E7CFF3C00E93612 /* vAlloc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vAlloc.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/vAlloc.c; sourceTree = "<group>"; };
+		CD5C6B061E7CFF3C00E93612 /* vDisp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vDisp.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/vDisp.c; sourceTree = "<group>"; };
+		CD5C6B071E7CFF3C00E93612 /* vFree.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vFree.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/vFree.c; sourceTree = "<group>"; };
+		CD5C6B081E7CFF3C00E93612 /* vHouse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vHouse.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/vHouse.c; sourceTree = "<group>"; };
+		CD5C6B091E7CFF3C00E93612 /* vInnerP.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vInnerP.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/vInnerP.c; sourceTree = "<group>"; };
+		CD5C6B0A1E7CFF3C00E93612 /* vTridiag.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vTridiag.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/vTridiag.c; sourceTree = "<group>"; };
+		CD5C6B581E7CFF6E00E93612 /* coord.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = coord.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR2/coord.c; sourceTree = "<group>"; };
+		CD5C6B591E7CFF6E00E93612 /* featureMap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = featureMap.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR2/featureMap.c; sourceTree = "<group>"; };
+		CD5C6B5A1E7CFF6E00E93612 /* featureSet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = featureSet.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR2/featureSet.c; sourceTree = "<group>"; };
+		CD5C6B5B1E7CFF6E00E93612 /* handle.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = handle.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR2/handle.c; sourceTree = "<group>"; };
+		CD5C6B5C1E7CFF6E00E93612 /* imageSet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = imageSet.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR2/imageSet.c; sourceTree = "<group>"; };
+		CD5C6B5D1E7CFF6E00E93612 /* jpeg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jpeg.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR2/jpeg.c; sourceTree = "<group>"; };
+		CD5C6B5E1E7CFF6E00E93612 /* marker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = marker.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR2/marker.c; sourceTree = "<group>"; };
+		CD5C6B5F1E7CFF6E00E93612 /* matching.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = matching.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR2/matching.c; sourceTree = "<group>"; };
+		CD5C6B601E7CFF6E00E93612 /* matching2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = matching2.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR2/matching2.c; sourceTree = "<group>"; };
+		CD5C6B611E7CFF6E00E93612 /* searchPoint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = searchPoint.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR2/searchPoint.c; sourceTree = "<group>"; };
+		CD5C6B621E7CFF6E00E93612 /* selectTemplate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = selectTemplate.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR2/selectTemplate.c; sourceTree = "<group>"; };
+		CD5C6B631E7CFF6E00E93612 /* surface.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = surface.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR2/surface.c; sourceTree = "<group>"; };
+		CD5C6B641E7CFF6E00E93612 /* template.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = template.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR2/template.c; sourceTree = "<group>"; };
+		CD5C6B651E7CFF6E00E93612 /* tracking.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tracking.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR2/tracking.c; sourceTree = "<group>"; };
+		CD5C6B661E7CFF6E00E93612 /* tracking2d.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tracking2d.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR2/tracking2d.c; sourceTree = "<group>"; };
+		CD5C6B671E7CFF6E00E93612 /* util.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = util.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR2/util.c; sourceTree = "<group>"; };
+		CD5C6B781E7CFF7800E93612 /* icpCalibStereo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = icpCalibStereo.c; path = ../../3rdparty/artoolkit5/lib/SRC/ARICP/icpCalibStereo.c; sourceTree = "<group>"; };
+		CD5C6B791E7CFF7800E93612 /* icpCore.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = icpCore.c; path = ../../3rdparty/artoolkit5/lib/SRC/ARICP/icpCore.c; sourceTree = "<group>"; };
+		CD5C6B7A1E7CFF7800E93612 /* icpHandle.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = icpHandle.c; path = ../../3rdparty/artoolkit5/lib/SRC/ARICP/icpHandle.c; sourceTree = "<group>"; };
+		CD5C6B7B1E7CFF7800E93612 /* icpPoint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = icpPoint.c; path = ../../3rdparty/artoolkit5/lib/SRC/ARICP/icpPoint.c; sourceTree = "<group>"; };
+		CD5C6B7C1E7CFF7800E93612 /* icpPointRobust.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = icpPointRobust.c; path = ../../3rdparty/artoolkit5/lib/SRC/ARICP/icpPointRobust.c; sourceTree = "<group>"; };
+		CD5C6B7D1E7CFF7800E93612 /* icpStereoHandle.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = icpStereoHandle.c; path = ../../3rdparty/artoolkit5/lib/SRC/ARICP/icpStereoHandle.c; sourceTree = "<group>"; };
+		CD5C6B7E1E7CFF7800E93612 /* icpStereoPoint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = icpStereoPoint.c; path = ../../3rdparty/artoolkit5/lib/SRC/ARICP/icpStereoPoint.c; sourceTree = "<group>"; };
+		CD5C6B7F1E7CFF7800E93612 /* icpStereoPointRobust.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = icpStereoPointRobust.c; path = ../../3rdparty/artoolkit5/lib/SRC/ARICP/icpStereoPointRobust.c; sourceTree = "<group>"; };
+		CD5C6B801E7CFF7800E93612 /* icpUtil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = icpUtil.c; path = ../../3rdparty/artoolkit5/lib/SRC/ARICP/icpUtil.c; sourceTree = "<group>"; };
+		CD5C6B8A1E7CFF8100E93612 /* arMultiFreeConfig.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arMultiFreeConfig.c; path = ../../3rdparty/artoolkit5/lib/SRC/ARMulti/arMultiFreeConfig.c; sourceTree = "<group>"; };
+		CD5C6B8B1E7CFF8100E93612 /* arMultiGetTransMat.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arMultiGetTransMat.c; path = ../../3rdparty/artoolkit5/lib/SRC/ARMulti/arMultiGetTransMat.c; sourceTree = "<group>"; };
+		CD5C6B8C1E7CFF8100E93612 /* arMultiGetTransMatStereo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arMultiGetTransMatStereo.c; path = ../../3rdparty/artoolkit5/lib/SRC/ARMulti/arMultiGetTransMatStereo.c; sourceTree = "<group>"; };
+		CD5C6B8D1E7CFF8100E93612 /* arMultiReadConfigFile.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arMultiReadConfigFile.c; path = ../../3rdparty/artoolkit5/lib/SRC/ARMulti/arMultiReadConfigFile.c; sourceTree = "<group>"; };
+		CD5C6B921E7CFF8E00E93612 /* kpmFopen.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = kpmFopen.c; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/kpmFopen.c; sourceTree = "<group>"; };
+		CD5C6B931E7CFF8E00E93612 /* kpmFopen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kpmFopen.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/kpmFopen.h; sourceTree = "<group>"; };
+		CD5C6B941E7CFF8E00E93612 /* kpmHandle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = kpmHandle.cpp; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/kpmHandle.cpp; sourceTree = "<group>"; };
+		CD5C6B951E7CFF8E00E93612 /* kpmMatching.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = kpmMatching.cpp; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/kpmMatching.cpp; sourceTree = "<group>"; };
+		CD5C6B961E7CFF8E00E93612 /* kpmPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kpmPrivate.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/kpmPrivate.h; sourceTree = "<group>"; };
+		CD5C6B971E7CFF8E00E93612 /* kpmRefDataSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = kpmRefDataSet.cpp; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/kpmRefDataSet.cpp; sourceTree = "<group>"; };
+		CD5C6B981E7CFF8E00E93612 /* kpmResult.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = kpmResult.cpp; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/kpmResult.cpp; sourceTree = "<group>"; };
+		CD5C6B991E7CFF8E00E93612 /* kpmUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = kpmUtil.cpp; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/kpmUtil.cpp; sourceTree = "<group>"; };
+		CD5C6BAB1E7D001F00E93612 /* DoG_scale_invariant_detector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DoG_scale_invariant_detector.cpp; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/detectors/DoG_scale_invariant_detector.cpp; sourceTree = "<group>"; };
+		CD5C6BAC1E7D001F00E93612 /* DoG_scale_invariant_detector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DoG_scale_invariant_detector.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/detectors/DoG_scale_invariant_detector.h; sourceTree = "<group>"; };
+		CD5C6BAD1E7D001F00E93612 /* gaussian_scale_space_pyramid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gaussian_scale_space_pyramid.cpp; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/detectors/gaussian_scale_space_pyramid.cpp; sourceTree = "<group>"; };
+		CD5C6BAE1E7D001F00E93612 /* gaussian_scale_space_pyramid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gaussian_scale_space_pyramid.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/detectors/gaussian_scale_space_pyramid.h; sourceTree = "<group>"; };
+		CD5C6BAF1E7D001F00E93612 /* gradients.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gradients.cpp; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/detectors/gradients.cpp; sourceTree = "<group>"; };
+		CD5C6BB01E7D001F00E93612 /* gradients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gradients.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/detectors/gradients.h; sourceTree = "<group>"; };
+		CD5C6BB11E7D001F00E93612 /* harris-inline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "harris-inline.h"; path = "../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/detectors/harris-inline.h"; sourceTree = "<group>"; };
+		CD5C6BB21E7D001F00E93612 /* harris.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = harris.cpp; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/detectors/harris.cpp; sourceTree = "<group>"; };
+		CD5C6BB31E7D001F00E93612 /* harris.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = harris.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/detectors/harris.h; sourceTree = "<group>"; };
+		CD5C6BB41E7D001F00E93612 /* interpolate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = interpolate.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/detectors/interpolate.h; sourceTree = "<group>"; };
+		CD5C6BB51E7D001F00E93612 /* orientation_assignment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = orientation_assignment.cpp; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/detectors/orientation_assignment.cpp; sourceTree = "<group>"; };
+		CD5C6BB61E7D001F00E93612 /* orientation_assignment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = orientation_assignment.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/detectors/orientation_assignment.h; sourceTree = "<group>"; };
+		CD5C6BB71E7D001F00E93612 /* pyramid-inline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "pyramid-inline.h"; path = "../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/detectors/pyramid-inline.h"; sourceTree = "<group>"; };
+		CD5C6BB81E7D001F00E93612 /* pyramid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pyramid.cpp; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/detectors/pyramid.cpp; sourceTree = "<group>"; };
+		CD5C6BB91E7D001F00E93612 /* pyramid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pyramid.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/detectors/pyramid.h; sourceTree = "<group>"; };
+		CD5C6BDD1E7D006700E93612 /* visual_database_facade.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = visual_database_facade.cpp; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/facade/visual_database_facade.cpp; sourceTree = "<group>"; };
+		CD5C6BDE1E7D006700E93612 /* visual_database_facade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = visual_database_facade.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/facade/visual_database_facade.h; sourceTree = "<group>"; };
+		CD5C6BE11E7D006F00E93612 /* date_time.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = date_time.cpp; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/framework/date_time.cpp; sourceTree = "<group>"; };
+		CD5C6BE21E7D006F00E93612 /* date_time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = date_time.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/framework/date_time.h; sourceTree = "<group>"; };
+		CD5C6BE31E7D006F00E93612 /* error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = error.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/framework/error.h; sourceTree = "<group>"; };
+		CD5C6BE41E7D006F00E93612 /* exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = exception.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/framework/exception.h; sourceTree = "<group>"; };
+		CD5C6BE51E7D006F00E93612 /* image_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = image_utils.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/framework/image_utils.h; sourceTree = "<group>"; };
+		CD5C6BE61E7D006F00E93612 /* image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = image.cpp; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/framework/image.cpp; sourceTree = "<group>"; };
+		CD5C6BE71E7D006F00E93612 /* image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = image.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/framework/image.h; sourceTree = "<group>"; };
+		CD5C6BE81E7D006F00E93612 /* logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = logger.cpp; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/framework/logger.cpp; sourceTree = "<group>"; };
+		CD5C6BE91E7D006F00E93612 /* logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = logger.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/framework/logger.h; sourceTree = "<group>"; };
+		CD5C6BEA1E7D006F00E93612 /* timers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = timers.cpp; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/framework/timers.cpp; sourceTree = "<group>"; };
+		CD5C6BEB1E7D006F00E93612 /* timers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = timers.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/framework/timers.h; sourceTree = "<group>"; };
+		CD5C6BF71E7D007800E93612 /* homography_solver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = homography_solver.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/homography_estimation/homography_solver.h; sourceTree = "<group>"; };
+		CD5C6BF81E7D007800E93612 /* robust_homography.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = robust_homography.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/homography_estimation/robust_homography.h; sourceTree = "<group>"; };
+		CD5C6BFB1E7D008600E93612 /* binary_hierarchical_clustering.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = binary_hierarchical_clustering.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/matchers/binary_hierarchical_clustering.h; sourceTree = "<group>"; };
+		CD5C6BFC1E7D008600E93612 /* feature_matcher-inline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "feature_matcher-inline.h"; path = "../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/matchers/feature_matcher-inline.h"; sourceTree = "<group>"; };
+		CD5C6BFD1E7D008600E93612 /* feature_matcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = feature_matcher.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/matchers/feature_matcher.h; sourceTree = "<group>"; };
+		CD5C6BFE1E7D008600E93612 /* feature_point.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = feature_point.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/matchers/feature_point.h; sourceTree = "<group>"; };
+		CD5C6BFF1E7D008600E93612 /* feature_store_io.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = feature_store_io.cpp; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/matchers/feature_store_io.cpp; sourceTree = "<group>"; };
+		CD5C6C001E7D008600E93612 /* feature_store_io.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = feature_store_io.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/matchers/feature_store_io.h; sourceTree = "<group>"; };
+		CD5C6C011E7D008600E93612 /* feature_store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = feature_store.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/matchers/feature_store.h; sourceTree = "<group>"; };
+		CD5C6C021E7D008600E93612 /* freak.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = freak.cpp; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/matchers/freak.cpp; sourceTree = "<group>"; };
+		CD5C6C031E7D008600E93612 /* freak.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = freak.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/matchers/freak.h; sourceTree = "<group>"; };
+		CD5C6C041E7D008600E93612 /* freak84-inline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "freak84-inline.h"; path = "../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/matchers/freak84-inline.h"; sourceTree = "<group>"; };
+		CD5C6C051E7D008600E93612 /* hough_similarity_voting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = hough_similarity_voting.cpp; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/matchers/hough_similarity_voting.cpp; sourceTree = "<group>"; };
+		CD5C6C061E7D008600E93612 /* hough_similarity_voting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hough_similarity_voting.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/matchers/hough_similarity_voting.h; sourceTree = "<group>"; };
+		CD5C6C071E7D008600E93612 /* keyframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = keyframe.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/matchers/keyframe.h; sourceTree = "<group>"; };
+		CD5C6C081E7D008600E93612 /* kmedoids.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kmedoids.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/matchers/kmedoids.h; sourceTree = "<group>"; };
+		CD5C6C091E7D008600E93612 /* matcher_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = matcher_types.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/matchers/matcher_types.h; sourceTree = "<group>"; };
+		CD5C6C0A1E7D008600E93612 /* visual_database_io.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = visual_database_io.cpp; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/matchers/visual_database_io.cpp; sourceTree = "<group>"; };
+		CD5C6C0B1E7D008600E93612 /* visual_database_io.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = visual_database_io.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/matchers/visual_database_io.h; sourceTree = "<group>"; };
+		CD5C6C0C1E7D008600E93612 /* visual_database_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = visual_database_types.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/matchers/visual_database_types.h; sourceTree = "<group>"; };
+		CD5C6C0D1E7D008600E93612 /* visual_database-inline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "visual_database-inline.h"; path = "../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/matchers/visual_database-inline.h"; sourceTree = "<group>"; };
+		CD5C6C0E1E7D008600E93612 /* visual_database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = visual_database.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/matchers/visual_database.h; sourceTree = "<group>"; };
+		CD5C6C231E7D00A100E93612 /* cholesky_linear_solvers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cholesky_linear_solvers.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/math/cholesky_linear_solvers.h; sourceTree = "<group>"; };
+		CD5C6C241E7D00A100E93612 /* cholesky.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cholesky.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/math/cholesky.h; sourceTree = "<group>"; };
+		CD5C6C251E7D00A100E93612 /* geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = geometry.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/math/geometry.h; sourceTree = "<group>"; };
+		CD5C6C261E7D00A100E93612 /* hamming.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hamming.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/math/hamming.h; sourceTree = "<group>"; };
+		CD5C6C271E7D00A100E93612 /* homography.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = homography.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/math/homography.h; sourceTree = "<group>"; };
+		CD5C6C281E7D00A100E93612 /* indexing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = indexing.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/math/indexing.h; sourceTree = "<group>"; };
+		CD5C6C291E7D00A100E93612 /* linear_algebra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = linear_algebra.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/math/linear_algebra.h; sourceTree = "<group>"; };
+		CD5C6C2A1E7D00A100E93612 /* linear_solvers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = linear_solvers.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/math/linear_solvers.h; sourceTree = "<group>"; };
+		CD5C6C2B1E7D00A100E93612 /* math_io.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = math_io.cpp; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/math/math_io.cpp; sourceTree = "<group>"; };
+		CD5C6C2C1E7D00A100E93612 /* math_io.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = math_io.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/math/math_io.h; sourceTree = "<group>"; };
+		CD5C6C2D1E7D00A100E93612 /* math_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = math_utils.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/math/math_utils.h; sourceTree = "<group>"; };
+		CD5C6C2E1E7D00A100E93612 /* matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = matrix.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/math/matrix.h; sourceTree = "<group>"; };
+		CD5C6C2F1E7D00A100E93612 /* polynomial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = polynomial.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/math/polynomial.h; sourceTree = "<group>"; };
+		CD5C6C301E7D00A100E93612 /* quaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = quaternion.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/math/quaternion.h; sourceTree = "<group>"; };
+		CD5C6C311E7D00A100E93612 /* rand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rand.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/math/rand.h; sourceTree = "<group>"; };
+		CD5C6C321E7D00A100E93612 /* robustifiers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = robustifiers.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/math/robustifiers.h; sourceTree = "<group>"; };
+		CD5C6C431E7D00A800E93612 /* feature_drawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = feature_drawing.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/utils/feature_drawing.h; sourceTree = "<group>"; };
+		CD5C6C441E7D00A800E93612 /* partial_sort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = partial_sort.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/utils/partial_sort.h; sourceTree = "<group>"; };
+		CD5C6C451E7D00A800E93612 /* point.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = point.h; path = ../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher/utils/point.h; sourceTree = "<group>"; };
+		CD5C6C491E7D00B700E93612 /* profile.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = profile.c; path = ../../3rdparty/artoolkit5/lib/SRC/Util/profile.c; sourceTree = "<group>"; };
+		CD5C6C4A1E7D00B700E93612 /* thread_sub_winrt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = thread_sub_winrt.cpp; path = ../../3rdparty/artoolkit5/lib/SRC/Util/thread_sub_winrt.cpp; sourceTree = "<group>"; };
+		CD5C6C4B1E7D00B700E93612 /* thread_sub_winrt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = thread_sub_winrt.h; path = ../../3rdparty/artoolkit5/lib/SRC/Util/thread_sub_winrt.h; sourceTree = "<group>"; };
+		CD5C6C4C1E7D00B700E93612 /* thread_sub.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = thread_sub.c; path = ../../3rdparty/artoolkit5/lib/SRC/Util/thread_sub.c; sourceTree = "<group>"; };
+		CD5C6C551E7D00C000E93612 /* video.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = video.c; path = ../../3rdparty/artoolkit5/lib/SRC/Video/video.c; sourceTree = "<group>"; };
+		CD5C6C561E7D00C000E93612 /* video2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = video2.c; path = ../../3rdparty/artoolkit5/lib/SRC/Video/video2.c; sourceTree = "<group>"; };
+		CD5C6C571E7D00C000E93612 /* videoAspectRatio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = videoAspectRatio.c; path = ../../3rdparty/artoolkit5/lib/SRC/Video/videoAspectRatio.c; sourceTree = "<group>"; };
+		CD5C6C591E7D00C000E93612 /* videoSaveImage.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = videoSaveImage.c; path = ../../3rdparty/artoolkit5/lib/SRC/Video/videoSaveImage.c; sourceTree = "<group>"; };
+		CD5C6C631E7D00C800E93612 /* videoDummy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = videoDummy.c; path = ../../3rdparty/artoolkit5/lib/SRC/VideoDummy/videoDummy.c; sourceTree = "<group>"; };
+		CD5C6C651E7D00CF00E93612 /* videoImage.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = videoImage.c; path = ../../3rdparty/artoolkit5/lib/SRC/VideoImage/videoImage.c; sourceTree = "<group>"; };
+		CD5C6C671E7D00DB00E93612 /* CameraVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CameraVideo.m; path = ../../3rdparty/artoolkit5/lib/SRC/VideoiPhone/CameraVideo.m; sourceTree = "<group>"; };
+		CD5C6C681E7D00DB00E93612 /* cparams.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cparams.c; path = ../../3rdparty/artoolkit5/lib/SRC/VideoiPhone/cparams.c; sourceTree = "<group>"; };
+		CD5C6C691E7D00DB00E93612 /* cparams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cparams.h; path = ../../3rdparty/artoolkit5/lib/SRC/VideoiPhone/cparams.h; sourceTree = "<group>"; };
+		CD5C6C6C1E7D00DB00E93612 /* MovieVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MovieVideo.m; path = ../../3rdparty/artoolkit5/lib/SRC/VideoiPhone/MovieVideo.m; sourceTree = "<group>"; };
+		CD5C6C6D1E7D00DB00E93612 /* videoiPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = videoiPhone.m; path = ../../3rdparty/artoolkit5/lib/SRC/VideoiPhone/videoiPhone.m; sourceTree = "<group>"; };
+		CD5C6C6E1E7D00DB00E93612 /* videoiPhoneCameraVideoTookPictureDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = videoiPhoneCameraVideoTookPictureDelegate.h; path = ../../3rdparty/artoolkit5/lib/SRC/VideoiPhone/videoiPhoneCameraVideoTookPictureDelegate.h; sourceTree = "<group>"; };
+		CD5C6C7D1E7D120400E93612 /* arLabelingPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = arLabelingPrivate.h; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingPrivate.h; sourceTree = "<group>"; };
+		CD5C6C7E1E7D120400E93612 /* arLabelingSub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = arLabelingSub.h; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSub.h; sourceTree = "<group>"; };
+		CD5C6C7F1E7D120400E93612 /* arLabelingSubDBI3C.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDBI3C.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDBI3C.c; sourceTree = "<group>"; };
+		CD5C6C801E7D120400E93612 /* arLabelingSubDBI3C565.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDBI3C565.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDBI3C565.c; sourceTree = "<group>"; };
+		CD5C6C811E7D120400E93612 /* arLabelingSubDBI3CA.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDBI3CA.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDBI3CA.c; sourceTree = "<group>"; };
+		CD5C6C821E7D120400E93612 /* arLabelingSubDBI3CA4444.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDBI3CA4444.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDBI3CA4444.c; sourceTree = "<group>"; };
+		CD5C6C831E7D120400E93612 /* arLabelingSubDBI3CA5551.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDBI3CA5551.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDBI3CA5551.c; sourceTree = "<group>"; };
+		CD5C6C841E7D120400E93612 /* arLabelingSubDBIA3C.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDBIA3C.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDBIA3C.c; sourceTree = "<group>"; };
+		CD5C6C851E7D120400E93612 /* arLabelingSubDBIC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDBIC.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDBIC.c; sourceTree = "<group>"; };
+		CD5C6C861E7D120400E93612 /* arLabelingSubDBICY.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDBICY.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDBICY.c; sourceTree = "<group>"; };
+		CD5C6C871E7D120400E93612 /* arLabelingSubDBIYC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDBIYC.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDBIYC.c; sourceTree = "<group>"; };
+		CD5C6C881E7D120400E93612 /* arLabelingSubDBR3C.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDBR3C.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDBR3C.c; sourceTree = "<group>"; };
+		CD5C6C891E7D120400E93612 /* arLabelingSubDBR3C565.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDBR3C565.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDBR3C565.c; sourceTree = "<group>"; };
+		CD5C6C8A1E7D120400E93612 /* arLabelingSubDBR3CA.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDBR3CA.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDBR3CA.c; sourceTree = "<group>"; };
+		CD5C6C8B1E7D120400E93612 /* arLabelingSubDBR3CA4444.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDBR3CA4444.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDBR3CA4444.c; sourceTree = "<group>"; };
+		CD5C6C8C1E7D120400E93612 /* arLabelingSubDBR3CA5551.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDBR3CA5551.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDBR3CA5551.c; sourceTree = "<group>"; };
+		CD5C6C8D1E7D120400E93612 /* arLabelingSubDBRA3C.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDBRA3C.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDBRA3C.c; sourceTree = "<group>"; };
+		CD5C6C8E1E7D120400E93612 /* arLabelingSubDBRC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDBRC.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDBRC.c; sourceTree = "<group>"; };
+		CD5C6C8F1E7D120400E93612 /* arLabelingSubDBRCY.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDBRCY.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDBRCY.c; sourceTree = "<group>"; };
+		CD5C6C901E7D120400E93612 /* arLabelingSubDBRYC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDBRYC.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDBRYC.c; sourceTree = "<group>"; };
+		CD5C6C911E7D120400E93612 /* arLabelingSubDBZ.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDBZ.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDBZ.c; sourceTree = "<group>"; };
+		CD5C6C921E7D120400E93612 /* arLabelingSubDWI3C.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDWI3C.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDWI3C.c; sourceTree = "<group>"; };
+		CD5C6C931E7D120400E93612 /* arLabelingSubDWI3C565.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDWI3C565.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDWI3C565.c; sourceTree = "<group>"; };
+		CD5C6C941E7D120400E93612 /* arLabelingSubDWI3CA.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDWI3CA.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDWI3CA.c; sourceTree = "<group>"; };
+		CD5C6C951E7D120400E93612 /* arLabelingSubDWI3CA4444.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDWI3CA4444.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDWI3CA4444.c; sourceTree = "<group>"; };
+		CD5C6C961E7D120400E93612 /* arLabelingSubDWI3CA5551.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDWI3CA5551.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDWI3CA5551.c; sourceTree = "<group>"; };
+		CD5C6C971E7D120400E93612 /* arLabelingSubDWIA3C.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDWIA3C.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDWIA3C.c; sourceTree = "<group>"; };
+		CD5C6C981E7D120400E93612 /* arLabelingSubDWIC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDWIC.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDWIC.c; sourceTree = "<group>"; };
+		CD5C6C991E7D120400E93612 /* arLabelingSubDWICY.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDWICY.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDWICY.c; sourceTree = "<group>"; };
+		CD5C6C9A1E7D120400E93612 /* arLabelingSubDWIYC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDWIYC.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDWIYC.c; sourceTree = "<group>"; };
+		CD5C6C9B1E7D120400E93612 /* arLabelingSubDWR3C.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDWR3C.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDWR3C.c; sourceTree = "<group>"; };
+		CD5C6C9C1E7D120400E93612 /* arLabelingSubDWR3C565.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDWR3C565.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDWR3C565.c; sourceTree = "<group>"; };
+		CD5C6C9D1E7D120400E93612 /* arLabelingSubDWR3CA.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDWR3CA.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDWR3CA.c; sourceTree = "<group>"; };
+		CD5C6C9E1E7D120400E93612 /* arLabelingSubDWR3CA4444.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDWR3CA4444.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDWR3CA4444.c; sourceTree = "<group>"; };
+		CD5C6C9F1E7D120400E93612 /* arLabelingSubDWR3CA5551.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDWR3CA5551.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDWR3CA5551.c; sourceTree = "<group>"; };
+		CD5C6CA01E7D120400E93612 /* arLabelingSubDWRA3C.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDWRA3C.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDWRA3C.c; sourceTree = "<group>"; };
+		CD5C6CA11E7D120400E93612 /* arLabelingSubDWRC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDWRC.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDWRC.c; sourceTree = "<group>"; };
+		CD5C6CA21E7D120400E93612 /* arLabelingSubDWRCY.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDWRCY.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDWRCY.c; sourceTree = "<group>"; };
+		CD5C6CA31E7D120400E93612 /* arLabelingSubDWRYC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDWRYC.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDWRYC.c; sourceTree = "<group>"; };
+		CD5C6CA41E7D120400E93612 /* arLabelingSubDWZ.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubDWZ.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubDWZ.c; sourceTree = "<group>"; };
+		CD5C6CA51E7D120400E93612 /* arLabelingSubEBI3C.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEBI3C.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEBI3C.c; sourceTree = "<group>"; };
+		CD5C6CA61E7D120400E93612 /* arLabelingSubEBI3C565.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEBI3C565.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEBI3C565.c; sourceTree = "<group>"; };
+		CD5C6CA71E7D120400E93612 /* arLabelingSubEBI3CA.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEBI3CA.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEBI3CA.c; sourceTree = "<group>"; };
+		CD5C6CA81E7D120400E93612 /* arLabelingSubEBI3CA4444.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEBI3CA4444.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEBI3CA4444.c; sourceTree = "<group>"; };
+		CD5C6CA91E7D120400E93612 /* arLabelingSubEBI3CA5551.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEBI3CA5551.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEBI3CA5551.c; sourceTree = "<group>"; };
+		CD5C6CAA1E7D120400E93612 /* arLabelingSubEBIA3C.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEBIA3C.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEBIA3C.c; sourceTree = "<group>"; };
+		CD5C6CAB1E7D120400E93612 /* arLabelingSubEBIC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEBIC.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEBIC.c; sourceTree = "<group>"; };
+		CD5C6CAC1E7D120400E93612 /* arLabelingSubEBICY.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEBICY.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEBICY.c; sourceTree = "<group>"; };
+		CD5C6CAD1E7D120400E93612 /* arLabelingSubEBIYC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEBIYC.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEBIYC.c; sourceTree = "<group>"; };
+		CD5C6CAE1E7D120400E93612 /* arLabelingSubEBR3C.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEBR3C.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEBR3C.c; sourceTree = "<group>"; };
+		CD5C6CAF1E7D120400E93612 /* arLabelingSubEBR3C565.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEBR3C565.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEBR3C565.c; sourceTree = "<group>"; };
+		CD5C6CB01E7D120400E93612 /* arLabelingSubEBR3CA.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEBR3CA.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEBR3CA.c; sourceTree = "<group>"; };
+		CD5C6CB11E7D120400E93612 /* arLabelingSubEBR3CA4444.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEBR3CA4444.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEBR3CA4444.c; sourceTree = "<group>"; };
+		CD5C6CB21E7D120400E93612 /* arLabelingSubEBR3CA5551.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEBR3CA5551.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEBR3CA5551.c; sourceTree = "<group>"; };
+		CD5C6CB31E7D120400E93612 /* arLabelingSubEBRA3C.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEBRA3C.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEBRA3C.c; sourceTree = "<group>"; };
+		CD5C6CB41E7D120400E93612 /* arLabelingSubEBRC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEBRC.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEBRC.c; sourceTree = "<group>"; };
+		CD5C6CB51E7D120400E93612 /* arLabelingSubEBRCY.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEBRCY.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEBRCY.c; sourceTree = "<group>"; };
+		CD5C6CB61E7D120400E93612 /* arLabelingSubEBRYC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEBRYC.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEBRYC.c; sourceTree = "<group>"; };
+		CD5C6CB71E7D120400E93612 /* arLabelingSubEBZ.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEBZ.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEBZ.c; sourceTree = "<group>"; };
+		CD5C6CB81E7D120400E93612 /* arLabelingSubEWI3C.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEWI3C.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEWI3C.c; sourceTree = "<group>"; };
+		CD5C6CB91E7D120400E93612 /* arLabelingSubEWI3C565.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEWI3C565.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEWI3C565.c; sourceTree = "<group>"; };
+		CD5C6CBA1E7D120400E93612 /* arLabelingSubEWI3CA.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEWI3CA.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEWI3CA.c; sourceTree = "<group>"; };
+		CD5C6CBB1E7D120400E93612 /* arLabelingSubEWI3CA4444.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEWI3CA4444.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEWI3CA4444.c; sourceTree = "<group>"; };
+		CD5C6CBC1E7D120400E93612 /* arLabelingSubEWI3CA5551.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEWI3CA5551.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEWI3CA5551.c; sourceTree = "<group>"; };
+		CD5C6CBD1E7D120400E93612 /* arLabelingSubEWIA3C.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEWIA3C.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEWIA3C.c; sourceTree = "<group>"; };
+		CD5C6CBE1E7D120400E93612 /* arLabelingSubEWIC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEWIC.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEWIC.c; sourceTree = "<group>"; };
+		CD5C6CBF1E7D120400E93612 /* arLabelingSubEWICY.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEWICY.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEWICY.c; sourceTree = "<group>"; };
+		CD5C6CC01E7D120400E93612 /* arLabelingSubEWIYC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEWIYC.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEWIYC.c; sourceTree = "<group>"; };
+		CD5C6CC11E7D120400E93612 /* arLabelingSubEWR3C.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEWR3C.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEWR3C.c; sourceTree = "<group>"; };
+		CD5C6CC21E7D120400E93612 /* arLabelingSubEWR3C565.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEWR3C565.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEWR3C565.c; sourceTree = "<group>"; };
+		CD5C6CC31E7D120400E93612 /* arLabelingSubEWR3CA.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEWR3CA.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEWR3CA.c; sourceTree = "<group>"; };
+		CD5C6CC41E7D120400E93612 /* arLabelingSubEWR3CA4444.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEWR3CA4444.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEWR3CA4444.c; sourceTree = "<group>"; };
+		CD5C6CC51E7D120400E93612 /* arLabelingSubEWR3CA5551.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEWR3CA5551.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEWR3CA5551.c; sourceTree = "<group>"; };
+		CD5C6CC61E7D120400E93612 /* arLabelingSubEWRA3C.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEWRA3C.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEWRA3C.c; sourceTree = "<group>"; };
+		CD5C6CC71E7D120400E93612 /* arLabelingSubEWRC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEWRC.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEWRC.c; sourceTree = "<group>"; };
+		CD5C6CC81E7D120400E93612 /* arLabelingSubEWRCY.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEWRCY.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEWRCY.c; sourceTree = "<group>"; };
+		CD5C6CC91E7D120400E93612 /* arLabelingSubEWRYC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEWRYC.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEWRYC.c; sourceTree = "<group>"; };
+		CD5C6CCA1E7D120400E93612 /* arLabelingSubEWZ.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = arLabelingSubEWZ.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/arLabelingSub/arLabelingSubEWZ.c; sourceTree = "<group>"; };
 		CD5F96F51C2BCD0D000FA476 /* MOAIFourier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFourier.cpp; sourceTree = "<group>"; };
 		CD5F96F61C2BCD0D000FA476 /* MOAIFourier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIFourier.h; sourceTree = "<group>"; };
 		CD5F96FC1C2BD279000FA476 /* _kiss_fft_guts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _kiss_fft_guts.h; path = ../../3rdparty/kissfft/_kiss_fft_guts.h; sourceTree = "<group>"; };
@@ -9354,6 +9855,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD5C6AC91E7CFD7000E93612 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD6D751F17EE415D00964415 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -9556,6 +10064,7 @@
 		032409EE13564CAF000ADC60 /* 3rd party */ = {
 			isa = PBXGroup;
 			children = (
+				CD5C6ACF1E7CFDBA00E93612 /* artoolkit5 */,
 				CD7851291D18C2AF003F15D0 /* assimp */,
 				032409EF13564CAF000ADC60 /* box2d */,
 				03240A7613564CAF000ADC60 /* contrib */,
@@ -9871,6 +10380,7 @@
 				CDD813521E16FE7100996311 /* libmoai-osx-google-test.a */,
 				CD792FFB1E51D51800388A4B /* libmoai-ios-vr.a */,
 				CD4BCF851E542277002306C2 /* libmoai-ios-ar.a */,
+				CD5C6ACE1E7CFD7000E93612 /* libmoai-ios-3rdparty-artoolkit5.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -11343,6 +11853,8 @@
 				CDD3401E1E5540AB0049EF72 /* MOAIVideoTexture.mm */,
 				CD4BCF8B1E542768002306C2 /* pch.cpp */,
 				CD4BCF8C1E542768002306C2 /* pch.h */,
+				CD5C68151E7A216700E93612 /* trackingThread.cpp */,
+				CD5C68161E7A216700E93612 /* trackingThread.h */,
 			);
 			name = "moai-ar";
 			sourceTree = "<group>";
@@ -11389,6 +11901,421 @@
 				CD5161581BCDC0BD000718FB /* MOAIImageFormatPng.h */,
 			);
 			name = "moai-image-png";
+			sourceTree = "<group>";
+		};
+		CD5C6ACF1E7CFDBA00E93612 /* artoolkit5 */ = {
+			isa = PBXGroup;
+			children = (
+				CD5C6AD01E7CFDE800E93612 /* AR */,
+				CD5C6AD81E7CFE2B00E93612 /* AR2 */,
+				CD5C6AD11E7CFDEC00E93612 /* ARICP */,
+				CD5C6AD21E7CFDF500E93612 /* ARMulti */,
+				CD5C6AD91E7CFE3100E93612 /* KPM */,
+				CD5C6ADA1E7CFE3600E93612 /* Util */,
+				CD5C6AD31E7CFDFC00E93612 /* Video */,
+				CD5C6AD41E7CFE0300E93612 /* VideoDummy */,
+				CD5C6AD51E7CFE0C00E93612 /* VideoImage */,
+				CD5C6AD61E7CFE1300E93612 /* VideoiPhone */,
+			);
+			name = artoolkit5;
+			sourceTree = "<group>";
+		};
+		CD5C6AD01E7CFDE800E93612 /* AR */ = {
+			isa = PBXGroup;
+			children = (
+				CD5C6B3B1E7CFF3F00E93612 /* arLabelingSub */,
+				CD5C6ADB1E7CFF3C00E93612 /* ar3DCreateHandle.c */,
+				CD5C6ADC1E7CFF3C00E93612 /* ar3DUtil.c */,
+				CD5C6ADD1E7CFF3C00E93612 /* arCreateHandle.c */,
+				CD5C6ADE1E7CFF3C00E93612 /* arDetectMarker.c */,
+				CD5C6ADF1E7CFF3C00E93612 /* arDetectMarker2.c */,
+				CD5C6AE01E7CFF3C00E93612 /* arFilterTransMat.c */,
+				CD5C6AE11E7CFF3C00E93612 /* arGetLine.c */,
+				CD5C6AE21E7CFF3C00E93612 /* arGetMarkerInfo.c */,
+				CD5C6AE31E7CFF3C00E93612 /* arGetTransMat.c */,
+				CD5C6AE41E7CFF3C00E93612 /* arGetTransMatStereo.c */,
+				CD5C6AE51E7CFF3C00E93612 /* arImageProc.c */,
+				CD5C6AE61E7CFF3C00E93612 /* arLabeling.c */,
+				CD5C6AE71E7CFF3C00E93612 /* arPattAttach.c */,
+				CD5C6AE81E7CFF3C00E93612 /* arPattCreateHandle.c */,
+				CD5C6AE91E7CFF3C00E93612 /* arPattGetID.c */,
+				CD5C6AEA1E7CFF3C00E93612 /* arPattLoad.c */,
+				CD5C6AEB1E7CFF3C00E93612 /* arPattSave.c */,
+				CD5C6AEC1E7CFF3C00E93612 /* arUtil.c */,
+				CD5C6AED1E7CFF3C00E93612 /* mAlloc.c */,
+				CD5C6AEE1E7CFF3C00E93612 /* mAllocDup.c */,
+				CD5C6AEF1E7CFF3C00E93612 /* mAllocInv.c */,
+				CD5C6AF01E7CFF3C00E93612 /* mAllocMul.c */,
+				CD5C6AF11E7CFF3C00E93612 /* mAllocTrans.c */,
+				CD5C6AF21E7CFF3C00E93612 /* mAllocUnit.c */,
+				CD5C6AF31E7CFF3C00E93612 /* mDet.c */,
+				CD5C6AF41E7CFF3C00E93612 /* mDisp.c */,
+				CD5C6AF51E7CFF3C00E93612 /* mDup.c */,
+				CD5C6AF61E7CFF3C00E93612 /* mFree.c */,
+				CD5C6AF71E7CFF3C00E93612 /* mInv.c */,
+				CD5C6AF81E7CFF3C00E93612 /* mMul.c */,
+				CD5C6AF91E7CFF3C00E93612 /* mPCA.c */,
+				CD5C6AFA1E7CFF3C00E93612 /* mSelfInv.c */,
+				CD5C6AFB1E7CFF3C00E93612 /* mTrans.c */,
+				CD5C6AFC1E7CFF3C00E93612 /* mUnit.c */,
+				CD5C6AFD1E7CFF3C00E93612 /* paramChangeSize.c */,
+				CD5C6AFE1E7CFF3C00E93612 /* paramClear.c */,
+				CD5C6AFF1E7CFF3C00E93612 /* paramDecomp.c */,
+				CD5C6B001E7CFF3C00E93612 /* paramDisp.c */,
+				CD5C6B011E7CFF3C00E93612 /* paramDistortion.c */,
+				CD5C6B021E7CFF3C00E93612 /* paramFile.c */,
+				CD5C6B031E7CFF3C00E93612 /* paramGetPerspective.c */,
+				CD5C6B041E7CFF3C00E93612 /* paramLT.c */,
+				CD5C6B051E7CFF3C00E93612 /* vAlloc.c */,
+				CD5C6B061E7CFF3C00E93612 /* vDisp.c */,
+				CD5C6B071E7CFF3C00E93612 /* vFree.c */,
+				CD5C6B081E7CFF3C00E93612 /* vHouse.c */,
+				CD5C6B091E7CFF3C00E93612 /* vInnerP.c */,
+				CD5C6B0A1E7CFF3C00E93612 /* vTridiag.c */,
+			);
+			name = AR;
+			sourceTree = "<group>";
+		};
+		CD5C6AD11E7CFDEC00E93612 /* ARICP */ = {
+			isa = PBXGroup;
+			children = (
+				CD5C6B781E7CFF7800E93612 /* icpCalibStereo.c */,
+				CD5C6B791E7CFF7800E93612 /* icpCore.c */,
+				CD5C6B7A1E7CFF7800E93612 /* icpHandle.c */,
+				CD5C6B7B1E7CFF7800E93612 /* icpPoint.c */,
+				CD5C6B7C1E7CFF7800E93612 /* icpPointRobust.c */,
+				CD5C6B7D1E7CFF7800E93612 /* icpStereoHandle.c */,
+				CD5C6B7E1E7CFF7800E93612 /* icpStereoPoint.c */,
+				CD5C6B7F1E7CFF7800E93612 /* icpStereoPointRobust.c */,
+				CD5C6B801E7CFF7800E93612 /* icpUtil.c */,
+			);
+			name = ARICP;
+			sourceTree = "<group>";
+		};
+		CD5C6AD21E7CFDF500E93612 /* ARMulti */ = {
+			isa = PBXGroup;
+			children = (
+				CD5C6B8A1E7CFF8100E93612 /* arMultiFreeConfig.c */,
+				CD5C6B8B1E7CFF8100E93612 /* arMultiGetTransMat.c */,
+				CD5C6B8C1E7CFF8100E93612 /* arMultiGetTransMatStereo.c */,
+				CD5C6B8D1E7CFF8100E93612 /* arMultiReadConfigFile.c */,
+			);
+			name = ARMulti;
+			sourceTree = "<group>";
+		};
+		CD5C6AD31E7CFDFC00E93612 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				CD5C6C551E7D00C000E93612 /* video.c */,
+				CD5C6C561E7D00C000E93612 /* video2.c */,
+				CD5C6C571E7D00C000E93612 /* videoAspectRatio.c */,
+				CD5C6C591E7D00C000E93612 /* videoSaveImage.c */,
+			);
+			name = Video;
+			sourceTree = "<group>";
+		};
+		CD5C6AD41E7CFE0300E93612 /* VideoDummy */ = {
+			isa = PBXGroup;
+			children = (
+				CD5C6C631E7D00C800E93612 /* videoDummy.c */,
+			);
+			name = VideoDummy;
+			sourceTree = "<group>";
+		};
+		CD5C6AD51E7CFE0C00E93612 /* VideoImage */ = {
+			isa = PBXGroup;
+			children = (
+				CD5C6C651E7D00CF00E93612 /* videoImage.c */,
+			);
+			name = VideoImage;
+			sourceTree = "<group>";
+		};
+		CD5C6AD61E7CFE1300E93612 /* VideoiPhone */ = {
+			isa = PBXGroup;
+			children = (
+				CD5C6C671E7D00DB00E93612 /* CameraVideo.m */,
+				CD5C6C681E7D00DB00E93612 /* cparams.c */,
+				CD5C6C691E7D00DB00E93612 /* cparams.h */,
+				CD5C6C6C1E7D00DB00E93612 /* MovieVideo.m */,
+				CD5C6C6D1E7D00DB00E93612 /* videoiPhone.m */,
+				CD5C6C6E1E7D00DB00E93612 /* videoiPhoneCameraVideoTookPictureDelegate.h */,
+			);
+			name = VideoiPhone;
+			sourceTree = "<group>";
+		};
+		CD5C6AD81E7CFE2B00E93612 /* AR2 */ = {
+			isa = PBXGroup;
+			children = (
+				CD5C6B581E7CFF6E00E93612 /* coord.c */,
+				CD5C6B591E7CFF6E00E93612 /* featureMap.c */,
+				CD5C6B5A1E7CFF6E00E93612 /* featureSet.c */,
+				CD5C6B5B1E7CFF6E00E93612 /* handle.c */,
+				CD5C6B5C1E7CFF6E00E93612 /* imageSet.c */,
+				CD5C6B5D1E7CFF6E00E93612 /* jpeg.c */,
+				CD5C6B5E1E7CFF6E00E93612 /* marker.c */,
+				CD5C6B5F1E7CFF6E00E93612 /* matching.c */,
+				CD5C6B601E7CFF6E00E93612 /* matching2.c */,
+				CD5C6B611E7CFF6E00E93612 /* searchPoint.c */,
+				CD5C6B621E7CFF6E00E93612 /* selectTemplate.c */,
+				CD5C6B631E7CFF6E00E93612 /* surface.c */,
+				CD5C6B641E7CFF6E00E93612 /* template.c */,
+				CD5C6B651E7CFF6E00E93612 /* tracking.c */,
+				CD5C6B661E7CFF6E00E93612 /* tracking2d.c */,
+				CD5C6B671E7CFF6E00E93612 /* util.c */,
+			);
+			name = AR2;
+			sourceTree = "<group>";
+		};
+		CD5C6AD91E7CFE3100E93612 /* KPM */ = {
+			isa = PBXGroup;
+			children = (
+				CD5C6BA21E7CFF9400E93612 /* FreakMatcher */,
+				CD5C6B921E7CFF8E00E93612 /* kpmFopen.c */,
+				CD5C6B931E7CFF8E00E93612 /* kpmFopen.h */,
+				CD5C6B941E7CFF8E00E93612 /* kpmHandle.cpp */,
+				CD5C6B951E7CFF8E00E93612 /* kpmMatching.cpp */,
+				CD5C6B961E7CFF8E00E93612 /* kpmPrivate.h */,
+				CD5C6B971E7CFF8E00E93612 /* kpmRefDataSet.cpp */,
+				CD5C6B981E7CFF8E00E93612 /* kpmResult.cpp */,
+				CD5C6B991E7CFF8E00E93612 /* kpmUtil.cpp */,
+			);
+			name = KPM;
+			sourceTree = "<group>";
+		};
+		CD5C6ADA1E7CFE3600E93612 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				CD5C6C491E7D00B700E93612 /* profile.c */,
+				CD5C6C4A1E7D00B700E93612 /* thread_sub_winrt.cpp */,
+				CD5C6C4B1E7D00B700E93612 /* thread_sub_winrt.h */,
+				CD5C6C4C1E7D00B700E93612 /* thread_sub.c */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
+		CD5C6B3B1E7CFF3F00E93612 /* arLabelingSub */ = {
+			isa = PBXGroup;
+			children = (
+				CD5C6C7D1E7D120400E93612 /* arLabelingPrivate.h */,
+				CD5C6C7E1E7D120400E93612 /* arLabelingSub.h */,
+				CD5C6C7F1E7D120400E93612 /* arLabelingSubDBI3C.c */,
+				CD5C6C801E7D120400E93612 /* arLabelingSubDBI3C565.c */,
+				CD5C6C811E7D120400E93612 /* arLabelingSubDBI3CA.c */,
+				CD5C6C821E7D120400E93612 /* arLabelingSubDBI3CA4444.c */,
+				CD5C6C831E7D120400E93612 /* arLabelingSubDBI3CA5551.c */,
+				CD5C6C841E7D120400E93612 /* arLabelingSubDBIA3C.c */,
+				CD5C6C851E7D120400E93612 /* arLabelingSubDBIC.c */,
+				CD5C6C861E7D120400E93612 /* arLabelingSubDBICY.c */,
+				CD5C6C871E7D120400E93612 /* arLabelingSubDBIYC.c */,
+				CD5C6C881E7D120400E93612 /* arLabelingSubDBR3C.c */,
+				CD5C6C891E7D120400E93612 /* arLabelingSubDBR3C565.c */,
+				CD5C6C8A1E7D120400E93612 /* arLabelingSubDBR3CA.c */,
+				CD5C6C8B1E7D120400E93612 /* arLabelingSubDBR3CA4444.c */,
+				CD5C6C8C1E7D120400E93612 /* arLabelingSubDBR3CA5551.c */,
+				CD5C6C8D1E7D120400E93612 /* arLabelingSubDBRA3C.c */,
+				CD5C6C8E1E7D120400E93612 /* arLabelingSubDBRC.c */,
+				CD5C6C8F1E7D120400E93612 /* arLabelingSubDBRCY.c */,
+				CD5C6C901E7D120400E93612 /* arLabelingSubDBRYC.c */,
+				CD5C6C911E7D120400E93612 /* arLabelingSubDBZ.c */,
+				CD5C6C921E7D120400E93612 /* arLabelingSubDWI3C.c */,
+				CD5C6C931E7D120400E93612 /* arLabelingSubDWI3C565.c */,
+				CD5C6C941E7D120400E93612 /* arLabelingSubDWI3CA.c */,
+				CD5C6C951E7D120400E93612 /* arLabelingSubDWI3CA4444.c */,
+				CD5C6C961E7D120400E93612 /* arLabelingSubDWI3CA5551.c */,
+				CD5C6C971E7D120400E93612 /* arLabelingSubDWIA3C.c */,
+				CD5C6C981E7D120400E93612 /* arLabelingSubDWIC.c */,
+				CD5C6C991E7D120400E93612 /* arLabelingSubDWICY.c */,
+				CD5C6C9A1E7D120400E93612 /* arLabelingSubDWIYC.c */,
+				CD5C6C9B1E7D120400E93612 /* arLabelingSubDWR3C.c */,
+				CD5C6C9C1E7D120400E93612 /* arLabelingSubDWR3C565.c */,
+				CD5C6C9D1E7D120400E93612 /* arLabelingSubDWR3CA.c */,
+				CD5C6C9E1E7D120400E93612 /* arLabelingSubDWR3CA4444.c */,
+				CD5C6C9F1E7D120400E93612 /* arLabelingSubDWR3CA5551.c */,
+				CD5C6CA01E7D120400E93612 /* arLabelingSubDWRA3C.c */,
+				CD5C6CA11E7D120400E93612 /* arLabelingSubDWRC.c */,
+				CD5C6CA21E7D120400E93612 /* arLabelingSubDWRCY.c */,
+				CD5C6CA31E7D120400E93612 /* arLabelingSubDWRYC.c */,
+				CD5C6CA41E7D120400E93612 /* arLabelingSubDWZ.c */,
+				CD5C6CA51E7D120400E93612 /* arLabelingSubEBI3C.c */,
+				CD5C6CA61E7D120400E93612 /* arLabelingSubEBI3C565.c */,
+				CD5C6CA71E7D120400E93612 /* arLabelingSubEBI3CA.c */,
+				CD5C6CA81E7D120400E93612 /* arLabelingSubEBI3CA4444.c */,
+				CD5C6CA91E7D120400E93612 /* arLabelingSubEBI3CA5551.c */,
+				CD5C6CAA1E7D120400E93612 /* arLabelingSubEBIA3C.c */,
+				CD5C6CAB1E7D120400E93612 /* arLabelingSubEBIC.c */,
+				CD5C6CAC1E7D120400E93612 /* arLabelingSubEBICY.c */,
+				CD5C6CAD1E7D120400E93612 /* arLabelingSubEBIYC.c */,
+				CD5C6CAE1E7D120400E93612 /* arLabelingSubEBR3C.c */,
+				CD5C6CAF1E7D120400E93612 /* arLabelingSubEBR3C565.c */,
+				CD5C6CB01E7D120400E93612 /* arLabelingSubEBR3CA.c */,
+				CD5C6CB11E7D120400E93612 /* arLabelingSubEBR3CA4444.c */,
+				CD5C6CB21E7D120400E93612 /* arLabelingSubEBR3CA5551.c */,
+				CD5C6CB31E7D120400E93612 /* arLabelingSubEBRA3C.c */,
+				CD5C6CB41E7D120400E93612 /* arLabelingSubEBRC.c */,
+				CD5C6CB51E7D120400E93612 /* arLabelingSubEBRCY.c */,
+				CD5C6CB61E7D120400E93612 /* arLabelingSubEBRYC.c */,
+				CD5C6CB71E7D120400E93612 /* arLabelingSubEBZ.c */,
+				CD5C6CB81E7D120400E93612 /* arLabelingSubEWI3C.c */,
+				CD5C6CB91E7D120400E93612 /* arLabelingSubEWI3C565.c */,
+				CD5C6CBA1E7D120400E93612 /* arLabelingSubEWI3CA.c */,
+				CD5C6CBB1E7D120400E93612 /* arLabelingSubEWI3CA4444.c */,
+				CD5C6CBC1E7D120400E93612 /* arLabelingSubEWI3CA5551.c */,
+				CD5C6CBD1E7D120400E93612 /* arLabelingSubEWIA3C.c */,
+				CD5C6CBE1E7D120400E93612 /* arLabelingSubEWIC.c */,
+				CD5C6CBF1E7D120400E93612 /* arLabelingSubEWICY.c */,
+				CD5C6CC01E7D120400E93612 /* arLabelingSubEWIYC.c */,
+				CD5C6CC11E7D120400E93612 /* arLabelingSubEWR3C.c */,
+				CD5C6CC21E7D120400E93612 /* arLabelingSubEWR3C565.c */,
+				CD5C6CC31E7D120400E93612 /* arLabelingSubEWR3CA.c */,
+				CD5C6CC41E7D120400E93612 /* arLabelingSubEWR3CA4444.c */,
+				CD5C6CC51E7D120400E93612 /* arLabelingSubEWR3CA5551.c */,
+				CD5C6CC61E7D120400E93612 /* arLabelingSubEWRA3C.c */,
+				CD5C6CC71E7D120400E93612 /* arLabelingSubEWRC.c */,
+				CD5C6CC81E7D120400E93612 /* arLabelingSubEWRCY.c */,
+				CD5C6CC91E7D120400E93612 /* arLabelingSubEWRYC.c */,
+				CD5C6CCA1E7D120400E93612 /* arLabelingSubEWZ.c */,
+			);
+			name = arLabelingSub;
+			sourceTree = "<group>";
+		};
+		CD5C6BA21E7CFF9400E93612 /* FreakMatcher */ = {
+			isa = PBXGroup;
+			children = (
+				CD5C6BAA1E7D000C00E93612 /* detectors */,
+				CD5C6BA81E7D000200E93612 /* facade */,
+				CD5C6BA71E7CFFFC00E93612 /* framework */,
+				CD5C6BA61E7CFFF200E93612 /* homography_estimation */,
+				CD5C6BA51E7CFFEC00E93612 /* matchers */,
+				CD5C6BA41E7CFFE600E93612 /* math */,
+				CD5C6BA31E7CFF9F00E93612 /* utils */,
+			);
+			name = FreakMatcher;
+			sourceTree = "<group>";
+		};
+		CD5C6BA31E7CFF9F00E93612 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				CD5C6C431E7D00A800E93612 /* feature_drawing.h */,
+				CD5C6C441E7D00A800E93612 /* partial_sort.h */,
+				CD5C6C451E7D00A800E93612 /* point.h */,
+			);
+			name = utils;
+			sourceTree = "<group>";
+		};
+		CD5C6BA41E7CFFE600E93612 /* math */ = {
+			isa = PBXGroup;
+			children = (
+				CD5C6C231E7D00A100E93612 /* cholesky_linear_solvers.h */,
+				CD5C6C241E7D00A100E93612 /* cholesky.h */,
+				CD5C6C251E7D00A100E93612 /* geometry.h */,
+				CD5C6C261E7D00A100E93612 /* hamming.h */,
+				CD5C6C271E7D00A100E93612 /* homography.h */,
+				CD5C6C281E7D00A100E93612 /* indexing.h */,
+				CD5C6C291E7D00A100E93612 /* linear_algebra.h */,
+				CD5C6C2A1E7D00A100E93612 /* linear_solvers.h */,
+				CD5C6C2B1E7D00A100E93612 /* math_io.cpp */,
+				CD5C6C2C1E7D00A100E93612 /* math_io.h */,
+				CD5C6C2D1E7D00A100E93612 /* math_utils.h */,
+				CD5C6C2E1E7D00A100E93612 /* matrix.h */,
+				CD5C6C2F1E7D00A100E93612 /* polynomial.h */,
+				CD5C6C301E7D00A100E93612 /* quaternion.h */,
+				CD5C6C311E7D00A100E93612 /* rand.h */,
+				CD5C6C321E7D00A100E93612 /* robustifiers.h */,
+			);
+			name = math;
+			sourceTree = "<group>";
+		};
+		CD5C6BA51E7CFFEC00E93612 /* matchers */ = {
+			isa = PBXGroup;
+			children = (
+				CD5C6BFB1E7D008600E93612 /* binary_hierarchical_clustering.h */,
+				CD5C6BFC1E7D008600E93612 /* feature_matcher-inline.h */,
+				CD5C6BFD1E7D008600E93612 /* feature_matcher.h */,
+				CD5C6BFE1E7D008600E93612 /* feature_point.h */,
+				CD5C6BFF1E7D008600E93612 /* feature_store_io.cpp */,
+				CD5C6C001E7D008600E93612 /* feature_store_io.h */,
+				CD5C6C011E7D008600E93612 /* feature_store.h */,
+				CD5C6C021E7D008600E93612 /* freak.cpp */,
+				CD5C6C031E7D008600E93612 /* freak.h */,
+				CD5C6C041E7D008600E93612 /* freak84-inline.h */,
+				CD5C6C051E7D008600E93612 /* hough_similarity_voting.cpp */,
+				CD5C6C061E7D008600E93612 /* hough_similarity_voting.h */,
+				CD5C6C071E7D008600E93612 /* keyframe.h */,
+				CD5C6C081E7D008600E93612 /* kmedoids.h */,
+				CD5C6C091E7D008600E93612 /* matcher_types.h */,
+				CD5C6C0A1E7D008600E93612 /* visual_database_io.cpp */,
+				CD5C6C0B1E7D008600E93612 /* visual_database_io.h */,
+				CD5C6C0C1E7D008600E93612 /* visual_database_types.h */,
+				CD5C6C0D1E7D008600E93612 /* visual_database-inline.h */,
+				CD5C6C0E1E7D008600E93612 /* visual_database.h */,
+			);
+			name = matchers;
+			sourceTree = "<group>";
+		};
+		CD5C6BA61E7CFFF200E93612 /* homography_estimation */ = {
+			isa = PBXGroup;
+			children = (
+				CD5C6BF71E7D007800E93612 /* homography_solver.h */,
+				CD5C6BF81E7D007800E93612 /* robust_homography.h */,
+			);
+			name = homography_estimation;
+			sourceTree = "<group>";
+		};
+		CD5C6BA71E7CFFFC00E93612 /* framework */ = {
+			isa = PBXGroup;
+			children = (
+				CD5C6BE11E7D006F00E93612 /* date_time.cpp */,
+				CD5C6BE21E7D006F00E93612 /* date_time.h */,
+				CD5C6BE31E7D006F00E93612 /* error.h */,
+				CD5C6BE41E7D006F00E93612 /* exception.h */,
+				CD5C6BE51E7D006F00E93612 /* image_utils.h */,
+				CD5C6BE61E7D006F00E93612 /* image.cpp */,
+				CD5C6BE71E7D006F00E93612 /* image.h */,
+				CD5C6BE81E7D006F00E93612 /* logger.cpp */,
+				CD5C6BE91E7D006F00E93612 /* logger.h */,
+				CD5C6BEA1E7D006F00E93612 /* timers.cpp */,
+				CD5C6BEB1E7D006F00E93612 /* timers.h */,
+			);
+			name = framework;
+			sourceTree = "<group>";
+		};
+		CD5C6BA81E7D000200E93612 /* facade */ = {
+			isa = PBXGroup;
+			children = (
+				CD5C6BDD1E7D006700E93612 /* visual_database_facade.cpp */,
+				CD5C6BDE1E7D006700E93612 /* visual_database_facade.h */,
+			);
+			name = facade;
+			sourceTree = "<group>";
+		};
+		CD5C6BAA1E7D000C00E93612 /* detectors */ = {
+			isa = PBXGroup;
+			children = (
+				CD5C6BDC1E7D002E00E93612 /* src */,
+				CD5C6BAB1E7D001F00E93612 /* DoG_scale_invariant_detector.cpp */,
+				CD5C6BAC1E7D001F00E93612 /* DoG_scale_invariant_detector.h */,
+				CD5C6BAD1E7D001F00E93612 /* gaussian_scale_space_pyramid.cpp */,
+				CD5C6BAE1E7D001F00E93612 /* gaussian_scale_space_pyramid.h */,
+				CD5C6BAF1E7D001F00E93612 /* gradients.cpp */,
+				CD5C6BB01E7D001F00E93612 /* gradients.h */,
+				CD5C6BB11E7D001F00E93612 /* harris-inline.h */,
+				CD5C6BB21E7D001F00E93612 /* harris.cpp */,
+				CD5C6BB31E7D001F00E93612 /* harris.h */,
+				CD5C6BB41E7D001F00E93612 /* interpolate.h */,
+				CD5C6BB51E7D001F00E93612 /* orientation_assignment.cpp */,
+				CD5C6BB61E7D001F00E93612 /* orientation_assignment.h */,
+				CD5C6BB71E7D001F00E93612 /* pyramid-inline.h */,
+				CD5C6BB81E7D001F00E93612 /* pyramid.cpp */,
+				CD5C6BB91E7D001F00E93612 /* pyramid.h */,
+			);
+			name = detectors;
+			sourceTree = "<group>";
+		};
+		CD5C6BDC1E7D002E00E93612 /* src */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = src;
 			sourceTree = "<group>";
 		};
 		CD5F96FB1C2BD244000FA476 /* kissfft */ = {
@@ -14073,6 +15000,10 @@
 				89BE6F2A173AD0CA00DFE837 /* MOAIAnimCurveQuat.h */,
 				89BE6F2B173AD0CA00DFE837 /* MOAIAnimCurveVec.cpp */,
 				89BE6F2C173AD0CA00DFE837 /* MOAIAnimCurveVec.h */,
+				CD5C67E91E76734700E93612 /* MOAIAnimLoop.cpp */,
+				CD5C67EA1E76734700E93612 /* MOAIAnimLoop.h */,
+				CD5C67EB1E76734700E93612 /* MOAIAnimMixer.cpp */,
+				CD5C67EC1E76734700E93612 /* MOAIAnimMixer.h */,
 				89BE6F50173AD0CA00DFE837 /* MOAIEaseDriver.cpp */,
 				89BE6F51173AD0CA00DFE837 /* MOAIEaseDriver.h */,
 				89BE6F52173AD0CA00DFE837 /* MOAIEaseType.cpp */,
@@ -16330,6 +17261,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD5C681F1E7BA47D00E93612 /* trackingThread.h in Headers */,
 				CDD3402C1E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-vsh.h in Headers */,
 				CDD3402E1E56CA1F0049EF72 /* MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-vsh.h in Headers */,
 				CD4BCF921E542768002306C2 /* pch.h in Headers */,
@@ -16533,6 +17465,71 @@
 				CD5160D41BCDBD07000718FB /* mux.h in Headers */,
 				CD5160701BCDBD07000718FB /* decode_vp8.h in Headers */,
 				CD5160A21BCDBD07000718FB /* histogram.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD5C68451E7CFD7000E93612 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD5C6C3C1E7D00A100E93612 /* math_io.h in Headers */,
+				CD5C6C331E7D00A100E93612 /* cholesky_linear_solvers.h in Headers */,
+				CD5C6C0F1E7D008600E93612 /* binary_hierarchical_clustering.h in Headers */,
+				CD5C6C481E7D00A800E93612 /* point.h in Headers */,
+				CD5C6C461E7D00A800E93612 /* feature_drawing.h in Headers */,
+				CD5C6BBB1E7D001F00E93612 /* DoG_scale_invariant_detector.h in Headers */,
+				CD5C6C361E7D00A100E93612 /* hamming.h in Headers */,
+				CD5C6C211E7D008600E93612 /* visual_database-inline.h in Headers */,
+				CD5C6C1B1E7D008600E93612 /* keyframe.h in Headers */,
+				CD5C6C4F1E7D00B700E93612 /* thread_sub_winrt.h in Headers */,
+				CD5C6C3A1E7D00A100E93612 /* linear_solvers.h in Headers */,
+				CD5C6C411E7D00A100E93612 /* rand.h in Headers */,
+				CD5C6BED1E7D006F00E93612 /* date_time.h in Headers */,
+				CD5C6BC31E7D001F00E93612 /* interpolate.h in Headers */,
+				CD5C6C1A1E7D008600E93612 /* hough_similarity_voting.h in Headers */,
+				CD5C6BF21E7D006F00E93612 /* image.h in Headers */,
+				CD5C6C111E7D008600E93612 /* feature_matcher.h in Headers */,
+				CD5C6BC01E7D001F00E93612 /* harris-inline.h in Headers */,
+				CD5C6B9E1E7CFF8E00E93612 /* kpmPrivate.h in Headers */,
+				CD5C6C1C1E7D008600E93612 /* kmedoids.h in Headers */,
+				CD5C6C371E7D00A100E93612 /* homography.h in Headers */,
+				CD5C6BE01E7D006700E93612 /* visual_database_facade.h in Headers */,
+				CD5C6C181E7D008600E93612 /* freak84-inline.h in Headers */,
+				CD5C6BEE1E7D006F00E93612 /* error.h in Headers */,
+				CD5C6C761E7D00DB00E93612 /* videoiPhoneCameraVideoTookPictureDelegate.h in Headers */,
+				CD5C6C341E7D00A100E93612 /* cholesky.h in Headers */,
+				CD5C6C3E1E7D00A100E93612 /* matrix.h in Headers */,
+				CD5C6BC51E7D001F00E93612 /* orientation_assignment.h in Headers */,
+				CD5C6C1D1E7D008600E93612 /* matcher_types.h in Headers */,
+				CD5C6C201E7D008600E93612 /* visual_database_types.h in Headers */,
+				CD5C6BBD1E7D001F00E93612 /* gaussian_scale_space_pyramid.h in Headers */,
+				CD5C6BC81E7D001F00E93612 /* pyramid.h in Headers */,
+				CD5C6C151E7D008600E93612 /* feature_store.h in Headers */,
+				CD5C6BF91E7D007800E93612 /* homography_solver.h in Headers */,
+				CD5C6C381E7D00A100E93612 /* indexing.h in Headers */,
+				CD5C6C171E7D008600E93612 /* freak.h in Headers */,
+				CD5C6CCB1E7D120400E93612 /* arLabelingPrivate.h in Headers */,
+				CD5C6BC61E7D001F00E93612 /* pyramid-inline.h in Headers */,
+				CD5C6BBF1E7D001F00E93612 /* gradients.h in Headers */,
+				CD5C6C121E7D008600E93612 /* feature_point.h in Headers */,
+				CD5C6C351E7D00A100E93612 /* geometry.h in Headers */,
+				CD5C6BF01E7D006F00E93612 /* image_utils.h in Headers */,
+				CD5C6C3F1E7D00A100E93612 /* polynomial.h in Headers */,
+				CD5C6B9B1E7CFF8E00E93612 /* kpmFopen.h in Headers */,
+				CD5C6BEF1E7D006F00E93612 /* exception.h in Headers */,
+				CD5C6BFA1E7D007800E93612 /* robust_homography.h in Headers */,
+				CD5C6C401E7D00A100E93612 /* quaternion.h in Headers */,
+				CD5C6C711E7D00DB00E93612 /* cparams.h in Headers */,
+				CD5C6BF41E7D006F00E93612 /* logger.h in Headers */,
+				CD5C6C471E7D00A800E93612 /* partial_sort.h in Headers */,
+				CD5C6CCC1E7D120400E93612 /* arLabelingSub.h in Headers */,
+				CD5C6C3D1E7D00A100E93612 /* math_utils.h in Headers */,
+				CD5C6BC21E7D001F00E93612 /* harris.h in Headers */,
+				CD5C6C391E7D00A100E93612 /* linear_algebra.h in Headers */,
+				CD5C6C101E7D008600E93612 /* feature_matcher-inline.h in Headers */,
+				CD5C6C421E7D00A100E93612 /* robustifiers.h in Headers */,
+				CD5C6C221E7D008600E93612 /* visual_database.h in Headers */,
+				CD5C6BF61E7D006F00E93612 /* timers.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18060,6 +19057,23 @@
 			productReference = CD515F8B1BCDBC08000718FB /* libmoai-ios-image-webp.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		CD5C68441E7CFD7000E93612 /* libmoai-ios-3rdparty-artoolkit5 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD5C6ACA1E7CFD7000E93612 /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty-artoolkit5" */;
+			buildPhases = (
+				CD5C68451E7CFD7000E93612 /* Headers */,
+				CD5C68A21E7CFD7000E93612 /* Sources */,
+				CD5C6AC91E7CFD7000E93612 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-ios-3rdparty-artoolkit5";
+			productName = OpenUSLS;
+			productReference = CD5C6ACE1E7CFD7000E93612 /* libmoai-ios-3rdparty-artoolkit5.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		CD6D745F17EE415D00964415 /* libmoai-osx-zl-vfs */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD6D752017EE415D00964415 /* Build configuration list for PBXNativeTarget "libmoai-osx-zl-vfs" */;
@@ -18570,6 +19584,7 @@
 			projectRoot = "";
 			targets = (
 				03C2F6F3104DE130009A2D5D /* libmoai-ios */,
+				CD5C68441E7CFD7000E93612 /* libmoai-ios-3rdparty-artoolkit5 */,
 				CD8315C81BED3AE900745C8A /* libmoai-ios-3rdparty-contrib */,
 				CDD47B9417FA78AE00525B77 /* libmoai-ios-3rdparty-crypto */,
 				CD830D741BED355500745C8A /* libmoai-ios-3rdparty-expat */,
@@ -20044,6 +21059,7 @@
 				CD4BCF911E542768002306C2 /* pch.cpp in Sources */,
 				CD4BCF8F1E542768002306C2 /* MOAIMarkerMgr.mm in Sources */,
 				CD4BCF8D1E542768002306C2 /* host.mm in Sources */,
+				CD5C681E1E7BA47D00E93612 /* trackingThread.cpp in Sources */,
 				CD6E82071E5ED7BD0001AC9B /* MOAIMarker.mm in Sources */,
 				CDD340201E5540AB0049EF72 /* MOAIVideoTexture.mm in Sources */,
 			);
@@ -20391,6 +21407,199 @@
 				CD5160931BCDBD07000718FB /* yuv_mips32.c in Sources */,
 				CD5160C11BCDBD07000718FB /* huffman.c in Sources */,
 				CD5161821BCDC110000718FB /* host.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD5C68A21E7CFD7000E93612 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD5C6B8E1E7CFF8100E93612 /* arMultiFreeConfig.c in Sources */,
+				CD5C6B831E7CFF7800E93612 /* icpHandle.c in Sources */,
+				CD5C6C5F1E7D00C000E93612 /* video2.c in Sources */,
+				CD5C6C191E7D008600E93612 /* hough_similarity_voting.cpp in Sources */,
+				CD5C6CFA1E7D120400E93612 /* arLabelingSubEBICY.c in Sources */,
+				CD5C6CD31E7D120400E93612 /* arLabelingSubDBIC.c in Sources */,
+				CD5C6CEE1E7D120400E93612 /* arLabelingSubDWRA3C.c in Sources */,
+				CD5C6B281E7CFF3C00E93612 /* mMul.c in Sources */,
+				CD5C6D091E7D120400E93612 /* arLabelingSubEWI3CA4444.c in Sources */,
+				CD5C6B1D1E7CFF3C00E93612 /* mAlloc.c in Sources */,
+				CD5C6B0B1E7CFF3C00E93612 /* ar3DCreateHandle.c in Sources */,
+				CD5C6B0C1E7CFF3C00E93612 /* ar3DUtil.c in Sources */,
+				CD5C6B6B1E7CFF6E00E93612 /* handle.c in Sources */,
+				CD5C6D0C1E7D120400E93612 /* arLabelingSubEWIC.c in Sources */,
+				CD5C6C3B1E7D00A100E93612 /* math_io.cpp in Sources */,
+				CD5C6B711E7CFF6E00E93612 /* searchPoint.c in Sources */,
+				CD5C6CD11E7D120400E93612 /* arLabelingSubDBI3CA5551.c in Sources */,
+				CD5C6B161E7CFF3C00E93612 /* arLabeling.c in Sources */,
+				CD5C6CE51E7D120400E93612 /* arLabelingSubDWIA3C.c in Sources */,
+				CD5C6CFE1E7D120400E93612 /* arLabelingSubEBR3CA.c in Sources */,
+				CD5C6B1F1E7CFF3C00E93612 /* mAllocInv.c in Sources */,
+				CD5C6BBA1E7D001F00E93612 /* DoG_scale_invariant_detector.cpp in Sources */,
+				CD5C6CFD1E7D120400E93612 /* arLabelingSubEBR3C565.c in Sources */,
+				CD5C6B371E7CFF3C00E93612 /* vFree.c in Sources */,
+				CD5C6CE81E7D120400E93612 /* arLabelingSubDWIYC.c in Sources */,
+				CD5C6B9F1E7CFF8E00E93612 /* kpmRefDataSet.cpp in Sources */,
+				CD5C6CF11E7D120400E93612 /* arLabelingSubDWRYC.c in Sources */,
+				CD5C6BA11E7CFF8E00E93612 /* kpmUtil.cpp in Sources */,
+				CD5C6B0F1E7CFF3C00E93612 /* arDetectMarker2.c in Sources */,
+				CD5C6CD51E7D120400E93612 /* arLabelingSubDBIYC.c in Sources */,
+				CD5C6CF91E7D120400E93612 /* arLabelingSubEBIC.c in Sources */,
+				CD5C6CED1E7D120400E93612 /* arLabelingSubDWR3CA5551.c in Sources */,
+				CD5C6CD21E7D120400E93612 /* arLabelingSubDBIA3C.c in Sources */,
+				CD5C6B171E7CFF3C00E93612 /* arPattAttach.c in Sources */,
+				CD5C6CCF1E7D120400E93612 /* arLabelingSubDBI3CA.c in Sources */,
+				CD5C6BC41E7D001F00E93612 /* orientation_assignment.cpp in Sources */,
+				CD5C6CF01E7D120400E93612 /* arLabelingSubDWRCY.c in Sources */,
+				CD5C6D101E7D120400E93612 /* arLabelingSubEWR3C565.c in Sources */,
+				CD5C6D021E7D120400E93612 /* arLabelingSubEBRC.c in Sources */,
+				CD5C6BDF1E7D006700E93612 /* visual_database_facade.cpp in Sources */,
+				CD5C6B9C1E7CFF8E00E93612 /* kpmHandle.cpp in Sources */,
+				CD5C6B2D1E7CFF3C00E93612 /* paramChangeSize.c in Sources */,
+				CD5C6C161E7D008600E93612 /* freak.cpp in Sources */,
+				CD5C6B241E7CFF3C00E93612 /* mDisp.c in Sources */,
+				CD5C6C601E7D00C000E93612 /* videoAspectRatio.c in Sources */,
+				CD5C6C661E7D00CF00E93612 /* videoImage.c in Sources */,
+				CD5C6B821E7CFF7800E93612 /* icpCore.c in Sources */,
+				CD5C6C751E7D00DB00E93612 /* videoiPhone.m in Sources */,
+				CD5C6B121E7CFF3C00E93612 /* arGetMarkerInfo.c in Sources */,
+				CD5C6CFC1E7D120400E93612 /* arLabelingSubEBR3C.c in Sources */,
+				CD5C6B6A1E7CFF6E00E93612 /* featureSet.c in Sources */,
+				CD5C6C641E7D00C800E93612 /* videoDummy.c in Sources */,
+				CD5C6CF21E7D120400E93612 /* arLabelingSubDWZ.c in Sources */,
+				CD5C6D0F1E7D120400E93612 /* arLabelingSubEWR3C.c in Sources */,
+				CD5C6BBC1E7D001F00E93612 /* gaussian_scale_space_pyramid.cpp in Sources */,
+				CD5C6C4E1E7D00B700E93612 /* thread_sub_winrt.cpp in Sources */,
+				CD5C6CEC1E7D120400E93612 /* arLabelingSubDWR3CA4444.c in Sources */,
+				CD5C6CD01E7D120400E93612 /* arLabelingSubDBI3CA4444.c in Sources */,
+				CD5C6CF31E7D120400E93612 /* arLabelingSubEBI3C.c in Sources */,
+				CD5C6CDC1E7D120400E93612 /* arLabelingSubDBRC.c in Sources */,
+				CD5C6B731E7CFF6E00E93612 /* surface.c in Sources */,
+				CD5C6D081E7D120400E93612 /* arLabelingSubEWI3CA.c in Sources */,
+				CD5C6CEB1E7D120400E93612 /* arLabelingSubDWR3CA.c in Sources */,
+				CD5C6B771E7CFF6E00E93612 /* util.c in Sources */,
+				CD5C6B861E7CFF7800E93612 /* icpStereoHandle.c in Sources */,
+				CD5C6B191E7CFF3C00E93612 /* arPattGetID.c in Sources */,
+				CD5C6B131E7CFF3C00E93612 /* arGetTransMat.c in Sources */,
+				CD5C6B271E7CFF3C00E93612 /* mInv.c in Sources */,
+				CD5C6D051E7D120400E93612 /* arLabelingSubEBZ.c in Sources */,
+				CD5C6CCE1E7D120400E93612 /* arLabelingSubDBI3C565.c in Sources */,
+				CD5C6CE41E7D120400E93612 /* arLabelingSubDWI3CA5551.c in Sources */,
+				CD5C6C5E1E7D00C000E93612 /* video.c in Sources */,
+				CD5C6CD81E7D120400E93612 /* arLabelingSubDBR3CA.c in Sources */,
+				CD5C6B251E7CFF3C00E93612 /* mDup.c in Sources */,
+				CD5C6CF81E7D120400E93612 /* arLabelingSubEBIA3C.c in Sources */,
+				CD5C6B231E7CFF3C00E93612 /* mDet.c in Sources */,
+				CD5C6CDE1E7D120400E93612 /* arLabelingSubDBRYC.c in Sources */,
+				CD5C6B8F1E7CFF8100E93612 /* arMultiGetTransMat.c in Sources */,
+				CD5C6B891E7CFF7800E93612 /* icpUtil.c in Sources */,
+				CD5C6B1E1E7CFF3C00E93612 /* mAllocDup.c in Sources */,
+				CD5C6D0A1E7D120400E93612 /* arLabelingSubEWI3CA5551.c in Sources */,
+				CD5C6CE21E7D120400E93612 /* arLabelingSubDWI3CA.c in Sources */,
+				CD5C6B6F1E7CFF6E00E93612 /* matching.c in Sources */,
+				CD5C6B6C1E7CFF6E00E93612 /* imageSet.c in Sources */,
+				CD5C6CE71E7D120400E93612 /* arLabelingSubDWICY.c in Sources */,
+				CD5C6B881E7CFF7800E93612 /* icpStereoPointRobust.c in Sources */,
+				CD5C6D141E7D120400E93612 /* arLabelingSubEWRA3C.c in Sources */,
+				CD5C6B301E7CFF3C00E93612 /* paramDisp.c in Sources */,
+				CD5C6CE01E7D120400E93612 /* arLabelingSubDWI3C.c in Sources */,
+				CD5C6CE31E7D120400E93612 /* arLabelingSubDWI3CA4444.c in Sources */,
+				CD5C6D161E7D120400E93612 /* arLabelingSubEWRCY.c in Sources */,
+				CD5C6B871E7CFF7800E93612 /* icpStereoPoint.c in Sources */,
+				CD5C6CF61E7D120400E93612 /* arLabelingSubEBI3CA4444.c in Sources */,
+				CD5C6BBE1E7D001F00E93612 /* gradients.cpp in Sources */,
+				CD5C6D131E7D120400E93612 /* arLabelingSubEWR3CA5551.c in Sources */,
+				CD5C6CDB1E7D120400E93612 /* arLabelingSubDBRA3C.c in Sources */,
+				CD5C6CEF1E7D120400E93612 /* arLabelingSubDWRC.c in Sources */,
+				CD5C6B691E7CFF6E00E93612 /* featureMap.c in Sources */,
+				CD5C6B751E7CFF6E00E93612 /* tracking.c in Sources */,
+				CD5C6B211E7CFF3C00E93612 /* mAllocTrans.c in Sources */,
+				CD5C6B1C1E7CFF3C00E93612 /* arUtil.c in Sources */,
+				CD5C6D121E7D120400E93612 /* arLabelingSubEWR3CA4444.c in Sources */,
+				CD5C6B221E7CFF3C00E93612 /* mAllocUnit.c in Sources */,
+				CD5C6D0B1E7D120400E93612 /* arLabelingSubEWIA3C.c in Sources */,
+				CD5C6B321E7CFF3C00E93612 /* paramFile.c in Sources */,
+				CD5C6B181E7CFF3C00E93612 /* arPattCreateHandle.c in Sources */,
+				CD5C6B2E1E7CFF3C00E93612 /* paramClear.c in Sources */,
+				CD5C6C4D1E7D00B700E93612 /* profile.c in Sources */,
+				CD5C6CCD1E7D120400E93612 /* arLabelingSubDBI3C.c in Sources */,
+				CD5C6D031E7D120400E93612 /* arLabelingSubEBRCY.c in Sources */,
+				CD5C6D111E7D120400E93612 /* arLabelingSubEWR3CA.c in Sources */,
+				CD5C6B1A1E7CFF3C00E93612 /* arPattLoad.c in Sources */,
+				CD5C6CD61E7D120400E93612 /* arLabelingSubDBR3C.c in Sources */,
+				CD5C6B331E7CFF3C00E93612 /* paramGetPerspective.c in Sources */,
+				CD5C6B0D1E7CFF3C00E93612 /* arCreateHandle.c in Sources */,
+				CD5C6CD41E7D120400E93612 /* arLabelingSubDBICY.c in Sources */,
+				CD5C6CF51E7D120400E93612 /* arLabelingSubEBI3CA.c in Sources */,
+				CD5C6C501E7D00B700E93612 /* thread_sub.c in Sources */,
+				CD5C6CD71E7D120400E93612 /* arLabelingSubDBR3C565.c in Sources */,
+				CD5C6B111E7CFF3C00E93612 /* arGetLine.c in Sources */,
+				CD5C6C701E7D00DB00E93612 /* cparams.c in Sources */,
+				CD5C6BEC1E7D006F00E93612 /* date_time.cpp in Sources */,
+				CD5C6B2C1E7CFF3C00E93612 /* mUnit.c in Sources */,
+				CD5C6B901E7CFF8100E93612 /* arMultiGetTransMatStereo.c in Sources */,
+				CD5C6D0D1E7D120400E93612 /* arLabelingSubEWICY.c in Sources */,
+				CD5C6D011E7D120400E93612 /* arLabelingSubEBRA3C.c in Sources */,
+				CD5C6D001E7D120400E93612 /* arLabelingSubEBR3CA5551.c in Sources */,
+				CD5C6C741E7D00DB00E93612 /* MovieVideo.m in Sources */,
+				CD5C6D171E7D120400E93612 /* arLabelingSubEWRYC.c in Sources */,
+				CD5C6CDF1E7D120400E93612 /* arLabelingSubDBZ.c in Sources */,
+				CD5C6B761E7CFF6E00E93612 /* tracking2d.c in Sources */,
+				CD5C6B841E7CFF7800E93612 /* icpPoint.c in Sources */,
+				CD5C6BC11E7D001F00E93612 /* harris.cpp in Sources */,
+				CD5C6B341E7CFF3C00E93612 /* paramLT.c in Sources */,
+				CD5C6CF71E7D120400E93612 /* arLabelingSubEBI3CA5551.c in Sources */,
+				CD5C6BC71E7D001F00E93612 /* pyramid.cpp in Sources */,
+				CD5C6CDA1E7D120400E93612 /* arLabelingSubDBR3CA5551.c in Sources */,
+				CD5C6B201E7CFF3C00E93612 /* mAllocMul.c in Sources */,
+				CD5C6B9A1E7CFF8E00E93612 /* kpmFopen.c in Sources */,
+				CD5C6B141E7CFF3C00E93612 /* arGetTransMatStereo.c in Sources */,
+				CD5C6B681E7CFF6E00E93612 /* coord.c in Sources */,
+				CD5C6B6E1E7CFF6E00E93612 /* marker.c in Sources */,
+				CD5C6B741E7CFF6E00E93612 /* template.c in Sources */,
+				CD5C6CF41E7D120400E93612 /* arLabelingSubEBI3C565.c in Sources */,
+				CD5C6B261E7CFF3C00E93612 /* mFree.c in Sources */,
+				CD5C6B701E7CFF6E00E93612 /* matching2.c in Sources */,
+				CD5C6B101E7CFF3C00E93612 /* arFilterTransMat.c in Sources */,
+				CD5C6D151E7D120400E93612 /* arLabelingSubEWRC.c in Sources */,
+				CD5C6B911E7CFF8100E93612 /* arMultiReadConfigFile.c in Sources */,
+				CD5C6CFB1E7D120400E93612 /* arLabelingSubEBIYC.c in Sources */,
+				CD5C6CEA1E7D120400E93612 /* arLabelingSubDWR3C565.c in Sources */,
+				CD5C6CE11E7D120400E93612 /* arLabelingSubDWI3C565.c in Sources */,
+				CD5C6B851E7CFF7800E93612 /* icpPointRobust.c in Sources */,
+				CD5C6C6F1E7D00DB00E93612 /* CameraVideo.m in Sources */,
+				CD5C6D0E1E7D120400E93612 /* arLabelingSubEWIYC.c in Sources */,
+				CD5C6B351E7CFF3C00E93612 /* vAlloc.c in Sources */,
+				CD5C6BA01E7CFF8E00E93612 /* kpmResult.cpp in Sources */,
+				CD5C6B811E7CFF7800E93612 /* icpCalibStereo.c in Sources */,
+				CD5C6B2B1E7CFF3C00E93612 /* mTrans.c in Sources */,
+				CD5C6C621E7D00C000E93612 /* videoSaveImage.c in Sources */,
+				CD5C6B3A1E7CFF3C00E93612 /* vTridiag.c in Sources */,
+				CD5C6CD91E7D120400E93612 /* arLabelingSubDBR3CA4444.c in Sources */,
+				CD5C6D041E7D120400E93612 /* arLabelingSubEBRYC.c in Sources */,
+				CD5C6CE61E7D120400E93612 /* arLabelingSubDWIC.c in Sources */,
+				CD5C6CDD1E7D120400E93612 /* arLabelingSubDBRCY.c in Sources */,
+				CD5C6B311E7CFF3C00E93612 /* paramDistortion.c in Sources */,
+				CD5C6D181E7D120400E93612 /* arLabelingSubEWZ.c in Sources */,
+				CD5C6B0E1E7CFF3C00E93612 /* arDetectMarker.c in Sources */,
+				CD5C6B381E7CFF3C00E93612 /* vHouse.c in Sources */,
+				CD5C6B151E7CFF3C00E93612 /* arImageProc.c in Sources */,
+				CD5C6B721E7CFF6E00E93612 /* selectTemplate.c in Sources */,
+				CD5C6B1B1E7CFF3C00E93612 /* arPattSave.c in Sources */,
+				CD5C6D071E7D120400E93612 /* arLabelingSubEWI3C565.c in Sources */,
+				CD5C6B6D1E7CFF6E00E93612 /* jpeg.c in Sources */,
+				CD5C6B291E7CFF3C00E93612 /* mPCA.c in Sources */,
+				CD5C6CE91E7D120400E93612 /* arLabelingSubDWR3C.c in Sources */,
+				CD5C6B9D1E7CFF8E00E93612 /* kpmMatching.cpp in Sources */,
+				CD5C6B391E7CFF3C00E93612 /* vInnerP.c in Sources */,
+				CD5C6B2F1E7CFF3C00E93612 /* paramDecomp.c in Sources */,
+				CD5C6BF11E7D006F00E93612 /* image.cpp in Sources */,
+				CD5C6CFF1E7D120400E93612 /* arLabelingSubEBR3CA4444.c in Sources */,
+				CD5C6D061E7D120400E93612 /* arLabelingSubEWI3C.c in Sources */,
+				CD5C6BF31E7D006F00E93612 /* logger.cpp in Sources */,
+				CD5C6B361E7CFF3C00E93612 /* vDisp.c in Sources */,
+				CD5C6B2A1E7CFF3C00E93612 /* mSelfInv.c in Sources */,
+				CD5C6BF51E7D006F00E93612 /* timers.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -22637,8 +23846,9 @@
 					"\"../../3rdparty/libtess2/include\"",
 					"\"../../3rdparty/google-test/googletest/include\"",
 					"\"../../3rdparty/gvr-ios-sdk/include\"",
-					"\"../../3rdparty/artoolkit-ios-sdk/include/ios7\"",
-					"\"../../3rdparty/artoolkit-ios-sdk/include\"",
+					"\"../../3rdparty/artoolkit5-config/ios\"",
+					"\"../../3rdparty/artoolkit5/include/ios7\"",
+					"\"../../3rdparty/artoolkit5/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
@@ -23705,8 +24915,9 @@
 					"\"../../3rdparty/libtess2/include\"",
 					"\"../../3rdparty/google-test/googletest/include\"",
 					"\"../../3rdparty/gvr-ios-sdk/include\"",
-					"\"../../3rdparty/artoolkit-ios-sdk/include/ios7\"",
-					"\"../../3rdparty/artoolkit-ios-sdk/include\"",
+					"\"../../3rdparty/artoolkit5-config/ios\"",
+					"\"../../3rdparty/artoolkit5/include/ios7\"",
+					"\"../../3rdparty/artoolkit5/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
@@ -25562,6 +26773,144 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-image-webp";
+				SDKROOT = iphoneos;
+				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
+				WARNING_CFLAGS = "-w";
+			};
+			name = "Release-NoSymbols";
+		};
+		CD5C6ACB1E7CFD7000E93612 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ZL_PRESERVE_STDLIB,
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher\"",
+				);
+				PRODUCT_NAME = "moai-ios-3rdparty-artoolkit5";
+				SDKROOT = iphoneos;
+				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
+				WARNING_CFLAGS = "-w";
+			};
+			name = Debug;
+		};
+		CD5C6ACC1E7CFD7000E93612 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ZL_PRESERVE_STDLIB,
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher\"",
+				);
+				PRODUCT_NAME = "moai-ios-3rdparty-artoolkit5";
+				SDKROOT = iphoneos;
+				SEPARATE_STRIP = NO;
+				STRIP_STYLE = all;
+				WARNING_CFLAGS = "-w";
+			};
+			name = Release;
+		};
+		CD5C6ACD1E7CFD7000E93612 /* Release-NoSymbols */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ZL_PRESERVE_STDLIB,
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher\"",
+				);
+				PRODUCT_NAME = "moai-ios-3rdparty-artoolkit5";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
 				STRIP_STYLE = all;
@@ -28636,8 +29985,9 @@
 					"\"../../3rdparty/libtess2/include\"",
 					"\"../../3rdparty/google-test/googletest/include\"",
 					"\"../../3rdparty/gvr-ios-sdk/include\"",
-					"\"../../3rdparty/artoolkit-ios-sdk/include/ios7\"",
-					"\"../../3rdparty/artoolkit-ios-sdk/include\"",
+					"\"../../3rdparty/artoolkit5-config/ios\"",
+					"\"../../3rdparty/artoolkit5/include/ios7\"",
+					"\"../../3rdparty/artoolkit5/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
@@ -29255,6 +30605,16 @@
 				CD515F871BCDBC08000718FB /* Debug */,
 				CD515F881BCDBC08000718FB /* Release */,
 				CD515F8A1BCDBC08000718FB /* Release-NoSymbols */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CD5C6ACA1E7CFD7000E93612 /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty-artoolkit5" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD5C6ACB1E7CFD7000E93612 /* Debug */,
+				CD5C6ACC1E7CFD7000E93612 /* Release */,
+				CD5C6ACD1E7CFD7000E93612 /* Release-NoSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
