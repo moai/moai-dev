@@ -201,6 +201,13 @@ void MOAIAnimCurveVec::SetSample ( u32 id, const ZLVec3D& value ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIAnimCurveVec::MOAIAnimCurveBase_Accumulate ( MOAIAnimChannel& channel, float time, float opacity ) {
+
+	ZLVec3D value = this->GetValue ( time );
+	channel.Accumulate ( value, opacity );
+}
+
+//----------------------------------------------------------------//
 void MOAIAnimCurveVec::MOAINode_Update () {
 
 	this->mValue = this->GetValue ( this->mTime );

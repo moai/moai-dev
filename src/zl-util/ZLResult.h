@@ -6,12 +6,7 @@
 
 #include <zl-util/STLString.h>
 
-#define ZL_RETURN_RESULT(type,value,code) {		\
-	ZLResult < type > __result;					\
-	__result.mValue = value;					\
-	__result.mCode = code;						\
-	return __result;							\
-}
+#define ZL_RETURN_RESULT(type,value,code)		return ZLResult < type >( value, code );
 
 #define	ZL_RETURN_BOOL_RESULT(value,code)		ZL_RETURN_RESULT ( bool, value, code )
 #define	ZL_RETURN_CHAR_RESULT(value,code)		ZL_RETURN_RESULT ( u8, value, code )
@@ -56,6 +51,25 @@ enum {
 typedef int ZLResultCode;
 
 //================================================================//
+// ZLError
+//================================================================//
+class ZLError {
+public:
+
+	ZLResultCode	mError;
+	
+	//----------------------------------------------------------------//
+	ZLError () :
+		mError ( ZL_ERROR ) {
+	}
+	
+	//----------------------------------------------------------------//
+	ZLError ( ZLResultCode code ) :
+		mError ( code ) {
+	}
+};
+
+//================================================================//
 // ZLResultBase
 //================================================================//
 class ZLResultBase {
@@ -88,6 +102,28 @@ public:
 	//----------------------------------------------------------------//
 	inline TYPE Value () const {
 		return this->mValue;
+	}
+	
+	//----------------------------------------------------------------//
+	ZLResult () {
+		this->mCode = ZL_ERROR;
+	}
+	
+	//----------------------------------------------------------------//
+	ZLResult ( const TYPE& value ) :
+		mValue ( value ) {
+		this->mCode = ZL_OK;
+	}
+	
+	//----------------------------------------------------------------//
+	ZLResult ( const TYPE& value, ZLResultCode code ) :
+		mValue ( value ) {
+		this->mCode = code;
+	}
+	
+	//----------------------------------------------------------------//
+	ZLResult ( const ZLError& error ) {
+		this->mCode = error.mError;
 	}
 };
 

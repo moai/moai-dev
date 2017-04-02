@@ -80,6 +80,12 @@ int	MOAIAnimCurveBase::_setWrapMode	( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIAnimCurveBase::Accumulate ( MOAIAnimChannel& channel, float time, float opacity ) {
+
+	this->MOAIAnimCurveBase_Accumulate ( channel, time, opacity );
+}
+
+//----------------------------------------------------------------//
 void MOAIAnimCurveBase::Clear () {
 
 	this->mKeys.Clear ();

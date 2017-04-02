@@ -296,6 +296,13 @@ void MOAIAnimCurve::SetSample ( u32 id, float value ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIAnimCurve::MOAIAnimCurveBase_Accumulate ( MOAIAnimChannel& channel, float time, float opacity ) {
+
+	float value = this->GetValue ( time );
+	channel.Accumulate ( value, opacity );
+}
+
+//----------------------------------------------------------------//
 void MOAIAnimCurve::MOAINode_Update () {
 
 	this->mValue = this->GetValue ( this->mTime );

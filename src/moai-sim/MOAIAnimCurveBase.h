@@ -4,6 +4,7 @@
 #ifndef	MOAIANIMCURVEBASE_H
 #define	MOAIANIMCURVEBASE_H
 
+#include <moai-sim/MOAIAnimChannel.h>
 #include <moai-sim/MOAINode.h>
 
 //================================================================//
@@ -77,7 +78,8 @@ protected:
 	virtual void		ReserveSamples			( u32 total ) = 0;
 
 	//----------------------------------------------------------------//
-	bool				MOAINode_ApplyAttrOp	( u32 attrID, MOAIAttribute& attr, u32 op );
+	virtual void		MOAIAnimCurveBase_Accumulate		( MOAIAnimChannel& channel, float time, float opacity ) = 0;
+	bool				MOAINode_ApplyAttrOp				( u32 attrID, MOAIAttribute& attr, u32 op );
 
 public:
 	
@@ -97,6 +99,7 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
+	void				Accumulate				( MOAIAnimChannel& channel, float time, float opacity );
 	void				Clear					();
 	virtual void		Draw					( u32 resolution ) const;
 	u32					FindKeyID				( float time ) const;

@@ -97,7 +97,6 @@ public:
 	template < typename TYPE >
 	inline TYPE ApplyNoAdd ( const TYPE& value, u32 op, u32 flags ) {
 		
-		
 		switch ( op ) {
 		
 			case GET:

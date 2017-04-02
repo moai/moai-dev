@@ -189,7 +189,7 @@ public:
 	//----------------------------------------------------------------//
 	ZLResultCode InsertAfter ( ZLLeanLink < TYPE >& cursor, ZLLeanLink < TYPE >& link ) {
 
-		if ( cursor->mList != this ) return ZL_ERROR;
+		if ( cursor.mList != this ) return ZL_ERROR;
 
 		link.Remove ();
 
@@ -214,7 +214,7 @@ public:
 	//----------------------------------------------------------------//
 	ZLResultCode InsertBefore ( ZLLeanLink < TYPE >& cursor, ZLLeanLink < TYPE >& link ) {
 
-		if ( cursor->mList != this ) return ZL_ERROR;
+		if ( cursor.mList != this ) return ZL_ERROR;
 
 		link.Remove ();
 

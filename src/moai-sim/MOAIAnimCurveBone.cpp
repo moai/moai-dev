@@ -260,6 +260,13 @@ void MOAIAnimCurveBone::SetSampleScale ( u32 idx, float x, float y, float z ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIAnimCurveBone::MOAIAnimCurveBase_Accumulate ( MOAIAnimChannel& channel, float time, float opacity ) {
+	UNUSED ( channel );
+	UNUSED ( time );
+	UNUSED ( opacity );
+}
+
+//----------------------------------------------------------------//
 void MOAIAnimCurveBone::MOAINode_Update () {
 
 	this->mValue = this->GetValue ( this->mTime );

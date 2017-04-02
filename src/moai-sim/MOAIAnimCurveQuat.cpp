@@ -199,6 +199,13 @@ void MOAIAnimCurveQuat::SetSample ( u32 id, float x, float y, float z ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIAnimCurveQuat::MOAIAnimCurveBase_Accumulate ( MOAIAnimChannel& channel, float time, float opacity ) {
+
+	ZLQuaternion value = this->GetValue ( time );
+	channel.Accumulate ( value, opacity );
+}
+
+//----------------------------------------------------------------//
 void MOAIAnimCurveQuat::MOAINode_Update () {
 
 	this->mValue = this->GetValue ( this->mTime );

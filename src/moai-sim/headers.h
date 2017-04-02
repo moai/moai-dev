@@ -15,6 +15,8 @@
 #include <moai-sim/MOAIAnimCurveBone.h>
 #include <moai-sim/MOAIAnimCurveQuat.h>
 #include <moai-sim/MOAIAnimCurveVec.h>
+#include <moai-sim/MOAIAnimLoop.h>
+#include <moai-sim/MOAIAnimMixer.h>
 #include <moai-sim/MOAIAttribute.h>
 #include <moai-sim/MOAIBlendMode.h>
 //#include <moai-sim/MOAIBoundsDeck.h>

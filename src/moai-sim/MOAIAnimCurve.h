@@ -30,7 +30,8 @@ private:
 	float			GetValue			( const MOAIAnimKeySpan& span ) const;
 	
 	//----------------------------------------------------------------//
-	void			MOAINode_Update		();
+	void			MOAIAnimCurveBase_Accumulate		( MOAIAnimChannel& channel, float time, float opacity );
+	void			MOAINode_Update						();
 
 public:
 	
