@@ -147,6 +147,7 @@ public:
 	friend class MOAILuaStrongRef;
 	friend class MOAILuaWeakRef;
 	friend class MOAILuaState;
+	template<typename U> friend class MOAILuaLocal;
 
 	DECL_LUA_SINGLETON ( MOAILuaRuntime )
 
