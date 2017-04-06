@@ -1072,6 +1072,10 @@
 		CD1D85E21E1F14480089FFAD /* ZLBounds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1D85E11E1F14480089FFAD /* ZLBounds.cpp */; };
 		CD1D85E31E1F14480089FFAD /* ZLBounds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1D85E11E1F14480089FFAD /* ZLBounds.cpp */; };
 		CD1D85EA1E1F36560089FFAD /* MOAIDeckProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD67B45E1B264C9C004298CF /* MOAIDeckProxy.cpp */; };
+		CD227F851E91818900A07E61 /* ZLBone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD227F831E91818900A07E61 /* ZLBone.cpp */; };
+		CD227F861E91818900A07E61 /* ZLBone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD227F831E91818900A07E61 /* ZLBone.cpp */; };
+		CD227F871E91818900A07E61 /* ZLBone.h in Headers */ = {isa = PBXBuildFile; fileRef = CD227F841E91818900A07E61 /* ZLBone.h */; };
+		CD227F881E91818900A07E61 /* ZLBone.h in Headers */ = {isa = PBXBuildFile; fileRef = CD227F841E91818900A07E61 /* ZLBone.h */; };
 		CD27718019C8CE940079A731 /* assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD27717F19C8CE940079A731 /* assert.cpp */; };
 		CD27718119C8CE940079A731 /* assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD27717F19C8CE940079A731 /* assert.cpp */; };
 		CD2BA7961B2A16B00010C399 /* MOAIGfxGlobalsCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA7941B2A16B00010C399 /* MOAIGfxGlobalsCache.cpp */; };
@@ -7205,6 +7209,8 @@
 		CD218F8513A7FD6E008337E7 /* luasql.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = luasql.c; path = "../../3rdparty/luasql-2.2.0/src/luasql.c"; sourceTree = SOURCE_ROOT; };
 		CD218F8613A7FD6E008337E7 /* luasql.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luasql.h; path = "../../3rdparty/luasql-2.2.0/src/luasql.h"; sourceTree = SOURCE_ROOT; };
 		CD218F8D13A7FD89008337E7 /* luacurl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = luacurl.c; path = "../../3rdparty/luacurl-1.2.1/luacurl.c"; sourceTree = SOURCE_ROOT; };
+		CD227F831E91818900A07E61 /* ZLBone.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLBone.cpp; sourceTree = "<group>"; };
+		CD227F841E91818900A07E61 /* ZLBone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLBone.h; sourceTree = "<group>"; };
 		CD257BA21A6255380057A53A /* libmoai-ios-apple.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-apple.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD257BA31A6255D00057A53A /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = headers.h; path = "moai-apple/headers.h"; sourceTree = "<group>"; };
 		CD257BA41A6255D00057A53A /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-apple/host.h"; sourceTree = "<group>"; };
@@ -11185,6 +11191,8 @@
 				89BE68A1173974FC00DFE837 /* ZLAffine2D.h */,
 				89BE68A2173974FC00DFE837 /* ZLAffine3D.h */,
 				CD1756441A199B24009C430A /* ZLBarycentric.h */,
+				CD227F831E91818900A07E61 /* ZLBone.cpp */,
+				CD227F841E91818900A07E61 /* ZLBone.h */,
 				CD1D85E11E1F14480089FFAD /* ZLBounds.cpp */,
 				CD1D85DC1E1F06CA0089FFAD /* ZLBounds.h */,
 				89BE68AA173974FC00DFE837 /* ZLBox.cpp */,
@@ -16566,6 +16574,7 @@
 				89BE6A73173974FD00DFE837 /* ZLTypeID.h in Headers */,
 				CD2FB1A71C473ABE005F8D8D /* ZLRefCountedObject.h in Headers */,
 				89BE6A75173974FD00DFE837 /* ZLUnion.h in Headers */,
+				CD227F871E91818900A07E61 /* ZLBone.h in Headers */,
 				89BE6A77173974FD00DFE837 /* ZLUnique.h in Headers */,
 				CD1D85921E1922BD0089FFAD /* ZLStrongPtr.h in Headers */,
 				89BE6A7D173974FD00DFE837 /* ZLVec2D.h in Headers */,
@@ -16692,6 +16701,7 @@
 				89BE6A74173974FD00DFE837 /* ZLTypeID.h in Headers */,
 				89BE6A76173974FD00DFE837 /* ZLUnion.h in Headers */,
 				89BE6A78173974FD00DFE837 /* ZLUnique.h in Headers */,
+				CD227F881E91818900A07E61 /* ZLBone.h in Headers */,
 				89BE6A7E173974FD00DFE837 /* ZLVec2D.h in Headers */,
 				89BE6A80173974FD00DFE837 /* ZLVec3D.h in Headers */,
 				89BE6A82173974FD00DFE837 /* ZLVec4D.h in Headers */,
@@ -20515,6 +20525,7 @@
 				89BE698B173974FD00DFE837 /* ZLByteStream.cpp in Sources */,
 				CD1D85E21E1F14480089FFAD /* ZLBounds.cpp in Sources */,
 				CD2FB1E01C473B72005F8D8D /* ZLGfxEnum.cpp in Sources */,
+				CD227F851E91818900A07E61 /* ZLBone.cpp in Sources */,
 				89BE698F173974FD00DFE837 /* ZLCgt.cpp in Sources */,
 				89BE6993173974FD00DFE837 /* ZLColor.cpp in Sources */,
 				89BE6997173974FD00DFE837 /* ZLCurve.cpp in Sources */,
@@ -20598,6 +20609,7 @@
 				89BE698C173974FD00DFE837 /* ZLByteStream.cpp in Sources */,
 				CD1D85E31E1F14480089FFAD /* ZLBounds.cpp in Sources */,
 				CD2FB1EE1C473B76005F8D8D /* ZLGfxEnum.cpp in Sources */,
+				CD227F861E91818900A07E61 /* ZLBone.cpp in Sources */,
 				89BE6990173974FD00DFE837 /* ZLCgt.cpp in Sources */,
 				89BE6994173974FD00DFE837 /* ZLColor.cpp in Sources */,
 				89BE6998173974FD00DFE837 /* ZLCurve.cpp in Sources */,
