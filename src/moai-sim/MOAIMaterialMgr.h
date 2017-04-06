@@ -48,6 +48,12 @@ private:
 	};
 	
 	u32					mStackDepth;
+
+public:
+
+	//----------------------------------------------------------------//
+					MOAIMaterialGlobal			();
+					~MOAIMaterialGlobal			();
 };
 
 //================================================================//
@@ -100,7 +106,8 @@ public:
 
 	//----------------------------------------------------------------//
 	//void				Clear						();
-	const MOAILight*	GetLight					( u32 lightID );
+	MOAILight*			GetLight					( u32 lightID );
+	MOAITextureBase*	GetTexture					( u32 textureID );
 	void				LoadGfxState				();
 						MOAIMaterialMgr				();
 						~MOAIMaterialMgr			();

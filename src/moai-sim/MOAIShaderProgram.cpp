@@ -138,9 +138,13 @@ int MOAIShaderProgram::_setTexture ( lua_State* L ) {
 	}
 	else {
 	
-		self->SetTexture ( idx, state.GetValue < u32 >( 3, MOAI_UNKNOWN_MATERIAL_GLOBAL ), unit );
+		self->SetTexture (
+			idx,
+			state.GetValue < u32 >( 3, MOAI_UNKNOWN_MATERIAL_GLOBAL + 1 ) - 1,
+			unit,
+			state.GetLuaObject < MOAITextureBase >( 5, false )
+		);
 	}
-	
 	return 0;
 }
 
@@ -172,14 +176,26 @@ int MOAIShaderProgram::_setVertexAttribute ( lua_State* L ) {
 void MOAIShaderProgram::BindTextures () {
 
 	MOAIGfxMgr& gfx = MOAIGfxMgr::Get ();
+	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
 
 	size_t nTextures = this->mTextures.Size ();
 	for ( u32 i = 0; i < nTextures; ++i ) {
 	
 		MOAIShaderProgramTexture& shaderTexture = this->mTextures [ i ];
-		if ( shaderTexture.mTexture ) {
-			gfx.mGfxState.SetTexture ( shaderTexture.mTexture, shaderTexture.mUnit );
+		
+		MOAITextureBase* texture = 0;
+		
+		// load texture by name
+		if ( shaderTexture.mName != MOAI_UNKNOWN_MATERIAL_GLOBAL ) {
+			texture = materialStack.GetTexture ( shaderTexture.mName );
 		}
+		
+		// fallback
+		if ( !texture ) {
+			texture = shaderTexture.mTexture;
+		}
+		
+		gfx.mGfxState.SetTexture ( texture, shaderTexture.mUnit );
 	}
 }
 
@@ -523,14 +539,14 @@ int MOAIShaderProgram::SetGlobal ( lua_State* L, int idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgram::SetTexture ( u32 idx, u32 name, u32 unit ) {
+void MOAIShaderProgram::SetTexture ( u32 idx, u32 name, u32 unit, MOAITextureBase* fallback ) {
 
 	if ( idx < this->mTextures.Size ()) {
 	
 		MOAIShaderProgramTexture& shaderTexture = this->mTextures [ idx ];
 		shaderTexture.mName = name;
 		shaderTexture.mUnit = unit;
-		shaderTexture.mTexture = 0;
+		shaderTexture.mTexture = fallback;
 	}
 }
 

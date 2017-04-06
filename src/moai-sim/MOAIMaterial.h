@@ -9,7 +9,7 @@
 class MOAILight;
 class MOAITextureBase;
 
-#define MOAI_UNKNOWN_MATERIAL_GLOBAL (( u32 )-1 )
+#define MOAI_UNKNOWN_MATERIAL_GLOBAL 0x80000000
 
 //================================================================//
 // MOAIMaterialNamedGlobal

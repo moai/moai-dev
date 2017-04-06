@@ -296,11 +296,11 @@ u32 MOAIMaterialBatch::GetNamedGlobalID ( MOAILuaState& state, int& idx, u32& na
 		if ( state.IsType ( idx + 1, LUA_TNUMBER )) {
 	
 			materialID		= state.GetValue < u32 >( idx++, 1 ) - 1;
-			name		= state.GetValue < u32 >( idx++, name );
+			name			= state.GetValue < u32 >( idx++, name  + 1 ) - 1;
 		}
 		else {
 			
-			materialID		= state.GetValue < u32 >( idx++, name );
+			materialID		= state.GetValue < u32 >( idx++, name + 1 ) - 1;
 		}
 	}
 	return materialID;

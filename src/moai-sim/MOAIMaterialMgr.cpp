@@ -30,6 +30,20 @@ MOAIMaterialStackScope::~MOAIMaterialStackScope () {
 }
 
 //================================================================//
+// MOAIMaterialGlobal
+//================================================================//
+	
+//----------------------------------------------------------------//
+MOAIMaterialGlobal::MOAIMaterialGlobal () :
+	mPtr ( 0 ),
+	mStackDepth ( 0 ) {
+}
+
+//----------------------------------------------------------------//
+MOAIMaterialGlobal::~MOAIMaterialGlobal () {
+}
+
+//================================================================//
 // MOAIMaterialMgr
 //================================================================//
 
@@ -93,12 +107,18 @@ void MOAIMaterialMgr::Compose ( const MOAIMaterial& material ) {
 }
 
 //----------------------------------------------------------------//
-const MOAILight* MOAIMaterialMgr::GetLight ( u32 lightID ) {
+MOAILight* MOAIMaterialMgr::GetLight ( u32 lightID ) {
 
 	assert ( lightID < MAX_GLOBAL_LIGHTS );
 	return this->mNamedLights [ lightID ].mLight;
 }
 
+//----------------------------------------------------------------//
+MOAITextureBase* MOAIMaterialMgr::GetTexture ( u32 textureID ) {
+
+	assert ( textureID < MAX_GLOBAL_TEXTURES );
+	return this->mNamedTextures [ textureID ].mTexture;
+}
 
 //----------------------------------------------------------------//
 void MOAIMaterialMgr::LoadGfxState () {
@@ -119,11 +139,7 @@ void MOAIMaterialMgr::LoadGfxState () {
 MOAIMaterialMgr::MOAIMaterialMgr () {
 
 	this->mNamedLights.Init ( MAX_GLOBAL_LIGHTS );
-	for ( u32 i = 0; i < MAX_GLOBAL_LIGHTS; ++i ) {
-		MOAIMaterialGlobal& state = this->mNamedLights [ i ];
-		state.mPtr = 0;
-		state.mStackDepth = 0;
-	}
+	this->mNamedTextures.Init ( MAX_GLOBAL_TEXTURES );
 }
 
 //----------------------------------------------------------------//
@@ -221,7 +237,7 @@ void MOAIMaterialMgr::SetGlobal ( MOAIMaterialGlobal& global, void* ptr ) {
 
 	if ( global.mStackDepth < stackDepth ) {
 	
-		if ( global.mPtr ) return; // don't overwrite lights
+		if ( global.mPtr ) return; // don't overwrite
 		
 		MOAIMaterialStackClearCmd* clearCmd = this->mRestoreCmdPool.Alloc ();
 		assert ( clearCmd );

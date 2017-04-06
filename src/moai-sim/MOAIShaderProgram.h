@@ -133,7 +133,7 @@ public:
 	void				ReserveTextures				( u32 nTextures );
 	void				ReserveUniforms				( u32 nUniforms );
 	void				SetGlobal					( u32 idx, u32 globalID, u32 uniformID, u32 index );
-	void				SetTexture					( u32 idx, u32 name, u32 unit );
+	void				SetTexture					( u32 idx, u32 name, u32 unit, MOAITextureBase* fallback );
 	void				SetTexture					( u32 idx, MOAITextureBase* texture, u32 unit );
 	void				SetVertexAttribute			( u32 idx, cc8* attribute );
 };
