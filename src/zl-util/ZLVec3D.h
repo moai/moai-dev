@@ -10,33 +10,26 @@
 // ZLMetaVec3D
 //================================================================//
 template < typename TYPE >
-class ZLMetaVec3D {
+class ZLMetaVec3DStruct {
 public:
-
-	static const ZLMetaVec3D < TYPE >	X_AXIS;
-	static const ZLMetaVec3D < TYPE >	Y_AXIS;
-	static const ZLMetaVec3D < TYPE >	Z_AXIS;
-
-	static const ZLMetaVec3D < TYPE >	ORIGIN;		// all 0's
-	static const ZLMetaVec3D < TYPE >	AXIS;		// all 1's
 
 	TYPE	mX;
 	TYPE	mY;
 	TYPE	mZ;
 
 	//----------------------------------------------------------------//
-	bool operator == ( const ZLMetaVec3D < TYPE >& rhs ) const {
+	bool operator == ( const ZLMetaVec3DStruct < TYPE >& rhs ) const {
 		return (( this->mX == rhs.mX ) && ( this->mY == rhs.mY ) && ( this->mZ == rhs.mZ ));
 	}
 	
 	//----------------------------------------------------------------//
-	bool operator != ( const ZLMetaVec3D < TYPE >& rhs ) const {
+	bool operator != ( const ZLMetaVec3DStruct < TYPE >& rhs ) const {
 		return (( this->mX != rhs.mX ) || ( this->mY != rhs.mY ) || ( this->mZ != rhs.mZ ));
 	}
 
 	//----------------------------------------------------------------//
-	ZLMetaVec3D < TYPE > operator + ( const ZLMetaVec3D < TYPE >& v ) const {
-		ZLMetaVec3D < TYPE > result;
+	ZLMetaVec3DStruct < TYPE > operator + ( const ZLMetaVec3DStruct < TYPE >& v ) const {
+		ZLMetaVec3DStruct < TYPE > result;
 		result.mX = this->mX + v.mX;
 		result.mY = this->mY + v.mY;
 		result.mZ = this->mZ + v.mZ;
@@ -44,8 +37,8 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	ZLMetaVec3D < TYPE > operator - ( const ZLMetaVec3D < TYPE >& v ) const {
-		ZLMetaVec3D < TYPE > result;
+	ZLMetaVec3DStruct < TYPE > operator - ( const ZLMetaVec3DStruct < TYPE >& v ) const {
+		ZLMetaVec3DStruct < TYPE > result;
 		result.mX = this->mX - v.mX;
 		result.mY = this->mY - v.mY;
 		result.mZ = this->mZ - v.mZ;
@@ -54,7 +47,7 @@ public:
 
 	//----------------------------------------------------------------//
 	// V = V + vec
-	void Add ( const ZLMetaVec3D < TYPE >& vec ) {
+	void Add ( const ZLMetaVec3DStruct < TYPE >& vec ) {
 		mX = mX + vec.mX;
 		mY = mY + vec.mY;
 		mZ = mZ + vec.mZ;
@@ -62,7 +55,7 @@ public:
 
 	//----------------------------------------------------------------//
 	// V += vec * scale
-	void Add ( const ZLMetaVec3D < TYPE >& vec, TYPE scale ) {
+	void Add ( const ZLMetaVec3DStruct < TYPE >& vec, TYPE scale ) {
 		mX = mX + ( vec.mX * scale );
 		mY = mY + ( vec.mY * scale );
 		mZ = mZ + ( vec.mZ * scale );
@@ -70,7 +63,7 @@ public:
 
 	//----------------------------------------------------------------//
 	// Clamps in positive and negative
-	void Clamp ( const ZLMetaVec3D < TYPE >& clamp ) {
+	void Clamp ( const ZLMetaVec3DStruct < TYPE >& clamp ) {
 		if ( mX > clamp.mX ) mX = clamp.mX;
 		else if ( mX < -clamp.mX ) mX = -clamp.mX;
 		if ( mY > clamp.mY ) mY = clamp.mY;
@@ -80,7 +73,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	bool Compare ( const ZLMetaVec3D < TYPE >& point ) {
+	bool Compare ( const ZLMetaVec3DStruct < TYPE >& point ) {
 	
 		if (( mX != point.mX ) || ( mY != point.mY ) || ( mZ != point.mZ )) return false;
 		
@@ -89,7 +82,7 @@ public:
 
 	//----------------------------------------------------------------//
 	// Is V within res of vec?
-	bool Compare ( const ZLMetaVec3D < TYPE >& vec, TYPE res ) const {
+	bool Compare ( const ZLMetaVec3DStruct < TYPE >& vec, TYPE res ) const {
 
 		if ((( mX < ( vec.mX - res )) || ( mX > ( vec.mX + res ))) ||
 			(( mY < ( vec.mY - res )) || ( mY > ( vec.mY + res ))) ||
@@ -100,7 +93,7 @@ public:
 
 	//----------------------------------------------------------------//
 	// V = V x vec
-	void Cross ( const ZLMetaVec3D < TYPE >& vec ) {
+	void Cross ( const ZLMetaVec3DStruct < TYPE >& vec ) {
 		float tx;
 		float ty;
 
@@ -113,20 +106,22 @@ public:
 	
 	//----------------------------------------------------------------//
 	// V = v0 x v1
-	static ZLMetaVec3D < TYPE > Cross ( const ZLMetaVec3D < TYPE >& v0, const ZLMetaVec3D < TYPE >& v1 ) {
+	static ZLMetaVec3DStruct < TYPE > Cross ( const ZLMetaVec3DStruct < TYPE >& v0, const ZLMetaVec3DStruct < TYPE >& v1 ) {
 		
-		float tx	= ( v0.mY * v1.mZ ) - ( v0.mZ * v1.mY );
-		float ty	= ( v0.mZ * v1.mX ) - ( v0.mX * v1.mZ );
-		float tz	= ( v0.mX * v1.mY ) - ( v0.mY * v1.mX );
+		ZLMetaVec3DStruct < TYPE > vec;
 		
-		return ZLMetaVec3D < TYPE >( tx, ty, tz );
+		vec.mX	= ( v0.mY * v1.mZ ) - ( v0.mZ * v1.mY );
+		vec.mY	= ( v0.mZ * v1.mX ) - ( v0.mX * v1.mZ );
+		vec.mZ	= ( v0.mX * v1.mY ) - ( v0.mY * v1.mX );
+		
+		return vec;
 	}
 	
 	//----------------------------------------------------------------//
 	// V = v0 x v1
-	static ZLMetaVec3D < TYPE > CrossNorm ( const ZLMetaVec3D < TYPE >& v0, const ZLMetaVec3D < TYPE >& v1 ) {
+	static ZLMetaVec3DStruct < TYPE > CrossNorm ( const ZLMetaVec3DStruct < TYPE >& v0, const ZLMetaVec3DStruct < TYPE >& v1 ) {
 	
-		ZLMetaVec3D < TYPE > v = Cross ( v0, v1 );
+		ZLMetaVec3DStruct < TYPE > v = Cross ( v0, v1 );
 		v.Norm ();
 		
 		return v;
@@ -134,7 +129,7 @@ public:
 
 	//----------------------------------------------------------------//
 	// |V| -= damp
-	void Dampen ( const ZLMetaVec3D < TYPE >& damp ) {
+	void Dampen ( const ZLMetaVec3DStruct < TYPE >& damp ) {
 		if ( mX > ( TYPE )0 ) {
 			mX -= damp.mX;
 			if ( mX < ( TYPE )0 ) mX = ( TYPE )0;
@@ -164,7 +159,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	float Dist ( const ZLMetaVec3D < TYPE >& vec ) {
+	float Dist ( const ZLMetaVec3DStruct < TYPE >& vec ) {
 
 		TYPE x = this->mX - vec.mX;
 		TYPE y = this->mY - vec.mY;
@@ -174,7 +169,7 @@ public:
 	}
 
     //----------------------------------------------------------------//
-	float DistSqrd ( const ZLMetaVec3D < TYPE >& vec ) const {
+	float DistSqrd ( const ZLMetaVec3DStruct < TYPE >& vec ) const {
 
 		TYPE x = this->mX - vec.mX;
 		TYPE y = this->mY - vec.mY;
@@ -185,7 +180,7 @@ public:
 
 	//----------------------------------------------------------------//
 	// V . vec
-	float Dot ( const ZLMetaVec3D < TYPE >& vec ) const {
+	float Dot ( const ZLMetaVec3DStruct < TYPE >& vec ) const {
 		return ( mX * vec.mX ) + ( mY * vec.mY ) + ( mZ * vec.mZ );
 	}
 
@@ -217,7 +212,7 @@ public:
 
 	//----------------------------------------------------------------//
 	template < typename PARAM_TYPE >
-	void Init ( const ZLMetaVec3D < PARAM_TYPE >& vec ) {
+	void Init ( const ZLMetaVec3DStruct < PARAM_TYPE >& vec ) {
 		mX = ( TYPE )vec.mX;
 		mY = ( TYPE )vec.mY;
 		mZ = ( TYPE )vec.mZ;
@@ -244,7 +239,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Lerp ( const ZLMetaVec3D& vec, TYPE time ) {
+	void Lerp ( const ZLMetaVec3DStruct& vec, TYPE time ) {
 
 		this->mX = this->mX + (( vec.mX - this->mX ) * time );
 		this->mY = this->mY + (( vec.mY - this->mY ) * time );
@@ -253,7 +248,7 @@ public:
 
 	//----------------------------------------------------------------//
 	// V *= vec
-	void Multiply ( const ZLMetaVec3D < TYPE >& vec ) {
+	void Multiply ( const ZLMetaVec3DStruct < TYPE >& vec ) {
 		mX = mX * vec.mX;
 		mY = mY * vec.mY;
 		mZ = mZ * vec.mZ;
@@ -291,14 +286,14 @@ public:
 
 	//----------------------------------------------------------------//
 	// V += vec * d
-	void Offset ( const ZLMetaVec3D < TYPE >& vec, TYPE d ) {
+	void Offset ( const ZLMetaVec3DStruct < TYPE >& vec, TYPE d ) {
 		mX += vec.mX * d;
 		mY += vec.mY * d;
 		mZ += vec.mZ * d;
 	}
 
 	//----------------------------------------------------------------//
-	void Project ( ZLMetaVec3D < TYPE >& norm ) {
+	void Project ( ZLMetaVec3DStruct < TYPE >& norm ) {
 
 		TYPE dot;
 		
@@ -310,7 +305,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Project ( ZLMetaVec3D < TYPE >& norm, ZLMetaVec3D < TYPE >& axis ) {
+	void Project ( ZLMetaVec3DStruct < TYPE >& norm, ZLMetaVec3DStruct < TYPE >& axis ) {
 
 		TYPE project = norm.Dot ( axis ) / Dot ( norm );
 
@@ -331,7 +326,7 @@ public:
 
 	//----------------------------------------------------------------//
 	// angle between vectors in radians
-	float Radians ( const ZLMetaVec3D < TYPE >& v ) const {
+	float Radians ( const ZLMetaVec3DStruct < TYPE >& v ) const {
 		
 		float dot = this->Dot ( v );
 		
@@ -342,7 +337,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Reflect ( ZLMetaVec3D < TYPE >& norm ) {
+	void Reflect ( ZLMetaVec3DStruct < TYPE >& norm ) {
 		TYPE dot;
 		
 		dot = 2.0f * this->Dot ( norm );
@@ -370,7 +365,7 @@ public:
 
 	//----------------------------------------------------------------//
 	// Rotates about the Z axis (implicit by the orthogonal normals provided)
-	void RotateInBasis	( ZLMetaVec3D < TYPE >& xAxis, ZLMetaVec3D < TYPE >& yAxis, TYPE theta ) {
+	void RotateInBasis	( ZLMetaVec3DStruct < TYPE >& xAxis, ZLMetaVec3DStruct < TYPE >& yAxis, TYPE theta ) {
 
 		// Do the trig for the angle
 		TYPE sinTheta = Sin ( theta );
@@ -443,7 +438,7 @@ public:
 
 	//----------------------------------------------------------------//
 	// V = V - vec
-	void Sub ( const ZLMetaVec3D < TYPE >& vec ) {
+	void Sub ( const ZLMetaVec3DStruct < TYPE >& vec ) {
 		mX -= vec.mX;
 		mY -= vec.mY;
 		mZ -= vec.mZ;
@@ -451,7 +446,7 @@ public:
 
 	//----------------------------------------------------------------//
 	// V -= vec * scale
-	void Sub ( const ZLMetaVec3D < TYPE >& vec, TYPE scale ) {
+	void Sub ( const ZLMetaVec3DStruct < TYPE >& vec, TYPE scale ) {
 		mX = mX - ( vec.mX * scale );
 		mY = mY - ( vec.mY * scale );
 		mZ = mZ - ( vec.mZ * scale );
@@ -462,33 +457,61 @@ public:
 	
 		return ZLMetaVec2D < TYPE >( this->mX, this->mY );
 	}
+};
+
+//================================================================//
+// ZLMetaVec3D
+//================================================================//
+template < typename TYPE >
+class ZLMetaVec3D :
+	public ZLMetaVec3DStruct < TYPE > {
+public:
+
+	static const ZLMetaVec3D < TYPE >	X_AXIS;
+	static const ZLMetaVec3D < TYPE >	Y_AXIS;
+	static const ZLMetaVec3D < TYPE >	Z_AXIS;
+
+	static const ZLMetaVec3D < TYPE >	ORIGIN;		// all 0's
+	static const ZLMetaVec3D < TYPE >	AXIS;		// all 1's
+
+	//----------------------------------------------------------------//
+	operator ZLMetaVec3DStruct < TYPE > () {
+	
+		return *( ZLMetaVec3DStruct < TYPE >* )this;
+	}
 
 	//----------------------------------------------------------------//
 	ZLMetaVec3D () {
 	}
 
 	//----------------------------------------------------------------//
-	ZLMetaVec3D ( TYPE x, TYPE y, TYPE z ) :
-		mX ( x ),
-		mY ( y ),
-		mZ ( z ) {
+	ZLMetaVec3D ( const ZLMetaVec3DStruct < TYPE >& vec ) {
+	
+		*( ZLMetaVec3DStruct < TYPE >* )this = vec;
 	}
 
 	//----------------------------------------------------------------//
-	~ZLMetaVec3D () {
+	ZLMetaVec3D ( TYPE x, TYPE y, TYPE z ) {
+		
+		this->mX = x;
+		this->mY = y;
+		this->mZ = z;
 	}
 };
 
-template < typename TYPE > const ZLMetaVec3D < TYPE > ZLMetaVec3D < TYPE >::X_AXIS ( 1, 0, 0 );
-template < typename TYPE > const ZLMetaVec3D < TYPE > ZLMetaVec3D < TYPE >::Y_AXIS ( 0, 1, 0 );
-template < typename TYPE > const ZLMetaVec3D < TYPE > ZLMetaVec3D < TYPE >::Z_AXIS ( 0, 0, 1 );
+template < typename TYPE > const ZLMetaVec3D < TYPE > ZLMetaVec3D < TYPE >::X_AXIS	= ZLMetaVec3D < TYPE >( 1, 0, 0 );
+template < typename TYPE > const ZLMetaVec3D < TYPE > ZLMetaVec3D < TYPE >::Y_AXIS	= ZLMetaVec3D < TYPE >( 0, 1, 0 );
+template < typename TYPE > const ZLMetaVec3D < TYPE > ZLMetaVec3D < TYPE >::Z_AXIS	= ZLMetaVec3D < TYPE >( 0, 0, 1 );
 
-template < typename TYPE > const ZLMetaVec3D < TYPE > ZLMetaVec3D < TYPE >::ORIGIN ( 0, 0, 0 );
-template < typename TYPE > const ZLMetaVec3D < TYPE > ZLMetaVec3D < TYPE >::AXIS ( 1, 1, 1 );
+template < typename TYPE > const ZLMetaVec3D < TYPE > ZLMetaVec3D < TYPE >::ORIGIN	= ZLMetaVec3D < TYPE >( 0, 0, 0 );
+template < typename TYPE > const ZLMetaVec3D < TYPE > ZLMetaVec3D < TYPE >::AXIS	= ZLMetaVec3D < TYPE >( 1, 1, 1 );
+
+typedef ZLMetaVec3DStruct < int > ZLIntVec3DStruct;
+typedef ZLMetaVec3DStruct < float > ZLVec3DStruct;
+typedef ZLMetaVec3DStruct < double > ZLVec3D64Struct;
 
 typedef ZLMetaVec3D < int > ZLIntVec3D;
 typedef ZLMetaVec3D < float > ZLVec3D;
 typedef ZLMetaVec3D < double > ZLVec3D64;
-
 
 #endif

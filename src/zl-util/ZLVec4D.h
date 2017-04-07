@@ -58,9 +58,12 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	ZLMetaVec4D ( float x, float y, float z, float w ) :
-		ZLMetaVec3D < TYPE >( x, y, z ),
-		mW ( w ) {
+	ZLMetaVec4D ( float x, float y, float z, float w ) {
+		
+		this->mX = x;
+		this->mY = y;
+		this->mZ = z;
+		this->mW = w;
 	}
 
 	//----------------------------------------------------------------//

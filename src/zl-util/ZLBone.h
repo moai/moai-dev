@@ -14,7 +14,7 @@
 // ZLBone
 //================================================================//
 class ZLBone {
-private:
+protected:
 
 	float		mShearYX;
 	float		mShearZX;
@@ -30,18 +30,8 @@ private:
 	ZLVec3D		mScale;
 
 	union {
-		struct {
-			float	mX;
-			float	mY;
-			float	mZ;
-		} mEuler;
-		
-		struct {
-			float	mX;
-			float	mY;
-			float	mZ;
-			float	mS;
-		} mQuat;
+		ZLVec3DStruct			mEuler;
+		ZLQuaternionStruct		mQuaternion;
 	};
 
 	u32		mRotationMode;
@@ -61,6 +51,11 @@ public:
 		QUATERNION		= 0xffffffff,
 	};
 
+	GET_SET ( ZLVec3D, Pivot, mPivot )
+	GET_SET ( ZLVec3D, Location, mLocation )
+	GET_SET ( ZLVec3D, Euler, mEuler )
+	GET_SET ( ZLVec3D, Scale, mScale )
+
 	IS ( Quaternion, mRotationMode, QUATERNION )
 
 	//----------------------------------------------------------------//
@@ -68,7 +63,12 @@ public:
 	void			Compose				( ZLAffine3D& mtx, ZLAffine3D& inv );
 	bool			GetEuler			( ZLVec3D& euler );
 	bool			GetQuaternion		( ZLQuaternion& quat );
+	void			Ident				();
+	void			SetEuler			( float x, float y, float z );
+	void			SetLocation			( float x, float y, float z );
+	void			SetPivot			( float x, float y, float z );
 	void			SetRotationMode		( u32 mode );
+	void			SetScale			( float x, float y, float z );
 					ZLBone				();
 					~ZLBone				();
 };

@@ -264,7 +264,7 @@ void MOAIPartitionResultBuffer::PushResult ( MOAIPartitionHull& hull, u32 key, i
 	result.mLoc = loc;
 	result.mBounds = bounds;
 	
-	ZLVec3D piv = hull.GetPiv ();
+	ZLVec3D piv = hull.GetPivot ();
 	result.mLoc.Add ( piv );
 	result.mBounds.Offset ( piv );
 }

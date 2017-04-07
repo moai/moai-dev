@@ -36,24 +36,9 @@
 	@attr	INHERIT_TRANSFORM
 */
 class MOAITransform :
-	public MOAITransformBase {
+	public MOAITransformBase,
+	public ZLBone {
 protected:
-
-	float			mShearYX;
-	float			mShearZX;
-
-	float			mShearXY;
-	float			mShearZY;
-	
-	float			mShearXZ;
-	float			mShearYZ;
-
-	ZLVec3D			mPiv;
-	ZLVec3D			mLoc;
-	ZLVec3D			mScale;
-	ZLVec3D			mRot;		// Euler angles, in degrees
-
-	u32				mEulerOrder;
 
 	//----------------------------------------------------------------//
 	static int	_addLoc			( lua_State* L );
@@ -95,15 +80,6 @@ public:
 	DECL_ATTR_HELPER ( MOAITransform )
 
 	enum {
-		EULER_XYZ		= ( 2 << 0x04 ) + ( 1 << 0x02 ) + ( 0 << 0x00 ),
-		EULER_XZY		= ( 1 << 0x04 ) + ( 2 << 0x02 ) + ( 0 << 0x00 ),
-		EULER_YXZ		= ( 2 << 0x04 ) + ( 0 << 0x02 ) + ( 1 << 0x00 ),
-		EULER_YZX		= ( 0 << 0x04 ) + ( 2 << 0x02 ) + ( 1 << 0x00 ),
-		EULER_ZXY		= ( 1 << 0x04 ) + ( 0 << 0x02 ) + ( 2 << 0x00 ),
-		EULER_ZYX		= ( 0 << 0x04 ) + ( 1 << 0x02 ) + ( 2 << 0x00 ),
-	};
-
-	enum {
 		ATTR_X_PIV,
 		ATTR_Y_PIV,
 		ATTR_Z_PIV,
@@ -126,17 +102,6 @@ public:
 		TOTAL_ATTR,
 	};
 	
-	GET_SET ( ZLVec3D, Piv, mPiv )
-	GET_SET ( ZLVec3D, Loc, mLoc )
-	GET_SET ( ZLVec3D, Scl, mScale )
-	GET_SET ( ZLVec3D, Rot, mRot )
-	
-	GET_SET ( float, XLoc, mLoc.mX )
-	GET_SET ( float, YLoc, mLoc.mY )
-	GET_SET ( float, ZLoc, mLoc.mZ )
-	
-	GET_SET ( u32, EulerOrder, mEulerOrder )
-	
 	//----------------------------------------------------------------//
 	ZLAffine3D				GetBillboardMtx				( const ZLAffine3D& faceCameraMtx ) const;
 							MOAITransform				();
@@ -145,10 +110,6 @@ public:
 	void					RegisterLuaFuncs			( MOAILuaState& state );
 	void					SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void					SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
-	void					SetLoc						( float x, float y, float z );
-	void					SetPiv						( float x, float y, float z );
-	void					SetRot						( float x, float y, float z );
-	void					SetScl						( float x, float y, float z );
 };
 
 #endif

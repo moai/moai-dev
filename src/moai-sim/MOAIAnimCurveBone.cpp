@@ -173,7 +173,7 @@ void MOAIAnimCurveBone::GetValue ( const MOAIAnimKeySpan& span, ZLVec3D& pos, ZL
 		q0.Slerp ( q0, q1, ZLInterpolate::Curve ( key.mMode, span.mTime, key.mWeight ));
 		s0.Lerp ( s1, ZLInterpolate::Curve ( key.mMode, span.mTime, key.mWeight ));
 	}
-		
+	
 	pos = p0;
 	rot = q0;
 	scl = s0;

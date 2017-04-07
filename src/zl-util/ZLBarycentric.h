@@ -57,9 +57,9 @@ public:
 		
 		ZLMetaVec3D < TYPE > bary;
 	
-		ZLMetaVec3D < TYPE > e0 ( v1.mX - v0.mX, v1.mY - v0.mY, v1.mZ - v0.mZ );
-		ZLMetaVec3D < TYPE > e1 ( v2.mX - v0.mX, v2.mY - v0.mY, v2.mZ - v0.mZ );
-		ZLMetaVec3D < TYPE > e2 ( cart.mX - v0.mX, cart.mY - v0.mY, cart.mZ - v0.mZ );
+		ZLMetaVec3D < TYPE > e0 = ZLMetaVec3D < TYPE > ( v1.mX - v0.mX, v1.mY - v0.mY, v1.mZ - v0.mZ );
+		ZLMetaVec3D < TYPE > e1 = ZLMetaVec3D < TYPE > ( v2.mX - v0.mX, v2.mY - v0.mY, v2.mZ - v0.mZ );
+		ZLMetaVec3D < TYPE > e2 = ZLMetaVec3D < TYPE > ( cart.mX - v0.mX, cart.mY - v0.mY, cart.mZ - v0.mZ );
 		
 		TYPE d00 = e0.Dot ( e0 );
 		TYPE d01 = e0.Dot ( e1 );

@@ -847,16 +847,16 @@ void MOAIGeometryWriter::WriteBox ( const MOAIVertexFormat& format, ZLStream& vt
 	float zMax = box.mMax.mZ;
 	
 	// back
-	ZLVec3D v0 ( xMax, yMin, zMin );
-	ZLVec3D v1 ( xMin, yMin, zMin );
-	ZLVec3D v2 ( xMin, yMax, zMin );
-	ZLVec3D v3 ( xMax, yMax, zMin );
+	ZLVec3D v0 = ZLVec3D ( xMax, yMin, zMin );
+	ZLVec3D v1 = ZLVec3D ( xMin, yMin, zMin );
+	ZLVec3D v2 = ZLVec3D ( xMin, yMax, zMin );
+	ZLVec3D v3 = ZLVec3D ( xMax, yMax, zMin );
 
 	// front
-	ZLVec3D v4 ( xMin, yMin, zMax );
-	ZLVec3D v5 ( xMax, yMin, zMax );
-	ZLVec3D v6 ( xMax, yMax, zMax );
-	ZLVec3D v7 ( xMin, yMax, zMax );
+	ZLVec3D v4 = ZLVec3D ( xMin, yMin, zMax );
+	ZLVec3D v5 = ZLVec3D ( xMax, yMin, zMax );
+	ZLVec3D v6 = ZLVec3D ( xMax, yMax, zMax );
+	ZLVec3D v7 = ZLVec3D ( xMin, yMax, zMax );
 
 	MOAIGeometryWriter::WriteQuad ( format, vtxStream, v0, v1, v2, v3, ZLVec3D ( 0.0f, 0.0f, -1.0f )); // back
 	MOAIGeometryWriter::WriteQuad ( format, vtxStream, v4, v5, v6, v7, ZLVec3D ( 0.0f, 0.0f, 1.0f )); // front

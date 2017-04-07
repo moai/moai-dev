@@ -9,34 +9,31 @@
 #include <zl-util/ZLMatrix4x4.h>
 
 //================================================================//
-// ZLQuaternion
+// ZLQuaternionStruct
 //================================================================//
-class ZLQuaternion {
+class ZLQuaternionStruct {
 public:
-	friend class MOAITest_USQuaternion;
 
-	static const ZLQuaternion IDENT;
-
-	float		mS;
-	ZLVec3D		mV;
+	float				mS;
+	ZLVec3DStruct		mV;
 
 	//----------------------------------------------------------------//
-	ZLQuaternion operator + ( const ZLQuaternion& v ) const {
-		ZLQuaternion result = *this;
+	ZLQuaternionStruct operator + ( const ZLQuaternionStruct& v ) const {
+		ZLQuaternionStruct result = *this;
 		result.Add ( v );
 		return result;
 	}
 
 	//----------------------------------------------------------------//
-	ZLQuaternion operator - ( const ZLQuaternion& v ) const {
-		ZLQuaternion result = *this;
+	ZLQuaternionStruct operator - ( const ZLQuaternionStruct& v ) const {
+		ZLQuaternionStruct result = *this;
 		result.Sub ( v );
 		return result;
 	}
 
 	//----------------------------------------------------------------//
-	void			Add					( const ZLQuaternion& rhs );
-	float			Dot					( const ZLQuaternion& rhs ) const;
+	void			Add					( const ZLQuaternionStruct& rhs );
+	float			Dot					( const ZLQuaternionStruct& rhs ) const;
 	void			Get					( ZLAffine3D& m ) const;
 	void			Get					( ZLMatrix3x3& m ) const;
 	void			Get					( ZLMatrix4x4& m ) const;
@@ -45,13 +42,32 @@ public:
 	void			Inverse				();
 	float			Length				() const;
 	float			LengthSquared		() const;
-	void			Multiply			( const ZLQuaternion& rhs );
+	void			Multiply			( const ZLQuaternionStruct& rhs );
 	void			Normalize			();
 	void			Scale				( float rhs );
-	void			Slerp				( ZLQuaternion q0, ZLQuaternion q1, float t );
-	void			Sub					( const ZLQuaternion& rhs );
+	void			Slerp				( ZLQuaternionStruct q0, ZLQuaternionStruct q1, float t );
+	void			Sub					( const ZLQuaternionStruct& rhs );
 	ZLVec3D			Transform			( ZLVec3D loc ) const;
+};
+
+//================================================================//
+// ZLQuaternion
+//================================================================//
+class ZLQuaternion :
+	public ZLQuaternionStruct {
+public:
+
+	static const ZLQuaternion IDENT;
+
+//	//----------------------------------------------------------------//
+//	operator ZLQuaternionStruct () {
+//	
+//		return *( ZLQuaternionStruct* )this;
+//	}
+
+	//----------------------------------------------------------------//
 					ZLQuaternion		();
+					ZLQuaternion		( const ZLQuaternionStruct& quat );
 					ZLQuaternion		( const ZLAffine3D& m );
 					ZLQuaternion		( ZLMatrix3x3 m );
 					ZLQuaternion		( const ZLMatrix4x4& m );
@@ -61,4 +77,3 @@ public:
 };
 
 #endif
-

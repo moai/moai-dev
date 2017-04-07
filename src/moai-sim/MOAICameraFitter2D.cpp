@@ -455,8 +455,8 @@ float MOAICameraFitter2D::GetFitDistance () {
 
 	if ( this->mCamera ) {
 
-		ZLVec3D loc = this->mCamera->GetLoc ();
-		float scale = this->mCamera->GetScl ().mX;
+		ZLVec3D loc = this->mCamera->GetLocation ();
+		float scale = this->mCamera->GetScale ().mX;
 
 		ZLVec3D current ( loc.mX, loc.mY, scale );
 		ZLVec3D target ( this->mTargetLoc.mX, this->mTargetLoc.mY, this->mTargetScale );
@@ -502,7 +502,7 @@ void MOAICameraFitter2D::RemoveAnchor ( MOAICameraAnchor2D& anchor ) {
 //----------------------------------------------------------------//
 void MOAICameraFitter2D::SnapToTargetLoc ( MOAITransform& camera ) {
 	
-	camera.SetLoc ( this->mTargetLoc );
+	camera.SetLocation ( this->mTargetLoc );
 	
 	camera.ScheduleUpdate ();
 }
@@ -512,7 +512,7 @@ void MOAICameraFitter2D::SnapToTargetScale ( MOAITransform& camera ) {
 	
 	ZLVec3D scaleVec;
 	scaleVec.Init ( this->mTargetScale, this->mTargetScale, 1.0f );
-	camera.SetScl ( scaleVec );
+	camera.SetScale ( scaleVec );
 	
 	camera.ScheduleUpdate ();
 }
@@ -574,7 +574,7 @@ void MOAICameraFitter2D::UpdateTarget () {
 		
 		// get the camera's target position and scale
 		ZLAffine3D cameraMtx;
-		float rot = this->mCamera ? this->mCamera->GetRot ().mZ : 0.0f;
+		float rot = this->mCamera ? this->mCamera->GetEuler ().mZ : 0.0f;
 		cameraMtx.ScRoTr ( this->mFitScale, this->mFitScale, 1.0f, 0.0f, 0.0f, rot * ( float )D2R, this->mFitLoc.mX, this->mFitLoc.mY, 0.0f );
 		
 		// get the camera rect
@@ -670,8 +670,8 @@ void MOAICameraFitter2D::MOAINode_Update () {
 		
 		float d = 1.0f - ZLFloat::Clamp ( this->mDamper, 0.0f, 1.0f );
 		
-		ZLVec3D loc = this->mCamera->GetLoc ();
-		float scale = this->mCamera->GetScl ().mX;
+		ZLVec3D loc = this->mCamera->GetLocation ();
+		float scale = this->mCamera->GetScale ().mX;
 		
 		loc.mX += ( this->mTargetLoc.mX - loc.mX ) * d;
 		loc.mY += ( this->mTargetLoc.mY - loc.mY ) * d;
@@ -679,8 +679,8 @@ void MOAICameraFitter2D::MOAINode_Update () {
 		
 		ZLVec3D scaleVec;
 		scaleVec.Init ( scale, scale, 1.0f );
-		this->mCamera->SetScl ( scaleVec );
-		this->mCamera->SetLoc ( loc );
+		this->mCamera->SetScale ( scaleVec );
+		this->mCamera->SetLocation ( loc );
 		this->mCamera->ScheduleUpdate ();
 	}
 }

@@ -470,8 +470,8 @@ void MOAICamera::LookAt ( float x, float y, float z ) {
 	float xRot = ( float )( yAxis.Radians ( target ) * R2D ); // pitch
 	
 	
-	ZLVec3D rot = this->GetRot ();
-	this->SetRot ( rot.mX - ( xRot - 90.0f ), rot.mY - yRot, 0.0f );
+	ZLVec3D euler = this->GetEuler ();
+	this->SetEuler ( euler.mX - ( xRot - 90.0f ), euler.mY - yRot, 0.0f );
 }
 
 //----------------------------------------------------------------//

@@ -340,8 +340,8 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 
 			// move (and force a dep node update)
 			// TODO: this needs to be *way* more efficient!
-			this->mLoc.mX += stepMoveNorm.mX * stepMoveLength;
-			this->mLoc.mY += stepMoveNorm.mY * stepMoveLength;
+			this->mLocation.mX += stepMoveNorm.mX * stepMoveLength;
+			this->mLocation.mY += stepMoveNorm.mY * stepMoveLength;
 			this->MOAITransformBase::MOAINode_Update ();
 			this->MOAIPartitionHull::MOAINode_Update ();
 
@@ -364,7 +364,7 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 	
 	ZLVec3D resolveOverlaps = overlapResolver.GetResult ();
 	
-	this->mLoc.Add ( resolveOverlaps );
+	this->mLocation.Add ( resolveOverlaps );
 	this->ScheduleUpdate ();
 
 	if ( move.LengthSqrd () && this->mCollisionWorld ) {
@@ -380,11 +380,11 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 		
 		float radius = ( width < height ? width : height ) * 0.25f;
 		
-		draw.DrawCircleOutline ( this->mLoc.mX, this->mLoc.mY, radius, 32 );
+		draw.DrawCircleOutline ( this->mLocation.mX, this->mLocation.mY, radius, 32 );
 		
 		move.Norm ();
 		move.Scale ( radius );
-		draw.DrawLine ( this->mLoc.mX, this->mLoc.mY, this->mLoc.mX + move.mX, this->mLoc.mY + move.mY );
+		draw.DrawLine ( this->mLocation.mX, this->mLocation.mY, this->mLocation.mX + move.mX, this->mLocation.mY + move.mY );
 	}
 }
 

@@ -137,27 +137,26 @@ void ZLBone::Compose ( ZLAffine3D& mtx ) {
 				
 				break;
 			
+			case QUATERNION:
+			
+				this->mQuaternion.Get ( mtx );
+			
+				mtx.m [ ZLAffine3D::C0_R0 ] *= scaleX;
+				mtx.m [ ZLAffine3D::C0_R1 ] *= scaleX;
+				mtx.m [ ZLAffine3D::C0_R2 ] *= scaleX;
+
+				mtx.m [ ZLAffine3D::C1_R0 ] *= scaleY;
+				mtx.m [ ZLAffine3D::C1_R1 ] *= scaleY;
+				mtx.m [ ZLAffine3D::C1_R2 ] *= scaleY;
+
+				mtx.m [ ZLAffine3D::C2_R0 ] *= scaleZ;
+				mtx.m [ ZLAffine3D::C2_R1 ] *= scaleZ;
+				mtx.m [ ZLAffine3D::C2_R2 ] *= scaleZ;
+			
 			default:
 			
 				mtx.Scale ( scaleX, scaleY, scaleZ );
 		}
-	}
-	else {
-	
-		ZLQuaternion quat ( this->mQuat.mS, this->mQuat.mX, this->mQuat.mY, this->mQuat.mZ );
-		quat.Get ( mtx );
-		
-		mtx.m [ ZLAffine3D::C0_R0 ] *= scaleX;
-		mtx.m [ ZLAffine3D::C0_R1 ] *= scaleX;
-		mtx.m [ ZLAffine3D::C0_R2 ] *= scaleX;
-
-		mtx.m [ ZLAffine3D::C1_R0 ] *= scaleY;
-		mtx.m [ ZLAffine3D::C1_R1 ] *= scaleY;
-		mtx.m [ ZLAffine3D::C1_R2 ] *= scaleY;
-
-		mtx.m [ ZLAffine3D::C2_R0 ] *= scaleZ;
-		mtx.m [ ZLAffine3D::C2_R1 ] *= scaleZ;
-		mtx.m [ ZLAffine3D::C2_R2 ] *= scaleZ;
 	}
 	
 	mtx.m [ ZLAffine3D::C3_R0 ] = this->mLocation.mX;
@@ -192,7 +191,7 @@ void ZLBone::Compose ( ZLAffine3D& mtx, ZLAffine3D& inv ) {
 bool ZLBone::GetEuler ( ZLVec3D& euler ) {
 
 	if ( this->mRotationMode != QUATERNION ) {
-		euler.Init ( this->mEuler.mX, this->mEuler.mY, this->mEuler.mZ );
+		euler = this->mEuler;
 		return true;
 	}
 	return false;
@@ -202,16 +201,66 @@ bool ZLBone::GetEuler ( ZLVec3D& euler ) {
 bool ZLBone::GetQuaternion ( ZLQuaternion& quat ) {
 
 	if ( this->mRotationMode == QUATERNION ) {
-		quat = ZLQuaternion ( this->mQuat.mS, this->mQuat.mX, this->mQuat.mY, this->mQuat.mZ );
+		quat = this->mQuaternion;
 		return true;
 	}
 	return false;
 }
 
 //----------------------------------------------------------------//
+void ZLBone::SetEuler ( float x, float y, float z ) {
+
+	this->mEuler.mX = x;
+	this->mEuler.mY = y;
+	this->mEuler.mZ = z;
+}
+
+//----------------------------------------------------------------//
+void ZLBone::SetLocation ( float x, float y, float z ) {
+
+	this->mLocation.mX = x;
+	this->mLocation.mY = y;
+	this->mLocation.mZ = z;
+}
+
+//----------------------------------------------------------------//
+void ZLBone::SetPivot ( float x, float y, float z ) {
+
+	this->mPivot.mX = x;
+	this->mPivot.mY = y;
+	this->mPivot.mZ = z;
+}
+
+//----------------------------------------------------------------//
 void ZLBone::SetRotationMode ( u32 mode ) {
 
 	this->mRotationMode = mode;
+}
+
+//----------------------------------------------------------------//
+void ZLBone::SetScale ( float x, float y, float z ) {
+
+	this->mScale.mX = x;
+	this->mScale.mY = y;
+	this->mScale.mZ = z;
+}
+
+//----------------------------------------------------------------//
+void ZLBone::Ident () {
+
+	this->mShearYX = 0.0f;
+	this->mShearZX = 0.0f;
+	this->mShearXY = 0.0f;
+	this->mShearZY = 0.0f;
+	this->mShearXZ = 0.0f;
+	this->mShearYZ = 0.0f;
+	
+	this->mPivot		= ZLVec3D::ORIGIN;
+	this->mLocation		= ZLVec3D::ORIGIN;
+	this->mScale		= ZLVec3D::AXIS;
+	this->mEuler		= ZLVec3D::ORIGIN;
+	
+	this->mRotationMode = EULER_XYZ;
 }
 
 //----------------------------------------------------------------//

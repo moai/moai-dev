@@ -245,15 +245,15 @@ bool ZLFrustum::GetXYSectRect ( const ZLAffine3D& mtx, ZLRect& rect ) const {
 void ZLFrustum::Init ( const ZLMatrix4x4& invViewProjMtx ) {
 
 	// set up the homogenous coordinates of the canonical view volume
-	ZLVec3D nlt ( -1.0f, 1.0f, -1.0f );
-	ZLVec3D nrt ( 1.0f, 1.0f, -1.0f );
-	ZLVec3D nrb ( 1.0f, -1.0f, -1.0f );
-	ZLVec3D nlb ( -1.0f, -1.0f, -1.0f );
+	ZLVec3D nlt = ZLVec3D ( -1.0f, 1.0f, -1.0f );
+	ZLVec3D nrt = ZLVec3D ( 1.0f, 1.0f, -1.0f );
+	ZLVec3D nrb = ZLVec3D ( 1.0f, -1.0f, -1.0f );
+	ZLVec3D nlb = ZLVec3D ( -1.0f, -1.0f, -1.0f );
 
-	ZLVec3D flt ( -1.0f, 1.0f, 1.0f );
-	ZLVec3D frt ( 1.0f, 1.0f, 1.0f );
-	ZLVec3D frb ( 1.0f, -1.0f, 1.0f );
-	ZLVec3D flb ( -1.0f, -1.0f, 1.0f );
+	ZLVec3D flt = ZLVec3D ( -1.0f, 1.0f, 1.0f );
+	ZLVec3D frt = ZLVec3D ( 1.0f, 1.0f, 1.0f );
+	ZLVec3D frb = ZLVec3D ( 1.0f, -1.0f, 1.0f );
+	ZLVec3D flb = ZLVec3D ( -1.0f, -1.0f, 1.0f );
 
 	// compute the corners of the frustum
 	invViewProjMtx.Project ( nlt );

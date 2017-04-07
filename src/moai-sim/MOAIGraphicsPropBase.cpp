@@ -281,13 +281,13 @@ ZLMatrix4x4 MOAIGraphicsPropBase::GetWorldDrawingMtx () {
 			}
 		
 			ZLMatrix4x4 billboardMtx;
-			billboardMtx.Translate ( -this->mPiv.mX, -this->mPiv.mY, -this->mPiv.mZ );
+			billboardMtx.Translate ( -this->mPivot.mX, -this->mPivot.mY, -this->mPivot.mZ );
 			
 			ZLMatrix4x4 mtx;
 			mtx.RotateZ ( -radians );
 			billboardMtx.Append ( mtx );
 			
-			mtx.Translate ( this->mPiv.mX, this->mPiv.mY, this->mPiv.mZ );
+			mtx.Translate ( this->mPivot.mX, this->mPivot.mY, this->mPivot.mZ );
 			billboardMtx.Append ( mtx );
 			
 			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());

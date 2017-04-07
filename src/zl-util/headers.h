@@ -23,6 +23,7 @@
 #include <zl-util/ZLBase64Writer.h>
 #include <zl-util/ZLBinarySearch.h>
 #include <zl-util/ZLBitBuffer.h>
+#include <zl-util/ZLBone.h>
 #include <zl-util/ZLBounds.h>
 #include <zl-util/ZLBox.h>
 #include <zl-util/ZLByteStream.h>

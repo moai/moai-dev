@@ -502,10 +502,10 @@ void MOAILayoutFrame::RemoveChildren () {
 void MOAILayoutFrame::SetLocByAxis ( u32 axis, float loc ) {
 
 	if ( axis == Y_AXIS ) {
-		this->mLoc.mY = loc;
+		this->mLocation.mY = loc;
 	}
 	else {
-		this->mLoc.mX = loc;
+		this->mLocation.mX = loc;
 	}
 }
 

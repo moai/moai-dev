@@ -3,13 +3,11 @@
 #include <zl-util/ZLQuaternion.h>
 
 //================================================================//
-// ZLQuaternion
+// ZLQuaternionStruct
 //================================================================//
 
-const ZLQuaternion ZLQuaternion::IDENT = ZLQuaternion ( 1.0f, 0.0f, 0.0f, 0.0f );
-
 //----------------------------------------------------------------//
-void ZLQuaternion::Add ( const ZLQuaternion& rhs ) {
+void ZLQuaternionStruct::Add ( const ZLQuaternionStruct& rhs ) {
 	
 	mS += rhs.mS;
 	mV.mX += rhs.mV.mX;
@@ -18,12 +16,12 @@ void ZLQuaternion::Add ( const ZLQuaternion& rhs ) {
 }
 
 //----------------------------------------------------------------//
-float ZLQuaternion::Dot ( const ZLQuaternion& rhs ) const {
+float ZLQuaternionStruct::Dot ( const ZLQuaternionStruct& rhs ) const {
 	return ( mS * rhs.mS ) + mV.Dot ( rhs.mV );
 }
 
 //----------------------------------------------------------------//
-void ZLQuaternion::Get ( ZLAffine3D& m ) const {
+void ZLQuaternionStruct::Get ( ZLAffine3D& m ) const {
 	
 	ZLMatrix3x3 affine;
 	this->Get ( affine );
@@ -31,7 +29,7 @@ void ZLQuaternion::Get ( ZLAffine3D& m ) const {
 }
 
 //----------------------------------------------------------------//
-void ZLQuaternion::Get ( ZLMatrix3x3& m ) const {
+void ZLQuaternionStruct::Get ( ZLMatrix3x3& m ) const {
 	
 	float x2 = mV.mX + mV.mX;
 	float y2 = mV.mY + mV.mY;
@@ -62,7 +60,7 @@ void ZLQuaternion::Get ( ZLMatrix3x3& m ) const {
 }
 
 //----------------------------------------------------------------//
-void ZLQuaternion::Get ( ZLMatrix4x4& m ) const {
+void ZLQuaternionStruct::Get ( ZLMatrix4x4& m ) const {
 	
 	ZLMatrix3x3 mtx3x3;
 	this->Get ( mtx3x3 );
@@ -70,7 +68,7 @@ void ZLQuaternion::Get ( ZLMatrix4x4& m ) const {
 }
 
 //----------------------------------------------------------------//
-void ZLQuaternion::Get ( ZLVec3D& axis, float& angle ) const {
+void ZLQuaternionStruct::Get ( ZLVec3D& axis, float& angle ) const {
 
 	float sqrLen = ( mV.mX * mV.mX ) + ( mV.mY * mV.mY ) + ( mV.mZ * mV.mZ );
 
@@ -90,7 +88,7 @@ void ZLQuaternion::Get ( ZLVec3D& axis, float& angle ) const {
 }
 
 //----------------------------------------------------------------//
-void ZLQuaternion::Get ( float& x, float& y, float& z ) const {
+void ZLQuaternionStruct::Get ( float& x, float& y, float& z ) const {
 
 	float sz_xy = 2.0f * ( mS * mV.mZ + mV.mX * mV.mY );
 
@@ -129,7 +127,7 @@ void ZLQuaternion::Get ( float& x, float& y, float& z ) const {
 }
 
 //----------------------------------------------------------------//
-void ZLQuaternion::Inverse () {
+void ZLQuaternionStruct::Inverse () {
 	
 	float length = Length ();
 	
@@ -140,17 +138,17 @@ void ZLQuaternion::Inverse () {
 }
 
 //----------------------------------------------------------------//
-float ZLQuaternion::Length () const {
+float ZLQuaternionStruct::Length () const {
 	return sqrtf ( LengthSquared ());
 }
 
 //----------------------------------------------------------------//
-float ZLQuaternion::LengthSquared () const {
+float ZLQuaternionStruct::LengthSquared () const {
 	return  ( mS * mS ) + ( mV.mX * mV.mX ) + ( mV.mY * mV.mY ) + ( mV.mZ * mV.mZ );
 }
 
 //----------------------------------------------------------------//
-void ZLQuaternion::Multiply ( const ZLQuaternion& rhs ) {
+void ZLQuaternionStruct::Multiply ( const ZLQuaternionStruct& rhs ) {
 
 	ZLVec3D cross;
 	cross.Cross ( mV, rhs.mV );
@@ -168,11 +166,10 @@ void ZLQuaternion::Multiply ( const ZLQuaternion& rhs ) {
 	
 	mS = mS * rhs.mS - mV.Dot ( rhs.mV );
 	mV.Init ( resultVec );
-	
 }
 
 //----------------------------------------------------------------//
-void ZLQuaternion::Normalize() {
+void ZLQuaternionStruct::Normalize() {
 	
 	float length = Length ();
 	
@@ -183,7 +180,7 @@ void ZLQuaternion::Normalize() {
 }
 
 //----------------------------------------------------------------//
-void ZLQuaternion::Scale ( float rhs ) {
+void ZLQuaternionStruct::Scale ( float rhs ) {
 	
 	mV.mX *= rhs;
 	mV.mY *= rhs;
@@ -192,7 +189,7 @@ void ZLQuaternion::Scale ( float rhs ) {
 }
 
 //----------------------------------------------------------------//
-void ZLQuaternion::Slerp ( ZLQuaternion q0, ZLQuaternion q1, float t ) {
+void ZLQuaternionStruct::Slerp ( ZLQuaternionStruct q0, ZLQuaternionStruct q1, float t ) {
 	
 	float floatRound = q0.Dot ( q1 );
 	
@@ -216,7 +213,7 @@ void ZLQuaternion::Slerp ( ZLQuaternion q0, ZLQuaternion q1, float t ) {
 }
 
 //----------------------------------------------------------------//
-void ZLQuaternion::Sub ( const ZLQuaternion& rhs ) {
+void ZLQuaternionStruct::Sub ( const ZLQuaternionStruct& rhs ) {
 	
 	mS -= rhs.mS;
 	mV.mX -= rhs.mV.mX;
@@ -225,11 +222,11 @@ void ZLQuaternion::Sub ( const ZLQuaternion& rhs ) {
 }
 
 //----------------------------------------------------------------//
-ZLVec3D ZLQuaternion::Transform ( ZLVec3D loc ) const {
+ZLVec3D ZLQuaternionStruct::Transform ( ZLVec3D loc ) const {
 
 	ZLQuaternion r ( 0.0f, loc.mX, loc.mY, loc.mZ );
 	
-	ZLQuaternion inv;
+	ZLQuaternionStruct inv;
 	inv = *this;
 	inv.Inverse();
 	
@@ -239,8 +236,20 @@ ZLVec3D ZLQuaternion::Transform ( ZLVec3D loc ) const {
 	return inv.mV;
 }
 
+//================================================================//
+// ZLQuaternion
+//================================================================//
+
+const ZLQuaternion ZLQuaternion::IDENT = ZLQuaternion ( 1.0f, 0.0f, 0.0f, 0.0f );
+
 //----------------------------------------------------------------//
 ZLQuaternion::ZLQuaternion () {
+}
+
+//----------------------------------------------------------------//
+ZLQuaternion::ZLQuaternion ( const ZLQuaternionStruct& quat ) {
+
+	*( ZLQuaternionStruct* )this = quat;
 }
 
 //----------------------------------------------------------------//
@@ -343,8 +352,8 @@ ZLQuaternion::ZLQuaternion ( float x, float y, float z ) {
 //----------------------------------------------------------------//
 ZLQuaternion::ZLQuaternion ( float s, float x, float y, float z ) {
 
-	mS = s;
-	mV.mX = x;
-	mV.mY = y;
-	mV.mZ = z;
+	mS		= s;
+	mV.mX	= x;
+	mV.mY	= y;
+	mV.mZ	= z;
 }

@@ -228,9 +228,9 @@ void MOAIAssimpCamera::SetCamera ( aiCamera *assimpCamera ) {
 
 	transform.Decompose ( this->mScaling, this->mRotation, this->mPosition );
 	this->mMoaiCamera = new MOAICamera ();
-	this->mMoaiCamera->SetLoc ( this->mPosition.x , this->mPosition.y , this->mPosition.z );
-	this->mMoaiCamera->SetScl ( this->mScaling.x , this->mScaling.y , this->mScaling.z );
-	this->mMoaiCamera->SetRot (
+	this->mMoaiCamera->SetLocation ( this->mPosition.x , this->mPosition.y , this->mPosition.z );
+	this->mMoaiCamera->SetScale ( this->mScaling.x , this->mScaling.y , this->mScaling.z );
+	this->mMoaiCamera->SetEuler (
 		( float )( this->CalculatePitch ( this->mRotation) * R2D ),
 		( float )( this->CalculateYaw ( this->mRotation) * R2D ),
 		( float )( this->CalculateRoll ( this->mRotation) * R2D )
