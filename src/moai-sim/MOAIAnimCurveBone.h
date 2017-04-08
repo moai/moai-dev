@@ -15,9 +15,11 @@ class MOAIAnimCurveBone :
 	public virtual MOAIAnimCurveBase {
 private:
 
-	ZLLeanArray < ZLVec3D >			mPositionSamples;
-	ZLLeanArray < ZLQuaternion >	mRotationSamples;
-	ZLLeanArray < ZLVec3D >			mScaleSamples;
+	ZLLeanArray < ZLBone >				mSamples;
+
+	//ZLLeanArray < ZLVec3D >			mPositionSamples;
+	//ZLLeanArray < ZLQuaternion >	mRotationSamples;
+	//ZLLeanArray < ZLVec3D >			mScaleSamples;
 	
 	ZLAffine3D mValue;
 
@@ -26,10 +28,10 @@ private:
 	static int		_setKey				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	static ZLAffine3D		Compose				( const ZLVec3D& pos, const ZLQuaternion& rot, const ZLVec3D& scl );
-	void					GetCurveDelta		( ZLVec3D& pos, ZLQuaternion& rot, ZLVec3D& scl ) const;
+	//static ZLAffine3D		Compose				( const ZLVec3D& pos, const ZLQuaternion& rot, const ZLVec3D& scl );
+	void					GetCurveDelta		( ZLBone& bone ) const;
 	ZLAffine3D				GetValue			( const MOAIAnimKeySpan& span ) const;
-	void					GetValue			( const MOAIAnimKeySpan& span, ZLVec3D& pos, ZLQuaternion& rot, ZLVec3D& scl ) const;
+	void					GetValue			( const MOAIAnimKeySpan& span, ZLBone& bone ) const;
 	void					ReserveSamples		( u32 total );
 
 	//----------------------------------------------------------------//
@@ -50,9 +52,7 @@ public:
 					~MOAIAnimCurveBone		();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			SetSamplePosition		( u32 idx, float x, float y, float z );
-	void			SetSampleRotation		( u32 idx, float x, float y, float z, float w );
-	void			SetSampleScale			( u32 idx, float x, float y, float z );
+	void			SetSample				( u32 idx, const ZLBone& bone );
 };
 
 #endif

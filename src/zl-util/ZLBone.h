@@ -41,6 +41,8 @@ protected:
 
 public:
 
+	static const ZLBone IDENT;
+
 	enum {
 		EULER_XYZ		= ( 2 << 0x04 ) + ( 1 << 0x02 ) + ( 0 << 0x00 ),
 		EULER_XZY		= ( 1 << 0x04 ) + ( 2 << 0x02 ) + ( 0 << 0x00 ),
@@ -53,24 +55,27 @@ public:
 
 	GET_SET ( ZLVec3D, Pivot, mPivot )
 	GET_SET ( ZLVec3D, Location, mLocation )
-	GET_SET ( ZLVec3D, Euler, mEuler )
 	GET_SET ( ZLVec3D, Scale, mScale )
 
 	IS ( Quaternion, mRotationMode, QUATERNION )
 
 	//----------------------------------------------------------------//
+	void			Add					( const ZLBone& rhs );
 	void			Compose				( ZLAffine3D& mtx ) const;
 	void			Compose				( ZLAffine3D& mtx, ZLAffine3D& inv ) const;
 	void			ComposeRotation		( ZLMatrix3x3& mtx ) const;
-	bool			GetEuler			( ZLVec3D& euler ) const; // TODO: perform conversion and return angles
+	ZLVec3D			GetEuler			() const;
 	ZLQuaternion	GetQuaternion		() const;
 	void			Ident				();
 	void			Interpolate			( const ZLBone& b0, const ZLBone& b1, float t );
-	void			SetEuler			( float x, float y, float z );
+	void			SetEuler			( float x, float y, float z, u32 mode = EULER_XYZ );
 	void			SetLocation			( float x, float y, float z );
 	void			SetPivot			( float x, float y, float z );
+	void			SetQuaternion		( const ZLQuaternion& quaternion );
+	void			SetQuaternion		( float s, float x, float y, float z );
 	void			SetRotationMode		( u32 mode );
 	void			SetScale			( float x, float y, float z );
+	void			Sub					( const ZLBone& rhs );
 					ZLBone				();
 					~ZLBone				();
 };

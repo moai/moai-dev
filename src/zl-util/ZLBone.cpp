@@ -3,9 +3,43 @@
 #include <zl-util/ZLBone.h>
 #include <zl-util/ZLInterpolate.h>
 
+//----------------------------------------------------------------//
+ZLBone _makeIdent () {
+
+	ZLBone bone;
+	bone.Ident ();
+	return bone;
+}
+
 //================================================================//
 // ZLBone
 //================================================================//
+
+const ZLBone ZLBone::IDENT = _makeIdent ();
+
+//----------------------------------------------------------------//
+void ZLBone::Add ( const ZLBone& rhs ) {
+
+	this->mShearYX += rhs.mShearXY;
+	this->mShearZX += rhs.mShearZX;
+
+	this->mShearXY += rhs.mShearXY;
+	this->mShearZY += rhs.mShearZY;
+	
+	this->mShearXZ += rhs.mShearXZ;
+	this->mShearYZ += rhs.mShearYZ;
+
+	this->mPivot.Add ( rhs.mPivot );
+	this->mLocation.Add ( rhs.mLocation );
+	this->mScale.Add ( rhs.mScale );
+
+	if ( this->mRotationMode == QUATERNION ) {
+		this->mQuaternion.Add ( rhs.mQuaternion );
+	}
+	else {
+		this->mEuler.Add ( rhs.mEuler );
+	}
+}
 
 //----------------------------------------------------------------//
 float ZLBone::ClampEuler ( float r ) {
@@ -195,14 +229,16 @@ void ZLBone::ComposeRotation ( ZLMatrix3x3& mtx ) const {
 	}
 }
 
-//----------------------------------------------------------------//
-bool ZLBone::GetEuler ( ZLVec3D& euler ) const {
 
-	if ( this->mRotationMode != QUATERNION ) {
-		euler = this->mEuler;
-		return true;
+
+//----------------------------------------------------------------//
+ZLVec3D ZLBone::GetEuler () const {
+
+	if ( this->mRotationMode == QUATERNION ) {
+		// TODO: perform conversion and return angles
+		return ZLVec3D::ORIGIN;
 	}
-	return false;
+	return this->mEuler;
 }
 
 //----------------------------------------------------------------//
@@ -214,6 +250,24 @@ ZLQuaternion ZLBone::GetQuaternion () const {
 	ZLMatrix3x3 mtx;
 	this->ComposeRotation ( mtx );
 	return ZLQuaternion ( mtx );
+}
+
+//----------------------------------------------------------------//
+void ZLBone::Ident () {
+
+	this->mShearYX = 0.0f;
+	this->mShearZX = 0.0f;
+	this->mShearXY = 0.0f;
+	this->mShearZY = 0.0f;
+	this->mShearXZ = 0.0f;
+	this->mShearYZ = 0.0f;
+	
+	this->mPivot		= ZLVec3D::ORIGIN;
+	this->mLocation		= ZLVec3D::ORIGIN;
+	this->mScale		= ZLVec3D::AXIS;
+	this->mEuler		= ZLVec3D::ORIGIN;
+	
+	this->mRotationMode = EULER_XYZ;
 }
 
 //----------------------------------------------------------------//
@@ -248,11 +302,15 @@ void ZLBone::Interpolate ( const ZLBone& b0, const ZLBone& b1, float t ) {
 }
 
 //----------------------------------------------------------------//
-void ZLBone::SetEuler ( float x, float y, float z ) {
+void ZLBone::SetEuler ( float x, float y, float z, u32 mode ) {
+
+	assert ( mode != QUATERNION );
 
 	this->mEuler.mX = x;
 	this->mEuler.mY = y;
 	this->mEuler.mZ = z;
+	
+	this->mRotationMode = mode;
 }
 
 //----------------------------------------------------------------//
@@ -272,6 +330,20 @@ void ZLBone::SetPivot ( float x, float y, float z ) {
 }
 
 //----------------------------------------------------------------//
+void ZLBone::SetQuaternion ( const ZLQuaternion& quaternion ) {
+
+	this->mQuaternion = quaternion;
+	this->mRotationMode = QUATERNION;
+}
+
+//----------------------------------------------------------------//
+void ZLBone::SetQuaternion ( float s, float x, float y, float z ) {
+
+	this->mQuaternion = ZLQuaternion ( s, x, y, z );
+	this->mRotationMode = QUATERNION;
+}
+
+//----------------------------------------------------------------//
 void ZLBone::SetRotationMode ( u32 mode ) {
 
 	this->mRotationMode = mode;
@@ -286,21 +358,27 @@ void ZLBone::SetScale ( float x, float y, float z ) {
 }
 
 //----------------------------------------------------------------//
-void ZLBone::Ident () {
+void ZLBone::Sub ( const ZLBone& rhs ) {
 
-	this->mShearYX = 0.0f;
-	this->mShearZX = 0.0f;
-	this->mShearXY = 0.0f;
-	this->mShearZY = 0.0f;
-	this->mShearXZ = 0.0f;
-	this->mShearYZ = 0.0f;
+	this->mShearYX -= rhs.mShearXY;
+	this->mShearZX -= rhs.mShearZX;
+
+	this->mShearXY -= rhs.mShearXY;
+	this->mShearZY -= rhs.mShearZY;
 	
-	this->mPivot		= ZLVec3D::ORIGIN;
-	this->mLocation		= ZLVec3D::ORIGIN;
-	this->mScale		= ZLVec3D::AXIS;
-	this->mEuler		= ZLVec3D::ORIGIN;
-	
-	this->mRotationMode = EULER_XYZ;
+	this->mShearXZ -= rhs.mShearXZ;
+	this->mShearYZ -= rhs.mShearYZ;
+
+	this->mPivot.Sub ( rhs.mPivot );
+	this->mLocation.Sub ( rhs.mLocation );
+	this->mScale.Sub ( rhs.mScale );
+
+	if ( this->mRotationMode == QUATERNION ) {
+		this->mQuaternion.Sub ( rhs.mQuaternion );
+	}
+	else {
+		this->mEuler.Sub ( rhs.mEuler );
+	}
 }
 
 //----------------------------------------------------------------//

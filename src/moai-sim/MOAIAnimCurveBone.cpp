@@ -37,12 +37,14 @@ int MOAIAnimCurveBone::_setKey ( lua_State* L ) {
 	float weight			= state.GetValue < float >( 15, 1.0f );
 	
 	if ( MOAILogMgr::CheckIndexPlusOne ( index, self->mKeys.Size (), L )) {
+
+		ZLBone bone = ZLBone::IDENT;
+		bone.SetLocation ( position );
+		bone.SetQuaternion ( rotation );
+		bone.SetScale ( scale );
 		
 		self->SetKey ( index, time, mode, weight );
-		
-		self->SetSamplePosition ( index, position.mX, position.mY, position.mZ );
-		self->SetSampleRotation ( index, rotation.mV.mX, rotation.mV.mY, rotation.mV.mZ, rotation.mS );
-		self->SetSampleScale ( index, scale.mX, scale.mY, scale.mZ );
+		self->SetSample ( index, bone );
 	}
 	return 0;
 }
@@ -58,63 +60,33 @@ void MOAIAnimCurveBone::ApplyValueAttrOp ( MOAIAttribute& attr, u32 op ) {
 }
 
 //----------------------------------------------------------------//
-ZLAffine3D MOAIAnimCurveBone::Compose ( const ZLVec3D& pos, const ZLQuaternion& rot, const ZLVec3D& scl ) {
-
-	ZLAffine3D value;
-	value.Scale ( scl );
-	
-	ZLAffine3D mtx;
-	rot.Get ( mtx );
-	value.Append ( mtx );
-	
-	mtx.Translate ( pos );
-	value.Append ( mtx );
-	
-	return value;
-}
-
-//----------------------------------------------------------------//
-void MOAIAnimCurveBone::GetCurveDelta ( ZLVec3D& pos, ZLQuaternion& rot, ZLVec3D& scl ) const {
+void MOAIAnimCurveBone::GetCurveDelta ( ZLBone& bone ) const {
 
 	u32 size = ( u32 )this->mKeys.Size ();
 	if ( size > 1 ) {
 	
-		pos = this->mPositionSamples [ size - 1 ];
-		pos.Sub ( this->mPositionSamples [ 0 ]);
-	
-		rot = this->mRotationSamples [ size - 1 ];
-		rot.Sub ( this->mRotationSamples [ 0 ]);
-		
-		scl = this->mScaleSamples [ size - 1 ];
-		scl.Sub ( this->mScaleSamples [ 0 ]);
+		bone = this->mSamples [ size - 1 ];
+		bone.Sub ( this->mSamples [ 0 ]);
 	}
 	else {
-		pos = ZLVec3D::ORIGIN;
-		rot = ZLQuaternion::IDENT;
-		scl = ZLVec3D::AXIS;
+		bone.Ident ();
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIAnimCurveBone::GetDelta ( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const {
 
-	ZLVec3D p0;
-	ZLQuaternion q0;
-	ZLVec3D s0;
+	ZLBone b0;
+	this->GetValue ( span0, b0 );
 	
-	this->GetValue ( span0, p0, q0, s0 );
-	
-	ZLVec3D p1;
-	ZLQuaternion q1;
-	ZLVec3D s1;
-	
-	this->GetValue ( span1, p1, q1, s1 );
+	ZLBone b1;
+	this->GetValue ( span1, b1 );
 
-	p1.Sub ( p0 );
-	q1.Sub ( q0 );
-	s1.Sub ( s0 );
+	b1.Sub ( b0 );
 	
-	attr.SetValue ( MOAIAnimCurveBone::Compose ( p1, q1, s1 ));
+	ZLAffine3D mtx;
+	b1.Compose ( mtx );
+	attr.SetValue ( mtx );
 }
 
 //----------------------------------------------------------------//
@@ -127,11 +99,8 @@ ZLAffine3D MOAIAnimCurveBone::GetValue ( float time ) const {
 //----------------------------------------------------------------//
 ZLAffine3D MOAIAnimCurveBone::GetValue ( const MOAIAnimKeySpan& span ) const {
 	
-	ZLVec3D p0;
-	ZLQuaternion q0;
-	ZLVec3D s0;
-		
-	this->GetValue ( span, p0, q0, s0 );
+	ZLBone bone;
+	this->GetValue ( span, bone );
 	
 	// TODO: test this
 //	if ( span.mCycle != 0.0f ) {
@@ -151,32 +120,25 @@ ZLAffine3D MOAIAnimCurveBone::GetValue ( const MOAIAnimKeySpan& span ) const {
 //		s0.Add ( s1 );
 //	}
 	
-	return MOAIAnimCurveBone::Compose ( p0, q0, s0 );
+	ZLAffine3D mtx;
+	bone.Compose ( mtx );
+	return mtx;
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveBone::GetValue ( const MOAIAnimKeySpan& span, ZLVec3D& pos, ZLQuaternion& rot, ZLVec3D& scl ) const {
+void MOAIAnimCurveBone::GetValue ( const MOAIAnimKeySpan& span, ZLBone& bone ) const {
 
 	MOAIAnimKey& key = this->mKeys [ span.mKeyID ];
 	
-	ZLVec3D p0			= this->mPositionSamples [ span.mKeyID ];
-	ZLQuaternion q0		= this->mRotationSamples [ span.mKeyID ];
-	ZLVec3D s0			= this->mScaleSamples [ span.mKeyID ];
-	
+	const ZLBone& b0			= this->mSamples [ span.mKeyID ];
+
 	if ( span.mTime > 0.0f ) {
-	
-		ZLVec3D p1			= this->mPositionSamples [ span.mKeyID + 1 ];
-		ZLQuaternion q1		= this->mRotationSamples [ span.mKeyID + 1 ];
-		ZLVec3D s1			= this->mScaleSamples [ span.mKeyID + 1 ];
-		
-		p0.Lerp ( p0, p1, ZLInterpolate::Curve ( key.mMode, span.mTime, key.mWeight ));
-		q0.Slerp ( q0, q1, ZLInterpolate::Curve ( key.mMode, span.mTime, key.mWeight ));
-		s0.Lerp ( s0, s1, ZLInterpolate::Curve ( key.mMode, span.mTime, key.mWeight ));
+		const ZLBone& b1	= this->mSamples [ span.mKeyID + 1 ];
+		bone.Interpolate ( b0, b1, ZLInterpolate::Curve ( key.mMode, span.mTime, key.mWeight ));
 	}
-	
-	pos = p0;
-	rot = q0;
-	scl = s0;
+	else {
+		bone = b0;
+	}
 }
 
 //----------------------------------------------------------------//
@@ -226,32 +188,14 @@ void MOAIAnimCurveBone::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIAnimCurveBone::ReserveSamples ( u32 total ) {
 
-	this->mPositionSamples.Init ( total );
-	this->mRotationSamples.Init ( total );
-	this->mScaleSamples.Init ( total );
+	this->mSamples.Init ( total );
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveBone::SetSamplePosition ( u32 idx, float x, float y, float z ) {
+void MOAIAnimCurveBone::SetSample ( u32 idx, const ZLBone& bone ) {
 
 	if ( idx < this->mKeys.Size ()) {
-		this->mPositionSamples [ idx ] = ZLVec3D ( x, y, z );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIAnimCurveBone::SetSampleRotation ( u32 idx, float x, float y, float z, float w ) {
-
-	if ( idx < this->mKeys.Size ()) {
-		this->mRotationSamples [ idx ] = ZLQuaternion ( w, x, y, z );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIAnimCurveBone::SetSampleScale ( u32 idx, float x, float y, float z ) {
-
-	if ( idx < this->mKeys.Size ()) {
-		this->mScaleSamples [ idx ] = ZLVec3D ( x, y, z );
+		this->mSamples [ idx ] = bone;
 	}
 }
 

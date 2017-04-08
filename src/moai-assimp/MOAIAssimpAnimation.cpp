@@ -202,10 +202,13 @@ MOAIAnimCurveBone* MOAIAssimpAnimation::GetAnimCurve ( u32 channel ) {
 			}
 		}
 		
+		ZLBone bone = ZLBone::IDENT;
+		bone.SetLocation ( p0 );
+		bone.SetQuaternion ( q0 );
+		bone.SetScale ( s0 );
+		
 		curve->SetKey (( u32 )i, t / this->mAssimpAnimation->mTicksPerSecond, ZLInterpolate::kLinear );
-		curve->SetSamplePosition (( u32 )i, p0.mX, p0.mY, p0.mZ );
-		curve->SetSampleRotation (( u32 )i, q0.mV.mX, q0.mV.mY, q0.mV.mZ, q0.mS );
-		curve->SetSampleScale (( u32 )i, s0.mX, s0.mY, s0.mZ );
+		curve->SetSample (( u32 )i, bone );
 	}
 	
 	return curve;
