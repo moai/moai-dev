@@ -30,12 +30,12 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Lerp ( const ZLMetaVec4D& vec, TYPE time ) {
-
-		this->mX = this->mX + (( vec.mX - this->mX ) * time );
-		this->mY = this->mY + (( vec.mY - this->mY ) * time );
-		this->mZ = this->mZ + (( vec.mZ - this->mZ ) * time );
-		this->mW = this->mW + (( vec.mW - this->mW ) * time );
+	void Lerp ( const ZLMetaVec4D& v0, const ZLMetaVec4D& v1, TYPE t ) {
+		
+		this->mX = v0.mX + (( v1.mX - v0.mX ) * t );
+		this->mY = v0.mY + (( v1.mY - v0.mY ) * t );
+		this->mZ = v0.mZ + (( v1.mZ - v0.mZ ) * t );
+		this->mW = v0.mW + (( v1.mW - v0.mW ) * t );
 	}
 
 	//----------------------------------------------------------------//

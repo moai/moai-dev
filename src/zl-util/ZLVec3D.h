@@ -239,11 +239,11 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Lerp ( const ZLMetaVec3DStruct& vec, TYPE time ) {
+	void Lerp ( const ZLMetaVec3DStruct& v0, const ZLMetaVec3DStruct& v1, TYPE t ) {
 
-		this->mX = this->mX + (( vec.mX - this->mX ) * time );
-		this->mY = this->mY + (( vec.mY - this->mY ) * time );
-		this->mZ = this->mZ + (( vec.mZ - this->mZ ) * time );
+		this->mX = v0.mX + (( v1.mX - v0.mX ) * t );
+		this->mY = v0.mY + (( v1.mY - v0.mY ) * t );
+		this->mZ = v0.mZ + (( v1.mZ - v0.mZ ) * t );
 	}
 
 	//----------------------------------------------------------------//

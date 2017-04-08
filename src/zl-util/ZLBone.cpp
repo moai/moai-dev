@@ -1,6 +1,7 @@
 
 #include "pch.h"
 #include <zl-util/ZLBone.h>
+#include <zl-util/ZLInterpolate.h>
 
 //================================================================//
 // ZLBone
@@ -19,145 +20,26 @@ float ZLBone::ClampEuler ( float r ) {
 }
 
 //----------------------------------------------------------------//
-void ZLBone::Compose ( ZLAffine3D& mtx ) {
+void ZLBone::Compose ( ZLAffine3D& mtx ) const {
+
+	ZLMatrix3x3 rot;
+	this->ComposeRotation ( rot );
 
 	float scaleX = this->mScale.mX;
 	float scaleY = this->mScale.mY;
 	float scaleZ = this->mScale.mZ;
 
-	if ( this->mRotationMode != QUATERNION ) {
-		
-		float rx = ClampEuler ( this->mEuler.mX ) * ( float )D2R;
-		float ry = ClampEuler ( this->mEuler.mY ) * ( float )D2R;
-		float rz = ClampEuler ( this->mEuler.mZ ) * ( float )D2R;
+	mtx.m [ ZLAffine3D::C0_R0 ] = rot.m [ ZLMatrix3x3::C0_R0 ] * scaleX;
+	mtx.m [ ZLAffine3D::C0_R1 ] = rot.m [ ZLMatrix3x3::C0_R1 ] * scaleX;
+	mtx.m [ ZLAffine3D::C0_R2 ] = rot.m [ ZLMatrix3x3::C0_R2 ] * scaleX;
 
-		float cosX = Cos ( rx );
-		float sinX = Sin ( rx );
-		float cosY = Cos ( ry );
-		float sinY = Sin ( ry );
-		float cosZ = Cos ( rz );
-		float sinZ = Sin ( rz );
-		
-		switch ( this->mRotationMode ) {
-		
-			case EULER_XYZ:
-			
-				mtx.m [ ZLAffine3D::C0_R0 ] = cosZ * cosY * scaleX;
-				mtx.m [ ZLAffine3D::C0_R1 ] = sinZ * cosY * scaleX;
-				mtx.m [ ZLAffine3D::C0_R2 ] = -sinY * scaleX;
+	mtx.m [ ZLAffine3D::C1_R0 ] = rot.m [ ZLMatrix3x3::C1_R0 ] * scaleY;
+	mtx.m [ ZLAffine3D::C1_R1 ] = rot.m [ ZLMatrix3x3::C1_R1 ] * scaleY;
+	mtx.m [ ZLAffine3D::C1_R2 ] = rot.m [ ZLMatrix3x3::C1_R2 ] * scaleY;
 
-				mtx.m [ ZLAffine3D::C1_R0 ] = (( cosZ * sinY * sinX ) + ( -sinZ * cosX )) * scaleY;
-				mtx.m [ ZLAffine3D::C1_R1 ] = (( sinZ * sinY * sinX ) + ( cosZ * cosX )) * scaleY;
-				mtx.m [ ZLAffine3D::C1_R2 ] = cosY * sinX * scaleY;
-
-				mtx.m [ ZLAffine3D::C2_R0 ] = (( cosZ * sinY * cosX ) + ( -sinZ * -sinX )) * scaleZ;
-				mtx.m [ ZLAffine3D::C2_R1 ] = (( sinZ * sinY * cosX ) + ( cosZ * -sinX )) * scaleZ;
-				mtx.m [ ZLAffine3D::C2_R2 ] = cosY * cosX * scaleZ;
-				
-				break;
-
-			case EULER_XZY:
-
-				mtx.m [ ZLAffine3D::C0_R0 ] = cosY * cosZ * scaleX;
-				mtx.m [ ZLAffine3D::C0_R1 ] = sinZ * scaleX;
-				mtx.m [ ZLAffine3D::C0_R2 ] = -sinY * cosZ * scaleX;
-
-				mtx.m [ ZLAffine3D::C1_R0 ] = (( cosY * -sinZ * cosX ) + ( sinY * sinX )) * scaleY;
-				mtx.m [ ZLAffine3D::C1_R1 ] = cosZ * cosX * scaleY;
-				mtx.m [ ZLAffine3D::C1_R2 ] = (( -sinY * -sinZ * cosX ) + ( cosY * sinX )) * scaleY;
-
-				mtx.m [ ZLAffine3D::C2_R0 ] = (( cosY * -sinZ * -sinX ) + ( sinY * cosX )) * scaleZ;
-				mtx.m [ ZLAffine3D::C2_R1 ] = cosZ * -sinX * scaleZ;
-				mtx.m [ ZLAffine3D::C2_R2 ] = (( -sinY * -sinZ * -sinX ) + ( cosY * cosX )) * scaleZ;
-
-				break;
-
-			case EULER_YXZ:
-			
-
-				mtx.m [ ZLAffine3D::C0_R0 ] = (( cosZ * cosY ) + ( -sinZ * -sinX * -sinY )) * scaleX;
-				mtx.m [ ZLAffine3D::C0_R1 ] = (( sinZ * cosY ) + ( cosZ * -sinX * -sinY )) * scaleX;
-				mtx.m [ ZLAffine3D::C0_R2 ] = cosX * -sinY * scaleX;
-
-				mtx.m [ ZLAffine3D::C1_R0 ] = -sinZ * cosX * scaleY;
-				mtx.m [ ZLAffine3D::C1_R1 ] = cosZ * cosX * scaleY;
-				mtx.m [ ZLAffine3D::C1_R2 ] = sinX * scaleY;
-
-				mtx.m [ ZLAffine3D::C2_R0 ] = (( cosZ * sinY ) + ( -sinZ * -sinX * cosY )) * scaleZ;
-				mtx.m [ ZLAffine3D::C2_R1 ] = (( sinZ * sinY ) + ( cosZ * -sinX * cosY )) * scaleZ;
-				mtx.m [ ZLAffine3D::C2_R2 ] = cosX * cosY * scaleZ;
-
-				break;
-
-			case EULER_YZX:
-
-				mtx.m [ ZLAffine3D::C0_R0 ] = cosZ * cosY * scaleX;
-				mtx.m [ ZLAffine3D::C0_R1 ] = (( cosX * sinZ * cosY ) + ( -sinX * -sinY )) * scaleX;
-				mtx.m [ ZLAffine3D::C0_R2 ] = (( sinX * sinZ * cosY ) + ( cosX * -sinY )) * scaleX;
-
-				mtx.m [ ZLAffine3D::C1_R0 ] = -sinZ * scaleY;
-				mtx.m [ ZLAffine3D::C1_R1 ] = cosX * cosZ * scaleY;
-				mtx.m [ ZLAffine3D::C1_R2 ] = sinX * cosZ * scaleY;
-
-				mtx.m [ ZLAffine3D::C2_R0 ] = cosZ * sinY * scaleZ;
-				mtx.m [ ZLAffine3D::C2_R1 ] = (( cosX * sinZ * sinY ) + ( -sinX * cosY )) * scaleZ;
-				mtx.m [ ZLAffine3D::C2_R2 ] = (( sinX * sinZ * sinY ) + ( cosX * cosY )) * scaleZ;
-
-				break;
-
-			case EULER_ZXY:
-			
-				mtx.m [ ZLAffine3D::C0_R0 ] = (( cosY * cosZ) + (sinY * sinX * sinZ )) * scaleX;
-				mtx.m [ ZLAffine3D::C0_R1 ] = cosX * sinZ * scaleX;
-				mtx.m [ ZLAffine3D::C0_R2 ] = ( -sinY * cosZ + (cosY * sinX * sinZ )) * scaleX;
-
-				mtx.m [ ZLAffine3D::C1_R0 ] = (( cosY * -sinZ) + (sinY * sinX * cosZ )) * scaleY;
-				mtx.m [ ZLAffine3D::C1_R1 ] = cosX * cosZ * scaleY;
-				mtx.m [ ZLAffine3D::C1_R2 ] = ( -sinY * -sinZ + (cosY * sinX * cosZ )) * scaleY;
-
-				mtx.m [ ZLAffine3D::C2_R0 ] = ( sinY * cosX * scaleZ );
-				mtx.m [ ZLAffine3D::C2_R1 ] = -sinX * scaleZ;
-				mtx.m [ ZLAffine3D::C2_R2 ] = ( cosY * cosX * scaleZ );
-
-				break;
-
-			case EULER_ZYX:
-
-				mtx.m [ ZLAffine3D::C0_R0 ] = cosY * cosZ * scaleX;
-				mtx.m [ ZLAffine3D::C0_R1 ] = (( cosX * sinZ ) + ( -sinX * -sinY * cosZ )) * scaleX;
-				mtx.m [ ZLAffine3D::C0_R2 ] = (( sinX * sinZ ) + ( cosX * -sinY * cosZ )) * scaleX;
-
-				mtx.m [ ZLAffine3D::C1_R0 ] = cosY * -sinZ * scaleY;
-				mtx.m [ ZLAffine3D::C1_R1 ] = (( cosX * cosZ ) + ( -sinX * -sinY * -sinZ )) * scaleY;
-				mtx.m [ ZLAffine3D::C1_R2 ] = (( sinX * cosZ ) + ( cosX * -sinY * -sinZ )) * scaleY;
-
-				mtx.m [ ZLAffine3D::C2_R0 ] = sinY * scaleZ;
-				mtx.m [ ZLAffine3D::C2_R1 ] = ( -sinX * cosY * scaleZ );
-				mtx.m [ ZLAffine3D::C2_R2 ] = ( cosX * cosY * scaleZ );
-				
-				break;
-			
-			case QUATERNION:
-			
-				this->mQuaternion.Get ( mtx );
-			
-				mtx.m [ ZLAffine3D::C0_R0 ] *= scaleX;
-				mtx.m [ ZLAffine3D::C0_R1 ] *= scaleX;
-				mtx.m [ ZLAffine3D::C0_R2 ] *= scaleX;
-
-				mtx.m [ ZLAffine3D::C1_R0 ] *= scaleY;
-				mtx.m [ ZLAffine3D::C1_R1 ] *= scaleY;
-				mtx.m [ ZLAffine3D::C1_R2 ] *= scaleY;
-
-				mtx.m [ ZLAffine3D::C2_R0 ] *= scaleZ;
-				mtx.m [ ZLAffine3D::C2_R1 ] *= scaleZ;
-				mtx.m [ ZLAffine3D::C2_R2 ] *= scaleZ;
-			
-			default:
-			
-				mtx.Scale ( scaleX, scaleY, scaleZ );
-		}
-	}
+	mtx.m [ ZLAffine3D::C2_R0 ] = rot.m [ ZLMatrix3x3::C2_R0 ] * scaleZ;
+	mtx.m [ ZLAffine3D::C2_R1 ] = rot.m [ ZLMatrix3x3::C2_R1 ] * scaleZ;
+	mtx.m [ ZLAffine3D::C2_R2 ] = rot.m [ ZLMatrix3x3::C2_R2 ] * scaleZ;
 	
 	mtx.m [ ZLAffine3D::C3_R0 ] = this->mLocation.mX;
 	mtx.m [ ZLAffine3D::C3_R1 ] = this->mLocation.mY;
@@ -181,14 +63,140 @@ void ZLBone::Compose ( ZLAffine3D& mtx ) {
 }
 
 //----------------------------------------------------------------//
-void ZLBone::Compose ( ZLAffine3D& mtx, ZLAffine3D& inv ) {
+void ZLBone::Compose ( ZLAffine3D& mtx, ZLAffine3D& inv ) const {
 
 	this->Compose ( mtx );
 	inv.Inverse ( mtx );
 }
 
 //----------------------------------------------------------------//
-bool ZLBone::GetEuler ( ZLVec3D& euler ) {
+void ZLBone::ComposeRotation ( ZLMatrix3x3& mtx ) const {
+
+	if ( this->mRotationMode == QUATERNION ) {
+	
+		this->mQuaternion.Get ( mtx );
+	}
+	else {
+
+		float rx = ClampEuler ( this->mEuler.mX ) * ( float )D2R;
+		float ry = ClampEuler ( this->mEuler.mY ) * ( float )D2R;
+		float rz = ClampEuler ( this->mEuler.mZ ) * ( float )D2R;
+
+		float cosX = Cos ( rx );
+		float sinX = Sin ( rx );
+		float cosY = Cos ( ry );
+		float sinY = Sin ( ry );
+		float cosZ = Cos ( rz );
+		float sinZ = Sin ( rz );
+
+		switch ( this->mRotationMode ) {
+		
+			case EULER_XYZ:
+			
+				mtx.m [ ZLMatrix3x3::C0_R0 ] = cosZ * cosY;
+				mtx.m [ ZLMatrix3x3::C0_R1 ] = sinZ * cosY;
+				mtx.m [ ZLMatrix3x3::C0_R2 ] = -sinY;
+
+				mtx.m [ ZLMatrix3x3::C1_R0 ] = (( cosZ * sinY * sinX ) + ( -sinZ * cosX ));
+				mtx.m [ ZLMatrix3x3::C1_R1 ] = (( sinZ * sinY * sinX ) + ( cosZ * cosX ));
+				mtx.m [ ZLMatrix3x3::C1_R2 ] = cosY * sinX;
+
+				mtx.m [ ZLMatrix3x3::C2_R0 ] = (( cosZ * sinY * cosX ) + ( -sinZ * -sinX ));
+				mtx.m [ ZLMatrix3x3::C2_R1 ] = (( sinZ * sinY * cosX ) + ( cosZ * -sinX ));
+				mtx.m [ ZLMatrix3x3::C2_R2 ] = cosY * cosX;
+				
+				break;
+
+			case EULER_XZY:
+
+				mtx.m [ ZLMatrix3x3::C0_R0 ] = cosY * cosZ;
+				mtx.m [ ZLMatrix3x3::C0_R1 ] = sinZ;
+				mtx.m [ ZLMatrix3x3::C0_R2 ] = -sinY * cosZ;
+
+				mtx.m [ ZLMatrix3x3::C1_R0 ] = (( cosY * -sinZ * cosX ) + ( sinY * sinX ));
+				mtx.m [ ZLMatrix3x3::C1_R1 ] = cosZ * cosX;
+				mtx.m [ ZLMatrix3x3::C1_R2 ] = (( -sinY * -sinZ * cosX ) + ( cosY * sinX ));
+
+				mtx.m [ ZLMatrix3x3::C2_R0 ] = (( cosY * -sinZ * -sinX ) + ( sinY * cosX ));
+				mtx.m [ ZLMatrix3x3::C2_R1 ] = cosZ * -sinX;
+				mtx.m [ ZLMatrix3x3::C2_R2 ] = (( -sinY * -sinZ * -sinX ) + ( cosY * cosX ));
+
+				break;
+
+			case EULER_YXZ:
+			
+
+				mtx.m [ ZLMatrix3x3::C0_R0 ] = (( cosZ * cosY ) + ( -sinZ * -sinX * -sinY ));
+				mtx.m [ ZLMatrix3x3::C0_R1 ] = (( sinZ * cosY ) + ( cosZ * -sinX * -sinY ));
+				mtx.m [ ZLMatrix3x3::C0_R2 ] = cosX * -sinY;
+
+				mtx.m [ ZLMatrix3x3::C1_R0 ] = -sinZ * cosX;
+				mtx.m [ ZLMatrix3x3::C1_R1 ] = cosZ * cosX;
+				mtx.m [ ZLMatrix3x3::C1_R2 ] = sinX;
+
+				mtx.m [ ZLMatrix3x3::C2_R0 ] = (( cosZ * sinY ) + ( -sinZ * -sinX * cosY ));
+				mtx.m [ ZLMatrix3x3::C2_R1 ] = (( sinZ * sinY ) + ( cosZ * -sinX * cosY ));
+				mtx.m [ ZLMatrix3x3::C2_R2 ] = cosX * cosY;
+
+				break;
+
+			case EULER_YZX:
+
+				mtx.m [ ZLMatrix3x3::C0_R0 ] = cosZ * cosY;
+				mtx.m [ ZLMatrix3x3::C0_R1 ] = (( cosX * sinZ * cosY ) + ( -sinX * -sinY ));
+				mtx.m [ ZLMatrix3x3::C0_R2 ] = (( sinX * sinZ * cosY ) + ( cosX * -sinY ));
+
+				mtx.m [ ZLMatrix3x3::C1_R0 ] = -sinZ;
+				mtx.m [ ZLMatrix3x3::C1_R1 ] = cosX * cosZ;
+				mtx.m [ ZLMatrix3x3::C1_R2 ] = sinX * cosZ;
+
+				mtx.m [ ZLMatrix3x3::C2_R0 ] = cosZ * sinY;
+				mtx.m [ ZLMatrix3x3::C2_R1 ] = (( cosX * sinZ * sinY ) + ( -sinX * cosY ));
+				mtx.m [ ZLMatrix3x3::C2_R2 ] = (( sinX * sinZ * sinY ) + ( cosX * cosY ));
+
+				break;
+
+			case EULER_ZXY:
+			
+				mtx.m [ ZLMatrix3x3::C0_R0 ] = (( cosY * cosZ) + (sinY * sinX * sinZ ));
+				mtx.m [ ZLMatrix3x3::C0_R1 ] = cosX * sinZ;
+				mtx.m [ ZLMatrix3x3::C0_R2 ] = ( -sinY * cosZ + (cosY * sinX * sinZ ));
+
+				mtx.m [ ZLMatrix3x3::C1_R0 ] = (( cosY * -sinZ) + (sinY * sinX * cosZ ));
+				mtx.m [ ZLMatrix3x3::C1_R1 ] = cosX * cosZ;
+				mtx.m [ ZLMatrix3x3::C1_R2 ] = ( -sinY * -sinZ + (cosY * sinX * cosZ ));
+
+				mtx.m [ ZLMatrix3x3::C2_R0 ] = ( sinY * cosX );
+				mtx.m [ ZLMatrix3x3::C2_R1 ] = -sinX;
+				mtx.m [ ZLMatrix3x3::C2_R2 ] = ( cosY * cosX );
+
+				break;
+
+			case EULER_ZYX:
+
+				mtx.m [ ZLMatrix3x3::C0_R0 ] = cosY * cosZ;
+				mtx.m [ ZLMatrix3x3::C0_R1 ] = (( cosX * sinZ ) + ( -sinX * -sinY * cosZ ));
+				mtx.m [ ZLMatrix3x3::C0_R2 ] = (( sinX * sinZ ) + ( cosX * -sinY * cosZ ));
+
+				mtx.m [ ZLMatrix3x3::C1_R0 ] = cosY * -sinZ;
+				mtx.m [ ZLMatrix3x3::C1_R1 ] = (( cosX * cosZ ) + ( -sinX * -sinY * -sinZ ));
+				mtx.m [ ZLMatrix3x3::C1_R2 ] = (( sinX * cosZ ) + ( cosX * -sinY * -sinZ ));
+
+				mtx.m [ ZLMatrix3x3::C2_R0 ] = sinY;
+				mtx.m [ ZLMatrix3x3::C2_R1 ] = ( -sinX * cosY );
+				mtx.m [ ZLMatrix3x3::C2_R2 ] = ( cosX * cosY );
+				
+				break;
+			
+			default:
+			
+				mtx.Ident ();
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+bool ZLBone::GetEuler ( ZLVec3D& euler ) const {
 
 	if ( this->mRotationMode != QUATERNION ) {
 		euler = this->mEuler;
@@ -198,13 +206,45 @@ bool ZLBone::GetEuler ( ZLVec3D& euler ) {
 }
 
 //----------------------------------------------------------------//
-bool ZLBone::GetQuaternion ( ZLQuaternion& quat ) {
+ZLQuaternion ZLBone::GetQuaternion () const {
 
 	if ( this->mRotationMode == QUATERNION ) {
-		quat = this->mQuaternion;
-		return true;
+		return this->mQuaternion;
 	}
-	return false;
+	ZLMatrix3x3 mtx;
+	this->ComposeRotation ( mtx );
+	return ZLQuaternion ( mtx );
+}
+
+//----------------------------------------------------------------//
+void ZLBone::Interpolate ( const ZLBone& b0, const ZLBone& b1, float t ) {
+
+	this->mShearYX = ZLInterpolate::Interpolate ( ZLInterpolate::kLinear, b0.mShearYX, b1.mShearXY, t );
+	this->mShearZX = ZLInterpolate::Interpolate ( ZLInterpolate::kLinear, b0.mShearZX, b1.mShearZX, t );
+
+	this->mShearXY = ZLInterpolate::Interpolate ( ZLInterpolate::kLinear, b0.mShearXY, b1.mShearXY, t );
+	this->mShearZY = ZLInterpolate::Interpolate ( ZLInterpolate::kLinear, b0.mShearZY, b1.mShearZY, t );
+	
+	this->mShearXZ = ZLInterpolate::Interpolate ( ZLInterpolate::kLinear, b0.mShearXZ, b1.mShearXZ, t );
+	this->mShearYZ = ZLInterpolate::Interpolate ( ZLInterpolate::kLinear, b0.mShearYZ, b1.mShearYZ, t );
+
+	this->mPivot.Lerp ( b0.mPivot, b1.mPivot, t );
+	this->mLocation.Lerp ( b0.mLocation, b1.mLocation, t );
+	this->mScale.Lerp ( b0.mScale, b1.mScale, t );
+
+	if ((( b0.mRotationMode == QUATERNION ) || ( b1.mRotationMode == QUATERNION )) || ( b0.mRotationMode != b1.mRotationMode )) {
+	
+		ZLQuaternion q0 = b0.GetQuaternion ();
+		ZLQuaternion q1 = b1.GetQuaternion ();
+	
+		this->mQuaternion.Slerp ( q0, q1, t );
+		this->mRotationMode = QUATERNION;
+	}
+	else {
+	
+		this->mEuler.Lerp ( b0.mEuler, b1.mEuler, t );
+		this->mRotationMode = b0.mRotationMode;
+	}
 }
 
 //----------------------------------------------------------------//

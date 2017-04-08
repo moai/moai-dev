@@ -6,6 +6,7 @@
 
 #define ATTR_OP_DECLARE_SETTER(type,typeID)			\
 	inline void SetValue ( const type& value ) {	\
+		assert ( sizeof ( type ) < MAX_SIZE );		\
 		this->mAttrTypeID = typeID;					\
 		*( type* )this->mBuffer = value;			\
 	}

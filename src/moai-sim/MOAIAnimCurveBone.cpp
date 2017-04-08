@@ -169,9 +169,9 @@ void MOAIAnimCurveBone::GetValue ( const MOAIAnimKeySpan& span, ZLVec3D& pos, ZL
 		ZLQuaternion q1		= this->mRotationSamples [ span.mKeyID + 1 ];
 		ZLVec3D s1			= this->mScaleSamples [ span.mKeyID + 1 ];
 		
-		p0.Lerp ( p1, ZLInterpolate::Curve ( key.mMode, span.mTime, key.mWeight ));
+		p0.Lerp ( p0, p1, ZLInterpolate::Curve ( key.mMode, span.mTime, key.mWeight ));
 		q0.Slerp ( q0, q1, ZLInterpolate::Curve ( key.mMode, span.mTime, key.mWeight ));
-		s0.Lerp ( s1, ZLInterpolate::Curve ( key.mMode, span.mTime, key.mWeight ));
+		s0.Lerp ( s0, s1, ZLInterpolate::Curve ( key.mMode, span.mTime, key.mWeight ));
 	}
 	
 	pos = p0;

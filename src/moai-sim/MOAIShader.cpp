@@ -210,7 +210,7 @@ void MOAIShader::Bless () {
 			
 			instance.mBuffer = ( void* )size;
 			
-			size += uniform.GetSize ();
+			size += uniform.GetSize ( instance.mCount );
 			
 			this->mMaxCount = this->mMaxCount < instance.mCount ? instance.mCount : this->mMaxCount;
 		}
@@ -223,7 +223,7 @@ void MOAIShader::Bless () {
 			MOAIShaderUniformInstance& instance = this->mUniformInstances [ i ];
 			
 			instance.mBuffer = ( void* )(( size_t )instance.mBuffer + ( size_t )this->mUniformBuffer.Data ());
-			uniform.Default ( instance.mBuffer );
+			uniform.Default ( instance.mBuffer, instance.mCount );
 		}
 	}
 }

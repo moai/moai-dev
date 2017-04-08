@@ -20,10 +20,6 @@ FILENAME = '../../../moai-content/guard/boblampclean.md5mesh'
 --MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
 
 MOAISim.openWindow ( "test", 1024, 1024 )
-MOAIGfxMgr.setClearColor ( 0.5, 0.5, 0.5, 1 )
-
-frameBuffer = MOAIGfxMgr.getFrameBuffer ()
-frameBuffer:setClearDepth ( true )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 1024, 1024 )
@@ -31,9 +27,12 @@ viewport:setScale ( 1024, 1024 )
 
 layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
+layer:setClearDepth ( true )
+layer:setClearColor ( 0.5, 0.5, 0.5, 1 )
 layer:pushRenderPass ()
 
 camera = MOAICamera.new ()
+camera:setType ( MOAICamera.CAMERA_TYPE_3D )
 --camera:setLoc ( 0, 0, camera:getFocalLength ( 320 ))
 camera:setLoc ( 0, 0, camera:getFocalLength ( 100 ))
 layer:setCamera ( camera )
@@ -60,8 +59,8 @@ program:declareUniform ( 1, 'transforms', MOAIShaderProgram.UNIFORM_TYPE_FLOAT, 
 program:declareUniform ( 2, 'bones', MOAIShaderProgram.UNIFORM_TYPE_FLOAT, MOAIShaderProgram.UNIFORM_WIDTH_MATRIX_4X4, 1 )
 
 program:reserveGlobals ( 2 )
-program:setGlobal ( 1, MOAIShaderProgram.GLOBAL_WORLD, 1, 1 )
-program:setGlobal ( 2, MOAIShaderProgram.GLOBAL_VIEW_PROJ, 1, 2 )
+program:setGlobal ( 1, MOAIShaderProgram.GLOBAL_MODEL_TO_WORLD_MTX, 1, 1 )
+program:setGlobal ( 2, MOAIShaderProgram.GLOBAL_WORLD_TO_CLIP_MTX, 1, 2 )
 
 program:load ( MOAIFileSystem.loadFile ( 'shader.vsh' ), MOAIFileSystem.loadFile ( 'shader.fsh' ))
 
@@ -164,6 +163,7 @@ if aiAnimations [ 1 ] then
 		end
 	end
 
+	aiAnimation.timer = timer
 	aiAnimation.curves = curves
 end
 
@@ -200,15 +200,15 @@ for i, aiMesh in ipairs ( aiMeshes ) do
 	--print ( 'BONEZ!' )
 	--printAsJson ( aiBones )
 
-	for i, aiBone in ipairs ( aiBones ) do
+	for j, aiBone in ipairs ( aiBones ) do
 
-		--print ( 'BONE', i )
+		--print ( 'BONE', j, aiBone.name )
 
 		local bone = makeTransform ( aiBone.offsetMatrix )
 		bone:setParent ( nodeDirectory [ aiBone.name ])
-		bones [ i ] = bone
+		bones [ j ] = bone
 
-		shader:setAttrLink ( shader:getAttributeID ( 2, i ), bone, MOAIMatrix.TRANSFORM_TRAIT )
+		shader:setAttrLink ( shader:getAttributeID ( 2, j ), bone, MOAIMatrix.TRANSFORM_TRAIT )
 	end
 
 	local vbo = MOAIVertexBuffer.new ()
@@ -234,6 +234,7 @@ for i, aiMesh in ipairs ( aiMeshes ) do
 	--prop:moveRot ( 0, 360, 0, 6 )
 	prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
 	prop:setDepthTest ( MOAIGraphicsProp.DEPTH_TEST_LESS )
+	prop:setPartition ( layer )
 
-	layer:insertProp ( prop )
+	prop.bones = bones
 end

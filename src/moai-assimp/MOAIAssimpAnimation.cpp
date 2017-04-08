@@ -168,7 +168,7 @@ MOAIAnimCurveBone* MOAIAssimpAnimation::GetAnimCurve ( u32 channel ) {
 				ZLVec3D p1 = p0;
 				const aiVectorKey& posKeyPrev = nodeAnim->mPositionKeys [ iPos > 0 ? iPos - 1 : 0 ];
 				p0 = ZLVec3D ( posKeyPrev.mValue.x, posKeyPrev.mValue.y, posKeyPrev.mValue.z );
-				p0.Lerp ( p1, ( t - posKeyPrev.mTime ) / ( posKey->mTime - posKeyPrev.mTime ));
+				p0.Lerp ( p0, p1, ( t - posKeyPrev.mTime ) / ( posKey->mTime - posKeyPrev.mTime ));
 			}
 		}
 		
@@ -198,7 +198,7 @@ MOAIAnimCurveBone* MOAIAssimpAnimation::GetAnimCurve ( u32 channel ) {
 				ZLVec3D s1 = s0;
 				const aiVectorKey& sclKeyPrev = nodeAnim->mScalingKeys [ iScl > 0 ? iScl - 1 : 0 ];
 				s0 = ZLVec3D ( sclKeyPrev.mValue.x, sclKeyPrev.mValue.y, sclKeyPrev.mValue.z );
-				s0.Lerp ( s1, ( t - sclKeyPrev.mTime ) / ( sclKey->mTime - sclKeyPrev.mTime ));
+				s0.Lerp ( s0, s1, ( t - sclKeyPrev.mTime ) / ( sclKey->mTime - sclKeyPrev.mTime ));
 			}
 		}
 		

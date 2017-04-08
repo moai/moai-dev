@@ -59,11 +59,13 @@ public:
 	IS ( Quaternion, mRotationMode, QUATERNION )
 
 	//----------------------------------------------------------------//
-	void			Compose				( ZLAffine3D& mtx );
-	void			Compose				( ZLAffine3D& mtx, ZLAffine3D& inv );
-	bool			GetEuler			( ZLVec3D& euler );
-	bool			GetQuaternion		( ZLQuaternion& quat );
+	void			Compose				( ZLAffine3D& mtx ) const;
+	void			Compose				( ZLAffine3D& mtx, ZLAffine3D& inv ) const;
+	void			ComposeRotation		( ZLMatrix3x3& mtx ) const;
+	bool			GetEuler			( ZLVec3D& euler ) const; // TODO: perform conversion and return angles
+	ZLQuaternion	GetQuaternion		() const;
 	void			Ident				();
+	void			Interpolate			( const ZLBone& b0, const ZLBone& b1, float t );
 	void			SetEuler			( float x, float y, float z );
 	void			SetLocation			( float x, float y, float z );
 	void			SetPivot			( float x, float y, float z );
