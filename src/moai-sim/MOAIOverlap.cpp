@@ -280,8 +280,3 @@ void MOAIOverlap::MOAICollisionPrimVisitor_Process ( const MOAICollisionPrim& sh
 		case SPHERE__SPHERE:		Overlap ( *( ZLSphere* )shape0.mPtr, *( ZLSphere* )shape1.mPtr,			t0, t1 );
 	}
 }
-
-//----------------------------------------------------------------//
-void MOAIOverlap::MOAIOverlap_OnOverlap ( const ZLBounds& bounds ) {
-	UNUSED ( bounds );
-}

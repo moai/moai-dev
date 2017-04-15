@@ -221,7 +221,7 @@ MOAICollisionProp::~MOAICollisionProp () {
 //----------------------------------------------------------------//
 void MOAICollisionProp::Move ( ZLVec3D move ) {
 
-	// just cramp everytning in here for now.
+	// just cram everything in here for now.
 	// possible to break into steps for collision world later *if*
 	// more traditional physics approach is desired.
 	
