@@ -115,6 +115,9 @@ void MOAICollisionProp::ClearOverlapLink ( MOAIPropOverlap& overlap ) {
 //----------------------------------------------------------------//
 void MOAICollisionProp::DrawContactPoints ( MOAIDrawShape& draw, const MOAIMoveConstraint2D* contacts, u32 nContacts ) {
 
+	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
+	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAICollisionProp >())) return;
+
 	draw.SetPenWidth ( 1.0f );
 
 	for ( u32 i = 0; i < nContacts; ++i ) {
@@ -126,39 +129,47 @@ void MOAICollisionProp::DrawContactPoints ( MOAIDrawShape& draw, const MOAIMoveC
 		const ZLVec2D cornerTangent = contact.mCornerTangent;
 		const ZLVec2D edgeNormal = contact.mEdgeNormal;
 		
-		draw.SetPenColor ( ZLColor::PackRGBA ( 0.0f, 1.0f, 0.0f, 1.0f ));
-		draw.DrawRay ( point.mX, point.mY, normal.mX, normal.mY, 32.0f );
+		
+		if ( debugLines.Bind ( DEBUG_DRAW_COLLISION_CONTACT_NORMAL, draw )) {
+			draw.DrawRay ( point.mX, point.mY, normal.mX, normal.mY, 32.0f );
+		}
+		
+		bool drawPoint = false;
 		
 		switch ( contact.mType ) {
-		
-			case MOAIMoveConstraint2D::LEAVING:
-
-				draw.SetPenColor ( ZLColor::PackRGBA ( 1.0f, 0.0f, 1.0f, 1.0f ));
+				
+			case MOAIMoveConstraint2D::CORNER:
+				
+				if ( debugLines.Bind ( DEBUG_DRAW_COLLISION_CONTACT_POINT_CORNER_EDGE_NORMAL, draw )) {
+					draw.DrawRay ( point.mX, point.mY, edgeNormal.mX, edgeNormal.mY, 32.0f );
+				}
+				
+				if ( debugLines.Bind ( DEBUG_DRAW_COLLISION_CONTACT_POINT_CORNER_TANGENT, draw )) {
+					draw.DrawRay ( point.mX, point.mY, cornerTangent.mX, cornerTangent.mY, 48.0f );
+				}
+			
+				drawPoint = debugLines.Bind ( DEBUG_DRAW_COLLISION_CONTACT_POINT_CORNER, draw );
 				break;
 				
 			case MOAIMoveConstraint2D::CROSSING:
 
-				draw.SetPenColor ( ZLColor::PackRGBA ( 1.0f, 0.0f, 0.0f, 1.0f ));
+				drawPoint = debugLines.Bind ( DEBUG_DRAW_COLLISION_CONTACT_POINT_CROSSING, draw );
 				break;
 				
+			case MOAIMoveConstraint2D::LEAVING:
+
+				drawPoint = debugLines.Bind ( DEBUG_DRAW_COLLISION_CONTACT_POINT_LEAVING, draw );
+				break;
+			
 			case MOAIMoveConstraint2D::PARALLEL:
 
-				draw.SetPenColor ( ZLColor::PackRGBA ( 0.0f, 1.0f, 1.0f, 1.0f ));
-				break;
-				
-			case MOAIMoveConstraint2D::CORNER:
-				
-				draw.SetPenColor ( ZLColor::PackRGBA ( 0.85f, 0.0f, 1.0f, 1.0f ));
-				draw.DrawRay ( point.mX, point.mY, cornerTangent.mX, cornerTangent.mY, 48.0f );
-			
-				draw.SetPenColor ( ZLColor::PackRGBA ( 1.0f, 0.0f, 0.0f, 1.0f ));
-				draw.DrawRay ( point.mX, point.mY, edgeNormal.mX, edgeNormal.mY, 32.0f );
-			
-				draw.SetPenColor ( ZLColor::PackRGBA ( 1.0f, 1.0f, 0.0f, 1.0f ));
+				drawPoint = debugLines.Bind ( DEBUG_DRAW_COLLISION_CONTACT_POINT_PARALLEL, draw );
 				break;
 		}
 		
-		draw.DrawRectFill ( point.mX - 4.0f, point.mY + 4.0f, point.mX + 4.0f, point.mY - 4.0f );
+		if ( drawPoint ) {
+			draw.DrawRectFill ( point.mX - 4.0f, point.mY + 4.0f, point.mX + 4.0f, point.mY - 4.0f );
+		}
 	}
 }
 
@@ -221,6 +232,9 @@ MOAICollisionProp::~MOAICollisionProp () {
 //----------------------------------------------------------------//
 void MOAICollisionProp::Move ( ZLVec3D move ) {
 
+	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
+	bool drawDebug = ( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAICollisionProp >());
+
 	// just cram everything in here for now.
 	// possible to break into steps for collision world later *if*
 	// more traditional physics approach is desired.
@@ -251,7 +265,7 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 		
 			// find contacts
 			ZLBox worldBounds = this->GetWorldBounds ();
-			worldBounds.Inflate ( 10.0f ); // TODO: epsilon
+			worldBounds.Inflate ( moveLength * 1.5f ); // TODO: epsilon
 		
 			contactAccumulator.Reset ();
 			this->GatherAndProcess ( contactAccumulator, worldBounds );
@@ -318,9 +332,7 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 				stepMoveNorm.PerpProject ( bestContact->mNormal );
 				stepMoveNorm.Norm ();
 				
-				float duh = stepMoveNorm.Dot ( bestContact->mTangent );
-				
-				float maxMove = duh > 0.0f ? bestContact->mPosD : bestContact->mNegD;
+				float maxMove = stepMoveNorm.Dot ( bestContact->mTangent ) > 0.0f ? bestContact->mPosD : bestContact->mNegD;
 				stepMoveLength = moveLength < maxMove ? moveLength : maxMove;
 				
 				DEBUG_LOG ( "----> STEP: (%g, %g) EDGE (%g, %g) MAX MOVE: %g\n",
@@ -338,7 +350,7 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 			
 			// TODO: final check that we aren't moving into a wall
 
-			// move (and force a dep node update)
+			// move (and force a dep node update to recompute the transform and bounds)
 			// TODO: this needs to be *way* more efficient!
 			this->mLoc.mX += stepMoveNorm.mX * stepMoveLength;
 			this->mLoc.mY += stepMoveNorm.mY * stepMoveLength;
@@ -354,10 +366,6 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 	
 	MOAICollisionProp::DrawContactPoints ( *this->mCollisionWorld, contacts, contactAccumulator.Top ());
 	
-//	this->mLoc.Add ( move );
-//	this->MOAITransformBase::MOAINode_Update ();
-//	this->MOAIPartitionHull::MOAINode_Update ();
-	
 	// resolve overlaps
 	MOAIOverlapResolver overlapResolver;
 	this->GatherAndProcess ( overlapResolver, this->GetWorldBounds ());
@@ -367,24 +375,24 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 	this->mLoc.Add ( resolveOverlaps );
 	this->ScheduleUpdate ();
 
-	if ( move.LengthSqrd () && this->mCollisionWorld ) {
-		
-		MOAIDrawShapeRetained& draw = *this->mCollisionWorld;
-		
-		draw.SetPenWidth ( 1.0f );
-		draw.SetPenColor ( ZLColor::PackRGBA ( 1.0f, 1.0f, 0.0f, 1.0f ));
-		
-		ZLRect worldRect = this->GetWorldBounds ().GetRect ();
-		float width = worldRect.Width ();
-		float height = worldRect.Height ();
-		
-		float radius = ( width < height ? width : height ) * 0.25f;
-		
-		draw.DrawCircleOutline ( this->mLoc.mX, this->mLoc.mY, radius, 32 );
-		
-		move.Norm ();
-		move.Scale ( radius );
-		draw.DrawLine ( this->mLoc.mX, this->mLoc.mY, this->mLoc.mX + move.mX, this->mLoc.mY + move.mY );
+	MOAIDrawShapeRetained& draw = *this->mCollisionWorld;
+
+	if ( drawDebug && debugLines.Bind ( DEBUG_DRAW_COLLISION_MOVE_RETICLE, draw )) {
+
+		if ( move.LengthSqrd () && this->mCollisionWorld ) {
+			
+			ZLRect worldRect = this->GetWorldBounds ().GetRect ();
+			float width = worldRect.Width ();
+			float height = worldRect.Height ();
+			
+			float radius = ( width < height ? width : height ) * 0.25f;
+			
+			draw.DrawCircleOutline ( this->mLoc.mX, this->mLoc.mY, radius, 32 );
+			
+			move.Norm ();
+			move.Scale ( radius );
+			draw.DrawLine ( this->mLoc.mX, this->mLoc.mY, this->mLoc.mX + move.mX, this->mLoc.mY + move.mY );
+		}
 	}
 }
 
@@ -446,9 +454,21 @@ void MOAICollisionProp::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "DEBUG_DRAW_COLLISION_ACTIVE_PROP_BOUNDS",				MOAIDebugLinesMgr::Pack < MOAICollisionProp >( DEBUG_DRAW_COLLISION_ACTIVE_PROP_BOUNDS ));
 	state.SetField ( -1, "DEBUG_DRAW_COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS",		MOAIDebugLinesMgr::Pack < MOAICollisionProp >( DEBUG_DRAW_COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS ));
 	state.SetField ( -1, "DEBUG_DRAW_COLLISION_ACTIVE_TOUCHED_PROP_BOUNDS",		MOAIDebugLinesMgr::Pack < MOAICollisionProp >( DEBUG_DRAW_COLLISION_ACTIVE_TOUCHED_PROP_BOUNDS ));
+	
+	state.SetField ( -1, "DEBUG_DRAW_COLLISION_CONTACT_NORMAL",						MOAIDebugLinesMgr::Pack < MOAICollisionProp >( DEBUG_DRAW_COLLISION_CONTACT_NORMAL ));
+	state.SetField ( -1, "DEBUG_DRAW_COLLISION_CONTACT_POINT_CORNER",				MOAIDebugLinesMgr::Pack < MOAICollisionProp >( DEBUG_DRAW_COLLISION_CONTACT_POINT_CORNER ));
+	state.SetField ( -1, "DEBUG_DRAW_COLLISION_CONTACT_POINT_CORNER_EDGE_NORMAL",	MOAIDebugLinesMgr::Pack < MOAICollisionProp >( DEBUG_DRAW_COLLISION_CONTACT_POINT_CORNER_EDGE_NORMAL ));
+	state.SetField ( -1, "DEBUG_DRAW_COLLISION_CONTACT_POINT_CORNER_TANGENT",		MOAIDebugLinesMgr::Pack < MOAICollisionProp >( DEBUG_DRAW_COLLISION_CONTACT_POINT_CORNER_TANGENT ));
+	state.SetField ( -1, "DEBUG_DRAW_COLLISION_CONTACT_POINT_CROSSING",				MOAIDebugLinesMgr::Pack < MOAICollisionProp >( DEBUG_DRAW_COLLISION_CONTACT_POINT_CROSSING ));
+	state.SetField ( -1, "DEBUG_DRAW_COLLISION_CONTACT_POINT_LEAVING",				MOAIDebugLinesMgr::Pack < MOAICollisionProp >( DEBUG_DRAW_COLLISION_CONTACT_POINT_LEAVING ));
+	state.SetField ( -1, "DEBUG_DRAW_COLLISION_CONTACT_POINT_PARALLEL",				MOAIDebugLinesMgr::Pack < MOAICollisionProp >( DEBUG_DRAW_COLLISION_CONTACT_POINT_PARALLEL ));
+	
+	state.SetField ( -1, "DEBUG_DRAW_COLLISION_MOVE_RETICLE",					MOAIDebugLinesMgr::Pack < MOAICollisionProp >( DEBUG_DRAW_COLLISION_MOVE_RETICLE ));
+	
 	state.SetField ( -1, "DEBUG_DRAW_COLLISION_OVERLAP_PROP_BOUNDS",			MOAIDebugLinesMgr::Pack < MOAICollisionProp >( DEBUG_DRAW_COLLISION_OVERLAP_PROP_BOUNDS ));
 	state.SetField ( -1, "DEBUG_DRAW_COLLISION_OVERLAPS",						MOAIDebugLinesMgr::Pack < MOAICollisionProp >( DEBUG_DRAW_COLLISION_OVERLAPS ));
 	state.SetField ( -1, "DEBUG_DRAW_COLLISION_WORLD_BOUNDS",					MOAIDebugLinesMgr::Pack < MOAICollisionProp >( DEBUG_DRAW_COLLISION_WORLD_BOUNDS ));
+	
 	
 	state.SetField ( -1, "OVERLAP_EVENTS_ON_UPDATE",		( u32 )OVERLAP_EVENTS_ON_UPDATE );
 	state.SetField ( -1, "OVERLAP_EVENTS_CONTINUOUS",		( u32 )OVERLAP_EVENTS_CONTINUOUS );
