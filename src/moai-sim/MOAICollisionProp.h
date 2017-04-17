@@ -67,6 +67,8 @@ private:
 	friend class MOAICollisionWorld;
 	friend class MOAIOverlapHandler;
 	
+	static const u32 DEFAULT_MAX_MOVE_STEPS = 8;
+	
 	u32									mCategory;			// type flags for collision object
 	u32									mMask;				// mask of type flags this object collides with
 	
@@ -93,7 +95,6 @@ private:
 	static void				DrawContactPoints		( MOAIDrawShape& draw, const MOAIMoveConstraint2D* contacts, u32 nContacts );
 	void					GatherAndProcess		( MOAICollisionPrimVisitor& visitor, const ZLBox& worldBounds );
 	bool					IsActive				();
-	void					Move					( ZLVec3D move );
 	void					Process					( MOAICollisionPrimVisitor& visitor, MOAICollisionProp& other );
 	static void				Process					( MOAICollisionPrimVisitor& visitor, MOAICollisionProp& prop0, MOAICollisionProp& prop1 );
 	
@@ -129,6 +130,12 @@ public:
 		TOTAL_DEBUG_LINE_STYLES,
 	};
 
+	enum {
+		SURFACE_MOVE_DETACH,
+		SURFACE_MOVE_SLIDE,
+		SURFACE_MOVE_LOCK,
+	};
+
 	DECL_LUA_FACTORY ( MOAICollisionProp )
 
 	static const u32 OVERLAP_ENABLE					= 0x01;		// prop behaves as collision region
@@ -144,6 +151,7 @@ public:
 
 	//----------------------------------------------------------------//
 	MOAICollisionShape*			GetCollisionShape				();
+	void						Move							( ZLVec3D move, u32 detach, u32 maxSteps );
 								MOAICollisionProp				();
 	virtual						~MOAICollisionProp				();
 	void						RegisterLuaClass				( MOAILuaState& state );

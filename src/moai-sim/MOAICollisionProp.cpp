@@ -45,9 +45,11 @@
 int MOAICollisionProp::_collisionMove ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICollisionProp, "U" )
 	
-	ZLVec3D move = state.GetValue < ZLVec3D >( 2, ZLVec3D::ORIGIN );
+	ZLVec3D move	= state.GetValue < ZLVec3D >( 2, ZLVec3D::ORIGIN );
+	u32 detach		= state.GetValue < u32 >( 5, SURFACE_MOVE_DETACH );
+	u32 maxSteps	= state.GetValue < u32 >( 6, DEFAULT_MAX_MOVE_STEPS );
 	
-	self->Move ( move );
+	self->Move ( move, detach, maxSteps );
 	
 	return 0;
 }
@@ -230,7 +232,7 @@ MOAICollisionProp::~MOAICollisionProp () {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionProp::Move ( ZLVec3D move ) {
+void MOAICollisionProp::Move ( ZLVec3D move, u32 detach, u32 maxSteps ) {
 
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	bool drawDebug = ( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAICollisionProp >());
@@ -242,8 +244,6 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 	// purpose here is just a proof of concept for an
 	// edge-following algorithm. will make all this user-configurable
 	// later.
-
-	static u32 MAX_PASSES = 8;
 	
 	MOAIMoveConstraint2D* contacts = ( MOAIMoveConstraint2D* )alloca ( 128 * sizeof ( MOAIMoveConstraint2D ));
 	MOAIMoveConstraintAccumulator2D contactAccumulator ( contacts, 128 );
@@ -253,7 +253,7 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 	
 	if ( moveLength > EPSILON ) {
 	
-		for ( u32 i = 0; i < MAX_PASSES; ++i ) {
+		for ( u32 i = 0; i < maxSteps; ++i ) {
 		
 			// find best contact points
 			
@@ -270,6 +270,7 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 			contactAccumulator.Reset ();
 			this->GatherAndProcess ( contactAccumulator, worldBounds );
 			u32 nContacts = contactAccumulator.Top ();
+			u32 nPushContacts = 0;
 			
 			for ( u32 i = 0; i < nContacts; ++i ) {
 			
@@ -284,13 +285,15 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 				
 				if ( d <= EPSILON ) {
 
+					nPushContacts++;
+
 					// heading into - push
 					if ( d < bestPushDot ) {
 						bestPushContact = &contact;
 						bestPushDot = d;
 					}
 				}
-				else {
+				else if ( detach != SURFACE_MOVE_DETACH ){
 
 					// heading out of - pull
 					if ( d < bestPullDot ) {
@@ -314,11 +317,15 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 			
 				// straight out of a wall
 				if ( bestPullDot >= ( 1.0f - EPSILON )) {
-					break;
+					if ( detach != SURFACE_MOVE_SLIDE ) {
+						break;
+					}
 				}
-				bestContact = bestPullContact;
+				else {
+					bestContact = bestPullContact;
+				}
 			}
-			else if ( nContacts ) {
+			else if (( nContacts ) && ( detach == SURFACE_MOVE_LOCK )) {
 			
 				break;
 			}
@@ -327,7 +334,7 @@ void MOAICollisionProp::Move ( ZLVec3D move ) {
 			float stepMoveLength;
 
 			if ( bestContact ) {
-						
+				
 				stepMoveNorm.Init ( move.mX, move.mY );
 				stepMoveNorm.PerpProject ( bestContact->mNormal );
 				stepMoveNorm.Norm ();
@@ -469,12 +476,15 @@ void MOAICollisionProp::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "DEBUG_DRAW_COLLISION_OVERLAPS",						MOAIDebugLinesMgr::Pack < MOAICollisionProp >( DEBUG_DRAW_COLLISION_OVERLAPS ));
 	state.SetField ( -1, "DEBUG_DRAW_COLLISION_WORLD_BOUNDS",					MOAIDebugLinesMgr::Pack < MOAICollisionProp >( DEBUG_DRAW_COLLISION_WORLD_BOUNDS ));
 	
-	
 	state.SetField ( -1, "OVERLAP_EVENTS_ON_UPDATE",		( u32 )OVERLAP_EVENTS_ON_UPDATE );
 	state.SetField ( -1, "OVERLAP_EVENTS_CONTINUOUS",		( u32 )OVERLAP_EVENTS_CONTINUOUS );
 	state.SetField ( -1, "OVERLAP_EVENTS_LIFECYCLE",		( u32 )OVERLAP_EVENTS_LIFECYCLE );
 	state.SetField ( -1, "OVERLAP_GRANULARITY_FINE",		( u32 )OVERLAP_GRANULARITY_FINE );
 	state.SetField ( -1, "OVERLAP_CALCULATE_BOUNDS",		( u32 )OVERLAP_CALCULATE_BOUNDS );
+	
+	state.SetField ( -1, "SURFACE_MOVE_DETACH",				( u32 )SURFACE_MOVE_DETACH );
+	state.SetField ( -1, "SURFACE_MOVE_SLIDE",				( u32 )SURFACE_MOVE_SLIDE );
+	state.SetField ( -1, "SURFACE_MOVE_LOCK",				( u32 )SURFACE_MOVE_LOCK );
 	
 	state.SetField ( -1, "CATEGORY_MASK_ALL",				( u32 )CATEGORY_MASK_ALL );
 }

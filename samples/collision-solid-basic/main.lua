@@ -148,7 +148,7 @@ main = function ()
 			yd = yd - ACC
 		end
 
-		coll1:collisionMove ( xd, yd, 0 )
+		coll1:collisionMove ( xd, yd, 0, MOAICollisionProp.SURFACE_MOVE_SLIDE )
 		--coll1:collisionMove ( 1, 0, 0 )
 
 		xd = xd * DAMP
