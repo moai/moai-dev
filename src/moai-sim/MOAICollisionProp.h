@@ -95,18 +95,16 @@ private:
 	static void				DrawContactPoints		( MOAIDrawShape& draw, const MOAIMoveConstraint2D* contacts, u32 nContacts );
 	void					GatherAndProcess		( MOAICollisionPrimVisitor& visitor, const ZLBox& worldBounds );
 	bool					IsActive				();
-	void					Process					( MOAICollisionPrimVisitor& visitor, MOAICollisionProp& other );
-	static void				Process					( MOAICollisionPrimVisitor& visitor, MOAICollisionProp& prop0, MOAICollisionProp& prop1 );
 	
 	//----------------------------------------------------------------//
-	void					MOAIDrawable_DrawDebug						( int subPrimID );
-	bool					MOAINode_ApplyAttrOp						( u32 attrID, MOAIAttribute& attr, u32 op );
-	void					MOAINode_Update								();
-	void					MOAIPartitionHull_AddToSortBuffer			( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
-	u32						MOAIPartitionHull_AffirmInterfaceMask		( MOAIPartition& partition );
-	ZLBounds				MOAIPartitionHull_GetModelBounds			();
-	bool					MOAIPartitionHull_PrepareForInsertion		( const MOAIPartition& partition );
-	void					MOAIPartitionHull_WasRemovedFromPartition	();
+	void					MOAIDrawable_DrawDebug							( int subPrimID );
+	bool					MOAINode_ApplyAttrOp							( u32 attrID, MOAIAttribute& attr, u32 op );
+	void					MOAINode_Update									();
+	void					MOAIPartitionHull_AddToSortBuffer				( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
+	u32						MOAIPartitionHull_AffirmInterfaceMask			( MOAIPartition& partition );
+	ZLBounds				MOAIPartitionHull_GetModelBounds				();
+	bool					MOAIPartitionHull_PrepareForInsertion			( const MOAIPartition& partition );
+	void					MOAIPartitionHull_WasRemovedFromPartition		();
 	
 public:
 
@@ -127,6 +125,7 @@ public:
 		DEBUG_DRAW_COLLISION_OVERLAP_PROP_BOUNDS,
 		DEBUG_DRAW_COLLISION_OVERLAPS,
 		DEBUG_DRAW_COLLISION_WORLD_BOUNDS,
+		
 		TOTAL_DEBUG_LINE_STYLES,
 	};
 

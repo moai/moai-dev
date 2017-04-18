@@ -17,9 +17,11 @@ protected:
 
 	//----------------------------------------------------------------//
 	void			MOAICollisionPrimVisitor_Process		( const MOAICollisionPrim& shape0, const MOAICollisionPrim& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 );
-	virtual void	MOAIOverlap_OnOverlap					( const ZLBounds& bounds ) = 0;
+	virtual void	MOAIOverlap_OnOverlap					( const ZLBounds& bounds );
 
 public:
+	
+	GET_SET ( bool, CalculateBounds, mCalculateBounds )
 	
 	//----------------------------------------------------------------//
 					MOAIOverlap				();

@@ -27,8 +27,8 @@ public:
 	ZLVec2D		mEdgeNormal;
 	ZLVec2D		mCornerTangent;
 	
-	float		mNegD; // the negative distance the point can travel along the tangent before reach the end
-	float		mPosD; // the positive distance the point can travel along the tangent before reach the end
+	float		mNegD; // the negative distance the point can travel along the tangent before reaching the end
+	float		mPosD; // the positive distance the point can travel along the tangent before reaching the end
 };
 
 //================================================================//
@@ -48,10 +48,7 @@ private:
 	void		PushCorner							( const ZLVec2D& point, const ZLVec2D& tangent, const ZLVec2D& normal, const ZLVec2D& v0, const ZLVec2D& v1, const ZLVec2D& edgeNormal, const ZLVec2D& cornerTangent );
 
 	//----------------------------------------------------------------//
-	void		MOAICollisionPrimVisitor_Process			( const MOAICollisionPrim& shape0, const MOAICollisionPrim& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 );
-
-
-
+	void		MOAICollisionPrimVisitor_Process	( const MOAICollisionPrim& shape0, const MOAICollisionPrim& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 );
 
 public:
 

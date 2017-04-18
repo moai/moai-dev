@@ -15,30 +15,6 @@ class MOAIPartitionHull;
 class MOAICollisionWorld;
 
 //================================================================//
-// MOAIOverlapHandler
-//================================================================//
-class MOAIOverlapHandler :
-	public MOAIOverlap {
-private:
-
-	friend class MOAICollisionWorld;
-
-	MOAICollisionProp&			mProp0;
-	MOAICollisionProp&			mProp1;
-
-	//----------------------------------------------------------------//
-	void			MOAIOverlap_OnOverlap	( const ZLBounds& bounds );
-
-public:
-	
-	const MOAITransformBase&	mTransform0;
-	const MOAITransformBase&	mTransform1;
-	
-	//----------------------------------------------------------------//
-					MOAIOverlapHandler		( MOAICollisionProp& prop0, MOAICollisionProp& prop1 );
-};
-
-//================================================================//
 // MOAICollisionWorld
 //================================================================//
 class MOAICollisionWorld :

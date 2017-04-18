@@ -25,37 +25,20 @@
 //================================================================//
 // MOAIOverlapHandler
 //================================================================//
+class MOAIOverlapHandler :
+	public MOAIOverlap {
+private:
 
-//----------------------------------------------------------------//
-MOAIOverlapHandler::MOAIOverlapHandler ( MOAICollisionProp& prop0, MOAICollisionProp& prop1 ) :
-	mProp0 ( prop0 ),
-	mProp1 ( prop1 ),
-	mTransform0 ( prop0 ),
-	mTransform1 ( prop1 ) {
+	friend class MOAICollisionWorld;
 
-	assert ( prop0.mCollisionWorld == prop1.mCollisionWorld );
-	
-	this->mCalculateBounds = ((( prop0.mOverlapFlags | prop1.mOverlapFlags ) & MOAICollisionProp::OVERLAP_CALCULATE_BOUNDS ) != 0 );
-	
-	bool overlapped = false;
+	//----------------------------------------------------------------//
+	void MOAIOverlap_OnOverlap	( const ZLBounds& bounds ) {
+		if ( this->mProp0 && this->mProp1 ) {
+			this->mProp0->mCollisionWorld->HandleOverlap ( *this->mProp0, 0, *this->mProp1, 0, bounds );
+		}
+	}
+};
 
-	// TODO: actually pay attention to OVERLAP_GRANULARITY_FINE and OVERLAP_CALCULATE_BOUNDS
-
-	// TODO: this should all be handled by collition iterators within the shapes
-	// TODO: shapes may be complex - compound shapes, grids, etc.
-	
-	MOAICollisionProp::Process ( *this, prop0, prop1 );
-}
-
-//================================================================//
-// ::implementation::
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAIOverlapHandler::MOAIOverlap_OnOverlap ( const ZLBounds& bounds ) {
-
-	this->mProp0.mCollisionWorld->HandleOverlap ( this->mProp0, 0, this->mProp1, 0, bounds );
-}
 
 //================================================================//
 // local
@@ -343,7 +326,9 @@ void MOAICollisionWorld::ProcessOverlaps () {
 			if ( otherProp->mOverlapPass == nextPass ) continue; // has been processed
 			
 			// this calculates the detailed overlap, updates the links and sends overlap events
-			MOAIOverlapHandler ( prop, *otherProp );
+			MOAIOverlapHandler overlapHandler;
+			overlapHandler.SetCalculateBounds ((( prop.mOverlapFlags | otherProp->mOverlapFlags ) & MOAICollisionProp::OVERLAP_CALCULATE_BOUNDS ) != 0 );
+			overlapHandler.Process ( prop, *otherProp );
 		}
 		
 		this->PruneOverlaps ( prop );

@@ -6,6 +6,9 @@
 
 #include <moai-sim/MOAICollisionConsts.h>
 
+class MOAICollisionProp;
+class MOAICollisionShape;
+
 #define DECLARE_OVERLAP_SHAPE(name, shapeClass, typeID)			\
 class MOAIOverlap##name :										\
 	public MOAICollisionPrim {									\
@@ -35,24 +38,24 @@ public:
 class MOAICollisionPrimVisitor {
 protected:
 
+	MOAICollisionProp*		mProp0;
+	MOAICollisionProp*		mProp1;
+
 	//----------------------------------------------------------------//
-	virtual void		MOAICollisionPrimVisitor_Process			( const MOAICollisionPrim& shape0, const MOAICollisionPrim& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 ) = 0;
+	virtual void	MOAICollisionPrimVisitor_Process	( const MOAICollisionPrim& shape0, const MOAICollisionPrim& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 ) = 0;
 
 public:
 
 	//----------------------------------------------------------------//
-	MOAICollisionPrimVisitor () {
-	}
-	
-	//----------------------------------------------------------------//
-	virtual ~MOAICollisionPrimVisitor () {
-	}
+					MOAICollisionPrimVisitor			();
+					~MOAICollisionPrimVisitor			();
+	void			Process								( MOAICollisionProp& prop0, MOAICollisionProp& prop1 );
+	void			Process								( const MOAICollisionPrim& shape0, const MOAICollisionPrim& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 );
 
-	//----------------------------------------------------------------//
-	void Process ( const MOAICollisionPrim& shape0, const MOAICollisionPrim& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 ) {
-	
-		this->MOAICollisionPrimVisitor_Process ( shape0, shape1, t0, t1 );
-	}
+	void			Process								( const MOAICollisionShape& shape0, const ZLBox& bounds1, const ZLAffine3D& t0, const ZLAffine3D& t1 );
+	void			Process								( const MOAICollisionShape& shape0, const MOAICollisionShape& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 );
+
+	void			SetProps							( MOAICollisionProp* prop0, MOAICollisionProp* prop1 );
 };
 
 DECLARE_OVERLAP_SHAPE ( Box,		ZLBox,			MOAICollisionConsts::BOX )

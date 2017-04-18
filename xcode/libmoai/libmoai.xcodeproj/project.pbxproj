@@ -5724,6 +5724,8 @@
 		CDE440171AC0D27600C745DB /* ZLFrustumFitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE440101AC0D27600C745DB /* ZLFrustumFitter.cpp */; };
 		CDE440181AC0D27600C745DB /* ZLFrustumFitter.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE440111AC0D27600C745DB /* ZLFrustumFitter.h */; };
 		CDE440191AC0D27600C745DB /* ZLFrustumFitter.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE440111AC0D27600C745DB /* ZLFrustumFitter.h */; };
+		CDE6CF5F1EA6D3B80020B819 /* MOAICollisionPrim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE6CF5E1EA6D3B80020B819 /* MOAICollisionPrim.cpp */; };
+		CDE6CF601EA6D3B80020B819 /* MOAICollisionPrim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE6CF5E1EA6D3B80020B819 /* MOAICollisionPrim.cpp */; };
 		CDE7ED701E402A550005D63A /* MOAIDrawShape.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE7ED6D1E402A550005D63A /* MOAIDrawShape.h */; };
 		CDE7ED711E402A550005D63A /* MOAIDrawShape.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE7ED6D1E402A550005D63A /* MOAIDrawShape.h */; };
 		CDE7ED761E4033AB0005D63A /* MOAIDrawShapeImmediate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE7ED721E4033AB0005D63A /* MOAIDrawShapeImmediate.cpp */; };
@@ -9516,6 +9518,7 @@
 		CDE4400F1AC0D27600C745DB /* ZLFrustum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLFrustum.h; sourceTree = "<group>"; };
 		CDE440101AC0D27600C745DB /* ZLFrustumFitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLFrustumFitter.cpp; sourceTree = "<group>"; };
 		CDE440111AC0D27600C745DB /* ZLFrustumFitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLFrustumFitter.h; sourceTree = "<group>"; };
+		CDE6CF5E1EA6D3B80020B819 /* MOAICollisionPrim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICollisionPrim.cpp; sourceTree = "<group>"; };
 		CDE7ED6D1E402A550005D63A /* MOAIDrawShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDrawShape.h; sourceTree = "<group>"; };
 		CDE7ED721E4033AB0005D63A /* MOAIDrawShapeImmediate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIDrawShapeImmediate.cpp; sourceTree = "<group>"; };
 		CDE7ED731E4033AB0005D63A /* MOAIDrawShapeImmediate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDrawShapeImmediate.h; sourceTree = "<group>"; };
@@ -14841,6 +14844,7 @@
 			isa = PBXGroup;
 			children = (
 				CD94BAE91E486F39003A0CFF /* MOAICollisionConsts.h */,
+				CDE6CF5E1EA6D3B80020B819 /* MOAICollisionPrim.cpp */,
 				CD94BAEC1E4871CC003A0CFF /* MOAICollisionPrim.h */,
 				CD73A5F8188F0AD200DFACDB /* MOAICollisionProp.cpp */,
 				CD73A5F9188F0AD200DFACDB /* MOAICollisionProp.h */,
@@ -19973,6 +19977,7 @@
 				CDE7ED761E4033AB0005D63A /* MOAIDrawShapeImmediate.cpp in Sources */,
 				CD94BAF71E4876D0003A0CFF /* MOAIMoveConstraint2D.cpp in Sources */,
 				CD4C3E1D180A63BB00C02381 /* MOAIEaseType.cpp in Sources */,
+				CDE6CF5F1EA6D3B80020B819 /* MOAICollisionPrim.cpp in Sources */,
 				CD792FB41E4F40E000388A4B /* MOAIMaterialHolder.cpp in Sources */,
 				CD4C3E87180A63BB00C02381 /* MOAIPartitionResultMgr.cpp in Sources */,
 				CD4C3E5E180A63BB00C02381 /* MOAILocationSensor.cpp in Sources */,
@@ -20161,6 +20166,7 @@
 				CDE7ED771E4033AB0005D63A /* MOAIDrawShapeImmediate.cpp in Sources */,
 				CD94BAF81E4876D0003A0CFF /* MOAIMoveConstraint2D.cpp in Sources */,
 				CD4C4041180A63C200C02381 /* MOAICompassSensor.cpp in Sources */,
+				CDE6CF601EA6D3B80020B819 /* MOAICollisionPrim.cpp in Sources */,
 				CD792FB51E4F40E000388A4B /* MOAIMaterialHolder.cpp in Sources */,
 				CD4C405A180A63C200C02381 /* MOAIFrameBufferTexture.cpp in Sources */,
 				CD4C40AD180A63C200C02381 /* MOAIParticleSystem.cpp in Sources */,

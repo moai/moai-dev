@@ -104,68 +104,6 @@ void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionShape::Process ( MOAICollisionPrimVisitor& visitor, const ZLBox& otherBounds, const ZLAffine3D& t0, const ZLAffine3D& t1 ) const {
-
-	MOAIOverlapBox otherShape;
-	otherShape.mShape = otherBounds;
-	otherShape.mBounds = otherBounds;
-
-	size_t selfShapeCount = this->mShapes.Size ();
-
-	if ( selfShapeCount == 1 ) {
-	
-		visitor.Process ( *this->mShapes [ 0 ], otherShape, t0, t1 );
-	}
-	else {
-	
-		for ( size_t i = 0; i < selfShapeCount; ++i ) {
-			visitor.Process ( *this->mShapes [ i ], otherShape, t0, t1 );
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionShape::Process ( MOAICollisionPrimVisitor& visitor, const MOAICollisionShape& otherShape, const ZLAffine3D& t0, const ZLAffine3D& t1 ) const {
-
-	MOAICollisionShape::Process ( visitor, *this, otherShape, t0, t1 );
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionShape::Process ( MOAICollisionPrimVisitor& visitor, const MOAICollisionShape& shape0, const MOAICollisionShape& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 ) {
-
-	size_t shapeCount0 = shape0.mShapes.Size ();
-	size_t shapeCount1 = shape1.mShapes.Size ();
-	
-	if (( shapeCount0 == 1 ) || ( shapeCount1 == 1 )) {
-	
-		if (( shapeCount0 == 1 ) && ( shapeCount1 == 1 )) {
-		
-			visitor.Process ( *shape0.mShapes [ 0 ], *shape1.mShapes [ 0 ], t0, t1 );
-		}
-		else if ( shapeCount1 == 1 ) {
-		
-			for ( size_t i = 0; i < shapeCount0; ++i ) {
-				visitor.Process ( *shape0.mShapes [ i ], *shape1.mShapes [ 0 ], t0, t1 );
-			}
-		}
-		else {
-		
-			for ( size_t i = 0; i < shapeCount1; ++i ) {
-				visitor.Process ( *shape0.mShapes [ 0 ], *shape1.mShapes [ i ], t0, t1 );
-			}
-		}
-	}
-	else {
-	
-		for ( size_t i = 0; i < shapeCount0; ++i ) {
-			for ( size_t j = 0; j < shapeCount1; ++j ) {
-				visitor.Process ( *shape0.mShapes [ i ], *shape1.mShapes [ j ], t0, t1 );
-			}
-		}
-	}
-}
-
-//----------------------------------------------------------------//
 MOAICollisionShape::MOAICollisionShape () {
 
 	this->mBounds = ZLBounds::EMPTY;

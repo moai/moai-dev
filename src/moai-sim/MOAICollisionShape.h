@@ -17,6 +17,8 @@ class MOAICollisionShape :
 	public ZLRefCountedObject {
 private:
 
+	friend class MOAICollisionPrimVisitor;
+
 	ZLBounds		mBounds;
 	
 	ZLLeanArray < MOAICollisionPrim* >	mShapes;
@@ -31,9 +33,6 @@ public:
 	//----------------------------------------------------------------//
 	void			Clear							();
 	void			Draw							( const ZLAffine3D& localToWorldMtx );
-	void			Process							( MOAICollisionPrimVisitor& visitor, const ZLBox& otherBounds, const ZLAffine3D& t0, const ZLAffine3D& t1 ) const;
-	void			Process							( MOAICollisionPrimVisitor& visitor, const MOAICollisionShape& otherShape, const ZLAffine3D& t0, const ZLAffine3D& t1 ) const;
-	static void		Process							( MOAICollisionPrimVisitor& visitor, const MOAICollisionShape& shape0, const MOAICollisionShape& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 );
 					MOAICollisionShape				();
 					~MOAICollisionShape				();
 	void			ReserveShapes					( u32 totalShapes );
