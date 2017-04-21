@@ -37,8 +37,6 @@ MOAIVertexBufferWithFormat::MOAIVertexBufferWithFormat () :
 
 //----------------------------------------------------------------//
 MOAIVertexBufferWithFormat::~MOAIVertexBufferWithFormat () {
-
-	assert ( !this->mIsBound );
 }
 
 //----------------------------------------------------------------//
