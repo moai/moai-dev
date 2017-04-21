@@ -48,7 +48,7 @@ public:
 
 	//----------------------------------------------------------------//
 					MOAICollisionPrimVisitor			();
-					~MOAICollisionPrimVisitor			();
+	virtual			~MOAICollisionPrimVisitor			();
 	void			Process								( MOAICollisionProp& prop0, MOAICollisionProp& prop1 );
 	void			Process								( const MOAICollisionPrim& shape0, const MOAICollisionPrim& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 );
 
