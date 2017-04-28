@@ -74,9 +74,9 @@ void MOAIDrawShape::DrawEllipseFill ( const ZLRect& rect, u32 steps ) {
 
 //----------------------------------------------------------------//
 void MOAIDrawShape::DrawEllipseFill ( float x, float y, float xRad, float yRad, u32 steps ) {
-
-	float angle = ( float )TWOPI / ( float )steps;
-	float angleStep = ( float )PI;
+	
+	float angle = ( float )PI;
+	float angleStep = ( float )TWOPI / ( float )steps;
 	
 	ZLVec3D v0 ( x, y, 0.0f );
 	ZLVec3D v1 ( x + ( Cos ( angle ) * xRad ), y + ( Sin ( angle ) * yRad ), 0.0f );
@@ -86,7 +86,7 @@ void MOAIDrawShape::DrawEllipseFill ( float x, float y, float xRad, float yRad, 
 		angle += angleStep;
 		ZLVec3D v2 ( x + ( Cos ( angle ) * xRad ), y + ( Sin ( angle ) * yRad ), 0.0f );
 		
-		this->DrawTriangleFill ( v0, v1, v2 );
+		this->DrawTriangleFill ( v0, v2, v1 );
 		
 		v1 = v2;
 	}
