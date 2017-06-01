@@ -4,7 +4,7 @@
 #ifndef	MOAINOTIFICATIONSIOS_H
 #define	MOAINOTIFICATIONSIOS_H
 
-#ifndef DISABLE_NOTIFICATIONS
+#if 0
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>

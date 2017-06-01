@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <zl-util/ZLLog.h>
 #include <zl-util/ZLStream.h>
 #include <zl-util/ZLXmlReader.h>
 
@@ -170,11 +171,6 @@ ZLXmlElement* ZLXmlReader::Parse () {
 			
 			case XML_ERROR_NOT_SUSPENDED:
 			case XML_STATUS_ERROR: {
-				fprintf ( stderr,
-					"%s at line %d\n",
-					XML_ErrorString ( XML_GetErrorCode (( XML_Parser )this->mParser )),
-					( int )XML_GetCurrentLineNumber (( XML_Parser )this->mParser )
-				);
 				this->mEvent = XML_ERROR;
 				this->SetElement ( 0 );
 				more = false;
@@ -183,6 +179,13 @@ ZLXmlElement* ZLXmlReader::Parse () {
 		};
 	}
 	return this->GetElement ();
+}
+
+//----------------------------------------------------------------//
+cc8* ZLXmlReader::GetErrorString () {
+
+	XML_Error error = XML_GetErrorCode (( XML_Parser )this->mParser );
+	return error == XML_ERROR_NONE ? 0 : XML_ErrorString ( error );
 }
 
 //----------------------------------------------------------------//

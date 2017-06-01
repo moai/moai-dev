@@ -108,6 +108,7 @@ public:
 	//----------------------------------------------------------------//
 	void			Clear			();
 	ZLXmlElement*	GetElement		();
+	cc8*			GetErrorString	();
 	int				GetLineNumber	();
 	ZLXmlElement*	Parse			();
 	void			SetStream		( ZLStream& stream );

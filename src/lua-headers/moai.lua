@@ -190,16 +190,17 @@ if MOAIXmlParser then
 				local element = {
 					getAttribute	= function ( name ) return parser:getElementAttribute ( name ) end,
 					getAttributes	= function () return parser:getElementAttributes () end,
-					getLineNumber	= function () return parser:getElementLineNumber () end,
+					getErrorString	= function () return parser:getErrorString () end,
+					getLineNumber	= function () return parser:getLineNumber () end,
 					getName			= function () return parser:getElementName () end,
 					getText			= function () return parser:getElementText () end,
 				}
-		
+				
 				return function ()
 					if more then
 						local event = parser:step ()
 						more = ( event ~= MOAIXmlParser.XML_ERROR ) and ( event ~= MOAIXmlParser.DONE )
-						return event, more and element
+						return event, element
 					end
 				end
 			end

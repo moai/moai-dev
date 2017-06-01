@@ -35,7 +35,7 @@ void AKUIosContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIAppIOS )
 	REGISTER_LUA_CLASS ( MOAIDialogIOS )
 	REGISTER_LUA_CLASS ( MOAIKeyboardIOS )
-	REGISTER_LUA_CLASS ( MOAINotificationsIOS )
+	//REGISTER_LUA_CLASS ( MOAINotificationsIOS ) // TODO: fix me
 	REGISTER_LUA_CLASS ( MOAIWebViewIOS )
 
 	// Device properties
@@ -91,20 +91,27 @@ void AKUIosContextInitialize () {
 
 //----------------------------------------------------------------//
 void AKUIosNotifyLocalNotificationReceived ( UILocalNotification* notification ) {
+	UNUSED ( notification );
 
-	MOAINotificationsIOS::Get ().NotifyLocalNotificationReceived ( notification );
+	// TODO: fix me
+	//MOAINotificationsIOS::Get ().NotifyLocalNotificationReceived ( notification );
 }
 
 //----------------------------------------------------------------//
 void AKUIosNotifyRemoteNotificationReceived ( NSDictionary* notification ) {
+	UNUSED ( notification );
 
-	MOAINotificationsIOS::Get ().NotifyRemoteNotificationReceived ( notification );
+	// TODO: fix me
+	//MOAINotificationsIOS::Get ().NotifyRemoteNotificationReceived ( notification );
 }
 
 //----------------------------------------------------------------//
 void AKUIosNotifyRemoteNotificationRegistrationComplete ( NSData* deviceToken, NSError* error ) {
+	UNUSED ( deviceToken );
+	UNUSED ( error );
 
-	MOAINotificationsIOS::Get ().NotifyRemoteRegistrationComplete ( deviceToken, error );
+	// TODO: fix me
+	//MOAINotificationsIOS::Get ().NotifyRemoteRegistrationComplete ( deviceToken, error );
 }
 
 //----------------------------------------------------------------//

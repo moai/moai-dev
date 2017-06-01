@@ -54,15 +54,6 @@ int MOAIXmlParser::_getElementAttributes ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int	MOAIXmlParser::_getElementLineNumber ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIXmlParser, "U" )
-	
-	state.Push ( self->mReader.GetLineNumber ());
-	return 1;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
 int MOAIXmlParser::_getElementName ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIXmlParser, "U" )
 
@@ -85,6 +76,28 @@ int MOAIXmlParser::_getElementText ( lua_State* L ) {
 		return 1;
 	}
 	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int	MOAIXmlParser::_getErrorString ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIXmlParser, "U" )
+	
+	cc8* error = self->mReader.GetErrorString ();
+	if ( error ) {
+		state.Push ( error );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int	MOAIXmlParser::_getLineNumber ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIXmlParser, "U" )
+	
+	state.Push ( self->mReader.GetLineNumber ());
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -261,9 +274,10 @@ void MOAIXmlParser::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable[] = {
 		{ "getElementAttribute",	_getElementAttribute },
 		{ "getElementAttributes",	_getElementAttributes },
-		{ "getElementLineNumber",	_getElementLineNumber },
 		{ "getElementName",			_getElementName },
 		{ "getElementText",			_getElementText },
+		{ "getErrorString",			_getErrorString },
+		{ "getLineNumber",			_getLineNumber },
 		{ "setStream",				_setStream },
 		{ "step",					_step },
 		{ NULL, NULL }

@@ -1,7 +1,9 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef DISABLE_NOTIFICATIONS
+// TODO: fix warnings
+
+#if 0
 
 #import <moai-apple/NSDictionary+MOAILib.h>
 #import <moai-apple/NSData+MOAILib.h>
