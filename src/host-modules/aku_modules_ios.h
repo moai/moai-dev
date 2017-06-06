@@ -63,6 +63,10 @@
 	#include <moai-ios-tapjoy/host.h>
 #endif
 
+#if AKU_WITH_IOS_TENJIN
+    #include <moai-ios-tenjin/host.h>
+#endif
+
 #if AKU_WITH_IOS_URBAN_AIRSHIP
 	#include <moai-ios-urban-airship/host.h>
 #endif

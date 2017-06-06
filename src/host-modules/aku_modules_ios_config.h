@@ -57,6 +57,10 @@
 		#define AKU_WITH_IOS_TAPJOY 0
 	#endif
 
+    #ifndef AKU_WITH_IOS_TENJIN
+        #define AKU_WITH_IOS_TENJIN 0
+    #endif
+
 	#ifndef AKU_WITH_IOS_URBAN_AIRSHIP
 		#define AKU_WITH_IOS_URBAN_AIRSHIP 0
 	#endif
@@ -64,6 +68,5 @@
 	#ifndef AKU_WITH_IOS_VUNGLE
 		#define AKU_WITH_IOS_VUNGLE 0
 	#endif
-
 
 #endif

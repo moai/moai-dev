@@ -5012,6 +5012,16 @@
 		E9940D6914B7A217006465CC /* lfs.c in Sources */ = {isa = PBXBuildFile; fileRef = E9940D6514B7A217006465CC /* lfs.c */; };
 		E9940D6A14B7A217006465CC /* lfs.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940D6714B7A217006465CC /* lfs.h */; };
 		E9940D6B14B7A217006465CC /* lfs.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940D6714B7A217006465CC /* lfs.h */; };
+		ED1E28071ED0C82C006EB699 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = EDE585D81EC69FCC0063FB30 /* host.h */; };
+		ED1E28081ED0C832006EB699 /* MOAITenjinIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = EDE585DA1EC69FCC0063FB30 /* MOAITenjinIOS.h */; };
+		ED1E28091ED0C83D006EB699 /* MOAITenjinIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = EDE585DB1EC69FCC0063FB30 /* MOAITenjinIOS.mm */; };
+		ED1E280A1ED0C840006EB699 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = EDE585D91EC69FCC0063FB30 /* host.mm */; };
+		ED8238C61EE758040009EA7D /* libTenjinSDKUniversal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED8238C11EE758040009EA7D /* libTenjinSDKUniversal.a */; };
+		ED8238C71EE758040009EA7D /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = ED8238C31EE758040009EA7D /* README.md */; };
+		ED8238C81EE758040009EA7D /* TenjinSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = ED8238C41EE758040009EA7D /* TenjinSDK.h */; };
+		ED8238CB1EE75D860009EA7D /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED8238CA1EE75D860009EA7D /* AdSupport.framework */; };
+		ED8238CD1EE75D8D0009EA7D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED8238CC1EE75D8D0009EA7D /* StoreKit.framework */; };
+		ED8238CF1EE75D930009EA7D /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED8238CE1EE75D930009EA7D /* iAd.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -8072,6 +8082,19 @@
 		CDFB27501A3C27F800853B1D /* STLSort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STLSort.h; sourceTree = "<group>"; };
 		E9940D6514B7A217006465CC /* lfs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lfs.c; sourceTree = "<group>"; };
 		E9940D6714B7A217006465CC /* lfs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lfs.h; sourceTree = "<group>"; };
+		ED8238C11EE758040009EA7D /* libTenjinSDKUniversal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTenjinSDKUniversal.a; sourceTree = "<group>"; };
+		ED8238C21EE758040009EA7D /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		ED8238C31EE758040009EA7D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		ED8238C41EE758040009EA7D /* TenjinSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TenjinSDK.h; sourceTree = "<group>"; };
+		ED8238C51EE758040009EA7D /* TenjinSDK.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TenjinSDK.podspec; sourceTree = "<group>"; };
+		ED8238CA1EE75D860009EA7D /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		ED8238CC1EE75D8D0009EA7D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		ED8238CE1EE75D930009EA7D /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		EDE585D81EC69FCC0063FB30 /* host.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = host.h; sourceTree = "<group>"; };
+		EDE585D91EC69FCC0063FB30 /* host.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = host.mm; sourceTree = "<group>"; };
+		EDE585DA1EC69FCC0063FB30 /* MOAITenjinIOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MOAITenjinIOS.h; sourceTree = "<group>"; };
+		EDE585DB1EC69FCC0063FB30 /* MOAITenjinIOS.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MOAITenjinIOS.mm; sourceTree = "<group>"; };
+		EDE585E91EC6A19F0063FB30 /* liblibmoai-ios-tenjin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liblibmoai-ios-tenjin.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -8558,6 +8581,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EDE585E31EC6A19F0063FB30 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED8238CF1EE75D930009EA7D /* iAd.framework in Frameworks */,
+				ED8238CD1EE75D8D0009EA7D /* StoreKit.framework in Frameworks */,
+				ED8238CB1EE75D860009EA7D /* AdSupport.framework in Frameworks */,
+				ED8238C61EE758040009EA7D /* libTenjinSDKUniversal.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -8591,6 +8625,7 @@
 				CD795CBA17F0834F006AEB47 /* sdl */,
 				B0FC2A0616F4004900796249 /* sfmt */,
 				03240BA213564CB0000ADC60 /* sqlite */,
+				ED8238C01EE758040009EA7D /* tenjin-1.7.3 */,
 				03240BA613564CB0000ADC60 /* tinyxml */,
 				07658749145CD04800723A7D /* tlsf */,
 				CD07C10013A14B5100C9386C /* untz */,
@@ -8809,6 +8844,7 @@
 				CDD7814C1A1162F400AD133E /* moai-ios-motion */,
 				CDC097E21AE9C79E002E325F /* moai-ios-movie */,
 				CDA4B7371808AB6F000129F9 /* moai-ios-tapjoy */,
+				EDE585D71EC69FCC0063FB30 /* moai-ios-tenjin */,
 				CD4C4166180A9AC500C02381 /* moai-ios-urban-airship */,
 				CDA4B7361808AB4A000129F9 /* moai-ios-vungle */,
 				89BE6AC31739759100DFE837 /* moai-luaext */,
@@ -8899,6 +8935,7 @@
 				CD8316C91BED3C1800745C8A /* libmoai-ios-3rdparty-liblua.a */,
 				CD320DDA1C5179B000AD5E5C /* libmoai-ios-harfbuzz.a */,
 				CD320F5D1C517A0E00AD5E5C /* libmoai-osx-harfbuzz.a */,
+				EDE585E91EC6A19F0063FB30 /* liblibmoai-ios-tenjin.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -8982,6 +9019,7 @@
 				032409EE13564CAF000ADC60 /* 3rd party */,
 				0324E4F113564BC7000ADC60 /* src */,
 				038DB6D7101FAA6700ECA0BF /* Products */,
+				ED8238C91EE75D860009EA7D /* Frameworks */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -13133,6 +13171,40 @@
 			path = "../../3rdparty/luafilesystem-1.5.0/src";
 			sourceTree = "<group>";
 		};
+		ED8238C01EE758040009EA7D /* tenjin-1.7.3 */ = {
+			isa = PBXGroup;
+			children = (
+				ED8238C11EE758040009EA7D /* libTenjinSDKUniversal.a */,
+				ED8238C21EE758040009EA7D /* LICENSE.txt */,
+				ED8238C31EE758040009EA7D /* README.md */,
+				ED8238C41EE758040009EA7D /* TenjinSDK.h */,
+				ED8238C51EE758040009EA7D /* TenjinSDK.podspec */,
+			);
+			name = "tenjin-1.7.3";
+			path = "../../3rdparty/tenjin-1.7.3";
+			sourceTree = "<group>";
+		};
+		ED8238C91EE75D860009EA7D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ED8238CE1EE75D930009EA7D /* iAd.framework */,
+				ED8238CC1EE75D8D0009EA7D /* StoreKit.framework */,
+				ED8238CA1EE75D860009EA7D /* AdSupport.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EDE585D71EC69FCC0063FB30 /* moai-ios-tenjin */ = {
+			isa = PBXGroup;
+			children = (
+				EDE585D81EC69FCC0063FB30 /* host.h */,
+				EDE585D91EC69FCC0063FB30 /* host.mm */,
+				EDE585DA1EC69FCC0063FB30 /* MOAITenjinIOS.h */,
+				EDE585DB1EC69FCC0063FB30 /* MOAITenjinIOS.mm */,
+			);
+			path = "moai-ios-tenjin";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -15688,6 +15760,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EDE585DD1EC6A19F0063FB30 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED1E28071ED0C82C006EB699 /* host.h in Headers */,
+				ED8238C81EE758040009EA7D /* TenjinSDK.h in Headers */,
+				ED1E28081ED0C832006EB699 /* MOAITenjinIOS.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -16864,6 +16946,23 @@
 			productReference = CDF288BC17ED41CF00FD4F59 /* libmoai-ios-zl-vfs.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		EDE585DC1EC6A19F0063FB30 /* libmoai-ios-tenjin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EDE585E41EC6A19F0063FB30 /* Build configuration list for PBXNativeTarget "libmoai-ios-tenjin" */;
+			buildPhases = (
+				EDE585DD1EC6A19F0063FB30 /* Headers */,
+				EDE585E01EC6A19F0063FB30 /* Sources */,
+				EDE585E31EC6A19F0063FB30 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-ios-tenjin";
+			productName = OpenUSLS;
+			productReference = EDE585E91EC6A19F0063FB30 /* liblibmoai-ios-tenjin.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -16936,6 +17035,7 @@
 				CDC097D41AE9C72E002E325F /* libmoai-ios-movie */,
 				89BE6EF5173AD06700DFE837 /* libmoai-ios-sim */,
 				CDA4B9111808AC9D000129F9 /* libmoai-ios-tapjoy */,
+				EDE585DC1EC6A19F0063FB30 /* libmoai-ios-tenjin */,
 				CD07C3A313A182AA00C9386C /* libmoai-ios-untz */,
 				CD4C4167180A9AEA00C02381 /* libmoai-ios-urban-airship */,
 				CDA4B9871808ACA6000129F9 /* libmoai-ios-vungle */,
@@ -20324,6 +20424,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EDE585E01EC6A19F0063FB30 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED8238C71EE758040009EA7D /* README.md in Sources */,
+				ED1E280A1ED0C840006EB699 /* host.mm in Sources */,
+				ED1E28091ED0C83D006EB699 /* MOAITenjinIOS.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -20693,6 +20803,7 @@
 					"../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
 					../../3rdparty/kontagent_ios_v1.5.6,
 					"../../3rdparty/adcolony-2.2.4",
+					"../../3rdparty/tenjin-1.7.3",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
@@ -20801,15 +20912,19 @@
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
 					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
+					"\"../../3rdparty/tenjin-1.7.3\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "../../3rdparty/tenjin-1.7.3";
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
 					"-include",
 					"\"../../src/zl-vfs/zl_replace.h\"",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -22025,6 +22140,7 @@
 					"../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
 					../../3rdparty/kontagent_ios_v1.5.6,
 					"../../3rdparty/adcolony-2.2.4",
+					"../../3rdparty/tenjin-1.7.3",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
@@ -22134,15 +22250,19 @@
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
 					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
+					"\"../../3rdparty/tenjin-1.7.3\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "../../3rdparty/tenjin-1.7.3";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-include",
 					"\"../../src/zl-vfs/zl_replace.h\"",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -29336,6 +29456,7 @@
 					"../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
 					../../3rdparty/kontagent_ios_v1.5.6,
 					"../../3rdparty/adcolony-2.2.4",
+					"../../3rdparty/tenjin-1.7.3",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
@@ -29445,15 +29566,19 @@
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
 					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
+					"\"../../3rdparty/tenjin-1.7.3\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "../../3rdparty/tenjin-1.7.3";
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
 					"-include",
 					"\"../../src/zl-vfs/zl_replace.h\"",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -29736,6 +29861,7 @@
 					"../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
 					../../3rdparty/kontagent_ios_v1.5.6,
 					"../../3rdparty/adcolony-2.2.4",
+					"../../3rdparty/tenjin-1.7.3",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
@@ -29844,15 +29970,19 @@
 					"\"../../3rdparty/libUAirship-3.0.1/Airship/Push\"",
 					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
+					"\"../../3rdparty/tenjin-1.7.3\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "../../3rdparty/tenjin-1.7.3";
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
 					"-include",
 					"\"../../src/zl-vfs/zl_replace.h\"",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -30118,6 +30248,135 @@
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
+		};
+		EDE585E51EC6A19F0063FB30 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					_DEBUG,
+					DEBUG,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					SQLITE_ENABLE_FTS3,
+					SQLITE_ENABLE_FTS3_PARENTHESIS,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT_DEBUG_LEVEL_ERROR,
+					FT_DEBUG_LEVEL_TRACE,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		EDE585E61EC6A19F0063FB30 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		EDE585E71EC6A19F0063FB30 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = AdHoc;
+		};
+		EDE585E81EC6A19F0063FB30 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					USE_ARES,
+					USE_OPENSSL,
+					USE_SSLEAY,
+					USE_SSL,
+					BUILDING_LIBCURL,
+					POSIX,
+					SQLITE_ENABLE_COLUMN_METADATA,
+					TIXML_USE_STL,
+					HAVE_MEMMOVE,
+					XML_STATIC,
+					FT2_BUILD_LIBRARY,
+					DARWIN_NO_CARBON,
+					L_ENDIAN,
+					OPENSSL_NO_GMP,
+					OPENSSL_NO_JPAKE,
+					OPENSSL_NO_MD2,
+					OPENSSL_NO_RC5,
+					OPENSSL_NO_RFC3779,
+					OPENSSL_NO_STORE,
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Distribution;
 		};
 /* End XCBuildConfiguration section */
 
@@ -30910,6 +31169,17 @@
 				CDF288B917ED41CF00FD4F59 /* Release */,
 				CDF288BA17ED41CF00FD4F59 /* AdHoc */,
 				CDF288BB17ED41CF00FD4F59 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EDE585E41EC6A19F0063FB30 /* Build configuration list for PBXNativeTarget "libmoai-ios-tenjin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDE585E51EC6A19F0063FB30 /* Debug */,
+				EDE585E61EC6A19F0063FB30 /* Release */,
+				EDE585E71EC6A19F0063FB30 /* AdHoc */,
+				EDE585E81EC6A19F0063FB30 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

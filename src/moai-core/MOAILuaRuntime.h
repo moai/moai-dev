@@ -125,6 +125,7 @@ private:
 	static int				_traceback				( lua_State *L );
 
 	//----------------------------------------------------------------//
+public:
 	void					BuildHistogram			( HistMap& histogram, cc8* trackingGroup );
 	void					DeregisterObject		( MOAILuaObject& object );
 	void					FindLuaRefs				( lua_State* L, FILE* file, cc8* trackingGroup, MOAILuaTraversalState& traversalState );
