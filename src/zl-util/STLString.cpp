@@ -209,7 +209,7 @@ void STLString::write_var ( cc8* format, va_list args ) {
 	this->append ( buffer );
 	
 	if ( buffer != str ) {
-		free ( buffer );
+		free ( str );
 	}
 }
 
