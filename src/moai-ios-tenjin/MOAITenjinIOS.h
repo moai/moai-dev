@@ -8,6 +8,7 @@
 #define	MOAITENJINIOS_H
 
 #include <moai-core/headers.h>
+#include <moai-ios-tenjin/MOAITenjinIOSStoreKitListener.h>
 
 //================================================================//
 // MOAITenjinIOS
@@ -17,21 +18,19 @@ class MOAITenjinIOS :
 private:
 
 	//----------------------------------------------------------------//
-	static int		_cacheInterstitial				( lua_State* L );
-	static int		_hasCachedInterstitial			( lua_State* L );
 	static int		_init							( lua_State* L );
-	static int		_showInterstitial				( lua_State* L );
 	
 public:
 
 	DECL_LUA_SINGLETON ( MOAITenjinIOS );
+		
+	MOAITenjinIOSStoreKitListener*	mStoreKitListener;
 
 	//----------------------------------------------------------------//
 					MOAITenjinIOS				();
 					~MOAITenjinIOS				();
-	void 			NotifyInterstitialDismissed		();
-	void 			NotifyInterstitialLoadFailed	();
-	void			RegisterLuaClass				( MOAILuaState& state );
+	void			LogPurchaseEvent			( SKPaymentTransaction * transaction );
+	void			RegisterLuaClass			( MOAILuaState& state );
 };
 
 #endif  //MOAITENJINIOS_H

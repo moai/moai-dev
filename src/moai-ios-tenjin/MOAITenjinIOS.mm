@@ -36,11 +36,28 @@ int MOAITenjinIOS::_init ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAITenjinIOS::MOAITenjinIOS () {
 
-	RTTI_SINGLE ( MOAILuaObject )	
+	RTTI_SINGLE ( MOAILuaObject )
+
+	this->mStoreKitListener = [[ MOAITenjinIOSStoreKitListener alloc ] init ];
+	[[ SKPaymentQueue defaultQueue ] addTransactionObserver:this->mStoreKitListener ];
 }
 
 //----------------------------------------------------------------//
 MOAITenjinIOS::~MOAITenjinIOS () {
+	
+	[[ SKPaymentQueue defaultQueue ] removeTransactionObserver:this->mStoreKitListener];
+	[ this->mStoreKitListener release ];
+}
+
+//----------------------------------------------------------------//
+void MOAITenjinIOS::LogPurchaseEvent ( SKPaymentTransaction * transaction ) {
+	
+	//Get the NSData receipt
+	NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
+	NSData *receiptData = [NSData dataWithContentsOfURL:receiptURL];
+	
+	//Pass the transaction and the receiptData to Tenjin
+	[TenjinSDK transaction: transaction andReceipt: receiptData];
 }
 
 //----------------------------------------------------------------//

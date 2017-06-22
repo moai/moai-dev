@@ -5016,6 +5016,7 @@
 		ED1E28081ED0C832006EB699 /* MOAITenjinIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = EDE585DA1EC69FCC0063FB30 /* MOAITenjinIOS.h */; };
 		ED1E28091ED0C83D006EB699 /* MOAITenjinIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = EDE585DB1EC69FCC0063FB30 /* MOAITenjinIOS.mm */; };
 		ED1E280A1ED0C840006EB699 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = EDE585D91EC69FCC0063FB30 /* host.mm */; };
+		ED4B7A531EF03DEC00F0711C /* MOAITenjinIOSStoreKitListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = ED4B7A521EF03DEC00F0711C /* MOAITenjinIOSStoreKitListener.mm */; };
 		ED8238C61EE758040009EA7D /* libTenjinSDKUniversal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED8238C11EE758040009EA7D /* libTenjinSDKUniversal.a */; };
 		ED8238C71EE758040009EA7D /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = ED8238C31EE758040009EA7D /* README.md */; };
 		ED8238C81EE758040009EA7D /* TenjinSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = ED8238C41EE758040009EA7D /* TenjinSDK.h */; };
@@ -8082,6 +8083,8 @@
 		CDFB27501A3C27F800853B1D /* STLSort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STLSort.h; sourceTree = "<group>"; };
 		E9940D6514B7A217006465CC /* lfs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lfs.c; sourceTree = "<group>"; };
 		E9940D6714B7A217006465CC /* lfs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lfs.h; sourceTree = "<group>"; };
+		ED4B7A511EF03C1300F0711C /* MOAITenjinIOSStoreKitListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MOAITenjinIOSStoreKitListener.h; sourceTree = "<group>"; };
+		ED4B7A521EF03DEC00F0711C /* MOAITenjinIOSStoreKitListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MOAITenjinIOSStoreKitListener.mm; sourceTree = "<group>"; };
 		ED8238C11EE758040009EA7D /* libTenjinSDKUniversal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTenjinSDKUniversal.a; sourceTree = "<group>"; };
 		ED8238C21EE758040009EA7D /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		ED8238C31EE758040009EA7D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -13201,6 +13204,8 @@
 				EDE585D91EC69FCC0063FB30 /* host.mm */,
 				EDE585DA1EC69FCC0063FB30 /* MOAITenjinIOS.h */,
 				EDE585DB1EC69FCC0063FB30 /* MOAITenjinIOS.mm */,
+				ED4B7A511EF03C1300F0711C /* MOAITenjinIOSStoreKitListener.h */,
+				ED4B7A521EF03DEC00F0711C /* MOAITenjinIOSStoreKitListener.mm */,
 			);
 			path = "moai-ios-tenjin";
 			sourceTree = "<group>";
@@ -17276,6 +17281,7 @@
 				89BE6B0A173975E500DFE837 /* MOAIFoo.cpp in Sources */,
 				CD2FB1BC1C473B24005F8D8D /* MOAIConditionVariable.cpp in Sources */,
 				89BE6B0E173975E500DFE837 /* MOAIFooMgr.cpp in Sources */,
+				ED4B7A531EF03DEC00F0711C /* MOAITenjinIOSStoreKitListener.mm in Sources */,
 				89BE6B12173975E500DFE837 /* MOAIGlobals.cpp in Sources */,
 				89BE6B16173975E500DFE837 /* MOAILogMessages.cpp in Sources */,
 				CD1975F61A8037D9006E3917 /* MOAIKeyCode.cpp in Sources */,
