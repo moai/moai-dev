@@ -139,10 +139,9 @@ MOAIShaderUniformFormatter* MOAILight::MOAIShaderUniformBuffer_GetUniform ( u32 
 
 	if ( this->mFormat ) {
 	
-		MOAILightFormatUniform* uniform = this->mFormat->GetUniform ( uniformID );
-		if ( uniform ) {
-		
-			buffer = ( void* )(( size_t )this->mBuffer.Data () + uniform->mBase );
+		MOAILightFormatUniform* lightFormatUniform = this->mFormat->GetUniform ( uniformID );
+		if ( lightFormatUniform ) {
+			buffer = ( void* )(( size_t )this->mBuffer.Data () + lightFormatUniform->mBase );
 		}
 	}
 	return uniform;

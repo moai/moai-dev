@@ -194,7 +194,6 @@ int MOAIGraphicsPropBase::_setVisible ( lua_State* L ) {
 ZLMatrix4x4 MOAIGraphicsPropBase::GetWorldDrawingMtx () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
 
 	ZLMatrix4x4 worldDrawingMtx;
 
@@ -411,7 +410,7 @@ void MOAIGraphicsPropBase::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAIGraphicsPropBase >( TOTAL_DEBUG_LINE_STYLES );
 	
-	state.SetField ( -1, "DEBUG_DRAW_GFX_PROP_MASTER",			MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( -1 ));
+	state.SetField ( -1, "DEBUG_DRAW_GFX_PROP_MASTER",			MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >(( u32 )-1 ));
 	state.SetField ( -1, "DEBUG_DRAW_PARTITION_CELLS",			MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( DEBUG_DRAW_PARTITION_CELLS ));
 	state.SetField ( -1, "DEBUG_DRAW_PARTITION_PADDED_CELLS",	MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( DEBUG_DRAW_PARTITION_PADDED_CELLS ));
 	state.SetField ( -1, "DEBUG_DRAW_AXIS",						MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( DEBUG_DRAW_AXIS ));

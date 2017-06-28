@@ -90,6 +90,7 @@ MOAILightFormat::~MOAILightFormat () {
 
 //----------------------------------------------------------------//
 void MOAILightFormat::RegisterLuaClass ( MOAILuaState& state ) {
+	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//

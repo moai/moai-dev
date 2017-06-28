@@ -4,9 +4,10 @@
 #ifndef	MOAIVERTEXARRAY_H
 #define	MOAIVERTEXARRAY_H
 
+#include <moai-sim/MOAIGfxStateCache.h>
+
 class MOAIVertexArray;
 class MOAIVertexBuffer;
-class MOAIVertexBufferWithFormat;
 class MOAIVertexFormat;
 
 //================================================================//

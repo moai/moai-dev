@@ -18,6 +18,36 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\3rdparty\zlib-1.2.11\adler32.c" />
+    <ClCompile Include="..\..\3rdparty\zlib-1.2.11\compress.c" />
+    <ClCompile Include="..\..\3rdparty\zlib-1.2.11\crc32.c" />
+    <ClCompile Include="..\..\3rdparty\zlib-1.2.11\deflate.c" />
+    <ClCompile Include="..\..\3rdparty\zlib-1.2.11\gzclose.c" />
+    <ClCompile Include="..\..\3rdparty\zlib-1.2.11\gzlib.c" />
+    <ClCompile Include="..\..\3rdparty\zlib-1.2.11\gzread.c" />
+    <ClCompile Include="..\..\3rdparty\zlib-1.2.11\gzwrite.c" />
+    <ClCompile Include="..\..\3rdparty\zlib-1.2.11\infback.c" />
+    <ClCompile Include="..\..\3rdparty\zlib-1.2.11\inffast.c" />
+    <ClCompile Include="..\..\3rdparty\zlib-1.2.11\inflate.c" />
+    <ClCompile Include="..\..\3rdparty\zlib-1.2.11\inftrees.c" />
+    <ClCompile Include="..\..\3rdparty\zlib-1.2.11\trees.c" />
+    <ClCompile Include="..\..\3rdparty\zlib-1.2.11\uncompr.c" />
+    <ClCompile Include="..\..\3rdparty\zlib-1.2.11\zutil.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\3rdparty\zlib-1.2.11\crc32.h" />
+    <ClInclude Include="..\..\3rdparty\zlib-1.2.11\deflate.h" />
+    <ClInclude Include="..\..\3rdparty\zlib-1.2.11\gzguts.h" />
+    <ClInclude Include="..\..\3rdparty\zlib-1.2.11\inffast.h" />
+    <ClInclude Include="..\..\3rdparty\zlib-1.2.11\inffixed.h" />
+    <ClInclude Include="..\..\3rdparty\zlib-1.2.11\inflate.h" />
+    <ClInclude Include="..\..\3rdparty\zlib-1.2.11\inftrees.h" />
+    <ClInclude Include="..\..\3rdparty\zlib-1.2.11\trees.h" />
+    <ClInclude Include="..\..\3rdparty\zlib-1.2.11\zconf.h" />
+    <ClInclude Include="..\..\3rdparty\zlib-1.2.11\zlib.h" />
+    <ClInclude Include="..\..\3rdparty\zlib-1.2.11\zutil.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E6C55A0C-B5B7-4963-8F77-19F1624B9F47}</ProjectGuid>
     <RootNamespace>zlib</RootNamespace>
@@ -89,7 +119,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\zlib-1.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\zlib-1.2.11;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -112,7 +142,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\zlib-1.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\zlib-1.2.11;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -136,7 +166,7 @@
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\zlib-1.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\zlib-1.2.11;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
@@ -162,7 +192,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\zlib-1.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\zlib-1.2.11;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
@@ -178,33 +208,6 @@
       <Command>xcopy /yr "$(OutDir)$(TargetFileName)" "..\..\bin\$(Platform)\$(Configuration)\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\3rdparty\zlib-1.2.3\adler32.c" />
-    <ClCompile Include="..\..\3rdparty\zlib-1.2.3\compress.c" />
-    <ClCompile Include="..\..\3rdparty\zlib-1.2.3\crc32.c" />
-    <ClCompile Include="..\..\3rdparty\zlib-1.2.3\deflate.c" />
-    <ClCompile Include="..\..\3rdparty\zlib-1.2.3\gzio.c" />
-    <ClCompile Include="..\..\3rdparty\zlib-1.2.3\infback.c" />
-    <ClCompile Include="..\..\3rdparty\zlib-1.2.3\inffast.c" />
-    <ClCompile Include="..\..\3rdparty\zlib-1.2.3\inflate.c" />
-    <ClCompile Include="..\..\3rdparty\zlib-1.2.3\inftrees.c" />
-    <ClCompile Include="..\..\3rdparty\zlib-1.2.3\trees.c" />
-    <ClCompile Include="..\..\3rdparty\zlib-1.2.3\uncompr.c" />
-    <ClCompile Include="..\..\3rdparty\zlib-1.2.3\zutil.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\3rdparty\zlib-1.2.3\crc32.h" />
-    <ClInclude Include="..\..\3rdparty\zlib-1.2.3\deflate.h" />
-    <ClInclude Include="..\..\3rdparty\zlib-1.2.3\inffast.h" />
-    <ClInclude Include="..\..\3rdparty\zlib-1.2.3\inffixed.h" />
-    <ClInclude Include="..\..\3rdparty\zlib-1.2.3\inflate.h" />
-    <ClInclude Include="..\..\3rdparty\zlib-1.2.3\inftrees.h" />
-    <ClInclude Include="..\..\3rdparty\zlib-1.2.3\trees.h" />
-    <ClInclude Include="..\..\3rdparty\zlib-1.2.3\zconf.h" />
-    <ClInclude Include="..\..\3rdparty\zlib-1.2.3\zconf.in.h" />
-    <ClInclude Include="..\..\3rdparty\zlib-1.2.3\zlib.h" />
-    <ClInclude Include="..\..\3rdparty\zlib-1.2.3\zutil.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

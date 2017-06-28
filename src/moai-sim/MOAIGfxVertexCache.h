@@ -127,7 +127,7 @@ public:
 	inline void WriteIndex ( u16 index ) {
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		this->mIdxBuffer->Write < u16 >( this->mVtxBase + index );
+		this->mIdxBuffer->Write < u16 >(( u16 )( this->mVtxBase + index ));
 	}
 	
 	//----------------------------------------------------------------//

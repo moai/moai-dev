@@ -7,6 +7,7 @@
 #include <moai-sim/MOAIBlendMode.h>
 #include <moai-sim/MOAIGfxPipelineClerk.h>
 #include <moai-sim/MOAIShaderMgr.h>
+#include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 
 class MOAIFrameBuffer;
@@ -14,7 +15,6 @@ class MOAIGfxResource;
 class MOAIIndexBuffer;
 class MOAIShader;
 class MOAIShaderProgram;
-class MOAITextureBase;
 class MOAIVertexArray;
 class MOAIVertexBuffer;
 class MOAIVertexBufferWithFormat;

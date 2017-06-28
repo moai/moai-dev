@@ -114,7 +114,7 @@ public:
 	DECL_ATTR_HELPER ( MOAIPartitionHull )
 
 	static const s32 UNKNOWN_PRIORITY	= 0x80000000;
-	static const int NO_SUBPRIM_ID		= 0xffffffff;
+	static const u32 NO_SUBPRIM_ID		= 0xffffffff;
 	
 	// these are implementation dependent; use them as hints
 	enum {

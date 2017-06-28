@@ -188,7 +188,7 @@ protected:
 	double					mClearDepth;
 		
 	//----------------------------------------------------------------//
-	const ZLMatrix4x4&		GetPrimaryMtx				( u32 mtxID, u64 mtxFlag );
+	const ZLMatrix4x4&		GetPrimaryMtx				( u32 mtxID );
 	void					SetDirtyFlags				( u64 dirtyFlags );
 	void					UpdateFinalColor			();
 	

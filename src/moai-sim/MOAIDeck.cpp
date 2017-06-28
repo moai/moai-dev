@@ -90,21 +90,22 @@ void MOAIDeck::Draw ( u32 idx ) {
 //----------------------------------------------------------------//
 ZLBounds MOAIDeck::GetBounds () {
 
+	// TODO: this seems suspicious
 	return this->GetBounds ( 0 );
 	
-	if ( this->mBoundsDirty ) {
-	
-		this->mMaxBounds = this->MOAIDeck_ComputeMaxBounds ();
-		
-		// flip and expand to account for flip flags
-		//ZLBox bounds = this->mMaxBounds;
-		//bounds.Scale ( -1.0f );
-		//bounds.Bless ();
-		
-		//this->mMaxBounds.Grow ( bounds );
-		this->mBoundsDirty = false;
-	}
-	return this->mMaxBounds;
+	//if ( this->mboundsdirty ) {
+	//
+	//	this->mmaxbounds = this->moaideck_computemaxbounds ();
+	//	
+	//	// flip and expand to account for flip flags
+	//	//zlbox bounds = this->mmaxbounds;
+	//	//bounds.scale ( -1.0f );
+	//	//bounds.bless ();
+	//	
+	//	//this->mmaxbounds.grow ( bounds );
+	//	this->mboundsdirty = false;
+	//}
+	//return this->mmaxbounds;
 }
 
 //----------------------------------------------------------------//
@@ -135,13 +136,13 @@ MOAIDeck::~MOAIDeck () {
 //----------------------------------------------------------------//
 bool MOAIDeck::Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
 
-	return this->Overlap ( idx, vec, granularity, result );
+	return this->MOAIDeck_Overlap ( idx, vec, granularity, result );
 }
 
 //----------------------------------------------------------------//
 bool MOAIDeck::Overlap ( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
 
-	return this->Overlap ( idx, vec, granularity, result );
+	return this->MOAIDeck_Overlap ( idx, vec, granularity, result );
 }
 
 //----------------------------------------------------------------//

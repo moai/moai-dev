@@ -5,7 +5,9 @@
 #include <moai_config.h>
 #include <zl-vfs/headers.h>
 
-#pragma GCC diagnostic ignored "-Wformat-security"
+#ifndef MOAI_COMPILER_MSVC
+	#pragma GCC diagnostic ignored "-Wformat-security"
+#endif
 
 using namespace std;
 

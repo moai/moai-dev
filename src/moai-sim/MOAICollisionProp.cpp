@@ -272,9 +272,9 @@ void MOAICollisionProp::Move ( ZLVec3D move, u32 detach, u32 maxSteps ) {
 			u32 nContacts = contactAccumulator.Top ();
 			u32 nPushContacts = 0;
 			
-			for ( u32 i = 0; i < nContacts; ++i ) {
+			for ( u32 j = 0; j < nContacts; ++j ) {
 			
-				const MOAIMoveConstraint2D& contact = contacts [ i ];
+				const MOAIMoveConstraint2D& contact = contacts [ j ];
 				
 				// ignore corner contacts if they are behind the move
 				if ( contact.mType == MOAIMoveConstraint2D::CORNER ) {
@@ -411,7 +411,7 @@ void MOAICollisionProp::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAICollisionProp >( TOTAL_DEBUG_LINE_STYLES );
 	
-	state.SetField ( -1, "DEBUG_DRAW_COLLISION_PROP_MASTER",						MOAIDebugLinesMgr::Pack < MOAICollisionProp >( -1 ));
+	state.SetField ( -1, "DEBUG_DRAW_COLLISION_PROP_MASTER",						MOAIDebugLinesMgr::Pack < MOAICollisionProp >(( u32 )-1 ));
 	state.SetField ( -1, "DEBUG_DRAW_COLLISION_ACTIVE_PROP_BOUNDS",					MOAIDebugLinesMgr::Pack < MOAICollisionProp >( DEBUG_DRAW_COLLISION_ACTIVE_PROP_BOUNDS ));
 	state.SetField ( -1, "DEBUG_DRAW_COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS",			MOAIDebugLinesMgr::Pack < MOAICollisionProp >( DEBUG_DRAW_COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS ));
 	state.SetField ( -1, "DEBUG_DRAW_COLLISION_ACTIVE_TOUCHED_PROP_BOUNDS",			MOAIDebugLinesMgr::Pack < MOAICollisionProp >( DEBUG_DRAW_COLLISION_ACTIVE_TOUCHED_PROP_BOUNDS ));
@@ -528,9 +528,7 @@ void MOAICollisionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	}
 	
 	if ( visible ) {
-		
-		MOAICollisionShape* shape = this->GetCollisionShape ();
-		
+				
 		if ( shape ) {
 			const ZLAffine3D& localToWorldMtx = this->GetLocalToWorldMtx ();
 			gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX, localToWorldMtx );

@@ -77,7 +77,7 @@ void MOAIBox2DDebugDraw::DrawCircle ( const b2Vec2& center, float32 radius, cons
 	const float32 k_segments = 16.0f;
 	const float32 k_increment = 2.0f * b2_pi / k_segments;
 	
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_LOOP, k_segments );
+	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_LOOP, ( u32 )k_segments );
 	float32 theta = 0.0f;
 	for ( int32 i = 0; i < k_segments; ++i ) {
 		b2Vec2 v = center + radius * b2Vec2 ( cosf ( theta ), sinf ( theta ));
@@ -98,7 +98,7 @@ void MOAIBox2DDebugDraw::DrawSolidCircle ( const b2Vec2& center, float32 radius,
 	const float32 k_segments = 16.0f;
 	const float32 k_increment = 2.0f * b2_pi / k_segments;
 	
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_TRIANGLE_FAN, k_segments );
+	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_TRIANGLE_FAN, ( u32 )k_segments );
 	float32 theta = 0.0f;
 	for (int32 i = 0; i < k_segments; ++i) {
 		b2Vec2 v = center + radius * b2Vec2(cosf(theta), sinf(theta));
@@ -110,7 +110,7 @@ void MOAIBox2DDebugDraw::DrawSolidCircle ( const b2Vec2& center, float32 radius,
 	gfxMgr.mGfxState.SetBlendMode ();
 	gfxMgr.mGfxState.SetPenColor ( color.r, color.g, color.b, 1.0f );
 
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_LOOP, k_segments );
+	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_LOOP, ( u32 )k_segments );
 	theta = 0.0f;
 	for (int32 i = 0; i < k_segments; ++i)
 	{

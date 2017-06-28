@@ -322,6 +322,18 @@
     </ClInclude>
     <ClInclude Include="..\..\src\zl-util\ZLContext.h" />
     <ClInclude Include="..\..\src\zl-util\ZLRtti.h" />
+    <ClInclude Include="..\..\src\zl-util\STLSort.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLBarycentric.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLBounds.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLCircle.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLCleanup.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLQuadCoord.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLRefCountedObjectBase.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLResult.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLSharedBuffer.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLSphere.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLStrongPtr.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLWeakPtr.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\zl-util\ZLAdapterInfo_posix.cpp">
@@ -512,6 +524,11 @@
     <ClCompile Include="..\..\src\zl-util\ZLRtti.cpp" />
     <ClCompile Include="..\..\src\zl-util\ZLPolygon2D-clip.cpp">
       <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\zl-util\ZLBounds.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLRefCountedObjectBase.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLDeviceTime_nacl.cpp">
+      <Filter>time</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

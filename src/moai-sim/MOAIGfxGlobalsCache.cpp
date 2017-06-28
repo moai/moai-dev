@@ -52,14 +52,14 @@ const ZLMatrix4x4& MOAIGfxGlobalsCache::GetMtx ( u32 mtxID ) {
 	switch ( setID ) {
 	
 		case PRIMARY_MATRICES:
-			this->GetPrimaryMtx ( primaryMtxID, mtxFlag );
+			this->GetPrimaryMtx ( primaryMtxID );
 			break;
 		
 		case INVERSE_MATRICES:
 		
 			if ( this->mDirtyFlags & mtxFlag ) {
 				
-				this->mMatrices [ mtxID ] = this->GetPrimaryMtx ( primaryMtxID, mtxFlag );
+				this->mMatrices [ mtxID ] = this->GetPrimaryMtx ( primaryMtxID );
 				this->mMatrices [ mtxID ].Inverse ();
 			}
 			break;
@@ -68,7 +68,7 @@ const ZLMatrix4x4& MOAIGfxGlobalsCache::GetMtx ( u32 mtxID ) {
 		
 			if ( this->mDirtyFlags & mtxFlag ) {
 			
-				ZLMatrix3x3 mtx3x3 = ZLMatrix3x3 ( this->GetPrimaryMtx ( primaryMtxID, mtxFlag ));
+				ZLMatrix3x3 mtx3x3 = ZLMatrix3x3 ( this->GetPrimaryMtx ( primaryMtxID ));
 				mtx3x3.Inverse ();
 				mtx3x3.Transpose ();
 				this->mMatrices [ mtxID ] = ZLMatrix4x4 ( mtx3x3 );
@@ -79,7 +79,7 @@ const ZLMatrix4x4& MOAIGfxGlobalsCache::GetMtx ( u32 mtxID ) {
 		
 			if ( this->mDirtyFlags & mtxFlag ) {
 			
-				ZLMatrix3x3 mtx3x3 = ZLMatrix3x3 ( this->GetPrimaryMtx ( primaryMtxID, mtxFlag ));
+				ZLMatrix3x3 mtx3x3 = ZLMatrix3x3 ( this->GetPrimaryMtx ( primaryMtxID ));
 				mtx3x3.Inverse ();
 				mtx3x3.Inverse ();
 				mtx3x3.Transpose ();
@@ -94,7 +94,8 @@ const ZLMatrix4x4& MOAIGfxGlobalsCache::GetMtx ( u32 mtxID ) {
 }
 
 //----------------------------------------------------------------//
-const ZLMatrix4x4& MOAIGfxGlobalsCache::GetPrimaryMtx ( u32 mtxID, u64 mtxFlag ) {
+const ZLMatrix4x4& MOAIGfxGlobalsCache::GetPrimaryMtx ( u32 mtxID ) {
+	
 
 	switch ( mtxID ) {
 	

@@ -20,6 +20,9 @@
 */
 
 #include "pch.h"
+
+SUPPRESS_EMPTY_FILE_WARNING
+
 #ifdef NACL
 
 #include <zl-util/ZLDeviceTime.h>

@@ -145,9 +145,7 @@ ZLBounds MOAIDrawDeck::MOAIDeck_GetBounds ( u32 idx ) {
 	if ( this->mOnBounds ) {
 	
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		
-		int top = state.GetTop ();
-		
+				
 		this->mOnBounds.PushRef ( state );
 		
 		lua_pushnumber ( state, idx );
