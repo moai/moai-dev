@@ -19,7 +19,7 @@
 int MOAIChartBoostIOS::_cacheInterstitial ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
-	[[ Chartboost sharedChartboost ] cacheInterstitial ];
+	[ Chartboost cacheInterstitial: CBLocationHomeScreen ];
 	return 0;
 }
 
@@ -32,12 +32,15 @@ int MOAIChartBoostIOS::_cacheInterstitial ( lua_State* L ) {
 int MOAIChartBoostIOS::_hasCachedInterstitial ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
-	bool isAdAvailable = [[ Chartboost sharedChartboost ] hasCachedInterstitial ];
+	bool isAdAvailable = [ Chartboost hasInterstitial: CBLocationHomeScreen ];
 	
 	lua_pushboolean ( state, isAdAvailable );
 	
 	return 1;
 }
+
+@interface MoaiChartBoostDelegate () <ChartboostDelegate>
+@end
 
 //----------------------------------------------------------------//
 /**	@lua	init
@@ -54,11 +57,7 @@ int MOAIChartBoostIOS::_init ( lua_State* L ) {
 	cc8* identifier = lua_tostring ( state, 1 );
 	cc8* signature = lua_tostring ( state, 2 );
 	
-	[[ Chartboost sharedChartboost ] setAppId:[ NSString stringWithUTF8String:identifier ]];
-	[[ Chartboost sharedChartboost ] setAppSignature:[ NSString stringWithUTF8String:signature ]];
-	[[ Chartboost sharedChartboost ] setDelegate:MOAIChartBoostIOS::Get ().mDelegate ];
-	[[ Chartboost sharedChartboost ] startSession ];
-	
+	[Chartboost startWithAppId:[ NSString stringWithUTF8String:identifier ] appSignature:[ NSString stringWithUTF8String:signature ] delegate:MOAIChartBoostIOS::Get ().mDelegate];	
 	return 0;
 }
 
@@ -72,8 +71,8 @@ int MOAIChartBoostIOS::_showInterstitial ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
-	if ( [[ Chartboost sharedChartboost ] hasCachedInterstitial ]) {
-		[[ Chartboost sharedChartboost ] showInterstitial ];
+	if ([ Chartboost hasInterstitial: CBLocationHomeScreen ]) {
+		[ Chartboost showInterstitial: CBLocationHomeScreen ];
 		lua_pushboolean ( state, true );
 		return 1;
 	}
@@ -129,11 +128,6 @@ void MOAIChartBoostIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	//================================================================//
 
 	//----------------------------------------------------------------//
-	- ( BOOL ) shouldRequestInterstitial {
-		return YES;
-	}
-
-	//----------------------------------------------------------------//
 	- ( void ) didFailToLoadInterstitial {
 		MOAIChartBoostIOS::Get ().InvokeListener ( MOAIChartBoostIOS::INTERSTITIAL_LOAD_FAILED );
 	}
@@ -160,5 +154,4 @@ void MOAIChartBoostIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	-( BOOL ) shouldRequestInterstitialsInFirstSession {
 		return NO;
 	}
-
 @end

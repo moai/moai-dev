@@ -5023,6 +5023,7 @@
 		ED8238CB1EE75D860009EA7D /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED8238CA1EE75D860009EA7D /* AdSupport.framework */; };
 		ED8238CD1EE75D8D0009EA7D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED8238CC1EE75D8D0009EA7D /* StoreKit.framework */; };
 		ED8238CF1EE75D930009EA7D /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED8238CE1EE75D930009EA7D /* iAd.framework */; };
+		EDF62A3A1F1596AC005172C2 /* Chartboost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDF62A391F1596AC005172C2 /* Chartboost.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -8098,6 +8099,7 @@
 		EDE585DA1EC69FCC0063FB30 /* MOAITenjinIOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MOAITenjinIOS.h; sourceTree = "<group>"; };
 		EDE585DB1EC69FCC0063FB30 /* MOAITenjinIOS.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MOAITenjinIOS.mm; sourceTree = "<group>"; };
 		EDE585E91EC6A19F0063FB30 /* liblibmoai-ios-tenjin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liblibmoai-ios-tenjin.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EDF62A391F1596AC005172C2 /* Chartboost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Chartboost.framework; path = "../../3rdparty/chartboost-6.6.3/Chartboost.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -8483,6 +8485,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDF62A3A1F1596AC005172C2 /* Chartboost.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13190,6 +13193,7 @@
 		ED8238C91EE75D860009EA7D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EDF62A391F1596AC005172C2 /* Chartboost.framework */,
 				ED8238CE1EE75D930009EA7D /* iAd.framework */,
 				ED8238CC1EE75D8D0009EA7D /* StoreKit.framework */,
 				ED8238CA1EE75D860009EA7D /* AdSupport.framework */,
@@ -20810,6 +20814,7 @@
 					../../3rdparty/kontagent_ios_v1.5.6,
 					"../../3rdparty/adcolony-2.2.4",
 					"../../3rdparty/tenjin-1.7.3",
+					"../../3rdparty/chartboost-6.6.3",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
@@ -20908,7 +20913,6 @@
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/crittercism-4.3.3/CrittercismSDK\"",
-					"\"../../3rdparty/chartboost-4.2\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
 					"\"../../3rdparty/sdl2-2.0.0/include\"",
@@ -22147,6 +22151,7 @@
 					../../3rdparty/kontagent_ios_v1.5.6,
 					"../../3rdparty/adcolony-2.2.4",
 					"../../3rdparty/tenjin-1.7.3",
+					"../../3rdparty/chartboost-6.6.3",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
@@ -22246,7 +22251,6 @@
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/crittercism-4.3.3/CrittercismSDK\"",
-					"\"../../3rdparty/chartboost-4.2\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
 					"\"../../3rdparty/sdl2-2.0.0/include\"",
@@ -29463,6 +29467,7 @@
 					../../3rdparty/kontagent_ios_v1.5.6,
 					"../../3rdparty/adcolony-2.2.4",
 					"../../3rdparty/tenjin-1.7.3",
+					"../../3rdparty/chartboost-6.6.3",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
@@ -29562,7 +29567,6 @@
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/crittercism-4.3.3/CrittercismSDK\"",
-					"\"../../3rdparty/chartboost-4.2\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
 					"\"../../3rdparty/sdl2-2.0.0/include\"",
@@ -29868,6 +29872,7 @@
 					../../3rdparty/kontagent_ios_v1.5.6,
 					"../../3rdparty/adcolony-2.2.4",
 					"../../3rdparty/tenjin-1.7.3",
+					"../../3rdparty/chartboost-6.6.3",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
@@ -29966,7 +29971,6 @@
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/ooid-0.99\"",
 					"\"../../3rdparty/crittercism-4.3.3/CrittercismSDK\"",
-					"\"../../3rdparty/chartboost-4.2\"",
 					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
 					"\"../../3rdparty/mongoose\"",
 					"\"../../3rdparty/sdl2-2.0.0/include\"",

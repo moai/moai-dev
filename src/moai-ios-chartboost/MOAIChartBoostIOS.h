@@ -8,7 +8,7 @@
 #define	MOAICHARTBOOSTIOS_H
 
 #include <moai-core/headers.h>
-#import <Chartboost.h>
+#import <Chartboost/Chartboost.h>
 
 @class MoaiChartBoostDelegate;
 
