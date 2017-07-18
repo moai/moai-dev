@@ -310,19 +310,21 @@ int ZLVfsZipStream::ResetZipStream () {
 
 	int result;
 	FILE* file = this->mFile;
-	z_stream* stream = &this->mStream;
 
-	z_stream newStream;
-	memset ( &newStream, 0, sizeof ( z_stream ));
+	// end the stream
+	result = inflateEnd ( &this->mStream );
+	if ( result != Z_OK ) return -1;
+
+	// clear the struct to be safe
+	memset ( &this->mStream, 0, sizeof ( z_stream ));
 	
+	// seek to the right spot in the compressed stream
 	result = fseek ( file, ( long )this->mBaseAddr, SEEK_SET );
 	if ( result ) return -1;
 	
-	result = inflateInit2 ( &newStream, -MAX_WBITS );
+	// init a new z_stream
+	result = inflateInit2 ( &this->mStream, -MAX_WBITS );
 	if ( result != Z_OK ) return -1;
-
-	inflateEnd ( stream );
-	( *stream ) = newStream;
 
 	this->mCompressedCursor = 0;
 	this->mPrevBlockID = -1;
