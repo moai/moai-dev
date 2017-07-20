@@ -10,9 +10,9 @@ fi
 fi
 
 #--config
-NDK_PATH=${NDK_PATH:-/Users/david/Downloads/android-ndk-r9d}
-EMSDK_PATH=${EMSDK_PATH:-/Users/david/moai/emsdk_portable}
-DOXYGEN_PATH=${DOXYGEN_PATH:-/Applications/Doxygen.app/Contents/Resources}
+NDK_PATH=$HOME/Applications/android-ndk-r10e
+EMSDK_PATH=$HOME/Applications/emsdk_portable
+DOXYGEN_PATH=$HOME/Applications/Doxygen.app/Contents/Resources
 
 
 #--check for reqs

@@ -16424,7 +16424,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = NO;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "libmoai" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -19952,7 +19952,6 @@
 		0324E2AD1356485F000ADC60 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -19996,7 +19995,6 @@
 		0324E2AE1356485F000ADC60 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -20042,7 +20040,6 @@
 		0324E2B91356485F000ADC60 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20057,7 +20054,6 @@
 		0324E2BA1356485F000ADC60 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20072,7 +20068,9 @@
 		0379C5941333ECD800E89DDC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"MOAI_KEEP_ASSERT=1",
@@ -20108,7 +20106,9 @@
 		0379C5951333ECD800E89DDC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"MOAI_KEEP_ASSERT=1",
@@ -20145,9 +20145,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"../../3rdparty/facebook-ios-sdk-4.5.1",
@@ -20161,6 +20172,7 @@
 				GCC_ENABLE_CPP_RTTI = NO;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -20206,6 +20218,7 @@
 				GCC_WARN_PROTOTYPE_CONVERSION = YES;
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
@@ -20263,7 +20276,7 @@
 					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
 					"-include",
@@ -20285,6 +20298,8 @@
 		03C2F6F6104DE131009A2D5D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -20320,6 +20335,8 @@
 		03C2F6F7104DE131009A2D5D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -20406,6 +20423,8 @@
 		89BE6F02173AD06700DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20436,6 +20455,8 @@
 		89BE6F03173AD06700DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20466,6 +20487,8 @@
 		89BE6F04173AD06700DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20496,6 +20519,8 @@
 		89BE6F05173AD06700DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20526,7 +20551,6 @@
 		89BE6F14173AD07100DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20562,7 +20586,6 @@
 		89BE6F15173AD07100DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20598,7 +20621,6 @@
 		89BE6F16173AD07100DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20634,7 +20656,6 @@
 		89BE6F17173AD07100DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20670,7 +20691,6 @@
 		89BE7377173AD29200DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20708,7 +20728,6 @@
 		89BE7378173AD29200DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20746,7 +20765,6 @@
 		89BE7379173AD29200DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20784,7 +20802,6 @@
 		89BE737A173AD29200DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20822,6 +20839,8 @@
 		89BE749D173AD2B600DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20852,6 +20871,8 @@
 		89BE749E173AD2B600DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20882,6 +20903,8 @@
 		89BE749F173AD2B600DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20912,6 +20935,8 @@
 		89BE74A0173AD2B600DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20942,7 +20967,6 @@
 		89BE75D6173C121800DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20978,7 +21002,6 @@
 		89BE75D7173C121800DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21014,7 +21037,6 @@
 		89BE75D8173C121800DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21050,7 +21072,6 @@
 		89BE75D9173C121800DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21086,6 +21107,8 @@
 		89BE75F3173C126100DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21116,6 +21139,8 @@
 		89BE75F4173C126100DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21146,6 +21171,8 @@
 		89BE75F5173C126100DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21176,6 +21203,8 @@
 		89BE75F6173C126100DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21206,6 +21235,8 @@
 		89BE7682173C15F100DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21236,6 +21267,8 @@
 		89BE7683173C15F100DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21266,6 +21299,8 @@
 		89BE7684173C15F100DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21296,6 +21331,8 @@
 		89BE7685173C15F100DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21326,7 +21363,6 @@
 		89BE769B173C160E00DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21362,7 +21398,6 @@
 		89BE769C173C160E00DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21398,7 +21433,6 @@
 		89BE769D173C160E00DFE837 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21434,7 +21468,6 @@
 		89BE769E173C160E00DFE837 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21471,9 +21504,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"../../3rdparty/facebook-ios-sdk-4.5.1",
@@ -21486,6 +21531,7 @@
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -21531,6 +21577,7 @@
 				GCC_WARN_PROTOTYPE_CONVERSION = YES;
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
@@ -21588,7 +21635,7 @@
 					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-include",
@@ -21610,6 +21657,8 @@
 		CD04ACB214725568009C20E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
@@ -21619,6 +21668,8 @@
 		CD04ACB314725568009C20E5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
@@ -21628,7 +21679,6 @@
 		CD04AE7D1472557F009C20E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21644,7 +21694,6 @@
 		CD04AE7E1472557F009C20E5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21660,6 +21709,8 @@
 		CD07C3CB13A182AA00C9386C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21690,6 +21741,8 @@
 		CD07C3CC13A182AA00C9386C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21720,7 +21773,6 @@
 		CD07C4E313A1918600C9386C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21757,7 +21809,6 @@
 		CD07C4E413A1918600C9386C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21794,7 +21845,6 @@
 		CD1845981A626BD500FCCCE0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21809,7 +21859,6 @@
 		CD1845991A626BD500FCCCE0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21824,7 +21873,6 @@
 		CD18459A1A626BD500FCCCE0 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21839,7 +21887,6 @@
 		CD18459B1A626BD500FCCCE0 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21854,6 +21901,8 @@
 		CD257B9E1A6255380057A53A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -21889,6 +21938,8 @@
 		CD257B9F1A6255380057A53A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -21919,6 +21970,8 @@
 		CD257BA01A6255380057A53A /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -21949,6 +22002,8 @@
 		CD257BA11A6255380057A53A /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -22108,7 +22163,6 @@
 		CD32B4D419F9EDD10059D019 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -22152,7 +22206,6 @@
 		CD32B4D519F9EDD10059D019 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -22198,7 +22251,6 @@
 		CD32B4D619F9EDD10059D019 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -22244,7 +22296,6 @@
 		CD32B4D719F9EDD10059D019 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -22290,7 +22341,6 @@
 		CD42F35F1A60A7CC001B6D72 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -22327,7 +22377,6 @@
 		CD42F3601A60A7CC001B6D72 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -22364,7 +22413,6 @@
 		CD42F3611A60A7CC001B6D72 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -22401,7 +22449,6 @@
 		CD42F3621A60A7CC001B6D72 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -22438,6 +22485,8 @@
 		CD4C3A7D180A623200C02381 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22468,6 +22517,8 @@
 		CD4C3A7E180A623200C02381 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22498,6 +22549,8 @@
 		CD4C3A7F180A623200C02381 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22528,6 +22581,8 @@
 		CD4C3A80180A623200C02381 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22952,7 +23007,6 @@
 		CD515F1A1BCDB440000718FB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -22989,7 +23043,6 @@
 		CD515F1B1BCDB440000718FB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23026,7 +23079,6 @@
 		CD515F1C1BCDB440000718FB /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23063,7 +23115,6 @@
 		CD515F1D1BCDB440000718FB /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23100,7 +23151,6 @@
 		CD515F291BCDB45B000718FB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23137,7 +23187,6 @@
 		CD515F2A1BCDB45B000718FB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23174,7 +23223,6 @@
 		CD515F2B1BCDB45B000718FB /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23211,7 +23259,6 @@
 		CD515F2C1BCDB45B000718FB /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23248,7 +23295,6 @@
 		CD515F381BCDB467000718FB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23285,7 +23331,6 @@
 		CD515F391BCDB467000718FB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23322,7 +23367,6 @@
 		CD515F3A1BCDB467000718FB /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23359,7 +23403,6 @@
 		CD515F3B1BCDB467000718FB /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23396,7 +23439,6 @@
 		CD515F471BCDB473000718FB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23433,7 +23475,6 @@
 		CD515F481BCDB473000718FB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23470,7 +23511,6 @@
 		CD515F491BCDB473000718FB /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23507,7 +23547,6 @@
 		CD515F4A1BCDB473000718FB /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -23544,6 +23583,8 @@
 		CD515F5A1BCDBBEC000718FB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23574,6 +23615,8 @@
 		CD515F5B1BCDBBEC000718FB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23604,6 +23647,8 @@
 		CD515F5C1BCDBBEC000718FB /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23634,6 +23679,8 @@
 		CD515F5D1BCDBBEC000718FB /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23664,6 +23711,8 @@
 		CD515F691BCDBBF8000718FB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23694,6 +23743,8 @@
 		CD515F6A1BCDBBF8000718FB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23724,6 +23775,8 @@
 		CD515F6B1BCDBBF8000718FB /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23754,6 +23807,8 @@
 		CD515F6C1BCDBBF8000718FB /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23784,6 +23839,8 @@
 		CD515F781BCDBC00000718FB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23814,6 +23871,8 @@
 		CD515F791BCDBC00000718FB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23844,6 +23903,8 @@
 		CD515F7A1BCDBC00000718FB /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23874,6 +23935,8 @@
 		CD515F7B1BCDBC00000718FB /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23904,6 +23967,8 @@
 		CD515F871BCDBC08000718FB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23934,6 +23999,8 @@
 		CD515F881BCDBC08000718FB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23964,6 +24031,8 @@
 		CD515F891BCDBC08000718FB /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -23994,6 +24063,8 @@
 		CD515F8A1BCDBC08000718FB /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -24153,7 +24224,6 @@
 		CD6D752117EE415D00964415 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24170,7 +24240,6 @@
 		CD6D752217EE415D00964415 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24187,7 +24256,6 @@
 		CD6D752317EE415D00964415 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24204,7 +24272,6 @@
 		CD6D752417EE415D00964415 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24479,7 +24546,6 @@
 		CD807B461831C3B500E658D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -24523,7 +24589,6 @@
 		CD807B471831C3B500E658D9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -24569,7 +24634,6 @@
 		CD807B481831C3B500E658D9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -24615,7 +24679,6 @@
 		CD807B491831C3B500E658D9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -24661,7 +24724,6 @@
 		CD807E941831C42100E658D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24677,7 +24739,6 @@
 		CD807E951831C42100E658D9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24693,7 +24754,6 @@
 		CD807E961831C42100E658D9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24709,7 +24769,6 @@
 		CD807E971831C42100E658D9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24725,7 +24784,6 @@
 		CD95D4A11831D4E20080C34E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24763,7 +24821,6 @@
 		CD95D4A21831D4E20080C34E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24801,7 +24858,6 @@
 		CD95D4A31831D4E20080C34E /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24839,7 +24895,6 @@
 		CD95D4A41831D4E20080C34E /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -25006,7 +25061,6 @@
 		CDA0DC9F1A01B184002B71B6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -25044,7 +25098,6 @@
 		CDA0DCA01A01B184002B71B6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -25082,7 +25135,6 @@
 		CDA0DCA11A01B184002B71B6 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -25120,7 +25172,6 @@
 		CDA0DCA21A01B184002B71B6 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -25158,6 +25209,8 @@
 		CDA4B7AA1808AC61000129F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -25194,6 +25247,8 @@
 		CDA4B7AB1808AC61000129F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -25225,6 +25280,8 @@
 		CDA4B7AC1808AC61000129F9 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -25256,6 +25313,8 @@
 		CDA4B7AD1808AC61000129F9 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -25948,6 +26007,8 @@
 		CDC097DD1AE9C72E002E325F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -25984,6 +26045,8 @@
 		CDC097DE1AE9C72E002E325F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -26015,6 +26078,8 @@
 		CDC097DF1AE9C72E002E325F /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -26046,6 +26111,8 @@
 		CDC097E01AE9C72E002E325F /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -26077,6 +26144,8 @@
 		CDC1237F17FA804C00FB64BB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				PRODUCT_NAME = "moai-ios-zl-crypto";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
@@ -26086,6 +26155,8 @@
 		CDC1238017FA804C00FB64BB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				PRODUCT_NAME = "moai-ios-zl-crypto";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
@@ -26095,6 +26166,8 @@
 		CDC1238117FA804C00FB64BB /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				PRODUCT_NAME = "moai-ios-zl-crypto";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
@@ -26104,6 +26177,8 @@
 		CDC1238217FA804C00FB64BB /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				PRODUCT_NAME = "moai-ios-zl-crypto";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
@@ -26113,6 +26188,8 @@
 		CDD06BCE1398822500AB0420 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -26143,6 +26220,8 @@
 		CDD06BCF1398822500AB0420 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -26173,7 +26252,6 @@
 		CDD06D85139882D900AB0420 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -26210,7 +26288,6 @@
 		CDD06D86139882D900AB0420 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -26247,7 +26324,9 @@
 		CDD480CD17FA78AE00525B77 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -26279,7 +26358,9 @@
 		CDD480CE17FA78AE00525B77 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -26311,7 +26392,9 @@
 		CDD480CF17FA78AE00525B77 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -26343,7 +26426,9 @@
 		CDD480D017FA78AE00525B77 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -26375,6 +26460,8 @@
 		CDD781C61A11631E00AD133E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -26410,6 +26497,8 @@
 		CDD781C71A11631E00AD133E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -26440,6 +26529,8 @@
 		CDD781C81A11631E00AD133E /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -26470,6 +26561,8 @@
 		CDD781C91A11631E00AD133E /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -26636,7 +26729,6 @@
 		CDDD30A11574AE0F00C410A0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -26675,7 +26767,6 @@
 		CDDD30A21574AE0F00C410A0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -26714,7 +26805,6 @@
 		CDDD30A31574AE0F00C410A0 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -26753,7 +26843,6 @@
 		CDDD30A41574AE0F00C410A0 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -26792,7 +26881,6 @@
 		CDE8A7FE155E42EF00C2DFF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -26833,7 +26921,6 @@
 		CDE8A7FF155E42EF00C2DFF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -26874,7 +26961,6 @@
 		CDE8A800155E42EF00C2DFF5 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -26915,7 +27001,6 @@
 		CDE8A801155E42EF00C2DFF5 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -26956,6 +27041,8 @@
 		CDF288B817ED41CF00FD4F59 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
@@ -26966,6 +27053,8 @@
 		CDF288B917ED41CF00FD4F59 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
@@ -26976,6 +27065,8 @@
 		CDF288BA17ED41CF00FD4F59 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
@@ -26986,6 +27077,8 @@
 		CDF288BB17ED41CF00FD4F59 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
@@ -26997,9 +27090,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"../../3rdparty/facebook-ios-sdk-4.5.1",
@@ -27013,6 +27117,7 @@
 				GCC_ENABLE_CPP_RTTI = NO;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -27058,6 +27163,7 @@
 				GCC_WARN_PROTOTYPE_CONVERSION = YES;
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
@@ -27115,7 +27221,7 @@
 					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
 					"-include",
@@ -27137,6 +27243,8 @@
 		E90D02C014D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -27167,7 +27275,9 @@
 		E90D02C114D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"MOAI_KEEP_ASSERT=1",
@@ -27203,6 +27313,8 @@
 		E90D02C214D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -27233,6 +27345,8 @@
 		E90D02C414D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -27263,6 +27377,8 @@
 		E90D02C514D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
@@ -27272,7 +27388,6 @@
 		E90D02C614D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -27287,7 +27402,6 @@
 		E90D02C714D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -27333,7 +27447,6 @@
 		E90D02C814D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -27370,7 +27483,6 @@
 		E90D02C914D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -27407,7 +27519,6 @@
 		E90D02CA14D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -27424,9 +27535,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"../../3rdparty/facebook-ios-sdk-4.5.1",
@@ -27440,6 +27562,7 @@
 				GCC_ENABLE_CPP_RTTI = NO;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -27485,6 +27608,7 @@
 				GCC_WARN_PROTOTYPE_CONVERSION = YES;
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
@@ -27542,7 +27666,7 @@
 					"\"../../3rdparty/Flurry-iOS-5.0.0/Flurry\"",
 					"\"../../3rdparty/mixpanel-iphone-2.2.0/Mixpanel\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
 					"-include",
@@ -27564,6 +27688,8 @@
 		E9C405C6150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -27594,7 +27720,9 @@
 		E9C405C7150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"MOAI_KEEP_ASSERT=1",
@@ -27630,6 +27758,8 @@
 		E9C405CA150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -27660,6 +27790,8 @@
 		E9C405CC150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -27690,6 +27822,8 @@
 		E9C405CD150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CC = "$(SRCROOT)/../ccache-clang";
+				CXX = "$(SRCROOT)/../ccache-clang++";
 				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-w";
@@ -27699,7 +27833,6 @@
 		E9C405CE150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -27714,7 +27847,6 @@
 		E9C405CF150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -27760,7 +27892,6 @@
 		E9C405D0150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -27797,7 +27928,6 @@
 		E9C405D1150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -27834,7 +27964,6 @@
 		E9C405D2150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
