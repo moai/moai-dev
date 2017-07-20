@@ -34,8 +34,8 @@ import android.widget.LinearLayout;
 // Moai
 import com.moaisdk.core.*;
 
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import java.net.URLConnection;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import android.os.AsyncTask;
 import android.net.Uri;
