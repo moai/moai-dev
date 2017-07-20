@@ -64,7 +64,7 @@ extern "C" {
  * The gradient is computed only at edge pixels. At other places in the
  * image, it is never used, and it's mostly zero anyway.
  */
-void computegradient(double *img, int w, int h, double *gx, double *gy);
+void moai_computegradient(double *img, int w, int h, double *gx, double *gy);
 
 /*
  * A somewhat tricky function to approximate the distance to an edge in a
@@ -75,15 +75,15 @@ void computegradient(double *img, int w, int h, double *gx, double *gy);
  * accuracy at and near edges, and reduces the error even at distant pixels
  * provided that the gradient direction is accurately estimated.
  */
-double edgedf(double gx, double gy, double a);
+double moai_edgedf(double gx, double gy, double a);
 
 
-double distaa3(double *img, double *gximg, double *gyimg, int w, int c, int xc, int yc, int xi, int yi);
+double moai_distaa3(double *img, double *gximg, double *gyimg, int w, int c, int xc, int yc, int xi, int yi);
 
 // Shorthand macro: add ubiquitous parameters dist, gx, gy, img and w and call distaa3()
 #define DISTAA(c,xc,yc,xi,yi) (distaa3(img, gx, gy, w, c, xc, yc, xi, yi))
 	
-void edtaa3(double *img, double *gx, double *gy, int w, int h, short *distx, short *disty, double *dist);
+void moai_edtaa3(double *img, double *gx, double *gy, int w, int h, short *distx, short *disty, double *dist);
 
 	
 #ifdef __cplusplus

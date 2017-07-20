@@ -318,8 +318,7 @@ void MOAITextDesignParser::BuildLayout () {
 		}
 		else {
 			MOAIGlyph* glyph = this->mDeck->GetGlyph ( c );
-			if ( !glyph ) continue;
-			if ( glyph->mCode == MOAIGlyph::NULL_CODE_ID ) continue;
+			if (( !glyph ) || ( glyph->mCode == MOAIGlyph::NULL_CODE_ID ) || ( glyph->mPageID == MOAIGlyph::NULL_PAGE_ID )) continue;
 			
 			// apply kerning
 			if ( this->mPrevGlyph ) {

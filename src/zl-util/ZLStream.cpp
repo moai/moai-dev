@@ -6,6 +6,7 @@
 #include <zl-util/ZLFileSys.h>
 #include <zl-util/ZLDirectoryItr.h>
 #include <zl-util/ZLMemStream.h>
+#include <zl-util/ZLSample.h>
 #include <zl-util/ZLStream.h>
 #include <stdio.h>
 
@@ -306,6 +307,23 @@ STLString ZLStream::ReadToken ( cc8* delimiters ) {
 }
 
 //----------------------------------------------------------------//
+float ZLStream::Sample ( u32 streamType, size_t sampleSize ) {
+
+	float accum = 0.0f;
+	
+	for ( size_t i = 0; i < sampleSize; ++i ) {
+	
+		float sample;
+	
+		size_t result = ZLSample::ReadSample ( *this, streamType, &sample, ZLSample::SAMPLE_FLOAT );
+		assert ( result );
+		
+		accum += sample / ( float )sampleSize;
+	}
+	return accum;
+}
+
+//----------------------------------------------------------------//
 int ZLStream::Seek ( long offset, int origin ) {
 
 	if ( !( this->GetCaps () & CAN_SEEK )) return -1;
@@ -330,9 +348,9 @@ int ZLStream::Seek ( long offset, int origin ) {
 		}
 	}
 	
-	if ( absCursor > cursor ) {
-		if (( length == UNKNOWN_SIZE ) || ( absCursor > length )) return -1;
-	}
+//	if ( absCursor > cursor ) {
+//		if (( length == UNKNOWN_SIZE ) || ( absCursor > length )) return -1;
+//	}
 	return ( absCursor != cursor ) ? this->SetCursor ( absCursor ) : 0;
 }
 

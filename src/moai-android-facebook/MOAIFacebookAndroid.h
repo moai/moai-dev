@@ -29,7 +29,10 @@ class MOAIFacebookAndroid :
 private:
 
 	jmethodID	mJava_GetToken;
+	jmethodID	mJava_GetTokenExpireTime;
+	jmethodID	mJava_GetTokenRefreshTime;
 	jmethodID	mJava_GetUserID;
+	jmethodID	mJava_GetUserName;
 	jmethodID	mJava_GraphRequest;
 	jmethodID	mJava_Init;
 	jmethodID	mJava_IsSessionValid;
@@ -41,17 +44,20 @@ private:
 	jmethodID	mJava_ShowInviteDialog;
 
 	//----------------------------------------------------------------//
-	static int	_getUserID			( lua_State* L );
-	static int	_getToken			( lua_State* L );
-	static int	_graphRequest		( lua_State* L );
-	static int	_init				( lua_State* L );
-	static int	_login				( lua_State* L );
-	static int	_logout				( lua_State* L );
-	static int	_postToFeed			( lua_State* L );
-	static int	_restoreSession		( lua_State* L );
-	static int	_sendRequest		( lua_State* L );
-	static int	_sessionValid		( lua_State* L );
-	static int	_showInviteDialog	( lua_State* L );
+	static int	_getUserID				( lua_State* L );
+	static int	_getUserName			( lua_State* L );
+	static int	_getToken				( lua_State* L );
+	static int	_getTokenExpireTime		( lua_State* L );
+	static int	_getTokenRefreshTime	( lua_State* L );
+	static int	_graphRequest			( lua_State* L );
+	static int	_init					( lua_State* L );
+	static int	_login					( lua_State* L );
+	static int	_logout					( lua_State* L );
+	static int	_postToFeed				( lua_State* L );
+	static int	_restoreSession			( lua_State* L );
+	static int	_sendRequest			( lua_State* L );
+	static int	_sessionValid			( lua_State* L );
+	static int	_showInviteDialog		( lua_State* L );
 
 public:
 

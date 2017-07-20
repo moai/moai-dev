@@ -619,6 +619,10 @@ int MOAILayer::_wndToWorld ( lua_State* L ) {
 int MOAILayer::_wndToWorldRay ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UNN" )
 
+	if ( self->mCamera ) {
+		self->mCamera->ForceUpdate ();
+	}
+
 	ZLMatrix4x4 wndToWorld = self->GetWndToWorldMtx ();
 
 	ZLVec4D loc;
@@ -681,7 +685,7 @@ int MOAILayer::_wndToWorldRay ( lua_State* L ) {
 		if ( self->mCamera  && ( self->mCamera->GetType () == MOAICamera::CAMERA_TYPE_3D )) {
 			const ZLAffine3D& localToWorldMtx = self->mCamera->GetLocalToWorldMtx ();
 			ZLVec3D zAxis = localToWorldMtx.GetZAxis ();
-			ns = -( d / zAxis.Dot ( norm ));
+			ns = -( d * zAxis.Dot ( norm ));
 		}
 		else {
 			ns = d;
@@ -1091,17 +1095,29 @@ void MOAILayer::RenderTable ( MOAILuaState& state, int idx ) {
 		
 		int valType = lua_type ( state, -1 );
 		
-		if ( valType == LUA_TUSERDATA ) {
-			MOAIRenderable* renderable = state.GetLuaObject < MOAIRenderable >( -1, false );
-			if ( renderable ) {
-				renderable->Render ();
+		switch ( valType ) {
+		
+			case LUA_TUSERDATA: {
+				MOAIRenderable* renderable = state.GetLuaObject < MOAIRenderable >( -1, false );
+				if ( renderable ) {
+					renderable->Render ();
+				}
+				break;
 			}
-		}
-		else if ( valType == LUA_TTABLE ) {
-			this->RenderTable ( state, -1 );
-		}
-		else {
-			n = 0;
+			case LUA_TTABLE:
+				this->RenderTable ( state, -1 );
+				break;
+			
+			case LUA_TFUNCTION: {
+			
+				MOAIDraw::Bind ();
+			
+				state.CopyToTop ( -1 );
+				state.DebugCall ( 0, 0 );
+				break;
+			}
+			default:
+				n = 0;
 		}
 		
 		lua_pop ( state, 1 );

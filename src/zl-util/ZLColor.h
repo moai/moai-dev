@@ -125,6 +125,7 @@ public:
 	//----------------------------------------------------------------//
 	void			Add					( const ZLColorVec& c );
 	void			AddAndClamp			( const ZLColorVec& c );
+	void			Clamp				();
 	bool			Compare				( const ZLColorVec& c );
 	bool			Compare				( const ZLColorVec& c, float res );
 	void			FromHSV				( float h, float s, float v );

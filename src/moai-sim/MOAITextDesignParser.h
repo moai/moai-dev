@@ -16,6 +16,7 @@ class MOAITextStyleState;
 //================================================================//
 // MOAITextDesignParser
 //================================================================//
+// parser for producing a layout
 class MOAITextDesignParser {
 private:
 	
