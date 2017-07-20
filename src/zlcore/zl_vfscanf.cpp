@@ -296,6 +296,7 @@ int read_format_specifier ( const char* format, FormatSpecifier* specifier ) {
 #ifndef MOAI_COMPILER_MSVC
 	#pragma GCC diagnostic push
 	#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+	#pragma GCC diagnostic ignored "-Wformat-security"
 #endif
 
 //----------------------------------------------------------------//
