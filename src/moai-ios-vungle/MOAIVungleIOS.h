@@ -8,6 +8,7 @@
 #define	MOAIVUNGLEIOS_H
 
 #include <moai-core/headers.h>
+#import <VungleSDK/VungleSDK.h>
 
 @class MOAIVungleDelegate;
 
@@ -19,12 +20,8 @@ class MOAIVungleIOS :
 private:
 
 	MOAIVungleDelegate*		mDelegate;
-	bool					mWatchedAd;
 	
 	//----------------------------------------------------------------//
-	static int		_allowAutoRotate			( lua_State* L );
-	static int		_cacheSizeGet				( lua_State* L );
-	static int		_cacheSizeSet				( lua_State* L );
 	static int		_displayAdvert				( lua_State* L );
 	static int		_init						( lua_State* L );
 	static int		_isVideoAvailable			( lua_State* L );
@@ -38,11 +35,19 @@ public:
 	DECL_LUA_SINGLETON ( MOAIVungleIOS );
 
 	//----------------------------------------------------------------//
-					MOAIVungleIOS				();
-					~MOAIVungleIOS				();
-	void			NotifyMoviePlayed			();
-	void			RegisterLuaClass			( MOAILuaState& state );
-	void			WatchedAd					( bool playedFull );
+						MOAIVungleIOS				();
+						~MOAIVungleIOS				();
+	MOAIVungleDelegate*	GetVungleDelegate			() const;
+	void				NotifyMoviePlayed			( bool playedFull, NSString* placementID );
+	void				RegisterLuaClass			( MOAILuaState& state );
 };
+
+//================================================================//
+// MOAIVungleDelegate
+//================================================================//
+@interface MOAIVungleDelegate : NSObject < VungleSDKDelegate > {
+@private
+}
+@end
 
 #endif  //MOAIVUNGLEIOS_H

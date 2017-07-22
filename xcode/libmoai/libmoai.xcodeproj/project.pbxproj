@@ -175,6 +175,7 @@
 		0765874F145CD06900723A7D /* tlsf.c in Sources */ = {isa = PBXBuildFile; fileRef = 0765874B145CD06900723A7D /* tlsf.c */; };
 		07658751145CD06900723A7D /* tlsf.h in Headers */ = {isa = PBXBuildFile; fileRef = 0765874C145CD06900723A7D /* tlsf.h */; };
 		07658753145CD06900723A7D /* tlsfbits.h in Headers */ = {isa = PBXBuildFile; fileRef = 0765874D145CD06900723A7D /* tlsfbits.h */; };
+		46BB34A81F22DF13008E4F14 /* VungleSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46BB34A71F22DF13008E4F14 /* VungleSDK.framework */; };
 		663704171612813D002D0D27 /* moai_whirlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 663704111612812C002D0D27 /* moai_whirlpool.h */; };
 		66E345471614CA710021FC4B /* moai_whirlpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 66E345451614CA710021FC4B /* moai_whirlpool.c */; };
 		89BE694A173974FD00DFE837 /* zl_platform.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6888173974FC00DFE837 /* zl_platform.h */; };
@@ -5538,6 +5539,7 @@
 		43BA2E9C177332B2007DCDF0 /* PlayHavenSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayHavenSDK.h; path = "../../3rdparty/playhaven-ios-1.13.1/src/PlayHavenSDK.h"; sourceTree = "<group>"; };
 		43BA2E9D177332B2007DCDF0 /* UIDevice+HardwareString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIDevice+HardwareString.h"; path = "../../3rdparty/playhaven-ios-1.13.1/src/UIDevice+HardwareString.h"; sourceTree = "<group>"; };
 		43BA2E9E177332B2007DCDF0 /* UIDevice+HardwareString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIDevice+HardwareString.m"; path = "../../3rdparty/playhaven-ios-1.13.1/src/UIDevice+HardwareString.m"; sourceTree = "<group>"; };
+		46BB34A71F22DF13008E4F14 /* VungleSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VungleSDK.framework; path = "../../3rdparty/vungle-5.1.0/VungleSDK.framework"; sourceTree = "<group>"; };
 		663704111612812C002D0D27 /* moai_whirlpool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = moai_whirlpool.h; path = ../../3rdparty/contrib/moai_whirlpool.h; sourceTree = "<group>"; };
 		6671AE9C15915C1500B36122 /* RiffFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RiffFile.cpp; path = ../../3rdparty/untz/src/native/android/RiffFile.cpp; sourceTree = "<group>"; };
 		6671AE9D15915C1500B36122 /* WaveFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WaveFile.cpp; path = ../../3rdparty/untz/src/native/android/WaveFile.cpp; sourceTree = "<group>"; };
@@ -8514,6 +8516,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46BB34A81F22DF13008E4F14 /* VungleSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13193,6 +13196,7 @@
 		ED8238C91EE75D860009EA7D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				46BB34A71F22DF13008E4F14 /* VungleSDK.framework */,
 				EDF62A391F1596AC005172C2 /* Chartboost.framework */,
 				ED8238CE1EE75D930009EA7D /* iAd.framework */,
 				ED8238CC1EE75D8D0009EA7D /* StoreKit.framework */,
@@ -20809,12 +20813,12 @@
 					"$(inherited)",
 					"../../3rdparty/facebook-ios-sdk-4.5.1",
 					../../3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework,
-					"../../3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
 					"../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
 					../../3rdparty/kontagent_ios_v1.5.6,
 					"../../3rdparty/adcolony-2.2.4",
 					"../../3rdparty/tenjin-1.7.3",
 					"../../3rdparty/chartboost-6.6.3",
+					"../../3rdparty/vungle-5.1.0",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
@@ -22146,12 +22150,12 @@
 					"$(inherited)",
 					"../../3rdparty/facebook-ios-sdk-4.5.1",
 					../../3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework,
-					"../../3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
 					"../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
 					../../3rdparty/kontagent_ios_v1.5.6,
 					"../../3rdparty/adcolony-2.2.4",
 					"../../3rdparty/tenjin-1.7.3",
 					"../../3rdparty/chartboost-6.6.3",
+					"../../3rdparty/vungle-5.1.0",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
@@ -29462,12 +29466,12 @@
 					"$(inherited)",
 					"../../3rdparty/facebook-ios-sdk-4.5.1",
 					../../3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework,
-					"../../3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
 					"../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
 					../../3rdparty/kontagent_ios_v1.5.6,
 					"../../3rdparty/adcolony-2.2.4",
 					"../../3rdparty/tenjin-1.7.3",
 					"../../3rdparty/chartboost-6.6.3",
+					"../../3rdparty/vungle-5.1.0",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
@@ -29867,12 +29871,12 @@
 					"$(inherited)",
 					"../../3rdparty/facebook-ios-sdk-4.5.1",
 					../../3rdparty/TapjoySDK_iOS_v10.0.2/Libraries/Tapjoy.embeddedframework,
-					"../../3rdparty/vungle-2.0.1/vunglepub.embeddedframework",
 					"../../3rdparty/MobileAppTracking-ios-2.6/sdk-ios",
 					../../3rdparty/kontagent_ios_v1.5.6,
 					"../../3rdparty/adcolony-2.2.4",
 					"../../3rdparty/tenjin-1.7.3",
 					"../../3rdparty/chartboost-6.6.3",
+					"../../3rdparty/vungle-5.1.0",
 				);
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
