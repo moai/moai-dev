@@ -103,9 +103,6 @@ int MOAIFacebookIOS::_getUserID ( lua_State* L ) {
 int MOAIFacebookIOS::_getUserName ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIFacebookIOS, "" )
 	
-	
-	
-
 	if ( MOAIFacebookIOS::Get ().mName != "") {
 		lua_pushstring ( L, MOAIFacebookIOS::Get ().mName.c_str() );
 	} else {
@@ -359,8 +356,6 @@ MOAIFacebookIOS::MOAIFacebookIOS ():
     
 	RTTI_SINGLE ( MOAILuaObject )
 	RTTI_SINGLE ( MOAIGlobalEventSource )
-	
-	
 }
 
 //----------------------------------------------------------------//
