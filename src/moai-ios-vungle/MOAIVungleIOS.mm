@@ -47,8 +47,10 @@ int	MOAIVungleIOS::_displayAdvert ( lua_State* L ) {
 	NSString* placementID = [ NSString stringWithCString: placementIDChar encoding: [ NSString defaultCStringEncoding ]];
 	
 	VungleSDK* sdk = [ VungleSDK sharedSDK ];
+	
+	NSDictionary *options = @{VunglePlayAdOptionKeyOrientations: @(UIInterfaceOrientationMaskLandscape)};
 	NSError *error;
-	[ sdk playAd: rootVC options: nil placementID: placementID error: &error ];
+	[ sdk playAd: rootVC options: options placementID: placementID error: &error ];
 	if ( error ) {
 		NSLog ( @"Error encountered playing ad: %@", error );
 	}
