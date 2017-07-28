@@ -1143,6 +1143,8 @@ void MOAITextLabel::MOAIDrawable_Draw ( int subPrimID ) {
 		this->PushGfxState ();
 		this->LoadVertexTransform ();
 		this->LoadUVTransform ();
+		MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
+		materialStack.LoadGfxState ();
 	
 		gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX ));
 		gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_TO_MODEL_MTX ));
