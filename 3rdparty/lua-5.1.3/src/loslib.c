@@ -10,7 +10,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
+#ifndef ANDROID
 #include <spawn.h>
+#endif
 
 #define loslib_c
 #define LUA_LIB
