@@ -23,7 +23,6 @@
 #include "lauxlib.h"
 #include "lualib.h"
 
-extern char **environ;
 
 static int os_pushresult (lua_State *L, int i, const char *filename) {
   int en = errno;  /* calls to Lua API may change this value */
@@ -43,7 +42,7 @@ static int os_pushresult (lua_State *L, int i, const char *filename) {
 static int os_execute (lua_State *L) {
   pid_t pid;
   char *argv[] = {luaL_optstring(L, 1, NULL)};
-
+  static char **environ;
   lua_pushinteger(L, posix_spawn(&pid, argv[0], NULL, NULL, argv, environ));
   waitpid(pid, NULL, 0);
   return 1;
