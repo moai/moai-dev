@@ -39,9 +39,9 @@ static int os_pushresult (lua_State *L, int i, const char *filename) {
 
 static int os_execute (lua_State *L) {
   pid_t pid;
-  char *optionsString = luaL_optstring(L, 1, NULL);
+  char *argv[] = {luaL_optstring(L, 1, NULL)};
 
-  lua_pushinteger(L, posix_spawn(&pid, optionsString, NULL, NULL, optionsString, environ));
+  lua_pushinteger(L, posix_spawn(&pid, argv[0], NULL, NULL, argv, environ));
   waitpid(pid, NULL, 0);
   return 1;
 }
