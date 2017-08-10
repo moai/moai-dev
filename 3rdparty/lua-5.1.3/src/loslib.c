@@ -11,6 +11,10 @@
 #include <string.h>
 #include <time.h>
 
+#ifndef ANDROID
+#include <spawn.h>
+#endif
+
 #define loslib_c
 #define LUA_LIB
 
@@ -36,7 +40,11 @@ static int os_pushresult (lua_State *L, int i, const char *filename) {
 
 
 static int os_execute (lua_State *L) {
-  lua_pushinteger(L, system(luaL_optstring(L, 1, NULL)));
+  pid_t pid;
+  char *argv[] = {luaL_optstring(L, 1, NULL)};
+  static char **environ;
+  lua_pushinteger(L, posix_spawn(&pid, argv[0], NULL, NULL, argv, environ));
+  waitpid(pid, NULL, 0);
   return 1;
 }
 
