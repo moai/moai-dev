@@ -49,7 +49,7 @@ void MOAIDrawable::Draw ( MOAILuaState& state, int idx, bool debug ) {
 		
 			size_t tableSize = state.GetTableSize ( idx );
 			for ( size_t i = 0; i < tableSize; ++i ) {
-				lua_rawgeti ( state, idx, i + 1 );
+				lua_rawgeti ( state, idx, ( int )( i + 1 ));
 				MOAIDrawable::Draw ( state, -1, debug );
 				lua_pop ( state, 1 );
 			}

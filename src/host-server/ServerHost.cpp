@@ -51,17 +51,7 @@ int main ( int argc, char *argv []) {
 	signal ( SIGTERM, signal_handler );
 	signal ( SIGINT, signal_handler );
 	
-	AKUSetArgv ( argv );
-	
-	for ( int i = 1; i < argc; ++i ) {
-		char* arg = argv [ i ];
-		if ( strcmp( arg, "-s" ) == 0 && ++i < argc ) {
-			AKURunString ( argv [ i ]);
-		}
-		else {
-			AKURunScript ( arg );
-		}
-	}
+	AKUModulesParseArgs ( argc, argv );
 	
 	while ( sExitFlag == 0 ) {
 		sleep ( 1 );

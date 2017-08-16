@@ -101,10 +101,10 @@ void MOAIImageFormatPng::ReadImagePng ( MOAIImage& image, void* pngParam, void* 
 	int interlaceType;
 	
 	int paletteSize = 0;
-	png_colorp palette;
+	png_colorp palette = 0;
 	
 	int transSize = 0;
-	png_bytep trans;
+	png_bytep trans = 0;
 	
 	png_read_info ( png, pngInfo );
 	png_get_IHDR ( png, pngInfo, &width, &height, &bitDepth, &pngColorType, &interlaceType, 0, 0 );

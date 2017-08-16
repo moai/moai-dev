@@ -1277,7 +1277,7 @@ void MOAIVectorTesselator::WriteShapes ( ZLStream& stream, MOAIVectorTesselatorW
 	MOAIVectorTesselatorWriter defaultWriter;
 	writer = writer ? writer : &defaultWriter;
 	
-	u32 nShapes = this->mShapeStack.GetTop ();
+	u32 nShapes = ( u32 )this->mShapeStack.GetTop ();
 
 	if ( nShapes ) {
 		for ( u32 i = 0; i < nShapes; ++i ) {

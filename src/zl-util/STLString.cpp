@@ -14,6 +14,16 @@
 #include <zl-util/ZLMemStream.h>
 #include <zl-util/ZLZip.h>
 
+//----------------------------------------------------------------//
+char _to_lower ( char c ) {
+	return ( char )tolower ( c );
+}
+
+//----------------------------------------------------------------//
+char _to_upper ( char c ) {
+	return ( char )toupper ( c );
+}
+
 //================================================================//
 // STLString
 //================================================================//
@@ -180,13 +190,13 @@ int STLString::to_int () {
 //----------------------------------------------------------------//
 void STLString::to_lower () {
 
-	transform ( this->begin (), this->end (),this->begin (), ( int( * )( int ))tolower );
+	transform ( this->begin (), this->end (),this->begin (), _to_lower );
 }
 
 //----------------------------------------------------------------//
 void STLString::to_upper () {
 
-	transform ( this->begin (), this->end (),this->begin (), ( int( * )( int ))toupper );
+	transform ( this->begin (), this->end (),this->begin (), _to_upper );
 }
 
 //----------------------------------------------------------------//

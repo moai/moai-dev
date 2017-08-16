@@ -328,6 +328,7 @@ int AKUModulesContextInitialize () {
 
 //----------------------------------------------------------------//
 void AKUModulesPause ( bool pause ) {
+	UNUSED ( pause );
 	
 	#if AKU_WITH_ANDROID
 		AKUModulesAndroidPause ( pause );

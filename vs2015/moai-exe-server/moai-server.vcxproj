@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -22,30 +22,31 @@
     <ProjectGuid>{4AAABD66-E60E-45BD-9F14-D0DD5F5F26E2}</ProjectGuid>
     <RootNamespace>moai-server-lua-5.1</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>NotSet</CharacterSet>
     <WholeProgramOptimization>false</WholeProgramOptimization>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>NotSet</CharacterSet>
     <WholeProgramOptimization>false</WholeProgramOptimization>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -92,12 +93,11 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_CONSOLE;_DEBUG;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=1;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CONSOLE;DEBUG;_DEBUG;AKU_WITH_BOX2D=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=1;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
-      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -110,7 +110,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>moai-lib-core.lib;moai-lib-luaext.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-util.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>zlib.lib;zl-lib-vfs.lib;contrib.lib;expat.lib;freetype.lib;jansson.lib;kissfft.lib;tinyxml.lib;libcrypto.lib;libssl.lib;libcurl.lib;libtess.lib;tlsf.lib;zl-lib-core.lib;zl-lib-crypto.lib;moai-lib-core.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-util.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
       <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -135,12 +135,11 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_CONSOLE;_DEBUG;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=1;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CONSOLE;DEBUG;_DEBUG;AKU_WITH_BOX2D=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=1;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
-      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -153,7 +152,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>moai-lib-core.lib;moai-lib-luaext.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-util.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>zlib.lib;zl-lib-vfs.lib;contrib.lib;expat.lib;freetype.lib;jansson.lib;kissfft.lib;tinyxml.lib;libcrypto.lib;libssl.lib;libcurl.lib;libtess.lib;tlsf.lib;zl-lib-core.lib;zl-lib-crypto.lib;moai-lib-core.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-util.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
       <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -175,10 +174,9 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_CONSOLE;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=1;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CONSOLE;NDEBUG;AKU_WITH_BOX2D=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=1;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
-      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -191,7 +189,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>moai-lib-core.lib;moai-lib-luaext.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-util.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>zlib.lib;zl-lib-vfs.lib;contrib.lib;expat.lib;freetype.lib;jansson.lib;kissfft.lib;tinyxml.lib;libcrypto.lib;libssl.lib;libcurl.lib;libtess.lib;tlsf.lib;zl-lib-core.lib;zl-lib-crypto.lib;moai-lib-core.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-util.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -214,10 +212,9 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
     </Midl>
     <ClCompile>
       <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_CONSOLE;AKU_WITH_BOX2D=0;AKU_WITH_CHIPMUNK=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=1;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CONSOLE;NDEBUG;AKU_WITH_BOX2D=0;AKU_WITH_FMOD_DESIGNER=0;AKU_WITH_FMOD_EX=0;AKU_WITH_HARNESS=0;AKU_WITH_HTTP_CLIENT=1;AKU_WITH_HTTP_SERVER=1;AKU_WITH_LUAEXT=1;AKU_WITH_SIM=0;AKU_WITH_TEST=0;AKU_WITH_UNTZ=0;AKU_WITH_UTIL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
-      <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -229,7 +226,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>moai-lib-core.lib;moai-lib-luaext.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-util.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>zlib.lib;zl-lib-vfs.lib;contrib.lib;expat.lib;freetype.lib;jansson.lib;kissfft.lib;tinyxml.lib;libcrypto.lib;libssl.lib;libcurl.lib;libtess.lib;tlsf.lib;zl-lib-core.lib;zl-lib-crypto.lib;moai-lib-core.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-util.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -258,8 +255,41 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
     <ProjectReference Include="..\box2d\box2d.vcxproj">
       <Project>{ab0dd232-1af9-4b16-a0f2-5ebf32250f6b}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\contrib\contrib.vcxproj">
+      <Project>{562b9eef-2a2e-46e1-8a28-550c86cdf9f6}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\expat\expat.vcxproj">
+      <Project>{860d46bc-ec6b-43c3-b335-3479f096fb1b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\jansson\jansson.vcxproj">
+      <Project>{52496c82-2edb-4649-8509-451891f6a3de}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\kissfft\kissfft.vcxproj">
+      <Project>{23fa2a9c-429a-4be6-a540-f80b061ee58a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\libcrypto\libcrypto.vcxproj">
+      <Project>{956ffe71-66f4-457c-8c88-9f075e4fde27}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\libcurl\libcurl.vcxproj">
+      <Project>{41beb1cb-88c0-4c0f-b24e-f5871cf9ee49}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\libssl\libssl.vcxproj">
+      <Project>{d0f1c892-57f4-4758-a2ee-bfb58db20987}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\libtess\libtess.vcxproj">
+      <Project>{6de5e8c5-e477-4cee-8824-73e3c3c483de}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\lua-lib-5.1\lua-lib-5.1.vcxproj">
+      <Project>{71f4ff55-2018-4950-9820-251d7c3cdd31}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\luaext\luaext.vcxproj">
+      <Project>{51007be8-c720-4a9f-a1bf-c2aa31179e02}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\moai-lib-core\moai-lib-core.vcxproj">
       <Project>{aa2bd0be-d174-4f8f-a7f7-b924128fed00}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\moai-lib-crypto\moai-lib-crypto.vcxproj">
+      <Project>{a5f1dfa8-7fdb-4d71-b926-350a011c98f9}</Project>
     </ProjectReference>
     <ProjectReference Include="..\moai-lib-http-client\moai-lib-http-client.vcxproj">
       <Project>{caf76e4c-0b1b-424d-b36e-ba0d974a7a0c}</Project>
@@ -272,6 +302,33 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
     </ProjectReference>
     <ProjectReference Include="..\moai-lib-util\moai-lib-util.vcxproj">
       <Project>{9cf1dc0d-a3c1-45c2-98ec-f4f30b6bb49d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\mongoose\mongoose.vcxproj">
+      <Project>{d7555f5d-ecfb-4a80-bab6-7a549f19f9a7}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\sfmt\sfmt.vcxproj">
+      <Project>{1dc6bd91-b45f-442a-ae6c-88ab5dcf0ce2}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\sqlite\sqlite.vcxproj">
+      <Project>{a9935050-2e54-4674-80f8-cfc45a2c106a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\tinyxml\tinyxml.vcxproj">
+      <Project>{991ebc54-28ff-44a1-863e-e70617782825}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\tlsf\tlsf.vcxproj">
+      <Project>{1e78302d-cf63-4922-8113-dccd24f94087}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\zl-lib-core\zl-lib-core.vcxproj">
+      <Project>{e97a3e3d-01d5-4210-bca0-a6d816624f1a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\zl-lib-crypto\zl-lib-crypto.vcxproj">
+      <Project>{5234f482-e45e-48e1-83f1-c56eec64c0ee}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\zl-lib-vfs\zl-lib-vfs.vcxproj">
+      <Project>{1e2d4a61-74ea-46fb-896d-6926dbca43d0}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\zlib\zlib.vcxproj">
+      <Project>{e6c55a0c-b5b7-4963-8f77-19f1624b9f47}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

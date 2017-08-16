@@ -104,7 +104,7 @@ void MOAIShader::ApplyGlobals () {
 	// NOTE: matrices are submitted *column major*; it is up to the shader to transform vertices correctly
 	// vert * matrix implicitely transposes the matrix; martix * vert uses the matrix as submitted
 
-	u32 nGlobals = this->mProgram->mGlobals.Size ();
+	u32 nGlobals = ( u32 )this->mProgram->mGlobals.Size ();
 
 	for ( u32 i = 0; i < nGlobals; ++i ) {
 	

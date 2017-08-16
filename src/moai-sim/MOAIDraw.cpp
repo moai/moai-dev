@@ -1308,7 +1308,7 @@ void MOAIDraw::DrawLuaArray ( lua_State* L, u32 primType ) {
 	
 	size_t size = state.GetTableSize ( -1 ) >> 2;
 	
-	gfxMgr.mVertexCache.BeginPrim ( primType, size );
+	gfxMgr.mVertexCache.BeginPrim ( primType, ( u32 )size );
 
 	u32 counter = 0;
 	lua_pushnil ( L );

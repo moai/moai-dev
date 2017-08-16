@@ -725,7 +725,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( u32 idx ) {
 		if ( totalQuads ) {
 		
 			size_t itemIdx = idx % totalQuads;
-			material = this->GetMaterial ( itemIdx );
+			material = this->GetMaterial (( u32 )itemIdx );
 
 			quadBrush.mModelQuad = this->mQuads [ itemIdx ];
 

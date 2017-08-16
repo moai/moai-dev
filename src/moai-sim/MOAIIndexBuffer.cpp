@@ -129,7 +129,7 @@ int MOAIIndexBuffer::_setIndexSize ( lua_State* L ) {
 //----------------------------------------------------------------//
 u32 MOAIIndexBuffer::CountIndices () {
 
-	return this->GetLength () / this->mIndexSize;
+	return ( u32 )this->GetLength () / this->mIndexSize;
 }
 
 //----------------------------------------------------------------//

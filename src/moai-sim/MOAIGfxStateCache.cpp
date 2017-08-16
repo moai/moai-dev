@@ -205,6 +205,7 @@ void MOAIGfxStateCache::ApplyStateChanges () {
 
 //----------------------------------------------------------------//
 void MOAIGfxStateCache::BindVertexBufferWithFormat ( MOAIVertexBufferWithFormat& bufferWithFormat, bool useVAOs ) {
+	UNUSED ( useVAOs );
 
 	MOAIVertexBuffer* buffer = bufferWithFormat.mBuffer;
 	MOAIVertexFormat* format = bufferWithFormat.mFormat;
@@ -337,7 +338,7 @@ void MOAIGfxStateCache::InitTextureUnits ( size_t nTextureUnits ) {
 	this->mActiveState.mTextureUnits.Init ( nTextureUnits );
 	this->mActiveState.mTextureUnits.Fill ( 0 );
 	
-	this->mMaxTextureUnits = nTextureUnits;
+	this->mMaxTextureUnits = ( u32 )nTextureUnits;
 }
 
 //----------------------------------------------------------------//

@@ -86,7 +86,7 @@ void ZLGfxDevice::Initialize () {
 	#endif
 
 	STLString version = ZLGfxDevice::GetString ( ZGL_STRING_VERSION );
-	std::transform ( version.begin (), version.end(), version.begin(), ::tolower );
+	version.to_lower ();
 	
 	STLString gles = "opengl es";
 

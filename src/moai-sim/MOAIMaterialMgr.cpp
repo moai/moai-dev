@@ -17,13 +17,13 @@
 MOAIMaterialStackScope::MOAIMaterialStackScope () :
 	mMaterialStack ( MOAIMaterialMgr::Get ()) {
 	
-	this->mRestoreTop = this->mMaterialStack.mStack.GetTop ();
+	this->mRestoreTop = ( u32 )this->mMaterialStack.mStack.GetTop ();
 }
 
 //----------------------------------------------------------------//
 MOAIMaterialStackScope::~MOAIMaterialStackScope () {
 
-	u32 top = this->mMaterialStack.mStack.GetTop ();
+	u32 top = ( u32 )this->mMaterialStack.mStack.GetTop ();
 	for ( ; top > this->mRestoreTop; --top ) {
 		this->mMaterialStack.Pop ();
 	}

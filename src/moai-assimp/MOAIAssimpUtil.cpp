@@ -172,8 +172,7 @@ void MOAIAssimpUtil::PushMesh ( lua_State* L , const aiMesh* currentMesh ) {
 //----------------------------------------------------------------//
 void MOAIAssimpUtil::PushNode ( lua_State* L, const aiNode* node ) {
 
-	int stackOK = lua_checkstack ( L, 4 );
-	assert ( stackOK );
+	assert ( lua_checkstack ( L, 4 ));
 
 	if ( !node ) return;
 	
