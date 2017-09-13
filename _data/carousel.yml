@@ -1,0 +1,7 @@
+# This file defines which apps in what order appear on the carousel.
+# Each item is the name of a .md file in the /games/_posts folder which contains the actual information.
+
+- 2014-01-14-broken-age-1
+- 2014-05-01-elevate
+- 2014-09-14-cannibal-cookout
+- 2014-11-01-land-of-venn

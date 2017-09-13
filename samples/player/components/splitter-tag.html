@@ -1,0 +1,106 @@
+<splitter>
+    <style>
+        .splitter {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            position: absolute;
+            top:0;
+            right:0;
+            bottom:0;
+            left:0;
+        }
+
+        .splitter-inner {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top:0;
+            bottom:0;
+        }
+        .splitter-inner.horizontal {
+            left: 4px;
+            right: 4px;
+        }
+
+        .splitter-inner.vertical {
+            top: 4px;
+            bottom: 4px;
+        }
+
+    </style>
+
+    <div class="splitter">
+        <div class="splitter-inner {type}" onmousemove="{onSplitterMove}" >
+            <yield />
+        </div>
+    </div>
+    <script>
+
+
+        this.on("mount", function() {
+            this.type = opts.type;
+            var horizontal = (this.type == "horizontal");
+            var panels = this.tags['splitter-panel'];
+
+
+            panels[0].type = (horizontal ? "left" : "top");
+            panels[1].type = (horizontal ? "right" : "bottom");
+
+            var splitter = this.tags["splitter-handle"];
+
+            this.dragging = false;
+            this.location = opts.location || 50;
+
+            var endMove = function(event) {
+                this.dragging = false;
+                $('body').css({ '-webkit-user-select': 'initial',
+                    '-moz-user-select': 'initial',
+                    '-ms-user-select': 'initial',
+                    'user-select': 'initial'
+                });
+                //this.trigger("resize");
+                $('iframe').each(function(idx, el) {
+                    el.style['pointer-events'] = 'auto';
+                });
+                document.removeEventListener("mouseup", endMove);
+            }.bind(this);
+
+
+            splitter.on("splitter-begin-move", function(event) {
+                this.dragging = true;
+                $('body').css({ '-webkit-user-select': 'none',
+                    '-moz-user-select': '-moz-none',
+                    '-ms-user-select': 'none',
+                    'user-select': 'none'
+                } );
+
+                //find all iframes and disable pointer events
+                $('iframe').each(function(idx,el) {
+                    el.style['pointer-events'] = 'none';
+                });
+                //bind to document to detect mouse up
+                document.addEventListener("mouseup",endMove);
+            }.bind(this));
+
+            this.onSplitterMove = function(e) {
+
+                if (!this.dragging) return;
+
+
+                var container = $(".splitter-inner", this.root);
+                var offsetTop = container.offset().top;
+                var offsetLeft = container.offset().left;
+
+                if (horizontal) {
+                    this.location = ((e.pageX - offsetLeft) / container.outerWidth()) * 100;
+                } else {
+                    this.location = ((e.pageY - offsetTop ) /container.outerHeight()) *100;
+                }
+                this.update();
+            }.bind(this);
+
+            this.update();
+        })
+    </script>
+
+</splitter>
