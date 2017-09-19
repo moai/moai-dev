@@ -20935,6 +20935,10 @@
 					"-include",
 					"\"../../src/zl-vfs/zl_replace.h\"",
 				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-DAKU_WITH_IFA=1",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -22272,6 +22276,10 @@
 				OTHER_CFLAGS = (
 					"-include",
 					"\"../../src/zl-vfs/zl_replace.h\"",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-DAKU_WITH_IFA=1",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -29589,6 +29597,10 @@
 					"-include",
 					"\"../../src/zl-vfs/zl_replace.h\"",
 				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-DAKU_WITH_IFA=1",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -29992,6 +30004,10 @@
 					"-DNS_BLOCK_ASSERTIONS=1",
 					"-include",
 					"\"../../src/zl-vfs/zl_replace.h\"",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-DAKU_WITH_IFA=1",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
