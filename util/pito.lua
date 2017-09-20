@@ -108,6 +108,6 @@ MOAIFileSystem.setWorkingDirectory ( SCRIPT_DIR )
 if MOAIFileSystem.checkFileExists('main.lua') then
     dofile ( 'main.lua' )
 else
-    usage()
+    usage(MOAI_CMD)
 end
 
