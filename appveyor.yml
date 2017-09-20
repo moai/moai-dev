@@ -1,6 +1,0 @@
-shallow_clone: true
-clone_depth: 2
-
-build_script: bin\ci-windows.bat  
-
-test: off
