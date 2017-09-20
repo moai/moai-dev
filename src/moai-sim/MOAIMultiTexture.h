@@ -16,12 +16,13 @@ class MOAIMultiTexture :
 	public MOAITextureBase {
 private:
 
-	friend class MOAIGfxDevice;
-	friend class MOAIGfxDeviceStateCache;
+	friend class MOAIGfxMgr;
+	friend class MOAIGfxStateCache;
 
 	ZLLeanArray < MOAISingleTexture* > mTextures;
 
 	//----------------------------------------------------------------//
+	static int			_release					( lua_State* L );
 	static int			_reserve					( lua_State* L );
 	static int			_setTexture					( lua_State* L );
 

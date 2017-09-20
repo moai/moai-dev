@@ -23,7 +23,7 @@ XLIB = -L/usr/X11R6/lib -lX11
 #LIBS = $(XLIB)
 LIBS = $(XLIB) -lm                      #platforms that need libm
 
-CFLAGS=-DPNG_USER_CONFIG -DNO_GZCOMPRESS -DNO_GZIP \
+CFLAGS=-DPNG_USER_CONFIG -DNO_GZCOMPRESS -DNO_GZIP -DZ_SOLO \
        -DdeflateParams\(a,b,c\)=Z_OK -I. $(XINC) -O1
 
 C=.c
@@ -31,7 +31,7 @@ O=.o
 L=.a
 E=
 
-ZOBJS  = adler32$(O) crc32$(O) gzio$(O) \
+ZOBJS  = adler32$(O) crc32$(O) \
 	 infback$(O) inffast$(O) inflate$(O) inftrees$(O) \
 	 trees$(O) uncompr$(O) zutil$(O)
 
@@ -50,7 +50,6 @@ all: rpng2-x$(E)
 
 rpng2-x$(E): $(OBJS)
 	$(LD) -o rpng2-x$(E) $(OBJS) $(LIBS)
-	strip rpng2-x$(E)
 
 clean:
 	$(RM) rpng2-x$(O)

@@ -57,6 +57,7 @@ private:
 	static int		_pushEllipse			( lua_State* L );
 	static int		_pushPoly				( lua_State* L );
 	static int		_pushRect				( lua_State* L );
+    static int      _pushRegion             ( lua_State* L );
 	static int		_pushRotate				( lua_State* L );
 	static int		_pushScale				( lua_State* L );
 	static int		_pushSkew				( lua_State* L );
@@ -120,8 +121,9 @@ public:
 	void				PushBezierVertices			( const ZLVec2D& p0, const ZLVec2D& p1, const ZLVec2D& p2, const ZLVec2D& p3 );
 	void				PushCombo					();
 	void				PushEllipse					( float x, float y, float xRad, float yRad );
-	void				PushPoly					( ZLVec2D* vertices, u32 total, bool closed );
+	void				PushPoly					( const ZLVec2D* vertices, u32 total, bool closed );
 	void				PushRect					( float xMin, float yMin, float xMax, float yMax );
+	void				PushRegion					( const MOAIRegion& region );
 	void				PushRotate					( float x, float y, float r );
 	void				PushScale					( float x, float y );
 	void				PushSkew					( float yx, float xy );

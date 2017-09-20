@@ -7,6 +7,7 @@
 #include <moai-sim/MOAIFontReader.h>
 
 class MOAIDynamicGlyphCachePage;
+class MOAIGlyphSet;
 class MOAISingleTexture;
 
 //================================================================//
@@ -17,7 +18,6 @@ class MOAIGlyph :
 private:
 	
 	static const u32 MAX_KERN_TABLE_SIZE	= 512;
-	static const u32 NULL_CODE_ID			= 0xffffffff;
 	static const u32 NULL_PAGE_ID			= 0xffffffff;
 	
 	u32			mCode;   // The character code of the glyph
@@ -28,9 +28,12 @@ private:
 	
 	ZLLeanArray < MOAIKernVec > mKernTable;
 	
-	MOAIGlyph*	mNext; // for use in glyph processing list
+	MOAIGlyph*		mNext; // for use in glyph processing list
+	MOAIGlyphSet*	mDeck;
 	
 public:
+
+	static const u32 NULL_CODE_ID			= 0xffffffff;
 
 	// TODO: this is a lot of friends; good idea to clean this up
 	friend class MOAIBitmapFontReader;
@@ -40,31 +43,28 @@ public:
 	friend class MOAIGlyphCache;
 	friend class MOAIDynamicGlyphCachePage;
 	friend class MOAITextLabel;
-	friend class MOAITextDesignParser;
+	friend class MOAITextLayoutEngine;
 	friend class MOAITextLayout;
 	friend class MOAITextStyleParser;
 	
-	GET ( u32, SrcX, mSrcX );
-	GET ( u32, SrcY, mSrcY );
-	GET ( float, Width, mWidth );
-	GET ( float, Height, mHeight );
+	GET ( u32, SrcX, mSrcX )
+	GET ( u32, SrcY, mSrcY )
+	GET_SET ( u32, Code, mCode )
+	GET_SET ( u32, PageID, mPageID )
+	GET_CONST ( MOAIGlyphSet&, Deck, *mDeck )
 	
-	GET_SET ( u32, Code, mCode );
-	GET_SET ( u32, PageID, mPageID );
-	GET_SET ( float, AdvanceX, mAdvanceX );
-
 	//----------------------------------------------------------------//
-	void			Draw				( MOAISingleTexture& texture, float x, float y, float xScale, float yScale, const ZLRect& padding ) const;
-	MOAIKernVec		GetKerning			( u32 name ) const;
-	ZLRect			GetRect				( float x, float y, float xScale = 1.0f, float yScale = 1.0f ) const;
-					MOAIGlyph			();
-					~MOAIGlyph			();
-	void			ReserveKernTable	( u32 total );
-	void			SerializeIn			( MOAILuaState& state );
-	void			SerializeOut		( MOAILuaState& state );
-	void			SetKernVec			( u32 id, const MOAIKernVec& kernVec );
-	void			SetScreenRect		( float width, float height, float yOff );
-	void			SetSourceLoc		( u32 srcX, u32 srcY );
+	void			Draw					( MOAISingleTexture& texture, float x, float y, float xScale, float yScale, const ZLRect& padding ) const;
+	ZLRect			GetGlyphLogicalRect		( float x, float y, float xScale = 1.0f, float yScale = 1.0f ) const;
+	MOAIKernVec		GetKerning				( u32 name ) const;
+					MOAIGlyph				();
+					~MOAIGlyph				();
+	void			ReserveKernTable		( u32 total );
+	void			SerializeIn				( MOAILuaState& state );
+	void			SerializeOut			( MOAILuaState& state );
+	void			SetKernVec				( u32 id, const MOAIKernVec& kernVec );
+	//void			SetScreenRect			( float width, float height, float yOff );
+	void			SetSourceLoc			( u32 srcX, u32 srcY );
 };
 
 #endif

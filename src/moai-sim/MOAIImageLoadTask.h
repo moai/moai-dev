@@ -11,25 +11,23 @@ class MOAIDataBuffer;
 //================================================================//
 // MOAIImageLoadTask
 //================================================================//
-class MOAIImageLoadTask : 
+class MOAIImageLoadTask :
 	public MOAITask {
 private:
 	
-	MOAIImage								mImage;
+	MOAIImage				mImage;
 
-	STLString								mFilename;
-	MOAILuaSharedPtr < MOAIDataBuffer >		mDataBuffer;
-	MOAILuaSharedPtr < MOAIImage >			mTarget;
-	MOAILuaMemberRef						mOnFinish;
-	u32										mTransform;
+	STLString				mFilename;
+	MOAIDataBuffer*			mDataBuffer;
+	MOAIImage*				mTarget;
+	MOAILuaStrongRef		mOnFinish;
+	u32						mTransform;
 
 	//----------------------------------------------------------------//
 	void		Execute				();
 	void		Publish				();
 
 public:
-
-	DECL_LUA_FACTORY ( MOAIImageLoadTask )
 
 	//----------------------------------------------------------------//
 	void		Init				( cc8* filename, MOAIImage& target, u32 transform );

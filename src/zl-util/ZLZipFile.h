@@ -91,13 +91,13 @@ private:
 public:
 
 	//----------------------------------------------------------------//
-	void		Close			();
-	ZLZipEntry&	GetEntry		( u32 idx );
-	u32			GetTotal		();
-	int			Inflate			();
-	void		Open			( ZLStream& stream );
-				ZLZipFile		();
-	virtual		~ZLZipFile		();
+	void			Close			();
+	ZLZipEntry&		GetEntry		( size_t idx );
+	size_t			GetTotal		();
+	int				Inflate			();
+	void			Open			( ZLStream& stream );
+					ZLZipFile		();
+	virtual			~ZLZipFile		();
 };
 
 #endif

@@ -48,8 +48,8 @@ private:
 	size_t				Inflate					( void* dest, size_t size );
 	void				InflateChunk			( ZLStreamChunk& chunk );
 	void				OnClose					();
-	bool				OnOpen					();
-	size_t				ReadBytes				( void* buffer, size_t size );
+	ZLResultCode		OnOpen					();
+	ZLSizeResult		ReadBytes				( void* buffer, size_t size );
 	int					ResetZipStream			();
 
 public:
@@ -58,9 +58,10 @@ public:
 
 	//----------------------------------------------------------------//
 	u32					GetCaps					();
-	int					SetCursor				( long offset );
+	int					SetCursor				( size_t offset );
 						ZLDeflateReader			();
 						~ZLDeflateReader		();
 };
 
 #endif
+

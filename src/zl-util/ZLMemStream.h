@@ -24,17 +24,14 @@ private:
 	size_t		mGuestBufferSize;
 
 	size_t		mChunkSize;
-	size_t		mTotalChunks;
 
-	ZLLeanArray < void* > mChunks;
+	ZLLeanArray < ZLLeanArray < u8 > > mChunks;
 
-	size_t		mBase;			// offset into base chunk (in the event of DiscardFront); never larger than chunk size
+	size_t		mBase;			// offset into first chunk (in the event of DiscardFront); never larger than chunk size
 	size_t		mCursor;		// current position in stream
 	size_t		mLength;		// current length of stream
 
 	//----------------------------------------------------------------//
-	void			ClearChunks			();
-	int				SetCursor			( long offset );
 
 public:
 
@@ -44,17 +41,20 @@ public:
 	void			Clear				();
 	void			Compact				();
 	void			DiscardAll			();
+	void			DiscardBack			();
 	void			DiscardBack			( size_t size );
+	void			DiscardFront		();
 	void			DiscardFront		( size_t size );
 	u32				GetCaps				();
 	size_t			GetCursor			();
 	size_t			GetLength			();
-	size_t			ReadBytes			( void* buffer, size_t size );
-	void			Reserve				( size_t length );
+	ZLSizeResult	ReadBytes			( void* buffer, size_t size );
+	ZLResultCode	Reserve				( size_t length );
 	void			SetChunkSize		( size_t chunkSize );
+	ZLResultCode	SetCursor			( size_t offset );
 	void			SetGuestBuffer		( void* guestBuffer, size_t guestBufferSize );
-	size_t			SetLength			( size_t length );
-	size_t			WriteBytes			( const void* buffer, size_t size );
+	ZLSizeResult	SetLength			( size_t length );
+	ZLSizeResult	WriteBytes			( const void* buffer, size_t size );
 					ZLMemStream			();
 					~ZLMemStream		();
 };

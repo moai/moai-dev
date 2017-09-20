@@ -13,7 +13,7 @@ function initFrameBuffer ()
 	local gfxQuad = MOAIGfxQuad2D.new ()
 	gfxQuad:setTexture ( "moai.png" )
 	gfxQuad:setRect ( -128, -128, 128, 128 )
-	gfxQuad:setUVRect ( 0, 0, 1, 1 )
+	gfxQuad:setUVRect ( 1, 1, 0, 0 )
 
 	local viewport = MOAIViewport.new ()
 	viewport:setSize ( 256, 256 )
@@ -32,6 +32,7 @@ function initFrameBuffer ()
 	frameBuffer:setRenderTable ({ layer })
 	frameBuffer:init ( 256, 256 )
 	frameBuffer:setClearColor ( 1, 0, 0, 1 )
+
 	MOAIRenderMgr.setBufferTable ({ frameBuffer })
 	
 	return frameBuffer
@@ -51,6 +52,7 @@ viewport:setScale ( 320, -480 )
 
 layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
+
 MOAISim.pushRenderPass ( layer )
 
 prop = MOAIProp2D.new ()

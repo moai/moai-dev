@@ -113,13 +113,13 @@ ZLBox MOAIBoundsDeck::ComputeMaxBounds () {
 
 	ZLBox bounds;
 
-	u32 size = this->mBoundsArray.Size ();
+	size_t size = this->mBoundsArray.Size ();
 	if ( size == 0 ) {
 		bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 	}
 	else {
 		this->mMaxBounds = this->mBoundsArray [ 0 ];
-		for ( u32 i = 1; i < size; ++i ) {
+		for ( size_t i = 1; i < size; ++i ) {
 			bounds.Grow ( this->mBoundsArray [ i ]);
 		}
 	}
@@ -140,8 +140,6 @@ MOAIBoundsDeck::MOAIBoundsDeck () {
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIStandardDeck )
 	RTTI_END
-	
-	//this->SetContentMask ( MOAIProp::CAN_DRAW );
 }
 
 //----------------------------------------------------------------//

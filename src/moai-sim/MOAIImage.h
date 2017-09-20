@@ -65,11 +65,8 @@ private:
 	u32		mWidth;
 	u32		mHeight;
 	
-	void*	mBitmap;
-	void*	mPalette;
-
-	//GET_SET ( void*, Bitmap, mBitmap );
-	//GET_SET ( void*, Palette, mPalette );
+	ZLCopyOnWrite	mBitmap;
+	ZLCopyOnWrite	mPalette;
 
 	SET ( PixelFormat, PixelFormat, mPixelFormat )
 	SET ( ZLColor::ColorFormat, ColorFormat, mColorFormat )
@@ -80,9 +77,11 @@ private:
 	//----------------------------------------------------------------//
 	static int		_average					( lua_State* L );
 	static int		_bleedRect					( lua_State* L );
-	static int		_blur						( lua_State* L );
+	static int		_calculateGaussianKernel	( lua_State* L );
 	static int		_compare					( lua_State* L );
 	static int		_convert					( lua_State* L );
+	static int		_convolve					( lua_State* L );
+	static int		_convolve1D					( lua_State* L );
 	static int		_copy						( lua_State* L );
 	static int		_copyBits					( lua_State* L );
 	static int		_copyRect					( lua_State* L );
@@ -96,10 +95,13 @@ private:
 	static int		_generateSDFAA				( lua_State* L );
 	static int		_generateSDFDeadReckoning	( lua_State* L );
 	static int		_getColor32					( lua_State* L );
+	static int		_getContentRect				( lua_State* L );
+	static int		_getData					( lua_State* L );
 	static int		_getFormat					( lua_State* L );
 	static int		_getRGBA					( lua_State* L );
 	static int		_getSize					( lua_State* L );
 	static int		_init						( lua_State* L );
+	static int		_isOpaque					( lua_State* L );
 	static int		_load						( lua_State* L );
 	static int		_loadAsync					( lua_State* L );
 	static int		_loadFromBuffer				( lua_State* L );
@@ -111,14 +113,15 @@ private:
 	static int		_setColor32					( lua_State* L );
 	static int		_setRGBA					( lua_State* L );
 	static int		_simpleThreshold			( lua_State* L );
+	static int		_subdivideRect				( lua_State* L );
 	static int		_write						( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			Alloc					();
 	void			ComparePixel			( ZLIntVec2D** grid, ZLIntVec2D& p, int x, int y, int offsetX, int offsetY, int width, int height );
 	void			CalculateSDF			( ZLIntVec2D** grid, int width, int height );
-	void*			GetRowAddr				( u32 y );
 	const void*		GetRowAddr				( u32 y ) const;
+	void*			GetRowAddrMutable		( u32 y );
 	virtual void	OnImageStatusChanged	( bool isOK );
 
 public:
@@ -131,8 +134,14 @@ public:
 	GET_CONST ( u32, Width, mWidth )
 	GET_CONST ( u32, Height, mHeight )
 	
-	GET_CONST ( void*, Bitmap, mBitmap );
-	GET_CONST ( void*, Palette, mPalette );
+	GET_CONST ( void*, Bitmap, mBitmap.GetBuffer ())
+	GET_CONST ( void*, Palette, mPalette.GetBuffer ())
+	
+	GET ( ZLCopyOnWrite, BitmapCow, mBitmap )
+	GET ( ZLCopyOnWrite, PaletteCow, mPalette )
+	
+	GET ( ZLSharedConstBuffer*, BitmapBuffer, mBitmap.GetSharedConstBuffer ())
+	GET ( ZLSharedConstBuffer*, PaletteBuffer, mBitmap.GetSharedConstBuffer ())
 	
 	enum {
 		FILTER_LINEAR,
@@ -140,72 +149,107 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	static MOAIImage*		AffirmImage					( MOAILuaState& state, int idx );
-	ZLColorVec				Average						() const;
-	void					BleedRect					( ZLIntRect rect );
-	void					Blit						( const MOAIImage& image, int srcX, int srcY, int destX, int destY, int width, int height );
-	void					Blur						();
-	void					Clear						();
-	void					ClearBitmap					();
-	void					ClearRect					( ZLIntRect rect );
-	bool					Compare						( const MOAIImage& image );
-	bool					Convert						( const MOAIImage& image, ZLColor::ColorFormat colorFmt, PixelFormat pixelFmt );
-	void					Copy						( const MOAIImage& image );
-	void					CopyRect					( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect destRect, u32 filter = FILTER_LINEAR );
-	void					CopyRect					( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect destRect, u32 filter, const ZLColorBlendFunc& blendFunc );
-	void					Desaturate					( const MOAIImage& image, float rY, float gY, float bY, float K );
-	void					DrawLine					( int p1x, int p1y, int p2x, int p2y, u32 color );
-	void					FillCircle					( float x, float y, float xRad, u32 color );
-	void					FillEllipse					( int x, int y, int xRad, int yRad, u32 color );
-	void					FillRect					( ZLIntRect rect, u32 color );
-	void					GammaCorrection				( const MOAIImage& image, float gamma );
-	void					GenerateOutlineFromSDF		( ZLIntRect rect, float distMin, float distMax, float r, float g, float b, float a );
-	void					GenerateSDF					( ZLIntRect rect );
-	void					GenerateSDFAA				( ZLIntRect rect, float sizeInPixels );
-	void					GenerateSDFDeadReckoning	( ZLIntRect rect, int threshold );
-	u32						GetBitmapSize				() const;
-	ZLIntRect				GetBounds					();
-	u32						GetColor					( u32 x, u32 y ) const;
-	u32						GetDataSize					() const;
-	static u32				GetMinPowerOfTwo			( u32 size ); // gets the smallest power of two greater than size
-	u32						GetPaletteColor				( u32 idx ) const;
-	u32						GetPaletteCount				() const;
-	u32						GetPaletteSize				() const;
-	u32						GetPixel					( u32 x, u32 y ) const;
-	u32						GetPixelDepthInBits			() const;
-	u32						GetPixelMask				() const;
-	ZLIntRect				GetRect						();
-	size_t					GetRowSize					() const;
-	void					GetSubImage					( const MOAIImage& image, ZLIntRect rect );
-	void					Init						( const MOAIImage& image );
-	void					Init						( u32 width, u32 height, ZLColor::ColorFormat colorFmt, PixelFormat pixelFmt );
-	void					Init						( void* bitmap, u32 width, u32 height, ZLColor::ColorFormat colorFmt );
-	bool					IsPow2						();
-	static bool				IsPow2						( u32 n );
-	bool					Load						( cc8* filename, u32 transform = 0 );
-	bool					Load						( ZLStream& stream, u32 transform = 0 );
-	bool					IsOK						();
-	bool					MipReduce					();
-	void					Mix							( const MOAIImage& image, const ZLMatrix4x4& mtx, float K );
-							MOAIImage					();
-							~MOAIImage					();
-	void					PadToPow2					( const MOAIImage& image );
-	void					PremultiplyAlpha			( const MOAIImage& image );
-	void					Print						();
-	void					RegisterLuaClass			( MOAILuaState& state );
-	void					RegisterLuaFuncs			( MOAILuaState& state );
-	void					ResizeCanvas				( const MOAIImage& image, ZLIntRect rect );
-	u32						SampleColor					( float x, float y, u32 filter, bool wrapX = false, bool wrapY = false ) const;
-	void					SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
-	void					SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
-	void					SetColor					( u32 x, u32 y, u32 color );
-	void					SetColor					( u32 x, u32 y, u32 color, const ZLColorBlendFunc& blendFunc );
-	void					SetPaletteColor				( u32 idx, u32 rgba );
-	void					SetPixel					( u32 x, u32 y, u32 pixel );
-	void					SimpleThreshold				( const MOAIImage& image, float rT, float gT, float bT, float aT );
-	void					Take						( MOAIImage& image );
-	void					Transform					( u32 transform );
-	bool					Write						( ZLStream& stream, cc8* formatName );
+	static MOAIImage*		AffirmImage						( MOAILuaState& state, int idx );
+	ZLColorVec				Average							() const;
+	void					BleedRect						( ZLIntRect rect );
+	void					Blit							( const MOAIImage& image, int srcX, int srcY, int destX, int destY, int width, int height );
+	void					Blur							();
+	static void				CalculateGaussianKernel			( float radius, float* kernel, size_t kernalWidth );
+	static void				CalculateGaussianKernel			( float radius, float sigma, float* kernel, size_t kernalWidth );
+	static size_t			CalculateGaussianKernelWidth	( float radius );
+	void					Clear							();
+	void					ClearBitmap						();
+	void					ClearRect						( ZLIntRect rect );
+	bool					Compare							( const MOAIImage& image );
+	bool					Convert							( const MOAIImage& image, ZLColor::ColorFormat colorFmt, PixelFormat pixelFmt );
+	void					Convolve						( const MOAIImage& image, const float* kernel, size_t kernelWidth );
+	void					Convolve						( const MOAIImage& image, const float* kernel, size_t kernelWidth, size_t kernelHeight );
+	void					Convolve1D						( const MOAIImage& image, const float* kernel, size_t kernelSize, bool horizontal );
+	void					Copy							( const MOAIImage& image );
+	void					CopyRect						( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect destRect, u32 filter = FILTER_LINEAR );
+	void					CopyRect						( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect destRect, u32 filter, const ZLColorBlendFunc& blendFunc );
+	void					Desaturate						( const MOAIImage& image, float rY, float gY, float bY, float K );
+	void					DrawLine						( int p1x, int p1y, int p2x, int p2y, u32 color );
+	void					FillCircle						( float x, float y, float xRad, u32 color );
+	void					FillEllipse						( int x, int y, int xRad, int yRad, u32 color );
+	void					FillRect						( ZLIntRect rect, u32 color );
+	void					GammaCorrection					( const MOAIImage& image, float gamma );
+	void					GenerateOutlineFromSDF			( ZLIntRect rect, float distMin, float distMax, float r, float g, float b, float a );
+	void					GenerateSDF						( ZLIntRect rect );
+	void					GenerateSDFAA					( ZLIntRect rect, float sizeInPixels );
+	void					GenerateSDFDeadReckoning		( ZLIntRect rect, int threshold );
+	size_t					GetBitmapSize					() const;
+	ZLIntRect				GetBounds						();
+	u32						GetColor						( u32 x, u32 y ) const;
+	ZLIntRect				GetContentRect					();
+	size_t					GetDataSize						() const;
+	static u32				GetMinPowerOfTwo				( u32 size ); // gets the smallest power of two greater than size
+	u32						GetPaletteColor					( u32 idx ) const;
+	u32						GetPaletteCount					() const;
+	size_t					GetPaletteSize					() const;
+	u32						GetPixel						( u32 x, u32 y ) const;
+	u32						GetPixelDepthInBits				() const;
+	u32						GetPixelMask					() const;
+	ZLIntRect				GetRect							();
+	size_t					GetRowSize						() const;
+	void					GetSubImage						( const MOAIImage& image, ZLIntRect rect );
+	void					Init							( const MOAIImage& image );
+	void					Init							( u32 width, u32 height, ZLColor::ColorFormat colorFmt, PixelFormat pixelFmt );
+	void					Init							( const void* bitmap, u32 width, u32 height, ZLColor::ColorFormat colorFmt );
+	bool					IsPow2							();
+	static bool				IsPow2							( u32 n );
+	bool					Load							( cc8* filename, u32 transform = 0 );
+	bool					Load							( ZLStream& stream, u32 transform = 0 );
+	bool					IsOK							();
+	bool					MipReduce						();
+	void					Mix								( const MOAIImage& image, const ZLMatrix4x4& mtx, float K );
+							MOAIImage						();
+							~MOAIImage						();
+	void					PadToPow2						( const MOAIImage& image );
+	void					PremultiplyAlpha				( const MOAIImage& image );
+	void					Print							();
+	void					RegisterLuaClass				( MOAILuaState& state );
+	void					RegisterLuaFuncs				( MOAILuaState& state );
+	void					ResizeCanvas					( const MOAIImage& image, ZLIntRect rect );
+	u32						SampleColor						( float x, float y, u32 filter, bool wrapX = false, bool wrapY = false ) const;
+	void					SerializeIn						( MOAILuaState& state, MOAIDeserializer& serializer );
+	void					SerializeOut					( MOAILuaState& state, MOAISerializer& serializer );
+	void					SetColor						( u32 x, u32 y, u32 color );
+	void					SetColor						( u32 x, u32 y, u32 color, const ZLColorBlendFunc& blendFunc );
+	void					SetPaletteColor					( u32 idx, u32 rgba );
+	void					SetPixel						( u32 x, u32 y, u32 pixel );
+	void					SimpleThreshold					( const MOAIImage& image, float rT, float gT, float bT, float aT );
+	void					Take							( MOAIImage& image );
+	void					Transform						( u32 transform );
+	bool					Write							( ZLStream& stream, cc8* formatName );
+	
+	//----------------------------------------------------------------//
+	// TODO: move this somewhere more appropriate
+	static inline double Gaussian ( double x, double c ) {
+	
+		return Gaussian ( x, GaussianUnitIntegral ( c ), 0.0, c );
+	}
+	
+	//----------------------------------------------------------------//
+	// TODO: move this somewhere more appropriate
+	static inline double Gaussian ( double x, double b, double c ) {
+	
+		return Gaussian ( x, GaussianUnitIntegral ( c ), b, c );
+	}
+	
+	//----------------------------------------------------------------//
+	// TODO: move this somewhere more appropriate
+	static inline double Gaussian ( double x, double a, double b, double c ) {
+	
+		return a * exp ( -((( x - b ) * ( x - b )) / ( 2.0 * ( c * c ))));
+	}
+	
+	//----------------------------------------------------------------//
+	// TODO: move this somewhere more appropriate
+	static inline double GaussianUnitIntegral ( double c ) {
+	
+		return 1.0 / ( c * sqrt ( TWOPI ));
+	}
 };
 
 #endif

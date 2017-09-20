@@ -3,7 +3,8 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIAnimCurve.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
+#include <moai-sim/MOAIGfxVertexCache.h>
 
 //================================================================//
 // local
@@ -22,9 +23,14 @@ int MOAIAnimCurve::_getValueAtTime ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnimCurve, "UN" );
 
 	float time = state.GetValue < float >( 2, 0 );
-	float value = self->GetValue ( time );
+	
+	MOAIAnimKeySpan span = self->GetSpan ( time );
+	float value = self->GetValue ( span );
+	
 	state.Push ( value );
-	return 1;
+	state.Push ( span.mKeyID + 1 );
+	
+	return 2;
 }
 
 //----------------------------------------------------------------//
@@ -104,35 +110,35 @@ void MOAIAnimCurve::Draw ( u32 resolution ) const {
 	// and then the spans between keys should be filled in with an approximation of
 	// the resolution.
 	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
 	float length = this->GetLength ();
 	float step = length / ( float )resolution;
 	
-	gfxDevice.BeginPrim ( ZGL_PRIM_LINE_STRIP );
+	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_STRIP );
 	
 	for ( u32 i = 0; i < resolution; ++i ) {
 		
 		float t = step * ( float )i;
 		float v = this->GetValue ( t );
 		
-		gfxDevice.WriteVtx ( t, v, 0.0f );
-		gfxDevice.WriteFinalColor4b ();
+		gfxMgr.mVertexCache.WriteVtx ( t, v, 0.0f );
+		gfxMgr.mVertexCache.WritePenColor4b ();
 	}
 	
 	float t = length;
 	float v = this->GetValue ( t );
 	
-	gfxDevice.WriteVtx ( t, v, 0.0f );
-	gfxDevice.WriteFinalColor4b ();
+	gfxMgr.mVertexCache.WriteVtx ( t, v, 0.0f );
+	gfxMgr.mVertexCache.WritePenColor4b ();
 	
-	gfxDevice.EndPrim ();
+	gfxMgr.mVertexCache.EndPrim ();
 }
 
 //----------------------------------------------------------------//
 float MOAIAnimCurve::GetCurveDelta () const {
 
-	u32 size = this->mKeys.Size ();
+	size_t size = this->mKeys.Size ();
 	if ( size > 1 ) {
 		return this->mSamples [ size - 1 ] - this->mSamples [ 0 ];
 	}

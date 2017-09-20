@@ -1,7 +1,6 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include "pch.h"
 #include <moai-sdl/host.h>
 #include <moai-sdl/headers.h>
 

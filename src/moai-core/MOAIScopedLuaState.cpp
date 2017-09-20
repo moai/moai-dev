@@ -14,6 +14,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+int MOAIScopedLuaState::GetLocalTop () {
+
+	return this->GetTop () - this->mRestoreTop;
+}
+
+//----------------------------------------------------------------//
 void MOAIScopedLuaState::PinTop () {
 
 	this->PinTop ( this->GetTop ());

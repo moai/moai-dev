@@ -78,9 +78,9 @@ int MOAIStreamAdapter::_openDeflateReader ( lua_State* L ) {
 	
 	reader->SetWindowBits ( windowBits );
 	
-	bool result = self->Open ( reader, stream );
+	ZLResultCode result = self->Open ( reader, stream );
 	
-	state.Push ( result );
+	state.Push ( result == ZL_OK );
 	return 1;
 }
 
@@ -111,9 +111,9 @@ int MOAIStreamAdapter::_openDeflateWriter ( lua_State* L ) {
 	writer->SetCompressionLevel ( level );
 	writer->SetWindowBits ( windowBits );
 	
-	bool result = self->Open ( writer, stream );
+	ZLResultCode result = self->Open ( writer, stream );
 	
-	state.Push ( result );
+	state.Push ( result == ZL_OK );
 	return 1;
 }
 
@@ -132,12 +132,36 @@ int MOAIStreamAdapter::_openHex ( lua_State* L ) {
 	return self->Open ( state, 2, new ZLHexAdapter ());
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIStreamAdapter::_openRing ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIStreamAdapter, "U" );
+	
+	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
+	u32 size = state.GetValue < u32 >( 3, ( u32 )stream->GetLength ());
+	
+	if ( size > 0 ) {
+	
+		ZLRingAdapter* adapter = new ZLRingAdapter ();
+		ZLResultCode result = self->Open ( adapter, stream );
+		
+		if ( result == ZL_OK ) {
+			adapter->SetLength ( size );
+			state.Push ( result );
+			return 1;
+		}
+	}
+	return 0;
+}
+
 //================================================================//
 // MOAIStreamAdapter
 //================================================================//
 
 //----------------------------------------------------------------//
 void MOAIStreamAdapter::Clear () {
+	
+	this->Close ();
 	
 	if ( this->mAdapter ) {
 		delete this->mAdapter;
@@ -171,7 +195,7 @@ MOAIStreamAdapter::~MOAIStreamAdapter () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIStreamAdapter::Open ( ZLStreamAdapter* adapter, MOAIStream* stream ) {
+ZLResultCode MOAIStreamAdapter::Open ( ZLStreamAdapter* adapter, MOAIStream* stream ) {
 
 	this->Clear ();
 	
@@ -179,9 +203,9 @@ bool MOAIStreamAdapter::Open ( ZLStreamAdapter* adapter, MOAIStream* stream ) {
 	this->SetProxiedStream ( this->mAdapter );
 	this->mAdaptedStream.Set ( *this, stream );
 	
-	bool result = this->mAdapter->Open ( this->mAdaptedStream );
+	ZLResultCode result = this->mAdapter->Open ( this->mAdaptedStream );
 	
-	if ( !result ) {
+	if ( result != ZL_OK ) {
 		this->Close ();
 	}
 	return result;
@@ -192,8 +216,8 @@ int MOAIStreamAdapter::Open ( MOAILuaState& state, int idx, ZLStreamAdapter* ada
 
 	MOAIStream* stream = state.GetLuaObject < MOAIStream >( idx, true );
 
-	bool result = this->Open ( adapter, stream );
-	state.Push ( result );
+	ZLResultCode result = this->Open ( adapter, stream );
+	state.Push ( result == ZL_OK );
 	return 1;
 }
 
@@ -218,6 +242,7 @@ void MOAIStreamAdapter::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "openDeflateReader",		_openDeflateReader },
 		{ "openDeflateWriter",		_openDeflateWriter },
 		{ "openHex",				_openHex },
+		{ "openRing",				_openRing },
 		{ NULL, NULL }
 	};
 

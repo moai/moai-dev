@@ -842,10 +842,10 @@ int MOAIBox2DWorld::_getPerformance ( lua_State* L ) {
 */
 int MOAIBox2DWorld::_getRayCast ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
-	float p1x=state.GetValue < float >( 2, 0 );
-	float p1y=state.GetValue < float >( 3, 0 );
-	float p2x=state.GetValue < float >( 4, 0 );
-	float p2y=state.GetValue < float >( 5, 0 );
+	float p1x=state.GetValue < float >( 2, 0 ) * self->mUnitsToMeters;
+	float p1y=state.GetValue < float >( 3, 0 ) * self->mUnitsToMeters;
+	float p2x=state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
+	float p2y=state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
  
 	b2Vec2 p1(p1x,p1y);
 	b2Vec2 p2(p2x,p2y);
@@ -1164,7 +1164,7 @@ MOAIBox2DWorld::~MOAIBox2DWorld () {
 void MOAIBox2DWorld::OnUpdate ( double step ) {
 	
 	this->mLock = true;
-	this->mWorld->Step ( step, this->mVelocityIterations, this->mPositionIterations );
+	this->mWorld->Step (( float32 )step, this->mVelocityIterations, this->mPositionIterations );
 	this->mLock = false;
 	
 	this->Destroy ();
@@ -1237,14 +1237,12 @@ void MOAIBox2DWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIBox2DWorld::Render () {
 
-	if ( this->mDebugDraw ) {
+	if ( this->mDebugDraw && MOAIDraw::Bind ()) {
 		
-		MOAIDraw::Bind ();
+		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 		
-		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-		
-		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_WORLD, MOAIGfxDevice::VTX_STAGE_PROJ );
-		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+		gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX );
+		gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_PROJ_MTX ));
 		
 		this->mDebugDraw->mScale = 1.0f / this->mUnitsToMeters;
 		this->mWorld->DrawDebugData ();

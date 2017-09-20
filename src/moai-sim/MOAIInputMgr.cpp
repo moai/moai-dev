@@ -26,10 +26,7 @@
 int MOAIInputMgr::_autoTimestamp ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIInputMgr, "" )
 	
-	self->mAutoTimestamp = state.GetValue < bool >( 1, true );
-	if ( self->mAutoTimestamp ) {
-		self->mTimebase = ZLDeviceTime::GetTimeInSeconds ();
-	}
+	self->SetAutotimestamp ( state.GetValue < bool >( 1, true ));
 	
 	return 0;
 }
@@ -97,7 +94,7 @@ int MOAIInputMgr::_suspendEvents ( lua_State* L ) {
 //----------------------------------------------------------------//
 u8 MOAIInputMgr::AddDevice ( cc8* name  ) {
 
-	u8 id = this->mDevices.GetTop ();
+	u8 id = ( u8 )this->mDevices.GetTop ();
 	
 	this->mDevices.Push ();
 	this->SetDevice ( id, name );
@@ -206,6 +203,7 @@ MOAIInputMgr::~MOAIInputMgr () {
 
 //----------------------------------------------------------------//
 size_t MOAIInputMgr::ParseEvents ( ZLStream& stream, double timestep ) {
+	UNUSED ( timestep ); // TODO: fix this
 
 	bool first = true;
 	double timebase = 0;
@@ -223,7 +221,7 @@ size_t MOAIInputMgr::ParseEvents ( ZLStream& stream, double timestep ) {
 			first = false;
 		}
 		
-		if ( timestep < ( timestamp - timebase )) break;
+		//if ( timestep < ( timestamp - timebase )) break; // TODO: come back to this
 		
 		MOAISensor* sensor = this->GetSensor ( deviceID, sensorID );
 		assert ( sensor );
@@ -239,9 +237,9 @@ size_t MOAIInputMgr::ParseEvents ( ZLStream& stream, double timestep ) {
 void MOAIInputMgr::Record ( size_t size ) {
 
 	if ( this->mRecorder && size ) {
-		this->Seek ( 0, SEEK_SET );
+		this->SetCursor ( 0 );
 		this->mRecorder->WriteStream ( *this, size );
-		this->Seek ( size, SEEK_SET );
+		this->SetCursor ( size );
 	}
 }
 
@@ -297,6 +295,15 @@ void MOAIInputMgr::ResetSensorState () {
 void MOAIInputMgr::SetAutosuspend ( double autosuspend ) {
 
 	this->mAutosuspend = autosuspend >= 0 ? autosuspend : 0;
+}
+
+//----------------------------------------------------------------//
+void MOAIInputMgr::SetAutotimestamp ( bool autotimestamp ) {
+
+	this->mAutoTimestamp = autotimestamp;
+	if ( this->mAutoTimestamp ) {
+		this->mTimebase = ZLDeviceTime::GetTimeInSeconds ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -360,12 +367,12 @@ void MOAIInputMgr::SuspendEvents ( bool suspend ) {
 //----------------------------------------------------------------//
 void MOAIInputMgr::Update ( double timestep ) {
 
-	ZLStream* eventStream = this;
+	//ZLStream* eventStream = this;
 
 	if ( this->mPlayback ) {
 		if ( this->mRecorder ) {
 			size_t cursor = this->ParseEvents ( *this->mRecorder, timestep );
-			this->mRecorder->Seek ( cursor, SEEK_SET );
+			this->mRecorder->SetCursor ( cursor );
 		}
 	}
 	else {
@@ -390,7 +397,7 @@ void MOAIInputMgr::Update ( double timestep ) {
 			this->DiscardFront ( cursor );
 			
 			// back to the end of the queue
-			this->Seek ( this->GetLength (), SEEK_SET );
+			this->SetCursor ( this->GetLength ());
 		}
 	}
 }
@@ -404,6 +411,7 @@ bool MOAIInputMgr::WriteEventHeader ( u8 deviceID, u8 sensorID, u32 type ) {
 		this->Write < u8 >(( u8 )sensorID );
 		
 		double timestamp = this->mAutoTimestamp ? ZLDeviceTime::GetTimeInSeconds () : this->mTimestamp;
+		
 		this->Write < double >( timestamp - this->mTimebase );
 		
 		return true;

@@ -1,6 +1,10 @@
 #ifndef ZL_PLATFORM_H
 #define	ZL_PLATFORM_H
 
+#if !(( defined ( DEBUG ) && defined ( _DEBUG )) || defined ( NDEBUG ))
+	#error DEBUG and _DEBUG or NDEBUG *must* be defined!
+#endif
+
 //http://predef.sourceforge.net/preos.html#sec19
 #if defined( __APPLE__ ) && defined( __MACH__ )
 
@@ -82,6 +86,7 @@
 		#include <crtdbg.h>
     #endif
 	
+	#include <io.h>
 	#include <direct.h>
 
 	#ifndef PATH_MAX
@@ -114,7 +119,7 @@
 #define _USE_MATH_DEFINES
 
 #include <assert.h>
-#include <ctype.h>
+//#include <ctype.h>
 #include <errno.h>
 #include <float.h>
 #include <math.h>
@@ -130,6 +135,7 @@
 	#include <algorithm>
 	#include <cstdio>
 	#include <cstdlib>
+	#include <fstream>
 	#include <map>
 	#include <set>
 	#include <string>

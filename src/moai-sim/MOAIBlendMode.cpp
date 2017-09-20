@@ -3,18 +3,21 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIBlendMode.h>
+#include <moai-sim/MOAIGfxMgr.h>
 
 //================================================================//
 // MOAIBlendMode
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIBlendMode::Bind () {
-	
-	zglEnable ( ZGL_PIPELINE_BLEND );
-	zglBlendMode ( this->mEquation );
-	zglBlendFunc ( this->mSourceFactor, this->mDestFactor );
-}
+//void MOAIBlendMode::Bind () {
+//	
+//	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+//	
+//	gfx.Enable ( ZGL_PIPELINE_BLEND );
+//	gfx.BlendMode ( this->mEquation );
+//	gfx.BlendFunc ( this->mSourceFactor, this->mDestFactor );
+//}
 
 //----------------------------------------------------------------//
 void MOAIBlendMode::GetBlendFactors ( u32 blend, int& srcFactor, int& dstFactor ) {

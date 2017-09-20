@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIDebugLines.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAINodeMgr.h>
 #include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAISim.h>
@@ -124,8 +124,8 @@ int MOAISim::_framesToTime ( lua_State* L ) {
 	
 	float frames = state.GetValue < float >( 1, 0.0f );
 	
-	MOAISim& device = MOAISim::Get ();
-	lua_pushnumber ( state, frames * device.mStep );
+	MOAISim& sim = MOAISim::Get ();
+	lua_pushnumber ( state, frames * sim.mStep );
 	
 	return 1;
 }
@@ -187,7 +187,7 @@ int MOAISim::_getLoopFlags ( lua_State* L ) {
 	@out	number count
 */
 int MOAISim::_getLuaObjectCount ( lua_State* L ) {
-	lua_pushnumber ( L, MOAILuaRuntime::Get ().GetObjectCount ());
+	lua_pushnumber ( L, ( lua_Number )MOAILuaRuntime::Get ().GetObjectCount ());
 	return 1;
 }
 
@@ -233,7 +233,7 @@ int MOAISim::_getMemoryUsage ( lua_State* L ) {
 	lua_pushnumber ( L, luabytes / divisor  );
 	lua_setfield ( L, -2, "_luagc_count" );
 	
-	count = MOAIGfxDevice::Get ().GetTextureMemoryUsage ();
+	count = MOAIGfxMgr::Get ().GetTextureMemoryUsage ();
 	lua_pushnumber ( L, count / divisor );
 	lua_setfield ( L, -2, "texture" );
 	total += count;
@@ -290,10 +290,10 @@ int MOAISim::_getMemoryUsage ( lua_State* L ) {
 int MOAISim::_getMemoryUsagePlain ( lua_State *L ) {
 	
 	size_t lua = MOAILuaRuntime::Get().GetMemoryUsage ();
-	size_t tex = MOAIGfxDevice::Get ().GetTextureMemoryUsage ();
+	size_t tex = MOAIGfxMgr::Get ().GetTextureMemoryUsage ();
 	
-	lua_pushnumber ( L, lua );
-	lua_pushnumber ( L, tex );
+	lua_pushnumber ( L, ( lua_Number )lua );
+	lua_pushnumber ( L, ( lua_Number )tex );
 	
 	return 2;
 }
@@ -385,7 +385,7 @@ int MOAISim::_openWindow ( lua_State* L ) {
 
 	OpenWindowFunc openWindow = MOAISim::Get ().GetOpenWindowFunc ();
 	if ( openWindow ) {
-		MOAIGfxDevice::Get ().SetBufferSize ( width, height );
+		MOAIGfxMgr::Get ().SetBufferSize ( width, height );
 		openWindow ( title, width, height );
 	}
 
@@ -759,7 +759,7 @@ MOAISim::MOAISim () :
 	this->mActionMgr.Set ( *this, new MOAIActionTree ());
 	this->mActionTree.Set ( *this, new MOAIActionTree ());
 	
-	this->mActionMgr->Start ( *this->mActionTree, false );
+	this->mActionMgr->Start ( this->mActionTree->GetDefaultParent (), false );
 }
 
 //----------------------------------------------------------------//
@@ -926,14 +926,14 @@ double MOAISim::SmoothStep ( double step ) {
 		return step;
 	}
 	
-	u32 size = this->mSmoothBuffer.Size ();
+	size_t size = this->mSmoothBuffer.Size ();
 	
 	this->mSmoothBuffer [ this->mSmoothIdx++ ] = step;
 	this->mSmoothIdx %= size;
 	
 	u32 count = 0;
 	double sum = 0.0;
-	for ( u32 i = 0; i < size; ++i ) {
+	for ( size_t i = 0; i < size; ++i ) {
 		double dt = this->mSmoothBuffer [ i ];
 		
 		// Ignore long delay steps

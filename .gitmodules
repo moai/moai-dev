@@ -1,3 +1,12 @@
 [submodule "3rdparty/civetweb"]
 	path = 3rdparty/civetweb
 	url = https://github.com/civetweb/civetweb.git
+[submodule "3rdparty/kissfft"]
+	path = 3rdparty/kissfft
+	url = https://github.com/itdaniher/kissfft.git
+[submodule "3rdparty/mbedtls"]
+	path = 3rdparty/mbedtls
+	url = https://github.com/ARMmbed/mbedtls.git
+[submodule "3rdparty/curl"]
+	path = 3rdparty/curl
+	url = https://github.com/curl/curl

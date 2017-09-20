@@ -4,7 +4,7 @@
 #include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAIRenderMgr.h>
 #include <moai-sim/MOAIDraw.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIProfilerReportBox.h>
 
@@ -344,260 +344,260 @@ void MOAIProfilerReportBox::Draw ( int subPrimID, float lod ) {
 	UNUSED ( subPrimID );
 	UNUSED ( lod );
 	
-	if ( !mFont ) return;
-	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	
-	// Get memory stats
-	u32 availableMainMem, usedMainMem;
-	_GetMemoryStats ( availableMainMem, usedMainMem );
-	float relativeMemUsed = availableMainMem > 0 ? (float) usedMainMem / (float) availableMainMem : 0;
-
-	float simRate = ( float )MOAISim::Get ().GetSimDuration () * 1000.0f;
-	float renderRate = ( float )MOAIRenderMgr::Get ().GetRenderDuration () * 1000.0f;
-	size_t luaMem = MOAILuaRuntime::Get ().GetMemoryUsage ();
-	size_t texMem = gfxDevice.GetTextureMemoryUsage ();
-
-	// used for drawing the memory bar
-	float memBarWidth = mMemoryXRange.mY - mMemoryXRange.mX;
-	float memUsedWidth = memBarWidth * relativeMemUsed;
-
-	const float cellOffsetX = 2;
-
-	// Get current state
-	const ZLMatrix4x4& orgUvMatrix = gfxDevice.GetUVTransform ();
-	const ZLMatrix4x4& orgWorldTransform = gfxDevice.GetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
-	const ZLMatrix4x4& orgViewTransform = gfxDevice.GetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM );
-	const ZLMatrix4x4& orgProjTransform = gfxDevice.GetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM );
-
-	MOAIBlendMode origBlendMode = gfxDevice.GetBlendMode ();
-
-	// Set state
-	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_WORLD, MOAIGfxDevice::VTX_STAGE_PROJ );
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM );
-
-	float rotation = 0;
-	if ( mOrientation == 1 ) {
-
-		rotation = 1.57f;
-	}
-	else if ( mOrientation == 2 ) {
-
-		rotation = -1.57f;
-	}
-
-	// Calculate projection matrix
-	ZLMatrix4x4 proj;
-
-	u32 windowWidth = gfxDevice.GetWidth ();
-	u32 windowheight = gfxDevice.GetHeight ();
-
-	proj.Ortho ( 2.0f / (float)windowWidth, -2.0f / (float)windowheight, 0, 1 );
-
-	ZLMatrix4x4 offset;
-	offset.Translate ( -1, 1, 0 );
-	proj.Append ( offset );
-
-	if ( rotation != 0 ) {
-
-		ZLMatrix4x4 rot;
-		rot.RotateZ ( rotation );
-		proj.Multiply ( orgProjTransform, rot );
-	}
-		
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, proj );
-
-	MOAIDraw::Bind ();
-
-	// Get some font metrics
-	mFontSize = mFontSize > 0 ? mFontSize : mFont->GetDefaultSize ();
-	MOAIGlyphSet* glyphSet = mFont->GetGlyphSet ( mFontSize );
-	float fontHeight = glyphSet->GetHeight ();
-	mLineHeight = fontHeight + 4;
-	mLineOffset = fontHeight + 10;
-	
-	// Calculate vertical layout
-	mSummaryYRange.Init ( this->mFrame.mYMin + 2, this->mFrame.mYMin + 2 + this->mLineHeight );
-	mHeaderYRange.Init ( this->mSummaryYRange.mX + mLineOffset, this->mSummaryYRange.mY + 2 + this->mLineHeight );
-	mBodyYRange.Init ( this->mHeaderYRange.mX + mLineOffset, this->mFrame.mYMax );
-
-	// Calculate horizonatal layout
-	float frameWidth = this->mFrame.mXMax - this->mFrame.mXMin;
-	mOverviewXRange.Init ( this->mFrame.mXMin + cellOffsetX, this->mFrame.mXMin + cellOffsetX + frameWidth * 0.3f );
-	mMemoryXRange.Init ( this->mOverviewXRange.mY + cellOffsetX, this->mFrame.mXMax - cellOffsetX * 2 );
-
-	mColumns [ COLUMN_NAME ].mX = this->mFrame.mXMin + cellOffsetX;
-	mColumns [ COLUMN_NAME ].mWidth = 50;
-	mColumns [ COLUMN_HITS ].mWidth = 4;
-	mColumns [ COLUMN_PERCENTAGE ].mWidth = 10;
-	mColumns [ COLUMN_DURATION ].mWidth = 5;
-	mColumns [ COLUMN_AVGDURATION ].mWidth = 5;
-	mColumns [ COLUMN_MINDURATION ].mWidth = 5;
-	mColumns [ COLUMN_MAXDURATION ].mWidth = 5;
-
-	float widthNorm = 0;
-	for ( u32 i = 0; i < COLUMN_COUNT; i++ ) {
-
-		widthNorm += mColumns [ i ].mWidth;
-	}
-	
-	frameWidth = this->mFrame.mXMax - 4 - mColumns [ COLUMN_NAME ].mX - cellOffsetX * COLUMN_COUNT;
-
-	widthNorm = 1.0f / widthNorm;
-	for ( u32 i = 0; i < COLUMN_COUNT; i++ ) {
-
-		mColumns [ i ].mWidth = ceil ( mColumns [ i ].mWidth * widthNorm * frameWidth );
-	}
-	for ( u32 i = 1; i < COLUMN_COUNT; i++ ) {
-
-		mColumns [ i ].mX = mColumns [ i - 1 ].mX + mColumns [ i - 1 ].mWidth + cellOffsetX;
-	}
-
-	// Prepare immediate mode drawing
-	MOAIDraw::Bind ();
-
-	gfxDevice.SetUVTransform ();
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
-
-	gfxDevice.SetBlendMode ( ZGL_BLEND_FACTOR_SRC_ALPHA, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
-
-	// Draw the table background	
-	gfxDevice.SetPenColor ( mBackgroundColor );
-	MOAIDraw::DrawRectFill ( this->mFrame.mXMin, this->mFrame.mYMin, this->mFrame.mXMax, this->mFrame.mYMax, false );
-
-	// Draw the summary row
-	gfxDevice.SetPenColor ( mRowColor );
-
-	MOAIDraw::DrawRectFill ( mOverviewXRange.mX, mSummaryYRange.mX, mOverviewXRange.mY, mSummaryYRange.mY, false );
-
-	// ToDo: Cache the colors
-	ZLColorVec memColorLow, memColorMed, memColorHigh, memColorCur;
-	memColorLow.Set ( 0.25f, 0.8f, 0.25f, 0.5f );
-	memColorMed.Set ( 0.7f, 0.7f, 0.25f, 0.5f );
-	memColorHigh.Set ( 0.8f, 0.25f, 0.25f, 0.5f );
-
-	if ( relativeMemUsed < 0.5f ) {
-		memColorCur = memColorLow;
-	}
-	else {		
-		if ( relativeMemUsed < 0.75f ) {
-			memColorCur.Lerp ( ZLInterpolate::kLinear, memColorLow, memColorMed, (relativeMemUsed - 0.5f) / 0.25f );
-		}
-		else {
-			memColorCur.Lerp ( ZLInterpolate::kLinear, memColorMed, memColorHigh, (relativeMemUsed - 0.75f) / 0.25f );
-		}
-	}
-
-	gfxDevice.SetPenColor ( memColorCur );
-	MOAIDraw::DrawRectFill ( mMemoryXRange.mX, mSummaryYRange.mX, mMemoryXRange.mX + memUsedWidth, mSummaryYRange.mY, false );
-	
-	gfxDevice.SetPenColor ( mRowColor );
-	MOAIDraw::DrawRectFill (mMemoryXRange.mX + memUsedWidth, mSummaryYRange.mX, mMemoryXRange.mY, mSummaryYRange.mY, false );
-
-	// Draw the rows
-	gfxDevice.SetPenColor ( mRowColor );
-
-	mCursorY = mHeaderYRange.mX;	
-	for ( u32 i = 0; i < COLUMN_COUNT; i++ ) {
-
-		MOAIDraw::DrawRectFill ( mColumns [ i ].mX, mCursorY, mColumns [ i ].mX + mColumns [ i ].mWidth, mCursorY + mLineHeight, false );
-	}
-
-	mCursorY += mLineOffset;
-	while ( mCursorY < this->mFrame.mYMax ) {
-
-		MOAIDraw::DrawRectFill ( this->mFrame.mXMin + 2, mCursorY, this->mFrame.mXMax - 4, mCursorY + mLineHeight, false );
-		mCursorY += mLineOffset;
-	}
-
-	// Draw the text of the profile report
-	gfxDevice.SetPenColor ( mTextColor );
-	
-	// Draw general frame information
-	MOAIDraw::BeginDrawString ( 1, *mFont, mFontSize, 0, 0 );
-	
-	sprintf ( mTemp, "Perf - sim:%.1fms rnd:%.1fms", simRate, renderRate );
-	MOAIDraw::DrawString ( mTemp, mOverviewXRange.mX + 3, mSummaryYRange.mX, 0, 0 );
-
-	sprintf ( mTemp, "Mem - lua:%ukb tex:%umb usr:%ukb used:%umb avail:%umb", (u32) (luaMem / 1024), (u32) (texMem / (1024 * 1024)),(mUserMemory / 1024), usedMainMem, availableMainMem );
-	MOAIDraw::DrawString ( mTemp, mMemoryXRange.mX + 3, mSummaryYRange.mX, 0, 0 );
-
-	MOAIDraw::DrawString ( kCloumn_Names [ COLUMN_NAME ], mColumns [ COLUMN_NAME ].mX + 3, mHeaderYRange.mX, 0, 0 );
-
-	// Draw the header first
-	for ( u32 i = 1; i < COLUMN_COUNT; i++ ) {
-		
-		MOAIDraw::DrawString ( kCloumn_Names [ i ], mColumns [ i ].mX + 3, mHeaderYRange.mX, 0, 0 );
-	}
-
-	MOAIDraw::EndDrawString ();
-	
-	// Get the current reports and show them
-	MOAIProfiler& profiler = MOAIProfiler::Get ();
-	
-	float cursor = mBodyYRange.mX;
-
-	u32 numProfileReports = profiler.GetNumProfileReports ();
-	for ( u32 i = 0; i < numProfileReports; i++ ) {
-
-		MOAIProfilerReport* profileReport = profiler.LockProfileReport ( i );
-		if ( profileReport ) {
-
-			mOneOverTotalDurationMicroSec = (float) profileReport->GetTotalDurationMicroSec ();
-			mOneOverTotalDurationMicroSec = mOneOverTotalDurationMicroSec > 0 ? 1.0f / mOneOverTotalDurationMicroSec : 0.0f;
-			
-			gfxDevice.SetPenColor ( mTextColor );
-
-			// ToDo: Prefix the name of the report
-			
-			MOAIDraw::BeginDrawString ( 1, *mFont, mFontSize, 0, 0 );
-
-			// Draw the content
-			mCursorY = cursor;
-			profileReport->TraverseProfileEntries ( DrawEntryText, this );
-
-			MOAIDraw::EndDrawString ();
-
-	
-			ZLColorVec col;
-			col.SetRGBA ( mTextColor );
-			col.mA *= 0.5f;
-			gfxDevice.SetPenColor ( col.PackRGBA () );
-
-			mCursorY = cursor;
-			profileReport->TraverseProfileEntries ( DrawEntryVisuals, this );
-
-			profiler.UnlockProfileReport ( i );
-
-			cursor = mCursorY;
-		}
-	}
-
-	// TODO: when profile not enabled
-	const float memStatX = 0.f;
-	const float memStatY = 0.f;
-	const float memStatWidth = 600.0f;
-	const float memStatHeight = mLineHeight;
-
-	ZLColorVec col;
-	col.SetRGBA ( mRowColor );
-	col.mA *= 0.5f;
-	gfxDevice.SetPenColor ( col );
-	MOAIDraw::DrawRectFill ( memStatX, memStatY, memStatX + memStatWidth, memStatY + memStatHeight, false );
-	gfxDevice.SetPenColor ( mTextColor );
-	sprintf ( mTemp, "Mem - lua:%ukb usr:%ukb used:%umb avail:%umb", (u32) (luaMem / 1024), (mUserMemory / 1024), usedMainMem, availableMainMem );
-	MOAIDraw::DrawString ( mTemp, memStatX, memStatY, 1, *mFont, mFontSize, 0, 0, 0, 0 );
-
-	// Restore render state
-	gfxDevice.SetUVTransform ( orgUvMatrix );
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, orgWorldTransform );
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM, orgViewTransform );
-	gfxDevice.SetBlendMode ( origBlendMode );
-	
-	if ( rotation != 0 ) {
-
-		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, orgProjTransform );
-	}
+//	if ( !mFont ) return;
+//	
+//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+//	
+//	// Get memory stats
+//	u32 availableMainMem, usedMainMem;
+//	_GetMemoryStats ( availableMainMem, usedMainMem );
+//	float relativeMemUsed = availableMainMem > 0 ? (float) usedMainMem / (float) availableMainMem : 0;
+//
+//	float simRate = ( float )MOAISim::Get ().GetSimDuration () * 1000.0f;
+//	float renderRate = ( float )MOAIRenderMgr::Get ().GetRenderDuration () * 1000.0f;
+//	size_t luaMem = MOAILuaRuntime::Get ().GetMemoryUsage ();
+//	size_t texMem = gfxMgr.GetTextureMemoryUsage ();
+//
+//	// used for drawing the memory bar
+//	float memBarWidth = mMemoryXRange.mY - mMemoryXRange.mX;
+//	float memUsedWidth = memBarWidth * relativeMemUsed;
+//
+//	const float cellOffsetX = 2;
+//
+//	// Get current state
+//	const ZLMatrix4x4& orgUvMatrix = gfxMgr.GetUVTransform ();
+//	const ZLMatrix4x4& orgWorldTransform = gfxMgr.GetVertexTransform ( MOAIGfxMgr::VTX_WORLD_TRANSFORM );
+//	const ZLMatrix4x4& orgViewTransform = gfxMgr.GetVertexTransform ( MOAIGfxMgr::VTX_VIEW_TRANSFORM );
+//	const ZLMatrix4x4& orgProjTransform = gfxMgr.GetVertexTransform ( MOAIGfxMgr::VTX_PROJ_TRANSFORM );
+//
+//	MOAIBlendMode origBlendMode = gfxMgr.GetBlendMode ();
+//
+//	// Set state
+//	gfxMgr.SetVertexMtxMode ( MOAIGfxMgr::VTX_STAGE_WORLD, MOAIGfxMgr::VTX_STAGE_PROJ );
+//	gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_VIEW_TRANSFORM );
+//
+//	float rotation = 0;
+//	if ( mOrientation == 1 ) {
+//
+//		rotation = 1.57f;
+//	}
+//	else if ( mOrientation == 2 ) {
+//
+//		rotation = -1.57f;
+//	}
+//
+//	// Calculate projection matrix
+//	ZLMatrix4x4 proj;
+//
+//	u32 windowWidth = gfxMgr.GetWidth ();
+//	u32 windowheight = gfxMgr.GetHeight ();
+//
+//	proj.Ortho ( 2.0f / (float)windowWidth, -2.0f / (float)windowheight, 0, 1 );
+//
+//	ZLMatrix4x4 offset;
+//	offset.Translate ( -1, 1, 0 );
+//	proj.Append ( offset );
+//
+//	if ( rotation != 0 ) {
+//
+//		ZLMatrix4x4 rot;
+//		rot.RotateZ ( rotation );
+//		proj.Multiply ( orgProjTransform, rot );
+//	}
+//		
+//	gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_PROJ_TRANSFORM, proj );
+//
+//	MOAIDraw::Bind ();
+//
+//	// Get some font metrics
+//	mFontSize = mFontSize > 0 ? mFontSize : mFont->GetDefaultSize ();
+//	MOAIGlyphSet* glyphSet = mFont->GetGlyphSet ( mFontSize );
+//	float fontHeight = glyphSet->GetHeight ();
+//	mLineHeight = fontHeight + 4;
+//	mLineOffset = fontHeight + 10;
+//	
+//	// Calculate vertical layout
+//	mSummaryYRange.Init ( this->mFrame.mYMin + 2, this->mFrame.mYMin + 2 + this->mLineHeight );
+//	mHeaderYRange.Init ( this->mSummaryYRange.mX + mLineOffset, this->mSummaryYRange.mY + 2 + this->mLineHeight );
+//	mBodyYRange.Init ( this->mHeaderYRange.mX + mLineOffset, this->mFrame.mYMax );
+//
+//	// Calculate horizonatal layout
+//	float frameWidth = this->mFrame.mXMax - this->mFrame.mXMin;
+//	mOverviewXRange.Init ( this->mFrame.mXMin + cellOffsetX, this->mFrame.mXMin + cellOffsetX + frameWidth * 0.3f );
+//	mMemoryXRange.Init ( this->mOverviewXRange.mY + cellOffsetX, this->mFrame.mXMax - cellOffsetX * 2 );
+//
+//	mColumns [ COLUMN_NAME ].mX = this->mFrame.mXMin + cellOffsetX;
+//	mColumns [ COLUMN_NAME ].mWidth = 50;
+//	mColumns [ COLUMN_HITS ].mWidth = 4;
+//	mColumns [ COLUMN_PERCENTAGE ].mWidth = 10;
+//	mColumns [ COLUMN_DURATION ].mWidth = 5;
+//	mColumns [ COLUMN_AVGDURATION ].mWidth = 5;
+//	mColumns [ COLUMN_MINDURATION ].mWidth = 5;
+//	mColumns [ COLUMN_MAXDURATION ].mWidth = 5;
+//
+//	float widthNorm = 0;
+//	for ( u32 i = 0; i < COLUMN_COUNT; i++ ) {
+//
+//		widthNorm += mColumns [ i ].mWidth;
+//	}
+//	
+//	frameWidth = this->mFrame.mXMax - 4 - mColumns [ COLUMN_NAME ].mX - cellOffsetX * COLUMN_COUNT;
+//
+//	widthNorm = 1.0f / widthNorm;
+//	for ( u32 i = 0; i < COLUMN_COUNT; i++ ) {
+//
+//		mColumns [ i ].mWidth = ceil ( mColumns [ i ].mWidth * widthNorm * frameWidth );
+//	}
+//	for ( u32 i = 1; i < COLUMN_COUNT; i++ ) {
+//
+//		mColumns [ i ].mX = mColumns [ i - 1 ].mX + mColumns [ i - 1 ].mWidth + cellOffsetX;
+//	}
+//
+//	// Prepare immediate mode drawing
+//	MOAIDraw::Bind ();
+//
+//	gfxMgr.SetUVTransform ();
+//	gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_WORLD_TRANSFORM );
+//
+//	gfxMgr.SetBlendMode ( ZGL_BLEND_FACTOR_SRC_ALPHA, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
+//
+//	// Draw the table background	
+//	gfxMgr.SetPenColor ( mBackgroundColor );
+//	MOAIDraw::DrawRectFill ( this->mFrame.mXMin, this->mFrame.mYMin, this->mFrame.mXMax, this->mFrame.mYMax, false );
+//
+//	// Draw the summary row
+//	gfxMgr.SetPenColor ( mRowColor );
+//
+//	MOAIDraw::DrawRectFill ( mOverviewXRange.mX, mSummaryYRange.mX, mOverviewXRange.mY, mSummaryYRange.mY, false );
+//
+//	// ToDo: Cache the colors
+//	ZLColorVec memColorLow, memColorMed, memColorHigh, memColorCur;
+//	memColorLow.Set ( 0.25f, 0.8f, 0.25f, 0.5f );
+//	memColorMed.Set ( 0.7f, 0.7f, 0.25f, 0.5f );
+//	memColorHigh.Set ( 0.8f, 0.25f, 0.25f, 0.5f );
+//
+//	if ( relativeMemUsed < 0.5f ) {
+//		memColorCur = memColorLow;
+//	}
+//	else {		
+//		if ( relativeMemUsed < 0.75f ) {
+//			memColorCur.Lerp ( ZLInterpolate::kLinear, memColorLow, memColorMed, (relativeMemUsed - 0.5f) / 0.25f );
+//		}
+//		else {
+//			memColorCur.Lerp ( ZLInterpolate::kLinear, memColorMed, memColorHigh, (relativeMemUsed - 0.75f) / 0.25f );
+//		}
+//	}
+//
+//	gfxMgr.SetPenColor ( memColorCur );
+//	MOAIDraw::DrawRectFill ( mMemoryXRange.mX, mSummaryYRange.mX, mMemoryXRange.mX + memUsedWidth, mSummaryYRange.mY, false );
+//	
+//	gfxMgr.SetPenColor ( mRowColor );
+//	MOAIDraw::DrawRectFill (mMemoryXRange.mX + memUsedWidth, mSummaryYRange.mX, mMemoryXRange.mY, mSummaryYRange.mY, false );
+//
+//	// Draw the rows
+//	gfxMgr.SetPenColor ( mRowColor );
+//
+//	mCursorY = mHeaderYRange.mX;	
+//	for ( u32 i = 0; i < COLUMN_COUNT; i++ ) {
+//
+//		MOAIDraw::DrawRectFill ( mColumns [ i ].mX, mCursorY, mColumns [ i ].mX + mColumns [ i ].mWidth, mCursorY + mLineHeight, false );
+//	}
+//
+//	mCursorY += mLineOffset;
+//	while ( mCursorY < this->mFrame.mYMax ) {
+//
+//		MOAIDraw::DrawRectFill ( this->mFrame.mXMin + 2, mCursorY, this->mFrame.mXMax - 4, mCursorY + mLineHeight, false );
+//		mCursorY += mLineOffset;
+//	}
+//
+//	// Draw the text of the profile report
+//	gfxMgr.SetPenColor ( mTextColor );
+//	
+//	// Draw general frame information
+//	MOAIDraw::BeginDrawString ( 1, *mFont, mFontSize, 0, 0 );
+//	
+//	sprintf ( mTemp, "Perf - sim:%.1fms rnd:%.1fms", simRate, renderRate );
+//	MOAIDraw::DrawString ( mTemp, mOverviewXRange.mX + 3, mSummaryYRange.mX, 0, 0 );
+//
+//	sprintf ( mTemp, "Mem - lua:%ukb tex:%umb usr:%ukb used:%umb avail:%umb", (u32) (luaMem / 1024), (u32) (texMem / (1024 * 1024)),(mUserMemory / 1024), usedMainMem, availableMainMem );
+//	MOAIDraw::DrawString ( mTemp, mMemoryXRange.mX + 3, mSummaryYRange.mX, 0, 0 );
+//
+//	MOAIDraw::DrawString ( kCloumn_Names [ COLUMN_NAME ], mColumns [ COLUMN_NAME ].mX + 3, mHeaderYRange.mX, 0, 0 );
+//
+//	// Draw the header first
+//	for ( u32 i = 1; i < COLUMN_COUNT; i++ ) {
+//		
+//		MOAIDraw::DrawString ( kCloumn_Names [ i ], mColumns [ i ].mX + 3, mHeaderYRange.mX, 0, 0 );
+//	}
+//
+//	MOAIDraw::EndDrawString ();
+//	
+//	// Get the current reports and show them
+//	MOAIProfiler& profiler = MOAIProfiler::Get ();
+//	
+//	float cursor = mBodyYRange.mX;
+//
+//	u32 numProfileReports = profiler.GetNumProfileReports ();
+//	for ( u32 i = 0; i < numProfileReports; i++ ) {
+//
+//		MOAIProfilerReport* profileReport = profiler.LockProfileReport ( i );
+//		if ( profileReport ) {
+//
+//			mOneOverTotalDurationMicroSec = (float) profileReport->GetTotalDurationMicroSec ();
+//			mOneOverTotalDurationMicroSec = mOneOverTotalDurationMicroSec > 0 ? 1.0f / mOneOverTotalDurationMicroSec : 0.0f;
+//			
+//			gfxMgr.SetPenColor ( mTextColor );
+//
+//			// ToDo: Prefix the name of the report
+//			
+//			MOAIDraw::BeginDrawString ( 1, *mFont, mFontSize, 0, 0 );
+//
+//			// Draw the content
+//			mCursorY = cursor;
+//			profileReport->TraverseProfileEntries ( DrawEntryText, this );
+//
+//			MOAIDraw::EndDrawString ();
+//
+//	
+//			ZLColorVec col;
+//			col.SetRGBA ( mTextColor );
+//			col.mA *= 0.5f;
+//			gfxMgr.SetPenColor ( col.PackRGBA () );
+//
+//			mCursorY = cursor;
+//			profileReport->TraverseProfileEntries ( DrawEntryVisuals, this );
+//
+//			profiler.UnlockProfileReport ( i );
+//
+//			cursor = mCursorY;
+//		}
+//	}
+//
+//	// TODO: when profile not enabled
+//	const float memStatX = 0.f;
+//	const float memStatY = 0.f;
+//	const float memStatWidth = 600.0f;
+//	const float memStatHeight = mLineHeight;
+//
+//	ZLColorVec col;
+//	col.SetRGBA ( mRowColor );
+//	col.mA *= 0.5f;
+//	gfxMgr.SetPenColor ( col );
+//	MOAIDraw::DrawRectFill ( memStatX, memStatY, memStatX + memStatWidth, memStatY + memStatHeight, false );
+//	gfxMgr.SetPenColor ( mTextColor );
+//	sprintf ( mTemp, "Mem - lua:%ukb usr:%ukb used:%umb avail:%umb", (u32) (luaMem / 1024), (mUserMemory / 1024), usedMainMem, availableMainMem );
+//	MOAIDraw::DrawString ( mTemp, memStatX, memStatY, 1, *mFont, mFontSize, 0, 0, 0, 0 );
+//
+//	// Restore render state
+//	gfxMgr.SetUVTransform ( orgUvMatrix );
+//	gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_WORLD_TRANSFORM, orgWorldTransform );
+//	gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_VIEW_TRANSFORM, orgViewTransform );
+//	gfxMgr.SetBlendMode ( origBlendMode );
+//	
+//	if ( rotation != 0 ) {
+//
+//		gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_PROJ_TRANSFORM, orgProjTransform );
+//	}
 }
 
 //----------------------------------------------------------------//
@@ -736,47 +736,47 @@ bool MOAIProfilerReportBox::_DrawEntryText ( MOAIProfilerEntry* entry ) {
 //----------------------------------------------------------------//
 bool MOAIProfilerReportBox::_DrawEntryVisuals ( MOAIProfilerEntry* entry ) {
 	
-	if ( entry->mAvgDurationMicroSec > kThresholdAvgDurationMicroSec ) {
-		
-		// Calculate bounds of the frame
-		const float start =  mColumns [ COLUMN_PERCENTAGE ].mX;
-		const float width = mColumns [ COLUMN_PERCENTAGE ].mWidth;
-		const float end = start + width;
-
-		// Draw the relative duration of the current entry
-		MOAIDraw::DrawRectFill ( start + width * (1.0f - entry->mRelativeDuration), mCursorY, end, mCursorY + mLineHeight, false );
-		MOAIDraw::DrawRectFill ( start + width * (1.0f - entry->mFrameRelativeDuration), mCursorY, end, mCursorY + mLineHeight, false );
-		
-		// Prepare the graph of historic values...
-		float x = start;
-		const float step = width / (float)(MOAIProfilerEntry::NUM_SAMPLES - 1);
-		for ( int i = MOAIProfilerEntry::NUM_SAMPLES - 1, j = 0; i >= 0; i--, j += 2, x += step ) {
-
-			float sample = entry->mTotalDurationSamplesMicroSec [ i ] * mOneOverTotalDurationMicroSec;
-			sample = min ( max ( sample, 0.0f ), 1.0f );
-
-			mSampleVerts [ j + 0 ] = x;
-			mSampleVerts [ j + 1 ] = mCursorY + mLineHeight * (1.0f - sample);
-		}
-		
-		// ...and draw it
-		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-		const ZLColorVec& penColor = gfxDevice.GetPenColor ();
-
-		MOAIDraw::DrawVertexArray2D ( mSampleVerts, MOAIProfilerEntry::NUM_SAMPLES, 0xff0000ff, ZGL_PRIM_LINE_STRIP );
-
-		gfxDevice.SetPenColor ( penColor );
-
-		// Draw the frame
-		ZLRect percentageRect;
-		percentageRect.Init (  start, mCursorY, start + width, mCursorY + mLineHeight );
-		MOAIDraw::DrawRectEdges ( percentageRect, 0xffffffff );
-
-		// Next line
-		mCursorY += mLineOffset;
-
-		return mCursorY < mBodyYRange.mY;
-	}
+//	if ( entry->mAvgDurationMicroSec > kThresholdAvgDurationMicroSec ) {
+//		
+//		// Calculate bounds of the frame
+//		const float start =  mColumns [ COLUMN_PERCENTAGE ].mX;
+//		const float width = mColumns [ COLUMN_PERCENTAGE ].mWidth;
+//		const float end = start + width;
+//
+//		// Draw the relative duration of the current entry
+//		MOAIDraw::DrawRectFill ( start + width * (1.0f - entry->mRelativeDuration), mCursorY, end, mCursorY + mLineHeight, false );
+//		MOAIDraw::DrawRectFill ( start + width * (1.0f - entry->mFrameRelativeDuration), mCursorY, end, mCursorY + mLineHeight, false );
+//		
+//		// Prepare the graph of historic values...
+//		float x = start;
+//		const float step = width / (float)(MOAIProfilerEntry::NUM_SAMPLES - 1);
+//		for ( int i = MOAIProfilerEntry::NUM_SAMPLES - 1, j = 0; i >= 0; i--, j += 2, x += step ) {
+//
+//			float sample = entry->mTotalDurationSamplesMicroSec [ i ] * mOneOverTotalDurationMicroSec;
+//			sample = min ( max ( sample, 0.0f ), 1.0f );
+//
+//			mSampleVerts [ j + 0 ] = x;
+//			mSampleVerts [ j + 1 ] = mCursorY + mLineHeight * (1.0f - sample);
+//		}
+//		
+//		// ...and draw it
+//		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+//		const ZLColorVec& penColor = gfxMgr.GetPenColor ();
+//
+//		MOAIDraw::DrawVertexArray2D ( mSampleVerts, MOAIProfilerEntry::NUM_SAMPLES, 0xff0000ff, ZGL_PRIM_LINE_STRIP );
+//
+//		gfxMgr.SetPenColor ( penColor );
+//
+//		// Draw the frame
+//		ZLRect percentageRect;
+//		percentageRect.Init (  start, mCursorY, start + width, mCursorY + mLineHeight );
+//		MOAIDraw::DrawRectEdges ( percentageRect, 0xffffffff );
+//
+//		// Next line
+//		mCursorY += mLineOffset;
+//
+//		return mCursorY < mBodyYRange.mY;
+//	}
 
 	return false;
 }

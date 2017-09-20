@@ -70,6 +70,15 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	void Clear () {
+	
+		this->mXMin = 0;
+		this->mYMin = 0;
+		this->mXMax = 0;
+		this->mYMax = 0;
+	}
+
+	//----------------------------------------------------------------//
 	void Clip ( ZLMetaRect < TYPE >& rect ) const {
 
 		// Clamp XMin
@@ -508,13 +517,23 @@ public:
 
 	//----------------------------------------------------------------//
 	template < typename PARAM_TYPE >
-	void Grow ( const ZLMetaRect < PARAM_TYPE >& rect ) {
+	void Grow ( const ZLMetaRect < PARAM_TYPE >& rect, bool grow = true ) {
 
-		if ( this->mXMin > ( TYPE )rect.mXMin ) this->mXMin = ( TYPE )rect.mXMin;
-		if ( this->mXMax < ( TYPE )rect.mXMax ) this->mXMax = ( TYPE )rect.mXMax;
-	
-		if ( this->mYMin > ( TYPE )rect.mYMin ) this->mYMin = ( TYPE )rect.mYMin;
-		if ( this->mYMax < ( TYPE )rect.mYMax ) this->mYMax = ( TYPE )rect.mYMax;
+		if ( grow ) {
+
+			if ( this->mXMin > ( TYPE )rect.mXMin ) this->mXMin = ( TYPE )rect.mXMin;
+			if ( this->mXMax < ( TYPE )rect.mXMax ) this->mXMax = ( TYPE )rect.mXMax;
+		
+			if ( this->mYMin > ( TYPE )rect.mYMin ) this->mYMin = ( TYPE )rect.mYMin;
+			if ( this->mYMax < ( TYPE )rect.mYMax ) this->mYMax = ( TYPE )rect.mYMax;
+		}
+		else {
+		
+			this->mXMin = ( TYPE )rect.mXMin;
+			this->mXMax = ( TYPE )rect.mXMax;
+			this->mYMin = ( TYPE )rect.mYMin;
+			this->mYMax = ( TYPE )rect.mYMax;
+		}
 	}
 
 	//----------------------------------------------------------------//
@@ -530,6 +549,21 @@ public:
 		this->mYMin -= size;
 		this->mXMax += size;
 		this->mYMax += size;
+	}
+
+	//----------------------------------------------------------------//
+	void Inflate ( const ZLMetaRect < TYPE >& pad ) {
+
+		this->mXMin += pad.mXMin;
+		this->mYMin += pad.mYMin;
+		this->mXMax += pad.mXMax;
+		this->mYMax += pad.mYMax;
+	}
+
+	//----------------------------------------------------------------//
+	void Init () {
+	
+		this->Clear ();
 	}
 
 	//----------------------------------------------------------------//
@@ -606,6 +640,17 @@ public:
 	bool IsYFlipped () {
 	
 		return ( this->mYMax < this->mYMin );
+	}
+	
+	//----------------------------------------------------------------//
+	bool IsEqual ( const ZLMetaRect < TYPE >& rect ) {
+	
+		return (
+			( this->mXMin == rect.mXMin ) &&
+			( this->mYMin == rect.mYMin ) &&
+			( this->mXMax == rect.mXMax ) &&
+			( this->mYMax == rect.mYMax )
+		);
 	}
 
 	//----------------------------------------------------------------//

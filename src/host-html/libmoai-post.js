@@ -8,5 +8,3 @@
       Module.SaveCallback = savefunc;
     }
 
-	return Module;	
-}

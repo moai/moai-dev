@@ -39,6 +39,10 @@
 	#include <moai-fmod-ex/host.h>
 #endif
 
+#if AKU_WITH_HARFBUZZ
+	#include <moai-harfbuzz/host.h>
+#endif
+
 #if AKU_WITH_HARNESS
 	#include <moai-harness/host.h>
 #endif
@@ -89,8 +93,8 @@
 
 //----------------------------------------------------------------//
 void		AKUModulesAppFinalize					();
-void		AKUModulesAppInitialize					();
-void		AKUModulesContextInitialize				();
+int			AKUModulesAppInitialize					();
+int			AKUModulesContextInitialize				();
 void		AKUModulesPause							( bool pause );
 void		AKUModulesUpdate						();
 

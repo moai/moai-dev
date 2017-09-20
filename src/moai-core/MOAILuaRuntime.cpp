@@ -940,7 +940,7 @@ void MOAILuaRuntime::PushHistogram ( MOAILuaState& state, cc8* trackingGroup  ) 
 		size_t count = histogramIt->second;
 		
 		lua_pushstring ( state, name );
-		lua_pushnumber ( state, count );
+		lua_pushnumber ( state, ( lua_Number )count );
 		lua_settable ( state, -3 );
 	}
 }
@@ -1112,8 +1112,8 @@ void MOAILuaRuntime::ReportLeaksFormatted ( cc8* filename, cc8* trackingGroup ) 
 		const ObjectSet& objectSet = i->second;
 		ZLLogF ( file, "Allocation: %lu\n", objectSet.size ());
 		
-		for ( ObjectSetIt objectSetIt = objectSet.begin (); objectSetIt != objectSet.end (); ++objectSetIt ) {
-			MOAILuaObject* object = *objectSetIt;
+		for ( ObjectSetConstIt objectSetIt = objectSet.begin (); objectSetIt != objectSet.end (); ++objectSetIt ) {
+			const MOAILuaObject* object = *objectSetIt;
 			ZLLogF ( file, "<%s> %p\n", object->TypeName (), object );
 			
 			if ( traversalState.mPathMap.contains ( object )) {

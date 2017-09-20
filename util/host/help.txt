@@ -1,0 +1,14 @@
+pito host <subcommand> <args>
+    Subcommands:
+        host list - Lists available hosts
+        host init - Creates a template host config file used by subsequent commands
+        host build <hostname>  - Creates (if it doesn't exist) in hosts folder, and 
+                                 (re)builds the host named <hostname>. 
+        host run <hostname>    - Creates (if it doesn't exists) in hosts folder, 
+                                 (re)builds and runs the host named <hostname>. 
+        host create <hostname> - Creates the host in the hosts folder (removing old 
+                                 host) based on latest config settings.
+    Example:
+        cd newMOAIProject && pito host create ios && \
+                             pito host create android-studio && \
+                             pito host create host osx-app && #etc.

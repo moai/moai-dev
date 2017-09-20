@@ -54,7 +54,7 @@ public:
 	typedef typename map < KEY, TYPE* >::iterator iterator;
 
 	//----------------------------------------------------------------//
-	bool contains ( const KEY& key ) {
+	bool contains ( const KEY& key ) const {
 		return ( this->find ( key ) != this->end ());
 	}
 

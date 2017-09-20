@@ -83,8 +83,8 @@ void MOAIPinTransform::OnDepNodeUpdate () {
 	this->mSourceLayer->GetWorldToWndMtx ().Project ( loc );
 	this->mDestLayer->GetWndToWorldMtx ().Transform ( loc );
 	
-	this->mLocalToWorldMtx.Translate ( loc.mX, loc.mY, 0.0f );
-	this->mWorldToLocalMtx.Translate ( -loc.mX, -loc.mY, 0.0f );
+	this->mLocalToWorldMtx.Translate ( loc.mX, loc.mY, loc.mZ );
+	this->mWorldToLocalMtx.Translate ( -loc.mX, -loc.mY, -loc.mZ );
 	
 	// Z component is at the back of the NDC's near plane
 	this->mFront = loc.mZ < -1.0f ? 0.0f : 1.0f;

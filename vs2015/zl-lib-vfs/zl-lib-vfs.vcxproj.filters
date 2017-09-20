@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\src\zl-vfs\assert.cpp" />
+    <ClCompile Include="..\..\src\zl-vfs\headers.cpp" />
+    <ClCompile Include="..\..\src\zl-vfs\pch.cpp" />
+    <ClCompile Include="..\..\src\zl-vfs\zl_mutex.cpp" />
+    <ClCompile Include="..\..\src\zl-vfs\zl_util.cpp" />
+    <ClCompile Include="..\..\src\zl-vfs\zl_vfscanf.cpp" />
+    <ClCompile Include="..\..\src\zl-vfs\ZLVfsDirectoryItr.cpp" />
+    <ClCompile Include="..\..\src\zl-vfs\ZLVfsFile.cpp" />
+    <ClCompile Include="..\..\src\zl-vfs\ZLVfsFileSystem.cpp" />
+    <ClCompile Include="..\..\src\zl-vfs\ZLVfsVirtualPath.cpp" />
+    <ClCompile Include="..\..\src\zl-vfs\ZLVfsZipArchive.cpp" />
+    <ClCompile Include="..\..\src\zl-vfs\ZLVfsZipStream.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\zl-vfs\assert.h" />
+    <ClInclude Include="..\..\src\zl-vfs\headers.h" />
+    <ClInclude Include="..\..\src\zl-vfs\pch.h" />
+    <ClInclude Include="..\..\src\zl-vfs\zl_mutex.h" />
+    <ClInclude Include="..\..\src\zl-vfs\zl_replace.h" />
+    <ClInclude Include="..\..\src\zl-vfs\zl_replace_locale.h" />
+    <ClInclude Include="..\..\src\zl-vfs\zl_replace_new_delete.h" />
+    <ClInclude Include="..\..\src\zl-vfs\zl_replace_stdio.h" />
+    <ClInclude Include="..\..\src\zl-vfs\zl_replace_stdlib.h" />
+    <ClInclude Include="..\..\src\zl-vfs\zl_types.h" />
+    <ClInclude Include="..\..\src\zl-vfs\zl_util.h" />
+    <ClInclude Include="..\..\src\zl-vfs\ZLVfsDirectoryItr.h" />
+    <ClInclude Include="..\..\src\zl-vfs\ZLVfsFile.h" />
+    <ClInclude Include="..\..\src\zl-vfs\ZLVfsFileSystem.h" />
+    <ClInclude Include="..\..\src\zl-vfs\ZLVfsVirtualPath.h" />
+    <ClInclude Include="..\..\src\zl-vfs\ZLVfsZipArchive.h" />
+    <ClInclude Include="..\..\src\zl-vfs\ZLVfsZipStream.h" />
+    <ClInclude Include="..\..\src\zl-common\zl_platform.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\zl-common\zl_types.h">
+      <Filter>common</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="common">
+      <UniqueIdentifier>{36e6a161-2a52-4709-9344-f9aaa95a9477}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

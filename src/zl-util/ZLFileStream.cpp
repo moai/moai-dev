@@ -145,33 +145,33 @@ bool ZLFileStream::OpenWrite ( cc8* filename ) {
 }
 
 //----------------------------------------------------------------//
-size_t ZLFileStream::ReadBytes ( void* buffer, size_t size ) {
+ZLSizeResult ZLFileStream::ReadBytes ( void* buffer, size_t size ) {
 
-	return zl_fread ( buffer, 1, size, this->mFile );
+	ZL_RETURN_SIZE_RESULT ( zl_fread ( buffer, 1, size, this->mFile ), ZL_OK );
 }
 
 //----------------------------------------------------------------//
-int ZLFileStream::SetCursor ( long offset ) {
+ZLResultCode ZLFileStream::SetCursor ( size_t offset ) {
 
-	return zl_fseek ( this->mFile, offset, SEEK_SET );
+	return zl_fseek ( this->mFile, ( long )offset, SEEK_SET ) == 0 ? ZL_OK : ZL_ERROR;
 }
 
 //----------------------------------------------------------------//
-size_t ZLFileStream::SetLength ( size_t length ) {
+ZLSizeResult ZLFileStream::SetLength ( size_t length ) {
 	UNUSED ( length );
-	return 0;
+	ZL_RETURN_SIZE_RESULT ( 0, ZL_UNSUPPORTED );
 }
 
 //----------------------------------------------------------------//
-size_t ZLFileStream::WriteBytes ( const void* buffer, size_t size ) {
+ZLSizeResult ZLFileStream::WriteBytes ( const void* buffer, size_t size ) {
 
-	size_t result = zl_fwrite ( buffer, 1, size, this->mFile );
+	size_t writeSize = zl_fwrite ( buffer, 1, size, this->mFile );
 	
 	size_t cursor = ( size_t )zl_ftell ( this->mFile );
 	if ( cursor > this->mLength ) {
 		this->mLength = cursor;
 	}
-	return result;
+	ZL_RETURN_SIZE_RESULT ( writeSize, ZL_OK );
 }
 
 //----------------------------------------------------------------//

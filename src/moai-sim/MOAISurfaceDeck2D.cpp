@@ -104,12 +104,12 @@ int MOAISurfaceDeck2D::_setSurface ( lua_State* L ) {
 //----------------------------------------------------------------//
 ZLBox MOAISurfaceDeck2D::ComputeMaxBounds () {
 	
-	u32 size = this->mBrushes.Size ();
+	size_t size = this->mBrushes.Size ();
 
 	ZLRect rect;
 	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 
-	for ( u32 i = 0; i < size; ++i ) {
+	for ( size_t i = 0; i < size; ++i ) {
 		rect.Grow ( this->mBrushes [ i ].mBounds );
 	}
 
@@ -297,7 +297,6 @@ ZLBox MOAISurfaceDeck2D::GetItemBounds ( u32 idx ) {
 MOAISurfaceDeck2D::MOAISurfaceDeck2D () {
 
 	RTTI_SINGLE ( MOAIStandardDeck )
-	//this->SetContentMask ( MOAIProp::CAN_DRAW_DEBUG | MOAIProp::CAN_GATHER_SURFACES );
 }
 
 //----------------------------------------------------------------//

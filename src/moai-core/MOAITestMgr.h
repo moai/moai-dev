@@ -8,8 +8,6 @@
 #include <moai-core/MOAIGlobals.h>
 #include <moai-core/MOAILua.h>
 
-#include <jansson.h>
-
 //================================================================//
 // MOAITestResult
 //================================================================//
@@ -28,7 +26,7 @@ public:
 	STLList < MOAITestResult > mChildren;
 
 	//----------------------------------------------------------------//
-	json_t*			ToJson					();
+	void*			ToJson					();
 	void			Push					( lua_State* L );
 };
 

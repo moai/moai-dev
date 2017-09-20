@@ -20,7 +20,8 @@ STLString MOAIVersion::GetVersionString () {
 		MOAI_SDK_VERSION_MINOR
 	);
 	
-	if ( MOAI_SDK_VERSION_REVISION > 0 ) {
+	int revision = MOAI_SDK_VERSION_REVISION; // vs2015 C4127
+	if ( revision > 0 ) {
 		version.write ( ".%d", MOAI_SDK_VERSION_REVISION );
 	}
 	

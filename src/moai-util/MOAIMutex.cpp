@@ -11,45 +11,27 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMutex::Affirm () {
-
-	if ( !this->mImpl ) {
-		this->mImpl = new MOAIMutexImpl ();
-		this->mImpl->Init ();
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIMutex::Clear () {
-
-	if ( this->mImpl ) {
-		delete this->mImpl;
-		this->mImpl = 0;
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIMutex::Lock () {
 
-	this->Affirm ();
-	this->mImpl->Lock ();
+	this->mMutexImpl->Lock ();
 }
 
 //----------------------------------------------------------------//
-MOAIMutex::MOAIMutex () :
-	mImpl ( 0 ) {
+MOAIMutex::MOAIMutex () {
+	
+	this->mMutexImpl = new MOAIMutexImpl ();
 }
 
 //----------------------------------------------------------------//
 MOAIMutex::~MOAIMutex () {
-	this->Clear ();
+
+	delete this->mMutexImpl;
 }
 
 //----------------------------------------------------------------//
 void MOAIMutex::Unlock () {
 
-	this->Affirm ();
-	this->mImpl->Unlock ();
+	this->mMutexImpl->Unlock ();
 }
 
 //================================================================//

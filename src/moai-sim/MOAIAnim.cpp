@@ -106,7 +106,7 @@ void MOAIAnim::Apply ( float t ) {
 	
 	MOAIAttrOp attrOp;
 	
-	u32 total = this->mLinks.Size ();
+	u32 total = ( u32 )this->mLinks.Size ();
 	for ( u32 i = 0; i < total; ++i ) {
 		
 		MOAIAnimLink& link = this->mLinks [ i ];
@@ -134,7 +134,7 @@ void MOAIAnim::Apply ( float t0, float t1 ) {
 	
 	MOAIAttrOp attrOp;
 	
-	u32 total = this->mLinks.Size ();
+	u32 total = ( u32 )this->mLinks.Size ();
 	for ( u32 i = 0; i < total; ++i ) {
 		
 		MOAIAnimLink& link = this->mLinks [ i ];
@@ -191,7 +191,7 @@ MOAIAnim::~MOAIAnim () {
 void MOAIAnim::OnUpdate ( double step ) {
 
 	float t0 = this->GetTime ();
-	this->DoStep ( step );
+	this->DoStep (( float )step );
 	float t1 = this->GetTime ();
 	
 	this->Apply ( t0, t1 );

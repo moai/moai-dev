@@ -36,7 +36,7 @@ void _jsonArrayToLua ( lua_State* L, json_t* json ) {
 		
 		if ( value ) {
 		
-			lua_pushnumber ( L, i + 1 );
+			lua_pushnumber ( L, ( lua_Number )( i + 1 ));
 			_jsonToLua ( L, value );
 			lua_settable ( L, -3 );
 		}
@@ -268,12 +268,12 @@ void MOAIJsonParser::RegisterLuaClass ( MOAILuaState& state ) {
 	lua_pushlightuserdata ( state, 0 );
 	lua_setfield ( state, -2, "JSON_NULL" );
 
-	state.SetField ( -1, "JSON_INDENT", JSON_INDENT ( 4 ));
-	state.SetField ( -1, "JSON_COMPACT", JSON_COMPACT );
-	state.SetField ( -1, "JSON_ENSURE_ASCII", JSON_ENSURE_ASCII );
-	state.SetField ( -1, "JSON_SORT_KEYS", JSON_SORT_KEYS );
-	state.SetField ( -1, "JSON_PRESERVE_ORDER", JSON_PRESERVE_ORDER );
-	state.SetField ( -1, "JSON_ENCODE_ANY", JSON_ENCODE_ANY );
+	state.SetField ( -1, "JSON_INDENT",				JSON_INDENT ( 4 ));
+	state.SetField ( -1, "JSON_COMPACT",			JSON_COMPACT );
+	state.SetField ( -1, "JSON_ENSURE_ASCII",		JSON_ENSURE_ASCII );
+	state.SetField ( -1, "JSON_SORT_KEYS",			JSON_SORT_KEYS );
+	state.SetField ( -1, "JSON_PRESERVE_ORDER",		JSON_PRESERVE_ORDER );
+	state.SetField ( -1, "JSON_ENCODE_ANY",			JSON_ENCODE_ANY );
 	
 	luaL_Reg regTable[] = {
 		{ "decode",					_decode },

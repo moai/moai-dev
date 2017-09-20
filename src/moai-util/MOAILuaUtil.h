@@ -1,9 +1,9 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
-
-#ifndef MOAI_WITH_LUAJIT //can't convert luajit bytecode
 #ifndef	MOAILUAUTIL_H
 #define	MOAILUAUTIL_H
+
+
 
 //================================================================//
 // MOAILuaHeader
@@ -11,7 +11,9 @@
 class MOAILuaHeader {
 public:
 
-	u32			mSignature;				// "ESCLua" or 0x6175C41B
+	static const u32 SIGNATURE = 0x61754C1B;
+
+	u32			mSignature;				// "ESCLua" or 0x61754C1B
 	u8			mVersion;				// 0x51 for Lua 5.1
 	u8			mFormat;				// 0 = official version
 	u8			mByteOrder;				// 0 = big endian, 1 = little endian
@@ -22,9 +24,15 @@ public:
 	u8			mTypeOfLuaNumber;		// 0 = floating point, 1 = integral
 	
 	//----------------------------------------------------------------//
-	void		Init			();
-	void		Read			( ZLStream& stream );
-	void		Write			( ZLStream& stream ) const;
+	void				Init				();
+	bool				IsBytecode			();
+	bool				IsCompatible		( const MOAILuaHeader& check ) const;
+						MOAILuaHeader		();
+						~MOAILuaHeader		(); // no vtable
+	ZLResultCode		Read				( ZLStream& stream );
+	ZLResultCode		Read				( void* buffer, size_t size );
+	ZLResultCode		Write				( ZLStream& stream ) const;
+	ZLResultCode		Write				( void* buffer, size_t size );
 };
 
 //================================================================//
@@ -61,4 +69,5 @@ public:
 };
 
 #endif
-#endif
+
+

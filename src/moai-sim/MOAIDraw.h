@@ -29,8 +29,10 @@ private:
 	static int				_drawBezierCurve	( lua_State* L );
 	static int				_drawBoxOutline		( lua_State* L );
 	static int				_drawCircle			( lua_State* L );
+	static int				_drawCircleSpokes	( lua_State* L );
 	static int				_drawElements		( lua_State* L );
 	static int				_drawEllipse		( lua_State* L );
+	static int				_drawEllipseSpokes	( lua_State* L );
 	static int				_drawGrid			( lua_State* L );
 	static int				_drawLine			( lua_State* L );
 	static int				_drawPoints			( lua_State* L );
@@ -54,7 +56,7 @@ public:
 
 	//----------------------------------------------------------------//
 	static void			BeginDrawString			( float scale, MOAIFont& font, float fontSize, float shadowOffsetX, float shadowOffsetY );
-	static void			Bind					();
+	static bool			Bind					();
 	static void			DrawAnimCurve			( const MOAIAnimCurve& curve, u32 resolution );
 	static void			DrawAxisGrid			( ZLVec2D loc, ZLVec2D vec, float size );
 	static void			DrawBezierCurve			( const ZLCubicBezier2D& bezier );
@@ -66,6 +68,7 @@ public:
 	static void			DrawEllipseFill			( float x, float y, float xRad, float yRad, u32 steps );
 	static void			DrawEllipseOutline		( const ZLRect& rect, u32 steps );
 	static void			DrawEllipseOutline		( float x, float y, float xRad, float yRad, u32 steps );
+	static void			DrawEllipseSpokes		( float x, float y, float xRad, float yRad, u32 steps );
 	static void			DrawGrid				( const ZLRect& rect, u32 xCells, u32 yCells );
 	static void			DrawLine				( const ZLVec2D& v0, const ZLVec2D& v1 );
 	static void			DrawLine				( const ZLVec3D& v0, const ZLVec3D& v1 );

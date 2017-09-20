@@ -1,0 +1,2 @@
+pito make-lua-docs 
+    Creates compact documentation for the Lua-side of the MOAI API.

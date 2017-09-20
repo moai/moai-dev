@@ -29,9 +29,14 @@ protected:
 		NO_CONTENT = 0xffffffff,
 	};
 	
+	MOAILuaSharedPtr < MOAIBoundsDeck > mBoundsDeck; // bounds override
+
+	ZLBox	mMaxBounds;
+	bool	mBoundsDirty;
+	
 	//----------------------------------------------------------------//
+	static int						_setBoundsDeck				( lua_State* L );
 	static int						_getBounds					( lua_State* L );
-	static int						_subdivideRect				( lua_State* L );
 
 public:
 	

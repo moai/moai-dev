@@ -24,6 +24,7 @@ void MOAIProfilerScope::Enter ( MOAIProfilerScope* parent, const ZLHashedString&
 
 //----------------------------------------------------------------//
 void MOAIProfilerScope::Leave ( const ZLHashedString& name ) {
+	UNUSED ( name ); // TODO: find out why zl assert undef isn't handling this
 
 	assert ( this->mName == name );
 	

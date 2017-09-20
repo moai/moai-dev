@@ -317,7 +317,7 @@ void MOAIKeyboardSensor::ParseEvent ( ZLStream& eventStream ) {
 		}
 	} else if ( eventType == KeyboardEventType::CHAR ) {
 
-		u32 unicodeChar = eventStream.Read < u32 >( -1 );
+		u32 unicodeChar = eventStream.Read < u32 >( 0xffffffff );
 		
 		if ( this->mOnChar ) {
 			// Convert to UTF-8 and zero-terminate

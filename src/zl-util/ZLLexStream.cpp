@@ -29,51 +29,65 @@ size_t ZLLexStream::GetLength () {
 }
 
 //----------------------------------------------------------------//
-size_t ZLLexStream::ReadBytes ( void* buffer, size_t size ) {
+ZLSizeResult ZLLexStream::ReadBytes ( void* buffer, size_t size ) {
 
 	size_t cursor = this->GetCursor ();
-
 	size_t length = this->GetLength ();
-	if (( cursor + size ) > length ) {
-		size = length - cursor;
-	}
+	
+	size_t readSize = (( cursor + size ) > length ) ? ( length - cursor ) : size;
 
 	u8* bytes = ( u8* )buffer;
-	for ( u32 i = 0; i < size; ++i ) {
+	for ( u32 i = 0; i < readSize; ++i ) {
 		bytes [ i ] = this->ReadByte ();
 	}
-	return size;
+	ZL_RETURN_SIZE_RESULT ( readSize, ZL_OK );
 }
 
 //----------------------------------------------------------------//
-u8 ZLLexStream::ReadByte () {
+ZLCharResult ZLLexStream::ReadByte () {
 
-	assert ( this->mStream );
+	if ( !this->mStream ) ZL_RETURN_CHAR_RESULT ( 0, ZL_ERROR );
+	
 	u8 value = this->mStream->Read < u8 >( 0 );
 	
 	if ( value == '\n' ) {
 		this->mLine++;
 	}
-	return value;
+	ZL_RETURN_CHAR_RESULT ( value, ZL_OK );
 }
 
 //----------------------------------------------------------------//
-int ZLLexStream::SetCursor ( long offset ) {
+ZLResultCode ZLLexStream::SetCursor ( size_t offset ) {
 
-	offset = offset - (long) this->GetCursor ();
+	if ( !( this->mStream && ( this->GetCaps () & ( CAN_READ | CAN_WRITE )))) return ZL_ERROR;
+
+	size_t restoreCursor = this->GetCursor ();
+	size_t restoreLine = this->mLine;
+
+	if ( this->GetLength () < offset ) return ZL_ERROR;
 	
-	if ( offset > 0 ) {
-		for ( long i = 0; i < offset; ++i ) {
+	// TODO: test this
+
+	if ( restoreCursor <= offset ) {
+		for ( size_t i = restoreCursor; i < offset; ++i ) {
 			this->ReadByte ();
 		}
 	}
 	else {
-		offset = -offset;
-		for ( long i = 0; i < offset; ++i ) {
+		for ( size_t i = offset; i < restoreCursor; ++i ) {
 			this->UnreadByte ();
 		}
 	}
-	return 0;
+	
+	// instead of checking each byte, we'll check the final cursor position
+	// if it isn't where we expected it to be, reset and return an error
+	if ( this->mStream->GetCursor () != ( size_t )offset ) {
+	
+		this->mStream->SetCursor ( restoreCursor );
+		this->mLine = restoreLine;
+		return ZL_ERROR;
+	}
+	return ZL_OK;
 }
 
 //----------------------------------------------------------------//
@@ -83,9 +97,9 @@ void ZLLexStream::SetStream ( ZLStream* stream ) {
 }
 
 //----------------------------------------------------------------//
-u8 ZLLexStream::UnreadByte () {
+ZLCharResult ZLLexStream::UnreadByte () {
 
-	assert ( this->mStream );
+	if ( !this->mStream ) ZL_RETURN_CHAR_RESULT ( 0, ZL_ERROR );
 
 	this->mStream->Seek ( -1, SEEK_CUR );
 	u8 value = this->mStream->Read < u8 >( 0 );
@@ -94,7 +108,7 @@ u8 ZLLexStream::UnreadByte () {
 	if ( value == '\n' ) {
 		this->mLine--;
 	}
-	return value;
+	ZL_RETURN_CHAR_RESULT ( value, ZL_OK );
 }
 
 //----------------------------------------------------------------//

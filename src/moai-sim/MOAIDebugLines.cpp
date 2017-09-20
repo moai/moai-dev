@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIDebugLines.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 
@@ -85,13 +85,13 @@ int MOAIDebugLines::_showStyle ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAIDebugLines::Bind ( u32 styleID ) {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	MOAIDebugLineStyle& style = this->mStyles [ styleID ];
 	
 	if ( style.mVisible ) {
-		gfxDevice.SetPenColor ( style.mColor );
-		gfxDevice.SetPenWidth ( style.mSize );
+		gfxMgr.mGfxState.SetPenColor ( style.mColor );
+		gfxMgr.mGfxState.SetPenWidth ( style.mSize );
 		return true;
 	}
 	return false;
@@ -138,7 +138,10 @@ void MOAIDebugLines::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "TEXT_BOX_BASELINES",						( u32 )TEXT_BOX_BASELINES );
 	state.SetField ( -1, "TEXT_BOX_GLYPH_BOUNDS",					( u32 )TEXT_BOX_GLYPH_BOUNDS );
 	state.SetField ( -1, "TEXT_BOX_GLYPHS",							( u32 )TEXT_BOX_GLYPHS );
-	state.SetField ( -1, "TEXT_BOX_LAYOUT",							( u32 )TEXT_BOX_LAYOUT );
+	state.SetField ( -1, "TEXT_BOX_LAYOUT_BOUNDS",					( u32 )TEXT_BOX_LAYOUT_BOUNDS );
+	state.SetField ( -1, "TEXT_BOX_LIMITS",							( u32 )TEXT_BOX_LIMITS );
+	state.SetField ( -1, "TEXT_BOX_LINES_GLYPH_BOUNDS",				( u32 )TEXT_BOX_LINES_GLYPH_BOUNDS );
+	state.SetField ( -1, "TEXT_BOX_LINES_LAYOUT_BOUNDS",			( u32 )TEXT_BOX_LINES_LAYOUT_BOUNDS );
 }
 
 //----------------------------------------------------------------//

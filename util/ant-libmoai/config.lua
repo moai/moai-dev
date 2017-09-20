@@ -10,7 +10,7 @@ SETTINGS = {
 	LIB_NAME			= 'moai',
 	MY_ARM_MODE			= 'arm',
 	MY_ARM_ARCH			= 'armeabi-v7a arm64-v8a x86',
-	MY_APP_PLATFORM		= 'android-10',
+	MY_APP_PLATFORM		= 'android-19',
 }
 
 MODULES = {
@@ -39,7 +39,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-adcolony.mk',
+			'$(MOAI_MODULES)/modules/moai-adcolony.mk',
 		},
 		
 		JAVA = {
@@ -60,7 +60,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-android.mk',
+			'$(MOAI_MODULES)/modules/moai-android.mk',
 		},
 		
 		JAVA = {
@@ -89,8 +89,8 @@ MODULES = {
 		},
 	
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-box2d.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-box2d.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-box2d.mk',
+			'$(MOAI_MODULES)/modules/moai-box2d.mk',
 		},
 		
 		JAVA = {
@@ -98,7 +98,7 @@ MODULES = {
 
 		STATIC_LIBRARIES = 'libbox2d libmoai-box2d',
 	},
-	
+
 	----------------------------------------------------------------
 	CHARTBOOST = {
 		
@@ -109,7 +109,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-chartboost.mk',
+			'$(MOAI_MODULES)/modules/moai-chartboost.mk',
 		},
 		
 		JAVA = {
@@ -130,7 +130,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-crittercism.mk',
+			'$(MOAI_MODULES)/modules/moai-crittercism.mk',
 		},
 		
 		JAVA = {
@@ -148,27 +148,41 @@ MODULES = {
 		NAMESPACE = 'com.ziplinegames.moai',
 		
 		HEADER_SEARCH_PATHS = {
-			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include-android',
-			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include',
-			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m',
-			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto',
+			'$(MOAI_SDK_HOME)/3rdparty/mbedtls/include',
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-crypto-a.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-crypto-b.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-crypto-c.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-crypto-d.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/zl-crypto.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-crypto.mk',
+			'$(MOAI_MODULES)/modules/zl-crypto.mk',
+			'$(MOAI_MODULES)/modules/moai-crypto.mk',
 		},
 		
 		JAVA = {
 		},
 
-		STATIC_LIBRARIES = 'libmoai-crypto libzl-crypto libcrypto-a libcrypto-b libcrypto-c libcrypto-d',
+		STATIC_LIBRARIES = 'libmoai-crypto libzl-crypto libmbedtls',
 	},
+
+	----------------------------------------------------------------
+	DELTADNA = {
+		
+		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_DELTADNA',
+		NAMESPACE = 'com.moaisdk.deltadna',
 	
+		HEADER_SEARCH_PATHS = {
+		},
+
+		MAKE = {
+			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-deltadna.mk',
+		},
+		
+		JAVA = {
+			MOAI_SDK_HOME .. '3rdparty-android/deltadna-v3.3.6',
+			MOAI_SDK_HOME .. 'src/moai-android-deltadna',
+		},
+
+		STATIC_LIBRARIES = 'libmoai-deltadna',
+	},
+
 	----------------------------------------------------------------
 	FACEBOOK = {
 		
@@ -179,7 +193,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-facebook.mk',
+			'$(MOAI_MODULES)/modules/moai-facebook.mk',
 		},
 		
 		JAVA = {
@@ -201,7 +215,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-flurry.mk',
+			'$(MOAI_MODULES)/modules/moai-flurry.mk',
 		},
 		
 		JAVA = {
@@ -214,6 +228,7 @@ MODULES = {
 
 	----------------------------------------------------------------
 	--[[
+	
 	FMOD_EX = {
 	
 		PREPROCESSOR_FLAG = 'AKU_WITH_FMOD_EX',
@@ -225,7 +240,7 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-fmod-ex.mk',
+			'$(MOAI_MODULES)/modules/moai-fmod-ex.mk',
 		},
 		
 		JAVA = {
@@ -238,14 +253,14 @@ MODULES = {
 	----------------------------------------------------------------
 	GOOGLE_PLAY_SERVICES = {
 		
-		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_GOOGLE_PLAY',
+		PREPROCESSOR_FLAG = 'AKU_WITH_ANDROID_GOOGLE_PLAY_SERVICES',
 		NAMESPACE = 'com.moaisdk.googleplayservices',
 	
 		HEADER_SEARCH_PATHS = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-google-play-services.mk',
+			'$(MOAI_MODULES)/modules/moai-google-play-services.mk',
 		},
 		
 		JAVA = {
@@ -287,22 +302,22 @@ MODULES = {
 		HEADER_SEARCH_PATHS = {
 			'$(MOAI_SDK_HOME)/3rdparty/c-ares-1.7.5',
 			'$(MOAI_SDK_HOME)/3rdparty/c-ares-1.7.5/include-android',
-			'$(MOAI_SDK_HOME)/3rdparty/curl-7.19.7/include-android',
-			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include-android',
-			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include',
+			'$(MOAI_SDK_HOME)/3rdparty/curl/include',
+			'$(MOAI_SDK_HOME)/src/custom-include/curl/android',
+			'$(MOAI_SDK_HOME)/src/custom-include/curl/android/curl',
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-c-ares.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-curl.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-ssl.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-http-client.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-c-ares.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-curl.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-mbedtls.mk',
+			'$(MOAI_MODULES)/modules/moai-http-client.mk',
 		},
 		
 		JAVA = {
 		},
 
-		STATIC_LIBRARIES = 'libcares libcurl libssl libmoai-http-client',
+		STATIC_LIBRARIES = 'libcares libcurl libmbedtls libmoai-http-client',
 	},
 	
 	----------------------------------------------------------------
@@ -316,8 +331,8 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-mongoose.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-http-server.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-mongoose.mk',
+			'$(MOAI_MODULES)/modules/moai-http-server.mk',
 		},
 		
 		JAVA = {
@@ -337,8 +352,8 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-jpg.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-jpg.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-jpg.mk',
+			'$(MOAI_MODULES)/modules/moai-image-jpg.mk',
 		},
 		
 		JAVA = {
@@ -358,8 +373,8 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-png.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-png.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-png.mk',
+			'$(MOAI_MODULES)/modules/moai-image-png.mk',
 		},
 		
 		JAVA = {
@@ -379,8 +394,8 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-pvr.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-pvr.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-pvr.mk',
+			'$(MOAI_MODULES)/modules/moai-image-pvr.mk',
 		},
 		
 		JAVA = {
@@ -400,8 +415,8 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-webp.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-image-webp.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-webp.mk',
+			'$(MOAI_MODULES)/modules/moai-image-webp.mk',
 		},
 		
 		JAVA = {
@@ -417,16 +432,11 @@ MODULES = {
 		NAMESPACE = 'com.ziplinegames.moai',
 		
 		HEADER_SEARCH_PATHS = {
-			'$(MOAI_SDK_HOME)/3rdparty/luacrypto-0.2.0/src',
-			'$(MOAI_SDK_HOME)/3rdparty/luacurl-1.2.1',
-			'$(MOAI_SDK_HOME)/3rdparty/luafilesystem-1.5.0/src',
-			'$(MOAI_SDK_HOME)/3rdparty/luasocket-2.0.2/src',
-			'$(MOAI_SDK_HOME)/3rdparty/luasocket-2.0.2-embed/src',
-			'$(MOAI_SDK_HOME)/3rdparty/luasql-2.2.0/src',
+
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-luaext.mk',
+			'$(MOAI_MODULES)/modules/moai-luaext.mk',
 		},
 		
 		JAVA = {
@@ -452,10 +462,10 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-freetype.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-tess.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/zl-gfx.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-sim.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-freetype.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-tess.mk',
+			'$(MOAI_MODULES)/modules/zl-gfx.mk',
+			'$(MOAI_MODULES)/modules/moai-sim.mk',
 		},
 		
 		JAVA = {
@@ -463,7 +473,7 @@ MODULES = {
 
 		STATIC_LIBRARIES = 'libmoai-sim libfreetype libtess libzl-gfx',
 	},
-	
+
 	----------------------------------------------------------------
 	TAPJOY = {
 		
@@ -474,7 +484,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-tapjoy.mk',
+			'$(MOAI_MODULES)/modules/moai-tapjoy.mk',
 		},
 		
 		JAVA = {
@@ -495,7 +505,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-twitter.mk',
+			'$(MOAI_MODULES)/modules/moai-twitter.mk',
 		},
 		
 		JAVA = {
@@ -521,10 +531,10 @@ MODULES = {
 		},
 		
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-ogg.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-vorbis.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/3rdparty-untz.mk',
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-untz.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-ogg.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-vorbis.mk',
+			'$(MOAI_MODULES)/modules/3rdparty-untz.mk',
+			'$(MOAI_MODULES)/modules/moai-untz.mk',
 		},
 		
 		JAVA = {
@@ -532,7 +542,7 @@ MODULES = {
 
 		STATIC_LIBRARIES = 'libogg libvorbis libuntz libmoai-untz',
 	},
-	
+
 	----------------------------------------------------------------
 	VUNGLE = {
 		
@@ -543,7 +553,7 @@ MODULES = {
 		},
 
 		MAKE = {
-			'$(MOAI_SDK_HOME)/util/ant-libmoai/modules/moai-vungle.mk',
+			'$(MOAI_MODULES)/modules/moai-vungle.mk',
 		},
 		
 		JAVA = {
@@ -581,6 +591,7 @@ TARGETS = {
 			'BOX2D',
 			'CHARTBOOST',
 			'CRYPTO',
+			'DELTADNA',
 			'FACEBOOK',
 			'FLURRY',
 			'GOOGLE_PLAY_SERVICES',
@@ -609,14 +620,13 @@ STATIC_LINK_ORDER = {
 	'libmoai-adcolony',
 	'libmoai-chartboost',
 	'libmoai-crittercism',
+	'libmoai-deltadna',
 	'libmoai-facebook',
 	'libmoai-flurry',
 	'libmoai-google-play-services',
 	'libmoai-tapjoy',
 	'libmoai-twitter',
 	'libmoai-vungle',
-
-	'libmoai-chartboost',
 
 	-- moai
 	'libmoai-android',
@@ -654,12 +664,9 @@ STATIC_LINK_ORDER = {
 	'libmongoose',
 	'libcurl',
 	'libcares',
-	'libssl',
+	'libmbedtls',
 	
-	'libcrypto-a',
-	'libcrypto-b',
-	'libcrypto-c',
-	'libcrypto-d',
+
 	
 	--vfs
 	--'libzl-vfs',
@@ -672,8 +679,4 @@ WHOLE_STATIC_LIBRARIES = {
 	'libmoai-android',
 	'libmoai-sim',
 	'libmoai-core',
-	'libcrypto-a',
-	'libcrypto-b',
-	'libcrypto-c',
-	'libcrypto-d',
 }

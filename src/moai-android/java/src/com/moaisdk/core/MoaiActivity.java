@@ -59,6 +59,7 @@ public class MoaiActivity extends Activity {
 	private boolean							mWaitingToResume = false;
 	private boolean							mWindowFocusLost = false;
 	private float []						mAccelerometerData = null;
+	protected String 							luaWorkDir = "bundle/assets/lua";
 
 	private static MoaiActivity sActivity;
 
@@ -113,7 +114,7 @@ public class MoaiActivity extends Activity {
 			    Moai.mount ( "bundle", myApp.publicSourceDir );
 			}
 			
-			Moai.setWorkingDirectory ( "bundle/assets" ); // TODO: this should be set from a string resource or a manifest entry
+			Moai.setWorkingDirectory ( luaWorkDir );
 		} catch ( NameNotFoundException e ) {
 			MoaiLog.e ( "MoaiActivity onCreate: Unable to locate the application bundle" );
 		}

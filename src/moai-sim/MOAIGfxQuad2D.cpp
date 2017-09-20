@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGrid.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxQuad2D.h>
 #include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAIProp.h>
@@ -186,13 +186,13 @@ ZLBox MOAIGfxQuad2D::ComputeMaxBounds () {
 //----------------------------------------------------------------//
 void MOAIGfxQuad2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 	
-	materials.LoadGfxState ( this, idx, MOAIShaderMgr::DECK2D_SHADER );
+	if ( !materials.LoadGfxState ( this, idx, MOAIShaderMgr::DECK2D_SHADER )) return;
 	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIQuadBrush::BindVertexFormat ( gfxMgr.mVertexCache );
 	
-	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
-	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX ));
+	gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_MTX ));
 	
 	this->mQuad.Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY );
 }
@@ -219,8 +219,6 @@ MOAIGfxQuad2D::MOAIGfxQuad2D () {
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIStandardDeck )
 	RTTI_END
-	
-	//this->SetContentMask ( MOAIProp::CAN_DRAW );
 	
 	// set up rects to draw a unit tile centered at the origin
 	this->mQuad.SetVerts ( -0.5f, -0.5f, 0.5f, 0.5f );

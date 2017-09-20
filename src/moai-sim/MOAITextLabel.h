@@ -6,7 +6,7 @@
 
 #include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAIGraphicsProp.h>
-#include <moai-sim/MOAITextDesigner.h>
+#include <moai-sim/MOAITextLayoutRules.h>
 #include <moai-sim/MOAITextLayout.h>
 #include <moai-sim/MOAITextStyle.h>
 #include <moai-sim/MOAITextStyleCache.h>
@@ -135,31 +135,33 @@ protected:
 	static const u32 REVEAL_ALL = 0xffffffff;
 	static const float DEFAULT_SPOOL_SPEED;
 	
-	float				mSpool;
-	float				mSpeed;
-	float				mThrottle;
-	u32					mReveal;
+	float					mSpool;
+	float					mSpeed;
+	float					mThrottle;
+	u32						mReveal;
 	
-	u32					mCurrentPageIdx;
-	u32					mNextPageIdx;
-	bool				mMore;
-	bool				mOverrun;
+	u32						mCurrentPageIdx;
+	u32						mNextPageIdx;
+	bool					mMore;
+	bool					mOverrun;
+
+	MOAITextLayoutRules		mLayoutRules;	// design params for laying out text
+	MOAITextStyleCache		mStyleCache;	// some style are anonymous and created ad hoc
+	MOAITextStyleMap		mStyleMap;		// preprocessed text broken up by style changes
+	MOAITextLayout			mLayout;		// cached glyph layout for currently visible text
 	
-	MOAITextDesigner	mDesigner;
-	MOAITextStyleCache	mStyleCache;
-	MOAITextStyleMap	mStyleMap;
-	MOAITextLayout		mLayout;
+	STLString				mText;
 	
-	STLString			mText;
-	
-	bool				mAutoFlip;
+	bool					mAutoFlip;
 	
 	//----------------------------------------------------------------//
 	static int			_clearHighlights		( lua_State* L );
 	static int			_getAlignment			( lua_State* L );
 	static int			_getGlyphScale			( lua_State* L );
 	static int			_getLineSpacing			( lua_State* L );
+	static int			_getOverrunRules		( lua_State* L );
 	static int			_getRect				( lua_State* L );
+	static int			_getSizingRules			( lua_State* L );
 	static int			_getStyle				( lua_State* L );
 	static int			_getText				( lua_State* L );
 	static int			_getTextBounds			( lua_State* L );
@@ -176,10 +178,12 @@ protected:
 	static int			_setHighlight			( lua_State* L );
 	static int			_setLineSnap			( lua_State* L );
 	static int			_setLineSpacing			( lua_State* L );
+	static int			_setOverrunRules		( lua_State* L );
 	static int			_setRect				( lua_State* L );
 	static int			_setRectLimits			( lua_State* L );
 	static int			_setReveal				( lua_State* L );
 	static int			_setSpeed				( lua_State* L );
+	static int			_setSizingRules			( lua_State* L );
 	static int			_setStyle				( lua_State* L );
 	static int			_setText				( lua_State* L );
 	static int			_setWordBreak			( lua_State* L );

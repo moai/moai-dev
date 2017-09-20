@@ -5,7 +5,7 @@
 #include <contrib/moai_utf8.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIFontReader.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGlyphCache.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIImageTexture.h>
@@ -289,8 +289,13 @@ int MOAIFont::_setDefaultSize ( lua_State* L ) {
 int MOAIFont::_setFilter ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
 	
-	self->mMinFilter = state.GetValue < int >( 2, ZGL_SAMPLE_LINEAR );
-	self->mMagFilter = state.GetValue < int >( 3, self->mMinFilter );
+	int min = state.GetValue < int >( 2, ZGL_SAMPLE_LINEAR );
+	int mag = state.GetValue < int >( 3, min );
+	
+	MOAISingleTexture::CheckFilterModes ( min, mag );
+	
+	self->mMinFilter = min;
+	self->mMagFilter = mag;
 
 	return 0;
 }
@@ -446,8 +451,8 @@ void MOAIFont::BuildKerning ( MOAIGlyph* glyphs, MOAIGlyph* pendingGlyphs ) {
 	for ( MOAIGlyph* glyphIt = glyphs; glyphIt; glyphIt = glyphIt->mNext ) {
 		MOAIGlyph& glyph = *glyphIt;
 		
-		u32 kernTableSize = 0;
-		u32 oldTableSize = glyph.mKernTable.Size ();
+		size_t kernTableSize = 0;
+		size_t oldTableSize = glyph.mKernTable.Size ();
 		
 		this->mReader->SelectGlyph ( glyph.mCode );
 		
@@ -458,7 +463,7 @@ void MOAIFont::BuildKerning ( MOAIGlyph* glyphs, MOAIGlyph* pendingGlyphs ) {
 			// skip if glyph is already in old glyph's kerning table
 			// may happen if glyphs are purged and then re-added
 			bool unknown = true;
-			for ( u32 i = 0; i < oldTableSize; ++i ) {
+			for ( size_t i = 0; i < oldTableSize; ++i ) {
 				if ( glyph.mKernTable [ i ].mName == glyph2.mCode ) {
 					unknown = false;
 					break;
@@ -485,7 +490,7 @@ void MOAIFont::BuildKerning ( MOAIGlyph* glyphs, MOAIGlyph* pendingGlyphs ) {
 	for ( MOAIGlyph* glyphIt = pendingGlyphs; glyphIt; glyphIt = glyphIt->mNext ) {
 		MOAIGlyph& glyph = *glyphIt;
 		
-		u32 kernTableSize = 0;
+		size_t kernTableSize = 0;
 		
 		this->mReader->SelectGlyph ( glyph.mCode );
 		
@@ -559,8 +564,10 @@ MOAISingleTexture* MOAIFont::GetGlyphTexture ( MOAIGlyph& glyph ) {
 //----------------------------------------------------------------//
 void MOAIFont::Init ( cc8* filename ) {
 
-	if ( ZLFileSys::CheckFileExists ( filename )) {
-		this->mFilename = ZLFileSys::GetAbsoluteFilePath ( filename );
+	this->mFilename = ZLFileSys::GetAbsoluteFilePath ( filename );
+
+	if ( !ZLFileSys::CheckFileExists ( filename )) {
+		ZLLog_Warning ( "WARNING: font file %s does not exist\n", filename );
 	}
 }
 
@@ -609,6 +616,9 @@ MOAIFont::~MOAIFont () {
 // update them to match target - i.e. metrics or metrics and bitmap
 void MOAIFont::ProcessGlyphs () {
 
+	// this function gets called frequenty to process any pending glyphs on the fly.
+	// for that reason, it should exit quickly if there are no pending glyphs.
+
 	MOAIFontReader* fontReader = this->mReader;
 	if ( !fontReader ) return;
 
@@ -629,11 +639,15 @@ void MOAIFont::ProcessGlyphs () {
 		// if no pending glyphs, move on to the next deck
 		if ( !pendingGlyphs ) continue;
 		
+		// only open the font here as we know that we have pending glyphs to process
 		if ( !fontIsOpen ) {
 			fontIsOpen = this->mReader->OpenFontFile ( this->mFilename ) == MOAIFontReader::OK;
 		}
 
-		if ( !fontIsOpen ) return;		
+		if ( !fontIsOpen ) {
+			ZLLog_Error ( "ERROR: unable to open font file %s for reading glyphs.\n", this->mFilename.c_str ());
+			return;
+		}
 		
 		// get the face metrics
 		fontReader->SelectFace ( glyphSet.mSize );

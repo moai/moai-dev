@@ -37,7 +37,7 @@ local width = bounds.xMax - bounds.xMin
 local height = bounds.yMax - bounds.yMin
 
 MOAISim.openWindow ( "test", width, height )
-MOAIGfxDevice.setClearColor ( 1, 1, 1, 1 )
+MOAIGfxMgr.setClearColor ( 1, 1, 1, 1 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( width, height )

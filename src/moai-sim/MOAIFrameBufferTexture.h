@@ -20,9 +20,9 @@ class MOAIFrameBufferTexture :
 	public MOAISingleTexture {
 private:
 	
-	u32					mGLColorBufferID;
-	u32					mGLDepthBufferID;
-	u32					mGLStencilBufferID;
+	ZLGfxHandle*		mGLColorBufferID;
+	ZLGfxHandle*		mGLDepthBufferID;
+	ZLGfxHandle*		mGLStencilBufferID;
 	
 	u32					mColorFormat;
 	u32					mDepthFormat;
@@ -33,12 +33,11 @@ private:
 	
 	//----------------------------------------------------------------//
 	bool				OnGPUCreate					();
-	void				OnGPUDestroy				();
-	void				OnGPULost					();
+	void				OnGPUDeleteOrDiscard		( bool shouldDelete );
 
 public:
 	
-	friend class MOAIGfxDevice;
+	friend class MOAIGfxMgr;
 	friend class MOAISingleTexture;
 	
 	DECL_LUA_FACTORY ( MOAIFrameBufferTexture )

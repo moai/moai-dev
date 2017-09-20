@@ -37,9 +37,9 @@ u8 ZLHexAdapter::HexToByte ( u32 c ) {
 }
 
 //----------------------------------------------------------------//
-size_t ZLHexAdapter::ReadBytes ( void* buffer, size_t size ) {
+ZLSizeResult ZLHexAdapter::ReadBytes ( void* buffer, size_t size ) {
 	
-	if ( !this->mProxiedStream ) return 0;
+	if ( !this->mProxiedStream ) ZL_RETURN_SIZE_RESULT ( 0, ZL_ERROR );
 	
 	char hexByte [ 2 ];
 	
@@ -48,7 +48,7 @@ size_t ZLHexAdapter::ReadBytes ( void* buffer, size_t size ) {
 		
 		size_t result = this->mProxiedStream->ReadBytes ( hexByte, 2 );
 		if ( result != 2 ) {
-			return i;
+			ZL_RETURN_SIZE_RESULT ( i, ZL_OK );
 		}
 		
 		u32 hi = ZLHexAdapter::HexToByte ( hexByte [ 0 ]);
@@ -56,13 +56,13 @@ size_t ZLHexAdapter::ReadBytes ( void* buffer, size_t size ) {
 		
 		bytes [ i ] = ( u8 )(( hi << 4 ) + lo );
 	}
-	return size;
+	ZL_RETURN_SIZE_RESULT ( size, ZL_OK );
 }
 
 //----------------------------------------------------------------//
-size_t ZLHexAdapter::WriteBytes ( const void* buffer, size_t size ) {
+ZLSizeResult ZLHexAdapter::WriteBytes ( const void* buffer, size_t size ) {
 	
-	if ( !this->mProxiedStream ) return 0;
+	if ( !this->mProxiedStream ) ZL_RETURN_SIZE_RESULT ( 0, ZL_ERROR );
 	
 	const char* hexTable = "0123456789abcdef";
 	char hexByte [ 2 ];
@@ -77,14 +77,14 @@ size_t ZLHexAdapter::WriteBytes ( const void* buffer, size_t size ) {
 		
 		size_t result = this->mProxiedStream->WriteBytes ( hexByte, 2 );
 		if ( result != 2 ) {
-			return i;
+			ZL_RETURN_SIZE_RESULT ( i, ZL_OK );
 		}
 	}
 	
 	if ( this->mLength < this->mCursor ) {
 		this->mLength = this->mCursor;
 	}
-	return size;
+	ZL_RETURN_SIZE_RESULT ( size, ZL_OK );
 }
 
 //----------------------------------------------------------------//

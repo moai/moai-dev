@@ -66,7 +66,7 @@ int MOAIColor::_moveColor ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr (), false );
+		action->Start ( 0, false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -120,7 +120,7 @@ int MOAIColor::_seekColor ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr (), false );
+		action->Start ( 0, false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -148,11 +148,6 @@ int MOAIColor::_seekColor ( lua_State* L ) {
 */
 int MOAIColor::_setColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIColor, "UNNN" )
-
-	float r = state.GetValue < float >( 2, 0.0f );
-	float g = state.GetValue < float >( 3, 0.0f );
-	float b = state.GetValue < float >( 4, 0.0f );
-	float a = state.GetValue < float >( 5, 1.0f );
 
 	ZLColorVec color = state.GetColor ( 2, 0.0f, 0.0f, 0.0f, 1.0f );
 	if ( !color.Compare ( *self )) {

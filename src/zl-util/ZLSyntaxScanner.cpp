@@ -16,8 +16,8 @@ void ZLSyntaxScanner::ScanSyntax ( ZLSyntaxNode* node ) {
 
 	if ( node->IsNonterminal ()) {
 	
-		u32 nChildren = node->CountChildren ();
-		for ( u32 i = 0; i < nChildren; ++i ) {
+		size_t nChildren = node->CountChildren ();
+		for ( size_t i = 0; i < nChildren; ++i ) {
 			this->ScanSyntax ( node->GetChild ( i ));
 		}
 		this->OnRule ( node->GetID (), *node );

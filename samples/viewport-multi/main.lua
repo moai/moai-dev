@@ -33,7 +33,7 @@ local function makeProp ( x, y, xs, ys, r )
 	return prop
 end
 
-MOAIGfxDevice.getFrameBuffer ():setClearColor () -- no need to clear the surface
+MOAIGfxMgr.getFrameBuffer ():setClearColor () -- no need to clear the surface
 
 local layers = {}
 

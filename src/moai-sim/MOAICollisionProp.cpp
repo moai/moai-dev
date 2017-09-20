@@ -8,7 +8,7 @@
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDebugLines.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAILayoutFrame.h>
 #include <moai-sim/MOAIRenderMgr.h>
@@ -110,7 +110,7 @@ MOAICollisionProp::MOAICollisionProp () :
 	mStayActive ( false ),
 	mTouched ( MOAICollisionWorld::OVERLAP_PASS_INIT ),
 	mCollisionWorld ( 0 ) {
-	
+
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
 	RTTI_END
@@ -138,11 +138,13 @@ void MOAICollisionProp::OnRemoved () {
 
 //----------------------------------------------------------------//
 bool MOAICollisionProp::PrepareForInsertion ( const MOAIPartition& partition ) {
+	UNUSED ( partition );
 	return true;
 }
 
 //----------------------------------------------------------------//
 bool MOAICollisionProp::RefineOverlap ( const MOAICollisionProp& other, MOAIOverlapInfo& info ) const {
+	UNUSED ( other );
 
 	// TODO: actually pay attention to OVERLAP_GRANULARITY_FINE and OVERLAP_CALCULATE_BOUNDS
 	info.mHasBounds = false;

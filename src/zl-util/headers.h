@@ -14,8 +14,8 @@
 #include <zl-util/STLSort.h>
 #include <zl-util/STLString.h>
 
-#include <zl-util/ZLAdapterInfo.h>
 #include <zl-util/ZLAccessors.h>
+#include <zl-util/ZLAdapterInfo.h>
 #include <zl-util/ZLAffine2D.h>
 #include <zl-util/ZLBarycentric.h>
 #include <zl-util/ZLBase64Encoder.h>
@@ -26,7 +26,10 @@
 #include <zl-util/ZLBox.h>
 #include <zl-util/ZLByteStream.h>
 #include <zl-util/ZLCgt.h>
+#include <zl-util/ZLCleanup.h>
 #include <zl-util/ZLColor.h>
+#include <zl-util/ZLCopyOnWrite.h>
+#include <zl-util/ZLCubicBezier2D.h>
 #include <zl-util/ZLCurve.h>
 #include <zl-util/ZLDeflateReader.h>
 #include <zl-util/ZLDeflateWriter.h>
@@ -74,7 +77,12 @@
 #include <zl-util/ZLRadixSort16.h>
 #include <zl-util/ZLRadixSort32.h>
 #include <zl-util/ZLRect.h>
+#include <zl-util/ZLRefCountedObject.h>
+#include <zl-util/ZLResult.h>
 #include <zl-util/ZLRhombus.h>
+#include <zl-util/ZLRingAdapter.h>
+#include <zl-util/ZLSample.h>
+#include <zl-util/ZLSharedHandle.h>
 #include <zl-util/ZLStream.h>
 #include <zl-util/ZLStreamAdapter.h>
 #include <zl-util/ZLSurface2D.h>

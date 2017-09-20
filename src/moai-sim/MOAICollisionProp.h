@@ -100,19 +100,15 @@ public:
 
 	DECL_LUA_FACTORY ( MOAICollisionProp )
 
-	enum {
-		OVERLAP_EVENTS_ON_UPDATE		= 0x01,		// will send overlap update events
-		OVERLAP_EVENTS_CONTINUOUS		= 0x02,		// both props will stay active as long as there's an overlap
-		OVERLAP_EVENTS_LIFECYCLE		= 0x04,		// will create overlap links and receive begin/end events
-		OVERLAP_GRANULARITY_FINE		= 0x08,		// will use higher resolution primitives if available
-		OVERLAP_CALCULATE_BOUNDS		= 0x10,		// will calculate bounds instead of just a point between both props
-	};
-	
-	enum {
-		GROUP_MASK_ALL		= 0xffffffff,
-	};
+	static const u32 OVERLAP_EVENTS_ON_UPDATE		= 0x01;		// will send overlap update events
+	static const u32 OVERLAP_EVENTS_CONTINUOUS		= 0x02;		// both props will stay active as long as there's an overlap
+	static const u32 OVERLAP_EVENTS_LIFECYCLE		= 0x04;		// will create overlap links and receive begin/end events
+	static const u32 OVERLAP_GRANULARITY_FINE		= 0x08;		// will use higher resolution primitives if available
+	static const u32 OVERLAP_CALCULATE_BOUNDS		= 0x10;		// will calculate bounds instead of just a point between both props
 
-	static const u32 DEFAULT_OVERLAP_FLAGS	= 0;
+	static const u32 GROUP_MASK_ALL					= 0xffffffff;
+
+	static const u32 DEFAULT_OVERLAP_FLAGS			= 0;
 
 	//----------------------------------------------------------------//
 							MOAICollisionProp		();

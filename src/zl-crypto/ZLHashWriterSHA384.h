@@ -4,31 +4,17 @@
 #ifndef ZLHASHWRITERSHA384_H
 #define ZLHASHWRITERSHA384_H
 
-#include <zl-util/ZLHashWriter.h>
+#include <zl-crypto/ZLHashWriterMbedTLS.h>
 
 //================================================================//
 // ZLHashWriterSHA384
 //================================================================//
 class ZLHashWriterSHA384 :
-	public ZLHashWriter {
-private:
-	
-	void*			mAlgorithm;
-	u8				mHash [ 48 ];
-
-	//----------------------------------------------------------------//
-	void			FinalizeHash			();
-	void			InitHash				();
+	public ZLHashWriterMbedTLS {
 
 public:
-
-	//----------------------------------------------------------------//
-	size_t			GetBlockSize			();
-	void*			GetHash					();
-	size_t			GetHashSize				();
-	void			HashBytes				( const void* buffer, size_t size );
-					~ZLHashWriterSHA384		();
-					ZLHashWriterSHA384		();
+	size_t			GetBlockSize();
+	ZLHashWriterSHA384();
 };
 
 #endif

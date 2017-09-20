@@ -187,7 +187,7 @@ int MOAICamera::_moveFieldOfView ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr (), false );
+		action->Start ( 0, false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -224,7 +224,7 @@ int MOAICamera::_seekFieldOfView ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr (), false );
+		action->Start ( 0, false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -384,7 +384,6 @@ ZLMatrix4x4 MOAICamera::GetProjMtx ( const MOAIViewport& viewport ) const {
 			
 			ZLRect rect = viewport.GetRect ();
 			
-			ZLVec2D viewScale = viewport.GetScale ();
 			float xScale = ( 2.0f / rect.Width ()) * viewScale.mX;
 			float yScale = ( 2.0f / rect.Height ()) * viewScale.mY;
 			
@@ -467,12 +466,12 @@ void MOAICamera::LookAt ( float x, float y, float z ) {
 	target.Init ( local.mX, 0.0f, local.mZ );
 	target.Norm ();
 	
-	float yRot = zAxis.Radians ( target ) * R2D * ( target.mX > 0.0f ? 1.0f : -1.0f ); // yaw
+	float yRot = ( float )( zAxis.Radians ( target ) * R2D * ( target.mX > 0.0f ? 1.0f : -1.0f )); // yaw
 	
 	target = local;
 	target.Norm ();
 	
-	float xRot = yAxis.Radians ( target ) * R2D; // pitch
+	float xRot = ( float )( yAxis.Radians ( target ) * R2D ); // pitch
 	
 	
 	ZLVec3D rot = this->GetRot ();

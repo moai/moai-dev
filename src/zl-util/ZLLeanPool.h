@@ -57,6 +57,11 @@ public:
 	//----------------------------------------------------------------//
 	void Clear () {
 		
+		size_t top = this->mChunks.GetTop ();
+		for ( size_t i = 0; i < top; ++i ) {
+			free ( this->mChunks [ i ]);
+		}
+		
 		this->mChunks.Clear ();
 		this->mFree.Clear ();
 	}
@@ -65,7 +70,7 @@ public:
 	void Free ( TYPE* type ) {
 		
 		if ( type ) {
-			type->TYPE::~TYPE ();
+			type->~TYPE ();
 			this->mFree.Push ( type );
 		}
 	}

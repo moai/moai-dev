@@ -2,6 +2,9 @@
 // http://getmoai.com
 
 #include "pch.h"
+
+SUPPRESS_EMPTY_FILE_WARNING
+
 #ifdef _WIN32
 
 #include <moai-util/MOAIMutex_win32.h>
@@ -11,33 +14,27 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMutexImpl::Init () {
-}
-
-//----------------------------------------------------------------//
 void MOAIMutexImpl::Lock () {
 
-	WaitForSingleObject ( mMutexHandle, INFINITE );
+	EnterCriticalSection ( &this->mCriticalSection );
 }
 
 //----------------------------------------------------------------//
 MOAIMutexImpl::MOAIMutexImpl () {
 
-	mMutexHandle = CreateMutex ( NULL, FALSE, NULL );
-	assert ( mMutexHandle );
+	InitializeCriticalSection ( &this->mCriticalSection );
 }
 
 //----------------------------------------------------------------//
 MOAIMutexImpl::~MOAIMutexImpl () {
 
-	CloseHandle ( mMutexHandle );
-	mMutexHandle = NULL;
+	DeleteCriticalSection ( &this->mCriticalSection );
 }
 
 //----------------------------------------------------------------//
 void MOAIMutexImpl::Unlock () {
 
-	ReleaseMutex ( mMutexHandle );
+	LeaveCriticalSection ( &this->mCriticalSection );
 }
 
 #endif

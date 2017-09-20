@@ -16,11 +16,11 @@ class MOAIMutexImpl {
 private:
 
 	friend class MOAIMutex;
+	friend class MOAIConditionVariableImpl;
 
-	HANDLE			mMutexHandle;
+	CRITICAL_SECTION	mCriticalSection;
 
 	//----------------------------------------------------------------//
-	void			Init				();
 	void			Lock				();
 					MOAIMutexImpl		();
 					~MOAIMutexImpl		();

@@ -6,7 +6,7 @@
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIDynamicGlyphCache.h>
 #include <moai-sim/MOAIDynamicGlyphCachePage.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGlyph.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIImageTexture.h>
@@ -113,13 +113,13 @@ MOAISingleTexture* MOAIDynamicGlyphCache::GetGlyphTexture ( MOAIGlyph& glyph ) {
 //----------------------------------------------------------------//
 MOAIImage* MOAIDynamicGlyphCache::GetImage () {
 
-	u32 totalPages = this->mPages.Size ();
+	size_t totalPages = this->mPages.Size ();
 	if ( !totalPages ) return 0;
 
 	u32 width = 0;
 	u32 height = 0;
 
-	for ( u32 i = 0; i < totalPages; ++i ) {
+	for ( size_t i = 0; i < totalPages; ++i ) {
 		MOAIImage& srcImage = *this->mPages [ i ]->mImageTexture;
 		
 		width = srcImage.GetWidth ();
@@ -137,7 +137,7 @@ MOAIImage* MOAIDynamicGlyphCache::GetImage () {
 	);
 	
 	u32 y = 0;
-	for ( u32 i = 0; i < totalPages; ++i ) {
+	for ( size_t i = 0; i < totalPages; ++i ) {
 		MOAIImage& srcImage = *this->mPages [ i ]->mImageTexture;
 		
 		u32 copyHeight = srcImage.GetHeight ();
@@ -184,7 +184,7 @@ int MOAIDynamicGlyphCache::PlaceGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 		}
 	}
 	
-	u32 pageID = this->mPages.Size ();
+	u32 pageID = ( u32 )this->mPages.Size (); // TODO: cast
 	this->mPages.Resize ( pageID + 1 );
 	
 	MOAIDynamicGlyphCachePage* page = new MOAIDynamicGlyphCachePage ();

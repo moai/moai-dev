@@ -13,90 +13,87 @@
 			context (if possible).
 */
 class MOAIGfxResource :
-	public virtual MOAILuaObject {
+	public virtual MOAIInstanceEventSource,
+	public virtual ZLGfxListener {
 private:
 
-	friend class MOAIGfxDevice;
-	friend class MOAIGfxDeviceBase;
-	friend class MOAIGfxDeviceStateCache;
-	friend class MOAIGfxResourceMgr;
-
-	enum {
-		STATE_NEW, // we use this state to ensure we call DoCPUAffirm after init
-		STATE_NEEDS_CPU_CREATE,
-		STATE_NEEDS_GPU_CREATE,
-		STATE_READY_TO_BIND,
-		STATE_ERROR,
-	};
+	friend class MOAIGfxMgr;
+	friend class MOAIGfxPipelineClerk;
+	friend class MOAIGfxStateCache;
+	friend class MOAIGfxResourceClerk;
 
 	u32					mState;
 	u32					mLastRenderCount;
-	u32					mLoadingPolicy;
 
-	ZLLeanLink < MOAIGfxResource* > mLink;
+	ZLLeanLink < MOAIGfxResource* > mMasterLink;
+	ZLLeanLink < MOAIGfxResource* > mPendingLink;
 
 	// for custom loading function
 	MOAILuaMemberRef	mReloader;
 
 	//----------------------------------------------------------------//
 	static int		_getAge						( lua_State* L );
+	static int		_getResourceState			( lua_State* L );
+	static int		_preload					( lua_State* L );
 	static int		_purge						( lua_State* L );
-	static int		_setLoadingPolicy			( lua_State* L );
+	static int		_scheduleForGPUCreate		( lua_State* L );
 	static int		_setReloader				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool			Bind						(); // bind for drawing; go to STATE_READY
-	bool			DoGPUAffirm					(); // gets ready to bind
-	void			InvokeLoader				();
+	void			Affirm						();
+	u32				Bind						(); // bind OR create
+	bool			DoGPUCreate					(); // gets ready to bind
+	bool			DoGPUUpdate					();
+	bool			InvokeLoader				();
 	void			Renew						(); // lose (but not *delete*) the GPU resource
 	void			Unbind						();
 
 protected:
 
+	enum {
+		GFX_EVENT_CREATED,
+		GFX_EVENT_TOTAL,
+	};
+
 	//----------------------------------------------------------------//
 	void			FinishInit					(); // ready to CPU/GPU affirm; recover from STATE_NEW or STATE_ERROR
 	bool			HasReloader					();
-	
+	virtual void	OnClearDirty				();
 	virtual bool	OnCPUCreate					() = 0; // load or initialize any CPU-side resources required to create the GPU-side resource
 	virtual void	OnCPUDestroy				() = 0; // clear any CPU-side memory used by class
+	void			OnGfxEvent					( u32 event, void* userdata );
 	virtual void	OnGPUBind					() = 0; // select GPU-side resource on device for use
 	virtual bool	OnGPUCreate					() = 0; // create GPU-side resource
-	virtual void	OnGPUDestroy				() = 0; // schedule GPU-side resource for destruction
-	virtual void	OnGPULost					() = 0; // clear any handles or references to GPU-side (called by 'Abandon')
+	virtual void	OnGPUDeleteOrDiscard		( bool shouldDelete ) = 0; // delete or discard GPU resource handles
 	virtual void	OnGPUUnbind					() = 0; // unbind GPU-side resource
+	virtual bool	OnGPUUpdate					() = 0;
 
 public:
 
-	GET ( u32, State, mState )
-	IS ( Ready, mState, STATE_READY_TO_BIND )
-	
-	SET ( u32, LoadingPolicy, mLoadingPolicy )
-	
 	enum {
-		LOADING_POLICY_NONE,				// don't care and/or use global policy
-		LOADING_POLICY_CPU_GPU_ASAP,		// load everything asap
-		LOADING_POLICY_CPU_ASAP_GPU_NEXT,	// load the cpu part asap; load the gpu part next render
-		LOADING_POLICY_CPU_ASAP_GPU_BIND,	// load the cpu part asap, load the gpu part on bind (during render)
-		LOADING_POLICY_CPU_GPU_BIND,		// load the cpu and gpu part on bind (during render)
+		STATE_UNINITIALIZED,			// we use this state to ensure we call DoCPUAffirm after init
+		STATE_READY_FOR_CPU_CREATE,
+		STATE_READY_FOR_GPU_CREATE,
+		STATE_PENDING,					// waiting for GPU
+		STATE_READY_TO_BIND,
+		STATE_NEEDS_GPU_UPDATE,
+		STATE_ERROR,
 	};
 
-	static const u32 DEFAULT_LOADING_POLICY = LOADING_POLICY_CPU_ASAP_GPU_NEXT;
-
-	// if the build defines MOAI_USE_GFX_THREAD, then gpu loading can *only* happen during render. this only effects
-	// LOADING_POLICY_CPU_GPU_ASAP, in which case the gpu portion must be added to a queue and loaded the next time
-	// we render.
+	GET ( u32, State, mState )
+	IS ( Pending, mState, STATE_PENDING )
+	IS ( Ready, mState, STATE_READY_TO_BIND )
 
 	//----------------------------------------------------------------//
-	bool			DoCPUAffirm					(); // preload CPU portion
 	void			Destroy						(); // delete CPU and GPU data; go back to STATE_NEW
-	void			ForceCPUCreate				();
-	virtual u32		GetLoadingPolicy			();
+	bool			DoCPUCreate					(); // preload CPU portion
 					MOAIGfxResource				();
 	virtual			~MOAIGfxResource			();
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
+	bool			ScheduleForGPUCreate		( u32 pipelineID );
+	bool			ScheduleForGPUUpdate		();
 	bool			Purge						( u32 age );
-	bool			PrepareForBind				();
 };
 
 #endif

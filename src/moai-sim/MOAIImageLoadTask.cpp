@@ -2,8 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIImageLoadTask.h>
 #include <moai-sim/MOAIImage.h>
+#include <moai-sim/MOAIImageLoadTask.h>
 
 //================================================================//
 // MOAIImageLoadTask
@@ -35,21 +35,28 @@ void MOAIImageLoadTask::Execute () {
 //----------------------------------------------------------------//
 void MOAIImageLoadTask::Init ( cc8* filename, MOAIImage& target, u32 transform ) {
 
+	this->mTarget = &target;
+
 	this->mFilename = filename;
 	this->mTransform = transform;
-	this->mTarget.Set ( *this, &target );
+	this->mTarget->LuaRetain ();
 }
 
 //----------------------------------------------------------------//
 void MOAIImageLoadTask::Init ( MOAIDataBuffer& data, MOAIImage& target, u32 transform ) {
 
+	this->mDataBuffer = &data;
+	this->mTarget = &target;
+
 	this->mTransform = transform;
-	this->mDataBuffer.Set ( *this, &data);
-	this->mTarget.Set ( *this, &target );
+	this->mDataBuffer->LuaRetain ();
+	this->mTarget->LuaRetain ();
 }
 
 //----------------------------------------------------------------//
-MOAIImageLoadTask::MOAIImageLoadTask () {
+MOAIImageLoadTask::MOAIImageLoadTask () :
+	mDataBuffer ( 0 ),
+	mTarget ( 0 ) {
 	
 	RTTI_SINGLE ( MOAITask )
 }
@@ -57,8 +64,13 @@ MOAIImageLoadTask::MOAIImageLoadTask () {
 //----------------------------------------------------------------//
 MOAIImageLoadTask::~MOAIImageLoadTask () {
 
-	this->mDataBuffer.Set ( *this, 0 );
-	this->mTarget.Set ( *this, 0 );
+	if ( this->mDataBuffer ) {
+		this->mDataBuffer->LuaRelease ();
+	}
+	
+	if ( this->mTarget ) {
+		this->mTarget->LuaRelease ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -90,6 +102,6 @@ void MOAIImageLoadTask::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIImageLoadTask::SetCallback ( lua_State* L, int idx ) {
 
 	MOAILuaState state ( L );
-	this->mOnFinish.SetRef ( *this, state, idx );
+	this->mOnFinish.SetRef ( state, idx );
 }
 

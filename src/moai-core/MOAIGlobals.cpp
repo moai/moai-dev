@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <moai-core/MOAILuaRuntime.h>
 #include <moai-core/MOAIGlobals.h>
 
 //================================================================//
@@ -11,6 +12,10 @@
 
 //----------------------------------------------------------------//
 void MOAIGlobalClassBase::OnGlobalsFinalize () {
+}
+
+//----------------------------------------------------------------//
+void MOAIGlobalClassBase::OnGlobalsInitialize () {
 }
 
 //----------------------------------------------------------------//
@@ -35,6 +40,12 @@ MOAIGlobals::~MOAIGlobals () {
 	ZLLog_DebugF ( ZLLog::CONSOLE, "MOAIGlobals::~MOAIGlobals %p\n", this );
 
 	size_t total = this->mGlobals.Size ();
+	
+	MOAILuaRuntime::Get ().Close (); // call this ahead of everything to purge all the Lua bindings
+	
+	// Lua runtime gets special treatment
+	u32 luaRuntimeID = MOAIGlobalID < MOAILuaRuntime >::GetID ();
+	this->mGlobals [ luaRuntimeID ].mIsValid = false;
 	
 	// finalize everything
 	for ( size_t i = 1; i <= total; ++i ) {

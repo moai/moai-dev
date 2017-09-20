@@ -12,7 +12,7 @@
 // returns an approx. len no smaller than actual decoded size
 size_t ZLBase64Reader::EstimateDecodedLength ( size_t encodedLength ) {
 
-	return 3 * ( size_t )ceilf (( double )encodedLength / 4.0 ); // should not need ceil
+	return 3 * ( size_t )ceil (( double )encodedLength / 4.0 ); // should not need ceil
 }
 
 //----------------------------------------------------------------//
@@ -29,7 +29,7 @@ void ZLBase64Reader::OnClose () {
 }
 
 //----------------------------------------------------------------//
-size_t ZLBase64Reader::ReadBytes ( void* buffer, size_t size ) {
+ZLSizeResult ZLBase64Reader::ReadBytes ( void* buffer, size_t size ) {
 
 	size_t remainder = size;
 	while ( remainder ) {
@@ -61,14 +61,14 @@ size_t ZLBase64Reader::ReadBytes ( void* buffer, size_t size ) {
 		}
 	}
 	
-	return size - remainder;
+	ZL_RETURN_SIZE_RESULT ( size - remainder, ZL_OK );
 }
 
 //----------------------------------------------------------------//
-int ZLBase64Reader::SetCursor ( long offset ) {
+ZLResultCode ZLBase64Reader::SetCursor ( size_t offset ) {
 
-	this->mCursor = offset;
-	return 0;
+	this->mCursor = offset; // TODO: check bounds and report error
+	return ZL_OK;
 }
 
 //----------------------------------------------------------------//
@@ -81,7 +81,7 @@ void ZLBase64Reader::SyncBlock () {
 		this->mBlockID = blockID;
 		
 		size_t cryptBlockAddr = ( blockID * ZLBase64Encoder::CRYPT_BLOCK_SIZE ) + this->mBase;
-		this->mProxiedStream->Seek ( cryptBlockAddr, SEEK_SET );
+		this->mProxiedStream->Seek (( long )cryptBlockAddr, SEEK_SET );
 		
 		u8 cryptBlock [ ZLBase64Encoder::CRYPT_BLOCK_SIZE ];
 		this->mEncoder.FormatCryptBlock ( cryptBlock );

@@ -50,7 +50,7 @@ int MOAIAppIOS::_canOpenURL ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getAvailableStorage
+/**	@lua	getAvailableStorage
 	@text	Get the available storage size in mb on the system
  
 	@out	long size
@@ -217,7 +217,7 @@ int MOAIAppIOS::_getResourcePathInBundle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getSystemUptime
+/**	@lua	getSystemUptime
 	@text	Get the current uptime in seconds. This value does not change when system clock is modified by user
 	
 	@in		nil

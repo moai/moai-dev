@@ -4,8 +4,9 @@
 #include "pch.h"
 #include <moai-sim/MOAIGeometryWriter.h>
 #include <moai-sim/MOAIGfxBuffer.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGrid.h>
+#include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIVectorCombo.h>
@@ -196,6 +197,20 @@ int MOAIVectorTesselator::_pushRect ( lua_State* L ) {
 	
 	ZLRect rect = state.GetRect < float >( 2 );
 	self->PushRect ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIVectorTesselator::_pushRegion ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
+	
+	MOAIRegion* region = state.GetLuaObject < MOAIRegion >( 2, true );
+	
+	if ( region ) {
+		self->PushCombo ();
+		self->PushRegion ( *region );
+		self->Finish ();
+	}
 	return 0;
 }
 
@@ -529,7 +544,7 @@ int MOAIVectorTesselator::_tesselate ( lua_State* L ) {
 		u32 idxSizeInBytes = state.GetValue < u32 >( 4, 4 );
 		MOAIVertexFormat* format = state.GetLuaObject < MOAIVertexFormat >( 5, false );
 		
-		base = idxBuffer->GetCursor () / idxSizeInBytes;
+		base = ( u32 )( idxBuffer->GetCursor () / idxSizeInBytes ); // TODO: cast
 		totalElements = self->Tesselate ( *vtxBuffer, *idxBuffer, *format, idxSizeInBytes );
 	}
 	else {
@@ -539,7 +554,7 @@ int MOAIVectorTesselator::_tesselate ( lua_State* L ) {
 		MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 4, false );
 		
 		if ( vtxStream && idxStream && format ) {
-			base = idxStream->GetCursor () / 4;
+			base = ( u32 )( idxStream->GetCursor () / 4 ); // TODO: cast
 			totalElements = self->Tesselate ( *vtxStream, *idxStream, *format );
 		}
 	}
@@ -629,14 +644,15 @@ void MOAIVectorTesselator::ClearTransforms () {
 //----------------------------------------------------------------//
 u32 MOAIVectorTesselator::CountVertices ( const MOAIVertexFormat& format, ZLStream& vtxStream ) {
 
-	return ( vtxStream.GetLength () / format.GetVertexSize ());
+	return ( u32 )( vtxStream.GetLength () / format.GetVertexSize ()); // TODO: cast
 }
 
 //----------------------------------------------------------------//
 int MOAIVectorTesselator::Finish () {
 
-	u32 vertsTop = this->mVertexStack.GetTop ();
-	u32 shapesTop = this->mShapeStack.GetTop ();
+	// TODO: check overflow
+	u32 vertsTop = ( u32 )this->mVertexStack.GetTop ();
+	u32 shapesTop = ( u32 )this->mShapeStack.GetTop ();
 	
 	int error = 0;
 	
@@ -736,7 +752,7 @@ void MOAIVectorTesselator::PushEllipse ( float x, float y, float xRad, float yRa
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::PushPoly ( ZLVec2D* vertices, u32 total, bool closed ) {
+void MOAIVectorTesselator::PushPoly ( const ZLVec2D* vertices, u32 total, bool closed ) {
 
 	this->mPolyClosed = closed;
 
@@ -751,6 +767,17 @@ void MOAIVectorTesselator::PushRect ( float xMin, float yMin, float xMax, float 
 	MOAIVectorRect* vectorRect = new MOAIVectorRect ();
 	this->PushShape ( vectorRect );
 	vectorRect->Init ( xMin, yMin, xMax, yMax );
+}
+
+//----------------------------------------------------------------//
+void MOAIVectorTesselator::PushRegion ( const MOAIRegion& region ) {
+
+	size_t size = region.GetSize ();
+	for ( size_t i = 0; i < size; ++i ) {
+	
+		const ZLPolygon2D& polygon = region.GetPolygon (( u32 )i );
+		this->PushPoly ( polygon.GetVertices(), ( u32 )polygon.GetSize (), true ); // TODO: cast
+	}
 }
 
 //----------------------------------------------------------------//
@@ -791,7 +818,7 @@ u32 MOAIVectorTesselator::PushShape ( MOAIVectorShape* shape ) {
 
 	shape->mStyle = this->mStyle;
 
-	u32 tag = this->mDirectory.GetTop ();
+	u32 tag = ( u32 )this->mDirectory.GetTop (); // TODO: cast
 
 	this->mDirectory.Push ( shape );
 	this->mShapeStack.Push ( shape );
@@ -892,6 +919,7 @@ void MOAIVectorTesselator::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "pushEllipse",			_pushEllipse },
 		{ "pushPoly",				_pushPoly },
 		{ "pushRect",				_pushRect },
+		{ "pushRegion",				_pushRegion },
 		{ "pushRotate",				_pushRotate },
 		{ "pushScale",				_pushScale },
 		{ "pushSkew",				_pushSkew },
@@ -966,7 +994,7 @@ int MOAIVectorTesselator::Tesselate ( SafeTesselator& tess ) {
 		error = shape->Tesselate ( *this, tess );
 		if ( error ) return error;
 	}
-	return this->mShapeStack.GetTop ();
+	return ( int )this->mShapeStack.GetTop (); // TODO: fix cast
 }
 
 //----------------------------------------------------------------//
@@ -983,7 +1011,7 @@ int MOAIVectorTesselator::Tesselate ( MOAIRegion& region ) {
 		region.Transform ( region, this->mStyle.mDrawingToWorld );
 		region.Bless ();
 		
-		return region.GetSize ();
+		return ( int )region.GetSize (); // TODO: cast
 	}
 	return 0;
 }
@@ -994,7 +1022,7 @@ int MOAIVectorTesselator::Tesselate ( ZLStream& vtxStream, ZLStream& idxStream, 
 	int error = this->Finish ();
 	if ( error ) return -1;
 
-	int base = idxStream.GetLength ();
+	int base = ( int )idxStream.GetLength (); // TODO: cast
 
 	this->mDepthOffset = 0.0f;
 
@@ -1005,7 +1033,7 @@ int MOAIVectorTesselator::Tesselate ( ZLStream& vtxStream, ZLStream& idxStream, 
 	}
 	
 	// idx stream is 32-bits, so divide by 4 to get total indices
-	return ( idxStream.GetLength () - base ) >> 2;
+	return ( int )(( idxStream.GetLength () - base ) >> 2 ); // TODO: cast
 }
 
 //----------------------------------------------------------------//
@@ -1221,12 +1249,12 @@ void MOAIVectorTesselator::WriteVertex ( ZLStream& stream, MOAIVertexFormat& for
 	size_t vertexSize = format.GetVertexSize ();
 	if ( this->mVtxExtraSize && ( this->mVtxExtraSize < vertexSize )) {
 	
-		stream.Seek ( base + ( vertexSize - this->mVtxExtraSize ), SEEK_SET );
+		stream.SetCursor ( base + ( vertexSize - this->mVtxExtraSize ));
 		
 		vertexExtraID = vertexExtraID % this->mVtxExtras.Size ();
 		stream.WriteBytes ( this->mVtxExtras [ vertexExtraID ], this->mVtxExtraSize );
 		
-		stream.Seek ( base, SEEK_SET );
+		stream.SetCursor ( base );
 	}
 	
 	format.WriteCoord ( stream, x, y, z, 1.0f );

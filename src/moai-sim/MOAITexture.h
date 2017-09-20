@@ -57,7 +57,7 @@ public:
 	void					Init					( cc8* filename, u32 transform, cc8* debugname = 0 );
 	void					Init					( ZLStream& stream, u32 transform, cc8* debugname );
 	void					Init					( MOAIDataBuffer& data, u32 transform, cc8* debugname );
-	void					Init					( const void* data, u32 size, u32 transform, cc8* debugname );
+	void					Init					( const void* data, size_t size, u32 transform, cc8* debugname );
 							MOAITexture				();
 							~MOAITexture			();
 	void					RegisterLuaClass		( MOAILuaState& state );

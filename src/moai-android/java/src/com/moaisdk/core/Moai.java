@@ -144,6 +144,7 @@ public class Moai {
 		"com.moaisdk.amazonbilling.MoaiAmazonBilling",
 		"com.moaisdk.chartboost.MoaiChartBoost",
 		"com.moaisdk.crittercism.MoaiCrittercism",
+		"com.moaisdk.deltadna.MoaiDeltaDNA",
 		"com.moaisdk.facebook.MoaiFacebook",
         "com.moaisdk.fortumo.MoaiFortumo",
 		"com.moaisdk.flurry.MoaiFlurry",

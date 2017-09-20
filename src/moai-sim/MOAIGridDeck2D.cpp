@@ -139,7 +139,7 @@ ZLBox MOAIGridDeck2D::ComputeMaxBounds () {
 
 	ZLBox bounds;
 
-	u32 size = this->mBrushes.Size ();
+	u32 size = ( u32 )this->mBrushes.Size ();
 	if ( size == 0 ) {
 		bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 	}
@@ -155,7 +155,7 @@ ZLBox MOAIGridDeck2D::ComputeMaxBounds () {
 //----------------------------------------------------------------//
 void MOAIGridDeck2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 	
-	u32 size = this->mBrushes.Size ();
+	u32 size = ( u32 )this->mBrushes.Size ();
 	if ( !size ) return;
 	
 	if ( !this->mGrid ) return;
@@ -199,7 +199,7 @@ ZLBox MOAIGridDeck2D::GetItemBounds ( u32 idx ) {
 	
 	ZLBox bounds;
 	
-	u32 size = this->mBrushes.Size ();
+	u32 size = ( u32 )this->mBrushes.Size ();
 	if ( this->mGrid && size ) {
 		
 		// TODO: handle oversized decks (don't assume unit sized deck items)
@@ -224,7 +224,6 @@ MOAIGridDeck2D::MOAIGridDeck2D () {
 		RTTI_EXTEND ( MOAIStandardDeck )
 	RTTI_END
 	
-	//this->SetContentMask ( MOAIProp::CAN_DRAW );
 	this->mMaxBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 }
 

@@ -5,11 +5,15 @@
 #define ZL_H
 
 #include <zl-vfs/pch.h>
+
 #include <zl-vfs/zl_mutex.h>
+#include <zl-vfs/zl_util.h>
 
 #ifdef  __cplusplus
 	extern "C" {
 #endif
+
+typedef void ( *zl_out_of_memory_func )();
 
 //================================================================//
 // zl_stat
@@ -30,9 +34,9 @@ typedef struct zl_stat {
 // zlcore
 //================================================================//
 
-typedef void ZLDIR;
-typedef void ZLFILE;
-typedef void ZL_TLSF_POOL;
+typedef int ZLDIR;
+typedef int ZLFILE;
+typedef int ZL_TLSF_POOL;
 
 extern ZLFILE* zl_stderr;
 extern ZLFILE* zl_stdin;
@@ -63,6 +67,7 @@ extern void*				zl_calloc					( size_t num, size_t size );
 extern void					zl_free						( void* ptr );
 extern void*				zl_malloc					( size_t size );
 extern void*				zl_realloc					( void* ptr, size_t size );
+extern void					zl_set_out_of_memory_func	( zl_out_of_memory_func handler );
 extern ZL_TLSF_POOL*		zl_tlsf_create_pool			( size_t bytes );
 extern void					zl_tlsf_destroy_pool		( ZL_TLSF_POOL* opaque );
 extern ZL_TLSF_POOL*		zl_tlsf_get_pool			( void );
@@ -79,6 +84,8 @@ extern int					zl_feof					( ZLFILE* fp );
 extern int					zl_ferror				( ZLFILE* fp );
 extern int					zl_fflush				( ZLFILE* fp );
 extern int					zl_fgetc				( ZLFILE* fp );
+extern wchar_t				zl_fgetwc				( ZLFILE* fp );
+
 extern void*				zl_fgethandle			( ZLFILE* fp ); // return the native OS file handle
 extern int					zl_fgetpos				( ZLFILE* fp, fpos_t* position );
 extern char* 				zl_fgets				( char* string, int length, ZLFILE* fp );
@@ -87,6 +94,7 @@ extern void					zl_flockfile			( ZLFILE* fp );
 extern ZLFILE* 				zl_fopen 				( const char* filename, const char* mode );
 extern int					zl_fprintf				( ZLFILE* fp, const char * format, ... );
 extern int 					zl_fputc				( int c, ZLFILE* fp );
+extern int					zl_fputwc               ( wchar_t c,ZLFILE* fp);
 extern int					zl_fputs				( const char* string, ZLFILE* fp );
 extern size_t				zl_fread				( void* buffer, size_t size, size_t count, ZLFILE* fp );
 extern ZLFILE*				zl_freopen				( const char* filename, const char* mode, ZLFILE* fp );
@@ -104,7 +112,7 @@ extern ZLFILE*				zl_popen				( const char *command, const char *mode );
 extern int					zl_printf				( const char* format, ... );
 extern int					zl_putc					( int character, ZLFILE* fp );
 extern int					zl_puts					( const char* string );
-extern int					zl_remove				( const char* path );
+extern int 					zl_remove				( const char* path );
 extern int					zl_rename				( const char* oldname, const char* newname );
 extern void					zl_rewind				( ZLFILE* fp );
 extern void					zl_setbuf				( ZLFILE* fp, char* buffer );
@@ -112,6 +120,7 @@ extern int					zl_setvbuf				( ZLFILE* fp, char* buffer, int mode, size_t size )
 extern ZLFILE*				zl_tmpfile				( void );
 extern char*				zl_tmpnam				( char* str );
 extern int					zl_ungetc				( int character, ZLFILE* fp );
+extern wchar_t				zl_ungetwc             ( wchar_t character, ZLFILE* fp);
 extern int					zl_vfprintf				( ZLFILE* fp, const char* format, va_list arg );
 extern int					zl_vfscanf				( ZLFILE* fp, const char* format, va_list arg );
 extern int					zl_vprintf				( const char* format, va_list arg );

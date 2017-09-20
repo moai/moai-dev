@@ -170,6 +170,28 @@ public:
 	template < typename TYPE > void						SetFieldByIndex		( int idx, int key, TYPE value );
 	template < typename TYPE > void						SetGlobal			( cc8* key, TYPE value );
 	template < typename TYPE > void						WriteArray			( int size, TYPE* values );
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	TYPE GetFieldValue ( int idx, cc8* key, TYPE value ) {
+	
+		this->GetField ( idx, key );
+		TYPE result = this->GetValue < TYPE >( -1, value );
+		this->Pop ();
+		
+		return result;
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	TYPE GetFieldValue ( int idx, int key, TYPE value ) {
+	
+		this->GetField ( idx, key );
+		TYPE result = this->GetValue < TYPE >( -1, value );
+		this->Pop ();
+		
+		return result;
+	}
 };
 
 //----------------------------------------------------------------//

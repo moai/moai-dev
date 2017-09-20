@@ -97,7 +97,7 @@ void MOAIFont::InitWithBMFont ( cc8* filename, const u32 numPreloadedTextures, M
 	STLString absFilePath = ZLFileSys::GetAbsoluteFilePath ( filename );
 	STLString absDirPath = ZLFileSys::TruncateFilename ( absFilePath );
 
-	u32 len = stream.GetLength ();
+	size_t len = stream.GetLength ();
 	char* buf = ( char* )malloc ( len + 1 );
 	stream.ReadBytes ( buf, len );
 	buf [ len ] = '\0';
@@ -259,7 +259,7 @@ void MOAIFont::InitWithBMFont ( cc8* filename, const u32 numPreloadedTextures, M
 				assert ( glyphSet );
 				MOAIGlyph& glyph = glyphSet->EditGlyph ( first );
 				
-				u32 i = glyph.mKernTable.Size();
+				size_t i = glyph.mKernTable.Size ();
 				glyph.mKernTable.Grow ( i + 1 );
 				glyph.mKernTable [ i ].mName = second;
 				glyph.mKernTable [ i ].mX = amount;

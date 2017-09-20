@@ -11,7 +11,14 @@ LOCAL_ARM_MODE 		:= $(MY_ARM_MODE)
 LOCAL_CFLAGS		:= $(MY_LOCAL_CFLAGS) -include $(MOAI_SDK_HOME)/src/zl-vfs/zl_replace.h -fvisibility=hidden
 
 LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
-LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/luacrypto-0.3.2/src/lcrypto.c
+LOCAL_C_INCLUDES 	+= $(MOAI_SDK_HOME)/3rdparty/luacurl-1.2.1
+LOCAL_C_INCLUDES	+= $(MOAI_SDK_HOME)/3rdparty/luafilesystem-1.5.0/src'
+LOCAL_C_INCLUDES	+= $(MOAI_SDK_HOME)/3rdparty/luasocket-2.0.2/src'
+LOCAL_C_INCLUDES	+= $(MOAI_SDK_HOME)/3rdparty/luasocket-2.0.2-embed/src'
+LOCAL_C_INCLUDES	+= $(MOAI_SDK_HOME)/3rdparty/luasql-2.2.0/src'
+
+
+
 LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/luacurl-1.2.1/luacurl.c
 LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/luafilesystem-1.5.0/src/lfs.c
 LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/luasocket-2.0.2/src/auxiliar.c

@@ -5,22 +5,68 @@
 #include <moai-sim/MOAIFontReader.h>
 
 //================================================================//
-// MOAIFontFaceMetrics
-//================================================================//
-MOAIFontFaceMetrics::MOAIFontFaceMetrics () :
-	mHeight ( 0.0f ),
-	mAscent ( 0.0f ) {
-};
-
-//================================================================//
 // MOAIGlyphMetrics
 //================================================================//
+
+//----------------------------------------------------------------//
+/**
+ * Get the rect of the glyph which includes the bearing + the size of the bounding box of the glyph.
+ * 
+ * @param x The x pen position when drawing this glyph
+ * @param y The y pen position when drawing this glyph
+ * @param scale The scale at which the glyph would be drawn
+ */
+ZLRect MOAIGlyphMetrics::GetGlyphRect ( float x, float y, float xScale, float yScale ) const {
+
+	ZLRect rect;
+
+	x += ( this->mBearingX * xScale );
+	y -= ( this->mBearingY * yScale );
+
+	rect.Init (
+		x,
+		y,
+		x + ( this->mWidth * xScale ),
+		y + ( this->mHeight * yScale )
+	);
+
+	return rect;
+}
+
+//----------------------------------------------------------------//
+ZLRect MOAIGlyphMetrics::GetLogicalRect ( float x, float y, float ascent, float descent, float xScale, float yScale ) const {
+
+	ZLRect rect;
+
+	x += ( this->mBearingX * xScale );
+
+	rect.Init (
+		x,
+		y - ( ascent * yScale ),
+		x + ( this->mWidth * xScale ),
+		y + ( descent * yScale )
+	);
+
+	return rect;
+}
+
+//----------------------------------------------------------------//
 MOAIGlyphMetrics::MOAIGlyphMetrics () :
 	mAdvanceX ( 0.0f ),
 	mBearingX ( 0.0f ),
 	mBearingY ( 0.0f ),
 	mWidth ( 0.0f ),
 	mHeight ( 0.0f ) {
+};
+
+//================================================================//
+// MOAIFontFaceMetrics
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAIFontFaceMetrics::MOAIFontFaceMetrics () :
+	mHeight ( 0.0f ),
+	mAscent ( 0.0f ) {
 };
 
 //================================================================//

@@ -36,6 +36,7 @@ protected:
 	static int		_openDeflateReader		( lua_State* L );
 	static int		_openDeflateWriter		( lua_State* L );
 	static int		_openHex				( lua_State* L );
+	static int		_openRing				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	int				Open					( MOAILuaState& state, int idx, ZLStreamAdapter* adapter );
@@ -49,7 +50,7 @@ public:
 	void			Close					(); // clears the stream and closes the adapter, but *doesn't* also clear the adapter
 					MOAIStreamAdapter		();
 					~MOAIStreamAdapter		();
-	bool			Open					( ZLStreamAdapter* adapter, MOAIStream* stream );
+	ZLResultCode	Open					( ZLStreamAdapter* adapter, MOAIStream* stream );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };

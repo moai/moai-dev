@@ -1,0 +1,2 @@
+pito help <command>
+	Print help doc for command.

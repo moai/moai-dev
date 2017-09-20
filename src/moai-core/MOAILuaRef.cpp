@@ -217,7 +217,7 @@ bool MOAILuaMemberRef::PushRef ( MOAILuaState& state ) {
 				lua_rawgeti ( state, -1, this->mRefID );
 				lua_replace ( state, -2 );
 			}
-			isNil = lua_isnil ( state, -1 );
+			isNil = state.IsNilOrNone ( -1 );
 		}
 
 		if ( isNil ) {
@@ -236,7 +236,7 @@ void MOAILuaMemberRef::SetRef ( MOAILuaObject& owner, MOAILuaState& state, int i
 
 	this->Clear ();
 
-	if ( lua_isnil ( state, idx ) == false ) {
+	if ( state.IsNilOrNone ( idx ) == false ) {
 
 		idx = state.AbsIndex ( idx );
 

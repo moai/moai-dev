@@ -21,6 +21,10 @@
 		#define AKU_WITH_FMOD_EX 0
 	#endif
 
+	#ifndef AKU_WITH_HARFBUZZ
+		#define AKU_WITH_HARFBUZZ 0
+	#endif
+
 	#ifndef AKU_WITH_HARNESS
 		#define AKU_WITH_HARNESS 0
 	#endif
@@ -31,6 +35,10 @@
 
 	#ifndef AKU_WITH_HTTP_SERVER
 		#define AKU_WITH_HTTP_SERVER 0
+	#endif
+
+	#ifndef AKU_WITH_IFA // technically not a module; just configuration
+		#define AKU_WITH_IFA 1
 	#endif
 
 	#ifndef AKU_WITH_IMAGE_JPG

@@ -27,13 +27,14 @@ protected:
 	//----------------------------------------------------------------//
 	void				Alloc						( MOAIImage& image ) const;
 	void				CleanupTexture				( MOAISingleTexture& texture );
-	void*				GetBitmap					( MOAIImage& image ) const;
-	void*				GetRowAddr					( MOAIImage& image, u32 y ) const;
+	const void*			GetBitmap					( MOAIImage& image ) const;
+	void*				GetBitmapMutable			( MOAIImage& image ) const;
 	const void*			GetRowAddr					( const MOAIImage& image, u32 y ) const;
+	void*				GetRowAddrMutable			( MOAIImage& image, u32 y ) const;
 	void				SetColorFormat				( MOAIImage& image, ZLColor::ColorFormat colorFormat ) const;
 	bool				SetDimensions				( MOAIImage& image, u32 width, u32 height, u32 transform ) const;
 	void				SetPixelFormat				( MOAIImage& image, MOAIImage::PixelFormat pixelFormat ) const;
-	void				SetTextureID				( MOAISingleTexture& texture, u32 glTexID, int internalFormat, int pixelType, size_t textureSize );
+	void				SetTextureID				( MOAISingleTexture& texture, ZLGfxHandle* glTexID, int internalFormat, int pixelType, size_t textureSize );
 
 public:
 

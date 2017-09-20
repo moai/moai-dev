@@ -1,8 +1,6 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include "pch.h"
-
 #include <moai-image-pvr/MOAIImageFormatPvr.h>
 
 #include <PVRTTexture.h>
@@ -65,7 +63,7 @@ public:
 	//----------------------------------------------------------------//
 	static const void*			GetFileData					( const void* data, size_t size );
 	static MOAIPvrHeader*		GetHeader					( const void* data, size_t size );
-	MOAIPvrMipLevelInfo			GetMipLevelInfo				( int mipLevel );
+	MOAIPvrMipLevelInfo			GetMipLevelInfo				( u32 mipLevel );
 	size_t						GetPixelSizeDecompressed	();
 	size_t						GetTotalSize				();
 	bool						HasAlpha					();
@@ -100,14 +98,14 @@ MOAIPvrHeader* MOAIPvrHeader::GetHeader ( const void* data, size_t size ) {
 }
 
 //----------------------------------------------------------------//
-MOAIPvrMipLevelInfo MOAIPvrHeader::GetMipLevelInfo ( int mipLevel ) {
+MOAIPvrMipLevelInfo MOAIPvrHeader::GetMipLevelInfo ( u32 mipLevel ) {
 
 	MOAIPvrMipLevelInfo info;
 	info.mLevel = mipLevel;
 	
-	const size_t factor = 1 << mipLevel;
+	const u32 factor = 1 << mipLevel;
 
-	info.mWidth	= MAX ( this->mWidth / factor, 1 );
+	info.mWidth		= MAX ( this->mWidth / factor, 1 );
 	info.mHeight	= MAX ( this->mHeight / factor, 1 );
 
 	info.mSizeDecompressed	= info.mWidth * info.mHeight * this->GetPixelSizeDecompressed ();
@@ -115,8 +113,8 @@ MOAIPvrMipLevelInfo MOAIPvrHeader::GetMipLevelInfo ( int mipLevel ) {
 	if ( this->IsCompressed ()) {
 	
 		bool isTwoBit				= this->IsTwoBit ();
-		const size_t minTexWidth	= isTwoBit ? PVRTC2_MIN_TEXWIDTH : PVRTC4_MIN_TEXWIDTH;
-		const size_t minTexHeight	= isTwoBit ? PVRTC2_MIN_TEXHEIGHT : PVRTC4_MIN_TEXHEIGHT;
+		const u32 minTexWidth		= isTwoBit ? PVRTC2_MIN_TEXWIDTH : PVRTC4_MIN_TEXWIDTH;
+		const u32 minTexHeight		= isTwoBit ? PVRTC2_MIN_TEXHEIGHT : PVRTC4_MIN_TEXHEIGHT;
 		info.mSizeCompressed		= ( MAX ( info.mWidth, minTexWidth ) * MAX ( info.mHeight, minTexHeight ) * this->mBitCount ) / 8; // TODO: this right for two bit?
 	}
 	else {
@@ -214,19 +212,13 @@ bool MOAIImageFormatPvr::CheckHeader ( const void* buffer ) {
 //----------------------------------------------------------------//
 bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void* data, size_t size ) {
 
-	if ( !MOAIGfxDevice::Get ().GetHasContext ()) return false;
-	MOAIGfxDevice::Get ().ClearErrors ();
+	if ( !MOAIGfxMgr::Get ().GetHasContext ()) return false;
+	MOAIGfxMgr::Get ().ClearErrors ();
 
 	MOAIPvrHeader* header = MOAIPvrHeader::GetHeader ( data, size );
 	if ( !header ) return false;
 	
 	bool isCompressed = header->IsCompressed ();
-	
-	#if !( ZGL_DEVCAPS_PVR_TEXTURE || MOAI_WITH_LIBPVR )
-		if ( isCompressed ) return false;
-	#endif
-	
-	bool hasAlpha = header->HasAlpha ();
 
 	int internalFormat = 0;
 	int pixelType = 0;
@@ -271,11 +263,11 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 		#if ZGL_DEVCAPS_PVR_TEXTURE
 		
 			case MOAIPvrHeader::OGL_PVRTC2:
-				internalFormat = hasAlpha ? ZGL_PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG : ZGL_PIXEL_TYPE_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
+				internalFormat = header->HasAlpha () ? ZGL_PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG : ZGL_PIXEL_TYPE_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
 				break;
 			
 			case MOAIPvrHeader::OGL_PVRTC4:
-				internalFormat = hasAlpha ? ZGL_PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG : ZGL_PIXEL_TYPE_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
+				internalFormat = header->HasAlpha () ? ZGL_PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG : ZGL_PIXEL_TYPE_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
 				break;
 		
 		#else
@@ -304,47 +296,54 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 		default:
 			return false;
 	}
+	
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
-	u32 glTexID = zglCreateTexture ();
+	ZLGfxHandle* glTexID = gfx.CreateTexture ();
 	if ( glTexID ) {
 
-		zglBindTexture ( glTexID );
+		gfx.BindTexture ( glTexID );
 		
 		size_t textureSize = 0;
 		
 		const void* imageData = header->GetFileData ( data, size );
+		ZLCopyOnWrite buffer;
 		
-		int nLevels = header->mMipMapCount + 1;
-		for ( int level = 0; level < nLevels; ++level ) {
+		u32 nLevels = header->mMipMapCount + 1;
+		for ( u32 level = 0; level < nLevels; ++level ) {
 		
 			MOAIPvrMipLevelInfo info = header->GetMipLevelInfo ( level );
 		
-			int width = info.mWidth;
-			int height = info.mHeight;
+			u32 width = info.mWidth;
+			u32 height = info.mHeight;
 		
 			if ( isCompressed ) {
 			
 				#if ZGL_DEVCAPS_PVR_TEXTURE
 				
-					zglCompressedTexImage2D ( level, internalFormat, width, height, info.mSizeCompressed, imageData );
+					buffer.Alloc ( info.mSizeCompressed, imageData );
+					gfx.CompressedTexImage2D ( level, internalFormat, width, height, info.mSizeCompressed, buffer.GetSharedConstBuffer ());
 				
-				#elif MOAI_WITH_LIBPVR
+				#else
 				
-					ZLLeanArray < char > buffer;
-					buffer.Init ( info.mSizeDecompressed );
-					if ( !this->Decompress ( *header, info, buffer.Data (), info.mSizeDecompressed, imageData, info.mSizeCompressed )) {
+				
+					buffer.Reserve ( info.mSizeDecompressed );
+				
+					if ( !this->Decompress ( *header, info, buffer.Invalidate (), info.mSizeDecompressed, imageData, info.mSizeCompressed )) {
 						this->CleanupTexture ( texture );
 						return false;
 					}
-					zglTexImage2D ( level, internalFormat, width, height, internalFormat, pixelType, buffer.Data ());
+					gfx.TexImage2D ( level, internalFormat, width, height, internalFormat, pixelType, buffer.GetSharedConstBuffer ());
 				
 				#endif
 			}
 			else {
-				zglTexImage2D ( level, internalFormat, width, height, internalFormat, pixelType, imageData );
+			
+				buffer.Alloc ( info.mSizeDecompressed, imageData );
+				gfx.TexImage2D ( level, internalFormat, width, height, internalFormat, pixelType, buffer.GetSharedConstBuffer ());
 			}
 			
-			if ( MOAIGfxDevice::Get ().LogErrors ()) {
+			if ( MOAIGfxMgr::Get ().LogErrors ()) {
 				this->CleanupTexture ( texture );
 				return false;
 			}
@@ -354,6 +353,7 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 		}
 
 		this->SetTextureID ( texture, glTexID, internalFormat, pixelType, textureSize );
+		
 		return true;
 	}
 	return false;
@@ -361,8 +361,6 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 
 //----------------------------------------------------------------//
 bool MOAIImageFormatPvr::Decompress ( MOAIPvrHeader& header, const MOAIPvrMipLevelInfo& info, MOAIImage& image, ZLStream& stream ) {
-
-	bool isCompressed = header.IsCompressed ();
 	
 	this->SetDimensions ( image, info.mWidth, info.mHeight, 0 );
 
@@ -408,7 +406,7 @@ bool MOAIImageFormatPvr::Decompress ( MOAIPvrHeader& header, const MOAIPvrMipLev
 	this->SetPixelFormat ( image, MOAIImage::TRUECOLOR );
 	this->Alloc ( image );
 	
-	if ( !MOAIImageFormatPvr::Decompress ( header, info, this->GetBitmap ( image ), image.GetBitmapSize (), stream )) {
+	if ( !MOAIImageFormatPvr::Decompress ( header, info, this->GetBitmapMutable ( image ), image.GetBitmapSize (), stream )) {
 		ZLLog_ErrorF ( ZLLog::CONSOLE, "Error loading or decompressing PVR at mip level %d\n", info.mLevel );
 		return false;
 	}
@@ -454,11 +452,7 @@ bool MOAIImageFormatPvr::Decompress ( MOAIPvrHeader& header, const MOAIPvrMipLev
 
 	if ( isCompressed ) {
 	
-		int resultSize = 0;
-		
-		#if MOAI_WITH_LIBPVR
-			resultSize = PVRTDecompressPVRTC ( srcBuffer, header.IsTwoBit (), info.mWidth, info.mHeight, ( unsigned char* )buffer );
-		#endif
+		size_t resultSize = ( size_t )PVRTDecompressPVRTC ( srcBuffer, header.IsTwoBit (), info.mWidth, info.mHeight, ( unsigned char* )buffer );
 	
 		if ( resultSize != info.mSizeCompressed ) {
 			ZLLog_ErrorF ( ZLLog::CONSOLE, "Error decompressing PVR at mip level %d\n", info.mLevel );
@@ -482,10 +476,6 @@ bool MOAIImageFormatPvr::GetTextureInfo ( ZLStream& stream, MOAITextureInfo& inf
 	
 	MOAIPvrHeader header;
 	if ( header.Load ( stream )) {
-	
-		#if !( ZGL_DEVCAPS_PVR_TEXTURE || MOAI_WITH_LIBPVR )
-			if ( header.IsCompressed ()) return false;
-		#endif
 	
 		info.mWidth		= header.mWidth;
 		info.mHeight	= header.mHeight;
@@ -517,14 +507,7 @@ bool MOAIImageFormatPvr::ReadImage ( MOAIImage& image, ZLStream& stream, u32 tra
 		return false;
 	}
 
-	#if !MOAI_WITH_LIBPVR
-		if ( header.IsCompressed ()) {
-			ZLLog_ErrorF ( ZLLog::CONSOLE, "Software PVR decompression not supported; build Moai SDK using MOAI_WITH_LIBPVR\n" );
-			return false;
-		}
-	#endif
-
-	MOAIPvrMipLevelInfo info = header.GetMipLevelInfo ( 1 );
+	MOAIPvrMipLevelInfo info = header.GetMipLevelInfo ( 0 );
 	
 	if ( this->Decompress ( header, info, image, stream )) {
 		image.Transform ( transform );

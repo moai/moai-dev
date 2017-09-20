@@ -5,7 +5,7 @@
 #include <moai-sim/MOAIScriptDeck.h>
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDraw.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
@@ -120,18 +120,14 @@ ZLBox MOAIScriptDeck::ComputeMaxBounds () {
 //----------------------------------------------------------------//
 void MOAIScriptDeck::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
 	
-	materials.LoadGfxState ( this, idx - 1, MOAIShaderMgr::LINE_SHADER );
+	if ( !materials.LoadGfxState ( this, idx - 1, MOAIShaderMgr::LINE_SHADER )) return;
 	
 	if ( this->mOnDraw ) {
 	
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		if ( this->mOnDraw.PushRef ( state )) {
 	
-			MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-			gfxDevice.BindBufferedDrawing ( MOAIVertexFormatMgr::XYZWC );
-			
-			gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
-			gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+			MOAIDraw::Bind ();
 		
 			// TODO: fix this to take all offset/scale params
 			lua_pushnumber ( state, idx );

@@ -16,6 +16,7 @@ MOAISim.pushRenderPass ( layer )
 
 grid = MOAIGrid.new ()
 grid:initDiamondGrid ( 4, 4, 128, 128 )
+grid:setRepeat ( true )
 
 grid:setRow ( 1, 	0x01, 0x02, 0x01, 0x02 )
 grid:setRow ( 2,	0x03, 0x04, 0x03, 0x04 )

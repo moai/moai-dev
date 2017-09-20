@@ -16,7 +16,7 @@ class MOAITextStyleState {
 protected:
 
 	friend class MOAITextLabel;
-	friend class MOAITextDesignParser;
+	friend class MOAITextLayoutEngine;
 	friend class MOAITextLayout;
 	friend class MOAITextStyle;
 	friend class MOAITextStyleParser;
@@ -59,7 +59,7 @@ class MOAITextStyle :
 private:
 
 	friend class MOAITextLabel;
-	friend class MOAITextDesignParser;
+	friend class MOAITextLayoutEngine;
 	friend class MOAITextLayout;
 	friend class MOAITextStyleParser;
 	friend class MOAITextStyleCache;

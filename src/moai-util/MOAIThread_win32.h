@@ -37,7 +37,7 @@ private:
 class MOAIThreadLocalImpl {
 public:
 
-	DWORD		mTlsIndex;
+	DWORD			mTlsIndex;
 	
 	//----------------------------------------------------------------//
 	MOAIThread*		GetCurrentThread		() const;

@@ -21,20 +21,15 @@ class MOAIImageTexture :
 	public MOAIImage {
 private:
 
-	enum {
-		VALID,
-		INVALID,
-	};
-
-	u32			mStatus;
 	ZLIntRect	mRegion;
 
 	//----------------------------------------------------------------//
 	static int		_updateRegion			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			OnGPUBind				();
+	void			OnClearDirty			();
 	bool			OnGPUCreate				();
+	bool			OnGPUUpdate				();
 	void			OnImageStatusChanged	( bool isOK );
 
 public:

@@ -181,34 +181,33 @@ void MOAIStretchPatch2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVe
 	
 	// TODO: make use of offset and scale
 	
-	materials.LoadGfxState ( this, idx - 1, MOAIShaderMgr::DECK2D_SHADER );
+	if ( !materials.LoadGfxState ( this, idx - 1, MOAIShaderMgr::DECK2D_SHADER )) return;
 	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIQuadBrush::BindVertexFormat ( gfxMgr.mVertexCache );
 	
-	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
-	gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
-	
-	ZLMatrix4x4 transform = gfxDevice.GetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
-	ZLVec3D stretch = transform.GetStretch ();
+	ZLMatrix4x4 worldTransform = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_MTX );
+	ZLVec3D stretch = worldTransform.GetStretch ();
 	
 	ZLMatrix4x4 noStretch;
 	noStretch.Scale ( 1.0f / stretch.mX, 1.0f / stretch.mY, 1.0f / stretch.mZ );
-	noStretch.Append ( transform );
+	noStretch.Append ( worldTransform );
+	noStretch.Append ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_PROJ_MTX ) );
 	
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, noStretch );
+	gfxMgr.mVertexCache.SetVertexTransform ( noStretch );
+	gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_MTX ));
 	
 	this->UpdateParams ();
 	this->DrawStretch ( idx, stretch.mX, stretch.mY );
 	
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, transform );
+	//gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_WORLD_TRANSFORM, transform );
 }
 
 //----------------------------------------------------------------//
 void MOAIStretchPatch2D::DrawStretch ( u32 idx, float xStretch, float yStretch ) {
 
 	ZLRect uvRect;
-	u32 totalUVRects = this->mUVRects.Size ();
+	u32 totalUVRects = ( u32 )this->mUVRects.Size ();
 	
 	if ( totalUVRects == 0 ) {
 		uvRect.Init ( 0.0f, 1.0f, 1.0f, 0.0f );
@@ -258,8 +257,8 @@ void MOAIStretchPatch2D::DrawStretch ( u32 idx, float xStretch, float yStretch )
 		yStretchPatchScale = yPatchScale;
 	}
 	
-	u32 totalRows = this->mRows.Size ();
-	u32 totalCols = this->mCols.Size ();
+	u32 totalRows = ( u32 )this->mRows.Size ();
+	u32 totalCols = ( u32 )this->mCols.Size ();
 	
 	MOAIQuadBrush quad;
 	
@@ -328,7 +327,6 @@ MOAIStretchPatch2D::MOAIStretchPatch2D () :
 		RTTI_EXTEND ( MOAIStandardDeck )
 	RTTI_END
 	
-	//this->SetContentMask ( MOAIProp::CAN_DRAW );
 	this->mRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
@@ -392,8 +390,8 @@ void MOAIStretchPatch2D::UpdateParams () {
 	this->mYFix = 0.0f;
 	this->mYFlex = 0.0f;
 	
-	u32 totalRows = this->mRows.Size ();
-	for ( u32 i = 0; i < totalRows; ++i ) {
+	size_t totalRows = this->mRows.Size ();
+	for ( size_t i = 0; i < totalRows; ++i ) {
 		MOAIStretchPatchSpan& span = this->mRows [ i ];
 		if ( span.mCanStretch ) {
 			this->mYFlex += span.mPercent;
@@ -406,8 +404,8 @@ void MOAIStretchPatch2D::UpdateParams () {
 	this->mXFix = 0.0f;
 	this->mXFlex = 0.0f;
 	
-	u32 totalCols = this->mCols.Size ();
-	for ( u32 i = 0; i < totalCols; ++i ) {
+	size_t totalCols = this->mCols.Size ();
+	for ( size_t i = 0; i < totalCols; ++i ) {
 		MOAIStretchPatchSpan& span = this->mCols [ i ];
 		if ( span.mCanStretch ) {
 			this->mXFlex += span.mPercent;

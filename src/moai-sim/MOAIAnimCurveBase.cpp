@@ -102,7 +102,7 @@ u32 MOAIAnimCurveBase::FindKeyID ( float time ) const {
 	MOAIAnimKey key;
 	key.mTime = time;
 	
-	u32 index = USBinarySearchNearest < MOAIAnimKey >( this->mKeys.Data (), key, this->mKeys.Size ());
+	u32 index = USBinarySearchNearest < MOAIAnimKey >( this->mKeys.Data (), key, ( u32 )this->mKeys.Size ());
 	
 	return index;
 }
@@ -132,7 +132,7 @@ const MOAIAnimKey& MOAIAnimCurveBase::GetKey ( u32 id ) const {
 //----------------------------------------------------------------//
 float MOAIAnimCurveBase::GetLength () const {
 
-	u32 total = this->mKeys.Size ();
+	u32 total = ( u32 )this->mKeys.Size ();
 	if ( total == 0 ) return 0.0f;
 	return this->mKeys [ total - 1 ].mTime - this->mKeys [ 0 ].mTime;
 }
@@ -145,7 +145,7 @@ MOAIAnimKeySpan MOAIAnimCurveBase::GetSpan ( float time ) const {
 	span.mTime = 0.0f;
 	span.mCycle = 0.0f;
 
-	u32 total = this->mKeys.Size ();
+	u32 total = ( u32 )this->mKeys.Size ();
 	u32 endID = total - 1;
 	assert ( total );
 	
@@ -244,7 +244,7 @@ void MOAIAnimCurveBase::SetKey ( u32 id, float time, u32 mode, float weight ) {
 //----------------------------------------------------------------//
 u32 MOAIAnimCurveBase::Size () const {
 
-	return this->mKeys.Size ();
+	return ( u32 )this->mKeys.Size ();
 }
 
 //----------------------------------------------------------------//
@@ -288,11 +288,13 @@ float MOAIAnimCurveBase::WrapTime ( float t, float &repeat ) const {
 		break;
 	}
 
-	wrappedT = wrappedT * length + startTime;
+	float result = wrappedT * length + startTime;
 	
-	if ( wrappedT + EPSILON > t && wrappedT - EPSILON < t ) { 
-		wrappedT = t; 
+	if( wrappedT != 0.0f && wrappedT != 1.0f ) {
+		if ( result + EPSILON > t && result - EPSILON < t ) { 
+			result = t; 
+		}
 	}
 
-	return wrappedT;
+	return result;
 }

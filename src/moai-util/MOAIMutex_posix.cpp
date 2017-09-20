@@ -2,6 +2,9 @@
 // http://getmoai.com
 
 #include "pch.h"
+
+SUPPRESS_EMPTY_FILE_WARNING
+
 #ifndef _WIN32
 
 #include <moai-util/MOAIMutex_posix.h>
@@ -9,12 +12,6 @@
 //================================================================//
 // MOAIMutexImpl
 //================================================================//
-
-//----------------------------------------------------------------//
-void MOAIMutexImpl::Init () {
-
-	pthread_mutex_init ( &this->mMutex, 0 );
-}
 
 //----------------------------------------------------------------//
 void MOAIMutexImpl::Lock () {
@@ -26,6 +23,7 @@ void MOAIMutexImpl::Lock () {
 MOAIMutexImpl::MOAIMutexImpl () {
 
 	memset ( &this->mMutex, 0, sizeof ( pthread_mutex_t ));
+	pthread_mutex_init ( &this->mMutex, 0 );
 }
 
 //----------------------------------------------------------------//

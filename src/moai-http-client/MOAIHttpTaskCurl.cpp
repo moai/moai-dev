@@ -3,10 +3,12 @@
 
 #include "pch.h"
 
+SUPPRESS_EMPTY_FILE_WARNING
+
+#if MOAI_WITH_LIBCURL
+
 #include <algorithm>
 
-SUPPRESS_EMPTY_FILE_WARNING
-#if MOAI_WITH_LIBCURL
 #include <moai-http-client/MOAIHttpTaskCurl.h>
 #include <moai-http-client/MOAIUrlMgrCurl.h>
 
@@ -205,7 +207,7 @@ void MOAIHttpTaskCurl::CurlFinish () {
 
 	if ( this->mStream == &this->mMemStream ) {
 	
-		u32 size = this->mMemStream.GetLength ();
+		u32 size = ( u32 )this->mMemStream.GetLength ();
 		
 		if ( size ) {
 			this->mData.Init ( size );

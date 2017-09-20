@@ -162,10 +162,10 @@ int MOAIHashWriter::_openWhirlpool ( lua_State* L ) {
 	#ifndef MOAI_OS_NACL
 		self->mHashWriter = new ZLHashWriterWhirlpool ();
 		return self->Open ( state, 2, self->mHashWriter );
+	#else
+		state.Push ( false );
+		return 1;
 	#endif
-
-	state.Push ( false );
-	return 1;
 }
 
 //----------------------------------------------------------------//

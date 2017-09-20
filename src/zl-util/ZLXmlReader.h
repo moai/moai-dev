@@ -6,13 +6,14 @@
 
 #if MOAI_WITH_EXPAT
 
-#include <expat.h>
 #include <zl-util/STLList.h>
 #include <zl-util/STLMap.h>
 #include <zl-util/STLString.h>
 #include <zl-util/ZLAccessors.h>
 
 class ZLStream;
+
+typedef int* ZLXmlParser;
 
 //================================================================//
 // ZLXmlElement
@@ -61,11 +62,11 @@ private:
 	enum {
 		BUFFER_SIZE = 512,
 	};
-
-	XML_Parser	mParser;
+	
+	ZLXmlParser	mParser;
 	ZLStream*	mStream;
 	
-	u32			mInputLen;
+	int			mInputLen;
 	char		mBuffer [ BUFFER_SIZE ];
 
 	STLList < ZLXmlElement* > mElementStack;
@@ -86,7 +87,7 @@ private:
 	void					OnText				( const char* text, int len );
 	ZLXmlElement*			PopElement			();
 	ZLXmlElement*			PushElement			( cc8* name );
-	XML_Status				Resume				();
+	int						Resume				();
 	void					SetElement			( ZLXmlElement* element );
 	void					Suspend				( u32 event );
 
@@ -116,3 +117,4 @@ public:
 
 #endif
 #endif
+

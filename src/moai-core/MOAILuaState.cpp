@@ -511,8 +511,6 @@ int MOAILuaState::GetLuaThreadStatus ( lua_State* thread ) {
 		default:  // some error occured
 			return THREAD_ERROR;
 	}
-	
-	return THREAD_UNKNOWN;
 }
 
 //----------------------------------------------------------------//
@@ -860,13 +858,13 @@ ZLBox MOAILuaState::GetValue < ZLBox >( int idx, const ZLBox value ) {
 	
 		ZLBox box;
 		
-		box.mMin.mX		= lua_tonumber ( this->mState, idx + 0 );
-		box.mMin.mY		= lua_tonumber ( this->mState, idx + 1 );
-		box.mMin.mZ		= lua_tonumber ( this->mState, idx + 2 );
+		box.mMin.mX		= ( float )lua_tonumber ( this->mState, idx + 0 );
+		box.mMin.mY		= ( float )lua_tonumber ( this->mState, idx + 1 );
+		box.mMin.mZ		= ( float )lua_tonumber ( this->mState, idx + 2 );
 		
-		box.mMax.mX		= lua_tonumber ( this->mState, idx + 3 );
-		box.mMax.mY		= lua_tonumber ( this->mState, idx + 4 );
-		box.mMax.mZ		= lua_tonumber ( this->mState, idx + 5 );
+		box.mMax.mX		= ( float )lua_tonumber ( this->mState, idx + 3 );
+		box.mMax.mY		= ( float )lua_tonumber ( this->mState, idx + 4 );
+		box.mMax.mZ		= ( float )lua_tonumber ( this->mState, idx + 5 );
 		
 		return box;
 	}
@@ -881,10 +879,10 @@ ZLColorVec MOAILuaState::GetValue < ZLColorVec >( int idx, const ZLColorVec valu
 	
 		ZLColorVec color;
 		
-		color.mR		= lua_tonumber ( this->mState, idx + 0 );
-		color.mG		= lua_tonumber ( this->mState, idx + 1 );
-		color.mB		= lua_tonumber ( this->mState, idx + 2 );
-		color.mA		= lua_tonumber ( this->mState, idx + 3 );
+		color.mR		= ( float )lua_tonumber ( this->mState, idx + 0 );
+		color.mG		= ( float )lua_tonumber ( this->mState, idx + 1 );
+		color.mB		= ( float )lua_tonumber ( this->mState, idx + 2 );
+		color.mA		= ( float )lua_tonumber ( this->mState, idx + 3 );
 		
 		return color;
 	}
@@ -899,10 +897,10 @@ ZLRect MOAILuaState::GetValue < ZLRect >( int idx, const ZLRect value ) {
 
 	if ( this->CheckParams ( idx, "NNNN", false )) {
 		
-		rect.mXMin		= lua_tonumber ( this->mState, idx + 0 );
-		rect.mYMin		= lua_tonumber ( this->mState, idx + 1 );
-		rect.mXMax		= lua_tonumber ( this->mState, idx + 2 );
-		rect.mYMax		= lua_tonumber ( this->mState, idx + 3 );
+		rect.mXMin		= ( float )lua_tonumber ( this->mState, idx + 0 );
+		rect.mYMin		= ( float )lua_tonumber ( this->mState, idx + 1 );
+		rect.mXMax		= ( float )lua_tonumber ( this->mState, idx + 2 );
+		rect.mYMax		= ( float )lua_tonumber ( this->mState, idx + 3 );
 		
 		return rect;
 	}
@@ -910,12 +908,12 @@ ZLRect MOAILuaState::GetValue < ZLRect >( int idx, const ZLRect value ) {
 		
 		rect.mXMin		= value.mXMin;
 		rect.mYMin		= value.mYMin;
-		rect.mXMax		= value.mXMin + lua_tonumber ( this->mState, idx + 1 );
-		rect.mYMax		= value.mYMin + lua_tonumber ( this->mState, idx + 2 );
+		rect.mXMax		= value.mXMin + ( float )lua_tonumber ( this->mState, idx + 1 );
+		rect.mYMax		= value.mYMin + ( float )lua_tonumber ( this->mState, idx + 2 );
 	}
 	else if ( this->IsType ( idx, LUA_TNUMBER )) {
 	
-		float size = lua_tonumber ( this->mState, idx );
+		float size = ( float )lua_tonumber ( this->mState, idx );
 		
 		rect.mXMin		= value.mXMin;
 		rect.mYMin		= value.mYMin;
@@ -934,8 +932,8 @@ ZLVec2D MOAILuaState::GetValue < ZLVec2D >( int idx, const ZLVec2D value ) {
 	
 		ZLVec2D vec;
 		
-		vec.mX			= lua_tonumber ( this->mState, idx + 0 );
-		vec.mY			= lua_tonumber ( this->mState, idx + 1 );
+		vec.mX			= ( float )lua_tonumber ( this->mState, idx + 0 );
+		vec.mY			= ( float )lua_tonumber ( this->mState, idx + 1 );
 		
 		return vec;
 	}
@@ -950,9 +948,9 @@ ZLVec3D MOAILuaState::GetValue < ZLVec3D >( int idx, const ZLVec3D value ) {
 	
 		ZLVec3D vec;
 		
-		vec.mX			= lua_tonumber ( this->mState, idx + 0 );
-		vec.mY			= lua_tonumber ( this->mState, idx + 1 );
-		vec.mZ			= lua_tonumber ( this->mState, idx + 2 );
+		vec.mX			= ( float )lua_tonumber ( this->mState, idx + 0 );
+		vec.mY			= ( float )lua_tonumber ( this->mState, idx + 1 );
+		vec.mZ			= ( float )lua_tonumber ( this->mState, idx + 2 );
 		
 		return vec;
 	}
@@ -1059,7 +1057,7 @@ bool MOAILuaState::IsTableOrUserdata ( int idx ) {
 bool MOAILuaState::IsTrueOrNotNil ( int idx ) {
 
 	if ( lua_isboolean ( this->mState, idx )) {
-		return lua_toboolean ( this->mState, idx );
+		return lua_toboolean ( this->mState, idx ) ? true : false;
 	}
 	return !lua_isnil ( this->mState, idx );
 }

@@ -36,5 +36,5 @@ curve:setKey ( 2, 1, 16 )
 textbox:reserveCurves ( 1 )
 textbox:setCurve ( 1, curve )
 
-textbox:spool ()
+--textbox:spool ()
 

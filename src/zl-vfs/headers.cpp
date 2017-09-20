@@ -34,7 +34,7 @@
 	#include "NaClFile.h"
 #endif
 
-#ifdef ANDROID
+#ifdef MOAI_OS_ANDROID
 	#include <android/log.h>
 #endif
 
@@ -42,6 +42,15 @@
 #include <zl-vfs/ZLVfsFileSystem.h>
 
 using namespace std;
+
+//----------------------------------------------------------------//
+void _out_of_memory () {
+
+	zl_printf ( "FATAL: Ran out of memory. Aborting.\n" );
+	zl_printf ( "NOTE: Provide your own OOM handler by calling zl_set_out_of_memory_func ().\n" );
+	
+	abort ();
+}
 
 //================================================================//
 // ZLTlsfPool
@@ -57,9 +66,9 @@ typedef struct ZLTlsfPool {
 // zlcore
 //================================================================//
 
-ZLFILE* zl_stderr = 0;
-ZLFILE* zl_stdin = 0;
-ZLFILE* zl_stdout = 0;
+ZLFILE* zl_stderr	= 0;
+ZLFILE* zl_stdin	= 0;
+ZLFILE* zl_stdout	= 0;
 
 //----------------------------------------------------------------//
 int zl_affirm_path ( const char* path ) {
@@ -185,7 +194,7 @@ int zl_get_stat ( char const* path, zl_stat* filestat ) {
 			ZLVfsZipFileEntry* entry;
 
 			const char *filename = localpath;
-			int i = strlen ( filename ) - 2;
+			size_t i = strlen ( filename ) - 2;
 
 			result = stat ( mount->mArchive->mFilename.c_str (), &s );
 
@@ -200,7 +209,7 @@ int zl_get_stat ( char const* path, zl_stat* filestat ) {
 
 			entry = parentDir->mChildFiles;
 			for ( ; entry; entry = entry->mNext ) {
-				if ( strcmp_ignore_case ( entry->mName.c_str (), filename ) == 0 ) break;
+				if ( zl_strcmp_ignore_case ( entry->mName.c_str (), filename ) == 0 ) break;
 			}
 
 			if ( entry ) {
@@ -217,7 +226,7 @@ int zl_get_stat ( char const* path, zl_stat* filestat ) {
 					dirname.append ( "/" );
 				}
 				for ( ; dir; dir = dir->mNext ) {
-					if ( strcmp_ignore_case ( dir->mName.c_str (), dirname.c_str ()) == 0 ) break;
+					if ( zl_strcmp_ignore_case ( dir->mName.c_str (), dirname.c_str ()) == 0 ) break;
 				}
 
 				if ( dir ) {
@@ -306,19 +315,32 @@ int zl_rmdir ( const char* path ) {
 // stdlib
 //================================================================//
 
-static ZLTlsfPool* sTlsfPool = 0;
+static zl_out_of_memory_func sOutOtMemoryHandler	= _out_of_memory;
+static ZLTlsfPool* sTlsfPool						= 0;
 
 //----------------------------------------------------------------//
 void* zl_calloc ( size_t num, size_t size ) {
 
+	void* ptr = 0;
+
 	if ( sTlsfPool ) {
-		void* ptr = tlsf_malloc ( sTlsfPool->mPool, num * size );
+		ptr = tlsf_malloc ( sTlsfPool->mPool, num * size );
 		if ( ptr ) {
 			memset ( ptr, 0, num * size );
 		}
-		return ptr;
 	}
-	return calloc ( num, size );
+	else {
+		ptr = calloc ( num, size );
+	}
+	
+	if ( !ptr ) {
+		if ( !sOutOtMemoryHandler ) {
+			abort ();
+		}
+		sOutOtMemoryHandler ();
+	}
+	
+	return ptr;
 }
 
 //----------------------------------------------------------------//
@@ -335,19 +357,37 @@ void zl_free ( void* ptr ) {
 //----------------------------------------------------------------//
 void* zl_malloc ( size_t size ) {
 
-	if ( sTlsfPool ) {
-		return tlsf_malloc ( sTlsfPool->mPool, size );
+	void* ptr = sTlsfPool ? tlsf_malloc ( sTlsfPool->mPool, size ) : malloc ( size );
+
+	if ( !ptr ) {
+		if ( !sOutOtMemoryHandler ) {
+			abort ();
+		}
+		sOutOtMemoryHandler ();
 	}
-	return malloc ( size );
+	
+	return ptr;
 }
 
 //----------------------------------------------------------------//
 void* zl_realloc ( void* ptr, size_t size ) {
 
-	if ( sTlsfPool ) {
-		return tlsf_realloc ( sTlsfPool->mPool, ptr, size );
+	ptr = sTlsfPool ? tlsf_realloc ( sTlsfPool->mPool, ptr, size ) : realloc ( ptr, size );
+	
+	if ( !ptr ) {
+		if ( !sOutOtMemoryHandler ) {
+			abort ();
+		}
+		sOutOtMemoryHandler ();
 	}
-	return realloc ( ptr, size );
+	
+	return ptr;
+}
+
+//----------------------------------------------------------------//
+void zl_set_out_of_memory_func ( zl_out_of_memory_func handler ) {
+
+	sOutOtMemoryHandler = handler;
 }
 
 //----------------------------------------------------------------//
@@ -481,6 +521,13 @@ char* zl_fgets ( char* string, int length, ZLFILE* fp ) {
 }
 
 //----------------------------------------------------------------//
+wchar_t zl_fgetwc(ZLFILE* fp) {
+	UNUSED(fp);
+	assert(0); // TODO:
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int	zl_fileno ( ZLFILE* fp ) {
 	
 	// TODO:
@@ -571,11 +618,7 @@ int zl_fputs ( const char* string, ZLFILE* fp ) {
 
 	if (( fp == 0 ) || ( fp == zl_stdout )) {
 
-		#ifdef ANDROID
-			return __android_log_print ( ANDROID_LOG_INFO, "MoaiLog", "%s", string );
-		#else
-			return printf ( "%s", string );
-		#endif
+		zl_printf ( "%s", string );
 	}
 	else {
 
@@ -585,6 +628,15 @@ int zl_fputs ( const char* string, ZLFILE* fp ) {
 		}
 	}
 	return EOF;
+}
+
+//----------------------------------------------------------------//
+int zl_fputwc(wchar_t c,  ZLFILE* fp) {
+	UNUSED(fp);
+	UNUSED(c);
+
+	assert(0); // TODO:
+	return -1;
 }
 
 //----------------------------------------------------------------//
@@ -777,11 +829,7 @@ int zl_putc ( int character, ZLFILE* fp ) {
 //----------------------------------------------------------------//
 int zl_puts ( const char* string ) {
 
-	#ifdef ANDROID
-		return __android_log_print ( ANDROID_LOG_INFO, "MoaiLog", "%s\n", string );
-	#else
-		return printf ( "%s\n", string );
-	#endif
+	return zl_printf ( "%s\n", string );
 }
 
 //----------------------------------------------------------------//
@@ -860,15 +908,35 @@ int zl_ungetc ( int character, ZLFILE* fp ) {
 	return EOF;
 }
 
+wchar_t	zl_ungetwc(wchar_t character, ZLFILE* fp) {
+	UNUSED(character);
+	UNUSED(fp);
+	assert(0);
+	return 0;
+}
+
 //----------------------------------------------------------------//
 int zl_vfprintf ( ZLFILE* fp, const char* format, va_list arg ) {
 
 	if (( fp == 0 ) || ( fp == zl_stdout )) {
 	
-		#ifdef ANDROID
+		#ifdef MOAI_OS_ANDROID
 			return __android_log_vprint ( ANDROID_LOG_INFO, "MoaiLog", format, arg );
 		#else
+			#ifdef MOAI_OS_WINDOWS
+
+				char buffer [ 1024 ];
+				char* str = zl_vsnprintf_alloc ( buffer, sizeof ( buffer ), format, arg );
+				OutputDebugString ( str );
+
+				if ( str != buffer ) {
+					free ( str );
+				}
+
+			#endif
+
 			return vprintf ( format, arg );
+
 		#endif
 	}
 	else {

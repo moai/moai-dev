@@ -374,13 +374,13 @@ MOAIRenderMgr.extend (
 		
 		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 		function class.grabNextFrame (image, callback)
-			local frameBuffer = MOAIGfxDevice.getFrameBuffer ()
-			frameBuffer:grabNextFrame (image, callback)
+			local frameBuffer = MOAIGfxMgr.getFrameBuffer ()
+			frameBuffer:grabNextFrame ( image, callback )
 		end
 		
 		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 		function class.getRenderTable ()
-			local frameBuffer = MOAIGfxDevice.getFrameBuffer ()
+			local frameBuffer = MOAIGfxMgr.getFrameBuffer ()
 			return frameBuffer:getRenderTable ()
 		end
 		
@@ -413,7 +413,7 @@ MOAIRenderMgr.extend (
 		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 		function class.setRenderTable ( renderTable )
 		
-			local frameBuffer = MOAIGfxDevice.getFrameBuffer ()
+			local frameBuffer = MOAIGfxMgr.getFrameBuffer ()
 			frameBuffer:setRenderTable ( renderTable )
 		end
 	end
@@ -535,11 +535,11 @@ MOAITransform.extend (
 )
 
 --============================================================--
--- MOAIGfxDevice
+-- MOAIGfxMgr
 --============================================================--
-MOAIGfxDevice.extend (
+MOAIGfxMgr.extend (
 
-	'MOAIGfxDevice',
+	'MOAIGfxMgr',
 	
 	----------------------------------------------------------------
 	function ( class, superClass )
@@ -547,7 +547,7 @@ MOAIGfxDevice.extend (
 		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
 		-- extend the class
 		function class.setClearColor ( ... )
-			MOAIGfxDevice.getFrameBuffer():setClearColor ( ... )
+			MOAIGfxMgr.getFrameBuffer():setClearColor ( ... )
 		end
 	end
 )
@@ -594,6 +594,8 @@ end
 --============================================================--
 -- renames
 --============================================================--
+
+MOAIGfxDevice		= MOAIGfxMgr
 
 MOAIHashWriter		= MOAIHashWriterCrypto or MOAIHashWriter
 MOAITextBox			= MOAITextLabel

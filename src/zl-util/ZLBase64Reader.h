@@ -21,7 +21,7 @@ private:
 
 	//----------------------------------------------------------------//
 	void				OnClose					();
-	size_t				ReadBytes				( void* buffer, size_t size );
+	ZLSizeResult		ReadBytes				( void* buffer, size_t size );
 	void				SyncBlock				();
 
 public:
@@ -29,7 +29,7 @@ public:
 	//----------------------------------------------------------------//
 	static size_t		EstimateDecodedLength	( size_t encodedLength );
 	u32					GetCaps					();
-	int					SetCursor				( long offset );
+	int					SetCursor				( size_t offset );
 						ZLBase64Reader			();
 						~ZLBase64Reader			();
 };

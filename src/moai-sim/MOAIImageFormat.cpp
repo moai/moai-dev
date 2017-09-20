@@ -32,21 +32,27 @@ bool MOAIImageFormat::CreateTexture ( MOAISingleTexture& texture, const void* da
 }
 
 //----------------------------------------------------------------//
-void* MOAIImageFormat::GetBitmap ( MOAIImage& image ) const {
+const void* MOAIImageFormat::GetBitmap ( MOAIImage& image ) const {
 
-	return image.mBitmap;
+	return image.mBitmap.GetBuffer ();
 }
 
 //----------------------------------------------------------------//
-void* MOAIImageFormat::GetRowAddr ( MOAIImage& image, u32 y ) const {
+void* MOAIImageFormat::GetBitmapMutable ( MOAIImage& image ) const {
 
-	return image.GetRowAddr ( y );
+	return image.mBitmap.Invalidate ();
 }
 
 //----------------------------------------------------------------//
 const void* MOAIImageFormat::GetRowAddr ( const MOAIImage& image, u32 y ) const {
 
 	return image.GetRowAddr ( y );
+}
+
+//----------------------------------------------------------------//
+void* MOAIImageFormat::GetRowAddrMutable ( MOAIImage& image, u32 y ) const {
+
+	return image.GetRowAddrMutable ( y );
 }
 
 //----------------------------------------------------------------//
@@ -97,7 +103,7 @@ void MOAIImageFormat::SetPixelFormat ( MOAIImage& image, MOAIImage::PixelFormat 
 }
 
 //----------------------------------------------------------------//
-void MOAIImageFormat::SetTextureID ( MOAISingleTexture& texture, u32 glTexID, int internalFormat, int pixelType, size_t textureSize ) {
+void MOAIImageFormat::SetTextureID ( MOAISingleTexture& texture, ZLGfxHandle* glTexID, int internalFormat, int pixelType, size_t textureSize ) {
 
 	texture.SetTextureID ( glTexID, internalFormat, pixelType, textureSize );
 }

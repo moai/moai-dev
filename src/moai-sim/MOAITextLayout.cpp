@@ -7,16 +7,42 @@
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIFont.h>
-#include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAINodeMgr.h>
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIShaderMgr.h>
-#include <moai-sim/MOAITextDesigner.h>
+#include <moai-sim/MOAITextLayoutRules.h>
+#include <moai-sim/MOAITextLayoutEngine.h>
 #include <moai-sim/MOAITextLayout.h>
 #include <moai-sim/MOAITextStyle.h>
 #include <moai-sim/MOAITextStyleParser.h>
 
 #define DEFAULT_STYLE_NAME ""
+
+//================================================================//
+// MOAITextLine
+//================================================================//
+
+//----------------------------------------------------------------//
+float MOAITextLine::GetAscent () {
+
+	return this->mOrigin.mY - this->mLayoutBounds.mYMin;
+}
+
+//----------------------------------------------------------------//
+float MOAITextLine::GetDescent () {
+
+	return this->mLayoutBounds.mYMax - this->mOrigin.mY;
+}
+
+//----------------------------------------------------------------//
+void MOAITextLine::Offset ( float xOff, float yOff ) {
+
+	this->mOrigin.mX += xOff;
+	this->mOrigin.mY += yOff;
+
+	this->mLayoutBounds.Offset ( xOff, yOff );
+}
 
 //================================================================//
 // MOAITextLayout
@@ -72,8 +98,8 @@ void MOAITextLayout::AddHighlight ( u32 base, u32 top, u32 color ) {
 //----------------------------------------------------------------//
 void MOAITextLayout::ApplyHighlights () {
 
-	u32 totalSprites = this->mSprites.GetTop ();
-	u32 spriteIdx = 0;
+	size_t totalSprites = this->mSprites.GetTop ();
+	size_t spriteIdx = 0;
 	MOAITextHighlight* highlight = this->mHighlights;
 	
 	while (( spriteIdx < totalSprites ) && highlight ) {
@@ -196,7 +222,7 @@ void MOAITextLayout::CompactHighlights () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAITextLayout::CountSprites () {
+size_t MOAITextLayout::CountSprites () {
 
 	return this->mSprites.GetTop ();
 }
@@ -206,22 +232,22 @@ void MOAITextLayout::Draw ( u32 reveal, MOAIShader* defaultShader, bool useSprit
 	
 	if ( reveal ) {
 		
-		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-		MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+		MOAIQuadBrush::BindVertexFormat ( gfxMgr.mVertexCache );
 
-		ZLColorVec baseColor = gfxDevice.GetPenColor ();
+		ZLColorVec baseColor = gfxMgr.mGfxState.GetPenColor ();
 		ZLColorVec blendColor;
 		u32 rgba0 = 0xffffffff;
 		u32 rgba1 = 0xffffffff;
 		
 		if ( !useSpriteShaders ) {
-			gfxDevice.SetShader ( defaultShader );
+			if ( !gfxMgr.mGfxState.BindShader ( defaultShader )) return;
 		}
 
 		MOAIShader* currentShader = 0;
 
-		u32 size = this->mSprites.GetTop ();
-		for ( u32 i = 0; ( i < size ) && ( i < reveal ); ++i ) {
+		size_t size = this->mSprites.GetTop ();
+		for ( size_t i = 0; ( i < size ) && ( i < reveal ); ++i ) {
 			const MOAITextSprite& sprite = this->mSprites [ i ];
 			const MOAITextStyleState* style = sprite.mStyle;
 			
@@ -232,14 +258,14 @@ void MOAITextLayout::Draw ( u32 reveal, MOAIShader* defaultShader, bool useSprit
 				
 				blendColor.SetRGBA ( rgba0 );
 				blendColor.Modulate ( baseColor );
-				gfxDevice.SetPenColor ( blendColor );
+				gfxMgr.mGfxState.SetPenColor ( blendColor );
 			}
 			
 			if ( useSpriteShaders ) {
 			
 				MOAIShader* spriteShader = sprite.mShader ? sprite.mShader : defaultShader;
 				if ( spriteShader != currentShader ) {
-					gfxDevice.SetShader ( spriteShader );
+					if ( !gfxMgr.mGfxState.BindShader ( spriteShader )) continue;
 					currentShader = spriteShader;
 				}
 			}
@@ -258,11 +284,12 @@ void MOAITextLayout::DrawDebug () {
 	
 	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_GLYPHS )) {
 	
-		u32 size = this->mSprites.GetTop ();
-		for ( u32 i = 0; i < size; ++i ) {
+		size_t size = this->mSprites.GetTop ();
+		for ( size_t i = 0; i < size; ++i ) {
 			const MOAITextSprite& sprite = this->mSprites [ i ];
 			
-			ZLRect glyphRect = sprite.mGlyph->GetRect ( sprite.mPen.mX, sprite.mPen.mY, sprite.mScale.mX, sprite.mScale.mY );
+			// TODO: change up the way padding works - should be innate to the glyph
+			ZLRect glyphRect = sprite.mGlyph->GetGlyphRect ( sprite.mPen.mX, sprite.mPen.mY, sprite.mScale.mX, sprite.mScale.mY );
 			
 			const ZLRect& padding = sprite.mStyle->mPadding;
 			glyphRect.mXMin += padding.mXMin;
@@ -274,27 +301,31 @@ void MOAITextLayout::DrawDebug () {
 		}
 	}
 	
-	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LAYOUT )) {
+	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LINES_GLYPH_BOUNDS )) {
 		
-		u32 totalLines = this->mLines.GetTop ();
-		for ( u32 i = 0; i < totalLines; ++i ) {
+		size_t totalLines = this->mLines.GetTop ();
+		for ( size_t i = 0; i < totalLines; ++i ) {
 			MOAITextLine& line = this->mLines [ i ];
-			draw.DrawRectOutline ( line.mRect );
+			draw.DrawRectOutline ( line.mGlyphBounds );
 		}
 	}
 	
-	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_GLYPH_BOUNDS )) {
-	
-		draw.DrawRectOutline ( this->mGlyphBounds );
+	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LINES_LAYOUT_BOUNDS )) {
+		
+		size_t totalLines = this->mLines.GetTop ();
+		for ( size_t i = 0; i < totalLines; ++i ) {
+			MOAITextLine& line = this->mLines [ i ];
+			draw.DrawRectOutline ( line.mLayoutBounds );
+		}
 	}
 	
 	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_BASELINES )) {
 		
-		u32 totalLines = this->mLines.GetTop ();
-		for ( u32 i = 0; i < totalLines; ++i ) {
+		size_t totalLines = this->mLines.GetTop ();
+		for ( size_t i = 0; i < totalLines; ++i ) {
 			MOAITextLine& line = this->mLines [ i ];
-			float y = line.mRect.mYMin + line.mAscent;
-			draw.DrawLine ( line.mRect.mXMin, y, line.mRect.mXMax, y );
+			float y = line.mOrigin.mY;
+			draw.DrawLine ( line.mLayoutBounds.mXMin, y, line.mLayoutBounds.mXMax, y );
 		}
 	}
 }
@@ -304,16 +335,16 @@ void MOAITextLayout::FindSpriteSpan ( u32 idx, u32 size, u32& spanIdx, u32& span
 
 	spanSize = 0;
 
-	u32 top = this->mSprites.GetTop ();
+	size_t top = this->mSprites.GetTop ();
 	if ( !top ) return;
 	if ( this->mSprites [ 0 ].mIdx >= ( idx + size )) return;
 	if ( this->mSprites [ top - 1 ].mIdx < idx ) return;
 	
-	for ( u32 i = 0; i < top; ++i ) {
+	for ( size_t i = 0; i < top; ++i ) {
 		MOAITextSprite& sprite = this->mSprites [ i ];
 	
 		if ( sprite.mIdx >= idx ) {
-			spanIdx = i;
+			spanIdx = ( u32 )i;
 			spanSize = 1;
 			break;
 		}
@@ -363,7 +394,7 @@ bool MOAITextLayout::GetBoundsForRange ( u32 idx, u32 size, ZLRect& rect ) {
 
 		if ( glyph.mWidth > 0.0f ) {
 
-			ZLRect glyphRect = glyph.GetRect ( sprite.mPen.mX, sprite.mPen.mY, sprite.mScale.mX, sprite.mScale.mY );
+			ZLRect glyphRect = glyph.GetGlyphRect ( sprite.mPen.mX, sprite.mPen.mY, sprite.mScale.mX, sprite.mScale.mY );
 
 			// Update the glyphRect height with the size of the of the glyphset's height for
 			// the max possible line height.
@@ -400,35 +431,43 @@ MOAITextLayout::~MOAITextLayout () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLayout::PushLine ( u32 start, u32 size, const ZLRect& rect, float height, float ascent ) {
+void MOAITextLayout::PushLine ( u32 start, u32 size, const ZLVec2D& origin, const ZLRect& layoutBounds ) {
+
+	if ( layoutBounds.mYMin == layoutBounds.mYMax ) return;
 
 	MOAITextLine textLine;
 	
-	textLine.mStart			= start;
-	textLine.mSize			= size;
-	textLine.mRect			= rect;
-	textLine.mHeight		= height;
-	textLine.mAscent		= ascent;
+	textLine.mStart				= start;
+	textLine.mSize				= size;
+	
+	textLine.mOrigin			= origin;
+	textLine.mLayoutBounds		= layoutBounds;
 	
 	this->mLines.Push ( textLine );
 }
 
 //----------------------------------------------------------------//
-void MOAITextLayout::PushSprite ( u32 idx, MOAIGlyph& glyph, MOAITextStyleState& style, float x, float y, float xScale, float yScale ) {
+void MOAITextLayout::PushSprite ( const MOAITextStyledChar& styledChar, float x, float y ) {
+	
+	MOAIGlyph* glyph = styledChar.mGlyph;
+	assert ( glyph );
+	
+	MOAITextStyleState* style = styledChar.mStyle;
+	assert ( style );
 	
 	MOAITextSprite textSprite;
 	
-	textSprite.mIdx			= idx;
-	textSprite.mGlyph		= &glyph;
-	textSprite.mStyle		= &style;
+	textSprite.mIdx			= styledChar.mIdx;
+	textSprite.mGlyph		= glyph;
+	textSprite.mStyle		= style;
 	textSprite.mPen.mX		= x;
 	textSprite.mPen.mY		= y;
-	textSprite.mScale.mX	= xScale;
-	textSprite.mScale.mY	= yScale;
+	textSprite.mScale.mX	= styledChar.mScale.mX;
+	textSprite.mScale.mY	= styledChar.mScale.mY;
 	
-	textSprite.mRGBA		= style.mColor;
-	textSprite.mTexture		= style.mFont->GetGlyphTexture ( glyph );
-	textSprite.mShader		= style.mShader ? style.mShader : style.mFont->GetShader ();
+	textSprite.mRGBA		= style->mColor;
+	textSprite.mTexture		= style->mFont->GetGlyphTexture ( *glyph );
+	textSprite.mShader		= style->mShader ? style->mShader : style->mFont->GetShader ();
 	textSprite.mMask		= 0;
 
 	this->mSprites.Push ( textSprite );
@@ -462,8 +501,8 @@ void MOAITextLayout::Reset () {
 //----------------------------------------------------------------//
 void MOAITextLayout::ResetHighlights () {
 
-	u32 top = this->mSprites.GetTop ();
-	for ( u32 i = 0; i > top; ++i ) {
+	size_t top = this->mSprites.GetTop ();
+	for ( size_t i = 0; i > top; ++i ) {
 		MOAITextSprite& sprite = this->mSprites [ i ];
 		sprite.mMask = sprite.mMask & ~MOAITextSprite::MASK_COLOR;
 	}

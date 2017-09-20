@@ -19,8 +19,8 @@ private:
 
 	//----------------------------------------------------------------//
 	void				OnClose					();
-	bool				OnOpen					();
-	size_t				WriteBytes				( const void* buffer, size_t size );
+	ZLResultCode		OnOpen					();
+	ZLSizeResult		WriteBytes				( const void* buffer, size_t size );
 
 public:
 

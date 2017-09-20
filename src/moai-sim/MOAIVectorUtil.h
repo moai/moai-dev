@@ -25,7 +25,7 @@ public:
 	struct TESStesselator*	mTess;
 
 	//----------------------------------------------------------------//
-	void			AddContour				( int size, const void* vertices, int stride, int numVertices );
+	void			AddContour				( int size, const void* vertices, int stride, size_t numVertices );
 	void			AddPolygon				( const ZLPolygon2D& poly );
 	u32				GetTriangles			( MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream );
 	u32				GetTriangles			( MOAIVertexFormat& format, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes );
