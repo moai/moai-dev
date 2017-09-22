@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -8,56 +8,11 @@
 #include <zl-gfx/ZLGfxRetained.h>
 
 //================================================================//
-// ZLClonedGfxBuffer
-//================================================================//
-class ZLClonedGfxBuffer :
-	public ZLSharedConstBuffer {
-private:
-
-	friend class ZLGfxRetained;
-
-	void*				mBuffer;
-	size_t				mSize;
-	bool				mLocal;
-
-public:
-
-	GET_CONST ( void*, ConstData, mBuffer )
-	GET ( size_t, Size, mSize )
-	
-	//----------------------------------------------------------------//
-	void Delete () {
-	
-		if ( !this->mLocal ) {
-			if ( this->mBuffer ) {
-				free ( this->mBuffer );
-			}
-			delete this;
-		}
-		else {
-			this->~ZLClonedGfxBuffer (); // placement delete
-		}
-	}
-	
-	//----------------------------------------------------------------//
-	ZLClonedGfxBuffer () :
-		mBuffer ( 0 ),
-		mSize ( 0 ),
-		mLocal ( false ) {
-	}
-	
-	//----------------------------------------------------------------//
-	~ZLClonedGfxBuffer () {
-	}
-};
-
-//================================================================//
 // ZLGfxRetainedListenerRecord
 //================================================================//
 
 //----------------------------------------------------------------//
 ZLGfxListenerRecord::ZLGfxListenerRecord () :
-	mListenerHandle ( 0 ),
 	mUserdata ( 0 ),
 	mCallbackID ( UNKNOWN ),
 	mEvent ( 0 ),
@@ -136,7 +91,7 @@ void ZLGfxRetained::BindRenderbuffer ( ZLGfxHandle* handle ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::BindTexture ( ZLGfxHandle* handle ) {
+void ZLGfxRetained::SetTexture ( ZLGfxHandle* handle ) {
 
 	assert ( this->mStream );
 
@@ -145,7 +100,7 @@ void ZLGfxRetained::BindTexture ( ZLGfxHandle* handle ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::BindVertexArray ( ZLGfxHandle* handle ) {
+void ZLGfxRetained::SetVertexArray ( ZLGfxHandle* handle ) {
 
 	assert ( this->mStream );
 
@@ -280,47 +235,6 @@ void ZLGfxRetained::CompressedTexImage2D ( u32 level, u32 internalFormat, u32 wi
 	this->mStream->Write < u32 >( height );
 	this->mStream->Write < u32 >( imageSize );
 	this->mStream->Write < ZLSharedConstBuffer* >( buffer );
-}
-
-//----------------------------------------------------------------//
-ZLSharedConstBuffer* ZLGfxRetained::CopyBuffer ( ZLSharedConstBuffer* buffer ) {
-
-	if ( buffer ) {
-	
-		ZLClonedGfxBuffer* copy = 0;
-	
-		size_t bufferSize = buffer->GetSize ();
-		size_t containerSize = sizeof ( ZLClonedGfxBuffer );
-		size_t totalSize = bufferSize + containerSize;
-		
-		if (( this->mBufferTop + totalSize ) <= this->mBufferSize ) {
-		
-			copy = ( ZLClonedGfxBuffer* )(( size_t )this->mBuffer + this->mBufferTop );
-			new ( copy ) ZLClonedGfxBuffer (); // placement new
-			this->mBufferTop += containerSize;
-			
-			void* bufferCopy = ( void* )(( size_t )this->mBuffer + this->mBufferTop );
-			this->mBufferTop += bufferSize;
-			
-			copy->mSize = bufferSize;
-			copy->mBuffer = bufferCopy;
-			copy->mLocal = true;
-		}
-		else {
-	
-			copy = new ZLClonedGfxBuffer ();
-			copy->mSize = buffer->GetSize ();
-			copy->mBuffer = malloc ( copy->mSize );
-			copy->mLocal = false;
-		}
-		
-		memcpy ( copy->mBuffer, buffer->GetConstData (), bufferSize );
-		buffer = copy;
-		
-		this->mAllocated += totalSize;
-		this->mMaxAllocated = this->mMaxAllocated < this->mAllocated ? this->mAllocated : this->mMaxAllocated;
-	}
-	return buffer;
 }
 
 //----------------------------------------------------------------//
@@ -477,14 +391,14 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			}
 			case ZLGFX_BIND_TEXTURE: {
 			
-				draw.BindTexture (
+				draw.SetTexture (
 					this->mStream->Read < ZLGfxHandle* >( 0 )
 				);
 				break;
 			}
 			case ZLGFX_BIND_VERTEX_ARRAY: {
 			
-				draw.BindVertexArray (
+				draw.SetVertexArray (
 					this->mStream->Read < ZLGfxHandle* >( 0 )
 				);
 				break;
@@ -872,57 +786,34 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				
 				break;
 			}
-			case ZLGFX_UNIFORM_1F: {
-			
-				draw.Uniform1f (
-					this->mStream->Read < u32 >( 0 ),
-					this->mStream->Read < float >( 0 )
-				);
-				break;
-			}
-			case ZLGFX_UNIFORM_1I: {
-			
-				draw.Uniform1i (
-					this->mStream->Read < u32 >( 0 ),
-					this->mStream->Read < s32 >( 0 )
-				);
-				break;
-			}
-			case ZLGFX_UNIFORM_4FV: {
+			case ZLGFX_UNIFORM_FLOAT: {
 			
 				u32 location = this->mStream->Read < u32 >( 0 );
+				u32 index = this->mStream->Read < u32 >( 0 );
+				u32 width = this->mStream->Read < u32 >( 0 );
 				u32 count = this->mStream->Read < u32 >( 0 );
 				
-				float vec [ 4 ];
-				this->mStream->ReadBytes ( vec, sizeof ( float ) * 4 );
+				assert ( width < 16 );
+				
+				float vec [ 16 ];
+				this->mStream->ReadBytes ( vec, sizeof ( float ) * width );
 			
-				draw.Uniform4fv ( location, count, vec );
+				draw.UniformFloat ( location, index, width, count, vec );
 				break;
 			}
-			case ZLGFX_UNIFORM_MATRIX_3FV: {
-				
-				u32 location = this->mStream->Read < u32 >( 0 );
-				u32 count = this->mStream->Read < u32 >( 0 );
-				bool transpose = this->mStream->Read < bool >( false );
-				
-				float mtx [ 9 ];
-				this->mStream->ReadBytes ( &mtx, sizeof ( float ) * 9 );
-				
-				draw.UniformMatrix3fv ( location, count, transpose, mtx );
-				
-				break;
-			}
-			case ZLGFX_UNIFORM_MATRIX_4FV: {
-				
-				u32 location = this->mStream->Read < u32 >( 0 );
-				u32 count = this->mStream->Read < u32 >( 0 );
-				bool transpose = this->mStream->Read < bool >( false );
-				
-				float mtx [ 16 ];
-				this->mStream->ReadBytes ( &mtx, sizeof ( float ) * 16 );
-				
-				draw.UniformMatrix4fv ( location, count, transpose, mtx );
+			case ZLGFX_UNIFORM_INT: {
 			
+				u32 location = this->mStream->Read < u32 >( 0 );
+				u32 index = this->mStream->Read < u32 >( 0 );
+				u32 width = this->mStream->Read < u32 >( 0 );
+				u32 count = this->mStream->Read < u32 >( 0 );
+				
+				assert ( width < 16 );
+				
+				s32 vec [ 16 ];
+				this->mStream->ReadBytes ( vec, sizeof ( s32 ) * width );
+			
+				draw.UniformInt ( location, index, width, count, vec );
 				break;
 			}
 			case ZLGFX_USE_PROGRAM: {
@@ -1180,7 +1071,7 @@ void ZLGfxRetained::PublishEvents () {
 	
 		ZLGfxListenerRecord& record = this->mListenerRecords [ i ];
 		
-		ZLGfxListener* listener = record.mListenerHandle->GetTarget ();
+		ZLGfxListener* listener = record.mListener;
 		if ( listener ) {
 		
 			switch ( record.mCallbackID ) {
@@ -1265,35 +1156,23 @@ void ZLGfxRetained::Reset () {
 
 	assert ( this->mStream );
 
-	if ( this->mListenerRecords.GetTop () > 0 ) {
+	size_t totalListeners = this->mListenerRecords.GetTop ();
+	if ( totalListeners > 0 ) {
+	
 		this->Abandon ();
-		this->mListenerRecords.Reset ();
+		
+		for ( size_t i = 0; i < totalListeners; ++i ) {
+			this->mListenerRecords [ i ].mListener = 0;
+		}
 	}
+	this->mListenerRecords.Reset ();
 
 	this->mStream->Seek ( 0, SEEK_SET );
-	
-	this->mListenerRecords.Reset ();
 	
 	while ( this->mReleaseStack.GetTop ()) {
 		ZLRefCountedObject* object = this->mReleaseStack.Pop ();
 		object->Release ();
 	}
-	
-	if ( this->mBufferSize < this->mMaxAllocated ) {
-	
-		if ( this->mBuffer ) {
-			free ( this->mBuffer );
-		}
-		
-		size_t paddedSize = 1;
-		while ( paddedSize < this->mMaxAllocated ) paddedSize = paddedSize << 0x01;
-		
-		this->mBufferSize = paddedSize;
-		this->mBuffer = malloc ( paddedSize );
-	}
-	
-	this->mAllocated = 0;
-	this->mBufferTop = 0;
 }
 
 //----------------------------------------------------------------//
@@ -1384,58 +1263,29 @@ void ZLGfxRetained::TexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 wid
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::Uniform1f ( u32 location, float v0 ) {
+void ZLGfxRetained::UniformFloat ( u32 location, u32 index, u32 width, u32 count, const float* value ) {
 
 	assert ( this->mStream );
 
-	this->mStream->Write < u32 >( ZLGFX_UNIFORM_1F );
+	this->mStream->Write < u32 >( ZLGFX_UNIFORM_FLOAT );
 	this->mStream->Write < u32 >( location );
-	this->mStream->Write < float >( v0 );
-}
-
-//----------------------------------------------------------------//
-void ZLGfxRetained::Uniform1i ( u32 location, s32 v0 ) {
-
-	assert ( this->mStream );
-
-	this->mStream->Write < u32 >( ZLGFX_UNIFORM_1I );
-	this->mStream->Write < u32 >( location );
-	this->mStream->Write < s32 >( v0 );
-}
-
-//----------------------------------------------------------------//
-void ZLGfxRetained::Uniform4fv ( u32 location, u32 count, const float* value ) {
-
-	assert ( this->mStream );
-
-	this->mStream->Write < u32 >( ZLGFX_UNIFORM_4FV );
-	this->mStream->Write < u32 >( location );
+	this->mStream->Write < u32 >( index );
+	this->mStream->Write < u32 >( width );
 	this->mStream->Write < u32 >( count );
-	this->mStream->WriteBytes ( value, sizeof ( float ) * 4 );
+	this->mStream->WriteBytes ( value, sizeof ( float ) * width );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::UniformMatrix3fv ( u32 location, u32 count, bool transpose, const float* mtx ) {
+void ZLGfxRetained::UniformInt ( u32 location, u32 index, u32 width, u32 count, const s32* value ) {
 
 	assert ( this->mStream );
 
-	this->mStream->Write < u32 >( ZLGFX_UNIFORM_MATRIX_3FV );
+	this->mStream->Write < u32 >( ZLGFX_UNIFORM_INT );
 	this->mStream->Write < u32 >( location );
+	this->mStream->Write < u32 >( index );
+	this->mStream->Write < u32 >( width );
 	this->mStream->Write < u32 >( count );
-	this->mStream->Write < bool >( transpose );
-	this->mStream->WriteBytes ( mtx, sizeof ( float ) * 9 );
-}
-
-//----------------------------------------------------------------//
-void ZLGfxRetained::UniformMatrix4fv ( u32 location, u32 count, bool transpose, const float* mtx ) {
-
-	assert ( this->mStream );
-
-	this->mStream->Write < u32 >( ZLGFX_UNIFORM_MATRIX_4FV );
-	this->mStream->Write < u32 >( location );
-	this->mStream->Write < u32 >( count );
-	this->mStream->Write < bool >( transpose );
-	this->mStream->WriteBytes ( mtx, sizeof ( float ) * 16 );
+	this->mStream->WriteBytes ( value, sizeof ( s32 ) * width );
 }
 
 //----------------------------------------------------------------//
@@ -1478,14 +1328,11 @@ void ZLGfxRetained::Viewport ( s32 x, s32 y, u32 w, u32 h ) {
 
 //----------------------------------------------------------------//
 ZLGfxListenerRecord& ZLGfxRetained::WriteListenerRecord ( ZLGfxListener* listener, void* userdata ) {
-
-	ZLGfxListenerHandle* listenerHandle = listener->GetRetainedHandle ();
-	this->mReleaseStack.Push ( listenerHandle );
 	
 	u32 idx = ( u32 )this->mListenerRecords.GetTop ();
 	ZLGfxListenerRecord& record = this->mListenerRecords.Push ();
 
-	record.mListenerHandle		= listenerHandle;
+	record.mListener			= listener;
 	record.mUserdata			= userdata;
 	record.mCallbackID			= ZLGfxListenerRecord::UNKNOWN;
 	record.mEvent				= 0;
@@ -1498,18 +1345,9 @@ ZLGfxListenerRecord& ZLGfxRetained::WriteListenerRecord ( ZLGfxListener* listene
 
 //----------------------------------------------------------------//
 ZLGfxRetained::ZLGfxRetained () :
-	mStream ( &this->mMemStream ),
-	mBuffer ( 0 ),
-	mBufferSize ( 0 ),
-	mBufferTop ( 0 ),
-	mAllocated ( 0 ),
-	mMaxAllocated ( 0 ) {
+	mStream ( &this->mMemStream ) {
 }
 
 //----------------------------------------------------------------//
 ZLGfxRetained::~ZLGfxRetained () {
-
-	if ( this->mBuffer ) {
-		free ( this->mBuffer );
-	}
 }

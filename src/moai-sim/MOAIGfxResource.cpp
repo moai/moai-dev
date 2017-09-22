@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -121,7 +121,7 @@ void MOAIGfxResource::Affirm () {
 u32 MOAIGfxResource::Bind () {
 
 //	if ( !MOAIGfxMgr::Get ().GetHasContext ()) {
-//		MOAILog ( 0, MOAILogMessages::MOAIGfxResource_MissingDevice );
+//		MOAILog ( 0, MOAISTRING_MOAIGfxResource_MissingDevice );
 //		return false;
 //	}
 

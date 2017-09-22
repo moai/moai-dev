@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef STLSTRING_H
@@ -7,8 +7,6 @@
 #include <zl-util/STLArray.h>
 
 #include <string>
-
-using namespace std;
 
 #define STLSTRING_APPEND_VA_ARGS(str,format,top) \
 	va_list args; \
@@ -27,7 +25,7 @@ class ZLStreamAdapter;
 // STLString
 //================================================================//
 class STLString :
-	public string {
+	public std::string {
 	
 	//----------------------------------------------------------------//
 	void				zl_decode			( ZLStreamAdapter& reader, void* buffer, size_t len );
@@ -76,14 +74,14 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	inline STLString& operator= ( const string& rhs ) {
-		this->string::assign ( rhs );
+	inline STLString& operator= ( const std::string& rhs ) {
+		this->std::string::assign ( rhs );
 		return *this;
 	}
 
 	//----------------------------------------------------------------//
 	inline STLString& operator= ( const STLString& rhs ) {
-		this->string::assign ( rhs );
+		this->std::string::assign ( rhs );
 		return *this;
 	}
 
@@ -107,37 +105,37 @@ public:
 	
 	//----------------------------------------------------------------//
 	inline STLString () :
-		string () {
+		std::string () {
 	}
 
 	//----------------------------------------------------------------//
-	inline STLString ( const string& s2 ) :
-		string ( s2 ) {
+	inline STLString ( const std::string& s2 ) :
+		std::string ( s2 ) {
 	}
 
 	//----------------------------------------------------------------//
 	inline STLString ( const STLString& s2 ) :
-		string ( s2 ) {
+		std::string ( s2 ) {
 	}
 
 	//----------------------------------------------------------------//
-	inline STLString ( const string& s2, size_type pos2, size_type len2 ) :
-		string ( s2, pos2, len2 ) {
+	inline STLString ( const std::string& s2, size_type pos2, size_type len2 ) :
+		std::string ( s2, pos2, len2 ) {
 	}
 
 	//----------------------------------------------------------------//
 	inline STLString ( const char* nts ) :
-		string ( nts ) {
+		std::string ( nts ) {
 	}
 
 	//----------------------------------------------------------------//
 	inline STLString ( const char* buf, size_type bufsize ) :
-		string ( buf, bufsize ) {
+		std::string ( buf, bufsize ) {
 	}
 
 	//----------------------------------------------------------------//
 	inline STLString ( size_type repetitions, char c ) :
-		string ( repetitions, c ) {
+		std::string ( repetitions, c ) {
 	}
 
 	//----------------------------------------------------------------//

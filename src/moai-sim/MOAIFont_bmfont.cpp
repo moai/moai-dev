@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -151,8 +151,8 @@ void MOAIFont::InitWithBMFont ( cc8* filename, const u32 numPreloadedTextures, M
 				else if ( strcasecmp ( key, "base" ) == 0 ) { base = ( float )atof ( val ); }
 			} while ( !endl );
 			
-			glyphSet->SetHeight( lineSpacing );
-			glyphSet->SetAscent( base );
+			glyphSet->SetHeight ( lineSpacing );
+			glyphSet->SetAscent ( base );
 			glyphCache->ReserveTextures ( pages );
 		}
 		else if ( strcmp ( key, "page" ) == 0 ) {

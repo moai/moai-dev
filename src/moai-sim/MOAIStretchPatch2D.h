@@ -1,12 +1,11 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAISTRETCHPATCH2D_H
 #define	MOAISTRETCHPATCH2D_H
 
-#include <moai-sim/MOAIStandardDeck.h>
-
-class MOAISingleTexture;
+#include <moai-sim/MOAIDeck.h>
+#include <moai-sim/MOAIMaterialBatchHolder.h>
 
 //================================================================//
 // MOAIStretchPatchSpan
@@ -28,7 +27,8 @@ private:
 			stretchable and non-stretchable 'bands.' Grid drawing not supported.
 */
 class MOAIStretchPatch2D :
-	public MOAIStandardDeck {
+	public MOAIDeck,
+	public MOAIMaterialBatchHolder {
 private:
 
 	ZLLeanArray < MOAIStretchPatchSpan >	mRows;
@@ -56,18 +56,22 @@ private:
 	static int		_setUVRect				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	ZLBox			ComputeMaxBounds		();
 	void			DrawStretch				( u32 idx, float xStretch, float yStretch );
-	ZLBox			GetItemBounds			( u32 idx );
 	void			UpdateParams			();
+
+	//----------------------------------------------------------------//
+	virtual ZLBounds				MOAIDeck_ComputeMaxBounds		();
+	virtual void					MOAIDeck_Draw					( u32 idx );
+	virtual ZLBounds				MOAIDeck_GetBounds				( u32 idx );
+	virtual MOAICollisionShape*		MOAIDeck_GetCollisionShape		( u32 idx );
+	virtual bool					MOAIDeck_Overlap				( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
+	virtual bool					MOAIDeck_Overlap				( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIStretchPatch2D )
 	
 	//----------------------------------------------------------------//
-	using MOAIDeck::DrawIndex;
-	void			DrawIndex				( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
 					MOAIStretchPatch2D		();
 					~MOAIStretchPatch2D		();
 	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );

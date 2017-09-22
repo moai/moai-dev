@@ -80,8 +80,8 @@ int zl_socket_close(void) {
 #define WAITFD_C        (WAITFD_E|WAITFD_W)
 
 /* disable warning for "conditional expression is constant." win 8.1 winsock.h has a while(0) for FD_SET*/
-#pragma warning( push )
-#pragma warning( disable : 4127 ) 
+#pragma warning ( push )
+#pragma warning ( disable : 4127 ) 
 
 int zl_socket_waitfd(zl_socket* ps, int sw, double tm) {
     int ret;
@@ -109,7 +109,8 @@ int zl_socket_waitfd(zl_socket* ps, int sw, double tm) {
     if (sw == WAITFD_C && FD_ISSET(*ps, &efds)) return ZL_IO_CLOSED;
     return ZL_IO_DONE;
 }
-#pragma warning( pop )
+
+#pragma warning ( pop )
 
 /*-------------------------------------------------------------------------*\
 * Put socket into blocking mode

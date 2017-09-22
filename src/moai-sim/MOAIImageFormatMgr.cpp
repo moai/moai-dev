@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -12,12 +12,15 @@
 //----------------------------------------------------------------//
 MOAIImageFormat* MOAIImageFormatMgr::FindFormat ( cc8* name ) {
 
-	u32 hash = this->HashName ( name );
-	return this->mFormats.contains ( hash ) ? this->mFormats [ hash ] : 0;
+	if ( name ) {
+		u32 hash = this->HashName ( name );
+		return this->mFormats.contains ( hash ) ? this->mFormats [ hash ] : 0;
+	}
+	return 0;
 }
 
 //----------------------------------------------------------------//
-MOAIImageFormat* MOAIImageFormatMgr::FindFormat ( ZLStream& stream ) {
+MOAIImageFormat* MOAIImageFormatMgr::FindFormat ( ZLStream& stream, cc8* name ) {
 
 	size_t cursor = stream.GetCursor ();
 
@@ -35,7 +38,23 @@ MOAIImageFormat* MOAIImageFormatMgr::FindFormat ( ZLStream& stream ) {
 			if (( size == headerSize ) && format.CheckHeader ( buffer )) return &format;
 		}
 	}
-	return 0;
+	
+	formatIt = this->mFormats.begin ();
+	for ( ; formatIt != this->mFormats.end (); formatIt++ ) {
+		MOAIImageFormat& format = *formatIt->second;
+		
+		size_t headerSize = format.GetHeaderGuessSize ();
+		if ( headerSize > 0 ) {
+		
+			void* buffer = alloca ( headerSize );
+			size_t size = stream.ReadBytes ( buffer, headerSize );
+			stream.SetCursor ( cursor );
+		
+			if (( size == headerSize ) && format.GuessHeader ( buffer )) return &format;
+		}
+	}
+	
+	return this->FindFormat ( name );
 }
 
 //----------------------------------------------------------------//

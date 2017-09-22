@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAICOLOR_H
@@ -7,7 +7,7 @@
 #include <moai-sim/MOAINode.h>
 
 class MOAIDeck;
-class MOAILayer;
+class MOAIPartitionViewLayer;
 
 //================================================================//
 // MOAIColor
@@ -33,9 +33,15 @@ protected:
 	//----------------------------------------------------------------//
 	static int		_getColor			( lua_State* L );
 	static int		_moveColor			( lua_State* L );
+	static int		_packRGBA			( lua_State* L );
 	static int		_seekColor			( lua_State* L );
 	static int		_setColor			( lua_State* L );
 	static int		_setParent			( lua_State* L );
+	static int		_unpackRGBA			( lua_State* L );
+
+	//----------------------------------------------------------------//
+	bool			MOAINode_ApplyAttrOp		( u32 attrID, MOAIAttribute& attr, u32 op );
+	void			MOAINode_Update				();
 
 public:
 	
@@ -57,12 +63,10 @@ public:
 	
 	//----------------------------------------------------------------//
 	static MOAIColor*	AffirmColor			( MOAILuaState& state, int idx );
-	bool				ApplyAttrOp			( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	ZLColorVec			GetColorTrait		();
+	ZLColorVec			GetColorTrait		() const;
 	bool				IsClear				();
 						MOAIColor			();
 						~MOAIColor			();
-	void				OnDepNodeUpdate		();
 	void				RegisterLuaClass	( MOAILuaState& state );
 	void				RegisterLuaFuncs	( MOAILuaState& state );
 };

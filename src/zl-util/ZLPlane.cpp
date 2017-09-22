@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -21,10 +21,17 @@ void ZLPlane2D::Init ( const ZLVec2D& p1, const ZLVec2D& p2 ) {
 	this->mNorm = p2;
 	this->mNorm.Sub ( p1 );
 	
-	this->mNorm.Rotate90Anticlockwise ();
+	this->mNorm.Rotate90Clockwise ();
 	this->mNorm.Norm ();
 
 	this->mDist = -this->mNorm.Dot ( p1 );
+}
+
+//----------------------------------------------------------------//
+void ZLPlane2D::Init ( const ZLVec2D& n, float d ) {
+
+	this->mNorm = n;
+	this->mDist = d;
 }
 
 //----------------------------------------------------------------//

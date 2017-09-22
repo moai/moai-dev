@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -92,11 +92,6 @@ MOAIAction* MOAIActionTree::GetDefaultParent () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIActionTree::IsDone () {
-	return false;
-}
-
-//----------------------------------------------------------------//
 MOAIActionTree::MOAIActionTree () :
 	mRoot ( 0 ),
 	mProfilingEnabled ( false ),
@@ -107,18 +102,6 @@ MOAIActionTree::MOAIActionTree () :
 
 //----------------------------------------------------------------//
 MOAIActionTree::~MOAIActionTree () {
-}
-
-//----------------------------------------------------------------//
-void MOAIActionTree::OnLostChild ( MOAIAction* child ) {
-	if ( this->mRoot == child ) {
-		this->mRoot = 0;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIActionTree::OnUpdate ( double step ) {
-	UNUSED ( step );
 }
 
 //----------------------------------------------------------------//
@@ -137,7 +120,7 @@ void MOAIActionTree::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
@@ -158,4 +141,25 @@ void MOAIActionTree::SetRoot ( MOAIAction* root ) {
 void MOAIActionTree::Update ( double step ) {
 
 	this->MOAIAction::Update ( *this, step );
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIActionTree::MOAIAction_DidLoseChild ( MOAIAction* child ) {
+	if ( this->mRoot == child ) {
+		this->mRoot = 0;
+	}
+}
+
+//----------------------------------------------------------------//
+bool MOAIActionTree::MOAIAction_IsDone () {
+	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAIActionTree::MOAIAction_Update ( double step ) {
+	UNUSED ( step );
 }

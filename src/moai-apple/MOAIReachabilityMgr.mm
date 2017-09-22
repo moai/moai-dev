@@ -1,7 +1,5 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
-
-#include "pch.h"
 
 #import <moai-apple/MOAIReachability.h>
 #import <moai-apple/MOAIReachabilityMgr.h>
@@ -70,7 +68,7 @@
 
 	[ self stopListener ];
 
-	MOAIGlobals* context = MOAIGlobalsMgr::Get ();
+	ZLContext* context = ZLContextMgr::Get ();
 
 	mObserver = [[ NSNotificationCenter defaultCenter ]
 		addObserverForName:kReachabilityChangedNotification
@@ -78,10 +76,10 @@
 		queue:nil
 		usingBlock:^( NSNotification* notification ) {
 		
-			MOAIScopedContext scopedContext;
+			ZLScopedContext scopedContext;
 
-			if ( !MOAIGlobalsMgr::Check ( context )) return;
-			MOAIGlobalsMgr::Set ( context );
+			if ( !ZLContextMgr::Check ( context )) return;
+			ZLContextMgr::Set ( context );
 			
 			NSLog ( @"%@", notification.name );
 			

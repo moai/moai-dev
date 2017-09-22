@@ -1,11 +1,11 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAITEXTURE_H
 #define	MOAITEXTURE_H
 
 #include <moai-sim/MOAIImage.h>
-#include <moai-sim/MOAISingleTexture.h>
+#include <moai-sim/MOAITextureBase.h>
 
 class MOAIDataBuffer;
 class MOAIImageFormat;
@@ -17,7 +17,7 @@ class MOAIImageFormat;
 	@text	Texture class.
 */
 class MOAITexture :
-	public MOAISingleTexture {
+	public MOAITextureBase {
 private:
 
 	// for loading from file

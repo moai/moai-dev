@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -6,7 +6,6 @@
 #include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIImageFormatMgr.h>
 #include <moai-sim/MOAITexture.h>
-#include <moai-sim/MOAIMultiTexture.h>
 
 //================================================================//
 // local
@@ -59,13 +58,10 @@ int MOAITexture::_load ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAITextureBase* MOAITexture::AffirmTexture ( MOAILuaState& state, int idx ) {
 
-	MOAITextureBase* textureSet = 0;
+	MOAITextureBase* textureBase = 0;
 	
-	textureSet = state.GetLuaObject < MOAISingleTexture >( idx, false );
-	if ( textureSet ) return textureSet;
-	
-	textureSet = state.GetLuaObject < MOAIMultiTexture >( idx, false );
-	if ( textureSet ) return textureSet;
+	textureBase = state.GetLuaObject < MOAITextureBase >( idx, false );
+	if ( textureBase ) return textureBase;
 	
 	MOAITexture* texture = new MOAITexture ();
 	if ( !texture->Init ( state, idx )) {
@@ -188,7 +184,7 @@ void MOAITexture::Init ( cc8* filename, u32 transform, cc8* debugname ) {
 
 	this->Clear ();
 	
-	if ( MOAILogMessages::CheckFileExists ( filename )) {
+	if ( MOAILogMgr::CheckFileExists ( filename )) {
 		
 		this->mFilename = ZLFileSys::GetAbsoluteFilePath ( filename );
 		if ( debugname ) {
@@ -296,7 +292,7 @@ MOAITexture::MOAITexture () :
 	mAutoClearImage ( false ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAISingleTexture )
+		RTTI_EXTEND ( MOAITextureBase )
 	RTTI_END
 }
 
@@ -368,13 +364,13 @@ bool MOAITexture::OnGPUCreate () {
 //----------------------------------------------------------------//
 void MOAITexture::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	MOAISingleTexture::RegisterLuaClass ( state );
+	MOAITextureBase::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAITexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAISingleTexture::RegisterLuaFuncs ( state );
+	MOAITextureBase::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "load",					_load },
@@ -386,9 +382,9 @@ void MOAITexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAITexture::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAISingleTexture::SerializeIn ( state, serializer );
+	MOAITextureBase::SerializeIn ( state, serializer );
 	
-	STLString path = state.GetField ( -1, "mPath", "" );
+	STLString path = state.GetFieldValue ( -1, "mPath", "" );
 	
 	if ( path.size ()) {
 		this->Init ( path, DEFAULT_TRANSFORM ); // TODO: serialization
@@ -397,7 +393,7 @@ void MOAITexture::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serialize
 
 //----------------------------------------------------------------//
 void MOAITexture::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAISingleTexture::SerializeOut ( state, serializer );
+	MOAITextureBase::SerializeOut ( state, serializer );
 	
 	STLString path = ZLFileSys::GetRelativePath ( this->mFilename );
 	state.SetField ( -1, "mPath", path.str ());

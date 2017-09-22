@@ -1,23 +1,23 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIFRAMEBUFFERTEXTURE_H
 #define	MOAIFRAMEBUFFERTEXTURE_H
 
 #include <moai-sim/MOAIFrameBuffer.h>
-#include <moai-sim/MOAISingleTexture.h>
+#include <moai-sim/MOAITextureBase.h>
 
 //================================================================//
 // MOAIFrameBufferTexture
 //================================================================//
 /**	@lua	MOAIFrameBufferTexture
 	@text	This is an implementation of a frame buffer that may be
-			attached to a MOAILayer for offscreen rendering. It is
+			attached to a MOAIPartitionViewLayer for offscreen rendering. It is
 			also a texture that may be bound and used like any other.
 */
 class MOAIFrameBufferTexture :
 	public MOAIFrameBuffer,
-	public MOAISingleTexture {
+	public MOAITextureBase {
 private:
 	
 	ZLGfxHandle*		mGLColorBufferID;
@@ -32,13 +32,14 @@ private:
 	static int			_init					( lua_State* L );
 	
 	//----------------------------------------------------------------//
+	void				OnGPUBind					();
 	bool				OnGPUCreate					();
 	void				OnGPUDeleteOrDiscard		( bool shouldDelete );
 
 public:
 	
 	friend class MOAIGfxMgr;
-	friend class MOAISingleTexture;
+	friend class MOAITextureBase;
 	
 	DECL_LUA_FACTORY ( MOAIFrameBufferTexture )
 	
@@ -48,7 +49,6 @@ public:
 						~MOAIFrameBufferTexture		();
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
-	void				Render						();
 	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
 };

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -79,6 +79,7 @@ static void _renderSpan ( const int y, const int count, const FT_Span* const spa
 //================================================================//
 
 //----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIFreeTypeFontReader::_enableAntiAliasing ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFreeTypeFontReader, "U" )
 	self->mAntiAlias = state.GetValue < bool >( 2, false );
@@ -86,6 +87,28 @@ int MOAIFreeTypeFontReader::_enableAntiAliasing ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFreeTypeFontReader::_extractSystemFont ( lua_State* L ) {
+	MOAI_LUA_SETUP_CLASS ( "S" )
+
+	#ifdef __APPLE__
+
+		cc8* fontName = state.GetValue < cc8* >( 1, 0 );
+		cc8* fileName = state.GetValue < cc8* >( 2, 0 );
+		
+		if ( fontName && fileName ) {
+		
+			ZLFileStream stream;
+			stream.OpenWrite ( fileName );
+			MOAIFreeTypeFontReader::ExtractSystemFont ( fontName, stream );
+			stream.Close ();
+		}
+	#endif
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIFreeTypeFontReader::_setPenColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFreeTypeFontReader, "U" )
 	self->mPenColor = state.GetColor ( 2, 1.0f, 1.0f, 1.0f, 1.0f );
@@ -113,6 +136,16 @@ int MOAIFreeTypeFontReader::CloseFontFile () {
 
 	return ( int )OK;
 }
+
+#ifndef __APPLE__
+
+	//----------------------------------------------------------------//
+	void MOAIFreeTypeFontReader::ExtractSystemFont ( cc8* fontName, ZLStream& stream ) {
+		UNUSED ( fontName );
+		UNUSED ( stream );
+	}
+
+#endif
 
 //----------------------------------------------------------------//
 int MOAIFreeTypeFontReader::GetFaceMetrics ( MOAIFontFaceMetrics& faceMetrics ) {
@@ -211,6 +244,13 @@ int MOAIFreeTypeFontReader::OpenFontFile ( cc8* filename ) {
 //----------------------------------------------------------------//
 void MOAIFreeTypeFontReader::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIFontReader::RegisterLuaClass ( state );
+	
+	luaL_Reg regTable [] = {
+		{ "extractSystemFont",		_extractSystemFont },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

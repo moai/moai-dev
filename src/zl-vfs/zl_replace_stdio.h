@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef ZL_REPLACE_STDIO_H
@@ -51,14 +51,14 @@
 #undef fgetc
 #define fgetc zl_fgetc
 
-#undef fgetwc
-#define fgetwc zl_fgetwc
-
 #undef fgetpos
 #define fgetpos zl_fgetpos
 
 #undef fgets
 #define fgets zl_fgets
+
+#undef fgetwc
+#define fgetwc zl_fgetwc
 
 #undef fileno
 #define fileno zl_fileno
@@ -84,11 +84,11 @@
 #undef fputc
 #define fputc zl_fputc
 
-#undef fputwc
-#define fputwc zl_fputwc
-
 #undef fputs
 #define fputs zl_fputs
+
+#undef fputwc
+#define fputwc zl_fputwc
 
 #undef fread
 #define fread zl_fread

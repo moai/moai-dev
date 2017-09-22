@@ -1,10 +1,10 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
 #include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionLevel.h>
-#include <moai-sim/MOAIProp.h>
+#include <moai-sim/MOAIPartitionHull.h>
 
 //================================================================//
 // MOAIPartitionLevel
@@ -29,16 +29,16 @@ void MOAIPartitionLevel::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLe
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, u32 interfaceMask, u32 queryMask ) {
+void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, u32 interfaceMask, u32 queryMask ) {
 
 	size_t totalCells = this->mCells.Size ();
 	for ( size_t i = 0; i < totalCells; ++i ) {
-		this->mCells [ i ].GatherProps ( results, ignoreProp, interfaceMask, queryMask );
+		this->mCells [ i ].GatherHulls ( results, ignore, interfaceMask, queryMask );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLVec3D& point, u32 planeID, u32 interfaceMask, u32 queryMask ) {
+void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, const ZLVec3D& point, u32 planeID, u32 interfaceMask, u32 queryMask ) {
 
 	ZLVec2D cellPoint ( 0.0f, 0.0f );
 	
@@ -71,23 +71,23 @@ void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 			
 			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord.mX + x, coord.mY - y );
 			int addr = this->mGridSpace.GetCellAddr ( offset );
-			this->mCells [ addr ].GatherProps ( results, ignoreProp, point, interfaceMask, queryMask );
+			this->mCells [ addr ].GatherHulls ( results, ignore, point, interfaceMask, queryMask );
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask, u32 queryMask ) {
+void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask, u32 queryMask ) {
 	
 	// TODO: this is so lazy; fix it to use the plane and step through the proper cells
 	size_t totalCells = this->mCells.Size ();
 	for ( size_t i = 0; i < totalCells; ++i ) {
-		this->mCells [ i ].GatherProps ( results, ignoreProp, point, orientation, interfaceMask, queryMask );
+		this->mCells [ i ].GatherHulls ( results, ignore, point, orientation, interfaceMask, queryMask );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLRect& rect, u32 interfaceMask, u32 queryMask ) {
+void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, const ZLRect& rect, u32 interfaceMask, u32 queryMask ) {
 
 	float halfSize = this->mCellSize * 0.5f;
 
@@ -108,13 +108,13 @@ void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 			
 			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord0.mX + x, coord0.mY + y );
 			u32 addr = this->mGridSpace.GetCellAddr ( offset );
-			this->mCells [ addr ].GatherProps ( results, ignoreProp, rect, interfaceMask, queryMask );
+			this->mCells [ addr ].GatherHulls ( results, ignore, rect, interfaceMask, queryMask );
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLBox& box, u32 planeID, u32 interfaceMask, u32 queryMask ) {
+void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, const ZLBox& box, u32 planeID, u32 interfaceMask, u32 queryMask ) {
 
 	float halfSize = this->mCellSize * 0.5f;
 
@@ -136,13 +136,13 @@ void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 			
 			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord0.mX + x, coord0.mY + y );
 			u32 addr = this->mGridSpace.GetCellAddr ( offset );
-			this->mCells [ addr ].GatherProps ( results, ignoreProp, box, interfaceMask, queryMask );
+			this->mCells [ addr ].GatherHulls ( results, ignore, box, interfaceMask, queryMask );
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLFrustum& frustum, u32 planeID, u32 interfaceMask, u32 queryMask ) {
+void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, const ZLFrustum& frustum, u32 planeID, u32 interfaceMask, u32 queryMask ) {
 
 	float halfSize = this->mCellSize * 0.5f;
 
@@ -164,7 +164,7 @@ void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 			
 			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord0.mX + x, coord0.mY + y );
 			u32 addr = this->mGridSpace.GetCellAddr ( offset );
-			this->mCells [ addr ].GatherProps ( results, ignoreProp, frustum, interfaceMask, queryMask );
+			this->mCells [ addr ].GatherHulls ( results, ignore, frustum, interfaceMask, queryMask );
 		}
 	}
 }
@@ -183,10 +183,10 @@ void MOAIPartitionLevel::Init ( float cellSize, u32 width, u32 height ) {
 }
 
 //----------------------------------------------------------------//
-MOAIPartitionCell* MOAIPartitionLevel::GetCell ( MOAIProp& prop ) {
+MOAIPartitionCell* MOAIPartitionLevel::GetCell ( MOAIPartitionHull& hull ) {
 
 	ZLVec3D loc;
-	prop.mWorldBounds.GetCenter ( loc );
+	hull.mWorldBounds.GetCenter ( loc );
 	
 	MOAICellCoord coord = this->mGridSpace.GetCellCoord ( loc.mX, loc.mY );
 	u32 cellAddr = this->mGridSpace.GetCellAddr ( coord );
@@ -204,13 +204,8 @@ MOAIPartitionLevel::~MOAIPartitionLevel () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLevel::PlaceProp ( MOAIProp& prop ) {
+void MOAIPartitionLevel::PlaceHull ( MOAIPartitionHull& hull ) {
 
-	//ZLVec3D loc;
-	//prop.mWorldBounds.GetCenter ( loc );
-	//MOAICellCoord coord = this->mGridSpace.GetCellCoord ( loc.mX, loc.mY );
-	//printf ( "cell %d ( %d, %d )\n", this->mGridSpace.GetCellAddr ( coord ), coord.mX, coord.mY );
-
-	MOAIPartitionCell* cell = this->GetCell ( prop );
-	cell->InsertProp ( prop );
+	MOAIPartitionCell* cell = this->GetCell ( hull );
+	cell->InsertHull ( hull );
 }

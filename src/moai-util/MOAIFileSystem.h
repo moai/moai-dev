@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIOFILESYSTEM_H
@@ -11,7 +11,7 @@
 	@text	Functions for manipulating the file system.
 */
 class MOAIFileSystem :
-	public MOAIGlobalClass < MOAIFileSystem, MOAILuaObject > {
+	public ZLContextClass < MOAIFileSystem, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//

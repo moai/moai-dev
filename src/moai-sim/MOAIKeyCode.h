@@ -110,7 +110,7 @@
 	@const	OEM_102				This is either the [<] key or the [\] key on the RT 102-key keyboard.
 */
 class MOAIKeyCode :
-	public MOAIGlobalClass < MOAIKeyCode, MOAILuaObject > {
+	public ZLContextClass < MOAIKeyCode, MOAILuaObject > {
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIKeyCode )

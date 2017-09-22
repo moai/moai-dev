@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -34,9 +34,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( VIEW_WIDTH, VIEW_HEIGHT )
 viewport:setScale ( VIEW_WIDTH, -VIEW_HEIGHT )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 file = assert ( io.open ( 'shader.vsh', mode ))
 vsh = file:read ( '*all' )

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef STLSET_H
@@ -6,14 +6,12 @@
 
 #include <set>
 
-using namespace std;
-
 //================================================================//
 // STLSet
 //================================================================//
-template < typename KEY, typename COMPARE = less < KEY > >
+template < typename KEY, typename COMPARE = std::less < KEY > >
 class STLSet :
-	public set < KEY, COMPARE > {
+	public std::set < KEY, COMPARE > {
 public:
 
 	//----------------------------------------------------------------//

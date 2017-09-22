@@ -1,8 +1,7 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIMaterialBatch.h>
 
@@ -251,7 +250,19 @@ void MOAIGrid::Fill ( u32 value ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIGrid::GetTile ( int xTile, int yTile ) {
+u32 MOAIGrid::GetTile ( int addr ) const {
+
+	u32 size = ( u32 )this->mTiles.Size (); // TODO: cast
+
+	if ( size ) {
+		addr = addr % size;
+		return this->mTiles [ addr ];
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+u32 MOAIGrid::GetTile ( int xTile, int yTile ) const {
 
 	MOAICellCoord coord ( xTile, yTile );
 	if ( this->IsValidCoord ( coord )) {
@@ -275,6 +286,8 @@ MOAIGrid::~MOAIGrid () {
 
 //----------------------------------------------------------------//
 void MOAIGrid::OnResize () {
+
+	// TODO: this should be smarter
 
 	this->mTiles.Init ( this->GetTotalCells ());
 	this->mTiles.Fill ( 0 );
@@ -315,7 +328,7 @@ void MOAIGrid::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer )
 	this->MOAIGridSpace::SerializeIn ( state, serializer );
 	this->mTiles.Init ( this->MOAIGridSpace::GetTotalCells ());
 
-	state.GetField ( -1, "mData" );
+	state.PushField ( -1, "mData" );
 
 	if ( state.IsType ( -1, LUA_TSTRING )) {
 		
@@ -357,12 +370,12 @@ void MOAIGrid::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) 
 }
 
 //----------------------------------------------------------------//
-void MOAIGrid::SetTile ( u32 addr, u32 tile ) {
+void MOAIGrid::SetTile ( int addr, u32 tile ) {
 
 	u32 size = ( u32 )this->mTiles.Size (); // TODO: cast
 
 	if ( size ) {
-		addr = addr % this->mTiles.Size ();
+		addr = addr % size;
 		this->mTiles [ addr ] = tile;
 	}
 }
@@ -396,32 +409,4 @@ size_t MOAIGrid::StreamTilesOut ( ZLStream* stream ) {
 
 	size_t size = this->mTiles.Size () * sizeof ( u32 );
 	return stream->WriteBytes ( this->mTiles, size );
-}
-
-//----------------------------------------------------------------//
-void MOAIGrid::Draw ( MOAIDeck* deck, MOAIDeckRemapper* remapper, MOAIMaterialBatch& materials, const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
-
-	ZLVec3D offset	= ZLVec3D::ORIGIN;
-	ZLVec3D scale	= ZLVec3D::AXIS;
-	
-	float tileWidth = this->GetTileWidth ();
-	float tileHeight = this->GetTileHeight ();
-	
-	for ( int y = c0.mY; y <= c1.mY; ++y ) {
-		for ( int x = c0.mX; x <= c1.mX; ++x ) {
-			
-			MOAICellCoord wrap = this->WrapCellCoord ( x, y );
-			u32 idx = this->GetTile ( wrap.mX, wrap.mY );
-			
-			MOAICellCoord coord ( x, y );
-			ZLVec2D loc = this->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
-
-			offset.mX	= loc.mX;
-			offset.mY	= loc.mY;
-			scale.mX	= tileWidth;
-			scale.mY	= tileHeight;
-
-			deck->Draw ( MOAIDeckRemapper::Remap ( remapper, idx ), materials, offset, scale );
-		}
-	}
 }

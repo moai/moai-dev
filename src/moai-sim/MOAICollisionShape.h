@@ -1,50 +1,44 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAICOLLISIONSHAPE_H
 #define	MOAICOLLISIONSHAPE_H
 
-class MOAITransformBase;
+class MOAIOverlap;
+class MOAIOverlapResolver;
+class MOAICollisionPrim;
+class MOAICollisionPrimVisitor;
+class MOAIMoveConstraintAccumulator2D;
 
 //================================================================//
 // MOAICollisionShape
 //================================================================//
-class MOAICollisionShape {
+class MOAICollisionShape :
+	public ZLRefCountedObject {
 private:
 
-	// the intent is to determing a fine-gained overlap
-	// geometry is given in *local* space
-	// to overlap, 'self' and 'other' transforms must be provided
-	// it's up to each overlap implementation to do the math in whatever space is appropriate
+	friend class MOAICollisionPrimVisitor;
 
-	enum {
-		AABB,
-		BOX,
-		CONVEX_POLYGON,
-		POLYGON,
-		QUAD,
-		NONE,
-	};
-
-	ZLRect	mAABB;
-	ZLQuad	mQuad;
-	ZLBox	mBox;
-
-	u32		mType;
+	ZLBounds		mBounds;
+	
+	ZLLeanArray < MOAICollisionPrim* >	mShapes;
 
 	//----------------------------------------------------------------//
-	static bool		Overlap					( const MOAITransformBase& t0, const ZLQuad& q0, const MOAITransformBase& t1, const ZLQuad& q1, ZLBox& bounds );
+	void			Bless					();
 
 public:
 	
+	GET ( ZLBounds&, Bounds, mBounds )
+	
 	//----------------------------------------------------------------//
-					MOAICollisionShape		();
-					~MOAICollisionShape		();
-	bool			Overlap					( const MOAITransformBase& selfTransform, const MOAITransformBase& otherTransform, const MOAICollisionShape& otherShape, ZLBox& bounds ) const;
-	void			Set						();
-	void			Set						( const ZLRect& aabb );
-	void			Set						( const ZLBox& box );
-	void			Set						( const ZLQuad& quad );
+	void			Clear							();
+	void			Draw							( const ZLAffine3D& localToWorldMtx );
+					MOAICollisionShape				();
+					~MOAICollisionShape				();
+	void			ReserveShapes					( u32 totalShapes );
+	void			Set								( u32 idx, const ZLBox& box );
+	void			Set								( u32 idx, const ZLQuad& quad );
+	void			Set								( u32 idx, const ZLRect& rect );
 };
 
 #endif

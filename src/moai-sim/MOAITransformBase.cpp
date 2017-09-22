@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -221,26 +221,29 @@ int	MOAITransformBase::_getWorldZNormal ( lua_State* L ) {
 	@opt	number x			Default value is 0.
 	@opt	number y			Default value is 0.
 	@opt	number z			Default value is 0.
+	@opt	number w			Default value is 1.
 	@out	number x
 	@out	number y
 	@out	number z
+	@out	number w
 */
 int MOAITransformBase::_modelToWorld ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
 
 	self->ForceUpdate ();
 
-	ZLVec3D loc;
+	ZLVec4D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );
 	loc.mY = state.GetValue < float >( 3, 0.0f );
 	loc.mZ = state.GetValue < float >( 4, 0.0f );
+	loc.mW = state.GetValue < float >( 5, 1.0f );
 
 	ZLAffine3D modelToWorld = self->GetLocalToWorldMtx ();
 	modelToWorld.Transform ( loc );
 
 	state.Push ( loc );
 
-	return 3;
+	return 4;
 }
 
 //----------------------------------------------------------------//
@@ -258,7 +261,7 @@ int MOAITransformBase::_setParent ( lua_State* L ) {
 	
 	self->SetAttrLink ( PACK_ATTR ( MOAITransformBase, INHERIT_TRANSFORM ), parent, PACK_ATTR ( MOAITransformBase, TRANSFORM_TRAIT ));
 	
-	//MOAILogF ( state, MOAILogMessages::MOAI_FunctionDeprecated_S, "setParent" );
+	//MOAILogF ( state, MOAISTRING_FunctionDeprecated_S, "setParent" );
 	
 	return 0;
 }
@@ -271,97 +274,34 @@ int MOAITransformBase::_setParent ( lua_State* L ) {
 	@opt	number x			Default value is 0.
 	@opt	number y			Default value is 0.
 	@opt	number z			Default value is 0.
+	@opt	number w			Default value is 1.
 	@out	number x
 	@out	number y
 	@out	number z
+	@out	number w
 */
 int MOAITransformBase::_worldToModel ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
 
 	self->ForceUpdate ();
 
-	ZLVec3D loc;
+	ZLVec4D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );
 	loc.mY = state.GetValue < float >( 3, 0.0f );
 	loc.mZ = state.GetValue < float >( 4, 0.0f );
+	loc.mW = state.GetValue < float >( 5, 1.0f );
 
 	ZLAffine3D worldToModel = self->GetWorldToLocalMtx ();
 	worldToModel.Transform ( loc );
 
 	state.Push ( loc );
 
-	return 3;
+	return 4;
 }
 
 //================================================================//
 // MOAITransformBase
 //================================================================//
-
-//----------------------------------------------------------------//
-bool MOAITransformBase::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
-
-	// TODO: these values may need to be cached for performance reasons
-	if ( MOAITransformBaseAttr::Check ( attrID )) {
-
-		switch ( UNPACK_ATTR ( attrID )) {
-			
-			case ATTR_WORLD_X_LOC:
-				attrOp.Apply ( this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R0 ], op, MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_FLOAT );
-				return true;
-			
-			case ATTR_WORLD_Y_LOC:
-				attrOp.Apply ( this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R1 ], op, MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_FLOAT );
-				return true;
-			
-			case ATTR_WORLD_Z_LOC:
-				attrOp.Apply ( this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R2 ], op, MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_FLOAT );
-				return true;
-			
-			case ATTR_WORLD_Z_ROT: {
-				float rot = ( float )( atan2 ( this->mLocalToWorldMtx.m [ ZLAffine3D::C0_R0 ], this->mLocalToWorldMtx.m [ ZLAffine3D::C0_R1 ]) * R2D );
-				attrOp.Apply ( rot, op, MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_FLOAT );
-				return true;
-			}
-			case ATTR_WORLD_X_SCL: {
-				
-				ZLVec3D axis;
-			
-				axis.mX =	this->mLocalToWorldMtx.m [ ZLAffine3D::C0_R0 ];
-				axis.mY =	this->mLocalToWorldMtx.m [ ZLAffine3D::C0_R1 ];
-				axis.mZ =	this->mLocalToWorldMtx.m [ ZLAffine3D::C0_R2 ];
-			
-				attrOp.Apply ( axis.Length (), op, MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_FLOAT );
-				return true;
-			}
-			case ATTR_WORLD_Y_SCL: {
-				
-				ZLVec3D axis;
-			
-				axis.mX =	this->mLocalToWorldMtx.m [ ZLAffine3D::C1_R0 ];
-				axis.mY =	this->mLocalToWorldMtx.m [ ZLAffine3D::C1_R1 ];
-				axis.mZ =	this->mLocalToWorldMtx.m [ ZLAffine3D::C1_R2 ];
-				
-				attrOp.Apply ( axis.Length (), op, MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_FLOAT );
-				return true;
-			}
-			case ATTR_WORLD_Z_SCL: {
-				
-				ZLVec3D axis;
-			
-				axis.mX =	this->mLocalToWorldMtx.m [ ZLAffine3D::C2_R0 ];
-				axis.mY =	this->mLocalToWorldMtx.m [ ZLAffine3D::C2_R1 ];
-				axis.mZ =	this->mLocalToWorldMtx.m [ ZLAffine3D::C2_R2 ];
-				
-				attrOp.Apply ( axis.Length (), op, MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_FLOAT );
-				return true;
-			}
-			case TRANSFORM_TRAIT:
-				attrOp.ApplyNoAdd < ZLAffine3D* >( &this->mLocalToWorldMtx, op, MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_TRANSFORM );
-				return true;
-		}
-	}
-	return false;
-}
 
 //----------------------------------------------------------------//
 const ZLAffine3D& MOAITransformBase::GetLocalToWorldMtx () const {
@@ -398,33 +338,6 @@ MOAITransformBase::MOAITransformBase () {
 
 //----------------------------------------------------------------//
 MOAITransformBase::~MOAITransformBase () {
-}
-
-//----------------------------------------------------------------//
-void MOAITransformBase::OnDepNodeUpdate () {
-	
-	this->BuildLocalToWorldMtx ( this->mLocalToWorldMtx );
-	
-	const ZLAffine3D* inherit = this->GetLinkedValue < ZLAffine3D* >( MOAITransformBaseAttr::Pack ( INHERIT_TRANSFORM ), 0 );
-	if ( inherit ) {
-		this->mLocalToWorldMtx.Append ( *inherit );
-	}
-	else {
-	
-		inherit = this->GetLinkedValue < ZLAffine3D* >( MOAITransformBaseAttr::Pack ( INHERIT_LOC ), 0 );
-		if ( inherit ) {
-			
-			ZLVec3D loc = this->mLocalToWorldMtx.GetTranslation ();
-			
-			inherit->Transform ( loc );
-			
-			this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R0 ] = loc.mX;
-			this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R1 ] = loc.mY;
-			this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R2 ] = loc.mZ;
-		}
-	}
-	
-	this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
 }
 
 //----------------------------------------------------------------//
@@ -471,4 +384,104 @@ void MOAITransformBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAITransformBase::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	// TODO: these values may need to be cached for performance reasons
+	if ( MOAITransformBaseAttr::Check ( attrID )) {
+
+		switch ( UNPACK_ATTR ( attrID )) {
+			
+			case ATTR_WORLD_X_LOC:
+				attr.Apply ( this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R0 ], op, MOAIAttribute::ATTR_READ );
+				return true;
+			
+			case ATTR_WORLD_Y_LOC:
+				attr.Apply ( this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R1 ], op, MOAIAttribute::ATTR_READ );
+				return true;
+			
+			case ATTR_WORLD_Z_LOC:
+				attr.Apply ( this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R2 ], op, MOAIAttribute::ATTR_READ );
+				return true;
+			
+			case ATTR_WORLD_Z_ROT: {
+				float rot = ( float )( atan2 ( this->mLocalToWorldMtx.m [ ZLAffine3D::C0_R0 ], this->mLocalToWorldMtx.m [ ZLAffine3D::C0_R1 ]) * R2D );
+				attr.Apply ( rot, op, MOAIAttribute::ATTR_READ );
+				return true;
+			}
+			case ATTR_WORLD_X_SCL: {
+				
+				ZLVec3D axis;
+			
+				axis.mX =	this->mLocalToWorldMtx.m [ ZLAffine3D::C0_R0 ];
+				axis.mY =	this->mLocalToWorldMtx.m [ ZLAffine3D::C0_R1 ];
+				axis.mZ =	this->mLocalToWorldMtx.m [ ZLAffine3D::C0_R2 ];
+			
+				attr.Apply ( axis.Length (), op, MOAIAttribute::ATTR_READ );
+				return true;
+			}
+			case ATTR_WORLD_Y_SCL: {
+				
+				ZLVec3D axis;
+			
+				axis.mX =	this->mLocalToWorldMtx.m [ ZLAffine3D::C1_R0 ];
+				axis.mY =	this->mLocalToWorldMtx.m [ ZLAffine3D::C1_R1 ];
+				axis.mZ =	this->mLocalToWorldMtx.m [ ZLAffine3D::C1_R2 ];
+				
+				attr.Apply ( axis.Length (), op, MOAIAttribute::ATTR_READ );
+				return true;
+			}
+			case ATTR_WORLD_Z_SCL: {
+				
+				ZLVec3D axis;
+			
+				axis.mX =	this->mLocalToWorldMtx.m [ ZLAffine3D::C2_R0 ];
+				axis.mY =	this->mLocalToWorldMtx.m [ ZLAffine3D::C2_R1 ];
+				axis.mZ =	this->mLocalToWorldMtx.m [ ZLAffine3D::C2_R2 ];
+				
+				attr.Apply ( axis.Length (), op, MOAIAttribute::ATTR_READ );
+				return true;
+			}
+			case TRANSFORM_TRAIT:
+			
+				attr.ApplyNoAdd ( this->mLocalToWorldMtx, op, MOAIAttribute::ATTR_READ );
+				return true;
+		}
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAITransformBase::MOAINode_Update () {
+	
+	this->MOAITransformBase_BuildLocalToWorldMtx ( this->mLocalToWorldMtx );
+	
+	MOAIAttribute attr;
+	if ( this->PullLinkedAttr ( MOAITransformBaseAttr::Pack ( INHERIT_TRANSFORM ), attr )) {
+		const ZLAffine3D inherit = attr.GetValue ( ZLAffine3D::IDENT );
+		this->mLocalToWorldMtx.Append ( inherit );
+	}
+	else {
+	
+		if ( this->PullLinkedAttr ( MOAITransformBaseAttr::Pack ( INHERIT_LOC ), attr )) {
+			
+			const ZLAffine3D inherit = attr.GetValue ( ZLAffine3D::IDENT );
+			
+			ZLVec3D loc = this->mLocalToWorldMtx.GetTranslation ();
+			
+			inherit.Transform ( loc );
+			
+			this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R0 ] = loc.mX;
+			this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R1 ] = loc.mY;
+			this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R2 ] = loc.mZ;
+		}
+	}
+	
+	this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
 }

@@ -1,14 +1,14 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
 
 MOAISim.openWindow ( "test", 320, 480 )
 
-MOAIDebugLines.setStyle ( MOAIDebugLines.PARTITION_CELLS, 2, 1, 1, 1 )
-MOAIDebugLines.setStyle ( MOAIDebugLines.PARTITION_PADDED_CELLS, 1, 0.5, 0.5, 0.5 )
-MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 2, 0.75, 0.75, 0.75 )
+MOAIDebugLinesMgr.setStyle ( MOAIProp.DEBUG_DRAW_PARTITION_CELLS, 2, 1, 1, 1 )
+MOAIDebugLinesMgr.setStyle ( MOAIProp.DEBUG_DRAW_PARTITION_PADDED_CELLS, 1, 0.5, 0.5, 0.5 )
+MOAIDebugLinesMgr.setStyle ( MOAIProp.DEBUG_DRAW_WORLD_BOUNDS, 4, 1, 0, 1 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
@@ -20,19 +20,19 @@ partition:setLevel ( 1, 256, 4, 4 )
 partition:setLevel ( 2, 128, 8, 8 )
 partition:setLevel ( 3, 96, 96, 12 )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:setPartition ( partition )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
-gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "moai.png" )
-gfxQuad:setRect ( -64, -64, 64, 64 )
+spriteDeck = MOAISpriteDeck2D.new ()
+spriteDeck:setTexture ( '../resources/moai.png' )
+spriteDeck:setRect ( -64, -64, 64, 64 )
 
-prop = MOAIProp2D.new ()
-prop:setDeck ( gfxQuad )
-layer:insertProp ( prop )
+prop = MOAIProp.new ()
+prop:setDeck ( spriteDeck )
+prop:setPartition ( layer )
 
-prop:setLoc ( -64, 64 )
-prop:moveLoc ( 128, -128, 3 )
-prop:moveScl ( -0.5, -0.5, 3 )
+prop:setLoc ( -64, 64, 0 )
+prop:moveLoc ( 128, -128, 0, 3 )
+prop:moveScl ( -0.5, -0.5, 0, 3 )

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAITRACE_H
@@ -88,7 +88,7 @@ public:
 	@text	Internal debugging and hooking class.
 */
 class MOAITrace :
-	public MOAIGlobalClass < MOAITrace, MOAILuaObject > {
+	public ZLContextClass < MOAITrace, MOAILuaObject > {
 protected:
 
 	typedef STLMap < const void*, MOAIFuncTrace >::iterator FuncTraceIt;

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIDIALOGANDROID_H
@@ -20,7 +20,7 @@
 	@const	DIALOG_RESULT_CANCEL	Result code when the dialog is dismissed by pressing the cancel button.
 */
 class MOAIDialogAndroid :
-	public MOAIGlobalClass < MOAIDialogAndroid, MOAILuaObject > {
+	public ZLContextClass < MOAIDialogAndroid, MOAILuaObject > {
 private:
 
 	MOAILuaStrongRef	mDialogCallback;

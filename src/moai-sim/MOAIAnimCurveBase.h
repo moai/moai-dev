@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIANIMCURVEBASE_H
@@ -65,15 +65,19 @@ protected:
 	//----------------------------------------------------------------//
 	static int			_getLength			( lua_State* L );
 	static int			_reserveKeys		( lua_State* L );
+	static int			_setTime			( lua_State* L );
 	static int			_setWrapMode		( lua_State* L );
 
 	//----------------------------------------------------------------//
-	virtual void		ApplyValueAttrOp	( MOAIAttrOp& attrOp, u32 op ) = 0;
-	virtual void		GetDelta			( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const = 0;
-	MOAIAnimKeySpan		GetSpan				( float time ) const;
-	virtual void		GetValue			( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) const = 0;
-	virtual void		GetZero				( MOAIAttrOp& attrOp ) const = 0;
-	virtual void		ReserveSamples		( u32 total ) = 0;
+	virtual void		ApplyValueAttrOp		( MOAIAttribute& attr, u32 op ) = 0;
+	virtual void		GetDelta				( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const = 0;
+	MOAIAnimKeySpan		GetSpan					( float time ) const;
+	virtual void		GetValue				( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const = 0;
+	virtual void		GetZero					( MOAIAttribute& attr ) const = 0;
+	virtual void		ReserveSamples			( u32 total ) = 0;
+
+	//----------------------------------------------------------------//
+	bool				MOAINode_ApplyAttrOp	( u32 attrID, MOAIAttribute& attr, u32 op );
 
 public:
 	
@@ -93,14 +97,13 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	bool				ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	void				Clear					();
 	virtual void		Draw					( u32 resolution ) const;
 	u32					FindKeyID				( float time ) const;
-	void				GetDelta				( MOAIAttrOp& attrOp, float t0, float t1 );
+	void				GetDelta				( MOAIAttribute& attr, float t0, float t1 );
 	const MOAIAnimKey&	GetKey					( u32 id ) const;
 	float				GetLength				() const;
-	void				GetValue				( MOAIAttrOp& attrOp, float time );
+	void				GetValue				( MOAIAttribute& attr, float time );
 						MOAIAnimCurveBase		();
 						~MOAIAnimCurveBase		();
 	void				RegisterLuaClass		( MOAILuaState& state );

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 #ifndef	MOAIQUADBRUSH_H
 #define	MOAIQUADBRUSH_H
@@ -25,7 +25,7 @@ public:
 	ZLQuad	mUVQuad;
 
 	//----------------------------------------------------------------//
-	static void			BindVertexFormat	( MOAIGfxVertexCache& vertexCache );
+	static void			BindVertexFormat	();
 	void				Draw				();
 	void				Draw				( float xOff, float yOff, float zOff );
 	void				Draw				( float xOff, float yOff, float zOff, float xScale, float yScale );

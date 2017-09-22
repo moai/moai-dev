@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAICOROUTINE_H
@@ -41,12 +41,14 @@ private:
 	static int			_step					( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void				OnStart					();
-	void				OnStop					();
 	int					Resume					( float step );
-
-protected:
-	STLString			GetDebugInfo			() const;
+	
+	//----------------------------------------------------------------//
+	STLString			MOAIAction_GetDebugInfo		() const;
+	bool				MOAIAction_IsDone			();
+	void				MOAIAction_Start			();
+	void				MOAIAction_Stop				();
+	void				MOAIAction_Update			( double step );
 
 public:
 	
@@ -54,10 +56,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	MOAIAction*			GetDefaultParent		();
-	bool				IsDone					();
 						MOAICoroutine			();
 						~MOAICoroutine			();
-	void				OnUpdate				( double step );
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 };

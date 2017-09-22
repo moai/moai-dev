@@ -1,13 +1,11 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIDECKREMAPPER_H
 #define	MOAIDECKREMAPPER_H
 
+#include <moai-sim/MOAIDeckProxy.h>
 #include <moai-sim/MOAINode.h>
-
-class MOAIDeck;
-class MOAILayer;
 
 //================================================================//
 // MOAIDeckRemapper
@@ -18,29 +16,31 @@ class MOAILayer;
 			or driven using MOAIAnim or MOAIAnimCurve.
 */
 class MOAIDeckRemapper :
-	public virtual MOAINode {
+	public virtual MOAINode,
+	public virtual MOAIDeckProxy {
 protected:
 	
 	u32						mBase;
 	ZLLeanArray < u32 >		mRemap;
 	
 	//----------------------------------------------------------------//
-	static int		_reserve				( lua_State* L );
-	static int		_setBase				( lua_State* L );
-	static int		_setRemap				( lua_State* L );
+	static int			_reserve				( lua_State* L );
+	static int			_setBase				( lua_State* L );
+	static int			_setRemap				( lua_State* L );
+
+	//----------------------------------------------------------------//
+	u32					MOAIDeckProxy_Remap				( u32 idx );
+	bool				MOAINode_ApplyAttrOp			( u32 attrID, MOAIAttribute& attr, u32 op );
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIDeckRemapper )
 	
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-					MOAIDeckRemapper		();
-					~MOAIDeckRemapper		();
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
-	u32				Remap					( u32 idx ) const;
-	static u32		Remap					( const MOAIDeckRemapper* remapper, u32 idx );
+						MOAIDeckRemapper				();
+						~MOAIDeckRemapper				();
+	void				RegisterLuaClass				( MOAILuaState& state );
+	void				RegisterLuaFuncs				( MOAILuaState& state );
 };
 
 #endif

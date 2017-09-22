@@ -1,0 +1,649 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\3rdparty\assimp\code\3DSExporter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\3DSHelper.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\3DSLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\ACLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\ASELoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\ASEParser.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\AssbinExporter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\AssbinLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\assbin_chunks.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\AssxmlExporter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\B3DImporter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\BaseImporter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\BaseProcess.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\Bitmap.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\BlenderBMesh.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\BlenderDNA.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\BlenderIntermediate.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\BlenderLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\BlenderModifier.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\BlenderScene.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\BlenderSceneGen.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\BlenderTessellator.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\BlobIOSystem.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\BVHLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\ByteSwapper.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\CalcTangentsProcess.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\CInterfaceIOWrapper.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\COBLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\COBScene.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\ColladaExporter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\ColladaHelper.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\ColladaLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\ColladaParser.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\ComputeUVMappingProcess.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\ConvertToLHProcess.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\CSMLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\D3MFImporter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\D3MFOpcPackage.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\DeboneProcess.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\DefaultIOStream.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\DefaultIOSystem.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\DefaultProgressHandler.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\Defines.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\DXFHelper.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\DXFLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\Exceptional.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\fast_atof.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\FBXCompileConfig.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\FBXConverter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\FBXDocument.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\FBXDocumentUtil.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\FBXImporter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\FBXImportSettings.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\FBXMeshGeometry.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\FBXParser.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\FBXProperties.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\FBXTokenizer.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\FBXUtil.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\FileLogStream.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\FileSystemFilter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\FindDegenerates.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\FindInstancesProcess.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\FindInvalidDataProcess.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\FixNormalsStep.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\GenericProperty.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\GenFaceNormalsProcess.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\GenVertexNormalsProcess.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\glTFAsset.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\glTFAssetWriter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\glTFExporter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\glTFImporter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\HalfLifeFileData.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\Hash.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\HMPFileData.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\HMPLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\IFCLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\IFCReaderGen.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\IFCUtil.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\IFF.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\Importer.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\ImproveCacheLocality.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\IRRLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\IRRMeshLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\IRRShared.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\irrXMLWrapper.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\JoinVerticesProcess.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\LimitBoneWeightsProcess.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\LineSplitter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\LogAux.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\LWOAnimation.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\LWOFileData.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\LWOLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\LWSLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\Macros.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\MakeVerboseFormat.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\MaterialSystem.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\MathFunctions.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\MD2FileData.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\MD2Loader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\MD2NormalTable.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\MD3FileData.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\MD3Loader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\MD4FileData.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\MD5Loader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\MD5Parser.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\MDCFileData.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\MDCLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\MDCNormalTable.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\MDLDefaultColorMap.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\MDLFileData.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\MDLLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\MemoryIOWrapper.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\MS3DLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\NDOLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\NFFLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\ObjExporter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\ObjFileData.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\ObjFileImporter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\ObjFileMtlImporter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\ObjFileParser.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\ObjTools.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\OFFLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\OgreBinarySerializer.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\OgreImporter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\OgreParsingUtils.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\OgreStructs.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\OgreXmlSerializer.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\OptimizeGraph.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\OptimizeMeshes.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\ParsingUtils.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\PlyExporter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\PlyLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\PlyParser.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\PolyTools.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\PretransformVertices.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\ProcessHelper.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\Profiler.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\Q3BSPFileData.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\Q3BSPFileImporter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\Q3BSPFileParser.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\Q3BSPZipArchive.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\Q3DLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\qnan.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\RawLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\RemoveComments.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\RemoveRedundantMaterials.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\RemoveVCProcess.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\SceneCombiner.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\ScenePreprocessor.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\ScenePrivate.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\SGSpatialSort.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\SIBImporter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\SkeletonMeshBuilder.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\SMDLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\SmoothingGroups.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\SortByPTypeProcess.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\SpatialSort.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\SplitByBoneCountProcess.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\SplitLargeMeshes.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\StandardShapes.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\StdOStreamLogStream.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\StepExporter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\STEPFile.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\STEPFileEncoding.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\STEPFileReader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\STLExporter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\STLLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\StreamReader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\StreamWriter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\StringComparison.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\StringUtils.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\Subdivision.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\TargetAnimation.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\TerragenLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\TextureTransform.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\TinyFormatter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\TriangulateProcess.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\UnrealLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\ValidateDataStructure.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\Vertex.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\VertexTriangleAdjacency.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\Win32DebugLogStream.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\XFileExporter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\XFileHelper.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\XFileImporter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\XFileParser.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\XGLLoader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\code\XMLTools.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\clipper\clipper.hpp" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\ConvertUTF\ConvertUTF.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\irrXML\CXMLReaderImpl.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\irrXML\heapsort.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\irrXML\irrArray.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\irrXML\irrString.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\irrXML\irrTypes.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\irrXML\irrXML.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\openddlparser\include\openddlparser\DDLNode.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\openddlparser\include\openddlparser\OpenDDLCommon.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\openddlparser\include\openddlparser\OpenDDLExport.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\openddlparser\include\openddlparser\OpenDDLParser.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\openddlparser\include\openddlparser\OpenDDLParserUtils.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\openddlparser\include\openddlparser\Value.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\poly2tri\poly2tri\common\shapes.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\poly2tri\poly2tri\common\utils.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\poly2tri\poly2tri\poly2tri.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\poly2tri\poly2tri\sweep\advancing_front.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\poly2tri\poly2tri\sweep\cdt.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\poly2tri\poly2tri\sweep\sweep.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\poly2tri\poly2tri\sweep\sweep_context.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\allocators.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\document.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\encodedstream.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\encodings.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\error\en.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\error\error.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\filereadstream.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\filewritestream.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\internal\biginteger.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\internal\diyfp.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\internal\dtoa.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\internal\ieee754.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\internal\itoa.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\internal\meta.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\internal\pow10.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\internal\stack.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\internal\strfunc.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\internal\strtod.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\internal\swap.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\memorybuffer.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\memorystream.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\msinttypes\inttypes.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\msinttypes\stdint.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\pointer.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\prettywriter.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\rapidjson.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\reader.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\stringbuffer.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\rapidjson\include\rapidjson\writer.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\unzip\crypt.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\unzip\ioapi.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\contrib\unzip\unzip.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\ai_assert.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\anim.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\camera.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\cexport.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\cfileio.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\cimport.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\color4.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\Compiler\poppack1.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\Compiler\pstdint.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\Compiler\pushpack1.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\config.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\DefaultLogger.hpp" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\defs.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\Exporter.hpp" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\Importer.hpp" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\importerdesc.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\IOStream.hpp" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\IOSystem.hpp" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\light.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\Logger.hpp" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\LogStream.hpp" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\material.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\matrix3x3.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\matrix4x4.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\mesh.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\metadata.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\NullLogger.hpp" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\postprocess.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\ProgressHandler.hpp" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\quaternion.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\scene.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\texture.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\types.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\vector2.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\vector3.h" />
+    <ClInclude Include="..\..\3rdparty\assimp\include\assimp\version.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\3rdparty\assimp\code\BlenderDNA.inl" />
+    <None Include="..\..\3rdparty\assimp\code\glTFAsset.inl" />
+    <None Include="..\..\3rdparty\assimp\code\glTFAssetWriter.inl" />
+    <None Include="..\..\3rdparty\assimp\code\SmoothingGroups.inl" />
+    <None Include="..\..\3rdparty\assimp\include\assimp\color4.inl" />
+    <None Include="..\..\3rdparty\assimp\include\assimp\material.inl" />
+    <None Include="..\..\3rdparty\assimp\include\assimp\matrix3x3.inl" />
+    <None Include="..\..\3rdparty\assimp\include\assimp\matrix4x4.inl" />
+    <None Include="..\..\3rdparty\assimp\include\assimp\quaternion.inl" />
+    <None Include="..\..\3rdparty\assimp\include\assimp\vector2.inl" />
+    <None Include="..\..\3rdparty\assimp\include\assimp\vector3.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\3rdparty\assimp\code\3DSConverter.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\3DSExporter.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\3DSLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\ACLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\ASELoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\ASEParser.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\AssbinExporter.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\AssbinLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\Assimp.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\AssimpCExport.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\AssxmlExporter.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\B3DImporter.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\BaseImporter.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\BaseProcess.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\Bitmap.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\BlenderBMesh.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\BlenderDNA.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\BlenderLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\BlenderModifier.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\BlenderScene.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\BlenderTessellator.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\BVHLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\CalcTangentsProcess.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\COBLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\ColladaExporter.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\ColladaLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\ColladaParser.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\ComputeUVMappingProcess.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\ConvertToLHProcess.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\CSMLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\D3MFImporter.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\D3MFOpcPackage.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\DeboneProcess.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\DefaultIOStream.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\DefaultIOSystem.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\DefaultLogger.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\DXFLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\Exporter.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\FBXAnimation.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\FBXBinaryTokenizer.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\FBXConverter.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\FBXDeformer.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\FBXDocument.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\FBXDocumentUtil.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\FBXImporter.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\FBXMaterial.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\FBXMeshGeometry.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\FBXModel.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\FBXNodeAttribute.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\FBXParser.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\FBXProperties.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\FBXTokenizer.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\FBXUtil.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\FindDegenerates.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\FindInstancesProcess.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\FindInvalidDataProcess.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\FixNormalsStep.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\GenFaceNormalsProcess.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\GenVertexNormalsProcess.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\glTFExporter.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\glTFImporter.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\HMPLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\IFCBoolean.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\IFCCurve.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\IFCGeometry.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\IFCLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\IFCMaterial.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\IFCOpenings.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\IFCProfile.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\IFCReaderGen.cpp">
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/bigobj %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\assimp\code\IFCUtil.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\Importer.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\ImporterRegistry.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\ImproveCacheLocality.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\IRRLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\IRRMeshLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\IRRShared.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\JoinVerticesProcess.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\LimitBoneWeightsProcess.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\LWOAnimation.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\LWOBLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\LWOLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\LWOMaterial.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\LWSLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\MakeVerboseFormat.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\MaterialSystem.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\MD2Loader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\MD3Loader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\MD5Loader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\MD5Parser.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\MDCLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\MDLLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\MDLMaterialLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\MS3DLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\NDOLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\NFFLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\ObjExporter.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\ObjFileImporter.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\ObjFileMtlImporter.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\ObjFileParser.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\OFFLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\OgreBinarySerializer.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\OgreImporter.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\OgreMaterial.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\OgreStructs.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\OgreXmlSerializer.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\OptimizeGraph.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\OptimizeMeshes.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\PlyExporter.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\PlyLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\PlyParser.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\PostStepRegistry.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\PretransformVertices.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\ProcessHelper.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\Q3BSPFileImporter.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\Q3BSPFileParser.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\Q3BSPZipArchive.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\Q3DLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\RawLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\RemoveComments.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\RemoveRedundantMaterials.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\RemoveVCProcess.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\SceneCombiner.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\ScenePreprocessor.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\SGSpatialSort.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\SIBImporter.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\SkeletonMeshBuilder.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\SMDLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\SortByPTypeProcess.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\SpatialSort.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\SplitByBoneCountProcess.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\SplitLargeMeshes.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\StandardShapes.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\StepExporter.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\STEPFileEncoding.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\STEPFileReader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\STLExporter.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\STLLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\Subdivision.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\TargetAnimation.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\TerragenLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\TextureTransform.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\TriangulateProcess.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\UnrealLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\ValidateDataStructure.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\Version.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\VertexTriangleAdjacency.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\XFileExporter.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\XFileImporter.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\XFileParser.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\code\XGLLoader.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\clipper\clipper.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\ConvertUTF\ConvertUTF.c" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\irrXML\irrXML.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\openddlparser\code\DDLNode.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\openddlparser\code\OpenDDLCommon.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\openddlparser\code\OpenDDLExport.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\openddlparser\code\OpenDDLParser.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\openddlparser\code\Value.cpp" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\poly2tri\poly2tri\common\shapes.cc" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\poly2tri\poly2tri\sweep\advancing_front.cc" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\poly2tri\poly2tri\sweep\cdt.cc" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\poly2tri\poly2tri\sweep\sweep.cc" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\poly2tri\poly2tri\sweep\sweep_context.cc" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\unzip\ioapi.c" />
+    <ClCompile Include="..\..\3rdparty\assimp\contrib\unzip\unzip.c" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{EEB0E2FC-4B26-49D4-98C6-0BF34C44AC2E}</ProjectGuid>
+    <RootNamespace>assimp</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Platform)\$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Platform)\$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</IntDir>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\assimp-config;..\..\3rdparty\assimp;..\..\3rdparty\assimp\include;..\..\3rdparty\assimp\contrib\openddlparser\include;..\..\3rdparty\assimp\contrib\rapidjson\include;..\..\3rdparty\zlib-1.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;OPENDDL_STATIC_LIBARY;ASSIMP_BUILD_NO_C4D_IMPORTER;ASSIMP_BUILD_NO_OPENGEX_EXPORTER;ASSIMP_BUILD_NO_OPENGEX_IMPORTER;ASSIMP_BUILD_NO_OWN_ZLIB;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ForcedUsingFiles>%(ForcedUsingFiles)</ForcedUsingFiles>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <DisableSpecificWarnings>4267 </DisableSpecificWarnings>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>xcopy /yr "$(OutDir)$(TargetFileName)" "..\..\bin\$(Platform)\$(Configuration)\"</Command>
+    </PostBuildEvent>
+    <Lib>
+      <TargetMachine>
+      </TargetMachine>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\assimp-config;..\..\3rdparty\assimp;..\..\3rdparty\assimp\include;..\..\3rdparty\assimp\contrib\openddlparser\include;..\..\3rdparty\assimp\contrib\rapidjson\include;..\..\3rdparty\zlib-1.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;OPENDDL_STATIC_LIBARY;ASSIMP_BUILD_NO_C4D_IMPORTER;ASSIMP_BUILD_NO_OPENGEX_EXPORTER;ASSIMP_BUILD_NO_OPENGEX_IMPORTER;ASSIMP_BUILD_NO_OWN_ZLIB;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <DisableSpecificWarnings>4267 </DisableSpecificWarnings>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>xcopy /yr "$(OutDir)$(TargetFileName)" "..\..\bin\$(Platform)\$(Configuration)\"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\assimp-config;..\..\3rdparty\assimp;..\..\3rdparty\assimp\include;..\..\3rdparty\assimp\contrib\openddlparser\include;..\..\3rdparty\assimp\contrib\rapidjson\include;..\..\3rdparty\zlib-1.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;OPENDDL_STATIC_LIBARY;ASSIMP_BUILD_NO_C4D_IMPORTER;ASSIMP_BUILD_NO_OPENGEX_EXPORTER;ASSIMP_BUILD_NO_OPENGEX_IMPORTER;ASSIMP_BUILD_NO_OWN_ZLIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ForcedUsingFiles>%(ForcedUsingFiles)</ForcedUsingFiles>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <DisableSpecificWarnings>4267 </DisableSpecificWarnings>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>xcopy /yr "$(OutDir)$(TargetFileName)" "..\..\bin\$(Platform)\$(Configuration)\"</Command>
+    </PostBuildEvent>
+    <Lib>
+      <TargetMachine>
+      </TargetMachine>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\assimp-config;..\..\3rdparty\assimp;..\..\3rdparty\assimp\include;..\..\3rdparty\assimp\contrib\openddlparser\include;..\..\3rdparty\assimp\contrib\rapidjson\include;..\..\3rdparty\zlib-1.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;OPENDDL_STATIC_LIBARY;ASSIMP_BUILD_NO_C4D_IMPORTER;ASSIMP_BUILD_NO_OPENGEX_EXPORTER;ASSIMP_BUILD_NO_OPENGEX_IMPORTER;ASSIMP_BUILD_NO_OWN_ZLIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <DisableSpecificWarnings>4267 </DisableSpecificWarnings>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>xcopy /yr "$(OutDir)$(TargetFileName)" "..\..\bin\$(Platform)\$(Configuration)\"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

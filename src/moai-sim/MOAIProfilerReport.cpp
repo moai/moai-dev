@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -8,6 +8,10 @@
 #if defined ( MOAI_OS_WINDOWS )
 	#pragma optimize ( "", on ) 
 #endif
+
+SUPPRESS_EMPTY_FILE_WARNING
+
+#if 0
 
 //================================================================//
 // MOAIProfilerReport
@@ -160,8 +164,8 @@ u32 MOAIProfilerReport::Visitor_FinalizeEntries ( MOAIProfilerEntryBase* entry, 
 
 			numValidSamples++;
 
-			curEntry->mMinDurationMicroSec = min ( curEntry->mMinDurationMicroSec, durationMicroSec );
-			curEntry->mMaxDurationMicroSec = max ( curEntry->mMaxDurationMicroSec, durationMicroSec );
+			curEntry->mMinDurationMicroSec = MIN ( curEntry->mMinDurationMicroSec, durationMicroSec );
+			curEntry->mMaxDurationMicroSec = MAX ( curEntry->mMaxDurationMicroSec, durationMicroSec );
 			averageDurationMicorSec += (float) durationMicroSec;
 		}
 	}
@@ -195,4 +199,6 @@ u32 MOAIProfilerReport::Visitor_FinalizeEntries ( MOAIProfilerEntryBase* entry, 
 
 #if defined ( MOAI_OS_WINDOWS )
 	#pragma optimize ( "", off ) 
+#endif
+
 #endif

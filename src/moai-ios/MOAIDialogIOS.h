@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIDIALOGIOS_H
@@ -22,7 +22,7 @@
 	@const	DIALOG_RESULT_CANCEL	Result code when the dialog is dismissed by pressing the cancel button.
 */
 class MOAIDialogIOS :
-	public MOAIGlobalClass < MOAIDialogIOS, MOAILuaObject > {
+	public ZLContextClass < MOAIDialogIOS, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//

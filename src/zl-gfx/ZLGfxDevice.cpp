@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -20,24 +20,6 @@ static u32	sOperationDepth				= 0; // this is just the counter for tracking begi
 //================================================================//
 // ZLGfxDevice
 //================================================================//
-
-//----------------------------------------------------------------//
-void ZLGfxDevice::Begin () {
-
-	//zglBegin ();
-}
-
-//----------------------------------------------------------------//
-void ZLGfxDevice::End () {
-
-	//zglEnd ();
-}
-
-//----------------------------------------------------------------//
-void ZLGfxDevice::Finalize () {
-
-	//zglFinalize ();
-}
 
 //----------------------------------------------------------------//
 u32 ZLGfxDevice::GetCap ( u32 cap ) {
@@ -103,10 +85,10 @@ void ZLGfxDevice::Initialize () {
 		}
 	#endif
 
-	string version = ZLGfxDevice::GetString ( ZGL_STRING_VERSION );
+	STLString version = ZLGfxDevice::GetString ( ZGL_STRING_VERSION );
 	std::transform ( version.begin (), version.end(), version.begin(), ::tolower );
 	
-	string gles = "opengl es";
+	STLString gles = "opengl es";
 
 	if ( version.find ( gles ) != version.npos ) {
 		isOpenGLES = true;

@@ -1,10 +1,10 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	ZLPLANE_H
 #define	ZLPLANE_H
 
-#include <zl-util/ZLVec2D.h>
+#include <zl-util/ZLVec3D.h>
 
 //================================================================//
 // ZLPlane2D
@@ -18,6 +18,7 @@ class ZLPlane2D {
 	//----------------------------------------------------------------//
 	void	Flip			();
 	void	Init			( const ZLVec2D& p1, const ZLVec2D& p2 );	// From a line segment
+	void	Init			( const ZLVec2D& n, float d );
 	void	Init			( float xn, float yn, float d );
 			ZLPlane2D		() {};
 			~ZLPlane2D		() {};

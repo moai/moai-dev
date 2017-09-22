@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIENVIRONMENT_H
@@ -118,7 +118,7 @@
 	@const OS_BRAND_UNAVAILABLE		Signifies that the operating system cannot be determined
 */
 class MOAIEnvironment :
-	public MOAIGlobalClass < MOAIEnvironment, MOAIGlobalEventSource > {
+	public ZLContextClass < MOAIEnvironment, MOAIGlobalEventSource > {
 private:
 	
 	//----------------------------------------------------------------//

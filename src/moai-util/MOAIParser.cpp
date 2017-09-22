@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -24,7 +24,7 @@ int MOAIParser::_loadFile ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParser, "US" )
 	
 	cc8* filename = state.GetValue < cc8* >( 2, "" );
-	if ( MOAILogMessages::CheckFileExists ( filename, L )) {
+	if ( MOAILogMgr::CheckFileExists ( filename, L )) {
 	
 		ZLFileStream stream;
 		if ( stream.OpenRead ( filename )) {
@@ -52,7 +52,7 @@ int MOAIParser::_loadRules ( lua_State* L ) {
 
 	cc8* filename = state.GetValue < cc8* >( 2, "" );
 
-	if ( MOAILogMessages::CheckFileExists ( filename, L )) {
+	if ( MOAILogMgr::CheckFileExists ( filename, L )) {
 		self->mCGT.Load ( filename );
 	}
 	return 0;
@@ -197,7 +197,7 @@ void MOAIParser::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

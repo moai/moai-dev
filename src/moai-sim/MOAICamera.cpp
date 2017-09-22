@@ -1,14 +1,18 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
 #include <moai-sim/MOAICamera.h>
-#include <moai-sim/MOAISim.h>
+#include <moai-sim/MOAIDebugLines.h>
+#include <moai-sim/MOAIDraw.h>
+#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIViewport.h>
 
-#define DEFAULT_HFOV 60.0f
-#define DEFAULT_NEAR_PLANE 1.0f
-#define DEFAULT_FAR_PLANE 10000.0f
+#define DEFAULT_HFOV			60.0f
+#define DEFAULT_NEAR_PLANE		1.0f
+#define DEFAULT_FAR_PLANE		10000.0f
+
+#define RETICLE_RADIUS			0.125f
 
 //================================================================//
 // local
@@ -74,7 +78,7 @@ int MOAICamera::_getFloorMove ( lua_State* L ) {
 	
 	// TODO: double check this
 	ZLVec2D r ( v.mX, v.mY );
-	r.Rotate90Clockwise ();
+	r.Rotate90Anticlockwise ();
 	h.Init ( r.mX, r.mY, 0.0f );
 	
 	h.Scale ( x );
@@ -311,24 +315,43 @@ int MOAICamera::_setType ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAICamera::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+void MOAICamera::DrawDebug () {
 
-	if ( MOAICameraAttr::Check ( attrID )) {
-
-		switch ( UNPACK_ATTR ( attrID )) {
-			case ATTR_FOV:
-				this->mFieldOfView = attrOp.Apply ( this->mFieldOfView, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
-				return true;
-		}
+	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
+	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAICamera >())) return;
+	
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	
+	MOAIDraw& draw = MOAIDraw::Get ();
+	UNUSED ( draw ); // mystery warning in vs2008
+	
+	draw.Bind ();
+	
+	ZLRect viewRect = gfxMgr.mGfxState.GetViewRect ();
+	//float aspect = viewRect.Width () / viewRect.Height ();
+	
+	ZLMatrix4x4 mtx = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::CLIP_TO_DISPLAY_MTX );
+	
+	gfxMgr.mVertexCache.SetVertexTransform ( mtx ); // draw in device space
+	
+	if ( debugLines.Bind ( DEBUG_DRAW_FRAME )) {
+		draw.DrawRectOutline ( -1.0f, -1.0f, 1.0f, 1.0f );
 	}
-	return MOAITransform::ApplyAttrOp ( attrID, attrOp, op );
+	
+	mtx.m [ ZLMatrix4x4::C1_R1 ] *= viewRect.Width () / viewRect.Height ();
+	gfxMgr.mVertexCache.SetVertexTransform ( mtx );
+	
+	if ( debugLines.Bind ( DEBUG_DRAW_RETICLE )) {
+		draw.DrawEllipseOutline ( 0.0f, 0.0f, RETICLE_RADIUS, RETICLE_RADIUS, 64 );
+		draw.DrawLine ( -RETICLE_RADIUS, 0.0f, RETICLE_RADIUS, 0.0f );
+		draw.DrawLine ( 0.0f, -RETICLE_RADIUS, 0.0f, RETICLE_RADIUS );
+	}
 }
 
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAICamera::GetBillboardMtx () const {
 
-	ZLMatrix4x4 mtx;
-	mtx.Init ( this->GetLocalToWorldMtx ());
+	ZLMatrix4x4 mtx ( this->GetLocalToWorldMtx ());
 	mtx.m [ ZLMatrix4x4::C3_R0 ] = 0.0f;
 	mtx.m [ ZLMatrix4x4::C3_R1 ] = 0.0f;
 	mtx.m [ ZLMatrix4x4::C3_R2 ] = 0.0f;
@@ -356,38 +379,46 @@ ZLMatrix4x4 MOAICamera::GetProjMtx ( const MOAIViewport& viewport ) const {
 	
 	// project
 	
-	ZLVec2D viewScale = viewport.GetScale ();
+	ZLVec2D viewScale = viewport.GetScale (); // TODO: bit confusing in the 3d; clarify
 	
-	switch ( this->mType ) {
+	if ( this->mUseProjectionMtx ) {
 	
-		case CAMERA_TYPE_ORTHO: {
-			
-			float xs = ( 2.0f / viewport.Width ()) * viewScale.mX;
-			float ys = ( 2.0f / viewport.Height ()) * viewScale.mY;
-			
-			mtx.Ortho ( xs, ys, this->mNearPlane, this->mFarPlane );
-			break;
-		}
-		case CAMERA_TYPE_3D: {
-			
-			float xs = Cot (( this->mFieldOfView * ( float )D2R ) / 2.0f );
-			float ys = xs * viewport.GetAspect ();
-			
-			xs *= viewScale.mX;
-			ys *= viewScale.mY;
-			
-			mtx.Perspective ( xs, ys, this->mNearPlane, this->mFarPlane );
-			break;
-		}
-		case CAMERA_TYPE_WINDOW:
-		default: {
-			
-			ZLRect rect = viewport.GetRect ();
-			
-			float xScale = ( 2.0f / rect.Width ()) * viewScale.mX;
-			float yScale = ( 2.0f / rect.Height ()) * viewScale.mY;
-			
-			mtx.Scale ( xScale, yScale, -1.0f );
+		mtx = this->mProjectionMtx;
+	}
+	else {
+		
+		switch ( this->mType ) {
+		
+			case CAMERA_TYPE_ORTHO: {
+				
+				float xs = ( 2.0f / viewport.Width ()) * viewScale.mX;
+				float ys = ( 2.0f / viewport.Height ()) * viewScale.mY;
+				
+				mtx.Ortho ( xs, ys, this->mNearPlane, this->mFarPlane );
+				break;
+			}
+			case CAMERA_TYPE_3D: {
+				
+				float xs = Tan (( this->mFieldOfView * ( float )D2R ) / 2.0f ) * this->mNearPlane;
+				float ys = xs / viewport.GetAspect ();
+				
+				xs *= viewScale.mX;
+				ys *= viewScale.mY;
+
+				mtx.Frustum ( -xs, ys, xs, -ys, this->mNearPlane, this->mFarPlane );
+				
+				break;
+			}
+			case CAMERA_TYPE_WINDOW:
+			default: {
+				
+				ZLRect rect = viewport.GetRect ();
+				
+				float xScale = ( 2.0f / rect.Width ()) * viewScale.mX;
+				float yScale = ( 2.0f / rect.Height ()) * viewScale.mY;
+				
+				mtx.Scale ( xScale, yScale, -1.0f );
+			}
 		}
 	}
 	
@@ -401,27 +432,9 @@ ZLMatrix4x4 MOAICamera::GetProjMtx ( const MOAIViewport& viewport ) const {
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAICamera::GetProjMtxInv ( const MOAIViewport& viewport ) const {
-
-	ZLMatrix4x4 mtx;
-	mtx.Inverse ( this->GetProjMtx ( viewport ));
-	return mtx;
-}
-
-//----------------------------------------------------------------//
 ZLMatrix4x4 MOAICamera::GetViewMtx () const {
 
-	ZLMatrix4x4 mtx;
-	mtx.Init ( this->GetWorldToLocalMtx ());
-	return mtx;
-}
-
-//----------------------------------------------------------------//
-ZLMatrix4x4 MOAICamera::GetViewProjMtx ( const MOAIViewport& viewport ) const {
-
-	ZLMatrix4x4 mtx = this->GetViewMtx ();
-	mtx.Append ( this->GetProjMtx ( viewport ));
-	return mtx;
+	return ZLMatrix4x4 ( this->GetWorldToLocalMtx ());
 }
 
 //----------------------------------------------------------------//
@@ -431,23 +444,6 @@ ZLVec3D MOAICamera::GetViewVector () const {
 	viewVec.Norm ();
 	viewVec.Scale ( -1.0f );
 	return viewVec;
-}
-
-//----------------------------------------------------------------//
-ZLMatrix4x4 MOAICamera::GetWndToWorldMtx ( const MOAIViewport& viewport ) const {
-
-	ZLMatrix4x4 wndToWorld = this->GetWorldToWndMtx ( viewport );
-	wndToWorld.Inverse ();
-	return wndToWorld;
-}
-
-//----------------------------------------------------------------//
-ZLMatrix4x4 MOAICamera::GetWorldToWndMtx ( const MOAIViewport& viewport ) const {
-	
-	ZLMatrix4x4 worldToWnd = this->GetViewMtx ();
-	worldToWnd.Append ( this->GetProjMtx ( viewport ));
-	worldToWnd.Append ( viewport.GetNormToWndMtx ());
-	return worldToWnd;
 }
 
 //----------------------------------------------------------------//
@@ -480,14 +476,15 @@ void MOAICamera::LookAt ( float x, float y, float z ) {
 
 //----------------------------------------------------------------//
 MOAICamera::MOAICamera () :
+	mUseProjectionMtx ( false ),
 	mFieldOfView ( DEFAULT_HFOV ),
 	mNearPlane ( DEFAULT_NEAR_PLANE ),
 	mFarPlane ( DEFAULT_FAR_PLANE ),
-	mType ( CAMERA_TYPE_3D ) {
+	mType ( CAMERA_TYPE_WINDOW ) {
 
 	RTTI_SINGLE ( MOAITransform )
 	
-	//this->SetEulerOrder ( EULER_YXZ );
+	this->mProjectionMtx = ZLMatrix4x4::IDENT;
 }
 
 //----------------------------------------------------------------//
@@ -496,7 +493,14 @@ MOAICamera::~MOAICamera () {
 
 //----------------------------------------------------------------//
 void MOAICamera::RegisterLuaClass ( MOAILuaState& state ) {
+
 	MOAITransform::RegisterLuaClass ( state );
+	
+	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAICamera >( TOTAL_DEBUG_LINE_STYLES );
+	
+	state.SetField ( -1, "DEBUG_DRAW_CAMERA_MASTER",			MOAIDebugLinesMgr::Pack < MOAICamera >( -1 ));
+	state.SetField ( -1, "DEBUG_DRAW_FRAME",					MOAIDebugLinesMgr::Pack < MOAICamera >( DEBUG_DRAW_FRAME ));
+	state.SetField ( -1, "DEBUG_DRAW_RETICLE",					MOAIDebugLinesMgr::Pack < MOAICamera >( DEBUG_DRAW_RETICLE ));
 	
 	state.SetField ( -1, "ATTR_FOV",			MOAICameraAttr::Pack ( ATTR_FOV ));
 	
@@ -528,4 +532,36 @@ void MOAICamera::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAICamera::SetProjMtx () {
+
+	this->mProjectionMtx = ZLMatrix4x4::IDENT;
+	this->mUseProjectionMtx = false;
+}
+
+//----------------------------------------------------------------//
+void MOAICamera::SetProjMtx ( const ZLMatrix4x4& mtx ) {
+
+	this->mProjectionMtx = mtx;
+	this->mUseProjectionMtx = true;
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAICamera::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	if ( MOAICameraAttr::Check ( attrID )) {
+
+		switch ( UNPACK_ATTR ( attrID )) {
+			case ATTR_FOV:
+				this->mFieldOfView = attr.Apply ( this->mFieldOfView, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+		}
+	}
+	return MOAITransform::MOAINode_ApplyAttrOp ( attrID, attr, op );
 }

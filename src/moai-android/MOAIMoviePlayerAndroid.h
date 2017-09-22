@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIMOVIEPLAYERANDROID_H
@@ -14,7 +14,7 @@
 			MOAIMoviePlayer on all mobile platforms.
 */
 class MOAIMoviePlayerAndroid :
-	public MOAIGlobalClass < MOAIMoviePlayerAndroid, MOAILuaObject > {
+	public ZLContextClass < MOAIMoviePlayerAndroid, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//

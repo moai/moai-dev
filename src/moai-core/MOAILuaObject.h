@@ -1,12 +1,10 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAILUAOBJECT_H
 #define	MOAILUAOBJECT_H
 
-#include <moai-core/MOAIGlobals.h>
 #include <moai-core/MOAILuaRef.h>
-#include <moai-core/MOAIObject.h>
 
 class MOAIDeserializer;
 class MOAILuaClass;
@@ -19,30 +17,29 @@ class MOAISerializer;
 // MOAILuaObject
 //================================================================//
 class MOAILuaObject :
-	public virtual MOAIObject {
+	public virtual RTTIBase,
+	public virtual ZLRefCountedObject {
 private:
 
-	bool					mCollected;
 	u32						mActiveUserdataCount;
 	MOAILuaWeakRef			mUserdata;		// ref to userdata (weak)
 	MOAILuaStrongRef		mFinalizer;		// ref to finalizer (strong)
 
 protected:
 
-	//----------------------------------------------------------------//
-	static int				_gc					( lua_State* L );
-	static int				_getClass			( lua_State* L );
-	static int				_getClassName		( lua_State* L );
-	static int				_getMemberTable		( lua_State* L );
-	static int				_getRefTable		( lua_State* L );
-	static int				_pin				( lua_State* L );
-	static int				_serializeIn		( lua_State* L );
-	static int				_serializeOut		( lua_State* L );
-	static int				_setFinalizer		( lua_State* L );
-	static int				_setInterface		( lua_State* L );
-	static int				_setMembers			( lua_State* L );
-	static int				_tostring			( lua_State* L );
-	static int				_unpin				( lua_State* L );
+	static int				_gc						( lua_State* L );
+	static int				_getClass				( lua_State* L );
+	static int				_getClassName			( lua_State* L );
+	static int				_getMemberTable			( lua_State* L );
+	static int				_getRefTable			( lua_State* L );
+	static int				_pin					( lua_State* L );
+	static int				_serializeIn			( lua_State* L );
+	static int				_serializeOut			( lua_State* L );
+	static int				_setFinalizer			( lua_State* L );
+	static int				_setInterface			( lua_State* L );
+	static int				_setMembers				( lua_State* L );
+	static int				_tostring				( lua_State* L );
+	static int				_unpin					( lua_State* L );
 
 	//----------------------------------------------------------------//
 	static int				InjectAndCall			( lua_CFunction func, MOAILuaObject* self, lua_State* L );
@@ -60,6 +57,9 @@ public:
 	friend class MOAILuaRuntime;
 	friend class MOAIDeserializer;
 	friend class MOAISerializer;
+
+	//----------------------------------------------------------------//
+	static int				_alertNewIsUnsupported		( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void					BindToLua					( MOAILuaState& state );
@@ -83,13 +83,12 @@ public:
 	virtual void			RegisterLuaFuncs			( MOAILuaState& state );
 	virtual	void			SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	virtual	void			SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
-	bool					WasCollected				();
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE, lua_CFunction FUNC >
 	static int WrapInstanceFuncAsGlobal ( lua_State* L ) {
 	
-		TYPE* type = MOAIGlobalsMgr::Get ()->GetGlobal < TYPE >();
+		TYPE* type = ZLContextMgr::Get ()->GetGlobal < TYPE >();
 		assert ( type );
 		return InjectAndCall ( FUNC, type, L );
 	}

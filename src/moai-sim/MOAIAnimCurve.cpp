@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -85,7 +85,7 @@ int MOAIAnimCurve::_setKey ( lua_State* L ) {
 	u32 mode		= state.GetValue < u32 >( 5, ZLInterpolate::kSmooth );
 	float weight	= state.GetValue < float >( 6, 1.0f );
 	
-	if ( MOAILogMessages::CheckIndexPlusOne ( index, self->mKeys.Size (), L )) {
+	if ( MOAILogMgr::CheckIndexPlusOne ( index, self->mKeys.Size (), L )) {
 	
 		self->SetKey ( index, time, mode, weight );
 		self->SetSample ( index, value );
@@ -98,9 +98,9 @@ int MOAIAnimCurve::_setKey ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAnimCurve::ApplyValueAttrOp ( MOAIAttrOp& attrOp, u32 op ) {
+void MOAIAnimCurve::ApplyValueAttrOp ( MOAIAttribute& attr, u32 op ) {
 
-	this->mValue = attrOp.Apply ( this->mValue, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
+	this->mValue = attr.Apply ( this->mValue, op, MOAIAttribute::ATTR_READ_WRITE );
 }
 
 //----------------------------------------------------------------//
@@ -115,7 +115,7 @@ void MOAIAnimCurve::Draw ( u32 resolution ) const {
 	float length = this->GetLength ();
 	float step = length / ( float )resolution;
 	
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_STRIP );
+	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_STRIP, resolution );
 	
 	for ( u32 i = 0; i < resolution; ++i ) {
 		
@@ -146,12 +146,12 @@ float MOAIAnimCurve::GetCurveDelta () const {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurve::GetDelta ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const {
+void MOAIAnimCurve::GetDelta ( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const {
 
 	float v0 = this->GetValue ( span0 );
 	float v1 = this->GetValue ( span1 );
 	
-	attrOp.SetValue < float >( v1 - v0, MOAIAttrOp::ATTR_TYPE_FLOAT );
+	attr.SetValue ( v1 - v0 );
 }
 
 //----------------------------------------------------------------//
@@ -183,9 +183,9 @@ float MOAIAnimCurve::GetValue ( const MOAIAnimKeySpan& span ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurve::GetValue ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) const {
+void MOAIAnimCurve::GetValue ( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const {
 
-	attrOp.SetValue < float >( this->GetValue ( span ), MOAIAttrOp::ATTR_TYPE_FLOAT );
+	attr.SetValue ( this->GetValue ( span ));
 }
 
 //----------------------------------------------------------------//
@@ -240,9 +240,9 @@ void MOAIAnimCurve::GetValueRange ( float t0, float t1, float &min, float &max )
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurve::GetZero ( MOAIAttrOp& attrOp ) const {
+void MOAIAnimCurve::GetZero ( MOAIAttribute& attr ) const {
 
-	attrOp.SetValue < float >( 0.0f, MOAIAttrOp::ATTR_TYPE_FLOAT );
+	attr.SetValue ( 0.0f );
 }
 
 //----------------------------------------------------------------//
@@ -254,12 +254,6 @@ MOAIAnimCurve::MOAIAnimCurve () :
 
 //----------------------------------------------------------------//
 MOAIAnimCurve::~MOAIAnimCurve () {
-}
-
-//----------------------------------------------------------------//
-void MOAIAnimCurve::OnDepNodeUpdate () {
-
-	this->mValue = this->GetValue ( this->mTime );
 }
 
 //----------------------------------------------------------------//
@@ -295,4 +289,14 @@ void MOAIAnimCurve::SetSample ( u32 id, float value ) {
 	if ( id < this->mKeys.Size ()) {
 		this->mSamples [ id ] = value;
 	}
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIAnimCurve::MOAINode_Update () {
+
+	this->mValue = this->GetValue ( this->mTime );
 }

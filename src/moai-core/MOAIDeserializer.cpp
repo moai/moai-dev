@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -31,7 +31,7 @@ int MOAIDeserializer::_createObject ( lua_State* L ) {
 		state.Pop ( 1 );
 	}
 	else {
-		if ( state.GetFieldWithType ( -1, "new", LUA_TFUNCTION )) {
+		if ( state.PushFieldWithType ( -1, "new", LUA_TFUNCTION )) {
 			lua_replace ( state, -2 );
 			int status = state.DebugCall ( 0, 1 );
 			if ( status == 0 ) return 1;

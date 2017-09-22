@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIIMAGEFORMATMGR_H
@@ -10,7 +10,7 @@
 // MOAIImageFormatMgr
 //================================================================//
 class MOAIImageFormatMgr :
-	public MOAIGlobalClass < MOAIImageFormatMgr > {
+	public ZLContextClass < MOAIImageFormatMgr > {
 public:
 
 	typedef STLMap < u32, MOAIImageFormat* >::iterator FormatIt;
@@ -23,7 +23,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	MOAIImageFormat*		FindFormat					( cc8* name );
-	MOAIImageFormat*		FindFormat					( ZLStream& stream );
+	MOAIImageFormat*		FindFormat					( ZLStream& stream, cc8* name = 0 );
 							MOAIImageFormatMgr			();
 							~MOAIImageFormatMgr			();
 	

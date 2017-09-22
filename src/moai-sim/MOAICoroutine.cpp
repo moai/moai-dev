@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -205,20 +205,9 @@ int MOAICoroutine::_step ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-STLString MOAICoroutine::GetDebugInfo () const {
-	return mFuncName;
-}
-
-//----------------------------------------------------------------//
 MOAIAction* MOAICoroutine::GetDefaultParent () {
 
 	return this->mIsDefaultParent ? this : 0;
-}
-
-//----------------------------------------------------------------//
-bool MOAICoroutine::IsDone () {
-
-	return ( this->mRef == false );
 }
 
 //----------------------------------------------------------------//
@@ -236,29 +225,6 @@ MOAICoroutine::MOAICoroutine () :
 
 //----------------------------------------------------------------//
 MOAICoroutine::~MOAICoroutine () {
-}
-
-//----------------------------------------------------------------//
-void MOAICoroutine::OnStart () {
-	MOAIAction::OnStart ();
-}
-
-//----------------------------------------------------------------//
-void MOAICoroutine::OnStop () {
-	MOAIAction::OnStop ();
-	
-	// if we're stopping the thread from outside of its coroutine, clear out the ref
-	if ( MOAIActionStackMgr::IsValid ()) {
-		if ( MOAIActionStackMgr::Get ().GetCurrent () != this ) {
-			this->mRef.Clear ();
-			this->mState = 0;
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAICoroutine::OnUpdate ( double step ) {
-	this->Resume (( float )step );
 }
 
 //----------------------------------------------------------------//
@@ -375,4 +341,42 @@ int MOAICoroutine::Resume ( float step ) {
 	MOAILuaRuntime::Get ().SetTrackingGroup ();
 	
 	return returnCount;
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+STLString MOAICoroutine::MOAIAction_GetDebugInfo () const {
+	return mFuncName;
+}
+
+//----------------------------------------------------------------//
+bool MOAICoroutine::MOAIAction_IsDone () {
+
+	return ( this->mRef == false );
+}
+
+//----------------------------------------------------------------//
+void MOAICoroutine::MOAIAction_Start () {
+	MOAIAction::MOAIAction_Start ();
+}
+
+//----------------------------------------------------------------//
+void MOAICoroutine::MOAIAction_Stop () {
+	MOAIAction::MOAIAction_Stop ();
+	
+	// if we're stopping the thread from outside of its coroutine, clear out the ref
+	if ( MOAIActionStackMgr::IsValid ()) {
+		if ( MOAIActionStackMgr::Get ().GetCurrent () != this ) {
+			this->mRef.Clear ();
+			this->mState = 0;
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAICoroutine::MOAIAction_Update ( double step ) {
+	this->Resume (( float )step );
 }

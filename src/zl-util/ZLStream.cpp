@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -205,9 +205,15 @@ ZLSizeResult ZLStream::Print ( cc8* format, va_list args ) {
 }
 
 //----------------------------------------------------------------//
+template <> ZLResult < bool > ZLStream::Read < bool >() {
+	ZLResult < u8 > result = this->Read < u8 >( 0 );
+	ZL_RETURN_BOOL_RESULT ( result.mValue != 0, result.mCode );
+}
+
+//----------------------------------------------------------------//
 template <> ZLResult < bool > ZLStream::Read < bool >( bool value ) {
 	ZLResult < u8 > result = this->Read < u8 >( value ? 1 : 0 );
-   ZL_RETURN_BOOL_RESULT ( result.mValue > 0, result.mCode );
+	ZL_RETURN_BOOL_RESULT ( result.mValue != 0, result.mCode );
 }
 
 //----------------------------------------------------------------//
@@ -224,6 +230,7 @@ ZLStringResult ZLStream::ReadString ( size_t size ) {
 	STLString str;
 
 	const unsigned int MAX_HEAP_ALLOC = 1024;
+	
 	if ( size ) {
 
 		char* buffer;

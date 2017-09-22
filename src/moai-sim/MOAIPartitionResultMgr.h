@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIPARTITIONRESULTMGR_H
@@ -49,7 +49,7 @@ public:
 // MOAIPartitionResultMgr
 //================================================================//
 class MOAIPartitionResultMgr :
-	public MOAIGlobalClass < MOAIPartitionResultMgr > {
+	public ZLContextClass < MOAIPartitionResultMgr > {
 private:
 	
 	friend class MOAIScopedPartitionResultBufferHandle;

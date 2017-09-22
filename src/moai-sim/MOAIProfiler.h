@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIPROFILER_H
@@ -8,11 +8,13 @@
 #include <moai-sim/MOAIProfilerContext.h>
 #include <moai-sim/MOAIProfilerScope.h>
 
+#if 0
+
 //================================================================//
 // MOAIProfiler
 //================================================================//
 class MOAIProfiler :
-	public MOAIGlobalClass < MOAIProfiler > {
+	public ZLContextClass < MOAIProfiler > {
 private:
 
 	enum {
@@ -44,4 +46,5 @@ public:
 	void						UnlockProfileReport			( u32 index );
 };
 
+#endif
 #endif

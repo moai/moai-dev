@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -63,11 +63,11 @@ MOAIGlyphSet::~MOAIGlyphSet (){
 void MOAIGlyphSet::SerializeIn ( MOAILuaState& state ) {
 	UNUSED ( state );
 	
-	this->mSize		= state.GetField ( -1, "mSize", this->mSize );
-	this->mHeight	= state.GetField ( -1, "mHeight", this->mHeight );
-	this->mAscent	= state.GetField ( -1, "mAscent", this->mAscent );
+	this->mSize		= state.GetFieldValue ( -1, "mSize", this->mSize );
+	this->mHeight	= state.GetFieldValue ( -1, "mHeight", this->mHeight );
+	this->mAscent	= state.GetFieldValue ( -1, "mAscent", this->mAscent );
 
-	if ( state.GetFieldWithType ( -1, "mGlyphMap", LUA_TTABLE )) {
+	if ( state.PushFieldWithType ( -1, "mGlyphMap", LUA_TTABLE )) {
 
 		u32 itr = state.PushTableItr ( -1 );
 		while ( state.TableItrNext ( itr )) {

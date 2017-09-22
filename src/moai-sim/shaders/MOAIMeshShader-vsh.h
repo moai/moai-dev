@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIMESHSHADER_VSH_H
@@ -19,7 +19,7 @@ static cc8* _meshShaderVSH = SHADER (
 	varying MEDP vec2 uvVarying;
 
 	void main () {
-		gl_Position = position * transform;
+		gl_Position = transform * position;
 		uvVarying = uv;
 		colorVarying = color * ucolor;
 	}

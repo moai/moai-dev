@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef ZLGFX_H
@@ -9,7 +9,8 @@
 #include <zl-util/ZLMatrix3x3.h>
 #include <zl-util/ZLMatrix4x4.h>
 #include <zl-util/ZLRefCountedObject.h>
-#include <zl-util/ZLSharedHandle.h>
+#include <zl-util/ZLSharedBuffer.h>
+#include <zl-util/ZLWeakPtr.h>
 
 class ZLCopyOnWrite;
 
@@ -69,7 +70,7 @@ public:
 // ZLGfxListener
 //================================================================//
 class ZLGfxListener :
-	public ZLSharedHandleTarget < ZLGfxListener > {
+	public ZLRefCountedObject {
 private:
 
 	GET ( ZLGfxListener*, HandleTarget, this )
@@ -84,12 +85,13 @@ public:
 	virtual					~ZLGfxListener			();
 };
 
-typedef ZLSharedHandle < ZLGfxListener > ZLGfxListenerHandle;
+typedef ZLWeakPtr < ZLGfxListener > ZLGfxListenerHandle;
 
 //================================================================//
 // ZLGfx
 //================================================================//
 class ZLGfx {
+private:
 
 	friend class ZLGfxImmediate;
 	friend class ZLGfxRetained;
@@ -111,8 +113,8 @@ public:
 	virtual void					BindBuffer					( u32 target, ZLGfxHandle* buffer ) = 0;
 	virtual void					BindFramebuffer				( u32 target, ZLGfxHandle* frameBuffer ) = 0;
 	virtual void					BindRenderbuffer			( ZLGfxHandle* renderbuffer ) = 0;
-	virtual void					BindTexture					( ZLGfxHandle* texID ) = 0;
-	virtual void					BindVertexArray				( ZLGfxHandle* vertexArrayID ) = 0;
+	virtual void					SetTexture					( ZLGfxHandle* texID ) = 0;
+	virtual void					SetVertexArray				( ZLGfxHandle* vertexArrayID ) = 0;
 	
 	virtual void					BlendFunc					( u32 sourceFactor, u32 destFactor ) = 0;
 	virtual void					BlendMode					( u32 mode ) = 0;
@@ -131,7 +133,7 @@ public:
 	virtual void					CompileShader				( ZLGfxHandle* shader, bool log ) = 0;
 	virtual void					CompressedTexImage2D		( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, ZLSharedConstBuffer* buffer ) = 0;
 	
-	virtual ZLSharedConstBuffer*	CopyBuffer					( ZLSharedConstBuffer* buffer ) = 0;
+	//virtual ZLSharedConstBuffer*	CopyBuffer					( ZLSharedConstBuffer* buffer ) = 0;
 	
 	ZLGfxHandle*					CreateBuffer				();
 	ZLGfxHandle*					CreateFramebuffer			();
@@ -168,6 +170,8 @@ public:
 	virtual ZLGfxHandle*			GetCurrentFramebuffer		() = 0;
 	virtual void					GetUniformLocation			( ZLGfxHandle* program, cc8* uniformName, ZLGfxListener* listener, void* userdata ) = 0;
 	
+	static bool						IsFlag						( u32 flag );
+	
 	virtual bool					IsImmediate					() = 0;
 	
 	virtual void					LineWidth					( float width ) = 0;
@@ -190,11 +194,8 @@ public:
 	virtual void					TexImage2D					( u32 level, u32 internalFormat, u32 width, u32 height, u32 format, u32 type, ZLSharedConstBuffer* buffer ) = 0;
 	virtual void					TexParameteri				( u32 pname, s32 param ) = 0;
 	virtual void					TexSubImage2D				( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, u32 format, u32 type, ZLSharedConstBuffer* buffer ) = 0;
-	virtual void					Uniform1f					( u32 location, float v0 ) = 0;
-	virtual void					Uniform1i					( u32 location, s32 v0 ) = 0;
-	virtual void					Uniform4fv					( u32 location, u32 count, const float* value ) = 0;
-	virtual void					UniformMatrix3fv			( u32 location, u32 count, bool transpose, const float* mtx ) = 0;
-	virtual void					UniformMatrix4fv			( u32 location, u32 count, bool transpose, const float* mtx ) = 0;
+	virtual void					UniformFloat				( u32 location, u32 index, u32 width, u32 count, const float* value ) = 0;
+	virtual void					UniformInt					( u32 location, u32 index, u32 width, u32 count, const s32* value ) = 0;
 	virtual void					UseProgram					( ZLGfxHandle* program ) = 0;
 	virtual void					VertexAttribPointer			( u32 index, u32 size, u32 type, bool normalized, u32 stride, ZLSharedConstBuffer* buffer, size_t offset ) = 0;
 	virtual void					Viewport					( s32 x, s32 y, u32 w, u32 h ) = 0;

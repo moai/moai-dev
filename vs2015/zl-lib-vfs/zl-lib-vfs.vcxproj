@@ -132,7 +132,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ForcedIncludeFiles>%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -207,7 +207,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ForcedIncludeFiles>%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -230,6 +230,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\src\zl-vfs\ZLThreadLocalPtr_windows.cpp" />
     <ClCompile Include="..\..\src\zl-vfs\zl_mutex.cpp" />
     <ClCompile Include="..\..\src\zl-vfs\zl_util.cpp" />
     <ClCompile Include="..\..\src\zl-vfs\zl_vfscanf.cpp" />
@@ -246,6 +247,7 @@
     <ClInclude Include="..\..\src\zl-vfs\assert.h" />
     <ClInclude Include="..\..\src\zl-vfs\headers.h" />
     <ClInclude Include="..\..\src\zl-vfs\pch.h" />
+    <ClInclude Include="..\..\src\zl-vfs\ZLThreadLocalPtr.h" />
     <ClInclude Include="..\..\src\zl-vfs\zl_mutex.h" />
     <ClInclude Include="..\..\src\zl-vfs\zl_replace.h" />
     <ClInclude Include="..\..\src\zl-vfs\zl_replace_locale.h" />

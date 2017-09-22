@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -160,7 +160,7 @@ int MOAIImage::_convolve ( lua_State* L ) {
 	
 		MOAIImage* image = new MOAIImage ();
 	
-		state.GetField ( 2, 1 );
+		state.PushField ( 2, 1 );
 	
 		if ( state.IsType ( -1, LUA_TNUMBER )) {
 		
@@ -184,15 +184,11 @@ int MOAIImage::_convolve ( lua_State* L ) {
 			
 			for ( int y = 0; y < kernelWidth; ++y ) {
 				
-				state.GetField ( 2, y + 1 );
+				state.PushField ( 2, y + 1 );
 				for ( int x = 0; x < kernelWidth; ++x ) {
 					kernel [( y * kernelWidth ) + x ] = state.GetFieldValue < float >( -1, x + 1, 0.0f );
 				}
 				state.Pop ();
-			}
-			
-			for ( int x = 0; x < kernelWidth * kernelHeight; ++x ) {
-				printf ( "kernel: %f\n", kernel [ x ]);
 			}
 			
 			if ( normalize ) {
@@ -231,7 +227,7 @@ int MOAIImage::_convolve1D ( lua_State* L ) {
 	
 		MOAIImage* image = new MOAIImage ();
 	
-		state.GetField ( 2, 1 );
+		state.PushField ( 2, 1 );
 	
 		if ( state.IsType ( -1, LUA_TNUMBER )) {
 		
@@ -2091,8 +2087,8 @@ void MOAIImage::DrawLine(int p1x, int p1y, int p2x, int p2y, u32 color)
 	
 	// Swap points if p1 is on the right of p2
     if ( p1x > p2x ) {
-        swap ( p1x, p2x );
-        swap ( p1y, p2y );
+        std::swap ( p1x, p2x );
+        std::swap ( p1y, p2y );
     }
 	
     // Handle trivial cases separately for algorithm speed up.
@@ -2101,7 +2097,7 @@ void MOAIImage::DrawLine(int p1x, int p1y, int p2x, int p2y, u32 color)
 	
 		// Swap y-coordinates if p1 is above p2
         if (p1y > p2y) {
-            swap ( p1y, p2y );
+            std::swap ( p1y, p2y );
         }
 		
         x = p1x;
@@ -2955,12 +2951,12 @@ bool MOAIImage::Load ( cc8* filename, u32 transform ) {
 	
 	ZLFileStream stream;
 	if ( stream.OpenRead ( filename )) {
-		this->Load ( stream, transform );
+		this->Load ( stream, transform ); // TODO: use file extension as name
 		stream.Close ();
 		this->OnImageStatusChanged ( this->IsOK ());
 	}
 	else {
-		MOAILogF ( NULL, ZLLog::LOG_ERROR, MOAILogMessages::MOAI_FileOpenError_S, filename );
+		MOAILogF ( NULL, ZLLog::LOG_ERROR, MOAISTRING_FileOpenError_S, filename );
 	}
 	return this->IsOK ();
 }
@@ -2972,7 +2968,7 @@ bool MOAIImage::Load ( ZLStream& stream, u32 transform ) {
 
 	this->Clear ();
 	
-	MOAIImageFormat* format = MOAIImageFormatMgr::Get ().FindFormat ( stream );
+	MOAIImageFormat* format = MOAIImageFormatMgr::Get ().FindFormat ( stream ); // TODO: make use of name
 	if ( format ) {
 		format->ReadImage ( *this, stream, transform );
 		this->OnImageStatusChanged ( this->IsOK ());

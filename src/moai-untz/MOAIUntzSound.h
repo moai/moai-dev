@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIUNTZSOUND_H
@@ -45,6 +45,9 @@ private:
 	static int		_setVolume			( lua_State* L );
 	static int		_stop				( lua_State* L );
 
+	//----------------------------------------------------------------//
+	bool			MOAINode_ApplyAttrOp	( u32 attrID, MOAIAttribute& attr, u32 op );
+
 public:
 
 	DECL_LUA_FACTORY ( MOAIUntzSound )
@@ -56,7 +59,6 @@ public:
 	};
 
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp			( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 					MOAIUntzSound		();
 					~MOAIUntzSound		();
 	void			RegisterLuaClass	( MOAILuaState& state );

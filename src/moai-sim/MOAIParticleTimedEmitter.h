@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIPARTICLETIMEDEMITTER_H
@@ -27,7 +27,9 @@ private:
 	
 	//----------------------------------------------------------------//
 	float			GetRandomFrequency		();
-	void			OnUpdate				( double step );
+	
+	//----------------------------------------------------------------//
+	void			MOAIAction_Update		( double step );
 
 public:
 	

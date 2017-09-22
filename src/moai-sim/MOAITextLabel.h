@@ -1,11 +1,11 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAITEXTLABEL_H
 #define	MOAITEXTLABEL_H
 
 #include <moai-sim/MOAIAction.h>
-#include <moai-sim/MOAIGraphicsProp.h>
+#include <moai-sim/MOAIGraphicsPropBase.h>
 #include <moai-sim/MOAITextLayoutRules.h>
 #include <moai-sim/MOAITextLayout.h>
 #include <moai-sim/MOAITextStyle.h>
@@ -124,16 +124,14 @@ class MOAIFont;
 	@const	WORD_BREAK_CHAR
 */
 class MOAITextLabel :
-	public MOAIGraphicsProp,
+	public MOAIGraphicsPropBase,
 	public MOAIAction {
 private:
 
-	bool				mNeedsLayout;
-
-protected:
-
 	static const u32 REVEAL_ALL = 0xffffffff;
 	static const float DEFAULT_SPOOL_SPEED;
+	
+	bool					mNeedsLayout;
 	
 	float					mSpool;
 	float					mSpeed;
@@ -198,25 +196,39 @@ protected:
 	#endif
 	
 	//----------------------------------------------------------------//
-	void				BuildLocalToWorldMtx	( ZLAffine3D& localToWorldMtx );
 	ZLMatrix4x4			GetWorldDrawingMtx		();
-	void				OnDepNodeUpdate			();
-	u32					OnGetModelBounds		( ZLBox& bounds );
-	void				OnUpdate				( double step );
 	void				ResetLayout				();
 	void				ScheduleLayout			();
 	void				Refresh					();
 	virtual void		RefreshLayout			();
 	virtual void		RefreshStyleGlyphs		();
 
+	//----------------------------------------------------------------//
+	bool				MOAIAction_IsDone							();
+	void				MOAIAction_Update							( double step );
+	void				MOAIDrawable_Draw							( int subPrimID );
+	void				MOAIDrawable_DrawDebug						( int subPrimID );
+	void				MOAINode_Update								();
+	ZLBounds			MOAIPartitionHull_GetModelBounds			();
+	void				MOAITransformBase_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAITextLabel )
 	
+	enum {
+		DEBUG_DRAW_TEXT_LABEL,
+		DEBUG_DRAW_TEXT_LABEL_BASELINES,
+		DEBUG_DRAW_TEXT_LABEL_GLYPH_BOUNDS,
+		DEBUG_DRAW_TEXT_LABEL_GLYPHS,
+		DEBUG_DRAW_TEXT_LABEL_LAYOUT_BOUNDS,
+		DEBUG_DRAW_TEXT_LABEL_LIMITS,
+		DEBUG_DRAW_TEXT_LABEL_LINES_GLYPH_BOUNDS,
+		DEBUG_DRAW_TEXT_LABEL_LINES_LAYOUT_BOUNDS,
+		TOTAL_DEBUG_LINE_STYLES,
+	};
+	
 	//----------------------------------------------------------------//
-	void				Draw					( int subPrimID, float lod );
-	void				DrawDebug				( int subPrimID, float lod );
-	bool				IsDone					();
 						MOAITextLabel			();
 						~MOAITextLabel			();
 	bool				More					();

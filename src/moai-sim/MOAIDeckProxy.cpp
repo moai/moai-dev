@@ -1,17 +1,14 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIBoundsDeck.h>
 #include <moai-sim/MOAICollisionShape.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDeckProxy.h>
-#include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIImage.h>
-#include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAISurfaceSampler2D.h>
@@ -35,62 +32,6 @@ int MOAIDeckProxy::_setDeck ( lua_State* L ) {
 //================================================================//
 // MOAIDeckProxy
 //================================================================//
-
-//----------------------------------------------------------------//
-ZLBox MOAIDeckProxy::ComputeMaxBounds () {
-
-	assert ( this->mDeck );
-	return this->mDeck->ComputeMaxBounds ();
-}
-
-//----------------------------------------------------------------//
-bool MOAIDeckProxy::Contains ( u32 idx, const ZLVec2D& vec ) {
-	
-	return this->mDeck ? this->mDeck->Contains ( idx, vec ) : false;
-}
-
-//----------------------------------------------------------------//
-void MOAIDeckProxy::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
-
-	if ( this->mDeck ) {
-		this->DrawIndex ( idx, materials, offset, scale );
-	}
-}
-
-//----------------------------------------------------------------//
-ZLBox MOAIDeckProxy::GetBounds () {
-
-	assert ( this->mDeck );
-	return this->mDeck->GetBounds ();
-}
-
-//----------------------------------------------------------------//
-ZLBox MOAIDeckProxy::GetBounds ( u32 idx ) {
-
-	assert ( this->mDeck );
-	return this->mDeck->GetBounds ( idx );
-}
-
-//----------------------------------------------------------------//
-void MOAIDeckProxy::GetCollisionShape ( MOAICollisionShape& shape ) {
-
-	if ( this->mDeck ) {
-		this->GetCollisionShape ( shape );
-	}
-}
-
-//----------------------------------------------------------------//
-ZLBox MOAIDeckProxy::GetItemBounds ( u32 idx ) {
-
-	assert ( this->mDeck );
-	return this->mDeck->GetItemBounds ( idx );
-}
-
-//----------------------------------------------------------------//
-bool MOAIDeckProxy::Inside ( u32 idx, MOAIMaterialBatch& materials, u32 granularity, ZLVec3D vec, float pad ) {
-
-	return this->mDeck ? this->mDeck->Inside ( idx, materials, granularity, vec, pad ) : false;
-}
 
 //----------------------------------------------------------------//
 MOAIDeckProxy::MOAIDeckProxy () {
@@ -126,8 +67,61 @@ void MOAIDeckProxy::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-MOAIMaterialBatch& MOAIDeckProxy::ResolveMaterialBatch ( MOAIMaterialBatch* override ) {
+void MOAIDeckProxy::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
-	assert ( this->mDeck );
-	return this->mDeck->ResolveMaterialBatch ( override );
+	MOAIDeck::SerializeIn ( state, serializer );
+}
+
+//----------------------------------------------------------------//
+void MOAIDeckProxy::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+
+	MOAIDeck::SerializeOut ( state, serializer );
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+ZLBounds MOAIDeckProxy::MOAIDeck_ComputeMaxBounds () {
+
+	return this->mDeck ? this->mDeck->MOAIDeck_ComputeMaxBounds () : ZLBounds::ZL_BOUNDS_EMPTY;
+}
+
+//----------------------------------------------------------------//
+void MOAIDeckProxy::MOAIDeck_Draw ( u32 idx ) {
+
+	if ( this->mDeck ) {
+		this->mDeck->MOAIDeck_Draw ( this->MOAIDeckProxy_Remap ( idx ));
+	}
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAIDeckProxy::MOAIDeck_GetBounds ( u32 idx ) {
+
+	return this->mDeck ? this->mDeck->MOAIDeck_GetBounds ( this->MOAIDeckProxy_Remap ( idx )) : ZLBounds::ZL_BOUNDS_EMPTY;
+}
+
+//----------------------------------------------------------------//
+MOAICollisionShape* MOAIDeckProxy::MOAIDeck_GetCollisionShape ( u32 idx ) {
+
+	return this->mDeck ? this->mDeck->MOAIDeck_GetCollisionShape ( this->MOAIDeckProxy_Remap ( idx )) : 0;
+}
+
+//----------------------------------------------------------------//
+bool MOAIDeckProxy::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
+
+	return this->mDeck ? this->mDeck->MOAIDeck_Overlap ( this->MOAIDeckProxy_Remap ( idx ), vec, granularity, result ) : false;
+}
+
+//----------------------------------------------------------------//
+bool MOAIDeckProxy::MOAIDeck_Overlap ( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
+
+	return this->mDeck ? this->mDeck->MOAIDeck_Overlap ( this->MOAIDeckProxy_Remap ( idx ), vec, granularity, result ) : false;
+}
+
+//----------------------------------------------------------------//
+u32 MOAIDeckProxy::MOAIDeckProxy_Remap ( u32 idx ) {
+
+	return idx;
 }

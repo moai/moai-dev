@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIPARTICLESYSTEM_H
@@ -68,8 +68,12 @@ private:
 	void					EnqueueParticle			( MOAIParticle& particle );
 	AKUParticleSprite*		GetTopSprite			();
 	MOAIParticleState*		GetState				( u32 id );
-	u32						OnGetModelBounds		( ZLBox& bounds );
-	void					OnUpdate				( double step );
+	
+	//----------------------------------------------------------------//
+	bool					MOAIAction_IsDone						();
+	void					MOAIAction_Update						( double step );
+	void					MOAIDrawable_Draw						( int subPrimID );
+	ZLBounds				MOAIPartitionHull_GetModelBounds		();
 
 public:
 
@@ -85,8 +89,6 @@ public:
 	DECL_LUA_FACTORY ( MOAIParticleSystem )
 
 	//----------------------------------------------------------------//
-	void			Draw					( int subPrimID, float lod );
-	bool			IsDone					();
 					MOAIParticleSystem		();
 					~MOAIParticleSystem		();
 	bool			PushParticle			( float x, float y );

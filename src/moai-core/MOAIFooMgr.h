@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef MOAIFOOMGR_H
@@ -19,7 +19,7 @@
 			using the REGISTER_LUA_CLASS macro (see moaicore.cpp).
 */
 class MOAIFooMgr :
-	public MOAIGlobalClass < MOAIFooMgr, MOAILuaObject > {
+	public ZLContextClass < MOAIFooMgr, MOAILuaObject > {
 private:
 	
 	//----------------------------------------------------------------//

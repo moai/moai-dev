@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef MOAIGRIDSPACE_H
@@ -143,20 +143,20 @@ public:
 	static const u32 HEX_SHAPE			= 0x00000003 | STAGGER_FLAG;
 	static const u32 AXIAL_HEX_SHAPE	= 0x00000004;
 	
-	GET_SET ( float, XOff, mXOff )
-	GET_SET ( float, YOff, mYOff )
+	GET_SET_CONST ( float, XOff, mXOff )
+	GET_SET_CONST ( float, YOff, mYOff )
 	
-	GET_SET ( float, CellWidth, mCellWidth )
-	GET_SET ( float, CellHeight, mCellHeight )
+	GET_SET_CONST ( float, CellWidth, mCellWidth )
+	GET_SET_CONST ( float, CellHeight, mCellHeight )
 	
-	GET_SET ( float, TileWidth, mTileWidth )
-	GET_SET ( float, TileHeight, mTileHeight )
+	GET_SET_CONST ( float, TileWidth, mTileWidth )
+	GET_SET_CONST ( float, TileHeight, mTileHeight )
 	
-	GET_SET ( int, Width, mWidth )
-	GET_SET ( int, Height, mHeight )
+	GET_SET_CONST ( int, Width, mWidth )
+	GET_SET_CONST ( int, Height, mHeight )
 	
-	GET_SET ( u32, Shape, mShape )
-	GET_SET ( u32, Repeat, mRepeat )
+	GET_SET_CONST ( u32, Shape, mShape )
+	GET_SET_CONST ( u32, Repeat, mRepeat )
 	
 	//----------------------------------------------------------------//
 	ZLVec2D				CellToWorld				( MOAICellCoord cellCoord, ZLVec2D loc ) const;

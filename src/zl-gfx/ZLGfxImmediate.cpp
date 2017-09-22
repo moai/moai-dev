@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -63,14 +63,14 @@ void ZLGfxImmediate::BindRenderbuffer ( ZLGfxHandle* handle ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::BindTexture ( ZLGfxHandle* handle ) {
+void ZLGfxImmediate::SetTexture ( ZLGfxHandle* handle ) {
 
 	glBindTexture ( GL_TEXTURE_2D, handle ? handle->mGLID : 0 );
 	GL_LOG_ERRORS ( "glBindTexture" )
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::BindVertexArray ( ZLGfxHandle* handle ) {
+void ZLGfxImmediate::SetVertexArray ( ZLGfxHandle* handle ) {
 
 	#if defined( MOAI_OS_ANDROID ) || defined( MOAI_OS_HTML )
 		return;
@@ -214,10 +214,10 @@ void ZLGfxImmediate::CompressedTexImage2D ( u32 level, u32 internalFormat, u32 w
 }
 
 //----------------------------------------------------------------//
-ZLSharedConstBuffer* ZLGfxImmediate::CopyBuffer ( ZLSharedConstBuffer* buffer ) {
-
-	return buffer;
-}
+//ZLSharedConstBuffer* ZLGfxImmediate::CopyBuffer ( ZLSharedConstBuffer* buffer ) {
+//
+//	return buffer;
+//}
 
 //----------------------------------------------------------------//
 ZLGfxHandle* ZLGfxImmediate::Create ( ZLGfxHandle* handle, u32 param ) {
@@ -680,38 +680,67 @@ void ZLGfxImmediate::TexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 wi
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::Uniform1f ( u32 location, float v0 ) {
+void ZLGfxImmediate::UniformFloat ( u32 location, u32 index, u32 width, u32 count, const float* value ) {
 
-	glUniform1f (( GLint )location, ( GLfloat )v0 );
-	GL_LOG_ERRORS ( "glUniform1f" )
+	switch ( width ) {
+	
+		case 1:
+			glUniform1fv (( GLint )( location + index ), count, ( const GLfloat* )value );
+			GL_LOG_ERRORS ( "glUniform1fv" )
+			break;
+			
+		case 2:
+			glUniform2fv (( GLint )( location + index ), count, ( const GLfloat* )value );
+			GL_LOG_ERRORS ( "glUniform2fv" )
+			break;
+			
+		case 3:
+			glUniform3fv (( GLint )( location + index ), count, ( const GLfloat* )value );
+			GL_LOG_ERRORS ( "glUniform3fv" )
+			break;
+			
+		case 4:
+			glUniform4fv (( GLint )( location + index ), count, ( const GLfloat* )value );
+			GL_LOG_ERRORS ( "glUniform4fv" )
+			break;
+		
+		case 9:
+			glUniformMatrix3fv (( GLint )( location + ( index * 3 )), count, GL_FALSE, ( const GLfloat* )value );
+			GL_LOG_ERRORS ( "glUniformMatrix3fv" )
+			break;
+		
+		case 16:
+			glUniformMatrix4fv (( GLint )( location + ( index * 4 )), count, GL_FALSE, ( const GLfloat* )value );
+			GL_LOG_ERRORS ( "glUniformMatrix4fv" )
+			break;
+	}
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::Uniform1i ( u32 location, s32 v0 ) {
+void ZLGfxImmediate::UniformInt ( u32 location, u32 index, u32 width, u32 count, const s32* value ) {
 
-	glUniform1i (( GLint )location, ( GLint )v0 );
-	GL_LOG_ERRORS ( "glUniform1i" )
-}
-
-//----------------------------------------------------------------//
-void ZLGfxImmediate::Uniform4fv ( u32 location, u32 count, const float* value ) {
-
-	glUniform4fv (( GLint )location, ( GLsizei )count, ( const GLfloat* )value );
-	GL_LOG_ERRORS ( "glUniform4fv" )
-}
-
-//----------------------------------------------------------------//
-void ZLGfxImmediate::UniformMatrix3fv ( u32 location, u32 count, bool transpose, const float* mtx ) {
-
-	glUniformMatrix3fv (( GLint )location, ( GLsizei )count, transpose ? GL_TRUE : GL_FALSE, ( const GLfloat* )mtx );
-	GL_LOG_ERRORS ( "glUniformMatrix3fv" )
-}
-
-//----------------------------------------------------------------//
-void ZLGfxImmediate::UniformMatrix4fv ( u32 location, u32 count, bool transpose, const float* mtx ) {
-
-	glUniformMatrix4fv (( GLint )location, ( GLsizei )count, transpose ? GL_TRUE : GL_FALSE, ( const GLfloat* )mtx );
-	GL_LOG_ERRORS ( "glUniformMatrix4fv" )
+	switch ( width ) {
+	
+		case 1:
+			glUniform1iv (( GLint )location, count, ( const GLint* )value );
+			GL_LOG_ERRORS ( "glUniform1iv" )
+			break;
+			
+		case 2:
+			glUniform2iv (( GLint )location, count, ( const GLint* )value );
+			GL_LOG_ERRORS ( "glUniform2iv" )
+			break;
+			
+		case 3:
+			glUniform3iv (( GLint )location, count, ( const GLint* )value );
+			GL_LOG_ERRORS ( "glUniform3iv" )
+			break;
+			
+		case 4:
+			glUniform4iv (( GLint )location, count, ( const GLint* )value );
+			GL_LOG_ERRORS ( "glUniform4iv" )
+			break;
+	}
 }
 
 //----------------------------------------------------------------//

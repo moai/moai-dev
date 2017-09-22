@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef MOAIINPUTMGR_H
@@ -15,11 +15,16 @@
 	@text	Base class for input streams and device sets.
 */
 class MOAIInputMgr :
-	public MOAIGlobalClass < MOAIInputMgr, MOAILuaObject >,
+	public ZLContextClass < MOAIInputMgr, MOAILuaObject >,
 	public virtual ZLMemStream {
 private:
 
 	static const size_t CHUNK_SIZE = 256;
+
+	enum {
+		INPUT_EVENT,
+		FINISHED_UPDATE,
+	};
 
 	ZLLeanStack < MOAIInputDevice*, 8 > mDevices;
 
@@ -38,6 +43,8 @@ private:
 
 	MOAILuaSharedPtr < MOAIStream > mRecorder;
 	bool mPlayback;
+	
+	MOAILuaStrongRef	mEventCallback;
 
 	//----------------------------------------------------------------//
 	static int			_autoTimestamp				( lua_State* L );
@@ -45,12 +52,14 @@ private:
 	static int			_discardEvents				( lua_State* L );
 	static int			_playback					( lua_State* L );
 	static int			_setAutosuspend				( lua_State* L );
+	static int			_setEventCallback			( lua_State* L );
 	static int			_setRecorder				( lua_State* L );
 	static int			_suspendEvents				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	bool				CanWrite					();
 	bool				CheckSensor					( u8 deviceID, u8 sensorID, u32 type );
+	void				InvokeCallback				( u32 event, double timestamp );
 	size_t				ParseEvents					( ZLStream& stream, double timestep );
 	void				Record						( size_t size );
 	bool				WriteEventHeader			( u8 deviceID, u8 sensorID, u32 type );
@@ -69,7 +78,8 @@ public:
 	void				FlushEvents					( double skip );
 	MOAIInputDevice*	GetDevice					( u8 deviceID );
 	MOAISensor*			GetSensor					( u8 deviceID, u8 sensorID );
-	bool				IsDone						();
+	bool				HasEvents					();
+	//bool				IsDone						();
 						MOAIInputMgr				();
 						~MOAIInputMgr				();
 	void				RegisterLuaClass			( MOAILuaState& state );

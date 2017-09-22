@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include <moai-untz/MOAIUntzSampleBuffer.h>
@@ -121,7 +121,7 @@ int MOAIUntzSampleBuffer::_setData ( lua_State* L ) {
 	u32 startDataIndex = state.GetValue<u32>(3,1);
 	int itr = state.PushTableItr(2);
 	int idx = 0;
-	u32 total = 0;
+	//u32 total = 0;
 	int maxindex = self->mInfo.mChannels * self->mInfo.mTotalFrames;
 
 	idx = startDataIndex - 1;
@@ -184,6 +184,7 @@ MOAIUntzSampleBuffer::~MOAIUntzSampleBuffer () {
 }
 //----------------------------------------------------------------//
 void MOAIUntzSampleBuffer::RegisterLuaClass ( MOAILuaState& state ) {
+	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//

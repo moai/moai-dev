@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -7,7 +7,6 @@
 #include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIMesh.h>
-#include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAISelectionMesh.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
@@ -342,25 +341,6 @@ void MOAISelectionMesh::ClearSelection ( u32 set, size_t base, size_t top ) {
 }
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
-	UNUSED ( offset );
-	UNUSED ( scale );
-	
-	if ( !this->mMesh ) return;
-	
-	size_t size = this->mSets.Size ();
-	if ( !size ) return;
-
-	idx = idx - 1;
-	u32 itemIdx = idx % size;
-	
-	MOAIMeshSpan* span = this->mSets [ itemIdx ];
-	if ( !span ) return;
-
-	this->mMesh->DrawIndex ( idx, span, materials, offset, scale );
-}
-
-//----------------------------------------------------------------//
 void MOAISelectionMesh::FixOverlaps ( MOAISelectionSpan* span ) {
 
 	// we expect the new span to be *entirely* after the base of the previous span and
@@ -605,4 +585,24 @@ void MOAISelectionMesh::SerializeIn ( MOAILuaState& state, MOAIDeserializer& ser
 void MOAISelectionMesh::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
 	MOAIDeckProxy::SerializeOut ( state, serializer );
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAISelectionMesh::MOAIDeck_Draw ( u32 idx ) {
+	
+	if ( !this->mMesh ) return;
+	
+	size_t size = this->mSets.Size ();
+	if ( !size ) return;
+
+	u32 itemIdx = idx % size;
+	
+	MOAIMeshSpan* span = this->mSets [ itemIdx ];
+	if ( !span ) return;
+
+	this->mMesh->DrawIndex ( idx, span );
 }

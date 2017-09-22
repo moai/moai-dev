@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIGFXRESOURCE_H
@@ -21,7 +21,7 @@ private:
 	friend class MOAIGfxPipelineClerk;
 	friend class MOAIGfxStateCache;
 	friend class MOAIGfxResourceClerk;
-
+	
 	u32					mState;
 	u32					mLastRenderCount;
 

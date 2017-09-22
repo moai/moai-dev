@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIACTIONTREE_H
@@ -27,10 +27,13 @@ private:
 	MOAIAction* mRoot;
 
 	//----------------------------------------------------------------//
-	MOAIAction*			AffirmRoot				();
-	void				OnLostChild				( MOAIAction* child );
-	void				OnUpdate				( double step );
-	void				SetRoot					( MOAIAction* root );
+	MOAIAction*			AffirmRoot					();
+	void				SetRoot						( MOAIAction* root );
+
+	//----------------------------------------------------------------//
+	void				MOAIAction_DidLoseChild		( MOAIAction* child );
+	bool				MOAIAction_IsDone			();
+	void				MOAIAction_Update			( double step );
 
 protected:
 
@@ -51,7 +54,6 @@ public:
 
 	//----------------------------------------------------------------//
 	MOAIAction*			GetDefaultParent		();
-	bool				IsDone					();
 						MOAIActionTree			();
 						~MOAIActionTree			();
 	void				RegisterLuaClass		( MOAILuaState& state );

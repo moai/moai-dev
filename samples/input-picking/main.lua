@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
 
 MOAISim.openWindow ( "test", 320, 480 )
 
-layer = MOAILayer2D.new ()
-MOAISim.pushRenderPass ( layer )
+layer = MOAIPartitionViewLayer.new ()
+layer:pushRenderPass ()
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )

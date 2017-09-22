@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -871,6 +871,16 @@ int zl_setvbuf ( ZLFILE* fp, char* buffer, int mode, size_t size ) {
 }
 
 //----------------------------------------------------------------//
+int zl_system ( const char* command ) {
+
+	#ifdef MOAI_OS_IPHONE
+		assert ( false );
+	#else
+		return system ( command );
+	#endif
+}
+
+//----------------------------------------------------------------//
 ZLFILE* zl_tmpfile ( void ) {
 
 	ZLVfsFile* file = new ZLVfsFile ();
@@ -908,10 +918,11 @@ int zl_ungetc ( int character, ZLFILE* fp ) {
 	return EOF;
 }
 
-wchar_t	zl_ungetwc(wchar_t character, ZLFILE* fp) {
-	UNUSED(character);
-	UNUSED(fp);
-	assert(0);
+//----------------------------------------------------------------//
+wchar_t	zl_ungetwc ( wchar_t character, ZLFILE* fp ) {
+	UNUSED ( character );
+	UNUSED ( fp );
+	assert ( 0 );
 	return 0;
 }
 

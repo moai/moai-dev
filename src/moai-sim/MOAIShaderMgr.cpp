@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -97,116 +97,104 @@ MOAIShaderProgram* MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 				
 				case DECK2D_SHADER:
 					
-					program->SetSource ( _deck2DShaderVSH, _deck2DShaderFSH );
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
+					
+					program->Load ( _deck2DShaderVSH, _deck2DShaderFSH );
 					break;
 				
 				case DECK2D_SNAPPING_SHADER:
 					
-					program->SetSource ( _deck2DSnappingShaderVSH, _deck2DSnappingShaderFSH );
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 					
 					program->ReserveUniforms ( 2 );
-					program->DeclareUniform ( 0, "xSnap", MOAIShaderUniform::UNIFORM_FLOAT );
-					program->DeclareUniform ( 1, "ySnap", MOAIShaderUniform::UNIFORM_FLOAT );
+					program->DeclareUniform ( 0, "xSnap", MOAIShaderUniform::UNIFORM_TYPE_FLOAT );
+					program->DeclareUniform ( 1, "ySnap", MOAIShaderUniform::UNIFORM_TYPE_FLOAT );
 					
 					program->ReserveGlobals ( 2 );
-					program->SetGlobal ( 0, 0, MOAIGfxGlobalsCache::VIEW_HALF_WIDTH );
-					program->SetGlobal ( 1, 1, MOAIGfxGlobalsCache::VIEW_HALF_HEIGHT );
+					program->SetGlobal ( 0, MOAIGfxGlobalsCache::VIEW_HALF_WIDTH, 0, 0 );
+					program->SetGlobal ( 1, MOAIGfxGlobalsCache::VIEW_HALF_HEIGHT, 1, 0 );
 					
+					program->Load ( _deck2DSnappingShaderVSH, _deck2DSnappingShaderFSH );
 					break;
 				
 				case DECK2D_TEX_ONLY_SHADER:
 					
-					program->SetSource ( _deck2DTexOnlyShaderVSH, _deck2DTexOnlyShaderFSH );
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
+					
+					program->Load ( _deck2DTexOnlyShaderVSH, _deck2DTexOnlyShaderFSH );
 					break;
 				
 				case FONT_SHADER:
 					
-					program->SetSource ( _fontShaderVSH, _fontShaderFSH );
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
+					
+					program->Load ( _fontShaderVSH, _fontShaderFSH );
 					break;
 				
 				case FONT_SNAPPING_SHADER:
 					
-					program->SetSource ( _fontSnappingShaderVSH, _fontSnappingShaderFSH );
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 					
 					program->ReserveUniforms ( 2 );
-					program->DeclareUniform ( 0, "xSnap", MOAIShaderUniform::UNIFORM_FLOAT );
-					program->DeclareUniform ( 1, "ySnap", MOAIShaderUniform::UNIFORM_FLOAT );
+					program->DeclareUniform ( 0, "xSnap", MOAIShaderUniform::UNIFORM_TYPE_FLOAT );
+					program->DeclareUniform ( 1, "ySnap", MOAIShaderUniform::UNIFORM_TYPE_FLOAT );
 					
 					program->ReserveGlobals ( 2 );
-					program->SetGlobal ( 0, 0, MOAIGfxGlobalsCache::VIEW_HALF_WIDTH );
-					program->SetGlobal ( 1, 1, MOAIGfxGlobalsCache::VIEW_HALF_HEIGHT );
+					program->SetGlobal ( 0, MOAIGfxGlobalsCache::VIEW_HALF_WIDTH, 0, 0 );
+					program->SetGlobal ( 1, MOAIGfxGlobalsCache::VIEW_HALF_HEIGHT, 1, 0 );
 					
-					break;
-					
-				case FONT_EFFECTS_SHADER:
-					
-					//program->SetSource ( _fontEffectsShaderVSH, _fontEffectsShaderFSH );
-					//program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
-					//program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
-					//program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
-					
-					//program->ReserveUniforms ( 2 );
-					//program->DeclareUniform ( 0, "xSnap", MOAIShaderUniform::UNIFORM_FLOAT );
-					//program->DeclareUniform ( 1, "ySnap", MOAIShaderUniform::UNIFORM_FLOAT );
-					
-					//program->ReserveGlobals ( 2 );
-					//program->SetGlobal ( 0, 0, MOAIShaderProgram::GLOBAL_VIEW_HALF_WIDTH );
-					//program->SetGlobal ( 1, 1, MOAIShaderProgram::GLOBAL_VIEW_HALF_HEIGHT );
-					
+					program->Load ( _fontSnappingShaderVSH, _fontSnappingShaderFSH );
 					break;
 				
 				case LINE_SHADER:
 					
-					program->SetSource ( _lineShaderVSH, _lineShaderFSH );
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWC_POSITION, "position" );
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWC_COLOR, "color" );
+					program->Load ( _lineShaderVSH, _lineShaderFSH );
 					break;
 				
 				case LINE_SHADER_3D:
 					
-					program->SetSource ( _lineShader3DVSH, _lineShader3DFSH );
 					program->SetVertexAttribute ( 0, "position" );
 					program->SetVertexAttribute ( 1, "color" );
 					
 					program->ReserveUniforms ( 2 );
-					program->DeclareUniform ( 0, "transform", MOAIShaderUniform::UNIFORM_MATRIX_F4 );
-					program->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_VECTOR_F4 );
+					program->DeclareUniform ( 0, "transform", MOAIShaderUniform::UNIFORM_TYPE_FLOAT, MOAIShaderUniform::UNIFORM_WIDTH_MATRIX_4X4 );
+					program->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_TYPE_FLOAT, MOAIShaderUniform::UNIFORM_WIDTH_VEC_4 );
 					
 					program->ReserveGlobals ( 2 );
-					program->SetGlobal ( 0, 0, MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX );
-					program->SetGlobal ( 1, 1, MOAIGfxGlobalsCache::PEN_COLOR );
+					program->SetGlobal ( 0, MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX, 0, 0 );
+					program->SetGlobal ( 1, MOAIGfxGlobalsCache::PEN_COLOR, 1, 0 );
+					
+					program->Load ( _lineShader3DVSH, _lineShader3DFSH );
 					
 					break;
 
 				case MESH_SHADER:
 
-					program->SetSource ( _meshShaderVSH, _meshShaderFSH );
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 
 					program->ReserveUniforms ( 2 );
-					program->DeclareUniform ( 0, "transform", MOAIShaderUniform::UNIFORM_MATRIX_F4 );
-					program->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_VECTOR_F4 );
+					program->DeclareUniform ( 0, "transform", MOAIShaderUniform::UNIFORM_TYPE_FLOAT, MOAIShaderUniform::UNIFORM_WIDTH_MATRIX_4X4 );
+					program->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_TYPE_FLOAT, MOAIShaderUniform::UNIFORM_WIDTH_VEC_4 );
 					
 					program->ReserveGlobals ( 2 );
-					program->SetGlobal ( 0, 0, MOAIGfxGlobalsCache::WORLD_VIEW_PROJ_MTX );
-					program->SetGlobal ( 1, 1, MOAIGfxGlobalsCache::PEN_COLOR );
+					program->SetGlobal ( 0, MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX, 0, 0 );
+					program->SetGlobal ( 1, MOAIGfxGlobalsCache::PEN_COLOR, 1, 0 );
+					
+					program->Load ( _meshShaderVSH, _meshShaderFSH );
 					
 					break;
 			}
@@ -290,7 +278,7 @@ void MOAIShaderMgr::RegisterLuaClass ( MOAILuaState& state ) {
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

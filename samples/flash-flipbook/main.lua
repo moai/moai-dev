@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -126,10 +126,10 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( fla.width, fla.height )
 viewport:setScale ( fla.width, -fla.height )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 MOAISim.openWindow ( "flash", fla.width, fla.height )
 
 MOAIGfxMgr.setClearColor ( 1, 1, 1, 1 )

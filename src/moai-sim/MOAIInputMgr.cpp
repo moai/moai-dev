@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -64,6 +64,15 @@ int MOAIInputMgr::_setAutosuspend ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIInputMgr, "" )
 	
 	self->mAutosuspend = state.GetValue < double >( 1, 0 );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIInputMgr::_setEventCallback ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIInputMgr, "" )
+	
+	self->mEventCallback.SetRef ( state, 1 );
 	
 	return 0;
 }
@@ -167,9 +176,28 @@ MOAISensor* MOAIInputMgr::GetSensor ( u8 deviceID, u8 sensorID ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIInputMgr::IsDone () {
-	return false;
+bool MOAIInputMgr::HasEvents () {
+
+	// TODO: this ignores the case where there are pending events that would not be processed until after the current frame
+	return this->GetCursor () > 0;
 }
+
+//----------------------------------------------------------------//
+void MOAIInputMgr::InvokeCallback ( u32 event, double timestamp ) {
+
+	if ( this->mEventCallback ) {
+		
+		MOAIScopedLuaState state = this->mEventCallback.GetSelf ();
+		lua_pushnumber ( state, event );
+		lua_pushnumber ( state, timestamp );
+		state.DebugCall ( 2, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
+//bool MOAIInputMgr::IsDone () {
+//	return false;
+//}
 
 //----------------------------------------------------------------//
 MOAIInputMgr::MOAIInputMgr () :
@@ -228,8 +256,13 @@ size_t MOAIInputMgr::ParseEvents ( ZLStream& stream, double timestep ) {
 		sensor->mTimestamp = timestamp;
 		sensor->ParseEvent ( stream );
 		
+		this->InvokeCallback ( INPUT_EVENT, timestamp );
+		
 		cursor = stream.GetCursor ();
 	}
+	
+	this->InvokeCallback ( FINISHED_UPDATE, ZLDeviceTime::GetTimeInSeconds () - this->mTimebase );
+	
 	return cursor;
 }
 
@@ -246,12 +279,17 @@ void MOAIInputMgr::Record ( size_t size ) {
 //----------------------------------------------------------------//
 void MOAIInputMgr::RegisterLuaClass ( MOAILuaState& state ) {
 
+	state.SetField ( -1, "INPUT_EVENT",			( u32 )INPUT_EVENT );
+	state.SetField ( -1, "FINISHED_UPDATE",		( u32 )FINISHED_UPDATE );
+
+
 	luaL_Reg regTable [] = {
 		{ "autoTimestamp",		_autoTimestamp },
 		{ "deferEvents",		_deferEvents },
 		{ "discardEvents",		_discardEvents },
 		{ "playback",			_playback },
 		{ "setAutosuspend",		_setAutosuspend },
+		{ "setEventCallback",	_setEventCallback },
 		{ "setRecorder",		_setRecorder },
 		{ "suspendEvents",		_suspendEvents },
 		{ NULL, NULL }

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIPROFILERSCOPE_H
@@ -6,6 +6,8 @@
 
 #include <moai-sim/MOAIProfilerReport.h>
 #include <moai-sim/MOAIProfilerAutoScope.h>
+
+#if 0
 
 //================================================================//
 // MOAIProfilerScope
@@ -31,4 +33,5 @@ public:
 				MOAIProfilerScope		( const ZLHashedString& name = ZLHashedString::Empty );
 };
 
+#endif
 #endif

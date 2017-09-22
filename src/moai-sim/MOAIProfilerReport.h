@@ -1,10 +1,12 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIPROFILERREPORT_H
 #define	MOAIPROFILERREPORT_H
 
 #include <moai-sim/MOAIProfilerReportBase.h>
+
+#if 0
 
 //================================================================//
 // MOAIProfilerReport
@@ -39,4 +41,5 @@ public:
 
 };
 
+#endif
 #endif

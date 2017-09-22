@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIANIM_H
@@ -35,10 +35,13 @@ private:
 	ZLLeanArray < MOAIAnimLink > mLinks;
 
 	//----------------------------------------------------------------//
-	static int	_apply				( lua_State* L );
-	static int	_getLength			( lua_State* L );
-	static int	_reserveLinks		( lua_State* L );
-	static int	_setLink			( lua_State* L );
+	static int		_apply				( lua_State* L );
+	static int		_getLength			( lua_State* L );
+	static int		_reserveLinks		( lua_State* L );
+	static int		_setLink			( lua_State* L );
+	
+	//----------------------------------------------------------------//
+	void			MOAIAction_Update	( double step );
 	
 public:
 	
@@ -53,7 +56,6 @@ public:
 	void			ClearLinks			();
 					MOAIAnim			();
 					~MOAIAnim			();
-	void			OnUpdate			( double step );
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			ReserveLinks		( u32 totalLinks );

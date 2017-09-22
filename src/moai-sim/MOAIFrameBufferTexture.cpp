@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -72,7 +72,7 @@ MOAIFrameBufferTexture::MOAIFrameBufferTexture () :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIFrameBuffer )
-		RTTI_EXTEND ( MOAISingleTexture )
+		RTTI_EXTEND ( MOAITextureBase )
 	RTTI_END
  
 	this->mDebugName = "(texture from MOAIFrameBufferTexture)";
@@ -82,6 +82,13 @@ MOAIFrameBufferTexture::MOAIFrameBufferTexture () :
 MOAIFrameBufferTexture::~MOAIFrameBufferTexture () {
 
 	this->OnGPUDeleteOrDiscard ( true );
+}
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferTexture::OnGPUBind () {
+
+	this->NeedsClear ( true );
+	MOAITextureBase::OnGPUBind ();
 }
 
 //----------------------------------------------------------------//
@@ -142,7 +149,7 @@ bool MOAIFrameBufferTexture::OnGPUCreate () {
 	if ( gfx.PushSuccessHandler ()) {
 	
 		this->mGLTexID = gfx.CreateTexture ();
-		gfx.BindTexture ( this->mGLTexID );
+		gfx.SetTexture ( this->mGLTexID );
 		gfx.TexImage2D ( 0, ZGL_PIXEL_FORMAT_RGBA, this->mWidth, this->mHeight, ZGL_PIXEL_FORMAT_RGBA, ZGL_PIXEL_TYPE_UNSIGNED_BYTE, 0 );
 		gfx.FramebufferTexture2D ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_COLOR, this->mGLTexID, 0 );
 		
@@ -176,21 +183,21 @@ void MOAIFrameBufferTexture::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mGLDepthBufferID, shouldDelete );
 	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mGLStencilBufferID, shouldDelete );
 
-	this->MOAISingleTexture::OnGPUDeleteOrDiscard ( shouldDelete );
+	this->MOAITextureBase::OnGPUDeleteOrDiscard ( shouldDelete );
 }
 
 //----------------------------------------------------------------//
 void MOAIFrameBufferTexture::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAIFrameBuffer::RegisterLuaClass ( state );
-	MOAISingleTexture::RegisterLuaClass ( state );
+	MOAITextureBase::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIFrameBufferTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAIFrameBuffer::RegisterLuaFuncs ( state );
-	MOAISingleTexture::RegisterLuaFuncs ( state );	
+	MOAITextureBase::RegisterLuaFuncs ( state );	
 
 	luaL_Reg regTable [] = {
 		{ "init",						_init },
@@ -201,17 +208,11 @@ void MOAIFrameBufferTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferTexture::Render () {
-
-	MOAIFrameBuffer::Render ();
-}
-
-//----------------------------------------------------------------//
 void MOAIFrameBufferTexture::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAISingleTexture::SerializeIn ( state, serializer );
+	MOAITextureBase::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAIFrameBufferTexture::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAISingleTexture::SerializeOut ( state, serializer );
+	MOAITextureBase::SerializeOut ( state, serializer );
 }

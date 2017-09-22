@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -92,7 +92,7 @@ MOAIDynamicGlyphCachePage::GlyphSpan* MOAIDynamicGlyphCachePage::Alloc ( MOAIDyn
 	
 	GlyphSpan* glyphSpan = bestRowIt->mData.Alloc ( width );
 	if ( glyphSpan ) {
-		glyph.SetSourceLoc (( u32 )( glyphSpan->mBase - ( s32 ) owner.mPadding.mXMin ), ( u32 )( bestRowIt->mBase - ( s32 ) owner.mPadding.mYMin ));
+		glyph.SetSourceLoc (( u32 )( glyphSpan->mBase - ( s32 )owner.mPadding.mXMin ), ( u32 )( bestRowIt->mBase - ( s32 ) owner.mPadding.mYMin ));
 	}
 	
 	this->AffirmCanvas ( owner, font );

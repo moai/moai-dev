@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef ZLVEC2D_H
@@ -6,7 +6,6 @@
 
 #include <zl-util/ZLMathConsts.h>
 #include <zl-util/ZLTrig.h>
-#include <zl-util/ZLVec3D.h>
 
 template < typename TYPE > class tVec3;
 
@@ -44,6 +43,12 @@ template < typename TYPE >
 class ZLMetaVec2D {
 public:
 
+	static const ZLMetaVec2D < TYPE >	X_AXIS;
+	static const ZLMetaVec2D < TYPE >	Y_AXIS;
+
+	static const ZLMetaVec2D < TYPE >	ORIGIN;		// all 0's
+	static const ZLMetaVec2D < TYPE >	AXIS;		// all 1's
+
 	TYPE	mX;
 	TYPE	mY;
 
@@ -60,6 +65,22 @@ public:
 		ZLMetaVec2D < TYPE > result;
 		result.mX = this->mX - v.mX;
 		result.mY = this->mY - v.mY;
+		return result;
+	}
+
+	//----------------------------------------------------------------//
+	ZLMetaVec2D < TYPE > operator * ( float scalar ) const {
+		ZLMetaVec2D < TYPE > result;
+		result.mX = this->mX * scalar;
+		result.mY = this->mY * scalar;
+		return result;
+	}
+	
+	//----------------------------------------------------------------//
+	ZLMetaVec2D < TYPE > operator / ( float scalar ) const {
+		ZLMetaVec2D < TYPE > result;
+		result.mX = this->mX * scalar;
+		result.mY = this->mY * scalar;
 		return result;
 	}
 
@@ -193,10 +214,7 @@ public:
 	//----------------------------------------------------------------//
 	bool Equals ( const ZLMetaVec2D < TYPE >& point ) const {
 		
-		if ( mX != point.mX ) return false;
-		if ( mY != point.mY ) return false;
-		
-		return true;
+		return (( mX == point.mX ) && ( mY == point.mY ));
 	}
 	
 	//----------------------------------------------------------------//
@@ -346,7 +364,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	// angle between vector and (1.0f,0.0f) in radians
+	// angle between vector and (1.0f,0.0f) in radians (both vectors must already be normalized)
 	float Radians () const {
 		
 		float r = ASin ( ABS ( this->mY ));
@@ -358,7 +376,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	// angle between vectors in radians
+	// angle between vectors in radians (both vectors must already be normalized)
 	float Radians ( const ZLMetaVec2D < TYPE >& v ) const {
 		
 		float dot = this->Dot ( v );
@@ -400,16 +418,16 @@ public:
 	void Rotate90Anticlockwise () {
 	
 		float temp = this->mX;
-		this->mX = this->mY;
-		this->mY = -temp;
+		this->mX = -this->mY;
+		this->mY = temp;
 	}
 	
 	//----------------------------------------------------------------//
 	void Rotate90Clockwise () {
 	
 		float temp = this->mX;
-		this->mX = -this->mY;
-		this->mY = temp;
+		this->mX = this->mY;
+		this->mY = -temp;
 	}
 	
 	//----------------------------------------------------------------//
@@ -441,14 +459,14 @@ public:
 	
 	//----------------------------------------------------------------//
 	//  V = V - point
-	void Sub ( const ZLMetaVec2D < TYPE >& point ) { 
+	void Sub ( const ZLMetaVec2D < TYPE >& point ) {
 		mX -= point.mX;
 		mY -= point.mY;
 	}
 
 	//----------------------------------------------------------------//
 	// V = V - ( point * scale )
-	void Sub ( const ZLMetaVec2D < TYPE >& point, TYPE scale ) { 
+	void Sub ( const ZLMetaVec2D < TYPE >& point, TYPE scale ) {
 		mX -= point.mX * scale;
 		mY -= point.mY * scale;
 	}
@@ -467,10 +485,8 @@ public:
 	~ZLMetaVec2D () {
 	}
 	
-	DECLARE_BINARY ( ZLMetaVec2D < TYPE >, Add )
 	DECLARE_BINARY ( ZLMetaVec2D < TYPE >, Mid )
 	DECLARE_BINARY ( ZLMetaVec2D < TYPE >, Mul )
-	DECLARE_BINARY ( ZLMetaVec2D < TYPE >, Sub )
 	
 	DECLARE_BINARY_WITH_SCALAR ( ZLMetaVec2D < TYPE >, Add )
 	DECLARE_BINARY_WITH_SCALAR ( ZLMetaVec2D < TYPE >, Lerp )
@@ -478,6 +494,12 @@ public:
 	
 	DECLARE_UNARY_WITH_SCALAR ( ZLMetaVec2D < TYPE >, Scale )
 };
+
+template < typename TYPE > const ZLMetaVec2D < TYPE > ZLMetaVec2D < TYPE >::X_AXIS ( 1, 0 );
+template < typename TYPE > const ZLMetaVec2D < TYPE > ZLMetaVec2D < TYPE >::Y_AXIS ( 0, 1 );
+
+template < typename TYPE > const ZLMetaVec2D < TYPE > ZLMetaVec2D < TYPE >::ORIGIN ( 0, 0 );
+template < typename TYPE > const ZLMetaVec2D < TYPE > ZLMetaVec2D < TYPE >::AXIS ( 1, 1 );
 
 typedef ZLMetaVec2D < int > ZLIntVec2D;
 typedef ZLMetaVec2D < float > ZLVec2D;

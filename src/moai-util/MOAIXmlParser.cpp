@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -102,7 +102,7 @@ int MOAIXmlParser::_parseFile ( lua_State* L ) {
 	
 	cc8* filename = lua_tostring ( state, 1 );
 	
-	if ( MOAILogMessages::CheckFileExists ( filename, L )) {
+	if ( MOAILogMgr::CheckFileExists ( filename, L )) {
 		TiXmlDocument doc;
 		doc.LoadFile ( filename );
 		MOAIXmlParser::Parse ( state, doc.RootElement ());
@@ -201,7 +201,7 @@ void MOAIXmlParser::Parse ( MOAILuaState& state, TiXmlNode* node ) {
 		}
 		
 		// round up the children
-		STLSet < string > children;
+		STLSet < STLString > children;
 		TiXmlElement* childElement = node->FirstChildElement ();
 		for ( ; childElement; childElement = childElement->NextSiblingElement ()) {
 			children.affirm ( childElement->Value ());
@@ -209,10 +209,10 @@ void MOAIXmlParser::Parse ( MOAILuaState& state, TiXmlNode* node ) {
 		
 		if ( children.size ()) {
 			lua_newtable ( state );
-			STLSet < string >::iterator childrenIt = children.begin ();
+			STLSet < STLString >::iterator childrenIt = children.begin ();
 			for ( ; childrenIt != children.end (); ++childrenIt ) {
 				
-				string name = *childrenIt;
+				STLString name = *childrenIt;
 				lua_newtable ( state );
 				
 				childElement = node->FirstChildElement ( name );
@@ -252,7 +252,7 @@ void MOAIXmlParser::RegisterLuaClass ( MOAILuaState& state ) {
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
@@ -269,7 +269,7 @@ void MOAIXmlParser::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }
 
 #endif

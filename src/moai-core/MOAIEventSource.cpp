@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -26,7 +26,7 @@ MOAIEventSource::~MOAIEventSource () {
 bool MOAIEventSource::PushListener ( u32 eventID, MOAILuaState& state ) {
 
 	if ( this->PushListenerTable ( state )) {
-		if ( state.GetFieldWithType ( -1, eventID, LUA_TFUNCTION )) {
+		if ( state.PushFieldWithType ( -1, eventID, LUA_TFUNCTION )) {
 			lua_replace ( state, -2 );
 			return true;
 		}

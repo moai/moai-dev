@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -11,9 +11,9 @@ local viewport = MOAIViewport.new ()
 viewport:setSize ( 480, 100 )
 viewport:setScale ( 480, 100 )
 
-local layer = MOAILayer2D.new ()
+local layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 local font = MOAIFont.new ()
 font:loadFromTTF ( 'VL-PGothic.ttf' )

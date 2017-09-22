@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIVERTEXFORMATMGR_H
@@ -10,10 +10,10 @@
 // MOAIVertexFormatMgr
 //================================================================//
 class MOAIVertexFormatMgr :
-	public MOAIGlobalClass < MOAIVertexFormatMgr, MOAILuaObject > {
+	public ZLContextClass < MOAIVertexFormatMgr, MOAILuaObject > {
 public:
 
-	enum {
+	enum Preset {
 		XYZC,
 		XYZWC,
 		XYZWUVC,

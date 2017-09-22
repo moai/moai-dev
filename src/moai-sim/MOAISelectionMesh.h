@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAISELECTIONMESH_H
@@ -53,22 +53,25 @@ protected:
 //	void				BooleanXor					( u32 set, u32 a, u32 b );
 	void				ChangeSpanSet				( MOAISelectionSpan* span, u32 set );
 	void				Clear						();
-	void				DrawIndex					( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
+	void				DrawIndex					( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale );
 	void				FixOverlaps					( MOAISelectionSpan* span );
 	void				FreeSpan					( MOAISelectionSpan* span );
 	MOAISelectionSpan*	InsertSpan					( MOAISelectionSpan* span, MOAISelectionSpan* prevInMaster, MOAISelectionSpan* prevInSet );
 
+	//----------------------------------------------------------------//
+	void				MOAIDeck_Draw				( u32 idx );
+
 public:
-	
+
 //	enum {
 //		AND,
 //		OR,
 //		NOT,
 //		XOR,
 //	};
-	
+
 	DECL_LUA_FACTORY ( MOAISelectionMesh )
-	
+
 	//----------------------------------------------------------------//
 	void				AddSelection				( u32 set, size_t base, size_t top );
 	void				ClearSelection				( u32 set );

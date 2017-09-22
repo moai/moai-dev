@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -12,10 +12,10 @@ viewport:setScale ( 320, 480 )
 
 camera = MOAICamera2D.new ()
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:setCamera ( camera )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 fitter = MOAICameraFitter2D.new ()
 fitter:setViewport ( viewport )

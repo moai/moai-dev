@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -54,13 +54,13 @@ void ZLGfxLogger::BindRenderbuffer ( ZLGfxHandle* handle ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::BindTexture ( ZLGfxHandle* handle ) {
+void ZLGfxLogger::SetTexture ( ZLGfxHandle* handle ) {
 
 	this->PrintLine ( "glBindTexture - handle: %d\n", DEREF_HANDLE ( handle ));
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::BindVertexArray ( ZLGfxHandle* handle ) {
+void ZLGfxLogger::SetVertexArray ( ZLGfxHandle* handle ) {
 
 	this->PrintLine ( "glBindVertexArray - handle: %d\n", DEREF_HANDLE ( handle ));
 }
@@ -145,10 +145,10 @@ void ZLGfxLogger::CompressedTexImage2D ( u32 level, u32 internalFormat, u32 widt
 }
 
 //----------------------------------------------------------------//
-ZLSharedConstBuffer* ZLGfxLogger::CopyBuffer ( ZLSharedConstBuffer* buffer ) {
-
-	return buffer;
-}
+//ZLSharedConstBuffer* ZLGfxLogger::CopyBuffer ( ZLSharedConstBuffer* buffer ) {
+//
+//	return buffer;
+//}
 
 //----------------------------------------------------------------//
 ZLGfxHandle* ZLGfxLogger::Create ( ZLGfxHandle* handle, u32 param ) {
@@ -550,63 +550,40 @@ void ZLGfxLogger::TexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 width
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::Uniform1f ( u32 location, float v0 ) {
+void ZLGfxLogger::UniformFloat ( u32 location, u32 index, u32 width, u32 count, const float* value ) {
 
-	this->PrintLine ( "glUniform1f - location: %d v0: %f\n", location, v0 );
-}
+	if ( width <= 4 ) {
 
-//----------------------------------------------------------------//
-void ZLGfxLogger::Uniform1i ( u32 location, s32 v0 ) {
-
-	this->PrintLine ( "glUniform1i - location: %d v0: %d\n", location, v0 );
-}
-
-//----------------------------------------------------------------//
-void ZLGfxLogger::Uniform4fv ( u32 location, u32 count, const float* value ) {
-
-	this->PrintLine ( "glUniform4fv - location: %d count: %d\n", location, count );
-
-	for ( u32 i = 0; i < count; ++i ) {
-		const float* v = &value [ i * 4 ];
-		
-		this->PrintLine ( " value[%d]: ", i );
-		
-		for ( u32 j = 0; j < 4; ++j ) {
-			this->PrintLine ( " %f", v [ j ]);
-		}
+		this->PrintLine ( "glUniform*fv - location: %d index: %d width: %d count: %d\n", location, index, width, count );
+	}
+	else if ( width == 9 ) {
+	
+		this->PrintLine ( "glUniformMatrix3fv - location: %d index: %d count: %d\n", location, index, count );
+	}
+	else if ( width == 16 ) {
+	
+		this->PrintLine ( "glUniformMatrix4fv - location: %d index: %d count: %d\n", location, index, count );
+	}
+	
+	this->PrintLine ( " value: " );
+	for ( u32 j = 0; j < width; ++j ) {
+		this->PrintLine ( " %f", value [ j ]);
 	}
 	this->PrintLine ( "\n" );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::UniformMatrix3fv ( u32 location, u32 count, bool transpose, const float* mtx ) {
+void ZLGfxLogger::UniformInt ( u32 location, u32 index, u32 width, u32 count, const s32* value ) {
 
-	this->PrintLine ( "glUniformMatrix3fv - location: %d count: %d transpose: %s\n", location, count, transpose ? "true" : "false" );
+	this->PrintLine ( "glUniform*iv - location: %d index: %d width: %d count: %d\n", location, index, width, count );
 
-	for ( u32 i = 0; i < count; ++i ) {
-		const float* v = &mtx [ i * 4 ];
+	for ( u32 i = 0; i < 1; ++i ) {
+		const s32* v = &value [ i * width ];
 		
 		this->PrintLine ( " value[%d]: ", i );
 		
-		for ( u32 j = 0; j < 9; ++j ) {
-			this->PrintLine ( " %f", v [ j ]);
-		}
-	}
-	this->PrintLine ( "\n" );
-}
-
-//----------------------------------------------------------------//
-void ZLGfxLogger::UniformMatrix4fv ( u32 location, u32 count, bool transpose, const float* mtx ) {
-
-	this->PrintLine ( "glUniformMatrix4fv - location: %d count: %d transpose: %s\n", location, count, transpose ? "true" : "false" );
-
-	for ( u32 i = 0; i < count; ++i ) {
-		const float* v = &mtx [ i * 4 ];
-		
-		this->PrintLine ( " value[%d]: ", i );
-		
-		for ( u32 j = 0; j < 16; ++j ) {
-			this->PrintLine ( " %f", v [ j ]);
+		for ( u32 j = 0; j < width; ++j ) {
+			this->PrintLine ( " %d", v [ j ]);
 		}
 	}
 	this->PrintLine ( "\n" );

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIPARTICLESCRIPT_H
@@ -46,6 +46,7 @@ private:
 	static const u32 PARTICLE_REGISTER_MASK = 0x000000ff;
 	static const u32 LIVE_REG_COUNT = 16;
 
+	// "temporary" registers
 	enum {
 		SPRITE_X_LOC,
 		SPRITE_Y_LOC,
@@ -58,6 +59,13 @@ private:
 		SPRITE_OPACITY,
 		SPRITE_GLOW,
 		SPRITE_IDX,
+		
+		// not used by sprite drawing, but not stored in particle registers.
+		// these get initialized when the script runs. conceptually they are
+		// particle registers.
+		PARTICLE_AGE,
+		PARTICLE_TIME,
+		
 		TOTAL_SPRITE_REG,
 	};
 	
@@ -74,6 +82,7 @@ private:
 		EASE_DELTA,
 		MUL,
 		NORM,
+		OSCILLATE,
 		RAND,
 		RAND_INT,
 		RAND_VEC,
@@ -128,6 +137,7 @@ private:
 	static int		_easeDelta			( lua_State* L );
 	static int		_mul				( lua_State* L );
 	static int		_norm				( lua_State* L );
+	static int		_oscillate			( lua_State* L );
 	static int		_packConst			( lua_State* L );
 	static int		_packLiveReg		( lua_State* L );
 	static int		_packReg			( lua_State* L );
@@ -160,7 +170,7 @@ public:
 		PARAM_TYPE_CONST			= 0x01,
 		PARAM_TYPE_PARTICLE_REG		= 0x02,
 		PARAM_TYPE_SPRITE_REG		= 0x04,
-		PARAM_TYPE_LIVE_REG		= 0x08,
+		PARAM_TYPE_LIVE_REG			= 0x08,
 		
 		PARAM_TYPE_REG_MASK			= 0x0E,
 		PARAM_TYPE_MASK				= 0x0F,

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -7,6 +7,10 @@
 #if defined ( MOAI_OS_WINDOWS )
 	#pragma optimize ( "", on ) 
 #endif
+
+SUPPRESS_EMPTY_FILE_WARNING
+
+#if 0
 
 //================================================================//
 // MOAIProfilerReportBase
@@ -296,4 +300,6 @@ u32 MOAIProfilerReportBase::Visitor_UserCallback ( MOAIProfilerEntryBase* entry 
 
 #if defined ( MOAI_OS_WINDOWS )
 	#pragma optimize ( "", off ) 
+#endif
+
 #endif

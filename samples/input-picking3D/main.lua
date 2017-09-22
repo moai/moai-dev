@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -20,8 +20,8 @@ frameBuffer = MOAIGfxMgr.getFrameBuffer ()
 frameBuffer:setClearDepth ( true )
 frameBuffer:setClearColor ( 0, 0, 0, 1 )
 
-layer = MOAILayer.new ()
-MOAISim.pushRenderPass ( layer )
+layer = MOAIPartitionViewLayer.new ()
+layer:pushRenderPass ()
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( SCREEN_WIDTH, SCREEN_HEIGHT )

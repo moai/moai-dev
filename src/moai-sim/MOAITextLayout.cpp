@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -6,11 +6,14 @@
 #include <moai-sim/MOAIAnimCurve.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDebugLines.h>
+#include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIGfxMgr.h>
+#include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAINodeMgr.h>
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIShaderMgr.h>
+#include <moai-sim/MOAITextLabel.h>
 #include <moai-sim/MOAITextLayoutRules.h>
 #include <moai-sim/MOAITextLayoutEngine.h>
 #include <moai-sim/MOAITextLayout.h>
@@ -228,23 +231,22 @@ size_t MOAITextLayout::CountSprites () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLayout::Draw ( u32 reveal, MOAIShader* defaultShader, bool useSpriteShaders ) {
+void MOAITextLayout::Draw ( u32 reveal ) {
 	
 	if ( reveal ) {
 		
+		MOAIMaterialMgr& materialMgr = MOAIMaterialMgr::Get ();
+		MOAIShader* currentShader = materialMgr.GetShader ();
+		bool useSpriteShaders = ( currentShader == 0 );
+		MOAIShader* defaultShader = MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::FONT_SNAPPING_SHADER );
+		
 		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-		MOAIQuadBrush::BindVertexFormat ( gfxMgr.mVertexCache );
+		MOAIQuadBrush::BindVertexFormat ();
 
 		ZLColorVec baseColor = gfxMgr.mGfxState.GetPenColor ();
 		ZLColorVec blendColor;
 		u32 rgba0 = 0xffffffff;
 		u32 rgba1 = 0xffffffff;
-		
-		if ( !useSpriteShaders ) {
-			if ( !gfxMgr.mGfxState.BindShader ( defaultShader )) return;
-		}
-
-		MOAIShader* currentShader = 0;
 
 		size_t size = this->mSprites.GetTop ();
 		for ( size_t i = 0; ( i < size ) && ( i < reveal ); ++i ) {
@@ -265,7 +267,7 @@ void MOAITextLayout::Draw ( u32 reveal, MOAIShader* defaultShader, bool useSprit
 			
 				MOAIShader* spriteShader = sprite.mShader ? sprite.mShader : defaultShader;
 				if ( spriteShader != currentShader ) {
-					if ( !gfxMgr.mGfxState.BindShader ( spriteShader )) continue;
+					if ( !gfxMgr.mGfxState.SetShader ( spriteShader )) continue;
 					currentShader = spriteShader;
 				}
 			}
@@ -277,12 +279,13 @@ void MOAITextLayout::Draw ( u32 reveal, MOAIShader* defaultShader, bool useSprit
 //----------------------------------------------------------------//
 void MOAITextLayout::DrawDebug () {
 
-	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
+	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
+	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAITextLabel >())) return;
 	
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
 	
-	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_GLYPHS )) {
+	if ( debugLines.Bind ( MOAITextLabel::DEBUG_DRAW_TEXT_LABEL_GLYPHS )) {
 	
 		size_t size = this->mSprites.GetTop ();
 		for ( size_t i = 0; i < size; ++i ) {
@@ -301,7 +304,7 @@ void MOAITextLayout::DrawDebug () {
 		}
 	}
 	
-	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LINES_GLYPH_BOUNDS )) {
+	if ( debugLines.Bind ( MOAITextLabel::DEBUG_DRAW_TEXT_LABEL_LINES_GLYPH_BOUNDS )) {
 		
 		size_t totalLines = this->mLines.GetTop ();
 		for ( size_t i = 0; i < totalLines; ++i ) {
@@ -310,7 +313,7 @@ void MOAITextLayout::DrawDebug () {
 		}
 	}
 	
-	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LINES_LAYOUT_BOUNDS )) {
+	if ( debugLines.Bind ( MOAITextLabel::DEBUG_DRAW_TEXT_LABEL_LINES_LAYOUT_BOUNDS )) {
 		
 		size_t totalLines = this->mLines.GetTop ();
 		for ( size_t i = 0; i < totalLines; ++i ) {
@@ -319,7 +322,7 @@ void MOAITextLayout::DrawDebug () {
 		}
 	}
 	
-	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_BASELINES )) {
+	if ( debugLines.Bind ( MOAITextLabel::DEBUG_DRAW_TEXT_LABEL_BASELINES )) {
 		
 		size_t totalLines = this->mLines.GetTop ();
 		for ( size_t i = 0; i < totalLines; ++i ) {

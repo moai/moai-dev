@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -63,7 +63,7 @@ int MOAIAnimCurveVec::_setKey ( lua_State* L ) {
 	u32 mode		= state.GetValue < u32 >( 7, ZLInterpolate::kSmooth );
 	float weight	= state.GetValue < float >( 8, 1.0f );
 	
-	if ( MOAILogMessages::CheckIndexPlusOne ( index, self->mKeys.Size (), L )) {
+	if ( MOAILogMgr::CheckIndexPlusOne ( index, self->mKeys.Size (), L )) {
 		
 		self->SetKey ( index, time, mode, weight );
 		self->SetSample ( index, value );
@@ -76,9 +76,9 @@ int MOAIAnimCurveVec::_setKey ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveVec::ApplyValueAttrOp ( MOAIAttrOp& attrOp, u32 op ) {
+void MOAIAnimCurveVec::ApplyValueAttrOp ( MOAIAttribute& attr, u32 op ) {
 
-	this->mValue = attrOp.Apply < ZLVec3D >( this->mValue, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_VECTOR );
+	this->mValue = attr.Apply ( this->mValue, op, MOAIAttribute::ATTR_READ_WRITE );
 }
 
 //----------------------------------------------------------------//
@@ -98,14 +98,14 @@ ZLVec3D MOAIAnimCurveVec::GetCurveDelta () const {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveVec::GetDelta ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const {
+void MOAIAnimCurveVec::GetDelta ( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const {
 
 	ZLVec3D v0 = this->GetValue ( span0 );
 	ZLVec3D v1 = this->GetValue ( span1 );
 	
 	v1.Sub ( v0 );
 	
-	attrOp.SetValue < ZLVec3D >( v1, MOAIAttrOp::ATTR_TYPE_VECTOR );
+	attr.SetValue ( v1 );
 }
 
 //----------------------------------------------------------------//
@@ -139,16 +139,16 @@ ZLVec3D MOAIAnimCurveVec::GetValue ( const MOAIAnimKeySpan& span ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveVec::GetValue ( MOAIAttrOp& attrOp, const MOAIAnimKeySpan& span ) const {
+void MOAIAnimCurveVec::GetValue ( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const {
 
-	attrOp.SetValue < ZLVec3D >( this->GetValue ( span ), MOAIAttrOp::ATTR_TYPE_VECTOR );
+	attr.SetValue ( this->GetValue ( span ));
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveVec::GetZero ( MOAIAttrOp& attrOp ) const {
+void MOAIAnimCurveVec::GetZero ( MOAIAttribute& attr ) const {
 
 	ZLVec3D zero ( 0.0f, 0.0f, 0.0f );
-	attrOp.SetValue < ZLVec3D >( zero, MOAIAttrOp::ATTR_TYPE_VECTOR );
+	attr.SetValue ( zero );
 }
 
 //----------------------------------------------------------------//
@@ -160,12 +160,6 @@ MOAIAnimCurveVec::MOAIAnimCurveVec () :
 
 //----------------------------------------------------------------//
 MOAIAnimCurveVec::~MOAIAnimCurveVec () {
-}
-
-//----------------------------------------------------------------//
-void MOAIAnimCurveVec::OnDepNodeUpdate () {
-
-	this->mValue = this->GetValue ( this->mTime );
 }
 
 //----------------------------------------------------------------//
@@ -200,4 +194,14 @@ void MOAIAnimCurveVec::SetSample ( u32 id, const ZLVec3D& value ) {
 	if ( id < this->mKeys.Size ()) {
 		this->mSamples [ id ] = value;
 	}
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIAnimCurveVec::MOAINode_Update () {
+
+	this->mValue = this->GetValue ( this->mTime );
 }

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIPARTITION_H
@@ -27,7 +27,7 @@ private:
 
 	friend class MOAIPartitionCell;
 	friend class MOAIPartitionLevel;
-	friend class MOAIProp;
+	friend class MOAIPartitionHull;
 
 	ZLLeanArray < MOAIPartitionLevel >	mLevels;
 	MOAIPartitionCell					mEmpties;
@@ -44,28 +44,32 @@ private:
 	//----------------------------------------------------------------//
 	static int		_clear					( lua_State* L );
 	static int		_getInterfaceMask		( lua_State* L );
-	static int		_insertProp				( lua_State* L );
-	static int		_propForPoint			( lua_State* L );
-	static int		_propForRay				( lua_State* L );
-	static int		_propList				( lua_State* L );
-	static int		_propListForPoint		( lua_State* L );
-	static int		_propListForRay			( lua_State* L );
-	static int		_propListForRect		( lua_State* L );
-	static int		_removeProp				( lua_State* L );
+	static int		_hullForPoint			( lua_State* L );
+	static int		_hullForRay				( lua_State* L );
+	static int		_hullList				( lua_State* L );
+	static int		_hullListForPoint		( lua_State* L );
+	static int		_hullListForRay			( lua_State* L );
+	static int		_hullListForRect		( lua_State* L );
+	//static int		_insertHull				( lua_State* L );
+	//static int		_removeHull				( lua_State* L );
 	static int		_reserveLevels			( lua_State* L );
 	static int		_setLevel				( lua_State* L );
 	static int		_setPlane				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	u32				AffirmInterfaceMask		( u32 typeID );
-	void			AffirmPriority			( MOAIProp& prop );
+	void			AffirmPriority			( MOAIPartitionHull& hull );
 	u32				GetInterfaceMask		( u32 typeID ) const;
-	virtual void	OnPropInserted			( MOAIProp& prop );	
-	virtual void	OnPropRemoved			( MOAIProp& prop );	
-	virtual void	OnPropUpdated			( MOAIProp& prop );
 	void			PrepareRebuild			();
 	void			Rebuild					();
-	void			UpdateProp				( MOAIProp& prop, u32 status );
+	void			UpdateHull				( MOAIPartitionHull& hull );
+
+	//----------------------------------------------------------------//
+	virtual void	MOAIPartition_DrawDebugBack		();
+	virtual void	MOAIPartition_DrawDebugFront	();
+	virtual void	MOAIPartition_OnInsertHull		( MOAIPartitionHull& hull );
+	virtual void	MOAIPartition_OnRemoveHull		( MOAIPartitionHull& hull );
+	virtual void	MOAIPartition_OnUpdateHull		( MOAIPartitionHull& hull );
 
 public:
 	
@@ -73,20 +77,22 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			Clear					();
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLVec3D& point, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, ZLRect rect, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, ZLBox box, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLFrustum& frustum, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
-	void			InsertProp				( MOAIProp& prop );
-	bool			IsEmpty					( MOAIProp& prop );
-	bool			IsGlobal				( MOAIProp& prop );
+	void			DrawDebugBack			();
+	void			DrawDebugFront			();
+	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
+	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, const ZLVec3D& point, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
+	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
+	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, ZLRect rect, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
+	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, ZLBox box, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
+	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, const ZLFrustum& frustum, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
+	void			InsertHull				( MOAIPartitionHull& hull );
+	bool			IsEmpty					( MOAIPartitionHull& hull );
+	bool			IsGlobal				( MOAIPartitionHull& hull );
 					MOAIPartition			();
 					~MOAIPartition			();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			RemoveProp				( MOAIProp& prop );
+	void			RemoveHull				( MOAIPartitionHull& hull );
 	void			ReserveLevels			( int totalLevels );
 	void			SetLevel				( int levelID, float cellSize, int width, int height );
 	void			SetPlane				( u32 planeID );

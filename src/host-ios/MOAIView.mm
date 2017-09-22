@@ -1,5 +1,5 @@
 //----------------------------------------------------------------//
-// Copyright (c) 2010-2011 Zipline Games, Inc. 
+// Copyright (c) 2010-2017 Zipline Games, Inc. 
 // All Rights Reserved. 
 // http://getmoai.com
 //----------------------------------------------------------------//
@@ -58,15 +58,17 @@ enum {
 @implementation MOAIView
 
     //----------------------------------------------------------------//
-    +( void ) appInitialize {
-
-        AKUAppInitialize ();
-
-        static const int length = 255;
-		char version [ length ];
-		AKUGetMoaiVersion ( version, length );
-		printf ( "%s\n", version );
-    }
+//    +( void ) appInitialize {
+//
+//        AKUAppInitialize ();
+//
+//        static const int length = 255;
+//		char version [ length ];
+//		AKUGetMoaiVersion ( version, length );
+//		printf ( "%s\n", version );
+//        
+//        AKUModulesAppInitialize ();
+//    }
 
     //----------------------------------------------------------------//
 	-( void ) application:( UIApplication* )application didFailToRegisterForRemoteNotificationsWithError:( NSError* )error {
@@ -85,6 +87,8 @@ enum {
 		char version [ length ];
 		AKUGetMoaiVersion ( version, length );
 		printf ( "%s\n", version );
+        
+        AKUModulesAppInitialize ();
         
         return YES;
     }
@@ -212,7 +216,7 @@ enum {
 
     //----------------------------------------------------------------//
 	-( void ) moaiInit {
-        [self moaiInitWithMultisample:1 ];
+        [self moaiInitWithMultisample:4 ];
     }
 
 	//----------------------------------------------------------------//
@@ -235,8 +239,6 @@ enum {
 		
         CGRect screenRect = [ MOAIView getScreenBoundsFromCurrentOrientation:[[ UIScreen mainScreen ] bounds ]];
 		CGFloat scale = [[ UIScreen mainScreen ] scale ];
-		CGFloat screenWidth = screenRect.size.width * scale;
-		CGFloat screenHeight = screenRect.size.height * scale;
 		
 		AKUSetScreenDpi ([ self guessScreenDpi ]);
         
@@ -272,7 +274,7 @@ enum {
         
         AKUSetContext ( mAKUContext );
         AKUModulesUpdate ();
-        self.opaque = AKUIsGfxBufferOpaque () != 0;
+        //self.opaque = AKUIsGfxBufferOpaque () != 0; // TODO: this needs a 2.0 replacement
         
         [ mRenderer render ];
         

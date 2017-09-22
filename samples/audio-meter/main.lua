@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -15,10 +15,10 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 1024, 512 )
 viewport:setScale ( 1024, 512 )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:setClearColor ( 1, 1, 1, 1 )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 fourier = MOAIFourier.new ()
 fourier:init ( WINDOW_SIZE, true )

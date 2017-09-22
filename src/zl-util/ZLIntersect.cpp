@@ -1,7 +1,8 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
+#include <zl-util/ZLBarycentric.h>
 #include <zl-util/ZLDistance.h>
 #include <zl-util/ZLIntersect.h>
 #include <zl-util/ZLTrig.h>
@@ -80,15 +81,15 @@ u32 ZLSect::LineToLine ( const ZLVec2D& p0, const ZLVec2D& p1, const ZLVec2D& q0
 
 	// TODO: this one ignores colinear lines. provide an alternative method that cares about colinear lines.
 
-	ZLVec2D r = ZLVec2D::Sub ( p1, p0 ); // a0, b0
-	ZLVec2D s = ZLVec2D::Sub ( q1, q0 ); // a1, b1
+	ZLVec2D r = p1 - p0; // a0, b0
+	ZLVec2D s = q1 - q0; // a1, b1
 
 	float det = ZLVec2D::Cross ( r, s ); // c0
 
 	// parallel
 	if ( det == 0 ) return SECT_PARALLEL;
 
-	ZLVec2D m = ZLVec2D::Sub ( q0, p0 );
+	ZLVec2D m = q0 - p0;
 
 	t = ZLVec2D::Cross ( m, s ) / det;
 	float u = ZLVec2D::Cross ( m, r ) / det;
@@ -103,7 +104,7 @@ u32 ZLSect::PlaneToPlane ( const ZLPlane2D& p0, const ZLPlane2D& p1, ZLVec2D& lo
 	loc.Scale ( -p0.mDist );
 
 	ZLVec2D vec = p0.mNorm;
-	vec.Rotate90Clockwise ();
+	vec.Rotate90Anticlockwise ();
 	
 	float t;
 	u32 result = ZLSect::VecToPlane ( loc, vec, p1, t );
@@ -373,6 +374,19 @@ u32 ZLSect::VecToSphere ( float& t0, float& t1, const ZLVec3D& loc, const ZLVec3
 	}
 
 	return SECT_PARALLEL;
+}
+
+//----------------------------------------------------------------//
+u32 ZLSect::VecToTriangle ( const ZLVec3D& loc, const ZLVec3D& vec, const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2, float& t, ZLVec3D& result ) {
+
+	ZLPlane3D plane;
+	plane.Init ( v0, v1, v2 );
+
+	if ( ZLSect::VecToPlane ( loc, vec, plane, t, result ) == SECT_HIT ) {
+		
+		if ( ZLBarycentric::PointInTriangle ( v0, v1, v2, result )) return SECT_HIT;
+	}
+	return SECT_HIT_OUT_OF_RANGE;
 }
 
 //----------------------------------------------------------------//

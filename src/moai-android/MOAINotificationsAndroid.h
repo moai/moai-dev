@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAINOTIFICATIONSANDROID_H
@@ -28,7 +28,7 @@
 	@const	REMOTE_NOTIFICATION_ALERT					Notification type alerts. Unused.
 */
 class MOAINotificationsAndroid :
-	public MOAIGlobalClass < MOAINotificationsAndroid, MOAILuaObject > {
+	public ZLContextClass < MOAINotificationsAndroid, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//

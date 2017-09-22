@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef MOAITASKSUBSCRIBER_H
@@ -58,7 +58,7 @@ public:
 // thread has its own task subscriber.
 class MOAIMainThreadTaskSubscriber :
 	public MOAITaskSubscriber,
-	public MOAIGlobalClass < MOAIMainThreadTaskSubscriber > {
+	public ZLContextClass < MOAIMainThreadTaskSubscriber > {
 }; 
 
 #endif

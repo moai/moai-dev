@@ -1,15 +1,15 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
 
 MOAISim.openWindow ( "test", 768, 768 )
 
-layer = MOAILayer2D.new ()
-layer:setSortMode ( MOAILayer2D.SORT_VECTOR_ASCENDING )
+layer = MOAIPartitionViewLayer.new ()
+layer:setSortMode ( MOAIPartitionViewLayer2D.SORT_VECTOR_ASCENDING )
 layer:setSortScale ( 0, 1, 10000 )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 768, 768 )

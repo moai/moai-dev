@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIDIALOGSDL_H
@@ -11,7 +11,7 @@
 // MOAIDialogSDL
 //================================================================//
 class MOAIDialogSDL :
-	public MOAIGlobalClass < MOAIDialogSDL, MOAILuaObject > {
+	public ZLContextClass < MOAIDialogSDL, MOAILuaObject > {
 private:
 
 	SDL_Window*		mWindow;

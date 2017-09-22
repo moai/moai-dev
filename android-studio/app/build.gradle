@@ -1,0 +1,56 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        applicationId "com.moaisdk.refapp"
+        minSdkVersion 17
+        targetSdkVersion 22
+        versionCode 8
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+    }
+}
+
+//task ( 'cleanLuaScripts', type: Delete ) {
+//    delete 'src/main/assets/lua'
+//}
+
+task ( 'cleanLibraries', type: Delete ) {
+    delete 'src/main/jniLibs'
+}
+
+//task ( 'copyLuaScripts', type: Copy ) {
+//    from '../../samples/anim-basic'
+//    into 'src/main/assets/lua'
+//}
+
+task ( 'copyLibraries', type: Copy ) {
+    from '../../android-ndk/libs'
+    into 'src/main/jniLibs'
+}
+
+//clean.dependsOn cleanLuaScripts
+clean.dependsOn cleanLibraries
+
+//preBuild.dependsOn copyLuaScripts
+preBuild.dependsOn copyLibraries
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:22.1.1'
+    compile project(':core')
+}

@@ -1,9 +1,9 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 #ifndef	MOAILUAUTIL_H
 #define	MOAILUAUTIL_H
 
-
+#ifndef MOAI_WITH_LUAJIT //can't convert luajit bytecode
 
 //================================================================//
 // MOAILuaHeader
@@ -42,7 +42,7 @@ public:
 	@text	Methods for reading and converting Lua bytecode.
 */
 class MOAILuaUtil :
-	public MOAIGlobalClass < MOAILuaUtil, MOAILuaObject > {
+	public ZLContextClass < MOAILuaUtil, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//
@@ -68,6 +68,7 @@ public:
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 };
 
+#endif
 #endif
 
 

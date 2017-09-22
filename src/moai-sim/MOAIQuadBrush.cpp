@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -11,9 +11,9 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIQuadBrush::BindVertexFormat ( MOAIGfxVertexCache& vertexCache ) {
+void MOAIQuadBrush::BindVertexFormat () {
 	
-	vertexCache.BindBufferedDrawing ( MOAIVertexFormatMgr::XYZWUVC );
+	MOAIGfxMgr::Get ().mGfxState.SetVertexFormat ( MOAIVertexFormatMgr::XYZWUVC );
 }
 
 //----------------------------------------------------------------//

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -105,4 +105,10 @@ void ZLGfx::Discard ( ZLGfxHandle*& handle ) {
 		delete handle;
 		handle = 0;
 	}
+}
+
+//----------------------------------------------------------------//
+bool ZLGfx::IsFlag ( u32 flag ) {
+
+	return (( ZGL_FIRST_FLAG <= flag ) && ( flag < ZGL_TOTAL_FLAGS ));
 }

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -7,7 +7,7 @@
 #include <moai-sim/MOAIPartitionLevel.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIPartitionResultMgr.h>
-#include <moai-sim/MOAIProp.h>
+#include <moai-sim/MOAIPartitionHull.h>
 
 //================================================================//
 // local
@@ -39,50 +39,29 @@ int MOAIPartition::_getInterfaceMask ( lua_State* L ) {
 	if ( typeID ) {
 		interfaceMask = self->GetInterfaceMask ( typeID );
 	}
-	state.Push ( typeID );
+	state.Push ( interfaceMask );
 	return 1;
 }
 
 //----------------------------------------------------------------//
-/**	@lua	insertProp
-	@text	Inserts a prop into the partition. A prop can only be
-			in one partition at a time.
-	
-	@in		MOAIPartition self
-	@in		MOAIProp prop
-	@out	nil
-*/
-int MOAIPartition::_insertProp ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartition, "UU" )
-
-	MOAIProp* prop = state.GetLuaObject < MOAIProp >( 2, true );
-	if ( !prop ) return 0;
-
-	self->InsertProp ( *prop );
-	prop->ScheduleUpdate ();
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	propForPoint
-	@text	Returns the prop with the highest priority that contains
+/**	@lua	hullForPoint
+	@text	Returns the hull with the highest priority that contains
 			the given world space point.
 	
 	@in		MOAIPartition self
 	@in		number x
 	@in		number y
 	@in		number z
-	@opt	number sortMode			One of the MOAILayer sort modes. Default value is SORT_PRIORITY_ASCENDING.
+	@opt	number sortMode			One of the MOAIPartitionViewLayer sort modes. Default value is SORT_PRIORITY_ASCENDING.
 	@opt	number xScale			X scale for vector sort. Default value is 0.
 	@opt	number yScale			Y scale for vector sort. Default value is 0.
 	@opt	number zScale			Z scale for vector sort. Default value is 0.
 	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
 	@opt	number interfaceMask
 	@opt	number queryMask
-	@out	MOAIProp prop			The prop under the point or nil if no prop found.
+	@out	MOAIPartitionHull hull			The hull under the point or nil if no hull found.
 */
-int MOAIPartition::_propForPoint ( lua_State* L ) {
+int MOAIPartition::_hullForPoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
 
 	ZLVec3D vec;
@@ -102,7 +81,7 @@ int MOAIPartition::_propForPoint ( lua_State* L ) {
 	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
 	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
 	
-	u32 total = self->GatherProps ( buffer, 0, vec, interfaceMask, queryMask );
+	u32 total = self->GatherHulls ( buffer, 0, vec, interfaceMask, queryMask );
 	if ( total ) {
 		
 		// this just swaps the internal buffer pointers so we can access the results
@@ -111,10 +90,10 @@ int MOAIPartition::_propForPoint ( lua_State* L ) {
 		// generate the sort keys, but don't actually sort
 		buffer.GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
 		
-		// since we're just looking for one prop, do a one-pass traversal to find the best result
-		MOAIProp* prop = buffer.FindBest ();
-		if ( prop ) {
-			prop->PushLuaUserdata ( state );
+		// since we're just looking for one hull, do a one-pass traversal to find the best result
+		MOAIPartitionHull* hull = buffer.FindBest ();
+		if ( hull ) {
+			hull->PushLuaUserdata ( state );
 			return 1;
 		}
 	}
@@ -122,8 +101,8 @@ int MOAIPartition::_propForPoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	propForRay
-	@text	Returns the first prop that intersects the given ray
+/**	@lua	hullForRay
+	@text	Returns the first hull that intersects the given ray
 	 
 	@in		MOAIPartition self
 	@in		number x
@@ -134,9 +113,9 @@ int MOAIPartition::_propForPoint ( lua_State* L ) {
 	@in		number zdirection
 	@opt	number interfaceMask
 	@opt	number queryMask
-	@out	MOAIProp prop		The prop under the point in order of depth or nil if no prop found.
+	@out	MOAIPartitionHull hull		The hull under the point in order of depth or nil if no hull found.
 */
-int MOAIPartition::_propForRay ( lua_State* L ) {
+int MOAIPartition::_hullForRay ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
 	
 	ZLVec3D vec;
@@ -156,13 +135,13 @@ int MOAIPartition::_propForRay ( lua_State* L ) {
 	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
 	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
 	
-	u32 total = self->GatherProps ( buffer, 0, vec, direction, interfaceMask, queryMask );
+	u32 total = self->GatherHulls ( buffer, 0, vec, direction, interfaceMask, queryMask );
 
 	if ( total ) {
 		
-		MOAIProp* prop = buffer.FindBest ();
-		if ( prop ) {
-			prop->PushLuaUserdata ( state );
+		MOAIPartitionHull* hull = buffer.FindBest ();
+		if ( hull ) {
+			hull->PushLuaUserdata ( state );
 			return 1;
 		}
 	}
@@ -171,11 +150,11 @@ int MOAIPartition::_propForRay ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	propList
+/**	@lua	hullList
 	@text	Returns all props.
 	
 	@in		MOAIPartition self
-	@opt	number sortMode			One of the MOAILayer sort modes. Default value is SORT_NONE.
+	@opt	number sortMode			One of the MOAIPartitionViewLayer sort modes. Default value is SORT_NONE.
 	@opt	number xScale			X scale for vector sort. Default value is 0.
 	@opt	number yScale			Y scale for vector sort. Default value is 0.
 	@opt	number zScale			Z scale for vector sort. Default value is 0.
@@ -184,7 +163,7 @@ int MOAIPartition::_propForRay ( lua_State* L ) {
 	@opt	number queryMask
 	@out	... props				The props pushed onto the stack.
 */
-int MOAIPartition::_propList ( lua_State* L ) {
+int MOAIPartition::_hullList ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "U" )
 
 	u32 sortMode = state.GetValue < u32 >( 2, MOAIPartitionResultBuffer::SORT_NONE );
@@ -198,26 +177,26 @@ int MOAIPartition::_propList ( lua_State* L ) {
 	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
 	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
 
-	u32 total = self->GatherProps ( buffer, 0, interfaceMask, queryMask );
+	u32 total = self->GatherHulls ( buffer, 0, interfaceMask, queryMask );
 	if ( total ) {
 	
 		buffer.GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
 		buffer.Sort ( sortMode );
-		buffer.PushProps ( L );
+		buffer.PushHulls ( L );
 		return total;
 	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@lua	propListForPoint
+/**	@lua	hullListForPoint
 	@text	Returns all props under a given world space point.
 	
 	@in		MOAIPartition self
 	@in		number x
 	@in		number y
 	@in		number z
-	@opt	number sortMode			One of the MOAILayer sort modes. Default value is SORT_NONE.
+	@opt	number sortMode			One of the MOAIPartitionViewLayer sort modes. Default value is SORT_NONE.
 	@opt	number xScale			X scale for vector sort. Default value is 0.
 	@opt	number yScale			Y scale for vector sort. Default value is 0.
 	@opt	number zScale			Z scale for vector sort. Default value is 0.
@@ -226,7 +205,7 @@ int MOAIPartition::_propList ( lua_State* L ) {
 	@opt	number queryMask
 	@out	... props				The props under the point, all pushed onto the stack.
 */
-int MOAIPartition::_propListForPoint ( lua_State* L ) {
+int MOAIPartition::_hullListForPoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
 
 	ZLVec3D vec;
@@ -245,19 +224,19 @@ int MOAIPartition::_propListForPoint ( lua_State* L ) {
 	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
 	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
 
-	u32 total = self->GatherProps ( buffer, 0, vec, interfaceMask, queryMask );
+	u32 total = self->GatherHulls ( buffer, 0, vec, interfaceMask, queryMask );
 	if ( total ) {
 	
 		buffer.GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
 		buffer.Sort ( sortMode );
-		buffer.PushProps ( L );
+		buffer.PushHulls ( L );
 		return total;
 	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@lua	propListForRay
+/**	@lua	hullListForRay
 	@text	Returns all props that intersect the given ray.
 	
 	@in		MOAIPartition self
@@ -267,7 +246,7 @@ int MOAIPartition::_propListForPoint ( lua_State* L ) {
 	@in		number xdirection
 	@in		number ydirection
 	@in		number zdirection
-	@opt	number sortMode			One of the MOAILayer sort modes. Default value is SORT_KEY_ASCENDING.
+	@opt	number sortMode			One of the MOAIPartitionViewLayer sort modes. Default value is SORT_KEY_ASCENDING.
 	@opt	number xScale			X scale for vector sort. Default value is 0.
 	@opt	number yScale			Y scale for vector sort. Default value is 0.
 	@opt	number zScale			Z scale for vector sort. Default value is 0.
@@ -276,7 +255,7 @@ int MOAIPartition::_propListForPoint ( lua_State* L ) {
 	@opt	number queryMask
 	@out	... props				The props under the point in order of depth, all pushed onto the stack.
 */
-int MOAIPartition::_propListForRay ( lua_State* L ) {
+int MOAIPartition::_hullListForRay ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
 
 	ZLVec3D vec;
@@ -301,20 +280,20 @@ int MOAIPartition::_propListForRay ( lua_State* L ) {
 	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
 	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
 	
-	u32 total = self->GatherProps ( buffer, 0, vec, direction, interfaceMask, queryMask );
+	u32 total = self->GatherHulls ( buffer, 0, vec, direction, interfaceMask, queryMask );
 
 	if ( total ) {
 	
 		buffer.GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
 		buffer.Sort ( sortMode );
-		buffer.PushProps ( L );
+		buffer.PushHulls ( L );
 		return total;
 	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@lua	propListForRect
+/**	@lua	hullListForRect
 	@text	Returns all props under a given world space rect.
 	
 	@in		MOAIPartition self
@@ -322,7 +301,7 @@ int MOAIPartition::_propListForRay ( lua_State* L ) {
 	@in		number yMin
 	@in		number xMax
 	@in		number yMax
-	@opt	number sortMode			One of the MOAILayer sort modes. Default value is SORT_NONE.
+	@opt	number sortMode			One of the MOAIPartitionViewLayer sort modes. Default value is SORT_NONE.
 	@opt	number xScale			X scale for vector sort. Default value is 0.
 	@opt	number yScale			Y scale for vector sort. Default value is 0.
 	@opt	number zScale			Z scale for vector sort. Default value is 0.
@@ -331,7 +310,7 @@ int MOAIPartition::_propListForRay ( lua_State* L ) {
 	@opt	number queryMask
 	@out	... props				The props under the rect, all pushed onto the stack.
 */
-int MOAIPartition::_propListForRect ( lua_State* L ) {
+int MOAIPartition::_hullListForRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UNNNN" )
 	
 	ZLRect rect;
@@ -353,36 +332,57 @@ int MOAIPartition::_propListForRect ( lua_State* L ) {
 	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
 	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
 	
-	u32 total = self->GatherProps ( buffer, 0, rect, interfaceMask, queryMask );
+	u32 total = self->GatherHulls ( buffer, 0, rect, interfaceMask, queryMask );
 	if ( total ) {
 	
 		buffer.GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
 		buffer.Sort ( sortMode );
-		buffer.PushProps ( L );
+		buffer.PushHulls ( L );
 		return total;
 	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@lua	removeProp
-	@text	Removes a prop from the partition.
+/**	@lua	insertHull
+	@text	Inserts a hull into the partition. A hull can only be
+			in one partition at a time.
 	
 	@in		MOAIPartition self
-	@in		MOAIProp prop
+	@in		MOAIPartitionHull hull
 	@out	nil
 */
-int MOAIPartition::_removeProp ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartition, "UU" )
+//int MOAIPartition::_insertHull ( lua_State* L ) {
+//	MOAI_LUA_SETUP ( MOAIPartition, "UU" )
+//
+//	MOAIPartitionHull* hull = state.GetLuaObject < MOAIPartitionHull >( 2, true );
+//	if ( !hull ) return 0;
+//
+//	self->InsertHull ( *hull );
+//	hull->ScheduleUpdate ();
+//
+//	return 0;
+//}
 
-	MOAIProp* prop = state.GetLuaObject < MOAIProp >( 2, true );
-	if ( !prop ) return 0;
-
-	self->RemoveProp ( *prop );
-	prop->ScheduleUpdate ();
-
-	return 0;
-}
+//----------------------------------------------------------------//
+/**	@lua	removeHull
+	@text	Removes a hull from the partition.
+	
+	@in		MOAIPartition self
+	@in		MOAIPartitionHull hull
+	@out	nil
+*/
+//int MOAIPartition::_removeHull ( lua_State* L ) {
+//	MOAI_LUA_SETUP ( MOAIPartition, "UU" )
+//
+//	MOAIPartitionHull* hull = state.GetLuaObject < MOAIPartitionHull >( 2, true );
+//	if ( !hull ) return 0;
+//
+//	self->RemoveHull ( *hull );
+//	hull->ScheduleUpdate ();
+//
+//	return 0;
+//}
 
 //----------------------------------------------------------------//
 /**	@lua	reserveLevels
@@ -477,10 +477,10 @@ u32 MOAIPartition::AffirmInterfaceMask ( u32 typeID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartition::AffirmPriority ( MOAIProp& prop ) {
+void MOAIPartition::AffirmPriority ( MOAIPartitionHull& hull ) {
 
-	if ( prop.mPriority == MOAIProp::UNKNOWN_PRIORITY ) {
-		prop.mPriority = this->mPriorityCounter++;
+	if ( hull.mPriority == MOAIPartitionHull::UNKNOWN_PRIORITY ) {
+		hull.mPriority = this->mPriorityCounter++;
 		this->mPriorityCounter = this->mPriorityCounter & PRIORITY_MASK;
 	}
 }
@@ -498,94 +498,107 @@ void MOAIPartition::Clear () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, u32 interfaceMask, u32 queryMask ) {
+void MOAIPartition::DrawDebugBack () {
+
+	this->MOAIPartition_DrawDebugBack ();
+}
+
+//----------------------------------------------------------------//
+void MOAIPartition::DrawDebugFront () {
+
+	this->MOAIPartition_DrawDebugFront ();
+}
+
+
+//----------------------------------------------------------------//
+u32 MOAIPartition::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, u32 interfaceMask, u32 queryMask ) {
 	
 	results.Reset ();
 	
 	size_t totalLevels = this->mLevels.Size ();
 	for ( size_t i = 0; i < totalLevels; ++i ) {
-		this->mLevels [ i ].GatherProps ( results, ignoreProp, interfaceMask, queryMask );
+		this->mLevels [ i ].GatherHulls ( results, ignoreProp, interfaceMask, queryMask );
 	}
-	this->mBiggies.GatherProps ( results, ignoreProp, interfaceMask, queryMask );
-	this->mGlobals.GatherProps ( results, ignoreProp, interfaceMask, queryMask );
-	this->mEmpties.GatherProps ( results, ignoreProp, interfaceMask, queryMask );
+	this->mBiggies.GatherHulls ( results, ignoreProp, interfaceMask, queryMask );
+	this->mGlobals.GatherHulls ( results, ignoreProp, interfaceMask, queryMask );
+	this->mEmpties.GatherHulls ( results, ignoreProp, interfaceMask, queryMask );
 	
 	return results.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
 }
 
 //----------------------------------------------------------------//
-u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLVec3D& point, u32 interfaceMask, u32 queryMask ) {
+u32 MOAIPartition::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, const ZLVec3D& point, u32 interfaceMask, u32 queryMask ) {
 	
 	results.Reset ();
 	
 	size_t totalLevels = this->mLevels.Size ();
 	for ( size_t i = 0; i < totalLevels; ++i ) {
-		this->mLevels [ i ].GatherProps ( results, ignoreProp, point, this->mPlaneID, interfaceMask, queryMask );
+		this->mLevels [ i ].GatherHulls ( results, ignoreProp, point, this->mPlaneID, interfaceMask, queryMask );
 	}
-	this->mBiggies.GatherProps ( results, ignoreProp, point, interfaceMask, queryMask );
-	this->mGlobals.GatherProps ( results, ignoreProp, interfaceMask, queryMask );
+	this->mBiggies.GatherHulls ( results, ignoreProp, point, interfaceMask, queryMask );
+	this->mGlobals.GatherHulls ( results, ignoreProp, interfaceMask, queryMask );
 	
 	return results.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
 }
 
 //----------------------------------------------------------------//
-u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask, u32 queryMask ) {
+u32 MOAIPartition::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask, u32 queryMask ) {
 	
 	results.Reset ();
 	
 	size_t totalLevels = this->mLevels.Size ();
 	for ( size_t i = 0; i < totalLevels; ++i ) {
-		this->mLevels [ i ].GatherProps ( results, ignoreProp, point, orientation, interfaceMask, queryMask );
+		this->mLevels [ i ].GatherHulls ( results, ignoreProp, point, orientation, interfaceMask, queryMask );
 	}
-	this->mBiggies.GatherProps ( results, ignoreProp, point, orientation, interfaceMask, queryMask );
-	this->mGlobals.GatherProps ( results, ignoreProp, point, orientation, interfaceMask, queryMask );
+	this->mBiggies.GatherHulls ( results, ignoreProp, point, orientation, interfaceMask, queryMask );
+	this->mGlobals.GatherHulls ( results, ignoreProp, point, orientation, interfaceMask, queryMask );
 	
 	return results.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
 }
 
 //----------------------------------------------------------------//
-u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, ZLRect rect, u32 interfaceMask, u32 queryMask ) {
+u32 MOAIPartition::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, ZLRect rect, u32 interfaceMask, u32 queryMask ) {
 	
 	results.Reset ();
 	rect.Bless ();
 	
 	size_t totalLevels = this->mLevels.Size ();
 	for ( size_t i = 0; i < totalLevels; ++i ) {
-		this->mLevels [ i ].GatherProps ( results, ignoreProp, rect, interfaceMask, queryMask );
+		this->mLevels [ i ].GatherHulls ( results, ignoreProp, rect, interfaceMask, queryMask );
 	}
-	this->mBiggies.GatherProps ( results, ignoreProp, rect, interfaceMask, queryMask );
-	this->mGlobals.GatherProps ( results, ignoreProp, interfaceMask, queryMask );
+	this->mBiggies.GatherHulls ( results, ignoreProp, rect, interfaceMask, queryMask );
+	this->mGlobals.GatherHulls ( results, ignoreProp, interfaceMask, queryMask );
 	
 	return results.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
 }
 
 //----------------------------------------------------------------//
-u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, ZLBox box, u32 interfaceMask, u32 queryMask ) {
+u32 MOAIPartition::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, ZLBox box, u32 interfaceMask, u32 queryMask ) {
 	
 	results.Reset ();
 	box.Bless ();
 	
 	size_t totalLevels = this->mLevels.Size ();
 	for ( size_t i = 0; i < totalLevels; ++i ) {
-		this->mLevels [ i ].GatherProps ( results, ignoreProp, box, this->mPlaneID, interfaceMask, queryMask );
+		this->mLevels [ i ].GatherHulls ( results, ignoreProp, box, this->mPlaneID, interfaceMask, queryMask );
 	}
-	this->mBiggies.GatherProps ( results, ignoreProp, box, interfaceMask, queryMask );
-	this->mGlobals.GatherProps ( results, ignoreProp, interfaceMask, queryMask );
+	this->mBiggies.GatherHulls ( results, ignoreProp, box, interfaceMask, queryMask );
+	this->mGlobals.GatherHulls ( results, ignoreProp, interfaceMask, queryMask );
 	
 	return results.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
 }
 
 //----------------------------------------------------------------//
-u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLFrustum& frustum, u32 interfaceMask, u32 queryMask ) {
+u32 MOAIPartition::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, const ZLFrustum& frustum, u32 interfaceMask, u32 queryMask ) {
 	
 	results.Reset ();
 	
 	size_t totalLevels = this->mLevels.Size ();
 	for ( size_t i = 0; i < totalLevels; ++i ) {
-		this->mLevels [ i ].GatherProps ( results, ignoreProp, frustum, this->mPlaneID, interfaceMask, queryMask );
+		this->mLevels [ i ].GatherHulls ( results, ignoreProp, frustum, this->mPlaneID, interfaceMask, queryMask );
 	}
-	this->mBiggies.GatherProps ( results, ignoreProp, frustum, interfaceMask, queryMask );
-	this->mGlobals.GatherProps ( results, ignoreProp, interfaceMask, queryMask );
+	this->mBiggies.GatherHulls ( results, ignoreProp, frustum, interfaceMask, queryMask );
+	this->mGlobals.GatherHulls ( results, ignoreProp, interfaceMask, queryMask );
 	
 	return results.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
 }
@@ -603,43 +616,43 @@ u32 MOAIPartition::GetInterfaceMask ( u32 typeID ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartition::InsertProp ( MOAIProp& prop ) {
+void MOAIPartition::InsertHull ( MOAIPartitionHull& hull ) {
 	
-	if ( prop.mPartition == this ) return;
+	if ( hull.mPartition == this ) return;
 	
-	this->LuaRetain ( &prop );
+	this->LuaRetain ( &hull );
 	
-	if ( prop.mPartition ) {
-		prop.mPartition->RemoveProp ( prop );
+	if ( hull.mPartition ) {
+		hull.mPartition->RemoveHull ( hull );
 	}
 	
-	u32 interfaceMask = prop.AffirmInterfaceMask ( *this );
+	u32 interfaceMask = hull.AffirmInterfaceMask ( *this );
 	if ( interfaceMask ) {
 	
-		if ( prop.mPriority == MOAIProp::UNKNOWN_PRIORITY ) {
-			prop.mPriority = this->mPriorityCounter++;
+		if ( hull.mPriority == MOAIPartitionHull::UNKNOWN_PRIORITY ) {
+			hull.mPriority = this->mPriorityCounter++;
 			this->mPriorityCounter = this->mPriorityCounter & PRIORITY_MASK;
 		}
 		
-		this->mEmpties.InsertProp ( prop );
-		this->AffirmPriority ( prop );
+		this->mEmpties.InsertHull ( hull );
+		this->AffirmPriority ( hull );
 		
-		prop.mPartition = this;
-		prop.mInterfaceMask = interfaceMask;
-		prop.ScheduleUpdate ();
+		hull.mPartition = this;
+		hull.mInterfaceMask = interfaceMask;
+		hull.ScheduleUpdate ();
 		
-		this->OnPropInserted ( prop );
+		this->MOAIPartition_OnInsertHull ( hull );
 	}
 }
 
 //----------------------------------------------------------------//
-bool MOAIPartition::IsEmpty ( MOAIProp& prop ) {
-	return prop.mCell == &this->mEmpties;
+bool MOAIPartition::IsEmpty ( MOAIPartitionHull& hull ) {
+	return hull.mCell == &this->mEmpties;
 }
 
 //----------------------------------------------------------------//
-bool MOAIPartition::IsGlobal ( MOAIProp& prop ) {
-	return prop.mCell == &this->mGlobals;
+bool MOAIPartition::IsGlobal ( MOAIPartitionHull& hull ) {
+	return hull.mCell == &this->mGlobals;
 }
 
 //----------------------------------------------------------------//
@@ -655,21 +668,6 @@ MOAIPartition::MOAIPartition () :
 //----------------------------------------------------------------//
 MOAIPartition::~MOAIPartition () {
 	this->Clear ();
-}
-
-//----------------------------------------------------------------//
-void MOAIPartition::OnPropInserted ( MOAIProp& prop ) {
-	UNUSED ( prop );
-}
-
-//----------------------------------------------------------------//	
-void MOAIPartition::OnPropRemoved ( MOAIProp& prop ) {
-	UNUSED ( prop );
-}
-
-//----------------------------------------------------------------//
-void MOAIPartition::OnPropUpdated ( MOAIProp& prop ) {
-	UNUSED ( prop );
 }
 
 //----------------------------------------------------------------//
@@ -705,14 +703,14 @@ void MOAIPartition::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "clear",						_clear },
 		{ "getInterfaceMask",			_getInterfaceMask },
-		{ "insertProp",					_insertProp },
-		{ "propForPoint",				_propForPoint },
-		{ "propForRay",					_propForRay },
-		{ "propList",					_propList },
-		{ "propListForPoint",			_propListForPoint },
-		{ "propListForRay",				_propListForRay },
-		{ "propListForRect",			_propListForRect },
-		{ "removeProp",					_removeProp },
+		{ "hullForPoint",				_hullForPoint },
+		{ "hullForRay",					_hullForRay },
+		{ "hullList",					_hullList },
+		{ "hullListForPoint",			_hullListForPoint },
+		{ "hullListForRay",				_hullListForRay },
+		{ "hullListForRect",			_hullListForRect },
+		//{ "insertHull",					_insertHull },
+		//{ "removeHull",					_removeHull },
 		{ "reserveLevels",				_reserveLevels },
 		{ "setLevel",					_setLevel },
 		{ "setPlane",					_setPlane },
@@ -723,19 +721,19 @@ void MOAIPartition::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartition::RemoveProp ( MOAIProp& prop ) {
+void MOAIPartition::RemoveHull ( MOAIPartitionHull& hull ) {
 
-	if ( prop.mPartition != this ) return;
+	if ( hull.mPartition != this ) return;
 	
-	if ( prop.mCell ) {
-		prop.mCell->RemoveProp ( prop );
+	if ( hull.mCell ) {
+		hull.mCell->RemoveHull ( hull );
 	}
 
-	prop.mPartition = 0;
-	prop.mInterfaceMask = 0;
-	this->OnPropRemoved ( prop );
+	hull.mPartition = 0;
+	hull.mInterfaceMask = 0;
+	this->MOAIPartition_OnRemoveHull ( hull );
 
-	this->LuaRelease ( &prop );
+	this->LuaRelease ( &hull );
 }
 
 //----------------------------------------------------------------//
@@ -755,25 +753,26 @@ void MOAIPartition::SetLevel ( int levelID, float cellSize, int width, int heigh
 }
 
 //----------------------------------------------------------------//
-void MOAIPartition::UpdateProp ( MOAIProp& prop, u32 status ) {
+void MOAIPartition::UpdateHull ( MOAIPartitionHull& hull ) {
 
 	// clear out the level; level will be re-calculated below
-	// also: prop.mLevel is *only* for debug drawing 
-	prop.mLevel = 0;
+	// also: hull.mLevel is *only* for debug drawing 
+	hull.mLevel = 0;
+	
+	u32 status = hull.mWorldBounds.mStatus;
 
-	// status is not 'OK' so prop is either global or empty
-	if ( status != MOAIProp::BOUNDS_OK ) {
-		
-		if ( status == MOAIProp::BOUNDS_GLOBAL ) {
-			this->mGlobals.InsertProp ( prop );
-		}
-		else {
-			this->mEmpties.InsertProp ( prop );
-		}
+	// status is not 'OK' so hull is either global or empty
+	if ( status == ZLBounds::ZL_BOUNDS_GLOBAL ) {
+		this->mGlobals.InsertHull ( hull );
+		return;
+	}
+	
+	if ( status == ZLBounds::ZL_BOUNDS_EMPTY ) {
+		this->mEmpties.InsertHull ( hull );
 		return;
 	}
 
-	ZLRect rect = prop.mWorldBounds.GetRect ( this->mPlaneID );
+	ZLRect rect = hull.mWorldBounds.GetRect ( this->mPlaneID );
 
 	float width = rect.Width ();
 	float height = rect.Height ();
@@ -796,18 +795,18 @@ void MOAIPartition::UpdateProp ( MOAIProp& prop, u32 status ) {
 		}
 		
 		if ( level ) {
-			// level prop
-			level->PlaceProp ( prop );
-			prop.mLevel = level;
+			// level hull
+			level->PlaceHull ( hull );
+			hull.mLevel = level;
 		}
 		else {
-			// biggie prop - has dimension but too big to fit in any level
-			this->mBiggies.InsertProp ( prop );
+			// biggie hull - has dimension but too big to fit in any level
+			this->mBiggies.InsertHull ( hull );
 		}
 	}
 	else {
-		// empty prop
-		this->mEmpties.InsertProp ( prop );
+		// empty hull
+		this->mEmpties.InsertHull ( hull );
 	}
 }
 
@@ -818,4 +817,31 @@ void MOAIPartition::SetPlane ( u32 planeID ) {
 	this->PrepareRebuild ();
 	this->mPlaneID = planeID;
 	this->Rebuild ();
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIPartition::MOAIPartition_DrawDebugBack () {
+}
+
+//----------------------------------------------------------------//
+void MOAIPartition::MOAIPartition_DrawDebugFront () {
+}
+
+//----------------------------------------------------------------//
+void MOAIPartition::MOAIPartition_OnInsertHull ( MOAIPartitionHull& hull ) {
+	UNUSED ( hull );
+}
+
+//----------------------------------------------------------------//	
+void MOAIPartition::MOAIPartition_OnRemoveHull ( MOAIPartitionHull& hull ) {
+	UNUSED ( hull );
+}
+
+//----------------------------------------------------------------//
+void MOAIPartition::MOAIPartition_OnUpdateHull ( MOAIPartitionHull& hull ) {
+	UNUSED ( hull );
 }

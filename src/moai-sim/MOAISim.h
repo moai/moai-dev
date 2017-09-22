@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAISIM_H
@@ -41,7 +41,7 @@ class MOAIProp;
 	@const DEFAULT_STEP_MULTIPLIER			Value is 1
 */
 class MOAISim :
-	public MOAIGlobalClass < MOAISim, MOAIGlobalEventSource > {
+	public ZLContextClass < MOAISim, MOAIGlobalEventSource > {
 public:
 
 	typedef void ( *EnterFullscreenModeFunc )		();

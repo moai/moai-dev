@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -10,9 +10,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 480 )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 function makeCurve ( ease )
 
@@ -38,7 +38,7 @@ local curveIndex = 1
 
 function onDraw ( index, xOff, yOff, xFlip, yFlip )
 
-	MOAIGfxMgr.setPenColor ( 1, 0, 0, 1 )
+	MOAIDraw.setPenColor ( 1, 0, 0, 1 )
 	MOAIDraw.drawAnimCurve ( makeCurve ( curveTypes [ curveIndex ].value ), 100 )
 	if curveIndex ~= prevIndex then
 		print ( string.format ( "%i of %i: %s", curveIndex, #curveTypes, curveTypes [ curveIndex ].name ))

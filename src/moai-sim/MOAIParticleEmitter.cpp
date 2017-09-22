@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -71,7 +71,7 @@ int MOAIParticleEmitter::_setMagnitude ( lua_State* L ) {
 int MOAIParticleEmitter::_setMask ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleEmitter, "U" )
 	
-	self->mMaskProp.Set ( *self, state.GetLuaObject < MOAIProp >( 2, true ));
+	self->mMaskProp.Set ( *self, state.GetLuaObject < MOAIPartitionHull >( 2, true ));
 	
 	return 0;
 }
@@ -240,12 +240,6 @@ ZLVec3D MOAIParticleEmitter::GetRandomVec ( float minAngle, float maxAngle, floa
 }
 
 //----------------------------------------------------------------//
-bool MOAIParticleEmitter::IsDone () {
-
-	return false;
-}
-
-//----------------------------------------------------------------//
 bool MOAIParticleEmitter::MaskParticle ( const ZLVec3D& loc ) {
 
 	return this->mMaskProp ? this->mMaskProp->Inside ( loc, 0.0f ) : true;
@@ -276,30 +270,6 @@ MOAIParticleEmitter::~MOAIParticleEmitter () {
 
 	this->mSystem.Set ( *this, 0 );
 	this->mMaskProp.Set ( *this, 0 );
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleEmitter::OnDepNodeUpdate () {
-
-	MOAITransform::OnDepNodeUpdate ();
-	
-	if ( this->mSystem ) {
-
-		ZLVec3D loc;
-		ZLVec3D vec;
-		for ( u32 i = 0; i < this->mEmission; ++i ) {
-			this->GetRandomParticle ( loc, vec );
-			this->mLocalToWorldMtx.Transform ( loc );
-			
-			if ( this->MaskParticle ( loc )) {
-			
-				this->mLocalToWorldMtx.TransformVec ( vec );
-				this->mSystem->PushParticle ( loc.mX, loc.mY, vec.mX, vec.mY, this->mParticleState );
-			}
-		}
-	}
-	
-	this->mEmission = 0;
 }
 
 //----------------------------------------------------------------//
@@ -371,4 +341,38 @@ void MOAIParticleEmitter::Surge ( u32 total ) {
 	
 	this->mEmission += total;
 	this->ScheduleUpdate ();
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIParticleEmitter::MOAIAction_IsDone () {
+
+	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleEmitter::MOAINode_Update () {
+
+	MOAITransform::MOAINode_Update ();
+	
+	if ( this->mSystem ) {
+
+		ZLVec3D loc;
+		ZLVec3D vec;
+		for ( u32 i = 0; i < this->mEmission; ++i ) {
+			this->GetRandomParticle ( loc, vec );
+			this->mLocalToWorldMtx.Transform ( loc );
+			
+			if ( this->MaskParticle ( loc )) {
+			
+				this->mLocalToWorldMtx.TransformVec ( vec );
+				this->mSystem->PushParticle ( loc.mX, loc.mY, vec.mX, vec.mY, this->mParticleState );
+			}
+		}
+	}
+	
+	this->mEmission = 0;
 }

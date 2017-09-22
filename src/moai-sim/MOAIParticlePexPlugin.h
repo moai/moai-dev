@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIPARTICLEPEXPLUGIN_H
@@ -10,6 +10,7 @@
 #include <moai-sim/MOAIParticlePlugin.h>
 #include <moai-sim/MOAIParticleScript.h>
 #include <tinyxml/tinyxml.h>
+
 //================================================================//
 // MOAIParticlePexPlugin
 //================================================================//

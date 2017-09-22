@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAISHADERUNIFORM_H
@@ -6,92 +6,51 @@
 
 #include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAINode.h>
+#include <moai-sim/MOAIShaderUniformFormatter.h>
 
 class MOAIColor;
 class MOAITransformBase;
 
 //================================================================//
-// MOAIShaderUniformBuffer
+// MOAIShaderUniformInstance
 //================================================================//
-class MOAIShaderUniformBuffer {
+class MOAIShaderUniformInstance {
 protected:
 
 	friend class MOAIShader;
-	friend class MOAIShaderProgram;
+	friend class MOAIShaderUniform;
 
-	u32		mType;
-	
-	ZLLeanArray < u8 > mBuffer;
-
-	union {
-		float	mFloat;
-		int		mInt;
-	};
-
-	//----------------------------------------------------------------//
-	void		Clear				();
-	void		ClearValue			();
-	u32			SetBuffer			( void* buffer, size_t size );
-
-public:
-
-	enum {
-		UNIFORM_NONE,
-		UNIFORM_FLOAT,
-		UNIFORM_INDEX,
-		UNIFORM_INT,
-		UNIFORM_MATRIX_F3,
-		UNIFORM_MATRIX_F4,
-		UNIFORM_VECTOR_F4,
-	};
-
-	GET ( u32, Type, mType )
-
-	//----------------------------------------------------------------//
-	void		AddValue			( const MOAIAttrOp& attrOp );
-	void		Default				();
-	void		GetFlags			( MOAIAttrOp& attrOp );
-	void        GetValue			( MOAIAttrOp& attrOp );
-	void		SetType				( u32 type );
-	u32			SetValue			( float value );
-	u32			SetValue			( int value );
-	u32			SetValue			( const MOAIAttrOp& attrOp );
-	u32			SetValue			( const ZLColorVec& value );
-	u32			SetValue			( const ZLAffine3D& value );
-	u32			SetValue			( const ZLMatrix4x4& value );
-	u32			SetValue          	( const ZLMatrix3x3& value );
-	u32			SetValue			( const MOAIShaderUniformBuffer& uniformBuffer );
+	void*			mBuffer;			// offset in CPU buffer
+	u32				mCount;				// actual size of array (may differ from default count in uniform)
 };
 
 //================================================================//
 // MOAIShaderUniform
 //================================================================//
 class MOAIShaderUniform :
-	public MOAIShaderUniformBuffer {
-private:
+	public MOAIShaderUniformFormatter {
+protected:
 
 	friend class MOAIShader;
 	friend class MOAIShaderProgram;
 
 	STLString		mName;
-	u32				mAddr;			// this is resolved when linking the shader
-	u32				mFlags;			// used by MOAIShaderProgram
+	u32				mCount;				// (default) size of array
+	u32				mGPUBase;			// this is resolved when linking the shader
 
 public:
 
-	enum {
-		UNIFORM_FLAG_DIRTY		= 0x01,
-		UNIFORM_FLAG_GLOBAL		= 0x02,
-	};
-
 	//----------------------------------------------------------------//
-	void		Bind				();
-				MOAIShaderUniform	();
-				~MOAIShaderUniform	();
+	void			Bind					( MOAIShaderUniformInstance& instance );
+	void			Default					( void* buffer ) const;
+	size_t			GetSize					() const;
+	void			Init					( u32 type, u32 width = 1, u32 count = 1 );
+					MOAIShaderUniform		();
+					~MOAIShaderUniform		();
 	
 	//----------------------------------------------------------------//
 	inline bool IsValid () {
-		return this->mAddr != ZGL_INVALID_UNIFORM_ADDR;
+		return ( this->mGPUBase != ZGL_INVALID_UNIFORM_ADDR );
 	}
 };
 

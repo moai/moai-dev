@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAITRANSFORMBASE_H
@@ -43,6 +43,11 @@ protected:
 	static int	_setParent			( lua_State* L );
 	static int	_worldToModel		( lua_State* L );
 
+	//----------------------------------------------------------------//
+	bool				MOAINode_ApplyAttrOp						( u32 attrID, MOAIAttribute& attr, u32 op );
+	void				MOAINode_Update								();
+	virtual void		MOAITransformBase_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx ) = 0;
+
 public:
 	
 	DECL_ATTR_HELPER ( MOAITransformBase )
@@ -69,15 +74,12 @@ public:
 	GET ( ZLVec3D, WorldLoc, mLocalToWorldMtx.GetTranslation ())
 	
 	//----------------------------------------------------------------//
-	bool					ApplyAttrOp					( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	virtual void			BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx ) = 0;
 	const ZLAffine3D&		GetLocalToWorldMtx			() const;
 	const ZLAffine3D*		GetLocTrait					() const;
 	const ZLAffine3D*		GetTransformTrait			() const;
 	const ZLAffine3D&		GetWorldToLocalMtx			() const;
 							MOAITransformBase			();
 							~MOAITransformBase			();
-	void					OnDepNodeUpdate				();
 	void					RegisterLuaClass			( MOAILuaState& state );
 	void					RegisterLuaFuncs			( MOAILuaState& state );
 };

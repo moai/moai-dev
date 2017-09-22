@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -12,10 +12,10 @@ local function makeLayer ( x, y, w, h, r, g, b, a )
 	viewport:setSize ( x, y, x + w, y + h )
 	viewport:setScale ( w, -h )
 
-	local layer = MOAILayer2D.new ()
+	local layer = MOAIPartitionViewLayer.new ()
 	layer:setViewport ( viewport )
 	layer:setClearColor ( r, g, b, a )
-	MOAISim.pushRenderPass ( layer )
+	layer:pushRenderPass ()
 	
 	return layer
 end

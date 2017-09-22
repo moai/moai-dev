@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIBLOCKER_H
@@ -17,8 +17,10 @@ private:
 
 	//----------------------------------------------------------------//
 	void				AddBlocked				( MOAIBlocker* blocked );
-	virtual void		OnUnblock				();
 	void				RemoveBlocked			( MOAIBlocker* blocked );
+
+	//----------------------------------------------------------------//
+	virtual void		MOAIBlocker_Unblock		();
 
 public:
 

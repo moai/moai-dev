@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -203,7 +203,7 @@ ZLSizeResult ZLCopyOnWrite::SetLength ( size_t length ) {
 
 		length = length > internal->mLength ? internal->mLength : length;
 		
-		if ( length< internal->mLength ) {
+		if ( length < internal->mLength ) {
 			this->Invalidate ();
 		}
 		internal->mLength = length;

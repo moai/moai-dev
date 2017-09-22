@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIGFXVERTEXCACHE_H
@@ -8,16 +8,13 @@
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIVertexBuffer.h>
 
-class MOAICamera;
 class MOAIFrameBuffer;
 class MOAIGfxResource;
-class MOAIMultiTexture;
 class MOAIShader;
 class MOAIShaderProgram;
 class MOAITexture;
-class MOAISingleTexture;
+class MOAITextureBase;
 class MOAIVertexFormat;
-class MOAIViewport;
 
 //================================================================//
 // MOAIGfxVertexCache
@@ -37,29 +34,19 @@ protected:
 	static const size_t DEFAULT_VERTEX_BUFFER_SIZE	= 0x8000;
 	static const size_t DEFAULT_INDEX_BUFFER_SIZE	= 0x1000;
 
+	static const size_t UNIFORM_BUFFER_CHUNK_SIZE	= 1024;
+
 	bool						mIsDrawing;
-	bool						mUseIdxBuffer;
-
-	MOAIVertexBuffer*			mVtxBuffer;
-	MOAIIndexBuffer*			mIdxBuffer;
 	
-	u32							mVertexSize;
+	u32							mVtxBase; // offsets the vertex in drawprims *or* the index when writing indexed prims
+	u32							mIdxBase; // this is the offset to the first index for the next call to draw prims
+	
+	u32							mVtxSize;
 
-	u32							mMaxVertices;
-	u32							mMaxIndices;
-	u32							mMaxPrims;
-
-	u32							mPrimCount;
-	u32							mPrimSize;
-//	u32							mPrimTopIdx;
-//	u32							mPrimTopVtx;
 	u32							mPrimType;
-	
-	u32							mTotalVertices;
-	u32							mTotalIndices;
-	u16							mIndexBase;
-
-	MOAIVertexFormat*			mVertexFormat;
+	bool						mFlushOnPrimEnd;
+	bool						mUseIdxBuffer;
+	u32							mPrimCount;
 
 	bool						mApplyVertexTransform;
 	ZLMatrix4x4					mVertexTransform;
@@ -69,24 +56,31 @@ protected:
 
 	ZLColorVec					mVertexColor;
 	u32							mVertexColor32;
-
+	
+	ZLStrongPtr < MOAIVertexBuffer >	mVtxBuffer;
+	ZLStrongPtr < MOAIIndexBuffer >		mIdxBuffer;
+	
+	MOAIShader*					mCurrentShader;
+	void*						mUniformBuffer;
+	size_t						mUniformBufferSize;
+	
 	//----------------------------------------------------------------//
 	void			OnGfxStateWillChange			();
+	void			ResizeUniformBuffer				( size_t size );
 	void			TransformAndWriteQuad			( ZLVec4D* vtx, ZLVec2D* uv );
-	void			UpdateLimits					();
 
 public:
 	
+	enum {
+		CONTINUE_OK,
+		CONTINUE_ROLLOVER,
+		CONTINUE_FAIL,
+	};
+	
 	//----------------------------------------------------------------//
-	void			BeginPrim						();
-	void			BeginPrim						( u32 primType, u32 primSize = 0 );
-	void			BeginPrimIndexed				( u32 primType, u32 vtxCount, u32 idxCount );
-	
-	void			BindBufferedDrawing				( MOAIVertexFormat& format );
-	void			BindBufferedDrawing				( u32 preset );
-	
+	bool			BeginPrim						( u32 primType, u32 vtxCount, u32 idxCount = 0 );
+	u32				ContinuePrim					( u32 vtxCount, u32 idxCount = 0 );
 	void			EndPrim							();
-	void			EndPrimIndexed					();
 	
 	void			FlushBufferedPrims				();
 	
@@ -95,14 +89,13 @@ public:
 					MOAIGfxVertexCache				();
 					~MOAIGfxVertexCache				();
 
-	void			SetPrimType						( u32 primType, u32 primSize = 0 );
+	void			Reset							();
 
 	void			SetUVTransform					();
 	void			SetUVTransform					( const ZLMatrix4x4& uvTransform );
 	void			SetVertexTransform				();
 	void			SetVertexTransform				( const ZLMatrix4x4& vertexTransform );
 
-	//void			UnbindBufferedDrawing			();
 	void			WriteQuad						( const ZLVec2D* vtx, const ZLVec2D* uv );
 	void			WriteQuad						( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff );
 	void			WriteQuad						( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale );
@@ -134,7 +127,7 @@ public:
 	inline void WriteIndex ( u16 index ) {
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		this->mIdxBuffer->Write < u16 >( this->mIndexBase + index );
+		this->mIdxBuffer->Write < u16 >( this->mVtxBase + index );
 	}
 	
 	//----------------------------------------------------------------//

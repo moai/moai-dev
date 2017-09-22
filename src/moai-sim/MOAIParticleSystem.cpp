@@ -1,10 +1,9 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
 #include <float.h>
 #include <moai-sim/MOAIDeck.h>
-#include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIParticleState.h>
 #include <moai-sim/MOAIParticleSystem.h>
@@ -370,56 +369,6 @@ void MOAIParticleSystem::ClearQueue () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleSystem::Draw ( int subPrimID, float lod ) {
-	UNUSED ( subPrimID );
-
-	if ( !this->IsVisible ( lod )) return;
-	if ( !this->mDeck ) return;
-	if ( this->IsClear ()) return;
-
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	
-	this->LoadGfxState ();
-	this->LoadUVTransform ();
-
-	MOAIMaterialBatch& materials = this->mDeck->ResolveMaterialBatch ( this->mMaterialBatch );
-
-	ZLAffine3D drawingMtx;
-	ZLAffine3D spriteMtx;
-	
-	u32 maxSprites = ( u32 )this->mSprites.Size ();
-	u32 total = this->mSpriteTop;
-	u32 base = 0;
-	if ( total > maxSprites ) {
-		base = total % maxSprites;
-		total = maxSprites;
-	}
-	
-	for ( u32 i = 0; i < total; ++i ) {
-
-		u32 idx;
-		if ( this->mDrawOrder == ORDER_NORMAL ) {
-			idx = ( base + i ) % maxSprites;
-		}
-		else {
-			idx = ( base + ( total - 1 - i )) % maxSprites;
-		}
-				
-		AKUParticleSprite& sprite = this->mSprites [ idx ];
-		gfxMgr.mGfxState.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
-		
-		spriteMtx.ScRoTr ( sprite.mXScl, sprite.mYScl, 1.0f, 0.0f, 0.0f, sprite.mZRot * ( float )D2R, sprite.mXLoc, sprite.mYLoc, 0.0f );
-		
-		drawingMtx = this->GetLocalToWorldMtx ();
-		drawingMtx.Prepend ( spriteMtx );
-		
-		gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX, drawingMtx );
-		
-		this->mDeck->Draw ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex + ( u32 )sprite.mGfxID ), materials );
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIParticleSystem::EnqueueParticle ( MOAIParticle& particle ) {
 
 	if ( this->mTail ) {
@@ -453,12 +402,6 @@ AKUParticleSprite* MOAIParticleSystem::GetTopSprite () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIParticleSystem::IsDone () {
-
-	return false;
-}
-
-//----------------------------------------------------------------//
 MOAIParticleSystem::MOAIParticleSystem () :
 	mParticleSize ( 0 ),
 	mCapParticles ( false ),
@@ -484,60 +427,6 @@ MOAIParticleSystem::MOAIParticleSystem () :
 MOAIParticleSystem::~MOAIParticleSystem () {
 
 	this->ClearStates ();
-}
-
-//----------------------------------------------------------------//
-u32 MOAIParticleSystem::OnGetModelBounds ( ZLBox& bounds ) {
-
-	if ( this->mSpriteTop ) {
-		bounds = this->mParticleBounds;
-		return BOUNDS_OK;
-	}
-	return BOUNDS_EMPTY;
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleSystem::OnUpdate ( double step ) {
-
-	bool schedule = ( this->mSpriteTop > 0 );
-
-	// clear out the sprites
-	this->mSpriteTop = 0;
-
-	this->mParticleBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
-
-	// if particles
-	if ( this->mHead ) {
-
-		// grab the head then clear out the queue
-		MOAIParticle* cursor = this->mHead;
-		this->ClearQueue ();
-		
-		// update the particles and rebuild the queue
-		while ( cursor ) {
-			MOAIParticle* particle = cursor;
-			cursor = cursor->mNext;
-			
-			// update the particle
-			if ( particle->mState ) {
-				particle->mState->ProcessParticle ( *this, *particle,( float )step );
-			}
-			
-			// if is still to be killed, move it to the free list, else put it back in the queue
-			if ( !particle->mState ) {
-				particle->mNext = this->mFree;
-				this->mFree = particle;
-			}
-			else {
-				// and put it back in the queue
-				this->EnqueueParticle ( *particle );
-			}
-		}
-	}
-	
-	if ( schedule || this->mSpriteTop ) {
-		this->ScheduleUpdate ();
-	}
 }
 
 //----------------------------------------------------------------//
@@ -609,7 +498,7 @@ bool MOAIParticleSystem::PushSprite ( const AKUParticleSprite& sprite ) {
 		this->mSprites [ idx ] = sprite;
 		
 		// TODO: need to take rotation into account
-		ZLBox bounds = this->mDeck->GetBounds ( MOAIDeckRemapper::Remap ( this->mRemapper, sprite.mGfxID ));
+		ZLBox bounds = this->mDeck->GetBounds ( sprite.mGfxID );
 		
 		ZLVec3D offset ( sprite.mXLoc, sprite.mYLoc, 0.0f );
 		ZLVec3D scale ( sprite.mXScl, sprite.mYScl, 0.0f );
@@ -727,4 +616,120 @@ void MOAIParticleSystem::SerializeOut ( MOAILuaState& state, MOAISerializer& ser
 
 	MOAIGraphicsProp::SerializeOut ( state, serializer );
 	MOAIAction::SerializeOut ( state, serializer );
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIParticleSystem::MOAIAction_IsDone () {
+
+	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleSystem::MOAIAction_Update ( double step ) {
+
+	bool schedule = ( this->mSpriteTop > 0 );
+
+	// clear out the sprites
+	this->mSpriteTop = 0;
+
+	this->mParticleBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+
+	// if particles
+	if ( this->mHead ) {
+
+		// grab the head then clear out the queue
+		MOAIParticle* cursor = this->mHead;
+		this->ClearQueue ();
+		
+		// update the particles and rebuild the queue
+		while ( cursor ) {
+			MOAIParticle* particle = cursor;
+			cursor = cursor->mNext;
+			
+			// update the particle
+			if ( particle->mState ) {
+				particle->mState->ProcessParticle ( *this, *particle,( float )step );
+			}
+			
+			// if is still to be killed, move it to the free list, else put it back in the queue
+			if ( !particle->mState ) {
+				particle->mNext = this->mFree;
+				this->mFree = particle;
+			}
+			else {
+				// and put it back in the queue
+				this->EnqueueParticle ( *particle );
+			}
+		}
+	}
+	
+	if ( schedule || this->mSpriteTop ) {
+		this->ScheduleUpdate ();
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleSystem::MOAIDrawable_Draw ( int subPrimID ) {
+	UNUSED ( subPrimID );
+
+	if ( !this->IsVisible ()) return;
+	if ( !this->mDeck ) return;
+	if ( this->IsClear ()) return;
+
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	
+	this->PushGfxState ();
+	this->LoadUVTransform ();
+
+	ZLAffine3D drawingMtx;
+	ZLAffine3D spriteMtx;
+	
+	u32 maxSprites = ( u32 )this->mSprites.Size ();
+	u32 total = this->mSpriteTop;
+	u32 base = 0;
+	if ( total > maxSprites ) {
+		base = total % maxSprites;
+		total = maxSprites;
+	}
+	
+	for ( u32 i = 0; i < total; ++i ) {
+
+		u32 idx;
+		if ( this->mDrawOrder == ORDER_NORMAL ) {
+			idx = ( base + i ) % maxSprites;
+		}
+		else {
+			idx = ( base + ( total - 1 - i )) % maxSprites;
+		}
+				
+		AKUParticleSprite& sprite = this->mSprites [ idx ];
+		gfxMgr.mGfxState.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
+		
+		spriteMtx.ScRoTr ( sprite.mXScl, sprite.mYScl, 1.0f, 0.0f, 0.0f, sprite.mZRot * ( float )D2R, sprite.mXLoc, sprite.mYLoc, 0.0f );
+		
+		drawingMtx = this->GetLocalToWorldMtx ();
+		drawingMtx.Prepend ( spriteMtx );
+		
+		gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX, drawingMtx );
+		
+		//this->mDeck->Draw ( this->mIndex + ( u32 )sprite.mGfxID, this->mMaterialBatch );
+		this->mDeck->Draw ( this->mIndex + ( u32 )sprite.mGfxID );
+	}
+	
+	this->PopGfxState ();
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAIParticleSystem::MOAIPartitionHull_GetModelBounds () {
+
+	if ( this->mSpriteTop ) {
+		ZLBounds bounds;
+		bounds.Init ( this->mParticleBounds );
+		return bounds;
+	}
+	return ZLBounds::EMPTY;
 }

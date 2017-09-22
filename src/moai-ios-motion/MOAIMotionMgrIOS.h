@@ -1,11 +1,10 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIMOTIONMANAGERIOS_H
 #define	MOAIMOTIONMANAGERIOS_H
 
-#include <moai-core/headers.h>
-#include <moai-sim/MOAIAction.h>
+#include <moai-sim/headers.h>
 
 @class CLLocationManager;
 @class CMMotionManager;
@@ -15,7 +14,7 @@
 // MOAIMotionMgrIOS
 //================================================================//
 class MOAIMotionMgrIOS :
-	public MOAIGlobalClass < MOAIMotionMgrIOS, MOAIAction > {
+	public ZLContextClass < MOAIMotionMgrIOS, MOAIAction > {
 private:
 
 	bool				mIsHeadingActive;
@@ -43,8 +42,8 @@ private:
 	static int	_setMagnetometerActive					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool				IsDone							();
-	void				OnUpdate						( double step );
+	bool				MOAIAction_IsDone				();
+	void				MOAIAction_Update				( double step );
 
 public:
 	

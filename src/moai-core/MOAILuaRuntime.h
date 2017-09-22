@@ -1,11 +1,8 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef MOAILUARUNTIME_H
 #define MOAILUARUNTIME_H
-
-//#include <moai-core/MOAIEventSource.h>
-#include <moai-core/MOAIGlobals.h>
 
 #include <moai-core/MOAILuaClass.h>
 #include <moai-core/MOAILuaObject.h>
@@ -56,7 +53,7 @@ private:
 // MOAILuaRuntime
 //================================================================//
 class MOAILuaRuntime :
-	public MOAIGlobalClass < MOAILuaRuntime, MOAILuaObject > {
+	public ZLContextClass < MOAILuaRuntime, MOAILuaObject > {
 public:
 
 	typedef void ( *TracebackFunc ) ( const char* message, struct lua_State* L, int level );
@@ -150,8 +147,8 @@ public:
 	friend class MOAILuaStrongRef;
 	friend class MOAILuaWeakRef;
 	friend class MOAILuaState;
-    template<typename U> friend class MOAILuaLocal;
-	
+	template < typename U > friend class MOAILuaLocal;
+
 	DECL_LUA_SINGLETON ( MOAILuaRuntime )
 
 	GET ( size_t, ObjectCount, mObjectCount )

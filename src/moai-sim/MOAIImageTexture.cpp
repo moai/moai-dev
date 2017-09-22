@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -49,7 +49,7 @@ void MOAIImageTexture::OnClearDirty () {
 MOAIImageTexture::MOAIImageTexture () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAISingleTexture )
+		RTTI_EXTEND ( MOAITextureBase )
 		RTTI_EXTEND ( MOAIImage )
 	RTTI_END
 	
@@ -81,7 +81,7 @@ bool MOAIImageTexture::OnGPUUpdate () {
 		result = this->UpdateTextureFromImage ( *this, this->mRegion );
 		this->mRegion.Clear ();
 	}
-	return result && MOAISingleTexture::OnGPUUpdate ();
+	return result && MOAITextureBase::OnGPUUpdate ();
 }
 
 //----------------------------------------------------------------//
@@ -95,14 +95,14 @@ void MOAIImageTexture::OnImageStatusChanged	( bool isOK ) {
 //----------------------------------------------------------------//
 void MOAIImageTexture::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	MOAISingleTexture::RegisterLuaClass ( state );
+	MOAITextureBase::RegisterLuaClass ( state );
 	MOAIImage::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAISingleTexture::RegisterLuaFuncs ( state );
+	MOAITextureBase::RegisterLuaFuncs ( state );
 	MOAIImage::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
@@ -116,12 +116,12 @@ void MOAIImageTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAISingleTexture::SerializeIn ( state, serializer );
+	MOAITextureBase::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAISingleTexture::SerializeOut ( state, serializer );
+	MOAITextureBase::SerializeOut ( state, serializer );
 }
 
 //----------------------------------------------------------------//

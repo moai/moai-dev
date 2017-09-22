@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include <moai-image-webp/MOAIImageFormatWebP.h>
@@ -19,7 +19,7 @@ bool MOAIImageFormatWebP::CheckHeader ( const void* buffer ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatWebP::CreateTexture ( MOAISingleTexture& texture, const void* data, size_t size ) {
+bool MOAIImageFormatWebP::CreateTexture ( MOAITextureBase& texture, const void* data, size_t size ) {
 	UNUSED ( texture );
 	UNUSED ( data );
 	UNUSED ( size );

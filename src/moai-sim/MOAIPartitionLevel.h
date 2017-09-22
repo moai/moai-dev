@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIPARTITIONLEVEL_H
@@ -20,20 +20,20 @@ private:
 	//----------------------------------------------------------------//
 	void					Clear				();
 	void					ExtractProps		( MOAIPartitionCell& cell, MOAIPartitionLevel* level );
-	void					GatherProps			( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, u32 interfaceMask, u32 queryMask );
-	void					GatherProps			( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLVec3D& point, u32 planeID, u32 interfaceMask, u32 queryMask );
-	void					GatherProps			( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask, u32 queryMask );
-	void					GatherProps			( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLRect& rect, u32 interfaceMask, u32 queryMask );
-	void					GatherProps			( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLBox& box, u32 planeID, u32 interfaceMask, u32 queryMask );
-	void					GatherProps			( MOAIPartitionResultBuffer& results, MOAIProp* ignoreProp, const ZLFrustum& frustum, u32 planeID, u32 interfaceMask, u32 queryMask );
-	MOAIPartitionCell*		GetCell				( MOAIProp& prop );
+	void					GatherHulls			( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, u32 interfaceMask, u32 queryMask );
+	void					GatherHulls			( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, const ZLVec3D& point, u32 planeID, u32 interfaceMask, u32 queryMask );
+	void					GatherHulls			( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask, u32 queryMask );
+	void					GatherHulls			( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, const ZLRect& rect, u32 interfaceMask, u32 queryMask );
+	void					GatherHulls			( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, const ZLBox& box, u32 planeID, u32 interfaceMask, u32 queryMask );
+	void					GatherHulls			( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, const ZLFrustum& frustum, u32 planeID, u32 interfaceMask, u32 queryMask );
+	MOAIPartitionCell*		GetCell				( MOAIPartitionHull& hull );
 	void					Init				( float cellSize, u32 width, u32 height );
-	void					PlaceProp			( MOAIProp& prop );
+	void					PlaceHull			( MOAIPartitionHull& hull );
 
 public:
 
 	friend class MOAIPartition;
-	friend class MOAIProp;
+	friend class MOAIPartitionHull;
 
 	//----------------------------------------------------------------//
 					MOAIPartitionLevel	();

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIGFXBUFFER_H
@@ -35,6 +35,7 @@ protected:
 	
 	friend class MOAIGfxPipelineClerk;
 	friend class MOAIGfxStateCache;
+	friend class MOAIVertexArrayItem;
 	
 	enum {
 		UPDATE_MODE_MAPBUFFER,
@@ -59,7 +60,7 @@ protected:
 	static int				_scheduleFlush			( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	//void					BindVertexFormat		( MOAIVertexFormat* format );
+	ZLSharedConstBuffer*	GetBufferForBind		( ZLGfx& gfx );
 	bool					OnCPUCreate				();
 	void					OnCPUDestroy			();
 	void					OnGPUBind				();
@@ -77,7 +78,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void						Clear					();
-	void						CopyFromStream			( ZLStream& stream );
+	void						CopyFromStream			( ZLStream& stream, size_t size );
 	ZLSharedConstBuffer*		GetBuffer				();
 								MOAIGfxBuffer			();
 								~MOAIGfxBuffer			();

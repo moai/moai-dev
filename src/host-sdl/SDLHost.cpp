@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include <stdio.h>
@@ -439,6 +439,13 @@ void Init ( int argc, char** argv ) {
 //----------------------------------------------------------------//
 void MainLoop () {
 	
+	SDL_GL_SetAttribute ( SDL_GL_MULTISAMPLEBUFFERS, 1 );
+	SDL_GL_SetAttribute ( SDL_GL_MULTISAMPLESAMPLES, 16 );
+
+//	SDL_GL_SetAttribute ( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
+//	SDL_GL_SetAttribute ( SDL_GL_CONTEXT_MINOR_VERSION, 2 );
+//	SDL_GL_SetAttribute ( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
+	
 	#if GFX_ASYNC
 	
 		WorkerThreadInfo loadingThread;
@@ -451,9 +458,9 @@ void MainLoop () {
 	
 	#else
 	
-		SDL_GLContext context = SDL_GL_CreateContext ( sWindow );
+		//SDL_GLContext context = SDL_GL_CreateContext ( sWindow );
+		SDL_GL_CreateContext ( sWindow );
 		SDL_GL_SetSwapInterval ( 1 );
-	
 		AKUDetectGfxContext ();
 	
 	#endif
@@ -630,7 +637,7 @@ void MainLoop () {
 		if ( delta < frameDelta ) {
 			SDL_Delay ( frameDelta - delta );
 		}
-		lastFrame = SDL_GetTicks();
+		lastFrame = SDL_GetTicks ();
 	}
 	
 	#if GFX_ASYNC
@@ -639,7 +646,13 @@ void MainLoop () {
 		renderThread.Stop ();
 	#else
 	
+		AKUDeleteContext ( AKUGetContext ());
+
 		//SDL_GL_DeleteContext ( context );  removing context here leaves the window and it explodes with gl error during glflush
+
+		// TODO: presumably the context needs to be deleted?
+		// TODO: what happens in multi-threaded mode?
+
 	#endif
 }
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef MOAIEASEDRIVER_H
@@ -38,24 +38,26 @@ private:
 	ZLLeanArray < MOAIEaseDriverLink > mLinks;
 
 	//----------------------------------------------------------------//
-	static int		_reserveLinks		( lua_State* L );
-	static int		_setLink			( lua_State* L );
+	static int		_reserveLinks			( lua_State* L );
+	static int		_setLink				( lua_State* L );
+
+	//----------------------------------------------------------------//
+	void			MOAIAction_Update		( double step );
 
 public:
 
 	DECL_LUA_FACTORY ( MOAIEaseDriver )
 
 	//----------------------------------------------------------------//
-					MOAIEaseDriver		();
-					~MOAIEaseDriver		();
-	void			OnUpdate			( double step );
-	u32				ParseForMove		( MOAILuaState& state, int idx, MOAINode* dest, u32 total, int mode, ... );
-	u32				ParseForSeek		( MOAILuaState& state, int idx, MOAINode* dest, u32 total, int mode, ... );
-	void			RegisterLuaClass	( MOAILuaState& state );
-	void			RegisterLuaFuncs	( MOAILuaState& state );
-	void			ReserveLinks		( u32 total );
-	void			SetLink				( u32 idx, MOAINode* dest, u32 destAttrID, float v1, u32 mode );
-	void			SetLink				( u32 idx, MOAINode* dest, u32 destAttrID, MOAINode* source, u32 sourceAttrID, u32 mode );
+					MOAIEaseDriver			();
+					~MOAIEaseDriver			();
+	u32				ParseForMove			( MOAILuaState& state, int idx, MOAINode* dest, u32 total, int mode, ... );
+	u32				ParseForSeek			( MOAILuaState& state, int idx, MOAINode* dest, u32 total, int mode, ... );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			ReserveLinks			( u32 total );
+	void			SetLink					( u32 idx, MOAINode* dest, u32 destAttrID, float v1, u32 mode );
+	void			SetLink					( u32 idx, MOAINode* dest, u32 destAttrID, MOAINode* source, u32 sourceAttrID, u32 mode );
 };
 
 #endif

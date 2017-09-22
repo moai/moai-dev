@@ -7,6 +7,8 @@
 #include <moai-sim/MOAIProfiler.h>
 #include <moai-sim/MOAIProfilerEntry.h>
 
+#if 0
+
 class MOAIFont;
 
 //================================================================//
@@ -120,10 +122,11 @@ public:
 						~MOAIProfilerReportBox	();
 	//----------------------------------------------------------------//
 	void				RegisterLuaFuncs		( MOAILuaState& state );
-	void				Draw					( int subPrimID, float lod );
+	void				Draw					( int subPrimID );
 	u32					OnGetModelBounds		( ZLBox& bounds );
 	//----------------------------------------------------------------//
 	void				SetRect					( float left, float top, float right, float bottom );
 };
 
+#endif
 #endif

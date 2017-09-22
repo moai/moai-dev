@@ -1,5 +1,5 @@
 //----------------------------------------------------------------//
-// Copyright (c) 2010-2011 Zipline Games, Inc.
+// Copyright (c) 2010-2017 Zipline Games, Inc.
 // All Rights Reserved.
 // http://getmoai.com
 //----------------------------------------------------------------//
@@ -140,22 +140,22 @@ public class Moai {
     }
 
 	private static String [] sExternalClasses = {
-		"com.moaisdk.adcolony.MoaiAdColony",
-		"com.moaisdk.amazonbilling.MoaiAmazonBilling",
-		"com.moaisdk.chartboost.MoaiChartBoost",
-		"com.moaisdk.crittercism.MoaiCrittercism",
-		"com.moaisdk.deltadna.MoaiDeltaDNA",
-		"com.moaisdk.facebook.MoaiFacebook",
-        "com.moaisdk.fortumo.MoaiFortumo",
-		"com.moaisdk.flurry.MoaiFlurry",
-		"com.moaisdk.googlebilling.MoaiGoogleBilling",
-		"com.moaisdk.googleplayservices.MoaiGooglePlayServices",
-		"com.moaisdk.googlepush.MoaiGooglePush",
+		//"com.moaisdk.adcolony.MoaiAdColony",
+		//"com.moaisdk.amazonbilling.MoaiAmazonBilling",
+		//"com.moaisdk.chartboost.MoaiChartBoost",
+		//"com.moaisdk.crittercism.MoaiCrittercism",
+		//"com.moaisdk.deltadna.MoaiDeltaDNA",
+		//"com.moaisdk.facebook.MoaiFacebook",
+        //"com.moaisdk.fortumo.MoaiFortumo",
+		//"com.moaisdk.flurry.MoaiFlurry",
+		//"com.moaisdk.googlebilling.MoaiGoogleBilling",
+		//"com.moaisdk.googleplayservices.MoaiGooglePlayServices",
+		//"com.moaisdk.googlepush.MoaiGooglePush",
 		"com.moaisdk.core.MoaiKeyboard",
 		"com.moaisdk.core.MoaiMoviePlayer",
-		"com.moaisdk.tapjoy.MoaiTapjoy",
-        "com.moaisdk.twitter.MoaiTwitter",
-		"com.moaisdk.vungle.MoaiVungle",
+		//"com.moaisdk.tapjoy.MoaiTapjoy",
+        //"com.moaisdk.twitter.MoaiTwitter",
+		//"com.moaisdk.vungle.MoaiVungle",
 	};
 
 	private static Activity 				sActivity = null;
@@ -170,6 +170,7 @@ public class Moai {
 	protected static native boolean		AKUAppInvokeListener			( int eventID );
 	protected static native void		AKUAppOpenedFromURL				( String url );
 	protected static native int	 		AKUCreateContext 				();
+	protected static native void 		AKUDetectFramebuffer			();
 	protected static native void 		AKUDetectGfxContext 			();
 	protected static native void 		AKUEnqueueLevelEvent 			( int deviceId, int sensorId, float x, float y, float z );
 	protected static native void 		AKUEnqueueLocationEvent			( int deviceId, int sensorId, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed );
@@ -245,6 +246,14 @@ public class Moai {
 			contextId = AKUCreateContext ();
 		}
 		return contextId;
+	}
+
+	//----------------------------------------------------------------//
+	public static void detectFramebuffer () {
+
+		synchronized ( sAkuLock ) {
+			AKUDetectFramebuffer ();
+		}
 	}
 
 	//----------------------------------------------------------------//
@@ -432,7 +441,7 @@ public class Moai {
 
 	//----------------------------------------------------------------//
 	public static void onStart () {
-		MoaiLog.i ( "###### On Start #######" );
+
 		for ( Class < ? > theClass : sAvailableClasses ) {
 			executeMethod ( theClass, null, "onStart", new Class < ? > [] { }, new Object [] { });
 		}
@@ -496,6 +505,14 @@ public class Moai {
 			AKUSetConnectionType ( connectionType );
 		}
 	}
+
+    //----------------------------------------------------------------//
+    public static void setContext ( int context ) {
+
+        synchronized ( sAkuLock ) {
+            AKUSetContext ( context );
+        }
+    }
 
 	//----------------------------------------------------------------//
 	public static void setDocumentDirectory ( String path ) {

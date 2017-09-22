@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #import <moai-apple/NSError+MOAILib.h>
@@ -364,7 +364,7 @@ int MOAIWebViewIOS::_show ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAIWebViewIOS::MOAIWebViewIOS () :
-	mWebViewController ( false ) {
+	mWebViewController ( 0 ) {
 
 	RTTI_SINGLE ( MOAIInstanceEventSource )
 	

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIDECK_H
@@ -15,6 +15,11 @@ class MOAIQuadBrush;
 class MOAIShader;
 class MOAISurfaceSampler2D;
 
+// right now, MOAIDeck is going to be an everything sandwich that ties all the moai-sim
+// subsystems together - collision, graphics, bounds, hit tests. since MOAIDeck is the
+// base, not a big deal to have a top-level interface in one place. if it becomes
+// unwieldy, easy enough to factor more down the road.
+
 //================================================================//
 // MOAIDeck
 //================================================================//
@@ -25,37 +30,43 @@ class MOAIDeck :
 	public virtual MOAILuaObject {
 protected:
 
+	friend class MOAIDeckProxy;
+
 	enum {
 		NO_CONTENT = 0xffffffff,
 	};
 	
-	MOAILuaSharedPtr < MOAIBoundsDeck > mBoundsDeck; // bounds override
-
-	ZLBox	mMaxBounds;
-	bool	mBoundsDirty;
+	ZLBounds				mMaxBounds;
+	bool					mBoundsDirty;
 	
 	//----------------------------------------------------------------//
-	static int						_setBoundsDeck				( lua_State* L );
-	static int						_getBounds					( lua_State* L );
+	static int				_draw							( lua_State* L );
+	static int				_getBounds						( lua_State* L );
+
+	//----------------------------------------------------------------//
+	void					SetBoundsDirty					();
+
+	//----------------------------------------------------------------//
+	virtual ZLBounds				MOAIDeck_ComputeMaxBounds		();
+	virtual void					MOAIDeck_Draw					( u32 idx );
+	virtual ZLBounds				MOAIDeck_GetBounds				( u32 idx );
+	virtual MOAICollisionShape*		MOAIDeck_GetCollisionShape		( u32 idx );
+	virtual bool					MOAIDeck_Overlap				( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
+	virtual bool					MOAIDeck_Overlap				( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
 
 public:
 	
 	//----------------------------------------------------------------//
-	virtual ZLBox					ComputeMaxBounds			() = 0;
-	virtual ZLBox					GetItemBounds				( u32 idx ) = 0;
-	virtual bool					Contains					( u32 idx, const ZLVec2D& vec ) = 0;
-	virtual void					Draw						( u32 idx, MOAIMaterialBatch& materials );
-	virtual void					Draw						( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
-	virtual void					DrawIndex					( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) = 0;
-	virtual ZLBox					GetBounds					() = 0;
-	virtual ZLBox					GetBounds					( u32 idx ) = 0;
-	virtual void					GetCollisionShape			( MOAICollisionShape& shape ) = 0;
-	virtual bool					Inside						( u32 idx, MOAIMaterialBatch& materials, u32 granularity, ZLVec3D vec, float pad ) = 0;
-									MOAIDeck					();
-									~MOAIDeck					();
-	void							RegisterLuaClass			( MOAILuaState& state );
-	void							RegisterLuaFuncs			( MOAILuaState& state );
-	virtual MOAIMaterialBatch&		ResolveMaterialBatch		( MOAIMaterialBatch* override ) = 0;
+	void					Draw							( u32 idx );
+	ZLBounds				GetBounds						();
+	ZLBounds				GetBounds						( u32 idx );
+	MOAICollisionShape*		GetCollisionShape				( u32 idx );
+							MOAIDeck						();
+							~MOAIDeck						();
+	bool					Overlap							( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result = 0 );
+	bool					Overlap							( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result = 0 );
+	void					RegisterLuaClass				( MOAILuaState& state );
+	void					RegisterLuaFuncs				( MOAILuaState& state );
 };
 
 #endif

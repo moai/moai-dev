@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include <moai-image-pvr/MOAIImageFormatPvr.h>
@@ -210,7 +210,7 @@ bool MOAIImageFormatPvr::CheckHeader ( const void* buffer ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void* data, size_t size ) {
+bool MOAIImageFormatPvr::CreateTexture ( MOAITextureBase& texture, const void* data, size_t size ) {
 
 	if ( !MOAIGfxMgr::Get ().GetHasContext ()) return false;
 	MOAIGfxMgr::Get ().ClearErrors ();
@@ -302,7 +302,7 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 	ZLGfxHandle* glTexID = gfx.CreateTexture ();
 	if ( glTexID ) {
 
-		gfx.BindTexture ( glTexID );
+		gfx.SetTexture ( glTexID );
 		
 		size_t textureSize = 0;
 		

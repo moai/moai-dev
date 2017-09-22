@@ -1,10 +1,11 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef ZLCOPYONWRITE_H
 #define ZLCOPYONWRITE_H
 
 #include <zl-util/ZLRefCountedObject.h>
+#include <zl-util/ZLSharedBuffer.h>
 #include <zl-util/ZLStream.h>
 
 //================================================================//

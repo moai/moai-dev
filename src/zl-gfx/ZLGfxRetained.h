@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef ZLGFXRETAINED_H
@@ -26,14 +26,14 @@ private:
 		UNKNOWN,
 	};
 	
-	ZLGfxListenerHandle*	mListenerHandle;
-	void*					mUserdata;
+	ZLWeakPtr < ZLGfxListener >		mListener;
+	void*							mUserdata;
 	
-	u32						mCallbackID;
-	u32						mEvent;
-	u32						mUniformAddr;
+	u32								mCallbackID;
+	u32								mEvent;
+	u32								mUniformAddr;
 	
-	ZLCopyOnWrite			mCopyOnWrite;
+	ZLCopyOnWrite					mCopyOnWrite;
 
 public:
 
@@ -110,11 +110,8 @@ private:
 		ZLGFX_TEX_PARAMETERI,
 		ZLGFX_TEX_SUB_IMAGE_2D,
 		
-		ZLGFX_UNIFORM_1F,
-		ZLGFX_UNIFORM_1I,
-		ZLGFX_UNIFORM_4FV,
-		ZLGFX_UNIFORM_MATRIX_3FV,
-		ZLGFX_UNIFORM_MATRIX_4FV,
+		ZLGFX_UNIFORM_FLOAT,
+		ZLGFX_UNIFORM_INT,
 		
 		ZLGFX_USE_PROGRAM,
 		ZLGFX_VERTEX_ATTRIB_POINTER,
@@ -124,15 +121,8 @@ private:
 	ZLMemStream		mMemStream;
 	ZLStream*		mStream;
 
-	void*			mBuffer;
-	size_t			mBufferSize;
-	size_t			mBufferTop;
-	
-	size_t			mAllocated;
-	size_t			mMaxAllocated;
-
-	ZLLeanStack < ZLRefCountedObject*, 32 >				mReleaseStack;
-	ZLLeanStack < ZLGfxListenerRecord, 32 >				mListenerRecords;
+	ZLLeanStack < ZLRefCountedObject*, 32 >			mReleaseStack;
+	ZLLeanStack < ZLGfxListenerRecord, 32 >			mListenerRecords;
 
 	//----------------------------------------------------------------//
 	ZLGfxHandle*			Create						( ZLGfxHandle* handle, u32 param );
@@ -156,8 +146,8 @@ public:
 	void					BindBuffer					( u32 target, ZLGfxHandle* handle );
 	void					BindFramebuffer				( u32 target, ZLGfxHandle* handle );
 	void					BindRenderbuffer			( ZLGfxHandle* handle );
-	void					BindTexture					( ZLGfxHandle* handle );
-	void					BindVertexArray				( ZLGfxHandle* handle );
+	void					SetTexture					( ZLGfxHandle* handle );
+	void					SetVertexArray				( ZLGfxHandle* handle );
 	
 	void					BlendFunc					( u32 sourceFactor, u32 destFactor );
 	void					BlendMode					( u32 mode );
@@ -175,7 +165,7 @@ public:
 	void					CompileShader				( ZLGfxHandle* shader, bool log );
 	void					CompressedTexImage2D		( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, ZLSharedConstBuffer* buffer );
 	
-	ZLSharedConstBuffer*	CopyBuffer					( ZLSharedConstBuffer* buffer );
+	//ZLSharedConstBuffer*	CopyBuffer					( ZLSharedConstBuffer* buffer );
 	
 	ZLGfxHandle*			CreateBuffer				();
 	ZLGfxHandle*			CreateFramebuffer			();
@@ -237,11 +227,8 @@ public:
 	void					TexImage2D					( u32 level, u32 internalFormat, u32 width, u32 height, u32 format, u32 type, ZLSharedConstBuffer* buffer );
 	void					TexParameteri				( u32 pname, s32 param );
 	void					TexSubImage2D				( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, u32 format, u32 type, ZLSharedConstBuffer* buffer );
-	void					Uniform1f					( u32 location, float v0 );
-	void					Uniform1i					( u32 location, s32 v0 );
-	void					Uniform4fv					( u32 location, u32 count, const float* value );
-	void					UniformMatrix3fv			( u32 location, u32 count, bool transpose, const float* mtx );
-	void					UniformMatrix4fv			( u32 location, u32 count, bool transpose, const float* mtx );
+	void					UniformFloat				( u32 location, u32 index, u32 width, u32 count, const float* value );
+	void					UniformInt					( u32 location, u32 index, u32 width, u32 count, const s32* value );
 	void					UseProgram					( ZLGfxHandle* program );
 	void					VertexAttribPointer			( u32 index, u32 size, u32 type, bool normalized, u32 stride, ZLSharedConstBuffer* buffer, size_t offset );
 	void					Viewport					( s32 x, s32 y, u32 w, u32 h );

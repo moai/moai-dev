@@ -1,16 +1,16 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAINODE_H
 #define	MOAINODE_H
 
-#include <moai-sim/MOAIAttrOp.h>
+#include <moai-sim/MOAIAttribute.h>
 
 #define PACK_ATTR(type,attrID)	\
 	( MOAINode::PackAttrID < type >( type::attrID ))
 
 #define UNPACK_ATTR(attrID)	\
-	( attrID & MOAIAttrOp::ATTR_ID_MASK )
+	( attrID & MOAIAttribute::ATTR_ID_MASK )
 
 #define DECL_ATTR_HELPER(type)																				\
 	class type##Attr {																						\
@@ -70,19 +70,22 @@ private:
 	void			PullAttributes		();
 	void			RemoveDepLink		( MOAIDepLink& link );
 
+	//----------------------------------------------------------------//
+	virtual bool	MOAINode_ApplyAttrOp				( u32 attrID, MOAIAttribute& attr, u32 op );
+	virtual void	MOAINode_Update						();
+
 protected:
 
 	//----------------------------------------------------------------//
-	virtual void	OnDepNodeUpdate		();
-	bool			PullLinkedAttr		( u32 attrID, MOAIAttrOp& attrOp );
+	bool			PullLinkedAttr		( u32 attrID, MOAIAttribute& attr );
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
 	TYPE GetLinkedValue ( u32 attrID, const TYPE& value ) {
 		
-		MOAIAttrOp attrOp;
-		if ( this->PullLinkedAttr ( attrID, attrOp )) {
-			return attrOp.GetValue < TYPE >( value );
+		MOAIAttribute attr;
+		if ( this->PullLinkedAttr ( attrID, attr )) {
+			return attr.GetValue ( value );
 		}
 		return value;
 	}
@@ -120,7 +123,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Activate				( MOAINode& activator );
-	virtual bool	ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	bool			ApplyAttrOp				( u32 attrID, MOAIAttribute& attr, u32 op );
 	bool			CheckAttrExists			( u32 attrID );
 	void			ClearAttrLink			( int attrID );
 	void			ClearNodeLink			( MOAINode& srcNode );
@@ -139,17 +142,17 @@ public:
 	template < typename TYPE >
 	static inline bool CheckAttrID ( u32 attrID ) {
 	
-		return (( ZLTypeID < TYPE >::GetID ()) == (( attrID & MOAIAttrOp::CLASS_ID_MASK ) >> 16 ));
+		return (( ZLTypeID < TYPE >::GetID ()) == (( attrID & MOAIAttribute::CLASS_ID_MASK ) >> 16 ));
 	}
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
 	TYPE GetAttributeValue ( u32 attrID, TYPE value ) {
 		
-		if ( attrID != MOAIAttrOp::NULL_ATTR ) {
-			MOAIAttrOp getter;
-			this->ApplyAttrOp ( attrID, getter, MOAIAttrOp::GET );
-			value = getter.GetValue < TYPE >( value );
+		if ( attrID != MOAIAttribute::NULL_ATTR ) {
+			MOAIAttribute getter;
+			this->ApplyAttrOp ( attrID, getter, MOAIAttribute::GET );
+			value = getter.GetValue ( value );
 		}
 		return value;
 	}
@@ -158,16 +161,16 @@ public:
 	template < typename TYPE >
 	static inline u32 PackAttrID ( u32 attrID ) {
 	
-		return (( ZLTypeID < TYPE >::GetID () << 16 ) & MOAIAttrOp::CLASS_ID_MASK ) | ( attrID & MOAIAttrOp::ATTR_ID_MASK );
+		return (( ZLTypeID < TYPE >::GetID () << 16 ) & MOAIAttribute::CLASS_ID_MASK ) | ( attrID & MOAIAttribute::ATTR_ID_MASK );
 	}
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
 	void SetAttributeValue ( u32 attrID, TYPE value ) {
-		if ( attrID != MOAIAttrOp::NULL_ATTR ) {
-			MOAIAttrOp setter;
+		if ( attrID != MOAIAttribute::NULL_ATTR ) {
+			MOAIAttribute setter;
 			setter.SetValue ( value );
-			this->ApplyAttrOp ( attrID, setter, MOAIAttrOp::SET );
+			this->ApplyAttrOp ( attrID, setter, MOAIAttribute::SET );
 		}
 	}
 	
@@ -175,7 +178,7 @@ public:
 	template < typename TYPE >
 	static inline u32 UnpackAttrID ( u32 attrID ) {
 		
-		return attrID & MOAIAttrOp::ATTR_ID_MASK;
+		return attrID & MOAIAttribute::ATTR_ID_MASK;
 	}
 };
 

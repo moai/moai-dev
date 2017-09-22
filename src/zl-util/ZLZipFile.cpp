@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -50,16 +50,16 @@ bool ZLZipEntry::SerializeIn ( ZLStream& stream ) {
 	
 	if ( this->mBitFlag & BIT_HAS_DESCRIPTOR ) {
 		
-		u32 sigOrCRC = stream.Read < u32 >( 0 );
-		u32 crc32;
+//		u32 sigOrCRC = stream.Read < u32 >( 0 );
+//		u32 crc32;
 		
 		//crc-32						4 bytes
-		if ( sigOrCRC == 0x04034b50 ) {
-			crc32 = stream.Read < u32 >( 0 );
-		}
-		else {
-			crc32 = sigOrCRC;
-		}
+//		if ( sigOrCRC == 0x04034b50 ) {
+//			crc32 = stream.Read < u32 >( 0 );
+//		}
+//		else {
+//			crc32 = sigOrCRC;
+//		}
 		
 		//u32 compressedSize = stream.Read < u32 >(); //compressed size				4 bytes
 		//u32 uncompressedSize = stream.Read < u32 >(); //uncompressed size			4 bytes

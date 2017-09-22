@@ -1,10 +1,11 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef MOAIREGION_H
 #define MOAIREGION_H
 
 class MOAIIndexBuffer;
+class MOAITransform;
 class MOAIVertexBuffer;
 class MOAIVertexFormat;
 
@@ -25,12 +26,14 @@ private:
 	static int		_bless				( lua_State* L );
 	static int		_boolean			( lua_State* L );
 	static int		_clear				( lua_State* L );
+	static int		_clip				( lua_State* L );
 	static int		_convexHull			( lua_State* L );
 	static int		_copy				( lua_State* L );
 	static int		_countPolygons		( lua_State* L );
 	static int		_cull				( lua_State* L );
 	static int		_drawDebug			( lua_State* L );
 	static int		_edge				( lua_State* L );
+	static int		_findExtremity		( lua_State* L );
 	static int		_getDistance		( lua_State* L );
 	static int		_getPolygon			( lua_State* L );
 	static int		_getTriangles		( lua_State* L );
@@ -49,6 +52,7 @@ private:
 	static int		_translate			( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void					Read					( ZLStream& verts, ZLStream& polySizes );
 	bool					ShouldCull				( const ZLPolygon2D& poly, u32 flag, bool checkArea, float minArea );
 
 public:
@@ -79,6 +83,8 @@ public:
 	void					BooleanOr				( const MOAIRegion& regionA, const MOAIRegion& regionB );
 	void					BooleanXor				( const MOAIRegion& regionA, const MOAIRegion& regionB );
 	void					Clear					();
+	void					Clip					( const MOAIRegion& region, ZLPlane2D plane );
+	void					Clip					( const MOAIRegion& region, const MOAIRegion& clip, const ZLAffine3D* mtx = 0 );
 	int						CombineAndTesselate		( const MOAIRegion& regionA, const MOAIRegion& regionB, int windingRule );
 	ZLSizeResult			ConvexHull				( ZLStream& vtxStream, size_t nVerts );
 	void					Copy					( const MOAIRegion& region );
@@ -87,6 +93,7 @@ public:
 	void					Cull					( const MOAIRegion& region, u32 flag, bool checkArea = false, float minArea = 0.0f );
 	void					DrawDebug				() const;
 	void					Edge					( const MOAIRegion& region, const ZLVec2D& offset );
+	bool					FindExtremity			( ZLVec2D n, ZLVec2D& e );
 	bool					GetDistance				( const ZLVec2D& point, float& d ) const;
 	bool					GetDistance				( const ZLVec2D& point, float& d, ZLVec2D& p ) const;
 	ZLPolygon2D&			GetPolygon				( u32 idx );
@@ -108,7 +115,6 @@ public:
 	void					SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void					SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void					SetWinding				( u32 winding );
-	void					SetWinding				( u32 oldWinding, u32 newWinding );
 	void					Snap					( const MOAIRegion& region, float xSnap, float ySnap );
 	void					Stroke					( const MOAIRegion& region, float exterior, bool strokeExterior, float interior, bool strokeInterior );
 	int						Tesselate				( const MOAIRegion& region, int windingRule );

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAITRANSFORM_H
@@ -83,8 +83,11 @@ protected:
 	static int	_setShearByZ	( lua_State* L );
 
 	//----------------------------------------------------------------//
-	virtual void	BuildLocalToWorldMtx	( ZLAffine3D& localToWorldMtx );
-	static float	ClampEuler				( float r );
+	static float	ClampEuler									( float r );
+
+	//----------------------------------------------------------------//
+	bool			MOAINode_ApplyAttrOp						( u32 attrID, MOAIAttribute& attr, u32 op );
+	void			MOAITransformBase_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );
 
 public:
 
@@ -135,7 +138,6 @@ public:
 	GET_SET ( u32, EulerOrder, mEulerOrder )
 	
 	//----------------------------------------------------------------//
-	bool					ApplyAttrOp					( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	ZLAffine3D				GetBillboardMtx				( const ZLAffine3D& faceCameraMtx ) const;
 							MOAITransform				();
 							~MOAITransform				();

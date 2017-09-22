@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -183,7 +183,7 @@ void MOAILuaMemberRef::Clear () {
 
 	if ( this->mRefID != LUA_NOREF ) {
 
-		if (( !this->mOwner->mCollected ) && MOAILuaRuntime::IsValid ()) {
+		if ( this->mOwner->IsBound () && MOAILuaRuntime::IsValid ()) {
 			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 			if ( this->mOwner->PushRefTable ( state )) {
 				luaL_unref ( state, -1, this->mRefID );

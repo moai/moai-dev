@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -22,6 +22,7 @@
 	
 	@in		MOAIGfxBuffer self
 	@in		MOAIStream stream
+	@opt	number length
 	@out	nil
 */
 int MOAIGfxBuffer::_copyFromStream ( lua_State* L ) {
@@ -29,7 +30,9 @@ int MOAIGfxBuffer::_copyFromStream ( lua_State* L ) {
 	
 	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
 	if ( stream ) {
-		self->CopyFromStream ( *stream );
+	
+		size_t size = state.GetValue < u32 >( 3, ( u32 )( stream->GetLength () - stream->GetCursor () ));
+		self->CopyFromStream ( *stream, size );
 	}
 	return 0;
 }
@@ -101,10 +104,6 @@ int MOAIGfxBuffer::_scheduleFlush ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-//void MOAIGfxBuffer::BindVertexFormat ( MOAIVertexFormat* format ) {
-//}
-
-//----------------------------------------------------------------//
 void MOAIGfxBuffer::Clear () {
 
 	this->ZLCopyOnWrite::Free ();
@@ -116,9 +115,8 @@ void MOAIGfxBuffer::Clear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::CopyFromStream ( ZLStream& stream ) {
+void MOAIGfxBuffer::CopyFromStream ( ZLStream& stream, size_t size ) {
 
-	size_t size = stream.GetLength () - stream.GetCursor ();
 	this->Reserve (( u32 )size );
 	this->WriteStream ( stream );
 	
@@ -126,9 +124,14 @@ void MOAIGfxBuffer::CopyFromStream ( ZLStream& stream ) {
 }
 
 //----------------------------------------------------------------//
-ZLSharedConstBuffer* MOAIGfxBuffer::GetBuffer () {
+ZLSharedConstBuffer* MOAIGfxBuffer::GetBufferForBind ( ZLGfx& gfx ) {
 
 	return this->mUseVBOs ? 0 : this->ZLCopyOnWrite::GetSharedConstBuffer ();
+
+//	if ( this->mUseVBOs ) return 0;
+//
+//	ZLSharedConstBuffer* buffer = this->ZLCopyOnWrite::GetSharedConstBuffer ();
+//	return this->mCopyOnBind ? gfx.CopyBuffer ( buffer ) : buffer;
 }
 
 //----------------------------------------------------------------//
@@ -191,9 +194,9 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 			
 				ZLSharedConstBuffer* buffer = this->GetCursor () ? this->GetSharedConstBuffer () : 0;
 				
-				if ( this->mCopyOnUpdate ) {
-					buffer = gfx.CopyBuffer ( buffer );
-				}
+//				if ( this->mCopyOnUpdate ) {
+//					buffer = gfx.CopyBuffer ( buffer );
+//				}
 			
 				gfx.BindBuffer ( this->mTarget, vbo );
 				gfx.BufferData ( this->mTarget, this->GetLength (), buffer, 0, hint );
@@ -247,9 +250,9 @@ bool MOAIGfxBuffer::OnGPUUpdate () {
 		
 		ZLSharedConstBuffer* buffer = this->GetSharedConstBuffer ();
 		
-		if ( this->mCopyOnUpdate ) {
-			buffer = gfx.CopyBuffer ( buffer );
-		}
+//		if ( this->mCopyOnUpdate ) {
+//			buffer = gfx.CopyBuffer ( buffer );
+//		}
 		
 		gfx.BindBuffer ( this->mTarget, vbo );
 		gfx.BufferSubData ( this->mTarget, 0, this->GetCursor (), buffer, 0 );
@@ -320,13 +323,13 @@ void MOAIGfxBuffer::ReserveVBOs ( u32 gpuBuffers ) {
 void MOAIGfxBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 
-	u32 totalVBOs		= state.GetField < u32 >( -1, "mTotalVBOs", 0 );
-	u32 size			= state.GetField < u32 >( -1, "mSize", 0 );
+	u32 totalVBOs		= state.GetFieldValue < u32 >( -1, "mTotalVBOs", 0 );
+	u32 size			= state.GetFieldValue < u32 >( -1, "mSize", 0 );
 
 	this->Reserve ( size );
 	this->ReserveVBOs ( totalVBOs );
 	
-	state.GetField ( -1, "mData" );
+	state.PushField ( -1, "mData" );
 	if ( state.IsType ( -1, LUA_TSTRING )) {
 		
 		STLString zipString = lua_tostring ( state, -1 );

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIBOX2DBODY_H
@@ -66,11 +66,13 @@ private:
 	static int		_setType				( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	void			BuildLocalToWorldMtx	( ZLAffine3D& localToWorldMtx );
 	void			Clear					();
 	void			SetBody					( b2Body* body );
-	void			OnDepNodeUpdate			();
+	
+	//----------------------------------------------------------------//
+	bool			MOAINode_ApplyAttrOp						( u32 attrID, MOAIAttribute& attr, u32 op );
+	void			MOAINode_Update								();
+	void			MOAITransformBase_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );
 
 public:
 	

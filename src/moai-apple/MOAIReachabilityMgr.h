@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIREACHABILITYMGR_H
@@ -12,7 +12,7 @@
 // MOAIReachabilityMgr
 //================================================================//
 class MOAIReachabilityMgr :
-	public MOAIGlobalClass < MOAIReachabilityMgr > {
+	public ZLContextClass < MOAIReachabilityMgr > {
 private:
 	
 	MOAIReachabilityListener*	mReachabilityListener;

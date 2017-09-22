@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	AKU_MODULES_H
@@ -14,9 +14,16 @@
 	#include <moai-android/host.h>
 #endif
 
-
 #if AKU_WITH_APPLE
 	#include <moai-apple/host.h>
+#endif
+
+#if AKU_WITH_AR
+	#include <moai-ar/host.h>
+#endif
+
+#if AKU_WITH_ASSIMP
+	#include <moai-assimp/host.h>
 #endif
 
 #if AKU_WITH_AUDIO_SAMPLER
@@ -67,6 +74,10 @@
 	#include <moai-image-pvr/host.h>
 #endif
 
+#if AKU_WITH_IMAGE_TGA
+	#include <moai-image-tga/host.h>
+#endif
+
 #if AKU_WITH_IMAGE_WEBP
 	#include <moai-image-webp/host.h>
 #endif
@@ -89,6 +100,10 @@
 
 #if AKU_WITH_UTIL
 	#include <moai-util/host.h>
+#endif
+
+#if AKU_WITH_VR
+	#include <moai-vr/host.h>
 #endif
 
 //----------------------------------------------------------------//

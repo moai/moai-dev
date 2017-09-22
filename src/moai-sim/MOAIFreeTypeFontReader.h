@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIFREETYPEFONTREADER_H
@@ -36,7 +36,11 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_enableAntiAliasing			( lua_State* L );
+	static int		_extractSystemFont			( lua_State* L );
 	static int		_setPenColor				( lua_State* L );
+
+	//----------------------------------------------------------------//
+	static void		ExtractSystemFont			( cc8* fontName, ZLStream& stream );
 
 public:
 	

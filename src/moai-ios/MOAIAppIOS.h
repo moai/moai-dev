@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIAPPIOS_H
@@ -12,7 +12,7 @@
 #import <moai-core/headers.h>
 
 @class MOAIMailComposeDelegate;
-@class MOAITakeCameraListener;
+//@class MOAITakeCameraListener;
 
 //================================================================//
 // MOAIAppIOS
@@ -36,7 +36,7 @@
 	@const	INTERFACE_ORIENTATION_LANDSCAPE_RIGHT		Interface orientation UIInterfaceOrientationLandscapeRight.
 */
 class MOAIAppIOS :
-	public MOAIGlobalClass < MOAIAppIOS, MOAIGlobalEventSource > {
+	public ZLContextClass < MOAIAppIOS, MOAIGlobalEventSource > {
 private:
 	
 	typedef STLMap < STLString, u32 >::iterator NotificationListenerMapIt;
@@ -46,9 +46,9 @@ private:
 	STLList < id >	mNotificationObservers;
 
 	MOAILuaStrongRef			mOnTakeCameraCallback;
-	MOAITakeCameraListener*		mTakeCameraListener;
+	//MOAITakeCameraListener*		mTakeCameraListener;
 	//MOAIMailComposeDelegate*	mMailDelegate;
-	UIPopoverController*		mImagePickerPopover;
+	//UIPopoverController*		mImagePickerPopover;
 	
 	//----------------------------------------------------------------//
 	static int		_canOpenURL						( lua_State* L );
@@ -62,7 +62,7 @@ private:
 	static int		_openURL						( lua_State* L );
 	static int		_openURLWithParams				( lua_State* L );
 	static int		_sendMail						( lua_State* L );
-	static int		_takeCamera						( lua_State* L );
+	//static int		_takeCamera						( lua_State* L );
 	static int		_vibrate						( lua_State* L );
 	
 	//----------------------------------------------------------------//

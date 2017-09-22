@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -1036,6 +1036,16 @@ u32 ZLColor::Swizzle ( u32 c0, u32 sw ) {
 // ZLColorVec
 //================================================================//
 
+const ZLColorVec ZLColorVec::WHITE		= ZLColorVec ( 1.0f, 1.0f, 1.0f, 1.0f );
+const ZLColorVec ZLColorVec::BLACK		= ZLColorVec ( 0.0f, 0.0f, 0.0f, 1.0f );
+const ZLColorVec ZLColorVec::CLEAR		= ZLColorVec ( 0.0f, 0.0f, 0.0f, 0.0f );
+const ZLColorVec ZLColorVec::RED		= ZLColorVec ( 1.0f, 0.0f, 0.0f, 1.0f );
+const ZLColorVec ZLColorVec::GREEN		= ZLColorVec ( 0.0f, 1.0f, 0.0f, 1.0f );
+const ZLColorVec ZLColorVec::BLUE		= ZLColorVec ( 0.0f, 0.0f, 1.0f, 1.0f );
+const ZLColorVec ZLColorVec::YELLOW		= ZLColorVec ( 1.0f, 1.0f, 0.0f, 1.0f );
+const ZLColorVec ZLColorVec::CYAN		= ZLColorVec ( 0.0f, 1.0f, 1.0f, 1.0f );
+const ZLColorVec ZLColorVec::MAGENTA	= ZLColorVec ( 1.0f, 0.0f, 1.0f, 1.0f );
+
 //----------------------------------------------------------------//
 void ZLColorVec::Add ( const ZLColorVec& c ) {
 
@@ -1063,28 +1073,6 @@ void ZLColorVec::Clamp () {
 	this->mG = ZLFloat::Clamp ( this->mG, 0.0f, 1.0f );
 	this->mB = ZLFloat::Clamp ( this->mB, 0.0f, 1.0f );
 	this->mA = ZLFloat::Clamp ( this->mA, 0.0f, 1.0f );
-}
-
-//----------------------------------------------------------------//
-bool ZLColorVec::Compare ( const ZLColorVec& c ) {
-
-	if ((( mR != c.mR ) || ( mR != c.mR )) ||
-		(( mG != c.mG ) || ( mG != c.mG )) ||
-		(( mB != c.mB ) || ( mB != c.mB )) ||
-		(( mA != c.mA ) || ( mA != c.mA ))) return false;
-
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool ZLColorVec::Compare ( const ZLColorVec& c, float res ) {
-
-	if ((( mR < ( c.mR - res )) || ( mR > ( c.mR + res ))) ||
-		(( mG < ( c.mG - res )) || ( mG > ( c.mG + res ))) ||
-		(( mB < ( c.mB - res )) || ( mB > ( c.mB + res ))) ||
-		(( mA < ( c.mA - res )) || ( mA > ( c.mA + res )))) return false;
-
-	return true;
 }
 
 //----------------------------------------------------------------//
@@ -1168,9 +1156,20 @@ bool ZLColorVec::IsClear () const {
 }
 
 //----------------------------------------------------------------//
-bool ZLColorVec::IsOpaque () const {
+bool ZLColorVec::IsEqual ( const ZLColorVec& c ) const {
 
-	return ( this->mA >= 1.0f );
+	return (( mR == c.mR ) && ( mG == c.mG ) && ( mB == c.mB ) && ( mA == c.mA ));
+}
+
+//----------------------------------------------------------------//
+bool ZLColorVec::IsEqual ( const ZLColorVec& c, float res ) const {
+
+	if ((( mR < ( c.mR - res )) || ( mR > ( c.mR + res ))) ||
+		(( mG < ( c.mG - res )) || ( mG > ( c.mG + res ))) ||
+		(( mB < ( c.mB - res )) || ( mB > ( c.mB + res ))) ||
+		(( mA < ( c.mA - res )) || ( mA > ( c.mA + res )))) return false;
+
+	return true;
 }
 
 //----------------------------------------------------------------//

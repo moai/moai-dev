@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -148,7 +148,7 @@ json_t* _luaToJSONArray ( lua_State* L, int idx ) {
 	bool more = true;
 	for ( int key = 1; more; ++key ) {
 		
-		state.GetField ( idx, key );
+		state.PushField ( idx, key );
 		json_t* value = _luaToJSON ( state, -1 );
 		lua_pop ( state, 1 );
 		
@@ -281,7 +281,7 @@ void MOAIJsonParser::RegisterLuaClass ( MOAILuaState& state ) {
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

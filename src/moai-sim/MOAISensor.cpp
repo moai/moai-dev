@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -38,7 +38,7 @@ MOAISensor::~MOAISensor () {
 void MOAISensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
-		{ "new",					MOAILogMessages::_alertNewIsUnsupported },
+		{ "new",					MOAILuaObject::_alertNewIsUnsupported },
 		{ NULL, NULL }
 	};
 

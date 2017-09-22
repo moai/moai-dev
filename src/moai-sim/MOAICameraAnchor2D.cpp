@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -80,15 +80,6 @@ MOAICameraAnchor2D::~MOAICameraAnchor2D () {
 }
 
 //----------------------------------------------------------------//
-void MOAICameraAnchor2D::OnDepNodeUpdate () {
-	
-	const ZLAffine3D* inherit = this->GetLinkedValue < ZLAffine3D* >( MOAICameraAnchor2DAttr::Pack ( INHERIT_LOC ), 0 );
-	if ( inherit ) {
-		this->mLoc = inherit->GetTranslation ();
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAICameraAnchor2D::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAINode::RegisterLuaClass ( state );
@@ -110,3 +101,13 @@ void MOAICameraAnchor2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAICameraAnchor2D::MOAINode_Update () {
+	
+	const ZLAffine3D inherit = this->GetLinkedValue ( MOAICameraAnchor2DAttr::Pack ( INHERIT_LOC ), ZLAffine3D::IDENT );
+	this->mLoc = inherit.GetTranslation ();
+}

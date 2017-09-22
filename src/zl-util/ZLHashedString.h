@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	ZLHASHEDSTRING_H
@@ -52,12 +52,12 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool operator == ( const ZLHashedString& rhs ) const {
-		return GetHash() == rhs.GetHash();
+		return this->GetHash () == rhs.GetHash ();
 	}
 	
 	//----------------------------------------------------------------//
 	bool operator != ( const ZLHashedString& rhs ) const {
-		return GetHash() != rhs.GetHash();
+		return this->GetHash () != rhs.GetHash ();
 	}
 };
 

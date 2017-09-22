@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAICAMERAANCHOR2D_H
@@ -9,18 +9,18 @@
 class MOAITransformBase;
 
 //================================================================//
-// MOAIProp
+// MOAICameraAnchor2D
 //================================================================//
 /**	@lua	MOAICameraAnchor2D
 	@text	Attaches fitting information to a transform. Used by
 			MOAICameraFitter2D.
 */
 class MOAICameraAnchor2D :
-	public MOAINode {
+	public virtual MOAINode {
 private:
 
-	ZLRect							mRect;
-	ZLVec3D							mLoc;
+	ZLRect			mRect;
+	ZLVec3D			mLoc;
 	
 	//----------------------------------------------------------------//
 	static int		_setParent				( lua_State* L );
@@ -28,7 +28,9 @@ private:
 
 	//----------------------------------------------------------------//
 	ZLRect			GetRect					();
-	void			OnDepNodeUpdate			();
+	
+	//----------------------------------------------------------------//
+	void			MOAINode_Update			();
 
 public:
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -24,42 +24,6 @@ int MOAICameraFitter2D::_clearAnchors ( lua_State* L ) {
 	return 0;
 }
 
-//----------------------------------------------------------------//
-/**	@lua	startTrackingNode
-	@text	Track a MOAITransform's position by setting the fit location.
-	Works best with FITTING_MODE_APPLY_BOUNDS.
-
-	@in		MOAICameraFitter2D self
-	@in		MOAITransform node
-	@out	nil
-*/
-int MOAICameraFitter2D::_startTrackingNode (lua_State* L ) {
-	MOAI_LUA_SETUP (MOAICameraFitter2D, "UU" )
-
-	MOAITransform* node = state.GetLuaObject < MOAITransform >( 2, true );
-	if ( node ) {
-		self->StartTrackingNode(*node);
-	} else {
-		self->mFittingMode &= ~FITTING_MODE_TRACK_NODE;
-	}
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	stopTrackingNode
-	@text	Stop tracking the node if one was tracked
-
-	@in		MOAICameraFitter2D self
-	@out	nil
-*/
-int MOAICameraFitter2D::_stopTrackingNode (lua_State* L ) {
-	MOAI_LUA_SETUP (MOAICameraFitter2D, "U" )
-
-	self->StopTrackingNode();
-
-	return 0;
-}
 //----------------------------------------------------------------//
 /**	@lua	clearFitMode
 	@text	Clears bits in the fitting mask.
@@ -412,6 +376,43 @@ int MOAICameraFitter2D::_snapToTarget ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@lua	startTrackingNode
+	@text	Track a MOAITransform's position by setting the fit location.
+	Works best with FITTING_MODE_APPLY_BOUNDS.
+
+	@in		MOAICameraFitter2D self
+	@in		MOAITransform node
+	@out	nil
+*/
+int MOAICameraFitter2D::_startTrackingNode ( lua_State* L ) {
+	MOAI_LUA_SETUP (MOAICameraFitter2D, "UU" )
+
+	MOAITransform* node = state.GetLuaObject < MOAITransform >( 2, true );
+	if ( node ) {
+		self->StartTrackingNode ( *node );
+	} else {
+		self->mFittingMode &= ~FITTING_MODE_TRACK_NODE;
+	}
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	stopTrackingNode
+	@text	Stop tracking the node if one was tracked
+
+	@in		MOAICameraFitter2D self
+	@out	nil
+*/
+int MOAICameraFitter2D::_stopTrackingNode ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICameraFitter2D, "U" )
+
+	self->StopTrackingNode ();
+
+	return 0;
+}
+
 //================================================================//
 // MOAICameraFitter2D
 //================================================================//
@@ -517,12 +518,6 @@ float MOAICameraFitter2D::GetFitDistance () {
 }
 
 //----------------------------------------------------------------//
-bool MOAICameraFitter2D::IsDone () {
-
-	return false;
-}
-
-//----------------------------------------------------------------//
 MOAICameraFitter2D::MOAICameraFitter2D () :
 	mMin ( 0.0f ),
 	mDamper ( 0.0f ),
@@ -544,46 +539,6 @@ MOAICameraFitter2D::MOAICameraFitter2D () :
 MOAICameraFitter2D::~MOAICameraFitter2D () {
 
 	this->Clear ();
-}
-
-//----------------------------------------------------------------//
-void MOAICameraFitter2D::OnDepNodeUpdate () {
-
-	this->UpdateTracking();
-	this->UpdateFit ();
-	this->UpdateTarget ();
-
-	if ( this->mCamera ) {
-
-		float d = 1.0f - ZLFloat::Clamp ( this->mDamper, 0.0f, 1.0f );
-
-		ZLVec3D loc = this->mCamera->GetLoc ();
-		float scale = this->mCamera->GetScl ().mX;
-
-		loc.mX += ( this->mTargetLoc.mX - loc.mX ) * d;
-		loc.mY += ( this->mTargetLoc.mY - loc.mY ) * d;
-		scale += ( this->mTargetScale - scale ) * d;
-
-		ZLVec3D scaleVec;
-		scaleVec.Init ( scale, scale, 1.0f );
-		this->mCamera->SetScl ( scaleVec );
-		this->mCamera->SetLoc ( loc );
-		this->mCamera->ScheduleUpdate ();
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAICameraFitter2D::OnUpdate ( double step ) {
-	UNUSED ( step );
-
-	this->ScheduleUpdate ();
-
-	// make sure all the anchors are ahead of fitter in the update schedule
-	AnchorIt anchorIt = this->mAnchors.begin ();
-	for ( ; anchorIt != this->mAnchors.end (); ++anchorIt ) {
-		MOAICameraAnchor2D* anchor = *anchorIt;
-		anchor->Activate ( *this );
-	}
 }
 
 //----------------------------------------------------------------//
@@ -611,87 +566,6 @@ void MOAICameraFitter2D::SnapToTargetScale ( MOAITransform& camera ) {
 	camera.SetScl ( scaleVec );
 
 	camera.ScheduleUpdate ();
-}
-
-//----------------------------------------------------------------//
-void MOAICameraFitter2D::UpdateFit () {
-
-	if ( !( this->mFittingMode & FITTING_MODE_APPLY_ANCHORS )) return;
-	if ( !this->mAnchors.size ()) return;
-	if ( !this->mViewport ) return;
-
-	// reset the fitter
-	this->mFitLoc.Init ( 0.0f, 0.0f, 0.0f );
-	this->mFitScale = 1.0f;
-
-	// grab the view transform
-	ZLMatrix4x4 wndToWorld = this->mViewport->GetWndToNormMtx ();
-	wndToWorld.Append ( this->mViewport->GetProjMtxInv ());
-
-	// grab the view rect in world space
-	// TODO: take viewport offset into account
-	ZLRect worldViewRect = this->mViewport->GetRect ();
-	wndToWorld.Transform ( worldViewRect );
-	worldViewRect.Bless ();
-
-	// build the anchor rect (clipped to bounds)
-	ZLRect anchorRect = this->GetAnchorRect ();
-
-	// fit the view rect around the target rect while preserving aspect ratio
-	ZLRect fitViewRect = worldViewRect;
-	anchorRect.FitOutside ( fitViewRect );
-
-	// get the fitting
-	this->mFitScale = fitViewRect.Width () / worldViewRect.Width ();
-	fitViewRect.GetCenter ( this->mFitLoc );
-}
-
-//----------------------------------------------------------------//
-void MOAICameraFitter2D::UpdateTracking () {
-	if ( !(this->mFittingMode & FITTING_MODE_TRACK_NODE) ||
-	!this->mTrackingNode) { return; }
-
-	this->mFitLoc = this->mTrackingNode->GetLoc();
-}
-
-//----------------------------------------------------------------//
-void MOAICameraFitter2D::UpdateTarget () {
-
-	if ( !this->mViewport ) return;
-
-	// reset the fitter
-	this->mTargetLoc = this->mFitLoc;
-	this->mTargetScale = this->mFitScale;
-
-	// clamp to bounds
-	if ( this->mFittingMode & FITTING_MODE_APPLY_BOUNDS ) {
-
-		// grab the view transform
-		ZLMatrix4x4 wndToWorld = this->mViewport->GetWndToNormMtx ();
-		wndToWorld.Append ( this->mViewport->GetProjMtxInv ());
-
-		// grab the view rect in world space
-		// TODO: take viewport offset into account
-		ZLRect worldViewRect = this->mViewport->GetRect ();
-		wndToWorld.Transform ( worldViewRect );
-		worldViewRect.Bless ();
-
-		// get the camera's target position and scale
-		ZLAffine3D cameraMtx;
-		float rot = this->mCamera ? this->mCamera->GetRot ().mZ : 0.0f;
-		cameraMtx.ScRoTr ( this->mFitScale, this->mFitScale, 1.0f, 0.0f, 0.0f, rot * ( float )D2R, this->mFitLoc.mX, this->mFitLoc.mY, 0.0f );
-
-		// get the camera rect
-		ZLRect cameraRect = worldViewRect;
-		cameraMtx.Transform ( cameraRect );
-		cameraRect.Bless ();
-
-		this->mBounds.ConstrainWithAspect ( cameraRect );
-
-		// get the fitting
-		this->mTargetScale = cameraRect.Width () / worldViewRect.Width ();
-		cameraRect.GetCenter ( this->mTargetLoc );
-	}
 }
 
 //----------------------------------------------------------------//
@@ -741,4 +615,134 @@ void MOAICameraFitter2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAICameraFitter2D::UpdateFit () {
+
+	if ( !( this->mFittingMode & FITTING_MODE_APPLY_ANCHORS )) return;
+	if ( !this->mAnchors.size ()) return;
+	if ( !this->mViewport ) return;
+
+	// reset the fitter
+	this->mFitLoc.Init ( 0.0f, 0.0f, 0.0f );
+	this->mFitScale = 1.0f;
+
+	// grab the view transform
+	ZLMatrix4x4 wndToWorld = this->mViewport->GetWndToNormMtx ();
+	wndToWorld.Append ( this->mViewport->GetProjMtxInv ());
+
+	// grab the view rect in world space
+	// TODO: take viewport offset into account
+	ZLRect worldViewRect = this->mViewport->GetRect ();
+	wndToWorld.Transform ( worldViewRect );
+	worldViewRect.Bless ();
+
+	// build the anchor rect (clipped to bounds)
+	ZLRect anchorRect = this->GetAnchorRect ();
+
+	// fit the view rect around the target rect while preserving aspect ratio
+	ZLRect fitViewRect = worldViewRect;
+	anchorRect.FitOutside ( fitViewRect );
+
+	// get the fitting
+	this->mFitScale = fitViewRect.Width () / worldViewRect.Width ();
+	fitViewRect.GetCenter ( this->mFitLoc );
+}
+
+//----------------------------------------------------------------//
+void MOAICameraFitter2D::UpdateTarget () {
+
+	if ( !this->mViewport ) return;
+
+	// reset the fitter
+	this->mTargetLoc = this->mFitLoc;
+	this->mTargetScale = this->mFitScale;
+
+	// clamp to bounds
+	if ( this->mFittingMode & FITTING_MODE_APPLY_BOUNDS ) {
+
+		// grab the view transform
+		ZLMatrix4x4 wndToWorld = this->mViewport->GetWndToNormMtx ();
+		wndToWorld.Append ( this->mViewport->GetProjMtxInv ());
+
+		// grab the view rect in world space
+		// TODO: take viewport offset into account
+		ZLRect worldViewRect = this->mViewport->GetRect ();
+		wndToWorld.Transform ( worldViewRect );
+		worldViewRect.Bless ();
+
+		// get the camera's target position and scale
+		ZLAffine3D cameraMtx;
+		float rot = this->mCamera ? this->mCamera->GetRot ().mZ : 0.0f;
+		cameraMtx.ScRoTr ( this->mFitScale, this->mFitScale, 1.0f, 0.0f, 0.0f, rot * ( float )D2R, this->mFitLoc.mX, this->mFitLoc.mY, 0.0f );
+
+		// get the camera rect
+		ZLRect cameraRect = worldViewRect;
+		cameraMtx.Transform ( cameraRect );
+		cameraRect.Bless ();
+
+		this->mBounds.ConstrainWithAspect ( cameraRect );
+
+		// get the fitting
+		this->mTargetScale = cameraRect.Width () / worldViewRect.Width ();
+		cameraRect.GetCenter ( this->mTargetLoc );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAICameraFitter2D::UpdateTracking () {
+
+	if ( !( this->mFittingMode & FITTING_MODE_TRACK_NODE ) || !this->mTrackingNode ) return;
+	this->mFitLoc = this->mTrackingNode->GetLoc ();
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAICameraFitter2D::MOAIAction_IsDone () {
+
+	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAICameraFitter2D::MOAIAction_Update ( double step ) {
+	UNUSED ( step );
+	
+	this->ScheduleUpdate ();
+	
+	// make sure all the anchors are ahead of fitter in the update schedule
+	AnchorIt anchorIt = this->mAnchors.begin ();	
+	for ( ; anchorIt != this->mAnchors.end (); ++anchorIt ) {
+		MOAICameraAnchor2D* anchor = *anchorIt;
+		anchor->Activate ( *this );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAICameraFitter2D::MOAINode_Update () {
+
+	this->UpdateTracking();
+	this->UpdateFit ();
+	this->UpdateTarget ();
+	
+	if ( this->mCamera ) {
+		
+		float d = 1.0f - ZLFloat::Clamp ( this->mDamper, 0.0f, 1.0f );
+		
+		ZLVec3D loc = this->mCamera->GetLoc ();
+		float scale = this->mCamera->GetScl ().mX;
+		
+		loc.mX += ( this->mTargetLoc.mX - loc.mX ) * d;
+		loc.mY += ( this->mTargetLoc.mY - loc.mY ) * d;
+		scale += ( this->mTargetScale - scale ) * d;
+		
+		ZLVec3D scaleVec;
+		scaleVec.Init ( scale, scale, 1.0f );
+		this->mCamera->SetScl ( scaleVec );
+		this->mCamera->SetLoc ( loc );
+		this->mCamera->ScheduleUpdate ();
+	}
 }
