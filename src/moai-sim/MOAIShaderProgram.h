@@ -44,7 +44,6 @@ private:
 	@const	UNIFORM_VECTOR_F4
 	
 	@const	GLOBAL_VIEW_PROJ
-	@const	GLOBAL_VIEW_PROJ
 	@const	GLOBAL_VIEW_WIDTH
 	@const	GLOBAL_VIEW_HEIGHT
 	@const	GLOBAL_WORLD
