@@ -154,7 +154,7 @@ void MOAIGfxVertexCache::FlushBufferedPrims () {
 	
 		this->mIsDrawing = true;
 		
-		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+		//ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 		
 		u32 count = 0;
 		u32 offset = 0;

@@ -168,7 +168,7 @@ MOAIAnimCurveBone* MOAIAssimpAnimation::GetAnimCurve ( u32 channel ) {
 				ZLVec3D p1 = p0;
 				const aiVectorKey& posKeyPrev = nodeAnim->mPositionKeys [ iPos > 0 ? iPos - 1 : 0 ];
 				p0 = ZLVec3D ( posKeyPrev.mValue.x, posKeyPrev.mValue.y, posKeyPrev.mValue.z );
-				p0.Lerp ( p1, ( t - posKeyPrev.mTime ) / ( posKey->mTime - posKeyPrev.mTime ));
+				p0.Lerp ( p1, (float) (( t - posKeyPrev.mTime ) / ( posKey->mTime - posKeyPrev.mTime )));
 			}
 		}
 		
@@ -183,7 +183,7 @@ MOAIAnimCurveBone* MOAIAssimpAnimation::GetAnimCurve ( u32 channel ) {
 				ZLQuaternion q1 = q0;
 				const aiQuatKey& rotKeyPrev = nodeAnim->mRotationKeys [ iRot > 0 ? iRot - 1 : 0 ];
 				q0 = ZLQuaternion ( rotKeyPrev.mValue.w, rotKeyPrev.mValue.x, rotKeyPrev.mValue.y, rotKeyPrev.mValue.z );
-				q0.Slerp ( q0, q1, ( t - rotKeyPrev.mTime ) / ( rotKey->mTime - rotKeyPrev.mTime ));
+				q0.Slerp ( q0, q1, (float) (( t - rotKeyPrev.mTime ) / ( rotKey->mTime - rotKeyPrev.mTime )));
 			}
 		}
 		
@@ -198,11 +198,11 @@ MOAIAnimCurveBone* MOAIAssimpAnimation::GetAnimCurve ( u32 channel ) {
 				ZLVec3D s1 = s0;
 				const aiVectorKey& sclKeyPrev = nodeAnim->mScalingKeys [ iScl > 0 ? iScl - 1 : 0 ];
 				s0 = ZLVec3D ( sclKeyPrev.mValue.x, sclKeyPrev.mValue.y, sclKeyPrev.mValue.z );
-				s0.Lerp ( s1, ( t - sclKeyPrev.mTime ) / ( sclKey->mTime - sclKeyPrev.mTime ));
+				s0.Lerp ( s1, (float) (( t - sclKeyPrev.mTime ) / ( sclKey->mTime - sclKeyPrev.mTime )));
 			}
 		}
 		
-		curve->SetKey (( u32 )i, t / this->mAssimpAnimation->mTicksPerSecond, ZLInterpolate::kLinear );
+		curve->SetKey (( u32 )i, (float) ( t / this->mAssimpAnimation->mTicksPerSecond ), ZLInterpolate::kLinear );
 		curve->SetSamplePosition (( u32 )i, p0.mX, p0.mY, p0.mZ );
 		curve->SetSampleRotation (( u32 )i, q0.mV.mX, q0.mV.mY, q0.mV.mZ, q0.mS );
 		curve->SetSampleScale (( u32 )i, s0.mX, s0.mY, s0.mZ );

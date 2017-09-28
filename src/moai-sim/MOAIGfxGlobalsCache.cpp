@@ -95,7 +95,7 @@ const ZLMatrix4x4& MOAIGfxGlobalsCache::GetMtx ( u32 mtxID ) {
 
 //----------------------------------------------------------------//
 const ZLMatrix4x4& MOAIGfxGlobalsCache::GetPrimaryMtx ( u32 mtxID, u64 mtxFlag ) {
-
+	UNUSED(mtxFlag);
 	switch ( mtxID ) {
 	
 		case CLIP_TO_DISPLAY_MTX:

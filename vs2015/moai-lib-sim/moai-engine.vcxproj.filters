@@ -159,9 +159,6 @@
     <ClInclude Include="..\..\src\moai-sim\MOAICamera.h">
       <Filter>camera</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\moai-sim\MOAICamera2D.h">
-      <Filter>camera</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\moai-sim\MOAICameraAnchor2D.h">
       <Filter>camera</Filter>
     </ClInclude>
@@ -291,24 +288,6 @@
     <ClInclude Include="..\..\src\moai-sim\MOAIDeck.h">
       <Filter>deck</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\moai-sim\MOAIGfxQuadDeck2D.h">
-      <Filter>deck</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moai-sim\MOAIGfxQuadListDeck2D.h">
-      <Filter>deck</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moai-sim\MOAIGfxQuad2D.h">
-      <Filter>deck</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moai-sim\MOAIGridDeck2D.h">
-      <Filter>deck</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moai-sim\MOAIScriptDeck.h">
-      <Filter>deck</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moai-sim\MOAIStandardDeck.h">
-      <Filter>deck</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\moai-sim\MOAISurfaceDeck2D.h">
       <Filter>deck</Filter>
     </ClInclude>
@@ -316,9 +295,6 @@
       <Filter>deck</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moai-sim\MOAIDeckProxy.h">
-      <Filter>deck</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moai-sim\MOAIBoundsDeck.h">
       <Filter>deck</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moai-sim\MOAIWheelSensor.h">
@@ -334,9 +310,6 @@
       <Filter>anim</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moai-sim\MOAIGrid.h">
-      <Filter>grid</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moai-sim\MOAIGridFancy.h">
       <Filter>grid</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moai-sim\MOAIGridPathGraph.h">
@@ -359,9 +332,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moai-sim\MOAIImageTexture.h">
       <Filter>image</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moai-sim\MOAIGraphicsProp2D.h">
-      <Filter>gfx</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moai-sim\MOAIGfxGlobalsCache.h">
       <Filter>gfx</Filter>
@@ -432,9 +402,6 @@
     <ClInclude Include="..\..\src\moai-sim\MOAIPartitionResultMgr.h">
       <Filter>partition</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\moai-sim\MOAIAttrOp.h">
-      <Filter>node</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\moai-sim\MOAINodeMgr.h">
       <Filter>node</Filter>
     </ClInclude>
@@ -470,9 +437,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moai-sim\MOAISensor.h">
       <Filter>input</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moai-sim\MOAILayer2D.h">
-      <Filter>layer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moai-sim\MOAILayer.h">
       <Filter>layer</Filter>
@@ -516,12 +480,6 @@
     <ClInclude Include="..\..\src\moai-sim\MOAIGfxBuffer.h">
       <Filter>mesh</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\moai-sim\MOAIMultiTexture.h">
-      <Filter>texture</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moai-sim\MOAISingleTexture.h">
-      <Filter>texture</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\moai-sim\MOAIFrameBufferTexture.h">
       <Filter>texture</Filter>
     </ClInclude>
@@ -532,9 +490,6 @@
       <Filter>transform</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moai-sim\MOAITransform.h">
-      <Filter>transform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moai-sim\MOAITransform2D.h">
       <Filter>transform</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moai-sim\MOAITransformBase.h">
@@ -550,9 +505,6 @@
       <Filter>mesh</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moai-sim\MOAIRenderMgr.h">
-      <Filter>gfx</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moai-sim\MOAIRenderable.h">
       <Filter>gfx</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moai-sim\MOAIRegion.h">
@@ -615,9 +567,6 @@
     <ClInclude Include="..\..\src\moai-sim\MOAIPath.h">
       <Filter>vector</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\moai-sim\MOAIProp.h">
-      <Filter>partition</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\moai-sim\MOAIVertexFormatMgr.h">
       <Filter>mesh</Filter>
     </ClInclude>
@@ -633,6 +582,56 @@
     <ClInclude Include="..\..\src\moai-sim\MOAIMeshTernaryTree.h">
       <Filter>mesh</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\moai-sim\MOAIDeckPropBase.h">
+      <Filter>deck</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moai-sim\MOAIAnimCurveBone.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIAttribute.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAICollisionConsts.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAICollisionDeck.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAICollisionPrim.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIDrawable.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIDrawDeck.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIDrawShape.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIDrawShapeImmediate.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIDrawShapeRetained.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIFancyGrid.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIGraphicsGridProp.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIGraphicsPropBase.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIGridPropBase.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIHitMask.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIIndexedPropBase.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAILight.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAILightFormat.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIMaterial.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIMaterialBase.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIMaterialBatchHolder.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIMaterialHolder.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIMaterialMgr.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIMetaTileDeck2D.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIMoveConstraint2D.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIOverlap.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIOverlapResolver.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIPartitionHolder.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIPartitionHull.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIPartitionViewLayer.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIProfiler.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIProfilerAutoScope.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIProfilerContext.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIProfilerEntry.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIProfilerEntryBase.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIProfilerReport.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIProfilerReportBase.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIProfilerReportBox.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIProfilerScope.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIShaderUniformBuffer.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIShaderUniformFormatter.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAISpriteDeck2D.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAITableLayer.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAITableViewLayer.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIViewLayer.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIViewProj.h" />
+    <ClInclude Include="..\..\src\moai-sim\strings.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\moai-sim\pch.cpp" />
@@ -659,9 +658,6 @@
       <Filter>anim</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moai-sim\MOAICamera.cpp">
-      <Filter>camera</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moai-sim\MOAICamera2D.cpp">
       <Filter>camera</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moai-sim\MOAICameraAnchor2D.cpp">
@@ -793,24 +789,6 @@
     <ClCompile Include="..\..\src\moai-sim\MOAIDeck.cpp">
       <Filter>deck</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moai-sim\MOAIGfxQuadDeck2D.cpp">
-      <Filter>deck</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moai-sim\MOAIGfxQuadListDeck2D.cpp">
-      <Filter>deck</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moai-sim\MOAIGfxQuad2D.cpp">
-      <Filter>deck</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moai-sim\MOAIGridDeck2D.cpp">
-      <Filter>deck</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moai-sim\MOAIScriptDeck.cpp">
-      <Filter>deck</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moai-sim\MOAIStandardDeck.cpp">
-      <Filter>deck</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\moai-sim\MOAISurfaceDeck2D.cpp">
       <Filter>deck</Filter>
     </ClCompile>
@@ -818,9 +796,6 @@
       <Filter>deck</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moai-sim\MOAIDeckProxy.cpp">
-      <Filter>deck</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moai-sim\MOAIBoundsDeck.cpp">
       <Filter>deck</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moai-sim\MOAIWheelSensor.cpp">
@@ -836,9 +811,6 @@
       <Filter>anim</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moai-sim\MOAIGrid.cpp">
-      <Filter>grid</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moai-sim\MOAIGridFancy.cpp">
       <Filter>grid</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moai-sim\MOAIGridPathGraph.cpp">
@@ -884,9 +856,6 @@
       <Filter>gfx</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moai-sim\MOAIGraphicsProp.cpp">
-      <Filter>gfx</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moai-sim\MOAIGraphicsProp2D.cpp">
       <Filter>gfx</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moai-sim\MOAITextBundle.cpp">
@@ -967,9 +936,6 @@
     <ClCompile Include="..\..\src\moai-sim\MOAISensor.cpp">
       <Filter>input</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moai-sim\MOAILayer2D.cpp">
-      <Filter>layer</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\moai-sim\MOAILayer.cpp">
       <Filter>layer</Filter>
     </ClCompile>
@@ -1012,12 +978,6 @@
     <ClCompile Include="..\..\src\moai-sim\MOAIGfxBuffer.cpp">
       <Filter>mesh</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moai-sim\MOAIMultiTexture.cpp">
-      <Filter>texture</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moai-sim\MOAISingleTexture.cpp">
-      <Filter>texture</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\moai-sim\MOAIFrameBufferTexture.cpp">
       <Filter>texture</Filter>
     </ClCompile>
@@ -1028,9 +988,6 @@
       <Filter>transform</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moai-sim\MOAITransform.cpp">
-      <Filter>transform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moai-sim\MOAITransform2D.cpp">
       <Filter>transform</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moai-sim\MOAITransformBase.cpp">
@@ -1046,9 +1003,6 @@
       <Filter>mesh</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moai-sim\MOAIRenderMgr.cpp">
-      <Filter>gfx</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moai-sim\MOAIRenderable.cpp">
       <Filter>gfx</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moai-sim\MOAIRegion.cpp">
@@ -1105,9 +1059,6 @@
     <ClCompile Include="..\..\src\moai-sim\MOAIPath.cpp">
       <Filter>vector</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moai-sim\MOAIProp.cpp">
-      <Filter>partition</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\moai-sim\MOAIVertexFormatMgr.cpp">
       <Filter>mesh</Filter>
     </ClCompile>
@@ -1120,5 +1071,55 @@
     <ClCompile Include="..\..\src\moai-sim\MOAIMeshTernaryTree.cpp">
       <Filter>mesh</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moai-sim\MOAIDeckPropBase.cpp">
+      <Filter>deck</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moai-sim\MOAIAnimCurveBone.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAICollisionDeck.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAICollisionPrim.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIDrawable.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIDrawDeck.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIDrawShape.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIDrawShapeImmediate.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIDrawShapeRetained.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIFancyGrid.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIGraphicsGridProp.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIGraphicsPropBase.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIGridPropBase.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIHitMask.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIIndexedPropBase.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAILight.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAILightFormat.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIMaterial.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIMaterialBase.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIMaterialBatchHolder.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIMaterialHolder.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIMaterialMgr.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIMetaTileDeck2D.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIMoveConstraint2D.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIMoveConstraint2D-poly-poly.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIOverlap.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIOverlapResolver.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIOverlapResolver-poly-poly.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIPartitionHolder.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIPartitionHull.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIPartitionViewLayer.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIProfiler.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIProfilerAutoScope.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIProfilerContext.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIProfilerEntry.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIProfilerEntryBase.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIProfilerReport.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIProfilerReportBase.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIProfilerReportBox.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIProfilerScope.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIShaderUniformBuffer.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIShaderUniformFormatter.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAISpriteDeck2D.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAITableLayer.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAITableViewLayer.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAITextureBase.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIViewLayer.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIViewProj.cpp" />
   </ItemGroup>
 </Project>
