@@ -170,7 +170,10 @@ void MOAIDrawShape::DrawPoint ( const ZLVec2D& loc ) {
 //----------------------------------------------------------------//
 void MOAIDrawShape::DrawPoint ( float x, float y, float z ) {
 
-	this->DrawPoint ( x, y, z );
+	//this->DrawPoint ( x, y, z );
+	UNUSED(x);
+	UNUSED(y);
+	UNUSED(z);
 }
 
 //----------------------------------------------------------------//

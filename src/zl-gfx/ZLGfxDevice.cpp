@@ -69,6 +69,10 @@ cc8* ZLGfxDevice::GetString ( u32 stringID ) {
 	return ( cc8* )glGetString ( ZLGfxEnum::MapZLToNative ( stringID ));
 }
 
+char Lower(char c) {
+	return (char) ::tolower((int)c);
+}
+
 //----------------------------------------------------------------//
 void ZLGfxDevice::Initialize () {
 
@@ -86,7 +90,7 @@ void ZLGfxDevice::Initialize () {
 	#endif
 
 	STLString version = ZLGfxDevice::GetString ( ZGL_STRING_VERSION );
-	std::transform ( version.begin (), version.end(), version.begin(), ::tolower );
+	std::transform ( version.begin (), version.end(), version.begin(), Lower );
 	
 	STLString gles = "opengl es";
 

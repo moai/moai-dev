@@ -225,7 +225,7 @@ void ZLBox::Grow ( const ZLRect& rect, bool first, u32 plane ) {
 
 	ZLBox grow;
 	grow.Init ( rect, plane );
-	this->Grow ( rect, first );
+	this->Grow ( grow, first );
 }
 
 //----------------------------------------------------------------//
