@@ -133,12 +133,8 @@ MOAIDeck::~MOAIDeck () {
 
 //----------------------------------------------------------------//
 bool MOAIDeck::Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
-	UNUSED(idx);
-	UNUSED(vec);
-	UNUSED(granularity);
-	UNUSED(result);
-	return false;
-	//return this->Overlap ( idx, vec, granularity, result );
+
+	return this->MOAIDeck_Overlap ( idx, vec, granularity, result );
 }
 
 
