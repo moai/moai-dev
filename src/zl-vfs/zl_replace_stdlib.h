@@ -29,8 +29,8 @@
 #define realloc zl_realloc
 
 #ifndef MOAI_COMPILER_MSVC
-#undef system
-#define system zl_system
+	#undef system
+	#define system zl_system
 #endif
 
 #ifdef  __cplusplus
