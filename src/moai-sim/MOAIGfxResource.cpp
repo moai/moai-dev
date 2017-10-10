@@ -180,6 +180,7 @@ bool MOAIGfxResource::DoGPUCreate () {
 			this->OnCPUDestroy ();
 		}
 		else {
+			printf("Error in gpu create\n");
 			this->mState = STATE_ERROR;
 		}
 	}
@@ -325,11 +326,15 @@ void MOAIGfxResource::Renew () {
 
 	// any (valid) state other than error we go back to square zero
 	if ( !(( this->mState == STATE_UNINITIALIZED ) || ( this->mState == STATE_ERROR ))) {
-	
+		printf("renewing resource gpu delete or discard\n");
 		this->OnGPUDeleteOrDiscard ( false ); // clear out the resource id (if any)
+		
 		this->mState = STATE_READY_FOR_CPU_CREATE;
+		printf("invoking loader\n");
 		this->InvokeLoader ();
+		printf("do gpu create\n");
 		this->DoGPUCreate ();
+		printf("renew complete\n");
 	}
 }
 

@@ -229,27 +229,37 @@ void MOAIGfxMgr::ClearSurface ( u32 clearFlags ) {
 //----------------------------------------------------------------//
 void MOAIGfxMgr::DetectContext () {
 
+	printf("Detect context\n");
 	this->mHasContext = true;
 	
 	ZLGfxDevice::Begin ();
 	
 	ZLGfxDevice::Initialize ();
+	printf("get Texture Units\n");
 	
 	u32 maxTextureUnits = ZLGfxDevice::GetCap ( ZGL_CAPS_MAX_TEXTURE_UNITS );
 	this->mGfxState.InitTextureUnits ( maxTextureUnits );
 	
+	printf("get Texture size\n");
 	this->mMaxTextureSize = ZLGfxDevice::GetCap ( ZGL_CAPS_MAX_TEXTURE_SIZE );
 
+	printf("select drawing api\n");
 	// renew resources in immediate mode
 	this->mPipelineMgr.SelectDrawingAPI ();
 	
+	printf("get default framebuffer\n");
 	this->mGfxState.GetDefaultFrameBuffer ()->DetectGLFrameBufferID ();
 	
+	printf("init shader manager\n");
 	MOAIShaderMgr::Get ().AffirmAll ();
 	
+
+
+	printf("renew resources\n");
 	mResourceMgr.RenewResources ();
-	
+	printf("device end\n");
 	ZLGfxDevice::End ();
+	printf("end detect\n");
 }
 
 //----------------------------------------------------------------//

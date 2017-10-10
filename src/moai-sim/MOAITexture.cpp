@@ -311,9 +311,18 @@ bool MOAITexture::OnCPUCreate () {
 
 	if ( this->mFilename.size ()) {
 		ZLFileStream stream;
-		stream.OpenRead ( this->mFilename );
-		this->LoadFromStream ( stream, this->mTransform );
-		stream.Close ();
+		if (stream.OpenRead(this->mFilename)) {
+			bool ok = this->LoadFromStream(stream, this->mTransform);
+			stream.Close();
+			if (!ok) {
+				cout << "Couldnt read texture file"  << endl;
+				return false;
+			}
+		}
+		else {
+			cout << "Couldnt open texture file"  << endl;
+			return false;
+		}
 	}
 	return (( this->mImage && this->mImage->IsOK ()) || this->mTextureData );
 }

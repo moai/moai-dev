@@ -277,10 +277,22 @@ void _AKUExitFullscreenModeFunc () {
 void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	
 	if ( !sWindow ) {
-		
+		printf("Getting Pixel Scale\n");
 		GetDeviceToPixelScale ( sDeviceScaleX, sDeviceScaleY );
-	
+		printf("Setting gl attribute\n");
+
+		#ifdef GFX_ASYNC
 		SDL_GL_SetAttribute ( SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1 );
+		#endif
+		
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+
+		//set double buffer
+		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+
+		printf("Creating window\n");
 		sWindow = SDL_CreateWindow (
 			title,
 			SDL_WINDOWPOS_CENTERED,
@@ -290,15 +302,23 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 			SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI
 		);
 
+		if (!sWindow) {
+			printf("Error opening window %s\n", SDL_GetError());
+			return;
+		}
+		printf("setting view size\n");
 		AKUSetViewSize ( width, height );
+		printf("setting sdl window\n");
 		AKUSdlSetWindow ( sWindow );
 
 		// Enable keyboard text input.
 		// According to the SDL documentation, this will open an on-screen keyboard on some platforms.
 		// Currently we're using the SDL host for desktop platforms only, so this should not be a problem.
+		printf("starting sdl text input\n");
 		SDL_StartTextInput ();
 	}
 	else {
+		printf("setting sdl window size\n");
 		SDL_SetWindowSize ( sWindow, width, height );
 	}
 }
@@ -366,7 +386,10 @@ void Init ( int argc, char** argv ) {
 	SDL_LogSetOutputFunction ( _SDL_LogOutputFunction, 0 );
 	SDL_LogSetPriority ( SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_VERBOSE );
 
-	SDL_Init ( SDL_INIT_EVERYTHING );
+	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+		printf("Warning: Unable to initialize SDL: %s\n", SDL_GetError());
+	}
+	
 	PrintMoaiVersion ();
 
 	#ifdef _DEBUG
@@ -438,7 +461,7 @@ void Init ( int argc, char** argv ) {
 
 //----------------------------------------------------------------//
 void MainLoop () {
-	
+	printf("starting main loop\n");
 	#if GFX_ASYNC
 	
 		WorkerThreadInfo loadingThread;
@@ -450,14 +473,22 @@ void MainLoop () {
 		SDL_GL_MakeCurrent ( sWindow, NULL );
 	
 	#else
-	
+		printf("Creating sdl context\n");
 		SDL_GLContext context = SDL_GL_CreateContext ( sWindow );
+		if (!context) {
+			printf("Error obtaining GL context %s\n", SDL_GetError());
+			return;
+		}
+
+
+		printf("Setting swap interval\n");
 		SDL_GL_SetSwapInterval ( 1 );
-	
+		printf("detecting gfx context\n");
 		AKUDetectGfxContext ();
 	
 	#endif
 
+		printf("Doing joystick stuff\n");
 	// TODO: array's of Joysticks
 	Joystick * joystick0 = NULL;
 
@@ -476,10 +507,11 @@ void MainLoop () {
 	}
 	
 	int simUpdateCounter = 0;
-	
+	printf("getting sdl ticks\n");
 	Uint32 lastFrame = SDL_GetTicks();
 	
 	bool running = true;
+	printf("entering main while loop\n");
 	while ( running ) {
 		
 		SDL_Event sdlEvent;

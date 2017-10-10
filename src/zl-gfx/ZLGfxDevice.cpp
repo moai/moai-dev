@@ -104,6 +104,8 @@ void ZLGfxDevice::Initialize () {
 	#endif
 
 	string version = ZLGfxDevice::GetString ( ZGL_STRING_VERSION );
+
+	
 	std::transform ( version.begin (), version.end(), version.begin(), ::tolower );
 	
 	string gles = "opengl es";
@@ -125,6 +127,8 @@ void ZLGfxDevice::Initialize () {
 
 	majorVersion = version.at ( 0 ) - '0';
 	minorVersion = version.at ( 2 ) - '0';
+
+	printf("Opengl Version: %d %d\n", majorVersion, minorVersion);
 
 	#ifdef EMSCRIPTEN 
 		isOpenGLES = true;
