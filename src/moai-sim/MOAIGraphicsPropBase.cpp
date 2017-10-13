@@ -262,27 +262,32 @@ ZLMatrix4x4 MOAIGraphicsPropBase::GetWorldDrawingMtx () {
 		}
 		
 		case BILLBOARD_COMPASS: {
-		
-			//const ZLAffine3D& cameraMtx = camera->GetLocalToWorldMtx (); // inv view mtx
-			ZLAffine3D cameraMtx ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_TO_WORLD_MTX ));
-			//ZLVec3D cameraZ = cameraMtx.GetZAxis ();
+			// TODO: The cache for VIEW_TO_WORLD matrix is not working, so manually inverting here, which not efficient
+			ZLMatrix4x4 worldToView = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_VIEW_MTX );
+			ZLMatrix4x4 worldToViewInv;
+			bool worldToViewInvSuccess = worldToViewInv.Inverse(worldToView);
+			ZLAffine3D cameraMtx ( worldToViewInv );
+
 			ZLVec3D	cameraY = cameraMtx.GetYAxis ();
 			
 			cameraY.mZ = 0.0f;
 			cameraY.Norm ();
 			
+			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
+
 			ZLVec2D mapY ( cameraY.mX, cameraY.mY );
 			ZLVec2D worldY ( 0.0f, 1.0f );
 			
-			float radians = mapY.Radians ( worldY );
-			
+			float flipped = copysign(1.0f, worldDrawingMtx.GetYAxis().Dot(ZLVec3D(0.0f, 1.0f, 0.0f)));
+			float radians = mapY.Radians ( worldY ) * flipped;
+
 			if ( cameraY.mX < 0.0f ) {
 				radians = -radians;
 			}
-		
+
 			ZLMatrix4x4 billboardMtx;
 			billboardMtx.Translate ( -this->mPiv.mX, -this->mPiv.mY, -this->mPiv.mZ );
-			
+
 			ZLMatrix4x4 mtx;
 			mtx.RotateZ ( -radians );
 			billboardMtx.Append ( mtx );
@@ -290,7 +295,6 @@ ZLMatrix4x4 MOAIGraphicsPropBase::GetWorldDrawingMtx () {
 			mtx.Translate ( this->mPiv.mX, this->mPiv.mY, this->mPiv.mZ );
 			billboardMtx.Append ( mtx );
 			
-			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
 			worldDrawingMtx.Prepend ( billboardMtx );
 		
 			break;
