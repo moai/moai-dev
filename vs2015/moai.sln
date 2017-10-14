@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3rd Party", "3rd Party", "{3C05055B-3444-43CB-8793-D469F0D40706}"
 EndProject
@@ -140,6 +140,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "assimp", "assimp\assimp.vcxproj", "{EEB0E2FC-4B26-49D4-98C6-0BF34C44AC2E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "moai-lib-assimp", "moai-lib-assimp\moai-lib-assimp.vcxproj", "{A90989F3-8C14-487B-9127-C89A9D53630C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EEB0E2FC-4B26-49D4-98C6-0BF34C44AC2E} = {EEB0E2FC-4B26-49D4-98C6-0BF34C44AC2E}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "moai-lib-image-tga", "moai-lib-image-tga\moai-lib-image-tga.vcxproj", "{18093173-A50D-42A3-9066-1301BF1F5D14}"
 EndProject
@@ -700,8 +703,9 @@ Global
 		{46CF2D25-6A36-4189-B59C-E4815388E554} = {3C05055B-3444-43CB-8793-D469F0D40706}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		AMDCaPersistentConfig = Debug|Win32
-		AMDCaPersistentStartup = moai (Utilities\moai)
 		AMDCaProjectFile = C:\Documents and Settings\Patrick\My Documents\git\moai\vs2008\CodeAnalyst\moai.caw
+		AMDCaPersistentStartup = moai (Utilities\moai)
+		AMDCaPersistentConfig = Debug|Win32
+		SolutionGuid = {2A8C43A2-FD0E-4965-85FF-8890DF1A5E33}
 	EndGlobalSection
 EndGlobal

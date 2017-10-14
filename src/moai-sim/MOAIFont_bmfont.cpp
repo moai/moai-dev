@@ -11,9 +11,11 @@
 
 #if defined( _WIN32 ) 
 	#define strcasecmp(str1, str2) ( stricmp ( str1,str2 ))
+#else
+	#include <strings.h>
 #endif
 
-#include <strings.h>
+
 
 #define WIDE_ID_BIT			0x80000000
 #define WIDE_ID_MASK		0x7fffffff
