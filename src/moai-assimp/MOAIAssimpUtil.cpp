@@ -174,6 +174,7 @@ void MOAIAssimpUtil::PushNode ( lua_State* L, const aiNode* node ) {
 
 	int stackOK = lua_checkstack ( L, 4 );
 	assert ( stackOK );
+	UNUSED(stackOK);
 
 	if ( !node ) return;
 	

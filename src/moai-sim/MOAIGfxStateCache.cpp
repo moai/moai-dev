@@ -211,6 +211,8 @@ void MOAIGfxStateCache::ApplyStateChanges () {
 //----------------------------------------------------------------//
 void MOAIGfxStateCache::BindVertexBufferWithFormat ( MOAIVertexBufferWithFormat& bufferWithFormat, bool useVAOs ) {
 
+	UNUSED(useVAOs);
+
 	MOAIVertexBuffer* buffer = bufferWithFormat.mBuffer;
 	MOAIVertexFormat* format = bufferWithFormat.mFormat;
 

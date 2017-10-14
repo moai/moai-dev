@@ -159,7 +159,7 @@ MOAIAnimCurveBone* MOAIAssimpAnimation::GetAnimCurve ( u32 channel ) {
 		
 		if ( posKey ) {
 		
-			p0 = ZLVec3D ( posKey->mValue.x, posKey->mValue.y, posKey->mValue.z );
+			p0 = ZLVec3D ( (float) posKey->mValue.x, (float) posKey->mValue.y, (float) posKey->mValue.z );
 			
 			if ( t == posKey->mTime ) {
 				iPos++;
@@ -167,14 +167,14 @@ MOAIAnimCurveBone* MOAIAssimpAnimation::GetAnimCurve ( u32 channel ) {
 			else {
 				ZLVec3D p1 = p0;
 				const aiVectorKey& posKeyPrev = nodeAnim->mPositionKeys [ iPos > 0 ? iPos - 1 : 0 ];
-				p0 = ZLVec3D ( posKeyPrev.mValue.x, posKeyPrev.mValue.y, posKeyPrev.mValue.z );
+				p0 = ZLVec3D ((float) posKeyPrev.mValue.x, (float) posKeyPrev.mValue.y, (float) posKeyPrev.mValue.z );
 				p0.Lerp ( p1, (float) (( t - posKeyPrev.mTime ) / ( posKey->mTime - posKeyPrev.mTime )));
 			}
 		}
 		
 		if ( rotKey ) {
 		
-			q0 = ZLQuaternion ( rotKey->mValue.w, rotKey->mValue.x, rotKey->mValue.y, rotKey->mValue.z );
+			q0 = ZLQuaternion ((float) rotKey->mValue.w, (float) rotKey->mValue.x, (float)rotKey->mValue.y, (float) rotKey->mValue.z );
 			
 			if ( t == posKey->mTime ) {
 				iRot++;
@@ -182,14 +182,14 @@ MOAIAnimCurveBone* MOAIAssimpAnimation::GetAnimCurve ( u32 channel ) {
 			else {
 				ZLQuaternion q1 = q0;
 				const aiQuatKey& rotKeyPrev = nodeAnim->mRotationKeys [ iRot > 0 ? iRot - 1 : 0 ];
-				q0 = ZLQuaternion ( rotKeyPrev.mValue.w, rotKeyPrev.mValue.x, rotKeyPrev.mValue.y, rotKeyPrev.mValue.z );
+				q0 = ZLQuaternion ((float) rotKeyPrev.mValue.w, (float) rotKeyPrev.mValue.x, (float) rotKeyPrev.mValue.y, (float) rotKeyPrev.mValue.z );
 				q0.Slerp ( q0, q1, (float) (( t - rotKeyPrev.mTime ) / ( rotKey->mTime - rotKeyPrev.mTime )));
 			}
 		}
 		
 		if ( sclKey ) {
 		
-			s0 = ZLVec3D ( sclKey->mValue.x, sclKey->mValue.y, sclKey->mValue.z );
+			s0 = ZLVec3D ((float) sclKey->mValue.x, (float) sclKey->mValue.y, (float) sclKey->mValue.z );
 			
 			if ( t == posKey->mTime ) {
 				iScl++;
@@ -197,7 +197,7 @@ MOAIAnimCurveBone* MOAIAssimpAnimation::GetAnimCurve ( u32 channel ) {
 			else {
 				ZLVec3D s1 = s0;
 				const aiVectorKey& sclKeyPrev = nodeAnim->mScalingKeys [ iScl > 0 ? iScl - 1 : 0 ];
-				s0 = ZLVec3D ( sclKeyPrev.mValue.x, sclKeyPrev.mValue.y, sclKeyPrev.mValue.z );
+				s0 = ZLVec3D ((float) sclKeyPrev.mValue.x, (float) sclKeyPrev.mValue.y, (float) sclKeyPrev.mValue.z );
 				s0.Lerp ( s1, (float) (( t - sclKeyPrev.mTime ) / ( sclKey->mTime - sclKeyPrev.mTime )));
 			}
 		}

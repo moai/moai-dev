@@ -158,21 +158,21 @@ int MOAIAssimpCamera::_getYawAngle ( lua_State *L ) {
 
 //----------------------------------------------------------------//
 float MOAIAssimpCamera::CalculatePitch(aiQuaternion quaternion) {
-	return asin ( 2.0f * quaternion.z * quaternion.y + 2.0f * quaternion.x * quaternion. w );
+	return (float) asin ( 2.0f * quaternion.z * quaternion.y + 2.0f * quaternion.x * quaternion. w );
 }
 
 //----------------------------------------------------------------//
 float MOAIAssimpCamera::CalculateRoll ( aiQuaternion quaternion ) {
-	float x2 = quaternion.x * quaternion.x;
-	float z2 = quaternion.z * quaternion.z;
-	return atan2 ( 2.0f * quaternion.z * quaternion.w - 2.0f * quaternion.y * quaternion.x, 1.0f- 2.0f * z2 - 2.0f * x2 );
+	float x2 = (float) quaternion.x * (float) quaternion.x;
+	float z2 = (float) quaternion.z * (float) quaternion.z;
+	return (float) atan2 ( 2.0f * quaternion.z * quaternion.w - 2.0f * quaternion.y * quaternion.x, 1.0f- 2.0f * z2 - 2.0f * x2 );
 }
 
 //----------------------------------------------------------------//
 float MOAIAssimpCamera::CalculateYaw ( aiQuaternion quaternion ) {
-	float x2 = quaternion.x * quaternion.x;
-	float y2 = quaternion.y * quaternion.y;
-	return atan2 ( 2.0f * quaternion.y * quaternion.w - 2.0f * quaternion.z * quaternion.x , 1.0f - 2.0f * x2 - 2.0f * y2 );
+	float x2 = (float) quaternion.x * (float) quaternion.x;
+	float y2 = (float) quaternion.y * (float) quaternion.y;
+	return (float) atan2 ( 2.0f * quaternion.y * quaternion.w - 2.0f * quaternion.z * quaternion.x , 1.0f - 2.0f * x2 - 2.0f * y2 );
 }
 
 //----------------------------------------------------------------//
@@ -228,8 +228,8 @@ void MOAIAssimpCamera::SetCamera ( aiCamera *assimpCamera ) {
 
 	transform.Decompose ( this->mScaling, this->mRotation, this->mPosition );
 	this->mMoaiCamera = new MOAICamera ();
-	this->mMoaiCamera->SetLoc ( this->mPosition.x , this->mPosition.y , this->mPosition.z );
-	this->mMoaiCamera->SetScl ( this->mScaling.x , this->mScaling.y , this->mScaling.z );
+	this->mMoaiCamera->SetLoc ((float) this->mPosition.x , (float) this->mPosition.y , (float) this->mPosition.z );
+	this->mMoaiCamera->SetScl ((float) this->mScaling.x , (float) this->mScaling.y , (float) this->mScaling.z );
 	this->mMoaiCamera->SetRot (
 		( float )( this->CalculatePitch ( this->mRotation) * R2D ),
 		( float )( this->CalculateYaw ( this->mRotation) * R2D ),
