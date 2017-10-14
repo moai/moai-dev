@@ -125,7 +125,7 @@ bool MOAIGraphicsProp::MOAIPartitionHull_Inside ( ZLVec3D vec, float pad ) {
 	if ( passTrivial && this->mDeck && ( this->mHitGranularity > HIT_TEST_COARSE )) {
 	
 		//return this->mDeck->Inside ( this->mIndex, this->mMaterialBatch, this->mHitGranularity, vec, pad );
-		return this->mDeck->Overlap ( this->mIndex - 1, vec, this->mHitGranularity, 0 );
+		return this->mDeck->Overlap ( this->mIndex - 1, vec.Vec2D(), this->mHitGranularity, 0 );
 	}
 	return passTrivial;
 }

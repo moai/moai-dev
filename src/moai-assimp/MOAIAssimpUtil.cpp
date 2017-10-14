@@ -174,6 +174,7 @@ void MOAIAssimpUtil::PushNode ( lua_State* L, const aiNode* node ) {
 
 	int stackOK = lua_checkstack ( L, 4 );
 	assert ( stackOK );
+	UNUSED(stackOK);
 
 	if ( !node ) return;
 	
@@ -232,7 +233,7 @@ void MOAIAssimpUtil::PushNode ( lua_State* L, const aiNode* node ) {
 					state.Push ( *( bool* )value.mData );
 					break;
 					
-				case AI_INT:
+				case AI_INT32:
 					state.Push ( *( int* )value.mData );
 					break;
 					
@@ -296,7 +297,7 @@ void MOAIAssimpUtil::PushTexture ( lua_State* L, aiMaterial* material, aiTexture
 	aiString path;
 	aiTextureMapping mapping;
 	uint uvindex;
-	float blend;
+	double blend;
 	aiTextureOp op;
 	aiTextureMapMode mapmode [ 3 ];
 

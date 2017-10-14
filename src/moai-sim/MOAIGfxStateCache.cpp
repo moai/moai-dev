@@ -92,8 +92,8 @@ MOAIGfxState::~MOAIGfxState () {
 //----------------------------------------------------------------//
 void MOAIGfxStateCache::ApplyStateChange ( u32 stateID ) {
 
-	MOAIGfxState& active = this->mActiveState;
-	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+//	MOAIGfxState& active = this->mActiveState;
+	//& gfx = MOAIGfxMgr::GetDrawingAPI ();
 	
 	switch ( stateID ) {
 
@@ -211,6 +211,8 @@ void MOAIGfxStateCache::ApplyStateChanges () {
 //----------------------------------------------------------------//
 void MOAIGfxStateCache::BindVertexBufferWithFormat ( MOAIVertexBufferWithFormat& bufferWithFormat, bool useVAOs ) {
 
+	UNUSED(useVAOs);
+
 	MOAIVertexBuffer* buffer = bufferWithFormat.mBuffer;
 	MOAIVertexFormat* format = bufferWithFormat.mFormat;
 
@@ -241,7 +243,7 @@ void MOAIGfxStateCache::DrawPrims ( u32 primType, u32 base, u32 count ) {
 
 	DEBUG_LOG ( "DRAW PRIMS: %d %d %d\n", primType, base, count );
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	this->ApplyStateChanges ();
 
 	MOAIShader* shader = this->mActiveState.mShader;

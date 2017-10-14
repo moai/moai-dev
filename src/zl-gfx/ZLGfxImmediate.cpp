@@ -718,7 +718,7 @@ void ZLGfxImmediate::UniformFloat ( u32 location, u32 index, u32 width, u32 coun
 
 //----------------------------------------------------------------//
 void ZLGfxImmediate::UniformInt ( u32 location, u32 index, u32 width, u32 count, const s32* value ) {
-
+	UNUSED(index);
 	switch ( width ) {
 	
 		case 1:

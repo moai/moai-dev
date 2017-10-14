@@ -1229,15 +1229,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		080E96DDFE201D6D7F000001 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				CDC963C91A12C68F00F9CA22 /* moai */,
-				CDFD7DFA1A08B15200A94E6B /* modules */,
-			);
-			path = Classes;
-			sourceTree = SOURCE_ROOT;
-		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1251,7 +1242,8 @@
 			isa = PBXGroup;
 			children = (
 				03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */,
-				080E96DDFE201D6D7F000001 /* Classes */,
+				CDC963C91A12C68F00F9CA22 /* moai */,
+				CDFD7DFA1A08B15200A94E6B /* modules */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -2497,7 +2489,7 @@
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
-					"\"../../3rdparty/artoolkit5/lib/ios7\"",
+					"\"../../3rdparty/artoolkit-ios-sdk/lib\"",
 					"\"../../3rdparty/gvr-ios-sdk/lib\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
@@ -2564,7 +2556,7 @@
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
-					"\"../../3rdparty/artoolkit5/lib/ios7\"",
+					"\"../../3rdparty/artoolkit-ios-sdk/lib\"",
 					"\"../../3rdparty/gvr-ios-sdk/lib\"",
 				);
 				OTHER_CFLAGS = (
