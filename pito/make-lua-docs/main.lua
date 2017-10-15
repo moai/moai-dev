@@ -263,8 +263,9 @@ end
 
 ----------------------------------------------------------------
 writeDoxygenClassBlock = function ( out, doxygenBlock, module )
-	
-	out:write ( string.format ( '\n\t@ingroup %s\n', module ))
+	if (module) then
+		out:write ( string.format ( '\n\t@ingroup %s\n', module  ))
+	end
 	
 	name = ''
 	text = ''
