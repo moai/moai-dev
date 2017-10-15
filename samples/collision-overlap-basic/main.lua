@@ -49,7 +49,7 @@ spriteDeck:setRect ( -64, -64, 64, 64 )
 spriteDeck:setUVRect ( 0, 0, 1, 1 )
 
 --font = MOAIFont.new ()
---font:loadFromTTF ( '../resources/arial-rounded.TTF' )
+--font:loadFromTTF ( '../resources/fonts/arial-rounded.TTF' )
 
 collDeck = MOAICollisionDeck.new ()
 collDeck:reserveShapes ( 1 )
