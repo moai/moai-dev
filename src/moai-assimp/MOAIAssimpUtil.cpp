@@ -238,7 +238,7 @@ void MOAIAssimpUtil::PushNode ( lua_State* L, const aiNode* node ) {
 					break;
 					
 				case AI_UINT64:
-					state.Push ( *( uint64_t* )value.mData );
+					state.Push ( *( u64* )value.mData );
 					break;
 					
 				case AI_FLOAT:
