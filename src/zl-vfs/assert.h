@@ -39,9 +39,13 @@ extern jmp_buf*                zl_set_assert_jmp_buf        ( jmp_buf* env );
     //for vs2015 currently break command line build
     //#define __assert(x) (( void )sizeof ( x ))
     //#define assert(x) (( void )sizeof ( x ))
-    #define __assert(x) (( void ) 0 )
+    #ifndef ANDROID_NDK
+        #define __assert(x) (( void ) 0 )
+    #endif
 	#define assert(x) (( void ) 0 )
 #else
-    #define __assert zl_assert
+    #ifndef ANDROID_NDK
+        #define __assert zl_assert
+    #endif
     #define assert zl_assert
 #endif

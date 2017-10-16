@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "com.moaisdk.refapp"
@@ -10,6 +10,17 @@ android {
         targetSdkVersion 22
         versionCode 8
         versionName "1.0"
+        externalNativeBuild {
+            cmake {
+                arguments "-DMOAI_SDK_HOME=" + new File('../').canonicalPath
+            }
+        }
+        ndk {
+            // Specifies the ABI configurations of your native
+            // libraries Gradle should build and package with your APK.
+            abiFilters 'x86', 'x86_64', 'armeabi-v7a'
+
+        }
     }
     buildTypes {
         release {
@@ -22,6 +33,11 @@ android {
     }
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
+    }
+    externalNativeBuild {
+        cmake {
+            path '../../../../cmake/hosts/host-android/CMakeLists.txt'
+        }
     }
 }
 
