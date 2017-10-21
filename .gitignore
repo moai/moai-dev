@@ -52,3 +52,4 @@ util/build-sample-browser/temprom/
 android-studio/app/.externalNativeBuild/
 android-studio/libmoai/.externalNativeBuild/
 cmake/cmake/hosts/host-win-sdl/.vs/
+cmake/lib/

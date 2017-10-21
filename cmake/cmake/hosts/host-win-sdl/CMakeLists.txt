@@ -57,6 +57,9 @@ target_link_libraries ( moai
   SDL2-static   
   ${OPENGL_LIBRARIES}
   winmm
+  msimg32
+  version
+  Imm32
 )
 
 

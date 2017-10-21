@@ -52,8 +52,7 @@ cd build-windows
 cmake ^
 -DMOAI_SDK_HOME="%MOAI_SDK_HOME%" ^
 -DBUILD_WINDOWS=TRUE ^
--DCMAKE_BUILD_TYPE=Release ^
--DMOAI_SDK=TRUE ^
+-DMOAI_SDL=TRUE ^
 -DMOAI_LUAJIT=FALSE ^
 -DCMAKE_INSTALL_PREFIX="%CMAKEROOT%\lib\windows" ^
 -DCMAKE_GENERATOR_PLATFORM=Win32 ^
@@ -62,11 +61,13 @@ cmake ^
 
 cmake --build  . --target moai || goto ERROR
 
-popd
-rem Install into lib
 
+
+rem Install into lib
 mkdir "%CMAKEROOT%\lib\windows"
-echo "TODO COPY LIBS"
+copy /y .\debug\moai.exe "%CMAKEROOT%\lib\windows" 
+
+popd
 
 goto END
 

@@ -2,8 +2,8 @@ cmake_minimum_required ( VERSION 2.8.5 )
 
 project ( curl )
 
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DCURL_STATICLIB -DBUILDING_LIBCURL -DCURL_DISABLE_LDAP -DCURL_DISABLE_NTLM -DUSE_MBEDTLS -DHAVE_CONFIG_H"  )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DCURL_STATICLIB -DBUILDING_LIBCURL -DCURL_DISABLE_LDAP -DCURL_DISABLE_NTLM -DUSE_MBEDTLS -DHAVE_CONFIG_H" )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DBUILDING_LIBCURL -DCURL_DISABLE_LDAP -DCURL_DISABLE_NTLM -DUSE_MBEDTLS"  )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBUILDING_LIBCURL -DCURL_DISABLE_LDAP -DCURL_DISABLE_NTLM -DUSE_MBEDTLS" )
   
   if ( BUILD_ANDROID OR BUILD_IOS )
     set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_ARES" )
@@ -11,6 +11,8 @@ project ( curl )
   endif (BUILD_ANDROID OR BUILD_IOS)
 
   if (BUILD_LINUX)
+      set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -DHAVE_CONFIG_H"  )
+      set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DHAVE_CONFIG_H" )
       set ( CURL_INCLUDES 
         "${MOAI_ROOT}/src/custom-include/curl/linux"
         "${MOAI_ROOT}/src/custom-include/curl/linux/curl"
@@ -22,15 +24,25 @@ project ( curl )
 
 
   if (BUILD_WINDOWS)
+      set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DWIN32 -D_WINDOWS"  )
+      set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DWIN32 -D_WINDOWS" )
       set ( CURL_INCLUDES 
-        "${MOAI_ROOT}/3rdparty/curl/include/" 
+      "${MOAI_ROOT}/src/custom-include/curl/windows"
+      "${MOAI_ROOT}/src/custom-include/curl/windows/curl"
+      "${MOAI_ROOT}/3rdparty/curl/include/" 
+      "${MOAI_ROOT}/3rdparty/curl/lib/" 
      
       )
   endif (BUILD_WINDOWS)
   
   if (BUILD_OSX)
+        set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DHAVE_CONFIG_H"  )
+        set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DHAVE_CONFIG_H" )
         set ( CURL_INCLUDES
-          "${MOAI_ROOT}/3rdparty/curl/include-osx/"
+          "${MOAI_ROOT}/src/custom-include/curl/osx" 
+          "${MOAI_ROOT}/src/custom-include/curl/osx/curl" 
+          "${MOAI_ROOT}/3rdparty/curl/include/"
+          "${MOAI_ROOT}/3rdparty/curl/lib"
         )
     endif (BUILD_OSX)
 
@@ -42,6 +54,8 @@ project ( curl )
 
 
   if (BUILD_ANDROID)
+    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DHAVE_CONFIG_H"  )
+    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DHAVE_CONFIG_H" )
     set ( CURL_INCLUDES 
         "${MOAI_ROOT}/src/custom-include/curl/android" 
         "${MOAI_ROOT}/src/custom-include/curl/android/curl" 
@@ -51,9 +65,14 @@ project ( curl )
   endif (BUILD_ANDROID)
 
   if (BUILD_IOS)
+    set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DHAVE_CONFIG_H"  )
+    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DHAVE_CONFIG_H" )
     set ( CURL_INCLUDES 
-        "${MOAI_ROOT}/3rdparty/curl-7.19.7/include-iphone/"
-       )
+        "${MOAI_ROOT}/src/custom-include/curl/ios" 
+        "${MOAI_ROOT}/src/custom-include/curl/ios/curl" 
+        "${MOAI_ROOT}/3rdparty/curl/include/"
+        "${MOAI_ROOT}/3rdparty/curl/lib"
+    )
   endif (BUILD_IOS)
 
   set (CURL_HEADERS "")
@@ -198,6 +217,7 @@ project ( curl )
   target_include_directories (curl PUBLIC "$<BUILD_INTERFACE:${CURL_INCLUDES}>" )
   target_link_libraries( curl zlib mbedtls)
   set_target_properties( curl PROPERTIES FOLDER Third-Party )
+  target_compile_definitions( curl PUBLIC CURL_STATICLIB=1 )
 
   if (USE_ARES)  
     target_link_libraries( curl cares )
