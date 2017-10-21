@@ -1,0 +1,16 @@
+
+rem ---- SETTINGS -------
+rem * edit or remove these to suit your setup.
+
+rem -- for android support
+set NDK_PATH=C:\dev\android-ndk-r12b
+set JAVA_HOME=C:\Program Files\Java\jdk1.8.0_112
+
+rem -- For emscripten support
+set CMAKE_PATH=C:\Program Files\CMake\bin\cmake.exe
+set MINGW_PATH=C:\dev\mingw64\bin
+set EMSDK_PATH=C:\dev\emsdk-1.2.5
+
+rem -- for building docs
+rem set DOXYGEN_PATH=c:\dev\doxygen
+rem set DOT_PATH=c:\dev\graphviz\bin

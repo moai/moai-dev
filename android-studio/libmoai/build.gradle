@@ -11,7 +11,7 @@ android {
         versionName "1.0"
         externalNativeBuild {
             cmake {
-                arguments "-DBUILD_ANDROID=TRUE", "-DMOAI_ANDROID=TRUE", "-DANDROID_STL=c++_static",  "-DMOAI_SDK_HOME=" + new File('../').canonicalPath
+                arguments "-DBUILD_ANDROID=TRUE", "-DMOAI_ANDROID=TRUE", "-DANDROID_STL=c++_static",  "-DMOAI_SDK_HOME=" + new File(moaiSdkRoot).canonicalPath
             }
         }
         ndk {
@@ -31,8 +31,7 @@ android {
     }
     externalNativeBuild {
         cmake {
-            //TODO: update this if cmake gets pulled into moai-dev
-            path '../../../../cmake/hosts/host-android/CMakeLists.txt'
+            path new File(moaiSdkRoot).canonicalPath + '/cmake/cmake/hosts/host-android/CMakeLists.txt'
         }
     }
 }

@@ -1,4 +1,4 @@
-include ':app', ':libmoai'
-
+include ':app'
 include ':core'
-project(':core').projectDir = new File('../src/moai-android/java')
+project(':core').projectDir = new File(moaiSdkRoot+'/src/moai-android/java')
+include(":libmoai")
