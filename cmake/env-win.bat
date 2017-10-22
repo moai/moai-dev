@@ -21,7 +21,7 @@ if exist "%~dp0%\env-local.bat" (
 
 rem ---- android NDK -------
 :ndk
-if "%NDK_PATH%"=="" goto :mingw
+if "%NDK_PATH%"=="" goto :util
 echo "Setting Android NDK path..."
 
 set "ANDROID_NDK=%NDK_PATH%"

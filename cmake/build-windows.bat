@@ -59,7 +59,7 @@ cmake ^
 -G "Visual Studio 15 2017" ^
 %CMAKEROOT%\cmake\hosts\host-win-sdl || goto ERROR
 
-cmake --build  . --target moai || goto ERROR
+cmake --build  . --target moai --config Release || goto ERROR
 
 
 

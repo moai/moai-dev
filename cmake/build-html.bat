@@ -14,7 +14,7 @@ popd
 echo "Setting MingW Gcc path"
 set "PATH=%MINGW_PATH%;%PATH%"
 
-rem Prerequisites
+rem ----- Requirements Check -----
 
 if "%MOAI_SDK_HOME%"=="" echo "Could not determine location of MOAI SDK, please set MOAI_SDK_HOME" && goto ERROR
 
@@ -22,19 +22,19 @@ if "%EMSCRIPTEN%"=="" echo "EMSCRIPTEN is not defined. Please set to the locatio
 
 where mingw32-make || echo "mingw32-make is required. Install TCC Mingw from http://tdm-gcc.tdragon.net/ and add to the path" && goto ERROR
 
-where cmake || echo "Cmake 2.8.11+ is required, download from cmake.org" && goto ERROR
+where cmake || echo "Cmake 3.2+ is required, download from cmake.org" && goto ERROR
 
+rem ----- Build libmoai ----
 
-:COMPILE
+pushd "%~dp0%"
 
-cd "%~dp0%/.."
-
-set "PITOROOT=%cd%"
+set "CMAKEROOT=%cd%"
 
 mkdir build
 cd build
 mkdir build-html
 cd build-html
+
 cmake ^
 -DEMSCRIPTEN_ROOT_PATH=%EMSCRIPTEN% ^
 -DCMAKE_TOOLCHAIN_FILE=%EMSCRIPTEN%\cmake\Modules\Platform\Emscripten.cmake ^
@@ -44,30 +44,24 @@ cmake ^
 -DMOAI_CHIPMUNK=FALSE ^
 -DMOAI_CURL=FALSE ^
 -DMOAI_CRYPTO=FALSE ^
--DMOAI_LIBCRYPTO=FALSE ^
--DMOAI_EXPAT=TRUE ^
 -DMOAI_MONGOOSE=FALSE ^
 -DMOAI_OGG=FALSE ^
--DMOAI_OPENSSL=FALSE ^
 -DMOAI_SQLITE3=FALSE ^
 -DMOAI_SFMT=FALSE ^
 -DMOAI_VORBIS=FALSE ^
 -DMOAI_WEBP=FALSE ^
 -DMOAI_HTTP_CLIENT=FALSE ^
 -DMOAI_LUAJIT=FALSE ^
--DCMAKE_INSTALL_PREFIX="%PITOROOT%\lib\html" ^
+-DCMAKE_INSTALL_PREFIX="%CMAKEROOT%\lib\html" ^
 -G "MinGW Makefiles" ^
-%PITOROOT%\cmake\hosts\host-html || goto ERROR
-
+%CMAKEROOT%\cmake\hosts\host-html || goto ERROR
 
 cmake --build  . --target moaijs || goto ERROR
 
-
 rem Install into lib
-
-mkdir "%PITOROOT%\lib\html"
-copy /y moaijs.js "%PITOROOT%\lib\html\moaijs.js"
-copy /y moaijs.wasm "%PITOROOT%\lib\html\moaijs.wasm"
+mkdir "%CMAKEROOT%\lib\html"
+copy /y moaijs.js "%CMAKEROOT%\lib\html\moaijs.js"
+copy /y moaijs.wasm "%CMAKEROOT%\lib\html\moaijs.wasm"
 
 goto END
 
