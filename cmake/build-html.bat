@@ -56,7 +56,7 @@ cmake ^
 -G "MinGW Makefiles" ^
 %CMAKEROOT%\cmake\hosts\host-html || goto ERROR
 
-cmake --build  . --target moaijs || goto ERROR
+mingw32-make moaijs || goto ERROR
 
 rem Install into lib
 mkdir "%CMAKEROOT%\lib\html"
