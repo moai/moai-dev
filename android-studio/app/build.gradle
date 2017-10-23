@@ -27,10 +27,6 @@ android {
 
 }
 
-
-
-
-
 if (hasProperty('luaRoot')) {
     task ( 'cleanLuaScripts', type: Delete ) {
         delete 'src/main/assets/lua'
@@ -45,7 +41,10 @@ if (hasProperty('luaRoot')) {
     preBuild.dependsOn copyLuaScripts
 }
 
-if (hasProperty('usePrebuiltMoaiFrom')) {
+//set on command line or in gradle.properties
+boolean usePrebuiltLibs = hasProperty('usePrebuiltMoaiFrom')
+
+if (usePrebuiltLibs) {
     task('copyLibraries', type: Copy) {
         from new File(usePrebuiltMoaiFrom).canonicalPath
         into 'src/main/jniLibs'
@@ -59,15 +58,12 @@ if (hasProperty('usePrebuiltMoaiFrom')) {
     preBuild.dependsOn copyLibraries
 }
 
-
-
-
-
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile project(':core')
-    if (!hasProperty('usePrebuiltMoaiFrom')) {
+    if (!usePrebuiltLibs) {
         compile project(":libmoai")
     }
 }
+
