@@ -9,6 +9,14 @@ file ( GLOB HOST_MODULES_SRC
   "${HOST_ROOT}/host-modules/aku_modules_util.*"
 )
 
+if (BUILD_ANDROID)
+  list( APPEND HOST_MODULES_SRC 
+    "${HOST_ROOT}/host-modules/aku_modules_android_config.h"
+    "${HOST_ROOT}/host-modules/aku_modules_android.h"
+    "${HOST_ROOT}/host-modules/aku_modules_android.cpp"
+  )
+endif (BUILD_ANDROID)
+
 #include_directories ( ${HOST_MODULES_INCLUDES} )
 
 add_library ( host-modules STATIC ${HOST_MODULES_SRC} )

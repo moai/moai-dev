@@ -5,6 +5,7 @@ set (MOAI_VERSION_REVISION FALSE)
 
 
 option ( MOAI_APPLE     		"Enable Apple"                  FALSE )
+option ( MOAI_ANDROID    		"Enable Android"                FALSE )
 option ( MOAI_ASSIMP            "Enable Assimp"                 TRUE )
 option ( MOAI_SDL       		"Enable SDL"                    FALSE )
 option ( MOAI_BOX2D				"Enable Box2D physics"		    TRUE  )
