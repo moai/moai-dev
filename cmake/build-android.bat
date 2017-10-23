@@ -47,7 +47,7 @@ for %%a in (x86) do (
     -DMOAI_SDK_HOME=%MOAI_SDK_HOME% ^
     -DHOST_ROOT=%MOAI_SDK_HOME%/src || goto ERROR
     
-    cmake --build  . --target moai || goto ERROR
+    cmake --build  . --target moai -- -j3 || goto ERROR
 )
 
 goto END

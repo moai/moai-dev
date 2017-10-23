@@ -11,6 +11,10 @@ set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/src/moai-android" )
 
 file ( GLOB MOAI_ANDROID_SRC "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/*.h" )
 
+# remove this since this should be built as part of the main shared library build script
+# preventing the linker from removing the JNI methods.
+list ( REMOVE_ITEM MOAI_ANDROID_SRC "${CMAKE_CURRENT_SOURCE_DIR}/moai.cpp" )
+
 
 add_library (moai-android STATIC ${MOAI_ANDROID_SRC} )
 target_link_libraries( moai-android moai-sim moai-util moai-core )

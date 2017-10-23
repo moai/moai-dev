@@ -35,6 +35,7 @@ LINK_DIRECTORIES("${LUA_LIB_DIR}")
 
 add_library ( moai SHARED
     "${MOAI_ROOT}/android-ndk/jni/src/jni.cpp"
+    "${MOAI_ROOT}/src/moai-android/moai.cpp"
 )
 
 
