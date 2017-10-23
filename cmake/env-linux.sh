@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-  export MOAI_SDK_HOME=${MOAI_SDK_HOME-$(cd $(dirname "${BASH_SOURCE[0]}")/../; pwd)/sdk/moai}
+  export MOAI_SDK_HOME=${MOAI_SDK_HOME-$(cd $(dirname "${BASH_SOURCE[0]}")/../; pwd)}
   #--User config
   if [ -e "$(dirname ${BASH_SOURCE[0]})/env-local.sh" ]; then
      source $(dirname "${BASH_SOURCE[0]}")/env-local.sh
@@ -36,14 +36,8 @@ if [ ! -z "$ANDROID_SDK_HOME" ]; then
    echo "No ANDROID_SDK_HOME specified, Android hosts will need path set in local.properties to be buildable"
 fi
 
-if [ ! -z "$EMSDK_PATH" ]; then
-  echo "Setting Emscripten path..."
-  pushd $EMSDK_PATH > /dev/null
-  ls
-  source ./emsdk_env.sh
-  popd > /dev/null
-else
-  echo "No EMSDK_PATH specified, JS libs will not be buildable"
+if [ -z "$EMSDK_PATH" ]; then
+   echo "No EMSDK_PATH specified, JS libs will not be buildable"
 fi
 
 echo "Environment setup complete"

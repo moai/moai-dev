@@ -12,8 +12,10 @@
 
 set -e
 
+source ./env-linux.sh
+
 if [ -z $1 ]; then
-  libprefix=`dirname $0`/../lib/linux
+  libprefix=`dirname $0`/lib/linux
 else
   libprefix=$1
 fi
@@ -25,8 +27,8 @@ cores=$(getconf _NPROCESSORS_ONLN)
 
 : ${MOAI_SDK_HOME?"MOAI_SDK_HOME is not defined. Please set to the location of your MOAI SDK install (path)"}
 
-pushd `dirname $0`/..
-PITO_ROOT=$(pwd)
+pushd `dirname $0`
+CMAKEROOT=$(pwd)
 
 
 BUILD_DIR="build/build-linux"
@@ -50,17 +52,9 @@ cmake \
 -DMOAI_HTTP_SERVER=TRUE \
 -DCMAKE_BUILD_TYPE=Release \
 -DCMAKE_INSTALL_PREFIX=$libprefix \
-$PITO_ROOT/cmake/hosts/host-linux-sdl
+$CMAKEROOT/cmake/hosts/host-linux-sdl
 
 cmake --build . --target install -- -j$cores
-
-if [ ! -e "${PITO_ROOT}/bin/moai" ]; then
-   cp $libprefix/bin/moai $PITO_ROOT/bin/moai
-fi
-
-if [ ! -e "${MOAI_SDK_HOME}/util/moai" ]; then
-   cp $libprefix/bin/moai ${MOAI_SDK_HOME}/util/moai
-fi
 
 popd
 exit 0

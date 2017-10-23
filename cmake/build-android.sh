@@ -8,8 +8,8 @@ source $ENVSCRIPT
 : "${MOAI_SDK_HOME:?Please set MOAI_SDK_HOME variable to point to your Moai SDK }"
 : "${ANDROID_NDK:?You need to set ANDROID_NDK to point to your ndk path. Try using env-local.sh }"
 
-javac --version || ( echo "Can't find a JDK" && exit 1 )
-cmake --version || ( echo "Can't find cmake" && exit 1 )
+javac -version || { echo "Can't find a JDK" ; exit 1; }
+cmake --version || { echo "Can't find cmake"; exit 1; }
 
 #----- Build libmoai using sdk methods -----
 pushd `dirname $0`
@@ -38,9 +38,9 @@ echo "building for :$a:"
     -DMOAI_ANDROID=TRUE \
     -DANDROID_STL=c++_static \
     -DMOAI_SDK_HOME=$MOAI_SDK_HOME \
-    -DHOST_ROOT=$MOAI_SDK_HOME/src || ( echo "error running cmake" && exit 1 )
+    -DHOST_ROOT=$MOAI_SDK_HOME/src || { echo "error running cmake"; exit 1; }
 
-   make moai -j3 || ( echo "error building libmoai" && exit 1 )
+   make moai -j3 || { echo "error building libmoai"; exit 1; }
 done
 
 popd
