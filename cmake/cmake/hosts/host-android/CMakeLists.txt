@@ -5,6 +5,7 @@ get_filename_component(MY_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/../../cmake-module
 set (CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${MY_SOURCE}")
 set(BUILD_ANDROID TRUE)
 set(MOAI_ROOT ${MOAI_SDK_HOME} )
+set(HOST_ROOT ${MOAI_SDK_HOME}/src )
 # Setup the "MOAI_ROOT" variable
 get_filename_component(MOAI_ROOT "${MOAI_ROOT}" ABSOLUTE)
 get_filename_component(HOST_ROOT "${HOST_ROOT}" ABSOLUTE)
