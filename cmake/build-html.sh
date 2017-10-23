@@ -16,7 +16,8 @@
 # Thanks!
 pushd `dirname $0`
 
-source ./env-osx.sh
+uname -a | grep -i Darwin && ENVSCRIPT=./env-osx.sh || ENVSCRIPT=./env-linux.sh
+source $ENVSCRIPT
 
 # requirements
 if [ ! -z "$EMSDK_PATH" ]; then
