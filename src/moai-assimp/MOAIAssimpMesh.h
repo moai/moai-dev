@@ -12,7 +12,9 @@
 //================================================================//
 // MOAIAssimpMesh
 //================================================================//
-// TODO: doxygen
+/**	@lua	MOAIAssimpMesh
+	@text	Assimp Mesh
+*/
 class MOAIAssimpMesh :
 	public MOAIAssimpSceneMember {
 private:

@@ -15,6 +15,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	getIndex
+	@text	Return the index of the scene member within the scene
+
+	@in		MOAIAssimpSceneMember self
+	@out	number index
+*/
 int MOAIAssimpSceneMember::_getIndex ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpSceneMember, "U" )
 
@@ -26,6 +32,12 @@ int MOAIAssimpSceneMember::_getIndex ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getName
+	@text	Return the name of the scene member or its index if it has no name
+
+	@in		MOAIAssimpSceneMember self
+	@out	name or index
+*/
 int MOAIAssimpSceneMember::_getName ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpSceneMember, "U" )
 

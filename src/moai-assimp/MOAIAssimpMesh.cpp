@@ -10,7 +10,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	countBones
+ @text	Returns number of bones.
+ 
+ @in	MOAIAssimpMesh self
+ @out	number countBones
+ */
 int MOAIAssimpMesh::_countBones ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 
@@ -19,7 +24,12 @@ int MOAIAssimpMesh::_countBones ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	countColorChannels
+ @text	Returns number of ColorChannels.
+ 
+ @in	MOAIAssimpMesh self
+ @out	number countColorChannels
+ */
 int MOAIAssimpMesh::_countColorChannels ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 
@@ -28,7 +38,12 @@ int MOAIAssimpMesh::_countColorChannels ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	countFaces
+ @text	Returns number of Faces.
+ 
+ @in	MOAIAssimpMesh self
+ @out	number countFaces
+ */
 int MOAIAssimpMesh::_countFaces ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 
@@ -37,7 +52,12 @@ int MOAIAssimpMesh::_countFaces ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	countUVChannels
+ @text	Returns number of UVChannels.
+ 
+ @in	MOAIAssimpMesh self
+ @out	number countUVChannels
+ */
 int MOAIAssimpMesh::_countUVChannels ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 
@@ -46,7 +66,13 @@ int MOAIAssimpMesh::_countUVChannels ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	countUVs
+ @text	Returns number of UVs in a channel
+ 
+ @in	MOAIAssimpMesh self
+ @in	number channelId
+ @out	number countUVs
+ */
 int MOAIAssimpMesh::_countUVs ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 
@@ -73,7 +99,7 @@ int MOAIAssimpMesh::_countVertices ( lua_State* L ) {
 /**	@name	getBitangentsData
 	@text	Returns a table that contains bitangents vectors
 
-	@in		MOAIImportFactory self
+	@in		MOAIAssimpMesh self
 	@out	a Table that contain bitangent vectors
 */
 int MOAIAssimpMesh::_getBitangentsData ( lua_State* L ) {
@@ -87,7 +113,12 @@ int MOAIAssimpMesh::_getBitangentsData ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getBones
+	@text	Returns a table that contains bones vectors
+
+	@in		MOAIAssimpMesh self
+	@out	a Table that contains bone name and offset matricies
+*/
 int MOAIAssimpMesh::_getBones ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 
@@ -99,10 +130,10 @@ int MOAIAssimpMesh::_getBones ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	gethFacesData
+/**	@name	getFacesData
 	@text	Returns a table that contains vertex indices
 
-	@in		MOAIImportFactory self
+	@in		MOAIAssimpMesh self
 	@out	a Table that contain vertex indices
 */
 int MOAIAssimpMesh::_getFacesData ( lua_State* L ) {
@@ -116,7 +147,14 @@ int MOAIAssimpMesh::_getFacesData ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getIndices
+	@text	Fills a provided stream or indexbuffer with vertex indices
+
+	@in		MOAIAssimpMesh self
+	@in		MOAIStream|MOAIIndexBuffer target
+	@in		number indexSize
+	@out	number number of indicies written to stream
+*/
 int MOAIAssimpMesh::_getIndices ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 
@@ -159,7 +197,7 @@ int MOAIAssimpMesh::_getIndices ( lua_State* L ) {
 /**	@name	getMaterialIndex
 	@text	Returns a mesh's index to a scene material table
 
-	@in		MOAIImportFactory self
+	@in		MOAIAssimpMesh self
 	@out	an integer index to a scene material table
 */
 int MOAIAssimpMesh::_getMaterialIndex ( lua_State *L ) {
@@ -176,7 +214,7 @@ int MOAIAssimpMesh::_getMaterialIndex ( lua_State *L ) {
 /**	@name	getNormalsData
 	@text	Returns a table that contains normals vectors
 
-	@in		MOAIImportFactory self
+	@in		MOAIAssimpMesh self
 	@out	a Table that contain normal vectors
 */
 int MOAIAssimpMesh::_getNormalsData ( lua_State* L ) {
@@ -190,7 +228,12 @@ int MOAIAssimpMesh::_getNormalsData ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getPrimitiveType
+	@text	Returns a mesh's primative type
+
+	@in		MOAIAssimpMesh self
+	@out	ZGL_PRIM_POINTS | ZGL_PRIM_LINES | ZGL_PRIM_TRIANGLES 
+*/
 int MOAIAssimpMesh::_getPrimitiveType ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 
@@ -223,7 +266,7 @@ int MOAIAssimpMesh::_getPrimitiveType ( lua_State *L ) {
 /**	@name	getTangentsData
 	@text	Returns a table that contains tangents vectors
 
-	@in		MOAIImportFactory self
+	@in		MOAIAssimpMesh self
 	@out	a Table that contain tangent vectors
 */
 int MOAIAssimpMesh::_getTangentsData ( lua_State* L ) {
@@ -240,7 +283,7 @@ int MOAIAssimpMesh::_getTangentsData ( lua_State* L ) {
 /**	@name	getUVData
 	@text	Returns a table that contains UV Coordinates
 
-	@in		MOAIImportFactory self
+	@in		MOAIAssimpMesh self
 	@out	a Table that contain UV Coordniates Tables
 */
 int MOAIAssimpMesh::_getUVData ( lua_State* L ) {
@@ -278,7 +321,7 @@ int MOAIAssimpMesh::_getVertexColorData ( lua_State *L ) {
 /**	@name	getVertexData
 	@text	Returns a table that contains position vertices
 
-	@in		MOAIImportFactory self
+	@in		MOAIAssimpMesh self
 	@out	a Table that contain position vertices
 */
 int MOAIAssimpMesh::_getVertexData ( lua_State* L ) {
@@ -292,7 +335,15 @@ int MOAIAssimpMesh::_getVertexData ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getVertices
+	@text	Fills a provided stream or indexbuffer with vertex data
+
+	@in		MOAIAssimpMesh self
+	@in		MOAIStream|MOAIVertexBuffer target
+	@in 	boolean renormalize bones
+	@in		MOAIVertexFormat vertexFormat
+	@out	number number of indicies written to stream
+*/
 int MOAIAssimpMesh::_getVertices ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
 

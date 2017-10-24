@@ -122,7 +122,18 @@ int MOAIAssimpScene::_countTextures ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getAnimations
+	@text	Gets an animation or all animations from the scene
+
+	@overload
+		@in		MOAIAssimpScene self
+		@in		number animationIndex
+		@out	MOAIAssimpAnimation the animation
+
+	@overload
+		@in		MOAIAssimpScene self
+		@out	table Array of all MOAIAssimpAnimation
+*/
 int MOAIAssimpScene::_getAnimations ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
 
@@ -142,7 +153,18 @@ int MOAIAssimpScene::_getAnimations ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getCameras
+	@text	Gets a camera or all cameras from the scene
+
+	@overload
+		@in		MOAIAssimpScene self
+		@in		number cameraIndex
+		@out	MOAIAssimpCamera the camera
+
+	@overload
+		@in		MOAIAssimpScene self
+		@out	table Array of all MOAIAssimpCamera
+*/
 int MOAIAssimpScene::_getCameras ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
 
@@ -162,7 +184,18 @@ int MOAIAssimpScene::_getCameras ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getMaterials
+	@text	Gets a material or all materials from the scene
+
+	@overload
+		@in		MOAIAssimpScene self
+		@in		number index
+		@out	the material
+
+	@overload
+		@in		MOAIAssimpScene self
+		@out	array of all materials
+*/
 int MOAIAssimpScene::_getMaterials ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
 
@@ -192,7 +225,18 @@ int MOAIAssimpScene::_getMaterials ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getMeshes
+	@text	Gets a mesh by index or all materials from the scene
+
+	@overload
+		@in		MOAIAssimpScene self
+		@in		number index
+		@out	MOAIAssimpMesh the mesh
+
+	@overload
+		@in		MOAIAssimpScene self
+		@out	table of all meshes
+*/
 int MOAIAssimpScene::_getMeshes ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
 
@@ -212,7 +256,12 @@ int MOAIAssimpScene::_getMeshes ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getRootNode
+	@text	Return the root node of the scene
+
+	@in		MOAIAssimpScene self
+	@out	the root node
+*/
 int MOAIAssimpScene::_getRootNode ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
 

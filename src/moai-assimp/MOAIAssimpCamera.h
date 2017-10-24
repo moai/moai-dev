@@ -13,7 +13,9 @@
 //================================================================//
 // MOAIAssimpCamera
 //================================================================//
-// TODO: doxygen
+/**	@lua	MOAIAssimpCamera
+	@text	Assimp Camera
+*/
 class MOAIAssimpCamera :
 	public MOAIAssimpSceneMember {
 private:

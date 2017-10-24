@@ -13,7 +13,9 @@
 //================================================================//
 // MOAIAssimpAnimation
 //================================================================//
-// TODO: doxygen
+/**	@lua	MOAIAssimpAnimation
+	@text	Assimp Animation.
+*/
 class MOAIAssimpAnimation :
 	public MOAIAssimpSceneMember {
 private:

@@ -10,6 +10,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@lua	getAspect
+ @text	Returns the aspect.
+ 
+ @in	MOAIAssimpCamera self
+ @out	number aspectRatio
+ */
 int MOAIAssimpCamera::_getAspect ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
@@ -18,6 +24,12 @@ int MOAIAssimpCamera::_getAspect ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getFarClipPlane
+ @text	Returns the FarClipPlane
+ 
+ @in	MOAIAssimpCamera self
+ @out	number ClipPlaneFar
+ */
 int MOAIAssimpCamera::_getFarClipPlane ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
@@ -26,6 +38,12 @@ int MOAIAssimpCamera::_getFarClipPlane ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getHorizontalFOV
+ @text	Returns the HorizontalFOV
+ 
+ @in	MOAIAssimpCamera self
+ @out	number HorizontalFOV
+ */
 int MOAIAssimpCamera::_getHorizontalFOV ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
@@ -34,6 +52,12 @@ int MOAIAssimpCamera::_getHorizontalFOV ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getLocationVector
+ @text	Returns the LocationVector
+ 
+ @in	MOAIAssimpCamera self
+ @out	table location(x,y,z)
+ */
 int MOAIAssimpCamera::_getLocationVector ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
@@ -45,6 +69,12 @@ int MOAIAssimpCamera::_getLocationVector ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getLookAtVector
+ @text	Returns the LookAtVector
+ 
+ @in	MOAIAssimpCamera self
+ @out	table lookAt(x,y,z)
+ */
 int MOAIAssimpCamera::_getLookAtVector ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
@@ -56,6 +86,12 @@ int MOAIAssimpCamera::_getLookAtVector ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getMoaiCamera
+ @text	Returns the Moai Camera
+ 
+ @in	MOAIAssimpCamera self
+ @out	MOAICamera camera
+ */
 int MOAIAssimpCamera::_getMoaiCamera ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
@@ -67,6 +103,12 @@ int MOAIAssimpCamera::_getMoaiCamera ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getNearClipPlane
+ @text	Returns the NearClipPlane
+ 
+ @in	MOAIAssimpCamera self
+ @out	number NearClipPlane
+ */
 int MOAIAssimpCamera::_getNearClipPlane ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
@@ -75,6 +117,12 @@ int MOAIAssimpCamera::_getNearClipPlane ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getPitchAngle
+ @text	Returns the PitchAngle
+ 
+ @in	MOAIAssimpCamera self
+ @out	number PitchAngle
+ */
 int MOAIAssimpCamera::_getPitchAngle ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
@@ -83,6 +131,12 @@ int MOAIAssimpCamera::_getPitchAngle ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getPositionVector
+ @text	Returns the PositionVector
+ 
+ @in	MOAIAssimpCamera self
+ @out	table PitchAngle(x,y,z)
+ */
 int MOAIAssimpCamera::_getPositionVector ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
@@ -94,6 +148,12 @@ int MOAIAssimpCamera::_getPositionVector ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getRollAngle
+ @text	Returns the RollAngle
+ 
+ @in	MOAIAssimpCamera self
+ @out	number RollAngle
+ */
 int MOAIAssimpCamera::_getRollAngle ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
@@ -102,6 +162,12 @@ int MOAIAssimpCamera::_getRollAngle ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getRotationQuaternion
+ @text	Returns the RotationQuaternion
+ 
+ @in	MOAIAssimpCamera self
+ @out	table RotationQuaternion(x,y,z,w)
+ */
 int MOAIAssimpCamera::_getRotationQuaternion ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
@@ -123,6 +189,12 @@ int MOAIAssimpCamera::_getRotationQuaternion ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getScalingVector
+ @text	Returns the ScalingVector
+ 
+ @in	MOAIAssimpCamera self
+ @out	table ScalingVector(x,y,z)
+ */
 int MOAIAssimpCamera::_getScalingVector ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
@@ -134,6 +206,12 @@ int MOAIAssimpCamera::_getScalingVector ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getUpVector
+ @text	Returns the UpVector
+ 
+ @in	MOAIAssimpCamera self
+ @out	table UpVector(x,y,z)
+ */
 int MOAIAssimpCamera::_getUpVector ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 
@@ -145,6 +223,12 @@ int MOAIAssimpCamera::_getUpVector ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getYawAngle
+ @text	Returns the YawAngle
+ 
+ @in	MOAIAssimpCamera self
+ @out	number YawAngle
+ */
 int MOAIAssimpCamera::_getYawAngle ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpCamera, "U" )
 

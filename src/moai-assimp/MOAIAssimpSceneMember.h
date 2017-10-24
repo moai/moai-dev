@@ -12,7 +12,9 @@ class MOAIAssimpScene;
 //================================================================//
 // MOAIAssimpSceneMember
 //================================================================//
-// TODO: doxygen
+/**	@lua	MOAIAssimpSceneMember
+	@text	Base class for Assimp Scene Members
+*/
 class MOAIAssimpSceneMember :
 	public virtual MOAILuaObject {
 protected:

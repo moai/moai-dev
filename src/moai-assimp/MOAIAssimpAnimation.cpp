@@ -10,6 +10,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@lua	countChannels
+ @text	Returns the number of channels.
+ 
+ @in	MOAIAssimpAnimation self
+ @out	number channelCount
+ */
 int MOAIAssimpAnimation::_countChannels ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpAnimation, "U" )
 
@@ -18,6 +24,13 @@ int MOAIAssimpAnimation::_countChannels ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	countPositionKeys
+ @text	Returns the number of position keys in the channel
+ 
+ @in	MOAIAssimpAnimation self
+ @in	number channelIdx
+ @out	number NumPositionKeys
+ */
 int MOAIAssimpAnimation::_countPositionKeys ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpAnimation, "UN" )
 
@@ -27,6 +40,13 @@ int MOAIAssimpAnimation::_countPositionKeys ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	countRotationKeys
+ @text	Returns the number of rotation keys in the channel
+ 
+ @in	MOAIAssimpAnimation self
+ @in	number channelId
+ @out	number NumRotationKeys
+ */
 int MOAIAssimpAnimation::_countRotationKeys ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpAnimation, "UN" )
 
@@ -36,6 +56,13 @@ int MOAIAssimpAnimation::_countRotationKeys ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getAnimCurve
+ @text	Returns the anim curve specified by id.
+ 
+ @in	MOAIAssimpAnimation self
+ @in	number animcurveId
+ @out	MOAIAnimCurveBone animCurve
+ */
 int MOAIAssimpAnimation::_getAnimCurve ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpAnimation, "UN" )
 	
@@ -45,6 +72,13 @@ int MOAIAssimpAnimation::_getAnimCurve ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getChannelName
+ @text	Returns the channel name for channel with specified id.
+ 
+ @in	MOAIAssimpAnimation self
+ @in	number channelId
+ @out	string channelName
+ */
 int MOAIAssimpAnimation::_getChannelName ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpAnimation, "UN" )
 	
@@ -54,6 +88,13 @@ int MOAIAssimpAnimation::_getChannelName ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	countScaleKeys
+ @text	Returns the scale keys for channel with specified id.
+ 
+ @in	MOAIAssimpAnimation self
+ @in	number channelId
+ @out	number NumScalingKeys
+ */
 int MOAIAssimpAnimation::_countScaleKeys ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpAnimation, "UN" )
 
@@ -63,6 +104,12 @@ int MOAIAssimpAnimation::_countScaleKeys ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getDuration
+ @text	Returns duration of the animation in seconds
+ 
+ @in	MOAIAssimpAnimation self
+ @out	number durationSec
+ */
 int MOAIAssimpAnimation::_getDuration ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpAnimation, "U" )
 
@@ -71,6 +118,15 @@ int MOAIAssimpAnimation::_getDuration ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getPositionKey
+ @text	Returns a position key in a specified channel at specified index
+ 
+ @in	MOAIAssimpAnimation self
+ @in 	number channelId
+ @in	number index
+ @out	number time
+ @out	table vector(x,y,z)
+ */
 int MOAIAssimpAnimation::_getPositionKey ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpAnimation, "UNN" )
 
@@ -85,8 +141,17 @@ int MOAIAssimpAnimation::_getPositionKey ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getRotationKey
+ @text	Returns a rotation key in a specified channel at specified index
+ 
+ @in	MOAIAssimpAnimation self
+ @in 	number channelId
+ @in	number index
+ @out	number time
+ @out	table quaternion(x,y,z,w)
+ */
 int MOAIAssimpAnimation::_getRotationKey ( lua_State *L ) {
-	MOAI_LUA_SETUP ( MOAIAssimpAnimation, "U" )
+	MOAI_LUA_SETUP ( MOAIAssimpAnimation, "UNN" )
 
 	aiQuatKey* key = self->GetRotationKey ( state.GetValue < u32 >( 2, 1 ) - 1 , state.GetValue < u32 >( 3, 1 ) - 1 );
 	
@@ -99,8 +164,17 @@ int MOAIAssimpAnimation::_getRotationKey ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getScaleKey
+ @text	Returns a scale key in a specified channel at specified index
+ 
+ @in	MOAIAssimpAnimation self
+ @in 	number channelId
+ @in	number index
+ @out	number time
+ @out	table vector(x,y,z)
+ */
 int MOAIAssimpAnimation::_getScaleKey ( lua_State *L ) {
-	MOAI_LUA_SETUP ( MOAIAssimpAnimation, "U" )
+	MOAI_LUA_SETUP ( MOAIAssimpAnimation, "UNN" )
 
 	aiVectorKey* key = self->GetScaleKey ( state.GetValue < u32 >( 2, 1 ) - 1 , state.GetValue < u32 >( 3, 1 ) - 1 );
 	
