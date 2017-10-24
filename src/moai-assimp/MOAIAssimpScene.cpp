@@ -24,7 +24,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	clear
+/**	@lua	clear
 	@text	Frees Memory and Data from a Scene File
 
 	@in		MOAIAssimpScene self
@@ -38,11 +38,11 @@ int MOAIAssimpScene::_clear ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	countAnimations
+/**	@lua	countAnimations
 	@text	Return the number of animations in an scene
 	@in		MOAIAssimpScene self
 
-	@out	number of animations or nil
+	@out	number count    num of animations or nil
 */
 int MOAIAssimpScene::_countAnimations ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
@@ -52,11 +52,11 @@ int MOAIAssimpScene::_countAnimations ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	countCameras
+/**	@lua	countCameras
 	@text	Return the number of Cameras in an scene
 
 	@in		MOAIAssimpScene self
-	@out	number of cameras or nil
+	@out	number count    num of cameras or nil
 */
 int MOAIAssimpScene::_countCameras ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
@@ -66,11 +66,11 @@ int MOAIAssimpScene::_countCameras ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	countLights
+/**	@lua	countLights
 	@text	Return the number of lights in an scene
 
 	@in		MOAIAssimpScene self
-	@out	number of lights or nil
+	@out	number count    num of lights or nil
 */
 int MOAIAssimpScene::_countLights ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
@@ -80,11 +80,11 @@ int MOAIAssimpScene::_countLights ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	countMaterials
+/**	@lua	countMaterials
 	@text	Return the number of materials in an scene
 
 	@in		MOAIAssimpScene self
-	@out	number of materials or nil
+	@out	number count	num of materials or nil
 */
 int MOAIAssimpScene::_countMaterials ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
@@ -94,11 +94,11 @@ int MOAIAssimpScene::_countMaterials ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	countMeshes
+/**	@lua	countMeshes
 	@text	Return the number of meshes in an scene
 
 	@in		MOAIAssimpScene self
-	@out	number of meshes or nil
+	@out	number count	num of meshes or nil
 */
 int MOAIAssimpScene::_countMeshes ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
@@ -108,11 +108,11 @@ int MOAIAssimpScene::_countMeshes ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	countTextures
+/**	@lua	countTextures
 	@text	Return the number of textures in an scene
 
 	@in		MOAIAssimpScene self
-	@out	number of textures or nil
+	@out	number count	num of textures or nil
 */
 int MOAIAssimpScene::_countTextures ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
@@ -122,17 +122,17 @@ int MOAIAssimpScene::_countTextures ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getAnimations
+/**	@lua	getAnimations
 	@text	Gets an animation or all animations from the scene
 
 	@overload
 		@in		MOAIAssimpScene self
 		@in		number animationIndex
-		@out	MOAIAssimpAnimation the animation
+		@out	MOAIAssimpAnimation animation
 
 	@overload
 		@in		MOAIAssimpScene self
-		@out	table Array of all MOAIAssimpAnimation
+		@out	table animations   Array of all MOAIAssimpAnimation
 */
 int MOAIAssimpScene::_getAnimations ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
@@ -153,17 +153,17 @@ int MOAIAssimpScene::_getAnimations ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getCameras
+/**	@lua	getCameras
 	@text	Gets a camera or all cameras from the scene
 
 	@overload
 		@in		MOAIAssimpScene self
 		@in		number cameraIndex
-		@out	MOAIAssimpCamera the camera
+		@out	MOAIAssimpCamera camera
 
 	@overload
 		@in		MOAIAssimpScene self
-		@out	table Array of all MOAIAssimpCamera
+		@out	table assimpCameras		Array of all MOAIAssimpCamera
 */
 int MOAIAssimpScene::_getCameras ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
@@ -184,17 +184,17 @@ int MOAIAssimpScene::_getCameras ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMaterials
+/**	@lua	getMaterials
 	@text	Gets a material or all materials from the scene
 
 	@overload
 		@in		MOAIAssimpScene self
 		@in		number index
-		@out	the material
+		@out	MOAILuaMemberRef	material
 
 	@overload
 		@in		MOAIAssimpScene self
-		@out	array of all materials
+		@out	table materials		array of all materials
 */
 int MOAIAssimpScene::_getMaterials ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
@@ -225,17 +225,17 @@ int MOAIAssimpScene::_getMaterials ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMeshes
+/**	@lua	getMeshes
 	@text	Gets a mesh by index or all materials from the scene
 
 	@overload
 		@in		MOAIAssimpScene self
 		@in		number index
-		@out	MOAIAssimpMesh the mesh
+		@out	MOAIAssimpMesh mesh
 
 	@overload
 		@in		MOAIAssimpScene self
-		@out	table of all meshes
+		@out	table meshes	all of the meshes
 */
 int MOAIAssimpScene::_getMeshes ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
@@ -256,11 +256,11 @@ int MOAIAssimpScene::_getMeshes ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getRootNode
+/**	@lua	getRootNode
 	@text	Return the root node of the scene
 
 	@in		MOAIAssimpScene self
-	@out	the root node
+	@out	table node 	the root node
 */
 int MOAIAssimpScene::_getRootNode ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpScene, "U" )
@@ -275,7 +275,7 @@ int MOAIAssimpScene::_getRootNode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	load
+/**	@lua	load
 	@text	Loads a 3D scene file. May be passed a filename or an existing
 			file to reload with new processing. The preprocessing flags
 			may be OR'ed together and passed as a single flag or may be

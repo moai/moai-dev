@@ -82,11 +82,11 @@ int MOAIAssimpMesh::_countUVs ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getNumvertices
-	@text	Return the number of vertices in a mesh
-
+/**	@lua	countVertices
+ 	@text	Returns number of Verticies in mesh
+ 
 	@in		MOAIAssimpMesh self
-	@out	number of vertices in a mesh or nil
+	@out	number count
 */
 int MOAIAssimpMesh::_countVertices ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
@@ -96,11 +96,11 @@ int MOAIAssimpMesh::_countVertices ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getBitangentsData
+/**	@lua	getBitangentsData
 	@text	Returns a table that contains bitangents vectors
 
 	@in		MOAIAssimpMesh self
-	@out	a Table that contain bitangent vectors
+	@out	table tangentdata 	a Table that contain bitangent vectors
 */
 int MOAIAssimpMesh::_getBitangentsData ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
@@ -113,11 +113,11 @@ int MOAIAssimpMesh::_getBitangentsData ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getBones
+/**	@lua	getBones
 	@text	Returns a table that contains bones vectors
 
 	@in		MOAIAssimpMesh self
-	@out	a Table that contains bone name and offset matricies
+	@out	table bones	  a Table that contains bone name and offset matricies
 */
 int MOAIAssimpMesh::_getBones ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
@@ -130,11 +130,11 @@ int MOAIAssimpMesh::_getBones ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getFacesData
-	@text	Returns a table that contains vertex indices
+/**	@lua	getFacesData
+	@text	Returns a table that contains face data
 
 	@in		MOAIAssimpMesh self
-	@out	a Table that contain vertex indices
+	@out	table faces	 Table that contain faces
 */
 int MOAIAssimpMesh::_getFacesData ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
@@ -147,13 +147,20 @@ int MOAIAssimpMesh::_getFacesData ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getIndices
+/**	@lua	getIndices
 	@text	Fills a provided stream or indexbuffer with vertex indices
 
-	@in		MOAIAssimpMesh self
-	@in		MOAIStream|MOAIIndexBuffer target
-	@in		number indexSize
-	@out	number number of indicies written to stream
+	@overload
+		@in		MOAIAssimpMesh self
+		@in		MOAIStream target		stream to accept indicies
+		@in		number indexSize		Size of each index
+		@out	number count			number of indicies written to stream
+
+	@overload
+		@in		MOAIAssimpMesh self
+		@in		MOAIIndexBuffer target	Buffer to accept indicies
+		@in		number indexSize		Size of each index
+		@out	number count	 		number of indicies written to stream
 */
 int MOAIAssimpMesh::_getIndices ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
@@ -194,11 +201,11 @@ int MOAIAssimpMesh::_getIndices ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMaterialIndex
+/**	@lua	getMaterialIndex
 	@text	Returns a mesh's index to a scene material table
 
 	@in		MOAIAssimpMesh self
-	@out	an integer index to a scene material table
+	@out	number materialIndex 	an integer index to a scene material table
 */
 int MOAIAssimpMesh::_getMaterialIndex ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
@@ -211,11 +218,11 @@ int MOAIAssimpMesh::_getMaterialIndex ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getNormalsData
+/**	@lua	getNormalsData
 	@text	Returns a table that contains normals vectors
 
 	@in		MOAIAssimpMesh self
-	@out	a Table that contain normal vectors
+	@out	table normals	a Table that contain normal vectors
 */
 int MOAIAssimpMesh::_getNormalsData ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
@@ -228,11 +235,11 @@ int MOAIAssimpMesh::_getNormalsData ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getPrimitiveType
+/**	@lua	getPrimitiveType
 	@text	Returns a mesh's primative type
 
 	@in		MOAIAssimpMesh self
-	@out	ZGL_PRIM_POINTS | ZGL_PRIM_LINES | ZGL_PRIM_TRIANGLES 
+	@out	number primType		either ZGL_PRIM_POINTS | ZGL_PRIM_LINES | ZGL_PRIM_TRIANGLES | nil
 */
 int MOAIAssimpMesh::_getPrimitiveType ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
@@ -263,11 +270,11 @@ int MOAIAssimpMesh::_getPrimitiveType ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTangentsData
+/**	@lua	getTangentsData
 	@text	Returns a table that contains tangents vectors
 
 	@in		MOAIAssimpMesh self
-	@out	a Table that contain tangent vectors
+	@out	table tangents	 Table that contain tangent vectors
 */
 int MOAIAssimpMesh::_getTangentsData ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
@@ -280,11 +287,12 @@ int MOAIAssimpMesh::_getTangentsData ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getUVData
+/**	@lua	getUVData
 	@text	Returns a table that contains UV Coordinates
 
 	@in		MOAIAssimpMesh self
-	@out	a Table that contain UV Coordniates Tables
+	@in		number channelId	Channel
+	@out	table uvData		A Table that contain UV Coordniates Tables
 */
 int MOAIAssimpMesh::_getUVData ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "UN" )
@@ -299,12 +307,12 @@ int MOAIAssimpMesh::_getUVData ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getVertexColorData
+/**	@lua	getVertexColorData
 	@text	Returns a table that contains color data vertex 4d vector
 
 	@in		MOAIAssimpMesh self
-	@in     Color Vertex channel number
-	@out	a Table that color data vertex 4d vectors
+	@in     number colorChannel	 	Color Vertex channel number
+	@out	table colorData		a Table that color data vertex 4d vectors
 */
 int MOAIAssimpMesh::_getVertexColorData ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "UN" )
@@ -318,11 +326,11 @@ int MOAIAssimpMesh::_getVertexColorData ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getVertexData
+/**	@lua	getVertexData
 	@text	Returns a table that contains position vertices
 
 	@in		MOAIAssimpMesh self
-	@out	a Table that contain position vertices
+	@out	table vertexData	a Table that contain position vertices
 */
 int MOAIAssimpMesh::_getVertexData ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
@@ -335,14 +343,22 @@ int MOAIAssimpMesh::_getVertexData ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getVertices
+/**	@lua	getVertices
 	@text	Fills a provided stream or indexbuffer with vertex data
 
-	@in		MOAIAssimpMesh self
-	@in		MOAIStream|MOAIVertexBuffer target
-	@in 	boolean renormalize bones
-	@in		MOAIVertexFormat vertexFormat
-	@out	number number of indicies written to stream
+	@overload
+		@in		MOAIAssimpMesh self
+		@in		MOAIStream target 						destination stream
+		@in 	boolean renormalizeBones				do we renormalize bones
+		@in		MOAIVertexFormat vertexFormat			the vertex format
+		@out	number count	 						number of indicies written to stream
+	
+	@overload
+		@in		MOAIAssimpMesh self
+		@in		MOAIVertexBuffer target 				destination vertex buffer
+		@in 	boolean renormalizeBones				do we renormalize bones
+		@in		MOAIVertexFormat vertexFormat			the vertex format
+		@out	number count	 						number of indicies written to stream
 */
 int MOAIAssimpMesh::_getVertices ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAssimpMesh, "U" )
