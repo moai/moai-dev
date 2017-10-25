@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "com.moaisdk.refapp"
@@ -10,6 +10,7 @@ android {
         targetSdkVersion 22
         versionCode 8
         versionName "1.0"
+
     }
     buildTypes {
         release {
@@ -23,34 +24,46 @@ android {
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
     }
+
 }
 
-//task ( 'cleanLuaScripts', type: Delete ) {
-//    delete 'src/main/assets/lua'
-//}
+if (hasProperty('luaRoot')) {
+    task ( 'cleanLuaScripts', type: Delete ) {
+        delete 'src/main/assets/lua'
+    }
 
-task ( 'cleanLibraries', type: Delete ) {
-    delete 'src/main/jniLibs'
+    task ( 'copyLuaScripts', type: Copy ) {
+        from new File(luaRoot).canonicalPath
+        into 'src/main/assets/lua'
+    }
+
+    clean.dependsOn cleanLuaScripts
+    preBuild.dependsOn copyLuaScripts
 }
 
-//task ( 'copyLuaScripts', type: Copy ) {
-//    from '../../samples/anim-basic'
-//    into 'src/main/assets/lua'
-//}
+//set on command line or in gradle.properties
+boolean usePrebuiltLibs = hasProperty('usePrebuiltMoaiFrom')
 
-task ( 'copyLibraries', type: Copy ) {
-    from '../../android-ndk/libs'
-    into 'src/main/jniLibs'
+if (usePrebuiltLibs) {
+    task('copyLibraries', type: Copy) {
+        from new File(usePrebuiltMoaiFrom).canonicalPath
+        into 'src/main/jniLibs'
+    }
+
+    task ( 'cleanLibraries', type: Delete ) {
+        delete 'src/main/jniLibs'
+    }
+
+    clean.dependsOn cleanLibraries
+    preBuild.dependsOn copyLibraries
 }
-
-//clean.dependsOn cleanLuaScripts
-clean.dependsOn cleanLibraries
-
-//preBuild.dependsOn copyLuaScripts
-preBuild.dependsOn copyLibraries
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile project(':core')
+    if (!usePrebuiltLibs) {
+        compile project(":libmoai")
+    }
 }
+
