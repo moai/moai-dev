@@ -33,6 +33,11 @@ extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_MoaiKeyboard_AKUNotifyTe
 }
 
 //----------------------------------------------------------------//
+/**	@lua	hideKeyboard
+	@text	hides the android soft keyboard
+
+	@out 	nil
+*/
 int MOAIKeyboardAndroid::_hideKeyboard ( lua_State* L ) {
 	JNI_GET_ENV ( jvm, env );
 	MOAILuaState state ( L );
@@ -59,6 +64,11 @@ int MOAIKeyboardAndroid::_hideKeyboard ( lua_State* L ) {
 
 // Listeners use getText to retrieve the input
 //----------------------------------------------------------------//
+/**	@lua	getText
+	@text	gets the text of the keyboard
+
+	@out 	string text
+*/
 int MOAIKeyboardAndroid::_getText ( lua_State* L ) {
 	MOAILuaState state ( L );
 	MOAIKeyboardAndroid::Get ().PushText ( state );
@@ -66,6 +76,13 @@ int MOAIKeyboardAndroid::_getText ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	setListener
+	@text	sets the listener for the specified keyboard event EVENT_INPUT or EVENT_RETURN
+
+	@in		number eventType
+	@in 	function listener
+	@out 	nil
+*/
 int MOAIKeyboardAndroid::_setListener ( lua_State* L ) {
 	MOAILuaState state ( L );
 
@@ -78,6 +95,12 @@ int MOAIKeyboardAndroid::_setListener ( lua_State* L ) {
 	return 0;
 }
 
+/**	@lua	setText
+	@text	sets the text of the current keyboard
+	
+	@in		string text
+	@out 	nil
+*/
 int MOAIKeyboardAndroid::_setText ( lua_State* L ) { 
 
 	MOAILuaState state ( L ); 
@@ -92,28 +115,48 @@ int MOAIKeyboardAndroid::_setText ( lua_State* L ) {
 		jmethodID setText = env->GetStaticMethodID ( moai, "setText", "(Ljava/lang/String;)V" );
 		if ( setText ) {
 			env->CallStaticVoidMethod ( moai, setText, ( jstring )jtext ); 
-			return 1;
+			return 0;
 		}
 	}
 	return 0;
 }
 
+/**	@lua	showKeyboard
+	@text	shows the default text keyboard
+	@out 	nil
+*/
 int MOAIKeyboardAndroid::_showKeyboard ( lua_State* L ) {
     return _showTextKeyboard( L );
 }
 
+/**	@lua	showTextKeyboard
+	@text	shows the text keyboard
+	@out 	nil
+*/
 int MOAIKeyboardAndroid::_showTextKeyboard( lua_State* L ) {
     return _showKeyboardHelper( "showTextKeyboard" );
 }
 
+/**	@lua	showNumberKeyboard
+	@text	shows the numeric keyboard
+	@out 	nil
+*/
 int MOAIKeyboardAndroid::_showNumberKeyboard( lua_State* L ) {
     return _showKeyboardHelper( "showNumberKeyboard" );
 }
 
+/**	@lua	showDateTimeKeyboard
+	@text	shows the date time keyboard
+	@out 	nil
+*/
 int MOAIKeyboardAndroid::_showDateTimeKeyboard( lua_State* L ) {
     return _showKeyboardHelper( "showDateTimeKeyboard" );
 }
 
+/**	@lua	showPhoneKeyboard
+	@text	shows the phone keyboard
+	@out 	nil
+*/
 int MOAIKeyboardAndroid::_showPhoneKeyboard( lua_State* L ) {
     return _showKeyboardHelper( "showPhoneKeyboard" );
 }

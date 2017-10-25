@@ -120,6 +120,12 @@ int MOAIMoviePlayerAndroid::_pause ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	setListener
+	@text	Add a listener for a Movie Player Event ( MOVIE_PLAYER_READY | MOVIE_PLAYER_COMPLETED )
+	
+	@in		number 	eventType				
+	@out	nil
+*/
 int MOAIMoviePlayerAndroid::_setListener ( lua_State* L ) {
 	
 	MOAILuaState state ( L );

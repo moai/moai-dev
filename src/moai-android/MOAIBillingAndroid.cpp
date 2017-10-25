@@ -306,6 +306,14 @@ int MOAIBillingAndroid::_setBillingProvider ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	setListener
+	@text	set the callback for the provided event type which can be any of:
+	CHECK_BILLING_SUPPORTED ,PURCHASE_RESPONSE_RECEIVED, PURCHASE_STATE_CHANGED,
+	RESTORE_RESPONSE_RECEIVED, USER_ID_DETERMINED
+
+	@in		number EventType
+	@out 	nil
+*/
 int MOAIBillingAndroid::_setListener ( lua_State* L ) {
 
 	MOAILuaState state ( L );
@@ -578,7 +586,7 @@ int MOAIBillingAndroid::_purchaseProduct ( lua_State* L ) {
 	@text	Starts a purchase intent for the desired product
 
 	@in		string sku
-	@in		int type
+	@in		number type
 	@opt	string devPayload
 	@out 	nil
 */

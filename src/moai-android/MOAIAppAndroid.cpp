@@ -16,7 +16,11 @@ extern JavaVM* jvm;
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getPictureCode
+	@text	Return the result code of the last takePicture call
+
+	@out 	number	resultCode			0 = User cancelled, -1 = Success
+*/
 int MOAIAppAndroid::_getPictureCode( lua_State* L ) {
 	MOAILuaState state( L );
 	MOAIAppAndroid::Get().PushPictureCode( state );
@@ -24,7 +28,11 @@ int MOAIAppAndroid::_getPictureCode( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getPicturePath
+	@text	Return the path of the image obtained using the last takePicture call
+
+	@out 	string	imagePath			filelocation or "" if the operation failed
+*/
 int MOAIAppAndroid::_getPicturePath( lua_State* L ) {
 	MOAILuaState state( L );
 	MOAIAppAndroid::Get().PushPicturePath( state );
@@ -140,7 +148,12 @@ int MOAIAppAndroid::_getSystemUptime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/** @lua    openURL
+    @text   opens a url by invoking the Intent.ACTION_VIEW intent
+
+	@in		string Url
+	@out	nil
+*/
 int MOAIAppAndroid::_openURL ( lua_State* L ) {
 
 	MOAILuaState state ( L );
@@ -157,7 +170,7 @@ int MOAIAppAndroid::_openURL ( lua_State* L ) {
 
 	if ( moai == NULL ) {
 	
-		ZLLogF ( ZLLog::CONSOLE, "MOAIAppAndroid: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
+		ZLLogF ( ZLLog::CONSOLE, "MOAIAppAndroid: Unable to find java class %s", "com/moaisdk/core/Moai" );
 
     }
     else {
@@ -271,7 +284,14 @@ int MOAIAppAndroid::_share ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/** @lua    takePicture
+	@text   takes a picture by invoking the MediaStore.ACTION_IMAGE_CAPTURE intent 
+			listen for EVENT_PICTURE_TAKEN on the listener which is called 
+			with resultcode (-1 for success) and path or get result
+			using getPictureCode() and getPicturePath()
+	
+	@out	nil
+*/
 int MOAIAppAndroid::_takePicture( lua_State* L ) {
     MOAILuaState state( L);
 

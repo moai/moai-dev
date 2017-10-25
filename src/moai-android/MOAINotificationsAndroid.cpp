@@ -199,6 +199,14 @@ int MOAINotificationsAndroid::_setAppIconBadgeNumber ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	setListener
+	@text	Add a listener for a Notification Event 	
+			LOCAL_NOTIFICATION_MESSAGE_RECEIVED, REMOTE_NOTIFICATION_REGISTRATION_COMPLETE, 
+			REMOTE_NOTIFICATION_MESSAGE_RECEIVED
+	
+	@in		number 	eventType				
+	@out	nil
+*/
 int MOAINotificationsAndroid::_setListener ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
