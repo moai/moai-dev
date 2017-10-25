@@ -17,7 +17,7 @@
 /**	@lua	getDampingRatio
 	@text	See Box2D documentation.
 
-	@in		MOAIBox2DDistanceJoint self
+	@in		MOAIBox2DWeldJoint self
 	@out	number 	dampingRatio
  */
 int MOAIBox2DWeldJoint::_getDampingRatio ( lua_State* L ) {
@@ -38,7 +38,7 @@ int MOAIBox2DWeldJoint::_getDampingRatio ( lua_State* L ) {
 /**	@lua    getFrequency
 	@text   See Box2D documentation.
 
-	@in		MOAIBox2DDistanceJoint 		self
+	@in		MOAIBox2DWeldJoint 		self
 	@out	number 	frequency			In Hz.
  */
 int MOAIBox2DWeldJoint::_getFrequency ( lua_State* L ) {
@@ -59,7 +59,7 @@ int MOAIBox2DWeldJoint::_getFrequency ( lua_State* L ) {
 /**	@lua    setDampingRatio
 	@text   See Box2D documentation.
 	
-	@in		MOAIBox2DDistanceJoint 		self
+	@in		MOAIBox2DWeldJoint 		self
 	@opt	number dampingRatio 		Default value is 0.
 	@out	nil
  */
@@ -83,7 +83,7 @@ int MOAIBox2DWeldJoint::_setDampingRatio ( lua_State* L ) {
 /**	@lua	setFrequency
 	@text	See Box2D documentation.
 	   
-	@in		MOAIBox2DDistanceJoint 	self
+	@in		MOAIBox2DWeldJoint 	self
 	@opt	number frequency		In Hz. Default value is 0.
 	@out	nil
  */

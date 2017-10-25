@@ -9,6 +9,9 @@
 //================================================================//
 // MOAIDeserializer
 //================================================================//
+/**	@lua	MOAIDeserializer
+	@text	Class for deserializing objects serialized using MOAISerializer
+*/
 class MOAIDeserializer :
 	public MOAISerializerBase {
 private:

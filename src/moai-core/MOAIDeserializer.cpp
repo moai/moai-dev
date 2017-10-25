@@ -11,6 +11,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@lua	base64Decode
+	@text	decodes a base64 string
+	
+	@in		string encodedText
+	@out	string decodedText
+*/
 int MOAIDeserializer::_base64Decode ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
@@ -19,6 +25,13 @@ int MOAIDeserializer::_base64Decode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	createObject
+	@text	creates an object of the specified class by invoking its "new" method
+	
+	@in		MOAIDeserializer self
+	@in		string className
+	@out	userdata object
+*/
 int MOAIDeserializer::_createObject ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDeserializer, "US" );
 
@@ -41,6 +54,15 @@ int MOAIDeserializer::_createObject ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	initObject
+	@text	deserializes values into an existing object
+	
+	@in		MOAIDeserializer self
+	@in	    MOAILuaObject into  target object
+	@in		table memberTable	the membertable
+	@in		table initTable 	table of property values
+	@out	nil
+*/
 int MOAIDeserializer::_initObject ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDeserializer, "UU" );
 
@@ -77,6 +99,16 @@ int MOAIDeserializer::_initObject ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	registerObjectID
+	@text	registers an ID for a given object so that when the objectId
+			is encountered during deserialization, the given object is substituted.
+	
+	@in		MOAIDeserializer self
+	@in	    MOAILuaObject object 	Object to register
+	@in		number objectId
+
+	@out	MOAILuaObject
+*/
 int MOAIDeserializer::_registerObjectID ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDeserializer, "UU" );
 

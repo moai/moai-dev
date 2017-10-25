@@ -796,7 +796,7 @@ int MOAIBox2DWorld::_getLinearSleepTolerance ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/** @lua    getPerformace
+/** @lua    getPerformance
 	@text   Returns profiler numbers from box2d
 	
 	@in		MOAIBox2DWorld self
