@@ -19,7 +19,7 @@
 	extern "C" {
 #endif
 
-typedef void ( *zl_out_of_memory_func )();
+typedef void ( *zl_out_of_memory_func )( void );
 
 //================================================================//
 // zl_stat

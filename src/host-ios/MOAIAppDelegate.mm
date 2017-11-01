@@ -33,7 +33,7 @@
 	//----------------------------------------------------------------//
 	-( BOOL ) application:( UIApplication* )application didFinishLaunchingWithOptions:( NSDictionary* )launchOptions {
 		
-        [ application setStatusBarHidden:true ];
+        //[ application setStatusBarHidden:true ];
         
         [ MOAIView application:application didFinishLaunchingWithOptions:launchOptions ];
         
@@ -51,6 +51,7 @@
         
         mMoaiVC = [[ UIViewController alloc ] init ];
         mMoaiVC.view = mMoaiView;
+        [ mMoaiVC prefersStatusBarHidden ];
 
         mWindow = [[ UIWindow alloc ] init ];
         [ mWindow makeKeyAndVisible ];
