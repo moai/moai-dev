@@ -178,7 +178,6 @@ void ZLColor::Convert ( void* dest, ColorFormat destFmt, const void* src, ColorF
 					color = ZLBitBuffer::GetValue ( src, nCopied + i, 1 ) ? 0xff : 0x00;
 					buffer [ i ] = color << 0x18;
 				}
-				bufferPtr = buffer;
 				break;
 			
 			case A_4:
@@ -187,7 +186,6 @@ void ZLColor::Convert ( void* dest, ColorFormat destFmt, const void* src, ColorF
 					color = ZLBitBuffer::GetValue ( src, nCopied + i, 4 );
 					buffer [ i ] = ( color << 0x1C ) | ( color << 0x18 );
 				}
-				bufferPtr = buffer;
 				break;
 			
 			case A_8:
@@ -199,7 +197,6 @@ void ZLColor::Convert ( void* dest, ColorFormat destFmt, const void* src, ColorF
 					
 					buffer [ i ] = color << 0x18;
 				}
-				bufferPtr = buffer;
 				break;
 			
 			case LA_8:
@@ -217,7 +214,6 @@ void ZLColor::Convert ( void* dest, ColorFormat destFmt, const void* src, ColorF
 									( l << 0x10 ) +
 									( a << 0x18 );
 				}
-				bufferPtr = buffer;
 				break;
 			
 			case RGB_888:
@@ -235,7 +231,6 @@ void ZLColor::Convert ( void* dest, ColorFormat destFmt, const void* src, ColorF
 					
 					buffer [ i ]= color | 0xFF000000;
 				}
-				bufferPtr = buffer;
 				break;
 				
 			case RGB_565:
@@ -255,7 +250,6 @@ void ZLColor::Convert ( void* dest, ColorFormat destFmt, const void* src, ColorF
 									0xFF000000;
 					
 				}
-				bufferPtr = buffer;
 				break;
 			
 			case RGBA_5551: 
@@ -274,7 +268,6 @@ void ZLColor::Convert ( void* dest, ColorFormat destFmt, const void* src, ColorF
 									((( b << 0x03 ) | ( b >> 0x02 )) << 0x10 ) +
 									(((( color >> 0x0F ) & 0x01 ) ? 0xFF : 0x00 ) << 0x18 );
 				}
-				bufferPtr = buffer;
 				break;
 
 			case RGBA_4444:
@@ -294,7 +287,6 @@ void ZLColor::Convert ( void* dest, ColorFormat destFmt, const void* src, ColorF
 									(( b << 0x14 ) | ( b << 0x10 )) +
 									(( a << 0x1C ) | ( a << 0x18 ));
 				}
-				bufferPtr = buffer;
 				break;
 
 			case RGBA_8888:

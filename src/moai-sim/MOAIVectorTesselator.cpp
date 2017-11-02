@@ -813,7 +813,7 @@ void MOAIVectorTesselator::ClearShapes () {
 	for ( u32 i = 0; i < this->mShapeStack.GetTop (); ++i ) {
 		MOAIVectorShape* shape = this->mShapeStack [ i ];
 		if ( shape ) {
-			delete shape;
+			delete this->mShapeStack [ i ];
 		}
 	}
 	

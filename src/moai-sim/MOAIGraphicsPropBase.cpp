@@ -317,6 +317,7 @@ ZLMatrix4x4 MOAIGraphicsPropBase::GetWorldDrawingMtx () {
 			ZLMatrix4x4 localToWorldMtx ( this->GetLocalToWorldMtx ());
 			
 			// TODO: check that pivot is supported correctly
+			worldDrawingMtx.Ident (); // TODO: this was uninitialized
 			ZLVec3D loc;
 			worldDrawingMtx.GetTranslation ( loc );
 			viewProjMtx.Project ( loc );

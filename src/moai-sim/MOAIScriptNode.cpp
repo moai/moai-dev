@@ -4,11 +4,20 @@
 #include "pch.h"
 #include <moai-sim/MOAIScriptNode.h>
 
+//================================================================//
+// MOAIMemberTableAttr
+//================================================================//
 class MOAIMemberTableAttr {
 protected:
 	friend class MOAIScriptNode;
 	MOAIScriptNode*		mSource;
 	cc8*				mFieldName;
+	
+	//----------------------------------------------------------------//
+	MOAIMemberTableAttr () :
+		mSource ( 0 ),
+		mFieldName ( 0 ) {
+		}
 };
 
 //================================================================//
@@ -159,13 +168,15 @@ void MOAIScriptNode::NamedAttrSet ( u32 attrID, MOAIAttribute &attr ) {
 			MOAIScriptNode* source = value.mSource;
 			cc8* sourceField = value.mFieldName;
 			
-			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-			source->PushMemberTable ( state );
-			this->PushMemberTable ( state );
-			state.PushField ( -2, sourceField );
+			if ( source && sourceField ) {
 			
-			lua_setfield ( state, -2, attrName );
-			
+				MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+				source->PushMemberTable ( state );
+				this->PushMemberTable ( state );
+				state.PushField ( -2, sourceField );
+				
+				lua_setfield ( state, -2, attrName );
+			}
 			break;
 		}
 	}

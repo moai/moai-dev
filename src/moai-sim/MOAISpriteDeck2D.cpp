@@ -787,7 +787,7 @@ ZLBounds MOAISpriteDeck2D::MOAIDeck_GetBounds ( u32 idx ) {
 			for ( size_t i = base ; i < top; ++i ) {
 				
 				MOAISprite sprite = this->mSprites [ i % totalSprites ];
-				rect.Grow ( this->mQuads [ sprite.mQuadID ].GetBounds (), i > 0 );
+				rect.Grow ( this->mQuads [ sprite.mQuadID ].GetBounds (), i > base );
 			}
 			bounds.Init ( rect );
 		}

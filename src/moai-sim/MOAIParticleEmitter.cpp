@@ -207,6 +207,7 @@ void MOAIParticleEmitter::GetRandomParticle ( ZLVec3D& loc, ZLVec3D& vec ) {
 			loc = this->GetRandomVec ( 0.0f, 360.0f, this->mInnerRadius, this->mOuterRadius );
 			break;
 
+		default:
 		case POINT:
 			
 			loc.mX = 0.0f;

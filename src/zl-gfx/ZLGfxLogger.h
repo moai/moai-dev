@@ -59,14 +59,6 @@ public:
 	void					CompressedTexImage2D		( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, ZLSharedConstBuffer* buffer );
 	
 	//ZLSharedConstBuffer*	CopyBuffer					( ZLSharedConstBuffer* buffer );
-
-	ZLGfxHandle*			CreateBuffer				();
-	ZLGfxHandle*			CreateFramebuffer			();
-	ZLGfxHandle*			CreateProgram				();
-	ZLGfxHandle*			CreateRenderbuffer			();
-	ZLGfxHandle*			CreateShader				( u32 shaderType );
-	ZLGfxHandle*			CreateTexture				();
-	ZLGfxHandle*			CreateVertexArray			();
 	
 	void					CullFace					( u32 mode );
 	

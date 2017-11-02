@@ -234,7 +234,7 @@ size_t MOAIInputMgr::ParseEvents ( ZLStream& stream, double timestep ) {
 	UNUSED ( timestep ); // TODO: fix this
 
 	bool first = true;
-	double timebase = 0;
+	//double timebase = 0;
 	size_t cursor = stream.GetCursor ();
 	
 	// parse events until we run out or hit an event after the current sim time
@@ -245,7 +245,7 @@ size_t MOAIInputMgr::ParseEvents ( ZLStream& stream, double timestep ) {
 		double timestamp	= stream.Read < double >( 0 );
 		
 		if ( first ) {
-			timebase = timestamp;
+			//timebase = timestamp;
 			first = false;
 		}
 		

@@ -67,11 +67,11 @@ public:
 	
 	//----------------------------------------------------------------//
 	TYPE& Push () {
-		
-		ZLResultCode result = this->Grow ( this->mTop + 1, CHUNKSIZE );
-		
-		UNUSED ( result );
-		assert ( result == ZL_OK );
+
+		if (( this->Grow ( this->mTop + 1, CHUNKSIZE ) != ZL_OK ) || ( !this->mData )) {
+			assert ( false );
+			return ZLTypeID < TYPE >::DummyRef ();
+		}
 		
 		new ( &this->mData [ this->mTop ]) TYPE (); // placement new
 		return this->mData [ this->mTop++ ]; // Note the post-increment
@@ -80,7 +80,7 @@ public:
 	//----------------------------------------------------------------//
 	TYPE& Push ( ZLResultCode& result ) {
 	
-		if ( this->Grow ( this->mTop + 1, CHUNKSIZE ) != ZL_OK ) {
+		if (( this->Grow ( this->mTop + 1, CHUNKSIZE ) != ZL_OK ) || ( !this->mData )) {
 			result = ZL_ALLOCATION_ERROR;
 			return ZLTypeID < TYPE >::DummyRef ();
 		}
@@ -93,10 +93,10 @@ public:
 	//----------------------------------------------------------------//
 	TYPE& Push ( const TYPE& type ) {
 		
-		ZLResultCode result = this->Grow ( this->mTop + 1, CHUNKSIZE );
-		UNUSED ( result ); // TODO: why isn't assert () redefine working here?
-
-		assert ( result == ZL_OK );
+		if (( this->Grow ( this->mTop + 1, CHUNKSIZE ) != ZL_OK ) || ( !this->mData )) {
+			assert ( false );
+			return ZLTypeID < TYPE >::DummyRef ();
+		}
 		
 		new ( &this->mData [ this->mTop ]) TYPE ( type ); // placement copy constructor
 		return this->mData [ this->mTop++ ]; // Note the post-increment
@@ -105,11 +105,12 @@ public:
 	//----------------------------------------------------------------//
 	TYPE& Push ( const TYPE& type, ZLResultCode& result ) {
 		
-		if ( this->Grow ( this->mTop + 1, CHUNKSIZE ) != ZL_OK ) {
+		if (( this->Grow ( this->mTop + 1, CHUNKSIZE ) != ZL_OK ) || ( !this->mData )) {
 			result = ZL_ALLOCATION_ERROR;
 			return ZLTypeID < TYPE >::DummyRef ();
 		}
 		result = ZL_OK;
+		
 		new ( &this->mData [ this->mTop ]) TYPE ( type ); // placement copy constructor
 		return this->mData [ this->mTop++ ]; // Note the post-increment
 	}

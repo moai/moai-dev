@@ -149,6 +149,8 @@ void MOAIFreeTypeFontReader::ExtractSystemFont ( cc8* fontName, ZLStream& stream
 	stream.WriteBytes ( buffer, totalSize );
 
 	CGFontRelease ( cgFont );
+	CFRelease ( tags );
+	
 	free ( tableSizes );
 	free ( buffer );
 }

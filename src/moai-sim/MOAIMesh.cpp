@@ -48,6 +48,8 @@ ZLBox MOAIMeshPrimCoords::GetBounds () {
 //----------------------------------------------------------------//
 bool MOAIMeshPrimReader::GetPrimCoords ( u32 idx, MOAIMeshPrimCoords& prim ) const {
 
+	// TODO: should return index instead of bool?
+	
 	assert ( this->mMesh && this->mVertexFormat && this->mVertexBuffer );
 	
 	prim.mIndex = idx;
@@ -134,7 +136,7 @@ bool MOAIMeshPrimReader::Init ( MOAIMesh& mesh, u32 vertexBufferIndex ) {
 	MOAIVertexFormat* vertexFormat = mesh.GetVertexFormat ( vertexBufferIndex );
 	MOAIVertexBuffer* vertexBuffer = mesh.GetVertexBuffer ( vertexBufferIndex );
 
-	if ( !vertexFormat && vertexBuffer ) return false;
+	if ( !( vertexFormat && vertexBuffer )) return false;
 
 	if ( !vertexFormat->CountAttributesByUse ( MOAIVertexFormat::ATTRIBUTE_COORD )) return false;
 
@@ -178,7 +180,7 @@ bool MOAIMeshPrimReader::Init ( MOAIMesh& mesh, u32 vertexBufferIndex ) {
 //----------------------------------------------------------------//
 ZLVec3D MOAIMeshPrimReader::ReadCoord ( u32 idx ) const {
 
-	assert ( this->mMesh && this->mVertexFormat && this->mAttribute && this->mVertexBuffer );
+	if ( !( this->mMesh && this->mVertexFormat && this->mAttribute && this->mVertexBuffer )) return ZLVec3D::ORIGIN; // TODO: report error
 
 	idx %= this->mMesh->mTotalElements;
 

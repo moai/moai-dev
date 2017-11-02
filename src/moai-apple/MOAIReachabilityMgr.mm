@@ -122,7 +122,7 @@
 			Class networkInfoClass = NSClassFromString ( @"CTTelephonyNetworkInfo" );
 			if ( networkInfoClass ) {
 			
-				CTCarrier* carrierInfo = [[[ networkInfoClass alloc ] init ] subscriberCellularProvider ];
+				CTCarrier* carrierInfo = [[[[ networkInfoClass alloc ] init ] autorelease ] subscriberCellularProvider ];
 				
 				environment.SetValue ( MOAI_ENV_carrierISOCountryCode,		[ carrierInfo.isoCountryCode UTF8String ]);
 				environment.SetValue ( MOAI_ENV_carrierMobileCountryCode,	[[ carrierInfo mobileCountryCode ] UTF8String ]);

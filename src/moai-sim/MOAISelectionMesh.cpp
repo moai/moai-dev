@@ -464,10 +464,10 @@ void MOAISelectionMesh::MergeSelection ( u32 set, u32 merge ) {
 			MOAISelectionSpan* span = cursor;
 			cursor = cursor->mNextInMaster;
 			
+			MOAISelectionSpan* prevInMaster = span->mPrevInMaster;
+			
 			if ( span->mSetID == merge ) {
-			
-				MOAISelectionSpan* prevInMaster = span->mPrevInMaster;
-			
+				
 				size_t base = span->mBase;
 				size_t top = span->mTop;
 			
@@ -478,7 +478,7 @@ void MOAISelectionMesh::MergeSelection ( u32 set, u32 merge ) {
 			
 			if ( span->mSetID == set ) {
 			
-				if (( span->mPrevInMaster->mSetID == set ) && ( span->mPrevInMaster->mTop == span->mBase )) {
+				if ( prevInMaster && ( prevInMaster->mSetID == set ) && ( prevInMaster->mTop == span->mBase )) {
 				
 					span->mPrevInMaster->mTop = span->mTop;
 					this->FreeSpan ( span );

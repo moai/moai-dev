@@ -355,7 +355,7 @@ std::string ZLVfsFileSystem::GetRelativePath ( const char* path, const char* bas
 
 	// count the number of steps up in the current directory
 	for ( size_t i = same; workpath [ i ]; ++i ) {
-		if ( base [ i ] == '/' ) {
+		if ( workpath [ i ] == '/' ) {
 			depth++;
 		}
 	}

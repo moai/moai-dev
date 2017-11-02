@@ -26867,6 +26867,11 @@
 					"$(inherited)",
 					"\"../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher\"",
 				);
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-artoolkit5";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -26914,6 +26919,11 @@
 					"$(inherited)",
 					"\"../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher\"",
 				);
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-artoolkit5";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -26960,6 +26970,11 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../3rdparty/artoolkit5/lib/SRC/KPM/FreakMatcher\"",
+				);
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
 				);
 				PRODUCT_NAME = "moai-ios-3rdparty-artoolkit5";
 				SDKROOT = iphoneos;
@@ -27625,6 +27640,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-expat";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -27664,6 +27684,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-expat";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -27703,6 +27728,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-expat";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -27742,6 +27772,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-jannson";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -27781,6 +27816,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-jannson";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -27820,6 +27860,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-jannson";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -27859,6 +27904,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-tinyxml";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -27898,6 +27948,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-tinyxml";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -27937,6 +27992,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-tinyxml";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -27977,6 +28037,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-zlib";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -28017,6 +28082,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-zlib";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -28057,6 +28127,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-zlib";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -28096,6 +28171,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-sfmt";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -28135,6 +28215,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-sfmt";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -28174,6 +28259,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-sfmt";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -28213,6 +28303,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-tlsf";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -28252,6 +28347,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-tlsf";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -28291,6 +28391,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-tlsf";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -28330,6 +28435,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-freetype";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -28369,6 +28479,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-freetype";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -28408,6 +28523,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-freetype";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -28447,6 +28567,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-contrib";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -28486,6 +28611,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-contrib";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -28525,6 +28655,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-contrib";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -28564,6 +28699,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-libtess";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -28603,6 +28743,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-libtess";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -28642,6 +28787,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-libtess";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -28681,6 +28831,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-liblua";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -28720,6 +28875,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-liblua";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -28759,6 +28919,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-liblua";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -29528,6 +29693,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-crypto";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -29563,6 +29733,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-crypto";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -29598,6 +29773,11 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-Xanalyzer",
+					"-analyzer-disable-all-checks",
+				);
 				PRODUCT_NAME = "moai-ios-3rdparty-crypto";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;

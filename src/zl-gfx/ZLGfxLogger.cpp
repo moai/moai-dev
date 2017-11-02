@@ -192,48 +192,6 @@ ZLGfxHandle* ZLGfxLogger::Create ( ZLGfxHandle* handle, u32 param ) {
 }
 
 //----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxLogger::CreateBuffer () {
-
-	return this->Create ( new ZLGfxHandle ( ZLGfxHandle::BUFFER, 0, true ), 0 );
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxLogger::CreateFramebuffer () {
-
-	return this->Create ( new ZLGfxHandle ( ZLGfxHandle::FRAMEBUFFER, 0, true ), 0 );
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxLogger::CreateProgram () {
-
-	return this->Create ( new ZLGfxHandle ( ZLGfxHandle::PROGRAM, 0, true ), 0 );
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxLogger::CreateRenderbuffer () {
-
-	return this->Create ( new ZLGfxHandle ( ZLGfxHandle::RENDERBUFFER, 0, true ), 0 );
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxLogger::CreateShader ( u32 shaderType ) {
-
-	return this->Create ( new ZLGfxHandle ( ZLGfxHandle::SHADER, 0, true ), shaderType );
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxLogger::CreateTexture () {
-
-	return this->Create ( new ZLGfxHandle ( ZLGfxHandle::TEXTURE, 0, true ), 0 );
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxLogger::CreateVertexArray () {
-
-	return this->Create ( new ZLGfxHandle ( ZLGfxHandle::VERTEXARRAY, 0, true ), 0 );
-}
-
-//----------------------------------------------------------------//
 void ZLGfxLogger::CullFace ( u32 mode ) {
 
 	this->PrintLine ( "glCullFace - mode: %d\n", mode );

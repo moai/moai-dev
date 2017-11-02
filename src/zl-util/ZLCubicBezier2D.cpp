@@ -284,7 +284,7 @@ void ZLCubicBezierFlattener2D::Init ( const ZLCubicBezier2D& curve, float flatne
 	this->mVertexIdx = 0;
 	this->mCommandIdx = 0;
 
-	float cusp = 0.0f;
+	//float cusp = 0.0f;
 
 	float t0_minus = -1.0f;
 	float t0_plus = -1.0f;
@@ -300,7 +300,7 @@ void ZLCubicBezierFlattener2D::Init ( const ZLCubicBezier2D& curve, float flatne
 	switch ( inflections ) {
 	
 		case ZLCubicBezier2D::ONE_CUSP: {
-			cusp = inflection0;
+			//cusp = inflection0;
 			break;
 		}
 		

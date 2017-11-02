@@ -190,37 +190,36 @@ void MOAITextLayout::CompactHighlights () {
 	while ( cursor ) {
 	
 		MOAITextHighlight* highlight = cursor;
-		cursor = highlight->mNext;
-	
+		
 		// prune empty highlights
 		if ( highlight->mBase == highlight->mTop ) {
+			
+			cursor = highlight->mNext;
+			
 			this->RemoveHighlight ( *highlight );
 			delete highlight;
 			continue;
 		}
+		else {
 		
-		// gobble up any adjacent (or overlapping) same-colored highlights
-		// break if we hit a gap or another color
-		MOAITextHighlight* cursor2 = highlight->mNext;
-		while ( cursor2 ) {
-			MOAITextHighlight* highlight2 = cursor2;
-			cursor2 = highlight2->mNext;
-			
-			if ( highlight2->mBase != highlight2->mTop ) {
-			
+			// gobble up any adjacent (or overlapping) same-colored highlights
+			// break if we hit a gap or another color
+			MOAITextHighlight* cursor2 = highlight->mNext;
+			while ( cursor2 ) {
+				MOAITextHighlight* highlight2 = cursor2;
+				cursor2 = highlight2->mNext;
+				
 				if ( highlight->mColor != highlight2->mColor ) break;
 				if ( highlight->mTop < highlight2->mBase ) break;
 				
 				if ( highlight->mTop < highlight2->mTop ) {
 					highlight->mTop = highlight2->mTop;
 				}
+				cursor = cursor2;
+				this->RemoveHighlight ( *highlight2 );
+				delete highlight2;
 			}
-			
-			this->RemoveHighlight ( *highlight2 );
-			delete highlight2;
 		}
-		
-		cursor = highlight->mNext;
 	}
 }
 

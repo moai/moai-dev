@@ -120,7 +120,7 @@ void ZLBitBuffer::Blit ( void* dest, size_t destX, const void* src, size_t srcX,
 	
 		// just treat everything as 1-bit resolution
 		if ( bitDepth == 4 ) {
-			bitDepth = 8;
+			//bitDepth = 8;
 			
 			// 4 bits to every nybble
 			destX *= 4;
@@ -240,7 +240,7 @@ void ZLBitBuffer::Clear ( void* buffer, u32 bitDepth, size_t x, size_t n ) {
 	
 		// just treat everything as 1-bit resolution
 		if ( bitDepth == 4 ) {
-			bitDepth = 8;
+			//bitDepth = 8;
 			
 			// 4 bits to every nybble
 			x *= 4;

@@ -108,11 +108,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	static ZLGfx& GetDrawingAPI () {
-	
-		ZLGfx* gfx = MOAIGfxMgr::Get ().mPipelineMgr.GetDrawingAPI ();
-		assert ( gfx );
 		
-		return *gfx;
+		return MOAIGfxMgr::Get ().mPipelineMgr.GetDrawingAPI ();
 	}
 };
 

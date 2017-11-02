@@ -151,8 +151,10 @@ void MOAIFont::InitWithBMFont ( cc8* filename, const u32 numPreloadedTextures, M
 				else if ( strcasecmp ( key, "base" ) == 0 ) { base = ( float )atof ( val ); }
 			} while ( !endl );
 			
-			glyphSet->SetHeight ( lineSpacing );
-			glyphSet->SetAscent ( base );
+			if ( glyphSet ) {
+				glyphSet->SetHeight ( lineSpacing );
+				glyphSet->SetAscent ( base );
+			}
 			glyphCache->ReserveTextures ( pages );
 		}
 		else if ( strcmp ( key, "page" ) == 0 ) {
@@ -222,17 +224,19 @@ void MOAIFont::InitWithBMFont ( cc8* filename, const u32 numPreloadedTextures, M
 			} while( !endl );
 			
 			assert ( glyphSet );
-			MOAIGlyph& glyph = glyphSet->EditGlyph ( c );
-			
-			glyph.mSrcX = x;
-			glyph.mSrcY = y;
-			glyph.mPageID = page;
-			glyph.mWidth = width;
-			glyph.mHeight = height;
-			glyph.mAdvanceX = xadv;
-			glyph.mBearingX = xoff;
-			glyph.mBearingY = glyphSet->GetAscent() - yoff;
-			
+			if ( glyphSet ) {
+				
+				MOAIGlyph& glyph = glyphSet->EditGlyph ( c );
+				
+				glyph.mSrcX = x;
+				glyph.mSrcY = y;
+				glyph.mPageID = page;
+				glyph.mWidth = width;
+				glyph.mHeight = height;
+				glyph.mAdvanceX = xadv;
+				glyph.mBearingX = xoff;
+				glyph.mBearingY = glyphSet->GetAscent() - yoff;
+			}
 		}
 		else if ( strcmp ( key, "kernings" ) == 0 ) {
 			//kernings count=560
@@ -257,13 +261,15 @@ void MOAIFont::InitWithBMFont ( cc8* filename, const u32 numPreloadedTextures, M
 			if ( first && second && ( amount != 0.0f )) {
 			
 				assert ( glyphSet );
-				MOAIGlyph& glyph = glyphSet->EditGlyph ( first );
-				
-				size_t i = glyph.mKernTable.Size ();
-				glyph.mKernTable.Grow ( i + 1 );
-				glyph.mKernTable [ i ].mName = second;
-				glyph.mKernTable [ i ].mX = amount;
-				glyph.mKernTable [ i ].mY = 0;
+				if ( glyphSet ) {
+					MOAIGlyph& glyph = glyphSet->EditGlyph ( first );
+					
+					size_t i = glyph.mKernTable.Size ();
+					glyph.mKernTable.Grow ( i + 1 );
+					glyph.mKernTable [ i ].mName = second;
+					glyph.mKernTable [ i ].mX = amount;
+					glyph.mKernTable [ i ].mY = 0;
+				}
 			}
 		}
 	}

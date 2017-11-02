@@ -410,20 +410,14 @@ MOAILuaObject::~MOAILuaObject () {
 			// clear out the gc
 			this->mUserdata.PushRef ( state );
 			
-			u32 top = state.GetTop ();
-			
 			MOAILuaRuntime::Get ().PurgeUserdata ( state, -1 );
-			
-			top = state.GetTop ();
 			
 			if ( lua_getmetatable ( state, -1 )) {
 				lua_pushnil ( state );
 				lua_setfield ( state, -2, "__gc" );
 				state.Pop ( 1 );
 			}
-			
-			top = state.GetTop ();
-			
+						
 			// and the ref table
 			lua_pushnil ( state );
 			lua_setmetatable ( state, -2 );

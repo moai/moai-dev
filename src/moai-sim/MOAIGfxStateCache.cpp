@@ -211,21 +211,26 @@ void MOAIGfxStateCache::BindVertexBufferWithFormat ( MOAIVertexBufferWithFormat&
 
 	MOAIVertexBuffer* buffer = bufferWithFormat.mBuffer;
 	MOAIVertexFormat* format = bufferWithFormat.mFormat;
-
-	assert ( !bufferWithFormat.mIsBound );
-	assert ( buffer && format );
-	assert (( useVAOs && buffer->IsUsingVBOs ()) || ( !useVAOs )); // buffer objects must use VBOs to work with VAOs
 	
-	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+	if ( buffer && format ) {
 	
-	ZLSharedConstBuffer* bufferForBind = buffer->GetBufferForBind ( gfx );
-	
-	buffer->Bind ();
-	format->Bind ( bufferForBind );
-	buffer->Unbind ();
-	
-	bufferWithFormat.mBoundVtxBuffer = bufferForBind;
-	bufferWithFormat.mIsBound = true;
+		assert ( !bufferWithFormat.mIsBound );
+		assert (( useVAOs && buffer->IsUsingVBOs ()) || ( !useVAOs )); // buffer objects must use VBOs to work with VAOs
+		
+		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+		
+		ZLSharedConstBuffer* bufferForBind = buffer->GetBufferForBind ( gfx );
+		
+		buffer->Bind ();
+		format->Bind ( bufferForBind );
+		buffer->Unbind ();
+		
+		bufferWithFormat.mBoundVtxBuffer = bufferForBind;
+		bufferWithFormat.mIsBound = true;
+	}
+	else {
+		assert ( false );
+	}
 }
 
 //----------------------------------------------------------------//

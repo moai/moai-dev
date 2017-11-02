@@ -29,23 +29,22 @@ void MOAIMeshSparseQuadTreeBuilder::Build ( MOAIMeshSparseQuadTree& meshPartitio
 	for ( u32 i = 0; i < totalMeshPrims; ++i ) {
 	
 		MOAIMeshPrimCoords prim;
-		if ( primReader.GetPrimCoords ( i, prim )) {
-			
-			MOAIMeshSparseQuadBuilderPrim& partitionPrim = this->mPrims [ totalPrims++ ];
-			
-			partitionPrim.mIndex = prim.mIndex;
-			partitionPrim.mBounds = prim.GetBounds ();
-			partitionPrim.mBounds.Bless ();
-			partitionPrim.mNext = 0;
-			
-			ZLRect frame = partitionPrim.mBounds.GetRect ( ZLBox::PLANE_XY );
-			
-			if ( i == 0 ) {
-				bounds = frame;
-			}
-			else {
-				bounds.Grow ( frame );
-			}
+		primReader.GetPrimCoords ( i, prim ); // TODO: should index skip ahead by more than 1?
+		
+		MOAIMeshSparseQuadBuilderPrim& partitionPrim = this->mPrims [ totalPrims++ ];
+		
+		partitionPrim.mIndex = prim.mIndex;
+		partitionPrim.mBounds = prim.GetBounds ();
+		partitionPrim.mBounds.Bless ();
+		partitionPrim.mNext = 0;
+		
+		ZLRect frame = partitionPrim.mBounds.GetRect ( ZLBox::PLANE_XY );
+		
+		if ( i == 0 ) {
+			bounds = frame;
+		}
+		else {
+			bounds.Grow ( frame );
 		}
 	}
 	

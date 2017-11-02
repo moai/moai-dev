@@ -182,7 +182,7 @@ int MOAIImage::_convolve ( lua_State* L ) {
 			
 			float* kernel = ( float* )alloca ( kernelWidth * kernelHeight * sizeof ( float ));
 			
-			for ( int y = 0; y < kernelWidth; ++y ) {
+			for ( int y = 0; y < kernelHeight; ++y ) {
 				
 				state.PushField ( 2, y + 1 );
 				for ( int x = 0; x < kernelWidth; ++x ) {

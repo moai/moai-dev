@@ -28,18 +28,16 @@ class ZLTypeID :
 	//----------------------------------------------------------------//
 	static const TYPE& Dummy () {
 	
-		static TYPE dummy = TYPE ();
-		return dummy;
+		return ZLTypeID < TYPE >::Dummy ();
 	}
 	
 	//----------------------------------------------------------------//
 	static TYPE& DummyRef () {
 	
-		// intent is to create an object that will crash if accessed.
-		// on system withouth memory protection (are there sill any?) this
-		// should be redefined to just return a statically declared sentinel.
-	
-		return *( TYPE* )0;
+		assert ( false );
+		
+		static TYPE dummy = TYPE ();
+		return dummy;
 	}
 	
 	//----------------------------------------------------------------//

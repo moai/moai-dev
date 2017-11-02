@@ -90,7 +90,7 @@ public:
 	};
 	
 	GET ( u32, DrawCount, mDrawCount )
-	GET ( ZLGfx*, DrawingAPI, mDrawingAPI )
+	GET ( ZLGfx&, DrawingAPI, mDrawingAPI ? *mDrawingAPI : mGfxImmediate )
 	
 	//----------------------------------------------------------------//
 	void				BeginPhase					( u32 phase );

@@ -167,14 +167,6 @@ public:
 	
 	//ZLSharedConstBuffer*	CopyBuffer					( ZLSharedConstBuffer* buffer );
 	
-	ZLGfxHandle*			CreateBuffer				();
-	ZLGfxHandle*			CreateFramebuffer			();
-	ZLGfxHandle*			CreateProgram				();
-	ZLGfxHandle*			CreateRenderbuffer			();
-	ZLGfxHandle*			CreateShader				( u32 shaderType );
-	ZLGfxHandle*			CreateTexture				();
-	ZLGfxHandle*			CreateVertexArray			();
-	
 	void					CullFace					( u32 mode );
 	
 	void					DepthFunc					( u32 depthFunc );

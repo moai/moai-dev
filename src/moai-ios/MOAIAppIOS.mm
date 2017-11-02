@@ -300,16 +300,13 @@ int MOAIAppIOS::_openURLWithParams ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
 	NSString* baseURL = [[ NSString alloc ] initWithLua: state stackIndex: 1 ];
-	NSMutableDictionary* params = [[ NSMutableDictionary alloc ] initWithCapacity:5 ];
-	[ params initWithLua: state stackIndex: 2 ];
-	
-	if ( baseURL == NULL || params == NULL ) return 0;
+	NSMutableDictionary* params = [[ NSMutableDictionary alloc ] initWithLua: state stackIndex: 2 ];
 	
 	NSURL* parsedURL = [ NSURL URLWithString: baseURL ];
 	NSString* urlQueryPrefix = parsedURL.query ? @"&" : @"?";
 	
 	NSMutableArray* paramPairs = [ NSMutableArray array ];
-	for ( NSString* key in [ params keyEnumerator ] ) {
+	for ( NSString* key in [ params keyEnumerator ]) {
 		
 		NSString* escapedValue = ( NSString* )CFURLCreateStringByAddingPercentEscapes( NULL, ( CFStringRef )[ params objectForKey: key ], NULL, ( CFStringRef )@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8 );
 		[ paramPairs addObject:[ NSString stringWithFormat: @"%@=%@", key, escapedValue ]];
@@ -320,6 +317,9 @@ int MOAIAppIOS::_openURLWithParams ( lua_State* L ) {
 		
 	[[ UIApplication sharedApplication ] openURL:[ NSURL URLWithString:[ NSString stringWithFormat: @"%@%@%@", baseURL, urlQueryPrefix, urlQuery ]]];	
 
+	[ baseURL release ];
+	[ params release ];
+	
 	return 0;
 }
 

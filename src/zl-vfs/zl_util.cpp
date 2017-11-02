@@ -49,7 +49,7 @@ char* zl_vsnprintf_alloc ( char* s, size_t n, const char* format, va_list arg ) 
 	
 	int result;
 	
-	for ( ;; ) {
+	while ( buffer ) {
 		
 		va_list copy;
 		va_copy ( copy, arg );
@@ -72,11 +72,21 @@ char* zl_vsnprintf_alloc ( char* s, size_t n, const char* format, va_list arg ) 
 		}
 		
 		if ( buffer ) {
-			buffer = ( char* )realloc ( buffer, buffSize );
+			
+			char* bufferRealloc = ( char* )realloc ( buffer, buffSize );
+			if ( !bufferRealloc ) {
+				free ( buffer );
+				buffer = 0;
+			}
+			else {
+				buffer = bufferRealloc;
+			}
 		}
 		else {
 			buffer = ( char* )malloc ( buffSize );
 		}
+		
+		assert ( buffer );
 	}
 
 	return buffer;
