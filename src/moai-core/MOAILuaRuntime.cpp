@@ -178,16 +178,30 @@ typedef STLSet < struct Table* > TableSet;
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@lua	clearRef
+	@text	removes the reference indexed by the provided reference Id
+
+	@in		number refId  referenceId obtained from getRef
+
+	@out	nil
+*/
 int MOAILuaRuntime::_clearRef ( lua_State* L ) {
 	MOAILuaState state ( L );
 
-	int ref = state.GetValue < int >( 2, false );
+	int ref = state.GetValue < int >( 1, false );
 	MOAILuaRuntime::Get ().ClearRef ( ref );
 
 	return 0;
 }
 
 //----------------------------------------------------------------//
+/**	@lua	debugCall
+	@text	invokes the provided function with lua_pcall logs any errors to the console.
+
+	@in		number refId  referenceId obtained from getRef
+
+	@out	nil
+*/
 int MOAILuaRuntime::_debugCall ( lua_State* L ) {
 
 	MOAILuaState state ( L );
@@ -198,16 +212,33 @@ int MOAILuaRuntime::_debugCall ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	deref
+	@text	takes a reference previously created with getRef and returns the referenced value
+
+	@in		number refId  referenceId obtained from getRef
+
+	@out	nil
+*/
 int MOAILuaRuntime::_deref ( lua_State* L ) {
 	MOAILuaState state ( L );
 
-	int ref = state.GetValue < int >( 2, false );
+	int ref = state.GetValue < int >( 1, false );
 	MOAILuaRuntime::Get ().PushRef ( state, ref );
 
 	return 1;
 }
 
 //----------------------------------------------------------------//
+/**	@lua	dump
+	@text	dumps the provided lua value to the log, with name and verbosity
+			only works with lua 5.1 and not luajit
+
+	@in		string	name
+	@in		variant	value
+	@opt		boolean verbose
+
+	@out	nil
+*/
 int MOAILuaRuntime::_dump ( lua_State* L ) {
 	UNUSED ( L );
 
@@ -229,6 +260,13 @@ int MOAILuaRuntime::_dump ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	dumpStack
+	@text	dumps the current lua stack to the logs trying to provide type info for each entry
+			only works with lua 5.1 and not luajit
+
+	@opt	boolean verbose
+	@out	nil
+*/
 int MOAILuaRuntime::_dumpStack ( lua_State* L ) {
 	UNUSED ( L );
 
@@ -281,6 +319,14 @@ int MOAILuaRuntime::_getHistogram ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getRef
+	@text	Get a lua reference of type (weak or strong)
+
+	@in		variant objectToReference
+	@opt	boolean strong  get a strong or weak ref
+
+	@out	number refId
+*/
 int MOAILuaRuntime::_getRef ( lua_State* L ) {
 	MOAILuaState state ( L );
 
@@ -301,6 +347,14 @@ int MOAILuaRuntime::_panic ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	reportGC
+	@text	enables or disables the reporting of object collection. Setting to true
+			causes objects to log when they are being collected
+
+	@in		boolean enableGCReporting 	set to true to enable reporting
+	
+	@out	nil
+*/
 int MOAILuaRuntime::_reportGC ( lua_State* L ) {
 
 	MOAILuaState state ( L );
@@ -372,6 +426,12 @@ int MOAILuaRuntime::_setTrackingFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	traceback
+	@text	logs the provided message and calls either the default or user provided traceback function to dump a stack trace
+ 
+	@opt	string message   optional message to prepend to stack trace
+	@out	nil
+*/
 int MOAILuaRuntime::_traceback ( lua_State *L ) {
 	
 	MOAILuaRuntime& runtime = MOAILuaRuntime::Get ();

@@ -52,6 +52,9 @@ private:
 //================================================================//
 // MOAILuaRuntime
 //================================================================//
+/**	@lua	MOAILuaRuntime
+	@text	Utility methods for interacting with the Lua Runtime.
+*/
 class MOAILuaRuntime :
 	public ZLContextClass < MOAILuaRuntime, MOAILuaObject > {
 public:
