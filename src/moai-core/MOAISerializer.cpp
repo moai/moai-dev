@@ -281,6 +281,17 @@ STLString MOAISerializer::EscapeString ( cc8* str, size_t len ) {
 	STLString outStr;
 	outStr.reserve ( len * 2 );
 
+	if ( this->mBase64 ) {
+		
+			STLString base64;
+			base64.base_64_encode ( str, len );
+			
+			outStr = "";
+			outStr.write ( "base64 ( '%s' )", base64.c_str ());
+			
+			return outStr;
+	}
+
 	outStr.append ( "\'" );
 
 	for ( u32 i = 0; i < len; ++i ) {
@@ -305,16 +316,7 @@ STLString MOAISerializer::EscapeString ( cc8* str, size_t len ) {
         }
 		else {
 		
-			if ( this->mBase64 ) {
-			
-				STLString base64;
-				base64.base_64_encode ( str, len );
 				
-				outStr = "";
-				outStr.write ( "base64 ( '%s' )", base64.c_str ());
-				
-				return outStr;
-			}
 			int b = ( int )(( u8* )str )[ i ];
 			outStr.write ( "\\%03d", b );
 		}
