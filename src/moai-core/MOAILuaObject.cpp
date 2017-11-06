@@ -62,6 +62,13 @@ int MOAILuaObject::_gc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getClass
+	@text	returns the object's class table
+	
+	@in	    MOAILuaObject self
+
+	@out	MOAILuaClass class
+*/
 int MOAILuaObject::_getClass ( lua_State* L ) {
 
 	MOAILuaState state ( L );
@@ -75,6 +82,13 @@ int MOAILuaObject::_getClass ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getClassName
+	@text	returns the object's class name
+	
+	@in	    MOAILuaObject self
+
+	@out	string className
+*/
 int MOAILuaObject::_getClassName ( lua_State* L ) {
 
 	MOAILuaState state ( L );
@@ -89,6 +103,14 @@ int MOAILuaObject::_getClassName ( lua_State* L ) {
 
 
 //----------------------------------------------------------------//
+/**	@lua	getMemberTable
+	@text	returns the object's member table. This table contains user added instance methods and variables
+			lookups on this table fall back to a shared interfaceTable
+	
+	@in	    MOAILuaObject self
+
+	@out	table memberTable
+*/
 int MOAILuaObject::_getMemberTable ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILuaObject, "U" )
 	
@@ -97,6 +119,14 @@ int MOAILuaObject::_getMemberTable ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getRefTable
+	@text	returns the object's ref table. This table contains instance specific system methods added by moai
+	        including __gc and __tostring. It delegates index and newindex to the member table
+	
+	@in	    MOAILuaObject self
+
+	@out	table refTable
+*/
 int MOAILuaObject::_getRefTable ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILuaObject, "U" )
 
@@ -105,6 +135,14 @@ int MOAILuaObject::_getRefTable ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	serializeIn
+	@text	reads a table of native property values for internal state and sets them on this object's userdata
+	
+	@in	    MOAILuaObject self
+	@in		table propertyValues
+
+	@out	nil
+*/
 int MOAILuaObject::_serializeIn ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILuaObject, "UT" )
 	
@@ -114,6 +152,14 @@ int MOAILuaObject::_serializeIn ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	serializeOut
+	@text	writes native property values of a MOAILuaObject to a provided table which can be used by serializeIn to initialize a lua object
+	
+	@in	    MOAILuaObject self
+	@in		table propertyReceiver
+
+	@out	nil
+*/
 int MOAILuaObject::_serializeOut ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILuaObject, "UT" )
 	
@@ -123,6 +169,14 @@ int MOAILuaObject::_serializeOut ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	setFinalizer
+	@text	set a function to be called when this object is garbage collected. Invoked during the __gc metamethod call.
+	
+	@in	    MOAILuaObject self
+	@in		function finalizerFunction
+
+	@out	nil
+*/
 int MOAILuaObject::_setFinalizer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILuaObject, "U" )
 
@@ -132,6 +186,15 @@ int MOAILuaObject::_setFinalizer ( lua_State* L ) {
 
 
 //----------------------------------------------------------------//
+/**	@lua	setInterface
+	@text	set a new interface table on this object. This replaces the existing interface table and will be used as
+			the __index for the member table: the last stop in trying to resolve a method call on this object.
+	
+	@in	    MOAILuaObject self
+	@in		table interface
+
+	@out	nil
+*/
 int MOAILuaObject::_setInterface ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILuaObject, "U" )
 
@@ -140,6 +203,16 @@ int MOAILuaObject::_setInterface ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	setMembers
+	@text	This replaces the existing member table and will be used as
+			the __index and __newindex for the ref table. All existing user added variables and methods will be clobbered.
+			the member table will have its metatable set to the current interface table.
+	
+	@in	    MOAILuaObject self
+	@in		table members
+
+	@out	nil
+*/
 int MOAILuaObject::_setMembers ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILuaObject, "U" )
 
@@ -148,10 +221,19 @@ int MOAILuaObject::_setMembers ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	pin
+	@text	prevents garbage collection of the specified object 
+			and tracks the reference in this objects ref table. You can pin yourself.
+
+	@in	    MOAILuaObject self
+	@in		MOAILuaObject objectToPin
+
+	@out	nil
+*/
 int MOAILuaObject::_pin ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILuaObject, "UU" )
 
-	MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( -2, true );
+	MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( 2, true );
 	self->LuaRetain ( object );
 	return 0;
 }
@@ -185,10 +267,19 @@ int MOAILuaObject::_tostring ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	unpin
+	@text	removes a previous pin tracked this objects ref table
+			that may free the MOAILuaObject up for GC. You can pin yourself.
+
+	@in	    MOAILuaObject self
+	@in		MOAILuaObject objectToUnpin
+
+	@out	nil
+*/
 int MOAILuaObject::_unpin ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILuaObject, "UU" )
 
-	MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( -2, true );
+	MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( 2, true );
 	self->LuaRelease ( object );
 	return 0;
 }
@@ -198,12 +289,12 @@ int MOAILuaObject::_unpin ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-// userdata -> memberTable -> refTable -> interfaceTable
+// userdata -> refTable -> memberTable  -> interfaceTable
 // userdata is the object
+// refTable is for ad hoc mambers added by the engine (e.g toString and _gc)
 // memberTable is for ad hoc members added by the scripter
-// refTable is for ad hoc mambers added by the engine
 // interfaceTable is the 'class' table - methods and constants
-// __index looks in membertTable then *skips* refTable to fall back on interfaceTable
+// __index looks in reftable then membertTable then falls back on interfaceTable
 void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 
 	assert ( !this->mUserdata );

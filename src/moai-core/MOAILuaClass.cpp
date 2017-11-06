@@ -10,6 +10,17 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@lua	extend
+	@text	extends an existing lua singleton or factory class. It takes a new class name and 
+			an extender function. The extender function is called with (newInterfaceTable, newClassTable, superInterfaceTable, superClassTable)
+			for factory classes (DECL_LUA_FACTORY) or (userData, newClassTable) for singletons (DECL_LUA_SINGLETON).
+			The resulting class is registered as a global under className
+	
+	@in	    string className 	the name of the new class to be set as a global
+	@in		function extenderFunc  
+
+	@out	nil
+*/
 int MOAILuaClass::_extendFactory ( lua_State* L ) {
 
 	MOAILuaState state ( L );
@@ -178,6 +189,12 @@ int MOAILuaClass::_extendSingleton ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getInterfaceTable
+	@text	gets the interface table for this lua factory class.
+	
+	@in		MOAILuaClass self
+	@out	table interfaceTable
+*/
 int MOAILuaClass::_getInterfaceTable ( lua_State* L ) {
 
 	MOAILuaState state ( L );
@@ -193,6 +210,11 @@ int MOAILuaClass::_getUpvalue ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	new
+	@text	create a new instance of this class.
+	
+	@out	MOAILuaObject instance
+*/
 int MOAILuaClass::_new ( lua_State* L ) {
 
 	// upvalues:

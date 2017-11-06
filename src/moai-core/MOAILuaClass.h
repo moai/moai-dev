@@ -32,6 +32,9 @@ type::RegisterLuaType ();
 //================================================================//
 // MOAILuaClass
 //================================================================//
+/**	@lua	MOAILuaClass
+	@text	A c++ class registered with Lua using either DECL_LUA_SINGLETON or DECL_LUA_FACTORY
+*/
 class MOAILuaClass :
 	public ZLContextClassBase {
 protected:
