@@ -10,7 +10,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	floatToHex
+	@text	format a lua double or float as a hex string
+
+	@in		number floatOrDouble
+
+	@out	string hexString
+*/
 int MOAISerializer::_floatToHex ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
@@ -23,7 +29,16 @@ int MOAISerializer::_floatToHex ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getObjectTables
+	@text	format a lua double or float as a hex string
+
+	@in		MOAISerializer self
+	@in		MOAILuaObject object
+
+	@out	nil
+	@out	table memberTable
+	@out	table serializedInternalProperties
+*/
 int MOAISerializer::_getObjectTables ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISerializer, "UU" );
 
@@ -49,7 +64,13 @@ int MOAISerializer::_getObjectTables ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	hexToFloat
+	@text	convert a hex string to a lua number
+
+	@in		string hexString
+
+	@out	number converted  returns nil if can't convert
+*/
 int MOAISerializer::_hexToFloat ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
@@ -173,6 +194,14 @@ int MOAISerializer::_serializeToString ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	setBase64Enabled
+	@text	enables or disables base64 encoding of strings
+
+	@in		MOAISerializer self
+	@in		boolean enable
+
+	@out	nil
+*/
 int MOAISerializer::_setBase64Enabled ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISerializer, "U" );
 	
@@ -316,7 +345,7 @@ STLString MOAISerializer::EscapeString ( cc8* str, size_t len ) {
         }
 		else {
 		
-				
+	
 			int b = ( int )(( u8* )str )[ i ];
 			outStr.write ( "\\%03d", b );
 		}
