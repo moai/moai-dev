@@ -85,6 +85,14 @@ void* MOAITestResult::ToJson () {
 
 //----------------------------------------------------------------//
 #ifndef _assert
+/**	@lua	assert
+	@text	throws a lua error with optional message if parameter is not true or nil
+
+	@in		variant assertCondition
+	@in		string message 
+
+	@out	nil
+*/
 int MOAITestMgr::_assert ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
 	
@@ -97,6 +105,13 @@ int MOAITestMgr::_assert ( lua_State* L ) {
 #endif
 
 //----------------------------------------------------------------//
+/**	@lua	comment
+	@text	adds a comment to the current test
+
+	@in		string comment
+
+	@out	nil
+*/
 int MOAITestMgr::_comment ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "S" )
 	
@@ -105,6 +120,13 @@ int MOAITestMgr::_comment ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	error
+	@text	marks a test as failed including a message and stack trace
+
+	@in		string errorMessage
+
+	@out	nil
+*/
 int MOAITestMgr::_error ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "SC" )
 
@@ -126,6 +148,11 @@ int MOAITestMgr::_error ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	popTest
+	@text	pops a test off the test stack returning true if there is another test
+
+	@out	boolean moreTests
+*/
 int MOAITestMgr::_popTest ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
 	
@@ -136,6 +163,12 @@ int MOAITestMgr::_popTest ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	pushTest
+	@text	pushes a test onto the test stack
+
+	@in		string TestDescription
+	@out	nil
+*/
 int MOAITestMgr::_pushTest ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
 
@@ -145,6 +178,11 @@ int MOAITestMgr::_pushTest ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	results
+	@text	fetch the results of the test suite
+	
+	@out	table testResults
+*/
 int MOAITestMgr::_results ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
 	
@@ -153,6 +191,12 @@ int MOAITestMgr::_results ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	setStepFunc
+	@text	sets the step function
+
+	@in		function stepfunc
+	@out	nil
+*/
 int MOAITestMgr::_setStepFunc ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
 
@@ -161,6 +205,12 @@ int MOAITestMgr::_setStepFunc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	setTimeout
+	@text	sets the test timeout (currently a NOOP on windows)
+
+	@in		number timeoutInSeconds 
+	@out	nil
+*/
 int MOAITestMgr::_setTimeout ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
 
@@ -169,6 +219,11 @@ int MOAITestMgr::_setTimeout ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	standalone
+	@text	marks a test as standalone
+
+	@out	nil
+*/
 int MOAITestMgr::_standalone ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
 
@@ -177,6 +232,12 @@ int MOAITestMgr::_standalone ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	suite
+	@text	initializes a new test suite which will collect all results
+
+	@in		string SuiteName
+	@out	nil
+*/
 int MOAITestMgr::_suite ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAITestMgr, "" )
 

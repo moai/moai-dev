@@ -32,7 +32,9 @@ public:
 //================================================================//
 // MOAITestMgr
 //================================================================//
-// TODO: doxygen
+/**	@lua	MOAITestMgr
+	@text	Test manager for executing tests within MOAI
+*/
 class MOAITestMgr :
 	public ZLContextClass < MOAITestMgr, MOAILuaObject > {
 private:

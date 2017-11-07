@@ -16,6 +16,11 @@ void MOAITrace::_callback ( lua_State *L, lua_Debug* ar ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	reportTrace
+	@text	dump trace summary
+	
+	@out	nil
+*/
 int MOAITrace::_reportTrace ( lua_State* L ) {
 	UNUSED ( L );
 
@@ -31,6 +36,12 @@ int MOAITrace::_run ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	setVerbose
+	@text	toggle verbosity of trace
+
+	@in		boolean isVerbose
+	@out	nil
+*/
 int MOAITrace::_setVerbose ( lua_State* L ) {
 	MOAILuaState state ( L );
 
@@ -39,6 +50,10 @@ int MOAITrace::_setVerbose ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	start
+	@text	starts a debug trace dumping messages to stdout
+	@out	nil
+*/
 int MOAITrace::_start ( lua_State* L ) {
 	UNUSED ( L );
 
