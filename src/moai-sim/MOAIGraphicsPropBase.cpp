@@ -85,8 +85,8 @@ int	MOAIGraphicsPropBase::_isVisible ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@lua	setBillboard
 	@text	Sets the prop's billboarding mode. One of BILLBOARD_NORMAL,
-			BILLBOARD_ORTHO, BILLBOARD_COMPASS, BILLBOARD_SCREEN,
-			BILLBOARD_NONE.
+			BILLBOARD_ORTHO, BILLBOARD_COMPASS, BILLBOARD_COMPASS_SCALE,
+			BILLBOARD_SCREEN, BILLBOARD_NONE.
 	
 	@override
 	
@@ -306,6 +306,66 @@ ZLMatrix4x4 MOAIGraphicsPropBase::GetWorldDrawingMtx () {
 			break;
 		}
 		
+		case BILLBOARD_COMPASS_SCALE: {
+			ZLMatrix4x4 viewToClip = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_TO_CLIP_MTX );
+			ZLMatrix4x4 worldToClip = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX );
+			ZLMatrix4x4 clipToWindow = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::CLIP_TO_WINDOW_MTX );
+			// TODO: The cache for VIEW_TO_WORLD matrix is not working, so manually inverting here, which not efficient
+			ZLMatrix4x4 worldToView = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_VIEW_MTX );
+			ZLMatrix4x4 worldToViewInv;
+			
+			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
+			
+			bool worldToViewInvSuccess = worldToViewInv.Inverse(worldToView);
+			
+			if (!worldToViewInvSuccess) {
+				break;
+			}
+			
+			ZLAffine3D cameraMtx ( worldToViewInv );
+			
+			ZLVec3D	cameraY = cameraMtx.GetYAxis ();
+			
+			cameraY.mZ = 0.0f;
+			cameraY.Norm ();
+			
+			ZLVec2D mapY ( cameraY.mX, cameraY.mY );
+			ZLVec2D worldY ( 0.0f, 1.0f );
+			
+			float flipped = copysign(1.0f, worldDrawingMtx.GetYAxis().Dot(ZLVec3D(0.0f, 1.0f, 0.0f)));
+			float radians = mapY.Radians ( worldY ) * flipped;
+			
+			if ( cameraY.mX < 0.0f ) {
+				radians = -radians;
+			}
+			
+			// Determine scale to match camera
+			ZLVec3D loc;
+			worldDrawingMtx.GetTranslation ( loc );
+			ZLVec4D loc4 (loc.mX, loc.mY, loc.mZ, 1);
+			worldToClip.Transform(loc4);
+			float sx = loc4.mW * clipToWindow.GetXAxis().Length() / viewToClip.GetXAxis().Length();
+			float sy = loc4.mW * clipToWindow.GetYAxis().Length() / viewToClip.GetYAxis().Length();
+			
+			ZLMatrix4x4 billboardMtx;
+			billboardMtx.Translate ( -this->mPiv.mX, -this->mPiv.mY, -this->mPiv.mZ );
+			
+			ZLMatrix4x4 mtx;
+			mtx.RotateZ ( -radians );
+			billboardMtx.Append ( mtx );
+			
+			mtx.Scale ( sx, sy, 1 );
+			billboardMtx.Append ( mtx );
+			
+			mtx.Translate ( this->mPiv.mX, this->mPiv.mY, this->mPiv.mZ );
+			billboardMtx.Append ( mtx );
+			
+			worldDrawingMtx.Prepend ( billboardMtx );
+			
+			break;
+		}
+			
+			
 		case BILLBOARD_SCREEN: {
 			
 			//MOAIGfxMgr::Get ().GetWorldToWndMtx ();
@@ -474,6 +534,7 @@ void MOAIGraphicsPropBase::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "BILLBOARD_NORMAL",			( u32 )BILLBOARD_NORMAL );
 	state.SetField ( -1, "BILLBOARD_ORTHO",				( u32 )BILLBOARD_ORTHO );
 	state.SetField ( -1, "BILLBOARD_COMPASS",			( u32 )BILLBOARD_COMPASS );
+	state.SetField ( -1, "BILLBOARD_COMPASS_SCALE",		( u32 )BILLBOARD_COMPASS_SCALE );
 	state.SetField ( -1, "BILLBOARD_SCREEN",			( u32 )BILLBOARD_SCREEN );
 }
 
