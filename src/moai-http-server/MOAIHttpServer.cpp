@@ -11,6 +11,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@lua	start
+	@text	start the Mongoose web server.
+	@in		MOAIHttpServer self
+	@in		table MongooseOptions      Mongoose 3.8 options documented here (https://github.com/cesanta/mongoose/blob/3.8/UserManual.md#configuration-options)
+	
+	@out	nil
+ */
 int MOAIHttpServer::_start ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpServer, "U" )
 	
@@ -33,6 +40,12 @@ int MOAIHttpServer::_start ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	stop
+	@text	stop the server.
+	@in		MOAIHttpServer self
+	
+	@out	nil
+ */
 int MOAIHttpServer::_stop ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpServer, "U" )
 	

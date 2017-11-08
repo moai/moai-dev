@@ -9,6 +9,9 @@
 //================================================================//
 // MOAIHttpServer
 //================================================================//
+/**	@lua	MOAIHttpServer
+	@text	A minimal http server implemented with mongoose
+*/
 class MOAIHttpServer :
 	public MOAIInstanceEventSource {
 private:

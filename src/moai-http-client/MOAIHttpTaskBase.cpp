@@ -14,6 +14,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@lua	cancel
+	@text	cancel the download.
+	
+	@in		MOAIHttpTaskBase self
+	@out	nil
+ */
 int MOAIHttpTaskBase::_cancel ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "U" )
 	
@@ -27,7 +33,7 @@ int MOAIHttpTaskBase::_cancel ( lua_State* L ) {
 	@text	Returns the progress of the download.
 	
 	@in		MOAIHttpTaskBase self
-	@out	number progress		the percentage the download has left ( form 0.0 to 1.0 )
+	@out	number progress		the percentage the download has left ( from 0.0 to 1.0 )
  */
 int	MOAIHttpTaskBase::_getProgress		( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "U" )
@@ -423,9 +429,9 @@ int MOAIHttpTaskBase::_setHeader ( lua_State* L ) {
 	@text	SSL options for peer verification.
  
 	@in		MOAIHttpTaskBase self
-	@in		boolean		verifyPeer
-	@in		boolean		verifyHost
-	@in		string		path to ca-cert bundle (.crt)
+	@in		boolean	verifyPeer
+	@in		boolean	verifyHost
+	@in		string certPath		Path to ca-cert bundle (.crt)
 	@out	nil
 */
 int MOAIHttpTaskBase::_setSSLOptions ( lua_State *L ) {

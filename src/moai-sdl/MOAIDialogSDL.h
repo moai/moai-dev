@@ -10,6 +10,9 @@
 //================================================================//
 // MOAIDialogSDL
 //================================================================//
+/**	@lua	MOAIDialogSDL
+	@text 	Dialog controller for deskop platforms
+*/
 class MOAIDialogSDL :
 	public ZLContextClass < MOAIDialogSDL, MOAILuaObject > {
 private:

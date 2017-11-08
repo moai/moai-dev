@@ -8,6 +8,16 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@lua	show
+	@text	Show a native window dialog
+
+	@in		string title
+	@in		string messageText
+	@in		table buttons		array of button text OR array of table({ text=string, default=bool, func=callbackfunction })
+	@opt	function callback	gets called with the index of button that was pressed
+
+	@out	number refId
+*/
 int MOAIDialogSDL::_show ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIDialogSDL, "SST" )
 	
