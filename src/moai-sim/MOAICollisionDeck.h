@@ -11,7 +11,9 @@ class MOAICollisionShape;
 //================================================================//
 // MOAICollisionDeck
 //================================================================//
-// TODO: doxygen
+/**	@lua	MOAICollisionDeck
+	@text	A collection of collision shapes and useful functions. Use with MOAICollisionProp for easy collision detection
+*/
 class MOAICollisionDeck :
 	public MOAIDeck {
 private:

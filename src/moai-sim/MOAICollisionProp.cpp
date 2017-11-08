@@ -41,7 +41,20 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	collisionMove
+	@text	add a rectangle shape to deck at index
+
+	@in		MOAICollisionProp self
+	@in		number index
+	
+	@in		number moveX	
+	@in		number moveY
+	@in		number moveZ
+
+	@in		number detachMode	one of 	SURFACE_MOVE_DETACH | SURFACE_MOVE_SLIDE | SURFACE_MOVE_LOCK
+
+	@out	nil
+*/
 int MOAICollisionProp::_collisionMove ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICollisionProp, "U" )
 	
@@ -55,7 +68,13 @@ int MOAICollisionProp::_collisionMove ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getOverlaps
+	@text	retrieve overlaps
+
+	@in		MOAICollisionProp self
+
+	@out	...	overlappingProps
+*/
 int MOAICollisionProp::_getOverlaps ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICollisionProp, "U" )
 
@@ -68,11 +87,17 @@ int MOAICollisionProp::_getOverlaps ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	hasOverlaps
+	@text	does this prop have overlaps
+
+	@in		MOAICollisionProp self
+
+	@out	boolean	hasOverlaps
+*/
 int MOAICollisionProp::_hasOverlaps ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICollisionProp, "U" )
-
-	return self->mOverlapLinks != 0;
+	state.Push ( self->mOverlapLinks != 0 )
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -85,7 +110,13 @@ int MOAICollisionProp::_hasOverlaps ( lua_State* L ) {
 //}
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setOverlapFlags
+	@text	sets overlap flags
+
+	@in		MOAICollisionProp self
+	@in		number flags
+	@out	nil
+*/
 int MOAICollisionProp::_setOverlapFlags ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICollisionProp, "U" )
 	

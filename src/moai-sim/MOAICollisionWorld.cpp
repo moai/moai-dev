@@ -45,7 +45,13 @@ private:
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	processOverlaps
+	@text	Processes overlaps triggering callbacks
+
+	@in		MOAICollisionWorld self
+
+	@out	nil
+*/
 int MOAICollisionWorld::_processOverlaps ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICollisionWorld, "U" )
 
@@ -54,7 +60,14 @@ int MOAICollisionWorld::_processOverlaps ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setCallback
+	@text	sets a callback to be triggered on collision events
+
+	@in		MOAICollisionWorld self
+	@in		function callback	callback gets prop1, prop2, other info
+
+	@out	nil
+*/
 int MOAICollisionWorld::_setCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICollisionWorld, "U" )
 	

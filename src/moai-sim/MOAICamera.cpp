@@ -173,6 +173,7 @@ int MOAICamera::_lookAt ( lua_State* L ) {
 	@in		MOAICamera self
 	@in		number fov
 	@in		number delay
+	@opt	number easeType		one of MOAIEaseType
 	@out	nil
 */
 int MOAICamera::_moveFieldOfView ( lua_State* L ) {
@@ -210,6 +211,7 @@ int MOAICamera::_moveFieldOfView ( lua_State* L ) {
 	@in		MOAICamera self
 	@in		number fov
 	@in		number delay
+	@opt	number easeType		one of MOAIEaseType
 	@out	nil
 */
 int MOAICamera::_seekFieldOfView ( lua_State* L ) {

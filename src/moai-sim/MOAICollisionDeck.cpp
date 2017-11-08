@@ -10,7 +10,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	reserveShapes
+	@text	reserve space for collision shapes
+
+	@in		MOAICollisionDeck self
+	@in		number count
+	
+	@out	nil
+*/
 int MOAICollisionDeck::_reserveShapes ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICollisionDeck, "U" )
 	
@@ -20,7 +27,22 @@ int MOAICollisionDeck::_reserveShapes ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setBox
+	@text	add a box shape to deck at index
+
+	@in		MOAICollisionDeck self
+	@in		number index
+	
+	@in		number xMin	
+	@in		number yMin	
+	@in		number zMin	
+
+	@in		number xMax	
+	@in		number yMax	
+	@in		number zMax	
+
+	@out	nil
+*/
 int MOAICollisionDeck::_setBox ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICollisionDeck, "U" )
 	
@@ -33,7 +55,20 @@ int MOAICollisionDeck::_setBox ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setRect
+	@text	add a rectangle shape to deck at index
+
+	@in		MOAICollisionDeck self
+	@in		number index
+	
+	@in		number xMin	
+	@in		number yMin	
+
+	@in		number xMax	
+	@in		number yMax	
+
+	@out	nil
+*/
 int MOAICollisionDeck::_setRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICollisionDeck, "U" )
 	
@@ -46,7 +81,23 @@ int MOAICollisionDeck::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setQuad
+	@text	add a 4 pointed polygon shape to deck at index
+
+	@in		MOAICollisionDeck self
+	@in		number index
+	
+	@in		number x1	
+	@in		number y1	
+	@in		number x2	
+	@in		number y2	
+	@in		number x3	
+	@in		number y3	
+	@in		number x4	
+	@in		number y4	
+
+	@out	nil
+*/
 int MOAICollisionDeck::_setQuad ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICollisionDeck, "U" )
 	

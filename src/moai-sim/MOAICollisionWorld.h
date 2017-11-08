@@ -17,6 +17,9 @@ class MOAICollisionWorld;
 //================================================================//
 // MOAICollisionWorld
 //================================================================//
+/**	@lua	MOAICollisionWorld
+	@text	Collision World
+*/
 class MOAICollisionWorld :
 	public virtual MOAIAction,
 	public virtual MOAIDrawShapeRetained,

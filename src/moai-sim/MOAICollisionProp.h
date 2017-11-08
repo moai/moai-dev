@@ -57,7 +57,9 @@ private:
 //================================================================//
 // MOAICollisionProp
 //================================================================//
-// TODO: doxygen
+/**	@lua	MOAICollisionProp
+	@text	A prop that can be used for basic collision detection. Add a MOAICollisionDeck and use hasOverlaps and getOverlaps
+*/
 class MOAICollisionProp :
 	public virtual MOAIPartitionHull,
 	public virtual MOAIDrawable,

@@ -10,7 +10,7 @@
 //================================================================//
 // MOAIAnimCurveBone
 //================================================================//
-/**	@lua	MOAIAnimCurveBase
+/**	@lua	MOAIAnimCurveBone
 	@text	AnimCurve type with position, rotation, and scale values.
 */
 class MOAIAnimCurveBone :
