@@ -9,7 +9,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	getValueAtTime
+	@text	forces the curve to a set time.
+	
+	@in		MOAIAnimCurveBone self
+	@in		number time			
+	@out	... affine3DMatrix		the matrix values
+*/
 int MOAIAnimCurveBone::_getValueAtTime ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnimCurveBone, "UN" );
 
@@ -24,7 +30,31 @@ int MOAIAnimCurveBone::_getValueAtTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setKey
+	@text	sets the value for a key.
+	
+	@in		MOAIAnimCurveBone self
+	@in		number key			
+	@in		number time
+
+	@in		number positionX
+	@in		number positionY
+	@in		number positionZ
+
+	@opt		number rotationX
+	@opt		number rotationY
+	@opt		number rotationZ
+	@opt		number rotationM
+	
+	@opt		number scaleX
+	@opt		number scaleY
+	@opt		number scaleZ
+
+	@opt		number mode 	one from MOAIEaseType
+	@opt		number weight	
+
+	@out	... valueMatrix
+*/
 int MOAIAnimCurveBone::_setKey ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnimCurveBone, "UNNNN" );
 

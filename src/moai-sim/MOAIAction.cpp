@@ -123,6 +123,7 @@ int MOAIAction::_clear ( lua_State* L ) {
 	@text	Defers action's update until the next time the action tree is processed.
 
 	@in		MOAIAction self
+	@opt	boolean deferExtra		Defer an additional step
 	@out	nil
 */
 int MOAIAction::_defer ( lua_State* L ) {
@@ -155,7 +156,7 @@ int MOAIAction::_detach ( lua_State* L ) {
 	@text	Get action's children (if any).
 
 	@in		MOAIAction self
-	@out	...					Child actions (returned as multiple values).
+	@out	...	children		Child actions (returned as multiple values).
 */
 int MOAIAction::_getChildren ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" )
@@ -240,7 +241,7 @@ int MOAIAction::_isDone ( lua_State* L ) {
 	@text	Checks to see if an action is 'paused.'
  
 	@in		MOAIAction self
-	@out	bool isPaused
+	@out	boolean isPaused
 */
 int MOAIAction::_isPaused ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" );
@@ -271,6 +272,7 @@ int MOAIAction::_pause ( lua_State* L ) {
 			when no longer busy.
 
 	@in		MOAIAction self
+	@in		boolean autoStop	toggles autoStop on and off
 	@out	nil
 */
 int MOAIAction::_setAutoStop ( lua_State* L ) {

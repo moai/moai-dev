@@ -42,7 +42,13 @@ int MOAIAnimCurveBase::_reserveKeys ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@lua	setTime
+	@text	forces the curve to a set time.
+	
+	@in		MOAIAnimCurveBase self
+	@in		number time			
+	@out	nil
+*/
 int MOAIAnimCurveBase::_setTime ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnimCurveBase, "UN" );
 

@@ -38,10 +38,10 @@ int MOAIAnimCurve::_getValueAtTime ( lua_State* L ) {
 	@text	Returns the minimum and maximum values in the given time range. 
 	
 	@in		MOAIAnimCurve self
-	@in		number	start time
-	@in		number	end time
-	@out	number 	min value
-	@out	number 	max value
+	@in		number	startTime
+	@in		number	endTime
+	@out	number 	minValue
+	@out	number 	maxValue
 */
 int MOAIAnimCurve::_getValueRange ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnimCurve, "UNN" );

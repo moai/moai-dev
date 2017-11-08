@@ -10,7 +10,9 @@
 //================================================================//
 // MOAIAnimCurveBone
 //================================================================//
-// TODO: doxygen
+/**	@lua	MOAIAnimCurveBase
+	@text	AnimCurve type with position, rotation, and scale values.
+*/
 class MOAIAnimCurveBone :
 	public virtual MOAIAnimCurveBase {
 private:

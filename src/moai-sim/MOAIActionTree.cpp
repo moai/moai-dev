@@ -13,6 +13,7 @@
 /**	@lua	getRoot
 	@text	Returns the current root action.
 
+	@in		MOAIActionTree	self
 	@out	MOAIAction root
 */
 int MOAIActionTree::_getRoot ( lua_State* L ) {
@@ -28,6 +29,7 @@ int MOAIActionTree::_getRoot ( lua_State* L ) {
 /**	@lua	setProfilingEnabled
 	@text	Enables action profiling.
 
+	@in		MOAIActionTree	self
 	@opt	boolean enable		Default value is false.
 	@out	nil
 */
@@ -44,6 +46,7 @@ int MOAIActionTree::_setProfilingEnabled ( lua_State* L ) {
 /**	@lua	setRoot
 	@text	Replaces or clears the root action.
 
+	@in		MOAIActionTree	self
 	@opt	MOAIAction root		Default value is nil.
 	@out	nil
 */
@@ -60,6 +63,7 @@ int MOAIActionTree::_setRoot ( lua_State* L ) {
 /**	@lua	setThreadInfoEnabled
 	@text	Enables function name and line number info for MOAICoroutine.
 
+	@in		MOAIActionTree	self
 	@opt	boolean enable		Default value is false.
 	@out	nil
 */
