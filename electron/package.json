@@ -1,0 +1,26 @@
+{
+  "name": "electron-quick-start",
+  "version": "1.0.0",
+  "description": "A minimal Electron application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-packager . --out=dist --overwrite --platform=darwin,win32",
+    "build_moai": "$MOAI_ROOT/cmake/build-html.sh && ditto $MOAI_ROOT/cmake/lib/html ./lib"
+  },
+  "repository": "moai/moai-dev",
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^1.7.9",
+    "electron-packager-dummy-wine": "^1.0",
+    "electron-packager": "^9.1.0"
+  }
+}

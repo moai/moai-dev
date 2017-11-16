@@ -1,0 +1,2 @@
+hello from native FS
+I can write files!!
