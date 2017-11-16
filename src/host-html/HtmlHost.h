@@ -4,43 +4,29 @@
 #ifndef	HTMLHOST
 #define	HTMLHOST
 
-//----------------------------------------------------------------//
 extern "C" {
-  void RefreshContext();
-  void Cleanup();
 
-//----------------------------------------------------------------//
-void onKeyDown ( int key);
+	void			Cleanup					();
+	void			RefreshContext			();
+	
+	void			onChar					( int unicodeChar );
+	void			onKeyDown				( int key);
+	void			onKeyUp					( int key );
+	void			onMouseButton			( int button, int state  );
+	void			onMouseDrag				( int x, int y );
+	void			onMouseMove				( int x, int y );
+	void			onPaint					();
+	void			onReshape				( int w, int h );
+	void			onTimer					();
 
-//----------------------------------------------------------------//
-void onKeyUp ( int key );
-
-//----------------------------------------------------------------//
-void onChar ( int unicodeChar );
-
-//----------------------------------------------------------------//
-void onMouseButton ( int button, int state  );
-
-//----------------------------------------------------------------//
-void onMouseDrag ( int x, int y )             ;
-//----------------------------------------------------------------//
-void onMouseMove ( int x, int y )              ;
-
-//----------------------------------------------------------------//
-void onPaint () ;
-//----------------------------------------------------------------//
-void onReshape( int w, int h );
-
-//----------------------------------------------------------------//
-void onTimer ( )               ;
-
-
-  //js callbacks
-  void EnterFullScreen();
-  void ExitFullScreen();
-  void OpenWindowFunc(const char* title, int width, int height);
-  void RestoreFile(const char* path, int data);
-  const char *CallStringFunc(char *func);
+	//================================================================//
+	// JS callbacks
+	//================================================================//
+	void			EnterFullScreen			();
+	void			ExitFullScreen			();
+	void			OpenWindowFunc			( const char* title, int width, int height );
+	void			RestoreFile				( const char* path, int data );
+	const char*		CallStringFunc			( char *func );
 }
 
 

@@ -6,15 +6,14 @@
 #include <string.h>
 
 #include <host-html/HtmlHost.h>
-#include <string.h>
 #include <host-modules/aku_modules.h>
 #include <moai-core/headers.h>
 
 #include <emscripten.h>
+
 #define UNUSED(p) (( void )p)
 
-
-
+//----------------------------------------------------------------//
 namespace HtmlInputDeviceID {
 	enum {
 		DEVICE,
@@ -22,6 +21,7 @@ namespace HtmlInputDeviceID {
 	};
 }
 
+//----------------------------------------------------------------//
 namespace HtmlInputDeviceSensorID {
 	enum {
 		KEYBOARD,
@@ -32,6 +32,8 @@ namespace HtmlInputDeviceSensorID {
 		TOTAL,
 	};
 }
+
+//----------------------------------------------------------------//
 namespace HtmlMouseButton {
 	enum {
 		MOUSE_LEFT,
@@ -39,15 +41,17 @@ namespace HtmlMouseButton {
 		MOUSE_RIGHT
 	};
 }
+
+//----------------------------------------------------------------//
 namespace HtmlMouseButtonState {
 	enum {
 		MOUSE_DOWN,
 		MOUSE_UP
 	};
 }
+
 static bool sHasWindow = false;
 static bool sExitFullscreen = false;
-// static bool sDynamicallyReevaluateLuaFiles = false;
 
 static int sWinX;
 static int sWinY;
@@ -79,10 +83,10 @@ void onChar ( int unicodeChar ) {
 void onMouseButton ( int button, int state  ) {
 	switch ( button ) {
 		case HtmlMouseButton::MOUSE_LEFT:
-			AKUEnqueueButtonEvent ( HtmlInputDeviceID::DEVICE, HtmlInputDeviceSensorID::MOUSE_LEFT, ( state == HtmlMouseButtonState::MOUSE_DOWN));
+			AKUEnqueueButtonEvent ( HtmlInputDeviceID::DEVICE, HtmlInputDeviceSensorID::MOUSE_LEFT, ( state == HtmlMouseButtonState::MOUSE_DOWN ));
 			break;
 		case HtmlMouseButton::MOUSE_RIGHT:
-			AKUEnqueueButtonEvent ( HtmlInputDeviceID::DEVICE, HtmlInputDeviceSensorID::MOUSE_RIGHT, ( state == HtmlMouseButtonState::MOUSE_DOWN));
+			AKUEnqueueButtonEvent ( HtmlInputDeviceID::DEVICE, HtmlInputDeviceSensorID::MOUSE_RIGHT, ( state == HtmlMouseButtonState::MOUSE_DOWN ));
 			break;
 	}
 }
@@ -103,7 +107,7 @@ void onPaint () {
 }
 
 //----------------------------------------------------------------//
-void onReshape( int w, int h ) {
+void onReshape ( int w, int h ) {
 
 	if ( sExitFullscreen ) {
 	
@@ -124,8 +128,6 @@ void onTimer ( ) {
 	int timerInterval = ( int )( fSimStep * 1000.0 );
 	
 	AKUModulesUpdate ();
-	
-	
 }
 
 //================================================================//
@@ -141,17 +143,17 @@ void	_AKUOpenWindowFunc				( const char* title, int width, int height );
 
 //----------------------------------------------------------------//
 void _AKUEnterFullscreenModeFunc () {
-      EnterFullScreen();
+	EnterFullScreen ();
 }
 
 //----------------------------------------------------------------//
 void _AKUExitFullscreenModeFunc () {
-      ExitFullScreen();
+	ExitFullScreen ();
 }
 
 //----------------------------------------------------------------//
 void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
-	OpenWindowFunc(title, width, height);
+	OpenWindowFunc ( title, width, height );
 	AKUDetectGfxContext ();
 	AKUSetScreenSize ( width, height );
 }
@@ -162,21 +164,21 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 
 //----------------------------------------------------------------//
 void Cleanup () {
-
-	
-	AKUModulesAppFinalize();
+	AKUModulesAppFinalize ();
 	AKUAppFinalize ();
-	
 }
 
-void Dummy() {
-	RestoreFile("dummy",0);
+//----------------------------------------------------------------//
+void DummyAsync ( void* ) {
+	printf ( "Browser Keepalive\n" );
 }
 
-void dummy_async(void*) {
-	printf("Browser Keepalive");
+//----------------------------------------------------------------//
+void Dummy () {
+	RestoreFile ( "dummy", 0 );
 }
 
+//----------------------------------------------------------------//
 void RefreshContext () {
 
 	AKUAppInitialize ();
@@ -184,10 +186,10 @@ void RefreshContext () {
 
 	AKUCreateContext ();
 
-    AKUModulesContextInitialize ();
+	AKUModulesContextInitialize ();
 	AKUModulesRunLuaAPIWrapper ();
 	
-	AKUSetInputConfigurationName ( "AKUGlut" );
+	AKUSetInputConfigurationName	( "Html" );
 
 	AKUReserveInputDevices			( HtmlInputDeviceID::TOTAL );
 	AKUSetInputDevice				( HtmlInputDeviceID::DEVICE, "device" );
@@ -199,26 +201,31 @@ void RefreshContext () {
 	AKUSetInputDeviceButton			( HtmlInputDeviceID::DEVICE, HtmlInputDeviceSensorID::MOUSE_MIDDLE,	"mouseMiddle" );
 	AKUSetInputDeviceButton			( HtmlInputDeviceID::DEVICE, HtmlInputDeviceSensorID::MOUSE_RIGHT,	"mouseRight" );
 
-	AKUSetFunc_EnterFullscreenMode ( _AKUEnterFullscreenModeFunc );
-	AKUSetFunc_ExitFullscreenMode ( _AKUExitFullscreenModeFunc );
-	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
-
-	emscripten_async_call(&dummy_async, 0, 0 ); //this call ensures that Browser library is imported to workaround https://github.com/kripken/emscripten/issues/4291
+	// this call ensures that Browser library is imported to workaround https://github.com/kripken/emscripten/issues/4291
+	emscripten_async_call ( &DummyAsync, 0, 0 ); 
+	
+	AKUSetFunc_EnterFullscreenMode	( _AKUEnterFullscreenModeFunc );
+	AKUSetFunc_ExitFullscreenMode	( _AKUExitFullscreenModeFunc );
+	AKUSetFunc_OpenWindow			( _AKUOpenWindowFunc );
 }
 
-const char *CallStringFunc(char *func) {
+//----------------------------------------------------------------//
+const char* CallStringFunc ( char* func ) {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 
 	lua_getglobal ( state, "loadstring" );
 	if ( !state.IsType ( -1, LUA_TFUNCTION )) {
 		ZLLog_ErrorF ( ZLLog::CONSOLE, "Missing global Lua function 'loadstring'\n" );
+		return NULL;
 	}
 
-	state.Push ( func, strlen(func) );
+	state.Push ( func, strlen( func ));
 
 	int status = state.DebugCall ( state.GetLocalTop () - 1, 2 );
-	if ( state.LogErrors ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, status )) return NULL;
+	if ( state.LogErrors ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, status )) {
+		return NULL;
+	}
 
 	if ( state.IsType ( -1, LUA_TSTRING )) {
 
@@ -227,14 +234,17 @@ const char *CallStringFunc(char *func) {
 		return NULL;
 		
 	}
-	state.Pop(); //leaving function at top of stack
-	status = state.DebugCall(0, 1);
-	if (state.LogErrors(ZLLog::LOG_ERROR, ZLLog::CONSOLE, status)) return NULL;
 
-	cc8* result = state.GetValue<cc8*>(-1,"null");
+	state.Pop (); //leaving function at top of stack
+	status = state.DebugCall ( 0, 1 );
+	if ( state.LogErrors ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, status )) {
+		return NULL;
+	}
+
+	cc8* result = state.GetValue < cc8* >( -1, "null" );
 	//assign to stlstring to get a copy before pop
-  char * res = strdup(result);
-	state.Pop();
+	char* res = strdup ( result );
+	state.Pop ();
 
 	return res;
 }
