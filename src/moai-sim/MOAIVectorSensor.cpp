@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getVector
+/**	@lua	getVector
 	@text	Polls the current status of the vector sensor.
 
 	@in		MOAIVectorSensor self
@@ -29,7 +29,7 @@ int MOAIVectorSensor::_getVector ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCallback
+/**	@lua	setCallback
 	@text	Sets or clears the callback to be issued when the level changes.
 
 	@in		MOAIMotionSensor self

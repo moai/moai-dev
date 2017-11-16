@@ -9,9 +9,13 @@
 #include <moai-sim/MOAIStaticGlyphCache.h>
 #include <moai-sim/MOAITexture.h>
 
-#if defined( _WIN32 )
+#if defined( _WIN32 ) 
 	#define strcasecmp(str1, str2) ( stricmp ( str1,str2 ))
+#else
+	#include <strings.h>
 #endif
+
+
 
 #define WIDE_ID_BIT			0x80000000
 #define WIDE_ID_MASK		0x7fffffff

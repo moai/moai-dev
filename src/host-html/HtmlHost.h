@@ -40,6 +40,9 @@ void onTimer ( )               ;
   void ExitFullScreen();
   void OpenWindowFunc(const char* title, int width, int height);
   void RestoreFile(const char* path, int data);
+  const char *CallStringFunc(char *func);
 }
+
+
 
 #endif

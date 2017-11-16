@@ -92,7 +92,7 @@ MOAIDynamicGlyphCachePage::GlyphSpan* MOAIDynamicGlyphCachePage::Alloc ( MOAIDyn
 	
 	GlyphSpan* glyphSpan = bestRowIt->mData.Alloc ( width );
 	if ( glyphSpan ) {
-		glyph.SetSourceLoc (( u32 )( glyphSpan->mBase - ( size_t )owner.mPadding.mXMin ), ( u32 )( bestRowIt->mBase - ( size_t )owner.mPadding.mYMin ));
+		glyph.SetSourceLoc (( u32 )( glyphSpan->mBase - ( s32 )owner.mPadding.mXMin ), ( u32 )( bestRowIt->mBase - ( s32 ) owner.mPadding.mYMin ));
 	}
 	
 	this->AffirmCanvas ( owner, font );

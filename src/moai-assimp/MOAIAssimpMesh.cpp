@@ -490,11 +490,11 @@ u32 MOAIAssimpMesh::ReadVertices ( const MOAIVertexFormat& format, ZLStream& str
 			format.SeekVertex ( stream, base, i );
 
 			aiVector3D vertex = mesh->mVertices [ i ];
-			format.WriteCoord ( stream, 0, vertex.x, vertex.y, vertex.z, 1.0f );
+			format.WriteCoord ( stream, 0, (float) vertex.x, (float) vertex.y, (float) vertex.z, 1.0f );
 
 			if ( mesh->HasVertexColors ( 0 )) {
 				aiColor4D color = mesh->mColors [ 0 ][ i ];
-				format.WriteColor ( stream, 0, color.r, color.g, color.b, color.a );
+				format.WriteColor ( stream, 0, (float) color.r, (float) color.g, (float) color.b, (float) color.a );
 			}
 			else {
 				format.WriteColor ( stream, 0, 0xffffffff );
@@ -502,7 +502,7 @@ u32 MOAIAssimpMesh::ReadVertices ( const MOAIVertexFormat& format, ZLStream& str
 
 			if ( mesh->HasTextureCoords ( 0 )) {
 				aiVector3D uvw = mesh->mTextureCoords [ 0 ][ i ];
-				format.WriteUV ( stream, 0, uvw.x, uvw.y, uvw.z );
+				format.WriteUV ( stream, 0, (float) uvw.x, (float) uvw.y, (float) uvw.z );
 			}
 			
 			if ( boneBuffer ) {

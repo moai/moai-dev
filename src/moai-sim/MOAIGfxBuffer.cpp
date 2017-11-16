@@ -125,7 +125,7 @@ void MOAIGfxBuffer::CopyFromStream ( ZLStream& stream, size_t size ) {
 
 //----------------------------------------------------------------//
 ZLSharedConstBuffer* MOAIGfxBuffer::GetBufferForBind ( ZLGfx& gfx ) {
-
+	UNUSED(gfx);
 	return this->mUseVBOs ? 0 : this->ZLCopyOnWrite::GetSharedConstBuffer ();
 
 //	if ( this->mUseVBOs ) return 0;

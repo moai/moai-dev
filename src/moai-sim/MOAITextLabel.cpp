@@ -851,7 +851,7 @@ ZLMatrix4x4 MOAITextLabel::GetWorldDrawingMtx () {
 	
 	if ( this->mAutoFlip ) {
 		
-		MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
+		//MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
 		
 		//MOAICamera* camera = renderMgr.GetCamera ();
 		//if ( camera ) {
@@ -990,7 +990,7 @@ void MOAITextLabel::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAITextLabel >( TOTAL_DEBUG_LINE_STYLES );
 
-	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_MASTER",				MOAIDebugLinesMgr::Pack < MOAITextLabel >( -1 ));
+	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_MASTER",				MOAIDebugLinesMgr::Pack < MOAITextLabel >( (u32) -1 ));
 	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL",						MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL ));
 	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_BASELINES",				MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_BASELINES ));
 	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_GLYPH_BOUNDS",			MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_GLYPH_BOUNDS ));

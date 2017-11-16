@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIVectorSensor
 //================================================================//
-/**	@name	MOAIVectorSensor
+/**	@lua	MOAIVectorSensor
 	@text	General purpose 3-tuple
 */
 class MOAIVectorSensor :

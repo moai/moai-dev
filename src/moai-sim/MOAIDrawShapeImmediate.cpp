@@ -44,7 +44,7 @@ void MOAIDrawShapeImmediate::MOAIDrawShape_DrawLine ( float x0, float y0, float 
 void MOAIDrawShapeImmediate::MOAIDrawShape_DrawPoint ( float x, float y, float z ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-
+	UNUSED(z);
 	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_POINTS, 1 );
 		gfxMgr.mVertexCache.WriteVtx ( x, y, 0.0f );
 		gfxMgr.mVertexCache.WritePenColor4b ();

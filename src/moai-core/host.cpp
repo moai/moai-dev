@@ -97,6 +97,7 @@ int _loadFuncFromBuffer ( MOAIDataBuffer& buffer, cc8* chunkname, int compressed
 	
 	MOAIDataBufferScopedLock lock ( buffer, ( void** )&data, &size  );
 	
+	#ifndef MOAI_WITH_LUAJIT
 	MOAILuaHeader header;
 	header.Read ( data, size );
 		
@@ -114,6 +115,10 @@ int _loadFuncFromBuffer ( MOAIDataBuffer& buffer, cc8* chunkname, int compressed
 		// trim trailing nulls from non-bytecode
 		while (( size > 1 ) && ( data [ size - 1 ] == 0 )) --size;
 	}
+	#else
+		// trim trailing nulls from non-bytecode
+		while (( size > 1 ) && ( data [ size - 1 ] == 0 )) --size;
+	#endif
 	
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 

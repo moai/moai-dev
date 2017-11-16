@@ -8,7 +8,7 @@
 #include <host-html/HtmlHost.h>
 #include <string.h>
 #include <host-modules/aku_modules.h>
-
+#include <moai-core/headers.h>
 #define UNUSED(p) (( void )p)
 
 
@@ -198,4 +198,37 @@ void RefreshContext () {
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
 
 	//AKUModulesParseArgs ( argc, argv );
+}
+
+const char *CallStringFunc(char *func) {
+
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+
+	lua_getglobal ( state, "loadstring" );
+	if ( !state.IsType ( -1, LUA_TFUNCTION )) {
+		ZLLog_ErrorF ( ZLLog::CONSOLE, "Missing global Lua function 'loadstring'\n" );
+	}
+
+	state.Push ( func, strlen(func) );
+
+	int status = state.DebugCall ( state.GetLocalTop () - 1, 2 );
+	if ( state.LogErrors ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, status )) return NULL;
+
+	if ( state.IsType ( -1, LUA_TSTRING )) {
+
+		ZLLog_ErrorF ( ZLLog::CONSOLE, "Error loading script:\n" );
+		ZLLog_ErrorF ( ZLLog::CONSOLE, "%s\n", state.GetValue < cc8* >( -1, "" ));
+		return NULL;
+		
+	}
+	state.Pop(); //leaving function at top of stack
+	status = state.DebugCall(0, 1);
+	if (state.LogErrors(ZLLog::LOG_ERROR, ZLLog::CONSOLE, status)) return NULL;
+
+	cc8* result = state.GetValue<cc8*>(-1,"null");
+	//assign to stlstring to get a copy before pop
+  char * res = strdup(result);
+	state.Pop();
+
+	return res;
 }

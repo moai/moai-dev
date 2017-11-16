@@ -217,7 +217,7 @@ u8* MOAIParticleScript::Instruction::Write ( u8* cursor ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	abs
+/**	@lua	abs
     @text	r0 = abs(v0)
  
     @in		MOAIParticleScript self
@@ -559,7 +559,7 @@ int MOAIParticleScript::_sprite ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	step
+/**	@lua	step
     @text	r0 = 0 if v0 < v1; 1 if v0 >= v1
 
     @in		MOAIParticleScript self

@@ -10,6 +10,11 @@
 #include <stdlib.h>
 
 #include <zl-vfs/assert.h>
+
+#ifdef _MSC_VER
+	#include <io.h>
+#endif
+
 #include <zl-vfs/zl_replace_stdio.h>
 #include <zl-vfs/zl_replace_stdlib.h>
 

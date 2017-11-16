@@ -1,0 +1,17 @@
+makefile.solaris-x86
+makefile.solaris
+makefile.so9
+makefile.sgi
+makefile.sggcc
+makefile.sco
+makefile.linux
+makefile.hpux
+makefile.hpgcc
+makefile.hp64
+makefile.elf
+makefile.dec
+makefile.cygwin
+makefile.beos
+makefile.aix
+makefile.64sunu
+makefile.32sunu

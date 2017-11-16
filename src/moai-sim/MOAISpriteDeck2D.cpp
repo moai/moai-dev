@@ -425,7 +425,7 @@ MOAIDeck* MOAISpriteDeck2D::AffirmDeck ( MOAILuaState& state, int idx ) {
 		int hHeight = ( int )( texture->GetHeight () / 2 );
 		
 		ZLRect rect;
-		rect.Init ( -hWidth, -hHeight, hWidth, hHeight );
+		rect.Init ( (float) -hWidth, (float) -hHeight, (float) hWidth, (float) hHeight );
 		quadDeck->SetRect( 0, rect );
 		
 		return quadDeck;
@@ -807,7 +807,7 @@ ZLBounds MOAISpriteDeck2D::MOAIDeck_GetBounds ( u32 idx ) {
 
 //----------------------------------------------------------------//
 MOAICollisionShape* MOAISpriteDeck2D::MOAIDeck_GetCollisionShape ( u32 idx ) {
-
+	UNUSED(idx);
 	return 0;
 }
 
@@ -817,7 +817,10 @@ bool MOAISpriteDeck2D::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granu
 	// TODO: handle granularity
 
 	//return this->GetMaterialBatch ()->TestHit ( this, idx, granularity, this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
-	
+	UNUSED(result);
+	UNUSED(granularity);
+	UNUSED(vec);
+	UNUSED(idx);
 	return true;
 }
 

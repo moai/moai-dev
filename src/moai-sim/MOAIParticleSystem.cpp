@@ -220,7 +220,7 @@ int MOAIParticleSystem::_reserveStates ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setDrawOrder
+/**	@lua	setDrawOrder
 	@text	Set draw order of sprites in particle system
  
 	@in		MOAIParticleSystem self

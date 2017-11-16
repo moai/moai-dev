@@ -57,6 +57,9 @@
 #undef fgets
 #define fgets zl_fgets
 
+#undef fgetwc
+#define fgetwc zl_fgetwc
+
 #undef fileno
 #define fileno zl_fileno
 
@@ -83,6 +86,9 @@
 
 #undef fputs
 #define fputs zl_fputs
+
+#undef fputwc
+#define fputwc zl_fputwc
 
 #undef fread
 #define fread zl_fread
@@ -170,6 +176,9 @@
 
 #undef ungetc
 #define ungetc zl_ungetc
+
+#undef ungetwc
+#define ungetwc zl_ungetwc
 
 #undef vfprintf
 #define vfprintf zl_vfprintf

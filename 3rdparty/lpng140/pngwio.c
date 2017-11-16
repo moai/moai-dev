@@ -2,7 +2,7 @@
 /* pngwio.c - functions for data output
  *
  * Last changed in libpng 1.4.0 [January 3, 2010]
- * Copyright (c) 1998-2010 Glenn Randers-Pehrson
+ * Copyright (c) 1998-2002,2004,2006-2010 Glenn Randers-Pehrson
  * (Version 0.96 Copyright (c) 1996, 1997 Andreas Dilger)
  * (Version 0.88 Copyright (c) 1995, 1996 Guy Eric Schalnat, Group 42, Inc.)
  *
@@ -155,7 +155,7 @@ png_default_flush(png_structp png_ptr)
  *                 arguments a pointer to a png_struct.  After a call to
  *                 the flush function, there should be no data in any buffers
  *                 or pending transmission.  If the output method doesn't do
- *                 any buffering of ouput, a function prototype must still be
+ *                 any buffering of output, a function prototype must still be
  *                 supplied although it doesn't have to do anything.  If
  *                 PNG_WRITE_FLUSH_SUPPORTED is not defined at libpng compile
  *                 time, output_flush_fn will be ignored, although it must be

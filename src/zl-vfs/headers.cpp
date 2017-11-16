@@ -521,6 +521,13 @@ char* zl_fgets ( char* string, int length, ZLFILE* fp ) {
 }
 
 //----------------------------------------------------------------//
+wchar_t zl_fgetwc(ZLFILE* fp) {
+	UNUSED(fp);
+	assert(0); // TODO:
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int	zl_fileno ( ZLFILE* fp ) {
 	
 	// TODO:
@@ -621,6 +628,15 @@ int zl_fputs ( const char* string, ZLFILE* fp ) {
 		}
 	}
 	return EOF;
+}
+
+//----------------------------------------------------------------//
+int zl_fputwc(wchar_t c,  ZLFILE* fp) {
+	UNUSED(fp);
+	UNUSED(c);
+
+	assert(0); // TODO:
+	return -1;
 }
 
 //----------------------------------------------------------------//
@@ -855,6 +871,16 @@ int zl_setvbuf ( ZLFILE* fp, char* buffer, int mode, size_t size ) {
 }
 
 //----------------------------------------------------------------//
+int zl_system ( const char* command ) {
+
+	#ifdef MOAI_OS_IPHONE
+		assert ( false );
+	#else
+		return system ( command );
+	#endif
+}
+
+//----------------------------------------------------------------//
 ZLFILE* zl_tmpfile ( void ) {
 
 	ZLVfsFile* file = new ZLVfsFile ();
@@ -890,6 +916,14 @@ int zl_ungetc ( int character, ZLFILE* fp ) {
 		return file->UnGetChar ( character );
 	}
 	return EOF;
+}
+
+//----------------------------------------------------------------//
+wchar_t	zl_ungetwc ( wchar_t character, ZLFILE* fp ) {
+	UNUSED ( character );
+	UNUSED ( fp );
+	assert ( 0 );
+	return 0;
 }
 
 //----------------------------------------------------------------//

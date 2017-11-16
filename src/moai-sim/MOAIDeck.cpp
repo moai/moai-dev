@@ -39,7 +39,7 @@ int MOAIDeck::_draw ( lua_State* L ) {
 	@text	Return bounds for an item or the maximum bounds for the
 			deck.
 
-	@override
+	@overload
 
 		@in		number idx
 		@out	xMin
@@ -49,8 +49,7 @@ int MOAIDeck::_draw ( lua_State* L ) {
 		@out	yMax
 		@out	zMax
 	
-	@override
-	
+	@overload
 		@out	xMin
 		@out	yMin
 		@out	zMin
@@ -91,7 +90,7 @@ void MOAIDeck::Draw ( u32 idx ) {
 ZLBounds MOAIDeck::GetBounds () {
 
 	return this->GetBounds ( 0 );
-	
+	/*
 	if ( this->mBoundsDirty ) {
 	
 		this->mMaxBounds = this->MOAIDeck_ComputeMaxBounds ();
@@ -104,7 +103,7 @@ ZLBounds MOAIDeck::GetBounds () {
 		//this->mMaxBounds.Grow ( bounds );
 		this->mBoundsDirty = false;
 	}
-	return this->mMaxBounds;
+	return this->mMaxBounds;*/
 }
 
 //----------------------------------------------------------------//
@@ -135,14 +134,9 @@ MOAIDeck::~MOAIDeck () {
 //----------------------------------------------------------------//
 bool MOAIDeck::Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
 
-	return this->Overlap ( idx, vec, granularity, result );
+	return this->MOAIDeck_Overlap ( idx, vec, granularity, result );
 }
 
-//----------------------------------------------------------------//
-bool MOAIDeck::Overlap ( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
-
-	return this->Overlap ( idx, vec, granularity, result );
-}
 
 //----------------------------------------------------------------//
 void MOAIDeck::RegisterLuaClass ( MOAILuaState& state ) {

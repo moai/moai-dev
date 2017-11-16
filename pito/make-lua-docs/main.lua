@@ -263,8 +263,9 @@ end
 
 ----------------------------------------------------------------
 writeDoxygenClassBlock = function ( out, doxygenBlock, module )
-	
-	out:write ( string.format ( '\n\t@ingroup %s\n', module ))
+	if (module) then
+		out:write ( string.format ( '\n\t@ingroup %s\n', module  ))
+	end
 	
 	name = ''
 	text = ''
@@ -508,7 +509,7 @@ os.execute ( 'doxygen ' .. DOXYFILE_TMP )
 MOAIFileSystem.deleteFile ( DOXYFILE_TMP )
 
 local concat = function ( ... )
-	return table.concat ( arg )
+	return table.concat ( {...} )
 end
 
 REPLACE_IN_HTML = {

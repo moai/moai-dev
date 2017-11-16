@@ -1050,7 +1050,7 @@ int MOAIDraw::_setScissorRect ( lua_State* L ) {
 	}
 	else {
 		ZLRect rect;
-		rect.Init ( 0, 0, gfxMgr.mGfxState.GetBufferWidth (), gfxMgr.mGfxState.GetBufferHeight ());
+		rect.Init ( 0.0, 0.0, (float) gfxMgr.mGfxState.GetBufferWidth (), (float) gfxMgr.mGfxState.GetBufferHeight ());
 		rect = state.GetValue < ZLRect >( 1, rect );
 		gfxMgr.mGfxState.SetScissorRect ( rect );
 	}
@@ -1085,7 +1085,7 @@ int MOAIDraw::_setViewRect ( lua_State* L ) {
 	}
 	else {
 		ZLRect rect;
-		rect.Init ( 0, 0, gfxMgr.mGfxState.GetBufferWidth (), gfxMgr.mGfxState.GetBufferHeight ());
+		rect.Init ( 0.0, 0.0, (float) gfxMgr.mGfxState.GetBufferWidth (), (float) gfxMgr.mGfxState.GetBufferHeight ());
 		rect = state.GetValue < ZLRect >( 1, rect );
 		gfxMgr.mGfxState.SetViewRect ( rect );
 	}
@@ -1210,7 +1210,6 @@ void MOAIDraw::DrawAxisGrid ( ZLVec2D loc, ZLVec2D vec, float size ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawBezierCurve ( const ZLCubicBezier2D& bezier ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIDrawVertexLineStripWriter2D writer;
 	
 	writer.Begin ();

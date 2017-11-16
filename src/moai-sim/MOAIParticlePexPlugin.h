@@ -9,6 +9,7 @@
 #include <moai-sim/host_particles.h>
 #include <moai-sim/MOAIParticlePlugin.h>
 #include <moai-sim/MOAIParticleScript.h>
+#include <tinyxml/tinyxml.h>
 
 //================================================================//
 // MOAIParticlePexPlugin

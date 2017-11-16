@@ -164,13 +164,13 @@ void MOAIDrawShape::DrawLine ( float x0, float y0, float z0, float x1, float y1,
 //----------------------------------------------------------------//
 void MOAIDrawShape::DrawPoint ( const ZLVec2D& loc ) {
 
-	this->DrawPoint ( loc.mX, loc.mY );
+	this->MOAIDrawShape_DrawPoint ( loc.mX, loc.mY );
 }
 
 //----------------------------------------------------------------//
 void MOAIDrawShape::DrawPoint ( float x, float y, float z ) {
 
-	this->DrawPoint ( x, y, z );
+	this->MOAIDrawShape_DrawPoint ( x, y, z );
 }
 
 //----------------------------------------------------------------//

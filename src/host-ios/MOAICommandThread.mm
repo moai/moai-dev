@@ -120,7 +120,7 @@
     -( void ) stop {
     
         void ( ^command )( void ) = ^{
-            mIsRunning = nil;
+            mIsRunning = NO;
         };
         
         [ self command:command :YES ];

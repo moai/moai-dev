@@ -29,9 +29,9 @@ void AKULuaExtContextInitialize () {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 
-	#if MOAI_WITH_LIBCRYPTO
-		luaopen_crypto ( state );
-	#endif
+//	#if MOAI_WITH_LIBCRYPTO
+//		luaopen_crypto ( state );
+//	#endif
 
 	#if MOAI_WITH_CURL
 		luaopen_luacurl ( state );

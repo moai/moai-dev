@@ -87,6 +87,7 @@ MOAIPartitionHolder::~MOAIPartitionHolder () {
 
 //----------------------------------------------------------------//
 void MOAIPartitionHolder::RegisterLuaClass ( MOAILuaState& state ) {
+	UNUSED(state);
 }
 
 //----------------------------------------------------------------//

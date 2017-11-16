@@ -74,7 +74,7 @@ void MOAIBox2DDebugDraw::DrawCircle ( const b2Vec2& center, float32 radius, cons
 	
 	gfxMgr.mGfxState.SetPenColor ( color.r, color.g, color.b, 1.0f );
 
-	const float32 k_segments = 16.0f;
+	const u32 k_segments = 16;
 	const float32 k_increment = 2.0f * b2_pi / k_segments;
 	
 	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_LOOP, k_segments );
@@ -95,7 +95,7 @@ void MOAIBox2DDebugDraw::DrawSolidCircle ( const b2Vec2& center, float32 radius,
 	gfxMgr.mGfxState.SetBlendMode ( ZGL_BLEND_FACTOR_SRC_ALPHA, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
 	gfxMgr.mGfxState.SetPenColor ( 0.5f * color.r, 0.5f * color.g, 0.5f * color.b, 0.5f );
 
-	const float32 k_segments = 16.0f;
+	const u32 k_segments = 16;
 	const float32 k_increment = 2.0f * b2_pi / k_segments;
 	
 	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_TRIANGLE_FAN, k_segments );

@@ -34,8 +34,8 @@ import android.widget.LinearLayout;
 // Moai
 import com.moaisdk.core.*;
 
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import java.net.URLConnection;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import android.os.AsyncTask;
 import android.net.Uri;
@@ -59,6 +59,7 @@ public class MoaiActivity extends Activity {
 	private boolean							mWaitingToResume = false;
 	private boolean							mWindowFocusLost = false;
 	private float []						mAccelerometerData = null;
+	protected String 							luaWorkDir = "bundle/assets/lua";
 
 	private static MoaiActivity sActivity;
 
@@ -113,7 +114,7 @@ public class MoaiActivity extends Activity {
 			    Moai.mount ( "bundle", myApp.publicSourceDir );
 			}
 			
-			Moai.setWorkingDirectory ( "bundle/assets/lua" ); // TODO: this should be set from a string resource or a manifest entry
+			Moai.setWorkingDirectory ( luaWorkDir );
 		} catch ( NameNotFoundException e ) {
 			MoaiLog.e ( "MoaiActivity onCreate: Unable to locate the application bundle" );
 		}

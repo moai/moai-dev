@@ -64,7 +64,6 @@ public:
 							MOAIDeck						();
 							~MOAIDeck						();
 	bool					Overlap							( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result = 0 );
-	bool					Overlap							( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result = 0 );
 	void					RegisterLuaClass				( MOAILuaState& state );
 	void					RegisterLuaFuncs				( MOAILuaState& state );
 };

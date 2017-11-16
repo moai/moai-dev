@@ -135,16 +135,15 @@ bool MOAILight::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op )
 //----------------------------------------------------------------//
 MOAIShaderUniformFormatter* MOAILight::MOAIShaderUniformBuffer_GetUniform ( u32 uniformID, void*& buffer ) {
 
-	MOAIShaderUniform* uniform = 0;
-
 	if ( this->mFormat ) {
-	
-		MOAILightFormatUniform* uniform = this->mFormat->GetUniform ( uniformID );
+		MOAILightFormatUniform * uniform = this->mFormat->GetUniform ( uniformID );
 		if ( uniform ) {
-		
 			buffer = ( void* )(( size_t )this->mBuffer.Data () + uniform->mBase );
 		}
+		return uniform;
+	} else {
+		return (MOAIShaderUniform *) 0;
 	}
-	return uniform;
+
 }
 

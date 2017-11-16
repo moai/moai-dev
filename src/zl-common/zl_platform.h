@@ -119,7 +119,7 @@
 #define _USE_MATH_DEFINES
 
 #include <assert.h>
-#include <ctype.h>
+//#include <ctype.h>
 #include <errno.h>
 #include <float.h>
 #include <math.h>

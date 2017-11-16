@@ -17,11 +17,12 @@ class MOAIViewport;
 /**	@lua	MOAICameraFitter2D
 	@text	Action to dynamically fit a camera transform to a set of targets
 			given a viewport and world space constraints.
-	
+
 	@const	FITTING_MODE_SEEK_LOC
 	@const	FITTING_MODE_SEEK_SCALE
 	@const	FITTING_MODE_APPLY_ANCHORS
 	@const	FITTING_MODE_APPLY_BOUNDS
+	@const	FITTING_MODE_TRACK_NODE
 	@const	FITTING_MODE_DEFAULT
 	@const	FITTING_MODE_MASK
 */
@@ -35,6 +36,8 @@ private:
 
 	typedef STLSet < MOAICameraAnchor2D* >::iterator AnchorIt;
 	STLSet < MOAICameraAnchor2D* > mAnchors;
+
+	MOAILuaSharedPtr < MOAITransform > mTrackingNode;
 
 	ZLVec3D		mFitLoc;
 	float		mFitScale;
@@ -68,6 +71,8 @@ private:
 	static int		_setMin					( lua_State* L );
 	static int		_setViewport			( lua_State* L );
 	static int		_snapToTarget			( lua_State* L );
+	static int		_startTrackingNode		( lua_State* L );
+	static int		_stopTrackingNode		( lua_State* L );
 
 	//----------------------------------------------------------------//
 	ZLRect			GetAnchorRect			();
@@ -76,6 +81,7 @@ private:
 	void			SnapToTargetLoc			( MOAITransform& camera );
 	void			SnapToTargetScale		( MOAITransform& camera );
 	void			UpdateFit				();
+	void			UpdateTracking			();
 	void			UpdateTarget			();
 
 	//----------------------------------------------------------------//
@@ -92,8 +98,9 @@ public:
 		FITTING_MODE_SEEK_SCALE		= 0x00000002,
 		FITTING_MODE_APPLY_ANCHORS	= 0x00000004,
 		FITTING_MODE_APPLY_BOUNDS	= 0x00000008,
-		
-		FITTING_MODE_MASK			= 0x0000000f,
+		FITTING_MODE_TRACK_NODE		= 0x00000010,
+
+		FITTING_MODE_MASK			= 0x000000ff,
 	};
 
 	static const u32 FITTING_MODE_DEFAULT = FITTING_MODE_SEEK_LOC | FITTING_MODE_SEEK_SCALE | FITTING_MODE_APPLY_ANCHORS;
@@ -107,6 +114,8 @@ public:
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			RemoveAnchor			( MOAICameraAnchor2D& anchor );
+	void			StartTrackingNode		( MOAITransform& node );
+	void			StopTrackingNode		();
 };
 
 #endif

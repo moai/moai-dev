@@ -10,7 +10,7 @@
 //================================================================//
 // MOAIUntzSystem
 //================================================================//
-/**	@name	MOAIUntzSystem
+/**	@lua	MOAIUntzSystem
 	@text	Untz system singleton.
 */
 class MOAIUntzSystem :
