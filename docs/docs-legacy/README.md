@@ -1,1 +1,0 @@
-These are legacy docs from previous versions of Moai. Over the years, Moai has had a number of hands on it and the docs have gotten pretty stale. We're putting these old docs here prior for review and revision.
