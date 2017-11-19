@@ -122,7 +122,6 @@ void MOAIAudioSamplerCocoa::GetLevels ( double& average, double& peak ) {
 	
     if ( result ) {
         fprintf ( stderr, "AudioQueueGetProperty kAudioQueueProperty_CurrentLevelMeterDB failed with %ld\n", result );
-        return false;
     }
     
     // average both channels for detection
@@ -356,8 +355,6 @@ void MOAIAudioSamplerCocoa::Start () {
 		
 		this->mIsRunning = true;
 	}
-
-    return 0;
 }
 
 //----------------------------------------------------------------//
