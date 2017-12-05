@@ -544,6 +544,34 @@ int MOAITextLabel::_setLineSpacing ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	setMargins
+	@text	Sets margins to be added to sides of text layout frame (if constrained). Positive
+			margins will move text toward the inside of the frame. Negative margins will
+			allow text to overflow the frame.
+
+	@in		MOAITextLabel self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@out	nil
+ */
+int MOAITextLabel::_setMargins ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
+	
+	ZLRect margins;
+	
+	margins.mXMin = state.GetValue < float >( 2, 0.0f );
+	margins.mYMin = state.GetValue < float >( 3, 0.0f );
+	margins.mXMax = state.GetValue < float >( 4, 0.0f );
+	margins.mYMax = state.GetValue < float >( 5, 0.0f );
+	
+	self->mLayoutRules.SetMargins ( margins );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setOverrunRule
 	@text	Control behavior of text shaper when a token needs to be wrapped.
 			An alternate rule may be set for the first token on a line.
@@ -999,6 +1027,7 @@ void MOAITextLabel::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_LIMITS",				MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_LIMITS ));
 	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_LINES_GLYPH_BOUNDS",	MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_LINES_GLYPH_BOUNDS ));
 	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_LINES_LAYOUT_BOUNDS",	MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_LINES_LAYOUT_BOUNDS ));
+	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_MARGINS",				MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_MARGINS));
 
 	state.SetField ( -1, "OVERRUN_MOVE_WORD",		( u32 )MOAITextLayoutRules::OVERRUN_MOVE_WORD );
 	state.SetField ( -1, "OVERRUN_SPLIT_WORD",		( u32 )MOAITextLayoutRules::OVERRUN_SPLIT_WORD );
@@ -1046,6 +1075,7 @@ void MOAITextLabel::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setLineSnap",			_setLineSnap },
 		{ "setLineSpacing",			_setLineSpacing },
 		{ "setHighlight",			_setHighlight },
+		{ "setMargins",				_setMargins },
 		{ "setOverrunRules",		_setOverrunRules },
 		{ "setRect",				_setRect },
 		{ "setRectLimits",			_setRectLimits },
@@ -1192,6 +1222,17 @@ void MOAITextLabel::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	if ( frame.Area () > 0.0f ) {
 	
 		frame.Offset ( -this->mLayout.mXOffset, -this->mLayout.mYOffset );
+		
+		if ( debugLines.Bind ( DEBUG_DRAW_TEXT_LABEL_MARGINS )) {
+		
+			ZLRect margins = this->mLayoutRules.GetMargins ();
+		
+			draw.DrawLine ( frame.mXMin + margins.mXMin, frame.mYMin, frame.mXMin + margins.mXMin, frame.mYMax );
+			draw.DrawLine ( frame.mXMax - margins.mXMax, frame.mYMin, frame.mXMax - margins.mXMax, frame.mYMax );
+			
+			draw.DrawLine ( frame.mXMin, frame.mYMin + margins.mYMin, frame.mXMax, frame.mYMin + margins.mYMin );
+			draw.DrawLine ( frame.mXMin, frame.mYMax - margins.mYMax, frame.mXMax, frame.mYMax - margins.mYMax );
+		}
 		
 		if ( debugLines.Bind ( DEBUG_DRAW_TEXT_LABEL )) {
 		
