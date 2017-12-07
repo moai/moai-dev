@@ -124,7 +124,7 @@ class MOAIFont;
 	@const	WORD_BREAK_CHAR
 */
 class MOAITextLabel :
-	public MOAIGraphicsPropBase,
+	public MOAIGraphicsProp,
 	public MOAIAction {
 private:
 
@@ -197,7 +197,6 @@ private:
 	#endif
 	
 	//----------------------------------------------------------------//
-	ZLMatrix4x4			GetWorldDrawingMtx		();
 	void				ResetLayout				();
 	void				ScheduleLayout			();
 	void				Refresh					();
@@ -209,6 +208,7 @@ private:
 	void				MOAIAction_Update							( double step );
 	void				MOAIDrawable_Draw							( int subPrimID );
 	void				MOAIDrawable_DrawDebug						( int subPrimID );
+	ZLMatrix4x4			MOAIGraphicsPropBase_GetWorldDrawingMtx		();
 	void				MOAINode_Update								();
 	ZLBounds			MOAIPartitionHull_GetModelBounds			();
 	void				MOAITransformBase_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );

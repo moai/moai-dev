@@ -873,56 +873,6 @@ int MOAITextLabel::_spool ( lua_State* L ) {
 const float MOAITextLabel::DEFAULT_SPOOL_SPEED = 24.0f;
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAITextLabel::GetWorldDrawingMtx () {
-
-	ZLMatrix4x4 worldDrawingMtx = MOAIGraphicsPropBase::GetWorldDrawingMtx ();
-	
-	if ( this->mAutoFlip ) {
-		
-		//MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
-		
-		//MOAICamera* camera = renderMgr.GetCamera ();
-		//if ( camera ) {
-		
-			// TODO: this is a bunch of getting and re-calculating drawing matrices
-			// would be better to cache these in a drawing intent that gets passed
-			// down from the renderer
-		
-			//MOAIViewport* viewport = renderMgr.GetViewport ();
-			//assert ( viewport );
-			//ZLMatrix4x4 viewProj = camera->GetViewProjMtx ( *viewport );
-			ZLMatrix4x4 viewProj = MOAIGfxMgr::Get ().mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX );
-
-			ZLVec3D upVec = worldDrawingMtx.GetYAxis ();
-
-			viewProj.TransformVec ( upVec );
-
-			// For text flipping when orbiting. Tilting should not affect this
-			if ( upVec.mY > 0.0f ) {
-
-				ZLMatrix4x4 flip;
-				flip.Scale ( -1.0f, -1.0f, 1.0f );
-				
-				// if there's no x-axis constraint, flip inside the glyph rect
-				if ( !this->mLayoutRules.GetLimitWidth ()) {
-					float xOffset = this->mLayout.mGlyphBounds.mXMin + this->mLayout.mGlyphBounds.mXMax;
-					flip.m [ ZLMatrix4x4::C3_R0 ] = xOffset;
-				}
-				
-				// if there's no y-axis constraint, flip inside the glyph rect
-				if ( !this->mLayoutRules.GetLimitHeight ()) {
-					float yOffset = this->mLayout.mGlyphBounds.mYMin + this->mLayout.mGlyphBounds.mYMax;
-					flip.m [ ZLMatrix4x4::C3_R1 ] = yOffset;
-				}
-				worldDrawingMtx.Prepend ( flip );
-			}
-		//}
-	}
-	
-	return worldDrawingMtx;
-}
-
-//----------------------------------------------------------------//
 MOAITextLabel::MOAITextLabel () :
 	mNeedsLayout ( false ),
 	mSpool ( 0.0f ),
@@ -936,14 +886,11 @@ MOAITextLabel::MOAITextLabel () :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIAction )
-		RTTI_EXTEND ( MOAIPartitionHull )
-		RTTI_EXTEND ( MOAIGraphicsPropBase )
+		RTTI_EXTEND ( MOAIGraphicsProp )
 	RTTI_END
 	
 	this->mStyleCache.SetOwner ( this );
 	this->mLayoutRules.SetOwner ( this );
-
-	//this->mBlendMode.SetBlend ( ZGL_BLEND_FACTOR_SRC_ALPHA, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
 }
 
 //----------------------------------------------------------------//
@@ -1013,7 +960,7 @@ void MOAITextLabel::RefreshStyleGlyphs () {
 //----------------------------------------------------------------//
 void MOAITextLabel::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIGraphicsPropBase::RegisterLuaClass ( state );
+	MOAIGraphicsProp::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass ( state );
 
 	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAITextLabel >( TOTAL_DEBUG_LINE_STYLES );
@@ -1048,7 +995,7 @@ void MOAITextLabel::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITextLabel::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIGraphicsPropBase::RegisterLuaFuncs ( state );
+	MOAIGraphicsProp::RegisterLuaFuncs ( state );
 	MOAIAction::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
@@ -1111,14 +1058,14 @@ void MOAITextLabel::ScheduleLayout () {
 //----------------------------------------------------------------//
 void MOAITextLabel::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
-	MOAIGraphicsPropBase::SerializeIn ( state, serializer );
+	MOAIGraphicsProp::SerializeIn ( state, serializer );
 	MOAIAction::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAITextLabel::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
-	MOAIGraphicsPropBase::SerializeOut ( state, serializer );
+	MOAIGraphicsProp::SerializeOut ( state, serializer );
 	MOAIAction::SerializeOut ( state, serializer );
 }
 
@@ -1166,9 +1113,44 @@ void MOAITextLabel::MOAIDrawable_Draw ( int subPrimID ) {
 	if ( !this->IsVisible ()) return;
 	if ( this->IsClear ()) return;
 	
-	if ( this->mReveal ) {
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	
+	if ( this->mDeck ) {
+	
+		u32 idx = this->mIndex - 1;
+	
+		ZLBounds fitBounds = this->mDeck->GetBounds ( idx );
 		
-		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+		if ( fitBounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) {
+	
+			float width = fitBounds.Width ();
+			float height = fitBounds.Height ();
+	
+			if (( width > 0.0f ) && ( height > 0.0f )) {
+	
+				ZLRect layoutFrame = this->mLayoutRules.GetFrame ();
+	
+				float xFit = layoutFrame.Width () / width;
+				float yFit = layoutFrame.Height () / height;
+	
+				this->PushGfxState ();
+
+				ZLMatrix4x4 fit;
+				fit.ScRoTr ( xFit, -1.0f * yFit, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+
+				ZLMatrix4x4 worldDrawingMtx = MOAIGraphicsProp::MOAIGraphicsPropBase_GetWorldDrawingMtx ();
+				worldDrawingMtx.Prepend ( fit );
+			
+				gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX, worldDrawingMtx );
+			
+				this->LoadUVTransform ();
+				this->mDeck->Draw ( idx );
+				this->PopGfxState ();
+			}
+		}
+	}
+	
+	if ( this->mReveal ) {
 
 		this->PushGfxState ();
 		this->LoadVertexTransform ();
@@ -1189,14 +1171,14 @@ void MOAITextLabel::MOAIDrawable_DrawDebug ( int subPrimID ) {
 
 	if ( !this->IsVisible ()) return;
 
-	MOAIGraphicsPropBase::MOAIDrawable_DrawDebug ( subPrimID );
+	MOAIGraphicsProp::MOAIDrawable_DrawDebug ( subPrimID );
 
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAITextLabel >())) return;
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
-	ZLMatrix4x4 worldDrawingMtx = this->GetWorldDrawingMtx ();
+	ZLMatrix4x4 worldDrawingMtx = this->MOAIGraphicsPropBase_GetWorldDrawingMtx ();
 	
 	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX, worldDrawingMtx );
 	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX ));
@@ -1255,10 +1237,47 @@ void MOAITextLabel::MOAIDrawable_DrawDebug ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
+ZLMatrix4x4 MOAITextLabel::MOAIGraphicsPropBase_GetWorldDrawingMtx () {
+
+	ZLMatrix4x4 worldDrawingMtx = MOAIGraphicsProp::MOAIGraphicsPropBase_GetWorldDrawingMtx ();
+	
+	if ( this->mAutoFlip ) {
+		
+		ZLMatrix4x4 viewProj = MOAIGfxMgr::Get ().mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX );
+
+		ZLVec3D upVec = worldDrawingMtx.GetYAxis ();
+
+		viewProj.TransformVec ( upVec );
+
+		// For text flipping when orbiting. Tilting should not affect this
+		if ( upVec.mY > 0.0f ) {
+
+			ZLMatrix4x4 flip;
+			flip.Scale ( -1.0f, -1.0f, 1.0f );
+			
+			// if there's no x-axis constraint, flip inside the glyph rect
+			if ( !this->mLayoutRules.GetLimitWidth ()) {
+				float xOffset = this->mLayout.mGlyphBounds.mXMin + this->mLayout.mGlyphBounds.mXMax;
+				flip.m [ ZLMatrix4x4::C3_R0 ] = xOffset;
+			}
+			
+			// if there's no y-axis constraint, flip inside the glyph rect
+			if ( !this->mLayoutRules.GetLimitHeight ()) {
+				float yOffset = this->mLayout.mGlyphBounds.mYMin + this->mLayout.mGlyphBounds.mYMax;
+				flip.m [ ZLMatrix4x4::C3_R1 ] = yOffset;
+			}
+			worldDrawingMtx.Prepend ( flip );
+		}
+	}
+	
+	return worldDrawingMtx;
+}
+
+//----------------------------------------------------------------//
 void MOAITextLabel::MOAINode_Update () {
 
 	this->Refresh ();
-	MOAIGraphicsPropBase::MOAINode_Update ();
+	MOAIGraphicsProp::MOAINode_Update ();
 }
 
 //----------------------------------------------------------------//
@@ -1305,6 +1324,7 @@ void MOAITextLabel::MOAITransformBase_BuildLocalToWorldMtx ( ZLAffine3D& localTo
 
 	this->MOAITransform::MOAITransformBase_BuildLocalToWorldMtx ( localToWorldMtx );
 
+	// do yFlip here so hit test on glyphs will work
 	float yScale = this->mLayoutRules.GetYFlip () ? -1.0f : 1.0f;
 
 	ZLAffine3D mtx;
