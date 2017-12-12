@@ -47,6 +47,7 @@ private:
 	bool	mNeedsUpdate;
 
 	//----------------------------------------------------------------//
+	static int		_ninePatch				( lua_State* L );
 	static int		_reserveColumns			( lua_State* L );
 	static int		_reserveRows			( lua_State* L );
 	static int		_reserveUVRects			( lua_State* L );
@@ -78,6 +79,8 @@ public:
 	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			SetColumn				( u32 idx, float percent, bool canStretch );
+	void			SetRow					( u32 idx, float percent, bool canStretch );
 };
 
 #endif

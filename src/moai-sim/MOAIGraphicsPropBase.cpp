@@ -191,217 +191,6 @@ int MOAIGraphicsPropBase::_setVisible ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGraphicsPropBase::GetWorldDrawingMtx () {
-
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	//MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
-
-	ZLMatrix4x4 worldDrawingMtx;
-
-	switch ( this->mBillboard ) {
-	
-		case BILLBOARD_NORMAL: {
-			
-			ZLAffine3D billboardMtx ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_TO_WORLD_MTX )); // inv view mtx sans translation
-			
-			billboardMtx.m [ ZLAffine3D::C3_R0 ] = 0.0f;
-			billboardMtx.m [ ZLAffine3D::C3_R1 ] = 0.0f;
-			billboardMtx.m [ ZLAffine3D::C3_R2 ] = 0.0f;
-			
-			worldDrawingMtx = ZLMatrix4x4 ( this->GetBillboardMtx ( billboardMtx ));
-			break;
-		}
-		
-		case BILLBOARD_ORTHO: {
-			
-			const ZLMatrix4x4& proj				= gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_TO_CLIP_MTX );
-			const ZLMatrix4x4& invViewProj		= gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::CLIP_TO_WORLD_MTX );
-			const ZLMatrix4x4& invWindowMtx		= gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WINDOW_TO_CLIP_MTX );
-			
-			ZLMatrix4x4 view					= gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_VIEW_MTX );
-			ZLMatrix4x4 windowMtx				= gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::CLIP_TO_WINDOW_MTX );
-			
-			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
-			
-			// world space location for prop
-			ZLVec3D worldLoc;
-			worldLoc.mX = worldDrawingMtx.m [ ZLMatrix4x4::C3_R0 ];
-			worldLoc.mY = worldDrawingMtx.m [ ZLMatrix4x4::C3_R1 ];
-			worldLoc.mZ = worldDrawingMtx.m [ ZLMatrix4x4::C3_R2 ];
-			
-			// view and project the location
-			view.Transform ( worldLoc );	// perspective view
-			proj.Project ( worldLoc );		// perspective projection
-			
-			// now we're going to "unproject" the point back, going from window space to *ortho* space
-			// this is as though we had projected the point using a 2D window matrix instead of the camera matrix
-			
-			invWindowMtx.Transform ( worldLoc );
-
-			// prop will start at the origin; will be moved by camera after rotation
-			worldDrawingMtx.m [ ZLMatrix4x4::C3_R0 ] = 0.0f;
-			worldDrawingMtx.m [ ZLMatrix4x4::C3_R1 ] = 0.0f;
-			worldDrawingMtx.m [ ZLMatrix4x4::C3_R2 ] = 0.0f;
-
-			// keep camera rotation, but replace translation with "projected" location of prop
-			view.m [ ZLMatrix4x4::C3_R0 ] = worldLoc.mX;
-			view.m [ ZLMatrix4x4::C3_R1 ] = worldLoc.mY;
-			view.m [ ZLMatrix4x4::C3_R2 ] = 0.0f;
-			
-			worldDrawingMtx.Append ( view );
-			
-			// apply the 2D "window" projection to get our final transform
-			windowMtx.m [ ZLMatrix4x4::C2_R2 ] = 0.0f;
-			worldDrawingMtx.Append ( windowMtx );
-			
-			// now roll everything back given the current view/proj
-			// this will be applied once more by the pipeline, thus cancelling itself out and leaving us with the previous transform
-			worldDrawingMtx.Append ( invViewProj );
-			
-			break;
-		}
-		
-		case BILLBOARD_COMPASS: {
-			// TODO: The cache for VIEW_TO_WORLD matrix is not working, so manually inverting here, which not efficient
-			ZLMatrix4x4 worldToView = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_VIEW_MTX );
-			ZLMatrix4x4 worldToViewInv;
-
-			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
-
-			bool worldToViewInvSuccess = worldToViewInv.Inverse(worldToView);
-			
-			if (!worldToViewInvSuccess) {
-				break;
-			}
-			
-			ZLAffine3D cameraMtx ( worldToViewInv );
-
-			ZLVec3D	cameraY = cameraMtx.GetYAxis ();
-			
-			cameraY.mZ = 0.0f;
-			cameraY.Norm ();
-
-			ZLVec2D mapY ( cameraY.mX, cameraY.mY );
-			ZLVec2D worldY ( 0.0f, 1.0f );
-			
-			float flipped = copysign(1.0f, worldDrawingMtx.GetYAxis().Dot(ZLVec3D(0.0f, 1.0f, 0.0f)));
-			float radians = mapY.Radians ( worldY ) * flipped;
-
-			if ( cameraY.mX < 0.0f ) {
-				radians = -radians;
-			}
-
-			ZLMatrix4x4 billboardMtx;
-			billboardMtx.Translate ( -this->mPiv.mX, -this->mPiv.mY, -this->mPiv.mZ );
-
-			ZLMatrix4x4 mtx;
-			mtx.RotateZ ( -radians );
-			billboardMtx.Append ( mtx );
-			
-			mtx.Translate ( this->mPiv.mX, this->mPiv.mY, this->mPiv.mZ );
-			billboardMtx.Append ( mtx );
-			
-			worldDrawingMtx.Prepend ( billboardMtx );
-		
-			break;
-		}
-		
-		case BILLBOARD_COMPASS_SCALE: {
-			ZLMatrix4x4 viewToClip = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_TO_CLIP_MTX );
-			ZLMatrix4x4 worldToClip = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX );
-			ZLMatrix4x4 clipToWindow = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::CLIP_TO_WINDOW_MTX );
-			// TODO: The cache for VIEW_TO_WORLD matrix is not working, so manually inverting here, which not efficient
-			ZLMatrix4x4 worldToView = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_VIEW_MTX );
-			ZLMatrix4x4 worldToViewInv;
-			
-			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
-			
-			bool worldToViewInvSuccess = worldToViewInv.Inverse(worldToView);
-			
-			if (!worldToViewInvSuccess) {
-				break;
-			}
-			
-			ZLAffine3D cameraMtx ( worldToViewInv );
-			
-			ZLVec3D	cameraY = cameraMtx.GetYAxis ();
-			
-			cameraY.mZ = 0.0f;
-			cameraY.Norm ();
-			
-			ZLVec2D mapY ( cameraY.mX, cameraY.mY );
-			ZLVec2D worldY ( 0.0f, 1.0f );
-			
-			float flipped = copysign(1.0f, worldDrawingMtx.GetYAxis().Dot(ZLVec3D(0.0f, 1.0f, 0.0f)));
-			float radians = mapY.Radians ( worldY ) * flipped;
-			
-			if ( cameraY.mX < 0.0f ) {
-				radians = -radians;
-			}
-			
-			// Determine scale to match camera
-			ZLVec3D loc;
-			worldDrawingMtx.GetTranslation ( loc );
-			ZLVec4D loc4 (loc.mX, loc.mY, loc.mZ, 1);
-			worldToClip.Transform(loc4);
-			float sx = loc4.mW * clipToWindow.GetXAxis().Length() / viewToClip.GetXAxis().Length();
-			float sy = loc4.mW * clipToWindow.GetYAxis().Length() / viewToClip.GetYAxis().Length();
-			
-			ZLMatrix4x4 billboardMtx;
-			billboardMtx.Translate ( -this->mPiv.mX, -this->mPiv.mY, -this->mPiv.mZ );
-			
-			ZLMatrix4x4 mtx;
-			mtx.RotateZ ( -radians );
-			billboardMtx.Append ( mtx );
-			
-			mtx.Scale ( sx, sy, 1 );
-			billboardMtx.Append ( mtx );
-			
-			mtx.Translate ( this->mPiv.mX, this->mPiv.mY, this->mPiv.mZ );
-			billboardMtx.Append ( mtx );
-			
-			worldDrawingMtx.Prepend ( billboardMtx );
-			
-			break;
-		}
-			
-			
-		case BILLBOARD_SCREEN: {
-			
-			//MOAIGfxMgr::Get ().GetWorldToWndMtx ();
-			
-			//ZLMatrix4x4 viewProjMtx = camera->GetWorldToWndMtx ( *viewport );
-			ZLMatrix4x4 viewProjMtx = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX );
-			viewProjMtx.Append ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::CLIP_TO_WINDOW_MTX ));
-			
-			ZLMatrix4x4 localToWorldMtx ( this->GetLocalToWorldMtx ());
-			
-			// TODO: check that pivot is supported correctly
-			worldDrawingMtx.Ident (); // TODO: this was uninitialized
-			ZLVec3D loc;
-			worldDrawingMtx.GetTranslation ( loc );
-			viewProjMtx.Project ( loc );
-			
-			worldDrawingMtx.m [ ZLMatrix4x4::C3_R0 ] = loc.mX;
-			worldDrawingMtx.m [ ZLMatrix4x4::C3_R1 ] = loc.mY;
-			worldDrawingMtx.m [ ZLMatrix4x4::C3_R2 ] = loc.mZ;
-			
-			viewProjMtx.Inverse ();
-			worldDrawingMtx.Append ( viewProjMtx );
-			
-			break;
-		}
-		
-		case BILLBOARD_NONE:
-		default:
-		
-			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
-	}
-	
-	return worldDrawingMtx;
-}
-
-//----------------------------------------------------------------//
 bool MOAIGraphicsPropBase::IsVisible () {
 	return (( this->mDisplayFlags & FLAGS_LOCAL_VISIBLE ) && ( this->mDisplayFlags & FLAGS_VISIBLE ));
 }
@@ -424,7 +213,7 @@ void MOAIGraphicsPropBase::LoadUVTransform () {
 void MOAIGraphicsPropBase::LoadVertexTransform () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX, this->GetWorldDrawingMtx ());
+	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX, this->MOAIGraphicsPropBase_GetWorldDrawingMtx ());
 }
 
 //----------------------------------------------------------------//
@@ -595,36 +384,6 @@ void MOAIGraphicsPropBase::SetVisible ( bool visible ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
-
-	if ( MOAIGraphicsPropBaseAttr::Check ( attrID )) {
-		
-		switch ( UNPACK_ATTR ( attrID )) {
-				
-			case ATTR_SCISSOR_RECT:
-				this->mScissorRect.Set ( *this, attr.ApplyVariantNoAdd < MOAIScissorRect* >( this->mScissorRect, op, MOAIAttribute::ATTR_READ_WRITE ));
-				return true;
-				
-			case ATTR_LOCAL_VISIBLE:
-				this->SetVisible ( ZLFloat::ToBoolean ( attr.ApplyNoAdd ( ZLFloat::FromBoolean (( this->mDisplayFlags & FLAGS_LOCAL_VISIBLE ) != 0 ), op, MOAIAttribute::ATTR_READ_WRITE )));
-				return true;
-				
-			case ATTR_VISIBLE:
-				attr.ApplyNoAdd ( ZLFloat::FromBoolean ( this->IsVisible ()), op , MOAIAttribute::ATTR_READ );
-				return true;
-			
-			//case FRAME_TRAIT:
-			//	attr.Apply < ZLBox >( &this->mFrame, op, MOAIAttribute::ATTR_READ );
-			//	return true;
-		}
-	}
-	
-	if ( MOAIColor::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
-	if ( MOAIPartitionHull::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
-	return false;
-}
-
-//----------------------------------------------------------------//
 void MOAIGraphicsPropBase::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
@@ -687,6 +446,235 @@ void MOAIGraphicsPropBase::MOAIDrawable_DrawDebug ( int subPrimID ) {
 			}
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () {
+
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	//MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
+
+	ZLMatrix4x4 worldDrawingMtx;
+
+	switch ( this->mBillboard ) {
+	
+		case BILLBOARD_NORMAL: {
+			
+			ZLAffine3D billboardMtx ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_TO_WORLD_MTX )); // inv view mtx sans translation
+			
+			billboardMtx.m [ ZLAffine3D::C3_R0 ] = 0.0f;
+			billboardMtx.m [ ZLAffine3D::C3_R1 ] = 0.0f;
+			billboardMtx.m [ ZLAffine3D::C3_R2 ] = 0.0f;
+			
+			worldDrawingMtx = ZLMatrix4x4 ( this->GetBillboardMtx ( billboardMtx ));
+			break;
+		}
+		
+		case BILLBOARD_ORTHO: {
+			
+			const ZLMatrix4x4& proj				= gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_TO_CLIP_MTX );
+			const ZLMatrix4x4& invViewProj		= gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::CLIP_TO_WORLD_MTX );
+			const ZLMatrix4x4& invWindowMtx		= gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WINDOW_TO_CLIP_MTX );
+			
+			ZLMatrix4x4 view					= gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_VIEW_MTX );
+			ZLMatrix4x4 windowMtx				= gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::CLIP_TO_WINDOW_MTX );
+			
+			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
+			
+			// world space location for prop
+			ZLVec3D worldLoc;
+			worldLoc.mX = worldDrawingMtx.m [ ZLMatrix4x4::C3_R0 ];
+			worldLoc.mY = worldDrawingMtx.m [ ZLMatrix4x4::C3_R1 ];
+			worldLoc.mZ = worldDrawingMtx.m [ ZLMatrix4x4::C3_R2 ];
+			
+			// view and project the location
+			view.Transform ( worldLoc );	// perspective view
+			proj.Project ( worldLoc );		// perspective projection
+			
+			// now we're going to "unproject" the point back, going from window space to *ortho* space
+			// this is as though we had projected the point using a 2D window matrix instead of the camera matrix
+			
+			invWindowMtx.Transform ( worldLoc );
+
+			// prop will start at the origin; will be moved by camera after rotation
+			worldDrawingMtx.m [ ZLMatrix4x4::C3_R0 ] = 0.0f;
+			worldDrawingMtx.m [ ZLMatrix4x4::C3_R1 ] = 0.0f;
+			worldDrawingMtx.m [ ZLMatrix4x4::C3_R2 ] = 0.0f;
+
+			// keep camera rotation, but replace translation with "projected" location of prop
+			view.m [ ZLMatrix4x4::C3_R0 ] = worldLoc.mX;
+			view.m [ ZLMatrix4x4::C3_R1 ] = worldLoc.mY;
+			view.m [ ZLMatrix4x4::C3_R2 ] = 0.0f;
+			
+			worldDrawingMtx.Append ( view );
+			
+			// apply the 2D "window" projection to get our final transform
+			windowMtx.m [ ZLMatrix4x4::C2_R2 ] = 0.0f;
+			worldDrawingMtx.Append ( windowMtx );
+			
+			// now roll everything back given the current view/proj
+			// this will be applied once more by the pipeline, thus cancelling itself out and leaving us with the previous transform
+			worldDrawingMtx.Append ( invViewProj );
+			
+			break;
+		}
+		
+		case BILLBOARD_COMPASS: {
+		
+			//const ZLAffine3D& cameraMtx = camera->GetLocalToWorldMtx (); // inv view mtx
+			ZLAffine3D cameraMtx ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_TO_WORLD_MTX ));
+			//ZLVec3D cameraZ = cameraMtx.GetZAxis ();
+			ZLVec3D	cameraY = cameraMtx.GetYAxis ();
+			
+			cameraY.mZ = 0.0f;
+			cameraY.Norm ();
+			
+			ZLVec2D mapY ( cameraY.mX, cameraY.mY );
+			ZLVec2D worldY ( 0.0f, 1.0f );
+			
+			float radians = mapY.Radians ( worldY );
+			
+			if ( cameraY.mX < 0.0f ) {
+				radians = -radians;
+			}
+		
+			ZLMatrix4x4 billboardMtx;
+			billboardMtx.Translate ( -this->mPiv.mX, -this->mPiv.mY, -this->mPiv.mZ );
+			
+			ZLMatrix4x4 mtx;
+			mtx.RotateZ ( -radians );
+			billboardMtx.Append ( mtx );
+			
+			mtx.Translate ( this->mPiv.mX, this->mPiv.mY, this->mPiv.mZ );
+			billboardMtx.Append ( mtx );
+			
+			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
+			worldDrawingMtx.Prepend ( billboardMtx );
+		
+			break;
+		}
+
+		case BILLBOARD_COMPASS_SCALE: {
+			ZLMatrix4x4 viewToClip = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_TO_CLIP_MTX );
+			ZLMatrix4x4 worldToClip = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX );
+			ZLMatrix4x4 clipToWindow = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::CLIP_TO_WINDOW_MTX );
+			// TODO: The cache for VIEW_TO_WORLD matrix is not working, so manually inverting here, which not efficient
+			ZLMatrix4x4 worldToView = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_VIEW_MTX );
+			ZLMatrix4x4 worldToViewInv;
+			
+			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
+			
+			bool worldToViewInvSuccess = worldToViewInv.Inverse(worldToView);
+			
+			if (!worldToViewInvSuccess) {
+				break;
+			}
+			
+			ZLAffine3D cameraMtx ( worldToViewInv );
+			
+			ZLVec3D	cameraY = cameraMtx.GetYAxis ();
+			
+			cameraY.mZ = 0.0f;
+			cameraY.Norm ();
+			
+			ZLVec2D mapY ( cameraY.mX, cameraY.mY );
+			ZLVec2D worldY ( 0.0f, 1.0f );
+			
+			float flipped = copysign(1.0f, worldDrawingMtx.GetYAxis().Dot(ZLVec3D(0.0f, 1.0f, 0.0f)));
+			float radians = mapY.Radians ( worldY ) * flipped;
+			
+			if ( cameraY.mX < 0.0f ) {
+				radians = -radians;
+			}
+			
+			// Determine scale to match camera
+			ZLVec3D loc;
+			worldDrawingMtx.GetTranslation ( loc );
+			ZLVec4D loc4 (loc.mX, loc.mY, loc.mZ, 1);
+			worldToClip.Transform(loc4);
+			float sx = loc4.mW * clipToWindow.GetXAxis().Length() / viewToClip.GetXAxis().Length();
+			float sy = loc4.mW * clipToWindow.GetYAxis().Length() / viewToClip.GetYAxis().Length();
+			
+			ZLMatrix4x4 billboardMtx;
+			billboardMtx.Translate ( -this->mPiv.mX, -this->mPiv.mY, -this->mPiv.mZ );
+			
+			ZLMatrix4x4 mtx;
+			mtx.RotateZ ( -radians );
+			billboardMtx.Append ( mtx );
+			
+			mtx.Scale ( sx, sy, 1 );
+			billboardMtx.Append ( mtx );
+			
+			mtx.Translate ( this->mPiv.mX, this->mPiv.mY, this->mPiv.mZ );
+			billboardMtx.Append ( mtx );
+			
+			worldDrawingMtx.Prepend ( billboardMtx );
+			
+			break;
+		}
+		
+		case BILLBOARD_SCREEN: {
+			
+			//MOAIGfxMgr::Get ().GetWorldToWndMtx ();
+			
+			//ZLMatrix4x4 viewProjMtx = camera->GetWorldToWndMtx ( *viewport );
+			ZLMatrix4x4 viewProjMtx = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX );
+			viewProjMtx.Append ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::CLIP_TO_WINDOW_MTX ));
+			
+			ZLMatrix4x4 localToWorldMtx ( this->GetLocalToWorldMtx ());
+			
+			// TODO: check that pivot is supported correctly
+			ZLVec3D loc;
+			worldDrawingMtx.GetTranslation ( loc );
+			viewProjMtx.Project ( loc );
+			
+			worldDrawingMtx.m [ ZLMatrix4x4::C3_R0 ] = loc.mX;
+			worldDrawingMtx.m [ ZLMatrix4x4::C3_R1 ] = loc.mY;
+			worldDrawingMtx.m [ ZLMatrix4x4::C3_R2 ] = loc.mZ;
+			
+			viewProjMtx.Inverse ();
+			worldDrawingMtx.Append ( viewProjMtx );
+			
+			break;
+		}
+		
+		case BILLBOARD_NONE:
+		default:
+		
+			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
+	}
+	
+	return worldDrawingMtx;
+}
+
+//----------------------------------------------------------------//
+bool MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	if ( MOAIGraphicsPropBaseAttr::Check ( attrID )) {
+		
+		switch ( UNPACK_ATTR ( attrID )) {
+				
+			case ATTR_SCISSOR_RECT:
+				this->mScissorRect.Set ( *this, attr.ApplyVariantNoAdd < MOAIScissorRect* >( this->mScissorRect, op, MOAIAttribute::ATTR_READ_WRITE ));
+				return true;
+				
+			case ATTR_LOCAL_VISIBLE:
+				this->SetVisible ( ZLFloat::ToBoolean ( attr.ApplyNoAdd ( ZLFloat::FromBoolean (( this->mDisplayFlags & FLAGS_LOCAL_VISIBLE ) != 0 ), op, MOAIAttribute::ATTR_READ_WRITE )));
+				return true;
+				
+			case ATTR_VISIBLE:
+				attr.ApplyNoAdd ( ZLFloat::FromBoolean ( this->IsVisible ()), op , MOAIAttribute::ATTR_READ );
+				return true;
+			
+			//case FRAME_TRAIT:
+			//	attr.Apply < ZLBox >( &this->mFrame, op, MOAIAttribute::ATTR_READ );
+			//	return true;
+		}
+	}
+	
+	if ( MOAIColor::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+	if ( MOAIPartitionHull::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+	return false;
 }
 
 //----------------------------------------------------------------//

@@ -12,20 +12,6 @@
 #include <moai-sim/MOAITransform.h>
 #include <moai-core/MOAILuaSharedPtr.h>
 
-class MOAICellCoord;
-class MOAICollisionProp;
-class MOAIDeck;
-class MOAIGrid;
-class MOAILayoutFrame;
-class MOAIOverlapPrim2D;
-class MOAIPartition;
-class MOAIPartitionCell;
-class MOAIPartitionLevel;
-class MOAIPartitionResultBuffer;
-class MOAISurfaceSampler2D;
-
-class MOAIProp;
-
 //================================================================//
 // MOAIIndexedPropBase
 //================================================================//

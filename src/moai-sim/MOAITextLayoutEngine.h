@@ -62,6 +62,7 @@ private:
 	
 	cc8*					mStr;
 
+	ZLRect					mLayoutFrameWithMargins;
 	ZLRect					mLayoutBounds;
 	
 	float					mLineSpacingCursor;

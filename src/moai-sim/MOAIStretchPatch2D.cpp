@@ -15,6 +15,29 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@lua	ninePatch
+	@text	Set up a nine patch using Android-style sections (25%, 50%, 25%).
+ 
+	@in		MOAIStretchPatch2D self
+	@out	nil
+*/
+int MOAIStretchPatch2D::_ninePatch ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIStretchPatch2D, "U" )
+
+	self->mRows.Init ( 3 );
+	self->SetRow ( 0, 0.25, false );
+	self->SetRow ( 1, 0.50, true );
+	self->SetRow ( 2, 0.25, false );
+
+	self->mCols.Init ( 3 );
+	self->SetColumn ( 0, 0.25, false );
+	self->SetColumn ( 1, 0.50, true );
+	self->SetColumn ( 2, 0.25, false );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	reserveColumns
 	@text	Reserve total columns in patch.
 	
@@ -89,9 +112,7 @@ int MOAIStretchPatch2D::_setColumn ( lua_State* L ) {
 	bool canStretch		= state.GetValue < bool >( 4, false );
 
 	if ( MOAILogMgr::CheckIndexPlusOne ( idx, self->mCols.Size (), L )) {
-		self->mCols [ idx ].mPercent = percent;
-		self->mCols [ idx ].mCanStretch = canStretch;
-		self->mNeedsUpdate = true;
+		self->SetColumn ( idx, percent, canStretch );
 	}
 	return 0;
 }
@@ -134,9 +155,7 @@ int MOAIStretchPatch2D::_setRow ( lua_State* L ) {
 	bool canStretch		= state.GetValue < bool >( 4, false );
 
 	if ( MOAILogMgr::CheckIndexPlusOne ( idx, self->mRows.Size (), L )) {
-		self->mRows [ idx ].mPercent = percent;
-		self->mRows [ idx ].mCanStretch = canStretch;
-		self->mNeedsUpdate = true;
+		self->SetRow ( idx, percent, canStretch );
 	}
 	return 0;
 }
@@ -305,6 +324,7 @@ void MOAIStretchPatch2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIMaterialBatchHolder::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
+		{ "ninePatch",			_ninePatch },
 		{ "reserveColumns",		_reserveColumns },
 		{ "reserveRows",		_reserveRows },
 		{ "reserveUVRects",		_reserveUVRects },
@@ -366,6 +386,26 @@ void MOAIStretchPatch2D::UpdateParams () {
 	this->mNeedsUpdate = false;
 }
 
+//----------------------------------------------------------------//
+void MOAIStretchPatch2D::SetColumn ( u32 idx, float percent, bool canStretch ) {
+
+	assert ( idx < this->mCols.Size ());
+
+	this->mCols [ idx ].mPercent = percent;
+	this->mCols [ idx ].mCanStretch = canStretch;
+	this->mNeedsUpdate = true;
+}
+
+//----------------------------------------------------------------//
+void MOAIStretchPatch2D::SetRow ( u32 idx, float percent, bool canStretch ) {
+
+	assert ( idx < this->mRows.Size ());
+
+	this->mRows [ idx ].mPercent = percent;
+	this->mRows [ idx ].mCanStretch = canStretch;
+	this->mNeedsUpdate = true;
+}
+
 //================================================================//
 // ::implementation::
 //================================================================//
@@ -390,7 +430,7 @@ void MOAIStretchPatch2D::MOAIDeck_Draw ( u32 idx ) {
 	ZLMatrix4x4 noStretch;
 	noStretch.Scale ( 1.0f / stretch.mX, 1.0f / stretch.mY, 1.0f / stretch.mZ );
 	noStretch.Append ( worldTransform );
-	noStretch.Append ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX ) );
+	noStretch.Append ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX ));
 	
 	gfxMgr.mVertexCache.SetVertexTransform ( noStretch );
 	gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_TO_MODEL_MTX ));

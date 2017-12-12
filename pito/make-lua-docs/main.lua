@@ -6,8 +6,8 @@ SRC_PATH		= MOAI_SDK_HOME .. 'src/'
 DST_PATH		= 'src-doxy-lua/'
 HTML_PATH		= 'html/'
 TEMPLATE_PATH	= 'template-lua/'
-OUTPUT_DIR		= INVOKE_DIR .. 'lua-docs-html/'
-VERSION				= dofile ( '../sdk-version/version.lua' )
+OUTPUT_DIR		= MOAI_SDK_HOME .. 'docs/lua-docs-html/'
+VERSION			= dofile ( '../sdk-version/version.lua' )
 
 assert ( VERSION )
 assert ( VERSION.MAJOR )

@@ -22,11 +22,14 @@
 				CDFD7C2F1A0857EF00A94E6B /* PBXTargetDependency */,
 				3EDC16F419F6DD37007A7775 /* PBXTargetDependency */,
 				3EDC16F819F6DD37007A7775 /* PBXTargetDependency */,
+				CD4CCD571FC0294300A0F24C /* PBXTargetDependency */,
+				CD4CCD591FC0294300A0F24C /* PBXTargetDependency */,
 				CDFD7C311A0857EF00A94E6B /* PBXTargetDependency */,
 				3EDC170219F6DD37007A7775 /* PBXTargetDependency */,
 				CDD9541C1BD4AF2D001744F0 /* PBXTargetDependency */,
 				CDD9541E1BD4AF2D001744F0 /* PBXTargetDependency */,
 				CDD954201BD4AF2D001744F0 /* PBXTargetDependency */,
+				CD4CCD5B1FC0294300A0F24C /* PBXTargetDependency */,
 				CDD954221BD4AF2D001744F0 /* PBXTargetDependency */,
 				CDFD7C331A0857EF00A94E6B /* PBXTargetDependency */,
 				CDBA1E4C1B1E443400DCDC75 /* PBXTargetDependency */,
@@ -4538,6 +4541,27 @@
 			proxyType = 1;
 			remoteGlobalIDString = CD6D745F17EE415D00964415;
 			remoteInfo = "libmoai-osx-zl-vfs";
+		};
+		CD4CCD561FC0294300A0F24C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDD812C61E16FE7100996311;
+			remoteInfo = "libmoai-osx-google-test";
+		};
+		CD4CCD581FC0294300A0F24C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD320DDB1C517A0E00AD5E5C;
+			remoteInfo = "libmoai-osx-harfbuzz";
+		};
+		CD4CCD5A1FC0294300A0F24C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDA1D0691D1B75B20006C5E5;
+			remoteInfo = "libmoai-osx-image-tga";
 		};
 		CD83255F1D18D28B002CE2A1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -18881,6 +18905,21 @@
 			isa = PBXTargetDependency;
 			target = CD6D745F17EE415D00964415 /* libmoai-osx-zl-vfs */;
 			targetProxy = 3EDC170F19F6DD37007A7775 /* PBXContainerItemProxy */;
+		};
+		CD4CCD571FC0294300A0F24C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDD812C61E16FE7100996311 /* libmoai-osx-google-test */;
+			targetProxy = CD4CCD561FC0294300A0F24C /* PBXContainerItemProxy */;
+		};
+		CD4CCD591FC0294300A0F24C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD320DDB1C517A0E00AD5E5C /* libmoai-osx-harfbuzz */;
+			targetProxy = CD4CCD581FC0294300A0F24C /* PBXContainerItemProxy */;
+		};
+		CD4CCD5B1FC0294300A0F24C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDA1D0691D1B75B20006C5E5 /* libmoai-osx-image-tga */;
+			targetProxy = CD4CCD5A1FC0294300A0F24C /* PBXContainerItemProxy */;
 		};
 		CD8325601D18D28B002CE2A1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

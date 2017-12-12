@@ -46,24 +46,22 @@ void MOAITextLayoutEngine::Align () {
 	
 	glyphBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	layoutBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-
-	//bool hasSprites = ( this->mLayout->mSprites.GetTop () > 0 );
 	
 	u32 baseLine = this->mBaseLine;
 	
 	bool limitWidth = this->mLayoutRules->mLimitWidth;
 	bool limitHeight = this->mLayoutRules->mLimitHeight;
-
+	
 	// this is for alignment; text should already be within bounds, if constrained
-	float width = limitWidth ? this->mLayoutRules->mFrame.Width () : this->mLayoutBounds.Width ();
-	float height = limitHeight ? this->mLayoutRules->mFrame.Height () : this->mLayoutBounds.Height ();
+	float width = limitWidth ? this->mLayoutFrameWithMargins.Width () : this->mLayoutBounds.Width ();
+	float height = limitHeight ? this->mLayoutFrameWithMargins.Height () : this->mLayoutBounds.Height ();
 
 	float layoutHeight = this->mLayoutBounds.Height ();
 
-	float xMin = limitWidth ? this->mLayoutRules->mFrame.mXMin : 0.0f;
+	float xMin = limitWidth ? this->mLayoutFrameWithMargins.mXMin : 0.0f;
 	float xMax = xMin + width;
 	
-	float yMin = limitHeight ? this->mLayoutRules->mFrame.mYMin : 0.0f;
+	float yMin = limitHeight ? this->mLayoutFrameWithMargins.mYMin : 0.0f;
 	float yMax = yMin + height;
 	
 	float xOffsetToCenter = -this->Snap ( xMin + ( width * 0.5f ), this->mLayoutRules->mHLineSnap );
@@ -100,8 +98,7 @@ void MOAITextLayoutEngine::Align () {
 		const ZLRect& lineRect = line.mLayoutBounds;
 		
 		float lineWidth = lineRect.Width ();
-		//float lineHeight = lineRect.Height ();
-		
+
 		float adjustedLineXMin = xMin;
 		float adjustedLineYMin = lineRect.mYMin + lineYOffset;
 		
@@ -139,9 +136,6 @@ void MOAITextLayoutEngine::Align () {
 		for ( u32 j = 0; j < line.mSize; ++j ) {
 			
 			MOAITextSprite& sprite = this->mLayout->mSprites [ line.mStart + j ];
-			
-			//sprite.mPen.mX += ( line.mOrigin.mX ) - xMin;
-			//sprite.mPen.mY += ( line.mOrigin.mY + ( curve ? curve->GetValue (( sprite.mPen.mX - xMin ) / width ) : 0.0f )) - yMin;
 			
 			sprite.mPen.mX += xOff;
 			sprite.mPen.mY += line.mOrigin.mY + ( curve ? curve->GetValue (( sprite.mPen.mX - xMin ) / width ) : 0.0f );
@@ -247,12 +241,6 @@ void MOAITextLayoutEngine::BeginToken () {
 //----------------------------------------------------------------//
 void MOAITextLayoutEngine::BuildLayout () {
 	
-	//bool limitWidth = this->mLayoutRules->mLimitWidth;
-	//bool limitHeight = this->mLayoutRules->mLimitHeight;
-	
-	//float frameWidth = this->mLayoutRules->mFrame.Width ();
-	//float frameHeight = this->mLayoutRules->mFrame.Height ();
-	
 	bool more = true;
 	while ( more ) {
 		
@@ -321,6 +309,8 @@ void MOAITextLayoutEngine::BuildLayout ( MOAITextLayout& layout, MOAITextStyleCa
 	
 	this->mStyleSpan	= 0;
 	this->mSpanIdx		= 0;
+	
+	this->mLayoutFrameWithMargins = layoutRules.GetFrameWithMargins ();
 	
 	this->mLayoutBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	this->mLineLayoutBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
@@ -508,7 +498,7 @@ u32 MOAITextLayoutEngine::PushLine () {
 	
 	if ( this->mLayoutRules->mLimitHeight ) {
 	
-		float frameHeight = this->mLayoutRules->GetFrame ().Height ();
+		float frameHeight = this->mLayoutFrameWithMargins.Height ();
 		if ( newLayoutBounds.Height () > frameHeight ) return PUSH_OVERRUN;
 	}
 	
@@ -530,7 +520,7 @@ u32 MOAITextLayoutEngine::PushSprite ( const MOAITextStyledChar& styledChar, flo
 	ZLRect glyphSpacingRect = this->mLayoutRules->GetGlyphSpacingRect ( *glyph, x, y, xScale, yScale );
 	
 	if ( this->mLayoutRules->mLimitWidth ) {
-		float frameWidth = this->mLayoutRules->GetFrame ().Width ();
+		float frameWidth = this->mLayoutFrameWithMargins.Width ();
 		if ( glyphLayoutRect.mXMax > frameWidth ) return PUSH_OVERRUN;
 	}
 	

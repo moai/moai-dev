@@ -124,7 +124,7 @@ class MOAIFont;
 	@const	WORD_BREAK_CHAR
 */
 class MOAITextLabel :
-	public MOAIGraphicsPropBase,
+	public MOAIGraphicsProp,
 	public MOAIAction {
 private:
 
@@ -144,7 +144,7 @@ private:
 	bool					mOverrun;
 
 	MOAITextLayoutRules		mLayoutRules;	// design params for laying out text
-	MOAITextStyleCache		mStyleCache;	// some style are anonymous and created ad hoc
+	MOAITextStyleCache		mStyleCache;	// anonymous styles are created ad hoc
 	MOAITextStyleMap		mStyleMap;		// preprocessed text broken up by style changes
 	MOAITextLayout			mLayout;		// cached glyph layout for currently visible text
 	
@@ -176,6 +176,7 @@ private:
 	static int			_setHighlight			( lua_State* L );
 	static int			_setLineSnap			( lua_State* L );
 	static int			_setLineSpacing			( lua_State* L );
+	static int			_setMargins				( lua_State* L );
 	static int			_setOverrunRules		( lua_State* L );
 	static int			_setRect				( lua_State* L );
 	static int			_setRectLimits			( lua_State* L );
@@ -196,7 +197,6 @@ private:
 	#endif
 	
 	//----------------------------------------------------------------//
-	ZLMatrix4x4			GetWorldDrawingMtx		();
 	void				ResetLayout				();
 	void				ScheduleLayout			();
 	void				Refresh					();
@@ -208,6 +208,7 @@ private:
 	void				MOAIAction_Update							( double step );
 	void				MOAIDrawable_Draw							( int subPrimID );
 	void				MOAIDrawable_DrawDebug						( int subPrimID );
+	ZLMatrix4x4			MOAIGraphicsPropBase_GetWorldDrawingMtx		();
 	void				MOAINode_Update								();
 	ZLBounds			MOAIPartitionHull_GetModelBounds			();
 	void				MOAITransformBase_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );
@@ -225,6 +226,7 @@ public:
 		DEBUG_DRAW_TEXT_LABEL_LIMITS,
 		DEBUG_DRAW_TEXT_LABEL_LINES_GLYPH_BOUNDS,
 		DEBUG_DRAW_TEXT_LABEL_LINES_LAYOUT_BOUNDS,
+		DEBUG_DRAW_TEXT_LABEL_MARGINS,
 		TOTAL_DEBUG_LINE_STYLES,
 	};
 	
