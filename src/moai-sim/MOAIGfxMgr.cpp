@@ -142,11 +142,17 @@ void MOAIGfxMgr::ClearErrors () {
 //----------------------------------------------------------------//
 void MOAIGfxMgr::ClearSurface ( u32 clearFlags ) {
 
+	// TODO: probably clear surface should live in the state cashe; it is
+	// similar to DrawPrims in that it changes the contents of a frame buffer
+
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
 	if ( clearFlags ) {
 	
 		this->mVertexCache.FlushBufferedPrims ();
+		
+		// TODO: this shouldn't be exposed here
+		this->mGfxState.ApplyStateChanges ();
 	
 		if (( clearFlags & ZGL_CLEAR_DEPTH_BUFFER_BIT ) && !this->mGfxState.GetDepthMask ()) {
 			gfx.DepthMask ( true );

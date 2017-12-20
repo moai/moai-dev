@@ -187,6 +187,9 @@ void MOAIGfxStateCache::ApplyStateChanges () {
 		
 		DEBUG_LOG ( "APPLY STATE CHANGES\n" );
 
+		// TODO: use recursion here to a depth-first pass through the
+		// flags as opposed to iterating over every one individually
+
 		if ( dirtyFlags ) {
 			for ( u32 i = 1; i < END_STATE_FLAGS; i <<= 1 ) {
 				if ( dirtyFlags & i ) {

@@ -110,6 +110,8 @@ protected:
 	friend class MOAIGfxVertexCache;
 	friend class MOAIVertexArray;
 
+	friend class MOAIGfxMgr; // TODO: this is only here so MOAIGfxMgr can call ApplyStateChanges in Clear (). move Clear () here.
+
 	// right now we just test every flag for an update in a for loop.
 	// these flags ordered roughly by (guessed) call frequency just so we can bail out of the
 	// state update loop early. if the update loop is ever a bottleneck (or if this list grows
