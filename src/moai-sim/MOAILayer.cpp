@@ -123,9 +123,9 @@ int MOAILayer::_setClearMode ( lua_State* L ) {
 int MOAILayer::_setFrameBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "U" )
 	
-	MOAIFrameBuffer* frameBuffer = state.GetLuaObject < MOAIFrameBuffer >( 1, true );
-	state.Push ( frameBuffer );
-	return 1;
+	MOAIFrameBuffer* frameBuffer = state.GetLuaObject < MOAIFrameBuffer >( 2, true );
+	self->SetFrameBuffer ( frameBuffer );
+	return 0;
 }
 
 //================================================================//
@@ -139,6 +139,8 @@ void MOAILayer::ClearSurface () {
 	assert ( frameBuffer );
 
 	if (( this->mClearMode == CLEAR_NEVER ) || (( this->mClearMode == CLEAR_ON_BUFFER_FLAG ) && ( !frameBuffer->NeedsClear ()))) return;
+
+	// TODO: should not call the drawing API directly. should use the state cache.
 
 	if ( this->mClearFlags & ZGL_CLEAR_COLOR_BUFFER_BIT ) {
 	
@@ -167,11 +169,7 @@ void MOAILayer::ClearSurface () {
 //----------------------------------------------------------------//
 MOAIFrameBuffer* MOAILayer::GetFrameBuffer () {
 
-	// affirm the frame buffer
-	if ( !this->mFrameBuffer ) {
-		this->SetFrameBuffer ();
-	}
-	return this->mFrameBuffer;
+	return this->mFrameBuffer ? this->mFrameBuffer : MOAIGfxMgr::Get ().mGfxState.GetDefaultFrameBuffer ();
 }
 
 //----------------------------------------------------------------//
@@ -229,7 +227,8 @@ void MOAILayer::SetClearColor ( MOAIColor* color ) {
 //----------------------------------------------------------------//
 void MOAILayer::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 
-	this->mFrameBuffer.Set ( *this, frameBuffer ? frameBuffer : MOAIGfxMgr::Get ().mGfxState.GetDefaultFrameBuffer ());
+	//this->mFrameBuffer.Set ( *this, frameBuffer ? frameBuffer : MOAIGfxMgr::Get ().mGfxState.GetDefaultFrameBuffer ());
+	this->mFrameBuffer.Set ( *this, frameBuffer );
 }
 
 //================================================================//
