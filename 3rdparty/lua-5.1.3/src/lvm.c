@@ -125,7 +125,7 @@ void luaV_gettable (lua_State *L, const TValue *t, TValue *key, StkId val) {
       callTMres(L, val, tm, t, key);
       return;
     }
-    t = tm;  /* else repeat with `tm' */ 
+    t = tm;  /* else repeat with `tm' */
   }
   luaG_runerror(L, "loop in gettable");
 }
@@ -152,7 +152,7 @@ void luaV_settable (lua_State *L, const TValue *t, TValue *key, StkId val) {
       callTM(L, tm, t, key, val);
       return;
     }
-    t = tm;  /* else repeat with `tm' */ 
+    t = tm;  /* else repeat with `tm' */
   }
   luaG_runerror(L, "loop in settable");
 }
@@ -515,7 +515,24 @@ void luaV_execute (lua_State *L, int nexeccalls) {
             break;
           }
           case LUA_TSTRING: {
-            setnvalue(ra, cast_num(tsvalue(rb)->len));
+            const char *bytes = getstr(tsvalue(rb));
+            size_t index = 0;
+            size_t characterLength = 0;
+            unsigned char byte = bytes[index];
+            while (byte) {
+              size_t byteCount = 1;
+              if (byte >= 240) {
+                byteCount = 4;
+              } else if (byte >= 224) {
+                byteCount = 3;
+              } else if (byte >= 192){
+                byteCount = 2;
+              }
+              index += byteCount;
+              byte = bytes[index];
+              characterLength++;
+            }
+            setnvalue(ra, characterLength);
             break;
           }
           default: {  /* try metamethod */
@@ -760,4 +777,3 @@ void luaV_execute (lua_State *L, int nexeccalls) {
     }
   }
 }
-
