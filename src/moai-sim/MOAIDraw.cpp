@@ -940,6 +940,30 @@ int MOAIDraw::_setClearDepth ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	setCullMode
+ @text	Set cull mode
+ See the OpenGL documentation for an explanation of culling modes.
+ 
+ @in	number
+ @out	nil
+ */
+int MOAIDraw::_setCullMode ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
+	
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	
+	if ( state.IsType ( 1, LUA_TNUMBER )) {
+			
+		u32 cullMode = state.GetValue < u32 >( 1, 0 );
+		gfxMgr.mGfxState.SetCullFunc ( cullMode );
+	}
+	else {
+		gfxMgr.mGfxState.SetCullFunc ();
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setDefaultTexture
 	@text	Specify a fallback texture to use when textures are
 			unavailable (pending load, missing or in error state).
@@ -968,6 +992,29 @@ int MOAIDraw::_setDefaultTexture ( lua_State* L ) {
 	if ( texture ) {
 		texture->PushLuaUserdata ( state );
 		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	setDepthFunc
+ @text	Set depth function.
+ 
+ @in	number
+ @out	nil
+ */
+int MOAIDraw::_setDepthFunc ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
+	
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	
+	if ( state.IsType ( 1, LUA_TNUMBER )) {
+		
+		u32 depthFunc = state.GetValue < u32 >( 1, 0 );
+		gfxMgr.mGfxState.SetDepthFunc ( depthFunc );
+	}
+	else {
+		gfxMgr.mGfxState.SetDepthFunc ();
 	}
 	return 0;
 }
@@ -1481,7 +1528,9 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setBlendMode",			_setBlendMode },
 		{ "setClearColor",			_setClearColor },
 		{ "setClearDepth",			_setClearDepth },
+		{ "setCullMode",			_setCullMode },
 		{ "setDefaultTexture",		_setDefaultTexture },
+		{ "setDepthFunc",			_setDepthFunc },
 		{ "setMatrix",				_setMatrix },
 		{ "setPenColor",			_setPenColor },
 		{ "setPenWidth",			_setPenWidth },

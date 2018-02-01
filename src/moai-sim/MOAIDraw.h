@@ -58,7 +58,9 @@ private:
 	static int			_setBlendMode			( lua_State* L );
 	static int			_setClearColor			( lua_State* L );
 	static int			_setClearDepth			( lua_State* L );
+	static int			_setCullMode			( lua_State* L );
 	static int			_setDefaultTexture		( lua_State* L );
+	static int			_setDepthFunc			( lua_State* L );
 	static int			_setMatrix				( lua_State* L );
 	static int			_setPenColor			( lua_State* L );
 	static int			_setPenWidth			( lua_State* L );
