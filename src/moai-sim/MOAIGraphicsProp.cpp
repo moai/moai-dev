@@ -87,7 +87,7 @@ void MOAIGraphicsProp::MOAIDrawable_Draw ( int subPrimID ) {
 	this->LoadVertexTransform ();
 	this->LoadUVTransform ();
 	
-	this->mDeck->Draw ( this->mIndex - 1 );
+	this->mDeck->Draw ( this->mIndex );
 	
 	this->PopGfxState ();
 }
