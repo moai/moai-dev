@@ -520,13 +520,18 @@ void luaV_execute (lua_State *L, int nexeccalls) {
             size_t characterLength = 0;
             unsigned char byte = bytes[index];
             while (byte) {
-              size_t byteCount = 1;
-              if (byte >= 240) {
+              size_t byteCount = 0;
+              if (byte >= 241 && byte <= 243) {
                 byteCount = 4;
-              } else if (byte >= 224) {
+              } else if ((byte >= 225 && byte <= 236) || byte == 238 || byte == 239) {
                 byteCount = 3;
-              } else if (byte >= 192){
+              } else if (byte >= 194 && byte <= 223) {
                 byteCount = 2;
+              } else if (byte >= 32 && byte <= 126) {
+                byteCount = 1;
+              } else {
+                setnvalue(ra, 0);
+                break;
               }
               index += byteCount;
               byte = bytes[index];
