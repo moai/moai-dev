@@ -26,7 +26,7 @@ gfxQuad:setHitMaskThreshold ( 1, 1, 1, 1 ) -- just hit test the white pixels
 prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
 prop:setHitGranularity ( MOAIProp.HIT_TEST_FINE )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 function clickCallback ( down )
 	

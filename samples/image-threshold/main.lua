@@ -36,7 +36,7 @@ gfxQuad:setTexture ( image )
 gfxQuad:setRect ( -hw1, -hh1, hw1, hh1 )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 

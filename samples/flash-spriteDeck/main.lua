@@ -80,10 +80,10 @@ end
 spriteLibs = loadSpriteLibs ( spriteLibs )
 spriteLib = spriteLibs [ 1 ]
 
-sprite = MOAIProp2D.new ()
+sprite = MOAIProp.new ()
 sprite:setDeck ( spriteLib )
 
-layer:insertProp ( sprite )
+sprite:setPartition ( layer )
 
 function onMouseLeftEvent ( down )
 	if MOAIInputMgr.device.mouseLeft:down () then

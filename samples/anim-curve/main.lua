@@ -14,20 +14,16 @@ layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:pushRenderPass ()
 
-gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "moai.png" )
-gfxQuad:setRect ( -128, -128, 128, 128 )
-
-prop = MOAIProp2D.new ()
-prop:setDeck ( gfxQuad )
-layer:insertProp ( prop )
+prop = MOAIProp.new ()
+prop:setDeck ( '../resources/moai.png' )
+prop:setPartition ( layer )
 
 curve = MOAIAnimCurve.new ()
 curve:reserveKeys ( 2 )
 curve:setKey ( 1, 0, 0 )
 curve:setKey ( 2, 1.5, 360 )
 
-prop:setAttrLink ( MOAIProp2D.ATTR_Z_ROT, curve, MOAIAnimCurve.ATTR_VALUE )
+prop:setAttrLink ( MOAIProp.ATTR_Z_ROT, curve, MOAIAnimCurve.ATTR_VALUE )
 
 timer = MOAITimer.new ()
 timer:setSpan ( 0, curve:getLength ())

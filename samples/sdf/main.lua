@@ -38,10 +38,10 @@ makeLayerWithDeckItem = function ( deck, idx, pad, viewWidth, viewHeight )
 	local layer = MOAIPartitionViewLayer.new ()
 	layer:setViewport ( viewport )
 	
-	local prop = MOAIProp2D.new ()
+	local prop = MOAIProp.new ()
 	prop:setDeck ( deck )
 	prop:setIndex ( idx )
-	layer:insertProp ( prop )
+	prop:setPartition ( layer )
 
 	return layer, prop, width, height
 end

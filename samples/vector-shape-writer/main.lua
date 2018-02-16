@@ -112,4 +112,4 @@ mesh:setBounds ( vtxBuffer:computeBounds ( vtxFormat ))
 
 local prop = MOAIProp.new ()
 prop:setDeck ( mesh )
-layer:insertProp ( prop )
+prop:setPartition ( layer )

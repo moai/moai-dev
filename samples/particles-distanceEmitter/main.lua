@@ -47,7 +47,7 @@ system:reserveSprites ( 256 )
 system:reserveStates ( 2 )
 system:setDeck ( texture )
 system:start ()
-layer:insertProp ( system )
+system:setPartition ( layer )
 
 state = MOAIParticleState.new ()
 state:setTerm ( 3, 3 )

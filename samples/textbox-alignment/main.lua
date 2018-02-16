@@ -29,7 +29,7 @@ function addTextbox ( top, height, alignment )
 	textbox:setRect ( -150, top - height, 150, top )
 	textbox:setAlignment ( alignment )
 	textbox:setYFlip ( true )
-	layer:insertProp ( textbox )
+	textbox:setPartition ( layer )
 end
 
 local top = 230

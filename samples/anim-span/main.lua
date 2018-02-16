@@ -19,9 +19,9 @@ tileLib:setTexture ( "numbers.png" )
 tileLib:setSize ( 8, 8 )
 tileLib:setRect ( -16, -16, 16, 16 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( tileLib )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 curve = MOAIAnimCurve.new ()
 
@@ -38,7 +38,7 @@ curve:setKey ( 9, 2.00, 9, MOAIEaseType.FLAT )
 
 anim = MOAIAnim:new ()
 anim:reserveLinks ( 1 )
-anim:setLink ( 1, curve, prop, MOAIProp2D.ATTR_INDEX )
+anim:setLink ( 1, curve, prop, MOAIProp.ATTR_INDEX )
 anim:setMode ( MOAITimer.PING_PONG )
 anim:setSpan ( 0.25, 1.5 )
 anim:setTime ( 0.25 )

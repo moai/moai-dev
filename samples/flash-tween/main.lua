@@ -14,14 +14,14 @@ local timeline
 local function insertProps ( self, layer )
 
 	for i, v in ipairs ( self.props ) do
-		layer:insertProp ( v )
+		v:setPartition ( layer )
 	end
 end
 
-local function removeProps ( self, layer )
+local function removeProps ( self )
 
 	for i, v in ipairs ( self.props ) do
-		layer:removeProp ( v )
+		v:setPartition ()
 	end
 end
 
@@ -37,13 +37,13 @@ local function newPlayer ( self )
 	
 	for i, curveSet in pairs ( self.curves ) do
 		
-		local prop = MOAIProp2D.new ()
+		local prop = MOAIProp.new ()
 		prop:setParent ( root )
 		prop:setDeck ( self.deck )
 		
 		local c = ( i - 1 ) * layerSize
 		
-		player:setLink ( c + 1, curveSet.id, prop, MOAIProp2D.ATTR_INDEX )
+		player:setLink ( c + 1, curveSet.id, prop, MOAIProp.ATTR_INDEX )
 		player:setLink ( c + 2, curveSet.x, prop, MOAITransform.ATTR_X_LOC )
 		player:setLink ( c + 3, curveSet.y, prop, MOAITransform.ATTR_Y_LOC )
 		player:setLink ( c + 4, curveSet.r, prop, MOAITransform.ATTR_Z_ROT )

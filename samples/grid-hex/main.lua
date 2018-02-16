@@ -30,18 +30,18 @@ tileDeck = MOAITileDeck2D.new ()
 tileDeck:setTexture ( "hex-tiles.png" )
 tileDeck:setSize ( 4, 4, 0.25, 0.216796875 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( tileDeck )
 prop:setGrid ( grid )
 prop:setLoc ( -256, -256 )
 prop:forceUpdate ()
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
-cursor = MOAIProp2D.new ()
+cursor = MOAIProp.new ()
 cursor:setDeck ( tileDeck )
 cursor:setScl ( grid:getTileSize ())
 cursor:addScl ( -10 )
-layer:insertProp ( cursor )
+cursor:setPartition ( layer )
 
 font = MOAIFont.new ()
 font:load ( "arial-rounded.TTF" )
@@ -57,7 +57,7 @@ for c = 1, grid_columns do
 		textbox:setLoc ( x, y )
 		textbox:setYFlip ( true )
 		textbox:setAlignment ( MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY )
-		layer:insertProp ( textbox )
+		textbox:setPartition ( layer )
 
 		textbox:setString ( string.format("%d,%d", c, r) )
 	end

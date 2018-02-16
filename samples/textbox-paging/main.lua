@@ -30,7 +30,7 @@ textbox:setTextSize ( 16, 163 )
 textbox:setRect ( -150, 100, 150, 230 )
 textbox:setYFlip ( true )
 textbox:setSpeed ( 12 )
-layer:insertProp ( textbox )
+textbox:setPartition ( layer )
 
 function page ( text )
 

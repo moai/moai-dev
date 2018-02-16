@@ -32,5 +32,5 @@ textbox:setRect ( -150, -230, 150, 230 )
 textbox:setYFlip ( true )
 textbox:setColor ( 0, 0, 0, 1 )
 textbox:seekScl ( 0.25, 0.25, 1, 5 )
-layer:insertProp ( textbox )
+textbox:setPartition ( layer )
 

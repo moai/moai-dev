@@ -51,4 +51,4 @@ textbox:setYFlip ( true )
 style = textbox:getStyle ()
 style:setPadding ( 10, 10 )
 
-layer:insertProp ( textbox )
+textbox:setPartition ( layer )

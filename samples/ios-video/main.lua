@@ -24,9 +24,9 @@ gfxQuad:setTexture ( "moai.png" )
 gfxQuad:setRect ( -128, -128, 128, 128 )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 prop:moveRot ( 540, 2.5 )
 

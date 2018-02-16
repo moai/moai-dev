@@ -73,8 +73,8 @@ shader:setProgram ( program )
 
 mesh:setShader ( shader )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( mesh )
 prop:moveRot ( 360, 1.5 )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 

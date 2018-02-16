@@ -18,9 +18,9 @@ gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( "moai.png" )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 function threadFunc ()
  

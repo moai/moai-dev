@@ -53,4 +53,4 @@ system:setDeck ( deck )
 system:start ()
 emitter:start ()
 
-layer:insertProp ( system )
+system:setPartition ( layer )

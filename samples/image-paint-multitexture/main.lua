@@ -101,11 +101,11 @@ gfxQuad:setTexture ( multitexture )
 gfxQuad:setRect ( 0, 0, VIEW_WIDTH, VIEW_HEIGHT )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
 prop:setPiv ( VIEW_WIDTH / 2, VIEW_HEIGHT / 2 )	
 prop:setShader ( shader )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 function stamp ( x, y, erase )
 

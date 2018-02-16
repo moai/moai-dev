@@ -28,5 +28,5 @@ textbox:setTextSize ( 32 )
 textbox:setRect ( -150, -240, 150, 240 )
 textbox:setYFlip ( true )
 textbox:setWordBreak ( MOAITextBox.WORD_BREAK_CHAR )
-layer:insertProp ( textbox )
+textbox:setPartition ( layer )
 

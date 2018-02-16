@@ -26,7 +26,7 @@ gfxQuad:setRect ( -64, -64, 64, 64 )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
 local function makeProp ( x, y, xs, ys, r )
-	local prop = MOAIProp2D.new ()
+	local prop = MOAIProp.new ()
 	prop:setDeck ( gfxQuad )
 	prop:setLoc ( x, y )
 	prop:setScl ( xs, ys )
@@ -43,7 +43,7 @@ table.insert ( layers, makeLayer ( 0, 256, 256, 256, 0, 0, 1, 1 ))
 table.insert ( layers, makeLayer ( 256, 256, 256, 256, 0, 1, 1, 1 ))
 
 for i, layer in ipairs ( layers ) do
-	layer:insertProp ( makeProp ( 0, 0, 1, 1 ))
+	makeProp ( 0, 0, 1, 1 ):setPartition ( layer )
 end
 
 function clickCallback ( down )

@@ -79,4 +79,4 @@ textbox:setShader ( shader )
 style = textbox:getStyle ()
 style:setPadding ( 20, 20 )
 
-layer:insertProp ( textbox )
+textbox:setPartition ( layer )

@@ -21,7 +21,7 @@ gfxQuad:setUVRect ( 0, 1, 1, 0 )
 
 prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 local action = prop:moveRot ( 0, 0, 360, 3 )
 prop:moveLoc ( 0, 0, 128, 3 )

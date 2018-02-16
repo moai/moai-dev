@@ -79,9 +79,9 @@ texture = MOAIGfxQuad2D.new ()
 texture:setTexture ( 'moai.png' )
 texture:setRect ( -0.5, -0.5, 0.5, 0.5 )
 
-sprite = MOAIProp2D.new ()
+sprite = MOAIProp.new ()
 sprite:setDeck ( texture )
-layer:insertProp ( sprite )
+sprite:setPartition ( layer )
 
 curve = MOAIAnimCurve.new ()
 curve:reserveKeys ( 2 )

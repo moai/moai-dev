@@ -36,13 +36,13 @@ gfxQuad:setTexture ( "moai.png" )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 
 function addSprite ( x, y, xScl, yScl, name )
-	local prop = MOAIProp2D.new ()
+	local prop = MOAIProp.new ()
 	prop:setDeck ( gfxQuad )
 	prop:setPriority ( priority )
 	prop:setLoc ( x, y )
 	prop:setScl ( xScl, yScl )
 	prop.name = name
-	partition:insertProp ( prop )
+	prop:setPartition ( partition )
 end
 
 addSprite ( -64, 64, 0.5, 0.5, "sprite1" )

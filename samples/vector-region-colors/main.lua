@@ -60,7 +60,7 @@ mesh:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.LINE_SHADER_3D ))
 
 local prop = MOAIProp.new ()
 prop:setDeck ( mesh )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 --prop:setColor ( 1, 0, 0, 1 )
 

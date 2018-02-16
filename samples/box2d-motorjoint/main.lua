@@ -41,11 +41,11 @@ function addSprite()
 	fixture:setFriction ( 0.6 )
   body:resetMassData ()
 
-	local sprite = MOAIProp2D.new ()
+	local sprite = MOAIProp.new ()
 	sprite:setDeck ( texture )
 	sprite.body = body
 	sprite:setParent ( body )
-	layer:insertProp ( sprite )	
+	sprite:setPartition ( layer )	
   
 	return sprite
 end

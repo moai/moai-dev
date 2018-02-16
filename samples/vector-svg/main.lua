@@ -22,7 +22,7 @@ onProp = function ( prop, style )
 	end
 	
 	--prop:setColor ( 0, 0, 0, 1 )
-	layer:insertProp ( prop )
+	prop:setPartition ( layer )
 	--prop:setVisible ( style.visible )
 end
 

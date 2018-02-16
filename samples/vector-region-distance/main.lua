@@ -82,7 +82,7 @@ scriptDeck:setDrawCallback ( onDraw )
 
 local prop = MOAIProp.new ()
 prop:setDeck ( scriptDeck )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 prop:setColor ( 1, 0, 0, 1 )
 

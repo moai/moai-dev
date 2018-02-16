@@ -18,20 +18,20 @@ gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( "moai.png" )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 
-prop1 = MOAIProp2D.new ()
+prop1 = MOAIProp.new ()
 prop1:setDeck ( gfxQuad )
 prop1:setLoc ( 0, 64 )
-layer:insertProp ( prop1 )
+prop1::setPartition ( layer )
 
-prop2 = MOAIProp2D.new ()
+prop2 = MOAIProp.new ()
 prop2:setDeck ( gfxQuad )
 prop2:setLoc ( 0, -64 )
-layer:insertProp ( prop2 )
+prop2::setPartition ( layer )
 
-prop3 = MOAIProp2D.new ()
+prop3 = MOAIProp.new ()
 prop3:setDeck ( gfxQuad )
 prop3:setLoc ( 0, -64 )
-layer:insertProp ( prop3 )
+prop3::setPartition ( layer )
 
 prop2:setParent ( prop1 )
 

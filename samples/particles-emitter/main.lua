@@ -28,7 +28,7 @@ gfxQuad:setHitMaskThreshold ( 1, 1, 1, 1 ) -- just hit test the white pixels
 prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
 prop:setHitGranularity ( MOAIProp.HIT_TEST_FINE )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 CONST = MOAIParticleScript.packConst
 
@@ -51,7 +51,7 @@ system:reserveSprites ( 1024 )
 system:reserveStates ( 1 )
 system:setDeck ( texture )
 system:start ()
-layer:insertProp ( system )
+system:setPartition ( layer )
 
 -- state 1
 state1 = MOAIParticleState.new ()

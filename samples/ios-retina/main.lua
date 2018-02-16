@@ -25,7 +25,7 @@ gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( "maneki.png" )
 gfxQuad:setRect ( -128, -128, 128, 128 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 

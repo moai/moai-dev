@@ -37,5 +37,5 @@ textbox:setTextSize ( 16 )
 textbox:setRect ( -150, -230, 150, 230 )
 textbox:setAlignment ( MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY )
 textbox:setYFlip ( true )
-layer:insertProp ( textbox )
+textbox:setPartition ( layer )
 

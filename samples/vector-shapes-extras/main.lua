@@ -114,6 +114,6 @@ mesh:setBounds ( vtxBuffer:computeBounds ( vtxFormat ))
 
 local prop = MOAIProp.new ()
 prop:setDeck ( mesh )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 prop:moveRot ( 0, 0, -180, 1.5 )

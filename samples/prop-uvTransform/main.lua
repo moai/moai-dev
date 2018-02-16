@@ -27,10 +27,10 @@ uvTransform:moveLoc ( 1, 0, 3 )
 uvTransform:moveRot ( 360, 3 )
 uvTransform:moveScl ( 1, 1, 3 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
 prop:setUVTransform ( uvTransform )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 prop:moveRot ( -360, 2 )
 prop:moveScl ( 1.5, 1.5, 3 )

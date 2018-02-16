@@ -33,8 +33,8 @@ gfxQuad:setTexture ( image )
 gfxQuad:setRect ( -128, -128, 128, 128 )
 gfxQuad:setUVRect ( 0, 1, 1, 0 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
 --prop:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.FONT_SHADER ))
 prop:setBlendMode ( MOAIGraphicsProp.GL_SRC_ALPHA, MOAIGraphicsProp.GL_ONE_MINUS_SRC_ALPHA );
-layer:insertProp ( prop )
+prop:setPartition ( layer )

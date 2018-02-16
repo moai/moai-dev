@@ -26,7 +26,7 @@ textbox:setFont ( font )
 textbox:setTextSize ( 16, 163 )
 textbox:setRect ( -150, -230, 150, 230 )
 textbox:setYFlip ( true )
-layer:insertProp ( textbox )
+textbox:setPartition ( layer )
 
 textbox:spool ()
 

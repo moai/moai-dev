@@ -90,11 +90,11 @@ function addSprite()
 	body:resetMassData ()
 	body:applyAngularImpulse ( 80 )
 
-	local sprite = MOAIProp2D.new ()
+	local sprite = MOAIProp.new ()
 	sprite:setDeck ( texture )
 	sprite.body = body
 	sprite:setParent ( body )
-	layer:insertProp ( sprite )
+	sprite:setPartition ( layer )
 end
 
 function pointerCallback ( x, y )

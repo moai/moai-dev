@@ -56,10 +56,10 @@ gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( canvas )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
 
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 gfxQuad:setRect ( 0, 0, PROP_WIDTH, PROP_HEIGHT )
 prop:setPiv ( PROP_WIDTH / 2, PROP_HEIGHT / 2 )	

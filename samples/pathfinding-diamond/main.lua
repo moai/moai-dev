@@ -38,11 +38,11 @@ tileDeck = MOAITileDeck2D.new ()
 tileDeck:setTexture ( "diamond-tiles.png" )
 tileDeck:setSize ( 4, 4 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( tileDeck )
 prop:setGrid ( grid )
 prop:setLoc ( -272, -128 )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 startNode = grid:getCellAddr ( 1, 1 )
 endNode = grid:getCellAddr ( 8, 16 )

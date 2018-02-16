@@ -42,7 +42,7 @@ local addLabel = function ( text, x, y, hJustify, vJustify )
 	label:setYFlip ( true )
 	label:setAutoFlip ( true )
 	label:setLoc ( x, y )
-	layer:insertProp ( label )
+	label:setPartition ( layer )
 	
 	table.insert ( labels, label )
 end
@@ -58,7 +58,7 @@ local addTextBox = function ( text, x, y, hJustify, vJustify )
 	label:setAutoFlip ( true )
 	label:setRect ( 0, -256, 256, 0 )
 	label:setLoc ( x, y )
-	layer:insertProp ( label )
+	label:setPartition ( layer )
 	
 	table.insert ( labels, label )
 end

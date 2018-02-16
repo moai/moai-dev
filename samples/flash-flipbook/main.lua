@@ -13,7 +13,7 @@ local timeline
 
 local function insertProps ( self, layer )
 
-	layer:insertProp ( self.prop )
+	self.prop:setPartition ( layer )
 end
 
 local function removeProps ( self, layer )
@@ -26,11 +26,11 @@ local function newPlayer ( self )
 	local player = MOAIAnim.new ()
 	player:reserveLinks ( 1 )
 		
-	local prop = MOAIProp2D.new ()
+	local prop = MOAIProp.new ()
 	prop:setParent ( root )
 	prop:setDeck ( self.quadListDeck )
 	
-	player:setLink ( 1, self.curve, prop, MOAIProp2D.ATTR_INDEX )
+	player:setLink ( 1, self.curve, prop, MOAIProp.ATTR_INDEX )
 	
 	player.prop = prop
 	player.flash = self

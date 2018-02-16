@@ -18,16 +18,16 @@ gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( "moai.png" )
 gfxQuad:setRect ( -128, -128, 128, 128 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 curve = MOAIAnimCurveVec.new ()
 curve:reserveKeys ( 2 )
 curve:setKey ( 1, 0, 0, 0, 0 )
 curve:setKey ( 2, 1, 100, 100, 0 )
 
-prop:setAttrLink ( MOAIProp2D.ATTR_TRANSLATE, curve, MOAIAnimCurve.ATTR_VALUE )
+prop:setAttrLink ( MOAIProp.ATTR_TRANSLATE, curve, MOAIAnimCurve.ATTR_VALUE )
 
 timer = MOAITimer.new ()
 timer:setSpan ( 0, curve:getLength ())

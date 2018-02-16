@@ -42,12 +42,12 @@ tileDeck = MOAITileDeck2D.new ()
 tileDeck:setTexture ( "hex-tiles.png" )
 tileDeck:setSize ( 1, 1, 1, .867187500 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( tileDeck )
 prop:setGrid ( grid )
 prop:setLoc ( -256, -256 )
 prop:forceUpdate ()
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 ----------------------------------------------------------------
 local xCoord = nil

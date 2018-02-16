@@ -83,6 +83,6 @@ scriptDeck = MOAIScriptDeck.new ()
 scriptDeck:setRect ( 0, 0, 10, 10 )
 scriptDeck:setDrawCallback ( onDraw )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( scriptDeck )
-layer:insertProp ( prop )
+prop:setPartition ( layer )

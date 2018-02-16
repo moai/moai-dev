@@ -23,9 +23,9 @@ gfxQuad:setTexture ( texture )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 prop:setScl ( 0, 0 )
 prop:moveScl ( 4, 4, 6, MOAIEaseType.LINEAR )

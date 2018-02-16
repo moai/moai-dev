@@ -50,11 +50,11 @@ function addSprite ( x, y, r, density, type )
 	body:resetMassData ()
 	--body:applyAngularImpulse ( 80 )
 
-	local sprite = MOAIProp2D.new ()
+	local sprite = MOAIProp.new ()
 	sprite:setBounds ( -r, -r, 0, r, r, 0 )
 	sprite.body = body
 	sprite:setParent ( body )
-	layer:insertProp ( sprite )
+	sprite:setPartition ( layer )
 
 	local top = #chain
 

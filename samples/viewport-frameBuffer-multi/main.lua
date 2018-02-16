@@ -25,11 +25,11 @@ mainLayer = MOAIPartitionViewLayer.new ()
 mainLayer:setViewport ( viewport )
 MOAISim.pushRenderPass ( mainLayer )
 
-mainProp = MOAIProp2D.new ()
+mainProp = MOAIProp.new ()
 mainProp:setDeck ( gfxQuad )
 mainProp:setPiv ( 256, 256 )
 mainProp:setRot ( 10 )
-mainLayer:insertProp ( mainProp )
+mainProp:setPartition ( mainLayer )
 
 -- add layers to offscreen buffer
 local function makeLayer ( x, y, w, h, r, g, b, a )
@@ -51,7 +51,7 @@ gfxQuad:setRect ( -64, -64, 64, 64 )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
 local function makeProp ( x, y, xs, ys, r )
-	local prop = MOAIProp2D.new ()
+	local prop = MOAIProp.new ()
 	prop:setDeck ( gfxQuad )
 	prop:setLoc ( x, y )
 	prop:setScl ( xs, ys )
@@ -68,7 +68,7 @@ table.insert ( layers, makeLayer ( 256, 256, 256, 256, 0, 1, 1, 1 ))
 frameBuffer:setRenderTable ( layers )
 
 for i, layer in ipairs ( layers ) do
-	layer:insertProp ( makeProp ( 0, 0, 1, 1 ))
+	makeProp ( 0, 0, 1, 1 ):setPartition ( layer )
 end
 
 function clickCallback ( down )

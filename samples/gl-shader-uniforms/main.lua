@@ -54,7 +54,7 @@ spriteDeck:setRect ( -128, -128, 128, 128 )
 prop = MOAIProp.new ()
 prop:setDeck ( spriteDeck )
 prop:setShader ( shader )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 prop:moveRot ( 0, 0, -360, 5 )
 
@@ -67,6 +67,6 @@ spriteDeck:setShader ( shader )
 
 prop = MOAIProp.new ()
 prop:setDeck ( spriteDeck )
-layer:insertProp ( prop )   
+prop:setPartition ( layer )   
 
 prop:moveRot ( 0, 0, 360, 5 )

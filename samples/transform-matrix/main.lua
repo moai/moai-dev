@@ -25,8 +25,8 @@ matrix:setMatrix (
 	0, 0, 1, 0
 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
 prop:setLoc ( 0, 0 )
 prop:setParent ( matrix )
-layer:insertProp ( prop )
+prop:setPartition ( layer )

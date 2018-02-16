@@ -41,9 +41,9 @@ onCreated = function ( texture )
 		gfxQuad:setRect ( -128, -128, 128, 128 )
 		gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
-		prop = MOAIProp2D.new ()
+		prop = MOAIProp.new ()
 		prop:setDeck ( gfxQuad )
-		layer:insertProp ( prop )
+		prop:setPartition ( layer )
 		prop:moveRot ( 360, 5 )
 
 		gfxQuad = MOAIGfxQuad2D.new ()
@@ -51,10 +51,10 @@ onCreated = function ( texture )
 		gfxQuad:setRect ( -128, -128, 128, 128 )
 		gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
-		prop = MOAIProp2D.new ()
+		prop = MOAIProp.new ()
 		prop:setDeck ( gfxQuad )
 		prop:setColor ( 1, 1, 1, 0 )
-		layer:insertProp ( prop )
+		prop:setPartition ( layer )
 		prop:moveRot ( -360, 5 )
 	end
 end

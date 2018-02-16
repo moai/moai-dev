@@ -90,7 +90,7 @@ makeTextWithColl = function ( text, size, x, y, group )
 	label:setFont ( font )
 	label:setTextSize ( size )
 	label:setAlignment ( MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY )
-	layer:insertProp ( label )
+	label:setPartition ( layer )
 
 	return ready ( label, x, y, group )
 end

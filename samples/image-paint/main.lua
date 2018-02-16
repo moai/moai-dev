@@ -22,11 +22,11 @@ gfxQuad:setTexture ( texture )
 gfxQuad:setRect ( 0, 0, 16, 16 )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
 prop:setPiv ( 8, 8 )
 prop:setScl ( 8, 8 )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 prop:moveRot ( 360, 1.5 )
 

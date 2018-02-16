@@ -46,14 +46,14 @@ function onDraw ( index, xOff, yOff, xFlip, yFlip )
 	end
 end
 
-scriptDeck = MOAIScriptDeck.new ()
-scriptDeck:setRect ( -128, -128, 128, 128 )
-scriptDeck:setDrawCallback ( onDraw )
+drawDeck = MOAIDrawDeck.new ()
+drawDeck:setBounds ( -128, -128, 128, 128 )
+drawDeck:setDrawCallback ( onDraw )
 
-prop = MOAIProp2D.new ()
-prop:setDeck ( scriptDeck )
+prop = MOAIProp.new ()
+prop:setDeck ( drawDeck )
 prop:setLoc ( -128, -128 )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 print ( "Press space to go to the next ease type, backspace to go back." )
 

@@ -235,5 +235,5 @@ for i, aiMesh in ipairs ( aiMeshes ) do
 	prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
 	prop:setDepthTest ( MOAIGraphicsProp.DEPTH_TEST_LESS )
 
-	layer:insertProp ( prop )
+	prop:setPartition ( layer )
 end

@@ -26,8 +26,8 @@ gCamera:setLoc ( 0, 100, gCamera:getFocalLength ( 320 ))
 gCamera:lookAt ( 0, 0, 0 )
 gWorldLayer:setCamera ( gCamera )
 
-gCameraPivot:setAttrLink ( MOAIProp2D.INHERIT_TRANSFORM, gCameraSpin, MOAIProp2D.TRANSFORM_TRAIT )
-gCamera:setAttrLink ( MOAIProp2D.INHERIT_TRANSFORM, gCameraPivot, MOAIProp2D.TRANSFORM_TRAIT )
+gCameraPivot:setAttrLink ( MOAIProp.INHERIT_TRANSFORM, gCameraSpin, MOAIProp.TRANSFORM_TRAIT )
+gCamera:setAttrLink ( MOAIProp.INHERIT_TRANSFORM, gCameraPivot, MOAIProp.TRANSFORM_TRAIT )
 
 gCameraPivot:setRot ( 80, 0, 0 )
 gCameraSpin:moveRot ( 0, 0, 360, 5 )
@@ -81,4 +81,4 @@ prop:setDeck ( mesh )
 prop:setCullMode ( MOAIProp.CULL_BACK )
 prop:setDepthTest ( MOAIProp.DEPTH_TEST_LESS_EQUAL )
 
-gWorldLayer:insertProp ( prop )
+gWorldprop:setPartition ( layer )

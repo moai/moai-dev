@@ -65,7 +65,7 @@ selectionMesh:printSelection ()
 
 local prop = MOAIProp.new ()
 prop:setDeck ( selectionMesh )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 index = 1
 

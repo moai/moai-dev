@@ -30,7 +30,7 @@ label:setFont ( font )
 label:setTextSize ( 32 )
 label:setYFlip ( true )
 label:setAlignment ( MOAITextBox.LEFT_JUSTIFY, MOAITextBox.CENTER_JUSTIFY )
-layer:insertProp ( label )
+label:setPartition ( layer )
 
 -- Set label text
 function updateLabel ()
@@ -69,10 +69,10 @@ cursorDeck:setDrawCallback ( function ( index )
 	end
 	MOAIDraw.fillRect( cursorX - cursorWidth / 2, -cursorHeight / 2, cursorX + cursorWidth / 2, cursorHeight / 2 )
 end )
-local cursorProp = MOAIProp2D.new ()
+local cursorProp = MOAIProp.new ()
 cursorProp:setLoc ( -230, 0 )
 cursorProp:setDeck ( cursorDeck )
-layer:insertProp ( cursorProp )
+cursorProp:setPartition ( layer )
 
 -- Make cursor blink
 local resetCursor = false

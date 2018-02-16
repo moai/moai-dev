@@ -35,7 +35,7 @@ function addCube ( x, y, z, name )
 	local prop = makeCube ( 32 )
 	prop:setLoc ( x, y, z )
 	prop.name = name
-	partition:insertProp ( prop )
+	prop:setPartition ( partition )
 end
 
 --add out of order to test sorting

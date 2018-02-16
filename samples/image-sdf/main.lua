@@ -67,6 +67,6 @@ gfxQuad:setShader ( shader )
 gfxQuad:setRect ( -hWidth, -hHeight, hWidth, hHeight )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
-layer:insertProp ( prop )
+prop:setPartition ( layer )

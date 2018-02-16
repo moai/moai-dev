@@ -40,7 +40,7 @@ textbox:setString ( text )
 textbox:spool ()
 textbox:setRect ( -128, -128, 128, 128 )
 textbox:setAlignment ( MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY )
-layer:insertProp ( textbox )
+textbox:setPartition ( layer )
 
 function onMouseLeftEvent ( down )
 

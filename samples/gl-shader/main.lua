@@ -50,7 +50,7 @@ mesh:setTexture ( 'moai.png' )
 prop = MOAIProp.new ()
 prop:setDeck ( mesh )
 prop:setCullMode ( MOAIProp.CULL_BACK )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 moaiMatrix = MOAIMatrix:new ()
 shader:setAttrLink ( 1, moaiMatrix, MOAIMatrix.TRANSFORM_TRAIT )

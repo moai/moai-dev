@@ -27,19 +27,19 @@ tileDeck = MOAITileDeck2D.new ()
 tileDeck:setTexture ( "diamond-tiles.png" )
 tileDeck:setSize ( 4, 4 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( tileDeck )
 prop:setGrid ( grid )
 prop:setLoc ( -256, -256 )
 prop:forceUpdate ()
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 ----------------------------------------------------------------
-cursor = MOAIProp2D.new ()
+cursor = MOAIProp.new ()
 cursor:setDeck ( tileDeck )
 cursor:setScl ( grid:getTileSize ())
 cursor:addScl ( -32, -16 )
-layer:insertProp ( cursor )
+cursor:setPartition ( layer )
 
 local xCoord = 0
 local yCoord = 0

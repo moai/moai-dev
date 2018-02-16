@@ -49,7 +49,7 @@ makeProp = function ( x, y, z )
 	prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
 	prop:setDepthTest ( MOAIGraphicsProp.DEPTH_TEST_LESS )
 	prop:setLoc ( x, y, z )
-	layer:insertProp ( prop )
+	prop:setPartition ( layer )
 
 	return prop
 end

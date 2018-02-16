@@ -19,10 +19,10 @@ gfxQuad:setTexture ( "moai.png" )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 
 function addProp ( x, y )
-	local prop = MOAIProp2D.new ()
+	local prop = MOAIProp.new ()
 	prop:setDeck ( gfxQuad )
 	prop:setLoc ( x, y )
-	layer:insertProp ( prop )
+	prop:setPartition ( layer )
 end
 
 addProp ( -32, 64 )

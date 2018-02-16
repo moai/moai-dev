@@ -363,12 +363,12 @@ function addSprite ( x, y, r0, r1, quality )
 		joint [ 5 ][ i ]:setDampingRatio ( 0 )
 	end
 
-	local sprite = MOAIProp2D.new ()
+	local sprite = MOAIProp.new ()
 	sprite:setDeck ( deck )
 	sprite:setIndex ( 1 )
 	sprite.body = centerBody
 	if not SHOW_SPRITES then sprite:setColor ( 0, 0, 0, 0 ) end
-	layer:insertProp ( sprite )
+	sprite:setPartition ( layer )
   
 	local function makeAnim ( curve )
 		local anim = MOAIAnim.new ()
