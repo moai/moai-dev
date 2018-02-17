@@ -542,7 +542,7 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () {
 			billboardMtx.Translate ( -this->mPiv.mX, -this->mPiv.mY, -this->mPiv.mZ );
 			
 			ZLMatrix4x4 mtx;
-			mtx.RotateZ ( -radians );
+			mtx.RotateZ ( radians );
 			billboardMtx.Append ( mtx );
 			
 			mtx.Translate ( this->mPiv.mX, this->mPiv.mY, this->mPiv.mZ );
@@ -555,6 +555,7 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () {
 		}
 
 		case BILLBOARD_COMPASS_SCALE: {
+		
 			ZLMatrix4x4 viewToClip = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_TO_CLIP_MTX );
 			ZLMatrix4x4 worldToClip = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX );
 			ZLMatrix4x4 clipToWindow = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::CLIP_TO_WINDOW_MTX );
