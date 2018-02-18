@@ -316,7 +316,7 @@ ZLBounds MOAITileDeck2D::MOAIDeck_ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAITileDeck2D::MOAIDeck_Draw ( u32 idx ) {
+void MOAITileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	UNUSED ( idx );
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
@@ -325,7 +325,7 @@ void MOAITileDeck2D::MOAIDeck_Draw ( u32 idx ) {
 	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX ));
 	gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_TO_MODEL_MTX ));
 	
-	MOAICellCoord coord = this->GetCellCoord ( idx );
+	MOAICellCoord coord = this->GetCellCoord ( idx.mKey );
 	ZLRect uvRect = this->GetTileRect ( coord );
 	
 	float uScale = ( uvRect.mXMax - uvRect.mXMin );
@@ -335,7 +335,7 @@ void MOAITileDeck2D::MOAIDeck_Draw ( u32 idx ) {
 	float vOff = uvRect.mYMin - ( 0.5f * vScale );
 	
 	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
-	materialStack.Push ( this->GetMaterial ( idx ));
+	materialStack.Push ( this->GetMaterial ( idx.mKey ));
 	materialStack.SetShader ( MOAIShaderMgr::DECK2D_SHADER );
 	materialStack.LoadGfxState ();
 	
@@ -345,21 +345,21 @@ void MOAITileDeck2D::MOAIDeck_Draw ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-ZLBounds MOAITileDeck2D::MOAIDeck_GetBounds ( u32 idx ) {
+ZLBounds MOAITileDeck2D::MOAIDeck_GetBounds ( ZLIndex idx ) {
 	UNUSED ( idx );
 	
 	return ZLBounds ( this->mQuad.GetVtxBounds ());
 }
 
 //----------------------------------------------------------------//
-MOAICollisionShape* MOAITileDeck2D::MOAIDeck_GetCollisionShape ( u32 idx ) {
+MOAICollisionShape* MOAITileDeck2D::MOAIDeck_GetCollisionShape ( ZLIndex idx ) {
 	UNUSED ( idx );
 
 	return 0;
 }
 
 //----------------------------------------------------------------//
-bool MOAITileDeck2D::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
+bool MOAITileDeck2D::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
 	UNUSED ( idx );
 	UNUSED ( vec );
 	UNUSED ( granularity );
@@ -369,7 +369,7 @@ bool MOAITileDeck2D::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granula
 }
 
 //----------------------------------------------------------------//
-bool MOAITileDeck2D::MOAIDeck_Overlap ( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
+bool MOAITileDeck2D::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
 	UNUSED ( idx );
 	UNUSED ( vec );
 	UNUSED ( granularity );

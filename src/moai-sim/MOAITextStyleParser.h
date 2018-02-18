@@ -4,7 +4,7 @@
 #ifndef	MOAITEXTSTYLEPARSER_H
 #define	MOAITEXTSTYLEPARSER_H
 
-class MOAIAnimCurve;
+class MOAIAnimCurveFloat;
 class MOAIFont;
 class MOAITextStyle;
 class MOAITextStyleCache;

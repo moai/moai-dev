@@ -520,10 +520,10 @@ u32 MOAIMesh::CountPrims () const {
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span ) {
+void MOAIMesh::DrawIndex ( ZLIndex idx, MOAIMeshSpan* span ) {
 
 	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
-	materialStack.Push ( this->GetMaterial ( idx ));
+	materialStack.Push ( this->GetMaterial ( idx.mKey ));
 	materialStack.SetShader ( MOAIShaderMgr::MESH_SHADER );
 	materialStack.LoadGfxState ();
 	materialStack.Pop ();
@@ -744,13 +744,13 @@ ZLBounds MOAIMesh::MOAIDeck_ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::MOAIDeck_Draw ( u32 idx ) {
+void MOAIMesh::MOAIDeck_Draw ( ZLIndex idx ) {
 
 	this->DrawIndex ( idx, 0 );
 }
 
 //----------------------------------------------------------------//
-ZLBounds MOAIMesh::MOAIDeck_GetBounds ( u32 idx ) {
+ZLBounds MOAIMesh::MOAIDeck_GetBounds ( ZLIndex idx ) {
 	UNUSED ( idx );
 
 	return this->mBounds;

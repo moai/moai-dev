@@ -20,7 +20,7 @@ class MOAIIndexedPropBase :
 	public virtual MOAIDeckPropBase {
 protected:
 	
-	u32				mIndex;
+	ZLIndex		mIndex;
 	
 	//----------------------------------------------------------------//
 	static int		_getIndex					( lua_State* L );
@@ -38,7 +38,7 @@ public:
 		TOTAL_ATTR,
 	};
 
-	GET_SET ( u32, Index, mIndex )
+	GET_SET ( size_t, Index, mIndex.mKey )
 
 	//----------------------------------------------------------------//
 					MOAIIndexedPropBase			();

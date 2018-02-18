@@ -362,26 +362,26 @@ ZLBounds MOAISurfaceDeck2D::MOAIDeck_ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAISurfaceDeck2D::MOAIDeck_Draw ( u32 idx ) {
+void MOAISurfaceDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	UNUSED ( idx );
 }
 
 //----------------------------------------------------------------//
-ZLBounds MOAISurfaceDeck2D::MOAIDeck_GetBounds ( u32 idx ) {
+ZLBounds MOAISurfaceDeck2D::MOAIDeck_GetBounds ( ZLIndex idx ) {
 	UNUSED ( idx );
 
 	return ZLBounds::EMPTY;
 }
 
 //----------------------------------------------------------------//
-MOAICollisionShape* MOAISurfaceDeck2D::MOAIDeck_GetCollisionShape ( u32 idx ) {
+MOAICollisionShape* MOAISurfaceDeck2D::MOAIDeck_GetCollisionShape ( ZLIndex idx ) {
 	UNUSED ( idx );
 
 	return 0;
 }
 
 //----------------------------------------------------------------//
-bool MOAISurfaceDeck2D::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
+bool MOAISurfaceDeck2D::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
 	UNUSED ( idx );
 	UNUSED ( vec );
 	UNUSED ( granularity );
@@ -391,7 +391,7 @@ bool MOAISurfaceDeck2D::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 gran
 }
 
 //----------------------------------------------------------------//
-bool MOAISurfaceDeck2D::MOAIDeck_Overlap ( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
+bool MOAISurfaceDeck2D::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
 	UNUSED ( idx );
 	UNUSED ( vec );
 	UNUSED ( granularity );

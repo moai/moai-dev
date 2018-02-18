@@ -1,53 +1,52 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIANIMCURVEVEC_H
-#define	MOAIANIMCURVEVEC_H
+#ifndef	MOAIANIMCURVEINDEX_H
+#define	MOAIANIMCURVEINDEX_H
 
 #include <moai-sim/MOAIAnimCurve.h>
 #include <moai-sim/MOAINode.h>
 
 //================================================================//
-// MOAIAnimCurveVec
+// MOAIAnimCurveIndex
 //================================================================//
-/**	@lua	MOAIAnimCurveVec
-	@text	Implementation of animation curve for 3D vector values.
+/**	@lua	MOAIAnimCurveIndex
+	@text	Implementation of animation curve for integer index values.
 */
-class MOAIAnimCurveVec :
+class MOAIAnimCurveIndex :
 	public virtual MOAIAnimCurve {
 private:
 
-	ZLLeanArray < ZLVec3D > mSamples;
-	ZLVec3D mValue;
+	ZLLeanArray < ZLIndex > mSamples;
+	ZLIndex mValue;
 
 	//----------------------------------------------------------------//
 	static int		_getValueAtTime		( lua_State* L );
 	static int		_setKey				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	ZLVec3D			GetCurveDelta		() const;
-	ZLVec3D			GetValue			( const MOAIAnimKeySpan& span ) const;
-
+	ZLIndex		GetValue			( const MOAIAnimKeySpan& span ) const;
+	
 	//----------------------------------------------------------------//
 	void				MOAIAnimCurve_ApplyValueAttrOp		( MOAIAttribute& attr, u32 op );
 	void				MOAIAnimCurve_GetDelta				( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const;
+	float				MOAIAnimCurve_GetFloatForTime		( float t ) const;
 	void				MOAIAnimCurve_GetValue				( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const;
 	void				MOAIAnimCurve_GetZero				( MOAIAttribute& attr ) const;
 	void				MOAIAnimCurve_ReserveSamples		( u32 total );
-	void				MOAINode_Update							();
+	void				MOAINode_Update						();
 
 public:
 	
-	DECL_LUA_FACTORY ( MOAIAnimCurveVec )
+	DECL_LUA_FACTORY ( MOAIAnimCurveIndex )
 	
 	//----------------------------------------------------------------//
-	ZLVec3D			GetValue				( float time ) const;
-					MOAIAnimCurveVec		();
-					~MOAIAnimCurveVec		();
+	ZLIndex		GetValue				( float time ) const;
+					MOAIAnimCurveIndex		();
+					~MOAIAnimCurveIndex		();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			ReserveSamples			( u32 total );
-	void			SetSample				( ZLIndex idx, const ZLVec3D& value );
+	void			SetSample				( ZLIndex idx, ZLIndex value );
 };
 
 #endif

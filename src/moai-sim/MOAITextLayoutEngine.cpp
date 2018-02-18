@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <contrib/moai_utf8.h>
-#include <moai-sim/MOAIAnimCurve.h>
+#include <moai-sim/MOAIAnimCurveFloat.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAITextLayoutRules.h>
 #include <moai-sim/MOAITextLayoutEngine.h>
@@ -89,7 +89,7 @@ void MOAITextLayoutEngine::Align () {
 	
 	float lineYOffset = adjustedLayoutYMin - this->mLayoutBounds.mYMin;
 	
-	MOAIAnimCurve** curves = this->mLayoutRules->mCurves;
+	MOAIAnimCurveFloat** curves = this->mLayoutRules->mCurves.GetBuffer ();
 	u32 totalCurves = ( u32 )this->mLayoutRules->mCurves.Size ();
 	
 	for ( u32 i = baseLine; i < totalLines; ++i ) {
@@ -131,7 +131,7 @@ void MOAITextLayoutEngine::Align () {
 		
 		line.Offset ( xOff, yOff );
 		
-		MOAIAnimCurve* curve = curves ? curves [( i - baseLine ) % totalCurves ] : 0;
+		MOAIAnimCurveFloat* curve = curves ? curves [( i - baseLine ) % totalCurves ] : 0;
 		
 		for ( u32 j = 0; j < line.mSize; ++j ) {
 			

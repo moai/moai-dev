@@ -657,7 +657,7 @@ ZLBounds MOAISpriteDeck2D::MOAIDeck_ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAISpriteDeck2D::MOAIDeck_Draw ( u32 idx ) {
+void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 
 	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
 
@@ -678,13 +678,13 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( u32 idx ) {
 		
 		if ( totalSpriteLists ) {
 		
-			MOAISpriteList& spriteList = this->mSpriteLists [ idx % totalSpriteLists ];
+			MOAISpriteList& spriteList = this->mSpriteLists [ idx.mKey % totalSpriteLists ];
 			base = spriteList.mBaseSprite;
 			top = base + spriteList.mTotalSprites;
 		}
 		else {
 		
-			base = idx % totalSprites;
+			base = idx.mKey % totalSprites;
 			top = base + 1;
 		}
 		
@@ -724,7 +724,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( u32 idx ) {
 		
 		if ( totalQuads ) {
 		
-			size_t itemIdx = idx % totalQuads;
+			size_t itemIdx = idx.mKey % totalQuads;
 			material = this->GetMaterial ( itemIdx );
 
 			quadBrush.mModelQuad = this->mQuads [ itemIdx ];
@@ -755,7 +755,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-ZLBounds MOAISpriteDeck2D::MOAIDeck_GetBounds ( u32 idx ) {
+ZLBounds MOAISpriteDeck2D::MOAIDeck_GetBounds ( ZLIndex idx ) {
 
 	ZLBounds bounds = ZLBounds::EMPTY;
 
@@ -772,13 +772,13 @@ ZLBounds MOAISpriteDeck2D::MOAIDeck_GetBounds ( u32 idx ) {
 			
 			if ( totalSpriteLists ) {
 			
-				MOAISpriteList& spriteList = this->mSpriteLists [ idx % totalSpriteLists ];
+				MOAISpriteList& spriteList = this->mSpriteLists [ idx.mKey % totalSpriteLists ];
 				base = spriteList.mBaseSprite;
 				top = base + spriteList.mTotalSprites;
 			}
 			else {
 			
-				base = idx % totalSprites;
+				base = idx.mKey % totalSprites;
 				top = base + 1;
 			}
 
@@ -793,7 +793,7 @@ ZLBounds MOAISpriteDeck2D::MOAIDeck_GetBounds ( u32 idx ) {
 		}
 		else {
 		
-			ZLRect rect = this->mQuads [ idx % totalQuads ].GetBounds ();
+			ZLRect rect = this->mQuads [ idx.mKey % totalQuads ].GetBounds ();
 			bounds.Init ( rect );
 		}
 	}
@@ -806,13 +806,13 @@ ZLBounds MOAISpriteDeck2D::MOAIDeck_GetBounds ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-MOAICollisionShape* MOAISpriteDeck2D::MOAIDeck_GetCollisionShape ( u32 idx ) {
+MOAICollisionShape* MOAISpriteDeck2D::MOAIDeck_GetCollisionShape ( ZLIndex idx ) {
 	UNUSED(idx);
 	return 0;
 }
 
 //----------------------------------------------------------------//
-bool MOAISpriteDeck2D::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
+bool MOAISpriteDeck2D::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
 
 	// TODO: handle granularity
 
@@ -825,7 +825,7 @@ bool MOAISpriteDeck2D::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granu
 }
 
 //----------------------------------------------------------------//
-bool MOAISpriteDeck2D::MOAIDeck_Overlap ( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
+bool MOAISpriteDeck2D::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
 
 	// TODO: handle granularity
 

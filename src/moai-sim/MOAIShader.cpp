@@ -110,7 +110,7 @@ void MOAIShader::ApplyGlobals () {
 	
 		const MOAIShaderProgramGlobal& global = this->mProgram->mGlobals [ i ];
 		
-		if ( global.mUniformID == INVALID_INDEX ) continue;
+		if ( global.mUniformID == ZLIndex::INVALID_KEY ) continue;
 		
 		void* element;
 		MOAIShaderUniformFormatter* uniform = this->GetUniform ( global.mUniformID, global.mIndex, element );
@@ -222,7 +222,7 @@ void MOAIShader::Bless () {
 			const MOAIShaderUniform& uniform = this->mProgram->mUniforms [ i ];
 			MOAIShaderUniformInstance& instance = this->mUniformInstances [ i ];
 			
-			instance.mBuffer = ( void* )(( size_t )instance.mBuffer + ( size_t )this->mUniformBuffer.Data ());
+			instance.mBuffer = ( void* )(( size_t )instance.mBuffer + ( size_t )this->mUniformBuffer.GetBuffer ());
 			uniform.Default ( instance.mBuffer );
 		}
 	}

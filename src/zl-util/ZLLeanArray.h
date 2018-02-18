@@ -4,6 +4,7 @@
 #ifndef	ZLLEANARRAY_H
 #define	ZLLEANARRAY_H
 
+#include <zl-util/ZLIndex.h>
 #include <zl-util/ZLResult.h>
 
 #define ZL_DECLARE_SCOPED_BUFFER(name,type,size,stackAllocMax)									\
@@ -11,7 +12,7 @@
 	type* name					= ( type* )( size <= stackAllocMax ? alloca ( size ) : 0 );		\
 	if ( !name ) {																				\
 		_##name##_array.Init ( size );															\
-		name = ( type* )_##name##_array.Data ();												\
+		name = ( type* )_##name##_array.GetBuffer ();												\
 	}
 
 //================================================================//
@@ -21,7 +22,7 @@ template < typename TYPE >
 class ZLLeanArray {
 protected:
 
-	size_t	mSize;
+	ZLSize	mSize;
 	TYPE*	mData;
 
 public:
@@ -35,13 +36,27 @@ public:
 	};
 
 	//----------------------------------------------------------------//
-	inline operator TYPE* () const {
-		return this->mData;
-	};
+	inline TYPE& operator [] ( ZLSize idx ) const {
+
+		assert ( idx < this->mSize );
+		return this->mData [ idx ];
+	}
 
 	//----------------------------------------------------------------//
-	size_t BufferSize () {
+	inline TYPE& operator [] ( const ZLIndex& idx ) const {
+		
+		assert ( idx.mKey < this->mSize );
+		return this->mData [ idx.mKey ];
+	}
+
+	//----------------------------------------------------------------//
+	ZLSize BufferSize () {
 		return this->mSize * sizeof ( TYPE );
+	}
+
+	//----------------------------------------------------------------//
+	inline bool CheckIndex ( ZLIndex index ) const {
+		return ( index.mKey < this->mSize );
 	}
 
 	//----------------------------------------------------------------//
@@ -61,37 +76,37 @@ public:
 	//----------------------------------------------------------------//
 	void CopyFrom ( const ZLLeanArray < TYPE >& src ) {
 
-		size_t total = ( this->mSize < src.mSize ) ? this->mSize : src.mSize;
+		ZLSize total = ( this->mSize < src.mSize ) ? this->mSize : src.mSize;
 
-		for ( size_t i = 0; i < total; ++i ) {
+		for ( ZLSize i = 0; i < total; ++i ) {
 			this->mData [ i ] = src [ i ];
 		}
 	}
 
 	//----------------------------------------------------------------//
-	inline TYPE& Elem ( size_t idx ) {
+	inline TYPE& Elem ( ZLSize idx ) {
 		return this->mData [ idx ];
 	}
 
 	//----------------------------------------------------------------//
-	inline TYPE* Data () {
-		return this->mData;
-	}
-
-	//----------------------------------------------------------------//
-	inline const TYPE* Data () const {
-		return this->mData;
-	}
-
-	//----------------------------------------------------------------//
 	void Fill ( const TYPE& value ) {
-		for ( size_t i = 0; i < this->mSize; ++i ) {
+		for ( ZLSize i = 0; i < this->mSize; ++i ) {
 			this->mData [ i ] = value;
 		}
 	}
 
 	//----------------------------------------------------------------//
-	ZLResultCode Grow ( size_t size ) {
+	inline TYPE* GetBuffer () {
+		return this->mData;
+	}
+
+	//----------------------------------------------------------------//
+	inline const TYPE* GetBuffer () const {
+		return this->mData;
+	}
+
+	//----------------------------------------------------------------//
+	ZLResultCode Grow ( ZLSize size ) {
 	
 		if ( size > this->mSize ) {
 			return this->Resize ( size );
@@ -100,17 +115,17 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	ZLResultCode Grow ( size_t size, size_t chunkSize ) {
+	ZLResultCode Grow ( ZLSize size, ZLSize chunkSize ) {
 		
-		size_t chunks = ( size / chunkSize ) + 1;
+		ZLSize chunks = ( size / chunkSize ) + 1;
 		return this->Grow ( chunks * chunkSize );
 	}
 
 	//----------------------------------------------------------------//
-	ZLResultCode Grow ( size_t size, size_t chunkSize, const TYPE& value ) {
+	ZLResultCode Grow ( ZLSize size, ZLSize chunkSize, const TYPE& value ) {
 		
-		size_t chunks = ( size / chunkSize ) + 1;
-		size_t newSize = chunks * chunkSize;
+		ZLSize chunks = ( size / chunkSize ) + 1;
+		ZLSize newSize = chunks * chunkSize;
 		
 		if ( newSize > this->mSize ) {
 			return this->Resize ( newSize, value );
@@ -119,7 +134,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	ZLResultCode Init ( size_t size ) {
+	ZLResultCode Init ( ZLSize size ) {
 
 		return this->Resize ( size );
 	}
@@ -132,7 +147,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	virtual ZLResultCode Resize ( size_t size ) {
+	virtual ZLResultCode Resize ( ZLSize size ) {
 
 		if ( this->mSize != size ) {
 
@@ -143,9 +158,9 @@ public:
 				data = new TYPE [ size ];
 				if ( !data ) return ZL_ALLOCATION_ERROR;
 
-				size_t total = ( this->mSize < size ) ? this->mSize : size;
+				ZLSize total = ( this->mSize < size ) ? this->mSize : size;
 				
-				for ( size_t i = 0; i < total; ++i ) {
+				for ( ZLSize i = 0; i < total; ++i ) {
 					data [ i ] = this->mData [ i ];
 				}
 			}
@@ -161,14 +176,14 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	ZLResultCode Resize ( size_t size, const TYPE& value ) {
+	ZLResultCode Resize ( ZLSize size, const TYPE& value ) {
 
-		size_t oldSize = this->mSize;
+		ZLSize oldSize = this->mSize;
 		
 		if ( this->Resize ( size ) != ZL_OK ) return ZL_ALLOCATION_ERROR;
 		
 		if ( size >= oldSize ) {
-			for ( size_t i = oldSize; i < size; ++i ) {
+			for ( ZLSize i = oldSize; i < size; ++i ) {
 				this->mData [ i ] = value;
 			}
 		}
@@ -176,17 +191,17 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void RotateLeft ( size_t spaces ) {
+	void RotateLeft ( ZLSize spaces ) {
 	
 		spaces = spaces % this->mSize;
 		if ( spaces ) {
 			
-			size_t size = this->mSize * sizeof ( TYPE );
-			size_t leftSize = spaces * sizeof ( TYPE );
-			size_t rightSize = size - leftSize;
+			ZLSize size = this->mSize * sizeof ( TYPE );
+			ZLSize leftSize = spaces * sizeof ( TYPE );
+			ZLSize rightSize = size - leftSize;
 			
-			void* lower = ( void* )(( size_t )this->mData + leftSize );
-			void* upper = ( void* )(( size_t )this->mData + rightSize );
+			void* lower = ( void* )(( ZLSize )this->mData + leftSize );
+			void* upper = ( void* )(( ZLSize )this->mData + rightSize );
 			
 			void* temp = alloca ( leftSize );
 		
@@ -197,17 +212,17 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void RotateRight ( size_t spaces ) {
+	void RotateRight ( ZLSize spaces ) {
 	
 		spaces = spaces % this->mSize;
 		if ( spaces ) {
 			
-			size_t size = this->mSize * sizeof ( TYPE );
-			size_t leftSize = spaces * sizeof ( TYPE );
-			size_t rightSize = size - leftSize;
+			ZLSize size = this->mSize * sizeof ( TYPE );
+			ZLSize leftSize = spaces * sizeof ( TYPE );
+			ZLSize rightSize = size - leftSize;
 			
-			void* lower = ( void* )(( size_t )this->mData + leftSize );
-			void* upper = ( void* )(( size_t )this->mData + rightSize );
+			void* lower = ( void* )(( ZLSize )this->mData + leftSize );
+			void* upper = ( void* )(( ZLSize )this->mData + rightSize );
 			
 			void* temp = alloca ( rightSize );
 		
@@ -218,7 +233,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	inline size_t Size () const {
+	inline ZLSize Size () const {
 		return this->mSize;
 	}
 

@@ -120,11 +120,11 @@ void MOAIDeckRemapper::RegisterLuaFuncs ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-u32 MOAIDeckRemapper::MOAIDeckProxy_Remap ( u32 idx ) {
+ZLIndex MOAIDeckRemapper::MOAIDeckProxy_Remap ( ZLIndex idx ) {
 
-	u32 code = idx - this->mBase;
+	u32 code = idx.mKey - this->mBase;
 	
-	return ( code < this->mRemap.Size ()) ? this->mRemap [ code ] : idx;
+	return ZLIndex (( code < this->mRemap.Size ()) ? this->mRemap [ code ] : idx );
 }
 
 //----------------------------------------------------------------//

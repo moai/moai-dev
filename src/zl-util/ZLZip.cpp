@@ -28,7 +28,7 @@ int ZLZip::Deflate ( const void* buffer, size_t size, ZLLeanArray < u8 >& result
 	if ( r == Z_OK ) {
 		result.Init ( outStream.GetLength ());
 		outStream.Seek ( 0, SEEK_SET );
-		outStream.ReadBytes ( result.Data (), result.Size () );
+		outStream.ReadBytes ( result.GetBuffer (), result.Size () );
 	}
 	return r;
 }
@@ -127,7 +127,7 @@ int ZLZip::Inflate ( const void* buffer, size_t size, ZLLeanArray < u8 >& result
 	if ( r == Z_OK ) {
 		result.Init ( outStream.GetLength ());
 		outStream.Seek ( 0, SEEK_SET );
-		outStream.ReadBytes ( result.Data (), result.Size () );
+		outStream.ReadBytes ( result.GetBuffer (), result.Size () );
 	}
 	return r;
 }

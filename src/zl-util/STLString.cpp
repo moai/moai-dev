@@ -218,7 +218,7 @@ void STLString::zip_deflate ( const void* buffer, size_t len ) {
 
 	ZLLeanArray < u8 > zip;
 	ZLZip::Deflate ( buffer, len, zip );
-	this->base_64_encode ( zip.Data (), zip.Size ());
+	this->base_64_encode ( zip.GetBuffer (), zip.Size ());
 }
 
 //----------------------------------------------------------------//
@@ -237,7 +237,7 @@ size_t STLString::zip_inflate ( void* buffer, size_t len ) {
 	size_t unzipLen = unzip.Size ();
 	
 	len = unzipLen <= len ? unzipLen : len;
-	memcpy ( buffer, unzip.Data (), len );
+	memcpy ( buffer, unzip.GetBuffer (), len );
 	
 	return unzipLen;
 }

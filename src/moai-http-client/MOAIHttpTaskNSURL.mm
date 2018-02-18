@@ -94,7 +94,7 @@ void MOAIHttpTaskNSURL::FinishRequest () {
 		if ( size ) {
 			this->mData.Init ( size );
 			this->mStream->Seek ( 0, SEEK_SET );
-			this->mStream->ReadBytes ( this->mData, size );
+			this->mStream->ReadBytes ( this->mData.GetBuffer (), size );
 		}
 		this->mMemStream.Clear ();
 	}
@@ -168,7 +168,7 @@ NSURLRequest* MOAIHttpTaskNSURL::Prepare () {
 	}
 	
 	if ( mBody.Size () > 0 ) {
-		[ request setHTTPBody:[ NSData dataWithBytes:mBody.Data () length:mBody.Size ()]];
+		[ request setHTTPBody:[ NSData dataWithBytes:mBody.GetBuffer () length:mBody.Size ()]];
 		mBody.Clear ();
 	}
 	
@@ -233,7 +233,7 @@ void MOAIHttpTaskNSURL::Reset () {
 void MOAIHttpTaskNSURL::SetBody ( const void* buffer, u32 size ) {
 	
 	this->mBody.Init ( size );
-	memcpy ( this->mBody, buffer, size );
+	memcpy ( this->mBody.GetBuffer (), buffer, size );
 }
 
 //----------------------------------------------------------------//

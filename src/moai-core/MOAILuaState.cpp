@@ -341,62 +341,6 @@ u32 MOAILuaState::GetColor32 ( int idx, float r, float g, float b, float a ) {
 	return color.PackRGBA ();
 }
 
-////----------------------------------------------------------------//
-//STLString MOAILuaState::GetField ( int idx, cc8* key, cc8* value ) {
-//
-//	STLString str;
-//	if ( this->PushFieldWithType ( idx, key, LUA_TSTRING )) {
-//		str = lua_tostring ( this->mState, -1 );
-//		lua_pop ( this->mState, 1 );
-//	}
-//	else {
-//		str = value;
-//	}
-//	return str;
-//}
-//
-////----------------------------------------------------------------//
-//STLString MOAILuaState::GetField ( int idx, int key, cc8* value ) {
-//
-//	STLString str;
-//	if ( this->PushFieldWithType ( idx, key, LUA_TSTRING )) {
-//		str = lua_tostring ( this->mState, -1 );
-//		lua_pop ( this->mState, 1 );
-//	}
-//	else {
-//		str = value;
-//	}
-//	return str;
-//}
-
-////----------------------------------------------------------------//
-//STLString MOAILuaState::GetField ( int idx, cc8* key, const STLString& value ) {
-//
-//	STLString str;
-//	if ( this->PushFieldWithType ( idx, key, LUA_TSTRING )) {
-//		str = lua_tostring ( this->mState, -1 );
-//		lua_pop ( this->mState, 1 );
-//	}
-//	else {
-//		str = value;
-//	}
-//	return str;
-//}
-//
-////----------------------------------------------------------------//
-//STLString MOAILuaState::GetField ( int idx, int key, const STLString& value ) {
-//
-//	STLString str;
-//	if ( this->PushFieldWithType ( idx, key, LUA_TSTRING )) {
-//		str = lua_tostring ( this->mState, -1 );
-//		lua_pop ( this->mState, 1 );
-//	}
-//	else {
-//		str = value;
-//	}
-//	return str;
-//}
-
 //----------------------------------------------------------------//
 int MOAILuaState::GetLuaThreadStatus ( int idx ) {
 
@@ -717,16 +661,6 @@ float MOAILuaState::GetValue < float >( int idx, const float value ) {
 }
 
 //----------------------------------------------------------------//
-//template <>
-//int MOAILuaState::GetValue < int >( int idx, const int value ) {
-//
-//	if ( this->IsType ( idx, LUA_TNUMBER )) {
-//		return ( int )lua_tonumber ( this->mState, idx );
-//	}
-//	return value;
-//}
-
-//----------------------------------------------------------------//
 template <>
 s8 MOAILuaState::GetValue < s8 >( int idx, const s8 value ) {
 
@@ -818,6 +752,38 @@ const void* MOAILuaState::GetValue < const void* >( int idx, const void* value )
 
 //----------------------------------------------------------------//
 template <>
+ZLAffine2D MOAILuaState::GetValue < ZLAffine2D >( int idx, const ZLAffine2D value ) {
+
+	ZLAffine2D mtx;
+	
+	for ( int row = 0; row < 2; ++row ) {
+		for ( int col = 0; col < 3; ++col ) {
+	
+			int element = ZLAffine2D::GetIndex ( row, col );
+			mtx.m [ element ] = this->GetValue < float >( idx + ( row * 3 ) + col, value.m [ element ]);
+		}
+	}
+	return mtx;
+}
+
+//----------------------------------------------------------------//
+template <>
+ZLAffine3D MOAILuaState::GetValue < ZLAffine3D >( int idx, const ZLAffine3D value ) {
+
+	ZLAffine3D mtx;
+	
+	for ( int row = 0; row < 3; ++row ) {
+		for ( int col = 0; col < 4; ++col ) {
+	
+			int element = ZLAffine3D::GetIndex ( row, col );
+			mtx.m [ element ] = this->GetValue < float >( idx + ( row * 4 ) + col, value.m [ element ]);
+		}
+	}
+	return mtx;
+}
+
+//----------------------------------------------------------------//
+template <>
 ZLBox MOAILuaState::GetValue < ZLBox >( int idx, const ZLBox value ) {
 
 	if ( this->CheckParams ( idx, "NNNNNN" )) {
@@ -853,34 +819,14 @@ ZLColorVec MOAILuaState::GetValue < ZLColorVec >( int idx, const ZLColorVec valu
 
 //----------------------------------------------------------------//
 template <>
-ZLAffine2D MOAILuaState::GetValue < ZLAffine2D >( int idx, const ZLAffine2D value ) {
+ZLIndex MOAILuaState::GetValue < ZLIndex >( int idx, const ZLIndex value ) {
 
-	ZLAffine2D mtx;
-	
-	for ( int row = 0; row < 2; ++row ) {
-		for ( int col = 0; col < 3; ++col ) {
-	
-			int element = ZLAffine2D::GetIndex ( row, col );
-			mtx.m [ element ] = this->GetValue < float >( idx + ( row * 3 ) + col, value.m [ element ]);
-		}
-	}	
-	return mtx;
-}
-
-//----------------------------------------------------------------//
-template <>
-ZLAffine3D MOAILuaState::GetValue < ZLAffine3D >( int idx, const ZLAffine3D value ) {
-
-	ZLAffine3D mtx;
-	
-	for ( int row = 0; row < 3; ++row ) {
-		for ( int col = 0; col < 4; ++col ) {
-	
-			int element = ZLAffine3D::GetIndex ( row, col );
-			mtx.m [ element ] = this->GetValue < float >( idx + ( row * 4 ) + col, value.m [ element ]);
-		}
-	}	
-	return mtx;
+	if ( this->IsType ( idx, LUA_TNUMBER )) {
+		ZLIndex index;
+		index.mKey = ( u32 )lua_tonumber ( this->mState, idx ) - 1;
+		return index;
+	}
+	return value;
 }
 
 //----------------------------------------------------------------//
@@ -1256,31 +1202,6 @@ void MOAILuaState::Push ( u64 value ) {
 }
 
 //----------------------------------------------------------------//
-int MOAILuaState::Push ( const ZLBox& value ) {
-
-	lua_pushnumber ( this->mState, value.mMin.mX );
-	lua_pushnumber ( this->mState, value.mMin.mY );
-	lua_pushnumber ( this->mState, value.mMin.mZ );
-	
-	lua_pushnumber ( this->mState, value.mMax.mX );
-	lua_pushnumber ( this->mState, value.mMax.mY );
-	lua_pushnumber ( this->mState, value.mMax.mZ );
-	
-	return 6;
-}
-
-//----------------------------------------------------------------//
-int MOAILuaState::Push ( const ZLColorVec& value ) {
-
-	lua_pushnumber ( this->mState, value.mR );
-	lua_pushnumber ( this->mState, value.mG );
-	lua_pushnumber ( this->mState, value.mB );
-	lua_pushnumber ( this->mState, value.mA );
-	
-	return 4;
-}
-
-//----------------------------------------------------------------//
 int MOAILuaState::Push ( const ZLAffine2D& value ) {
 
 	lua_pushnumber ( this->mState, value.m [ ZLAffine2D::C0_R0 ]);
@@ -1313,6 +1234,37 @@ int MOAILuaState::Push ( const ZLAffine3D& value ) {
 	lua_pushnumber ( this->mState, value.m [ ZLAffine3D::C3_R2 ]);
 	
 	return 12;
+}
+
+//----------------------------------------------------------------//
+int MOAILuaState::Push ( const ZLBox& value ) {
+
+	lua_pushnumber ( this->mState, value.mMin.mX );
+	lua_pushnumber ( this->mState, value.mMin.mY );
+	lua_pushnumber ( this->mState, value.mMin.mZ );
+	
+	lua_pushnumber ( this->mState, value.mMax.mX );
+	lua_pushnumber ( this->mState, value.mMax.mY );
+	lua_pushnumber ( this->mState, value.mMax.mZ );
+	
+	return 6;
+}
+
+//----------------------------------------------------------------//
+int MOAILuaState::Push ( const ZLColorVec& value ) {
+
+	lua_pushnumber ( this->mState, value.mR );
+	lua_pushnumber ( this->mState, value.mG );
+	lua_pushnumber ( this->mState, value.mB );
+	lua_pushnumber ( this->mState, value.mA );
+	
+	return 4;
+}
+
+//----------------------------------------------------------------//
+void MOAILuaState::Push ( const ZLIndex& value ) {
+
+	lua_pushnumber ( this->mState, value.mKey + 1 );
 }
 
 //----------------------------------------------------------------//

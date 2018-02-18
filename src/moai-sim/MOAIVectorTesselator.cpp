@@ -848,7 +848,7 @@ int MOAIVectorTesselator::Finish () {
 	
 		assert ( shapesTop );
 		MOAIVectorShape* shape = this->mShapeStack [ shapesTop - 1 ];
-		bool result = shape->SetVertices ( this->mVertexStack, vertsTop, this->mPolyClosed );
+		bool result = shape->SetVertices ( this->mVertexStack.GetBuffer (), vertsTop, this->mPolyClosed );
 		
 		assert ( result );
 		UNUSED ( result );

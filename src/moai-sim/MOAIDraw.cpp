@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIAnimCurve.h>
+#include <moai-sim/MOAIAnimCurveFloat.h>
 #include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIGfxBuffer.h>
@@ -416,7 +416,7 @@ int MOAIDraw::_clear ( lua_State* L ) {
 int MOAIDraw::_drawAnimCurve ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
 
-	MOAIAnimCurve* curve	= state.GetLuaObject < MOAIAnimCurve >( 1, true );
+	MOAIAnimCurveFloat* curve	= state.GetLuaObject < MOAIAnimCurveFloat >( 1, true );
 	u32 resolution			= state.GetValue < u32 >( 2, 1 );
 
 	if ( curve ) {
@@ -1159,7 +1159,7 @@ bool MOAIDraw::Bind () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::DrawAnimCurve ( const MOAIAnimCurve& curve, u32 resolution ) {
+void MOAIDraw::DrawAnimCurve ( const MOAIAnimCurveFloat& curve, u32 resolution ) {
 
 	curve.Draw ( resolution );
 }

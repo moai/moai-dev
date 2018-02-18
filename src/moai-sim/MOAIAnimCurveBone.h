@@ -4,7 +4,7 @@
 #ifndef	MOAIANIMCURVEBONE_H
 #define	MOAIANIMCURVEBONE_H
 
-#include <moai-sim/MOAIAnimCurveBase.h>
+#include <moai-sim/MOAIAnimCurve.h>
 #include <moai-sim/MOAINode.h>
 
 //================================================================//
@@ -12,7 +12,7 @@
 //================================================================//
 // TODO: doxygen
 class MOAIAnimCurveBone :
-	public virtual MOAIAnimCurveBase {
+	public virtual MOAIAnimCurve {
 private:
 
 	ZLLeanArray < ZLVec3D >			mPositionSamples;
@@ -33,25 +33,26 @@ private:
 	void					ReserveSamples		( u32 total );
 
 	//----------------------------------------------------------------//
-	void					MOAINode_Update		();
+	void				MOAIAnimCurve_ApplyValueAttrOp		( MOAIAttribute& attr, u32 op );
+	void				MOAIAnimCurve_GetDelta				( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const;
+	void				MOAIAnimCurve_GetValue				( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const;
+	void				MOAIAnimCurve_GetZero				( MOAIAttribute& attr ) const;
+	void				MOAIAnimCurve_ReserveSamples		( u32 total );
+	void				MOAINode_Update							();
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIAnimCurveBone )
 	
 	//----------------------------------------------------------------//
-	void			ApplyValueAttrOp		( MOAIAttribute& attr, u32 op );
-	void			GetDelta				( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const;
 	ZLAffine3D		GetValue				( float time ) const;
-	void			GetValue				( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const;
-	void			GetZero					( MOAIAttribute& attr ) const;
 					MOAIAnimCurveBone		();
 					~MOAIAnimCurveBone		();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			SetSamplePosition		( u32 idx, float x, float y, float z );
-	void			SetSampleRotation		( u32 idx, float x, float y, float z, float w );
-	void			SetSampleScale			( u32 idx, float x, float y, float z );
+	void			SetSamplePosition		( ZLIndex idx, float x, float y, float z );
+	void			SetSampleRotation		( ZLIndex idx, float x, float y, float z, float w );
+	void			SetSampleScale			( ZLIndex idx, float x, float y, float z );
 };
 
 #endif

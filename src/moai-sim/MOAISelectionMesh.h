@@ -59,7 +59,7 @@ protected:
 	MOAISelectionSpan*	InsertSpan					( MOAISelectionSpan* span, MOAISelectionSpan* prevInMaster, MOAISelectionSpan* prevInSet );
 
 	//----------------------------------------------------------------//
-	void				MOAIDeck_Draw				( u32 idx );
+	void				MOAIDeck_Draw				( ZLIndex idx );
 
 public:
 

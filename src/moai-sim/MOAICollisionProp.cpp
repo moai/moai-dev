@@ -198,7 +198,7 @@ void MOAICollisionProp::GatherAndProcess ( MOAICollisionPrimVisitor& visitor, co
 //----------------------------------------------------------------//
 MOAICollisionShape* MOAICollisionProp::GetCollisionShape () {
 
-	return this->mDeck ? this->mDeck->GetCollisionShape ( this->mIndex - 1 ) : 0;
+	return this->mDeck ? this->mDeck->GetCollisionShape ( this->mIndex ) : 0;
 }
 
 //----------------------------------------------------------------//

@@ -25,6 +25,7 @@ typedef signed short			s16;
 typedef signed int				s32;
 typedef signed long long		s64;
 
-#define INVALID_INDEX			(( uint )-1 )
+typedef size_t					ZLSize;
+typedef float					ZLReal;
 
 #endif

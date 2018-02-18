@@ -60,7 +60,7 @@ void MOAILight::ApplyUniforms ( void* buffer, size_t bufferSize ) {
 
 	size_t srcSize = this->mBuffer.Size ();
 	if ( srcSize < bufferSize ) {
-		memcpy ( buffer, this->mBuffer, srcSize );
+		memcpy ( buffer, this->mBuffer.GetBuffer (), srcSize );
 	}
 }
 
@@ -138,7 +138,7 @@ MOAIShaderUniformFormatter* MOAILight::MOAIShaderUniformBuffer_GetUniform ( u32 
 	if ( this->mFormat ) {
 		MOAILightFormatUniform * uniform = this->mFormat->GetUniform ( uniformID );
 		if ( uniform ) {
-			buffer = ( void* )(( size_t )this->mBuffer.Data () + uniform->mBase );
+			buffer = ( void* )(( size_t )this->mBuffer.GetBuffer () + uniform->mBase );
 		}
 		return uniform;
 	} else {

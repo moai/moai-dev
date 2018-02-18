@@ -424,7 +424,7 @@ bool MOAIImageFormatPvr::Decompress ( MOAIPvrHeader& header, const MOAIPvrMipLev
 	
 	if ( isCompressed ) {
 		srcBufferArray.Init ( info.mSizeCompressed );
-		srcBuffer = srcBufferArray.Data ();
+		srcBuffer = srcBufferArray.GetBuffer ();
 	}
 
 	if ( stream.ReadBytes ( srcBuffer, info.mSizeCompressed ) != ( size_t )info.mSizeCompressed ) {

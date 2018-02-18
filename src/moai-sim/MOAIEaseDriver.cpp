@@ -212,9 +212,9 @@ void MOAIEaseDriver::ReserveLinks ( u32 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIEaseDriver::SetLink ( u32 idx, MOAINode* dest, u32 destAttrID, float v1, u32 mode  ) {
+void MOAIEaseDriver::SetLink ( ZLIndex idx, MOAINode* dest, u32 destAttrID, float v1, u32 mode  ) {
 
-	if ( idx < this->mLinks.Size ()) {
+	if ( this->mLinks.CheckIndex ( idx )) {
 		
 		MOAIEaseDriverLink& link = this->mLinks [ idx ];
 
@@ -231,9 +231,9 @@ void MOAIEaseDriver::SetLink ( u32 idx, MOAINode* dest, u32 destAttrID, float v1
 }
 
 //----------------------------------------------------------------//
-void MOAIEaseDriver::SetLink ( u32 idx, MOAINode* dest, u32 destAttrID, MOAINode* source, u32 sourceAttrID, u32 mode ) {
+void MOAIEaseDriver::SetLink ( ZLIndex idx, MOAINode* dest, u32 destAttrID, MOAINode* source, u32 sourceAttrID, u32 mode ) {
 
-	if ( idx < this->mLinks.Size ()) {
+	if ( this->mLinks.CheckIndex ( idx )) {
 		
 		MOAIEaseDriverLink& link = this->mLinks [ idx ];
 

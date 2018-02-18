@@ -56,8 +56,8 @@ public:
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			ReserveLinks			( u32 total );
-	void			SetLink					( u32 idx, MOAINode* dest, u32 destAttrID, float v1, u32 mode );
-	void			SetLink					( u32 idx, MOAINode* dest, u32 destAttrID, MOAINode* source, u32 sourceAttrID, u32 mode );
+	void			SetLink					( ZLIndex idx, MOAINode* dest, u32 destAttrID, float v1, u32 mode );
+	void			SetLink					( ZLIndex idx, MOAINode* dest, u32 destAttrID, MOAINode* source, u32 sourceAttrID, u32 mode );
 };
 
 #endif

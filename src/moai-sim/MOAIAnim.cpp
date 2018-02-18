@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIAnim.h>
-#include <moai-sim/MOAIAnimCurveBase.h>
+#include <moai-sim/MOAIAnimCurve.h>
 
 //================================================================//
 // local
@@ -75,7 +75,7 @@ int	MOAIAnim::_reserveLinks ( lua_State* L ) {
 	
 	@in		MOAIAnim self
 	@in		number linkID
-	@in		MOAIAnimCurveBase curve
+	@in		MOAIAnimCurve curve
 	@in		MOAINode target				Target node.
 	@in		number attrID				Attribute of the target node to be driven by the curve.
 	@opt	boolean asDelta				'true' to apply the curve as a delta instead of an absolute. Default value is false.
@@ -88,7 +88,7 @@ int	MOAIAnim::_setLink ( lua_State* L ) {
 	if ( !target ) return 0;
 	
 	u32 linkID					= state.GetValue < u32 >( 2, 1 ) - 1;
-	MOAIAnimCurveBase* curve	= state.GetLuaObject < MOAIAnimCurveBase >( 3, true );
+	MOAIAnimCurve* curve		= state.GetLuaObject < MOAIAnimCurve >( 3, true );
 	u32 attrID					= state.GetValue < u32 >( 5, 0 );
 	bool relative				= state.GetValue < bool >( 6, false );
 	
@@ -110,7 +110,7 @@ void MOAIAnim::Apply ( float t ) {
 	for ( u32 i = 0; i < total; ++i ) {
 		
 		MOAIAnimLink& link = this->mLinks [ i ];
-		MOAIAnimCurveBase* curve = link.mCurve;
+		MOAIAnimCurve* curve = link.mCurve;
 		MOAINode* target = link.mTarget;
 		
 		if ( curve && target ) {
@@ -138,7 +138,7 @@ void MOAIAnim::Apply ( float t0, float t1 ) {
 	for ( u32 i = 0; i < total; ++i ) {
 		
 		MOAIAnimLink& link = this->mLinks [ i ];
-		MOAIAnimCurveBase* curve = link.mCurve;
+		MOAIAnimCurve* curve = link.mCurve;
 		MOAINode* target = link.mTarget;
 		
 		if ( curve && target ) {
@@ -217,9 +217,9 @@ void MOAIAnim::ReserveLinks ( u32 totalLinks ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnim::SetLink ( u32 linkID, MOAIAnimCurveBase* curve, MOAINode* target, u32 attrID, bool relative ) {
+void MOAIAnim::SetLink ( ZLIndex linkID, MOAIAnimCurve* curve, MOAINode* target, u32 attrID, bool relative ) {
 
-	if ( linkID >= this->mLinks.Size ()) return;
+	if ( linkID.mKey >= this->mLinks.Size ()) return;
 	if ( !target ) return;
 	if ( !target->CheckAttrExists ( attrID )) return;
 

@@ -36,7 +36,7 @@ int MOAIVectorCombo::AddFillContours ( SafeTesselator& tess ) {
 bool MOAIVectorCombo::GroupShapes ( MOAIVectorShape** shapes, u32 total ) {
 	
 	this->mShapes.Init ( total );
-	memcpy ( this->mShapes.Data (), shapes, sizeof ( MOAIVectorShape** ) * total );
+	memcpy ( this->mShapes.GetBuffer (), shapes, sizeof ( MOAIVectorShape** ) * total );
 	this->mCanGroup = false;
 	return true;
 }

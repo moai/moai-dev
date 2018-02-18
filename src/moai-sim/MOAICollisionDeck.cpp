@@ -73,15 +73,15 @@ int MOAICollisionDeck::_setQuad ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAICollisionShape& MOAICollisionDeck::AffirmShape ( u32 idx ) {
+MOAICollisionShape& MOAICollisionDeck::AffirmShape ( ZLIndex idx ) {
 
-	assert ( idx < this->mShapes.Size ());
+	assert ( this->mShapes.CheckIndex ( idx ));
 
-	MOAICollisionShape* shape = this->mShapes [ idx ];
+	MOAICollisionShape* shape = this->mShapes [ idx.mKey ];
 
 	if ( !shape ) {
 		shape = new MOAICollisionShape ();
-		this->mShapes [ idx ] = shape;
+		this->mShapes [ idx.mKey ] = shape;
 	}
 	
 	assert ( shape );
@@ -130,25 +130,25 @@ void MOAICollisionDeck::ReserveShapes ( u32 totalShapes ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionDeck::SetBox ( u32 idx, const ZLBox& box ) {
+void MOAICollisionDeck::SetBox ( ZLIndex idx, const ZLBox& box ) {
 
-	if ( idx < this->mShapes.Size ()) {
+	if ( this->mShapes.CheckIndex ( idx )) {
 		this->AffirmShape ( idx ).Set ( 0, box );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionDeck::SetRect ( u32 idx, const ZLRect& rect ) {
+void MOAICollisionDeck::SetRect ( ZLIndex idx, const ZLRect& rect ) {
 
-	if ( idx < this->mShapes.Size ()) {
+	if ( this->mShapes.CheckIndex ( idx )) {
 		this->AffirmShape ( idx ).Set ( 0, rect );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionDeck::SetQuad ( u32 idx, const ZLQuad& quad ) {
+void MOAICollisionDeck::SetQuad ( ZLIndex idx, const ZLQuad& quad ) {
 
-	if ( idx < this->mShapes.Size ()) {
+	if ( this->mShapes.CheckIndex ( idx )) {
 		this->AffirmShape ( idx ).Set ( 0, quad );
 	}
 }
@@ -164,7 +164,7 @@ ZLBounds MOAICollisionDeck::MOAIDeck_ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionDeck::MOAIDeck_Draw ( u32 idx ) {
+void MOAICollisionDeck::MOAIDeck_Draw ( ZLIndex idx ) {
 	UNUSED ( idx );
 	
 //	u32 size = ( u32 )this->mQuads.Size ();
@@ -186,25 +186,24 @@ void MOAICollisionDeck::MOAIDeck_Draw ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-ZLBounds MOAICollisionDeck::MOAIDeck_GetBounds ( u32 idx ) {
+ZLBounds MOAICollisionDeck::MOAIDeck_GetBounds ( ZLIndex idx ) {
 	
-	assert ( idx < this->mShapes.Size ());
+	assert ( this->mShapes.CheckIndex ( idx ));
 
-	return this->mShapes [ idx ]->GetBounds ();
+	return this->mShapes [ idx.mKey ]->GetBounds ();
 }
 
 //----------------------------------------------------------------//
-MOAICollisionShape* MOAICollisionDeck::MOAIDeck_GetCollisionShape ( u32 idx ) {
-	UNUSED ( idx );
+MOAICollisionShape* MOAICollisionDeck::MOAIDeck_GetCollisionShape ( ZLIndex idx ) {
 
-	if ( idx < this->mShapes.Size ()) {
-		return this->mShapes [ idx ];
+	if ( this->mShapes.CheckIndex ( idx )) {
+		return this->mShapes [ idx.mKey ];
 	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
-bool MOAICollisionDeck::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
+bool MOAICollisionDeck::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
 	UNUSED ( idx );
 	UNUSED ( vec );
 	UNUSED ( granularity );
@@ -222,7 +221,7 @@ bool MOAICollisionDeck::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 gran
 }
 
 //----------------------------------------------------------------//
-bool MOAICollisionDeck::MOAIDeck_Overlap ( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
+bool MOAICollisionDeck::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
 	UNUSED ( idx );
 	UNUSED ( vec );
 	UNUSED ( granularity );

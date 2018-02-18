@@ -24,7 +24,7 @@
 int MOAIDeck::_draw ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDeck, "U" )
 
-	u32 index						= state.GetValue < u32 >( 2, 1 );
+	ZLIndex index					= state.GetValue < ZLIndex >( 2, ZLIndex::ZERO );
 	//MOAIMaterialBatch* materials	= state.GetLuaObject < MOAIMaterialBatch >( 3, false );
 	//ZLVec3D offset					= state.GetValue < ZLVec3D >( 4, ZLVec3D::ORIGIN );
 	//ZLVec3D scale					= state.GetValue < ZLVec3D >( 7, ZLVec3D::AXIS );
@@ -64,7 +64,7 @@ int MOAIDeck::_getBounds ( lua_State* L ) {
 	
 	if ( state.IsType ( 2, LUA_TNUMBER )) {
 	
-		u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
+		ZLIndex idx = state.GetValue < ZLIndex >( 2, ZLIndex::ZERO );
 		box = self->GetBounds ( idx );
 	}
 	else {
@@ -81,7 +81,7 @@ int MOAIDeck::_getBounds ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDeck::Draw ( u32 idx ) {
+void MOAIDeck::Draw ( ZLIndex idx ) {
 
 	this->MOAIDeck_Draw ( idx );
 }
@@ -89,7 +89,7 @@ void MOAIDeck::Draw ( u32 idx ) {
 //----------------------------------------------------------------//
 ZLBounds MOAIDeck::GetBounds () {
 
-	return this->GetBounds ( 0 );
+	return this->GetBounds ( ZLIndex::ZERO );
 	/*
 	if ( this->mBoundsDirty ) {
 	
@@ -107,13 +107,13 @@ ZLBounds MOAIDeck::GetBounds () {
 }
 
 //----------------------------------------------------------------//
-ZLBounds MOAIDeck::GetBounds ( u32 idx ) {
+ZLBounds MOAIDeck::GetBounds ( ZLIndex idx ) {
 
 	return this->MOAIDeck_GetBounds ( idx );
 }
 
 //----------------------------------------------------------------//
-MOAICollisionShape* MOAIDeck::GetCollisionShape ( u32 idx ) {
+MOAICollisionShape* MOAIDeck::GetCollisionShape ( ZLIndex idx ) {
 
 	return MOAIDeck_GetCollisionShape ( idx );
 }
@@ -132,7 +132,7 @@ MOAIDeck::~MOAIDeck () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIDeck::Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
+bool MOAIDeck::Overlap ( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
 
 	return this->MOAIDeck_Overlap ( idx, vec, granularity, result );
 }
@@ -172,26 +172,26 @@ ZLBounds MOAIDeck::MOAIDeck_ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::MOAIDeck_Draw ( u32 idx ) {
+void MOAIDeck::MOAIDeck_Draw ( ZLIndex idx ) {
 	UNUSED ( idx );
 }
 
 //----------------------------------------------------------------//
-ZLBounds MOAIDeck::MOAIDeck_GetBounds ( u32 idx ) {
+ZLBounds MOAIDeck::MOAIDeck_GetBounds ( ZLIndex idx ) {
 	UNUSED ( idx );
 
 	return ZLBounds::EMPTY;
 }
 
 //----------------------------------------------------------------//
-MOAICollisionShape* MOAIDeck::MOAIDeck_GetCollisionShape ( u32 idx ) {
+MOAICollisionShape* MOAIDeck::MOAIDeck_GetCollisionShape ( ZLIndex idx ) {
 	UNUSED ( idx );
 
 	return 0;
 }
 
 //----------------------------------------------------------------//
-bool MOAIDeck::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
+bool MOAIDeck::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
 	UNUSED ( result );
 	UNUSED ( granularity );
 	
@@ -200,7 +200,7 @@ bool MOAIDeck::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, 
 }
 
 //----------------------------------------------------------------//
-bool MOAIDeck::MOAIDeck_Overlap ( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
+bool MOAIDeck::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
 	UNUSED ( result );
 	UNUSED ( granularity );
 	

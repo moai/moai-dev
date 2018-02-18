@@ -76,7 +76,7 @@ void MOAIMeshSparseQuadTreeBuilder::Build ( MOAIMeshSparseQuadTree& meshPartitio
 	size_t leafStreamLength = this->mLeafStream.GetCursor ();
 	meshPartition.mMembers.Init ( leafStreamLength / sizeof ( MOAIMeshSparseQuadTreeLeaf ));
 	this->mLeafStream.Seek ( 0 );
-	this->mLeafStream.WriteBytes ( meshPartition.mMembers.Data (), leafStreamLength );
+	this->mLeafStream.WriteBytes ( meshPartition.mMembers.GetBuffer (), leafStreamLength );
 	
 	meshPartition.mMaxDepth = this->mMaxDepth;
 	meshPartition.mTotalNodes = this->mTotalNodes;

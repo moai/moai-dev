@@ -12,7 +12,7 @@
 #include <moai-sim/MOAITextStyleCache.h>
 #include <moai-sim/MOAITextStyleMap.h>
 
-class MOAIAnimCurve;
+class MOAIAnimCurveFloat;
 class MOAIFont;
 
 //================================================================//

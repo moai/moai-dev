@@ -21,7 +21,7 @@
 int MOAIIndexedPropBase::_getIndex ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIIndexedPropBase, "U" )
 
-	lua_pushnumber ( state, self->mIndex );
+	state.Push ( self->mIndex );
 
 	return 1;
 }
@@ -37,7 +37,7 @@ int MOAIIndexedPropBase::_getIndex ( lua_State* L ) {
 int MOAIIndexedPropBase::_setIndex ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIIndexedPropBase, "U" )
 
-	self->mIndex = state.GetValue < u32 >( 2, 1 );
+	self->mIndex = state.GetValue < ZLIndex >( 2, ZLIndex::ZERO );
 	self->ScheduleUpdate ();
 
 	return 0;
@@ -49,7 +49,7 @@ int MOAIIndexedPropBase::_setIndex ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAIIndexedPropBase::MOAIIndexedPropBase () :
-	mIndex ( 1 ) {
+	mIndex ( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIDeckPropBase )
@@ -105,7 +105,7 @@ bool MOAIIndexedPropBase::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr
 		
 		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_INDEX:
-				this->mIndex = ZLFloat::ToIndex ((float) attr.Apply (( s32 )this->mIndex, op, MOAIAttribute::ATTR_READ_WRITE ));
+				this->mIndex = attr.Apply ( this->mIndex, op, MOAIAttribute::ATTR_READ_WRITE );
 				return true;
 		}
 	}

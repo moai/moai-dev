@@ -7,7 +7,7 @@
 #include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAINode.h>
 
-class MOAIAnimCurve;
+class MOAIAnimCurveFloat;
 
 //================================================================//
 // MOAITimer
@@ -35,7 +35,7 @@ class MOAITimer :
 	public MOAIAction {
 protected:
 
-	MOAILuaSharedPtr < MOAIAnimCurve > mCurve;
+	MOAILuaSharedPtr < MOAIAnimCurveFloat > mCurve;
 
 	float	mTime;
 	float	mCycle;

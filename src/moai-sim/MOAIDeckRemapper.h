@@ -13,7 +13,7 @@
 /**	@lua	MOAIDeckRemapper
 	@text	Remap deck indices. Most useful for controlling animated tiles in tilemaps.
 			All indices are exposed as attributes that may be connected by setAttrLink
-			or driven using MOAIAnim or MOAIAnimCurve.
+			or driven using MOAIAnim or MOAIAnimCurveFloat.
 */
 class MOAIDeckRemapper :
 	public virtual MOAINode,
@@ -29,7 +29,7 @@ protected:
 	static int			_setRemap				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	u32					MOAIDeckProxy_Remap				( u32 idx );
+	ZLIndex			MOAIDeckProxy_Remap				( ZLIndex idx );
 	bool				MOAINode_ApplyAttrOp			( u32 attrID, MOAIAttribute& attr, u32 op );
 
 public:

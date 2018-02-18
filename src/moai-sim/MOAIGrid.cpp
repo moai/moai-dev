@@ -334,20 +334,20 @@ void MOAIGrid::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer )
 		
 		// TODO: all this is unsafe; don't assume sizes will be reasonable of that deflated data is guaranteed to be smaller; rewrite this with checking and recover in place
 		
-		void* tiles = this->mTiles;
+		void* tiles = this->mTiles.GetBuffer ();
 		size_t tilesSize = this->mTiles.Size () * sizeof ( u32 );
 		
 		STLString base64 = lua_tostring ( state, -1 ); 
 		base64.base_64_decode ( tiles, tilesSize );
 		
 		ZLLeanArray < u8 > unzip;
-		ZLZip::Inflate ( this->mTiles, this->mTiles.Size () * sizeof ( u32 ), unzip );
+		ZLZip::Inflate ( this->mTiles.GetBuffer (), this->mTiles.Size () * sizeof ( u32 ), unzip );
 		
-		tiles = unzip.Data ();
+		tiles = unzip.GetBuffer ();
 		if ( unzip.Size () < tilesSize ) {
 			tilesSize = unzip.Size ();
 		}
-		memcpy ( this->mTiles, tiles, tilesSize );
+		memcpy ( this->mTiles.GetBuffer (), tiles, tilesSize );
 	}
 	
 	lua_pop ( state, 1 );
@@ -360,10 +360,10 @@ void MOAIGrid::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) 
 	this->MOAIGridSpace::SerializeOut ( state, serializer );
 
 	ZLLeanArray < u8 > zip;
-	ZLZip::Deflate ( this->mTiles, this->mTiles.Size () * sizeof ( u32 ), zip );
+	ZLZip::Deflate ( this->mTiles.GetBuffer (), this->mTiles.Size () * sizeof ( u32 ), zip );
 
 	STLString base64;
-	base64.base_64_encode ( zip.Data (), zip.Size ());
+	base64.base_64_encode ( zip.GetBuffer (), zip.Size ());
 	
 	lua_pushstring ( state, base64.str ());
 	lua_setfield ( state, -2, "mData" );
@@ -399,7 +399,7 @@ size_t MOAIGrid::StreamTilesIn ( ZLStream* stream ) {
 	if ( !stream ) return 0;
 	
 	size_t size = this->mTiles.Size () * sizeof ( u32 );
-	return stream->ReadBytes ( this->mTiles, size );
+	return stream->ReadBytes ( this->mTiles.GetBuffer (), size );
 }
 
 //----------------------------------------------------------------//
@@ -408,5 +408,5 @@ size_t MOAIGrid::StreamTilesOut ( ZLStream* stream ) {
 	if ( !stream ) return 0;
 
 	size_t size = this->mTiles.Size () * sizeof ( u32 );
-	return stream->WriteBytes ( this->mTiles, size );
+	return stream->WriteBytes ( this->mTiles.GetBuffer (), size );
 }

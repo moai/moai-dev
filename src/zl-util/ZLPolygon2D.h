@@ -91,7 +91,7 @@ public:
 	GET_CONST ( u32, Info, mInfo )
 	GET_CONST ( float, Area, mArea )
 
-	GET_CONST ( ZLVec2D*, Vertices, this->mVertices.Data ())
+	GET_CONST ( ZLVec2D*, Vertices, this->mVertices.GetBuffer ())
 	GET_CONST ( size_t, Size, this->mVertices.Size ())
 
 	//----------------------------------------------------------------//

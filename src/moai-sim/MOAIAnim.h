@@ -6,7 +6,7 @@
 
 #include <moai-sim/MOAITimer.h>
 
-class MOAIAnimCurveBase;
+class MOAIAnimCurve;
 
 //================================================================//
 // MOAIAnimLink
@@ -14,7 +14,7 @@ class MOAIAnimCurveBase;
 class MOAIAnimLink {
 public:
 
-	MOAILuaSharedPtr < MOAIAnimCurveBase > mCurve;
+	MOAILuaSharedPtr < MOAIAnimCurve > mCurve;
 	MOAILuaSharedPtr < MOAINode > mTarget;
 	u32 mAttrID;
 	bool mRelative;
@@ -59,7 +59,7 @@ public:
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			ReserveLinks		( u32 totalLinks );
-	void			SetLink				( u32 linkID, MOAIAnimCurveBase* curve, MOAINode* target, u32 attrID, bool relative );
+	void			SetLink				( ZLIndex linkID, MOAIAnimCurve* curve, MOAINode* target, u32 attrID, bool relative );
 };
 
 #endif

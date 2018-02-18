@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <contrib/moai_utf8.h>
-#include <moai-sim/MOAIAnimCurve.h>
+#include <moai-sim/MOAIAnimCurveFloat.h>
 #include <moai-sim/MOAICamera.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDraw.h>
@@ -413,7 +413,7 @@ int MOAITextLabel::_setBounds ( lua_State* L ) {
 
 		@in		MOAITextLabel self
 		@in		number curveID				The ID of the curve within this text object.
-		@in		MOAIAnimCurve curve			The MOAIAnimCurve to bind to.
+		@in		MOAIAnimCurveFloat curve			The MOAIAnimCurveFloat to bind to.
 		@out	nil
 	
 	@overload
@@ -428,7 +428,7 @@ int MOAITextLabel::_setCurve ( lua_State* L ) {
 
 		u32 index = state.GetValue < u32 >( 2, 1 ) - 1;
 	
-		MOAIAnimCurve* curve = state.GetLuaObject < MOAIAnimCurve >( 3, true );
+		MOAIAnimCurveFloat* curve = state.GetLuaObject < MOAIAnimCurveFloat >( 3, true );
 		if ( !curve ) return 0;
 
 		self->mLayoutRules.SetCurve ( index, curve );
@@ -1117,9 +1117,7 @@ void MOAITextLabel::MOAIDrawable_Draw ( int subPrimID ) {
 	
 	if ( this->mDeck ) {
 	
-		u32 idx = this->mIndex - 1;
-	
-		ZLBounds fitBounds = this->mDeck->GetBounds ( idx );
+		ZLBounds fitBounds = this->mDeck->GetBounds ( this->mIndex );
 		
 		if ( fitBounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) {
 	
@@ -1144,7 +1142,7 @@ void MOAITextLabel::MOAIDrawable_Draw ( int subPrimID ) {
 				gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX, worldDrawingMtx );
 			
 				this->LoadUVTransform ();
-				this->mDeck->Draw ( idx );
+				this->mDeck->Draw ( this->mIndex );
 				this->PopGfxState ();
 			}
 		}

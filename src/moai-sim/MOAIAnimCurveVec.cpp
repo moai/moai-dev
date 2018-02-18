@@ -76,12 +76,6 @@ int MOAIAnimCurveVec::_setKey ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveVec::ApplyValueAttrOp ( MOAIAttribute& attr, u32 op ) {
-
-	this->mValue = attr.Apply ( this->mValue, op, MOAIAttribute::ATTR_READ_WRITE );
-}
-
-//----------------------------------------------------------------//
 ZLVec3D MOAIAnimCurveVec::GetCurveDelta () const {
 
 	ZLVec3D delta;
@@ -95,17 +89,6 @@ ZLVec3D MOAIAnimCurveVec::GetCurveDelta () const {
 		delta.Init ( 0.0f, 0.0f, 0.0f );
 	}
 	return delta;
-}
-
-//----------------------------------------------------------------//
-void MOAIAnimCurveVec::GetDelta ( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const {
-
-	ZLVec3D v0 = this->GetValue ( span0 );
-	ZLVec3D v1 = this->GetValue ( span1 );
-	
-	v1.Sub ( v0 );
-	
-	attr.SetValue ( v1 );
 }
 
 //----------------------------------------------------------------//
@@ -139,23 +122,10 @@ ZLVec3D MOAIAnimCurveVec::GetValue ( const MOAIAnimKeySpan& span ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveVec::GetValue ( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const {
-
-	attr.SetValue ( this->GetValue ( span ));
-}
-
-//----------------------------------------------------------------//
-void MOAIAnimCurveVec::GetZero ( MOAIAttribute& attr ) const {
-
-	ZLVec3D zero ( 0.0f, 0.0f, 0.0f );
-	attr.SetValue ( zero );
-}
-
-//----------------------------------------------------------------//
 MOAIAnimCurveVec::MOAIAnimCurveVec () :
 	mValue ( 0.0f, 0.0f, 0.0f ) {
 	
-	RTTI_SINGLE ( MOAIAnimCurveBase )
+	RTTI_SINGLE ( MOAIAnimCurve )
 }
 
 //----------------------------------------------------------------//
@@ -165,13 +135,13 @@ MOAIAnimCurveVec::~MOAIAnimCurveVec () {
 //----------------------------------------------------------------//
 void MOAIAnimCurveVec::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIAnimCurveBase::RegisterLuaClass ( state );
+	MOAIAnimCurve::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIAnimCurveVec::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIAnimCurveBase::RegisterLuaFuncs ( state );
+	MOAIAnimCurve::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "getValueAtTime",		_getValueAtTime },
@@ -183,22 +153,52 @@ void MOAIAnimCurveVec::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveVec::ReserveSamples ( u32 total ) {
+void MOAIAnimCurveVec::SetSample ( ZLIndex idx, const ZLVec3D& value ) {
 
-	this->mSamples.Init ( total );
-}
-
-//----------------------------------------------------------------//
-void MOAIAnimCurveVec::SetSample ( u32 id, const ZLVec3D& value ) {
-
-	if ( id < this->mKeys.Size ()) {
-		this->mSamples [ id ] = value;
+	if ( this->mKeys.CheckIndex ( idx )) {
+		this->mSamples [ idx.mKey ] = value;
 	}
 }
 
 //================================================================//
 // ::implementation::
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAIAnimCurveVec::MOAIAnimCurve_ApplyValueAttrOp ( MOAIAttribute& attr, u32 op ) {
+
+	this->mValue = attr.Apply ( this->mValue, op, MOAIAttribute::ATTR_READ_WRITE );
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurveVec::MOAIAnimCurve_GetDelta ( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const {
+
+	ZLVec3D v0 = this->GetValue ( span0 );
+	ZLVec3D v1 = this->GetValue ( span1 );
+	
+	v1.Sub ( v0 );
+	
+	attr.SetValue ( v1 );
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurveVec::MOAIAnimCurve_GetValue ( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const {
+
+	attr.SetValue ( this->GetValue ( span ));
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurveVec::MOAIAnimCurve_GetZero ( MOAIAttribute& attr ) const {
+
+	ZLVec3D zero ( 0.0f, 0.0f, 0.0f );
+	attr.SetValue ( zero );
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurveVec::MOAIAnimCurve_ReserveSamples ( u32 total ) {
+
+	this->mSamples.Init ( total );
+}
 
 //----------------------------------------------------------------//
 void MOAIAnimCurveVec::MOAINode_Update () {

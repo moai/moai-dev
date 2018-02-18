@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIAnimCurve.h>
+#include <moai-sim/MOAIAnimCurveFloat.h>
 #include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAITimer.h>
 
@@ -57,13 +57,13 @@ int MOAITimer::_getTimesExecuted ( lua_State* L ) {
 	@text	Set or clear the curve to use for event generation.
 	
 	@in		MOAITimer self
-	@opt	MOAIAnimCurve curve		Default value is nil.
+	@opt	MOAIAnimCurveFloat curve		Default value is nil.
 	@out	nil
 */
 int MOAITimer::_setCurve ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITimer, "U" );
 
-	self->mCurve.Set ( *self, state.GetLuaObject < MOAIAnimCurve >( 2, true ));
+	self->mCurve.Set ( *self, state.GetLuaObject < MOAIAnimCurveFloat >( 2, true ));
 	self->ScheduleUpdate ();
 
 	return 0;

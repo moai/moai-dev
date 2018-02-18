@@ -519,7 +519,7 @@ void MOAIFont::BuildKerning ( MOAIGlyph* glyphs, MOAIGlyph* pendingGlyphs ) {
 		// init the kern table
 		if ( kernTableSize ) {
 			glyph.mKernTable.Init ( kernTableSize );
-			memcpy ( glyph.mKernTable, kernTable, sizeof ( MOAIKernVec ) * kernTableSize );
+			memcpy ( glyph.mKernTable.GetBuffer (), kernTable, sizeof ( MOAIKernVec ) * kernTableSize );
 		}
 	}
 }
@@ -745,7 +745,7 @@ void MOAIFont::RebuildKerning ( MOAIGlyphSet& glyphSet ) {
 		
 		// copy in the new kern vecs (if any)
 		if ( kernTableSize ) {
-			memcpy ( glyph.mKernTable, kernTable, sizeof ( MOAIKernVec ) * kernTableSize );
+			memcpy ( glyph.mKernTable.GetBuffer (), kernTable, sizeof ( MOAIKernVec ) * kernTableSize );
 		}
 	}
 }

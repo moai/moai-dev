@@ -1,0 +1,171 @@
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
+// http://getmoai.com
+
+#include "pch.h"
+#include <moai-sim/MOAIAnimCurveIndex.h>
+#include <moai-sim/MOAIGfxMgr.h>
+#include <moai-sim/MOAIGfxVertexCache.h>
+
+//================================================================//
+// local
+//================================================================//
+
+//----------------------------------------------------------------//
+/**	@lua	getValueAtTime
+	@text	Return the interpolated value given a point in time along the curve. This does not change
+	        the curve's built in TIME attribute (it simply performs the requisite computation on demand).
+ 
+	@in		MOAIAnimCurveIndex self
+	@in		number time
+	@out	number value	The interpolated value
+*/
+int MOAIAnimCurveIndex::_getValueAtTime ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAnimCurveIndex, "UN" );
+
+	float time = state.GetValue < float >( 2, 0 );
+	
+	MOAIAnimKeySpan span = self->GetSpan ( time );
+	ZLIndex value = self->GetValue ( span );
+	
+	state.Push ( value );
+	state.Push ( span.mKeyID + 1 );
+	
+	return 2;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	setKey
+	@text	Initialize a key frame at a given time with a give value. Also set the transition type between
+			the specified key frame and the next key frame.
+ 
+	@in		MOAIAnimCurveIndex self
+	@in		number index			Index of the keyframe.
+	@in		number time				Location of the key frame along the curve.
+	@in		number value			Value of the curve at time.
+	@opt	number mode				The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+									MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
+	@opt	number weight			Blends between chosen ease type (of any) and a linear transition. Defaults to 1.
+	@out	nil
+*/
+int MOAIAnimCurveIndex::_setKey ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAnimCurveIndex, "UNN" );
+
+	u32 index			= state.GetValue < u32 >( 2, 1 ) - 1;
+	float time			= state.GetValue < float >( 3, 0.0f );
+	ZLIndex value		= state.GetValue < ZLIndex >( 4, 0.0f );
+	u32 mode			= state.GetValue < u32 >( 5, ZLInterpolate::kSmooth );
+	float weight		= state.GetValue < float >( 6, 1.0f );
+	
+	if ( MOAILogMgr::CheckIndexPlusOne ( index, self->mKeys.Size (), L )) {
+	
+		self->SetKey ( index, time, mode, weight );
+		self->SetSample ( index, value );
+	}
+	return 0;
+}
+
+//================================================================//
+// MOAIAnimCurveIndex
+//================================================================//
+
+//----------------------------------------------------------------//
+ZLIndex MOAIAnimCurveIndex::GetValue ( float time ) const {
+
+	MOAIAnimKeySpan span = this->GetSpan ( time );
+	return this->GetValue ( span );
+}
+
+//----------------------------------------------------------------//
+ZLIndex MOAIAnimCurveIndex::GetValue ( const MOAIAnimKeySpan& span ) const {
+
+	return this->mSamples [ span.mKeyID ];
+}
+
+//----------------------------------------------------------------//
+MOAIAnimCurveIndex::MOAIAnimCurveIndex () :
+	mValue ( 0.0f ) {
+	
+	RTTI_SINGLE ( MOAIAnimCurve )
+}
+
+//----------------------------------------------------------------//
+MOAIAnimCurveIndex::~MOAIAnimCurveIndex () {
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurveIndex::RegisterLuaClass ( MOAILuaState& state ) {
+
+	MOAIAnimCurve::RegisterLuaClass ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurveIndex::RegisterLuaFuncs ( MOAILuaState& state ) {
+
+	MOAIAnimCurve::RegisterLuaFuncs ( state );
+
+	luaL_Reg regTable [] = {
+		{ "getValueAtTime",		_getValueAtTime },
+		{ "setKey",				_setKey },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurveIndex::SetSample ( ZLIndex idx, ZLIndex value ) {
+
+	if ( this->mKeys.CheckIndex ( idx )) {
+		this->mSamples [ idx ] = value;
+	}
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIAnimCurveIndex::MOAIAnimCurve_ApplyValueAttrOp ( MOAIAttribute& attr, u32 op ) {
+
+	this->mValue = attr.Apply ( this->mValue, op, MOAIAttribute::ATTR_READ_WRITE );
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurveIndex::MOAIAnimCurve_GetDelta ( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const {
+
+	ZLIndex v0 = this->GetValue ( span0 );
+	ZLIndex v1 = this->GetValue ( span1 );
+	
+	attr.SetValue (( float )( v1.mKey - v0.mKey ));
+}
+
+//----------------------------------------------------------------//
+float MOAIAnimCurveIndex::MOAIAnimCurve_GetFloatForTime ( float t ) const {
+
+	return ( float )this->GetValue ( t ).mKey;
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurveIndex::MOAIAnimCurve_GetValue ( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const {
+
+	attr.SetValue (( float )this->GetValue ( span ).mKey );
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurveIndex::MOAIAnimCurve_GetZero ( MOAIAttribute& attr ) const {
+
+	attr.SetValue ( 0.0f );
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurveIndex::MOAIAnimCurve_ReserveSamples ( u32 total ) {
+
+	this->mSamples.Init ( total );
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurveIndex::MOAINode_Update () {
+
+	this->mValue = this->GetValue ( this->mTime );
+}
+

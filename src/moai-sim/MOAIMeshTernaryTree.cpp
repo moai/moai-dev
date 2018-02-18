@@ -61,7 +61,7 @@ void MOAIMeshTernaryTreeBuilder::Build ( MOAIMeshTernaryTree& meshPartition, con
 			sortBuffer [ j ].mKey = ZLFloat::FloatToIntKey ( prim.mBounds.mMin.GetComponent ( i ));
 		}
 		
-		PrimSortKey* sortedKeys = RadixSort32 < PrimSortKey >( sortBuffer, &sortBuffer [ totalPrims ], totalPrims );
+		PrimSortKey* sortedKeys = RadixSort32 < PrimSortKey >( sortBuffer.GetBuffer (), &sortBuffer [ totalPrims ], totalPrims );
 		
 		for ( u32 j = 0; j < totalPrims; ++j ) {
 			sorted [ j ] = &this->mPrims [ sortedKeys [ j ].mData ];
@@ -76,7 +76,7 @@ void MOAIMeshTernaryTreeBuilder::Build ( MOAIMeshTernaryTree& meshPartition, con
 	size_t indexRunStreamLength = this->mIndexRunStream.GetCursor ();
 	meshPartition.mIndexRuns.Init ( indexRunStreamLength / 4 );
 	this->mIndexRunStream.Seek ( 0 );
-	this->mIndexRunStream.WriteBytes ( meshPartition.mIndexRuns.Data (), indexRunStreamLength );
+	this->mIndexRunStream.WriteBytes ( meshPartition.mIndexRuns.GetBuffer (), indexRunStreamLength );
 }
 
 //----------------------------------------------------------------//

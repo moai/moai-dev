@@ -647,7 +647,7 @@ int MOAIParticleScript::_vecAngle ( lua_State* L ) {
 //----------------------------------------------------------------//
 u8* MOAIParticleScript::Compile () {
 
-	if ( this->mCompiled ) return this->mBytecode;
+	if ( this->mCompiled ) return this->mBytecode.GetBuffer ();
 	
 	Instruction end;
 	end.Init ( END, "" );
@@ -661,7 +661,7 @@ u8* MOAIParticleScript::Compile () {
 	
 	this->mBytecode.Init ( size );
 	
-	u8* cursor = this->mBytecode;
+	u8* cursor = this->mBytecode.GetBuffer ();
 	
 	u8* top = ( u8* )(( size_t )cursor + size );
 	UNUSED ( top );
@@ -676,7 +676,7 @@ u8* MOAIParticleScript::Compile () {
 	
 	this->mInstructions.clear ();
 	this->mCompiled = true;
-	return this->mBytecode;
+	return this->mBytecode.GetBuffer ();
 }
 
 //----------------------------------------------------------------//
@@ -838,7 +838,7 @@ void MOAIParticleScript::ResetRegisters ( float* spriteRegisters, float* particl
 void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particle, float t0, float t1 ) {
 
 	u8* dst;
-	u8* bytecode = this->mBytecode;
+	u8* bytecode = this->mBytecode.GetBuffer ();
 	if ( !bytecode ) return;
 	
 	float particleRegisters [ MAX_PARTICLE_REGISTERS ];

@@ -18,7 +18,7 @@ int MOAIVectorPoly::AddFillContours ( SafeTesselator& tess ) {
 	
 	SafeTesselator outline;
 
-	outline.AddContour ( 2, this->mVertices.Data (), sizeof ( ZLVec2D ), this->mVertices.Size ());
+	outline.AddContour ( 2, this->mVertices.GetBuffer (), sizeof ( ZLVec2D ), this->mVertices.Size ());
 	
 	int error = outline.Tesselate (( int )this->mStyle.GetWindingRule (), TESS_BOUNDARY_CONTOURS, 0, 0 );
 	if ( error ) return error;
@@ -114,7 +114,7 @@ bool MOAIVectorPoly::SetVertices ( const ZLVec2D* vertices, u32 total, bool clos
 
 	if ( total ) {
 		this->mVertices.Init ( total );
-		memcpy ( this->mVertices, vertices, total * sizeof ( ZLVec2D ));
+		memcpy ( this->mVertices.GetBuffer (), vertices, total * sizeof ( ZLVec2D ));
 		this->mIsClosed = closed;
 	}
 	return true;

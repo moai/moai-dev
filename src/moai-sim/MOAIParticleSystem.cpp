@@ -716,8 +716,7 @@ void MOAIParticleSystem::MOAIDrawable_Draw ( int subPrimID ) {
 		
 		gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX, drawingMtx );
 		
-		//this->mDeck->Draw ( this->mIndex + ( u32 )sprite.mGfxID, this->mMaterialBatch );
-		this->mDeck->Draw ( this->mIndex + ( u32 )sprite.mGfxID );
+		this->mDeck->Draw ( ZLIndex ( this->mIndex.mKey + ( u32 )sprite.mGfxID ));
 	}
 	
 	this->PopGfxState ();

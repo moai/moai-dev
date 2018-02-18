@@ -58,8 +58,8 @@ void MOAIHttpTaskNaCl::HttpGetMainThread ( void* userData, int32_t result ) {
 		handler->SetUserData ( taskInfo );
 
 		if ( taskInfo->mBody.Size () > 0 ) {
-			NACL_LOG ( "\nSet Body: %s\n", taskInfo->mBody.Data ());
-			handler->SetBody ( taskInfo->mBody.Data (), taskInfo->mBody.Size ());
+			NACL_LOG ( "\nSet Body: %s\n", taskInfo->mBody.GetBuffer ());
+			handler->SetBody ( taskInfo->mBody.GetBuffer (), taskInfo->mBody.Size ());
 		}
 
 		taskInfo->Prepare ( handler );

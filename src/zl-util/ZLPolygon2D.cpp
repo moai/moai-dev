@@ -210,7 +210,7 @@ ZLSizeResult ZLPolygon2D::ConvexHull ( ZLStream& input, size_t nPoints, u32 sort
 		this->Clear ();
 		ZL_HANDLE_ERROR_CODE ( this->ReserveVertices ( chainResult ), ZL_RETURN_SIZE_RESULT ( 0, ZL_ALLOCATION_ERROR ))
 	
-		memcpy ( this->mVertices, hull, chainResult * sizeof ( ZLVec2D ));
+		memcpy ( this->mVertices.GetBuffer (), hull, chainResult * sizeof ( ZLVec2D ));
 	
 		this->Bless ();
 	}
@@ -556,7 +556,7 @@ void ZLPolygon2D::SetVert ( size_t idx, float x, float y ) {
 void ZLPolygon2D::SetVertices ( const ZLVec2D* vertices, size_t total ) {
 
 	this->ReserveVertices ( total );
-	memcpy ( this->mVertices.Data (), vertices, sizeof ( ZLVec2D ) * total );
+	memcpy ( this->mVertices.GetBuffer (), vertices, sizeof ( ZLVec2D ) * total );
 }
 
 //----------------------------------------------------------------//

@@ -344,7 +344,7 @@ void MOAIHttpTaskCurl::SetBody ( const void* buffer, u32 size ) {
 
 	CURLcode result;
 
-	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_POSTFIELDS, this->mBody.Data ());
+	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_POSTFIELDS, this->mBody.GetBuffer ());
 	PrintError ( result );
 	
     result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_POSTFIELDSIZE, ( long )size );

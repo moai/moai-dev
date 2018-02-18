@@ -125,8 +125,8 @@ protected:
 
 	//----------------------------------------------------------------//
 	ZLBounds			MOAIDeck_ComputeMaxBounds		();
-	void				MOAIDeck_Draw					( u32 idx );
-	ZLBounds			MOAIDeck_GetBounds				( u32 idx );
+	void				MOAIDeck_Draw					( ZLIndex idx );
+	ZLBounds			MOAIDeck_GetBounds				( ZLIndex idx );
 
 public:
 
@@ -138,7 +138,7 @@ public:
 	//----------------------------------------------------------------//
 	void				ClearBounds					();
 	u32					CountPrims					() const;
-	void				DrawIndex					( u32 idx, MOAIMeshSpan* span );
+	void				DrawIndex					( ZLIndex idx, MOAIMeshSpan* span );
 						MOAIMesh					();
 						~MOAIMesh					();
 	void				RegisterLuaClass			( MOAILuaState& state );

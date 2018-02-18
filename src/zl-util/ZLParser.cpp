@@ -376,8 +376,8 @@ void ZLParser::RetrieveToken ( ZLDfaToken* token, ZLLexStream* scanner ) {
 				}
 			}
 			
-			scanner->Seek ( (long) startCursor, SEEK_SET );
-			token->mLine = (u32) scanner->GetLine ();
+			scanner->Seek (( long )startCursor, SEEK_SET );
+			token->mLine = ( u32 )scanner->GetLine ();
 			
 			if ( acceptLength < ( bufferSize - 1 )) {
 
@@ -388,10 +388,10 @@ void ZLParser::RetrieveToken ( ZLDfaToken* token, ZLLexStream* scanner ) {
 			else {
 				
 				ZLLeanArray < char > bigBuffer;
-				bigBuffer.Init ( (u32) acceptLength + 1 );
-				scanner->ReadBytes ( bigBuffer, acceptLength );
+				bigBuffer.Init (( u32 )acceptLength + 1 );
+				scanner->ReadBytes ( bigBuffer.GetBuffer (), acceptLength );
 				bigBuffer [ acceptLength ] = 0;
-				token->mData = bigBuffer;
+				token->mData = bigBuffer.GetBuffer ();
 			}
 			return;
 		}

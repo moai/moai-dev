@@ -4,7 +4,7 @@
 #ifndef	MOAIANIMCURVEQUAT_H
 #define	MOAIANIMCURVEQUAT_H
 
-#include <moai-sim/MOAIAnimCurveBase.h>
+#include <moai-sim/MOAIAnimCurve.h>
 #include <moai-sim/MOAINode.h>
 
 //================================================================//
@@ -14,7 +14,7 @@
 	@text	Implementation of animation curve for rotation (via quaternion) values.
 */
 class MOAIAnimCurveQuat :
-	public virtual MOAIAnimCurveBase {
+	public virtual MOAIAnimCurve {
 private:
 
 	ZLLeanArray < ZLQuaternion > mSamples;
@@ -29,24 +29,25 @@ private:
 	ZLQuaternion	GetValue			( const MOAIAnimKeySpan& span ) const;
 
 	//----------------------------------------------------------------//
-	void			MOAINode_Update		();
+	void				MOAIAnimCurve_ApplyValueAttrOp		( MOAIAttribute& attr, u32 op );
+	void				MOAIAnimCurve_GetDelta				( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const;
+	void				MOAIAnimCurve_GetValue				( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const;
+	void				MOAIAnimCurve_GetZero				( MOAIAttribute& attr ) const;
+	void				MOAIAnimCurve_ReserveSamples		( u32 total );
+	void				MOAINode_Update							();
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIAnimCurveQuat )
 	
 	//----------------------------------------------------------------//
-	void			ApplyValueAttrOp		( MOAIAttribute& attr, u32 op );
-	void			GetDelta				( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const;
 	ZLQuaternion	GetValue				( float time ) const;
-	void			GetValue				( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const;
-	void			GetZero					( MOAIAttribute& attr ) const;
 					MOAIAnimCurveQuat		();
 					~MOAIAnimCurveQuat		();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			ReserveSamples			( u32 total );
-	void			SetSample				( u32 id, float x, float y, float z );
+	void			SetSample				( ZLIndex idx, float x, float y, float z );
 };
 
 #endif

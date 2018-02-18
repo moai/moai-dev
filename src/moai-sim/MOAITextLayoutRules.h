@@ -4,7 +4,7 @@
 #ifndef	MOAITEXTLAYOUTRULES_H
 #define	MOAITEXTLAYOUTRULES_H
 
-class MOAIAnimCurve;
+class MOAIAnimCurveFloat;
 class MOAINode;
 class MOAITextLayout;
 class MOAITextStyle;
@@ -45,11 +45,11 @@ protected:
 	float		mHLineSnap; // snap lines to this boundary
 	float		mVLineSnap; // snap lines to this boundary
 	
-	ZLLeanArray < MOAIAnimCurve* > mCurves;
+	ZLLeanArray < MOAIAnimCurveFloat* > mCurves;
 
 	//----------------------------------------------------------------//
-	void		ReleaseCurve				( MOAIAnimCurve* curve  );
-	void		RetainCurve					( MOAIAnimCurve* curve  );
+	void		ReleaseCurve				( MOAIAnimCurveFloat* curve  );
+	void		RetainCurve					( MOAIAnimCurveFloat* curve  );
 
 public:
 
@@ -114,7 +114,7 @@ public:
 						MOAITextLayoutRules			();
 						~MOAITextLayoutRules		();
 	void				ReserveCurves				( u32 total );
-	void				SetCurve					( u32 idx, MOAIAnimCurve* curve );
+	void				SetCurve					( u32 idx, MOAIAnimCurveFloat* curve );
 };
 
 #endif

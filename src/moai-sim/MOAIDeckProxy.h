@@ -21,12 +21,12 @@ protected:
 
 	//----------------------------------------------------------------//
 	ZLBounds				MOAIDeck_ComputeMaxBounds		();
-	void					MOAIDeck_Draw					( u32 idx );
-	ZLBounds				MOAIDeck_GetBounds				( u32 idx );
-	MOAICollisionShape*		MOAIDeck_GetCollisionShape		( u32 idx );
-	bool					MOAIDeck_Overlap				( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
-	bool					MOAIDeck_Overlap				( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
-	virtual u32				MOAIDeckProxy_Remap				( u32 idx );
+	void					MOAIDeck_Draw					( ZLIndex idx );
+	ZLBounds				MOAIDeck_GetBounds				( ZLIndex idx );
+	MOAICollisionShape*		MOAIDeck_GetCollisionShape		( ZLIndex idx );
+	bool					MOAIDeck_Overlap				( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
+	bool					MOAIDeck_Overlap				( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
+	virtual ZLIndex		MOAIDeckProxy_Remap				( ZLIndex idx );
 
 public:
 	

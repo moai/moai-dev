@@ -448,7 +448,7 @@ bool MOAIDataBuffer::Decode ( ZLStreamAdapter& reader ) {
 	this->mMutex.Lock ();
 	
 	ZLByteStream cryptStream;
-	cryptStream.SetBuffer ( this->mBytes, this->mBytes.Size ());
+	cryptStream.SetBuffer ( this->mBytes.GetBuffer (), this->mBytes.Size ());
 	cryptStream.SetLength ( this->mBytes.Size ());
 	
 	ZLMemStream plainStream;
@@ -461,7 +461,7 @@ bool MOAIDataBuffer::Decode ( ZLStreamAdapter& reader ) {
 	this->mBytes.Init ( len );
 	
 	plainStream.Seek ( 0, SEEK_SET );
-	plainStream.ReadBytes ( this->mBytes, len );
+	plainStream.ReadBytes ( this->mBytes.GetBuffer (), len );
 	
 	this->mMutex.Unlock ();
 	return true;
@@ -485,14 +485,14 @@ bool MOAIDataBuffer::Encode ( ZLStreamAdapter& writer ) {
 	ZLMemStream stream;
 	
 	writer.Open ( &stream );
-	writer.WriteBytes ( this->mBytes, this->mBytes.Size ());
+	writer.WriteBytes ( this->mBytes.GetBuffer (), this->mBytes.Size ());
 	writer.Close ();
 	
 	size_t len = stream.GetLength ();
 	this->mBytes.Init ( len );
 	
 	stream.Seek ( 0, SEEK_SET );
-	stream.ReadBytes ( this->mBytes, len );
+	stream.ReadBytes ( this->mBytes.GetBuffer (), len );
 
 	this->mMutex.Unlock ();
 	return true;
@@ -500,7 +500,7 @@ bool MOAIDataBuffer::Encode ( ZLStreamAdapter& writer ) {
 
 //----------------------------------------------------------------//
 void* MOAIDataBuffer::GetBuffer () {
-	return this->mBytes.Data ();
+	return this->mBytes.GetBuffer ();
 }
 
 //----------------------------------------------------------------//
@@ -560,7 +560,7 @@ bool MOAIDataBuffer::Load ( cc8* filename ) {
 
 	size_t size = in.GetLength ();
 	this->mBytes.Init ( size );
-	in.ReadBytes ( this->mBytes , size );
+	in.ReadBytes ( this->mBytes.GetBuffer (), size );
 
 	this->mMutex.Unlock ();
 
@@ -573,7 +573,7 @@ void MOAIDataBuffer::Load ( void* bytes, size_t size ) {
 	this->mMutex.Lock ();
 	
 	this->mBytes.Init ( size );
-	memcpy ( this->mBytes.Data (), bytes, size );
+	memcpy ( this->mBytes.GetBuffer (), bytes, size );
 	
 	this->mMutex.Unlock ();
 }
@@ -591,7 +591,7 @@ void MOAIDataBuffer::Load ( MOAILuaState& state, int idx ) {
 void MOAIDataBuffer::Lock ( void** bytes, size_t* size ) {
 
 	this->mMutex.Lock ();
-	( *bytes ) = this->mBytes;
+	( *bytes ) = this->mBytes.GetBuffer ();
 	( *size ) = this->mBytes.Size ();
 }
 
@@ -624,7 +624,7 @@ size_t MOAIDataBuffer::Read ( void* buffer, size_t size ) {
 	this->mMutex.Lock ();
 	
 	ZLByteStream byteStream;
-	byteStream.SetBuffer ( this->mBytes, this->mBytes.Size (), this->mBytes.Size ());
+	byteStream.SetBuffer ( this->mBytes.GetBuffer (), this->mBytes.Size (), this->mBytes.Size ());
 	size = byteStream.ReadBytes ( buffer, size );
 	
 	this->mMutex.Unlock ();
@@ -685,7 +685,7 @@ bool MOAIDataBuffer::Save ( cc8* filename ) {
 	if ( !out.OpenWrite ( filename )) return false;
 
 	this->mMutex.Lock ();
-	out.WriteBytes ( this->mBytes , this->mBytes.Size ());
+	out.WriteBytes ( this->mBytes.GetBuffer (), this->mBytes.Size ());
 	this->mMutex.Unlock ();
 
 	return true;

@@ -188,7 +188,7 @@ int MOAIStretchPatch2D::_setUVRect ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::DrawStretch ( u32 idx, float xStretch, float yStretch ) {
+void MOAIStretchPatch2D::DrawStretch ( ZLIndex idx, float xStretch, float yStretch ) {
 
 	ZLRect uvRect;
 	u32 totalUVRects = ( u32 )this->mUVRects.Size ();
@@ -197,8 +197,8 @@ void MOAIStretchPatch2D::DrawStretch ( u32 idx, float xStretch, float yStretch )
 		uvRect.Init ( 0.0f, 1.0f, 1.0f, 0.0f );
 	}
 	else {
-		idx = ( idx - 1 ) % totalUVRects;
-		uvRect = this->mUVRects [ idx ];
+		idx.Sub ( 1, totalUVRects );
+		uvRect = this->mUVRects [ idx.mKey ];
 	}
 
 	float nativeWidth = this->mRect.Width ();
@@ -417,7 +417,7 @@ ZLBounds MOAIStretchPatch2D::MOAIDeck_ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::MOAIDeck_Draw ( u32 idx ) {
+void MOAIStretchPatch2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	
 	this->UpdateParams ();
 	
@@ -436,7 +436,7 @@ void MOAIStretchPatch2D::MOAIDeck_Draw ( u32 idx ) {
 	gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_TO_MODEL_MTX ));
 	
 	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
-	materialStack.Push ( this->GetMaterial ( idx ));
+	materialStack.Push ( this->GetMaterial ( idx.mKey ));
 	materialStack.SetShader ( MOAIShaderMgr::DECK2D_SHADER );
 	materialStack.LoadGfxState ();
 	
@@ -446,21 +446,21 @@ void MOAIStretchPatch2D::MOAIDeck_Draw ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-ZLBounds MOAIStretchPatch2D::MOAIDeck_GetBounds ( u32 idx ) {
+ZLBounds MOAIStretchPatch2D::MOAIDeck_GetBounds ( ZLIndex idx ) {
 	UNUSED ( idx );
 
 	return ZLBounds ( this->mRect );
 }
 
 //----------------------------------------------------------------//
-MOAICollisionShape* MOAIStretchPatch2D::MOAIDeck_GetCollisionShape ( u32 idx ) {
+MOAICollisionShape* MOAIStretchPatch2D::MOAIDeck_GetCollisionShape ( ZLIndex idx ) {
 	UNUSED ( idx );
 
 	return 0;
 }
 
 //----------------------------------------------------------------//
-bool MOAIStretchPatch2D::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
+bool MOAIStretchPatch2D::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
 	UNUSED ( idx );
 	UNUSED ( vec );
 	UNUSED ( granularity );
@@ -470,7 +470,7 @@ bool MOAIStretchPatch2D::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 gra
 }
 
 //----------------------------------------------------------------//
-bool MOAIStretchPatch2D::MOAIDeck_Overlap ( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
+bool MOAIStretchPatch2D::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
 	UNUSED ( idx );
 	UNUSED ( vec );
 	UNUSED ( granularity );

@@ -186,7 +186,7 @@ ZLBounds MOAIMetaTileDeck2D::MOAIDeck_ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMetaTileDeck2D::MOAIDeck_Draw ( u32 idx ) {
+void MOAIMetaTileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	UNUSED ( idx );
 
 	u32 size = ( u32 )this->mBrushes.Size ();
@@ -195,8 +195,8 @@ void MOAIMetaTileDeck2D::MOAIDeck_Draw ( u32 idx ) {
 	if ( !this->mGrid ) return;
 	if ( !this->mDeck ) return;
 	
-	idx = ( idx - 1 ) % size;
-	MOAIMetaTile& brush = this->mBrushes [ idx ];
+	idx.Sub ( 1, size );
+	MOAIMetaTile& brush = this->mBrushes [ idx.mKey ];
 	
 	MOAICellCoord c0 = brush.mMin;
 	MOAICellCoord c1 = brush.mMax;
@@ -237,15 +237,15 @@ void MOAIMetaTileDeck2D::MOAIDeck_Draw ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-ZLBounds MOAIMetaTileDeck2D::MOAIDeck_GetBounds ( u32 idx ) {
+ZLBounds MOAIMetaTileDeck2D::MOAIDeck_GetBounds ( ZLIndex idx ) {
 	
 	u32 size = ( u32 )this->mBrushes.Size ();
 	if ( this->mGrid && size ) {
 		
 		// TODO: handle oversized decks (don't assume unit sized deck items)
-		idx = idx % size;
+		idx.Wrap ( size );
 		
-		MOAIMetaTile& brush = this->mBrushes [ idx ];
+		MOAIMetaTile& brush = this->mBrushes [ idx.mKey ];
 		ZLRect rect = this->mGrid->GetBounds ( brush.mMin, brush.mMax );
 		rect.Offset ( brush.mOffset.mX - rect.mXMin, brush.mOffset.mY - rect.mYMin );
 		return ZLBounds ( rect );
@@ -254,14 +254,14 @@ ZLBounds MOAIMetaTileDeck2D::MOAIDeck_GetBounds ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-MOAICollisionShape* MOAIMetaTileDeck2D::MOAIDeck_GetCollisionShape ( u32 idx ) {
+MOAICollisionShape* MOAIMetaTileDeck2D::MOAIDeck_GetCollisionShape ( ZLIndex idx ) {
 	UNUSED ( idx );
 
 	return 0;
 }
 
 //----------------------------------------------------------------//
-bool MOAIMetaTileDeck2D::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
+bool MOAIMetaTileDeck2D::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
 	UNUSED ( idx );
 	UNUSED ( vec );
 	UNUSED ( granularity );
@@ -271,7 +271,7 @@ bool MOAIMetaTileDeck2D::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 gra
 }
 
 //----------------------------------------------------------------//
-bool MOAIMetaTileDeck2D::MOAIDeck_Overlap ( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
+bool MOAIMetaTileDeck2D::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
 	UNUSED ( idx );
 	UNUSED ( vec );
 	UNUSED ( granularity );

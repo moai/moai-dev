@@ -592,14 +592,14 @@ void MOAISelectionMesh::SerializeOut ( MOAILuaState& state, MOAISerializer& seri
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::MOAIDeck_Draw ( u32 idx ) {
+void MOAISelectionMesh::MOAIDeck_Draw ( ZLIndex idx ) {
 	
 	if ( !this->mMesh ) return;
 	
 	size_t size = this->mSets.Size ();
 	if ( !size ) return;
 
-	u32 itemIdx = idx % size;
+	u32 itemIdx = idx.mKey % size;
 	
 	MOAIMeshSpan* span = this->mSets [ itemIdx ];
 	if ( !span ) return;

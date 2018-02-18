@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <contrib/moai_utf8.h>
-#include <moai-sim/MOAIAnimCurve.h>
+#include <moai-sim/MOAIAnimCurveFloat.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAITextLayoutRules.h>
 #include <moai-sim/MOAITextLayoutEngine.h>
@@ -162,7 +162,7 @@ MOAITextLayoutRules::~MOAITextLayoutRules () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLayoutRules::ReleaseCurve ( MOAIAnimCurve* curve  ) {
+void MOAITextLayoutRules::ReleaseCurve ( MOAIAnimCurveFloat* curve  ) {
 
 	if ( curve ) {
 		if ( this->mOwner ) {
@@ -182,7 +182,7 @@ void MOAITextLayoutRules::ReserveCurves ( u32 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLayoutRules::RetainCurve ( MOAIAnimCurve* curve  ) {
+void MOAITextLayoutRules::RetainCurve ( MOAIAnimCurveFloat* curve  ) {
 
 	if ( curve ) {
 		curve->Retain ();
@@ -193,7 +193,7 @@ void MOAITextLayoutRules::RetainCurve ( MOAIAnimCurve* curve  ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLayoutRules::SetCurve ( u32 idx, MOAIAnimCurve* curve ) {
+void MOAITextLayoutRules::SetCurve ( u32 idx, MOAIAnimCurveFloat* curve ) {
 
 	if ( idx > this->mCurves.Size ()) return;
 	if ( this->mCurves [ idx ] == curve ) return;

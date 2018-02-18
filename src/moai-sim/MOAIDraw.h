@@ -6,7 +6,7 @@
 
 #include <moai-sim/MOAIDrawShapeImmediate.h>
 
-class MOAIAnimCurve;
+class MOAIAnimCurveFloat;
 class MOAITextureBase;
 class MOAITexture;
 class MOAIFont;
@@ -79,7 +79,7 @@ public:
 	//----------------------------------------------------------------//
 	void			BeginDrawString			( float scale, MOAIFont& font, float fontSize, float shadowOffsetX, float shadowOffsetY );
 	bool			Bind					();
-	void			DrawAnimCurve			( const MOAIAnimCurve& curve, u32 resolution );
+	void			DrawAnimCurve			( const MOAIAnimCurveFloat& curve, u32 resolution );
 	void			DrawAxisGrid			( ZLVec2D loc, ZLVec2D vec, float size );
 	void			DrawBezierCurve			( const ZLCubicBezier2D& bezier );
 	void			DrawElements			( MOAIGfxBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat, u32 count );

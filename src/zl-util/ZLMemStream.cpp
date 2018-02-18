@@ -148,7 +148,7 @@ ZLSizeResult ZLMemStream::ReadBytes ( void* buffer, size_t size ) {
 	}
 	else {
 	
-		assert ( this->mChunks );
+		assert ( this->mChunks.GetBuffer ());
 
 		size_t chunk0 = ( size_t )( cursor0 / this->mChunkSize );
 		size_t chunk1 = ( size_t )( cursor1 / this->mChunkSize );
@@ -156,7 +156,7 @@ ZLSizeResult ZLMemStream::ReadBytes ( void* buffer, size_t size ) {
 		size_t offset0 = cursor0 - ( chunk0 * this->mChunkSize );
 		size_t offset1 = cursor1 - ( chunk1 * this->mChunkSize );
 
-		void* src = ( void* )(( size_t )this->mChunks [ chunk0 ].Data () + offset0 );
+		void* src = ( void* )(( size_t )this->mChunks [ chunk0 ].GetBuffer () + offset0 );
 		void* dest = buffer;
 
 		if ( chunk0 == chunk1 ) {
@@ -169,10 +169,10 @@ ZLSizeResult ZLMemStream::ReadBytes ( void* buffer, size_t size ) {
 			dest = ( void* )(( size_t )dest + this->mChunkSize - offset0 );
 			
 			for ( size_t i = ( chunk0 + 1 ); i < chunk1; ++i ) {
-				memcpy ( dest, this->mChunks [ i ], this->mChunkSize );
+				memcpy ( dest, this->mChunks [ i ].GetBuffer (), this->mChunkSize );
 				dest = ( void* )(( size_t )dest + this->mChunkSize );
 			}
-			memcpy ( dest, this->mChunks [ chunk1 ], offset1 );
+			memcpy ( dest, this->mChunks [ chunk1 ].GetBuffer (), offset1 );
 		}
 
 		this->mCursor = cursor1 - this->mBase;
@@ -315,7 +315,7 @@ ZLSizeResult ZLMemStream::WriteBytes ( const void* buffer, size_t size ) {
 		size_t offset0 = cursor0 - ( chunk0 * this->mChunkSize );
 		size_t offset1 = cursor1 - ( chunk1 * this->mChunkSize );
 
-		void* dest = ( void* )(( size_t )this->mChunks [ chunk0 ].Data () + offset0 );
+		void* dest = ( void* )(( size_t )this->mChunks [ chunk0 ].GetBuffer () + offset0 );
 		const void* src = buffer;
 
 		if ( chunk0 == chunk1 ) {
@@ -328,10 +328,10 @@ ZLSizeResult ZLMemStream::WriteBytes ( const void* buffer, size_t size ) {
 			src = ( void* )(( size_t )src + this->mChunkSize - offset0 );
 			
 			for ( size_t i = ( chunk0 + 1 ); i < chunk1; ++i ) {
-				memcpy ( this->mChunks [ i ], src, this->mChunkSize );
+				memcpy ( this->mChunks [ i ].GetBuffer (), src, this->mChunkSize );
 				src = ( void* )(( size_t )src + this->mChunkSize );
 			}
-			memcpy ( this->mChunks [ chunk1 ], src, offset1 );
+			memcpy ( this->mChunks [ chunk1 ].GetBuffer (), src, offset1 );
 		}
 
 		this->mCursor = cursor1 - this->mBase;

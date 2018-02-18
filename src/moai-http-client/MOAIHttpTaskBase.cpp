@@ -104,7 +104,7 @@ int MOAIHttpTaskBase::_getString ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "U" )
 	
 	if ( self->mData.Size ()) {
-		lua_pushlstring ( state, ( cc8* )self->mData.Data (), self->mData.Size ());
+		lua_pushlstring ( state, ( cc8* )self->mData.GetBuffer (), self->mData.Size ());
 		return 1;
 	}
 	return 0;
@@ -229,7 +229,7 @@ int MOAIHttpTaskBase::_parseXml ( lua_State* L ) {
 
 		if ( !self->mData.Size ()) return 0;
 		
-		cc8* xml = ( cc8* )self->mData.Data ();
+		cc8* xml = ( cc8* )self->mData.GetBuffer ();
 		
 		TiXmlDocument doc;
 		doc.Parse ( xml );
@@ -556,7 +556,7 @@ void MOAIHttpTaskBase::GetData ( void* buffer, u32 size ) {
 
 	ZLByteStream byteStream;
 	
-	byteStream.SetBuffer ( this->mData, this->mData.Size ());
+	byteStream.SetBuffer ( this->mData.GetBuffer (), this->mData.Size ());
 	byteStream.SetLength ( this->mData.Size ());
 	byteStream.ReadBytes ( buffer, size );
 }

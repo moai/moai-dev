@@ -123,7 +123,7 @@ ZLBounds MOAIDrawDeck::MOAIDeck_ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawDeck::MOAIDeck_Draw ( u32 idx ) {
+void MOAIDrawDeck::MOAIDeck_Draw ( ZLIndex idx ) {
 	
 	if ( this->mOnDraw ) {
 	
@@ -131,23 +131,21 @@ void MOAIDrawDeck::MOAIDeck_Draw ( u32 idx ) {
 	
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		this->mOnDraw.PushRef ( state );
-		lua_pushnumber ( state, idx + 1 );
+		state.Push ( idx );
 		state.DebugCall ( 1, 0 );
 	}
 }
 
 //----------------------------------------------------------------//
-ZLBounds MOAIDrawDeck::MOAIDeck_GetBounds ( u32 idx ) {
+ZLBounds MOAIDrawDeck::MOAIDeck_GetBounds ( ZLIndex idx ) {
 	
 	if ( this->mOnBounds ) {
 	
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		
-	//	int top = state.GetTop ();
-		
 		this->mOnBounds.PushRef ( state );
 		
-		lua_pushnumber ( state, idx + 1 );
+		state.Push ( idx );
 		state.DebugCall ( 1, 6 );
 		
 		ZLBounds bounds;
@@ -158,14 +156,14 @@ ZLBounds MOAIDrawDeck::MOAIDeck_GetBounds ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-MOAICollisionShape* MOAIDrawDeck::MOAIDeck_GetCollisionShape ( u32 idx ) {
+MOAICollisionShape* MOAIDrawDeck::MOAIDeck_GetCollisionShape ( ZLIndex idx ) {
 	UNUSED ( idx );
 
 	return 0;
 }
 
 //----------------------------------------------------------------//
-bool MOAIDrawDeck::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
+bool MOAIDrawDeck::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
 	UNUSED ( idx );
 	UNUSED ( vec );
 	UNUSED ( granularity );
@@ -175,7 +173,7 @@ bool MOAIDrawDeck::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granulari
 }
 
 //----------------------------------------------------------------//
-bool MOAIDrawDeck::MOAIDeck_Overlap ( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
+bool MOAIDrawDeck::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
 	UNUSED ( idx );
 	UNUSED ( vec );
 	UNUSED ( granularity );

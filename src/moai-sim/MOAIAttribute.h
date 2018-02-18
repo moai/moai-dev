@@ -40,6 +40,7 @@ public:
 	enum {
 		ATTR_TYPE_COLOR_VEC_4,
 		ATTR_TYPE_FLOAT_32,
+		ATTR_TYPE_INDEX_32,
 		ATTR_TYPE_INT_32,
 		ATTR_TYPE_AFFINE_3D,
 		ATTR_TYPE_MATRIX_3X3,
@@ -63,6 +64,7 @@ public:
 	ATTR_OP_DECLARE_SETTER ( float,			ATTR_TYPE_FLOAT_32 )
 	ATTR_OP_DECLARE_SETTER ( s32,			ATTR_TYPE_INT_32 )
 	ATTR_OP_DECLARE_SETTER ( ZLAffine3D,	ATTR_TYPE_AFFINE_3D )
+	ATTR_OP_DECLARE_SETTER ( ZLIndex,		ATTR_TYPE_INDEX_32 )
 	ATTR_OP_DECLARE_SETTER ( ZLMatrix3x3,	ATTR_TYPE_MATRIX_3X3 )
 	ATTR_OP_DECLARE_SETTER ( ZLMatrix4x4,	ATTR_TYPE_MATRIX_4X4 )
 	ATTR_OP_DECLARE_SETTER ( ZLQuaternion,	ATTR_TYPE_QUATERNION )
@@ -171,6 +173,7 @@ public:
 
 		switch ( this->mAttrTypeID ) {
 			case ATTR_TYPE_FLOAT_32:	return *( float* )this->mBuffer == 0.0f ? false : true;
+			case ATTR_TYPE_INDEX_32:	return ( *( ZLIndex* )this->mBuffer ).mKey == 0 ? false : true;
 			case ATTR_TYPE_INT_32:		return *( s32* )this->mBuffer == 0 ? false : true;
 			default:					return value;
 		}
@@ -195,6 +198,7 @@ public:
 
 		switch ( this->mAttrTypeID ) {
 			case ATTR_TYPE_FLOAT_32:	return *( float* )this->mBuffer;
+			case ATTR_TYPE_INDEX_32:	return ( float )( *( ZLIndex* )this->mBuffer ).mKey;
 			case ATTR_TYPE_INT_32:		return ( float )( *( s32* )this->mBuffer );
 			default:					return value;
 		}
@@ -206,6 +210,7 @@ public:
 		switch ( this->mAttrTypeID ) {
 			case ATTR_TYPE_COLOR_VEC_4:	return (( ZLColorVec* )this->mBuffer )->PackRGBA ();
 			case ATTR_TYPE_FLOAT_32:	return ( s32 )( *( float* )this->mBuffer );
+			case ATTR_TYPE_INDEX_32:	return ( s32 )( *( ZLIndex* )this->mBuffer ).mKey;
 			case ATTR_TYPE_INT_32:		return *( s32* )this->mBuffer;
 			default:					return value;
 		}
@@ -226,6 +231,17 @@ public:
 				return mtx;
 			}
 			default: return value;
+		}
+	}
+	
+	//----------------------------------------------------------------//
+	inline ZLIndex GetValue ( const ZLIndex& value ) const {
+
+		switch ( this->mAttrTypeID ) {
+			case ATTR_TYPE_FLOAT_32:	return ZLIndex (( u32 )( *( float* )this->mBuffer ));
+			case ATTR_TYPE_INDEX_32:	return *( ZLIndex* )this->mBuffer;
+			case ATTR_TYPE_INT_32:		return ZLIndex (( u32 )( *( s32* )this->mBuffer ));
+			default:					return value;
 		}
 	}
 	

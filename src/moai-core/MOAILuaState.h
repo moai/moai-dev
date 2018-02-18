@@ -52,12 +52,6 @@ public:
 	ZLBox			GetBox						( int idx );
 	ZLColorVec		GetColor					( int idx, float r, float g, float b, float a );
 	u32				GetColor32					( int idx, float r, float g, float b, float a );
-	
-//	STLString		GetField					( int idx, cc8* key, cc8* value );
-//	STLString		GetField					( int idx, int key, cc8* value );
-//	STLString		GetField					( int idx, cc8* key, const STLString& value );
-//	STLString		GetField					( int idx, int key, const STLString& value );
-	
 	static cc8*		GetLuaTypeName				( int type );
 	ZLMatrix4x4		GetMatrix					( int idx, size_t size );
 	void*			GetPtrUserData				( int idx );
@@ -110,11 +104,11 @@ public:
 	void			Push						( u16 value );
 	void			Push						( u32 value );
 	void			Push						( u64 value );
-	
-	int				Push						( const ZLBox& value );
-	int				Push						( const ZLColorVec& value );
 	int				Push						( const ZLAffine2D& value );
 	int				Push						( const ZLAffine3D& value );
+	int				Push						( const ZLBox& value );
+	int				Push						( const ZLColorVec& value );
+	void			Push						( const ZLIndex& value );
 	int				Push						( const ZLMatrix3x3& value );
 	int				Push						( const ZLMatrix4x4& value );
 	int				Push						( const ZLQuad& value );
@@ -185,28 +179,6 @@ public:
 	template < typename TYPE > void						SetFieldByIndex		( int idx, int key, TYPE value );
 	template < typename TYPE > void						SetGlobal			( cc8* key, TYPE value );
 	template < typename TYPE > void						WriteArray			( int size, TYPE* values );
-	
-//	//----------------------------------------------------------------//
-//	template < typename TYPE >
-//	TYPE GetFieldValue ( int idx, cc8* key, TYPE value ) {
-//	
-//		this->PushField ( idx, key );
-//		TYPE result = this->GetValue < TYPE >( -1, value );
-//		this->Pop ();
-//		
-//		return result;
-//	}
-//	
-//	//----------------------------------------------------------------//
-//	template < typename TYPE >
-//	TYPE GetFieldValue ( int idx, int key, TYPE value ) {
-//	
-//		this->PushField ( idx, key );
-//		TYPE result = this->GetValue < TYPE >( -1, value );
-//		this->Pop ();
-//		
-//		return result;
-//	}
 };
 
 //----------------------------------------------------------------//
@@ -223,10 +195,11 @@ template <> u16				MOAILuaState::GetValue < u16 >				( int idx, const u16 value 
 template <> u32				MOAILuaState::GetValue < u32 >				( int idx, const u32 value );
 template <> u64				MOAILuaState::GetValue < u64 >				( int idx, const u64 value );
 template <> const void*		MOAILuaState::GetValue < const void* >		( int idx, const void* value );
-template <> ZLBox			MOAILuaState::GetValue < ZLBox >			( int idx, const ZLBox value );
-template <> ZLColorVec		MOAILuaState::GetValue < ZLColorVec >		( int idx, const ZLColorVec value );
 template <> ZLAffine2D		MOAILuaState::GetValue < ZLAffine2D >		( int idx, const ZLAffine2D value );
 template <> ZLAffine3D		MOAILuaState::GetValue < ZLAffine3D >		( int idx, const ZLAffine3D value );
+template <> ZLBox			MOAILuaState::GetValue < ZLBox >			( int idx, const ZLBox value );
+template <> ZLColorVec		MOAILuaState::GetValue < ZLColorVec >		( int idx, const ZLColorVec value );
+template <> ZLIndex		MOAILuaState::GetValue < ZLIndex >		( int idx, const ZLIndex value );
 template <> ZLMatrix3x3		MOAILuaState::GetValue < ZLMatrix3x3 >		( int idx, const ZLMatrix3x3 value );
 template <> ZLMatrix4x4		MOAILuaState::GetValue < ZLMatrix4x4 >		( int idx, const ZLMatrix4x4 value );
 template <> ZLQuaternion	MOAILuaState::GetValue < ZLQuaternion >		( int idx, const ZLQuaternion value );

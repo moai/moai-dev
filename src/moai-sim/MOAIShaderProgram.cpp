@@ -16,8 +16,8 @@
 	
 //----------------------------------------------------------------//
 MOAIShaderProgramGlobal::MOAIShaderProgramGlobal () :
-	mGlobalID ( INVALID_INDEX ),
-	mUniformID ( INVALID_INDEX ),
+	mGlobalID ( ZLIndex::INVALID_KEY ),
+	mUniformID ( ZLIndex::INVALID_KEY ),
 	mIndex ( 0 ) {
 }
 
@@ -529,7 +529,7 @@ int MOAIShaderProgram::SetGlobal ( lua_State* L, int idx ) {
 	MOAILuaState state ( L );
 
 	u32 globalIdx	= state.GetValue < u32 >( idx, 1 ) - 1;
-	u32 globalID	= state.GetValue < u32 >( idx + 1, INVALID_INDEX );
+	u32 globalID	= state.GetValue < u32 >( idx + 1, ZLIndex::INVALID_KEY );
 	u32 uniformID	= state.GetValue < u32 >( idx + 2, 1 ) - 1;
 	u32 index		= state.GetValue < u32 >( idx + 3, 1 ) - 1;
 	

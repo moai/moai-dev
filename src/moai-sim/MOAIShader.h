@@ -50,7 +50,7 @@ public:
 
 	GET ( MOAIShaderProgram*, Program, mProgram )
 	GET ( size_t, UniformBufferSize, mUniformBuffer.Size ())
-	GET_CONST ( void*, UniformBuffer, mUniformBuffer.Data ())
+	GET_CONST ( void*, UniformBuffer, mUniformBuffer.GetBuffer ())
 
 	//----------------------------------------------------------------//
 	static MOAIShader*		AffirmShader			( MOAILuaState& state, int idx );
