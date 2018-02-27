@@ -501,8 +501,10 @@ template < typename TYPE > const ZLMetaVec2D < TYPE > ZLMetaVec2D < TYPE >::Y_AX
 template < typename TYPE > const ZLMetaVec2D < TYPE > ZLMetaVec2D < TYPE >::ORIGIN ( 0, 0 );
 template < typename TYPE > const ZLMetaVec2D < TYPE > ZLMetaVec2D < TYPE >::AXIS ( 1, 1 );
 
-typedef ZLMetaVec2D < int > ZLIntVec2D;
-typedef ZLMetaVec2D < float > ZLVec2D;
-typedef ZLMetaVec2D < double > ZLVec2D64;
+typedef ZLMetaVec2D < ZLReal >	ZLVec2D;
+typedef ZLMetaVec2D < float >	ZLVec2D32;
+typedef ZLMetaVec2D < double >	ZLVec2D64;
+
+typedef ZLMetaVec2D < int >		ZLIntVec2D;
 
 #endif

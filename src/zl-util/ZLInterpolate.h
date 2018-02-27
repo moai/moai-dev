@@ -46,10 +46,10 @@ namespace ZLInterpolate {
 	};
 	
 	//----------------------------------------------------------------//
-	float	Curve			( u32 mode, float t );
-	float	Curve			( u32 mode, float t, float w );
-	float	Interpolate		( u32 mode, float x0, float x1, float t );
-	float	Interpolate		( u32 mode, float x0, float x1, float t, float w );
+	ZLReal	Curve			( u32 mode, ZLReal t );
+	ZLReal	Curve			( u32 mode, ZLReal t, ZLReal w );
+	ZLReal	Interpolate		( u32 mode, ZLReal x0, ZLReal x1, ZLReal t );
+	ZLReal	Interpolate		( u32 mode, ZLReal x0, ZLReal x1, ZLReal t, ZLReal w );
 	
 } // namespace ZLDist
 

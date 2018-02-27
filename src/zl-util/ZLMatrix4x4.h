@@ -1229,7 +1229,6 @@ public:
 template < typename TYPE >
 const ZLMetaMatrix4x4 < TYPE > ZLMetaMatrix4x4 < TYPE >::IDENT = ZLMetaMatrix4x4 < TYPE >().Ident ();
 
-typedef ZLMetaMatrix4x4 < float > ZLMatrix4x4;
-typedef ZLMetaMatrix4x4 < double > ZLDoubleMatrix4x4;
+typedef ZLMetaMatrix4x4 < ZLReal > ZLMatrix4x4;
 
 #endif

@@ -13,7 +13,7 @@ class ZLCurve1D {
 public:
 	
 	//----------------------------------------------------------------//
-	virtual float		Evaluate		( float t ) const = 0;
+	virtual ZLReal		Evaluate		( ZLReal t ) const = 0;
 						ZLCurve1D		() {};
 	virtual				~ZLCurve1D		() {};
 };
@@ -25,7 +25,7 @@ class ZLCurve2D {
 public:
 
 	//----------------------------------------------------------------//
-	virtual ZLVec2D		Evaluate		( float t ) const = 0;
+	virtual ZLVec2D		Evaluate		( ZLReal t ) const = 0;
 						ZLCurve2D		() {};
 	virtual				~ZLCurve2D		() {};
 };
@@ -37,13 +37,13 @@ class ZLCubicCurve1D :
 	public ZLCurve1D {
 public:
 
-	float		mA;
-	float		mB;
-	float		mC;
-	float		mD;
+	ZLReal		mA;
+	ZLReal		mB;
+	ZLReal		mC;
+	ZLReal		mD;
 	
 	//----------------------------------------------------------------//
-	void		Init				( float a, float b, float c, float d );
+	void		Init				( ZLReal a, ZLReal b, ZLReal c, ZLReal d );
 };
 
 //================================================================//
@@ -86,7 +86,7 @@ class ZLCatmullRom1D :
 public:
 
 	//----------------------------------------------------------------//
-	float		Evaluate			( float t ) const;
+	ZLReal		Evaluate			( ZLReal t ) const;
 };
 
 //================================================================//
@@ -97,7 +97,7 @@ class ZLCatmullRom2D :
 public:
 
 	//----------------------------------------------------------------//
-	ZLVec2D		Evaluate			( float t ) const;
+	ZLVec2D		Evaluate			( ZLReal t ) const;
 };
 
 //================================================================//
@@ -108,7 +108,7 @@ class ZLQuadraticBezier2D :
 public:
 
 	//----------------------------------------------------------------//
-	ZLVec2D		Evaluate			( float t ) const;
+	ZLVec2D		Evaluate			( ZLReal t ) const;
 };
 
 #endif

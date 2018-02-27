@@ -13,13 +13,13 @@ class ZLPlane2D {
 	public:
 
 	ZLVec2D	mNorm;
-	float	mDist;
+	ZLReal	mDist;
 
 	//----------------------------------------------------------------//
 	void	Flip			();
 	void	Init			( const ZLVec2D& p1, const ZLVec2D& p2 );	// From a line segment
-	void	Init			( const ZLVec2D& n, float d );
-	void	Init			( float xn, float yn, float d );
+	void	Init			( const ZLVec2D& n, ZLReal d );
+	void	Init			( ZLReal xn, ZLReal yn, ZLReal d );
 			ZLPlane2D		() {};
 			~ZLPlane2D		() {};
 };
@@ -31,13 +31,13 @@ class ZLPlane3D {
 	public:
 
 	ZLVec3D	mNorm;
-	float	mDist;
+	ZLReal	mDist;
 
 	//----------------------------------------------------------------//
 	void	Flip			();
 	void	Init			( const ZLVec3D& p, const ZLVec3D& n );							// From a point and a normal
 	void	Init			( const ZLVec3D& p1, const ZLVec3D& p2, const ZLVec3D& p3 );	// From a triangle; N = |( p2 - p1 ) x ( p3 - p1 )|
-	void	Init			( float xn, float yn, float zn, float d );
+	void	Init			( ZLReal xn, ZLReal yn, ZLReal zn, ZLReal d );
 			ZLPlane3D		() {};
 			~ZLPlane3D		() {};
 };

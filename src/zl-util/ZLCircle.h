@@ -13,7 +13,7 @@ class ZLCircle {
 	public:
 
 	ZLVec2D	mCenter;
-	float	mRadius;
+	ZLReal	mRadius;
 };
 
 #endif

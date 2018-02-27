@@ -8,14 +8,14 @@
 
 //----------------------------------------------------------------//
 // t ^ 4
-static float _pow ( float t ) {
+static ZLReal _pow ( ZLReal t ) {
 
 	return t * t * t * t;
 }
 
 //----------------------------------------------------------------//
 // t ^ 16
-static float _pow_extra_sharp ( float t ) {
+static ZLReal _pow_extra_sharp ( ZLReal t ) {
 
 	t = t * t * t * t;
 	t = t * t;
@@ -25,7 +25,7 @@ static float _pow_extra_sharp ( float t ) {
 
 //----------------------------------------------------------------//
 // t ^ 8
-static float _pow_sharp ( float t ) {
+static ZLReal _pow_sharp ( ZLReal t ) {
 
 	t = t * t * t * t;
 	t = t * t;
@@ -34,7 +34,7 @@ static float _pow_sharp ( float t ) {
 
 //----------------------------------------------------------------//
 // t ^ 2
-static float _pow_soft ( float t ) {
+static ZLReal _pow_soft ( ZLReal t ) {
 
 	return t * t;
 }
@@ -44,17 +44,17 @@ static float _pow_soft ( float t ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-float ZLInterpolate::Curve ( u32 mode, float t ) {
+ZLReal ZLInterpolate::Curve ( u32 mode, ZLReal t ) {
 	
-	float p, s;
+	ZLReal p, s;
 	
 	switch ( mode ) {
 
 		//................................................................
 		case kEaseIn:
 		
-			t = t - 1.0f;
-			return 1.0f - _pow ( t );
+			t = t - 1.0;
+			return 1.0 - _pow ( t );
 		
 		//................................................................
 		case kEaseOut:
@@ -64,8 +64,8 @@ float ZLInterpolate::Curve ( u32 mode, float t ) {
 		//................................................................
 		case kExtraSharpEaseIn:
 		
-			t = t - 1.0f;
-			return 1.0f - _pow_extra_sharp ( t );
+			t = t - 1.0;
+			return 1.0 - _pow_extra_sharp ( t );
 		
 		//................................................................
 		case kExtraSharpEaseOut:
@@ -75,12 +75,12 @@ float ZLInterpolate::Curve ( u32 mode, float t ) {
 		//................................................................
 		case kExtraSharpSmooth:
 		
-			if ( t < 0.5f ) {
-				t = t * 2.0f;
-				return _pow_extra_sharp ( t ) * 0.5f;
+			if ( t < 0.5 ) {
+				t = t * 2.0;
+				return _pow_extra_sharp ( t ) * 0.5;
 			}
-			t = ( t * 2.0f ) - 2.0f;
-			return ( 2.0f - _pow_extra_sharp ( t )) * 0.5f;
+			t = ( t * 2.0 ) - 2.0;
+			return ( 2.0 - _pow_extra_sharp ( t )) * 0.5;
 		
 		//................................................................
 		case kExtraSharpSmoothEaseOut:
@@ -90,7 +90,7 @@ float ZLInterpolate::Curve ( u32 mode, float t ) {
 		//................................................................
 		case kFlat:
 		
-			return ( t < 1.0f ) ? 0.0f : 1.0f;
+			return ( t < 1.0 ) ? 0.0 : 1.0;
 		
 		//................................................................
 		case kLinear:
@@ -100,8 +100,8 @@ float ZLInterpolate::Curve ( u32 mode, float t ) {
 		//................................................................
 		case kSharpEaseIn:
 		
-			t = t - 1.0f;
-			return 1.0f - _pow_sharp ( t );
+			t = t - 1.0;
+			return 1.0 - _pow_sharp ( t );
 		
 		//................................................................
 		case kSharpEaseOut:
@@ -111,12 +111,12 @@ float ZLInterpolate::Curve ( u32 mode, float t ) {
 		//................................................................
 		case kSharpSmooth:
 		
-			if ( t < 0.5f ) {
-				t = t * 2.0f;
-				return _pow_sharp ( t ) * 0.5f;
+			if ( t < 0.5 ) {
+				t = t * 2.0;
+				return _pow_sharp ( t ) * 0.5;
 			}
-			t = ( t * 2.0f ) - 2.0f;
-			return ( 2.0f - _pow_sharp ( t )) * 0.5f;
+			t = ( t * 2.0 ) - 2.0;
+			return ( 2.0 - _pow_sharp ( t )) * 0.5;
 		
 		//................................................................
 		case kSharpSmoothEaseOut:
@@ -126,12 +126,12 @@ float ZLInterpolate::Curve ( u32 mode, float t ) {
 		//................................................................
 		case kSmooth:
 		
-			if ( t < 0.5f ) {
-				t = t * 2.0f;
-				return _pow ( t ) * 0.5f;
+			if ( t < 0.5 ) {
+				t = t * 2.0;
+				return _pow ( t ) * 0.5;
 			}
-			t = ( t * 2.0f ) - 2.0f;
-			return ( 2.0f - _pow ( t )) * 0.5f;
+			t = ( t * 2.0 ) - 2.0;
+			return ( 2.0 - _pow ( t )) * 0.5;
 		
 		//................................................................
 		case kSmoothEaseOut:
@@ -141,8 +141,8 @@ float ZLInterpolate::Curve ( u32 mode, float t ) {
 		//................................................................
 		case kSoftEaseIn:
 		
-			t = t - 1.0f;
-			return 1.0f - _pow_soft ( t );
+			t = t - 1.0;
+			return 1.0 - _pow_soft ( t );
 		
 		//................................................................
 		case kSoftEaseOut:
@@ -152,12 +152,12 @@ float ZLInterpolate::Curve ( u32 mode, float t ) {
 		//................................................................
 		case kSoftSmooth:
 		
-			if ( t < 0.5f ) {
-				t = t * 2.0f;
-				return _pow_soft ( t ) * 0.5f;
+			if ( t < 0.5 ) {
+				t = t * 2.0;
+				return _pow_soft ( t ) * 0.5;
 			}
-			t = ( t * 2.0f ) - 2.0f;
-			return ( 2.0f - _pow_soft ( t )) * 0.5f;
+			t = ( t * 2.0 ) - 2.0;
+			return ( 2.0 - _pow_soft ( t )) * 0.5;
 		
 		//................................................................
 		case kSoftSmoothEaseOut:
@@ -167,176 +167,176 @@ float ZLInterpolate::Curve ( u32 mode, float t ) {
 		//................................................................
 		case kSineEaseIn:
 			
-			return ( float )sin ( t * M_PI_2 );
+			return ( ZLReal )sin ( t * M_PI_2 );
 		
 		//................................................................
 		case kSineEaseOut:
 			
-			return 1.0f - ( float )cos ( t * M_PI_2 );
+			return 1.0 - ( ZLReal )cos ( t * M_PI_2 );
 
 		//................................................................
 		case kSineSmooth:
 			
-			return 0.5f - 0.5f * ( float )cos ( t * M_PI );
+			return 0.5 - 0.5 * ( ZLReal )cos ( t * M_PI );
 
 		//................................................................
 		case kCircEaseIn:
 			
-			t = t - 1.0f;
-			return ( float )sqrt ( 1.0f - t * t );
+			t = t - 1.0;
+			return ( ZLReal )sqrt ( 1.0 - t * t );
 
 		//................................................................
 		case kCircEaseOut:
 			
-			return 1.0f - ( float )sqrt ( 1.0f - t * t );
+			return 1.0 - ( ZLReal )sqrt ( 1.0 - t * t );
 
 		//................................................................
 		case kCircSmooth:
 			
-			if ( t < 0.5f ) {
-				t = t * 2.0f;
-				return 0.5f - 0.5f * sqrtf ( 1.0f - t * t );
+			if ( t < 0.5 ) {
+				t = t * 2.0;
+				return 0.5 - 0.5 * sqrtf ( 1.0 - t * t );
 			}
-			t = t * 2.0f - 2.0f;
-			return 0.5f + 0.5f * sqrtf ( 1.0f - t * t );
+			t = t * 2.0 - 2.0;
+			return 0.5 + 0.5 * sqrtf ( 1.0 - t * t );
 			
 		//................................................................
 		case kBounceIn:
 			
-			if ( t < (1.0f / 2.75f) ) {
-				return 7.5625f * t * t;
+			if ( t < (1.0 / 2.75) ) {
+				return 7.5625 * t * t;
 			}
-			else if ( t < (2.0f / 2.75f) ) {
-				t = t - 1.5f / 2.75f;
-				return 7.5625f * t * t + 0.75f;
+			else if ( t < (2.0 / 2.75) ) {
+				t = t - 1.5 / 2.75;
+				return 7.5625 * t * t + 0.75;
 			}
-			else if ( t < (2.5f / 2.75f) ) {
-				t = t - 2.25f / 2.75f;
-				return 7.5625f * t * t + 0.9375f;
+			else if ( t < (2.5 / 2.75) ) {
+				t = t - 2.25 / 2.75;
+				return 7.5625 * t * t + 0.9375;
 			}
 			else {
-				t = t - 2.625f / 2.75f;
-				return 7.5625f * t * t + 0.984375f;
+				t = t - 2.625 / 2.75;
+				return 7.5625 * t * t + 0.984375;
 			}
 
 		//................................................................
 		case kBounceOut:
 			
-			return 1.0f - Curve ( kBounceIn, 1.0f - t );
+			return 1.0 - Curve ( kBounceIn, 1.0 - t );
 
 		//................................................................
 		case kBounceSmooth:
 			
-			if ( t < 0.5f ) {
-				return 0.5f * Curve ( kBounceOut, t * 2.0f );
+			if ( t < 0.5 ) {
+				return 0.5 * Curve ( kBounceOut, t * 2.0 );
 			}
 			else {
-				return 0.5f + 0.5f * Curve ( kBounceIn, 2.0f * t - 1.f );
+				return 0.5 + 0.5 * Curve ( kBounceIn, 2.0 * t - 1.0 );
 			}
 			
 		//................................................................
 		case kElasticIn:
 			
-			if ( t == 0.0f ) {
-				return 0.0f;
+			if ( t == 0.0 ) {
+				return 0.0;
 			}
 			
-			if ( t == 1.0f ) {
-				return 1.0f;
+			if ( t == 1.0 ) {
+				return 1.0;
 			}
 			
-			p = 0.3f;
-			s = 0.25f * p;
-			return ( float )( 1.0 + pow ( 2.0, -10.0 * t ) * sin (( t - s ) * ( 2.0 * M_PI ) / p ));
+			p = 0.3;
+			s = 0.25 * p;
+			return ( ZLReal )( 1.0 + pow ( 2.0, -10.0 * t ) * sin (( t - s ) * ( 2.0 * M_PI ) / p ));
 
 		//................................................................
 		case kElasticOut:
 			
-			if ( t == 0.0f ) {
-				return 0.0f;
+			if ( t == 0.0 ) {
+				return 0.0;
 			}
 			
-			if ( t == 1.0f ) {
-				return 1.0f;
+			if ( t == 1.0 ) {
+				return 1.0;
 			}
 			
-			p = 0.3f;
-			s = 0.25f * p;
-			t = t - 1.0f;
-			return ( float )( -pow ( 2.0f, 10.f * t ) * sin (( t - s ) * ( 2.0f * M_PI ) / p ));
+			p = 0.3;
+			s = 0.25 * p;
+			t = t - 1.0;
+			return ( ZLReal )( -pow ( 2.0, 10.0 * t ) * sin (( t - s ) * ( 2.0 * M_PI ) / p ));
 
 		//................................................................
 		case kElasticSmooth:
 			
-			if ( t == 0.0f ) {
-				return 0.0f;
+			if ( t == 0.0 ) {
+				return 0.0;
 			}
 			
-			if ( t == 1.0f ) {
-				return 1.0f;
+			if ( t == 1.0 ) {
+				return 1.0;
 			}
 			
-			t = 2.0f * t;
-			p = 0.3f * 1.5f;
-			s = 0.25f * p;
+			t = 2.0 * t;
+			p = 0.3 * 1.5;
+			s = 0.25 * p;
 			
-			if ( t < 1.0f ) {
-				t = t - 1.0f;
-				return ( float )( -0.5 * ( pow ( 2.0f, 10.0 * t ) * sin (( t - s ) * ( 2.0 * M_PI ) / p )));
+			if ( t < 1.0 ) {
+				t = t - 1.0;
+				return ( ZLReal )( -0.5 * ( pow ( 2.0, 10.0 * t ) * sin (( t - s ) * ( 2.0 * M_PI ) / p )));
 			}
-			t = t - 1.0f;
-			return ( float )( 1.0 + 0.5 * ( pow ( 2.0f, -10.0 * t ) * sin (( t - s ) * ( 2.0 * M_PI ) / p )));
+			t = t - 1.0;
+			return ( ZLReal )( 1.0 + 0.5 * ( pow ( 2.0, -10.0 * t ) * sin (( t - s ) * ( 2.0 * M_PI ) / p )));
 
 		//................................................................
 		case kBackEaseIn:
 			
-			s = 1.70158f;
-			t = t - 1.0f;
-			return t * t * ( (s + 1.0f) * t + s ) + 1.0f;
+			s = 1.70158;
+			t = t - 1.0;
+			return t * t * ( (s + 1.0) * t + s ) + 1.0;
 			
 		//................................................................
 		case kBackEaseOut:
 			
-			s = 1.70158f;
-			return t * t * ( (s + 1.0f) * t - s );
+			s = 1.70158;
+			return t * t * ( (s + 1.0) * t - s );
 			
 		//................................................................
 		case kBackSmooth:
 			
-			s = 1.70158f * 1.525f;
-			t = 2.0f * t;
+			s = 1.70158 * 1.525;
+			t = 2.0 * t;
 			if ( t < 1 ) {
-				return 0.5f * ( t * t * ((s + 1.0f) * t - s) );
+				return 0.5 * ( t * t * ((s + 1.0) * t - s) );
 			}
-			t = t - 2.0f;
-			return 1.0f + 0.5f * (t * t * ((s + 1.0f) * t + s));
+			t = t - 2.0;
+			return 1.0 + 0.5 * (t * t * ((s + 1.0) * t + s));
 
 	}
-	return 0.0f;
+	return 0.0;
 }
 
 //----------------------------------------------------------------//
-float ZLInterpolate::Curve ( u32 mode, float t, float w ) {
+ZLReal ZLInterpolate::Curve ( u32 mode, ZLReal t, ZLReal w ) {
 
-	float v0 = Curve ( kLinear, t );
-	float v1 = Curve ( mode, t );
+	ZLReal v0 = Curve ( kLinear, t );
+	ZLReal v1 = Curve ( mode, t );
 	
 	return Interpolate ( kLinear, v0, v1, w );
 }
 
 //----------------------------------------------------------------//
-float ZLInterpolate::Interpolate ( u32 mode, float x0, float x1, float t ) {
+ZLReal ZLInterpolate::Interpolate ( u32 mode, ZLReal x0, ZLReal x1, ZLReal t ) {
 
 	if ( mode == kFlat ) {
-		return ( t < 1.0f ) ? x0 : x1;
+		return ( t < 1.0 ) ? x0 : x1;
 	}
-	float s = Curve ( mode, t );
+	ZLReal s = Curve ( mode, t );
 	return x0 + (( x1 - x0 ) * s );
 }
 
 //----------------------------------------------------------------//
-float ZLInterpolate::Interpolate ( u32 mode, float x0, float x1, float t, float w ) {
+ZLReal ZLInterpolate::Interpolate ( u32 mode, ZLReal x0, ZLReal x1, ZLReal t, ZLReal w ) {
 	
-	float s = Curve ( mode, t, w );
+	ZLReal s = Curve ( mode, t, w );
 	return x0 + (( x1 - x0 ) * s );
 }

@@ -512,7 +512,7 @@ public:
 template < typename TYPE >
 const ZLMetaMatrix3x3 < TYPE > ZLMetaMatrix3x3 < TYPE >::IDENT = ZLMetaMatrix3x3 < TYPE >().Ident ();
 
-typedef ZLMetaMatrix3x3 < float > ZLMatrix3x3;
+typedef ZLMetaMatrix3x3 < ZLReal > ZLMatrix3x3;
 
 #endif
 

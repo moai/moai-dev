@@ -25,53 +25,53 @@ public:
 	ZLVec3D		mMax;
 
 	//----------------------------------------------------------------//
-	float		Area			() const;
+	ZLReal		Area			() const;
 	void		Bless			();
 	void		Clip			( const ZLBox& box );
 	bool		Contains		( const ZLVec3D& loc ) const;
 	bool		Contains		( const ZLVec3D& loc, u32 plane ) const;
 	void		GetCenter		( ZLVec3D& center ) const;
 	void		GetFitting		( const ZLBox& target, ZLVec3D& offset, ZLVec3D& scale ) const; // gets mapping from self to target
-	float		GetMaxExtent	() const;
-	float		GetRadius		() const;
+	ZLReal		GetMaxExtent	() const;
+	ZLReal		GetRadius		() const;
 	ZLRect		GetRect			( u32 plane = PLANE_XY ) const;
 	void		Grow			( const ZLBox& box, bool first = false );
 	void		Grow			( const ZLRect& rect, bool first = false, u32 plane = PLANE_XY );
 	void		Grow			( const ZLVec3D& vec, bool first = false );
-	void		Inflate			( float size );
+	void		Inflate			( ZLReal size );
 	void		Init			( const ZLBox& box );
 	void		Init			( const ZLPrism& prism );
 	void		Init			( const ZLVec3D& vec );
-	void		Init			( const ZLRect& rect, u32 plane = PLANE_XY, float back = 0.0f, float front = 0.0f );
-	void		Init			( float left, float top, float right, float bottom, float back, float front );
+	void		Init			( const ZLRect& rect, u32 plane = PLANE_XY, ZLReal back = 0.0, ZLReal front = 0.0 );
+	void		Init			( ZLReal left, ZLReal top, ZLReal right, ZLReal bottom, ZLReal back, ZLReal front );
 	bool		IsPoint			();
 	bool		IsSame			( const ZLBox& box ) const;
 	void		Offset			( const ZLVec3D& offset );
 	bool		Overlap			( const ZLBox& box ) const; // True if boxes overlap
 	bool		Overlap			( const ZLBox& box, u32 plane ) const;
-	void		Pad				( float pad ); // Add padding to all sides; so dim += pad * 2 for all axes
-	void		Pad				( float xPad, float yPad, float zPad );
-	void		Scale			( float scale );
+	void		Pad				( ZLReal pad ); // Add padding to all sides; so dim += pad * 2 for all axes
+	void		Pad				( ZLReal xPad, ZLReal yPad, ZLReal zPad );
+	void		Scale			( ZLReal scale );
 	void		Scale			( const ZLVec3D& scale );
 	void		Transform		( const ZLAffine3D& mtx ); // Gets AABB of transformed box
 	void		Transform		( const ZLMatrix4x4& mtx ); // Gets AABB of transformed box
 	
 	//----------------------------------------------------------------//
-	inline float Depth () const {
-		float s = this->mMax.mZ - this->mMin.mZ;
-		return s < 0.0f ? -s : s;
+	inline ZLReal Depth () const {
+		ZLReal s = this->mMax.mZ - this->mMin.mZ;
+		return s < 0.0 ? -s : s;
 	}
 	
 	//----------------------------------------------------------------//
-	inline float Height () const {
-		float s = this->mMax.mY - this->mMin.mY;
-		return s < 0.0f ? -s : s;
+	inline ZLReal Height () const {
+		ZLReal s = this->mMax.mY - this->mMin.mY;
+		return s < 0.0 ? -s : s;
 	}
 	
 	//----------------------------------------------------------------//
-	inline float Width () const {
-		float s = this->mMax.mX - this->mMin.mX;
-		return s < 0.0f ? -s : s;
+	inline ZLReal Width () const {
+		ZLReal s = this->mMax.mX - this->mMin.mX;
+		return s < 0.0 ? -s : s;
 	}
 };
 

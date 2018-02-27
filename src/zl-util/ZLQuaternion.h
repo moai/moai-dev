@@ -17,7 +17,7 @@ public:
 
 	static const ZLQuaternion IDENT;
 
-	float		mS;
+	ZLReal		mS;
 	ZLVec3D		mV;
 
 	//----------------------------------------------------------------//
@@ -36,28 +36,28 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Add					( const ZLQuaternion& rhs );
-	float			Dot					( const ZLQuaternion& rhs ) const;
+	ZLReal			Dot					( const ZLQuaternion& rhs ) const;
 	void			Get					( ZLAffine3D& m ) const;
 	void			Get					( ZLMatrix3x3& m ) const;
 	void			Get					( ZLMatrix4x4& m ) const;
-	void			Get					( ZLVec3D& axis, float& angle ) const;
-	void			Get					( float& x, float& y, float& z ) const;
+	void			Get					( ZLVec3D& axis, ZLReal& angle ) const;
+	void			Get					( ZLReal& x, ZLReal& y, ZLReal& z ) const;
 	void			Inverse				();
-	float			Length				() const;
-	float			LengthSquared		() const;
+	ZLReal			Length				() const;
+	ZLReal			LengthSquared		() const;
 	void			Multiply			( const ZLQuaternion& rhs );
 	void			Normalize			();
-	void			Scale				( float rhs );
-	void			Slerp				( ZLQuaternion q0, ZLQuaternion q1, float t );
+	void			Scale				( ZLReal rhs );
+	void			Slerp				( ZLQuaternion q0, ZLQuaternion q1, ZLReal t );
 	void			Sub					( const ZLQuaternion& rhs );
 	ZLVec3D			Transform			( ZLVec3D loc ) const;
 					ZLQuaternion		();
 					ZLQuaternion		( const ZLAffine3D& m );
 					ZLQuaternion		( ZLMatrix3x3 m );
 					ZLQuaternion		( const ZLMatrix4x4& m );
-					ZLQuaternion		( const ZLVec3D& axis, float angle );
-					ZLQuaternion		( float x, float y, float z ); // set from Euler angles
-					ZLQuaternion		( float s, float x, float y, float z ); // set from quat
+					ZLQuaternion		( const ZLVec3D& axis, ZLReal angle );
+					ZLQuaternion		( ZLReal x, ZLReal y, ZLReal z ); // set from Euler angles
+					ZLQuaternion		( ZLReal s, ZLReal x, ZLReal y, ZLReal z ); // set from quat
 };
 
 #endif

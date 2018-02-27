@@ -106,9 +106,9 @@ bool ZLBox::Contains ( const ZLVec3D& loc, u32 plane ) const {
 //----------------------------------------------------------------//
 void ZLBox::GetCenter ( ZLVec3D& center ) const {
 	
-	center.mX = this->mMin.mX + (( this->mMax.mX - this->mMin.mX ) * 0.5f );
-	center.mY = this->mMin.mY + (( this->mMax.mY - this->mMin.mY ) * 0.5f );
-	center.mZ = this->mMin.mZ + (( this->mMax.mZ - this->mMin.mZ ) * 0.5f );
+	center.mX = this->mMin.mX + (( this->mMax.mX - this->mMin.mX ) * 0.5 );
+	center.mY = this->mMin.mY + (( this->mMax.mY - this->mMin.mY ) * 0.5 );
+	center.mZ = this->mMin.mZ + (( this->mMax.mZ - this->mMin.mZ ) * 0.5 );
 }
 
 //----------------------------------------------------------------//
@@ -122,9 +122,9 @@ void ZLBox::GetFitting ( const ZLBox& target, ZLVec3D& offset, ZLVec3D& scale ) 
 	float th = target.Height ();
 	float td = target.Depth ();
 
-	scale.mX = ( w != 0.0f ) && ( tw != 0.0f ) ? tw / w : 1.0f;
-	scale.mY = ( h != 0.0f ) && ( th != 0.0f ) ? th / h : 1.0f;
-	scale.mZ = ( d != 0.0f ) && ( td != 0.0f ) ? td / d : 1.0f;
+	scale.mX = ( w != 0.0 ) && ( tw != 0.0 ) ? tw / w : 1.0;
+	scale.mY = ( h != 0.0 ) && ( th != 0.0 ) ? th / h : 1.0;
+	scale.mZ = ( d != 0.0 ) && ( td != 0.0 ) ? td / d : 1.0;
 	
 	offset.mX = target.mMin.mX - ( this->mMin.mX * scale.mX );
 	offset.mY = target.mMin.mY - ( this->mMin.mY * scale.mY );
@@ -134,7 +134,7 @@ void ZLBox::GetFitting ( const ZLBox& target, ZLVec3D& offset, ZLVec3D& scale ) 
 //----------------------------------------------------------------//
 float ZLBox::GetMaxExtent () const {
 
-	float max = 0.0f;
+	float max = 0.0;
 	float comp;
 	
 	comp = ABS ( this->mMin.mX );
@@ -163,7 +163,7 @@ float ZLBox::GetRadius () const {
 
 	ZLVec3D spans = mMax;
 	spans.Sub ( mMin );
-	spans.Scale ( 0.5f );
+	spans.Scale ( 0.5 );
 	return spans.Length ();
 }
 
@@ -273,33 +273,33 @@ void ZLBox::Init ( const ZLPrism& prism ) {
 	this->mMax = prism.mLoc;
 	
 	// X Axis
-	if ( prism.mXAxis.mX < 0.0f )	this->mMin.mX += prism.mXAxis.mX;
+	if ( prism.mXAxis.mX < 0.0 )	this->mMin.mX += prism.mXAxis.mX;
 	else							this->mMax.mX += prism.mXAxis.mX;
 	
-	if ( prism.mYAxis.mX < 0.0f )	this->mMin.mX += prism.mYAxis.mX;
+	if ( prism.mYAxis.mX < 0.0 )	this->mMin.mX += prism.mYAxis.mX;
 	else							this->mMax.mX += prism.mYAxis.mX;
 	
-	if ( prism.mZAxis.mX < 0.0f )	this->mMin.mX += prism.mZAxis.mX;
+	if ( prism.mZAxis.mX < 0.0 )	this->mMin.mX += prism.mZAxis.mX;
 	else							this->mMax.mX += prism.mZAxis.mX;
 	
 	// Y Axis
-	if ( prism.mXAxis.mY < 0.0f )	this->mMin.mY += prism.mXAxis.mY;
+	if ( prism.mXAxis.mY < 0.0 )	this->mMin.mY += prism.mXAxis.mY;
 	else							this->mMax.mY += prism.mXAxis.mY;
 	
-	if ( prism.mYAxis.mY < 0.0f )	this->mMin.mY += prism.mYAxis.mY;
+	if ( prism.mYAxis.mY < 0.0 )	this->mMin.mY += prism.mYAxis.mY;
 	else							this->mMax.mY += prism.mYAxis.mY;
 	
-	if ( prism.mZAxis.mY < 0.0f )	this->mMin.mY += prism.mZAxis.mY;
+	if ( prism.mZAxis.mY < 0.0 )	this->mMin.mY += prism.mZAxis.mY;
 	else							this->mMax.mY += prism.mZAxis.mY;
 	
 	// Z Axis
-	if ( prism.mXAxis.mZ < 0.0f )	this->mMin.mZ += prism.mXAxis.mZ;
+	if ( prism.mXAxis.mZ < 0.0 )	this->mMin.mZ += prism.mXAxis.mZ;
 	else							this->mMax.mZ += prism.mXAxis.mZ;
 	
-	if ( prism.mYAxis.mZ < 0.0f )	this->mMin.mZ += prism.mYAxis.mZ;
+	if ( prism.mYAxis.mZ < 0.0 )	this->mMin.mZ += prism.mYAxis.mZ;
 	else							this->mMax.mZ += prism.mYAxis.mZ;
 	
-	if ( prism.mZAxis.mZ < 0.0f )	this->mMin.mZ += prism.mZAxis.mZ;
+	if ( prism.mZAxis.mZ < 0.0 )	this->mMin.mZ += prism.mZAxis.mZ;
 	else							this->mMax.mZ += prism.mZAxis.mZ;
 }
 

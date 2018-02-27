@@ -10,15 +10,15 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-float ZLCubicBezier2D::Angle () {
+ZLReal ZLCubicBezier2D::Angle () {
 	// Compute angle between (p0,p1) and (p2,p3)
         
-	float dx0 = this->mP1.mX - this->mP0.mX;
-	float dy0 = this->mP1.mY - this->mP0.mY;
-	float dx1 = this->mP3.mX - this->mP2.mX;
-	float dy1 = this->mP3.mY - this->mP2.mY;
+	ZLReal dx0 = this->mP1.mX - this->mP0.mX;
+	ZLReal dy0 = this->mP1.mY - this->mP0.mY;
+	ZLReal dx1 = this->mP3.mX - this->mP2.mX;
+	ZLReal dy1 = this->mP3.mY - this->mP2.mY;
 	
-	float angle = ( float )atan2 ( ABS (( dx0 * dy1 ) - ( dy0 * dx1 )), ( dx0 * dx1 ) + ( dy0 * dy1 ));
+	ZLReal angle = ( ZLReal )atan2 ( ABS (( dx0 * dy1 ) - ( dy0 * dx1 )), ( dx0 * dx1 ) + ( dy0 * dy1 ));
 	return angle;
 }
 
@@ -34,17 +34,17 @@ void ZLCubicBezier2D::Bless () {
 }
 
 //----------------------------------------------------------------//
-ZLVec2D ZLCubicBezier2D::Evaluate ( float t ) const {
+ZLVec2D ZLCubicBezier2D::Evaluate ( ZLReal t ) const {
 	
-	float tM = 1.0f - t;
+	ZLReal tM = 1.0 - t;
 	
-	float b = tM * tM;
-	float c = t * t;
-	float d = c * t;
-	float a = b * tM;
+	ZLReal b = tM * tM;
+	ZLReal c = t * t;
+	ZLReal d = c * t;
+	ZLReal a = b * tM;
 	
-	b *= 3.0f * t;
-	c *= 3.0f * tM;
+	b *= 3.0 * t;
+	c *= 3.0 * tM;
 	
 	ZLVec2D v;
 	
@@ -55,13 +55,13 @@ ZLVec2D ZLCubicBezier2D::Evaluate ( float t ) const {
 }
 
 //----------------------------------------------------------------//
-void ZLCubicBezier2D::FindInflectionDomain ( float t, float& t0, float& t1, float flatness ) const {
+void ZLCubicBezier2D::FindInflectionDomain ( ZLReal t, ZLReal& t0, ZLReal& t1, ZLReal flatness ) const {
 
 	// for a given inflection point, find the domain around the point where
 	// the curve is 'flat' and can be approximated by a line
     
-	const float EPSILON = 1e-5f;
-	const float POWER = 1.0f/3.0f;
+	const ZLReal EPSILON = 1e-5;
+	const ZLReal POWER = 1.0 / 3.0;
     
 	t0 = t;
 	t1 = 1;
@@ -75,32 +75,32 @@ void ZLCubicBezier2D::FindInflectionDomain ( float t, float& t0, float& t1, floa
 		this->Split ( t, left, right );
 	}
 	else {
-		right = this->Split ( 1.0f, 2.0f );
+		right = this->Split ( 1.0, 2.0 );
 	}
 
-	float dx = right.mP1.mX - right.mP0.mX;
-	float dy = right.mP1.mY - right.mP0.mY;
+	ZLReal dx = right.mP1.mX - right.mP0.mX;
+	ZLReal dy = right.mP1.mY - right.mP0.mY;
 	
-	float norm = Sqrt (( dx * dx ) + ( dy * dy ));
+	ZLReal norm = Sqrt (( dx * dx ) + ( dy * dy ));
     
-	if ( norm != 0.0f ) {
+	if ( norm != 0.0 ) {
 		
-		float s4 = ( float )fabs ((( this->mP3.mX - this->mP0.mX ) * dy ) - ((  this->mP3.mY -  this->mP0.mY ) * dx )) / norm;
-		float tf = ( float )pow ( flatness / s4, POWER );
+		ZLReal s4 = ( ZLReal )fabs ((( this->mP3.mX - this->mP0.mX ) * dy ) - ((  this->mP3.mY -  this->mP0.mY ) * dx )) / norm;
+		ZLReal tf = ( ZLReal )pow ( flatness / s4, POWER );
 		
-		if ( ABS ( t - 1.0f ) > EPSILON ) {
-			t0 = t - tf * ( 1.0f - t );
-			t1 = t + tf * ( 1.0f - t );
+		if ( ABS ( t - 1.0 ) > EPSILON ) {
+			t0 = t - tf * ( 1.0 - t );
+			t1 = t + tf * ( 1.0 - t );
 		}
 		else {
-			t0 = 1.0f - ( float )( EPSILON * tf );
-			t1 = 1.0f + ( float )( EPSILON * tf );
+			t0 = 1.0 - ( ZLReal )( EPSILON * tf );
+			t1 = 1.0 + ( ZLReal )( EPSILON * tf );
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-u32 ZLCubicBezier2D::FindInflections ( float& t0, float& t1 ) const {
+u32 ZLCubicBezier2D::FindInflections ( ZLReal& t0, ZLReal& t1 ) const {
 
 	const ZLVec2D& p0 = this->mP0;
 	const ZLVec2D& p1 = this->mP1;
@@ -112,14 +112,14 @@ u32 ZLCubicBezier2D::FindInflections ( float& t0, float& t1 ) const {
 
 	/// A, B, C - first three coefficients of f(t) via the Bezier matrix
 
-	float ax = -p0.mX + ( 3.0f * p1.mX ) - ( 3.0f * p2.mX ) + p3.mX;
-	float ay = -p0.mY + ( 3.0f * p1.mY ) - ( 3.0f * p2.mY ) + p3.mY;
+	ZLReal ax = -p0.mX + ( 3.0 * p1.mX ) - ( 3.0 * p2.mX ) + p3.mX;
+	ZLReal ay = -p0.mY + ( 3.0 * p1.mY ) - ( 3.0 * p2.mY ) + p3.mY;
 	
-	float bx = ( 3.0f * p0.mX ) - ( 6.0f * p1.mX ) + ( 3.0f * p2.mX );
-	float by = ( 3.0f * p0.mY ) - ( 6.0f * p1.mY ) + ( 3.0f * p2.mY );
+	ZLReal bx = ( 3.0 * p0.mX ) - ( 6.0 * p1.mX ) + ( 3.0 * p2.mX );
+	ZLReal by = ( 3.0 * p0.mY ) - ( 6.0 * p1.mY ) + ( 3.0 * p2.mY );
 	
-	float cx = -( 3.0f * p0.mX ) + ( 3.0f * p1.mX );
-	float cy = -( 3.0f * p0.mY ) + ( 3.0f * p1.mY );
+	ZLReal cx = -( 3.0 * p0.mX ) + ( 3.0 * p1.mX );
+	ZLReal cy = -( 3.0 * p0.mY ) + ( 3.0 * p1.mY );
 
 	// At inflection points the component of the acceleration (second
 	// derivative of position) perpendicular to the velocity (first
@@ -131,28 +131,28 @@ u32 ZLCubicBezier2D::FindInflections ( float& t0, float& t1 ) const {
 	// Solving for this quadratic equation yields the parametric
 	// positions t0 and t1 of the inflection points, if they exist.
 
-	float ab = ( ay * bx ) - ( ax * by );
-	float ac = ( ay * cx ) - ( ax * cy );
-	float bc = ( by * cx ) - ( bx * cy );
+	ZLReal ab = ( ay * bx ) - ( ax * by );
+	ZLReal ac = ( ay * cx ) - ( ax * cy );
+	ZLReal bc = ( by * cx ) - ( bx * cy );
 	
 	// Dont want a straight line if P0.x == P1.x or P0.y == P1.y
-	if ( cx == 0.0f || cy == 0.0f ) {
+	if ( cx == 0.0 || cy == 0.0 ) {
 		return NONE;
 	}
 	
-	if (( ac == 0.0f ) || ( bc == 0.0f )) {
+	if (( ac == 0.0 ) || ( bc == 0.0 )) {
 		return DEGENERATE;
 	}
 
-	if ( ab == 0.0f ) {
-		t0 = -bc / ( 3.0f * ac );
+	if ( ab == 0.0 ) {
+		t0 = -bc / ( 3.0 * ac );
 		return ONE_INFLECTION;
 	}
 	
-	float tcusp = -0.5f * ( ac / ab );
-	float d = ( tcusp * tcusp ) - ( bc / ( 3.0f * ab ));
+	ZLReal tcusp = -0.5 * ( ac / ab );
+	ZLReal d = ( tcusp * tcusp ) - ( bc / ( 3.0 * ab ));
 
-	if ( d > 0.0f ) {
+	if ( d > 0.0 ) {
 	
 		d = Sqrt ( d );
 		
@@ -162,7 +162,7 @@ u32 ZLCubicBezier2D::FindInflections ( float& t0, float& t1 ) const {
 		return TWO_INFLECTIONS;
 	}
 	
-    if ( d == 0.0f ) {
+    if ( d == 0.0 ) {
 		t0 = tcusp;
 		return ONE_CUSP;
 	}
@@ -171,7 +171,7 @@ u32 ZLCubicBezier2D::FindInflections ( float& t0, float& t1 ) const {
 }
 
 //----------------------------------------------------------------//
-void ZLCubicBezier2D::Flatten ( ZLAbstractVertexWriter2D& writer, float flatness, float angle ) const {
+void ZLCubicBezier2D::Flatten ( ZLAbstractVertexWriter2D& writer, ZLReal flatness, ZLReal angle ) const {
 
 	ZLCubicBezierFlattener2D flattener;
 	flattener.Init ( *this, flatness, angle );
@@ -182,9 +182,9 @@ void ZLCubicBezier2D::Flatten ( ZLAbstractVertexWriter2D& writer, float flatness
 }
 
 //----------------------------------------------------------------//
-float ZLCubicBezier2D::GetFlattenedLength ( float flatness, float angle ) {
+ZLReal ZLCubicBezier2D::GetFlattenedLength ( ZLReal flatness, ZLReal angle ) {
 
-	float length = 0.0f;
+	ZLReal length = 0.0;
 	
 	ZLCubicBezierFlattener2D flattener;
 	flattener.Init ( *this, flatness, angle );
@@ -205,7 +205,7 @@ float ZLCubicBezier2D::GetFlattenedLength ( float flatness, float angle ) {
 }
 
 //----------------------------------------------------------------//
-size_t ZLCubicBezier2D::GetFlattenedSize ( float flatness, float angle ) {
+size_t ZLCubicBezier2D::GetFlattenedSize ( ZLReal flatness, ZLReal angle ) {
 
 	size_t size = 0;
 	
@@ -218,7 +218,7 @@ size_t ZLCubicBezier2D::GetFlattenedSize ( float flatness, float angle ) {
 }
 
 //----------------------------------------------------------------//
-void ZLCubicBezier2D::Split ( float t, ZLCubicBezier2D& left, ZLCubicBezier2D& right ) const {
+void ZLCubicBezier2D::Split ( ZLReal t, ZLCubicBezier2D& left, ZLCubicBezier2D& right ) const {
 
     // Split curve at t into left and right cubic bezier curves
 
@@ -238,20 +238,20 @@ void ZLCubicBezier2D::Split ( float t, ZLCubicBezier2D& left, ZLCubicBezier2D& r
 }
 
 //----------------------------------------------------------------//
-ZLCubicBezier2D ZLCubicBezier2D::Split ( float t0, float t1 ) const {
+ZLCubicBezier2D ZLCubicBezier2D::Split ( ZLReal t0, ZLReal t1 ) const {
     // Extract a segment of t curve
 
-    float u0 = 1.0f - t0;
-    float u1 = 1.0f - t1;
+    ZLReal u0 = 1.0 - t0;
+    ZLReal u1 = 1.0 - t1;
 
-	float u0u0 = u0 * u0;
-	float u1u1 = u1 * u1;
+	ZLReal u0u0 = u0 * u0;
+	ZLReal u1u1 = u1 * u1;
 
-	float t0t0 = t0 * t0;
-	float t1t1 = t1 * t1;
+	ZLReal t0t0 = t0 * t0;
+	ZLReal t1t1 = t1 * t1;
 	
-	float t0u02 = t0 * u0 * 2.0f;
-	float t1u12 = t1 * u1 * 2.0f;
+	ZLReal t0u02 = t0 * u0 * 2.0;
+	ZLReal t1u12 = t1 * u1 * 2.0;
 
 	ZLVec2D a = (( this->mP0 * u0u0 ) + (( this->mP1 * t0u02 ) + ( this->mP2 * t0t0 )));
 	ZLVec2D b = (( this->mP0 * u1u1 ) + (( this->mP1 * t1u12 ) + ( this->mP2 * t1t1 )));
@@ -273,27 +273,27 @@ ZLCubicBezier2D ZLCubicBezier2D::Split ( float t0, float t1 ) const {
 //================================================================//
 
 //----------------------------------------------------------------//
-void ZLCubicBezierFlattener2D::Init ( const ZLCubicBezier2D& curve, float flatness, float angle ) {
+void ZLCubicBezierFlattener2D::Init ( const ZLCubicBezier2D& curve, ZLReal flatness, ZLReal angle ) {
 
 	// cribbed from https://github.com/rougier/gl-bezier
 
 	this->mFlatness = flatness;
-	this->mAngleInRadians = ( float )( angle * D2R );
+	this->mAngleInRadians = ( ZLReal )( angle * D2R );
 
 	this->mCurveIdx = 0;
 	this->mVertexIdx = 0;
 	this->mCommandIdx = 0;
 
-	//float cusp = 0.0f;
+	//ZLReal cusp = 0.0;
 
-	float t0_minus = -1.0f;
-	float t0_plus = -1.0f;
+	ZLReal t0_minus = -1.0;
+	ZLReal t0_plus = -1.0;
 
-	float t1_minus = 2.0f;
-	float t1_plus = 2.0f;
+	ZLReal t1_minus = 2.0;
+	ZLReal t1_plus = 2.0;
 
-	float inflection0;
-	float inflection1;
+	ZLReal inflection0;
+	ZLReal inflection1;
 	
 	u32 inflections = curve.FindInflections ( inflection0, inflection1 );
 	
@@ -331,8 +331,8 @@ void ZLCubicBezierFlattener2D::Init ( const ZLCubicBezier2D& curve, float flatne
 			t1_minus = t0_plus;
 		}
 
-		bool t0_out = ( t0_plus < 0.0f ) || ( t0_minus > 1.0f );
-		bool t1_out = ( t1_plus < 0.0f ) || ( t1_minus > 1.0f );
+		bool t0_out = ( t0_plus < 0.0 ) || ( t0_minus > 1.0 );
+		bool t1_out = ( t1_plus < 0.0 ) || ( t1_minus > 1.0 );
 		
 		bool t0_t1_cross = t1_minus < t0_plus;
 
@@ -344,18 +344,18 @@ void ZLCubicBezierFlattener2D::Init ( const ZLCubicBezier2D& curve, float flatne
 			t0_plus = t1_plus;
 			t0_out = t1_out;
 			
-			t1_minus = 2.0f;
-			t1_plus = 2.0f;
+			t1_minus = 2.0;
+			t1_plus = 2.0;
 			t1_out = true;
 		}
 
-		bool t0_in				= ( 0.0f < t0_minus ) && ( t0_minus < t0_plus ) && ( t0_plus < 1.0f );
-		bool t0_cross_start		= ( t0_minus < 0.0f ) && ( 0.0f < t0_plus ) && ( t0_plus < 1.0f );
-		bool t0_cross_end		= ( 0.0f < t0_minus ) && ( t0_minus < 1.0f ) && ( 1.0f < t0_plus );
+		bool t0_in				= ( 0.0 < t0_minus ) && ( t0_minus < t0_plus ) && ( t0_plus < 1.0 );
+		bool t0_cross_start		= ( t0_minus < 0.0 ) && ( 0.0 < t0_plus ) && ( t0_plus < 1.0 );
+		bool t0_cross_end		= ( 0.0 < t0_minus ) && ( t0_minus < 1.0 ) && ( 1.0 < t0_plus );
 		bool t0_cross			= t0_cross_start || t0_cross_end;
 
-		bool t1_in				= ( 0.0f < t1_minus ) && ( t1_minus < t1_plus ) && ( t1_plus < 1.0f );
-		bool t1_cross_end		= ( 0.0f < t1_minus ) && ( t1_minus < 1.0f ) && ( 1.0f < t1_plus );
+		bool t1_in				= ( 0.0 < t1_minus ) && ( t1_minus < t1_plus ) && ( t1_plus < 1.0 );
+		bool t1_cross_end		= ( 0.0 < t1_minus ) && ( t1_minus < 1.0 ) && ( 1.0 < t1_plus );
 
 		this->PushCommand ( curve.mP0 ); // add first point
 		
@@ -519,14 +519,14 @@ ZLVec2D ZLCubicBezierFlattener2D::Next () {
 	
 	const ZLCubicBezier2D& curve = this->mCurve;
 	
-	float dx = curve.mP1.mX - curve.mP0.mX;
-	float dy = curve.mP1.mY - curve.mP0.mY;
+	ZLReal dx = curve.mP1.mX - curve.mP0.mX;
+	ZLReal dy = curve.mP1.mY - curve.mP0.mY;
 	
-	float norm = Sqrt (( dx * dx ) + ( dy * dy ));
-	float s3 = ( float )fabs ((( curve.mP2.mX - curve.mP0.mX ) * dy ) - ((  curve.mP2.mY -  curve.mP0.mY ) * dx )) / norm;
-	float t = 2.0f * Sqrt ( this->mFlatness /( 3.0f * s3 ));
+	ZLReal norm = Sqrt (( dx * dx ) + ( dy * dy ));
+	ZLReal s3 = ( ZLReal )fabs ((( curve.mP2.mX - curve.mP0.mX ) * dy ) - ((  curve.mP2.mY -  curve.mP0.mY ) * dx )) / norm;
+	ZLReal t = 2.0 * Sqrt ( this->mFlatness /( 3.0 * s3 ));
 	
-	if (( norm == 0.0f ) || ( s3 == 0.0f ) || ( t > 1.0f )) {
+	if (( norm == 0.0 ) || ( s3 == 0.0 ) || ( t > 1.0 )) {
 		this->mIsProcessingCurve = false;
 		this->mLastVertex = this->mCurve.mP3;
 		return this->mLastVertex;
@@ -539,7 +539,7 @@ ZLVec2D ZLCubicBezierFlattener2D::Next () {
 	for ( u32 i = 0; i < 50; ++i ) { // TODO: make param; min of t better?
 		curve.Split ( t, left, right );
 		if ( left.Angle () > this->mAngleInRadians ) {
-			t /= 1.75f; // magic numbers, yay
+			t /= 1.75; // magic numbers, yay
 		}
 		else {
 			break;

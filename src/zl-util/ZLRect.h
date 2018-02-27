@@ -761,8 +761,7 @@ public:
 	}
 };
 
-typedef ZLMetaRect < float >	ZLRect;
-typedef ZLMetaRect < double >	ZLDoubleRect;
+typedef ZLMetaRect < ZLReal >	ZLRect;
 typedef ZLMetaRect < int >		ZLIntRect;
 
 #endif

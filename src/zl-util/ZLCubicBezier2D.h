@@ -27,7 +27,7 @@ class ZLCubicBezier2D :
 private:
 
 	//----------------------------------------------------------------//
-	void				FlattenProgressive		( ZLAbstractVertexWriter2D& writer, float flatness = 0.125f, float angle = 15.0f ) const;
+	void				FlattenProgressive		( ZLAbstractVertexWriter2D& writer, ZLReal flatness = 0.125, ZLReal angle = 15.0 ) const;
 
 public:
 
@@ -40,16 +40,16 @@ public:
 	};
 
 	//----------------------------------------------------------------//
-	float				Angle					();
+	ZLReal				Angle					();
 	void				Bless					();
-	ZLVec2D				Evaluate				( float t ) const;
-	void				FindInflectionDomain	( float t, float& t0, float& t1, float flatness = 0.25f ) const;
-	u32					FindInflections			( float& t0, float& t1 ) const;
-	void				Flatten					( ZLAbstractVertexWriter2D& writer, float flatness = 0.125f, float angle = 15.0f ) const;
-	float				GetFlattenedLength		( float flatness = 0.125f, float angle = 15.0f );
-	size_t				GetFlattenedSize		( float flatness = 0.125f, float angle = 15.0f );
-	void				Split					( float t, ZLCubicBezier2D& left, ZLCubicBezier2D& right ) const;
-	ZLCubicBezier2D		Split					( float t0, float t1 ) const;
+	ZLVec2D				Evaluate				( ZLReal t ) const;
+	void				FindInflectionDomain	( ZLReal t, ZLReal& t0, ZLReal& t1, ZLReal flatness = 0.25 ) const;
+	u32					FindInflections			( ZLReal& t0, ZLReal& t1 ) const;
+	void				Flatten					( ZLAbstractVertexWriter2D& writer, ZLReal flatness = 0.125, ZLReal angle = 15.0 ) const;
+	ZLReal				GetFlattenedLength		( ZLReal flatness = 0.125, ZLReal angle = 15.0 );
+	size_t				GetFlattenedSize		( ZLReal flatness = 0.125, ZLReal angle = 15.0 );
+	void				Split					( ZLReal t, ZLCubicBezier2D& left, ZLCubicBezier2D& right ) const;
+	ZLCubicBezier2D		Split					( ZLReal t0, ZLReal t1 ) const;
 };
 
 //================================================================//
@@ -79,8 +79,8 @@ private:
 	
 	u32					mTotalCommands;
 	
-	float				mFlatness;
-	float				mAngleInRadians;
+	ZLReal				mFlatness;
+	ZLReal				mAngleInRadians;
 	
 	bool				mIsProcessingCurve;
 	ZLCubicBezier2D		mCurve;
@@ -94,7 +94,7 @@ private:
 public:
 
 	//----------------------------------------------------------------//
-	void				Init							( const ZLCubicBezier2D& curve, float flatness = 0.125f, float angle = 15.0f );
+	void				Init							( const ZLCubicBezier2D& curve, ZLReal flatness = 0.125, ZLReal angle = 15.0 );
 	bool				More							();
 	ZLVec2D				Next							();
 						ZLCubicBezierFlattener2D		();

@@ -1049,7 +1049,6 @@ public:
 template < typename TYPE >
 const ZLMetaAffine3D < TYPE > ZLMetaAffine3D < TYPE >::IDENT = ZLMetaAffine3D < TYPE >().Ident ();
 
-typedef ZLMetaAffine3D < float > ZLAffine3D;
-typedef ZLMetaAffine3D < double > ZLAffine3D64;
+typedef ZLMetaAffine3D < ZLReal > ZLAffine3D;
 
 #endif

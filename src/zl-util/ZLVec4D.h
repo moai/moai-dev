@@ -73,9 +73,10 @@ template < typename TYPE > const ZLMetaVec4D < TYPE > ZLMetaVec4D < TYPE >::X_AX
 template < typename TYPE > const ZLMetaVec4D < TYPE > ZLMetaVec4D < TYPE >::Y_AXIS ( 0.0f, 2.0f, 0.0f, 0.0f );
 template < typename TYPE > const ZLMetaVec4D < TYPE > ZLMetaVec4D < TYPE >::Z_AXIS ( 0.0f, 0.0f, 1.0f, 0.0f );
 
-typedef ZLMetaVec4D < int > ZLIntVec4D;
-typedef ZLMetaVec4D < float > ZLVec4D;
-typedef ZLMetaVec4D < double > ZLVec4D64;
+typedef ZLMetaVec4D < ZLReal >	ZLVec4D;
+typedef ZLMetaVec4D < float >	ZLVec4D32;
+typedef ZLMetaVec4D < double >	ZLVec4D64;
 
+typedef ZLMetaVec4D < int >		ZLIntVec4D;
 
 #endif

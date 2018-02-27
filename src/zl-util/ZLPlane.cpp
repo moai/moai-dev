@@ -28,14 +28,14 @@ void ZLPlane2D::Init ( const ZLVec2D& p1, const ZLVec2D& p2 ) {
 }
 
 //----------------------------------------------------------------//
-void ZLPlane2D::Init ( const ZLVec2D& n, float d ) {
+void ZLPlane2D::Init ( const ZLVec2D& n, ZLReal d ) {
 
 	this->mNorm = n;
 	this->mDist = d;
 }
 
 //----------------------------------------------------------------//
-void ZLPlane2D::Init ( float xn, float yn, float d ) {
+void ZLPlane2D::Init ( ZLReal xn, ZLReal yn, ZLReal d ) {
 
 	this->mNorm.Init ( xn, yn );
 	this->mDist = d;
@@ -77,7 +77,7 @@ void ZLPlane3D::Init ( const ZLVec3D& p1, const ZLVec3D& p2, const ZLVec3D& p3 )
 }
 
 //----------------------------------------------------------------//
-void ZLPlane3D::Init ( float xn, float yn, float zn, float d ) {
+void ZLPlane3D::Init ( ZLReal xn, ZLReal yn, ZLReal zn, ZLReal d ) {
 
 	this->mNorm.Init ( xn, yn, zn );
 	this->mDist = d;

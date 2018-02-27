@@ -62,7 +62,7 @@ public:
 	u32			mIntersectionType;
 	GHVertex*	mNeighbor;
 	ZLVec2D		mTangent;
-	float		mAlpha;
+	ZLReal		mAlpha;
 	bool		mVisited;
 	
 	//----------------------------------------------------------------//
@@ -72,8 +72,8 @@ public:
 		mNextEdge ( 0 ),
 		mIntersectionType ( INTERSECTION_UNCLASSIFIED ),
 		mNeighbor ( 0 ),
-		mTangent ( 0.0f, 0.0f ),
-		mAlpha ( 0.0f ),
+		mTangent ( 0.0, 0.0 ),
+		mAlpha ( 0.0 ),
 		mVisited ( false ) {
 	}
 	
@@ -197,7 +197,7 @@ public:
 						DEBUG_LOG ( " -- first intersection\n" );
 					
 						GHVertex* prev = cursor->mPrev;
-						while (( edgeNormal.Dot ( prev->mTangent ) == 0.0f ) || ( prev->Equals ( *cursor ))) {
+						while (( edgeNormal.Dot ( prev->mTangent ) == 0.0 ) || ( prev->Equals ( *cursor ))) {
 							prev = prev->mPrev;
 						}
 						
@@ -206,19 +206,19 @@ public:
 						// skip intersections we don't care about
 					
 						GHVertex* next = cursor;
-						while ( edgeNormal.Dot ( next->mTangent ) == 0.0f ) {
+						while ( edgeNormal.Dot ( next->mTangent ) == 0.0 ) {
 							next = next->mNext;
 							next->mIntersectionType = GHVertex::INTERSECTION_NONE;
 						}
 						
 						DEBUG_LOG ( "next: (%g, %g) (%g, %g)\n", cursor->mX, cursor->mY, cursor->mTangent.mX, cursor->mTangent.mY );
 					
-						float d0 = edgeNormal.Dot ( prev->mTangent );
-						float d1 = edgeNormal.Dot ( next->mTangent );
+						ZLReal d0 = edgeNormal.Dot ( prev->mTangent );
+						ZLReal d1 = edgeNormal.Dot ( next->mTangent );
 						
-						if ((( d0 < 0.0f ) && ( d1 < 0.0f )) || (( 0.0f < d0 ) && ( 0.0f < d1 ))) {
+						if ((( d0 < 0.0 ) && ( d1 < 0.0 )) || (( 0.0 < d0 ) && ( 0.0 < d1 ))) {
 							
-							intersectionType = d1 > 0.0f ? GHVertex::INTERSECTION_IS_ENTRY : GHVertex::INTERSECTION_IS_EXIT;
+							intersectionType = d1 > 0.0 ? GHVertex::INTERSECTION_IS_ENTRY : GHVertex::INTERSECTION_IS_EXIT;
 							
 							if ( intersectionType == prevIntersectionType ) {
 								intersectionType = GHVertex::INTERSECTION_NONE;
@@ -409,8 +409,8 @@ public:
 			e1.Sub ( v1 );
 			e1.Norm ();
 			
-			float d = e0.Dot ( e1 );
-			if (( d == 1.0f ) || ( d == -1.0f )) {
+			ZLReal d = e0.Dot ( e1 );
+			if (( d == 1.0 ) || ( d == -1.0 )) {
 				DEBUG_LOG ( " -- skipping non-corner\n" );
 				continue; // ignore non-corners
 			}
@@ -552,7 +552,7 @@ public:
 		if ( cursor ) {
 		
 			do {
-				ZLVec3D vtx ( cursor->mX, cursor->mY, 0.0f );
+				ZLVec3D vtx ( cursor->mX, cursor->mY, 0.0 );
 				mtx.Transform ( vtx );
 				cursor->mX = vtx.mX;
 				cursor->mY = vtx.mY;
@@ -577,8 +577,8 @@ public:
 
 	//----------------------------------------------------------------//
 	GHIntersection ( const GHVertex& sourceVertex, const ZLPlane2D& clipPlane ) :
-		mSourceTangent ( 0.0f, 0.0f ),
-		mClipTangent ( 0.0f, 0.0f ),
+		mSourceTangent ( 0.0, 0.0 ),
+		mClipTangent ( 0.0, 0.0 ),
 		mIsValid ( false ) {
 	
 		ZLVec2D v0 = sourceVertex;
@@ -590,7 +590,7 @@ public:
 		this->mClipTangent = clipPlane.mNorm;
 		this->mClipTangent.Rotate90Clockwise ();
 		
-		if ( ZLDist::PointToPlane2D ( v0, clipPlane ) == 0.0f ) {
+		if ( ZLDist::PointToPlane2D ( v0, clipPlane ) == 0.0 ) {
 			
 			this->mIsValid = true;
 		}
@@ -599,12 +599,12 @@ public:
 			ZLVec2D edge = *sourceVertex.mNextEdge;
 			edge.Sub ( v0 );
 			
-			float t;
+			ZLReal t;
 			
 			if ( ZLSect::VecToPlane ( v0, edge, clipPlane, t ) == ZLSect::SECT_HIT ) {
 				
 				this->Add ( edge, t );
-				this->mIsValid = (( 0.0f < t ) && ( t < 1.0f ));
+				this->mIsValid = (( 0.0 < t ) && ( t < 1.0 ));
 			}
 		}
 	}
@@ -622,14 +622,14 @@ public:
 		ZLVec2D c0 = clipVertex;
 		ZLVec2D c1 = *clipVertex.mNextEdge;
 		
-		float d = (( c1.mY - c0.mY ) * ( s1.mX - s0.mX )) - (( c1.mX - c0.mX ) * ( s1.mY - s0.mY ));
+		ZLReal d = (( c1.mY - c0.mY ) * ( s1.mX - s0.mX )) - (( c1.mX - c0.mX ) * ( s1.mY - s0.mY ));
 		
-		if ( d != 0.0f ) {
+		if ( d != 0.0 ) {
 		
-			float toSource		= ((( c1.mX - c0.mX ) * ( s0.mY - c0.mY )) - (( c1.mY - c0.mY ) * ( s0.mX - c0.mX ))) / d;
-			float toClip		= ((( s1.mX - s0.mX ) * ( s0.mY - c0.mY )) - (( s1.mY - s0.mY ) * ( s0.mX - c0.mX ))) / d;
+			ZLReal toSource		= ((( c1.mX - c0.mX ) * ( s0.mY - c0.mY )) - (( c1.mY - c0.mY ) * ( s0.mX - c0.mX ))) / d;
+			ZLReal toClip		= ((( s1.mX - s0.mX ) * ( s0.mY - c0.mY )) - (( s1.mY - s0.mY ) * ( s0.mX - c0.mX ))) / d;
 			
-			this->mIsValid		= (( 0.0f < toSource ) && ( toSource < 1.0f )) && (( 0.0f < toClip ) && ( toClip < 1.0f ));
+			this->mIsValid		= (( 0.0 < toSource ) && ( toSource < 1.0 )) && (( 0.0 < toClip ) && ( toClip < 1.0 ));
 			
 			if ( this->mIsValid ) {
 				this->mX = s0.mX + ( toSource * ( s1.mX - s0.mX ));
@@ -683,10 +683,10 @@ size_t ZLPolygon2D::Clip ( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, Z
     do {
         if ( sourceVertex->mIntersectionType == GHVertex::INTERSECTION_NONE ) {
 			
-			float dist = ZLDist::PointToPlane2D ( *sourceVertex, plane );
+			ZLReal dist = ZLDist::PointToPlane2D ( *sourceVertex, plane );
 			
-			if ( dist == 0.0f ) pointsOn++;
-			else if ( dist > 0.0f ) pointsFront++;
+			if ( dist == 0.0 ) pointsOn++;
+			else if ( dist > 0.0 ) pointsFront++;
 			
 			GHIntersection intersection ( *sourceVertex, plane );
 			

@@ -64,7 +64,7 @@ public:
 		IS_ANTICLOCKWISE_CONCAVE,
 	};
 
-	typedef float VertexComponentType;
+	typedef ZLReal VertexComponentType;
 	static const size_t VERTEX_SIZE = 2 * sizeof ( VertexComponentType );
 
 	enum {
@@ -76,7 +76,7 @@ public:
 private:
 	
 	u32										mInfo;
-	float									mArea;
+	ZLReal									mArea;
 	ZLRect									mBounds;
 	ZLLeanArray < ZLVec2D >					mVertices;
 	
@@ -89,7 +89,7 @@ public:
 	
 	GET_CONST ( ZLRect&, Bounds, mBounds )
 	GET_CONST ( u32, Info, mInfo )
-	GET_CONST ( float, Area, mArea )
+	GET_CONST ( ZLReal, Area, mArea )
 
 	GET_CONST ( ZLVec2D*, Vertices, this->mVertices.GetBuffer ())
 	GET_CONST ( size_t, Size, this->mVertices.Size ())
@@ -102,23 +102,23 @@ public:
 	size_t					Clip					( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, ZLStream& clippedPolySizes, void* buffer, size_t bufferSize );
 	size_t					Clip					( const ZLPolygon2D& poly, const ZLAffine3D* mtx, ZLStream& clippedPolyVerts, ZLStream& clippedPolySizes );
 	size_t					Clip					( const ZLPolygon2D& poly, const ZLAffine3D* mtx, ZLStream& clippedPolyVerts, ZLStream& clippedPolySizes, void* buffer, size_t bufferSize );
-	//ZLSizeResult			ConcaveHull				( ZLStream& input, size_t nPoints, int maxEdges, int maxPasses, float minIndent );
+	//ZLSizeResult			ConcaveHull				( ZLStream& input, size_t nPoints, int maxEdges, int maxPasses, ZLReal minIndent );
 	ZLSizeResult			ConvexHull				( ZLStream& input, size_t nPoints, u32 sort = SORT_CSTDLIB );
 	void					Copy					( const ZLPolygon2D& src );
-	float					GetCorner				( size_t idx, ZLVec2D* normal );
-	bool					GetDistance				( const ZLVec2D& point, float& d ) const;
-	bool					GetDistance				( const ZLVec2D& point, float& d, ZLVec2D& p ) const;
+	ZLReal					GetCorner				( size_t idx, ZLVec2D* normal );
+	bool					GetDistance				( const ZLVec2D& point, ZLReal& d ) const;
+	bool					GetDistance				( const ZLVec2D& point, ZLReal& d, ZLVec2D& p ) const;
 	cc8*					GetInfoString			() const;
 	static cc8*				GetInfoString			( u32 info );
 	const ZLVec2D&			GetVertex				( size_t idx ) const;
 	void					InitAsRect				( const ZLRect& rect );
-	u32						PointInside				( const ZLVec2D& p, float pad = 0.0f ) const;
+	u32						PointInside				( const ZLVec2D& p, ZLReal pad = 0.0 ) const;
 	ZLResultCode			ReserveVertices			( size_t total );
 	void					ReverseWinding			();
 	void					SetVert					( size_t idx, const ZLVec2D& v );
-	void					SetVert					( size_t idx, float x, float y );
+	void					SetVert					( size_t idx, ZLReal x, ZLReal y );
 	void					SetVertices				( const ZLVec2D* vertices, size_t total );
-	void					Snap					( float xSnap, float ySnap );
+	void					Snap					( ZLReal xSnap, ZLReal ySnap );
 	void					Transform				( const ZLAffine2D& matrix );
 							ZLPolygon2D				();
 							~ZLPolygon2D			();

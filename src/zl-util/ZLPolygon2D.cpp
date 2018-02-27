@@ -23,12 +23,12 @@ u32 ZLPolygon2D::Analyze () {
 	
 	u32 status = POLY_KNOWN_BIT;
 	
-	//float sign = 0.0;
+	//ZLReal sign = 0.0;
 	
 	size_t countPositive = 0;
 	size_t countNegative = 0;
 	
-	float area = 0.0;
+	ZLReal area = 0.0;
 	
 	for ( size_t i = 0; i < totalVerts; i++ ) {
 
@@ -46,11 +46,11 @@ u32 ZLPolygon2D::Analyze () {
 		ZLVec2D v1 = p2;
 		v1.Sub ( p1 );
 		
-		float z = v0.Cross ( v1 );
+		ZLReal z = v0.Cross ( v1 );
 		if ( z > 0.0 ) {
 			countPositive++;
 		}
-		else if ( z < 0.0f ) {
+		else if ( z < 0.0 ) {
 			countNegative++;
 		}
 		else {
@@ -150,7 +150,7 @@ void ZLPolygon2D::Clear () {
 }
 
 //----------------------------------------------------------------//
-//ZLSizeResult ZLPolygon2D::ConcaveHull ( ZLStream& input, size_t nPoints, int maxEdges, int maxPasses, float minIndent ) {
+//ZLSizeResult ZLPolygon2D::ConcaveHull ( ZLStream& input, size_t nPoints, int maxEdges, int maxPasses, ZLReal minIndent ) {
 //
 //	size_t reset = input.GetCursor ();
 //
@@ -230,11 +230,11 @@ void ZLPolygon2D::Copy ( const ZLPolygon2D& src ) {
 }
 
 //----------------------------------------------------------------//
-float ZLPolygon2D::GetCorner ( size_t idx, ZLVec2D* normal ) {
+ZLReal ZLPolygon2D::GetCorner ( size_t idx, ZLVec2D* normal ) {
 
 	size_t size = this->mVertices.Size ();
 
-	if ( size < 3 ) return 0.0f;
+	if ( size < 3 ) return 0.0;
 	
 	idx = idx % size;
 
@@ -263,7 +263,7 @@ float ZLPolygon2D::GetCorner ( size_t idx, ZLVec2D* normal ) {
 }
 
 //----------------------------------------------------------------//
-bool ZLPolygon2D::GetDistance ( const ZLVec2D& point, float& d ) const {
+bool ZLPolygon2D::GetDistance ( const ZLVec2D& point, ZLReal& d ) const {
 
 	ZLVec2D p;
 	return this->GetDistance ( point, d, p );
@@ -271,7 +271,7 @@ bool ZLPolygon2D::GetDistance ( const ZLVec2D& point, float& d ) const {
 
 
 //----------------------------------------------------------------//
-bool ZLPolygon2D::GetDistance ( const ZLVec2D& point, float& d, ZLVec2D& p ) const {
+bool ZLPolygon2D::GetDistance ( const ZLVec2D& point, ZLReal& d, ZLVec2D& p ) const {
 	UNUSED ( d );
 
 	bool foundResult = false;
@@ -287,9 +287,9 @@ bool ZLPolygon2D::GetDistance ( const ZLVec2D& point, float& d, ZLVec2D& p ) con
 		ZLVec2D n = e1 - e0;
 		
 		// distance of edges and point along edge
-		float edgeDist0		= n.Dot ( e0 );
-		float edgeDist1		= n.Dot ( e1 );
-		float edgeDist		= n.Dot ( point );
+		ZLReal edgeDist0		= n.Dot ( e0 );
+		ZLReal edgeDist1		= n.Dot ( e1 );
+		ZLReal edgeDist		= n.Dot ( point );
 		
 		ZLVec2D candidateP;
 		
@@ -309,7 +309,7 @@ bool ZLPolygon2D::GetDistance ( const ZLVec2D& point, float& d, ZLVec2D& p ) con
 			candidateP = ( edgeDist < edgeDist0 ) ? e0 : e1;
 		}
 		
-		float candidateD = candidateP.Dist ( point );
+		ZLReal candidateD = candidateP.Dist ( point );
 		
 		if (( !foundResult ) || ( candidateD < d )) {
 		
@@ -390,7 +390,7 @@ ZLSizeResult ZLPolygon2D::MonotoneChain ( ZLVec2D* hull, ZLVec2D* points, size_t
 			for ( size_t i = 0; i < nPoints; ++i ) {
 				const ZLVec2D& p = points [ i ];
 				radixBuffer [ i ].mData = p;
-				radixBuffer [ i ].mKey = ZLFloat::FloatToIntKey (( p.mX * ( float )nPoints ) + p.mY ); // sort by x then y
+				radixBuffer [ i ].mKey = ZLFloat::FloatToIntKey (( p.mX * ( ZLReal )nPoints ) + p.mY ); // sort by x then y
 			}
 
 			radixBuffer = RadixSort32 < ZLRadixVec2D >( radixBuffer, swapBuffer, ( u32 )nPoints );
@@ -441,15 +441,15 @@ int ZLPolygon2D::MonotoneChainComp ( const void* p1, const void* p2 ) {
 }
 
 //----------------------------------------------------------------//
-u32 ZLPolygon2D::PointInside ( const ZLVec2D& p, float pad ) const {
+u32 ZLPolygon2D::PointInside ( const ZLVec2D& p, ZLReal pad ) const {
 
-	if ( pad != 0.0f ) {
+	if ( pad != 0.0 ) {
 		
-		float dist = 0.0f;
+		ZLReal dist = 0.0;
 		
 		if ( this->GetDistance ( p, dist )) {
 			if ( dist <= ABS ( pad ) ) {
-				return pad < 0.0f ? POINT_OUTSIDE : POINT_ON_EDGE;
+				return pad < 0.0 ? POINT_OUTSIDE : POINT_ON_EDGE;
 			}
 		}
 	}
@@ -458,8 +458,8 @@ u32 ZLPolygon2D::PointInside ( const ZLVec2D& p, float pad ) const {
 
 	if ( this->mBounds.Contains ( p )) {
 
-		float x = p.mX;
-		float y = p.mY;
+		ZLReal x = p.mX;
+		ZLReal y = p.mY;
 		
 		size_t totalVerts = this->mVertices.Size ();
 		for ( size_t i = 0; i < totalVerts; i++ ) {
@@ -468,10 +468,10 @@ u32 ZLPolygon2D::PointInside ( const ZLVec2D& p, float pad ) const {
 			ZLVec2D& p2 = this->mVertices [( i + 1 ) % totalVerts ];
 			
 			// Components of points
-			float p1X = p1.mX;
-			float p1Y = p1.mY;
-			float p2X = p2.mX;
-			float p2Y = p2.mY;
+			ZLReal p1X = p1.mX;
+			ZLReal p1Y = p1.mY;
+			ZLReal p2X = p2.mX;
+			ZLReal p2Y = p2.mY;
 			
 			// Segment is behind point, so skip
 			if ( x > MAX ( p1X, p2X )) continue;
@@ -487,7 +487,7 @@ u32 ZLPolygon2D::PointInside ( const ZLVec2D& p, float pad ) const {
 			if ( y > MAX ( p1Y, p2Y )) continue;
 			
 			// x intersect w/ line seg
-			float xIntersect = (( y - p1Y ) * ( p2X - p1X ) / ( p2Y - p1Y )) + p1X;
+			ZLReal xIntersect = (( y - p1Y ) * ( p2X - p1X ) / ( p2Y - p1Y )) + p1X;
 			
 			// If we're on the line, return true
 			if ( x == xIntersect ) return POINT_ON_EDGE;
@@ -542,7 +542,7 @@ void ZLPolygon2D::SetVert ( size_t idx, const ZLVec2D& v ) {
 }
 
 //----------------------------------------------------------------//
-void ZLPolygon2D::SetVert ( size_t idx, float x, float y ) {
+void ZLPolygon2D::SetVert ( size_t idx, ZLReal x, ZLReal y ) {
 
 	ZLVec2D& vert = this->mVertices [ idx ];
 
@@ -560,15 +560,15 @@ void ZLPolygon2D::SetVertices ( const ZLVec2D* vertices, size_t total ) {
 }
 
 //----------------------------------------------------------------//
-void ZLPolygon2D::Snap ( float xSnap, float ySnap ) {
+void ZLPolygon2D::Snap ( ZLReal xSnap, ZLReal ySnap ) {
 
 	size_t totalVerts = this->mVertices.Size ();
 	for ( size_t i = 0; i < totalVerts; i++ ) {
 		
 		ZLVec2D& vert = this->mVertices [ i ];
 	
-		vert.mX = xSnap == 0.0f ? vert.mX : floorf (( vert.mX / xSnap ) + 0.5f ) * xSnap;
-		vert.mY = ySnap == 0.0f ? vert.mY : floorf (( vert.mY / ySnap ) + 0.5f ) * ySnap;
+		vert.mX = xSnap == 0.0 ? vert.mX : floorf (( vert.mX / xSnap ) + 0.5 ) * xSnap;
+		vert.mY = ySnap == 0.0 ? vert.mY : floorf (( vert.mY / ySnap ) + 0.5 ) * ySnap;
 	}
 }
 
@@ -582,10 +582,10 @@ void ZLPolygon2D::Transform ( const ZLAffine2D& matrix ) {
 	
 	if ( this->mInfo != POLY_UNKNOWN ) {
 	
-		float c0r0 = matrix.m [ ZLAffine2D::C0_R0 ];
-		float c1r1 = matrix.m [ ZLAffine2D::C1_R1 ];
+		ZLReal c0r0 = matrix.m [ ZLAffine2D::C0_R0 ];
+		ZLReal c1r1 = matrix.m [ ZLAffine2D::C1_R1 ];
 	
-		if ((( c0r0 < 0.0f ) || ( c1r1 > 0.0f )) || (( c0r0 > 0.0f ) || ( c1r1 < 0.0f ))) {
+		if ((( c0r0 < 0.0 ) || ( c1r1 > 0.0 )) || (( c0r0 > 0.0 ) || ( c1r1 < 0.0 ))) {
 			this->mInfo ^= POLY_CLOCKWISE_BIT;
 		}
 	}

@@ -486,9 +486,10 @@ template < typename TYPE > const ZLMetaVec3D < TYPE > ZLMetaVec3D < TYPE >::Z_AX
 template < typename TYPE > const ZLMetaVec3D < TYPE > ZLMetaVec3D < TYPE >::ORIGIN ( 0, 0, 0 );
 template < typename TYPE > const ZLMetaVec3D < TYPE > ZLMetaVec3D < TYPE >::AXIS ( 1, 1, 1 );
 
-typedef ZLMetaVec3D < int > ZLIntVec3D;
-typedef ZLMetaVec3D < float > ZLVec3D;
-typedef ZLMetaVec3D < double > ZLVec3D64;
+typedef ZLMetaVec3D < ZLReal >	ZLVec3D;
+typedef ZLMetaVec3D < float >	ZLVec3D32;
+typedef ZLMetaVec3D < double >	ZLVec3D64;
 
+typedef ZLMetaVec3D < int >		ZLIntVec3D;
 
 #endif
