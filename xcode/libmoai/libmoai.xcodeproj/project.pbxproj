@@ -3604,6 +3604,10 @@
 		CDCDD02E1A23F233008779B5 /* xmltok_ns.c in Sources */ = {isa = PBXBuildFile; fileRef = CDCDD0081A23F233008779B5 /* xmltok_ns.c */; };
 		CDCDD0301A23F233008779B5 /* xmltok.c in Sources */ = {isa = PBXBuildFile; fileRef = CDCDD0091A23F233008779B5 /* xmltok.c */; };
 		CDCDD0321A23F233008779B5 /* xmltok.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDD00A1A23F233008779B5 /* xmltok.h */; };
+		CDCDE225204F66C4005CD590 /* MOAICanary.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDE223204F66C4005CD590 /* MOAICanary.h */; };
+		CDCDE226204F66C4005CD590 /* MOAICanary.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCDE223204F66C4005CD590 /* MOAICanary.h */; };
+		CDCDE227204F66C4005CD590 /* MOAICanary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCDE224204F66C4005CD590 /* MOAICanary.cpp */; };
+		CDCDE228204F66C4005CD590 /* MOAICanary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCDE224204F66C4005CD590 /* MOAICanary.cpp */; };
 		CDCE61551DFB78B50088B2AB /* ZLThreadLocalPtr_pthreads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCE61541DFB78B50088B2AB /* ZLThreadLocalPtr_pthreads.cpp */; };
 		CDCE61561DFB78B50088B2AB /* ZLThreadLocalPtr_pthreads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCE61541DFB78B50088B2AB /* ZLThreadLocalPtr_pthreads.cpp */; };
 		CDCE61581DFB79C30088B2AB /* ZLThreadLocalPtr_windows.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCE61571DFB79C30088B2AB /* ZLThreadLocalPtr_windows.cpp */; };
@@ -6987,6 +6991,8 @@
 		CDCDD0081A23F233008779B5 /* xmltok_ns.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xmltok_ns.c; path = "../../3rdparty/expat-2.1.0/lib/xmltok_ns.c"; sourceTree = "<group>"; };
 		CDCDD0091A23F233008779B5 /* xmltok.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = xmltok.c; path = "../../3rdparty/expat-2.1.0/lib/xmltok.c"; sourceTree = "<group>"; };
 		CDCDD00A1A23F233008779B5 /* xmltok.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xmltok.h; path = "../../3rdparty/expat-2.1.0/lib/xmltok.h"; sourceTree = "<group>"; };
+		CDCDE223204F66C4005CD590 /* MOAICanary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAICanary.h; sourceTree = "<group>"; };
+		CDCDE224204F66C4005CD590 /* MOAICanary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICanary.cpp; sourceTree = "<group>"; };
 		CDCE61541DFB78B50088B2AB /* ZLThreadLocalPtr_pthreads.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLThreadLocalPtr_pthreads.cpp; sourceTree = "<group>"; };
 		CDCE61571DFB79C30088B2AB /* ZLThreadLocalPtr_windows.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLThreadLocalPtr_windows.cpp; sourceTree = "<group>"; };
 		CDD06BD01398822500AB0420 /* libmoai-ios-luaext.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-luaext.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -8579,6 +8585,8 @@
 				89BE6ACC173975E500DFE837 /* host.cpp */,
 				89BE6ACD173975E500DFE837 /* host.h */,
 				CDE93C191B34EF370051ADA1 /* moai_version.h */,
+				CDCDE224204F66C4005CD590 /* MOAICanary.cpp */,
+				CDCDE223204F66C4005CD590 /* MOAICanary.h */,
 				89BE6AD0173975E500DFE837 /* MOAIDeserializer.cpp */,
 				89BE6AD1173975E500DFE837 /* MOAIDeserializer.h */,
 				CD1845BE1A62751200FCCCE0 /* MOAIEnvironment.cpp */,
@@ -12675,6 +12683,7 @@
 				89BE6AFD173975E500DFE837 /* host.h in Headers */,
 				CD5F96FA1C2BCD0D000FA476 /* MOAIFourier.h in Headers */,
 				CD2FB1B91C473B15005F8D8D /* MOAIConditionVariable.h in Headers */,
+				CDCDE226204F66C4005CD590 /* MOAICanary.h in Headers */,
 				89BE6B05173975E500DFE837 /* MOAIDeserializer.h in Headers */,
 				89BE6B09173975E500DFE837 /* MOAIEventSource.h in Headers */,
 				89BE6B0D173975E500DFE837 /* MOAIFoo.h in Headers */,
@@ -12780,6 +12789,7 @@
 				89BE6D0A1739A42500DFE837 /* MOAIDataIOTask.h in Headers */,
 				CD4322C31BCC6B520054F644 /* MOAIImageLoadTask.h in Headers */,
 				CD1844DB1A6269AB00FCCCE0 /* MOAIDialogIOS.h in Headers */,
+				CDCDE225204F66C4005CD590 /* MOAICanary.h in Headers */,
 				89BE6D0E1739A42500DFE837 /* MOAIFileStream.h in Headers */,
 				89BE6D121739A42500DFE837 /* MOAIFileSystem.h in Headers */,
 				89BE6D161739A42500DFE837 /* MOAIHashWriter.h in Headers */,
@@ -16213,6 +16223,7 @@
 				CD1845C11A62751200FCCCE0 /* MOAIEnvironment.cpp in Sources */,
 				89E9D7871743F7EE00033CDD /* MOAIVersion.cpp in Sources */,
 				89E9D7A71745223E00033CDD /* MOAIScopedLuaState.cpp in Sources */,
+				CDCDE228204F66C4005CD590 /* MOAICanary.cpp in Sources */,
 				CD4322C21BCC6B520054F644 /* MOAIImageLoadTask.cpp in Sources */,
 				CD93078317EC473A00AED686 /* MOAILuaClass.cpp in Sources */,
 				CD93078717EC473A00AED686 /* MOAILuaRefTable.cpp in Sources */,
@@ -16261,6 +16272,7 @@
 				89BE6D201739A42500DFE837 /* MOAIMemStream.cpp in Sources */,
 				89BE6D241739A42500DFE837 /* MOAIMutex.cpp in Sources */,
 				89BE6D281739A42500DFE837 /* MOAIMutex_posix.cpp in Sources */,
+				CDCDE227204F66C4005CD590 /* MOAICanary.cpp in Sources */,
 				CD2CB51D19FDBECA00C42260 /* MOAIStreamAdapter.cpp in Sources */,
 				CD1844D51A6269AB00FCCCE0 /* host.mm in Sources */,
 				89BE6D2C1739A42500DFE837 /* MOAIMutex_win32.cpp in Sources */,
