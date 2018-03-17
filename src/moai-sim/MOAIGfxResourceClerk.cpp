@@ -15,7 +15,7 @@
 void MOAIGfxResourceClerk::DeleteOrDiscardHandle ( ZLGfxHandle*& handle, bool shouldDelete ) {
 
 	if ( handle ) {
-		if ( shouldDelete && MOAIGfxMgr::IsValid ()) {
+		if ( handle->mOwns && shouldDelete && MOAIGfxMgr::IsValid ()) {
 			MOAIGfxMgr::Get ().mResourceMgr.mDeleterStack.Push ( handle );
 		}
 		else {

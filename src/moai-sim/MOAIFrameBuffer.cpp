@@ -92,7 +92,7 @@ int MOAIFrameBuffer::_isPendingGrab ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIFrameBuffer::DetectGLFrameBufferID () {
 
-	this->mGLFrameBufferID = MOAIGfxMgr::GetDrawingAPI ().GetCurrentFramebuffer ();
+	this->SetGLFrameBufferID ( MOAIGfxMgr::GetDrawingAPI ().GetCurrentFramebuffer ());
 }
 
 //----------------------------------------------------------------//
@@ -159,7 +159,7 @@ MOAIFrameBuffer::MOAIFrameBuffer () :
 //----------------------------------------------------------------//
 MOAIFrameBuffer::~MOAIFrameBuffer () {
 
-	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mGLFrameBufferID, false );
+	this->SetGLFrameBufferID ( 0 );
 	this->mFrameImage.Set ( *this, 0 );
 }
 
@@ -259,7 +259,9 @@ void MOAIFrameBuffer::SetBufferSize ( u32 width, u32 height ) {
 
 //----------------------------------------------------------------//
 void MOAIFrameBuffer::SetGLFrameBufferID ( ZLGfxHandle* frameBufferID ){
-  this->mGLFrameBufferID = frameBufferID;
+
+	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mGLFrameBufferID, true );
+	this->mGLFrameBufferID = frameBufferID;
 }
 
 //----------------------------------------------------------------//

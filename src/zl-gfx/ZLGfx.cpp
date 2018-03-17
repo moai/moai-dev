@@ -94,6 +94,7 @@ void ZLGfx::Delete ( ZLGfxHandle*& handle ) {
 		if ( handle->mOwns ) {
 			this->Delete ( handle->mType, handle->mGLID );
 		}
+		delete handle;
 		handle = 0;
 	}
 }

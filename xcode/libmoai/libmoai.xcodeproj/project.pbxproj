@@ -3268,12 +3268,10 @@
 		CD8315CB1BED3AE900745C8A /* moai_utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240A7813564CAF000ADC60 /* moai_utf8.h */; };
 		CD8315CC1BED3AE900745C8A /* MOAIIso8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */; };
 		CD8315EC1BED3AE900745C8A /* moai_edtaa3func.h in Headers */ = {isa = PBXBuildFile; fileRef = 20A0B0281A5020740072F513 /* moai_edtaa3func.h */; };
-		CD8315EE1BED3AE900745C8A /* MOAIOpenUDID.h in Headers */ = {isa = PBXBuildFile; fileRef = CD9F761B1808C7670001EF0C /* MOAIOpenUDID.h */; };
 		CD8315EF1BED3AE900745C8A /* moai_whirlpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 663704111612812C002D0D27 /* moai_whirlpool.h */; };
 		CD8315F11BED3AE900745C8A /* moai_utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240A7713564CAF000ADC60 /* moai_utf8.c */; };
 		CD8315F51BED3AE900745C8A /* MOAIIso8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* MOAIIso8601DateFormatter.m */; };
 		CD8315F81BED3AE900745C8A /* moai_edtaa3func.c in Sources */ = {isa = PBXBuildFile; fileRef = 20A0B0271A5020740072F513 /* moai_edtaa3func.c */; };
-		CD8315FA1BED3AE900745C8A /* MOAIOpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9F761C1808C7670001EF0C /* MOAIOpenUDID.m */; };
 		CD83161B1BED3AE900745C8A /* moai_whirlpool.c in Sources */ = {isa = PBXBuildFile; fileRef = 66E345451614CA710021FC4B /* moai_whirlpool.c */; };
 		CD8316821BED3C1800745C8A /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490041141AB6EC00913D80 /* lapi.h */; };
 		CD8316831BED3C1800745C8A /* lauxlib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490043141AB6EC00913D80 /* lauxlib.h */; };
@@ -6901,8 +6899,6 @@
 		CD95D4A51831D4E20080C34E /* libmoai-osx-crypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-crypto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD9E5BE01A772B4100469462 /* MOAIGfxBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGfxBuffer.cpp; sourceTree = "<group>"; };
 		CD9E5BE11A772B4100469462 /* MOAIGfxBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxBuffer.h; sourceTree = "<group>"; };
-		CD9F761B1808C7670001EF0C /* MOAIOpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIOpenUDID.h; path = ../../3rdparty/contrib/MOAIOpenUDID.h; sourceTree = "<group>"; };
-		CD9F761C1808C7670001EF0C /* MOAIOpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MOAIOpenUDID.m; path = ../../3rdparty/contrib/MOAIOpenUDID.m; sourceTree = "<group>"; };
 		CD9F76941808DE770001EF0C /* MOAIVectorPoly.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVectorPoly.cpp; sourceTree = "<group>"; };
 		CD9F76951808DE770001EF0C /* MOAIVectorPoly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVectorPoly.h; sourceTree = "<group>"; };
 		CD9F76961808DE770001EF0C /* MOAIVectorStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVectorStyle.h; sourceTree = "<group>"; };
@@ -8084,8 +8080,6 @@
 		03240A7613564CAF000ADC60 /* contrib */ = {
 			isa = PBXGroup;
 			children = (
-				CD9F761B1808C7670001EF0C /* MOAIOpenUDID.h */,
-				CD9F761C1808C7670001EF0C /* MOAIOpenUDID.m */,
 				CD80F63D135BBCFF006B0683 /* MOAIIso8601DateFormatter.h */,
 				CD80F63E135BBCFF006B0683 /* MOAIIso8601DateFormatter.m */,
 				03240A7713564CAF000ADC60 /* moai_utf8.c */,
@@ -14682,7 +14676,6 @@
 				CD5F97041C2BD279000FA476 /* kiss_fft.h in Headers */,
 				CD5F97001C2BD279000FA476 /* _kiss_fft_guts.h in Headers */,
 				CD8315EC1BED3AE900745C8A /* moai_edtaa3func.h in Headers */,
-				CD8315EE1BED3AE900745C8A /* MOAIOpenUDID.h in Headers */,
 				CD8315EF1BED3AE900745C8A /* moai_whirlpool.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -18459,7 +18452,6 @@
 				CD8315F51BED3AE900745C8A /* MOAIIso8601DateFormatter.m in Sources */,
 				CD5F97021C2BD279000FA476 /* kiss_fft.c in Sources */,
 				CD8315F81BED3AE900745C8A /* moai_edtaa3func.c in Sources */,
-				CD8315FA1BED3AE900745C8A /* MOAIOpenUDID.m in Sources */,
 				CD83161B1BED3AE900745C8A /* moai_whirlpool.c in Sources */,
 				CD1642A01C42501E009926E0 /* kiss_fftr.c in Sources */,
 			);

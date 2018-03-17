@@ -153,6 +153,12 @@ void ZLContextMgr::Delete ( ZLContext* globals ) {
 			globalSet->erase ( globals );
 			sInstance.Set ( 0 );
 		}
+		
+		// if the global set is empty, delete it
+		if ( globalSet->size () == 0 ) {
+			delete globalSet;
+        	sGlobalsSet.Set ( 0 );
+		}
 	}
 	
 	// don't set this to nil until *after* deleting it!
@@ -170,11 +176,8 @@ void ZLContextMgr::Finalize () {
 
         GlobalsSetIt globalsIt = globalSet->begin ();
         for ( ; globalsIt != globalSet->end (); ++globalsIt ) {
-		
 			ZLContext* instance = *globalsIt;
-			
             sInstance.Set ( instance );
-			
             delete instance;
         }
         
