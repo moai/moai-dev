@@ -12,16 +12,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceClerk::DeleteOrDiscardHandle ( ZLGfxHandle*& handle, bool shouldDelete ) {
+void MOAIGfxResourceClerk::DeleteOrDiscard ( const ZLGfxHandle& handle, bool shouldDelete ) {
 
-	if ( handle ) {
-		if ( handle->mOwns && shouldDelete && MOAIGfxMgr::IsValid ()) {
-			MOAIGfxMgr::Get ().mResourceMgr.mDeleterStack.Push ( handle );
-		}
-		else {
-			ZLGfx::Discard ( handle );
-		}
-		handle = 0;
+	if ( shouldDelete && MOAIGfxMgr::IsValid ()) {
+		MOAIGfxMgr::Get ().mResourceMgr.mDeleterStack.Push ( handle );
+	}
+	else {
+		ZLGfx::DiscardResource ( handle );
 	}
 }
 
@@ -36,7 +33,7 @@ void MOAIGfxResourceClerk::DiscardResources () {
 	size_t top = this->mDeleterStack.GetTop ();
 
 	for ( size_t i = 0; i < top; ++i ) {
-		ZLGfx::Discard ( this->mDeleterStack [ i ]);
+		ZLGfx::DiscardResource ( this->mDeleterStack [ i ]);
 	}
 	this->mDeleterStack.Reset ();
 }
@@ -67,8 +64,7 @@ void MOAIGfxResourceClerk::ProcessDeleters () {
 		gfx.Flush ();
 	
 		for ( size_t i = 0; i < top; ++i ) {
-			ZLGfxHandle* handle = this->mDeleterStack [ i ];
-			gfx.Delete ( handle );
+			gfx.DeleteResource ( this->mDeleterStack [ i ]);
 		}
 		this->mDeleterStack.Reset ();
 	

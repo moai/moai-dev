@@ -168,9 +168,9 @@ void MOAIGfxBuffer::OnGPUBind () {
 	
 	if ( !this->mUseVBOs ) return;
 	
-	ZLGfxHandle* vbo = this->mVBOs [ this->mCurrentVBO ];
+	const ZLGfxHandle& vbo = this->mVBOs [ this->mCurrentVBO ];
 	
-	if ( vbo ) {
+	if ( vbo.CanBind ()) {
 		MOAIGfxMgr::GetDrawingAPI ().BindBuffer ( this->mTarget, vbo );
 	}
 }
@@ -189,8 +189,10 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 
 		for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
 			
-			ZLGfxHandle* vbo = gfx.CreateBuffer ();
-			if ( vbo ) {
+			ZLGfxHandle vbo = gfx.CreateBuffer ();
+			
+			// TODO: error handling
+			//if ( vbo ) {
 			
 				ZLSharedConstBuffer* buffer = this->GetCursor () ? this->GetSharedConstBuffer () : 0;
 				
@@ -200,10 +202,10 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 			
 				gfx.BindBuffer ( this->mTarget, vbo );
 				gfx.BufferData ( this->mTarget, this->GetLength (), buffer, 0, hint );
-				gfx.BindBuffer ( this->mTarget, 0 );
+				gfx.BindBuffer ( this->mTarget, ZLGfxResource::UNBIND );
 				
 				count++;
-			}
+			//}
 			this->mVBOs [ i ] = vbo;
 		}
 	}
@@ -215,14 +217,14 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 void MOAIGfxBuffer::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 
 	for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
-		MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mVBOs [ i ], shouldDelete );
+		MOAIGfxResourceClerk::DeleteOrDiscard ( this->mVBOs [ i ], shouldDelete );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::OnGPUUnbind () {
 
-	MOAIGfxMgr::GetDrawingAPI ().BindBuffer ( this->mTarget, 0 ); // OK?
+	MOAIGfxMgr::GetDrawingAPI ().BindBuffer ( this->mTarget, ZLGfxResource::UNBIND ); // OK?
 }
 
 //----------------------------------------------------------------//
@@ -236,9 +238,9 @@ bool MOAIGfxBuffer::OnGPUUpdate () {
 		this->mCurrentVBO = ( this->mCurrentVBO + 1 ) % this->mVBOs.Size ();
 	}
 	
-	ZLGfxHandle* vbo = this->mVBOs [ this->mCurrentVBO ];
+	const ZLGfxHandle& vbo = this->mVBOs [ this->mCurrentVBO ];
 	
-	if ( dirty && vbo ) {
+	if ( dirty && vbo.CanBind ()) {
 		
 		// TODO: There are a few different ways to approach updating buffers with varying performance
 		// on different platforms. The approach here is just to multi-buffer the VBO and replace its
@@ -256,7 +258,7 @@ bool MOAIGfxBuffer::OnGPUUpdate () {
 		
 		gfx.BindBuffer ( this->mTarget, vbo );
 		gfx.BufferSubData ( this->mTarget, 0, this->GetCursor (), buffer, 0 );
-		gfx.BindBuffer ( this->mTarget, 0 );
+		gfx.BindBuffer ( this->mTarget, ZLGfxResource::UNBIND );
 	
 		//u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_DYNAMIC_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
 		//zglBufferData ( this->mTarget, this->GetLength (), 0, hint );
@@ -312,7 +314,7 @@ void MOAIGfxBuffer::ReserveVBOs ( u32 gpuBuffers ) {
 	}
 
 	if ( gpuBuffers ) {
-		this->mVBOs.Resize ( gpuBuffers, 0 );
+		this->mVBOs.Resize ( gpuBuffers );
 		this->mCurrentVBO = gpuBuffers - 1;
 	}
 

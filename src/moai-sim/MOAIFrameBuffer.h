@@ -37,7 +37,7 @@ protected:
 	
 	bool				mNeedsClear;
 	
-	ZLGfxHandle*		mGLFrameBufferID;
+	ZLGfxHandle			mGLFrameBuffer;
 
 	bool								mGrabNextFrame;
 	MOAILuaMemberRef					mOnFrameFinish;
@@ -70,7 +70,7 @@ public:
 	bool				NeedsClear					() const;
 	void				NeedsClear					( bool needsClear );
 	void				SetBufferSize				( u32 width, u32 height );
-	void				SetGLFrameBufferID			( ZLGfxHandle* frameBufferID );
+	void				SetGLFrameBuffer			( const ZLGfxHandle& frameBuffer );
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
 	ZLRect				WndRectToDevice				( ZLRect rect ) const;

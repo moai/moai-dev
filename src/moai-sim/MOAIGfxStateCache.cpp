@@ -385,7 +385,7 @@ void MOAIGfxStateCache::ResetState () {
 	ZGL_COMMENT ( gfx, "GFX RESET STATE" );
 
 	// reset the shader
-	gfx.UseProgram ( 0 );
+	gfx.UseProgram ( ZLGfxResource::UNBIND );
 	
 	// turn off blending
 	gfx.Disable ( ZGL_PIPELINE_BLEND );
@@ -420,7 +420,7 @@ void MOAIGfxStateCache::ResetState () {
 	// TODO: seems like overkill
 	for ( size_t i = 0; i < this->mMaxTextureUnits; ++i ){
 		gfx.ActiveTexture (( u32 )i );
-		gfx.SetTexture ( 0 );
+		gfx.BindTexture ( ZLGfxResource::UNBIND );
 		pending.mTextureUnits [ i ] = 0;
 		active.mTextureUnits [ i ] = 0;
 	}
@@ -444,7 +444,7 @@ void MOAIGfxStateCache::ResetState () {
 	
 	pending.mFrameBuffer = this->mDefaultFrameBuffer;
 	active.mFrameBuffer = this->mDefaultFrameBuffer;
-	gfx.BindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, pending.mFrameBuffer->mGLFrameBufferID );
+	gfx.BindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, pending.mFrameBuffer->mGLFrameBuffer );
 	
 	this->mDirtyFlags = 0;
 	this->mTextureDirtyFlags = 0;
@@ -670,7 +670,7 @@ bool MOAIGfxStateCache::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 			
 			this->GfxStateWillChange ();
 			
-			MOAIGfxMgr::GetDrawingAPI ().BindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, frameBuffer->mGLFrameBufferID );
+			MOAIGfxMgr::GetDrawingAPI ().BindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, frameBuffer->mGLFrameBuffer );
 			active.mFrameBuffer = frameBuffer;
 		}
 	}

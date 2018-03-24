@@ -122,9 +122,7 @@ void MOAIVertexArray::OnCPUDestroy () {
 void MOAIVertexArray::OnGPUBind () {
 
 	if ( this->mUseVAOs && this->mVAOs.Size ()) {
-	
-		ZLGfxHandle* vao = this->mVAOs [ this->mCurrentVAO ];
-		MOAIGfxMgr::GetDrawingAPI ().SetVertexArray ( vao );
+		MOAIGfxMgr::GetDrawingAPI ().BindVertexArray ( this->mVAOs [ this->mCurrentVAO ]);
 	}
 	else {
 		this->BindVertexArrayItems ();
@@ -143,8 +141,8 @@ bool MOAIVertexArray::OnGPUCreate () {
 	if ( totalVAOs ) {
 		
 		for ( size_t i = 0; i < totalVAOs; ++i ) {
-			ZLGfxHandle* vao = gfx.CreateVertexArray (); // OK for this to return 0
-			if ( vao ) {
+			ZLGfxHandle vao = gfx.CreateVertexArray (); // OK for this to return 0
+			if ( vao.GetType () != ZLGfxResource::NONE ) {
 				this->mVAOs [ i ] = vao;
 				this->mUseVAOs = true;
 			}
@@ -161,7 +159,7 @@ bool MOAIVertexArray::OnGPUCreate () {
 void MOAIVertexArray::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 
 	for ( size_t i = 0; i < this->mVAOs.Size (); ++i ) {
-		MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mVAOs [ i ], shouldDelete );
+		MOAIGfxResourceClerk::DeleteOrDiscard ( this->mVAOs [ i ], shouldDelete );
 	}
 }
 
@@ -169,7 +167,7 @@ void MOAIVertexArray::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 void MOAIVertexArray::OnGPUUnbind () {
 
 	if ( this->mUseVAOs ) {
-		MOAIGfxMgr::GetDrawingAPI ().SetVertexArray ( 0 );
+		MOAIGfxMgr::GetDrawingAPI ().BindVertexArray ( ZLGfxResource::UNBIND );
 	}
 	else {
 		this->UnbindVertexArrayItems ();
@@ -183,13 +181,13 @@ bool MOAIVertexArray::OnGPUUpdate () {
 	if ( !this->mVAOs.Size ()) return false;
 
 	this->mCurrentVAO = ( this->mCurrentVAO + 1 ) % this->mVAOs.Size ();
-	ZLGfxHandle* vao = this->mVAOs [ this->mCurrentVAO ];
+	const ZLGfxHandle& vao = this->mVAOs [ this->mCurrentVAO ];
 	
-	if ( vao ) {
+	if ( vao.CanBind ()) {
 		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-		gfx.SetVertexArray ( vao );
+		gfx.BindVertexArray ( vao );
 		this->BindVertexArrayItems ();
-		gfx.SetVertexArray ( 0 );
+		gfx.BindVertexArray ( ZLGfxResource::UNBIND );
 		return true;
 	}
 	return false;
@@ -221,11 +219,10 @@ void MOAIVertexArray::ReserveVAOs ( u32 total ) {
 
 	if ( MOAIGfxMgr::IsValid ()) {
 		for ( size_t i = 0; i < this->mVAOs.Size (); ++i ) {
-			MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mVAOs [ i ], false );
+			MOAIGfxResourceClerk::DeleteOrDiscard ( this->mVAOs [ i ], false );
 		}
 	}
 	this->mVAOs.Init ( total );
-	this->mVAOs.Fill ( 0 );
 	
 	this->FinishInit ();
 }

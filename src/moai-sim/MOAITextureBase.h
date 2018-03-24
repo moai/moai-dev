@@ -33,7 +33,7 @@ protected:
 	STLString			mDebugName;
 
 	// GL texture
-	ZLGfxHandle*		mGLTexID;
+	ZLGfxHandle			mGLTexture;
 	
 	// size of the original texture
 	u32					mWidth;
@@ -74,14 +74,14 @@ protected:
 	void				OnGPUDeleteOrDiscard		( bool shouldDelete );
 	void				OnGPUUnbind					();
 	bool				OnGPUUpdate					();
-	void				SetTextureID				( ZLGfxHandle* glTexID, int internalFormat, int pixelType, size_t textureSize );
+	void				SetGLTexture				( const ZLGfxHandle& glTexture, int internalFormat, int pixelType, size_t textureSize );
 	bool				ShouldGenerateMipmaps		();
 	bool				UpdateTextureFromImage		( MOAIImage& image, ZLIntRect rect );
 	
 public:
 	
 	GET_SET ( cc8*, DebugName, mDebugName );
-	GET ( ZLGfxHandle*, TextureID, mGLTexID );
+	GET_CONST ( ZLGfxHandle&, GLTexture, mGLTexture );
 
 	//----------------------------------------------------------------//
 	static void			CheckFilterModes			( int min, int mag );

@@ -9,6 +9,7 @@
 #include <zl-gfx/ZLGfx.h>
 #include <zl-gfx/ZLGfxDevice.h>
 #include <zl-gfx/ZLGfxEnum.h>
+#include <zl-gfx/ZLGfxHandle.h>
 #include <zl-gfx/ZLGfxImmediate.h>
 #include <zl-gfx/ZLGfxLogger.h>
 #include <zl-gfx/ZLGfxRetained.h>

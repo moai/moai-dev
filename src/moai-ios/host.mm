@@ -121,6 +121,6 @@ void AKUIosOpenUrl ( NSURL* url, NSString* sourceApplication ) {
 //----------------------------------------------------------------//
 void AKUIosSetFrameBuffer ( GLuint frameBuffer ) {
 
-	MOAIGfxMgr::Get ().mGfxState.GetDefaultFrameBuffer ()->SetGLFrameBufferID ( new ZLGfxHandle ( ZLGfxHandle::FRAMEBUFFER, frameBuffer, true ));
+	MOAIGfxMgr::Get ().mGfxState.GetDefaultFrameBuffer ()->SetGLFrameBuffer ( ZLGfxHandle ( ZLGfxResource::FRAMEBUFFER, frameBuffer, ZLGfxResource::SYSTEM_ALLOCATED ));
 }
 

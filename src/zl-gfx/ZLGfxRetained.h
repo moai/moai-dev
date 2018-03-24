@@ -52,7 +52,9 @@ private:
 
 	enum {
 		ZLGFX_UNKNOWN,
+		
 		ZLGFX_ACTIVE_TEXTURE,
+		ZLGFX_ALLOCATE_RESOURCE,
 		ZLGFX_ATTACH_SHADER,
 		ZLGFX_BIND_ATTRIB_LOCATION,
 		ZLGFX_BIND_BUFFER,
@@ -74,10 +76,9 @@ private:
 		ZLGFX_COMMENT,
 		ZLGFX_COMPILE_SHADER,
 		ZLGFX_COMPRESSED_TEX_IMAGE_2D,
-		ZLGFX_CREATE,
 		ZLGFX_CULL_FACE,
 		
-		ZLGFX_DELETE,
+		ZLGFX_DELETE_RESOURCE,
 		ZLGFX_DEPTH_FUNC,
 		ZLGFX_DEPTH_MASK,
 		ZLGFX_DISABLE,
@@ -125,8 +126,7 @@ private:
 	ZLLeanStack < ZLGfxListenerRecord, 32 >			mListenerRecords;
 
 	//----------------------------------------------------------------//
-	ZLGfxHandle*			Create						( ZLGfxHandle* handle, u32 param );
-	void					Delete						( u32 type, u32 glid );
+	void					AllocateResource			( ZLGfxResource& resource, u32 param );
 	void					OnGfxEvent					( u32 event, void* userdata );
 	void					OnReadPixels				( const ZLCopyOnWrite& copyOnWrite, void* userdata );
 	void					OnUniformLocation			( u32 addr, void* userdata );
@@ -139,15 +139,15 @@ public:
 
 	//----------------------------------------------------------------//
 	void					ActiveTexture				( u32 textureUnit );
-	void					AttachShader				( ZLGfxHandle* program, ZLGfxHandle* shader );
+	void					AttachShader				( ZLGfxResource& program, ZLGfxResource& shader );
 	
-	void					BindAttribLocation			( ZLGfxHandle* program, u32 index, cc8* name );
+	void					BindAttribLocation			( ZLGfxResource& program, u32 index, cc8* name );
 	
-	void					BindBuffer					( u32 target, ZLGfxHandle* handle );
-	void					BindFramebuffer				( u32 target, ZLGfxHandle* handle );
-	void					BindRenderbuffer			( ZLGfxHandle* handle );
-	void					SetTexture					( ZLGfxHandle* handle );
-	void					SetVertexArray				( ZLGfxHandle* handle );
+	void					BindBuffer					( u32 target, ZLGfxResource& handle );
+	void					BindFramebuffer				( u32 target, ZLGfxResource& handle );
+	void					BindRenderbuffer			( ZLGfxResource& handle );
+	void					BindTexture					( ZLGfxResource& handle );
+	void					BindVertexArray				( ZLGfxResource& handle );
 	
 	void					BlendFunc					( u32 sourceFactor, u32 destFactor );
 	void					BlendMode					( u32 mode );
@@ -162,12 +162,12 @@ public:
 	
 	void					Comment						( cc8* comment );
 	
-	void					CompileShader				( ZLGfxHandle* shader, bool log );
+	void					CompileShader				( ZLGfxResource& shader, bool log );
 	void					CompressedTexImage2D		( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, ZLSharedConstBuffer* buffer );
-	
-	//ZLSharedConstBuffer*	CopyBuffer					( ZLSharedConstBuffer* buffer );
-	
+		
 	void					CullFace					( u32 mode );
+	
+	void					DeleteResource				( ZLGfxResource& resource );
 	
 	void					DepthFunc					( u32 depthFunc );
 	void					DepthMask					( bool flag );
@@ -184,11 +184,11 @@ public:
 	void					Event						( ZLGfxListener* listener, u32 event, void* userdata );
 	
 	void					Flush						( bool finish );
-	void					FramebufferRenderbuffer		( u32 target, u32 attachment, ZLGfxHandle* renderbuffer );
-	void					FramebufferTexture2D		( u32 target, u32 attachment, ZLGfxHandle* texture, s32 level );
+	void					FramebufferRenderbuffer		( u32 target, u32 attachment, ZLGfxResource& renderbuffer );
+	void					FramebufferTexture2D		( u32 target, u32 attachment, ZLGfxResource& texture, s32 level );
 	
-	ZLGfxHandle*			GetCurrentFramebuffer		();
-	void					GetUniformLocation			( ZLGfxHandle* program, cc8* uniformName, ZLGfxListener* listener, void* userdata );
+	void					GetCurrentFramebuffer		( ZLGfxResource& framebuffer );
+	void					GetUniformLocation			( ZLGfxResource& program, cc8* uniformName, ZLGfxListener* listener, void* userdata );
 	
 	bool					HasContent					();
 	
@@ -196,7 +196,7 @@ public:
 	
 	void					LineWidth					( float width );
 	
-	void					LinkProgram					( ZLGfxHandle* program, bool log );
+	void					LinkProgram					( ZLGfxResource& program, bool log );
 	
 	void					PopSection					();
 	
@@ -213,7 +213,7 @@ public:
 	
 	void					Scissor						( s32 x, s32 y, u32 w, u32 h );
 	
-	void					ShaderSource				( ZLGfxHandle* shader, cc8* source, size_t length );
+	void					ShaderSource				( ZLGfxResource& shader, cc8* source, size_t length );
 	
 	void					TexEnvi						( u32 pname, s32 param );
 	void					TexImage2D					( u32 level, u32 internalFormat, u32 width, u32 height, u32 format, u32 type, ZLSharedConstBuffer* buffer );
@@ -221,7 +221,7 @@ public:
 	void					TexSubImage2D				( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, u32 format, u32 type, ZLSharedConstBuffer* buffer );
 	void					UniformFloat				( u32 location, u32 index, u32 width, u32 count, const float* value );
 	void					UniformInt					( u32 location, u32 index, u32 width, u32 count, const s32* value );
-	void					UseProgram					( ZLGfxHandle* program );
+	void					UseProgram					( ZLGfxResource& program );
 	void					VertexAttribPointer			( u32 index, u32 size, u32 type, bool normalized, u32 stride, ZLSharedConstBuffer* buffer, size_t offset );
 	void					Viewport					( s32 x, s32 y, u32 w, u32 h );
 	

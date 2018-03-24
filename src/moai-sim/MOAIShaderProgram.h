@@ -78,9 +78,9 @@ protected:
 	STLString		mVertexShaderSource;
 	STLString		mFragmentShaderSource;
 
-	ZLGfxHandle*	mProgram;
-	ZLGfxHandle*	mVertexShader;
-	ZLGfxHandle*	mFragmentShader;
+	ZLGfxHandle		mProgram;
+	ZLGfxHandle		mVertexShader;
+	ZLGfxHandle		mFragmentShader;
 
 	typedef STLMap < u32, STLString >::iterator AttributeMapIt;
 	STLMap < u32, STLString > mAttributeMap;
@@ -101,7 +101,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	void				BindTextures				();
-	ZLGfxHandle*		CompileShader				( u32 type, cc8* source );
+	ZLGfxHandle			CompileShader				( u32 type, cc8* source );
 	MOAIShaderUniform*	GetUniform					( u32 uniformID );
 	bool				OnCPUCreate					();
 	void				OnCPUDestroy				();

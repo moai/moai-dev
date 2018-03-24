@@ -43,7 +43,7 @@ protected:
 		UPDATE_MODE_SUBDATA,
 	};
 	
-	ZLLeanArray < ZLGfxHandle* >	mVBOs;
+	ZLLeanArray < ZLGfxHandle >		mVBOs;
 	u32								mCurrentVBO;
 	u32								mTarget;
 

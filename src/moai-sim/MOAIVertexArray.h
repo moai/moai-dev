@@ -17,7 +17,7 @@ class MOAIVertexArray :
 	public MOAIGfxResource {
 protected:
 
-	ZLLeanArray < ZLGfxHandle* >					mVAOs; // vertex array objects to bind all the vertex and buffer state
+	ZLLeanArray < ZLGfxHandle >						mVAOs; // vertex array objects to bind all the vertex and buffer state
 	u32												mCurrentVAO;
 
 	ZLLeanArray < MOAIVertexBufferWithFormat >		mVertexBuffers;

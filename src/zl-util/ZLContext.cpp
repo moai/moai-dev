@@ -116,7 +116,7 @@ bool ZLContextMgr::Check ( ZLContext* globals ) {
 u32 ZLContextMgr::CountContexts () {
 
 	GlobalsSet* globalSet = sGlobalsSet.Get ();
-	return globalSet->size ();
+	return globalSet ? globalSet->size () : 0;
 }
 
 //----------------------------------------------------------------//

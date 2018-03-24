@@ -349,7 +349,7 @@ void MOAILuaObject::LuaRelease ( MOAILuaObject* object ) {
 	}
 	
 	// this will take the ref count to zero, but if the object hasn't been collected it *won't* get deleted
-	// thanks to the override of ZLRefCountedObject::OnRelease ()
+	// thanks to the override of ZLRefCountedObject::ZLRefCountedObjectBase_OnRelease ()
 	object->Release ();
 }
 
@@ -461,21 +461,6 @@ void MOAILuaObject::MakeLuaBinding ( MOAILuaState& state ) {
 	lua_setmetatable ( state, -2 ); // interface is meta of member
 	lua_setmetatable ( state, -2 ); // member is meta of ref
 	lua_setmetatable ( state, -2 ); // ref is meta of userdata
-}
-
-//----------------------------------------------------------------//
-void MOAILuaObject::OnRelease ( u32 refCount ) {
-
-	// The engine is done with this object, so it's OK to delete
-	// it if there is no connection to the Lua runtime. If there
-	// is, then refcount can remain 0 and the object will be
-	// collected by the Lua GC.
-
-	if (( !this->IsBound ()) && ( refCount == 0 )) {
-		// no Lua binding and no references, so
-		// go ahead and kill this turkey
-		delete this;
-	}
 }
 
 //----------------------------------------------------------------//
@@ -621,4 +606,23 @@ void MOAILuaObject::SetMemberTable ( MOAILuaState& state, int idx ) {
 	
 	this->MakeLuaBinding ( state );
 	state.Pop ( 1 );
+}
+
+//================================================================//
+// ZLRefCountedObjectBase
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAILuaObject::ZLRefCountedObjectBase_OnRelease ( u32 refCount ) {
+
+	// The engine is done with this object, so it's OK to delete
+	// it if there is no connection to the Lua runtime. If there
+	// is, then refcount can remain 0 and the object will be
+	// collected by the Lua GC.
+
+	if (( !this->IsBound ()) && ( refCount == 0 )) {
+		// no Lua binding and no references, so
+		// go ahead and kill this turkey
+		delete this;
+	}
 }
