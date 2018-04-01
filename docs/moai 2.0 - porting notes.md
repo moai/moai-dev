@@ -77,6 +77,8 @@ prop:setMaterialBatch(myMaterialBatch) -- set a material batch
 
 Material settings cascade from prop to deck. All material attributes support a nil value; setting a non-nil value to a material attribute on a prop will mask the same attribute when the deck is rendered.
 
+Also of note: the "convenience" blend modes are gone. Blend modes must now be set explicitly, with all three parameters (func, srcFactor, destFactor).
+
 ## Class-Scoped Debug Lines
 
 MOAIDebugLines has been renamed to MOAIDebugLinesMgr and debug line styles are now scoped to classes. For example:
