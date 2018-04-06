@@ -35,7 +35,7 @@ enum {
 @interface MOAIView () {
 
     AKUContextID        mAKUContext;
-    NSTimeInterval      mAnimInterval;
+    NSTimeInterval      mAnimFPS;
     CADisplayLink*      mDisplayLink;
     
     BOOL                mGCDetected;
@@ -315,7 +315,7 @@ enum {
 		
 		if ( !mDisplayLink ) {
 			CADisplayLink* aDisplayLink = [[ UIScreen mainScreen ] displayLinkWithTarget:self selector:@selector( onUpdateAnim )];
-			[ aDisplayLink setFrameInterval:mAnimInterval ];
+			[ aDisplayLink setPreferredFramesPerSecond:mAnimFPS ];
 			[ aDisplayLink addToRunLoop:[ NSRunLoop currentRunLoop ] forMode:NSDefaultRunLoopMode ]; // or NSRunLoopCommonModes
 			mDisplayLink = aDisplayLink;
 		}
