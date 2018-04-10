@@ -115,6 +115,34 @@ int MOAIFreeTypeFontReader::_setPenColor ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFreeTypeFontReader::_strokeGlyph ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFreeTypeFontReader, "U" )
+
+	int result = MOAIFontReader::FONT_ERROR;
+	MOAIImage* image = state.GetLuaObject < MOAIImage >( 2, true );
+	
+	if ( image ) {
+	
+		float x				= state.GetValue < float >( 3, 0.0f );
+		float y				= state.GetValue < float >( 4, 0.0f );
+		float strokeSize	= state.GetValue < float >( 5, 0.0f );
+		
+		ZLColorBlendFunc blendFunc;
+		blendFunc.mEquation = ZLColor::BLEND_EQ_NONE;
+		
+		if ( state.CheckParams ( 6, "NN", false )) {
+			blendFunc.mSrcFactor	= ( ZLColor::BlendFactor )state.GetValue < u32 >( 6, ( u32 )ZLColor::BLEND_FACTOR_SRC_ALPHA );
+			blendFunc.mDstFactor	= ( ZLColor::BlendFactor )state.GetValue < u32 >( 7, ( u32 )ZLColor::BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
+			blendFunc.mEquation		= ( ZLColor::BlendEquation )state.GetValue < u32 >( 8, ( u32 )ZLColor::BLEND_EQ_ADD );
+		}
+		result = self->StrokeGlyph ( *image, x, y, strokeSize, blendFunc );
+	}
+	state.Push ( result != MOAIFontReader::OK );
+	return 1;
+}
+
 //================================================================//
 // MOAIFreeTypeFontReader
 //================================================================//
@@ -260,6 +288,7 @@ void MOAIFreeTypeFontReader::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "enableAntiAliasing",		_enableAntiAliasing },
 		{ "setPenColor",			_setPenColor },
+		{ "strokeGlyph",			_strokeGlyph },
 		{ NULL, NULL }
 	};
 	
@@ -295,16 +324,13 @@ int MOAIFreeTypeFontReader::RenderGlyph ( MOAIImage& image, float x, float y, co
 		render.mPenColor = this->mPenColor;
 		render.mPenX =  ( int )x;
 		render.mPenY = ( int )y;
-	
+		
 		FT_Outline_Render (( FT_Library )this->mLibrary, &face->glyph->outline, &params );
 	}
 	else {
 		// completely different path to render monochrome
 		// TODO: render monochrome glyph
 		FT_Error error = FT_Render_Glyph ( face->glyph, FT_RENDER_MODE_MONO );
-		if ( error == 0 ) {
-			printf ( "OK!\n" );
-		}
 	}
 
 	return OK;
@@ -354,6 +380,58 @@ void MOAIFreeTypeFontReader::SerializeIn ( MOAILuaState& state, MOAIDeserializer
 //----------------------------------------------------------------//
 void MOAIFreeTypeFontReader::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	MOAIFontReader::SerializeOut ( state, serializer );
+}
+
+//----------------------------------------------------------------//
+int MOAIFreeTypeFontReader::StrokeGlyph ( MOAIImage& image, float x, float y, float strokeSize, const ZLColorBlendFunc& blendFunc ) {
+
+	if ( image.GetPixelFormat () != MOAIImage::TRUECOLOR ) return FONT_ERROR;
+
+	if ( !this->mFace ) return FONT_ERROR;
+	if ( this->mGlyphCode == GLYPH_CODE_NULL ) return FONT_ERROR;
+
+	FT_Face face = ( FT_Face )this->mFace;
+	
+	// bail if glyph has no outline we can render
+	if ( face->glyph->format!= FT_GLYPH_FORMAT_OUTLINE ) return FONT_ERROR;
+	
+	// set up the render params in case they are needed
+	RenderParams render;
+	FT_Raster_Params params;
+	memset ( &params, 0, sizeof ( params ));
+	params.flags = FT_RASTER_FLAG_DIRECT | ( this->mAntiAlias ? FT_RASTER_FLAG_AA : 0 );
+	params.gray_spans = _renderSpan;
+	params.user = &render;
+	
+	render.mImage = &image;
+	render.mBlendFunc = blendFunc;
+	render.mPenColor = this->mPenColor;
+	render.mPenX =  ( int )x;
+	render.mPenY = ( int )y;
+	
+	
+	
+	// Set up a stroker.
+	FT_Stroker stroker;
+	FT_Stroker_New (( FT_Library )this->mLibrary, &stroker );
+	FT_Stroker_Set ( stroker, ( int )( strokeSize * 64.0f ), FT_STROKER_LINECAP_ROUND, FT_STROKER_LINEJOIN_ROUND, 0 );
+
+	FT_Glyph glyph;
+	if ( FT_Get_Glyph ( face->glyph, &glyph ) == 0 ) {
+	
+		FT_Glyph_Stroke ( &glyph, stroker, true );
+		
+		if ( glyph->format == FT_GLYPH_FORMAT_OUTLINE ) {
+		
+			FT_Outline* outline = &reinterpret_cast < FT_OutlineGlyph >( glyph )->outline;
+			FT_Outline_Render (( FT_Library )this->mLibrary, outline, &params );
+		}
+
+		// Clean up afterwards.
+		FT_Stroker_Done ( stroker );
+		FT_Done_Glyph ( glyph );
+	}
+	return OK;
 }
 
 #endif
