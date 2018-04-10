@@ -1285,10 +1285,6 @@
 		CD18CEDD14693BC100990FE1 /* MOAISharedPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CEA014693BC100990FE1 /* MOAISharedPtr.h */; };
 		CD18CEE214693BC100990FE1 /* MOAIWeakPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CEA314693BC100990FE1 /* MOAIWeakPtr.h */; };
 		CD18CEE314693BC100990FE1 /* MOAIWeakPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CEA314693BC100990FE1 /* MOAIWeakPtr.h */; };
-		CD19AA08151AF7E2006A1F9D /* USUnique_linux.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD19AA06151AF7E2006A1F9D /* USUnique_linux.cpp */; };
-		CD19AA09151AF7E2006A1F9D /* USUnique_linux.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD19AA06151AF7E2006A1F9D /* USUnique_linux.cpp */; };
-		CD19AA0A151AF7E2006A1F9D /* USUnique.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA07151AF7E2006A1F9D /* USUnique.h */; };
-		CD19AA0B151AF7E2006A1F9D /* USUnique.h in Headers */ = {isa = PBXBuildFile; fileRef = CD19AA07151AF7E2006A1F9D /* USUnique.h */; };
 		CD1D0BA413599FD200802A3C /* AKU-iphone.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D0BA213599FD200802A3C /* AKU-iphone.h */; };
 		CD1D0BA513599FD200802A3C /* AKU-iphone.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD1D0BA313599FD200802A3C /* AKU-iphone.mm */; };
 		CD218F7213A7FC79008337E7 /* USLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD218F7013A7FC79008337E7 /* USLog.cpp */; };
@@ -6878,7 +6874,6 @@
 				075BA09E151949C50002E925 /* MOAIUrlMgrNaCl.h in Headers */,
 				077D50121519A4A1003DFC89 /* MOAIRenderable.h in Headers */,
 				077D50161519A4A1003DFC89 /* MOAIRenderMgr.h in Headers */,
-				CD19AA0B151AF7E2006A1F9D /* USUnique.h in Headers */,
 				66C3B18C15587833005C1858 /* MOAIScissorRect.h in Headers */,
 				CD06AF96155B443E00EB03C5 /* MOAIFoo.h in Headers */,
 				EB70432918761BDE0057E450 /* MOAIEaseSineIn.h in Headers */,
@@ -7357,7 +7352,6 @@
 				075BA09D151949C50002E925 /* MOAIUrlMgrNaCl.h in Headers */,
 				077D50111519A4A1003DFC89 /* MOAIRenderable.h in Headers */,
 				077D50151519A4A1003DFC89 /* MOAIRenderMgr.h in Headers */,
-				CD19AA0A151AF7E2006A1F9D /* USUnique.h in Headers */,
 				E9A41AB7151AAA5400650276 /* MOAICrittercismIOS.h in Headers */,
 				E9CA1DFE151AD5B4005F39B7 /* MOAINotificationsIOS.h in Headers */,
 				CDF2C61B151B146F0009D47D /* MOAIAppIOS.h in Headers */,
@@ -8802,7 +8796,6 @@
 				075BA09C151949C50002E925 /* MOAIUrlMgrNaCl.cpp in Sources */,
 				077D50101519A4A1003DFC89 /* MOAIRenderable.cpp in Sources */,
 				077D50141519A4A1003DFC89 /* MOAIRenderMgr.cpp in Sources */,
-				CD19AA09151AF7E2006A1F9D /* USUnique_linux.cpp in Sources */,
 				667AE73B154A09CA00CCE42D /* MOAIFoo.cpp in Sources */,
 				667AE73E154A0CAD00CCE42D /* MOAIFooMgr.cpp in Sources */,
 				66C3B18915587827005C1858 /* MOAIScissorRect.cpp in Sources */,
@@ -9350,7 +9343,6 @@
 				077D500F1519A4A1003DFC89 /* MOAIRenderable.cpp in Sources */,
 				077D50131519A4A1003DFC89 /* MOAIRenderMgr.cpp in Sources */,
 				8DF743F41E4CEB9D003A62C4 /* ftdebug.c in Sources */,
-				CD19AA08151AF7E2006A1F9D /* USUnique_linux.cpp in Sources */,
 				E9A41AB8151AAA5400650276 /* MOAICrittercismIOS.mm in Sources */,
 				E9CA1DFF151AD5B4005F39B7 /* MOAINotificationsIOS.mm in Sources */,
 				CDF2C61C151B146F0009D47D /* MOAIAppIOS.mm in Sources */,
@@ -10105,7 +10097,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D018565F8B00775234 /* libmoai-osx-debug.xcconfig */;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libstdc++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -10140,7 +10131,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D118565F8B00775234 /* libmoai-osx-release.xcconfig */;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libstdc++";
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -10177,7 +10167,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D018565F8B00775234 /* libmoai-osx-debug.xcconfig */;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libstdc++";
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -10193,7 +10182,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D118565F8B00775234 /* libmoai-osx-release.xcconfig */;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libstdc++";
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -10327,6 +10315,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -10427,7 +10416,7 @@
 					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
 					"../../3rdparty/sfmt-1.4/",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_CFLAGS = (
 					"-include",
 					"\"zlcore/zl_replace.h\"",
@@ -10529,6 +10518,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -10634,7 +10624,7 @@
 					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
 					"../../3rdparty/sfmt-1.4/",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-include",
@@ -10675,7 +10665,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D018565F8B00775234 /* libmoai-osx-debug.xcconfig */;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libstdc++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -10691,7 +10680,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D118565F8B00775234 /* libmoai-osx-release.xcconfig */;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libstdc++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -10768,7 +10756,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D018565F8B00775234 /* libmoai-osx-debug.xcconfig */;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libstdc++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -10803,7 +10790,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5751E6D118565F8B00775234 /* libmoai-osx-release.xcconfig */;
 			buildSettings = {
-				CLANG_CXX_LIBRARY = "libstdc++";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
