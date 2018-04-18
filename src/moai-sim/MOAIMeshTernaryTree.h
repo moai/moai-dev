@@ -20,8 +20,8 @@ class MOAIVertexFormat;
 class MOAIMeshTernaryTreeBuilderPrim {
 private:
 
-	friend MOAIMeshTernaryTree;
-	friend MOAIMeshTernaryTreeBuilder;
+	friend class MOAIMeshTernaryTree;
+	friend class MOAIMeshTernaryTreeBuilder;
 
 	u32				mIndex;			// the mesh component index (into either the vertex buffer, or the index buffer if the mesh has one)
 	ZLBox			mBounds;		// bounds of the prim

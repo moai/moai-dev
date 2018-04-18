@@ -39,7 +39,7 @@ public:
 class MOAIMaterialGlobal {
 private:
 
-	friend MOAIMaterialMgr;
+	friend class MOAIMaterialMgr;
 	
 	union {
 		MOAITextureBase*	mTexture;
@@ -62,7 +62,7 @@ public:
 class MOAIMaterialStackClearCmd {
 private:
 
-	friend MOAIMaterialMgr;
+	friend class MOAIMaterialMgr;
 	
 	MOAIMaterialGlobal*				mGlobal;
 	MOAIMaterialStackClearCmd*		mNext;
@@ -74,7 +74,7 @@ private:
 class MOAIMaterialStackFrame {
 private:
 
-	friend MOAIMaterialMgr;
+	friend class MOAIMaterialMgr;
 	
 	u32								mFlags;
 	MOAIMaterialStackClearCmd*		mClearList;
