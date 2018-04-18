@@ -26,7 +26,7 @@ protected:
 	MOAICollisionShape*		MOAIDeck_GetCollisionShape		( ZLIndex idx );
 	bool					MOAIDeck_Overlap				( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
 	bool					MOAIDeck_Overlap				( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
-	virtual ZLIndex		MOAIDeckProxy_Remap				( ZLIndex idx );
+	virtual ZLIndex			MOAIDeckProxy_Remap				( ZLIndex idx );
 
 public:
 	

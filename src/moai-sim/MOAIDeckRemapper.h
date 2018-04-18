@@ -29,7 +29,7 @@ protected:
 	static int			_setRemap				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	ZLIndex			MOAIDeckProxy_Remap				( ZLIndex idx );
+	ZLIndex				MOAIDeckProxy_Remap				( ZLIndex idx );
 	bool				MOAINode_ApplyAttrOp			( u32 attrID, MOAIAttribute& attr, u32 op );
 
 public:
