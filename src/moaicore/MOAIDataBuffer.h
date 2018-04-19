@@ -40,6 +40,7 @@ private:
 	static int		_save				( lua_State* L );
 	static int		_saveAsync			( lua_State* L );
 	static int		_setString			( lua_State* L );
+	static int		_setData			( lua_State* L );
 	static int		_toCppHeader		( lua_State* L );
 
 	//----------------------------------------------------------------//
