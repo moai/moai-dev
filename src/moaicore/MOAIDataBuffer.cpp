@@ -355,9 +355,10 @@ int MOAIDataBuffer::_setString ( lua_State* L ) {
 }
 
 int MOAIDataBuffer::_setData ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDataBuffer, "ULN" );
+	MOAI_LUA_SETUP ( MOAIDataBuffer, "UNN" );
 
-	void *p = state.GetUserData ( 2, NULL );
+	u64 b = state.GetValue < u64 >( 2, 0 );
+	void *p = (void *)b;
 	u32 count = state.GetValue < u32 >( 3, 0 );
 
 	self->Load ( p, count );
