@@ -92,11 +92,11 @@ u32 ZLColor::BilerpFixed ( u32 c0, u32 c1, u32 c2, u32 c3, u8 xt, u8 yt ) {
 //----------------------------------------------------------------//
 u32 ZLColor::Blend ( u32 src32, u32 dst32, const ZLColorBlendFunc& blendFunc ) {
 
-	return Blend ( src32, dst32, blendFunc.mSrcFactor, blendFunc.mDstFactor, blendFunc.mEquation );
+	return Blend ( src32, dst32, blendFunc.mEquation, blendFunc.mSrcFactor, blendFunc.mDstFactor );
 }
 
 //----------------------------------------------------------------//
-u32 ZLColor::Blend ( u32 src32, u32 dst32, ZLColor::BlendFactor srcFactor, ZLColor::BlendFactor dstFactor, ZLColor::BlendEquation blendEq ) {
+u32 ZLColor::Blend ( u32 src32, u32 dst32, ZLColor::BlendEquation blendEq, ZLColor::BlendFactor srcFactor, ZLColor::BlendFactor dstFactor ) {
 	
 	if ( blendEq == BLEND_EQ_NONE ) return src32;
 	

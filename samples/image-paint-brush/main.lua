@@ -85,17 +85,17 @@ function stamp ( x, y, source )
 	-- copy only the RGB channels from the source image
 	brush:copyRect ( source, x1, y1, x2, y2, 0, 0, w, h,
 		MOAIImage.FILTER_LINEAR,
+		MOAIImage.BLEND_EQ_ADD
 		MOAIImage.BLEND_FACTOR_1110,
 		MOAIImage.BLEND_FACTOR_0001,
-		MOAIImage.BLEND_EQ_ADD
 	)
 
 	-- blend the brush with the dest image using the brush's alpha channel
 	canvas:copyRect ( brush, 0, 0, w, h, x1, y1, x2, y2,
 		MOAIImage.FILTER_LINEAR,
+		MOAIImage.BLEND_EQ_ADD
 		MOAIImage.BLEND_FACTOR_SRC_ALPHA,
 		MOAIImage.BLEND_FACTOR_ONE_MINUS_SRC_ALPHA,
-		MOAIImage.BLEND_EQ_ADD
 	)
 	canvas:invalidate ( x1, y1, x2, y2 )
 end

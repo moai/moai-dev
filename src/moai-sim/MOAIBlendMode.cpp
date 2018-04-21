@@ -12,14 +12,11 @@
 //----------------------------------------------------------------//
 void MOAIBlendMode::Init ( MOAILuaState& state, int idx ) {
 
-	if ( state.CheckParams ( idx, "NNN" )) {
-
-		u32 equation	= state.GetValue < u32 >( idx++, ZGL_BLEND_MODE_ADD );
-		u32 srcFactor	= state.GetValue < u32 >( idx++, ZGL_BLEND_FACTOR_ONE );
-		u32 dstFactor	= state.GetValue < u32 >( idx, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
-		
-		this->SetBlend ( equation, srcFactor, dstFactor );
-	}
+	u32 equation	= state.GetValue < u32 >( idx++, ZGL_BLEND_MODE_ADD );
+	u32 srcFactor	= state.GetValue < u32 >( idx++, ZGL_BLEND_FACTOR_ONE );
+	u32 dstFactor	= state.GetValue < u32 >( idx, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
+	
+	this->SetBlend ( equation, srcFactor, dstFactor );
 }
 
 //----------------------------------------------------------------//

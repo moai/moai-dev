@@ -25,11 +25,13 @@ layer:pushRenderPass ()
 renderGlyph = function ( font, reader, image, code, x, y, xMin, yMin, xMax, yMax )
 	print ( 'GLYPH:', font, reader, image, code, x, y, xMin, yMin, xMax, yMax )
 	
+	reader:setBlendMode ( MOAIImage.BLEND_EQ_ADD, MOAIImage.BLEND_FACTOR_ONE, MOAIImage.BLEND_FACTOR_ONE_MINUS_SRC_ALPHA )
+
 	reader:setPenColor ( 0, 1, 1, 1 )
-	reader:renderGlyph ( image, x, y, MOAIImage.BLEND_FACTOR_ONE, MOAIImage.BLEND_FACTOR_ONE_MINUS_SRC_ALPHA, MOAIImage.BLEND_EQ_ADD )
+	reader:renderGlyph ( image, x, y )
 
 	reader:setPenColor ( 1, 1, 1, 1 )
-	reader:strokeGlyph ( image, x, y, 2, MOAIImage.BLEND_FACTOR_ONE, MOAIImage.BLEND_FACTOR_ONE_MINUS_SRC_ALPHA, MOAIImage.BLEND_EQ_ADD )
+	reader:strokeGlyph ( image, x, y, 2 )
 end
 
 font = MOAIFont.new ()

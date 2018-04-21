@@ -120,9 +120,9 @@ function stamp ( x, y, erase )
 	-- blend the brush with the dest image using the brush's alpha channel
 	mask:copyRect ( brush, 0, 0, w, h, x1, y1, x2, y2,
 		MOAIImage.FILTER_LINEAR,
+		erase and MOAIImage.BLEND_EQ_SUB_INV or MOAIImage.BLEND_EQ_ADD,
 		MOAIImage.BLEND_FACTOR_ONE,
 		MOAIImage.BLEND_FACTOR_ONE,
-		erase and MOAIImage.BLEND_EQ_SUB_INV or MOAIImage.BLEND_EQ_ADD
 	)
 	mask:invalidate ( x1, y1, x2, y2 )
 
