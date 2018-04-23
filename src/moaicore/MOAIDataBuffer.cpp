@@ -357,11 +357,11 @@ int MOAIDataBuffer::_setString ( lua_State* L ) {
 int MOAIDataBuffer::_setData ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDataBuffer, "UNN" );
 
-	u64 b = state.GetValue < u64 >( 2, 0 );
-	void *p = (void *)b;
-	u32 count = state.GetValue < u32 >( 3, 0 );
+	s64 bytesAddress = state.GetValue < s64 >( 2, 0 );
+	void *bytesPointer = (void *)bytesAddress;
+	s32 count = state.GetValue < s32 >( 3, 0 );
 
-	self->Load ( p, count );
+	self->Load ( bytesPointer, count );
 
 	return 0;
 }
