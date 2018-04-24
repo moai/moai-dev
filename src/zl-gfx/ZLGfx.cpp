@@ -45,7 +45,7 @@ ZLGfxListener::~ZLGfxListener () {
 ZLGfxHandle ZLGfx::CreateBuffer () {
 
 	#if defined( MOAI_OS_ANDROID ) || defined( MOAI_OS_HTML )
-		return ZLGfxHandle ( ZLGfxResource::EMPTY, 0, ZLGfxResource::NOT_ALLOCATED );
+		return ZLGfxHandle ( ZLGfxResource::NONE, 0, ZLGfxResource::NOT_ALLOCATED );
 	#else
 		ZLGfxHandle handle ( ZLGfxResource::BUFFER, 0, ZLGfxResource::PENDING_ALLOCATION );
 		this->AllocateResource ( *handle.mResource, 0 );
