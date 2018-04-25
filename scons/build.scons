@@ -10,9 +10,9 @@ import shutil
 import os
 
 nacl_env = make_nacl_env.NaClEnvironment(
-    use_c_plus_plus_libs=True, 
+    use_c_plus_plus_libs=True,
 	nacl_platform=os.getenv('NACL_TARGET_PLATFORM'))
-	
+
 fmod_include = os.getenv('FMOD_CHROME_SDK_ROOT') + '/api/inc';
 fmod_library = os.getenv('FMOD_CHROME_SDK_ROOT') + '/api/lib/' + os.getenv('NACL_TARGET_PLATFORM') + '/win_x86_newlib/x86-';
 
@@ -279,7 +279,7 @@ box2d_sources = [ os.path.join( box2d_path, src_file ) for src_file in [
 
 uslcore_sources = [ os.path.join( 'uslscore', src_file ) for src_file in [
 					'STLString.cpp'           ,
-					'USAdapterInfo_posix.cpp' ,					
+					'USAdapterInfo_posix.cpp' ,
 					'USBase64Reader.cpp'	  ,
 					'USBase64Writer.cpp'	  ,
 					'USBase64Encoder.cpp'	  ,
@@ -313,7 +313,7 @@ uslcore_sources = [ os.path.join( 'uslscore', src_file ) for src_file in [
 					'USIntersect.cpp'         ,
 					'USLexStream.cpp'         ,
 					'USLog.cpp'               ,
-					'uslscore-pch.cpp'        ,				
+					'uslscore-pch.cpp'        ,
 					'USMemStream.cpp'         ,
 					'USMercator.cpp'          ,
 					'USParser.cpp'            ,
@@ -333,7 +333,7 @@ uslcore_sources = [ os.path.join( 'uslscore', src_file ) for src_file in [
 					'USTrig.cpp'              ,
 					'USTypedPtr.cpp'          ,
 					'USUnique_linux.cpp'      ,
-					'USXmlReader.cpp'         ,					
+					'USXmlReader.cpp'         ,
 					'USZip.cpp'               ,
 					'USZipFile.cpp'           ,
 ]]
@@ -510,6 +510,7 @@ moai_sources = [ os.path.join('moaicore', src_file) for src_file in [
 				'MOAITextStyler.cpp'             ,
 				'MOAITexture.cpp'                ,
 				'MOAITextureBase.cpp'            ,
+        'MOAITextureRaw.cpp'             ,
 				'MOAIThread.cpp'            		 ,
 				'MOAIThread_posix.cpp'      		 ,
 				'MOAICoroutine.cpp'              ,
@@ -528,11 +529,11 @@ moai_sources = [ os.path.join('moaicore', src_file) for src_file in [
 				'MOAIXmlParser.cpp'              ,
 ]]
 
-moaiextuntz_sources = [ os.path.join('moaiext-untz', src_file) for src_file in [ 
+moaiextuntz_sources = [ os.path.join('moaiext-untz', src_file) for src_file in [
 				'MOAIUntzSystem.cpp'              ,
 ]]
-		
-moaiextfmod_sources = [ os.path.join('moaiext-fmod-ex', src_file) for src_file in [ 
+
+moaiextfmod_sources = [ os.path.join('moaiext-fmod-ex', src_file) for src_file in [
 				'MOAIFmodEx.cpp'              ,
 				'MOAIFmodExChannel.cpp'       ,
 				'MOAIFmodExSound.cpp'         ,
@@ -552,10 +553,10 @@ nacl_env.Append ( LIBS=['m','nacl_dyncode','c', 'g', 'nacl', 'ppapi_gles2','fmod
 
 nacl_env.Append ( CPPDEFINES=['MOAI_OS_NACL','HAVE_MEMMOVE','__linux', 'NACL', 'USE_CURL=0','USE_CHIPMUNK=0','USE_OPENGLES1=0','USE_SQL=0', 'USE_OPENSSL=0','FT2_BUILD_LIBRARY'] )
 
-nacl_env["CPPPATH"] = [ 'lua-5.1.3/src', 
+nacl_env["CPPPATH"] = [ 'lua-5.1.3/src',
 						'ooid-0.99',
-                        'box2d-2.2.1', 
-						'chipmunk-5.3.4/include', 
+                        'box2d-2.2.1',
+						'chipmunk-5.3.4/include',
 						'physfs-2.0.2',
 						'sqlite-3.6.16',
 						'expat-2.0.1/lib',

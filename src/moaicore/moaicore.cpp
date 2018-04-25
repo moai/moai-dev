@@ -175,6 +175,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAITextStyle )
 	REGISTER_LUA_CLASS ( MOAITextRenderer )
 	REGISTER_LUA_CLASS ( MOAITexture )
+	REGISTER_LUA_CLASS ( MOAITextureRaw )
 	REGISTER_LUA_CLASS ( MOAITileDeck2D )
 	REGISTER_LUA_CLASS ( MOAITimer )
 	REGISTER_LUA_CLASS ( MOAITouchSensor )

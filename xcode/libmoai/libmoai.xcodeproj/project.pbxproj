@@ -1120,6 +1120,10 @@
 		8DF744901E4CF1EB003A62C4 /* ftsynth.c in Sources */ = {isa = PBXBuildFile; fileRef = 8DF744161E4CED59003A62C4 /* ftsynth.c */; };
 		8DF744911E4CF1EB003A62C4 /* fttype1.c in Sources */ = {isa = PBXBuildFile; fileRef = 8DF744171E4CED59003A62C4 /* fttype1.c */; };
 		8DF744921E4CF1EB003A62C4 /* ftwinfnt.c in Sources */ = {isa = PBXBuildFile; fileRef = 8DF744181E4CED59003A62C4 /* ftwinfnt.c */; };
+		AB80F4992086B24A0072BF49 /* MOAITextureRaw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB80F4982086B24A0072BF49 /* MOAITextureRaw.cpp */; };
+		AB80F49B2086B2930072BF49 /* MOAITextureRaw.h in Headers */ = {isa = PBXBuildFile; fileRef = AB80F49A2086B2930072BF49 /* MOAITextureRaw.h */; };
+		AB80F49C2086B4A20072BF49 /* MOAITextureRaw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB80F4982086B24A0072BF49 /* MOAITextureRaw.cpp */; };
+		AB80F49D2086B4BA0072BF49 /* MOAITextureRaw.h in Headers */ = {isa = PBXBuildFile; fileRef = AB80F49A2086B2930072BF49 /* MOAITextureRaw.h */; };
 		B408CA1118CE609F00F9A780 /* MOAITest_sample.h in Headers */ = {isa = PBXBuildFile; fileRef = B408CA0A18CE609F00F9A780 /* MOAITest_sample.h */; };
 		B408CA1218CE609F00F9A780 /* MOAITest_USQuaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = B408CA0B18CE609F00F9A780 /* MOAITest_USQuaternion.h */; };
 		B408CA1318CE609F00F9A780 /* MOAITest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B408CA0C18CE609F00F9A780 /* MOAITest.cpp */; };
@@ -3809,6 +3813,8 @@
 		8DF744351E4CEE63003A62C4 /* type42.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = type42.c; path = "../../3rdparty/freetype-2.7/src/type42/type42.c"; sourceTree = "<group>"; };
 		8DF744371E4CEE70003A62C4 /* winfnt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = winfnt.c; path = "../../3rdparty/freetype-2.7/src/winfonts/winfnt.c"; sourceTree = "<group>"; };
 		8DF744391E4CEE86003A62C4 /* type1cid.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = type1cid.c; path = "../../3rdparty/freetype-2.7/src/cid/type1cid.c"; sourceTree = "<group>"; };
+		AB80F4982086B24A0072BF49 /* MOAITextureRaw.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextureRaw.cpp; sourceTree = "<group>"; };
+		AB80F49A2086B2930072BF49 /* MOAITextureRaw.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MOAITextureRaw.h; sourceTree = "<group>"; };
 		B408CA0A18CE609F00F9A780 /* MOAITest_sample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAITest_sample.h; path = "moaiext-test/MOAITest_sample.h"; sourceTree = "<group>"; };
 		B408CA0B18CE609F00F9A780 /* MOAITest_USQuaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAITest_USQuaternion.h; path = "moaiext-test/MOAITest_USQuaternion.h"; sourceTree = "<group>"; };
 		B408CA0C18CE609F00F9A780 /* MOAITest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAITest.cpp; path = "moaiext-test/MOAITest.cpp"; sourceTree = "<group>"; };
@@ -6262,6 +6268,8 @@
 				07D1A8A113EDFD8300604979 /* MOAIFrameBuffer.h */,
 				0324E59213564BC8000ADC60 /* MOAITexture.cpp */,
 				0324E59313564BC8000ADC60 /* MOAITexture.h */,
+				AB80F4982086B24A0072BF49 /* MOAITextureRaw.cpp */,
+				AB80F49A2086B2930072BF49 /* MOAITextureRaw.h */,
 			);
 			name = texture;
 			sourceTree = "<group>";
@@ -6620,6 +6628,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB80F49D2086B4BA0072BF49 /* MOAITextureRaw.h in Headers */,
 				0324E83713564BC8000ADC60 /* pch.h in Headers */,
 				0324E83913564BC8000ADC60 /* MOAIAction.h in Headers */,
 				0324E83B13564BC8000ADC60 /* MOAIAnim.h in Headers */,
@@ -7282,6 +7291,7 @@
 				CDBD3D371425DC2600BC33D4 /* MOAIBox2DMouseJoint.h in Headers */,
 				CDBD3D391425DC2600BC33D4 /* MOAIBox2DPrismaticJoint.h in Headers */,
 				B4A3C42E19930764006DEEB6 /* MOAICCParticleSystem.h in Headers */,
+				AB80F49B2086B2930072BF49 /* MOAITextureRaw.h in Headers */,
 				CDBD3D3B1425DC2600BC33D4 /* MOAIBox2DPulleyJoint.h in Headers */,
 				CDBD3D3D1425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.h in Headers */,
 				CDBD3D3F1425DC2600BC33D4 /* MOAIBox2DWeldJoint.h in Headers */,
@@ -8594,6 +8604,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB80F49C2086B4A20072BF49 /* MOAITextureRaw.cpp in Sources */,
 				0324E83613564BC8000ADC60 /* pch.cpp in Sources */,
 				0324E83813564BC8000ADC60 /* MOAIAction.cpp in Sources */,
 				0324E83A13564BC8000ADC60 /* MOAIAnim.cpp in Sources */,
@@ -9399,6 +9410,7 @@
 				8DF743E41E4CEB01003A62C4 /* autofit.c in Sources */,
 				8DF7441D1E4CED59003A62C4 /* ftotval.c in Sources */,
 				4D851DA91873E760009DF1C4 /* MOAIEaseElasticIn.cpp in Sources */,
+				AB80F4992086B24A0072BF49 /* MOAITextureRaw.cpp in Sources */,
 				663703F416128038002D0D27 /* USHashWriterSHA256.cpp in Sources */,
 				663703F816128038002D0D27 /* USHashWriterSHA384.cpp in Sources */,
 				663703FC16128038002D0D27 /* USHashWriterSHA512.cpp in Sources */,

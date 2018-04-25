@@ -71,6 +71,7 @@ protected:
 	//----------------------------------------------------------------//
 	void			CreateTextureFromImage	( MOAIImage& image );
 	void			CreateTextureFromPVR	( void* data, size_t size );
+	void            CreateTextureFromRaw    ( uint8_t* data, size_t width, size_t height );
 	bool			IsRenewable				();
 
 	virtual void	OnBind					();

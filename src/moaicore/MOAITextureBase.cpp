@@ -97,6 +97,54 @@ int MOAITextureBase::_setWrap ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAITextureBase::CreateTextureFromRaw ( uint8_t *data, size_t width, size_t height ) {
+	if ( !MOAIGfxDevice::Get ().GetHasContext ()) {
+		return;
+	}
+
+	MOAIGfxDevice::Get ().ClearErrors ();
+
+	this->mGLInternalFormat = GL_RGBA;
+	this->mGLPixelType = GL_UNSIGNED_BYTE;
+
+	glGenTextures ( 1, &this->mGLTexID );
+	if ( !this->mGLTexID ) {
+		return;
+	}
+
+	glBindTexture ( GL_TEXTURE_2D, this->mGLTexID );
+
+	GLsizei currentSize = (GLsizei) USFloat::Max ( (float)(32), (float)(width * height * 4) );
+	this->mTextureSize = currentSize;
+
+#ifdef MOAI_OS_ANDROID
+	GLenum format = GL_RGBA;
+#else
+	GLenum format = GL_BGRA;
+#endif
+
+	glTexImage2D(GL_TEXTURE_2D,
+				 0,
+				 GL_RGBA,
+				 (GLsizei)width,
+				 (GLsizei)height,
+				 0,
+				 format,
+				 this->mGLPixelType,
+				 data);
+
+	if ( glGetError () != 0 ) {
+		this->Clear ();
+		return;
+	}
+
+	if ( this->mGLTexID ) {
+		MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
+		this->mIsDirty = true;
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAITextureBase::CreateTextureFromImage ( MOAIImage& image ) {
 
 	bool error = false;

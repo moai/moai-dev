@@ -354,6 +354,18 @@ int MOAIDataBuffer::_setString ( lua_State* L ) {
 	return 0;
 }
 
+int MOAIDataBuffer::_setData ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIDataBuffer, "UNN" );
+
+	s64 bytesAddress = state.GetValue < s64 >( 2, 0 );
+	void *bytesPointer = (void *)bytesAddress;
+	s32 count = state.GetValue < s32 >( 3, 0 );
+
+	self->Load ( bytesPointer, count );
+
+	return 0;
+}
+
 //----------------------------------------------------------------//
 /**	@name	toCppHeader
 	@text	Convert data to CPP header file.
@@ -625,6 +637,7 @@ void MOAIDataBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "save",			_save },
 		{ "saveAsync",		_saveAsync },
 		{ "setString",		_setString },
+		{ "setData",		_setData },
 		{ NULL, NULL }
 	};
 
