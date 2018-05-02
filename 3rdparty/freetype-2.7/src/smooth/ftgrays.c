@@ -472,34 +472,6 @@ typedef ptrdiff_t  FT_PtrDist;
 
   } gray_TRaster, *gray_PRaster;
 
-
-#ifdef FT_DEBUG_LEVEL_TRACE
-
-  /* to be called while in the debugger --                                */
-  /* this function causes a compiler warning since it is unused otherwise */
-  static void
-  gray_dump_cells( RAS_ARG )
-  {
-    int  y;
-
-
-    for ( y = ras.min_ey; y < ras.max_ey; y++ )
-    {
-      PCell  cell = ras.ycells[y - ras.min_ey];
-
-
-      printf( "%3d:", y );
-
-      for ( ; cell != NULL; cell = cell->next )
-        printf( " (%3d, c:%4d, a:%6d)",
-                cell->x, cell->cover, cell->area );
-      printf( "\n" );
-    }
-  }
-
-#endif /* FT_DEBUG_LEVEL_TRACE */
-
-
   /*************************************************************************/
   /*                                                                       */
   /* Record the current cell in the table.                                 */
