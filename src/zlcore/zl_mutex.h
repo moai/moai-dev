@@ -11,7 +11,7 @@
 typedef void ZL_MUTEX;
 
 //----------------------------------------------------------------//
-extern ZL_MUTEX*		zl_mutex_create			();
+extern ZL_MUTEX*		zl_mutex_create			( void );
 extern void				zl_mutex_destroy		( ZL_MUTEX* mutex );
 extern void				zl_mutex_lock			( ZL_MUTEX* mutex );
 extern void				zl_mutex_unlock			( ZL_MUTEX* mutex );
