@@ -19,9 +19,10 @@ AKU_API void	AKUIosAppFinalize									();
 AKU_API void	AKUIosAppInitialize									();
 AKU_API void	AKUIosContextInitialize								();
 
-AKU_API void	AKUIosNotifyLocalNotificationReceived				( UILocalNotification* notification );
-AKU_API void	AKUIosNotifyRemoteNotificationReceived				( NSDictionary* notification );
-AKU_API void	AKUIosNotifyRemoteNotificationRegistrationComplete	( NSData* deviceToken, NSError* error );
+// TODO: deprecated; restore notification handling
+//AKU_API void	AKUIosNotifyLocalNotificationReceived				( UILocalNotification* notification );
+//AKU_API void	AKUIosNotifyRemoteNotificationReceived				( NSDictionary* notification );
+//AKU_API void	AKUIosNotifyRemoteNotificationRegistrationComplete	( NSData* deviceToken, NSError* error );
 AKU_API void	AKUIosOpenUrl										( NSURL* url, NSString* sourceApplication );
 AKU_API void	AKUIosSetFrameBuffer								( GLuint frameBuffer );
 

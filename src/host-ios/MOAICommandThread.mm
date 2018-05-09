@@ -20,7 +20,6 @@
 @interface MOAICommandThread () {
 	
     NSThread*           mThread;
-    
     NSCondition*        mCommandCondition;
     
     void                ( ^mCommand )( void );
@@ -120,7 +119,7 @@
     -( void ) stop {
     
         void ( ^command )( void ) = ^{
-            mIsRunning = NO;
+            self->mIsRunning = NO;
         };
         
         [ self command:command :YES ];

@@ -53,15 +53,15 @@
             void ( ^command )( void ) = ^{
             
                 AKUDisplayListEnable ( AKU_DISPLAY_LIST_DRAWING );
-                mRenderer = [[ MOAIRenderer alloc ] initWithLayer :layer :multisample ];
+                self->mRenderer = [[ MOAIRenderer alloc ] initWithLayer :layer :multisample ];
                 
                 if ( useLoadingThread ) {
                 
                     AKUDisplayListEnable ( AKU_DISPLAY_LIST_LOADING );
-                    mLoadingContext = [[ EAGLContext alloc ] initWithAPI:kEAGLRenderingAPIOpenGLES2 sharegroup:[[ mRenderer eaglContext ] sharegroup ]];
+                    self->mLoadingContext = [[ EAGLContext alloc ] initWithAPI:kEAGLRenderingAPIOpenGLES2 sharegroup:[[ self->mRenderer eaglContext ] sharegroup ]];
                     
-                    mLoadingThread = [[ MOAICommandThread alloc ] init ];
-                    [ mLoadingThread start ];
+                    self->mLoadingThread = [[ MOAICommandThread alloc ] init ];
+                    [ self->mLoadingThread start ];
                 }
             };
             
@@ -79,7 +79,7 @@
         
         void ( ^command )( void ) = ^{
             
-            [ EAGLContext setCurrentContext:mLoadingContext ];
+            [ EAGLContext setCurrentContext:self->mLoadingContext ];
             
             [ MOAIContextMgr displayListBeginPhase:AKU_DISPLAY_LIST_LOADING_PHASE ];
             AKUDisplayListProcess ( AKU_DISPLAY_LIST_LOADING );
@@ -97,7 +97,7 @@
         if ([ mDrawingThread isBusy ]) return;
     
         void ( ^command )( void ) = ^{
-            [ mRenderer presentFrame ];
+            [ self->mRenderer presentFrame ];
         };
         
         [ mDrawingThread command:command :YES ];
@@ -116,7 +116,7 @@
         if ( !AKUDisplayListHasContent ( AKU_DISPLAY_LIST_DRAWING )) return;
         
         void ( ^command )( void ) = ^{
-            [ mRenderer render ];
+            [ self->mRenderer render ];
         };
         
         [ mDrawingThread command:command :NO ];
@@ -126,7 +126,7 @@
     -( void ) resize :( CAEAGLLayer* )layer {
     
         void ( ^command )( void ) = ^{
-            [ mRenderer resize :layer ];
+            [ self->mRenderer resize :layer ];
         };
         
         [ mDrawingThread command:command :YES ];
@@ -137,7 +137,7 @@
     
         void ( ^command )( void ) = ^{
             
-            [ mRenderer shutdown ];
+            [ self->mRenderer shutdown ];
         };
         
         [ mDrawingThread command:command :YES ];

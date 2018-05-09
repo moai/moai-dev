@@ -71,11 +71,12 @@ enum {
 //    }
 
     //----------------------------------------------------------------//
-	-( void ) application:( UIApplication* )application didFailToRegisterForRemoteNotificationsWithError:( NSError* )error {
-        ( void )application;
-    
-		AKUIosNotifyRemoteNotificationRegistrationComplete ( nil, error );
-	}
+    // TODO: restore notification support
+//	-( void ) application:( UIApplication* )application didFailToRegisterForRemoteNotificationsWithError:( NSError* )error {
+//        ( void )application;
+//
+//		AKUIosNotifyRemoteNotificationRegistrationComplete ( nil, error );
+//	}
 
     //----------------------------------------------------------------//
     +( BOOL ) application :( UIApplication* )application didFinishLaunchingWithOptions:( NSDictionary* )launchOptions {
@@ -94,33 +95,36 @@ enum {
     }
 
 	//----------------------------------------------------------------//
-	-( void ) application:( UIApplication* )application didReceiveRemoteNotification:( NSDictionary* )pushBundle {
-		( void )application;
-        
-		AKUIosNotifyRemoteNotificationReceived ( pushBundle );
-	}
-	
-	//----------------------------------------------------------------//
-	-( void ) application:( UIApplication* )application didRegisterForRemoteNotificationsWithDeviceToken:( NSData* )deviceToken {
-        ( void )application;
-    
-    	// TODO: why did we need this? why not do it in Lua?
-    	//NSString* strData = [[[[deviceToken description]
-		//	stringByReplacingOccurrencesOfString: @"<" withString: @""]
-		//	stringByReplacingOccurrencesOfString: @">" withString: @""]
-		//	stringByReplacingOccurrencesOfString: @" " withString: @""];
-        //NSLog(@"%@", strData);
-		AKUIosNotifyRemoteNotificationRegistrationComplete ( deviceToken, nil );
-	}
-		
-    //----------------------------------------------------------------//
-    -( BOOL ) application:( UIApplication* )application openURL:( NSURL* )url sourceApplication:( NSString* )sourceApplication annotation:( id )annotation {
+	// TODO: restore notification support
+//	-( void ) application:( UIApplication* )application didReceiveRemoteNotification:( NSDictionary* )pushBundle {
+//		( void )application;
+//
+//		AKUIosNotifyRemoteNotificationReceived ( pushBundle );
+//	}
 
-        if ( AKUModulesIosApplicationOpenURL ( application, url, sourceApplication, annotation ) == NO ) {
-            AKUIosOpenUrl ( url, sourceApplication );
-        }
-        return YES;
-    }
+	//----------------------------------------------------------------//
+	// TODO: restore notification support
+//	-( void ) application:( UIApplication* )application didRegisterForRemoteNotificationsWithDeviceToken:( NSData* )deviceToken {
+//        ( void )application;
+//
+//    	// TODO: why did we need this? why not do it in Lua?
+//    	//NSString* strData = [[[[deviceToken description]
+//		//	stringByReplacingOccurrencesOfString: @"<" withString: @""]
+//		//	stringByReplacingOccurrencesOfString: @">" withString: @""]
+//		//	stringByReplacingOccurrencesOfString: @" " withString: @""];
+//        //NSLog(@"%@", strData);
+//		AKUIosNotifyRemoteNotificationRegistrationComplete ( deviceToken, nil );
+//	}
+
+    //----------------------------------------------------------------//
+    // TODO: restore
+//    -( BOOL ) application:( UIApplication* )application openURL:( NSURL* )url sourceApplication:( NSString* )sourceApplication annotation:( id )annotation {
+//
+//        if ( AKUModulesIosApplicationOpenURL ( application, url, sourceApplication, annotation ) == NO ) {
+//            AKUIosOpenUrl ( url, sourceApplication );
+//        }
+//        return YES;
+//    }
 
 	//----------------------------------------------------------------//
 	-( void ) dealloc {
