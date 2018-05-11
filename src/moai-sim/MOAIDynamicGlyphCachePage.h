@@ -29,15 +29,18 @@ private:
 	typedef MOAISpanList < GlyphList > RowList;
 	typedef MOAISpanList < GlyphList >::Span RowSpan;
 
-	RowList mRows;
+	u32			mPageID;
+	RowList 	mRows;
 
 	MOAIImageTexture* mImageTexture;
 	
 	//ZLColor::ColorFormat mColorFormat;
 
-	float mThreshold;
+	float		mThreshold;
 
 public:
+	
+	GET_SET ( u32, PageID, mPageID )
 	
 	//----------------------------------------------------------------//
 	void			AffirmCanvas					( MOAIDynamicGlyphCache& owner, MOAIFont& font );
