@@ -173,29 +173,20 @@ int MOAIShaderProgram::_setVertexAttribute ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIShaderProgram::BindTextures () {
+void MOAIShaderProgram::AffirmUniforms () {
 
-	MOAIGfxMgr& gfx = MOAIGfxMgr::Get ();
-	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
-
-	size_t nTextures = this->mTextures.Size ();
-	for ( u32 i = 0; i < nTextures; ++i ) {
+	if ( this->mUniformBufferSize ) return;
 	
-		MOAIShaderProgramTexture& shaderTexture = this->mTextures [ i ];
+	this->mUniformBufferSize = 0;
+	size_t nUniforms = this->mUniforms.Size ();
+	
+	for ( size_t i = 0; i < nUniforms; ++i ) {
 		
-		MOAITextureBase* texture = 0;
+		MOAIShaderUniform& uniform = this->mUniforms [ i ];
+		uniform.mCPUOffset = this->mUniformBufferSize;
+		this->mUniformBufferSize += uniform.GetSize ();
 		
-		// load texture by name
-		if ( shaderTexture.mName != MOAI_UNKNOWN_MATERIAL_GLOBAL ) {
-			texture = materialStack.GetTexture ( shaderTexture.mName );
-		}
-		
-		// fallback
-		if ( !texture ) {
-			texture = shaderTexture.mTexture;
-		}
-		
-		gfx.mGfxState.SetTexture ( texture, shaderTexture.mUnit );
+		this->mMaxCount = this->mMaxCount < uniform.mCount ? uniform.mCount : this->mMaxCount;
 	}
 }
 
@@ -261,6 +252,22 @@ MOAIShaderUniform* MOAIShaderProgram::GetUniform ( u32 uniformID ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIShaderProgram::InitUniformBuffer ( ZLLeanArray < u8 >& buffer ) {
+
+	this->AffirmUniforms ();
+
+	buffer.Clear ();
+	
+	size_t nUniforms = this->mUniforms.Size ();
+	buffer.Init ( this->mUniformBufferSize );
+	
+	for ( size_t i = 0; i < nUniforms; ++i ) {
+		MOAIShaderUniformHandle uniform = this->GetUniformHandle ( buffer, i );
+		uniform.Default ( this->mUniforms [ i ].mCount );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIShaderProgram::Load ( cc8* vshSource, cc8* fshSource ) {
 
 	if ( vshSource && fshSource ) {
@@ -273,7 +280,9 @@ void MOAIShaderProgram::Load ( cc8* vshSource, cc8* fshSource ) {
 }
 
 //----------------------------------------------------------------//
-MOAIShaderProgram::MOAIShaderProgram () {
+MOAIShaderProgram::MOAIShaderProgram () :
+	mMaxCount ( 0 ),
+	mUniformBufferSize ( 0 ) {
 
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIGfxResource )
@@ -509,6 +518,33 @@ void MOAIShaderProgram::ReserveUniforms ( u32 nUniforms ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIShaderProgram::ScheduleTextures () {
+
+	MOAIGfxMgr& gfx = MOAIGfxMgr::Get ();
+	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
+
+	size_t nTextures = this->mTextures.Size ();
+	for ( u32 i = 0; i < nTextures; ++i ) {
+	
+		MOAIShaderProgramTexture& shaderTexture = this->mTextures [ i ];
+		
+		MOAITextureBase* texture = 0;
+		
+		// load texture by name
+		if ( shaderTexture.mName != MOAI_UNKNOWN_MATERIAL_GLOBAL ) {
+			texture = materialStack.GetTexture ( shaderTexture.mName );
+		}
+		
+		// fallback
+		if ( !texture ) {
+			texture = shaderTexture.mTexture;
+		}
+		
+		gfx.mGfxState.SetTexture ( texture, shaderTexture.mUnit );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIShaderProgram::SetGlobal ( u32 idx, u32 globalID, u32 uniformID, u32 index ) {
 	
 	MOAIShaderProgramGlobal& global = this->mGlobals [ idx ];
@@ -563,4 +599,81 @@ void MOAIShaderProgram::SetVertexAttribute ( u32 idx, cc8* attribute ) {
 	if ( attribute ) {
 		this->mAttributeMap [ idx ] = attribute;
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderProgram::UpdateUniforms ( ZLLeanArray < u8 >& buffer ) {
+
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	
+	ZLRect viewRect = gfxMgr.mGfxState.GetViewRect ();
+
+	// NOTE: matrices are submitted *column major*; it is up to the shader to transform vertices correctly
+	// vert * matrix implicitely transposes the matrix; martix * vert uses the matrix as submitted
+
+	u32 nGlobals = this->mGlobals.Size ();
+
+	for ( u32 i = 0; i < nGlobals; ++i ) {
+	
+		const MOAIShaderProgramGlobal& global = this->mGlobals [ i ];
+		
+		if ( global.mUniformID == INVALID_INDEX ) continue;
+		
+		MOAIShaderUniformHandle uniform = this->GetUniformHandle ( buffer, global.mUniformID, global.mIndex );
+		if ( !uniform.IsValid ()) continue;
+		
+		if ( global.mGlobalID < MOAIGfxGlobalsCache::TOTAL_MATRICES ) {
+		
+			uniform.SetValue ( gfxMgr.mGfxState.GetMtx ( global.mGlobalID ));
+		}
+		else {
+		
+			switch ( global.mGlobalID ) {
+				
+				case MOAIGfxGlobalsCache::PEN_COLOR:
+				
+					uniform.SetValue ( gfxMgr.mGfxState.GetFinalColor ());
+					break;
+				
+				case MOAIGfxGlobalsCache::VIEW_HALF_HEIGHT:
+				
+					uniform.SetValue ( viewRect.Height () * 0.5f );
+					break;
+					
+				case MOAIGfxGlobalsCache::VIEW_HALF_WIDTH: {
+				
+					uniform.SetValue ( viewRect.Width () * 0.5f );
+					break;
+				}
+				case MOAIGfxGlobalsCache::VIEW_HEIGHT:
+				
+					uniform.SetValue ( viewRect.Height ());
+					break;
+					
+				case MOAIGfxGlobalsCache::VIEW_WIDTH:
+				
+					uniform.SetValue ( viewRect.Width ());
+					break;
+			}
+		}
+	}
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAIShaderUniformHandle MOAIShaderProgram::MOAIShaderUniformSchema_GetUniformHandle ( void* buffer, u32 uniformID ) const {
+
+	MOAIShaderUniformHandle uniform;
+	uniform.mBuffer = 0;
+
+	if ( uniformID < this->mUniforms.Size ()) {
+		const MOAIShaderUniform& programUniform = this->mUniforms [ uniformID ];
+		uniform.mType		= programUniform.mType;
+		uniform.mWidth		= programUniform.mWidth;
+		uniform.mBuffer		= ( void* )(( size_t )buffer + this->mUniforms [ uniformID ].mCPUOffset );
+	}
+	return uniform;
 }

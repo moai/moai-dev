@@ -7,7 +7,7 @@
 #include <moai-sim/MOAIGfxStateCache.h>
 
 class MOAICamera;
-class MOAIShaderUniformBuffer;
+class MOAIShaderUniformSchema;
 class MOAIViewport;
 
 #define ID_TO_FLAG(id) (( u64 )1 << id )

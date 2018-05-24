@@ -60,13 +60,8 @@ protected:
 	ZLStrongPtr < MOAIVertexBuffer >	mVtxBuffer;
 	ZLStrongPtr < MOAIIndexBuffer >		mIdxBuffer;
 	
-	MOAIShader*					mCurrentShader;
-	void*						mUniformBuffer;
-	size_t						mUniformBufferSize;
-	
 	//----------------------------------------------------------------//
 	void			OnGfxStateWillChange			();
-	void			ResizeUniformBuffer				( size_t size );
 	void			TransformAndWriteQuad			( ZLVec4D* vtx, ZLVec2D* uv );
 
 public:

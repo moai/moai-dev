@@ -4,13 +4,13 @@
 #ifndef	MOAILIGHTFORMAT_H
 #define	MOAILIGHTFORMAT_H
 
-#include <moai-sim/MOAIShaderUniformFormatter.h>
+#include <moai-sim/MOAIShaderUniformHandle.h>
 
 //================================================================//
 // MOAILightFormatUniform
 //================================================================//
 class MOAILightFormatUniform :
-	public MOAIShaderUniformFormatter {
+	public MOAIShaderUniformBase {
 public:
 
 	size_t				mBase;		// base in uniform buffer

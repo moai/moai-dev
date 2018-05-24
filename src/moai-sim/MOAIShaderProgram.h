@@ -65,7 +65,8 @@ public:
 			uniform values.
 */
 class MOAIShaderProgram :
-	public MOAIGfxResource {
+	public MOAIGfxResource,
+	public MOAIShaderUniformSchema {
 protected:
 
 	friend class MOAIShader;
@@ -89,6 +90,9 @@ protected:
 	ZLLeanArray < MOAIShaderProgramGlobal >		mGlobals;
 	ZLLeanArray < MOAIShaderProgramTexture >	mTextures;
 
+	size_t										mMaxCount;
+	size_t										mUniformBufferSize;
+
 	//----------------------------------------------------------------//
 	static int			_declareUniform				( lua_State* L );
 	static int			_load						( lua_State* L );
@@ -100,9 +104,10 @@ protected:
 	static int			_setVertexAttribute			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				BindTextures				();
+	void				AffirmUniforms				();
 	ZLGfxHandle			CompileShader				( u32 type, cc8* source );
 	MOAIShaderUniform*	GetUniform					( u32 uniformID );
+	void				InitUniformBuffer			( ZLLeanArray < u8 >& buffer );
 	bool				OnCPUCreate					();
 	void				OnCPUDestroy				();
 	void				OnGPUBind					();
@@ -112,7 +117,12 @@ protected:
 	bool				OnGPUUpdate					();
 	void				OnUniformLocation			( u32 addr, void* userdata );
 	int					ReserveGlobals				( lua_State* L, int idx );
+	void				ScheduleTextures			();
 	int					SetGlobal					( lua_State* L, int idx );
+	void				UpdateUniforms				( ZLLeanArray < u8 >& buffer );
+	
+	//----------------------------------------------------------------//
+	MOAIShaderUniformHandle				MOAIShaderUniformSchema_GetUniformHandle	( void* buffer, u32 uniformID ) const;
 	
 public:
 
@@ -120,7 +130,6 @@ public:
 
 	//----------------------------------------------------------------//
 	void				Clear						();
-	//void				ClearUniforms				();
 	void				DeleteShaders				();
 	void				DeclareUniform				( u32 idx, cc8* name, u32 type, u32 width = 1, u32 count = 1 );
 	void				Load						( cc8* vshSource, cc8* fshSource );

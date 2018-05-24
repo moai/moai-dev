@@ -4,7 +4,7 @@
 #ifndef	MOAISHADER_H
 #define	MOAISHADER_H
 
-#include <moai-sim/MOAIShaderUniformBuffer.h>
+#include <moai-sim/MOAIShaderUniformSchema.h>
 #include <moai-sim/MOAIShaderProgram.h>
 
 //================================================================//
@@ -16,33 +16,24 @@
 			uniform values and to expose uniform values as MOAINode attributes.
 */
 class MOAIShader :
-	public virtual MOAINode,
-	public MOAIShaderUniformBuffer {
+	public virtual MOAINode {
 protected:
 
 	friend class MOAIGfxStateCache;
 	friend class MOAIShaderProgram;
 
 	MOAILuaSharedPtr < MOAIShaderProgram >		mProgram;
-	ZLLeanArray < MOAIShaderUniformInstance >	mUniformInstances;
 	ZLLeanArray < u8 >							mUniformBuffer;
-	size_t										mMaxCount;
+	ZLLeanArray < u8 >							mPendingUniformBuffer;
 
 	//----------------------------------------------------------------//
 	static int				_getAttributeID				( lua_State* L );
-	static int				_resizeUniformArray			( lua_State* L );
 	static int				_setProgram					( lua_State* L );
 	static int				_setUniform					( lua_State* L );
 	static int				_setUniformArrayItem		( lua_State* L );
-	
-	//----------------------------------------------------------------//
-	void					ApplyGlobals				();
-	void					BindUniforms				();
-	void					UpdateUniforms				();
 
 	//----------------------------------------------------------------//
-	bool								MOAINode_ApplyAttrOp						( u32 attrID, MOAIAttribute& attr, u32 op );
-	MOAIShaderUniformFormatter*			MOAIShaderUniformBuffer_GetUniform			( u32 uniformID, void*& buffer );
+	bool					MOAINode_ApplyAttrOp		( u32 attrID, MOAIAttribute& attr, u32 op );
 
 public:
 
@@ -53,15 +44,19 @@ public:
 	GET_CONST ( void*, UniformBuffer, mUniformBuffer.Data ())
 
 	//----------------------------------------------------------------//
+	void					ApplyUniforms			();
 	static MOAIShader*		AffirmShader			( MOAILuaState& state, int idx );
-	void					BindTextures			();
+	void					BindUniforms			();
 	void					Bless					();
+	bool					IsDirty					();
 							MOAIShader				();
 							~MOAIShader				();
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
 	void					ResizeUniformArray		( u32 uniformID, u32 count );
+	void					ScheduleTextures		();
 	void					SetProgram				( MOAIShaderProgram* program );
+	void					UpdateUniforms			();
 };
 
 #endif

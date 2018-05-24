@@ -81,7 +81,6 @@ protected:
 	ZLRect									mScissorRect;
 	
 	ZLStrongPtr < MOAIShader >				mShader;
-	ZLStrongPtr < MOAIShaderProgram >		mShaderProgram;
 
 	ZLStrongPtr < MOAIFrameBuffer >			mFrameBuffer;
 	ZLStrongPtr < MOAIIndexBuffer >			mIdxBuffer;
@@ -231,7 +230,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	inline void GfxStateWillChange () {
-	
+		
 		if ( this->mClient ) {
 			MOAIGfxStateCacheClient* client = this->mClient;
 			this->mClient = 0;

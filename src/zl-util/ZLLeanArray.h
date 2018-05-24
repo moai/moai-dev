@@ -125,6 +125,15 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	bool IsIdentical ( const ZLLeanArray < TYPE >& array ) {
+	
+		if ( this->mSize == array.mSize ) {
+			return ( memcmp ( this->mData, array.mData, this->mSize ) == 0 );
+		}
+		return false;
+	}
+
+	//----------------------------------------------------------------//
 	void Nullify () {
 	
 		mData = 0;

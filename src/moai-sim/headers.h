@@ -138,8 +138,8 @@
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIShaderProgram.h>
 #include <moai-sim/MOAIShaderUniform.h>
-#include <moai-sim/MOAIShaderUniformBuffer.h>
-#include <moai-sim/MOAIShaderUniformFormatter.h>
+#include <moai-sim/MOAIShaderUniformHandle.h>
+#include <moai-sim/MOAIShaderUniformSchema.h>
 #include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAISpanList.h>

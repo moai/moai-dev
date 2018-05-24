@@ -89,9 +89,6 @@ MOAIGfxState::~MOAIGfxState () {
 
 //----------------------------------------------------------------//
 void MOAIGfxStateCache::ApplyStateChange ( u32 stateID ) {
-
-//	MOAIGfxState& active = this->mActiveState;
-	//& gfx = MOAIGfxMgr::GetDrawingAPI ();
 	
 	switch ( stateID ) {
 
@@ -117,7 +114,7 @@ void MOAIGfxStateCache::ApplyStateChange ( u32 stateID ) {
 			break;
 
 		case FRAME_BUFFER:
-		
+			
 			this->SetFrameBuffer ( this->mPendingState.mFrameBuffer );
 			break;
 		
@@ -248,15 +245,12 @@ size_t MOAIGfxStateCache::CountTextureUnits () {
 void MOAIGfxStateCache::DrawPrims ( u32 primType, u32 base, u32 count ) {
 
 	DEBUG_LOG ( "DRAW PRIMS: %d %d %d\n", primType, base, count );
-
-//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	
 	this->ApplyStateChanges ();
 
 	MOAIShader* shader = this->mActiveState.mShader;
 
 	if ( shader && ( this->mActiveState.mVtxBuffer || this->mActiveState.mVtxArray )) {
-		
-		shader->BindUniforms ();
 		
 		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 		
@@ -430,13 +424,13 @@ void MOAIGfxStateCache::ResetState () {
 		active.mVtxArray->Unbind ();
 	}
 	
-	pending.mShaderProgram	= 0;
+	pending.mShader			= 0;
 	pending.mIdxBuffer		= 0;
 	pending.mVtxArray		= 0;
 	pending.mVtxBuffer		= 0;
 	pending.mVtxFormat		= 0;
 	
-	active.mShaderProgram	= 0;
+	active.mShader			= 0;
 	active.mIdxBuffer		= 0;
 	active.mVtxArray		= 0;
 	active.mVtxBuffer		= 0;
@@ -832,42 +826,53 @@ bool MOAIGfxStateCache::SetShader ( MOAIShaderMgr::Preset preset ) {
 bool MOAIGfxStateCache::SetShader ( MOAIShader* shader ) {
 
 	MOAIShaderProgram* program = shader ? shader->GetProgram () : 0;
+	shader = program ? shader : 0;
 
 	if ( this->mApplyingStateChanges ) {
-	
+		
 		MOAIGfxState& active = this->mActiveState;
-	
-		if (( active.mShaderProgram != program ) || ( active.mShader != shader )) {
+		
+		bool applyUniforms = ( shader && shader->IsDirty ());
+		bool changeShader = ( shader != this->mActiveState.mShader );
+		
+		if ( applyUniforms || changeShader ) {
+		
 			this->GfxStateWillChange ();
-		}
-	
-		if ( active.mShaderProgram != program ) {
 
 			DEBUG_LOG ( "  binding shader program: %p\n", program );
 			
-			if ( active.mShaderProgram ) {
-				active.mShaderProgram->Unbind ();
+			if ( changeShader ) {
+			
+				if ( active.mShader ) {
+					active.mShader->GetProgram ()->Unbind ();
+				}
+				if ( shader ) {
+					program->Bind ();
+				}
+				active.mShader = shader;
 			}
 			
-			active.mShaderProgram = program;
-			
-			if ( program ) {
-				program->Bind ();
+			if ( applyUniforms ) {
+				shader->ApplyUniforms ();
+				shader->BindUniforms ();
 			}
 		}
-
-		active.mShader = shader;
 	}
 	else {
-	
+		
+		bool isClean = ( this->mActiveState.mShader == shader );
+		
 		if ( shader ) {
-			shader->BindTextures ();
+			shader->ScheduleTextures ();
 			shader->UpdateUniforms ();
+			
+			if ( isClean ) {
+				isClean = !shader->IsDirty ();
+			}
 		}
-	
+		
 		this->mPendingState.mShader = shader;
-		this->mPendingState.mShaderProgram = program;
-		this->mDirtyFlags = (( this->mActiveState.mShader == shader ) && ( this->mActiveState.mShaderProgram == program )) ? ( this->mDirtyFlags & ~SHADER ) : ( this->mDirtyFlags | SHADER );
+		this->mDirtyFlags = ( isClean ) ? ( this->mDirtyFlags & ~SHADER ) : ( this->mDirtyFlags | SHADER );
 	}
 	
 	return program ? program->IsReady () : true;

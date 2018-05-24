@@ -53,39 +53,7 @@ bool MOAIGfxVertexCache::BeginPrim ( u32 primType, u32 vtxCount, u32 idxCount ) 
 	gfxMgr.mGfxState.SetVertexBuffer ();
 	gfxMgr.mGfxState.ApplyStateChanges (); // must happen here in case there needs to be a flush
 	
-	// check to see if the shader uniforms changed
-	MOAIShader* shader = gfxMgr.mGfxState.GetCurrentShader ();
-	assert ( shader );
-	size_t uniformBufferSize = shader->GetUniformBufferSize ();
-	const void* uniformBuffer = shader->GetUniformBuffer ();
-	
-	if ( this->mCurrentShader ) {
-	
-		if ( uniformBufferSize ) {
-	
-			assert ( shader == this->mCurrentShader );
-			assert ( uniformBufferSize <= this->mUniformBufferSize );
-		
-			if ( memcmp ( this->mUniformBuffer, uniformBuffer, uniformBufferSize )) {
-				this->FlushBufferedPrims ();
-				memcpy ( this->mUniformBuffer, uniformBuffer, uniformBufferSize );
-			}
-		}
-	}
-	else {
-		
-		// take a snapshot of the uniform buffer
-		this->mCurrentShader = shader;
-		
-		if ( uniformBufferSize ) {
-			this->ResizeUniformBuffer ( uniformBufferSize );
-			memcpy ( this->mUniformBuffer, uniformBuffer, uniformBufferSize );
-		}
-	}
-	
 	gfxMgr.mGfxState.SetClient ( this );
-	
-	// OK, *now* we can start to change the state
 	
 	this->mPrimType = primType;
 	this->mVtxSize = vtxSize;
@@ -144,7 +112,7 @@ void MOAIGfxVertexCache::EndPrim () {
 void MOAIGfxVertexCache::FlushBufferedPrims () {
 
 	if ( this->mPrimCount == 0 ) return;
-
+	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	gfxMgr.mGfxState.SuspendChanges (); // don't apply any pending state changes;
 
@@ -153,8 +121,6 @@ void MOAIGfxVertexCache::FlushBufferedPrims () {
 		DEBUG_LOG ( "FLUSH BUFFERED PRIMS\n" );
 	
 		this->mIsDrawing = true;
-		
-		//ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 		
 		u32 count = 0;
 		u32 offset = 0;
@@ -188,8 +154,6 @@ void MOAIGfxVertexCache::FlushBufferedPrims () {
 		}
 	}
 	
-	this->mCurrentShader = 0;
-	
 	gfxMgr.mGfxState.ResumeChanges (); // business as usual
 }
 
@@ -222,10 +186,7 @@ MOAIGfxVertexCache::MOAIGfxVertexCache () :
 	mPrimCount ( 0 ),
 	mApplyVertexTransform ( false ),
 	mApplyUVTransform ( false ),
-	mVertexColor32 ( 0xffffffff ),
-	mCurrentShader ( 0 ),
-	mUniformBuffer ( 0 ),
-	mUniformBufferSize ( 0 ) {
+	mVertexColor32 ( 0xffffffff ) {
 	
 	this->mVertexTransform.Ident ();
 	this->mUVTransform.Ident ();
@@ -235,8 +196,6 @@ MOAIGfxVertexCache::MOAIGfxVertexCache () :
 
 //----------------------------------------------------------------//
 MOAIGfxVertexCache::~MOAIGfxVertexCache () {
-
-	this->ResizeUniformBuffer ( 0 );
 }
 
 //----------------------------------------------------------------//
@@ -253,22 +212,6 @@ void MOAIGfxVertexCache::Reset () {
 	
 	this->mVtxBase = 0;
 	this->mIdxBase = 0;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxVertexCache::ResizeUniformBuffer ( size_t size ) {
-
-	if ( size && ( this->mUniformBufferSize < size )) {
-
-		if ( this->mUniformBuffer ) {
-			free ( this->mUniformBuffer );
-			this->mUniformBuffer = 0;
-			this->mUniformBufferSize = 0;
-		}
-
-		this->mUniformBufferSize = (( size / UNIFORM_BUFFER_CHUNK_SIZE ) + 1 ) * UNIFORM_BUFFER_CHUNK_SIZE;
-		this->mUniformBuffer = malloc ( this->mUniformBufferSize );
-	}
 }
 
 //----------------------------------------------------------------//

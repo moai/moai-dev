@@ -7,11 +7,40 @@
 #include <moai-sim/MOAIShaderUniform.h>
 
 //================================================================//
+// MOAIShaderUniformBase
+//================================================================//
+
+//----------------------------------------------------------------//
+size_t MOAIShaderUniformBase::GetSize () const {
+
+	return this->mWidth * ELEMENT_SIZE;
+}
+
+//----------------------------------------------------------------//
+bool MOAIShaderUniformBase::Init ( u32 type, u32 width ) {
+	
+	this->mType		= type;
+	this->mWidth	= width;
+	
+	return true;
+}
+
+//----------------------------------------------------------------//
+MOAIShaderUniformBase::MOAIShaderUniformBase () :
+	mType ( UNIFORM_TYPE_FLOAT ),
+	mWidth ( 1 ) {
+}
+
+//----------------------------------------------------------------//
+MOAIShaderUniformBase::~MOAIShaderUniformBase () {
+}
+
+//================================================================//
 // MOAIShaderUniform
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIShaderUniform::Bind ( MOAIShaderUniformInstance& instance ) {
+void MOAIShaderUniform::Bind ( const void* buffer ) const {
 
 	if ( this->mGPUBase == ZGL_INVALID_UNIFORM_ADDR ) return;
 
@@ -19,31 +48,26 @@ void MOAIShaderUniform::Bind ( MOAIShaderUniformInstance& instance ) {
 
 	if ( this->mType == UNIFORM_TYPE_FLOAT ) {
 
-		gfx.UniformFloat ( this->mGPUBase, 0, this->mWidth, instance.mCount, ( float* )instance.mBuffer );
+		gfx.UniformFloat ( this->mGPUBase, 0, this->mWidth, this->mCount, ( float* )buffer );
 	}
 	else if ( this->mType == UNIFORM_TYPE_INT ) {
 		
-		gfx.UniformInt ( this->mGPUBase, 0, this->mWidth, instance.mCount, ( s32* )instance.mBuffer );
+		gfx.UniformInt ( this->mGPUBase, 0, this->mWidth, this->mCount, ( s32* )buffer );
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderUniform::Default ( void* buffer ) const {
-
-	this->MOAIShaderUniformFormatter::Default ( buffer, this->mCount );
 }
 
 //----------------------------------------------------------------//
 size_t MOAIShaderUniform::GetSize () const {
 
-	return this->MOAIShaderUniformFormatter::GetSize () * this->mCount;
+	return this->MOAIShaderUniformHandle::GetSize () * this->mCount;
 }
 
 //----------------------------------------------------------------//
 void MOAIShaderUniform::Init ( u32 type, u32 width, u32 count ) {
 	
-	this->MOAIShaderUniformFormatter::Init ( type, width );
+	this->MOAIShaderUniformHandle::Init ( type, width );
 	this->mCount = count;
+	this->mCPUOffset = 0;
 }
 
 //----------------------------------------------------------------//

@@ -3,19 +3,18 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIAttribute.h>
-#include <moai-sim/MOAIShaderUniformBuffer.h>
+#include <moai-sim/MOAIShaderUniformSchema.h>
 
 //================================================================//
-// MOAIShaderUniformBuffer
+// MOAIShaderUniformSchema
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIShaderUniformBuffer::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIShaderUniformSchema::ApplyAttrOp ( void* buffer, u32 attrID, MOAIAttribute& attr, u32 op ) const {
 			
-	void* element;
-	MOAIShaderUniformFormatter* uniform = this->GetUniformForAttributeID ( attrID, element );
+	MOAIShaderUniformHandle uniform = this->GetUniformHandleForAttributeID ( buffer, attrID );
 	
-	if ( uniform ) {
+	if ( uniform.IsValid ()) {
 	
 		switch ( op ) {
 
@@ -24,11 +23,11 @@ bool MOAIShaderUniformBuffer::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32
 				return true;
 
 			case MOAIAttribute::SET:
-				uniform->SetValue ( element, attr );
+				uniform.SetValue ( attr );
 				return true;
 
 			case MOAIAttribute::ADD:
-				uniform->AddValue ( element, attr );
+				uniform.AddValue ( attr );
 				return true;
 		}
 	}
@@ -36,54 +35,51 @@ bool MOAIShaderUniformBuffer::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32
 }
 
 //----------------------------------------------------------------//
-u32 MOAIShaderUniformBuffer::GetAttributeID ( u32 uniformID, u32 index ) {
+u32 MOAIShaderUniformSchema::GetAttributeID ( u32 uniformID, u32 index ) const {
 
 	return ( uniformID * MAX_UNIFORM_ARRAY_SIZE ) + index;
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformFormatter* MOAIShaderUniformBuffer::GetUniform ( u32 uniformID, void*& buffer ) {
+MOAIShaderUniformHandle MOAIShaderUniformSchema::GetUniformHandle ( void* buffer, u32 uniformID ) const {
 
-	return this->MOAIShaderUniformBuffer_GetUniform ( uniformID, buffer );
+	return this->MOAIShaderUniformSchema_GetUniformHandle ( buffer, uniformID );
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformFormatter* MOAIShaderUniformBuffer::GetUniform ( u32 uniformID, u32 index, void*& buffer ) {
+MOAIShaderUniformHandle MOAIShaderUniformSchema::GetUniformHandle ( void* buffer, u32 uniformID, u32 index ) const {
 
-	MOAIShaderUniformFormatter* uniform = this->GetUniform ( uniformID, buffer );
-	buffer = uniform ? uniform->GetArrayItem ( buffer, index ) : 0;
-
-	return uniform;
+	MOAIShaderUniformHandle uniform = this->GetUniformHandle ( buffer, uniformID );
+	return uniform.IsValid () ? uniform.Offset ( index ) : uniform;
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformFormatter* MOAIShaderUniformBuffer::GetUniformForAttributeID ( u32 attrID, void*& buffer ) {
+MOAIShaderUniformHandle MOAIShaderUniformSchema::GetUniformHandleForAttributeID ( void* buffer, u32 attrID ) const {
 
 	attrID &= MOAIAttribute::ATTR_ID_MASK;
 
 	u32 uniformID = attrID / MAX_UNIFORM_ARRAY_SIZE;
 	u32 index = attrID - ( uniformID * MAX_UNIFORM_ARRAY_SIZE );
 	
-	return this->GetUniform ( uniformID, index, buffer );
+	return this->GetUniformHandle ( buffer, uniformID, index );
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformBuffer::MOAIShaderUniformBuffer () {
+MOAIShaderUniformSchema::MOAIShaderUniformSchema () {
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformBuffer::~MOAIShaderUniformBuffer () {
+MOAIShaderUniformSchema::~MOAIShaderUniformSchema () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniformBuffer::SetUniform ( lua_State* L, int idx, u32 uniformID, u32 index ) {
+void MOAIShaderUniformSchema::SetUniform ( lua_State* L, int idx, void* buffer, u32 uniformID, u32 index ) const {
 
 	MOAILuaState state ( L );
 
-	void* element;
-	MOAIShaderUniformFormatter* uniform = this->GetUniform ( uniformID, index, element );
+	MOAIShaderUniformHandle uniform = this->GetUniformHandle ( buffer, uniformID, index );
 	
-	if ( uniform ) {
+	if ( uniform.IsValid ()) {
 		
 		int size = state.GetStackSize ( idx );
 		
@@ -91,7 +87,7 @@ void MOAIShaderUniformBuffer::SetUniform ( lua_State* L, int idx, u32 uniformID,
 		
 			ZLVec4D vec = state.GetValue < ZLVec4D >( idx, ZLVec4D::ZERO );
 			
-			uniform->SetValue ( element, vec );
+			uniform.SetValue ( vec );
 		}
 		else {
 
@@ -100,19 +96,19 @@ void MOAIShaderUniformBuffer::SetUniform ( lua_State* L, int idx, u32 uniformID,
 			switch ( size ) {
 			
 				case 6:
-					uniform->SetValue ( element, state.GetValue < ZLAffine2D >( idx, ZLAffine2D::IDENT ));
+					uniform.SetValue ( state.GetValue < ZLAffine2D >( idx, ZLAffine2D::IDENT ));
 					break;
 				
 				case 9:
-					uniform->SetValue ( element, state.GetValue < ZLMatrix3x3 >( idx, ZLMatrix3x3::IDENT ));
+					uniform.SetValue ( state.GetValue < ZLMatrix3x3 >( idx, ZLMatrix3x3::IDENT ));
 					break;
 				
 				case 12:
-					uniform->SetValue ( element, state.GetValue < ZLAffine3D >( idx, ZLAffine3D::IDENT ));
+					uniform.SetValue ( state.GetValue < ZLAffine3D >( idx, ZLAffine3D::IDENT ));
 					break;
 				
 				case 16:
-					uniform->SetValue ( element, state.GetValue < ZLMatrix4x4 >( idx, ZLMatrix4x4::IDENT ));
+					uniform.SetValue ( state.GetValue < ZLMatrix4x4 >( idx, ZLMatrix4x4::IDENT ));
 					break;
 				
 				default:
