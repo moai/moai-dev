@@ -58,7 +58,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	inline operator bool () {
+	inline operator bool () const {
 		return ( this->mRefID != LUA_NOREF );
 	}
 };
@@ -110,7 +110,7 @@ public:
 	void		SetRef					( MOAILuaObject& owner, MOAILuaState& state, int idx );
 	
 	//----------------------------------------------------------------//
-	inline operator bool () {
+	inline operator bool () const {
 		return this->mRefID != LUA_NOREF;
 	}
 };

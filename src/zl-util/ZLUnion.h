@@ -43,7 +43,7 @@ private:
 public:
 
 	//----------------------------------------------------------------//
-	inline operator bool () {
+	inline operator bool () const {
 		return this->mType != 0;
 	};
 

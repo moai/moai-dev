@@ -28,11 +28,6 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-	inline operator bool () {
-		return this->Get () != 0;
-	};
-
-	//----------------------------------------------------------------//
 	inline operator bool () const {
 		return this->Get () != 0;
 	};

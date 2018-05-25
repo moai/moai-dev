@@ -165,7 +165,7 @@ public:
 	};
 
 	//----------------------------------------------------------------//
-	inline operator bool () {
+	inline operator bool () const {
 		return ( this->mState != 0 );
 	}
 	
