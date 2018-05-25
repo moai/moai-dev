@@ -866,7 +866,7 @@ bool MOAIGfxStateCache::SetShader ( MOAIShader* shader ) {
 	else {
 		
 		this->mPendingState.mShader = shader;
-		this->mDirtyFlags = ( !shader || ( this->mActiveState.mShader == shader )) ? ( this->mDirtyFlags & ~SHADER ) : ( this->mDirtyFlags | SHADER );
+		this->mDirtyFlags = ( !shader && ( this->mActiveState.mShader == shader )) ? ( this->mDirtyFlags & ~SHADER ) : ( this->mDirtyFlags | SHADER );
 	}
 	
 	return program ? program->IsReady () : true;
