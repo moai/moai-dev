@@ -83,33 +83,23 @@ MOAIShader* MOAIShader::AffirmShader ( MOAILuaState& state, int idx ) {
 //----------------------------------------------------------------//
 void MOAIShader::ApplyUniforms () {
 
-	this->mUniformBuffer.CopyFrom ( this->mPendingUniformBuffer );
+	if ( this->mProgram ) {
+		this->mProgram->ApplyUniforms ( this->mPendingUniformBuffer );
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAIShader::BindUniforms () {
 	
-	MOAIShaderProgram* program = this->mProgram;
-	if ( !program ) return;
-	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	
-	size_t nUniforms = this->mProgram->mUniforms.Size ();
-	
-	for ( u32 i = 0; i < nUniforms; ++i ) {
-	
-		MOAIShaderUniformHandle uniform = program->GetUniformHandle ( this->mUniformBuffer, i );
-		
-		if ( uniform.IsValid ()) {
-			this->mProgram->mUniforms [ i ].Bind ( uniform.mBuffer );
-		}
+	if ( this->mProgram ) {
+		this->mProgram->BindUniforms ();
 	}
 }
 
 //----------------------------------------------------------------//
-bool MOAIShader::IsDirty () {
+bool MOAIShader::HasDirtyUniforms () {
 
-	return !this->mUniformBuffer.IsIdentical ( this->mPendingUniformBuffer );
+	return !this->mProgram->mUniformBuffer.IsIdentical ( this->mPendingUniformBuffer );
 }
 
 //----------------------------------------------------------------//
@@ -159,12 +149,9 @@ void MOAIShader::ScheduleTextures () {
 void MOAIShader::SetProgram ( MOAIShaderProgram* program ) {
 	
 	this->mProgram.Set ( *this, program );
-	this->mUniformBuffer.Clear ();
 	
 	if ( program ) {
 		program->InitUniformBuffer ( this->mPendingUniformBuffer );
-		this->mUniformBuffer.Init ( this->mPendingUniformBuffer.Size ());
-		this->mUniformBuffer.Fill ( 0xff );
 	}
 }
 

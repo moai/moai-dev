@@ -93,6 +93,8 @@ protected:
 	size_t										mMaxCount;
 	size_t										mUniformBufferSize;
 
+	ZLLeanArray < u8 >							mUniformBuffer;
+
 	//----------------------------------------------------------------//
 	static int			_declareUniform				( lua_State* L );
 	static int			_load						( lua_State* L );
@@ -105,6 +107,8 @@ protected:
 
 	//----------------------------------------------------------------//
 	void				AffirmUniforms				();
+	void				ApplyUniforms				( ZLLeanArray < u8 >& buffer );
+	void				BindUniforms				();
 	ZLGfxHandle			CompileShader				( u32 type, cc8* source );
 	MOAIShaderUniform*	GetUniform					( u32 uniformID );
 	void				InitUniformBuffer			( ZLLeanArray < u8 >& buffer );

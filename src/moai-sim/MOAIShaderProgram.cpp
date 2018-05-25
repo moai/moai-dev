@@ -188,6 +188,33 @@ void MOAIShaderProgram::AffirmUniforms () {
 		
 		this->mMaxCount = this->mMaxCount < uniform.mCount ? uniform.mCount : this->mMaxCount;
 	}
+	
+	this->mUniformBuffer.Clear ();
+	this->mUniformBuffer.Init ( this->mUniformBufferSize );
+	this->mUniformBuffer.Fill ( 0xff );
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderProgram::ApplyUniforms ( ZLLeanArray < u8 >& buffer ) {
+
+	this->mUniformBuffer.CopyFrom ( buffer);
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderProgram::BindUniforms () {
+	
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	
+	size_t nUniforms = this->mUniforms.Size ();
+	
+	for ( u32 i = 0; i < nUniforms; ++i ) {
+	
+		MOAIShaderUniformHandle uniform = this->GetUniformHandle ( this->mUniformBuffer, i );
+		
+		if ( uniform.IsValid ()) {
+			this->mUniforms [ i ].Bind ( uniform.mBuffer );
+		}
+	}
 }
 
 //----------------------------------------------------------------//

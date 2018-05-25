@@ -832,8 +832,13 @@ bool MOAIGfxStateCache::SetShader ( MOAIShader* shader ) {
 		
 		MOAIGfxState& active = this->mActiveState;
 		
-		bool applyUniforms = ( shader && shader->IsDirty ());
-		bool changeShader = ( shader != this->mActiveState.mShader );
+		if ( shader ) {
+			shader->ScheduleTextures ();
+			shader->UpdateUniforms ();
+		}
+		
+		bool applyUniforms	= ( shader && shader->HasDirtyUniforms ());
+		bool changeShader	= ( shader != this->mActiveState.mShader );
 		
 		if ( applyUniforms || changeShader ) {
 		
@@ -842,7 +847,7 @@ bool MOAIGfxStateCache::SetShader ( MOAIShader* shader ) {
 			DEBUG_LOG ( "  binding shader program: %p\n", program );
 			
 			if ( changeShader ) {
-			
+				
 				if ( active.mShader ) {
 					active.mShader->GetProgram ()->Unbind ();
 				}
@@ -860,19 +865,8 @@ bool MOAIGfxStateCache::SetShader ( MOAIShader* shader ) {
 	}
 	else {
 		
-		bool isClean = ( this->mActiveState.mShader == shader );
-		
-		if ( shader ) {
-			shader->ScheduleTextures ();
-			shader->UpdateUniforms ();
-			
-			if ( isClean ) {
-				isClean = !shader->IsDirty ();
-			}
-		}
-		
 		this->mPendingState.mShader = shader;
-		this->mDirtyFlags = ( isClean ) ? ( this->mDirtyFlags & ~SHADER ) : ( this->mDirtyFlags | SHADER );
+		this->mDirtyFlags = ( !shader || ( this->mActiveState.mShader == shader )) ? ( this->mDirtyFlags & ~SHADER ) : ( this->mDirtyFlags | SHADER );
 	}
 	
 	return program ? program->IsReady () : true;

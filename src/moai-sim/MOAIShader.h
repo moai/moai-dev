@@ -23,7 +23,6 @@ protected:
 	friend class MOAIShaderProgram;
 
 	MOAILuaSharedPtr < MOAIShaderProgram >		mProgram;
-	ZLLeanArray < u8 >							mUniformBuffer;
 	ZLLeanArray < u8 >							mPendingUniformBuffer;
 
 	//----------------------------------------------------------------//
@@ -33,6 +32,9 @@ protected:
 	static int				_setUniformArrayItem		( lua_State* L );
 
 	//----------------------------------------------------------------//
+	bool					IsDirty					();
+
+	//----------------------------------------------------------------//
 	bool					MOAINode_ApplyAttrOp		( u32 attrID, MOAIAttribute& attr, u32 op );
 
 public:
@@ -40,15 +42,13 @@ public:
 	DECL_LUA_FACTORY ( MOAIShader )
 
 	GET ( MOAIShaderProgram*, Program, mProgram )
-	GET ( size_t, UniformBufferSize, mUniformBuffer.Size ())
-	GET_CONST ( void*, UniformBuffer, mUniformBuffer.Data ())
 
 	//----------------------------------------------------------------//
 	void					ApplyUniforms			();
 	static MOAIShader*		AffirmShader			( MOAILuaState& state, int idx );
 	void					BindUniforms			();
 	void					Bless					();
-	bool					IsDirty					();
+	bool					HasDirtyUniforms		();
 							MOAIShader				();
 							~MOAIShader				();
 	void					RegisterLuaClass		( MOAILuaState& state );
