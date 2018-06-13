@@ -51,9 +51,7 @@ add_custom_target( moaijs
                     -s TOTAL_MEMORY=32MB
                     -s ALLOW_MEMORY_GROWTH=1
                     -s FULL_ES2=1 
-                    #-s LINKABLE=1 
                     -s MODULARIZE=1
-                    -s DEFAULT_LIBRARY_FUNCS_TO_INCLUDE="['$$Browser']"
                     -s EXPORT_NAME="'CreateMoaiRuntime'"
                     -s EXPORTED_FUNCTIONS="${EXPORTED_FUNCTIONS}" 
                     -s EXTRA_EXPORTED_RUNTIME_METHODS="['FS_mount','FS_unmount','FS_mkdir','FS_filesystems','FS_chdir','FS_root','FS_lookupPath']" 
