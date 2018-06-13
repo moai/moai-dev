@@ -1,8 +1,8 @@
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( zlib )
 
-set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/zlib-1.2.8/" )
-set ( ZLIB_INCLUDES "${MOAI_ROOT}/3rdparty/zlib-1.2.8/" )
+set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/zlib-1.2.11/" )
+set ( ZLIB_INCLUDES "${MOAI_ROOT}/3rdparty/zlib-1.2.11/" )
 
 file ( GLOB ZLIB_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.c" )
 file ( GLOB ZLIB_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/*.h" )
