@@ -156,6 +156,22 @@ protected:
 	void			ApplyStateChange				( u32 stateID );
 	void			ApplyStateChanges				();
 	void			BindVertexBufferWithFormat		( MOAIVertexBufferWithFormat& buffer, bool useVAOs );
+	void			FlushBlendMode					();
+	void			FlushCullFunc					();
+	void			FlushDepthFunc					();
+	void			FlushDepthMask					();
+	void			FlushFrameBuffer				();
+	void			FlushIndexBuffer				();
+	void			FlushPenWidth					();
+	void			FlushScissorRect				();
+	void			FlushShader						();
+	void			FlushTexture					( u32 textureUnit );
+	void			FlushVertexArray				();
+	void			FlushVertexBuffer				(); // must be called *after* BindVertexFormat
+	void			FlushVertexFormat				();
+	void			FlushViewRect					();
+	void			ForceIndexBuffer				( MOAIIndexBuffer* buffer );
+	void			ForceVertexBuffer				( MOAIVertexBuffer* buffer );
 	void			ResumeChanges					();
 	void			SuspendChanges					();
 	void			UnbindVertexBufferWithFormat	( MOAIVertexBufferWithFormat& buffer );

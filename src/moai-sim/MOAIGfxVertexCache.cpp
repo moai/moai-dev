@@ -49,8 +49,10 @@ bool MOAIGfxVertexCache::BeginPrim ( u32 primType, u32 vtxCount, u32 idxCount ) 
 	this->mFlushOnPrimEnd = !(( primType == ZGL_PRIM_POINTS ) || ( primType == ZGL_PRIM_LINES ) || ( primType == ZGL_PRIM_TRIANGLES ));
 	
 	// these will get bound later, just before drawing; clear them for now
+	// we have to bind them later since their contents will change as the primitive is drawn
 	gfxMgr.mGfxState.SetIndexBuffer ();
 	gfxMgr.mGfxState.SetVertexBuffer ();
+	
 	gfxMgr.mGfxState.ApplyStateChanges (); // must happen here in case there needs to be a flush
 	
 	gfxMgr.mGfxState.SetClient ( this );
@@ -137,9 +139,9 @@ void MOAIGfxVertexCache::FlushBufferedPrims () {
 		if ( count > 0 ) {
 		
 			if ( this->mUseIdxBuffer ) {
-				gfxMgr.mGfxState.SetIndexBuffer ( this->mIdxBuffer );
+				gfxMgr.mGfxState.ForceIndexBuffer ( this->mIdxBuffer );
 			}
-			gfxMgr.mGfxState.SetVertexBuffer ( this->mVtxBuffer );
+			gfxMgr.mGfxState.ForceVertexBuffer ( this->mVtxBuffer );
 		
 			gfxMgr.mGfxState.DrawPrims ( this->mPrimType, offset, count );
 		}

@@ -94,74 +94,64 @@ void MOAIGfxStateCache::ApplyStateChange ( u32 stateID ) {
 
 		case BLEND_MODE:
 			
-			if ( this->mPendingState.mBlendEnabled ) {
-				this->SetBlendMode ( this->mPendingState.mBlendMode );
-			}
-			else {
-				this->SetBlendMode ();
-			}
+			this->FlushBlendMode ();
 			break;
 		
 		case CULL_FUNC:
 			
-			this->SetCullFunc ( this->mPendingState.mCullFunc );
+			this->FlushCullFunc ();
 			break;
 		
 		case DEPTH_MODE:
 			
-			this->SetDepthFunc ( this->mPendingState.mDepthFunc );
-			this->SetDepthMask ( this->mPendingState.mDepthMask );
+			this->FlushDepthFunc ();
+			this->FlushDepthMask ();
 			break;
 
 		case FRAME_BUFFER:
 			
-			this->SetFrameBuffer ( this->mPendingState.mFrameBuffer );
+			this->FlushFrameBuffer ();
 			break;
 		
 		case INDEX_BUFFER:
 		
-			this->SetIndexBuffer ( this->mPendingState.mIdxBuffer );
+			this->FlushIndexBuffer ();
 			break;
 		
 		case PEN_WIDTH:
 		
-			this->SetPenWidth ( this->mPendingState.mPenWidth );
+			this->FlushPenWidth ();
 			break;
 		
 		case SCISSOR_RECT:
 	
-			if ( this->mPendingState.mScissorEnabled ) {
-				this->SetScissorRect ( this->mPendingState.mScissorRect );
-			}
-			else {
-				this->SetScissorRect ();
-			}
+			this->FlushScissorRect ();
 			break;
 		
 		case SHADER:
 		
-			this->SetShader ( this->mPendingState.mShader );
+			this->FlushShader ();
 			break;
 		
 		case VERTEX_ARRAY:
 		
-			this->SetVertexArray ( this->mPendingState.mVtxArray );
+			this->FlushVertexArray ();
 			break;
 		
 		case VERTEX_BUFFER:
 			
 			this->mActiveState.mVtxFormat = this->mPendingState.mVtxFormat;
-			this->SetVertexBuffer ( this->mPendingState.mVtxBuffer );
+			this->FlushVertexBuffer ();
 			break;
 		
 		case VERTEX_FORMAT:
 			
-			this->SetVertexFormat ( this->mPendingState.mVtxFormat );
+			this->FlushVertexFormat ();
 			break;
 
 		case VIEW_RECT:
 		
-			this->SetViewRect ( this->mPendingState.mViewRect );
+			this->FlushViewRect ();
 			break;
 	}
 }
@@ -169,47 +159,53 @@ void MOAIGfxStateCache::ApplyStateChange ( u32 stateID ) {
 //----------------------------------------------------------------//
 void MOAIGfxStateCache::ApplyStateChanges () {
 
-	if (( this->mDirtyFlags || this->mTextureDirtyFlags ) && ( !this->mApplyingStateChanges )) {
-		
-		this->SuspendChanges ();
-		this->mCurrentState = &this->mActiveState;
-		
-		u32 dirtyFlags = this->mDirtyFlags;
-		this->mDirtyFlags = 0;
-		
-		u32 textureDirtyFlags = this->mTextureDirtyFlags;
-		this->mTextureDirtyFlags = 0;
-		
-		DEBUG_LOG ( "APPLY STATE CHANGES\n" );
+	if ( !this->mApplyingStateChanges ) {
+	
+		if ( this->mPendingState.mShader ) {
+			this->mPendingState.mShader->ScheduleTextures ();
+		}
 
-		// TODO: use recursion here to a depth-first pass through the
-		// flags as opposed to iterating over every one individually
+		if ( this->mDirtyFlags || this->mTextureDirtyFlags ) {
+			
+			this->SuspendChanges ();
+			this->mCurrentState = &this->mActiveState;
+			
+			u32 dirtyFlags = this->mDirtyFlags;
+			this->mDirtyFlags = 0;
+			
+			u32 textureDirtyFlags = this->mTextureDirtyFlags;
+			this->mTextureDirtyFlags = 0;
+			
+			DEBUG_LOG ( "APPLY STATE CHANGES\n" );
 
-		if ( dirtyFlags ) {
-			for ( u32 i = 1; i < END_STATE_FLAGS; i <<= 1 ) {
-				if ( dirtyFlags & i ) {
-					this->ApplyStateChange ( i );
+			// TODO: use recursion here to a depth-first pass through the
+			// flags as opposed to iterating over every one individually
+
+			if ( dirtyFlags ) {
+				for ( u32 i = 1; i < END_STATE_FLAGS; i <<= 1 ) {
+					if ( dirtyFlags & i ) {
+						this->ApplyStateChange ( i );
+					}
 				}
 			}
-		}
-		
-		if ( textureDirtyFlags ) {
-			for ( u32 i = 0; i < this->mTopDirtyTexture; ++i ) {
-				if ( textureDirtyFlags & ( 1 << i )) {
-					this->SetTexture ( this->mPendingState.mTextureUnits [ i ], i );
+			
+			if ( textureDirtyFlags ) {
+				for ( u32 i = 0; i < this->mTopDirtyTexture; ++i ) {
+					if ( textureDirtyFlags & ( 1 << i )) {
+						this->FlushTexture ( i );
+					}
 				}
 			}
+			
+			this->mCurrentState = &this->mPendingState;
+			this->ResumeChanges ();
 		}
-		
-		this->mCurrentState = &this->mPendingState;
-		this->ResumeChanges ();
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxStateCache::BindVertexBufferWithFormat ( MOAIVertexBufferWithFormat& bufferWithFormat, bool useVAOs ) {
-
-	UNUSED(useVAOs);
+	UNUSED ( useVAOs );
 
 	MOAIVertexBuffer* buffer = bufferWithFormat.mBuffer;
 	MOAIVertexFormat* format = bufferWithFormat.mFormat;
@@ -267,6 +263,479 @@ void MOAIGfxStateCache::DrawPrims ( u32 primType, u32 base, u32 count ) {
 		else {
 			DEBUG_LOG ( "drawing prims with vertex buffer\n" );
 			gfx.DrawArrays ( primType, base, count );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateCache::FlushBlendMode () {
+
+	assert ( this->mApplyingStateChanges );
+	
+	MOAIGfxState& active = this->mActiveState;
+	MOAIGfxState& pending = this->mPendingState;
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+	
+	if ( pending.mBlendEnabled != active.mBlendEnabled ) {
+	
+		if ( pending.mBlendEnabled ) {
+		
+			bool updateBlend = false;
+			const MOAIBlendMode& blendMode = pending.mBlendMode;
+		
+			if ( !active.mBlendEnabled ) {
+			
+				this->GfxStateWillChange ();
+			
+				DEBUG_LOG ( "  enabling blend\n" );
+				gfx.Enable ( ZGL_PIPELINE_BLEND );
+				active.mBlendEnabled = true;
+				updateBlend = true;
+			}
+			
+			if ( updateBlend || !active.mBlendMode.IsSame ( blendMode )) {
+			
+				this->GfxStateWillChange ();
+				
+				DEBUG_LOG ( "  updating blend mode\n" );
+				active.mBlendMode = blendMode;
+				gfx.BlendMode ( active.mBlendMode.mEquation );
+				gfx.BlendFunc ( active.mBlendMode.mSourceFactor, active.mBlendMode.mDestFactor );
+			}
+		}
+		else {
+		
+			if ( active.mBlendEnabled ) {
+			
+				this->GfxStateWillChange ();
+
+				DEBUG_LOG ( "  disabling blend\n" );
+				MOAIGfxMgr::GetDrawingAPI ().Disable ( ZGL_PIPELINE_BLEND );
+				active.mBlendEnabled = false;
+			}
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateCache::FlushCullFunc () {
+
+	assert ( this->mApplyingStateChanges );
+	
+	MOAIGfxState& active = this->mActiveState;
+	MOAIGfxState& pending = this->mPendingState;
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+	
+	if ( active.mCullFunc != pending.mCullFunc ) {
+	
+		this->GfxStateWillChange ();
+	
+		active.mCullFunc = pending.mCullFunc;
+	
+		if ( active.mCullFunc ) {
+			DEBUG_LOG ( "  enabling/setting cull func\n" );
+			gfx.Enable ( ZGL_PIPELINE_CULL );
+			gfx.CullFace ( active.mCullFunc );
+		}
+		else {
+			DEBUG_LOG ( "  disabling cull func\n" );
+			gfx.Disable ( ZGL_PIPELINE_CULL );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateCache::FlushDepthFunc () {
+
+	assert ( this->mApplyingStateChanges );
+	
+	MOAIGfxState& active = this->mActiveState;
+	MOAIGfxState& pending = this->mPendingState;
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+
+	if ( active.mDepthFunc != pending.mDepthFunc ) {
+	
+		this->GfxStateWillChange ();
+	
+		DEBUG_LOG ( "  setting depth func: %d\n", pending.mDepthFunc );
+		
+		active.mDepthFunc = pending.mDepthFunc;
+		
+		if ( active.mDepthFunc ) {
+			gfx.Enable ( ZGL_PIPELINE_DEPTH );
+			gfx.DepthFunc ( active.mDepthFunc );
+		}
+		else {
+			gfx.Disable ( ZGL_PIPELINE_DEPTH );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateCache::FlushDepthMask () {
+
+	assert ( this->mApplyingStateChanges );
+	
+	MOAIGfxState& active = this->mActiveState;
+	MOAIGfxState& pending = this->mPendingState;
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+	
+	if ( active.mDepthMask != pending.mDepthMask ) {
+		
+		this->GfxStateWillChange ();
+	
+		DEBUG_LOG ( "  setting depth mask: %s\n", pending.mDepthMask ? "true" : "false" );
+		active.mDepthMask = pending.mDepthMask;
+		gfx.DepthMask ( active.mDepthMask );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateCache::FlushFrameBuffer () {
+
+	assert ( this->mApplyingStateChanges );
+	
+	MOAIGfxState& active = this->mActiveState;
+	MOAIGfxState& pending = this->mPendingState;
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+	
+	MOAIFrameBuffer* frameBuffer = pending.mFrameBuffer;
+	
+	if ( active.mFrameBuffer != frameBuffer) {
+		
+		DEBUG_LOG ( "  binding frame buffer: %p\n", frameBuffer );
+	
+		this->GfxStateWillChange ();
+	
+		gfx.BindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, frameBuffer->mGLFrameBuffer );
+		active.mFrameBuffer = frameBuffer;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateCache::FlushIndexBuffer () {
+
+	this->ForceIndexBuffer ( this->mPendingState.mIdxBuffer );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateCache::FlushPenWidth () {
+
+	assert ( this->mApplyingStateChanges );
+	
+	MOAIGfxState& active = this->mActiveState;
+	MOAIGfxState& pending = this->mPendingState;
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+	
+	if ( active.mPenWidth != pending.mPenWidth ) {
+		
+		DEBUG_LOG ( "  setting pen width: %f\n", pending.mPenWidth );
+	
+		this->GfxStateWillChange ();
+	
+		active.mPenWidth = pending.mPenWidth;
+		gfx.LineWidth ( active.mPenWidth );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateCache::FlushScissorRect () {
+
+	assert ( this->mApplyingStateChanges );
+	
+	MOAIGfxState& active = this->mActiveState;
+	MOAIGfxState& pending = this->mPendingState;
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+	
+	if ( pending.mScissorEnabled ) {
+	
+		bool updateRect = false;
+		
+		if ( !active.mScissorEnabled ) {
+		
+			this->GfxStateWillChange ();
+		
+			DEBUG_LOG ( "  enabling scissor rect\n" );
+			gfx.Enable ( ZGL_PIPELINE_SCISSOR );
+			active.mScissorEnabled = true;
+			updateRect = true;
+		}
+		
+		if ( updateRect || !active.mScissorRect.IsEqual ( pending.mScissorRect )) {
+		
+			this->GfxStateWillChange ();
+			
+			active.mScissorRect = pending.mScissorRect;
+		
+			ZLRect rect = active.mFrameBuffer->WndRectToDevice ( pending.mScissorRect );
+		
+			s32 x = ( s32 )active.mScissorRect.mXMin;
+			s32 y = ( s32 )active.mScissorRect.mYMin;
+			
+			u32 w = ( u32 )( active.mScissorRect.Width () + 0.5f );
+			u32 h = ( u32 )( active.mScissorRect.Height () + 0.5f );
+
+			w = h == 0 ? 0 : w;
+			h = w == 0 ? 0 : h;
+			
+			DEBUG_LOG ( "  update scissor rect: %d %d %d %d\n", x, y, w, h );
+			
+			gfx.Scissor ( x, y, w, h );
+		}
+	}
+	else {
+	
+		if ( active.mScissorEnabled == true ) {
+
+			this->GfxStateWillChange ();
+
+			DEBUG_LOG ( "  disabling scissor rect\n" );
+			MOAIGfxMgr::GetDrawingAPI ().Disable ( ZGL_PIPELINE_SCISSOR );
+			active.mScissorEnabled = false;
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateCache::FlushShader () {
+
+	assert ( this->mApplyingStateChanges );
+	
+	MOAIGfxState& active = this->mActiveState;
+	MOAIGfxState& pending = this->mPendingState;
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+	
+	MOAIShader* shader = this->mPendingState.mShader;
+	MOAIShaderProgram* program = shader ? shader->GetProgram () : 0;
+	shader = program ? shader : 0;
+	
+	if ( shader ) {
+		shader->UpdateUniforms ();
+	}
+	
+	bool applyUniforms	= ( shader && shader->HasDirtyUniforms ());
+	bool changeShader	= ( shader != this->mActiveState.mShader );
+
+	if ( applyUniforms || changeShader ) {
+	
+		this->GfxStateWillChange ();
+
+		DEBUG_LOG ( "  binding shader program: %p\n", program );
+		
+		if ( changeShader ) {
+			
+			if ( active.mShader ) {
+				active.mShader->GetProgram ()->Unbind ();
+			}
+			if ( shader ) {
+				program->Bind ();
+			}
+			active.mShader = shader;
+		}
+		
+		if ( applyUniforms ) {
+			shader->ApplyUniforms ();
+			shader->BindUniforms ();
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateCache::FlushTexture ( u32 textureUnit ) {
+
+	assert ( this->mApplyingStateChanges );
+	
+	MOAIGfxState& active = this->mActiveState;
+	MOAIGfxState& pending = this->mPendingState;
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+	
+	MOAITextureBase* texture = pending.mTextureUnits [ textureUnit ];
+	texture = texture && texture->IsReady () ? texture : this->mDefaultTexture;
+	MOAITextureBase* prevTexture = active.mTextureUnits [ textureUnit ];
+
+	if ( prevTexture != texture ) {
+
+		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+
+		this->GfxStateWillChange ();
+
+		DEBUG_LOG ( "  binding texture set: %p\n", textureSet );
+
+		gfx.ActiveTexture ( textureUnit );
+
+		if ( prevTexture ) {
+			prevTexture->Unbind ();
+		}
+		
+		active.mTextureUnits [ textureUnit ] = texture;
+		
+		if ( texture ) {
+		
+			DEBUG_LOG ( "    binding texture: %d %p\n", i, bindTexture );
+			texture->Bind ();
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateCache::FlushVertexArray () {
+
+	assert ( this->mApplyingStateChanges );
+	
+	MOAIGfxState& active = this->mActiveState;
+	MOAIGfxState& pending = this->mPendingState;
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+	
+	MOAIVertexArray* vtxArray = pending.mVtxArray;
+	
+	if ( active.mVtxArray != vtxArray ) {
+
+		this->GfxStateWillChange ();
+
+		DEBUG_LOG ( "  binding vertex array: %p\n", vtxArray );
+
+		if ( active.mVtxArray ) {
+			active.mVtxArray->Unbind ();
+		}
+		
+		active.mVtxArray = vtxArray;
+		
+		if ( vtxArray ) {
+			
+			this->FlushVertexBuffer (); // force the unbind in case it hasn't happened yet
+			vtxArray->Bind ();
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateCache::FlushVertexBuffer () {
+	
+	this->ForceVertexBuffer ( this->mPendingState.mVtxBuffer );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateCache::FlushVertexFormat () {
+
+	assert ( this->mApplyingStateChanges );
+	
+	MOAIGfxState& active = this->mActiveState;
+	MOAIGfxState& pending = this->mPendingState;
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+	
+	MOAIVertexFormat* format = pending.mVtxFormat;
+	
+	if ( active.mVtxFormat != format ) {
+		
+		DEBUG_LOG ( "  binding vertex format: (%p)\n", format );
+	
+		this->GfxStateWillChange ();
+		
+		if ( active.mVtxFormat && active.mVtxBuffer ) {
+			active.mVtxFormat->Unbind ();
+		}
+		
+		active.mVtxFormat = format;
+		active.mVtxBuffer = 0; // must be set in a later step
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateCache::FlushViewRect () {
+
+	assert ( this->mApplyingStateChanges );
+	
+	MOAIGfxState& active = this->mActiveState;
+	MOAIGfxState& pending = this->mPendingState;
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+	
+	if ( !active.mViewRect.IsEqual ( pending.mViewRect )) {
+		
+		this->GfxStateWillChange ();
+	
+		active.mViewRect = pending.mViewRect;
+
+		ZLRect rect = this->mActiveState.mFrameBuffer->WndRectToDevice ( pending.mViewRect );
+
+		s32 x = ( s32 )active.mViewRect.mXMin;
+		s32 y = ( s32 )active.mViewRect.mYMin;
+	
+		u32 w = ( u32 )( active.mViewRect.Width () + 0.5f );
+		u32 h = ( u32 )( active.mViewRect.Height () + 0.5f );
+	
+		DEBUG_LOG ( "  update view rect: %d %d %d %d\n", x, y, w, h );
+	
+		gfx.Viewport ( x, y, w, h );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateCache::ForceIndexBuffer ( MOAIIndexBuffer* buffer ) {
+
+	assert ( this->mApplyingStateChanges );
+	
+	MOAIGfxState& active = this->mActiveState;
+	MOAIGfxState& pending = this->mPendingState;
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+	
+	ZLSharedConstBuffer* bufferForBind = buffer ? buffer->GetBufferForBind ( gfx ) : 0;
+	
+	if (( active.mIdxBuffer != buffer ) || ( this->mBoundIdxBuffer != bufferForBind )) {
+	
+		this->GfxStateWillChange ();
+	
+		DEBUG_LOG ( "  binding index buffer: %p\n", buffer );
+		
+		if ( active.mIdxBuffer ) {
+			active.mIdxBuffer->Unbind ();
+		}
+		
+		active.mIdxBuffer = buffer;
+		this->mBoundIdxBuffer = 0;
+		
+		if ( buffer ) {
+			buffer->Bind ();
+			this->mBoundIdxBuffer = bufferForBind;
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateCache::ForceVertexBuffer ( MOAIVertexBuffer* buffer ) {
+
+	assert ( this->mApplyingStateChanges );
+
+	MOAIGfxState& active = this->mActiveState;
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+	
+	ZLSharedConstBuffer* bufferForBind = buffer ? buffer->GetBufferForBind ( gfx ) : 0;
+
+	MOAIVertexFormat* format = active.mVtxFormat;
+
+	if (( active.mVtxBuffer != buffer ) || ( this->mBoundVtxBuffer != bufferForBind )) {
+
+		this->GfxStateWillChange ();
+
+		DEBUG_LOG ( "  binding vertex buffer: (%p)\n", buffer );
+
+		if ( active.mVtxBuffer ) {
+			assert ( active.mVtxFormat );
+			active.mVtxFormat->Unbind ();
+		}
+		
+		active.mVtxBuffer = 0;
+		this->mBoundVtxBuffer = 0;
+		
+		if ( format && buffer ) {
+			
+			this->FlushVertexArray (); // force the unbind in case it hasn't happened yet
+			
+			buffer->Bind ();
+			format->Bind ( bufferForBind );
+			buffer->Unbind ();
+			
+			active.mVtxBuffer = buffer;
+			this->mBoundVtxBuffer = bufferForBind;
 		}
 	}
 }
@@ -456,62 +925,20 @@ void MOAIGfxStateCache::ResumeChanges () {
 //----------------------------------------------------------------//
 void MOAIGfxStateCache::SetBlendMode () {
 
-	if ( this->mApplyingStateChanges ) {
+	assert ( !this->mApplyingStateChanges );
 	
-		MOAIGfxState& active = this->mActiveState;
-		
-		if ( active.mBlendEnabled ) {
-			
-			this->GfxStateWillChange ();
-
-			DEBUG_LOG ( "  disabling blend\n" );
-			MOAIGfxMgr::GetDrawingAPI ().Disable ( ZGL_PIPELINE_BLEND );
-			active.mBlendEnabled = false;
-		}
-	}
-	else {
-
-		this->mPendingState.mBlendEnabled = false;
-		this->mDirtyFlags = ( !this->mActiveState.mBlendEnabled ) ? ( this->mDirtyFlags & ~BLEND_MODE ) : ( this->mDirtyFlags | BLEND_MODE );
-	}
+	this->mPendingState.mBlendEnabled = false;
+	this->mDirtyFlags = ( !this->mActiveState.mBlendEnabled ) ? ( this->mDirtyFlags & ~BLEND_MODE ) : ( this->mDirtyFlags | BLEND_MODE );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxStateCache::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 
-	if ( this->mApplyingStateChanges ) {
+	assert ( !this->mApplyingStateChanges );
 	
-		MOAIGfxState& active = this->mActiveState;
-		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-		
-		bool updateBlend = false;
-		
-		if ( !active.mBlendEnabled ) {
-		
-			this->GfxStateWillChange ();
-		
-			DEBUG_LOG ( "  enabling blend\n" );
-			gfx.Enable ( ZGL_PIPELINE_BLEND );
-			active.mBlendEnabled = true;
-			updateBlend = true;
-		}
-		
-		if ( updateBlend || !active.mBlendMode.IsSame ( blendMode )) {
-		
-			this->GfxStateWillChange ();
-			
-			DEBUG_LOG ( "  updating blend mode\n" );
-			active.mBlendMode = blendMode;
-			gfx.BlendMode ( active.mBlendMode.mEquation );
-			gfx.BlendFunc ( active.mBlendMode.mSourceFactor, active.mBlendMode.mDestFactor );
-		}
-	}
-	else {
-	
-		this->mPendingState.mBlendEnabled = true;
-		this->mPendingState.mBlendMode = blendMode;
-		this->mDirtyFlags = ( this->mActiveState.mBlendEnabled && ( this->mActiveState.mBlendMode.IsSame ( blendMode ))) ? ( this->mDirtyFlags & ~BLEND_MODE ) : ( this->mDirtyFlags | BLEND_MODE );
-	}
+	this->mPendingState.mBlendEnabled = true;
+	this->mPendingState.mBlendMode = blendMode;
+	this->mDirtyFlags = ( this->mActiveState.mBlendEnabled && ( this->mActiveState.mBlendMode.IsSame ( blendMode ))) ? ( this->mDirtyFlags & ~BLEND_MODE ) : ( this->mDirtyFlags | BLEND_MODE );
 }
 
 //----------------------------------------------------------------//
@@ -548,33 +975,10 @@ void MOAIGfxStateCache::SetCullFunc () {
 //----------------------------------------------------------------//
 void MOAIGfxStateCache::SetCullFunc ( int cullFunc ) {
 
-	if ( this->mApplyingStateChanges ) {
-
-		MOAIGfxState& active = this->mActiveState;
-		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-		
-		if ( active.mCullFunc != cullFunc ) {
+	assert ( !this->mApplyingStateChanges );
 	
-			this->GfxStateWillChange ();
-			
-			active.mCullFunc = cullFunc;
-			
-			if ( active.mCullFunc ) {
-				DEBUG_LOG ( "  enabling/setting cull func\n" );
-				gfx.Enable ( ZGL_PIPELINE_CULL );
-				gfx.CullFace ( active.mCullFunc );
-			}
-			else {
-				DEBUG_LOG ( "  disabling cull func\n" );
-				gfx.Disable ( ZGL_PIPELINE_CULL );
-			}
-		}
-	}
-	else {
-	
-		this->mPendingState.mCullFunc = cullFunc;
-		this->mDirtyFlags = ( this->mActiveState.mCullFunc == cullFunc ) ? ( this->mDirtyFlags & ~CULL_FUNC ) : ( this->mDirtyFlags | CULL_FUNC );
-	}
+	this->mPendingState.mCullFunc = cullFunc;
+	this->mDirtyFlags = ( this->mActiveState.mCullFunc == cullFunc ) ? ( this->mDirtyFlags & ~CULL_FUNC ) : ( this->mDirtyFlags | CULL_FUNC );
 }
 
 //----------------------------------------------------------------//
@@ -598,82 +1002,29 @@ void MOAIGfxStateCache::SetDepthFunc () {
 //----------------------------------------------------------------//
 void MOAIGfxStateCache::SetDepthFunc ( int depthFunc ) {
 
-	if ( this->mApplyingStateChanges ) {
-
-		MOAIGfxState& active = this->mActiveState;
-		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-
-		if ( active.mDepthFunc != depthFunc ) {
-		
-			this->GfxStateWillChange ();
-		
-			DEBUG_LOG ( "  setting depth func: %d\n", depthFunc );
-			
-			active.mDepthFunc = depthFunc;
-			
-			if ( active.mDepthFunc ) {
-				gfx.Enable ( ZGL_PIPELINE_DEPTH );
-				gfx.DepthFunc ( active.mDepthFunc );
-			}
-			else {
-				gfx.Disable ( ZGL_PIPELINE_DEPTH );
-			}
-		}
-	}
-	else {
+	assert ( !this->mApplyingStateChanges );
 	
-		this->mPendingState.mDepthFunc = depthFunc;
-		this->mDirtyFlags = (( this->mActiveState.mDepthFunc == depthFunc ) && ( this->mActiveState.mDepthMask == this->mPendingState.mDepthMask )) ? ( this->mDirtyFlags & ~DEPTH_MODE ) : ( this->mDirtyFlags | DEPTH_MODE );
-	}
+	this->mPendingState.mDepthFunc = depthFunc;
+	this->mDirtyFlags = (( this->mActiveState.mDepthFunc == depthFunc ) && ( this->mActiveState.mDepthMask == this->mPendingState.mDepthMask )) ? ( this->mDirtyFlags & ~DEPTH_MODE ) : ( this->mDirtyFlags | DEPTH_MODE );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxStateCache::SetDepthMask ( bool depthMask ) {
 
-	if ( this->mApplyingStateChanges ) {
+	assert ( !this->mApplyingStateChanges );
 
-		MOAIGfxState& active = this->mActiveState;
-		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-
-		if ( active.mDepthMask != depthMask ) {
-		
-			this->GfxStateWillChange ();
-			
-			DEBUG_LOG ( "  setting depth mask: %s\n", depthMask ? "true" : "false" );
-			active.mDepthMask = depthMask;
-			gfx.DepthMask ( active.mDepthMask );
-		}
-	}
-	else {
-
-		this->mPendingState.mDepthMask = depthMask;
-		this->mDirtyFlags = (( this->mActiveState.mDepthMask == depthMask ) && ( this->mActiveState.mDepthFunc == this->mPendingState.mDepthFunc )) ? ( this->mDirtyFlags & ~DEPTH_MODE ) : ( this->mDirtyFlags | DEPTH_MODE );
-	}
+	this->mPendingState.mDepthMask = depthMask;
+	this->mDirtyFlags = (( this->mActiveState.mDepthMask == depthMask ) && ( this->mActiveState.mDepthFunc == this->mPendingState.mDepthFunc )) ? ( this->mDirtyFlags & ~DEPTH_MODE ) : ( this->mDirtyFlags | DEPTH_MODE );
 }
 
 //----------------------------------------------------------------//
 bool MOAIGfxStateCache::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 
-	if ( this->mApplyingStateChanges ) {
-	
-		MOAIGfxState& active = this->mActiveState;
+	assert ( !this->mApplyingStateChanges );
 
-		if ( active.mFrameBuffer != frameBuffer ) {
-			
-			DEBUG_LOG ( "  binding frame buffer: %p\n", frameBuffer );
-			
-			this->GfxStateWillChange ();
-			
-			MOAIGfxMgr::GetDrawingAPI ().BindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, frameBuffer->mGLFrameBuffer );
-			active.mFrameBuffer = frameBuffer;
-		}
-	}
-	else {
-
-		frameBuffer = frameBuffer ? frameBuffer : this->mDefaultFrameBuffer;
-		this->mPendingState.mFrameBuffer = frameBuffer;
-		this->mDirtyFlags = ( this->mActiveState.mFrameBuffer == frameBuffer ) ? ( this->mDirtyFlags & ~FRAME_BUFFER ) : ( this->mDirtyFlags | FRAME_BUFFER );
-	}
+	frameBuffer = frameBuffer ? frameBuffer : this->mDefaultFrameBuffer;
+	this->mPendingState.mFrameBuffer = frameBuffer;
+	this->mDirtyFlags = ( this->mActiveState.mFrameBuffer == frameBuffer ) ? ( this->mDirtyFlags & ~FRAME_BUFFER ) : ( this->mDirtyFlags | FRAME_BUFFER );
 	
 	return true;
 }
@@ -681,37 +1032,10 @@ bool MOAIGfxStateCache::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 //----------------------------------------------------------------//
 bool MOAIGfxStateCache::SetIndexBuffer ( MOAIIndexBuffer* buffer ) {
 	
-	if ( this->mApplyingStateChanges ) {
+	assert ( !this->mApplyingStateChanges );
 	
-		MOAIGfxState& active = this->mActiveState;
-		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-		
-		ZLSharedConstBuffer* bufferForBind = buffer ? buffer->GetBufferForBind ( gfx ) : 0;
-	
-		if (( active.mIdxBuffer != buffer ) || ( this->mBoundIdxBuffer != bufferForBind )) {
-		
-			this->GfxStateWillChange ();
-		
-			DEBUG_LOG ( "  binding index buffer: %p\n", buffer );
-			
-			if ( active.mIdxBuffer ) {
-				active.mIdxBuffer->Unbind ();
-			}
-			
-			active.mIdxBuffer = buffer;
-			this->mBoundIdxBuffer = 0;
-			
-			if ( buffer ) {
-				buffer->Bind ();
-				this->mBoundIdxBuffer = bufferForBind;
-			}
-		}
-	}
-	else {
-	
-		this->mPendingState.mIdxBuffer = buffer;
-		this->mDirtyFlags = ( this->mActiveState.mIdxBuffer == buffer ) ? ( this->mDirtyFlags & ~INDEX_BUFFER ) : ( this->mDirtyFlags | INDEX_BUFFER );
-	}
+	this->mPendingState.mIdxBuffer = buffer;
+	this->mDirtyFlags = ( this->mActiveState.mIdxBuffer == buffer ) ? ( this->mDirtyFlags & ~INDEX_BUFFER ) : ( this->mDirtyFlags | INDEX_BUFFER );
 
 	return buffer ? buffer->IsReady () : true;
 }
@@ -719,49 +1043,19 @@ bool MOAIGfxStateCache::SetIndexBuffer ( MOAIIndexBuffer* buffer ) {
 //----------------------------------------------------------------//
 void MOAIGfxStateCache::SetPenWidth ( float penWidth ) {
 
-	if ( this->mApplyingStateChanges ) {
+	assert ( !this->mApplyingStateChanges );
 
-		MOAIGfxState& active = this->mActiveState;
-		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-
-		if ( active.mPenWidth != penWidth ) {
-			
-			DEBUG_LOG ( "  setting pen width: %f\n", penWidth );
-		
-			this->GfxStateWillChange ();
-			
-			active.mPenWidth = penWidth;
-			gfx.LineWidth ( active.mPenWidth );
-		}
-	}
-	else {
-
-		this->mPendingState.mPenWidth = penWidth;
-		this->mDirtyFlags = ( this->mActiveState.mPenWidth == penWidth ) ? ( this->mDirtyFlags & ~PEN_WIDTH ) : ( this->mDirtyFlags | PEN_WIDTH );
-	}
+	this->mPendingState.mPenWidth = penWidth;
+	this->mDirtyFlags = ( this->mActiveState.mPenWidth == penWidth ) ? ( this->mDirtyFlags & ~PEN_WIDTH ) : ( this->mDirtyFlags | PEN_WIDTH );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxStateCache::SetScissorRect () {
 
-	if ( this->mApplyingStateChanges ) {
+	assert ( !this->mApplyingStateChanges );
 
-		MOAIGfxState& active = this->mActiveState;
-		
-		if ( active.mScissorEnabled == true ) {
-
-			this->GfxStateWillChange ();
-
-			DEBUG_LOG ( "  disabling scissor rect\n" );
-			MOAIGfxMgr::GetDrawingAPI ().Disable ( ZGL_PIPELINE_SCISSOR );
-			active.mScissorEnabled = false;
-		}
-	}
-	else {
-
-		this->mPendingState.mScissorEnabled = false;
-		this->mDirtyFlags = ( !this->mActiveState.mScissorEnabled ) ? ( this->mDirtyFlags & ~SCISSOR_RECT ) : ( this->mDirtyFlags | SCISSOR_RECT );
-	}
+	this->mPendingState.mScissorEnabled = false;
+	this->mDirtyFlags = ( !this->mActiveState.mScissorEnabled ) ? ( this->mDirtyFlags & ~SCISSOR_RECT ) : ( this->mDirtyFlags | SCISSOR_RECT );
 }
 
 //----------------------------------------------------------------//
@@ -769,51 +1063,11 @@ void MOAIGfxStateCache::SetScissorRect ( ZLRect rect ) {
 	
 	rect.Bless ();
 	
-	if ( this->mApplyingStateChanges ) {
+	assert ( !this->mApplyingStateChanges );
 	
-		MOAIGfxState& active = this->mActiveState;
-		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-		
-		bool updateRect = false;
-		
-		if ( !active.mScissorEnabled ) {
-		
-			this->GfxStateWillChange ();
-		
-			DEBUG_LOG ( "  enabling scissor rect\n" );
-			gfx.Enable ( ZGL_PIPELINE_SCISSOR );
-			active.mScissorEnabled = true;
-			updateRect = true;
-		}
-		
-		if ( updateRect || !active.mScissorRect.IsEqual ( rect )) {
-		
-			this->GfxStateWillChange ();
-			
-			active.mScissorRect = rect;
-		
-			rect = active.mFrameBuffer->WndRectToDevice ( rect );
-		
-			s32 x = ( s32 )active.mScissorRect.mXMin;
-			s32 y = ( s32 )active.mScissorRect.mYMin;
-			
-			u32 w = ( u32 )( active.mScissorRect.Width () + 0.5f );
-			u32 h = ( u32 )( active.mScissorRect.Height () + 0.5f );
-
-			w = h == 0 ? 0 : w;
-			h = w == 0 ? 0 : h;
-			
-			DEBUG_LOG ( "  update scissor rect: %d %d %d %d\n", x, y, w, h );
-			
-			gfx.Scissor ( x, y, w, h );
-		}
-	}
-	else {
-	
-		this->mPendingState.mScissorEnabled = true;
-		this->mPendingState.mScissorRect = rect;
-		this->mDirtyFlags = ( this->mActiveState.mScissorEnabled && ( this->mActiveState.mScissorRect.IsEqual ( rect ))) ? ( this->mDirtyFlags & ~SCISSOR_RECT ) : ( this->mDirtyFlags | SCISSOR_RECT );
-	}
+	this->mPendingState.mScissorEnabled = true;
+	this->mPendingState.mScissorRect = rect;
+	this->mDirtyFlags = ( this->mActiveState.mScissorEnabled && ( this->mActiveState.mScissorRect.IsEqual ( rect ))) ? ( this->mDirtyFlags & ~SCISSOR_RECT ) : ( this->mDirtyFlags | SCISSOR_RECT );
 }
 
 //----------------------------------------------------------------//
@@ -825,52 +1079,15 @@ bool MOAIGfxStateCache::SetShader ( MOAIShaderMgr::Preset preset ) {
 //----------------------------------------------------------------//
 bool MOAIGfxStateCache::SetShader ( MOAIShader* shader ) {
 
+	assert ( !this->mApplyingStateChanges );
+	
 	MOAIShaderProgram* program = shader ? shader->GetProgram () : 0;
 	shader = program ? shader : 0;
-
-	if ( this->mApplyingStateChanges ) {
-		
-		MOAIGfxState& active = this->mActiveState;
-		
-		if ( shader ) {
-			shader->UpdateUniforms ();
-		}
-		
-		bool applyUniforms	= ( shader && shader->HasDirtyUniforms ());
-		bool changeShader	= ( shader != this->mActiveState.mShader );
-		
-		if ( applyUniforms || changeShader ) {
-		
-			this->GfxStateWillChange ();
-
-			DEBUG_LOG ( "  binding shader program: %p\n", program );
-			
-			if ( changeShader ) {
-				
-				if ( active.mShader ) {
-					active.mShader->GetProgram ()->Unbind ();
-				}
-				if ( shader ) {
-					program->Bind ();
-				}
-				active.mShader = shader;
-			}
-			
-			if ( applyUniforms ) {
-				shader->ApplyUniforms ();
-				shader->BindUniforms ();
-			}
-		}
-	}
-	else {
-		
-		if ( shader ) {
-			shader->ScheduleTextures ();
-		}
-		
-		this->mPendingState.mShader = shader;
-		this->mDirtyFlags = ( !shader && ( this->mActiveState.mShader == shader )) ? ( this->mDirtyFlags & ~SHADER ) : ( this->mDirtyFlags | SHADER );
-	}
+	
+	this->mPendingState.mShader = shader;
+	
+	// shader dirty flag only ceared if both are null
+	this->mDirtyFlags = ( !( shader || this->mActiveState.mShader )) ? ( this->mDirtyFlags & ~SHADER ) : ( this->mDirtyFlags | SHADER );
 	
 	return program ? program->IsReady () : true;
 }
@@ -878,48 +1095,17 @@ bool MOAIGfxStateCache::SetShader ( MOAIShader* shader ) {
 //----------------------------------------------------------------//
 bool MOAIGfxStateCache::SetTexture ( MOAITextureBase* texture, u32 textureUnit ) {
 
-	if ( this->mApplyingStateChanges ) {
+	assert ( !this->mApplyingStateChanges );
+
+	u32 mask = 1 << textureUnit;
+	this->mPendingState.mTextureUnits [ textureUnit ] = texture;
+	if ( this->mActiveState.mTextureUnits [ textureUnit ] == texture ) {
 	
-		MOAIGfxState& active = this->mActiveState;
-	
-		texture = texture && texture->IsReady () ? texture : this->mDefaultTexture;
-		MOAITextureBase* prevTexture = active.mTextureUnits [ textureUnit ];
-	
-		if ( prevTexture != texture ) {
-
-			ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-
-			this->GfxStateWillChange ();
-
-			DEBUG_LOG ( "  binding texture set: %p\n", textureSet );
-
-			gfx.ActiveTexture ( textureUnit );
-
-			if ( prevTexture ) {
-				prevTexture->Unbind ();
-			}
-			
-			active.mTextureUnits [ textureUnit ] = texture;
-			
-			if ( texture ) {
-			
-				DEBUG_LOG ( "    binding texture: %d %p\n", i, bindTexture );
-				texture->Bind ();
-			}
-		}
+		this->mTextureDirtyFlags = this->mTextureDirtyFlags & ~mask;
 	}
 	else {
-
-		u32 mask = 1 << textureUnit;
-		this->mPendingState.mTextureUnits [ textureUnit ] = texture;
-		if ( this->mActiveState.mTextureUnits [ textureUnit ] == texture ) {
-		
-			this->mTextureDirtyFlags = this->mTextureDirtyFlags & ~mask;
-		}
-		else {
-			this->mTextureDirtyFlags = this->mTextureDirtyFlags | mask;
-			this->mTopDirtyTexture = textureUnit + 1;
-		}
+		this->mTextureDirtyFlags = this->mTextureDirtyFlags | mask;
+		this->mTopDirtyTexture = textureUnit + 1;
 	}
 	
 	return true;
@@ -928,94 +1114,32 @@ bool MOAIGfxStateCache::SetTexture ( MOAITextureBase* texture, u32 textureUnit )
 //----------------------------------------------------------------//
 bool MOAIGfxStateCache::SetVertexArray ( MOAIVertexArray* vtxArray ) {
 
-	if ( this->mApplyingStateChanges ) {
-		
-		MOAIGfxState& active = this->mActiveState;
-		
-		if ( active.mVtxArray != vtxArray ) {
-	
-			this->GfxStateWillChange ();
-	
-			DEBUG_LOG ( "  binding vertex array: %p\n", vtxArray );
-	
-			if ( active.mVtxArray ) {
-				active.mVtxArray->Unbind ();
-			}
-			
-			active.mVtxArray = vtxArray;
-			
-			if ( vtxArray ) {
-								
-				this->SetVertexBuffer (); // force the unbind in case it hasn't happened yet
-			
-				vtxArray->Bind ();
-			}
-		}
-	}
-	else {
+	assert ( !this->mApplyingStateChanges );
 
-		if ( vtxArray ) {
-			this->mPendingState.mVtxBuffer = 0;
-			this->mPendingState.mVtxFormat = 0;
-			this->mDirtyFlags &= ~VERTEX_BUFFER;
-		}
-
-		this->mPendingState.mVtxArray = vtxArray;
-		this->mDirtyFlags = ( this->mActiveState.mVtxArray == vtxArray ) ? ( this->mDirtyFlags & ~VERTEX_ARRAY ) : ( this->mDirtyFlags | VERTEX_ARRAY );
+	if ( vtxArray ) {
+		this->mPendingState.mVtxBuffer = 0;
+		this->mPendingState.mVtxFormat = 0;
+		this->mDirtyFlags &= ~VERTEX_BUFFER;
 	}
+
+	this->mPendingState.mVtxArray = vtxArray;
+	this->mDirtyFlags = ( this->mActiveState.mVtxArray == vtxArray ) ? ( this->mDirtyFlags & ~VERTEX_ARRAY ) : ( this->mDirtyFlags | VERTEX_ARRAY );
+
 	return vtxArray ? vtxArray->IsReady () : true;
 }
 
 //----------------------------------------------------------------//
 bool MOAIGfxStateCache::SetVertexBuffer ( MOAIVertexBuffer* buffer ) {
 
-	if ( this->mApplyingStateChanges ) {
+	assert ( !this->mApplyingStateChanges );
 	
-		MOAIGfxState& active = this->mActiveState;
-		
-		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-		
-		ZLSharedConstBuffer* bufferForBind = buffer ? buffer->GetBufferForBind ( gfx ) : 0;
-		
-		MOAIVertexFormat* format = active.mVtxFormat;
-		
-		if (( active.mVtxBuffer != buffer ) || ( this->mBoundVtxBuffer != bufferForBind )) {
-
-			this->GfxStateWillChange ();
-
-			DEBUG_LOG ( "  binding vertex buffer: (%p)\n", buffer );
-
-			if ( active.mVtxBuffer ) {
-				assert ( active.mVtxFormat );
-				active.mVtxFormat->Unbind ();
-			}
-			
-			active.mVtxBuffer = 0;
-			this->mBoundVtxBuffer = 0;
-			
-			if ( format && buffer ) {
-				
-				this->SetVertexArray (); // force the unbind in case it hasn't happened yet
-				
-				buffer->Bind ();
-				format->Bind ( bufferForBind );
-				buffer->Unbind ();
-				
-				active.mVtxBuffer = buffer;
-				this->mBoundVtxBuffer = bufferForBind;
-			}
-		}
+	if ( buffer ) {
+		this->mPendingState.mVtxArray = 0;
+		this->mDirtyFlags &= ~VERTEX_ARRAY;
 	}
-	else {
-	
-		if ( buffer ) {
-			this->mPendingState.mVtxArray = 0;
-			this->mDirtyFlags &= ~VERTEX_ARRAY;
-		}
-	
-		this->mPendingState.mVtxBuffer = buffer;
-		this->mDirtyFlags = ( this->mActiveState.mVtxBuffer == buffer ) ? ( this->mDirtyFlags & ~VERTEX_BUFFER ) : ( this->mDirtyFlags | VERTEX_BUFFER );
-	}
+
+	this->mPendingState.mVtxBuffer = buffer;
+	this->mDirtyFlags = ( this->mActiveState.mVtxBuffer == buffer ) ? ( this->mDirtyFlags & ~VERTEX_BUFFER ) : ( this->mDirtyFlags | VERTEX_BUFFER );
 	
 	return buffer ? buffer->IsReady () : true;
 }
@@ -1029,29 +1153,10 @@ void MOAIGfxStateCache::SetVertexFormat ( MOAIVertexFormatMgr::Preset preset ) {
 //----------------------------------------------------------------//
 void MOAIGfxStateCache::SetVertexFormat ( MOAIVertexFormat* format ) {
 
-	if ( this->mApplyingStateChanges ) {
-		
-		MOAIGfxState& active = this->mActiveState;
-		
-		if ( active.mVtxFormat != format ) {
-			
-			DEBUG_LOG ( "  binding vertex format: (%p)\n", format );
-		
-			this->GfxStateWillChange ();
-			
-			if ( active.mVtxFormat && active.mVtxBuffer ) {
-				active.mVtxFormat->Unbind ();
-			}
-			
-			active.mVtxFormat = format;
-			active.mVtxBuffer = 0; // must be set in a later step
-		}
-	}
-	else {
+	assert ( !this->mApplyingStateChanges );
 
-		this->mPendingState.mVtxFormat = format;
-		this->mDirtyFlags = ( this->mActiveState.mVtxFormat == format ) ? ( this->mDirtyFlags & ~VERTEX_FORMAT ) : ( this->mDirtyFlags | VERTEX_FORMAT );
-	}
+	this->mPendingState.mVtxFormat = format;
+	this->mDirtyFlags = ( this->mActiveState.mVtxFormat == format ) ? ( this->mDirtyFlags & ~VERTEX_FORMAT ) : ( this->mDirtyFlags | VERTEX_FORMAT );
 }
 
 //----------------------------------------------------------------//
@@ -1071,35 +1176,10 @@ void MOAIGfxStateCache::SetViewRect ( ZLRect rect ) {
 	
 	rect.Bless ();
 	
-	if ( this->mApplyingStateChanges ) {
+	assert ( !this->mApplyingStateChanges );
 	
-		MOAIGfxState& active = this->mActiveState;
-		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-	
-		if ( !active.mViewRect.IsEqual ( rect )) {
-			
-			this->GfxStateWillChange ();
-			
-			active.mViewRect = rect;
-	
-			rect = this->mActiveState.mFrameBuffer->WndRectToDevice ( rect );
-	
-			s32 x = ( s32 )active.mViewRect.mXMin;
-			s32 y = ( s32 )active.mViewRect.mYMin;
-			
-			u32 w = ( u32 )( active.mViewRect.Width () + 0.5f );
-			u32 h = ( u32 )( active.mViewRect.Height () + 0.5f );
-			
-			DEBUG_LOG ( "  update view rect: %d %d %d %d\n", x, y, w, h );
-			
-			gfx.Viewport ( x, y, w, h );
-		}
-	}
-	else {
-	
-		this->mPendingState.mViewRect = rect;
-		this->mDirtyFlags = ( this->mActiveState.mViewRect.IsEqual ( rect )) ? ( this->mDirtyFlags & ~VIEW_RECT ) : ( this->mDirtyFlags | VIEW_RECT );
-	}
+	this->mPendingState.mViewRect = rect;
+	this->mDirtyFlags = ( this->mActiveState.mViewRect.IsEqual ( rect )) ? ( this->mDirtyFlags & ~VIEW_RECT ) : ( this->mDirtyFlags | VIEW_RECT );
 }
 
 //----------------------------------------------------------------//
