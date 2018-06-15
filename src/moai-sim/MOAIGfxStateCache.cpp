@@ -833,7 +833,6 @@ bool MOAIGfxStateCache::SetShader ( MOAIShader* shader ) {
 		MOAIGfxState& active = this->mActiveState;
 		
 		if ( shader ) {
-			shader->ScheduleTextures ();
 			shader->UpdateUniforms ();
 		}
 		
@@ -864,6 +863,10 @@ bool MOAIGfxStateCache::SetShader ( MOAIShader* shader ) {
 		}
 	}
 	else {
+		
+		if ( shader ) {
+			shader->ScheduleTextures ();
+		}
 		
 		this->mPendingState.mShader = shader;
 		this->mDirtyFlags = ( !shader && ( this->mActiveState.mShader == shader )) ? ( this->mDirtyFlags & ~SHADER ) : ( this->mDirtyFlags | SHADER );
@@ -903,8 +906,6 @@ bool MOAIGfxStateCache::SetTexture ( MOAITextureBase* texture, u32 textureUnit )
 				DEBUG_LOG ( "    binding texture: %d %p\n", i, bindTexture );
 				texture->Bind ();
 			}
-
-			gfx.ActiveTexture ( 0 );
 		}
 	}
 	else {
