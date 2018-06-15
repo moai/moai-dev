@@ -555,16 +555,11 @@ void MOAIShaderProgram::ScheduleTextures () {
 	
 		MOAIShaderProgramTexture& shaderTexture = this->mTextures [ i ];
 		
-		MOAITextureBase* texture = 0;
+		MOAITextureBase* texture = shaderTexture.mTexture;
 		
 		// load texture by name
-		if ( shaderTexture.mName != MOAI_UNKNOWN_MATERIAL_GLOBAL ) {
-			texture = materialStack.GetTexture ( shaderTexture.mName );
-		}
-		
-		// fallback
 		if ( !texture ) {
-			texture = shaderTexture.mTexture;
+			texture = materialStack.GetTexture ( shaderTexture.mName );
 		}
 		
 		gfx.mGfxState.SetTexture ( texture, shaderTexture.mUnit );

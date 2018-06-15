@@ -117,7 +117,8 @@ MOAILight* MOAIMaterialMgr::GetLight ( u32 lightID ) {
 MOAITextureBase* MOAIMaterialMgr::GetTexture ( u32 textureID ) {
 
 	assert ( textureID < MAX_GLOBAL_TEXTURES );
-	return this->mNamedTextures [ textureID ].mTexture;
+	MOAITextureBase* texture = this->mNamedTextures [ textureID ].mTexture;
+	return texture ? texture : ( MOAITextureBase* )this->mTexture;
 }
 
 //----------------------------------------------------------------//
