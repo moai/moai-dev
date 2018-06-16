@@ -1082,9 +1082,11 @@ bool MOAIGfxStateCache::SetVertexArray ( MOAIVertexArray* vtxArray ) {
 
 	assert ( !this->mApplyingStateChanges );
 
-	this->mPendingState.mVtxBuffer = 0;
-	this->mPendingState.mVtxFormat = 0;
-	this->mDirtyFlags &= ~VERTEX_BUFFER;
+	if ( vtxArray ) {
+		this->mPendingState.mVtxBuffer = 0;
+		this->mPendingState.mVtxFormat = 0;
+		this->mDirtyFlags &= ~VERTEX_BUFFER;
+	}
 
 	this->mPendingState.mVtxArray = vtxArray;
 	this->mDirtyFlags = ( this->mActiveState.mVtxArray == vtxArray ) ? ( this->mDirtyFlags & ~VERTEX_ARRAY ) : ( this->mDirtyFlags | VERTEX_ARRAY );
@@ -1097,8 +1099,10 @@ bool MOAIGfxStateCache::SetVertexBuffer ( MOAIVertexBuffer* buffer ) {
 
 	assert ( !this->mApplyingStateChanges );
 	
-	this->mPendingState.mVtxArray = 0;
-	this->mDirtyFlags &= ~VERTEX_ARRAY;
+	if ( buffer ) {
+		this->mPendingState.mVtxArray = 0;
+		this->mDirtyFlags &= ~VERTEX_ARRAY;
+	}
 
 	this->mPendingState.mVtxBuffer = buffer;
 	this->mDirtyFlags = ( this->mActiveState.mVtxBuffer == buffer ) ? ( this->mDirtyFlags & ~VERTEX_BUFFER ) : ( this->mDirtyFlags | VERTEX_BUFFER );
