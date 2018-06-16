@@ -156,20 +156,20 @@ protected:
 	void			ApplyStateChange				( u32 stateID );
 	void			ApplyStateChanges				();
 	void			BindVertexBufferWithFormat		( MOAIVertexBufferWithFormat& buffer, bool useVAOs );
-	void			FlushBlendMode					();
-	void			FlushCullFunc					();
-	void			FlushDepthFunc					();
-	void			FlushDepthMask					();
-	void			FlushFrameBuffer				();
-	void			FlushIndexBuffer				();
-	void			FlushPenWidth					();
-	void			FlushScissorRect				();
-	void			FlushShader						();
-	void			FlushTexture					( u32 textureUnit );
-	void			FlushVertexArray				();
-	void			FlushVertexBuffer				(); // must be called *after* BindVertexFormat
-	void			FlushVertexFormat				();
-	void			FlushViewRect					();
+	void			FlushBlendMode					( bool blendEnabled, const MOAIBlendMode& blendMode );
+	void			FlushCullFunc					( int cullFunc );
+	void			FlushDepthFunc					( int depthFunc );
+	void			FlushDepthMask					( bool depthMask );
+	void			FlushFrameBuffer				( MOAIFrameBuffer* frameBuffer );
+	void			FlushIndexBuffer				( MOAIIndexBuffer* buffer );
+	void			FlushPenWidth					( float penWidth );
+	void			FlushScissorRect				( bool scissorEnabled, ZLRect rect );
+	void			FlushShader						( MOAIShader* shader );
+	void			FlushTexture					( u32 textureUnit, MOAITextureBase* texture );
+	void			FlushVertexArray				( MOAIVertexArray* vtxArray );
+	void			FlushVertexBuffer				( MOAIVertexBuffer* buffer ); // must be called *after* BindVertexFormat
+	void			FlushVertexFormat				( MOAIVertexFormat* vtxFormat );
+	void			FlushViewRect					( ZLRect rect );
 	void			ForceIndexBuffer				( MOAIIndexBuffer* buffer );
 	void			ForceVertexBuffer				( MOAIVertexBuffer* buffer );
 	void			ResumeChanges					();

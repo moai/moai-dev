@@ -142,9 +142,9 @@ void MOAIGfxVertexCache::FlushBufferedPrims () {
 			// it's OK to leave these; will get set back to zero for the next cached prim.
 			// setting back to zero won't trigger a redraw, since the vertex prim cache will be empty.
 			if ( this->mUseIdxBuffer ) {
-				gfxMgr.mGfxState.ForceIndexBuffer ( this->mIdxBuffer );
+				gfxMgr.mGfxState.FlushIndexBuffer ( this->mIdxBuffer );
 			}
-			gfxMgr.mGfxState.ForceVertexBuffer ( this->mVtxBuffer );
+			gfxMgr.mGfxState.FlushVertexBuffer ( this->mVtxBuffer );
 			
 			gfxMgr.mGfxState.DrawPrims ( this->mPrimType, offset, count );
 		}
