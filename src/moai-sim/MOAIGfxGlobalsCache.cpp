@@ -264,7 +264,6 @@ bool MOAIGfxGlobalsCache::IsInputMtx ( u32 mtxID ) {
 //----------------------------------------------------------------//
 MOAIGfxGlobalsCache::MOAIGfxGlobalsCache () :
 	mDirtyFlags ( 0 ),
-	mShaderFlags ( 0 ),
 	mFinalColor32 ( 0xffffffff ),
 	mClearFlags ( 0 ),
 	mClearDepth ( 0.0 ) {

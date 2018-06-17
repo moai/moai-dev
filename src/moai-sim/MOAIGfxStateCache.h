@@ -112,7 +112,7 @@ protected:
 	friend class MOAIGfxMgr; // TODO: this is only here so MOAIGfxMgr can call ApplyStateChanges in Clear (). move Clear () here.
 
 	// right now we just test every flag for an update in a for loop.
-	// these flags ordered roughly by (guessed) call frequency just so we can bail out of the
+	// these flags ordered roughly by (guessed) call frequency so we can bail out of the
 	// state update loop early. if the update loop is ever a bottleneck (or if this list grows
 	// a lot) then we'll have to look at a data structure for scheduling updates.
 	// note that some of these also have to be done in a certain order.
@@ -134,7 +134,6 @@ protected:
 	
 	u32										mDirtyFlags;
 	u32										mTextureDirtyFlags;
-	u32										mTopDirtyTexture;
 	u32										mMaxTextureUnits;
 	
 	u32										mApplyingStateChanges;

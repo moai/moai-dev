@@ -97,14 +97,6 @@ public:
 	void			WriteQuad						( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale );
 	
 	//----------------------------------------------------------------//
-//	inline void WriteColor ( float r, float g, float b, float a ) {
-//		UNUSED ( r );
-//		UNUSED ( g );
-//		UNUSED ( b );
-//		UNUSED ( a );
-//	}
-	
-	//----------------------------------------------------------------//
 	inline void WritePenColor4b () {
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)

@@ -173,27 +173,24 @@ void MOAIGfxStateCache::ApplyStateChanges () {
 			u32 dirtyFlags = this->mDirtyFlags;
 			this->mDirtyFlags = 0;
 			
-			u32 textureDirtyFlags = this->mTextureDirtyFlags;
-			this->mTextureDirtyFlags = 0;
-			
 			DEBUG_LOG ( "APPLY STATE CHANGES\n" );
 
-			// TODO: use recursion here to a depth-first pass through the
-			// flags as opposed to iterating over every one individually
-
-			if ( dirtyFlags ) {
-				for ( u32 i = 1; i < END_STATE_FLAGS; i <<= 1 ) {
-					if ( dirtyFlags & i ) {
-						this->ApplyStateChange ( i );
-					}
+			for ( u32 i = 0; dirtyFlags; ++i ) {
+				u32 mask = 1 << i;
+				if ( dirtyFlags & mask ) {
+					this->ApplyStateChange ( mask );
+					dirtyFlags &= ~mask;
 				}
 			}
 			
-			if ( textureDirtyFlags ) {
-				for ( u32 i = 0; i < this->mTopDirtyTexture; ++i ) {
-					if ( textureDirtyFlags & ( 1 << i )) {
-						this->FlushTexture ( i, this->mPendingState.mTextureUnits [ i ]);
-					}
+			u32 textureDirtyFlags = this->mTextureDirtyFlags;
+			this->mTextureDirtyFlags = 0;
+			
+			for ( u32 i = 0; textureDirtyFlags; ++i ) {
+				u32 mask = 1 << i;
+				if ( textureDirtyFlags & mask ) {
+					this->FlushTexture ( i, this->mPendingState.mTextureUnits [ i ]);
+					textureDirtyFlags &= ~mask;
 				}
 			}
 			
@@ -788,7 +785,6 @@ MOAIGfxStateCache::MOAIGfxStateCache () :
 	mCurrentState ( 0 ),
 	mDirtyFlags ( 0 ),
 	mTextureDirtyFlags ( 0 ),
-	mTopDirtyTexture ( 0 ),
 	mMaxTextureUnits ( 0 ),
 	mApplyingStateChanges ( 0 ),
 	mClient ( 0 ),
@@ -877,7 +873,6 @@ void MOAIGfxStateCache::ResetState () {
 	
 	this->mDirtyFlags = 0;
 	this->mTextureDirtyFlags = 0;
-	this->mTopDirtyTexture = 0;
 	
 	ZGL_COMMENT ( gfx, "" );
 }
@@ -1066,12 +1061,10 @@ bool MOAIGfxStateCache::SetTexture ( MOAITextureBase* texture, u32 textureUnit )
 	u32 mask = 1 << textureUnit;
 	this->mPendingState.mTextureUnits [ textureUnit ] = texture;
 	if ( this->mActiveState.mTextureUnits [ textureUnit ] == texture ) {
-	
 		this->mTextureDirtyFlags = this->mTextureDirtyFlags & ~mask;
 	}
 	else {
 		this->mTextureDirtyFlags = this->mTextureDirtyFlags | mask;
-		this->mTopDirtyTexture = textureUnit + 1;
 	}
 	
 	return true;

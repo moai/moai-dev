@@ -151,9 +151,7 @@ void MOAIGfxVertexCache::FlushBufferedPrims () {
 		
 		this->mIsDrawing = false;
 		this->mPrimCount = 0;
-		
-		gfxMgr.mGfxState.SetShaderFlags ( 0 );
-		
+				
 		if ( MOAIGfxMgr::GetDrawingAPI ().IsImmediate ()) {
 			this->Reset ();
 		}

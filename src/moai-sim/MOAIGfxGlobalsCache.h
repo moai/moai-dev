@@ -176,7 +176,6 @@ public:
 protected:
 
 	u64						mDirtyFlags;
-	u64						mShaderFlags;
 	
 	ZLMatrix4x4				mMatrices [ TOTAL_MATRICES ];
 	
@@ -202,8 +201,6 @@ public:
 	GET ( const ZLColorVec&, PenColor, mPenColor )
 	GET ( const ZLColorVec&, FinalColor, mFinalColor )
 	GET ( u32, FinalColor32, mFinalColor32 )
-
-	GET_SET ( u64, ShaderFlags, mShaderFlags )
 	
 	GET_SET ( u32, ClearFlags, mClearFlags )
 	GET_SET ( ZLColorVec&, ClearColor, mClearColor )
