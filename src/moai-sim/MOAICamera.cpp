@@ -330,7 +330,7 @@ void MOAICamera::DrawDebug () {
 	ZLRect viewRect = gfxMgr.mGfxState.GetViewRect ();
 	//float aspect = viewRect.Width () / viewRect.Height ();
 	
-	ZLMatrix4x4 mtx = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::CLIP_TO_DISPLAY_MTX );
+	ZLMatrix4x4 mtx = gfxMgr.mGfxState.GetMtx ( MOAIGfxState::CLIP_TO_DISPLAY_MTX );
 	
 	gfxMgr.mVertexCache.SetVertexTransform ( mtx ); // draw in device space
 	

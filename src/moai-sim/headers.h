@@ -49,10 +49,11 @@
 #include <moai-sim/MOAIFrameBufferTexture.h>
 #include <moai-sim/MOAIGeometryWriter.h>
 #include <moai-sim/MOAIGfxBuffer.h>
-#include <moai-sim/MOAIGfxGlobalsCache.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxPipelineClerk.h>
-#include <moai-sim/MOAIGfxStateCache.h>
+#include <moai-sim/MOAIGfxState.h>
+#include <moai-sim/MOAIGfxStateCPU.h>
+#include <moai-sim/MOAIGfxStateGPU.h>
 #include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIGfxVertexCache.h>
 #include <moai-sim/MOAIGraphicsProp.h>

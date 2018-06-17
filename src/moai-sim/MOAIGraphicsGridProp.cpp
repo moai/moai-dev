@@ -151,7 +151,7 @@ void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoo
 				mtx.PrependSclTr2D ( xScale, yScale, loc.mX, loc.mY );
 			}
 
-			gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX, mtx );
+			gfxMgr.mGfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX, mtx );
 			
 			if ( fancyGrid ) {
 				gfxMgr.mGfxState.SetPenColor ( penColor * fancyGrid->GetTileColor ( addr ));

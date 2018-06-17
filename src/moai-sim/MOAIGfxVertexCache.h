@@ -4,7 +4,7 @@
 #ifndef	MOAIGFXVERTEXCACHE_H
 #define	MOAIGFXVERTEXCACHE_H
 
-#include <moai-sim/MOAIGfxStateCache.h>
+#include <moai-sim/MOAIGfxStateGPU.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIVertexBuffer.h>
 
@@ -20,11 +20,12 @@ class MOAIVertexFormat;
 // MOAIGfxVertexCache
 //================================================================//
 class MOAIGfxVertexCache :
-	virtual public MOAIGfxStateCacheClient {
+	virtual public MOAIGfxStateClientGPU {
 protected:
 
-	friend class MOAIGfxGlobalsCache;
-	friend class MOAIGfxStateCache;
+	friend class MOAIGfxState;
+	friend class MOAIGfxStateCPU;
+	friend class MOAIGfxStateGPU;
 	
 	// Stock OpenGL ES 2.0 has no support for u32 index size in glDrawElements.
 	// iOS and many Androids (PowerVR, adreno) support it with GL_OES_element_index_uint extension.

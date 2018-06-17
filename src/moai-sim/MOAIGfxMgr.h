@@ -7,7 +7,7 @@
 #include <moai-sim/MOAIBlendMode.h>
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIFrameBuffer.h>
-#include <moai-sim/MOAIGfxGlobalsCache.h>
+#include <moai-sim/MOAIGfxState.h>
 #include <moai-sim/MOAIGfxPipelineClerk.h>
 #include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIGfxVertexCache.h>
@@ -80,7 +80,7 @@ public:
 	GET_BOOL ( IsFramebufferSupported, mIsFramebufferSupported )
 	
 	MOAIGfxResourceClerk		mResourceMgr;
-	MOAIGfxGlobalsCache			mGfxState;
+	MOAIGfxState				mGfxState;
 	MOAIGfxVertexCache			mVertexCache;
 	MOAIGfxPipelineClerk		mPipelineMgr;
 	

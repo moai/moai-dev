@@ -1,10 +1,8 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXSHADERGLOBALSCACHE_H
-#define	MOAIGFXSHADERGLOBALSCACHE_H
-
-#include <moai-sim/MOAIGfxStateCache.h>
+#ifndef	MOAIGFXSTATECPU_H
+#define	MOAIGFXSTATECPU_H
 
 class MOAICamera;
 class MOAIShaderUniformSchema;
@@ -15,10 +13,9 @@ class MOAIViewport;
 #define PRIMARY_TO_FULL_MASK(mask) (( mask ) | (( mask ) << MATRIX_SET_SIZE ) | (( mask ) << ( MATRIX_SET_SIZE * 2 )) | (( mask ) << ( MATRIX_SET_SIZE * 3 )))
 
 //================================================================//
-// MOAIGfxGlobalsCache
+// MOAIGfxStateConstsCPU
 //================================================================//
-class MOAIGfxGlobalsCache :
-	public MOAIGfxStateCache {
+class MOAIGfxStateConstsCPU {
 public:
 
 	// MUST NOT EXCEED 64 GLOBALS FOR NOW
@@ -134,9 +131,9 @@ public:
 	static const u64 WORLD_TO_DISPLAY_MTX_MASK				= ID_TO_FLAG ( WORLD_TO_DISPLAY_MTX );
 	
 	// for each settable matrix, here are the masks they will dirty
-		
+	
 	static const u64 CLIP_TO_WINDOW_MTX_DIRTY_MASK			= PRIMARY_TO_FULL_MASK ( ID_TO_FLAG ( CLIP_TO_WINDOW_MTX ));
-		
+	
 	static const u64 MODEL_TO_WORLD_MTX_DIRTY_MASK			= PRIMARY_TO_FULL_MASK (
 																  ID_TO_FLAG ( MODEL_TO_CLIP_MTX )
 																| ID_TO_FLAG ( MODEL_TO_DISPLAY_MTX )
@@ -172,12 +169,19 @@ public:
 																| ID_TO_FLAG ( WORLD_TO_CLIP_MTX )
 																| ID_TO_FLAG ( WORLD_TO_VIEW_MTX )
 															);
+};
 
+//================================================================//
+// MOAIGfxStateFrameCPU
+//================================================================//
+class MOAIGfxStateFrameCPU {
 protected:
 
+	friend class MOAIGfxStateCPU;
+	
 	u64						mDirtyFlags;
 	
-	ZLMatrix4x4				mMatrices [ TOTAL_MATRICES ];
+	ZLMatrix4x4				mMatrices [ MOAIGfxStateConstsCPU::TOTAL_MATRICES ];
 	
 	ZLFrustum				mViewVolume;
 	
@@ -189,7 +193,16 @@ protected:
 	u32						mClearFlags;
 	ZLColorVec				mClearColor;
 	double					mClearDepth;
-		
+};
+
+//================================================================//
+// MOAIGfxStateCPU
+//================================================================//
+class MOAIGfxStateCPU :
+	public MOAIGfxStateFrameCPU,
+ 	public MOAIGfxStateConstsCPU {
+protected:
+	
 	//----------------------------------------------------------------//
 	const ZLMatrix4x4&		GetPrimaryMtx				( u32 mtxID, u64 mtxFlag );
 	void					SetDirtyFlags				( u64 dirtyFlags );
@@ -207,30 +220,15 @@ public:
 	GET_SET ( double, ClearDepth, mClearDepth )
 
 	//----------------------------------------------------------------//
-	
-	ZLMatrix4x4				GetNormToWndMtx				();
-	ZLMatrix4x4				GetNormToWndMtx				( const ZLRect& wndRect );
-	
 	const ZLMatrix4x4&		GetMtx						( u32 mtxID );
-	
 	void					GetVertexMtxMode			( u32& input, u32& output );
 	const ZLMatrix4x4&		GetVertexTransform			( u32 id );
-	
-	ZLMatrix4x4				GetWorldToWndMtx			();
-	ZLMatrix4x4				GetWorldToWndMtx			( const ZLRect& wndRect );
-	
-	ZLMatrix4x4				GetWndToNormMtx				();
-	ZLMatrix4x4				GetWndToNormMtx				( const ZLRect& wndRect );
-	
-	ZLMatrix4x4				GetWndToWorldMtx			();
-	ZLMatrix4x4				GetWndToWorldMtx			( const ZLRect& wndRect );
-	
 	const ZLFrustum&		GetViewVolume				();
 	
 	bool					IsInputMtx					( u32 mtxID );
 	
-							MOAIGfxGlobalsCache			();
-							~MOAIGfxGlobalsCache		();
+							MOAIGfxStateCPU				();
+	virtual					~MOAIGfxStateCPU			();
 
 	void					SetAmbientColor				( u32 color );
 	void					SetAmbientColor				( const ZLColorVec& colorVec );

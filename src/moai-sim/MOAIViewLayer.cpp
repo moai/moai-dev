@@ -529,7 +529,7 @@ void MOAIViewLayer::MOAIDrawable_Draw ( int subPrimID ) {
 	this->ClearSurface ();
 	
 	gfxMgr.mGfxState.SetViewProj ( this->mViewport, this->mCamera, this->mDebugCamera, this->mParallax );
-	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX );
+	gfxMgr.mGfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX );
 	
 	// set up the ambient color
 	gfxMgr.mGfxState.SetAmbientColor ( this->mColor );

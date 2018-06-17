@@ -229,7 +229,7 @@ void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition ) {
 	if ( !totalResults ) return;
 	
 	if ( this->mSortInViewSpace ) {
-		buffer.Transform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_VIEW_MTX ), false );
+		buffer.Transform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::WORLD_TO_VIEW_MTX ), false );
 	}
 	
 	buffer.GenerateKeys (

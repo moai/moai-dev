@@ -202,10 +202,10 @@ void MOAIGraphicsPropBase::LoadUVTransform () {
 	
 	if ( this->mUVTransform ) {
 		ZLAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
-		gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_UV_MTX, uvMtx );
+		gfxMgr.mGfxState.SetMtx ( MOAIGfxState::MODEL_TO_UV_MTX, uvMtx );
 	}
 	else {
-		gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_UV_MTX );
+		gfxMgr.mGfxState.SetMtx ( MOAIGfxState::MODEL_TO_UV_MTX );
 	}
 }
 
@@ -213,7 +213,7 @@ void MOAIGraphicsPropBase::LoadUVTransform () {
 void MOAIGraphicsPropBase::LoadVertexTransform () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX, this->MOAIGraphicsPropBase_GetWorldDrawingMtx ());
+	gfxMgr.mGfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX, this->MOAIGraphicsPropBase_GetWorldDrawingMtx ());
 }
 
 //----------------------------------------------------------------//
@@ -401,7 +401,7 @@ void MOAIGraphicsPropBase::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	
 	this->LoadVertexTransform ();
 	
-	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::MODEL_TO_DISPLAY_MTX ));
+	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::MODEL_TO_DISPLAY_MTX ));
 	
 	ZLBounds modelBounds = this->GetModelBounds ();
 	
@@ -420,7 +420,7 @@ void MOAIGraphicsPropBase::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	}
 	
 	// clear out the world transform (draw in world space)
-	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_DISPLAY_MTX ));
+	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::WORLD_TO_DISPLAY_MTX ));
 	
 	if ( debugLines.Bind ( DEBUG_DRAW_WORLD_BOUNDS )) {
 		draw.DrawBoxOutline ( this->GetWorldBounds ());
@@ -460,7 +460,7 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () {
 	
 		case BILLBOARD_NORMAL: {
 			
-			ZLAffine3D billboardMtx ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_TO_WORLD_MTX )); // inv view mtx sans translation
+			ZLAffine3D billboardMtx ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::VIEW_TO_WORLD_MTX )); // inv view mtx sans translation
 			
 			billboardMtx.m [ ZLAffine3D::C3_R0 ] = 0.0f;
 			billboardMtx.m [ ZLAffine3D::C3_R1 ] = 0.0f;
@@ -472,12 +472,12 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () {
 		
 		case BILLBOARD_ORTHO: {
 			
-			const ZLMatrix4x4& proj				= gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_TO_CLIP_MTX );
-			const ZLMatrix4x4& invViewProj		= gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::CLIP_TO_WORLD_MTX );
-			const ZLMatrix4x4& invWindowMtx		= gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WINDOW_TO_CLIP_MTX );
+			const ZLMatrix4x4& proj				= gfxMgr.mGfxState.GetMtx ( MOAIGfxState::VIEW_TO_CLIP_MTX );
+			const ZLMatrix4x4& invViewProj		= gfxMgr.mGfxState.GetMtx ( MOAIGfxState::CLIP_TO_WORLD_MTX );
+			const ZLMatrix4x4& invWindowMtx		= gfxMgr.mGfxState.GetMtx ( MOAIGfxState::WINDOW_TO_CLIP_MTX );
 			
-			ZLMatrix4x4 view					= gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_VIEW_MTX );
-			ZLMatrix4x4 windowMtx				= gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::CLIP_TO_WINDOW_MTX );
+			ZLMatrix4x4 view					= gfxMgr.mGfxState.GetMtx ( MOAIGfxState::WORLD_TO_VIEW_MTX );
+			ZLMatrix4x4 windowMtx				= gfxMgr.mGfxState.GetMtx ( MOAIGfxState::CLIP_TO_WINDOW_MTX );
 			
 			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
 			
@@ -522,7 +522,7 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () {
 		case BILLBOARD_COMPASS: {
 		
 			//const ZLAffine3D& cameraMtx = camera->GetLocalToWorldMtx (); // inv view mtx
-			ZLAffine3D cameraMtx ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_TO_WORLD_MTX ));
+			ZLAffine3D cameraMtx ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::VIEW_TO_WORLD_MTX ));
 			//ZLVec3D cameraZ = cameraMtx.GetZAxis ();
 			ZLVec3D	cameraY = cameraMtx.GetYAxis ();
 			
@@ -556,11 +556,11 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () {
 
 		case BILLBOARD_COMPASS_SCALE: {
 		
-			ZLMatrix4x4 viewToClip = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_TO_CLIP_MTX );
-			ZLMatrix4x4 worldToClip = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX );
-			ZLMatrix4x4 clipToWindow = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::CLIP_TO_WINDOW_MTX );
+			ZLMatrix4x4 viewToClip = gfxMgr.mGfxState.GetMtx ( MOAIGfxState::VIEW_TO_CLIP_MTX );
+			ZLMatrix4x4 worldToClip = gfxMgr.mGfxState.GetMtx ( MOAIGfxState::WORLD_TO_CLIP_MTX );
+			ZLMatrix4x4 clipToWindow = gfxMgr.mGfxState.GetMtx ( MOAIGfxState::CLIP_TO_WINDOW_MTX );
 			// TODO: The cache for VIEW_TO_WORLD matrix is not working, so manually inverting here, which not efficient
-			ZLMatrix4x4 worldToView = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_VIEW_MTX );
+			ZLMatrix4x4 worldToView = gfxMgr.mGfxState.GetMtx ( MOAIGfxState::WORLD_TO_VIEW_MTX );
 			ZLMatrix4x4 worldToViewInv;
 			
 			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
@@ -619,8 +619,8 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () {
 			//MOAIGfxMgr::Get ().GetWorldToWndMtx ();
 			
 			//ZLMatrix4x4 viewProjMtx = camera->GetWorldToWndMtx ( *viewport );
-			ZLMatrix4x4 viewProjMtx = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX );
-			viewProjMtx.Append ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::CLIP_TO_WINDOW_MTX ));
+			ZLMatrix4x4 viewProjMtx = gfxMgr.mGfxState.GetMtx ( MOAIGfxState::WORLD_TO_CLIP_MTX );
+			viewProjMtx.Append ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::CLIP_TO_WINDOW_MTX ));
 			
 			ZLMatrix4x4 localToWorldMtx ( this->GetLocalToWorldMtx ());
 			

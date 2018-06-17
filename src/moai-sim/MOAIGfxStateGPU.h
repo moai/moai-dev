@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXSTATECACHE_H
-#define	MOAIGFXSTATECACHE_H
+#ifndef	MOAIGFXSTATEGPU_H
+#define	MOAIGFXSTATEGPU_H
 
 #include <moai-sim/MOAIBlendMode.h>
 #include <moai-sim/MOAIGfxPipelineClerk.h>
@@ -29,7 +29,7 @@ private:
 	ZLSharedConstBuffer*						mBoundVtxBuffer;
 	bool										mIsBound;
 
-	friend class MOAIGfxStateCache;
+	friend class MOAIGfxStateGPU;
 
 public:
 
@@ -44,28 +44,28 @@ public:
 };
 
 //================================================================//
-// MOAIGfxStateCacheClient
+// MOAIGfxStateClientGPU
 //================================================================//
-class MOAIGfxStateCacheClient {
+class MOAIGfxStateClientGPU {
 protected:
 
-	friend class MOAIGfxStateCache;
+	friend class MOAIGfxStateGPU;
 
 	//----------------------------------------------------------------//
-						MOAIGfxStateCacheClient				();
-	virtual				~MOAIGfxStateCacheClient			();
-	virtual void		OnGfxStateWillChange				();
+						MOAIGfxStateClientGPU		();
+	virtual				~MOAIGfxStateClientGPU		();
+	virtual void		OnGfxStateWillChange		();
 };
 
 //================================================================//
-// MOAIGfxState
+// MOAIGfxStateFrameGPU
 //================================================================//
-class MOAIGfxState {
+class MOAIGfxStateFrameGPU {
 protected:
 
 	// TODO: multithread will impact caching of buffer behavior as gfx.Copy () may produce a different result each time it is called
 
-	friend class MOAIGfxStateCache;
+	friend class MOAIGfxStateGPU;
 
 	int										mCullFunc;
 	
@@ -93,15 +93,14 @@ protected:
 	ZLLeanArray < ZLStrongPtr < MOAITextureBase > >		mTextureUnits;
 	
 	//----------------------------------------------------------------//
-					MOAIGfxState			();
-					~MOAIGfxState			();
+					MOAIGfxStateFrameGPU			();
+					~MOAIGfxStateFrameGPU			();
 };
 
 //================================================================//
-// MOAIGfxStateCache
+// MOAIGfxStateGPU
 //================================================================//
-class MOAIGfxStateCache :
-	public virtual MOAILuaObject {
+class MOAIGfxStateGPU {
 protected:
 
 	static const u32 MAX_TEXTURE_UNITS = 32; // enough? will need more flags below if not.
@@ -138,18 +137,18 @@ protected:
 	
 	u32										mApplyingStateChanges;
 
-	MOAIGfxState*							mCurrentState;
-	MOAIGfxState							mActiveState;
-	MOAIGfxState							mPendingState;
+	MOAIGfxStateFrameGPU*					mCurrentState;
+	MOAIGfxStateFrameGPU					mActiveState;
+	MOAIGfxStateFrameGPU					mPendingState;
 
 	// don't think these need to be lua shared pointers...
-	MOAILuaSharedPtr < MOAIFrameBuffer >	mDefaultFrameBuffer;
-	MOAILuaSharedPtr < MOAITextureBase >	mDefaultTexture;
+	ZLStrongPtr < MOAIFrameBuffer >			mDefaultFrameBuffer;
+	ZLStrongPtr < MOAITextureBase >			mDefaultTexture;
 
 	ZLSharedConstBuffer*					mBoundIdxBuffer;
 	ZLSharedConstBuffer*					mBoundVtxBuffer;
 
-	MOAIGfxStateCacheClient*				mClient;
+	MOAIGfxStateClientGPU*					mClient;
 
 	//----------------------------------------------------------------//
 	void			ApplyStateChange				( u32 stateID );
@@ -199,8 +198,8 @@ public:
 	
 	void			InitTextureUnits			( size_t nTextureUnits );
 	
-					MOAIGfxStateCache			();
-	virtual			~MOAIGfxStateCache			();
+					MOAIGfxStateGPU				();
+	virtual			~MOAIGfxStateGPU			();
 
 	void			ResetState					();
 
@@ -209,7 +208,7 @@ public:
 	void			SetBlendMode				( int srcFactor, int dstFactor, int equation = ZGL_BLEND_MODE_ADD );
 
 	void			SetClient					();
-	void			SetClient					( MOAIGfxStateCacheClient* client );
+	void			SetClient					( MOAIGfxStateClientGPU* client );
 
 	void			SetCullFunc					();
 	void			SetCullFunc					( int cullFunc );
@@ -247,7 +246,7 @@ public:
 	inline void GfxStateWillChange () {
 		
 		if ( this->mClient ) {
-			MOAIGfxStateCacheClient* client = this->mClient;
+			MOAIGfxStateClientGPU* client = this->mClient;
 			this->mClient = 0;
 			client->OnGfxStateWillChange ();
 		}

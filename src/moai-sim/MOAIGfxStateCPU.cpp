@@ -4,41 +4,18 @@
 #include "pch.h"
 
 #include <moai-sim/MOAICamera.h>
-#include <moai-sim/MOAIGfxGlobalsCache.h>
+#include <moai-sim/MOAIGfxStateCPU.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIShaderUniform.h>
 #include <moai-sim/MOAIViewport.h>
 #include <moai-sim/MOAIViewProj.h>
 
 //================================================================//
-// MOAIGfxGlobalsCache
+// MOAIGfxStateCPU
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxGlobalsCache::GetNormToWndMtx () {
-
-	return this->GetNormToWndMtx ( this->GetViewRect ());
-}
-
-//----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxGlobalsCache::GetNormToWndMtx ( const ZLRect& wndRect ) {
-
-	float hWidth = wndRect.Width () * 0.5f;
-	float hHeight = wndRect.Height () * 0.5f;
-
-	// Wnd
-	ZLMatrix4x4 normToWnd;
-	normToWnd.Scale ( hWidth, -hHeight, 1.0f );
-	
-	ZLMatrix4x4 mtx;
-	mtx.Translate ( hWidth + wndRect.mXMin, hHeight + wndRect.mYMin, 0.0f );
-	normToWnd.Append ( mtx );
-	
-	return normToWnd;
-}
-
-//----------------------------------------------------------------//
-const ZLMatrix4x4& MOAIGfxGlobalsCache::GetMtx ( u32 mtxID ) {
+const ZLMatrix4x4& MOAIGfxStateCPU::GetMtx ( u32 mtxID ) {
 	
 	u64 mtxFlag = ID_TO_FLAG ( mtxID );
 	
@@ -94,7 +71,7 @@ const ZLMatrix4x4& MOAIGfxGlobalsCache::GetMtx ( u32 mtxID ) {
 }
 
 //----------------------------------------------------------------//
-const ZLMatrix4x4& MOAIGfxGlobalsCache::GetPrimaryMtx ( u32 mtxID, u64 mtxFlag ) {
+const ZLMatrix4x4& MOAIGfxStateCPU::GetPrimaryMtx ( u32 mtxID, u64 mtxFlag ) {
 	UNUSED(mtxFlag);
 	switch ( mtxID ) {
 	
@@ -182,64 +159,7 @@ const ZLMatrix4x4& MOAIGfxGlobalsCache::GetPrimaryMtx ( u32 mtxID, u64 mtxFlag )
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxGlobalsCache::GetWorldToWndMtx () {
-
-	return this->GetWorldToWndMtx ( this->GetViewRect ());
-}
-
-//----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxGlobalsCache::GetWorldToWndMtx ( const ZLRect& wndRect ) {
-
-	ZLMatrix4x4 worldToWnd = this->GetMtx ( WORLD_TO_CLIP_MTX );
-	worldToWnd.Append ( MOAIGfxGlobalsCache::GetNormToWndMtx ( wndRect ));
-	
-	return worldToWnd;
-}
-
-//----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxGlobalsCache::GetWndToNormMtx () {
-
-	return this->GetWndToNormMtx ( this->GetViewRect ());
-}
-
-//----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxGlobalsCache::GetWndToNormMtx ( const ZLRect& wndRect ) {
-
-	float hWidth = wndRect.Width () * 0.5f;
-	float hHeight = wndRect.Height () * 0.5f;
-
-	// Inv Wnd
-	ZLMatrix4x4 wndToNorm;
-	wndToNorm.Translate ( -hWidth - wndRect.mXMin, -hHeight - wndRect.mYMin, 0.0f );
-	
-	ZLMatrix4x4 mtx;
-	mtx.Scale (( 1.0f / hWidth ), -( 1.0f / hHeight ), 1.0f );
-	wndToNorm.Append ( mtx );
-	
-	return wndToNorm;
-}
-
-//----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxGlobalsCache::GetWndToWorldMtx () {
-
-	return this->GetWndToWorldMtx ( this->GetViewRect ());
-}
-
-//----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxGlobalsCache::GetWndToWorldMtx ( const ZLRect& wndRect ) {
-
-	ZLMatrix4x4 wndToWorld = MOAIGfxGlobalsCache::GetWndToNormMtx ( wndRect );
-	
-	// inv viewproj
-	ZLMatrix4x4 mtx = this->GetMtx ( WORLD_TO_CLIP_MTX );
-	mtx.Inverse ();
-	wndToWorld.Append ( mtx );
-	
-	return wndToWorld;
-}
-
-//----------------------------------------------------------------//
-const ZLFrustum& MOAIGfxGlobalsCache::GetViewVolume () {
+const ZLFrustum& MOAIGfxStateCPU::GetViewVolume () {
 
 	if ( this->mDirtyFlags & VIEW_VOLUME_MASK ) {
 		this->mViewVolume.Init ( this->GetMtx ( CLIP_TO_WORLD_MTX ));
@@ -249,7 +169,7 @@ const ZLFrustum& MOAIGfxGlobalsCache::GetViewVolume () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxGlobalsCache::IsInputMtx ( u32 mtxID ) {
+bool MOAIGfxStateCPU::IsInputMtx ( u32 mtxID ) {
 
 	return (
 		( mtxID == CLIP_TO_WINDOW_MTX )		||
@@ -262,52 +182,51 @@ bool MOAIGfxGlobalsCache::IsInputMtx ( u32 mtxID ) {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxGlobalsCache::MOAIGfxGlobalsCache () :
-	mDirtyFlags ( 0 ),
-	mFinalColor32 ( 0xffffffff ),
-	mClearFlags ( 0 ),
-	mClearDepth ( 0.0 ) {
+MOAIGfxStateCPU::MOAIGfxStateCPU () {
 
 	assert ( TOTAL_GLOBALS < MAX_GLOBALS );
 
 	for ( u32 i = 0; i < TOTAL_MATRICES; ++i ) {
 		this->mMatrices [ i ].Ident ();
-		this->mDirtyFlags = 0;
 	}
+	
+	this->mDirtyFlags = 0;
 	
 	this->mAmbientColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
 	this->mFinalColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
 	this->mPenColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
 	this->mClearColor.Set ( 0.0f, 0.0f, 0.0f, 1.0f );
+	this->mClearFlags = 0;
+	this->mClearDepth = 0.0;
 }
 
 //----------------------------------------------------------------//
-MOAIGfxGlobalsCache::~MOAIGfxGlobalsCache () {
+MOAIGfxStateCPU::~MOAIGfxStateCPU () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxGlobalsCache::SetAmbientColor ( u32 color ) {
+void MOAIGfxStateCPU::SetAmbientColor ( u32 color ) {
 
 	this->mAmbientColor.SetRGBA ( color );
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxGlobalsCache::SetAmbientColor ( const ZLColorVec& colorVec ) {
+void MOAIGfxStateCPU::SetAmbientColor ( const ZLColorVec& colorVec ) {
 
 	this->mAmbientColor = colorVec;
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxGlobalsCache::SetAmbientColor ( float r, float g, float b, float a ) {
+void MOAIGfxStateCPU::SetAmbientColor ( float r, float g, float b, float a ) {
 
 	this->mAmbientColor.Set ( r, g, b, a );
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxGlobalsCache::SetMtx ( u32 mtxID ) {
+void MOAIGfxStateCPU::SetMtx ( u32 mtxID ) {
 
 	ZLMatrix4x4 mtx;
 	mtx.Ident ();
@@ -315,13 +234,13 @@ void MOAIGfxGlobalsCache::SetMtx ( u32 mtxID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxGlobalsCache::SetMtx ( u32 mtxID, const ZLAffine3D& transform ) {
+void MOAIGfxStateCPU::SetMtx ( u32 mtxID, const ZLAffine3D& transform ) {
 
 	this->SetMtx ( mtxID, ZLMatrix4x4 ( transform ));
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxGlobalsCache::SetMtx ( u32 mtxID, const ZLMatrix4x4& mtx ) {
+void MOAIGfxStateCPU::SetMtx ( u32 mtxID, const ZLMatrix4x4& mtx ) {
 
 	u64 dirtyMask = 0;
 
@@ -371,49 +290,49 @@ void MOAIGfxGlobalsCache::SetMtx ( u32 mtxID, const ZLMatrix4x4& mtx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxGlobalsCache::SetPenColor ( u32 color ) {
+void MOAIGfxStateCPU::SetPenColor ( u32 color ) {
 
 	this->mPenColor.SetRGBA ( color );
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxGlobalsCache::SetPenColor ( const ZLColorVec& colorVec ) {
+void MOAIGfxStateCPU::SetPenColor ( const ZLColorVec& colorVec ) {
 
 	this->mPenColor = colorVec;
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxGlobalsCache::SetPenColor ( float r, float g, float b, float a ) {
+void MOAIGfxStateCPU::SetPenColor ( float r, float g, float b, float a ) {
 
 	this->mPenColor.Set ( r, g, b, a );
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxGlobalsCache::SetViewProj ( MOAIViewport* viewport, MOAICamera* camera, MOAICamera* debug, const ZLVec3D& parallax ) {
+void MOAIGfxStateCPU::SetViewProj ( MOAIViewport* viewport, MOAICamera* camera, MOAICamera* debug, const ZLVec3D& parallax ) {
 
 	ZLMatrix4x4 view = MOAIViewProj::GetViewMtx ( camera, parallax );
 	ZLMatrix4x4 proj = MOAIViewProj::GetProjectionMtx ( viewport, camera );
 	
-	this->SetMtx ( MOAIGfxGlobalsCache::WORLD_TO_VIEW_MTX, view );
-	this->SetMtx ( MOAIGfxGlobalsCache::VIEW_TO_CLIP_MTX, proj );
-	this->SetMtx ( MOAIGfxGlobalsCache::CLIP_TO_WINDOW_MTX, viewport ? viewport->GetProjMtx () : ZLMatrix4x4::IDENT );
+	this->SetMtx ( MOAIGfxStateCPU::WORLD_TO_VIEW_MTX, view );
+	this->SetMtx ( MOAIGfxStateCPU::VIEW_TO_CLIP_MTX, proj );
+	this->SetMtx ( MOAIGfxStateCPU::CLIP_TO_WINDOW_MTX, viewport ? viewport->GetProjMtx () : ZLMatrix4x4::IDENT );
 	
 	if ( debug ) {
 		ZLMatrix4x4 display = MOAIViewProj::GetViewMtx ( debug );
 		display.Append ( MOAIViewProj::GetProjectionMtx ( viewport, debug ));
-		this->SetMtx ( MOAIGfxGlobalsCache::WORLD_TO_DISPLAY_MTX, display );
+		this->SetMtx ( MOAIGfxStateCPU::WORLD_TO_DISPLAY_MTX, display );
 	}
 	else {
 		view.Append ( proj );
-		this->SetMtx ( MOAIGfxGlobalsCache::WORLD_TO_DISPLAY_MTX, view );
+		this->SetMtx ( MOAIGfxStateCPU::WORLD_TO_DISPLAY_MTX, view );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxGlobalsCache::UpdateFinalColor () {
+void MOAIGfxStateCPU::UpdateFinalColor () {
 
 	this->mFinalColor.mR = this->mAmbientColor.mR * this->mPenColor.mR;
 	this->mFinalColor.mG = this->mAmbientColor.mG * this->mPenColor.mG;

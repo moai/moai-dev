@@ -142,7 +142,7 @@ void MOAIGfxMgr::ClearErrors () {
 //----------------------------------------------------------------//
 void MOAIGfxMgr::ClearSurface ( u32 clearFlags ) {
 
-	// TODO: probably clear surface should live in the state cashe; it is
+	// TODO: probably clear surface should live in the state cache; it is
 	// similar to DrawPrims in that it changes the contents of a frame buffer
 
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
@@ -223,7 +223,7 @@ MOAIGfxMgr::MOAIGfxMgr () :
 	mMaxTextureSize ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_SINGLE ( MOAIGfxStateCache )
+		RTTI_SINGLE ( MOAIGfxStateGPU )
 		RTTI_SINGLE ( MOAIGlobalEventSource )
 	RTTI_END
 	
