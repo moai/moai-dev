@@ -5,24 +5,24 @@
 #define	MOAIGFXSTATE_H
 
 #include <moai-sim/MOAIAbstractGfxStateCache.h>
-#include <moai-sim/MOAIGfxStateCPU.h>
-#include <moai-sim/MOAIGfxStateGPU.h>
-#include <moai-sim/MOAIGfxVertexCache.h>
+#include <moai-sim/MOAIGfxStateCPUCache.h>
+#include <moai-sim/MOAIGfxStateGPUCache.h>
+#include <moai-sim/MOAIGfxStateVertexCache.h>
 
 //================================================================//
 // MOAIGfxState
 //================================================================//
 class MOAIGfxState :
 	virtual public MOAIAbstractGfxStateCache,
-	public MOAIGfxStateCPU,
-	public MOAIGfxStateGPU,
-	public MOAIGfxVertexCache {
+	public MOAIGfxStateCPUCache,
+	public MOAIGfxStateGPUCache,
+	public MOAIGfxStateVertexCache {
 protected:
 
 	//----------------------------------------------------------------//
-	MOAIGfxStateCPU&			MOAIAbstractGfxStateCache_GetGfxStateCacheCPU			();
-	MOAIGfxStateGPU&			MOAIAbstractGfxStateCache_GetGfxStateCacheGPU			();
-	MOAIGfxVertexCache&			MOAIAbstractGfxStateCache_GetGfxVertexCache				();
+	MOAIGfxStateCPUCache&			MOAIAbstractGfxStateCache_GetGfxStateCacheCPU			();
+	MOAIGfxStateGPUCache&			MOAIAbstractGfxStateCache_GetGfxStateCacheGPU			();
+	MOAIGfxStateVertexCache&		MOAIAbstractGfxStateCache_GetGfxVertexCache				();
 
 public:
 

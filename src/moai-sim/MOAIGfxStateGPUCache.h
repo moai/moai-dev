@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXSTATEGPU_H
-#define	MOAIGFXSTATEGPU_H
+#ifndef	MOAIGFXSTATEGPUCACHE_H
+#define	MOAIGFXSTATEGPUCACHE_H
 
 #include <moai-sim/MOAIAbstractGfxStateCache.h>
 #include <moai-sim/MOAIBlendMode.h>
@@ -30,7 +30,7 @@ private:
 	ZLSharedConstBuffer*						mBoundVtxBuffer;
 	bool										mIsBound;
 
-	friend class MOAIGfxStateGPU;
+	friend class MOAIGfxStateGPUCache;
 
 public:
 
@@ -45,14 +45,14 @@ public:
 };
 
 //================================================================//
-// MOAIGfxStateFrameGPU
+// MOAIGfxStateGPUCacheFrame
 //================================================================//
-class MOAIGfxStateFrameGPU {
+class MOAIGfxStateGPUCacheFrame {
 protected:
 
 	// TODO: multithread will impact caching of buffer behavior as gfx.Copy () may produce a different result each time it is called
 
-	friend class MOAIGfxStateGPU;
+	friend class MOAIGfxStateGPUCache;
 
 	int										mCullFunc;
 	
@@ -80,20 +80,20 @@ protected:
 	ZLLeanArray < ZLStrongPtr < MOAITextureBase > >		mTextureUnits;
 	
 	//----------------------------------------------------------------//
-					MOAIGfxStateFrameGPU			();
-					~MOAIGfxStateFrameGPU			();
+					MOAIGfxStateGPUCacheFrame			();
+					~MOAIGfxStateGPUCacheFrame			();
 };
 
 //================================================================//
-// MOAIGfxStateGPU
+// MOAIGfxStateGPUCache
 //================================================================//
-class MOAIGfxStateGPU :
+class MOAIGfxStateGPUCache :
 	virtual public MOAIAbstractGfxStateCache {
 protected:
 
 	static const u32 MAX_TEXTURE_UNITS = 32; // enough? will need more flags below if not.
 
-	friend class MOAIGfxVertexCache;
+	friend class MOAIGfxStateVertexCache;
 	friend class MOAIVertexArray;
 
 	friend class MOAIGfxMgr; // TODO: this is only here so MOAIGfxMgr can call ApplyStateChanges in Clear (). move Clear () here.
@@ -125,9 +125,9 @@ protected:
 	
 	u32										mApplyingStateChanges;
 
-	MOAIGfxStateFrameGPU*					mCurrentState;
-	MOAIGfxStateFrameGPU					mActiveState;
-	MOAIGfxStateFrameGPU					mPendingState;
+	MOAIGfxStateGPUCacheFrame*					mCurrentState;
+	MOAIGfxStateGPUCacheFrame					mActiveState;
+	MOAIGfxStateGPUCacheFrame					mPendingState;
 
 	// don't think these need to be lua shared pointers...
 	ZLStrongPtr < MOAIFrameBuffer >			mDefaultFrameBuffer;
@@ -185,8 +185,8 @@ public:
 	
 	void			InitTextureUnits			( size_t nTextureUnits );
 	
-					MOAIGfxStateGPU				();
-	virtual			~MOAIGfxStateGPU			();
+					MOAIGfxStateGPUCache		();
+	virtual			~MOAIGfxStateGPUCache		();
 
 	void			ResetState					();
 

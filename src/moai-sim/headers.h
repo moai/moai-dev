@@ -39,7 +39,7 @@
 #include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIDrawable.h>
 #include <moai-sim/MOAIDrawDeck.h>
-#include <moai-sim/MOAIDrawShape.h>
+#include <moai-sim/MOAIAbstractDrawShape.h>
 #include <moai-sim/MOAIDrawShapeImmediate.h>
 #include <moai-sim/MOAIDrawShapeRetained.h>
 #include <moai-sim/MOAIEaseDriver.h>
@@ -52,10 +52,10 @@
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxPipelineClerk.h>
 #include <moai-sim/MOAIGfxState.h>
-#include <moai-sim/MOAIGfxStateCPU.h>
-#include <moai-sim/MOAIGfxStateGPU.h>
+#include <moai-sim/MOAIGfxStateCPUCache.h>
+#include <moai-sim/MOAIGfxStateGPUCache.h>
 #include <moai-sim/MOAIGfxResourceClerk.h>
-#include <moai-sim/MOAIGfxVertexCache.h>
+#include <moai-sim/MOAIGfxStateVertexCache.h>
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIGraphicsGridProp.h>
 #include <moai-sim/MOAIGrid.h>

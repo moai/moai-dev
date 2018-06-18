@@ -28,7 +28,7 @@ class MOAIFrameBuffer :
 protected:
 	
 	friend class MOAIGfxMgr;
-	friend class MOAIGfxStateGPU;
+	friend class MOAIGfxStateGPUCache;
 	
 	u32					mBufferWidth;
 	u32					mBufferHeight;

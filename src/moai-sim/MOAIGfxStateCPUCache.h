@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXSTATECPU_H
-#define	MOAIGFXSTATECPU_H
+#ifndef	MOAIGFXSTATECPUCACHE_H
+#define	MOAIGFXSTATECPUCACHE_H
 
 #include <moai-sim/MOAIAbstractGfxStateCache.h>
 
@@ -174,12 +174,12 @@ public:
 };
 
 //================================================================//
-// MOAIGfxStateFrameCPU
+// MOAIGfxStateCPUCacheFrame
 //================================================================//
-class MOAIGfxStateFrameCPU {
+class MOAIGfxStateCPUCacheFrame {
 protected:
 
-	friend class MOAIGfxStateCPU;
+	friend class MOAIGfxStateCPUCache;
 	
 	u64						mDirtyFlags;
 	
@@ -198,9 +198,9 @@ protected:
 };
 
 //================================================================//
-// MOAIGfxStateCPU
+// MOAIGfxStateCPUCache
 //================================================================//
-class MOAIGfxStateCPU :
+class MOAIGfxStateCPUCache :
  	public MOAIGfxStateConstsCPU,
  	virtual public MOAIAbstractGfxStateCache {
 protected:
@@ -221,7 +221,7 @@ public:
 	GET_SET ( ZLColorVec&, ClearColor, this->mStateFrameCPU.mClearColor )
 	GET_SET ( double, ClearDepth, this->mStateFrameCPU.mClearDepth )
 
-	MOAIGfxStateFrameCPU	mStateFrameCPU;
+	MOAIGfxStateCPUCacheFrame	mStateFrameCPU;
 
 	//----------------------------------------------------------------//
 	const ZLMatrix4x4&		GetMtx						( u32 mtxID );
@@ -231,8 +231,8 @@ public:
 	
 	bool					IsInputMtx					( u32 mtxID );
 	
-							MOAIGfxStateCPU				();
-	virtual					~MOAIGfxStateCPU			();
+							MOAIGfxStateCPUCache		();
+	virtual					~MOAIGfxStateCPUCache		();
 
 	void					SetAmbientColor				( u32 color );
 	void					SetAmbientColor				( const ZLColorVec& colorVec );

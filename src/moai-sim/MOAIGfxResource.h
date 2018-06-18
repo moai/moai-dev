@@ -19,7 +19,7 @@ private:
 
 	friend class MOAIGfxMgr;
 	friend class MOAIGfxPipelineClerk;
-	friend class MOAIGfxStateGPU;
+	friend class MOAIGfxStateGPUCache;
 	friend class MOAIGfxResourceClerk;
 	
 	u32					mState;

@@ -225,7 +225,7 @@ MOAIGfxMgr::MOAIGfxMgr () :
 	mMaxTextureSize ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_SINGLE ( MOAIGfxStateGPU )
+		RTTI_SINGLE ( MOAIGfxStateGPUCache )
 		RTTI_SINGLE ( MOAIGlobalEventSource )
 	RTTI_END
 	

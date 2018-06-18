@@ -115,7 +115,7 @@ void MOAICollisionProp::ClearOverlapLink ( MOAIPropOverlap& overlap ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionProp::DrawContactPoints ( MOAIDrawShape& draw, const MOAIMoveConstraint2D* contacts, u32 nContacts ) {
+void MOAICollisionProp::DrawContactPoints ( MOAIAbstractDrawShape& draw, const MOAIMoveConstraint2D* contacts, u32 nContacts ) {
 
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAICollisionProp >())) return;

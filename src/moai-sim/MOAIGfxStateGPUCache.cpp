@@ -6,9 +6,9 @@
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIFrameBufferTexture.h>
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIGfxStateCPU.h>
-#include <moai-sim/MOAIGfxStateGPU.h>
-#include <moai-sim/MOAIGfxVertexCache.h>
+#include <moai-sim/MOAIGfxStateCPUCache.h>
+#include <moai-sim/MOAIGfxStateGPUCache.h>
+#include <moai-sim/MOAIGfxStateVertexCache.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
@@ -50,11 +50,11 @@ void MOAIVertexBufferWithFormat::SetBufferAndFormat ( MOAILuaObject& owner, MOAI
 }
 
 //================================================================//
-// MOAIGfxStateFrameGPU
+// MOAIGfxStateGPUCacheFrame
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIGfxStateFrameGPU::MOAIGfxStateFrameGPU () :
+MOAIGfxStateGPUCacheFrame::MOAIGfxStateGPUCacheFrame () :
 	mCullFunc ( 0 ),
 	mDepthFunc ( 0 ),
 	mDepthMask ( true ),
@@ -67,15 +67,15 @@ MOAIGfxStateFrameGPU::MOAIGfxStateFrameGPU () :
 }
 
 //----------------------------------------------------------------//
-MOAIGfxStateFrameGPU::~MOAIGfxStateFrameGPU () {
+MOAIGfxStateGPUCacheFrame::~MOAIGfxStateGPUCacheFrame () {
 }
 
 //================================================================//
-// MOAIGfxStateGPU
+// MOAIGfxStateGPUCache
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::ApplyStateChange ( u32 stateID ) {
+void MOAIGfxStateGPUCache::ApplyStateChange ( u32 stateID ) {
 	
 	switch ( stateID ) {
 
@@ -144,7 +144,7 @@ void MOAIGfxStateGPU::ApplyStateChange ( u32 stateID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::ApplyStateChanges () {
+void MOAIGfxStateGPUCache::ApplyStateChanges () {
 
 	if ( !this->mApplyingStateChanges ) {
 	
@@ -188,7 +188,7 @@ void MOAIGfxStateGPU::ApplyStateChanges () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::BindVertexBufferWithFormat ( MOAIVertexBufferWithFormat& bufferWithFormat, bool useVAOs ) {
+void MOAIGfxStateGPUCache::BindVertexBufferWithFormat ( MOAIVertexBufferWithFormat& bufferWithFormat, bool useVAOs ) {
 	UNUSED ( useVAOs );
 
 	MOAIVertexBuffer* buffer = bufferWithFormat.mBuffer;
@@ -216,13 +216,13 @@ void MOAIGfxStateGPU::BindVertexBufferWithFormat ( MOAIVertexBufferWithFormat& b
 }
 
 //----------------------------------------------------------------//
-size_t MOAIGfxStateGPU::CountTextureUnits () {
+size_t MOAIGfxStateGPUCache::CountTextureUnits () {
 
 	return this->mActiveState.mTextureUnits.Size ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::DrawPrims ( u32 primType, u32 base, u32 count ) {
+void MOAIGfxStateGPUCache::DrawPrims ( u32 primType, u32 base, u32 count ) {
 
 	DEBUG_LOG ( "DRAW PRIMS: %d %d %d\n", primType, base, count );
 	
@@ -252,11 +252,11 @@ void MOAIGfxStateGPU::DrawPrims ( u32 primType, u32 base, u32 count ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::FlushBlendMode ( bool blendEnabled, const MOAIBlendMode& blendMode ) {
+void MOAIGfxStateGPUCache::FlushBlendMode ( bool blendEnabled, const MOAIBlendMode& blendMode ) {
 
 	assert ( this->mApplyingStateChanges );
 	
-	MOAIGfxStateFrameGPU& active = this->mActiveState;
+	MOAIGfxStateGPUCacheFrame& active = this->mActiveState;
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 	
 	if ( blendEnabled ) {
@@ -297,11 +297,11 @@ void MOAIGfxStateGPU::FlushBlendMode ( bool blendEnabled, const MOAIBlendMode& b
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::FlushCullFunc ( int cullFunc ) {
+void MOAIGfxStateGPUCache::FlushCullFunc ( int cullFunc ) {
 
 	assert ( this->mApplyingStateChanges );
 	
-	MOAIGfxStateFrameGPU& active = this->mActiveState;
+	MOAIGfxStateGPUCacheFrame& active = this->mActiveState;
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 	
 	if ( active.mCullFunc != cullFunc ) {
@@ -323,11 +323,11 @@ void MOAIGfxStateGPU::FlushCullFunc ( int cullFunc ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::FlushDepthFunc ( int depthFunc ) {
+void MOAIGfxStateGPUCache::FlushDepthFunc ( int depthFunc ) {
 
 	assert ( this->mApplyingStateChanges );
 	
-	MOAIGfxStateFrameGPU& active = this->mActiveState;
+	MOAIGfxStateGPUCacheFrame& active = this->mActiveState;
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
 	if ( active.mDepthFunc != depthFunc ) {
@@ -349,11 +349,11 @@ void MOAIGfxStateGPU::FlushDepthFunc ( int depthFunc ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::FlushDepthMask ( bool depthMask ) {
+void MOAIGfxStateGPUCache::FlushDepthMask ( bool depthMask ) {
 
 	assert ( this->mApplyingStateChanges );
 	
-	MOAIGfxStateFrameGPU& active = this->mActiveState;
+	MOAIGfxStateGPUCacheFrame& active = this->mActiveState;
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 	
 	if ( active.mDepthMask != depthMask ) {
@@ -367,11 +367,11 @@ void MOAIGfxStateGPU::FlushDepthMask ( bool depthMask ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::FlushFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
+void MOAIGfxStateGPUCache::FlushFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 
 	assert ( this->mApplyingStateChanges );
 	
-	MOAIGfxStateFrameGPU& active = this->mActiveState;
+	MOAIGfxStateGPUCacheFrame& active = this->mActiveState;
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 		
 	if ( active.mFrameBuffer != frameBuffer) {
@@ -386,11 +386,11 @@ void MOAIGfxStateGPU::FlushFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::FlushIndexBuffer ( MOAIIndexBuffer* buffer ) {
+void MOAIGfxStateGPUCache::FlushIndexBuffer ( MOAIIndexBuffer* buffer ) {
 
 	assert ( this->mApplyingStateChanges );
 	
-	MOAIGfxStateFrameGPU& active = this->mActiveState;
+	MOAIGfxStateGPUCacheFrame& active = this->mActiveState;
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 	
 	ZLSharedConstBuffer* bufferForBind = buffer ? buffer->GetBufferForBind ( gfx ) : 0;
@@ -416,11 +416,11 @@ void MOAIGfxStateGPU::FlushIndexBuffer ( MOAIIndexBuffer* buffer ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::FlushPenWidth ( float penWidth ) {
+void MOAIGfxStateGPUCache::FlushPenWidth ( float penWidth ) {
 
 	assert ( this->mApplyingStateChanges );
 	
-	MOAIGfxStateFrameGPU& active = this->mActiveState;
+	MOAIGfxStateGPUCacheFrame& active = this->mActiveState;
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 	
 	if ( active.mPenWidth != penWidth ) {
@@ -435,11 +435,11 @@ void MOAIGfxStateGPU::FlushPenWidth ( float penWidth ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::FlushScissorRect ( bool scissorEnabled, ZLRect rect ) {
+void MOAIGfxStateGPUCache::FlushScissorRect ( bool scissorEnabled, ZLRect rect ) {
 
 	assert ( this->mApplyingStateChanges );
 	
-	MOAIGfxStateFrameGPU& active = this->mActiveState;
+	MOAIGfxStateGPUCacheFrame& active = this->mActiveState;
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 	
 	if ( scissorEnabled ) {
@@ -492,11 +492,11 @@ void MOAIGfxStateGPU::FlushScissorRect ( bool scissorEnabled, ZLRect rect ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::FlushShader ( MOAIShader* shader ) {
+void MOAIGfxStateGPUCache::FlushShader ( MOAIShader* shader ) {
 
 	assert ( this->mApplyingStateChanges );
 	
-	MOAIGfxStateFrameGPU& active = this->mActiveState;
+	MOAIGfxStateGPUCacheFrame& active = this->mActiveState;
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 	
 	MOAIShaderProgram* program = shader ? shader->GetProgram () : 0;
@@ -537,11 +537,11 @@ void MOAIGfxStateGPU::FlushShader ( MOAIShader* shader ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::FlushTexture ( u32 textureUnit, MOAITextureBase* texture ) {
+void MOAIGfxStateGPUCache::FlushTexture ( u32 textureUnit, MOAITextureBase* texture ) {
 
 	assert ( this->mApplyingStateChanges );
 	
-	MOAIGfxStateFrameGPU& active = this->mActiveState;
+	MOAIGfxStateGPUCacheFrame& active = this->mActiveState;
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 	
 	texture = texture && texture->IsReady () ? texture : ( MOAITextureBase* )this->mDefaultTexture;
@@ -572,11 +572,11 @@ void MOAIGfxStateGPU::FlushTexture ( u32 textureUnit, MOAITextureBase* texture )
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::FlushVertexArray ( MOAIVertexArray* vtxArray ) {
+void MOAIGfxStateGPUCache::FlushVertexArray ( MOAIVertexArray* vtxArray ) {
 
 	assert ( this->mApplyingStateChanges );
 	
-	MOAIGfxStateFrameGPU& active = this->mActiveState;
+	MOAIGfxStateGPUCacheFrame& active = this->mActiveState;
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 	
 	if ( active.mVtxArray != vtxArray ) {
@@ -600,11 +600,11 @@ void MOAIGfxStateGPU::FlushVertexArray ( MOAIVertexArray* vtxArray ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::FlushVertexBuffer ( MOAIVertexBuffer* buffer ) {
+void MOAIGfxStateGPUCache::FlushVertexBuffer ( MOAIVertexBuffer* buffer ) {
 
 	assert ( this->mApplyingStateChanges );
 
-	MOAIGfxStateFrameGPU& active = this->mActiveState;
+	MOAIGfxStateGPUCacheFrame& active = this->mActiveState;
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 	
 	ZLSharedConstBuffer* bufferForBind = buffer ? buffer->GetBufferForBind ( gfx ) : 0;
@@ -640,11 +640,11 @@ void MOAIGfxStateGPU::FlushVertexBuffer ( MOAIVertexBuffer* buffer ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::FlushVertexFormat ( MOAIVertexFormat* vtxFormat ) {
+void MOAIGfxStateGPUCache::FlushVertexFormat ( MOAIVertexFormat* vtxFormat ) {
 
 	assert ( this->mApplyingStateChanges );
 	
-	MOAIGfxStateFrameGPU& active = this->mActiveState;
+	MOAIGfxStateGPUCacheFrame& active = this->mActiveState;
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 	
 	if ( active.mVtxFormat != vtxFormat ) {
@@ -663,11 +663,11 @@ void MOAIGfxStateGPU::FlushVertexFormat ( MOAIVertexFormat* vtxFormat ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::FlushViewRect ( ZLRect rect ) {
+void MOAIGfxStateGPUCache::FlushViewRect ( ZLRect rect ) {
 
 	assert ( this->mApplyingStateChanges );
 	
-	MOAIGfxStateFrameGPU& active = this->mActiveState;
+	MOAIGfxStateGPUCacheFrame& active = this->mActiveState;
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 	
 	if ( !active.mViewRect.IsEqual ( rect )) {
@@ -691,7 +691,7 @@ void MOAIGfxStateGPU::FlushViewRect ( ZLRect rect ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIGfxStateGPU::GetBufferHeight () const {
+u32 MOAIGfxStateGPUCache::GetBufferHeight () const {
 
 	assert ( this->mCurrentState );
 	const MOAIFrameBuffer* frameBuffer = this->mCurrentState->mFrameBuffer;
@@ -699,7 +699,7 @@ u32 MOAIGfxStateGPU::GetBufferHeight () const {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIGfxStateGPU::GetBufferWidth () const {
+u32 MOAIGfxStateGPUCache::GetBufferWidth () const {
 
 	assert ( this->mCurrentState );
 	const MOAIFrameBuffer* frameBuffer = this->mCurrentState->mFrameBuffer;
@@ -707,21 +707,21 @@ u32 MOAIGfxStateGPU::GetBufferWidth () const {
 }
 
 //----------------------------------------------------------------//
-//float MOAIGfxStateGPU::GetDeviceScale () {
+//float MOAIGfxStateGPUCache::GetDeviceScale () {
 //
 //	assert ( this->mFrameBuffer );
 //	return this->mFrameBuffer->mBufferScale;
 //}
 
 //----------------------------------------------------------------//
-float MOAIGfxStateGPU::GetViewHeight () const {
+float MOAIGfxStateGPUCache::GetViewHeight () const {
 
 	assert ( this->mCurrentState );
 	return this->mCurrentState->mViewRect.Height ();
 }
 
 //----------------------------------------------------------------//
-//ZLQuad MOAIGfxStateGPU::GetViewQuad () const {
+//ZLQuad MOAIGfxStateGPUCache::GetViewQuad () const {
 //
 //	ZLQuad quad;
 //
@@ -738,26 +738,26 @@ float MOAIGfxStateGPU::GetViewHeight () const {
 //}
 
 //----------------------------------------------------------------//
-//ZLRect MOAIGfxStateGPU::GetViewRect () const {
+//ZLRect MOAIGfxStateGPUCache::GetViewRect () const {
 //
 //	return this->mViewRect;
 //}
 
 //----------------------------------------------------------------//
-float MOAIGfxStateGPU::GetViewWidth () const {
+float MOAIGfxStateGPUCache::GetViewWidth () const {
 
 	assert ( this->mCurrentState );
 	return this->mCurrentState->mViewRect.Width ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::GfxStateWillChange () {
+void MOAIGfxStateGPUCache::GfxStateWillChange () {
 		
 	this->GetGfxVertexCache ().FlushVertexCache ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::InitTextureUnits ( size_t nTextureUnits ) {
+void MOAIGfxStateGPUCache::InitTextureUnits ( size_t nTextureUnits ) {
 
 	if ( MAX_TEXTURE_UNITS < nTextureUnits ) {
 		ZLLog_Warning ( "Hardware textures units (%d) exceed Moai maximum supported texture units (%d)\n", nTextureUnits, MAX_TEXTURE_UNITS );
@@ -774,7 +774,7 @@ void MOAIGfxStateGPU::InitTextureUnits ( size_t nTextureUnits ) {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxStateGPU::MOAIGfxStateGPU () :
+MOAIGfxStateGPUCache::MOAIGfxStateGPUCache () :
 	mCurrentState ( 0 ),
 	mDirtyFlags ( 0 ),
 	mTextureDirtyFlags ( 0 ),
@@ -787,15 +787,15 @@ MOAIGfxStateGPU::MOAIGfxStateGPU () :
 }
 
 //----------------------------------------------------------------//
-MOAIGfxStateGPU::~MOAIGfxStateGPU () {
+MOAIGfxStateGPUCache::~MOAIGfxStateGPUCache () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::ResetState () {
+void MOAIGfxStateGPUCache::ResetState () {
 
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-	MOAIGfxStateFrameGPU& pending = this->mPendingState;
-	MOAIGfxStateFrameGPU& active = this->mActiveState;
+	MOAIGfxStateGPUCacheFrame& pending = this->mPendingState;
+	MOAIGfxStateGPUCacheFrame& active = this->mActiveState;
 
 	ZGL_COMMENT ( gfx, "GFX RESET STATE" );
 
@@ -868,13 +868,13 @@ void MOAIGfxStateGPU::ResetState () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::ResumeChanges () {
+void MOAIGfxStateGPUCache::ResumeChanges () {
 
 	this->mApplyingStateChanges--;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::SetBlendMode () {
+void MOAIGfxStateGPUCache::SetBlendMode () {
 
 	assert ( !this->mApplyingStateChanges );
 	
@@ -883,7 +883,7 @@ void MOAIGfxStateGPU::SetBlendMode () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::SetBlendMode ( const MOAIBlendMode& blendMode ) {
+void MOAIGfxStateGPUCache::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 
 	assert ( !this->mApplyingStateChanges );
 	
@@ -893,7 +893,7 @@ void MOAIGfxStateGPU::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::SetBlendMode ( int srcFactor, int dstFactor, int equation ) {
+void MOAIGfxStateGPUCache::SetBlendMode ( int srcFactor, int dstFactor, int equation ) {
 
 	MOAIBlendMode blendMode;
 	blendMode.SetBlend ( equation, srcFactor, dstFactor );
@@ -902,13 +902,13 @@ void MOAIGfxStateGPU::SetBlendMode ( int srcFactor, int dstFactor, int equation 
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::SetCullFunc () {
+void MOAIGfxStateGPUCache::SetCullFunc () {
 
 	this->SetCullFunc ( 0 );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::SetCullFunc ( int cullFunc ) {
+void MOAIGfxStateGPUCache::SetCullFunc ( int cullFunc ) {
 
 	assert ( !this->mApplyingStateChanges );
 	
@@ -917,25 +917,25 @@ void MOAIGfxStateGPU::SetCullFunc ( int cullFunc ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::SetDefaultFrameBuffer ( MOAILuaObject& owner, MOAIFrameBuffer* frameBuffer ) {
+void MOAIGfxStateGPUCache::SetDefaultFrameBuffer ( MOAILuaObject& owner, MOAIFrameBuffer* frameBuffer ) {
 
 	this->mDefaultFrameBuffer = frameBuffer;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::SetDefaultTexture ( MOAILuaObject& owner, MOAITextureBase* texture ) {
+void MOAIGfxStateGPUCache::SetDefaultTexture ( MOAILuaObject& owner, MOAITextureBase* texture ) {
 
 	this->mDefaultTexture = texture;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::SetDepthFunc () {
+void MOAIGfxStateGPUCache::SetDepthFunc () {
 
 	this->SetDepthFunc ( 0 );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::SetDepthFunc ( int depthFunc ) {
+void MOAIGfxStateGPUCache::SetDepthFunc ( int depthFunc ) {
 
 	assert ( !this->mApplyingStateChanges );
 	
@@ -944,7 +944,7 @@ void MOAIGfxStateGPU::SetDepthFunc ( int depthFunc ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::SetDepthMask ( bool depthMask ) {
+void MOAIGfxStateGPUCache::SetDepthMask ( bool depthMask ) {
 
 	assert ( !this->mApplyingStateChanges );
 
@@ -953,7 +953,7 @@ void MOAIGfxStateGPU::SetDepthMask ( bool depthMask ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxStateGPU::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
+bool MOAIGfxStateGPUCache::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 
 	assert ( !this->mApplyingStateChanges );
 
@@ -965,7 +965,7 @@ bool MOAIGfxStateGPU::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxStateGPU::SetIndexBuffer ( MOAIIndexBuffer* buffer ) {
+bool MOAIGfxStateGPUCache::SetIndexBuffer ( MOAIIndexBuffer* buffer ) {
 	
 	assert ( !this->mApplyingStateChanges );
 	
@@ -976,7 +976,7 @@ bool MOAIGfxStateGPU::SetIndexBuffer ( MOAIIndexBuffer* buffer ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::SetPenWidth ( float penWidth ) {
+void MOAIGfxStateGPUCache::SetPenWidth ( float penWidth ) {
 
 	assert ( !this->mApplyingStateChanges );
 
@@ -985,7 +985,7 @@ void MOAIGfxStateGPU::SetPenWidth ( float penWidth ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::SetScissorRect () {
+void MOAIGfxStateGPUCache::SetScissorRect () {
 
 	assert ( !this->mApplyingStateChanges );
 
@@ -994,7 +994,7 @@ void MOAIGfxStateGPU::SetScissorRect () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::SetScissorRect ( ZLRect rect ) {
+void MOAIGfxStateGPUCache::SetScissorRect ( ZLRect rect ) {
 	
 	rect.Bless ();
 	
@@ -1006,13 +1006,13 @@ void MOAIGfxStateGPU::SetScissorRect ( ZLRect rect ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxStateGPU::SetShader ( MOAIShaderMgr::Preset preset ) {
+bool MOAIGfxStateGPUCache::SetShader ( MOAIShaderMgr::Preset preset ) {
 
 	return this->SetShader ( MOAIShaderMgr::Get ().GetShader ( preset ));
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxStateGPU::SetShader ( MOAIShader* shader ) {
+bool MOAIGfxStateGPUCache::SetShader ( MOAIShader* shader ) {
 
 	assert ( !this->mApplyingStateChanges );
 	
@@ -1028,7 +1028,7 @@ bool MOAIGfxStateGPU::SetShader ( MOAIShader* shader ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxStateGPU::SetTexture ( MOAITextureBase* texture, u32 textureUnit ) {
+bool MOAIGfxStateGPUCache::SetTexture ( MOAITextureBase* texture, u32 textureUnit ) {
 
 	assert ( !this->mApplyingStateChanges );
 
@@ -1045,7 +1045,7 @@ bool MOAIGfxStateGPU::SetTexture ( MOAITextureBase* texture, u32 textureUnit ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxStateGPU::SetVertexArray ( MOAIVertexArray* vtxArray ) {
+bool MOAIGfxStateGPUCache::SetVertexArray ( MOAIVertexArray* vtxArray ) {
 
 	assert ( !this->mApplyingStateChanges );
 
@@ -1062,7 +1062,7 @@ bool MOAIGfxStateGPU::SetVertexArray ( MOAIVertexArray* vtxArray ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxStateGPU::SetVertexBuffer ( MOAIVertexBuffer* buffer ) {
+bool MOAIGfxStateGPUCache::SetVertexBuffer ( MOAIVertexBuffer* buffer ) {
 
 	assert ( !this->mApplyingStateChanges );
 	
@@ -1078,13 +1078,13 @@ bool MOAIGfxStateGPU::SetVertexBuffer ( MOAIVertexBuffer* buffer ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::SetVertexFormat ( MOAIVertexFormatMgr::Preset preset ) {
+void MOAIGfxStateGPUCache::SetVertexFormat ( MOAIVertexFormatMgr::Preset preset ) {
 
 	this->SetVertexFormat ( MOAIVertexFormatMgr::Get ().GetFormat ( preset ));
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::SetVertexFormat ( MOAIVertexFormat* format ) {
+void MOAIGfxStateGPUCache::SetVertexFormat ( MOAIVertexFormat* format ) {
 
 	assert ( !this->mApplyingStateChanges );
 
@@ -1093,7 +1093,7 @@ void MOAIGfxStateGPU::SetVertexFormat ( MOAIVertexFormat* format ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::SetViewRect () {
+void MOAIGfxStateGPUCache::SetViewRect () {
 
 	float width = ( float )this->GetBufferWidth ();
 	float height = ( float )this->GetBufferHeight ();
@@ -1105,7 +1105,7 @@ void MOAIGfxStateGPU::SetViewRect () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::SetViewRect ( ZLRect rect ) {
+void MOAIGfxStateGPUCache::SetViewRect ( ZLRect rect ) {
 	
 	rect.Bless ();
 	
@@ -1116,13 +1116,13 @@ void MOAIGfxStateGPU::SetViewRect ( ZLRect rect ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::SuspendChanges () {
+void MOAIGfxStateGPUCache::SuspendChanges () {
 
 	this->mApplyingStateChanges++;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::UnbindAll () {
+void MOAIGfxStateGPUCache::UnbindAll () {
 
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
@@ -1140,7 +1140,7 @@ void MOAIGfxStateGPU::UnbindAll () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPU::UnbindVertexBufferWithFormat ( MOAIVertexBufferWithFormat& bufferWithFormat ) {
+void MOAIGfxStateGPUCache::UnbindVertexBufferWithFormat ( MOAIVertexBufferWithFormat& bufferWithFormat ) {
 
 	assert ( bufferWithFormat.mIsBound );
 	assert ( bufferWithFormat.mBuffer && bufferWithFormat.mFormat );

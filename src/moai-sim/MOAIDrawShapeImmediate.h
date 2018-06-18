@@ -4,14 +4,14 @@
 #ifndef	MOAIDRAWSHAPEIMMEDIATE_H
 #define	MOAIDRAWSHAPEIMMEDIATE_H
 
-#include <moai-sim/MOAIDrawShape.h>
+#include <moai-sim/MOAIAbstractDrawShape.h>
 
 //================================================================//
 // MOAIDrawShapeImmediate
 //================================================================//
 // TODO: doxygen
 class MOAIDrawShapeImmediate :
-	public virtual MOAIDrawShape {
+	public virtual MOAIAbstractDrawShape {
 protected:
 
 	//----------------------------------------------------------------//

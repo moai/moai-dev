@@ -10,7 +10,7 @@
 #include <moai-sim/MOAIGfxState.h>
 #include <moai-sim/MOAIGfxPipelineClerk.h>
 #include <moai-sim/MOAIGfxResourceClerk.h>
-#include <moai-sim/MOAIGfxVertexCache.h>
+#include <moai-sim/MOAIGfxStateVertexCache.h>
 #include <moai-sim/MOAIImage.h>
 
 class MOAIFrameBuffer;

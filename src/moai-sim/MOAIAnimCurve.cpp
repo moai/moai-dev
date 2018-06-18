@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <moai-sim/MOAIAnimCurve.h>
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIGfxVertexCache.h>
 
 //================================================================//
 // local

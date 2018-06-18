@@ -110,16 +110,16 @@ MOAIGfxState::~MOAIGfxState () {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIGfxStateCPU& MOAIGfxState::MOAIAbstractGfxStateCache_GetGfxStateCacheCPU () {
+MOAIGfxStateCPUCache& MOAIGfxState::MOAIAbstractGfxStateCache_GetGfxStateCacheCPU () {
 	return *this;
 }
 
 //----------------------------------------------------------------//
-MOAIGfxStateGPU& MOAIGfxState::MOAIAbstractGfxStateCache_GetGfxStateCacheGPU () {
+MOAIGfxStateGPUCache& MOAIGfxState::MOAIAbstractGfxStateCache_GetGfxStateCacheGPU () {
 	return *this;
 }
 
 //----------------------------------------------------------------//
-MOAIGfxVertexCache& MOAIGfxState::MOAIAbstractGfxStateCache_GetGfxVertexCache () {
+MOAIGfxStateVertexCache& MOAIGfxState::MOAIAbstractGfxStateCache_GetGfxVertexCache () {
 	return *this;
 }

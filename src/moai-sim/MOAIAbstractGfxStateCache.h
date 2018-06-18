@@ -4,9 +4,9 @@
 #ifndef	MOAIABSTRACTGFXSTATECACHE_H
 #define	MOAIABSTRACTGFXSTATECACHE_H
 
-class MOAIGfxStateCPU;
-class MOAIGfxStateGPU;
-class MOAIGfxVertexCache;
+class MOAIGfxStateCPUCache;
+class MOAIGfxStateGPUCache;
+class MOAIGfxStateVertexCache;
 
 //================================================================//
 // MOAIAbstractGfxStateCache
@@ -15,24 +15,24 @@ class MOAIAbstractGfxStateCache {
 protected:
 
 	//----------------------------------------------------------------//
-	virtual MOAIGfxStateCPU&			MOAIAbstractGfxStateCache_GetGfxStateCacheCPU			() = 0;
-	virtual MOAIGfxStateGPU&			MOAIAbstractGfxStateCache_GetGfxStateCacheGPU			() = 0;
-	virtual MOAIGfxVertexCache&			MOAIAbstractGfxStateCache_GetGfxVertexCache				() = 0;
+	virtual MOAIGfxStateCPUCache&			MOAIAbstractGfxStateCache_GetGfxStateCacheCPU			() = 0;
+	virtual MOAIGfxStateGPUCache&			MOAIAbstractGfxStateCache_GetGfxStateCacheGPU			() = 0;
+	virtual MOAIGfxStateVertexCache&		MOAIAbstractGfxStateCache_GetGfxVertexCache				() = 0;
 
 public:
 
 	//----------------------------------------------------------------//
-	inline MOAIGfxStateCPU& GetGfxStateCacheCPU () {
+	inline MOAIGfxStateCPUCache& GetGfxStateCacheCPU () {
 		return MOAIAbstractGfxStateCache_GetGfxStateCacheCPU ();
 	}
 	
 	//----------------------------------------------------------------//
-	inline MOAIGfxStateGPU& GetGfxStateCacheGPU () {
+	inline MOAIGfxStateGPUCache& GetGfxStateCacheGPU () {
 		return MOAIAbstractGfxStateCache_GetGfxStateCacheGPU ();
 	}
 	
 	//----------------------------------------------------------------//
-	inline MOAIGfxVertexCache& GetGfxVertexCache () {
+	inline MOAIGfxStateVertexCache& GetGfxVertexCache () {
 		return MOAIAbstractGfxStateCache_GetGfxVertexCache ();
 	}
 	
