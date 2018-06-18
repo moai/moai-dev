@@ -1158,8 +1158,8 @@ void MOAITextLabel::MOAIDrawable_Draw ( int subPrimID ) {
 		MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
 		materialStack.LoadGfxState ();
 	
-		gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::MODEL_TO_CLIP_MTX ));
-		gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::UV_TO_MODEL_MTX ));
+		gfxMgr.mGfxState.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::MODEL_TO_CLIP_MTX ));
+		gfxMgr.mGfxState.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::UV_TO_MODEL_MTX ));
 
 		this->mLayout.Draw ( this->mReveal );
 
@@ -1183,7 +1183,7 @@ void MOAITextLabel::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	ZLMatrix4x4 worldDrawingMtx = this->MOAIGraphicsPropBase_GetWorldDrawingMtx ();
 	
 	gfxMgr.mGfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX, worldDrawingMtx );
-	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::MODEL_TO_CLIP_MTX ));
+	gfxMgr.mGfxState.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::MODEL_TO_CLIP_MTX ));
 	
 	this->mLayout.DrawDebug ();
 	

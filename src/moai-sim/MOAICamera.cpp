@@ -332,14 +332,14 @@ void MOAICamera::DrawDebug () {
 	
 	ZLMatrix4x4 mtx = gfxMgr.mGfxState.GetMtx ( MOAIGfxState::CLIP_TO_DISPLAY_MTX );
 	
-	gfxMgr.mVertexCache.SetVertexTransform ( mtx ); // draw in device space
+	gfxMgr.mGfxState.SetVertexTransform ( mtx ); // draw in device space
 	
 	if ( debugLines.Bind ( DEBUG_DRAW_FRAME )) {
 		draw.DrawRectOutline ( -1.0f, -1.0f, 1.0f, 1.0f );
 	}
 	
 	mtx.m [ ZLMatrix4x4::C1_R1 ] *= viewRect.Width () / viewRect.Height ();
-	gfxMgr.mVertexCache.SetVertexTransform ( mtx );
+	gfxMgr.mGfxState.SetVertexTransform ( mtx );
 	
 	if ( debugLines.Bind ( DEBUG_DRAW_RETICLE )) {
 		draw.DrawEllipseOutline ( 0.0f, 0.0f, RETICLE_RADIUS, RETICLE_RADIUS, 64 );

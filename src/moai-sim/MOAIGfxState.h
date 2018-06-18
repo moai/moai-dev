@@ -4,18 +4,31 @@
 #ifndef	MOAIGFXSTATE_H
 #define	MOAIGFXSTATE_H
 
+#include <moai-sim/MOAIAbstractGfxStateCache.h>
 #include <moai-sim/MOAIGfxStateCPU.h>
 #include <moai-sim/MOAIGfxStateGPU.h>
+#include <moai-sim/MOAIGfxVertexCache.h>
 
 //================================================================//
 // MOAIGfxState
 //================================================================//
 class MOAIGfxState :
+	virtual public MOAIAbstractGfxStateCache,
 	public MOAIGfxStateCPU,
-	public MOAIGfxStateGPU {
+	public MOAIGfxStateGPU,
+	public MOAIGfxVertexCache {
+protected:
+
+	//----------------------------------------------------------------//
+	MOAIGfxStateCPU&			MOAIAbstractGfxStateCache_GetGfxStateCacheCPU			();
+	MOAIGfxStateGPU&			MOAIAbstractGfxStateCache_GetGfxStateCacheGPU			();
+	MOAIGfxVertexCache&			MOAIAbstractGfxStateCache_GetGfxVertexCache				();
+
 public:
 
 	//----------------------------------------------------------------//
+	void					FinishFrame					();
+	
 	ZLMatrix4x4				GetNormToWndMtx				();
 	ZLMatrix4x4				GetNormToWndMtx				( const ZLRect& wndRect );
 	

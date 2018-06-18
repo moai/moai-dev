@@ -234,7 +234,7 @@ void MOAIFrameBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 //		state.Pop ( 1 );
 //	}
 //
-//	gfxMgr.mVertexCache.FlushBufferedPrims (); // do we need to do this if we aren't reading pixels?
+//	gfxMgr.mGfxState.FlushVertexCache (); // do we need to do this if we aren't reading pixels?
 //
 //	// since we're doing this on the render thread, set it every time until we get a callback
 //	if ( this->mGrabNextFrame ) {

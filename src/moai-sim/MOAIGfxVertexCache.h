@@ -4,6 +4,7 @@
 #ifndef	MOAIGFXVERTEXCACHE_H
 #define	MOAIGFXVERTEXCACHE_H
 
+#include <moai-sim/MOAIAbstractGfxStateCache.h>
 #include <moai-sim/MOAIGfxStateGPU.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIVertexBuffer.h>
@@ -20,9 +21,10 @@ class MOAIVertexFormat;
 // MOAIGfxVertexCache
 //================================================================//
 class MOAIGfxVertexCache :
-	virtual public MOAIGfxStateClientGPU {
+	virtual public MOAIAbstractGfxStateCache {
 protected:
 
+	friend class MOAIGfxMgr; // for now
 	friend class MOAIGfxState;
 	friend class MOAIGfxStateCPU;
 	friend class MOAIGfxStateGPU;
@@ -62,7 +64,7 @@ protected:
 	ZLStrongPtr < MOAIIndexBuffer >		mIdxBuffer;
 	
 	//----------------------------------------------------------------//
-	void			OnGfxStateWillChange			();
+	void			FlushVertexCache				();
 	void			TransformAndWriteQuad			( ZLVec4D* vtx, ZLVec2D* uv );
 
 public:
@@ -77,8 +79,6 @@ public:
 	bool			BeginPrim						( u32 primType, u32 vtxCount, u32 idxCount = 0 );
 	u32				ContinuePrim					( u32 vtxCount, u32 idxCount = 0 );
 	void			EndPrim							();
-	
-	void			FlushBufferedPrims				();
 	
 	void			InitBuffers						();
 	

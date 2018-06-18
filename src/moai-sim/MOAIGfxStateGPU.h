@@ -4,6 +4,7 @@
 #ifndef	MOAIGFXSTATEGPU_H
 #define	MOAIGFXSTATEGPU_H
 
+#include <moai-sim/MOAIAbstractGfxStateCache.h>
 #include <moai-sim/MOAIBlendMode.h>
 #include <moai-sim/MOAIGfxPipelineClerk.h>
 #include <moai-sim/MOAIShaderMgr.h>
@@ -41,20 +42,6 @@ public:
 				~MOAIVertexBufferWithFormat		();
 	void		SetBufferAndFormat				( MOAILuaObject& owner, MOAIVertexBuffer* buffer, MOAIVertexFormat* format );
 	
-};
-
-//================================================================//
-// MOAIGfxStateClientGPU
-//================================================================//
-class MOAIGfxStateClientGPU {
-protected:
-
-	friend class MOAIGfxStateGPU;
-
-	//----------------------------------------------------------------//
-						MOAIGfxStateClientGPU		();
-	virtual				~MOAIGfxStateClientGPU		();
-	virtual void		OnGfxStateWillChange		();
 };
 
 //================================================================//
@@ -100,7 +87,8 @@ protected:
 //================================================================//
 // MOAIGfxStateGPU
 //================================================================//
-class MOAIGfxStateGPU {
+class MOAIGfxStateGPU :
+	virtual public MOAIAbstractGfxStateCache {
 protected:
 
 	static const u32 MAX_TEXTURE_UNITS = 32; // enough? will need more flags below if not.
@@ -148,8 +136,6 @@ protected:
 	ZLSharedConstBuffer*					mBoundIdxBuffer;
 	ZLSharedConstBuffer*					mBoundVtxBuffer;
 
-	MOAIGfxStateClientGPU*					mClient;
-
 	//----------------------------------------------------------------//
 	void			ApplyStateChange				( u32 stateID );
 	void			ApplyStateChanges				();
@@ -170,6 +156,7 @@ protected:
 	void			FlushViewRect					( ZLRect rect );
 	void			ForceIndexBuffer				( MOAIIndexBuffer* buffer );
 	void			ForceVertexBuffer				( MOAIVertexBuffer* buffer );
+	void			GfxStateWillChange				();
 	void			ResumeChanges					();
 	void			SuspendChanges					();
 	void			UnbindVertexBufferWithFormat	( MOAIVertexBufferWithFormat& buffer );
@@ -207,9 +194,6 @@ public:
 	void			SetBlendMode				( const MOAIBlendMode& blendMode );
 	void			SetBlendMode				( int srcFactor, int dstFactor, int equation = ZGL_BLEND_MODE_ADD );
 
-	void			SetClient					();
-	void			SetClient					( MOAIGfxStateClientGPU* client );
-
 	void			SetCullFunc					();
 	void			SetCullFunc					( int cullFunc );
 	
@@ -241,16 +225,6 @@ public:
 	void			SetViewRect					( ZLRect rect );
 	
 	void			UnbindAll					();
-	
-	//----------------------------------------------------------------//
-	inline void GfxStateWillChange () {
-		
-		if ( this->mClient ) {
-			MOAIGfxStateClientGPU* client = this->mClient;
-			this->mClient = 0;
-			client->OnGfxStateWillChange ();
-		}
-	}
 };
 
 #endif

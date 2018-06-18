@@ -81,7 +81,6 @@ public:
 	
 	MOAIGfxResourceClerk		mResourceMgr;
 	MOAIGfxState				mGfxState;
-	MOAIGfxVertexCache			mVertexCache;
 	MOAIGfxPipelineClerk		mPipelineMgr;
 	
 	//----------------------------------------------------------------//

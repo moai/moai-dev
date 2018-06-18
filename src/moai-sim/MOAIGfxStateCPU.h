@@ -4,6 +4,8 @@
 #ifndef	MOAIGFXSTATECPU_H
 #define	MOAIGFXSTATECPU_H
 
+#include <moai-sim/MOAIAbstractGfxStateCache.h>
+
 class MOAICamera;
 class MOAIShaderUniformSchema;
 class MOAIViewport;
@@ -199,8 +201,8 @@ protected:
 // MOAIGfxStateCPU
 //================================================================//
 class MOAIGfxStateCPU :
-	public MOAIGfxStateFrameCPU,
- 	public MOAIGfxStateConstsCPU {
+ 	public MOAIGfxStateConstsCPU,
+ 	virtual public MOAIAbstractGfxStateCache {
 protected:
 	
 	//----------------------------------------------------------------//
@@ -210,14 +212,16 @@ protected:
 	
 public:
 
-	GET ( const ZLColorVec&, AmbientColor, mAmbientColor )
-	GET ( const ZLColorVec&, PenColor, mPenColor )
-	GET ( const ZLColorVec&, FinalColor, mFinalColor )
-	GET ( u32, FinalColor32, mFinalColor32 )
+	GET ( const ZLColorVec&, AmbientColor, this->mStateFrameCPU.mAmbientColor )
+	GET ( const ZLColorVec&, PenColor, this->mStateFrameCPU.mPenColor )
+	GET ( const ZLColorVec&, FinalColor, this->mStateFrameCPU.mFinalColor )
+	GET ( u32, FinalColor32, this->mStateFrameCPU.mFinalColor32 )
 	
-	GET_SET ( u32, ClearFlags, mClearFlags )
-	GET_SET ( ZLColorVec&, ClearColor, mClearColor )
-	GET_SET ( double, ClearDepth, mClearDepth )
+	GET_SET ( u32, ClearFlags, this->mStateFrameCPU.mClearFlags )
+	GET_SET ( ZLColorVec&, ClearColor, this->mStateFrameCPU.mClearColor )
+	GET_SET ( double, ClearDepth, this->mStateFrameCPU.mClearDepth )
+
+	MOAIGfxStateFrameCPU	mStateFrameCPU;
 
 	//----------------------------------------------------------------//
 	const ZLMatrix4x4&		GetMtx						( u32 mtxID );

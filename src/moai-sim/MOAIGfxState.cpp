@@ -10,6 +10,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIGfxState::FinishFrame () {
+
+	this->FlushVertexCache (); // TODO: need to do this here?
+	this->UnbindAll ();
+	this->Reset ();
+}
+
+//----------------------------------------------------------------//
 ZLMatrix4x4 MOAIGfxState::GetNormToWndMtx () {
 
 	return this->GetNormToWndMtx ( this->GetViewRect ());
@@ -95,4 +103,23 @@ MOAIGfxState::MOAIGfxState () {
 
 //----------------------------------------------------------------//
 MOAIGfxState::~MOAIGfxState () {
+}
+
+//================================================================//
+// overrides
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAIGfxStateCPU& MOAIGfxState::MOAIAbstractGfxStateCache_GetGfxStateCacheCPU () {
+	return *this;
+}
+
+//----------------------------------------------------------------//
+MOAIGfxStateGPU& MOAIGfxState::MOAIAbstractGfxStateCache_GetGfxStateCacheGPU () {
+	return *this;
+}
+
+//----------------------------------------------------------------//
+MOAIGfxVertexCache& MOAIGfxState::MOAIAbstractGfxStateCache_GetGfxVertexCache () {
+	return *this;
 }

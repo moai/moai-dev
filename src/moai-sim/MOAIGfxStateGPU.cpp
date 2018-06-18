@@ -6,6 +6,9 @@
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIFrameBufferTexture.h>
 #include <moai-sim/MOAIGfxMgr.h>
+#include <moai-sim/MOAIGfxStateCPU.h>
+#include <moai-sim/MOAIGfxStateGPU.h>
+#include <moai-sim/MOAIGfxVertexCache.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
@@ -44,22 +47,6 @@ void MOAIVertexBufferWithFormat::SetBufferAndFormat ( MOAILuaObject& owner, MOAI
 
 	this->mBuffer.Set ( owner, buffer );
 	this->mFormat.Set ( owner, format );
-}
-
-//================================================================//
-// MOAIGfxStateClientGPU
-//================================================================//
-
-//----------------------------------------------------------------//
-MOAIGfxStateClientGPU::MOAIGfxStateClientGPU () {
-}
-
-//----------------------------------------------------------------//
-MOAIGfxStateClientGPU::~MOAIGfxStateClientGPU () {
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxStateClientGPU::OnGfxStateWillChange () {
 }
 
 //================================================================//
@@ -764,6 +751,12 @@ float MOAIGfxStateGPU::GetViewWidth () const {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxStateGPU::GfxStateWillChange () {
+		
+	this->GetGfxVertexCache ().FlushVertexCache ();
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxStateGPU::InitTextureUnits ( size_t nTextureUnits ) {
 
 	if ( MAX_TEXTURE_UNITS < nTextureUnits ) {
@@ -787,7 +780,6 @@ MOAIGfxStateGPU::MOAIGfxStateGPU () :
 	mTextureDirtyFlags ( 0 ),
 	mMaxTextureUnits ( 0 ),
 	mApplyingStateChanges ( 0 ),
-	mClient ( 0 ),
 	mBoundIdxBuffer ( 0 ),
 	mBoundVtxBuffer ( 0 ) {
 	
@@ -907,22 +899,6 @@ void MOAIGfxStateGPU::SetBlendMode ( int srcFactor, int dstFactor, int equation 
 	blendMode.SetBlend ( equation, srcFactor, dstFactor );
 	
 	this->SetBlendMode ( blendMode );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxStateGPU::SetClient () {
-
-	this->SetClient ( 0 );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxStateGPU::SetClient ( MOAIGfxStateClientGPU* client ) {
-
-	if ( this->mClient != client ) {
-	
-		this->GfxStateWillChange ();
-		this->mClient = client;
-	}
 }
 
 //----------------------------------------------------------------//

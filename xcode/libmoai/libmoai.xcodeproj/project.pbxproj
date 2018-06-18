@@ -3570,6 +3570,8 @@
 		CDC2B36920D66EC100300A96 /* MOAIGfxState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC2B36620D66EC100300A96 /* MOAIGfxState.cpp */; };
 		CDC2B36A20D66EC100300A96 /* MOAIGfxState.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC2B36720D66EC100300A96 /* MOAIGfxState.h */; };
 		CDC2B36B20D66EC100300A96 /* MOAIGfxState.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC2B36720D66EC100300A96 /* MOAIGfxState.h */; };
+		CDC2B37120D84BE000300A96 /* MOAIAbstractGfxStateCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC2B36E20D84BE000300A96 /* MOAIAbstractGfxStateCache.h */; };
+		CDC2B37220D84BE000300A96 /* MOAIAbstractGfxStateCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC2B36E20D84BE000300A96 /* MOAIAbstractGfxStateCache.h */; };
 		CDC5203618A17EB700BCC12F /* MOAIShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC5203018A17EB700BCC12F /* MOAIShaderProgram.cpp */; };
 		CDC5203718A17EB700BCC12F /* MOAIShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC5203018A17EB700BCC12F /* MOAIShaderProgram.cpp */; };
 		CDC5203818A17EB700BCC12F /* MOAIShaderProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC5203118A17EB700BCC12F /* MOAIShaderProgram.h */; };
@@ -6969,6 +6971,7 @@
 		CDC123A717FA818000FB64BB /* MOAIHashWriterCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIHashWriterCrypto.h; path = "moai-crypto/MOAIHashWriterCrypto.h"; sourceTree = "<group>"; };
 		CDC2B36620D66EC100300A96 /* MOAIGfxState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGfxState.cpp; sourceTree = "<group>"; };
 		CDC2B36720D66EC100300A96 /* MOAIGfxState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxState.h; sourceTree = "<group>"; };
+		CDC2B36E20D84BE000300A96 /* MOAIAbstractGfxStateCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAbstractGfxStateCache.h; sourceTree = "<group>"; };
 		CDC5203018A17EB700BCC12F /* MOAIShaderProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIShaderProgram.cpp; sourceTree = "<group>"; };
 		CDC5203118A17EB700BCC12F /* MOAIShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIShaderProgram.h; sourceTree = "<group>"; };
 		CDC5203218A17EB700BCC12F /* MOAIShaderUniform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIShaderUniform.cpp; sourceTree = "<group>"; };
@@ -8724,6 +8727,7 @@
 				CDE9851818975AA7001827F9 /* deck */,
 				CDE9851918975AB6001827F9 /* font */,
 				CD13524B189738B000A39A74 /* graphics */,
+				CDC2B36C20D84BC500300A96 /* graphics state cache */,
 				CD2BA7A01B2A20BB0010C399 /* graphics system */,
 				CD8DD76819195FFB0088EA60 /* grid */,
 				CDE36E4D1A5F4DAB0095E863 /* image */,
@@ -9571,14 +9575,6 @@
 				89BE6F6A173AD0CA00DFE837 /* MOAIGfxResource.h */,
 				CD1AEB441A0F785C005512C8 /* MOAIGfxResourceClerk.cpp */,
 				CD1AEB451A0F785C005512C8 /* MOAIGfxResourceClerk.h */,
-				CDC2B36620D66EC100300A96 /* MOAIGfxState.cpp */,
-				CDC2B36720D66EC100300A96 /* MOAIGfxState.h */,
-				CD2BA7941B2A16B00010C399 /* MOAIGfxStateCPU.cpp */,
-				CD2BA7951B2A16B00010C399 /* MOAIGfxStateCPU.h */,
-				CD3431031B30EDC6002BEBFA /* MOAIGfxStateGPU.cpp */,
-				CD3431041B30EDC6002BEBFA /* MOAIGfxStateGPU.h */,
-				CD2BA7A11B2A2D750010C399 /* MOAIGfxVertexCache.cpp */,
-				CD2BA7A21B2A2D750010C399 /* MOAIGfxVertexCache.h */,
 				89BE6FE3173AD0CA00DFE837 /* MOAIRenderMgr.cpp */,
 				89BE6FE4173AD0CA00DFE837 /* MOAIRenderMgr.h */,
 			);
@@ -12228,6 +12224,22 @@
 			name = "moai-crypto";
 			sourceTree = "<group>";
 		};
+		CDC2B36C20D84BC500300A96 /* graphics state cache */ = {
+			isa = PBXGroup;
+			children = (
+				CDC2B36E20D84BE000300A96 /* MOAIAbstractGfxStateCache.h */,
+				CDC2B36620D66EC100300A96 /* MOAIGfxState.cpp */,
+				CDC2B36720D66EC100300A96 /* MOAIGfxState.h */,
+				CD2BA7941B2A16B00010C399 /* MOAIGfxStateCPU.cpp */,
+				CD2BA7951B2A16B00010C399 /* MOAIGfxStateCPU.h */,
+				CD3431031B30EDC6002BEBFA /* MOAIGfxStateGPU.cpp */,
+				CD3431041B30EDC6002BEBFA /* MOAIGfxStateGPU.h */,
+				CD2BA7A11B2A2D750010C399 /* MOAIGfxVertexCache.cpp */,
+				CD2BA7A21B2A2D750010C399 /* MOAIGfxVertexCache.h */,
+			);
+			name = "graphics state cache";
+			sourceTree = "<group>";
+		};
 		CDD06BD11398824600AB0420 /* luasocket */ = {
 			isa = PBXGroup;
 			children = (
@@ -12911,6 +12923,7 @@
 				CDE7ED781E4033AB0005D63A /* MOAIDrawShapeImmediate.h in Headers */,
 				CD4C3DEB180A63BB00C02381 /* MOAIAction.h in Headers */,
 				CDC5203818A17EB700BCC12F /* MOAIShaderProgram.h in Headers */,
+				CDC2B37120D84BE000300A96 /* MOAIAbstractGfxStateCache.h in Headers */,
 				CDC02C841E380CDE007A02FB /* MOAIDeckRemapper.h in Headers */,
 				CD4C3E78180A63BB00C02381 /* MOAIParticleScript.h in Headers */,
 				CD92385F1E24B0EF00D5048D /* MOAIMaterial.h in Headers */,
@@ -13090,6 +13103,7 @@
 				CD4C404C180A63C200C02381 /* MOAIDraw.h in Headers */,
 				CD4C40EF180A63C200C02381 /* MOAISim.h in Headers */,
 				CD1D85A51E1B2AA80089FFAD /* MOAIPartitionHull.h in Headers */,
+				CDC2B37220D84BE000300A96 /* MOAIAbstractGfxStateCache.h in Headers */,
 				CD4C4099180A63C200C02381 /* MOAINode.h in Headers */,
 				CD67B45D1B264C51004298CF /* MOAISelectionMesh.h in Headers */,
 				CD94BB2E1E4AF14A003A0CFF /* MOAILight.h in Headers */,

@@ -8,6 +8,9 @@
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIGfxResourceClerk.h>
+#include <moai-sim/MOAIGfxStateCPU.h>
+#include <moai-sim/MOAIGfxStateGPU.h>
+#include <moai-sim/MOAIGfxVertexCache.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIShaderProgram.h>
@@ -44,7 +47,7 @@ bool MOAIGfxVertexCache::BeginPrim ( u32 primType, u32 vtxCount, u32 idxCount ) 
 
 	// flush if ya gotta
 	if (( this->mPrimType != primType ) || ( this->mVtxSize != vtxSize ) || ( this->mUseIdxBuffer != useIdxBuffer )) {
-		this->FlushBufferedPrims ();
+		this->FlushVertexCache ();
 	}
 	this->mFlushOnPrimEnd = !(( primType == ZGL_PRIM_POINTS ) || ( primType == ZGL_PRIM_LINES ) || ( primType == ZGL_PRIM_TRIANGLES ));
 	
@@ -54,8 +57,6 @@ bool MOAIGfxVertexCache::BeginPrim ( u32 primType, u32 vtxCount, u32 idxCount ) 
 	gfxMgr.mGfxState.SetVertexBuffer ();
 	
 	gfxMgr.mGfxState.ApplyStateChanges (); // must happen here in case there needs to be a flush
-	
-	gfxMgr.mGfxState.SetClient ( this );
 	
 	this->mPrimType = primType;
 	this->mVtxSize = vtxSize;
@@ -92,7 +93,7 @@ u32 MOAIGfxVertexCache::ContinuePrim ( u32 vtxCount, u32 idxCount ) {
 	
 	if (( vtxBufferSize < ( vtxCursor + vtxBytes )) || ( idxBufferSize < ( idxCursor + idxBytes ))) {
 		
-		this->FlushBufferedPrims ();
+		this->FlushVertexCache ();
 		this->Reset ();
 		return CONTINUE_ROLLOVER;
 	}
@@ -106,12 +107,12 @@ void MOAIGfxVertexCache::EndPrim () {
 	this->mPrimCount++;
 	
 	if ( this->mFlushOnPrimEnd ) {
-		this->FlushBufferedPrims ();
+		this->FlushVertexCache ();
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxVertexCache::FlushBufferedPrims () {
+void MOAIGfxVertexCache::FlushVertexCache () {
 
 	if ( this->mPrimCount == 0 ) return;
 	
@@ -199,12 +200,6 @@ MOAIGfxVertexCache::MOAIGfxVertexCache () :
 
 //----------------------------------------------------------------//
 MOAIGfxVertexCache::~MOAIGfxVertexCache () {
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxVertexCache::OnGfxStateWillChange () {
-
-	this->FlushBufferedPrims ();
 }
 
 //----------------------------------------------------------------//

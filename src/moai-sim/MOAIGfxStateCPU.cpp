@@ -6,6 +6,9 @@
 #include <moai-sim/MOAICamera.h>
 #include <moai-sim/MOAIGfxStateCPU.h>
 #include <moai-sim/MOAIGfxMgr.h>
+#include <moai-sim/MOAIGfxStateCPU.h>
+#include <moai-sim/MOAIGfxStateGPU.h>
+#include <moai-sim/MOAIGfxVertexCache.h>
 #include <moai-sim/MOAIShaderUniform.h>
 #include <moai-sim/MOAIViewport.h>
 #include <moai-sim/MOAIViewProj.h>
@@ -19,8 +22,8 @@ const ZLMatrix4x4& MOAIGfxStateCPU::GetMtx ( u32 mtxID ) {
 	
 	u64 mtxFlag = ID_TO_FLAG ( mtxID );
 	
-	if ( !( this->mDirtyFlags & mtxFlag )) {
-		return this->mMatrices [ mtxID ];
+	if ( !( this->mStateFrameCPU.mDirtyFlags & mtxFlag )) {
+		return this->mStateFrameCPU.mMatrices [ mtxID ];
 	}
 	
 	u32 primaryMtxID = mtxID % MATRIX_SET_SIZE;
@@ -34,40 +37,40 @@ const ZLMatrix4x4& MOAIGfxStateCPU::GetMtx ( u32 mtxID ) {
 		
 		case INVERSE_MATRICES:
 		
-			if ( this->mDirtyFlags & mtxFlag ) {
+			if ( this->mStateFrameCPU.mDirtyFlags & mtxFlag ) {
 				
-				this->mMatrices [ mtxID ] = this->GetPrimaryMtx ( primaryMtxID, mtxFlag );
-				this->mMatrices [ mtxID ].Inverse ();
+				this->mStateFrameCPU.mMatrices [ mtxID ] = this->GetPrimaryMtx ( primaryMtxID, mtxFlag );
+				this->mStateFrameCPU.mMatrices [ mtxID ].Inverse ();
 			}
 			break;
 		
 		case NORMAL_MATRICES:
 		
-			if ( this->mDirtyFlags & mtxFlag ) {
+			if ( this->mStateFrameCPU.mDirtyFlags & mtxFlag ) {
 			
 				ZLMatrix3x3 mtx3x3 = ZLMatrix3x3 ( this->GetPrimaryMtx ( primaryMtxID, mtxFlag ));
 				mtx3x3.Inverse ();
 				mtx3x3.Transpose ();
-				this->mMatrices [ mtxID ] = ZLMatrix4x4 ( mtx3x3 );
+				this->mStateFrameCPU.mMatrices [ mtxID ] = ZLMatrix4x4 ( mtx3x3 );
 			}
 			break;
 		
 		case NORMAL_INVERSE_MATRICES:
 		
-			if ( this->mDirtyFlags & mtxFlag ) {
+			if ( this->mStateFrameCPU.mDirtyFlags & mtxFlag ) {
 			
 				ZLMatrix3x3 mtx3x3 = ZLMatrix3x3 ( this->GetPrimaryMtx ( primaryMtxID, mtxFlag ));
 				mtx3x3.Inverse ();
 				mtx3x3.Inverse ();
 				mtx3x3.Transpose ();
-				this->mMatrices [ mtxID ] = ZLMatrix4x4 ( mtx3x3 );
+				this->mStateFrameCPU.mMatrices [ mtxID ] = ZLMatrix4x4 ( mtx3x3 );
 			}
 			break;
 	}
 
-	this->mDirtyFlags &= ~mtxFlag;
+	this->mStateFrameCPU.mDirtyFlags &= ~mtxFlag;
 	
-	return this->mMatrices [ mtxID ];
+	return this->mStateFrameCPU.mMatrices [ mtxID ];
 }
 
 //----------------------------------------------------------------//
@@ -77,81 +80,81 @@ const ZLMatrix4x4& MOAIGfxStateCPU::GetPrimaryMtx ( u32 mtxID, u64 mtxFlag ) {
 	
 		case CLIP_TO_DISPLAY_MTX:
 	
-			if ( this->mDirtyFlags & CLIP_TO_DISPLAY_MTX_MASK ) {
+			if ( this->mStateFrameCPU.mDirtyFlags & CLIP_TO_DISPLAY_MTX_MASK ) {
 			
-				this->mMatrices [ mtxID ] = this->GetMtx ( CLIP_TO_WORLD_MTX ); // back to world space
-				this->mMatrices [ mtxID ].Append ( this->GetMtx ( WORLD_TO_DISPLAY_MTX )); // and forward to display space
+				this->mStateFrameCPU.mMatrices [ mtxID ] = this->GetMtx ( CLIP_TO_WORLD_MTX ); // back to world space
+				this->mStateFrameCPU.mMatrices [ mtxID ].Append ( this->GetMtx ( WORLD_TO_DISPLAY_MTX )); // and forward to display space
 			}
-			return this->mMatrices [ mtxID ];
+			return this->mStateFrameCPU.mMatrices [ mtxID ];
 		
 		case CLIP_TO_WINDOW_MTX:
 			
-			return this->mMatrices [ mtxID ];
+			return this->mStateFrameCPU.mMatrices [ mtxID ];
 		
 		case MODEL_TO_CLIP_MTX:
 			
-			if ( this->mDirtyFlags & MODEL_TO_CLIP_MTX_MASK ) {
+			if ( this->mStateFrameCPU.mDirtyFlags & MODEL_TO_CLIP_MTX_MASK ) {
 			
-				this->mMatrices [ mtxID ] = this->mMatrices [ MODEL_TO_WORLD_MTX ];
-				this->mMatrices [ mtxID ].Append ( this->GetMtx ( WORLD_TO_CLIP_MTX ));
+				this->mStateFrameCPU.mMatrices [ mtxID ] = this->mStateFrameCPU.mMatrices [ MODEL_TO_WORLD_MTX ];
+				this->mStateFrameCPU.mMatrices [ mtxID ].Append ( this->GetMtx ( WORLD_TO_CLIP_MTX ));
 			}
-			return this->mMatrices [ mtxID ];
+			return this->mStateFrameCPU.mMatrices [ mtxID ];
 		
 		case MODEL_TO_DISPLAY_MTX:
 	
-			if ( this->mDirtyFlags & MODEL_TO_DISPLAY_MTX_MASK ) {
+			if ( this->mStateFrameCPU.mDirtyFlags & MODEL_TO_DISPLAY_MTX_MASK ) {
 			
-				this->mMatrices [ mtxID ] = this->GetMtx ( MODEL_TO_WORLD_MTX );
-				this->mMatrices [ mtxID ].Append ( this->GetMtx ( WORLD_TO_DISPLAY_MTX ));
+				this->mStateFrameCPU.mMatrices [ mtxID ] = this->GetMtx ( MODEL_TO_WORLD_MTX );
+				this->mStateFrameCPU.mMatrices [ mtxID ].Append ( this->GetMtx ( WORLD_TO_DISPLAY_MTX ));
 			}
-			return this->mMatrices [ mtxID ];
+			return this->mStateFrameCPU.mMatrices [ mtxID ];
 		
 		case MODEL_TO_UV_MTX:
 			
-			return this->mMatrices [ MODEL_TO_UV_MTX ];
+			return this->mStateFrameCPU.mMatrices [ MODEL_TO_UV_MTX ];
 		
 		case MODEL_TO_VIEW_MTX:
 			
-			if ( this->mDirtyFlags & MODEL_TO_VIEW_MTX_MASK ) {
+			if ( this->mStateFrameCPU.mDirtyFlags & MODEL_TO_VIEW_MTX_MASK ) {
 			
-				this->mMatrices [ mtxID ] = this->mMatrices [ MODEL_TO_WORLD_MTX ];
-				this->mMatrices [ mtxID ].Append ( this->mMatrices [ WORLD_TO_VIEW_MTX ]);
+				this->mStateFrameCPU.mMatrices [ mtxID ] = this->mStateFrameCPU.mMatrices [ MODEL_TO_WORLD_MTX ];
+				this->mStateFrameCPU.mMatrices [ mtxID ].Append ( this->mStateFrameCPU.mMatrices [ WORLD_TO_VIEW_MTX ]);
 			}
-			return this->mMatrices [ mtxID ];
+			return this->mStateFrameCPU.mMatrices [ mtxID ];
 		
 		case MODEL_TO_WORLD_MTX:
 			
-			return this->mMatrices [ mtxID ];
+			return this->mStateFrameCPU.mMatrices [ mtxID ];
 		
 		case VIEW_TO_CLIP_MTX:
 			
-			return this->mMatrices [ mtxID ];
+			return this->mStateFrameCPU.mMatrices [ mtxID ];
 		
 		case VIEW_TO_DISPLAY_MTX:
 	
-			if ( this->mDirtyFlags & VIEW_TO_DISPLAY_MTX_MASK ) {
+			if ( this->mStateFrameCPU.mDirtyFlags & VIEW_TO_DISPLAY_MTX_MASK ) {
 					
-				this->mMatrices [ mtxID ].Inverse ( this->GetMtx ( VIEW_TO_WORLD_MTX )); // back to world space
-				this->mMatrices [ mtxID ].Append ( this->GetMtx ( WORLD_TO_DISPLAY_MTX )); // and forward to display space
+				this->mStateFrameCPU.mMatrices [ mtxID ].Inverse ( this->GetMtx ( VIEW_TO_WORLD_MTX )); // back to world space
+				this->mStateFrameCPU.mMatrices [ mtxID ].Append ( this->GetMtx ( WORLD_TO_DISPLAY_MTX )); // and forward to display space
 			}
-			return this->mMatrices [ VIEW_TO_DISPLAY_MTX ];
+			return this->mStateFrameCPU.mMatrices [ VIEW_TO_DISPLAY_MTX ];
 		
 		case WORLD_TO_CLIP_MTX:
 			
-			if ( this->mDirtyFlags & WORLD_TO_CLIP_MTX_MASK ) {
+			if ( this->mStateFrameCPU.mDirtyFlags & WORLD_TO_CLIP_MTX_MASK ) {
 			
-				this->mMatrices [ mtxID ] = this->mMatrices [ WORLD_TO_VIEW_MTX ];
-				this->mMatrices [ mtxID ].Append ( this->mMatrices [ VIEW_TO_CLIP_MTX ]);
+				this->mStateFrameCPU.mMatrices [ mtxID ] = this->mStateFrameCPU.mMatrices [ WORLD_TO_VIEW_MTX ];
+				this->mStateFrameCPU.mMatrices [ mtxID ].Append ( this->mStateFrameCPU.mMatrices [ VIEW_TO_CLIP_MTX ]);
 			}
-			return this->mMatrices [ mtxID ];
+			return this->mStateFrameCPU.mMatrices [ mtxID ];
 		
 		case WORLD_TO_DISPLAY_MTX:
 			
-			return this->mMatrices [ mtxID ];
+			return this->mStateFrameCPU.mMatrices [ mtxID ];
 		
 		case WORLD_TO_VIEW_MTX:
 			
-			return this->mMatrices [ mtxID ];
+			return this->mStateFrameCPU.mMatrices [ mtxID ];
 	}
 	
 	assert ( false );
@@ -161,11 +164,11 @@ const ZLMatrix4x4& MOAIGfxStateCPU::GetPrimaryMtx ( u32 mtxID, u64 mtxFlag ) {
 //----------------------------------------------------------------//
 const ZLFrustum& MOAIGfxStateCPU::GetViewVolume () {
 
-	if ( this->mDirtyFlags & VIEW_VOLUME_MASK ) {
-		this->mViewVolume.Init ( this->GetMtx ( CLIP_TO_WORLD_MTX ));
-		this->mDirtyFlags &= ~VIEW_VOLUME_MASK;
+	if ( this->mStateFrameCPU.mDirtyFlags & VIEW_VOLUME_MASK ) {
+		this->mStateFrameCPU.mViewVolume.Init ( this->GetMtx ( CLIP_TO_WORLD_MTX ));
+		this->mStateFrameCPU.mDirtyFlags &= ~VIEW_VOLUME_MASK;
 	}
-	return this->mViewVolume;
+	return this->mStateFrameCPU.mViewVolume;
 }
 
 //----------------------------------------------------------------//
@@ -187,17 +190,17 @@ MOAIGfxStateCPU::MOAIGfxStateCPU () {
 	assert ( TOTAL_GLOBALS < MAX_GLOBALS );
 
 	for ( u32 i = 0; i < TOTAL_MATRICES; ++i ) {
-		this->mMatrices [ i ].Ident ();
+		this->mStateFrameCPU.mMatrices [ i ].Ident ();
 	}
 	
-	this->mDirtyFlags = 0;
+	this->mStateFrameCPU.mDirtyFlags = 0;
 	
-	this->mAmbientColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
-	this->mFinalColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
-	this->mPenColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
-	this->mClearColor.Set ( 0.0f, 0.0f, 0.0f, 1.0f );
-	this->mClearFlags = 0;
-	this->mClearDepth = 0.0;
+	this->mStateFrameCPU.mAmbientColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
+	this->mStateFrameCPU.mFinalColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
+	this->mStateFrameCPU.mPenColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
+	this->mStateFrameCPU.mClearColor.Set ( 0.0f, 0.0f, 0.0f, 1.0f );
+	this->mStateFrameCPU.mClearFlags = 0;
+	this->mStateFrameCPU.mClearDepth = 0.0;
 }
 
 //----------------------------------------------------------------//
@@ -207,21 +210,21 @@ MOAIGfxStateCPU::~MOAIGfxStateCPU () {
 //----------------------------------------------------------------//
 void MOAIGfxStateCPU::SetAmbientColor ( u32 color ) {
 
-	this->mAmbientColor.SetRGBA ( color );
+	this->mStateFrameCPU.mAmbientColor.SetRGBA ( color );
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxStateCPU::SetAmbientColor ( const ZLColorVec& colorVec ) {
 
-	this->mAmbientColor = colorVec;
+	this->mStateFrameCPU.mAmbientColor = colorVec;
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxStateCPU::SetAmbientColor ( float r, float g, float b, float a ) {
 
-	this->mAmbientColor.Set ( r, g, b, a );
+	this->mStateFrameCPU.mAmbientColor.Set ( r, g, b, a );
 	this->UpdateFinalColor ();
 }
 
@@ -282,31 +285,31 @@ void MOAIGfxStateCPU::SetMtx ( u32 mtxID, const ZLMatrix4x4& mtx ) {
 			return;
 	}
 
-	if ( !this->mMatrices [ mtxID ].IsSame ( mtx )) {
+	if ( !this->mStateFrameCPU.mMatrices [ mtxID ].IsSame ( mtx )) {
 	
-		this->mDirtyFlags |= dirtyMask;
-		this->mMatrices [ mtxID ] = mtx;
+		this->mStateFrameCPU.mDirtyFlags |= dirtyMask;
+		this->mStateFrameCPU.mMatrices [ mtxID ] = mtx;
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxStateCPU::SetPenColor ( u32 color ) {
 
-	this->mPenColor.SetRGBA ( color );
+	this->mStateFrameCPU.mPenColor.SetRGBA ( color );
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxStateCPU::SetPenColor ( const ZLColorVec& colorVec ) {
 
-	this->mPenColor = colorVec;
+	this->mStateFrameCPU.mPenColor = colorVec;
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxStateCPU::SetPenColor ( float r, float g, float b, float a ) {
 
-	this->mPenColor.Set ( r, g, b, a );
+	this->mStateFrameCPU.mPenColor.Set ( r, g, b, a );
 	this->UpdateFinalColor ();
 }
 
@@ -334,20 +337,19 @@ void MOAIGfxStateCPU::SetViewProj ( MOAIViewport* viewport, MOAICamera* camera, 
 //----------------------------------------------------------------//
 void MOAIGfxStateCPU::UpdateFinalColor () {
 
-	this->mFinalColor.mR = this->mAmbientColor.mR * this->mPenColor.mR;
-	this->mFinalColor.mG = this->mAmbientColor.mG * this->mPenColor.mG;
-	this->mFinalColor.mB = this->mAmbientColor.mB * this->mPenColor.mB;
-	this->mFinalColor.mA = this->mAmbientColor.mA * this->mPenColor.mA;
+	this->mStateFrameCPU.mFinalColor.mR = this->mStateFrameCPU.mAmbientColor.mR * this->mStateFrameCPU.mPenColor.mR;
+	this->mStateFrameCPU.mFinalColor.mG = this->mStateFrameCPU.mAmbientColor.mG * this->mStateFrameCPU.mPenColor.mG;
+	this->mStateFrameCPU.mFinalColor.mB = this->mStateFrameCPU.mAmbientColor.mB * this->mStateFrameCPU.mPenColor.mB;
+	this->mStateFrameCPU.mFinalColor.mA = this->mStateFrameCPU.mAmbientColor.mA * this->mStateFrameCPU.mPenColor.mA;
 
-	u32 finalColor = this->mFinalColor.PackRGBA ();
+	u32 finalColor = this->mStateFrameCPU.mFinalColor.PackRGBA ();
 	
-	if ( this->mFinalColor32 != finalColor ) {
+	if ( this->mStateFrameCPU.mFinalColor32 != finalColor ) {
 		
-		this->mFinalColor32 = finalColor;
+		this->mStateFrameCPU.mFinalColor32 = finalColor;
 		
-		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-		
-		gfxMgr.mVertexCache.mVertexColor = this->mFinalColor;
-		gfxMgr.mVertexCache.mVertexColor32 = this->mFinalColor32;
+		MOAIGfxVertexCache& vertexCache = this->GetGfxVertexCache ();
+		vertexCache.mVertexColor = this->mStateFrameCPU.mFinalColor;
+		vertexCache.mVertexColor32 = this->mStateFrameCPU.mFinalColor32;
 	}
 }

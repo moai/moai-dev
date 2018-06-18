@@ -115,24 +115,24 @@ void MOAIAnimCurve::Draw ( u32 resolution ) const {
 	float length = this->GetLength ();
 	float step = length / ( float )resolution;
 	
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_STRIP, resolution );
+	gfxMgr.mGfxState.BeginPrim ( ZGL_PRIM_LINE_STRIP, resolution );
 	
 	for ( u32 i = 0; i < resolution; ++i ) {
 		
 		float t = step * ( float )i;
 		float v = this->GetValue ( t );
 		
-		gfxMgr.mVertexCache.WriteVtx ( t, v, 0.0f );
-		gfxMgr.mVertexCache.WritePenColor4b ();
+		gfxMgr.mGfxState.WriteVtx ( t, v, 0.0f );
+		gfxMgr.mGfxState.WritePenColor4b ();
 	}
 	
 	float t = length;
 	float v = this->GetValue ( t );
 	
-	gfxMgr.mVertexCache.WriteVtx ( t, v, 0.0f );
-	gfxMgr.mVertexCache.WritePenColor4b ();
+	gfxMgr.mGfxState.WriteVtx ( t, v, 0.0f );
+	gfxMgr.mGfxState.WritePenColor4b ();
 	
-	gfxMgr.mVertexCache.EndPrim ();
+	gfxMgr.mGfxState.EndPrim ();
 }
 
 //----------------------------------------------------------------//

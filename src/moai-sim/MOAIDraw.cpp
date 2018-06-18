@@ -38,7 +38,7 @@ public:
 	void Begin () {
 	
 		this->mVertexCount = 0;
-		this->mGfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_STRIP, 1 );
+		this->mGfxMgr.mGfxState.BeginPrim ( ZGL_PRIM_LINE_STRIP, 1 );
 	}
 	
 	//----------------------------------------------------------------//
@@ -49,15 +49,15 @@ public:
 	//----------------------------------------------------------------//
 	void WriteVertex ( const ZLVec2D& v ) {
 		
-		if (( this->mVertexCount > 0 ) && ( this->mGfxMgr.mVertexCache.ContinuePrim ( 1 ) == MOAIGfxVertexCache::CONTINUE_ROLLOVER )) {
+		if (( this->mVertexCount > 0 ) && ( this->mGfxMgr.mGfxState.ContinuePrim ( 1 ) == MOAIGfxVertexCache::CONTINUE_ROLLOVER )) {
 
 			// if we roll over, repeat the last vertex to start a new line strip
-			this->mGfxMgr.mVertexCache.WriteVtx ( this->mLastVertex.mX, this->mLastVertex.mY );
-			this->mGfxMgr.mVertexCache.WritePenColor4b ();
+			this->mGfxMgr.mGfxState.WriteVtx ( this->mLastVertex.mX, this->mLastVertex.mY );
+			this->mGfxMgr.mGfxState.WritePenColor4b ();
 		}
 		
-		this->mGfxMgr.mVertexCache.WriteVtx ( v.mX, v.mY );
-		this->mGfxMgr.mVertexCache.WritePenColor4b ();
+		this->mGfxMgr.mGfxState.WriteVtx ( v.mX, v.mY );
+		this->mGfxMgr.mGfxState.WritePenColor4b ();
 		
 		this->mLastVertex = v;
 	}
@@ -65,7 +65,7 @@ public:
 	//----------------------------------------------------------------//
 	void End () {
 	
-		this->mGfxMgr.mVertexCache.EndPrim ();
+		this->mGfxMgr.mGfxState.EndPrim ();
 	}
 };
 
@@ -234,7 +234,7 @@ void MOAIDraw::EndDrawString () {
 	if ( !gfxMgr.mGfxState.SetShader ( MOAIShaderMgr::FONT_SHADER )) return;
 	
 	gfxMgr.mGfxState.SetBlendMode ( ZGL_BLEND_FACTOR_ONE, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
-	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX ));
+	gfxMgr.mGfxState.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX ));
 	MOAIQuadBrush::BindVertexFormat ();
 
 	// Get the context data
@@ -632,9 +632,7 @@ int MOAIDraw::_drawLine ( lua_State* L ) {
 	}
 	else {
 		self->DrawLuaParams ( L, ZGL_PRIM_LINE_STRIP );
-	}
-	
-	MOAIGfxMgr::Get ().mVertexCache.FlushBufferedPrims (); // TODO: have to do this here?
+	}	
 	return 0;
 }
 
@@ -1152,8 +1150,8 @@ bool MOAIDraw::Bind () {
 	if ( !gfxMgr.mGfxState.SetShader ( MOAIShaderMgr::LINE_SHADER )) return false;
 	gfxMgr.mGfxState.SetVertexFormat ( MOAIVertexFormatMgr::XYZWC );
 	
-	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::MODEL_TO_CLIP_MTX ));
-	gfxMgr.mVertexCache.SetUVTransform ( MOAIGfxMgr::Get ().mGfxState.GetMtx ( MOAIGfxState::UV_TO_MODEL_MTX ));
+	gfxMgr.mGfxState.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::MODEL_TO_CLIP_MTX ));
+	gfxMgr.mGfxState.SetUVTransform ( MOAIGfxMgr::Get ().mGfxState.GetMtx ( MOAIGfxState::UV_TO_MODEL_MTX ));
 
 	return true;
 }
@@ -1327,7 +1325,7 @@ void MOAIDraw::DrawLuaParams ( lua_State* L, u32 primType ) {
 
 	u32 total = state.GetTop () >> 1;
 	
-	gfxMgr.mVertexCache.BeginPrim ( primType, total );
+	gfxMgr.mGfxState.BeginPrim ( primType, total );
 	
 	for ( u32 i = 0; i < total; ++i ) {
 		
@@ -1336,11 +1334,11 @@ void MOAIDraw::DrawLuaParams ( lua_State* L, u32 primType ) {
 		float x = state.GetValue < float >( idx, 0.0f );
 		float y = state.GetValue < float >( idx + 1, 0.0f );
 		
-		gfxMgr.mVertexCache.WriteVtx ( x, y, 0.0f );
-		gfxMgr.mVertexCache.WritePenColor4b ();
+		gfxMgr.mGfxState.WriteVtx ( x, y, 0.0f );
+		gfxMgr.mGfxState.WritePenColor4b ();
 	}
 	
-	gfxMgr.mVertexCache.EndPrim ();
+	gfxMgr.mGfxState.EndPrim ();
 }
 
 
@@ -1355,7 +1353,7 @@ void MOAIDraw::DrawLuaArray ( lua_State* L, u32 primType ) {
 	
 	size_t size = state.GetTableSize ( -1 ) >> 2;
 	
-	gfxMgr.mVertexCache.BeginPrim ( primType, size );
+	gfxMgr.mGfxState.BeginPrim ( primType, size );
 
 	u32 counter = 0;
 	lua_pushnil ( L );
@@ -1366,14 +1364,14 @@ void MOAIDraw::DrawLuaArray ( lua_State* L, u32 primType ) {
 			x = state.GetValue < float >( -1, 0.0f );
 		} else {
 			y = state.GetValue < float >( -1, 0.0f );
-			gfxMgr.mVertexCache.WriteVtx ( x, y );
-			gfxMgr.mVertexCache.WritePenColor4b ();
+			gfxMgr.mGfxState.WriteVtx ( x, y );
+			gfxMgr.mGfxState.WritePenColor4b ();
 		}
 		++counter;
 		lua_pop ( L, 1 );
 	}
 
-	gfxMgr.mVertexCache.EndPrim ();
+	gfxMgr.mGfxState.EndPrim ();
 }
 
 //----------------------------------------------------------------//
@@ -1403,15 +1401,15 @@ void MOAIDraw::DrawRay ( float x, float y, float dx, float dy ) {
 		
 		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 		
-		gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINES, 2 );
+		gfxMgr.mGfxState.BeginPrim ( ZGL_PRIM_LINES, 2 );
 		
-			gfxMgr.mVertexCache.WriteVtx ( p0.mX, p0.mY, 0.0f );
-			gfxMgr.mVertexCache.WritePenColor4b ();
+			gfxMgr.mGfxState.WriteVtx ( p0.mX, p0.mY, 0.0f );
+			gfxMgr.mGfxState.WritePenColor4b ();
 			
-			gfxMgr.mVertexCache.WriteVtx ( p1.mX, p1.mY, 0.0f );
-			gfxMgr.mVertexCache.WritePenColor4b ();
+			gfxMgr.mGfxState.WriteVtx ( p1.mX, p1.mY, 0.0f );
+			gfxMgr.mGfxState.WritePenColor4b ();
 
-		gfxMgr.mVertexCache.EndPrim ();
+		gfxMgr.mGfxState.EndPrim ();
 	}
 }
 
@@ -1449,15 +1447,15 @@ void MOAIDraw::DrawVertexArray ( const ZLVec3D* verts, u32 count, u32 color, u32
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	gfxMgr.mGfxState.SetPenColor ( color );
-	gfxMgr.mVertexCache.BeginPrim ( primType, count );
+	gfxMgr.mGfxState.BeginPrim ( primType, count );
 	
 	for ( u32 i = 0; i < count; ++i ) {
 		const ZLVec3D& vtx = verts [ i ];
-		gfxMgr.mVertexCache.WriteVtx ( vtx );
-		gfxMgr.mVertexCache.WritePenColor4b ();
+		gfxMgr.mGfxState.WriteVtx ( vtx );
+		gfxMgr.mGfxState.WritePenColor4b ();
 	}
 
-	gfxMgr.mVertexCache.EndPrim ();
+	gfxMgr.mGfxState.EndPrim ();
 }
 
 //----------------------------------------------------------------//
@@ -1466,15 +1464,15 @@ void MOAIDraw::DrawVertexArray2D ( const float* verts, u32 count, u32 color, u32
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	gfxMgr.mGfxState.SetPenColor ( color );
-	gfxMgr.mVertexCache.BeginPrim ( primType, count );
+	gfxMgr.mGfxState.BeginPrim ( primType, count );
 	
 	for ( u32 i = 0; i < count; ++i ) {
 		u32 v = i << 1;
-		gfxMgr.mVertexCache.WriteVtx ( verts [ v ], verts [ v + 1 ], 0.0f );
-		gfxMgr.mVertexCache.WritePenColor4b ();
+		gfxMgr.mGfxState.WriteVtx ( verts [ v ], verts [ v + 1 ], 0.0f );
+		gfxMgr.mGfxState.WritePenColor4b ();
 	}
 
-	gfxMgr.mVertexCache.EndPrim ();
+	gfxMgr.mGfxState.EndPrim ();
 }
 
 //----------------------------------------------------------------//

@@ -149,7 +149,9 @@ void MOAIGfxMgr::ClearSurface ( u32 clearFlags ) {
 
 	if ( clearFlags ) {
 	
-		this->mVertexCache.FlushBufferedPrims ();
+		// discard this if all buffers are to be cleared?
+		// (may still need to draw if depth or color only)
+		this->mGfxState.FlushVertexCache ();
 		
 		// TODO: this shouldn't be exposed here
 		this->mGfxState.ApplyStateChanges ();
@@ -249,7 +251,7 @@ void MOAIGfxMgr::OnGlobalsFinalize () {
 //----------------------------------------------------------------//
 void MOAIGfxMgr::OnGlobalsInitialize () {
 
-	this->mVertexCache.InitBuffers ();
+	this->mGfxState.InitBuffers ();
 }
 
 //----------------------------------------------------------------//

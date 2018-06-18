@@ -29,15 +29,15 @@ void MOAIDrawShapeImmediate::MOAIDrawShape_DrawLine ( float x0, float y0, float 
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINES, 2 );
+	gfxMgr.mGfxState.BeginPrim ( ZGL_PRIM_LINES, 2 );
 	
-		gfxMgr.mVertexCache.WriteVtx ( x0, y0, z0 );
-		gfxMgr.mVertexCache.WritePenColor4b ();
+		gfxMgr.mGfxState.WriteVtx ( x0, y0, z0 );
+		gfxMgr.mGfxState.WritePenColor4b ();
 		
-		gfxMgr.mVertexCache.WriteVtx ( x1, y1, z1 );
-		gfxMgr.mVertexCache.WritePenColor4b ();
+		gfxMgr.mGfxState.WriteVtx ( x1, y1, z1 );
+		gfxMgr.mGfxState.WritePenColor4b ();
 	
-	gfxMgr.mVertexCache.EndPrim ();
+	gfxMgr.mGfxState.EndPrim ();
 }
 
 //----------------------------------------------------------------//
@@ -45,10 +45,10 @@ void MOAIDrawShapeImmediate::MOAIDrawShape_DrawPoint ( float x, float y, float z
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	UNUSED(z);
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_POINTS, 1 );
-		gfxMgr.mVertexCache.WriteVtx ( x, y, 0.0f );
-		gfxMgr.mVertexCache.WritePenColor4b ();
-	gfxMgr.mVertexCache.EndPrim ();
+	gfxMgr.mGfxState.BeginPrim ( ZGL_PRIM_POINTS, 1 );
+		gfxMgr.mGfxState.WriteVtx ( x, y, 0.0f );
+		gfxMgr.mGfxState.WritePenColor4b ();
+	gfxMgr.mGfxState.EndPrim ();
 }
 
 //----------------------------------------------------------------//
@@ -56,18 +56,18 @@ void MOAIDrawShapeImmediate::MOAIDrawShape_DrawTriangleFill ( const ZLVec3D& v0,
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_TRIANGLES, 3 );
+	gfxMgr.mGfxState.BeginPrim ( ZGL_PRIM_TRIANGLES, 3 );
 	
-		gfxMgr.mVertexCache.WriteVtx ( v0.mX, v0.mY, v0.mZ );
-		gfxMgr.mVertexCache.WritePenColor4b ();
+		gfxMgr.mGfxState.WriteVtx ( v0.mX, v0.mY, v0.mZ );
+		gfxMgr.mGfxState.WritePenColor4b ();
 	
-		gfxMgr.mVertexCache.WriteVtx ( v1.mX, v1.mY, v1.mZ );
-		gfxMgr.mVertexCache.WritePenColor4b ();
+		gfxMgr.mGfxState.WriteVtx ( v1.mX, v1.mY, v1.mZ );
+		gfxMgr.mGfxState.WritePenColor4b ();
 	
-		gfxMgr.mVertexCache.WriteVtx ( v2.mX, v2.mY, v2.mZ );
-		gfxMgr.mVertexCache.WritePenColor4b ();
+		gfxMgr.mGfxState.WriteVtx ( v2.mX, v2.mY, v2.mZ );
+		gfxMgr.mGfxState.WritePenColor4b ();
 
-	gfxMgr.mVertexCache.EndPrim ();
+	gfxMgr.mGfxState.EndPrim ();
 }
 
 //----------------------------------------------------------------//
