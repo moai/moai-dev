@@ -917,13 +917,13 @@ void MOAIGfxStateGPUCache::SetCullFunc ( int cullFunc ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPUCache::SetDefaultFrameBuffer ( MOAILuaObject& owner, MOAIFrameBuffer* frameBuffer ) {
+void MOAIGfxStateGPUCache::SetDefaultFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 
 	this->mDefaultFrameBuffer = frameBuffer;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateGPUCache::SetDefaultTexture ( MOAILuaObject& owner, MOAITextureBase* texture ) {
+void MOAIGfxStateGPUCache::SetDefaultTexture ( MOAITextureBase* texture ) {
 
 	this->mDefaultTexture = texture;
 }

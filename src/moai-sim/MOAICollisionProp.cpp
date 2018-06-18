@@ -486,7 +486,7 @@ void MOAICollisionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAICollisionProp >())) return;
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
@@ -494,7 +494,7 @@ void MOAICollisionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	draw.Bind ();
 
 	if ( debugLines.Bind ( MOAICollisionProp::DEBUG_DRAW_COLLISION_WORLD_BOUNDS )) {
-		gfxMgr.mGfxState.SetVertexTransform ( MOAIGfxState::WORLD_TO_CLIP_MTX );
+		gfxState.SetVertexTransform ( MOAIGfxState::WORLD_TO_CLIP_MTX );
 		draw.DrawBoxOutline ( this->GetWorldBounds ());
 	}
 	
@@ -502,7 +502,7 @@ void MOAICollisionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
 		
 	if ( shape ) {
 		const ZLAffine3D& localToWorldMtx = this->GetLocalToWorldMtx ();
-		gfxMgr.mGfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX, localToWorldMtx );
+		gfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX, localToWorldMtx );
 		shape->Draw ( localToWorldMtx );
 	}
 
@@ -533,18 +533,18 @@ void MOAICollisionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
 		
 		if ( shape ) {
 			const ZLAffine3D& localToWorldMtx = this->GetLocalToWorldMtx ();
-			gfxMgr.mGfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX, localToWorldMtx );
+			gfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX, localToWorldMtx );
 			shape->Draw ( localToWorldMtx );
 		}
 		else {
-			gfxMgr.mGfxState.SetVertexTransform ( MOAIGfxState::WORLD_TO_CLIP_MTX );
+			gfxState.SetVertexTransform ( MOAIGfxState::WORLD_TO_CLIP_MTX );
 			draw.DrawBoxOutline ( this->GetWorldBounds ());
 		}
 	}
 	
 	if ( debugLines.Bind ( MOAICollisionProp::DEBUG_DRAW_COLLISION_OVERLAPS )) {
 	
-		gfxMgr.mGfxState.SetVertexTransform ( MOAIGfxState::WORLD_TO_CLIP_MTX );
+		gfxState.SetVertexTransform ( MOAIGfxState::WORLD_TO_CLIP_MTX );
 
 		MOAIPropOverlapLink* overlapLinkIt = this->mOverlapLinks;
 		for ( ; overlapLinkIt; overlapLinkIt = overlapLinkIt->mNext ) {

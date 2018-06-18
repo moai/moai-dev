@@ -221,10 +221,10 @@ void MOAIFrameBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 //	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 //	//this->mLastDrawCount = gfxMgr.GetDrawCount ();
 //
-//	gfxMgr.mGfxState.SetFrameBuffer ( this );
+//	gfxState.SetFrameBuffer ( this );
 //	
 //	//disable scissor rect for clear
-//	gfxMgr.mGfxState.SetScissorRect ();
+//	gfxState.SetScissorRect ();
 //	this->ClearSurface ();
 //	
 //	if ( this->mRenderTable ) {
@@ -234,7 +234,7 @@ void MOAIFrameBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 //		state.Pop ( 1 );
 //	}
 //
-//	gfxMgr.mGfxState.FlushVertexCache (); // do we need to do this if we aren't reading pixels?
+//	gfxState.FlushVertexCache (); // do we need to do this if we aren't reading pixels?
 //
 //	// since we're doing this on the render thread, set it every time until we get a callback
 //	if ( this->mGrabNextFrame ) {

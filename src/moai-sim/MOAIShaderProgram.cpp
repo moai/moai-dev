@@ -203,7 +203,7 @@ void MOAIShaderProgram::ApplyUniforms ( ZLLeanArray < u8 >& buffer ) {
 //----------------------------------------------------------------//
 void MOAIShaderProgram::BindUniforms () {
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	
 	size_t nUniforms = this->mUniforms.Size ();
 	
@@ -626,9 +626,9 @@ void MOAIShaderProgram::SetVertexAttribute ( u32 idx, cc8* attribute ) {
 //----------------------------------------------------------------//
 void MOAIShaderProgram::UpdateUniforms ( ZLLeanArray < u8 >& buffer ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	
-	ZLRect viewRect = gfxMgr.mGfxState.GetViewRect ();
+	ZLRect viewRect = gfxState.GetViewRect ();
 
 	// NOTE: matrices are submitted *column major*; it is up to the shader to transform vertices correctly
 	// vert * matrix implicitely transposes the matrix; martix * vert uses the matrix as submitted
@@ -646,7 +646,7 @@ void MOAIShaderProgram::UpdateUniforms ( ZLLeanArray < u8 >& buffer ) {
 		
 		if ( global.mGlobalID < MOAIGfxState::TOTAL_MATRICES ) {
 		
-			uniform.SetValue ( gfxMgr.mGfxState.GetMtx ( global.mGlobalID ));
+			uniform.SetValue ( gfxState.GetMtx ( global.mGlobalID ));
 		}
 		else {
 		
@@ -654,7 +654,7 @@ void MOAIShaderProgram::UpdateUniforms ( ZLLeanArray < u8 >& buffer ) {
 				
 				case MOAIGfxState::PEN_COLOR:
 				
-					uniform.SetValue ( gfxMgr.mGfxState.GetFinalColor ());
+					uniform.SetValue ( gfxState.GetFinalColor ());
 					break;
 				
 				case MOAIGfxState::VIEW_HALF_HEIGHT:

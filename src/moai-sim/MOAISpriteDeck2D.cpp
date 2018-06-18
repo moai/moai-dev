@@ -661,11 +661,11 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( u32 idx ) {
 
 	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	MOAIQuadBrush::BindVertexFormat ();
 	
-	gfxMgr.mGfxState.SetVertexTransform ( MOAIGfxState::MODEL_TO_DISPLAY_MTX );
-	gfxMgr.mGfxState.SetUVTransform ( MOAIGfxState::UV_TO_MODEL_MTX );
+	gfxState.SetVertexTransform ( MOAIGfxState::MODEL_TO_DISPLAY_MTX );
+	gfxState.SetUVTransform ( MOAIGfxState::UV_TO_MODEL_MTX );
 
 	size_t totalSprites			= this->mSprites.Size ();
 	size_t totalSpriteLists		= this->mSpriteLists.Size ();

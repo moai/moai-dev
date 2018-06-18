@@ -38,9 +38,9 @@ void MOAICollisionShape::Clear () {
 //----------------------------------------------------------------//
 void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
-	gfxMgr.mGfxState.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::UV_TO_MODEL_MTX ));
+	gfxState.SetUVTransform ( gfxState.GetMtx ( MOAIGfxState::UV_TO_MODEL_MTX ));
 
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
@@ -55,7 +55,7 @@ void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
 			
 			case MOAICollisionConsts::BOX: {
 			
-				gfxMgr.mGfxState.SetVertexTransform ( MOAIGfxState::WORLD_TO_CLIP_MTX );
+				gfxState.SetVertexTransform ( MOAIGfxState::WORLD_TO_CLIP_MTX );
 			
 				ZLBox box = *( ZLBox* )shape->mPtr;
 				box.Transform ( localToWorldMtx );
@@ -64,7 +64,7 @@ void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
 			}
 			case MOAICollisionConsts::CIRCLE: {
 			
-				gfxMgr.mGfxState.SetVertexTransform ( MOAIGfxState::MODEL_TO_CLIP_MTX );
+				gfxState.SetVertexTransform ( MOAIGfxState::MODEL_TO_CLIP_MTX );
 			
 				ZLCircle circle = *( ZLCircle* )shape->mPtr;
 				draw.DrawEllipseOutline ( circle.mCenter.mX, circle.mCenter.mY, circle.mRadius, circle.mRadius, 32 );
@@ -81,13 +81,13 @@ void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
 			
 			case MOAICollisionConsts::QUAD: {
 			
-				gfxMgr.mGfxState.SetVertexTransform ( MOAIGfxState::MODEL_TO_CLIP_MTX );
+				gfxState.SetVertexTransform ( MOAIGfxState::MODEL_TO_CLIP_MTX );
 				draw.DrawQuadOutline ( *( ZLQuad* )shape->mPtr );
 				break;
 			}
 			case MOAICollisionConsts::RECT: {
 			
-				gfxMgr.mGfxState.SetVertexTransform ( MOAIGfxState::WORLD_TO_CLIP_MTX );
+				gfxState.SetVertexTransform ( MOAIGfxState::WORLD_TO_CLIP_MTX );
 			
 				ZLRect rect = *( ZLRect* )shape->mPtr;
 				localToWorldMtx.Transform ( rect );

@@ -229,21 +229,21 @@ MOAIGfxMgr::MOAIGfxMgr () :
 		RTTI_SINGLE ( MOAIGlobalEventSource )
 	RTTI_END
 	
-	this->mGfxState.SetDefaultFrameBuffer ( *this, new MOAIFrameBuffer ());
+	this->mGfxState.SetDefaultFrameBuffer ( new MOAIFrameBuffer ());
 }
 
 //----------------------------------------------------------------//
 MOAIGfxMgr::~MOAIGfxMgr () {
 
-	this->mGfxState.SetDefaultFrameBuffer ( *this, 0 );
-	this->mGfxState.SetDefaultTexture ( *this, 0 );
+	this->mGfxState.SetDefaultFrameBuffer ( 0 );
+	this->mGfxState.SetDefaultTexture ( 0 );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxMgr::OnGlobalsFinalize () {
 
-	this->mGfxState.SetDefaultFrameBuffer ( *this, 0 );
-	this->mGfxState.SetDefaultTexture ( *this, 0 );
+	this->mGfxState.SetDefaultFrameBuffer ( 0 );
+	this->mGfxState.SetDefaultTexture ( 0 );
 	
 	mResourceMgr.ProcessDeleters ();
 }

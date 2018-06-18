@@ -8728,7 +8728,7 @@
 				CDC2B37320D86F9200300A96 /* drawing */,
 				CDE9851918975AB6001827F9 /* font */,
 				CD13524B189738B000A39A74 /* graphics */,
-				CDC2B36C20D84BC500300A96 /* graphics state cache */,
+				CDC2B36C20D84BC500300A96 /* graphics state */,
 				CD2BA7A01B2A20BB0010C399 /* graphics system */,
 				CD8DD76819195FFB0088EA60 /* grid */,
 				CDE36E4D1A5F4DAB0095E863 /* image */,
@@ -12217,7 +12217,7 @@
 			name = "moai-crypto";
 			sourceTree = "<group>";
 		};
-		CDC2B36C20D84BC500300A96 /* graphics state cache */ = {
+		CDC2B36C20D84BC500300A96 /* graphics state */ = {
 			isa = PBXGroup;
 			children = (
 				CDC2B36E20D84BE000300A96 /* MOAIAbstractGfxStateCache.h */,
@@ -12230,7 +12230,7 @@
 				CD2BA7A11B2A2D750010C399 /* MOAIGfxStateVertexCache.cpp */,
 				CD2BA7A21B2A2D750010C399 /* MOAIGfxStateVertexCache.h */,
 			);
-			name = "graphics state cache";
+			name = "graphics state";
 			sourceTree = "<group>";
 		};
 		CDC2B37320D86F9200300A96 /* drawing */ = {

@@ -421,19 +421,19 @@ void MOAIStretchPatch2D::MOAIDeck_Draw ( u32 idx ) {
 	
 	this->UpdateParams ();
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	MOAIQuadBrush::BindVertexFormat ();
 	
-	ZLMatrix4x4 worldTransform = gfxMgr.mGfxState.GetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX );
+	ZLMatrix4x4 worldTransform = gfxState.GetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX );
 	ZLVec3D stretch = worldTransform.GetStretch ();
 	
 	ZLMatrix4x4 noStretch;
 	noStretch.Scale ( 1.0f / stretch.mX, 1.0f / stretch.mY, 1.0f / stretch.mZ );
 	noStretch.Append ( worldTransform );
-	noStretch.Append ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::WORLD_TO_CLIP_MTX ));
+	noStretch.Append ( gfxState.GetMtx ( MOAIGfxState::WORLD_TO_CLIP_MTX ));
 	
-	gfxMgr.mGfxState.SetVertexTransform ( noStretch );
-	gfxMgr.mGfxState.SetUVTransform ( MOAIGfxState::UV_TO_MODEL_MTX );
+	gfxState.SetVertexTransform ( noStretch );
+	gfxState.SetUVTransform ( MOAIGfxState::UV_TO_MODEL_MTX );
 	
 	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
 	materialStack.Push ( this->GetMaterial ( idx ));

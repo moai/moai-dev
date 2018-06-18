@@ -532,8 +532,8 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span ) {
 
 	// TODO: make use of offset and scale
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	if ( gfxMgr.mGfxState.SetVertexArray ( this )) {
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	if ( gfxState.SetVertexArray ( this )) {
 
 		// I am super lazy, so set this up here instead of adding if's below
 		MOAIMeshSpan defaultSpan;
@@ -544,22 +544,22 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span ) {
 			span = &defaultSpan;
 		}
 		
-		gfxMgr.mGfxState.SetPenWidth ( this->mPenWidth );
+		gfxState.SetPenWidth ( this->mPenWidth );
 		
 		if ( this->mIndexBuffer ) {
 			
 			// TODO: turns out we can bind this inside the VAO as well. so there.
-			if ( gfxMgr.mGfxState.SetIndexBuffer ( this->mIndexBuffer )) {
+			if ( gfxState.SetIndexBuffer ( this->mIndexBuffer )) {
 			
 				for ( ; span; span = span->mNext ) {
 				
 					if ( span->mBase == span->mTop ) continue;
 					assert (( span->mBase < span->mTop ) && ( span->mTop <= this->mTotalElements ));
 				
-					gfxMgr.mGfxState.DrawPrims ( this->mPrimType, span->mBase, ( u32 )( span->mTop - span->mBase ));
+					gfxState.DrawPrims ( this->mPrimType, span->mBase, ( u32 )( span->mTop - span->mBase ));
 				}
 
-				gfxMgr.mGfxState.SetIndexBuffer ();
+				gfxState.SetIndexBuffer ();
 			}
 		}
 		else {
@@ -569,10 +569,10 @@ void MOAIMesh::DrawIndex ( u32 idx, MOAIMeshSpan* span ) {
 				if ( span->mBase == span->mTop ) continue;
 				assert (( span->mBase < span->mTop ) && ( span->mTop <= this->mTotalElements ));
 			
-				gfxMgr.mGfxState.DrawPrims ( this->mPrimType, span->mBase, ( u32 )( span->mTop - span->mBase ));
+				gfxState.DrawPrims ( this->mPrimType, span->mBase, ( u32 )( span->mTop - span->mBase ));
 			}
 		}
-		gfxMgr.mGfxState.SetVertexArray ();
+		gfxState.SetVertexArray ();
 	}
 }
 

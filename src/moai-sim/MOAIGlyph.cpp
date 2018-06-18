@@ -15,8 +15,8 @@
 //----------------------------------------------------------------//
 void MOAIGlyph::Draw ( MOAITextureBase& texture, float x, float y, float xScale, float yScale, const ZLRect& padding ) const {
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	if ( !gfxMgr.mGfxState.SetTexture ( &texture )) return;
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	if ( !gfxState.SetTexture ( &texture )) return;
 	
 	MOAIQuadBrush glQuad;
 	

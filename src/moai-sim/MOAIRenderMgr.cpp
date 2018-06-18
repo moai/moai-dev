@@ -124,5 +124,5 @@ void MOAIRenderMgr::Render () {
 	this->mRenderDuration = endTime - startTime;
 	this->mRenderTime += this->mRenderDuration;
 	
-	gfxMgr.mGfxState.FinishFrame ();
+	 gfxMgr.mGfxState.FinishFrame ();
 }

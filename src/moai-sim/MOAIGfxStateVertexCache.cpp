@@ -37,8 +37,8 @@ bool MOAIGfxStateVertexCache::BeginPrim ( u32 primType, u32 vtxCount, u32 idxCou
 	
 	DEBUG_LOG ( "BEGIN INDEXED PRIM: %d %d %d\n", primType, vtxCount, idxCount );
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	MOAIVertexFormat* format = gfxMgr.mGfxState.GetCurrentVtxFormat ();
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	MOAIVertexFormat* format = gfxState.GetCurrentVtxFormat ();
 	
 	u32 vtxSize = format ? format->GetVertexSize () : 0;
 	if ( !vtxSize ) return false;
@@ -53,10 +53,10 @@ bool MOAIGfxStateVertexCache::BeginPrim ( u32 primType, u32 vtxCount, u32 idxCou
 	
 	// these will get bound later, just before drawing; clear them for now
 	// we have to bind them later since their contents will change as the primitive is drawn
-	gfxMgr.mGfxState.SetIndexBuffer ();
-	gfxMgr.mGfxState.SetVertexBuffer ();
+	gfxState.SetIndexBuffer ();
+	gfxState.SetVertexBuffer ();
 	
-	gfxMgr.mGfxState.ApplyStateChanges (); // must happen here in case there needs to be a flush
+	gfxState.ApplyStateChanges (); // must happen here in case there needs to be a flush
 	
 	this->mPrimType = primType;
 	this->mVtxSize = vtxSize;
@@ -116,8 +116,8 @@ void MOAIGfxStateVertexCache::FlushVertexCache () {
 
 	if ( this->mPrimCount == 0 ) return;
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	gfxMgr.mGfxState.SuspendChanges (); // don't apply any pending state changes;
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	gfxState.SuspendChanges (); // don't apply any pending state changes;
 
 	if ( !this->mIsDrawing ) {
 	
@@ -143,11 +143,11 @@ void MOAIGfxStateVertexCache::FlushVertexCache () {
 			// it's OK to leave these; will get set back to zero for the next cached prim.
 			// setting back to zero won't trigger a redraw, since the vertex prim cache will be empty.
 			if ( this->mUseIdxBuffer ) {
-				gfxMgr.mGfxState.FlushIndexBuffer ( this->mIdxBuffer );
+				gfxState.FlushIndexBuffer ( this->mIdxBuffer );
 			}
-			gfxMgr.mGfxState.FlushVertexBuffer ( this->mVtxBuffer );
+			gfxState.FlushVertexBuffer ( this->mVtxBuffer );
 			
-			gfxMgr.mGfxState.DrawPrims ( this->mPrimType, offset, count );
+			gfxState.DrawPrims ( this->mPrimType, offset, count );
 		}
 		
 		this->mIsDrawing = false;
@@ -158,7 +158,7 @@ void MOAIGfxStateVertexCache::FlushVertexCache () {
 		}
 	}
 	
-	gfxMgr.mGfxState.ResumeChanges (); // business as usual
+	gfxState.ResumeChanges (); // business as usual
 }
 
 //----------------------------------------------------------------//

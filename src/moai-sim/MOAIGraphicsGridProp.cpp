@@ -111,7 +111,7 @@
 //----------------------------------------------------------------//
 void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
 	ZLVec3D offset	= ZLVec3D::ORIGIN;
 	ZLVec3D scale	= ZLVec3D::AXIS;
@@ -126,7 +126,7 @@ void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoo
 	MOAIFancyGrid* fancyGrid = this->mGrid->AsType < MOAIFancyGrid >();
 	
 	const ZLAffine3D& modelToWorldMtx = this->MOAIGraphicsPropBase_GetWorldDrawingMtx ();
-	ZLColorVec penColor = gfxMgr.mGfxState.GetPenColor ();
+	ZLColorVec penColor = gfxState.GetPenColor ();
 	
 	for ( int y = c0.mY; y <= c1.mY; ++y ) {
 		for ( int x = c0.mX; x <= c1.mX; ++x ) {
@@ -151,10 +151,10 @@ void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoo
 				mtx.PrependSclTr2D ( xScale, yScale, loc.mX, loc.mY );
 			}
 
-			gfxMgr.mGfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX, mtx );
+			gfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX, mtx );
 			
 			if ( fancyGrid ) {
-				gfxMgr.mGfxState.SetPenColor ( penColor * fancyGrid->GetTileColor ( addr ));
+				gfxState.SetPenColor ( penColor * fancyGrid->GetTileColor ( addr ));
 			}
 			
 			this->mDeck->Draw (( idx & MOAITileFlags::CODE_MASK ) - 1 );

@@ -513,9 +513,9 @@ void MOAIViewLayer::MOAIDrawable_Draw ( int subPrimID ) {
 	if ( !this->mViewport ) return;
 	if ( this->IsClear ()) return;
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	
-	gfxMgr.mGfxState.SetFrameBuffer ( this->GetFrameBuffer ());
+	gfxState.SetFrameBuffer ( this->GetFrameBuffer ());
 	
 	MOAIViewport& viewport = *this->mViewport;
 	ZLRect viewportRect = viewport;
@@ -523,16 +523,16 @@ void MOAIViewLayer::MOAIDrawable_Draw ( int subPrimID ) {
 	ZLMatrix4x4 mtx ( this->mLocalToWorldMtx );
 	mtx.Transform ( viewportRect );
 
-	gfxMgr.mGfxState.SetViewRect ( viewportRect );
-	gfxMgr.mGfxState.SetScissorRect ( viewportRect );
+	gfxState.SetViewRect ( viewportRect );
+	gfxState.SetScissorRect ( viewportRect );
 	
 	this->ClearSurface ();
 	
-	gfxMgr.mGfxState.SetViewProj ( this->mViewport, this->mCamera, this->mDebugCamera, this->mParallax );
-	gfxMgr.mGfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX );
+	gfxState.SetViewProj ( this->mViewport, this->mCamera, this->mDebugCamera, this->mParallax );
+	gfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX );
 	
 	// set up the ambient color
-	gfxMgr.mGfxState.SetAmbientColor ( this->mColor );
+	gfxState.SetAmbientColor ( this->mColor );
 	
 	this->MOAIViewLayer_Draw ();
 	
@@ -541,7 +541,7 @@ void MOAIViewLayer::MOAIDrawable_Draw ( int subPrimID ) {
 			this->mCamera->DrawDebug ();
 		}
 	}
-	gfxMgr.mGfxState.SetFrameBuffer ( this->GetFrameBuffer ());
+	gfxState.SetFrameBuffer ( this->GetFrameBuffer ());
 }
 
 //----------------------------------------------------------------//

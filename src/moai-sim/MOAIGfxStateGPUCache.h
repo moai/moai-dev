@@ -197,8 +197,8 @@ public:
 	void			SetCullFunc					();
 	void			SetCullFunc					( int cullFunc );
 	
-	void			SetDefaultFrameBuffer		( MOAILuaObject& owner, MOAIFrameBuffer* frameBuffer );
-	void			SetDefaultTexture			( MOAILuaObject& owner, MOAITextureBase* texture );
+	void			SetDefaultFrameBuffer		( MOAIFrameBuffer* frameBuffer );
+	void			SetDefaultTexture			( MOAITextureBase* texture );
 	
 	void			SetDepthFunc				();
 	void			SetDepthFunc				( int depthFunc );

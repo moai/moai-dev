@@ -239,11 +239,11 @@ void MOAILayer::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 void MOAILayer::MOAIDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
-	gfxMgr.mGfxState.SetFrameBuffer ( this->GetFrameBuffer ());
+	gfxState.SetFrameBuffer ( this->GetFrameBuffer ());
 	
 	//disable scissor rect for clear
-	gfxMgr.mGfxState.SetScissorRect ();
+	gfxState.SetScissorRect ();
 	this->ClearSurface ();
 }

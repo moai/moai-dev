@@ -796,7 +796,7 @@ void MOAIRegion::DrawDebug () const {
 	
 	static u32 POLY_CORRUPT_COLOR					= ZLColor::PackRGBA ( 1.0f, 0.0f, 0.0f, 1.0f );
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
 	MOAIDraw& draw = MOAIDraw::Get ();
 	draw.Bind ();
@@ -808,38 +808,38 @@ void MOAIRegion::DrawDebug () const {
 		switch ( poly.GetInfo ()) {
 		
 			case ZLPolygon2D::POLY_UNKNOWN: {
-				gfxMgr.mGfxState.SetPenColor ( POLY_UNKNOWN_COLOR );
-				gfxMgr.mGfxState.SetPenWidth ( 1.0f );
+				gfxState.SetPenColor ( POLY_UNKNOWN_COLOR );
+				gfxState.SetPenWidth ( 1.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_COMPLEX: {
-				gfxMgr.mGfxState.SetPenColor ( POLY_COMPLEX_COLOR );
-				gfxMgr.mGfxState.SetPenWidth ( 1.0f );
+				gfxState.SetPenColor ( POLY_COMPLEX_COLOR );
+				gfxState.SetPenWidth ( 1.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_ANTICLOCKWISE_CONVEX: {
-				gfxMgr.mGfxState.SetPenColor ( POLY_ANTICLOCKWISE_CONVEX_COLOR );
-				gfxMgr.mGfxState.SetPenWidth ( 2.0f );
+				gfxState.SetPenColor ( POLY_ANTICLOCKWISE_CONVEX_COLOR );
+				gfxState.SetPenWidth ( 2.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_ANTICLOCKWISE_CONCAVE: {
-				gfxMgr.mGfxState.SetPenColor ( POLY_ANTICLOCKWISE_CONCAVE_COLOR );
-				gfxMgr.mGfxState.SetPenWidth ( 2.0f );
+				gfxState.SetPenColor ( POLY_ANTICLOCKWISE_CONCAVE_COLOR );
+				gfxState.SetPenWidth ( 2.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_CLOCKWISE_CONVEX: {
-				gfxMgr.mGfxState.SetPenColor ( POLY_CLOCKWISE_CONVEX_COLOR );
-				gfxMgr.mGfxState.SetPenWidth ( 1.0f );
+				gfxState.SetPenColor ( POLY_CLOCKWISE_CONVEX_COLOR );
+				gfxState.SetPenWidth ( 1.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_CLOCKWISE_CONCAVE: {
-				gfxMgr.mGfxState.SetPenColor ( POLY_CLOCKWISE_CONCAVE_COLOR );
-				gfxMgr.mGfxState.SetPenWidth ( 1.0f );
+				gfxState.SetPenColor ( POLY_CLOCKWISE_CONCAVE_COLOR );
+				gfxState.SetPenWidth ( 1.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_CORRUPT: {
-				gfxMgr.mGfxState.SetPenColor ( POLY_CORRUPT_COLOR );
-				gfxMgr.mGfxState.SetPenWidth ( 1.0f );
+				gfxState.SetPenColor ( POLY_CORRUPT_COLOR );
+				gfxState.SetPenWidth ( 1.0f );
 				break;
 			}
 		}

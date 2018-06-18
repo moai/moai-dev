@@ -214,8 +214,8 @@ void MOAIMetaTileDeck2D::MOAIDeck_Draw ( u32 idx ) {
 	float xOff = brush.mOffset.mX - ( c0.mX * tileWidth );
 	float yOff = brush.mOffset.mY - ( c0.mY * tileHeight );
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	const ZLAffine3D& modelToWorldMtx = gfxMgr.mGfxState.GetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX );
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	const ZLAffine3D& modelToWorldMtx = gfxState.GetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX );
 	
 	for ( int y = c0.mY; y <= c1.mY; ++y ) {
 		for ( int x = c0.mX; x <= c1.mX; ++x ) {
@@ -228,7 +228,7 @@ void MOAIMetaTileDeck2D::MOAIDeck_Draw ( u32 idx ) {
 			
 			ZLAffine3D mtx = modelToWorldMtx;
 			mtx.PrependSclTr2D ( tileWidth, tileHeight, xOff + loc.mX, yOff + loc.mY );
-			gfxMgr.mGfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX, mtx );
+			gfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX, mtx );
 
 			//this->mDeck->Draw ( MOAIDeckRemapper::Remap ( this->mRemapper, idx ), materials, loc, scale );
 			this->mDeck->Draw ( idx );
