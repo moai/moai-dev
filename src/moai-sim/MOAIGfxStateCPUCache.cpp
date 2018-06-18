@@ -201,6 +201,8 @@ MOAIGfxStateCPUCache::MOAIGfxStateCPUCache () {
 	this->mStateFrameCPU.mClearColor.Set ( 0.0f, 0.0f, 0.0f, 1.0f );
 	this->mStateFrameCPU.mClearFlags = 0;
 	this->mStateFrameCPU.mClearDepth = 0.0;
+	
+	this->mStateFrameCPU.mFinalColor32 = 0xffffffff;
 }
 
 //----------------------------------------------------------------//
@@ -342,14 +344,5 @@ void MOAIGfxStateCPUCache::UpdateFinalColor () {
 	this->mStateFrameCPU.mFinalColor.mB = this->mStateFrameCPU.mAmbientColor.mB * this->mStateFrameCPU.mPenColor.mB;
 	this->mStateFrameCPU.mFinalColor.mA = this->mStateFrameCPU.mAmbientColor.mA * this->mStateFrameCPU.mPenColor.mA;
 
-	u32 finalColor = this->mStateFrameCPU.mFinalColor.PackRGBA ();
-	
-	if ( this->mStateFrameCPU.mFinalColor32 != finalColor ) {
-		
-		this->mStateFrameCPU.mFinalColor32 = finalColor;
-		
-		MOAIGfxStateVertexCache& vertexCache = this->GetGfxVertexCache ();
-		vertexCache.mVertexColor = this->mStateFrameCPU.mFinalColor;
-		vertexCache.mVertexColor32 = this->mStateFrameCPU.mFinalColor32;
-	}
+	this->mStateFrameCPU.mFinalColor32 = this->mStateFrameCPU.mFinalColor.PackRGBA ();
 }

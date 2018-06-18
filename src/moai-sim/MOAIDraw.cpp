@@ -234,7 +234,7 @@ void MOAIDraw::EndDrawString () {
 	if ( !gfxMgr.mGfxState.SetShader ( MOAIShaderMgr::FONT_SHADER )) return;
 	
 	gfxMgr.mGfxState.SetBlendMode ( ZGL_BLEND_FACTOR_ONE, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
-	gfxMgr.mGfxState.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX ));
+	gfxMgr.mGfxState.SetVertexTransform ( MOAIGfxState::MODEL_TO_WORLD_MTX );
 	MOAIQuadBrush::BindVertexFormat ();
 
 	// Get the context data
@@ -1150,8 +1150,8 @@ bool MOAIDraw::Bind () {
 	if ( !gfxMgr.mGfxState.SetShader ( MOAIShaderMgr::LINE_SHADER )) return false;
 	gfxMgr.mGfxState.SetVertexFormat ( MOAIVertexFormatMgr::XYZWC );
 	
-	gfxMgr.mGfxState.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::MODEL_TO_CLIP_MTX ));
-	gfxMgr.mGfxState.SetUVTransform ( MOAIGfxMgr::Get ().mGfxState.GetMtx ( MOAIGfxState::UV_TO_MODEL_MTX ));
+	gfxMgr.mGfxState.SetVertexTransform ( MOAIGfxState::MODEL_TO_CLIP_MTX );
+	gfxMgr.mGfxState.SetUVTransform ( MOAIGfxState::UV_TO_MODEL_MTX );
 
 	return true;
 }

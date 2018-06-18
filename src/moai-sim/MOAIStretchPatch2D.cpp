@@ -433,7 +433,7 @@ void MOAIStretchPatch2D::MOAIDeck_Draw ( u32 idx ) {
 	noStretch.Append ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::WORLD_TO_CLIP_MTX ));
 	
 	gfxMgr.mGfxState.SetVertexTransform ( noStretch );
-	gfxMgr.mGfxState.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::UV_TO_MODEL_MTX ));
+	gfxMgr.mGfxState.SetUVTransform ( MOAIGfxState::UV_TO_MODEL_MTX );
 	
 	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
 	materialStack.Push ( this->GetMaterial ( idx ));

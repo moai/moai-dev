@@ -14,7 +14,6 @@
 //================================================================//
 class MOAIGfxState :
 	virtual public MOAIAbstractGfxStateCache,
-	public MOAIGfxStateCPUCache,
 	public MOAIGfxStateGPUCache,
 	public MOAIGfxStateVertexCache {
 protected:

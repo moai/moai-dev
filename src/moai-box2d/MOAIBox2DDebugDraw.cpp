@@ -59,7 +59,6 @@ void MOAIBox2DDebugDraw::DrawPoint ( const b2Vec2& p, float32 size, const b2Colo
 	gfxMgr.mGfxState.EndPrim ();
 }
 
-
 //----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::DrawPolygon ( const b2Vec2* vertices, int32 vertexCount, const b2Color& color ) {
 

@@ -5,7 +5,7 @@
 #define	MOAIGFXSTATEVERTEXCACHE_H
 
 #include <moai-sim/MOAIAbstractGfxStateCache.h>
-#include <moai-sim/MOAIGfxStateGPUCache.h>
+#include <moai-sim/MOAIGfxStateCPUCache.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIVertexBuffer.h>
 
@@ -21,7 +21,8 @@ class MOAIVertexFormat;
 // MOAIGfxStateVertexCache
 //================================================================//
 class MOAIGfxStateVertexCache :
-	virtual public MOAIAbstractGfxStateCache {
+	virtual public MOAIAbstractGfxStateCache,
+	public MOAIGfxStateCPUCache {
 protected:
 
 	friend class MOAIGfxMgr; // for now
@@ -56,9 +57,6 @@ protected:
 
 	bool						mApplyUVTransform;
 	ZLMatrix4x4					mUVTransform;
-
-	ZLColorVec					mVertexColor;
-	u32							mVertexColor32;
 	
 	ZLStrongPtr < MOAIVertexBuffer >	mVtxBuffer;
 	ZLStrongPtr < MOAIIndexBuffer >		mIdxBuffer;
@@ -88,8 +86,11 @@ public:
 	void			Reset							();
 
 	void			SetUVTransform					();
+	void			SetUVTransform					( u32 mtxID );
 	void			SetUVTransform					( const ZLMatrix4x4& uvTransform );
+	
 	void			SetVertexTransform				();
+	void			SetVertexTransform				( u32 mtxID );
 	void			SetVertexTransform				( const ZLMatrix4x4& vertexTransform );
 
 	void			WriteQuad						( const ZLVec2D* vtx, const ZLVec2D* uv );
@@ -101,14 +102,14 @@ public:
 	inline void WritePenColor4b () {
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		this->mVtxBuffer->Write < u32 >( this->mVertexColor32 );
+		this->mVtxBuffer->Write < u32 >( this->mStateFrameCPU.mFinalColor32 );
 	}
 	
 	//----------------------------------------------------------------//
 	inline void WritePenColor4f () {
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		this->mVtxBuffer->Write < ZLColorVec >( this->mVertexColor );
+		this->mVtxBuffer->Write < ZLColorVec >( this->mStateFrameCPU.mFinalColor );
 	}
 		
 	//----------------------------------------------------------------//

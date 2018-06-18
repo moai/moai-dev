@@ -189,13 +189,10 @@ MOAIGfxStateVertexCache::MOAIGfxStateVertexCache () :
 	mUseIdxBuffer ( false ),
 	mPrimCount ( 0 ),
 	mApplyVertexTransform ( false ),
-	mApplyUVTransform ( false ),
-	mVertexColor32 ( 0xffffffff ) {
+	mApplyUVTransform ( false ) {
 	
 	this->mVertexTransform.Ident ();
 	this->mUVTransform.Ident ();
-	
-	this->mVertexColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
 }
 
 //----------------------------------------------------------------//
@@ -220,6 +217,12 @@ void MOAIGfxStateVertexCache::SetUVTransform () {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxStateVertexCache::SetUVTransform ( u32 mtxID ) {
+
+	this->SetUVTransform ( this->GetMtx ( mtxID ));
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxStateVertexCache::SetUVTransform ( const ZLMatrix4x4& uvTransform ) {
 
 	this->mApplyUVTransform = !uvTransform.IsIdent ();
@@ -231,6 +234,12 @@ void MOAIGfxStateVertexCache::SetVertexTransform () {
 
 	this->mApplyVertexTransform = false;
 	this->mVertexTransform.Ident ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateVertexCache::SetVertexTransform ( u32 mtxID ) {
+
+	this->SetVertexTransform ( this->GetMtx ( mtxID ));
 }
 
 //----------------------------------------------------------------//
@@ -258,22 +267,22 @@ void MOAIGfxStateVertexCache::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* uv 
 		// left top
 		this->mVtxBuffer->Write ( vtx [ 0 ]);
 		this->mVtxBuffer->Write ( uv [ 0 ]);
-		this->mVtxBuffer->Write < u32 >( this->mVertexColor32 );
+		this->mVtxBuffer->Write < u32 >( this->mStateFrameCPU.mFinalColor32 );
 	
 		// right top
 		this->mVtxBuffer->Write ( vtx [ 1 ]);
 		this->mVtxBuffer->Write ( uv [ 1 ]);
-		this->mVtxBuffer->Write < u32 >( this->mVertexColor32 );
+		this->mVtxBuffer->Write < u32 >( this->mStateFrameCPU.mFinalColor32 );
 	
 		// right bottom
 		this->mVtxBuffer->Write ( vtx[ 2 ]);
 		this->mVtxBuffer->Write ( uv [ 2 ]);
-		this->mVtxBuffer->Write < u32 >( this->mVertexColor32 );
+		this->mVtxBuffer->Write < u32 >( this->mStateFrameCPU.mFinalColor32 );
 	
 		// left bottom
 		this->mVtxBuffer->Write ( vtx [ 3 ]);
 		this->mVtxBuffer->Write ( uv [ 3 ]);
-		this->mVtxBuffer->Write < u32 >( this->mVertexColor32 );
+		this->mVtxBuffer->Write < u32 >( this->mStateFrameCPU.mFinalColor32 );
 
 		// indices
 		this->WriteIndex ( 0 ); // left top

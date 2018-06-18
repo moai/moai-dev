@@ -180,6 +180,7 @@ class MOAIGfxStateCPUCacheFrame {
 protected:
 
 	friend class MOAIGfxStateCPUCache;
+	friend class MOAIGfxStateVertexCache;
 	
 	u64						mDirtyFlags;
 	

@@ -178,8 +178,8 @@ void MOAICollisionDeck::MOAIDeck_Draw ( u32 idx ) {
 //		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 //		MOAIQuadBrush::BindVertexFormat ();
 //		
-//		gfxMgr.mGfxState.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::MODEL_TO_CLIP_MTX ));
-//		gfxMgr.mGfxState.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::UV_TO_MODEL_MTX ));
+//		gfxMgr.mGfxState.SetVertexTransform ( MOAIGfxState::MODEL_TO_CLIP_MTX );
+//		gfxMgr.mGfxState.SetUVTransform ( MOAIGfxState::UV_TO_MODEL_MTX );
 //		
 //		this->mQuads [ itemIdx ].Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY  );
 //	}

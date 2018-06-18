@@ -494,7 +494,7 @@ void MOAICollisionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	draw.Bind ();
 
 	if ( debugLines.Bind ( MOAICollisionProp::DEBUG_DRAW_COLLISION_WORLD_BOUNDS )) {
-		gfxMgr.mGfxState.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::WORLD_TO_CLIP_MTX ));
+		gfxMgr.mGfxState.SetVertexTransform ( MOAIGfxState::WORLD_TO_CLIP_MTX );
 		draw.DrawBoxOutline ( this->GetWorldBounds ());
 	}
 	
@@ -537,14 +537,14 @@ void MOAICollisionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
 			shape->Draw ( localToWorldMtx );
 		}
 		else {
-			gfxMgr.mGfxState.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::WORLD_TO_CLIP_MTX ));
+			gfxMgr.mGfxState.SetVertexTransform ( MOAIGfxState::WORLD_TO_CLIP_MTX );
 			draw.DrawBoxOutline ( this->GetWorldBounds ());
 		}
 	}
 	
 	if ( debugLines.Bind ( MOAICollisionProp::DEBUG_DRAW_COLLISION_OVERLAPS )) {
 	
-		gfxMgr.mGfxState.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxState::WORLD_TO_CLIP_MTX ));
+		gfxMgr.mGfxState.SetVertexTransform ( MOAIGfxState::WORLD_TO_CLIP_MTX );
 
 		MOAIPropOverlapLink* overlapLinkIt = this->mOverlapLinks;
 		for ( ; overlapLinkIt; overlapLinkIt = overlapLinkIt->mNext ) {
