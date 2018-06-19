@@ -101,7 +101,7 @@ public:
 			pair.mProxy			= 0;
 			pair.mIsValid		= false;
 			
-			this->mGlobals.Grow ( id, CHUNK_SIZE, pair );
+			this->mGlobals.GrowChunked ( id + 1, CHUNK_SIZE, pair );
 		}
 		
 		if ( !this->mGlobals [ id ].mGlobal ) {

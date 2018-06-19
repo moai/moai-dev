@@ -140,7 +140,7 @@ void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t top ) {
 	// of the new span will be clipped.
 
 	// make sure the array of sets is big enough
-	this->mSets.Grow ( set, 1, 0 );
+	this->mSets.Grow ( set + 1, 0 );
 	
 	// identify the previous span in both the master and set lists.
 	// a span is only 'previous' if its base is entirely below the new span's base.

@@ -764,8 +764,8 @@ void MOAIGfxStateGPUCache::InitTextureUnits ( size_t nTextureUnits ) {
 		nTextureUnits = MAX_TEXTURE_UNITS;
 	}
 
-	this->mPendingState.mTextureUnits.Grow ( nTextureUnits, 1, 0 );
-	this->mActiveState.mTextureUnits.Grow ( nTextureUnits, 1, 0 );
+	this->mPendingState.mTextureUnits.Grow ( nTextureUnits, 0 );
+	this->mActiveState.mTextureUnits.Grow ( nTextureUnits, 0 );
 	
 	this->mMaxTextureUnits = nTextureUnits;
 }
@@ -1158,7 +1158,7 @@ void MOAIGfxStateGPUCache::SetViewRect ( ZLRect rect ) {
 void MOAIGfxStateGPUCache::StoreGPUState ( MOAIGfxStateGPUCacheFrame& frame ) const {
 
 	if ( frame.mTextureUnits.Size () < this->mMaxTextureUnits ) {
-		frame.mTextureUnits.Grow ( this->mMaxTextureUnits, 1, 0 );
+		frame.mTextureUnits.Grow ( this->mMaxTextureUnits, 0 );
 	}
 	frame = this->mPendingState;
 }

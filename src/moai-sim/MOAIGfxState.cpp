@@ -123,7 +123,7 @@ void MOAIGfxState::PopState () {
 //----------------------------------------------------------------//
 void MOAIGfxState::PushState () {
 
-	this->mStateStack.Grow ( this->mStateStackTop + 1, 1, 0 );
+	this->mStateStack.Grow( this->mStateStackTop + 1, 0 );
 	if ( !this->mStateStack [ this->mStateStackTop ]) {
 		this->mStateStack [ this->mStateStackTop ] = new MOAIGfxStateFrame ();
 	}
