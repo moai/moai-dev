@@ -210,6 +210,12 @@ MOAIGfxStateCPUCache::~MOAIGfxStateCPUCache () {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxStateCPUCache::RestoreCPUState ( const MOAIGfxStateCPUCacheFrame& frame ) {
+
+	memcpy ( &this->mStateFrameCPU, &frame, sizeof ( MOAIGfxStateCPUCacheFrame ));
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxStateCPUCache::SetAmbientColor ( u32 color ) {
 
 	this->mStateFrameCPU.mAmbientColor.SetRGBA ( color );
@@ -334,6 +340,12 @@ void MOAIGfxStateCPUCache::SetViewProj ( MOAIViewport* viewport, MOAICamera* cam
 		view.Append ( proj );
 		this->SetMtx ( MOAIGfxStateCPUCache::WORLD_TO_DISPLAY_MTX, view );
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateCPUCache::StoreCPUState ( MOAIGfxStateCPUCacheFrame& frame ) const {
+
+	memcpy ( &frame, &this->mStateFrameCPU, sizeof ( MOAIGfxStateCPUCacheFrame ));
 }
 
 //----------------------------------------------------------------//

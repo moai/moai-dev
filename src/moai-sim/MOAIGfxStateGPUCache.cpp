@@ -764,11 +764,8 @@ void MOAIGfxStateGPUCache::InitTextureUnits ( size_t nTextureUnits ) {
 		nTextureUnits = MAX_TEXTURE_UNITS;
 	}
 
-	this->mPendingState.mTextureUnits.Init ( nTextureUnits );
-	this->mPendingState.mTextureUnits.Fill ( 0 );
-	
-	this->mActiveState.mTextureUnits.Init ( nTextureUnits );
-	this->mActiveState.mTextureUnits.Fill ( 0 );
+	this->mPendingState.mTextureUnits.Grow ( nTextureUnits, 1, 0 );
+	this->mActiveState.mTextureUnits.Grow ( nTextureUnits, 1, 0 );
 	
 	this->mMaxTextureUnits = nTextureUnits;
 }
@@ -788,6 +785,41 @@ MOAIGfxStateGPUCache::MOAIGfxStateGPUCache () :
 
 //----------------------------------------------------------------//
 MOAIGfxStateGPUCache::~MOAIGfxStateGPUCache () {
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateGPUCache::RecalculateDirtyFlags () {
+
+	if ( this->mPendingState.mBlendEnabled ) {
+		this->SetBlendMode ( this->mPendingState.mBlendMode );
+	}
+	else {
+		this->SetBlendMode ();
+	}
+	
+	this->SetCullFunc ( this->mPendingState.mCullFunc );
+	this->SetDepthFunc ( this->mPendingState.mDepthFunc );
+	this->SetDepthMask ( this->mPendingState.mDepthMask );
+	this->SetFrameBuffer ( this->mPendingState.mFrameBuffer );
+	this->SetIndexBuffer ( this->mPendingState.mIdxBuffer );
+	this->SetPenWidth ( this->mPendingState.mPenWidth );
+	
+	if ( this->mPendingState.mScissorEnabled ) {
+		this->SetScissorRect ( this->mPendingState.mScissorRect );
+	}
+	else {
+		this->SetScissorRect ();
+	}
+	
+	this->SetShader ( this->mPendingState.mShader );
+	this->SetVertexArray ( this->mPendingState.mVtxArray );
+	this->SetViewRect ( this->mPendingState.mViewRect );
+	this->SetVertexBuffer ( this->mPendingState.mVtxBuffer );
+	this->SetVertexFormat ( this->mPendingState.mVtxFormat );
+	
+	for ( u32 i = 0; i < MAX_TEXTURE_UNITS; ++i ) {
+		this->SetTexture ( this->mPendingState.mTextureUnits [ i ], i );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -865,6 +897,13 @@ void MOAIGfxStateGPUCache::ResetState () {
 	this->mTextureDirtyFlags = 0;
 	
 	ZGL_COMMENT ( gfx, "" );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateGPUCache::RestoreGPUState ( const MOAIGfxStateGPUCacheFrame& frame ) {
+
+	this->mPendingState = frame;
+	this->RecalculateDirtyFlags ();
 }
 
 //----------------------------------------------------------------//
@@ -1113,6 +1152,15 @@ void MOAIGfxStateGPUCache::SetViewRect ( ZLRect rect ) {
 	
 	this->mPendingState.mViewRect = rect;
 	this->mDirtyFlags = ( this->mActiveState.mViewRect.IsEqual ( rect )) ? ( this->mDirtyFlags & ~VIEW_RECT ) : ( this->mDirtyFlags | VIEW_RECT );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxStateGPUCache::StoreGPUState ( MOAIGfxStateGPUCacheFrame& frame ) const {
+
+	if ( frame.mTextureUnits.Size () < this->mMaxTextureUnits ) {
+		frame.mTextureUnits.Grow ( this->mMaxTextureUnits, 1, 0 );
+	}
+	frame = this->mPendingState;
 }
 
 //----------------------------------------------------------------//

@@ -51,10 +51,11 @@
 #include <moai-sim/MOAIGfxBuffer.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxPipelineClerk.h>
+#include <moai-sim/MOAIGfxResource.h>
+#include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIGfxState.h>
 #include <moai-sim/MOAIGfxStateCPUCache.h>
 #include <moai-sim/MOAIGfxStateGPUCache.h>
-#include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIGfxStateVertexCache.h>
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIGraphicsGridProp.h>

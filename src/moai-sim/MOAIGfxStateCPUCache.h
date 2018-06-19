@@ -206,9 +206,13 @@ class MOAIGfxStateCPUCache :
  	virtual public MOAIAbstractGfxStateCache {
 protected:
 	
+	MOAIGfxStateCPUCacheFrame	mStateFrameCPU;
+	
 	//----------------------------------------------------------------//
 	const ZLMatrix4x4&		GetPrimaryMtx				( u32 mtxID, u64 mtxFlag );
+	void					RestoreCPUState				( const MOAIGfxStateCPUCacheFrame& frame );
 	void					SetDirtyFlags				( u64 dirtyFlags );
+	void					StoreCPUState				( MOAIGfxStateCPUCacheFrame& frame ) const;
 	void					UpdateFinalColor			();
 	
 public:
@@ -221,8 +225,6 @@ public:
 	GET_SET ( u32, ClearFlags, this->mStateFrameCPU.mClearFlags )
 	GET_SET ( ZLColorVec&, ClearColor, this->mStateFrameCPU.mClearColor )
 	GET_SET ( double, ClearDepth, this->mStateFrameCPU.mClearDepth )
-
-	MOAIGfxStateCPUCacheFrame	mStateFrameCPU;
 
 	//----------------------------------------------------------------//
 	const ZLMatrix4x4&		GetMtx						( u32 mtxID );

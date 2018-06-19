@@ -96,7 +96,7 @@ protected:
 	friend class MOAIGfxStateVertexCache;
 	friend class MOAIVertexArray;
 
-	friend class MOAIGfxMgr; // TODO: this is only here so MOAIGfxMgr can call ApplyStateChanges in Clear (). move Clear () here.
+	friend class MOAIGfxMgr;
 
 	// right now we just test every flag for an update in a for loop.
 	// these flags ordered roughly by (guessed) call frequency so we can bail out of the
@@ -119,15 +119,15 @@ protected:
 		END_STATE_FLAGS			= 1 << 12,
 	};
 	
-	u32										mDirtyFlags;
-	u32										mTextureDirtyFlags;
 	u32										mMaxTextureUnits;
 	
+	u32										mDirtyFlags;
+	u32										mTextureDirtyFlags;
 	u32										mApplyingStateChanges;
 
-	MOAIGfxStateGPUCacheFrame*					mCurrentState;
-	MOAIGfxStateGPUCacheFrame					mActiveState;
-	MOAIGfxStateGPUCacheFrame					mPendingState;
+	MOAIGfxStateGPUCacheFrame*				mCurrentState;
+	MOAIGfxStateGPUCacheFrame				mActiveState;
+	MOAIGfxStateGPUCacheFrame				mPendingState;
 
 	// don't think these need to be lua shared pointers...
 	ZLStrongPtr < MOAIFrameBuffer >			mDefaultFrameBuffer;
@@ -151,13 +151,17 @@ protected:
 	void			FlushShader						( MOAIShader* shader );
 	void			FlushTexture					( u32 textureUnit, MOAITextureBase* texture );
 	void			FlushVertexArray				( MOAIVertexArray* vtxArray );
-	void			FlushVertexBuffer				( MOAIVertexBuffer* buffer ); // must be called *after* BindVertexFormat
+	void			FlushVertexBuffer				( MOAIVertexBuffer* buffer );
 	void			FlushVertexFormat				( MOAIVertexFormat* vtxFormat );
 	void			FlushViewRect					( ZLRect rect );
 	void			ForceIndexBuffer				( MOAIIndexBuffer* buffer );
 	void			ForceVertexBuffer				( MOAIVertexBuffer* buffer );
 	void			GfxStateWillChange				();
+	void			InitTextureUnits				( size_t nTextureUnits );
+	void			RecalculateDirtyFlags			();
+	void			RestoreGPUState					( const MOAIGfxStateGPUCacheFrame& frame );
 	void			ResumeChanges					();
+	void			StoreGPUState					( MOAIGfxStateGPUCacheFrame& frame ) const;
 	void			SuspendChanges					();
 	void			UnbindVertexBufferWithFormat	( MOAIVertexBufferWithFormat& buffer );
 
@@ -182,8 +186,6 @@ public:
 		
 	float			GetViewHeight				() const;
 	float			GetViewWidth				() const;
-	
-	void			InitTextureUnits			( size_t nTextureUnits );
 	
 					MOAIGfxStateGPUCache		();
 	virtual			~MOAIGfxStateGPUCache		();
@@ -217,7 +219,7 @@ public:
 	bool			SetTexture					( MOAITextureBase* texture = 0, u32 textureUnit = 0 );
 	
 	bool			SetVertexArray				( MOAIVertexArray* vtxArray = 0 );
-	bool			SetVertexBuffer				( MOAIVertexBuffer* buffer = 0 ); // must be called *after* BindVertexFormat
+	bool			SetVertexBuffer				( MOAIVertexBuffer* buffer = 0 );
 	void			SetVertexFormat				( MOAIVertexFormatMgr::Preset preset );
 	void			SetVertexFormat				( MOAIVertexFormat* format = 0 );
 	

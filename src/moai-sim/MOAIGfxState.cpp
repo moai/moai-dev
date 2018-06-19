@@ -103,6 +103,35 @@ MOAIGfxState::MOAIGfxState () {
 
 //----------------------------------------------------------------//
 MOAIGfxState::~MOAIGfxState () {
+
+	for ( size_t i = 0; i < this->mStateStack.Size (); ++i ) {
+		delete this->mStateStack [ i ];
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxState::PopState () {
+
+	assert ( this->mStateStackTop > 0 );
+	
+	MOAIGfxStateFrame* frame = this->mStateStack [ --this->mStateStackTop ];
+	
+	this->RestoreCPUState ( *frame );
+	this->RestoreGPUState ( *frame );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxState::PushState () {
+
+	this->mStateStack.Grow ( this->mStateStackTop + 1, 1, 0 );
+	if ( !this->mStateStack [ this->mStateStackTop ]) {
+		this->mStateStack [ this->mStateStackTop ] = new MOAIGfxStateFrame ();
+	}
+	
+	MOAIGfxStateFrame* frame = this->mStateStack [ this->mStateStackTop++ ];
+	
+	this->StoreCPUState ( *frame );
+	this->StoreGPUState ( *frame );
 }
 
 //================================================================//

@@ -10,6 +10,15 @@
 #include <moai-sim/MOAIGfxStateVertexCache.h>
 
 //================================================================//
+// MOAIGfxStateFrame
+//================================================================//
+class MOAIGfxStateFrame :
+	public MOAIGfxStateCPUCacheFrame,
+	public MOAIGfxStateGPUCacheFrame {
+protected:
+};
+
+//================================================================//
 // MOAIGfxState
 //================================================================//
 class MOAIGfxState :
@@ -17,6 +26,9 @@ class MOAIGfxState :
 	public MOAIGfxStateGPUCache,
 	public MOAIGfxStateVertexCache {
 protected:
+
+	ZLLeanArray < MOAIGfxStateFrame* >	mStateStack;
+	size_t								mStateStackTop;
 
 	//----------------------------------------------------------------//
 	MOAIGfxStateCPUCache&			MOAIAbstractGfxStateCache_GetGfxStateCacheCPU			();
@@ -42,6 +54,9 @@ public:
 	
 							MOAIGfxState				();
 							~MOAIGfxState				();
+	
+	void					PopState					();
+	void					PushState					();
 };
 
 #endif
