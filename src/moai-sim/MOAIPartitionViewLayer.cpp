@@ -23,15 +23,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIPartitionViewLayer::_draw ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartitionViewLayer, "U" )
-
-	self->Render ();
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@lua	getPropViewList
 	@text	Return a list of props gathered and sorted by layer.
 	
@@ -331,7 +322,6 @@ void MOAIPartitionViewLayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIViewLayer::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
-		{ "draw",					_draw },
 		{ "getLayerPartition",		MOAIPartitionHolder::_getPartition },
 		{ "getPartition",			MOAIViewLayer::_getPartition },
 		{ "getPropViewList",		_getPropViewList },

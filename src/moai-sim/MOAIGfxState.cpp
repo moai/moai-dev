@@ -114,6 +114,8 @@ void MOAIGfxState::PopState () {
 
 	assert ( this->mStateStackTop > 0 );
 	
+	this->FlushVertexCache ();
+	
 	MOAIGfxStateFrame* frame = this->mStateStack [ --this->mStateStackTop ];
 	
 	this->RestoreCPUState ( *frame );
@@ -123,7 +125,9 @@ void MOAIGfxState::PopState () {
 //----------------------------------------------------------------//
 void MOAIGfxState::PushState () {
 
-	this->mStateStack.Grow( this->mStateStackTop + 1, 0 );
+	this->FlushVertexCache ();
+
+	this->mStateStack.Grow ( this->mStateStackTop + 1, 0 );
 	if ( !this->mStateStack [ this->mStateStackTop ]) {
 		this->mStateStack [ this->mStateStackTop ] = new MOAIGfxStateFrame ();
 	}

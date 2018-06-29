@@ -90,6 +90,12 @@ int MOAIFrameBuffer::_isPendingGrab ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIFrameBuffer::AffirmBuffers () {
+
+	this->MOAIFrameBuffer_AffirmBuffers ();
+}
+
+//----------------------------------------------------------------//
 void MOAIFrameBuffer::DetectGLFrameBufferID () {
 
 	this->SetGLFrameBuffer ( MOAIGfxMgr::GetDrawingAPI ().GetCurrentFramebuffer ());
@@ -298,4 +304,12 @@ ZLRect MOAIFrameBuffer::WndRectToDevice ( ZLRect rect ) const {
 
 	rect.Scale ( this->mBufferScale, this->mBufferScale );
 	return rect;
+}
+
+//================================================================//
+// overrides
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIFrameBuffer::MOAIFrameBuffer_AffirmBuffers () {
 }

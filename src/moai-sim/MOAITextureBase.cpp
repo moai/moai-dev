@@ -347,6 +347,7 @@ void MOAITextureBase::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 		MOAIGfxMgr::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
 	}
 	MOAIGfxResourceClerk::DeleteOrDiscard ( this->mGLTexture, shouldDelete );
+	this->mGLTexture = ZLGfxHandle (); // clear out the handle
 }
 
 //----------------------------------------------------------------//

@@ -86,7 +86,6 @@ public:
 	//----------------------------------------------------------------//
 	
 	void			ClearErrors				();
-	void			ClearSurface			( u32 clearFlags ); // takes zgl clear flags
 	void			DetectContext			();
 	void			DetectFramebuffer		();
 	

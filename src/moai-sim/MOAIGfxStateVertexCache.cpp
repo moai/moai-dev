@@ -102,6 +102,12 @@ u32 MOAIGfxStateVertexCache::ContinuePrim ( u32 vtxCount, u32 idxCount ) {
 }
 
 //----------------------------------------------------------------//
+u32 MOAIGfxStateVertexCache::CountPrims () {
+
+	return this->mPrimCount;
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxStateVertexCache::EndPrim () {
 	
 	this->mPrimCount++;

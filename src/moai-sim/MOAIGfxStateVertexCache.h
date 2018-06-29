@@ -62,6 +62,7 @@ protected:
 	ZLStrongPtr < MOAIIndexBuffer >		mIdxBuffer;
 	
 	//----------------------------------------------------------------//
+	u32				CountPrims						();
 	void			FlushVertexCache				();
 	void			TransformAndWriteQuad			( ZLVec4D* vtx, ZLVec2D* uv );
 

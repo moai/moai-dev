@@ -386,28 +386,7 @@ int MOAIDraw::_bindVertexFormat ( lua_State* L ) {
 int MOAIDraw::_clear ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-
-	u32 clearFlags = gfxMgr.mGfxState.GetClearFlags ();
-
-	if ( clearFlags & ZGL_CLEAR_COLOR_BUFFER_BIT ) {
-	
-		const ZLColorVec& clearColor = gfxMgr.mGfxState.GetClearColor ();
-		
-		MOAIGfxMgr::GetDrawingAPI ().ClearColor (
-			clearColor.mR,
-			clearColor.mG,
-			clearColor.mB,
-			clearColor.mA
-		);
-	}
-	
-	// TODO
-	//if ( clearFlags & ZGL_CLEAR_DEPTH_BUFFER_BIT ) {
-	//}
-
-	gfxMgr.ClearSurface ( clearFlags );
-
+	MOAIGfxMgr::Get ().mGfxState.ClearSurface ();
 	return 0;
 }
 
@@ -849,6 +828,22 @@ int MOAIDraw::_fillRect ( lua_State* L ) {
 	float y1 = state.GetValue < float >( 4, 0.0f );
 
 	self->Get ().DrawRectFill ( x0, y0, x1, y1 );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDraw::_popGfxState ( lua_State* L ) {
+
+	MOAIGfxMgr::Get ().mGfxState.PopState ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDraw::_pushGfxState ( lua_State* L ) {
+
+	MOAIGfxMgr::Get ().mGfxState.PushState ();
 	return 0;
 }
 
@@ -1523,6 +1518,8 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "fillEllipse",			_fillEllipse },
 		{ "fillFan",				_fillFan },
 		{ "fillRect",				_fillRect },
+		{ "popGfxState",			_popGfxState },
+		{ "pushGfxState",			_pushGfxState },
 		{ "setBlendMode",			_setBlendMode },
 		{ "setClearColor",			_setClearColor },
 		{ "setClearDepth",			_setClearDepth },

@@ -42,14 +42,6 @@ int MOAIGfxResource::_getResourceState ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIGfxResource::_preload ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@lua	purge
 	@text	Attempt to release the resource. Generally this is used when
 			responding to a memory warning from the system. A resource
@@ -106,7 +98,7 @@ int MOAIGfxResource::_setReloader ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxResource::Affirm () {
+bool MOAIGfxResource::Affirm () {
 
 	if ( this->mState == STATE_NEEDS_GPU_UPDATE ) {
 		this->DoGPUUpdate ();
@@ -115,6 +107,7 @@ void MOAIGfxResource::Affirm () {
 		this->InvokeLoader ();
 		this->DoGPUCreate ();
 	}
+	return this->IsReady ();
 }
 
 //----------------------------------------------------------------//
@@ -124,6 +117,10 @@ u32 MOAIGfxResource::Bind () {
 //		MOAILog ( 0, MOAISTRING_MOAIGfxResource_MissingDevice );
 //		return false;
 //	}
+
+	if ( this->mState != STATE_READY_TO_BIND ) {
+		this->Affirm ();
+	}
 
 	// we're ready to bind, so do it
 	if ( this->mState == STATE_READY_TO_BIND ) {
@@ -310,7 +307,6 @@ void MOAIGfxResource::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getAge",					_getAge },
 		{ "getResourceState",		_getResourceState },
-		{ "preload",				_preload },
 		{ "purge",					_purge },
 		{ "softRelease",			_purge }, // back compat
 		{ "scheduleForGPUCreate",	_scheduleForGPUCreate },

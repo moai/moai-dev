@@ -49,8 +49,12 @@ protected:
 	static int			_isPendingGrab				( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void				AffirmBuffers				();
 	void				OnReadPixels				( const ZLCopyOnWrite& buffer, void* userdata );
 	void				RenderTable					( MOAILuaState& state, int idx );
+
+	//----------------------------------------------------------------//
+	virtual void		MOAIFrameBuffer_AffirmBuffers		();
 
 public:
 	

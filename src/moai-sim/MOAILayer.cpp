@@ -14,6 +14,15 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAILayer::_draw ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPartitionViewLayer, "U" )
+
+	self->Draw ( MOAIPartitionHull::NO_SUBPRIM_ID );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAILayer::_getClearMode ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "U" )
 	state.Push ( self->mClearMode );
@@ -140,7 +149,7 @@ void MOAILayer::ClearSurface () {
 
 	if (( this->mClearMode == CLEAR_NEVER ) || (( this->mClearMode == CLEAR_ON_BUFFER_FLAG ) && ( !frameBuffer->NeedsClear ()))) return;
 
-	// TODO: should not call the drawing API directly. should use the state cache.
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
 	if ( this->mClearFlags & ZGL_CLEAR_COLOR_BUFFER_BIT ) {
 	
@@ -153,15 +162,11 @@ void MOAILayer::ClearSurface () {
 			clearColor.SetRGBA ( this->mClearColor );
 		}
 		
-		MOAIGfxMgr::GetDrawingAPI ().ClearColor (
-			clearColor.mR,
-			clearColor.mG,
-			clearColor.mB,
-			clearColor.mA
-		);
+		gfxState.SetClearColor ( clearColor );
 	}
-
-	MOAIGfxMgr::Get ().ClearSurface ( this->mClearFlags );
+	
+	gfxState.SetClearFlags ( this->mClearFlags );
+	MOAIGfxMgr::Get ().mGfxState.ClearSurface ();
 	
 	frameBuffer->NeedsClear ( false );
 }
@@ -203,6 +208,7 @@ void MOAILayer::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "draw",						_draw },
 		{ "getClearMode",				_getClearMode },
 		{ "getFrameBuffer",				_getFrameBuffer },
 		{ "pushRenderPass",				_pushRenderPass },

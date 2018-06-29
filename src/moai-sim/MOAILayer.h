@@ -26,6 +26,7 @@ private:
 	MOAILuaSharedPtr < MOAIFrameBuffer >	mFrameBuffer;
 
 	//----------------------------------------------------------------//
+	static int		_draw					( lua_State* L );
 	static int		_getClearMode			( lua_State* L );
 	static int		_getFrameBuffer			( lua_State* L );
 	static int		_pushRenderPass			( lua_State* L );

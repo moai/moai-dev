@@ -216,6 +216,46 @@ void MOAIGfxStateGPUCache::BindVertexBufferWithFormat ( MOAIVertexBufferWithForm
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxStateGPUCache::ClearSurface () {
+	
+	MOAIGfxStateCPUCache& cpuCache = this->MOAIAbstractGfxStateCache_GetGfxStateCacheCPU ();
+	
+	u32 clearFlags = cpuCache.GetClearFlags ();
+
+	if ( clearFlags ) {
+	
+		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+	
+		// discard this if all buffers are to be cleared?
+		// (may still need to draw if depth or color only)
+		this->MOAIAbstractGfxStateCache_GetGfxVertexCache ().FlushVertexCache ();
+		
+		this->ApplyStateChanges ();
+	
+		if ( clearFlags & ZGL_CLEAR_COLOR_BUFFER_BIT ) {
+		
+			const ZLColorVec& clearColor = cpuCache.GetClearColor ();
+		
+			gfx.ClearColor (
+				clearColor.mR,
+				clearColor.mG,
+				clearColor.mB,
+				clearColor.mA
+			);
+		}
+	
+		if (( clearFlags & ZGL_CLEAR_DEPTH_BUFFER_BIT ) && !this->GetDepthMask ()) {
+			gfx.DepthMask ( true );
+			gfx.Clear ( clearFlags );
+			gfx.DepthMask ( false );
+		}
+		else {
+			gfx.Clear ( clearFlags );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 size_t MOAIGfxStateGPUCache::CountTextureUnits () {
 
 	return this->mActiveState.mTextureUnits.Size ();
@@ -374,11 +414,15 @@ void MOAIGfxStateGPUCache::FlushFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 	MOAIGfxStateGPUCacheFrame& active = this->mActiveState;
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 		
-	if ( active.mFrameBuffer != frameBuffer) {
+	if ( active.mFrameBuffer != frameBuffer ) {
 		
 		DEBUG_LOG ( "  binding frame buffer: %p\n", frameBuffer );
 	
 		this->GfxStateWillChange ();
+	
+		if ( frameBuffer ) {
+			frameBuffer->AffirmBuffers ();
+		}
 	
 		gfx.BindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, frameBuffer->mGLFrameBuffer );
 		active.mFrameBuffer = frameBuffer;
@@ -544,7 +588,7 @@ void MOAIGfxStateGPUCache::FlushTexture ( u32 textureUnit, MOAITextureBase* text
 	MOAIGfxStateGPUCacheFrame& active = this->mActiveState;
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 	
-	texture = texture && texture->IsReady () ? texture : ( MOAITextureBase* )this->mDefaultTexture;
+	texture = texture && texture->Affirm () ? texture : ( MOAITextureBase* )this->mDefaultTexture;
 	MOAITextureBase* prevTexture = active.mTextureUnits [ textureUnit ];
 
 	if ( prevTexture != texture ) {

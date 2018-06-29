@@ -177,6 +177,8 @@ public:
 	GET ( MOAITextureBase*, DefaultTexture, mDefaultTexture )
 	
 	//----------------------------------------------------------------//
+	void			ClearSurface				(); // takes zgl clear flags
+	
 	size_t			CountTextureUnits			();
 	
 	void			DrawPrims					( u32 primType, u32 base, u32 count );
