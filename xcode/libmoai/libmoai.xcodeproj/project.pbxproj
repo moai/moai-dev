@@ -19312,6 +19312,7 @@
 					"-include",
 					"\"../../src/zl-vfs/zl_replace.h\"",
 					"-Werror=return-type",
+					"-fembed-bitcode",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
@@ -20417,6 +20418,7 @@
 					"-include",
 					"\"../../src/zl-vfs/zl_replace.h\"",
 					"-Werror=return-type",
+					"-fembed-bitcode-marker",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
@@ -25422,6 +25424,7 @@
 					"-include",
 					"\"../../src/zl-vfs/zl_replace.h\"",
 					"-Werror=return-type",
+					"-fembed-bitcode",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
