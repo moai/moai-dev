@@ -23,6 +23,7 @@ image:copyRect ( srcImage,
 	0, 0, w0, h0,
 	0, 0, w1, h1,
 	MOAIImage.FILTER_LINEAR,
+	MOAIImage.BLEND_EQ_ADD,
 	MOAIImage.BLEND_FACTOR_DST_ALPHA,
 	MOAIImage.BLEND_FACTOR_ZERO
 )

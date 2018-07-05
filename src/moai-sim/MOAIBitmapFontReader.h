@@ -94,7 +94,7 @@ public:
 					~MOAIBitmapFontReader		();
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
-	int				RenderGlyph					( MOAIImage& image, float x, float y, const ZLColorBlendFunc& blendFunc );
+	int				RenderGlyph					( MOAIImage& image, float x, float y );
 	int				SelectFace					( float size );
 	int				SelectGlyph					( u32 c );
 	void			SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );

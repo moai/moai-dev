@@ -12,20 +12,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@lua	getPerformanceDrawCount	
-	@text	Returns the number of draw calls last frame.	
-
-	@out	number count		Number of underlying graphics "draw" calls last frame.	
-*/	
-int MOAIRenderMgr::_getPerformanceDrawCount ( lua_State* L ) {
-
-	MOAIRenderMgr& gfxMgr = MOAIRenderMgr::Get ();
-	lua_pushnumber ( L, gfxMgr.mLastDrawCount );
-
-	return 1;
-}
-
-//----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIRenderMgr::_getRenderCount ( lua_State* L ) {
 
@@ -89,7 +75,6 @@ void MOAIRenderMgr::PushDrawable ( MOAILuaObject* drawable ) {
 void MOAIRenderMgr::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
-		{ "getPerformanceDrawCount",	_getPerformanceDrawCount },
 		{ "getRenderCount",				_getRenderCount },
 		{ "getRender",					_getRender },
 		{ "setRender",					_setRender },
@@ -119,8 +104,6 @@ void MOAIRenderMgr::Render () {
 	// Measure performance
 	double startTime = ZLDeviceTime::GetTimeInSeconds ();
 	
-	//gfxMgr.ResetDrawCount ();
-
 	ZLGfx* gfx = gfxMgr.mPipelineMgr.SelectDrawingAPI ( MOAIGfxPipelineClerk::DRAWING_PIPELINE );
 	if ( !gfx ) return;
 
@@ -134,7 +117,6 @@ void MOAIRenderMgr::Render () {
 		MOAIDrawable::Draw ( state, -1 );
 	}
 	
-	//this->mLastDrawCount = MOAIGfxMgr::Get ().GetDrawCount ();
 	this->mRenderCounter++;
 	
 	// Measure performance
@@ -142,7 +124,5 @@ void MOAIRenderMgr::Render () {
 	this->mRenderDuration = endTime - startTime;
 	this->mRenderTime += this->mRenderDuration;
 	
-	gfxMgr.mVertexCache.FlushBufferedPrims (); // TODO: need to do this here?
-	gfxMgr.mGfxState.UnbindAll ();
-	gfxMgr.mVertexCache.Reset ();
+	 gfxMgr.mGfxState.FinishFrame ();
 }

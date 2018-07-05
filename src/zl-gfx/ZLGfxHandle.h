@@ -79,6 +79,12 @@ public:
 					~ZLGfxHandle		();
 	
 	//----------------------------------------------------------------//
+	inline operator bool () const {
+	
+		return this->mResource != NULL;
+	}
+	
+	//----------------------------------------------------------------//
 	operator ZLGfxResource& () const {
 	
 		return this->mResource ? *this->mResource : ZLGfxResource::UNBIND;

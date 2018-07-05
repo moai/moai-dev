@@ -35,7 +35,7 @@ enum {
 @interface MOAIView () {
 
     AKUContextID        mAKUContext;
-    NSTimeInterval      mAnimInterval;
+    NSTimeInterval      mAnimFPS;
     CADisplayLink*      mDisplayLink;
     
     BOOL                mGCDetected;
@@ -71,11 +71,12 @@ enum {
 //    }
 
     //----------------------------------------------------------------//
-	-( void ) application:( UIApplication* )application didFailToRegisterForRemoteNotificationsWithError:( NSError* )error {
-        ( void )application;
-    
-		AKUIosNotifyRemoteNotificationRegistrationComplete ( nil, error );
-	}
+    // TODO: restore notification support
+//	-( void ) application:( UIApplication* )application didFailToRegisterForRemoteNotificationsWithError:( NSError* )error {
+//        ( void )application;
+//
+//		AKUIosNotifyRemoteNotificationRegistrationComplete ( nil, error );
+//	}
 
     //----------------------------------------------------------------//
     +( BOOL ) application :( UIApplication* )application didFinishLaunchingWithOptions:( NSDictionary* )launchOptions {
@@ -94,33 +95,36 @@ enum {
     }
 
 	//----------------------------------------------------------------//
-	-( void ) application:( UIApplication* )application didReceiveRemoteNotification:( NSDictionary* )pushBundle {
-		( void )application;
-        
-		AKUIosNotifyRemoteNotificationReceived ( pushBundle );
-	}
-	
-	//----------------------------------------------------------------//
-	-( void ) application:( UIApplication* )application didRegisterForRemoteNotificationsWithDeviceToken:( NSData* )deviceToken {
-        ( void )application;
-    
-    	// TODO: why did we need this? why not do it in Lua?
-    	//NSString* strData = [[[[deviceToken description]
-		//	stringByReplacingOccurrencesOfString: @"<" withString: @""]
-		//	stringByReplacingOccurrencesOfString: @">" withString: @""]
-		//	stringByReplacingOccurrencesOfString: @" " withString: @""];
-        //NSLog(@"%@", strData);
-		AKUIosNotifyRemoteNotificationRegistrationComplete ( deviceToken, nil );
-	}
-		
-    //----------------------------------------------------------------//
-    -( BOOL ) application:( UIApplication* )application openURL:( NSURL* )url sourceApplication:( NSString* )sourceApplication annotation:( id )annotation {
+	// TODO: restore notification support
+//	-( void ) application:( UIApplication* )application didReceiveRemoteNotification:( NSDictionary* )pushBundle {
+//		( void )application;
+//
+//		AKUIosNotifyRemoteNotificationReceived ( pushBundle );
+//	}
 
-        if ( AKUModulesIosApplicationOpenURL ( application, url, sourceApplication, annotation ) == NO ) {
-            AKUIosOpenUrl ( url, sourceApplication );
-        }
-        return YES;
-    }
+	//----------------------------------------------------------------//
+	// TODO: restore notification support
+//	-( void ) application:( UIApplication* )application didRegisterForRemoteNotificationsWithDeviceToken:( NSData* )deviceToken {
+//        ( void )application;
+//
+//    	// TODO: why did we need this? why not do it in Lua?
+//    	//NSString* strData = [[[[deviceToken description]
+//		//	stringByReplacingOccurrencesOfString: @"<" withString: @""]
+//		//	stringByReplacingOccurrencesOfString: @">" withString: @""]
+//		//	stringByReplacingOccurrencesOfString: @" " withString: @""];
+//        //NSLog(@"%@", strData);
+//		AKUIosNotifyRemoteNotificationRegistrationComplete ( deviceToken, nil );
+//	}
+
+    //----------------------------------------------------------------//
+    // TODO: restore
+//    -( BOOL ) application:( UIApplication* )application openURL:( NSURL* )url sourceApplication:( NSString* )sourceApplication annotation:( id )annotation {
+//
+//        if ( AKUModulesIosApplicationOpenURL ( application, url, sourceApplication, annotation ) == NO ) {
+//            AKUIosOpenUrl ( url, sourceApplication );
+//        }
+//        return YES;
+//    }
 
 	//----------------------------------------------------------------//
 	-( void ) dealloc {
@@ -262,7 +266,7 @@ enum {
         
         // start to run the moai thread immediately so it renders the view before returning from here
         // to get a chance to display a splash screen for example while the rest loads
-        mAnimInterval = 1; // 1 for 60fps, 2 for 30fps
+        mAnimFPS = 60; // Frames per second
         
         [ self pause:false ];
 	}
@@ -315,7 +319,7 @@ enum {
 		
 		if ( !mDisplayLink ) {
 			CADisplayLink* aDisplayLink = [[ UIScreen mainScreen ] displayLinkWithTarget:self selector:@selector( onUpdateAnim )];
-			[ aDisplayLink setFrameInterval:mAnimInterval ];
+			[ aDisplayLink setPreferredFramesPerSecond:mAnimFPS ];
 			[ aDisplayLink addToRunLoop:[ NSRunLoop currentRunLoop ] forMode:NSDefaultRunLoopMode ]; // or NSRunLoopCommonModes
 			mDisplayLink = aDisplayLink;
 		}

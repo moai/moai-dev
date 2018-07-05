@@ -1,14 +1,14 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIDRAWSHAPE_H
-#define	MOAIDRAWSHAPE_H
+#ifndef	MOAIABSTRACTDRAWSHAPE_H
+#define	MOAIABSTRACTDRAWSHAPE_H
 
 //================================================================//
-// MOAIDrawShape
+// MOAIAbstractDrawShape
 //================================================================//
 // TODO: doxygen
-class MOAIDrawShape {
+class MOAIAbstractDrawShape {
 protected:
 
 	//----------------------------------------------------------------//
@@ -47,8 +47,8 @@ public:
 	void			DrawRectOutline				( float left, float top, float right, float bottom );
 	void			DrawTriangleFill			( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2 );
 	void			DrawTriangleOutline			( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2 );
-					MOAIDrawShape				();
-	virtual			~MOAIDrawShape				();
+					MOAIAbstractDrawShape		();
+	virtual			~MOAIAbstractDrawShape		();
 	void			SetPenColor					( u32 color );
 	void			SetPenWidth					( float width );
 };

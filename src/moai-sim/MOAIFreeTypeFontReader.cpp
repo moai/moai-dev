@@ -25,7 +25,7 @@ public:
 
 	MOAIImage*	mImage;
 	
-	ZLColorBlendFunc	mBlendFunc;
+	MOAIImageBlendMode	mBlendMode;
 	ZLColorVec			mPenColor;
 	int					mPenX;
 	int					mPenY;
@@ -43,7 +43,7 @@ static void _renderSpan ( const int y, const int count, const FT_Span* const spa
 
 	MOAIImage* image = render->mImage;
 	ZLColor::ColorFormat colorFormat = image->GetColorFormat ();
-	ZLColorBlendFunc blendFunc = render->mBlendFunc;
+	MOAIImageBlendMode blendMode = render->mBlendMode;
 
 	u32 penColor = render->mPenColor.PackRGBA ();
 
@@ -56,7 +56,7 @@ static void _renderSpan ( const int y, const int count, const FT_Span* const spa
 		
 		u32 srcColor = ZLColor::Scale ( penColor, span.coverage );
 		
-		if ( blendFunc.mEquation == ZLColor::BLEND_EQ_NONE ) {
+		if ( blendMode.mEquation == ZLColor::BLEND_EQ_NONE ) {
 			
 			u32 pixel = ZLColor::ConvertFromRGBA ( srcColor, colorFormat );
 			for ( int j = 0; j < len; ++j ) {
@@ -66,7 +66,7 @@ static void _renderSpan ( const int y, const int count, const FT_Span* const spa
 		else {
 			for ( int j = 0; j < len; ++j ) {
 				u32 dstColor = render->mImage->GetColor ( x + j, line );
-				u32 blendColor = ZLColor::Blend ( srcColor, dstColor, blendFunc );
+				u32 blendColor = ZLColor::Blend ( srcColor, dstColor, blendMode );
 				u32 pixel = ZLColor::ConvertFromRGBA ( blendColor, colorFormat );
 				render->mImage->SetPixel ( x + j, line, pixel );
 			}
@@ -128,16 +128,16 @@ int MOAIFreeTypeFontReader::_strokeGlyph ( lua_State* L ) {
 		float x				= state.GetValue < float >( 3, 0.0f );
 		float y				= state.GetValue < float >( 4, 0.0f );
 		float strokeSize	= state.GetValue < float >( 5, 0.0f );
+
+		u32 capStyle		= state.GetValue < u32 >( 6, ( u32 )FT_STROKER_LINECAP_SQUARE );
+		u32 joinStyle		= state.GetValue < u32 >( 7, ( u32 )FT_STROKER_LINEJOIN_MITER_VARIABLE );
 		
-		ZLColorBlendFunc blendFunc;
-		blendFunc.mEquation = ZLColor::BLEND_EQ_NONE;
-		
-		if ( state.CheckParams ( 6, "NN", false )) {
-			blendFunc.mSrcFactor	= ( ZLColor::BlendFactor )state.GetValue < u32 >( 6, ( u32 )ZLColor::BLEND_FACTOR_SRC_ALPHA );
-			blendFunc.mDstFactor	= ( ZLColor::BlendFactor )state.GetValue < u32 >( 7, ( u32 )ZLColor::BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
-			blendFunc.mEquation		= ( ZLColor::BlendEquation )state.GetValue < u32 >( 8, ( u32 )ZLColor::BLEND_EQ_ADD );
-		}
-		result = self->StrokeGlyph ( *image, x, y, strokeSize, blendFunc );
+		// PCM: this scalar is arbitrary. FT miter limit doesn't behave like I'd expect.
+		// (I'd expect either a simple distance, or a ratio, like SVG uses.)
+		// TODO: investigate FT's miter limit implementation and fix accordingly.
+		float miterLimit	= state.GetValue < float >( 8, strokeSize * 100.0f );
+
+		result = self->StrokeGlyph ( *image, x, y, strokeSize, capStyle, joinStyle, miterLimit );
 	}
 	state.Push ( result != MOAIFontReader::OK );
 	return 1;
@@ -273,6 +273,16 @@ int MOAIFreeTypeFontReader::OpenFontFile ( cc8* filename ) {
 void MOAIFreeTypeFontReader::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIFontReader::RegisterLuaClass ( state );
 	
+	state.SetField ( -1, "STROKER_CAP_STYLE_BUTT",				( u32 )FT_STROKER_LINECAP_BUTT );
+	state.SetField ( -1, "STROKER_CAP_STYLE_ROUND",				( u32 )FT_STROKER_LINECAP_ROUND );
+	state.SetField ( -1, "STROKER_CAP_STYLE_SQUARE",			( u32 )FT_STROKER_LINECAP_SQUARE );
+	
+	state.SetField ( -1, "STROKER_JOIN_STYLE_ROUND",			( u32 )FT_STROKER_LINEJOIN_ROUND );
+	state.SetField ( -1, "STROKER_JOIN_STYLE_BEVEL",			( u32 )FT_STROKER_LINEJOIN_BEVEL );
+	state.SetField ( -1, "STROKER_JOIN_STYLE_MITER_VARIABLE",	( u32 )FT_STROKER_LINEJOIN_MITER_VARIABLE );
+	state.SetField ( -1, "STROKER_JOIN_STYLE_MITER",			( u32 )FT_STROKER_LINEJOIN_MITER );
+	state.SetField ( -1, "STROKER_JOIN_STYLE_MITER_FIXED",		( u32 )FT_STROKER_LINEJOIN_MITER_FIXED );
+	
 	luaL_Reg regTable [] = {
 		{ "extractSystemFont",		_extractSystemFont },
 		{ NULL, NULL }
@@ -296,7 +306,7 @@ void MOAIFreeTypeFontReader::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIFreeTypeFontReader::RenderGlyph ( MOAIImage& image, float x, float y, const ZLColorBlendFunc& blendFunc ) {
+int MOAIFreeTypeFontReader::RenderGlyph ( MOAIImage& image, float x, float y ) {
 
 	if ( image.GetPixelFormat () != MOAIImage::TRUECOLOR ) return FONT_ERROR;
 
@@ -315,15 +325,15 @@ int MOAIFreeTypeFontReader::RenderGlyph ( MOAIImage& image, float x, float y, co
 		RenderParams render;
 		FT_Raster_Params params;
 		memset ( &params, 0, sizeof ( params ));
-		params.flags = FT_RASTER_FLAG_DIRECT | FT_RASTER_FLAG_AA;
-		params.gray_spans = _renderSpan;
-		params.user = &render;
+		params.flags		= FT_RASTER_FLAG_DIRECT | FT_RASTER_FLAG_AA;
+		params.gray_spans	= _renderSpan;
+		params.user			= &render;
 		
-		render.mImage = &image;
-		render.mBlendFunc = blendFunc;
-		render.mPenColor = this->mPenColor;
-		render.mPenX =  ( int )x;
-		render.mPenY = ( int )y;
+		render.mImage		= &image;
+		render.mBlendMode	= this->mBlendMode;
+		render.mPenColor	= this->mPenColor;
+		render.mPenX		=  ( int )x;
+		render.mPenY		= ( int )y;
 		
 		FT_Outline_Render (( FT_Library )this->mLibrary, &face->glyph->outline, &params );
 	}
@@ -383,7 +393,7 @@ void MOAIFreeTypeFontReader::SerializeOut ( MOAILuaState& state, MOAISerializer&
 }
 
 //----------------------------------------------------------------//
-int MOAIFreeTypeFontReader::StrokeGlyph ( MOAIImage& image, float x, float y, float strokeSize, const ZLColorBlendFunc& blendFunc ) {
+int MOAIFreeTypeFontReader::StrokeGlyph ( MOAIImage& image, float x, float y, float strokeSize, u32 capStyle, u32 joinStyle, float miterLimit ) {
 
 	if ( image.GetPixelFormat () != MOAIImage::TRUECOLOR ) return FONT_ERROR;
 
@@ -399,22 +409,26 @@ int MOAIFreeTypeFontReader::StrokeGlyph ( MOAIImage& image, float x, float y, fl
 	RenderParams render;
 	FT_Raster_Params params;
 	memset ( &params, 0, sizeof ( params ));
-	params.flags = FT_RASTER_FLAG_DIRECT | ( this->mAntiAlias ? FT_RASTER_FLAG_AA : 0 );
-	params.gray_spans = _renderSpan;
-	params.user = &render;
+	params.flags		= FT_RASTER_FLAG_DIRECT | ( this->mAntiAlias ? FT_RASTER_FLAG_AA : 0 );
+	params.gray_spans	= _renderSpan;
+	params.user			= &render;
 	
-	render.mImage = &image;
-	render.mBlendFunc = blendFunc;
-	render.mPenColor = this->mPenColor;
-	render.mPenX =  ( int )x;
-	render.mPenY = ( int )y;
-	
-	
+	render.mImage		= &image;
+	render.mBlendMode	= this->mBlendMode;
+	render.mPenColor	= this->mPenColor;
+	render.mPenX		= ( int )x;
+	render.mPenY		= ( int )y;
 	
 	// Set up a stroker.
 	FT_Stroker stroker;
 	FT_Stroker_New (( FT_Library )this->mLibrary, &stroker );
-	FT_Stroker_Set ( stroker, ( int )( strokeSize * 64.0f ), FT_STROKER_LINECAP_ROUND, FT_STROKER_LINEJOIN_ROUND, 0 );
+	FT_Stroker_Set (
+		stroker,
+		( int )( strokeSize * 64.0f ),
+		( FT_Stroker_LineCap )capStyle,
+		( FT_Stroker_LineJoin )joinStyle,
+		( int )( miterLimit * 64.0f )
+	);
 
 	FT_Glyph glyph;
 	if ( FT_Get_Glyph ( face->glyph, &glyph ) == 0 ) {

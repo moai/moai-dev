@@ -4,14 +4,14 @@
 #ifndef	MOAIDRAWSHAPERETAINED_H
 #define	MOAIDRAWSHAPERETAINED_H
 
-#include <moai-sim/MOAIDrawShape.h>
+#include <moai-sim/MOAIAbstractDrawShape.h>
 
 //================================================================//
 // MOAIDrawShapeRetained
 //================================================================//
 // TODO: doxygen
 class MOAIDrawShapeRetained :
-	public virtual MOAIDrawShape {
+	public virtual MOAIAbstractDrawShape {
 protected:
 
 	enum {

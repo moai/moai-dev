@@ -72,7 +72,7 @@ namespace ZLColor {
 	u32				Average						( u32 c0, u32 c1, u32 c2, u32 c3 );
 	u32				BilerpFixed					( u32 c0, u32 c1, u32 c2, u32 c3, u8 xt, u8 yt );
 	u32				Blend						( u32 src32, u32 dst32, const ZLColorBlendFunc& blendFunc );
-	u32				Blend						( u32 src32, u32 dst32, BlendFactor srcFactor, BlendFactor dstFactor, BlendEquation blendEq );
+	u32				Blend						( u32 src32, u32 dst32, BlendEquation blendEq, BlendFactor srcFactor, BlendFactor dstFactor );
 	u32				BlendFactorAlpha			( u32 color32 );
 	u32				BlendFactorOneMinusAlpha	( u32 color32 );
 	u32				BlendFactorOneMinusColor	( u32 color32 );

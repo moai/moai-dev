@@ -343,7 +343,7 @@ void AKUSetScreenSize ( int width, int height) {
 //----------------------------------------------------------------//
 void AKUSetViewSize ( int width, int height ) {
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr= MOAIGfxMgr::Get ();
 	
 	u32 currentWidth = gfxMgr.mGfxState.GetBufferWidth ();
 	u32 currentHeight = gfxMgr.mGfxState.GetBufferHeight ();

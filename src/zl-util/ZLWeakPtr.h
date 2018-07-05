@@ -55,9 +55,10 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-	inline operator bool () {
+	inline operator bool () const {
 		return this->Get () != 0;
 	};
+
 
 	//----------------------------------------------------------------//
 	inline TYPE& operator * () {

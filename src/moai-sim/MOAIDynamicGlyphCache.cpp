@@ -12,6 +12,12 @@
 #include <moai-sim/MOAIImageTexture.h>
 #include <moai-sim/MOAITextureBase.h>
 
+#ifdef MOAIDYNAMICGLYPHCACHE_DEBUG
+	#define DEBUG_LOG printf
+#else
+	#define DEBUG_LOG(...)
+#endif
+
 //================================================================//
 // local
 //================================================================//
@@ -174,10 +180,19 @@ MOAIDynamicGlyphCache::~MOAIDynamicGlyphCache () {
 //----------------------------------------------------------------//
 int MOAIDynamicGlyphCache::PlaceGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 
+	DEBUG_LOG ( "PLACE GLYPH %d: (%d x %d) - %s\n",
+		glyph.GetCode (),
+		( u32 )( glyph.mWidth + this->mPadding.Width ()),
+		( u32 )( glyph.mHeight + this->mPadding.Height ()),
+		font.GetFilename ()
+	);
+
 	for ( u32 i = 0; i < this->mPages.Size (); ++i ) {
+		DEBUG_LOG ( "  TRYING PAGE: %d\n", i );
 		MOAIDynamicGlyphCachePage* page = this->mPages [ i ];
 		MOAISpan < MOAIGlyph* >* span = page->Alloc ( *this, font, glyph );
 		if ( span ) {
+			DEBUG_LOG ( "  PLACED IN PAGE: %d\n", i );
 			this->mPages [ i ]->mImageTexture->UpdateRegion ();
 			glyph.SetPageID ( i );
 			return STATUS_OK;
@@ -187,7 +202,10 @@ int MOAIDynamicGlyphCache::PlaceGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 	u32 pageID = ( u32 )this->mPages.Size (); // TODO: cast
 	this->mPages.Resize ( pageID + 1 );
 	
+	DEBUG_LOG ( "  NEW PAGE: %d\n", pageID );
+	
 	MOAIDynamicGlyphCachePage* page = new MOAIDynamicGlyphCachePage ();
+	page->SetPageID ( pageID );
 	this->mPages [ pageID ] = page;
 
 	page->Alloc ( *this, font, glyph );

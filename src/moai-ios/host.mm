@@ -88,29 +88,32 @@ void AKUIosContextInitialize () {
 }
 
 //----------------------------------------------------------------//
-void AKUIosNotifyLocalNotificationReceived ( UILocalNotification* notification ) {
-	UNUSED ( notification );
-
-	// TODO: fix me
-	//MOAINotificationsIOS::Get ().NotifyLocalNotificationReceived ( notification );
-}
-
-//----------------------------------------------------------------//
-void AKUIosNotifyRemoteNotificationReceived ( NSDictionary* notification ) {
-	UNUSED ( notification );
-
-	// TODO: fix me
-	//MOAINotificationsIOS::Get ().NotifyRemoteNotificationReceived ( notification );
-}
+// TODO: fix me
+//void AKUIosNotifyLocalNotificationReceived ( UILocalNotification* notification ) {
+//	UNUSED ( notification );
+//
+//	// TODO: fix me
+//	//MOAINotificationsIOS::Get ().NotifyLocalNotificationReceived ( notification );
+//}
 
 //----------------------------------------------------------------//
-void AKUIosNotifyRemoteNotificationRegistrationComplete ( NSData* deviceToken, NSError* error ) {
-	UNUSED ( deviceToken );
-	UNUSED ( error );
+// TODO: fix me
+//void AKUIosNotifyRemoteNotificationReceived ( NSDictionary* notification ) {
+//	UNUSED ( notification );
+//
+//	// TODO: fix me
+//	//MOAINotificationsIOS::Get ().NotifyRemoteNotificationReceived ( notification );
+//}
 
-	// TODO: fix me
-	//MOAINotificationsIOS::Get ().NotifyRemoteRegistrationComplete ( deviceToken, error );
-}
+//----------------------------------------------------------------//
+// TODO: fix me
+//void AKUIosNotifyRemoteNotificationRegistrationComplete ( NSData* deviceToken, NSError* error ) {
+//	UNUSED ( deviceToken );
+//	UNUSED ( error );
+//
+//	// TODO: fix me
+//	//MOAINotificationsIOS::Get ().NotifyRemoteRegistrationComplete ( deviceToken, error );
+//}
 
 //----------------------------------------------------------------//
 void AKUIosOpenUrl ( NSURL* url, NSString* sourceApplication ) {

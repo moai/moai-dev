@@ -2,16 +2,16 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIDrawShape.h>
+#include <moai-sim/MOAIAbstractDrawShape.h>
 
 #define DEFAULT_ELLIPSE_STEPS 64
 
 //================================================================//
-// MOAIDrawShape
+// MOAIAbstractDrawShape
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawBoxAxis ( const ZLBox& box ) {
+void MOAIAbstractDrawShape::DrawBoxAxis ( const ZLBox& box ) {
 
 	ZLVec3D center;
 	box.GetCenter ( center );
@@ -22,7 +22,7 @@ void MOAIDrawShape::DrawBoxAxis ( const ZLBox& box ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawBoxDiagonals ( const ZLBox& box ) {
+void MOAIAbstractDrawShape::DrawBoxDiagonals ( const ZLBox& box ) {
 
 	this->DrawLine ( box.mMin.mX, box.mMin.mY, box.mMin.mZ, box.mMax.mX, box.mMax.mY, box.mMax.mZ );
 	this->DrawLine ( box.mMin.mX, box.mMax.mY, box.mMin.mZ, box.mMax.mX, box.mMin.mY, box.mMax.mZ );
@@ -31,7 +31,7 @@ void MOAIDrawShape::DrawBoxDiagonals ( const ZLBox& box ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawBoxOutline ( const ZLBox& box ) {
+void MOAIAbstractDrawShape::DrawBoxOutline ( const ZLBox& box ) {
 
 	this->DrawLine ( box.mMin.mX, box.mMin.mY, box.mMin.mZ, box.mMax.mX, box.mMin.mY, box.mMin.mZ );
 	this->DrawLine ( box.mMin.mX, box.mMin.mY, box.mMin.mZ, box.mMin.mX, box.mMax.mY, box.mMin.mZ );
@@ -52,19 +52,19 @@ void MOAIDrawShape::DrawBoxOutline ( const ZLBox& box ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawCircleFill ( float x, float y, float radius, u32 steps ) {
+void MOAIAbstractDrawShape::DrawCircleFill ( float x, float y, float radius, u32 steps ) {
 
 	this->DrawEllipseFill ( x, y, radius, radius, steps );
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawCircleOutline ( float x, float y, float radius, u32 steps ) {
+void MOAIAbstractDrawShape::DrawCircleOutline ( float x, float y, float radius, u32 steps ) {
 
 	this->DrawEllipseOutline ( x, y, radius, radius, steps );
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawEllipseFill ( const ZLRect& rect, u32 steps ) {
+void MOAIAbstractDrawShape::DrawEllipseFill ( const ZLRect& rect, u32 steps ) {
 
 	float xRad = ( rect.mXMax - rect.mXMin ) * 0.5f;
 	float yRad = ( rect.mYMax - rect.mYMin ) * 0.5f;
@@ -73,7 +73,7 @@ void MOAIDrawShape::DrawEllipseFill ( const ZLRect& rect, u32 steps ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawEllipseFill ( float x, float y, float xRad, float yRad, u32 steps ) {
+void MOAIAbstractDrawShape::DrawEllipseFill ( float x, float y, float xRad, float yRad, u32 steps ) {
 	
 	float angle = ( float )PI;
 	float angleStep = ( float )TWOPI / ( float )steps;
@@ -93,7 +93,7 @@ void MOAIDrawShape::DrawEllipseFill ( float x, float y, float xRad, float yRad, 
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawEllipseOutline ( const ZLRect& rect, u32 steps ) {
+void MOAIAbstractDrawShape::DrawEllipseOutline ( const ZLRect& rect, u32 steps ) {
 	
 	float xRad = ( rect.mXMax - rect.mXMin ) * 0.5f;
 	float yRad = ( rect.mYMax - rect.mYMin ) * 0.5f;
@@ -102,7 +102,7 @@ void MOAIDrawShape::DrawEllipseOutline ( const ZLRect& rect, u32 steps ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawEllipseOutline ( float x, float y, float xRad, float yRad, u32 steps ) {
+void MOAIAbstractDrawShape::DrawEllipseOutline ( float x, float y, float xRad, float yRad, u32 steps ) {
 
 	float angle = ( float )PI;
 	float angleStep = ( float )TWOPI / ( float )steps;
@@ -121,7 +121,7 @@ void MOAIDrawShape::DrawEllipseOutline ( float x, float y, float xRad, float yRa
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawEllipseSpokes ( float x, float y, float xRad, float yRad, u32 steps ) {
+void MOAIAbstractDrawShape::DrawEllipseSpokes ( float x, float y, float xRad, float yRad, u32 steps ) {
 
 	float step = ( float )TWOPI / ( float )steps;
 	float angle = ( float )PI;
@@ -138,43 +138,43 @@ void MOAIDrawShape::DrawEllipseSpokes ( float x, float y, float xRad, float yRad
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawLine ( const ZLVec2D& v0, const ZLVec2D& v1 ) {
+void MOAIAbstractDrawShape::DrawLine ( const ZLVec2D& v0, const ZLVec2D& v1 ) {
 
 	this->DrawLine ( v0.mX, v0.mY, v1.mX, v1.mY );
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawLine ( const ZLVec3D& v0, const ZLVec3D& v1 ) {
+void MOAIAbstractDrawShape::DrawLine ( const ZLVec3D& v0, const ZLVec3D& v1 ) {
 
 	this->DrawLine ( v0.mX, v0.mY, v0.mZ, v1.mX, v1.mY, v1.mZ );
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawLine ( float x0, float y0, float x1, float y1 ) {
+void MOAIAbstractDrawShape::DrawLine ( float x0, float y0, float x1, float y1 ) {
 	
 	this->DrawLine ( x0, y0, 0.0f, x1, y1, 0.0f );
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawLine ( float x0, float y0, float z0, float x1, float y1, float z1 ) {
+void MOAIAbstractDrawShape::DrawLine ( float x0, float y0, float z0, float x1, float y1, float z1 ) {
 
 	this->MOAIDrawShape_DrawLine ( x0, y0, z0, x1, y1, z1 );
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawPoint ( const ZLVec2D& loc ) {
+void MOAIAbstractDrawShape::DrawPoint ( const ZLVec2D& loc ) {
 
 	this->MOAIDrawShape_DrawPoint ( loc.mX, loc.mY );
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawPoint ( float x, float y, float z ) {
+void MOAIAbstractDrawShape::DrawPoint ( float x, float y, float z ) {
 
 	this->MOAIDrawShape_DrawPoint ( x, y, z );
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawPolyOutline ( const ZLPolygon2D& poly ) {
+void MOAIAbstractDrawShape::DrawPolyOutline ( const ZLPolygon2D& poly ) {
 
 	size_t size = poly.GetSize ();
 
@@ -186,7 +186,7 @@ void MOAIDrawShape::DrawPolyOutline ( const ZLPolygon2D& poly ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawQuadOutline ( const ZLQuad& quad ) {
+void MOAIAbstractDrawShape::DrawQuadOutline ( const ZLQuad& quad ) {
 
 	this->DrawLine ( quad.mV [ 0 ].mX, quad.mV [ 0 ].mY, quad.mV [ 1 ].mX, quad.mV [ 1 ].mY );
 	this->DrawLine ( quad.mV [ 1 ].mX, quad.mV [ 1 ].mY, quad.mV [ 2 ].mX, quad.mV [ 2 ].mY );
@@ -195,13 +195,13 @@ void MOAIDrawShape::DrawQuadOutline ( const ZLQuad& quad ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawRay ( float x, float y, float dx, float dy, float length ) {
+void MOAIAbstractDrawShape::DrawRay ( float x, float y, float dx, float dy, float length ) {
 
 	this->DrawLine ( x, y, x + ( dx * length ), y + ( dy * length ));
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawRectEdges ( ZLRect rect, u32 edges ) {
+void MOAIAbstractDrawShape::DrawRectEdges ( ZLRect rect, u32 edges ) {
 
 	rect.Bless ();
 	
@@ -227,14 +227,14 @@ void MOAIDrawShape::DrawRectEdges ( ZLRect rect, u32 edges ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawRectFill ( ZLRect rect ) {
+void MOAIAbstractDrawShape::DrawRectFill ( ZLRect rect ) {
 
 	rect.Bless ();
 	this->DrawRectFill ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax );
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawRectFill ( float left, float top, float right, float bottom ) {
+void MOAIAbstractDrawShape::DrawRectFill ( float left, float top, float right, float bottom ) {
 	
 	ZLVec3D lt ( left, top, 0.0f );
 	ZLVec3D rt ( right, top, 0.0f );
@@ -246,13 +246,13 @@ void MOAIDrawShape::DrawRectFill ( float left, float top, float right, float bot
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawRectOutline ( const ZLRect& rect ) {
+void MOAIAbstractDrawShape::DrawRectOutline ( const ZLRect& rect ) {
 	
 	this->DrawRectOutline ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax );
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawRectOutline ( float left, float top, float right, float bottom ) {
+void MOAIAbstractDrawShape::DrawRectOutline ( float left, float top, float right, float bottom ) {
 	
 	this->DrawLine ( left, top, right, top );
 	this->DrawLine ( right, top, right, bottom );
@@ -261,13 +261,13 @@ void MOAIDrawShape::DrawRectOutline ( float left, float top, float right, float 
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawTriangleFill ( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2 ) {
+void MOAIAbstractDrawShape::DrawTriangleFill ( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2 ) {
 
 	this->MOAIDrawShape_DrawTriangleFill ( v0, v1, v2 );
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::DrawTriangleOutline ( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2 ) {
+void MOAIAbstractDrawShape::DrawTriangleOutline ( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2 ) {
 
 	this->DrawLine ( v0, v1 );
 	this->DrawLine ( v1, v2 );
@@ -275,21 +275,21 @@ void MOAIDrawShape::DrawTriangleOutline ( const ZLVec3D& v0, const ZLVec3D& v1, 
 }
 
 //----------------------------------------------------------------//
-MOAIDrawShape::MOAIDrawShape () {
+MOAIAbstractDrawShape::MOAIAbstractDrawShape () {
 }
 
 //----------------------------------------------------------------//
-MOAIDrawShape::~MOAIDrawShape () {
+MOAIAbstractDrawShape::~MOAIAbstractDrawShape () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::SetPenColor ( u32 color ) {
+void MOAIAbstractDrawShape::SetPenColor ( u32 color ) {
 
 	this->MOAIDrawShape_SetPenColor ( color );
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShape::SetPenWidth ( float width ) {
+void MOAIAbstractDrawShape::SetPenWidth ( float width ) {
 
 	this->MOAIDrawShape_SetPenWidth ( width );
 }

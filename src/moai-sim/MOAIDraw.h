@@ -55,6 +55,8 @@ private:
 	static int			_fillEllipse			( lua_State* L );
 	static int			_fillFan				( lua_State* L );
 	static int			_fillRect				( lua_State* L );
+	static int			_popGfxState			( lua_State* L );
+	static int			_pushGfxState			( lua_State* L );
 	static int			_setBlendMode			( lua_State* L );
 	static int			_setClearColor			( lua_State* L );
 	static int			_setClearDepth			( lua_State* L );

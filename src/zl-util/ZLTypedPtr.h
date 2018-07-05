@@ -23,7 +23,7 @@ public:
 			ZLTypedPtr	();
 
 	//----------------------------------------------------------------//
-	inline operator bool () {
+	inline operator bool () const {
 		return ( mData != 0 );
 	};
 	

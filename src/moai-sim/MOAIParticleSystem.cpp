@@ -680,7 +680,7 @@ void MOAIParticleSystem::MOAIDrawable_Draw ( int subPrimID ) {
 	if ( !this->mDeck ) return;
 	if ( this->IsClear ()) return;
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	
 	this->PushGfxState ();
 	this->LoadUVTransform ();
@@ -707,14 +707,14 @@ void MOAIParticleSystem::MOAIDrawable_Draw ( int subPrimID ) {
 		}
 				
 		AKUParticleSprite& sprite = this->mSprites [ idx ];
-		gfxMgr.mGfxState.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
+		gfxState.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
 		
 		spriteMtx.ScRoTr ( sprite.mXScl, sprite.mYScl, 1.0f, 0.0f, 0.0f, sprite.mZRot * ( float )D2R, sprite.mXLoc, sprite.mYLoc, 0.0f );
 		
 		drawingMtx = this->GetLocalToWorldMtx ();
 		drawingMtx.Prepend ( spriteMtx );
 		
-		gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX, drawingMtx );
+		gfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX, drawingMtx );
 		
 		//this->mDeck->Draw ( this->mIndex + ( u32 )sprite.mGfxID, this->mMaterialBatch );
 		this->mDeck->Draw ( this->mIndex + ( u32 )sprite.mGfxID );

@@ -100,28 +100,41 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	ZLResultCode Grow ( size_t size, size_t chunkSize ) {
+	ZLResultCode Grow ( size_t size, const TYPE& value ) {
+	
+		if ( size > this->mSize ) {
+			return this->Resize ( size, value );
+		}
+		return ZL_OK;
+	}
+	
+	//----------------------------------------------------------------//
+	ZLResultCode GrowChunked ( size_t size, size_t chunkSize ) {
 		
-		size_t chunks = ( size / chunkSize ) + 1;
+		size_t chunks = ( size / chunkSize ) + (( size % chunkSize ) ? 1 : 0 );
 		return this->Grow ( chunks * chunkSize );
 	}
 
 	//----------------------------------------------------------------//
-	ZLResultCode Grow ( size_t size, size_t chunkSize, const TYPE& value ) {
+	ZLResultCode GrowChunked ( size_t size, size_t chunkSize, const TYPE& value ) {
 		
-		size_t chunks = ( size / chunkSize ) + 1;
-		size_t newSize = chunks * chunkSize;
-		
-		if ( newSize > this->mSize ) {
-			return this->Resize ( newSize, value );
-		}
-		return ZL_OK;
+		size_t chunks = ( size / chunkSize ) + (( size % chunkSize ) ? 1 : 0 );
+		return this->Resize ( chunks * chunkSize, value );
 	}
 
 	//----------------------------------------------------------------//
 	ZLResultCode Init ( size_t size ) {
 
 		return this->Resize ( size );
+	}
+
+	//----------------------------------------------------------------//
+	bool IsIdentical ( const ZLLeanArray < TYPE >& array ) {
+	
+		if ( this->mSize == array.mSize ) {
+			return ( memcmp ( this->mData, array.mData, this->mSize ) == 0 );
+		}
+		return false;
 	}
 
 	//----------------------------------------------------------------//

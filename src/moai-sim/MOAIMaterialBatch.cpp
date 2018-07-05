@@ -185,7 +185,7 @@ int MOAIMaterialBatch::_setTexture ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIMaterial& MOAIMaterialBatch::AffirmMaterial ( u32 idx ) {
 
-	this->mMaterials.Grow ( idx, 1 );
+	this->mMaterials.Grow ( idx + 1 );
 	return this->mMaterials [ idx ];
 }
 

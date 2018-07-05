@@ -1050,18 +1050,18 @@
 		CD1D85EA1E1F36560089FFAD /* MOAIDeckProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD67B45E1B264C9C004298CF /* MOAIDeckProxy.cpp */; };
 		CD27718019C8CE940079A731 /* assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD27717F19C8CE940079A731 /* assert.cpp */; };
 		CD27718119C8CE940079A731 /* assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD27717F19C8CE940079A731 /* assert.cpp */; };
-		CD2BA7961B2A16B00010C399 /* MOAIGfxGlobalsCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA7941B2A16B00010C399 /* MOAIGfxGlobalsCache.cpp */; };
-		CD2BA7971B2A16B00010C399 /* MOAIGfxGlobalsCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA7941B2A16B00010C399 /* MOAIGfxGlobalsCache.cpp */; };
-		CD2BA7981B2A16B00010C399 /* MOAIGfxGlobalsCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2BA7951B2A16B00010C399 /* MOAIGfxGlobalsCache.h */; };
-		CD2BA7991B2A16B00010C399 /* MOAIGfxGlobalsCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2BA7951B2A16B00010C399 /* MOAIGfxGlobalsCache.h */; };
+		CD2BA7961B2A16B00010C399 /* MOAIGfxStateCPUCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA7941B2A16B00010C399 /* MOAIGfxStateCPUCache.cpp */; };
+		CD2BA7971B2A16B00010C399 /* MOAIGfxStateCPUCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA7941B2A16B00010C399 /* MOAIGfxStateCPUCache.cpp */; };
+		CD2BA7981B2A16B00010C399 /* MOAIGfxStateCPUCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2BA7951B2A16B00010C399 /* MOAIGfxStateCPUCache.h */; };
+		CD2BA7991B2A16B00010C399 /* MOAIGfxStateCPUCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2BA7951B2A16B00010C399 /* MOAIGfxStateCPUCache.h */; };
 		CD2BA79C1B2A20A80010C399 /* MOAIGfxPipelineClerk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA79A1B2A20A80010C399 /* MOAIGfxPipelineClerk.cpp */; };
 		CD2BA79D1B2A20A80010C399 /* MOAIGfxPipelineClerk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA79A1B2A20A80010C399 /* MOAIGfxPipelineClerk.cpp */; };
 		CD2BA79E1B2A20A80010C399 /* MOAIGfxPipelineClerk.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2BA79B1B2A20A80010C399 /* MOAIGfxPipelineClerk.h */; };
 		CD2BA79F1B2A20A80010C399 /* MOAIGfxPipelineClerk.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2BA79B1B2A20A80010C399 /* MOAIGfxPipelineClerk.h */; };
-		CD2BA7A31B2A2D760010C399 /* MOAIGfxVertexCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA7A11B2A2D750010C399 /* MOAIGfxVertexCache.cpp */; };
-		CD2BA7A41B2A2D760010C399 /* MOAIGfxVertexCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA7A11B2A2D750010C399 /* MOAIGfxVertexCache.cpp */; };
-		CD2BA7A51B2A2D760010C399 /* MOAIGfxVertexCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2BA7A21B2A2D750010C399 /* MOAIGfxVertexCache.h */; };
-		CD2BA7A61B2A2D760010C399 /* MOAIGfxVertexCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2BA7A21B2A2D750010C399 /* MOAIGfxVertexCache.h */; };
+		CD2BA7A31B2A2D760010C399 /* MOAIGfxStateVertexCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA7A11B2A2D750010C399 /* MOAIGfxStateVertexCache.cpp */; };
+		CD2BA7A41B2A2D760010C399 /* MOAIGfxStateVertexCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2BA7A11B2A2D750010C399 /* MOAIGfxStateVertexCache.cpp */; };
+		CD2BA7A51B2A2D760010C399 /* MOAIGfxStateVertexCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2BA7A21B2A2D750010C399 /* MOAIGfxStateVertexCache.h */; };
+		CD2BA7A61B2A2D760010C399 /* MOAIGfxStateVertexCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2BA7A21B2A2D750010C399 /* MOAIGfxStateVertexCache.h */; };
 		CD2CB51D19FDBECA00C42260 /* MOAIStreamAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2CB51B19FDBECA00C42260 /* MOAIStreamAdapter.cpp */; };
 		CD2CB51E19FDBECA00C42260 /* MOAIStreamAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2CB51B19FDBECA00C42260 /* MOAIStreamAdapter.cpp */; };
 		CD2CB51F19FDBECA00C42260 /* MOAIStreamAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2CB51C19FDBECA00C42260 /* MOAIStreamAdapter.h */; };
@@ -1681,10 +1681,10 @@
 		CD3430FF1B30ABB3002BEBFA /* MOAIVertexArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3430FC1B30ABB3002BEBFA /* MOAIVertexArray.cpp */; };
 		CD3431001B30ABB3002BEBFA /* MOAIVertexArray.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3430FD1B30ABB3002BEBFA /* MOAIVertexArray.h */; };
 		CD3431011B30ABB3002BEBFA /* MOAIVertexArray.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3430FD1B30ABB3002BEBFA /* MOAIVertexArray.h */; };
-		CD3431051B30EDC6002BEBFA /* MOAIGfxStateCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3431031B30EDC6002BEBFA /* MOAIGfxStateCache.cpp */; };
-		CD3431061B30EDC6002BEBFA /* MOAIGfxStateCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3431031B30EDC6002BEBFA /* MOAIGfxStateCache.cpp */; };
-		CD3431071B30EDC6002BEBFA /* MOAIGfxStateCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3431041B30EDC6002BEBFA /* MOAIGfxStateCache.h */; };
-		CD3431081B30EDC6002BEBFA /* MOAIGfxStateCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3431041B30EDC6002BEBFA /* MOAIGfxStateCache.h */; };
+		CD3431051B30EDC6002BEBFA /* MOAIGfxStateGPUCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3431031B30EDC6002BEBFA /* MOAIGfxStateGPUCache.cpp */; };
+		CD3431061B30EDC6002BEBFA /* MOAIGfxStateGPUCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3431031B30EDC6002BEBFA /* MOAIGfxStateGPUCache.cpp */; };
+		CD3431071B30EDC6002BEBFA /* MOAIGfxStateGPUCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3431041B30EDC6002BEBFA /* MOAIGfxStateGPUCache.h */; };
+		CD3431081B30EDC6002BEBFA /* MOAIGfxStateGPUCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3431041B30EDC6002BEBFA /* MOAIGfxStateGPUCache.h */; };
 		CD34310B1B31175F002BEBFA /* MOAITextureBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3431091B31175F002BEBFA /* MOAITextureBase.cpp */; };
 		CD34310C1B31175F002BEBFA /* MOAITextureBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3431091B31175F002BEBFA /* MOAITextureBase.cpp */; };
 		CD34310D1B31175F002BEBFA /* MOAITextureBase.h in Headers */ = {isa = PBXBuildFile; fileRef = CD34310A1B31175F002BEBFA /* MOAITextureBase.h */; };
@@ -3422,14 +3422,14 @@
 		CD94BB341E4AF214003A0CFF /* MOAILightFormat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD94BB2F1E4AF214003A0CFF /* MOAILightFormat.cpp */; };
 		CD94BB351E4AF214003A0CFF /* MOAILightFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = CD94BB301E4AF214003A0CFF /* MOAILightFormat.h */; };
 		CD94BB361E4AF214003A0CFF /* MOAILightFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = CD94BB301E4AF214003A0CFF /* MOAILightFormat.h */; };
-		CD94BB5B1E4C5FDD003A0CFF /* MOAIShaderUniformFormatter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD94BB591E4C5FDD003A0CFF /* MOAIShaderUniformFormatter.cpp */; };
-		CD94BB5C1E4C5FDD003A0CFF /* MOAIShaderUniformFormatter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD94BB591E4C5FDD003A0CFF /* MOAIShaderUniformFormatter.cpp */; };
-		CD94BB5D1E4C5FDD003A0CFF /* MOAIShaderUniformFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD94BB5A1E4C5FDD003A0CFF /* MOAIShaderUniformFormatter.h */; };
-		CD94BB5E1E4C5FDD003A0CFF /* MOAIShaderUniformFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD94BB5A1E4C5FDD003A0CFF /* MOAIShaderUniformFormatter.h */; };
-		CD94BB631E4C6AB7003A0CFF /* MOAIShaderUniformBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD94BB601E4C6AB6003A0CFF /* MOAIShaderUniformBuffer.h */; };
-		CD94BB641E4C6AB7003A0CFF /* MOAIShaderUniformBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD94BB601E4C6AB6003A0CFF /* MOAIShaderUniformBuffer.h */; };
-		CD94BB661E4C6C4B003A0CFF /* MOAIShaderUniformBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD94BB651E4C6C4B003A0CFF /* MOAIShaderUniformBuffer.cpp */; };
-		CD94BB671E4C6C4B003A0CFF /* MOAIShaderUniformBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD94BB651E4C6C4B003A0CFF /* MOAIShaderUniformBuffer.cpp */; };
+		CD94BB5B1E4C5FDD003A0CFF /* MOAIShaderUniformHandle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD94BB591E4C5FDD003A0CFF /* MOAIShaderUniformHandle.cpp */; };
+		CD94BB5C1E4C5FDD003A0CFF /* MOAIShaderUniformHandle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD94BB591E4C5FDD003A0CFF /* MOAIShaderUniformHandle.cpp */; };
+		CD94BB5D1E4C5FDD003A0CFF /* MOAIShaderUniformHandle.h in Headers */ = {isa = PBXBuildFile; fileRef = CD94BB5A1E4C5FDD003A0CFF /* MOAIShaderUniformHandle.h */; };
+		CD94BB5E1E4C5FDD003A0CFF /* MOAIShaderUniformHandle.h in Headers */ = {isa = PBXBuildFile; fileRef = CD94BB5A1E4C5FDD003A0CFF /* MOAIShaderUniformHandle.h */; };
+		CD94BB631E4C6AB7003A0CFF /* MOAIShaderUniformSchema.h in Headers */ = {isa = PBXBuildFile; fileRef = CD94BB601E4C6AB6003A0CFF /* MOAIShaderUniformSchema.h */; };
+		CD94BB641E4C6AB7003A0CFF /* MOAIShaderUniformSchema.h in Headers */ = {isa = PBXBuildFile; fileRef = CD94BB601E4C6AB6003A0CFF /* MOAIShaderUniformSchema.h */; };
+		CD94BB661E4C6C4B003A0CFF /* MOAIShaderUniformSchema.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD94BB651E4C6C4B003A0CFF /* MOAIShaderUniformSchema.cpp */; };
+		CD94BB671E4C6C4B003A0CFF /* MOAIShaderUniformSchema.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD94BB651E4C6C4B003A0CFF /* MOAIShaderUniformSchema.cpp */; };
 		CD95D4DD1831D6350080C34E /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A317FA818000FB64BB /* headers.h */; };
 		CD95D4DE1831D6350080C34E /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC123A417FA818000FB64BB /* host.cpp */; };
 		CD95D4DF1831D6350080C34E /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC123A517FA818000FB64BB /* host.h */; };
@@ -3566,6 +3566,12 @@
 		CDC1239317FA808A00FB64BB /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC1238417FA808A00FB64BB /* headers.h */; };
 		CDC1239417FA808A00FB64BB /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC1238517FA808A00FB64BB /* pch.cpp */; };
 		CDC1239517FA808A00FB64BB /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC1238617FA808A00FB64BB /* pch.h */; };
+		CDC2B36820D66EC100300A96 /* MOAIGfxState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC2B36620D66EC100300A96 /* MOAIGfxState.cpp */; };
+		CDC2B36920D66EC100300A96 /* MOAIGfxState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC2B36620D66EC100300A96 /* MOAIGfxState.cpp */; };
+		CDC2B36A20D66EC100300A96 /* MOAIGfxState.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC2B36720D66EC100300A96 /* MOAIGfxState.h */; };
+		CDC2B36B20D66EC100300A96 /* MOAIGfxState.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC2B36720D66EC100300A96 /* MOAIGfxState.h */; };
+		CDC2B37120D84BE000300A96 /* MOAIAbstractGfxStateCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC2B36E20D84BE000300A96 /* MOAIAbstractGfxStateCache.h */; };
+		CDC2B37220D84BE000300A96 /* MOAIAbstractGfxStateCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC2B36E20D84BE000300A96 /* MOAIAbstractGfxStateCache.h */; };
 		CDC5203618A17EB700BCC12F /* MOAIShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC5203018A17EB700BCC12F /* MOAIShaderProgram.cpp */; };
 		CDC5203718A17EB700BCC12F /* MOAIShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDC5203018A17EB700BCC12F /* MOAIShaderProgram.cpp */; };
 		CDC5203818A17EB700BCC12F /* MOAIShaderProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = CDC5203118A17EB700BCC12F /* MOAIShaderProgram.h */; };
@@ -4244,8 +4250,8 @@
 		CDE440191AC0D27600C745DB /* ZLFrustumFitter.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE440111AC0D27600C745DB /* ZLFrustumFitter.h */; };
 		CDE6CF5F1EA6D3B80020B819 /* MOAICollisionPrim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE6CF5E1EA6D3B80020B819 /* MOAICollisionPrim.cpp */; };
 		CDE6CF601EA6D3B80020B819 /* MOAICollisionPrim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE6CF5E1EA6D3B80020B819 /* MOAICollisionPrim.cpp */; };
-		CDE7ED701E402A550005D63A /* MOAIDrawShape.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE7ED6D1E402A550005D63A /* MOAIDrawShape.h */; };
-		CDE7ED711E402A550005D63A /* MOAIDrawShape.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE7ED6D1E402A550005D63A /* MOAIDrawShape.h */; };
+		CDE7ED701E402A550005D63A /* MOAIAbstractDrawShape.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE7ED6D1E402A550005D63A /* MOAIAbstractDrawShape.h */; };
+		CDE7ED711E402A550005D63A /* MOAIAbstractDrawShape.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE7ED6D1E402A550005D63A /* MOAIAbstractDrawShape.h */; };
 		CDE7ED761E4033AB0005D63A /* MOAIDrawShapeImmediate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE7ED721E4033AB0005D63A /* MOAIDrawShapeImmediate.cpp */; };
 		CDE7ED771E4033AB0005D63A /* MOAIDrawShapeImmediate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE7ED721E4033AB0005D63A /* MOAIDrawShapeImmediate.cpp */; };
 		CDE7ED781E4033AB0005D63A /* MOAIDrawShapeImmediate.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE7ED731E4033AB0005D63A /* MOAIDrawShapeImmediate.h */; };
@@ -4254,8 +4260,8 @@
 		CDE7ED7B1E4033AB0005D63A /* MOAIDrawShapeRetained.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE7ED741E4033AB0005D63A /* MOAIDrawShapeRetained.cpp */; };
 		CDE7ED7C1E4033AB0005D63A /* MOAIDrawShapeRetained.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE7ED751E4033AB0005D63A /* MOAIDrawShapeRetained.h */; };
 		CDE7ED7D1E4033AB0005D63A /* MOAIDrawShapeRetained.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE7ED751E4033AB0005D63A /* MOAIDrawShapeRetained.h */; };
-		CDE7ED7F1E40364F0005D63A /* MOAIDrawShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE7ED7E1E40364F0005D63A /* MOAIDrawShape.cpp */; };
-		CDE7ED801E40364F0005D63A /* MOAIDrawShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE7ED7E1E40364F0005D63A /* MOAIDrawShape.cpp */; };
+		CDE7ED7F1E40364F0005D63A /* MOAIAbstractDrawShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE7ED7E1E40364F0005D63A /* MOAIAbstractDrawShape.cpp */; };
+		CDE7ED801E40364F0005D63A /* MOAIAbstractDrawShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE7ED7E1E40364F0005D63A /* MOAIAbstractDrawShape.cpp */; };
 		CDE93C1A1B34EF370051ADA1 /* moai_version.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE93C191B34EF370051ADA1 /* moai_version.h */; };
 		CDE93C1B1B34EF370051ADA1 /* moai_version.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE93C191B34EF370051ADA1 /* moai_version.h */; };
 		CDECEE2018E0C87C00546426 /* mongoose.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795EFE17F0901A006AEB47 /* mongoose.c */; };
@@ -5737,12 +5743,12 @@
 		CD2B7C9117FA573B00EBA2DB /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = headers.h; path = "moai-ios/headers.h"; sourceTree = "<group>"; };
 		CD2B7C9217FA573B00EBA2DB /* host.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = host.mm; path = "moai-ios/host.mm"; sourceTree = "<group>"; };
 		CD2B7C9317FA573B00EBA2DB /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-ios/host.h"; sourceTree = "<group>"; };
-		CD2BA7941B2A16B00010C399 /* MOAIGfxGlobalsCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGfxGlobalsCache.cpp; sourceTree = "<group>"; };
-		CD2BA7951B2A16B00010C399 /* MOAIGfxGlobalsCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxGlobalsCache.h; sourceTree = "<group>"; };
+		CD2BA7941B2A16B00010C399 /* MOAIGfxStateCPUCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGfxStateCPUCache.cpp; sourceTree = "<group>"; };
+		CD2BA7951B2A16B00010C399 /* MOAIGfxStateCPUCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxStateCPUCache.h; sourceTree = "<group>"; };
 		CD2BA79A1B2A20A80010C399 /* MOAIGfxPipelineClerk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGfxPipelineClerk.cpp; sourceTree = "<group>"; };
 		CD2BA79B1B2A20A80010C399 /* MOAIGfxPipelineClerk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxPipelineClerk.h; sourceTree = "<group>"; };
-		CD2BA7A11B2A2D750010C399 /* MOAIGfxVertexCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGfxVertexCache.cpp; sourceTree = "<group>"; };
-		CD2BA7A21B2A2D750010C399 /* MOAIGfxVertexCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxVertexCache.h; sourceTree = "<group>"; };
+		CD2BA7A11B2A2D750010C399 /* MOAIGfxStateVertexCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGfxStateVertexCache.cpp; sourceTree = "<group>"; };
+		CD2BA7A21B2A2D750010C399 /* MOAIGfxStateVertexCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxStateVertexCache.h; sourceTree = "<group>"; };
 		CD2CB51B19FDBECA00C42260 /* MOAIStreamAdapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIStreamAdapter.cpp; sourceTree = "<group>"; };
 		CD2CB51C19FDBECA00C42260 /* MOAIStreamAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIStreamAdapter.h; sourceTree = "<group>"; };
 		CD2E468C1C517FF6008E22A1 /* host.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = host.cpp; path = "moai-harfbuzz/host.cpp"; sourceTree = "<group>"; };
@@ -5926,8 +5932,8 @@
 		CD3371CC1CAF8E62008B8BC7 /* tesselator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tesselator.h; path = ../../3rdparty/libtess2/Include/tesselator.h; sourceTree = "<group>"; };
 		CD3430FC1B30ABB3002BEBFA /* MOAIVertexArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVertexArray.cpp; sourceTree = "<group>"; };
 		CD3430FD1B30ABB3002BEBFA /* MOAIVertexArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVertexArray.h; sourceTree = "<group>"; };
-		CD3431031B30EDC6002BEBFA /* MOAIGfxStateCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGfxStateCache.cpp; sourceTree = "<group>"; };
-		CD3431041B30EDC6002BEBFA /* MOAIGfxStateCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxStateCache.h; sourceTree = "<group>"; };
+		CD3431031B30EDC6002BEBFA /* MOAIGfxStateGPUCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGfxStateGPUCache.cpp; sourceTree = "<group>"; };
+		CD3431041B30EDC6002BEBFA /* MOAIGfxStateGPUCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxStateGPUCache.h; sourceTree = "<group>"; };
 		CD3431091B31175F002BEBFA /* MOAITextureBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextureBase.cpp; sourceTree = "<group>"; };
 		CD34310A1B31175F002BEBFA /* MOAITextureBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextureBase.h; sourceTree = "<group>"; };
 		CD34A24E19C7D77A00BFF405 /* assert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = assert.h; sourceTree = "<group>"; };
@@ -6896,10 +6902,10 @@
 		CD94BB2A1E4AF14A003A0CFF /* MOAILight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAILight.h; sourceTree = "<group>"; };
 		CD94BB2F1E4AF214003A0CFF /* MOAILightFormat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAILightFormat.cpp; sourceTree = "<group>"; };
 		CD94BB301E4AF214003A0CFF /* MOAILightFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAILightFormat.h; sourceTree = "<group>"; };
-		CD94BB591E4C5FDD003A0CFF /* MOAIShaderUniformFormatter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIShaderUniformFormatter.cpp; sourceTree = "<group>"; };
-		CD94BB5A1E4C5FDD003A0CFF /* MOAIShaderUniformFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIShaderUniformFormatter.h; sourceTree = "<group>"; };
-		CD94BB601E4C6AB6003A0CFF /* MOAIShaderUniformBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIShaderUniformBuffer.h; sourceTree = "<group>"; };
-		CD94BB651E4C6C4B003A0CFF /* MOAIShaderUniformBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIShaderUniformBuffer.cpp; sourceTree = "<group>"; };
+		CD94BB591E4C5FDD003A0CFF /* MOAIShaderUniformHandle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIShaderUniformHandle.cpp; sourceTree = "<group>"; };
+		CD94BB5A1E4C5FDD003A0CFF /* MOAIShaderUniformHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIShaderUniformHandle.h; sourceTree = "<group>"; };
+		CD94BB601E4C6AB6003A0CFF /* MOAIShaderUniformSchema.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIShaderUniformSchema.h; sourceTree = "<group>"; };
+		CD94BB651E4C6C4B003A0CFF /* MOAIShaderUniformSchema.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIShaderUniformSchema.cpp; sourceTree = "<group>"; };
 		CD95D4A51831D4E20080C34E /* libmoai-osx-crypto.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-crypto.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD9E5BE01A772B4100469462 /* MOAIGfxBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGfxBuffer.cpp; sourceTree = "<group>"; };
 		CD9E5BE11A772B4100469462 /* MOAIGfxBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxBuffer.h; sourceTree = "<group>"; };
@@ -6963,6 +6969,9 @@
 		CDC123A517FA818000FB64BB /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-crypto/host.h"; sourceTree = "<group>"; };
 		CDC123A617FA818000FB64BB /* MOAIHashWriterCrypto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIHashWriterCrypto.cpp; path = "moai-crypto/MOAIHashWriterCrypto.cpp"; sourceTree = "<group>"; };
 		CDC123A717FA818000FB64BB /* MOAIHashWriterCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIHashWriterCrypto.h; path = "moai-crypto/MOAIHashWriterCrypto.h"; sourceTree = "<group>"; };
+		CDC2B36620D66EC100300A96 /* MOAIGfxState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGfxState.cpp; sourceTree = "<group>"; };
+		CDC2B36720D66EC100300A96 /* MOAIGfxState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxState.h; sourceTree = "<group>"; };
+		CDC2B36E20D84BE000300A96 /* MOAIAbstractGfxStateCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAbstractGfxStateCache.h; sourceTree = "<group>"; };
 		CDC5203018A17EB700BCC12F /* MOAIShaderProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIShaderProgram.cpp; sourceTree = "<group>"; };
 		CDC5203118A17EB700BCC12F /* MOAIShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIShaderProgram.h; sourceTree = "<group>"; };
 		CDC5203218A17EB700BCC12F /* MOAIShaderUniform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIShaderUniform.cpp; sourceTree = "<group>"; };
@@ -7500,12 +7509,12 @@
 		CDE440101AC0D27600C745DB /* ZLFrustumFitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLFrustumFitter.cpp; sourceTree = "<group>"; };
 		CDE440111AC0D27600C745DB /* ZLFrustumFitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLFrustumFitter.h; sourceTree = "<group>"; };
 		CDE6CF5E1EA6D3B80020B819 /* MOAICollisionPrim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICollisionPrim.cpp; sourceTree = "<group>"; };
-		CDE7ED6D1E402A550005D63A /* MOAIDrawShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDrawShape.h; sourceTree = "<group>"; };
+		CDE7ED6D1E402A550005D63A /* MOAIAbstractDrawShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAbstractDrawShape.h; sourceTree = "<group>"; };
 		CDE7ED721E4033AB0005D63A /* MOAIDrawShapeImmediate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIDrawShapeImmediate.cpp; sourceTree = "<group>"; };
 		CDE7ED731E4033AB0005D63A /* MOAIDrawShapeImmediate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDrawShapeImmediate.h; sourceTree = "<group>"; };
 		CDE7ED741E4033AB0005D63A /* MOAIDrawShapeRetained.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIDrawShapeRetained.cpp; sourceTree = "<group>"; };
 		CDE7ED751E4033AB0005D63A /* MOAIDrawShapeRetained.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDrawShapeRetained.h; sourceTree = "<group>"; };
-		CDE7ED7E1E40364F0005D63A /* MOAIDrawShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIDrawShape.cpp; sourceTree = "<group>"; };
+		CDE7ED7E1E40364F0005D63A /* MOAIAbstractDrawShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAbstractDrawShape.cpp; sourceTree = "<group>"; };
 		CDE93C191B34EF370051ADA1 /* moai_version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = moai_version.h; sourceTree = "<group>"; };
 		CDEEC77C1C7BCEDC0014CC3F /* ZLResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLResult.h; sourceTree = "<group>"; };
 		CDEFD55C181ECB3E0058D772 /* MOAITextLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextLabel.cpp; sourceTree = "<group>"; };
@@ -8716,8 +8725,10 @@
 				CD8DD76419195F5A0088EA60 /* collision */,
 				CDA8609F1E30527100F35CAC /* debug lines */,
 				CDE9851818975AA7001827F9 /* deck */,
+				CDC2B37320D86F9200300A96 /* drawing */,
 				CDE9851918975AB6001827F9 /* font */,
 				CD13524B189738B000A39A74 /* graphics */,
+				CDC2B36C20D84BC500300A96 /* graphics state */,
 				CD2BA7A01B2A20BB0010C399 /* graphics system */,
 				CD8DD76819195FFB0088EA60 /* grid */,
 				CDE36E4D1A5F4DAB0095E863 /* image */,
@@ -9549,16 +9560,6 @@
 		CD2BA7A01B2A20BB0010C399 /* graphics system */ = {
 			isa = PBXGroup;
 			children = (
-				89BE6F4E173AD0CA00DFE837 /* MOAIDraw.cpp */,
-				89BE6F4F173AD0CA00DFE837 /* MOAIDraw.h */,
-				CDE7ED7E1E40364F0005D63A /* MOAIDrawShape.cpp */,
-				CDE7ED6D1E402A550005D63A /* MOAIDrawShape.h */,
-				CDE7ED721E4033AB0005D63A /* MOAIDrawShapeImmediate.cpp */,
-				CDE7ED731E4033AB0005D63A /* MOAIDrawShapeImmediate.h */,
-				CDE7ED741E4033AB0005D63A /* MOAIDrawShapeRetained.cpp */,
-				CDE7ED751E4033AB0005D63A /* MOAIDrawShapeRetained.h */,
-				CD2BA7941B2A16B00010C399 /* MOAIGfxGlobalsCache.cpp */,
-				CD2BA7951B2A16B00010C399 /* MOAIGfxGlobalsCache.h */,
 				89BE6F61173AD0CA00DFE837 /* MOAIGfxMgr.cpp */,
 				89BE6F62173AD0CA00DFE837 /* MOAIGfxMgr.h */,
 				CD2BA79A1B2A20A80010C399 /* MOAIGfxPipelineClerk.cpp */,
@@ -9567,10 +9568,6 @@
 				89BE6F6A173AD0CA00DFE837 /* MOAIGfxResource.h */,
 				CD1AEB441A0F785C005512C8 /* MOAIGfxResourceClerk.cpp */,
 				CD1AEB451A0F785C005512C8 /* MOAIGfxResourceClerk.h */,
-				CD3431031B30EDC6002BEBFA /* MOAIGfxStateCache.cpp */,
-				CD3431041B30EDC6002BEBFA /* MOAIGfxStateCache.h */,
-				CD2BA7A11B2A2D750010C399 /* MOAIGfxVertexCache.cpp */,
-				CD2BA7A21B2A2D750010C399 /* MOAIGfxVertexCache.h */,
 				89BE6FE3173AD0CA00DFE837 /* MOAIRenderMgr.cpp */,
 				89BE6FE4173AD0CA00DFE837 /* MOAIRenderMgr.h */,
 			);
@@ -12160,10 +12157,10 @@
 				CDC5203118A17EB700BCC12F /* MOAIShaderProgram.h */,
 				CDC5203218A17EB700BCC12F /* MOAIShaderUniform.cpp */,
 				CDC5203318A17EB700BCC12F /* MOAIShaderUniform.h */,
-				CD94BB651E4C6C4B003A0CFF /* MOAIShaderUniformBuffer.cpp */,
-				CD94BB601E4C6AB6003A0CFF /* MOAIShaderUniformBuffer.h */,
-				CD94BB591E4C5FDD003A0CFF /* MOAIShaderUniformFormatter.cpp */,
-				CD94BB5A1E4C5FDD003A0CFF /* MOAIShaderUniformFormatter.h */,
+				CD94BB591E4C5FDD003A0CFF /* MOAIShaderUniformHandle.cpp */,
+				CD94BB5A1E4C5FDD003A0CFF /* MOAIShaderUniformHandle.h */,
+				CD94BB651E4C6C4B003A0CFF /* MOAIShaderUniformSchema.cpp */,
+				CD94BB601E4C6AB6003A0CFF /* MOAIShaderUniformSchema.h */,
 			);
 			name = shader;
 			sourceTree = "<group>";
@@ -12218,6 +12215,37 @@
 				CDC123A717FA818000FB64BB /* MOAIHashWriterCrypto.h */,
 			);
 			name = "moai-crypto";
+			sourceTree = "<group>";
+		};
+		CDC2B36C20D84BC500300A96 /* graphics state */ = {
+			isa = PBXGroup;
+			children = (
+				CDC2B36E20D84BE000300A96 /* MOAIAbstractGfxStateCache.h */,
+				CDC2B36620D66EC100300A96 /* MOAIGfxState.cpp */,
+				CDC2B36720D66EC100300A96 /* MOAIGfxState.h */,
+				CD2BA7941B2A16B00010C399 /* MOAIGfxStateCPUCache.cpp */,
+				CD2BA7951B2A16B00010C399 /* MOAIGfxStateCPUCache.h */,
+				CD3431031B30EDC6002BEBFA /* MOAIGfxStateGPUCache.cpp */,
+				CD3431041B30EDC6002BEBFA /* MOAIGfxStateGPUCache.h */,
+				CD2BA7A11B2A2D750010C399 /* MOAIGfxStateVertexCache.cpp */,
+				CD2BA7A21B2A2D750010C399 /* MOAIGfxStateVertexCache.h */,
+			);
+			name = "graphics state";
+			sourceTree = "<group>";
+		};
+		CDC2B37320D86F9200300A96 /* drawing */ = {
+			isa = PBXGroup;
+			children = (
+				89BE6F4E173AD0CA00DFE837 /* MOAIDraw.cpp */,
+				89BE6F4F173AD0CA00DFE837 /* MOAIDraw.h */,
+				CDE7ED7E1E40364F0005D63A /* MOAIAbstractDrawShape.cpp */,
+				CDE7ED6D1E402A550005D63A /* MOAIAbstractDrawShape.h */,
+				CDE7ED721E4033AB0005D63A /* MOAIDrawShapeImmediate.cpp */,
+				CDE7ED731E4033AB0005D63A /* MOAIDrawShapeImmediate.h */,
+				CDE7ED741E4033AB0005D63A /* MOAIDrawShapeRetained.cpp */,
+				CDE7ED751E4033AB0005D63A /* MOAIDrawShapeRetained.h */,
+			);
+			name = drawing;
 			sourceTree = "<group>";
 		};
 		CDD06BD11398824600AB0420 /* luasocket */ = {
@@ -12857,14 +12885,15 @@
 				CD4C3ED8180A63BB00C02381 /* MOAITileFlags.h in Headers */,
 				CD4C3DF5180A63BB00C02381 /* MOAIAnimCurveQuat.h in Headers */,
 				CD4C3EB9180A63BB00C02381 /* MOAIShader.h in Headers */,
-				CD3431071B30EDC6002BEBFA /* MOAIGfxStateCache.h in Headers */,
+				CD3431071B30EDC6002BEBFA /* MOAIGfxStateGPUCache.h in Headers */,
 				CD4C3E47180A63BB00C02381 /* MOAIGridSpace.h in Headers */,
 				CD4C3E72180A63BB00C02381 /* MOAIParticleForce.h in Headers */,
 				CD4C3EFD180A63BB00C02381 /* pch.h in Headers */,
 				CD4C3E59180A63BB00C02381 /* MOAIPartitionViewLayer.h in Headers */,
+				CDC2B36A20D66EC100300A96 /* MOAIGfxState.h in Headers */,
 				CD4C3E16180A63BB00C02381 /* MOAIDeck.h in Headers */,
 				CD4C3E51180A63BB00C02381 /* MOAIInputDevice.h in Headers */,
-				CDE7ED701E402A550005D63A /* MOAIDrawShape.h in Headers */,
+				CDE7ED701E402A550005D63A /* MOAIAbstractDrawShape.h in Headers */,
 				CD1D85BA1E1B631C0089FFAD /* MOAIGraphicsPropBase.h in Headers */,
 				CD4C3ECA180A63BB00C02381 /* MOAITextBundle.h in Headers */,
 				CD1D85C71E1B87440089FFAD /* MOAIGraphicsGridProp.h in Headers */,
@@ -12902,6 +12931,7 @@
 				CDE7ED781E4033AB0005D63A /* MOAIDrawShapeImmediate.h in Headers */,
 				CD4C3DEB180A63BB00C02381 /* MOAIAction.h in Headers */,
 				CDC5203818A17EB700BCC12F /* MOAIShaderProgram.h in Headers */,
+				CDC2B37120D84BE000300A96 /* MOAIAbstractGfxStateCache.h in Headers */,
 				CDC02C841E380CDE007A02FB /* MOAIDeckRemapper.h in Headers */,
 				CD4C3E78180A63BB00C02381 /* MOAIParticleScript.h in Headers */,
 				CD92385F1E24B0EF00D5048D /* MOAIMaterial.h in Headers */,
@@ -12942,7 +12972,7 @@
 				CD1AEB481A0F785C005512C8 /* MOAIGfxResourceClerk.h in Headers */,
 				CD4C3EBD180A63BB00C02381 /* MOAISim.h in Headers */,
 				CD2BA79E1B2A20A80010C399 /* MOAIGfxPipelineClerk.h in Headers */,
-				CD2BA7A51B2A2D760010C399 /* MOAIGfxVertexCache.h in Headers */,
+				CD2BA7A51B2A2D760010C399 /* MOAIGfxStateVertexCache.h in Headers */,
 				CD792FAE1E4DB2DE00388A4B /* MOAIMaterialBase.h in Headers */,
 				CD1D85D91E1CDC590089FFAD /* MOAIOverlap.h in Headers */,
 				CD4C3EF1180A63BB00C02381 /* MOAIVectorStyle.h in Headers */,
@@ -12956,11 +12986,11 @@
 				CD4C3DFC180A63BB00C02381 /* MOAIBlendMode.h in Headers */,
 				CD4C3E25180A63BB00C02381 /* MOAIFontReader.h in Headers */,
 				CD4C3EDC180A63BB00C02381 /* MOAITouchSensor.h in Headers */,
-				CD2BA7981B2A16B00010C399 /* MOAIGfxGlobalsCache.h in Headers */,
+				CD2BA7981B2A16B00010C399 /* MOAIGfxStateCPUCache.h in Headers */,
 				CD4C3E5F180A63BB00C02381 /* MOAILocationSensor.h in Headers */,
 				CD4C3E27180A63BB00C02381 /* MOAIFrameBuffer.h in Headers */,
 				CD94BB2D1E4AF14A003A0CFF /* MOAILight.h in Headers */,
-				CD94BB5D1E4C5FDD003A0CFF /* MOAIShaderUniformFormatter.h in Headers */,
+				CD94BB5D1E4C5FDD003A0CFF /* MOAIShaderUniformHandle.h in Headers */,
 				CDE36E521A5F4E340095E863 /* MOAIImageFormatMgr.h in Headers */,
 				CD4C3E12180A63BB00C02381 /* MOAICoroutine.h in Headers */,
 				CD4C3E02180A63BB00C02381 /* MOAIButtonSensor.h in Headers */,
@@ -12996,7 +13026,7 @@
 				CD4C3EC0180A63BB00C02381 /* MOAIStaticGlyphCache.h in Headers */,
 				CD4C3DEF180A63BB00C02381 /* MOAIAnim.h in Headers */,
 				CD4C3EF0180A63BB00C02381 /* MOAIVectorShape.h in Headers */,
-				CD94BB631E4C6AB7003A0CFF /* MOAIShaderUniformBuffer.h in Headers */,
+				CD94BB631E4C6AB7003A0CFF /* MOAIShaderUniformSchema.h in Headers */,
 				CD32113D1C517BD300AD5E5C /* MOAITextLayoutEngine.h in Headers */,
 				CD4C3EF5180A63BB00C02381 /* MOAIVertexFormat.h in Headers */,
 				CDF695571D63E7330045A020 /* MOAIAnimCurveBone.h in Headers */,
@@ -13037,7 +13067,7 @@
 				CD4C402C180A63C200C02381 /* MOAIBitmapFontReader.h in Headers */,
 				CD3211431C517BD800AD5E5C /* MOAITextLayoutEngine.h in Headers */,
 				CD4C408B180A63C200C02381 /* MOAIPartitionViewLayer.h in Headers */,
-				CD94BB5E1E4C5FDD003A0CFF /* MOAIShaderUniformFormatter.h in Headers */,
+				CD94BB5E1E4C5FDD003A0CFF /* MOAIShaderUniformHandle.h in Headers */,
 				CD4C40E3180A63C200C02381 /* MOAIScissorRect.h in Headers */,
 				CD4C403E180A63C200C02381 /* MOAICollisionShape.h in Headers */,
 				CD4C40B8180A63C200C02381 /* MOAIPartitionResultBuffer.h in Headers */,
@@ -13081,6 +13111,7 @@
 				CD4C404C180A63C200C02381 /* MOAIDraw.h in Headers */,
 				CD4C40EF180A63C200C02381 /* MOAISim.h in Headers */,
 				CD1D85A51E1B2AA80089FFAD /* MOAIPartitionHull.h in Headers */,
+				CDC2B37220D84BE000300A96 /* MOAIAbstractGfxStateCache.h in Headers */,
 				CD4C4099180A63C200C02381 /* MOAINode.h in Headers */,
 				CD67B45D1B264C51004298CF /* MOAISelectionMesh.h in Headers */,
 				CD94BB2E1E4AF14A003A0CFF /* MOAILight.h in Headers */,
@@ -13099,13 +13130,14 @@
 				CD4C4123180A63C200C02381 /* MOAIVectorStyle.h in Headers */,
 				CD4C4129180A63C200C02381 /* MOAIVertexFormatMgr.h in Headers */,
 				CD4C403C180A63C200C02381 /* MOAICameraFitter2D.h in Headers */,
+				CDC2B36B20D66EC100300A96 /* MOAIGfxState.h in Headers */,
 				CD4C40BE180A63C200C02381 /* MOAIPathGraph.h in Headers */,
 				CD1D85C81E1B87440089FFAD /* MOAIGraphicsGridProp.h in Headers */,
 				CD5BFBF91E3737340057CFDB /* MOAIStretchPatch2D.h in Headers */,
 				CD4C40E1180A63C200C02381 /* MOAIRenderMgr.h in Headers */,
 				CD4C40A0180A63C200C02381 /* MOAIParticleDistanceEmitter.h in Headers */,
 				CD4C4057180A63C200C02381 /* MOAIFontReader.h in Headers */,
-				CDE7ED711E402A550005D63A /* MOAIDrawShape.h in Headers */,
+				CDE7ED711E402A550005D63A /* MOAIAbstractDrawShape.h in Headers */,
 				CDCA75F81D717E7D00FFE537 /* MOAIViewProj.h in Headers */,
 				CD4C40DD180A63C200C02381 /* MOAIQuadBrush.h in Headers */,
 				CDD5D6981C24EB6A0070237E /* MOAIPathStepper.h in Headers */,
@@ -13137,7 +13169,7 @@
 				CD5BFBF71E3737340057CFDB /* MOAIDrawDeck.h in Headers */,
 				CD4C40DF180A63C200C02381 /* MOAIDrawable.h in Headers */,
 				CDEFD571181ECB3E0058D772 /* MOAITextLayout.h in Headers */,
-				CD3431081B30EDC6002BEBFA /* MOAIGfxStateCache.h in Headers */,
+				CD3431081B30EDC6002BEBFA /* MOAIGfxStateGPUCache.h in Headers */,
 				CD4C402A180A63C200C02381 /* MOAIAttribute.h in Headers */,
 				CD4C410C180A63C200C02381 /* MOAITimer.h in Headers */,
 				CD4C4110180A63C200C02381 /* MOAITransform.h in Headers */,
@@ -13164,14 +13196,14 @@
 				CD1D85CE1E1C6D9F0089FFAD /* MOAICollisionDeck.h in Headers */,
 				CD4C407F180A63C200C02381 /* MOAIImageTexture.h in Headers */,
 				CD4C4021180A63C200C02381 /* MOAIAnim.h in Headers */,
-				CD94BB641E4C6AB7003A0CFF /* MOAIShaderUniformBuffer.h in Headers */,
+				CD94BB641E4C6AB7003A0CFF /* MOAIShaderUniformSchema.h in Headers */,
 				CD4C409E180A63C200C02381 /* MOAIParticleCallbackPlugin.h in Headers */,
 				CD6A30CB1E2A317D00C926EE /* MOAILayer.h in Headers */,
 				CD3211471C517BD800AD5E5C /* MOAITextShaper.h in Headers */,
 				CD4C40C4180A63C200C02381 /* MOAIPointerSensor.h in Headers */,
 				CD4C4046180A63C200C02381 /* MOAIDebugLines.h in Headers */,
 				CD73A603188F0AD200DFACDB /* MOAICollisionWorld.h in Headers */,
-				CD2BA7991B2A16B00010C399 /* MOAIGfxGlobalsCache.h in Headers */,
+				CD2BA7991B2A16B00010C399 /* MOAIGfxStateCPUCache.h in Headers */,
 				CD92388E1E275D3100D5048D /* MOAIFancyGrid.h in Headers */,
 				CD6ECF6F1A6E247C004813FF /* MOAIMatrix.h in Headers */,
 				CDF695581D63E7330045A020 /* MOAIAnimCurveBone.h in Headers */,
@@ -13195,7 +13227,7 @@
 				CDEFD579181ECB3E0058D772 /* MOAIVectorEllipse.h in Headers */,
 				CD4C40AE180A63C200C02381 /* MOAIParticleSystem.h in Headers */,
 				CD4C4050180A63C200C02381 /* MOAIEaseType.h in Headers */,
-				CD2BA7A61B2A2D760010C399 /* MOAIGfxVertexCache.h in Headers */,
+				CD2BA7A61B2A2D760010C399 /* MOAIGfxStateVertexCache.h in Headers */,
 				CD9238861E25F98000D5048D /* MOAIMaterialHolder.h in Headers */,
 				CD4C4017180A63C200C02381 /* headers.h in Headers */,
 				CDC02C8E1E381DD2007A02FB /* MOAIPartitionHolder.h in Headers */,
@@ -15956,7 +15988,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = NO;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0930;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "libmoai" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -16337,7 +16369,7 @@
 				CD4C3EC9180A63BB00C02381 /* MOAITextBundle.cpp in Sources */,
 				CD781095187CAA2D008B9C0A /* MOAITextStyleCache.cpp in Sources */,
 				CD4C3E68180A63BB00C02381 /* MOAINodeMgr.cpp in Sources */,
-				CDE7ED7F1E40364F0005D63A /* MOAIDrawShape.cpp in Sources */,
+				CDE7ED7F1E40364F0005D63A /* MOAIAbstractDrawShape.cpp in Sources */,
 				CD4C3E26180A63BB00C02381 /* MOAIFrameBuffer.cpp in Sources */,
 				CD4C3E07180A63BB00C02381 /* MOAICameraAnchor2D.cpp in Sources */,
 				CD4C3E75180A63BB00C02381 /* MOAIParticlePlugin.cpp in Sources */,
@@ -16368,6 +16400,7 @@
 				CD4C3E46180A63BB00C02381 /* MOAIGridSpace.cpp in Sources */,
 				CD4C3E5C180A63BB00C02381 /* MOAILayoutFrame.cpp in Sources */,
 				CDEFD57A181ECB3E0058D772 /* MOAIVectorRect.cpp in Sources */,
+				CDC2B36820D66EC100300A96 /* MOAIGfxState.cpp in Sources */,
 				CD4C3DF6180A63BB00C02381 /* MOAIAnimCurveVec.cpp in Sources */,
 				CDE7ED761E4033AB0005D63A /* MOAIDrawShapeImmediate.cpp in Sources */,
 				CD94BAF71E4876D0003A0CFF /* MOAIMoveConstraint2D.cpp in Sources */,
@@ -16380,7 +16413,7 @@
 				CD4C3E13180A63BB00C02381 /* MOAIDebugLines.cpp in Sources */,
 				CDEFD56A181ECB3E0058D772 /* MOAITextLabel.cpp in Sources */,
 				CD92385D1E24B0EF00D5048D /* MOAIMaterial.cpp in Sources */,
-				CD94BB5B1E4C5FDD003A0CFF /* MOAIShaderUniformFormatter.cpp in Sources */,
+				CD94BB5B1E4C5FDD003A0CFF /* MOAIShaderUniformHandle.cpp in Sources */,
 				CD4C3E7D180A63BB00C02381 /* MOAIParticleTimedEmitter.cpp in Sources */,
 				CD4C3EBA180A63BB00C02381 /* MOAIShaderMgr.cpp in Sources */,
 				CD4C3E4A180A63BB00C02381 /* MOAIImage.cpp in Sources */,
@@ -16411,7 +16444,7 @@
 				CD4C3E8D180A63BB00C02381 /* MOAIPathTerrainDeck.cpp in Sources */,
 				CD4C3E40180A63BB00C02381 /* MOAIGrid.cpp in Sources */,
 				CD4C3E71180A63BB00C02381 /* MOAIParticleForce.cpp in Sources */,
-				CD94BB661E4C6C4B003A0CFF /* MOAIShaderUniformBuffer.cpp in Sources */,
+				CD94BB661E4C6C4B003A0CFF /* MOAIShaderUniformSchema.cpp in Sources */,
 				CD4C3E73180A63BB00C02381 /* MOAIParticlePexPlugin.cpp in Sources */,
 				CD4C3E91180A63BB00C02381 /* MOAIPointerSensor.cpp in Sources */,
 				CD4C3E83180A63BB00C02381 /* MOAIPartitionLevel.cpp in Sources */,
@@ -16436,7 +16469,7 @@
 				CDE36E561A5F62FA0095E863 /* MOAIImageFormat.cpp in Sources */,
 				CDEFD572181ECB3E0058D772 /* MOAITextStyleParser.cpp in Sources */,
 				CDC5203E18A17EB700BCC12F /* MOAIVectorTesselator.cpp in Sources */,
-				CD3431051B30EDC6002BEBFA /* MOAIGfxStateCache.cpp in Sources */,
+				CD3431051B30EDC6002BEBFA /* MOAIGfxStateGPUCache.cpp in Sources */,
 				CD1AEB461A0F785C005512C8 /* MOAIGfxResourceClerk.cpp in Sources */,
 				CD4C3E1B180A63BB00C02381 /* MOAIEaseDriver.cpp in Sources */,
 				CD4C3E34180A63BB00C02381 /* MOAIGfxResource.cpp in Sources */,
@@ -16445,7 +16478,7 @@
 				CD4C3EAE180A63BB00C02381 /* MOAIRenderMgr.cpp in Sources */,
 				CD4C3E38180A63BB00C02381 /* MOAIDynamicGlyphCache.cpp in Sources */,
 				CD4C3E03180A63BB00C02381 /* MOAICamera.cpp in Sources */,
-				CD2BA7961B2A16B00010C399 /* MOAIGfxGlobalsCache.cpp in Sources */,
+				CD2BA7961B2A16B00010C399 /* MOAIGfxStateCPUCache.cpp in Sources */,
 				CD4C3EB8180A63BB00C02381 /* MOAIShader.cpp in Sources */,
 				CDC02C8B1E381DD2007A02FB /* MOAIPartitionHolder.cpp in Sources */,
 				CDC02C971E388140007A02FB /* MOAITableViewLayer.cpp in Sources */,
@@ -16456,7 +16489,7 @@
 				CD4C3EDD180A63BB00C02381 /* MOAITransform.cpp in Sources */,
 				CD4C3ED1180A63BB00C02381 /* MOAITexture.cpp in Sources */,
 				CD4C050F18500C18005B0520 /* MOAIVectorStyle.cpp in Sources */,
-				CD2BA7A31B2A2D760010C399 /* MOAIGfxVertexCache.cpp in Sources */,
+				CD2BA7A31B2A2D760010C399 /* MOAIGfxStateVertexCache.cpp in Sources */,
 				CD4C3E28180A63BB00C02381 /* MOAIFrameBufferTexture.cpp in Sources */,
 				CD4C3E8F180A63BB00C02381 /* MOAIPinTransform.cpp in Sources */,
 				CD48CF221A12F8F70029F932 /* MOAIRegion.cpp in Sources */,
@@ -16526,7 +16559,7 @@
 				CD73A601188F0AD200DFACDB /* MOAICollisionWorld.cpp in Sources */,
 				CD4C405C180A63C200C02381 /* MOAIFreeTypeFontReader.cpp in Sources */,
 				CD4C404D180A63C200C02381 /* MOAIEaseDriver.cpp in Sources */,
-				CDE7ED801E40364F0005D63A /* MOAIDrawShape.cpp in Sources */,
+				CDE7ED801E40364F0005D63A /* MOAIAbstractDrawShape.cpp in Sources */,
 				CD4C40F7180A63C200C02381 /* MOAISurfaceSampler2D.cpp in Sources */,
 				CD4C40AB180A63C200C02381 /* MOAIParticleState.cpp in Sources */,
 				CD4C412E180A63C200C02381 /* pch.cpp in Sources */,
@@ -16557,6 +16590,7 @@
 				CD4C40EE180A63C200C02381 /* MOAISim.cpp in Sources */,
 				CDEFD56F181ECB3E0058D772 /* MOAITextLayout.cpp in Sources */,
 				CD4C40B3180A63C200C02381 /* MOAIPartitionCell.cpp in Sources */,
+				CDC2B36920D66EC100300A96 /* MOAIGfxState.cpp in Sources */,
 				CD4C4126180A63C200C02381 /* MOAIVertexFormat.cpp in Sources */,
 				CDE7ED771E4033AB0005D63A /* MOAIDrawShapeImmediate.cpp in Sources */,
 				CD94BAF81E4876D0003A0CFF /* MOAIMoveConstraint2D.cpp in Sources */,
@@ -16569,7 +16603,7 @@
 				CD1D85B11E1B5EDD0089FFAD /* MOAIIndexedPropBase.cpp in Sources */,
 				CD92385E1E24B0EF00D5048D /* MOAIMaterial.cpp in Sources */,
 				CD4C4094180A63C200C02381 /* MOAIMotionSensor.cpp in Sources */,
-				CD94BB5C1E4C5FDD003A0CFF /* MOAIShaderUniformFormatter.cpp in Sources */,
+				CD94BB5C1E4C5FDD003A0CFF /* MOAIShaderUniformHandle.cpp in Sources */,
 				CDEFD577181ECB3E0058D772 /* MOAIVectorEllipse.cpp in Sources */,
 				CD4C405E180A63C200C02381 /* MOAIGfxMgr.cpp in Sources */,
 				CD4C40BF180A63C200C02381 /* MOAIPathTerrainDeck.cpp in Sources */,
@@ -16599,7 +16633,7 @@
 				CD4C4056180A63C200C02381 /* MOAIFontReader.cpp in Sources */,
 				CD34310C1B31175F002BEBFA /* MOAITextureBase.cpp in Sources */,
 				CD3211441C517BD800AD5E5C /* MOAITextLayoutRules.cpp in Sources */,
-				CD94BB671E4C6C4B003A0CFF /* MOAIShaderUniformBuffer.cpp in Sources */,
+				CD94BB671E4C6C4B003A0CFF /* MOAIShaderUniformSchema.cpp in Sources */,
 				CD3211421C517BD800AD5E5C /* MOAITextLayoutEngine.cpp in Sources */,
 				CD73A5FD188F0AD200DFACDB /* MOAICollisionProp.cpp in Sources */,
 				CD4C412A180A63C200C02381 /* MOAIViewport.cpp in Sources */,
@@ -16617,7 +16651,7 @@
 				CD4C401A180A63C200C02381 /* host_particles.cpp in Sources */,
 				CD4C409D180A63C200C02381 /* MOAIParticleCallbackPlugin.cpp in Sources */,
 				CD9238791E25F37C00D5048D /* MOAIMaterialBatchHolder.cpp in Sources */,
-				CD3431061B30EDC6002BEBFA /* MOAIGfxStateCache.cpp in Sources */,
+				CD3431061B30EDC6002BEBFA /* MOAIGfxStateGPUCache.cpp in Sources */,
 				CD5BFBF41E3737340057CFDB /* MOAIMetaTileDeck2D.cpp in Sources */,
 				CD4C402F180A63C200C02381 /* MOAIBlocker.cpp in Sources */,
 				CD4C4035180A63C200C02381 /* MOAICamera.cpp in Sources */,
@@ -16631,7 +16665,7 @@
 				CD6A30C01E29B57900C926EE /* MOAITableLayer.cpp in Sources */,
 				CD4C401C180A63C200C02381 /* MOAIAction.cpp in Sources */,
 				CD1AEB471A0F785C005512C8 /* MOAIGfxResourceClerk.cpp in Sources */,
-				CD2BA7971B2A16B00010C399 /* MOAIGfxGlobalsCache.cpp in Sources */,
+				CD2BA7971B2A16B00010C399 /* MOAIGfxStateCPUCache.cpp in Sources */,
 				CD4C4121180A63C200C02381 /* MOAIVectorShape.cpp in Sources */,
 				CD4C4078180A63C200C02381 /* MOAIGridSpace.cpp in Sources */,
 				CD4C403D180A63C200C02381 /* MOAICollisionShape.cpp in Sources */,
@@ -16642,7 +16676,7 @@
 				CD1D85A31E1B2AA80089FFAD /* MOAIPartitionHull.cpp in Sources */,
 				CD94BB001E488309003A0CFF /* MOAIOverlapResolver-poly-poly.cpp in Sources */,
 				CD4C4098180A63C200C02381 /* MOAINode.cpp in Sources */,
-				CD2BA7A41B2A2D760010C399 /* MOAIGfxVertexCache.cpp in Sources */,
+				CD2BA7A41B2A2D760010C399 /* MOAIGfxStateVertexCache.cpp in Sources */,
 				CD1401401A0C5F660065AEE7 /* MOAIInputMgr.cpp in Sources */,
 				CD4C407E180A63C200C02381 /* MOAIImageTexture.cpp in Sources */,
 				CD4C402D180A63C200C02381 /* MOAIBlendMode.cpp in Sources */,
@@ -19058,6 +19092,7 @@
 		0324E2AD1356485F000ADC60 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -19102,6 +19137,7 @@
 		0324E2AE1356485F000ADC60 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -19148,6 +19184,7 @@
 		0324E2B91356485F000ADC60 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -19162,6 +19199,7 @@
 		0324E2BA1356485F000ADC60 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -19178,12 +19216,20 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -19318,6 +19364,7 @@
 		03C2F6F6104DE131009A2D5D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -19355,6 +19402,7 @@
 		03C2F6F7104DE131009A2D5D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -19387,6 +19435,7 @@
 		3EDC16E619F6DD1A007A7775 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -19394,6 +19443,7 @@
 		3EDC16E719F6DD1A007A7775 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -19401,6 +19451,7 @@
 		3EDC16E919F6DD1A007A7775 /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = "Release-NoSymbols";
@@ -19408,6 +19459,7 @@
 		3EDC171319F6DE01007A7775 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -19415,6 +19467,7 @@
 		3EDC171419F6DE01007A7775 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -19422,6 +19475,7 @@
 		3EDC171619F6DE01007A7775 /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = "Release-NoSymbols";
@@ -19429,6 +19483,7 @@
 		89BE6F02173AD06700DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19461,6 +19516,7 @@
 		89BE6F03173AD06700DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19493,6 +19549,7 @@
 		89BE6F05173AD06700DFE837 /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19525,6 +19582,7 @@
 		89BE6F14173AD07100DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -19560,6 +19618,7 @@
 		89BE6F15173AD07100DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -19595,6 +19654,7 @@
 		89BE6F17173AD07100DFE837 /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -19630,6 +19690,7 @@
 		89BE7377173AD29200DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -19667,6 +19728,7 @@
 		89BE7378173AD29200DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -19704,6 +19766,7 @@
 		89BE737A173AD29200DFE837 /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -19741,6 +19804,7 @@
 		89BE749D173AD2B600DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19773,6 +19837,7 @@
 		89BE749E173AD2B600DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19805,6 +19870,7 @@
 		89BE74A0173AD2B600DFE837 /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19837,6 +19903,7 @@
 		89BE75D6173C121800DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -19872,6 +19939,7 @@
 		89BE75D7173C121800DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -19907,6 +19975,7 @@
 		89BE75D9173C121800DFE837 /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -19942,6 +20011,7 @@
 		89BE75F3173C126100DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -19974,6 +20044,7 @@
 		89BE75F4173C126100DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20006,6 +20077,7 @@
 		89BE75F6173C126100DFE837 /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20038,6 +20110,7 @@
 		89BE7682173C15F100DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20070,6 +20143,7 @@
 		89BE7683173C15F100DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20102,6 +20176,7 @@
 		89BE7685173C15F100DFE837 /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20134,6 +20209,7 @@
 		89BE769B173C160E00DFE837 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20169,6 +20245,7 @@
 		89BE769C173C160E00DFE837 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20204,6 +20281,7 @@
 		89BE769E173C160E00DFE837 /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20241,12 +20319,20 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -20383,6 +20469,7 @@
 		CD04ACB214725568009C20E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -20394,6 +20481,7 @@
 		CD04ACB314725568009C20E5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -20405,6 +20493,7 @@
 		CD04AE7D1472557F009C20E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20421,6 +20510,7 @@
 		CD04AE7E1472557F009C20E5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20437,6 +20527,7 @@
 		CD07C3CB13A182AA00C9386C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20469,6 +20560,7 @@
 		CD07C3CC13A182AA00C9386C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -20501,6 +20593,7 @@
 		CD07C4E313A1918600C9386C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20537,6 +20630,7 @@
 		CD07C4E413A1918600C9386C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20573,6 +20667,7 @@
 		CD1845981A626BD500FCCCE0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20587,6 +20682,7 @@
 		CD1845991A626BD500FCCCE0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20601,6 +20697,7 @@
 		CD18459B1A626BD500FCCCE0 /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -20615,6 +20712,7 @@
 		CD257B9E1A6255380057A53A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -20652,6 +20750,7 @@
 		CD257B9F1A6255380057A53A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -20684,6 +20783,7 @@
 		CD257BA11A6255380057A53A /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -20716,6 +20816,7 @@
 		CD320DD61C5179B000AD5E5C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -20754,6 +20855,7 @@
 		CD320DD71C5179B000AD5E5C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -20792,6 +20894,7 @@
 		CD320DD91C5179B000AD5E5C /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -20830,6 +20933,7 @@
 		CD320F591C517A0E00AD5E5C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -20873,6 +20977,7 @@
 		CD320F5A1C517A0E00AD5E5C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -20918,6 +21023,7 @@
 		CD320F5C1C517A0E00AD5E5C /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -20963,6 +21069,7 @@
 		CD32B4D419F9EDD10059D019 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -21006,6 +21113,7 @@
 		CD32B4D519F9EDD10059D019 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -21051,6 +21159,7 @@
 		CD32B4D719F9EDD10059D019 /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -21096,6 +21205,7 @@
 		CD42F35F1A60A7CC001B6D72 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21132,6 +21242,7 @@
 		CD42F3601A60A7CC001B6D72 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21168,6 +21279,7 @@
 		CD42F3621A60A7CC001B6D72 /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21204,6 +21316,7 @@
 		CD4BCF821E542277002306C2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					MOAI_WITH_ARTOOLKIT,
@@ -21240,6 +21353,7 @@
 		CD4BCF831E542277002306C2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					MOAI_WITH_ARTOOLKIT,
@@ -21275,6 +21389,7 @@
 		CD4BCF841E542277002306C2 /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					MOAI_WITH_ARTOOLKIT,
@@ -21310,6 +21425,7 @@
 		CD4C3A7D180A623200C02381 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21342,6 +21458,7 @@
 		CD4C3A7E180A623200C02381 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21374,6 +21491,7 @@
 		CD4C3A80180A623200C02381 /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21406,6 +21524,7 @@
 		CD515F1A1BCDB440000718FB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21442,6 +21561,7 @@
 		CD515F1B1BCDB440000718FB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21478,6 +21598,7 @@
 		CD515F1D1BCDB440000718FB /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21514,6 +21635,7 @@
 		CD515F291BCDB45B000718FB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21550,6 +21672,7 @@
 		CD515F2A1BCDB45B000718FB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21586,6 +21709,7 @@
 		CD515F2C1BCDB45B000718FB /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21622,6 +21746,7 @@
 		CD515F381BCDB467000718FB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21658,6 +21783,7 @@
 		CD515F391BCDB467000718FB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21694,6 +21820,7 @@
 		CD515F3B1BCDB467000718FB /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21730,6 +21857,7 @@
 		CD515F471BCDB473000718FB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21766,6 +21894,7 @@
 		CD515F481BCDB473000718FB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21802,6 +21931,7 @@
 		CD515F4A1BCDB473000718FB /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -21838,6 +21968,7 @@
 		CD515F5A1BCDBBEC000718FB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21870,6 +22001,7 @@
 		CD515F5B1BCDBBEC000718FB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21902,6 +22034,7 @@
 		CD515F5D1BCDBBEC000718FB /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21934,6 +22067,7 @@
 		CD515F691BCDBBF8000718FB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21966,6 +22100,7 @@
 		CD515F6A1BCDBBF8000718FB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -21998,6 +22133,7 @@
 		CD515F6C1BCDBBF8000718FB /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22030,6 +22166,7 @@
 		CD515F781BCDBC00000718FB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22062,6 +22199,7 @@
 		CD515F791BCDBC00000718FB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22094,6 +22232,7 @@
 		CD515F7B1BCDBC00000718FB /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22126,6 +22265,7 @@
 		CD515F871BCDBC08000718FB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22158,6 +22298,7 @@
 		CD515F881BCDBC08000718FB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22190,6 +22331,7 @@
 		CD515F8A1BCDBC08000718FB /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -22224,6 +22366,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
@@ -22270,6 +22413,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
@@ -22316,6 +22460,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
@@ -22360,6 +22505,7 @@
 		CD6D752117EE415D00964415 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -22376,6 +22522,7 @@
 		CD6D752217EE415D00964415 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -22392,6 +22539,7 @@
 		CD6D752417EE415D00964415 /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -22409,6 +22557,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
@@ -22464,6 +22613,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
@@ -22521,6 +22671,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
@@ -22577,6 +22728,7 @@
 		CD7852C91D18C669003F15D0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -22621,6 +22773,7 @@
 		CD7852CA1D18C669003F15D0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -22665,6 +22818,7 @@
 		CD7852CC1D18C669003F15D0 /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -22709,6 +22863,7 @@
 		CD792FF81E51D51800388A4B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					GVR_NO_CPP_WRAPPER,
@@ -22746,6 +22901,7 @@
 		CD792FF91E51D51800388A4B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					GVR_NO_CPP_WRAPPER,
@@ -22783,6 +22939,7 @@
 		CD792FFA1E51D51800388A4B /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					GVR_NO_CPP_WRAPPER,
@@ -22820,6 +22977,7 @@
 		CD807E941831C42100E658D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -22836,6 +22994,7 @@
 		CD807E951831C42100E658D9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -22852,6 +23011,7 @@
 		CD807E971831C42100E658D9 /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -22868,6 +23028,7 @@
 		CD830E461BED355500745C8A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -22906,6 +23067,7 @@
 		CD830E471BED355500745C8A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -22944,6 +23106,7 @@
 		CD830E491BED355500745C8A /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -22982,6 +23145,7 @@
 		CD830F1D1BED356D00745C8A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23020,6 +23184,7 @@
 		CD830F1E1BED356D00745C8A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23058,6 +23223,7 @@
 		CD830F201BED356D00745C8A /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23096,6 +23262,7 @@
 		CD8312791BED379600745C8A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23134,6 +23301,7 @@
 		CD83127A1BED379600745C8A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23172,6 +23340,7 @@
 		CD83127C1BED379600745C8A /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23210,6 +23379,7 @@
 		CD8313501BED38F600745C8A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23249,6 +23419,7 @@
 		CD8313511BED38F600745C8A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23288,6 +23459,7 @@
 		CD8313531BED38F600745C8A /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23327,6 +23499,7 @@
 		CD8314271BED394D00745C8A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23365,6 +23538,7 @@
 		CD8314281BED394D00745C8A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23403,6 +23577,7 @@
 		CD83142A1BED394D00745C8A /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23441,6 +23616,7 @@
 		CD8314FE1BED395600745C8A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23479,6 +23655,7 @@
 		CD8314FF1BED395600745C8A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23517,6 +23694,7 @@
 		CD8315011BED395600745C8A /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23555,6 +23733,7 @@
 		CD8315C31BED3A8100745C8A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23593,6 +23772,7 @@
 		CD8315C41BED3A8100745C8A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23631,6 +23811,7 @@
 		CD8315C61BED3A8100745C8A /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23669,6 +23850,7 @@
 		CD83161E1BED3AE900745C8A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23707,6 +23889,7 @@
 		CD83161F1BED3AE900745C8A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23745,6 +23928,7 @@
 		CD8316211BED3AE900745C8A /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23783,6 +23967,7 @@
 		CD8316791BED3BC100745C8A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23821,6 +24006,7 @@
 		CD83167A1BED3BC100745C8A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23859,6 +24045,7 @@
 		CD83167C1BED3BC100745C8A /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23897,6 +24084,7 @@
 		CD8316C51BED3C1800745C8A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23935,6 +24123,7 @@
 		CD8316C61BED3C1800745C8A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -23973,6 +24162,7 @@
 		CD8316C81BED3C1800745C8A /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -24011,6 +24201,7 @@
 		CD95D4A11831D4E20080C34E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24048,6 +24239,7 @@
 		CD95D4A21831D4E20080C34E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24085,6 +24277,7 @@
 		CD95D4A41831D4E20080C34E /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24122,6 +24315,7 @@
 		CDA0DA001A01B111002B71B6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -24160,6 +24354,7 @@
 		CDA0DA011A01B111002B71B6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -24193,6 +24388,7 @@
 		CDA0DA031A01B111002B71B6 /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -24226,6 +24422,7 @@
 		CDA0DC9F1A01B184002B71B6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24263,6 +24460,7 @@
 		CDA0DCA01A01B184002B71B6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24300,6 +24498,7 @@
 		CDA0DCA21A01B184002B71B6 /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24337,6 +24536,7 @@
 		CDA1D0841D1B75B20006C5E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24378,6 +24578,7 @@
 		CDA1D0851D1B75B20006C5E5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24419,6 +24620,7 @@
 		CDA1D0871D1B75B20006C5E5 /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24460,6 +24662,7 @@
 		CDC097DD1AE9C72E002E325F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_ARES,
 					USE_OPENSSL,
@@ -24498,6 +24701,7 @@
 		CDC097DE1AE9C72E002E325F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -24531,6 +24735,7 @@
 		CDC097E01AE9C72E002E325F /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -24564,6 +24769,7 @@
 		CDC1237F17FA804C00FB64BB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					MBEDTLS_EXPORTS,
@@ -24579,6 +24785,7 @@
 		CDC1238017FA804C00FB64BB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					MBEDTLS_EXPORTS,
@@ -24594,6 +24801,7 @@
 		CDC1238217FA804C00FB64BB /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					MBEDTLS_EXPORTS,
@@ -24609,6 +24817,7 @@
 		CDD06BCE1398822500AB0420 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -24641,6 +24850,7 @@
 		CDD06BCF1398822500AB0420 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -24673,6 +24883,7 @@
 		CDD06D85139882D900AB0420 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24710,6 +24921,7 @@
 		CDD06D86139882D900AB0420 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24747,6 +24959,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -24879,6 +25092,7 @@
 		CDD781C71A11631E00AD133E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -24911,6 +25125,7 @@
 		CDD781C91A11631E00AD133E /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -24943,6 +25158,7 @@
 		CDD8134F1E16FE7100996311 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -24984,6 +25200,7 @@
 		CDD813501E16FE7100996311 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -25025,6 +25242,7 @@
 		CDD813511E16FE7100996311 /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -25066,6 +25284,7 @@
 		CDF288B817ED41CF00FD4F59 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
@@ -25078,6 +25297,7 @@
 		CDF288B917ED41CF00FD4F59 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
@@ -25090,6 +25310,7 @@
 		CDF288BB17ED41CF00FD4F59 /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
@@ -25104,12 +25325,20 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -25245,6 +25474,7 @@
 		E90D02C014D5E12700DD75AA /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					USE_ARES,
@@ -25277,6 +25507,7 @@
 		E90D02C214D5E12700DD75AA /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -25309,6 +25540,7 @@
 		E90D02C414D5E12700DD75AA /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -25341,6 +25573,7 @@
 		E90D02C514D5E12700DD75AA /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -25352,6 +25585,7 @@
 		E90D02C614D5E12700DD75AA /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -25366,6 +25600,7 @@
 		E90D02C714D5E12700DD75AA /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -25412,6 +25647,7 @@
 		E90D02C814D5E12700DD75AA /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -25448,6 +25684,7 @@
 		E90D02C914D5E12700DD75AA /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -25484,6 +25721,7 @@
 		E90D02CA14D5E12700DD75AA /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",

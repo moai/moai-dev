@@ -117,22 +117,23 @@ MOAILight* MOAIMaterialMgr::GetLight ( u32 lightID ) {
 MOAITextureBase* MOAIMaterialMgr::GetTexture ( u32 textureID ) {
 
 	assert ( textureID < MAX_GLOBAL_TEXTURES );
-	return this->mNamedTextures [ textureID ].mTexture;
+	MOAITextureBase* texture = this->mNamedTextures [ textureID ].mTexture;
+	return texture ? texture : ( MOAITextureBase* )this->mTexture;
 }
 
 //----------------------------------------------------------------//
 void MOAIMaterialMgr::LoadGfxState () {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
-	gfxMgr.mGfxState.SetBlendMode ( this->mBlendMode );
-	gfxMgr.mGfxState.SetCullFunc ( this->mCullMode );
-	gfxMgr.mGfxState.SetDepthMask ( this->mDepthMask );
-	gfxMgr.mGfxState.SetDepthFunc ( this->mDepthTest );
-	gfxMgr.mGfxState.SetTexture ( this->mTexture );
+	gfxState.SetBlendMode ( this->mBlendMode );
+	gfxState.SetCullFunc ( this->mCullMode );
+	gfxState.SetDepthMask ( this->mDepthMask );
+	gfxState.SetDepthFunc ( this->mDepthTest );
+	gfxState.SetTexture ( this->mTexture );
 	
 	// load shader last!
-	gfxMgr.mGfxState.SetShader ( this->mShader );
+	gfxState.SetShader ( this->mShader );
 }
 
 //----------------------------------------------------------------//

@@ -72,7 +72,7 @@ bool MOAIVertexArray::AffirmVertexBuffers ( u32 idx ) {
 //----------------------------------------------------------------//
 void MOAIVertexArray::BindVertexArrayItems () {
 
-	MOAIGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
 	size_t totalVBOs = this->mVertexBuffers.Size ();
 	for ( size_t i = 0; i < totalVBOs; ++i ) {
@@ -290,7 +290,7 @@ void MOAIVertexArray::SetVertexBuffer ( u32 idx, MOAIVertexBuffer* vtxBuffer, MO
 //----------------------------------------------------------------//
 void MOAIVertexArray::UnbindVertexArrayItems () {
 
-	MOAIGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
 	size_t totalVBOs = this->mVertexBuffers.Size ();
 	for ( size_t i = 0; i < totalVBOs; ++i ) {

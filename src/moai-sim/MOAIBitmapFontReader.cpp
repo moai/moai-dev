@@ -276,8 +276,7 @@ void MOAIBitmapFontReader::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIBitmapFontReader::RenderGlyph ( MOAIImage& image, float x, float y, const ZLColorBlendFunc& blendFunc ) {
-	UNUSED ( blendFunc );
+int MOAIBitmapFontReader::RenderGlyph ( MOAIImage& image, float x, float y ) {
 
 	if ( !this->mCurrentGlyph ) return FONT_ERROR;
 	
@@ -294,7 +293,7 @@ int MOAIBitmapFontReader::RenderGlyph ( MOAIImage& image, float x, float y, cons
 		bitmapGlyph.mSrcRect,
 		destRect,
 		MOAIImage::FILTER_LINEAR,
-		blendFunc
+		this->mBlendMode
 	);
 	
 	return OK;

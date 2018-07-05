@@ -44,10 +44,10 @@ int MOAILight::_setTransform ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAILight::_setUniform ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIShader, "U" )
+	MOAI_LUA_SETUP ( MOAILight, "U" )
 
 	u32 uniformID	= state.GetValue < u32 >( 2, 1 ) - 1;
-	self->SetUniform ( L, 3, uniformID, 0 );
+	self->SetUniform ( L, 3, self->mBuffer, uniformID, 0 );
 	return 0;
 }
 
@@ -129,21 +129,23 @@ void MOAILight::SetFormat ( MOAILightFormat* format ) {
 //----------------------------------------------------------------//
 bool MOAILight::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 
-	return this->mFormat ? this->MOAIShaderUniformBuffer::ApplyAttrOp ( attrID, attr, op ) : false;
+	return this->mFormat ? this->MOAIShaderUniformSchema::ApplyAttrOp ( this->mBuffer, attrID, attr, op ) : false;
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformFormatter* MOAILight::MOAIShaderUniformBuffer_GetUniform ( u32 uniformID, void*& buffer ) {
+MOAIShaderUniformHandle MOAILight::MOAIShaderUniformSchema_GetUniformHandle ( void* buffer, u32 uniformID ) const {
+
+	MOAIShaderUniformHandle uniform;
+	uniform.mBuffer = 0;
 
 	if ( this->mFormat ) {
-		MOAILightFormatUniform * uniform = this->mFormat->GetUniform ( uniformID );
-		if ( uniform ) {
-			buffer = ( void* )(( size_t )this->mBuffer.Data () + uniform->mBase );
-		}
-		return uniform;
-	} else {
-		return (MOAIShaderUniform *) 0;
-	}
+	
+		const MOAILightFormatUniform& lightUniform = this->mFormat->mUniforms [ uniformID ];
 
+		uniform.mType		= lightUniform.mType;
+		uniform.mWidth		= lightUniform.mWidth;
+		uniform.mBuffer		= ( void* )(( size_t )this->mBuffer.Data () + lightUniform.mBase );
+	}
+	return uniform;
 }
 

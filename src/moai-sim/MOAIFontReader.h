@@ -71,6 +71,8 @@ protected:
 
 	static const u32 GLYPH_CODE_NULL = 0xffffffff;
 
+	MOAIImageBlendMode	mBlendMode;
+
 	//----------------------------------------------------------------//
 	static int		_close					( lua_State* L );
 	static int		_getFaceMetrics			( lua_State* L );
@@ -81,6 +83,7 @@ protected:
 	static int		_renderGlyph			( lua_State* L );
 	static int		_selectFace				( lua_State* L );
 	static int		_selectGlyph			( lua_State* L );
+	static int		_setBlendMode			( lua_State* L );
 
 public:
 
@@ -101,8 +104,7 @@ public:
 	virtual int			OpenFontFile			( cc8* filename );
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
-	int					RenderGlyph				( MOAIImage& image, float x, float y );
-	virtual int			RenderGlyph				( MOAIImage& image, float x, float y, const ZLColorBlendFunc& blendFunc ) = 0;
+	virtual int			RenderGlyph				( MOAIImage& image, float x, float y ) = 0;
 	virtual int			SelectFace				( float size ) = 0;
 	virtual int			SelectGlyph				( u32 c ) = 0;
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );

@@ -70,7 +70,7 @@ private:
 public:
 
 	//----------------------------------------------------------------//
-	inline operator bool () {
+	inline operator bool () const {
 		return this->mFunc != 0;
 	};
 
