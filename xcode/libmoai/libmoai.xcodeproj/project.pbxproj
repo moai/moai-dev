@@ -19312,6 +19312,7 @@
 					"-include",
 					"\"../../src/zl-vfs/zl_replace.h\"",
 					"-Werror=return-type",
+					"-fembed-bitcode",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
@@ -20417,6 +20418,7 @@
 					"-include",
 					"\"../../src/zl-vfs/zl_replace.h\"",
 					"-Werror=return-type",
+					"-fembed-bitcode-marker",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
@@ -25251,7 +25253,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				OTHER_CFLAGS = "";
+				OTHER_CFLAGS = "-fembed-bitcode-marker";
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -25264,7 +25266,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				OTHER_CFLAGS = "";
+				OTHER_CFLAGS = "-fembed-bitcode";
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -25277,7 +25279,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				OTHER_CFLAGS = "";
+				OTHER_CFLAGS = "-fembed-bitcode";
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
 				SEPARATE_STRIP = NO;
@@ -25422,6 +25424,7 @@
 					"-include",
 					"\"../../src/zl-vfs/zl_replace.h\"",
 					"-Werror=return-type",
+					"-fembed-bitcode",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
