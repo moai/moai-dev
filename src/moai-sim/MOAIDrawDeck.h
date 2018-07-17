@@ -4,7 +4,7 @@
 #ifndef	MOAIDRAWDECK_H
 #define	MOAIDRAWDECK_H
 
-#include <moai-sim/MOAIDeck.h>
+#include <moai-sim/MOAIStretchDeck.h>
 
 //================================================================//
 // MOAIDrawDeck
@@ -13,7 +13,7 @@
 	@text Scriptable deck objectf for immediate mode drawing with MOAIDraw.
 */
 class MOAIDrawDeck :
-	public MOAIDeck {
+	public MOAIStretchDeck {
 private:
 
 	ZLBounds				mBounds;

@@ -833,6 +833,24 @@ int MOAIDraw::_fillRect ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIDraw::_fillRoundedRect ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
+	
+	float x0 = state.GetValue < float >( 1, 0.0f );
+	float y0 = state.GetValue < float >( 2, 0.0f );
+	float x1 = state.GetValue < float >( 3, 0.0f );
+	float y1 = state.GetValue < float >( 4, 0.0f );
+	
+	float xRad		= state.GetValue < float >( 5, 0.0f );
+	float yRad		= state.GetValue < float >( 6, xRad );
+	u32 steps		= state.GetValue < u32 >( 7, DEFAULT_ELLIPSE_STEPS );
+
+	self->Get ().DrawRoundedRectFill ( x0, y0, x1, y1, xRad, yRad, steps );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIDraw::_popGfxState ( lua_State* L ) {
 
 	MOAIGfxMgr::Get ().mGfxState.PopState ();
@@ -1129,6 +1147,27 @@ int MOAIDraw::_setViewRect ( lua_State* L ) {
 		rect = state.GetValue < ZLRect >( 1, rect );
 		gfxState.SetViewRect ( rect );
 	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIDraw::_strokeRoundedRect ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
+	
+	float x0 = state.GetValue < float >( 1, 0.0f );
+	float y0 = state.GetValue < float >( 2, 0.0f );
+	float x1 = state.GetValue < float >( 3, 0.0f );
+	float y1 = state.GetValue < float >( 4, 0.0f );
+	
+	float stroke	= state.GetValue < float >( 5, 0.0f );
+	float offset	= state.GetValue < float >( 6, 0.0f );
+	
+	float xRad		= state.GetValue < float >( 7, 0.0f );
+	float yRad		= state.GetValue < float >( 8, xRad );
+	u32 steps		= state.GetValue < u32 >( 9, DEFAULT_ELLIPSE_STEPS );
+
+	self->Get ().DrawRoundedRectStroke ( x0, y0, x1, y1, xRad, yRad, steps, stroke, offset );
 	return 0;
 }
 
@@ -1518,6 +1557,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "fillEllipse",			_fillEllipse },
 		{ "fillFan",				_fillFan },
 		{ "fillRect",				_fillRect },
+		{ "fillRoundedRect",		_fillRoundedRect },
 		{ "popGfxState",			_popGfxState },
 		{ "pushGfxState",			_pushGfxState },
 		{ "setBlendMode",			_setBlendMode },
@@ -1532,6 +1572,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setScissorRect",			_setScissorRect },
 		{ "setViewProj",			_setViewProj },
 		{ "setViewRect",			_setViewRect },
+		{ "strokeRoundedRect",		_strokeRoundedRect },
 		
 		{ NULL, NULL }
 	};

@@ -11,6 +11,65 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIAbstractDrawShape::DrawArcFill ( float x, float y, float xRad, float yRad, float d0, float d1, u32 steps ) {
+
+	// TODO: this is in essence drawing a scaled circle. so d0 and d1 may not give expected results if xRad != yRad. the
+	// todo is to draw a proper arc as though the ellipse was overlaid on a circle and the circle's degrees are used.
+	// in other words, if 2 o'clock and 4 o'clock are given, any elliptical arc overlaid on a circle arc should start and
+	// stop in the same place. the (lazy) way this is written now, they won't. but... since we are only writing this
+	// for the rounded rect, we won't worry about it just yet.
+
+	float angle = ( float )( d0 * D2R );
+	float angleStep = ( float )(( d1 - d0 ) * D2R ) / ( float )steps;
+	
+	ZLVec3D v0 ( x, y, 0.0f );
+	ZLVec3D v1 ( x + ( Cos ( angle ) * xRad ), y + ( Sin ( angle ) * yRad ), 0.0f );
+	
+	for ( u32 i = 0; i < steps; ++i ) {
+		
+		angle += angleStep;
+		ZLVec3D v2 ( x + ( Cos ( angle ) * xRad ), y + ( Sin ( angle ) * yRad ), 0.0f );
+		
+		this->DrawTriangleFill ( v0, v1, v2 );
+		
+		v1 = v2;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIAbstractDrawShape::DrawArcStroke ( float x, float y, float xRad, float yRad, float d0, float d1, u32 steps, float stroke, float offset ) {
+
+	// TODO: see concerns in DrawArcFill; same here. but moreso.
+
+	stroke = stroke * 0.5;
+
+	float angle = ( float )( d0 * D2R );
+	float angleStep = ( float )(( d1 - d0 ) * D2R ) / ( float )steps;
+	
+	float innerXRad = xRad + offset - stroke;
+	float outerXRad = xRad + offset + stroke;
+	
+	float innerYRad = yRad + offset - stroke;
+	float outerYRad = yRad + offset + stroke;
+	
+	ZLVec3D inner0 ( x + ( Cos ( angle ) * innerXRad ), y + ( Sin ( angle ) * innerYRad ), 0.0f );
+	ZLVec3D outer0 ( x + ( Cos ( angle ) * outerXRad ), y + ( Sin ( angle ) * outerYRad ), 0.0f );
+	
+	for ( u32 i = 0; i < steps; ++i ) {
+		
+		angle += angleStep;
+		ZLVec3D inner1 ( x + ( Cos ( angle ) * innerXRad ), y + ( Sin ( angle ) * innerYRad ), 0.0f );
+		ZLVec3D outer1 ( x + ( Cos ( angle ) * outerXRad ), y + ( Sin ( angle ) * outerYRad ), 0.0f );
+		
+		this->DrawTriangleFill ( inner0, outer0, outer1 );
+		this->DrawTriangleFill ( inner0, outer1, inner1 );
+		
+		inner0 = inner1;
+		outer0 = outer1;
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIAbstractDrawShape::DrawBoxAxis ( const ZLBox& box ) {
 
 	ZLVec3D center;
@@ -158,19 +217,19 @@ void MOAIAbstractDrawShape::DrawLine ( float x0, float y0, float x1, float y1 ) 
 //----------------------------------------------------------------//
 void MOAIAbstractDrawShape::DrawLine ( float x0, float y0, float z0, float x1, float y1, float z1 ) {
 
-	this->MOAIDrawShape_DrawLine ( x0, y0, z0, x1, y1, z1 );
+	this->MOAIAbstractDrawShape_DrawLine ( x0, y0, z0, x1, y1, z1 );
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractDrawShape::DrawPoint ( const ZLVec2D& loc ) {
 
-	this->MOAIDrawShape_DrawPoint ( loc.mX, loc.mY );
+	this->MOAIAbstractDrawShape_DrawPoint ( loc.mX, loc.mY );
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractDrawShape::DrawPoint ( float x, float y, float z ) {
 
-	this->MOAIDrawShape_DrawPoint ( x, y, z );
+	this->MOAIAbstractDrawShape_DrawPoint ( x, y, z );
 }
 
 //----------------------------------------------------------------//
@@ -261,9 +320,81 @@ void MOAIAbstractDrawShape::DrawRectOutline ( float left, float top, float right
 }
 
 //----------------------------------------------------------------//
+void MOAIAbstractDrawShape::DrawRoundedRectFill ( float left, float top, float right, float bottom, float xRad, float yRad, u32 steps ) {
+
+	ZLRect rect;
+	rect.Init ( left, top, right, bottom );
+	rect.Bless ();
+
+	float hWidth	= rect.Width () * 0.5;
+	float hHeight	= rect.Height () * 0.5;
+
+	if (( hWidth > 0.0 ) && ( hHeight > 0.0 )) {
+
+		// quarter of the steps for each corner
+		steps = steps >> 2;
+
+		// clamp radii
+		xRad = xRad > hWidth ? hWidth : xRad;
+		yRad = yRad > hHeight ? hHeight : yRad;
+
+		// draw sections
+		this->DrawRectFill ( rect.mXMin + xRad, rect.mYMax - yRad, rect.mXMax - xRad, rect.mYMax ); // top section
+		this->DrawRectFill ( rect.mXMin, rect.mYMin + yRad, rect.mXMax, rect.mYMax - yRad ); // middle section
+		this->DrawRectFill ( rect.mXMin + xRad, rect.mYMin, rect.mXMax - xRad, rect.mYMin + yRad ); // bottom section
+
+		// draw corners
+		DrawArcFill ( rect.mXMax - xRad, rect.mYMax - yRad, xRad, yRad, 0.0, 90.0, steps );
+		DrawArcFill ( rect.mXMin + xRad, rect.mYMax - yRad, xRad, yRad, 90.0, 180.0, steps );
+		DrawArcFill ( rect.mXMin + xRad, rect.mYMin + yRad, xRad, yRad, 180.0, 270.0, steps );
+		DrawArcFill ( rect.mXMax - xRad, rect.mYMin + yRad, xRad, yRad, 270.0, 360.0, steps );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIAbstractDrawShape::DrawRoundedRectStroke ( float left, float top, float right, float bottom, float xRad, float yRad, u32 steps, float stroke, float offset ) {
+
+	if ( stroke <= 0.0 ) return;
+
+	ZLRect rect;
+	rect.Init ( left, top, right, bottom );
+	rect.Bless ();
+
+	float hWidth	= rect.Width () * 0.5;
+	float hHeight	= rect.Height () * 0.5;
+
+	if (( hWidth > 0.0 ) && ( hHeight > 0.0 )) {
+
+		// half stroke
+		float hStroke = stroke * 0.5;
+
+		// quarter of the steps for each corner
+		steps = steps >> 2;
+
+		// clamp radii
+		xRad = xRad > hWidth ? hWidth : xRad;
+		yRad = yRad > hHeight ? hHeight : yRad;
+
+		// stroke edges
+
+		this->DrawRectFill ( rect.mXMin - offset - hStroke, rect.mYMax - yRad, rect.mXMin - offset + hStroke, rect.mYMin + yRad ); // left
+		this->DrawRectFill ( rect.mXMax + offset - hStroke, rect.mYMax - yRad, rect.mXMax + offset + hStroke, rect.mYMin + yRad ); // right
+
+		this->DrawRectFill ( rect.mXMin + xRad, rect.mYMax + offset + hStroke, rect.mXMax - xRad, rect.mYMax + offset - hStroke ); // top
+		this->DrawRectFill ( rect.mXMin + xRad, rect.mYMin - offset + hStroke, rect.mXMax - xRad, rect.mYMin - offset - hStroke ); // bottom
+
+		// stroke corners
+		DrawArcStroke ( rect.mXMax - xRad, rect.mYMax - yRad, xRad, yRad, 0.0, 90.0, steps, stroke, offset );
+		DrawArcStroke ( rect.mXMin + xRad, rect.mYMax - yRad, xRad, yRad, 90.0, 180.0, steps, stroke, offset );
+		DrawArcStroke ( rect.mXMin + xRad, rect.mYMin + yRad, xRad, yRad, 180.0, 270.0, steps, stroke, offset );
+		DrawArcStroke ( rect.mXMax - xRad, rect.mYMin + yRad, xRad, yRad, 270.0, 360.0, steps, stroke, offset );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIAbstractDrawShape::DrawTriangleFill ( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2 ) {
 
-	this->MOAIDrawShape_DrawTriangleFill ( v0, v1, v2 );
+	this->MOAIAbstractDrawShape_DrawTriangleFill ( v0, v1, v2 );
 }
 
 //----------------------------------------------------------------//
@@ -285,11 +416,11 @@ MOAIAbstractDrawShape::~MOAIAbstractDrawShape () {
 //----------------------------------------------------------------//
 void MOAIAbstractDrawShape::SetPenColor ( u32 color ) {
 
-	this->MOAIDrawShape_SetPenColor ( color );
+	this->MOAIAbstractDrawShape_SetPenColor ( color );
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractDrawShape::SetPenWidth ( float width ) {
 
-	this->MOAIDrawShape_SetPenWidth ( width );
+	this->MOAIAbstractDrawShape_SetPenWidth ( width );
 }

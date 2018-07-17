@@ -59,7 +59,7 @@ void MOAIShaderUniform::Bind ( const void* buffer ) const {
 //----------------------------------------------------------------//
 size_t MOAIShaderUniform::GetSize () const {
 
-	return this->MOAIShaderUniformHandle::GetSize () * this->mCount;
+	return this->MOAIShaderUniformBase::GetSize () * this->mCount;
 }
 
 //----------------------------------------------------------------//

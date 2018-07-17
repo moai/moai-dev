@@ -25,7 +25,7 @@ MOAIDrawShapeImmediate::~MOAIDrawShapeImmediate () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDrawShapeImmediate::MOAIDrawShape_DrawLine ( float x0, float y0, float z0, float x1, float y1, float z1 ) {
+void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_DrawLine ( float x0, float y0, float z0, float x1, float y1, float z1 ) {
 	
 	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
@@ -41,7 +41,7 @@ void MOAIDrawShapeImmediate::MOAIDrawShape_DrawLine ( float x0, float y0, float 
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShapeImmediate::MOAIDrawShape_DrawPoint ( float x, float y, float z ) {
+void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_DrawPoint ( float x, float y, float z ) {
 
 	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	UNUSED(z);
@@ -52,7 +52,7 @@ void MOAIDrawShapeImmediate::MOAIDrawShape_DrawPoint ( float x, float y, float z
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShapeImmediate::MOAIDrawShape_DrawTriangleFill ( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2 ) {
+void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_DrawTriangleFill ( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2 ) {
 
 	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
@@ -71,13 +71,13 @@ void MOAIDrawShapeImmediate::MOAIDrawShape_DrawTriangleFill ( const ZLVec3D& v0,
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShapeImmediate::MOAIDrawShape_SetPenColor ( u32 color ) {
+void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_SetPenColor ( u32 color ) {
 
 	MOAIGfxMgr::Get ().mGfxState.SetPenColor ( color );
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShapeImmediate::MOAIDrawShape_SetPenWidth ( float width ) {
+void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_SetPenWidth ( float width ) {
 
 	MOAIGfxMgr::Get ().mGfxState.SetPenWidth ( width );
 }
