@@ -1,10 +1,11 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXVERTEXCACHE_H
-#define	MOAIGFXVERTEXCACHE_H
+#ifndef	MOAIGFXSTATEVERTEXCACHE_H
+#define	MOAIGFXSTATEVERTEXCACHE_H
 
-#include <moai-sim/MOAIGfxStateCache.h>
+#include <moai-sim/MOAIAbstractGfxStateCache.h>
+#include <moai-sim/MOAIGfxStateCPUCache.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIVertexBuffer.h>
 
@@ -17,14 +18,17 @@ class MOAITextureBase;
 class MOAIVertexFormat;
 
 //================================================================//
-// MOAIGfxVertexCache
+// MOAIGfxStateVertexCache
 //================================================================//
-class MOAIGfxVertexCache :
-	virtual public MOAIGfxStateCacheClient {
+class MOAIGfxStateVertexCache :
+	virtual public MOAIAbstractGfxStateCache,
+	public MOAIGfxStateCPUCache {
 protected:
 
-	friend class MOAIGfxGlobalsCache;
-	friend class MOAIGfxStateCache;
+	friend class MOAIGfxMgr; // for now
+	friend class MOAIGfxState;
+	friend class MOAIGfxStateCPUCache;
+	friend class MOAIGfxStateGPUCache;
 	
 	// Stock OpenGL ES 2.0 has no support for u32 index size in glDrawElements.
 	// iOS and many Androids (PowerVR, adreno) support it with GL_OES_element_index_uint extension.
@@ -53,15 +57,13 @@ protected:
 
 	bool						mApplyUVTransform;
 	ZLMatrix4x4					mUVTransform;
-
-	ZLColorVec					mVertexColor;
-	u32							mVertexColor32;
 	
 	ZLStrongPtr < MOAIVertexBuffer >	mVtxBuffer;
 	ZLStrongPtr < MOAIIndexBuffer >		mIdxBuffer;
 	
 	//----------------------------------------------------------------//
-	void			OnGfxStateWillChange			();
+	u32				CountPrims						();
+	void			FlushVertexCache				();
 	void			TransformAndWriteQuad			( ZLVec4D* vtx, ZLVec2D* uv );
 
 public:
@@ -77,18 +79,19 @@ public:
 	u32				ContinuePrim					( u32 vtxCount, u32 idxCount = 0 );
 	void			EndPrim							();
 	
-	void			FlushBufferedPrims				();
-	
 	void			InitBuffers						();
 	
-					MOAIGfxVertexCache				();
-					~MOAIGfxVertexCache				();
+					MOAIGfxStateVertexCache			();
+					~MOAIGfxStateVertexCache		();
 
 	void			Reset							();
 
 	void			SetUVTransform					();
+	void			SetUVTransform					( u32 mtxID );
 	void			SetUVTransform					( const ZLMatrix4x4& uvTransform );
+	
 	void			SetVertexTransform				();
+	void			SetVertexTransform				( u32 mtxID );
 	void			SetVertexTransform				( const ZLMatrix4x4& vertexTransform );
 
 	void			WriteQuad						( const ZLVec2D* vtx, const ZLVec2D* uv );
@@ -100,14 +103,14 @@ public:
 	inline void WritePenColor4b () {
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		this->mVtxBuffer->Write < u32 >( this->mVertexColor32 );
+		this->mVtxBuffer->Write < u32 >( this->mStateFrameCPU.mFinalColor32 );
 	}
 	
 	//----------------------------------------------------------------//
 	inline void WritePenColor4f () {
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		this->mVtxBuffer->Write < ZLColorVec >( this->mVertexColor );
+		this->mVtxBuffer->Write < ZLColorVec >( this->mStateFrameCPU.mFinalColor );
 	}
 		
 	//----------------------------------------------------------------//

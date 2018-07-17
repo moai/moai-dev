@@ -36,6 +36,9 @@ private:
 	bool				OnGPUCreate					();
 	void				OnGPUDeleteOrDiscard		( bool shouldDelete );
 
+	//----------------------------------------------------------------//
+	void				MOAIFrameBuffer_AffirmBuffers		();
+
 public:
 	
 	friend class MOAIGfxMgr;

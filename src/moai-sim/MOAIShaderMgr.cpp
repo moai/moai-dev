@@ -115,8 +115,8 @@ MOAIShaderProgram* MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 					program->DeclareUniform ( 1, "ySnap", MOAIShaderUniform::UNIFORM_TYPE_FLOAT );
 					
 					program->ReserveGlobals ( 2 );
-					program->SetGlobal ( 0, MOAIGfxGlobalsCache::VIEW_HALF_WIDTH, 0, 0 );
-					program->SetGlobal ( 1, MOAIGfxGlobalsCache::VIEW_HALF_HEIGHT, 1, 0 );
+					program->SetGlobal ( 0, MOAIGfxState::VIEW_HALF_WIDTH, 0, 0 );
+					program->SetGlobal ( 1, MOAIGfxState::VIEW_HALF_HEIGHT, 1, 0 );
 					
 					program->Load ( _deck2DSnappingShaderVSH, _deck2DSnappingShaderFSH );
 					break;
@@ -150,8 +150,8 @@ MOAIShaderProgram* MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 					program->DeclareUniform ( 1, "ySnap", MOAIShaderUniform::UNIFORM_TYPE_FLOAT );
 					
 					program->ReserveGlobals ( 2 );
-					program->SetGlobal ( 0, MOAIGfxGlobalsCache::VIEW_HALF_WIDTH, 0, 0 );
-					program->SetGlobal ( 1, MOAIGfxGlobalsCache::VIEW_HALF_HEIGHT, 1, 0 );
+					program->SetGlobal ( 0, MOAIGfxState::VIEW_HALF_WIDTH, 0, 0 );
+					program->SetGlobal ( 1, MOAIGfxState::VIEW_HALF_HEIGHT, 1, 0 );
 					
 					program->Load ( _fontSnappingShaderVSH, _fontSnappingShaderFSH );
 					break;
@@ -173,8 +173,8 @@ MOAIShaderProgram* MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 					program->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_TYPE_FLOAT, MOAIShaderUniform::UNIFORM_WIDTH_VEC_4 );
 					
 					program->ReserveGlobals ( 2 );
-					program->SetGlobal ( 0, MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX, 0, 0 );
-					program->SetGlobal ( 1, MOAIGfxGlobalsCache::PEN_COLOR, 1, 0 );
+					program->SetGlobal ( 0, MOAIGfxState::MODEL_TO_CLIP_MTX, 0, 0 );
+					program->SetGlobal ( 1, MOAIGfxState::PEN_COLOR, 1, 0 );
 					
 					program->Load ( _lineShader3DVSH, _lineShader3DFSH );
 					
@@ -191,8 +191,8 @@ MOAIShaderProgram* MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 					program->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_TYPE_FLOAT, MOAIShaderUniform::UNIFORM_WIDTH_VEC_4 );
 					
 					program->ReserveGlobals ( 2 );
-					program->SetGlobal ( 0, MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX, 0, 0 );
-					program->SetGlobal ( 1, MOAIGfxGlobalsCache::PEN_COLOR, 1, 0 );
+					program->SetGlobal ( 0, MOAIGfxState::MODEL_TO_CLIP_MTX, 0, 0 );
+					program->SetGlobal ( 1, MOAIGfxState::PEN_COLOR, 1, 0 );
 					
 					program->Load ( _meshShaderVSH, _meshShaderFSH );
 					

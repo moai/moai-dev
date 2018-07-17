@@ -25,59 +25,59 @@ MOAIDrawShapeImmediate::~MOAIDrawShapeImmediate () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDrawShapeImmediate::MOAIDrawShape_DrawLine ( float x0, float y0, float z0, float x1, float y1, float z1 ) {
+void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_DrawLine ( float x0, float y0, float z0, float x1, float y1, float z1 ) {
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINES, 2 );
+	gfxState.BeginPrim ( ZGL_PRIM_LINES, 2 );
 	
-		gfxMgr.mVertexCache.WriteVtx ( x0, y0, z0 );
-		gfxMgr.mVertexCache.WritePenColor4b ();
+		gfxState.WriteVtx ( x0, y0, z0 );
+		gfxState.WritePenColor4b ();
 		
-		gfxMgr.mVertexCache.WriteVtx ( x1, y1, z1 );
-		gfxMgr.mVertexCache.WritePenColor4b ();
+		gfxState.WriteVtx ( x1, y1, z1 );
+		gfxState.WritePenColor4b ();
 	
-	gfxMgr.mVertexCache.EndPrim ();
+	gfxState.EndPrim ();
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShapeImmediate::MOAIDrawShape_DrawPoint ( float x, float y, float z ) {
+void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_DrawPoint ( float x, float y, float z ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	UNUSED(z);
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_POINTS, 1 );
-		gfxMgr.mVertexCache.WriteVtx ( x, y, 0.0f );
-		gfxMgr.mVertexCache.WritePenColor4b ();
-	gfxMgr.mVertexCache.EndPrim ();
+	gfxState.BeginPrim ( ZGL_PRIM_POINTS, 1 );
+		gfxState.WriteVtx ( x, y, 0.0f );
+		gfxState.WritePenColor4b ();
+	gfxState.EndPrim ();
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShapeImmediate::MOAIDrawShape_DrawTriangleFill ( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2 ) {
+void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_DrawTriangleFill ( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2 ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_TRIANGLES, 3 );
+	gfxState.BeginPrim ( ZGL_PRIM_TRIANGLES, 3 );
 	
-		gfxMgr.mVertexCache.WriteVtx ( v0.mX, v0.mY, v0.mZ );
-		gfxMgr.mVertexCache.WritePenColor4b ();
+		gfxState.WriteVtx ( v0.mX, v0.mY, v0.mZ );
+		gfxState.WritePenColor4b ();
 	
-		gfxMgr.mVertexCache.WriteVtx ( v1.mX, v1.mY, v1.mZ );
-		gfxMgr.mVertexCache.WritePenColor4b ();
+		gfxState.WriteVtx ( v1.mX, v1.mY, v1.mZ );
+		gfxState.WritePenColor4b ();
 	
-		gfxMgr.mVertexCache.WriteVtx ( v2.mX, v2.mY, v2.mZ );
-		gfxMgr.mVertexCache.WritePenColor4b ();
+		gfxState.WriteVtx ( v2.mX, v2.mY, v2.mZ );
+		gfxState.WritePenColor4b ();
 
-	gfxMgr.mVertexCache.EndPrim ();
+	gfxState.EndPrim ();
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShapeImmediate::MOAIDrawShape_SetPenColor ( u32 color ) {
+void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_SetPenColor ( u32 color ) {
 
 	MOAIGfxMgr::Get ().mGfxState.SetPenColor ( color );
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShapeImmediate::MOAIDrawShape_SetPenWidth ( float width ) {
+void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_SetPenWidth ( float width ) {
 
 	MOAIGfxMgr::Get ().mGfxState.SetPenWidth ( width );
 }

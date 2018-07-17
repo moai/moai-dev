@@ -80,6 +80,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	inline operator bool () const {
+	
 		return this->mResource != NULL;
 	}
 	

@@ -23,12 +23,12 @@ SUPPRESS_EMPTY_FILE_WARNING
 //----------------------------------------------------------------//
 bool MOAIMaterial::LoadGfxState ( MOAIMaterial* fallback, u32 defaultShader ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	
 	MOAIShader* shader = this->mShader ? this->mShader : (( fallback && fallback->mShader ) ? fallback->mShader : MOAIShaderMgr::Get ().GetShader ( defaultShader ));
 	MOAITextureBase* texture = this->mTexture ? this->mTexture : (( fallback && fallback->mTexture ) ? fallback->mTexture : 0 );
 	
-	return ( gfxMgr.mGfxState.SetShader ( shader ) && gfxMgr.mGfxState.SetTexture ( texture ));
+	return ( gfxState.SetShader ( shader ) && gfxState.SetTexture ( texture ));
 }
 
 //----------------------------------------------------------------//
@@ -495,10 +495,10 @@ bool MOAIMaterialBatch::LoadGfxState ( MOAIMaterialBatch* override, u32 material
 		return secondary->LoadGfxState ( 0, defaultShader );
 	}
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	
-	gfxMgr.mGfxState.SetTexture ();
-	return gfxMgr.mGfxState.SetShader ( MOAIShaderMgr::Get ().GetShader ( defaultShader ));
+	gfxState.SetTexture ();
+	return gfxState.SetShader ( MOAIShaderMgr::Get ().GetShader ( defaultShader ));
 }
 
 //----------------------------------------------------------------//

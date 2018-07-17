@@ -14,8 +14,28 @@ layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:pushRenderPass ()
 
+function onDraw ( index, xStretch, yStretch )
+
+    local x = 64 * xStretch
+    local y = 64 * yStretch
+
+    MOAIDraw.setPenColor ( 0.5, 0.5, 0.5, 1 )
+    MOAIDraw.strokeRoundedRect ( -x, y, x, -y, 8, 12, 16 )
+end
+
+drawDeck = MOAIDrawDeck.new ()
+drawDeck:setBounds ()
+drawDeck:setStretchFactor ( 1 )
+drawDeck:setDrawCallback ( onDraw )
+
+prop = MOAIGraphicsProp.new ()
+prop:setDeck ( drawDeck )
+prop:setPartition ( layer )
+
+prop:moveScl ( 1, 1, 0, 3 )
+
 stretchPatch = MOAIStretchPatch2D.new ()
-stretchPatch:setTexture ( '../resources/moai.png' )
+stretchPatch:setTexture ( '../resources/numbers.png' )
 
 stretchPatch:reserveRows ( 3 )
 stretchPatch:setRow ( 1, 0.25, false )
@@ -37,4 +57,3 @@ prop:setDeck ( stretchPatch )
 prop:setPartition ( layer )
 
 prop:moveScl ( 1, 1, 0, 3 )
-

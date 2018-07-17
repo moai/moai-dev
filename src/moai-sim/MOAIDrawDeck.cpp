@@ -81,7 +81,7 @@ int MOAIDrawDeck::_setDrawCallback ( lua_State* L ) {
 MOAIDrawDeck::MOAIDrawDeck () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeck )
+		RTTI_EXTEND ( MOAIStretchDeck )
 	RTTI_END
 	
 	this->mBounds = ZLBounds::GLOBAL;
@@ -94,13 +94,13 @@ MOAIDrawDeck::~MOAIDrawDeck () {
 //----------------------------------------------------------------//
 void MOAIDrawDeck::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaClass ( state );
+	MOAIStretchDeck::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIDrawDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaFuncs ( state );
+	MOAIStretchDeck::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "setBounds",				_setBounds },
@@ -129,10 +129,17 @@ void MOAIDrawDeck::MOAIDeck_Draw ( u32 idx ) {
 	
 		MOAIDraw::Get ().Bind ();
 	
+		MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+		ZLVec3D stretch = this->BindStretchVertexTransform ();
+		gfxState.SetUVTransform ( MOAIGfxState::UV_TO_MODEL_MTX );
+	
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		this->mOnDraw.PushRef ( state );
-		lua_pushnumber ( state, idx + 1 );
-		state.DebugCall ( 1, 0 );
+		state.Push ( idx + 1 );
+		state.Push ( stretch.mX );
+		state.Push ( stretch.mY );
+		state.Push ( stretch.mZ );
+		state.DebugCall ( 4, 0 );
 	}
 }
 
@@ -142,8 +149,6 @@ ZLBounds MOAIDrawDeck::MOAIDeck_GetBounds ( u32 idx ) {
 	if ( this->mOnBounds ) {
 	
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		
-	//	int top = state.GetTop ();
 		
 		this->mOnBounds.PushRef ( state );
 		

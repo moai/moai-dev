@@ -207,3 +207,13 @@ void MOAIFrameBufferTexture::SerializeIn ( MOAILuaState& state, MOAIDeserializer
 void MOAIFrameBufferTexture::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	MOAITextureBase::SerializeOut ( state, serializer );
 }
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferTexture::MOAIFrameBuffer_AffirmBuffers () {
+
+	this->Affirm ();
+}

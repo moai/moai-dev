@@ -1,22 +1,30 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIDRAWSHAPE_H
-#define	MOAIDRAWSHAPE_H
+#ifndef	MOAIABSTRACTDRAWSHAPE_H
+#define	MOAIABSTRACTDRAWSHAPE_H
 
 //================================================================//
-// MOAIDrawShape
+// MOAIAbstractDrawShape
 //================================================================//
 // TODO: doxygen
-class MOAIDrawShape {
-protected:
+class MOAIAbstractDrawShape {
+private:
 
 	//----------------------------------------------------------------//
-	virtual void		MOAIDrawShape_DrawLine				( float x0, float y0, float z0, float x1, float y1, float z1 ) = 0;
-	virtual void		MOAIDrawShape_DrawPoint				( float x, float y, float z = 0.0f ) = 0;
-	virtual void		MOAIDrawShape_DrawTriangleFill		( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2 ) = 0;
-	virtual void		MOAIDrawShape_SetPenColor			( u32 color ) = 0;
-	virtual void		MOAIDrawShape_SetPenWidth			( float width ) = 0;
+	// TODO: not ready for prime time; see notes in implementation
+	void			DrawArcFill					( float x, float y, float xRad, float yRad, float d0, float d1, u32 steps );
+	void			DrawArcStroke				( float x, float y, float xRad, float yRad, float d0, float d1, u32 steps, float stroke, float offset );
+
+protected:
+
+
+	//----------------------------------------------------------------//
+	virtual void		MOAIAbstractDrawShape_DrawLine				( float x0, float y0, float z0, float x1, float y1, float z1 ) = 0;
+	virtual void		MOAIAbstractDrawShape_DrawPoint				( float x, float y, float z = 0.0f ) = 0;
+	virtual void		MOAIAbstractDrawShape_DrawTriangleFill		( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2 ) = 0;
+	virtual void		MOAIAbstractDrawShape_SetPenColor			( u32 color ) = 0;
+	virtual void		MOAIAbstractDrawShape_SetPenWidth			( float width ) = 0;
 
 public:
 
@@ -45,10 +53,12 @@ public:
 	void			DrawRectFill				( float left, float top, float right, float bottom );
 	void			DrawRectOutline				( const ZLRect& rect );
 	void			DrawRectOutline				( float left, float top, float right, float bottom );
+	void			DrawRoundedRectFill			( float left, float top, float right, float bottom, float xRad, float yRad, u32 steps );
+	void			DrawRoundedRectStroke		( float left, float top, float right, float bottom, float xRad, float yRad, u32 steps, float stroke, float offset );
 	void			DrawTriangleFill			( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2 );
 	void			DrawTriangleOutline			( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2 );
-					MOAIDrawShape				();
-	virtual			~MOAIDrawShape				();
+					MOAIAbstractDrawShape		();
+	virtual			~MOAIAbstractDrawShape		();
 	void			SetPenColor					( u32 color );
 	void			SetPenWidth					( float width );
 };

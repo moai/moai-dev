@@ -4,7 +4,7 @@
 #ifndef	MOAISTRETCHPATCH2D_H
 #define	MOAISTRETCHPATCH2D_H
 
-#include <moai-sim/MOAIDeck.h>
+#include <moai-sim/MOAIStretchDeck.h>
 #include <moai-sim/MOAIMaterialBatchHolder.h>
 
 //================================================================//
@@ -27,7 +27,7 @@ private:
 			stretchable and non-stretchable 'bands.' Grid drawing not supported.
 */
 class MOAIStretchPatch2D :
-	public MOAIDeck,
+	public MOAIStretchDeck,
 	public MOAIMaterialBatchHolder {
 private:
 
@@ -61,12 +61,12 @@ private:
 	void			UpdateParams			();
 
 	//----------------------------------------------------------------//
-	virtual ZLBounds				MOAIDeck_ComputeMaxBounds		();
-	virtual void					MOAIDeck_Draw					( u32 idx );
-	virtual ZLBounds				MOAIDeck_GetBounds				( u32 idx );
-	virtual MOAICollisionShape*		MOAIDeck_GetCollisionShape		( u32 idx );
-	virtual bool					MOAIDeck_Overlap				( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
-	virtual bool					MOAIDeck_Overlap				( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
+	ZLBounds				MOAIDeck_ComputeMaxBounds				();
+	void					MOAIDeck_Draw							( u32 idx );
+	ZLBounds				MOAIDeck_GetBounds						( u32 idx );
+	MOAICollisionShape*		MOAIDeck_GetCollisionShape				( u32 idx );
+	bool					MOAIDeck_Overlap						( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
+	bool					MOAIDeck_Overlap						( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
 
 public:
 	

@@ -110,7 +110,7 @@ bool MOAIDebugLinesMgr::Bind ( u32 styleID ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIDebugLinesMgr::Bind ( u32 styleID, MOAIDrawShape& draw ) {
+bool MOAIDebugLinesMgr::Bind ( u32 styleID, MOAIAbstractDrawShape& draw ) {
 
 	if ( !this->mShowDebugLines ) return false;
 

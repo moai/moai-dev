@@ -90,7 +90,7 @@ void MOAIDrawShapeRetained::ResetShapeStream () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDrawShapeRetained::MOAIDrawShape_DrawLine ( float x0, float y0, float z0, float x1, float y1, float z1 ) {
+void MOAIDrawShapeRetained::MOAIAbstractDrawShape_DrawLine ( float x0, float y0, float z0, float x1, float y1, float z1 ) {
 	
 	this->mStream.Write < u32 >( CMD_LINE );
 	this->mStream.Write < ZLVec3D >( ZLVec3D ( x0, y0, z0 ));
@@ -98,14 +98,14 @@ void MOAIDrawShapeRetained::MOAIDrawShape_DrawLine ( float x0, float y0, float z
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShapeRetained::MOAIDrawShape_DrawPoint ( float x, float y, float z ) {
+void MOAIDrawShapeRetained::MOAIAbstractDrawShape_DrawPoint ( float x, float y, float z ) {
 
 	this->mStream.Write < u32 >( CMD_POINT );
 	this->mStream.Write < ZLVec3D >( ZLVec3D ( x, y, z ));
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShapeRetained::MOAIDrawShape_DrawTriangleFill ( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2 ) {
+void MOAIDrawShapeRetained::MOAIAbstractDrawShape_DrawTriangleFill ( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2 ) {
 
 	this->mStream.Write < u32 >( CMD_TRIANGLE );
 	this->mStream.Write < ZLVec3D >( v0 );
@@ -114,14 +114,14 @@ void MOAIDrawShapeRetained::MOAIDrawShape_DrawTriangleFill ( const ZLVec3D& v0, 
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShapeRetained::MOAIDrawShape_SetPenColor ( u32 color ) {
+void MOAIDrawShapeRetained::MOAIAbstractDrawShape_SetPenColor ( u32 color ) {
 
 	this->mStream.Write < u32 >( CMD_PEN_COLOR );
 	this->mStream.Write < u32 >( color );
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawShapeRetained::MOAIDrawShape_SetPenWidth ( float width ) {
+void MOAIDrawShapeRetained::MOAIAbstractDrawShape_SetPenWidth ( float width ) {
 
 	this->mStream.Write < u32 >( CMD_PEN_WIDTH );
 	this->mStream.Write < float >( width );

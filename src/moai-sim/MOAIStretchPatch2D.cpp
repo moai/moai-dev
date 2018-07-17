@@ -204,10 +204,6 @@ void MOAIStretchPatch2D::DrawStretch ( u32 idx, float xStretch, float yStretch )
 	float nativeWidth = this->mRect.Width ();
 	float nativeHeight = this->mRect.Height ();
 	
-	// TODO: make optional
-	// xStretch /= nativeWidth;
-	// yStretch /= nativeHeight;
-	
 	float rectWidth = nativeWidth * xStretch;
 	float rectHeight = nativeHeight * yStretch;
 	
@@ -299,7 +295,7 @@ MOAIStretchPatch2D::MOAIStretchPatch2D () :
 	mNeedsUpdate ( true ) {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeck )
+		RTTI_EXTEND ( MOAIStretchDeck )
 		RTTI_EXTEND ( MOAIMaterialBatchHolder )
 	RTTI_END
 	
@@ -313,14 +309,14 @@ MOAIStretchPatch2D::~MOAIStretchPatch2D () {
 //----------------------------------------------------------------//
 void MOAIStretchPatch2D::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaClass ( state );
+	MOAIStretchDeck::RegisterLuaClass ( state );
 	MOAIMaterialBatchHolder::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIStretchPatch2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaFuncs ( state );
+	MOAIStretchDeck::RegisterLuaFuncs ( state );
 	MOAIMaterialBatchHolder::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
@@ -417,23 +413,23 @@ ZLBounds MOAIStretchPatch2D::MOAIDeck_ComputeMaxBounds () {
 }
 
 //----------------------------------------------------------------//
+ZLBounds MOAIStretchPatch2D::MOAIDeck_GetBounds ( u32 idx ) {
+	UNUSED ( idx );
+
+	return ZLBounds ( this->mRect );
+}
+
+//----------------------------------------------------------------//
 void MOAIStretchPatch2D::MOAIDeck_Draw ( u32 idx ) {
 	
 	this->UpdateParams ();
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	
+	ZLVec3D stretch = this->BindStretchVertexTransform ();
+	gfxState.SetUVTransform ( MOAIGfxState::UV_TO_MODEL_MTX );
+	
 	MOAIQuadBrush::BindVertexFormat ();
-	
-	ZLMatrix4x4 worldTransform = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::MODEL_TO_WORLD_MTX );
-	ZLVec3D stretch = worldTransform.GetStretch ();
-	
-	ZLMatrix4x4 noStretch;
-	noStretch.Scale ( 1.0f / stretch.mX, 1.0f / stretch.mY, 1.0f / stretch.mZ );
-	noStretch.Append ( worldTransform );
-	noStretch.Append ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_CLIP_MTX ));
-	
-	gfxMgr.mVertexCache.SetVertexTransform ( noStretch );
-	gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_TO_MODEL_MTX ));
 	
 	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
 	materialStack.Push ( this->GetMaterial ( idx ));
@@ -443,13 +439,6 @@ void MOAIStretchPatch2D::MOAIDeck_Draw ( u32 idx ) {
 	this->DrawStretch ( idx, stretch.mX, stretch.mY );
 	
 	materialStack.Pop ();
-}
-
-//----------------------------------------------------------------//
-ZLBounds MOAIStretchPatch2D::MOAIDeck_GetBounds ( u32 idx ) {
-	UNUSED ( idx );
-
-	return ZLBounds ( this->mRect );
 }
 
 //----------------------------------------------------------------//

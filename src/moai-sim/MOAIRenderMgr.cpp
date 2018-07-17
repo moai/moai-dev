@@ -124,7 +124,5 @@ void MOAIRenderMgr::Render () {
 	this->mRenderDuration = endTime - startTime;
 	this->mRenderTime += this->mRenderDuration;
 	
-	gfxMgr.mVertexCache.FlushBufferedPrims (); // TODO: need to do this here?
-	gfxMgr.mGfxState.UnbindAll ();
-	gfxMgr.mVertexCache.Reset ();
+	 gfxMgr.mGfxState.FinishFrame ();
 }

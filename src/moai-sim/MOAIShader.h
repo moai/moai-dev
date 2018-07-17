@@ -19,7 +19,7 @@ class MOAIShader :
 	public virtual MOAINode {
 protected:
 
-	friend class MOAIGfxStateCache;
+	friend class MOAIGfxStateGPUCache;
 	friend class MOAIShaderProgram;
 
 	MOAILuaSharedPtr < MOAIShaderProgram >		mProgram;

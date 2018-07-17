@@ -89,7 +89,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void					Clear							();
-	MOAIPartitionHull*				FindBest						();
+	MOAIPartitionHull*		FindBest						();
 	void					GenerateKeys					( u32 mode, float xScale, float yScale, float zScale, float priority );
 							MOAIPartitionResultBuffer		();
 							~MOAIPartitionResultBuffer		();

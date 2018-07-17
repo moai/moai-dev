@@ -239,10 +239,10 @@ void MOAITextLayout::Draw ( u32 reveal ) {
 		bool useSpriteShaders = ( currentShader == 0 );
 		MOAIShader* defaultShader = MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::FONT_SNAPPING_SHADER );
 		
-		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+		MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 		MOAIQuadBrush::BindVertexFormat ();
 
-		ZLColorVec baseColor = gfxMgr.mGfxState.GetPenColor ();
+		ZLColorVec baseColor = gfxState.GetPenColor ();
 		ZLColorVec blendColor;
 		u32 rgba0 = 0xffffffff;
 		u32 rgba1 = 0xffffffff;
@@ -259,14 +259,14 @@ void MOAITextLayout::Draw ( u32 reveal ) {
 				
 				blendColor.SetRGBA ( rgba0 );
 				blendColor.Modulate ( baseColor );
-				gfxMgr.mGfxState.SetPenColor ( blendColor );
+				gfxState.SetPenColor ( blendColor );
 			}
 			
 			if ( useSpriteShaders ) {
 			
 				MOAIShader* spriteShader = sprite.mShader ? sprite.mShader : defaultShader;
 				if ( spriteShader != currentShader ) {
-					if ( !gfxMgr.mGfxState.SetShader ( spriteShader )) continue;
+					if ( !gfxState.SetShader ( spriteShader )) continue;
 					currentShader = spriteShader;
 				}
 			}

@@ -140,32 +140,6 @@ void MOAIGfxMgr::ClearErrors () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr::ClearSurface ( u32 clearFlags ) {
-
-	// TODO: probably clear surface should live in the state cashe; it is
-	// similar to DrawPrims in that it changes the contents of a frame buffer
-
-	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-
-	if ( clearFlags ) {
-	
-		this->mVertexCache.FlushBufferedPrims ();
-		
-		// TODO: this shouldn't be exposed here
-		this->mGfxState.ApplyStateChanges ();
-	
-		if (( clearFlags & ZGL_CLEAR_DEPTH_BUFFER_BIT ) && !this->mGfxState.GetDepthMask ()) {
-			gfx.DepthMask ( true );
-			gfx.Clear ( clearFlags );
-			gfx.DepthMask ( false );
-		}
-		else {
-			gfx.Clear ( clearFlags );
-		}
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxMgr::DetectContext () {
 
 	this->mHasContext = true;
@@ -223,25 +197,25 @@ MOAIGfxMgr::MOAIGfxMgr () :
 	mMaxTextureSize ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_SINGLE ( MOAIGfxStateCache )
+		RTTI_SINGLE ( MOAIGfxStateGPUCache )
 		RTTI_SINGLE ( MOAIGlobalEventSource )
 	RTTI_END
 	
-	this->mGfxState.SetDefaultFrameBuffer ( *this, new MOAIFrameBuffer ());
+	this->mGfxState.SetDefaultFrameBuffer ( new MOAIFrameBuffer ());
 }
 
 //----------------------------------------------------------------//
 MOAIGfxMgr::~MOAIGfxMgr () {
 
-	this->mGfxState.SetDefaultFrameBuffer ( *this, 0 );
-	this->mGfxState.SetDefaultTexture ( *this, 0 );
+	this->mGfxState.SetDefaultFrameBuffer ( 0 );
+	this->mGfxState.SetDefaultTexture ( 0 );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxMgr::OnGlobalsFinalize () {
 
-	this->mGfxState.SetDefaultFrameBuffer ( *this, 0 );
-	this->mGfxState.SetDefaultTexture ( *this, 0 );
+	this->mGfxState.SetDefaultFrameBuffer ( 0 );
+	this->mGfxState.SetDefaultTexture ( 0 );
 	
 	mResourceMgr.ProcessDeleters ();
 }
@@ -249,7 +223,7 @@ void MOAIGfxMgr::OnGlobalsFinalize () {
 //----------------------------------------------------------------//
 void MOAIGfxMgr::OnGlobalsInitialize () {
 
-	this->mVertexCache.InitBuffers ();
+	this->mGfxState.InitBuffers ();
 }
 
 //----------------------------------------------------------------//

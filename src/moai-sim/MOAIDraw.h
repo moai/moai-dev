@@ -55,6 +55,9 @@ private:
 	static int			_fillEllipse			( lua_State* L );
 	static int			_fillFan				( lua_State* L );
 	static int			_fillRect				( lua_State* L );
+	static int			_fillRoundedRect		( lua_State* L );
+	static int			_popGfxState			( lua_State* L );
+	static int			_pushGfxState			( lua_State* L );
 	static int			_setBlendMode			( lua_State* L );
 	static int			_setClearColor			( lua_State* L );
 	static int			_setClearDepth			( lua_State* L );
@@ -67,6 +70,7 @@ private:
 	static int			_setScissorRect			( lua_State* L );
 	static int			_setViewProj			( lua_State* L );
 	static int			_setViewRect			( lua_State* L );
+	static int			_strokeRoundedRect		( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void			DrawLuaParams			( lua_State* L, u32 primType );
