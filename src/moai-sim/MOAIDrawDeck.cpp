@@ -84,6 +84,7 @@ MOAIDrawDeck::MOAIDrawDeck () {
 		RTTI_EXTEND ( MOAIStretchDeck )
 	RTTI_END
 	
+	this->mStretchFactor = 0.0;
 	this->mBounds = ZLBounds::GLOBAL;
 }
 
@@ -131,7 +132,6 @@ void MOAIDrawDeck::MOAIDeck_Draw ( u32 idx ) {
 	
 		MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 		ZLVec3D stretch = this->BindStretchVertexTransform ();
-		gfxState.SetUVTransform ( MOAIGfxState::UV_TO_MODEL_MTX );
 	
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		this->mOnDraw.PushRef ( state );
