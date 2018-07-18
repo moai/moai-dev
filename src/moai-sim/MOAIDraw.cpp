@@ -851,6 +851,21 @@ int MOAIDraw::_fillRoundedRect ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIDraw::_getPenColor ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
+
+	ZLColorVec color = MOAIGfxMgr::Get ().mGfxState.GetPenColor ();
+	
+	state.Push ( color.mR );
+	state.Push ( color.mG );
+	state.Push ( color.mB );
+	state.Push ( color.mA );
+	
+	return 4;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIDraw::_popGfxState ( lua_State* L ) {
 
 	MOAIGfxMgr::Get ().mGfxState.PopState ();
@@ -1558,6 +1573,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "fillFan",				_fillFan },
 		{ "fillRect",				_fillRect },
 		{ "fillRoundedRect",		_fillRoundedRect },
+		{ "getPenColor",			_getPenColor },
 		{ "popGfxState",			_popGfxState },
 		{ "pushGfxState",			_pushGfxState },
 		{ "setBlendMode",			_setBlendMode },

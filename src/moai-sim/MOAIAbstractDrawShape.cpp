@@ -344,10 +344,10 @@ void MOAIAbstractDrawShape::DrawRoundedRectFill ( float left, float top, float r
 		this->DrawRectFill ( rect.mXMin + xRad, rect.mYMin, rect.mXMax - xRad, rect.mYMin + yRad ); // bottom section
 
 		// draw corners
-		DrawArcFill ( rect.mXMax - xRad, rect.mYMax - yRad, xRad, yRad, 0.0, 90.0, steps );
-		DrawArcFill ( rect.mXMin + xRad, rect.mYMax - yRad, xRad, yRad, 90.0, 180.0, steps );
-		DrawArcFill ( rect.mXMin + xRad, rect.mYMin + yRad, xRad, yRad, 180.0, 270.0, steps );
-		DrawArcFill ( rect.mXMax - xRad, rect.mYMin + yRad, xRad, yRad, 270.0, 360.0, steps );
+		DrawArcFill ( rect.mXMax - xRad, rect.mYMax - yRad, xRad, yRad, 90.0, 0.0, steps );
+		DrawArcFill ( rect.mXMin + xRad, rect.mYMax - yRad, xRad, yRad, 180.0, 90.0, steps );
+		DrawArcFill ( rect.mXMin + xRad, rect.mYMin + yRad, xRad, yRad, 270.0, 180.0, steps );
+		DrawArcFill ( rect.mXMax - xRad, rect.mYMin + yRad, xRad, yRad, 360.0, 270.0, steps );
 	}
 }
 
@@ -383,11 +383,11 @@ void MOAIAbstractDrawShape::DrawRoundedRectStroke ( float left, float top, float
 		this->DrawRectFill ( rect.mXMin + xRad, rect.mYMax + offset + hStroke, rect.mXMax - xRad, rect.mYMax + offset - hStroke ); // top
 		this->DrawRectFill ( rect.mXMin + xRad, rect.mYMin - offset + hStroke, rect.mXMax - xRad, rect.mYMin - offset - hStroke ); // bottom
 
-		// stroke corners
-		DrawArcStroke ( rect.mXMax - xRad, rect.mYMax - yRad, xRad, yRad, 0.0, 90.0, steps, stroke, offset );
-		DrawArcStroke ( rect.mXMin + xRad, rect.mYMax - yRad, xRad, yRad, 90.0, 180.0, steps, stroke, offset );
-		DrawArcStroke ( rect.mXMin + xRad, rect.mYMin + yRad, xRad, yRad, 180.0, 270.0, steps, stroke, offset );
-		DrawArcStroke ( rect.mXMax - xRad, rect.mYMin + yRad, xRad, yRad, 270.0, 360.0, steps, stroke, offset );
+		// stroke corners		
+		DrawArcStroke ( rect.mXMax - xRad, rect.mYMax - yRad, xRad, yRad, 90.0, 0.0, steps, stroke, offset );
+		DrawArcStroke ( rect.mXMin + xRad, rect.mYMax - yRad, xRad, yRad, 180.0, 90.0, steps, stroke, offset );
+		DrawArcStroke ( rect.mXMin + xRad, rect.mYMin + yRad, xRad, yRad, 270.0, 180.0, steps, stroke, offset );
+		DrawArcStroke ( rect.mXMax - xRad, rect.mYMin + yRad, xRad, yRad, 360.0, 270.0, steps, stroke, offset );
 	}
 }
 

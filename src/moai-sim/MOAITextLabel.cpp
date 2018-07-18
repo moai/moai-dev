@@ -1136,8 +1136,8 @@ void MOAITextLabel::MOAIDrawable_Draw ( int subPrimID ) {
 				this->PushGfxState ();
 
 				ZLMatrix4x4 fit;
-				fit.ScRoTr ( xFit, -1.0f * yFit, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
-
+				fit.Scale ( xFit, -1.0f * yFit, 1.0f );
+				
 				ZLMatrix4x4 worldDrawingMtx = MOAIGraphicsProp::MOAIGraphicsPropBase_GetWorldDrawingMtx ();
 				worldDrawingMtx.Prepend ( fit );
 			
@@ -1155,6 +1155,7 @@ void MOAITextLabel::MOAIDrawable_Draw ( int subPrimID ) {
 		this->PushGfxState ();
 		this->LoadVertexTransform ();
 		this->LoadUVTransform ();
+		
 		MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
 		materialStack.LoadGfxState ();
 	
