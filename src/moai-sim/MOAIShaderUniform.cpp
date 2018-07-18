@@ -65,7 +65,7 @@ size_t MOAIShaderUniform::GetSize () const {
 //----------------------------------------------------------------//
 void MOAIShaderUniform::Init ( u32 type, u32 width, u32 count ) {
 	
-	this->MOAIShaderUniformHandle::Init ( type, width );
+	this->MOAIShaderUniformBase::Init ( type, width );
 	this->mCount = count;
 	this->mCPUOffset = 0;
 }
