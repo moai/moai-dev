@@ -1202,6 +1202,8 @@ bool MOAIDraw::Bind () {
 	gfxState.SetVertexTransform ( MOAIGfxState::MODEL_TO_CLIP_MTX );
 	gfxState.SetUVTransform ( MOAIGfxState::UV_TO_MODEL_MTX );
 
+	gfxState.SetCullFunc (); // no culling in immediate mode drawing
+
 	return true;
 }
 
