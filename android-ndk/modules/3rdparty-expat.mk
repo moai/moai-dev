@@ -8,7 +8,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE 		:= expat
 LOCAL_ARM_MODE 		:= $(MY_ARM_MODE)
-LOCAL_CFLAGS		:= -DHAVE_MEMMOVE=1 -DXML_STATIC
+LOCAL_CFLAGS		:= -DHAVE_MEMMOVE=1 -DXML_STATIC -DXML_DEV_URANDOM
 LOCAL_CFLAGS		+= -include $(MOAI_SDK_HOME)/src/zl-vfs/zl_replace.h
 LOCAL_CFLAGS		+= -fvisibility=hidden
 
