@@ -1,31 +1,13 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIVERTEXARRAY_H
 #define	MOAIVERTEXARRAY_H
 
-#include <moai-sim/MOAIStandardDeck.h>
-
 class MOAIVertexArray;
 class MOAIVertexBuffer;
+class MOAIVertexBufferWithFormat;
 class MOAIVertexFormat;
-
-//================================================================//
-// MOAIVertexArrayItem
-//================================================================//
-class MOAIVertexArrayItem {
-public:
-	
-	MOAILuaSharedPtr < MOAIVertexBuffer >		mBuffer;
-	MOAILuaSharedPtr < MOAIVertexFormat >		mFormat;
-	
-	//----------------------------------------------------------------//
-	void		Bind					( bool useVAOs );
-				MOAIVertexArrayItem		();
-				~MOAIVertexArrayItem	();
-	void		SetBufferAndFormat		( MOAIVertexArray& owner, MOAIVertexBuffer* buffer, MOAIVertexFormat* format );
-	void		Unbind					();
-};
 
 //================================================================//
 // MOAIVertexArray
@@ -35,10 +17,10 @@ class MOAIVertexArray :
 	public MOAIGfxResource {
 protected:
 
-	ZLLeanArray < ZLGfxHandle* >			mVAOs; // vertex array objects to bind all the vertex and buffer state
-	u32										mCurrentVAO;
+	ZLLeanArray < ZLGfxHandle >						mVAOs; // vertex array objects to bind all the vertex and buffer state
+	u32												mCurrentVAO;
 
-	ZLLeanArray < MOAIVertexArrayItem >		mVertexBuffers;
+	ZLLeanArray < MOAIVertexBufferWithFormat >		mVertexBuffers;
 
 	bool				mUseVAOs;
 
@@ -66,6 +48,8 @@ public:
 	IS ( UsingVAOs, mUseVAOs, true )
 	
 	//----------------------------------------------------------------//
+	MOAIVertexBuffer*	GetVertexBuffer				( u32 idx );
+	MOAIVertexFormat*	GetVertexFormat				( u32 idx );
 						MOAIVertexArray				();
 						~MOAIVertexArray			();
 	void				RegisterLuaClass			( MOAILuaState& state );

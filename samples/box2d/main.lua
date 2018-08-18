@@ -10,16 +10,11 @@ end
 
 local width = 640
 local height = 480
-MOAISim.openWindow ( "test", width ,height  )
+MOAISim.openWindow ( "test", width, height  )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( width, height )
-viewport:setScale (width / (width/640), height / (height/480))
-
-layer = MOAILayer2D.new ()
-layer:setPartition( MOAIPartition.new() )
-layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+viewport:setScale ( width / ( width / 640 ), height / ( height / 480 ))
 
 function onCollide ( event )
 
@@ -45,19 +40,33 @@ world = MOAIBox2DWorld.new ()
 world:setGravity ( 0, -10 )
 world:setUnitsToMeters ( .05 )
 world:start ()
-layer:setUnderlayTable ({ world })
+
+debugLayer = MOAITableLayer.new ()
+debugLayer:setViewport ( viewport )
+debugLayer:pushRenderPass ()
+debugLayer:setRenderTable ( world )
 
 worldBody = world:addBody ( MOAIBox2DBody.STATIC )
-fixture2 = worldBody:addRect ( -(300/2), -200, 300/2, -300)
+fixture2 = worldBody:addRect ( -( 300 / 2 ), -200, 300 / 2, -300 )
 fixture2:setFilter ( 0x02 )
 fixture2:setCollisionHandler ( onCollide, MOAIBox2DArbiter.BEGIN + MOAIBox2DArbiter.END, 0x00 )
 
-texture = MOAIGfxQuad2D.new ()
-texture:setTexture ( 'moai.png' )
-texture:setRect ( -25/2, -25/2, 25/2, 25/2 )
+layer = MOAIPartitionLayer.new ()
+layer:setViewport ( viewport )
+layer:pushRenderPass ()
 
-function addSprite()
+deck = MOAISpriteDeck2D.new ()
+deck:setTexture ( '../resources/moai.png' )
+deck:setQuad ( 0, -25, 25, 0, 0, 25, -25, 0 )
+deck:setUVRect ( 0, 0, 1, 1 )
+
+function addSprite ( x, y )
+
+	x = x or 0
+	y = y or 0
+
 	local body = world:addBody ( MOAIBox2DBody.DYNAMIC )
+	body:setTransform ( x, y )
 
 	local poly = {
 		0, -25,
@@ -75,35 +84,39 @@ function addSprite()
 	body:resetMassData ()
 	body:applyAngularImpulse ( 80 )
 
-	local sprite = MOAIProp2D.new ()
-	sprite:setDeck ( texture )
+	local sprite = MOAIGraphicsProp.new ()
+	sprite:setDeck ( deck )
 	sprite.body = body
 	sprite:setParent ( body )
-	layer:insertProp ( sprite )
+	sprite:setPartition ( layer )
 end
 
 function pointerCallback ( x, y )
+
 	worldX, worldY = layer:wndToWorld ( x, y )
 
 	if pick then
-	  mouseJoint:setTarget(worldX, worldY)
+		mouseJoint:setTarget ( worldX, worldY )
 	end
 end
 
 function clickCallback ( down )
 	if down then
-		pick = layer:getPartition():propForPoint ( worldX, worldY)
+		pick = layer:getLayerPartition ():hullForPoint ( worldX, worldY )
 		if pick then
-			mouseBody = world:addBody( MOAIBox2DBody.DYNAMIC )
-			mouseBody:setTransform(worldX, worldY)
 
-			mouseJoint = world:addMouseJoint(mouseBody, pick.body, worldX, worldY,  10000.0 * pick.body:getMass());
-			mouseJoint:setDampingRatio(2);
+			mouseBody = world:addBody ( MOAIBox2DBody.DYNAMIC )
+			mouseBody:setTransform ( worldX, worldY )
+
+			mouseJoint = world:addMouseJoint ( mouseBody, pick.body, worldX, worldY,  10000.0 * pick.body:getMass ());
+			mouseJoint:setDampingRatio ( 2 ) ;
+		else
+			addSprite ( worldX, worldY )
 		end
 	else
 		if pick then
 			--also destroys joint
-			mouseBody:destroy()
+			mouseBody:destroy ()
 			mouseBody = nil
 			pick = nil
 		end
@@ -112,10 +125,9 @@ end
 
 function rightclickCallback ( down )
 	if down then
-	  addSprite()
+		addSprite ( worldX, worldY )
 	end
 end
-
 
 if MOAIInputMgr.device.pointer then
     MOAIInputMgr.device.pointer:setCallback ( pointerCallback )
@@ -125,13 +137,13 @@ else
     MOAIInputMgr.device.touch:setCallback (
         function ( eventType, idx, x, y, tapCount )
             local isDown = eventType == MOAITouchSensor.TOUCH_DOWN
-            if (tapCount > 1) then
-                rightclickCallback(isDown)
+            if ( tapCount > 1 ) then
+                rightclickCallback ( isDown )
             elseif eventType ~= MOAITouchSensor.TOUCH_MOVE then
-                pointerCallback(x,y)
-                clickCallback(isDown)
+                pointerCallback ( x, y )
+                clickCallback ( isDown )
             elseif eventType == MOAITouchSensor.TOUCH_MOVE then
-                pointerCallback(x,y)
+                pointerCallback ( x, y )
             end
         end
     )

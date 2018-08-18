@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIIMAGEFORMATJPG_H
@@ -22,7 +22,7 @@ public:
 
 	//----------------------------------------------------------------//
 	bool			CheckHeader					( const void* buffer );
-	bool			CreateTexture				( MOAISingleTexture& texture, const void* data, size_t size );
+	bool			CreateTexture				( MOAITextureBase& texture, const void* data, size_t size );
 	size_t			GetHeaderSize				();
 					MOAIImageFormatJpg			();
 					~MOAIImageFormatJpg			();

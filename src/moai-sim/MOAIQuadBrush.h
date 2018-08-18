@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 #ifndef	MOAIQUADBRUSH_H
 #define	MOAIQUADBRUSH_H
@@ -12,11 +12,11 @@ class MOAIQuadBrush {
 private:
 	
 	//----------------------------------------------------------------//
-	static inline void WriteVertex ( MOAIGfxVertexCache& vertexCache, const ZLVec2D& vtx, const ZLVec2D& uv ) {
+	static inline void WriteVertex ( MOAIGfxState& gfxState, const ZLVec2D& vtx, const ZLVec2D& uv ) {
 		
-		vertexCache.WriteVtx ( vtx );
-		vertexCache.WriteUV ( uv );
-		vertexCache.WritePenColor4b ();
+		gfxState.WriteVtx ( vtx );
+		gfxState.WriteUV ( uv );
+		gfxState.WritePenColor4b ();
 	}
 
 public:
@@ -25,7 +25,7 @@ public:
 	ZLQuad	mUVQuad;
 
 	//----------------------------------------------------------------//
-	static void			BindVertexFormat	( MOAIGfxVertexCache& vertexCache );
+	static void			BindVertexFormat	();
 	void				Draw				();
 	void				Draw				( float xOff, float yOff, float zOff );
 	void				Draw				( float xOff, float yOff, float zOff, float xScale, float yScale );

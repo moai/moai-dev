@@ -40,6 +40,9 @@
     <Filter Include="socket">
       <UniqueIdentifier>{ee52e811-e07f-4ed9-b694-a0611b8cbf40}</UniqueIdentifier>
     </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{1ab81aca-0abc-49ea-ad62-97cce83beea3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\zl-util\ZLAccessors.h">
@@ -183,9 +186,6 @@
     <ClInclude Include="..\..\src\zl-util\ZLQuad.h">
       <Filter>math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\zl-util\ZLQuadCoord.h">
-      <Filter>math</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\zl-util\ZLQuaternion.h">
       <Filter>math</Filter>
     </ClInclude>
@@ -314,6 +314,26 @@
     <ClInclude Include="..\..\src\zl-util\ZLRingAdapter.h">
       <Filter>stream</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\zl-common\zl_platform.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\zl-common\zl_types.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\zl-util\ZLContext.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLRtti.h" />
+    <ClInclude Include="..\..\src\zl-util\STLSort.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLBarycentric.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLBounds.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLCircle.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLCleanup.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLQuadCoord.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLRefCountedObjectBase.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLResult.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLSharedBuffer.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLSphere.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLStrongPtr.h" />
+    <ClInclude Include="..\..\src\zl-util\ZLWeakPtr.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\zl-util\ZLAdapterInfo_posix.cpp">
@@ -389,9 +409,6 @@
       <Filter>math</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\zl-util\ZLQuad.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\zl-util\ZLQuadCoord.cpp">
       <Filter>math</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\zl-util\ZLQuaternion.cpp">
@@ -503,5 +520,13 @@
     <ClCompile Include="..\..\src\zl-util\ZLPolygon2D.cpp">
       <Filter>math</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\zl-util\ZLContext.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLRtti.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLPolygon2D-clip.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\zl-util\ZLBounds.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLDeviceTime_nacl.cpp" />
+    <ClCompile Include="..\..\src\zl-util\ZLRefCountedObjectBase.cpp" />
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -25,7 +25,7 @@ int MOAIDeckRemapper::_reserve ( lua_State* L ) {
 	self->mRemap.Init ( size );
 	
 	for ( u32 i = 0; i < size; ++i ) {
-		self->mRemap [ i ] = i + 1;
+		self->mRemap [ i ] = i;
 	}
 	return 0;
 }
@@ -60,11 +60,16 @@ int MOAIDeckRemapper::_setBase ( lua_State* L ) {
 int MOAIDeckRemapper::_setRemap ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDeckRemapper, "UN" )
 
-	u32 idx		= state.GetValue < u32 >( 2, 1 ) - 1;
+	u32 idx		= state.GetValue < u32 >( 2, 1 );
 	u32 remap	= state.GetValue < u32 >( 3, idx );
 	
-	if ( idx < self->mRemap.Size ()) {
-		self->mRemap [ idx ] = remap;
+	idx			= idx - 1;
+	remap		= remap - 1;
+	
+	u32 code = idx - self->mBase;
+	
+	if ( code < self->mRemap.Size ()) {
+		self->mRemap [ code ] = remap;
 	}
 	return 0;
 }
@@ -74,22 +79,12 @@ int MOAIDeckRemapper::_setRemap ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIDeckRemapper::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
-
-	attrID -=1;
-	if (( attrID >= this->mBase ) && ( attrID < this->mRemap.Size ())) {
-		this->mRemap [ attrID ] = ZLFloat::ToIndex ( attrOp.Apply (( float )this->mRemap [ attrID ], op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ));
-		return true;
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
 MOAIDeckRemapper::MOAIDeckRemapper () :
 	mBase ( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAINode )
+		RTTI_EXTEND ( MOAIDeckProxy )
 	RTTI_END
 }
 
@@ -101,12 +96,14 @@ MOAIDeckRemapper::~MOAIDeckRemapper () {
 void MOAIDeckRemapper::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAINode::RegisterLuaClass ( state );
+	MOAIDeckProxy::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIDeckRemapper::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAINode::RegisterLuaFuncs ( state );
+	MOAIDeckProxy::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "reserve",			_reserve },
@@ -118,22 +115,26 @@ void MOAIDeckRemapper::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
+//================================================================//
+// ::implementation::
+//================================================================//
+
 //----------------------------------------------------------------//
-u32 MOAIDeckRemapper::Remap ( u32 idx ) const {
+u32 MOAIDeckRemapper::MOAIDeckProxy_Remap ( u32 idx ) {
 
-	u32 code = ( idx & MOAITileFlags::CODE_MASK ) - 1;
-
-	if (( code >= this->mBase ) && ( code < this->mRemap.Size ())) {
+	u32 code = idx - this->mBase;
 	
-		u32 flags = idx & MOAITileFlags::FLAGS_MASK;
-		return ( this->mRemap [ code ] ^ ( flags & MOAITileFlags::FLIP_MASK )) | ( flags & MOAITileFlags::HIDDEN );
-	}
-	return idx;
+	return ( code < this->mRemap.Size ()) ? this->mRemap [ code ] : idx;
 }
 
 //----------------------------------------------------------------//
-u32 MOAIDeckRemapper::Remap ( const MOAIDeckRemapper* remapper, u32 idx ) {
+bool MOAIDeckRemapper::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 
-	return remapper ? remapper->Remap ( idx ) : idx;
+	u32 code = attrID - this->mBase - 1;
+
+	if ( code < this->mRemap.Size ()) {
+		this->mRemap [ code ] = ZLFloat::ToIndex ( attr.Apply (( float )this->mRemap [ code ], op, MOAIAttribute::ATTR_READ_WRITE )) - 1;
+		return true;
+	}
+	return false;
 }
-

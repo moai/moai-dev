@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -6,6 +6,7 @@
 #include <moai-core/MOAILua.h>
 #include <moai-core/MOAISerializer.h>
 #include <moai-core/MOAILuaState-impl.h>
+#include <moai-core/strings.h>
 
 #define FINALIZE_FUNC_NAME "finalize"
 #define MOAI_TAG "moai"
@@ -15,19 +16,24 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+int MOAILuaObject::_alertNewIsUnsupported ( lua_State* L ) {
+
+	MOAILogF ( L, ZLLog::LOG_ERROR, MOAISTRING_NewIsUnsupported );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAILuaObject::_gc ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 	MOAILuaObject* self = ( MOAILuaObject* )state.GetPtrUserData ( 1 );
 	
-	//edgecase: ignore _gc() called by previous Lua Userdata
-	self->mActiveUserdataCount -- ;
+	//edgecase: ignore _gc() called by previous Lua userdata
+	self->mActiveUserdataCount--;
 	if ( self->mActiveUserdataCount > 0 ) return 0;
 	
-	self->mCollected = true;
-	
 	if ( MOAILuaRuntime::IsValid ()) {
-	
+		
 		if ( self->mFinalizer ) {
 			self->mFinalizer.PushRef ( state );
 			if ( state.IsType ( -1, LUA_TFUNCTION )) {
@@ -45,6 +51,8 @@ int MOAILuaObject::_gc ( lua_State* L ) {
 		if ( MOAILuaRuntime::Get ().mReportGC ) {
 			printf ( "GC %s <%p>\n", self->TypeName (), self );
 		}
+		
+		self->mUserdata.Clear ();
 	}
 	
 	if ( self->GetRefCount () == 0 ) {
@@ -228,7 +236,7 @@ void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 	// and take a weak ref back to the userdata	
 	this->mUserdata.SetRef ( state, -1 );
 	assert ( this->mUserdata );
-	this->mActiveUserdataCount ++;
+	this->mActiveUserdataCount++;
 	
 	// NOTE: we have to do this *after* mUserdata has been initialized as LuaRetain calls PushLuaUserdata
 	// which in turn calls BindToLua if there is no mUserdata...
@@ -311,7 +319,7 @@ void MOAILuaObject::LuaRelease ( MOAILuaObject* object ) {
 
 	if ( !object ) return;
 	
-	if (( !this->mCollected ) && MOAILuaRuntime::IsValid ()) {
+	if (( this->IsBound ()) && MOAILuaRuntime::IsValid ()) {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		if ( this->PushRefTable ( state )) {
 			if ( object->PushLuaUserdata ( state )) {
@@ -341,7 +349,7 @@ void MOAILuaObject::LuaRelease ( MOAILuaObject* object ) {
 	}
 	
 	// this will take the ref count to zero, but if the object hasn't been collected it *won't* get deleted
-	// thanks to the override of MOAIObject OnRelease ()
+	// thanks to the override of ZLRefCountedObject::ZLRefCountedObjectBase_OnRelease ()
 	object->Release ();
 }
 
@@ -379,8 +387,7 @@ void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 }
 
 //----------------------------------------------------------------//
-MOAILuaObject::MOAILuaObject ():
-	mCollected ( false ),
+MOAILuaObject::MOAILuaObject () :
 	mActiveUserdataCount ( 0 ) {
 	RTTI_SINGLE ( RTTIBase )
 	
@@ -397,29 +404,20 @@ MOAILuaObject::~MOAILuaObject () {
 		MOAILuaRuntime::Get ().DeregisterObject ( *this );
 		
 		// TODO: change from both patrick's fork and the community branch; double check
-		if (( !this->mCollected ) && this->mUserdata ) {
+		if ( this->IsBound () && this->mUserdata ) {
 			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 			
 			// clear out the gc
 			this->mUserdata.PushRef ( state );
 			
-			u32 top = state.GetTop ();
-			bool isUserdata = state.IsType ( top, LUA_TUSERDATA );
-			
 			MOAILuaRuntime::Get ().PurgeUserdata ( state, -1 );
-			
-			top = state.GetTop ();
-			isUserdata = state.IsType ( top, LUA_TUSERDATA );
 			
 			if ( lua_getmetatable ( state, -1 )) {
 				lua_pushnil ( state );
 				lua_setfield ( state, -2, "__gc" );
 				state.Pop ( 1 );
 			}
-			
-			top = state.GetTop ();
-			isUserdata = state.IsType ( top, LUA_TUSERDATA );
-			
+						
 			// and the ref table
 			lua_pushnil ( state );
 			lua_setmetatable ( state, -2 );
@@ -463,21 +461,6 @@ void MOAILuaObject::MakeLuaBinding ( MOAILuaState& state ) {
 	lua_setmetatable ( state, -2 ); // interface is meta of member
 	lua_setmetatable ( state, -2 ); // member is meta of ref
 	lua_setmetatable ( state, -2 ); // ref is meta of userdata
-}
-
-//----------------------------------------------------------------//
-void MOAILuaObject::OnRelease ( u32 refCount ) {
-
-	// The engine is done with this object, so it's OK to delete
-	// it if there is no connection to the Lua runtime. If there
-	// is, then refcount can remain 0 and the object will be
-	// collected by the Lua GC.
-
-	if ( this->mCollected && ( refCount == 0 )) {
-		// no Lua binding and no references, so
-		// go ahead and kill this turkey
-		delete this;
-	}
 }
 
 //----------------------------------------------------------------//
@@ -607,8 +590,6 @@ void MOAILuaObject::SetInterfaceTable ( MOAILuaState& state, int idx ) {
 
 //----------------------------------------------------------------//
 void MOAILuaObject::SetMemberTable ( MOAILuaState& state, int idx ) {
-	UNUSED ( state );
-	UNUSED ( idx );
 
 	// TODO: what if object is a singleton?
 	assert ( !this->GetLuaClass ()->IsSingleton ()); // TODO: should actually set the member table, not just crash
@@ -627,7 +608,21 @@ void MOAILuaObject::SetMemberTable ( MOAILuaState& state, int idx ) {
 	state.Pop ( 1 );
 }
 
+//================================================================//
+// ZLRefCountedObjectBase
+//================================================================//
+
 //----------------------------------------------------------------//
-bool MOAILuaObject::WasCollected () {
-	return this->mCollected;
+void MOAILuaObject::ZLRefCountedObjectBase_OnRelease ( u32 refCount ) {
+
+	// The engine is done with this object, so it's OK to delete
+	// it if there is no connection to the Lua runtime. If there
+	// is, then refcount can remain 0 and the object will be
+	// collected by the Lua GC.
+
+	if (( !this->IsBound ()) && ( refCount == 0 )) {
+		// no Lua binding and no references, so
+		// go ahead and kill this turkey
+		delete this;
+	}
 }

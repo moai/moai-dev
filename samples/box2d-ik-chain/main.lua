@@ -16,10 +16,10 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( width, height )
 viewport:setScale (width / (width/640), height / (height/480))
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setPartition( MOAIPartition.new() )
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 -- set up the world and start its simulation
 world = MOAIBox2DWorld.new ()
@@ -50,11 +50,11 @@ function addSprite ( x, y, r, density, type )
 	body:resetMassData ()
 	--body:applyAngularImpulse ( 80 )
 
-	local sprite = MOAIProp2D.new ()
+	local sprite = MOAIProp.new ()
 	sprite:setBounds ( -r, -r, 0, r, r, 0 )
 	sprite.body = body
 	sprite:setParent ( body )
-	layer:insertProp ( sprite )
+	sprite:setPartition ( layer )
 
 	local top = #chain
 

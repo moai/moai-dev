@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -75,14 +75,14 @@ viewport:setSize ( 256, 256 )
 viewport:setOffset ( -1, -1 )
 viewport:setScale ( 10, 10 )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 scriptDeck = MOAIScriptDeck.new ()
 scriptDeck:setRect ( 0, 0, 10, 10 )
 scriptDeck:setDrawCallback ( onDraw )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( scriptDeck )
-layer:insertProp ( prop )
+prop:setPartition ( layer )

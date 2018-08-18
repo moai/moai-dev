@@ -1,10 +1,8 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef STLSORTPAIR_H
 #define	STLSORTPAIR_H
-
-using namespace std;
 
 //================================================================//
 // STLSortPair

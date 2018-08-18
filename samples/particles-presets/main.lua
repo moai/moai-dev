@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -10,9 +10,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 480 )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 MOAISim.openWindow ( "cathead", 320, 480 )
 
@@ -44,7 +44,7 @@ system:reserveSprites ( 256 )
 system:reserveStates ( 1 )
 system:setDeck ( texture )
 system:start ()
-layer:insertProp ( system )
+system:setPartition ( layer )
 
 -- state 1
 state1 = MOAIParticleState.new ()

@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -12,15 +12,16 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 480 )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 renderGlyph = function ( font, reader, image, code, x, y, xMin, yMin, xMax, yMax )
 	print ( 'GLYPH:', font, reader, image, code, x, y, xMin, yMin, xMax, yMax )
 	image:fillRect ( xMin, yMin, xMax, yMax, 0, 0, 1, 1 )
 	reader:setPenColor ( 0, 1, 1, 1 )
-	reader:renderGlyph ( image, x, y, MOAIImage.BLEND_FACTOR_ONE, MOAIImage.BLEND_FACTOR_ONE_MINUS_SRC_ALPHA, MOAIImage.BLEND_EQ_ADD )
+	reader:setBlendMode ( MOAIImage.BLEND_EQ_ADD, MOAIImage.BLEND_FACTOR_ONE, MOAIImage.BLEND_FACTOR_ONE_MINUS_SRC_ALPHA )
+	reader:renderGlyph ( image, x, y )
 end
 
 charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-'
@@ -51,4 +52,4 @@ textbox:setYFlip ( true )
 style = textbox:getStyle ()
 style:setPadding ( 10, 10 )
 
-layer:insertProp ( textbox )
+textbox:setPartition ( layer )

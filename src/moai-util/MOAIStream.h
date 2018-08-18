@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef MOAISTREAM_H
@@ -43,9 +43,11 @@ private:
 	static int		_read8				( lua_State* L );
 	static int		_read16				( lua_State* L );
 	static int		_read32				( lua_State* L );
+	static int		_readBoolean		( lua_State* L );
 	static int		_readDouble			( lua_State* L );
 	static int		_readFloat			( lua_State* L );
 	static int		_readFormat			( lua_State* L );
+	static int		_readString			( lua_State* L );
 	static int		_readU8				( lua_State* L );
 	static int		_readU16			( lua_State* L );
 	static int		_readU32			( lua_State* L );
@@ -55,11 +57,13 @@ private:
 	static int		_write8				( lua_State* L );
 	static int		_write16			( lua_State* L );
 	static int		_write32			( lua_State* L );
+	static int		_writeBoolean		( lua_State* L );
 	static int		_writeColor32		( lua_State* L );
 	static int		_writeDouble		( lua_State* L );
 	static int		_writeFloat			( lua_State* L );
 	static int		_writeFormat		( lua_State* L );
 	static int		_writeStream		( lua_State* L );
+	static int		_writeString		( lua_State* L );
 	static int		_writeU8			( lua_State* L );
 	static int		_writeU16			( lua_State* L );
 	static int		_writeU32			( lua_State* L );
@@ -89,48 +93,48 @@ private:
 	template < typename TYPE >
 	int ReadValues ( MOAILuaState& state, int idx ) {
 		
+		size_t base = this->GetCursor ();
+		
 		u32 total = state.GetValue < u32 >( idx, 1 );
-		size_t size = sizeof ( TYPE );
-		size_t bytes = 0;
+		u32 count = 0;
 		
 		for ( u32 i = 0; i < total; ++i ) {
-			TYPE value;
-			size_t result = this->ReadBytes ( &value, size );
-			bytes += result;
-			if ( result == size ) {
-				state.Push ( value );
+		
+			ZLResult < TYPE > result = this->Read < TYPE >();
+			
+			if ( result.mCode == ZL_OK ) {
+				state.Push ( result.mValue );
+				count++;
 			}
 			else {
 				// TODO: report errors
-				for ( u32 j = i; j < total; ++j ) {
-					state.Push ();
-				}
 				break;
 			} 
 		}
-		state.Push (( u32 )bytes ); // TODO: overflow?
-		return total + 1;
+		state.Push (( u32 )( this->GetCursor () - base )); // TODO: overflow?
+		return count + 1;
 	}
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
 	int WriteValues ( MOAILuaState& state, int idx ) {
 		
+		size_t base = this->GetCursor ();
+		
 		idx = state.AbsIndex ( idx );
 		u32 total = ( state.GetTop () - idx ) + 1;
-		size_t size = sizeof ( TYPE );
-		size_t bytes = 0;
 		
 		for ( u32 i = 0; i < total; ++i ) {
+		
 			TYPE value = state.GetValue < TYPE >( idx + i, 0 );
-			size_t result = this->WriteBytes ( &value, size );
-			bytes += result;
-			if ( result != size ) {
+			ZLSizeResult result = this->Write < TYPE >( value );
+
+			if ( result.mCode != ZL_OK ) {
 				// TODO: report errors
 				break;
 			}
 		}
-		state.Push (( u32 )bytes ); // TODO: overflow?
+		state.Push (( u32 )( this->GetCursor () - base )); // TODO: overflow?
 		return 1;
 	}
 

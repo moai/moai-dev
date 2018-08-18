@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIPARTICLEFORCE_H
@@ -42,6 +42,7 @@ private:
 	static int		_setType				( lua_State* L );
 	
 	//----------------------------------------------------------------//
+	void			MOAINode_Update			();
 
 public:
 	
@@ -64,7 +65,6 @@ public:
 	void			Eval					( const ZLVec3D& loc, float mass, ZLVec3D& acceleration, ZLVec3D& offset );
 					MOAIParticleForce		();
 					~MOAIParticleForce		();
-	void			OnDepNodeUpdate			();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };

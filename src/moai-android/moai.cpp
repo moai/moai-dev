@@ -138,7 +138,7 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT jint JNICALL Java_com_moaisdk_core_Moai_AKUCreateContext ( JNIEnv* env, jclass obj ) {
+	extern "C" JNIEXPORT void* JNICALL Java_com_moaisdk_core_Moai_AKUCreateContext ( JNIEnv* env, jclass obj ) {
 
 		AKUContextID context = AKUCreateContext ();
 		if ( context ) {
@@ -148,9 +148,15 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUDeleteContext ( JNIEnv* env, jclass obj, jint contextId ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUDeleteContext ( JNIEnv* env, jclass obj, void* contextId ) {
 
 		AKUDeleteContext ( contextId );
+	}
+
+	//----------------------------------------------------------------//
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUDetectFramebuffer ( JNIEnv* env, jclass obj ) {
+
+		AKUDetectFramebuffer ();
 	}
 
 	//----------------------------------------------------------------//
@@ -315,7 +321,7 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUSetContext ( JNIEnv* env, jclass obj, jint contextId ) {
+	extern "C" JNIEXPORT void JNICALL Java_com_moaisdk_core_Moai_AKUSetContext ( JNIEnv* env, jclass obj, void* contextId ) {
 
 		AKUSetContext ( contextId );
 	}

@@ -1,11 +1,10 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAITEXTLAYOUT_H
 #define	MOAITEXTLAYOUT_H
 
 #include <moai-sim/MOAIAction.h>
-#include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAITextShaper.h>
 #include <moai-sim/MOAITextStyle.h>
 #include <moai-sim/MOAITextStyleParser.h>
@@ -25,7 +24,7 @@ private:
 	
 	MOAIGlyph*				mGlyph;
 	MOAITextStyleState*		mStyle;
-	MOAISingleTexture*		mTexture; // caching this here to avoid add'l virtual calls when drawing
+	MOAITextureBase*		mTexture; // caching this here to avoid add'l virtual calls when drawing
 	MOAIShader*				mShader;
 	
 	u32			mIdx;		// index in original string
@@ -126,7 +125,7 @@ public:
 	void				ClearHighlight			( u32 base, u32 top );
 	void				ClearHighlights			();
 	size_t				CountSprites			();
-	void				Draw					( u32 reveal, MOAIShader* defaultShader, bool useSpriteShaders );
+	void				Draw					( u32 reveal );
 	void				DrawDebug				();
 	bool				GetBounds				( ZLRect& rect );
 	bool				GetBoundsForRange		( u32 idx, u32 size, ZLRect& rect );

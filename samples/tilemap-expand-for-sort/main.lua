@@ -1,15 +1,15 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
 
 MOAISim.openWindow ( "test", 768, 768 )
 
-layer = MOAILayer2D.new ()
-layer:setSortMode ( MOAILayer2D.SORT_VECTOR_ASCENDING )
+layer = MOAIPartitionViewLayer.new ()
+layer:setSortMode ( MOAIPartitionViewLayer2D.SORT_VECTOR_ASCENDING )
 layer:setSortScale ( 0, 1, 10000 )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 768, 768 )
@@ -38,14 +38,14 @@ grid:setRow ( 8, 	0x00000001, 0x00000000, 0x00000001, 0x00000000, 0x00000001, 0x
 grid:setRow ( 9, 	0x00000000, 0x00000001, 0x00000000, 0x00000001, 0x00000000, 0x00000001, 0x00000000 )
 grid:setRow ( 10, 	0x00000001, 0x00000000, 0x00000001, 0x00000000, 0x00000001, 0x00000000, 0x00000001 )
 
-map = MOAIProp2D.new ()
+map = MOAIProp.new ()
 map:setDeck ( tileDeck )
 map:setGrid ( grid )
 map:setLoc ( -448, -320 )
 map:setScl ( 1, 1 )
 map:setPriority ( 0 )
 map:setExpandForSort ( true )
-layer:insertProp ( map )
+map:setPartition ( layer )
 
 grid = MOAIGrid.new ()
 grid:setSize ( 5, 8, 128, 64 )
@@ -59,24 +59,24 @@ grid:setRow ( 6, 	0x00000000, 0x00000000, 0x00000002, 0x00000000, 0x00000000 )
 grid:setRow ( 7, 	0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000 )
 grid:setRow ( 8, 	0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000 )
 
-map = MOAIProp2D.new ()
+map = MOAIProp.new ()
 map:setDeck ( tileDeck )
 map:setGrid ( grid )
 map:setLoc ( -320, -256 )
 map:setScl ( 1, 1 )
 map:setPriority ( 1 )
 map:setExpandForSort ( true )
-layer:insertProp ( map )
+map:setPartition ( layer )
 
 gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( texture )
 gfxQuad:setRect ( -128, -192, 128, 64 )
 gfxQuad:setUVRect ( 0.75, 0, 1, 0.25 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
 prop:setPriority ( 1 )
 prop:setLoc ( 0, -256 )
 prop:moveLoc ( 0, 480, 5 )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 

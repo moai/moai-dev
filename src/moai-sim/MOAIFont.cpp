@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -292,7 +292,7 @@ int MOAIFont::_setFilter ( lua_State* L ) {
 	int min = state.GetValue < int >( 2, ZGL_SAMPLE_LINEAR );
 	int mag = state.GetValue < int >( 3, min );
 	
-	MOAISingleTexture::CheckFilterModes ( min, mag );
+	MOAITextureBase::CheckFilterModes ( min, mag );
 	
 	self->mMinFilter = min;
 	self->mMagFilter = mag;
@@ -555,7 +555,7 @@ MOAIGlyphSet* MOAIFont::GetGlyphSet ( float size ) {
 }
 
 //----------------------------------------------------------------//
-MOAISingleTexture* MOAIFont::GetGlyphTexture ( MOAIGlyph& glyph ) {
+MOAITextureBase* MOAIFont::GetGlyphTexture ( MOAIGlyph& glyph ) {
 
 	assert ( this->mCache );
 	return this->mCache->GetGlyphTexture ( glyph );
@@ -667,14 +667,9 @@ void MOAIFont::ProcessGlyphs () {
 			glyph.mNext = glyphSet.mGlyphs;
 			glyphSet.mGlyphs = &glyph;
 			
-			u8 foo [ 2 ];
-			foo [ 0 ] = ( u8 )glyph.GetCode ();
-			foo [ 1 ] = 0;
-			//printf ( "%s\n", foo );
-			
 			fontReader->SelectGlyph ( glyph.mCode );
 			fontReader->GetGlyphMetrics ( glyph );
-			
+						
 			// place and render the glyph
 			this->RenderGlyph ( glyph );
 		}
@@ -838,11 +833,11 @@ void MOAIFont::RenderGlyph ( MOAIGlyph& glyph ) {
 void MOAIFont::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 
-	this->mFilename = state.GetField ( -1, "mFilename", this->mFilename );
-	this->mFlags = state.GetField ( -1, "mFlags", this->mFlags );
-	this->mDefaultSize = state.GetField ( -1, "mDefaultSize", this->mDefaultSize );
+	this->mFilename = state.GetFieldValue ( -1, "mFilename", this->mFilename );
+	this->mFlags = state.GetFieldValue ( -1, "mFlags", this->mFlags );
+	this->mDefaultSize = state.GetFieldValue ( -1, "mDefaultSize", this->mDefaultSize );
 	
-	if ( state.GetFieldWithType ( -1, "mGlyphSets", LUA_TTABLE )) {
+	if ( state.PushFieldWithType ( -1, "mGlyphSets", LUA_TTABLE )) {
 
 		u32 itr = state.PushTableItr ( -1 );
 		while ( state.TableItrNext ( itr )) {

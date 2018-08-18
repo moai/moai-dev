@@ -1,5 +1,5 @@
 //----------------------------------------------------------------//
-// Copyright (c) 2010-2011 Zipline Games, Inc. 
+// Copyright (c) 2010-2017 Zipline Games, Inc. 
 // All Rights Reserved. 
 // http://getmoai.com
 //----------------------------------------------------------------//
@@ -48,7 +48,7 @@
     -( void )           bindFramebuffer;
     -( void )           closeGraphicsContext;
     -( void )           createContext               :( CAEAGLLayer* )layer;
-    -( bool )           createBuffers               :( CAEAGLLayer* )layer :( int )multisample;
+    -( BOOL )           createBuffers               :( CAEAGLLayer* )layer :( int )multisample;
     -( void )           deleteBuffers;
     -( void )           openGraphicsContext;
     -( BOOL )           sizeChanged                 :( CAEAGLLayer* )layer;
@@ -90,7 +90,7 @@
 		mWidth = 0;
 		mHeight = 0;
 
-        glBindFramebufferOES ( GL_FRAMEBUFFER_OES, 0 );
+        glBindFramebufferOES ( GL_FRAMEBUFFER_OES, nil );
 
 		// set us up the frame buffers
 	    glGenFramebuffersOES ( 1, &mFramebuffer );
@@ -256,7 +256,7 @@
     -( void ) render {
         
         if ( mFrameIsReady ) return;
-        if ( !AKUDisplayListHasContent ( AKU_DISPLAY_LIST_DRAWING )) return;
+        //if ( !AKUDisplayListHasContent ( AKU_DISPLAY_LIST_DRAWING )) return;
         
         [ self openGraphicsContext ];
         [ self bindFramebuffer ];

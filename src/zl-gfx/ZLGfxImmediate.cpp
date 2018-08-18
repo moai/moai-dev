@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -28,54 +28,105 @@ void ZLGfxImmediate::ActiveTexture ( u32 textureUnit ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::AttachShader ( ZLGfxHandle* program, ZLGfxHandle* shader ) {
+void ZLGfxImmediate::AllocateResource ( ZLGfxResource& resource, u32 param ) {
 
-	glAttachShader ( program ? program->mGLID : 0, shader ? shader->mGLID : 0 );
+	resource.mGLID = 0;
+	resource.mStatus = ZLGfxResource::GPU_ALLOCATED;
+
+	switch ( resource.mType ) {
+	
+		case ZLGfxResource::BUFFER:
+			glGenBuffers ( 1, &resource.mGLID );
+			GL_LOG_ERRORS ( "glGenBuffers" )
+			break;
+			
+		case ZLGfxResource::FRAMEBUFFER:
+			glGenFramebuffers ( 1, &resource.mGLID );
+			GL_LOG_ERRORS ( "glGenFramebuffers" )
+			break;
+			
+		case ZLGfxResource::PROGRAM:
+			resource.mGLID = ( u32 )glCreateProgram ();
+			GL_LOG_ERRORS ( "glCreateProgram" )
+			break;
+			
+		case ZLGfxResource::SHADER:
+			resource.mGLID = ( u32 )glCreateShader ( ZLGfxEnum::MapZLToNative ( param ));
+			GL_LOG_ERRORS ( "glCreateShader" )
+			break;
+			
+		case ZLGfxResource::TEXTURE:
+			glGenTextures ( 1, ( GLuint* )&resource.mGLID );
+			GL_LOG_ERRORS ( "glGenTextures" )
+			break;
+			
+		case ZLGfxResource::RENDERBUFFER:
+			glGenRenderbuffers ( 1, &resource.mGLID );
+			GL_LOG_ERRORS ( "glGenRenderbuffers" )
+			break;
+			
+		case ZLGfxResource::VERTEXARRAY:
+			#ifndef MOAI_OS_ANDROID
+				glGenVertexArrays ( 1, &resource.mGLID );
+				GL_LOG_ERRORS ( "glGenVertexArrays" )
+			#endif
+			break;
+		
+		default:
+			resource.mType = ZLGfxResource::NONE;
+			resource.mStatus = ZLGfxResource::NOT_ALLOCATED;
+	}
+}
+
+//----------------------------------------------------------------//
+void ZLGfxImmediate::AttachShader ( ZLGfxResource& program, ZLGfxResource& shader ) {
+
+	glAttachShader ( program.GLID (), shader.GLID ());
 	GL_LOG_ERRORS ( "glAttachShader" )
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::BindAttribLocation ( ZLGfxHandle* program, u32 index, cc8* name ) {
+void ZLGfxImmediate::BindAttribLocation ( ZLGfxResource& program, u32 index, cc8* name ) {
 
-	glBindAttribLocation ( program ? program->mGLID : 0, index, name );
+	glBindAttribLocation ( program.GLID (), index, name );
 	GL_LOG_ERRORS ( "glBindAttribLocation" )
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::BindBuffer ( u32 target, ZLGfxHandle* handle ) {
+void ZLGfxImmediate::BindBuffer ( u32 target, ZLGfxResource& handle ) {
 
-	glBindBuffer ( ZLGfxEnum::MapZLToNative ( target ), handle ? handle->mGLID : 0 );
+	glBindBuffer ( ZLGfxEnum::MapZLToNative ( target ), handle.GLID ());
 	GL_LOG_ERRORS ( "glBindBuffer" )
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::BindFramebuffer ( u32 target, ZLGfxHandle* handle ) {
+void ZLGfxImmediate::BindFramebuffer ( u32 target, ZLGfxResource& handle ) {
 
-	glBindFramebuffer ( ZLGfxEnum::MapZLToNative ( target ), handle ? handle->mGLID : 0 );
+	glBindFramebuffer ( ZLGfxEnum::MapZLToNative ( target ), handle.GLID ());
 	GL_LOG_ERRORS ( "glBindFramebuffer" )
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::BindRenderbuffer ( ZLGfxHandle* handle ) {
+void ZLGfxImmediate::BindRenderbuffer ( ZLGfxResource& handle ) {
 
-	glBindRenderbuffer ( GL_RENDERBUFFER, handle ? handle->mGLID : 0 );
+	glBindRenderbuffer ( GL_RENDERBUFFER, handle.GLID ());
 	GL_LOG_ERRORS ( "glBindRenderbuffer" )
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::BindTexture ( ZLGfxHandle* handle ) {
+void ZLGfxImmediate::BindTexture ( ZLGfxResource& handle ) {
 
-	glBindTexture ( GL_TEXTURE_2D, handle ? handle->mGLID : 0 );
+	glBindTexture ( GL_TEXTURE_2D, handle.GLID ());
 	GL_LOG_ERRORS ( "glBindTexture" )
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::BindVertexArray ( ZLGfxHandle* handle ) {
+void ZLGfxImmediate::BindVertexArray ( ZLGfxResource& handle ) {
 
 	#if defined( MOAI_OS_ANDROID ) || defined( MOAI_OS_HTML )
 		return;
 	#else
-		glBindVertexArray ( handle ? handle->mGLID : 0 );
+		glBindVertexArray ( handle.GLID ());
 		GL_LOG_ERRORS ( "glBindVertexArray" )
 	#endif
 }
@@ -162,9 +213,9 @@ void ZLGfxImmediate::Comment ( cc8* comment ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::CompileShader ( ZLGfxHandle* shader, bool log ) {
+void ZLGfxImmediate::CompileShader ( ZLGfxResource& shader, bool log ) {
 
-	GLuint shaderID = ( GLuint )( shader ? shader->mGLID : 0 );
+	GLuint shaderID = ( GLuint )( shader.GLID ());
 
 	glCompileShader ( shaderID );
 	GL_LOG_ERRORS ( "glCompileShader" )
@@ -214,63 +265,6 @@ void ZLGfxImmediate::CompressedTexImage2D ( u32 level, u32 internalFormat, u32 w
 }
 
 //----------------------------------------------------------------//
-ZLSharedConstBuffer* ZLGfxImmediate::CopyBuffer ( ZLSharedConstBuffer* buffer ) {
-
-	return buffer;
-}
-
-//----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxImmediate::Create ( ZLGfxHandle* handle, u32 param ) {
-
-	if ( handle ) {
-	
-		switch ( handle->mType ) {
-		
-			case ZLGfxHandle::BUFFER:
-				glGenBuffers ( 1, &handle->mGLID );
-				GL_LOG_ERRORS ( "glGenBuffers" )
-				break;
-				
-			case ZLGfxHandle::FRAMEBUFFER:
-				glGenFramebuffers ( 1, &handle->mGLID );
-				GL_LOG_ERRORS ( "glGenFramebuffers" )
-				break;
-				
-			case ZLGfxHandle::PROGRAM:
-				handle->mGLID = ( u32 )glCreateProgram ();
-				GL_LOG_ERRORS ( "glCreateProgram" )
-				break;
-				
-			case ZLGfxHandle::SHADER:
-				handle->mGLID = ( u32 )glCreateShader ( ZLGfxEnum::MapZLToNative ( param ));
-				GL_LOG_ERRORS ( "glCreateShader" )
-				break;
-				
-			case ZLGfxHandle::TEXTURE:
-				glGenTextures ( 1, ( GLuint* )&handle->mGLID );
-				GL_LOG_ERRORS ( "glGenTextures" )
-				break;
-				
-			case ZLGfxHandle::RENDERBUFFER:
-				glGenRenderbuffers ( 1, &handle->mGLID );
-				GL_LOG_ERRORS ( "glGenRenderbuffers" )
-				break;
-				
-			case ZLGfxHandle::VERTEXARRAY:
-				#ifdef MOAI_OS_ANDROID
-					handle->mGLID = 0;
-				#else
-					glGenVertexArrays ( 1, &handle->mGLID );
-					GL_LOG_ERRORS ( "glGenVertexArrays" )
-				#endif
-				break;
-		}
-	}
-	
-	return handle;
-}
-
-//----------------------------------------------------------------//
 void ZLGfxImmediate::CullFace ( u32 mode ) {
 
 	glCullFace ( ZLGfxEnum::MapZLToNative ( mode ));
@@ -278,21 +272,29 @@ void ZLGfxImmediate::CullFace ( u32 mode ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::Delete ( u32 type, u32 glid ) {
+void ZLGfxImmediate::DeleteResource ( ZLGfxResource& resource ) {
+	
+	u32 glid	= resource.mGLID;
+	u32 type	= resource.mType;
+	u32 status	= resource.mStatus;
+	
+	resource.Discard ();
+
+	if ( status != ZLGfxResource::GPU_ALLOCATED ) return;
 
 	switch ( type ) {
 	
-		case ZLGfxHandle::BUFFER:
+		case ZLGfxResource::BUFFER:
 			glDeleteBuffers ( 1, &glid );
 			GL_LOG_ERRORS ( "glDeleteBuffers" )
 			break;
 		
-		case ZLGfxHandle::FRAMEBUFFER:
+		case ZLGfxResource::FRAMEBUFFER:
 			glDeleteFramebuffers ( 1, &glid );
 			GL_LOG_ERRORS ( "glDeleteFramebuffers" )
 			break;
 		
-		case ZLGfxHandle::PROGRAM: {
+		case ZLGfxResource::PROGRAM: {
 		
 			GLint status;
 			glGetProgramiv ( glid, GL_DELETE_STATUS, &status );
@@ -304,7 +306,7 @@ void ZLGfxImmediate::Delete ( u32 type, u32 glid ) {
 			}
 			break;
 		}
-		case ZLGfxHandle::SHADER: {
+		case ZLGfxResource::SHADER: {
 		
 			GLint status;
 			glGetShaderiv ( glid, GL_DELETE_STATUS, &status );
@@ -316,17 +318,17 @@ void ZLGfxImmediate::Delete ( u32 type, u32 glid ) {
 			}
 			break;
 		}
-		case ZLGfxHandle::TEXTURE:
+		case ZLGfxResource::TEXTURE:
 			glDeleteTextures ( 1, &glid );
 			GL_LOG_ERRORS ( "glDeleteTextures" )
 			break;
 		
-		case ZLGfxHandle::RENDERBUFFER:
+		case ZLGfxResource::RENDERBUFFER:
 			glDeleteRenderbuffers ( 1, &glid );
 			GL_LOG_ERRORS ( "glDeleteRenderbuffers" )
 			break;
 		
-		case ZLGfxHandle::VERTEXARRAY:
+		case ZLGfxResource::VERTEXARRAY:
 			#if !( defined( MOAI_OS_ANDROID ) || defined( MOAI_OS_HTML ))
 				glDeleteVertexArrays ( 1, &glid );
 				GL_LOG_ERRORS ( "glDeleteVertexArrays" )
@@ -433,45 +435,47 @@ void ZLGfxImmediate::Flush ( bool finish ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::FramebufferRenderbuffer ( u32 target, u32 attachment, ZLGfxHandle* renderbuffer ) {
+void ZLGfxImmediate::FramebufferRenderbuffer ( u32 target, u32 attachment, ZLGfxResource& renderbuffer ) {
 	
 	glFramebufferRenderbuffer (
 		ZLGfxEnum::MapZLToNative ( target ),
 		ZLGfxEnum::MapZLToNative ( attachment ),
 		GL_RENDERBUFFER,
-		( GLuint )ZLGfxHandle::GLID ( renderbuffer )
+		( GLuint )renderbuffer.GLID ()
 	);
 	GL_LOG_ERRORS ( "glFramebufferRenderbuffer" )
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::FramebufferTexture2D ( u32 target, u32 attachment, ZLGfxHandle* texture, s32 level ) {
+void ZLGfxImmediate::FramebufferTexture2D ( u32 target, u32 attachment, ZLGfxResource& texture, s32 level ) {
 
 	glFramebufferTexture2D (
 		ZLGfxEnum::MapZLToNative ( target ),
 		ZLGfxEnum::MapZLToNative ( attachment ),
 		GL_TEXTURE_2D,
-		( GLuint )ZLGfxHandle::GLID ( texture ),
+		( GLuint )texture.GLID (),
 		( GLint )level
 	);
 	GL_LOG_ERRORS ( "glFramebufferTexture2D" )
 }
 
 //----------------------------------------------------------------//
-ZLGfxHandle* ZLGfxImmediate::GetCurrentFramebuffer () {
+void ZLGfxImmediate::GetCurrentFramebuffer ( ZLGfxResource& framebuffer ) {
 
 	int buffer;
 	glGetIntegerv ( GL_FRAMEBUFFER_BINDING, &buffer );
 	GL_LOG_ERRORS ( "glGetIntegerv" )
 
-	return new ZLGfxHandle ( ZLGfxHandle::FRAMEBUFFER, buffer, false );
+	framebuffer.mType		= ZLGfxResource::FRAMEBUFFER;
+	framebuffer.mGLID		= ( u32 )buffer;
+	framebuffer.mStatus		= ZLGfxResource::SYSTEM_ALLOCATED;
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::GetUniformLocation ( ZLGfxHandle* program, cc8* uniformName, ZLGfxListener* listener, void* userdata ) {
+void ZLGfxImmediate::GetUniformLocation ( ZLGfxResource& program, cc8* uniformName, ZLGfxListener* listener, void* userdata ) {
 
 	if ( listener) {
-		u32 addr = ( u32 )glGetUniformLocation (( GLuint )ZLGfxHandle::GLID ( program ), ( const GLchar* )uniformName );
+		u32 addr = ( u32 )glGetUniformLocation (( GLuint )program.GLID (), ( const GLchar* )uniformName );
 		GL_LOG_ERRORS ( "glGetUniformLocation" )
 		listener->OnUniformLocation ( addr, userdata );
 	}
@@ -491,9 +495,9 @@ void ZLGfxImmediate::LineWidth ( float width ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::LinkProgram ( ZLGfxHandle* program, bool log ) {
+void ZLGfxImmediate::LinkProgram ( ZLGfxResource& program, bool log ) {
 
-	GLuint programID = ( GLuint )ZLGfxHandle::GLID ( program );
+	GLuint programID = ( GLuint )program.GLID ();
 
 	glLinkProgram ( programID );
 	GL_LOG_ERRORS ( "glLinkProgram" )
@@ -614,12 +618,12 @@ void ZLGfxImmediate::Scissor ( s32 x, s32 y, u32 w, u32 h ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::ShaderSource ( ZLGfxHandle* shader, cc8* source, size_t length ) {
+void ZLGfxImmediate::ShaderSource ( ZLGfxResource& shader, cc8* source, size_t length ) {
 
 	const GLchar* stringArray [] = {( GLchar* )source };
 	const GLint lengthArray [] = {( GLint )length };
 
-	glShaderSource (( GLuint )( shader ? shader->mGLID : 0 ), 1, stringArray, lengthArray );
+	glShaderSource (( GLuint )shader.GLID (), 1, stringArray, lengthArray );
 	GL_LOG_ERRORS ( "glShaderSource" )
 }
 
@@ -680,44 +684,73 @@ void ZLGfxImmediate::TexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 wi
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::Uniform1f ( u32 location, float v0 ) {
+void ZLGfxImmediate::UniformFloat ( u32 location, u32 index, u32 width, u32 count, const float* value ) {
 
-	glUniform1f (( GLint )location, ( GLfloat )v0 );
-	GL_LOG_ERRORS ( "glUniform1f" )
+	switch ( width ) {
+	
+		case 1:
+			glUniform1fv (( GLint )( location + index ), count, ( const GLfloat* )value );
+			GL_LOG_ERRORS ( "glUniform1fv" )
+			break;
+			
+		case 2:
+			glUniform2fv (( GLint )( location + index ), count, ( const GLfloat* )value );
+			GL_LOG_ERRORS ( "glUniform2fv" )
+			break;
+			
+		case 3:
+			glUniform3fv (( GLint )( location + index ), count, ( const GLfloat* )value );
+			GL_LOG_ERRORS ( "glUniform3fv" )
+			break;
+			
+		case 4:
+			glUniform4fv (( GLint )( location + index ), count, ( const GLfloat* )value );
+			GL_LOG_ERRORS ( "glUniform4fv" )
+			break;
+		
+		case 9:
+			glUniformMatrix3fv (( GLint )( location + ( index * 3 )), count, GL_FALSE, ( const GLfloat* )value );
+			GL_LOG_ERRORS ( "glUniformMatrix3fv" )
+			break;
+		
+		case 16:
+			glUniformMatrix4fv (( GLint )( location + ( index * 4 )), count, GL_FALSE, ( const GLfloat* )value );
+			GL_LOG_ERRORS ( "glUniformMatrix4fv" )
+			break;
+	}
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::Uniform1i ( u32 location, s32 v0 ) {
-
-	glUniform1i (( GLint )location, ( GLint )v0 );
-	GL_LOG_ERRORS ( "glUniform1i" )
+void ZLGfxImmediate::UniformInt ( u32 location, u32 index, u32 width, u32 count, const s32* value ) {
+	UNUSED(index);
+	switch ( width ) {
+	
+		case 1:
+			glUniform1iv (( GLint )location, count, ( const GLint* )value );
+			GL_LOG_ERRORS ( "glUniform1iv" )
+			break;
+			
+		case 2:
+			glUniform2iv (( GLint )location, count, ( const GLint* )value );
+			GL_LOG_ERRORS ( "glUniform2iv" )
+			break;
+			
+		case 3:
+			glUniform3iv (( GLint )location, count, ( const GLint* )value );
+			GL_LOG_ERRORS ( "glUniform3iv" )
+			break;
+			
+		case 4:
+			glUniform4iv (( GLint )location, count, ( const GLint* )value );
+			GL_LOG_ERRORS ( "glUniform4iv" )
+			break;
+	}
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::Uniform4fv ( u32 location, u32 count, const float* value ) {
+void ZLGfxImmediate::UseProgram ( ZLGfxResource& program ) {
 
-	glUniform4fv (( GLint )location, ( GLsizei )count, ( const GLfloat* )value );
-	GL_LOG_ERRORS ( "glUniform4fv" )
-}
-
-//----------------------------------------------------------------//
-void ZLGfxImmediate::UniformMatrix3fv ( u32 location, u32 count, bool transpose, const float* mtx ) {
-
-	glUniformMatrix3fv (( GLint )location, ( GLsizei )count, transpose ? GL_TRUE : GL_FALSE, ( const GLfloat* )mtx );
-	GL_LOG_ERRORS ( "glUniformMatrix3fv" )
-}
-
-//----------------------------------------------------------------//
-void ZLGfxImmediate::UniformMatrix4fv ( u32 location, u32 count, bool transpose, const float* mtx ) {
-
-	glUniformMatrix4fv (( GLint )location, ( GLsizei )count, transpose ? GL_TRUE : GL_FALSE, ( const GLfloat* )mtx );
-	GL_LOG_ERRORS ( "glUniformMatrix4fv" )
-}
-
-//----------------------------------------------------------------//
-void ZLGfxImmediate::UseProgram ( ZLGfxHandle* program ) {
-
-	glUseProgram (( GLuint )( program ? program->mGLID : 0 ));
+	glUseProgram (( GLuint )program.GLID ());
 	GL_LOG_ERRORS ( "glUseProgram" )
 }
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -241,7 +241,8 @@ int MOAIFileSystem::_getVirtualPathInfo ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@lua	listDirectories
-	@text	Lists the sub-directories contained in a directory.
+	@text	Lists the sub-directories contained in a directory, sorted alphabetically.
+			Special directories '.' and '..' are omitted.
  
 	@opt	string path				Path to search. Default is current directory.
 	@out	table directories		A table of directory names (or nil if the path is invalid)
@@ -251,7 +252,6 @@ int MOAIFileSystem::_listDirectories ( lua_State* L ) {
 	
 	STLString oldPath = ZLFileSys::GetCurrentPath ();
 	
-	//cc8* dir = NULL;
 	if ( lua_type ( L, 1 ) == LUA_TSTRING ) {
 		cc8* dir = lua_tostring ( L, 1 );
 		if ( !ZLFileSys::SetCurrentPath ( dir )) {
@@ -259,29 +259,33 @@ int MOAIFileSystem::_listDirectories ( lua_State* L ) {
 		}
 	}
 	
-	ZLDirectoryItr dirItr;
+	STLSet < STLString > sortedSet;
 	
-	lua_newtable ( L );
-	int n = 0;
+	ZLDirectoryItr dirItr;
 	dirItr.Start ();
 	while ( dirItr.NextDirectory ()) {
-		
-		lua_pushstring ( L, dirItr.Current ());
-		n++;
+		sortedSet.insert ( dirItr.Current ());
+	}
+	ZLFileSys::SetCurrentPath ( oldPath );
+	
+	lua_newtable ( L );
+	
+	STLSet < STLString >::iterator sortedSetIt = sortedSet.begin ();
+	for ( int n = 1; sortedSetIt != sortedSet.end (); ++sortedSetIt, ++n ) {
+	
+		lua_pushstring ( L, sortedSetIt->c_str ());
 		#ifdef luaL_setn
 			luaL_setn ( L, -2, n );  // new size
 		#endif
 		lua_rawseti ( L, -2, n );  // t[pos] = v
 	}
 	
-	ZLFileSys::SetCurrentPath ( oldPath );
-	
 	return 1;
 }
 
 //----------------------------------------------------------------//
 /**	@lua	listFiles
-	@text	Lists the files contained in a directory
+	@text	Lists the files contained in a directory, sorted alphabetically.
  
 	@opt	string path		Path to search. Default is current directory.
 	@out	table files		A table of filenames (or nil if the path is invalid)
@@ -291,7 +295,6 @@ int MOAIFileSystem::_listFiles ( lua_State* L ) {
 	
 	STLString oldPath = ZLFileSys::GetCurrentPath ();
 	
-	//cc8* dir = NULL;
 	if ( lua_type ( L, 1 ) == LUA_TSTRING ) {
 		cc8* dir = lua_tostring ( L, 1 );
 		if( !ZLFileSys::SetCurrentPath ( dir )) {
@@ -299,21 +302,26 @@ int MOAIFileSystem::_listFiles ( lua_State* L ) {
 		}
 	}
 
-	ZLDirectoryItr dirItr;
+	STLSet < STLString > sortedSet;
 	
-	lua_newtable ( L );
-	int n = 0;
+	ZLDirectoryItr dirItr;
 	dirItr.Start ();
 	while ( dirItr.NextFile ()) {
-		lua_pushstring ( L, dirItr.Current ());
-		n++;
+		sortedSet.insert ( dirItr.Current ());
+	}
+	ZLFileSys::SetCurrentPath ( oldPath );
+	
+	lua_newtable ( L );
+	
+	STLSet < STLString >::iterator sortedSetIt = sortedSet.begin ();
+	for ( int n = 1; sortedSetIt != sortedSet.end (); ++sortedSetIt, ++n ) {
+	
+		lua_pushstring ( L, sortedSetIt->c_str ());
 		#ifdef luaL_setn
 			luaL_setn ( L, -2, n );  // new size
 		#endif
 		lua_rawseti ( L, -2, n );  // t[pos] = v
 	}
-	
-	ZLFileSys::SetCurrentPath ( oldPath );
 	
 	return 1;
 }
@@ -525,5 +533,5 @@ void MOAIFileSystem::RegisterLuaClass ( MOAILuaState& state ) {
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }

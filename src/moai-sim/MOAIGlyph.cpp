@@ -1,11 +1,11 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
 #include <moai-sim/MOAIGlyph.h>
 #include <moai-sim/MOAIGlyphSet.h>
 #include <moai-sim/MOAIDynamicGlyphCachePage.h>
-#include <moai-sim/MOAISingleTexture.h>
+#include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAIQuadBrush.h>
 
 //================================================================//
@@ -13,10 +13,10 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGlyph::Draw ( MOAISingleTexture& texture, float x, float y, float xScale, float yScale, const ZLRect& padding ) const {
+void MOAIGlyph::Draw ( MOAITextureBase& texture, float x, float y, float xScale, float yScale, const ZLRect& padding ) const {
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	if ( !gfxMgr.mGfxState.BindTexture ( &texture )) return;
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	if ( !gfxState.SetTexture ( &texture )) return;
 	
 	MOAIQuadBrush glQuad;
 	
@@ -95,30 +95,30 @@ void MOAIGlyph::ReserveKernTable ( u32 total ) {
 //----------------------------------------------------------------//
 void MOAIGlyph::SerializeIn ( MOAILuaState& state ) {
 
-	this->mCode			= state.GetField ( -1, "mCode", this->mCode );
-	this->mPageID		= state.GetField ( -1, "mPageID", this->mPageID );
+	this->mCode			= state.GetFieldValue ( -1, "mCode", this->mCode );
+	this->mPageID		= state.GetFieldValue ( -1, "mPageID", this->mPageID );
 	
-	this->mWidth		= state.GetField ( -1, "mWidth", this->mWidth );
-	this->mHeight		= state.GetField ( -1, "mHeight", this->mHeight );
-	this->mAdvanceX		= state.GetField ( -1, "mAdvanceX", this->mAdvanceX );
-	this->mBearingX		= state.GetField ( -1, "mBearingX", this->mBearingX );
-	this->mBearingY		= state.GetField ( -1, "mBearingY", this->mBearingY );
+	this->mWidth		= state.GetFieldValue ( -1, "mWidth", this->mWidth );
+	this->mHeight		= state.GetFieldValue ( -1, "mHeight", this->mHeight );
+	this->mAdvanceX		= state.GetFieldValue ( -1, "mAdvanceX", this->mAdvanceX );
+	this->mBearingX		= state.GetFieldValue ( -1, "mBearingX", this->mBearingX );
+	this->mBearingY		= state.GetFieldValue ( -1, "mBearingY", this->mBearingY );
 
-	this->mSrcX			= state.GetField ( -1, "mSrcX", this->mSrcX );
-	this->mSrcY			= state.GetField ( -1, "mSrcY", this->mSrcY );
+	this->mSrcX			= state.GetFieldValue ( -1, "mSrcX", this->mSrcX );
+	this->mSrcY			= state.GetFieldValue ( -1, "mSrcY", this->mSrcY );
 	
-	if ( state.GetFieldWithType ( -1, "mKernTable", LUA_TTABLE )) {
+	if ( state.PushFieldWithType ( -1, "mKernTable", LUA_TTABLE )) {
 		
 		int size = ( int )lua_objlen ( state, -1 ); // TODO: cast
 		this->mKernTable.Init ( size );
 		
 		for ( int i = 0; i < size; ++i ) {
 		
-			if ( state.GetFieldWithType ( -1, i + 1, LUA_TTABLE )) {
+			if ( state.PushFieldWithType ( -1, i + 1, LUA_TTABLE )) {
 				
-				this->mKernTable [ i ].mName = state.GetField ( -1, "mName", 0 );
-				this->mKernTable [ i ].mX = state.GetField ( -1, "mX", 0.0f );
-				this->mKernTable [ i ].mY = state.GetField ( -1, "mY", 0.0f );
+				this->mKernTable [ i ].mName	= state.GetFieldValue ( -1, "mName", 0 );
+				this->mKernTable [ i ].mX		= state.GetFieldValue ( -1, "mX", 0.0f );
+				this->mKernTable [ i ].mY		= state.GetFieldValue ( -1, "mY", 0.0f );
 			}
 			state.Pop ( 1 );
 		}

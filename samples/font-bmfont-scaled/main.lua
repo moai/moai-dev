@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -13,9 +13,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 480 )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-'
 text = 'The quick brown fox jumps over the lazy dog who is so totally lazy that he barely jumps at all.'
@@ -30,7 +30,7 @@ staticTextbox:setTextSize ( 18 )
 staticTextbox:setRect ( -150, 0, 150, 130 )
 staticTextbox:setAlignment ( MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY )
 staticTextbox:setYFlip ( true )
-layer:insertProp ( staticTextbox )
+staticTextbox:setPartition ( layer )
 
 dynamicFont = MOAIFont.new ()
 dynamicFont:load ( "Verdana.ttf" )
@@ -43,4 +43,4 @@ dynamicTextbox:setTextSize ( 18 )
 dynamicTextbox:setRect ( -150, -130, 150, 0 )
 dynamicTextbox:setAlignment ( MOAITextBox.CENTER_JUSTIFY, MOAITextBox.CENTER_JUSTIFY )
 dynamicTextbox:setYFlip ( true )
-layer:insertProp ( dynamicTextbox )
+dynamicTextbox:setPartition ( layer )

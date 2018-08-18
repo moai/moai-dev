@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef MOAILUA_H
@@ -19,6 +19,5 @@
 #include <moai-core/MOAILuaClass-impl.h>
 
 #include <moai-core/MOAILogMgr.h>
-#include <moai-core/MOAILogMessages.h>
 
 #endif

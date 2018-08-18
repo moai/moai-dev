@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -25,14 +25,14 @@ int MOAIBox2DBody::_addChain ( lua_State* L ) {
     MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
  
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
  
 	float unitsToMeters = self->GetUnitsToMeters ();
 	u32 totalCoords = ( u32 )lua_objlen ( state, 2 );
 	if( totalCoords < 4 || totalCoords % 2 != 0 ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_InvalidVertexCount_D, totalCoords );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_InvalidVertexCount_D, totalCoords );
 		return 0;
 	}
  
@@ -76,7 +76,7 @@ int MOAIBox2DBody::_addCircle ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -110,7 +110,7 @@ int MOAIBox2DBody::_addEdges ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -159,7 +159,7 @@ int MOAIBox2DBody::_addPolygon ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 
@@ -171,7 +171,7 @@ int MOAIBox2DBody::_addPolygon ( lua_State* L ) {
 	int numVerts = MOAIBox2DFixture::LoadVerts ( state, 2, verts, b2_maxPolygonVertices, unitsToMeters );
 	
 	if (( numVerts < 3 ) || ( numVerts > b2_maxPolygonVertices )) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_InvalidVertexCount_D, numVerts );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_InvalidVertexCount_D, numVerts );
 		return 0;
 	}
 	
@@ -211,7 +211,7 @@ int MOAIBox2DBody::_addRect ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -255,7 +255,7 @@ int MOAIBox2DBody::_applyAngularImpulse ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "UN" )
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -284,7 +284,7 @@ int MOAIBox2DBody::_applyForce ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -320,7 +320,7 @@ int MOAIBox2DBody::_applyLinearImpulse ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -351,7 +351,7 @@ int MOAIBox2DBody::_applyTorque ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	float unitsToMeters = self->GetUnitsToMeters();
@@ -375,7 +375,7 @@ int MOAIBox2DBody::_destroy ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -396,7 +396,7 @@ int MOAIBox2DBody::_getAngle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -416,7 +416,7 @@ int MOAIBox2DBody::_getAngularVelocity ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -438,7 +438,7 @@ int MOAIBox2DBody::_getContactList ( lua_State* L ) {
 	
 	b2Body* body = self->mBody;
 	if ( !body ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -471,7 +471,7 @@ int MOAIBox2DBody::_getInertia ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 
@@ -494,7 +494,7 @@ int MOAIBox2DBody::_getGravityScale ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -518,7 +518,7 @@ int MOAIBox2DBody::_getLinearVelocity ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -542,7 +542,7 @@ int MOAIBox2DBody::_getLocalCenter ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -564,7 +564,7 @@ int MOAIBox2DBody::_getMass ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -585,7 +585,7 @@ int MOAIBox2DBody::_getPosition ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -609,7 +609,7 @@ int MOAIBox2DBody::_getWorldCenter ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -631,7 +631,7 @@ int MOAIBox2DBody::_isActive ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -652,7 +652,7 @@ int MOAIBox2DBody::_isAwake ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -673,7 +673,7 @@ int MOAIBox2DBody::_isBullet ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -694,7 +694,7 @@ int MOAIBox2DBody::_isFixedRotation ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -715,7 +715,7 @@ int MOAIBox2DBody::_resetMassData ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -736,7 +736,7 @@ int MOAIBox2DBody::_setActive ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 
@@ -758,7 +758,7 @@ int MOAIBox2DBody::_setAngularDamping ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "UN" )
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -780,7 +780,7 @@ int MOAIBox2DBody::_setAngularVelocity ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -802,7 +802,7 @@ int MOAIBox2DBody::_setAwake ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -824,7 +824,7 @@ int MOAIBox2DBody::_setBullet ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -846,7 +846,7 @@ int MOAIBox2DBody::_setFixedRotation ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -868,7 +868,7 @@ int MOAIBox2DBody::_setGravityScale ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "UN" );
 
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 
@@ -890,7 +890,7 @@ int MOAIBox2DBody::_setLinearDamping ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "UN" )
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -914,7 +914,7 @@ int MOAIBox2DBody::_setLinearVelocity ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
@@ -943,12 +943,12 @@ int MOAIBox2DBody::_setMassData ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
 	if ( self->mWorld->IsLocked ()) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -980,12 +980,12 @@ int MOAIBox2DBody::_setTransform ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
 	if ( self->mWorld->IsLocked ()) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -1013,12 +1013,12 @@ int MOAIBox2DBody::_setType ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "UN" )
 	
 	if ( !self->mBody ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
 	if ( self->mWorld->IsLocked ()) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -1033,40 +1033,6 @@ int MOAIBox2DBody::_setType ( lua_State* L ) {
 //================================================================//
 // MOAIBox2DBody
 //================================================================//
-
-//----------------------------------------------------------------//
-bool MOAIBox2DBody::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
-	// TODO: these values may need to be cached for performance reasons
-	if ( MOAITransform::MOAITransformAttr::Check ( attrID )) {
-		const b2Transform & xform = mBody->GetTransform();
-		
-		switch ( UNPACK_ATTR ( attrID )) {
-			case MOAITransform::ATTR_X_LOC: {
-				float x = attrOp.Apply ( xform.p.x, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ) * this->GetUnitsToMeters ();
-				mBody->SetTransform ( b2Vec2( x, xform.p.y), xform.q.GetAngle() );
-				return true;
-			}
-				
-			case MOAITransform::ATTR_Y_LOC: {
-				float y = attrOp.Apply ( xform.p.y, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ) * this->GetUnitsToMeters ();
-				mBody->SetTransform ( b2Vec2( xform.p.x, y ), xform.q.GetAngle() );
-				return true;
-			}
-				
-			case MOAITransform::ATTR_Z_ROT: {
-				float angle = attrOp.Apply ( xform.q.GetAngle(), op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
-				mBody->SetTransform ( xform.p,  ( float )((angle * D2R) + M_PI_4 ));
-				return true;
-			}
-		}
-	}
-	return MOAITransformBase::ApplyAttrOp (attrID, attrOp, op );
-}
-
-//----------------------------------------------------------------//
-void MOAIBox2DBody::BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
-	UNUSED ( localToWorldMtx );
-}
 
 //----------------------------------------------------------------//
 void MOAIBox2DBody::Destroy () {
@@ -1087,29 +1053,6 @@ MOAIBox2DBody::MOAIBox2DBody () :
 
 //----------------------------------------------------------------//
 MOAIBox2DBody::~MOAIBox2DBody () {
-}
-
-//----------------------------------------------------------------//
-void MOAIBox2DBody::OnDepNodeUpdate () {
-
-	if ( this->mBody ) {
-		
-		b2Transform transform = this->mBody->GetTransform ();
-		float scale = 1.0f / this->GetUnitsToMeters ();
-		
-		float* m = this->mLocalToWorldMtx.m;
-		
-		m [ ZLAffine3D::C0_R0 ] = ( float )transform.q.GetXAxis().x;
-		m [ ZLAffine3D::C0_R1 ] = ( float )transform.q.GetXAxis().y;
-
-		m [ ZLAffine3D::C1_R0 ] = ( float )transform.q.GetYAxis().x;
-		m [ ZLAffine3D::C1_R1 ] = ( float )transform.q.GetYAxis().y;
-
-		m [ ZLAffine3D::C3_R0 ] = ( float )transform.p.x * scale;
-		m [ ZLAffine3D::C3_R1 ] = ( float )transform.p.y * scale;
-		
-		this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
-	}
 }
 
 //----------------------------------------------------------------//
@@ -1176,4 +1119,68 @@ void MOAIBox2DBody::SetBody ( b2Body* body ) {
 
 	this->mBody = body;
 	body->SetUserData ( this );
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIBox2DBody::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	// TODO: these values may need to be cached for performance reasons
+	if ( MOAITransform::MOAITransformAttr::Check ( attrID )) {
+	
+		const b2Transform & xform = mBody->GetTransform();
+		
+		switch ( UNPACK_ATTR ( attrID )) {
+		
+			case MOAITransform::ATTR_X_LOC: {
+				float x = attr.Apply ( xform.p.x, op, MOAIAttribute::ATTR_READ_WRITE ) * this->GetUnitsToMeters ();
+				mBody->SetTransform ( b2Vec2( x, xform.p.y), xform.q.GetAngle() );
+				return true;
+			}
+				
+			case MOAITransform::ATTR_Y_LOC: {
+				float y = attr.Apply ( xform.p.y, op, MOAIAttribute::ATTR_READ_WRITE ) * this->GetUnitsToMeters ();
+				mBody->SetTransform ( b2Vec2( xform.p.x, y ), xform.q.GetAngle() );
+				return true;
+			}
+				
+			case MOAITransform::ATTR_Z_ROT: {
+				float angle = attr.Apply ( xform.q.GetAngle(), op, MOAIAttribute::ATTR_READ_WRITE );
+				mBody->SetTransform ( xform.p,  ( float )((angle * D2R) + M_PI_4 ));
+				return true;
+			}
+		}
+	}
+	return MOAITransformBase::MOAINode_ApplyAttrOp (attrID, attr, op );
+}
+
+//----------------------------------------------------------------//
+void MOAIBox2DBody::MOAINode_Update () {
+
+	if ( this->mBody ) {
+		
+		b2Transform transform = this->mBody->GetTransform ();
+		float scale = 1.0f / this->GetUnitsToMeters ();
+		
+		float* m = this->mLocalToWorldMtx.m;
+		
+		m [ ZLAffine3D::C0_R0 ] = ( float )transform.q.GetXAxis().x;
+		m [ ZLAffine3D::C0_R1 ] = ( float )transform.q.GetXAxis().y;
+
+		m [ ZLAffine3D::C1_R0 ] = ( float )transform.q.GetYAxis().x;
+		m [ ZLAffine3D::C1_R1 ] = ( float )transform.q.GetYAxis().y;
+
+		m [ ZLAffine3D::C3_R0 ] = ( float )transform.p.x * scale;
+		m [ ZLAffine3D::C3_R1 ] = ( float )transform.p.y * scale;
+		
+		this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIBox2DBody::MOAITransformBase_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
+	UNUSED ( localToWorldMtx );
 }

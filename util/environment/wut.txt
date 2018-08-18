@@ -1,5 +1,0 @@
-pito environment 
-    This command will give you the needed environment variables to use pito.
-    Example:
-        /absolute/path/to/moai_sdk/util/pito environment
-        (Follow instructions)

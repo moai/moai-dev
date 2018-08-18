@@ -1,85 +1,61 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
 #include <moai-core/MOAICanary.h>
-#include <moai-core/MOAIObject.h>
+
+//================================================================//
+// lua
+//================================================================//
+
+//----------------------------------------------------------------//
+/**	@lua	setMessage
+	@text	Sets the message to print on destruction.
+	
+	@in		MOAICanary self
+	@out	nil
+*/
+int MOAICanary::_setMessage ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICanary, "U" ) // this macro initializes the 'self' variable and type checks arguments
+	
+	self->mMessage = state.GetValue < cc8* >( 2, "" );
+	
+	return 0;
+}
 
 //================================================================//
 // MOAICanary
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAICanary::ForceDelete () {
-
-	if ( this->mObject ) {
-		delete this->mObject;
-	}
-	this->mObject = 0;
-}
-
-//----------------------------------------------------------------//
-MOAIObject* MOAICanary::GetObject () {
-
-	return this->mObject;
-}
-
-//----------------------------------------------------------------//
-bool MOAICanary::IsValid () {
-
-	if ( this->mObject  ) {
-		return true;
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
-void MOAICanary::Release ( bool strong ) {
-
-	if ( strong ) {
+MOAICanary::MOAICanary () {
 	
-		if ( this->mStrongRefs ) {
-			--this->mStrongRefs;
-		}
-		
-		if ( this->mObject ) {
-			this->mObject->OnRelease ( this->mStrongRefs );
-		}
-	}
-	
-	if ( this->mRefCount ) {
-		--this->mRefCount;
-		
-		if ( this->mRefCount == 0 ) {
-			delete this;
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAICanary::Retain ( bool strong ) {
-
-	++this->mRefCount;
-	if ( strong ) {
-		++this->mStrongRefs;
-		
-		if ( this->mObject ) {
-			this->mObject->OnRetain ( this->mStrongRefs );
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-MOAICanary::MOAICanary () :
-	mRefCount ( 0 ),
-	mStrongRefs ( 0 ),
-	mObject ( 0 ) {
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//
 MOAICanary::~MOAICanary () {
 
-	if ( this->mObject ) {
-		this->mObject->mCanary = 0;
+	if ( this->mMessage.size ()) {
+		printf ( "DELETED CANARY: %s\n", this->mMessage.c_str ());
 	}
 }
+
+//----------------------------------------------------------------//
+void MOAICanary::RegisterLuaClass ( MOAILuaState& state ) {
+	UNUSED ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAICanary::RegisterLuaFuncs ( MOAILuaState& state ) {
+
+	luaL_Reg regTable [] = {
+		{ "setMessage",		_setMessage },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+

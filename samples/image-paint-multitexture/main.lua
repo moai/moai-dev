@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -34,9 +34,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( VIEW_WIDTH, VIEW_HEIGHT )
 viewport:setScale ( VIEW_WIDTH, -VIEW_HEIGHT )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 file = assert ( io.open ( 'shader.vsh', mode ))
 vsh = file:read ( '*all' )
@@ -101,11 +101,11 @@ gfxQuad:setTexture ( multitexture )
 gfxQuad:setRect ( 0, 0, VIEW_WIDTH, VIEW_HEIGHT )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
 prop:setPiv ( VIEW_WIDTH / 2, VIEW_HEIGHT / 2 )	
 prop:setShader ( shader )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 function stamp ( x, y, erase )
 
@@ -120,9 +120,9 @@ function stamp ( x, y, erase )
 	-- blend the brush with the dest image using the brush's alpha channel
 	mask:copyRect ( brush, 0, 0, w, h, x1, y1, x2, y2,
 		MOAIImage.FILTER_LINEAR,
+		erase and MOAIImage.BLEND_EQ_SUB_INV or MOAIImage.BLEND_EQ_ADD,
 		MOAIImage.BLEND_FACTOR_ONE,
 		MOAIImage.BLEND_FACTOR_ONE,
-		erase and MOAIImage.BLEND_EQ_SUB_INV or MOAIImage.BLEND_EQ_ADD
 	)
 	mask:invalidate ( x1, y1, x2, y2 )
 

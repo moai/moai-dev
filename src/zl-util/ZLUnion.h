@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	ZLUNION_H
@@ -43,7 +43,7 @@ private:
 public:
 
 	//----------------------------------------------------------------//
-	inline operator bool () {
+	inline operator bool () const {
 		return this->mType != 0;
 	};
 

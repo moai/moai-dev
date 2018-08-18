@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -22,27 +22,27 @@
     <ProjectGuid>{83DE7C0A-667A-4B75-8D00-B575501BC289}</ProjectGuid>
     <RootNamespace>moai-lua-5.1</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <WholeProgramOptimization>false</WholeProgramOptimization>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <WholeProgramOptimization>false</WholeProgramOptimization>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -89,14 +89,14 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\sdl2-2.0.4\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\glew-1.5.6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_CONSOLE;DECLSPEC=;SDL_MAIN_HANDLED;AKU_WITH_SDL;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CONSOLE;DECLSPEC=;SDL_MAIN_HANDLED;AKU_WITH_ASSIMP;AKU_WITH_IMAGE_TGA;AKU_WITH_SDL;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ForcedIncludeFiles>%(ForcedIncludeFiles);zl-vfs/zl_replace.h</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -108,7 +108,7 @@
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>zlib.lib;zl-lib-vfs.lib;box2d.lib;contrib.lib;expat.lib;freetype.lib;glew.lib;jansson.lib;kissfft.lib;tinyxml.lib;libcurl.lib;mbedtls.lib;libjpg.lib;libpng.lib;libpvr.lib;libwebp.lib;libogg.lib;libvorbis.lib;libtess.lib;sdl.lib;zl-lib-core.lib;zl-lib-crypto.lib;zl-lib-gfx.lib;moai-lib-core.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-sim.lib;moai-lib-image-jpg.lib;moai-lib-image-png.lib;moai-lib-image-pvr.lib;moai-lib-image-webp.lib;moai-lib-untz.lib;moai-lib-util.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;opengl32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>zlib.lib;zl-lib-vfs.lib;assimp.lib;box2d.lib;contrib.lib;expat.lib;mbedtls.lib;freetype.lib;glew.lib;jansson.lib;kissfft.lib;tinyxml.lib;libcurl.lib;libjpg.lib;libpng.lib;libpvr.lib;libwebp.lib;libogg.lib;libvorbis.lib;libtess.lib;sdl.lib;zl-lib-core.lib;zl-lib-crypto.lib;zl-lib-gfx.lib;moai-lib-assimp.lib;moai-lib-core.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-sim.lib;moai-lib-image-jpg.lib;moai-lib-image-png.lib;moai-lib-image-pvr.lib;moai-lib-image-tga.lib;moai-lib-image-webp.lib;moai-lib-untz.lib;moai-lib-util.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;opengl32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -119,10 +119,15 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalManifestDependencies>
+      </AdditionalManifestDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /yr "$(OutDir)$(TargetFileName)" "..\..\bin\$(Platform)\$(Configuration)\"</Command>
     </PostBuildEvent>
+    <Manifest>
+      <AdditionalManifestFiles>DeclareDPIAware.manifest</AdditionalManifestFiles>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
@@ -131,14 +136,14 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\sdl2-2.0.4\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\glew-1.5.6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_CONSOLE;DECLSPEC=;SDL_MAIN_HANDLED;AKU_WITH_SDL;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CONSOLE;DECLSPEC=;SDL_MAIN_HANDLED;AKU_WITH_ASSIMP;AKU_WITH_IMAGE_TGA;AKU_WITH_SDL;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -149,7 +154,7 @@
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>zlib.lib;zl-lib-vfs.lib;box2d.lib;contrib.lib;expat.lib;freetype.lib;glew.lib;jansson.lib;kissfft.lib;tinyxml.lib;libcurl.lib;mbedtls.lib;libjpg.lib;libpng.lib;libpvr.lib;libwebp.lib;libogg.lib;libvorbis.lib;libtess.lib;sdl.lib;zl-lib-core.lib;zl-lib-crypto.lib;zl-lib-gfx.lib;moai-lib-core.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-sim.lib;moai-lib-image-jpg.lib;moai-lib-image-png.lib;moai-lib-image-pvr.lib;moai-lib-image-webp.lib;moai-lib-untz.lib;moai-lib-util.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;opengl32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>zlib.lib;zl-lib-vfs.lib;assimp.lib;box2d.lib;contrib.lib;expat.lib;mbedtls.lib;freetype.lib;glew.lib;jansson.lib;kissfft.lib;tinyxml.lib;libcurl.lib;libjpg.lib;libpng.lib;libpvr.lib;libwebp.lib;libogg.lib;libvorbis.lib;libtess.lib;sdl.lib;zl-lib-core.lib;zl-lib-crypto.lib;zl-lib-gfx.lib;moai-lib-assimp.lib;moai-lib-core.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-sim.lib;moai-lib-image-jpg.lib;moai-lib-image-png.lib;moai-lib-image-pvr.lib;moai-lib-image-tga.lib;moai-lib-image-webp.lib;moai-lib-untz.lib;moai-lib-util.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;opengl32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
       <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -161,21 +166,26 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalManifestDependencies>
+      </AdditionalManifestDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /yr "$(OutDir)$(TargetFileName)" "..\..\bin\$(Platform)\$(Configuration)\"</Command>
     </PostBuildEvent>
+    <Manifest>
+      <AdditionalManifestFiles>DeclareDPIAware.manifest</AdditionalManifestFiles>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\sdl2-2.0.4\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\glew-1.5.6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_CONSOLE;DECLSPEC=;SDL_MAIN_HANDLED;AKU_WITH_SDL;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CONSOLE;DECLSPEC=;SDL_MAIN_HANDLED;AKU_WITH_ASSIMP;AKU_WITH_IMAGE_TGA;AKU_WITH_SDL;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>
       </DebugInformationFormat>
       <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
@@ -187,7 +197,7 @@
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>zlib.lib;zl-lib-vfs.lib;box2d.lib;contrib.lib;expat.lib;freetype.lib;glew.lib;jansson.lib;kissfft.lib;tinyxml.lib;libcurl.lib;mbedtls.lib;libjpg.lib;libpng.lib;libpvr.lib;libwebp.lib;libogg.lib;libvorbis.lib;libtess.lib;sdl.lib;zl-lib-core.lib;zl-lib-crypto.lib;zl-lib-gfx.lib;moai-lib-core.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-sim.lib;moai-lib-image-jpg.lib;moai-lib-image-png.lib;moai-lib-image-pvr.lib;moai-lib-image-webp.lib;moai-lib-untz.lib;moai-lib-util.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;opengl32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>zlib.lib;zl-lib-vfs.lib;assimp.lib;box2d.lib;contrib.lib;expat.lib;mbedtls.lib;freetype.lib;glew.lib;jansson.lib;kissfft.lib;tinyxml.lib;libcurl.lib;libjpg.lib;libpng.lib;libpvr.lib;libwebp.lib;libogg.lib;libvorbis.lib;libtess.lib;sdl.lib;zl-lib-core.lib;zl-lib-crypto.lib;zl-lib-gfx.lib;moai-lib-assimp.lib;moai-lib-core.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-sim.lib;moai-lib-image-jpg.lib;moai-lib-image-png.lib;moai-lib-image-pvr.lib;moai-lib-image-tga.lib;moai-lib-image-webp.lib;moai-lib-untz.lib;moai-lib-util.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;opengl32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -198,10 +208,15 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalManifestDependencies>
+      </AdditionalManifestDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /yr "$(OutDir)$(TargetFileName)" "..\..\bin\$(Platform)\$(Configuration)\"</Command>
     </PostBuildEvent>
+    <Manifest>
+      <AdditionalManifestFiles>DeclareDPIAware.manifest</AdditionalManifestFiles>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Midl>
@@ -209,13 +224,13 @@
     </Midl>
     <ClCompile>
       <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty\sdl2-2.0.4\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\glew-1.5.6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_CONSOLE;DECLSPEC=;SDL_MAIN_HANDLED;AKU_WITH_SDL;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CONSOLE;DECLSPEC=;SDL_MAIN_HANDLED;AKU_WITH_ASSIMP;AKU_WITH_IMAGE_TGA;AKU_WITH_SDL;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -226,7 +241,7 @@
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>zlib.lib;zl-lib-vfs.lib;box2d.lib;contrib.lib;expat.lib;freetype.lib;glew.lib;jansson.lib;kissfft.lib;tinyxml.lib;libcurl.lib;mbedtls.lib;libjpg.lib;libpng.lib;libpvr.lib;libwebp.lib;libogg.lib;libvorbis.lib;libtess.lib;sdl.lib;zl-lib-core.lib;zl-lib-crypto.lib;zl-lib-gfx.lib;moai-lib-core.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-sim.lib;moai-lib-image-jpg.lib;moai-lib-image-png.lib;moai-lib-image-pvr.lib;moai-lib-image-webp.lib;moai-lib-untz.lib;moai-lib-util.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;opengl32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>zlib.lib;zl-lib-vfs.lib;assimp.lib;box2d.lib;contrib.lib;expat.lib;mbedtls.lib;freetype.lib;glew.lib;jansson.lib;kissfft.lib;tinyxml.lib;libcurl.lib;libjpg.lib;libpng.lib;libpvr.lib;libwebp.lib;libogg.lib;libvorbis.lib;libtess.lib;sdl.lib;zl-lib-core.lib;zl-lib-crypto.lib;zl-lib-gfx.lib;moai-lib-assimp.lib;moai-lib-core.lib;moai-lib-crypto.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-sim.lib;moai-lib-image-jpg.lib;moai-lib-image-png.lib;moai-lib-image-pvr.lib;moai-lib-image-tga.lib;moai-lib-image-webp.lib;moai-lib-untz.lib;moai-lib-util.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;opengl32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -237,12 +252,20 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalManifestDependencies>
+      </AdditionalManifestDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /yr "$(OutDir)$(TargetFileName)" "..\..\bin\$(Platform)\$(Configuration)\"</Command>
     </PostBuildEvent>
+    <Manifest>
+      <AdditionalManifestFiles>DeclareDPIAware.manifest</AdditionalManifestFiles>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ProjectReference Include="..\assimp\assimp.vcxproj">
+      <Project>{eeb0e2fc-4b26-49d4-98c6-0bf34c44ac2e}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\box2d\box2d.vcxproj">
       <Project>{ab0dd232-1af9-4b16-a0f2-5ebf32250f6b}</Project>
     </ProjectReference>
@@ -294,6 +317,9 @@
     <ProjectReference Include="..\luaext\luaext.vcxproj">
       <Project>{51007be8-c720-4a9f-a1bf-c2aa31179e02}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\moai-lib-assimp\moai-lib-assimp.vcxproj">
+      <Project>{a90989f3-8c14-487b-9127-c89a9d53630c}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\moai-lib-box2d\moai-lib-box2d.vcxproj">
       <Project>{baaf0611-4ba9-4bdd-9d83-822f3b23aba3}</Project>
     </ProjectReference>
@@ -317,6 +343,9 @@
     </ProjectReference>
     <ProjectReference Include="..\moai-lib-image-pvr\moai-lib-image-pvr.vcxproj">
       <Project>{985ce67a-b78b-4a50-a033-5a50a04f645e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\moai-lib-image-tga\moai-lib-image-tga.vcxproj">
+      <Project>{18093173-a50d-42a3-9066-1301bf1f5d14}</Project>
     </ProjectReference>
     <ProjectReference Include="..\moai-lib-image-webp\moai-lib-image-webp.vcxproj">
       <Project>{99e440cc-f4d1-427e-9ab0-0ba2f2d1f89d}</Project>

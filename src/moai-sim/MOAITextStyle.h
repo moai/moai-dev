@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAITEXTSTYLE_H
@@ -54,7 +54,7 @@ public:
 			section of text in a text box using a style escape.
 */
 class MOAITextStyle :
-	public MOAINode,
+	public virtual MOAINode,
 	public MOAITextStyleState {
 private:
 

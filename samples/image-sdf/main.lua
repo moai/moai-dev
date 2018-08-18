@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -43,9 +43,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( width, height )
 viewport:setScale ( width, -height )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 sdfTexture = MOAITexture.new ()
 sdfTexture:load ( image )
@@ -67,6 +67,6 @@ gfxQuad:setShader ( shader )
 gfxQuad:setRect ( -hWidth, -hHeight, hWidth, hHeight )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
-layer:insertProp ( prop )
+prop:setPartition ( layer )

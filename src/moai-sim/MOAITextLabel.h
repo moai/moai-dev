@@ -1,11 +1,11 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAITEXTLABEL_H
 #define	MOAITEXTLABEL_H
 
 #include <moai-sim/MOAIAction.h>
-#include <moai-sim/MOAIGraphicsProp.h>
+#include <moai-sim/MOAIGraphicsPropBase.h>
 #include <moai-sim/MOAITextLayoutRules.h>
 #include <moai-sim/MOAITextLayout.h>
 #include <moai-sim/MOAITextStyle.h>
@@ -128,12 +128,10 @@ class MOAITextLabel :
 	public MOAIAction {
 private:
 
-	bool				mNeedsLayout;
-
-protected:
-
 	static const u32 REVEAL_ALL = 0xffffffff;
 	static const float DEFAULT_SPOOL_SPEED;
+	
+	bool					mNeedsLayout;
 	
 	float					mSpool;
 	float					mSpeed;
@@ -146,7 +144,7 @@ protected:
 	bool					mOverrun;
 
 	MOAITextLayoutRules		mLayoutRules;	// design params for laying out text
-	MOAITextStyleCache		mStyleCache;	// some style are anonymous and created ad hoc
+	MOAITextStyleCache		mStyleCache;	// anonymous styles are created ad hoc
 	MOAITextStyleMap		mStyleMap;		// preprocessed text broken up by style changes
 	MOAITextLayout			mLayout;		// cached glyph layout for currently visible text
 	
@@ -178,6 +176,7 @@ protected:
 	static int			_setHighlight			( lua_State* L );
 	static int			_setLineSnap			( lua_State* L );
 	static int			_setLineSpacing			( lua_State* L );
+	static int			_setMargins				( lua_State* L );
 	static int			_setOverrunRules		( lua_State* L );
 	static int			_setRect				( lua_State* L );
 	static int			_setRectLimits			( lua_State* L );
@@ -198,25 +197,40 @@ protected:
 	#endif
 	
 	//----------------------------------------------------------------//
-	void				BuildLocalToWorldMtx	( ZLAffine3D& localToWorldMtx );
-	ZLMatrix4x4			GetWorldDrawingMtx		();
-	void				OnDepNodeUpdate			();
-	u32					OnGetModelBounds		( ZLBox& bounds );
-	void				OnUpdate				( double step );
 	void				ResetLayout				();
 	void				ScheduleLayout			();
 	void				Refresh					();
 	virtual void		RefreshLayout			();
 	virtual void		RefreshStyleGlyphs		();
 
+	//----------------------------------------------------------------//
+	bool				MOAIAction_IsDone							();
+	void				MOAIAction_Update							( double step );
+	void				MOAIDrawable_Draw							( int subPrimID );
+	void				MOAIDrawable_DrawDebug						( int subPrimID );
+	ZLMatrix4x4			MOAIGraphicsPropBase_GetWorldDrawingMtx		();
+	void				MOAINode_Update								();
+	ZLBounds			MOAIPartitionHull_GetModelBounds			();
+	void				MOAITransformBase_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAITextLabel )
 	
+	enum {
+		DEBUG_DRAW_TEXT_LABEL,
+		DEBUG_DRAW_TEXT_LABEL_BASELINES,
+		DEBUG_DRAW_TEXT_LABEL_GLYPH_BOUNDS,
+		DEBUG_DRAW_TEXT_LABEL_GLYPHS,
+		DEBUG_DRAW_TEXT_LABEL_LAYOUT_BOUNDS,
+		DEBUG_DRAW_TEXT_LABEL_LIMITS,
+		DEBUG_DRAW_TEXT_LABEL_LINES_GLYPH_BOUNDS,
+		DEBUG_DRAW_TEXT_LABEL_LINES_LAYOUT_BOUNDS,
+		DEBUG_DRAW_TEXT_LABEL_MARGINS,
+		TOTAL_DEBUG_LINE_STYLES,
+	};
+	
 	//----------------------------------------------------------------//
-	void				Draw					( int subPrimID, float lod );
-	void				DrawDebug				( int subPrimID, float lod );
-	bool				IsDone					();
 						MOAITextLabel			();
 						~MOAITextLabel			();
 	bool				More					();

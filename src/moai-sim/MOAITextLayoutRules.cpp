@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -76,12 +76,25 @@ ZLRect MOAITextLayoutRules::GetGlyphSpacingRect ( const MOAIGlyph& glyph, float 
 }
 
 //----------------------------------------------------------------//
+ZLRect MOAITextLayoutRules::GetFrameWithMargins () {
+
+	ZLRect frame = this->mFrame;
+	frame.mXMin += this->mMargins.mXMin;
+	frame.mYMin += this->mMargins.mYMin;
+	frame.mXMax -= this->mMargins.mXMax;
+	frame.mYMax -= this->mMargins.mYMax;
+	
+	return frame;
+}
+
+//----------------------------------------------------------------//
 void MOAITextLayoutRules::Init ( const MOAITextLayoutRules& designer ) {
 
 	this->ClearCurves ();
 
 	this->mOwner				= designer.mOwner;
 	this->mFrame				= designer.mFrame;
+	this->mMargins				= designer.mMargins;
 	this->mLimitWidth			= designer.mLimitWidth;
 	this->mLimitHeight			= designer.mLimitHeight;
 	this->mHAlign				= designer.mHAlign;
@@ -139,6 +152,7 @@ MOAITextLayoutRules::MOAITextLayoutRules () :
 	mVLineSnap ( 0.0f ) {
 	
 	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	this->mMargins.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//

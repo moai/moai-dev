@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef MOAIBLENDMODE_H
@@ -10,24 +10,17 @@
 class MOAIBlendMode {
 public:
 	
-	enum {
-		BLEND_NORMAL,
-		BLEND_ADD,
-		BLEND_MULTIPLY,
-	};
-	
 	int				mEquation;
 	int				mSourceFactor;
 	int				mDestFactor;
 
 	//----------------------------------------------------------------//
-	//void			Bind				();
-	static void		GetBlendFactors		( u32 blend, int& srcFactor, int& dstFactor );
-	void			SetBlend			( u32 blend );
-	void			SetBlend			( int srcFactor, int dstFactor );
-	void			SetBlendEquation	( int equation );
+	void			Init				( MOAILuaState& state, int idx );
+	void			SetBlend			( int equation, int srcFactor, int dstFactor );
 					MOAIBlendMode		();
+					MOAIBlendMode		( int equation, int srcFactor, int dstFactor );
 					~MOAIBlendMode		();
+	int				Push				( MOAILuaState& state ) const;
 	
 	//----------------------------------------------------------------//
 	inline bool IsSame ( const MOAIBlendMode& blendMode ) {

@@ -4,15 +4,23 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "63C4897045D0EF88507AD257AEF500CB53038CE0" : 0,
+    "9B988C7359AA495F85FDA9F3B96E8CAA9B874E81" : 0,
+    "0BE2D393D91F44FADD1C4CA1AAED513D7753907E" : 0,
+    "AE3F0F79FA18959EE39DE06BF81D40ADA159F259" : 0,
     "7BB53B1506E6E1939A1DD83892672A1FDD165695" : 0,
-    "0BE2D393D91F44FADD1C4CA1AAED513D7753907E" : 0
+    "DE072679D3B61AA77D9DD9650241084BC6FA3713" : 0,
+    "63C4897045D0EF88507AD257AEF500CB53038CE0" : 0,
+    "7B804F069F3BF9B8D0286008FBC54D2FBA87945B" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "C4FE9C75-0543-4DE3-B558-ABA9029A68FF",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "63C4897045D0EF88507AD257AEF500CB53038CE0" : "moai-dev",
+    "9B988C7359AA495F85FDA9F3B96E8CAA9B874E81" : "moai-dev\/3rdparty\/TGAReader\/",
+    "0BE2D393D91F44FADD1C4CA1AAED513D7753907E" : "moai-dev\/3rdparty\/kissfft\/",
+    "AE3F0F79FA18959EE39DE06BF81D40ADA159F259" : "moai-dev\/3rdparty\/assimp\/",
     "7BB53B1506E6E1939A1DD83892672A1FDD165695" : "",
-    "0BE2D393D91F44FADD1C4CA1AAED513D7753907E" : "moai-dev\/3rdparty\/kissfft\/"
+    "DE072679D3B61AA77D9DD9650241084BC6FA3713" : "..\/..\/..",
+    "63C4897045D0EF88507AD257AEF500CB53038CE0" : "moai-dev",
+    "7B804F069F3BF9B8D0286008FBC54D2FBA87945B" : ".."
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "libmoai",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -29,9 +37,29 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "63C4897045D0EF88507AD257AEF500CB53038CE0"
     },
     {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "bitbucket.org:pointinside\/pimgl.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7B804F069F3BF9B8D0286008FBC54D2FBA87945B"
+    },
+    {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/fallguyconsulting\/casinowonders.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7BB53B1506E6E1939A1DD83892672A1FDD165695"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/npedotnet\/TGAReader.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9B988C7359AA495F85FDA9F3B96E8CAA9B874E81"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/assimp\/assimp.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "AE3F0F79FA18959EE39DE06BF81D40ADA159F259"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "ssh:\/\/bitbucket.org\/pointinside\/ios-pimapslib.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DE072679D3B61AA77D9DD9650241084BC6FA3713"
     }
   ]
 }

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -296,11 +296,9 @@ u32 MOAILayoutFrame::GetPerpAxis ( u32 axis ) {
 ZLRect MOAILayoutFrame::GetScissorRect () {
 
 	ZLRect scissorRect = this->GetFrame ();
-	
-	ZLMatrix4x4 mtx;
-	
+		
 	// TODO:
-	mtx.Init ( this->mLocalToWorldMtx );
+	ZLMatrix4x4 mtx ( this->mLocalToWorldMtx );
 	//mtx.Append ( MOAIGfxMgr::Get ().GetWorldToWndMtx ( 1.0f, 1.0f ));
 	mtx.Transform ( scissorRect );
 	

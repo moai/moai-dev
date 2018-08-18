@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -201,29 +201,51 @@ ZLRect ZLBox::GetRect ( u32 plane ) const {
 }
 
 //----------------------------------------------------------------//
-void ZLBox::Grow ( const ZLBox& box ) {
+void ZLBox::Grow ( const ZLBox& box, bool first ) {
 
-	if ( mMin.mX > box.mMin.mX ) mMin.mX = box.mMin.mX;
-	if ( mMax.mX < box.mMax.mX ) mMax.mX = box.mMax.mX;
+	if ( first ) {
 	
-	if ( mMin.mY > box.mMin.mY ) mMin.mY = box.mMin.mY;
-	if ( mMax.mY < box.mMax.mY ) mMax.mY = box.mMax.mY;
-	
-	if ( mMin.mZ > box.mMin.mZ ) mMin.mZ = box.mMin.mZ;
-	if ( mMax.mZ < box.mMax.mZ ) mMax.mZ = box.mMax.mZ;
+		*this = box;
+	}
+	else {
+
+		if ( mMin.mX > box.mMin.mX ) mMin.mX = box.mMin.mX;
+		if ( mMax.mX < box.mMax.mX ) mMax.mX = box.mMax.mX;
+		
+		if ( mMin.mY > box.mMin.mY ) mMin.mY = box.mMin.mY;
+		if ( mMax.mY < box.mMax.mY ) mMax.mY = box.mMax.mY;
+		
+		if ( mMin.mZ > box.mMin.mZ ) mMin.mZ = box.mMin.mZ;
+		if ( mMax.mZ < box.mMax.mZ ) mMax.mZ = box.mMax.mZ;
+	}
 }
 
 //----------------------------------------------------------------//
-void ZLBox::Grow ( const ZLVec3D& vec ) {
+void ZLBox::Grow ( const ZLRect& rect, bool first, u32 plane ) {
 
-	if ( mMin.mX > vec.mX ) mMin.mX = vec.mX;
-	else if ( mMax.mX < vec.mX ) mMax.mX = vec.mX;
+	ZLBox grow;
+	grow.Init ( rect, plane );
+	this->Grow ( grow, first );
+}
+
+//----------------------------------------------------------------//
+void ZLBox::Grow ( const ZLVec3D& vec, bool first ) {
+
+	if ( first ) {
 	
-	if ( mMin.mY > vec.mY ) mMin.mY = vec.mY;
-	else if ( mMax.mY < vec.mY ) mMax.mY = vec.mY;
+		this->Init ( vec );
+	}
+	else {
 
-	if ( mMin.mZ > vec.mZ ) mMin.mZ = vec.mZ;
-	else if ( mMax.mZ < vec.mZ ) mMax.mZ = vec.mZ;
+		if ( mMin.mX > vec.mX ) mMin.mX = vec.mX;
+		else if ( mMax.mX < vec.mX ) mMax.mX = vec.mX;
+		
+		if ( mMin.mY > vec.mY ) mMin.mY = vec.mY;
+		else if ( mMax.mY < vec.mY ) mMax.mY = vec.mY;
+
+		if ( mMin.mZ > vec.mZ ) mMin.mZ = vec.mZ;
+		else if ( mMax.mZ < vec.mZ ) mMax.mZ = vec.mZ;
+	}
 }
 
 //----------------------------------------------------------------//

@@ -1,12 +1,11 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAISTRETCHPATCH2D_H
 #define	MOAISTRETCHPATCH2D_H
 
-#include <moai-sim/MOAIStandardDeck.h>
-
-class MOAISingleTexture;
+#include <moai-sim/MOAIStretchDeck.h>
+#include <moai-sim/MOAIMaterialBatchHolder.h>
 
 //================================================================//
 // MOAIStretchPatchSpan
@@ -28,7 +27,8 @@ private:
 			stretchable and non-stretchable 'bands.' Grid drawing not supported.
 */
 class MOAIStretchPatch2D :
-	public MOAIStandardDeck {
+	public MOAIStretchDeck,
+	public MOAIMaterialBatchHolder {
 private:
 
 	ZLLeanArray < MOAIStretchPatchSpan >	mRows;
@@ -47,6 +47,7 @@ private:
 	bool	mNeedsUpdate;
 
 	//----------------------------------------------------------------//
+	static int		_ninePatch				( lua_State* L );
 	static int		_reserveColumns			( lua_State* L );
 	static int		_reserveRows			( lua_State* L );
 	static int		_reserveUVRects			( lua_State* L );
@@ -56,24 +57,30 @@ private:
 	static int		_setUVRect				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	ZLBox			ComputeMaxBounds		();
 	void			DrawStretch				( u32 idx, float xStretch, float yStretch );
-	ZLBox			GetItemBounds			( u32 idx );
 	void			UpdateParams			();
+
+	//----------------------------------------------------------------//
+	ZLBounds				MOAIDeck_ComputeMaxBounds				();
+	void					MOAIDeck_Draw							( u32 idx );
+	ZLBounds				MOAIDeck_GetBounds						( u32 idx );
+	MOAICollisionShape*		MOAIDeck_GetCollisionShape				( u32 idx );
+	bool					MOAIDeck_Overlap						( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
+	bool					MOAIDeck_Overlap						( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIStretchPatch2D )
 	
 	//----------------------------------------------------------------//
-	using MOAIDeck::DrawIndex;
-	void			DrawIndex				( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale );
 					MOAIStretchPatch2D		();
 					~MOAIStretchPatch2D		();
 	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			SetColumn				( u32 idx, float percent, bool canStretch );
+	void			SetRow					( u32 idx, float percent, bool canStretch );
 };
 
 #endif

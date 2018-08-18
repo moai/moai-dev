@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIGFXMGR_H
@@ -7,22 +7,19 @@
 #include <moai-sim/MOAIBlendMode.h>
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIFrameBuffer.h>
-#include <moai-sim/MOAIGfxGlobalsCache.h>
+#include <moai-sim/MOAIGfxState.h>
 #include <moai-sim/MOAIGfxPipelineClerk.h>
 #include <moai-sim/MOAIGfxResourceClerk.h>
-#include <moai-sim/MOAIGfxVertexCache.h>
+#include <moai-sim/MOAIGfxStateVertexCache.h>
 #include <moai-sim/MOAIImage.h>
 
-class MOAICamera;
 class MOAIFrameBuffer;
 class MOAIGfxResource;
-class MOAIMultiTexture;
 class MOAIShader;
 class MOAIShaderProgram;
 class MOAITexture;
-class MOAISingleTexture;
+class MOAITextureBase;
 class MOAIVertexFormat;
-class MOAIViewport;
 
 //================================================================//
 // MOAIGfxMgr
@@ -33,7 +30,7 @@ class MOAIViewport;
 	@const	EVENT_RESIZE
 */
 class MOAIGfxMgr :
-	public MOAIGlobalClass < MOAIGfxMgr, MOAIGlobalEventSource > {
+	public ZLContextClass < MOAIGfxMgr, MOAIGlobalEventSource > {
 public:
 	
 	enum {
@@ -62,9 +59,6 @@ private:
 	static int			_getViewSize				( lua_State* L );
 	static int			_purgeResources				( lua_State* L );
 	static int			_renewResources				( lua_State* L );
-	static int			_setDefaultTexture			( lua_State* L );
-	static int			_setPenColor				( lua_State* L );
-	static int			_setPenWidth				( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void				OnGlobalsFinalize			();
@@ -74,7 +68,7 @@ public:
 	
 	friend class MOAIGfxResource;
 	friend class MOAIShaderProgram;
-	friend class MOAISingleTexture;
+	friend class MOAITextureBase;
 	
 	DECL_LUA_SINGLETON ( MOAIGfxMgr )
 	
@@ -86,18 +80,15 @@ public:
 	GET_BOOL ( IsFramebufferSupported, mIsFramebufferSupported )
 	
 	MOAIGfxResourceClerk		mResourceMgr;
-	MOAIGfxGlobalsCache			mGfxState;
-	MOAIGfxVertexCache			mVertexCache;
+	MOAIGfxState				mGfxState;
 	MOAIGfxPipelineClerk		mPipelineMgr;
 	
 	//----------------------------------------------------------------//
 	
 	void			ClearErrors				();
-	void			ClearSurface			( u32 clearFlags ); // takes zgl clear flags
 	void			DetectContext			();
 	void			DetectFramebuffer		();
 	
-	bool			IsOpaque				();
 	u32				LogErrors				();
 	
 					MOAIGfxMgr				();
@@ -115,11 +106,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	static ZLGfx& GetDrawingAPI () {
-	
-		ZLGfx* gfx = MOAIGfxMgr::Get ().mPipelineMgr.GetDrawingAPI ();
-		assert ( gfx );
 		
-		return *gfx;
+		return MOAIGfxMgr::Get ().mPipelineMgr.GetDrawingAPI ();
 	}
 };
 

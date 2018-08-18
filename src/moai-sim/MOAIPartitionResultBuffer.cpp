@@ -1,9 +1,9 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
 #include <moai-sim/MOAIPartitionResultBuffer.h>
-#include <moai-sim/MOAIProp.h>
+#include <moai-sim/MOAIPartitionHull.h>
 
 //================================================================//
 // IsoSortItem
@@ -90,7 +90,7 @@ public:
 //----------------------------------------------------------------//
 MOAIPartitionResult* MOAIPartitionResultBuffer::AffirmSwapBuffer () {
 
-	this->mSwapBuffer->Grow ( this->mTotalResults, BLOCK_SIZE );
+	this->mSwapBuffer->GrowChunked ( this->mTotalResults, BLOCK_SIZE );
 	return *this->mSwapBuffer;
 }
 
@@ -109,7 +109,7 @@ void MOAIPartitionResultBuffer::Clear () {
 }
 
 //----------------------------------------------------------------//
-MOAIProp* MOAIPartitionResultBuffer::FindBest () {
+MOAIPartitionHull* MOAIPartitionResultBuffer::FindBest () {
 
 	if ( !this->mTotalResults ) return 0;
 	
@@ -126,7 +126,7 @@ MOAIProp* MOAIPartitionResultBuffer::FindBest () {
 			bestKey = compKey;
 		}
 	}
-	return best->mProp;
+	return best->mHull;
 }
 
 //----------------------------------------------------------------//
@@ -228,28 +228,28 @@ void MOAIPartitionResultBuffer::Project ( const ZLMatrix4x4& mtx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionResultBuffer::PushProps ( lua_State* L ) {
+void MOAIPartitionResultBuffer::PushHulls ( lua_State* L ) {
 	MOAILuaState state ( L );
 
 	u32 total = this->mTotalResults;
 
 	// make sure there is enough stack space to push all props
-	// the +1 is needed because pushing a prop requires an
+	// the +1 is needed because pushing a hull requires an
 	// additional value to be pushed onto the stack temporarily
 	lua_checkstack ( L, total + 1 );
 
 	for ( u32 i = 0; i < total; ++i ) {
-		this->mResults [ i ].mProp->PushLuaUserdata ( state );
+		this->mResults [ i ].mHull->PushLuaUserdata ( state );
    }
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionResultBuffer::PushResult ( MOAIProp& prop, u32 key, int subPrimID, s32 priority, const ZLVec3D& loc, const ZLBox& bounds ) {
+void MOAIPartitionResultBuffer::PushResult ( MOAIPartitionHull& hull, u32 key, int subPrimID, s32 priority, const ZLVec3D& loc, const ZLBox& bounds ) {
 
 	u32 idx = this->mTotalResults++;
 	
 	if ( idx >= this->mMainBuffer->Size ()) {
-		this->mMainBuffer->Grow ( idx + 1, BLOCK_SIZE );
+		this->mMainBuffer->GrowChunked ( idx + 1, BLOCK_SIZE );
 		this->mResults = this->mMainBuffer->Data ();
 	}
 	
@@ -257,14 +257,14 @@ void MOAIPartitionResultBuffer::PushResult ( MOAIProp& prop, u32 key, int subPri
 	
 	result.mKey = key;
 	
-	result.mProp = &prop;
+	result.mHull = &hull;
 	result.mSubPrimID = subPrimID;
 	result.mPriority = priority;
 	
 	result.mLoc = loc;
 	result.mBounds = bounds;
 	
-	ZLVec3D piv = prop.GetPiv ();
+	ZLVec3D piv = hull.GetPiv ();
 	result.mLoc.Add ( piv );
 	result.mBounds.Offset ( piv );
 }
@@ -289,7 +289,7 @@ void MOAIPartitionResultBuffer::SetResultsBuffer ( MOAIPartitionResult* buffer )
 //----------------------------------------------------------------//
 void MOAIPartitionResultBuffer::Reset () {
 
-	this->mBufferA.Grow ( 1, BLOCK_SIZE );
+	this->mBufferA.GrowChunked ( 1, BLOCK_SIZE );
 	this->SetResultsBuffer ( this->mBufferA );
 	this->mTotalResults = 0;
 }
@@ -324,11 +324,11 @@ u32 MOAIPartitionResultBuffer::SortResultsIso () {
 		backList.Clear ();
 		dontCareList.Clear ();
 		
-		// get the next prop to add
+		// get the next hull to add
 		MOAIPartitionResult* result0 = &mainBuffer [ i ];
 		const ZLBox& bounds0 = result0->mBounds;
 		
-		// check incoming prop against all others
+		// check incoming hull against all others
 		IsoSortItem* cursor = list.PopFront ();
 		while ( cursor ) {
 			IsoSortItem* item = cursor;

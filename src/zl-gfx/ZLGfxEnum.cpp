@@ -1,16 +1,10 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
 #include <zl-gfx/headers.h>
 #include <zl-gfx/ZLGfx-gles.h>
 #include <zl-gfx/ZLGfxEnum.h>
-
-//#include <algorithm>
-//#include <string>
-//using namespace std;
-
-//#define ASSERT_OPERATION_DEPTH() ( assert ( sOperationDepth > 0 )) // Attempt to call zgl graphics method outside of operation.
 
 //================================================================//
 // ZLGfxEnum

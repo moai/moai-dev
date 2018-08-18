@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -15,11 +15,50 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIShader::_getAttributeID ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIShader, "UN" )
+
+	u32 uniformID		= state.GetValue < u32 >( 2, 1 ) - 1;
+	u32 index			= state.GetValue < u32 >( 3, 1 ) - 1;
+	
+	if ( self->mProgram ) {
+		state.Push ( self->mProgram->GetAttributeID ( uniformID, index ));
+	}
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIShader::_setProgram ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShader, "U" )
 	
 	self->SetProgram ( state.GetLuaObject < MOAIShaderProgram >( 2, true ));
 
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIShader::_setUniform ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIShader, "U" )
+
+	u32 uniformID	= state.GetValue < u32 >( 2, 1 ) - 1;
+
+	if ( self->mProgram ) {
+		self->mProgram->SetUniform ( L, 3, self->mPendingUniformBuffer, uniformID, 0 );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIShader::_setUniformArrayItem ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIShader, "U" )
+
+	u32 uniformID	= state.GetValue < u32 >( 2, 1 ) - 1;
+	u32 index		= state.GetValue < u32 >( 3, 1 ) - 1;
+
+	if ( self->mProgram ) {
+		self->mProgram->SetUniform ( L, 4, self->mPendingUniformBuffer, uniformID, index );
+	}
 	return 0;
 }
 
@@ -42,32 +81,25 @@ MOAIShader* MOAIShader::AffirmShader ( MOAILuaState& state, int idx ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIShader::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+void MOAIShader::ApplyUniforms () {
 
-	attrID = ( attrID & MOAIAttrOp::ATTR_ID_MASK ) - 1;
-
-	if ( attrID >= this->mUniformBuffers.Size ()) return false;
-
-	switch ( op ) {
-
-		case MOAIAttrOp::CHECK:
-			this->mUniformBuffers [ attrID ].GetFlags ( attrOp );
-			return true;
-
-		case MOAIAttrOp::SET:
-			this->mUniformBuffers [ attrID ].SetValue ( attrOp );
-			return true;
-
-		case MOAIAttrOp::ADD:
-			this->mUniformBuffers [ attrID ].AddValue ( attrOp );
-			return true;
-		
-		case MOAIAttrOp::GET:
-			this->mUniformBuffers [ attrID ].GetValue ( attrOp );
-			return true;
+	if ( this->mProgram ) {
+		this->mProgram->ApplyUniforms ( this->mPendingUniformBuffer );
 	}
+}
 
-	return false;
+//----------------------------------------------------------------//
+void MOAIShader::BindUniforms () {
+	
+	if ( this->mProgram ) {
+		this->mProgram->BindUniforms ();
+	}
+}
+
+//----------------------------------------------------------------//
+bool MOAIShader::HasDirtyUniforms () {
+
+	return !this->mProgram->mUniformBuffer.IsIdentical ( this->mPendingUniformBuffer );
 }
 
 //----------------------------------------------------------------//
@@ -96,49 +128,50 @@ void MOAIShader::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAINode::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
+		{ "getAttributeID",				_getAttributeID },
 		{ "setProgram",					_setProgram },
+		{ "setUniform",					_setUniform },
+		{ "setUniformArrayItem",		_setUniformArrayItem },
 		{ NULL, NULL }
 	};
 	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
-void MOAIShader::SetProgram ( MOAIShaderProgram* program ) {
+void MOAIShader::ScheduleTextures () {
 
-	this->mUniformBuffers.Clear ();
-	this->mProgram.Set ( *this, program );
-	
-	if ( program ) {
-		
-		size_t nUniforms = program->mUniforms.Size ();
-		this->mUniformBuffers.Init ( nUniforms );
-		
-		for ( size_t i = 0; i < nUniforms; ++i ) {
-
-			MOAIShaderUniformBuffer& uniformBuffer = this->mUniformBuffers [ i ];
-			uniformBuffer.SetType ( program->mUniforms [ i ].GetType ());
-			uniformBuffer.SetValue ( program->mDefaults [ i ]);
-		}
+	if ( this->mProgram ) {
+		this->mProgram->ScheduleTextures ();
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIShader::UpdateAndBindUniforms () {
-
-	MOAIShaderProgram* program = this->mProgram;
-
+void MOAIShader::SetProgram ( MOAIShaderProgram* program ) {
+	
+	this->mProgram.Set ( *this, program );
+	
 	if ( program ) {
-		
-		size_t nUniforms = program->mUniforms.Size ();
-		
-		for ( size_t i = 0; i < nUniforms; ++i ) {
-			MOAIShaderUniform& uniform = program->mUniforms [ i ];
-			if (( uniform.mFlags & MOAIShaderUniform::UNIFORM_FLAG_GLOBAL ) == 0 ) {
-				uniform.mFlags |= uniform.SetValue ( this->mUniformBuffers [ i ]);
-			}
-		}
-		
-		program->ApplyGlobals ();
-		program->BindUniforms ();
+		program->InitUniformBuffer ( this->mPendingUniformBuffer );
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIShader::UpdateUniforms () {
+
+	if ( this->mProgram ) {
+		this->mProgram->UpdateUniforms ( this->mPendingUniformBuffer );
+	}
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIShader::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	if ( this->mProgram ) {
+		return this->mProgram->ApplyAttrOp ( this->mPendingUniformBuffer, attrID, attr, op );
+	}
+	return false;
 }

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef MOAILUAREF_H
@@ -58,7 +58,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	inline operator bool () {
+	inline operator bool () const {
 		return ( this->mRefID != LUA_NOREF );
 	}
 };
@@ -110,7 +110,7 @@ public:
 	void		SetRef					( MOAILuaObject& owner, MOAILuaState& state, int idx );
 	
 	//----------------------------------------------------------------//
-	inline operator bool () {
+	inline operator bool () const {
 		return this->mRefID != LUA_NOREF;
 	}
 };

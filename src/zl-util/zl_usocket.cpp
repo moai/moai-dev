@@ -416,7 +416,7 @@ int zl_socket_waitfd ( zl_socket n, int sw, double tm ) {
 
 	if ( tm >= 0.0f ) {
 		tm += ZLDeviceTime::GetTimeInSeconds ();
-		tp = &tv;
+		//tp = &tv;
 	}
 	
 	int ret;

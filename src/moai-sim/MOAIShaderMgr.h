@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAISHADERMGR_H
@@ -24,10 +24,10 @@ class MOAIShaderProgram;
 	@const MESH_SHADER
 */
 class MOAIShaderMgr :
-	public MOAIGlobalClass < MOAIShaderMgr, MOAILuaObject > {
+	public ZLContextClass < MOAIShaderMgr, MOAILuaObject > {
 public:
 
-	enum {
+	enum Preset {
 		DECK2D_SHADER,
 		DECK2D_SNAPPING_SHADER,
 		DECK2D_TEX_ONLY_SHADER,

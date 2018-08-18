@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -8,7 +8,6 @@
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIGfxResourceClerk.h>
-#include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIShaderProgram.h>
@@ -17,6 +16,7 @@
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 #include <moai-sim/MOAIViewport.h>
+#include <moai-sim/strings.h>
 
 //================================================================//
 // local
@@ -125,76 +125,6 @@ int MOAIGfxMgr::_renewResources ( lua_State* L ) {
 	return 0;
 }
 
-//----------------------------------------------------------------//
-/**	@lua	setDefaultTexture
-	@text	Specify a fallback texture to use when textures are
-			unavailable (pending load, missing or in error state).
-	
-	@in		MOAITexture texture
-	@out	MOAITexture texture		Texture that was passed in or created.
-*/
-int MOAIGfxMgr::_setDefaultTexture ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-
-	MOAITexture* texture = state.GetLuaObject < MOAITexture >( 1, false );
-	
-	if ( !texture ) {
-		texture = new MOAITexture ();
-		if ( !texture->Init ( state, 1 )) {
-			// TODO: report error
-			delete texture;
-			texture = 0;
-		}
-	}
-
-	gfxMgr.mGfxState.SetDefaultTexture ( gfxMgr, texture );
-
-	if ( texture ) {
-		texture->PushLuaUserdata ( state );
-		return 1;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setPenColor
-
-	@in		number r
-	@in		number g
-	@in		number b
-	@opt	number a	Default value is 1.
-	@out	nil
-*/
-int MOAIGfxMgr::_setPenColor ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-
-	float r = state.GetValue < float >( 1, 1.0f );
-	float g = state.GetValue < float >( 2, 1.0f );
-	float b = state.GetValue < float >( 3, 1.0f );
-	float a = state.GetValue < float >( 4, 1.0f );
-
-	MOAIGfxMgr::Get ().mGfxState.SetPenColor ( r, g, b, a );
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setPenWidth
-
-	@in		number width
-	@out	nil
-*/
-int MOAIGfxMgr::_setPenWidth ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-
-	float width = state.GetValue < float >( 1, 1.0f );
-	MOAIGfxMgr::Get ().mGfxState.SetPenWidth ( width );
-	return 0;
-}
-
 //================================================================//
 // MOAIGfxMgr
 //================================================================//
@@ -210,28 +140,9 @@ void MOAIGfxMgr::ClearErrors () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr::ClearSurface ( u32 clearFlags ) {
-
-	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-
-	if ( clearFlags ) {
-		if (( clearFlags & ZGL_CLEAR_DEPTH_BUFFER_BIT ) && !this->mGfxState.GetDepthMask ()) {
-			gfx.DepthMask ( true );
-			gfx.Clear ( clearFlags );
-			gfx.DepthMask ( false );
-		}
-		else {
-			gfx.Clear ( clearFlags );
-		}
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxMgr::DetectContext () {
 
 	this->mHasContext = true;
-	
-	ZLGfxDevice::Begin ();
 	
 	ZLGfxDevice::Initialize ();
 	
@@ -248,25 +159,13 @@ void MOAIGfxMgr::DetectContext () {
 	MOAIShaderMgr::Get ().AffirmAll ();
 	
 	mResourceMgr.RenewResources ();
-	
-	ZLGfxDevice::End ();
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxMgr::DetectFramebuffer () {
 	
-	ZLGfxDevice::Begin ();
-	
 	this->mGfxState.GetDefaultFrameBuffer ()->DetectGLFrameBufferID ();
-	
-	ZLGfxDevice::End ();
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxMgr::IsOpaque () {
-	
-	assert ( this->mGfxState.GetDefaultFrameBuffer ());
-	return this->mGfxState.GetDefaultFrameBuffer ()->IsOpaque ();
+	this->mGfxState.SetFrameBuffer ();
 }
 
 //----------------------------------------------------------------//
@@ -276,7 +175,7 @@ u32 MOAIGfxMgr::LogErrors () {
 	#ifndef MOAI_OS_NACL
 		if ( this->mHasContext ) {
 			for ( u32 error = ZLGfxDevice::GetError (); error != ZGL_ERROR_NONE; error = ZLGfxDevice::GetError (), ++count ) {
-				MOAILogF ( 0, ZLLog::LOG_ERROR, MOAILogMessages::MOAIGfxDevice_OpenGLError_S, ZLGfxDevice::GetErrorString ( error ));
+				MOAILogF ( 0, ZLLog::LOG_ERROR, MOAISTRING_MOAIGfxDevice_OpenGLError_S, ZLGfxDevice::GetErrorString ( error ));
 			}
 		}
 	#endif
@@ -298,25 +197,25 @@ MOAIGfxMgr::MOAIGfxMgr () :
 	mMaxTextureSize ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_SINGLE ( MOAIGfxStateCache )
+		RTTI_SINGLE ( MOAIGfxStateGPUCache )
 		RTTI_SINGLE ( MOAIGlobalEventSource )
 	RTTI_END
 	
-	this->mGfxState.SetDefaultFrameBuffer ( *this, new MOAIFrameBuffer ());
+	this->mGfxState.SetDefaultFrameBuffer ( new MOAIFrameBuffer ());
 }
 
 //----------------------------------------------------------------//
 MOAIGfxMgr::~MOAIGfxMgr () {
 
-	this->mGfxState.SetDefaultFrameBuffer ( *this, 0 );
-	this->mGfxState.SetDefaultFrameBuffer ( *this, 0 );
+	this->mGfxState.SetDefaultFrameBuffer ( 0 );
+	this->mGfxState.SetDefaultTexture ( 0 );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxMgr::OnGlobalsFinalize () {
 
-	this->mGfxState.SetDefaultFrameBuffer ( *this, 0 );
-	this->mGfxState.SetDefaultTexture ( *this, 0 );
+	this->mGfxState.SetDefaultFrameBuffer ( 0 );
+	this->mGfxState.SetDefaultTexture ( 0 );
 	
 	mResourceMgr.ProcessDeleters ();
 }
@@ -324,7 +223,7 @@ void MOAIGfxMgr::OnGlobalsFinalize () {
 //----------------------------------------------------------------//
 void MOAIGfxMgr::OnGlobalsInitialize () {
 
-	this->mVertexCache.InitBuffers ();
+	this->mGfxState.InitBuffers ();
 }
 
 //----------------------------------------------------------------//
@@ -344,14 +243,11 @@ void MOAIGfxMgr::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getViewSize",				_getViewSize },
 		{ "purgeResources",				_purgeResources },
 		{ "renewResources",				_renewResources },
-		{ "setDefaultTexture",			_setDefaultTexture },
 		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIGfxMgr > },
-		{ "setPenColor",				_setPenColor },
-		{ "setPenWidth",				_setPenWidth },
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
@@ -359,7 +255,7 @@ void MOAIGfxMgr::ReportTextureAlloc ( cc8* name, size_t size ) {
 
 	this->mTextureMemoryUsage += size;
 	float mb = ( float )this->mTextureMemoryUsage / 1024.0f / 1024.0f;
-	MOAILogF ( 0, ZLLog::LOG_STATUS, MOAILogMessages::MOAITexture_MemoryUse_SDFS, "+", size/1024, mb, name );
+	MOAILogF ( 0, ZLLog::LOG_STATUS, MOAISTRING_MOAITexture_MemoryUse_SDFS, "+", size / 1024, mb, name );
 }
 
 //----------------------------------------------------------------//
@@ -367,7 +263,7 @@ void MOAIGfxMgr::ReportTextureFree ( cc8* name, size_t size ) {
 
 	this->mTextureMemoryUsage -= size;
 	float mb = ( float )this->mTextureMemoryUsage / 1024.0f / 1024.0f;
-	MOAILogF ( 0, ZLLog::LOG_STATUS, MOAILogMessages::MOAITexture_MemoryUse_SDFS, "-", size/1024, mb, name );
+	MOAILogF ( 0, ZLLog::LOG_STATUS, MOAISTRING_MOAITexture_MemoryUse_SDFS, "-", size / 1024, mb, name );
 }
 
 //----------------------------------------------------------------//

@@ -1,7 +1,6 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include "pch.h"
 #import <moai-ios/MOAIKeyboardIOS.h>
 
 //================================================================//
@@ -182,9 +181,9 @@ void MOAIKeyboardIOS::Finish () {
 		[ this->mTextField resignFirstResponder ];
 		[ this->mTextField removeFromSuperview ];
 		
-		id delegate = [ this->mTextField delegate ];
-		[ this->mTextField setDelegate:0 ];
-		[ delegate release ];
+		//id delegate = [ this->mTextField delegate ];
+		[ this->mTextField setDelegate:nil ];
+		//[ delegate release ];
 		
 		[ this->mTextField release ];
 		this->mTextField = 0;
@@ -269,7 +268,7 @@ void MOAIKeyboardIOS::ShowKeyboard ( cc8* text, int type, int returnKey, bool se
 		
 		CGRect frame = CGRectMake ( 0, 0, 320, 24 );
 		this->mTextField = [[ UITextField alloc ] initWithFrame:frame ];
-		[ this->mTextField setDelegate:[[ MOAITextFieldDelegate alloc ] init ]];
+		[ this->mTextField setDelegate:[[[ MOAITextFieldDelegate alloc ] init ] autorelease ]];
 		
 		[ window addSubview:this->mTextField ];
 	}

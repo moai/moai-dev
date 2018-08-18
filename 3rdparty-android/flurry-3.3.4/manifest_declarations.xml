@@ -1,5 +1,0 @@
-<!-- Flurry -->
-<activity
-	android:name="com.flurry.android.FlurryFullscreenTakeoverActivity"
-	android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize">
-</activity>

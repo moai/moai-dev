@@ -1,11 +1,10 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAINodeMgr.h>
-#include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAIRenderMgr.h>
@@ -693,7 +692,7 @@ int MOAISim::_timeToFrames ( lua_State* L ) {
 		@text	Alias for MOAIRenderMgr.pushRenderPass (). THIS METHOD
 				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
 
-		@in		MOAIRenderable renderable
+		@in		MOAIDrawable renderable
 		@out	nil
 	*/
 	int MOAISim::_pushRenderPass ( lua_State* L ) {
@@ -704,7 +703,7 @@ int MOAISim::_timeToFrames ( lua_State* L ) {
 		@text	Alias for MOAIRenderMgr.removeRenderPass (). THIS METHOD
 				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
 
-		@in		MOAIRenderable renderable
+		@in		MOAIDrawable renderable
 		@out	nil
 	*/
 	int MOAISim::_removeRenderPass ( lua_State* L ) {
@@ -886,7 +885,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
@@ -1073,11 +1072,11 @@ void MOAISim::Update () {
 	// make up the entire time deficit - but only if the sim has fallen behind
 	// by a certain threshold (given in number of frames)
 	// we only boost if we've fallen behind the number of steps given by boost threshold
-	if (( this->mLoopFlags & SIM_LOOP_ALLOW_BOOST ) && ( gap > ( this->mStep * this->mBoostThreshold ))) {
-		budget -= this->StepSim ( gap, 1 );
-		gap = 0.0f;
-	}
-	else {
+	if ( !(( this->mLoopFlags & SIM_LOOP_ALLOW_BOOST ) && ( gap > ( this->mStep * this->mBoostThreshold )))) {
+//		budget -= this->StepSim ( gap, 1 );
+//		gap = 0.0f;
+//	}
+//	else {
 	
 		// we didn't boost, so process steps normally...
 	

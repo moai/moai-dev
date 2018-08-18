@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -16,9 +16,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 480 )
 
-layer = MOAILayer.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 camera = MOAICamera.new ()
 camera:setLoc ( 0, 0, camera:getFocalLength ( 320 ))
@@ -72,4 +72,4 @@ prop:setDeck ( mesh )
 prop:moveRot ( 360, 0, 360, 6 )
 prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
 prop:setDepthTest ( MOAIGraphicsProp.DEPTH_TEST_LESS )
-layer:insertProp ( prop )
+prop:setPartition ( layer )

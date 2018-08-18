@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -68,7 +68,7 @@ int MOAIEaseDriver::_setLink ( lua_State* L ) {
 	
 	if ( source ) {
 	
-		u32 sourceAttrID	= state.GetValue < u32 >( 6, MOAIAttrOp::NULL_ATTR );
+		u32 sourceAttrID	= state.GetValue < u32 >( 6, MOAIAttribute::NULL_ATTR );
 		u32 mode			= state.GetValue < u32 >( 7, ZLInterpolate::kSmooth );
 		
 		self->SetLink ( idx, dest, destAttrID, source, sourceAttrID, mode );
@@ -101,63 +101,6 @@ MOAIEaseDriver::~MOAIEaseDriver () {
 		MOAIEaseDriverLink& link = this->mLinks [ i ];
 		link.mSource.Set ( *this, 0 );
 		link.mDest.Set ( *this, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIEaseDriver::OnUpdate ( double step ) {
-	
-	float c0 = this->GetCycle ();
-	float t0 = ZLFloat::Clamp ( this->GetNormalizedTime () - c0, 0.0f, 1.0f );
-	
-	MOAITimer::OnUpdate ( step );
-	if ( step == 0.0f ) return;
-	
-	float c1 = this->GetCycle ();
-	float t1 = ZLFloat::Clamp ( this->GetNormalizedTime () - c1, 0.0f, 1.0f );
-
-	MOAIAttrOp adder;
-
-	size_t total = this->mLinks.Size ();
-	for ( size_t i = 0; i < total; ++i ) {
-		
-		MOAIEaseDriverLink& link = this->mLinks [ i ];
-		if ( link.mDest ) {
-			
-			float delta = 0.0f;
-			
-			if ( link.mSource ) {
-				if ( this->mDirection > 0.0f ) {
-				
-					t0 = c0 >= 1.0f ? 1.0f : t0;
-					t1 = c1 >= 1.0f ? 1.0f : t1;
-					
-					float v0 = ZLInterpolate::Interpolate ( link.mMode, link.mV0, link.mV1, t0 );
-					
-					link.mV1 = link.mSource->GetAttributeValue ( link.mSourceAttrID, link.mV1 );
-					
-					float v1 = ZLInterpolate::Interpolate ( link.mMode, link.mV0, link.mV1, t1 );
-					
-					delta = v1 - v0;
-				}
-			}
-			else {
-				
-				float magnitude = ( link.mV1 - link.mV0 );
-				if ( magnitude == 0.0f ) continue;
-				
-				float v0 = link.mV0 + ( magnitude * c0 ) + ZLInterpolate::Interpolate ( link.mMode, 0.0f, magnitude, t0 );
-				float v1 = link.mV0 + ( magnitude * c1 ) + ZLInterpolate::Interpolate ( link.mMode, 0.0f, magnitude, t1 );
-				
-				delta = v1 - v0;
-			}
-			
-			if ( delta != 0.0f ) {
-				adder.SetValue ( delta, MOAIAttrOp::ATTR_TYPE_FLOAT );
-				link.mDest->ApplyAttrOp ( link.mDestAttrID, adder, MOAIAttrOp::ADD );
-				link.mDest->ScheduleUpdate ();
-			}
-		}
 	}
 }
 
@@ -276,7 +219,7 @@ void MOAIEaseDriver::SetLink ( u32 idx, MOAINode* dest, u32 destAttrID, float v1
 		MOAIEaseDriverLink& link = this->mLinks [ idx ];
 
 		link.mSource.Set ( *this, 0 );
-		link.mSourceAttrID	= MOAIAttrOp::NULL_ATTR;
+		link.mSourceAttrID	= MOAIAttribute::NULL_ATTR;
 
 		link.mDest.Set ( *this, dest );
 		link.mDestAttrID	= destAttrID;
@@ -303,5 +246,66 @@ void MOAIEaseDriver::SetLink ( u32 idx, MOAINode* dest, u32 destAttrID, MOAINode
 		link.mV0			= dest->GetAttributeValue ( destAttrID, 0.0f );
 		link.mV1			= source->GetAttributeValue ( sourceAttrID, 0.0f );
 		link.mMode			= mode;
+	}
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIEaseDriver::MOAIAction_Update ( double step ) {
+	
+	float c0 = this->GetCycle ();
+	float t0 = ZLFloat::Clamp ( this->GetNormalizedTime () - c0, 0.0f, 1.0f );
+	
+	MOAITimer::MOAIAction_Update ( step );
+	if ( step == 0.0f ) return;
+	
+	float c1 = this->GetCycle ();
+	float t1 = ZLFloat::Clamp ( this->GetNormalizedTime () - c1, 0.0f, 1.0f );
+
+	MOAIAttribute adder;
+
+	size_t total = this->mLinks.Size ();
+	for ( size_t i = 0; i < total; ++i ) {
+		
+		MOAIEaseDriverLink& link = this->mLinks [ i ];
+		if ( link.mDest ) {
+			
+			float delta = 0.0f;
+			
+			if ( link.mSource ) {
+				if ( this->mDirection > 0.0f ) {
+				
+					t0 = c0 >= 1.0f ? 1.0f : t0;
+					t1 = c1 >= 1.0f ? 1.0f : t1;
+					
+					float v0 = ZLInterpolate::Interpolate ( link.mMode, link.mV0, link.mV1, t0 );
+					
+					link.mV1 = link.mSource->GetAttributeValue ( link.mSourceAttrID, link.mV1 );
+					
+					float v1 = ZLInterpolate::Interpolate ( link.mMode, link.mV0, link.mV1, t1 );
+					
+					delta = v1 - v0;
+				}
+			}
+			else {
+				
+				float magnitude = ( link.mV1 - link.mV0 );
+				if ( magnitude == 0.0f ) continue;
+				
+				float v0 = link.mV0 + ( magnitude * c0 ) + ZLInterpolate::Interpolate ( link.mMode, 0.0f, magnitude, t0 );
+				float v1 = link.mV0 + ( magnitude * c1 ) + ZLInterpolate::Interpolate ( link.mMode, 0.0f, magnitude, t1 );
+				
+				delta = v1 - v0;
+			}
+			
+			if ( delta != 0.0f ) {
+				adder.SetValue ( delta );
+				link.mDest->ApplyAttrOp ( link.mDestAttrID, adder, MOAIAttribute::ADD );
+				link.mDest->ScheduleUpdate ();
+			}
+		}
 	}
 }

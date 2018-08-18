@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	ZLXMLREADER_H
@@ -108,6 +108,7 @@ public:
 	//----------------------------------------------------------------//
 	void			Clear			();
 	ZLXmlElement*	GetElement		();
+	cc8*			GetErrorString	();
 	int				GetLineNumber	();
 	ZLXmlElement*	Parse			();
 	void			SetStream		( ZLStream& stream );

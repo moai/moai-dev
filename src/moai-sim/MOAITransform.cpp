@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -877,132 +877,6 @@ int MOAITransform::_setShearByZ ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAITransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
-
-	if ( MOAITransformAttr::Check ( attrID )) {
-
-		switch ( UNPACK_ATTR ( attrID )) {
-			case ATTR_X_PIV:
-				this->mPiv.mX = attrOp.Apply ( this->mPiv.mX, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
-				return true;
-			case ATTR_Y_PIV:
-				this->mPiv.mY = attrOp.Apply ( this->mPiv.mY, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
-				return true;
-			case ATTR_Z_PIV:
-				this->mPiv.mZ = attrOp.Apply ( this->mPiv.mZ, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
-				return true;
-			case ATTR_X_LOC:
-				this->mLoc.mX = attrOp.Apply ( this->mLoc.mX, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
-				return true;
-			case ATTR_Y_LOC:
-				this->mLoc.mY = attrOp.Apply ( this->mLoc.mY, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
-				return true;
-			case ATTR_Z_LOC:
-				this->mLoc.mZ = attrOp.Apply ( this->mLoc.mZ, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
-				return true;
-			case ATTR_X_ROT:
-				this->mRot.mX = attrOp.Apply ( this->mRot.mX, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
-				return true;
-			case ATTR_Y_ROT:
-				this->mRot.mY = attrOp.Apply ( this->mRot.mY, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
-				return true;
-			case ATTR_Z_ROT:
-				this->mRot.mZ = attrOp.Apply ( this->mRot.mZ, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
-				return true;
-			case ATTR_X_SCL:
-				this->mScale.mX = attrOp.Apply ( this->mScale.mX, op, MOAIAttrOp::ATTR_READ_WRITE , MOAIAttrOp::ATTR_TYPE_FLOAT);
-				return true;
-			case ATTR_Y_SCL:
-				this->mScale.mY = attrOp.Apply ( this->mScale.mY, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
-				return true;
-			case ATTR_Z_SCL:
-				this->mScale.mZ = attrOp.Apply ( this->mScale.mZ, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
-				return true;
-			case ATTR_ROTATE_QUAT: {
-				// TODO: cache rotation as quat to support read/write, delta adds?
-				ZLQuaternion quat;
-				attrOp.SetFlags ( MOAIAttrOp::ATTR_READ_WRITE );
-
-				if ( op == MOAIAttrOp::ADD ) {
-
-					quat.Set ( this->mRot.mX, this->mRot.mY, this->mRot.mZ );
-					quat = attrOp.Apply < ZLQuaternion >( quat, op, MOAIAttrOp::ATTR_WRITE, MOAIAttrOp::ATTR_TYPE_QUATERNION );
-					quat.Get ( this->mRot.mX, this->mRot.mY, this->mRot.mZ );
-				}
-				else if ( op != MOAIAttrOp::CHECK ) {
-
-					quat.Set ( 0.0f, 0.0f, 0.0f, 0.0f );
-					quat = attrOp.Apply < ZLQuaternion >( quat, op, MOAIAttrOp::ATTR_WRITE, MOAIAttrOp::ATTR_TYPE_QUATERNION );
-					quat.Get ( this->mRot.mX, this->mRot.mY, this->mRot.mZ );
-				}
-				return true;
-			}
-			case ATTR_TRANSLATE:
-				this->mLoc = attrOp.Apply < ZLVec3D >( this->mLoc, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_VECTOR );
-				return true;
-		}
-	}
-	return MOAITransformBase::ApplyAttrOp ( attrID, attrOp, op );
-}
-
-//----------------------------------------------------------------//
-void MOAITransform::BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
-
-	float xRot = ClampEuler ( this->mRot.mX ) * ( float )D2R;
-	float yRot = ClampEuler ( this->mRot.mY ) * ( float )D2R;
-	float zRot = ClampEuler ( this->mRot.mZ ) * ( float )D2R;
-
-	if ( this->mEulerOrder == EULER_XYZ ) {
-
-		localToWorldMtx.ScRoTr (
-			this->mScale.mX,
-			this->mScale.mY,
-			this->mScale.mZ,
-			xRot,
-			yRot,
-			zRot,
-			this->mLoc.mX,
-			this->mLoc.mY,
-			this->mLoc.mZ
-		);
-	}
-	else {
-	
-		localToWorldMtx.Scale ( this->mScale.mX, this->mScale.mY, this->mScale.mZ );
-	
-		ZLAffine3D euler [ 3 ];
-		
-		euler [ 0 ].RotateX ( xRot );
-		euler [ 1 ].RotateY ( yRot );
-		euler [ 2 ].RotateZ ( zRot );
-		
-		u32 idx = this->mEulerOrder & 0x03;
-		localToWorldMtx.Append ( euler [ idx ]);
-		
-		idx = ( this->mEulerOrder >> 0x02 ) & 0x03;
-		localToWorldMtx.Append ( euler [ idx ]);
-		
-		idx = ( this->mEulerOrder >> 0x04 ) & 0x03;
-		localToWorldMtx.Append ( euler [ idx ]);
-		
-		localToWorldMtx.m [ ZLAffine3D::C3_R0 ] = this->mLoc.mX;
-		localToWorldMtx.m [ ZLAffine3D::C3_R1 ] = this->mLoc.mY;
-		localToWorldMtx.m [ ZLAffine3D::C3_R2 ] = this->mLoc.mZ;
-	}
-	
-	ZLAffine3D shear;
-	shear.Shear ( this->mShearYX, this->mShearZX, this->mShearXY, this->mShearZY, this->mShearXZ, this->mShearYZ );
-	localToWorldMtx.Prepend ( shear );
-	
-	if (( this->mPiv.mX != 0.0f ) || ( this->mPiv.mY != 0.0f ) || ( this->mPiv.mZ != 0.0f )) {
-		
-		ZLAffine3D pivot;
-		pivot.Translate ( -this->mPiv.mX, -this->mPiv.mY, -this->mPiv.mZ );
-		localToWorldMtx.Prepend ( pivot );
-	}
-}
-
-//----------------------------------------------------------------//
 float MOAITransform::ClampEuler ( float r ) {
 
 	if ( r >= 360.0f ) {
@@ -1138,16 +1012,16 @@ void MOAITransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAITransform::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 	
-	this->mPiv.mX = state.GetField < float >( -1, "mPiv.mX", 0.0f );
-	this->mPiv.mY = state.GetField < float >( -1, "mPiv.mY", 0.0f );
+	this->mPiv.mX		= state.GetFieldValue < float >( -1, "mPiv.mX", 0.0f );
+	this->mPiv.mY		= state.GetFieldValue < float >( -1, "mPiv.mY", 0.0f );
 	
-	this->mLoc.mX = state.GetField < float >( -1, "mLoc.mX", 0.0f );
-	this->mLoc.mY = state.GetField < float >( -1, "mLoc.mY", 0.0f );
+	this->mLoc.mX		= state.GetFieldValue < float >( -1, "mLoc.mX", 0.0f );
+	this->mLoc.mY		= state.GetFieldValue < float >( -1, "mLoc.mY", 0.0f );
 	
-	this->mScale.mX = state.GetField < float >( -1, "mScale.mX", 1.0f );
-	this->mScale.mY = state.GetField < float >( -1, "mScale.mY", 1.0f );
+	this->mScale.mX		= state.GetFieldValue < float >( -1, "mScale.mX", 1.0f );
+	this->mScale.mY		= state.GetFieldValue < float >( -1, "mScale.mY", 1.0f );
 	
-	this->mRot.mZ = state.GetField < float >( -1, "mDegrees", 0.0f );
+	this->mRot.mZ		= state.GetFieldValue < float >( -1, "mDegrees", 0.0f );
 }
 
 //----------------------------------------------------------------//
@@ -1198,3 +1072,146 @@ void MOAITransform::SetScl ( float x, float y, float z ) {
 	this->mScale.mZ = z;
 }
 
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAITransform::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	if ( MOAITransformAttr::Check ( attrID )) {
+
+		switch ( UNPACK_ATTR ( attrID )) {
+		
+			case ATTR_X_PIV:
+				this->mPiv.mX = attr.Apply ( this->mPiv.mX, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_Y_PIV:
+				this->mPiv.mY = attr.Apply ( this->mPiv.mY, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_Z_PIV:
+				this->mPiv.mZ = attr.Apply ( this->mPiv.mZ, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_X_LOC:
+				this->mLoc.mX = attr.Apply ( this->mLoc.mX, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_Y_LOC:
+				this->mLoc.mY = attr.Apply ( this->mLoc.mY, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_Z_LOC:
+				this->mLoc.mZ = attr.Apply ( this->mLoc.mZ, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_X_ROT:
+				this->mRot.mX = attr.Apply ( this->mRot.mX, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_Y_ROT:
+				this->mRot.mY = attr.Apply ( this->mRot.mY, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_Z_ROT:
+				this->mRot.mZ = attr.Apply ( this->mRot.mZ, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_X_SCL:
+				this->mScale.mX = attr.Apply ( this->mScale.mX, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_Y_SCL:
+				this->mScale.mY = attr.Apply ( this->mScale.mY, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_Z_SCL:
+				this->mScale.mZ = attr.Apply ( this->mScale.mZ, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+				
+			case ATTR_ROTATE_QUAT: {
+			
+				// TODO: cache rotation as quat to support read/write, delta adds?
+
+				attr.SetFlags ( MOAIAttribute::ATTR_READ_WRITE );
+
+				if ( op == MOAIAttribute::ADD ) {
+
+					ZLQuaternion quat ( this->mRot.mX, this->mRot.mY, this->mRot.mZ );
+					quat = attr.Apply ( quat, op, MOAIAttribute::ATTR_WRITE );
+					quat.Get ( this->mRot.mX, this->mRot.mY, this->mRot.mZ );
+				}
+				else if ( op != MOAIAttribute::CHECK ) {
+
+					ZLQuaternion quat ( 0.0f, 0.0f, 0.0f, 0.0f );
+					quat = attr.Apply ( quat, op, MOAIAttribute::ATTR_WRITE );
+					quat.Get ( this->mRot.mX, this->mRot.mY, this->mRot.mZ );
+				}
+				return true;
+			}
+			case ATTR_TRANSLATE:
+				this->mLoc = attr.Apply ( this->mLoc, op, MOAIAttribute::ATTR_READ_WRITE );
+				return true;
+		}
+	}
+	return MOAITransformBase::MOAINode_ApplyAttrOp ( attrID, attr, op );
+}
+
+//----------------------------------------------------------------//
+void MOAITransform::MOAITransformBase_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
+
+	float xRot = ClampEuler ( this->mRot.mX ) * ( float )D2R;
+	float yRot = ClampEuler ( this->mRot.mY ) * ( float )D2R;
+	float zRot = ClampEuler ( this->mRot.mZ ) * ( float )D2R;
+
+	if ( this->mEulerOrder == EULER_XYZ ) {
+
+		localToWorldMtx.ScRoTr (
+			this->mScale.mX,
+			this->mScale.mY,
+			this->mScale.mZ,
+			xRot,
+			yRot,
+			zRot,
+			this->mLoc.mX,
+			this->mLoc.mY,
+			this->mLoc.mZ
+		);
+	}
+	else {
+	
+		localToWorldMtx.Scale ( this->mScale.mX, this->mScale.mY, this->mScale.mZ );
+	
+		ZLAffine3D euler [ 3 ];
+		
+		euler [ 0 ].RotateX ( xRot );
+		euler [ 1 ].RotateY ( yRot );
+		euler [ 2 ].RotateZ ( zRot );
+		
+		u32 idx = this->mEulerOrder & 0x03;
+		localToWorldMtx.Append ( euler [ idx ]);
+		
+		idx = ( this->mEulerOrder >> 0x02 ) & 0x03;
+		localToWorldMtx.Append ( euler [ idx ]);
+		
+		idx = ( this->mEulerOrder >> 0x04 ) & 0x03;
+		localToWorldMtx.Append ( euler [ idx ]);
+		
+		localToWorldMtx.m [ ZLAffine3D::C3_R0 ] = this->mLoc.mX;
+		localToWorldMtx.m [ ZLAffine3D::C3_R1 ] = this->mLoc.mY;
+		localToWorldMtx.m [ ZLAffine3D::C3_R2 ] = this->mLoc.mZ;
+	}
+	
+	ZLAffine3D shear;
+	shear.Shear ( this->mShearYX, this->mShearZX, this->mShearXY, this->mShearZY, this->mShearXZ, this->mShearYZ );
+	localToWorldMtx.Prepend ( shear );
+	
+	if (( this->mPiv.mX != 0.0f ) || ( this->mPiv.mY != 0.0f ) || ( this->mPiv.mZ != 0.0f )) {
+		
+		ZLAffine3D pivot;
+		pivot.Translate ( -this->mPiv.mX, -this->mPiv.mY, -this->mPiv.mZ );
+		localToWorldMtx.Prepend ( pivot );
+	}
+}

@@ -1,5 +1,5 @@
 //----------------------------------------------------------------//
-// Copyright (c) 2010-2011 Zipline Games, Inc. 
+// Copyright (c) 2010-2017 Zipline Games, Inc. 
 // All Rights Reserved. 
 // http://getmoai.com
 //----------------------------------------------------------------//
@@ -29,9 +29,13 @@
 	#endif
 #endif
 
+#ifndef AKU_CONTEXT_ID_TYPE
+	#define AKU_CONTEXT_ID_TYPE void*
+#endif
+
 struct lua_State;
 typedef struct lua_State lua_State;
-typedef int AKUContextID;
+typedef AKU_CONTEXT_ID_TYPE AKUContextID;
 
 enum {
 	AKU_AS_ARGS		= 0,

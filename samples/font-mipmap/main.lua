@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -13,9 +13,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 480 )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-'
 text = 'The quick brown fox jumps over the lazy dog.'
@@ -32,5 +32,5 @@ textbox:setRect ( -150, -230, 150, 230 )
 textbox:setYFlip ( true )
 textbox:setColor ( 0, 0, 0, 1 )
 textbox:seekScl ( 0.25, 0.25, 1, 5 )
-layer:insertProp ( textbox )
+textbox:setPartition ( layer )
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef MOAICAMERAFITTER2D_H
@@ -27,8 +27,8 @@ class MOAIViewport;
 	@const	FITTING_MODE_MASK
 */
 class MOAICameraFitter2D :
-	public MOAIAction,
-	public MOAINode {
+	public virtual MOAIAction,
+	public virtual MOAINode {
 private:
 
 	MOAILuaSharedPtr < MOAITransform >	mCamera;
@@ -62,29 +62,32 @@ private:
 	static int		_getTargetScale			( lua_State* L );
 	static int		_insertAnchor			( lua_State* L );
 	static int		_removeAnchor			( lua_State* L );
-	static int		_startTrackingNode			( lua_State* L );
-	static int		_stopTrackingNode		( lua_State* L );
-	static int		_setBounds			( lua_State* L );
+	static int		_setBounds				( lua_State* L );
 	static int		_setCamera				( lua_State* L );
 	static int		_setDamper				( lua_State* L );
 	static int		_setFitLoc				( lua_State* L );
 	static int		_setFitMode				( lua_State* L );
 	static int		_setFitScale			( lua_State* L );
-	static int		_setMin				( lua_State* L );
+	static int		_setMin					( lua_State* L );
 	static int		_setViewport			( lua_State* L );
 	static int		_snapToTarget			( lua_State* L );
+	static int		_startTrackingNode		( lua_State* L );
+	static int		_stopTrackingNode		( lua_State* L );
 
 	//----------------------------------------------------------------//
 	ZLRect			GetAnchorRect			();
 	void			GetCamera				( ZLAffine3D& camera );
-	void			OnDepNodeUpdate			();
-	void			OnUpdate				( double step );
 	void			SetTarget				( const ZLAffine3D& camera, const ZLRect& screenRect );
 	void			SnapToTargetLoc			( MOAITransform& camera );
 	void			SnapToTargetScale		( MOAITransform& camera );
 	void			UpdateFit				();
 	void			UpdateTracking			();
 	void			UpdateTarget			();
+
+	//----------------------------------------------------------------//
+	bool			MOAIAction_IsDone		();
+	void			MOAIAction_Update		( double step );
+	void			MOAINode_Update			();
 
 public:
 
@@ -97,7 +100,7 @@ public:
 		FITTING_MODE_APPLY_BOUNDS	= 0x00000008,
 		FITTING_MODE_TRACK_NODE		= 0x00000010,
 
-		FITTING_MODE_MASK		= 0x000000ff,
+		FITTING_MODE_MASK			= 0x000000ff,
 	};
 
 	static const u32 FITTING_MODE_DEFAULT = FITTING_MODE_SEEK_LOC | FITTING_MODE_SEEK_SCALE | FITTING_MODE_APPLY_ANCHORS;
@@ -106,7 +109,6 @@ public:
 	void			AddAnchor				( MOAICameraAnchor2D& anchor );
 	void			Clear					();
 	float			GetFitDistance			();
-	bool			IsDone					();
 					MOAICameraFitter2D		();
 					~MOAICameraFitter2D		();
 	void			RegisterLuaClass		( MOAILuaState& state );

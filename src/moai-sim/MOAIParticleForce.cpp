@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -204,19 +204,6 @@ MOAIParticleForce::~MOAIParticleForce () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleForce::OnDepNodeUpdate () {
-
-	this->MOAITransform::OnDepNodeUpdate ();
-	
-	const ZLAffine3D& localToWorldMtx = this->GetLocalToWorldMtx ();
-	
-	this->mWorldLoc = localToWorldMtx.GetTranslation ();
-	
-	this->mWorldVec = this->mVec;
-	localToWorldMtx.TransformVec ( this->mWorldVec );
-}
-
-//----------------------------------------------------------------//
 void MOAIParticleForce::RegisterLuaClass ( MOAILuaState& state ) {
 
 	this->MOAITransform::RegisterLuaClass ( state );
@@ -241,4 +228,21 @@ void MOAIParticleForce::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIParticleForce::MOAINode_Update () {
+
+	this->MOAITransformBase::MOAINode_Update ();
+	
+	const ZLAffine3D& localToWorldMtx = this->GetLocalToWorldMtx ();
+	
+	this->mWorldLoc = localToWorldMtx.GetTranslation ();
+	
+	this->mWorldVec = this->mVec;
+	localToWorldMtx.TransformVec ( this->mWorldVec );
 }

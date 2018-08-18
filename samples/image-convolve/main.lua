@@ -43,9 +43,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( width, height )
 viewport:setScale ( width, -height )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 
 gfxQuad = MOAIGfxQuad2D.new ()
@@ -53,6 +53,6 @@ gfxQuad:setTexture ( image )
 gfxQuad:setRect ( -hWidth, -hHeight, hWidth, hHeight )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
-layer:insertProp ( prop )
+prop:setPartition ( layer )

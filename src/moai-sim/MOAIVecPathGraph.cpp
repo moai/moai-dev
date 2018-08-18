@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -24,8 +24,8 @@ int MOAIVecPathGraph::_areNeighbors ( lua_State* L ) {
 	u32 id1 = state.GetValue < u32 >( 2, 1 ) - 1;
 	u32 id2 = state.GetValue < u32 >( 3, 1 ) - 1;
 
-	if ( MOAILogMessages::CheckIndexPlusOne ( id1, self->mNodes.Size (), L ) &&
-		MOAILogMessages::CheckIndexPlusOne ( id2, self->mNodes.Size (), L )) {
+	if ( MOAILogMgr::CheckIndexPlusOne ( id1, self->mNodes.Size (), L ) &&
+		MOAILogMgr::CheckIndexPlusOne ( id2, self->mNodes.Size (), L )) {
 
 		bool result = self->AreNeighbors ( id1, id2 );
 		state.Push ( result );
@@ -51,7 +51,7 @@ int MOAIVecPathGraph::_getNode ( lua_State* L ) {
 
 	u32 id = state.GetValue < u32 >( 2, 1 ) - 1;
 
-	if ( MOAILogMessages::CheckIndexPlusOne ( id, self->mNodes.Size (), L )) {
+	if ( MOAILogMgr::CheckIndexPlusOne ( id, self->mNodes.Size (), L )) {
 		ZLVec3D vec = self->GetNode( id );
 
 		state.Push ( vec.mX );
@@ -114,8 +114,8 @@ int MOAIVecPathGraph::_setNeighbors ( lua_State* L ) {
 	u32 id2 = state.GetValue < u32 >( 3, 1 ) - 1;
 	bool neighbors = state.GetValue < bool >( 4, true );
 
-	if ( MOAILogMessages::CheckIndexPlusOne ( id1, self->mNodes.Size (), L ) &&
-		MOAILogMessages::CheckIndexPlusOne ( id2, self->mNodes.Size (), L )) {
+	if ( MOAILogMgr::CheckIndexPlusOne ( id1, self->mNodes.Size (), L ) &&
+		MOAILogMgr::CheckIndexPlusOne ( id2, self->mNodes.Size (), L )) {
 
 		self->SetNeighbors ( id1, id2, neighbors );
 	}
@@ -142,7 +142,7 @@ int MOAIVecPathGraph::_setNode ( lua_State* L ) {
 	float y = state.GetValue < float >( 4, 0.0f );
 	float z = state.GetValue < float >( 5, 0.0f );
 
-	if ( MOAILogMessages::CheckIndexPlusOne ( id, self->mNodes.Size (), L )) {
+	if ( MOAILogMgr::CheckIndexPlusOne ( id, self->mNodes.Size (), L )) {
 		self->SetNode ( id, ZLVec3D ( x, y, z ));
 	}
 

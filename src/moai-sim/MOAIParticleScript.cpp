@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -22,8 +22,8 @@
 		if ( type == PARAM_TYPE_SPRITE_REG ) {					\
 			reg = &spriteRegisters [ regIdx ];					\
 		}														\
-		else if ( type == PARAM_TYPE_LIVE_REG ) {					\
-			reg = &this->mLiveRegisters [ regIdx ];					\
+		else if ( type == PARAM_TYPE_LIVE_REG ) {				\
+			reg = &this->mLiveRegisters [ regIdx ];				\
 		}														\
 		else {													\
 			reg = &particleRegisters [ regIdx ];				\
@@ -47,8 +47,8 @@
 			if ( type == PARAM_TYPE_SPRITE_REG ) {				\
 				var = spriteRegisters [ regIdx ];				\
 			}													\
-			else if ( type == PARAM_TYPE_LIVE_REG ) {				\
-				var = this->mLiveRegisters [ regIdx ];				\
+			else if ( type == PARAM_TYPE_LIVE_REG ) {			\
+				var = this->mLiveRegisters [ regIdx ];			\
 			}													\
 			else {												\
 				var = particleRegisters [ regIdx ];				\
@@ -103,8 +103,8 @@ void MOAIParticleScript::Instruction::Parse ( MOAILuaState& state, u32 idx ) {
 					
 					this->mSize += sizeof ( u32 );
 					
-					this->mParams [ i ] = state.GetValue < u32 >( idx++, 0 );
 					this->mTypes [ i ] = PARAM_TYPE_FLAG;
+					this->mParams [ i ] = state.GetValue < u32 >( idx++, 0 );
 					break;
 				
 				case 'R':
@@ -370,7 +370,7 @@ int MOAIParticleScript::_mul ( lua_State* L ) {
 /**	@lua	norm
 	@text	<p>r0 = v0 / |v|</p>
 			<p>r1 = v1 / |v|</p>
-			<p>Where |v| == sqrt( v0^2 + v1^2)</p>
+			<p>Where |v| == sqrt(v0^2 + v1^2)</p>
 	
 	@in		MOAIParticleScript self
 	@in		number r0
@@ -381,6 +381,19 @@ int MOAIParticleScript::_mul ( lua_State* L ) {
 */
 int MOAIParticleScript::_norm ( lua_State* L ) {
 	IMPL_LUA_PARTICLE_OP ( NORM, "RRVV" )
+}
+
+//----------------------------------------------------------------//
+/**	@lua	oscillate
+	@text	r0 = v0 + ( sin ( v1 + ( age * v2 )) * v3 )
+
+	@in		MOAIParticleScript self
+	@in		number r0
+	@in		number v0
+	@out	nil
+*/
+int MOAIParticleScript::_oscillate ( lua_State* L ) {
+	IMPL_LUA_PARTICLE_OP ( OSCILLATE, "RVVVV" )
 }
 
 //----------------------------------------------------------------//
@@ -520,13 +533,13 @@ int MOAIParticleScript::_setLiveReg ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@lua	sin
- @text	r0 = sin(v0)
- 
- @in		MOAIParticleScript self
- @in		number r0
- @in		number v0
- @out	nil
- */
+	@text	r0 = sin(v0)
+
+	@in		MOAIParticleScript self
+	@in		number r0
+	@in		number v0
+	@out	nil
+*/
 int MOAIParticleScript::_sin ( lua_State* L ) {
 	IMPL_LUA_PARTICLE_OP ( SIN, "RV" )
 }
@@ -738,22 +751,26 @@ void MOAIParticleScript::PushSprite ( MOAIParticleSystem& system, float* registe
 //----------------------------------------------------------------//
 void MOAIParticleScript::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "PARTICLE_X",			Pack64 ( MOAIParticle::PARTICLE_X, PARAM_TYPE_PARTICLE_REG ));
-	state.SetField ( -1, "PARTICLE_Y",			Pack64 ( MOAIParticle::PARTICLE_Y, PARAM_TYPE_PARTICLE_REG ));
-	state.SetField ( -1, "PARTICLE_DX",			Pack64 ( MOAIParticle::PARTICLE_DX, PARAM_TYPE_PARTICLE_REG ));
-	state.SetField ( -1, "PARTICLE_DY",			Pack64 ( MOAIParticle::PARTICLE_DY, PARAM_TYPE_PARTICLE_REG ));
+	state.SetField ( -1, "PARTICLE_X",			Pack64 ( MOAIParticle::PARTICLE_X,		PARAM_TYPE_PARTICLE_REG ));
+	state.SetField ( -1, "PARTICLE_Y",			Pack64 ( MOAIParticle::PARTICLE_Y,		PARAM_TYPE_PARTICLE_REG ));
+	state.SetField ( -1, "PARTICLE_DX",			Pack64 ( MOAIParticle::PARTICLE_DX,		PARAM_TYPE_PARTICLE_REG ));
+	state.SetField ( -1, "PARTICLE_DY",			Pack64 ( MOAIParticle::PARTICLE_DY,		PARAM_TYPE_PARTICLE_REG ));
 
-	state.SetField ( -1, "SPRITE_X_LOC",		Pack64 ( SPRITE_X_LOC, PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_Y_LOC",		Pack64 ( SPRITE_Y_LOC, PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_ROT",			Pack64 ( SPRITE_ROT, PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_X_SCL",		Pack64 ( SPRITE_X_SCL, PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_Y_SCL",		Pack64 ( SPRITE_Y_SCL, PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_RED",			Pack64 ( SPRITE_RED, PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_GREEN",		Pack64 ( SPRITE_GREEN, PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_BLUE",			Pack64 ( SPRITE_BLUE, PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_OPACITY",		Pack64 ( SPRITE_OPACITY, PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_GLOW",			Pack64 ( SPRITE_GLOW, PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_IDX",			Pack64 ( SPRITE_IDX, PARAM_TYPE_SPRITE_REG ));
+	state.SetField ( -1, "SPRITE_X_LOC",		Pack64 ( SPRITE_X_LOC,		PARAM_TYPE_SPRITE_REG ));
+	state.SetField ( -1, "SPRITE_Y_LOC",		Pack64 ( SPRITE_Y_LOC,		PARAM_TYPE_SPRITE_REG ));
+	state.SetField ( -1, "SPRITE_ROT",			Pack64 ( SPRITE_ROT,		PARAM_TYPE_SPRITE_REG ));
+	state.SetField ( -1, "SPRITE_X_SCL",		Pack64 ( SPRITE_X_SCL,		PARAM_TYPE_SPRITE_REG ));
+	state.SetField ( -1, "SPRITE_Y_SCL",		Pack64 ( SPRITE_Y_SCL,		PARAM_TYPE_SPRITE_REG ));
+	state.SetField ( -1, "SPRITE_RED",			Pack64 ( SPRITE_RED,		PARAM_TYPE_SPRITE_REG ));
+	state.SetField ( -1, "SPRITE_GREEN",		Pack64 ( SPRITE_GREEN,		PARAM_TYPE_SPRITE_REG ));
+	state.SetField ( -1, "SPRITE_BLUE",			Pack64 ( SPRITE_BLUE,		PARAM_TYPE_SPRITE_REG ));
+	state.SetField ( -1, "SPRITE_OPACITY",		Pack64 ( SPRITE_OPACITY,	PARAM_TYPE_SPRITE_REG ));
+	state.SetField ( -1, "SPRITE_GLOW",			Pack64 ( SPRITE_GLOW,		PARAM_TYPE_SPRITE_REG ));
+	state.SetField ( -1, "SPRITE_IDX",			Pack64 ( SPRITE_IDX,		PARAM_TYPE_SPRITE_REG ));
+	
+	
+	state.SetField ( -1, "PARTICLE_AGE",		Pack64 ( PARTICLE_AGE,		PARAM_TYPE_SPRITE_REG ));
+	state.SetField ( -1, "PARTICLE_TIME",		Pack64 ( PARTICLE_TIME,		PARAM_TYPE_SPRITE_REG ));
 	
 	luaL_Reg regTable [] = {
 		{ "packConst",			_packConst },
@@ -780,6 +797,7 @@ void MOAIParticleScript::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "easeDelta",			_easeDelta },
 		{ "mul",				_mul },
 		{ "norm",				_norm },
+		{ "oscillate",			_oscillate },
 		{ "rand",				_rand },
 		{ "randInt",			_randInt },
 		{ "randVec",			_randVec },
@@ -827,6 +845,9 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 	memcpy ( particleRegisters, particle.mData, sizeof ( float ) * system.mParticleSize );
 	
 	float spriteRegisters [ TOTAL_SPRITE_REG ];
+	
+	spriteRegisters [ PARTICLE_AGE ] = particle.mAge;
+	spriteRegisters [ PARTICLE_TIME ] = t1;
 	
 	float* r0;
 	float* r1;
@@ -997,6 +1018,19 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 				}
 				break;
 			
+			case OSCILLATE: // RV
+
+				READ_ADDR   ( r0, bytecode );
+				READ_VALUE  ( v0, bytecode );
+				READ_VALUE  ( v1, bytecode );
+				READ_VALUE  ( v2, bytecode );
+				READ_VALUE  ( v3, bytecode );
+				
+				if ( r0 ) {
+					*r0 = v0 + ( float )( sin ( v1 + ( particle.mAge * v2 )) * v3 );
+				}
+				break;
+			
 			case RAND: // RVV
 				
 				READ_ADDR	( r0, bytecode );
@@ -1047,6 +1081,7 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 					*r0 = v0;
 				}
 				break;
+			
 			case SIN: // RV
 
 				READ_ADDR   ( r0, bytecode );

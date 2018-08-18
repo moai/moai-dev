@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -9,6 +9,31 @@
 #include <moai-sim/MOAIGfxMgr.h>
 #include <float.h>
 #include <contrib/moai_edtaa3func.h>
+
+//================================================================//
+// MOAIImageBlendMode
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIImageBlendMode::Clear () {
+
+	this->mEquation		= ZLColor::BLEND_EQ_NONE;
+	this->mSrcFactor	= ZLColor::BLEND_FACTOR_ZERO;
+	this->mDstFactor	= ZLColor::BLEND_FACTOR_ZERO;
+}
+
+//----------------------------------------------------------------//
+void MOAIImageBlendMode::Init ( MOAILuaState& state, int idx ) {
+
+	this->mEquation		= ( ZLColor::BlendEquation )state.GetValue < u32 >( idx++, ( u32 )ZLColor::BLEND_EQ_NONE );
+	this->mSrcFactor	= ( ZLColor::BlendFactor )state.GetValue < u32 >( idx++, ( u32 )ZLColor::BLEND_FACTOR_ZERO );
+	this->mDstFactor	= ( ZLColor::BlendFactor )state.GetValue < u32 >( idx, ( u32 )ZLColor::BLEND_FACTOR_ZERO );
+}
+
+//----------------------------------------------------------------//
+MOAIImageBlendMode::MOAIImageBlendMode () {
+	this->Clear ();
+}
 
 //================================================================//
 // local
@@ -160,7 +185,7 @@ int MOAIImage::_convolve ( lua_State* L ) {
 	
 		MOAIImage* image = new MOAIImage ();
 	
-		state.GetField ( 2, 1 );
+		state.PushField ( 2, 1 );
 	
 		if ( state.IsType ( -1, LUA_TNUMBER )) {
 		
@@ -182,17 +207,13 @@ int MOAIImage::_convolve ( lua_State* L ) {
 			
 			float* kernel = ( float* )alloca ( kernelWidth * kernelHeight * sizeof ( float ));
 			
-			for ( int y = 0; y < kernelWidth; ++y ) {
+			for ( int y = 0; y < kernelHeight; ++y ) {
 				
-				state.GetField ( 2, y + 1 );
+				state.PushField ( 2, y + 1 );
 				for ( int x = 0; x < kernelWidth; ++x ) {
 					kernel [( y * kernelWidth ) + x ] = state.GetFieldValue < float >( -1, x + 1, 0.0f );
 				}
 				state.Pop ();
-			}
-			
-			for ( int x = 0; x < kernelWidth * kernelHeight; ++x ) {
-				printf ( "kernel: %f\n", kernel [ x ]);
 			}
 			
 			if ( normalize ) {
@@ -231,7 +252,7 @@ int MOAIImage::_convolve1D ( lua_State* L ) {
 	
 		MOAIImage* image = new MOAIImage ();
 	
-		state.GetField ( 2, 1 );
+		state.PushField ( 2, 1 );
 	
 		if ( state.IsType ( -1, LUA_TNUMBER )) {
 		
@@ -354,16 +375,10 @@ int MOAIImage::_copyRect ( lua_State* L ) {
 	
 	u32 filter = state.GetValue < u32 >( 11, MOAIImage::FILTER_LINEAR );
 	
-	ZLColorBlendFunc blendFunc;
-	blendFunc.mEquation = ZLColor::BLEND_EQ_NONE;
-	
-	if ( state.CheckParams ( 12, "NNN", false )) {
-		blendFunc.mSrcFactor	= ( ZLColor::BlendFactor )state.GetValue < u32 >( 12, ( u32 )ZLColor::BLEND_FACTOR_SRC_ALPHA );
-		blendFunc.mDstFactor	= ( ZLColor::BlendFactor )state.GetValue < u32 >( 13, ( u32 )ZLColor::BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
-		blendFunc.mEquation		= ( ZLColor::BlendEquation )state.GetValue < u32 >( 14, ( u32 )ZLColor::BLEND_EQ_ADD );
-	}
+	MOAIImageBlendMode blendMode;
+	blendMode.Init ( state, 12 );
 
-	self->CopyRect ( *image, srcRect, destRect, filter, blendFunc );
+	self->CopyRect ( *image, srcRect, destRect, filter, blendMode );
 	
 	return 0;
 }
@@ -1830,13 +1845,11 @@ void MOAIImage::Copy ( const MOAIImage& image ) {
 //----------------------------------------------------------------//
 void MOAIImage::CopyRect ( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect destRect, u32 filter ) {
 
-	ZLColorBlendFunc blendFunc;
-	blendFunc.mEquation = ZLColor::BLEND_EQ_NONE;
-	this->CopyRect ( image, srcRect, destRect, filter, blendFunc );
+	this->CopyRect ( image, srcRect, destRect, filter, MOAIImageBlendMode ());
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::CopyRect ( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect destRect, u32 filter, const ZLColorBlendFunc& blendFunc ) {
+void MOAIImage::CopyRect ( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect destRect, u32 filter, const MOAIImageBlendMode& blendMode ) {
 
 	if (( this->mPixelFormat != TRUECOLOR ) && ( image.mPixelFormat != TRUECOLOR )) return; // TODO: warn about this case
 
@@ -1848,7 +1861,7 @@ void MOAIImage::CopyRect ( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect 
 
 	// if everything's the same size and format, we can do a simple blit
 	if ( !( xFlip || yFlip )) {
-		if (( blendFunc.mEquation == ZLColor::BLEND_EQ_NONE ) && ( this->mPixelFormat == image.mPixelFormat ) && ( this->mColorFormat == image.mColorFormat )) {
+		if (( blendMode.mEquation == ZLColor::BLEND_EQ_NONE ) && ( this->mPixelFormat == image.mPixelFormat ) && ( this->mColorFormat == image.mColorFormat )) {
 			if (( srcRect.Width () == destRect.Width ()) && ( srcRect.Height () == destRect.Height ())) {
 				this->Blit ( image, srcRect.mXMin, srcRect.mYMin, destRect.mXMin, destRect.mYMin, srcRect.Width (), srcRect.Height ());
 				return;
@@ -2025,7 +2038,7 @@ void MOAIImage::CopyRect ( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect 
 				float ySample = ySrcOrigin + (( float )y * ySrcStep );
 				
 				u32 color = srcImage.SampleColor ( xSample, ySample, filter );
-				this->SetColor ( destRect.mXMin + x, destRect.mYMin + y, color, blendFunc );
+				this->SetColor ( destRect.mXMin + x, destRect.mYMin + y, color, blendMode );
 			}
 		}
 	}
@@ -2061,7 +2074,7 @@ void MOAIImage::CopyRect ( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect 
 				b *= sampleAverage;
 				a *= sampleAverage;
 				
-				this->SetColor ( destRect.mXMin + x, destRect.mYMin + y, ZLColor::PackRGBA ( r, g, b, a ), blendFunc );
+				this->SetColor ( destRect.mXMin + x, destRect.mYMin + y, ZLColor::PackRGBA ( r, g, b, a ), blendMode );
 			}
 		}
 	}
@@ -2091,8 +2104,8 @@ void MOAIImage::DrawLine(int p1x, int p1y, int p2x, int p2y, u32 color)
 	
 	// Swap points if p1 is on the right of p2
     if ( p1x > p2x ) {
-        swap ( p1x, p2x );
-        swap ( p1y, p2y );
+        std::swap ( p1x, p2x );
+        std::swap ( p1y, p2y );
     }
 	
     // Handle trivial cases separately for algorithm speed up.
@@ -2101,7 +2114,7 @@ void MOAIImage::DrawLine(int p1x, int p1y, int p2x, int p2y, u32 color)
 	
 		// Swap y-coordinates if p1 is above p2
         if (p1y > p2y) {
-            swap ( p1y, p2y );
+            std::swap ( p1y, p2y );
         }
 		
         x = p1x;
@@ -2369,9 +2382,9 @@ void MOAIImage::GenerateOutlineFromSDF ( ZLIntRect rect, float distMin, float di
 				colorVec.mA = a;
 			}
 			else {
-				colorVec.mR = 1;
-				colorVec.mG = 1;
-				colorVec.mB = 1;
+				colorVec.mR = 0;
+				colorVec.mG = 0;
+				colorVec.mB = 0;
 				colorVec.mA = 0;
 			}
 			
@@ -2955,12 +2968,12 @@ bool MOAIImage::Load ( cc8* filename, u32 transform ) {
 	
 	ZLFileStream stream;
 	if ( stream.OpenRead ( filename )) {
-		this->Load ( stream, transform );
+		this->Load ( stream, transform ); // TODO: use file extension as name
 		stream.Close ();
 		this->OnImageStatusChanged ( this->IsOK ());
 	}
 	else {
-		MOAILogF ( NULL, ZLLog::LOG_ERROR, MOAILogMessages::MOAI_FileOpenError_S, filename );
+		MOAILogF ( NULL, ZLLog::LOG_ERROR, MOAISTRING_FileOpenError_S, filename );
 	}
 	return this->IsOK ();
 }
@@ -2972,7 +2985,7 @@ bool MOAIImage::Load ( ZLStream& stream, u32 transform ) {
 
 	this->Clear ();
 	
-	MOAIImageFormat* format = MOAIImageFormatMgr::Get ().FindFormat ( stream );
+	MOAIImageFormat* format = MOAIImageFormatMgr::Get ().FindFormat ( stream ); // TODO: make use of name
 	if ( format ) {
 		format->ReadImage ( *this, stream, transform );
 		this->OnImageStatusChanged ( this->IsOK ());
@@ -3364,16 +3377,16 @@ void MOAIImage::SetColor ( u32 x, u32 y, u32 color ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::SetColor ( u32 x, u32 y, u32 color, const ZLColorBlendFunc& blendFunc ) {
+void MOAIImage::SetColor ( u32 x, u32 y, u32 color, const MOAIImageBlendMode& blendMode ) {
 
 	if ( this->mPixelFormat != TRUECOLOR ) return;
 	
 	if ( y > this->mHeight ) return;
 	if ( x > this->mWidth ) return;
 
-	if ( blendFunc.mEquation != ZLColor::BLEND_EQ_NONE ) {
+	if ( blendMode.mEquation != ZLColor::BLEND_EQ_NONE ) {
 		u32 dstColor = this->GetColor ( x, y );
-		color = ZLColor::Blend ( color, dstColor, blendFunc );
+		color = ZLColor::Blend ( color, dstColor, blendMode );
 	}
 	u32 pixel = ZLColor::ConvertFromRGBA ( color, this->mColorFormat );
 	this->SetPixel ( x, y, pixel );

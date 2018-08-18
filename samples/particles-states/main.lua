@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -10,9 +10,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 640, 480 )
 viewport:setScale ( 640, 480 )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 MOAISim.openWindow ( "cathead", 640, 480 )
 
@@ -49,8 +49,8 @@ render2:rand			( MOAIParticleScript.SPRITE_GREEN, CONST ( 0.5 ), CONST ( 1 ))
 render2:set				( MOAIParticleScript.SPRITE_BLUE, 0 )
 
 ----------------------------------------------------------------
-texture = MOAIGfxQuad2D.new ()
-texture:setTexture ( "moai.png" )
+texture = MOAISpriteDeck2D.new ()
+texture:setTexture ( "../resources/moai.png" )
 texture:setRect ( -16, -16, 16, 16 )
 
 system = MOAIParticleSystem.new ()
@@ -59,7 +59,7 @@ system:reserveSprites ( 256 )
 system:reserveStates ( 2 )
 system:setDeck ( texture )
 system:start ()
-layer:insertProp ( system )
+system:setPartition ( layer )
 
 magnet = MOAIParticleForce.new ()
 magnet:initBasin ( 256, 64 )

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -7,7 +7,6 @@
 #include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIMesh.h>
-#include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAISelectionMesh.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
@@ -141,7 +140,7 @@ void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t top ) {
 	// of the new span will be clipped.
 
 	// make sure the array of sets is big enough
-	this->mSets.Grow ( set, 1, 0 );
+	this->mSets.Grow ( set + 1, 0 );
 	
 	// identify the previous span in both the master and set lists.
 	// a span is only 'previous' if its base is entirely below the new span's base.
@@ -342,25 +341,6 @@ void MOAISelectionMesh::ClearSelection ( u32 set, size_t base, size_t top ) {
 }
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
-	UNUSED ( offset );
-	UNUSED ( scale );
-	
-	if ( !this->mMesh ) return;
-	
-	size_t size = this->mSets.Size ();
-	if ( !size ) return;
-
-	idx = idx - 1;
-	u32 itemIdx = idx % size;
-	
-	MOAIMeshSpan* span = this->mSets [ itemIdx ];
-	if ( !span ) return;
-
-	this->mMesh->DrawIndex ( idx, span, materials, offset, scale );
-}
-
-//----------------------------------------------------------------//
 void MOAISelectionMesh::FixOverlaps ( MOAISelectionSpan* span ) {
 
 	// we expect the new span to be *entirely* after the base of the previous span and
@@ -484,10 +464,10 @@ void MOAISelectionMesh::MergeSelection ( u32 set, u32 merge ) {
 			MOAISelectionSpan* span = cursor;
 			cursor = cursor->mNextInMaster;
 			
+			MOAISelectionSpan* prevInMaster = span->mPrevInMaster;
+			
 			if ( span->mSetID == merge ) {
-			
-				MOAISelectionSpan* prevInMaster = span->mPrevInMaster;
-			
+				
 				size_t base = span->mBase;
 				size_t top = span->mTop;
 			
@@ -498,7 +478,7 @@ void MOAISelectionMesh::MergeSelection ( u32 set, u32 merge ) {
 			
 			if ( span->mSetID == set ) {
 			
-				if (( span->mPrevInMaster->mSetID == set ) && ( span->mPrevInMaster->mTop == span->mBase )) {
+				if ( prevInMaster && ( prevInMaster->mSetID == set ) && ( prevInMaster->mTop == span->mBase )) {
 				
 					span->mPrevInMaster->mTop = span->mTop;
 					this->FreeSpan ( span );
@@ -605,4 +585,24 @@ void MOAISelectionMesh::SerializeIn ( MOAILuaState& state, MOAIDeserializer& ser
 void MOAISelectionMesh::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
 	MOAIDeckProxy::SerializeOut ( state, serializer );
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAISelectionMesh::MOAIDeck_Draw ( u32 idx ) {
+	
+	if ( !this->mMesh ) return;
+	
+	size_t size = this->mSets.Size ();
+	if ( !size ) return;
+
+	u32 itemIdx = idx % size;
+	
+	MOAIMeshSpan* span = this->mSets [ itemIdx ];
+	if ( !span ) return;
+
+	this->mMesh->DrawIndex ( idx, span );
 }

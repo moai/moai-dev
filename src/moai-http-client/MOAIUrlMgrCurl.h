@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef MOAIURLMGRCURL_H
@@ -12,7 +12,7 @@
 // MOAIUrlMgrCurl
 //================================================================//
 class MOAIUrlMgrCurl :
-	public MOAIGlobalClass < MOAIUrlMgrCurl > {
+	public ZLContextClass < MOAIUrlMgrCurl > {
 private:
 
 	STLMap < CURL*, MOAIHttpTaskCurl* > mHandleMap;

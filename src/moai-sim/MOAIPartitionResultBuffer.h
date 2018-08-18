@@ -1,10 +1,10 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIPARTITIONRESULTBUFFER_H
 #define	MOAIPARTITIONRESULTBUFFER_H
 
-class MOAIProp;
+#include <moai-sim/MOAIPartitionHull.h>
 
 //================================================================//
 // MOAIPartitionResult
@@ -13,12 +13,18 @@ class MOAIPartitionResult :
 	public ZLRadixKey32Base {
 public:
 
-	MOAIProp*	mProp;
+	MOAIPartitionHull*	mHull;
 	int			mSubPrimID;
 	s32			mPriority;
 	
 	ZLVec3D		mLoc;
 	ZLBox		mBounds;
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	TYPE* AsType () {
+		return this->mHull->AsType < TYPE >();
+	}
 };
 
 //================================================================//
@@ -83,14 +89,14 @@ public:
 	
 	//----------------------------------------------------------------//
 	void					Clear							();
-	MOAIProp*				FindBest						();
+	MOAIPartitionHull*		FindBest						();
 	void					GenerateKeys					( u32 mode, float xScale, float yScale, float zScale, float priority );
 							MOAIPartitionResultBuffer		();
 							~MOAIPartitionResultBuffer		();
 	MOAIPartitionResult*	PopResult						();
 	void					Project							( const ZLMatrix4x4& mtx );
-	void					PushProps						( lua_State* L );
-	void					PushResult						( MOAIProp& prop, u32 key, int subPrimID, s32 priority, const ZLVec3D& loc, const ZLBox& bounds );
+	void					PushHulls						( lua_State* L );
+	void					PushResult						( MOAIPartitionHull& hull, u32 key, int subPrimID, s32 priority, const ZLVec3D& loc, const ZLBox& bounds );
 	void					Reset							();
 	u32						Sort							( u32 mode );
 	void					Transform						( const ZLMatrix4x4& mtx, bool transformBounds );

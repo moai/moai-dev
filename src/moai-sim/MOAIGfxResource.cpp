@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -39,14 +39,6 @@ int MOAIGfxResource::_getResourceState ( lua_State* L ) {
 
 	state.Push ( self->mState );
 	return 1;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIGfxResource::_preload ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )
-
-	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -106,7 +98,7 @@ int MOAIGfxResource::_setReloader ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxResource::Affirm () {
+bool MOAIGfxResource::Affirm () {
 
 	if ( this->mState == STATE_NEEDS_GPU_UPDATE ) {
 		this->DoGPUUpdate ();
@@ -115,15 +107,20 @@ void MOAIGfxResource::Affirm () {
 		this->InvokeLoader ();
 		this->DoGPUCreate ();
 	}
+	return this->IsReady ();
 }
 
 //----------------------------------------------------------------//
 u32 MOAIGfxResource::Bind () {
 
 //	if ( !MOAIGfxMgr::Get ().GetHasContext ()) {
-//		MOAILog ( 0, MOAILogMessages::MOAIGfxResource_MissingDevice );
+//		MOAILog ( 0, MOAISTRING_MOAIGfxResource_MissingDevice );
 //		return false;
 //	}
+
+	if ( this->mState != STATE_READY_TO_BIND ) {
+		this->Affirm ();
+	}
 
 	// we're ready to bind, so do it
 	if ( this->mState == STATE_READY_TO_BIND ) {
@@ -310,7 +307,6 @@ void MOAIGfxResource::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getAge",					_getAge },
 		{ "getResourceState",		_getResourceState },
-		{ "preload",				_preload },
 		{ "purge",					_purge },
 		{ "softRelease",			_purge }, // back compat
 		{ "scheduleForGPUCreate",	_scheduleForGPUCreate },

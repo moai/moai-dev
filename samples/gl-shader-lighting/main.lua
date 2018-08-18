@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc.
+-- Copyright (c) 2010-2017 Zipline Games, Inc.
 -- All Rights Reserved.
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -13,9 +13,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 480 )
 
-layer = MOAILayer.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 camera = MOAICamera.new ()
 camera:setLoc ( 0, 0, camera:getFocalLength ( 320 ))
@@ -33,9 +33,9 @@ end
 
 local function vec_cross(p1,p2)
 	local ret = {}
-	ret.x = p1.y*p2.z - p1.z*p2.y
-	ret.y = p1.z*p2.x - p1.x*p2.z
-	ret.z = p1.x*p2.y - p1.y*p2.x
+	ret.x = p1.y * p2.z - p1.z * p2.y
+	ret.y = p1.z * p2.x - p1.x * p2.z
+	ret.z = p1.x * p2.y - p1.y * p2.x
 	return ret
 end
 
@@ -52,6 +52,14 @@ local function vec_scale(const,p1)
 	ret.x = p1.x * const
 	ret.y = p1.y * const
 	ret.z = p1.z * const
+	return ret
+end
+
+local function vec_sub(p1,p2)
+	local ret = {}
+	ret.x = p1.x - p2.x
+	ret.y = p1.y - p2.y
+	ret.z = p1.z - p2.z
 	return ret
 end
 
@@ -77,23 +85,23 @@ function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
 
 	local function writeTri ( vbo, p1, p2, p3, uv1, uv2, uv3 )
 
-		local normal = vec_cross(vec_add(p2,vec_scale(-1,p1)),vec_add(p3,vec_scale(-1,p1)))
-		normal = vec_normalize(normal)
+		local normal = vec_cross ( vec_sub ( p2, p1 ), vec_sub ( p3, p1 ))
+		normal = vec_normalize ( normal )
 
 		vbo:writeFloat(p1.x, p1.y, p1.z)
 		vbo:writeFloat(normal.x,normal.y,normal.z)
 		vbo:writeFloat(uv1.x, uv1.y)
-		vbo:writeColor32(0,0,0)
+		vbo:writeColor32 ( 1, 1, 1, 1 )
 
 		vbo:writeFloat(p2.x, p2.y, p2.z)
 		vbo:writeFloat(normal.x,normal.y,normal.z)
 		vbo:writeFloat(uv2.x, uv2.y)
-		vbo:writeColor32(0,0,0)
+		vbo:writeColor32 ( 1, 1, 1, 1 )
 
 		vbo:writeFloat(p3.x, p3.y, p3.z)
 		vbo:writeFloat(normal.x,normal.y,normal.z)
 		vbo:writeFloat(uv3.x, uv3.y)
-		vbo:writeColor32(0,0,0)
+		vbo:writeColor32 ( 1, 1, 1, 1 )
 	end
 
 	local function writeFace ( vbo, p1, p2, p3, p4, uv1, uv2, uv3, uv4 )
@@ -152,12 +160,12 @@ function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
 	program:setVertexAttribute( 4, 'color' )
 	
 	program:reserveUniforms ( 2 )
-	program:declareUniform ( 1, 'transform', MOAIShaderProgram.UNIFORM_MATRIX_F4 )
-	program:declareUniform ( 2, 'normalTransform', MOAIShaderProgram.UNIFORM_MATRIX_F3 )
-	
+	program:declareUniform ( 1, 'worldViewProj', MOAIShaderProgram.UNIFORM_TYPE_FLOAT, MOAIShaderProgram.UNIFORM_WIDTH_MATRIX_4X4 )
+	program:declareUniform ( 2, 'worldNorm', MOAIShaderProgram.UNIFORM_TYPE_FLOAT, MOAIShaderProgram.UNIFORM_WIDTH_MATRIX_3X3 )
+
 	program:reserveGlobals ( 2 )
 	program:setGlobal ( 1, 1, MOAIShaderProgram.GLOBAL_WORLD_VIEW_PROJ )
-	program:setGlobal ( 2, 2, MOAIShaderProgram.GLOBAL_WORLD_VIEW_INVERSE )
+	program:setGlobal ( 2, 2, MOAIShaderProgram.GLOBAL_WORLD_NORMAL )
 	
 	program:load ( vsh, fsh )
 
@@ -187,6 +195,6 @@ local mesh = makeCube ( 128, 'moai.png' )
 
 prop = MOAIProp.new ()
 prop:setDeck ( mesh )
-prop:moveRot ( 360, 360, 0, 6 )
+prop:moveRot ( 360, 360, 0, 12 )
 prop:setCullMode ( MOAIProp.CULL_BACK )
-layer:insertProp ( prop )
+prop:setPartition ( layer )

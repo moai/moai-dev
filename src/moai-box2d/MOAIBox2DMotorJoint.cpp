@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -26,7 +26,7 @@ int MOAIBox2DMotorJoint::_setLinearOffset ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DMotorJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -55,7 +55,7 @@ int MOAIBox2DMotorJoint::_getLinearOffset ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DMotorJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -82,7 +82,7 @@ int	MOAIBox2DMotorJoint::_setAngularOffset ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DMotorJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -105,7 +105,7 @@ int	MOAIBox2DMotorJoint::_getAngularOffset ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DMotorJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -127,7 +127,7 @@ int	MOAIBox2DMotorJoint::_setMaxForce ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DMotorJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -151,7 +151,7 @@ int	MOAIBox2DMotorJoint::_getMaxForce ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DMotorJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -175,7 +175,7 @@ int	MOAIBox2DMotorJoint::_setMaxTorque ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DMotorJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -200,7 +200,7 @@ int MOAIBox2DMotorJoint::_getMaxTorque ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DMotorJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -224,7 +224,7 @@ int MOAIBox2DMotorJoint::_setCorrectionFactor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DMotorJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -247,7 +247,7 @@ int MOAIBox2DMotorJoint::_getCorrectionFactor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DMotorJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 

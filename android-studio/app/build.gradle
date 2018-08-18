@@ -1,0 +1,69 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion '25.0.0'
+
+    defaultConfig {
+        applicationId "com.moaisdk.refapp"
+        minSdkVersion 17
+        targetSdkVersion 22
+        versionCode 8
+        versionName "1.0"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+    }
+
+}
+
+if (hasProperty('luaRoot')) {
+    task ( 'cleanLuaScripts', type: Delete ) {
+        delete 'src/main/assets/lua'
+    }
+
+    task ( 'copyLuaScripts', type: Copy ) {
+        from new File(luaRoot).canonicalPath
+        into 'src/main/assets/lua'
+    }
+
+    clean.dependsOn cleanLuaScripts
+    preBuild.dependsOn copyLuaScripts
+}
+
+//set on command line or in gradle.properties
+boolean usePrebuiltLibs = hasProperty('usePrebuiltMoaiFrom')
+
+if (usePrebuiltLibs) {
+    task('copyLibraries', type: Copy) {
+        from new File(usePrebuiltMoaiFrom).canonicalPath
+        into 'src/main/jniLibs'
+    }
+
+    task ( 'cleanLibraries', type: Delete ) {
+        delete 'src/main/jniLibs'
+    }
+
+    clean.dependsOn cleanLibraries
+    preBuild.dependsOn copyLibraries
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:22.1.1'
+    compile project(':core')
+    if (!usePrebuiltLibs) {
+        compile project(":libmoai")
+    }
+}
+

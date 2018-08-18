@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -31,9 +31,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( VIEW_WIDTH, VIEW_HEIGHT )
 viewport:setScale ( VIEW_WIDTH, -VIEW_HEIGHT )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 draw = MOAIImage.new ()
 draw:load ( 'moai.png' )
@@ -56,10 +56,10 @@ gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( canvas )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
 
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 gfxQuad:setRect ( 0, 0, PROP_WIDTH, PROP_HEIGHT )
 prop:setPiv ( PROP_WIDTH / 2, PROP_HEIGHT / 2 )	
@@ -85,17 +85,17 @@ function stamp ( x, y, source )
 	-- copy only the RGB channels from the source image
 	brush:copyRect ( source, x1, y1, x2, y2, 0, 0, w, h,
 		MOAIImage.FILTER_LINEAR,
+		MOAIImage.BLEND_EQ_ADD
 		MOAIImage.BLEND_FACTOR_1110,
 		MOAIImage.BLEND_FACTOR_0001,
-		MOAIImage.BLEND_EQ_ADD
 	)
 
 	-- blend the brush with the dest image using the brush's alpha channel
 	canvas:copyRect ( brush, 0, 0, w, h, x1, y1, x2, y2,
 		MOAIImage.FILTER_LINEAR,
+		MOAIImage.BLEND_EQ_ADD
 		MOAIImage.BLEND_FACTOR_SRC_ALPHA,
 		MOAIImage.BLEND_FACTOR_ONE_MINUS_SRC_ALPHA,
-		MOAIImage.BLEND_EQ_ADD
 	)
 	canvas:invalidate ( x1, y1, x2, y2 )
 end

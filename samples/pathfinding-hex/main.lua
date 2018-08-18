@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -10,9 +10,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 512, 512 )
 viewport:setScale ( 512, 512 )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 grid = MOAIGrid.new ()
 grid:initHexGrid ( 5, 16, 32 )
@@ -38,11 +38,11 @@ tileDeck = MOAITileDeck2D.new ()
 tileDeck:setTexture ( "hex-tiles.png" )
 tileDeck:setSize ( 4, 4, 0.25, 0.216796875 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( tileDeck )
 prop:setGrid ( grid )
 prop:setLoc ( -264, -224 )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 startNode = grid:getCellAddr ( 1, 1 )
 endNode = grid:getCellAddr ( 5, 16 )

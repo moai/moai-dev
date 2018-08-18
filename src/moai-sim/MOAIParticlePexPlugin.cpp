@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -121,13 +121,13 @@ int MOAIParticlePexPlugin::_load( lua_State* L ){
 
 	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "S" )) {							
-		MOAILogF ( L, ZLLog::LOG_ERROR, MOAILogMessages::MOAI_ParamTypeMismatch );		
+		MOAILogF ( L, ZLLog::LOG_ERROR, MOAISTRING_ParamTypeMismatch );		
 		return 0;													
 	}																
 		
 	cc8* xml = lua_tostring ( state, 1 );
 
-	if ( MOAILogMessages::CheckFileExists ( xml, L )) {
+	if ( MOAILogMgr::CheckFileExists ( xml, L )) {
 		TiXmlDocument doc;
 		doc.LoadFile ( xml );
 		MOAIParticlePexPlugin *particle = new MOAIParticlePexPlugin();
@@ -503,7 +503,7 @@ void MOAIParticlePexPlugin::Parse ( cc8* filename, MOAIParticlePexPlugin& plugin
 		
 		plugin.mSize = 0;
 		// round up the children
-		STLSet < string > children;
+		STLSet < STLString > children;
 		TiXmlElement* childElement = node->FirstChildElement ();
 		
 		for ( ; childElement; childElement = childElement->NextSiblingElement ()) {
@@ -768,7 +768,7 @@ void MOAIParticlePexPlugin::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }
 
 #endif

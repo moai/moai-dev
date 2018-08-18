@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -22,18 +22,18 @@ YMAX = 460
 viewport = MOAIViewport.new ()
 viewport:setSize ( XMIN, YMIN, XMAX, YMAX )
 
-layer = MOAILayer.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:setClearColor ( 1, 1, 1, 1 )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 960, 480 )
 viewport:setScale ( 960, 480 )
 
-layer = MOAILayer.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 camera = MOAICamera.new ()
 camera:setFieldOfView ( 45 )
@@ -49,7 +49,7 @@ makeProp = function ( x, y, z )
 	prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
 	prop:setDepthTest ( MOAIGraphicsProp.DEPTH_TEST_LESS )
 	prop:setLoc ( x, y, z )
-	layer:insertProp ( prop )
+	prop:setPartition ( layer )
 
 	return prop
 end

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef ZLGFXDEVICE_H
@@ -8,12 +8,10 @@
 // ZLGfxDevice
 //================================================================//
 class ZLGfxDevice {
+private:
 public:
 
 	//----------------------------------------------------------------//
-	static void				Begin					();
-	static void				End						();
-	static void				Finalize				();
 	static u32				GetCap					( u32 cap );
 	ZLGfxHandle*			GetCurrentFramebuffer	();
 	static u32				GetError				();

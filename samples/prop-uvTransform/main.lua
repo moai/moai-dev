@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -10,9 +10,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 480 )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 texture = MOAITexture.new ()
 texture:load ( "moai.png" )
@@ -27,10 +27,10 @@ uvTransform:moveLoc ( 1, 0, 3 )
 uvTransform:moveRot ( 360, 3 )
 uvTransform:moveScl ( 1, 1, 3 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
 prop:setUVTransform ( uvTransform )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 prop:moveRot ( -360, 2 )
 prop:moveScl ( 1.5, 1.5, 3 )

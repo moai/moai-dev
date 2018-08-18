@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -92,11 +92,11 @@ u32 ZLColor::BilerpFixed ( u32 c0, u32 c1, u32 c2, u32 c3, u8 xt, u8 yt ) {
 //----------------------------------------------------------------//
 u32 ZLColor::Blend ( u32 src32, u32 dst32, const ZLColorBlendFunc& blendFunc ) {
 
-	return Blend ( src32, dst32, blendFunc.mSrcFactor, blendFunc.mDstFactor, blendFunc.mEquation );
+	return Blend ( src32, dst32, blendFunc.mEquation, blendFunc.mSrcFactor, blendFunc.mDstFactor );
 }
 
 //----------------------------------------------------------------//
-u32 ZLColor::Blend ( u32 src32, u32 dst32, ZLColor::BlendFactor srcFactor, ZLColor::BlendFactor dstFactor, ZLColor::BlendEquation blendEq ) {
+u32 ZLColor::Blend ( u32 src32, u32 dst32, ZLColor::BlendEquation blendEq, ZLColor::BlendFactor srcFactor, ZLColor::BlendFactor dstFactor ) {
 	
 	if ( blendEq == BLEND_EQ_NONE ) return src32;
 	
@@ -178,7 +178,6 @@ void ZLColor::Convert ( void* dest, ColorFormat destFmt, const void* src, ColorF
 					color = ZLBitBuffer::GetValue ( src, nCopied + i, 1 ) ? 0xff : 0x00;
 					buffer [ i ] = color << 0x18;
 				}
-				bufferPtr = buffer;
 				break;
 			
 			case A_4:
@@ -187,7 +186,6 @@ void ZLColor::Convert ( void* dest, ColorFormat destFmt, const void* src, ColorF
 					color = ZLBitBuffer::GetValue ( src, nCopied + i, 4 );
 					buffer [ i ] = ( color << 0x1C ) | ( color << 0x18 );
 				}
-				bufferPtr = buffer;
 				break;
 			
 			case A_8:
@@ -199,7 +197,6 @@ void ZLColor::Convert ( void* dest, ColorFormat destFmt, const void* src, ColorF
 					
 					buffer [ i ] = color << 0x18;
 				}
-				bufferPtr = buffer;
 				break;
 			
 			case LA_8:
@@ -217,7 +214,6 @@ void ZLColor::Convert ( void* dest, ColorFormat destFmt, const void* src, ColorF
 									( l << 0x10 ) +
 									( a << 0x18 );
 				}
-				bufferPtr = buffer;
 				break;
 			
 			case RGB_888:
@@ -235,7 +231,6 @@ void ZLColor::Convert ( void* dest, ColorFormat destFmt, const void* src, ColorF
 					
 					buffer [ i ]= color | 0xFF000000;
 				}
-				bufferPtr = buffer;
 				break;
 				
 			case RGB_565:
@@ -255,7 +250,6 @@ void ZLColor::Convert ( void* dest, ColorFormat destFmt, const void* src, ColorF
 									0xFF000000;
 					
 				}
-				bufferPtr = buffer;
 				break;
 			
 			case RGBA_5551: 
@@ -274,7 +268,6 @@ void ZLColor::Convert ( void* dest, ColorFormat destFmt, const void* src, ColorF
 									((( b << 0x03 ) | ( b >> 0x02 )) << 0x10 ) +
 									(((( color >> 0x0F ) & 0x01 ) ? 0xFF : 0x00 ) << 0x18 );
 				}
-				bufferPtr = buffer;
 				break;
 
 			case RGBA_4444:
@@ -294,7 +287,6 @@ void ZLColor::Convert ( void* dest, ColorFormat destFmt, const void* src, ColorF
 									(( b << 0x14 ) | ( b << 0x10 )) +
 									(( a << 0x1C ) | ( a << 0x18 ));
 				}
-				bufferPtr = buffer;
 				break;
 
 			case RGBA_8888:
@@ -1036,6 +1028,16 @@ u32 ZLColor::Swizzle ( u32 c0, u32 sw ) {
 // ZLColorVec
 //================================================================//
 
+const ZLColorVec ZLColorVec::WHITE		= ZLColorVec ( 1.0f, 1.0f, 1.0f, 1.0f );
+const ZLColorVec ZLColorVec::BLACK		= ZLColorVec ( 0.0f, 0.0f, 0.0f, 1.0f );
+const ZLColorVec ZLColorVec::CLEAR		= ZLColorVec ( 0.0f, 0.0f, 0.0f, 0.0f );
+const ZLColorVec ZLColorVec::RED		= ZLColorVec ( 1.0f, 0.0f, 0.0f, 1.0f );
+const ZLColorVec ZLColorVec::GREEN		= ZLColorVec ( 0.0f, 1.0f, 0.0f, 1.0f );
+const ZLColorVec ZLColorVec::BLUE		= ZLColorVec ( 0.0f, 0.0f, 1.0f, 1.0f );
+const ZLColorVec ZLColorVec::YELLOW		= ZLColorVec ( 1.0f, 1.0f, 0.0f, 1.0f );
+const ZLColorVec ZLColorVec::CYAN		= ZLColorVec ( 0.0f, 1.0f, 1.0f, 1.0f );
+const ZLColorVec ZLColorVec::MAGENTA	= ZLColorVec ( 1.0f, 0.0f, 1.0f, 1.0f );
+
 //----------------------------------------------------------------//
 void ZLColorVec::Add ( const ZLColorVec& c ) {
 
@@ -1063,28 +1065,6 @@ void ZLColorVec::Clamp () {
 	this->mG = ZLFloat::Clamp ( this->mG, 0.0f, 1.0f );
 	this->mB = ZLFloat::Clamp ( this->mB, 0.0f, 1.0f );
 	this->mA = ZLFloat::Clamp ( this->mA, 0.0f, 1.0f );
-}
-
-//----------------------------------------------------------------//
-bool ZLColorVec::Compare ( const ZLColorVec& c ) {
-
-	if ((( mR != c.mR ) || ( mR != c.mR )) ||
-		(( mG != c.mG ) || ( mG != c.mG )) ||
-		(( mB != c.mB ) || ( mB != c.mB )) ||
-		(( mA != c.mA ) || ( mA != c.mA ))) return false;
-
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool ZLColorVec::Compare ( const ZLColorVec& c, float res ) {
-
-	if ((( mR < ( c.mR - res )) || ( mR > ( c.mR + res ))) ||
-		(( mG < ( c.mG - res )) || ( mG > ( c.mG + res ))) ||
-		(( mB < ( c.mB - res )) || ( mB > ( c.mB + res ))) ||
-		(( mA < ( c.mA - res )) || ( mA > ( c.mA + res )))) return false;
-
-	return true;
 }
 
 //----------------------------------------------------------------//
@@ -1168,9 +1148,20 @@ bool ZLColorVec::IsClear () const {
 }
 
 //----------------------------------------------------------------//
-bool ZLColorVec::IsOpaque () const {
+bool ZLColorVec::IsEqual ( const ZLColorVec& c ) const {
 
-	return ( this->mA >= 1.0f );
+	return (( mR == c.mR ) && ( mG == c.mG ) && ( mB == c.mB ) && ( mA == c.mA ));
+}
+
+//----------------------------------------------------------------//
+bool ZLColorVec::IsEqual ( const ZLColorVec& c, float res ) const {
+
+	if ((( mR < ( c.mR - res )) || ( mR > ( c.mR + res ))) ||
+		(( mG < ( c.mG - res )) || ( mG > ( c.mG + res ))) ||
+		(( mB < ( c.mB - res )) || ( mB > ( c.mB + res ))) ||
+		(( mA < ( c.mA - res )) || ( mA > ( c.mA + res )))) return false;
+
+	return true;
 }
 
 //----------------------------------------------------------------//

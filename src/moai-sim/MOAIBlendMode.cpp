@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -10,46 +10,33 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-//void MOAIBlendMode::Bind () {
-//	
-//	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-//	
-//	gfx.Enable ( ZGL_PIPELINE_BLEND );
-//	gfx.BlendMode ( this->mEquation );
-//	gfx.BlendFunc ( this->mSourceFactor, this->mDestFactor );
-//}
+void MOAIBlendMode::Init ( MOAILuaState& state, int idx ) {
 
-//----------------------------------------------------------------//
-void MOAIBlendMode::GetBlendFactors ( u32 blend, int& srcFactor, int& dstFactor ) {
-
-	switch ( blend ) {
-		case BLEND_NORMAL: {
-			srcFactor = ZGL_BLEND_FACTOR_ONE;
-			dstFactor = ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
-			break;
-		}
-		case BLEND_ADD: {
-			srcFactor = ZGL_BLEND_FACTOR_SRC_ALPHA;
-			dstFactor = ZGL_BLEND_FACTOR_ONE;
-			break;
-		}
-		case BLEND_MULTIPLY: {
-			srcFactor = ZGL_BLEND_FACTOR_DST_COLOR;
-			dstFactor = ZGL_BLEND_FACTOR_ZERO;
-			break;
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIBlendMode::SetBlend ( u32 blend ) {
+	u32 equation	= state.GetValue < u32 >( idx++, ZGL_BLEND_MODE_ADD );
+	u32 srcFactor	= state.GetValue < u32 >( idx++, ZGL_BLEND_FACTOR_ONE );
+	u32 dstFactor	= state.GetValue < u32 >( idx, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
 	
-	MOAIBlendMode::GetBlendFactors ( blend, this->mSourceFactor, this->mDestFactor );
-	this->mEquation = ZGL_BLEND_MODE_ADD;
+	this->SetBlend ( equation, srcFactor, dstFactor );
 }
 
 //----------------------------------------------------------------//
-void MOAIBlendMode::SetBlend ( int srcFactor, int dstFactor ) {
+int MOAIBlendMode::Push ( MOAILuaState& state ) const {
+
+	state.Push ( this->mEquation );
+	state.Push ( this->mSourceFactor );
+	state.Push ( this->mDestFactor );
+	
+	return 3;
+}
+
+//----------------------------------------------------------------//
+void MOAIBlendMode::SetBlend ( int equation, int srcFactor, int dstFactor ) {
+
+	// ZGL_BLEND_MODE_ADD
+	// ZGL_BLEND_MODE_SUBTRACT
+	// ZGL_BLEND_MODE_REVERSE_SUBTRACT
+	// (ZGL_BLEND_MODE_MIN and GL_BLEND_MODE_MAX unsupported on iOS)
+	this->mEquation = equation;
 
 	// ZGL_BLEND_FACTOR_ZERO
 	// ZGL_BLEND_FACTOR_ONE
@@ -74,19 +61,17 @@ void MOAIBlendMode::SetBlend ( int srcFactor, int dstFactor ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIBlendMode::SetBlendEquation ( int equation ) {
-	// ZGL_BLEND_MODE_ADD
-	// ZGL_BLEND_MODE_SUBTRACT
-	// ZGL_BLEND_MODE_REVERSE_SUBTRACT
-	// (ZGL_BLEND_MODE_MIN and GL_BLEND_MODE_MAX unsupported on iOS)
-	this->mEquation = equation;
-}
-
-//----------------------------------------------------------------//
 MOAIBlendMode::MOAIBlendMode () :
 	mEquation ( ZGL_BLEND_MODE_ADD ),
 	mSourceFactor ( ZGL_BLEND_FACTOR_ONE ),
 	mDestFactor ( ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA ) {
+}
+
+//----------------------------------------------------------------//
+MOAIBlendMode::MOAIBlendMode ( int equation, int srcFactor, int dstFactor ) :
+	mEquation ( equation ),
+	mSourceFactor ( srcFactor ),
+	mDestFactor ( dstFactor ) {
 }
 
 //----------------------------------------------------------------//

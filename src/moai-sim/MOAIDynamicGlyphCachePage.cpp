@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -19,9 +19,12 @@ void MOAIDynamicGlyphCachePage::AffirmCanvas ( MOAIDynamicGlyphCache& owner, MOA
 	
 	if ( !this->mImageTexture ) {
 		
+		STLString debugName;
+		debugName.write ( "page %d - %s (%p)", this->mPageID, font.GetFilename (), &font );
+		
 		this->mImageTexture = new MOAIImageTexture ();
 		this->mImageTexture->Init ( MAX_TEXTURE_SIZE, ( u32 )this->mRows.mSize, owner.mColorFormat, MOAIImage::TRUECOLOR );
-		this->mImageTexture->SetDebugName ( font.GetFilename ());
+		this->mImageTexture->SetDebugName ( debugName );
 		this->mImageTexture->SetFilter ( font.GetMinFilter (), font.GetMagFilter ());
 		this->mImageTexture->ClearBitmap ();
 		
@@ -92,7 +95,7 @@ MOAIDynamicGlyphCachePage::GlyphSpan* MOAIDynamicGlyphCachePage::Alloc ( MOAIDyn
 	
 	GlyphSpan* glyphSpan = bestRowIt->mData.Alloc ( width );
 	if ( glyphSpan ) {
-		glyph.SetSourceLoc (( u32 )( glyphSpan->mBase - ( s32 ) owner.mPadding.mXMin ), ( u32 )( bestRowIt->mBase - ( s32 ) owner.mPadding.mYMin ));
+		glyph.SetSourceLoc (( u32 )( glyphSpan->mBase - ( s32 )owner.mPadding.mXMin ), ( u32 )( bestRowIt->mBase - ( s32 ) owner.mPadding.mYMin ));
 	}
 	
 	this->AffirmCanvas ( owner, font );
@@ -138,6 +141,7 @@ bool MOAIDynamicGlyphCachePage::ExpandToNextPowerofTwo () {
 
 //----------------------------------------------------------------//
 MOAIDynamicGlyphCachePage::MOAIDynamicGlyphCachePage () :
+	mPageID ( 0 ),
 	mImageTexture ( 0 ),
 	//mColorFormat ( ZLColor::A_8 ),
 	mThreshold ( 0.8f ) {

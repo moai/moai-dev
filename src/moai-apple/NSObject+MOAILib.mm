@@ -67,7 +67,7 @@ void loadMoaiLib_NSObject () {
 				break;
 				
 			case LUA_TTABLE:
-				return [[[ NSMutableDictionary dictionary ] initWithLua:state stackIndex:idx ] autorelease ];
+				return [[[ NSMutableDictionary alloc ] initWithLua:state stackIndex:idx ] autorelease ];
 				break;
 				
 			default:

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef ZLACCESSORS_H
@@ -16,8 +16,8 @@
 #define SET(type,name,member) \
 	inline void Set##name ( type value ) { member = value; }
 
-#define Can(name,member,value) const \
-	inline bool Can##name () { return member == value; }
+//#define Can(name,member,value) const \
+//	inline bool Can##name () { return member == value; }
 
 #define HAS(name,member,value) const \
 	inline bool Has##name () { return member == value; }

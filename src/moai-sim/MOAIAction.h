@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIACTION_H
@@ -14,7 +14,7 @@ class MOAIActionTree;
 // MOAIActionStackMgr
 //================================================================//
 class MOAIActionStackMgr :
-	public MOAIGlobalClass < MOAIActionStackMgr > {
+	public ZLContextClass < MOAIActionStackMgr > {
 private:
 	
 	ZLLeanStack < MOAIAction* > mStack;
@@ -91,18 +91,20 @@ private:
 	static int			_update					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	virtual void		OnLostChild				( MOAIAction* child );
-	void				OnUnblock				();
 	void				ResetPass				( u32 pass = 0 );
 	void				Update					( MOAIActionTree& tree, double step );
 
 protected:
 
 	//----------------------------------------------------------------//
-	virtual STLString		GetDebugInfo			() const;
-	virtual void			OnStart					();
-	virtual void			OnStop					();
-	virtual void			OnUpdate				( double step );
+	virtual void			MOAIAction_DidLoseChild			( MOAIAction* child );
+	virtual STLString		MOAIAction_GetDebugInfo			() const;
+	virtual MOAIAction*		MOAIAction_GetDefaultParent		();
+	virtual bool			MOAIAction_IsDone				();
+	virtual void			MOAIAction_Start				();
+	virtual void			MOAIAction_Stop					();
+	virtual void			MOAIAction_Update				( double step );
+	void					MOAIBlocker_Unblock				();
 	
 public:
 	
@@ -127,7 +129,7 @@ public:
 	virtual MOAIAction*		GetDefaultParent		();
 	bool					IsActive				();
 	bool					IsBusy					();
-	virtual bool			IsDone					();
+	bool					IsDone					();
 	bool					IsPaused				();
 							MOAIAction				();
 							~MOAIAction				();

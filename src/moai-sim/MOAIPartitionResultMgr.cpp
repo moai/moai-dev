@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -41,7 +41,7 @@ MOAIScopedPartitionResultBufferHandle MOAIPartitionResultMgr::GetBufferHandle ()
 		handle.mBuffer = new MOAIPartitionResultBuffer ();
 
 		size_t index = this->mBuffers.Size ();
-		this->mBuffers.Grow ( index + 1, 1, 0 );
+		this->mBuffers.Grow ( index + 1, 0 );
 		this->mBuffers [ index ] = handle.mBuffer;
 		
 		return handle;

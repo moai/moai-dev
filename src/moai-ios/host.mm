@@ -1,12 +1,10 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#import "pch.h"
 #import "host.h"
 #import "headers.h"
 
-#import <contrib/MOAIOpenUDID.h>
-#import <moai-sim/MOAIGfxMgr.h>
+#import <moai-sim/headers.h>
 
 #if AKU_WITH_IFA
 	#import <AdSupport/ASIdentifierManager.h>
@@ -36,7 +34,7 @@ void AKUIosContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIAppIOS )
 	REGISTER_LUA_CLASS ( MOAIDialogIOS )
 	REGISTER_LUA_CLASS ( MOAIKeyboardIOS )
-	REGISTER_LUA_CLASS ( MOAINotificationsIOS )
+	//REGISTER_LUA_CLASS ( MOAINotificationsIOS ) // TODO: fix me
 	REGISTER_LUA_CLASS ( MOAIWebViewIOS )
 
 	// Device properties
@@ -54,7 +52,6 @@ void AKUIosContextInitialize () {
 	environment.SetValue ( MOAI_ENV_languageCode,			[[[ NSLocale currentLocale ] objectForKey: NSLocaleLanguageCode ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_osBrand,				"iOS" );
 	environment.SetValue ( MOAI_ENV_osVersion,				[[ UIDevice currentDevice ].systemVersion UTF8String ]);
-	environment.SetValue ( MOAI_ENV_openUdid,				[[ MOAIOpenUDID value] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_screenScale,			[[ UIScreen mainScreen ] scale ]);
 	environment.SetValue ( MOAI_ENV_systemLanguageCode,		[[[ NSLocale preferredLanguages ] objectAtIndex: 0 ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_verticalResolution,		[[ UIScreen mainScreen ] bounds ].size.height * [[ UIScreen mainScreen ] scale ]);
@@ -91,22 +88,32 @@ void AKUIosContextInitialize () {
 }
 
 //----------------------------------------------------------------//
-void AKUIosNotifyLocalNotificationReceived ( UILocalNotification* notification ) {
-
-	MOAINotificationsIOS::Get ().NotifyLocalNotificationReceived ( notification );
-}
-
-//----------------------------------------------------------------//
-void AKUIosNotifyRemoteNotificationReceived ( NSDictionary* notification ) {
-
-	MOAINotificationsIOS::Get ().NotifyRemoteNotificationReceived ( notification );
-}
+// TODO: fix me
+//void AKUIosNotifyLocalNotificationReceived ( UILocalNotification* notification ) {
+//	UNUSED ( notification );
+//
+//	// TODO: fix me
+//	//MOAINotificationsIOS::Get ().NotifyLocalNotificationReceived ( notification );
+//}
 
 //----------------------------------------------------------------//
-void AKUIosNotifyRemoteNotificationRegistrationComplete ( NSData* deviceToken, NSError* error ) {
+// TODO: fix me
+//void AKUIosNotifyRemoteNotificationReceived ( NSDictionary* notification ) {
+//	UNUSED ( notification );
+//
+//	// TODO: fix me
+//	//MOAINotificationsIOS::Get ().NotifyRemoteNotificationReceived ( notification );
+//}
 
-	MOAINotificationsIOS::Get ().NotifyRemoteRegistrationComplete ( deviceToken, error );
-}
+//----------------------------------------------------------------//
+// TODO: fix me
+//void AKUIosNotifyRemoteNotificationRegistrationComplete ( NSData* deviceToken, NSError* error ) {
+//	UNUSED ( deviceToken );
+//	UNUSED ( error );
+//
+//	// TODO: fix me
+//	//MOAINotificationsIOS::Get ().NotifyRemoteRegistrationComplete ( deviceToken, error );
+//}
 
 //----------------------------------------------------------------//
 void AKUIosOpenUrl ( NSURL* url, NSString* sourceApplication ) {
@@ -117,6 +124,6 @@ void AKUIosOpenUrl ( NSURL* url, NSString* sourceApplication ) {
 //----------------------------------------------------------------//
 void AKUIosSetFrameBuffer ( GLuint frameBuffer ) {
 
-	MOAIGfxMgr::Get ().mGfxState.GetDefaultFrameBuffer ()->SetGLFrameBufferID ( new ZLGfxHandle ( ZLGfxHandle::FRAMEBUFFER, frameBuffer, true ));
+	MOAIGfxMgr::Get ().mGfxState.GetDefaultFrameBuffer ()->SetGLFrameBuffer ( ZLGfxHandle ( ZLGfxResource::FRAMEBUFFER, frameBuffer, ZLGfxResource::SYSTEM_ALLOCATED ));
 }
 

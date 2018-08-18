@@ -1,5 +1,5 @@
 //----------------------------------------------------------------//
-// Copyright (c) 2010-2011 Zipline Games, Inc. 
+// Copyright (c) 2010-2017 Zipline Games, Inc. 
 // All Rights Reserved. 
 // http://getmoai.com
 //----------------------------------------------------------------//
@@ -20,7 +20,6 @@
 @interface MOAICommandThread () {
 	
     NSThread*           mThread;
-    
     NSCondition*        mCommandCondition;
     
     void                ( ^mCommand )( void );
@@ -120,7 +119,7 @@
     -( void ) stop {
     
         void ( ^command )( void ) = ^{
-            mIsRunning = NO;
+            self->mIsRunning = NO;
         };
         
         [ self command:command :YES ];

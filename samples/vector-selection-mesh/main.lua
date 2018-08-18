@@ -11,9 +11,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 640, 480 )
 viewport:setScale ( 640, 480 )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 local vtxStream = MOAIMemStream.new ()
 local idxStream = MOAIMemStream.new ()
@@ -65,7 +65,7 @@ selectionMesh:printSelection ()
 
 local prop = MOAIProp.new ()
 prop:setDeck ( selectionMesh )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 index = 1
 

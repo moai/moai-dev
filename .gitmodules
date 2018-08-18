@@ -10,3 +10,18 @@
 [submodule "3rdparty/curl"]
 	path = 3rdparty/curl
 	url = https://github.com/curl/curl
+[submodule "3rdparty/assimp"]
+	path = 3rdparty/assimp
+	url = https://github.com/assimp/assimp.git
+[submodule "3rdparty/TGAReader"]
+	path = 3rdparty/TGAReader
+	url = https://github.com/npedotnet/TGAReader.git
+[submodule "3rdparty/google-test"]
+	path = 3rdparty/google-test
+	url = https://github.com/google/googletest.git
+[submodule "3rdparty/gvr-ios-sdk"]
+	path = 3rdparty/gvr-ios-sdk
+	url = https://github.com/moai/gvr-ios-sdk.git
+[submodule "3rdparty/artoolkit5"]
+	path = 3rdparty/artoolkit5
+	url = https://github.com/artoolkit/artoolkit5.git

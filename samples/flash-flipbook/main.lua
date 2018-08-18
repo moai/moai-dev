@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -13,7 +13,7 @@ local timeline
 
 local function insertProps ( self, layer )
 
-	layer:insertProp ( self.prop )
+	self.prop:setPartition ( layer )
 end
 
 local function removeProps ( self, layer )
@@ -26,11 +26,11 @@ local function newPlayer ( self )
 	local player = MOAIAnim.new ()
 	player:reserveLinks ( 1 )
 		
-	local prop = MOAIProp2D.new ()
+	local prop = MOAIProp.new ()
 	prop:setParent ( root )
 	prop:setDeck ( self.quadListDeck )
 	
-	player:setLink ( 1, self.curve, prop, MOAIProp2D.ATTR_INDEX )
+	player:setLink ( 1, self.curve, prop, MOAIProp.ATTR_INDEX )
 	
 	player.prop = prop
 	player.flash = self
@@ -126,10 +126,10 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( fla.width, fla.height )
 viewport:setScale ( fla.width, -fla.height )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 MOAISim.openWindow ( "flash", fla.width, fla.height )
 
 MOAIGfxMgr.setClearColor ( 1, 1, 1, 1 )

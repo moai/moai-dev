@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -54,15 +54,6 @@ int MOAIXmlParser::_getElementAttributes ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int	MOAIXmlParser::_getElementLineNumber ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIXmlParser, "U" )
-	
-	state.Push ( self->mReader.GetLineNumber ());
-	return 1;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
 int MOAIXmlParser::_getElementName ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIXmlParser, "U" )
 
@@ -88,6 +79,28 @@ int MOAIXmlParser::_getElementText ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int	MOAIXmlParser::_getErrorString ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIXmlParser, "U" )
+	
+	cc8* error = self->mReader.GetErrorString ();
+	if ( error ) {
+		state.Push ( error );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int	MOAIXmlParser::_getLineNumber ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIXmlParser, "U" )
+	
+	state.Push ( self->mReader.GetLineNumber ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	parseFile
 	@text	Parses the contents of the specified file as XML.
 
@@ -102,7 +115,7 @@ int MOAIXmlParser::_parseFile ( lua_State* L ) {
 	
 	cc8* filename = lua_tostring ( state, 1 );
 	
-	if ( MOAILogMessages::CheckFileExists ( filename, L )) {
+	if ( MOAILogMgr::CheckFileExists ( filename, L )) {
 		TiXmlDocument doc;
 		doc.LoadFile ( filename );
 		MOAIXmlParser::Parse ( state, doc.RootElement ());
@@ -201,7 +214,7 @@ void MOAIXmlParser::Parse ( MOAILuaState& state, TiXmlNode* node ) {
 		}
 		
 		// round up the children
-		STLSet < string > children;
+		STLSet < STLString > children;
 		TiXmlElement* childElement = node->FirstChildElement ();
 		for ( ; childElement; childElement = childElement->NextSiblingElement ()) {
 			children.affirm ( childElement->Value ());
@@ -209,10 +222,10 @@ void MOAIXmlParser::Parse ( MOAILuaState& state, TiXmlNode* node ) {
 		
 		if ( children.size ()) {
 			lua_newtable ( state );
-			STLSet < string >::iterator childrenIt = children.begin ();
+			STLSet < STLString >::iterator childrenIt = children.begin ();
 			for ( ; childrenIt != children.end (); ++childrenIt ) {
 				
-				string name = *childrenIt;
+				STLString name = *childrenIt;
 				lua_newtable ( state );
 				
 				childElement = node->FirstChildElement ( name );
@@ -252,7 +265,7 @@ void MOAIXmlParser::RegisterLuaClass ( MOAILuaState& state ) {
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
@@ -261,15 +274,16 @@ void MOAIXmlParser::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable[] = {
 		{ "getElementAttribute",	_getElementAttribute },
 		{ "getElementAttributes",	_getElementAttributes },
-		{ "getElementLineNumber",	_getElementLineNumber },
 		{ "getElementName",			_getElementName },
 		{ "getElementText",			_getElementText },
+		{ "getErrorString",			_getErrorString },
+		{ "getLineNumber",			_getLineNumber },
 		{ "setStream",				_setStream },
 		{ "step",					_step },
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }
 
 #endif

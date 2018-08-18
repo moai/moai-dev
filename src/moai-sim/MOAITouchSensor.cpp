@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -545,7 +545,7 @@ void MOAITouchSensor::PrintStacks () {
 	
 	stacks.write ( " ]\n" );
 	
-	ZLLog ( stacks.c_str ());
+	ZLLogF ( ZLLog::CONSOLE, stacks.c_str ());
 }
 
 //----------------------------------------------------------------//

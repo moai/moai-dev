@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include <moai-untz/MOAIUntzSound.h>
@@ -144,22 +144,23 @@ int MOAIUntzSound::_load ( lua_State* L ) {
 	}
 
 	MOAIUntzSampleBuffer* data = state.GetLuaObject < MOAIUntzSampleBuffer >( 2, false );
-	if(data)
-	{
-		self->mSound = UNTZ::Sound::create(data->GetSoundInfo(), data->GetSampleBuffer());
+	if ( data ) {
+	
+		self->mSound = UNTZ::Sound::create(data->GetSoundInfo (), data->GetSampleBuffer ());
 		self->mInMemory = true;
 	}
-	else if ( state.IsType( 2, LUA_TSTRING ) ) 
-	{
+	else if ( state.IsType( 2, LUA_TSTRING )) {
+	
 		cc8* filename = state.GetValue < cc8* >( 2, "" );
 		bool loadIntoMemory = state.GetValue < bool >( 3, true );	
 
 		self->mFilename = filename;
 		self->mInMemory = loadIntoMemory;
 		//printf ( "creating sound: %s - %s\n", self->mFilename.str(), (loadIntoMemory) ? "in memory" : "not in memory" );
-		if ( MOAILogMessages::CheckFileExists ( filename )) {
+		if ( MOAILogMgr::CheckFileExists ( filename )) {
 			self->mSound = UNTZ::Sound::create ( filename, loadIntoMemory );
-		} else {
+		}
+		else {
 			self->mSound = NULL;
 		}
 	}
@@ -375,20 +376,6 @@ int MOAIUntzSound::_stop ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIUntzSound::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
-
-	if ( MOAIUntzSoundAttr::Check ( attrID )) {
-		attrID = UNPACK_ATTR ( attrID );
-
-		if ( attrID == ATTR_VOLUME ) {
-			this->mSound->setVolume ( attrOp.Apply ( this->mSound->getVolume (), op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ));
-			return true;
-		}
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
 MOAIUntzSound::MOAIUntzSound () :
 	mSound ( 0 ),
 	mFilename ( 0 ),
@@ -443,3 +430,20 @@ void MOAIUntzSound::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIUntzSound::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	if ( MOAIUntzSoundAttr::Check ( attrID )) {
+		attrID = UNPACK_ATTR ( attrID );
+
+		if ( attrID == ATTR_VOLUME ) {
+			this->mSound->setVolume ( attr.Apply ( this->mSound->getVolume (), op, MOAIAttribute::ATTR_READ_WRITE ));
+			return true;
+		}
+	}
+	return false;
+}

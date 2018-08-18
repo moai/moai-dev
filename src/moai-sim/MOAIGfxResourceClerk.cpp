@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -12,15 +12,16 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceClerk::DeleteOrDiscardHandle ( ZLGfxHandle*& handle, bool shouldDelete ) {
+void MOAIGfxResourceClerk::DeleteOrDiscard ( const ZLGfxHandle& handle, bool shouldDelete ) {
 
 	if ( handle ) {
+	
 		if ( shouldDelete && MOAIGfxMgr::IsValid ()) {
-		
 			MOAIGfxMgr::Get ().mResourceMgr.mDeleterStack.Push ( handle );
-			return;
 		}
-		ZLGfx::Discard ( handle );
+		else {
+			ZLGfx::DiscardResource ( handle );
+		}
 	}
 }
 
@@ -35,7 +36,7 @@ void MOAIGfxResourceClerk::DiscardResources () {
 	size_t top = this->mDeleterStack.GetTop ();
 
 	for ( size_t i = 0; i < top; ++i ) {
-		ZLGfx::Discard ( this->mDeleterStack [ i ]);
+		ZLGfx::DiscardResource ( this->mDeleterStack [ i ]);
 	}
 	this->mDeleterStack.Reset ();
 }
@@ -62,20 +63,15 @@ void MOAIGfxResourceClerk::ProcessDeleters () {
 	if ( top ) {
 
 		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-
-		ZLGfxDevice::Begin ();
 	
 		gfx.Flush ();
 	
 		for ( size_t i = 0; i < top; ++i ) {
-			ZLGfxHandle* handle = this->mDeleterStack [ i ];
-			gfx.Delete ( handle );
+			gfx.DeleteResource ( this->mDeleterStack [ i ]);
 		}
 		this->mDeleterStack.Reset ();
 	
 		gfx.Flush ();
-	
-		ZLGfxDevice::End ();
 	}
 }
 
@@ -97,14 +93,10 @@ void MOAIGfxResourceClerk::ProcessPending ( ZLLeanList < MOAIGfxResource* > &lis
 //----------------------------------------------------------------//
 void MOAIGfxResourceClerk::PurgeResources ( u32 age ) {
 	
-	ZLGfxDevice::Begin ();
-	
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
 		resourceIt->Data ()->Purge ( age );
 	}
-	
-	ZLGfxDevice::End ();
 }
 
 //----------------------------------------------------------------//
@@ -119,16 +111,12 @@ void MOAIGfxResourceClerk::RemoveGfxResource ( MOAIGfxResource& resource ) {
 // this gets called when the graphics context is renewed
 void MOAIGfxResourceClerk::RenewResources () {
 
-	ZLGfxDevice::Begin ();
-
 	this->mDeleterStack.Reset ();
 
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
 		resourceIt->Data ()->Renew ();
 	}
-	
-	ZLGfxDevice::End ();
 }
 
 //----------------------------------------------------------------//
@@ -151,30 +139,32 @@ void MOAIGfxResourceClerk::Update () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	ZLGfxDevice::Begin ();
-
 	if ( this->mDeleterStack.GetTop () || this->mPendingForLoadList.Count ()) {
 	
-		ZLGfx& gfxLoading = gfxMgr.mPipelineMgr.SelectDrawingAPI ( MOAIGfxPipelineClerk::LOADING_PIPELINE, true );
+		ZLGfx* gfxLoading = gfxMgr.mPipelineMgr.SelectDrawingAPI ( MOAIGfxPipelineClerk::LOADING_PIPELINE );
 		
-		ZGL_COMMENT ( gfxLoading, "RESOURCE MGR LOADING PIPELINE UPDATE" );
-		this->ProcessDeleters ();
-		this->ProcessPending ( this->mPendingForLoadList );
-		gfxMgr.mGfxState.UnbindAll ();
+		if ( gfxLoading ) {
+		
+			ZGL_COMMENT ( *gfxLoading, "RESOURCE MGR LOADING PIPELINE UPDATE" );
+			this->ProcessDeleters ();
+			this->ProcessPending ( this->mPendingForLoadList );
+			gfxMgr.mGfxState.UnbindAll ();
+		}
 	}
 	
 	if ( this->mPendingForDrawList.Count ()) {
 	
-		ZLGfx& gfxDrawing = gfxMgr.mPipelineMgr.SelectDrawingAPI ( MOAIGfxPipelineClerk::DRAWING_PIPELINE, true );
+		ZLGfx* gfxDrawing = gfxMgr.mPipelineMgr.SelectDrawingAPI ( MOAIGfxPipelineClerk::DRAWING_PIPELINE );
 		
-		ZGL_COMMENT ( gfxDrawing, "RESOURCE MGR DRAWING PIPELINE UPDATE" );
-		this->ProcessPending ( this->mPendingForDrawList );
-		gfxMgr.mGfxState.UnbindAll ();
+		if ( gfxDrawing ) {
+		
+			ZGL_COMMENT ( *gfxDrawing, "RESOURCE MGR DRAWING PIPELINE UPDATE" );
+			this->ProcessPending ( this->mPendingForDrawList );
+			gfxMgr.mGfxState.UnbindAll ();
+		}
 	}
 
 	// TODO: think about cases where we can get async results back on the
 	// same display list so we can remove the one-frame lag when creating resources
 	// in retained mode.
-	
-	ZLGfxDevice::End ();
 }

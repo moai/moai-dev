@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIDYNAMICGLYPHCACHEPAGE_H
@@ -29,15 +29,18 @@ private:
 	typedef MOAISpanList < GlyphList > RowList;
 	typedef MOAISpanList < GlyphList >::Span RowSpan;
 
-	RowList mRows;
+	u32			mPageID;
+	RowList 	mRows;
 
 	MOAIImageTexture* mImageTexture;
 	
 	//ZLColor::ColorFormat mColorFormat;
 
-	float mThreshold;
+	float		mThreshold;
 
 public:
+	
+	GET_SET ( u32, PageID, mPageID )
 	
 	//----------------------------------------------------------------//
 	void			AffirmCanvas					( MOAIDynamicGlyphCache& owner, MOAIFont& font );

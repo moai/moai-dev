@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -22,7 +22,7 @@
 STLString& STLString::assign ( cc8* str ) {
 
 	if ( str ) {
-		this->string::assign ( str );
+		this->std::string::assign ( str );
 	}
 	else {
 		this->clear ();
@@ -180,13 +180,13 @@ int STLString::to_int () {
 //----------------------------------------------------------------//
 void STLString::to_lower () {
 
-	transform ( this->begin (), this->end (),this->begin (), ( int( * )( int ))tolower );
+	transform ( this->begin (), this->end (),this->begin (), ( char( * )( char ))tolower );
 }
 
 //----------------------------------------------------------------//
 void STLString::to_upper () {
 
-	transform ( this->begin (), this->end (),this->begin (), ( int( * )( int ))toupper );
+	transform ( this->begin (), this->end (),this->begin (), ( char( * )( char ))toupper );
 }
 
 //----------------------------------------------------------------//
@@ -206,7 +206,7 @@ void STLString::write_var ( cc8* format, va_list args ) {
 	char buffer [ 1024 ];
 	char* str = zl_vsnprintf_alloc ( buffer, sizeof ( buffer ), format, args );
 	
-	this->append ( buffer );
+	this->append ( str );
 	
 	if ( buffer != str ) {
 		free ( str );

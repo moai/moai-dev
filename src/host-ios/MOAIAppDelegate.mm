@@ -1,5 +1,5 @@
 //----------------------------------------------------------------//
-// Copyright (c) 2010-2011 Zipline Games, Inc. 
+// Copyright (c) 2010-2017 Zipline Games, Inc. 
 // All Rights Reserved. 
 // http://getmoai.com
 //----------------------------------------------------------------//
@@ -25,21 +25,23 @@
 	//================================================================//	
 
 	//----------------------------------------------------------------//
-	-( void ) application:( UIApplication* )application didFailToRegisterForRemoteNotificationsWithError:( NSError* )error {
-
-        [ mMoaiView application:application didFailToRegisterForRemoteNotificationsWithError:error ];
-	}
+	// TODO: restore notifications
+//	-( void ) application:( UIApplication* )application didFailToRegisterForRemoteNotificationsWithError:( NSError* )error {
+//
+//        [ mMoaiView application:application didFailToRegisterForRemoteNotificationsWithError:error ];
+//	}
 
 	//----------------------------------------------------------------//
 	-( BOOL ) application:( UIApplication* )application didFinishLaunchingWithOptions:( NSDictionary* )launchOptions {
 		
-        [ application setStatusBarHidden:true ];
+        //[ application setStatusBarHidden:true ];
         
         [ MOAIView application:application didFinishLaunchingWithOptions:launchOptions ];
         
         // clear old notifications
-        NSArray* scheduledNotifications = [ NSArray arrayWithArray:application.scheduledLocalNotifications ];
-        application.scheduledLocalNotifications = scheduledNotifications;
+        // TODO: deprecated
+//        NSArray* scheduledNotifications = [ NSArray arrayWithArray:application.scheduledLocalNotifications ];
+//        application.scheduledLocalNotifications = scheduledNotifications;
 
         CGRect nativeBounds = [[ UIScreen mainScreen ] bounds ];
         
@@ -51,6 +53,7 @@
         
         mMoaiVC = [[ UIViewController alloc ] init ];
         mMoaiVC.view = mMoaiView;
+        [ mMoaiVC prefersStatusBarHidden ];
 
         mWindow = [[ UIWindow alloc ] init ];
         [ mWindow makeKeyAndVisible ];
@@ -77,48 +80,54 @@
             // if Lua Main is not defined in the plist at all, use the default (main.lua)
             [ mMoaiView run:@"main.lua" ];
         }
-        
-        // check to see if the app was lanuched from a remote notification
-        // these keeps the old behavior, in which we 'fall back' on remote notifications
-        // TODO: is this correct?
-        NSDictionary* pushBundle = [ launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey ];
 
-        // fall back on remote notifications bundle
-        if ( pushBundle == NULL ) {
-            pushBundle = [ launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey ];
-        }
+		// TODO: restore notification handling
 
-        // if we have a bundle, handle it
-        if ( pushBundle != NULL ) {
-            [ mMoaiView application:application didReceiveRemoteNotification:pushBundle ];
-        }
-        
+//        // check to see if the app was lanuched from a remote notification
+//        // these keeps the old behavior, in which we 'fall back' on remote notifications
+//        // TODO: is this correct?
+//        NSDictionary* pushBundle = [ launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey ];
+//
+//        // fall back on remote notifications bundle
+//        if ( pushBundle == NULL ) {
+//            pushBundle = [ launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey ];
+//        }
+//
+//        // if we have a bundle, handle it
+//        if ( pushBundle != NULL ) {
+//            [ mMoaiView application:application didReceiveRemoteNotification:pushBundle ];
+//        }
+		
         return YES;
 	}
 	
     //----------------------------------------------------------------//
-    -( void ) application:( UIApplication* )application didReceiveLocalNotification:( UILocalNotification* )notification {
-    
-        //[ mMoaiView application:application didReceiveLocalNotification:notification ];
-    }   
+    // TODO: deprecated
+//    -( void ) application:( UIApplication* )application didReceiveLocalNotification:( UILocalNotification* )notification {
+//
+//        //[ mMoaiView application:application didReceiveLocalNotification:notification ];
+//    }
 
 	//----------------------------------------------------------------//
-	-( void ) application:( UIApplication* )application didReceiveRemoteNotification:( NSDictionary* )pushBundle {
+	// TODO: deprecated
+//	-( void ) application:( UIApplication* )application didReceiveRemoteNotification:( NSDictionary* )pushBundle {
+//
+//        [ mMoaiView application:application didReceiveRemoteNotification:pushBundle ];
+//	}
 
-        [ mMoaiView application:application didReceiveRemoteNotification:pushBundle ];
-	}
-	
      //----------------------------------------------------------------//
-    -( void ) application:( UIApplication* )application didRegisterForRemoteNotificationsWithError:( NSError* )error {
-        
-        //[ mMoaiView application:application didRegisterForRemoteNotificationsWithError:error ];
-    }
+     // TODO: restore notifications
+//    -( void ) application:( UIApplication* )application didRegisterForRemoteNotificationsWithError:( NSError* )error {
+//
+//        //[ mMoaiView application:application didRegisterForRemoteNotificationsWithError:error ];
+//    }
 
 	//----------------------------------------------------------------//
-	-( void ) application:( UIApplication* )application didRegisterForRemoteNotificationsWithDeviceToken:( NSData* )deviceToken {
-
-        [ mMoaiView application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken ];
-	}
+	 // TODO: restore notifications
+//	-( void ) application:( UIApplication* )application didRegisterForRemoteNotificationsWithDeviceToken:( NSData* )deviceToken {
+//
+//        [ mMoaiView application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken ];
+//	}
 
 	//----------------------------------------------------------------//
 	-( void ) applicationDidBecomeActive:( UIApplication* )application {
@@ -133,9 +142,10 @@
 	}
 	
     //----------------------------------------------------------------//
-    -( BOOL )application:( UIApplication* )application openURL:( NSURL* )url sourceApplication:( NSString* )sourceApplication annotation:( id )annotation {
-    
-        return [ mMoaiView application:application openURL:url sourceApplication:sourceApplication annotation:annotation ];
-    }
+    // TODO: deprecated
+//    -( BOOL )application:( UIApplication* )application openURL:( NSURL* )url sourceApplication:( NSString* )sourceApplication annotation:( id )annotation {
+//
+//        return [ mMoaiView application:application openURL:url sourceApplication:sourceApplication annotation:annotation ];
+//    }
 
 @end

@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -12,9 +12,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 512, 512 )
 viewport:setScale ( 512, 512 )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 file = assert ( io.open ( 'shader.vsh', mode ))
 vsh = file:read ( '*all' )
@@ -42,12 +42,12 @@ grid:setRow ( 6, 	0x29, 0x2a, 0x2b, 0x2c, 0x2d, 0x2e, 0x2f, 0x30 )
 grid:setRow ( 7, 	0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38 )
 grid:setRow ( 8, 	0x39, 0x3a, 0x3b, 0x3c, 0x3d, 0x3e, 0x3f, 0x40 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( tileDeck )
 prop:setGrid ( grid )
 prop:setLoc ( -128, 128 )
 prop:setScl ( 1, -1 )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 prop:moveRot ( 360, 6 )
 prop:moveLoc ( -512, 0, 6 )

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -104,7 +104,7 @@ int	MOAIAnim::_setLink ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIAnim::Apply ( float t ) {
 	
-	MOAIAttrOp attrOp;
+	MOAIAttribute attr;
 	
 	u32 total = ( u32 )this->mLinks.Size ();
 	for ( u32 i = 0; i < total; ++i ) {
@@ -116,8 +116,8 @@ void MOAIAnim::Apply ( float t ) {
 		if ( curve && target ) {
 			
 			if ( !link.mRelative ) {
-				curve->GetValue ( attrOp, t );
-				target->ApplyAttrOp ( link.mAttrID, attrOp, MOAIAttrOp::SET );
+				curve->GetValue ( attr, t );
+				target->ApplyAttrOp ( link.mAttrID, attr, MOAIAttribute::SET );
 			}
 			target->ScheduleUpdate ();
 		}
@@ -132,7 +132,7 @@ void MOAIAnim::Apply ( float t0, float t1 ) {
 		return;
 	}
 	
-	MOAIAttrOp attrOp;
+	MOAIAttribute attr;
 	
 	u32 total = ( u32 )this->mLinks.Size ();
 	for ( u32 i = 0; i < total; ++i ) {
@@ -144,12 +144,12 @@ void MOAIAnim::Apply ( float t0, float t1 ) {
 		if ( curve && target ) {
 			
 			if ( link.mRelative ) {
-				curve->GetDelta ( attrOp, t0, t1 );
-				target->ApplyAttrOp ( link.mAttrID, attrOp, MOAIAttrOp::ADD );
+				curve->GetDelta ( attr, t0, t1 );
+				target->ApplyAttrOp ( link.mAttrID, attr, MOAIAttribute::ADD );
 			}
 			else {
-				curve->GetValue ( attrOp, t1 );
-				target->ApplyAttrOp ( link.mAttrID, attrOp, MOAIAttrOp::SET );
+				curve->GetValue ( attr, t1 );
+				target->ApplyAttrOp ( link.mAttrID, attr, MOAIAttribute::SET );
 			}
 			target->ScheduleUpdate ();
 		}
@@ -185,16 +185,6 @@ MOAIAnim::MOAIAnim () :
 MOAIAnim::~MOAIAnim () {
 
 	this->Clear ();
-}
-
-//----------------------------------------------------------------//
-void MOAIAnim::OnUpdate ( double step ) {
-
-	float t0 = this->GetTime ();
-	this->DoStep (( float )step );
-	float t1 = this->GetTime ();
-	
-	this->Apply ( t0, t1 );
 }
 
 //----------------------------------------------------------------//
@@ -245,5 +235,19 @@ void MOAIAnim::SetLink ( u32 linkID, MOAIAnimCurveBase* curve, MOAINode* target,
 		this->mLength = length;
 	}
 	this->mEndTime = this->mLength;
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIAnim::MOAIAction_Update ( double step ) {
+
+	float t0 = this->GetTime ();
+	this->DoStep (( float )step );
+	float t1 = this->GetTime ();
+	
+	this->Apply ( t0, t1 );
 }
 

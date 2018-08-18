@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIKEYBOARDIOS_H
@@ -75,7 +75,7 @@
 	@const	RETURN_KEY_SEND
 */
 class MOAIKeyboardIOS :
-	public MOAIGlobalClass < MOAIKeyboardIOS, MOAIGlobalEventSource > {
+	public ZLContextClass < MOAIKeyboardIOS, MOAIGlobalEventSource > {
 private:
 
 	enum {

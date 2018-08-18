@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -13,6 +13,10 @@
 // globals
 //================================================================//
 
+static bool	sIsOpenGLES					= false;
+static u32	sMajorVersion				= 0;
+static u32	sMinorVersion				= 0;
+
 static u32	sMaxTextureUnits			= 0;
 static u32	sMaxTextureSize				= 0;
 static u32	sOperationDepth				= 0; // this is just the counter for tracking begin/end calls
@@ -20,24 +24,6 @@ static u32	sOperationDepth				= 0; // this is just the counter for tracking begi
 //================================================================//
 // ZLGfxDevice
 //================================================================//
-
-//----------------------------------------------------------------//
-void ZLGfxDevice::Begin () {
-
-	//zglBegin ();
-}
-
-//----------------------------------------------------------------//
-void ZLGfxDevice::End () {
-
-	//zglEnd ();
-}
-
-//----------------------------------------------------------------//
-void ZLGfxDevice::Finalize () {
-
-	//zglFinalize ();
-}
 
 //----------------------------------------------------------------//
 u32 ZLGfxDevice::GetCap ( u32 cap ) {
@@ -87,11 +73,15 @@ cc8* ZLGfxDevice::GetString ( u32 stringID ) {
 	return ( cc8* )glGetString ( ZLGfxEnum::MapZLToNative ( stringID ));
 }
 
+char Lower(char c) {
+	return (char) ::tolower((int)c);
+}
+
 //----------------------------------------------------------------//
 void ZLGfxDevice::Initialize () {
 
-	u32 majorVersion = 0;
-	u32 minorVersion = 0;
+	//u32 majorVersion = 0;
+	//u32 minorVersion = 0;
 
 	bool isOpenGLES = false;
 
@@ -103,13 +93,13 @@ void ZLGfxDevice::Initialize () {
 		}
 	#endif
 
-	string version = ZLGfxDevice::GetString ( ZGL_STRING_VERSION );
-	std::transform ( version.begin (), version.end(), version.begin(), ::tolower );
+	STLString version = ZLGfxDevice::GetString ( ZGL_STRING_VERSION );
+	std::transform ( version.begin (), version.end(), version.begin(), Lower );
 	
-	string gles = "opengl es";
+	STLString gles = "opengl es";
 
 	if ( version.find ( gles ) != version.npos ) {
-		isOpenGLES = true;
+		sIsOpenGLES = true;
 		version = version.substr ( gles.length ());
 
 		size_t space = version.find ( ' ' );
@@ -118,13 +108,13 @@ void ZLGfxDevice::Initialize () {
 		}
 	}
 	else {
-		isOpenGLES = false;
+		sIsOpenGLES = false;
 	}
 
 	version = version.substr ( 0, 3 );
 
-	majorVersion = version.at ( 0 ) - '0';
-	minorVersion = version.at ( 2 ) - '0';
+	sMajorVersion = version.at ( 0 ) - '0';
+	sMinorVersion = version.at ( 2 ) - '0';
 
 	#ifdef EMSCRIPTEN 
 		isOpenGLES = true;
@@ -164,7 +154,7 @@ void ZLGfxDevice::Initialize () {
 
 	int maxTextureUnits = 0;
 
-	if ( majorVersion == 1 ) {
+	if ( sMajorVersion == 1 ) {
 		assert ( false ); // OpenGL ES1 no longer supported
 	}
 	else {

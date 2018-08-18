@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -10,18 +10,18 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 480 )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( "moai.png" )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
 prop:setLoc ( 0, 80 )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 font = MOAIFont.new ()
 font:loadFromTTF ( "arialbd.ttf", " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,.?!", 12, 163 )
@@ -32,7 +32,7 @@ textbox:setRect ( -160, -80, 160, 80 )
 textbox:setLoc ( 0, -100 )
 textbox:setYFlip ( true )
 textbox:setAlignment ( MOAITextBox.CENTER_JUSTIFY )
-layer:insertProp ( textbox )
+textbox:setPartition ( layer )
 
 textbox:setString ( "Moai has installed correctly! <c:0F0>Check out the samples folder.<c>" )
 textbox:spool ()

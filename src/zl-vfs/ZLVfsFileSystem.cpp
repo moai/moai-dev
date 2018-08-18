@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -355,7 +355,7 @@ std::string ZLVfsFileSystem::GetRelativePath ( const char* path, const char* bas
 
 	// count the number of steps up in the current directory
 	for ( size_t i = same; workpath [ i ]; ++i ) {
-		if ( base [ i ] == '/' ) {
+		if ( workpath [ i ] == '/' ) {
 			depth++;
 		}
 	}

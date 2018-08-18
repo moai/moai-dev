@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -156,16 +156,8 @@ int MOAIFontReader::_renderGlyph ( lua_State* L ) {
 	
 		float x = state.GetValue < float >( 3, 0.0f );
 		float y = state.GetValue < float >( 4, 0.0f );
-		
-		ZLColorBlendFunc blendFunc;
-		blendFunc.mEquation = ZLColor::BLEND_EQ_NONE;
-		
-		if ( state.CheckParams ( 5, "NN", false )) {
-			blendFunc.mSrcFactor	= ( ZLColor::BlendFactor )state.GetValue < u32 >( 5, ( u32 )ZLColor::BLEND_FACTOR_SRC_ALPHA );
-			blendFunc.mDstFactor	= ( ZLColor::BlendFactor )state.GetValue < u32 >( 6, ( u32 )ZLColor::BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
-			blendFunc.mEquation		= ( ZLColor::BlendEquation )state.GetValue < u32 >( 7, ( u32 )ZLColor::BLEND_EQ_ADD );
-		}
-		result = self->RenderGlyph ( *image, x, y, blendFunc );
+
+		result = self->RenderGlyph ( *image, x, y );
 	}
 	state.Push ( result != MOAIFontReader::OK );
 	return 1;
@@ -185,6 +177,14 @@ int MOAIFontReader::_selectGlyph ( lua_State* L ) {
 	u32 result = self->SelectGlyph ( state.GetValue < u32 >( 2, MOAIFontReader::GLYPH_CODE_NULL ));
 	state.Push ( result != MOAIFontReader::OK );
 	return 1;
+}
+
+//----------------------------------------------------------------//
+int MOAIFontReader::_setBlendMode ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFontReader, "U" )
+	
+	self->mBlendMode.Init ( state, 2 );
+	return 0;
 }
 
 //================================================================//
@@ -252,18 +252,11 @@ void MOAIFontReader::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "renderGlyph",		_renderGlyph },
 		{ "selectFace",			_selectFace },
 		{ "selectGlyph",		_selectGlyph },
+		{ "setBlendMode",		_setBlendMode },
 		{ NULL, NULL }
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-int MOAIFontReader::RenderGlyph ( MOAIImage& image, float x, float y ) {
-
-	ZLColorBlendFunc blendFunc;
-	blendFunc.mEquation = ZLColor::BLEND_EQ_NONE;
-	return this->RenderGlyph ( image, x, y, blendFunc );
 }
 
 //----------------------------------------------------------------//

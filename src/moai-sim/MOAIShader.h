@@ -1,9 +1,10 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAISHADER_H
 #define	MOAISHADER_H
 
+#include <moai-sim/MOAIShaderUniformSchema.h>
 #include <moai-sim/MOAIShaderProgram.h>
 
 //================================================================//
@@ -13,27 +14,28 @@
 	@text	This represents the "instance" of a shader program. Its purpose
 			is to enable sharing of a single program across multiple sets of
 			uniform values and to expose uniform values as MOAINode attributes.
-			
-			As uniform values change, they will "dirty" the underlying shader
-			program and cause its values to re-bind prior to drawing. If minimal
-			re-binds are desired, simply create one shader program per shader
-			instance.
 */
 class MOAIShader :
 	public virtual MOAINode {
 protected:
 
-	friend class MOAIGfxStateCache;
+	friend class MOAIGfxStateGPUCache;
 	friend class MOAIShaderProgram;
 
 	MOAILuaSharedPtr < MOAIShaderProgram >		mProgram;
-	ZLLeanArray < MOAIShaderUniformBuffer >		mUniformBuffers;
+	ZLLeanArray < u8 >							mPendingUniformBuffer;
 
 	//----------------------------------------------------------------//
-	static int				_setProgram				( lua_State* L );
-	
+	static int				_getAttributeID				( lua_State* L );
+	static int				_setProgram					( lua_State* L );
+	static int				_setUniform					( lua_State* L );
+	static int				_setUniformArrayItem		( lua_State* L );
+
 	//----------------------------------------------------------------//
-	void					UpdateAndBindUniforms	();
+	bool					IsDirty					();
+
+	//----------------------------------------------------------------//
+	bool					MOAINode_ApplyAttrOp		( u32 attrID, MOAIAttribute& attr, u32 op );
 
 public:
 
@@ -42,13 +44,19 @@ public:
 	GET ( MOAIShaderProgram*, Program, mProgram )
 
 	//----------------------------------------------------------------//
+	void					ApplyUniforms			();
 	static MOAIShader*		AffirmShader			( MOAILuaState& state, int idx );
-	bool					ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	void					BindUniforms			();
+	void					Bless					();
+	bool					HasDirtyUniforms		();
 							MOAIShader				();
 							~MOAIShader				();
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
+	void					ResizeUniformArray		( u32 uniformID, u32 count );
+	void					ScheduleTextures		();
 	void					SetProgram				( MOAIShaderProgram* program );
+	void					UpdateUniforms			();
 };
 
 #endif

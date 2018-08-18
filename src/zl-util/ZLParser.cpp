@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -353,7 +353,7 @@ void ZLParser::RetrieveToken ( ZLDfaToken* token, ZLLexStream* scanner ) {
 			assert ( edge.mCharSetID < this->mCGT->mCharSetTable.Size ());
 			ZLCgtCharSet& charSet = this->mCGT->mCharSetTable [ edge.mCharSetID ];
 			
-			if ( charSet.mCharacters.find (( char )lookahead ) != string::npos ) {
+			if ( charSet.mCharacters.find (( char )lookahead ) != STLString::npos ) {
 				dfaState = &this->mCGT->mDFAStateTable [ edge.mTargetStateID ];
 				transition = true;
 				break;

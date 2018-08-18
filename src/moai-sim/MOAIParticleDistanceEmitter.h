@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIPARTICLEDISTANCEEMITTER_H
@@ -31,8 +31,10 @@ private:
 	
 	//----------------------------------------------------------------//
 	float			GetRandomDistance		();
-	void			OnDepNodeUpdate			();
-	void			OnUpdate				( double step );
+	
+	//----------------------------------------------------------------//
+	void			MOAIAction_Update		( double step );
+	void			MOAINode_Update			();
 
 public:
 	

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -506,6 +506,7 @@ void MOAILuaRuntime::Close () {
 		lua_close ( this->mState );
 		this->mState = 0;
 	}
+	this->InvalidateContext ();
 }
 
 //----------------------------------------------------------------//
@@ -760,6 +761,8 @@ void MOAILuaRuntime::FindLuaRefs ( lua_State* L, int idx, FILE* file, STLString 
 //----------------------------------------------------------------//
 void MOAILuaRuntime::ForceGarbageCollection () {
 
+	this->PurgeUserdataCache ();
+
 	lua_State* L = this->mState;
 
 	// Make sure that anything that can be collected, is. Note: we collect
@@ -1001,7 +1004,7 @@ void MOAILuaRuntime::RegisterLuaClass ( MOAILuaState& state ) {
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

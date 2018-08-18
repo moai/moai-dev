@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -180,20 +180,6 @@ int MOAITimer::_toggleDirection ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAITimer::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
-
-	if ( MOAITimerAttr::Check ( attrID )) {
-		attrID = UNPACK_ATTR ( attrID );
-		
-		if ( attrID == ATTR_TIME ) {
-			attrOp.Apply ( this->GetTime (), op, MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_FLOAT );
-			return true;
-		}
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
 void MOAITimer::DoStep ( float step ) {
 
 	if ( step == 0.0f ) return;
@@ -209,8 +195,8 @@ void MOAITimer::DoStep ( float step ) {
 	float t0 = this->mTime;
 	this->mTime += step * this->mSpeed * this->mDirection;
 	
-	float t1 = this->mTime;
-	float result = 0.0f;
+	//float t1 = this->mTime;
+	//float result = 0.0f;
 	
 	switch ( this->mMode ) {
 	
@@ -227,7 +213,7 @@ void MOAITimer::DoStep ( float step ) {
 			else {
 				this->GenerateKeyframeCallbacks ( t0, this->mTime, false );
 			}
-			result = this->mTime - t0;
+			//result = this->mTime - t0;
 			break;
 		}
 		
@@ -244,7 +230,7 @@ void MOAITimer::DoStep ( float step ) {
 			else {
 				this->GenerateKeyframeCallbacks ( t0, this->mTime, false );
 			}
-			result = this->mTime - t0;
+			//result = this->mTime - t0;
 			break;
 		}
 		
@@ -274,7 +260,7 @@ void MOAITimer::DoStep ( float step ) {
 			else {
 				this->GenerateKeyframeCallbacks ( t0, this->mTime, false );
 			}
-			result = t1 - t0;
+			//result = t1 - t0;
 			break;
 		}
 		
@@ -304,7 +290,7 @@ void MOAITimer::DoStep ( float step ) {
 			else {
 				this->GenerateKeyframeCallbacks ( t0, this->mTime, false );
 			}
-			result = t1 - t0;
+			//result = t1 - t0;
 			break;
 		}
 		
@@ -341,7 +327,7 @@ void MOAITimer::DoStep ( float step ) {
 			else {
 				this->GenerateKeyframeCallbacks ( t0, this->mTime, false );
 			}
-			result = this->mTime - t0;
+			//result = this->mTime - t0;
 			break;
 		}
 	}
@@ -418,19 +404,6 @@ float MOAITimer::GetTime () {
 }
 
 //----------------------------------------------------------------//
-bool MOAITimer::IsDone () {
-
-	if ( this->mMode == NORMAL ) {
-		return (( this->mTime < this->mStartTime ) || ( this->mTime >= this->mEndTime ));
-	}
-	
-	if ( this->mMode == REVERSE ) {
-		return (( this->mTime <= this->mStartTime ) || ( this->mTime > this->mEndTime ));
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
 MOAITimer::MOAITimer () :
 	mTime ( 0.0f ),
 	mCycle ( 0.0f ),
@@ -461,10 +434,6 @@ void MOAITimer::OnBeginSpan () {
 		state.Push ( this->mTimesExecuted );
 		state.DebugCall ( 2, 0 );
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAITimer::OnDepNodeUpdate () {
 }
 
 //----------------------------------------------------------------//
@@ -499,28 +468,6 @@ void MOAITimer::OnLoop () {
 	if ( this->PushListenerAndSelf ( EVENT_TIMER_LOOP, state )) {
 		state.DebugCall ( 1, 0 );
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAITimer::OnStart () {
-	MOAIAction::OnStart ();
-
-	if( this->mDirection > 0.0f ) {
-		this->mTime = this->mStartTime;
-	}
-	else {
-		this->mTime = this->mEndTime;
-	}
-	this->mCycle = 0.0f;
-	this->mTimesExecuted = 0.0f;
-	
-	this->OnBeginSpan ();
-}
-
-//----------------------------------------------------------------//
-void MOAITimer::OnUpdate ( double step ) {
-
-	this->DoStep (( float )step ); // TODO: change everything to doubles
 }
 
 //----------------------------------------------------------------//
@@ -669,4 +616,57 @@ void MOAITimer::ToggleDirection () {
 			this->mDirection = -1.0f;
 			break;
 	}
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAITimer::MOAIAction_IsDone () {
+
+	if ( this->mMode == NORMAL ) {
+		return (( this->mTime < this->mStartTime ) || ( this->mTime >= this->mEndTime ));
+	}
+	
+	if ( this->mMode == REVERSE ) {
+		return (( this->mTime <= this->mStartTime ) || ( this->mTime > this->mEndTime ));
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAITimer::MOAIAction_Start () {
+	MOAIAction::MOAIAction_Start ();
+
+	if( this->mDirection > 0.0f ) {
+		this->mTime = this->mStartTime;
+	}
+	else {
+		this->mTime = this->mEndTime;
+	}
+	this->mCycle = 0.0f;
+	this->mTimesExecuted = 0.0f;
+	
+	this->OnBeginSpan ();
+}
+
+//----------------------------------------------------------------//
+void MOAITimer::MOAIAction_Update ( double step ) {
+
+	this->DoStep (( float )step ); // TODO: change everything to doubles
+}
+
+//----------------------------------------------------------------//
+bool MOAITimer::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	if ( MOAITimerAttr::Check ( attrID )) {
+		attrID = UNPACK_ATTR ( attrID );
+		
+		if ( attrID == ATTR_TIME ) {
+			attr.Apply ( this->GetTime (), op, MOAIAttribute::ATTR_READ );
+			return true;
+		}
+	}
+	return false;
 }

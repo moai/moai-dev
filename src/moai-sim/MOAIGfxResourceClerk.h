@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIGFXRESOURCECLERK_H
@@ -18,7 +18,7 @@ private:
 	ZLLeanList < MOAIGfxResource* >		mPendingForLoadList;
 	ZLLeanList < MOAIGfxResource* >		mPendingForDrawList;
 	
-	ZLLeanStack < ZLGfxHandle*, 32 >	mDeleterStack;
+	ZLLeanStack < ZLGfxHandle, 32 >	mDeleterStack;
 
 	//----------------------------------------------------------------//
 	void			InsertGfxResource			( MOAIGfxResource& resource );
@@ -35,7 +35,7 @@ public:
 	friend class MOAIRenderMgr;
 	
 	//----------------------------------------------------------------//
-	static void		DeleteOrDiscardHandle		( ZLGfxHandle*& handle, bool shouldDelete );
+	static void		DeleteOrDiscard				( const ZLGfxHandle& handle, bool shouldDelete );
 	void			DiscardResources			();
 					MOAIGfxResourceClerk		();
 					~MOAIGfxResourceClerk		();

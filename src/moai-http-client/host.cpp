@@ -1,10 +1,9 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
 #include <moai-http-client/host.h>
 #include <moai-http-client/headers.h>
-
 
 #if MOAI_WITH_ARES
 	#include <ares.h>
@@ -29,10 +28,10 @@ void AKUHttpClientAppFinalize () {
 //----------------------------------------------------------------//
 void AKUHttpClientAppInitialize () {
 
-	#if MOAI_WITH_OPENSSL
+	//#if MOAI_WITH_OPENSSL
 	//	SSL_library_init ();
-//		SSL_load_error_strings ();
-	#endif
+	//	SSL_load_error_strings ();
+	//#endif
 
 	#if MOAI_WITH_ARES
 		ares_set_default_dns_addr ( 0x08080808 );

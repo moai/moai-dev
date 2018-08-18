@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -84,6 +84,20 @@ int MOAIColor::_moveColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIColor::_packRGBA ( lua_State* L ) {
+	MOAI_LUA_SETUP_CLASS ( "" )
+
+	float r		= state.GetValue < float >( 1, 1.0f );
+	float g		= state.GetValue < float >( 2, 1.0f );
+	float b		= state.GetValue < float >( 3, 1.0f );
+	float a		= state.GetValue < float >( 4, 1.0f );
+
+	state.Push ( ZLColor::PackRGBA ( r, g, b, a ));
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	seekColor
 	@text	Animate the color by applying a delta. Delta is computed
 			given a target value. Creates and returns a MOAIEaseDriver
@@ -127,7 +141,7 @@ int MOAIColor::_seekColor ( lua_State* L ) {
 	}
 	
 	ZLColorVec color = state.GetColor ( 2, 0.0f, 0.0f, 0.0f, 0.0f );
-	if ( !color.Compare ( *self )) {
+	if ( !color.IsEqual ( *self )) {
 		self->Set ( color.mR, color.mG, color.mB, color.mA );
 		self->ScheduleUpdate ();
 	}
@@ -150,7 +164,7 @@ int MOAIColor::_setColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIColor, "UNNN" )
 
 	ZLColorVec color = state.GetColor ( 2, 0.0f, 0.0f, 0.0f, 1.0f );
-	if ( !color.Compare ( *self )) {
+	if ( !color.IsEqual ( *self )) {
 		self->Set ( color.mR, color.mG, color.mB, color.mA );
 		self->ScheduleUpdate ();
 	}
@@ -173,9 +187,23 @@ int MOAIColor::_setParent ( lua_State* L ) {
 	
 	self->SetAttrLink ( PACK_ATTR ( MOAIColor, INHERIT_COLOR ), parent, PACK_ATTR ( MOAIColor, COLOR_TRAIT ));
 	
-	//MOAILogF ( state, MOAILogMessages::MOAI_FunctionDeprecated_S, "setParent" );
+	//MOAILogF ( state, MOAISTRING_FunctionDeprecated_S, "setParent" );
 	
 	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIColor::_unpackRGBA ( lua_State* L ) {
+	MOAI_LUA_SETUP_CLASS ( "" )
+
+	u32 rgba = state.GetValue < u32 >( 1, 0xffffffff );
+
+	ZLColorVec color;
+	color.SetRGBA ( rgba );
+
+	state.Push ( color );
+	return 4;
 }
 
 //================================================================//
@@ -205,33 +233,7 @@ MOAIColor* MOAIColor::AffirmColor ( MOAILuaState& state, int idx ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIColor::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
-
-	if ( MOAIColorAttr::Check ( attrID )) {
-
-		switch ( UNPACK_ATTR ( attrID )) {
-			case ATTR_R_COL:
-				this->mR = ZLFloat::Clamp ( attrOp.Apply ( this->mR, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ), 0.0f, 1.0f );
-				return true;
-			case ATTR_G_COL:
-				this->mG = ZLFloat::Clamp ( attrOp.Apply ( this->mG, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ), 0.0f, 1.0f );
-				return true;
-			case ATTR_B_COL:
-				this->mB = ZLFloat::Clamp ( attrOp.Apply ( this->mB, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ), 0.0f, 1.0f );
-				return true;
-			case ATTR_A_COL:
-				this->mA = ZLFloat::Clamp ( attrOp.Apply ( this->mA, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ), 0.0f, 1.0f );
-				return true;
-			case COLOR_TRAIT:
-				attrOp.ApplyNoAdd < ZLColorVec* >( &this->mColor, op, MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_COLOR );
-				return true;
-		}
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
-ZLColorVec MOAIColor::GetColorTrait () {
+ZLColorVec MOAIColor::GetColorTrait () const {
 
 	return this->mColor;
 }
@@ -258,24 +260,6 @@ MOAIColor::~MOAIColor () {
 }
 
 //----------------------------------------------------------------//
-void MOAIColor::OnDepNodeUpdate () {
-
-	this->mColor = *this;
-
-	ZLColorVec* color = 0;
-	
-	color = this->GetLinkedValue < ZLColorVec* >( MOAIColorAttr::Pack ( INHERIT_COLOR ), 0 );
-	if ( color ) {
-		this->mColor.Modulate ( *color );
-	}
-	
-	color = this->GetLinkedValue < ZLColorVec* >( MOAIColorAttr::Pack ( ADD_COLOR ), 0 );
-	if ( color ) {
-		this->mColor.Add ( *color );
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIColor::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAINode::RegisterLuaClass ( state );
@@ -288,6 +272,14 @@ void MOAIColor::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "ADD_COLOR", MOAIColorAttr::Pack ( ADD_COLOR ));
 	state.SetField ( -1, "INHERIT_COLOR", MOAIColorAttr::Pack ( INHERIT_COLOR ));
 	state.SetField ( -1, "COLOR_TRAIT", MOAIColorAttr::Pack ( COLOR_TRAIT ));
+	
+	luaL_Reg regTable [] = {
+		{ "packRGBA",				_packRGBA },
+		{ "unpackRGBA",				_unpackRGBA },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
@@ -306,3 +298,54 @@ void MOAIColor::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_register ( state, 0, regTable );
 }
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIColor::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+
+	if ( MOAIColorAttr::Check ( attrID )) {
+
+		switch ( UNPACK_ATTR ( attrID )) {
+		
+			case ATTR_R_COL:
+				this->mR = ZLFloat::Clamp ( attr.Apply ( this->mR, op, MOAIAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				return true;
+				
+			case ATTR_G_COL:
+				this->mG = ZLFloat::Clamp ( attr.Apply ( this->mG, op, MOAIAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				return true;
+				
+			case ATTR_B_COL:
+				this->mB = ZLFloat::Clamp ( attr.Apply ( this->mB, op, MOAIAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				return true;
+				
+			case ATTR_A_COL:
+				this->mA = ZLFloat::Clamp ( attr.Apply ( this->mA, op, MOAIAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				return true;
+				
+			case COLOR_TRAIT:
+				attr.ApplyNoAdd ( this->mColor, op, MOAIAttribute::ATTR_READ );
+				return true;
+		}
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAIColor::MOAINode_Update () {
+
+	this->mColor = *this;
+	
+	MOAIAttribute attr;
+	if ( this->PullLinkedAttr ( MOAIColorAttr::Pack ( INHERIT_COLOR ), attr )) {
+		this->mColor.Modulate ( attr.GetValue ( ZLColorVec::WHITE ));
+	}
+	
+	if ( this->PullLinkedAttr ( MOAIColorAttr::Pack ( ADD_COLOR ), attr )) {
+		this->mColor.Add ( attr.GetValue ( ZLColorVec::WHITE ));
+	}
+}
+

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -266,7 +266,7 @@ void MOAIBox2DArbiter::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "POST_SOLVE", ( u32 )POST_SOLVE );
 	
 	luaL_Reg regTable [] = {
-		{ "new",							MOAILogMessages::_alertNewIsUnsupported },
+		{ "new",							MOAILuaObject::_alertNewIsUnsupported },
 		{ NULL, NULL }
 	};
 	
@@ -282,7 +282,7 @@ void MOAIBox2DArbiter::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getNormalImpulse",			_getNormalImpulse },
 		{ "getTangentImpulse",			_getTangentImpulse },
 		{ "setContactEnabled",			_setContactEnabled },
-		{ "new",						MOAILogMessages::_alertNewIsUnsupported },
+		{ "new",						MOAILuaObject::_alertNewIsUnsupported },
 		{ NULL, NULL }
 	};
 	

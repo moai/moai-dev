@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -20,8 +20,8 @@ end
 
 MOAISim.openWindow ( 'test', 320, 480 )
 
-layer = MOAILayer2D.new ()
-MOAISim.pushRenderPass ( layer )
+layer = MOAIPartitionViewLayer.new ()
+layer:pushRenderPass ()
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
@@ -36,13 +36,13 @@ gfxQuad:setTexture ( "moai.png" )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 
 function addSprite ( x, y, xScl, yScl, name )
-	local prop = MOAIProp2D.new ()
+	local prop = MOAIProp.new ()
 	prop:setDeck ( gfxQuad )
 	prop:setPriority ( priority )
 	prop:setLoc ( x, y )
 	prop:setScl ( xScl, yScl )
 	prop.name = name
-	partition:insertProp ( prop )
+	prop:setPartition ( partition )
 end
 
 addSprite ( -64, 64, 0.5, 0.5, "sprite1" )

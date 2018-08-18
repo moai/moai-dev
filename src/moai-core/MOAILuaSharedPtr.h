@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAILUASHAREDPTR_H
@@ -26,11 +26,6 @@ protected:
 	}
 
 public:
-
-	//----------------------------------------------------------------//
-	inline operator bool () {
-		return this->Get () != 0;
-	};
 
 	//----------------------------------------------------------------//
 	inline operator bool () const {
@@ -73,6 +68,16 @@ public:
 		this->mObject = assign.mObject;
 		(( MOAILuaSharedPtr < TYPE >& )assign ).mObject = 0;
 	};
+
+	//----------------------------------------------------------------//
+	inline bool operator == ( const MOAILuaSharedPtr < TYPE >& other ) const {
+		return this->mObject == other.mObject;
+	}
+	
+	//----------------------------------------------------------------//
+	inline bool operator != ( const MOAILuaSharedPtr < TYPE >& other ) const {
+		return this->mObject != other.mObject;
+	}
 
 	//----------------------------------------------------------------//
 	inline bool PushRef ( MOAILuaState& state ) {

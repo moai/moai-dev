@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIFONTSNAPPINGSHADER_FSH_H
@@ -14,10 +14,7 @@ static cc8* _fontSnappingShaderFSH = SHADER (
 	uniform sampler2D sampler;
 
 	void main () {
-		gl_FragColor [ 0 ] = colorVarying [ 0 ];
-		gl_FragColor [ 1 ] = colorVarying [ 1 ];
-		gl_FragColor [ 2 ] = colorVarying [ 2 ];
-		gl_FragColor [ 3 ] = colorVarying [ 3 ] * texture2D ( sampler, uvVarying )[ 3 ];
+		gl_FragColor = colorVarying * texture2D ( sampler, uvVarying )[ 3 ];
 	}
 );
 

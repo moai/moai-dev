@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -27,18 +27,20 @@
     <ClInclude Include="..\..\src\moai-sim\MOAIAnim.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIAnimCurve.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIAnimCurveBase.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIAnimCurveBone.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIAnimCurveQuat.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIAnimCurveVec.h" />
-    <ClInclude Include="..\..\src\moai-sim\MOAIAttrOp.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIAttribute.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIBitmapFontReader.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIBlendMode.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIBlocker.h" />
-    <ClInclude Include="..\..\src\moai-sim\MOAIBoundsDeck.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIButtonSensor.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAICamera.h" />
-    <ClInclude Include="..\..\src\moai-sim\MOAICamera2D.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAICameraAnchor2D.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAICameraFitter2D.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAICollisionConsts.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAICollisionDeck.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAICollisionPrim.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAICollisionProp.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAICollisionShape.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAICollisionWorld.h" />
@@ -47,13 +49,20 @@
     <ClInclude Include="..\..\src\moai-sim\MOAICoroutine.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIDebugLines.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIDeck.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIDeckPropBase.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIDeckProxy.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIDeckRemapper.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIDraw.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIDrawable.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIDrawDeck.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIDrawShape.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIDrawShapeImmediate.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIDrawShapeRetained.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIDynamicGlyphCache.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIDynamicGlyphCachePage.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIEaseDriver.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIEaseType.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIFancyGrid.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIFont.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIFontReader.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIFrameBuffer.h" />
@@ -64,9 +73,6 @@
     <ClInclude Include="..\..\src\moai-sim\MOAIGfxGlobalsCache.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIGfxMgr.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIGfxPipelineClerk.h" />
-    <ClInclude Include="..\..\src\moai-sim\MOAIGfxQuad2D.h" />
-    <ClInclude Include="..\..\src\moai-sim\MOAIGfxQuadDeck2D.h" />
-    <ClInclude Include="..\..\src\moai-sim\MOAIGfxQuadListDeck2D.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIGfxResource.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIGfxResourceClerk.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIGfxStateCache.h" />
@@ -74,19 +80,21 @@
     <ClInclude Include="..\..\src\moai-sim\MOAIGlyph.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIGlyphCache.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIGlyphSet.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIGraphicsGridProp.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIGraphicsProp.h" />
-    <ClInclude Include="..\..\src\moai-sim\MOAIGraphicsProp2D.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIGraphicsPropBase.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIGrid.h" />
-    <ClInclude Include="..\..\src\moai-sim\MOAIGridDeck2D.h" />
-    <ClInclude Include="..\..\src\moai-sim\MOAIGridFancy.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIGridPathGraph.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIGridPropBase.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIGridSpace.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIHitMask.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIImage.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIImageFormat.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIImageFormatMgr.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIImageLoadTask.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIImageTexture.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIIndexBuffer.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIIndexedPropBase.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIInputDevice.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIInputMgr.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIJoystickSensor.h" />
@@ -94,16 +102,28 @@
     <ClInclude Include="..\..\src\moai-sim\MOAIKeyCode.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIKeyCodeEnum.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAILayer.h" />
-    <ClInclude Include="..\..\src\moai-sim\MOAILayer2D.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAILayoutFrame.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAILight.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAILightFormat.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAILocationSensor.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIMaterial.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIMaterialBase.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIMaterialBatch.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIMaterialBatchHolder.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIMaterialHolder.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIMaterialMgr.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIMatrix.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIMesh.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIMeshPartition.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIMeshSparseQuadTree.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIMeshTernaryTree.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIMetaTileDeck2D.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIMotionSensor.h" />
-    <ClInclude Include="..\..\src\moai-sim\MOAIMultiTexture.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIMoveConstraint2D.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAINode.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAINodeMgr.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIOverlap.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIOverlapResolver.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIParticle.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIParticleCallbackPlugin.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIParticleDistanceEmitter.h" />
@@ -117,9 +137,12 @@
     <ClInclude Include="..\..\src\moai-sim\MOAIParticleTimedEmitter.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIPartition.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIPartitionCell.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIPartitionHolder.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIPartitionHull.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIPartitionLevel.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIPartitionResultBuffer.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIPartitionResultMgr.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIPartitionViewLayer.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIPath.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIPathFinder.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIPathGraph.h" />
@@ -127,13 +150,19 @@
     <ClInclude Include="..\..\src\moai-sim\MOAIPathTerrainDeck.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIPinTransform.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIPointerSensor.h" />
-    <ClInclude Include="..\..\src\moai-sim\MOAIProp.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIProfiler.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIProfilerAutoScope.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIProfilerContext.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIProfilerEntry.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIProfilerEntryBase.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIProfilerReport.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIProfilerReportBase.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIProfilerReportBox.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIProfilerScope.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIQuadBrush.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIRegion.h" />
-    <ClInclude Include="..\..\src\moai-sim\MOAIRenderable.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIRenderMgr.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIScissorRect.h" />
-    <ClInclude Include="..\..\src\moai-sim\MOAIScriptDeck.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIScriptNode.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAISelectionMesh.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAISensor.h" />
@@ -141,14 +170,17 @@
     <ClInclude Include="..\..\src\moai-sim\MOAIShaderMgr.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIShaderProgram.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIShaderUniform.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIShaderUniformBuffer.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIShaderUniformFormatter.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAISim.h" />
-    <ClInclude Include="..\..\src\moai-sim\MOAISingleTexture.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAISpanList.h" />
-    <ClInclude Include="..\..\src\moai-sim\MOAIStandardDeck.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAISpriteDeck2D.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIStaticGlyphCache.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIStretchPatch2D.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAISurfaceDeck2D.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAISurfaceSampler2D.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAITableLayer.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAITableViewLayer.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAITextBundle.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAITextLabel.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAITextLayout.h" />
@@ -166,7 +198,6 @@
     <ClInclude Include="..\..\src\moai-sim\MOAITimer.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAITouchSensor.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAITransform.h" />
-    <ClInclude Include="..\..\src\moai-sim\MOAITransform2D.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAITransformBase.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIVecPathGraph.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIVectorCombo.h" />
@@ -182,7 +213,9 @@
     <ClInclude Include="..\..\src\moai-sim\MOAIVertexBuffer.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIVertexFormat.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIVertexFormatMgr.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIViewLayer.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIViewport.h" />
+    <ClInclude Include="..\..\src\moai-sim\MOAIViewProj.h" />
     <ClInclude Include="..\..\src\moai-sim\MOAIWheelSensor.h" />
     <ClInclude Include="..\..\src\moai-sim\pch.h" />
     <ClInclude Include="..\..\src\moai-sim\shaders\MOAIDeck2DShader-fsh.h" />
@@ -203,6 +236,7 @@
     <ClInclude Include="..\..\src\moai-sim\shaders\MOAILineShader3D-vsh.h" />
     <ClInclude Include="..\..\src\moai-sim\shaders\MOAIMeshShader-fsh.h" />
     <ClInclude Include="..\..\src\moai-sim\shaders\MOAIMeshShader-vsh.h" />
+    <ClInclude Include="..\..\src\moai-sim\strings.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\moai-sim\host.cpp" />
@@ -212,17 +246,18 @@
     <ClCompile Include="..\..\src\moai-sim\MOAIAnim.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIAnimCurve.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIAnimCurveBase.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIAnimCurveBone.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIAnimCurveQuat.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIAnimCurveVec.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIBitmapFontReader.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIBlendMode.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIBlocker.cpp" />
-    <ClCompile Include="..\..\src\moai-sim\MOAIBoundsDeck.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIButtonSensor.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAICamera.cpp" />
-    <ClCompile Include="..\..\src\moai-sim\MOAICamera2D.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAICameraAnchor2D.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAICameraFitter2D.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAICollisionDeck.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAICollisionPrim.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAICollisionProp.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAICollisionShape.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAICollisionWorld.cpp" />
@@ -231,13 +266,20 @@
     <ClCompile Include="..\..\src\moai-sim\MOAICoroutine.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIDebugLines.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIDeck.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIDeckPropBase.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIDeckProxy.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIDeckRemapper.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIDraw.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIDrawable.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIDrawDeck.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIDrawShape.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIDrawShapeImmediate.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIDrawShapeRetained.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIDynamicGlyphCache.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIDynamicGlyphCachePage.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIEaseDriver.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIEaseType.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIFancyGrid.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIFont.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIFontReader.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIFont_bmfont.cpp" />
@@ -249,9 +291,6 @@
     <ClCompile Include="..\..\src\moai-sim\MOAIGfxGlobalsCache.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIGfxMgr.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIGfxPipelineClerk.cpp" />
-    <ClCompile Include="..\..\src\moai-sim\MOAIGfxQuad2D.cpp" />
-    <ClCompile Include="..\..\src\moai-sim\MOAIGfxQuadDeck2D.cpp" />
-    <ClCompile Include="..\..\src\moai-sim\MOAIGfxQuadListDeck2D.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIGfxResource.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIGfxResourceClerk.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIGfxStateCache.cpp" />
@@ -259,35 +298,50 @@
     <ClCompile Include="..\..\src\moai-sim\MOAIGlyph.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIGlyphCache.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIGlyphSet.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIGraphicsGridProp.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIGraphicsProp.cpp" />
-    <ClCompile Include="..\..\src\moai-sim\MOAIGraphicsProp2D.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIGraphicsPropBase.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIGrid.cpp" />
-    <ClCompile Include="..\..\src\moai-sim\MOAIGridDeck2D.cpp" />
-    <ClCompile Include="..\..\src\moai-sim\MOAIGridFancy.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIGridPathGraph.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIGridPropBase.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIGridSpace.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIHitMask.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIImage.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIImageFormat.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIImageFormatMgr.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIImageLoadTask.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIImageTexture.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIIndexBuffer.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIIndexedPropBase.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIInputDevice.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIInputMgr.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIJoystickSensor.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIKeyboardSensor.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIKeyCode.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAILayer.cpp" />
-    <ClCompile Include="..\..\src\moai-sim\MOAILayer2D.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAILayoutFrame.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAILight.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAILightFormat.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAILocationSensor.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIMaterial.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIMaterialBase.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIMaterialBatch.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIMaterialBatchHolder.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIMaterialHolder.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIMaterialMgr.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIMatrix.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIMesh.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIMeshSparseQuadTree.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIMeshTernaryTree.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIMetaTileDeck2D.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIMotionSensor.cpp" />
-    <ClCompile Include="..\..\src\moai-sim\MOAIMultiTexture.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIMoveConstraint2D-poly-poly.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIMoveConstraint2D.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAINode.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAINodeMgr.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIOverlap.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIOverlapResolver-poly-poly.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIOverlapResolver.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIParticleCallbackPlugin.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIParticleDistanceEmitter.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIParticleEmitter.cpp" />
@@ -300,9 +354,12 @@
     <ClCompile Include="..\..\src\moai-sim\MOAIParticleTimedEmitter.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIPartition.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIPartitionCell.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIPartitionHolder.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIPartitionHull.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIPartitionLevel.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIPartitionResultBuffer.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIPartitionResultMgr.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIPartitionViewLayer.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIPath.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIPathFinder.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIPathGraph.cpp" />
@@ -310,13 +367,19 @@
     <ClCompile Include="..\..\src\moai-sim\MOAIPathTerrainDeck.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIPinTransform.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIPointerSensor.cpp" />
-    <ClCompile Include="..\..\src\moai-sim\MOAIProp.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIProfiler.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIProfilerAutoScope.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIProfilerContext.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIProfilerEntry.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIProfilerEntryBase.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIProfilerReport.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIProfilerReportBase.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIProfilerReportBox.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIProfilerScope.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIQuadBrush.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIRegion.cpp" />
-    <ClCompile Include="..\..\src\moai-sim\MOAIRenderable.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIRenderMgr.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIScissorRect.cpp" />
-    <ClCompile Include="..\..\src\moai-sim\MOAIScriptDeck.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIScriptNode.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAISelectionMesh.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAISensor.cpp" />
@@ -324,13 +387,16 @@
     <ClCompile Include="..\..\src\moai-sim\MOAIShaderMgr.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIShaderProgram.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIShaderUniform.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIShaderUniformBuffer.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIShaderUniformFormatter.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAISim.cpp" />
-    <ClCompile Include="..\..\src\moai-sim\MOAISingleTexture.cpp" />
-    <ClCompile Include="..\..\src\moai-sim\MOAIStandardDeck.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAISpriteDeck2D.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIStaticGlyphCache.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIStretchPatch2D.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAISurfaceDeck2D.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAISurfaceSampler2D.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAITableLayer.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAITableViewLayer.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAITextBundle.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAITextLabel.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAITextLayout.cpp" />
@@ -342,12 +408,12 @@
     <ClCompile Include="..\..\src\moai-sim\MOAITextStyleMap.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAITextStyleParser.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAITexture.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAITextureBase.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAITileDeck2D.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAITileFlags.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAITimer.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAITouchSensor.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAITransform.cpp" />
-    <ClCompile Include="..\..\src\moai-sim\MOAITransform2D.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAITransformBase.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIVecPathGraph.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIVectorCombo.cpp" />
@@ -363,7 +429,9 @@
     <ClCompile Include="..\..\src\moai-sim\MOAIVertexBuffer.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIVertexFormat.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIVertexFormatMgr.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIViewLayer.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIViewport.cpp" />
+    <ClCompile Include="..\..\src\moai-sim\MOAIViewProj.cpp" />
     <ClCompile Include="..\..\src\moai-sim\MOAIWheelSensor.cpp" />
     <ClCompile Include="..\..\src\moai-sim\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -377,27 +445,28 @@
     <ProjectGuid>{FA856173-3823-4FFF-8207-32DB9C1711FA}</ProjectGuid>
     <RootNamespace>moai-lib-sim</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>NotSet</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>NotSet</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>NotSet</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>NotSet</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -441,7 +510,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\kissfft;..\..\3rdparty\libtess2\include;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\jpeg-8c;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\kissfft;..\..\3rdparty\libtess2\include;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.8;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\jpeg-8c;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;..\..\3rdparty\freetype-2.7\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -472,7 +541,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\kissfft;..\..\3rdparty\libtess2\include;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\jpeg-8c;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\kissfft;..\..\3rdparty\libtess2\include;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.8;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\jpeg-8c;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;..\..\3rdparty\freetype-2.7\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -484,7 +553,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -507,7 +576,7 @@
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>false</OmitFramePointers>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\kissfft;..\..\3rdparty\libtess2\include;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\jpeg-8c;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\kissfft;..\..\3rdparty\libtess2\include;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.8;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\jpeg-8c;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;..\..\3rdparty\freetype-2.7\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -547,7 +616,7 @@
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\kissfft;..\..\3rdparty\libtess2\include;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\jpeg-8c;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\src\config;..\..\src\config-default;..\..\3rdparty;..\..\3rdparty\kissfft;..\..\3rdparty\libtess2\include;..\..\3rdparty\sfmt-1.4;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.8;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\jpeg-8c;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;..\..\3rdparty\freetype-2.7\include;..\..\3rdparty\box2d-2.2.1;..\..\3rdparty\chipmunk-5.3.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -558,7 +627,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ForcedIncludeFiles>zl-vfs/zl_replace.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>

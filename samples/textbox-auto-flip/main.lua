@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -17,10 +17,10 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 1024, 1024 )
 viewport:setScale ( 1024, 1024 )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:setCamera ( camera )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 text1 = 'This quick brown fox jumped over the something something.'
 --text2 = 'Two lines\nof text...\nor NOT!'
@@ -42,7 +42,7 @@ local addLabel = function ( text, x, y, hJustify, vJustify )
 	label:setYFlip ( true )
 	label:setAutoFlip ( true )
 	label:setLoc ( x, y )
-	layer:insertProp ( label )
+	label:setPartition ( layer )
 	
 	table.insert ( labels, label )
 end
@@ -58,7 +58,7 @@ local addTextBox = function ( text, x, y, hJustify, vJustify )
 	label:setAutoFlip ( true )
 	label:setRect ( 0, -256, 256, 0 )
 	label:setLoc ( x, y )
-	layer:insertProp ( label )
+	label:setPartition ( layer )
 	
 	table.insert ( labels, label )
 end

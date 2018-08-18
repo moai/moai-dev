@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIBOX2DWORLD_H
@@ -61,7 +61,7 @@ public:
 */
 class MOAIBox2DWorld :
 	public MOAIAction,
-	public MOAIRenderable,
+	public MOAIDrawable,
 	public b2DestructionListener {
 private:
 
@@ -120,6 +120,11 @@ private:
 	void			ScheduleDestruction		( MOAIBox2DFixture& fixture );
 	void			ScheduleDestruction		( MOAIBox2DJoint& joint );
 
+	//----------------------------------------------------------------//
+	bool			MOAIAction_IsDone		();
+	void			MOAIAction_Update		( double step );
+	void			MOAIDrawable_Draw		( int subPrimID );
+
 public:
 	
 	friend class MOAIBox2DBody;
@@ -141,14 +146,11 @@ public:
 	static const u32 DEBUG_DRAW_DEFAULT = DEBUG_DRAW_SHAPES | DEBUG_DRAW_JOINTS | DEBUG_DRAW_CENTERS;
 	
 	//----------------------------------------------------------------//
-	bool			IsDone					();
 	bool			IsLocked				();
 					MOAIBox2DWorld			();
 					~MOAIBox2DWorld			();
-	void			OnUpdate				( double step );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			Render					();
 };
 
 #endif

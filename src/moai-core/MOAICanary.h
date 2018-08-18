@@ -1,35 +1,35 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef MOAICANARY_H
 #define MOAICANARY_H
 
-class MOAIObject;
+#include <moai-core/MOAILua.h>
+
+#include <moai-core/MOAILuaState-impl.h>
+#include <moai-core/MOAILuaClass-impl.h>
 
 //================================================================//
 // MOAICanary
 //================================================================//
-class MOAICanary {
-protected:
-
-	u32				mRefCount;
-	u32				mStrongRefs;
-	MOAIObject*		mObject;
-
-	//----------------------------------------------------------------//	
-					MOAICanary		();
+class MOAICanary :
+	public virtual MOAILuaObject {
+private:
 	
-public:
+	STLString		mMessage;
+	
+	//----------------------------------------------------------------//
+	static int		_setMessage			( lua_State* L );
 
-	friend class MOAIObject;
+public:
+	
+	DECL_LUA_FACTORY ( MOAICanary )
 
 	//----------------------------------------------------------------//
-	void			ForceDelete		();
-	MOAIObject*		GetObject		();
-	bool			IsValid			();
-	void			Release			( bool strong );
-	void			Retain			( bool strong );
-					~MOAICanary		();
+					MOAICanary			();
+					~MOAICanary			();
+	void			RegisterLuaClass	( MOAILuaState& state );
+	void			RegisterLuaFuncs	( MOAILuaState& state );
 };
 
 #endif

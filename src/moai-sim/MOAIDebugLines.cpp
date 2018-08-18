@@ -1,11 +1,9 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
 #include <moai-sim/MOAIDebugLines.h>
-#include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIShaderMgr.h>
-#include <moai-sim/MOAIVertexFormatMgr.h>
+#include <moai-sim/MOAIDraw.h>
 
 //================================================================//
 // MOAIDebugLineStyle
@@ -13,13 +11,38 @@
 
 //----------------------------------------------------------------//
 MOAIDebugLineStyle::MOAIDebugLineStyle () :
-	mVisible ( false ),
-	mColor ( 0xffffffff ),
-	mSize ( 1 ) {
+	mDisplay ( DISPLAY_PASS ),
+	mSize ( 1.0f ),
+	mColor ( 0xffffffff ) {
 }
 
 //----------------------------------------------------------------//
 MOAIDebugLineStyle::~MOAIDebugLineStyle () {
+}
+
+//================================================================//
+// MOAIDebugLineStyleSet
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAIDebugLineStyle* MOAIDebugLineStyleSet::GetStyle ( u32 styleID ) {
+
+	return styleID < this->mLineStyles.Size () ? &this->mLineStyles [ styleID ] : 0;
+}
+
+//----------------------------------------------------------------//
+MOAIDebugLineStyleSet::MOAIDebugLineStyleSet () :
+	mShowDebugLines ( true ) {
+}
+
+//----------------------------------------------------------------//
+MOAIDebugLineStyleSet::~MOAIDebugLineStyleSet () {
+}
+
+//----------------------------------------------------------------//
+void MOAIDebugLineStyleSet::ReserveStyles ( u32 size ) {
+
+	this->mLineStyles.Init ( size );
 }
 
 //================================================================//
@@ -30,7 +53,7 @@ MOAIDebugLineStyle::~MOAIDebugLineStyle () {
 /**	@lua	setStyle
 	@text	Sets the particulars of a given debug line style.
 	
-	@in		number styleID		See MOAIDebugLines class documentation for a list of styles.
+	@in		number styleID		See MOAIDebugLinesMgr class documentation for a list of styles.
 	@opt	number size			Pen size (in pixels) for the style. Default value is 1.
 	@opt	number r			Red component of line color. Default value is 1.
 	@opt	number g			Green component of line color. Default value is 1.
@@ -38,12 +61,10 @@ MOAIDebugLineStyle::~MOAIDebugLineStyle () {
 	@opt	number a			Alpha component of line color. Default value is 1.
 	@out	nil
 */
-int MOAIDebugLines::_setStyle ( lua_State* L ) {
+int MOAIDebugLinesMgr::_setStyle ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIDebugLinesMgr, "" )
 	
-	MOAILuaState state ( L );
-	if ( !state.CheckParams ( 1, "N" )) return 0;
-	
-	u32 styleID		= state.GetValue < u32 >( 1, 0 );
+	u32 packedID	= state.GetValue < u32 >( 1, 0 );
 	float size		= state.GetValue < float >( 2, 1.0f );
 	float r			= state.GetValue < float >( 3, 1.0f );
 	float g			= state.GetValue < float >( 4, 1.0f );
@@ -52,110 +73,158 @@ int MOAIDebugLines::_setStyle ( lua_State* L ) {
 	
 	u32 color = ZLColor::PackRGBA ( r, g, b, a );
 	
-	MOAIDebugLines::Get ().SetStyle ( styleID, size, color );
+	self->SelectStyleSet ( MOAIDebugLinesMgr::GetSetID ( packedID ));
+	self->SetStyle ( MOAIDebugLinesMgr::GetStyleID ( packedID ), size, color );
 	
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@lua	showStyle
-	@text	Enables or disables drawing of a given debug line style.
-	
-	@in		number styleID		See MOAIDebugLines class documentation for a list of styles.
-	@opt	boolean show		Default value is 'true'
-	@out	nil
-*/
-int MOAIDebugLines::_showStyle ( lua_State* L ) {
+// TODO: doxygen
+int MOAIDebugLinesMgr::_showDebugLines ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIDebugLinesMgr, "" )
 
-	MOAILuaState state ( L );
-	if ( !state.CheckParams ( 1, "N" )) return 0;
+	if ( state.IsType ( 1, LUA_TNUMBER )) {
 	
-	u32 styleID		= state.GetValue < u32 >( 1, 0 );
-	bool show		= state.GetValue < bool >( 2, true );
-	
-	MOAIDebugLines::Get ().ShowStyle ( styleID, show );
-	
+		u32 packedID = state.GetValue < u32 >( 1, 0 );
+		
+		MOAIDebugLineStyleSet* styleSet = self->mStyleSets.value_for_key ( MOAIDebugLinesMgr::GetSetID ( packedID ), 0 );
+		if ( styleSet ) {
+			styleSet->mShowDebugLines = state.GetValue < bool >( 2, true );
+		}
+	}
+	else {
+		self->mShowDebugLines = state.GetValue < bool >( 1, true );
+	}
 	return 0;
 }
 
 //================================================================//
-// MOAIDebugLines
+// MOAIDebugLinesMgr
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIDebugLines::Bind ( u32 styleID ) {
+bool MOAIDebugLinesMgr::Bind ( u32 styleID ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	return this->Bind ( styleID, MOAIDraw::Get ());
+}
 
-	MOAIDebugLineStyle& style = this->mStyles [ styleID ];
-	
-	if ( style.mVisible ) {
-		gfxMgr.mGfxState.SetPenColor ( style.mColor );
-		gfxMgr.mGfxState.SetPenWidth ( style.mSize );
+//----------------------------------------------------------------//
+bool MOAIDebugLinesMgr::Bind ( u32 styleID, MOAIAbstractDrawShape& draw ) {
+
+	if ( !this->mShowDebugLines ) return false;
+
+	MOAIDebugLineStyle* style = this->GetStyle ( styleID );
+	if ( style && ( style->mDisplay == MOAIDebugLineStyle::DISPLAY_VISIBLE )) {
+
+		draw.SetPenColor ( style->mColor );
+		draw.SetPenWidth ( style->mSize );
 		return true;
 	}
 	return false;
 }
 
 //----------------------------------------------------------------//
-bool MOAIDebugLines::IsVisible ( u32 styleID ) {
+u32 MOAIDebugLinesMgr::GetSetID ( u32 packedID ) {
 
-	return this->mStyles [ styleID ].mVisible;
+	return ( packedID & STYLE_SET_ID_MASK ) >> STYLE_SET_ID_SHIFT;
 }
 
 //----------------------------------------------------------------//
-MOAIDebugLines::MOAIDebugLines () {
+MOAIDebugLineStyle* MOAIDebugLinesMgr::GetStyle ( u32 styleID ) {
+
+	return this->mActiveStyleSet ? this->mActiveStyleSet->GetStyle ( styleID ) : 0;
+}
+
+//----------------------------------------------------------------//
+u32 MOAIDebugLinesMgr::GetStyleID ( u32 packedID ) {
+
+	return packedID & STYLE_ID_MASK;
+}
+
+//----------------------------------------------------------------//
+bool MOAIDebugLinesMgr::IsVisible () {
+
+	return this->mShowDebugLines;
+}
+
+//----------------------------------------------------------------//
+bool MOAIDebugLinesMgr::IsVisible ( u32 styleID ) {
+
+	if ( !this->mShowDebugLines ) return false;
+	
+	MOAIDebugLineStyle* style = this->GetStyle ( styleID );
+	if ( style ) {
+		return style->mDisplay == MOAIDebugLineStyle::DISPLAY_VISIBLE;
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
+MOAIDebugLinesMgr::MOAIDebugLinesMgr () :
+	mActiveStyleSet ( 0 ),
+	mShowDebugLines ( true ) {
 
 	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
-MOAIDebugLines::~MOAIDebugLines () {
+MOAIDebugLinesMgr::~MOAIDebugLinesMgr () {
+
+	StyleSetIt styleSetIt = this->mStyleSets.begin ();
+	for ( ; styleSetIt != this->mStyleSets.end (); ++styleSetIt ) {
+		delete ( styleSetIt->second );
+	}
 }
 
 //----------------------------------------------------------------//
-void MOAIDebugLines::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIDebugLinesMgr::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable[] = {
 		{ "setStyle",			_setStyle },
-		{ "showStyle",			_showStyle },
+		{ "showDebugLines",		_showDebugLines },
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
-	
-	state.SetField ( -1, "COLLISION_ACTIVE_PROP_BOUNDS",			( u32 )COLLISION_ACTIVE_PROP_BOUNDS );
-	state.SetField ( -1, "COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS",	( u32 )COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS );
-	state.SetField ( -1, "COLLISION_ACTIVE_TOUCHED_PROP_BOUNDS",	( u32 )COLLISION_ACTIVE_TOUCHED_PROP_BOUNDS );
-	state.SetField ( -1, "COLLISION_OVERLAP_PROP_BOUNDS",			( u32 )COLLISION_OVERLAP_PROP_BOUNDS );
-	state.SetField ( -1, "PARTITION_CELLS",							( u32 )PARTITION_CELLS );
-	state.SetField ( -1, "PARTITION_PADDED_CELLS",					( u32 )PARTITION_PADDED_CELLS );
-	state.SetField ( -1, "PROP_MODEL_AXIS",							( u32 )PROP_MODEL_AXIS );
-	state.SetField ( -1, "PROP_MODEL_DIAGONALS",					( u32 )PROP_MODEL_DIAGONALS );
-	state.SetField ( -1, "PROP_MODEL_BOUNDS",						( u32 )PROP_MODEL_BOUNDS );
-	state.SetField ( -1, "PROP_WORLD_BOUNDS",						( u32 )PROP_WORLD_BOUNDS );
-	state.SetField ( -1, "TEXT_BOX",								( u32 )TEXT_BOX );
-	state.SetField ( -1, "TEXT_BOX_BASELINES",						( u32 )TEXT_BOX_BASELINES );
-	state.SetField ( -1, "TEXT_BOX_GLYPH_BOUNDS",					( u32 )TEXT_BOX_GLYPH_BOUNDS );
-	state.SetField ( -1, "TEXT_BOX_GLYPHS",							( u32 )TEXT_BOX_GLYPHS );
-	state.SetField ( -1, "TEXT_BOX_LAYOUT_BOUNDS",					( u32 )TEXT_BOX_LAYOUT_BOUNDS );
-	state.SetField ( -1, "TEXT_BOX_LIMITS",							( u32 )TEXT_BOX_LIMITS );
-	state.SetField ( -1, "TEXT_BOX_LINES_GLYPH_BOUNDS",				( u32 )TEXT_BOX_LINES_GLYPH_BOUNDS );
-	state.SetField ( -1, "TEXT_BOX_LINES_LAYOUT_BOUNDS",			( u32 )TEXT_BOX_LINES_LAYOUT_BOUNDS );
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
-void MOAIDebugLines::SetStyle ( u32 styleID, float size, u32 color ) {
+void MOAIDebugLinesMgr::ReserveStyleSet ( u32 setID, u32 size ) {
 
-	MOAIDebugLineStyle& style = this->mStyles [ styleID ];
+	MOAIDebugLineStyleSet* styleSet = this->mStyleSets.value_for_key ( setID, 0 );
+	if ( !styleSet ) {
 	
-	style.mVisible = true;
-	style.mColor = color;
-	style.mSize = size;
+		styleSet = new MOAIDebugLineStyleSet ();
+		this->mStyleSets [ setID ] = styleSet;
+	}
+	styleSet->ReserveStyles ( size );
+	this->mActiveStyleSet = styleSet;
 }
 
 //----------------------------------------------------------------//
-void MOAIDebugLines::ShowStyle ( u32 styleID, bool show ) {
+bool MOAIDebugLinesMgr::SelectStyleSet ( u32 setID ) {
 
-	this->mStyles [ styleID ].mVisible = show;
+	this->mActiveStyleSet = this->mStyleSets.value_for_key ( setID, 0 );
+	return this->mActiveStyleSet && this->mActiveStyleSet->mShowDebugLines;
+}
+
+//----------------------------------------------------------------//
+void MOAIDebugLinesMgr::SetStyle ( u32 styleID ) {
+
+	MOAIDebugLineStyle* style = this->GetStyle ( styleID );
+	if ( style ) {
+		style->mDisplay = MOAIDebugLineStyle::DISPLAY_PASS;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIDebugLinesMgr::SetStyle ( u32 styleID, float size, u32 color ) {
+
+	MOAIDebugLineStyle* style = this->GetStyle ( styleID );
+	if ( style ) {
+		style->mDisplay = size > 0.0f ? MOAIDebugLineStyle::DISPLAY_VISIBLE : MOAIDebugLineStyle::DISPLAY_HIDE;
+		style->mSize = size;
+		style->mColor = color;
+	}
 }

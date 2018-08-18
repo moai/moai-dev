@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef ZLRESULT_H
@@ -62,6 +62,11 @@ class ZLResultBase {
 public:
 
 	ZLResultCode	mCode;
+	
+	//----------------------------------------------------------------//
+	inline ZLResultCode Code () const {
+		return this->mCode;
+	}
 };
 
 //================================================================//
@@ -77,6 +82,11 @@ public:
 	//----------------------------------------------------------------//
 	inline operator const TYPE& () const {
 		assert ( this->mCode == ZL_OK );
+		return this->mValue;
+	}
+	
+	//----------------------------------------------------------------//
+	inline TYPE Value () const {
 		return this->mValue;
 	}
 };

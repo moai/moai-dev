@@ -1,11 +1,11 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 #include "pch.h"
 #include <moai-util/MOAILuaUtil.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 
-
+#ifndef MOAI_WITH_LUAJIT
 
 #include <lundump.h>
 
@@ -348,7 +348,7 @@ void MOAILuaUtil::RegisterLuaClass ( MOAILuaState& state ) {
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
@@ -356,3 +356,4 @@ void MOAILuaUtil::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
+#endif 

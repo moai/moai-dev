@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	ZLBOX_H
@@ -34,9 +34,10 @@ public:
 	void		GetFitting		( const ZLBox& target, ZLVec3D& offset, ZLVec3D& scale ) const; // gets mapping from self to target
 	float		GetMaxExtent	() const;
 	float		GetRadius		() const;
-	ZLRect		GetRect			( u32 plane ) const;
-	void		Grow			( const ZLBox& box );
-	void		Grow			( const ZLVec3D& vec );
+	ZLRect		GetRect			( u32 plane = PLANE_XY ) const;
+	void		Grow			( const ZLBox& box, bool first = false );
+	void		Grow			( const ZLRect& rect, bool first = false, u32 plane = PLANE_XY );
+	void		Grow			( const ZLVec3D& vec, bool first = false );
 	void		Inflate			( float size );
 	void		Init			( const ZLBox& box );
 	void		Init			( const ZLPrism& prism );

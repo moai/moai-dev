@@ -10,10 +10,10 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( width, height )
 viewport:setScale (width / (width/640), height / (height/480))
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setPartition( MOAIPartition.new() )
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 -- set up the world and start its simulation
 world = MOAIBox2DWorld.new ()
@@ -41,11 +41,11 @@ function addSprite()
 	fixture:setFriction ( 0.6 )
   body:resetMassData ()
 
-	local sprite = MOAIProp2D.new ()
+	local sprite = MOAIProp.new ()
 	sprite:setDeck ( texture )
 	sprite.body = body
 	sprite:setParent ( body )
-	layer:insertProp ( sprite )	
+	sprite:setPartition ( layer )	
   
 	return sprite
 end

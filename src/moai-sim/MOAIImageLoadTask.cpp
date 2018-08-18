@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -57,8 +57,6 @@ void MOAIImageLoadTask::Init ( MOAIDataBuffer& data, MOAIImage& target, u32 tran
 MOAIImageLoadTask::MOAIImageLoadTask () :
 	mDataBuffer ( 0 ),
 	mTarget ( 0 ) {
-	
-	RTTI_SINGLE ( MOAITask )
 }
 
 //----------------------------------------------------------------//

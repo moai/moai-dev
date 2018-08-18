@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIFONT_H
@@ -11,7 +11,7 @@ class MOAIFontReader;
 class MOAIGlyph;
 class MOAIGlyphCache;
 class MOAIShader;
-class MOAISingleTexture;
+class MOAITextureBase;
 class MOAITexture;
 
 #define DPI 72
@@ -140,7 +140,7 @@ public:
 	void				AffirmGlyph				( float size, u32 c );
     MOAIGlyphSet&		AffirmGlyphSet			( float size );
 	MOAIGlyphSet*		GetGlyphSet				( float size );
-	MOAISingleTexture*	GetGlyphTexture			( MOAIGlyph& glyph );
+	MOAITextureBase*	GetGlyphTexture			( MOAIGlyph& glyph );
 	void				Init					( cc8* filename );
 	void				InitWithBMFont			( cc8* filename, const u32 numPreloadedTextures, MOAITexture** preloadedTextures );
 	static bool			IsControl				( u32 c );

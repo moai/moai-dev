@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -10,9 +10,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 256, 512 )
 viewport:setScale ( 256, -512 )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 pvrs = {
 
@@ -58,15 +58,15 @@ local nextTexture = function ()
 	texQuadFromImage:setTexture ( image )
 end
 
-prop1 = MOAIProp2D.new ()
+prop1 = MOAIProp.new ()
 prop1:setDeck ( texQuadFromFile )
 prop1:setLoc ( 0, -128 )
-layer:insertProp ( prop1 )
+prop1::setPartition ( layer )
 
-prop2 = MOAIProp2D.new ()
+prop2 = MOAIProp.new ()
 prop2:setDeck ( texQuadFromImage )
 prop2:setLoc ( 0, 128 )
-layer:insertProp ( prop2 )
+prop2::setPartition ( layer )
 
 nextTexture ()
 

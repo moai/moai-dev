@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef ZL_REPLACE_H
@@ -10,8 +10,9 @@
 #include <stdlib.h>
 
 #include <zl-vfs/assert.h>
+
 #ifdef _MSC_VER
-#include <io.h>
+	#include <io.h>
 #endif
 
 #include <zl-vfs/zl_replace_stdio.h>

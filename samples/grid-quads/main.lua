@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -10,9 +10,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 512, 512 )
 viewport:setScale ( 512, 512 )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 grid = MOAIGrid.new ()
 grid:initDiamondGrid ( 4, 4, 128, 128 )
@@ -29,8 +29,8 @@ tileDeck:setSize ( 4, 4 )
 tileDeck:setQuad ( 0, 0.5, 0.5, 0, 0, -0.5, -0.5, 0 )
 tileDeck:setUVQuad ( 0, 0.5, 0.5, 0, 0, -0.5, -0.5, 0 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( tileDeck )
 prop:setGrid ( grid )
 prop:forceUpdate ()
-layer:insertProp ( prop )
+prop:setPartition ( layer )

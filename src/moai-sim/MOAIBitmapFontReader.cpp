@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -276,8 +276,7 @@ void MOAIBitmapFontReader::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIBitmapFontReader::RenderGlyph ( MOAIImage& image, float x, float y, const ZLColorBlendFunc& blendFunc ) {
-	UNUSED ( blendFunc );
+int MOAIBitmapFontReader::RenderGlyph ( MOAIImage& image, float x, float y ) {
 
 	if ( !this->mCurrentGlyph ) return FONT_ERROR;
 	
@@ -289,14 +288,12 @@ int MOAIBitmapFontReader::RenderGlyph ( MOAIImage& image, float x, float y, cons
 	destRect.mXMax = destRect.mXMin + ( int )bitmapGlyph.mSrcRect.Width ();
 	destRect.mYMax = destRect.mYMin + ( int )bitmapGlyph.mSrcRect.Height ();
 	
-	y -= bitmapGlyph.mBase;
-	
 	image.CopyRect (
 		this->mCurrentPage->mImage,
 		bitmapGlyph.mSrcRect,
 		destRect,
 		MOAIImage::FILTER_LINEAR,
-		blendFunc
+		this->mBlendMode
 	);
 	
 	return OK;

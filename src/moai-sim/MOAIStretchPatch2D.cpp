@@ -1,10 +1,9 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIGrid.h>
-#include <moai-sim/MOAIProp.h>
+#include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIStretchPatch2D.h>
@@ -14,6 +13,29 @@
 //================================================================//
 // local
 //================================================================//
+
+//----------------------------------------------------------------//
+/**	@lua	ninePatch
+	@text	Set up a nine patch using Android-style sections (25%, 50%, 25%).
+ 
+	@in		MOAIStretchPatch2D self
+	@out	nil
+*/
+int MOAIStretchPatch2D::_ninePatch ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIStretchPatch2D, "U" )
+
+	self->mRows.Init ( 3 );
+	self->SetRow ( 0, 0.25, false );
+	self->SetRow ( 1, 0.50, true );
+	self->SetRow ( 2, 0.25, false );
+
+	self->mCols.Init ( 3 );
+	self->SetColumn ( 0, 0.25, false );
+	self->SetColumn ( 1, 0.50, true );
+	self->SetColumn ( 2, 0.25, false );
+
+	return 0;
+}
 
 //----------------------------------------------------------------//
 /**	@lua	reserveColumns
@@ -89,10 +111,8 @@ int MOAIStretchPatch2D::_setColumn ( lua_State* L ) {
 	float percent		= state.GetValue < float >( 3, 0.0f );
 	bool canStretch		= state.GetValue < bool >( 4, false );
 
-	if ( MOAILogMessages::CheckIndexPlusOne ( idx, self->mCols.Size (), L )) {
-		self->mCols [ idx ].mPercent = percent;
-		self->mCols [ idx ].mCanStretch = canStretch;
-		self->mNeedsUpdate = true;
+	if ( MOAILogMgr::CheckIndexPlusOne ( idx, self->mCols.Size (), L )) {
+		self->SetColumn ( idx, percent, canStretch );
 	}
 	return 0;
 }
@@ -134,10 +154,8 @@ int MOAIStretchPatch2D::_setRow ( lua_State* L ) {
 	float percent		= state.GetValue < float >( 3, 0.0f );
 	bool canStretch		= state.GetValue < bool >( 4, false );
 
-	if ( MOAILogMessages::CheckIndexPlusOne ( idx, self->mRows.Size (), L )) {
-		self->mRows [ idx ].mPercent = percent;
-		self->mRows [ idx ].mCanStretch = canStretch;
-		self->mNeedsUpdate = true;
+	if ( MOAILogMgr::CheckIndexPlusOne ( idx, self->mRows.Size (), L )) {
+		self->SetRow ( idx, percent, canStretch );
 	}
 	return 0;
 }
@@ -159,7 +177,7 @@ int MOAIStretchPatch2D::_setUVRect ( lua_State* L ) {
 	
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
 	
-	if ( MOAILogMessages::CheckIndexPlusOne ( idx, self->mUVRects.Size (), L )) {
+	if ( MOAILogMgr::CheckIndexPlusOne ( idx, self->mUVRects.Size (), L )) {
 		self->mUVRects [ idx ] = state.GetRect < float >( 3 );
 	}
 	return 0;
@@ -168,40 +186,6 @@ int MOAIStretchPatch2D::_setUVRect ( lua_State* L ) {
 //================================================================//
 // MOAIStretchPatch2D
 //================================================================//
-
-//----------------------------------------------------------------//
-ZLBox MOAIStretchPatch2D::ComputeMaxBounds () {
-	return this->GetItemBounds ( 0 );
-}
-
-//----------------------------------------------------------------//
-void MOAIStretchPatch2D::DrawIndex ( u32 idx, MOAIMaterialBatch& materials, ZLVec3D offset, ZLVec3D scale ) {
-	UNUSED ( offset );
-	UNUSED ( scale );
-	
-	// TODO: make use of offset and scale
-	
-	if ( !materials.LoadGfxState ( this, idx - 1, MOAIShaderMgr::DECK2D_SHADER )) return;
-	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	MOAIQuadBrush::BindVertexFormat ( gfxMgr.mVertexCache );
-	
-	ZLMatrix4x4 worldTransform = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_MTX );
-	ZLVec3D stretch = worldTransform.GetStretch ();
-	
-	ZLMatrix4x4 noStretch;
-	noStretch.Scale ( 1.0f / stretch.mX, 1.0f / stretch.mY, 1.0f / stretch.mZ );
-	noStretch.Append ( worldTransform );
-	noStretch.Append ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_PROJ_MTX ) );
-	
-	gfxMgr.mVertexCache.SetVertexTransform ( noStretch );
-	gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_MTX ));
-	
-	this->UpdateParams ();
-	this->DrawStretch ( idx, stretch.mX, stretch.mY );
-	
-	//gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_WORLD_TRANSFORM, transform );
-}
 
 //----------------------------------------------------------------//
 void MOAIStretchPatch2D::DrawStretch ( u32 idx, float xStretch, float yStretch ) {
@@ -219,10 +203,6 @@ void MOAIStretchPatch2D::DrawStretch ( u32 idx, float xStretch, float yStretch )
 
 	float nativeWidth = this->mRect.Width ();
 	float nativeHeight = this->mRect.Height ();
-	
-	// TODO: make optional
-	// xStretch /= nativeWidth;
-	// yStretch /= nativeHeight;
 	
 	float rectWidth = nativeWidth * xStretch;
 	float rectHeight = nativeHeight * yStretch;
@@ -311,20 +291,12 @@ void MOAIStretchPatch2D::DrawStretch ( u32 idx, float xStretch, float yStretch )
 }
 
 //----------------------------------------------------------------//
-ZLBox MOAIStretchPatch2D::GetItemBounds ( u32 idx ) {
-	UNUSED ( idx );
-	
-	ZLBox bounds;
-	bounds.Init ( this->mRect.mXMin, this->mRect.mYMax, this->mRect.mXMax, this->mRect.mYMin, 0.0f, 0.0f );
-	return bounds;
-}
-
-//----------------------------------------------------------------//
 MOAIStretchPatch2D::MOAIStretchPatch2D () :
 	mNeedsUpdate ( true ) {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIStandardDeck )
+		RTTI_EXTEND ( MOAIStretchDeck )
+		RTTI_EXTEND ( MOAIMaterialBatchHolder )
 	RTTI_END
 	
 	this->mRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
@@ -337,15 +309,18 @@ MOAIStretchPatch2D::~MOAIStretchPatch2D () {
 //----------------------------------------------------------------//
 void MOAIStretchPatch2D::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIStandardDeck::RegisterLuaClass ( state );
+	MOAIStretchDeck::RegisterLuaClass ( state );
+	MOAIMaterialBatchHolder::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIStretchPatch2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIStandardDeck::RegisterLuaFuncs ( state );
+	MOAIStretchDeck::RegisterLuaFuncs ( state );
+	MOAIMaterialBatchHolder::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
+		{ "ninePatch",			_ninePatch },
 		{ "reserveColumns",		_reserveColumns },
 		{ "reserveRows",		_reserveRows },
 		{ "reserveUVRects",		_reserveUVRects },
@@ -363,23 +338,12 @@ void MOAIStretchPatch2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIStretchPatch2D::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
-
-//	STLString path = state.GetField ( -1, "mPath", "" );
-//	
-//	if ( path.size ()) {
-//		USFilename filename;
-//		filename.Bless ( path.str ());
-//		this->Load ( filename.mBuffer );
-//	}
 }
 
 //----------------------------------------------------------------//
 void MOAIStretchPatch2D::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
-
-//	STLString path = ZLFileSys::GetRelativePath ( this->mTexturePath );
-//	state.SetField ( -1, "mPath", path.str ());
 }
 
 //----------------------------------------------------------------//
@@ -416,4 +380,90 @@ void MOAIStretchPatch2D::UpdateParams () {
 	}
 	
 	this->mNeedsUpdate = false;
+}
+
+//----------------------------------------------------------------//
+void MOAIStretchPatch2D::SetColumn ( u32 idx, float percent, bool canStretch ) {
+
+	assert ( idx < this->mCols.Size ());
+
+	this->mCols [ idx ].mPercent = percent;
+	this->mCols [ idx ].mCanStretch = canStretch;
+	this->mNeedsUpdate = true;
+}
+
+//----------------------------------------------------------------//
+void MOAIStretchPatch2D::SetRow ( u32 idx, float percent, bool canStretch ) {
+
+	assert ( idx < this->mRows.Size ());
+
+	this->mRows [ idx ].mPercent = percent;
+	this->mRows [ idx ].mCanStretch = canStretch;
+	this->mNeedsUpdate = true;
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+ZLBounds MOAIStretchPatch2D::MOAIDeck_ComputeMaxBounds () {
+
+	return this->GetBounds ( 0 );
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAIStretchPatch2D::MOAIDeck_GetBounds ( u32 idx ) {
+	UNUSED ( idx );
+
+	return ZLBounds ( this->mRect );
+}
+
+//----------------------------------------------------------------//
+void MOAIStretchPatch2D::MOAIDeck_Draw ( u32 idx ) {
+	
+	this->UpdateParams ();
+	
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	
+	ZLVec3D stretch = this->BindStretchVertexTransform ();
+	gfxState.SetUVTransform ( MOAIGfxState::UV_TO_MODEL_MTX );
+	
+	MOAIQuadBrush::BindVertexFormat ();
+	
+	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
+	materialStack.Push ( this->GetMaterial ( idx ));
+	materialStack.SetShader ( MOAIShaderMgr::DECK2D_SHADER );
+	materialStack.LoadGfxState ();
+	
+	this->DrawStretch ( idx, stretch.mX, stretch.mY );
+	
+	materialStack.Pop ();
+}
+
+//----------------------------------------------------------------//
+MOAICollisionShape* MOAIStretchPatch2D::MOAIDeck_GetCollisionShape ( u32 idx ) {
+	UNUSED ( idx );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+bool MOAIStretchPatch2D::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
+	UNUSED ( idx );
+	UNUSED ( vec );
+	UNUSED ( granularity );
+	UNUSED ( result );
+
+	return false;
+}
+
+//----------------------------------------------------------------//
+bool MOAIStretchPatch2D::MOAIDeck_Overlap ( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
+	UNUSED ( idx );
+	UNUSED ( vec );
+	UNUSED ( granularity );
+	UNUSED ( result );
+
+	return false;
 }

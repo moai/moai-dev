@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIJSONPARSER_H
@@ -12,7 +12,7 @@
 	@text	Converts between Lua and JSON.
 */
 class MOAIJsonParser :
-	public MOAIGlobalClass < MOAIJsonParser, MOAILuaObject > {
+	public ZLContextClass < MOAIJsonParser, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//

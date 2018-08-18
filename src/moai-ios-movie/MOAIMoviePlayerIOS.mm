@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #import <moai-ios-movie/MOAIMoviePlayerIOS.h>
@@ -28,7 +28,7 @@ int MOAIMoviePlayerIOS::_init ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
-	NSString* url = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
+	NSString* url = [[[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" )] autorelease ];
 	
 	MOAIMoviePlayerIOS::Get ().mInitialOrientation = [[ UIApplication sharedApplication ] statusBarOrientation ];
 

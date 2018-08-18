@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -91,7 +91,7 @@ int MOAIBox2DWorld::_addBody ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UN" )
 	
 	if ( self->IsLocked ()) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -132,7 +132,7 @@ int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
 	
 	if ( self->IsLocked ()) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -185,7 +185,7 @@ int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNN" )
 	
 	if ( self->IsLocked ()) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -235,7 +235,7 @@ int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUN" )
 	
 	if ( self->IsLocked ()) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -279,7 +279,7 @@ int MOAIBox2DWorld::_addMotorJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUU" )
 
 	if ( self->IsLocked ()) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -323,7 +323,7 @@ int	MOAIBox2DWorld::_addMouseJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNN" )
 	
 	if ( self->IsLocked ()) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -374,7 +374,7 @@ int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
 	
 	if ( self->IsLocked ()) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -432,7 +432,7 @@ int	MOAIBox2DWorld::_addPulleyJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNNNNNNNNNN" )
 	
 	if ( self->IsLocked ()) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -494,7 +494,7 @@ int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNN" )
 	
 	if ( self->IsLocked ()) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -540,7 +540,7 @@ int	MOAIBox2DWorld::_addRevoluteJointLocal( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
 	
 	if ( self->IsLocked ()) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -593,7 +593,7 @@ int	MOAIBox2DWorld::_addRopeJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUU" )
 	
 	if ( self->IsLocked ()) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -650,7 +650,7 @@ int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNN" )
 	
 	if ( self->IsLocked ()) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -697,7 +697,7 @@ int	MOAIBox2DWorld::_addWheelJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
 	
 	if ( self->IsLocked ()) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DWorld_IsLocked );
 		return 0;
 	}
 	
@@ -1101,12 +1101,6 @@ void MOAIBox2DWorld::Destroy () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIBox2DWorld::IsDone () {
-
-	return false;
-}
-
-//----------------------------------------------------------------//
 bool MOAIBox2DWorld::IsLocked () {
 
 	if ( this->mWorld ) {
@@ -1127,7 +1121,7 @@ MOAIBox2DWorld::MOAIBox2DWorld () :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIAction )
-		RTTI_EXTEND ( MOAIRenderable )
+		RTTI_EXTEND ( MOAIDrawable )
 	RTTI_END
 	
 	this->mArbiter.Set ( *this, new MOAIBox2DArbiter ( *this ));
@@ -1161,28 +1155,9 @@ MOAIBox2DWorld::~MOAIBox2DWorld () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DWorld::OnUpdate ( double step ) {
-	
-	this->mLock = true;
-	this->mWorld->Step (( float32 )step, this->mVelocityIterations, this->mPositionIterations );
-	this->mLock = false;
-	
-	this->Destroy ();
-	
-	b2Body* body = this->mWorld->GetBodyList ();
-	for ( ; body; body = body->GetNext ()) {
-		if ( body->IsActive () && body->IsAwake ()) {
-			MOAIBox2DBody* moaiBody = ( MOAIBox2DBody* )body->GetUserData ();
-			moaiBody->ScheduleUpdate ();
-		}
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIBox2DWorld::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIAction::RegisterLuaClass ( state );
-	MOAIRenderable::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "DEBUG_DRAW_SHAPES", ( u32 )DEBUG_DRAW_SHAPES );
 	state.SetField ( -1, "DEBUG_DRAW_JOINTS", ( u32 )DEBUG_DRAW_JOINTS );
@@ -1197,7 +1172,6 @@ void MOAIBox2DWorld::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIBox2DWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIAction::RegisterLuaFuncs ( state );
-	MOAIRenderable::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "addBody",					_addBody },
@@ -1232,21 +1206,6 @@ void MOAIBox2DWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIBox2DWorld::Render () {
-
-	if ( this->mDebugDraw && MOAIDraw::Bind ()) {
-		
-		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-		
-		gfxMgr.mGfxState.SetMtx ( MOAIGfxGlobalsCache::WORLD_MTX );
-		gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::VIEW_PROJ_MTX ));
-		
-		this->mDebugDraw->mScale = 1.0f / this->mUnitsToMeters;
-		this->mWorld->DrawDebugData ();
-	}
 }
 
 //----------------------------------------------------------------//
@@ -1300,4 +1259,48 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DJoint& joint ) {
 		joint.mDestroy = true;
 	}
 	this->Destroy ();
+}
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIBox2DWorld::MOAIAction_IsDone () {
+
+	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAIBox2DWorld::MOAIAction_Update ( double step ) {
+	
+	this->mLock = true;
+	this->mWorld->Step (( float32 )step, this->mVelocityIterations, this->mPositionIterations );
+	this->mLock = false;
+	
+	this->Destroy ();
+	
+	b2Body* body = this->mWorld->GetBodyList ();
+	for ( ; body; body = body->GetNext ()) {
+		if ( body->IsActive () && body->IsAwake ()) {
+			MOAIBox2DBody* moaiBody = ( MOAIBox2DBody* )body->GetUserData ();
+			moaiBody->ScheduleUpdate ();
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIBox2DWorld::MOAIDrawable_Draw ( int subPrimID ) {
+	UNUSED ( subPrimID );
+
+	if ( this->mDebugDraw && MOAIDraw::Get ().Bind ()) {
+		
+		MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+		
+		gfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX );
+		gfxState.SetVertexTransform ( MOAIGfxState::WORLD_TO_CLIP_MTX );
+		
+		this->mDebugDraw->mScale = 1.0f / this->mUnitsToMeters;
+		this->mWorld->DrawDebugData ();
+	}
 }

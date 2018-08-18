@@ -5,7 +5,7 @@
 //  Part of UNTZ
 //
 //  Created by Francisco Tufro. (francisco@ziplinegames.com) on 02/18/2013.
-//  Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+//  Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 //
 
 #include "UntzSystem.h"

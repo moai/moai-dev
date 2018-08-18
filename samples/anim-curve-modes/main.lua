@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -10,17 +10,17 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 480 )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
-gfxQuad = MOAIGfxQuad2D.new ()
+gfxQuad = MOAISpriteDeck2D.new ()
 gfxQuad:setTexture ( "moai.png" )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 curve = MOAIAnimCurve.new ()
 curve:reserveKeys ( 2 )
@@ -40,9 +40,9 @@ curve3:setKey ( 1, 0.0, -64 )
 curve3:setKey ( 2, 1.5, -32 )
 curve3:setWrapMode ( MOAIAnimCurve.APPEND )
 
-prop:setAttrLink ( MOAIProp2D.ATTR_Z_ROT, curve, MOAIAnimCurve.ATTR_VALUE )
-prop:setAttrLink ( MOAIProp2D.ATTR_X_LOC, curve2, MOAIAnimCurve.ATTR_VALUE )
-prop:setAttrLink ( MOAIProp2D.ATTR_Y_LOC, curve3, MOAIAnimCurve.ATTR_VALUE )
+prop:setAttrLink ( MOAIProp.ATTR_Z_ROT, curve, MOAIAnimCurve.ATTR_VALUE )
+prop:setAttrLink ( MOAIProp.ATTR_X_LOC, curve2, MOAIAnimCurve.ATTR_VALUE )
+prop:setAttrLink ( MOAIProp.ATTR_Y_LOC, curve3, MOAIAnimCurve.ATTR_VALUE )
 
 timer = MOAITimer.new ()
 timer:setSpan ( 0, 3.0 )

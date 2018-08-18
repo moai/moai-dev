@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAITEXTLAYOUTENGINE_H
@@ -62,6 +62,7 @@ private:
 	
 	cc8*					mStr;
 
+	ZLRect					mLayoutFrameWithMargins;
 	ZLRect					mLayoutBounds;
 	
 	float					mLineSpacingCursor;

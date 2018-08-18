@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAITIMER_H
@@ -33,7 +33,7 @@ class MOAIAnimCurve;
 class MOAITimer :
 	public virtual MOAINode,
 	public MOAIAction {
-private:
+protected:
 
 	MOAILuaSharedPtr < MOAIAnimCurve > mCurve;
 
@@ -58,6 +58,12 @@ private:
 	void			OnEndSpan					();
 	void			OnKeyframe					( u32 idx, float time, float value );
 	void			OnLoop						();
+
+	//----------------------------------------------------------------//
+	bool			MOAIAction_IsDone			();
+	void			MOAIAction_Start			();
+	void			MOAIAction_Update			( double step );
+	bool			MOAINode_ApplyAttrOp		( u32 attrID, MOAIAttribute& attr, u32 op );
 
 protected:
 
@@ -99,18 +105,13 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp			( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	void			DoStep				( float step );
 	float			GetCycle			();
 	float			GetLength			();
 	float			GetNormalizedTime	();
 	float			GetTime				();
-	bool			IsDone				();
 					MOAITimer			();
 					~MOAITimer			();
-	void			OnDepNodeUpdate		();
-	void			OnStart				();
-	void			OnUpdate			( double step );
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			SetSpan				( float span );

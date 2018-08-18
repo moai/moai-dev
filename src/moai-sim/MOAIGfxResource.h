@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIGFXRESOURCE_H
@@ -19,9 +19,9 @@ private:
 
 	friend class MOAIGfxMgr;
 	friend class MOAIGfxPipelineClerk;
-	friend class MOAIGfxStateCache;
+	friend class MOAIGfxStateGPUCache;
 	friend class MOAIGfxResourceClerk;
-
+	
 	u32					mState;
 	u32					mLastRenderCount;
 
@@ -34,13 +34,11 @@ private:
 	//----------------------------------------------------------------//
 	static int		_getAge						( lua_State* L );
 	static int		_getResourceState			( lua_State* L );
-	static int		_preload					( lua_State* L );
 	static int		_purge						( lua_State* L );
 	static int		_scheduleForGPUCreate		( lua_State* L );
 	static int		_setReloader				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			Affirm						();
 	u32				Bind						(); // bind OR create
 	bool			DoGPUCreate					(); // gets ready to bind
 	bool			DoGPUUpdate					();
@@ -56,6 +54,7 @@ protected:
 	};
 
 	//----------------------------------------------------------------//
+	bool			Affirm						();
 	void			FinishInit					(); // ready to CPU/GPU affirm; recover from STATE_NEW or STATE_ERROR
 	bool			HasReloader					();
 	virtual void	OnClearDirty				();

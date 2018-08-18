@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -9,9 +9,13 @@
 #include <moai-sim/MOAIStaticGlyphCache.h>
 #include <moai-sim/MOAITexture.h>
 
-#if defined( _WIN32 )
+#if defined( _WIN32 ) 
 	#define strcasecmp(str1, str2) ( stricmp ( str1,str2 ))
+#else
+	#include <strings.h>
 #endif
+
+
 
 #define WIDE_ID_BIT			0x80000000
 #define WIDE_ID_MASK		0x7fffffff
@@ -151,8 +155,10 @@ void MOAIFont::InitWithBMFont ( cc8* filename, const u32 numPreloadedTextures, M
 				else if ( strcasecmp ( key, "base" ) == 0 ) { base = ( float )atof ( val ); }
 			} while ( !endl );
 			
-			glyphSet->SetHeight( lineSpacing );
-			glyphSet->SetAscent( base );
+			if ( glyphSet ) {
+				glyphSet->SetHeight ( lineSpacing );
+				glyphSet->SetAscent ( base );
+			}
 			glyphCache->ReserveTextures ( pages );
 		}
 		else if ( strcmp ( key, "page" ) == 0 ) {
@@ -222,17 +228,19 @@ void MOAIFont::InitWithBMFont ( cc8* filename, const u32 numPreloadedTextures, M
 			} while( !endl );
 			
 			assert ( glyphSet );
-			MOAIGlyph& glyph = glyphSet->EditGlyph ( c );
-			
-			glyph.mSrcX = x;
-			glyph.mSrcY = y;
-			glyph.mPageID = page;
-			glyph.mWidth = width;
-			glyph.mHeight = height;
-			glyph.mAdvanceX = xadv;
-			glyph.mBearingX = xoff;
-			glyph.mBearingY = glyphSet->GetAscent() - yoff;
-			
+			if ( glyphSet ) {
+				
+				MOAIGlyph& glyph = glyphSet->EditGlyph ( c );
+				
+				glyph.mSrcX = x;
+				glyph.mSrcY = y;
+				glyph.mPageID = page;
+				glyph.mWidth = width;
+				glyph.mHeight = height;
+				glyph.mAdvanceX = xadv;
+				glyph.mBearingX = xoff;
+				glyph.mBearingY = glyphSet->GetAscent() - yoff;
+			}
 		}
 		else if ( strcmp ( key, "kernings" ) == 0 ) {
 			//kernings count=560
@@ -257,13 +265,15 @@ void MOAIFont::InitWithBMFont ( cc8* filename, const u32 numPreloadedTextures, M
 			if ( first && second && ( amount != 0.0f )) {
 			
 				assert ( glyphSet );
-				MOAIGlyph& glyph = glyphSet->EditGlyph ( first );
-				
-				size_t i = glyph.mKernTable.Size ();
-				glyph.mKernTable.Grow ( i + 1 );
-				glyph.mKernTable [ i ].mName = second;
-				glyph.mKernTable [ i ].mX = amount;
-				glyph.mKernTable [ i ].mY = 0;
+				if ( glyphSet ) {
+					MOAIGlyph& glyph = glyphSet->EditGlyph ( first );
+					
+					size_t i = glyph.mKernTable.Size ();
+					glyph.mKernTable.Grow ( i + 1 );
+					glyph.mKernTable [ i ].mName = second;
+					glyph.mKernTable [ i ].mX = amount;
+					glyph.mKernTable [ i ].mY = 0;
+				}
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include <string.h>
@@ -53,6 +53,10 @@ void AKUModulesAppFinalize () {
 		AKUAppleAppFinalize ();
 	#endif
 
+    #if AKU_WITH_AR
+		AKUArAppFinalize ();
+	#endif
+
     #if AKU_WITH_AUDIO_SAMPLER
 		AKUAudioSamplerAppFinalize ();
 	#endif
@@ -101,6 +105,10 @@ void AKUModulesAppFinalize () {
 		AKUUtilAppFinalize ();
 	#endif
 	
+	#if AKU_WITH_VR
+		AKUVrAppFinalize ();
+	#endif
+	
 	#if AKU_WITH_IOS
 		AKUModulesIosAppFinalize ();
 	#endif
@@ -119,6 +127,10 @@ int AKUModulesAppInitialize () {
 
     #if AKU_WITH_APPLE
 		AKUAppleAppInitialize ();
+	#endif
+
+    #if AKU_WITH_AR
+		AKUArAppInitialize ();
 	#endif
 
     #if AKU_WITH_AUDIO_SAMPLER
@@ -169,6 +181,10 @@ int AKUModulesAppInitialize () {
 		AKUUtilAppInitialize ();
 	#endif
 
+	#if AKU_WITH_VR
+		AKUVrAppInitialize ();
+	#endif
+
 	#if AKU_WITH_IOS
 		AKUModulesIosAppInitialize ();
 	#endif
@@ -191,6 +207,14 @@ int AKUModulesContextInitialize () {
 
     #if AKU_WITH_APPLE
 		AKUAppleContextInitialize ();
+	#endif
+
+    #if AKU_WITH_AR
+		AKUArContextInitialize ();
+	#endif
+
+	#if AKU_WITH_ASSIMP
+		AKUAssimpContextInitialize ();
 	#endif
 
     #if AKU_WITH_AUDIO_SAMPLER
@@ -249,6 +273,10 @@ int AKUModulesContextInitialize () {
 		AKUUtilContextInitialize ();
 	#endif
 	
+	#if AKU_WITH_VR
+		AKUVrContextInitialize ();
+	#endif
+	
 	#if AKU_WITH_IOS
 		AKUModulesIosContextInitialize ();
 	#endif
@@ -269,6 +297,10 @@ int AKUModulesContextInitialize () {
 
 	#if AKU_WITH_IMAGE_PVR
 		AKUImagePvrContextInitialize ();
+	#endif
+
+	#if AKU_WITH_IMAGE_TGA
+		AKUImageTgaContextInitialize ();
 	#endif
 
 	#if AKU_WITH_IMAGE_WEBP
@@ -301,12 +333,20 @@ void AKUModulesPause ( bool pause ) {
 		AKUModulesAndroidPause ( pause );
 	#endif
 
+    #if AKU_WITH_AR
+		AKUArPause ( pause );
+	#endif
+
 	#if AKU_WITH_SIM
 		AKUPause ( pause );
 	#endif
 	
 	#if AKU_WITH_UNTZ
 		AKUUntzPause ( pause );
+	#endif
+	
+	#if AKU_WITH_VR
+		AKUVrPause ( pause );
 	#endif
 	
 	#if AKU_WITH_IOS
@@ -336,10 +376,6 @@ void AKUModulesUpdate () {
 	#if AKU_WITH_FMOD_EX
 		AKUFmodExUpdate ();
 	#endif
-
-	#if AKU_WITH_SIM
-		AKUUpdate ();
-	#endif
 	
 	#if AKU_WITH_IOS
 		AKUModulesIosUpdate ();
@@ -347,5 +383,14 @@ void AKUModulesUpdate () {
 	
 	#if AKU_WITH_PLUGINS
 		AKUPluginsUpdate ();
+	#endif
+	
+	#if AKU_WITH_VR
+		AKUVrUpdate ();
+	#endif
+	
+	// do this last
+	#if AKU_WITH_SIM
+		AKUUpdate ();
 	#endif
 }

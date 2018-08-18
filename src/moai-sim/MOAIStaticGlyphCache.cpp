@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -30,7 +30,7 @@ MOAIImage* MOAIStaticGlyphCache::GetGlyphImage ( MOAIGlyph& glyph ) {
 }
 
 //----------------------------------------------------------------//
-MOAISingleTexture* MOAIStaticGlyphCache::GetGlyphTexture ( MOAIGlyph& glyph ) {
+MOAITextureBase* MOAIStaticGlyphCache::GetGlyphTexture ( MOAIGlyph& glyph ) {
 
 	assert ( glyph.GetPageID () < this->mTextures.Size ());
 	return this->mTextures [ glyph.GetPageID ()];

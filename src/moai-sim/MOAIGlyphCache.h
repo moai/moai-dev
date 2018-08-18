@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIGLYPHCACHE_H
@@ -6,7 +6,7 @@
 
 class MOAIGlyph;
 class MOAIImage;
-class MOAISingleTexture;
+class MOAITextureBase;
 class MOAIFont;
 
 //================================================================//
@@ -41,7 +41,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	virtual MOAIImage*			GetGlyphImage			( MOAIGlyph& glyph ) = 0;
-	virtual MOAISingleTexture*	GetGlyphTexture			( MOAIGlyph& glyph ) = 0;
+	virtual MOAITextureBase*	GetGlyphTexture			( MOAIGlyph& glyph ) = 0;
 	virtual MOAIImage*			GetImage				() = 0;
 	virtual bool				IsDynamic				() = 0;
 								MOAIGlyphCache			();

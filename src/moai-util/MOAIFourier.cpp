@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -629,6 +629,8 @@ void MOAIFourier::Transform ( ZLStream& inStream, u32 inStreamType, bool complex
 	bool complexOut = (( this->mOutputType == OUTPUT_COMPLEX ) || ( this->mOutputType == OUTPUT_IMAGINARY ));
 
 	size_t halfSize = this->mSize >> 1;
+	
+	if ( !( this->mSize && halfSize )) return;
 
 	// the way kissft is written the cases are either C to C, R to C or C to R. There appears to be no R to R.
 
@@ -755,7 +757,7 @@ void MOAIFourier::Transform ( ZLStream& inStream, u32 inStreamType, bool complex
 	
 	float* amplitudes = 0;
 	
-	if (( this->mOutputType == OUTPUT_AMPLITUDE ) || ( this->mOutputType == OUTPUT_AMPLITUDE ) || ( this->mOutputType == OUTPUT_AMPLITUDE )) {
+	if (( this->mOutputType == OUTPUT_AVERAGE ) || ( this->mOutputType == OUTPUT_OCTAVES )) {
 		amplitudes = ( float* )in; // let's re-use this buffer
 	}
 	
@@ -803,7 +805,6 @@ void MOAIFourier::Transform ( ZLStream& inStream, u32 inStreamType, bool complex
 					ZLSample::WriteSample ( outStream, outStreamType, &amplitude, ZLSample::SAMPLE_FLOAT );
 				}
 				else {
-					amplitudes = ( float* )in;
 					amplitudes [ i ] = amplitude;
 				}
 				break;
@@ -893,7 +894,7 @@ float MOAIFourier::Window ( u32 func, size_t index, size_t length, float a ) {
 
 //----------------------------------------------------------------//
 void MOAIFourier::WriteAverage ( float* amplitudes, ZLStream& outStream, u32 outStreamType ) {
-
+	
 	size_t chunkSize = this->mSize / this->mOutputBands;
 	
 	for ( size_t i = 0; i < this->mOutputBands; ++i ) {

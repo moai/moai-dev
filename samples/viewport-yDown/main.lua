@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -11,9 +11,9 @@ viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, -480 )
 viewport:setOffset ( -1, 1 )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 grid = MOAIGrid.new ()
 grid:setSize ( 8, 8, 32, 32 )
@@ -32,7 +32,7 @@ tileDeck:setTexture ( "numbers.png" )
 tileDeck:setSize ( 8, 8 )
 tileDeck:setRect ( -0.5, 0.5, 0.5, -0.5 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( tileDeck )
 prop:setGrid ( grid )
-layer:insertProp ( prop )
+prop:setPartition ( layer )

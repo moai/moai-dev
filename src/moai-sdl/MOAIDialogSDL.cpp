@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include <moai-sdl/MOAIDialogSDL.h>
@@ -26,7 +26,7 @@ int MOAIDialogSDL::_show ( lua_State* L ) {
 		button.flags = 0;
 		button.text = "";
 		
-		state.GetField ( 3, buttonIdx );
+		state.PushField ( 3, buttonIdx );
 		
 		int type = lua_type ( state, -1 );
 		
@@ -35,8 +35,8 @@ int MOAIDialogSDL::_show ( lua_State* L ) {
 		}
 		
 		if ( type == LUA_TTABLE ) {
-			button.text = state.GetField < cc8* >( -1, "text", "" );
-			button.flags |= state.GetField < bool >( -1, "default", false ) ? SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT : 0;
+			button.text = state.GetFieldValue < cc8* >( -1, "text", "" );
+			button.flags |= state.GetFieldValue < bool >( -1, "default", false ) ? SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT : 0;
 		}
 		
 		state.Pop ();
@@ -63,8 +63,8 @@ int MOAIDialogSDL::_show ( lua_State* L ) {
 	
 		bool handledByButton = false;
 	
-		if ( state.GetFieldWithType ( 3, buttonid, LUA_TTABLE )) {
-			if ( state.GetFieldWithType ( -1, "func", LUA_TFUNCTION )) {
+		if ( state.PushFieldWithType ( 3, buttonid, LUA_TTABLE )) {
+			if ( state.PushFieldWithType ( -1, "func", LUA_TFUNCTION )) {
 				state.DebugCall ( 0, 0 );
 				handledByButton = true;
 			}

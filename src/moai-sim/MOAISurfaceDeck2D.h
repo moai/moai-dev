@@ -1,10 +1,10 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAISURFACEDECK2D_H
 #define	MOAISURFACEDECK2D_H
 
-#include <moai-sim/MOAIStandardDeck.h>
+#if 0
 
 //================================================================//
 // MOAISurfaceBrush2D
@@ -43,6 +43,14 @@ private:
 	void			GatherSurfaces			( u32 idx, float xOff, float yOff, bool xFlip, bool yFlip, MOAISurfaceSampler2D& sampler );
 	ZLBox			GetItemBounds			( u32 idx );
 
+	//----------------------------------------------------------------//
+	ZLBounds				MOAIDeck_ComputeMaxBounds		();
+	void					MOAIDeck_Draw					( u32 idx );
+	ZLBounds				MOAIDeck_GetBounds				( u32 idx );
+	MOAICollisionShape*		MOAIDeck_GetCollisionShape		( u32 idx );
+	bool					MOAIDeck_Overlap				( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
+	bool					MOAIDeck_Overlap				( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAISurfaceDeck2D )
@@ -58,4 +66,5 @@ public:
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
+#endif
 #endif

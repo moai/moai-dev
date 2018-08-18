@@ -1,7 +1,5 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
-
-#include "pch.h"
 
 #import <AudioToolbox/AudioToolbox.h>
 
@@ -12,7 +10,7 @@
 #import <moai-apple/NSString+MOAILib.h>
 
 #import <moai-ios/MOAIAppIOS.h>
-#import <moai-ios/MOAITakeCameraListener.h>
+//#import <moai-ios/MOAITakeCameraListener.h>
 
 #import <ifaddrs.h>
 #import <arpa/inet.h>
@@ -302,16 +300,13 @@ int MOAIAppIOS::_openURLWithParams ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
 	NSString* baseURL = [[ NSString alloc ] initWithLua: state stackIndex: 1 ];
-	NSMutableDictionary* params = [[ NSMutableDictionary alloc ] initWithCapacity:5 ];
-	[ params initWithLua: state stackIndex: 2 ];
-	
-	if ( baseURL == NULL || params == NULL ) return 0;
+	NSMutableDictionary* params = [[ NSMutableDictionary alloc ] initWithLua: state stackIndex: 2 ];
 	
 	NSURL* parsedURL = [ NSURL URLWithString: baseURL ];
 	NSString* urlQueryPrefix = parsedURL.query ? @"&" : @"?";
 	
 	NSMutableArray* paramPairs = [ NSMutableArray array ];
-	for ( NSString* key in [ params keyEnumerator ] ) {
+	for ( NSString* key in [ params keyEnumerator ]) {
 		
 		NSString* escapedValue = ( NSString* )CFURLCreateStringByAddingPercentEscapes( NULL, ( CFStringRef )[ params objectForKey: key ], NULL, ( CFStringRef )@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8 );
 		[ paramPairs addObject:[ NSString stringWithFormat: @"%@=%@", key, escapedValue ]];
@@ -322,6 +317,9 @@ int MOAIAppIOS::_openURLWithParams ( lua_State* L ) {
 		
 	[[ UIApplication sharedApplication ] openURL:[ NSURL URLWithString:[ NSString stringWithFormat: @"%@%@%@", baseURL, urlQueryPrefix, urlQuery ]]];	
 
+	[ baseURL release ];
+	[ params release ];
+	
 	return 0;
 }
 
@@ -373,45 +371,45 @@ int MOAIAppIOS::_sendMail ( lua_State* L ) {
 	@in int			if device is an ipad width coordinate of Popover
 	@in int			if device is an ipad height coordinate of Popover
  */
-int MOAIAppIOS::_takeCamera( lua_State* L ) {
-	
-	int x, y, width, height = 0;
-	NSUInteger sourceType;
-	
-	MOAILuaState state ( L );
-	if ( state.IsType ( 1, LUA_TFUNCTION )) {
-		MOAIAppIOS::Get ().mOnTakeCameraCallback.SetRef ( state, 1 );
-	}
-	
-	sourceType = state.GetValue < NSUInteger >( 2, 0 );
-	x = state.GetValue < int >( 3, 0 );
-	y = state.GetValue < int >( 4, 0 );
-	width = state.GetValue < int >( 5, 0 );
-	height = state.GetValue < int >( 6, 0 );
-	
-	UIImagePickerController *ipc = [[UIImagePickerController alloc]
-									init]; 
-	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
-	UIViewController* rootVC = [ window rootViewController ];
-
-	ipc.delegate = MOAIAppIOS::Get ().mTakeCameraListener;
-	ipc.sourceType = sourceType;
-	
-	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-		MOAIAppIOS::Get().mImagePickerPopover = [[UIPopoverController alloc] 
-												   initWithContentViewController: ipc];
-		[MOAIAppIOS::Get ().mTakeCameraListener setPopover:MOAIAppIOS::Get().mImagePickerPopover];
-		MOAIAppIOS::Get().mImagePickerPopover.delegate = MOAIAppIOS::Get ().mTakeCameraListener;
-		CGRect rect = CGRectMake(x,y,10,10);
-		[MOAIAppIOS::Get().mImagePickerPopover presentPopoverFromRect:rect inView:[rootVC view] 
-						  permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-
-	} else {
-		[rootVC presentViewController:ipc animated:YES completion:nil];
-	}
-	
-	return 0;
-}
+//int MOAIAppIOS::_takeCamera( lua_State* L ) {
+//	
+//	int x, y, width, height = 0;
+//	NSUInteger sourceType;
+//	
+//	MOAILuaState state ( L );
+//	if ( state.IsType ( 1, LUA_TFUNCTION )) {
+//		MOAIAppIOS::Get ().mOnTakeCameraCallback.SetRef ( state, 1 );
+//	}
+//	
+//	sourceType = state.GetValue < NSUInteger >( 2, 0 );
+//	x = state.GetValue < int >( 3, 0 );
+//	y = state.GetValue < int >( 4, 0 );
+//	width = state.GetValue < int >( 5, 0 );
+//	height = state.GetValue < int >( 6, 0 );
+//	
+//	UIImagePickerController *ipc = [[UIImagePickerController alloc]
+//									init]; 
+//	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
+//	UIViewController* rootVC = [ window rootViewController ];
+//
+//	ipc.delegate = MOAIAppIOS::Get ().mTakeCameraListener;
+//	ipc.sourceType = sourceType;
+//	
+//	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+//		MOAIAppIOS::Get().mImagePickerPopover = [[UIPopoverController alloc] 
+//												   initWithContentViewController: ipc];
+//		[MOAIAppIOS::Get ().mTakeCameraListener setPopover:MOAIAppIOS::Get().mImagePickerPopover];
+//		MOAIAppIOS::Get().mImagePickerPopover.delegate = MOAIAppIOS::Get ().mTakeCameraListener;
+//		CGRect rect = CGRectMake(x,y,10,10);
+//		[MOAIAppIOS::Get().mImagePickerPopover presentPopoverFromRect:rect inView:[rootVC view] 
+//						  permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+//
+//	} else {
+//		[rootVC presentViewController:ipc animated:YES completion:nil];
+//	}
+//	
+//	return 0;
+//}
 
 //----------------------------------------------------------------//
 /**	@lua	vibrate
@@ -465,7 +463,7 @@ MOAIAppIOS::MOAIAppIOS () {
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 
 	//this->mMailDelegate = [ MOAIMailComposeDelegate alloc ];
-	this->mTakeCameraListener = [ MOAITakeCameraListener alloc ];
+	//this->mTakeCameraListener = [ MOAITakeCameraListener alloc ];
 	
 	this->RegisterNotificationListeners ();
 }
@@ -476,7 +474,7 @@ MOAIAppIOS::~MOAIAppIOS () {
 	RemoveNotificationListeners ();
 
 	//[ this->mMailDelegate release ];
-	[ this->mTakeCameraListener release];
+	//[ this->mTakeCameraListener release];
 }
 
 //----------------------------------------------------------------//
@@ -528,7 +526,7 @@ void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "openURLWithParams",			_openURLWithParams },
 		{ "sendMail",					_sendMail },
 		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIAppIOS > },
-		{ "takeCamera",					_takeCamera },
+		//{ "takeCamera",					_takeCamera },
 		{ "vibrate",					_vibrate },
 		{ NULL, NULL }
 	};
@@ -546,7 +544,7 @@ void MOAIAppIOS::RegisterNotificationListeners () {
 	this->mNotificationListenerMap [ "UIApplicationWillResignActiveNotification" ] = WILL_RESIGN_ACTIVE;
 	this->mNotificationListenerMap [ "UIApplicationWillTerminateNotification" ] = WILL_TERMINATE;
 
-	MOAIGlobals* context = MOAIGlobalsMgr::Get ();
+	ZLContext* context = ZLContextMgr::Get ();
 
 	NotificationListenerMapIt notificationIt = this->mNotificationListenerMap.begin ();
 	for ( ; notificationIt != this->mNotificationListenerMap.end (); ++notificationIt ) {
@@ -561,10 +559,10 @@ void MOAIAppIOS::RegisterNotificationListeners () {
 				
 				ZLLog_DebugF ( ZLLog::CONSOLE, "MOAIAppIOS: received notification '%s'\n", [ notification.name UTF8String ]);
 				
-				MOAIScopedContext scopedContext;
+				ZLScopedContext scopedContext;
 				
-				if ( !MOAIGlobalsMgr::Check ( context )) return;
-				MOAIGlobalsMgr::Set ( context );
+				if ( !ZLContextMgr::Check ( context )) return;
+				ZLContextMgr::Set ( context );
 				
 				this->InvokeListener ( eventID );
 				

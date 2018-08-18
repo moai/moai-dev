@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef ZLSTREAMADAPTER_H
@@ -60,7 +60,7 @@ public:
 	size_t					GetCursor				();
 	size_t					GetLength				();
 	bool					IsAtEnd					();
-	ZLResultCode			Open					( ZLStream* stream );
+	ZLResultCode			Open					( ZLStream* stream = 0 );
 							ZLStreamAdapter			();
 							~ZLStreamAdapter		();
 };

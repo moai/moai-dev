@@ -1,0 +1,55 @@
+#!/usr/bin/env bash 
+#
+# pito - rapa nui for 'navel'  (See: http://www.sacred-texts.com/pac/ei/)
+#
+INVOKE_DIR=$(pwd)
+MOAI_SDK_HOME=$(cd $(dirname "${0}")/../ && pwd)
+MOAI_CMD=${1}
+
+echo "MOAI_SDK_HOME: $MOAI_SDK_HOME"
+
+case `uname` in
+
+    Darwin*)
+        MOAI_SDK_BIN="$MOAI_SDK_HOME/bin/osx/moai"
+        MOAI_BUILD_SCRIPT="$MOAI_SDK_HOME/pito/build/build-osx.sh"
+    ;;
+
+    Linux*)
+        MOAI_SDK_BIN="$MOAI_SDK_HOME/bin/nix/moai"
+        MOAI_BUILD_SCRIPT="$MOAI_SDK_HOME/pito/build/build-nix.sh"
+    	exit 1
+    ;;
+    *)
+        echo "Didn't recognize operating system; cannot locate or build moai .. aborting"
+    	exit 1
+    ;;
+esac
+
+# at this stage, paths to moai binary and to moai build scripts are known, though moai binary may be missing.
+# if the binary is missing, build it.
+if ! [ -x "$MOAI_SDK_BIN" ]
+then
+
+    # attempt to build moai on this system
+    echo "MOAI_BUILD_SCRIPT: $MOAI_BUILD_SCRIPT" 
+    $MOAI_BUILD_SCRIPT
+
+    if [ -x "$MOAI_SDK_BIN" ]
+    then
+        echo "Continuing pito execution..."
+    else
+        echo "Something went wrong with building $MOAI_SDK_BIN .. exiting!"
+        exit 1
+    fi
+fi
+
+echo "MOAI_SDK_BIN: $MOAI_SDK_BIN" 
+
+# call pito.lua
+shift
+set $INVOKE_DIR $MOAI_SDK_HOME $MOAI_CMD $@
+
+pushd $MOAI_SDK_HOME/pito > /dev/null
+$MOAI_SDK_BIN pito.lua $@
+popd > /dev/null

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIIMAGE_H
@@ -15,6 +15,19 @@ namespace MOAIImageTransform {
 		PREMULTIPLY_ALPHA	= 0x08,
 	};
 }
+
+//================================================================//
+// MOAIImageBlendMode
+//================================================================//
+class MOAIImageBlendMode :
+	public ZLColorBlendFunc {
+public:
+
+	//----------------------------------------------------------------//
+	void		Clear					();
+	void		Init					( MOAILuaState& state, int idx );
+				MOAIImageBlendMode		();
+};
 
 //================================================================//
 // MOAIImage
@@ -167,7 +180,7 @@ public:
 	void					Convolve1D						( const MOAIImage& image, const float* kernel, size_t kernelSize, bool horizontal );
 	void					Copy							( const MOAIImage& image );
 	void					CopyRect						( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect destRect, u32 filter = FILTER_LINEAR );
-	void					CopyRect						( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect destRect, u32 filter, const ZLColorBlendFunc& blendFunc );
+	void					CopyRect						( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect destRect, u32 filter, const MOAIImageBlendMode& blendMode );
 	void					Desaturate						( const MOAIImage& image, float rY, float gY, float bY, float K );
 	void					DrawLine						( int p1x, int p1y, int p2x, int p2y, u32 color );
 	void					FillCircle						( float x, float y, float xRad, u32 color );
@@ -215,7 +228,7 @@ public:
 	void					SerializeIn						( MOAILuaState& state, MOAIDeserializer& serializer );
 	void					SerializeOut					( MOAILuaState& state, MOAISerializer& serializer );
 	void					SetColor						( u32 x, u32 y, u32 color );
-	void					SetColor						( u32 x, u32 y, u32 color, const ZLColorBlendFunc& blendFunc );
+	void					SetColor						( u32 x, u32 y, u32 color, const MOAIImageBlendMode& blendMode );
 	void					SetPaletteColor					( u32 idx, u32 rgba );
 	void					SetPixel						( u32 x, u32 y, u32 pixel );
 	void					SimpleThreshold					( const MOAIImage& image, float rT, float gT, float bT, float aT );

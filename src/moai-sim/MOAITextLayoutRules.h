@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAITEXTLAYOUTRULES_H
@@ -23,6 +23,7 @@ protected:
 	MOAINode*	mOwner; // TODO: just put here to make release/retain curve work. which sucks. kill it.
 
 	ZLRect		mFrame;
+	ZLRect		mMargins;
 	
 	bool		mLimitWidth;
 	bool		mLimitHeight;
@@ -81,6 +82,7 @@ public:
 	GET_SET ( MOAINode*, Owner, mOwner )
 	
 	GET_SET_CONST ( ZLRect&, Frame, mFrame )
+	GET_SET_CONST ( ZLRect&, Margins, mMargins )
 	
 	GET_SET_CONST ( bool, LimitWidth, mLimitWidth )
 	GET_SET_CONST ( bool, LimitHeight, mLimitHeight )
@@ -106,6 +108,7 @@ public:
 	static ZLRect		GetGlyphRect				( const MOAIGlyph& glyph, float x, float y, float xScale, float yScale, u32 hRule, u32 vRule );
 	ZLRect				GetGlyphLayoutRect			( const MOAIGlyph& glyph, float x, float y, float xScale, float yScale );
 	ZLRect				GetGlyphSpacingRect			( const MOAIGlyph& glyph, float x, float y, float xScale, float yScale );
+	ZLRect				GetFrameWithMargins			();
 	void				Init						( const MOAITextLayoutRules& designer );
 	void				Layout						( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, cc8* str, u32 idx, bool* more, u32* nextIdx, bool* overrun );
 						MOAITextLayoutRules			();

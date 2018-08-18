@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef MOAIURLMGRNACL_H
@@ -13,7 +13,7 @@ class MOAIUrlMgrOpaque;
 // MOAIUrlMgrNaCl
 //================================================================//
 class MOAIUrlMgrNaCl :
-	public MOAIGlobalClass < MOAIUrlMgrNaCl > {
+	public ZLContextClass < MOAIUrlMgrNaCl > {
 private:
 
 	STLList < MOAIHttpTaskNaCl* > mTasks;

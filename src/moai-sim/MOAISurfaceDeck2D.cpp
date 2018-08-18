@@ -1,14 +1,41 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
 #include <moai-sim/MOAIDebugLines.h>
-#include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIGrid.h>
-#include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAISurfaceDeck2D.h>
 #include <moai-sim/MOAISurfaceSampler2D.h>
 #include <moai-sim/MOAITransformBase.h>
+
+SUPPRESS_EMPTY_FILE_WARNING
+
+#if 0
+
+//----------------------------------------------------------------//
+//void MOAIProp::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
+//	UNUSED ( sampler );
+
+	//if ( !this->mDeck ) return;
+	//
+	//sampler.SetSourcePrim ( this );
+	//
+	//if ( this->mGrid ) {
+	//	
+	//	ZLRect localRect = sampler.GetLocalRect ();
+	//	
+	//	MOAICellCoord c0;
+	//	MOAICellCoord c1;
+	//	
+	//	ZLRect deckBounds = this->mDeck->GetBounds ().GetRect( ZLBox::PLANE_XY );
+
+	//	this->mGrid->GetBoundsInRect ( localRect, c0, c1, deckBounds );
+	//	//this->mDeck->GatherSurfaces ( *this->mGrid, this->mRemapper, this->mGridScale, c0, c1, sampler );
+	//}
+	//else {
+	//	//this->mDeck->GatherSurfaces ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ), sampler );
+	//}
+//}
 
 //================================================================//
 // local
@@ -323,3 +350,54 @@ void MOAISurfaceDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_register ( state, 0, regTable );
 }
+
+//================================================================//
+// ::implementation::
+//================================================================//
+
+//----------------------------------------------------------------//
+ZLBounds MOAISurfaceDeck2D::MOAIDeck_ComputeMaxBounds () {
+
+	return ZLBounds::EMPTY;
+}
+
+//----------------------------------------------------------------//
+void MOAISurfaceDeck2D::MOAIDeck_Draw ( u32 idx ) {
+	UNUSED ( idx );
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAISurfaceDeck2D::MOAIDeck_GetBounds ( u32 idx ) {
+	UNUSED ( idx );
+
+	return ZLBounds::EMPTY;
+}
+
+//----------------------------------------------------------------//
+MOAICollisionShape* MOAISurfaceDeck2D::MOAIDeck_GetCollisionShape ( u32 idx ) {
+	UNUSED ( idx );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+bool MOAISurfaceDeck2D::MOAIDeck_Overlap ( u32 idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
+	UNUSED ( idx );
+	UNUSED ( vec );
+	UNUSED ( granularity );
+	UNUSED ( result );
+
+	return false;
+}
+
+//----------------------------------------------------------------//
+bool MOAISurfaceDeck2D::MOAIDeck_Overlap ( u32 idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
+	UNUSED ( idx );
+	UNUSED ( vec );
+	UNUSED ( granularity );
+	UNUSED ( result );
+
+	return false;
+}
+
+#endif

@@ -11,9 +11,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 640, 480 )
 viewport:setScale ( 640, 480 )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 tess = MOAIVectorTesselator.new ()
 
@@ -82,7 +82,7 @@ scriptDeck:setDrawCallback ( onDraw )
 
 local prop = MOAIProp.new ()
 prop:setDeck ( scriptDeck )
-layer:insertProp ( prop )
+prop:setPartition ( layer )
 
 prop:setColor ( 1, 0, 0, 1 )
 

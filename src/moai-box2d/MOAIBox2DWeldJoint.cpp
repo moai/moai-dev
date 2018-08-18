@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -24,7 +24,7 @@ int MOAIBox2DWeldJoint::_getDampingRatio ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWeldJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -45,7 +45,7 @@ int MOAIBox2DWeldJoint::_getFrequency ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWeldJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
@@ -67,7 +67,7 @@ int MOAIBox2DWeldJoint::_setDampingRatio ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWeldJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 
@@ -91,7 +91,7 @@ int MOAIBox2DWeldJoint::_setFrequency ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWeldJoint, "U" )
 
 	if ( !self->mJoint ) {
-		MOAILogF ( state, ZLLog::LOG_ERROR, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		MOAILogF ( state, ZLLog::LOG_ERROR, MOAISTRING_MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 

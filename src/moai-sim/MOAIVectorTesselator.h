@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIVECTORTESSELATOR_H
@@ -14,6 +14,61 @@ class MOAIVertexFormat;
 class SafeTesselator;
 
 //================================================================//
+// MOAIVectorTesselatorWriter
+//================================================================//
+// TODO: doxygen
+class MOAIVectorTesselatorWriter :
+	public MOAILuaObject {
+private:
+
+	friend class MOAIVectorTesselator;
+
+	enum {
+		STYLE_CMD_FILL,
+		STYLE_CMD_FILL_COLOR,
+		STYLE_CMD_LINE,
+		STYLE_CMD_LINE_COLOR,
+		STYLE_CMD_LINE_WIDTH,
+		STYLE_CMD_STROKE,
+		STYLE_CMD_STROKE_COLOR,
+		STYLE_CMD_STROKE_WIDTH,
+		STYLE_CMD_STROKE_DEPTH_BIAS,
+		STYLE_CMD_JOIN,
+		STYLE_CMD_CAP,
+		STYLE_CMD_MITER_LIMIT,
+		STYLE_CMD_WINDING_RULE,
+		STYLE_CMD_CIRCLE_RESOLUTION,
+		STYLE_CMD_EXTRUDE,
+		STYLE_CMD_Z_OFFSET,
+		STYLE_CMD_LIGHT_VEC,
+		STYLE_CMD_LIGHT_COLOR,
+		STYLE_CMD_LIGHT_CURVE,
+		STYLE_CMD_SHADOW_COLOR,
+		STYLE_CMD_SHADOW_CURVE,
+		STYLE_CMD_DRAWING_TO_WORLD,
+		STYLE_CMD_FILL_EXTRA_ID,
+		STYLE_CMD_STROKE_EXTRA_ID,
+		STYLE_CMD_MERGE_NORMALS,
+		
+		VECTOR_CMD_SHAPE,
+		VECTOR_CMD_DONE,
+	};
+
+	bool				mFlushStyle;
+	MOAIVectorStyle		mStyle;
+
+public:
+
+	DECL_LUA_OPAQUE ( MOAIVectorTesselatorWriter )
+
+	//----------------------------------------------------------------//
+							MOAIVectorTesselatorWriter			();
+							~MOAIVectorTesselatorWriter			();
+	MOAIVectorShape*		ReadShape							( ZLStream& stream );
+	void					WriteShape							( ZLStream& stream, const MOAIVectorShape& shape );
+};
+
+//================================================================//
 // MOAIVectorTesselator
 //================================================================//
 /**	@lua	MOAIVectorTessalator
@@ -27,8 +82,7 @@ private:
 		VERTEX_SIZE = 16,
 	};
 
-	ZLLeanStack < MOAIVectorShape*, 64 >	mDirectory; // TODO: should use a chunked array or something
-	ZLLeanStack < MOAIVectorShape*, 16 >	mShapeStack; // TODO: ditto
+	ZLLeanStack < MOAIVectorShape*, 16 >	mShapeStack;
 	
 	ZLLeanStack < ZLVec2D, 32 >				mVertexStack;
 	bool									mPolyClosed;
@@ -47,11 +101,14 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_clearShapes			( lua_State* L );
+	static int		_clearStyles			( lua_State* L );
 	static int		_clearTransforms		( lua_State* L );
 	static int		_drawingToWorld			( lua_State* L );
 	static int		_drawingToWorldVec		( lua_State* L );
 	static int		_finish					( lua_State* L );
+	static int		_getExtrude				( lua_State* L );
 	static int		_getTransform			( lua_State* L );
+	static int		_openWriter				( lua_State* L );
 	static int		_pushBezierVertices		( lua_State* L );
 	static int		_pushCombo				( lua_State* L );
 	static int		_pushEllipse			( lua_State* L );
@@ -64,6 +121,7 @@ private:
 	static int		_pushTransform			( lua_State* L );
 	static int		_pushTranslate			( lua_State* L );
 	static int		_pushVertex				( lua_State* L );
+	static int		_readShapes				( lua_State* L );
 	static int		_reserveVertexExtras	( lua_State* L );
 	static int		_setCapStyle			( lua_State* L );
 	static int		_setCircleResolution	( lua_State* L );
@@ -95,13 +153,16 @@ private:
 	static int		_tesselate				( lua_State* L );
 	static int		_worldToDrawing			( lua_State* L );
 	static int		_worldToDrawingVec		( lua_State* L );
+	static int		_writeShapes			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	u32				CountVertices			( const MOAIVertexFormat& format, ZLStream& vtxStream );
-	u32				PushShape				( MOAIVectorShape* shape );
-	void			WriteVertex				( ZLStream& stream, MOAIVertexFormat& format, float x, float y, float z, float xn, float yn, float zn, u32 color, u32 vertexExtraID );
-	
+	void			PushShape				( MOAIVectorShape* shape );
+		
 public:
+
+	static const u32	TESSELATE_FILLS			= 0x01;
+	static const u32	TESSELATE_STROKES		= 0x02;
+	static const u32	TESSELATE_ALL			= TESSELATE_FILLS | TESSELATE_STROKES;
 	
 	DECL_LUA_FACTORY ( MOAIVectorTesselator )
 	
@@ -114,6 +175,7 @@ public:
 	void				Clear						();
 	void				ClearShapes					();
 	void				ClearTransforms				();
+	u32					CountVertices				( const MOAIVertexFormat& format, ZLStream& vtxStream );
 	int					Finish						();
 						MOAIVectorTesselator		();
 						~MOAIVectorTesselator		();
@@ -131,16 +193,19 @@ public:
 	void				PushTransform				( float a, float b, float c, float d, float tx, float ty );
 	void				PushTranslate				( float x, float y);
 	void				PushVertex					( float x, float y );
+	void				ReadShapes					( ZLStream& stream );
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
 	void				ReserveVertexExtras			( u32 total, size_t size );
 	void				SetVertexExtra				( u32 idx, void* extra, size_t size );
-	int					Tesselate					( SafeTesselator& tess );
-	int					Tesselate					( MOAIRegion& region );
-	int					Tesselate					( ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format );
-	int					Tesselate					( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, MOAIVertexFormat& format, u32 idxSizeInBytes );
+	int					Tesselate					( SafeTesselator& tess, u32 flags = TESSELATE_ALL );
+	int					Tesselate					( MOAIRegion& region, u32 flags = TESSELATE_ALL );
+	int					Tesselate					( ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, u32 flags = TESSELATE_ALL );
+	int					Tesselate					( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, MOAIVertexFormat& format, u32 idxSizeInBytes, u32 flags = TESSELATE_ALL );
+	void				WriteShapes					( ZLStream& stream, MOAIVectorTesselatorWriter* writer = 0 );
 	void				WriteSkirt					( SafeTesselator& tess, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, const MOAIVectorStyle& style, const ZLColorVec& fillColor, u32 vertexExtraID );
 	void				WriteTriangles				( SafeTesselator& tess, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, const MOAIVectorStyle& style, float z, u32 color, u32 vertexExtraID );
+	void				WriteVertex					( ZLStream& stream, MOAIVertexFormat& format, float x, float y, float z, float xn, float yn, float zn, u32 color, u32 vertexExtraID );
 };
 
 #endif

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef ZLSTREAM_H
@@ -52,10 +52,18 @@ public:
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
+	ZLResult < TYPE > Read () {
+		TYPE value;
+		ZLSizeResult result = this->ReadBytes ( &value, sizeof ( TYPE ));
+		ZL_RETURN_RESULT ( TYPE, value, result.mCode );
+	}
+
+	//----------------------------------------------------------------//
+	template < typename TYPE >
 	ZLResult < TYPE > Read ( TYPE fallback ) {
-		TYPE temp;
-		if ( this->ReadBytes ( &temp, sizeof ( TYPE )).mValue == sizeof ( TYPE )) {
-			ZL_RETURN_RESULT ( TYPE, temp, ZL_OK );
+		TYPE value;
+		if ( this->ReadBytes ( &value, sizeof ( TYPE )).mValue == sizeof ( TYPE )) {
+			ZL_RETURN_RESULT ( TYPE, value, ZL_OK );
 		}
 		ZL_RETURN_RESULT ( TYPE, fallback, ZL_ERROR );
 	}
@@ -80,6 +88,7 @@ public:
 };
 
 //----------------------------------------------------------------//
+template <> ZLResult < bool >	ZLStream::Read < bool >			();
 template <> ZLResult < bool >	ZLStream::Read < bool >			( bool value );
 template <> ZLSizeResult		ZLStream::Write < bool >		( bool value );
 

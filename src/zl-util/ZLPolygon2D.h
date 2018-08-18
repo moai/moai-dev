@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef ZLPOLYGON2D_H
@@ -13,7 +13,7 @@
 //================================================================//
 // ZLPolygon2D
 //================================================================//
-class ZLPolygon2D {
+class ZLPolygon2D {	
 public:
 
 	static const u32 POLY_KNOWN_BIT			= 0x01;
@@ -98,9 +98,14 @@ public:
 	size_t					Bless					();
 	bool					Check					( u32 check ) const;
 	void					Clear					();
+	size_t					Clip					( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, ZLStream& clippedPolySizes );
+	size_t					Clip					( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, ZLStream& clippedPolySizes, void* buffer, size_t bufferSize );
+	size_t					Clip					( const ZLPolygon2D& poly, const ZLAffine3D* mtx, ZLStream& clippedPolyVerts, ZLStream& clippedPolySizes );
+	size_t					Clip					( const ZLPolygon2D& poly, const ZLAffine3D* mtx, ZLStream& clippedPolyVerts, ZLStream& clippedPolySizes, void* buffer, size_t bufferSize );
 	//ZLSizeResult			ConcaveHull				( ZLStream& input, size_t nPoints, int maxEdges, int maxPasses, float minIndent );
 	ZLSizeResult			ConvexHull				( ZLStream& input, size_t nPoints, u32 sort = SORT_CSTDLIB );
 	void					Copy					( const ZLPolygon2D& src );
+	float					GetCorner				( size_t idx, ZLVec2D* normal );
 	bool					GetDistance				( const ZLVec2D& point, float& d ) const;
 	bool					GetDistance				( const ZLVec2D& point, float& d, ZLVec2D& p ) const;
 	cc8*					GetInfoString			() const;

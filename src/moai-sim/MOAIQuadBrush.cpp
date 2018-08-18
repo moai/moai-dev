@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -11,33 +11,33 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIQuadBrush::BindVertexFormat ( MOAIGfxVertexCache& vertexCache ) {
+void MOAIQuadBrush::BindVertexFormat () {
 	
-	vertexCache.BindBufferedDrawing ( MOAIVertexFormatMgr::XYZWUVC );
+	MOAIGfxMgr::Get ().mGfxState.SetVertexFormat ( MOAIVertexFormatMgr::XYZWUVC );
 }
 
 //----------------------------------------------------------------//
 void MOAIQuadBrush::Draw () {
 
-	MOAIGfxMgr::Get ().mVertexCache.WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV );
+	MOAIGfxMgr::Get ().mGfxState.WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV );
 }
 
 //----------------------------------------------------------------//
 void MOAIQuadBrush::Draw ( float xOff, float yOff, float zOff ) {
 	
-	MOAIGfxMgr::Get ().mVertexCache.WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff );
+	MOAIGfxMgr::Get ().mGfxState.WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff );
 }
 
 //----------------------------------------------------------------//
 void MOAIQuadBrush::Draw ( float xOff, float yOff, float zOff, float xScale, float yScale ) {
 	
-	MOAIGfxMgr::Get ().mVertexCache.WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff, xScale, yScale );
+	MOAIGfxMgr::Get ().mGfxState.WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff, xScale, yScale );
 }
 
 //----------------------------------------------------------------//
 void MOAIQuadBrush::Draw ( float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale ) {
 	
-	MOAIGfxMgr::Get ().mVertexCache.WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff, xScale, yScale, uOff, vOff, uScale, vScale );
+	MOAIGfxMgr::Get ().mGfxState.WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff, xScale, yScale, uOff, vOff, uScale, vScale );
 }
 
 //----------------------------------------------------------------//

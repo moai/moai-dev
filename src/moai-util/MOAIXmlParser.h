@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIXMLPARSER_H
@@ -26,9 +26,10 @@ private:
 	//----------------------------------------------------------------//
 	static int	_getElementAttribute		( lua_State* L );
 	static int	_getElementAttributes		( lua_State* L );
-	static int	_getElementLineNumber		( lua_State* L );
 	static int	_getElementName				( lua_State* L );
 	static int	_getElementText				( lua_State* L );
+	static int	_getErrorString				( lua_State* L );
+	static int	_getLineNumber				( lua_State* L );
 	static int	_parseFile					( lua_State* L );
 	static int	_parseString				( lua_State* L );
 	static int	_setStream					( lua_State* L );

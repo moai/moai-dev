@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -22,6 +22,7 @@
 	
 	@in		MOAIGfxBuffer self
 	@in		MOAIStream stream
+	@opt	number length
 	@out	nil
 */
 int MOAIGfxBuffer::_copyFromStream ( lua_State* L ) {
@@ -29,7 +30,9 @@ int MOAIGfxBuffer::_copyFromStream ( lua_State* L ) {
 	
 	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
 	if ( stream ) {
-		self->CopyFromStream ( *stream );
+	
+		size_t size = state.GetValue < u32 >( 3, ( u32 )( stream->GetLength () - stream->GetCursor () ));
+		self->CopyFromStream ( *stream, size );
 	}
 	return 0;
 }
@@ -101,10 +104,6 @@ int MOAIGfxBuffer::_scheduleFlush ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-//void MOAIGfxBuffer::BindVertexFormat ( MOAIVertexFormat* format ) {
-//}
-
-//----------------------------------------------------------------//
 void MOAIGfxBuffer::Clear () {
 
 	this->ZLCopyOnWrite::Free ();
@@ -116,9 +115,8 @@ void MOAIGfxBuffer::Clear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::CopyFromStream ( ZLStream& stream ) {
+void MOAIGfxBuffer::CopyFromStream ( ZLStream& stream, size_t size ) {
 
-	size_t size = stream.GetLength () - stream.GetCursor ();
 	this->Reserve (( u32 )size );
 	this->WriteStream ( stream );
 	
@@ -126,9 +124,14 @@ void MOAIGfxBuffer::CopyFromStream ( ZLStream& stream ) {
 }
 
 //----------------------------------------------------------------//
-ZLSharedConstBuffer* MOAIGfxBuffer::GetBuffer () {
-
+ZLSharedConstBuffer* MOAIGfxBuffer::GetBufferForBind ( ZLGfx& gfx ) {
+	UNUSED(gfx);
 	return this->mUseVBOs ? 0 : this->ZLCopyOnWrite::GetSharedConstBuffer ();
+
+//	if ( this->mUseVBOs ) return 0;
+//
+//	ZLSharedConstBuffer* buffer = this->ZLCopyOnWrite::GetSharedConstBuffer ();
+//	return this->mCopyOnBind ? gfx.CopyBuffer ( buffer ) : buffer;
 }
 
 //----------------------------------------------------------------//
@@ -165,9 +168,9 @@ void MOAIGfxBuffer::OnGPUBind () {
 	
 	if ( !this->mUseVBOs ) return;
 	
-	ZLGfxHandle* vbo = this->mVBOs [ this->mCurrentVBO ];
+	const ZLGfxHandle& vbo = this->mVBOs [ this->mCurrentVBO ];
 	
-	if ( vbo ) {
+	if ( vbo.CanBind ()) {
 		MOAIGfxMgr::GetDrawingAPI ().BindBuffer ( this->mTarget, vbo );
 	}
 }
@@ -186,21 +189,23 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 
 		for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
 			
-			ZLGfxHandle* vbo = gfx.CreateBuffer ();
-			if ( vbo ) {
+			ZLGfxHandle vbo = gfx.CreateBuffer ();
+			
+			// TODO: error handling
+			//if ( vbo ) {
 			
 				ZLSharedConstBuffer* buffer = this->GetCursor () ? this->GetSharedConstBuffer () : 0;
 				
-				if ( this->mCopyOnUpdate ) {
-					buffer = gfx.CopyBuffer ( buffer );
-				}
+//				if ( this->mCopyOnUpdate ) {
+//					buffer = gfx.CopyBuffer ( buffer );
+//				}
 			
 				gfx.BindBuffer ( this->mTarget, vbo );
 				gfx.BufferData ( this->mTarget, this->GetLength (), buffer, 0, hint );
-				gfx.BindBuffer ( this->mTarget, 0 );
+				gfx.BindBuffer ( this->mTarget, ZLGfxResource::UNBIND );
 				
 				count++;
-			}
+			//}
 			this->mVBOs [ i ] = vbo;
 		}
 	}
@@ -212,14 +217,14 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 void MOAIGfxBuffer::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 
 	for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
-		MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mVBOs [ i ], shouldDelete );
+		MOAIGfxResourceClerk::DeleteOrDiscard ( this->mVBOs [ i ], shouldDelete );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::OnGPUUnbind () {
 
-	MOAIGfxMgr::GetDrawingAPI ().BindBuffer ( this->mTarget, 0 ); // OK?
+	MOAIGfxMgr::GetDrawingAPI ().BindBuffer ( this->mTarget, ZLGfxResource::UNBIND ); // OK?
 }
 
 //----------------------------------------------------------------//
@@ -233,9 +238,9 @@ bool MOAIGfxBuffer::OnGPUUpdate () {
 		this->mCurrentVBO = ( this->mCurrentVBO + 1 ) % this->mVBOs.Size ();
 	}
 	
-	ZLGfxHandle* vbo = this->mVBOs [ this->mCurrentVBO ];
+	const ZLGfxHandle& vbo = this->mVBOs [ this->mCurrentVBO ];
 	
-	if ( dirty && vbo ) {
+	if ( dirty && vbo.CanBind ()) {
 		
 		// TODO: There are a few different ways to approach updating buffers with varying performance
 		// on different platforms. The approach here is just to multi-buffer the VBO and replace its
@@ -247,13 +252,13 @@ bool MOAIGfxBuffer::OnGPUUpdate () {
 		
 		ZLSharedConstBuffer* buffer = this->GetSharedConstBuffer ();
 		
-		if ( this->mCopyOnUpdate ) {
-			buffer = gfx.CopyBuffer ( buffer );
-		}
+//		if ( this->mCopyOnUpdate ) {
+//			buffer = gfx.CopyBuffer ( buffer );
+//		}
 		
 		gfx.BindBuffer ( this->mTarget, vbo );
 		gfx.BufferSubData ( this->mTarget, 0, this->GetCursor (), buffer, 0 );
-		gfx.BindBuffer ( this->mTarget, 0 );
+		gfx.BindBuffer ( this->mTarget, ZLGfxResource::UNBIND );
 	
 		//u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_DYNAMIC_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
 		//zglBufferData ( this->mTarget, this->GetLength (), 0, hint );
@@ -309,7 +314,7 @@ void MOAIGfxBuffer::ReserveVBOs ( u32 gpuBuffers ) {
 	}
 
 	if ( gpuBuffers ) {
-		this->mVBOs.Resize ( gpuBuffers, 0 );
+		this->mVBOs.Resize ( gpuBuffers );
 		this->mCurrentVBO = gpuBuffers - 1;
 	}
 
@@ -320,13 +325,13 @@ void MOAIGfxBuffer::ReserveVBOs ( u32 gpuBuffers ) {
 void MOAIGfxBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 
-	u32 totalVBOs		= state.GetField < u32 >( -1, "mTotalVBOs", 0 );
-	u32 size			= state.GetField < u32 >( -1, "mSize", 0 );
+	u32 totalVBOs		= state.GetFieldValue < u32 >( -1, "mTotalVBOs", 0 );
+	u32 size			= state.GetFieldValue < u32 >( -1, "mSize", 0 );
 
 	this->Reserve ( size );
 	this->ReserveVBOs ( totalVBOs );
 	
-	state.GetField ( -1, "mData" );
+	state.PushField ( -1, "mData" );
 	if ( state.IsType ( -1, LUA_TSTRING )) {
 		
 		STLString zipString = lua_tostring ( state, -1 );

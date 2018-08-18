@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -77,7 +77,7 @@ const ZLHashedString::ZLHashedStringEntry& ZLHashedString::GetHashedStringEntry 
 	size_t nameLength = name ? strlen ( name ) : 0;
 	u32 nameHash = GetStringHash ( name, nameLength );
 
-	ZLHashedStringEntry* entry = gStringDictonary.value_for_key ( nameHash );
+	ZLHashedStringEntry* entry = gStringDictonary.value_for_key ( nameHash, 0 );
 	if ( entry == 0 ) {
 
 		// Create a new hashed string entry

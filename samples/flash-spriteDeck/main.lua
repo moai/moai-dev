@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -12,10 +12,10 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 128, 128 )
 viewport:setScale ( 128, -128 )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 MOAISim.openWindow ( "flash-spriteDeck", 128, 128 )
 
 local spriteLibs = dofile ( 'flash-spriteDeck.fla.lua' )
@@ -80,10 +80,10 @@ end
 spriteLibs = loadSpriteLibs ( spriteLibs )
 spriteLib = spriteLibs [ 1 ]
 
-sprite = MOAIProp2D.new ()
+sprite = MOAIProp.new ()
 sprite:setDeck ( spriteLib )
 
-layer:insertProp ( sprite )
+sprite:setPartition ( layer )
 
 function onMouseLeftEvent ( down )
 	if MOAIInputMgr.device.mouseLeft:down () then

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include <stdio.h>
@@ -9,6 +9,8 @@
 #include <string.h>
 #include <host-modules/aku_modules.h>
 #include <moai-core/headers.h>
+
+#include <emscripten.h>
 #define UNUSED(p) (( void )p)
 
 
@@ -171,6 +173,10 @@ void Dummy() {
 	RestoreFile("dummy",0);
 }
 
+void dummy_async(void*) {
+	printf("Browser Keepalive");
+}
+
 void RefreshContext () {
 
 	AKUAppInitialize ();
@@ -197,7 +203,7 @@ void RefreshContext () {
 	AKUSetFunc_ExitFullscreenMode ( _AKUExitFullscreenModeFunc );
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
 
-	//AKUModulesParseArgs ( argc, argv );
+	emscripten_async_call(&dummy_async, 0, 0 ); //this call ensures that Browser library is imported to workaround https://github.com/kripken/emscripten/issues/4291
 }
 
 const char *CallStringFunc(char *func) {

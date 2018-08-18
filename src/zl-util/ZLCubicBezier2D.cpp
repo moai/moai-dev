@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -244,17 +244,26 @@ ZLCubicBezier2D ZLCubicBezier2D::Split ( float t0, float t1 ) const {
     float u0 = 1.0f - t0;
     float u1 = 1.0f - t1;
 
-	ZLVec2D a = ZLVec2D::Add ( ZLVec2D::Scale ( this->mP0, ( u0 * u0 )), ZLVec2D::Add ( ZLVec2D::Scale ( this->mP1, ( 2.0f * t0 * u0 )), ZLVec2D::Scale ( this->mP2, ( t0 * t0 ))));
-	ZLVec2D b = ZLVec2D::Add ( ZLVec2D::Scale ( this->mP0, ( u1 * u1 )), ZLVec2D::Add ( ZLVec2D::Scale ( this->mP1, ( 2.0f * t1 * u1 )), ZLVec2D::Scale ( this->mP2, ( t1 * t1 ))));
-	ZLVec2D c = ZLVec2D::Add ( ZLVec2D::Scale ( this->mP1, ( u0 * u0 )), ZLVec2D::Add ( ZLVec2D::Scale ( this->mP2, ( 2.0f * t0 * u0 )), ZLVec2D::Scale ( this->mP3, ( t0 * t0 ))));
-	ZLVec2D d = ZLVec2D::Add ( ZLVec2D::Scale ( this->mP1, ( u1 * u1 )), ZLVec2D::Add ( ZLVec2D::Scale ( this->mP2, ( 2.0f * t1 * u1 )), ZLVec2D::Scale ( this->mP3, ( t1 * t1 ))));
+	float u0u0 = u0 * u0;
+	float u1u1 = u1 * u1;
+
+	float t0t0 = t0 * t0;
+	float t1t1 = t1 * t1;
+	
+	float t0u02 = t0 * u0 * 2.0f;
+	float t1u12 = t1 * u1 * 2.0f;
+
+	ZLVec2D a = (( this->mP0 * u0u0 ) + (( this->mP1 * t0u02 ) + ( this->mP2 * t0t0 )));
+	ZLVec2D b = (( this->mP0 * u1u1 ) + (( this->mP1 * t1u12 ) + ( this->mP2 * t1t1 )));
+	ZLVec2D c = (( this->mP1 * u0u0 ) + (( this->mP2 * t0u02 ) + ( this->mP3 * t0t0 )));
+	ZLVec2D d = (( this->mP1 * u1u1 ) + (( this->mP2 * t1u12 ) + ( this->mP3 * t1t1 )));
 
     ZLCubicBezier2D segment;
 
-    segment.mP0 = ZLVec2D::Add ( ZLVec2D::Scale ( a, u0 ), ZLVec2D::Scale ( c, t0 ));
-    segment.mP1 = ZLVec2D::Add ( ZLVec2D::Scale ( a, u1 ), ZLVec2D::Scale ( c, t1 ));
-    segment.mP2 = ZLVec2D::Add ( ZLVec2D::Scale ( b, u0 ), ZLVec2D::Scale ( d, t0 ));
-    segment.mP3 = ZLVec2D::Add ( ZLVec2D::Scale ( b, u1 ), ZLVec2D::Scale ( d, t1 ));
+    segment.mP0 = ( a * u0 ) + ( c * t0 );
+    segment.mP1 = ( a * u1 ) + ( c * t1 );
+    segment.mP2 = ( b * u0 ) + ( d * t0 );
+    segment.mP3 = ( b * u1 ) + ( d * t1 );
 
 	return segment;
 }
@@ -275,7 +284,7 @@ void ZLCubicBezierFlattener2D::Init ( const ZLCubicBezier2D& curve, float flatne
 	this->mVertexIdx = 0;
 	this->mCommandIdx = 0;
 
-	float cusp = 0.0f;
+	//float cusp = 0.0f;
 
 	float t0_minus = -1.0f;
 	float t0_plus = -1.0f;
@@ -291,7 +300,7 @@ void ZLCubicBezierFlattener2D::Init ( const ZLCubicBezier2D& curve, float flatne
 	switch ( inflections ) {
 	
 		case ZLCubicBezier2D::ONE_CUSP: {
-			cusp = inflection0;
+			//cusp = inflection0;
 			break;
 		}
 		

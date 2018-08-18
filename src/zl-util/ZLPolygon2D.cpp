@@ -1,7 +1,8 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
+#include <zl-util/ZLDistance.h>
 #include <zl-util/ZLFloat.h>
 #include <zl-util/ZLIntersect.h>
 #include <zl-util/ZLMemStream.h>
@@ -229,6 +230,39 @@ void ZLPolygon2D::Copy ( const ZLPolygon2D& src ) {
 }
 
 //----------------------------------------------------------------//
+float ZLPolygon2D::GetCorner ( size_t idx, ZLVec2D* normal ) {
+
+	size_t size = this->mVertices.Size ();
+
+	if ( size < 3 ) return 0.0f;
+	
+	idx = idx % size;
+
+	ZLVec2D v0 = this->mVertices [ ( idx == 0 ? size : idx ) - 1 ];
+	ZLVec2D v1 = this->mVertices [ idx ];
+	ZLVec2D v2 = this->mVertices [ ( idx + 1 ) %  size ];
+	
+	ZLVec2D e0 = v1;
+	e0.Sub ( v0 );
+	e0.Norm ();
+	
+	ZLVec2D e1 = v2;
+	e1.Sub ( v1 );
+	e1.Norm ();
+	
+	ZLVec2D n = e0;
+	n.Add ( e1 );
+	n.Norm ();
+	n.Rotate90Clockwise ();
+	
+	if ( normal ) {
+		*normal = n;
+	}
+	
+	return 2.0f * ACos ( n.Dot ( e0 ));
+}
+
+//----------------------------------------------------------------//
 bool ZLPolygon2D::GetDistance ( const ZLVec2D& point, float& d ) const {
 
 	ZLVec2D p;
@@ -250,7 +284,7 @@ bool ZLPolygon2D::GetDistance ( const ZLVec2D& point, float& d, ZLVec2D& p ) con
 		ZLVec2D& e1 = this->mVertices [( i + 1 ) % totalVerts ];
 	
 		// get the edge vector
-		ZLVec2D n = ZLVec2D::Sub ( e1, e0 );
+		ZLVec2D n = e1 - e0;
 		
 		// distance of edges and point along edge
 		float edgeDist0		= n.Dot ( e0 );
@@ -264,7 +298,7 @@ bool ZLPolygon2D::GetDistance ( const ZLVec2D& point, float& d, ZLVec2D& p ) con
 			// snap the point onto the edge
 			
 			// edge normal
-			n.Rotate90Anticlockwise ();
+			n.Rotate90Clockwise ();
 			n.NormSafe ();
 			
 			// snap

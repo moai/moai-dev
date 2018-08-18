@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIVERTEXBUFFER_H
@@ -19,6 +19,7 @@ class MOAIVertexBuffer :
 private:
 	
 	friend class MOAIGfxPipelineClerk;
+	friend class MOAIVertexBufferWithFormat;
 
 	//----------------------------------------------------------------//
 	static int		_computeBounds			( lua_State* L );

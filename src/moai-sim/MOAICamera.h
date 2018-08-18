@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAICAMERA_H
@@ -17,6 +17,9 @@ class MOAIViewport;
 class MOAICamera :
 	public virtual MOAITransform {
 private:
+
+	ZLMatrix4x4		mProjectionMtx;
+	bool			mUseProjectionMtx;
 
 	float			mFieldOfView;
 	float			mNearPlane;
@@ -43,7 +46,16 @@ private:
 	//----------------------------------------------------------------//
 	void			LookAt					( float x, float y, float z );
 	
+	//----------------------------------------------------------------//
+	bool			MOAINode_ApplyAttrOp	( u32 attrID, MOAIAttribute& attr, u32 op );
+	
 public:
+	
+	enum {
+		DEBUG_DRAW_FRAME,
+		DEBUG_DRAW_RETICLE,
+		TOTAL_DEBUG_LINE_STYLES,
+	};
 	
 	enum {
 		CAMERA_TYPE_3D,
@@ -66,20 +78,18 @@ public:
 	GET_SET ( u32, Type, mType )
 	
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	void			DrawDebug				();
 	ZLMatrix4x4		GetBillboardMtx			() const;
 	float			GetFocalLength			( float width ) const;
 	ZLMatrix4x4		GetProjMtx				( const MOAIViewport& viewport ) const;
-	ZLMatrix4x4		GetProjMtxInv			( const MOAIViewport& viewport ) const;
 	ZLMatrix4x4		GetViewMtx				() const;
-	ZLMatrix4x4		GetViewProjMtx			( const MOAIViewport& viewport ) const;
 	ZLVec3D			GetViewVector			() const;
-	ZLMatrix4x4		GetWndToWorldMtx		( const MOAIViewport& viewport ) const;
-	ZLMatrix4x4		GetWorldToWndMtx		( const MOAIViewport& viewport ) const;
 					MOAICamera				();
 					~MOAICamera				();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			SetProjMtx				();
+	void			SetProjMtx				( const ZLMatrix4x4& mtx );
 };
 
 #endif

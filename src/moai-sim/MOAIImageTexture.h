@@ -1,11 +1,11 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIIMAGETEXTURE_H
 #define	MOAIIMAGETEXTURE_H
 
 #include <moai-sim/MOAIImage.h>
-#include <moai-sim/MOAISingleTexture.h>
+#include <moai-sim/MOAITextureBase.h>
 
 //================================================================//
 // MOAIImageTexture
@@ -17,7 +17,7 @@
 			into GPU memory the next time the texture is bound.
 */
 class MOAIImageTexture :
-	public MOAISingleTexture,
+	public MOAITextureBase,
 	public MOAIImage {
 private:
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -42,32 +42,32 @@ MOAIVertexFormat* MOAIVertexFormatMgr::GetFormat ( u32 formatID ) {
 			switch ( formatID ) {
 				
 				case XYZC:
-					format->DeclareAttribute ( XYZC_POSITION, ZGL_TYPE_FLOAT, 3, MOAIVertexFormat::ARRAY_VERTEX, false );
-					format->DeclareAttribute ( XYZC_COLOR, ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ARRAY_COLOR, true );
+					format->DeclareAttribute ( XYZC_POSITION, ZGL_TYPE_FLOAT, 3, MOAIVertexFormat::ATTRIBUTE_COORD, false );
+					format->DeclareAttribute ( XYZC_COLOR, ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
 					break;
 				
 				case XYZWC:
-					format->DeclareAttribute ( XYZWC_POSITION, ZGL_TYPE_FLOAT, 4, MOAIVertexFormat::ARRAY_VERTEX, false );
-					format->DeclareAttribute ( XYZWC_COLOR, ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ARRAY_COLOR, true );
+					format->DeclareAttribute ( XYZWC_POSITION, ZGL_TYPE_FLOAT, 4, MOAIVertexFormat::ATTRIBUTE_COORD, false );
+					format->DeclareAttribute ( XYZWC_COLOR, ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
 					break;
 				
 				case XYZWUVC:
-					format->DeclareAttribute ( XYZWUVC_POSITION, ZGL_TYPE_FLOAT, 4, MOAIVertexFormat::ARRAY_VERTEX, false );
-					format->DeclareAttribute ( XYZWUVC_TEXCOORD, ZGL_TYPE_FLOAT, 2, MOAIVertexFormat::ARRAY_TEX_COORD, false );
-					format->DeclareAttribute ( XYZWUVC_COLOR, ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ARRAY_COLOR, true );
+					format->DeclareAttribute ( XYZWUVC_POSITION, ZGL_TYPE_FLOAT, 4, MOAIVertexFormat::ATTRIBUTE_COORD, false );
+					format->DeclareAttribute ( XYZWUVC_TEXCOORD, ZGL_TYPE_FLOAT, 2, MOAIVertexFormat::ATTRIBUTE_TEX_COORD, false );
+					format->DeclareAttribute ( XYZWUVC_COLOR, ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
 					break;
 				
 				case XYZWNNNC:
-					format->DeclareAttribute ( XYZWNNNC_POSITION, ZGL_TYPE_FLOAT, 4, MOAIVertexFormat::ARRAY_VERTEX, false );
-					format->DeclareAttribute ( XYZWNNNC_NORMAL, ZGL_TYPE_FLOAT, 3, MOAIVertexFormat::ARRAY_NORMAL, false );
-					format->DeclareAttribute ( XYZWNNNC_COLOR, ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ARRAY_COLOR, true );
+					format->DeclareAttribute ( XYZWNNNC_POSITION, ZGL_TYPE_FLOAT, 4, MOAIVertexFormat::ATTRIBUTE_COORD, false );
+					format->DeclareAttribute ( XYZWNNNC_NORMAL, ZGL_TYPE_FLOAT, 3, MOAIVertexFormat::ATTRIBUTE_NORMAL, false );
+					format->DeclareAttribute ( XYZWNNNC_COLOR, ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
 					break;
 				
 				case XYZWNNNUVC:
-					format->DeclareAttribute ( XYZWNNNUVC_POSITION, ZGL_TYPE_FLOAT, 4, MOAIVertexFormat::ARRAY_VERTEX, false );
-					format->DeclareAttribute ( XYZWNNNUVC_NORMAL, ZGL_TYPE_FLOAT, 3, MOAIVertexFormat::ARRAY_NORMAL, false );
-					format->DeclareAttribute ( XYZWNNNUVC_TEXCOORD, ZGL_TYPE_FLOAT, 2, MOAIVertexFormat::ARRAY_TEX_COORD, false );
-					format->DeclareAttribute ( XYZWNNNUVC_COLOR, ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ARRAY_COLOR, true );
+					format->DeclareAttribute ( XYZWNNNUVC_POSITION, ZGL_TYPE_FLOAT, 4, MOAIVertexFormat::ATTRIBUTE_COORD, false );
+					format->DeclareAttribute ( XYZWNNNUVC_NORMAL, ZGL_TYPE_FLOAT, 3, MOAIVertexFormat::ATTRIBUTE_NORMAL, false );
+					format->DeclareAttribute ( XYZWNNNUVC_TEXCOORD, ZGL_TYPE_FLOAT, 2, MOAIVertexFormat::ATTRIBUTE_TEX_COORD, false );
+					format->DeclareAttribute ( XYZWNNNUVC_COLOR, ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
 					break;
 			}
 			
@@ -118,7 +118,7 @@ void MOAIVertexFormatMgr::RegisterLuaClass ( MOAILuaState& state ) {
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

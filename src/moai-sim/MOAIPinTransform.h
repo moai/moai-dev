@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIPINTRANSFORM_H
@@ -7,7 +7,7 @@
 #include <moai-sim/MOAITransform.h>
 #include <moai-sim/MOAINode.h>
 
-class MOAILayer;
+class MOAIViewLayer;
 
 //================================================================//
 // MOAIPinTransform
@@ -20,8 +20,8 @@ class MOAIPinTransform :
 	public MOAITransform {
 private:
 
-	MOAILuaSharedPtr < MOAILayer > mSourceLayer;
-	MOAILuaSharedPtr < MOAILayer > mDestLayer;
+	MOAILuaSharedPtr < MOAIViewLayer > mSourceLayer;
+	MOAILuaSharedPtr < MOAIViewLayer > mDestLayer;
 		
 	float			mFront;
 	
@@ -29,7 +29,8 @@ private:
 	static int		_init						( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			OnDepNodeUpdate				();
+	bool			MOAINode_ApplyAttrOp		( u32 attrID, MOAIAttribute& attr, u32 op );
+	void			MOAINode_Update				();
 
 public:
 	
@@ -37,12 +38,10 @@ public:
 	DECL_ATTR_HELPER ( MOAIPinTransform )
 		
 	enum {
-		ATTR_FRONT
+		ATTR_FRONT,
 	};
 		
 	//----------------------------------------------------------------//
-		
-	virtual bool	ApplyAttrOp					( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 					MOAIPinTransform			();
 					~MOAIPinTransform			();
 	void			RegisterLuaClass			( MOAILuaState& state );

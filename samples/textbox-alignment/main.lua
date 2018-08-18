@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- Copyright (c) 2010-2017 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
 ----------------------------------------------------------------
@@ -10,9 +10,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 480 )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()
 
 charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-'
 text = 'Lorem ipsum dolor\nsit amet, consectetur\nadipiscing elit.\nMaecenas diam augue, laoreet\nvitae\ndapibus in, sodales in ligula.'
@@ -29,7 +29,7 @@ function addTextbox ( top, height, alignment )
 	textbox:setRect ( -150, top - height, 150, top )
 	textbox:setAlignment ( alignment )
 	textbox:setYFlip ( true )
-	layer:insertProp ( textbox )
+	textbox:setPartition ( layer )
 end
 
 local top = 230

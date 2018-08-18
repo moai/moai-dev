@@ -1,11 +1,13 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAILOGMGR_H
 #define	MOAILOGMGR_H
 
-#include <moai-core/MOAIGlobals.h>
 #include <moai-core/MOAILua.h>
+#include <moai-core/strings.h>
+
+// TODO: these have never made a lot of sense here. find someplace better for them.
 
 #define MOAI_LUA_SETUP(type,str)												\
 	MOAILuaState state ( L );													\
@@ -22,18 +24,6 @@
 	if ( !self ) return 0;
 
 //================================================================//
-// MOAILogMessage
-//================================================================//
-class MOAILogMessage {
-private:
-	
-	friend class MOAILogMgr;
-	
-	u32				mLevel;
-	STLString		mFormatString;
-};
-
-//================================================================//
 // MOAILogMgr
 //================================================================//
 /**	@lua	MOAILogMgr
@@ -46,11 +36,8 @@ private:
 	@const LOG_DEBUG	Debug level
 */
 class MOAILogMgr :
-	public MOAIGlobalClass < MOAILogMgr, MOAILuaObject > {
+	public ZLContextClass < MOAILogMgr, MOAILuaObject > {
 private:
-
-	typedef STLMap < u32, MOAILogMessage >::iterator MessageMapIt;
-	STLMap < u32, MOAILogMessage > mMessageMap;
 
 	FILE*			mFile;
 	bool			mTypeCheckLuaParams;
@@ -60,7 +47,6 @@ private:
 	static int		_isDebugBuild				( lua_State* L );
 	static int		_log						( lua_State* L );
 	static int		_openFile					( lua_State* L );
-	static int		_registerLogMessage			( lua_State* L );
 	static int		_setLogLevel				( lua_State* L );
 	static int		_setTypeCheckLuaParams		( lua_State* L );
 
@@ -71,19 +57,17 @@ public:
 	//GET ( FILE*, File, mFile ? mFile : ZLLog::CONSOLE )
 	
 	//----------------------------------------------------------------//
+	static bool		CheckFileExists			( cc8* filename, lua_State* L = 0 );
+	static bool		CheckIndex				( size_t idx, size_t size, lua_State* L = 0 );
+	static bool		CheckIndexPlusOne		( size_t idx, size_t size, lua_State* L = 0 );
+	static bool		CheckReserve			( size_t idx, size_t size, lua_State* L = 0 );
 	void			CloseFile				();
-	
-	void			LogF					( lua_State *L, u32 level, u32 messageID, ... );
 	void			LogF					( lua_State *L, u32 level, cc8* message, ... );
-	
-	void			LogV					( lua_State *L, u32 level, u32 messageID, va_list args );
 	void			LogV					( lua_State *L, u32 level, cc8* message, va_list args );
-	
 	bool			LuaSetupClass			( MOAILuaState& state, cc8* typeStr );
 					MOAILogMgr				();
 					~MOAILogMgr				();
 	void			OpenFile				( cc8* filename );
-	void			RegisterLogMessage		( u32 messageID, u32 level, cc8* formatString );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	
 	//----------------------------------------------------------------//
@@ -103,11 +87,11 @@ public:
 		if ( this->mTypeCheckLuaParams && typeStr ) {
 			if ( !state.CheckParams ( 1, typeStr, true )) return 0;
 		}
-		return MOAIGlobalsMgr::Get ()->GetGlobal < TYPE >();
+		return ZLContextMgr::Get ()->GetGlobal < TYPE >();
 	}
 };
 
-#define MOAILogF(L,level,messageID,...)			MOAILogMgr::Get ().LogF ( L, level, messageID, ##__VA_ARGS__ )
-#define MOAILogV(L,level,messageID,args)		MOAILogMgr::Get ().LogV ( L, level, messageID, args )
+#define MOAILogF(L,level,message,...)		MOAILogMgr::Get ().LogF ( L, level, message, ##__VA_ARGS__ )
+#define MOAILogV(L,level,message,args)		MOAILogMgr::Get ().LogV ( L, level, message, args )
 
 #endif

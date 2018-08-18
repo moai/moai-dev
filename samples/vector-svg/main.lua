@@ -6,7 +6,7 @@
 
 svg = require ( 'svg' )
 
-layer = MOAILayer2D.new ()
+layer = MOAIPartitionViewLayer.new ()
 
 onProp = function ( prop, style )
 
@@ -22,7 +22,7 @@ onProp = function ( prop, style )
 	end
 	
 	--prop:setColor ( 0, 0, 0, 1 )
-	layer:insertProp ( prop )
+	prop:setPartition ( layer )
 	--prop:setVisible ( style.visible )
 end
 
@@ -45,4 +45,4 @@ viewport:setScale ( width, -height )
 viewport:setOffset ( -1, 1 )
 
 layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
+layer:pushRenderPass ()

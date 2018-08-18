@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIPARTICLEEMITTER_H
@@ -8,7 +8,7 @@
 #include <moai-sim/MOAITransform.h>
 
 class MOAIParticleSystem;
-class MOAIProp;
+class MOAIPartitionHull;
 
 //================================================================//
 // MOAIParticleEmitter
@@ -40,8 +40,7 @@ protected:
 	u32		mParticleState;
 
 	MOAILuaSharedPtr < MOAIParticleSystem > mSystem;
-	
-	MOAILuaSharedPtr < MOAIProp > mMaskProp;
+	MOAILuaSharedPtr < MOAIPartitionHull > mMaskProp;
 
 	//----------------------------------------------------------------//
 	static int		_setAngle				( lua_State* L );
@@ -60,6 +59,10 @@ protected:
 	ZLVec3D			GetRandomVec			( float minAngle, float maxAngle, float min, float max );
 	bool			MaskParticle			( const ZLVec3D& loc );
 
+	//----------------------------------------------------------------//
+	bool			MOAIAction_IsDone		();
+	void			MOAINode_Update			();
+
 public:
 	
 	enum {
@@ -74,10 +77,8 @@ public:
 	SET ( u32, ShapeID, mShapeID )
 
 	//----------------------------------------------------------------//
-	bool			IsDone					();
 					MOAIParticleEmitter		();
 					~MOAIParticleEmitter	();
-	void			OnDepNodeUpdate			();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );

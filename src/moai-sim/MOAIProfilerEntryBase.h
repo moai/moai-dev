@@ -1,8 +1,10 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIPROFILERENTRYBASE_H
 #define	MOAIPROFILERENTRYBASE_H
+
+#if 0
 
 //================================================================//
 // MOAIProfilerEntryBase
@@ -39,4 +41,5 @@ public:
 	void						SortChildren			();
 };
 
+#endif
 #endif

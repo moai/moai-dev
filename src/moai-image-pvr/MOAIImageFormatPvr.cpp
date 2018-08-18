@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include <moai-image-pvr/MOAIImageFormatPvr.h>
@@ -210,7 +210,7 @@ bool MOAIImageFormatPvr::CheckHeader ( const void* buffer ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void* data, size_t size ) {
+bool MOAIImageFormatPvr::CreateTexture ( MOAITextureBase& texture, const void* data, size_t size ) {
 
 	if ( !MOAIGfxMgr::Get ().GetHasContext ()) return false;
 	MOAIGfxMgr::Get ().ClearErrors ();
@@ -299,8 +299,8 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 	
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
-	ZLGfxHandle* glTexID = gfx.CreateTexture ();
-	if ( glTexID ) {
+	ZLGfxHandle glTexID = gfx.CreateTexture ();
+	//if ( glTexID ) { // TODO: error checking
 
 		gfx.BindTexture ( glTexID );
 		
@@ -352,11 +352,11 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAISingleTexture& texture, const void*
 			textureSize += info.mSizeCompressed;
 		}
 
-		this->SetTextureID ( texture, glTexID, internalFormat, pixelType, textureSize );
+		this->SetGLTexture ( texture, glTexID, internalFormat, pixelType, textureSize );
 		
 		return true;
-	}
-	return false;
+	//}
+	//return false;
 }
 
 //----------------------------------------------------------------//

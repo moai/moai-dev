@@ -1,5 +1,5 @@
 //----------------------------------------------------------------//
-// Copyright (c) 2010-2011 Zipline Games, Inc. 
+// Copyright (c) 2010-2017 Zipline Games, Inc. 
 // All Rights Reserved. 
 // http://getmoai.com
 //----------------------------------------------------------------//
@@ -75,10 +75,16 @@ public class MoaiLocalNotificationReceiver extends BroadcastReceiver {
 
 		    PendingIntent contentIntent = PendingIntent.getActivity ( context, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT );
 
-		    NotificationManager notificationManager = ( NotificationManager ) context.getSystemService ( Context.NOTIFICATION_SERVICE );
-		    Notification notification = new Notification ( icon, message, System.currentTimeMillis ()); 
-		    notification.setLatestEventInfo ( context, title, message, contentIntent );
-		    notification.flags |= Notification.FLAG_AUTO_CANCEL;
+			NotificationManager notificationManager = ( NotificationManager ) context.getSystemService ( Context.NOTIFICATION_SERVICE );
+			// Notification notification = new Notification ( icon, message, System.currentTimeMillis ());
+			Notification.Builder notificationBuilder = new Notification.Builder(context);
+			notificationBuilder.setSmallIcon(icon);
+			notificationBuilder.setContentTitle(title);
+			notificationBuilder.setContentText(message);
+			notificationBuilder.setContentIntent(contentIntent);
+			notificationBuilder.setAutoCancel(true);
+
+			Notification notification = notificationBuilder.build();
 
 			String tag = intent.getStringExtra ( "collapse_key" );
 			int id = ( intent.getStringExtra ( "id" ) != null ) ? Integer.parseInt ( intent.getStringExtra ( "id" )) : 1;

@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIUNTZSYSTEM_H
@@ -14,7 +14,7 @@
 	@text	Untz system singleton.
 */
 class MOAIUntzSystem :
-	public MOAIGlobalClass < MOAIUntzSystem, MOAILuaObject > {
+	public ZLContextClass < MOAIUntzSystem, MOAILuaObject > {
 private:
 
 	static const u32 DEFAULT_SAMPLE_RATE		= 44100;

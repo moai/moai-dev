@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIVECTORUTIL_H
@@ -25,7 +25,7 @@ public:
 	struct TESStesselator*	mTess;
 
 	//----------------------------------------------------------------//
-	void			AddContour				( int size, const void* vertices, int stride, size_t numVertices );
+	void			AddContour				( int numComponents, const void* vertices, int stride, size_t numVertices );
 	void			AddPolygon				( const ZLPolygon2D& poly );
 	u32				GetTriangles			( MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream );
 	u32				GetTriangles			( MOAIVertexFormat& format, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes );

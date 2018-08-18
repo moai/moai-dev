@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #ifndef	MOAIINDEXBUFFER_H
@@ -33,7 +33,9 @@ public:
 	DECL_LUA_FACTORY ( MOAIIndexBuffer )
 	
 	//----------------------------------------------------------------//
-	void			CopyFromStream			( ZLStream& stream, u32 srcInputSizeInBytes );
+	u32				CountIndices			();
+	void			CopyFromStream			( ZLStream& stream, size_t size, u32 srcInputSizeInBytes );
+	u32				GetIndex				( u32 element );
 					MOAIIndexBuffer			();
 					~MOAIIndexBuffer		();
 	void			PrintIndices			();
