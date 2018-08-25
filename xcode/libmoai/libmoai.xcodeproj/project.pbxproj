@@ -15981,16 +15981,6 @@
 				Japanese,
 				French,
 				German,
-				en,
-				de,
-				fr,
-				nl,
-				jp,
-				ja,
-				sv,
-				sk,
-				cs,
-				it,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
