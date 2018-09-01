@@ -1,0 +1,34 @@
+---
+layout: default
+title: Moai | Minimalist game development engine.
+---
+
+<div class="container">
+	{% for post in site.categories.games %}
+	<div class="row">
+		{% assign post_name = post.path | split: '/' | last | remove: '.md' | capitalize %}
+		{% assign image_prefix = site.baseurl | append: '/img/games/' | append: post_name %}
+		<a id="{{ post_name }}"></a><h2>{{ post.title }} <small>{% if post.coming_soon %}Coming soon!{% else %}{{ post.date | date: '%b %Y' }}{% endif %}</small></h2>
+		<div>
+			<a href="{{ post.main.url }}"><img style="margin-right: 15px; float: left;" src="{{ image_prefix | append: '.' | append: post.main.image_type }}" width="240" height="160"></a>
+		</div>
+		{{ post.excerpt }}
+		{% if post.video %}
+		<p>
+			<a target="_blank" href="{{ post.video.url }}"><img alt="video" src="{{ image_prefix | append: '_video.' | append: post.video.image_type }}" width="120" height="67"></a>
+		</p>
+		{% endif %}
+		<p>
+			{% assign current_category = 'Other' %}
+			{% for platform_id in post.platforms %}
+				{% assign platform = site.data.platforms[platform_id] %}
+				{% if platform.category != current_category %}
+					{% assign current_category = platform.category %}
+					{% unless forloop.first %} &bullet; {% endunless %}<em>{{ current_category }}:</em>
+				{% endif %}
+				<img src="{{ site.baseurl }}/{{ platform.image }}" style="vertical-align: -1px;" width="16" height="16" title="{{ platform.title }}" />
+			{% endfor %}
+		</p>
+	</div>
+	{% endfor %}
+</div>
