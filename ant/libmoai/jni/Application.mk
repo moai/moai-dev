@@ -10,7 +10,7 @@
 	APP_ABI 		:= $(MY_ARM_ARCH)
 	APP_CFLAGS		:= -w -DANDROID_NDK -DDISABLE_IMPORTGL -DUSE_CHIPMUNK=0
 	APP_PLATFORM 	:= $(MY_APP_PLATFORM)
-	APP_STL 		:= gnustl_static
+	APP_STL 		:= c++_static
 
 	ifeq ($(NDK_DEBUG),1)
 	    APP_OPTIM := debug
