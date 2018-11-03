@@ -13,6 +13,7 @@
 		0300CF68140DC53C00ABCC5B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */; };
 		0300CF7B140DC61000ABCC5B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0300CF7A140DC61000ABCC5B /* AudioToolbox.framework */; };
 		0300CF94140DC65100ABCC5B /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0300CF93140DC65100ABCC5B /* AudioUnit.framework */; };
+		096B3705218DE9F300D1640B /* libmoai-osx-expat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 096B3704218DE9F300D1640B /* libmoai-osx-expat.a */; };
 		4C623B6415246B10008E4436 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
 		4C623B6615246B25008E4436 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6515246B25008E4436 /* CoreServices.framework */; };
 		63A2ACCE1D16BBA5008D5D59 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63A2ACCD1D16BBA5008D5D59 /* CoreVideo.framework */; };
@@ -71,6 +72,7 @@
 		07CC7AF913DF7E9B00F2DEDE /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		07CC7AFF13DF7EF200F2DEDE /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
+		096B3704218DE9F300D1640B /* libmoai-osx-expat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libmoai-osx-expat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C623B6315246B10008E4436 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		4C623B6515246B25008E4436 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		63A2ACCD1D16BBA5008D5D59 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -121,6 +123,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				096B3705218DE9F300D1640B /* libmoai-osx-expat.a in Frameworks */,
 				63A2ACCE1D16BBA5008D5D59 /* CoreVideo.framework in Frameworks */,
 				CDFD7C781A0859CB00A94E6B /* libmoai-osx.a in Frameworks */,
 				CDFD7C681A0859CB00A94E6B /* libmoai-osx-3rdparty-core.a in Frameworks */,
@@ -206,6 +209,7 @@
 		CD2FDE8613542E9F00B814DF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				096B3704218DE9F300D1640B /* libmoai-osx-expat.a */,
 				63A2ACCD1D16BBA5008D5D59 /* CoreVideo.framework */,
 				CDBA1E7E1B1E582400DCDC75 /* SystemConfiguration.framework */,
 				CD096FD118E0FFE300A36EDD /* libstdc++.dylib */,
