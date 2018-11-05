@@ -19,10 +19,6 @@ class MOAIBrowserAndroid :
 	public JniUtils {
 private:
 
-	jmethodID	mJava_CanOpenURL;
-	jmethodID	mJava_OpenURL;
-	jmethodID	mJava_OpenURLWithParams;
-
 	//----------------------------------------------------------------//
 	static int	_canOpenURL			( lua_State* L );
 	static int	_openURL			( lua_State* L );
