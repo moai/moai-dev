@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion '25.0.0'
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "com.moaisdk.refapp"
@@ -59,11 +59,11 @@ if (usePrebuiltLibs) {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:22.1.1'
-    compile project(':core')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:22.1.1'
+    implementation project(':core')
     if (!usePrebuiltLibs) {
-        compile project(":libmoai")
+        implementation project(":libmoai")
     }
 }
 
