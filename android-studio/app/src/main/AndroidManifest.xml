@@ -46,4 +46,6 @@
 
     <uses-feature android:name="android.hardware.screen.landscape" android:required="true" />
     <uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="true" />
+    <uses-feature android:name="android.hardware.type.watch" />
+
 </manifest>
