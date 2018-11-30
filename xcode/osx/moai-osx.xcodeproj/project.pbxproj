@@ -19,6 +19,7 @@
 		B319C9911DBFF96600A6C621 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B319C9901DBFF96600A6C621 /* JavaScriptCore.framework */; };
 		CD096FD218E0FFE300A36EDD /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD096FD118E0FFE300A36EDD /* libstdc++.dylib */; };
 		CD1845BD1A626F0300FCCCE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1845BC1A626F0300FCCCE0 /* SystemConfiguration.framework */; };
+		CD273EF821B1F209006C4D84 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD273EF721B1F209006C4D84 /* Metal.framework */; };
 		CD2E46C51C5181A3008E22A1 /* libmoai-osx-harfbuzz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1F44E81BDEBB7800F5CF59 /* libmoai-osx-harfbuzz.a */; };
 		CD323B071A8040CB00E2FEBB /* SDLJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD323B031A8040CB00E2FEBB /* SDLJoystick.cpp */; };
 		CD323B081A8040CB00E2FEBB /* SDLKeyCodeMapping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD323B051A8040CB00E2FEBB /* SDLKeyCodeMapping.cpp */; };
@@ -876,6 +877,7 @@
 		B319C9901DBFF96600A6C621 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		CD096FD118E0FFE300A36EDD /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		CD1845BC1A626F0300FCCCE0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		CD273EF721B1F209006C4D84 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		CD323B031A8040CB00E2FEBB /* SDLJoystick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDLJoystick.cpp; path = "../../src/host-sdl/SDLJoystick.cpp"; sourceTree = "<group>"; };
 		CD323B041A8040CB00E2FEBB /* SDLJoystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDLJoystick.h; path = "../../src/host-sdl/SDLJoystick.h"; sourceTree = "<group>"; };
 		CD323B051A8040CB00E2FEBB /* SDLKeyCodeMapping.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDLKeyCodeMapping.cpp; path = "../../src/host-sdl/SDLKeyCodeMapping.cpp"; sourceTree = "<group>"; };
@@ -924,7 +926,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				095A1748218DE7BC003543B8 /* libmoai-osx-expat.a in Frameworks */,
 				CDFD8FC01AD8653C0003F415 /* libmoai-osx.a in Frameworks */,
 				CD6E274D1D19157000792933 /* libmoai-osx-3rdparty-assimp.a in Frameworks */,
 				CDFD8FB11AD8653C0003F415 /* libmoai-osx-3rdparty-core.a in Frameworks */,
@@ -934,6 +935,7 @@
 				CDFF5ADE1C29232600969B44 /* libmoai-osx-audio-sampler.a in Frameworks */,
 				CDFD8FB51AD8653C0003F415 /* libmoai-osx-box2d.a in Frameworks */,
 				CDFD8FB61AD8653C0003F415 /* libmoai-osx-crypto.a in Frameworks */,
+				095A1748218DE7BC003543B8 /* libmoai-osx-expat.a in Frameworks */,
 				CD2E46C51C5181A3008E22A1 /* libmoai-osx-harfbuzz.a in Frameworks */,
 				CDFD8FB71AD8653C0003F415 /* libmoai-osx-http-client.a in Frameworks */,
 				CDFD8FB81AD8653C0003F415 /* libmoai-osx-http-server.a in Frameworks */,
@@ -963,6 +965,7 @@
 				4C623B6415246B10008E4436 /* Foundation.framework in Frameworks */,
 				0300CF68140DC53C00ABCC5B /* IOKit.framework in Frameworks */,
 				B319C9911DBFF96600A6C621 /* JavaScriptCore.framework in Frameworks */,
+				CD273EF821B1F209006C4D84 /* Metal.framework in Frameworks */,
 				CD6600661831CB5400D9862B /* OpenGL.framework in Frameworks */,
 				CD1845BD1A626F0300FCCCE0 /* SystemConfiguration.framework in Frameworks */,
 			);
@@ -1044,9 +1047,9 @@
 		CD2FDE8613542E9F00B814DF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B319C9901DBFF96600A6C621 /* JavaScriptCore.framework */,
 				B319C95D1DBFF95800A6C621 /* libcommonCrypto.tbd */,
-				CDF2380E1CAA731C00A45E31 /* CoreVideo.framework */,
+				CD74EA2B137807E40093EE68 /* libcrypto.dylib */,
+				CDFD8FB01AD8653C0003F415 /* libmoai-osx.a */,
 				CDFD8FA11AD8653C0003F415 /* libmoai-osx-3rdparty-core.a */,
 				CDFD8FA21AD8653C0003F415 /* libmoai-osx-3rdparty-crypto.a */,
 				CDFD8FA31AD8653C0003F415 /* libmoai-osx-3rdparty-sdl.a */,
@@ -1062,23 +1065,24 @@
 				CDFD8FAD1AD8653C0003F415 /* libmoai-osx-zl-core.a */,
 				CDFD8FAE1AD8653C0003F415 /* libmoai-osx-zl-crypto.a */,
 				CDFD8FAF1AD8653C0003F415 /* libmoai-osx-zl-vfs.a */,
-				CDFD8FB01AD8653C0003F415 /* libmoai-osx.a */,
 				CD096FD118E0FFE300A36EDD /* libstdc++.dylib */,
-				CD74EA2B137807E40093EE68 /* libcrypto.dylib */,
 				CD74EA311378080E0093EE68 /* libssl.dylib */,
 				0324CC63135643FD000ADC60 /* libSystem.dylib */,
 				66D9680B14047B7100017919 /* libz.dylib */,
 				CD795EF117F08E4B006AEB47 /* Cocoa.framework */,
 				CD795EF317F08F4E006AEB47 /* CoreAudio.framework */,
 				4C623B6515246B25008E4436 /* CoreServices.framework */,
+				CDF2380E1CAA731C00A45E31 /* CoreVideo.framework */,
 				CD795EF517F08F86006AEB47 /* ForceFeedback.framework */,
 				4C623B6315246B10008E4436 /* Foundation.framework */,
 				07CC7AF913DF7E9B00F2DEDE /* CoreFoundation.framework */,
 				07CC7AFF13DF7EF200F2DEDE /* Carbon.framework */,
 				07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */,
+				B319C9901DBFF96600A6C621 /* JavaScriptCore.framework */,
 				0300CF7A140DC61000ABCC5B /* AudioToolbox.framework */,
 				0300CF93140DC65100ABCC5B /* AudioUnit.framework */,
 				CD6600651831CB5400D9862B /* OpenGL.framework */,
+				CD273EF721B1F209006C4D84 /* Metal.framework */,
 				CD1845BC1A626F0300FCCCE0 /* SystemConfiguration.framework */,
 			);
 			name = Frameworks;
@@ -2124,7 +2128,7 @@
 					"\"../../src\"",
 					"\"../../src/config\"",
 					"\"../../src/config-default\"",
-					"\"../../3rdparty/sdl2-2.0.4/include\"",
+					"\"../../3rdparty/sdl2-2.0.9/include\"",
 					"\"../../3rdparty/google-test/googletest/include\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
@@ -2209,7 +2213,7 @@
 					"\"../../src\"",
 					"\"../../src/config\"",
 					"\"../../src/config-default\"",
-					"\"../../3rdparty/sdl2-2.0.4/include\"",
+					"\"../../3rdparty/sdl2-2.0.9/include\"",
 					"\"../../3rdparty/google-test/googletest/include\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
