@@ -74,9 +74,8 @@ void MOAITableViewLayer::SerializeOut ( MOAILuaState& state, MOAISerializer& ser
 
 //----------------------------------------------------------------//
 void MOAITableViewLayer::MOAIDrawable_Draw ( int subPrimID ) {
-	UNUSED ( subPrimID );
 
-	MOAIViewLayer_Draw ();
+	this->MOAIViewLayer::MOAIDrawable_Draw ( subPrimID );
 }
 
 //----------------------------------------------------------------//

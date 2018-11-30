@@ -16,11 +16,6 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( width, height )
 viewport:setScale (width / (width/640), height / (height/480))
 
-layer = MOAIPartitionViewLayer.new ()
-layer:setPartition( MOAIPartition.new() )
-layer:setViewport ( viewport )
-layer:pushRenderPass ()
-
 function onCollide ( event )
 
 	if event == MOAIBox2DArbiter.BEGIN then
@@ -45,16 +40,20 @@ world = MOAIBox2DWorld.new ()
 world:setGravity ( 0, -10 )
 world:setUnitsToMeters ( .05 )
 world:start ()
-layer:setUnderlayTable ({ world })
+
+debugLayer = MOAITableViewLayer.new ()
+debugLayer:setViewport ( viewport )
+debugLayer:setRenderTable ( world )
+debugLayer:pushRenderPass ()
 
 worldBody = world:addBody ( MOAIBox2DBody.STATIC )
 fixture2 = worldBody:addRect ( -(300/2), -200, 300/2, -300)
 fixture2:setFilter ( 0x02 )
 fixture2:setCollisionHandler ( onCollide, MOAIBox2DArbiter.BEGIN + MOAIBox2DArbiter.END, 0x00 )
 
-texture = MOAIGfxQuad2D.new ()
-texture:setTexture ( 'moai.png' )
-texture:setRect ( -25/2, -25/2, 25/2, 25/2 )
+deck = MOAISpriteDeck2D.new ()
+deck:setTexture ( 'moai.png' )
+deck:setRect ( -25/2, -25/2, 25/2, 25/2 )
 
 sensorBody = world:addBody ( MOAIBox2DBody.KINEMATIC )
 sensorFixture = sensorBody:addCircle ( 0, -130, 40 )
@@ -70,6 +69,10 @@ thread:run ( function ()
         coroutine.yield ()
     end
 end )
+
+layer = MOAIPartitionViewLayer.new ()
+layer:setViewport ( viewport )
+layer:pushRenderPass ()
 
 function addSprite()
 	local body = world:addBody ( MOAIBox2DBody.DYNAMIC )
@@ -90,8 +93,8 @@ function addSprite()
 	body:resetMassData ()
 	body:applyAngularImpulse ( 80 )
 
-	local sprite = MOAIProp.new ()
-	sprite:setDeck ( texture )
+	local sprite = MOAIGraphicsProp.new ()
+	sprite:setDeck ( deck )
 	sprite.body = body
 	sprite:setParent ( body )
 	sprite:setPartition ( layer )
@@ -107,7 +110,7 @@ end
 
 function clickCallback ( down )
 	if down then
-		pick = layer:getPartition():propForPoint ( worldX, worldY)
+		pick = layer:getLayerPartition():hullForPoint ( worldX, worldY )
 		if pick then
 			mouseBody = world:addBody( MOAIBox2DBody.DYNAMIC )
 			mouseBody:setTransform(worldX, worldY)

@@ -82,9 +82,10 @@ function createTexturePackerDeckRaw ( filename )
 	end
 
 	-- Construct the deck
-	local deck = MOAIGfxQuadDeck2D.new ()
+	local deck = MOAISpriteDeck2D.new ()
 	deck:setTexture ( tex )
-	deck:reserve ( #frames )
+	deck:reserveQuads ( #frames )
+    deck:reserveUVQuads ( #frames )
 	local names = {}
 	for i, frame in ipairs ( frames ) do
 		local q = frame.uvQuad
@@ -135,7 +136,7 @@ local function positionSprite ( sprite, x, y, head, points )
   local angle = vecAngle ( headAxisX, headAxisY, 0, 1 )
   
   angle = ( headAxisX < 0 ) and angle or -angle
-   sprite:setRot ( angle )
+  sprite:setRot ( 0, 0, angle )
   
   local sideAxisX, sideAxisY = headAxisY, -headAxisX
   
@@ -176,12 +177,7 @@ MOAISim.openWindow ( "test", width ,height  )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( width, height )
-viewport:setScale (width / (width/640), height / (height/480))
-
-layer = MOAIPartitionViewLayer.new ()
-layer:setPartition( MOAIPartition.new() )
-layer:setViewport ( viewport )
-layer:pushRenderPass ()
+viewport:setScale ( width / ( width / 640 ), height / ( height / 480 ))
 
 allPigs = {}
 pigs = 0
@@ -192,9 +188,9 @@ stickyFloorQueue = {}
 function onPigCollide ( event, thisFixture, thatFixture, arbiter )
   
 	if thatFixture.pig and ( thatFixture.sticky or thisFixture.sticky ) then
-		table.insert ( stickyQueue, { body1 = thisFixture:getBody (), body2 = thatFixture:getBody (), type = "pig" } )
+		table.insert ( stickyQueue, { body1 = thisFixture:getBody (), body2 = thatFixture:getBody (), type = "pig" })
 	elseif thatFixture.floor and thisFixture.sticky then
-		table.insert ( stickyQueue, { body1 = thisFixture:getBody (), body2 = thatFixture:getBody (), type = "floor" } )
+		table.insert ( stickyQueue, { body1 = thisFixture:getBody (), body2 = thatFixture:getBody (), type = "floor" })
 		thisFixture:setSensor ( true )
 	elseif thisFixture.pig and thatFixture.mud then
 	  
@@ -215,7 +211,15 @@ world:setIterations ( ITERATIONS, ITERATIONS )
 world:start ()
 
 world:setDebugDrawFlags ( MOAIBox2DWorld.DEBUG_DRAW_SHAPES + MOAIBox2DWorld.DEBUG_DRAW_JOINTS + MOAIBox2DWorld.DEBUG_DRAW_PAIRS )
-layer:setUnderlayTable ({ world })
+
+debugLayer = MOAITableViewLayer.new ()
+debugLayer:setViewport ( viewport )
+debugLayer:setRenderTable ( world )
+debugLayer:pushRenderPass ()
+
+layer = MOAIPartitionViewLayer.new ()
+layer:setViewport ( viewport )
+layer:pushRenderPass ()
 
 worldBody = world:addBody ( MOAIBox2DBody.STATIC )
 fixture2 = worldBody:addRect ( -(800/2), -200, 800/2, -300)
@@ -408,7 +412,7 @@ end
 
 function clickCallback ( down )
 	if down then
-		pick = layer:getPartition():propForPoint ( worldX, worldY)
+		pick = layer:getLayerPartition():hullForPoint ( worldX, worldY)
 		if pick then
 			mouseBody = world:addBody( MOAIBox2DBody.DYNAMIC )
 			mouseBody:setTransform(worldX, worldY)
@@ -464,7 +468,7 @@ else
     )
 end
 
-scaleThread = MOAIThread.new ()
+scaleThread = MOAICoroutine.new ()
 scaleThread:run ( function ()
 	repeat
 		coroutine.yield ()
@@ -475,7 +479,7 @@ scaleThread:run ( function ()
 	until false
 end )
 
-stickyThread = MOAIThread.new ()
+stickyThread = MOAICoroutine.new ()
 stickyThread:run ( function ()
     
 	repeat

@@ -29,7 +29,7 @@ viewport:setScale ( SCREEN_WIDTH, SCREEN_HEIGHT )
 layer:setViewport ( viewport )
 
 partition = MOAIPartition.new ()
-layer:setPartition ( partition )
+layer:setLayerPartition ( partition )
 
 function addCube ( x, y, z, name )
 	local prop = makeCube ( 32 )

@@ -1298,7 +1298,6 @@ void MOAIBox2DWorld::MOAIDrawable_Draw ( int subPrimID ) {
 		MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 		
 		gfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX );
-		gfxState.SetVertexTransform ( MOAIGfxState::WORLD_TO_CLIP_MTX );
 		
 		this->mDebugDraw->mScale = 1.0f / this->mUnitsToMeters;
 		this->mWorld->DrawDebugData ();

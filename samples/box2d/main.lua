@@ -41,17 +41,17 @@ world:setGravity ( 0, -10 )
 world:setUnitsToMeters ( .05 )
 world:start ()
 
-debugLayer = MOAITableLayer.new ()
+debugLayer = MOAITableViewLayer.new ()
 debugLayer:setViewport ( viewport )
-debugLayer:pushRenderPass ()
 debugLayer:setRenderTable ( world )
+debugLayer:pushRenderPass ()
 
 worldBody = world:addBody ( MOAIBox2DBody.STATIC )
 fixture2 = worldBody:addRect ( -( 300 / 2 ), -200, 300 / 2, -300 )
 fixture2:setFilter ( 0x02 )
 fixture2:setCollisionHandler ( onCollide, MOAIBox2DArbiter.BEGIN + MOAIBox2DArbiter.END, 0x00 )
 
-layer = MOAIPartitionLayer.new ()
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:pushRenderPass ()
 

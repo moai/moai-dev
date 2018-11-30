@@ -4,21 +4,42 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+print ( 'HELLO FROM BOX2D' )
+
 local function printf ( ... )
 	return io.stdout:write ( string.format ( ... ))
 end 
 
 local width = 640
 local height = 480
-MOAISim.openWindow ( "test", width ,height  )
+MOAISim.openWindow ( "test", width, height  )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( width, height )
-viewport:setScale (width / (width/640), height / (height/480))
+viewport:setScale ( width / ( width / 640 ), height / ( height / 480 ))
+
+function onCollide ( event )
+
+	if event == MOAIBox2DArbiter.BEGIN then
+		print ( 'begin!' )
+	end
+	
+	if event == MOAIBox2DArbiter.END then
+		print ( 'end!' )
+	end
+	
+	if event == MOAIBox2DArbiter.PRE_SOLVE then
+		print ( 'pre!' )
+	end
+	
+	if event == MOAIBox2DArbiter.POST_SOLVE then
+		print ( 'post!' )
+	end
+end
 
 -- set up the world and start its simulation
 world = MOAIBox2DWorld.new ()
-world:setGravity ( 0, 0 )
+world:setGravity ( 0, -10 )
 world:setUnitsToMeters ( .05 )
 world:start ()
 
@@ -27,90 +48,78 @@ debugLayer:setViewport ( viewport )
 debugLayer:setRenderTable ( world )
 debugLayer:pushRenderPass ()
 
+worldBody = world:addBody ( MOAIBox2DBody.STATIC )
+fixture2 = worldBody:addRect ( -( 300 / 2 ), -200, 300 / 2, -300 )
+fixture2:setFilter ( 0x02 )
+fixture2:setCollisionHandler ( onCollide, MOAIBox2DArbiter.BEGIN + MOAIBox2DArbiter.END, 0x00 )
+
 layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-layer:pushRenderPass ()
+--layer:pushRenderPass ()
 
-local chain = {}
+deck = MOAISpriteDeck2D.new ()
+deck:setTexture ( '../resources/moai.png' )
+deck:setQuad ( 0, -25, 25, 0, 0, 25, -25, 0 )
+deck:setUVRect ( 0, 0, 1, 1 )
 
-function dist ( x1, y1, x2, y2 )
-	return math.sqrt ((( x2 - x1 ) ^ 2 ) + (( y2 - y1 ) ^ 2 ))
-end
+function addSprite ( x, y )
 
-function addSprite ( x, y, r, density, type )
+	x = x or 0
+	y = y or 0
 
-	local body = world:addBody ( type or MOAIBox2DBody.DYNAMIC )
-	body:setTransform ( worldX, worldY )
+	local body = world:addBody ( MOAIBox2DBody.DYNAMIC )
+	body:setTransform ( x, y )
 
-	local r = r or math.random ( 10, 30 )
+	local poly = {
+		0, -25,
+		25, 0,
+		0, 25,
+		-25, 0,
+	}
 
-	local fixture = body:addCircle ( 0, 0, r )
-	fixture:setDensity ( density or 1 )
+	local fixture = body:addPolygon ( poly )
+	fixture:setDensity ( 1 )
 	fixture:setFriction ( 0.3 )
 	fixture:setFilter ( 0x01 )
+	fixture:setCollisionHandler ( onCollide, MOAIBox2DArbiter.BEGIN + MOAIBox2DArbiter.END, 0x02 )
 
 	body:resetMassData ()
-	--body:applyAngularImpulse ( 80 )
+	body:applyAngularImpulse ( 80 )
 
-	local sprite = MOAIProp.new ()
-	sprite:setBounds ( -r, -r, 0, r, r, 0 )
+	local sprite = MOAIGraphicsProp.new ()
+	sprite:setDeck ( deck )
 	sprite.body = body
 	sprite:setParent ( body )
 	sprite:setPartition ( layer )
-
-	local top = #chain
-
-	if top > 0 then
-
-		local parent = chain [ top ]
-		local parentX, parentY = parent:getPosition ()
-		local d1 = dist ( parentX, parentY, x, y )
-
-		world:addDistanceJoint ( parent, body, parentX, parentY, x, y )
-		world:addRevoluteJoint ( parent, body, parentX, parentY )
-
-		if top > 1 then
-
-			local grandParent = chain [ top - 1 ]
-			local grandParentX, grandParentY = grandParent:getPosition ()
-			local d2 = dist ( grandParentX, grandParentY, x, y )
-
-			local distanceJoint = world:addDistanceJoint ( grandParent, body, grandParentX, grandParentY, x, y )
-			distanceJoint:setLength ( d1 + d2 )
-			distanceJoint:setFrequency ( 2 )
-			distanceJoint:setDampingRatio ( 10 )
-		end
-	end
-
-	chain [ top + 1 ] = body
 end
 
-addSprite ( 0, 0, 40, 1000, MOAIBox2DBody.STATIC )
-
 function pointerCallback ( x, y )
+
 	worldX, worldY = layer:wndToWorld ( x, y )
-	if mouseJoint then
-		mouseBody:setTransform ( worldX, worldY )
+
+	if pick then
 		mouseJoint:setTarget ( worldX, worldY )
 	end
 end
 
 function clickCallback ( down )
-
 	if down then
 		pick = layer:getLayerPartition ():hullForPoint ( worldX, worldY )
 		if pick then
-			mouseBody = world:addBody ( MOAIBox2DBody.STATIC )
+
+			mouseBody = world:addBody ( MOAIBox2DBody.DYNAMIC )
 			mouseBody:setTransform ( worldX, worldY )
-			mouseJoint = world:addMouseJoint ( mouseBody, pick.body, worldX, worldY, 10000.0 * pick.body:getMass ());
-			mouseJoint:setDampingRatio ( 2 );
+
+			mouseJoint = world:addMouseJoint ( mouseBody, pick.body, worldX, worldY,  10000.0 * pick.body:getMass ());
+			mouseJoint:setDampingRatio ( 2 ) ;
+		else
+			addSprite ( worldX, worldY )
 		end
 	else
 		if pick then
 			--also destroys joint
 			mouseBody:destroy ()
 			mouseBody = nil
-			mouseJoint = nil
 			pick = nil
 		end
 	end
@@ -118,7 +127,7 @@ end
 
 function rightclickCallback ( down )
 	if down then
-	  addSprite ( worldX, worldY )
+		addSprite ( worldX, worldY )
 	end
 end
 
