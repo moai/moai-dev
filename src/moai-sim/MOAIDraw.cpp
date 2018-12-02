@@ -295,6 +295,15 @@ void MOAIDraw::EndDrawString () {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIDraw::_bind ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
+	
+	self->Bind ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIDraw::_bindFrameBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
 	
@@ -1546,6 +1555,7 @@ void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "WORLD_MATRIX",				( u32 )MOAIGfxState::MODEL_TO_WORLD_MTX );
 
 	luaL_Reg regTable [] = {
+		{ "bind",					_bind },
 		{ "bindFrameBuffer",		_bindFrameBuffer },
 		{ "bindIndexBuffer",		_bindIndexBuffer },
 		{ "bindShader",				_bindShader },

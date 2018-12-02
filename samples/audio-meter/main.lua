@@ -15,7 +15,7 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 1024, 512 )
 viewport:setScale ( 1024, 512 )
 
-layer = MOAIPartitionViewLayer.new ()
+layer = MOAITableViewLayer.new ()
 layer:setViewport ( viewport )
 layer:setClearColor ( 1, 1, 1, 1 )
 layer:pushRenderPass ()
@@ -86,6 +86,8 @@ elapsedFrames = 0
 
 onDraw = function ()
 
+    MOAIDraw.bind ()
+
 	meter:seek ( 0 )
 
 	local span = 1024 / bands
@@ -95,9 +97,9 @@ onDraw = function ()
 		local x = (( i - 1 ) * span ) - ( 1024 / 2 )
 		local y = ( meter:readFloat () * 64 ) - 256
 
-		MOAIGfxMgr.setPenColor ( 1, 0, 0, 1 )
+		MOAIDraw.setPenColor ( 1, 0, 0, 1 )
 		MOAIDraw.fillRect ( x, y, x + span, -256 )
 	end
 end
 
-layer:setOverlayTable ({ onDraw })
+layer:setRenderTable ({ onDraw })

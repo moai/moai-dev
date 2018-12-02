@@ -27,6 +27,7 @@ class MOAIDraw :
 private:
 
 	//----------------------------------------------------------------//
+	static int			_bind					( lua_State* L );
 	static int			_bindFrameBuffer		( lua_State* L );
 	static int			_bindIndexBuffer		( lua_State* L );
 	static int			_bindShader				( lua_State* L );
