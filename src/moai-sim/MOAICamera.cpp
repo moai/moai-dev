@@ -412,12 +412,10 @@ ZLMatrix4x4 MOAICamera::GetProjMtx ( const MOAIViewport& viewport ) const {
 			case CAMERA_TYPE_WINDOW:
 			default: {
 				
-				ZLRect rect = viewport.GetRect ();
+				float xScale = ( 2.0f / viewport.Width ()) * viewScale.mX;
+				float yScale = ( 2.0f / viewport.Height ()) * viewScale.mY;
 				
-				float xScale = ( 2.0f / rect.Width ()) * viewScale.mX;
-				float yScale = ( 2.0f / rect.Height ()) * viewScale.mY;
-				
-				mtx.Scale ( xScale, yScale, -1.0f );
+				mtx.Scale ( xScale, yScale, 0.0 );
 			}
 		}
 	}

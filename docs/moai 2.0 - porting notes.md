@@ -45,6 +45,12 @@ Is now:
 
 prop:moveLoc(x, y, z, t)
 
+## MOAICamera consolidation
+
+2D, 3D or ortho cameras have been consolidated into a single class: MOAICamera. To set the camera type, use MOAICamera.setType() with one of MOAICamera.CAMERA_TYPE_3D, MOAICamera.CAMERA_TYPE_ORTHO, MOAICamera.CAMERA_TYPE_WINDOW.
+
+The '3D' and 'ortho' camera types are simply perspective and orthographic projects. The 'window' camera type is an ortho projection that ignores that discards the Z axis (by scaling Z to 0). This elimates depth information, but also the effect of the near/far plane settings.
+
 ## Partition membership
 
 MOAIPartitionHull now exists independently of MOAIProp. MOAIPartitionHull inherits MOAITransform and represents membership in a partition, dimenionality (having bounds or existing boundlessly in global space), and placement (having a location and orientation in space).
