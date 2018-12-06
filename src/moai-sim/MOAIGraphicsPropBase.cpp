@@ -452,7 +452,6 @@ void MOAIGraphicsPropBase::MOAIDrawable_DrawDebug ( int subPrimID ) {
 ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () {
 
 	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
-	//MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
 
 	ZLMatrix4x4 worldDrawingMtx;
 
@@ -521,9 +520,9 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () {
 		
 		case BILLBOARD_COMPASS: {
 		
-			//const ZLAffine3D& cameraMtx = camera->GetLocalToWorldMtx (); // inv view mtx
+			
+		
 			ZLAffine3D cameraMtx ( gfxState.GetMtx ( MOAIGfxState::VIEW_TO_WORLD_MTX ));
-			//ZLVec3D cameraZ = cameraMtx.GetZAxis ();
 			ZLVec3D	cameraY = cameraMtx.GetYAxis ();
 			
 			cameraY.mZ = 0.0f;
@@ -532,7 +531,7 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () {
 			ZLVec2D mapY ( cameraY.mX, cameraY.mY );
 			ZLVec2D worldY ( 0.0f, 1.0f );
 			
-			float radians = mapY.Radians ( worldY );
+			float radians = -mapY.Radians ( worldY );
 			
 			if ( cameraY.mX < 0.0f ) {
 				radians = -radians;
@@ -548,9 +547,19 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () {
 			mtx.Translate ( this->mPiv.mX, this->mPiv.mY, this->mPiv.mZ );
 			billboardMtx.Append ( mtx );
 			
+			// now that we've calculated the compass billboard, here's the tricky part.
+			// we need to sandwich it into the local-to-world matrix, after the scale and rotate,
+			// but before the translation. it's not sufficient just to prepend as we'd wind up
+			// with compass-scale-rotate-translate. in that scenario, if scale != 1, then it will
+			// mess up the compass transform. so we need to do scale-rotate-compass-translate instead.
+			
 			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
-			worldDrawingMtx.Prepend ( billboardMtx );
-		
+			
+			ZLVec4D localToWorldTranslation = worldDrawingMtx.GetColumn ( 3 ); // extract the translation
+			worldDrawingMtx.SetColumn ( 3, ZLVec4D::ORIGIN ); // set translation back to origin
+			worldDrawingMtx.Append ( billboardMtx ); // this gives us scale-rotate-billboard
+			worldDrawingMtx.SetColumn ( 3, localToWorldTranslation ); // scale-rotate-billboard-translation
+			
 			break;
 		}
 
