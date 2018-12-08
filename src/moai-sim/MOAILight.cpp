@@ -127,7 +127,7 @@ void MOAILight::SetFormat ( MOAILightFormat* format ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAILight::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAILight::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
 	return this->mFormat ? this->MOAIShaderUniformSchema::ApplyAttrOp ( this->mBuffer.GetBuffer (), attrID, attr, op ) : false;
 }

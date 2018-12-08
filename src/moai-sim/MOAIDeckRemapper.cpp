@@ -125,9 +125,9 @@ ZLIndex MOAIDeckRemapper::MOAIDeckProxy_Remap ( ZLIndex idx ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIDeckRemapper::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIDeckRemapper::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
-	ZLIndex code = ZLIndexCast (( ZLSize )attrID - this->mBase - 1 ); // TODO: verify
+	ZLIndex code = ZLIndexCast (( ZLSize )attrID.Unpack () - this->mBase - 1 ); // TODO: verify
 
 	// TODO: verify
 	if ( code < this->mRemap.Size ()) {

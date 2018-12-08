@@ -539,7 +539,7 @@ void MOAIPartitionHull::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAITransform::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "ATTR_PARTITION",				MOAIPartitionHullAttr::Pack ( ATTR_PARTITION ));
+	state.SetField ( -1, "ATTR_PARTITION",				MOAIPartitionHullAttr::Pack ( ATTR_PARTITION ).ToRaw ());
 	
 	state.SetField ( -1, "FLAGS_EXPAND_FOR_SORT",		( u32 )FLAGS_EXPAND_FOR_SORT );
 	state.SetField ( -1, "FLAGS_PARTITION_GLOBAL",		( u32 )FLAGS_PARTITION_GLOBAL );
@@ -646,11 +646,11 @@ void MOAIPartitionHull::WasRemovedFromPartition () {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIPartitionHull::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIPartitionHull::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( MOAIPartitionHullAttr::Check ( attrID )) {
 		
-		switch ( UNPACK_ATTR ( attrID )) {;
+		switch (  attrID.Unpack ()) {;
 			case ATTR_PARTITION:
 				this->SetPartition ( attr.ApplyVariantNoAdd < MOAIPartition* >( this->GetPartition (), op, MOAIAttribute::ATTR_READ_WRITE ));
 				return true;

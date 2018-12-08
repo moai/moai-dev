@@ -208,11 +208,12 @@ void MOAIScriptNode::RegisterLuaFuncs ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIScriptNode::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIScriptNode::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 	
-	ZLIndex attrIndex = ZLIndexCast ( UNPACK_ATTR ( attrID ) - 1 );
+	ZLIndex attrIndex = ZLIndexCast ( attrID.Unpack () - 1 );
 	
-	if ( attrID >= this->mAttributes.Size()) {
+	// TODO: verify
+	if ( attrIndex >= this->mAttributes.Size()) {
 		return false;
 	}
 	

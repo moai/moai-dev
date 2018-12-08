@@ -476,7 +476,7 @@ void MOAITimer::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAINode::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass ( state );
 
-	state.SetField ( -1, "ATTR_TIME", MOAITimerAttr::Pack ( ATTR_TIME ));
+	state.SetField ( -1, "ATTR_TIME", MOAITimerAttr::Pack ( ATTR_TIME ).ToRaw ());
 	
 	state.SetField ( -1, "EVENT_TIMER_KEYFRAME",	( u32 )EVENT_TIMER_KEYFRAME );
 	state.SetField ( -1, "EVENT_TIMER_LOOP",		( u32 )EVENT_TIMER_LOOP );
@@ -658,12 +658,10 @@ void MOAITimer::MOAIAction_Update ( double step ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAITimer::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAITimer::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( MOAITimerAttr::Check ( attrID )) {
-		attrID = UNPACK_ATTR ( attrID );
-		
-		if ( attrID == ATTR_TIME ) {
+		if ( attrID.Unpack () == ATTR_TIME ) {
 			attr.Apply ( this->GetTime (), op, MOAIAttribute::ATTR_READ );
 			return true;
 		}

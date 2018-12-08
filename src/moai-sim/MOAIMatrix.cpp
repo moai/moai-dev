@@ -79,7 +79,7 @@ void MOAIMatrix::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAITransformBase::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "ATTR_MATRIX",	MOAIMatrixAttr::Pack ( ATTR_MATRIX ));
+	state.SetField ( -1, "ATTR_MATRIX",	MOAIMatrixAttr::Pack ( ATTR_MATRIX ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
@@ -114,12 +114,12 @@ void MOAIMatrix::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer 
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIMatrix::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIMatrix::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
 	// TODO: these values may need to be cached for performance reasons
 	if ( MOAIMatrix::MOAIMatrixAttr::Check ( attrID )) {
 
-		switch ( UNPACK_ATTR ( attrID )) {
+		switch (  attrID.Unpack ()) {
 			
 			case ATTR_MATRIX:
 			

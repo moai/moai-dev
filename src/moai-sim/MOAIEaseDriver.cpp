@@ -61,22 +61,22 @@ int MOAIEaseDriver::_setLink ( lua_State* L ) {
 	MOAINode* dest = state.GetLuaObject < MOAINode >( 3, true );
 	if ( !dest ) return 0;
 	
-	ZLIndex idx			= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	u32 destAttrID		= state.GetValue < u32 >( 4, 0 );
+	ZLIndex idx				= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	MOAIAttrID destAttrID	= MOAIAttrID::FromRaw ( state.GetValue < u32 >( 4, 0 ));
 	
 	MOAINode* source = state.GetLuaObject < MOAINode >( 5, true );
 	
 	if ( source ) {
 	
-		u32 sourceAttrID	= state.GetValue < u32 >( 6, MOAIAttribute::NULL_ATTR );
-		u32 mode			= state.GetValue < u32 >( 7, ZLInterpolate::kSmooth );
+		MOAIAttrID sourceAttrID = MOAIAttrID::FromRaw ( state.GetValue < u32 >( 6, MOAIAttribute::NULL_ATTR ));
+		u32 mode = state.GetValue < u32 >( 7, ZLInterpolate::kSmooth );
 		
 		self->SetLink ( idx, dest, destAttrID, source, sourceAttrID, mode );
 	}
 	else {
 	
-		float v1			= state.GetValue < float >( 5, 0.0f );
-		u32 mode			= state.GetValue < u32 >( 6, ZLInterpolate::kSmooth );
+		float v1 = state.GetValue < float >( 5, 0.0f );
+		u32 mode = state.GetValue < u32 >( 6, ZLInterpolate::kSmooth );
 		
 		self->SetLink ( idx, dest, destAttrID, v1, mode );
 	}
@@ -137,7 +137,7 @@ u32 MOAIEaseDriver::ParseForMove ( MOAILuaState& state, int idx, MOAINode* dest,
 			float v1 = params [ i ];
 			
 			if ( v1 != 0.0 ) {
-				this->SetLink ( linkID++, dest, destAttrID, v1, ( u32 )mode );
+				this->SetLink ( linkID++, dest, MOAIAttrID::FromRaw ( destAttrID ), v1, ( u32 )mode );
 			}
 		}
 	}
@@ -178,7 +178,7 @@ u32 MOAIEaseDriver::ParseForSeek ( MOAILuaState& state, int idx, MOAINode* dest,
 			float v1 = params [ i ];
 			
 			if ( v1 != 0.0 ) {
-				this->SetLink ( linkID++, dest, destAttrID, v1, ( u32 )mode );
+				this->SetLink ( linkID++, dest, MOAIAttrID::FromRaw ( destAttrID ), v1, ( u32 )mode );
 			}
 		}
 	}
@@ -212,14 +212,14 @@ void MOAIEaseDriver::ReserveLinks ( u32 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIEaseDriver::SetLink ( ZLIndex idx, MOAINode* dest, u32 destAttrID, float v1, u32 mode  ) {
+void MOAIEaseDriver::SetLink ( ZLIndex idx, MOAINode* dest, MOAIAttrID destAttrID, float v1, u32 mode  ) {
 
 	if ( this->mLinks.CheckIndex ( idx )) {
 		
 		MOAIEaseDriverLink& link = this->mLinks [ idx ];
 
 		link.mSource.Set ( *this, 0 );
-		link.mSourceAttrID	= MOAIAttribute::NULL_ATTR;
+		link.mSourceAttrID	= MOAIAttrID::FromRaw ( MOAIAttribute::NULL_ATTR );
 
 		link.mDest.Set ( *this, dest );
 		link.mDestAttrID	= destAttrID;
@@ -231,7 +231,7 @@ void MOAIEaseDriver::SetLink ( ZLIndex idx, MOAINode* dest, u32 destAttrID, floa
 }
 
 //----------------------------------------------------------------//
-void MOAIEaseDriver::SetLink ( ZLIndex idx, MOAINode* dest, u32 destAttrID, MOAINode* source, u32 sourceAttrID, u32 mode ) {
+void MOAIEaseDriver::SetLink ( ZLIndex idx, MOAINode* dest, MOAIAttrID destAttrID, MOAINode* source, MOAIAttrID sourceAttrID, u32 mode ) {
 
 	if ( this->mLinks.CheckIndex ( idx )) {
 		

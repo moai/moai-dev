@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIShaderUniformSchema::ApplyAttrOp ( void* buffer, u32 attrID, MOAIAttribute& attr, u32 op ) const {
+bool MOAIShaderUniformSchema::ApplyAttrOp ( void* buffer, MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) const {
 			
 	MOAIShaderUniformHandle uniform = this->GetUniformHandleForAttributeID ( buffer, attrID );
 	
@@ -54,12 +54,12 @@ MOAIShaderUniformHandle MOAIShaderUniformSchema::GetUniformHandle ( void* buffer
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformHandle MOAIShaderUniformSchema::GetUniformHandleForAttributeID ( void* buffer, u32 attrID ) const {
+MOAIShaderUniformHandle MOAIShaderUniformSchema::GetUniformHandleForAttributeID ( void* buffer, MOAIAttrID attrID ) const {
 
-	attrID &= MOAIAttribute::ATTR_ID_MASK;
+	u32 rawID = attrID.Unpack ();
 
-	ZLSize uniformID = attrID / MAX_UNIFORM_ARRAY_SIZE;
-	ZLSize index = attrID - ( uniformID * MAX_UNIFORM_ARRAY_SIZE );
+	ZLSize uniformID = rawID / MAX_UNIFORM_ARRAY_SIZE;
+	ZLSize index = rawID - ( uniformID * MAX_UNIFORM_ARRAY_SIZE );
 	
 	return this->GetUniformHandle ( buffer, ZLIndexCast ( uniformID ), ZLIndexCast ( index ));
 }

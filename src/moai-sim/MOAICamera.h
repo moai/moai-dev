@@ -47,7 +47,7 @@ private:
 	void			LookAt					( float x, float y, float z );
 	
 	//----------------------------------------------------------------//
-	bool			MOAINode_ApplyAttrOp	( u32 attrID, MOAIAttribute& attr, u32 op );
+	bool			MOAINode_ApplyAttrOp	( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
 	
 public:
 	

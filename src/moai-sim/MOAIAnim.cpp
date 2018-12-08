@@ -89,7 +89,7 @@ int	MOAIAnim::_setLink ( lua_State* L ) {
 	
 	ZLIndex linkID				= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	MOAIAnimCurve* curve		= state.GetLuaObject < MOAIAnimCurve >( 3, true );
-	u32 attrID					= state.GetValue < u32 >( 5, 0 );
+	MOAIAttrID attrID			= MOAIAttrID::FromRaw ( state.GetValue < u32 >( 5, 0 ));
 	bool relative				= state.GetValue < bool >( 6, false );
 	
 	self->SetLink ( linkID, curve, target, attrID, relative );
@@ -217,7 +217,7 @@ void MOAIAnim::ReserveLinks ( u32 totalLinks ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnim::SetLink ( ZLIndex linkID, MOAIAnimCurve* curve, MOAINode* target, u32 attrID, bool relative ) {
+void MOAIAnim::SetLink ( ZLIndex linkID, MOAIAnimCurve* curve, MOAINode* target, MOAIAttrID attrID, bool relative ) {
 
 	if ( linkID >= this->mLinks.Size ()) return;
 	if ( !target ) return;

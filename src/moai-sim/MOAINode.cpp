@@ -25,8 +25,8 @@ private:
 	MOAIDepLink*				mNextInDest;
 
 	// the attribute mapping
-	u32							mSourceAttrID;
-	u32							mDestAttrID;
+	MOAIAttrID					mSourceAttrID;
+	MOAIAttrID					mDestAttrID;
 
 	// cached flag indicating it's safe to pull from source to dest (attribute flags match)
 	bool						mPullable;
@@ -37,9 +37,10 @@ private:
 		mDestNode ( 0 ),
 		mNextInSource ( 0 ),
 		mNextInDest ( 0 ),
-		mSourceAttrID ( MOAIAttribute::NULL_ATTR ),
-		mDestAttrID ( MOAIAttribute::NULL_ATTR ),
 		mPullable ( false ) {
+		
+		this->mSourceAttrID.mPackedID = MOAIAttribute::NULL_ATTR;
+		this->mDestAttrID.mPackedID = MOAIAttribute::NULL_ATTR;
 	}
 
 	//----------------------------------------------------------------//
@@ -49,9 +50,9 @@ private:
 	//----------------------------------------------------------------//
 	void Update () {
 		this->mPullable =
-			( mSourceAttrID & MOAIAttribute::ATTR_READ ) &&
-			( mDestAttrID & MOAIAttribute::ATTR_WRITE ) &&
-			( mSourceAttrID != MOAIAttribute::NULL_ATTR );
+			( mSourceAttrID.mPackedID & MOAIAttribute::ATTR_READ ) &&
+			( mDestAttrID.mPackedID & MOAIAttribute::ATTR_WRITE ) &&
+			( mSourceAttrID.mPackedID != MOAIAttribute::NULL_ATTR );
 	}
 };
 
@@ -71,7 +72,7 @@ private:
 int MOAINode::_clearAttrLink ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAINode, "UN" );
 
-	u32 attrID = state.GetValue < u32 >( 2, 0 );
+	MOAIAttrID attrID = MOAIAttrID::FromRaw ( state.GetValue < u32 >( 2, 0 ));
 	self->ClearAttrLink ( attrID );
 
 	return 0;
@@ -126,7 +127,7 @@ int MOAINode::_forceUpdate ( lua_State* L ) {
 int MOAINode::_getAttr ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAINode, "UN" );
 
-	u32 attrID = state.GetValue < u32 >( 2, 0 );
+	MOAIAttrID attrID = MOAIAttrID::FromRaw ( state.GetValue < u32 >( 2, 0 ));
 
 	MOAIAttribute getter;
 	self->ApplyAttrOp ( attrID, getter, MOAIAttribute::GET );
@@ -152,13 +153,13 @@ int MOAINode::_getAttr ( lua_State* L ) {
 int MOAINode::_getAttrLink ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAINode, "UN" );
 
-	u32 attrID = state.GetValue < u32 >( 2, 0 );
+	MOAIAttrID attrID = MOAIAttrID::FromRaw ( state.GetValue < u32 >( 2, 0 ));
 
 	MOAIDepLink* link = self->FindAttrLink ( attrID );
 	if ( link && link->mSourceNode ) {
 		state.Push ( link->mSourceNode );
-		if ( link->mSourceAttrID != MOAIAttribute::NULL_ATTR ) {
-			state.Push ( link->mSourceAttrID );
+		if ( link->mSourceAttrID.mPackedID != MOAIAttribute::NULL_ATTR ) {
+			state.Push ( link->mSourceAttrID.mPackedID );
 			return 2;
 		}
 		return 1;
@@ -200,10 +201,10 @@ int MOAINode::_moveAttr ( lua_State* L ) {
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveLinks ( 1 );
 	
-	u32 attrID		= state.GetValue < u32 >( 2, 0 );
-	float value		= state.GetValue < float >( 3, 0.0f );
-	float length	= state.GetValue < float >( 4, 0.0f );
-	u32 mode		= state.GetValue < u32 >( 5, ZLInterpolate::kSmooth );
+	MOAIAttrID attrID	= MOAIAttrID::FromRaw ( state.GetValue < u32 >( 2, 0 ));
+	float value			= state.GetValue < float >( 3, 0.0f );
+	float length		= state.GetValue < float >( 4, 0.0f );
+	u32 mode			= state.GetValue < u32 >( 5, ZLInterpolate::kSmooth );
 	
 	if ( self->CheckAttrExists ( attrID )) {
 	
@@ -255,7 +256,7 @@ int MOAINode::_seekAttr ( lua_State* L ) {
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveLinks ( 1 );
 	
-	u32 attrID = state.GetValue < u32 >( 2, 0 );
+	MOAIAttrID attrID = MOAIAttrID::FromRaw ( state.GetValue < u32 >( 2, 0 ));
 	if ( self->CheckAttrExists ( attrID )) {
 	
 		MOAIAttribute getter;
@@ -291,8 +292,8 @@ int MOAINode::_seekAttr ( lua_State* L ) {
 int MOAINode::_setAttr ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAINode, "UNN" );
 	
-	u32 attrID = state.GetValue < u32 >( 2, 0 );
-	float value = state.GetValue < float >( 3, 0.0f );
+	MOAIAttrID attrID	= MOAIAttrID::FromRaw ( state.GetValue < u32 >( 2, 0 ));
+	float value			= state.GetValue < float >( 3, 0.0f );
 	
 	if ( self->CheckAttrExists ( attrID )) {
 	
@@ -324,12 +325,11 @@ int MOAINode::_setAttr ( lua_State* L ) {
 int MOAINode::_setAttrLink ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAINode, "UNU" );
 	
-	u32 attrID = state.GetValue < u32 >( 2, 0 );
-	
 	MOAINode* srcNode = state.GetLuaObject < MOAINode >( 3, true );
 	if ( !srcNode ) return 0;
-
-	u32 srcAttrID = state.GetValue < u32 >( 4, attrID );
+	
+	MOAIAttrID attrID		= MOAIAttrID::FromRaw ( state.GetValue < u32 >( 2, 0 ));
+	MOAIAttrID srcAttrID	= MOAIAttrID::FromRaw ( state.GetValue < u32 >( 4, attrID.mPackedID ));
 	
 	if ( srcNode->CheckAttrExists ( srcAttrID )) {
 		self->SetAttrLink ( attrID, srcNode, srcAttrID );
@@ -384,7 +384,7 @@ void MOAINode::Activate ( MOAINode& activator ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAINode::ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAINode::ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
 	return this->MOAINode_ApplyAttrOp ( attrID, attr, op );
 }
@@ -411,9 +411,9 @@ void MOAINode::ActivateOnLink ( MOAINode& srcNode ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAINode::CheckAttrExists ( u32 attrID ) {
+bool MOAINode::CheckAttrExists ( MOAIAttrID attrID ) {
 
-	if ( attrID == MOAIAttribute::NULL_ATTR ) return false;
+	if ( attrID.mPackedID == MOAIAttribute::NULL_ATTR ) return false;
 
 	MOAIAttribute getter;
 	this->ApplyAttrOp ( attrID, getter, MOAIAttribute::CHECK );
@@ -421,7 +421,7 @@ bool MOAINode::CheckAttrExists ( u32 attrID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAINode::ClearAttrLink ( int attrID ) {
+void MOAINode::ClearAttrLink ( MOAIAttrID attrID ) {
 
 	MOAIDepLink* cursor = this->mPullLinks;
 	this->mPullLinks = 0;
@@ -430,7 +430,7 @@ void MOAINode::ClearAttrLink ( int attrID ) {
 		MOAIDepLink* link = cursor;
 		cursor = cursor->mNextInDest;
 		
-		if (( link->mDestAttrID & ~MOAIAttribute::ATTR_FLAGS_MASK ) == ( u32 )attrID ) {
+		if (( link->mDestAttrID.mPackedID & ~MOAIAttribute::ATTR_FLAGS_MASK ) == attrID.mPackedID ) {
 			link->mSourceNode->RemoveDepLink ( *link );
 			delete link;
 			this->ScheduleUpdate ();
@@ -452,7 +452,7 @@ void MOAINode::ClearNodeLink ( MOAINode& srcNode ) {
 		MOAIDepLink* link = cursor;
 		cursor = cursor->mNextInDest;
 		
-		if (( link->mDestAttrID == MOAIAttribute::NULL_ATTR ) && ( link->mSourceNode == &srcNode )) {
+		if (( link->mDestAttrID.mPackedID == MOAIAttribute::NULL_ATTR ) && ( link->mSourceNode == &srcNode )) {
 			link->mSourceNode->RemoveDepLink ( *link );
 			delete link;
 		}
@@ -489,13 +489,11 @@ void MOAINode::ExtendUpdate () {
 }
 
 //----------------------------------------------------------------//
-MOAIDepLink* MOAINode::FindAttrLink ( int attrID ) {
-
-	attrID = attrID & ~MOAIAttribute::ATTR_FLAGS_MASK;
+MOAIDepLink* MOAINode::FindAttrLink ( MOAIAttrID attrID ) {
 
 	MOAIDepLink* link = this->mPullLinks;
 	for ( ; link; link = link->mNextInDest ) {
-		if ( link->mDestAttrID == ( u32 )attrID ) break;
+		if ( link->mDestAttrID.mPackedID == ( attrID.mPackedID & ~MOAIAttribute::ATTR_FLAGS_MASK )) break;
 	}
 	return link;
 }
@@ -505,7 +503,7 @@ MOAIDepLink* MOAINode::FindNodeLink ( MOAINode& srcNode ) {
 
 	MOAIDepLink* link = this->mPullLinks;
 	for ( ; link; link = link->mNextInDest ) {
-		if (( link->mSourceNode == &srcNode ) && ( link->mDestAttrID == MOAIAttribute::NULL_ATTR )) break;
+		if (( link->mSourceNode == &srcNode ) && ( link->mDestAttrID.mPackedID == MOAIAttribute::NULL_ATTR )) break;
 	}
 	return link;
 }
@@ -518,7 +516,7 @@ void MOAINode::ForceUpdate () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAINode::GetAttrFlags ( u32 attrID ) {
+u32 MOAINode::GetAttrFlags ( MOAIAttrID attrID ) {
 
 	MOAIAttribute attr;
 	this->ApplyAttrOp ( attrID, attr, MOAIAttribute::CHECK );
@@ -588,11 +586,11 @@ void MOAINode::PullAttributes () {
 }
 
 //----------------------------------------------------------------//
-bool MOAINode::PullLinkedAttr ( u32 attrID, MOAIAttribute& attr ) {
+bool MOAINode::PullLinkedAttr ( MOAIAttrID attrID, MOAIAttribute& attr ) {
 
 	MOAIDepLink* link = this->mPullLinks;	
 	for ( ; link ; link = link->mNextInDest ) {
-		if ((( link->mDestAttrID & ~MOAIAttribute::ATTR_FLAGS_MASK ) == attrID ) && ( link->mSourceAttrID & MOAIAttribute::ATTR_READ )) {
+		if ((( link->mDestAttrID.mPackedID & ~MOAIAttribute::ATTR_FLAGS_MASK ) == attrID.mPackedID ) && ( link->mSourceAttrID.mPackedID & MOAIAttribute::ATTR_READ )) {
 			link->mSourceNode->ApplyAttrOp ( link->mSourceAttrID, attr, MOAIAttribute::GET );
 			return true;
 		}
@@ -710,22 +708,22 @@ void MOAINode::ScheduleUpdate () {
 }
 
 //----------------------------------------------------------------//
-void MOAINode::SetAttrLink ( int attrID, MOAINode* srcNode, int srcAttrID ) {
+void MOAINode::SetAttrLink ( MOAIAttrID attrID, MOAINode* srcNode, MOAIAttrID srcAttrID ) {
 	
-	if ( attrID == ( int )MOAIAttribute::NULL_ATTR ) return;
+	if ( attrID.mPackedID == ( int )MOAIAttribute::NULL_ATTR ) return;
 	
 	if (( srcNode ) && ( !srcNode->CheckAttrExists ( srcAttrID ))) {
 		srcNode = 0;
 	}
 	
-	if (( !srcNode ) || ( srcAttrID == ( int )MOAIAttribute::NULL_ATTR )) {
-		attrID |= this->GetAttrFlags ( attrID );
+	if (( !srcNode ) || ( srcAttrID.mPackedID == ( int )MOAIAttribute::NULL_ATTR )) {
+		attrID.mPackedID |= this->GetAttrFlags ( attrID );
 		this->ClearAttrLink ( attrID );
 		return;
 	}
 	
-	attrID |= this->GetAttrFlags ( attrID );
-	srcAttrID |= srcNode->GetAttrFlags ( srcAttrID );
+	attrID.mPackedID |= this->GetAttrFlags ( attrID );
+	srcAttrID.mPackedID |= srcNode->GetAttrFlags ( srcAttrID );
 	
 	MOAIDepLink* link = this->FindAttrLink ( attrID );
 	
@@ -789,7 +787,7 @@ void MOAINode::SetNodeLink ( MOAINode& srcNode ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAINode::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAINode::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 	UNUSED ( attrID );
 	UNUSED ( attr );
 	UNUSED ( op );

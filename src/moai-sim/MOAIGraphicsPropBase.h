@@ -106,7 +106,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	virtual ZLMatrix4x4		MOAIGraphicsPropBase_GetWorldDrawingMtx		(); // factors in billboard flags
-	bool					MOAINode_ApplyAttrOp						( u32 attrID, MOAIAttribute& attr, u32 op );
+	bool					MOAINode_ApplyAttrOp						( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
 	void					MOAINode_Update								();
 
 public:

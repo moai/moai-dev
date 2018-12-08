@@ -187,7 +187,7 @@ int MOAICamera::_moveFieldOfView ( lua_State* L ) {
 		MOAIEaseDriver* action = new MOAIEaseDriver ();
 		
 		action->ParseForMove ( state, 2, self, 1, mode,
-			MOAICameraAttr::Pack ( ATTR_FOV ), 0.0f
+			MOAICameraAttr::Pack ( ATTR_FOV ).ToRaw (), 0.0f
 		);
 		
 		action->SetSpan ( delay );
@@ -224,7 +224,7 @@ int MOAICamera::_seekFieldOfView ( lua_State* L ) {
 		MOAIEaseDriver* action = new MOAIEaseDriver ();
 		
 		action->ParseForSeek ( state, 2, self, 1, mode,
-			MOAICameraAttr::Pack ( ATTR_FOV ), self->mFieldOfView, 0.0f
+			MOAICameraAttr::Pack ( ATTR_FOV ).ToRaw (), self->mFieldOfView, 0.0f
 		);
 		
 		action->SetSpan ( delay );
@@ -500,7 +500,7 @@ void MOAICamera::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "DEBUG_DRAW_FRAME",					MOAIDebugLinesMgr::Pack < MOAICamera >( DEBUG_DRAW_FRAME ));
 	state.SetField ( -1, "DEBUG_DRAW_RETICLE",					MOAIDebugLinesMgr::Pack < MOAICamera >( DEBUG_DRAW_RETICLE ));
 	
-	state.SetField ( -1, "ATTR_FOV",			MOAICameraAttr::Pack ( ATTR_FOV ));
+	state.SetField ( -1, "ATTR_FOV",			MOAICameraAttr::Pack ( ATTR_FOV ).ToRaw ());
 	
 	state.SetField ( -1, "CAMERA_TYPE_3D",		( u32 )CAMERA_TYPE_3D );
 	state.SetField ( -1, "CAMERA_TYPE_ORTHO",	( u32 )CAMERA_TYPE_ORTHO );
@@ -551,11 +551,11 @@ void MOAICamera::SetProjMtx ( const ZLMatrix4x4& mtx ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAICamera::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAICamera::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( MOAICameraAttr::Check ( attrID )) {
 
-		switch ( UNPACK_ATTR ( attrID )) {
+		switch (  attrID.Unpack ()) {
 			case ATTR_FOV:
 				this->mFieldOfView = attr.Apply ( this->mFieldOfView, op, MOAIAttribute::ATTR_READ_WRITE );
 				return true;

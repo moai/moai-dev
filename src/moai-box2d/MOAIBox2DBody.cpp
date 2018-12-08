@@ -1126,14 +1126,14 @@ void MOAIBox2DBody::SetBody ( b2Body* body ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIBox2DBody::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIBox2DBody::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
 	// TODO: these values may need to be cached for performance reasons
 	if ( MOAITransform::MOAITransformAttr::Check ( attrID )) {
 	
 		const b2Transform & xform = mBody->GetTransform();
 		
-		switch ( UNPACK_ATTR ( attrID )) {
+		switch (  attrID.Unpack ()) {
 		
 			case MOAITransform::ATTR_X_LOC: {
 				float x = attr.Apply ( xform.p.x, op, MOAIAttribute::ATTR_READ_WRITE ) * this->GetUnitsToMeters ();

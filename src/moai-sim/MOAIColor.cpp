@@ -59,10 +59,10 @@ int MOAIColor::_moveColor ( lua_State* L ) {
 		MOAIEaseDriver* action = new MOAIEaseDriver ();
 		
 		action->ParseForMove ( state, 2, self, 4, mode,
-			MOAIColorAttr::Pack ( ATTR_R_COL ), 0.0f,
-			MOAIColorAttr::Pack ( ATTR_G_COL ), 0.0f,
-			MOAIColorAttr::Pack ( ATTR_B_COL ), 0.0f,
-			MOAIColorAttr::Pack ( ATTR_A_COL ), 0.0f
+			MOAIColorAttr::Pack ( ATTR_R_COL ).ToRaw (), 0.0f,
+			MOAIColorAttr::Pack ( ATTR_G_COL ).ToRaw (), 0.0f,
+			MOAIColorAttr::Pack ( ATTR_B_COL ).ToRaw (), 0.0f,
+			MOAIColorAttr::Pack ( ATTR_A_COL ).ToRaw (), 0.0f
 		);
 		
 		action->SetSpan ( delay );
@@ -127,10 +127,10 @@ int MOAIColor::_seekColor ( lua_State* L ) {
 		MOAIEaseDriver* action = new MOAIEaseDriver ();
 		
 		action->ParseForSeek ( state, 2, self, 4, mode,
-			MOAIColorAttr::Pack ( ATTR_R_COL ), self->mR, 0.0f,
-			MOAIColorAttr::Pack ( ATTR_G_COL ), self->mG, 0.0f,
-			MOAIColorAttr::Pack ( ATTR_B_COL ), self->mB, 0.0f,
-			MOAIColorAttr::Pack ( ATTR_A_COL ), self->mA, 0.0f
+			MOAIColorAttr::Pack ( ATTR_R_COL ).ToRaw (), self->mR, 0.0f,
+			MOAIColorAttr::Pack ( ATTR_G_COL ).ToRaw (), self->mG, 0.0f,
+			MOAIColorAttr::Pack ( ATTR_B_COL ).ToRaw (), self->mB, 0.0f,
+			MOAIColorAttr::Pack ( ATTR_A_COL ).ToRaw (), self->mA, 0.0f
 		);
 		
 		action->SetSpan ( delay );
@@ -264,14 +264,14 @@ void MOAIColor::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAINode::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "ATTR_R_COL", MOAIColorAttr::Pack ( ATTR_R_COL ));
-	state.SetField ( -1, "ATTR_G_COL", MOAIColorAttr::Pack ( ATTR_G_COL ));
-	state.SetField ( -1, "ATTR_B_COL", MOAIColorAttr::Pack ( ATTR_B_COL ));
-	state.SetField ( -1, "ATTR_A_COL", MOAIColorAttr::Pack ( ATTR_A_COL ));
+	state.SetField ( -1, "ATTR_R_COL",		MOAIColorAttr::Pack ( ATTR_R_COL ).ToRaw ());
+	state.SetField ( -1, "ATTR_G_COL",		MOAIColorAttr::Pack ( ATTR_G_COL ).ToRaw ());
+	state.SetField ( -1, "ATTR_B_COL",		MOAIColorAttr::Pack ( ATTR_B_COL ).ToRaw ());
+	state.SetField ( -1, "ATTR_A_COL",		MOAIColorAttr::Pack ( ATTR_A_COL ).ToRaw ());
 	
-	state.SetField ( -1, "ADD_COLOR", MOAIColorAttr::Pack ( ADD_COLOR ));
-	state.SetField ( -1, "INHERIT_COLOR", MOAIColorAttr::Pack ( INHERIT_COLOR ));
-	state.SetField ( -1, "COLOR_TRAIT", MOAIColorAttr::Pack ( COLOR_TRAIT ));
+	state.SetField ( -1, "ADD_COLOR",		MOAIColorAttr::Pack ( ADD_COLOR ).ToRaw ());
+	state.SetField ( -1, "INHERIT_COLOR",	MOAIColorAttr::Pack ( INHERIT_COLOR ).ToRaw ());
+	state.SetField ( -1, "COLOR_TRAIT",		MOAIColorAttr::Pack ( COLOR_TRAIT ).ToRaw ());
 	
 	luaL_Reg regTable [] = {
 		{ "packRGBA",				_packRGBA },
@@ -304,11 +304,11 @@ void MOAIColor::RegisterLuaFuncs ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIColor::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIColor::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( MOAIColorAttr::Check ( attrID )) {
 
-		switch ( UNPACK_ATTR ( attrID )) {
+		switch (  attrID.Unpack ()) {
 		
 			case ATTR_R_COL:
 				this->mR = ZLFloat::Clamp ( attr.Apply ( this->mR, op, MOAIAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );

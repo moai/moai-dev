@@ -22,11 +22,11 @@ protected:
 public:
 	
 	//----------------------------------------------------------------//
-	bool							ApplyAttrOp							( void* buffer, u32 attrID, MOAIAttribute& attr, u32 op ) const;
+	bool							ApplyAttrOp							( void* buffer, MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) const;
 	u32								GetAttributeID						( u32 uniformID, u32 index ) const;
 	MOAIShaderUniformHandle			GetUniformHandle					( void* buffer, ZLIndex uniformID ) const;
 	MOAIShaderUniformHandle			GetUniformHandle					( void* buffer, ZLIndex uniformID, ZLIndex index ) const;
-	MOAIShaderUniformHandle			GetUniformHandleForAttributeID		( void* buffer, u32 attrID ) const;
+	MOAIShaderUniformHandle			GetUniformHandleForAttributeID		( void* buffer, MOAIAttrID attrID ) const;
 									MOAIShaderUniformSchema				();
 	virtual							~MOAIShaderUniformSchema			();
 	void							SetUniform							( lua_State* L, int idx, void* buffer, ZLIndex uniformID, ZLIndex index ) const;

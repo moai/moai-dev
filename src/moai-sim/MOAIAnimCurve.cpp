@@ -193,8 +193,8 @@ void MOAIAnimCurve::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAINode::RegisterLuaClass ( state );
 
-	state.SetField ( -1, "ATTR_TIME", MOAIAnimCurveAttr::Pack ( ATTR_TIME ));
-	state.SetField ( -1, "ATTR_VALUE", MOAIAnimCurveAttr::Pack ( ATTR_VALUE ));
+	state.SetField ( -1, "ATTR_TIME", MOAIAnimCurveAttr::Pack ( ATTR_TIME ).ToRaw ());
+	state.SetField ( -1, "ATTR_VALUE", MOAIAnimCurveAttr::Pack ( ATTR_VALUE ).ToRaw ());
 
 	state.SetField ( -1, "CLAMP", ( u32 )CLAMP );
 	state.SetField ( -1, "WRAP", ( u32 )WRAP );
@@ -336,11 +336,11 @@ ZLReal MOAIAnimCurve::MOAIAnimCurve_GetFloatForTime ( ZLReal t ) const {
 }
 
 //----------------------------------------------------------------//
-bool MOAIAnimCurve::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIAnimCurve::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( MOAIAnimCurveAttr::Check ( attrID )) {
 
-		switch ( UNPACK_ATTR ( attrID )) {
+		switch (  attrID.Unpack ()) {
 			case ATTR_TIME:
 				this->mTime = attr.Apply ( this->mTime, op, MOAIAttribute::ATTR_READ_WRITE );
 				return true;

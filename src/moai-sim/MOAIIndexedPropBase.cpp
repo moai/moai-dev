@@ -65,7 +65,7 @@ void MOAIIndexedPropBase::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAIDeckPropBase::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "ATTR_INDEX",					MOAIIndexedPropBaseAttr::Pack ( ATTR_INDEX ));
+	state.SetField ( -1, "ATTR_INDEX", MOAIIndexedPropBaseAttr::Pack ( ATTR_INDEX ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
@@ -99,11 +99,11 @@ void MOAIIndexedPropBase::SerializeOut ( MOAILuaState& state, MOAISerializer& se
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIIndexedPropBase::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIIndexedPropBase::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( MOAIIndexedPropBaseAttr::Check ( attrID )) {
 		
-		switch ( UNPACK_ATTR ( attrID )) {
+		switch (  attrID.Unpack ()) {
 			case ATTR_INDEX:
 				this->mIndex = attr.Apply ( this->mIndex, op, MOAIAttribute::ATTR_READ_WRITE );
 				return true;

@@ -168,7 +168,7 @@ void MOAIShader::UpdateUniforms () {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIShader::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIShader::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( this->mProgram ) {
 		return this->mProgram->ApplyAttrOp ( this->mPendingUniformBuffer.GetBuffer (), attrID, attr, op );

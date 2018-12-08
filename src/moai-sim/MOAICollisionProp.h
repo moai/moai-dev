@@ -98,7 +98,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	void					MOAIDrawable_DrawDebug							( int subPrimID );
-	bool					MOAINode_ApplyAttrOp							( u32 attrID, MOAIAttribute& attr, u32 op );
+	bool					MOAINode_ApplyAttrOp							( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
 	void					MOAINode_Update									();
 	void					MOAIPartitionHull_AddToSortBuffer				( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
 	u32						MOAIPartitionHull_AffirmInterfaceMask			( MOAIPartition& partition );

@@ -399,7 +399,7 @@ void MOAIUntzSound::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAINode::RegisterLuaClass ( state );
 
-	state.SetField ( -1, "ATTR_VOLUME", MOAIUntzSoundAttr::Pack ( ATTR_VOLUME ));
+	state.SetField ( -1, "ATTR_VOLUME", MOAIUntzSoundAttr::Pack ( ATTR_VOLUME ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
@@ -435,12 +435,10 @@ void MOAIUntzSound::RegisterLuaFuncs ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIUntzSound::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIUntzSound::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( MOAIUntzSoundAttr::Check ( attrID )) {
-		attrID = UNPACK_ATTR ( attrID );
-
-		if ( attrID == ATTR_VOLUME ) {
+		if ( attrID.Unpack () == ATTR_VOLUME ) {
 			this->mSound->setVolume ( attr.Apply ( this->mSound->getVolume (), op, MOAIAttribute::ATTR_READ_WRITE ));
 			return true;
 		}

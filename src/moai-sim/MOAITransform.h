@@ -86,7 +86,7 @@ protected:
 	static float	ClampEuler									( float r );
 
 	//----------------------------------------------------------------//
-	bool			MOAINode_ApplyAttrOp						( u32 attrID, MOAIAttribute& attr, u32 op );
+	bool			MOAINode_ApplyAttrOp						( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
 	void			MOAITransformBase_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );
 
 public:

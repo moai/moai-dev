@@ -31,7 +31,7 @@ private:
 	static int			_setUniform					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool								MOAINode_ApplyAttrOp						( u32 attrID, MOAIAttribute& attr, u32 op );
+	bool								MOAINode_ApplyAttrOp						( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
 	MOAIShaderUniformHandle				MOAIShaderUniformSchema_GetUniformHandle	( void* buffer, ZLIndex uniformID ) const;
 
 public:
