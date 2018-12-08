@@ -16,9 +16,9 @@
 	
 //----------------------------------------------------------------//
 MOAIShaderProgramGlobal::MOAIShaderProgramGlobal () :
-	mGlobalID ( ZLIndex::INVALID ),
-	mUniformID ( ZLIndex::INVALID ),
-	mIndex ( ZLIndex::ZERO ) {
+	mGlobalID ( ZLIndexOp::INVALID ),
+	mUniformID ( ZLIndexOp::INVALID ),
+	mIndex ( ZLIndexOp::ZERO ) {
 }
 
 //================================================================//
@@ -28,7 +28,7 @@ MOAIShaderProgramGlobal::MOAIShaderProgramGlobal () :
 //----------------------------------------------------------------//
 MOAIShaderProgramTexture::MOAIShaderProgramTexture () :
 	mName ( MOAI_UNKNOWN_MATERIAL_GLOBAL ),
-	mUnit ( ZLIndex::ZERO ) {
+	mUnit ( ZLIndexOp::ZERO ) {
 }
 
 //================================================================//
@@ -51,7 +51,7 @@ MOAIShaderProgramTexture::MOAIShaderProgramTexture () :
 int MOAIShaderProgram::_declareUniform ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShaderProgram, "UNSN" )
 
-	ZLIndex idx			= state.GetValueAsIndex ( 2 );
+	ZLIndex idx			= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	STLString name		= state.GetValue < cc8* >( 3, "" );
 	u32 type			= state.GetValue < u32 >( 4, MOAIShaderUniform::UNIFORM_TYPE_FLOAT );
 	u32 width			= state.GetValue < u32 >( 5, 1 );
@@ -129,8 +129,8 @@ int MOAIShaderProgram::_setGlobal ( lua_State* L ) {
 int MOAIShaderProgram::_setTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShaderProgram, "U" )
 	
-	ZLIndex idx		= state.GetValueAsIndex ( 2 );
-	ZLIndex unit	= state.GetValueAsIndex ( 4 );
+	ZLIndex idx		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex unit	= state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
 	
 	if ( state.IsType ( 3, LUA_TUSERDATA )) {
 	
@@ -160,7 +160,7 @@ int MOAIShaderProgram::_setTexture ( lua_State* L ) {
 int MOAIShaderProgram::_setVertexAttribute ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShaderProgram, "UNS" )
 
-	ZLIndex idx				= state.GetValueAsIndex ( 2 );
+	ZLIndex idx				= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	STLString attribute		= state.GetValue < cc8* >( 3, "" );
 
 	self->SetVertexAttribute ( idx, attribute );
@@ -180,7 +180,7 @@ void MOAIShaderProgram::AffirmUniforms () {
 	this->mUniformBufferSize = 0;
 	size_t nUniforms = this->mUniforms.Size ();
 	
-	for ( ZLIndex i = ZLIndex::ZERO; i < nUniforms; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < nUniforms; ++i ) {
 		
 		MOAIShaderUniform& uniform = this->mUniforms [ i ];
 		uniform.mCPUOffset = this->mUniformBufferSize;
@@ -207,7 +207,7 @@ void MOAIShaderProgram::BindUniforms () {
 	
 	size_t nUniforms = this->mUniforms.Size ();
 	
-	for ( ZLIndex i = ZLIndex::ZERO; i < nUniforms; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < nUniforms; ++i ) {
 	
 		MOAIShaderUniformHandle uniform = this->GetUniformHandle ( this->mUniformBuffer.GetBuffer (), i );
 		
@@ -288,7 +288,7 @@ void MOAIShaderProgram::InitUniformBuffer ( ZLLeanArray < u8 >& buffer ) {
 	size_t nUniforms = this->mUniforms.Size ();
 	buffer.Init ( this->mUniformBufferSize );
 	
-	for ( ZLIndex i = ZLIndex::ZERO; i < nUniforms; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < nUniforms; ++i ) {
 		MOAIShaderUniformHandle uniform = this->GetUniformHandle ( buffer.GetBuffer (), i );
 		uniform.Default ( this->mUniforms [ i ].mCount );
 	}
@@ -367,7 +367,7 @@ bool MOAIShaderProgram::OnGPUCreate () {
 	gfx.LinkProgram ( this->mProgram, true );
 
 	// get the uniform locations
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mUniforms.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mUniforms.Size (); ++i ) {
 		MOAIShaderUniform& uniform = this->mUniforms [ i ];
 		gfx.GetUniformLocation ( this->mProgram, uniform.mName, this, ( void* )(( size_t )i )); // TODO: cast?
 	}
@@ -407,7 +407,7 @@ void MOAIShaderProgram::OnUniformLocation ( u32 addr, void* userdata ) {
 	ZLSize i = ( size_t )userdata;
 	
 	if ( i < this->mUniforms.Size ()) {
-		this->mUniforms [ ZLIndex ( i, ZLIndex::LIMIT )].mGPUBase = addr;
+		this->mUniforms [ ZLIndexCast ( i )].mGPUBase = addr;
 	}
 }
 
@@ -551,7 +551,7 @@ void MOAIShaderProgram::ScheduleTextures () {
 	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
 
 	size_t nTextures = this->mTextures.Size ();
-	for ( ZLIndex i = ZLIndex::ZERO; i < nTextures; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < nTextures; ++i ) {
 	
 		MOAIShaderProgramTexture& shaderTexture = this->mTextures [ i ];
 		
@@ -581,10 +581,10 @@ int MOAIShaderProgram::SetGlobal ( lua_State* L, int idx ) {
 
 	MOAILuaState state ( L );
 
-	ZLIndex globalIdx	= state.GetValueAsIndex ( idx );
-	ZLIndex globalID	= state.GetValueAsIndex ( idx + 1, ZLIndex::INVALID );
-	ZLIndex uniformID	= state.GetValueAsIndex ( idx + 2 );
-	ZLIndex index		= state.GetValueAsIndex ( idx + 3 );
+	ZLIndex globalIdx	= state.GetValue < MOAILuaIndex >( idx, ZLIndexOp::ZERO );
+	ZLIndex globalID	= state.GetValue < MOAILuaIndex >( idx + 1, ZLIndexOp::INVALID );
+	ZLIndex uniformID	= state.GetValue < MOAILuaIndex >( idx + 2, ZLIndexOp::ZERO );
+	ZLIndex index		= state.GetValue < MOAILuaIndex >( idx + 3, ZLIndexOp::ZERO );
 	
 	this->SetGlobal ( globalIdx, globalID, uniformID, index );
 
@@ -635,11 +635,11 @@ void MOAIShaderProgram::UpdateUniforms ( ZLLeanArray < u8 >& buffer ) {
 
 	u32 nGlobals = this->mGlobals.Size ();
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < nGlobals; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < nGlobals; ++i ) {
 	
 		const MOAIShaderProgramGlobal& global = this->mGlobals [ i ];
 		
-		if ( global.mUniformID == ZLIndex::INVALID ) continue;
+		if ( global.mUniformID == ZLIndexOp::INVALID ) continue;
 		
 		MOAIShaderUniformHandle uniform = this->GetUniformHandle ( buffer.GetBuffer (), global.mUniformID, global.mIndex );
 		if ( !uniform.IsValid ()) continue;

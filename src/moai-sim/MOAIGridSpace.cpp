@@ -51,7 +51,7 @@ MOAICellCoord::~MOAICellCoord () {
 int MOAIGridSpace::_cellAddrToCoord	( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGridSpace, "UN" )
 
-	u32 addr = state.GetValue < u32 >( 2, 1 ) - 1;
+	ZLIndex addr = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	
 	MOAICellCoord coord = self->GetCellCoord ( addr );
 	
@@ -75,7 +75,7 @@ int MOAIGridSpace::_getCellAddr ( lua_State* L ) {
 	int xTile		= state.GetValue < int >( 2, 1 ) - 1;
 	int yTile		= state.GetValue < int >( 3, 1 ) - 1;
 	
-	state.Push ( self->GetCellAddr ( xTile, yTile ));
+	state.Push ( MOAILuaIndex ( self->GetCellAddr ( xTile, yTile )));
 	return 1;
 }
 
@@ -414,7 +414,7 @@ int MOAIGridSpace::_locToCellAddr ( lua_State* L ) {
 	MOAICellCoord coord;
 	coord = self->GetCellCoord ( loc );
 
-	state.Push ( self->GetCellAddr ( coord ));
+	state.Push ( MOAILuaIndex ( self->GetCellAddr ( coord )));
 	return 1;
 }
 
@@ -747,7 +747,7 @@ ZLIndex MOAIGridSpace::GetCellAddr ( MOAICellCoord cellCoord ) const {
 //----------------------------------------------------------------//
 ZLIndex MOAIGridSpace::GetCellAddr ( int xCell, int yCell ) const {
 
-	if ( !( this->mWidth && this->mHeight )) return ZLIndex::ZERO;
+	if ( !( this->mWidth && this->mHeight )) return ZLIndexOp::ZERO;
 
 	xCell = xCell % this->mWidth;
 	if ( xCell < 0 ) xCell += this->mWidth;
@@ -755,16 +755,16 @@ ZLIndex MOAIGridSpace::GetCellAddr ( int xCell, int yCell ) const {
 	yCell = yCell % this->mHeight;
 	if ( yCell < 0 ) yCell += this->mHeight;
 
-	return ZLIndex (( ZLSize )(( yCell * this->mWidth ) + xCell ), ZLIndex::LIMIT );
+	return ZLIndexCast (( ZLSize )(( yCell * this->mWidth ) + xCell ) );
 }
 
 //----------------------------------------------------------------//
-MOAICellCoord MOAIGridSpace::GetCellCoord ( int cellAddr ) const {
+MOAICellCoord MOAIGridSpace::GetCellCoord ( ZLIndex cellAddr ) const {
 	
 	MOAICellCoord cellCoord;
 	
 	cellCoord.mX = ( cellAddr % this->mWidth );
-	cellCoord.mY = (( int )( cellAddr / this->mWidth ) % this->mHeight );
+	cellCoord.mY = (( int )(( ZLSize )cellAddr / this->mWidth ) % this->mHeight );
 	
 	return cellCoord;
 }

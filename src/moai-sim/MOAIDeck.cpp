@@ -24,7 +24,7 @@
 int MOAIDeck::_draw ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDeck, "U" )
 
-	ZLIndex index					= state.GetValue < ZLIndex >( 2, ZLIndex::ZERO );
+	ZLIndex index					= state.GetValue < ZLIndex >( 2, ZLIndexOp::ZERO );
 	//MOAIMaterialBatch* materials	= state.GetLuaObject < MOAIMaterialBatch >( 3, false );
 	//ZLVec3D offset					= state.GetValue < ZLVec3D >( 4, ZLVec3D::ORIGIN );
 	//ZLVec3D scale					= state.GetValue < ZLVec3D >( 7, ZLVec3D::AXIS );
@@ -64,7 +64,7 @@ int MOAIDeck::_getBounds ( lua_State* L ) {
 	
 	if ( state.IsType ( 2, LUA_TNUMBER )) {
 	
-		ZLIndex idx = state.GetValue < ZLIndex >( 2, ZLIndex::ZERO );
+		ZLIndex idx = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 		box = self->GetBounds ( idx );
 	}
 	else {
@@ -89,7 +89,7 @@ void MOAIDeck::Draw ( ZLIndex idx ) {
 //----------------------------------------------------------------//
 ZLBounds MOAIDeck::GetBounds () {
 
-	return this->GetBounds ( ZLIndex::ZERO );
+	return this->GetBounds ( ZLIndexOp::ZERO );
 	/*
 	if ( this->mBoundsDirty ) {
 	

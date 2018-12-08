@@ -36,7 +36,7 @@ void ZLMemStream::Compact () {
 		ZLLeanArray < ZLLeanArray < u8 > > temp;
 		temp.Init ( chunks );
 		
-		for ( ZLIndex i = ZLIndex::ZERO; i < chunks; ++i ) {
+		for ( ZLIndex i = ZLIndexOp::ZERO; i < chunks; ++i ) {
 			temp [ i ].Take ( this->mChunks [ i ]);
 		}
 		this->mChunks.Take ( temp );
@@ -150,8 +150,8 @@ ZLSizeResult ZLMemStream::ReadBytes ( void* buffer, size_t size ) {
 	
 		assert ( this->mChunks.GetBuffer ());
 
-		ZLIndex chunk0 = ZLIndex (( ZLSize )( cursor0 / this->mChunkSize ), ZLIndex::LIMIT );
-		ZLIndex chunk1 = ZLIndex (( ZLSize )( cursor1 / this->mChunkSize ), ZLIndex::LIMIT );
+		ZLIndex chunk0 = ZLIndexCast (( ZLSize )( cursor0 / this->mChunkSize ) );
+		ZLIndex chunk1 = ZLIndexCast (( ZLSize )( cursor1 / this->mChunkSize ) );
 
 		ZLSize offset0 = cursor0 - ( chunk0 * this->mChunkSize );
 		ZLSize offset1 = cursor1 - ( chunk1 * this->mChunkSize );
@@ -210,14 +210,14 @@ ZLResultCode ZLMemStream::Reserve ( size_t length ) {
 	ZLLeanArray < ZLLeanArray < u8 > > temp;
 	if ( temp.Init ( neededChunks ) != ZL_OK ) return ZL_ALLOCATION_ERROR;
 	
-	for ( ZLIndex i = ZLIndex ( totalChunks, ZLIndex::LIMIT ); i < neededChunks; ++i ) {
+	for ( ZLIndex i = ZLIndexCast ( totalChunks ); i < neededChunks; ++i ) {
 		if ( temp [ i ].Init ( this->mChunkSize )) return ZL_ALLOCATION_ERROR;
 	}
 	
 	// we made it this far, so we're through the woods: no more allocations
 	// it is now OK to mutate internal state
 	
-	for ( ZLIndex i = ZLIndex::ZERO; i < totalChunks; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalChunks; ++i ) {
 		temp [ i ].Take ( this->mChunks [ i ]);
 	}
 	
@@ -309,8 +309,8 @@ ZLSizeResult ZLMemStream::WriteBytes ( const void* buffer, size_t size ) {
 	}
 	else {
 
-		ZLIndex chunk0 = ZLIndex (( ZLSize )( cursor0 / this->mChunkSize ), ZLIndex::LIMIT );
-		ZLIndex chunk1 = ZLIndex (( ZLSize )( cursor1 / this->mChunkSize ), ZLIndex::LIMIT );
+		ZLIndex chunk0 = ZLIndexCast (( ZLSize )( cursor0 / this->mChunkSize ) );
+		ZLIndex chunk1 = ZLIndexCast (( ZLSize )( cursor1 / this->mChunkSize ) );
 
 		ZLSize offset0 = cursor0 - ( chunk0 * this->mChunkSize );
 		ZLSize offset1 = cursor1 - ( chunk1 * this->mChunkSize );

@@ -54,7 +54,7 @@ int MOAIMaterialBatch::_getDepthTest ( lua_State* L ) {
 */
 int MOAIMaterialBatch::_getIndexBatchSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" );
-	state.Push ( self->mIndexBatchSize );
+	state.Push ( MOAILuaSize ( self->mIndexBatchSize ));
 	return 1;
 }
 
@@ -198,7 +198,7 @@ void MOAIMaterialBatch::Clear () {
 //----------------------------------------------------------------//
 int MOAIMaterialBatch::GetBlendMode ( MOAILuaState& state, int idx ) {
 
-	MOAIMaterial* material = this->RawGetMaterial ( state.GetValueAsIndex ( idx ));
+	MOAIMaterial* material = this->RawGetMaterial ( state.GetValue < MOAILuaIndex >( idx, ZLIndexOp::ZERO ));
 	if ( material ) {
 		return material->mBlendMode.Push ( state );
 	}
@@ -208,7 +208,7 @@ int MOAIMaterialBatch::GetBlendMode ( MOAILuaState& state, int idx ) {
 //----------------------------------------------------------------//
 int MOAIMaterialBatch::GetCullMode ( MOAILuaState& state, int idx ) {
 
-	MOAIMaterial* material = this->RawGetMaterial ( state.GetValueAsIndex ( idx ));
+	MOAIMaterial* material = this->RawGetMaterial ( state.GetValue < MOAILuaIndex >( idx, ZLIndexOp::ZERO ));
 	if ( material ) {
 		state.Push ( material->mCullMode );
 		return 1;
@@ -219,7 +219,7 @@ int MOAIMaterialBatch::GetCullMode ( MOAILuaState& state, int idx ) {
 //----------------------------------------------------------------//
 int MOAIMaterialBatch::GetDepthMask ( MOAILuaState& state, int idx ) {
 
-	MOAIMaterial* material = this->RawGetMaterial ( state.GetValueAsIndex ( idx ));
+	MOAIMaterial* material = this->RawGetMaterial ( state.GetValue < MOAILuaIndex >( idx, ZLIndexOp::ZERO ));
 	if ( material ) {
 		state.Push ( material->mDepthMask );
 		return 1;
@@ -230,7 +230,7 @@ int MOAIMaterialBatch::GetDepthMask ( MOAILuaState& state, int idx ) {
 //----------------------------------------------------------------//
 int MOAIMaterialBatch::GetDepthTest ( MOAILuaState& state, int idx ) {
 
-	MOAIMaterial* material = this->RawGetMaterial ( state.GetValueAsIndex ( idx ));
+	MOAIMaterial* material = this->RawGetMaterial ( state.GetValue < MOAILuaIndex >( idx, ZLIndexOp::ZERO ));
 	if ( material ) {
 		state.Push ( material->mDepthTest );
 		return 1;
@@ -259,9 +259,9 @@ MOAIMaterial* MOAIMaterialBatch::GetMaterial ( ZLIndex idx ) {
 ZLIndex MOAIMaterialBatch::GetMaterialID ( MOAILuaState& state, int& idx ) {
 
 	if ( state.IsType ( idx, LUA_TNUMBER ) && ( state.AbsIndex ( idx ) < state.GetTop ())) {
-		return state.GetValueAsIndex ( idx++ );
+		return state.GetValue < MOAILuaIndex >( idx++, ZLIndexOp::ZERO );
 	}
-	return ZLIndex::ZERO;
+	return ZLIndexOp::ZERO;
 }
 
 //----------------------------------------------------------------//
@@ -275,32 +275,32 @@ ZLIndex MOAIMaterialBatch::GetMaterialID ( MOAILuaState& state, int& idx, bool& 
 		
 		if (( value == 0 ) || ZLGfx::IsFlag ( value )) {
 			set = true;
-			return ZLIndex::ZERO;
+			return ZLIndexOp::ZERO;
 		}
 		idx++;
 		set = state.IsNil ( idx );
-		return ZLIndex ( value - 1, ZLIndex::LIMIT );
+		return ZLIndexCast ( value - 1 );
 	}
 	set = state.IsNil ( idx );
-	return ZLIndex::ZERO;
+	return ZLIndexOp::ZERO;
 }
 
 //----------------------------------------------------------------//
 ZLIndex MOAIMaterialBatch::GetNamedGlobalID ( MOAILuaState& state, int& idx, u32& name ) {
 
-	ZLIndex materialID	= ZLIndex::ZERO;
+	ZLIndex materialID	= ZLIndexOp::ZERO;
 	name				= MOAI_UNKNOWN_MATERIAL_GLOBAL;
 
 	if ( state.IsType ( idx, LUA_TNUMBER )) {
 	
 		if ( state.IsType ( idx + 1, LUA_TNUMBER )) {
 	
-			materialID		= state.GetValueAsIndex ( idx++ );
+			materialID		= state.GetValue < MOAILuaIndex >( idx++, ZLIndexOp::ZERO );
 			name			= state.GetValue < u32 >( idx++, name  + 1 ) - 1;
 		}
 		else {
 			
-			materialID		= state.GetValueAsIndex ( idx++ );
+			materialID		= state.GetValue < MOAILuaIndex >( idx++, ZLIndexOp::ZERO );
 		}
 	}
 	return materialID;
@@ -309,7 +309,7 @@ ZLIndex MOAIMaterialBatch::GetNamedGlobalID ( MOAILuaState& state, int& idx, u32
 //----------------------------------------------------------------//
 int MOAIMaterialBatch::GetShader ( MOAILuaState& state, int idx ) {
 
-	MOAIMaterial* material = this->RawGetMaterial ( state.GetValueAsIndex ( idx ));
+	MOAIMaterial* material = this->RawGetMaterial ( state.GetValue < MOAILuaIndex >( idx, ZLIndexOp::ZERO ));
 	if ( material && material->mShader ) {
 		state.Push (( MOAIShader* )material->mShader );
 		return 1;
@@ -347,7 +347,7 @@ MOAIMaterialBatch::~MOAIMaterialBatch () {
 MOAIMaterial* MOAIMaterialBatch::RawGetMaterial ( ZLIndex idx ) {
 
 	ZLSize size = this->mMaterials.Size ();
-	return size ? &this->mMaterials [ ZLIndex::Wrap ( idx, size )] : 0;
+	return size ? &this->mMaterials [  ZLIndexOp::Wrap ( idx, size )] : 0;
 }
 
 //----------------------------------------------------------------//

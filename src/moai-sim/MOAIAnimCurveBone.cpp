@@ -28,7 +28,7 @@ int MOAIAnimCurveBone::_getValueAtTime ( lua_State* L ) {
 int MOAIAnimCurveBone::_setKey ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnimCurveBone, "UNNNN" );
 
-	ZLIndex index			= state.GetValueAsIndex ( 2 );
+	ZLIndex index			= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	float time				= state.GetValue < float >( 3, 0.0f );
 	ZLVec3D position		= state.GetValue < ZLVec3D >( 4, ZLVec3D::ORIGIN );
 	ZLQuaternion rotation	= state.GetValue < ZLQuaternion >( 7, ZLQuaternion::IDENT );
@@ -73,16 +73,16 @@ void MOAIAnimCurveBone::GetCurveDelta ( ZLVec3D& pos, ZLQuaternion& rot, ZLVec3D
 	ZLSize size = this->mKeys.Size ();
 	if ( size > 1 ) {
 	
-		ZLIndex idx ( size - 1, ZLIndex::LIMIT );
+		ZLIndex idx = ZLIndexCast ( size - 1 );
 	
 		pos = this->mPositionSamples [ idx ];
-		pos.Sub ( this->mPositionSamples [ ZLIndex::ZERO ]);
+		pos.Sub ( this->mPositionSamples [ ZLIndexOp::ZERO ]);
 	
 		rot = this->mRotationSamples [ idx ];
-		rot.Sub ( this->mRotationSamples [ ZLIndex::ZERO ]);
+		rot.Sub ( this->mRotationSamples [ ZLIndexOp::ZERO ]);
 		
 		scl = this->mScaleSamples [ idx ];
-		scl.Sub ( this->mScaleSamples [ ZLIndex::ZERO ]);
+		scl.Sub ( this->mScaleSamples [ ZLIndexOp::ZERO ]);
 	}
 	else {
 		pos = ZLVec3D::ORIGIN;

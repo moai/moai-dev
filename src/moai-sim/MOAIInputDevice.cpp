@@ -40,7 +40,7 @@ int MOAIInputDevice::_getHardwareInfo ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIInputDevice::ClearSensorState () {
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mSensors.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mSensors.Size (); ++i ) {
 		MOAISensor* sensor = this->mSensors [ i ];
 		if ( sensor ) {
 			sensor->ClearState ();
@@ -67,7 +67,7 @@ MOAIInputDevice::MOAIInputDevice () :
 //----------------------------------------------------------------//
 MOAIInputDevice::~MOAIInputDevice () {
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mSensors.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mSensors.Size (); ++i ) {
 		this->LuaRelease ( this->mSensors [ i ]);
 	}
 }
@@ -99,7 +99,7 @@ void MOAIInputDevice::ReserveSensors ( ZLSize total ) {
 //----------------------------------------------------------------//
 void MOAIInputDevice::ResetSensorState () {
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mSensors.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mSensors.Size (); ++i ) {
 		MOAISensor* sensor = this->mSensors [ i ];
 		if ( sensor ) {
 			sensor->ResetState ();

@@ -57,7 +57,7 @@ ZLContext::~ZLContext () {
 	
 	// finalize everything
 	for ( size_t i = 1; i <= total; ++i ) {
-		ZLContextPair& pair = this->mGlobals [ ZLIndex ( total - i, ZLIndex::LIMIT )];
+		ZLContextPair& pair = this->mGlobals [ ZLIndexCast ( total - i )];
 		ZLContextClassBase* global = pair.mGlobalBase;
 
 		if ( global ) {
@@ -73,7 +73,7 @@ ZLContext::~ZLContext () {
 	// mark everything as invalid
 	for ( size_t i = 1; i <= total; ++i ) {
 	
-		ZLContextPair& pair = this->mGlobals [ ZLIndex ( total - i, ZLIndex::LIMIT )];
+		ZLContextPair& pair = this->mGlobals [ ZLIndexCast ( total - i )];
 		
 		#ifdef ZL_ENABLE_CONTEXT_DEBUG_LOG
 			log.LogF ( ZLLog::LOG_DEBUG, ZLLog::CONSOLE, "ZLContext: invalidating global %p\n", pair.mGlobalBase );
@@ -84,7 +84,7 @@ ZLContext::~ZLContext () {
 
 	// and officially delete everything
 	for ( size_t i = 1; i <= total; ++i ) {
-		ZLContextPair& pair = this->mGlobals [ ZLIndex ( total - i, ZLIndex::LIMIT )];
+		ZLContextPair& pair = this->mGlobals [ ZLIndexCast ( total - i )];
 		ZLContextClassBase* global = pair.mGlobalBase;
 
 		if ( global ) {

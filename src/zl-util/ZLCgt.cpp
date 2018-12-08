@@ -8,7 +8,7 @@
 //----------------------------------------------------------------//
 ZLCgtSymbol* ZLCgt::FindNonterminal ( cc8* symbolName ) {
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mSymbolTable.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mSymbolTable.Size (); ++i ) {
 		ZLCgtSymbol& symbol = this->mSymbolTable [ i ];
 		if ( symbol.mKind != ZLCgtSymbol::CGT_NONTERMINAL ) continue;
 		if ( symbol.mName == symbolName ) {
@@ -21,7 +21,7 @@ ZLCgtSymbol* ZLCgt::FindNonterminal ( cc8* symbolName ) {
 //----------------------------------------------------------------//
 ZLCgtSymbol* ZLCgt::FindSymbol ( cc8* symbolName ) {
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mSymbolTable.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mSymbolTable.Size (); ++i ) {
 		ZLCgtSymbol& symbol = this->mSymbolTable [ i ];
 		if ( symbol.mName == symbolName ) {
 			return &symbol;
@@ -33,7 +33,7 @@ ZLCgtSymbol* ZLCgt::FindSymbol ( cc8* symbolName ) {
 //----------------------------------------------------------------//
 ZLCgtSymbol* ZLCgt::FindTerminal ( cc8* symbolName ) {
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mSymbolTable.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mSymbolTable.Size (); ++i ) {
 		ZLCgtSymbol& symbol = this->mSymbolTable [ i ];
 		if ( symbol.mKind != ZLCgtSymbol::CGT_TERMINAL ) continue;
 		if ( symbol.mName == symbolName ) {
@@ -100,7 +100,7 @@ void ZLCgt::Load ( cc8* filename ) {
 			// Symbol Table Entry
 			case 'S': {
 				
-				ZLIndex index = ZLIndex ( this->ReadIntEntry ( stream ), ZLIndex::LIMIT );
+				ZLIndex index = ZLIndexCast ( this->ReadIntEntry ( stream ) );
 				assert ( index < this->mSymbolTable.Size ());
 				ZLCgtSymbol& symbol = this->mSymbolTable [ index ];
 				
@@ -114,7 +114,7 @@ void ZLCgt::Load ( cc8* filename ) {
 			// Character Set Table Entry
 			case 'C': {
 			
-				ZLIndex index = ZLIndex ( this->ReadIntEntry ( stream ), ZLIndex::LIMIT );
+				ZLIndex index = ZLIndexCast ( this->ReadIntEntry ( stream ) );
 				assert ( index < this->mCharSetTable.Size ());
 				
 				this->mCharSetTable [ index ].mCharacters = this->ReadStringEntry ( stream );
@@ -125,7 +125,7 @@ void ZLCgt::Load ( cc8* filename ) {
 			// Rule Table Entry
 			case 'R': {
 			
-				ZLIndex index = ZLIndex ( this->ReadIntEntry ( stream ), ZLIndex::LIMIT );
+				ZLIndex index = ZLIndexCast ( this->ReadIntEntry ( stream ) );
 				assert ( index < this->mRuleTable.Size ());
 				ZLCgtRule& rule = this->mRuleTable [ index ];
 				
@@ -135,7 +135,7 @@ void ZLCgt::Load ( cc8* filename ) {
 				// 4 is the # of entries read so far...
 				u32 ruleSize = totalEntries - 4;
 				rule.mRuleSymbols.Init ( ruleSize );
-				for ( ZLIndex i = ZLIndex::ZERO; i < ruleSize; ++i ) {
+				for ( ZLIndex i = ZLIndexOp::ZERO; i < ruleSize; ++i ) {
 					rule.mRuleSymbols [ i ] = this->ReadIntEntry ( stream );
 				}
 				break;
@@ -144,7 +144,7 @@ void ZLCgt::Load ( cc8* filename ) {
 			// DFA State Entry
 			case 'D': {
 			
-				ZLIndex index = ZLIndex ( this->ReadIntEntry ( stream ), ZLIndex::LIMIT );
+				ZLIndex index = ZLIndexCast ( this->ReadIntEntry ( stream ) );
 				assert ( index < this->mDFAStateTable.Size ());
 				ZLDfaState& dfaState = this->mDFAStateTable [ index ];
 				
@@ -160,7 +160,7 @@ void ZLCgt::Load ( cc8* filename ) {
 				
 				dfaState.mEdges.Init ( totalEdges );
 				
-				for ( ZLIndex i = ZLIndex::ZERO; i < totalEdges; ++i ) {
+				for ( ZLIndex i = ZLIndexOp::ZERO; i < totalEdges; ++i ) {
 					dfaState.mEdges [ i ].mCharSetID = this->ReadIntEntry ( stream );
 					dfaState.mEdges [ i ].mTargetStateID = this->ReadIntEntry ( stream );
 					this->ReadEmptyEntry ( stream );
@@ -171,7 +171,7 @@ void ZLCgt::Load ( cc8* filename ) {
 			// LALR State Entry
 			case 'L': {
 			
-				ZLIndex index = ZLIndex ( this->ReadIntEntry ( stream ), ZLIndex::LIMIT );
+				ZLIndex index = ZLIndexCast ( this->ReadIntEntry ( stream ) );
 				assert ( index < this->mLALRStateTable.Size ());
 				ZLLalrState& lalrState = this->mLALRStateTable [ index ];
 				
@@ -185,7 +185,7 @@ void ZLCgt::Load ( cc8* filename ) {
 				
 				lalrState.mActions.Init ( totalActions );
 				
-				for ( ZLIndex i = ZLIndex::ZERO; i < totalActions; ++i ) {
+				for ( ZLIndex i = ZLIndexOp::ZERO; i < totalActions; ++i ) {
 					ZLLalrAction& action = lalrState.mActions [ i ];
 					action.mInputSymbolID = this->ReadIntEntry ( stream );
 					action.mActionType = this->ReadIntEntry ( stream );

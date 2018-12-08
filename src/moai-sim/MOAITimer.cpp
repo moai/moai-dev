@@ -345,7 +345,7 @@ void MOAITimer::GenerateKeyframeCallbacks ( float t0, float t1, bool end ) {
 		
 	ZLIndex keyID = this->mCurve->FindKeyID ( t0 );
 	if ( size <= keyID ) {
-		keyID = ZLIndex::ZERO;
+		keyID = ZLIndexOp::ZERO;
 	}
 	
 	if ( t0 < t1 ) {

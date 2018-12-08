@@ -173,7 +173,7 @@ public:
 
 		switch ( this->mAttrTypeID ) {
 			case ATTR_TYPE_FLOAT_32:	return *( float* )this->mBuffer == 0.0f ? false : true;
-			case ATTR_TYPE_INDEX_32:	return ( *( ZLIndex* )this->mBuffer ).mKey == 0 ? false : true;
+			case ATTR_TYPE_INDEX_32:	return ( *( ZLIndex* )this->mBuffer ) == 0 ? false : true;
 			case ATTR_TYPE_INT_32:		return *( s32* )this->mBuffer == 0 ? false : true;
 			default:					return value;
 		}
@@ -198,7 +198,7 @@ public:
 
 		switch ( this->mAttrTypeID ) {
 			case ATTR_TYPE_FLOAT_32:	return *( float* )this->mBuffer;
-			case ATTR_TYPE_INDEX_32:	return ( float )( *( ZLIndex* )this->mBuffer ).mKey;
+			case ATTR_TYPE_INDEX_32:	return ( float )(( ZLSize )( *( ZLIndex* )this->mBuffer ));
 			case ATTR_TYPE_INT_32:		return ( float )( *( s32* )this->mBuffer );
 			default:					return value;
 		}
@@ -210,7 +210,7 @@ public:
 		switch ( this->mAttrTypeID ) {
 			case ATTR_TYPE_COLOR_VEC_4:	return (( ZLColorVec* )this->mBuffer )->PackRGBA ();
 			case ATTR_TYPE_FLOAT_32:	return ( s32 )( *( float* )this->mBuffer );
-			case ATTR_TYPE_INDEX_32:	return ( s32 )( *( ZLIndex* )this->mBuffer ).mKey;
+			case ATTR_TYPE_INDEX_32:	return ( s32 )(( ZLSize )( *( ZLIndex* )this->mBuffer ));
 			case ATTR_TYPE_INT_32:		return *( s32* )this->mBuffer;
 			default:					return value;
 		}
@@ -238,9 +238,9 @@ public:
 	inline ZLIndex GetValue ( const ZLIndex& value ) const {
 
 		switch ( this->mAttrTypeID ) {
-			case ATTR_TYPE_FLOAT_32:	return ZLIndex (( ZLSize )( *( float* )this->mBuffer ), 0 );
+			case ATTR_TYPE_FLOAT_32:	return ZLIndexCast (( ZLSize )( *( float* )this->mBuffer ));
 			case ATTR_TYPE_INDEX_32:	return *( ZLIndex* )this->mBuffer;
-			case ATTR_TYPE_INT_32:		return ZLIndex (( ZLSize )( *( s32* )this->mBuffer ), 0 );
+			case ATTR_TYPE_INT_32:		return ZLIndexCast (( ZLSize )( *( s32* )this->mBuffer ));
 			default:					return value;
 		}
 	}

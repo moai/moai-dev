@@ -490,19 +490,19 @@ u32 MOAIAssimpMesh::ReadVertices ( const MOAIVertexFormat& format, ZLStream& str
 			format.SeekVertex ( stream, base, i );
 
 			aiVector3D vertex = mesh->mVertices [ i ];
-			format.WriteCoord ( stream, ZLIndex::ZERO, (float) vertex.x, (float) vertex.y, (float) vertex.z, 1.0f );
+			format.WriteCoord ( stream, ZLIndexOp::ZERO, (float) vertex.x, (float) vertex.y, (float) vertex.z, 1.0f );
 
 			if ( mesh->HasVertexColors ( 0 )) {
 				aiColor4D color = mesh->mColors [ 0 ][ i ];
-				format.WriteColor ( stream, ZLIndex::ZERO, (float) color.r, (float) color.g, (float) color.b, (float) color.a );
+				format.WriteColor ( stream, ZLIndexOp::ZERO, (float) color.r, (float) color.g, (float) color.b, (float) color.a );
 			}
 			else {
-				format.WriteColor ( stream, ZLIndex::ZERO, 0xffffffff );
+				format.WriteColor ( stream, ZLIndexOp::ZERO, 0xffffffff );
 			}
 
 			if ( mesh->HasTextureCoords ( 0 )) {
 				aiVector3D uvw = mesh->mTextureCoords [ 0 ][ i ];
-				format.WriteUV ( stream, ZLIndex::ZERO, (float) uvw.x, (float) uvw.y, (float) uvw.z );
+				format.WriteUV ( stream, ZLIndexOp::ZERO, (float) uvw.x, (float) uvw.y, (float) uvw.z );
 			}
 			
 			if ( boneBuffer ) {
@@ -523,7 +523,7 @@ u32 MOAIAssimpMesh::ReadVertices ( const MOAIVertexFormat& format, ZLStream& str
 //				printf ( "\n" );
 				
 				format.WriteBones ( stream, indices, weights, nBonesPerVertex ); // TODO: report errors
-				format.WriteBoneCount ( stream, ZLIndex::ZERO, boneCounts [ i ]);
+				format.WriteBoneCount ( stream, ZLIndexOp::ZERO, boneCounts [ i ]);
 			}
 		}
 	}

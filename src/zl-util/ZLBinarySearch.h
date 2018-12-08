@@ -16,8 +16,8 @@ ZLSize ZLBinarySearch ( const TYPE* buffer, const TYPE& key, ZLSize total ) {
 	ZLSize j = total - 1;
 	ZLSize s = j;
 	
-	if ( key < buffer [ i ]) return ZLIndex::INVALID_KEY;
-	if ( buffer [ j ] < key ) return ZLIndex::INVALID_KEY;
+	if ( key < buffer [ i ]) return ZLIndexOp::INVALID_KEY;
+	if ( buffer [ j ] < key ) return ZLIndexOp::INVALID_KEY;
 	
 	while ( s ) {
 		
@@ -37,7 +37,7 @@ ZLSize ZLBinarySearch ( const TYPE* buffer, const TYPE& key, ZLSize total ) {
 		s = j - i;
 	}
 	
-	return ( !(( key < buffer [ i ]) || ( buffer [ i ] < key ))) ? i : ZLIndex::INVALID_KEY;
+	return ( !(( key < buffer [ i ]) || ( buffer [ i ] < key ))) ? i : ZLIndexOp::INVALID_KEY;
 }
 
 //----------------------------------------------------------------//
@@ -48,8 +48,8 @@ ZLSize ZLBinarySearchNearest ( const TYPE* buffer, const TYPE& key, ZLSize total
 	ZLSize j = total - 1;
 	ZLSize s = j;
 	
-	if ( key < buffer [ i ]) return ZLIndex::INVALID_KEY;
-	if ( buffer [ j ] < key ) return ZLIndex::INVALID_KEY;
+	if ( key < buffer [ i ]) return ZLIndexOp::INVALID_KEY;
+	if ( buffer [ j ] < key ) return ZLIndexOp::INVALID_KEY;
 	
 	while ( s > 1 ) {
 		

@@ -57,7 +57,7 @@ private:
 	
 		ZLSize totalMaterials = this->mMaterials.Size ();
 		ZLSize rawIndex = ( totalMaterials && ( this->mIndexBatchSize > 0 )) ? (( idx / this->mIndexBatchSize ) % totalMaterials ) : 0;
-		return ZLIndex ( rawIndex, ZLIndex::LIMIT );
+		return ZLIndexCast ( rawIndex );
 	}
 
 public:

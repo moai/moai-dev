@@ -372,11 +372,11 @@ public:
 		GHVertex* head = 0;
 		GHVertex* tail = 0;
 		
-		for ( ZLIndex i = ZLIndex::ZERO; i < polySize; ++i ) {
+		for ( ZLIndex i = ZLIndexOp::ZERO; i < polySize; ++i ) {
 		
-			ZLVec2D v0 = poly.GetVertex ( ZLIndex::SubtractAndWrap ( i, 1, polySize ));
+			ZLVec2D v0 = poly.GetVertex (  ZLIndexOp::SubtractAndWrap ( i, 1, polySize ));
 			ZLVec2D v1 = poly.GetVertex ( i );
-			ZLVec2D v2 = poly.GetVertex ( ZLIndex::AddAndWrap ( i, 1, polySize ));
+			ZLVec2D v2 = poly.GetVertex (  ZLIndexOp::AddAndWrap ( i, 1, polySize ));
 			
 			DEBUG_LOG ( "%d: (%g, %g) (%g, %g) (%g, %g)\n", i.ToInt (), v0.mX, v0.mY, v1.mX, v1.mY, v2.mX, v2.mY );
 			
@@ -386,9 +386,9 @@ public:
 			}
 			
 			// skip ahead to find the next unique vertex
-			ZLIndex j = ZLIndex::ONE;
+			ZLIndex j = ZLIndexOp::ONE;
 			for ( ; (( v1.mX == v2.mX ) && ( v1.mY == v2.mY )) && ( j < polySize ); ++j ) {
-				v2 = poly.GetVertex ( ZLIndex::Wrap ( i + j + ( ZLSize )1, polySize ));
+				v2 = poly.GetVertex (  ZLIndexOp::Wrap ( i + j + ( ZLSize )1, polySize ));
 			}
 			
 			if ( j == polySize ) {
@@ -707,7 +707,7 @@ size_t ZLPolygon2D::Clip ( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, Z
 	
 	if (( pointsFront + pointsOn ) == polySize ) {
 				
-		for ( ZLIndex j = ZLIndex::ZERO; j < polySize; ++j ) {
+		for ( ZLIndex j = ZLIndexOp::ZERO; j < polySize; ++j ) {
 			const ZLVec2D& vert = this->mVertices [ j ];
 			clippedPolyVerts.Write ( vert );
 		}

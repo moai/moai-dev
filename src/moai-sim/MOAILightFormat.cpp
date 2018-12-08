@@ -33,7 +33,7 @@ int MOAILightFormat::_reserveUniform ( lua_State* L ) {
 int MOAILightFormat::_setUniform ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILightFormat, "U" )
 	
-	ZLIndex idx = state.GetValueAsIndex ( 2 );
+	ZLIndex idx = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	
 	if ( idx < self->mUniforms.Size ()) {
 	
@@ -57,7 +57,7 @@ void MOAILightFormat::Bless () {
 		ZLSize base = 0;
 	
 		ZLSize nUniforms = this->mUniforms.Size ();
-		for ( ZLIndex i = ZLIndex::ZERO; i < nUniforms; ++i ) {
+		for ( ZLIndex i = ZLIndexOp::ZERO; i < nUniforms; ++i ) {
 			
 			MOAILightFormatUniform& uniform = this->mUniforms [ i ];
 			uniform.mBase = base;

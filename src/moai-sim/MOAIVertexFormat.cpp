@@ -34,7 +34,7 @@ int MOAIVertexFormat::_clear ( lua_State* L ) {
 int	MOAIVertexFormat::_declareAttribute ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexFormat, "UNNN" )
 
-	u32 index			= state.GetValue < u32 >( 2, 0 ) - 1;
+	ZLIndex index		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	u32 type			= state.GetValue < u32 >( 3, 0 );
 	u32 size			= state.GetValue < u32 >( 4, 0 );
 	bool normalized		= state.GetValue < bool >( 5, false );
@@ -51,7 +51,7 @@ int	MOAIVertexFormat::_declareAttribute ( lua_State* L ) {
 int MOAIVertexFormat::_declareBoneCount ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 	
-	u32 index			= state.GetValue < u32 >( 2, 0 ) - 1;
+	ZLIndex index		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	u32 type			= state.GetValue < u32 >( 3, ZGL_TYPE_UNSIGNED_BYTE );
 	
 	self->DeclareAttribute ( index, type, 1, ATTRIBUTE_BONE_COUNT, false );
@@ -64,7 +64,7 @@ int MOAIVertexFormat::_declareBoneCount ( lua_State* L ) {
 int MOAIVertexFormat::_declareBoneIndices ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 	
-	u32 index			= state.GetValue < u32 >( 2, 0 ) - 1;
+	ZLIndex index		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	u32 type			= state.GetValue < u32 >( 3, ZGL_TYPE_UNSIGNED_BYTE );
 	u32 size			= state.GetValue < u32 >( 4, 4 );
 	
@@ -78,7 +78,7 @@ int MOAIVertexFormat::_declareBoneIndices ( lua_State* L ) {
 int MOAIVertexFormat::_declareBoneWeights ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 	
-	u32 index			= state.GetValue < u32 >( 2, 0 ) - 1;
+	ZLIndex index		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	u32 type			= state.GetValue < u32 >( 3, ZGL_TYPE_FLOAT );
 	u32 size			= state.GetValue < u32 >( 4, 4 );
 	
@@ -99,7 +99,7 @@ int MOAIVertexFormat::_declareBoneWeights ( lua_State* L ) {
 int MOAIVertexFormat::_declareColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 
-	u32 index			= state.GetValue < u32 >( 2, 0 ) - 1;
+	ZLIndex index		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	u32 type			= state.GetValue < u32 >( 3, ZGL_TYPE_UNSIGNED_BYTE );
 	
 	self->DeclareAttribute ( index, type, COLOR_SIZE, ATTRIBUTE_COLOR, true );
@@ -120,7 +120,7 @@ int MOAIVertexFormat::_declareColor ( lua_State* L ) {
 int MOAIVertexFormat::_declareCoord ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 
-	u32 index			= state.GetValue < u32 >( 2, 0 ) - 1;
+	ZLIndex index		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	u32 type			= state.GetValue < u32 >( 3, ZGL_TYPE_FLOAT );
 	u32 size			= state.GetValue < u32 >( 4, 3 );
 	
@@ -141,7 +141,7 @@ int MOAIVertexFormat::_declareCoord ( lua_State* L ) {
 int MOAIVertexFormat::_declareNormal ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 	
-	u32 index			= state.GetValue < u32 >( 2, 0 ) - 1;
+	ZLIndex index		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	u32 type			= state.GetValue < u32 >( 3, ZGL_TYPE_FLOAT );
 	
 	self->DeclareAttribute ( index, type, NORMAL_SIZE, ATTRIBUTE_NORMAL, false );
@@ -162,7 +162,7 @@ int MOAIVertexFormat::_declareNormal ( lua_State* L ) {
 int MOAIVertexFormat::_declareUV ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 
-	u32 index			= state.GetValue < u32 >( 2, 0 ) - 1;
+	ZLIndex index		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	u32 type			= state.GetValue < u32 >( 3, ZGL_TYPE_FLOAT );
 	u32 size			= state.GetValue < u32 >( 4, 2 );
 	
@@ -181,7 +181,7 @@ int MOAIVertexFormat::_declareUV ( lua_State* L ) {
 int MOAIVertexFormat::_getVertexSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 
-	state.Push (( MOAILuaState::IndexType )(( ZLSize )self->mVertexSize ));
+	state.Push ( MOAILuaSize ( self->mVertexSize ));
 	return 1;
 }
 
@@ -208,7 +208,7 @@ void MOAIVertexFormat::Bind ( ZLSharedConstBuffer* buffer ) const {
 
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
-	for ( ZLIndex i ( 0, ZLIndex::LIMIT ); i < this->mTotalAttributes; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mTotalAttributes; ++i ) {
 		
 		const MOAIVertexAttribute& attr = this->mAttributes [ i ];
 		
@@ -232,7 +232,7 @@ void MOAIVertexFormat::Clear () {
 //----------------------------------------------------------------//
 int MOAIVertexFormat::Compare ( const void* v0, const void* v1, float componentEpsilon, float normEpsilon ) const {
 
-	for ( ZLIndex i ( 0, ZLIndex::LIMIT ); i < this->mTotalAttributes; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mTotalAttributes; ++i ) {
 
 		MOAIVertexAttribute& attribute = this->mAttributes [ i ];
 		
@@ -307,18 +307,18 @@ bool MOAIVertexFormat::ComputeBounds ( ZLBox& bounds, ZLStream& stream, size_t s
 	
 	size_t base = stream.GetCursor ();
 	
-	ZLVec4D coord = this->ReadCoord ( stream, ZLIndex ( 0, ZLIndex::LIMIT ));
+	ZLVec4D coord = this->ReadCoord ( stream, ZLIndexCast ( 0 ));
 	
 	bounds.Init ( coord );
 	bounds.Inflate ( 0.0000001f ); // prevent 'empty' bounds on cardinal direction lines or single vertex objects
 	
 	if ( nCoordsPerVert > 0 ) {
 	
-		for ( ZLIndex i ( 0, ZLIndex::LIMIT ); i < total; ++i ) {
+		for ( ZLIndex i = ZLIndexOp::ZERO; i < total; ++i ) {
 		
 			this->SeekVertex ( stream, base, i );
 		
-			for ( ZLIndex j ( 0, ZLIndex::LIMIT ); j < nCoordsPerVert; ++j ) {
+			for ( ZLIndex j = ZLIndexOp::ZERO; j < nCoordsPerVert; ++j ) {
 				coord = this->ReadCoord ( stream, j );
 				bounds.Grow ( coord );
 			}
@@ -326,9 +326,9 @@ bool MOAIVertexFormat::ComputeBounds ( ZLBox& bounds, ZLStream& stream, size_t s
 	}
 	else {
 	
-		for ( ZLIndex i ( 0, ZLIndex::LIMIT ); i < total; ++i ) {
+		for ( ZLIndex i = ZLIndexOp::ZERO; i < total; ++i ) {
 			this->SeekVertex ( stream, base, i );
-			coord = this->ReadCoord ( stream, ZLIndex ( 0, ZLIndex::LIMIT ));
+			coord = this->ReadCoord ( stream, ZLIndexCast ( 0 ));
 			bounds.Grow ( coord );
 		}
 	}
@@ -371,7 +371,7 @@ u32 MOAIVertexFormat::CountComponentsByUse ( u32 useID ) const {
 
 	u32 nComponents = 0;
 	u32 nAttributes = this->mTotalAttributesByUse [ useID ];
-	for ( ZLIndex i ( 0, ZLIndex::LIMIT ); i < nAttributes; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < nAttributes; ++i ) {
 	
 		ZLIndex attrIdx = this->mAttributeIDsByUse [ useID ][ i ];
 		const MOAIVertexAttribute& attr = this->mAttributes [ attrIdx ];
@@ -381,15 +381,15 @@ u32 MOAIVertexFormat::CountComponentsByUse ( u32 useID ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormat::DeclareAttribute ( u32 index, u32 type, u32 size, u32 use, bool normalized ) {
+void MOAIVertexFormat::DeclareAttribute ( ZLIndex index, u32 type, u32 size, u32 use, bool normalized ) {
 
-	ZLIndex attrIdx ( this->mTotalAttributes++, ZLIndex::LIMIT );
+	ZLIndex attrIdx = ZLIndexCast ( this->mTotalAttributes++ );
 	this->mAttributes.Grow ( this->mTotalAttributes );
 	MOAIVertexAttribute& attr = this->mAttributes [ attrIdx ];
 	
 	u32 offset = this->mVertexSize;
 	
-	attr.mIndex			= index == ( u32 )-1 ? attrIdx : index;
+	attr.mIndex			= index == ZLIndexOp::INVALID ? attrIdx : index;
 	attr.mSize			= size;
 	attr.mType			= type;
 	attr.mUse			= use;
@@ -401,7 +401,7 @@ void MOAIVertexFormat::DeclareAttribute ( u32 index, u32 type, u32 size, u32 use
 	
 	if ( use < TOTAL_ATTRIBUTE_TYPES ) {
 		
-		ZLIndex idx ( this->mTotalAttributesByUse [ use ]++, ZLIndex::LIMIT );
+		ZLIndex idx = ZLIndexCast ( this->mTotalAttributesByUse [ use ]++ );
 		
 		this->mAttributeIDsByUse [ use ].Grow (( ZLSize )idx + 1 );
 		this->mAttributeIDsByUse [ use ][ idx ] = attrIdx;
@@ -544,11 +544,11 @@ void MOAIVertexFormat::PrintVertices ( ZLStream& stream, size_t size ) const {
 	u32 total = this->mVertexSize ? ( u32 )( size / this->mVertexSize ) : 0; // TODO: cast
 	if ( !total ) return;
 
-	for ( ZLIndex i ( 0, ZLIndex::LIMIT ); i < total; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < total; ++i ) {
 	
 		printf ( "vertex %d:\n", ( int )ZLSize ( i ));
 		
-		for ( ZLIndex j ( 0, ZLIndex::LIMIT ); j < this->mTotalAttributes; ++j ) {
+		for ( ZLIndex j = ZLIndexOp::ZERO; j < this->mTotalAttributes; ++j ) {
 			MOAIVertexAttribute& attribute = this->mAttributes [ j ];
 			
 			printf ( "  %d: ", ( int )ZLSize ( j ));
@@ -652,7 +652,7 @@ size_t MOAIVertexFormat::ReadComponents ( ZLStream& stream, u32 useID, float* co
 	size_t remaining = size;
 	size_t n = this->mTotalAttributesByUse [ useID ];
 	
-	for ( ZLIndex i ( 0, ZLIndex::LIMIT ); ( i < n ) && remaining; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; ( i < n ) && remaining; ++i ) {
 	
 		const MOAIVertexAttribute& attribute = this->mAttributes [ this->mAttributeIDsByUse [ useID ][ i ]];
 		
@@ -736,30 +736,30 @@ size_t MOAIVertexFormat::SeekVertex ( ZLStream& stream, size_t base, size_t vert
 void MOAIVertexFormat::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 
-	this->mTotalAttributes		= state.GetFieldValue < u32 >( -1, "mTotalAttributes", 0 );
-	this->mVertexSize			= state.GetFieldValue < u32 >( -1, "mVertexSize", 0 );
+	this->mTotalAttributes		= state.GetFieldValue < cc8*, u32 >( -1, "mTotalAttributes", 0 );
+	this->mVertexSize			= state.GetFieldValue < cc8*, u32 >( -1, "mVertexSize", 0 );
 
 	this->mAttributes.Init ( this->mTotalAttributes );
 
 	state.PushField ( -1, "mAttributes" );
-	for ( ZLIndex i ( 0, ZLIndex::LIMIT ); i < this->mTotalAttributes; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mTotalAttributes; ++i ) {
 		
 		MOAIVertexAttribute& attribute = this->mAttributes [ i ];
 		
-		state.PushField ( -1, ( MOAILuaState::IndexType )(( ZLSize )i ) + 1 );
+		state.PushField ( -1, ZLIndexOp::ToInt ( i ) + 1 );
 		
-		attribute.mIndex			= state.GetFieldValue < u32 >( -1, "mIndex", 0 );
-		attribute.mSize				= state.GetFieldValue < u32 >( -1, "mSize", 0 );
-		attribute.mType				= state.GetFieldValue < u32 >( -1, "mType", 0 );
-		attribute.mNormalized		= state.GetFieldValue < bool >( -1, "mNormalized", 0 );
-		attribute.mOffset			= state.GetFieldValue < u32 >( -1, "mOffset", 0 );
+		attribute.mIndex			= state.GetFieldValue < cc8*, u32 >( -1, "mIndex", 0 );
+		attribute.mSize				= state.GetFieldValue < cc8*, u32 >( -1, "mSize", 0 );
+		attribute.mType				= state.GetFieldValue < cc8*, u32 >( -1, "mType", 0 );
+		attribute.mNormalized		= state.GetFieldValue < cc8*, bool >( -1, "mNormalized", false );
+		attribute.mOffset			= state.GetFieldValue < cc8*, u32 >( -1, "mOffset", 0 );
 		
 		state.Pop ();
 	}
 	state.Pop ();
 	
 	state.PushField ( -1, "mAttributeUseTable" );
-	for ( ZLIndex i ( 0, ZLIndex::LIMIT ); i < TOTAL_ATTRIBUTE_TYPES; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < TOTAL_ATTRIBUTE_TYPES; ++i ) {
 		
 		u32 luaUseIdx = MOAIVertexFormat::GetLuaIndexForUseID ( i );
 		state.PushField ( -1, luaUseIdx );
@@ -768,9 +768,9 @@ void MOAIVertexFormat::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seri
 		this->mTotalAttributesByUse [ i ] = nAttributesByUse;
 		this->mAttributeIDsByUse [ i ].Init ( nAttributesByUse );
 		
-		for ( ZLIndex j ( 0, ZLIndex::LIMIT ); j < nAttributesByUse; ++j ) {
+		for ( ZLIndex j = ZLIndexOp::ZERO; j < nAttributesByUse; ++j ) {
 			
-			this->mAttributeIDsByUse [ i ][ j ] = ZLIndex ( state.GetFieldValue < MOAILuaState::IndexType >( -1, ( ZLSize )j + 1, 0 ), ZLIndex::LIMIT );
+			this->mAttributeIDsByUse [ i ][ j ] = state.GetFieldValue < MOAILuaIndex, MOAILuaIndex >( -1, j, ZLIndexOp::ZERO );
 		}
 		state.Pop ();
 	}
@@ -781,15 +781,15 @@ void MOAIVertexFormat::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seri
 void MOAIVertexFormat::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 
-	state.SetField ( -1, "mTotalAttributes", ( MOAILuaState::SizeType )this->mTotalAttributes );
-	state.SetField ( -1, "mVertexSize", ( MOAILuaState::SizeType )this->mVertexSize );
+	state.SetField ( -1, "mTotalAttributes", MOAILuaSize ( this->mTotalAttributes ));
+	state.SetField ( -1, "mVertexSize", MOAILuaSize ( this->mVertexSize ));
 
 	lua_newtable ( state );
-	for ( ZLIndex i ( 0, ZLIndex::LIMIT ); i < this->mTotalAttributes; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mTotalAttributes; ++i ) {
 	
 		MOAIVertexAttribute& attribute = this->mAttributes [ i ];
 	
-		state.Push (( MOAILuaState::IndexType )(( ZLSize )i ) + 1 );
+		state.Push ( MOAILuaIndex ( i ));
 		lua_newtable ( state );
 		
 		state.SetField ( -1, "mIndex",			attribute.mIndex );
@@ -803,14 +803,14 @@ void MOAIVertexFormat::SerializeOut ( MOAILuaState& state, MOAISerializer& seria
 	lua_setfield ( state, -2, "mAttributes" );
 
 	lua_newtable ( state );
-	for ( u32 i = 0; i < TOTAL_ATTRIBUTE_TYPES; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < TOTAL_ATTRIBUTE_TYPES; ++i ) {
 		
 		state.Push ( MOAIVertexFormat::GetLuaIndexForUseID ( i ));
 		lua_newtable ( state );
 		
-		u32 nAttributesByUse = this->mTotalAttributesByUse [ i ];
-		for ( ZLIndex j ( 0, ZLIndex::LIMIT ); j < nAttributesByUse; ++j ) {
-			state.SetFieldByIndex ( -1, ( MOAILuaState::IndexType )(( ZLSize )j + i ), this->mAttributeIDsByUse [ i ][ j ]);
+		ZLSize nAttributesByUse = this->mTotalAttributesByUse [ i ];
+		for ( ZLIndex j = ZLIndexOp::ZERO; j < nAttributesByUse; ++j ) {
+			state.SetField ( -1, MOAILuaIndex ( j + i ), MOAILuaIndex ( this->mAttributeIDsByUse [ i ][ j ]));
 		}
 		lua_settable ( state, -3 );
 	}
@@ -820,7 +820,7 @@ void MOAIVertexFormat::SerializeOut ( MOAILuaState& state, MOAISerializer& seria
 //----------------------------------------------------------------//
 void MOAIVertexFormat::Unbind () const {
 
-	for ( ZLIndex i ( 0, ZLIndex::LIMIT ); i < this->mTotalAttributes; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mTotalAttributes; ++i ) {
 		
 		MOAIVertexAttribute& attr = this->mAttributes [ i ];
 		MOAIGfxMgr::GetDrawingAPI ().DisableVertexAttribArray ( attr.mIndex );
@@ -940,7 +940,7 @@ size_t MOAIVertexFormat::WriteComponents ( ZLStream& stream, u32 useID, const fl
 	size_t remaining = size;
 	size_t n = this->mTotalAttributesByUse [ useID ];
 	
-	for ( ZLIndex i ( 0, ZLIndex::LIMIT ); ( i < n ) && remaining; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; ( i < n ) && remaining; ++i ) {
 	
 		const MOAIVertexAttribute& attribute = this->mAttributes [ this->mAttributeIDsByUse [ useID ][ i ]];
 		

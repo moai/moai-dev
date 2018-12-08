@@ -158,7 +158,7 @@ void MOAIGridPropBase::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seri
 	
 	MOAIDeckPropBase::SerializeIn ( state, serializer );
 	
-	this->mGrid.Set ( *this, serializer.MemberIDToObject < MOAIGrid >( state.GetFieldValue < MOAISerializerBase::ObjID >( -1, "mGrid", 0 )));
+	this->mGrid.Set ( *this, serializer.MemberIDToObject < MOAIGrid >( state.GetFieldValue < cc8*, MOAISerializerBase::ObjID >( -1, "mGrid", 0 )));
 }
 
 //----------------------------------------------------------------//

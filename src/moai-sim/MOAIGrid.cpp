@@ -255,7 +255,7 @@ u32 MOAIGrid::GetTile ( ZLIndex addr ) const {
 	ZLSize size = this->mTiles.Size ();
 
 	if ( size ) {
-		addr = ZLIndex::Wrap ( addr, size );
+		addr =  ZLIndexOp::Wrap ( addr, size );
 		return this->mTiles [ addr ];
 	}
 	return 0;
@@ -375,7 +375,7 @@ void MOAIGrid::SetTile ( ZLIndex addr, u32 tile ) {
 	u32 size = ( u32 )this->mTiles.Size (); // TODO: cast
 
 	if ( size ) {
-		addr = ZLIndex::Wrap ( addr, size );
+		addr =  ZLIndexOp::Wrap ( addr, size );
 		this->mTiles [ addr ] = tile;
 	}
 }

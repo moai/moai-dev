@@ -106,7 +106,7 @@ ZLIndex MOAIInputMgr::AddDevice ( cc8* name ) {
 	ZLSize top = this->mDevices.GetTop ();
 	assert ( top < MAX_DEVICES );
 	
-	ZLIndex deviceID =  ZLIndex ( top, ZLIndex::LIMIT );
+	ZLIndex deviceID =  ZLIndexCast ( top );
 	
 	this->mDevices.Push ();
 	this->SetDevice ( deviceID, name );
@@ -126,7 +126,7 @@ bool MOAIInputMgr::CanWrite () {
 //----------------------------------------------------------------//
 void MOAIInputMgr::ClearSensorState () {
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mDevices.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mDevices.Size (); ++i ) {
 		MOAIInputDevice* device = this->mDevices [ i ];
 		if ( device ) {
 			device->ClearSensorState ();
@@ -226,7 +226,7 @@ MOAIInputMgr::~MOAIInputMgr () {
 		this->mRecorder->Flush ();
 	}
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mDevices.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mDevices.Size (); ++i ) {
 		this->LuaRelease ( this->mDevices [ i ]);
 	}
 	this->mRecorder.Set ( *this, 0 );
@@ -243,8 +243,8 @@ size_t MOAIInputMgr::ParseEvents ( ZLStream& stream, double timestep ) {
 	// parse events until we run out or hit an event after the current sim time
 	while ( stream.GetCursor () < stream.GetLength ()) {
 		
-		ZLIndex deviceID	= ZLIndex ( stream.Read < u8 >( 0 ), ZLIndex::LIMIT );
-		ZLIndex sensorID	= ZLIndex ( stream.Read < u8 >( 0 ), ZLIndex::LIMIT );
+		ZLIndex deviceID	= ZLIndexCast ( stream.Read < u8 >( 0 ) );
+		ZLIndex sensorID	= ZLIndexCast ( stream.Read < u8 >( 0 ) );
 		double timestamp	= stream.Read < double >( 0 );
 		
 		if ( first ) {
@@ -328,7 +328,7 @@ void MOAIInputMgr::ReserveSensors ( ZLIndex deviceID, ZLSize total ) {
 //----------------------------------------------------------------//
 void MOAIInputMgr::ResetSensorState () {
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mDevices.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mDevices.Size (); ++i ) {
 		MOAIInputDevice* device = this->mDevices [ i ];
 		if ( device ) {
 			device->ResetSensorState ();

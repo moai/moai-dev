@@ -109,7 +109,7 @@ void MOAIGfxBuffer::Clear () {
 	this->ZLCopyOnWrite::Free ();
 
 	this->mVBOs.Clear ();
-	this->mCurrentVBO = ZLIndex::ZERO;
+	this->mCurrentVBO = ZLIndexOp::ZERO;
 	
 	this->Destroy ();
 }
@@ -136,7 +136,7 @@ ZLSharedConstBuffer* MOAIGfxBuffer::GetBufferForBind ( ZLGfx& gfx ) {
 
 //----------------------------------------------------------------//
 MOAIGfxBuffer::MOAIGfxBuffer () :
-	mCurrentVBO ( ZLIndex::ZERO ),
+	mCurrentVBO ( ZLIndexOp::ZERO ),
 	mTarget ( ZGL_BUFFER_TARGET_ARRAY ),
 	mLoader ( 0 ),
 	mUseVBOs ( false ),
@@ -187,7 +187,7 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 
 		u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_STREAM_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
 
-		for ( ZLIndex i = ZLIndex::ZERO; i < this->mVBOs.Size (); ++i ) {
+		for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVBOs.Size (); ++i ) {
 			
 			ZLGfxHandle vbo = gfx.CreateBuffer ();
 			
@@ -216,7 +216,7 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mVBOs.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVBOs.Size (); ++i ) {
 		MOAIGfxResourceClerk::DeleteOrDiscard ( this->mVBOs [ i ], shouldDelete );
 	}
 }
@@ -235,7 +235,7 @@ bool MOAIGfxBuffer::OnGPUUpdate () {
 	bool dirty = this->GetCursor () > 0;
 	
 	if ( dirty ) {
-		this->mCurrentVBO = ZLIndex::AddAndWrap ( this->mCurrentVBO, 1, this->mVBOs.Size ());
+		this->mCurrentVBO =  ZLIndexOp::AddAndWrap ( this->mCurrentVBO, 1, this->mVBOs.Size ());
 	}
 	
 	const ZLGfxHandle& vbo = this->mVBOs [ this->mCurrentVBO ];
@@ -315,7 +315,7 @@ void MOAIGfxBuffer::ReserveVBOs ( ZLSize gpuBuffers ) {
 
 	if ( gpuBuffers ) {
 		this->mVBOs.Resize ( gpuBuffers );
-		this->mCurrentVBO = ZLIndex ( gpuBuffers - 1, ZLIndex::LIMIT );
+		this->mCurrentVBO = ZLIndexCast ( gpuBuffers - 1 );
 	}
 
 	this->FinishInit ();
@@ -325,8 +325,8 @@ void MOAIGfxBuffer::ReserveVBOs ( ZLSize gpuBuffers ) {
 void MOAIGfxBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 
-	u32 totalVBOs		= state.GetFieldValue < u32 >( -1, "mTotalVBOs", 0 );
-	u32 size			= state.GetFieldValue < u32 >( -1, "mSize", 0 );
+	u32 totalVBOs		= state.GetFieldValue < cc8*, u32 >( -1, "mTotalVBOs", 0 );
+	u32 size			= state.GetFieldValue < cc8*, u32 >( -1, "mSize", 0 );
 
 	this->Reserve ( size );
 	this->ReserveVBOs ( totalVBOs );
@@ -351,10 +351,10 @@ void MOAIGfxBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seriali
 void MOAIGfxBuffer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 
-	size_t size = this->GetLength ();
+	ZLSize size = this->GetLength ();
 
-	state.SetField < u32 >( -1, "mTotalVBOs", ( u32 )this->mVBOs.Size ());
-	state.SetField < u32 >( -1, "mSize", ( u32 )size );
+	state.SetField < cc8*, MOAILuaSize >( -1, "mTotalVBOs", this->mVBOs.Size ());
+	state.SetField < cc8*, MOAILuaSize >( -1, "mSize", size );
 	
 	STLString zipString;
 	zipString.zip_deflate ( this->ZLCopyOnWrite::GetBuffer (), size );

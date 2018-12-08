@@ -4382,6 +4382,8 @@
 		CDE7ED801E40364F0005D63A /* MOAIAbstractDrawShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE7ED7E1E40364F0005D63A /* MOAIAbstractDrawShape.cpp */; };
 		CDE93C1A1B34EF370051ADA1 /* moai_version.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE93C191B34EF370051ADA1 /* moai_version.h */; };
 		CDE93C1B1B34EF370051ADA1 /* moai_version.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE93C191B34EF370051ADA1 /* moai_version.h */; };
+		CDEC2F7821BBD03D00DBA57F /* ZLSemanticNumeric.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEC2F7721BBD03D00DBA57F /* ZLSemanticNumeric.h */; };
+		CDEC2F7921BBD03D00DBA57F /* ZLSemanticNumeric.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEC2F7721BBD03D00DBA57F /* ZLSemanticNumeric.h */; };
 		CDECEE2018E0C87C00546426 /* mongoose.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795EFE17F0901A006AEB47 /* mongoose.c */; };
 		CDECEE2118E0C87C00546426 /* mongoose.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795EFF17F0901A006AEB47 /* mongoose.h */; };
 		CDECEE2418E0C88700546426 /* mongoose.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795EFE17F0901A006AEB47 /* mongoose.c */; };
@@ -7676,6 +7678,7 @@
 		CDE7ED751E4033AB0005D63A /* MOAIDrawShapeRetained.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDrawShapeRetained.h; sourceTree = "<group>"; };
 		CDE7ED7E1E40364F0005D63A /* MOAIAbstractDrawShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAbstractDrawShape.cpp; sourceTree = "<group>"; };
 		CDE93C191B34EF370051ADA1 /* moai_version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = moai_version.h; sourceTree = "<group>"; };
+		CDEC2F7721BBD03D00DBA57F /* ZLSemanticNumeric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLSemanticNumeric.h; sourceTree = "<group>"; };
 		CDEEC77C1C7BCEDC0014CC3F /* ZLResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLResult.h; sourceTree = "<group>"; };
 		CDEFD55C181ECB3E0058D772 /* MOAITextLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextLabel.cpp; sourceTree = "<group>"; };
 		CDEFD55D181ECB3E0058D772 /* MOAITextLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextLabel.h; sourceTree = "<group>"; };
@@ -8586,6 +8589,7 @@
 				CD1756411A1999E8009C430A /* os */,
 				CD1D858F1E1922720089FFAD /* object */,
 				CD1756401A19998D009C430A /* parser */,
+				CDEC2F7321BBA9D900DBA57F /* semantic-numeric */,
 				CDB718A81A44E71D003DFFBA /* socket */,
 				CD17563E1A19990B009C430A /* stl */,
 				CDF0D37B19FCCC7C001C64C5 /* stream */,
@@ -8610,7 +8614,6 @@
 				89BE68CB173974FC00DFE837 /* ZLHashedString.h */,
 				89BE68E0173974FC00DFE837 /* ZLHexDump.cpp */,
 				89BE68E1173974FC00DFE837 /* ZLHexDump.h */,
-				CDF3F4B12038DC1D0000D684 /* ZLIndex.h */,
 				89BE68F1173974FC00DFE837 /* ZLLog.cpp */,
 				89BE68F2173974FC00DFE837 /* ZLLog.h */,
 				89BE690B173974FC00DFE837 /* ZLRadixSort16.h */,
@@ -12688,6 +12691,15 @@
 			name = action;
 			sourceTree = "<group>";
 		};
+		CDEC2F7321BBA9D900DBA57F /* semantic-numeric */ = {
+			isa = PBXGroup;
+			children = (
+				CDF3F4B12038DC1D0000D684 /* ZLIndex.h */,
+				CDEC2F7721BBD03D00DBA57F /* ZLSemanticNumeric.h */,
+			);
+			name = "semantic-numeric";
+			sourceTree = "<group>";
+		};
 		CDF0D37A19FCCBD6001C64C5 /* stream */ = {
 			isa = PBXGroup;
 			children = (
@@ -13676,6 +13688,7 @@
 				89BE697B173974FD00DFE837 /* ZLBase64Encoder.h in Headers */,
 				89BE697F173974FD00DFE837 /* ZLBase64Reader.h in Headers */,
 				89BE6983173974FD00DFE837 /* ZLBase64Writer.h in Headers */,
+				CDEC2F7821BBD03D00DBA57F /* ZLSemanticNumeric.h in Headers */,
 				89BE6985173974FD00DFE837 /* ZLBinarySearch.h in Headers */,
 				89BE6989173974FD00DFE837 /* ZLBox.h in Headers */,
 				89BE698D173974FD00DFE837 /* ZLByteStream.h in Headers */,
@@ -13797,6 +13810,7 @@
 				CD6891CC1DC93D510086B16B /* ZLRtti.h in Headers */,
 				89BE696E173974FD00DFE837 /* ZLAccessors.h in Headers */,
 				89BE6970173974FD00DFE837 /* ZLAdapterInfo.h in Headers */,
+				CDEC2F7921BBD03D00DBA57F /* ZLSemanticNumeric.h in Headers */,
 				CD1D85951E1922BD0089FFAD /* ZLWeakPtr.h in Headers */,
 				CD1756481A199B24009C430A /* ZLBarycentric.h in Headers */,
 				89BE6976173974FD00DFE837 /* ZLAffine2D.h in Headers */,

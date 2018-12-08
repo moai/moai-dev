@@ -112,7 +112,7 @@ int MOAIImage::_calculateGaussianKernel ( lua_State* L ) {
 
 		lua_newtable ( state );
 		for ( int i = 0; i < kernelWidth; ++i ) {
-			state.SetFieldByIndex ( -1, i + 1, kernel [ i ]);
+			state.SetField ( -1, i + 1, kernel [ i ]);
 		}
 		return 1;
 	}
@@ -1235,10 +1235,10 @@ int MOAIImage::_subdivideRect ( lua_State* L ) {
 					state.Push ( count );
 				
 					lua_newtable ( state );
-					state.SetFieldByIndex < float >( -1, 1, sub.mXMin );
-					state.SetFieldByIndex < float >( -1, 2, sub.mYMin );
-					state.SetFieldByIndex < float >( -1, 3, sub.mXMax );
-					state.SetFieldByIndex < float >( -1, 4, sub.mYMax );
+					state.SetField < int, float >( -1, 1, sub.mXMin );
+					state.SetField < int, float >( -1, 2, sub.mYMin );
+					state.SetField < int, float >( -1, 3, sub.mXMax );
+					state.SetField < int, float >( -1, 4, sub.mYMax );
 					
 					lua_settable ( state, -3 );
 					

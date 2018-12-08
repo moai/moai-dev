@@ -143,7 +143,7 @@ MOAIAnimCurveBone* MOAIAssimpAnimation::GetAnimCurve ( u32 channel ) {
 	ZLQuaternion q0		= ZLQuaternion::IDENT;
 	ZLVec3D s0			= ZLVec3D::AXIS;
 	
-	for ( ZLIndex i = ZLIndex::ZERO; i < nKeys; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < nKeys; ++i ) {
 	
 		const aiVectorKey* posKey	= iPos < nodeAnim->mNumPositionKeys ? &nodeAnim->mPositionKeys [ iPos ] : 0;
 		const aiQuatKey* rotKey		= iRot < nodeAnim->mNumRotationKeys ? &nodeAnim->mRotationKeys [ iRot ] : 0;

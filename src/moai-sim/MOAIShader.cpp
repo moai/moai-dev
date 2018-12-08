@@ -41,10 +41,10 @@ int MOAIShader::_setProgram ( lua_State* L ) {
 int MOAIShader::_setUniform ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShader, "U" )
 
-	ZLIndex uniformID	= state.GetValueAsIndex ( 2 );
+	ZLIndex uniformID	= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 
 	if ( self->mProgram ) {
-		self->mProgram->SetUniform ( L, 3, self->mPendingUniformBuffer.GetBuffer (), uniformID, ZLIndex::ZERO );
+		self->mProgram->SetUniform ( L, 3, self->mPendingUniformBuffer.GetBuffer (), uniformID, ZLIndexOp::ZERO );
 	}
 	return 0;
 }
@@ -53,8 +53,8 @@ int MOAIShader::_setUniform ( lua_State* L ) {
 int MOAIShader::_setUniformArrayItem ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShader, "U" )
 
-	ZLIndex uniformID	= state.GetValueAsIndex ( 2 );
-	ZLIndex index		= state.GetValueAsIndex ( 3 );
+	ZLIndex uniformID	= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex index		= state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
 
 	if ( self->mProgram ) {
 		self->mProgram->SetUniform ( L, 4, self->mPendingUniformBuffer.GetBuffer (), uniformID, index );

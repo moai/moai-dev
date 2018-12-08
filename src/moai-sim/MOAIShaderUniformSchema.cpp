@@ -61,7 +61,7 @@ MOAIShaderUniformHandle MOAIShaderUniformSchema::GetUniformHandleForAttributeID 
 	ZLSize uniformID = attrID / MAX_UNIFORM_ARRAY_SIZE;
 	ZLSize index = attrID - ( uniformID * MAX_UNIFORM_ARRAY_SIZE );
 	
-	return this->GetUniformHandle ( buffer, ZLIndex ( uniformID, ZLIndex::LIMIT ), ZLIndex ( index, ZLIndex::LIMIT ));
+	return this->GetUniformHandle ( buffer, ZLIndexCast ( uniformID ), ZLIndexCast ( index ));
 }
 
 //----------------------------------------------------------------//

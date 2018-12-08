@@ -35,7 +35,7 @@ protected:
 int MOAIScriptNode::_reserveAttrs ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIScriptNode, "UN" );
 
-	ZLSize size = state.GetValue < MOAILuaState::SizeType >( 2, 0 );
+	ZLSize size = state.GetValue < MOAILuaSize >( 2, 0 );
 	self->mAttributes.Init ( size );
 	self->mAttributes.Fill ( 0.0f );
 	
@@ -64,7 +64,7 @@ int MOAIScriptNode::_setCallback ( lua_State* L ) {
 int MOAIScriptNode::_setAttrName ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIScriptNode, "U" );
 	
-	ZLIndex idx = state.GetValueAsIndex ( 2 );
+	ZLIndex idx = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	self->mAttrNames [ idx ] = state.GetValue < cc8* >( 3, 0 );
 	
 	return 0;
@@ -96,7 +96,7 @@ void MOAIScriptNode::NamedAttrAdd ( ZLIndex attrID, MOAIAttribute &attr ) {
 				
 				MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 				this->PushMemberTable ( state );
-				float cur = state.GetFieldValue < float >( -1, attrName, 0.0f );
+				float cur = state.GetFieldValue < cc8*, float >( -1, attrName, 0.0f );
 				state.SetField ( -1, attrName, cur + value );
 			}
 			break;
@@ -107,7 +107,7 @@ void MOAIScriptNode::NamedAttrAdd ( ZLIndex attrID, MOAIAttribute &attr ) {
 			if ( value != 0 ) {
 				MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 				this->PushMemberTable ( state );
-				int cur = state.GetFieldValue < int >( -1, attrName, 0 );
+				int cur = state.GetFieldValue < cc8*, int >( -1, attrName, 0 );
 				state.SetField ( -1, attrName, cur + value );
 			}
 			break;
@@ -210,7 +210,7 @@ void MOAIScriptNode::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 bool MOAIScriptNode::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 	
-	ZLIndex attrIndex = ZLIndex ( UNPACK_ATTR ( attrID ) - 1, ZLIndex::LIMIT );
+	ZLIndex attrIndex = ZLIndexCast ( UNPACK_ATTR ( attrID ) - 1 );
 	
 	if ( attrID >= this->mAttributes.Size()) {
 		return false;

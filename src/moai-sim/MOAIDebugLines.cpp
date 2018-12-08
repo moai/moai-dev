@@ -27,7 +27,7 @@ MOAIDebugLineStyle::~MOAIDebugLineStyle () {
 //----------------------------------------------------------------//
 MOAIDebugLineStyle* MOAIDebugLineStyleSet::GetStyle ( u32 styleID ) {
 
-	return styleID < this->mLineStyles.Size () ? &this->mLineStyles [ ZLIndex ( styleID, ZLIndex::LIMIT )] : 0;
+	return styleID < this->mLineStyles.Size () ? &this->mLineStyles [ ZLIndexCast ( styleID )] : 0;
 }
 
 //----------------------------------------------------------------//

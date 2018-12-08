@@ -14,7 +14,7 @@
 void MOAIPartitionLevel::Clear () {
 
 	ZLSize totalCells = this->mCells.Size ();
-	for ( ZLIndex i = ZLIndex::ZERO; i < totalCells; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalCells; ++i ) {
 		this->mCells [ i ].Clear ();
 	}
 }
@@ -23,7 +23,7 @@ void MOAIPartitionLevel::Clear () {
 void MOAIPartitionLevel::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLevel* level ) {
 
 	ZLSize totalCells = this->mCells.Size ();
-	for ( ZLIndex i = ZLIndex::ZERO; i < totalCells; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalCells; ++i ) {
 		this->mCells [ i ].ExtractProps ( cell, level );
 	}
 }
@@ -32,7 +32,7 @@ void MOAIPartitionLevel::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLe
 void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, u32 interfaceMask, u32 queryMask ) {
 
 	ZLSize totalCells = this->mCells.Size ();
-	for ( ZLIndex i = ZLIndex::ZERO; i < totalCells; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalCells; ++i ) {
 		this->mCells [ i ].GatherHulls ( results, ignore, interfaceMask, queryMask );
 	}
 }
@@ -81,7 +81,7 @@ void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIP
 	
 	// TODO: this is so lazy; fix it to use the plane and step through the proper cells
 	ZLSize totalCells = this->mCells.Size ();
-	for ( ZLIndex i = ZLIndex::ZERO; i < totalCells; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalCells; ++i ) {
 		this->mCells [ i ].GatherHulls ( results, ignore, point, orientation, interfaceMask, queryMask );
 	}
 }

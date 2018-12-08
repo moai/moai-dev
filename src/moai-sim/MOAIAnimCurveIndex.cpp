@@ -26,8 +26,8 @@ int MOAIAnimCurveIndex::_getValueAtTime ( lua_State* L ) {
 	MOAIAnimKeySpan span = self->GetSpan ( time );
 	ZLIndex value = self->GetValue ( span );
 	
-	state.Push ( value );
-	state.Push ( span.mKeyID );
+	state.Push ( MOAILuaIndex ( value ));
+	state.Push ( MOAILuaIndex ( span.mKeyID ));
 	
 	return 2;
 }
@@ -49,9 +49,9 @@ int MOAIAnimCurveIndex::_getValueAtTime ( lua_State* L ) {
 int MOAIAnimCurveIndex::_setKey ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnimCurveIndex, "UNN" );
 
-	ZLIndex index		= state.GetValueAsIndex ( 2 ) ;
+	ZLIndex index		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO ) ;
 	float time			= state.GetValue < float >( 3, 0.0 );
-	ZLIndex value		= state.GetValueAsIndex ( 4 );
+	ZLIndex value		= state.GetValue < MOAILuaIndex >( 4, ZLIndexOp::ZERO );
 	u32 mode			= state.GetValue < u32 >( 5, ZLInterpolate::kSmooth );
 	float weight		= state.GetValue < float >( 6, 1.0 );
 	
@@ -82,7 +82,7 @@ ZLIndex MOAIAnimCurveIndex::GetValue ( const MOAIAnimKeySpan& span ) const {
 
 //----------------------------------------------------------------//
 MOAIAnimCurveIndex::MOAIAnimCurveIndex () :
-	mValue ( ZLIndex::ZERO ) {
+	mValue ( ZLIndexOp::ZERO ) {
 	
 	RTTI_SINGLE ( MOAIAnimCurve )
 }
@@ -135,25 +135,25 @@ void MOAIAnimCurveIndex::MOAIAnimCurve_GetDelta ( MOAIAttribute& attr, const MOA
 	ZLIndex v0 = this->GetValue ( span0 );
 	ZLIndex v1 = this->GetValue ( span1 );
 	
-	attr.SetValue (( float )( v1.mKey - v0.mKey ));
+	attr.SetValue ( v1 - v0 );
 }
 
 //----------------------------------------------------------------//
 float MOAIAnimCurveIndex::MOAIAnimCurve_GetFloatForTime ( float t ) const {
 
-	return ( float )this->GetValue ( t ).mKey;
+	return ( float )(( ZLSize )this->GetValue ( t ));
 }
 
 //----------------------------------------------------------------//
 void MOAIAnimCurveIndex::MOAIAnimCurve_GetValue ( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const {
 
-	attr.SetValue (( float )this->GetValue ( span ).mKey );
+	attr.SetValue ( this->GetValue ( span ));
 }
 
 //----------------------------------------------------------------//
 void MOAIAnimCurveIndex::MOAIAnimCurve_GetZero ( MOAIAttribute& attr ) const {
 
-	attr.SetValue ( 0.0f );
+	attr.SetValue ( ZLIndexOp::ZERO );
 }
 
 //----------------------------------------------------------------//

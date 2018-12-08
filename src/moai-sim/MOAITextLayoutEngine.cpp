@@ -20,9 +20,9 @@
 //----------------------------------------------------------------//
 MOAILayoutEngineState::MOAILayoutEngineState () :
 	mStyleSpan ( 0 ),
-	mSpanIdx ( ZLIndex::ZERO ),
+	mSpanIdx ( ZLIndexOp::ZERO ),
 	mCharIdx ( 0 ),
-	mSpriteIdx ( ZLIndex::ZERO ) {
+	mSpriteIdx ( ZLIndexOp::ZERO ) {
 }
 
 //----------------------------------------------------------------//
@@ -133,7 +133,7 @@ void MOAITextLayoutEngine::Align () {
 		
 		MOAIAnimCurveFloat* curve = curves ? curves [( i - baseLine ) % totalCurves ] : 0;
 		
-		for ( ZLIndex j = ZLIndex::ZERO; j < line.mSize; ++j ) {
+		for ( ZLIndex j = ZLIndexOp::ZERO; j < line.mSize; ++j ) {
 			
 			MOAITextSprite& sprite = this->mLayout->mSprites [ line.mStart + j ];
 			
@@ -196,7 +196,7 @@ void MOAITextLayoutEngine::Align () {
 			
 			case MOAITextLayoutRules::BASELINE_JUSTIFY: {
 				ZLReal sign = this->mLayoutRules->mYFlip ? 1.0 : -1.0;
-				ZLReal firstLineAscent = this->mLayout->mLines [ ZLIndex::ZERO ].GetAscent ();
+				ZLReal firstLineAscent = this->mLayout->mLines [ ZLIndexOp::ZERO ].GetAscent ();
 				this->mLayout->mYOffset = ( yOffsetToCenter + firstLineAscent ) * sign;
 				break;
 			}
@@ -305,10 +305,10 @@ void MOAITextLayoutEngine::BuildLayout ( MOAITextLayout& layout, MOAITextStyleCa
 	
 	this->mStr			= str;
 	this->mCharIdx		= idx;
-	this->mSpriteIdx	= ZLIndex ( this->mLayout->mSprites.GetTop (), ZLIndex::LIMIT );
+	this->mSpriteIdx	= ZLIndexCast ( this->mLayout->mSprites.GetTop () );
 	
 	this->mStyleSpan	= 0;
-	this->mSpanIdx		= ZLIndex::ZERO;
+	this->mSpanIdx		= ZLIndexOp::ZERO;
 	
 	this->mLayoutFrameWithMargins = layoutRules.GetFrameWithMargins ();
 	
@@ -318,7 +318,7 @@ void MOAITextLayoutEngine::BuildLayout ( MOAITextLayout& layout, MOAITextStyleCa
 	this->mLineSpacingBounds.Init ( 0.0, 0.0, 0.0, 0.0 );
 	this->mLineSpacingCursor = 0.0;
 	
-	this->mBaseLine = ZLIndex ( layout.mLines.GetTop (), ZLIndex::LIMIT);
+	this->mBaseLine = ZLIndexCast ( layout.mLines.GetTop ());
 	
 	memset ( &this->mCurrentChar, 0, sizeof ( MOAITextStyledChar ));
 	this->mCurrentChar.mScale.Init ( 1.0, 1.0 );
@@ -358,7 +358,7 @@ ZLIndex MOAITextLayoutEngine::GetLineSpriteIdx () {
 //----------------------------------------------------------------//
 ZLIndex MOAITextLayoutEngine::GetSpriteIndex () {
 
-	return ZLIndex ( this->mLayout->mSprites.GetTop (), ZLIndex::LIMIT );
+	return ZLIndexCast ( this->mLayout->mSprites.GetTop () );
 }
 
 //----------------------------------------------------------------//
@@ -367,7 +367,7 @@ MOAITextLayoutEngine::MOAITextLayoutEngine () :
 	mLineSpacingCursor ( 0.0f ),
 	mEmptyLineAscent ( 0.0f ),
 	mEmptyLineDescent ( 0.0f ),
-	mBaseLine ( ZLIndex::ZERO ),
+	mBaseLine ( ZLIndexOp::ZERO ),
 	mCurrentGlyphDeck ( 0 ),
 	mResetStyle ( false ),
 	mOverrun ( false ),
@@ -393,8 +393,8 @@ MOAITextStyledChar MOAITextLayoutEngine::NextChar () {
 	this->mCurrentChar.mChar = 0; // set this here so shaper will abort if we return due to an error.
 
 	if ( !this->mStyleSpan ) {
-		this->mStyleSpan = &this->mStyleMap->Elem ( ZLIndex::ZERO );
-		this->mSpanIdx = ZLIndex::ZERO;
+		this->mStyleSpan = &this->mStyleMap->Elem ( ZLIndexOp::ZERO );
+		this->mSpanIdx = ZLIndexOp::ZERO;
 		this->mResetStyle = true;
 	}
 
@@ -531,7 +531,7 @@ u32 MOAITextLayoutEngine::PushSprite ( const MOAITextStyledChar& styledChar, flo
 	
 	this->mLayout->PushSprite ( styledChar, x, y );
 	
-	this->mSpriteIdx = ZLIndex ( this->mLayout->mSprites.GetTop (), ZLIndex::LIMIT );
+	this->mSpriteIdx = ZLIndexCast ( this->mLayout->mSprites.GetTop () );
 	
 	return PUSH_OK;
 }

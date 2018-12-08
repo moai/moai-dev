@@ -249,7 +249,7 @@ int MOAIRegion::_getDistance ( lua_State* L ) {
 int MOAIRegion::_getPolygon ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRegion, "U" )
 
-	ZLIndex polygonID = state.GetValueAsIndex ( 2 );
+	ZLIndex polygonID = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	
 	if ( polygonID < self->mPolygons.Size ()) {
 	
@@ -258,7 +258,7 @@ int MOAIRegion::_getPolygon ( lua_State* L ) {
 		const ZLPolygon2D& polygon = self->mPolygons [ polygonID ];
 	
 		ZLSize polygonSize = polygon.GetSize ();
-		for ( ZLIndex i = ZLIndex::ZERO; i < polygonSize; ++i ) {
+		for ( ZLIndex i = ZLIndexOp::ZERO; i < polygonSize; ++i ) {
 		
 			ZLVec2D vec = polygon.GetVertex ( i );
 		
@@ -380,8 +380,8 @@ int MOAIRegion::_reservePolygons ( lua_State* L ) {
 int MOAIRegion::_reserveVertices ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRegion, "UN" )
 	
-	ZLIndex idx		= state.GetValueAsIndex ( 2 );
-	ZLSize size		= state.GetValue < MOAILuaState::SizeType >( 3, 0 );
+	ZLIndex idx		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLSize size		= state.GetValue < MOAILuaSize >( 3, 0 );
 	
 	self->mPolygons [ idx ].ReserveVertices ( size );
 	
@@ -406,8 +406,8 @@ int MOAIRegion::_reverseWinding ( lua_State* L ) {
 int MOAIRegion::_setVertex ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRegion, "UNNNN" )
 	
-	ZLIndex polyIdx		= state.GetValueAsIndex ( 2 );
-	ZLIndex vertIdx		= state.GetValueAsIndex ( 3 );
+	ZLIndex polyIdx		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex vertIdx		= state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
 	
 	float x			= state.GetValue < float >( 4, 0.0f );
 	float y			= state.GetValue < float >( 5, 0.0f );
@@ -541,7 +541,7 @@ int MOAIRegion::AddFillContours ( SafeTesselator& tess, u32 mask ) const {
 
 	ZLSize size = this->mPolygons.Size ();
 	
-	for ( ZLIndex i = ZLIndex::ZERO; i < size; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
 		ZLPolygon2D& polygon = this->mPolygons [ i ];
 		if ( polygon.GetInfo () & mask ) {
 			tess.AddPolygon ( this->mPolygons [ i ]);
@@ -559,11 +559,11 @@ void MOAIRegion::Append ( const MOAIRegion& regionA, const MOAIRegion& regionB )
 	
 	this->ReservePolygons ( sizeA + sizeB );
 	
-	for ( ZLIndex i = ZLIndex::ZERO; i < sizeA; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < sizeA; ++i ) {
 		this->mPolygons [ i ].Copy ( regionA.mPolygons [ i ]);
 	}
 	
-	for ( ZLIndex i = ZLIndex::ZERO; i < sizeB; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < sizeB; ++i ) {
 		this->mPolygons [ i + sizeA ].Copy ( regionA.mPolygons [ i + sizeA ]);
 	}
 	
@@ -574,7 +574,7 @@ void MOAIRegion::Append ( const MOAIRegion& regionA, const MOAIRegion& regionB )
 void MOAIRegion::Bless () {
 
 	ZLSize size = this->mPolygons.Size ();
-	for ( ZLIndex i = ZLIndex::ZERO; i < size; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
 		this->mPolygons [ i ].Bless ();
 	}
 }
@@ -644,7 +644,7 @@ void MOAIRegion::Clip ( const MOAIRegion& region, ZLPlane2D plane ) {
 	ZLMemStream clippedPolyVerts;
 	ZLMemStream clippedPolySizes;
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < region.mPolygons.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < region.mPolygons.Size (); ++i ) {
 	
 		ZLPolygon2D& poly = region.mPolygons [ i ];
 		poly.Clip ( plane, clippedPolyVerts, clippedPolySizes );
@@ -659,9 +659,9 @@ void MOAIRegion::Clip ( const MOAIRegion& region, const MOAIRegion& clip, const 
 	ZLMemStream clippedPolyVerts;
 	ZLMemStream clippedPolySizes;
 
-	const ZLPolygon2D& clipPoly = clip.GetPolygon ( ZLIndex::ZERO );
+	const ZLPolygon2D& clipPoly = clip.GetPolygon ( ZLIndexOp::ZERO );
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < region.mPolygons.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < region.mPolygons.Size (); ++i ) {
 	
 		ZLPolygon2D& poly = region.mPolygons [ i ];
 		poly.Clip ( clipPoly, mtx, clippedPolyVerts, clippedPolySizes );
@@ -698,7 +698,7 @@ ZLSizeResult MOAIRegion::ConvexHull ( ZLStream& vtxStream, size_t nVerts ) {
 	ZL_HANDLE_ERROR_CODE ( this->ReservePolygons ( 1 ), ZL_RETURN_SIZE_RESULT ( 0, CODE ))
 
 	ZLMemStream hull;
-	ZLSizeResult hullSize = this->mPolygons [ ZLIndex::ZERO ].ConvexHull ( vtxStream, nVerts );
+	ZLSizeResult hullSize = this->mPolygons [ ZLIndexOp::ZERO ].ConvexHull ( vtxStream, nVerts );
 	
 	ZL_HANDLE_ERROR_CODE ( hullSize.mCode, ZL_RETURN_SIZE_RESULT ( 0, CODE ))
 	if ( hullSize < 3 ) ZL_RETURN_SIZE_RESULT ( 0, ZL_ERROR )
@@ -716,7 +716,7 @@ void MOAIRegion::Copy ( const MOAIRegion& region ) {
 
 		this->mPolygons.Init ( size );
 		
-		for ( ZLIndex i = ZLIndex::ZERO; i < size; ++i ) {
+		for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
 			this->mPolygons [ i ].Copy ( region.mPolygons [ i ]);
 		}
 	}
@@ -732,7 +732,7 @@ void MOAIRegion::Copy ( const SafeTesselator& tess ) {
 	// each elem is an edge loop
 	this->ReservePolygons ( nelems );
 	
-	for ( ZLIndex i = ZLIndex::ZERO; i < nelems; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < nelems; ++i ) {
 	
 		ZLPolygon2D& poly = this->GetPolygon ( i );
 		
@@ -749,7 +749,7 @@ void MOAIRegion::Cull ( const MOAIRegion& region, u32 flag, bool checkArea, floa
 	ZLSize count	= 0;
 	ZLSize size		= region.mPolygons.Size ();
 	
-	for ( ZLIndex i = ZLIndex::ZERO; i < size; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
 		ZLPolygon2D& poly = region.mPolygons [ i ];
 		if ( !this->ShouldCull ( poly, flag, checkArea, minArea )) {
 			count++;
@@ -773,10 +773,10 @@ void MOAIRegion::Cull ( const MOAIRegion& region, u32 flag, bool checkArea, floa
 	
 	count = 0;
 	
-	for ( ZLIndex i = ZLIndex::ZERO; i < size; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
 		ZLPolygon2D& poly = srcRegion->mPolygons [ i ];
 		if ( !this->ShouldCull ( poly, flag, checkArea, minArea )) {
-			this->mPolygons [ ZLIndex ( count++, ZLIndex::LIMIT )].Copy ( poly );
+			this->mPolygons [ ZLIndexCast ( count++ )].Copy ( poly );
 		}
 	}
 }
@@ -801,7 +801,7 @@ void MOAIRegion::DrawDebug () const {
 	draw.Bind ();
 
 	ZLSize nPolys = this->mPolygons.Size ();
-	for ( ZLIndex i = ZLIndex::ZERO; i < nPolys; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < nPolys; ++i ) {
 		const ZLPolygon2D& poly = this->mPolygons [ i ];
 		
 		switch ( poly.GetInfo ()) {
@@ -850,26 +850,26 @@ void MOAIRegion::DrawDebug () const {
 //----------------------------------------------------------------//
 void MOAIRegion::Edge ( const MOAIRegion& region, const ZLVec2D& offset ) {
 
-	static const ZLIndex IDX_0 ( 0, ZLIndex::LIMIT );
-	static const ZLIndex IDX_1 ( 1, ZLIndex::LIMIT );
-	static const ZLIndex IDX_2 ( 2, ZLIndex::LIMIT );
-	static const ZLIndex IDX_3 ( 3, ZLIndex::LIMIT );
+	static const ZLIndex IDX_0 = ZLIndexCast ( 0 );
+	static const ZLIndex IDX_1 = ZLIndexCast ( 1 );
+	static const ZLIndex IDX_2 = ZLIndexCast ( 2 );
+	static const ZLIndex IDX_3 = ZLIndexCast ( 3 );
 
 	SafeTesselator tess;
 	
 	ZLSize size = region.mPolygons.Size ();
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < size; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
 		ZLPolygon2D& polygon = region.mPolygons [ i ];
 		
 		ZLSize nVerts = polygon.GetSize ();
 		
-		for ( ZLIndex j = ZLIndex::ZERO; j < nVerts; ++j ) {
+		for ( ZLIndex j = ZLIndexOp::ZERO; j < nVerts; ++j ) {
 			
 			ZLVec2D contour [ 4 ];
 			
 			contour [ IDX_0 ] = polygon.GetVertex ( j );
-			contour [ IDX_1 ] = polygon.GetVertex ( ZLIndex::AddAndWrap ( j, 1, nVerts ));
+			contour [ IDX_1 ] = polygon.GetVertex (  ZLIndexOp::AddAndWrap ( j, 1, nVerts ));
 			
 			ZLVec2D edgeVec = contour [ IDX_1 ];
 			edgeVec.Sub ( contour [ IDX_0 ]);
@@ -917,11 +917,11 @@ bool MOAIRegion::FindExtremity ( ZLVec2D n, ZLVec2D& e ) {
 	ZLVec2D		bestVert ( 0.0f, 0.0f );
 
 	ZLSize size = this->mPolygons.Size ();
-	for ( ZLIndex i = ZLIndex::ZERO; i < size; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
 		ZLPolygon2D& polygon = this->mPolygons [ i ];
 		
 		ZLSize nVerts = polygon.GetSize ();
-		for ( ZLIndex j = ZLIndex::ZERO; j < nVerts; ++j ) {
+		for ( ZLIndex j = ZLIndexOp::ZERO; j < nVerts; ++j ) {
 			
 			ZLVec2D vert = polygon.GetVertex ( j );
 			
@@ -954,7 +954,7 @@ bool MOAIRegion::GetDistance ( const ZLVec2D& point, float& d, ZLVec2D& p ) cons
 
 	bool foundResult = false;
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mPolygons.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mPolygons.Size (); ++i ) {
 	
 		ZLPolygon2D& poly = this->mPolygons [ i ];
 		
@@ -989,7 +989,7 @@ const ZLPolygon2D& MOAIRegion::GetPolygon ( ZLIndex idx ) const {
 u32 MOAIRegion::GetTriangles ( SafeTesselator& tess ) const {
 
 	ZLSize nPolys = this->mPolygons.Size ();
-	for ( ZLIndex i = ZLIndex::ZERO; i < nPolys; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < nPolys; ++i ) {
 		const ZLPolygon2D& poly = this->mPolygons [ i ];
 		tess.AddContour ( 2, poly.GetVertices (), sizeof ( ZLVec2D ), ( int )poly.GetSize ());
 	}
@@ -1027,12 +1027,12 @@ ZLSizeResult MOAIRegion::GetVertices ( ZLStream& vtxStream ) const {
 	ZLSize count = 0;
 
 	ZLSize nPolys = this->mPolygons.Size ();
-	for ( ZLIndex i = ZLIndex::ZERO; i < nPolys; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < nPolys; ++i ) {
 	
 		const ZLPolygon2D& poly = this->mPolygons [ i ];
 	
 		ZLSize nVerts = poly.GetSize ();
-		for ( ZLIndex j = ZLIndex::ZERO; j < nVerts; ++j ) {
+		for ( ZLIndex j = ZLIndexOp::ZERO; j < nVerts; ++j ) {
 		
 			const ZLVec2D& v = poly.GetVertex ( j );
 			vtxStream.Write < float >( v.mX );
@@ -1065,7 +1065,7 @@ void MOAIRegion::Pad ( const MOAIRegion& region, float pad ) {
 	MOAIVectorStyle style;
 	style.Default ();
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < size; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
 	
 		ZLPolygon2D& polygon = region.mPolygons [ i ];
 		
@@ -1101,7 +1101,7 @@ bool MOAIRegion::PointInside ( const ZLVec2D& p, float pad ) const {
 
 	bool inside = false;
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < nPolys; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < nPolys; ++i ) {
 		
 		switch ( this->mPolygons [ i ].PointInside ( p )) {
 		
@@ -1120,17 +1120,17 @@ bool MOAIRegion::PointInside ( const ZLVec2D& p, float pad ) const {
 void MOAIRegion::Print () const {
 
 	ZLSize nPolys = this->mPolygons.Size ();
-	for ( ZLIndex i = ZLIndex::ZERO; i < nPolys; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < nPolys; ++i ) {
 	
 		const ZLPolygon2D& poly = this->mPolygons [ i ];
 		
-		printf ( "poly %d:\n", i.ToInt ());
+		printf ( "poly %d:\n", ZLIndexOp::ToInt ( i ));
 	
 		ZLSize nVerts = poly.GetSize ();
-		for ( ZLIndex j = ZLIndex::ZERO; j < nVerts; ++j ) {
+		for ( ZLIndex j = ZLIndexOp::ZERO; j < nVerts; ++j ) {
 		
 			const ZLVec2D& v = poly.GetVertex ( j );
-			printf ( "\t%d: (%f, %f)\n", j.ToInt (), v.mX, v.mY );
+			printf ( "\t%d: (%f, %f)\n", ZLIndexOp::ToInt ( j ), v.mX, v.mY );
 		}
 	}
 }
@@ -1149,14 +1149,14 @@ void MOAIRegion::Read ( ZLStream& verts, ZLStream& polySizes ) {
 		
 		this->ReservePolygons ( nPolygons );
 		
-		for ( ZLIndex i = ZLIndex::ZERO; i < nPolygons; ++i ) {
+		for ( ZLIndex i = ZLIndexOp::ZERO; i < nPolygons; ++i ) {
 
 			ZLSize polySize = polySizes.Read < size_t >( 0 );
 			
 			ZLPolygon2D& poly = this->mPolygons [ i ];
 			poly.ReserveVertices ( polySize );
 			
-			for ( ZLIndex j = ZLIndex::ZERO; j < polySize; ++j ) {
+			for ( ZLIndex j = ZLIndexOp::ZERO; j < polySize; ++j ) {
 			
 				ZLVec2D vert = verts.Read < ZLVec2D >( ZLVec2D ( 0.0f, 0.0f ));
 				poly.SetVert ( j, vert.mX, vert.mY );
@@ -1262,7 +1262,7 @@ void MOAIRegion::ReverseWinding ( const MOAIRegion& region ) {
 
 	ZLSize size = this->mPolygons.Size ();
 	
-	for ( ZLIndex i = ZLIndex::ZERO; i < size; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
 		ZLPolygon2D& polygon = this->mPolygons [ i ];
 		polygon.ReverseWinding ();
 	}
@@ -1275,7 +1275,7 @@ void MOAIRegion::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer
 	ZLSize nPolys = ( int )lua_objlen ( state, -1 );
 	this->mPolygons.Init ( nPolys );
 	
-	for ( ZLIndex i = ZLIndex::ZERO; i < nPolys; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < nPolys; ++i ) {
 		ZLPolygon2D& poly = this->mPolygons [ i ];
 	
 		state.PushField ( -1, ( int )(( ZLSize )i + 1 )); // TODO: cast
@@ -1297,7 +1297,7 @@ void MOAIRegion::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer 
 	UNUSED ( serializer );
 	
 	ZLSize nPolys = this->mPolygons.Size ();
-	for ( ZLIndex i = ZLIndex::ZERO; i < nPolys; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < nPolys; ++i ) {
 		const ZLPolygon2D& poly = this->mPolygons [ i ];
 
 		state.Push (( u32 )i + 1 );
@@ -1310,7 +1310,7 @@ void MOAIRegion::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer 
 void MOAIRegion::SetWinding ( u32 winding ) {
 
 	ZLSize nPolys = this->mPolygons.Size ();
-	for ( ZLIndex i = ZLIndex::ZERO; i < nPolys; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < nPolys; ++i ) {
 		ZLPolygon2D& poly = this->mPolygons [ i ];
 		
 		if ((( winding == WINDING_CLOCKWISE ) && poly.Check ( ZLPolygon2D::IS_ANTICLOCKWISE )) ||
@@ -1333,7 +1333,7 @@ void MOAIRegion::Snap ( const MOAIRegion& region, float xSnap, float ySnap ) {
 	
 	ZLSize size = this->mPolygons.Size ();
 	
-	for ( ZLIndex i = ZLIndex::ZERO; i < size; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
 		this->mPolygons [ i ].Snap ( xSnap, ySnap );
 	}
 }
@@ -1348,7 +1348,7 @@ void MOAIRegion::Stroke ( const MOAIRegion& region, float exterior, bool strokeE
 	MOAIVectorStyle style;
 	style.Default ();
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < size; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
 		ZLPolygon2D& polygon = region.mPolygons [ i ];
 		
 		int nVerts = ( int )polygon.GetSize ();
@@ -1411,7 +1411,7 @@ void MOAIRegion::Transform ( const MOAIRegion& region, const ZLAffine2D& transfo
 	this->Copy ( region );
 
 	ZLSize nPolys = this->mPolygons.Size ();
-	for ( ZLIndex i = ZLIndex::ZERO; i < nPolys; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < nPolys; ++i ) {
 		this->mPolygons [ i ].Transform ( transform );
 	}
 }

@@ -38,7 +38,7 @@ public:
 		TOTAL_ATTR,
 	};
 
-	GET_SET ( size_t, Index, mIndex.mKey )
+	GET_SET ( ZLIndex, Index, mIndex )
 
 	//----------------------------------------------------------------//
 					MOAIIndexedPropBase			();

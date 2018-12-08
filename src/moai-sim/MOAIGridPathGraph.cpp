@@ -100,13 +100,13 @@ void MOAIGridPathGraph::PushNeighbor ( MOAIPathFinder& pathFinder, MOAIGridPathG
 		
 		if ( pathFinder.CheckMask ( tile1 )) {
 			
-			ZLIndex neighborID = ZLIndex ( this->mGrid->GetCellAddr ( coord ), ZLIndex::LIMIT );
+			ZLIndex neighborID = ZLIndexCast ( this->mGrid->GetCellAddr ( coord ) );
 			
 			if ( !pathFinder.IsVisited ( neighborID )) {
 				
 				float g = ( moveCost + pathFinder.ComputeTerrainCost ( moveCost, tile0, tile1 )) * params.mGWeight;
 				
-				int targetID = pathFinder.GetTargetNodeID ();
+				ZLIndex targetID = pathFinder.GetTargetNodeID ();
 				MOAICellCoord targetCoord = this->mGrid->GetCellCoord ( targetID );
 				
 				float h = this->ComputeHeuristic ( params, coord, targetCoord ) * params.mHWeight;

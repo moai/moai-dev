@@ -9,19 +9,8 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-template < typename TYPE >
-TYPE MOAILuaState::GetFieldValue ( int idx, int key, TYPE value ) {
-
-	this->PushField ( idx, key );
-	value = this->GetValue < TYPE >( -1, value );
-	this->Pop ( 1 );
-	
-	return value;
-}
-
-//----------------------------------------------------------------//
-template < typename TYPE >
-TYPE MOAILuaState::GetFieldValue ( int idx, cc8* key, TYPE value ) {
+template < typename KEY_TYPE, typename TYPE >
+TYPE MOAILuaState::GetFieldValue ( int idx, KEY_TYPE key, TYPE value ) {
 
 	this->PushField ( idx, key );
 	value = this->GetValue < TYPE >( -1, value );
@@ -138,6 +127,28 @@ ZLMetaVec3D < TYPE > MOAILuaState::GetVec3D ( int idx, TYPE value ) {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
+bool MOAILuaState::HasField ( int idx, TYPE key ) {
+
+	this->PushField ( idx, key );
+	bool hasField = ( lua_isnil ( this->mState, -1 ) == false );
+	lua_pop ( this->mState, 1 );
+	
+	return hasField;
+}
+
+//----------------------------------------------------------------//
+template < typename TYPE >
+bool MOAILuaState::HasFieldWithType ( int idx, TYPE key, int type ) {
+
+	this->PushField ( idx, key );
+	bool hasField = ( lua_type ( this->mState, -1 ) == type );
+	lua_pop ( this->mState, 1 );
+	
+	return hasField;
+}
+
+//----------------------------------------------------------------//
+template < typename TYPE >
 TYPE MOAILuaState::PopValue ( TYPE value ) {
 
 	value = this->GetValue < TYPE >( -1, value );
@@ -156,6 +167,18 @@ void MOAILuaState::Push ( ZLMetaRect < TYPE >& rect ) {
 }
 
 //----------------------------------------------------------------//
+template < typename KEY_TYPE >
+bool MOAILuaState::PushFieldWithType ( int idx, KEY_TYPE key, int type ) {
+
+	this->PushField ( idx, key );
+	if ( lua_type ( this->mState, -1 ) != type ) {
+		lua_pop ( this->mState, 1 );
+		return false;
+	}
+	return true;
+}
+
+//----------------------------------------------------------------//
 template < typename TYPE >
 void MOAILuaState::ReadArray ( int size, TYPE* values, TYPE value ) {
 
@@ -165,19 +188,8 @@ void MOAILuaState::ReadArray ( int size, TYPE* values, TYPE value ) {
 }
 
 //----------------------------------------------------------------//
-template < typename TYPE >
-void MOAILuaState::SetField ( int idx, cc8* key, TYPE value ) {
-	
-	if ( this->IsTableOrUserdata ( idx )) {
-		idx = this->AbsIndex ( idx );
-		this->Push ( value );
-		lua_setfield ( this->mState, idx, key );
-	}
-}
-
-//----------------------------------------------------------------//
-template < typename TYPE >
-void MOAILuaState::SetFieldByIndex ( int idx, int key, TYPE value ) {
+template < typename KEY_TYPE, typename TYPE >
+void MOAILuaState::SetField ( int idx, KEY_TYPE key, TYPE value ) {
 	
 	if ( this->IsTableOrUserdata ( idx )) {
 		idx = this->AbsIndex ( idx );
@@ -200,7 +212,7 @@ template < typename TYPE >
 void MOAILuaState::WriteArray ( int size, TYPE* values ) {
 
 	for ( int i = 0; i < size; ++i ) {
-		this->SetFieldByIndex ( -1, i + 1, values [ i ]);
+		this->SetField ( -1, i + 1, values [ i ]);
 	}
 }
 

@@ -21,7 +21,7 @@
 int MOAIIndexedPropBase::_getIndex ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIIndexedPropBase, "U" )
 
-	state.Push ( self->mIndex );
+	state.Push ( MOAILuaIndex ( self->mIndex ));
 
 	return 1;
 }
@@ -37,7 +37,7 @@ int MOAIIndexedPropBase::_getIndex ( lua_State* L ) {
 int MOAIIndexedPropBase::_setIndex ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIIndexedPropBase, "U" )
 
-	self->mIndex = state.GetValue < ZLIndex >( 2, ZLIndex::ZERO );
+	self->mIndex = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	self->ScheduleUpdate ();
 
 	return 0;
@@ -49,7 +49,7 @@ int MOAIIndexedPropBase::_setIndex ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAIIndexedPropBase::MOAIIndexedPropBase () :
-	mIndex ( ZLIndex::ZERO ) {
+	mIndex ( ZLIndexOp::ZERO ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIDeckPropBase )

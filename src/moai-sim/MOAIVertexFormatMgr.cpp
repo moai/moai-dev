@@ -42,32 +42,32 @@ MOAIVertexFormat* MOAIVertexFormatMgr::GetFormat ( u32 formatID ) {
 			switch ( formatID ) {
 				
 				case XYZC:
-					format->DeclareAttribute ( XYZC_POSITION, ZGL_TYPE_FLOAT, 3, MOAIVertexFormat::ATTRIBUTE_COORD, false );
-					format->DeclareAttribute ( XYZC_COLOR, ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
+					format->DeclareAttribute ( ZLIndexCast ( XYZC_POSITION ), ZGL_TYPE_FLOAT, 3, MOAIVertexFormat::ATTRIBUTE_COORD, false );
+					format->DeclareAttribute ( ZLIndexCast ( XYZC_COLOR ), ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
 					break;
 				
 				case XYZWC:
-					format->DeclareAttribute ( XYZWC_POSITION, ZGL_TYPE_FLOAT, 4, MOAIVertexFormat::ATTRIBUTE_COORD, false );
-					format->DeclareAttribute ( XYZWC_COLOR, ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
+					format->DeclareAttribute ( ZLIndexCast ( XYZWC_POSITION ), ZGL_TYPE_FLOAT, 4, MOAIVertexFormat::ATTRIBUTE_COORD, false );
+					format->DeclareAttribute ( ZLIndexCast ( XYZWC_COLOR ), ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
 					break;
 				
 				case XYZWUVC:
-					format->DeclareAttribute ( XYZWUVC_POSITION, ZGL_TYPE_FLOAT, 4, MOAIVertexFormat::ATTRIBUTE_COORD, false );
-					format->DeclareAttribute ( XYZWUVC_TEXCOORD, ZGL_TYPE_FLOAT, 2, MOAIVertexFormat::ATTRIBUTE_TEX_COORD, false );
-					format->DeclareAttribute ( XYZWUVC_COLOR, ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
+					format->DeclareAttribute ( ZLIndexCast ( XYZWUVC_POSITION ), ZGL_TYPE_FLOAT, 4, MOAIVertexFormat::ATTRIBUTE_COORD, false );
+					format->DeclareAttribute ( ZLIndexCast ( XYZWUVC_TEXCOORD ), ZGL_TYPE_FLOAT, 2, MOAIVertexFormat::ATTRIBUTE_TEX_COORD, false );
+					format->DeclareAttribute ( ZLIndexCast ( XYZWUVC_COLOR ), ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
 					break;
 				
 				case XYZWNNNC:
-					format->DeclareAttribute ( XYZWNNNC_POSITION, ZGL_TYPE_FLOAT, 4, MOAIVertexFormat::ATTRIBUTE_COORD, false );
-					format->DeclareAttribute ( XYZWNNNC_NORMAL, ZGL_TYPE_FLOAT, 3, MOAIVertexFormat::ATTRIBUTE_NORMAL, false );
-					format->DeclareAttribute ( XYZWNNNC_COLOR, ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
+					format->DeclareAttribute ( ZLIndexCast ( XYZWNNNC_POSITION ), ZGL_TYPE_FLOAT, 4, MOAIVertexFormat::ATTRIBUTE_COORD, false );
+					format->DeclareAttribute ( ZLIndexCast ( XYZWNNNC_NORMAL ), ZGL_TYPE_FLOAT, 3, MOAIVertexFormat::ATTRIBUTE_NORMAL, false );
+					format->DeclareAttribute ( ZLIndexCast ( XYZWNNNC_COLOR ), ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
 					break;
 				
 				case XYZWNNNUVC:
-					format->DeclareAttribute ( XYZWNNNUVC_POSITION, ZGL_TYPE_FLOAT, 4, MOAIVertexFormat::ATTRIBUTE_COORD, false );
-					format->DeclareAttribute ( XYZWNNNUVC_NORMAL, ZGL_TYPE_FLOAT, 3, MOAIVertexFormat::ATTRIBUTE_NORMAL, false );
-					format->DeclareAttribute ( XYZWNNNUVC_TEXCOORD, ZGL_TYPE_FLOAT, 2, MOAIVertexFormat::ATTRIBUTE_TEX_COORD, false );
-					format->DeclareAttribute ( XYZWNNNUVC_COLOR, ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
+					format->DeclareAttribute ( ZLIndexCast ( XYZWNNNUVC_POSITION ), ZGL_TYPE_FLOAT, 4, MOAIVertexFormat::ATTRIBUTE_COORD, false );
+					format->DeclareAttribute ( ZLIndexCast ( XYZWNNNUVC_NORMAL ), ZGL_TYPE_FLOAT, 3, MOAIVertexFormat::ATTRIBUTE_NORMAL, false );
+					format->DeclareAttribute ( ZLIndexCast ( XYZWNNNUVC_TEXCOORD ), ZGL_TYPE_FLOAT, 2, MOAIVertexFormat::ATTRIBUTE_TEX_COORD, false );
+					format->DeclareAttribute ( ZLIndexCast ( XYZWNNNUVC_COLOR ), ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
 					break;
 			}
 			

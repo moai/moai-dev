@@ -110,14 +110,14 @@ void MOAIMaterialMgr::Compose ( const MOAIMaterial& material ) {
 MOAILight* MOAIMaterialMgr::GetLight ( u32 lightID ) {
 
 	assert ( lightID < MAX_GLOBAL_LIGHTS );
-	return this->mNamedLights [ ZLIndex ( lightID, ZLIndex::LIMIT )].mLight;
+	return this->mNamedLights [ ZLIndexCast ( lightID )].mLight;
 }
 
 //----------------------------------------------------------------//
 MOAITextureBase* MOAIMaterialMgr::GetTexture ( u32 textureID ) {
 
 	assert ( textureID < MAX_GLOBAL_TEXTURES );
-	MOAITextureBase* texture = this->mNamedTextures [ ZLIndex ( textureID, ZLIndex::LIMIT )].mTexture;
+	MOAITextureBase* texture = this->mNamedTextures [ ZLIndexCast ( textureID )].mTexture;
 	return texture ? texture : ( MOAITextureBase* )this->mTexture;
 }
 
@@ -258,7 +258,7 @@ void MOAIMaterialMgr::SetGlobal ( MOAIMaterialGlobal& global, void* ptr ) {
 void MOAIMaterialMgr::SetLight ( u32 lightID, MOAILight* light ) {
 
 	assert ( lightID < MAX_GLOBAL_LIGHTS );
-	this->SetGlobal ( this->mNamedLights [ ZLIndex ( lightID, ZLIndex::LIMIT )], light );
+	this->SetGlobal ( this->mNamedLights [ ZLIndexCast ( lightID )], light );
 }
 
 //----------------------------------------------------------------//
@@ -289,5 +289,5 @@ void MOAIMaterialMgr::SetTexture ( MOAITextureBase* texture ) {
 void MOAIMaterialMgr::SetTexture ( u32 textureID, MOAITextureBase* texture ) {
 	
 	assert ( textureID < MAX_GLOBAL_TEXTURES );
-	this->SetGlobal ( this->mNamedTextures [ ZLIndex ( textureID, ZLIndex::LIMIT )], texture );
+	this->SetGlobal ( this->mNamedTextures [ ZLIndexCast ( textureID )], texture );
 }

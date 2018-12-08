@@ -59,7 +59,7 @@ int MOAIPath::_reserve ( lua_State* L ) {
 int MOAIPath::_setPoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPath, "U" );
 
-	ZLIndex idx		= state.GetValueAsIndex ( 2 );
+	ZLIndex idx		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	float x			= state.GetValue < float >( 3, 0.0f );
 	float y			= state.GetValue < float >( 4, 0.0f );
 	
@@ -95,7 +95,7 @@ void MOAIPath::Bless () {
 	
 	this->mLength = 0.0f;
 	
-	for ( ZLIndex i = ZLIndex::ZERO; i < totalSegments; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalSegments; ++i ) {
 	
 		ZLCubicBezier2D curve = this->GetSegment ( i );
 		
@@ -121,7 +121,7 @@ ZLVec2D MOAIPath::Evaluate ( float t ) {
 //----------------------------------------------------------------//
 ZLCubicBezier2D MOAIPath::GetSegment ( ZLIndex idx ) {
 
-	ZLIndex basePoint = idx > 0 ? idx * ( ZLSize )3 : ZLIndex::ZERO;
+	ZLIndex basePoint = idx > 0 ? idx * ( ZLSize )3 : ZLIndexOp::ZERO;
 	
 	ZLCubicBezier2D curve;
 	
@@ -148,7 +148,7 @@ ZLCubicBezier2D MOAIPath::GetSegmentForTime ( float t, float* st ) {
 		( *st ) = t - s;
 	}
 	
-	return this->GetSegment ( ZLIndex (( ZLSize )s, ZLIndex::LIMIT ));
+	return this->GetSegment ( ZLIndexCast (( ZLSize )s ));
 }
 
 //----------------------------------------------------------------//

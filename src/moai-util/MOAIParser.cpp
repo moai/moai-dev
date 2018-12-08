@@ -219,7 +219,7 @@ void MOAIParser::Traverse ( ZLSyntaxNode* node ) {
 		this->OnStartNonterminal ( node );
 		
 		ZLSize nChildren = node->CountChildren ();
-		for ( ZLIndex i = ZLIndex::ZERO; i < nChildren; ++i ) {
+		for ( ZLIndex i = ZLIndexOp::ZERO; i < nChildren; ++i ) {
 			this->Traverse ( node->GetChild ( i ));
 		}
 		

@@ -46,8 +46,8 @@ int MOAILight::_setTransform ( lua_State* L ) {
 int MOAILight::_setUniform ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILight, "U" )
 
-	ZLIndex uniformID = state.GetValueAsIndex ( 2 );
-	self->SetUniform ( L, 3, self->mBuffer.GetBuffer (), uniformID, ZLIndex::ZERO );
+	ZLIndex uniformID = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	self->SetUniform ( L, 3, self->mBuffer.GetBuffer (), uniformID, ZLIndexOp::ZERO );
 	return 0;
 }
 
@@ -70,7 +70,7 @@ void MOAILight::BindTextures ( u32 textureOffset ) {
 	MOAIGfxMgr& gfx = MOAIGfxMgr::Get ();
 
 	size_t nTextures = this->mTextures.Size ();
-	for ( ZLIndex i = ZLIndex::ZERO; i < nTextures; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < nTextures; ++i ) {
 		gfx.mGfxState.SetTexture ( this->mTextures [ i ], i + ( ZLSize )textureOffset );
 	}
 }

@@ -689,7 +689,7 @@ int MOAIVectorTesselator::_setVertexExtra ( lua_State* L ) {
 	size_t len;
 	void* extra = ( void* )lua_tolstring ( state, 3, &len );
 	
-	self->SetVertexExtra ( ZLIndex ( idx, ZLIndex::LIMIT ), extra, len );
+	self->SetVertexExtra ( ZLIndexCast ( idx ), extra, len );
 	
 	return 0;
 }
@@ -801,7 +801,7 @@ void MOAIVectorTesselator::Clear () {
 
 	this->ClearShapes ();
 	
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mVtxExtras.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVtxExtras.Size (); ++i ) {
 		free ( this->mVtxExtras [ i ]);
 	}
 	this->mVtxExtraSize = 0;
@@ -810,7 +810,7 @@ void MOAIVectorTesselator::Clear () {
 //----------------------------------------------------------------//
 void MOAIVectorTesselator::ClearShapes () {
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mShapeStack.GetTop (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mShapeStack.GetTop (); ++i ) {
 		MOAIVectorShape* shape = this->mShapeStack [ i ];
 		if ( shape ) {
 			delete this->mShapeStack [ i ];
@@ -846,7 +846,7 @@ int MOAIVectorTesselator::Finish () {
 	if ( vertsTop ) {
 	
 		assert ( shapesTop );
-		MOAIVectorShape* shape = this->mShapeStack [ ZLIndex ( shapesTop - 1, ZLIndex::LIMIT )];
+		MOAIVectorShape* shape = this->mShapeStack [ ZLIndexCast ( shapesTop - 1 )];
 		bool result = shape->SetVertices ( this->mVertexStack.GetBuffer (), vertsTop, this->mPolyClosed );
 		
 		assert ( result );
@@ -859,7 +859,7 @@ int MOAIVectorTesselator::Finish () {
 		if ( shapesTop >= 2 ) {
 			
 			bool done = false;
-			for ( ZLIndex i ( shapesTop - 2, ZLIndex::LIMIT ); ( i >= 0 ) && ( !done ); --i ) {
+			for ( ZLIndex i = ZLIndexCast ( shapesTop - 2 ); ( i >= 0 ) && ( !done ); --i ) {
 				ZLIndex c = i + ( ZLSize )1;
 				MOAIVectorShape* shape = this->mShapeStack [ i ];
 				if ( shape->CanGroup () && shape->GroupShapes ( &this->mShapeStack [ c ], shapesTop - c )) {
@@ -905,7 +905,7 @@ void MOAIVectorTesselator::PopTransform () {
 	ZLAffine2D transform;
 	transform.Ident ();
 	
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mMatrixStack.GetTop (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mMatrixStack.GetTop (); ++i ) {
 		transform.Prepend ( this->mMatrixStack [ i ]);
 	}
 	this->mStyle.mDrawingToWorld = transform;
@@ -960,7 +960,7 @@ void MOAIVectorTesselator::PushRect ( float xMin, float yMin, float xMax, float 
 void MOAIVectorTesselator::PushRegion ( const MOAIRegion& region ) {
 
 	ZLSize size = region.GetSize ();
-	for ( ZLIndex i = ZLIndex::ZERO; i < size; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
 	
 		const ZLPolygon2D& polygon = region.GetPolygon ( i );
 		this->PushPoly ( polygon.GetVertices(), polygon.GetSize (), true ); // TODO: cast
@@ -1173,7 +1173,7 @@ void MOAIVectorTesselator::ReserveVertexExtras ( ZLSize total, size_t size ) {
 	this->mVtxExtraSize = size;
 	this->mVtxExtras.Init ( total );
 	
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mVtxExtras.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVtxExtras.Size (); ++i ) {
 		this->mVtxExtras [ i ] = calloc ( 1, this->mVtxExtraSize );
 	}
 }
@@ -1193,7 +1193,7 @@ int MOAIVectorTesselator::Tesselate ( SafeTesselator& tess, u32 flags ) {
 	int error = this->Finish ();
 	if ( error ) return error;
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mShapeStack.GetTop (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mShapeStack.GetTop (); ++i ) {
 		MOAIVectorShape* shape = this->mShapeStack [ i ];
 		error = shape->Tesselate ( *this, tess, flags );
 		if ( error ) return error;
@@ -1209,7 +1209,7 @@ int MOAIVectorTesselator::Tesselate ( MOAIRegion& region, u32 flags ) {
 	
 	if ( this->mShapeStack.GetTop () == 1 ) {
 
-		useTess = this->mShapeStack [ ZLIndex::ZERO ]->Tesselate ( *this, region, flags ) != 0;
+		useTess = this->mShapeStack [ ZLIndexOp::ZERO ]->Tesselate ( *this, region, flags ) != 0;
 	}
 
 	if ( useTess ) {
@@ -1241,7 +1241,7 @@ int MOAIVectorTesselator::Tesselate ( ZLStream& vtxStream, ZLStream& idxStream, 
 
 	this->mDepthOffset = 0.0f;
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mShapeStack.GetTop (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mShapeStack.GetTop (); ++i ) {
 		MOAIVectorShape* shape = this->mShapeStack [ i ];
 		error = shape->Tesselate ( *this, vtxStream, idxStream, format, flags );
 		assert ( error == 0 );
@@ -1279,7 +1279,7 @@ void MOAIVectorTesselator::WriteShapes ( ZLStream& stream, MOAIVectorTesselatorW
 	u32 nShapes = this->mShapeStack.GetTop ();
 
 	if ( nShapes ) {
-		for ( ZLIndex i = ZLIndex::ZERO; i < nShapes; ++i ) {
+		for ( ZLIndex i = ZLIndexOp::ZERO; i < nShapes; ++i ) {
 			MOAIVectorShape* shape = this->mShapeStack [ i ];
 			writer->WriteShape ( stream, *shape );
 		}
@@ -1486,15 +1486,15 @@ void MOAIVectorTesselator::WriteVertex ( ZLStream& stream, MOAIVertexFormat& for
 	
 		stream.SetCursor ( base + ( vertexSize - this->mVtxExtraSize ));
 		
-		vertexExtraID = ZLIndex::Wrap ( vertexExtraID, this->mVtxExtras.Size ());
+		vertexExtraID =  ZLIndexOp::Wrap ( vertexExtraID, this->mVtxExtras.Size ());
 		stream.WriteBytes ( this->mVtxExtras [ vertexExtraID ], this->mVtxExtraSize );
 		
 		stream.SetCursor ( base );
 	}
 		
-	format.WriteCoord ( stream, ZLIndex::ZERO, x, y, z, 1.0f );
-	format.WriteColor ( stream, ZLIndex::ZERO, color );
-	format.WriteNormal ( stream, ZLIndex::ZERO, xn, yn, zn );
+	format.WriteCoord ( stream, ZLIndexOp::ZERO, x, y, z, 1.0f );
+	format.WriteColor ( stream, ZLIndexOp::ZERO, color );
+	format.WriteNormal ( stream, ZLIndexOp::ZERO, xn, yn, zn );
 	
 	// next vertex
 	format.SeekVertex ( stream, base, 1 );

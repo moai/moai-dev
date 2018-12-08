@@ -99,13 +99,13 @@ ZLMatrix4x4 MOAIGfxState::GetWndToWorldMtx ( const ZLRect& wndRect ) {
 
 //----------------------------------------------------------------//
 MOAIGfxState::MOAIGfxState () :
-	mStateStackTop ( ZLIndex::ZERO ) {
+	mStateStackTop ( ZLIndexOp::ZERO ) {
 }
 
 //----------------------------------------------------------------//
 MOAIGfxState::~MOAIGfxState () {
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mStateStack.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mStateStack.Size (); ++i ) {
 		delete this->mStateStack [ i ];
 	}
 }

@@ -171,7 +171,7 @@ public:
 	
 	ZLIndex				GetCellAddr				( MOAICellCoord cellCoord ) const;
 	ZLIndex				GetCellAddr				( int xCell, int yCell ) const;
-	MOAICellCoord		GetCellCoord			( int cellAddr ) const;
+	MOAICellCoord		GetCellCoord			( ZLIndex cellAddr ) const;
 	MOAICellCoord		GetCellCoord			( ZLVec2D loc ) const;
 	MOAICellCoord		GetCellCoord			( float x, float y ) const;
 	MOAICellCoord		GetCellCoord			( int xCell, int yCell ) const;

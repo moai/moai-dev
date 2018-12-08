@@ -47,7 +47,7 @@ public:
 
 	//----------------------------------------------------------------//
 	MOAIMaterialBatch*		AffirmMaterialBatch			();
-	MOAIMaterial*			GetMaterial					( ZLIndex idx = ZLIndex::ZERO );
+	MOAIMaterial*			GetMaterial					( ZLIndex idx = ZLIndexOp::ZERO );
 							MOAIMaterialBatchHolder		();
 							~MOAIMaterialBatchHolder	();
 	void					RegisterLuaClass			( MOAILuaState& state );

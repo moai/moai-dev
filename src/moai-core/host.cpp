@@ -161,7 +161,7 @@ void _pushArgOrParam ( MOAILuaState& state, int index, char* arg, int asParam ) 
 		}
 	}
 	else {
-		state.SetFieldByIndex ( -1, index, arg );
+		state.SetField ( -1, index, arg );
 	}
 }
 
@@ -169,8 +169,8 @@ void _pushArgOrParam ( MOAILuaState& state, int index, char* arg, int asParam ) 
 void _setupArgs ( MOAILuaState& state, char* exeName, char* scriptName, int asParams ) {
 
 	lua_newtable ( state );
-	state.SetFieldByIndex ( -1, -1, exeName );
-	state.SetFieldByIndex ( -1, 0, scriptName );
+	state.SetField ( -1, -1, exeName );
+	state.SetField ( -1, 0, scriptName );
 	lua_setglobal ( state, "arg" );
 
 	if ( asParams == AKU_AS_ARGS ) {

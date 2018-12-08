@@ -22,15 +22,15 @@
 int MOAISelectionMesh::_addSelection ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISelectionMesh, "UNN*" )
 	
-	ZLIndex set		= ZLIndex::ZERO;
-	ZLIndex base	= ZLIndex::ZERO;
-	ZLIndex top		= ZLIndex::ZERO;
+	ZLIndex set		= ZLIndexOp::ZERO;
+	ZLIndex base	= ZLIndexOp::ZERO;
+	ZLIndex top		= ZLIndexOp::ZERO;
 	
 	if ( state.IsType ( 4, LUA_TNUMBER )) {
 
-		set			= state.GetValueAsIndex ( 2 );
-		base		= state.GetValueAsIndex ( 3 );
-		top			= state.GetValueAsIndex ( 4 );
+		set			= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+		base		= state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
+		top			= state.GetValue < MOAILuaIndex >( 4, ZLIndexOp::ZERO );
 	}
 	else {
 	
@@ -38,12 +38,12 @@ int MOAISelectionMesh::_addSelection ( lua_State* L ) {
 		if ( result.mCode != ZL_OK ) return 0;
 		
 		set			= result;
-		base		= state.GetValueAsIndex ( 2 );
-		top			= state.GetValueAsIndex ( 3 );
+		base		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+		top			= state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
 	}
 	
 	self->AddSelection ( set, base, top );
-	state.Push ( set + ( ZLSize )1 );
+	state.Push ( MOAILuaIndex ( set ));
 	return 1;
 }
 
@@ -52,12 +52,12 @@ int MOAISelectionMesh::_addSelection ( lua_State* L ) {
 int MOAISelectionMesh::_clearSelection ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISelectionMesh, "UN" )
 
-	ZLIndex set		= state.GetValueAsIndex ( 2 );
+	ZLIndex set		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	
 	if ( state.CheckParams ( 3, "NN", false )) {
 	
-		ZLIndex base	= state.GetValueAsIndex ( 3 );
-		ZLIndex top		= state.GetValueAsIndex ( 4 );
+		ZLIndex base	= state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
+		ZLIndex top		= state.GetValue < MOAILuaIndex >( 4, ZLIndexOp::ZERO );
 	
 		self->ClearSelection ( set, base, top );
 	}
@@ -72,8 +72,8 @@ int MOAISelectionMesh::_clearSelection ( lua_State* L ) {
 int MOAISelectionMesh::_mergeSelection ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISelectionMesh, "UNN" )
 
-	ZLIndex set		= state.GetValueAsIndex ( 2 );
-	ZLIndex merge	= state.GetValueAsIndex ( 3 );
+	ZLIndex set		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex merge	= state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
 
 	self->MergeSelection ( set, merge );
 
@@ -86,7 +86,7 @@ int MOAISelectionMesh::_printSelection ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISelectionMesh, "U" )
 
 	if ( state.IsType ( 2, LUA_TNUMBER )) {
-		self->PrintSelection ( state.GetValueAsIndex ( 2 ));
+		self->PrintSelection ( state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO ));
 	}
 	else {
 		self->PrintSelections ();
@@ -99,7 +99,7 @@ int MOAISelectionMesh::_printSelection ( lua_State* L ) {
 int MOAISelectionMesh::_reserveSelections ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISelectionMesh, "U" )
 
-	ZLSize total = state.GetValue < MOAILuaState::SizeType >( 2, 0 );
+	ZLSize total = state.GetValue < MOAILuaSize >( 2, 0 );
 	self->ReserveSelections ( total );
 
 	return 0;
@@ -221,9 +221,9 @@ void MOAISelectionMesh::AddSelection ( ZLIndex set, ZLIndex base, ZLIndex top ) 
 //----------------------------------------------------------------//
 ZLResult < ZLIndex > MOAISelectionMesh::AffirmSpanSet () {
 
-	ZLIndex top = ZLIndex ( this->mSets.Size (), ZLIndex::LIMIT );
+	ZLIndex top = ZLIndexCast ( this->mSets.Size () );
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < top; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < top; ++i ) {
 		if ( !this->mSets [ i ]) {
 			ZL_RETURN_RESULT ( ZLIndex, i, ZL_OK );
 		}
@@ -232,7 +232,7 @@ ZLResult < ZLIndex > MOAISelectionMesh::AffirmSpanSet () {
 	if ( this->mSets.Grow ( top ) == ZL_OK ) {
 		ZL_RETURN_RESULT ( ZLIndex, top, ZL_OK );
 	}
-	ZL_RETURN_RESULT ( ZLIndex, ZLIndex::INVALID, ZL_ERROR );
+	ZL_RETURN_RESULT ( ZLIndex, ZLIndexOp::INVALID, ZL_ERROR );
 }
 
 //----------------------------------------------------------------//
@@ -599,7 +599,7 @@ void MOAISelectionMesh::MOAIDeck_Draw ( ZLIndex idx ) {
 	size_t size = this->mSets.Size ();
 	if ( !size ) return;
 
-	ZLIndex itemIdx = ZLIndex::Wrap ( idx, size );
+	ZLIndex itemIdx =  ZLIndexOp::Wrap ( idx, size );
 	
 	MOAIMeshSpan* span = this->mSets [ itemIdx ];
 	if ( !span ) return;

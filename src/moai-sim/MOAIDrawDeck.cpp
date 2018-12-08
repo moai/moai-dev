@@ -136,7 +136,7 @@ void MOAIDrawDeck::MOAIDeck_Draw ( ZLIndex idx ) {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		this->mOnDraw.PushRef ( state );
 
-		state.Push ( idx );
+		state.Push ( MOAILuaIndex ( idx ));
 		state.Push ( stretch.mX );
 		state.Push ( stretch.mY );
 		state.Push ( stretch.mZ );
@@ -153,7 +153,7 @@ ZLBounds MOAIDrawDeck::MOAIDeck_GetBounds ( ZLIndex idx ) {
 		
 		this->mOnBounds.PushRef ( state );
 		
-		state.Push ( idx );
+		state.Push ( MOAILuaIndex ( idx ));
 		state.DebugCall ( 1, 6 );
 		
 		ZLBounds bounds;

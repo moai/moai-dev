@@ -38,8 +38,8 @@ public:
 	//----------------------------------------------------------------//
 	inline TYPE& operator [] ( const ZLIndex& idx ) const {
 		
-		assert ( idx.mKey < this->mSize );
-		return this->mData [ idx.mKey ];
+		assert ( idx < this->mSize );
+		return this->mData [( ZLSize )idx ];
 	}
 
 	//----------------------------------------------------------------//
@@ -49,7 +49,7 @@ public:
 
 	//----------------------------------------------------------------//
 	inline bool CheckIndex ( ZLIndex index ) const {
-		return ( index.mKey < this->mSize );
+		return ( index < this->mSize );
 	}
 
 	//----------------------------------------------------------------//
@@ -78,7 +78,7 @@ public:
 
 	//----------------------------------------------------------------//
 	inline TYPE& Elem ( const ZLIndex& idx ) {
-		return this->mData [ idx.mKey ];
+		return this->mData [( ZLSize )idx ];
 	}
 
 	//----------------------------------------------------------------//

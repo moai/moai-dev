@@ -61,7 +61,7 @@ int MOAIEaseDriver::_setLink ( lua_State* L ) {
 	MOAINode* dest = state.GetLuaObject < MOAINode >( 3, true );
 	if ( !dest ) return 0;
 	
-	ZLIndex idx			= state.GetValueAsIndex ( 2 );
+	ZLIndex idx			= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	u32 destAttrID		= state.GetValue < u32 >( 4, 0 );
 	
 	MOAINode* source = state.GetLuaObject < MOAINode >( 5, true );
@@ -97,7 +97,7 @@ MOAIEaseDriver::MOAIEaseDriver () {
 MOAIEaseDriver::~MOAIEaseDriver () {
 
 	ZLSize total = this->mLinks.Size ();
-	for ( ZLIndex i = ZLIndex::ZERO; i < total; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < total; ++i ) {
 		MOAIEaseDriverLink& link = this->mLinks [ i ];
 		link.mSource.Set ( *this, 0 );
 		link.mDest.Set ( *this, 0 );
@@ -130,7 +130,7 @@ u32 MOAIEaseDriver::ParseForMove ( MOAILuaState& state, int idx, MOAINode* dest,
 		
 		this->ReserveLinks ( count );
 		
-		ZLIndex linkID = ZLIndex::ZERO;
+		ZLIndex linkID = ZLIndexOp::ZERO;
 		for ( ZLSize i = 0; i < total; ++i ) {
 		
 			u32 destAttrID = destAttrIDs [ i ];
@@ -171,7 +171,7 @@ u32 MOAIEaseDriver::ParseForSeek ( MOAILuaState& state, int idx, MOAINode* dest,
 		
 		this->ReserveLinks ( count );
 		
-		ZLIndex linkID = ZLIndex::ZERO;
+		ZLIndex linkID = ZLIndexOp::ZERO;
 		for ( u32 i = 0; i < total; ++i ) {
 		
 			u32 destAttrID = destAttrIDs [ i ];
@@ -268,7 +268,7 @@ void MOAIEaseDriver::MOAIAction_Update ( double step ) {
 	MOAIAttribute adder;
 
 	ZLSize total = this->mLinks.Size ();
-	for ( ZLIndex i = ZLIndex::ZERO; i < total; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < total; ++i ) {
 		
 		MOAIEaseDriverLink& link = this->mLinks [ i ];
 		if ( link.mDest ) {

@@ -143,7 +143,7 @@ bool MOAIMeshPrimReader::Init ( MOAIMesh& mesh, ZLIndex vertexBufferIndex ) {
 	this->mMesh				= &mesh;
 	this->mVertexFormat		= vertexFormat;
 	
-	this->mAttribute		= vertexFormat->GetAttributeByUse ( MOAIVertexFormat::ATTRIBUTE_COORD, ZLIndex::ZERO );
+	this->mAttribute		= vertexFormat->GetAttributeByUse ( MOAIVertexFormat::ATTRIBUTE_COORD, ZLIndexOp::ZERO );
 	this->mVertexBuffer		= vertexBuffer->ZLCopyOnWrite::GetBuffer ();
 	this->mIndexBuffer		= mesh.mIndexBuffer;
 	
@@ -204,7 +204,7 @@ int MOAIMesh::_buildQuadTree ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "U" )
 
 	u32 targetPrimsPerNode			= state.GetValue < u32 >( 1, MOAIMeshSparseQuadTree::DEFAULT_TARGET_PRIMS_PER_NODE );
-	ZLIndex vertexBufferIndex		= state.GetValueAsIndex ( 2 );
+	ZLIndex vertexBufferIndex		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 
 	MOAIMeshPrimReader coordReader;
 	
@@ -224,7 +224,7 @@ int MOAIMesh::_buildTernaryTree ( lua_State* L ) {
 	
 	u32 axisMask				= state.GetValue < u32 >( 2, MOAIMeshTernaryTree::AXIS_MASK_ALL );
 	u32 targetPrimsPerNode		= state.GetValue < u32 >( 3, MOAIMeshTernaryTree::DEFAULT_TARGET_PRIMS_PER_NODE );
-	ZLIndex vertexBufferIndex	= state.GetValueAsIndex ( 4 );
+	ZLIndex vertexBufferIndex	= state.GetValue < MOAILuaIndex >( 4, ZLIndexOp::ZERO );
 	
 	MOAIMeshPrimReader coordReader;
 	
@@ -255,7 +255,7 @@ int MOAIMesh::_getPrimsForPoint ( lua_State* L ) {
 	ZLBox meshBounds = self->GetBounds ();
 	if ((( is3D ) && meshBounds.Contains ( point )) || meshBounds.Contains ( point, ZLBox::PLANE_XY )) {
 		
-		if ( primReader.Init ( *self, ZLIndex::ZERO )) {
+		if ( primReader.Init ( *self, ZLIndexOp::ZERO )) {
 			
 			u32 basePrim = state.GetValue < u32 >( 5, 1 ) - 1;
 			u32 nPrims = state.GetValue < u32 >( 6, primReader.GetTotalPrims ());
@@ -304,7 +304,7 @@ int MOAIMesh::_getRegionForPrim ( lua_State* L ) {
 
 	MOAIMeshPrimReader primReader;
 	
-	if ( primReader.Init ( *self, ZLIndex::ZERO )) {
+	if ( primReader.Init ( *self, ZLIndexOp::ZERO )) {
 		
 		for ( u32 i = 0; i < nPrims; ++i ) {
 		
@@ -352,7 +352,7 @@ int MOAIMesh::_intersectRay ( lua_State* L ) {
 	float bestTime = 0.0f;
 	ZLVec3D bestHit;
 	
-	if ( primReader.Init ( *self, ZLIndex::ZERO )) {
+	if ( primReader.Init ( *self, ZLIndexOp::ZERO )) {
 	
 		u32 totalMeshPrims = primReader.GetTotalPrims ();
 		
@@ -409,7 +409,7 @@ int MOAIMesh::_readPrimCoords ( lua_State* L ) {
 
 		MOAIMeshPrimReader primReader;
 		
-		if ( primReader.Init ( *self, ZLIndex::ZERO )) {
+		if ( primReader.Init ( *self, ZLIndexOp::ZERO )) {
 			
 			for ( u32 i = 0; i < nPrims; ++i ) {
 			
@@ -538,8 +538,8 @@ void MOAIMesh::DrawIndex ( ZLIndex idx, MOAIMeshSpan* span ) {
 		// I am super lazy, so set this up here instead of adding if's below
 		MOAIMeshSpan defaultSpan;
 		if ( !span ) {
-			defaultSpan.mBase = ZLIndex::ZERO;
-			defaultSpan.mTop = ZLIndex ( this->mTotalElements, ZLIndex::LIMIT );
+			defaultSpan.mBase = ZLIndexOp::ZERO;
+			defaultSpan.mTop = ZLIndexCast ( this->mTotalElements );
 			defaultSpan.mNext = 0;
 			span = &defaultSpan;
 		}
@@ -651,7 +651,7 @@ void MOAIMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIMesh::ReserveVAOs ( u32 total ) {
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mVAOs.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVAOs.Size (); ++i ) {
 		MOAIGfxResourceClerk::DeleteOrDiscard ( this->mVAOs [ i ], false );
 	}
 	this->mVAOs.Init ( total );
@@ -660,7 +660,7 @@ void MOAIMesh::ReserveVAOs ( u32 total ) {
 //----------------------------------------------------------------//
 void MOAIMesh::ReserveVertexBuffers ( u32 total ) {
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mVertexBuffers.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVertexBuffers.Size (); ++i ) {
 		this->mVertexBuffers [ i ].SetBufferAndFormat ( *this, 0, 0 );
 	}
 	this->mVertexBuffers.Init ( total );
@@ -673,26 +673,26 @@ void MOAIMesh::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer )
 	MOAIMaterialBatchHolder::SerializeIn ( state, serializer );
 	MOAIVertexArray::SerializeIn ( state, serializer );
 
-	this->SetIndexBuffer ( serializer.MemberIDToObject < MOAIIndexBuffer >( state.GetFieldValue < MOAISerializer::ObjID >( -1, "mIndexBuffer", 0 )));
+	this->SetIndexBuffer ( serializer.MemberIDToObject < MOAIIndexBuffer >( state.GetFieldValue < cc8*, MOAISerializer::ObjID >( -1, "mIndexBuffer", 0 )));
 	
-	this->mTotalElements = state.GetFieldValue < u32 >( -1, "mTotalElements", 0 );
+	this->mTotalElements = state.GetFieldValue < cc8*, u32 >( -1, "mTotalElements", 0 );
 	
 	if ( state.PushFieldWithType ( -1, "mBounds", LUA_TTABLE )) {
 		
-		this->mBounds.mMin.mX	= state.GetFieldValue < float >( -1, "mMinX", 0 );
-		this->mBounds.mMin.mY	= state.GetFieldValue < float >( -1, "mMinY", 0 );
-		this->mBounds.mMin.mZ	= state.GetFieldValue < float >( -1, "mMinZ", 0 );
+		this->mBounds.mMin.mX	= state.GetFieldValue < cc8*, float >( -1, "mMinX", 0 );
+		this->mBounds.mMin.mY	= state.GetFieldValue < cc8*, float >( -1, "mMinY", 0 );
+		this->mBounds.mMin.mZ	= state.GetFieldValue < cc8*, float >( -1, "mMinZ", 0 );
 		
-		this->mBounds.mMax.mX	= state.GetFieldValue < float >( -1, "mMaxX", 0 );
-		this->mBounds.mMax.mY	= state.GetFieldValue < float >( -1, "mMaxY", 0 );
-		this->mBounds.mMax.mZ	= state.GetFieldValue < float >( -1, "mMaxZ", 0 );
+		this->mBounds.mMax.mX	= state.GetFieldValue < cc8*, float >( -1, "mMaxX", 0 );
+		this->mBounds.mMax.mY	= state.GetFieldValue < cc8*, float >( -1, "mMaxY", 0 );
+		this->mBounds.mMax.mZ	= state.GetFieldValue < cc8*, float >( -1, "mMaxZ", 0 );
 		
 		this->mBounds.UpdateStatus ();
 		
 		state.Pop ();
 	}
 	
-	this->mPenWidth = state.GetFieldValue < float >( -1, "mPenWidth", 0 );
+	this->mPenWidth = state.GetFieldValue < cc8*, float >( -1, "mPenWidth", 0 );
 }
 
 //----------------------------------------------------------------//
@@ -704,21 +704,21 @@ void MOAIMesh::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) 
 
 	state.SetField ( -1, "mIndexBuffer", serializer.AffirmMemberID ( this->mIndexBuffer ));
 	
-	state.SetField < u32 >( -1, "mTotalElements", this->mTotalElements );
+	state.SetField < cc8*, u32 >( -1, "mTotalElements", this->mTotalElements );
 	
 	lua_newtable ( state );
 	
-		state.SetField < float >( -1, "mMinX", this->mBounds.mMin.mX );
-		state.SetField < float >( -1, "mMinY", this->mBounds.mMin.mY );
-		state.SetField < float >( -1, "mMinZ", this->mBounds.mMin.mZ );
+		state.SetField < cc8*, float >( -1, "mMinX", this->mBounds.mMin.mX );
+		state.SetField < cc8*, float >( -1, "mMinY", this->mBounds.mMin.mY );
+		state.SetField < cc8*, float >( -1, "mMinZ", this->mBounds.mMin.mZ );
 	
-		state.SetField < float >( -1, "mMaxX", this->mBounds.mMax.mX );
-		state.SetField < float >( -1, "mMaxY", this->mBounds.mMax.mY );
-		state.SetField < float >( -1, "mMaxZ", this->mBounds.mMax.mZ );
+		state.SetField < cc8*, float >( -1, "mMaxX", this->mBounds.mMax.mX );
+		state.SetField < cc8*, float >( -1, "mMaxY", this->mBounds.mMax.mY );
+		state.SetField < cc8*, float >( -1, "mMaxZ", this->mBounds.mMax.mZ );
 	
 	lua_setfield ( state, -2, "mBounds" );
 	
-	state.SetField < u32 >( -1, "mPenWidth", ( u32 )this->mPenWidth );
+	state.SetField < cc8*, u32 >( -1, "mPenWidth", ( u32 )this->mPenWidth );
 }
 
 //----------------------------------------------------------------//

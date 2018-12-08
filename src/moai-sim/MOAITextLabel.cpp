@@ -426,7 +426,7 @@ int MOAITextLabel::_setCurve ( lua_State* L ) {
 	
 	if ( state.GetTop () > 1 ) {
 
-		ZLIndex index = state.GetValueAsIndex ( 2 );
+		ZLIndex index = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	
 		MOAIAnimCurveFloat* curve = state.GetLuaObject < MOAIAnimCurveFloat >( 3, true );
 		if ( !curve ) return 0;

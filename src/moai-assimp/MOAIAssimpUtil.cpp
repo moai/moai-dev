@@ -132,34 +132,34 @@ void MOAIAssimpUtil::PushMatrix ( lua_State* L, const aiMatrix4x4& matrix ) {
 	
 	lua_pushnumber ( L, 1 );
 	lua_newtable ( L );
-	state.SetFieldByIndex ( -1, 1, matrix.a1 );
-	state.SetFieldByIndex ( -1, 2, matrix.a2 );
-	state.SetFieldByIndex ( -1, 3, matrix.a3 );
-	state.SetFieldByIndex ( -1, 4, matrix.a4 );
+	state.SetField ( -1, 1, matrix.a1 );
+	state.SetField ( -1, 2, matrix.a2 );
+	state.SetField ( -1, 3, matrix.a3 );
+	state.SetField ( -1, 4, matrix.a4 );
 	lua_settable ( L, -3 );
 	
 	lua_pushnumber ( L, 2 );
 	lua_newtable ( L );
-	state.SetFieldByIndex ( -1, 1, matrix.b1 );
-	state.SetFieldByIndex ( -1, 2, matrix.b2 );
-	state.SetFieldByIndex ( -1, 3, matrix.b3 );
-	state.SetFieldByIndex ( -1, 4, matrix.b4 );
+	state.SetField ( -1, 1, matrix.b1 );
+	state.SetField ( -1, 2, matrix.b2 );
+	state.SetField ( -1, 3, matrix.b3 );
+	state.SetField ( -1, 4, matrix.b4 );
 	lua_settable ( L, -3 );
 	
 	lua_pushnumber ( L, 3 );
 	lua_newtable ( L );
-	state.SetFieldByIndex ( -1, 1, matrix.c1 );
-	state.SetFieldByIndex ( -1, 2, matrix.c2 );
-	state.SetFieldByIndex ( -1, 3, matrix.c3 );
-	state.SetFieldByIndex ( -1, 4, matrix.c4 );
+	state.SetField ( -1, 1, matrix.c1 );
+	state.SetField ( -1, 2, matrix.c2 );
+	state.SetField ( -1, 3, matrix.c3 );
+	state.SetField ( -1, 4, matrix.c4 );
 	lua_settable ( L, -3 );
 	
 	lua_pushnumber ( L, 4 );
 	lua_newtable ( L );
-	state.SetFieldByIndex ( -1, 1, matrix.d1 );
-	state.SetFieldByIndex ( -1, 2, matrix.d2 );
-	state.SetFieldByIndex ( -1, 3, matrix.d3 );
-	state.SetFieldByIndex ( -1, 4, matrix.d4 );
+	state.SetField ( -1, 1, matrix.d1 );
+	state.SetField ( -1, 2, matrix.d2 );
+	state.SetField ( -1, 3, matrix.d3 );
+	state.SetField ( -1, 4, matrix.d4 );
 	lua_settable ( L, -3 );
 }
 

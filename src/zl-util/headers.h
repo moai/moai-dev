@@ -86,6 +86,7 @@
 #include <zl-util/ZLRhombus.h>
 #include <zl-util/ZLRingAdapter.h>
 #include <zl-util/ZLSample.h>
+#include <zl-util/ZLSemanticNumeric.h>
 #include <zl-util/ZLSharedBuffer.h>
 #include <zl-util/ZLSphere.h>
 #include <zl-util/ZLStream.h>

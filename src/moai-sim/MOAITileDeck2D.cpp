@@ -312,7 +312,7 @@ void MOAITileDeck2D::TransformUV ( const ZLAffine3D& mtx ) {
 //----------------------------------------------------------------//
 ZLBounds MOAITileDeck2D::MOAIDeck_ComputeMaxBounds () {
 
-	return this->MOAIDeck::GetBounds ( ZLIndex::ZERO );
+	return this->MOAIDeck::GetBounds ( ZLIndexOp::ZERO );
 }
 
 //----------------------------------------------------------------//
@@ -325,7 +325,7 @@ void MOAITileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	gfxState.SetVertexTransform ( MOAIGfxState::MODEL_TO_CLIP_MTX );
 	gfxState.SetUVTransform ( MOAIGfxState::UV_TO_MODEL_MTX );
 	
-	MOAICellCoord coord = this->GetCellCoord ( idx.mKey );
+	MOAICellCoord coord = this->GetCellCoord ( idx );
 	ZLRect uvRect = this->GetTileRect ( coord );
 	
 	float uScale = ( uvRect.mXMax - uvRect.mXMin );

@@ -68,7 +68,7 @@ void MOAIRenderMgr::PushDrawable ( MOAILuaObject* drawable ) {
 	}
 	
 	int top = ( int )state.GetTableSize ( -1 );
-	state.SetFieldByIndex ( -1, top + 1, drawable );
+	state.SetField ( -1, top + 1, drawable );
 }
 
 //----------------------------------------------------------------//

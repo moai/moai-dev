@@ -18,16 +18,16 @@
 //----------------------------------------------------------------//
 void MOAICollisionShape::Bless () {
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mShapes.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mShapes.Size (); ++i ) {
 
-		this->mBounds.Grow ( this->mShapes [ i ]->mBounds, i == ZLIndex::ZERO );
+		this->mBounds.Grow ( this->mShapes [ i ]->mBounds, i == ZLIndexOp::ZERO );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAICollisionShape::Clear () {
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mShapes.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mShapes.Size (); ++i ) {
 		if ( this->mShapes [ i ]) {
 			delete ( this->mShapes [ i ]);
 		}
@@ -47,7 +47,7 @@ void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
 	
 	draw.Bind ();
 	
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mShapes.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mShapes.Size (); ++i ) {
 	
 		MOAICollisionPrim* shape = this->mShapes [ i ];
 	

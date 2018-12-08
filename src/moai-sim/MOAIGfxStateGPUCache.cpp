@@ -173,7 +173,7 @@ void MOAIGfxStateGPUCache::ApplyStateChanges () {
 			u32 textureDirtyFlags = this->mTextureDirtyFlags;
 			this->mTextureDirtyFlags = 0;
 			
-			for ( ZLIndex i = ZLIndex::ZERO; textureDirtyFlags; ++i ) {
+			for ( ZLIndex i = ZLIndexOp::ZERO; textureDirtyFlags; ++i ) {
 				u32 mask = 1 << i;
 				if ( textureDirtyFlags & mask ) {
 					this->FlushTexture ( i, this->mPendingState.mTextureUnits [ i ]);
@@ -861,7 +861,7 @@ void MOAIGfxStateGPUCache::RecalculateDirtyFlags () {
 	this->SetVertexBuffer ( this->mPendingState.mVtxBuffer );
 	this->SetVertexFormat ( this->mPendingState.mVtxFormat );
 	
-	for ( ZLIndex i = ZLIndex::ZERO; i < MAX_TEXTURE_UNITS; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < MAX_TEXTURE_UNITS; ++i ) {
 		this->SetTexture ( this->mPendingState.mTextureUnits [ i ], i );
 	}
 }
@@ -909,7 +909,7 @@ void MOAIGfxStateGPUCache::ResetState () {
 	gfx.Disable ( ZGL_PIPELINE_SCISSOR );
 	
 	// TODO: seems like overkill
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mMaxTextureUnits; ++i ){
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mMaxTextureUnits; ++i ){
 		gfx.ActiveTexture (( u32 )i );
 		gfx.BindTexture ( ZLGfxResource::UNBIND );
 		pending.mTextureUnits [ i ] = 0;

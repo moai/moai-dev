@@ -569,7 +569,7 @@ int MOAISim::_setStepSmoothing ( lua_State *L ) {
 	
 	device.mSmoothBuffer.Init ( size );
 	device.mSmoothBuffer.Fill ( device.mStep );
-	device.mSmoothIdx = ZLIndex::ZERO;
+	device.mSmoothIdx = ZLIndexOp::ZERO;
 	
 	return 0;
 }
@@ -744,7 +744,7 @@ MOAISim::MOAISim () :
 	mShowCursorFunc ( 0 ),
 	mHideCursorFunc ( 0 ),
 	mGCActive ( true ),
-	mSmoothIdx ( ZLIndex::ZERO ),
+	mSmoothIdx ( ZLIndexOp::ZERO ),
 	mGCStep ( 0 ) {
 	
 	RTTI_SINGLE ( MOAIGlobalEventSource )
@@ -928,11 +928,11 @@ double MOAISim::SmoothStep ( double step ) {
 	ZLSize size = this->mSmoothBuffer.Size ();
 	
 	this->mSmoothBuffer [ this->mSmoothIdx++ ] = step;
-	this->mSmoothIdx = ZLIndex::Wrap ( this->mSmoothIdx, size );
+	this->mSmoothIdx =  ZLIndexOp::Wrap ( this->mSmoothIdx, size );
 	
 	u32 count = 0;
 	double sum = 0.0;
-	for ( ZLIndex i = ZLIndex::ZERO; i < size; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
 		double dt = this->mSmoothBuffer [ i ];
 		
 		// Ignore long delay steps

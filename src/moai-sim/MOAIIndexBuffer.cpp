@@ -224,14 +224,14 @@ void MOAIIndexBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIIndexBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	MOAIGfxBuffer::SerializeIn ( state, serializer );
 	
-	this->mIndexSize = state.GetFieldValue < u32 >( -1, "mIndexSize", 0 );
+	this->mIndexSize = state.GetFieldValue < cc8*, u32 >( -1, "mIndexSize", 0 );
 }
 
 //----------------------------------------------------------------//
 void MOAIIndexBuffer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	MOAIGfxBuffer::SerializeOut ( state, serializer );
 	
-	state.SetField < u32 >( -1, "mIndexSize", this->mIndexSize );
+	state.SetField < cc8*, u32 >( -1, "mIndexSize", this->mIndexSize );
 }
 
 //----------------------------------------------------------------//

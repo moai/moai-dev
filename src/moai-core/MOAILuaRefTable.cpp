@@ -108,7 +108,7 @@ int MOAILuaRefTable::Ref ( MOAILuaState& state, int idx ) {
 //----------------------------------------------------------------//
 void MOAILuaRefTable::ReleaseRefID ( int refID ) {
 
-	this->mRefIDStack [ ZLIndex ( this->mRefIDStackTop++, ZLIndex::LIMIT )] = refID;
+	this->mRefIDStack [ ZLIndexCast ( this->mRefIDStackTop++ )] = refID;
 }
 
 //----------------------------------------------------------------//
@@ -124,7 +124,7 @@ int MOAILuaRefTable::ReserveRefID () {
 		u32 size = currentSize + REFID_CHUNK_SIZE;
 		this->mRefIDStack.Init ( size );
 
-		for ( ZLIndex i = ZLIndex::ZERO; i < REFID_CHUNK_SIZE; ++i ) {
+		for ( ZLIndex i = ZLIndexOp::ZERO; i < REFID_CHUNK_SIZE; ++i ) {
 			this->mRefIDStack [ i ] = size--;
 		}
 		this->mRefIDStackTop = REFID_CHUNK_SIZE;
@@ -132,7 +132,7 @@ int MOAILuaRefTable::ReserveRefID () {
 
 	assert ( this->mRefIDStackTop );
 
-	return this->mRefIDStack [ ZLIndex ( --this->mRefIDStackTop, ZLIndex::LIMIT )];
+	return this->mRefIDStack [ ZLIndexCast ( --this->mRefIDStackTop )];
 }
 
 //----------------------------------------------------------------//

@@ -742,10 +742,20 @@ u64 MOAILuaState::GetValue < u64 >( int idx, const u64 value ) {
 
 //----------------------------------------------------------------//
 template <>
-ZLSize MOAILuaState::GetValue < ZLSize >( int idx, const ZLSize value ) {
+MOAILuaIndex MOAILuaState::GetValue < MOAILuaIndex >( int idx, const MOAILuaIndex value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
-		return ( ZLSize )lua_tonumber ( this->mState, idx );
+		return MOAILuaIndex ( ZLIndexCast (( ZLSize )lua_tonumber ( this->mState, idx ) - 1 ));
+	}
+	return value;
+}
+
+//----------------------------------------------------------------//
+template <>
+MOAILuaSize MOAILuaState::GetValue < MOAILuaSize >( int idx, const MOAILuaSize value ) {
+
+	if ( this->IsType ( idx, LUA_TNUMBER )) {
+		return MOAILuaSize (( ZLSize )lua_tonumber ( this->mState, idx ));
 	}
 	return value;
 }
@@ -827,17 +837,6 @@ ZLColorVec MOAILuaState::GetValue < ZLColorVec >( int idx, const ZLColorVec valu
 	return color;
 }
 
-//----------------------------------------------------------------//
-//template <>
-//ZLIndex MOAILuaState::GetValue < ZLIndex >( int idx, const ZLIndex value ) {
-//
-//	if ( this->IsType ( idx, LUA_TNUMBER )) {
-//		ZLIndex index;
-//		index.mKey = ( u32 )lua_tonumber ( this->mState, idx ) - 1;
-//		return index;
-//	}
-//	return value;
-//}
 
 //----------------------------------------------------------------//
 template <>
@@ -957,53 +956,6 @@ ZLVec4D MOAILuaState::GetValue < ZLVec4D >( int idx, const ZLVec4D value ) {
 	vec.mW = this->GetValue < float >( idx + 3, value.mW );
 	
 	return vec;
-}
-
-//----------------------------------------------------------------//
-ZLIndex MOAILuaState::GetValueAsIndex ( int idx, ZLIndex value ) {
-
-	IndexType v = this->GetValue < IndexType >( idx, ( IndexType )(( ZLSize )value ) + 1 );
-	return ZLIndex ( v - 1, ZLIndex::LIMIT );
-}
-
-//----------------------------------------------------------------//
-bool MOAILuaState::HasField ( int idx, cc8* name ) {
-
-	lua_getfield ( this->mState, idx, name );
-	bool hasField = ( lua_isnil ( this->mState, -1 ) == false );
-	lua_pop ( this->mState, 1 );
-	
-	return hasField;
-}
-
-//----------------------------------------------------------------//
-bool MOAILuaState::HasField ( int idx, int key ) {
-
-	this->PushField ( idx, key );
-	bool hasField = ( lua_isnil ( this->mState, -1 ) == false );
-	lua_pop ( this->mState, 1 );
-	
-	return hasField;
-}
-
-//----------------------------------------------------------------//
-bool MOAILuaState::HasFieldWithType ( int idx, cc8* name, int type ) {
-
-	lua_getfield ( this->mState, idx, name );
-	bool hasField = ( lua_type ( this->mState, -1 ) == type );
-	lua_pop ( this->mState, 1 );
-	
-	return hasField;
-}
-
-//----------------------------------------------------------------//
-bool MOAILuaState::HasFieldWithType ( int idx, int key, int type ) {
-
-	this->PushField ( idx, key );
-	bool hasField = ( lua_type ( this->mState, -1 ) == type );
-	lua_pop ( this->mState, 1 );
-	
-	return hasField;
 }
 
 //----------------------------------------------------------------//
@@ -1219,10 +1171,17 @@ void MOAILuaState::Push ( u64 value ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaState::Push ( ZLSize value ) {
+void MOAILuaState::Push ( MOAILuaIndex value ) {
 
 	// TODO: check for overflow
-	lua_pushnumber ( this->mState, ( double )value );
+	lua_pushnumber ( this->mState, ( ZLSize )(( ZLIndex )value ) + 1 );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaState::Push ( MOAILuaSize value ) {
+
+	// TODO: check for overflow
+	lua_pushnumber ( this->mState, ( double )(( ZLSize )value ));
 }
 
 //----------------------------------------------------------------//
@@ -1283,12 +1242,6 @@ int MOAILuaState::Push ( const ZLColorVec& value ) {
 	lua_pushnumber ( this->mState, value.mA );
 	
 	return 4;
-}
-
-//----------------------------------------------------------------//
-void MOAILuaState::Push ( const ZLIndex& value ) {
-
-	lua_pushnumber ( this->mState, value.mKey + 1 );
 }
 
 //----------------------------------------------------------------//
@@ -1447,66 +1400,12 @@ void MOAILuaState::PushField ( int idx, int key ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAILuaState::PushFieldWithType ( int idx, cc8* name, int type ) {
+void MOAILuaState::PushField ( int idx, MOAILuaIndex key ) {
 
-	lua_getfield ( this->mState, idx, name );
-	if ( lua_type ( this->mState, -1 ) != type ) {
-		lua_pop ( this->mState, 1 );
-		return false;
-	}
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool MOAILuaState::PushFieldWithType ( int idx, int key, int type ) {
-
-	this->PushField ( idx, key );
-	if ( lua_type ( this->mState, -1 ) != type ) {
-		lua_pop ( this->mState, 1 );
-		return false;
-	}
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool MOAILuaState::PushSubfieldWithType ( int idx, cc8* format, int type, ... ) {
-
-	va_list args;
-	va_start ( args, type );
-	
 	idx = this->AbsIndex ( idx );
-	lua_pushvalue ( this->mState, idx );
 
-	for ( cc8* c = format; *c; ++c ) {
-		
-		switch ( *c ) {
-		
-			// number
-			case 'N':
-				lua_pushnumber ( this->mState, va_arg ( args, int ));
-				lua_gettable ( this->mState, -1 );
-				break;
-			
-			// string
-			case 'S':
-				lua_getfield ( this->mState, -1, va_arg ( args, char* ));
-				break;
-			
-			default:
-				lua_pushnil ( this->mState );
-		}
-	
-		if ( lua_isnil ( this->mState, -1 )) break;
-		lua_replace ( this->mState, -2 );
-	}
-	
-	va_end ( args );
-	
-	if ( lua_type ( this->mState, -1 ) != type ) {
-		lua_pop ( this->mState, 1 );
-		return false;
-	}
-	return true;
+	lua_pushinteger ( this->mState, ( ZLSize )(( ZLIndex )key ) + 1 );
+	lua_gettable ( this->mState, idx );
 }
 
 //----------------------------------------------------------------//
@@ -1516,6 +1415,47 @@ void MOAILuaState::PushPtrUserData ( void* ptr ) {
 	assert ( handle );
 	( *handle ) = ptr;
 }
+
+//----------------------------------------------------------------//
+//bool MOAILuaState::PushSubfieldWithType ( int idx, cc8* format, int type, ... ) {
+//
+//	va_list args;
+//	va_start ( args, type );
+//	
+//	idx = this->AbsIndex ( idx );
+//	lua_pushvalue ( this->mState, idx );
+//
+//	for ( cc8* c = format; *c; ++c ) {
+//		
+//		switch ( *c ) {
+//		
+//			// number
+//			case 'N':
+//				lua_pushnumber ( this->mState, va_arg ( args, int ));
+//				lua_gettable ( this->mState, -1 );
+//				break;
+//			
+//			// string
+//			case 'S':
+//				lua_getfield ( this->mState, -1, va_arg ( args, char* ));
+//				break;
+//			
+//			default:
+//				lua_pushnil ( this->mState );
+//		}
+//	
+//		if ( lua_isnil ( this->mState, -1 )) break;
+//		lua_replace ( this->mState, -2 );
+//	}
+//	
+//	va_end ( args );
+//	
+//	if ( lua_type ( this->mState, -1 ) != type ) {
+//		lua_pop ( this->mState, 1 );
+//		return false;
+//	}
+//	return true;
+//}
 
 //----------------------------------------------------------------//
 int MOAILuaState::PushTableItr ( int idx ) {

@@ -113,7 +113,7 @@ void MOAIDeckPropBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIDeckPropBase::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
-	this->mDeck.Set ( *this, serializer.MemberIDToObject < MOAIDeck >( state.GetFieldValue < MOAISerializerBase::ObjID >( -1, "mDeck", 0 )));
+	this->mDeck.Set ( *this, serializer.MemberIDToObject < MOAIDeck >( state.GetFieldValue < cc8*, MOAISerializerBase::ObjID >( -1, "mDeck", 0 )));
 }
 
 //----------------------------------------------------------------//

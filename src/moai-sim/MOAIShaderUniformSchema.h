@@ -36,7 +36,7 @@ public:
 	template < typename TYPE >
 	void SetUniform ( void* buffer, ZLIndex uniformID, const TYPE& value ) const {
 
-		MOAIShaderUniformHandle uniform = this->GetUniformHandle ( buffer, uniformID, ZLIndex::ZERO );
+		MOAIShaderUniformHandle uniform = this->GetUniformHandle ( buffer, uniformID, ZLIndexOp::ZERO );
 		assert ( uniform.IsValid ());
 		uniform.SetValue ( value );
 	}

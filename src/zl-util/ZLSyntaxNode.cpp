@@ -54,7 +54,7 @@ void ZLSyntaxNode::Print ( u32 indent, u32 offset ) {
 	if ( this->mChildren.Size ()) {
 		printf ( "%s <%d>\n", this->mName.c_str (), this->mID );
 	
-		for ( ZLIndex i = ZLIndex::ZERO; i < this->mChildren.Size (); ++i )
+		for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mChildren.Size (); ++i )
 			this->mChildren [ i ]->Print ( indent + offset, offset );
 	}
 	else {
@@ -69,7 +69,7 @@ ZLSyntaxNode::ZLSyntaxNode () {
 //----------------------------------------------------------------//
 ZLSyntaxNode::~ZLSyntaxNode () {
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mChildren.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mChildren.Size (); ++i ) {
 		delete this->mChildren [ i ];
 	}
 }

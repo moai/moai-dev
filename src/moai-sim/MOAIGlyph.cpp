@@ -56,7 +56,7 @@ ZLRect MOAIGlyph::GetGlyphLogicalRect ( float x, float y, float xScale, float yS
 MOAIKernVec MOAIGlyph::GetKerning ( u32 name ) const {
 
 	ZLSize total = this->mKernTable.Size ();
-	for ( ZLIndex i = ZLIndex::ZERO; i < total; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < total; ++i ) {
 		MOAIKernVec& kernVec = this->mKernTable [ i ];
 		
 		if ( kernVec.mName == name ) {
@@ -75,7 +75,7 @@ MOAIKernVec MOAIGlyph::GetKerning ( u32 name ) const {
 //----------------------------------------------------------------//
 MOAIGlyph::MOAIGlyph () :
 	mCode ( NULL_CODE_ID ),
-	mPageID ( ZLIndex::INVALID ),
+	mPageID ( ZLIndexOp::INVALID ),
 	mSrcX ( 0 ),
 	mSrcY ( 0 ),
 	mNext ( 0 ),
@@ -112,7 +112,7 @@ void MOAIGlyph::SerializeIn ( MOAILuaState& state ) {
 		int size = ( int )lua_objlen ( state, -1 ); // TODO: cast
 		this->mKernTable.Init ( size );
 		
-		for ( ZLIndex i = ZLIndex::ZERO; i < size; ++i ) {
+		for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
 		
 			if ( state.PushFieldWithType ( -1, ( int )i + 1, LUA_TTABLE )) {
 				
@@ -130,7 +130,7 @@ void MOAIGlyph::SerializeIn ( MOAILuaState& state ) {
 void MOAIGlyph::SerializeOut ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "mCode", this->mCode );
-	state.SetField ( -1, "mPageID", this->mPageID );
+	state.SetField ( -1, "mPageID", MOAILuaIndex ( this->mPageID ));
 
 	state.SetField ( -1, "mWidth", this->mWidth );
 	state.SetField ( -1, "mHeight", this->mHeight );
@@ -143,9 +143,9 @@ void MOAIGlyph::SerializeOut ( MOAILuaState& state ) {
 	
 	if ( this->mKernTable.Size ()) {
 		lua_newtable ( state );
-		for ( ZLIndex i = ZLIndex::ZERO; i < this->mKernTable.Size (); ++i ) {
+		for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mKernTable.Size (); ++i ) {
 		
-			state.Push ( i );
+			state.Push ( MOAILuaIndex ( i ));
 			lua_newtable ( state );
 			
 			state.SetField ( -1, "mName", this->mKernTable [ i ].mName );

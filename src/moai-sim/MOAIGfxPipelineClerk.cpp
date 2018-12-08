@@ -25,7 +25,7 @@ ZLGfxRetained* MOAIGfxPipeline::GetDisplayList () {
 		return this->mFreeDisplayLists.Pop ();
 	}
 	
-	ZLIndex idx = ZLIndex ( this->mDisplayLists.Size (), ZLIndex::LIMIT );
+	ZLIndex idx = ZLIndexCast ( this->mDisplayLists.Size () );
 	this->mDisplayLists.Grow (( ZLSize )idx + 1 );
 	this->mDisplayLists [ idx ] = new ZLGfxRetained ();
 	return this->mDisplayLists [ idx ];
@@ -48,7 +48,7 @@ MOAIGfxPipeline::MOAIGfxPipeline () :
 //----------------------------------------------------------------//
 MOAIGfxPipeline::~MOAIGfxPipeline () {
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mDisplayLists.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mDisplayLists.Size (); ++i ) {
 		delete ( this->mDisplayLists [ i ]);
 	}
 }
@@ -130,7 +130,7 @@ void MOAIGfxPipeline::PhaseEnd ( u32 phase ) {
 void MOAIGfxPipeline::PublishAndReset () {
 
 	ZLSize top = this->mFinishedDisplayLists.GetTop ();
-	for ( ZLIndex i = ZLIndex::ZERO; i < top; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < top; ++i ) {
 	
 		ZLGfxRetained* list = this->mFinishedDisplayLists [ i ];
 		

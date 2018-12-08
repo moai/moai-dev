@@ -37,7 +37,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	MOAIAnimKeySpan () :
-		mKeyID ( ZLIndex::INVALID ),
+		mKeyID ( ZLIndexOp::INVALID ),
 		mTime ( 0.0 ),
 		mCycle ( 0.0 ) {
 	}

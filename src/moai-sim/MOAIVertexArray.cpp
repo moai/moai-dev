@@ -42,10 +42,10 @@ int MOAIVertexArray::_setVertexBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexArray, "U" )
 	
 	u32 baseParam = 2;
-	ZLIndex idx = ZLIndex::ZERO;
+	ZLIndex idx = ZLIndexOp::ZERO;
 	
 	if ( state.IsType ( baseParam, LUA_TNUMBER )) {
-		idx = ZLIndex ( state.GetValue < u32 >( baseParam++, 1 ) - 1, ZLIndex::LIMIT );
+		idx = ZLIndexCast ( state.GetValue < u32 >( baseParam++, 1 ) - 1 );
 	}
 	
 	MOAIVertexBuffer* buffer	= state.GetLuaObject < MOAIVertexBuffer >( baseParam++, false );
@@ -75,7 +75,7 @@ void MOAIVertexArray::BindVertexArrayItems () {
 	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
 	ZLSize totalVBOs = this->mVertexBuffers.Size ();
-	for ( ZLIndex i ( 0, ZLIndex::LIMIT ); i < totalVBOs; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalVBOs; ++i ) {
 		gfxState.BindVertexBufferWithFormat ( this->mVertexBuffers [ i ], this->mUseVAOs );
 	}
 }
@@ -94,7 +94,7 @@ MOAIVertexFormat* MOAIVertexArray::GetVertexFormat ( ZLIndex idx ) {
 
 //----------------------------------------------------------------//
 MOAIVertexArray::MOAIVertexArray () :
-	mCurrentVAO ( ZLIndex::INVALID ),
+	mCurrentVAO ( ZLIndexOp::INVALID ),
 	mUseVAOs ( false ) {
 
 	RTTI_BEGIN
@@ -141,7 +141,7 @@ bool MOAIVertexArray::OnGPUCreate () {
 
 	if ( totalVAOs ) {
 		
-		for ( ZLIndex i ( 0, ZLIndex::LIMIT ); i < totalVAOs; ++i ) {
+		for ( ZLIndex i = ZLIndexOp::ZERO; i < totalVAOs; ++i ) {
 			ZLGfxHandle vao = gfx.CreateVertexArray (); // OK for this to return 0
 			if ( vao.GetType () != ZLGfxResource::NONE ) {
 				this->mVAOs [ i ] = vao;
@@ -150,7 +150,7 @@ bool MOAIVertexArray::OnGPUCreate () {
 		}
 	}
 	
-	this->mCurrentVAO = ZLIndex ( 0, ZLIndex::LIMIT );
+	this->mCurrentVAO = ZLIndexCast ( 0 );
 	this->OnGPUUpdate ();
 	
 	return true;
@@ -159,7 +159,7 @@ bool MOAIVertexArray::OnGPUCreate () {
 //----------------------------------------------------------------//
 void MOAIVertexArray::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mVAOs.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVAOs.Size (); ++i ) {
 		MOAIGfxResourceClerk::DeleteOrDiscard ( this->mVAOs [ i ], shouldDelete );
 	}
 }
@@ -181,7 +181,7 @@ bool MOAIVertexArray::OnGPUUpdate () {
 	if ( !this->mUseVAOs ) return true;
 	if ( !this->mVAOs.Size ()) return false;
 
-	this->mCurrentVAO = ZLIndex::AddAndWrap ( this->mCurrentVAO, 1, this->mVAOs.Size ());
+	this->mCurrentVAO =  ZLIndexOp::AddAndWrap ( this->mCurrentVAO, 1, this->mVAOs.Size ());
 	const ZLGfxHandle& vao = this->mVAOs [ this->mCurrentVAO ];
 	
 	if ( vao.CanBind ()) {
@@ -219,7 +219,7 @@ void MOAIVertexArray::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIVertexArray::ReserveVAOs ( u32 total ) {
 
 	if ( MOAIGfxMgr::IsValid ()) {
-		for ( ZLIndex i = ZLIndex::ZERO; i < this->mVAOs.Size (); ++i ) {
+		for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVAOs.Size (); ++i ) {
 			MOAIGfxResourceClerk::DeleteOrDiscard ( this->mVAOs [ i ], false );
 		}
 	}
@@ -231,7 +231,7 @@ void MOAIVertexArray::ReserveVAOs ( u32 total ) {
 //----------------------------------------------------------------//
 void MOAIVertexArray::ReserveVertexBuffers ( u32 total ) {
 
-	for ( ZLIndex i ( 0, ZLIndex::LIMIT ); i < this->mVertexBuffers.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVertexBuffers.Size (); ++i ) {
 		this->mVertexBuffers [ i ].SetBufferAndFormat ( *this, 0, 0 );
 	}
 	this->mVertexBuffers.Init ( total );
@@ -242,18 +242,18 @@ void MOAIVertexArray::ReserveVertexBuffers ( u32 total ) {
 //----------------------------------------------------------------//
 void MOAIVertexArray::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
-	u32 totalVAOs = state.GetFieldValue < u32 >( -1, "mTotalVAOs", 0 );
+	ZLSize totalVAOs = state.GetFieldValue < cc8*, MOAILuaSize >( -1, "mTotalVAOs", 0 );
 	this->ReserveVAOs ( totalVAOs );
 	
-	u32 totalVertexBuffers = state.GetFieldValue < u32 >( -1, "mTotalVertexBuffers", 0 );
+	ZLSize totalVertexBuffers = state.GetFieldValue < cc8*, MOAILuaSize >( -1, "mTotalVertexBuffers", 0 );
 	this->ReserveVertexBuffers ( totalVertexBuffers );
 	
 	if ( state.PushFieldWithType ( -1, "mVertexBuffers", LUA_TTABLE )) {
 		int itr = state.PushTableItr ( -1 );
-		for ( ZLIndex i = ZLIndex::ZERO; state.TableItrNext ( itr ); ++i ) {
+		for ( ZLIndex i = ZLIndexOp::ZERO; state.TableItrNext ( itr ); ++i ) {
 			if ( state.IsType ( -1, LUA_TTABLE )) {
-				MOAIVertexBuffer* buffer = serializer.MemberIDToObject < MOAIVertexBuffer >( state.GetFieldValue < MOAISerializer::ObjID >( -1, "mBuffer", 0 ));
-				MOAIVertexFormat* format = serializer.MemberIDToObject < MOAIVertexFormat >( state.GetFieldValue < MOAISerializer::ObjID >( -1, "mFormat", 0 ));
+				MOAIVertexBuffer* buffer = serializer.MemberIDToObject < MOAIVertexBuffer >( state.GetFieldValue < cc8*, MOAISerializer::ObjID >( -1, "mBuffer", 0 ));
+				MOAIVertexFormat* format = serializer.MemberIDToObject < MOAIVertexFormat >( state.GetFieldValue < cc8*, MOAISerializer::ObjID >( -1, "mFormat", 0 ));
 				this->SetVertexBuffer ( i, buffer, format );
 			}
 		}
@@ -265,15 +265,15 @@ void MOAIVertexArray::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seria
 //----------------------------------------------------------------//
 void MOAIVertexArray::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
-	state.SetField < u32 >( -1, "mTotalVAOs", ( u32 )this->mVAOs.Size ());
-	state.SetField < u32 >( -1, "mTotalVertexBuffers", ( u32 )this->mVertexBuffers.Size ());
+	state.SetField < cc8*, MOAILuaSize >( -1, "mTotalVAOs", this->mVAOs.Size ());
+	state.SetField < cc8*, MOAILuaSize >( -1, "mTotalVertexBuffers", this->mVertexBuffers.Size ());
 	
 	lua_newtable ( state );
-	for ( ZLIndex i = ZLIndex::ZERO; i < this->mVertexBuffers.Size (); ++i ) {
-		state.Push (( MOAILuaState::IndexType )(( ZLSize )i ) + 1 );
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVertexBuffers.Size (); ++i ) {
+		state.Push ( MOAILuaIndex ( i ));
 		lua_newtable ( state );
-		state.SetField < MOAISerializer::ObjID >( -1, "mBuffer", serializer.AffirmMemberID ( this->mVertexBuffers [ i ].mBuffer ));
-		state.SetField < MOAISerializer::ObjID >( -1, "mFormat", serializer.AffirmMemberID ( this->mVertexBuffers [ i ].mFormat ));
+		state.SetField < cc8*, MOAISerializer::ObjID >( -1, "mBuffer", serializer.AffirmMemberID ( this->mVertexBuffers [ i ].mBuffer ));
+		state.SetField < cc8*, MOAISerializer::ObjID >( -1, "mFormat", serializer.AffirmMemberID ( this->mVertexBuffers [ i ].mFormat ));
 		lua_settable ( state, -3 );
 	}
 	lua_setfield ( state, -2, "mVertexBuffers" );
@@ -294,7 +294,7 @@ void MOAIVertexArray::UnbindVertexArrayItems () {
 	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
 	size_t totalVBOs = this->mVertexBuffers.Size ();
-	for ( ZLIndex i ( 0, ZLIndex::LIMIT ); i < totalVBOs; ++i ) {
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalVBOs; ++i ) {
 		gfxState.UnbindVertexBufferWithFormat ( this->mVertexBuffers [ i ]);
 	}
 }

@@ -19,7 +19,7 @@ protected:
 	//----------------------------------------------------------------//
 	static ZLIndex GetUniqueID ()	{
 		static ZLSize counter = 0;
-		return ZLIndex ( counter++, 0 );
+		return ZLIndexCast ( counter++ );
 	};
 };
 

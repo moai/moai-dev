@@ -123,11 +123,11 @@ int MOAIViewLayer::_getFitting3D ( lua_State* L ) {
 			
 				ZLVec3D loc;
 				
-				loc.mX = state.GetFieldValue < float >( -1, "x", 0.0f );
-				loc.mY = state.GetFieldValue < float >( -1, "y", 0.0f );
-				loc.mZ = state.GetFieldValue < float >( -1, "z", 0.0f );
+				loc.mX = state.GetFieldValue < cc8*, float >( -1, "x", 0.0 );
+				loc.mY = state.GetFieldValue < cc8*, float >( -1, "y", 0.0 );
+				loc.mZ = state.GetFieldValue < cc8*, float >( -1, "z", 0.0 );
 				
-				float r = state.GetFieldValue < float >( -1, "r", 0.0f );
+				float r = state.GetFieldValue < cc8*, float >( -1, "r", 0.0 );
 				
 				fitter.FitPoint( loc, r );
 				

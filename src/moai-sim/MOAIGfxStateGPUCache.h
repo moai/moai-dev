@@ -218,7 +218,7 @@ public:
 	
 	bool			SetShader					( MOAIShaderMgr::Preset preset );
 	bool			SetShader					( MOAIShader* shader = 0 );
-	bool			SetTexture					( MOAITextureBase* texture = 0, ZLIndex textureUnit = ZLIndex::ZERO );
+	bool			SetTexture					( MOAITextureBase* texture = 0, ZLIndex textureUnit = ZLIndexOp::ZERO );
 	
 	bool			SetVertexArray				( MOAIVertexArray* vtxArray = 0 );
 	bool			SetVertexBuffer				( MOAIVertexBuffer* buffer = 0 );
