@@ -21,8 +21,8 @@ class MOAIVertexAttribute;
 class MOAIMeshSpan {
 public:
 	
-	size_t				mBase;
-	size_t				mTop;
+	ZLIndex				mBase;
+	ZLIndex				mTop;
 	
 	MOAIMeshSpan*		mPrev;
 	MOAIMeshSpan*		mNext;
@@ -57,19 +57,19 @@ private:
 
 	MOAIMesh*				mMesh;
 	MOAIVertexFormat*		mVertexFormat;
-	u32						mTotalPrims;
+	ZLSize					mTotalPrims;
 	
 	const MOAIVertexAttribute*	mAttribute;
 	const void*					mVertexBuffer;
 	MOAIIndexBuffer*			mIndexBuffer;
 
 	//----------------------------------------------------------------//
-	bool		Init			( MOAIMesh& mesh, u32 vertexBufferIndex );
+	bool		Init			( MOAIMesh& mesh, ZLIndex vertexBufferIndex );
 	ZLVec3D		ReadCoord		( u32 idx ) const;
 
 public:
 
-	GET_CONST ( u32, TotalPrims, mTotalPrims )
+	GET_CONST ( ZLSize, TotalPrims, mTotalPrims )
 
 	//----------------------------------------------------------------//
 	bool		GetPrimCoords	( u32 idx, MOAIMeshPrimCoords& prim ) const;

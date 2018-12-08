@@ -299,10 +299,10 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAITextureBase& texture, const void* d
 	
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 
-	ZLGfxHandle* glTexID = gfx.CreateTexture ();
-	if ( glTexID ) {
+	ZLGfxHandle glTexID = gfx.CreateTexture ();
+	//if ( glTexID ) { // TODO: error checking
 
-		gfx.SetTexture ( glTexID );
+		gfx.BindTexture ( glTexID );
 		
 		size_t textureSize = 0;
 		
@@ -352,11 +352,11 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAITextureBase& texture, const void* d
 			textureSize += info.mSizeCompressed;
 		}
 
-		this->SetTextureID ( texture, glTexID, internalFormat, pixelType, textureSize );
+		this->SetGLTexture ( texture, glTexID, internalFormat, pixelType, textureSize );
 		
 		return true;
-	}
-	return false;
+	//}
+	//return false;
 }
 
 //----------------------------------------------------------------//

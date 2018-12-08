@@ -17,9 +17,9 @@ class ZLContextClassIDBase {
 protected:
 
 	//----------------------------------------------------------------//
-	static u32 GetUniqueID ()	{
-		static u32 counter = 0;	
-		return counter++;
+	static ZLIndex GetUniqueID ()	{
+		static ZLSize counter = 0;
+		return ZLIndex ( counter++, 0 );
 	};
 };
 
@@ -32,9 +32,9 @@ class ZLContextClassID :
 public:
 	
 	//----------------------------------------------------------------//
-	static u32 GetID ( void	) {
+	static ZLIndex GetID ( void	) {
 	
-		static u32 type	= GetUniqueID ();
+		static ZLIndex type	= GetUniqueID ();
 		return type;
 	};
 };
@@ -91,7 +91,7 @@ public:
 	template < typename TYPE >
 	TYPE* AffirmGlobal () {
 		
-		u32 id = ZLContextClassID < TYPE >::GetID ();
+		ZLIndex id = ZLContextClassID < TYPE >::GetID ();
 		
 		if ( this->mGlobals.Size () <= id ) {
 		
@@ -101,7 +101,7 @@ public:
 			pair.mProxy			= 0;
 			pair.mIsValid		= false;
 			
-			this->mGlobals.Grow ( id, CHUNK_SIZE, pair );
+			this->mGlobals.GrowChunked (( ZLSize )id + 1, CHUNK_SIZE, pair );
 		}
 		
 		if ( !this->mGlobals [ id ].mGlobal ) {
@@ -134,7 +134,7 @@ public:
 	template < typename TYPE >
 	TYPE* GetGlobal () {
 		
-		u32 id = ZLContextClassID < TYPE >::GetID ();
+		ZLIndex id = ZLContextClassID < TYPE >::GetID ();
 		if ( id < this->mGlobals.Size ()) {
 			ZLContextPair& pair = this->mGlobals [ id ];
 			if ( pair.mIsValid ) {
@@ -148,7 +148,7 @@ public:
 	template < typename TYPE >
 	void Invalidate () {
 		
-		u32 id = ZLContextClassID < TYPE >::GetID ();
+		ZLIndex id = ZLContextClassID < TYPE >::GetID ();
 		
 		if ( id < this->mGlobals.Size ()) {
 			this->mGlobals [ id ].mIsValid = false;
@@ -159,7 +159,7 @@ public:
 	template < typename TYPE >
 	bool IsValid () {
 		
-		u32 id = ZLContextClassID < TYPE >::GetID ();
+		ZLIndex id = ZLContextClassID < TYPE >::GetID ();
 		
 		if ( id < this->mGlobals.Size ()) {
 			return this->mGlobals [ id ].mIsValid;
@@ -171,7 +171,7 @@ public:
 	template < typename TYPE >
 	void ProxyGlobal ( TYPE& proxy ) {
 		
-		u32 id = ZLContextClassID < TYPE >::GetID ();
+		ZLIndex id = ZLContextClassID < TYPE >::GetID ();
 		if ( id < this->mGlobals.Size ()) {
 			this->mGlobals [ id ].mProxy = &proxy;
 		}

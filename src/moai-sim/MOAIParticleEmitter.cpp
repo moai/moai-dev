@@ -149,7 +149,7 @@ int MOAIParticleEmitter::_setRect ( lua_State* L ) {
 int MOAIParticleEmitter::_setState ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleEmitter, "U" )
 	
-	self->mParticleState = state.GetValue < u32 >( 2, 1 ) - 1;
+	self->mParticleState = state.GetValueAsIndex ( 2 );
 	
 	return 0;
 }
@@ -258,7 +258,7 @@ MOAIParticleEmitter::MOAIParticleEmitter () :
 	mMinMagnitude ( 0.0f ),
 	mMaxMagnitude ( 1.0f ),
 	mEmission ( 0 ),
-	mParticleState ( 0 ) {
+	mParticleState ( ZLIndex::ZERO ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITransform )

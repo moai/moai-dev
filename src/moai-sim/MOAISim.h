@@ -107,7 +107,7 @@ private:
 	HideCursorFunc				mHideCursorFunc;
 	
 	ZLLeanArray < double >		mSmoothBuffer; // used for sim step smoothing
-	u32							mSmoothIdx;
+	ZLIndex						mSmoothIdx;
 
 	u32					mGCActive;
 	u32					mGCStep;

@@ -25,6 +25,12 @@ private:
 
 public:
 
+	typedef			u32			IndexType;
+	typedef			s32			IntType;
+	typedef			double		RealType;
+	typedef			u32			SizeType;
+	typedef			u32			UIntType;
+
 	enum {
 		THREAD_UNKNOWN		= 0x00,
 		THREAD_DEAD			= 0x01,
@@ -67,6 +73,7 @@ public:
 	void*			GetUserData					( int idx, void* value );
 	void*			GetUserData					( int idx, cc8* name, void* value );
 	STLString		GetValue					( int idx, cc8* value );
+	ZLIndex			GetValueAsIndex				( int idx, ZLIndex value = ZLIndex::ZERO );
 	bool			HasField					( int idx, cc8* name );
 	bool			HasField					( int idx, int key );
 	bool			HasFieldWithType			( int idx, cc8* name, int type );
@@ -104,6 +111,7 @@ public:
 	void			Push						( u16 value );
 	void			Push						( u32 value );
 	void			Push						( u64 value );
+	void			Push						( ZLSize value );
 	int				Push						( const ZLAffine2D& value );
 	int				Push						( const ZLAffine3D& value );
 	int				Push						( const ZLBox& value );
@@ -159,7 +167,7 @@ public:
 	};
 
 	//----------------------------------------------------------------//
-	inline operator bool () {
+	inline operator bool () const {
 		return ( this->mState != 0 );
 	}
 	
@@ -194,12 +202,13 @@ template <> u8				MOAILuaState::GetValue < u8 >				( int idx, const u8 value );
 template <> u16				MOAILuaState::GetValue < u16 >				( int idx, const u16 value );
 template <> u32				MOAILuaState::GetValue < u32 >				( int idx, const u32 value );
 template <> u64				MOAILuaState::GetValue < u64 >				( int idx, const u64 value );
+template <> ZLSize			MOAILuaState::GetValue < ZLSize >			( int idx, const ZLSize value );
 template <> const void*		MOAILuaState::GetValue < const void* >		( int idx, const void* value );
 template <> ZLAffine2D		MOAILuaState::GetValue < ZLAffine2D >		( int idx, const ZLAffine2D value );
 template <> ZLAffine3D		MOAILuaState::GetValue < ZLAffine3D >		( int idx, const ZLAffine3D value );
 template <> ZLBox			MOAILuaState::GetValue < ZLBox >			( int idx, const ZLBox value );
 template <> ZLColorVec		MOAILuaState::GetValue < ZLColorVec >		( int idx, const ZLColorVec value );
-template <> ZLIndex		MOAILuaState::GetValue < ZLIndex >		( int idx, const ZLIndex value );
+//template <> ZLIndex			MOAILuaState::GetValue < ZLIndex >			( int idx, const ZLIndex value );
 template <> ZLMatrix3x3		MOAILuaState::GetValue < ZLMatrix3x3 >		( int idx, const ZLMatrix3x3 value );
 template <> ZLMatrix4x4		MOAILuaState::GetValue < ZLMatrix4x4 >		( int idx, const ZLMatrix4x4 value );
 template <> ZLQuaternion	MOAILuaState::GetValue < ZLQuaternion >		( int idx, const ZLQuaternion value );

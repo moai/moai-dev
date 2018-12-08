@@ -36,7 +36,7 @@ void ZLMemStream::Compact () {
 		ZLLeanArray < ZLLeanArray < u8 > > temp;
 		temp.Init ( chunks );
 		
-		for ( size_t i = 0; i < chunks; ++i ) {
+		for ( ZLIndex i = ZLIndex::ZERO; i < chunks; ++i ) {
 			temp [ i ].Take ( this->mChunks [ i ]);
 		}
 		this->mChunks.Take ( temp );
@@ -129,9 +129,9 @@ ZLSizeResult ZLMemStream::ReadBytes ( void* buffer, size_t size ) {
 
 	if ( size == 0 ) ZL_RETURN_SIZE_RESULT ( 0, ZL_OK );
 
-	size_t cursor0 = this->mBase + this->mCursor;
-	size_t cursor1 = cursor0 + size;
-	size_t top = this->mBase + this->mLength;
+	ZLSize cursor0 = this->mBase + this->mCursor;
+	ZLSize cursor1 = cursor0 + size;
+	ZLSize top = this->mBase + this->mLength;
 
 	if ( cursor1 > top ) {
 		size = top - cursor0;
@@ -150,13 +150,13 @@ ZLSizeResult ZLMemStream::ReadBytes ( void* buffer, size_t size ) {
 	
 		assert ( this->mChunks.GetBuffer ());
 
-		size_t chunk0 = ( size_t )( cursor0 / this->mChunkSize );
-		size_t chunk1 = ( size_t )( cursor1 / this->mChunkSize );
+		ZLIndex chunk0 = ZLIndex (( ZLSize )( cursor0 / this->mChunkSize ), ZLIndex::LIMIT );
+		ZLIndex chunk1 = ZLIndex (( ZLSize )( cursor1 / this->mChunkSize ), ZLIndex::LIMIT );
 
-		size_t offset0 = cursor0 - ( chunk0 * this->mChunkSize );
-		size_t offset1 = cursor1 - ( chunk1 * this->mChunkSize );
+		ZLSize offset0 = cursor0 - ( chunk0 * this->mChunkSize );
+		ZLSize offset1 = cursor1 - ( chunk1 * this->mChunkSize );
 
-		void* src = ( void* )(( size_t )this->mChunks [ chunk0 ].GetBuffer () + offset0 );
+		void* src = ( void* )(( ZLSize )this->mChunks [ chunk0 ].GetBuffer () + offset0 );
 		void* dest = buffer;
 
 		if ( chunk0 == chunk1 ) {
@@ -166,11 +166,11 @@ ZLSizeResult ZLMemStream::ReadBytes ( void* buffer, size_t size ) {
 		else {
 			
 			memcpy ( dest, src, this->mChunkSize - offset0 );
-			dest = ( void* )(( size_t )dest + this->mChunkSize - offset0 );
+			dest = ( void* )(( ZLSize )dest + this->mChunkSize - offset0 );
 			
-			for ( size_t i = ( chunk0 + 1 ); i < chunk1; ++i ) {
+			for ( ZLIndex i = ( chunk0 + ( ZLSize )1 ); i < chunk1; ++i ) {
 				memcpy ( dest, this->mChunks [ i ].GetBuffer (), this->mChunkSize );
-				dest = ( void* )(( size_t )dest + this->mChunkSize );
+				dest = ( void* )(( ZLSize )dest + this->mChunkSize );
 			}
 			memcpy ( dest, this->mChunks [ chunk1 ].GetBuffer (), offset1 );
 		}
@@ -210,14 +210,14 @@ ZLResultCode ZLMemStream::Reserve ( size_t length ) {
 	ZLLeanArray < ZLLeanArray < u8 > > temp;
 	if ( temp.Init ( neededChunks ) != ZL_OK ) return ZL_ALLOCATION_ERROR;
 	
-	for ( size_t i = totalChunks; i < neededChunks; ++i ) {
+	for ( ZLIndex i = ZLIndex ( totalChunks, ZLIndex::LIMIT ); i < neededChunks; ++i ) {
 		if ( temp [ i ].Init ( this->mChunkSize )) return ZL_ALLOCATION_ERROR;
 	}
 	
 	// we made it this far, so we're through the woods: no more allocations
 	// it is now OK to mutate internal state
 	
-	for ( size_t i = 0; i < totalChunks; ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < totalChunks; ++i ) {
 		temp [ i ].Take ( this->mChunks [ i ]);
 	}
 	
@@ -309,13 +309,13 @@ ZLSizeResult ZLMemStream::WriteBytes ( const void* buffer, size_t size ) {
 	}
 	else {
 
-		size_t chunk0 = ( size_t )( cursor0 / this->mChunkSize );
-		size_t chunk1 = ( size_t )( cursor1 / this->mChunkSize );
+		ZLIndex chunk0 = ZLIndex (( ZLSize )( cursor0 / this->mChunkSize ), ZLIndex::LIMIT );
+		ZLIndex chunk1 = ZLIndex (( ZLSize )( cursor1 / this->mChunkSize ), ZLIndex::LIMIT );
 
-		size_t offset0 = cursor0 - ( chunk0 * this->mChunkSize );
-		size_t offset1 = cursor1 - ( chunk1 * this->mChunkSize );
+		ZLSize offset0 = cursor0 - ( chunk0 * this->mChunkSize );
+		ZLSize offset1 = cursor1 - ( chunk1 * this->mChunkSize );
 
-		void* dest = ( void* )(( size_t )this->mChunks [ chunk0 ].GetBuffer () + offset0 );
+		void* dest = ( void* )(( ZLSize )this->mChunks [ chunk0 ].GetBuffer () + offset0 );
 		const void* src = buffer;
 
 		if ( chunk0 == chunk1 ) {
@@ -327,7 +327,7 @@ ZLSizeResult ZLMemStream::WriteBytes ( const void* buffer, size_t size ) {
 			memcpy ( dest, src, this->mChunkSize - offset0 );
 			src = ( void* )(( size_t )src + this->mChunkSize - offset0 );
 			
-			for ( size_t i = ( chunk0 + 1 ); i < chunk1; ++i ) {
+			for ( ZLIndex i = ( chunk0 + ( ZLSize )1 ); i < chunk1; ++i ) {
 				memcpy ( this->mChunks [ i ].GetBuffer (), src, this->mChunkSize );
 				src = ( void* )(( size_t )src + this->mChunkSize );
 			}

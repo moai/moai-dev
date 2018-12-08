@@ -315,13 +315,16 @@ AKUContextID AKUCreateContext () {
 	MOAITrace::Affirm ();
 	MOAILogMgr::Affirm ();
 	MOAITestMgr::Affirm ();
+	MOAIFooMgr::Affirm ();
 	
 	MOAILuaRuntime& luaRuntime = MOAILuaRuntime::Get ();
 	luaRuntime.Open ();
 	luaRuntime.LoadLibs ();
 	
 	MOAIEnvironment::Affirm ();
-		
+	
+	REGISTER_LUA_CLASS ( MOAICanary )
+	REGISTER_LUA_CLASS ( MOAIFoo )
 	REGISTER_LUA_CLASS ( MOAILuaRuntime )
 	REGISTER_LUA_CLASS ( MOAIEnvironment )
 	REGISTER_LUA_CLASS ( MOAIDeserializer )

@@ -14,8 +14,8 @@
 //----------------------------------------------------------------//
 MOAIAction* MOAIActionStackMgr::GetCurrent () {
 
-	size_t top = this->mStack.GetTop ();
-	return top > 0 ? this->mStack [ top - 1 ] : 0;
+	ZLSize top = this->mStack.GetTop ();
+	return top > 0 ? this->mStack [ ZLIndex ( top - 1, ZLIndex::LIMIT )] : 0;
 }
 
 //----------------------------------------------------------------//

@@ -75,15 +75,15 @@ void MOAICollisionPrimVisitor::Process ( const MOAICollisionShape& shape0, const
 	shape1.mShape = bounds1;
 	shape1.mBounds = bounds1;
 
-	size_t shapeCount0 = shape0.mShapes.Size ();
+	ZLSize shapeCount0 = shape0.mShapes.Size ();
 
 	if ( shapeCount0 == 1 ) {
 	
-		this->Process ( *shape0.mShapes [ 0 ], shape1, t0, t1 );
+		this->Process ( *shape0.mShapes [ ZLIndex::ZERO ], shape1, t0, t1 );
 	}
 	else {
 	
-		for ( size_t i = 0; i < shapeCount0; ++i ) {
+		for ( ZLIndex i = ZLIndex::ZERO; i < shapeCount0; ++i ) {
 			this->Process ( *shape0.mShapes [ i ], shape1, t0, t1 );
 		}
 	}
@@ -99,25 +99,25 @@ void MOAICollisionPrimVisitor::Process ( const MOAICollisionShape& shape0, const
 	
 		if (( shapeCount0 == 1 ) && ( shapeCount1 == 1 )) {
 		
-			this->Process ( *shape0.mShapes [ 0 ], *shape1.mShapes [ 0 ], t0, t1 );
+			this->Process ( *shape0.mShapes [ ZLIndex::ZERO ], *shape1.mShapes [ ZLIndex::ZERO ], t0, t1 );
 		}
 		else if ( shapeCount1 == 1 ) {
 		
-			for ( size_t i = 0; i < shapeCount0; ++i ) {
-				this->Process ( *shape0.mShapes [ i ], *shape1.mShapes [ 0 ], t0, t1 );
+			for ( ZLIndex i = ZLIndex::ZERO; i < shapeCount0; ++i ) {
+				this->Process ( *shape0.mShapes [ i ], *shape1.mShapes [ ZLIndex::ZERO ], t0, t1 );
 			}
 		}
 		else {
 		
-			for ( size_t i = 0; i < shapeCount1; ++i ) {
-				this->Process ( *shape0.mShapes [ 0 ], *shape1.mShapes [ i ], t0, t1 );
+			for ( ZLIndex i = ZLIndex::ZERO; i < shapeCount1; ++i ) {
+				this->Process ( *shape0.mShapes [ ZLIndex::ZERO ], *shape1.mShapes [ i ], t0, t1 );
 			}
 		}
 	}
 	else {
 	
-		for ( size_t i = 0; i < shapeCount0; ++i ) {
-			for ( size_t j = 0; j < shapeCount1; ++j ) {
+		for ( ZLIndex i = ZLIndex::ZERO; i < shapeCount0; ++i ) {
+			for ( ZLIndex j = ZLIndex::ZERO; j < shapeCount1; ++j ) {
 				this->Process ( *shape0.mShapes [ i ], *shape1.mShapes [ j ], t0, t1 );
 			}
 		}

@@ -340,12 +340,12 @@ void MOAITimer::DoStep ( float step ) {
 void MOAITimer::GenerateKeyframeCallbacks ( float t0, float t1, bool end ) {
 
 	if ( t0 == t1 ) return;
-	u32 size = this->mCurve ? this->mCurve->Size () : 0;
+	ZLSize size = this->mCurve ? this->mCurve->Size () : 0;
 	if ( !size ) return;
 		
-	u32 keyID = ( int )this->mCurve->FindKeyID ( t0 );
+	ZLIndex keyID = this->mCurve->FindKeyID ( t0 );
 	if ( size <= keyID ) {
-		keyID = 0;
+		keyID = ZLIndex::ZERO;
 	}
 	
 	if ( t0 < t1 ) {

@@ -143,7 +143,7 @@ MOAIAnimCurveBone* MOAIAssimpAnimation::GetAnimCurve ( u32 channel ) {
 	ZLQuaternion q0		= ZLQuaternion::IDENT;
 	ZLVec3D s0			= ZLVec3D::AXIS;
 	
-	for ( size_t i = 0; i < nKeys; ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < nKeys; ++i ) {
 	
 		const aiVectorKey* posKey	= iPos < nodeAnim->mNumPositionKeys ? &nodeAnim->mPositionKeys [ iPos ] : 0;
 		const aiQuatKey* rotKey		= iRot < nodeAnim->mNumRotationKeys ? &nodeAnim->mRotationKeys [ iRot ] : 0;
@@ -202,10 +202,10 @@ MOAIAnimCurveBone* MOAIAssimpAnimation::GetAnimCurve ( u32 channel ) {
 			}
 		}
 		
-		curve->SetKey (( u32 )i, (float) ( t / this->mAssimpAnimation->mTicksPerSecond ), ZLInterpolate::kLinear );
-		curve->SetSamplePosition (( u32 )i, p0.mX, p0.mY, p0.mZ );
-		curve->SetSampleRotation (( u32 )i, q0.mV.mX, q0.mV.mY, q0.mV.mZ, q0.mS );
-		curve->SetSampleScale (( u32 )i, s0.mX, s0.mY, s0.mZ );
+		curve->SetKey ( i, (float) ( t / this->mAssimpAnimation->mTicksPerSecond ), ZLInterpolate::kLinear );
+		curve->SetSamplePosition ( i, p0.mX, p0.mY, p0.mZ );
+		curve->SetSampleRotation ( i, q0.mV.mX, q0.mV.mY, q0.mV.mZ, q0.mS );
+		curve->SetSampleScale ( i, s0.mX, s0.mY, s0.mZ );
 	}
 	
 	return curve;

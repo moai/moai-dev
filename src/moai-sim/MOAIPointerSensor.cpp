@@ -47,7 +47,7 @@ int MOAIPointerSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPointerSensor::EnqueuePointerEvent ( u8 deviceID, u8 sensorID, int x, int y ) {
+void MOAIPointerSensor::EnqueuePointerEvent ( ZLIndex deviceID, ZLIndex sensorID, int x, int y ) {
 
 	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
 	if ( inputMgr.WriteEventHeader < MOAIPointerSensor >( deviceID, sensorID )) {

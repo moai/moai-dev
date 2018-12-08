@@ -426,10 +426,10 @@ int MOAIPartition::_reserveLevels ( lua_State* L ) {
 int MOAIPartition::_setLevel ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UNNNN" )
 
-	u32 levelID		= state.GetValue < u32 >( 2, 1 ) - 1;
-	float cellSize	= state.GetValue < float >( 3, 1.0f );
-	u32 width		= state.GetValue < u32 >( 4, 0 );
-	u32 height		= state.GetValue < u32 >( 5, 0 );
+	ZLIndex levelID		= state.GetValueAsIndex ( 2 );
+	float cellSize		= state.GetValue < float >( 3, 1.0f );
+	u32 width			= state.GetValue < u32 >( 4, 0 );
+	u32 height			= state.GetValue < u32 >( 5, 0 );
 
 	self->SetLevel ( levelID, cellSize, width, height );
 
@@ -466,10 +466,10 @@ u32 MOAIPartition::AffirmInterfaceMask ( u32 typeID ) {
 
 	u32 mask = this->GetInterfaceMask ( typeID );
 	if ( mask == 0 ) {
-		size_t top = this->mInterfaceIDs.Size ();
+		ZLSize top = this->mInterfaceIDs.Size ();
 		if ( top < INTERFACE_MASK_BITS ) {
 			this->mInterfaceIDs.Grow ( top + 1 );
-			this->mInterfaceIDs [ top ] = typeID;
+			this->mInterfaceIDs [ ZLIndex ( top, ZLIndex::LIMIT )] = typeID;
 			return 1 << top;
 		}
 	}
@@ -488,8 +488,8 @@ void MOAIPartition::AffirmPriority ( MOAIPartitionHull& hull ) {
 //----------------------------------------------------------------//
 void MOAIPartition::Clear () {
 
-	size_t totalLevels = this->mLevels.Size ();
-	for ( size_t i = 0; i < totalLevels; ++i ) {
+	ZLSize totalLevels = this->mLevels.Size ();
+	for ( ZLIndex i = ZLIndex::ZERO; i < totalLevels; ++i ) {
 		this->mLevels [ i ].Clear ();
 	}
 	this->mBiggies.Clear ();
@@ -515,8 +515,8 @@ u32 MOAIPartition::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartiti
 	
 	results.Reset ();
 	
-	size_t totalLevels = this->mLevels.Size ();
-	for ( size_t i = 0; i < totalLevels; ++i ) {
+	ZLSize totalLevels = this->mLevels.Size ();
+	for ( ZLIndex i = ZLIndex::ZERO; i < totalLevels; ++i ) {
 		this->mLevels [ i ].GatherHulls ( results, ignoreProp, interfaceMask, queryMask );
 	}
 	this->mBiggies.GatherHulls ( results, ignoreProp, interfaceMask, queryMask );
@@ -531,8 +531,8 @@ u32 MOAIPartition::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartiti
 	
 	results.Reset ();
 	
-	size_t totalLevels = this->mLevels.Size ();
-	for ( size_t i = 0; i < totalLevels; ++i ) {
+	ZLSize totalLevels = this->mLevels.Size ();
+	for ( ZLIndex i = ZLIndex::ZERO; i < totalLevels; ++i ) {
 		this->mLevels [ i ].GatherHulls ( results, ignoreProp, point, this->mPlaneID, interfaceMask, queryMask );
 	}
 	this->mBiggies.GatherHulls ( results, ignoreProp, point, interfaceMask, queryMask );
@@ -546,8 +546,8 @@ u32 MOAIPartition::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartiti
 	
 	results.Reset ();
 	
-	size_t totalLevels = this->mLevels.Size ();
-	for ( size_t i = 0; i < totalLevels; ++i ) {
+	ZLSize totalLevels = this->mLevels.Size ();
+	for ( ZLIndex i = ZLIndex::ZERO; i < totalLevels; ++i ) {
 		this->mLevels [ i ].GatherHulls ( results, ignoreProp, point, orientation, interfaceMask, queryMask );
 	}
 	this->mBiggies.GatherHulls ( results, ignoreProp, point, orientation, interfaceMask, queryMask );
@@ -562,8 +562,8 @@ u32 MOAIPartition::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartiti
 	results.Reset ();
 	rect.Bless ();
 	
-	size_t totalLevels = this->mLevels.Size ();
-	for ( size_t i = 0; i < totalLevels; ++i ) {
+	ZLSize totalLevels = this->mLevels.Size ();
+	for ( ZLIndex i = ZLIndex::ZERO; i < totalLevels; ++i ) {
 		this->mLevels [ i ].GatherHulls ( results, ignoreProp, rect, interfaceMask, queryMask );
 	}
 	this->mBiggies.GatherHulls ( results, ignoreProp, rect, interfaceMask, queryMask );
@@ -578,8 +578,8 @@ u32 MOAIPartition::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartiti
 	results.Reset ();
 	box.Bless ();
 	
-	size_t totalLevels = this->mLevels.Size ();
-	for ( size_t i = 0; i < totalLevels; ++i ) {
+	ZLSize totalLevels = this->mLevels.Size ();
+	for ( ZLIndex i = ZLIndex::ZERO; i < totalLevels; ++i ) {
 		this->mLevels [ i ].GatherHulls ( results, ignoreProp, box, this->mPlaneID, interfaceMask, queryMask );
 	}
 	this->mBiggies.GatherHulls ( results, ignoreProp, box, interfaceMask, queryMask );
@@ -593,8 +593,8 @@ u32 MOAIPartition::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartiti
 	
 	results.Reset ();
 	
-	size_t totalLevels = this->mLevels.Size ();
-	for ( size_t i = 0; i < totalLevels; ++i ) {
+	ZLSize totalLevels = this->mLevels.Size ();
+	for ( ZLIndex i = ZLIndex::ZERO; i < totalLevels; ++i ) {
 		this->mLevels [ i ].GatherHulls ( results, ignoreProp, frustum, this->mPlaneID, interfaceMask, queryMask );
 	}
 	this->mBiggies.GatherHulls ( results, ignoreProp, frustum, interfaceMask, queryMask );
@@ -606,8 +606,8 @@ u32 MOAIPartition::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartiti
 //----------------------------------------------------------------//
 u32 MOAIPartition::GetInterfaceMask ( u32 typeID ) const {
 
-	size_t total = this->mInterfaceIDs.Size ();
-	for ( size_t i = 0; i < total; ++i ) {
+	ZLSize total = this->mInterfaceIDs.Size ();
+	for ( ZLIndex i = ZLIndex::ZERO; i < total; ++i ) {
 		if ( this->mInterfaceIDs [ i ] == typeID ) {
 			return 1 << i;
 		}
@@ -674,8 +674,8 @@ MOAIPartition::~MOAIPartition () {
 // This moves all props to the 'empties' cell
 void MOAIPartition::PrepareRebuild () {
 
-	size_t totalLevels = this->mLevels.Size ();
-	for ( size_t i = 0; i < totalLevels; ++i ) {
+	ZLSize totalLevels = this->mLevels.Size ();
+	for ( ZLIndex i = ZLIndex::ZERO; i < totalLevels; ++i ) {
 		this->mLevels [ i ].ExtractProps ( this->mEmpties, 0 );
 	}
 	this->mBiggies.ExtractProps ( this->mEmpties, 0 );
@@ -737,7 +737,7 @@ void MOAIPartition::RemoveHull ( MOAIPartitionHull& hull ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartition::ReserveLevels ( int totalLevels ) {
+void MOAIPartition::ReserveLevels ( ZLSize totalLevels ) {
 
 	this->PrepareRebuild ();
 	this->mLevels.Init ( totalLevels );
@@ -745,7 +745,7 @@ void MOAIPartition::ReserveLevels ( int totalLevels ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartition::SetLevel ( int levelID, float cellSize, int width, int height ) {
+void MOAIPartition::SetLevel ( ZLIndex levelID, float cellSize, int width, int height ) {
 
 	this->PrepareRebuild ();
 	this->mLevels [ levelID ].Init ( cellSize, width, height );
@@ -782,8 +782,8 @@ void MOAIPartition::UpdateHull ( MOAIPartitionHull& hull ) {
 		
 		MOAIPartitionLevel* level = 0;
 		
-		size_t totalLevels = this->mLevels.Size ();
-		for ( size_t i = 0; i < totalLevels; ++i ) {
+		ZLSize totalLevels = this->mLevels.Size ();
+		for ( ZLIndex i = ZLIndex::ZERO; i < totalLevels; ++i ) {
 			
 			MOAIPartitionLevel* testLevel = &this->mLevels [ i ];
 			

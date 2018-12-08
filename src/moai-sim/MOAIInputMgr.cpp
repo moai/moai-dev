@@ -101,13 +101,16 @@ int MOAIInputMgr::_suspendEvents ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-u8 MOAIInputMgr::AddDevice ( cc8* name  ) {
+ZLIndex MOAIInputMgr::AddDevice ( cc8* name ) {
 
-	u8 id = ( u8 )this->mDevices.GetTop ();
+	ZLSize top = this->mDevices.GetTop ();
+	assert ( top < MAX_DEVICES );
+	
+	ZLIndex deviceID =  ZLIndex ( top, ZLIndex::LIMIT );
 	
 	this->mDevices.Push ();
-	this->SetDevice ( id, name );
-	return id;
+	this->SetDevice ( deviceID, name );
+	return deviceID;
 }
 
 //----------------------------------------------------------------//
@@ -123,7 +126,7 @@ bool MOAIInputMgr::CanWrite () {
 //----------------------------------------------------------------//
 void MOAIInputMgr::ClearSensorState () {
 
-	for ( u32 i = 0; i < this->mDevices.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < this->mDevices.Size (); ++i ) {
 		MOAIInputDevice* device = this->mDevices [ i ];
 		if ( device ) {
 			device->ClearSensorState ();
@@ -132,7 +135,7 @@ void MOAIInputMgr::ClearSensorState () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIInputMgr::CheckSensor ( u8 deviceID, u8 sensorID, u32 type ) {
+bool MOAIInputMgr::CheckSensor ( ZLIndex deviceID, ZLIndex sensorID, u32 type ) {
 
 	MOAIInputDevice* device = this->GetDevice ( deviceID );
 	if ( device && device->mIsActive ) {
@@ -157,7 +160,7 @@ void MOAIInputMgr::FlushEvents ( double skip ) {
 }
 
 //----------------------------------------------------------------//
-MOAIInputDevice* MOAIInputMgr::GetDevice ( u8 deviceID ) {
+MOAIInputDevice* MOAIInputMgr::GetDevice ( ZLIndex deviceID ) {
 
 	if ( deviceID < this->mDevices.Size ()) {
 		return this->mDevices [ deviceID ];
@@ -166,7 +169,7 @@ MOAIInputDevice* MOAIInputMgr::GetDevice ( u8 deviceID ) {
 }
 
 //----------------------------------------------------------------//
-MOAISensor* MOAIInputMgr::GetSensor ( u8 deviceID, u8 sensorID ) {
+MOAISensor* MOAIInputMgr::GetSensor ( ZLIndex deviceID, ZLIndex sensorID ) {
 
 	MOAIInputDevice* device = this->GetDevice ( deviceID );
 	if ( device ) {
@@ -223,7 +226,7 @@ MOAIInputMgr::~MOAIInputMgr () {
 		this->mRecorder->Flush ();
 	}
 
-	for ( u32 i = 0; i < this->mDevices.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < this->mDevices.Size (); ++i ) {
 		this->LuaRelease ( this->mDevices [ i ]);
 	}
 	this->mRecorder.Set ( *this, 0 );
@@ -240,8 +243,8 @@ size_t MOAIInputMgr::ParseEvents ( ZLStream& stream, double timestep ) {
 	// parse events until we run out or hit an event after the current sim time
 	while ( stream.GetCursor () < stream.GetLength ()) {
 		
-		u8 deviceID			= stream.Read < u8 >( 0 );
-		u8 sensorID			= stream.Read < u8 >( 0 );
+		ZLIndex deviceID	= ZLIndex ( stream.Read < u8 >( 0 ), ZLIndex::LIMIT );
+		ZLIndex sensorID	= ZLIndex ( stream.Read < u8 >( 0 ), ZLIndex::LIMIT );
 		double timestamp	= stream.Read < double >( 0 );
 		
 		if ( first ) {
@@ -304,13 +307,17 @@ void MOAIInputMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputMgr::ReserveDevices ( u8 total ) {
+void MOAIInputMgr::ReserveDevices ( ZLSize total ) {
+
+	assert ( total < MAX_DEVICES );
 
 	this->mDevices.SetTop ( total, 0 );
 }
 
 //----------------------------------------------------------------//
-void MOAIInputMgr::ReserveSensors ( u8 deviceID, u8 total ) {
+void MOAIInputMgr::ReserveSensors ( ZLIndex deviceID, ZLSize total ) {
+
+	assert ( total < MAX_SENSORS );
 
 	MOAIInputDevice* device = this->GetDevice ( deviceID );
 	if ( device ) {
@@ -321,7 +328,7 @@ void MOAIInputMgr::ReserveSensors ( u8 deviceID, u8 total ) {
 //----------------------------------------------------------------//
 void MOAIInputMgr::ResetSensorState () {
 
-	for ( u32 i = 0; i < this->mDevices.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < this->mDevices.Size (); ++i ) {
 		MOAIInputDevice* device = this->mDevices [ i ];
 		if ( device ) {
 			device->ResetSensorState ();
@@ -354,7 +361,7 @@ void MOAIInputMgr::SetConfigurationName ( cc8* name ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputMgr::SetDevice ( u8 deviceID, cc8* name ) {
+void MOAIInputMgr::SetDevice ( ZLIndex deviceID, cc8* name ) {
 
 	if ( !( deviceID < this->mDevices.Size ())) return;
 
@@ -376,7 +383,7 @@ void MOAIInputMgr::SetDevice ( u8 deviceID, cc8* name ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputMgr::SetDeviceActive ( u8 deviceID, bool active ) {
+void MOAIInputMgr::SetDeviceActive ( ZLIndex deviceID, bool active ) {
 
 	MOAIInputDevice* device = this->GetDevice ( deviceID );
 	if ( device ) {
@@ -385,7 +392,7 @@ void MOAIInputMgr::SetDeviceActive ( u8 deviceID, bool active ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputMgr::SetDeviceHardwareInfo ( u8 deviceID, cc8* hardwareInfo ) {
+void MOAIInputMgr::SetDeviceHardwareInfo ( ZLIndex deviceID, cc8* hardwareInfo ) {
 
 	MOAIInputDevice* device = this->GetDevice ( deviceID );
 	if ( device ) {
@@ -441,7 +448,7 @@ void MOAIInputMgr::Update ( double timestep ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIInputMgr::WriteEventHeader ( u8 deviceID, u8 sensorID, u32 type ) {
+bool MOAIInputMgr::WriteEventHeader ( ZLIndex deviceID, ZLIndex sensorID, u32 type ) {
 
 	if ( this->CanWrite () && this->CheckSensor ( deviceID, sensorID, type )) {
 

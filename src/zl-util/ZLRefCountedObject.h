@@ -17,7 +17,7 @@ class ZLRefCountedObjectHandle :
 	public ZLRefCountedObjectBase {
 protected:
 
-	ZLRefCountedObject*			mObject;
+	ZLRefCountedObject*				mObject;
 
 	//----------------------------------------------------------------//
 									ZLRefCountedObjectHandle		();

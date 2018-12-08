@@ -49,7 +49,7 @@ int MOAIIndexedPropBase::_setIndex ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAIIndexedPropBase::MOAIIndexedPropBase () :
-	mIndex ( 0 ) {
+	mIndex ( ZLIndex::ZERO ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIDeckPropBase )

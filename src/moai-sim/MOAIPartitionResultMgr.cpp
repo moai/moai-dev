@@ -41,8 +41,8 @@ MOAIScopedPartitionResultBufferHandle MOAIPartitionResultMgr::GetBufferHandle ()
 		handle.mBuffer = new MOAIPartitionResultBuffer ();
 
 		size_t index = this->mBuffers.Size ();
-		this->mBuffers.Grow ( index + 1, 1, 0 );
-		this->mBuffers [ index ] = handle.mBuffer;
+		this->mBuffers.Grow ( index + 1, 0 );
+		this->mBuffers [ ZLIndex ( index, ZLIndex::LIMIT )] = handle.mBuffer;
 		
 		return handle;
 	}
@@ -59,7 +59,7 @@ MOAIPartitionResultMgr::MOAIPartitionResultMgr () {
 //----------------------------------------------------------------//
 MOAIPartitionResultMgr::~MOAIPartitionResultMgr () {
 
-	for ( size_t i = 0; i < this->mBuffers.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < this->mBuffers.Size (); ++i ) {
 		delete this->mBuffers [ i ];
 	}
 }

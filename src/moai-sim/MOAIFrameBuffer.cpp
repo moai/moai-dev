@@ -90,9 +90,15 @@ int MOAIFrameBuffer::_isPendingGrab ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIFrameBuffer::AffirmBuffers () {
+
+	this->MOAIFrameBuffer_AffirmBuffers ();
+}
+
+//----------------------------------------------------------------//
 void MOAIFrameBuffer::DetectGLFrameBufferID () {
 
-	this->mGLFrameBufferID = MOAIGfxMgr::GetDrawingAPI ().GetCurrentFramebuffer ();
+	this->SetGLFrameBuffer ( MOAIGfxMgr::GetDrawingAPI ().GetCurrentFramebuffer ());
 }
 
 //----------------------------------------------------------------//
@@ -148,7 +154,6 @@ MOAIFrameBuffer::MOAIFrameBuffer () :
 	mBufferScale ( 1.0f ),
 	mLandscape ( false ),
 	mNeedsClear ( true ),
-	mGLFrameBufferID ( 0 ),
 	mGrabNextFrame ( false ) {
 	
 	RTTI_BEGIN
@@ -159,7 +164,6 @@ MOAIFrameBuffer::MOAIFrameBuffer () :
 //----------------------------------------------------------------//
 MOAIFrameBuffer::~MOAIFrameBuffer () {
 
-	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mGLFrameBufferID, false );
 	this->mFrameImage.Set ( *this, 0 );
 }
 
@@ -223,10 +227,10 @@ void MOAIFrameBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 //	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 //	//this->mLastDrawCount = gfxMgr.GetDrawCount ();
 //
-//	gfxMgr.mGfxState.SetFrameBuffer ( this );
+//	gfxState.SetFrameBuffer ( this );
 //	
 //	//disable scissor rect for clear
-//	gfxMgr.mGfxState.SetScissorRect ();
+//	gfxState.SetScissorRect ();
 //	this->ClearSurface ();
 //	
 //	if ( this->mRenderTable ) {
@@ -236,7 +240,7 @@ void MOAIFrameBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 //		state.Pop ( 1 );
 //	}
 //
-//	gfxMgr.mVertexCache.FlushBufferedPrims (); // do we need to do this if we aren't reading pixels?
+//	gfxState.FlushVertexCache (); // do we need to do this if we aren't reading pixels?
 //
 //	// since we're doing this on the render thread, set it every time until we get a callback
 //	if ( this->mGrabNextFrame ) {
@@ -258,8 +262,10 @@ void MOAIFrameBuffer::SetBufferSize ( u32 width, u32 height ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBuffer::SetGLFrameBufferID ( ZLGfxHandle* frameBufferID ){
-  this->mGLFrameBufferID = frameBufferID;
+void MOAIFrameBuffer::SetGLFrameBuffer ( const ZLGfxHandle& frameBuffer ){
+
+	MOAIGfxResourceClerk::DeleteOrDiscard ( this->mGLFrameBuffer, true );
+	this->mGLFrameBuffer = frameBuffer;
 }
 
 //----------------------------------------------------------------//
@@ -298,4 +304,12 @@ ZLRect MOAIFrameBuffer::WndRectToDevice ( ZLRect rect ) const {
 
 	rect.Scale ( this->mBufferScale, this->mBufferScale );
 	return rect;
+}
+
+//================================================================//
+// overrides
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIFrameBuffer::MOAIFrameBuffer_AffirmBuffers () {
 }

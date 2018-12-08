@@ -48,8 +48,8 @@ private:
 	friend class MOAITextLabel;
 	friend class MOAITextLayout;
 	
-	u32			mStart;				// index in sprite stack
-	u32			mSize;				// number of sprites in line;
+	ZLIndex		mStart;				// index in sprite stack
+	ZLSize		mSize;				// number of sprites in line;
 	
 	ZLVec2D		mOrigin;			// offset to line 'hotspot' - origin of drawing
 	ZLRect		mGlyphBounds;		// tight fitting glyph bounds
@@ -111,8 +111,8 @@ private:
 	
 	//----------------------------------------------------------------//
 	void				CompactHighlights		();
-	void				FindSpriteSpan			( u32 idx, u32 size, u32& spanIdx, u32& spanSize );
-	void				PushLine				( u32 start, u32 size, const ZLVec2D& origin, const ZLRect& layoutBounds );
+	void				FindSpriteSpan			( u32 idx, u32 size, ZLIndex& spanIdx, ZLSize& spanSize );
+	void				PushLine				( ZLIndex start, ZLSize size, const ZLVec2D& origin, const ZLRect& layoutBounds );
 	void				PushSprite				( const MOAITextStyledChar& styledChar, float x, float y );
 	
 public:

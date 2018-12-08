@@ -35,7 +35,7 @@ protected:
 int MOAIScriptNode::_reserveAttrs ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIScriptNode, "UN" );
 
-	u32 size = state.GetValue < u32 >( 2, 0 );
+	ZLSize size = state.GetValue < MOAILuaState::SizeType >( 2, 0 );
 	self->mAttributes.Init ( size );
 	self->mAttributes.Fill ( 0.0f );
 	
@@ -64,7 +64,7 @@ int MOAIScriptNode::_setCallback ( lua_State* L ) {
 int MOAIScriptNode::_setAttrName ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIScriptNode, "U" );
 	
-	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
+	ZLIndex idx = state.GetValueAsIndex ( 2 );
 	self->mAttrNames [ idx ] = state.GetValue < cc8* >( 3, 0 );
 	
 	return 0;
@@ -85,7 +85,7 @@ MOAIScriptNode::~MOAIScriptNode () {
 }
 
 //----------------------------------------------------------------//
-void MOAIScriptNode::NamedAttrAdd ( u32 attrID, MOAIAttribute &attr ) {
+void MOAIScriptNode::NamedAttrAdd ( ZLIndex attrID, MOAIAttribute &attr ) {
 	
 	cc8* attrName = this->mAttrNames [ attrID ];
 	switch ( attr.GetTypeID ()) {
@@ -116,7 +116,7 @@ void MOAIScriptNode::NamedAttrAdd ( u32 attrID, MOAIAttribute &attr ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIScriptNode::NamedAttrGet ( u32 attrID, MOAIAttribute &attr ) {
+void MOAIScriptNode::NamedAttrGet ( ZLIndex attrID, MOAIAttribute &attr ) {
 	
 	cc8* attrName = this->mAttrNames [ attrID ];
 	
@@ -139,7 +139,7 @@ void MOAIScriptNode::NamedAttrGet ( u32 attrID, MOAIAttribute &attr ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIScriptNode::NamedAttrSet ( u32 attrID, MOAIAttribute &attr ) {
+void MOAIScriptNode::NamedAttrSet ( ZLIndex attrID, MOAIAttribute &attr ) {
 	
 	cc8* attrName = this->mAttrNames [ attrID ];
 	switch ( attr.GetTypeID ()) {
@@ -209,14 +209,15 @@ void MOAIScriptNode::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 bool MOAIScriptNode::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
-	attrID = UNPACK_ATTR(attrID) - 1;
+	
+	ZLIndex attrIndex = ZLIndex ( UNPACK_ATTR ( attrID ) - 1, ZLIndex::LIMIT );
 	
 	if ( attrID >= this->mAttributes.Size()) {
 		return false;
 	}
 	
-	if ( this->mAttrNames [ attrID ] == 0 ) {
-		this->mAttributes [ attrID ] = attr.Apply ( this->mAttributes [ attrID ], op, MOAIAttribute::ATTR_READ_WRITE );
+	if ( this->mAttrNames [ attrIndex ] == 0 ) {
+		this->mAttributes [ attrIndex ] = attr.Apply ( this->mAttributes [ attrIndex ], op, MOAIAttribute::ATTR_READ_WRITE );
 		return true;
 	}
 	else {
@@ -226,15 +227,15 @@ bool MOAIScriptNode::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32
 				break;
 				
 			case MOAIAttribute::ADD:
-				this->NamedAttrAdd ( attrID, attr );
+				this->NamedAttrAdd ( attrIndex, attr );
 				break;
 				
 			case MOAIAttribute::SET:
-				this->NamedAttrSet ( attrID, attr );
+				this->NamedAttrSet ( attrIndex, attr );
 				break;
 				
 			case MOAIAttribute::GET:
-				this->NamedAttrGet ( attrID, attr );
+				this->NamedAttrGet ( attrIndex, attr );
 				break;
 		}
 		return true;

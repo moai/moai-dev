@@ -40,7 +40,7 @@
 #include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIDrawable.h>
 #include <moai-sim/MOAIDrawDeck.h>
-#include <moai-sim/MOAIDrawShape.h>
+#include <moai-sim/MOAIAbstractDrawShape.h>
 #include <moai-sim/MOAIDrawShapeImmediate.h>
 #include <moai-sim/MOAIDrawShapeRetained.h>
 #include <moai-sim/MOAIEaseDriver.h>
@@ -50,12 +50,14 @@
 #include <moai-sim/MOAIFrameBufferTexture.h>
 #include <moai-sim/MOAIGeometryWriter.h>
 #include <moai-sim/MOAIGfxBuffer.h>
-#include <moai-sim/MOAIGfxGlobalsCache.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxPipelineClerk.h>
-#include <moai-sim/MOAIGfxStateCache.h>
+#include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIGfxResourceClerk.h>
-#include <moai-sim/MOAIGfxVertexCache.h>
+#include <moai-sim/MOAIGfxState.h>
+#include <moai-sim/MOAIGfxStateCPUCache.h>
+#include <moai-sim/MOAIGfxStateGPUCache.h>
+#include <moai-sim/MOAIGfxStateVertexCache.h>
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIGraphicsGridProp.h>
 #include <moai-sim/MOAIGrid.h>
@@ -139,8 +141,8 @@
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIShaderProgram.h>
 #include <moai-sim/MOAIShaderUniform.h>
-#include <moai-sim/MOAIShaderUniformBuffer.h>
-#include <moai-sim/MOAIShaderUniformFormatter.h>
+#include <moai-sim/MOAIShaderUniformHandle.h>
+#include <moai-sim/MOAIShaderUniformSchema.h>
 #include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAISpanList.h>

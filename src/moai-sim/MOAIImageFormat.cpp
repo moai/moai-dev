@@ -129,9 +129,9 @@ void MOAIImageFormat::SetPixelFormat ( MOAIImage& image, MOAIImage::PixelFormat 
 }
 
 //----------------------------------------------------------------//
-void MOAIImageFormat::SetTextureID ( MOAITextureBase& texture, ZLGfxHandle* glTexID, int internalFormat, int pixelType, size_t textureSize ) {
+void MOAIImageFormat::SetGLTexture ( MOAITextureBase& texture, const ZLGfxHandle& glTexture, int internalFormat, int pixelType, size_t textureSize ) {
 
-	texture.SetTextureID ( glTexID, internalFormat, pixelType, textureSize );
+	texture.SetGLTexture ( glTexture, internalFormat, pixelType, textureSize );
 }
 
 //----------------------------------------------------------------//

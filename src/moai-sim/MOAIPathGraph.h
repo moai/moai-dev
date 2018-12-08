@@ -21,7 +21,7 @@ protected:
 	static int		_setHeuristic			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	virtual void	PushNeighbors			( MOAIPathFinder& pathFinder, int nodeID ) = 0;
+	virtual void	PushNeighbors			( MOAIPathFinder& pathFinder, ZLIndex nodeID ) = 0;
 
 public:
 

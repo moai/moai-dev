@@ -39,9 +39,9 @@ public:
 	//----------------------------------------------------------------//
 					MOAIScriptNode			();
 					~MOAIScriptNode			();
-	void			NamedAttrAdd			( u32 attrID, MOAIAttribute& attr );
-	void			NamedAttrGet			( u32 attrID, MOAIAttribute& attr );
-	void			NamedAttrSet			( u32 attrID, MOAIAttribute& attr );
+	void			NamedAttrAdd			( ZLIndex attrID, MOAIAttribute& attr );
+	void			NamedAttrGet			( ZLIndex attrID, MOAIAttribute& attr );
+	void			NamedAttrSet			( ZLIndex attrID, MOAIAttribute& attr );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };

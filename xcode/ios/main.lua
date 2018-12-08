@@ -6,7 +6,13 @@
 
 print ( 'HELLO FROM LUA' )
 
-if MOAIFileSystem.checkFileExists ( 'lua/main.lua' ) then
-	MOAIFileSystem.setWorkingDirectory ( 'lua' )
-	dofile ( 'main-ar.lua' )
+local SAMPLE_NAME = 'debugLines-partition'
+local SAMPLE_PATH = 'lua/' .. SAMPLE_NAME
+
+print ( SAMPLE_PATH )
+
+if MOAIFileSystem.checkFileExists ( SAMPLE_PATH .. '/main.lua' ) then
+    print ( 'RUNNING SAMPLE' )
+	MOAIFileSystem.setWorkingDirectory ( SAMPLE_PATH )
+	dofile ( 'main.lua' )
 end

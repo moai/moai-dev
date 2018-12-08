@@ -44,10 +44,10 @@ int MOAILight::_setTransform ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAILight::_setUniform ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIShader, "U" )
+	MOAI_LUA_SETUP ( MOAILight, "U" )
 
-	u32 uniformID	= state.GetValue < u32 >( 2, 1 ) - 1;
-	self->SetUniform ( L, 3, uniformID, 0 );
+	ZLIndex uniformID = state.GetValueAsIndex ( 2 );
+	self->SetUniform ( L, 3, self->mBuffer.GetBuffer (), uniformID, ZLIndex::ZERO );
 	return 0;
 }
 
@@ -70,8 +70,8 @@ void MOAILight::BindTextures ( u32 textureOffset ) {
 	MOAIGfxMgr& gfx = MOAIGfxMgr::Get ();
 
 	size_t nTextures = this->mTextures.Size ();
-	for ( u32 i = 0; i < nTextures; ++i ) {
-		gfx.mGfxState.SetTexture ( this->mTextures [ i ], textureOffset + i );
+	for ( ZLIndex i = ZLIndex::ZERO; i < nTextures; ++i ) {
+		gfx.mGfxState.SetTexture ( this->mTextures [ i ], i + ( ZLSize )textureOffset );
 	}
 }
 
@@ -129,21 +129,22 @@ void MOAILight::SetFormat ( MOAILightFormat* format ) {
 //----------------------------------------------------------------//
 bool MOAILight::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 
-	return this->mFormat ? this->MOAIShaderUniformBuffer::ApplyAttrOp ( attrID, attr, op ) : false;
+	return this->mFormat ? this->MOAIShaderUniformSchema::ApplyAttrOp ( this->mBuffer.GetBuffer (), attrID, attr, op ) : false;
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformFormatter* MOAILight::MOAIShaderUniformBuffer_GetUniform ( u32 uniformID, void*& buffer ) {
+MOAIShaderUniformHandle MOAILight::MOAIShaderUniformSchema_GetUniformHandle ( void* buffer, ZLIndex uniformID ) const {
+
+	MOAIShaderUniformHandle uniform;
+	uniform.mBuffer = 0;
 
 	if ( this->mFormat ) {
-		MOAILightFormatUniform * uniform = this->mFormat->GetUniform ( uniformID );
-		if ( uniform ) {
-			buffer = ( void* )(( size_t )this->mBuffer.GetBuffer () + uniform->mBase );
-		}
-		return uniform;
-	} else {
-		return (MOAIShaderUniform *) 0;
+	
+		const MOAILightFormatUniform& lightUniform = this->mFormat->mUniforms [ uniformID ];
+
+		uniform.mType		= lightUniform.mType;
+		uniform.mWidth		= lightUniform.mWidth;
+		uniform.mBuffer		= ( void* )(( size_t )this->mBuffer.GetBuffer () + lightUniform.mBase );
 	}
-
+	return uniform;
 }
-

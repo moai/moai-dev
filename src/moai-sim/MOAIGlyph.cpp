@@ -15,8 +15,8 @@
 //----------------------------------------------------------------//
 void MOAIGlyph::Draw ( MOAITextureBase& texture, float x, float y, float xScale, float yScale, const ZLRect& padding ) const {
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	if ( !gfxMgr.mGfxState.SetTexture ( &texture )) return;
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	if ( !gfxState.SetTexture ( &texture )) return;
 	
 	MOAIQuadBrush glQuad;
 	
@@ -55,8 +55,8 @@ ZLRect MOAIGlyph::GetGlyphLogicalRect ( float x, float y, float xScale, float yS
 //----------------------------------------------------------------//
 MOAIKernVec MOAIGlyph::GetKerning ( u32 name ) const {
 
-	size_t total = this->mKernTable.Size ();
-	for ( size_t i = 0; i < total; ++i ) {
+	ZLSize total = this->mKernTable.Size ();
+	for ( ZLIndex i = ZLIndex::ZERO; i < total; ++i ) {
 		MOAIKernVec& kernVec = this->mKernTable [ i ];
 		
 		if ( kernVec.mName == name ) {
@@ -75,7 +75,7 @@ MOAIKernVec MOAIGlyph::GetKerning ( u32 name ) const {
 //----------------------------------------------------------------//
 MOAIGlyph::MOAIGlyph () :
 	mCode ( NULL_CODE_ID ),
-	mPageID ( NULL_PAGE_ID ),
+	mPageID ( ZLIndex::INVALID ),
 	mSrcX ( 0 ),
 	mSrcY ( 0 ),
 	mNext ( 0 ),
@@ -87,7 +87,7 @@ MOAIGlyph::~MOAIGlyph () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGlyph::ReserveKernTable ( u32 total ) {
+void MOAIGlyph::ReserveKernTable ( ZLSize total ) {
 
 	this->mKernTable.Init ( total );
 }
@@ -112,13 +112,13 @@ void MOAIGlyph::SerializeIn ( MOAILuaState& state ) {
 		int size = ( int )lua_objlen ( state, -1 ); // TODO: cast
 		this->mKernTable.Init ( size );
 		
-		for ( int i = 0; i < size; ++i ) {
+		for ( ZLIndex i = ZLIndex::ZERO; i < size; ++i ) {
 		
-			if ( state.PushFieldWithType ( -1, i + 1, LUA_TTABLE )) {
+			if ( state.PushFieldWithType ( -1, ( int )i + 1, LUA_TTABLE )) {
 				
 				this->mKernTable [ i ].mName	= state.GetFieldValue ( -1, "mName", 0 );
-				this->mKernTable [ i ].mX		= state.GetFieldValue ( -1, "mX", 0.0f );
-				this->mKernTable [ i ].mY		= state.GetFieldValue ( -1, "mY", 0.0f );
+				this->mKernTable [ i ].mX		= state.GetFieldValue ( -1, "mX", 0.0 );
+				this->mKernTable [ i ].mY		= state.GetFieldValue ( -1, "mY", 0.0 );
 			}
 			state.Pop ( 1 );
 		}
@@ -143,9 +143,9 @@ void MOAIGlyph::SerializeOut ( MOAILuaState& state ) {
 	
 	if ( this->mKernTable.Size ()) {
 		lua_newtable ( state );
-		for ( u32 i = 0; i < this->mKernTable.Size (); ++i ) {
+		for ( ZLIndex i = ZLIndex::ZERO; i < this->mKernTable.Size (); ++i ) {
 		
-			lua_pushnumber ( state, i + 1 );
+			state.Push ( i );
 			lua_newtable ( state );
 			
 			state.SetField ( -1, "mName", this->mKernTable [ i ].mName );
@@ -159,7 +159,7 @@ void MOAIGlyph::SerializeOut ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGlyph::SetKernVec ( u32 id, const MOAIKernVec& kernVec ) {
+void MOAIGlyph::SetKernVec ( ZLIndex id, const MOAIKernVec& kernVec ) {
 
 	this->mKernTable [ id ] = kernVec;
 }

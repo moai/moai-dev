@@ -25,8 +25,15 @@ extern JavaVM* jvm;
 int MOAIBrowserAndroid::_canOpenURL ( lua_State* L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIBrowserAndroid, "" )
 
+    ZLLogF ( ZLLog::CONSOLE, "MOAIBrowserAndroid: _canOpenURL");
+
+    JNI_GET_ENV ( jvm, env );
+
+    jclass browser = env->FindClass ( "com/moaisdk/core/MoaiBrowser" );
+    jmethodID canOpenUrl = env->GetStaticMethodID ( browser, "canOpenURL", "(Ljava/lang/String;)Z" );
+
 	MOAIJString jurl = self->GetJString ( lua_tostring ( state, 1 ));
-	lua_pushboolean( state, self->CallStaticBooleanMethod ( self->mJava_CanOpenURL, ( jstring )jurl ));
+	lua_pushboolean( state, self->CallStaticBooleanMethod ( canOpenUrl, ( jstring )jurl ));
 	return 1;
 }
 
@@ -42,8 +49,13 @@ int MOAIBrowserAndroid::_openURL ( lua_State* L ) {
 
 	ZLLogF ( ZLLog::CONSOLE, "MOAIBrowserAndroid: _openURL");
 
+    JNI_GET_ENV ( jvm, env );
+
+    jclass browser = env->FindClass ( "com/moaisdk/core/MoaiBrowser" );
+    jmethodID openUrl = env->GetStaticMethodID ( browser, "openURL", "(Ljava/lang/String;)V" );
+
 	MOAIJString jurl = self->GetJString ( lua_tostring ( state, 1 ));
-	self->CallStaticVoidMethod ( self->mJava_OpenURL, ( jstring )jurl );
+	self->CallStaticVoidMethod ( openUrl, ( jstring )jurl );
 	return 0;
 }
 
@@ -58,7 +70,9 @@ int MOAIBrowserAndroid::_openURL ( lua_State* L ) {
 */
 int MOAIBrowserAndroid::_openURLWithParams ( lua_State* L ) {
 	MOAI_JAVA_LUA_SETUP ( MOAIBrowserAndroid, "" )
-	
+
+	ZLLogF ( ZLLog::CONSOLE, "MOAIBrowserAndroid: _openURLWithParams");
+
 	cc8* url = lua_tostring ( state, 1 );
 
     jobject params;
@@ -68,8 +82,13 @@ int MOAIBrowserAndroid::_openURLWithParams ( lua_State* L ) {
 
 	if ( url == NULL || params == NULL ) return 0;
 
+	JNI_GET_ENV ( jvm, env );
+
+	jclass browser = env->FindClass ( "com/moaisdk/core/MoaiBrowser" );
+	jmethodID openURLWithParams = env->GetStaticMethodID ( browser, "openURLWithParams", "(Ljava/lang/String;Landroid/os/Bundle;)V" );
+
 	MOAIJString jurl = self->GetJString ( url );
-	self->CallStaticVoidMethod ( self->mJava_OpenURLWithParams, ( jstring )jurl, params );
+	self->CallStaticVoidMethod ( openURLWithParams, ( jstring )jurl, params );
 
 	return 0;
 }
@@ -80,14 +99,8 @@ int MOAIBrowserAndroid::_openURLWithParams ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAIBrowserAndroid::MOAIBrowserAndroid () {
-
 	RTTI_SINGLE ( MOAILuaObject )
-	
-	//if ( this->SetClass ( "com/moaisdk/core/MoaiBrowser" )) {
-	//	this->mJava_CanOpenURL			= this->GetStaticMethod ( "canOpenURL", "(Ljava/lang/String;)Z" );
-	//	this->mJava_OpenURL				= this->GetStaticMethod ( "openURL", "(Ljava/lang/String;)V" );
-	//	this->mJava_OpenURLWithParams	= this->GetStaticMethod ( "openURLWithParams", "(Ljava/lang/String;Landroid/os/Bundle;)V" );
-	//}
+	this->SetClass ( "com/moaisdk/core/MoaiBrowser" );
 }
 
 //----------------------------------------------------------------//

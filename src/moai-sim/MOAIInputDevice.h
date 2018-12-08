@@ -26,8 +26,8 @@ private:
 	static int		_getHardwareInfo		( lua_State* L );
 
 	//----------------------------------------------------------------//
-	MOAISensor*		GetSensor				( u8 sensorID );
-	void			SetSensor				( u8 sensorID, cc8* name, MOAISensor* sensor );
+	MOAISensor*		GetSensor				( ZLIndex sensorID );
+	void			SetSensor				( ZLIndex sensorID, cc8* name, MOAISensor* sensor );
 
 public:
 
@@ -45,7 +45,7 @@ public:
 					~MOAIInputDevice		();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			ReserveSensors			( u8 total );
+	void			ReserveSensors			( ZLSize total );
 	void			ResetSensorState		();
 	void			SetHardwareInfo			( cc8* hardwareInfo );
 };

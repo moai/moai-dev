@@ -742,6 +742,16 @@ u64 MOAILuaState::GetValue < u64 >( int idx, const u64 value ) {
 
 //----------------------------------------------------------------//
 template <>
+ZLSize MOAILuaState::GetValue < ZLSize >( int idx, const ZLSize value ) {
+
+	if ( this->IsType ( idx, LUA_TNUMBER )) {
+		return ( ZLSize )lua_tonumber ( this->mState, idx );
+	}
+	return value;
+}
+
+//----------------------------------------------------------------//
+template <>
 const void* MOAILuaState::GetValue < const void* >( int idx, const void* value ) {
 
 	if ( this->IsType ( idx, LUA_TLIGHTUSERDATA )) {
@@ -818,16 +828,16 @@ ZLColorVec MOAILuaState::GetValue < ZLColorVec >( int idx, const ZLColorVec valu
 }
 
 //----------------------------------------------------------------//
-template <>
-ZLIndex MOAILuaState::GetValue < ZLIndex >( int idx, const ZLIndex value ) {
-
-	if ( this->IsType ( idx, LUA_TNUMBER )) {
-		ZLIndex index;
-		index.mKey = ( u32 )lua_tonumber ( this->mState, idx ) - 1;
-		return index;
-	}
-	return value;
-}
+//template <>
+//ZLIndex MOAILuaState::GetValue < ZLIndex >( int idx, const ZLIndex value ) {
+//
+//	if ( this->IsType ( idx, LUA_TNUMBER )) {
+//		ZLIndex index;
+//		index.mKey = ( u32 )lua_tonumber ( this->mState, idx ) - 1;
+//		return index;
+//	}
+//	return value;
+//}
 
 //----------------------------------------------------------------//
 template <>
@@ -947,6 +957,13 @@ ZLVec4D MOAILuaState::GetValue < ZLVec4D >( int idx, const ZLVec4D value ) {
 	vec.mW = this->GetValue < float >( idx + 3, value.mW );
 	
 	return vec;
+}
+
+//----------------------------------------------------------------//
+ZLIndex MOAILuaState::GetValueAsIndex ( int idx, ZLIndex value ) {
+
+	IndexType v = this->GetValue < IndexType >( idx, ( IndexType )(( ZLSize )value ) + 1 );
+	return ZLIndex ( v - 1, ZLIndex::LIMIT );
 }
 
 //----------------------------------------------------------------//
@@ -1196,6 +1213,13 @@ void MOAILuaState::Push ( u32 value ) {
 
 //----------------------------------------------------------------//
 void MOAILuaState::Push ( u64 value ) {
+
+	// TODO: check for overflow
+	lua_pushnumber ( this->mState, ( double )value );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaState::Push ( ZLSize value ) {
 
 	// TODO: check for overflow
 	lua_pushnumber ( this->mState, ( double )value );

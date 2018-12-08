@@ -17,8 +17,8 @@ class MOAIVertexArray :
 	public MOAIGfxResource {
 protected:
 
-	ZLLeanArray < ZLGfxHandle* >					mVAOs; // vertex array objects to bind all the vertex and buffer state
-	u32												mCurrentVAO;
+	ZLLeanArray < ZLGfxHandle >						mVAOs; // vertex array objects to bind all the vertex and buffer state
+	ZLIndex											mCurrentVAO;
 
 	ZLLeanArray < MOAIVertexBufferWithFormat >		mVertexBuffers;
 
@@ -48,8 +48,8 @@ public:
 	IS ( UsingVAOs, mUseVAOs, true )
 	
 	//----------------------------------------------------------------//
-	MOAIVertexBuffer*	GetVertexBuffer				( u32 idx );
-	MOAIVertexFormat*	GetVertexFormat				( u32 idx );
+	MOAIVertexBuffer*	GetVertexBuffer				( ZLIndex idx );
+	MOAIVertexFormat*	GetVertexFormat				( ZLIndex idx );
 						MOAIVertexArray				();
 						~MOAIVertexArray			();
 	void				RegisterLuaClass			( MOAILuaState& state );
@@ -58,7 +58,7 @@ public:
 	void				ReserveVertexBuffers		( u32 total );
 	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
-	void				SetVertexBuffer				( u32 idx, MOAIVertexBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat );
+	void				SetVertexBuffer				( ZLIndex idx, MOAIVertexBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat );
 };
 
 #endif

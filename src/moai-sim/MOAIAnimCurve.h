@@ -12,9 +12,9 @@
 class MOAIAnimKey {
 public:
 
-	float		mTime;
+	ZLReal		mTime;
 	u32			mMode;
-	float		mWeight;
+	ZLReal		mWeight;
 	
 	bool operator < ( const MOAIAnimKey &rhs ) const {
 		return mTime < rhs.mTime;
@@ -31,9 +31,16 @@ public:
 class MOAIAnimKeySpan {
 public:
 
-	u32		mKeyID;		// ID of first key in span
-	float	mTime;		// Local time (within span)
-	float	mCycle;		// Total number of times to add curve delta (repeat cycle)
+	ZLIndex		mKeyID;		// ID of first key in span
+	ZLReal		mTime;		// Local time (within span)
+	ZLReal		mCycle;		// Total number of times to add curve delta (repeat cycle)
+	
+	//----------------------------------------------------------------//
+	MOAIAnimKeySpan () :
+		mKeyID ( ZLIndex::INVALID ),
+		mTime ( 0.0 ),
+		mCycle ( 0.0 ) {
+	}
 };
 
 //================================================================//
@@ -55,12 +62,10 @@ class MOAIAnimCurve :
 	public virtual MOAINode {
 protected:
 
-	static const u32 NULL_KEY_ID = ( u32 )-1;
-
 	ZLLeanArray < MOAIAnimKey > mKeys;
 
-	float	mTime;
-	u32		mWrapMode;
+	ZLReal		mTime;
+	u32			mWrapMode;
 
 	//----------------------------------------------------------------//
 	static int			_getLength			( lua_State* L );
@@ -72,7 +77,7 @@ protected:
 	virtual void		MOAIAnimCurve_ApplyValueAttrOp		( MOAIAttribute& attr, u32 op ) = 0;
 	virtual void		MOAIAnimCurve_Draw					( u32 resolution ) const;
 	virtual void		MOAIAnimCurve_GetDelta				( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const = 0;
-	virtual float		MOAIAnimCurve_GetFloatForTime		( float t ) const;
+	virtual ZLReal		MOAIAnimCurve_GetFloatForTime		( ZLReal t ) const;
 	virtual void		MOAIAnimCurve_GetValue				( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const = 0;
 	virtual void		MOAIAnimCurve_GetZero				( MOAIAttribute& attr ) const = 0;
 	virtual void		MOAIAnimCurve_ReserveSamples		( u32 total ) = 0;
@@ -100,20 +105,20 @@ public:
 	//----------------------------------------------------------------//
 	void				Clear					();
 	void				Draw					( u32 resolution ) const;
-	u32					FindKeyID				( float time ) const;
-	void				GetDelta				( MOAIAttribute& attr, float t0, float t1 );
+	ZLIndex				FindKeyID				( ZLReal time ) const;
+	void				GetDelta				( MOAIAttribute& attr, ZLReal t0, ZLReal t1 );
 	const MOAIAnimKey&	GetKey					( ZLIndex idx ) const;
-	float				GetLength				() const;
-	MOAIAnimKeySpan		GetSpan					( float time ) const;
-	void				GetValue				( MOAIAttribute& attr, float time );
+	ZLReal				GetLength				() const;
+	MOAIAnimKeySpan		GetSpan					( ZLReal time ) const;
+	void				GetValue				( MOAIAttribute& attr, ZLReal time );
 						MOAIAnimCurve			();
 						~MOAIAnimCurve			();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				ReserveKeys				( u32 total );
-	void				SetKey					( ZLIndex idx, float time, u32 mode, float weight = 1.0f );
+	void				SetKey					( ZLIndex idx, ZLReal time, u32 mode, ZLReal weight = 1.0f );
 	u32					Size					() const;
-	float				WrapTime				( float t, float &repeat ) const;
+	ZLReal				WrapTime				( ZLReal t, ZLReal &repeat ) const;
 };
 
 #endif

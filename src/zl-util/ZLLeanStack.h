@@ -10,17 +10,17 @@
 //================================================================//
 // ZLLeanStack
 //================================================================//
-template < typename TYPE, size_t CHUNKSIZE = 64 >
+template < typename TYPE, ZLSize CHUNKSIZE = 64 >
 class ZLLeanStack :
 	public ZLLeanArray < TYPE > {
 protected:
 
-	size_t mTop;
+	ZLSize mTop;
 
 public:
 	
 	//----------------------------------------------------------------//
-	size_t GetTop () const {
+	ZLSize GetTop () const {
 		
 		return this->mTop;
 	}
@@ -68,7 +68,7 @@ public:
 	//----------------------------------------------------------------//
 	TYPE& Push () {
 
-		if (( this->Grow ( this->mTop + 1, CHUNKSIZE ) != ZL_OK ) || ( !this->mData )) {
+		if (( this->GrowChunked ( this->mTop + 1, CHUNKSIZE ) != ZL_OK ) || ( !this->mData )) {
 			assert ( false );
 			return ZLTypeID < TYPE >::DummyRef ();
 		}
@@ -80,7 +80,7 @@ public:
 	//----------------------------------------------------------------//
 	TYPE& Push ( ZLResultCode& result ) {
 	
-		if (( this->Grow ( this->mTop + 1, CHUNKSIZE ) != ZL_OK ) || ( !this->mData )) {
+		if (( this->GrowChunked ( this->mTop + 1, CHUNKSIZE ) != ZL_OK ) || ( !this->mData )) {
 			result = ZL_ALLOCATION_ERROR;
 			return ZLTypeID < TYPE >::DummyRef ();
 		}
@@ -93,7 +93,7 @@ public:
 	//----------------------------------------------------------------//
 	TYPE& Push ( const TYPE& type ) {
 		
-		if (( this->Grow ( this->mTop + 1, CHUNKSIZE ) != ZL_OK ) || ( !this->mData )) {
+		if (( this->GrowChunked ( this->mTop + 1, CHUNKSIZE ) != ZL_OK ) || ( !this->mData )) {
 			assert ( false );
 			return ZLTypeID < TYPE >::DummyRef ();
 		}
@@ -105,7 +105,7 @@ public:
 	//----------------------------------------------------------------//
 	TYPE& Push ( const TYPE& type, ZLResultCode& result ) {
 		
-		if (( this->Grow ( this->mTop + 1, CHUNKSIZE ) != ZL_OK ) || ( !this->mData )) {
+		if (( this->GrowChunked ( this->mTop + 1, CHUNKSIZE ) != ZL_OK ) || ( !this->mData )) {
 			result = ZL_ALLOCATION_ERROR;
 			return ZLTypeID < TYPE >::DummyRef ();
 		}
@@ -121,12 +121,12 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	ZLResultCode Resize ( size_t size ) {
+	ZLResultCode Resize ( ZLSize size ) {
 
 		if ( this->mSize != size ) {
 
 			TYPE* data = 0;
-			size_t top = 0;
+			ZLSize top = 0;
 			
 			if ( size ) {
 			
@@ -135,13 +135,13 @@ public:
 
 				top = ( this->mTop < size ) ? this->mTop : size;
 
-				for ( size_t i = 0; i < top; ++i ) {
+				for ( ZLSize i = 0; i < top; ++i ) {
 					new ( &data [ i ]) TYPE ( this->mData [ i ]); // placement new
 				}
 			}
 
 			if ( this->mData ) {
-				for ( size_t i = this->mTop; i > 0; --i ) {
+				for ( ZLSize i = this->mTop; i > 0; --i ) {
 					this->mData [ i - 1 ].~TYPE ();
 				}
 				free ( this->mData );
@@ -155,20 +155,20 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	ZLResultCode SetTop ( size_t top ) {
+	ZLResultCode SetTop ( ZLSize top ) {
 	
-		if ( this->Grow ( top, CHUNKSIZE ) != ZL_OK ) return ZL_ALLOCATION_ERROR;
+		if ( this->GrowChunked ( top, CHUNKSIZE ) != ZL_OK ) return ZL_ALLOCATION_ERROR;
 		this->mTop = top;
 		return ZL_OK;
 	}
 	
 	//----------------------------------------------------------------//
-	ZLResultCode SetTop ( size_t top, const TYPE& value ) {
+	ZLResultCode SetTop ( ZLSize top, const TYPE& value ) {
 	
-		if ( this->Grow ( top, CHUNKSIZE, value ) != ZL_OK ) return ZL_ALLOCATION_ERROR;
+		if ( this->GrowChunked ( top, CHUNKSIZE, value ) != ZL_OK ) return ZL_ALLOCATION_ERROR;
 		this->mTop = top;
 		
-		for ( size_t i = 0; i < this->mTop; ++i ) {
+		for ( ZLSize i = 0; i < this->mTop; ++i ) {
 			new ( &this->mData [ i ]) TYPE ();
 		}
 		return ZL_OK;

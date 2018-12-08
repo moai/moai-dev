@@ -57,7 +57,7 @@ ZLContext::~ZLContext () {
 	
 	// finalize everything
 	for ( size_t i = 1; i <= total; ++i ) {
-		ZLContextPair& pair = this->mGlobals [ total - i ];
+		ZLContextPair& pair = this->mGlobals [ ZLIndex ( total - i, ZLIndex::LIMIT )];
 		ZLContextClassBase* global = pair.mGlobalBase;
 
 		if ( global ) {
@@ -73,7 +73,7 @@ ZLContext::~ZLContext () {
 	// mark everything as invalid
 	for ( size_t i = 1; i <= total; ++i ) {
 	
-		ZLContextPair& pair = this->mGlobals [ total - i ];
+		ZLContextPair& pair = this->mGlobals [ ZLIndex ( total - i, ZLIndex::LIMIT )];
 		
 		#ifdef ZL_ENABLE_CONTEXT_DEBUG_LOG
 			log.LogF ( ZLLog::LOG_DEBUG, ZLLog::CONSOLE, "ZLContext: invalidating global %p\n", pair.mGlobalBase );
@@ -84,7 +84,7 @@ ZLContext::~ZLContext () {
 
 	// and officially delete everything
 	for ( size_t i = 1; i <= total; ++i ) {
-		ZLContextPair& pair = this->mGlobals [ total - i ];
+		ZLContextPair& pair = this->mGlobals [ ZLIndex ( total - i, ZLIndex::LIMIT )];
 		ZLContextClassBase* global = pair.mGlobalBase;
 
 		if ( global ) {
@@ -116,7 +116,7 @@ bool ZLContextMgr::Check ( ZLContext* globals ) {
 u32 ZLContextMgr::CountContexts () {
 
 	GlobalsSet* globalSet = sGlobalsSet.Get ();
-	return globalSet->size ();
+	return globalSet ? globalSet->size () : 0;
 }
 
 //----------------------------------------------------------------//
@@ -153,6 +153,12 @@ void ZLContextMgr::Delete ( ZLContext* globals ) {
 			globalSet->erase ( globals );
 			sInstance.Set ( 0 );
 		}
+		
+		// if the global set is empty, delete it
+		if ( globalSet->size () == 0 ) {
+			delete globalSet;
+        	sGlobalsSet.Set ( 0 );
+		}
 	}
 	
 	// don't set this to nil until *after* deleting it!
@@ -170,11 +176,8 @@ void ZLContextMgr::Finalize () {
 
         GlobalsSetIt globalsIt = globalSet->begin ();
         for ( ; globalsIt != globalSet->end (); ++globalsIt ) {
-		
 			ZLContext* instance = *globalsIt;
-			
             sInstance.Set ( instance );
-			
             delete instance;
         }
         

@@ -463,7 +463,7 @@ void MOAIFont::BuildKerning ( MOAIGlyph* glyphs, MOAIGlyph* pendingGlyphs ) {
 			// skip if glyph is already in old glyph's kerning table
 			// may happen if glyphs are purged and then re-added
 			bool unknown = true;
-			for ( size_t i = 0; i < oldTableSize; ++i ) {
+			for ( ZLIndex i = ZLIndex::ZERO; i < oldTableSize; ++i ) {
 				if ( glyph.mKernTable [ i ].mName == glyph2.mCode ) {
 					unknown = false;
 					break;
@@ -482,7 +482,7 @@ void MOAIFont::BuildKerning ( MOAIGlyph* glyphs, MOAIGlyph* pendingGlyphs ) {
 		// resize the old kerning table and copy in the new kern vecs (if any)
 		if ( kernTableSize ) {
 			glyph.mKernTable.Resize ( oldTableSize + kernTableSize );
-			memcpy ( &glyph.mKernTable [ oldTableSize ], kernTable, sizeof ( MOAIKernVec ) * kernTableSize );
+			memcpy ( &glyph.mKernTable [ ZLIndex ( oldTableSize, ZLIndex::LIMIT )], kernTable, sizeof ( MOAIKernVec ) * kernTableSize );
 		}
 	}
 	

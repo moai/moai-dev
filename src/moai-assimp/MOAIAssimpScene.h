@@ -52,10 +52,10 @@ public:
 
 	//----------------------------------------------------------------//
 	void					Clear					();
-	MOAIAssimpAnimation*	GetAnimation			( size_t idx );
-	MOAIAssimpCamera*		GetCamera				( size_t idx );
-	MOAILuaMemberRef*		GetMaterial				( size_t idx );
-	MOAIAssimpMesh*			GetMesh					( size_t idx );
+	MOAIAssimpAnimation*	GetAnimation			( ZLIndex idx );
+	MOAIAssimpCamera*		GetCamera				( ZLIndex idx );
+	MOAILuaMemberRef*		GetMaterial				( ZLIndex idx );
+	MOAIAssimpMesh*			GetMesh					( ZLIndex idx );
 	ZLResultCode			Load					( cc8* filename, u32 postProcessingFlags = 0 );
 	ZLResultCode			Load					( const MOAIAssimpScene& scene, u32 postProcessingFlags = 0 );
 							MOAIAssimpScene			();

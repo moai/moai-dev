@@ -12,7 +12,7 @@
 	type* name					= ( type* )( size <= stackAllocMax ? alloca ( size ) : 0 );		\
 	if ( !name ) {																				\
 		_##name##_array.Init ( size );															\
-		name = ( type* )_##name##_array.GetBuffer ();												\
+		name = ( type* )_##name##_array.GetBuffer ();											\
 	}
 
 //================================================================//
@@ -34,13 +34,6 @@ public:
 		}
 		return *this;
 	};
-
-	//----------------------------------------------------------------//
-	inline TYPE& operator [] ( ZLSize idx ) const {
-
-		assert ( idx < this->mSize );
-		return this->mData [ idx ];
-	}
 
 	//----------------------------------------------------------------//
 	inline TYPE& operator [] ( const ZLIndex& idx ) const {
@@ -79,13 +72,13 @@ public:
 		ZLSize total = ( this->mSize < src.mSize ) ? this->mSize : src.mSize;
 
 		for ( ZLSize i = 0; i < total; ++i ) {
-			this->mData [ i ] = src [ i ];
+			this->mData [ i ] = src.mData [ i ];
 		}
 	}
 
 	//----------------------------------------------------------------//
-	inline TYPE& Elem ( ZLSize idx ) {
-		return this->mData [ idx ];
+	inline TYPE& Elem ( const ZLIndex& idx ) {
+		return this->mData [ idx.mKey ];
 	}
 
 	//----------------------------------------------------------------//
@@ -115,28 +108,41 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	ZLResultCode Grow ( ZLSize size, ZLSize chunkSize ) {
+	ZLResultCode Grow ( size_t size, const TYPE& value ) {
+	
+		if ( size > this->mSize ) {
+			return this->Resize ( size, value );
+		}
+		return ZL_OK;
+	}
+	
+	//----------------------------------------------------------------//
+	ZLResultCode GrowChunked ( size_t size, size_t chunkSize ) {
 		
-		ZLSize chunks = ( size / chunkSize ) + 1;
+		size_t chunks = ( size / chunkSize ) + (( size % chunkSize ) ? 1 : 0 );
 		return this->Grow ( chunks * chunkSize );
 	}
 
 	//----------------------------------------------------------------//
-	ZLResultCode Grow ( ZLSize size, ZLSize chunkSize, const TYPE& value ) {
+	ZLResultCode GrowChunked ( size_t size, size_t chunkSize, const TYPE& value ) {
 		
-		ZLSize chunks = ( size / chunkSize ) + 1;
-		ZLSize newSize = chunks * chunkSize;
-		
-		if ( newSize > this->mSize ) {
-			return this->Resize ( newSize, value );
-		}
-		return ZL_OK;
+		size_t chunks = ( size / chunkSize ) + (( size % chunkSize ) ? 1 : 0 );
+		return this->Resize ( chunks * chunkSize, value );
 	}
 
 	//----------------------------------------------------------------//
 	ZLResultCode Init ( ZLSize size ) {
 
 		return this->Resize ( size );
+	}
+
+	//----------------------------------------------------------------//
+	bool IsIdentical ( const ZLLeanArray < TYPE >& array ) {
+	
+		if ( this->mSize == array.mSize ) {
+			return ( memcmp ( this->mData, array.mData, this->mSize ) == 0 );
+		}
+		return false;
 	}
 
 	//----------------------------------------------------------------//
@@ -154,7 +160,7 @@ public:
 			TYPE* data = 0;
 
 			if ( size ) {
-			
+				
 				data = new TYPE [ size ];
 				if ( !data ) return ZL_ALLOCATION_ERROR;
 

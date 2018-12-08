@@ -52,7 +52,7 @@ ZLSyntaxNode* ZLParser::Parse ( ZLLexStream* scanner, bool trimReductions ) {
 
 	ZLDfaToken startToken;
 	startToken.mLALRStateID = this->mCGT->mLALRInitialStateID;
-	startToken.mSymbol = this->mCGT->mSymbolTable [ this->mCGT->mLALRStartSymbol ];
+	startToken.mSymbol = this->mCGT->mSymbolTable [ ZLIndex ( this->mCGT->mLALRStartSymbol, ZLIndex::LIMIT )];
 	this->mTokenStack.push_back ( startToken );
 	
 	this->mCurrentLALRStateID = this->mCGT->mLALRInitialStateID;
@@ -161,9 +161,9 @@ ZLSyntaxNode* ZLParser::Parse ( ZLLexStream* scanner, bool trimReductions ) {
 //----------------------------------------------------------------//
 u32 ZLParser::ParseToken ( ZLDfaToken* token, bool trimReductions ) {
 
-	ZLLalrState& state = this->mCGT->mLALRStateTable [ this->mCurrentLALRStateID ];
+	ZLLalrState& state = this->mCGT->mLALRStateTable [ ZLIndex ( this->mCurrentLALRStateID, ZLIndex::LIMIT )];
 
-	for ( u32 i = 0; i < state.mActions.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < state.mActions.Size (); ++i ) {
 		ZLLalrAction& action = state.mActions [ i ];
 		
 		if ( action.mInputSymbolID == token->mSymbol.mID ) {
@@ -204,14 +204,15 @@ u32 ZLParser::ParseToken ( ZLDfaToken* token, bool trimReductions ) {
 				}
 				
 				case ZLLalrAction::LALR_REDUCE: {
-					ZLCgtRule& rule = this->mCGT->mRuleTable [ action.mTarget ];
-					ZLCgtSymbol& ruleResult = this->mCGT->mSymbolTable [ rule.mRuleResult ];
+					ZLCgtRule& rule = this->mCGT->mRuleTable [ ZLIndex ( action.mTarget, ZLIndex::LIMIT )];
+					ZLCgtSymbol& ruleResult = this->mCGT->mSymbolTable [ ZLIndex ( rule.mRuleResult, ZLIndex::LIMIT )];
 					//assert ( rule.mRuleSymbols.Size ()); // allow for empty rule...
 					
 					// Check to see if we should trim reductions
 					bool doTrim = false;
 					if ( rule.mRuleSymbols.Size () == 1 ) {
-						ZLCgtSymbol& handle = this->mCGT->mSymbolTable [ rule.mRuleSymbols [ 0 ]];
+						ZLIndex ruleSymbol ( rule.mRuleSymbols [ ZLIndex::ZERO ], ZLIndex::LIMIT );
+						ZLCgtSymbol& handle = this->mCGT->mSymbolTable [ ruleSymbol ];
 						doTrim = (( handle.mKind == ZLCgtSymbol::CGT_NONTERMINAL ) && trimReductions );
 					}
 					
@@ -220,7 +221,7 @@ u32 ZLParser::ParseToken ( ZLDfaToken* token, bool trimReductions ) {
 					head.mSymbol = ruleResult;
 					
 					// Create the syntax node and initialize it...
-					size_t handleSize = rule.mRuleSymbols.Size ();
+					ZLSize handleSize = rule.mRuleSymbols.Size ();
 					
 					u16 prevStateID = this->mTokenStack.back ().mLALRStateID;
 					
@@ -238,13 +239,14 @@ u32 ZLParser::ParseToken ( ZLDfaToken* token, bool trimReductions ) {
 						if ( handleSize ) {
 						
 							head.mSyntaxNode->mChildren.Init ( handleSize );
-							for ( u32 j = 0; j < rule.mRuleSymbols.Size (); ++j ) {
-								head.mSyntaxNode->mChildren [ handleSize - ( j + 1 )] = this->mTokenStack.back ().mSyntaxNode;
+							for ( ZLSize j = 0; j < rule.mRuleSymbols.Size (); ++j ) {
+								ZLIndex childID ( handleSize - ( j + 1 ), ZLIndex::LIMIT );
+								head.mSyntaxNode->mChildren [ childID ] = this->mTokenStack.back ().mSyntaxNode;
 								prevStateID = this->mTokenStack.back ().mLALRStateID;
 								this->mTokenStack.pop_back ();
 							}
 						
-							head.mSyntaxNode->mLine = head.mSyntaxNode->mChildren [ 0 ]->mLine;
+							head.mSyntaxNode->mLine = head.mSyntaxNode->mChildren [ ZLIndex::ZERO ]->mLine;
 						}
 						else {
 							
@@ -256,7 +258,7 @@ u32 ZLParser::ParseToken ( ZLDfaToken* token, bool trimReductions ) {
 							eof->mTerminal = token->mData;
 							
 							head.mSyntaxNode->mChildren.Init ( 1 );
-							head.mSyntaxNode->mChildren [ 0 ] = eof;
+							head.mSyntaxNode->mChildren [ ZLIndex::ZERO ] = eof;
 							
 							head.mSyntaxNode->mLine = eof->mLine;
 						}
@@ -284,11 +286,11 @@ u32 ZLParser::ParseToken ( ZLDfaToken* token, bool trimReductions ) {
 			while ( this->mTokenStack.size () > 1 ) {
 		
 				this->mCurrentLALRStateID = this->mTokenStack.back ().mLALRStateID;
-				ZLLalrState& state2 = this->mCGT->mLALRStateTable [ this->mCurrentLALRStateID ];
+				ZLLalrState& state2 = this->mCGT->mLALRStateTable [ ZLIndex ( this->mCurrentLALRStateID, ZLIndex::LIMIT )];
 				
 				this->mTokenStack.pop_back ();
 				
-				for ( u32 i = 0; i < state2.mActions.Size (); ++i ) {
+				for ( ZLIndex i = ZLIndex::ZERO; i < state2.mActions.Size (); ++i ) {
 					ZLLalrAction& action = state2.mActions [ i ];
 					if ( action.mInputSymbolID == token->mSymbol.mID ) {
 						return ZLLalrAction::LALR_REDUCE;
@@ -322,15 +324,15 @@ void ZLParser::RetrieveToken ( ZLDfaToken* token, ZLLexStream* scanner ) {
 	}
 	
 	u16 stateID = this->mCGT->mDFAInitialStateID;
-	ZLDfaState* dfaState = &this->mCGT->mDFAStateTable [ stateID ];
+	ZLDfaState* dfaState = &this->mCGT->mDFAStateTable [ ZLIndex ( stateID, ZLIndex::LIMIT )];
 	
 	ZLDfaState* acceptState = 0;
-	size_t acceptLength = 0;
+	ZLSize acceptLength = 0;
 	
 	bool done = false;
 	
-	size_t startCursor = scanner->GetCursor ();
-	static const u32 bufferSize = 1024;
+	ZLSize startCursor = scanner->GetCursor ();
+	static const ZLSize bufferSize = 1024;
 	char buffer [ bufferSize ];
 	
 	while ( !done ) {
@@ -346,15 +348,15 @@ void ZLParser::RetrieveToken ( ZLDfaToken* token, ZLLexStream* scanner ) {
 		}
 		
 		bool transition = false;
-		for( u32 i = 0; i < dfaState->mEdges.Size (); ++i ) {
+		for( ZLIndex i = ZLIndex::ZERO; i < dfaState->mEdges.Size (); ++i ) {
 			
 			ZLDfaStateEdge& edge = dfaState->mEdges [ i ];
 			
 			assert ( edge.mCharSetID < this->mCGT->mCharSetTable.Size ());
-			ZLCgtCharSet& charSet = this->mCGT->mCharSetTable [ edge.mCharSetID ];
+			ZLCgtCharSet& charSet = this->mCGT->mCharSetTable [ ZLIndex ( edge.mCharSetID, ZLIndex::LIMIT )];
 			
 			if ( charSet.mCharacters.find (( char )lookahead ) != STLString::npos ) {
-				dfaState = &this->mCGT->mDFAStateTable [ edge.mTargetStateID ];
+				dfaState = &this->mCGT->mDFAStateTable [ ZLIndex ( edge.mTargetStateID, ZLIndex::LIMIT )];
 				transition = true;
 				break;
 			}
@@ -362,7 +364,7 @@ void ZLParser::RetrieveToken ( ZLDfaToken* token, ZLLexStream* scanner ) {
 		
 		if ( !transition ) {
 			if ( acceptState ) {
-				token->mSymbol = this->mCGT->mSymbolTable [ acceptState->mAcceptSymbolID ];
+				token->mSymbol = this->mCGT->mSymbolTable [ ZLIndex ( acceptState->mAcceptSymbolID, ZLIndex::LIMIT )];
 			}
 			else {
 				if ( this->mHandleErrors ) {
@@ -388,9 +390,9 @@ void ZLParser::RetrieveToken ( ZLDfaToken* token, ZLLexStream* scanner ) {
 			else {
 				
 				ZLLeanArray < char > bigBuffer;
-				bigBuffer.Init (( u32 )acceptLength + 1 );
+				bigBuffer.Init ( acceptLength + 1 );
 				scanner->ReadBytes ( bigBuffer.GetBuffer (), acceptLength );
-				bigBuffer [ acceptLength ] = 0;
+				bigBuffer [ ZLIndex ( acceptLength, ZLIndex::LIMIT )] = 0;
 				token->mData = bigBuffer.GetBuffer ();
 			}
 			return;

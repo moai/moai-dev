@@ -124,7 +124,7 @@ void MOAIButtonSensor::ClearState () {
 }
 
 //----------------------------------------------------------------//
-void MOAIButtonSensor::EnqueueButtonEvent ( u8 deviceID, u8 sensorID, bool down ) {
+void MOAIButtonSensor::EnqueueButtonEvent ( ZLIndex deviceID, ZLIndex sensorID, bool down ) {
 
 	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
 	if ( inputMgr.WriteEventHeader < MOAIButtonSensor >( deviceID, sensorID )) {

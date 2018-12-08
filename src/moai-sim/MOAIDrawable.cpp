@@ -56,11 +56,12 @@ void MOAIDrawable::Draw ( MOAILuaState& state, int idx, bool debug ) {
 			break;
 		}
 		
-		case LUA_TFUNCTION:
+		case LUA_TFUNCTION: {
 		
-			state.CopyToTop ( idx );
+			state.CopyToTop ( idx ); // copy the function to the top
 			state.DebugCall ( 0, 0 );
 			break;
+		}
 	}
 }
 

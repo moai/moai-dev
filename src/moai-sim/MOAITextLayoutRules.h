@@ -113,8 +113,8 @@ public:
 	void				Layout						( MOAITextLayout& layout, MOAITextStyleCache& styleCache, MOAITextStyleMap& styleMap, cc8* str, u32 idx, bool* more, u32* nextIdx, bool* overrun );
 						MOAITextLayoutRules			();
 						~MOAITextLayoutRules		();
-	void				ReserveCurves				( u32 total );
-	void				SetCurve					( u32 idx, MOAIAnimCurveFloat* curve );
+	void				ReserveCurves				( ZLSize total );
+	void				SetCurve					( ZLIndex idx, MOAIAnimCurveFloat* curve );
 };
 
 #endif

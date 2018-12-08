@@ -43,14 +43,14 @@ public:
 	void				Bless					();
 	size_t				CountSegments			();
 	ZLVec2D				Evaluate				( float t );
-	ZLCubicBezier2D		GetSegment				( size_t idx );
+	ZLCubicBezier2D		GetSegment				( ZLIndex idx );
 	ZLCubicBezier2D		GetSegmentForTime		( float t, float* st = 0 );
 						MOAIPath				();
 						~MOAIPath				();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
-	void				Reserve					( size_t size );
-	void				SetPoint				( size_t idx, float x, float y );
+	void				Reserve					( ZLSize size );
+	void				SetPoint				( ZLIndex idx, float x, float y );
 };
 
 #endif

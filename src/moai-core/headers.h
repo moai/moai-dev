@@ -9,6 +9,10 @@
 
 #include <moai-core/MOAILua.h>
 
+#include <moai-core/MOAICanary.h>
+#include <moai-core/MOAIFoo.h>
+#include <moai-core/MOAIFooMgr.h>
+
 #include <moai-core/MOAISerializerBase.h>
 #include <moai-core/MOAIDeserializer.h>
 #include <moai-core/MOAISerializer.h>

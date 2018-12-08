@@ -23,8 +23,8 @@ private:
 	ZLLeanArray < u32 >		mMasks;
 	ZLLeanArray < float >	mVectors;
 	
-	u32						mDeckSize;
-	u32						mVectorSize;
+	ZLSize					mDeckSize;
+	ZLSize					mVectorSize;
 
 	//----------------------------------------------------------------//
 	static int		_getMask					( lua_State* L );
@@ -41,7 +41,7 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIPathTerrainDeck )
 	
-	GET ( u32, VectorSize, mVectorSize )
+	GET ( ZLSize, VectorSize, mVectorSize )
 	
 	//----------------------------------------------------------------//
 					MOAIPathTerrainDeck			();

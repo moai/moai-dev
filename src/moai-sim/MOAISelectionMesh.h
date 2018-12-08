@@ -16,7 +16,7 @@ private:
 	
 	friend class MOAISelectionMesh;
 	
-	u32					mSetID;
+	ZLIndex				mSetID;
 	
 	MOAISelectionSpan*	mPrevInMaster;
 	MOAISelectionSpan*	mNextInMaster;
@@ -45,21 +45,21 @@ protected:
 	static int			_setMesh					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	ZLResult < u32 >	AffirmSpanSet				();
-	MOAISelectionSpan*	AllocSpan					( u32 set, size_t base, size_t top );
-//	void				BooleanAnd					( u32 set, u32 a, u32 b );
-//	void				BooleanOr					( u32 set, u32 a, u32 b );
-//	void				BooleanNot					( u32 set, u32 a, u32 b );
-//	void				BooleanXor					( u32 set, u32 a, u32 b );
-	void				ChangeSpanSet				( MOAISelectionSpan* span, u32 set );
-	void				Clear						();
-	void				DrawIndex					( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale );
-	void				FixOverlaps					( MOAISelectionSpan* span );
-	void				FreeSpan					( MOAISelectionSpan* span );
-	MOAISelectionSpan*	InsertSpan					( MOAISelectionSpan* span, MOAISelectionSpan* prevInMaster, MOAISelectionSpan* prevInSet );
+	ZLResult < ZLIndex >	AffirmSpanSet				();
+	MOAISelectionSpan*		AllocSpan					( ZLIndex set, ZLIndex base, ZLIndex top );
+//	void					BooleanAnd					( u32 set, u32 a, u32 b );
+//	void					BooleanOr					( u32 set, u32 a, u32 b );
+//	void					BooleanNot					( u32 set, u32 a, u32 b );
+//	void					BooleanXor					( u32 set, u32 a, u32 b );
+	void					ChangeSpanSet				( MOAISelectionSpan* span, ZLIndex set );
+	void					Clear						();
+	void					DrawIndex					( ZLIndex idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale );
+	void					FixOverlaps					( MOAISelectionSpan* span );
+	void					FreeSpan					( MOAISelectionSpan* span );
+	MOAISelectionSpan*		InsertSpan					( MOAISelectionSpan* span, MOAISelectionSpan* prevInMaster, MOAISelectionSpan* prevInSet );
 
 	//----------------------------------------------------------------//
-	void				MOAIDeck_Draw				( ZLIndex idx );
+	void					MOAIDeck_Draw				( ZLIndex idx );
 
 public:
 
@@ -73,18 +73,17 @@ public:
 	DECL_LUA_FACTORY ( MOAISelectionMesh )
 
 	//----------------------------------------------------------------//
-	void				AddSelection				( u32 set, size_t base, size_t top );
-	void				ClearSelection				( u32 set );
-	void				ClearSelection				( u32 set, size_t base, size_t top );
-	void				MergeSelection				( u32 set, u32 merge );
+	void				AddSelection				( ZLIndex set, ZLIndex base, ZLIndex top );
+	void				ClearSelection				( ZLIndex set );
+	void				ClearSelection				( ZLIndex set, ZLIndex base, ZLIndex top );
+	void				MergeSelection				( ZLIndex set, ZLIndex merge );
 						MOAISelectionMesh			();
 						~MOAISelectionMesh			();
-	void				PrintSelection				( u32 set );
+	void				PrintSelection				( ZLIndex set );
 	void				PrintSelections				();
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
-	void				ReserveSelections			( u32 total );
-	void				Select						( u32 set, size_t base, size_t size );
+	void				ReserveSelections			( ZLSize total );
 	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
 };

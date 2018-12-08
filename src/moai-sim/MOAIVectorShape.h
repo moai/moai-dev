@@ -59,7 +59,7 @@ public:
 	
 	virtual void				Read						( ZLStream& stream, MOAIVectorTesselatorWriter& writer ) = 0;
 	
-	virtual bool				SetVertices					( const ZLVec2D* vertices, u32 total, bool closed );
+	virtual bool				SetVertices					( const ZLVec2D* vertices, ZLSize total, bool closed );
 	
 	virtual int					Tesselate					( MOAIVectorTesselator& drawing, MOAIRegion& region, u32 flags );
 	virtual int					Tesselate					( MOAIVectorTesselator& drawing, SafeTesselator& tess, u32 flags );

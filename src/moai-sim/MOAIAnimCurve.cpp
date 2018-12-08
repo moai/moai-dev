@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIAnimCurve.h>
+#include <moai-sim/MOAIGfxMgr.h>
 
 //================================================================//
 // local
@@ -91,14 +92,12 @@ void MOAIAnimCurve::Draw ( u32 resolution ) const {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIAnimCurve::FindKeyID ( float time ) const {
+ZLIndex MOAIAnimCurve::FindKeyID ( float time ) const {
 	
 	MOAIAnimKey key;
 	key.mTime = time;
 	
-	u32 index = USBinarySearchNearest < MOAIAnimKey >( this->mKeys.GetBuffer (), key, ( u32 )this->mKeys.Size ());
-	
-	return index;
+	return ZLIndex ( ZLBinarySearchNearest < MOAIAnimKey >( this->mKeys.GetBuffer (), key, ( u32 )this->mKeys.Size ()), ZLIndex::LIMIT );
 }
 
 //----------------------------------------------------------------//
@@ -124,18 +123,18 @@ const MOAIAnimKey& MOAIAnimCurve::GetKey ( ZLIndex idx ) const {
 }
 
 //----------------------------------------------------------------//
-float MOAIAnimCurve::GetLength () const {
+ZLReal MOAIAnimCurve::GetLength () const {
 
-	u32 total = ( u32 )this->mKeys.Size ();
+	ZLSize total = this->mKeys.Size ();
 	if ( total == 0 ) return 0.0f;
-	return this->mKeys [ total - 1 ].mTime - this->mKeys [ 0 ].mTime;
+	return this->mKeys [ ZLIndex ( total - 1, ZLIndex::LIMIT )].mTime - this->mKeys [ ZLIndex::ZERO ].mTime;
 }
 
 //----------------------------------------------------------------//
 MOAIAnimKeySpan MOAIAnimCurve::GetSpan ( float time ) const {
 
 	MOAIAnimKeySpan span;
-	span.mKeyID = NULL_KEY_ID;
+	span.mKeyID = ZLIndex::INVALID;
 	span.mTime = 0.0f;
 	span.mCycle = 0.0f;
 
@@ -160,7 +159,7 @@ MOAIAnimKeySpan MOAIAnimCurve::GetSpan ( float time ) const {
 		return span;
 	}
 	
-	MOAIAnimKey k1 = this->mKeys [ span.mKeyID + 1 ];
+	MOAIAnimKey k1 = this->mKeys [ span.mKeyID + ( ZLSize )1 ];
 	
 	if ( k1.mTime > k0.mTime ) {
 		span.mTime = ( wrapTime - k0.mTime ) / ( k1.mTime - k0.mTime );
@@ -245,18 +244,18 @@ u32 MOAIAnimCurve::Size () const {
 //----------------------------------------------------------------//
 // return the time wrapped to fall within the time span defined by the curve
 // in APPEND mode, 'repeat' gives the cycle (how many complete spans have elapsed)
-float MOAIAnimCurve::WrapTime ( float t, float &repeat ) const {
+ZLReal MOAIAnimCurve::WrapTime ( ZLReal t, ZLReal &repeat ) const {
 
-	float startTime = this->mKeys [ 0 ].mTime;
-	float length = GetLength ();
+	ZLReal startTime = this->mKeys [ ZLIndex::ZERO ].mTime;
+	ZLReal length = GetLength ();
 
-	float time = ( t - startTime ) / length; // normalize time
-	float wrappedT = 0.0f;
+	ZLReal time = ( t - startTime ) / length; // normalize time
+	ZLReal wrappedT = 0.0f;
 	repeat = 0.0f;
 
 	switch ( mWrapMode ) {
 		case CLAMP: {
-			wrappedT = ZLFloat::Clamp ( time, 0.0f, 1.0f );
+			wrappedT = ZLFloat::Clamp ( time, 0.0, 1.0 );
 		}
 		break;
 
@@ -266,7 +265,7 @@ float MOAIAnimCurve::WrapTime ( float t, float &repeat ) const {
 		break;
 
 		case MIRROR: {
-			u32 tFloor = ( u32 ) ZLFloat::Floor ( time );
+			u32 tFloor = ( u32 )ZLFloat::Floor ( time );
 			if ( tFloor % 2 ) {
 				wrappedT = 1.0f - ( time - tFloor );
 			}
@@ -305,35 +304,35 @@ void MOAIAnimCurve::MOAIAnimCurve_Draw ( u32 resolution ) const {
 	// and then the spans between keys should be filled in with an approximation of
 	// the resolution.
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	
-	float length = this->GetLength ();
-	float step = length / ( float )resolution;
+	ZLReal length = this->GetLength ();
+	ZLReal step = length / ( ZLReal )resolution;
 	
-	gfxMgr.mVertexCache.BeginPrim ( ZGL_PRIM_LINE_STRIP, resolution );
+	gfxState.BeginPrim ( ZGL_PRIM_LINE_STRIP, resolution );
 	
-	for ( u32 i = 0; i < resolution; ++i ) {
+	for ( ZLSize i = 0; i < resolution; ++i ) {
 		
-		float t = step * ( float )i;
-		float v = this->MOAIAnimCurve_GetFloatForTime ( t );
+		ZLReal t = step * ( ZLReal )i;
+		ZLReal v = this->MOAIAnimCurve_GetFloatForTime ( t );
 		
-		gfxMgr.mVertexCache.WriteVtx ( t, v, 0.0f );
-		gfxMgr.mVertexCache.WritePenColor4b ();
+		gfxState.WriteVtx ( t, v, 0.0 );
+		gfxState.WritePenColor4b ();
 	}
 	
-	float t = length;
-	float v = this->MOAIAnimCurve_GetFloatForTime ( t );
+	ZLReal t = length;
+	ZLReal v = this->MOAIAnimCurve_GetFloatForTime ( t );
 	
-	gfxMgr.mVertexCache.WriteVtx ( t, v, 0.0f );
-	gfxMgr.mVertexCache.WritePenColor4b ();
+	gfxState.WriteVtx ( t, v, 0.0 );
+	gfxState.WritePenColor4b ();
 	
-	gfxMgr.mVertexCache.EndPrim ();
+	gfxState.EndPrim ();
 }
 
 //----------------------------------------------------------------//
-float MOAIAnimCurve::MOAIAnimCurve_GetFloatForTime ( float t ) const {
+ZLReal MOAIAnimCurve::MOAIAnimCurve_GetFloatForTime ( ZLReal t ) const {
 
-	return 0.0f;
+	return 0.0;
 }
 
 //----------------------------------------------------------------//

@@ -366,19 +366,19 @@ public:
 		mHead ( 0 ),
 		mSize ( 0 ) {
 		
-		size_t polySize = poly.GetSize ();
-		size_t newPolySize = 0;
+		ZLSize polySize = poly.GetSize ();
+		ZLSize newPolySize = 0;
 		
 		GHVertex* head = 0;
 		GHVertex* tail = 0;
 		
-		for ( size_t i = 0; i < polySize; ++i ) {
+		for ( ZLIndex i = ZLIndex::ZERO; i < polySize; ++i ) {
 		
-			ZLVec2D v0 = poly.GetVertex (( i == 0 ? polySize : i ) - 1 );
+			ZLVec2D v0 = poly.GetVertex ( ZLIndex::SubtractAndWrap ( i, 1, polySize ));
 			ZLVec2D v1 = poly.GetVertex ( i );
-			ZLVec2D v2 = poly.GetVertex (( i + 1 ) % polySize );
+			ZLVec2D v2 = poly.GetVertex ( ZLIndex::AddAndWrap ( i, 1, polySize ));
 			
-			DEBUG_LOG ( "%d: (%g, %g) (%g, %g) (%g, %g)\n", i, v0.mX, v0.mY, v1.mX, v1.mY, v2.mX, v2.mY );
+			DEBUG_LOG ( "%d: (%g, %g) (%g, %g) (%g, %g)\n", i.ToInt (), v0.mX, v0.mY, v1.mX, v1.mY, v2.mX, v2.mY );
 			
 			if (( v0.mX == v1.mX ) && ( v0.mY == v1.mY )) {
 				DEBUG_LOG ( " -- skipping repeated vertex\n" );
@@ -386,9 +386,9 @@ public:
 			}
 			
 			// skip ahead to find the next unique vertex
-			size_t j = 1;
+			ZLIndex j = ZLIndex::ONE;
 			for ( ; (( v1.mX == v2.mX ) && ( v1.mY == v2.mY )) && ( j < polySize ); ++j ) {
-				v2 = poly.GetVertex (( i + j + 1 ) % polySize );
+				v2 = poly.GetVertex ( ZLIndex::Wrap ( i + j + ( ZLSize )1, polySize ));
 			}
 			
 			if ( j == polySize ) {
@@ -398,7 +398,7 @@ public:
 			
 			if ( j > 1 ) {
 				DEBUG_LOG ( " -- fast forward to new final vert\n" );
-				DEBUG_LOG ( "%d: (%g, %g) (%g, %g) (%g, %g)\n", i, v0.mX, v0.mY, v1.mX, v1.mY, v2.mX, v2.mY );
+				DEBUG_LOG ( "%d: (%g, %g) (%g, %g) (%g, %g)\n", i.ToInt (), v0.mX, v0.mY, v1.mX, v1.mY, v2.mX, v2.mY );
 			}
 			
 			ZLVec2D e0 = v1;
@@ -707,7 +707,7 @@ size_t ZLPolygon2D::Clip ( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, Z
 	
 	if (( pointsFront + pointsOn ) == polySize ) {
 				
-		for ( size_t j = 0; j < polySize; ++j ) {
+		for ( ZLIndex j = ZLIndex::ZERO; j < polySize; ++j ) {
 			const ZLVec2D& vert = this->mVertices [ j ];
 			clippedPolyVerts.Write ( vert );
 		}

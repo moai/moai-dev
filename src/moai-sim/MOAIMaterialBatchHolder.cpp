@@ -285,9 +285,9 @@ MOAIMaterialBatch* MOAIMaterialBatchHolder::AffirmMaterialBatch () {
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial* MOAIMaterialBatchHolder::GetMaterial ( u32 idx ) {
+MOAIMaterial* MOAIMaterialBatchHolder::GetMaterial ( ZLIndex idx ) {
 
-	return this->mMaterialBatch ? this->mMaterialBatch->GetMaterial ( idx ) : 0;
+	return this->mMaterialBatch ? this->mMaterialBatch->GetMaterial ( idx ) : NULL;
 }
 
 //----------------------------------------------------------------//

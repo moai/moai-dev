@@ -109,7 +109,7 @@ void MOAIGfxBuffer::Clear () {
 	this->ZLCopyOnWrite::Free ();
 
 	this->mVBOs.Clear ();
-	this->mCurrentVBO = 0;
+	this->mCurrentVBO = ZLIndex::ZERO;
 	
 	this->Destroy ();
 }
@@ -136,7 +136,7 @@ ZLSharedConstBuffer* MOAIGfxBuffer::GetBufferForBind ( ZLGfx& gfx ) {
 
 //----------------------------------------------------------------//
 MOAIGfxBuffer::MOAIGfxBuffer () :
-	mCurrentVBO ( 0 ),
+	mCurrentVBO ( ZLIndex::ZERO ),
 	mTarget ( ZGL_BUFFER_TARGET_ARRAY ),
 	mLoader ( 0 ),
 	mUseVBOs ( false ),
@@ -168,9 +168,9 @@ void MOAIGfxBuffer::OnGPUBind () {
 	
 	if ( !this->mUseVBOs ) return;
 	
-	ZLGfxHandle* vbo = this->mVBOs [ this->mCurrentVBO ];
+	const ZLGfxHandle& vbo = this->mVBOs [ this->mCurrentVBO ];
 	
-	if ( vbo ) {
+	if ( vbo.CanBind ()) {
 		MOAIGfxMgr::GetDrawingAPI ().BindBuffer ( this->mTarget, vbo );
 	}
 }
@@ -187,10 +187,12 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 
 		u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_STREAM_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
 
-		for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
+		for ( ZLIndex i = ZLIndex::ZERO; i < this->mVBOs.Size (); ++i ) {
 			
-			ZLGfxHandle* vbo = gfx.CreateBuffer ();
-			if ( vbo ) {
+			ZLGfxHandle vbo = gfx.CreateBuffer ();
+			
+			// TODO: error handling
+			//if ( vbo ) {
 			
 				ZLSharedConstBuffer* buffer = this->GetCursor () ? this->GetSharedConstBuffer () : 0;
 				
@@ -200,10 +202,10 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 			
 				gfx.BindBuffer ( this->mTarget, vbo );
 				gfx.BufferData ( this->mTarget, this->GetLength (), buffer, 0, hint );
-				gfx.BindBuffer ( this->mTarget, 0 );
+				gfx.BindBuffer ( this->mTarget, ZLGfxResource::UNBIND );
 				
 				count++;
-			}
+			//}
 			this->mVBOs [ i ] = vbo;
 		}
 	}
@@ -214,15 +216,15 @@ bool MOAIGfxBuffer::OnGPUCreate () {
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 
-	for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
-		MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mVBOs [ i ], shouldDelete );
+	for ( ZLIndex i = ZLIndex::ZERO; i < this->mVBOs.Size (); ++i ) {
+		MOAIGfxResourceClerk::DeleteOrDiscard ( this->mVBOs [ i ], shouldDelete );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::OnGPUUnbind () {
 
-	MOAIGfxMgr::GetDrawingAPI ().BindBuffer ( this->mTarget, 0 ); // OK?
+	MOAIGfxMgr::GetDrawingAPI ().BindBuffer ( this->mTarget, ZLGfxResource::UNBIND ); // OK?
 }
 
 //----------------------------------------------------------------//
@@ -233,12 +235,12 @@ bool MOAIGfxBuffer::OnGPUUpdate () {
 	bool dirty = this->GetCursor () > 0;
 	
 	if ( dirty ) {
-		this->mCurrentVBO = ( this->mCurrentVBO + 1 ) % this->mVBOs.Size ();
+		this->mCurrentVBO = ZLIndex::AddAndWrap ( this->mCurrentVBO, 1, this->mVBOs.Size ());
 	}
 	
-	ZLGfxHandle* vbo = this->mVBOs [ this->mCurrentVBO ];
+	const ZLGfxHandle& vbo = this->mVBOs [ this->mCurrentVBO ];
 	
-	if ( dirty && vbo ) {
+	if ( dirty && vbo.CanBind ()) {
 		
 		// TODO: There are a few different ways to approach updating buffers with varying performance
 		// on different platforms. The approach here is just to multi-buffer the VBO and replace its
@@ -256,7 +258,7 @@ bool MOAIGfxBuffer::OnGPUUpdate () {
 		
 		gfx.BindBuffer ( this->mTarget, vbo );
 		gfx.BufferSubData ( this->mTarget, 0, this->GetCursor (), buffer, 0 );
-		gfx.BindBuffer ( this->mTarget, 0 );
+		gfx.BindBuffer ( this->mTarget, ZLGfxResource::UNBIND );
 	
 		//u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_DYNAMIC_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
 		//zglBufferData ( this->mTarget, this->GetLength (), 0, hint );
@@ -294,7 +296,7 @@ void MOAIGfxBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::Reserve ( u32 size ) {
+void MOAIGfxBuffer::Reserve ( ZLSize size ) {
 	
 	this->ZLCopyOnWrite::Free ();
 	
@@ -305,15 +307,15 @@ void MOAIGfxBuffer::Reserve ( u32 size ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::ReserveVBOs ( u32 gpuBuffers ) {
+void MOAIGfxBuffer::ReserveVBOs ( ZLSize gpuBuffers ) {
 
 	if ( gpuBuffers < this->mVBOs.Size ()) {
 		this->mVBOs.Clear ();
 	}
 
 	if ( gpuBuffers ) {
-		this->mVBOs.Resize ( gpuBuffers, 0 );
-		this->mCurrentVBO = gpuBuffers - 1;
+		this->mVBOs.Resize ( gpuBuffers );
+		this->mCurrentVBO = ZLIndex ( gpuBuffers - 1, ZLIndex::LIMIT );
 	}
 
 	this->FinishInit ();

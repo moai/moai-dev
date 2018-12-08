@@ -181,6 +181,20 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	ZLMetaVec4D < TYPE > GetColumn ( int c ) const {
+
+		ZLMetaVec4D < TYPE > col;
+		
+		c *= 4;
+		col.mX = this->m [ c++ ];
+		col.mY = this->m [ c++ ];
+		col.mZ = this->m [ c++ ];
+		col.mW = this->m [ c ];
+
+		return col;
+	}
+
+	//----------------------------------------------------------------//
 	TYPE GetElement ( int c, int r ) const {
 
 		return m [ ( c * 4 ) + r ];
@@ -770,6 +784,16 @@ public:
 		m[C3_R1]	= invScl.mY*((((cx*sz)+(-sx*-sy*cz))*x)+(((cx*cz)+(-sx*-sy*-sz))*y)+(-sx*cy*z));
 		m[C3_R2]	= invScl.mZ*((((sx*sz)+(cx*-sy*cz))*x)+(((sx*cz)+(cx*-sy*-sz))*y)+(cx*cy*z));
 		m[C3_R3]	= 1;
+	}
+
+	//----------------------------------------------------------------//
+	void SetColumn ( int c, const ZLMetaVec4D < TYPE >& col ) {
+		
+		c *= 4;
+		this->m [ c++ ] = col.mX;
+		this->m [ c++ ] = col.mY;
+		this->m [ c++ ] = col.mZ;
+		this->m [ c ] = col.mW;
 	}
 
 	//----------------------------------------------------------------//

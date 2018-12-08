@@ -12,7 +12,6 @@ class MOAIRenderMgr :
 	public ZLContextClass < MOAIRenderMgr, MOAILuaObject > {
 private:
 
-	u32				mLastDrawCount; // draw count for last frame.
 	u32				mRenderCounter;	// increments every render
 	double			mRenderDuration;
 	double			mRenderTime;
@@ -20,7 +19,6 @@ private:
 	MOAILuaStrongRef	mRenderRoot;
 	
 	//----------------------------------------------------------------//
-	static int		_getPerformanceDrawCount    ( lua_State* L );
 	static int		_getRenderCount				( lua_State* L );
 	static int		_getRender					( lua_State* L );
 	static int		_setRender					( lua_State* L );

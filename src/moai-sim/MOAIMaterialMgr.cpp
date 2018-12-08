@@ -110,29 +110,30 @@ void MOAIMaterialMgr::Compose ( const MOAIMaterial& material ) {
 MOAILight* MOAIMaterialMgr::GetLight ( u32 lightID ) {
 
 	assert ( lightID < MAX_GLOBAL_LIGHTS );
-	return this->mNamedLights [ lightID ].mLight;
+	return this->mNamedLights [ ZLIndex ( lightID, ZLIndex::LIMIT )].mLight;
 }
 
 //----------------------------------------------------------------//
 MOAITextureBase* MOAIMaterialMgr::GetTexture ( u32 textureID ) {
 
 	assert ( textureID < MAX_GLOBAL_TEXTURES );
-	return this->mNamedTextures [ textureID ].mTexture;
+	MOAITextureBase* texture = this->mNamedTextures [ ZLIndex ( textureID, ZLIndex::LIMIT )].mTexture;
+	return texture ? texture : ( MOAITextureBase* )this->mTexture;
 }
 
 //----------------------------------------------------------------//
 void MOAIMaterialMgr::LoadGfxState () {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
-	gfxMgr.mGfxState.SetBlendMode ( this->mBlendMode );
-	gfxMgr.mGfxState.SetCullFunc ( this->mCullMode );
-	gfxMgr.mGfxState.SetDepthMask ( this->mDepthMask );
-	gfxMgr.mGfxState.SetDepthFunc ( this->mDepthTest );
-	gfxMgr.mGfxState.SetTexture ( this->mTexture );
+	gfxState.SetBlendMode ( this->mBlendMode );
+	gfxState.SetCullFunc ( this->mCullMode );
+	gfxState.SetDepthMask ( this->mDepthMask );
+	gfxState.SetDepthFunc ( this->mDepthTest );
+	gfxState.SetTexture ( this->mTexture );
 	
 	// load shader last!
-	gfxMgr.mGfxState.SetShader ( this->mShader );
+	gfxState.SetShader ( this->mShader );
 }
 
 //----------------------------------------------------------------//
@@ -257,7 +258,7 @@ void MOAIMaterialMgr::SetGlobal ( MOAIMaterialGlobal& global, void* ptr ) {
 void MOAIMaterialMgr::SetLight ( u32 lightID, MOAILight* light ) {
 
 	assert ( lightID < MAX_GLOBAL_LIGHTS );
-	this->SetGlobal ( this->mNamedLights [ lightID ], light );
+	this->SetGlobal ( this->mNamedLights [ ZLIndex ( lightID, ZLIndex::LIMIT )], light );
 }
 
 //----------------------------------------------------------------//
@@ -288,5 +289,5 @@ void MOAIMaterialMgr::SetTexture ( MOAITextureBase* texture ) {
 void MOAIMaterialMgr::SetTexture ( u32 textureID, MOAITextureBase* texture ) {
 	
 	assert ( textureID < MAX_GLOBAL_TEXTURES );
-	this->SetGlobal ( this->mNamedTextures [ textureID ], texture );
+	this->SetGlobal ( this->mNamedTextures [ ZLIndex ( textureID, ZLIndex::LIMIT )], texture );
 }

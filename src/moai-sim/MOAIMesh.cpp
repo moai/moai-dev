@@ -131,7 +131,7 @@ bool MOAIMeshPrimReader::GetPrimCoords ( u32 idx, MOAIMeshPrimCoords& prim ) con
 }
 
 //----------------------------------------------------------------//
-bool MOAIMeshPrimReader::Init ( MOAIMesh& mesh, u32 vertexBufferIndex ) {
+bool MOAIMeshPrimReader::Init ( MOAIMesh& mesh, ZLIndex vertexBufferIndex ) {
 
 	MOAIVertexFormat* vertexFormat = mesh.GetVertexFormat ( vertexBufferIndex );
 	MOAIVertexBuffer* vertexBuffer = mesh.GetVertexBuffer ( vertexBufferIndex );
@@ -143,7 +143,7 @@ bool MOAIMeshPrimReader::Init ( MOAIMesh& mesh, u32 vertexBufferIndex ) {
 	this->mMesh				= &mesh;
 	this->mVertexFormat		= vertexFormat;
 	
-	this->mAttribute		= vertexFormat->GetAttributeByUse ( MOAIVertexFormat::ATTRIBUTE_COORD, 0 );
+	this->mAttribute		= vertexFormat->GetAttributeByUse ( MOAIVertexFormat::ATTRIBUTE_COORD, ZLIndex::ZERO );
 	this->mVertexBuffer		= vertexBuffer->ZLCopyOnWrite::GetBuffer ();
 	this->mIndexBuffer		= mesh.mIndexBuffer;
 	
@@ -203,8 +203,8 @@ ZLVec3D MOAIMeshPrimReader::ReadCoord ( u32 idx ) const {
 int MOAIMesh::_buildQuadTree ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "U" )
 
-	u32 targetPrimsPerNode		= state.GetValue < u32 >( 1, MOAIMeshSparseQuadTree::DEFAULT_TARGET_PRIMS_PER_NODE );
-	u32 vertexBufferIndex		= state.GetValue < u32 >( 2, 1 ) - 1;
+	u32 targetPrimsPerNode			= state.GetValue < u32 >( 1, MOAIMeshSparseQuadTree::DEFAULT_TARGET_PRIMS_PER_NODE );
+	ZLIndex vertexBufferIndex		= state.GetValueAsIndex ( 2 );
 
 	MOAIMeshPrimReader coordReader;
 	
@@ -224,7 +224,7 @@ int MOAIMesh::_buildTernaryTree ( lua_State* L ) {
 	
 	u32 axisMask				= state.GetValue < u32 >( 2, MOAIMeshTernaryTree::AXIS_MASK_ALL );
 	u32 targetPrimsPerNode		= state.GetValue < u32 >( 3, MOAIMeshTernaryTree::DEFAULT_TARGET_PRIMS_PER_NODE );
-	u32 vertexBufferIndex		= state.GetValue < u32 >( 4, 1 ) - 1;
+	ZLIndex vertexBufferIndex	= state.GetValueAsIndex ( 4 );
 	
 	MOAIMeshPrimReader coordReader;
 	
@@ -255,7 +255,7 @@ int MOAIMesh::_getPrimsForPoint ( lua_State* L ) {
 	ZLBox meshBounds = self->GetBounds ();
 	if ((( is3D ) && meshBounds.Contains ( point )) || meshBounds.Contains ( point, ZLBox::PLANE_XY )) {
 		
-		if ( primReader.Init ( *self, 0 )) {
+		if ( primReader.Init ( *self, ZLIndex::ZERO )) {
 			
 			u32 basePrim = state.GetValue < u32 >( 5, 1 ) - 1;
 			u32 nPrims = state.GetValue < u32 >( 6, primReader.GetTotalPrims ());
@@ -304,7 +304,7 @@ int MOAIMesh::_getRegionForPrim ( lua_State* L ) {
 
 	MOAIMeshPrimReader primReader;
 	
-	if ( primReader.Init ( *self, 0 )) {
+	if ( primReader.Init ( *self, ZLIndex::ZERO )) {
 		
 		for ( u32 i = 0; i < nPrims; ++i ) {
 		
@@ -352,7 +352,7 @@ int MOAIMesh::_intersectRay ( lua_State* L ) {
 	float bestTime = 0.0f;
 	ZLVec3D bestHit;
 	
-	if ( primReader.Init ( *self, 0 )) {
+	if ( primReader.Init ( *self, ZLIndex::ZERO )) {
 	
 		u32 totalMeshPrims = primReader.GetTotalPrims ();
 		
@@ -409,7 +409,7 @@ int MOAIMesh::_readPrimCoords ( lua_State* L ) {
 
 		MOAIMeshPrimReader primReader;
 		
-		if ( primReader.Init ( *self, 0 )) {
+		if ( primReader.Init ( *self, ZLIndex::ZERO )) {
 			
 			for ( u32 i = 0; i < nPrims; ++i ) {
 			
@@ -523,7 +523,7 @@ u32 MOAIMesh::CountPrims () const {
 void MOAIMesh::DrawIndex ( ZLIndex idx, MOAIMeshSpan* span ) {
 
 	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
-	materialStack.Push ( this->GetMaterial ( idx.mKey ));
+	materialStack.Push ( this->GetMaterial ( idx ));
 	materialStack.SetShader ( MOAIShaderMgr::MESH_SHADER );
 	materialStack.LoadGfxState ();
 	materialStack.Pop ();
@@ -532,34 +532,34 @@ void MOAIMesh::DrawIndex ( ZLIndex idx, MOAIMeshSpan* span ) {
 
 	// TODO: make use of offset and scale
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	if ( gfxMgr.mGfxState.SetVertexArray ( this )) {
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	if ( gfxState.SetVertexArray ( this )) {
 
 		// I am super lazy, so set this up here instead of adding if's below
 		MOAIMeshSpan defaultSpan;
 		if ( !span ) {
-			defaultSpan.mBase = 0;
-			defaultSpan.mTop = this->mTotalElements;
+			defaultSpan.mBase = ZLIndex::ZERO;
+			defaultSpan.mTop = ZLIndex ( this->mTotalElements, ZLIndex::LIMIT );
 			defaultSpan.mNext = 0;
 			span = &defaultSpan;
 		}
 		
-		gfxMgr.mGfxState.SetPenWidth ( this->mPenWidth );
+		gfxState.SetPenWidth ( this->mPenWidth );
 		
 		if ( this->mIndexBuffer ) {
 			
 			// TODO: turns out we can bind this inside the VAO as well. so there.
-			if ( gfxMgr.mGfxState.SetIndexBuffer ( this->mIndexBuffer )) {
+			if ( gfxState.SetIndexBuffer ( this->mIndexBuffer )) {
 			
 				for ( ; span; span = span->mNext ) {
 				
 					if ( span->mBase == span->mTop ) continue;
 					assert (( span->mBase < span->mTop ) && ( span->mTop <= this->mTotalElements ));
 				
-					gfxMgr.mGfxState.DrawPrims ( this->mPrimType, span->mBase, ( u32 )( span->mTop - span->mBase ));
+					gfxState.DrawPrims ( this->mPrimType, span->mBase, ( u32 )( span->mTop - span->mBase ));
 				}
 
-				gfxMgr.mGfxState.SetIndexBuffer ();
+				gfxState.SetIndexBuffer ();
 			}
 		}
 		else {
@@ -569,10 +569,10 @@ void MOAIMesh::DrawIndex ( ZLIndex idx, MOAIMeshSpan* span ) {
 				if ( span->mBase == span->mTop ) continue;
 				assert (( span->mBase < span->mTop ) && ( span->mTop <= this->mTotalElements ));
 			
-				gfxMgr.mGfxState.DrawPrims ( this->mPrimType, span->mBase, ( u32 )( span->mTop - span->mBase ));
+				gfxState.DrawPrims ( this->mPrimType, span->mBase, ( u32 )( span->mTop - span->mBase ));
 			}
 		}
-		gfxMgr.mGfxState.SetVertexArray ();
+		gfxState.SetVertexArray ();
 	}
 }
 
@@ -651,8 +651,8 @@ void MOAIMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIMesh::ReserveVAOs ( u32 total ) {
 
-	for ( size_t i = 0; i < this->mVAOs.Size (); ++i ) {
-		MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mVAOs [ i ], false );
+	for ( ZLIndex i = ZLIndex::ZERO; i < this->mVAOs.Size (); ++i ) {
+		MOAIGfxResourceClerk::DeleteOrDiscard ( this->mVAOs [ i ], false );
 	}
 	this->mVAOs.Init ( total );
 }
@@ -660,7 +660,7 @@ void MOAIMesh::ReserveVAOs ( u32 total ) {
 //----------------------------------------------------------------//
 void MOAIMesh::ReserveVertexBuffers ( u32 total ) {
 
-	for ( size_t i = 0; i < this->mVertexBuffers.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < this->mVertexBuffers.Size (); ++i ) {
 		this->mVertexBuffers [ i ].SetBufferAndFormat ( *this, 0, 0 );
 	}
 	this->mVertexBuffers.Init ( total );

@@ -44,10 +44,12 @@ protected:
 	//----------------------------------------------------------------//
 	static int				InjectAndCall			( lua_CFunction func, MOAILuaObject* self, lua_State* L );
 	void					MakeLuaBinding			( MOAILuaState& state );
-	void					OnRelease				( u32 refCount );
 	bool					PushRefTable			( MOAILuaState& state );
 	void					SetInterfaceTable		( MOAILuaState& state, int idx );
 	void					SetMemberTable			( MOAILuaState& state, int idx );
+
+	//----------------------------------------------------------------//
+	void					ZLRefCountedObjectBase_OnRelease				( u32 refCount );
 
 public:
 

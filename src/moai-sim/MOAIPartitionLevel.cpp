@@ -13,8 +13,8 @@
 //----------------------------------------------------------------//
 void MOAIPartitionLevel::Clear () {
 
-	size_t totalCells = this->mCells.Size ();
-	for ( size_t i = 0; i < totalCells; ++i ) {
+	ZLSize totalCells = this->mCells.Size ();
+	for ( ZLIndex i = ZLIndex::ZERO; i < totalCells; ++i ) {
 		this->mCells [ i ].Clear ();
 	}
 }
@@ -22,8 +22,8 @@ void MOAIPartitionLevel::Clear () {
 //----------------------------------------------------------------//
 void MOAIPartitionLevel::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLevel* level ) {
 
-	size_t totalCells = this->mCells.Size ();
-	for ( size_t i = 0; i < totalCells; ++i ) {
+	ZLSize totalCells = this->mCells.Size ();
+	for ( ZLIndex i = ZLIndex::ZERO; i < totalCells; ++i ) {
 		this->mCells [ i ].ExtractProps ( cell, level );
 	}
 }
@@ -31,8 +31,8 @@ void MOAIPartitionLevel::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLe
 //----------------------------------------------------------------//
 void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, u32 interfaceMask, u32 queryMask ) {
 
-	size_t totalCells = this->mCells.Size ();
-	for ( size_t i = 0; i < totalCells; ++i ) {
+	ZLSize totalCells = this->mCells.Size ();
+	for ( ZLIndex i = ZLIndex::ZERO; i < totalCells; ++i ) {
 		this->mCells [ i ].GatherHulls ( results, ignore, interfaceMask, queryMask );
 	}
 }
@@ -70,7 +70,7 @@ void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIP
 		for ( int x = 0; x < xTotal; ++x ) {
 			
 			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord.mX + x, coord.mY - y );
-			int addr = this->mGridSpace.GetCellAddr ( offset );
+			ZLIndex addr = this->mGridSpace.GetCellAddr ( offset );
 			this->mCells [ addr ].GatherHulls ( results, ignore, point, interfaceMask, queryMask );
 		}
 	}
@@ -80,8 +80,8 @@ void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIP
 void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask, u32 queryMask ) {
 	
 	// TODO: this is so lazy; fix it to use the plane and step through the proper cells
-	size_t totalCells = this->mCells.Size ();
-	for ( size_t i = 0; i < totalCells; ++i ) {
+	ZLSize totalCells = this->mCells.Size ();
+	for ( ZLIndex i = ZLIndex::ZERO; i < totalCells; ++i ) {
 		this->mCells [ i ].GatherHulls ( results, ignore, point, orientation, interfaceMask, queryMask );
 	}
 }
@@ -107,7 +107,7 @@ void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIP
 		for ( int x = 0; x < xTotal; ++x ) {
 			
 			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord0.mX + x, coord0.mY + y );
-			u32 addr = this->mGridSpace.GetCellAddr ( offset );
+			ZLIndex addr = this->mGridSpace.GetCellAddr ( offset );
 			this->mCells [ addr ].GatherHulls ( results, ignore, rect, interfaceMask, queryMask );
 		}
 	}
@@ -135,7 +135,7 @@ void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIP
 		for ( int x = 0; x < xTotal; ++x ) {
 			
 			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord0.mX + x, coord0.mY + y );
-			u32 addr = this->mGridSpace.GetCellAddr ( offset );
+			ZLIndex addr = this->mGridSpace.GetCellAddr ( offset );
 			this->mCells [ addr ].GatherHulls ( results, ignore, box, interfaceMask, queryMask );
 		}
 	}
@@ -163,7 +163,7 @@ void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIP
 		for ( int x = 0; x < xTotal; ++x ) {
 			
 			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord0.mX + x, coord0.mY + y );
-			u32 addr = this->mGridSpace.GetCellAddr ( offset );
+			ZLIndex addr = this->mGridSpace.GetCellAddr ( offset );
 			this->mCells [ addr ].GatherHulls ( results, ignore, frustum, interfaceMask, queryMask );
 		}
 	}
@@ -189,7 +189,7 @@ MOAIPartitionCell* MOAIPartitionLevel::GetCell ( MOAIPartitionHull& hull ) {
 	hull.mWorldBounds.GetCenter ( loc );
 	
 	MOAICellCoord coord = this->mGridSpace.GetCellCoord ( loc.mX, loc.mY );
-	u32 cellAddr = this->mGridSpace.GetCellAddr ( coord );
+	ZLIndex cellAddr = this->mGridSpace.GetCellAddr ( coord );
 	return &this->mCells [ cellAddr ];
 }
 

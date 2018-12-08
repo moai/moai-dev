@@ -269,7 +269,7 @@ int MOAITouchSensor::_up ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITouchSensor::EnqueueTouchEvent ( u8 deviceID, u8 sensorID, u32 touchID, bool down, float x, float y ) {
+void MOAITouchSensor::EnqueueTouchEvent ( ZLIndex deviceID, ZLIndex sensorID, u32 touchID, bool down, float x, float y ) {
 
 	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
 	if ( inputMgr.WriteEventHeader < MOAITouchSensor >( deviceID, sensorID )) {
@@ -287,7 +287,7 @@ void MOAITouchSensor::EnqueueTouchEvent ( u8 deviceID, u8 sensorID, u32 touchID,
 }
 
 //----------------------------------------------------------------//
-void MOAITouchSensor::EnqueueTouchEventCancel ( u8 deviceID, u8 sensorID ) {
+void MOAITouchSensor::EnqueueTouchEventCancel ( ZLIndex deviceID, ZLIndex sensorID ) {
 
 	DEBUG_LOG ( "ENQUEUE TOUCHES CANCELLED\n" );
 

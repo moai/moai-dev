@@ -6,6 +6,8 @@
 
 MOAISim.openWindow ( "test", 320, 480 )
 
+print ( 'NO DEBUG LINES HERE' )
+
 MOAIDebugLinesMgr.setStyle ( MOAIProp.DEBUG_DRAW_PARTITION_CELLS, 2, 1, 1, 1 )
 MOAIDebugLinesMgr.setStyle ( MOAIProp.DEBUG_DRAW_PARTITION_PADDED_CELLS, 1, 0.5, 0.5, 0.5 )
 MOAIDebugLinesMgr.setStyle ( MOAIProp.DEBUG_DRAW_WORLD_BOUNDS, 4, 1, 0, 1 )
@@ -22,7 +24,7 @@ partition:setLevel ( 3, 96, 96, 12 )
 
 layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
-layer:setPartition ( partition )
+layer:setLayerPartition ( partition )
 layer:pushRenderPass ()
 
 spriteDeck = MOAISpriteDeck2D.new ()

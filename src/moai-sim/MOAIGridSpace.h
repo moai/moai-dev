@@ -169,8 +169,8 @@ public:
 	ZLRect				GetBounds				( MOAICellCoord c0, MOAICellCoord c1 ) const;
 	void				GetBoundsInRect			( ZLRect rect, MOAICellCoord& c0, MOAICellCoord& c1, ZLRect maxSize ) const;
 	
-	int					GetCellAddr				( MOAICellCoord cellCoord ) const;
-	int					GetCellAddr				( int xCell, int yCell ) const;
+	ZLIndex				GetCellAddr				( MOAICellCoord cellCoord ) const;
+	ZLIndex				GetCellAddr				( int xCell, int yCell ) const;
 	MOAICellCoord		GetCellCoord			( int cellAddr ) const;
 	MOAICellCoord		GetCellCoord			( ZLVec2D loc ) const;
 	MOAICellCoord		GetCellCoord			( float x, float y ) const;

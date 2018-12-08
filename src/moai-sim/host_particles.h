@@ -24,7 +24,7 @@ public:
 	float		mGreen;
 	float		mBlue;
 	float		mAlpha;
-	int			mGfxID;
+	ZLIndex		mGfxID;
 };
 
 typedef void	( *AKUParticleInitFunc )		( float* particle, float* registers );

@@ -157,7 +157,7 @@ void MOAIKeyboardSensor::ClearState () {
 }
 
 //----------------------------------------------------------------//
-void MOAIKeyboardSensor::EnqueueKeyboardCharEvent ( u8 deviceID, u8 sensorID, u32 unicodeChar ) {
+void MOAIKeyboardSensor::EnqueueKeyboardCharEvent ( ZLIndex deviceID, ZLIndex sensorID, u32 unicodeChar ) {
 
 	// Don't allow non-printable characters
 	if ( unicodeChar < ' ' ) return;
@@ -170,7 +170,7 @@ void MOAIKeyboardSensor::EnqueueKeyboardCharEvent ( u8 deviceID, u8 sensorID, u3
 }
 
 //----------------------------------------------------------------//
-void MOAIKeyboardSensor::EnqueueKeyboardEditEvent ( u8 deviceID, u8 sensorID, char const* text, u32 start, u32 editLength, u32 maxLength ) {
+void MOAIKeyboardSensor::EnqueueKeyboardEditEvent ( ZLIndex deviceID, ZLIndex sensorID, char const* text, u32 start, u32 editLength, u32 maxLength ) {
 	
 	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
 	if ( inputMgr.WriteEventHeader < MOAIKeyboardSensor >( deviceID, sensorID )) {
@@ -186,7 +186,7 @@ void MOAIKeyboardSensor::EnqueueKeyboardEditEvent ( u8 deviceID, u8 sensorID, ch
 }
 
 //----------------------------------------------------------------//
-void MOAIKeyboardSensor::EnqueueKeyboardKeyEvent ( u8 deviceID, u8 sensorID, u32 keyID, bool down ) {
+void MOAIKeyboardSensor::EnqueueKeyboardKeyEvent ( ZLIndex deviceID, ZLIndex sensorID, u32 keyID, bool down ) {
 
 	if ( keyID >= MOAI_KEY_TOTAL ) return;
 
@@ -199,7 +199,7 @@ void MOAIKeyboardSensor::EnqueueKeyboardKeyEvent ( u8 deviceID, u8 sensorID, u32
 }
 
 //----------------------------------------------------------------//
-void MOAIKeyboardSensor::EnqueueKeyboardTextEvent ( u8 deviceID, u8 sensorID, cc8* text ) {
+void MOAIKeyboardSensor::EnqueueKeyboardTextEvent ( ZLIndex deviceID, ZLIndex sensorID, cc8* text ) {
 	
 	int i = 0;
 	while ( text [ i ]) {

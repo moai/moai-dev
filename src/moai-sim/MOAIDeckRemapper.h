@@ -20,8 +20,8 @@ class MOAIDeckRemapper :
 	public virtual MOAIDeckProxy {
 protected:
 	
-	u32						mBase;
-	ZLLeanArray < u32 >		mRemap;
+	ZLSize						mBase;
+	ZLLeanArray < ZLIndex >		mRemap;
 	
 	//----------------------------------------------------------------//
 	static int			_reserve				( lua_State* L );

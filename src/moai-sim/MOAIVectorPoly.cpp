@@ -40,10 +40,10 @@ int MOAIVectorPoly::AddStrokeContours ( SafeTesselator& tess, bool inside, bool 
 
 	// filter out duplicate vertices
 	ZLVec2D* verts = ( ZLVec2D* )alloca ( sizeof ( ZLVec2D ) * nVerts );
-	verts [ 0 ] = this->mVertices [ 0 ];
+	verts [ 0 ] = this->mVertices [ ZLIndex::ZERO ];
 
 	int nJoins = 1;
-	for ( int i = 1; i < nVerts; ++i ) {
+	for ( ZLIndex i = ZLIndex ( 1, ZLIndex::LIMIT ); i < nVerts; ++i ) {
 		
 		const ZLVec2D& v0 = verts [ nJoins - 1 ];
 		const ZLVec2D& v1 = this->mVertices [ i ];
@@ -103,14 +103,14 @@ void MOAIVectorPoly::Read ( ZLStream& stream, MOAIVectorTesselatorWriter& writer
 	
 	this->mVertices.Init ( size );
 	
-	for ( u16 i = 0; i < size; ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < size; ++i ) {
 		this->mVertices [ i ] = stream.Read < ZLVec2D >( ZLVec2D::ORIGIN );
 	}
 	this->mIsClosed = stream.Read < bool >( false );
 }
 
 //----------------------------------------------------------------//
-bool MOAIVectorPoly::SetVertices ( const ZLVec2D* vertices, u32 total, bool closed ) {
+bool MOAIVectorPoly::SetVertices ( const ZLVec2D* vertices, ZLSize total, bool closed ) {
 
 	if ( total ) {
 		this->mVertices.Init ( total );
@@ -127,7 +127,7 @@ void MOAIVectorPoly::Write ( ZLStream& stream, MOAIVectorTesselatorWriter& write
 	u16 size = ( u16 )this->mVertices.Size ();
 	
 	stream.Write < u16 >( size );
-	for ( u16 i = 0; i < size; ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < size; ++i ) {
 		stream.Write < ZLVec2D >( this->mVertices [ i ]);
 	}
 	stream.Write < bool >( this->mIsClosed );

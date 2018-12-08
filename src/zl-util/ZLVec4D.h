@@ -14,6 +14,7 @@ class ZLMetaVec4D :
 	public ZLMetaVec3D < TYPE > {
 public:
 
+	static const ZLMetaVec4D < TYPE > ORIGIN;
 	static const ZLMetaVec4D < TYPE > ZERO;
 	static const ZLMetaVec4D < TYPE > X_AXIS;
 	static const ZLMetaVec4D < TYPE > Y_AXIS;
@@ -68,6 +69,7 @@ public:
 	}
 };
 
+template < typename TYPE > const ZLMetaVec4D < TYPE > ZLMetaVec4D < TYPE >::ORIGIN ( 0.0f, 0.0f, 0.0f, 1.0f );
 template < typename TYPE > const ZLMetaVec4D < TYPE > ZLMetaVec4D < TYPE >::ZERO ( 0.0f, 0.0f, 0.0f, 0.0f );
 template < typename TYPE > const ZLMetaVec4D < TYPE > ZLMetaVec4D < TYPE >::X_AXIS ( 1.0f, 0.0f, 0.0f, 0.0f );
 template < typename TYPE > const ZLMetaVec4D < TYPE > ZLMetaVec4D < TYPE >::Y_AXIS ( 0.0f, 2.0f, 0.0f, 0.0f );

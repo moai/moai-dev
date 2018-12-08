@@ -26,13 +26,13 @@ private:
 	static int		_setNode					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool			AreNeighbors				( u32 id1, u32 id2 );
-	ZLVec3D			GetNode						( u32 id );
+	bool			AreNeighbors				( ZLIndex id1, ZLIndex id2 );
+	ZLVec3D			GetNode						( ZLIndex id );
 	u32				GetNodeCount				();
-	void			PushNeighbors				( MOAIPathFinder& pathFinder, int nodeID );
-	void			ReserveNodes				( u32 total );
-	void			SetNeighbors				( u32 id1, u32 id2, bool value );
-	void			SetNode						( u32 id, const ZLVec3D& node );
+	void			PushNeighbors				( MOAIPathFinder& pathFinder, ZLIndex nodeID );
+	void			ReserveNodes				( ZLSize total );
+	void			SetNeighbors				( ZLIndex id1, ZLIndex id2, bool value );
+	void			SetNode						( ZLIndex id, const ZLVec3D& node );
 
 public:
 	

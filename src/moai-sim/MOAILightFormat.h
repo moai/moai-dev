@@ -4,13 +4,13 @@
 #ifndef	MOAILIGHTFORMAT_H
 #define	MOAILIGHTFORMAT_H
 
-#include <moai-sim/MOAIShaderUniformFormatter.h>
+#include <moai-sim/MOAIShaderUniformHandle.h>
 
 //================================================================//
 // MOAILightFormatUniform
 //================================================================//
 class MOAILightFormatUniform :
-	public MOAIShaderUniformFormatter {
+	public MOAIShaderUniformBase {
 public:
 
 	size_t				mBase;		// base in uniform buffer
@@ -28,7 +28,7 @@ private:
 	u32											mTextures;
 	ZLLeanArray < MOAILightFormatUniform >		mUniforms;
 	bool										mDirty;
-	size_t										mBufferSize;
+	ZLSize										mBufferSize;
 
 	//----------------------------------------------------------------//
 	static int					_reserveTextures			( lua_State* L );
@@ -43,7 +43,7 @@ public:
 	DECL_LUA_FACTORY ( MOAILightFormat )
 
 	//----------------------------------------------------------------//
-	MOAILightFormatUniform*		GetUniform					( u32 uniformID );
+	MOAILightFormatUniform*		GetUniform					( ZLIndex uniformID );
 								MOAILightFormat				();
 								~MOAILightFormat			();
 	void						RegisterLuaClass			( MOAILuaState& state );

@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <moai-sim/MOAIAnimCurveIndex.h>
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIGfxVertexCache.h>
 
 //================================================================//
 // local
@@ -28,7 +27,7 @@ int MOAIAnimCurveIndex::_getValueAtTime ( lua_State* L ) {
 	ZLIndex value = self->GetValue ( span );
 	
 	state.Push ( value );
-	state.Push ( span.mKeyID + 1 );
+	state.Push ( span.mKeyID );
 	
 	return 2;
 }
@@ -50,11 +49,11 @@ int MOAIAnimCurveIndex::_getValueAtTime ( lua_State* L ) {
 int MOAIAnimCurveIndex::_setKey ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnimCurveIndex, "UNN" );
 
-	u32 index			= state.GetValue < u32 >( 2, 1 ) - 1;
-	float time			= state.GetValue < float >( 3, 0.0f );
-	ZLIndex value		= state.GetValue < ZLIndex >( 4, 0.0f );
+	ZLIndex index		= state.GetValueAsIndex ( 2 ) ;
+	float time			= state.GetValue < float >( 3, 0.0 );
+	ZLIndex value		= state.GetValueAsIndex ( 4 );
 	u32 mode			= state.GetValue < u32 >( 5, ZLInterpolate::kSmooth );
-	float weight		= state.GetValue < float >( 6, 1.0f );
+	float weight		= state.GetValue < float >( 6, 1.0 );
 	
 	if ( MOAILogMgr::CheckIndexPlusOne ( index, self->mKeys.Size (), L )) {
 	
@@ -83,7 +82,7 @@ ZLIndex MOAIAnimCurveIndex::GetValue ( const MOAIAnimKeySpan& span ) const {
 
 //----------------------------------------------------------------//
 MOAIAnimCurveIndex::MOAIAnimCurveIndex () :
-	mValue ( 0.0f ) {
+	mValue ( ZLIndex::ZERO ) {
 	
 	RTTI_SINGLE ( MOAIAnimCurve )
 }

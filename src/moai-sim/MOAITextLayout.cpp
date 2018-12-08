@@ -101,8 +101,8 @@ void MOAITextLayout::AddHighlight ( u32 base, u32 top, u32 color ) {
 //----------------------------------------------------------------//
 void MOAITextLayout::ApplyHighlights () {
 
-	size_t totalSprites = this->mSprites.GetTop ();
-	size_t spriteIdx = 0;
+	ZLSize totalSprites = this->mSprites.GetTop ();
+	ZLIndex spriteIdx = ZLIndex::ZERO;
 	MOAITextHighlight* highlight = this->mHighlights;
 	
 	while (( spriteIdx < totalSprites ) && highlight ) {
@@ -239,16 +239,16 @@ void MOAITextLayout::Draw ( u32 reveal ) {
 		bool useSpriteShaders = ( currentShader == 0 );
 		MOAIShader* defaultShader = MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::FONT_SNAPPING_SHADER );
 		
-		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+		MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 		MOAIQuadBrush::BindVertexFormat ();
 
-		ZLColorVec baseColor = gfxMgr.mGfxState.GetPenColor ();
+		ZLColorVec baseColor = gfxState.GetPenColor ();
 		ZLColorVec blendColor;
 		u32 rgba0 = 0xffffffff;
 		u32 rgba1 = 0xffffffff;
 
-		size_t size = this->mSprites.GetTop ();
-		for ( size_t i = 0; ( i < size ) && ( i < reveal ); ++i ) {
+		ZLSize size = this->mSprites.GetTop ();
+		for ( ZLIndex i = ZLIndex::ZERO; ( i < size ) && ( i < reveal ); ++i ) {
 			const MOAITextSprite& sprite = this->mSprites [ i ];
 			const MOAITextStyleState* style = sprite.mStyle;
 			
@@ -259,14 +259,14 @@ void MOAITextLayout::Draw ( u32 reveal ) {
 				
 				blendColor.SetRGBA ( rgba0 );
 				blendColor.Modulate ( baseColor );
-				gfxMgr.mGfxState.SetPenColor ( blendColor );
+				gfxState.SetPenColor ( blendColor );
 			}
 			
 			if ( useSpriteShaders ) {
 			
 				MOAIShader* spriteShader = sprite.mShader ? sprite.mShader : defaultShader;
 				if ( spriteShader != currentShader ) {
-					if ( !gfxMgr.mGfxState.SetShader ( spriteShader )) continue;
+					if ( !gfxState.SetShader ( spriteShader )) continue;
 					currentShader = spriteShader;
 				}
 			}
@@ -286,8 +286,8 @@ void MOAITextLayout::DrawDebug () {
 	
 	if ( debugLines.Bind ( MOAITextLabel::DEBUG_DRAW_TEXT_LABEL_GLYPHS )) {
 	
-		size_t size = this->mSprites.GetTop ();
-		for ( size_t i = 0; i < size; ++i ) {
+		ZLSize size = this->mSprites.GetTop ();
+		for ( ZLIndex i = ZLIndex::ZERO; i < size; ++i ) {
 			const MOAITextSprite& sprite = this->mSprites [ i ];
 			
 			// TODO: change up the way padding works - should be innate to the glyph
@@ -305,8 +305,8 @@ void MOAITextLayout::DrawDebug () {
 	
 	if ( debugLines.Bind ( MOAITextLabel::DEBUG_DRAW_TEXT_LABEL_LINES_GLYPH_BOUNDS )) {
 		
-		size_t totalLines = this->mLines.GetTop ();
-		for ( size_t i = 0; i < totalLines; ++i ) {
+		ZLSize totalLines = this->mLines.GetTop ();
+		for ( ZLIndex i = ZLIndex::ZERO; i < totalLines; ++i ) {
 			MOAITextLine& line = this->mLines [ i ];
 			draw.DrawRectOutline ( line.mGlyphBounds );
 		}
@@ -314,8 +314,8 @@ void MOAITextLayout::DrawDebug () {
 	
 	if ( debugLines.Bind ( MOAITextLabel::DEBUG_DRAW_TEXT_LABEL_LINES_LAYOUT_BOUNDS )) {
 		
-		size_t totalLines = this->mLines.GetTop ();
-		for ( size_t i = 0; i < totalLines; ++i ) {
+		ZLSize totalLines = this->mLines.GetTop ();
+		for ( ZLIndex i = ZLIndex::ZERO; i < totalLines; ++i ) {
 			MOAITextLine& line = this->mLines [ i ];
 			draw.DrawRectOutline ( line.mLayoutBounds );
 		}
@@ -323,8 +323,8 @@ void MOAITextLayout::DrawDebug () {
 	
 	if ( debugLines.Bind ( MOAITextLabel::DEBUG_DRAW_TEXT_LABEL_BASELINES )) {
 		
-		size_t totalLines = this->mLines.GetTop ();
-		for ( size_t i = 0; i < totalLines; ++i ) {
+		ZLSize totalLines = this->mLines.GetTop ();
+		for ( ZLIndex i = ZLIndex::ZERO; i < totalLines; ++i ) {
 			MOAITextLine& line = this->mLines [ i ];
 			float y = line.mOrigin.mY;
 			draw.DrawLine ( line.mLayoutBounds.mXMin, y, line.mLayoutBounds.mXMax, y );
@@ -333,20 +333,20 @@ void MOAITextLayout::DrawDebug () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLayout::FindSpriteSpan ( u32 idx, u32 size, u32& spanIdx, u32& spanSize ) {
+void MOAITextLayout::FindSpriteSpan ( u32 idx, u32 size, ZLIndex& spanIdx, ZLSize& spanSize ) {
 
 	spanSize = 0;
 
-	size_t top = this->mSprites.GetTop ();
+	ZLSize top = this->mSprites.GetTop ();
 	if ( !top ) return;
-	if ( this->mSprites [ 0 ].mIdx >= ( idx + size )) return;
-	if ( this->mSprites [ top - 1 ].mIdx < idx ) return;
+	if ( this->mSprites [ ZLIndex::ZERO ].mIdx >= ( idx + size )) return;
+	if ( this->mSprites [ ZLIndex ( top - 1, ZLIndex::LIMIT )].mIdx < idx ) return;
 	
-	for ( size_t i = 0; i < top; ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < top; ++i ) {
 		MOAITextSprite& sprite = this->mSprites [ i ];
 	
 		if ( sprite.mIdx >= idx ) {
-			spanIdx = ( u32 )i;
+			spanIdx = i;
 			spanSize = 1;
 			break;
 		}
@@ -355,7 +355,7 @@ void MOAITextLayout::FindSpriteSpan ( u32 idx, u32 size, u32& spanIdx, u32& span
 	if ( spanSize ) {
 		
 		u32 max = idx + size;
-		u32 i = spanIdx + 1;
+		ZLIndex i = spanIdx + ( ZLSize )1;
 		u32 count = 0;
 		
 		for ( ; i < top; ++i, ++count ) {
@@ -383,14 +383,14 @@ bool MOAITextLayout::GetBoundsForRange ( u32 idx, u32 size, ZLRect& rect ) {
 
 	bool result = false;
 
-	u32 spanIdx;
-	u32 spanSize;
+	ZLIndex spanIdx ( ZLIndex::INVALID );
+	ZLSize spanSize;
 	
 	this->FindSpriteSpan ( idx, size, spanIdx, spanSize );
 	if ( !spanSize ) return false;
 
-	u32 end = spanIdx + spanSize;
-	for ( u32 i = spanIdx; i < end; ++i ) {
+	ZLSize end = ( ZLSize )spanIdx + spanSize;
+	for ( ZLIndex i = spanIdx; i < end; ++i ) {
 		MOAITextSprite& sprite = this->mSprites [ i ];
 		MOAIGlyph& glyph = *sprite.mGlyph;
 
@@ -433,7 +433,7 @@ MOAITextLayout::~MOAITextLayout () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLayout::PushLine ( u32 start, u32 size, const ZLVec2D& origin, const ZLRect& layoutBounds ) {
+void MOAITextLayout::PushLine ( ZLIndex start, ZLSize size, const ZLVec2D& origin, const ZLRect& layoutBounds ) {
 
 	if ( layoutBounds.mYMin == layoutBounds.mYMax ) return;
 
@@ -504,7 +504,7 @@ void MOAITextLayout::Reset () {
 void MOAITextLayout::ResetHighlights () {
 
 	size_t top = this->mSprites.GetTop ();
-	for ( size_t i = 0; i > top; ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i > top; ++i ) {
 		MOAITextSprite& sprite = this->mSprites [ i ];
 		sprite.mMask = sprite.mMask & ~MOAITextSprite::MASK_COLOR;
 	}

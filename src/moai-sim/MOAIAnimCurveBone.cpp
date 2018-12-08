@@ -28,7 +28,7 @@ int MOAIAnimCurveBone::_getValueAtTime ( lua_State* L ) {
 int MOAIAnimCurveBone::_setKey ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnimCurveBone, "UNNNN" );
 
-	u32 index				= state.GetValue < u32 >( 2, 1 ) - 1;
+	ZLIndex index			= state.GetValueAsIndex ( 2 );
 	float time				= state.GetValue < float >( 3, 0.0f );
 	ZLVec3D position		= state.GetValue < ZLVec3D >( 4, ZLVec3D::ORIGIN );
 	ZLQuaternion rotation	= state.GetValue < ZLQuaternion >( 7, ZLQuaternion::IDENT );
@@ -70,17 +70,19 @@ ZLAffine3D MOAIAnimCurveBone::Compose ( const ZLVec3D& pos, const ZLQuaternion& 
 //----------------------------------------------------------------//
 void MOAIAnimCurveBone::GetCurveDelta ( ZLVec3D& pos, ZLQuaternion& rot, ZLVec3D& scl ) const {
 
-	u32 size = ( u32 )this->mKeys.Size ();
+	ZLSize size = this->mKeys.Size ();
 	if ( size > 1 ) {
 	
-		pos = this->mPositionSamples [ size - 1 ];
-		pos.Sub ( this->mPositionSamples [ 0 ]);
+		ZLIndex idx ( size - 1, ZLIndex::LIMIT );
 	
-		rot = this->mRotationSamples [ size - 1 ];
-		rot.Sub ( this->mRotationSamples [ 0 ]);
+		pos = this->mPositionSamples [ idx ];
+		pos.Sub ( this->mPositionSamples [ ZLIndex::ZERO ]);
+	
+		rot = this->mRotationSamples [ idx ];
+		rot.Sub ( this->mRotationSamples [ ZLIndex::ZERO ]);
 		
-		scl = this->mScaleSamples [ size - 1 ];
-		scl.Sub ( this->mScaleSamples [ 0 ]);
+		scl = this->mScaleSamples [ idx ];
+		scl.Sub ( this->mScaleSamples [ ZLIndex::ZERO ]);
 	}
 	else {
 		pos = ZLVec3D::ORIGIN;
@@ -137,9 +139,9 @@ void MOAIAnimCurveBone::GetValue ( const MOAIAnimKeySpan& span, ZLVec3D& pos, ZL
 	
 	if ( span.mTime > 0.0f ) {
 	
-		ZLVec3D p1			= this->mPositionSamples [ span.mKeyID + 1 ];
-		ZLQuaternion q1		= this->mRotationSamples [ span.mKeyID + 1 ];
-		ZLVec3D s1			= this->mScaleSamples [ span.mKeyID + 1 ];
+		ZLVec3D p1			= this->mPositionSamples [ span.mKeyID + ( ZLSize )1 ];
+		ZLQuaternion q1		= this->mRotationSamples [ span.mKeyID + ( ZLSize )1 ];
+		ZLVec3D s1			= this->mScaleSamples [ span.mKeyID + ( ZLSize )1 ];
 		
 		p0.Lerp ( p1, ZLInterpolate::Curve ( key.mMode, span.mTime, key.mWeight ));
 		q0.Slerp ( q0, q1, ZLInterpolate::Curve ( key.mMode, span.mTime, key.mWeight ));

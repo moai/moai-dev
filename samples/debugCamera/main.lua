@@ -30,7 +30,7 @@ partition:setLevel ( 3, 96, 96, 12 )
 layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:setCamera ( camera )
-layer:setPartition ( partition )
+layer:setLayerPartition ( partition )
 layer:pushRenderPass ()
 
 spriteDeck = MOAISpriteDeck2D.new ()

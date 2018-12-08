@@ -20,9 +20,9 @@ class MOAIFrameBufferTexture :
 	public MOAITextureBase {
 private:
 	
-	ZLGfxHandle*		mGLColorBufferID;
-	ZLGfxHandle*		mGLDepthBufferID;
-	ZLGfxHandle*		mGLStencilBufferID;
+	ZLGfxHandle			mGLColorBuffer;
+	ZLGfxHandle			mGLDepthBuffer;
+	ZLGfxHandle			mGLStencilBuffer;
 	
 	u32					mColorFormat;
 	u32					mDepthFormat;
@@ -35,6 +35,9 @@ private:
 	void				OnGPUBind					();
 	bool				OnGPUCreate					();
 	void				OnGPUDeleteOrDiscard		( bool shouldDelete );
+
+	//----------------------------------------------------------------//
+	void				MOAIFrameBuffer_AffirmBuffers		();
 
 public:
 	

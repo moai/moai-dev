@@ -92,7 +92,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Close			();
-	ZLZipEntry&		GetEntry		( size_t idx );
+	ZLZipEntry&		GetEntry		( ZLIndex idx );
 	size_t			GetTotal		();
 	int				Inflate			();
 	void			Open			( ZLStream& stream );

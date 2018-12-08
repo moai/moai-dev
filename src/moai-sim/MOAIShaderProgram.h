@@ -25,9 +25,9 @@ private:
 	friend class MOAIShaderGlobals;
 	friend class MOAIShaderProgram;
 
-	u32		mGlobalID;
-	u32		mUniformID;
-	u32		mIndex;
+	u32			mGlobalID;
+	ZLIndex		mUniformID;
+	ZLIndex		mIndex;
 
 public:
 
@@ -44,7 +44,7 @@ private:
 	friend class MOAIShaderProgram;
 
 	u32				mName;
-	u32				mUnit;
+	ZLIndex			mUnit;
 	ZLStrongPtr < MOAITextureBase > mTexture;
 
 public:
@@ -65,7 +65,8 @@ public:
 			uniform values.
 */
 class MOAIShaderProgram :
-	public MOAIGfxResource {
+	public MOAIGfxResource,
+	public MOAIShaderUniformSchema {
 protected:
 
 	friend class MOAIShader;
@@ -78,9 +79,9 @@ protected:
 	STLString		mVertexShaderSource;
 	STLString		mFragmentShaderSource;
 
-	ZLGfxHandle*	mProgram;
-	ZLGfxHandle*	mVertexShader;
-	ZLGfxHandle*	mFragmentShader;
+	ZLGfxHandle		mProgram;
+	ZLGfxHandle		mVertexShader;
+	ZLGfxHandle		mFragmentShader;
 
 	typedef STLMap < u32, STLString >::iterator AttributeMapIt;
 	STLMap < u32, STLString > mAttributeMap;
@@ -88,6 +89,11 @@ protected:
 	ZLLeanArray < MOAIShaderUniform >			mUniforms;
 	ZLLeanArray < MOAIShaderProgramGlobal >		mGlobals;
 	ZLLeanArray < MOAIShaderProgramTexture >	mTextures;
+
+	size_t										mMaxCount;
+	size_t										mUniformBufferSize;
+
+	ZLLeanArray < u8 >							mUniformBuffer;
 
 	//----------------------------------------------------------------//
 	static int			_declareUniform				( lua_State* L );
@@ -100,9 +106,12 @@ protected:
 	static int			_setVertexAttribute			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				BindTextures				();
-	ZLGfxHandle*		CompileShader				( u32 type, cc8* source );
-	MOAIShaderUniform*	GetUniform					( u32 uniformID );
+	void				AffirmUniforms				();
+	void				ApplyUniforms				( ZLLeanArray < u8 >& buffer );
+	void				BindUniforms				();
+	ZLGfxHandle			CompileShader				( u32 type, cc8* source );
+	MOAIShaderUniform*	GetUniform					( ZLIndex uniformID );
+	void				InitUniformBuffer			( ZLLeanArray < u8 >& buffer );
 	bool				OnCPUCreate					();
 	void				OnCPUDestroy				();
 	void				OnGPUBind					();
@@ -112,7 +121,12 @@ protected:
 	bool				OnGPUUpdate					();
 	void				OnUniformLocation			( u32 addr, void* userdata );
 	int					ReserveGlobals				( lua_State* L, int idx );
+	void				ScheduleTextures			();
 	int					SetGlobal					( lua_State* L, int idx );
+	void				UpdateUniforms				( ZLLeanArray < u8 >& buffer );
+	
+	//----------------------------------------------------------------//
+	MOAIShaderUniformHandle				MOAIShaderUniformSchema_GetUniformHandle	( void* buffer, ZLIndex uniformID ) const;
 	
 public:
 
@@ -120,21 +134,20 @@ public:
 
 	//----------------------------------------------------------------//
 	void				Clear						();
-	//void				ClearUniforms				();
 	void				DeleteShaders				();
-	void				DeclareUniform				( u32 idx, cc8* name, u32 type, u32 width = 1, u32 count = 1 );
+	void				DeclareUniform				( ZLIndex idx, cc8* name, u32 type, u32 width = 1, u32 count = 1 );
 	void				Load						( cc8* vshSource, cc8* fshSource );
 						MOAIShaderProgram			();
 						~MOAIShaderProgram			();
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
-	void				ReserveAttributes			( u32 nAttributes );
-	void				ReserveGlobals				( u32 nGlobals );
-	void				ReserveTextures				( u32 nTextures );
-	void				ReserveUniforms				( u32 nUniforms );
-	void				SetGlobal					( u32 idx, u32 globalID, u32 uniformID, u32 index );
-	void				SetTexture					( u32 idx, u32 name, u32 unit, MOAITextureBase* fallback );
-	void				SetTexture					( u32 idx, MOAITextureBase* texture, u32 unit );
+	void				ReserveAttributes			( ZLSize nAttributes );
+	void				ReserveGlobals				( ZLSize nGlobals );
+	void				ReserveTextures				( ZLSize nTextures );
+	void				ReserveUniforms				( ZLSize nUniforms );
+	void				SetGlobal					( ZLIndex idx, u32 globalID, ZLIndex uniformID, ZLIndex index );
+	void				SetTexture					( ZLIndex idx, u32 name, ZLIndex unit, MOAITextureBase* fallback );
+	void				SetTexture					( ZLIndex idx, MOAITextureBase* texture, ZLIndex unit );
 	void				SetVertexAttribute			( u32 idx, cc8* attribute );
 };
 

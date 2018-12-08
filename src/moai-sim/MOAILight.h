@@ -5,7 +5,7 @@
 #define	MOAILIGHT_H
 
 #include <moai-sim/MOAINode.h>
-#include <moai-sim/MOAIShaderUniformBuffer.h>
+#include <moai-sim/MOAIShaderUniformSchema.h>
 
 class MOAILightFormat;
 class MOAIShader;
@@ -16,7 +16,7 @@ class MOAITexture;
 //================================================================//
 class MOAILight :
 	public virtual MOAINode,
-	public MOAIShaderUniformBuffer {
+	public MOAIShaderUniformSchema {
 private:
 
 	MOAILuaSharedPtr < MOAILightFormat >	mFormat;
@@ -32,7 +32,7 @@ private:
 
 	//----------------------------------------------------------------//
 	bool								MOAINode_ApplyAttrOp						( u32 attrID, MOAIAttribute& attr, u32 op );
-	MOAIShaderUniformFormatter*			MOAIShaderUniformBuffer_GetUniform			( u32 uniformID, void*& buffer );
+	MOAIShaderUniformHandle				MOAIShaderUniformSchema_GetUniformHandle	( void* buffer, ZLIndex uniformID ) const;
 
 public:
 

@@ -18,7 +18,7 @@
 //----------------------------------------------------------------//
 void MOAITextLayoutRules::ClearCurves () {
 
-	for ( u32 i = 0; i < this->mCurves.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < this->mCurves.Size (); ++i ) {
 		this->ReleaseCurve ( this->mCurves [ i ]);
 	}
 	this->mCurves.Clear ();
@@ -107,7 +107,7 @@ void MOAITextLayoutRules::Init ( const MOAITextLayoutRules& designer ) {
 	
 	u32 totalCurves = ( u32 )designer.mCurves.Size (); // TODO: cast
 	this->ReserveCurves ( totalCurves );
-	for ( u32 i = 0; i < totalCurves; ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < totalCurves; ++i ) {
 		this->SetCurve ( i, designer.mCurves [ i ]);
 	}
 }
@@ -173,7 +173,7 @@ void MOAITextLayoutRules::ReleaseCurve ( MOAIAnimCurveFloat* curve  ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLayoutRules::ReserveCurves ( u32 total ) {
+void MOAITextLayoutRules::ReserveCurves ( ZLSize total ) {
 
 	this->ClearCurves ();
 	
@@ -193,7 +193,7 @@ void MOAITextLayoutRules::RetainCurve ( MOAIAnimCurveFloat* curve  ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLayoutRules::SetCurve ( u32 idx, MOAIAnimCurveFloat* curve ) {
+void MOAITextLayoutRules::SetCurve ( ZLIndex idx, MOAIAnimCurveFloat* curve ) {
 
 	if ( idx > this->mCurves.Size ()) return;
 	if ( this->mCurves [ idx ] == curve ) return;

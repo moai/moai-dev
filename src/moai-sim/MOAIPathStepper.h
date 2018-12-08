@@ -30,8 +30,8 @@ private:
 	MOAILuaSharedPtr < MOAIPath>	mPath;
 	
 	ZLCubicBezierFlattener2D		mFlattener;
-	size_t							mSegmentIdx;
-	size_t							mTotalSegments;
+	ZLIndex							mSegmentIdx;
+	ZLSize							mTotalSegments;
 	float							mLength;
 
 	//----------------------------------------------------------------//

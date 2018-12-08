@@ -17,7 +17,7 @@ private:
 protected:
 
 	//----------------------------------------------------------------//
-	virtual void OnRelease ( u32 refCount ) {
+	virtual void ZLRefCountedObjectBase_OnRelease ( u32 refCount ) {
 
 		if ( refCount == 0 ) {
 			delete ( this );
@@ -25,7 +25,7 @@ protected:
 	}
 
 	//----------------------------------------------------------------//
-	virtual void OnRetain ( u32 refCount ) {
+	virtual void ZLRefCountedObjectBase_OnRetain ( u32 refCount ) {
 		UNUSED ( refCount );
 	}
 
@@ -39,14 +39,14 @@ public:
 		if ( this->mRefCount > 0 ) {
 			this->mRefCount--;
 		}
-		this->OnRelease ( this->mRefCount );
+		this->ZLRefCountedObjectBase_OnRelease ( this->mRefCount );
 	}
 
 	//----------------------------------------------------------------//
 	void Retain () {
 
 		this->mRefCount++;
-		this->OnRetain ( this->mRefCount );
+		this->ZLRefCountedObjectBase_OnRetain ( this->mRefCount );
 	}
 
 	//----------------------------------------------------------------//

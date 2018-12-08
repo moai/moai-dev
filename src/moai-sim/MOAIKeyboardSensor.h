@@ -51,10 +51,10 @@ public:
 
 	//----------------------------------------------------------------//
 	void				ClearState					();
-	static void			EnqueueKeyboardCharEvent	( u8 deviceID, u8 sensorID, u32 unicodeChar );
-	static void			EnqueueKeyboardEditEvent	( u8 deviceID, u8 sensorID, char const* text, u32 start, u32 editLength, u32 maxLength );
-	static void			EnqueueKeyboardKeyEvent		( u8 deviceID, u8 sensorID, u32 keyID, bool down );
-	static void			EnqueueKeyboardTextEvent	( u8 deviceID, u8 sensorID, cc8* text );
+	static void			EnqueueKeyboardCharEvent	( ZLIndex deviceID, ZLIndex sensorID, u32 unicodeChar );
+	static void			EnqueueKeyboardEditEvent	( ZLIndex deviceID, ZLIndex sensorID, char const* text, u32 start, u32 editLength, u32 maxLength );
+	static void			EnqueueKeyboardKeyEvent		( ZLIndex deviceID, ZLIndex sensorID, u32 keyID, bool down );
+	static void			EnqueueKeyboardTextEvent	( ZLIndex deviceID, ZLIndex sensorID, cc8* text );
 	static int			CheckKeys					( lua_State* L, bool ( MOAIKeyboardSensor::*predicate )( u32 keyCode ));
 	bool				KeyDown						( u32 keyID );
 	bool				KeyIsDown					( u32 keyID );

@@ -28,7 +28,7 @@ class MOAIFrameBuffer :
 protected:
 	
 	friend class MOAIGfxMgr;
-	friend class MOAIGfxStateCache;
+	friend class MOAIGfxStateGPUCache;
 	
 	u32					mBufferWidth;
 	u32					mBufferHeight;
@@ -37,7 +37,7 @@ protected:
 	
 	bool				mNeedsClear;
 	
-	ZLGfxHandle*		mGLFrameBufferID;
+	ZLGfxHandle			mGLFrameBuffer;
 
 	bool								mGrabNextFrame;
 	MOAILuaMemberRef					mOnFrameFinish;
@@ -49,8 +49,12 @@ protected:
 	static int			_isPendingGrab				( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void				AffirmBuffers				();
 	void				OnReadPixels				( const ZLCopyOnWrite& buffer, void* userdata );
 	void				RenderTable					( MOAILuaState& state, int idx );
+
+	//----------------------------------------------------------------//
+	virtual void		MOAIFrameBuffer_AffirmBuffers		();
 
 public:
 	
@@ -70,7 +74,7 @@ public:
 	bool				NeedsClear					() const;
 	void				NeedsClear					( bool needsClear );
 	void				SetBufferSize				( u32 width, u32 height );
-	void				SetGLFrameBufferID			( ZLGfxHandle* frameBufferID );
+	void				SetGLFrameBuffer			( const ZLGfxHandle& frameBuffer );
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
 	ZLRect				WndRectToDevice				( ZLRect rect ) const;

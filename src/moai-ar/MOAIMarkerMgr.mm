@@ -221,8 +221,8 @@ void MOAIMarkerMgr::AffirmDeck () {
 		program->Load ( vsh, fsh );
 
 		program->ReserveUniforms ( 2 );
-		program->DeclareUniform ( 0, "texture0", MOAIShaderUniformFormatter::UNIFORM_TYPE_INT, 1, 1 );
-		program->DeclareUniform ( 1, "texture1", MOAIShaderUniformFormatter::UNIFORM_TYPE_INT, 1, 1 );
+		program->DeclareUniform ( 0, "texture0", MOAIShaderUniformHandle::UNIFORM_TYPE_INT, 1, 1 );
+		program->DeclareUniform ( 1, "texture1", MOAIShaderUniformHandle::UNIFORM_TYPE_INT, 1, 1 );
 
 		program->ReserveTextures ( 2 );
 		program->SetTexture ( 0, texture0, 0 );

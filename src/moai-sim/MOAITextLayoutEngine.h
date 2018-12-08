@@ -24,10 +24,10 @@ protected:
 	friend class MOAITextLayoutEngine;
 	
 	MOAITextStyleSpan*		mStyleSpan;
-	u32						mSpanIdx;
+	ZLIndex					mSpanIdx;
 	
 	u32						mCharIdx;
-	u32						mSpriteIdx;
+	ZLIndex					mSpriteIdx;
 	ZLRect					mLineLayoutBounds;
 	ZLRect					mLineSpacingBounds;
 	
@@ -69,7 +69,7 @@ private:
 	float					mEmptyLineAscent;
 	float					mEmptyLineDescent;
 	
-	u32						mBaseLine;
+	ZLIndex					mBaseLine;
 	
 	MOAITextStyledChar		mCurrentChar;
 	MOAIGlyphSet*			mCurrentGlyphDeck;
@@ -93,9 +93,9 @@ private:
 	void					BeginToken					();
 	void					BuildLayout					();
 	void					CaptureRestorePoint			( u32 restorePointID );
-	u32						GetLineSizeInSprites		();
-	u32						GetLineSpriteIdx			();
-	u32						GetSpriteIndex				();
+	ZLSize					GetLineSizeInSprites		();
+	ZLIndex					GetLineSpriteIdx			();
+	ZLIndex					GetSpriteIndex				();
 	MOAITextStyledChar		NextChar					();
 	u32						PushLine					();
 	u32						PushSprite					( const MOAITextStyledChar& styledChar, float x, float y );

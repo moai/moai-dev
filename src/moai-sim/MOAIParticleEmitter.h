@@ -21,23 +21,23 @@ class MOAIParticleEmitter :
 	public MOAIAction {
 protected:
 
-	u32		mShapeID;
-	ZLRect	mRect;
+	u32			mShapeID;
+	ZLRect		mRect;
 	
-	float	mInnerRadius;
-	float	mOuterRadius;
+	float		mInnerRadius;
+	float		mOuterRadius;
 	
-	u32		mMinEmission;
-	u32		mMaxEmission;
+	u32			mMinEmission;
+	u32			mMaxEmission;
 
-	float	mMinAngle;
-	float	mMaxAngle;
+	float		mMinAngle;
+	float		mMaxAngle;
 	
-	float	mMinMagnitude;
-	float	mMaxMagnitude;
+	float		mMinMagnitude;
+	float		mMaxMagnitude;
 
-	u32		mEmission;
-	u32		mParticleState;
+	u32			mEmission;
+	ZLIndex		mParticleState;
 
 	MOAILuaSharedPtr < MOAIParticleSystem > mSystem;
 	MOAILuaSharedPtr < MOAIPartitionHull > mMaskProp;

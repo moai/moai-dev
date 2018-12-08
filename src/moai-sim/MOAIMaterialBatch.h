@@ -25,7 +25,7 @@ class MOAIMaterialBatch :
 	public virtual MOAILuaObject {
 private:
 		
-	u32								mIndexBatchSize;
+	ZLSize							mIndexBatchSize;
 	ZLLeanArray < MOAIMaterial >	mMaterials;
 	
 	//----------------------------------------------------------------//
@@ -48,27 +48,26 @@ private:
 	static int			_setTexture					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	static u32			GetMaterialID				( MOAILuaState& state, int& idx );
-	static u32			GetMaterialID				( MOAILuaState& state, int& idx, bool& set );
-	static u32			GetNamedGlobalID			( MOAILuaState& state, int& idx, u32& globalID );
+	static ZLIndex		GetMaterialID				( MOAILuaState& state, int& idx );
+	static ZLIndex		GetMaterialID				( MOAILuaState& state, int& idx, bool& set );
+	static ZLIndex		GetNamedGlobalID			( MOAILuaState& state, int& idx, u32& globalID );
 
 	//----------------------------------------------------------------//
-	inline u32 GetRawIndex ( u32 idx ) {
+	inline ZLIndex GetRawIndex ( ZLIndex idx ) {
 	
-		size_t totalMaterials = this->mMaterials.Size ();
-		return ( totalMaterials && ( this->mIndexBatchSize > 0 )) ? ((( u32 )( idx / this->mIndexBatchSize )) % totalMaterials ) : 0;
+		ZLSize totalMaterials = this->mMaterials.Size ();
+		ZLSize rawIndex = ( totalMaterials && ( this->mIndexBatchSize > 0 )) ? (( idx / this->mIndexBatchSize ) % totalMaterials ) : 0;
+		return ZLIndex ( rawIndex, ZLIndex::LIMIT );
 	}
 
 public:
 
-	static const u32 UNKNOWN = 0xffffffff;
-
-	GET_SET ( u32, IndexBatchSize, mIndexBatchSize )
+	GET_SET ( ZLSize, IndexBatchSize, mIndexBatchSize )
 
 	DECL_LUA_FACTORY ( MOAIMaterialBatch )
 
 	//----------------------------------------------------------------//
-	MOAIMaterial&		AffirmMaterial				( u32 idx );
+	MOAIMaterial&		AffirmMaterial				( ZLIndex idx );
 	void				Clear						();
 	int					GetBlendEquation			( MOAILuaState& state, int idx );
 	int					GetBlendMode				( MOAILuaState& state, int idx );
@@ -76,47 +75,47 @@ public:
 	int					GetDepthMask				( MOAILuaState& state, int idx );
 	int					GetDepthTest				( MOAILuaState& state, int idx );
 	int					GetLight					( MOAILuaState& state, int idx );
-	MOAIMaterial*		GetMaterial					( u32 idx );
+	MOAIMaterial*		GetMaterial					( ZLIndex idx );
 	int					GetShader					( MOAILuaState& state, int idx );
 	int					GetTexture					( MOAILuaState& state, int idx );
 						MOAIMaterialBatch			();
 	virtual				~MOAIMaterialBatch			();
-	MOAIMaterial*		RawGetMaterial				( u32 idx );
+	MOAIMaterial*		RawGetMaterial				( ZLIndex idx );
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
-	void				Reserve						( u32 n );
+	void				Reserve						( ZLSize n );
 	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
 	
-	void				SetBlendMode				( u32 idx );
-	void				SetBlendMode				( u32 idx, const MOAIBlendMode& blendMode );
+	void				SetBlendMode				( ZLIndex idx );
+	void				SetBlendMode				( ZLIndex idx, const MOAIBlendMode& blendMode );
 	void				SetBlendMode				( MOAILuaState& state, int idx );
 	
-	void				SetCullMode					( u32 idx );
-	void				SetCullMode					( u32 idx, int cullMode );
+	void				SetCullMode					( ZLIndex idx );
+	void				SetCullMode					( ZLIndex idx, int cullMode );
 	void				SetCullMode					( MOAILuaState& state, int idx );
 	
-	void				SetDepthMask				( u32 idx );
-	void				SetDepthMask				( u32 idx, bool depthMask );
+	void				SetDepthMask				( ZLIndex idx );
+	void				SetDepthMask				( ZLIndex idx, bool depthMask );
 	void				SetDepthMask				( MOAILuaState& state, int idx );
 	
-	void				SetDepthTest				( u32 idx );
-	void				SetDepthTest				( u32 idx, int depthTest );
+	void				SetDepthTest				( ZLIndex idx );
+	void				SetDepthTest				( ZLIndex idx, int depthTest );
 	void				SetDepthTest				( MOAILuaState& state, int idx );
 	
-	void				SetLight					( u32 idx, u32 name );
-	void				SetLight					( u32 idx, u32 name, MOAILight* light );
+	void				SetLight					( ZLIndex idx, u32 name );
+	void				SetLight					( ZLIndex idx, u32 name, MOAILight* light );
 	MOAILight*			SetLight					( MOAILuaState& state, int idx );
 
-	void				SetShader					( u32 idx );
-	void				SetShader					( u32 idx, u32 shaderID );
-	void				SetShader					( u32 idx, MOAIShader* shader );
+	void				SetShader					( ZLIndex idx );
+	void				SetShader					( ZLIndex idx, u32 shaderID );
+	void				SetShader					( ZLIndex idx, MOAIShader* shader );
 	MOAIShader*			SetShader					( MOAILuaState& state, int idx );
 
-	void				SetTexture					( u32 idx );
-	void				SetTexture					( u32 idx, MOAITextureBase* texture );
-	void				SetTexture					( u32 idx, u32 name );
-	void				SetTexture					( u32 idx, u32 name, MOAITextureBase* texture );
+	void				SetTexture					( ZLIndex idx );
+	void				SetTexture					( ZLIndex idx, MOAITextureBase* texture );
+	void				SetTexture					( ZLIndex idx, u32 name );
+	void				SetTexture					( ZLIndex idx, u32 name, MOAITextureBase* texture );
 	MOAITextureBase*	SetTexture					( MOAILuaState& state, int idx );
 
 	size_t				Size						();

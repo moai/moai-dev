@@ -12,6 +12,12 @@
 #include <moai-sim/MOAIImageTexture.h>
 #include <moai-sim/MOAITextureBase.h>
 
+#ifdef MOAIDYNAMICGLYPHCACHE_DEBUG
+	#define DEBUG_LOG printf
+#else
+	#define DEBUG_LOG(...)
+#endif
+
 //================================================================//
 // local
 //================================================================//
@@ -89,7 +95,7 @@ int MOAIDynamicGlyphCache::_setPadding ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIDynamicGlyphCache::ClearPages () {
 
-	for ( u32 i = 0; i < this->mPages.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < this->mPages.Size (); ++i ) {
 		this->mPages [ i ]->Clear ( *this );
 		delete this->mPages [ i ];
 	}
@@ -119,14 +125,14 @@ MOAIImage* MOAIDynamicGlyphCache::GetImage () {
 	u32 width = 0;
 	u32 height = 0;
 
-	for ( size_t i = 0; i < totalPages; ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < totalPages; ++i ) {
 		MOAIImage& srcImage = *this->mPages [ i ]->mImageTexture;
 		
 		width = srcImage.GetWidth ();
 		height += srcImage.GetHeight ();
 	}
 	
-	MOAIImage& srcImage0 = *this->mPages [ 0 ]->mImageTexture;
+	MOAIImage& srcImage0 = *this->mPages [ ZLIndex::ZERO ]->mImageTexture;
 	MOAIImage* image = new MOAIImage ();
 	
 	image->Init (
@@ -137,7 +143,7 @@ MOAIImage* MOAIDynamicGlyphCache::GetImage () {
 	);
 	
 	u32 y = 0;
-	for ( size_t i = 0; i < totalPages; ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < totalPages; ++i ) {
 		MOAIImage& srcImage = *this->mPages [ i ]->mImageTexture;
 		
 		u32 copyHeight = srcImage.GetHeight ();
@@ -174,20 +180,32 @@ MOAIDynamicGlyphCache::~MOAIDynamicGlyphCache () {
 //----------------------------------------------------------------//
 int MOAIDynamicGlyphCache::PlaceGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 
-	for ( u32 i = 0; i < this->mPages.Size (); ++i ) {
+	DEBUG_LOG ( "PLACE GLYPH %d: (%d x %d) - %s\n",
+		glyph.GetCode (),
+		( u32 )( glyph.mWidth + this->mPadding.Width ()),
+		( u32 )( glyph.mHeight + this->mPadding.Height ()),
+		font.GetFilename ()
+	);
+
+	for ( ZLIndex i = ZLIndex::ZERO; i < this->mPages.Size (); ++i ) {
+		DEBUG_LOG ( "  TRYING PAGE: %d\n", i );
 		MOAIDynamicGlyphCachePage* page = this->mPages [ i ];
 		MOAISpan < MOAIGlyph* >* span = page->Alloc ( *this, font, glyph );
 		if ( span ) {
+			DEBUG_LOG ( "  PLACED IN PAGE: %d\n", i );
 			this->mPages [ i ]->mImageTexture->UpdateRegion ();
 			glyph.SetPageID ( i );
 			return STATUS_OK;
 		}
 	}
 	
-	u32 pageID = ( u32 )this->mPages.Size (); // TODO: cast
-	this->mPages.Resize ( pageID + 1 );
+	ZLIndex pageID = ZLIndex ( this->mPages.Size (), ZLIndex::LIMIT ); // TODO: cast
+	this->mPages.Resize (( ZLSize )pageID + 1 );
+	
+	DEBUG_LOG ( "  NEW PAGE: %d\n", pageID );
 	
 	MOAIDynamicGlyphCachePage* page = new MOAIDynamicGlyphCachePage ();
+	page->SetPageID ( pageID );
 	this->mPages [ pageID ] = page;
 
 	page->Alloc ( *this, font, glyph );

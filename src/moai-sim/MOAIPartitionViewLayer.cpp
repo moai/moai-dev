@@ -23,15 +23,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIPartitionViewLayer::_draw ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartitionViewLayer, "U" )
-
-	self->Render ();
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@lua	getPropViewList
 	@text	Return a list of props gathered and sorted by layer.
 	
@@ -207,7 +198,7 @@ int	MOAIPartitionViewLayer::_setSortScale ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
 	u32 interfaceMask = partition.GetInterfaceMask < MOAIDrawable >();
 	if ( !interfaceMask ) return;
@@ -215,7 +206,7 @@ void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition ) {
 	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
 	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
 	
-	const ZLFrustum& viewVolume = gfxMgr.mGfxState.GetViewVolume ();
+	const ZLFrustum& viewVolume = gfxState.GetViewVolume ();
 	
 	u32 totalResults = 0;
 		
@@ -229,7 +220,7 @@ void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition ) {
 	if ( !totalResults ) return;
 	
 	if ( this->mSortInViewSpace ) {
-		buffer.Transform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::WORLD_TO_VIEW_MTX ), false );
+		buffer.Transform ( gfxState.GetMtx ( MOAIGfxState::WORLD_TO_VIEW_MTX ), false );
 	}
 	
 	buffer.GenerateKeys (
@@ -331,7 +322,6 @@ void MOAIPartitionViewLayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIViewLayer::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
-		{ "draw",					_draw },
 		{ "getLayerPartition",		MOAIPartitionHolder::_getPartition },
 		{ "getPartition",			MOAIViewLayer::_getPartition },
 		{ "getPropViewList",		_getPropViewList },

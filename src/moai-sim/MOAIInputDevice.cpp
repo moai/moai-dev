@@ -40,7 +40,7 @@ int MOAIInputDevice::_getHardwareInfo ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIInputDevice::ClearSensorState () {
 
-	for ( u32 i = 0; i < this->mSensors.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < this->mSensors.Size (); ++i ) {
 		MOAISensor* sensor = this->mSensors [ i ];
 		if ( sensor ) {
 			sensor->ClearState ();
@@ -49,7 +49,7 @@ void MOAIInputDevice::ClearSensorState () {
 }
 
 //----------------------------------------------------------------//
-MOAISensor* MOAIInputDevice::GetSensor ( u8 sensorID ) {
+MOAISensor* MOAIInputDevice::GetSensor ( ZLIndex sensorID ) {
 	
 	if ( sensorID < this->mSensors.Size ()) {
 		return this->mSensors [ sensorID ];
@@ -67,7 +67,7 @@ MOAIInputDevice::MOAIInputDevice () :
 //----------------------------------------------------------------//
 MOAIInputDevice::~MOAIInputDevice () {
 
-	for ( u32 i = 0; i < this->mSensors.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < this->mSensors.Size (); ++i ) {
 		this->LuaRelease ( this->mSensors [ i ]);
 	}
 }
@@ -90,7 +90,7 @@ void MOAIInputDevice::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputDevice::ReserveSensors ( u8 total ) {
+void MOAIInputDevice::ReserveSensors ( ZLSize total ) {
 
 	this->mSensors.Init ( total );
 	this->mSensors.Fill ( 0 );
@@ -99,7 +99,7 @@ void MOAIInputDevice::ReserveSensors ( u8 total ) {
 //----------------------------------------------------------------//
 void MOAIInputDevice::ResetSensorState () {
 
-	for ( u32 i = 0; i < this->mSensors.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < this->mSensors.Size (); ++i ) {
 		MOAISensor* sensor = this->mSensors [ i ];
 		if ( sensor ) {
 			sensor->ResetState ();
@@ -114,7 +114,7 @@ void MOAIInputDevice::SetHardwareInfo ( cc8* hardwareInfo ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputDevice::SetSensor ( u8 sensorID, cc8* name, MOAISensor* sensor ) {
+void MOAIInputDevice::SetSensor ( ZLIndex sensorID, cc8* name, MOAISensor* sensor ) {
 
 	assert ( sensor );
 	

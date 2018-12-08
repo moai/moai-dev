@@ -24,7 +24,7 @@ int MOAICollisionDeck::_reserveShapes ( lua_State* L ) {
 int MOAICollisionDeck::_setBox ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICollisionDeck, "U" )
 	
-	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
+	ZLIndex idx = state.GetValueAsIndex ( 2 );
 	ZLBox box = state.GetBox ( 3 );
 	
 	self->SetBox ( idx, box );
@@ -37,7 +37,7 @@ int MOAICollisionDeck::_setBox ( lua_State* L ) {
 int MOAICollisionDeck::_setRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICollisionDeck, "U" )
 	
-	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
+	ZLIndex idx = state.GetValueAsIndex ( 2 );
 	ZLRect rect = state.GetRect < float >( 3 );
 	
 	self->SetRect ( idx, rect );
@@ -50,7 +50,7 @@ int MOAICollisionDeck::_setRect ( lua_State* L ) {
 int MOAICollisionDeck::_setQuad ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICollisionDeck, "U" )
 	
-	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
+	ZLIndex idx = state.GetValueAsIndex ( 2 );
 	
 	ZLQuad quad;
 	
@@ -77,11 +77,11 @@ MOAICollisionShape& MOAICollisionDeck::AffirmShape ( ZLIndex idx ) {
 
 	assert ( this->mShapes.CheckIndex ( idx ));
 
-	MOAICollisionShape* shape = this->mShapes [ idx.mKey ];
+	MOAICollisionShape* shape = this->mShapes [ idx ];
 
 	if ( !shape ) {
 		shape = new MOAICollisionShape ();
-		this->mShapes [ idx.mKey ] = shape;
+		this->mShapes [ idx ] = shape;
 	}
 	
 	assert ( shape );
@@ -133,7 +133,7 @@ void MOAICollisionDeck::ReserveShapes ( u32 totalShapes ) {
 void MOAICollisionDeck::SetBox ( ZLIndex idx, const ZLBox& box ) {
 
 	if ( this->mShapes.CheckIndex ( idx )) {
-		this->AffirmShape ( idx ).Set ( 0, box );
+		this->AffirmShape ( idx ).Set ( ZLIndex::ZERO, box );
 	}
 }
 
@@ -141,7 +141,7 @@ void MOAICollisionDeck::SetBox ( ZLIndex idx, const ZLBox& box ) {
 void MOAICollisionDeck::SetRect ( ZLIndex idx, const ZLRect& rect ) {
 
 	if ( this->mShapes.CheckIndex ( idx )) {
-		this->AffirmShape ( idx ).Set ( 0, rect );
+		this->AffirmShape ( idx ).Set ( ZLIndex::ZERO, rect );
 	}
 }
 
@@ -149,7 +149,7 @@ void MOAICollisionDeck::SetRect ( ZLIndex idx, const ZLRect& rect ) {
 void MOAICollisionDeck::SetQuad ( ZLIndex idx, const ZLQuad& quad ) {
 
 	if ( this->mShapes.CheckIndex ( idx )) {
-		this->AffirmShape ( idx ).Set ( 0, quad );
+		this->AffirmShape ( idx ).Set ( ZLIndex::ZERO, quad );
 	}
 }
 
@@ -160,7 +160,7 @@ void MOAICollisionDeck::SetQuad ( ZLIndex idx, const ZLQuad& quad ) {
 //----------------------------------------------------------------//
 ZLBounds MOAICollisionDeck::MOAIDeck_ComputeMaxBounds () {
 
-	return this->MOAIDeck::GetBounds ( 0 );
+	return this->MOAIDeck::GetBounds ( ZLIndex::ZERO );
 }
 
 //----------------------------------------------------------------//
@@ -178,8 +178,8 @@ void MOAICollisionDeck::MOAIDeck_Draw ( ZLIndex idx ) {
 //		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 //		MOAIQuadBrush::BindVertexFormat ();
 //		
-//		gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX ));
-//		gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_TO_MODEL_MTX ));
+//		gfxState.SetVertexTransform ( MOAIGfxState::MODEL_TO_CLIP_MTX );
+//		gfxState.SetUVTransform ( MOAIGfxState::UV_TO_MODEL_MTX );
 //		
 //		this->mQuads [ itemIdx ].Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY  );
 //	}
@@ -190,14 +190,14 @@ ZLBounds MOAICollisionDeck::MOAIDeck_GetBounds ( ZLIndex idx ) {
 	
 	assert ( this->mShapes.CheckIndex ( idx ));
 
-	return this->mShapes [ idx.mKey ]->GetBounds ();
+	return this->mShapes [ idx ]->GetBounds ();
 }
 
 //----------------------------------------------------------------//
 MOAICollisionShape* MOAICollisionDeck::MOAIDeck_GetCollisionShape ( ZLIndex idx ) {
 
 	if ( this->mShapes.CheckIndex ( idx )) {
-		return this->mShapes [ idx.mKey ];
+		return this->mShapes [ idx ];
 	}
 	return 0;
 }

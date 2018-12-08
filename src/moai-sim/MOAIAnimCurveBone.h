@@ -38,7 +38,7 @@ private:
 	void				MOAIAnimCurve_GetValue				( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const;
 	void				MOAIAnimCurve_GetZero				( MOAIAttribute& attr ) const;
 	void				MOAIAnimCurve_ReserveSamples		( u32 total );
-	void				MOAINode_Update							();
+	void				MOAINode_Update						();
 
 public:
 	

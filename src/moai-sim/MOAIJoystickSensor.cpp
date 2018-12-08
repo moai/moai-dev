@@ -56,7 +56,7 @@ int MOAIJoystickSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIJoystickSensor::EnqueueJoystickEvent( u8 deviceID, u8 sensorID, float x, float y ) {
+void MOAIJoystickSensor::EnqueueJoystickEvent( ZLIndex deviceID, ZLIndex sensorID, float x, float y ) {
 
 	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
 	if ( inputMgr.WriteEventHeader < MOAIJoystickSensor >( deviceID, sensorID )) {

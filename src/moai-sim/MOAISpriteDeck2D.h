@@ -16,9 +16,9 @@ private:
 
 	friend class MOAISpriteDeck2D;
 
-	u32		mUVQuadID;
-	u32		mQuadID;
-	u32		mMaterialID;
+	ZLIndex		mUVQuadID;
+	ZLIndex		mQuadID;
+	ZLIndex		mMaterialID;
 };
 
 //================================================================//
@@ -29,8 +29,8 @@ private:
 
 	friend class MOAISpriteDeck2D;
 
-	u32		mBaseSprite;
-	u32		mTotalSprites;
+	ZLIndex		mBaseSprite;
+	ZLSize		mTotalSprites;
 };
 
 //================================================================//
@@ -84,25 +84,25 @@ public:
 	
 	//----------------------------------------------------------------//
 	static MOAIDeck*	AffirmDeck					( MOAILuaState& state, int idx );
-	bool				Contains					( u32 idx, const ZLVec2D& vec );
-	void				DrawIndex					( u32 idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale );
-	bool				Inside						( u32 idx, MOAIMaterialBatch* materials, u32 granularity, ZLVec3D vec, float pad );
+	bool				Contains					( ZLIndex idx, const ZLVec2D& vec );
+	void				DrawIndex					( ZLIndex idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale );
+	bool				Inside						( ZLIndex idx, MOAIMaterialBatch* materials, u32 granularity, ZLVec3D vec, float pad );
 						MOAISpriteDeck2D			();
 						~MOAISpriteDeck2D			();
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
-	void				ReserveLists				( u32 total );
-	void				ReservePairs				( u32 total );
-	void				ReserveQuads				( u32 total );
-	void				ReserveUVQuads				( u32 total );
+	void				ReserveLists				( ZLSize total );
+	void				ReservePairs				( ZLSize total );
+	void				ReserveQuads				( ZLSize total );
+	void				ReserveUVQuads				( ZLSize total );
 	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
-	void				SetList						( u32 idx, u32 basePairID, u32 totalPairs );
-	void				SetPair						( u32 idx, u32 uvRectID, u32 screenRectID, u32 materialID );
-	void				SetQuad						( u32 idx, ZLQuad& quad );
-	void				SetRect						( u32 idx, ZLRect& rect );
-	void				SetUVQuad					( u32 idx, ZLQuad& quad );
-	void				SetUVRect					( u32 idx, ZLRect& rect );
+	void				SetList						( ZLIndex idx, ZLIndex basePairID, ZLSize totalPairs );
+	void				SetPair						( ZLIndex idx, ZLIndex uvRectID, ZLIndex screenRectID, ZLIndex materialID );
+	void				SetQuad						( ZLIndex idx, ZLQuad& quad );
+	void				SetRect						( ZLIndex idx, ZLRect& rect );
+	void				SetUVQuad					( ZLIndex idx, ZLQuad& quad );
+	void				SetUVRect					( ZLIndex idx, ZLRect& rect );
 	void				Transform					( const ZLAffine3D& mtx );
 	void				TransformUV					( const ZLAffine3D& mtx );
 };

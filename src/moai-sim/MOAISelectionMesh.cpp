@@ -22,28 +22,28 @@
 int MOAISelectionMesh::_addSelection ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISelectionMesh, "UNN*" )
 	
-	u32 set		= 0;
-	u32 base	= 0;
-	u32 top		= 0;
+	ZLIndex set		= ZLIndex::ZERO;
+	ZLIndex base	= ZLIndex::ZERO;
+	ZLIndex top		= ZLIndex::ZERO;
 	
 	if ( state.IsType ( 4, LUA_TNUMBER )) {
 
-		set			= state.GetValue < u32 >( 2, 1 ) - 1;
-		base		= state.GetValue < u32 >( 3, 1 ) - 1;
-		top			= state.GetValue < u32 >( 4, 1 ) - 1;
+		set			= state.GetValueAsIndex ( 2 );
+		base		= state.GetValueAsIndex ( 3 );
+		top			= state.GetValueAsIndex ( 4 );
 	}
 	else {
 	
-		ZLResult < u32 > result = self->AffirmSpanSet ();
+		ZLResult < ZLIndex > result = self->AffirmSpanSet ();
 		if ( result.mCode != ZL_OK ) return 0;
 		
 		set			= result;
-		base		= state.GetValue < u32 >( 2, 1 ) - 1;
-		top			= state.GetValue < u32 >( 3, 1 ) - 1;
+		base		= state.GetValueAsIndex ( 2 );
+		top			= state.GetValueAsIndex ( 3 );
 	}
 	
 	self->AddSelection ( set, base, top );
-	state.Push ( set + 1 );
+	state.Push ( set + ( ZLSize )1 );
 	return 1;
 }
 
@@ -52,12 +52,12 @@ int MOAISelectionMesh::_addSelection ( lua_State* L ) {
 int MOAISelectionMesh::_clearSelection ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISelectionMesh, "UN" )
 
-	u32 set			= state.GetValue < u32 >( 2, 1 ) - 1;
+	ZLIndex set		= state.GetValueAsIndex ( 2 );
 	
 	if ( state.CheckParams ( 3, "NN", false )) {
 	
-		u32 base		= state.GetValue < u32 >( 3, 1 ) - 1;
-		u32 top			= state.GetValue < u32 >( 4, 1 ) - 1;
+		ZLIndex base	= state.GetValueAsIndex ( 3 );
+		ZLIndex top		= state.GetValueAsIndex ( 4 );
 	
 		self->ClearSelection ( set, base, top );
 	}
@@ -72,8 +72,8 @@ int MOAISelectionMesh::_clearSelection ( lua_State* L ) {
 int MOAISelectionMesh::_mergeSelection ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISelectionMesh, "UNN" )
 
-	u32 set			= state.GetValue < u32 >( 2, 1 ) - 1;
-	u32 merge		= state.GetValue < u32 >( 3, 1 ) - 1;
+	ZLIndex set		= state.GetValueAsIndex ( 2 );
+	ZLIndex merge	= state.GetValueAsIndex ( 3 );
 
 	self->MergeSelection ( set, merge );
 
@@ -86,7 +86,7 @@ int MOAISelectionMesh::_printSelection ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISelectionMesh, "U" )
 
 	if ( state.IsType ( 2, LUA_TNUMBER )) {
-		self->PrintSelection ( state.GetValue < u32 >( 2, 1 ) - 1 );
+		self->PrintSelection ( state.GetValueAsIndex ( 2 ));
 	}
 	else {
 		self->PrintSelections ();
@@ -99,7 +99,7 @@ int MOAISelectionMesh::_printSelection ( lua_State* L ) {
 int MOAISelectionMesh::_reserveSelections ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISelectionMesh, "U" )
 
-	u32 total = state.GetValue < u32 >( 2, 0 );
+	ZLSize total = state.GetValue < MOAILuaState::SizeType >( 2, 0 );
 	self->ReserveSelections ( total );
 
 	return 0;
@@ -123,7 +123,7 @@ int MOAISelectionMesh::_setMesh ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t top ) {
+void MOAISelectionMesh::AddSelection ( ZLIndex set, ZLIndex base, ZLIndex top ) {
 
 	// the approach here is to insert the new span after the last span that has a
 	// base entirely below the new span, then clean up any overlaps.
@@ -140,7 +140,7 @@ void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t top ) {
 	// of the new span will be clipped.
 
 	// make sure the array of sets is big enough
-	this->mSets.Grow ( set, 1, 0 );
+	this->mSets.Grow (( ZLSize )set + 1, 0 );
 	
 	// identify the previous span in both the master and set lists.
 	// a span is only 'previous' if its base is entirely below the new span's base.
@@ -219,24 +219,24 @@ void MOAISelectionMesh::AddSelection ( u32 set, size_t base, size_t top ) {
 }
 
 //----------------------------------------------------------------//
-ZLResult < u32 > MOAISelectionMesh::AffirmSpanSet () {
+ZLResult < ZLIndex > MOAISelectionMesh::AffirmSpanSet () {
 
-	size_t top = this->mSets.Size ();
+	ZLIndex top = ZLIndex ( this->mSets.Size (), ZLIndex::LIMIT );
 
-	for ( size_t i = 0; i < top; ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < top; ++i ) {
 		if ( !this->mSets [ i ]) {
-			ZL_RETURN_RESULT ( u32, ( u32 )i, ZL_OK );
+			ZL_RETURN_RESULT ( ZLIndex, i, ZL_OK );
 		}
 	}
 	
 	if ( this->mSets.Grow ( top ) == ZL_OK ) {
-		ZL_RETURN_RESULT ( u32, ( u32 )top, ZL_OK );
+		ZL_RETURN_RESULT ( ZLIndex, top, ZL_OK );
 	}
-	ZL_RETURN_RESULT ( u32, ( u32 )-1, ZL_ERROR );
+	ZL_RETURN_RESULT ( ZLIndex, ZLIndex::INVALID, ZL_ERROR );
 }
 
 //----------------------------------------------------------------//
-MOAISelectionSpan* MOAISelectionMesh::AllocSpan ( u32 set, size_t base, size_t top ) {
+MOAISelectionSpan* MOAISelectionMesh::AllocSpan ( ZLIndex set, ZLIndex base, ZLIndex top ) {
 
 	MOAISelectionSpan* span = this->mSpanPool.Alloc ();
 	assert ( span );
@@ -256,7 +256,7 @@ MOAISelectionSpan* MOAISelectionMesh::AllocSpan ( u32 set, size_t base, size_t t
 }
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::ChangeSpanSet ( MOAISelectionSpan* span, u32 set ) {
+void MOAISelectionMesh::ChangeSpanSet ( MOAISelectionSpan* span, ZLIndex set ) {
 
 	if ( span && ( span->mSetID != set )) {
 
@@ -285,7 +285,7 @@ void MOAISelectionMesh::Clear () {
 }
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::ClearSelection ( u32 set ) {
+void MOAISelectionMesh::ClearSelection ( ZLIndex set ) {
 
 	MOAIMeshSpan* cursor = this->mSets [ set ];
 	while ( cursor ) {
@@ -298,7 +298,7 @@ void MOAISelectionMesh::ClearSelection ( u32 set ) {
 }
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::ClearSelection ( u32 set, size_t base, size_t top ) {
+void MOAISelectionMesh::ClearSelection ( ZLIndex set, ZLIndex base, ZLIndex top ) {
 
 	MOAISelectionSpan* cursor = this->mSpanListHead;
 	for ( ; cursor; cursor = cursor->mNextInMaster ) {
@@ -438,7 +438,7 @@ MOAISelectionSpan* MOAISelectionMesh::InsertSpan ( MOAISelectionSpan* span, MOAI
 }
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::MergeSelection ( u32 set, u32 merge ) {
+void MOAISelectionMesh::MergeSelection ( ZLIndex set, ZLIndex merge ) {
 
 	MOAISelectionSpan* cursor = this->mSpanListHead;
 	
@@ -448,8 +448,8 @@ void MOAISelectionMesh::MergeSelection ( u32 set, u32 merge ) {
 	
 		if ( cursor->mSetID == merge ) {
 		
-			size_t base = cursor->mBase;
-			size_t top = cursor->mTop;
+			ZLIndex base = cursor->mBase;
+			ZLIndex top = cursor->mTop;
 		
 			this->FreeSpan ( cursor );
 			cursor = this->InsertSpan ( this->AllocSpan ( set, base, top ), 0, 0 );
@@ -468,8 +468,8 @@ void MOAISelectionMesh::MergeSelection ( u32 set, u32 merge ) {
 			
 			if ( span->mSetID == merge ) {
 				
-				size_t base = span->mBase;
-				size_t top = span->mTop;
+				ZLIndex base = span->mBase;
+				ZLIndex top = span->mTop;
 			
 				this->FreeSpan ( span );
 				span = this->InsertSpan ( this->AllocSpan ( set, base, top ), prevInMaster, prevInSet );
@@ -508,16 +508,16 @@ MOAISelectionMesh::~MOAISelectionMesh () {
 }
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::PrintSelection ( u32 set ) {
+void MOAISelectionMesh::PrintSelection ( ZLIndex set ) {
 
 	if ( set < this->mSets.Size ()) {
 	
-		printf ( "set %d - ", set );
+		printf ( "set %d - ", ( int )(( ZLSize )set ));
 	
 		MOAISelectionSpan* span = ( MOAISelectionSpan* )this->mSets [ set ];
 		for ( ; span; span = ( MOAISelectionSpan* )span->mNext ) {
 		
-			printf ( "%d:[%d-%d]", span->mSetID + 1, span->mBase, span->mTop );
+			printf ( "%d:[%d-%d]", ( int )(( ZLSize )span->mSetID ) + 1, ( int )(( ZLSize )span->mBase ), ( int )(( ZLSize )span->mTop ));
 			
 			if ( span->mNext ) {
 				printf ( ", " );
@@ -533,7 +533,7 @@ void MOAISelectionMesh::PrintSelections () {
 	MOAISelectionSpan* span = this->mSpanListHead;
 	for ( ; span; span = span->mNextInMaster ) {
 	
-		printf ( "%d:[%d-%d]", span->mSetID + 1, span->mBase, span->mTop );
+		printf ( "%d:[%d-%d]", ( int )(( ZLSize )span->mSetID ) + 1, ( int )(( ZLSize )span->mBase ), ( int )(( ZLSize )span->mTop ));
 		
 		if ( span->mNextInMaster ) {
 			printf ( ", " );
@@ -568,7 +568,7 @@ void MOAISelectionMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::ReserveSelections ( u32 total ) {
+void MOAISelectionMesh::ReserveSelections ( ZLSize total ) {
 
 	this->Clear ();
 	
@@ -599,7 +599,7 @@ void MOAISelectionMesh::MOAIDeck_Draw ( ZLIndex idx ) {
 	size_t size = this->mSets.Size ();
 	if ( !size ) return;
 
-	u32 itemIdx = idx.mKey % size;
+	ZLIndex itemIdx = ZLIndex::Wrap ( idx, size );
 	
 	MOAIMeshSpan* span = this->mSets [ itemIdx ];
 	if ( !span ) return;

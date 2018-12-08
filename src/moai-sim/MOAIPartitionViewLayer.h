@@ -43,7 +43,6 @@ private:
 	bool		mPartitionCull2D;
 
 	//----------------------------------------------------------------//
-	static int		_draw					( lua_State* L );
 	static int		_getPropViewList		( lua_State* L );
 	static int		_getSortMode			( lua_State* L );
 	static int		_getSortScale			( lua_State* L );

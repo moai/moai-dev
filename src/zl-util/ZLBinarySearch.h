@@ -10,20 +10,18 @@
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-u32 ZLBinarySearch ( const TYPE* buffer, const TYPE& key, u32 total ) {
+ZLSize ZLBinarySearch ( const TYPE* buffer, const TYPE& key, ZLSize total ) {
 
-	static const u32 NO_MATCH = 0xffffffff;
-
-	u32 i = 0;
-	u32 j = total - 1;
-	u32 s = j;
+	ZLSize i = 0;
+	ZLSize j = total - 1;
+	ZLSize s = j;
 	
-	if ( key < buffer [ i ]) return NO_MATCH;
-	if ( buffer [ j ] < key ) return NO_MATCH;
+	if ( key < buffer [ i ]) return ZLIndex::INVALID_KEY;
+	if ( buffer [ j ] < key ) return ZLIndex::INVALID_KEY;
 	
 	while ( s ) {
 		
-		u32 c = i + ( s >> 1 );
+		ZLSize c = i + ( s >> 1 );
 		if ( i == c ) c = j;
 		const TYPE& test = buffer [ c ];
 		
@@ -39,27 +37,23 @@ u32 ZLBinarySearch ( const TYPE* buffer, const TYPE& key, u32 total ) {
 		s = j - i;
 	}
 	
-	if ( !(( key < buffer [ i ]) || ( buffer [ i ] < key )))  return i;
-	
-	return NO_MATCH;
+	return ( !(( key < buffer [ i ]) || ( buffer [ i ] < key ))) ? i : ZLIndex::INVALID_KEY;
 }
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-u32 USBinarySearchNearest ( const TYPE* buffer, const TYPE& key, u32 total ) {
+ZLSize ZLBinarySearchNearest ( const TYPE* buffer, const TYPE& key, ZLSize total ) {
 	
-	static const u32 NO_MATCH = 0xffffffff;
+	ZLSize i = 0;
+	ZLSize j = total - 1;
+	ZLSize s = j;
 	
-	u32 i = 0;
-	u32 j = total - 1;
-	u32 s = j;
-	
-	if ( key < buffer [ i ]) return NO_MATCH;
-	if ( buffer [ j ] < key ) return NO_MATCH;
+	if ( key < buffer [ i ]) return ZLIndex::INVALID_KEY;
+	if ( buffer [ j ] < key ) return ZLIndex::INVALID_KEY;
 	
 	while ( s > 1 ) {
 		
-		u32 c = i + ( s >> 1 );
+		ZLSize c = i + ( s >> 1 );
 		const TYPE& test = buffer [ c ];
 		
 		if ( test < key ) {
@@ -74,12 +68,7 @@ u32 USBinarySearchNearest ( const TYPE* buffer, const TYPE& key, u32 total ) {
 		s = j - i;
 	}
 	
-	if ( key < buffer [ j ] ) {
-		return i;
-	}
-	else {
-		return j;
-	}
+	return ( key < buffer [ j ]) ? i : j;
 }
 
 #endif

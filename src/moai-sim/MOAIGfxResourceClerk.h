@@ -18,7 +18,7 @@ private:
 	ZLLeanList < MOAIGfxResource* >		mPendingForLoadList;
 	ZLLeanList < MOAIGfxResource* >		mPendingForDrawList;
 	
-	ZLLeanStack < ZLGfxHandle*, 32 >	mDeleterStack;
+	ZLLeanStack < ZLGfxHandle, 32 >	mDeleterStack;
 
 	//----------------------------------------------------------------//
 	void			InsertGfxResource			( MOAIGfxResource& resource );
@@ -35,7 +35,7 @@ public:
 	friend class MOAIRenderMgr;
 	
 	//----------------------------------------------------------------//
-	static void		DeleteOrDiscardHandle		( ZLGfxHandle*& handle, bool shouldDelete );
+	static void		DeleteOrDiscard				( const ZLGfxHandle& handle, bool shouldDelete );
 	void			DiscardResources			();
 					MOAIGfxResourceClerk		();
 					~MOAIGfxResourceClerk		();

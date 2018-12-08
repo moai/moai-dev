@@ -37,7 +37,7 @@ private:
 	MOAIParticle*						mFree;
 	
 	ZLLeanArray < AKUParticleSprite >	mSprites;
-	u32									mSpriteTop;
+	ZLSize								mSpriteTop;
 	u32									mDrawOrder;
 	
 	bool								mComputeBounds;
@@ -67,7 +67,7 @@ private:
 	void					ClearQueue				();
 	void					EnqueueParticle			( MOAIParticle& particle );
 	AKUParticleSprite*		GetTopSprite			();
-	MOAIParticleState*		GetState				( u32 id );
+	MOAIParticleState*		GetState				( ZLIndex id );
 	
 	//----------------------------------------------------------------//
 	bool					MOAIAction_IsDone						();
@@ -93,18 +93,18 @@ public:
 					~MOAIParticleSystem		();
 	bool			PushParticle			( float x, float y );
 	bool			PushParticle			( float x, float y, float dx, float dy );
-	bool			PushParticle			( float x, float y, float dx, float dy, u32 stateIdx );
+	bool			PushParticle			( float x, float y, float dx, float dy, ZLIndex stateIdx );
 	bool			PushSprite				( const AKUParticleSprite& sprite );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			ReserveParticles		( u32 maxParticles, u32 particleSize );
-	void			ReserveRects			( u32 total );
-	void			ReserveSprites			( u32 maxSprites );
-	void			ReserveStates			( u32 total );
+	void			ReserveParticles		( ZLSize maxParticles, ZLSize particleSize );
+	void			ReserveRects			( ZLSize total );
+	void			ReserveSprites			( ZLSize maxSprites );
+	void			ReserveStates			( ZLSize total );
 	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
-	void			SetConstant				( u32 idx, float value );
-	void			SetRect					( u32 idx, ZLRect& rect );
+	void			SetConstant				( ZLIndex idx, float value );
+	void			SetRect					( ZLIndex idx, ZLRect& rect );
 };
 
 #endif

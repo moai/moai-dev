@@ -61,7 +61,7 @@ int MOAIEaseDriver::_setLink ( lua_State* L ) {
 	MOAINode* dest = state.GetLuaObject < MOAINode >( 3, true );
 	if ( !dest ) return 0;
 	
-	u32 idx				= state.GetValue < u32 >( 2, 1 ) - 1;
+	ZLIndex idx			= state.GetValueAsIndex ( 2 );
 	u32 destAttrID		= state.GetValue < u32 >( 4, 0 );
 	
 	MOAINode* source = state.GetLuaObject < MOAINode >( 5, true );
@@ -96,8 +96,8 @@ MOAIEaseDriver::MOAIEaseDriver () {
 //----------------------------------------------------------------//
 MOAIEaseDriver::~MOAIEaseDriver () {
 
-	size_t total = this->mLinks.Size ();
-	for ( size_t i = 0; i < total; ++i ) {	
+	ZLSize total = this->mLinks.Size ();
+	for ( ZLIndex i = ZLIndex::ZERO; i < total; ++i ) {
 		MOAIEaseDriverLink& link = this->mLinks [ i ];
 		link.mSource.Set ( *this, 0 );
 		link.mDest.Set ( *this, 0 );
@@ -120,7 +120,7 @@ u32 MOAIEaseDriver::ParseForMove ( MOAILuaState& state, int idx, MOAINode* dest,
 		float defaultValue = ( float )va_arg ( args, double );
 	
 		params [ i ] = state.GetValue < float >( idx + i, defaultValue );
-		if ( params [ i ] != 0.0f ) {
+		if ( params [ i ] != 0.0 ) {
 			count++;
 		}
 	}
@@ -130,13 +130,13 @@ u32 MOAIEaseDriver::ParseForMove ( MOAILuaState& state, int idx, MOAINode* dest,
 		
 		this->ReserveLinks ( count );
 		
-		u32 linkID = 0;
-		for ( u32 i = 0; i < total; ++i ) {
+		ZLIndex linkID = ZLIndex::ZERO;
+		for ( ZLSize i = 0; i < total; ++i ) {
 		
 			u32 destAttrID = destAttrIDs [ i ];
 			float v1 = params [ i ];
 			
-			if ( v1 != 0.0f ) {
+			if ( v1 != 0.0 ) {
 				this->SetLink ( linkID++, dest, destAttrID, v1, ( u32 )mode );
 			}
 		}
@@ -171,13 +171,13 @@ u32 MOAIEaseDriver::ParseForSeek ( MOAILuaState& state, int idx, MOAINode* dest,
 		
 		this->ReserveLinks ( count );
 		
-		u32 linkID = 0;
+		ZLIndex linkID = ZLIndex::ZERO;
 		for ( u32 i = 0; i < total; ++i ) {
 		
 			u32 destAttrID = destAttrIDs [ i ];
 			float v1 = params [ i ];
 			
-			if ( v1 != 0.0f ) {
+			if ( v1 != 0.0 ) {
 				this->SetLink ( linkID++, dest, destAttrID, v1, ( u32 )mode );
 			}
 		}
@@ -267,8 +267,8 @@ void MOAIEaseDriver::MOAIAction_Update ( double step ) {
 
 	MOAIAttribute adder;
 
-	size_t total = this->mLinks.Size ();
-	for ( size_t i = 0; i < total; ++i ) {
+	ZLSize total = this->mLinks.Size ();
+	for ( ZLIndex i = ZLIndex::ZERO; i < total; ++i ) {
 		
 		MOAIEaseDriverLink& link = this->mLinks [ i ];
 		if ( link.mDest ) {

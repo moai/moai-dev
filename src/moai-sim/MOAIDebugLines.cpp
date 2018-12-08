@@ -27,7 +27,7 @@ MOAIDebugLineStyle::~MOAIDebugLineStyle () {
 //----------------------------------------------------------------//
 MOAIDebugLineStyle* MOAIDebugLineStyleSet::GetStyle ( u32 styleID ) {
 
-	return styleID < this->mLineStyles.Size () ? &this->mLineStyles [ styleID ] : 0;
+	return styleID < this->mLineStyles.Size () ? &this->mLineStyles [ ZLIndex ( styleID, ZLIndex::LIMIT )] : 0;
 }
 
 //----------------------------------------------------------------//
@@ -110,7 +110,7 @@ bool MOAIDebugLinesMgr::Bind ( u32 styleID ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIDebugLinesMgr::Bind ( u32 styleID, MOAIDrawShape& draw ) {
+bool MOAIDebugLinesMgr::Bind ( u32 styleID, MOAIAbstractDrawShape& draw ) {
 
 	if ( !this->mShowDebugLines ) return false;
 

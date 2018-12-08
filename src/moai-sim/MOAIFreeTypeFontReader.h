@@ -38,6 +38,7 @@ private:
 	static int		_enableAntiAliasing			( lua_State* L );
 	static int		_extractSystemFont			( lua_State* L );
 	static int		_setPenColor				( lua_State* L );
+	static int		_strokeGlyph				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	static void		ExtractSystemFont			( cc8* fontName, ZLStream& stream );
@@ -57,11 +58,12 @@ public:
 	int				OpenFontFile				( cc8* filename );
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
-	int				RenderGlyph					( MOAIImage& image, float x, float y, const ZLColorBlendFunc& blendFunc );
+	int				RenderGlyph					( MOAIImage& image, float x, float y );
 	int				SelectFace					( float size );
 	int				SelectGlyph					( u32 c );
 	void			SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void			SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
+	int				StrokeGlyph					( MOAIImage& image, float x, float y, float strokeSize, u32 capStyle, u32 joinStyle, float miterLimit );
 };
 
 #endif

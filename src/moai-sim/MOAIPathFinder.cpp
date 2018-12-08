@@ -59,11 +59,11 @@ int MOAIPathFinder::_getGraph ( lua_State* L ) {
 int MOAIPathFinder::_getPathEntry ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPathFinder, "UN" )
 	
-	u32 index = state.GetValue < u32 >( 2, 1 ) - 1;
+	ZLIndex index = state.GetValueAsIndex ( 2, ZLIndex::ZERO );
 	
 	if ( index < self->mPath.Size ()) {
 	
-		state.Push ( self->mPath [ index ] + 1 );
+		state.Push ( self->mPath [ index ]);
 		return 1;
 	}
 	return 0;
@@ -95,8 +95,8 @@ int MOAIPathFinder::_getPathSize ( lua_State* L ) {
 int MOAIPathFinder::_init ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPathFinder, "UNN" )
 	
-	self->mStartNodeID = state.GetValue < int >( 2, 1 ) - 1;
-	self->mTargetNodeID = state.GetValue < int >( 3, 1 ) - 1;
+	self->mStartNodeID = state.GetValueAsIndex ( 2 );
+	self->mTargetNodeID = state.GetValueAsIndex ( 3 );
 	
 	self->Reset ();
 	
@@ -238,7 +238,7 @@ int MOAIPathFinder::_setTerrainMask ( lua_State* L ) {
 int MOAIPathFinder::_setTerrainWeight ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPathFinder, "UNNN" )
 	
-	u32 index = state.GetValue < u32 >( 2, 1 ) - 1;
+	ZLIndex index = state.GetValueAsIndex ( 2 );
 
 	if ( index < self->mWeights.Size ()) {
 	
@@ -274,12 +274,12 @@ int MOAIPathFinder::_setWeight ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIPathFinder::BuildPath ( MOAIPathState* state ) {
 
-	u32 size = 0;
+	ZLSize size = 0;
 	for ( MOAIPathState* cursor = state; cursor; cursor = cursor->mParent, ++size );
 	
 	this->mPath.Init ( size );
 	for ( MOAIPathState* cursor = state; cursor; cursor = cursor->mParent ) {
-		this->mPath [ --size ] = cursor->mNodeID;
+		this->mPath [ ZLIndex ( --size, ZLIndex::LIMIT )] = cursor->mNodeID;
 	}
 	
 	this->ClearVisitation ();
@@ -328,7 +328,7 @@ bool MOAIPathFinder::CheckMask ( u32 terrain ) {
 	if ( !terrain || ( terrain & MOAITileFlags::HIDDEN )) return false;
 
 	if ( this->mTerrainDeck ) {
-		return ( this->mMask & this->mTerrainDeck->GetMask ( terrain & MOAITileFlags::CODE_MASK ) ) ? true : false;
+		return ( this->mMask & this->mTerrainDeck->GetMask ( terrain & MOAITileFlags::CODE_MASK )) ? true : false;
 	}
 	return true;
 }
@@ -347,7 +347,7 @@ float MOAIPathFinder::ComputeTerrainCost ( float moveCost, u32 terrain0, u32 ter
 	float* v1 = this->mTerrainDeck->GetVector ( terrain1 & MOAITileFlags::CODE_MASK );
 	
 	float terrainCost = 0.0f;
-	for ( u32 i = 0; i < total; ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < total; ++i ) {
 		
 		const MOAIPathWeight& weight = this->mWeights [ i ];
 		
@@ -387,7 +387,7 @@ bool MOAIPathFinder::FindPath ( int iterations ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIPathFinder::IsVisited ( int nodeID ) {
+bool MOAIPathFinder::IsVisited ( ZLIndex nodeID ) {
 
 	for ( MOAIPathState* state = this->mOpen; state; state = state->mNext ) {
 		if ( state->mNodeID == nodeID ) return true;
@@ -404,8 +404,8 @@ bool MOAIPathFinder::IsVisited ( int nodeID ) {
 MOAIPathFinder::MOAIPathFinder () :
 	mOpen ( 0 ),
 	mClosed ( 0 ),
-	mStartNodeID ( 0 ),
-	mTargetNodeID ( 0 ),
+	mStartNodeID ( ZLIndex::ZERO ),
+	mTargetNodeID ( ZLIndex::ZERO ),
 	mState ( 0 ),
 	mMask ( 0xffffffff ),
 	mHeuristic ( 0 ),
@@ -441,7 +441,7 @@ MOAIPathState* MOAIPathFinder::NextState () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPathFinder::PushState ( int nodeID, float cost, float estimate ) {
+void MOAIPathFinder::PushState ( ZLIndex nodeID, float cost, float estimate ) {
 	
 	MOAIPathState* state = new MOAIPathState ();
 	state->mNodeID = nodeID;

@@ -21,8 +21,8 @@
 int MOAIVecPathGraph::_areNeighbors ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVecPathGraph, "UNN" )
 
-	u32 id1 = state.GetValue < u32 >( 2, 1 ) - 1;
-	u32 id2 = state.GetValue < u32 >( 3, 1 ) - 1;
+	ZLIndex id1 = state.GetValueAsIndex ( 2, ZLIndex::ZERO );
+	ZLIndex id2 = state.GetValueAsIndex ( 3, ZLIndex::ZERO );
 
 	if ( MOAILogMgr::CheckIndexPlusOne ( id1, self->mNodes.Size (), L ) &&
 		MOAILogMgr::CheckIndexPlusOne ( id2, self->mNodes.Size (), L )) {
@@ -49,7 +49,7 @@ int MOAIVecPathGraph::_areNeighbors ( lua_State* L ) {
 int MOAIVecPathGraph::_getNode ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVecPathGraph, "UN" )
 
-	u32 id = state.GetValue < u32 >( 2, 1 ) - 1;
+	ZLIndex id = state.GetValueAsIndex ( 2, ZLIndex::ZERO );
 
 	if ( MOAILogMgr::CheckIndexPlusOne ( id, self->mNodes.Size (), L )) {
 		ZLVec3D vec = self->GetNode( id );
@@ -110,8 +110,8 @@ int MOAIVecPathGraph::_reserveNodes ( lua_State* L ) {
 int MOAIVecPathGraph::_setNeighbors ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVecPathGraph, "UNN" )
 
-	u32 id1 = state.GetValue < u32 >( 2, 1 ) - 1;
-	u32 id2 = state.GetValue < u32 >( 3, 1 ) - 1;
+	ZLIndex id1 = state.GetValueAsIndex ( 2, ZLIndex::ZERO );
+	ZLIndex id2 = state.GetValueAsIndex ( 3, ZLIndex::ZERO );
 	bool neighbors = state.GetValue < bool >( 4, true );
 
 	if ( MOAILogMgr::CheckIndexPlusOne ( id1, self->mNodes.Size (), L ) &&
@@ -137,7 +137,7 @@ int MOAIVecPathGraph::_setNeighbors ( lua_State* L ) {
 int MOAIVecPathGraph::_setNode ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVecPathGraph, "UN" )
 
-	u32 id = state.GetValue < u32 >( 2, 1 ) - 1;
+	ZLIndex id = state.GetValueAsIndex ( 2, ZLIndex::ZERO );
 	float x = state.GetValue < float >( 3, 0.0f );
 	float y = state.GetValue < float >( 4, 0.0f );
 	float z = state.GetValue < float >( 5, 0.0f );
@@ -154,19 +154,19 @@ int MOAIVecPathGraph::_setNode ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIVecPathGraph::AreNeighbors ( u32 id1, u32 id2 ) {
+bool MOAIVecPathGraph::AreNeighbors ( ZLIndex id1, ZLIndex id2 ) {
 	
-	size_t total = this->mNodes.Size ();
+	ZLSize total = this->mNodes.Size ();
 
 	if ( id1 < total && id2 < total ) {
-		return this->mNeighbors [ id1 * total + id2 ];
+		return this->mNeighbors [( id1 * total ) + id2 ];
 	}
 
 	return false;
 }
 
 //----------------------------------------------------------------//
-ZLVec3D MOAIVecPathGraph::GetNode ( u32 id ) {
+ZLVec3D MOAIVecPathGraph::GetNode ( ZLIndex id ) {
 	
 	if ( id < this->mNodes.Size ()) {
 		return this->mNodes [ id ];
@@ -182,14 +182,14 @@ u32 MOAIVecPathGraph::GetNodeCount () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVecPathGraph::PushNeighbors ( MOAIPathFinder& pathFinder, int nodeID ) {
+void MOAIVecPathGraph::PushNeighbors ( MOAIPathFinder& pathFinder, ZLIndex nodeID ) {
 
 	u32 total = ( u32 )this->mNodes.Size (); // TODO: cast
 
 	ZLVec3D currentNode = this->GetNode ( nodeID );
 	ZLVec3D targetNode = this->GetNode ( pathFinder.GetTargetNodeID ());
 
-	for ( u32 neighborID = 0; neighborID < total; ++neighborID ) {
+	for ( ZLIndex neighborID = ZLIndex::ZERO; neighborID < total; ++neighborID ) {
 		if ( this->AreNeighbors ( nodeID, neighborID ) &&
 			!pathFinder.IsVisited ( neighborID )) {
 
@@ -225,7 +225,7 @@ void MOAIVecPathGraph::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVecPathGraph::ReserveNodes ( u32 total ) {
+void MOAIVecPathGraph::ReserveNodes ( ZLSize total ) {
 
 	this->mNodes.Init ( total );
 	this->mNeighbors.Init ( total * total );
@@ -233,9 +233,9 @@ void MOAIVecPathGraph::ReserveNodes ( u32 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVecPathGraph::SetNeighbors ( u32 id1, u32 id2, bool value ) {
+void MOAIVecPathGraph::SetNeighbors ( ZLIndex id1, ZLIndex id2, bool value ) {
 	
-	size_t total = this->mNodes.Size ();
+	ZLSize total = this->mNodes.Size ();
 
 	if (( id1 < total ) && ( id2 < total )) {
 		this->mNeighbors [ id1 * total + id2 ] = value;
@@ -244,7 +244,7 @@ void MOAIVecPathGraph::SetNeighbors ( u32 id1, u32 id2, bool value ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVecPathGraph::SetNode ( u32 id, const ZLVec3D& node ) {
+void MOAIVecPathGraph::SetNode ( ZLIndex id, const ZLVec3D& node ) {
 	
 	if ( id < this->mNodes.Size ()) {
 		this->mNodes [ id ] = node;

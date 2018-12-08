@@ -320,26 +320,26 @@ void MOAICamera::DrawDebug () {
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAICamera >())) return;
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
 	
 	draw.Bind ();
 	
-	ZLRect viewRect = gfxMgr.mGfxState.GetViewRect ();
+	ZLRect viewRect = gfxState.GetViewRect ();
 	//float aspect = viewRect.Width () / viewRect.Height ();
 	
-	ZLMatrix4x4 mtx = gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::CLIP_TO_DISPLAY_MTX );
+	ZLMatrix4x4 mtx = gfxState.GetMtx ( MOAIGfxState::CLIP_TO_DISPLAY_MTX );
 	
-	gfxMgr.mVertexCache.SetVertexTransform ( mtx ); // draw in device space
+	gfxState.SetVertexTransform ( mtx ); // draw in device space
 	
 	if ( debugLines.Bind ( DEBUG_DRAW_FRAME )) {
 		draw.DrawRectOutline ( -1.0f, -1.0f, 1.0f, 1.0f );
 	}
 	
 	mtx.m [ ZLMatrix4x4::C1_R1 ] *= viewRect.Width () / viewRect.Height ();
-	gfxMgr.mVertexCache.SetVertexTransform ( mtx );
+	gfxState.SetVertexTransform ( mtx );
 	
 	if ( debugLines.Bind ( DEBUG_DRAW_RETICLE )) {
 		draw.DrawEllipseOutline ( 0.0f, 0.0f, RETICLE_RADIUS, RETICLE_RADIUS, 64 );
@@ -412,12 +412,10 @@ ZLMatrix4x4 MOAICamera::GetProjMtx ( const MOAIViewport& viewport ) const {
 			case CAMERA_TYPE_WINDOW:
 			default: {
 				
-				ZLRect rect = viewport.GetRect ();
+				float xScale = ( 2.0f / viewport.Width ()) * viewScale.mX;
+				float yScale = ( 2.0f / viewport.Height ()) * viewScale.mY;
 				
-				float xScale = ( 2.0f / rect.Width ()) * viewScale.mX;
-				float yScale = ( 2.0f / rect.Height ()) * viewScale.mY;
-				
-				mtx.Scale ( xScale, yScale, -1.0f );
+				mtx.Scale ( xScale, yScale, 0.0 );
 			}
 		}
 	}

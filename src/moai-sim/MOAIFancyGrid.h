@@ -63,7 +63,7 @@ public:
 	
 	u32				GetColor			( int addr ) const;
 	u32				GetColor			( int xTile, int yTile ) const;
-	MOAIColor*		GetPaletteColor		( u32 idx ) const;
+	MOAIColor*		GetPaletteColor		( ZLIndex idx ) const;
 	
 	ZLColorVec		GetTileColor		( int addr ) const;
 	ZLColorVec		GetTileColor		( int xTile, int yTile ) const;
@@ -74,14 +74,14 @@ public:
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	
-	void			ReservePalette		( u32 size );
+	void			ReservePalette		( ZLSize size );
 	
 	void			SerializeIn			( MOAILuaState& state, MOAIDeserializer& serializer );
 	void			SerializeOut		( MOAILuaState& state, MOAISerializer& serializer );
 	
 	void			SetColor			( int addr, u32 value );
 	void			SetColor			( int xTile, int yTile, u32 value );
-	void			SetPaletteColor		( u32 idx, MOAIColor* color );
+	void			SetPaletteColor		( ZLIndex idx, MOAIColor* color );
 };
 
 #endif

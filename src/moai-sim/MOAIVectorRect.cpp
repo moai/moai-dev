@@ -98,13 +98,13 @@ int MOAIVectorRect::Tesselate ( MOAIVectorTesselator& drawing, MOAIRegion& regio
 	this->mStyle.mDrawingToWorld.Transform ( maxVec );
 
 	region.ReservePolygons ( 1 );
-	ZLPolygon2D& poly = region.GetPolygon ( 0 );
+	ZLPolygon2D& poly = region.GetPolygon ( ZLIndex::ZERO );
 	
 	poly.ReserveVertices ( 4 );
-	poly.SetVert ( 0, ZLVec2D ( minVec.mX, minVec.mY ));
-	poly.SetVert ( 1, ZLVec2D ( maxVec.mX, minVec.mY ));
-	poly.SetVert ( 2, ZLVec2D ( maxVec.mX, maxVec.mY ));
-	poly.SetVert ( 3, ZLVec2D ( minVec.mX, maxVec.mY ));
+	poly.SetVert ( ZLIndex ( 0, ZLIndex::LIMIT ), ZLVec2D ( minVec.mX, minVec.mY ));
+	poly.SetVert ( ZLIndex ( 1, ZLIndex::LIMIT ), ZLVec2D ( maxVec.mX, minVec.mY ));
+	poly.SetVert ( ZLIndex ( 2, ZLIndex::LIMIT ), ZLVec2D ( maxVec.mX, maxVec.mY ));
+	poly.SetVert ( ZLIndex ( 3, ZLIndex::LIMIT ), ZLVec2D ( minVec.mX, maxVec.mY ));
 
 	region.Bless ();
 	
@@ -133,9 +133,9 @@ int MOAIVectorRect::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vertexS
 	u32 fillColor = this->mStyle.mFillColor.PackRGBA ();
 	float zt = this->mStyle.GetExtrude () + this->mStyle.GetZOffset ();
 	
-	u32 base			= drawing.CountVertices ( format, vertexStream );
+	u32 base = drawing.CountVertices ( format, vertexStream );
 	
-	u32 fillExtraID		= this->mStyle.GetFillExtraID ();
+	ZLIndex fillExtraID ( this->mStyle.GetFillExtraID (), ZLIndex::LIMIT );
 	
 	drawing.WriteVertex ( vertexStream, format, minVec.mX, minVec.mY, zt, 0.0f, 0.0f, 1.0f, fillColor, fillExtraID );
 	drawing.WriteVertex ( vertexStream, format, maxVec.mX, minVec.mY, zt, 0.0f, 0.0f, 1.0f, fillColor, fillExtraID );

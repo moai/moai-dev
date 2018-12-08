@@ -93,8 +93,8 @@ public:
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			RemoveHull				( MOAIPartitionHull& hull );
-	void			ReserveLevels			( int totalLevels );
-	void			SetLevel				( int levelID, float cellSize, int width, int height );
+	void			ReserveLevels			( ZLSize totalLevels );
+	void			SetLevel				( ZLIndex levelID, float cellSize, int width, int height );
 	void			SetPlane				( u32 planeID );
 	
 	//----------------------------------------------------------------//

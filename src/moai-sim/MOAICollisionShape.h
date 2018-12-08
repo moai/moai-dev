@@ -35,10 +35,9 @@ public:
 	void			Draw							( const ZLAffine3D& localToWorldMtx );
 					MOAICollisionShape				();
 					~MOAICollisionShape				();
-	void			ReserveShapes					( u32 totalShapes );
-	void			Set								( u32 idx, const ZLBox& box );
-	void			Set								( u32 idx, const ZLQuad& quad );
-	void			Set								( u32 idx, const ZLRect& rect );
+	void			Set								( ZLIndex idx, const ZLBox& box );
+	void			Set								( ZLIndex idx, const ZLQuad& quad );
+	void			Set								( ZLIndex idx, const ZLRect& rect );
 };
 
 #endif

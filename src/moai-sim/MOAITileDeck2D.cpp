@@ -312,18 +312,18 @@ void MOAITileDeck2D::TransformUV ( const ZLAffine3D& mtx ) {
 //----------------------------------------------------------------//
 ZLBounds MOAITileDeck2D::MOAIDeck_ComputeMaxBounds () {
 
-	return this->MOAIDeck::GetBounds ( 0 );
+	return this->MOAIDeck::GetBounds ( ZLIndex::ZERO );
 }
 
 //----------------------------------------------------------------//
 void MOAITileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	UNUSED ( idx );
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	MOAIQuadBrush::BindVertexFormat ();
 	
-	gfxMgr.mVertexCache.SetVertexTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::MODEL_TO_CLIP_MTX ));
-	gfxMgr.mVertexCache.SetUVTransform ( gfxMgr.mGfxState.GetMtx ( MOAIGfxGlobalsCache::UV_TO_MODEL_MTX ));
+	gfxState.SetVertexTransform ( MOAIGfxState::MODEL_TO_CLIP_MTX );
+	gfxState.SetUVTransform ( MOAIGfxState::UV_TO_MODEL_MTX );
 	
 	MOAICellCoord coord = this->GetCellCoord ( idx.mKey );
 	ZLRect uvRect = this->GetTileRect ( coord );
@@ -335,7 +335,7 @@ void MOAITileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	float vOff = uvRect.mYMin - ( 0.5f * vScale );
 	
 	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
-	materialStack.Push ( this->GetMaterial ( idx.mKey ));
+	materialStack.Push ( this->GetMaterial ( idx ));
 	materialStack.SetShader ( MOAIShaderMgr::DECK2D_SHADER );
 	materialStack.LoadGfxState ();
 	

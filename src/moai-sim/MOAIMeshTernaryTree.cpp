@@ -21,13 +21,13 @@ void MOAIMeshTernaryTreeBuilder::Build ( MOAIMeshTernaryTree& meshPartition, con
 
 	this->mPrims.Init ( totalMeshPrims );
 
-	u32 totalPrims = 0;
+	ZLSize totalPrims = 0;
 	for ( u32 i = 0; i < totalMeshPrims; ++i ) {
 	
 		MOAIMeshPrimCoords prim;
 		if ( primReader.GetPrimCoords ( i, prim )) {
 			
-			MOAIMeshTernaryTreeBuilderPrim& partitionPrim = this->mPrims [ totalPrims++ ];
+			MOAIMeshTernaryTreeBuilderPrim& partitionPrim = this->mPrims [ ZLIndex ( totalPrims++, ZLIndex::LIMIT )];
 			
 			partitionPrim.mIndex = prim.mIndex;
 			partitionPrim.mBounds = prim.GetBounds ();
@@ -53,7 +53,7 @@ void MOAIMeshTernaryTreeBuilder::Build ( MOAIMeshTernaryTree& meshPartition, con
 		PrimPtrArray& sorted = sortedPrims [ i ];
 		sorted.Init ( totalPrims );
 	
-		for ( u32 j = 0; j < totalPrims; ++j ) {
+		for ( ZLIndex j = ZLIndex::ZERO; j < totalPrims; ++j ) {
 		
 			const MOAIMeshTernaryTreeBuilderPrim& prim = this->mPrims [ j ];
 		
@@ -61,9 +61,9 @@ void MOAIMeshTernaryTreeBuilder::Build ( MOAIMeshTernaryTree& meshPartition, con
 			sortBuffer [ j ].mKey = ZLFloat::FloatToIntKey ( prim.mBounds.mMin.GetComponent ( i ));
 		}
 		
-		PrimSortKey* sortedKeys = RadixSort32 < PrimSortKey >( sortBuffer.GetBuffer (), &sortBuffer [ totalPrims ], totalPrims );
+		PrimSortKey* sortedKeys = RadixSort32 < PrimSortKey >( sortBuffer.GetBuffer (), &sortBuffer [ ZLIndex ( totalPrims, ZLIndex::LIMIT )], totalPrims );
 		
-		for ( u32 j = 0; j < totalPrims; ++j ) {
+		for ( ZLIndex j = ZLIndex::ZERO; j < totalPrims; ++j ) {
 			sorted [ j ] = &this->mPrims [ sortedKeys [ j ].mData ];
 		}
 	}
@@ -118,7 +118,7 @@ MOAIMeshTernaryTreeNode* MOAIMeshTernaryTreeBuilder::BuildRecurse ( PrimPtrArray
 		
 			PrimPtrArray& sortedPrimsAxis = sortedPrims [ i ];
 	
-			for ( u32 j = 0; j < totalPrims; ++j ) {
+			for ( ZLIndex j = ZLIndex::ZERO; j < totalPrims; ++j ) {
 				this->mIndexRunStream.Write < u32 >( sortedPrimsAxis [ j ]->mIndex );
 			}
 			break;
@@ -131,11 +131,11 @@ MOAIMeshTernaryTreeNode* MOAIMeshTernaryTreeBuilder::BuildRecurse ( PrimPtrArray
 	
 	// classify all prims as in front of, overlapping or behind
 	
-	u32 totalFront		= 0;
-	u32 totalBack		= 0;
-	u32 totalOverlap	= 0;
+	ZLSize totalFront		= 0;
+	ZLSize totalBack		= 0;
+	ZLSize totalOverlap		= 0;
 	
-	for ( u32 i = 0; i < totalPrims; ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < totalPrims; ++i ) {
 	
 		MOAIMeshTernaryTreeBuilderPrim* prim = sortedPrims [ bestAxis ][ i ];
 		
@@ -179,13 +179,13 @@ MOAIMeshTernaryTreeNode* MOAIMeshTernaryTreeBuilder::BuildRecurse ( PrimPtrArray
 		backPrimsAxis.Init ( totalBack );
 		overlapPrimsAxis.Init ( totalOverlap );
 		
-		u32 frontCount = 0;
-		u32 backCount = 0;
-		u32 overlapCount = 0;
-	
+		ZLIndex frontCount		= ZLIndex::ZERO;
+		ZLIndex backCount		= ZLIndex::ZERO;
+		ZLIndex overlapCount	= ZLIndex::ZERO;
+		
 		const PrimPtrArray& sortedPrimsAxis = sortedPrims [ i ];
 	
-		for ( u32 j = 0; j < totalPrims; ++j ) {
+		for ( ZLIndex j = ZLIndex::ZERO; j < totalPrims; ++j ) {
 		
 			MOAIMeshTernaryTreeBuilderPrim* prim = sortedPrimsAxis [ j ];
 			assert ( prim );
@@ -243,10 +243,10 @@ void MOAIMeshTernaryTreeBuilder::Eval ( PrimPtrArray& sortedPrims, u32 totalPrim
 	this->mOverlapTop = 0;
 	this->mOverlapMin = 0.0f;
 
-	float lowerBound = sortedPrims [ 0 ]->mBounds.mMin.GetComponent ( axis );
+	float lowerBound = sortedPrims [ ZLIndex::ZERO ]->mBounds.mMin.GetComponent ( axis );
 	float upperBound = lowerBound;
-
-	for ( u32 i = 0; i < totalPrims; ++i ) {
+	
+	for ( ZLIndex i = ZLIndex::ZERO; i < totalPrims; ++i ) {
 	
 		MOAIMeshTernaryTreeBuilderPrim* prim = sortedPrims [ i ];
 		
@@ -258,12 +258,12 @@ void MOAIMeshTernaryTreeBuilder::Eval ( PrimPtrArray& sortedPrims, u32 totalPrim
 		}
 	}
 
-	u32 backCount = 0;
+	ZLSize backCount = 0;
 
-	for ( u32 i = 0; i < totalPrims; ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < totalPrims; ++i ) {
 	
 		MOAIMeshTernaryTreeBuilderPrim* prim = sortedPrims [ i ];
-		this->mOverlapSet [ this->mOverlapTop++ ] = prim;
+		this->mOverlapSet [ ZLIndex ( this->mOverlapTop++, ZLIndex::LIMIT )] = prim;
 		
 		float lower = prim->mLower;
 		float upper = prim->mUpper;
@@ -277,15 +277,15 @@ void MOAIMeshTernaryTreeBuilder::Eval ( PrimPtrArray& sortedPrims, u32 totalPrim
 		u32 upperBackCount		= backCount;
 		u32 upperOverlapCount	= 0;
 		
-		u32 overlapTop = this->mOverlapTop;
-		this->mOverlapTop = 0;
+		ZLSize overlapTop		= this->mOverlapTop;
+		this->mOverlapTop		= 0;
 		
-		for ( u32 j = 0; j < overlapTop; ++j ) {
+		for ( ZLIndex j = ZLIndex::ZERO; j < overlapTop; ++j ) {
 		
 			MOAIMeshTernaryTreeBuilderPrim* overlapPrim = this->mOverlapSet [ j ];
 			
 			if ( overlapPrim->mUpper >= lower ) {
-				this->mOverlapSet [ this->mOverlapTop++ ] = overlapPrim;
+				this->mOverlapSet [ ZLIndex ( this->mOverlapTop++, ZLIndex::LIMIT )] = overlapPrim;
 			}
 			else {
 				backCount++;
@@ -295,7 +295,7 @@ void MOAIMeshTernaryTreeBuilder::Eval ( PrimPtrArray& sortedPrims, u32 totalPrim
 			this->CountPlaneOverlaps ( overlapPrim->mLower, overlapPrim->mUpper, upper, upperFrontCount, upperBackCount, upperOverlapCount );
 		}
 		
-		for ( u32 j = i + 1; j < totalPrims; ++j ) {
+		for ( ZLIndex j = i + ( ZLSize )1; j < totalPrims; ++j ) {
 			
 			MOAIMeshTernaryTreeBuilderPrim* overlapPrim = sortedPrims [ j ];
 		

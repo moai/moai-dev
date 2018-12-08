@@ -24,16 +24,6 @@ function onDraw ( index )
 	MOAIDraw.drawEllipse ( 0, 0, 64, 64, 32 )
 	
 	MOAIDraw.drawRay ( 0, 0, 0, 1 )
-	
-	--[[
-	MOAIDraw.drawLine (
-		-32, 32,
-		32, 32,
-		32, -32,
-		-32, -32,
-		-32, 32
-	)
-	]]--
 
 	MOAIDraw.drawLine (
 		-64, 64,

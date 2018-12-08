@@ -13,11 +13,13 @@
 		0300CF68140DC53C00ABCC5B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */; };
 		0300CF7B140DC61000ABCC5B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0300CF7A140DC61000ABCC5B /* AudioToolbox.framework */; };
 		0300CF94140DC65100ABCC5B /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0300CF93140DC65100ABCC5B /* AudioUnit.framework */; };
+		095A1748218DE7BC003543B8 /* libmoai-osx-expat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 095A1747218DE7BC003543B8 /* libmoai-osx-expat.a */; };
 		4C623B6415246B10008E4436 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
 		4C623B6615246B25008E4436 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6515246B25008E4436 /* CoreServices.framework */; };
 		B319C9911DBFF96600A6C621 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B319C9901DBFF96600A6C621 /* JavaScriptCore.framework */; };
 		CD096FD218E0FFE300A36EDD /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD096FD118E0FFE300A36EDD /* libstdc++.dylib */; };
 		CD1845BD1A626F0300FCCCE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1845BC1A626F0300FCCCE0 /* SystemConfiguration.framework */; };
+		CD273EF821B1F209006C4D84 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD273EF721B1F209006C4D84 /* Metal.framework */; };
 		CD2E46C51C5181A3008E22A1 /* libmoai-osx-harfbuzz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1F44E81BDEBB7800F5CF59 /* libmoai-osx-harfbuzz.a */; };
 		CD323B071A8040CB00E2FEBB /* SDLJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD323B031A8040CB00E2FEBB /* SDLJoystick.cpp */; };
 		CD323B081A8040CB00E2FEBB /* SDLKeyCodeMapping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD323B051A8040CB00E2FEBB /* SDLKeyCodeMapping.cpp */; };
@@ -101,6 +103,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		095A1746218DE7BC003543B8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 095A1721218DE699003543B8;
+			remoteInfo = "libmoai-osx-3rdparty-expat";
+		};
 		CD1830711AECC0AC00D92E9E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
@@ -868,6 +877,7 @@
 		B319C9901DBFF96600A6C621 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		CD096FD118E0FFE300A36EDD /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		CD1845BC1A626F0300FCCCE0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		CD273EF721B1F209006C4D84 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		CD323B031A8040CB00E2FEBB /* SDLJoystick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDLJoystick.cpp; path = "../../src/host-sdl/SDLJoystick.cpp"; sourceTree = "<group>"; };
 		CD323B041A8040CB00E2FEBB /* SDLJoystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDLJoystick.h; path = "../../src/host-sdl/SDLJoystick.h"; sourceTree = "<group>"; };
 		CD323B051A8040CB00E2FEBB /* SDLKeyCodeMapping.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDLKeyCodeMapping.cpp; path = "../../src/host-sdl/SDLKeyCodeMapping.cpp"; sourceTree = "<group>"; };
@@ -925,6 +935,7 @@
 				CDFF5ADE1C29232600969B44 /* libmoai-osx-audio-sampler.a in Frameworks */,
 				CDFD8FB51AD8653C0003F415 /* libmoai-osx-box2d.a in Frameworks */,
 				CDFD8FB61AD8653C0003F415 /* libmoai-osx-crypto.a in Frameworks */,
+				095A1748218DE7BC003543B8 /* libmoai-osx-expat.a in Frameworks */,
 				CD2E46C51C5181A3008E22A1 /* libmoai-osx-harfbuzz.a in Frameworks */,
 				CDFD8FB71AD8653C0003F415 /* libmoai-osx-http-client.a in Frameworks */,
 				CDFD8FB81AD8653C0003F415 /* libmoai-osx-http-server.a in Frameworks */,
@@ -954,6 +965,7 @@
 				4C623B6415246B10008E4436 /* Foundation.framework in Frameworks */,
 				0300CF68140DC53C00ABCC5B /* IOKit.framework in Frameworks */,
 				B319C9911DBFF96600A6C621 /* JavaScriptCore.framework in Frameworks */,
+				CD273EF821B1F209006C4D84 /* Metal.framework in Frameworks */,
 				CD6600661831CB5400D9862B /* OpenGL.framework in Frameworks */,
 				CD1845BD1A626F0300FCCCE0 /* SystemConfiguration.framework in Frameworks */,
 			);
@@ -1035,9 +1047,9 @@
 		CD2FDE8613542E9F00B814DF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B319C9901DBFF96600A6C621 /* JavaScriptCore.framework */,
 				B319C95D1DBFF95800A6C621 /* libcommonCrypto.tbd */,
-				CDF2380E1CAA731C00A45E31 /* CoreVideo.framework */,
+				CD74EA2B137807E40093EE68 /* libcrypto.dylib */,
+				CDFD8FB01AD8653C0003F415 /* libmoai-osx.a */,
 				CDFD8FA11AD8653C0003F415 /* libmoai-osx-3rdparty-core.a */,
 				CDFD8FA21AD8653C0003F415 /* libmoai-osx-3rdparty-crypto.a */,
 				CDFD8FA31AD8653C0003F415 /* libmoai-osx-3rdparty-sdl.a */,
@@ -1053,23 +1065,24 @@
 				CDFD8FAD1AD8653C0003F415 /* libmoai-osx-zl-core.a */,
 				CDFD8FAE1AD8653C0003F415 /* libmoai-osx-zl-crypto.a */,
 				CDFD8FAF1AD8653C0003F415 /* libmoai-osx-zl-vfs.a */,
-				CDFD8FB01AD8653C0003F415 /* libmoai-osx.a */,
 				CD096FD118E0FFE300A36EDD /* libstdc++.dylib */,
-				CD74EA2B137807E40093EE68 /* libcrypto.dylib */,
 				CD74EA311378080E0093EE68 /* libssl.dylib */,
 				0324CC63135643FD000ADC60 /* libSystem.dylib */,
 				66D9680B14047B7100017919 /* libz.dylib */,
 				CD795EF117F08E4B006AEB47 /* Cocoa.framework */,
 				CD795EF317F08F4E006AEB47 /* CoreAudio.framework */,
 				4C623B6515246B25008E4436 /* CoreServices.framework */,
+				CDF2380E1CAA731C00A45E31 /* CoreVideo.framework */,
 				CD795EF517F08F86006AEB47 /* ForceFeedback.framework */,
 				4C623B6315246B10008E4436 /* Foundation.framework */,
 				07CC7AF913DF7E9B00F2DEDE /* CoreFoundation.framework */,
 				07CC7AFF13DF7EF200F2DEDE /* Carbon.framework */,
 				07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */,
+				B319C9901DBFF96600A6C621 /* JavaScriptCore.framework */,
 				0300CF7A140DC61000ABCC5B /* AudioToolbox.framework */,
 				0300CF93140DC65100ABCC5B /* AudioUnit.framework */,
 				CD6600651831CB5400D9862B /* OpenGL.framework */,
+				CD273EF721B1F209006C4D84 /* Metal.framework */,
 				CD1845BC1A626F0300FCCCE0 /* SystemConfiguration.framework */,
 			);
 			name = Frameworks;
@@ -1151,6 +1164,7 @@
 				CD8325991D18D2CC002CE2A1 /* libmoai-osx-assimp.a */,
 				CDE6C8091AD8682200D6B83A /* libmoai-osx-box2d.a */,
 				CDE6C80B1AD8682200D6B83A /* libmoai-osx-crypto.a */,
+				095A1747218DE7BC003543B8 /* libmoai-osx-expat.a */,
 				CDD813F41E16FFA900996311 /* libmoai-osx-google-test.a */,
 				CD1F44E81BDEBB7800F5CF59 /* libmoai-osx-harfbuzz.a */,
 				CDE6C8111AD8682200D6B83A /* libmoai-osx-http-client.a */,
@@ -1264,7 +1278,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = NO;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0930;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "moai-osx" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1275,16 +1289,6 @@
 				Japanese,
 				French,
 				German,
-				en,
-				de,
-				fr,
-				nl,
-				jp,
-				ja,
-				sv,
-				sk,
-				cs,
-				it,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
@@ -1303,6 +1307,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		095A1747218DE7BC003543B8 /* libmoai-osx-expat.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-osx-expat.a";
+			remoteRef = 095A1746218DE7BC003543B8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		CD1F44E61BDEBB7800F5CF59 /* libmoai-ios-harfbuzz.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -2021,6 +2032,7 @@
 		0300CF6C140DC53C00ABCC5B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2035,6 +2047,7 @@
 		0300CF6D140DC53C00ABCC5B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				LIBRARY_SEARCH_PATHS = (
@@ -2048,12 +2061,21 @@
 		03B080970F708135005CD8E5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -2106,7 +2128,7 @@
 					"\"../../src\"",
 					"\"../../src/config\"",
 					"\"../../src/config-default\"",
-					"\"../../3rdparty/sdl2-2.0.4/include\"",
+					"\"../../3rdparty/sdl2-2.0.9/include\"",
 					"\"../../3rdparty/google-test/googletest/include\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
@@ -2119,12 +2141,21 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -2182,7 +2213,7 @@
 					"\"../../src\"",
 					"\"../../src/config\"",
 					"\"../../src/config-default\"",
-					"\"../../3rdparty/sdl2-2.0.4/include\"",
+					"\"../../3rdparty/sdl2-2.0.9/include\"",
 					"\"../../3rdparty/google-test/googletest/include\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
@@ -2196,6 +2227,7 @@
 		CDD813CE1E16FFA900996311 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2216,7 +2248,7 @@
 					"\"../../3rdparty/openssl-1.0.0m\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.1.0/lib\"",
+					"\"../../3rdparty/expat-2.2.6/lib\"",
 					"\"../../3rdparty/freeglut-2.8.1/include\"",
 					"\"../../3rdparty/freetype-2.7/include\"",
 					"\"../../3rdparty/box2d-2.3.0\"",
@@ -2247,6 +2279,7 @@
 		CDD813CF1E16FFA900996311 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				HEADER_SEARCH_PATHS = (
@@ -2266,7 +2299,7 @@
 					"\"../../3rdparty/openssl-1.0.0m\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
-					"\"../../3rdparty/expat-2.1.0/lib\"",
+					"\"../../3rdparty/expat-2.2.6/lib\"",
 					"\"../../3rdparty/freeglut-2.8.1/include\"",
 					"\"../../3rdparty/freetype-2.7/include\"",
 					"\"../../3rdparty/box2d-2.3.0\"",

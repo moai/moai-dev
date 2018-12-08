@@ -93,7 +93,7 @@ void ZLZipFile::Close () {
 }
 
 //----------------------------------------------------------------//
-ZLZipEntry& ZLZipFile::GetEntry ( size_t idx ) {
+ZLZipEntry& ZLZipFile::GetEntry ( ZLIndex idx ) {
 
 	return *this->mEntryTable [ idx ];
 }
@@ -107,8 +107,8 @@ size_t ZLZipFile::GetTotal () {
 //----------------------------------------------------------------//
 int ZLZipFile::Inflate () {
 	
-	u32 total = ( u32 )this->mEntryTable.Size ();
-	for ( u32 i = 0; i < total; ++i ) {
+	ZLSize total = this->mEntryTable.Size ();
+	for ( ZLIndex i = ZLIndex::ZERO; i < total; ++i ) {
 	
 		ZLFileStream stream;
 		stream.OpenWrite ( this->mEntryTable [ i ]->GetName ());
@@ -153,7 +153,7 @@ void ZLZipFile::SerializeIn () {
 		this->mEntryTable.Init ( totalEntries );
 		
 		EntryListIt entryIt = this->mEntryList.begin ();
-		for ( u32 i = 0; entryIt != this->mEntryList.end (); ++entryIt, ++i ) {
+		for ( ZLIndex i = ZLIndex::ZERO; entryIt != this->mEntryList.end (); ++entryIt, ++i ) {
 			ZLZipEntry& entry = *entryIt;
 			this->mEntryTable [ i ] = &entry;
 		}

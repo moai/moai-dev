@@ -35,7 +35,7 @@ int MOAIAnimCurveQuat::_getValueAtTime ( lua_State* L ) {
 	state.Push ( value.mY );
 	state.Push ( value.mZ );
 	
-	state.Push ( span.mKeyID + 1 );
+	state.Push ( span.mKeyID );
 	
 	return 4;
 }
@@ -60,7 +60,7 @@ int MOAIAnimCurveQuat::_getValueAtTime ( lua_State* L ) {
 int MOAIAnimCurveQuat::_setKey ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnimCurveQuat, "UNNNN" );
 
-	u32 index		= state.GetValue < u32 >( 2, 1 ) - 1;
+	ZLIndex index	= state.GetValueAsIndex ( 2 );
 	float time		= state.GetValue < float >( 3, 0.0f );
 	ZLVec3D value	= state.GetVec3D < float >( 4 );
 	u32 mode		= state.GetValue < u32 >( 7, ZLInterpolate::kSmooth );
@@ -83,10 +83,10 @@ ZLQuaternion MOAIAnimCurveQuat::GetCurveDelta () const {
 
 	ZLQuaternion delta = ZLQuaternion::IDENT;
 
-	u32 size = ( u32 )this->mKeys.Size ();
+	ZLSize size = this->mKeys.Size ();
 	if ( size > 1 ) {
-		delta = this->mSamples [ size - 1 ];
-		delta.Sub ( this->mSamples [ 0 ]);
+		delta = this->mSamples [ ZLIndex ( size - 1, ZLIndex::LIMIT )];
+		delta.Sub ( this->mSamples [ ZLIndex::ZERO ]);
 	}
 	return delta;
 }
@@ -106,7 +106,7 @@ ZLQuaternion MOAIAnimCurveQuat::GetValue ( const MOAIAnimKeySpan& span ) const {
 	
 	if ( span.mTime > 0.0f ) {
 	
-		ZLQuaternion v1 = this->mSamples [ span.mKeyID + 1 ];
+		ZLQuaternion v1 = this->mSamples [ span.mKeyID + ( ZLSize )1 ];
 		
 		v0.Slerp ( v0, v1, ZLInterpolate::Curve ( key.mMode, span.mTime, key.mWeight ));
 	}

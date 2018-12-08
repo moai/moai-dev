@@ -73,85 +73,85 @@ void AKUDisplayListPublishAndReset () {
 //----------------------------------------------------------------//
 void AKUEnqueueButtonEvent ( int deviceID, int sensorID, bool down ) {
 
-	MOAIButtonSensor::EnqueueButtonEvent (( u8 )deviceID, ( u8 )sensorID, down );
+	MOAIButtonSensor::EnqueueButtonEvent ( ZLIndex ( deviceID, ZLIndex::LIMIT ), ZLIndex ( sensorID, ZLIndex::LIMIT ), down );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueueCompassEvent ( int deviceID, int sensorID, float heading ) {
 
-	MOAICompassSensor::EnqueueCompassEvent (( u8 )deviceID, ( u8 )sensorID, heading );
+	MOAICompassSensor::EnqueueCompassEvent ( ZLIndex ( deviceID, ZLIndex::LIMIT ), ZLIndex ( sensorID, ZLIndex::LIMIT ), heading );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueueJoystickEvent( int deviceID, int sensorID, float x, float y ) {
 
-	MOAIJoystickSensor::EnqueueJoystickEvent (( u8 )deviceID, ( u8 )sensorID, x, y );
+	MOAIJoystickSensor::EnqueueJoystickEvent ( ZLIndex ( deviceID, ZLIndex::LIMIT ), ZLIndex ( sensorID, ZLIndex::LIMIT ), x, y );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueueKeyboardCharEvent ( int deviceID, int sensorID, int unicodeChar ) {
 
-	MOAIKeyboardSensor::EnqueueKeyboardCharEvent (( u8 )deviceID, ( u8 )sensorID, unicodeChar );
+	MOAIKeyboardSensor::EnqueueKeyboardCharEvent ( ZLIndex ( deviceID, ZLIndex::LIMIT ), ZLIndex ( sensorID, ZLIndex::LIMIT ), unicodeChar );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueueKeyboardEditEvent ( int deviceID, int sensorID, char const* text, int start, int editLength, int maxLength) {
 	
-	MOAIKeyboardSensor::EnqueueKeyboardEditEvent (( u8 )deviceID, ( u8 )sensorID, text, ( u32 )start, ( u32 )editLength, ( u32 )maxLength );
+	MOAIKeyboardSensor::EnqueueKeyboardEditEvent ( ZLIndex ( deviceID, ZLIndex::LIMIT ), ZLIndex ( sensorID, ZLIndex::LIMIT ), text, ( u32 )start, ( u32 )editLength, ( u32 )maxLength );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueueKeyboardKeyEvent ( int deviceID, int sensorID, int keyID, bool down ) {
 
-	MOAIKeyboardSensor::EnqueueKeyboardKeyEvent (( u8 )deviceID, ( u8 )sensorID, keyID, down );
+	MOAIKeyboardSensor::EnqueueKeyboardKeyEvent ( ZLIndex ( deviceID, ZLIndex::LIMIT ), ZLIndex ( sensorID, ZLIndex::LIMIT ), keyID, down );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueueKeyboardTextEvent ( int deviceID, int sensorID, const char* text ) {
 
-	MOAIKeyboardSensor::EnqueueKeyboardTextEvent (( u8 )deviceID, ( u8 )sensorID, text );
+	MOAIKeyboardSensor::EnqueueKeyboardTextEvent ( ZLIndex ( deviceID, ZLIndex::LIMIT ), ZLIndex ( sensorID, ZLIndex::LIMIT ), text );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueueLevelEvent ( int deviceID, int sensorID, float x, float y, float z ) {
 
-	MOAIMotionSensor::EnqueueLevelEvent (( u8 )deviceID, ( u8 )sensorID, x, y, z );
+	MOAIMotionSensor::EnqueueLevelEvent ( ZLIndex ( deviceID, ZLIndex::LIMIT ), ZLIndex ( sensorID, ZLIndex::LIMIT ), x, y, z );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueueLocationEvent ( int deviceID, int sensorID, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed ) {
 
-	MOAILocationSensor::EnqueueLocationEvent (( u8 )deviceID, ( u8 )sensorID, longitude, latitude, altitude, hAccuracy, vAccuracy, speed );
+	MOAILocationSensor::EnqueueLocationEvent ( ZLIndex ( deviceID, ZLIndex::LIMIT ), ZLIndex ( sensorID, ZLIndex::LIMIT ), longitude, latitude, altitude, hAccuracy, vAccuracy, speed );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueuePointerEvent ( int deviceID, int sensorID, int x, int y ) {
 
-	MOAIPointerSensor::EnqueuePointerEvent (( u8 )deviceID, ( u8 )sensorID, x, y );
+	MOAIPointerSensor::EnqueuePointerEvent ( ZLIndex ( deviceID, ZLIndex::LIMIT ), ZLIndex ( sensorID, ZLIndex::LIMIT ), x, y );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueueTouchEvent ( int deviceID, int sensorID, int touchID, bool down, float x, float y ) {
 
-	MOAITouchSensor::EnqueueTouchEvent (( u8 )deviceID, ( u8 )sensorID, ( u32 )touchID, down, x, y );
+	MOAITouchSensor::EnqueueTouchEvent ( ZLIndex ( deviceID, ZLIndex::LIMIT ), ZLIndex ( sensorID, ZLIndex::LIMIT ), ( u32 )touchID, down, x, y );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueueTouchEventCancel ( int deviceID, int sensorID ) {
 
-	MOAITouchSensor::EnqueueTouchEventCancel (( u8 )deviceID, ( u8 )sensorID );
+	MOAITouchSensor::EnqueueTouchEventCancel ( ZLIndex ( deviceID, ZLIndex::LIMIT ), ZLIndex ( sensorID, ZLIndex::LIMIT ) );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueueVectorEvent ( int deviceID, int sensorID, float x, float y, float z ) {
 
-	MOAIVectorSensor::EnqueueVectorEvent (( u8 )deviceID, ( u8 )sensorID, x, y, z );
+	MOAIVectorSensor::EnqueueVectorEvent ( ZLIndex ( deviceID, ZLIndex::LIMIT ), ZLIndex ( sensorID, ZLIndex::LIMIT ), x, y, z );
 }
 
 //----------------------------------------------------------------//
 void AKUEnqueueWheelEvent ( int deviceID, int sensorID, float value ) {
 
-	MOAIWheelSensor::EnqueueWheelEvent (( u8 )deviceID, ( u8 )sensorID, value );
+	MOAIWheelSensor::EnqueueWheelEvent ( ZLIndex ( deviceID, ZLIndex::LIMIT ), ZLIndex ( sensorID, ZLIndex::LIMIT ), value );
 }
 
 //----------------------------------------------------------------//
@@ -186,13 +186,13 @@ void AKUSetFunc_HideCursor ( AKUHideCursorFunc func ) {
 //----------------------------------------------------------------//
 void AKUReserveInputDevices ( int total ) {
 
-	MOAIInputMgr::Get ().ReserveDevices (( u8 )total );
+	MOAIInputMgr::Get ().ReserveDevices (( ZLSize )total );
 }
 
 //----------------------------------------------------------------//
 void AKUReserveInputDeviceSensors ( int deviceID, int total ) {
 
-	MOAIInputMgr::Get ().ReserveSensors (( u8 )deviceID, ( u8 )total );
+	MOAIInputMgr::Get ().ReserveSensors ( ZLIndex ( deviceID, ZLIndex::LIMIT ), ( ZLSize )total );
 }
 
 //----------------------------------------------------------------//
@@ -234,79 +234,79 @@ void AKUSetInputConfigurationName ( char const* name ) {
 //----------------------------------------------------------------//
 void AKUSetInputDevice ( int deviceID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetDevice (( u8 )deviceID, name );
+	MOAIInputMgr::Get ().SetDevice ( ZLIndex ( deviceID, ZLIndex::LIMIT ), name );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDeviceHardwareInfo ( int deviceID, char const* hardwareInfo ) {
 
-	MOAIInputMgr::Get ().SetDeviceHardwareInfo (( u8 )deviceID, hardwareInfo );
+	MOAIInputMgr::Get ().SetDeviceHardwareInfo ( ZLIndex ( deviceID, ZLIndex::LIMIT ), hardwareInfo );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDeviceActive ( int deviceID, bool active ) {
 
-	MOAIInputMgr::Get ().SetDeviceActive (( u8 )deviceID, active );
+	MOAIInputMgr::Get ().SetDeviceActive ( ZLIndex ( deviceID, ZLIndex::LIMIT ), active );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDeviceButton ( int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAIButtonSensor >(( u8 )deviceID, ( u8 )sensorID, name );
+	MOAIInputMgr::Get ().SetSensor < MOAIButtonSensor >( ZLIndex ( deviceID, ZLIndex::LIMIT ), ZLIndex ( sensorID, ZLIndex::LIMIT ), name );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDeviceCompass ( int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAICompassSensor >(( u8 )deviceID, ( u8 )sensorID, name );
+	MOAIInputMgr::Get ().SetSensor < MOAICompassSensor >( ZLIndex ( deviceID, ZLIndex::LIMIT ), ZLIndex ( sensorID, ZLIndex::LIMIT ), name );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDeviceKeyboard ( int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAIKeyboardSensor >(( u8 )deviceID, ( u8 )sensorID, name );
+	MOAIInputMgr::Get ().SetSensor < MOAIKeyboardSensor >( ZLIndex ( deviceID, ZLIndex::LIMIT ), ZLIndex ( sensorID, ZLIndex::LIMIT ), name );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDeviceJoystick ( int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAIJoystickSensor >(( u8 )deviceID, ( u8 )sensorID, name );
+	MOAIInputMgr::Get ().SetSensor < MOAIJoystickSensor >( ZLIndex ( deviceID, ZLIndex::LIMIT ), ZLIndex ( sensorID, ZLIndex::LIMIT ), name );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDeviceLevel ( int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAIMotionSensor >(( u8 )deviceID, ( u8 )sensorID, name );
+	MOAIInputMgr::Get ().SetSensor < MOAIMotionSensor >( ZLIndex ( deviceID, ZLIndex::LIMIT ), ZLIndex ( sensorID, ZLIndex::LIMIT ), name );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDeviceLocation ( int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAILocationSensor >(( u8 )deviceID, ( u8 )sensorID, name );
+	MOAIInputMgr::Get ().SetSensor < MOAILocationSensor >( ZLIndex ( deviceID, ZLIndex::LIMIT ), ZLIndex ( sensorID, ZLIndex::LIMIT ), name );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDevicePointer ( int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAIPointerSensor >(( u8 )deviceID, ( u8 )sensorID, name );
+	MOAIInputMgr::Get ().SetSensor < MOAIPointerSensor >( ZLIndex ( deviceID, ZLIndex::LIMIT ), ZLIndex ( sensorID, ZLIndex::LIMIT ), name );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDeviceTouch ( int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAITouchSensor >(( u8 )deviceID, ( u8 )sensorID, name );
+	MOAIInputMgr::Get ().SetSensor < MOAITouchSensor >( ZLIndex ( deviceID, ZLIndex::LIMIT ), ZLIndex ( sensorID, ZLIndex::LIMIT ), name );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDeviceVector ( int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAIVectorSensor >(( u8 )deviceID, ( u8 )sensorID, name );
+	MOAIInputMgr::Get ().SetSensor < MOAIVectorSensor >( ZLIndex ( deviceID, ZLIndex::LIMIT ), ZLIndex ( sensorID, ZLIndex::LIMIT ), name );
 }
 
 //----------------------------------------------------------------//
 void AKUSetInputDeviceWheel ( int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAIWheelSensor >(( u8 )deviceID, ( u8 )sensorID, name );
+	MOAIInputMgr::Get ().SetSensor < MOAIWheelSensor >( ZLIndex ( deviceID, ZLIndex::LIMIT ), ZLIndex ( sensorID, ZLIndex::LIMIT ), name );
 }
 
 //----------------------------------------------------------------//
@@ -343,7 +343,7 @@ void AKUSetScreenSize ( int width, int height) {
 //----------------------------------------------------------------//
 void AKUSetViewSize ( int width, int height ) {
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr= MOAIGfxMgr::Get ();
 	
 	u32 currentWidth = gfxMgr.mGfxState.GetBufferWidth ();
 	u32 currentHeight = gfxMgr.mGfxState.GetBufferHeight ();

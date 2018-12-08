@@ -16,18 +16,20 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( width, height )
 viewport:setScale (width / (width/640), height / (height/480))
 
-layer = MOAIPartitionViewLayer.new ()
-layer:setPartition( MOAIPartition.new() )
-layer:setViewport ( viewport )
-layer:pushRenderPass ()
-
 -- set up the world and start its simulation
 world = MOAIBox2DWorld.new ()
 world:setGravity ( 0, 0 )
 world:setUnitsToMeters ( .05 )
 world:start ()
-layer:setUnderlayTable ({ world })
 
+debugLayer = MOAITableViewLayer.new ()
+debugLayer:setViewport ( viewport )
+debugLayer:setRenderTable ( world )
+debugLayer:pushRenderPass ()
+
+layer = MOAIPartitionViewLayer.new ()
+layer:setViewport ( viewport )
+layer:pushRenderPass ()
 
 local chain = {}
 
@@ -96,7 +98,7 @@ end
 function clickCallback ( down )
 
 	if down then
-		pick = layer:getPartition ():propForPoint ( worldX, worldY )
+		pick = layer:getLayerPartition ():hullForPoint ( worldX, worldY )
 		if pick then
 			mouseBody = world:addBody ( MOAIBox2DBody.STATIC )
 			mouseBody:setTransform ( worldX, worldY )

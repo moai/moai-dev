@@ -4,7 +4,7 @@
 #ifndef	MOAISTRETCHPATCH2D_H
 #define	MOAISTRETCHPATCH2D_H
 
-#include <moai-sim/MOAIDeck.h>
+#include <moai-sim/MOAIStretchDeck.h>
 #include <moai-sim/MOAIMaterialBatchHolder.h>
 
 //================================================================//
@@ -27,7 +27,7 @@ private:
 			stretchable and non-stretchable 'bands.' Grid drawing not supported.
 */
 class MOAIStretchPatch2D :
-	public MOAIDeck,
+	public MOAIStretchDeck,
 	public MOAIMaterialBatchHolder {
 private:
 
@@ -61,12 +61,12 @@ private:
 	void			UpdateParams			();
 
 	//----------------------------------------------------------------//
-	virtual ZLBounds				MOAIDeck_ComputeMaxBounds		();
-	virtual void					MOAIDeck_Draw					( ZLIndex idx );
-	virtual ZLBounds				MOAIDeck_GetBounds				( ZLIndex idx );
-	virtual MOAICollisionShape*		MOAIDeck_GetCollisionShape		( ZLIndex idx );
-	virtual bool					MOAIDeck_Overlap				( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
-	virtual bool					MOAIDeck_Overlap				( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
+	ZLBounds				MOAIDeck_ComputeMaxBounds				();
+	void					MOAIDeck_Draw							( ZLIndex idx );
+	ZLBounds				MOAIDeck_GetBounds						( ZLIndex idx );
+	MOAICollisionShape*		MOAIDeck_GetCollisionShape				( ZLIndex idx );
+	bool					MOAIDeck_Overlap						( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
+	bool					MOAIDeck_Overlap						( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
 
 public:
 	
@@ -79,8 +79,8 @@ public:
 	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			SetColumn				( u32 idx, float percent, bool canStretch );
-	void			SetRow					( u32 idx, float percent, bool canStretch );
+	void			SetColumn				( ZLIndex idx, float percent, bool canStretch );
+	void			SetRow					( ZLIndex idx, float percent, bool canStretch );
 };
 
 #endif

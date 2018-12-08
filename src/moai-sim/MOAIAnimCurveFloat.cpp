@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <moai-sim/MOAIAnimCurveFloat.h>
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIGfxVertexCache.h>
 
 //================================================================//
 // local
@@ -28,7 +27,7 @@ int MOAIAnimCurveFloat::_getValueAtTime ( lua_State* L ) {
 	float value = self->GetValue ( span );
 	
 	state.Push ( value );
-	state.Push ( span.mKeyID + 1 );
+	state.Push ( span.mKeyID );
 	
 	return 2;
 }
@@ -79,7 +78,7 @@ int MOAIAnimCurveFloat::_getValueRange ( lua_State* L ) {
 int MOAIAnimCurveFloat::_setKey ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnimCurveFloat, "UNN" );
 
-	u32 index		= state.GetValue < u32 >( 2, 1 ) - 1;
+	ZLIndex index	= state.GetValueAsIndex ( 2 );
 	float time		= state.GetValue < float >( 3, 0.0f );
 	float value		= state.GetValue < float >( 4, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 5, ZLInterpolate::kSmooth );
@@ -100,15 +99,15 @@ int MOAIAnimCurveFloat::_setKey ( lua_State* L ) {
 //----------------------------------------------------------------//
 float MOAIAnimCurveFloat::GetCurveDelta () const {
 
-	size_t size = this->mKeys.Size ();
+	ZLSize size = this->mKeys.Size ();
 	if ( size > 1 ) {
-		return this->mSamples [ size - 1 ] - this->mSamples [ 0 ];
+		return this->mSamples [ ZLIndex ( size - 1, ZLIndex::LIMIT )] - this->mSamples [ ZLIndex::ZERO ];
 	}
 	return 0.0f;
 }
 
 //----------------------------------------------------------------//
-float MOAIAnimCurveFloat::GetSample ( u32 id ) {
+float MOAIAnimCurveFloat::GetSample ( ZLIndex id ) {
 
 	if ( id < this->mKeys.Size ()) {
 		return this->mSamples [ id ];
@@ -130,7 +129,7 @@ float MOAIAnimCurveFloat::GetValue ( const MOAIAnimKeySpan& span ) const {
 	float v0 = this->mSamples [ span.mKeyID ];
 	
 	if ( span.mTime > 0.0f ) {
-		v0 = ZLInterpolate::Interpolate ( key.mMode, v0, this->mSamples [ span.mKeyID + 1 ], span.mTime, key.mWeight );
+		v0 = ZLInterpolate::Interpolate ( key.mMode, v0, this->mSamples [ span.mKeyID + ( ZLSize )1 ], span.mTime, key.mWeight );
 	}
 	return v0 + ( this->GetCurveDelta () * span.mCycle );
 }
@@ -138,15 +137,15 @@ float MOAIAnimCurveFloat::GetValue ( const MOAIAnimKeySpan& span ) const {
 //----------------------------------------------------------------//
 void MOAIAnimCurveFloat::GetValueRange ( float t0, float t1, float &min, float &max ) {
 	
-	u32 key0 = 0;
-	u32 key1 = 0;
+	ZLIndex key0 = ZLIndex::ZERO;
+	ZLIndex key1 = ZLIndex::ZERO;
 	
 	MOAIAnimKeySpan span0 = this->GetSpan ( t0 );
 	MOAIAnimKeySpan span1 = this->GetSpan ( t1 );
 	
 	if ( t1 - t0 > this->GetLength ()) {
-		key0 = 0;
-		key1 = this->Size () - 1;
+		key0 = ZLIndex::ZERO;
+		key1 = ZLIndex ( this->Size (), 1 );
 	}
 	else {
 		if ( span0.mKeyID > span1.mKeyID ) {
@@ -164,7 +163,7 @@ void MOAIAnimCurveFloat::GetValueRange ( float t0, float t1, float &min, float &
 	min = this->GetValue ( span0 );
 	max = this->GetValue ( span0 );
 	
-	for ( u32 id = key0 + 1; id <= key1; id++ ) {
+	for ( ZLIndex id = key0 + ( ZLSize )1; id <= key1; id++ ) {
 		
 		float val = this->mSamples [ id ];
 		
@@ -222,7 +221,7 @@ void MOAIAnimCurveFloat::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIAnimCurveFloat::SetSample ( ZLIndex idx, float value ) {
 
 	if ( this->mKeys.CheckIndex ( idx )) {
-		this->mSamples [ idx.mKey ] = value;
+		this->mSamples [ idx ] = value;
 	}
 }
 

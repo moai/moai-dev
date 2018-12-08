@@ -49,7 +49,7 @@ int MOAIVectorSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIVectorSensor::EnqueueVectorEvent ( u8 deviceID, u8 sensorID, float x, float y, float z ) {
+void MOAIVectorSensor::EnqueueVectorEvent ( ZLIndex deviceID, ZLIndex sensorID, float x, float y, float z ) {
 
 	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
 	if ( inputMgr.WriteEventHeader < MOAIVectorSensor >( deviceID, sensorID )) {

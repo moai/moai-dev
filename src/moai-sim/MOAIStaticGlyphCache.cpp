@@ -17,7 +17,7 @@
 //----------------------------------------------------------------//
 void MOAIStaticGlyphCache::ClearTextures () {
 
-	for ( u32 i = 0; i < this->mTextures.Size (); ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < this->mTextures.Size (); ++i ) {
 		this->LuaRelease ( this->mTextures [ i ]); // TODO: ref counting?
 	}
 	this->mTextures.Clear ();
@@ -43,7 +43,7 @@ MOAIImage* MOAIStaticGlyphCache::GetImage () {
 }
 
 //----------------------------------------------------------------//
-MOAITexture* MOAIStaticGlyphCache::GetTexture ( u32 id ) {
+MOAITexture* MOAIStaticGlyphCache::GetTexture ( ZLIndex id ) {
 
 	return this->mTextures [ id ];
 }
@@ -112,7 +112,7 @@ int MOAIStaticGlyphCache::SetImage ( MOAIFont& font, MOAIImage& image ) {
 	this->mTextures.Init ( totalTextures );
 	
 	u32 y = 0;
-	for ( u32 i = 0; i < totalTextures; ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < totalTextures; ++i ) {
 		
 		MOAITexture* texture = new MOAITexture ();
 		
@@ -130,7 +130,7 @@ int MOAIStaticGlyphCache::SetImage ( MOAIFont& font, MOAIImage& image ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIStaticGlyphCache::SetTexture ( int id, MOAITexture* texture ) {
+void MOAIStaticGlyphCache::SetTexture ( ZLIndex id, MOAITexture* texture ) {
 	this->LuaRetain ( texture ); // TODO: ref counting?
 	this->mTextures [ id ] = texture;
 }

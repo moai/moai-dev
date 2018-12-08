@@ -45,7 +45,7 @@ int MOAICompassSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAICompassSensor::EnqueueCompassEvent ( u8 deviceID, u8 sensorID, float heading ) {
+void MOAICompassSensor::EnqueueCompassEvent ( ZLIndex deviceID, ZLIndex sensorID, float heading ) {
 
 	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
 	if ( inputMgr.WriteEventHeader < MOAICompassSensor >( deviceID, sensorID )) {

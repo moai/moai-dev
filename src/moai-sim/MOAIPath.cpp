@@ -59,7 +59,7 @@ int MOAIPath::_reserve ( lua_State* L ) {
 int MOAIPath::_setPoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPath, "U" );
 
-	size_t idx		= state.GetValue < u32 >( 2, 1 ) - 1;
+	ZLIndex idx		= state.GetValueAsIndex ( 2 );
 	float x			= state.GetValue < float >( 3, 0.0f );
 	float y			= state.GetValue < float >( 4, 0.0f );
 	
@@ -95,7 +95,7 @@ void MOAIPath::Bless () {
 	
 	this->mLength = 0.0f;
 	
-	for ( size_t i = 0; i < totalSegments; ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < totalSegments; ++i ) {
 	
 		ZLCubicBezier2D curve = this->GetSegment ( i );
 		
@@ -119,17 +119,17 @@ ZLVec2D MOAIPath::Evaluate ( float t ) {
 }
 
 //----------------------------------------------------------------//
-ZLCubicBezier2D MOAIPath::GetSegment ( size_t idx ) {
+ZLCubicBezier2D MOAIPath::GetSegment ( ZLIndex idx ) {
 
-	size_t basePoint = idx > 0 ? idx * 3 : 0;
+	ZLIndex basePoint = idx > 0 ? idx * ( ZLSize )3 : ZLIndex::ZERO;
 	
 	ZLCubicBezier2D curve;
 	
 	curve.Init (
 		this->mControlPoints [ basePoint ],
-		this->mControlPoints [ basePoint + 1 ],
-		this->mControlPoints [ basePoint + 2 ],
-		this->mControlPoints [ basePoint + 3 ]
+		this->mControlPoints [ basePoint + ( ZLSize )1 ],
+		this->mControlPoints [ basePoint + ( ZLSize )2 ],
+		this->mControlPoints [ basePoint + ( ZLSize )3 ]
 	);
 	
 	return curve;
@@ -148,7 +148,7 @@ ZLCubicBezier2D MOAIPath::GetSegmentForTime ( float t, float* st ) {
 		( *st ) = t - s;
 	}
 	
-	return this->GetSegment (( size_t )s );
+	return this->GetSegment ( ZLIndex (( ZLSize )s, ZLIndex::LIMIT ));
 }
 
 //----------------------------------------------------------------//
@@ -186,13 +186,13 @@ void MOAIPath::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPath::Reserve ( size_t size ) {
+void MOAIPath::Reserve ( ZLSize size ) {
 
 	this->mControlPoints.Init ( size );
 }
 
 //----------------------------------------------------------------//
-void MOAIPath::SetPoint ( size_t idx, float x, float y ) {
+void MOAIPath::SetPoint ( ZLIndex idx, float x, float y ) {
 
 	this->mControlPoints [ idx ].Init ( x, y );
 }

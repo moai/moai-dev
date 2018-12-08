@@ -10,7 +10,7 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 480 )
 
-camera = MOAICamera2D.new ()
+camera = MOAICamera.new ()
 
 layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
@@ -24,13 +24,13 @@ fitter:setBounds ( -1000, -64, 1000, 10000 )
 fitter:setMin ( 256 )
 fitter:start ()
 
-gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "moai.png" )
-gfxQuad:setRect ( -64, -64, 64, 64 )
+spriteDeck = MOAISpriteDeck2D.new ()
+spriteDeck:setTexture ( '../resources/moai.png' )
+spriteDeck:setRect ( -64, -64, 64, 64 )
 
 prop = MOAIProp.new ()
-prop:setDeck ( gfxQuad )
-prop:moveLoc ( 256, 0, 3 )
+prop:setDeck ( spriteDeck )
+prop:moveLoc ( 256, 0, 0, 3 )
 prop:setPartition ( layer )
 
 anchor = MOAICameraAnchor2D.new ()
@@ -39,8 +39,8 @@ anchor:setRect ( -64, -64, 64, 64 )
 fitter:insertAnchor ( anchor )
 
 prop = MOAIProp.new ()
-prop:setDeck ( gfxQuad )
-prop:moveLoc ( -256, 0, 3 )
+prop:setDeck ( spriteDeck )
+prop:moveLoc ( -256, 0, 0, 3 )
 prop:setPartition ( layer )
 
 anchor = MOAICameraAnchor2D.new ()

@@ -137,8 +137,7 @@ void MOAITextureBase::CheckFilterModes ( int min, int mag ) {
 void MOAITextureBase::CleanupOnError () {
 
 	this->mTextureSize = 0;
-	MOAIGfxMgr::GetDrawingAPI ().Delete ( this->mGLTexID );
-	this->mGLTexID = 0;
+	MOAIGfxMgr::GetDrawingAPI ().DeleteResource ( this->mGLTexture );
 	this->mWidth = 0;
 	this->mHeight = 0;
 	this->mTextureSize = 0;
@@ -169,8 +168,8 @@ bool MOAITextureBase::CreateTextureFromImage ( MOAIImage& srcImage ) {
 	if ( !image.IsOK ()) return false;
 
 	//MOAIGfxMgr::Get ().ClearErrors ();
-	this->mGLTexID = gfx.CreateTexture ();
-	if ( !this->mGLTexID ) return false;
+	this->mGLTexture = gfx.CreateTexture ();
+	//if ( !this->mGLTexture ) return false;
 
 	// get the dimensions before trying to get the OpenGL texture ID
 	this->mWidth = image.GetWidth ();
@@ -234,7 +233,7 @@ bool MOAITextureBase::CreateTextureFromImage ( MOAIImage& srcImage ) {
 			return false;
 	}
 
-	gfx.SetTexture ( this->mGLTexID );
+	gfx.BindTexture ( this->mGLTexture );
 
 	gfx.TexImage2D (
 		0,
@@ -299,7 +298,6 @@ u32 MOAITextureBase::GetWidth () {
 
 //----------------------------------------------------------------//
 MOAITextureBase::MOAITextureBase () :
-	mGLTexID ( 0 ),
 	mWidth ( 0 ),
 	mHeight ( 0 ),
 	mMinFilter ( ZGL_SAMPLE_LINEAR ),
@@ -339,22 +337,23 @@ void MOAITextureBase::OnGfxEvent ( u32 event, void* userdata ) {
 //----------------------------------------------------------------//
 void MOAITextureBase::OnGPUBind () {
 
-	MOAIGfxMgr::GetDrawingAPI ().SetTexture ( this->mGLTexID );
+	MOAIGfxMgr::GetDrawingAPI ().BindTexture ( this->mGLTexture );
 }
 
 //----------------------------------------------------------------//
 void MOAITextureBase::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 
-	if ( this->mGLTexID && MOAIGfxMgr::IsValid ()) {
+	if ( this->mGLTexture.CanBind () && MOAIGfxMgr::IsValid ()) {
 		MOAIGfxMgr::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
 	}
-	MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mGLTexID, shouldDelete );
+	MOAIGfxResourceClerk::DeleteOrDiscard ( this->mGLTexture, shouldDelete );
+	this->mGLTexture = ZLGfxHandle (); // clear out the handle
 }
 
 //----------------------------------------------------------------//
 void MOAITextureBase::OnGPUUnbind () {
 
-	MOAIGfxMgr::GetDrawingAPI ().SetTexture ( 0 );
+	MOAIGfxMgr::GetDrawingAPI ().BindTexture ( ZLGfxResource::UNBIND );
 }
 
 //----------------------------------------------------------------//
@@ -446,9 +445,9 @@ void MOAITextureBase::SetFilter ( int min, int mag ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextureBase::SetTextureID ( ZLGfxHandle* glTexID, int internalFormat, int pixelType, size_t textureSize ) {
+void MOAITextureBase::SetGLTexture ( const ZLGfxHandle& glTexture, int internalFormat, int pixelType, size_t textureSize ) {
 
-	this->mGLTexID = glTexID;
+	this->mGLTexture = glTexture;
 	this->mGLInternalFormat = internalFormat;
 	this->mGLPixelType = pixelType;
 	this->mTextureSize = textureSize;
@@ -484,7 +483,7 @@ bool MOAITextureBase::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rect 
 	if ( this->ShouldGenerateMipmaps () || ( this->mWidth != image.GetWidth ()) || ( this->mHeight != image.GetHeight ())) {
 	
 		MOAIGfxMgr::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
-		MOAIGfxResourceClerk::DeleteOrDiscardHandle ( this->mGLTexID, false );
+		MOAIGfxResourceClerk::DeleteOrDiscard ( this->mGLTexture, false );
 		
 		if ( this->CreateTextureFromImage ( image )) {
 			MOAIGfxMgr::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
@@ -497,9 +496,9 @@ bool MOAITextureBase::UpdateTextureFromImage ( MOAIImage& image, ZLIntRect rect 
 	
 	// if the texture exists just update the sub-region
 	// otherwise create a new texture from the image
-	if ( this->mGLTexID ) {
+	if ( this->mGLTexture.CanBind ()) {
 
-		gfx.SetTexture ( this->mGLTexID );
+		gfx.BindTexture ( this->mGLTexture );
 
 		rect.Bless ();
 		ZLIntRect imageRect = image.GetRect ();

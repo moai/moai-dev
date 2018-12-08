@@ -83,7 +83,7 @@ void MOAIGlyphSet::SerializeIn ( MOAILuaState& state ) {
 	for ( ; glyphMapIt != this->mGlyphMap.end (); ++glyphMapIt ) {
 		MOAIGlyph& glyph = glyphMapIt->second;
 		
-		if ( glyph.mPageID == MOAIGlyph::NULL_PAGE_ID ) {
+		if ( glyph.mPageID == ZLIndex::INVALID ) {
 			glyph.mNext = this->mPending;
 			this->mPending = &glyph;
 		}

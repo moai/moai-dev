@@ -49,7 +49,7 @@ int MOAIMotionSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMotionSensor::EnqueueLevelEvent ( u8 deviceID, u8 sensorID, float x, float y, float z ) {
+void MOAIMotionSensor::EnqueueLevelEvent ( ZLIndex deviceID, ZLIndex sensorID, float x, float y, float z ) {
 
 	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
 	if ( inputMgr.WriteEventHeader < MOAIMotionSensor >( deviceID, sensorID )) {

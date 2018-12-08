@@ -21,10 +21,10 @@
 int MOAIDeckRemapper::_reserve ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDeckRemapper, "U" )
 
-	u32 size = state.GetValue < u32 >( 2, 0 );
+	ZLSize size = state.GetValue < u32 >( 2, 0 );
 	self->mRemap.Init ( size );
 	
-	for ( u32 i = 0; i < size; ++i ) {
+	for ( ZLIndex i = ZLIndex::ZERO; i < size; ++i ) {
 		self->mRemap [ i ] = i;
 	}
 	return 0;
@@ -60,13 +60,10 @@ int MOAIDeckRemapper::_setBase ( lua_State* L ) {
 int MOAIDeckRemapper::_setRemap ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDeckRemapper, "UN" )
 
-	u32 idx		= state.GetValue < u32 >( 2, 1 );
-	u32 remap	= state.GetValue < u32 >( 3, idx );
+	ZLIndex idx		= state.GetValueAsIndex ( 2 );
+	ZLIndex remap	= state.GetValueAsIndex ( 3 );
 	
-	idx			= idx - 1;
-	remap		= remap - 1;
-	
-	u32 code = idx - self->mBase;
+	ZLIndex code = idx - self->mBase;
 	
 	if ( code < self->mRemap.Size ()) {
 		self->mRemap [ code ] = remap;
@@ -122,7 +119,7 @@ void MOAIDeckRemapper::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 ZLIndex MOAIDeckRemapper::MOAIDeckProxy_Remap ( ZLIndex idx ) {
 
-	u32 code = idx.mKey - this->mBase;
+	ZLIndex code = idx - this->mBase;
 	
 	return ZLIndex (( code < this->mRemap.Size ()) ? this->mRemap [ code ] : idx );
 }
@@ -130,10 +127,13 @@ ZLIndex MOAIDeckRemapper::MOAIDeckProxy_Remap ( ZLIndex idx ) {
 //----------------------------------------------------------------//
 bool MOAIDeckRemapper::MOAINode_ApplyAttrOp ( u32 attrID, MOAIAttribute& attr, u32 op ) {
 
-	u32 code = attrID - this->mBase - 1;
+	ZLIndex code = ZLIndex ( attrID, ZLIndex::LIMIT ) - this->mBase - ( ZLSize )1;
 
+	// TODO: verify
 	if ( code < this->mRemap.Size ()) {
-		this->mRemap [ code ] = ZLFloat::ToIndex ( attr.Apply (( float )this->mRemap [ code ], op, MOAIAttribute::ATTR_READ_WRITE )) - 1;
+		ZLSize remap = this->mRemap [ code ];
+		ZLIndex idx = ZLIndex ( ZLFloat::ToIndex ( attr.Apply (( float )remap, op, MOAIAttribute::ATTR_READ_WRITE )) - 1, ZLIndex::LIMIT );
+		this->mRemap [ code ] = idx;
 		return true;
 	}
 	return false;

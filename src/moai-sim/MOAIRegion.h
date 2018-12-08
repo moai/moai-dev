@@ -96,8 +96,8 @@ public:
 	bool					FindExtremity			( ZLVec2D n, ZLVec2D& e );
 	bool					GetDistance				( const ZLVec2D& point, float& d ) const;
 	bool					GetDistance				( const ZLVec2D& point, float& d, ZLVec2D& p ) const;
-	ZLPolygon2D&			GetPolygon				( u32 idx );
-	const ZLPolygon2D&		GetPolygon				( u32 idx ) const;
+	ZLPolygon2D&			GetPolygon				( ZLIndex idx );
+	const ZLPolygon2D&		GetPolygon				( ZLIndex idx ) const;
 	u32						GetTriangles			( SafeTesselator& tess ) const;
 	u32						GetTriangles			( MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream ) const;
 	u32						GetTriangles			( MOAIVertexFormat& format, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytex ) const;
@@ -109,8 +109,8 @@ public:
 	void					Print					() const;
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
-	ZLResultCode			ReservePolygons			( size_t size );
-	ZLResultCode			ReserveVertices			( size_t idx, size_t size );
+	ZLResultCode			ReservePolygons			( ZLSize size );
+	ZLResultCode			ReserveVertices			( ZLIndex idx, ZLSize size );
 	void					ReverseWinding			( const MOAIRegion& region );
 	void					SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void					SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );

@@ -43,7 +43,7 @@ public:
 	bool				ButtonIsUp				();
 	bool				ButtonUp				();
 	void				ClearState				();
-	static void			EnqueueButtonEvent		( u8 deviceID, u8 sensorID, bool down );
+	static void			EnqueueButtonEvent		( ZLIndex deviceID, ZLIndex sensorID, bool down );
 						MOAIButtonSensor		();
 						~MOAIButtonSensor		();
 	void				ParseEvent				( ZLStream& eventStream );

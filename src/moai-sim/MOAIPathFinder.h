@@ -26,7 +26,7 @@ private:
 
 	friend class MOAIPathFinder;
 
-	int					mNodeID;
+	ZLIndex				mNodeID;
 	MOAIPathState*		mParent;
 	MOAIPathState*		mNext;
 	
@@ -50,7 +50,7 @@ private:
 	MOAILuaSharedPtr < MOAIPathGraph > mGraph;
 
 	ZLLeanArray < MOAIPathWeight > mWeights;
-	ZLLeanArray < int >	mPath;
+	ZLLeanArray < ZLIndex >	mPath;
 
 	// TODO: optimize implementation with memory pool of path states
 	// and binary heap of open paths
@@ -58,8 +58,8 @@ private:
 	MOAIPathState*		mOpen;
 	MOAIPathState*		mClosed;
 	
-	int					mStartNodeID;
-	int					mTargetNodeID;
+	ZLIndex				mStartNodeID;
+	ZLIndex				mTargetNodeID;
 
 	MOAIPathState*		mState; // used while expanding open set
 
@@ -98,7 +98,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIPathFinder )
 	
 	GET ( const ZLLeanArray < MOAIPathWeight >&, Weights, mWeights );
-	GET ( int, TargetNodeID, mTargetNodeID );
+	GET ( ZLIndex, TargetNodeID, mTargetNodeID );
 	GET ( u32, Mask, mMask );
 	GET ( u32, Heuristic, mHeuristic )
 	GET ( u32, Flags, mFlags )
@@ -109,10 +109,10 @@ public:
 	bool		CheckMask				( u32 terrain );
 	float		ComputeTerrainCost		( float moveCost, u32 terrain0, u32 terrain1 );
 	bool		FindPath				( int iterations );
-	bool		IsVisited				( int nodeID );
+	bool		IsVisited				( ZLIndex nodeID );
 				MOAIPathFinder			();
 				~MOAIPathFinder			();
-	void		PushState				( int nodeID, float cost, float estimate );
+	void		PushState				( ZLIndex nodeID, float cost, float estimate );
 	void		RegisterLuaClass		( MOAILuaState& state );
 	void		RegisterLuaFuncs		( MOAILuaState& state );
 };

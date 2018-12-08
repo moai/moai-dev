@@ -75,7 +75,7 @@ int MOAIGridSpace::_getCellAddr ( lua_State* L ) {
 	int xTile		= state.GetValue < int >( 2, 1 ) - 1;
 	int yTile		= state.GetValue < int >( 3, 1 ) - 1;
 	
-	lua_pushnumber ( state, self->GetCellAddr ( xTile, yTile ) + 1 );
+	state.Push ( self->GetCellAddr ( xTile, yTile ));
 	return 1;
 }
 
@@ -414,7 +414,7 @@ int MOAIGridSpace::_locToCellAddr ( lua_State* L ) {
 	MOAICellCoord coord;
 	coord = self->GetCellCoord ( loc );
 
-	state.Push ( self->GetCellAddr ( coord ) + 1 );
+	state.Push ( self->GetCellAddr ( coord ));
 	return 1;
 }
 
@@ -739,15 +739,15 @@ void MOAIGridSpace::GetBoundsInRect ( ZLRect rect, MOAICellCoord& c0, MOAICellCo
 }
 
 //----------------------------------------------------------------//
-int MOAIGridSpace::GetCellAddr ( MOAICellCoord cellCoord ) const {
+ZLIndex MOAIGridSpace::GetCellAddr ( MOAICellCoord cellCoord ) const {
 
 	return this->GetCellAddr ( cellCoord.mX, cellCoord.mY );
 }
 
 //----------------------------------------------------------------//
-int MOAIGridSpace::GetCellAddr ( int xCell, int yCell ) const {
+ZLIndex MOAIGridSpace::GetCellAddr ( int xCell, int yCell ) const {
 
-	if ( !( this->mWidth && this->mHeight )) return 0;
+	if ( !( this->mWidth && this->mHeight )) return ZLIndex::ZERO;
 
 	xCell = xCell % this->mWidth;
 	if ( xCell < 0 ) xCell += this->mWidth;
@@ -755,7 +755,7 @@ int MOAIGridSpace::GetCellAddr ( int xCell, int yCell ) const {
 	yCell = yCell % this->mHeight;
 	if ( yCell < 0 ) yCell += this->mHeight;
 
-	return ( yCell* this->mWidth ) + xCell;
+	return ZLIndex (( ZLSize )(( yCell * this->mWidth ) + xCell ), ZLIndex::LIMIT );
 }
 
 //----------------------------------------------------------------//

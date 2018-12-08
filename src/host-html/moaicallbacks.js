@@ -1,5 +1,18 @@
 var LibraryMOAI = {
 
+
+  ExitFullScreen: function() {
+    if (Module.ExitFullScreenCallback) {
+       Module.ExitFullScreenCallback()
+    }
+  },
+
+  EnterFullScreen: function() {
+    if (Module.EnterFullScreenCallback) {
+       Module.EnterFullScreenCallback()
+    }
+  },
+
   OpenWindowFunc: function(title,width,height) {
     var canvas;
     if (Module.OpenWindowCallback) {

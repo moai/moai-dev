@@ -48,7 +48,7 @@ private:
 
 	friend class MOAIGfxMgr;
 	friend class MOAIGfxPipelineClerk;
-	friend class MOAIGfxStateCache;
+	friend class MOAIGfxStateGPUCache;
 	
 	static const u32 COLOR_SIZE				= 4;
 	static const u32 NORMAL_SIZE			= 3;
@@ -57,12 +57,12 @@ private:
 	static const u32 MAX_ATTR_BYTES			= 16;
 	
 	ZLLeanArray < MOAIVertexAttribute >		mAttributes; // this is the linear array of attributes
-	ZLLeanArray < u32 >						mAttributeIDsByUse [ TOTAL_ATTRIBUTE_TYPES ]; // this is for looking up attributes by semantic meaning
+	ZLLeanArray < ZLIndex >					mAttributeIDsByUse [ TOTAL_ATTRIBUTE_TYPES ]; // this is for looking up attributes by semantic meaning
 	
-	u32										mTotalAttributes;
-	u32										mTotalAttributesByUse [ TOTAL_ATTRIBUTE_TYPES ];
+	ZLSize									mTotalAttributes;
+	ZLSize									mTotalAttributesByUse [ TOTAL_ATTRIBUTE_TYPES ];
 	
-	u32										mVertexSize;
+	ZLSize									mVertexSize;
 
 	//----------------------------------------------------------------//
 	static int					_clear							( lua_State* L );
@@ -119,7 +119,7 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIVertexFormat )
 	
-	GET_CONST ( u32, VertexSize, mVertexSize )
+	GET_CONST ( ZLSize, VertexSize, mVertexSize )
 	
 	//----------------------------------------------------------------//
 	static MOAIVertexFormat*		AffirmVertexFormat				( MOAILuaState& state, int idx );
@@ -130,15 +130,15 @@ public:
 	bool							ComputeBounds					( ZLBox& bounds, ZLStream& stream, size_t size ) const;
 	
 	u32								CountAttributesByUse			( u32 useID ) const;
-	u32								CountAttributeComponents		( u32 attrIdx ) const;
-	u32								CountAttributeComponents		( u32 useID, u32 idx ) const;
+	u32								CountAttributeComponents		( ZLIndex attrIdx ) const;
+	u32								CountAttributeComponents		( u32 useID, ZLIndex idx ) const;
 	u32								CountBones						() const;
 	u32								CountComponentsByUse			( u32 useID ) const;
 
 	void							DeclareAttribute				( u32 index, u32 type, u32 size, u32 use, bool normalized );
 	
-	const MOAIVertexAttribute&		GetAttribute					( u32 attrIdx );
-	const MOAIVertexAttribute*		GetAttributeByUse				( u32 useID, u32 attrIndex ) const;
+	const MOAIVertexAttribute&		GetAttribute					( ZLIndex attrIdx );
+	const MOAIVertexAttribute*		GetAttributeByUse				( u32 useID, ZLIndex attrIndex ) const;
 	
 									MOAIVertexFormat				();
 									~MOAIVertexFormat				();
@@ -149,14 +149,14 @@ public:
 	void							PrintVertices					( ZLStream& stream, size_t size ) const;
 	void							PrintVertices					( const void* buffer, size_t size ) const;
 	
-	ZLVec4D							ReadAttribute					( ZLStream& stream, u32 attrIdx, float yFallback, float zFallback, float wFallback ) const;
-	ZLVec4D							ReadAttribute					( ZLStream& stream, u32 useID, u32 idx, float yFallback, float zFallback, float wFallback ) const;
-	u32								ReadBoneCount					( ZLStream& stream, u32 idx ) const;
+	ZLVec4D							ReadAttribute					( ZLStream& stream, ZLIndex attrIdx, float yFallback, float zFallback, float wFallback ) const;
+	ZLVec4D							ReadAttribute					( ZLStream& stream, u32 useID, ZLIndex idx, float yFallback, float zFallback, float wFallback ) const;
+	u32								ReadBoneCount					( ZLStream& stream, ZLIndex idx ) const;
 	size_t							ReadBones						( ZLStream& stream, float* indices, float* weights, size_t size ) const;
-	ZLColorVec						ReadColor						( ZLStream& stream, u32 idx ) const;
-	ZLVec4D							ReadCoord						( ZLStream& stream, u32 idx ) const;
-	ZLVec3D							ReadNormal						( ZLStream& stream, u32 idx ) const;
-	ZLVec3D							ReadUV							( ZLStream& stream, u32 idx ) const;
+	ZLColorVec						ReadColor						( ZLStream& stream, ZLIndex idx ) const;
+	ZLVec4D							ReadCoord						( ZLStream& stream, ZLIndex idx ) const;
+	ZLVec3D							ReadNormal						( ZLStream& stream, ZLIndex idx ) const;
+	ZLVec3D							ReadUV							( ZLStream& stream, ZLIndex idx ) const;
 	
 	void							RegisterLuaClass				( MOAILuaState& state );
 	void							RegisterLuaFuncs				( MOAILuaState& state );
@@ -170,15 +170,15 @@ public:
 	static ZLVec4D					UnpackCoord						( const void* buffer, const MOAIVertexAttribute& attribute );
 	
 	void							WriteAhead						( ZLStream& stream ) const; // writes an empty vertex as a placeholder
-	void							WriteAttribute					( ZLStream& stream, u32 attrIdx, float x, float y, float z, float w ) const;
-	void							WriteAttribute					( ZLStream& stream, u32 useID, u32 idx, float x, float y, float z, float w ) const;
-	void							WriteBoneCount					( ZLStream& stream, u32 idx, u32 count ) const;
+	void							WriteAttribute					( ZLStream& stream, ZLIndex attrIdx, float x, float y, float z, float w ) const;
+	void							WriteAttribute					( ZLStream& stream, u32 useID, ZLIndex idx, float x, float y, float z, float w ) const;
+	void							WriteBoneCount					( ZLStream& stream, ZLIndex idx, u32 count ) const;
 	size_t							WriteBones						( ZLStream& stream, const float* indices, const float* weights, size_t size ) const;
-	void							WriteColor						( ZLStream& stream, u32 idx, u32 color ) const;
-	void							WriteColor						( ZLStream& stream, u32 idx, float r, float g, float b, float a ) const;
-	void							WriteCoord						( ZLStream& stream, u32 idx, float x, float y, float z, float w ) const;
-	void							WriteNormal						( ZLStream& stream, u32 idx, float x, float y, float z ) const;
-	void							WriteUV							( ZLStream& stream, u32 idx, float x, float y, float z ) const;
+	void							WriteColor						( ZLStream& stream, ZLIndex idx, u32 color ) const;
+	void							WriteColor						( ZLStream& stream, ZLIndex idx, float r, float g, float b, float a ) const;
+	void							WriteCoord						( ZLStream& stream, ZLIndex idx, float x, float y, float z, float w ) const;
+	void							WriteNormal						( ZLStream& stream, ZLIndex idx, float x, float y, float z ) const;
+	void							WriteUV							( ZLStream& stream, ZLIndex idx, float x, float y, float z ) const;
 	
 	//----------------------------------------------------------------//
 	inline void* GetAttributeAddress ( const MOAIVertexAttribute& attribute, void* vertexBuffer, u32 vtxIdx ) const {

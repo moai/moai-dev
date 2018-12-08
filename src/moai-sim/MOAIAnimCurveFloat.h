@@ -43,14 +43,14 @@ public:
 	DECL_LUA_FACTORY ( MOAIAnimCurveFloat )
 	
 	//----------------------------------------------------------------//
-	float			GetSample			( u32 id );
-	float			GetValue			( float time ) const;
-	void			GetValueRange		( float t0, float t1, float &min, float &max );
+	float			GetSample				( ZLIndex id );
+	float			GetValue				( float time ) const;
+	void			GetValueRange			( float t0, float t1, float &min, float &max );
 					MOAIAnimCurveFloat		();
 					~MOAIAnimCurveFloat		();
-	void			RegisterLuaClass	( MOAILuaState& state );
-	void			RegisterLuaFuncs	( MOAILuaState& state );
-	void			SetSample			( ZLIndex idx, float value );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			SetSample				( ZLIndex idx, float value );
 };
 
 #endif

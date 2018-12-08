@@ -10,21 +10,24 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( width, height )
 viewport:setScale (width / (width/640), height / (height/480))
 
-layer = MOAIPartitionViewLayer.new ()
-layer:setPartition( MOAIPartition.new() )
-layer:setViewport ( viewport )
-layer:pushRenderPass ()
-
 -- set up the world and start its simulation
 world = MOAIBox2DWorld.new ()
 world:setUnitsToMeters(0.05)
-layer:setUnderlayTable ({ world })
+
+debugLayer = MOAITableViewLayer.new ()
+debugLayer:setViewport ( viewport )
+debugLayer:setRenderTable ( world )
+debugLayer:pushRenderPass ()
+
+layer = MOAIPartitionViewLayer.new ()
+layer:setViewport ( viewport )
+layer:pushRenderPass ()
 
 worldBody = world:addBody ( MOAIBox2DBody.STATIC )
 
-texture = MOAIGfxQuad2D.new ()
-texture:setTexture ( 'moai.png' )
-texture:setRect ( -25/2, -25/2, 25/2, 25/2 )
+deck = MOAISpriteDeck2D.new ()
+deck:setTexture ( 'moai.png' )
+deck:setRect ( -25/2, -25/2, 25/2, 25/2 )
 
 function addSprite()
 	local body = world:addBody ( MOAIBox2DBody.DYNAMIC )
@@ -39,10 +42,10 @@ function addSprite()
 	local fixture = body:addPolygon ( poly )
 	fixture:setDensity ( 0.1 )
 	fixture:setFriction ( 0.6 )
-  body:resetMassData ()
+    body:resetMassData ()
 
-	local sprite = MOAIProp.new ()
-	sprite:setDeck ( texture )
+	local sprite = MOAIGraphicsProp.new ()
+	sprite:setDeck ( deck )
 	sprite.body = body
 	sprite:setParent ( body )
 	sprite:setPartition ( layer )	

@@ -19,7 +19,10 @@ class MOAIInputMgr :
 	public virtual ZLMemStream {
 private:
 
-	static const size_t CHUNK_SIZE = 256;
+	static const ZLSize CHUNK_SIZE		= 256;
+
+	static const ZLSize MAX_DEVICES		= 0xff;
+	static const ZLSize MAX_SENSORS		= 0xff;
 
 	enum {
 		INPUT_EVENT,
@@ -58,11 +61,11 @@ private:
 
 	//----------------------------------------------------------------//
 	bool				CanWrite					();
-	bool				CheckSensor					( u8 deviceID, u8 sensorID, u32 type );
+	bool				CheckSensor					( ZLIndex deviceID, ZLIndex sensorID, u32 type );
 	void				InvokeCallback				( u32 event, double timestamp );
 	size_t				ParseEvents					( ZLStream& stream, double timestep );
 	void				Record						( size_t size );
-	bool				WriteEventHeader			( u8 deviceID, u8 sensorID, u32 type );
+	bool				WriteEventHeader			( ZLIndex deviceID, ZLIndex sensorID, u32 type );
 
 public:
 
@@ -72,33 +75,33 @@ public:
 	SET ( double, Timestamp, mTimestamp )
 
 	//----------------------------------------------------------------//
-	u8					AddDevice					( cc8* name );
+	ZLIndex				AddDevice					( cc8* name );
 	void				ClearSensorState			();
 	void				DeferEvents					( bool defer );
 	void				FlushEvents					( double skip );
-	MOAIInputDevice*	GetDevice					( u8 deviceID );
-	MOAISensor*			GetSensor					( u8 deviceID, u8 sensorID );
+	MOAIInputDevice*	GetDevice					( ZLIndex deviceID );
+	MOAISensor*			GetSensor					( ZLIndex deviceID, ZLIndex sensorID );
 	bool				HasEvents					();
 	//bool				IsDone						();
 						MOAIInputMgr				();
 						~MOAIInputMgr				();
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
-	void				ReserveDevices				( u8 total );
-	void				ReserveSensors				( u8 deviceID, u8 total );
+	void				ReserveDevices				( ZLSize total );
+	void				ReserveSensors				( ZLIndex deviceID, ZLSize total );
 	void				ResetSensorState			();
 	void				SetAutosuspend				( double autosuspend );
 	void				SetAutotimestamp			( bool autotimestamp );
 	void				SetConfigurationName		( cc8* name );
-	void				SetDevice					( u8 deviceID, cc8* name ); // back compat
-	void				SetDeviceActive				( u8 deviceID, bool active );
-	void				SetDeviceHardwareInfo		( u8 deviceID, cc8* hardwareInfo );
+	void				SetDevice					( ZLIndex deviceID, cc8* name ); // back compat
+	void				SetDeviceActive				( ZLIndex deviceID, bool active );
+	void				SetDeviceHardwareInfo		( ZLIndex deviceID, cc8* hardwareInfo );
 	void				SuspendEvents				( bool suspend );
 	void				Update						( double timestep );
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	void SetSensor ( u8 deviceID, u8 sensorID, cc8* name ) {
+	void SetSensor ( ZLIndex deviceID, ZLIndex sensorID, cc8* name ) {
 	
 		MOAIInputDevice* device = this->GetDevice ( deviceID );
 		if ( device ) {
@@ -112,7 +115,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	bool WriteEventHeader ( u8 deviceID, u8 sensorID ) {
+	bool WriteEventHeader ( ZLIndex deviceID, ZLIndex sensorID ) {
 		return this->WriteEventHeader ( deviceID, sensorID, ZLTypeID < TYPE >::GetID ());
 	}
 };

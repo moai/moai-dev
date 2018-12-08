@@ -34,7 +34,7 @@ class MOAIGfxBuffer :
 protected:
 	
 	friend class MOAIGfxPipelineClerk;
-	friend class MOAIGfxStateCache;
+	friend class MOAIGfxStateGPUCache;
 	friend class MOAIVertexArrayItem;
 	
 	enum {
@@ -43,8 +43,8 @@ protected:
 		UPDATE_MODE_SUBDATA,
 	};
 	
-	ZLLeanArray < ZLGfxHandle* >	mVBOs;
-	u32								mCurrentVBO;
+	ZLLeanArray < ZLGfxHandle >		mVBOs;
+	ZLIndex							mCurrentVBO;
 	u32								mTarget;
 
 	MOAIGfxBufferLoader*			mLoader;
@@ -85,8 +85,8 @@ public:
 	bool						OnGPUUpdate				();
 	void						RegisterLuaClass		( MOAILuaState& state );
 	void						RegisterLuaFuncs		( MOAILuaState& state );
-	void						Reserve					( u32 size );
-	void						ReserveVBOs				( u32 gpuBuffers );
+	void						Reserve					( ZLSize size );
+	void						ReserveVBOs				( ZLSize gpuBuffers );
 	void						SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void						SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };

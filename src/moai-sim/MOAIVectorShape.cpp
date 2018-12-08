@@ -126,7 +126,7 @@ MOAIVectorShape::~MOAIVectorShape () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIVectorShape::SetVertices ( const ZLVec2D* vertices, u32 total, bool closed ) {
+bool MOAIVectorShape::SetVertices ( const ZLVec2D* vertices, ZLSize total, bool closed ) {
 	UNUSED ( vertices );
 	UNUSED ( total );
 	UNUSED ( closed );
@@ -196,8 +196,8 @@ int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, SafeTesselator& 
 //----------------------------------------------------------------//
 int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, u32 flags ) {
 	
-	u32 fillExtraID = this->mStyle.GetFillExtraID ();
-	u32 strokeExtraID = this->mStyle.GetStrokeExtraID ();
+	ZLIndex fillExtraID		= ZLIndex ( this->mStyle.GetFillExtraID (), ZLIndex::LIMIT );
+	ZLIndex strokeExtraID	= ZLIndex ( this->mStyle.GetStrokeExtraID (), ZLIndex::LIMIT );
 	int error = 0;
 	
 	bool isExtruded		= this->mStyle.GetExtrude () > 0.0f;
