@@ -21,7 +21,7 @@ int MOAICameraAnchor2D::_setParent ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICameraAnchor2D, "U" )
 	
 	MOAINode* parent = state.GetLuaObject < MOAINode >( 2, true );
-	self->SetAttrLink ( PACK_ATTR ( MOAICameraAnchor2D, INHERIT_LOC ), parent, PACK_ATTR ( MOAITransformBase, TRANSFORM_TRAIT ));
+	self->SetAttrLink ( AttrID::Pack ( INHERIT_LOC ), parent, MOAITransformBase::AttrID::Pack ( MOAITransformBase::TRANSFORM_TRAIT ));
 	
 	return 0;
 }
@@ -84,7 +84,7 @@ void MOAICameraAnchor2D::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAINode::RegisterLuaClass ( state );
 
-	state.SetField ( -1, "INHERIT_LOC", MOAICameraAnchor2DAttr::Pack ( INHERIT_LOC ).ToRaw ());
+	state.SetField ( -1, "INHERIT_LOC", AttrID::Pack ( INHERIT_LOC ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
@@ -108,6 +108,6 @@ void MOAICameraAnchor2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAICameraAnchor2D::MOAINode_Update () {
 	
-	const ZLAffine3D inherit = this->GetLinkedValue ( MOAICameraAnchor2DAttr::Pack ( INHERIT_LOC ), ZLAffine3D::IDENT );
+	const ZLAffine3D inherit = this->GetLinkedValue ( AttrID::Pack ( INHERIT_LOC ), ZLAffine3D::IDENT );
 	this->mLoc = inherit.GetTranslation ();
 }

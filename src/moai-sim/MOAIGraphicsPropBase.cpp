@@ -126,9 +126,9 @@ int MOAIGraphicsPropBase::_setParent ( lua_State* L ) {
 
 	MOAINode* parent = state.GetLuaObject < MOAINode >( 2, true );
 	
-	self->SetAttrLink ( PACK_ATTR ( MOAIColor, INHERIT_COLOR ), parent, PACK_ATTR ( MOAIColor, COLOR_TRAIT ));
-	self->SetAttrLink ( PACK_ATTR ( MOAITransformBase, INHERIT_TRANSFORM ), parent, PACK_ATTR ( MOAITransformBase, TRANSFORM_TRAIT ));
-	self->SetAttrLink ( PACK_ATTR ( MOAIGraphicsPropBase, INHERIT_VISIBLE ), parent, PACK_ATTR ( MOAIGraphicsPropBase, ATTR_VISIBLE ));
+	self->SetAttrLink ( MOAIColor::AttrID_INHERIT_COLOR (), parent, MOAIColor::AttrID_COLOR_TRAIT ());
+	self->SetAttrLink ( MOAITransformBase::AttrID::Pack ( MOAITransformBase::INHERIT_TRANSFORM ), parent, MOAITransformBase::AttrID::Pack ( MOAITransformBase::TRANSFORM_TRAIT ));
+	self->SetAttrLink ( AttrID::Pack ( INHERIT_VISIBLE ), parent, AttrID::Pack ( ATTR_VISIBLE ));
 	
 	//MOAILogF ( state, MOAISTRING_FunctionDeprecated_S, "setParent" );
 	
@@ -279,14 +279,14 @@ void MOAIGraphicsPropBase::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "DEBUG_DRAW_MODEL_BOUNDS",				MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( DEBUG_DRAW_MODEL_BOUNDS ));
 	state.SetField ( -1, "DEBUG_DRAW_WORLD_BOUNDS",				MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( DEBUG_DRAW_WORLD_BOUNDS ));
 	
-	state.SetField ( -1, "ATTR_SCISSOR_RECT",			MOAIGraphicsPropBaseAttr::Pack ( ATTR_SCISSOR_RECT ).ToRaw ());
+	state.SetField ( -1, "ATTR_SCISSOR_RECT",			AttrID::Pack ( ATTR_SCISSOR_RECT ).ToRaw ());
 
-	state.SetField ( -1, "ATTR_LOCAL_VISIBLE",			MOAIGraphicsPropBaseAttr::Pack ( ATTR_LOCAL_VISIBLE ).ToRaw ());
-	state.SetField ( -1, "ATTR_VISIBLE",				MOAIGraphicsPropBaseAttr::Pack ( ATTR_VISIBLE ).ToRaw ());
-	state.SetField ( -1, "INHERIT_VISIBLE",				MOAIGraphicsPropBaseAttr::Pack ( INHERIT_VISIBLE ).ToRaw ());
+	state.SetField ( -1, "ATTR_LOCAL_VISIBLE",			AttrID::Pack ( ATTR_LOCAL_VISIBLE ).ToRaw ());
+	state.SetField ( -1, "ATTR_VISIBLE",				AttrID::Pack ( ATTR_VISIBLE ).ToRaw ());
+	state.SetField ( -1, "INHERIT_VISIBLE",				AttrID::Pack ( INHERIT_VISIBLE ).ToRaw ());
 
-	state.SetField ( -1, "INHERIT_FRAME",				MOAIGraphicsPropBaseAttr::Pack ( INHERIT_FRAME ).ToRaw ());
-	state.SetField ( -1, "FRAME_TRAIT",					MOAIGraphicsPropBaseAttr::Pack ( FRAME_TRAIT ).ToRaw ());
+	state.SetField ( -1, "INHERIT_FRAME",				AttrID::Pack ( INHERIT_FRAME ).ToRaw ());
+	state.SetField ( -1, "FRAME_TRAIT",					AttrID::Pack ( FRAME_TRAIT ).ToRaw ());
 	
 	state.SetField ( -1, "GL_FUNC_ADD",					( u32 )ZGL_BLEND_MODE_ADD );
 	state.SetField ( -1, "GL_FUNC_SUBTRACT",			( u32 )ZGL_BLEND_MODE_SUBTRACT );
@@ -660,7 +660,7 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () {
 //----------------------------------------------------------------//
 bool MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
-	if ( MOAIGraphicsPropBaseAttr::Check ( attrID )) {
+	if ( AttrID::Check ( attrID )) {
 		
 		switch (  attrID.Unpack ()) {
 				
@@ -693,7 +693,7 @@ void MOAIGraphicsPropBase::MOAINode_Update () {
 	MOAIColor::MOAINode_Update ();
 	MOAIPartitionHull::MOAINode_Update ();
 	
-	bool visible = ZLFloat::ToBoolean ( this->GetLinkedValue ( MOAIGraphicsPropBaseAttr::Pack ( INHERIT_VISIBLE ), 1.0f ));
+	bool visible = ZLFloat::ToBoolean ( this->GetLinkedValue ( AttrID::Pack ( INHERIT_VISIBLE ), 1.0f ));
 	this->mDisplayFlags = visible && ( this->mDisplayFlags & FLAGS_LOCAL_VISIBLE ) ? this->mDisplayFlags | FLAGS_VISIBLE : this->mDisplayFlags & ~FLAGS_VISIBLE ;
 }
 

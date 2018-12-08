@@ -61,6 +61,15 @@ public:
 		TOTAL_ATTR,
 	};
 	
+	DECL_ATTR_ID ( ATTR_R_COL )
+	DECL_ATTR_ID ( ATTR_G_COL )
+	DECL_ATTR_ID ( ATTR_B_COL )
+	DECL_ATTR_ID ( ATTR_A_COL )
+	
+	DECL_ATTR_ID ( ADD_COLOR )
+	DECL_ATTR_ID ( INHERIT_COLOR )
+	DECL_ATTR_ID ( COLOR_TRAIT )
+	
 	//----------------------------------------------------------------//
 	static MOAIColor*	AffirmColor			( MOAILuaState& state, int idx );
 	ZLColorVec			GetColorTrait		() const;

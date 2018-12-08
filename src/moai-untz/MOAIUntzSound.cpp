@@ -193,7 +193,7 @@ int MOAIUntzSound::_moveVolume ( lua_State* L ) {
 		MOAIEaseDriver* action = new MOAIEaseDriver ();
 		action->ReserveLinks ( 1 );
 		
-		action->SetLink ( ZLIndexOp::ZERO, self, MOAIUntzSoundAttr::Pack ( ATTR_VOLUME ), volume, mode );
+		action->SetLink ( ZLIndexOp::ZERO, self, AttrID::Pack ( ATTR_VOLUME ), volume, mode );
 		
 		action->SetSpan ( delay );
 		action->Start ( 0, false );
@@ -265,7 +265,7 @@ int MOAIUntzSound::_seekVolume ( lua_State* L ) {
 		MOAIEaseDriver* action = new MOAIEaseDriver ();
 		action->ReserveLinks ( 1 );
 		
-		action->SetLink ( ZLIndexOp::ZERO, self, MOAIUntzSoundAttr::Pack ( ATTR_VOLUME ), volume - self->mSound->getVolume (), mode );
+		action->SetLink ( ZLIndexOp::ZERO, self, AttrID::Pack ( ATTR_VOLUME ), volume - self->mSound->getVolume (), mode );
 		
 		action->SetSpan ( delay );
 		action->Start ( 0, false );
@@ -399,7 +399,7 @@ void MOAIUntzSound::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAINode::RegisterLuaClass ( state );
 
-	state.SetField ( -1, "ATTR_VOLUME", MOAIUntzSoundAttr::Pack ( ATTR_VOLUME ).ToRaw ());
+	state.SetField ( -1, "ATTR_VOLUME", AttrID::Pack ( ATTR_VOLUME ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
@@ -437,7 +437,7 @@ void MOAIUntzSound::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 bool MOAIUntzSound::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
-	if ( MOAIUntzSoundAttr::Check ( attrID )) {
+	if ( AttrID::Check ( attrID )) {
 		if ( attrID.Unpack () == ATTR_VOLUME ) {
 			this->mSound->setVolume ( attr.Apply ( this->mSound->getVolume (), op, MOAIAttribute::ATTR_READ_WRITE ));
 			return true;

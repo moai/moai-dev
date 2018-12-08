@@ -259,7 +259,7 @@ int MOAITransformBase::_setParent ( lua_State* L ) {
 
 	MOAINode* parent = state.GetLuaObject < MOAINode >( 2, true );
 	
-	self->SetAttrLink ( MOAITransformBaseAttr::Pack ( INHERIT_TRANSFORM ), parent, MOAITransformBaseAttr::Pack ( TRANSFORM_TRAIT ));
+	self->SetAttrLink ( AttrID::Pack ( INHERIT_TRANSFORM ), parent, AttrID::Pack ( TRANSFORM_TRAIT ));
 	
 	//MOAILogF ( state, MOAISTRING_FunctionDeprecated_S, "setParent" );
 	
@@ -345,17 +345,17 @@ void MOAITransformBase::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAINode::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "ATTR_WORLD_X_LOC",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_X_LOC ).ToRaw ());
-	state.SetField ( -1, "ATTR_WORLD_Y_LOC",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Y_LOC ).ToRaw ());
-	state.SetField ( -1, "ATTR_WORLD_Z_LOC",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Z_LOC ).ToRaw ());
-	state.SetField ( -1, "ATTR_WORLD_Z_ROT",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Z_ROT ).ToRaw ());
-	state.SetField ( -1, "ATTR_WORLD_X_SCL",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_X_SCL ).ToRaw ());
-	state.SetField ( -1, "ATTR_WORLD_Y_SCL",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Y_SCL ).ToRaw ());
-	state.SetField ( -1, "ATTR_WORLD_Z_SCL",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Z_SCL ).ToRaw ());
-	state.SetField ( -1, "TRANSFORM_TRAIT",		MOAITransformBaseAttr::Pack ( TRANSFORM_TRAIT ).ToRaw ());
+	state.SetField ( -1, "ATTR_WORLD_X_LOC",	AttrID::Pack ( ATTR_WORLD_X_LOC ).ToRaw ());
+	state.SetField ( -1, "ATTR_WORLD_Y_LOC",	AttrID::Pack ( ATTR_WORLD_Y_LOC ).ToRaw ());
+	state.SetField ( -1, "ATTR_WORLD_Z_LOC",	AttrID::Pack ( ATTR_WORLD_Z_LOC ).ToRaw ());
+	state.SetField ( -1, "ATTR_WORLD_Z_ROT",	AttrID::Pack ( ATTR_WORLD_Z_ROT ).ToRaw ());
+	state.SetField ( -1, "ATTR_WORLD_X_SCL",	AttrID::Pack ( ATTR_WORLD_X_SCL ).ToRaw ());
+	state.SetField ( -1, "ATTR_WORLD_Y_SCL",	AttrID::Pack ( ATTR_WORLD_Y_SCL ).ToRaw ());
+	state.SetField ( -1, "ATTR_WORLD_Z_SCL",	AttrID::Pack ( ATTR_WORLD_Z_SCL ).ToRaw ());
+	state.SetField ( -1, "TRANSFORM_TRAIT",		AttrID::Pack ( TRANSFORM_TRAIT ).ToRaw ());
 	
-	state.SetField ( -1, "INHERIT_LOC",			MOAITransformBaseAttr::Pack ( INHERIT_LOC ).ToRaw ());
-	state.SetField ( -1, "INHERIT_TRANSFORM",	MOAITransformBaseAttr::Pack ( INHERIT_TRANSFORM ).ToRaw ());
+	state.SetField ( -1, "INHERIT_LOC",			AttrID::Pack ( INHERIT_LOC ).ToRaw ());
+	state.SetField ( -1, "INHERIT_TRANSFORM",	AttrID::Pack ( INHERIT_TRANSFORM ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
@@ -394,7 +394,7 @@ void MOAITransformBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 bool MOAITransformBase::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
 	// TODO: these values may need to be cached for performance reasons
-	if ( MOAITransformBaseAttr::Check ( attrID )) {
+	if ( AttrID::Check ( attrID )) {
 
 		switch (  attrID.Unpack ()) {
 			
@@ -463,13 +463,13 @@ void MOAITransformBase::MOAINode_Update () {
 	this->MOAITransformBase_BuildLocalToWorldMtx ( this->mLocalToWorldMtx );
 	
 	MOAIAttribute attr;
-	if ( this->PullLinkedAttr ( MOAITransformBaseAttr::Pack ( INHERIT_TRANSFORM ), attr )) {
+	if ( this->PullLinkedAttr ( AttrID::Pack ( INHERIT_TRANSFORM ), attr )) {
 		const ZLAffine3D inherit = attr.GetValue ( ZLAffine3D::IDENT );
 		this->mLocalToWorldMtx.Append ( inherit );
 	}
 	else {
 	
-		if ( this->PullLinkedAttr ( MOAITransformBaseAttr::Pack ( INHERIT_LOC ), attr )) {
+		if ( this->PullLinkedAttr ( AttrID::Pack ( INHERIT_LOC ), attr )) {
 			
 			const ZLAffine3D inherit = attr.GetValue ( ZLAffine3D::IDENT );
 			

@@ -59,7 +59,7 @@ MOAIPinTransform::~MOAIPinTransform () {
 void MOAIPinTransform::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAITransform::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "ATTR_FRONT", MOAIPinTransformAttr::Pack ( ATTR_FRONT ).ToRaw ());
+	state.SetField ( -1, "ATTR_FRONT", AttrID::Pack ( ATTR_FRONT ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
@@ -82,7 +82,7 @@ void MOAIPinTransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 bool MOAIPinTransform::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
-	if ( MOAIPinTransformAttr::Check ( attrID )) {
+	if ( AttrID::Check ( attrID )) {
 		switch (  attrID.Unpack ()) {
 			case ATTR_FRONT:
 				attr.Apply ( this->mFront, op, MOAIAttribute::ATTR_READ );

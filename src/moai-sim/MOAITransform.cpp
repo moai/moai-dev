@@ -221,15 +221,15 @@ int MOAITransform::_move ( lua_State* L ) {
 		MOAIEaseDriver* action = new MOAIEaseDriver ();
 		
 		action->ParseForMove ( state, 2, self, 9, mode,
-			MOAITransformAttr::Pack ( ATTR_X_LOC ).ToRaw (), 0.0f,
-			MOAITransformAttr::Pack ( ATTR_Y_LOC ).ToRaw (), 0.0f,
-			MOAITransformAttr::Pack ( ATTR_Z_LOC ).ToRaw (), 0.0f,
-			MOAITransformAttr::Pack ( ATTR_X_ROT ).ToRaw (), 0.0f,
-			MOAITransformAttr::Pack ( ATTR_Y_ROT ).ToRaw (), 0.0f,
-			MOAITransformAttr::Pack ( ATTR_Z_ROT ).ToRaw (), 0.0f,
-			MOAITransformAttr::Pack ( ATTR_X_SCL ).ToRaw (), 0.0f,
-			MOAITransformAttr::Pack ( ATTR_Y_SCL ).ToRaw (), 0.0f,
-			MOAITransformAttr::Pack ( ATTR_Z_SCL ).ToRaw (), 0.0f
+			AttrID::Pack ( ATTR_X_LOC ).ToRaw (), 0.0f,
+			AttrID::Pack ( ATTR_Y_LOC ).ToRaw (), 0.0f,
+			AttrID::Pack ( ATTR_Z_LOC ).ToRaw (), 0.0f,
+			AttrID::Pack ( ATTR_X_ROT ).ToRaw (), 0.0f,
+			AttrID::Pack ( ATTR_Y_ROT ).ToRaw (), 0.0f,
+			AttrID::Pack ( ATTR_Z_ROT ).ToRaw (), 0.0f,
+			AttrID::Pack ( ATTR_X_SCL ).ToRaw (), 0.0f,
+			AttrID::Pack ( ATTR_Y_SCL ).ToRaw (), 0.0f,
+			AttrID::Pack ( ATTR_Z_SCL ).ToRaw (), 0.0f
 		);
 		
 		action->SetSpan ( delay );
@@ -286,9 +286,9 @@ int MOAITransform::_moveLoc ( lua_State* L ) {
 		MOAIEaseDriver* action = new MOAIEaseDriver ();
 		
 		action->ParseForMove ( state, 2, self, 3, mode,
-			MOAITransformAttr::Pack ( ATTR_X_LOC ).ToRaw (), 0.0f,
-			MOAITransformAttr::Pack ( ATTR_Y_LOC ).ToRaw (), 0.0f,
-			MOAITransformAttr::Pack ( ATTR_Z_LOC ).ToRaw (), 0.0f
+			AttrID::Pack ( ATTR_X_LOC ).ToRaw (), 0.0f,
+			AttrID::Pack ( ATTR_Y_LOC ).ToRaw (), 0.0f,
+			AttrID::Pack ( ATTR_Z_LOC ).ToRaw (), 0.0f
 		);
 		
 		action->SetSpan ( delay );
@@ -336,9 +336,9 @@ int MOAITransform::_movePiv ( lua_State* L ) {
 		MOAIEaseDriver* action = new MOAIEaseDriver ();
 		
 		action->ParseForMove ( state, 2, self, 3, mode,
-			MOAITransformAttr::Pack ( ATTR_X_PIV ).ToRaw (), 0.0f,
-			MOAITransformAttr::Pack ( ATTR_Y_PIV ).ToRaw (), 0.0f,
-			MOAITransformAttr::Pack ( ATTR_Z_PIV ).ToRaw (), 0.0f
+			AttrID::Pack ( ATTR_X_PIV ).ToRaw (), 0.0f,
+			AttrID::Pack ( ATTR_Y_PIV ).ToRaw (), 0.0f,
+			AttrID::Pack ( ATTR_Z_PIV ).ToRaw (), 0.0f
 		);
 		
 		action->SetSpan ( delay );
@@ -386,9 +386,9 @@ int MOAITransform::_moveRot ( lua_State* L ) {
 		MOAIEaseDriver* action = new MOAIEaseDriver ();
 		
 		action->ParseForMove ( state, 2, self, 3, mode,
-			MOAITransformAttr::Pack ( ATTR_X_ROT ).ToRaw (), 0.0f,
-			MOAITransformAttr::Pack ( ATTR_Y_ROT ).ToRaw (), 0.0f,
-			MOAITransformAttr::Pack ( ATTR_Z_ROT ).ToRaw (), 0.0f
+			AttrID::Pack ( ATTR_X_ROT ).ToRaw (), 0.0f,
+			AttrID::Pack ( ATTR_Y_ROT ).ToRaw (), 0.0f,
+			AttrID::Pack ( ATTR_Z_ROT ).ToRaw (), 0.0f
 		);
 		
 		action->SetSpan ( delay );
@@ -436,9 +436,9 @@ int MOAITransform::_moveScl ( lua_State* L ) {
 		MOAIEaseDriver* action = new MOAIEaseDriver ();
 		
 		action->ParseForMove ( state, 2, self, 3, mode,
-			MOAITransformAttr::Pack ( ATTR_X_SCL ).ToRaw (), 0.0f,
-			MOAITransformAttr::Pack ( ATTR_Y_SCL ).ToRaw (), 0.0f,
-			MOAITransformAttr::Pack ( ATTR_Z_SCL ).ToRaw (), 0.0f
+			AttrID::Pack ( ATTR_X_SCL ).ToRaw (), 0.0f,
+			AttrID::Pack ( ATTR_Y_SCL ).ToRaw (), 0.0f,
+			AttrID::Pack ( ATTR_Z_SCL ).ToRaw (), 0.0f
 		);
 		
 		action->SetSpan ( delay );
@@ -493,15 +493,15 @@ int MOAITransform::_seek ( lua_State* L ) {
 		MOAIEaseDriver* action = new MOAIEaseDriver ();
 		
 		action->ParseForSeek ( state, 2, self, 9, mode,
-			MOAITransformAttr::Pack ( ATTR_X_LOC ).ToRaw (), self->mLoc.mX, 0.0f,
-			MOAITransformAttr::Pack ( ATTR_Y_LOC ).ToRaw (), self->mLoc.mY, 0.0f,
-			MOAITransformAttr::Pack ( ATTR_Z_LOC ).ToRaw (), self->mLoc.mZ, 0.0f,
-			MOAITransformAttr::Pack ( ATTR_X_ROT ).ToRaw (), self->mRot.mX, 0.0f,
-			MOAITransformAttr::Pack ( ATTR_Y_ROT ).ToRaw (), self->mRot.mY, 0.0f,
-			MOAITransformAttr::Pack ( ATTR_Z_ROT ).ToRaw (), self->mRot.mZ, 0.0f,
-			MOAITransformAttr::Pack ( ATTR_X_SCL ).ToRaw (), self->mScale.mX, 1.0f,
-			MOAITransformAttr::Pack ( ATTR_Y_SCL ).ToRaw (), self->mScale.mY, 1.0f,
-			MOAITransformAttr::Pack ( ATTR_Z_SCL ).ToRaw (), self->mScale.mZ, 1.0f
+			AttrID::Pack ( ATTR_X_LOC ).ToRaw (), self->mLoc.mX, 0.0f,
+			AttrID::Pack ( ATTR_Y_LOC ).ToRaw (), self->mLoc.mY, 0.0f,
+			AttrID::Pack ( ATTR_Z_LOC ).ToRaw (), self->mLoc.mZ, 0.0f,
+			AttrID::Pack ( ATTR_X_ROT ).ToRaw (), self->mRot.mX, 0.0f,
+			AttrID::Pack ( ATTR_Y_ROT ).ToRaw (), self->mRot.mY, 0.0f,
+			AttrID::Pack ( ATTR_Z_ROT ).ToRaw (), self->mRot.mZ, 0.0f,
+			AttrID::Pack ( ATTR_X_SCL ).ToRaw (), self->mScale.mX, 1.0f,
+			AttrID::Pack ( ATTR_Y_SCL ).ToRaw (), self->mScale.mY, 1.0f,
+			AttrID::Pack ( ATTR_Z_SCL ).ToRaw (), self->mScale.mZ, 1.0f
 		);
 		
 		action->SetSpan ( delay );
@@ -552,9 +552,9 @@ int MOAITransform::_seekLoc ( lua_State* L ) {
 		MOAIEaseDriver* action = new MOAIEaseDriver ();
 		
 		action->ParseForSeek ( state, 2, self, 3, mode,
-			MOAITransformAttr::Pack ( ATTR_X_LOC ).ToRaw (), self->mLoc.mX, 0.0f,
-			MOAITransformAttr::Pack ( ATTR_Y_LOC ).ToRaw (), self->mLoc.mY, 0.0f,
-			MOAITransformAttr::Pack ( ATTR_Z_LOC ).ToRaw (), self->mLoc.mZ, 0.0f
+			AttrID::Pack ( ATTR_X_LOC ).ToRaw (), self->mLoc.mX, 0.0f,
+			AttrID::Pack ( ATTR_Y_LOC ).ToRaw (), self->mLoc.mY, 0.0f,
+			AttrID::Pack ( ATTR_Z_LOC ).ToRaw (), self->mLoc.mZ, 0.0f
 		);
 		
 		action->SetSpan ( delay );
@@ -601,9 +601,9 @@ int MOAITransform::_seekPiv ( lua_State* L ) {
 		MOAIEaseDriver* action = new MOAIEaseDriver ();
 		
 		action->ParseForSeek ( state, 2, self, 3, mode,
-			MOAITransformAttr::Pack ( ATTR_X_PIV ).ToRaw (), self->mPiv.mX, 0.0f,
-			MOAITransformAttr::Pack ( ATTR_Y_PIV ).ToRaw (), self->mPiv.mY, 0.0f,
-			MOAITransformAttr::Pack ( ATTR_Z_PIV ).ToRaw (), self->mPiv.mZ, 0.0f
+			AttrID::Pack ( ATTR_X_PIV ).ToRaw (), self->mPiv.mX, 0.0f,
+			AttrID::Pack ( ATTR_Y_PIV ).ToRaw (), self->mPiv.mY, 0.0f,
+			AttrID::Pack ( ATTR_Z_PIV ).ToRaw (), self->mPiv.mZ, 0.0f
 		);
 		
 		action->SetSpan ( delay );
@@ -650,9 +650,9 @@ int MOAITransform::_seekRot ( lua_State* L ) {
 		MOAIEaseDriver* action = new MOAIEaseDriver ();
 		
 		action->ParseForSeek ( state, 2, self, 3, mode,
-			MOAITransformAttr::Pack ( ATTR_X_ROT ).ToRaw (), self->mRot.mX, 0.0f,
-			MOAITransformAttr::Pack ( ATTR_Y_ROT ).ToRaw (), self->mRot.mY, 0.0f,
-			MOAITransformAttr::Pack ( ATTR_Z_ROT ).ToRaw (), self->mRot.mZ, 0.0f
+			AttrID::Pack ( ATTR_X_ROT ).ToRaw (), self->mRot.mX, 0.0f,
+			AttrID::Pack ( ATTR_Y_ROT ).ToRaw (), self->mRot.mY, 0.0f,
+			AttrID::Pack ( ATTR_Z_ROT ).ToRaw (), self->mRot.mZ, 0.0f
 		);
 		
 		action->SetSpan ( delay );
@@ -699,9 +699,9 @@ int MOAITransform::_seekScl ( lua_State* L ) {
 		MOAIEaseDriver* action = new MOAIEaseDriver ();
 		
 		action->ParseForSeek ( state, 2, self, 3, mode,
-			MOAITransformAttr::Pack ( ATTR_X_SCL ).ToRaw (), self->mScale.mX, 1.0f,
-			MOAITransformAttr::Pack ( ATTR_Y_SCL ).ToRaw (), self->mScale.mY, 1.0f,
-			MOAITransformAttr::Pack ( ATTR_Z_SCL ).ToRaw (), self->mScale.mZ, 1.0f
+			AttrID::Pack ( ATTR_X_SCL ).ToRaw (), self->mScale.mX, 1.0f,
+			AttrID::Pack ( ATTR_Y_SCL ).ToRaw (), self->mScale.mY, 1.0f,
+			AttrID::Pack ( ATTR_Z_SCL ).ToRaw (), self->mScale.mZ, 1.0f
 		);
 		
 		action->SetSpan ( delay );
@@ -955,20 +955,20 @@ void MOAITransform::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAITransformBase::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "ATTR_X_PIV",			MOAITransformAttr::Pack ( ATTR_X_PIV ).ToRaw ());
-	state.SetField ( -1, "ATTR_Y_PIV",			MOAITransformAttr::Pack ( ATTR_Y_PIV ).ToRaw ());
-	state.SetField ( -1, "ATTR_Z_PIV",			MOAITransformAttr::Pack ( ATTR_Z_PIV ).ToRaw ());
-	state.SetField ( -1, "ATTR_X_LOC",			MOAITransformAttr::Pack ( ATTR_X_LOC ).ToRaw ());
-	state.SetField ( -1, "ATTR_Y_LOC",			MOAITransformAttr::Pack ( ATTR_Y_LOC ).ToRaw ());
-	state.SetField ( -1, "ATTR_Z_LOC",			MOAITransformAttr::Pack ( ATTR_Z_LOC ).ToRaw ());
-	state.SetField ( -1, "ATTR_X_ROT",			MOAITransformAttr::Pack ( ATTR_X_ROT ).ToRaw ());
-	state.SetField ( -1, "ATTR_Y_ROT",			MOAITransformAttr::Pack ( ATTR_Y_ROT ).ToRaw ());
-	state.SetField ( -1, "ATTR_Z_ROT",			MOAITransformAttr::Pack ( ATTR_Z_ROT ).ToRaw ());
-	state.SetField ( -1, "ATTR_X_SCL",			MOAITransformAttr::Pack ( ATTR_X_SCL ).ToRaw ());
-	state.SetField ( -1, "ATTR_Y_SCL",			MOAITransformAttr::Pack ( ATTR_Y_SCL ).ToRaw ());
-	state.SetField ( -1, "ATTR_Z_SCL",			MOAITransformAttr::Pack ( ATTR_Z_SCL ).ToRaw ());
-	state.SetField ( -1, "ATTR_ROTATE_QUAT",	MOAITransformAttr::Pack ( ATTR_ROTATE_QUAT ).ToRaw ());
-	state.SetField ( -1, "ATTR_TRANSLATE",		MOAITransformAttr::Pack ( ATTR_TRANSLATE ).ToRaw ());
+	state.SetField ( -1, "ATTR_X_PIV",			AttrID::Pack ( ATTR_X_PIV ).ToRaw ());
+	state.SetField ( -1, "ATTR_Y_PIV",			AttrID::Pack ( ATTR_Y_PIV ).ToRaw ());
+	state.SetField ( -1, "ATTR_Z_PIV",			AttrID::Pack ( ATTR_Z_PIV ).ToRaw ());
+	state.SetField ( -1, "ATTR_X_LOC",			AttrID::Pack ( ATTR_X_LOC ).ToRaw ());
+	state.SetField ( -1, "ATTR_Y_LOC",			AttrID::Pack ( ATTR_Y_LOC ).ToRaw ());
+	state.SetField ( -1, "ATTR_Z_LOC",			AttrID::Pack ( ATTR_Z_LOC ).ToRaw ());
+	state.SetField ( -1, "ATTR_X_ROT",			AttrID::Pack ( ATTR_X_ROT ).ToRaw ());
+	state.SetField ( -1, "ATTR_Y_ROT",			AttrID::Pack ( ATTR_Y_ROT ).ToRaw ());
+	state.SetField ( -1, "ATTR_Z_ROT",			AttrID::Pack ( ATTR_Z_ROT ).ToRaw ());
+	state.SetField ( -1, "ATTR_X_SCL",			AttrID::Pack ( ATTR_X_SCL ).ToRaw ());
+	state.SetField ( -1, "ATTR_Y_SCL",			AttrID::Pack ( ATTR_Y_SCL ).ToRaw ());
+	state.SetField ( -1, "ATTR_Z_SCL",			AttrID::Pack ( ATTR_Z_SCL ).ToRaw ());
+	state.SetField ( -1, "ATTR_ROTATE_QUAT",	AttrID::Pack ( ATTR_ROTATE_QUAT ).ToRaw ());
+	state.SetField ( -1, "ATTR_TRANSLATE",		AttrID::Pack ( ATTR_TRANSLATE ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
@@ -1079,7 +1079,7 @@ void MOAITransform::SetScl ( float x, float y, float z ) {
 //----------------------------------------------------------------//
 bool MOAITransform::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
-	if ( MOAITransformAttr::Check ( attrID )) {
+	if ( AttrID::Check ( attrID )) {
 
 		switch (  attrID.Unpack ()) {
 		

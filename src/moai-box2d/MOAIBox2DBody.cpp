@@ -1129,7 +1129,7 @@ void MOAIBox2DBody::SetBody ( b2Body* body ) {
 bool MOAIBox2DBody::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
 	// TODO: these values may need to be cached for performance reasons
-	if ( MOAITransform::MOAITransformAttr::Check ( attrID )) {
+	if ( MOAITransform::AttrID::Check ( attrID )) {
 	
 		const b2Transform & xform = mBody->GetTransform();
 		
