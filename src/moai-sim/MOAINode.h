@@ -14,7 +14,7 @@
 	};
 
 #define DECL_ATTR_ID(name)																										\
-	static inline MOAIAttrID	AttrID_##name		() {return AttrID::Pack ( name ); }
+	static inline MOAIAttrID	AttrID_##name		() { return AttrID::Pack ( name ); }
 
 class MOAINode;
 class MOAIDepLink;

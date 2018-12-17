@@ -180,13 +180,13 @@ int STLString::to_int () {
 //----------------------------------------------------------------//
 void STLString::to_lower () {
 
-	transform ( this->begin (), this->end (),this->begin (), ( char( * )( char ))tolower );
+	transform ( this->begin (), this->end (), this->begin (), ( char( * )( char ))tolower );
 }
 
 //----------------------------------------------------------------//
 void STLString::to_upper () {
 
-	transform ( this->begin (), this->end (),this->begin (), ( char( * )( char ))toupper );
+	transform ( this->begin (), this->end (), this->begin (), ( char( * )( char ))toupper );
 }
 
 //----------------------------------------------------------------//
