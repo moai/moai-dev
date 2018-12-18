@@ -17,13 +17,12 @@ int MOAIVectorPoly::AddFillContours ( SafeTesselator& tess ) {
 	if ( this->mVertices.Size () < 3 ) return 0;
 	
 	SafeTesselator outline;
-
-	outline.AddContour ( 2, this->mVertices.GetBuffer (), sizeof ( ZLVec2D ), this->mVertices.Size ());
+	outline.AddContour2D ( this->mVertices.GetBuffer (), this->mVertices.Size (), this->mStyle.mPrecision );
 	
 	int error = outline.Tesselate (( int )this->mStyle.GetWindingRule (), TESS_BOUNDARY_CONTOURS, 0, 0 );
 	if ( error ) return error;
 	
-	this->CopyBoundaries ( tess, &outline );
+	tess.CopyBoundaries ( outline );
 	
 	return error;
 }
@@ -76,7 +75,7 @@ int MOAIVectorPoly::AddStrokeContours ( SafeTesselator& tess, bool inside, bool 
 	MOAIVectorUtil::StrokeLine ( this->mStyle, contour0, joins0, nJoins, width, false );
 	MOAIVectorUtil::StrokeLine ( this->mStyle, contour1, joins1, nJoins, width, false );
 	
-	tess.AddContour ( 2, contour, sizeof ( ZLVec2D ), nContourVerts );
+	tess.AddContour2D ( contour, nContourVerts );
 	
 	return 0;
 }

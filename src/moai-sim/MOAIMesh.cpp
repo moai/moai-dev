@@ -319,7 +319,7 @@ int MOAIMesh::_getRegionForPrim ( lua_State* L ) {
 				triangle [ 1 ] = prim.mCoords [ 1 ].Vec2D ();
 				triangle [ 2 ] = prim.mCoords [ 2 ].Vec2D ();
 				
-				tesselator.AddContour ( 2, triangle, sizeof ( ZLVec2D ), 3 );
+				tesselator.AddContour2D ( triangle, 3 );
 			}
 		}
 	}

@@ -26,7 +26,7 @@ int MOAIVectorCombo::AddFillContours ( SafeTesselator& tess ) {
 	error = outline.Tesselate (( int )this->mStyle.GetWindingRule (), TESS_BOUNDARY_CONTOURS, 0, 0 );
 	if ( error ) return error;
 	
-	this->CopyBoundaries ( tess, &outline );
+	tess.CopyBoundaries ( outline );
 	
 	return error;
 }

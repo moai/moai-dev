@@ -19,6 +19,8 @@ class MOAIRegion :
 	public virtual MOAILuaObject {
 private:
 	
+	static const int DEFAULT_PRECISION = 1000;
+	
 	ZLLeanArray < ZLPolygon2D > mPolygons;
 	
 	//----------------------------------------------------------------//
@@ -74,18 +76,18 @@ public:
 	GET_CONST ( size_t, Size, mPolygons.Size ())
 
 	//----------------------------------------------------------------//
-	int						AddFillContours			( SafeTesselator& tess, u32 mask = 0xffffffff ) const;
+	int						AddFillContours			( SafeTesselator& tess, float precision, u32 mask = 0xffffffff ) const;
 	void					Append					( const MOAIRegion& regionA, const MOAIRegion& regionB );
 	void					Bless					();
-	void					Boolean					( const MOAIRegion& regionA, const MOAIRegion& regionB, u32 operation );
-	void					BooleanAnd				( const MOAIRegion& regionA, const MOAIRegion& regionB );
-	void					BooleanNot				( const MOAIRegion& regionA, const MOAIRegion& regionB );
-	void					BooleanOr				( const MOAIRegion& regionA, const MOAIRegion& regionB );
-	void					BooleanXor				( const MOAIRegion& regionA, const MOAIRegion& regionB );
+	void					Boolean					( const MOAIRegion& regionA, const MOAIRegion& regionB, u32 operation, float precision );
+	void					BooleanAnd				( const MOAIRegion& regionA, const MOAIRegion& regionB, float precision );
+	void					BooleanNot				( const MOAIRegion& regionA, const MOAIRegion& regionB, float precision );
+	void					BooleanOr				( const MOAIRegion& regionA, const MOAIRegion& regionB, float precision );
+	void					BooleanXor				( const MOAIRegion& regionA, const MOAIRegion& regionB, float precision );
 	void					Clear					();
 	void					Clip					( const MOAIRegion& region, ZLPlane2D plane );
 	void					Clip					( const MOAIRegion& region, const MOAIRegion& clip, const ZLAffine3D* mtx = 0 );
-	int						CombineAndTesselate		( const MOAIRegion& regionA, const MOAIRegion& regionB, int windingRule );
+	int						CombineAndTesselate		( const MOAIRegion& regionA, const MOAIRegion& regionB, int windingRule, float precision );
 	ZLSizeResult			ConvexHull				( ZLStream& vtxStream, size_t nVerts );
 	void					Copy					( const MOAIRegion& region );
 	void					Copy					( const SafeTesselator& tess );
@@ -117,7 +119,7 @@ public:
 	void					SetWinding				( u32 winding );
 	void					Snap					( const MOAIRegion& region, float xSnap, float ySnap );
 	void					Stroke					( const MOAIRegion& region, float exterior, bool strokeExterior, float interior, bool strokeInterior );
-	int						Tesselate				( const MOAIRegion& region, int windingRule );
+	int						Tesselate				( const MOAIRegion& region, int windingRule, float precision );
 	void					Transform				( const MOAIRegion& region, const ZLAffine2D& transform );
 };
 

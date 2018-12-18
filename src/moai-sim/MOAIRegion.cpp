@@ -48,9 +48,10 @@ int MOAIRegion::_boolean ( lua_State* L ) {
 	MOAIRegion* regionB		= state.GetLuaObject < MOAIRegion >( 3, false );
 
 	u32 operation			= state.GetValue < u32 >( 4, BOOLEAN_OR );
+	float precision			= state.GetValue < float >( 5, ( float )DEFAULT_PRECISION );
 
 	if ( regionA && regionB ) {
-		self->Boolean ( *regionA, *regionB, operation );
+		self->Boolean ( *regionA, *regionB, operation, precision );
 	}
 	return 0;
 }
@@ -502,12 +503,16 @@ int MOAIRegion::_tesselate ( lua_State* L ) {
 		if ( regionB ) {
 		
 			u32 windingRule		= state.GetValue < u32 >( 4, TESS_WINDING_ODD );
-			self->CombineAndTesselate ( *regionA, *regionB, windingRule );
+			float precision		= state.GetValue < float >( 5, ( float )DEFAULT_PRECISION );
+			
+			self->CombineAndTesselate ( *regionA, *regionB, windingRule, precision );
 		}
 		else {
 		
 			u32 windingRule		= state.GetValue < u32 >( 3, TESS_WINDING_ODD );
-			self->Tesselate ( *regionA, windingRule );
+			float precision		= state.GetValue < float >( 4, ( float )DEFAULT_PRECISION);
+			
+			self->Tesselate ( *regionA, windingRule, precision );
 		}
 	}
 	return 0;
@@ -537,14 +542,15 @@ int MOAIRegion::_translate ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-int MOAIRegion::AddFillContours ( SafeTesselator& tess, u32 mask ) const {
+int MOAIRegion::AddFillContours ( SafeTesselator& tess, float precision, u32 mask ) const {
 
 	ZLSize size = this->mPolygons.Size ();
 	
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
 		ZLPolygon2D& polygon = this->mPolygons [ i ];
 		if ( polygon.GetInfo () & mask ) {
-			tess.AddPolygon ( this->mPolygons [ i ]);
+			const ZLPolygon2D& polygon = this->mPolygons [ i ];
+			tess.AddContour2D ( polygon.GetVertices (), polygon.GetSize (), precision );
 		}
 	}
 	
@@ -580,56 +586,56 @@ void MOAIRegion::Bless () {
 }
 
 //----------------------------------------------------------------//
-void MOAIRegion::Boolean ( const MOAIRegion& regionA, const MOAIRegion& regionB, u32 operation ) {
+void MOAIRegion::Boolean ( const MOAIRegion& regionA, const MOAIRegion& regionB, u32 operation, float precision ) {
 
 	switch ( operation ) {
 	
 		case BOOLEAN_AND:
-			this->BooleanAnd ( regionA, regionB );
+			this->BooleanAnd ( regionA, regionB, precision );
 			break;
 		
 		case BOOLEAN_NOT:
-			this->BooleanNot ( regionA, regionB );
+			this->BooleanNot ( regionA, regionB, precision );
 			break;
 		
 		case BOOLEAN_OR:
-			this->BooleanOr ( regionA, regionB );
+			this->BooleanOr ( regionA, regionB, precision );
 			break;
 			
 		case BOOLEAN_XOR:
-			this->BooleanXor ( regionA, regionB );
+			this->BooleanXor ( regionA, regionB, precision );
 			break;
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIRegion::BooleanAnd ( const MOAIRegion& regionA, const MOAIRegion& regionB ) {
+void MOAIRegion::BooleanAnd ( const MOAIRegion& regionA, const MOAIRegion& regionB, float precision ) {
 	
-	this->CombineAndTesselate ( regionA, regionB, TESS_WINDING_ABS_GEQ_TWO );
+	this->CombineAndTesselate ( regionA, regionB, TESS_WINDING_ABS_GEQ_TWO, precision );
 }
 
 //----------------------------------------------------------------//
-void MOAIRegion::BooleanNot ( const MOAIRegion& regionA, const MOAIRegion& regionB ) {
+void MOAIRegion::BooleanNot ( const MOAIRegion& regionA, const MOAIRegion& regionB, float precision ) {
 
 	MOAIRegion regionOr;
-	int error = regionOr.CombineAndTesselate ( regionA, regionB, TESS_WINDING_POSITIVE );
+	int error = regionOr.CombineAndTesselate ( regionA, regionB, TESS_WINDING_POSITIVE, precision );
 
 	if ( !error ) {
-		this->CombineAndTesselate ( regionOr, regionB, TESS_WINDING_ODD );
+		this->CombineAndTesselate ( regionOr, regionB, TESS_WINDING_ODD, precision );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIRegion::BooleanOr ( const MOAIRegion& regionA, const MOAIRegion& regionB ) {
+void MOAIRegion::BooleanOr ( const MOAIRegion& regionA, const MOAIRegion& regionB, float precision ) {
 
-	this->CombineAndTesselate ( regionA, regionB, TESS_WINDING_POSITIVE );
+	this->CombineAndTesselate ( regionA, regionB, TESS_WINDING_POSITIVE, precision );
 	//this->Print ();
 }
 
 //----------------------------------------------------------------//
-void MOAIRegion::BooleanXor ( const MOAIRegion& regionA, const MOAIRegion& regionB ) {
+void MOAIRegion::BooleanXor ( const MOAIRegion& regionA, const MOAIRegion& regionB, float precision ) {
 
-	this->CombineAndTesselate ( regionA, regionB, TESS_WINDING_ODD );
+	this->CombineAndTesselate ( regionA, regionB, TESS_WINDING_ODD, precision );
 }
 
 //----------------------------------------------------------------//
@@ -671,12 +677,12 @@ void MOAIRegion::Clip ( const MOAIRegion& region, const MOAIRegion& clip, const 
 }
 
 //----------------------------------------------------------------//
-int MOAIRegion::CombineAndTesselate ( const MOAIRegion& regionA, const MOAIRegion& regionB, int windingRule ) {
+int MOAIRegion::CombineAndTesselate ( const MOAIRegion& regionA, const MOAIRegion& regionB, int windingRule, float precision ) {
 
 	SafeTesselator tess;
 	
-	regionA.AddFillContours ( tess );
-	regionB.AddFillContours ( tess );
+	regionA.AddFillContours ( tess, precision );
+	regionB.AddFillContours ( tess, precision );
 	
 	int error = tess.Tesselate ( windingRule, TESS_BOUNDARY_CONTOURS, 0, 0 );
 
@@ -895,7 +901,7 @@ void MOAIRegion::Edge ( const MOAIRegion& region, const ZLVec2D& offset ) {
 			d1.Sub ( contour [ IDX_1 ]);
 			
 			if ( ABS ( d0.Cross ( d1 )) > FLT_EPSILON ) {
-				tess.AddContour ( IDX_2, contour, sizeof ( ZLVec2D ), 4 );
+				tess.AddContour2D ( contour, 4 );
 			}
 		}
 	}
@@ -990,8 +996,8 @@ u32 MOAIRegion::GetTriangles ( SafeTesselator& tess ) const {
 
 	ZLSize nPolys = this->mPolygons.Size ();
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < nPolys; ++i ) {
-		const ZLPolygon2D& poly = this->mPolygons [ i ];
-		tess.AddContour ( 2, poly.GetVertices (), sizeof ( ZLVec2D ), ( int )poly.GetSize ());
+		const ZLPolygon2D& polygon = this->mPolygons [ i ];
+		tess.AddContour2D ( polygon.GetVertices (), polygon.GetSize ());
 	}
 	
 	return tess.Tesselate ( TESS_WINDING_NONZERO, TESS_POLYGONS, 3, 2 );
@@ -1365,7 +1371,7 @@ void MOAIRegion::Stroke ( const MOAIRegion& region, float exterior, bool strokeE
 			int contourVerts = MOAIVectorUtil::StrokeLine ( style, 0, joins, nVerts, exterior, exact );
 			ZLVec2D* contour = ( ZLVec2D* )alloca ( sizeof ( ZLVec2D ) * contourVerts );
 			MOAIVectorUtil::StrokeLine ( style, contour, joins, nVerts, exterior, exact );
-			tess.AddContour ( 2, contour, sizeof ( ZLVec2D ), contourVerts );
+			tess.AddContour2D ( contour, contourVerts );
 		}
 		
 		// stroke the interior
@@ -1378,7 +1384,7 @@ void MOAIRegion::Stroke ( const MOAIRegion& region, float exterior, bool strokeE
 			int contourVerts = MOAIVectorUtil::StrokeLine ( style, 0, joins, nVerts, interior, exact );
 			ZLVec2D* contour = ( ZLVec2D* )alloca ( sizeof ( ZLVec2D ) * contourVerts );
 			MOAIVectorUtil::StrokeLine ( style, contour, joins, nVerts, interior, exact );
-			tess.AddContour ( 2, contour, sizeof ( ZLVec2D ), contourVerts );
+			tess.AddContour2D ( contour, contourVerts );
 		}
 	}
 	
@@ -1390,11 +1396,11 @@ void MOAIRegion::Stroke ( const MOAIRegion& region, float exterior, bool strokeE
 }
 
 //----------------------------------------------------------------//
-int MOAIRegion::Tesselate ( const MOAIRegion& region, int windingRule ) {
+int MOAIRegion::Tesselate ( const MOAIRegion& region, int windingRule, float precision ) {
 
 	SafeTesselator tess;
 	
-	region.AddFillContours ( tess );
+	region.AddFillContours ( tess, precision );
 	
 	int error = tess.Tesselate ( windingRule, TESS_BOUNDARY_CONTOURS, 0, 0 );
 

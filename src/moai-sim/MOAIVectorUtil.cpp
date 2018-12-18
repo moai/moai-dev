@@ -22,15 +22,42 @@
 const ZLVec3D SafeTesselator::sNormal = ZLVec3D ( 0.0f, 0.0f, 1.0f );
 
 //----------------------------------------------------------------//
-void SafeTesselator::AddContour ( int numComponents, const void* vertices, int stride, size_t numVertices ) {
+void SafeTesselator::AddContour2D ( const ZLVec2D* vertices, size_t numVertices ) {
 	
-	tessAddContour ( this->mTess, numComponents, vertices, stride, ( int )numVertices ); // TODO: check overflow
+	tessAddContour ( this->mTess, 2, vertices, sizeof ( ZLVec2D ), ( int )numVertices ); // TODO: check overflow
 }
 
 //----------------------------------------------------------------//
-void SafeTesselator::AddPolygon ( const ZLPolygon2D& poly ) {
+void SafeTesselator::AddContour2D ( const ZLVec2D* vertices, size_t numVertices, float precision ) {
+	
+	if ( precision > 0 ) {
+	
+		const float* inFloats = ( const float* )vertices;
+		
+		size_t numFloats = numVertices * 2;
+		float* floats = ( float* )alloca ( sizeof ( float ) * numFloats );
+		for ( size_t i = 0; i < numFloats; ++i ) {
+			floats [ i ] = ( float )(( floor ( inFloats [ i ] * precision )) / precision );
+		}
+		this->AddContour2D (( const ZLVec2D* )floats, numVertices );
+	}
+	else {
+		this->AddContour2D ( vertices, numVertices );
+	}
+}
 
-	this->AddContour ( 2, poly.GetVertices (), sizeof ( TESSreal ) * 2, poly.GetSize ());
+//----------------------------------------------------------------//
+void SafeTesselator::CopyBoundaries ( const SafeTesselator& src ) {
+
+	const float* verts = tessGetVertices ( src.mTess );
+	const int* elems = tessGetElements ( src.mTess );
+	int nelems = tessGetElementCount ( src.mTess );
+
+	for ( int i = 0; i < nelems; ++i ) {
+		int b = elems [( i * 2 )];
+		int n = elems [( i * 2 ) + 1 ];
+		this->AddContour2D (( const ZLVec2D* )&verts [ b * 2 ], n );
+	}
 }
 
 //----------------------------------------------------------------//

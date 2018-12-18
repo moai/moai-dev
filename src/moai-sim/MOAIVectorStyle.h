@@ -79,6 +79,8 @@ public:
 	
 	float				mMergeNormals; // in degrees - 0 to 180; 0 will not be merged
 	
+	float				mPrecision;
+	
 	GET_SET_CONST ( u8, FillStyle, mFillStyle )
 	GET_SET_CONST ( ZLColorVec&, FillColor, mFillColor )
 	
@@ -115,6 +117,8 @@ public:
 	GET_SET_CONST ( u32, StrokeExtraID, mStrokeExtraID )
 	
 	GET_SET_CONST ( float, MergeNormals, mMergeNormals )
+	
+	GET_SET_CONST ( float, Precision, mPrecision )
 	
 	//----------------------------------------------------------------//
 	void		Default						();

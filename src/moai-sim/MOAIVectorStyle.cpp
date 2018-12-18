@@ -48,6 +48,8 @@ void MOAIVectorStyle::Default () {
 	this->mStrokeExtraID = 0;
 	
 	this->mMergeNormals = 0.0f;
+	
+	this->mPrecision = 100;
 }
 
 //----------------------------------------------------------------//

@@ -617,6 +617,14 @@ int MOAIVectorTesselator::_setPolyClosed ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIVectorTesselator::_setPrecision ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
+	
+	self->mStyle.mPrecision = state.GetValue < float >( 2, 0.0f );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAIVectorTesselator::_setShadowColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 	
@@ -888,8 +896,8 @@ int MOAIVectorTesselator::Finish () {
 
 //----------------------------------------------------------------//
 MOAIVectorTesselator::MOAIVectorTesselator () :
-	mDepthBias ( 0.0f ),
-	mDepthOffset ( 0.0f ),
+	mDepthBias ( 0 ),
+	mDepthOffset ( 0 ),
 	mVerbose ( false ),
 	mVtxExtraSize ( 0 ) {
 	
@@ -1156,6 +1164,7 @@ void MOAIVectorTesselator::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setMergeNormals",		_setMergeNormals },
 		{ "setMiterLimit",			_setMiterLimit },
 		{ "setPolyClosed",			_setPolyClosed },
+		{ "setPrecision",			_setPrecision },
 		{ "setShadowColor",			_setShadowColor },
 		{ "setShadowCurve",			_setShadowCurve },
 		{ "setStrokeColor",			_setStrokeColor },

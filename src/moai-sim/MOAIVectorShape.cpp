@@ -59,19 +59,19 @@ int MOAIVectorShape::AddStrokeContours ( SafeTesselator& tess, bool inside, bool
 		this->StrokeBoundaries ( exterior, outline, exteriorWidth, true, false );
 		error = exterior.Tesselate ( TESS_WINDING_NONZERO, TESS_BOUNDARY_CONTOURS, 0, 0 );
 		if ( error ) return error;
-		this->CopyBoundaries ( stroke, &exterior );
+		stroke.CopyBoundaries ( exterior );
 	}
 	
 	if ( inside ) {
 		this->StrokeBoundaries ( interior, outline, interiorWidth, false, false );
 		error = interior.Tesselate ( TESS_WINDING_NONZERO, TESS_BOUNDARY_CONTOURS, 0, 0 );
 		if ( error ) return error;
-		this->CopyBoundaries ( stroke, &interior );
+		stroke.CopyBoundaries ( interior );
 	}
 	
 	error = stroke.Tesselate ( TESS_WINDING_ODD, TESS_BOUNDARY_CONTOURS, 0, 0 );
 	if ( error ) return error;
-	this->CopyBoundaries ( tess, &stroke );
+	tess.CopyBoundaries ( stroke );
 	
 	return 0;
 }
@@ -80,20 +80,6 @@ int MOAIVectorShape::AddStrokeContours ( SafeTesselator& tess, bool inside, bool
 bool MOAIVectorShape::CanGroup () {
 
 	return this->mCanGroup;
-}
-
-//----------------------------------------------------------------//
-void MOAIVectorShape::CopyBoundaries ( SafeTesselator& dest, SafeTesselator* src ) {
-
-	const float* verts = tessGetVertices ( src->mTess );
-	const int* elems = tessGetElements ( src->mTess );
-	int nelems = tessGetElementCount ( src->mTess );
-
-	for ( int i = 0; i < nelems; ++i ) {
-		int b = elems [( i * 2 )];
-		int n = elems [( i * 2 ) + 1 ];
-		dest.AddContour ( 2, &verts [ b * 2 ], sizeof ( float ) * 2, n );
-	}
 }
 
 //----------------------------------------------------------------//
@@ -146,7 +132,7 @@ void MOAIVectorShape::Stroke ( SafeTesselator& tess, const ZLVec2D* verts, int n
 	
 	MOAIVectorUtil::StrokeLine ( this->mStyle, contour, joins, nVerts, width, exact );
 	
-	tess.AddContour ( 2, contour, sizeof ( ZLVec2D ), contourVerts );
+	tess.AddContour2D ( contour, contourVerts, this->mStyle.mPrecision );
 }
 
 //----------------------------------------------------------------//

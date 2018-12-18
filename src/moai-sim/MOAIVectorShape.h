@@ -24,7 +24,6 @@ protected:
 	bool				mCanGroup;
 
 	//----------------------------------------------------------------//
-	void				CopyBoundaries				( SafeTesselator& dest, SafeTesselator* src );
 	void				Stroke						( SafeTesselator& tess, const ZLVec2D* verts, int nVerts, float width, bool forward, bool interior );
 	void				StrokeBoundaries			( SafeTesselator& tess, SafeTesselator& outline, float width, bool forward, bool interior );
 
