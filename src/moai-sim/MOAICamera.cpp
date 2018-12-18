@@ -415,7 +415,7 @@ ZLMatrix4x4 MOAICamera::GetProjMtx ( const MOAIViewport& viewport ) const {
 				float xScale = ( 2.0f / viewport.Width ()) * viewScale.mX;
 				float yScale = ( 2.0f / viewport.Height ()) * viewScale.mY;
 				
-				mtx.Scale ( xScale, yScale, 0.0 );
+				mtx.Scale ( xScale, yScale, -1.0 ); // Z must be non-zero to produce invertible projection matrix
 			}
 		}
 	}
