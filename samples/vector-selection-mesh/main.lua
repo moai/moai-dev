@@ -5,7 +5,6 @@
 --==============================================================
 
 MOAISim.openWindow ( "test", 640, 480 )
-MOAIGfxMgr.setClearColor ( 1, 1, 1, 1 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 640, 480 )
@@ -13,6 +12,7 @@ viewport:setScale ( 640, 480 )
 
 layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
+layer:setClearColor ( 1, 1, 1, 1 )
 layer:pushRenderPass ()
 
 local vtxStream = MOAIMemStream.new ()
@@ -45,7 +45,7 @@ pushCircle ( -100, 100, 100 )
 vtxStream:seek ()
 idxStream:seek ()
 
-local mesh = MOAIGeometryWriter.getMesh ( vtxFormat, vtxStream, idxStream )
+local mesh = MOAIGeometryWriter.getMesh ( vtxFormat, vtxStream, vtxStream:getLength (), idxStream, idxStream:getLength ())
 mesh:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.LINE_SHADER_3D ))
 
 local selectionMesh = MOAISelectionMesh.new ()

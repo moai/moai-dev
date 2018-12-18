@@ -45,7 +45,7 @@ public:
 
 	//----------------------------------------------------------------//
 	u32 Unpack () const {
-		return this->mPackedID &  MOAIAttribute::ATTR_ID_MASK;
+		return this->mPackedID & MOAIAttribute::ATTR_ID_MASK;
 	}
 };
 

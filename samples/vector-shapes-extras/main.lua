@@ -30,14 +30,14 @@ program:setVertexAttribute ( 2, 'color' )
 program:setVertexAttribute ( 3, 'blend' )
 
 program:reserveUniforms ( 4 )
-program:declareUniform ( 1, 'transform', MOAIShaderProgram.UNIFORM_MATRIX_F4 )
-program:declareUniform ( 2, 'ucolor', MOAIShaderProgram.UNIFORM_VECTOR_F4 )
-program:declareUniform ( 3, 'color0', MOAIShaderProgram.UNIFORM_VECTOR_F4 )
-program:declareUniform ( 4, 'color1', MOAIShaderProgram.UNIFORM_VECTOR_F4 )
+program:declareUniform ( 1, 'transform',    MOAIShaderProgram.UNIFORM_TYPE_FLOAT, MOAIShaderProgram.UNIFORM_WIDTH_MATRIX_4X4 )
+program:declareUniform ( 2, 'ucolor',       MOAIShaderProgram.UNIFORM_TYPE_FLOAT, MOAIShaderProgram.UNIFORM_WIDTH_VEC_4 )
+program:declareUniform ( 3, 'color0',       MOAIShaderProgram.UNIFORM_TYPE_FLOAT, MOAIShaderProgram.UNIFORM_WIDTH_VEC_4 )
+program:declareUniform ( 4, 'color1',       MOAIShaderProgram.UNIFORM_TYPE_FLOAT, MOAIShaderProgram.UNIFORM_WIDTH_VEC_4 )
 
 program:reserveGlobals ( 2 )
-program:setGlobal ( 1, 1, MOAIShaderProgram.GLOBAL_WORLD_VIEW_PROJ )
-program:setGlobal ( 2, 2, MOAIShaderProgram.GLOBAL_PEN_COLOR )
+program:setGlobal ( 1, MOAIShaderProgram.GLOBAL_MODEL_TO_CLIP_MTX, 1 )
+program:setGlobal ( 2, MOAIShaderProgram.GLOBAL_PEN_COLOR, 2 )
 
 program:load ( load ( 'shader.vsh' ), load ( 'shader.fsh' ))
 
@@ -47,15 +47,14 @@ shader:setProgram ( program )
 color0 = MOAIColor.new ()
 color0:setColor ( 1, 0, 0, 0 )
 color0:moveColor ( 1, 0, 0, 1, 2 )
-shader:setAttrLink ( 3, color0, MOAIColor.COLOR_TRAIT )
+shader:setAttrLink ( shader:getAttributeID ( 3 ), color0, MOAIColor.COLOR_TRAIT )
 
 color1 = MOAIColor.new ()
 color1:setColor ( 0, 1, 0, 0 )
 color1:moveColor ( 0, 1, 0, 1, 2 )
-shader:setAttrLink ( 4, color1, MOAIColor.COLOR_TRAIT )
+shader:setAttrLink ( shader:getAttributeID ( 4 ), color1, MOAIColor.COLOR_TRAIT )
 
 MOAISim.openWindow ( "test", 640, 480 )
-MOAIGfxMgr.setClearColor ( 1, 1, 1, 1 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 640, 480 )
@@ -63,6 +62,7 @@ viewport:setScale ( 640, 480 )
 
 layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
+layer:setClearColor ( 1, 1, 1, 1 )
 layer:pushRenderPass ()
 
 -- make a tesselator
@@ -72,6 +72,9 @@ tess = MOAIVectorTesselator.new ()
 tess:reserveVertexExtras ( 2, 4 )
 tess:setVertexExtra ( 1, writeFormat ( 'f', 0.0 )) -- fill color
 tess:setVertexExtra ( 2, writeFormat ( 'f', 1.0 )) -- stroke color
+
+tess:setFillExtra ( 1 )
+tess:setStrokeExtra ( 2 )
 
 tess:setCircleResolution ( 32 )
 
@@ -84,9 +87,6 @@ tess:setStrokeWidth ( 10 )
 tess:setJoinStyle ( MOAIVectorTesselator.JOIN_MITER )
 tess:setCapStyle ( MOAIVectorTesselator.CAP_POINTY )
 tess:setMiterLimit ( 10 )
-
-tess:setFillExtra ( 1 )
-tess:setStrokeExtra ( 2 )
 
 tess:pushCombo ()
 	tess:pushPoly ( 50, -50, -50, -50, -50, 50, 50, 50 )
@@ -115,5 +115,4 @@ mesh:setBounds ( vtxBuffer:computeBounds ( vtxFormat ))
 local prop = MOAIProp.new ()
 prop:setDeck ( mesh )
 prop:setPartition ( layer )
-
 prop:moveRot ( 0, 0, -180, 1.5 )

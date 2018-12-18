@@ -6,22 +6,21 @@
 
 MOAISim.openWindow ( "test", 640, 480 )
 
-gFrameBuffer = MOAIGfxMgr.getFrameBuffer ()
-gFrameBuffer:setClearDepth ( true )
-gFrameBuffer:setClearColor ( 1, 1, 1, 1 )
-
 gViewport = MOAIViewport.new ()
 gViewport:setSize ( 640, 480 )
 gViewport:setScale ( 640, 480 )
 
 gWorldLayer = MOAIPartitionViewLayer.new ()
 gWorldLayer:setViewport ( gViewport )
-MOAISim.pushRenderPass ( gWorldLayer )
+gWorldLayer:setClearDepth ( true )
+gWorldLayer:setClearColor ( 1, 1, 1, 1 )
+gWorldLayer:pushRenderPass ()
 
 gCameraPivot = MOAITransform.new ()
 gCameraSpin = MOAITransform.new ()
 
 gCamera = MOAICamera.new ()
+gCamera:setType ( MOAICamera.CAMERA_TYPE_3D )
 gCamera:setLoc ( 0, 100, gCamera:getFocalLength ( 320 ))
 gCamera:lookAt ( 0, 0, 0 )
 gWorldLayer:setCamera ( gCamera )
@@ -38,6 +37,7 @@ tess:setCircleResolution ( 32 )
 
 tess:setFillStyle ( MOAIVectorTesselator.FILL_SOLID )
 tess:setFillColor ( 0.6, 0.75, 1.0, 1.0 )
+tess:setCircleResolution ( 32 )
 
 tess:setLightVec ( -1, -1 )
 
@@ -61,24 +61,18 @@ tess:finish ()
 local vtxStream = MOAIMemStream.new ()
 local idxStream = MOAIMemStream.new ()
 
-local vtxFormat = MOAIVertexFormatMgr.getFormat ( MOAIVertexFormatMgr.XYZWNNNC )
+local vtxFormat = MOAIVertexFormatMgr.getFormat ( MOAIVertexFormatMgr.XYZC )
 
 tess:tesselate ( vtxStream, idxStream, vtxFormat )
 
---vtxStream:seek ( 0 )
---MOAIGeometryWriter.applyLightFromImage ( vtxFormat, vtxStream, 'color.png' )
+vtxStream:seek ()
+idxStream:seek ()
 
-vtxStream:seek ( 0 )
-vtxStream:collapse ( 12, 16, 32 )
-
-local vtxFormat = MOAIVertexFormatMgr.getFormat ( MOAIVertexFormatMgr.XYZC ) -- note the change in vertex format
-
-local mesh = MOAIGeometryWriter.getMesh ( vtxFormat, vtxStream, idxStream )
+local mesh = MOAIGeometryWriter.getMesh ( vtxFormat, vtxStream, vtxStream:getLength (), idxStream, idxStream:getLength ())
 mesh:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.LINE_SHADER_3D ))
 
 local prop = MOAIProp.new ()
 prop:setDeck ( mesh )
 prop:setCullMode ( MOAIProp.CULL_BACK )
 prop:setDepthTest ( MOAIProp.DEPTH_TEST_LESS_EQUAL )
-
-gWorldprop:setPartition ( layer )
+prop:setPartition ( gWorldLayer )

@@ -18,8 +18,8 @@
 int MOAIShader::_getAttributeID ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShader, "UN" )
 
-	u32 uniformID		= state.GetValue < u32 >( 2, 1 ) - 1;
-	u32 index			= state.GetValue < u32 >( 3, 1 ) - 1;
+	ZLIndex uniformID		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex index			= state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
 	
 	if ( self->mProgram ) {
 		state.Push ( self->mProgram->GetAttributeID ( uniformID, index ));

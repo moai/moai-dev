@@ -23,6 +23,8 @@ public:
 	// MUST NOT EXCEED 64 GLOBALS FOR NOW
 	static const u32 MAX_GLOBALS = 64; // used to trip an assert
 
+	static const u32 NULL_GLOBAL =( u32 )-1;
+
 	enum {
 		PRIMARY_MATRICES			= 0,
 		INVERSE_MATRICES			= 1,

@@ -673,7 +673,9 @@ void MOAIMesh::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer )
 	MOAIMaterialBatchHolder::SerializeIn ( state, serializer );
 	MOAIVertexArray::SerializeIn ( state, serializer );
 
-	this->SetIndexBuffer ( serializer.MemberIDToObject < MOAIIndexBuffer >( state.GetFieldValue < cc8*, MOAISerializer::ObjID >( -1, "mIndexBuffer", 0 )));
+	this->SetIndexBuffer (
+		serializer.MemberIDToObject < MOAIIndexBuffer >( state.GetFieldValue < cc8*, MOAISerializer::ObjID >( -1, "mIndexBuffer", 0 ))
+	);
 	
 	this->mTotalElements = state.GetFieldValue < cc8*, u32 >( -1, "mTotalElements", 0 );
 	

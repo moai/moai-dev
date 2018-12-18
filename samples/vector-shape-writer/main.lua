@@ -5,7 +5,6 @@
 --==============================================================
 
 MOAISim.openWindow ( "test", 640, 480 )
-MOAIGfxMgr.setClearColor ( 1, 1, 1, 1 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 640, 480 )
@@ -13,6 +12,7 @@ viewport:setScale ( 640, 480 )
 
 layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
+layer:setClearColor ( 1, 1, 1, 1 )
 layer:pushRenderPass ()
 
 tess = MOAIVectorTesselator.new ()
@@ -33,67 +33,14 @@ tess:pushPoly ()
 tess:pushBezierVertices ( -50, -50, -50, 50, 50, 50, 50, -50 )
 tess:finish ()
 
-stream = MOAIMemStream.new ()
-writer = tess:openWriter ( stream )
+writer = tess:openWriter ()
 
-tess:writeShapes ( writer )
+stream = MOAIMemStream.new ()
+tess:writeShapes ( stream, writer )
 stream:seek ( 0 )
 
 tess = MOAIVectorTesselator.new ()
 tess:readShapes ( stream )
-
---tess:pushRect ( -50, -50, 50, 50 )
---tess:pushTranslate ( 50, 100 )
-
---tess:pushScale ( 1, 0.5 )
---tess:pushTranslate ( 50, 100 )
---tess:pushEllipse ( 0, 0, 100 )
-
---tess:pushPath ( -50, -50, 50, 50 )
---tess:pushPath ( 50, -50, 50, 50, -50, 50, -50, -50 )
---tess:pushPath ( 50, -50, -50, -50, -50, 50, 50, 50 )
---tess:pushPoly ( 50, -50, -50, -50, -50, 50, 50, 50 )
---tess:pushPoly ( 50, -50, 0, 50, -50, -50 )
-
---[[
-tess:pushCombo ()
-	tess:pushPoly ( -50, -150, -150, -150, -150, -50, -50, -50 )
-	tess:pushPoly ( 50, -50, -50, -50, -50, 50, 50, 50 )
-	tess:pushPoly ( 150, 50, 50, 50, 50, 150, 150, 150 )
-tess:finish ()
-]]--
-
---[[
-tess:pushCombo ()
-	tess:pushPoly ( 50, -50, -50, -50, -50, 50, 50, 50 )
-	tess:pushPoly ( -50, 100, 50, 100, 0, 0 )
-	tess:pushPoly ( 50, -100, -50, -100, 0, 0 )
-	tess:pushPoly ( 0, 0, 100, -50, 100, 50 )
-	tess:pushPoly ( 0, 0, -100, 50, -100, -50 )
-	tess:pushPoly ( 25, -25, -25, -25, -25, 25, 25, 25 )
-tess:finish ()
-]]--
-
---[[
-tess:pushPoly ()
-	tess:pushVertex ( 175, 175 )
-	tess:pushVertex ( 175, -175 )
-	tess:pushVertex ( -175, -175 )
-	tess:pushVertex ( -175, 175 )
-	tess:pushVertex ( 75, 175 )
-	tess:pushVertex ( 75, -75 )
-	tess:pushVertex ( -75, -75 )
-	tess:pushVertex ( -75, 75 )
-	tess:pushVertex ( -25, 75 )
-	tess:pushVertex ( -25, -25 )
-	tess:pushVertex ( 25, -25 )
-	tess:pushVertex ( 25, 125 )
-	tess:pushVertex ( -125, 125 )
-	tess:pushVertex ( -125, -125 )
-	tess:pushVertex ( 125, -125 )
-	tess:pushVertex ( 125, 175 )
-tess:finish ()
-]]--
 
 local vtxFormat = MOAIVertexFormatMgr.getFormat ( MOAIVertexFormatMgr.XYZC )
 

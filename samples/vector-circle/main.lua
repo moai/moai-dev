@@ -5,7 +5,6 @@
 --==============================================================
 
 MOAISim.openWindow ( "test", 640, 480 )
-MOAIGfxMgr.setClearColor ( 1, 1, 1, 1 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 640, 480 )
@@ -13,6 +12,7 @@ viewport:setScale ( 640, 480 )
 
 layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
+layer:setClearColor ( 1, 1, 1, 1 )
 layer:pushRenderPass ()
 
 tess = MOAIVectorTesselator.new ()

@@ -122,7 +122,7 @@ protected:
 	void				OnUniformLocation			( u32 addr, void* userdata );
 	int					ReserveGlobals				( lua_State* L, int idx );
 	void				ScheduleTextures			();
-	int					SetGlobal					( lua_State* L, int idx );
+	//int					SetGlobal					( lua_State* L, int idx );
 	void				UpdateUniforms				( ZLLeanArray < u8 >& buffer );
 	
 	//----------------------------------------------------------------//

@@ -5,7 +5,6 @@
 --==============================================================
 
 MOAISim.openWindow ( "test", 640, 480 )
-MOAIGfxMgr.setClearColor ( 1, 1, 1, 1 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 640, 480 )
@@ -13,6 +12,7 @@ viewport:setScale ( 640, 480 )
 
 layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
+layer:setClearColor ( 1, 1, 1, 1 )
 layer:pushRenderPass ()
 
 makeRegion = function ( x, y, r )
@@ -48,21 +48,24 @@ local vtxFormat = MOAIVertexFormatMgr.getFormat ( MOAIVertexFormatMgr.XYZC )
 region:getTriangles ( vtxStream, idxStream, vtxFormat )
 
 vtxStream:seek ( 0 )
-idxStream:seek ( 0 )
+MOAIGeometryWriter.snapCoords ( vtxFormat, vtxStream, vtxStream:getLength (), 0.1 )
 
-MOAIGeometryWriter.snapCoords ( vtxFormat, vtxStream, 0.1 )
-MOAIGeometryWriter.applyColor ( vtxFormat, vtxStream, 0, 0, 0, 1, MOAIGeometryWriter.COLOR_OVERWRITE )
-MOAIGeometryWriter.applyColor ( vtxFormat, vtxStream, 1, 0, 0, 1, mainRegion, 0, MOAIGeometryWriter.COLOR_OVERWRITE )
+vtxStream:seek ( 0 )
+MOAIGeometryWriter.applyColor ( vtxFormat, vtxStream, vtxStream:getLength (), 0, 0, 0, 1, MOAIGeometryWriter.COLOR_OVERWRITE )
+
+vtxStream:seek ( 0 )
+MOAIGeometryWriter.applyColor ( vtxFormat, vtxStream, vtxStream:getLength (), 1, 0, 0, 1, mainRegion, 0, MOAIGeometryWriter.COLOR_OVERWRITE )
+
+vtxStream:seek ( 0 )
+idxStream:seek ( 0 )
 MOAIGeometryWriter.pruneVertices ( vtxFormat, vtxStream, idxStream )
 
-local mesh = MOAIGeometryWriter.getMesh ( vtxFormat, vtxStream, idxStream )
+local mesh = MOAIGeometryWriter.getMesh ( vtxFormat, vtxStream, vtxStream:getLength (), idxStream, idxStream:getLength ())
 mesh:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.LINE_SHADER_3D ))
 
 local prop = MOAIProp.new ()
 prop:setDeck ( mesh )
 prop:setPartition ( layer )
-
---prop:setColor ( 1, 0, 0, 1 )
 
 function clickCallback ( down )
 	

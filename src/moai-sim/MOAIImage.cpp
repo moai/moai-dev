@@ -192,7 +192,7 @@ int MOAIImage::_convolve ( lua_State* L ) {
 			float* kernel = ( float* )alloca ( kernelWidth * sizeof ( float ));
 			
 			for ( int x = 0; x < kernelWidth; ++x ) {
-				kernel [ x ] = state.GetFieldValue < float >( 2, x + 1, 0.0f );
+				kernel [ x ] = state.GetFieldValue < int, float >( 2, x + 1, 0.0f );
 			}
 			
 			if ( normalize ) {
@@ -211,7 +211,7 @@ int MOAIImage::_convolve ( lua_State* L ) {
 				
 				state.PushField ( 2, y + 1 );
 				for ( int x = 0; x < kernelWidth; ++x ) {
-					kernel [( y * kernelWidth ) + x ] = state.GetFieldValue < float >( -1, x + 1, 0.0f );
+					kernel [( y * kernelWidth ) + x ] = state.GetFieldValue < int, float >( -1, x + 1, 0.0f );
 				}
 				state.Pop ();
 			}
@@ -259,7 +259,7 @@ int MOAIImage::_convolve1D ( lua_State* L ) {
 			float* kernel = ( float* )alloca ( kernelWidth * sizeof ( float ));
 			
 			for ( size_t x = 0; x < kernelWidth; ++x ) {
-				kernel [ x ] = state.GetFieldValue < float >( 2, ( int )( x + 1 ), 0.0f ); // TODO: cast
+				kernel [ x ] = state.GetFieldValue < int, float >( 2, ( int )( x + 1 ), 0.0f ); // TODO: cast
 			}
 			
 			if ( normalize ) {

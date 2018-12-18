@@ -27,8 +27,8 @@ class MOAITextureBase;
 //================================================================//
 // TODO: doxygen
 class MOAIGraphicsProp :
-	public MOAIIndexedPropBase,
-	public MOAIGraphicsPropBase {
+	public virtual MOAIIndexedPropBase,
+	public virtual MOAIGraphicsPropBase {
 protected:
 
 	//----------------------------------------------------------------//

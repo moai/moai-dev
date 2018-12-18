@@ -36,7 +36,7 @@
 	@attr	INHERIT_TRANSFORM
 */
 class MOAITransform :
-	public MOAITransformBase {
+	public virtual MOAITransformBase {
 protected:
 
 	float			mShearYX;

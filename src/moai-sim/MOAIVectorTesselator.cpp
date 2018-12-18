@@ -859,11 +859,20 @@ int MOAIVectorTesselator::Finish () {
 		if ( shapesTop >= 2 ) {
 			
 			bool done = false;
-			for ( ZLIndex i = ZLIndexCast ( shapesTop - 2 ); ( i >= 0 ) && ( !done ); --i ) {
+			
+			ZLIndex i = ZLIndexCast ( shapesTop - 2 );
+			while ( !done ) {
 				ZLIndex c = i + ( ZLSize )1;
 				MOAIVectorShape* shape = this->mShapeStack [ i ];
 				if ( shape->CanGroup () && shape->GroupShapes ( &this->mShapeStack [ c ], shapesTop - c )) {
 					this->mShapeStack.SetTop ( c );
+					done = true;
+				}
+				
+				if ( i > 0 ) {
+					--i;
+				}
+				else {
 					done = true;
 				}
 			}

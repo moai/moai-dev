@@ -5,7 +5,6 @@
 --==============================================================
 
 MOAISim.openWindow ( "test", 640, 480 )
-MOAIGfxMgr.setClearColor ( 1, 1, 1, 1 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 640, 480 )
@@ -13,6 +12,7 @@ viewport:setScale ( 640, 480 )
 
 layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
+layer:setClearColor ( 1, 1, 1, 1 )
 layer:pushRenderPass ()
 
 tess = MOAIVectorTesselator.new ()
@@ -34,8 +34,8 @@ function onDraw ( index, xOff, yOff, xFlip, yFlip )
 	region:drawDebug ()
 end
 
-scriptDeck = MOAIScriptDeck.new ()
-scriptDeck:setRect ( -64, -64, 64, 64 )
+scriptDeck = MOAIDrawDeck.new ()
+scriptDeck:setBounds ( -64, -64, 64, 64 )
 scriptDeck:setDrawCallback ( onDraw )
 
 local prop = MOAIProp.new ()

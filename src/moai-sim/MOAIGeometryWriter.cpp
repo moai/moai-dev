@@ -83,14 +83,14 @@ int MOAIGeometryWriter::_applyColor ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIGeometryWriter, "" )
 	
 	MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 1, true );
-	MOAIStream* vtxStream			= state.GetLuaObject < MOAIStream >( 2, true );
+	MOAIStream* vtxStream		= state.GetLuaObject < MOAIStream >( 2, true );
 	
 	if ( format && vtxStream ) {
 	
 		size_t length = state.GetValue < u32 >( 3, ( u32 )( vtxStream->GetLength () - vtxStream->GetCursor ()));
 	
 		ZLColorVec color	= state.GetColor ( 4, 0.0f, 0.0f, 0.0f, 1.0f );
-		MOAIRegion* region	= state.GetLuaObject < MOAIRegion >( 7, false );
+		MOAIRegion* region	= state.GetLuaObject < MOAIRegion >( 8, false );
 		
 		if ( region ) {
 		
@@ -812,6 +812,8 @@ void MOAIGeometryWriter::SnapCoords ( const MOAIVertexFormat& format, ZLStream& 
 		
 		format.WriteCoord ( vtxStream, ZLIndexOp::ZERO, coord.mX, coord.mY, coord.mZ, coord.mW );
 	}
+	
+	format.SeekVertex ( vtxStream, base, total );
 }
 
 //----------------------------------------------------------------//

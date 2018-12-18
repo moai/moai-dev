@@ -120,8 +120,15 @@ int MOAIShaderProgram::_reserveUniforms ( lua_State* L ) {
 // TODO: doxygen
 int MOAIShaderProgram::_setGlobal ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShaderProgram, "UNNN" )
+
+	ZLIndex globalIdx	= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	u32 globalID		= state.GetValue < u32 >( 3, MOAIGfxState::NULL_GLOBAL );
+	ZLIndex uniformID	= state.GetValue < MOAILuaIndex >( 4, ZLIndexOp::ZERO );
+	ZLIndex index		= state.GetValue < MOAILuaIndex >( 5, ZLIndexOp::ZERO );
 	
-	return self->SetGlobal ( L, 2 );
+	self->SetGlobal ( globalIdx, globalID, uniformID, index );
+
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -577,19 +584,19 @@ void MOAIShaderProgram::SetGlobal ( ZLIndex idx, u32 globalID, ZLIndex uniformID
 }
 
 //----------------------------------------------------------------//
-int MOAIShaderProgram::SetGlobal ( lua_State* L, int idx ) {
-
-	MOAILuaState state ( L );
-
-	ZLIndex globalIdx	= state.GetValue < MOAILuaIndex >( idx, ZLIndexOp::ZERO );
-	ZLIndex globalID	= state.GetValue < MOAILuaIndex >( idx + 1, ZLIndexOp::INVALID );
-	ZLIndex uniformID	= state.GetValue < MOAILuaIndex >( idx + 2, ZLIndexOp::ZERO );
-	ZLIndex index		= state.GetValue < MOAILuaIndex >( idx + 3, ZLIndexOp::ZERO );
-	
-	this->SetGlobal ( globalIdx, globalID, uniformID, index );
-
-	return 0;
-}
+//int MOAIShaderProgram::SetGlobal ( lua_State* L, int idx ) {
+//
+//	MOAILuaState state ( L );
+//
+//	ZLIndex globalIdx	= state.GetValue < MOAILuaIndex >( idx, ZLIndexOp::ZERO );
+//	u32 globalID		= state.GetValue < u32 >( idx + 1, MOAIGfxState::NULL_GLOBAL );
+//	ZLIndex uniformID	= state.GetValue < MOAILuaIndex >( idx + 2, ZLIndexOp::ZERO );
+//	ZLIndex index		= state.GetValue < MOAILuaIndex >( idx + 3, ZLIndexOp::ZERO );
+//
+//	this->SetGlobal ( globalIdx, globalID, uniformID, index );
+//
+//	return 0;
+//}
 
 //----------------------------------------------------------------//
 void MOAIShaderProgram::SetTexture ( ZLIndex idx, u32 name, ZLIndex unit, MOAITextureBase* fallback ) {

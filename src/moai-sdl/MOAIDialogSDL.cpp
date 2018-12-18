@@ -35,8 +35,8 @@ int MOAIDialogSDL::_show ( lua_State* L ) {
 		}
 		
 		if ( type == LUA_TTABLE ) {
-			button.text = state.GetFieldValue < cc8* >( -1, "text", "" );
-			button.flags |= state.GetFieldValue < bool >( -1, "default", false ) ? SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT : 0;
+			button.text = state.GetFieldValue < cc8*, cc8* >( -1, "text", "" );
+			button.flags |= state.GetFieldValue < cc8*, bool >( -1, "default", false ) ? SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT : 0;
 		}
 		
 		state.Pop ();

@@ -28,8 +28,8 @@ class MOAITextureBase;
 //================================================================//
 // TODO: doxygen
 class MOAIGraphicsGridProp :
-	public MOAIGridPropBase,
-	public MOAIGraphicsPropBase {
+	public virtual MOAIGridPropBase,
+	public virtual MOAIGraphicsPropBase {
 private:
 
 	//----------------------------------------------------------------//

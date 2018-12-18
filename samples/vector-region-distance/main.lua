@@ -5,7 +5,6 @@
 --==============================================================
 
 MOAISim.openWindow ( "test", 640, 480 )
-MOAIGfxMgr.setClearColor ( 1, 1, 1, 1 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 640, 480 )
@@ -13,6 +12,7 @@ viewport:setScale ( 640, 480 )
 
 layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
+layer:setClearColor ( 1, 1, 1, 1 )
 layer:pushRenderPass ()
 
 tess = MOAIVectorTesselator.new ()
@@ -52,32 +52,32 @@ function onDraw ( index, xOff, yOff, xFlip, yFlip )
 
 	region:drawDebug ()
 
-	MOAIGfxMgr.setPenWidth ( 1 )
+	MOAIDraw.setPenWidth ( 1 )
 
 	if cursorX and regionX then
-		MOAIGfxMgr.setPenColor ( 0, 0, 1, 1 )
+		MOAIDraw.setPenColor ( 0, 0, 1, 1 )
 		MOAIDraw.drawLine ( cursorX, cursorY, regionX, regionY )
 	end
 
 	if cursorX then
 
 		if inside then
-			MOAIGfxMgr.setPenColor ( 0, 0, 1, 1 )
+			MOAIDraw.setPenColor ( 0, 0, 1, 1 )
 			MOAIDraw.fillCircle ( cursorX, cursorY, radius )
 		else
-			MOAIGfxMgr.setPenColor ( 0, 1, 0, 1 )
+			MOAIDraw.setPenColor ( 0, 1, 0, 1 )
 			MOAIDraw.fillCircle ( cursorX, cursorY, radius )
 		end
 	end
 
 	if regionX then
-		MOAIGfxMgr.setPenColor ( 1, 0, 0, 1 )
+		MOAIDraw.setPenColor ( 1, 0, 0, 1 )
 		MOAIDraw.fillCircle ( regionX, regionY, 3 )
 	end
 end
 
-scriptDeck = MOAIScriptDeck.new ()
-scriptDeck:setRect ( -64, -64, 64, 64 )
+scriptDeck = MOAIDrawDeck.new ()
+scriptDeck:setBounds ( -64, -64, 64, 64 )
 scriptDeck:setDrawCallback ( onDraw )
 
 local prop = MOAIProp.new ()

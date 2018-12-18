@@ -56,6 +56,8 @@ MOAIShaderUniformHandle MOAIShaderUniformSchema::GetUniformHandle ( void* buffer
 //----------------------------------------------------------------//
 MOAIShaderUniformHandle MOAIShaderUniformSchema::GetUniformHandleForAttributeID ( void* buffer, MOAIAttrID attrID ) const {
 
+	// TODO: check for overflow
+
 	u32 rawID = attrID.Unpack ();
 
 	ZLSize uniformID = rawID / MAX_UNIFORM_ARRAY_SIZE;
