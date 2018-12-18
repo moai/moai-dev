@@ -14,7 +14,7 @@ varying LOWP vec4 colorVarying;
 
 void main () {
 
-	gl_Position = position * transform;
+	gl_Position = transform * position;
 	
 	vec4 blendColor = color0 + (( color1 - color0 ) * blend );
 	
