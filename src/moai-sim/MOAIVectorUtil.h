@@ -29,6 +29,7 @@ public:
 	void			AddPolygon				( const ZLPolygon2D& poly );
 	u32				GetTriangles			( MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream );
 	u32				GetTriangles			( MOAIVertexFormat& format, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes );
+	void			Print					();
 	void			Reset					();
 					SafeTesselator			();
 					~SafeTesselator			();

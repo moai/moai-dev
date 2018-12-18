@@ -81,6 +81,28 @@ u32 SafeTesselator::GetTriangles ( MOAIVertexFormat& format, MOAIVertexBuffer& v
 }
 
 //------------------------------------------------------------------//
+void SafeTesselator::Print () {
+
+	const float* verts = tessGetVertices ( this->mTess );
+	const int* elems = tessGetElements ( this->mTess );
+	int nelems = tessGetElementCount ( this->mTess );
+
+	for ( int i = 0; i < nelems; ++i ) {
+		int b = elems [( i * 2 )];
+		int n = elems [( i * 2 ) + 1 ];
+		
+		for ( int j = 0; j < n; ++j ) {
+		
+			size_t idx = ( b + j ) * 2;
+			float x = verts [ idx ];
+			float y = verts [ idx + 1 ];
+		
+			printf ( "%d %d: %g %g\n", i, j, x, y );
+		}
+	}
+}
+
+//------------------------------------------------------------------//
 void SafeTesselator::Reset () {
 	if ( this->mTess ) {
 		tessDeleteTess ( this->mTess );

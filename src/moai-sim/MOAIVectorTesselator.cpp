@@ -1495,7 +1495,7 @@ void MOAIVectorTesselator::WriteVertex ( ZLStream& stream, MOAIVertexFormat& for
 	
 		stream.SetCursor ( base + ( vertexSize - this->mVtxExtraSize ));
 		
-		vertexExtraID =  ZLIndexOp::Wrap ( vertexExtraID, this->mVtxExtras.Size ());
+		vertexExtraID = ZLIndexOp::Wrap ( vertexExtraID, this->mVtxExtras.Size ());
 		stream.WriteBytes ( this->mVtxExtras [ vertexExtraID ], this->mVtxExtraSize );
 		
 		stream.SetCursor ( base );
