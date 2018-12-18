@@ -65,7 +65,7 @@ TEST_F ( GTESTMoaiContext, libtess2 ) {
 			float x = verts [ idx ];
 			float y = verts [ idx + 1 ];
 		
-			printf ( "%d %d: %g %g\n", i, j, x, y );
+			printf ( "%d %d: %f %f\n", i, j, x, y );
 		}
 	}
 	
