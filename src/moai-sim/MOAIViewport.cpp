@@ -200,7 +200,7 @@ ZLMatrix4x4 MOAIViewport::GetProjMtx () const {
 	float xScale = ( 2.0f / rect.Width ()) * viewScale.mX;
 	float yScale = ( 2.0f / rect.Height ()) * viewScale.mY;
 	
-	mtx.Scale ( xScale, yScale, -1.0f );
+	mtx.Scale ( xScale, yScale, -1.0f ); // Z must be non-zero to produce invertible projection matrix
 	proj.Append ( mtx );
 	
 	// offset
