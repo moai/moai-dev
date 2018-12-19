@@ -1,15 +1,15 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAITRANSFORMNODE_H
-#define	MOAITRANSFORMNODE_H
+#ifndef	MOAIABSTRACTCHILDTRANSFORM_H
+#define	MOAIABSTRACTCHILDTRANSFORM_H
 
-#include <moai-sim/MOAITransformNodeBase.h>
+#include <moai-sim/MOAIAbstractParentTransform.h>
 
 //================================================================//
-// MOAITransformNode
+// MOAIAbstractChildTransform
 //================================================================//
-/**	@lua	MOAITransformNode
+/**	@lua	MOAIAbstractChildTransform
 	@text	Base class for 2D affine transforms.
 	
 	@attr	ATTR_WORLD_X_LOC
@@ -21,8 +21,8 @@
 	@attr	ATTR_WORLD_Z_SCL
 	@attr	TRANSFORM_TRAIT
 */
-class MOAITransformNode :
-	public virtual MOAITransformNodeBase {
+class MOAIAbstractChildTransform :
+	public virtual MOAIAbstractParentTransform {
 protected:
 
 	//----------------------------------------------------------------//
@@ -34,7 +34,7 @@ protected:
 
 public:
 	
-	DECL_ATTR_HELPER ( MOAITransformNode )
+	DECL_ATTR_HELPER ( MOAIAbstractChildTransform )
 	
 	enum {
 		
@@ -47,8 +47,8 @@ public:
 	GET ( ZLVec3D, WorldLoc, mLocalToWorldMtx.GetTranslation ())
 	
 	//----------------------------------------------------------------//
-				MOAITransformNode			();
-				~MOAITransformNode			();
+				MOAIAbstractChildTransform			();
+				~MOAIAbstractChildTransform			();
 	void		RegisterLuaClass			( MOAILuaState& state );
 	void		RegisterLuaFuncs			( MOAILuaState& state );
 };

@@ -2,57 +2,57 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAITransformNode.h>
+#include <moai-sim/MOAIAbstractChildTransform.h>
 
 //================================================================//
-// MOAITransformNode
+// MOAIAbstractChildTransform
 //================================================================//
 
 //----------------------------------------------------------------//
 /**	@lua	setParent
 	@text	This method has been deprecated. Use MOAINode setAttrLink instead.
 	
-	@in		MOAITransformNode self
+	@in		MOAIAbstractChildTransform self
 	@opt	MOAINode parent		Default value is nil.
 	@out	nil
 */
-int MOAITransformNode::_setParent ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransformNode, "U" )
+int MOAIAbstractChildTransform::_setParent ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractChildTransform, "U" )
 
-	MOAITransformNodeBase* parent = state.GetLuaObject < MOAITransformNodeBase >( 2, true );
+	MOAIAbstractParentTransform* parent = state.GetLuaObject < MOAIAbstractParentTransform >( 2, true );
 	
-	self->SetAttrLink ( AttrID::Pack ( INHERIT_TRANSFORM ), parent, MOAITransformNodeBase::AttrID::Pack ( MOAITransformNodeBase::TRANSFORM_TRAIT ));
+	self->SetAttrLink ( AttrID::Pack ( INHERIT_TRANSFORM ), parent, MOAIAbstractParentTransform::AttrID::Pack ( MOAIAbstractParentTransform::TRANSFORM_TRAIT ));
 	
 	return 0;
 }
 
 //================================================================//
-// MOAITransformNode
+// MOAIAbstractChildTransform
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAITransformNode::MOAITransformNode () {
+MOAIAbstractChildTransform::MOAIAbstractChildTransform () {
 	
-	RTTI_SINGLE ( MOAITransformNodeBase )
+	RTTI_SINGLE ( MOAIAbstractParentTransform )
 }
 
 //----------------------------------------------------------------//
-MOAITransformNode::~MOAITransformNode () {
+MOAIAbstractChildTransform::~MOAIAbstractChildTransform () {
 }
 
 //----------------------------------------------------------------//
-void MOAITransformNode::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIAbstractChildTransform::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	MOAITransformNodeBase::RegisterLuaClass ( state );
+	MOAIAbstractParentTransform::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "INHERIT_LOC",			AttrID::Pack ( INHERIT_LOC ).ToRaw ());
 	state.SetField ( -1, "INHERIT_TRANSFORM",	AttrID::Pack ( INHERIT_TRANSFORM ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
-void MOAITransformNode::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIAbstractChildTransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAITransformNodeBase::RegisterLuaFuncs ( state );
+	MOAIAbstractParentTransform::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "setParent",			_setParent },
@@ -67,15 +67,15 @@ void MOAITransformNode::RegisterLuaFuncs ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAITransformNode::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIAbstractChildTransform::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
-	return MOAITransformNodeBase::MOAINode_ApplyAttrOp ( attrID, attr, op );
+	return MOAIAbstractParentTransform::MOAINode_ApplyAttrOp ( attrID, attr, op );
 }
 
 //----------------------------------------------------------------//
-void MOAITransformNode::MOAINode_Update () {
+void MOAIAbstractChildTransform::MOAINode_Update () {
 	
-	this->MOAITransformNodeBase_BuildLocalToWorldMtx ( this->mLocalToWorldMtx );
+	this->MOAIAbstractParentTransform_BuildLocalToWorldMtx ( this->mLocalToWorldMtx );
 	
 	MOAIAttribute attr;
 	if ( this->PullLinkedAttr ( AttrID::Pack ( INHERIT_TRANSFORM ), attr )) {

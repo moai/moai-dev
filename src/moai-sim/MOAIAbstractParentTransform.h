@@ -1,15 +1,15 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAITRANSFORMNODEBASE_H
-#define	MOAITRANSFORMNODEBASE_H
+#ifndef	MOAIABSTRACTPARENTTRANSFORM_H
+#define	MOAIABSTRACTPARENTTRANSFORM_H
 
 #include <moai-sim/MOAINode.h>
 
 //================================================================//
-// MOAITransformNodeBase
+// MOAIAbstractParentTransform
 //================================================================//
-/**	@lua	MOAITransformNodeBase
+/**	@lua	MOAIAbstractParentTransform
 	@text	Base class for 2D affine transforms.
 	
 	@attr	ATTR_WORLD_X_LOC
@@ -21,7 +21,7 @@
 	@attr	ATTR_WORLD_Z_SCL
 	@attr	TRANSFORM_TRAIT
 */
-class MOAITransformNodeBase :
+class MOAIAbstractParentTransform :
 	public virtual MOAINode {
 protected:
 	
@@ -43,13 +43,15 @@ protected:
 	static int	_worldToModel		( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool				MOAINode_ApplyAttrOp							( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
-	void				MOAINode_Update									();
-	virtual void		MOAITransformNodeBase_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx ) = 0;
+	virtual void		MOAIAbstractParentTransform_BuildLocalToWorldMtx	( ZLAffine3D& localToWorldMtx ) = 0;
+
+	//----------------------------------------------------------------//
+	bool				MOAINode_ApplyAttrOp								( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
+	void				MOAINode_Update										();
 
 public:
 	
-	DECL_ATTR_HELPER ( MOAITransformNodeBase )
+	DECL_ATTR_HELPER ( MOAIAbstractParentTransform )
 	
 	enum {
 		ATTR_WORLD_X_LOC,
@@ -74,8 +76,8 @@ public:
 	const ZLAffine3D*		GetLocTrait					() const;
 	const ZLAffine3D*		GetTransformTrait			() const;
 	const ZLAffine3D&		GetWorldToLocalMtx			() const;
-							MOAITransformNodeBase		();
-							~MOAITransformNodeBase		();
+							MOAIAbstractParentTransform		();
+							~MOAIAbstractParentTransform		();
 	void					RegisterLuaClass			( MOAILuaState& state );
 	void					RegisterLuaFuncs			( MOAILuaState& state );
 };

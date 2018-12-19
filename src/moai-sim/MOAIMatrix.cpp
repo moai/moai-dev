@@ -64,7 +64,7 @@ int MOAIMatrix::_setMatrix ( lua_State* L ) {
 MOAIMatrix::MOAIMatrix () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAITransformNode )
+		RTTI_EXTEND ( MOAIAbstractChildTransform )
 	RTTI_END
 	
 	this->Ident ();
@@ -77,7 +77,7 @@ MOAIMatrix::~MOAIMatrix () {
 //----------------------------------------------------------------//
 void MOAIMatrix::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	MOAITransformNode::RegisterLuaClass ( state );
+	MOAIAbstractChildTransform::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "ATTR_MATRIX",	AttrID::Pack ( ATTR_MATRIX ).ToRaw ());
 }
@@ -85,7 +85,7 @@ void MOAIMatrix::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIMatrix::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAITransformNode::RegisterLuaFuncs ( state );
+	MOAIAbstractChildTransform::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "getMatrix",			_getMatrix },
@@ -114,6 +114,12 @@ void MOAIMatrix::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer 
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIMatrix::MOAIAbstractParentTransform_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
+
+	localToWorldMtx = *this;
+}
+
+//----------------------------------------------------------------//
 bool MOAIMatrix::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
 	// TODO: these values may need to be cached for performance reasons
@@ -127,11 +133,5 @@ bool MOAIMatrix::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, 
 				return true;
 		}
 	}
-	return MOAITransformNode::MOAINode_ApplyAttrOp ( attrID, attr, op );
-}
-
-//----------------------------------------------------------------//
-void MOAIMatrix::MOAITransformNodeBase_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
-
-	localToWorldMtx = *this;
+	return MOAIAbstractChildTransform::MOAINode_ApplyAttrOp ( attrID, attr, op );
 }

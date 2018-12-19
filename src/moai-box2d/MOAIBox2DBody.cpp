@@ -1047,7 +1047,7 @@ MOAIBox2DBody::MOAIBox2DBody () :
 	mBody ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAITransformNodeBase )
+		RTTI_EXTEND ( MOAIAbstractParentTransform )
 	RTTI_END
 }
 
@@ -1058,7 +1058,7 @@ MOAIBox2DBody::~MOAIBox2DBody () {
 //----------------------------------------------------------------//
 void MOAIBox2DBody::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAITransformNodeBase::RegisterLuaClass ( state );
+	MOAIAbstractParentTransform::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "DYNAMIC",		( u32 )b2_dynamicBody );
 	state.SetField ( -1, "KINEMATIC",	( u32 )b2_kinematicBody );
@@ -1068,7 +1068,7 @@ void MOAIBox2DBody::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIBox2DBody::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAITransformNodeBase::RegisterLuaFuncs ( state );
+	MOAIAbstractParentTransform::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "addChain",				_addChain },
@@ -1126,6 +1126,11 @@ void MOAIBox2DBody::SetBody ( b2Body* body ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIBox2DBody::MOAIAbstractParentTransform_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
+	UNUSED ( localToWorldMtx );
+}
+
+//----------------------------------------------------------------//
 bool MOAIBox2DBody::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
 	// TODO: these values may need to be cached for performance reasons
@@ -1154,7 +1159,7 @@ bool MOAIBox2DBody::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& att
 			}
 		}
 	}
-	return MOAITransformNodeBase::MOAINode_ApplyAttrOp (attrID, attr, op );
+	return MOAIAbstractParentTransform::MOAINode_ApplyAttrOp (attrID, attr, op );
 }
 
 //----------------------------------------------------------------//
@@ -1180,7 +1185,3 @@ void MOAIBox2DBody::MOAINode_Update () {
 	}
 }
 
-//----------------------------------------------------------------//
-void MOAIBox2DBody::MOAITransformNodeBase_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
-	UNUSED ( localToWorldMtx );
-}

@@ -37,7 +37,7 @@ MOAIHeadTransform::MOAIHeadTransform () {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIAction )
-		RTTI_EXTEND ( MOAITransformNodeBase )
+		RTTI_EXTEND ( MOAIAbstractParentTransform )
 	RTTI_END
 	
 	this->Ident ();
@@ -51,14 +51,14 @@ MOAIHeadTransform::~MOAIHeadTransform () {
 void MOAIHeadTransform::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAIAction::RegisterLuaClass ( state );
-	MOAITransformNodeBase::RegisterLuaClass ( state );
+	MOAIAbstractParentTransform::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIHeadTransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIAction::RegisterLuaFuncs ( state );
-	MOAITransformNodeBase::RegisterLuaFuncs ( state );
+	MOAIAbstractParentTransform::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "pauseTracking",				_pauseTracking },
@@ -74,6 +74,12 @@ void MOAIHeadTransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIHeadTransform::MOAIAbstractParentTransform_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
+
+	localToWorldMtx = *this;
+}
+
+//----------------------------------------------------------------//
 bool MOAIHeadTransform::MOAIAction_IsDone () {
 
 	return false;
@@ -85,12 +91,6 @@ void MOAIHeadTransform::MOAIAction_Update ( double step ) {
 	
 	*( ZLAffine3D* )this = ZLAffine3D ( MOAIVrMgr::Get ().GetHeadTransform ());
 	this->ScheduleUpdate ();
-}
-
-//----------------------------------------------------------------//
-void MOAIHeadTransform::MOAITransformNodeBase_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
-
-	localToWorldMtx = *this;
 }
 
 #endif

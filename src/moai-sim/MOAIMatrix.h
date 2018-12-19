@@ -4,14 +4,14 @@
 #ifndef	MOAIMATRIX_H
 #define	MOAIMATRIX_H
 
-#include <moai-sim/MOAITransformNode.h>
+#include <moai-sim/MOAIAbstractChildTransform.h>
 
 //================================================================//
 // MOAIMatrix
 //================================================================//
 // TODO: doxygen
 class MOAIMatrix :
-	public MOAITransformNode,
+	public MOAIAbstractChildTransform,
 	public ZLAffine3D {
 protected:
 
@@ -21,8 +21,8 @@ protected:
 	static int		_setMatrix				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool			MOAINode_ApplyAttrOp							( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
-	void			MOAITransformNodeBase_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );
+	void			MOAIAbstractParentTransform_BuildLocalToWorldMtx	( ZLAffine3D& localToWorldMtx );
+	bool			MOAINode_ApplyAttrOp								( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
 
 public:
 

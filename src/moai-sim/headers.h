@@ -7,8 +7,10 @@
 #include <moai-sim/pch.h>
 #include <moai-sim/strings.h>
 
+#include <moai-sim/MOAIAbstractChildTransform.h>
 #include <moai-sim/MOAIAbstractDrawable.h>
 #include <moai-sim/MOAIAbstractDrawShape.h>
+#include <moai-sim/MOAIAbstractParentTransform.h>
 #include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAIActionTree.h>
 #include <moai-sim/MOAIAnim.h>
@@ -161,8 +163,6 @@
 #include <moai-sim/MOAITimer.h>
 #include <moai-sim/MOAITouchSensor.h>
 #include <moai-sim/MOAITransform.h>
-#include <moai-sim/MOAITransformNode.h>
-#include <moai-sim/MOAITransformNodeBase.h>
 #include <moai-sim/MOAIVecPathGraph.h>
 #include <moai-sim/MOAIVectorCombo.h>
 #include <moai-sim/MOAIVectorEllipse.h>
