@@ -5,7 +5,7 @@
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
-#include <moai-sim/MOAIIndexedPropBase.h>
+#include <moai-sim/MOAIDeckHolderWithIndex.h>
 
 //================================================================//
 // local
@@ -15,11 +15,11 @@
 /**	@lua	getIndex
 	@text	Gets the value of the deck indexer.
 	
-	@in		MOAIIndexedPropBase self
+	@in		MOAIDeckHolderWithIndex self
 	@out	number index
 */
-int MOAIIndexedPropBase::_getIndex ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIIndexedPropBase, "U" )
+int MOAIDeckHolderWithIndex::_getIndex ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIDeckHolderWithIndex, "U" )
 
 	state.Push ( MOAILuaIndex ( self->mIndex ));
 
@@ -30,12 +30,12 @@ int MOAIIndexedPropBase::_getIndex ( lua_State* L ) {
 /**	@lua	setIndex
 	@text	Set the prop's index into its deck.
 	
-	@in		MOAIIndexedPropBase self
+	@in		MOAIDeckHolderWithIndex self
 	@opt	number index		Default value is 1.
 	@out	nil
 */
-int MOAIIndexedPropBase::_setIndex ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIIndexedPropBase, "U" )
+int MOAIDeckHolderWithIndex::_setIndex ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIDeckHolderWithIndex, "U" )
 
 	self->mIndex = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	self->ScheduleUpdate ();
@@ -44,34 +44,34 @@ int MOAIIndexedPropBase::_setIndex ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAIIndexedPropBase
+// MOAIDeckHolderWithIndex
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIIndexedPropBase::MOAIIndexedPropBase () :
+MOAIDeckHolderWithIndex::MOAIDeckHolderWithIndex () :
 	mIndex ( ZLIndexOp::ZERO ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeckPropBase )
+		RTTI_EXTEND ( MOAIDeckHolder )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
-MOAIIndexedPropBase::~MOAIIndexedPropBase () {
+MOAIDeckHolderWithIndex::~MOAIDeckHolderWithIndex () {
 }
 
 //----------------------------------------------------------------//
-void MOAIIndexedPropBase::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIDeckHolderWithIndex::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	MOAIDeckPropBase::RegisterLuaClass ( state );
+	MOAIDeckHolder::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "ATTR_INDEX", AttrID::Pack ( ATTR_INDEX ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
-void MOAIIndexedPropBase::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIDeckHolderWithIndex::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIDeckPropBase::RegisterLuaFuncs ( state );
+	MOAIDeckHolder::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "getIndex",				_getIndex },
@@ -83,15 +83,15 @@ void MOAIIndexedPropBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIIndexedPropBase::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIDeckHolderWithIndex::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
-	MOAIDeckPropBase::SerializeIn ( state, serializer );
+	MOAIDeckHolder::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAIIndexedPropBase::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIDeckHolderWithIndex::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
-	MOAIDeckPropBase::SerializeOut ( state, serializer );
+	MOAIDeckHolder::SerializeOut ( state, serializer );
 }
 
 //================================================================//
@@ -99,7 +99,7 @@ void MOAIIndexedPropBase::SerializeOut ( MOAILuaState& state, MOAISerializer& se
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIIndexedPropBase::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIDeckHolderWithIndex::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( AttrID::Check ( attrID )) {
 		

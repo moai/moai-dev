@@ -7,6 +7,7 @@
 #include <moai-sim/pch.h>
 #include <moai-sim/strings.h>
 
+#include <moai-sim/MOAIAbstractDrawShape.h>
 #include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAIActionTree.h>
 #include <moai-sim/MOAIAnim.h>
@@ -35,12 +36,14 @@
 #include <moai-sim/MOAICoroutine.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIDeck.h>
+#include <moai-sim/MOAIDeckHolder.h>
+#include <moai-sim/MOAIDeckHolderWithGrid.h>
+#include <moai-sim/MOAIDeckHolderWithIndex.h>
 #include <moai-sim/MOAIDeckProxy.h>
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIDrawable.h>
 #include <moai-sim/MOAIDrawDeck.h>
-#include <moai-sim/MOAIAbstractDrawShape.h>
 #include <moai-sim/MOAIDrawShapeImmediate.h>
 #include <moai-sim/MOAIDrawShapeRetained.h>
 #include <moai-sim/MOAIEaseDriver.h>

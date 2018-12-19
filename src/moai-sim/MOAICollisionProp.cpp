@@ -221,7 +221,7 @@ MOAICollisionProp::MOAICollisionProp () :
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIPartitionHull )
 		RTTI_EXTEND ( MOAIDrawable )
-		RTTI_EXTEND ( MOAIIndexedPropBase )
+		RTTI_EXTEND ( MOAIDeckHolderWithIndex )
 	RTTI_END
 	
 	this->mActiveListLink.Data ( this );
@@ -407,7 +407,7 @@ void MOAICollisionProp::Move ( ZLVec3D move, u32 detach, u32 maxSteps ) {
 void MOAICollisionProp::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAIPartitionHull::RegisterLuaClass ( state );
-	MOAIIndexedPropBase::RegisterLuaClass ( state );
+	MOAIDeckHolderWithIndex::RegisterLuaClass ( state );
 	
 	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAICollisionProp >( TOTAL_DEBUG_LINE_STYLES );
 	
@@ -447,7 +447,7 @@ void MOAICollisionProp::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAICollisionProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIPartitionHull::RegisterLuaFuncs ( state );
-	MOAIIndexedPropBase::RegisterLuaFuncs ( state );
+	MOAIDeckHolderWithIndex::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "collisionMove",		_collisionMove },
@@ -465,14 +465,14 @@ void MOAICollisionProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAICollisionProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
 	MOAIPartitionHull::SerializeIn ( state, serializer );
-	MOAIIndexedPropBase::SerializeIn ( state, serializer );
+	MOAIDeckHolderWithIndex::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAICollisionProp::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	
 	MOAIPartitionHull::SerializeOut ( state, serializer );
-	MOAIIndexedPropBase::SerializeOut ( state, serializer );
+	MOAIDeckHolderWithIndex::SerializeOut ( state, serializer );
 }
 
 //================================================================//
@@ -559,7 +559,7 @@ void MOAICollisionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
 //----------------------------------------------------------------//
 bool MOAICollisionProp::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
-	if ( MOAIIndexedPropBase::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+	if ( MOAIDeckHolderWithIndex::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
 	if ( MOAIPartitionHull::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
 	return false;
 }

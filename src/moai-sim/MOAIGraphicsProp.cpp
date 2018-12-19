@@ -33,7 +33,7 @@
 MOAIGraphicsProp::MOAIGraphicsProp () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIIndexedPropBase )
+		RTTI_EXTEND ( MOAIDeckHolderWithIndex )
 		RTTI_EXTEND ( MOAIGraphicsPropBase )
 	RTTI_END
 }
@@ -45,7 +45,7 @@ MOAIGraphicsProp::~MOAIGraphicsProp () {
 //----------------------------------------------------------------//
 void MOAIGraphicsProp::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	MOAIIndexedPropBase::RegisterLuaClass ( state );
+	MOAIDeckHolderWithIndex::RegisterLuaClass ( state );
 	MOAIGraphicsPropBase::RegisterLuaClass ( state );
 }
 
@@ -53,21 +53,21 @@ void MOAIGraphicsProp::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIGraphicsProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	
-	MOAIIndexedPropBase::RegisterLuaFuncs ( state );
+	MOAIDeckHolderWithIndex::RegisterLuaFuncs ( state );
 	MOAIGraphicsPropBase::RegisterLuaFuncs ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIGraphicsProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
-	MOAIIndexedPropBase::SerializeIn ( state, serializer );
+	MOAIDeckHolderWithIndex::SerializeIn ( state, serializer );
 	MOAIGraphicsPropBase::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAIGraphicsProp::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	
-	MOAIIndexedPropBase::SerializeOut ( state, serializer );
+	MOAIDeckHolderWithIndex::SerializeOut ( state, serializer );
 	MOAIGraphicsPropBase::SerializeOut ( state, serializer );
 }
 
@@ -95,7 +95,7 @@ void MOAIGraphicsProp::MOAIDrawable_Draw ( int subPrimID ) {
 //----------------------------------------------------------------//
 bool MOAIGraphicsProp::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 	
-	if ( MOAIIndexedPropBase::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+	if ( MOAIDeckHolderWithIndex::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
 	if ( MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
 	return false;
 }

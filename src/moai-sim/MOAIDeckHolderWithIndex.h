@@ -1,23 +1,23 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIINDEXEDPROPBASE_H
-#define	MOAIINDEXEDPROPBASE_H
+#ifndef	MOAIDECKHOLDERWITHINDEX_H
+#define	MOAIDECKHOLDERWITHINDEX_H
 
 #include <moai-sim/MOAIBlendMode.h>
 #include <moai-sim/MOAIColor.h>
-#include <moai-sim/MOAIDeckPropBase.h>
+#include <moai-sim/MOAIDeckHolder.h>
 #include <moai-sim/MOAIDrawable.h>
 #include <moai-sim/MOAIPartitionHull.h>
 #include <moai-sim/MOAITransform.h>
 #include <moai-core/MOAILuaSharedPtr.h>
 
 //================================================================//
-// MOAIIndexedPropBase
+// MOAIDeckHolderWithIndex
 //================================================================//
 // TODO: doxygen
-class MOAIIndexedPropBase :
-	public virtual MOAIDeckPropBase {
+class MOAIDeckHolderWithIndex :
+	public virtual MOAIDeckHolder {
 protected:
 	
 	ZLIndex		mIndex;
@@ -31,7 +31,7 @@ protected:
 
 public:
 
-	DECL_ATTR_HELPER ( MOAIIndexedPropBase )
+	DECL_ATTR_HELPER ( MOAIDeckHolderWithIndex )
 
 	enum {
 		ATTR_INDEX,
@@ -41,8 +41,8 @@ public:
 	GET_SET ( ZLIndex, Index, mIndex )
 
 	//----------------------------------------------------------------//
-					MOAIIndexedPropBase			();
-					~MOAIIndexedPropBase		();
+					MOAIDeckHolderWithIndex		();
+					~MOAIDeckHolderWithIndex	();
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
 	void			SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );

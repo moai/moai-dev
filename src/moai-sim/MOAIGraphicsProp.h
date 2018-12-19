@@ -4,7 +4,7 @@
 #ifndef	MOAIGRAPHICSPROP_H
 #define	MOAIGRAPHICSPROP_H
 
-#include <moai-sim/MOAIIndexedPropBase.h>
+#include <moai-sim/MOAIDeckHolderWithIndex.h>
 #include <moai-sim/MOAIGraphicsPropBase.h>
 
 class MOAICellCoord;
@@ -27,7 +27,7 @@ class MOAITextureBase;
 //================================================================//
 // TODO: doxygen
 class MOAIGraphicsProp :
-	public virtual MOAIIndexedPropBase,
+	public virtual MOAIDeckHolderWithIndex,
 	public virtual MOAIGraphicsPropBase {
 protected:
 

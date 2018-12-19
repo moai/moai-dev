@@ -5,7 +5,7 @@
 #define	MOAICOLLISIONFACET_H
 
 #include <moai-sim/MOAICollisionPrim.h>
-#include <moai-sim/MOAIIndexedPropBase.h>
+#include <moai-sim/MOAIDeckHolderWithIndex.h>
 #include <moai-sim/MOAIPartitionHull.h>
 
 class MOAICollisionShape;
@@ -61,7 +61,7 @@ private:
 class MOAICollisionProp :
 	public virtual MOAIPartitionHull,
 	public virtual MOAIDrawable,
-	public virtual MOAIIndexedPropBase {
+	public virtual MOAIDeckHolderWithIndex {
 private:
 	
 	friend class MOAICollisionWorld;

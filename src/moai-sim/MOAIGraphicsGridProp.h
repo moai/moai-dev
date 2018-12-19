@@ -4,7 +4,7 @@
 #ifndef	MOAIGRAPHICSGRIDPROP_H
 #define	MOAIGRAPHICSGRIDPROP_H
 
-#include <moai-sim/MOAIGridPropBase.h>
+#include <moai-sim/MOAIDeckHolderWithGrid.h>
 #include <moai-sim/MOAIGraphicsPropBase.h>
 
 class MOAICellCoord;
@@ -28,7 +28,7 @@ class MOAITextureBase;
 //================================================================//
 // TODO: doxygen
 class MOAIGraphicsGridProp :
-	public virtual MOAIGridPropBase,
+	public virtual MOAIDeckHolderWithGrid,
 	public virtual MOAIGraphicsPropBase {
 private:
 
@@ -49,6 +49,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIGraphicsGridProp )
 
 	//----------------------------------------------------------------//
+	void			GetGridBoundsInView			( const ZLAffine3D& worldToLocalMtx, MOAICellCoord& c0, MOAICellCoord& c1 ); // TODO: this shoudln't be here
 					MOAIGraphicsGridProp		();
 	virtual			~MOAIGraphicsGridProp		();
 	void			RegisterLuaClass			( MOAILuaState& state );

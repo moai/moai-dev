@@ -163,10 +163,28 @@ void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoo
 }
 
 //----------------------------------------------------------------//
+void MOAIGraphicsGridProp::GetGridBoundsInView ( const ZLAffine3D& worldToLocalMtx, MOAICellCoord& c0, MOAICellCoord& c1 ) {
+
+	const ZLFrustum& frustum = MOAIGfxMgr::Get ().mGfxState.GetViewVolume ();
+	
+	ZLRect viewRect;
+	//if ( frustum.GetXYSectRect ( this->GetWorldToLocalMtx (), viewRect )) {
+	if ( frustum.GetXYSectRect ( worldToLocalMtx, viewRect )) {
+	
+		// TODO: need to take into account perspective and truncate rect based on horizon
+		// TODO: consider bringing back poly to tile scanline converter...
+
+		ZLRect deckBounds = this->mDeck->GetBounds ().GetRect ( ZLBox::PLANE_XY );
+
+		this->mGrid->GetBoundsInRect ( viewRect, c0, c1, deckBounds );
+	}
+}
+
+//----------------------------------------------------------------//
 MOAIGraphicsGridProp::MOAIGraphicsGridProp () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIGridPropBase )
+		RTTI_EXTEND ( MOAIDeckHolderWithGrid )
 		RTTI_EXTEND ( MOAIGraphicsPropBase )
 	RTTI_END
 }
@@ -178,28 +196,28 @@ MOAIGraphicsGridProp::~MOAIGraphicsGridProp () {
 //----------------------------------------------------------------//
 void MOAIGraphicsGridProp::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	MOAIGridPropBase::RegisterLuaClass ( state );
+	MOAIDeckHolderWithGrid::RegisterLuaClass ( state );
 	MOAIGraphicsPropBase::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIGraphicsGridProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIGridPropBase::RegisterLuaFuncs ( state );
+	MOAIDeckHolderWithGrid::RegisterLuaFuncs ( state );
 	MOAIGraphicsPropBase::RegisterLuaFuncs ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIGraphicsGridProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
-	MOAIGridPropBase::SerializeIn ( state, serializer );
+	MOAIDeckHolderWithGrid::SerializeIn ( state, serializer );
 	MOAIGraphicsPropBase::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAIGraphicsGridProp::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	
-	MOAIGridPropBase::SerializeOut ( state, serializer );
+	MOAIDeckHolderWithGrid::SerializeOut ( state, serializer );
 	MOAIGraphicsPropBase::SerializeOut ( state, serializer );
 }
 
