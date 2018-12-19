@@ -4,9 +4,9 @@
 #ifndef	MOAICOLLISIONWORLD_H
 #define	MOAICOLLISIONWORLD_H
 
+#include <moai-sim/MOAIAbstractDrawable.h>
 #include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAICollisionProp.h>
-#include <moai-sim/MOAIDrawable.h>
 #include <moai-sim/MOAIDrawShapeRetained.h>
 #include <moai-sim/MOAIOverlap.h>
 #include <moai-sim/MOAIPartition.h>

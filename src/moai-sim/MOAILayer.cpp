@@ -185,7 +185,7 @@ MOAILayer::MOAILayer () :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
-		RTTI_EXTEND ( MOAIDrawable )
+		RTTI_EXTEND ( MOAIAbstractDrawable )
 	RTTI_END
 }
 
@@ -242,7 +242,7 @@ void MOAILayer::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAILayer::MOAIDrawable_Draw ( int subPrimID ) {
+void MOAILayer::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
 	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
@@ -252,4 +252,9 @@ void MOAILayer::MOAIDrawable_Draw ( int subPrimID ) {
 	//disable scissor rect for clear
 	gfxState.SetScissorRect ();
 	this->ClearSurface ();
+}
+
+//----------------------------------------------------------------//
+void MOAILayer::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
+	UNUSED ( subPrimID );
 }

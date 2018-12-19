@@ -61,7 +61,7 @@ public:
 */
 class MOAIBox2DWorld :
 	public MOAIAction,
-	public MOAIDrawable,
+	public MOAIAbstractDrawable,
 	public b2DestructionListener {
 private:
 
@@ -121,9 +121,10 @@ private:
 	void			ScheduleDestruction		( MOAIBox2DJoint& joint );
 
 	//----------------------------------------------------------------//
-	bool			MOAIAction_IsDone		();
-	void			MOAIAction_Update		( double step );
-	void			MOAIDrawable_Draw		( int subPrimID );
+	void			MOAIAbstractDrawable_Draw			( int subPrimID );
+	void			MOAIAbstractDrawable_DrawDebug		( int subPrimID );
+	bool			MOAIAction_IsDone					();
+	void			MOAIAction_Update					( double step );
 
 public:
 	

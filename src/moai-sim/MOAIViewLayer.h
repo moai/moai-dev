@@ -43,7 +43,8 @@ protected:
 	static int		_worldToWnd				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void					MOAIDrawable_Draw					( int subPrimID );
+	void					MOAIAbstractDrawable_Draw			( int subPrimID );
+	void					MOAIAbstractDrawable_DrawDebug		( int subPrimID );
 	ZLBounds				MOAIPartitionHull_GetModelBounds	();
 	virtual void			MOAIViewLayer_Draw					() = 0;
 

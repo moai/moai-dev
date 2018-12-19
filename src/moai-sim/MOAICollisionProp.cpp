@@ -220,7 +220,7 @@ MOAICollisionProp::MOAICollisionProp () :
 
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIPartitionHull )
-		RTTI_EXTEND ( MOAIDrawable )
+		RTTI_EXTEND ( MOAIAbstractDrawable )
 		RTTI_EXTEND ( MOAIDeckHolderWithIndex )
 	RTTI_END
 	
@@ -480,7 +480,12 @@ void MOAICollisionProp::SerializeOut ( MOAILuaState& state, MOAISerializer& seri
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAICollisionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
+void MOAICollisionProp::MOAIAbstractDrawable_Draw ( int subPrimID ) {
+	UNUSED ( subPrimID );
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionProp::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
@@ -585,7 +590,7 @@ u32 MOAICollisionProp::MOAIPartitionHull_AffirmInterfaceMask ( MOAIPartition& pa
 
 	return (
 		partition.AffirmInterfaceMask < MOAICollisionProp >() |
-		partition.AffirmInterfaceMask < MOAIDrawable >()
+		partition.AffirmInterfaceMask < MOAIAbstractDrawable >()
 	);
 }
 

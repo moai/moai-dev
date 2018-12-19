@@ -204,10 +204,10 @@ private:
 	virtual void		RefreshStyleGlyphs		();
 
 	//----------------------------------------------------------------//
+	void				MOAIAbstractDrawable_Draw					( int subPrimID );
+	void				MOAIAbstractDrawable_DrawDebug				( int subPrimID );
 	bool				MOAIAction_IsDone							();
 	void				MOAIAction_Update							( double step );
-	void				MOAIDrawable_Draw							( int subPrimID );
-	void				MOAIDrawable_DrawDebug						( int subPrimID );
 	ZLMatrix4x4			MOAIGraphicsPropBase_GetWorldDrawingMtx		();
 	void				MOAINode_Update								();
 	ZLBounds			MOAIPartitionHull_GetModelBounds			();

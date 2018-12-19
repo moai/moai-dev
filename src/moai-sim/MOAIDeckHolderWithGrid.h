@@ -4,10 +4,10 @@
 #ifndef	MOAIDECKHOLDERWITHGRID_H
 #define	MOAIDECKHOLDERWITHGRID_H
 
+#include <moai-sim/MOAIAbstractDrawable.h>
 #include <moai-sim/MOAIBlendMode.h>
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIDeckHolder.h>
-#include <moai-sim/MOAIDrawable.h>
 #include <moai-sim/MOAIPartitionHull.h>
 #include <moai-sim/MOAITransform.h>
 #include <moai-core/MOAILuaSharedPtr.h>

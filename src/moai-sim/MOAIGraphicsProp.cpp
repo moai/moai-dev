@@ -76,7 +76,7 @@ void MOAIGraphicsProp::SerializeOut ( MOAILuaState& state, MOAISerializer& seria
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGraphicsProp::MOAIDrawable_Draw ( int subPrimID ) {
+void MOAIGraphicsProp::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
 	if ( !this->IsVisible ()) return;

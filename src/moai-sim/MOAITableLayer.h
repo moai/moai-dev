@@ -24,7 +24,7 @@ protected:
 	static int			_setRenderTable			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				MOAIDrawable_Draw		( int subPrimID );
+	void				MOAIAbstractDrawable_Draw		( int subPrimID );
 
 public:
 

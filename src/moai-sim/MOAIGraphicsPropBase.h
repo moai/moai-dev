@@ -4,26 +4,13 @@
 #ifndef	MOAIGRAPHICSPROPBASE_H
 #define	MOAIGRAPHICSPROPBASE_H
 
+#include <moai-sim/MOAIAbstractDrawable.h>
 #include <moai-sim/MOAIColor.h>
-#include <moai-sim/MOAIDrawable.h>
 #include <moai-sim/MOAIPartitionHull.h>
 #include <moai-sim/MOAIMaterialBatchHolder.h>
 #include <moai-sim/MOAITransform.h>
 
-class MOAICellCoord;
-class MOAIDeck;
-class MOAIGrid;
-class MOAILayoutFrame;
-class MOAIMaterialBatch;
-class MOAIOverlapPrim2D;
-class MOAIPartition;
-class MOAIPartitionCell;
-class MOAIPartitionLevel;
-class MOAIPartitionResultBuffer;
 class MOAIScissorRect;
-class MOAIShader;
-class MOAISurfaceSampler2D;
-class MOAITextureBase;
 
 //================================================================//
 // MOAIGraphicsPropBase
@@ -69,7 +56,7 @@ class MOAITextureBase;
 class MOAIGraphicsPropBase :
 	public virtual MOAIPartitionHull,
 	public virtual MOAIColor,
-	public virtual MOAIDrawable,
+	public virtual MOAIAbstractDrawable,
 	public virtual MOAIMaterialBatchHolder {
 protected:
 	
@@ -85,7 +72,7 @@ protected:
 	static int		_setVisible				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			MOAIDrawable_DrawDebug						( int subPrimID );
+	void			MOAIAbstractDrawable_DrawDebug				( int subPrimID );
 	void			MOAIPartitionHull_AddToSortBuffer			( MOAIPartitionResultBuffer& buffer, u32 key );
 	u32				MOAIPartitionHull_AffirmInterfaceMask		( MOAIPartition& partition );
 

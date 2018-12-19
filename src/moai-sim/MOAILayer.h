@@ -4,7 +4,7 @@
 #ifndef	MOAILAYER_H
 #define	MOAILAYER_H
 
-#include <moai-sim/MOAIDrawable.h>
+#include <moai-sim/MOAIAbstractDrawable.h>
 
 class MOAIColor;
 class MOAIFrameBuffer;
@@ -15,7 +15,7 @@ class MOAIPartition;
 //================================================================//
 class MOAILayer :
 	public virtual MOAILuaObject,
-	public virtual MOAIDrawable {
+	public virtual MOAIAbstractDrawable {
 private:
 
 	u32				mClearFlags;
@@ -41,7 +41,8 @@ protected:
 	void			ClearSurface			();
 
 	//----------------------------------------------------------------//
-	void			MOAIDrawable_Draw		( int subPrimID );
+	void			MOAIAbstractDrawable_Draw			( int subPrimID );
+	void			MOAIAbstractDrawable_DrawDebug		( int subPrimID );
 
 public:
 

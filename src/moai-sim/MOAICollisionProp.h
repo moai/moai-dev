@@ -60,7 +60,7 @@ private:
 // TODO: doxygen
 class MOAICollisionProp :
 	public virtual MOAIPartitionHull,
-	public virtual MOAIDrawable,
+	public virtual MOAIAbstractDrawable,
 	public virtual MOAIDeckHolderWithIndex {
 private:
 	
@@ -97,7 +97,8 @@ private:
 	bool					IsActive				();
 	
 	//----------------------------------------------------------------//
-	void					MOAIDrawable_DrawDebug							( int subPrimID );
+	void					MOAIAbstractDrawable_Draw						( int subPrimID );
+	void					MOAIAbstractDrawable_DrawDebug					( int subPrimID );
 	bool					MOAINode_ApplyAttrOp							( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
 	void					MOAINode_Update									();
 	void					MOAIPartitionHull_AddToSortBuffer				( MOAIPartitionResultBuffer& buffer, u32 key = 0 );

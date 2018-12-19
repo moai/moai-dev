@@ -692,7 +692,7 @@ int MOAISim::_timeToFrames ( lua_State* L ) {
 		@text	Alias for MOAIRenderMgr.pushRenderPass (). THIS METHOD
 				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
 
-		@in		MOAIDrawable renderable
+		@in		MOAIAbstractDrawable renderable
 		@out	nil
 	*/
 	int MOAISim::_pushRenderPass ( lua_State* L ) {
@@ -703,7 +703,7 @@ int MOAISim::_timeToFrames ( lua_State* L ) {
 		@text	Alias for MOAIRenderMgr.removeRenderPass (). THIS METHOD
 				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
 
-		@in		MOAIDrawable renderable
+		@in		MOAIAbstractDrawable renderable
 		@out	nil
 	*/
 	int MOAISim::_removeRenderPass ( lua_State* L ) {

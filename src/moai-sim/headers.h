@@ -7,6 +7,7 @@
 #include <moai-sim/pch.h>
 #include <moai-sim/strings.h>
 
+#include <moai-sim/MOAIAbstractDrawable.h>
 #include <moai-sim/MOAIAbstractDrawShape.h>
 #include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAIActionTree.h>
@@ -42,7 +43,6 @@
 #include <moai-sim/MOAIDeckProxy.h>
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDraw.h>
-#include <moai-sim/MOAIDrawable.h>
 #include <moai-sim/MOAIDrawDeck.h>
 #include <moai-sim/MOAIDrawShapeImmediate.h>
 #include <moai-sim/MOAIDrawShapeRetained.h>

@@ -271,7 +271,7 @@ MOAICollisionWorld::MOAICollisionWorld () :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIAction )
-		RTTI_EXTEND ( MOAIDrawable )
+		RTTI_EXTEND ( MOAIAbstractDrawable )
 		RTTI_EXTEND ( MOAIPartition )
 	RTTI_END
 }

@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIDrawable.h>
+#include <moai-sim/MOAIAbstractDrawable.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIRenderMgr.h>
@@ -114,7 +114,7 @@ void MOAIRenderMgr::Render () {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		state.Push ( this->mRenderRoot );
 		
-		MOAIDrawable::Draw ( state, -1 );
+		MOAIAbstractDrawable::Draw ( state, -1 );
 	}
 	
 	this->mRenderCounter++;

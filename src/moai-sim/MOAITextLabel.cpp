@@ -1090,24 +1090,7 @@ void MOAITextLabel::SetText ( cc8* text ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAITextLabel::MOAIAction_IsDone () {
-
-	if ( this->IsActive ()) {
-		this->RefreshLayout ();
-		return ( this->mReveal >= this->mLayout.CountSprites ());
-	}
-	return true;
-}
-
-//----------------------------------------------------------------//
-void MOAITextLabel::MOAIAction_Update ( double step ) {
-	
-	this->mSpool += ( float )( this->mSpeed * step );
-	this->mReveal = ( u32 )this->mSpool;
-}
-
-//----------------------------------------------------------------//
-void MOAITextLabel::MOAIDrawable_Draw ( int subPrimID ) {
+void MOAITextLabel::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 	
 	if ( !this->IsVisible ()) return;
@@ -1167,12 +1150,12 @@ void MOAITextLabel::MOAIDrawable_Draw ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLabel::MOAIDrawable_DrawDebug ( int subPrimID ) {
+void MOAITextLabel::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
 	if ( !this->IsVisible ()) return;
 
-	MOAIGraphicsProp::MOAIDrawable_DrawDebug ( subPrimID );
+	MOAIGraphicsProp::MOAIAbstractDrawable_DrawDebug ( subPrimID );
 
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAITextLabel >())) return;
@@ -1189,7 +1172,7 @@ void MOAITextLabel::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
 	draw.Bind ();
-		
+	
 	if (( this->mLayout.mLayoutBounds.Area () > 0.0f ) && debugLines.Bind ( DEBUG_DRAW_TEXT_LABEL_LAYOUT_BOUNDS )) {
 		
 		draw.DrawRectOutline ( this->mLayout.mLayoutBounds );
@@ -1235,6 +1218,23 @@ void MOAITextLabel::MOAIDrawable_DrawDebug ( int subPrimID ) {
 			}
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+bool MOAITextLabel::MOAIAction_IsDone () {
+
+	if ( this->IsActive ()) {
+		this->RefreshLayout ();
+		return ( this->mReveal >= this->mLayout.CountSprites ());
+	}
+	return true;
+}
+
+//----------------------------------------------------------------//
+void MOAITextLabel::MOAIAction_Update ( double step ) {
+	
+	this->mSpool += ( float )( this->mSpeed * step );
+	this->mReveal = ( u32 )this->mSpool;
 }
 
 //----------------------------------------------------------------//

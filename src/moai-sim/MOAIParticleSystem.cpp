@@ -673,7 +673,7 @@ void MOAIParticleSystem::MOAIAction_Update ( double step ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleSystem::MOAIDrawable_Draw ( int subPrimID ) {
+void MOAIParticleSystem::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
 	if ( !this->IsVisible ()) return;

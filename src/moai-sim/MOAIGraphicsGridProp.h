@@ -7,22 +7,6 @@
 #include <moai-sim/MOAIDeckHolderWithGrid.h>
 #include <moai-sim/MOAIGraphicsPropBase.h>
 
-class MOAICellCoord;
-class MOAICollisionShape;
-class MOAIDeck;
-class MOAIGrid;
-class MOAILayoutFrame;
-class MOAIMaterialBatch;
-class MOAIOverlapPrim2D;
-class MOAIPartition;
-class MOAIPartitionCell;
-class MOAIPartitionLevel;
-class MOAIPartitionResultBuffer;
-class MOAIScissorRect;
-class MOAIShader;
-class MOAISurfaceSampler2D;
-class MOAITextureBase;
-
 //================================================================//
 // MOAIGraphicsGridProp
 //================================================================//
@@ -38,7 +22,7 @@ private:
 	void			DrawGrid								( const MOAICellCoord &c0, const MOAICellCoord &c1 );
 
 	//----------------------------------------------------------------//
-	void			MOAIDrawable_Draw						( int subPrimID );
+	void			MOAIAbstractDrawable_Draw				( int subPrimID );
 	bool			MOAINode_ApplyAttrOp					( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
 	void			MOAINode_Update							();
 	void			MOAIPartitionHull_AddToSortBuffer		( MOAIPartitionResultBuffer& buffer, u32 key = 0 );

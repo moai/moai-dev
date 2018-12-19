@@ -83,7 +83,7 @@ void MOAITableLayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITableLayer::MOAIDrawable_Draw ( int subPrimID ) {
+void MOAITableLayer::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
 	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
@@ -94,7 +94,7 @@ void MOAITableLayer::MOAIDrawable_Draw ( int subPrimID ) {
 	gfxState.SetScissorRect ();
 	this->ClearSurface ();
 	
-	MOAIDrawable::Draw ( this->mRenderTable );
+	MOAIAbstractDrawable::Draw ( this->mRenderTable );
 		
 	// restore the frame buffer
 	gfxState.SetFrameBuffer ( this->GetFrameBuffer ());

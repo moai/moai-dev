@@ -223,8 +223,8 @@ MOAIGraphicsPropBase::MOAIGraphicsPropBase () :
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIPartitionHull )
 		RTTI_EXTEND ( MOAIColor )
-		RTTI_EXTEND ( MOAIDrawable )
-		RTTI_EXTEND ( MOAIDrawable )
+		RTTI_EXTEND ( MOAIAbstractDrawable )
+		RTTI_EXTEND ( MOAIAbstractDrawable )
 		RTTI_EXTEND ( MOAIMaterialBatchHolder )
 	RTTI_END
 	
@@ -384,7 +384,7 @@ void MOAIGraphicsPropBase::SetVisible ( bool visible ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGraphicsPropBase::MOAIDrawable_DrawDebug ( int subPrimID ) {
+void MOAIGraphicsPropBase::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
 	if ( this->GetWorldBoundsStatus () == ZLBounds::ZL_BOUNDS_EMPTY ) return;
@@ -519,8 +519,6 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () {
 		}
 		
 		case BILLBOARD_COMPASS: {
-		
-			
 		
 			ZLAffine3D cameraMtx ( gfxState.GetMtx ( MOAIGfxState::VIEW_TO_WORLD_MTX ));
 			ZLVec3D	cameraY = cameraMtx.GetYAxis ();
@@ -706,5 +704,5 @@ void MOAIGraphicsPropBase::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionResu
 //----------------------------------------------------------------//
 u32 MOAIGraphicsPropBase::MOAIPartitionHull_AffirmInterfaceMask ( MOAIPartition& partition ) {
 
-	return partition.AffirmInterfaceMask < MOAIDrawable >();
+	return partition.AffirmInterfaceMask < MOAIAbstractDrawable >();
 }

@@ -42,7 +42,7 @@ int	MOAIPartitionViewLayer::_getPropViewList ( lua_State* L ) {
 	
 	if ( partition && self->mViewport ) {
 		
-		u32 interfaceMask = partition->GetInterfaceMask < MOAIDrawable >();
+		u32 interfaceMask = partition->GetInterfaceMask < MOAIAbstractDrawable >();
 		if ( !interfaceMask ) return 0;
 		
 		float sortScale [ 4 ];
@@ -200,7 +200,7 @@ void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition ) {
 
 	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
-	u32 interfaceMask = partition.GetInterfaceMask < MOAIDrawable >();
+	u32 interfaceMask = partition.GetInterfaceMask < MOAIAbstractDrawable >();
 	if ( !interfaceMask ) return;
 	
 	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
@@ -255,7 +255,7 @@ void MOAIPartitionViewLayer::DrawProps ( MOAIPartitionResultBuffer& buffer ) {
 
 	for ( u32 i = 0; i < totalResults; ++i ) {
 		MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-		MOAIDrawable* drawable = result->AsType < MOAIDrawable >();
+		MOAIAbstractDrawable* drawable = result->AsType < MOAIAbstractDrawable >();
 		drawable->Draw ( result->mSubPrimID );
 	}
 }
@@ -267,7 +267,7 @@ void MOAIPartitionViewLayer::DrawPropsDebug ( MOAIPartitionResultBuffer& buffer 
 
 	for ( u32 i = 0; i < totalResults; ++i ) {
 		MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-		MOAIDrawable* drawable = result->AsType < MOAIDrawable >();
+		MOAIAbstractDrawable* drawable = result->AsType < MOAIAbstractDrawable >();
 		drawable->DrawDebug ( result->mSubPrimID );
 	}
 }

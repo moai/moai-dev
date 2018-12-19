@@ -7,21 +7,6 @@
 #include <moai-sim/MOAIDeckHolderWithIndex.h>
 #include <moai-sim/MOAIGraphicsPropBase.h>
 
-class MOAICellCoord;
-class MOAIDeck;
-class MOAIGrid;
-class MOAILayoutFrame;
-class MOAIMaterialBatch;
-class MOAIOverlapPrim2D;
-class MOAIPartition;
-class MOAIPartitionCell;
-class MOAIPartitionLevel;
-class MOAIPartitionResultBuffer;
-class MOAIScissorRect;
-class MOAIShader;
-class MOAISurfaceSampler2D;
-class MOAITextureBase;
-
 //================================================================//
 // MOAIGraphicsProp
 //================================================================//
@@ -32,7 +17,7 @@ class MOAIGraphicsProp :
 protected:
 
 	//----------------------------------------------------------------//
-	void					MOAIDrawable_Draw						( int subPrimID );
+	void					MOAIAbstractDrawable_Draw				( int subPrimID );
 	bool					MOAINode_ApplyAttrOp					( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
 	void					MOAINode_Update							();
 	ZLBounds				MOAIPartitionHull_GetModelBounds		(); // get the prop bounds in model space

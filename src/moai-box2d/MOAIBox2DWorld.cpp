@@ -1121,7 +1121,7 @@ MOAIBox2DWorld::MOAIBox2DWorld () :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIAction )
-		RTTI_EXTEND ( MOAIDrawable )
+		RTTI_EXTEND ( MOAIAbstractDrawable )
 	RTTI_END
 	
 	this->mArbiter.Set ( *this, new MOAIBox2DArbiter ( *this ));
@@ -1266,6 +1266,26 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DJoint& joint ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIBox2DWorld::MOAIAbstractDrawable_Draw ( int subPrimID ) {
+	UNUSED ( subPrimID );
+
+	if ( this->mDebugDraw && MOAIDraw::Get ().Bind ()) {
+		
+		MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+		
+		gfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX );
+		
+		this->mDebugDraw->mScale = 1.0f / this->mUnitsToMeters;
+		this->mWorld->DrawDebugData ();
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIBox2DWorld::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
+	UNUSED ( subPrimID );
+}
+
+//----------------------------------------------------------------//
 bool MOAIBox2DWorld::MOAIAction_IsDone () {
 
 	return false;
@@ -1286,20 +1306,5 @@ void MOAIBox2DWorld::MOAIAction_Update ( double step ) {
 			MOAIBox2DBody* moaiBody = ( MOAIBox2DBody* )body->GetUserData ();
 			moaiBody->ScheduleUpdate ();
 		}
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIBox2DWorld::MOAIDrawable_Draw ( int subPrimID ) {
-	UNUSED ( subPrimID );
-
-	if ( this->mDebugDraw && MOAIDraw::Get ().Bind ()) {
-		
-		MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
-		
-		gfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX );
-		
-		this->mDebugDraw->mScale = 1.0f / this->mUnitsToMeters;
-		this->mWorld->DrawDebugData ();
 	}
 }

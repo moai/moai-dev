@@ -70,9 +70,9 @@ private:
 	MOAIParticleState*		GetState				( ZLIndex id );
 	
 	//----------------------------------------------------------------//
+	void					MOAIAbstractDrawable_Draw				( int subPrimID );
 	bool					MOAIAction_IsDone						();
 	void					MOAIAction_Update						( double step );
-	void					MOAIDrawable_Draw						( int subPrimID );
 	ZLBounds				MOAIPartitionHull_GetModelBounds		();
 
 public:

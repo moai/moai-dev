@@ -506,7 +506,7 @@ void MOAIViewLayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIViewLayer::MOAIDrawable_Draw ( int subPrimID ) {
+void MOAIViewLayer::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
     
    	if ( !this->IsVisible ()) return;
@@ -542,6 +542,11 @@ void MOAIViewLayer::MOAIDrawable_Draw ( int subPrimID ) {
 		}
 	}
 	gfxState.SetFrameBuffer ( this->GetFrameBuffer ());
+}
+
+//----------------------------------------------------------------//
+void MOAIViewLayer::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
+	UNUSED ( subPrimID );
 }
 
 //----------------------------------------------------------------//
