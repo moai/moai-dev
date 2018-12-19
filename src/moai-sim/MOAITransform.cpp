@@ -1081,7 +1081,7 @@ bool MOAITransform::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& att
 
 	if ( AttrID::Check ( attrID )) {
 
-		switch (  attrID.Unpack ()) {
+		switch ( attrID.Unpack ()) {
 		
 			case ATTR_X_PIV:
 				this->mPiv.mX = attr.Apply ( this->mPiv.mX, op, MOAIAttribute::ATTR_READ_WRITE );

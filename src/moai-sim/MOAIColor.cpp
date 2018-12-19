@@ -308,7 +308,7 @@ bool MOAIColor::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u
 
 	if ( AttrID::Check ( attrID )) {
 
-		switch (  attrID.Unpack ()) {
+		switch ( attrID.Unpack ()) {
 		
 			case ATTR_R_COL:
 				this->mR = ZLFloat::Clamp ( attr.Apply ( this->mR, op, MOAIAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );

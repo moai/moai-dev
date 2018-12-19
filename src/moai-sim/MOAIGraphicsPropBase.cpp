@@ -660,7 +660,7 @@ bool MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribu
 
 	if ( AttrID::Check ( attrID )) {
 		
-		switch (  attrID.Unpack ()) {
+		switch ( attrID.Unpack ()) {
 				
 			case ATTR_SCISSOR_RECT:
 				this->mScissorRect.Set ( *this, attr.ApplyVariantNoAdd < MOAIScissorRect* >( this->mScissorRect, op, MOAIAttribute::ATTR_READ_WRITE ));

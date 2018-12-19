@@ -396,7 +396,7 @@ bool MOAITransformBase::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute&
 	// TODO: these values may need to be cached for performance reasons
 	if ( AttrID::Check ( attrID )) {
 
-		switch (  attrID.Unpack ()) {
+		switch ( attrID.Unpack ()) {
 			
 			case ATTR_WORLD_X_LOC:
 				attr.Apply ( this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R0 ], op, MOAIAttribute::ATTR_READ );

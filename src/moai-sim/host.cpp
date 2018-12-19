@@ -475,6 +475,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIPinTransform )
 	REGISTER_LUA_CLASS ( MOAIPointerSensor )
 	//REGISTER_LUA_CLASS ( MOAIProfilerReportBox )
+	REGISTER_LUA_CLASS ( MOAIProjectionProp )
 	REGISTER_LUA_CLASS ( MOAIRegion )
 	REGISTER_LUA_CLASS ( MOAIRenderMgr )
 	REGISTER_LUA_CLASS ( MOAIScissorRect )

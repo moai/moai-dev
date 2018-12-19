@@ -101,7 +101,6 @@ protected:
 	void				BoundsDidChange				();
 	bool				PrepareForInsertion			( const MOAIPartition& partition );
 	u32					ResolveModelBounds			( ZLBox& bounds );
-	//void				UpdateWorldBounds			( u32 status );
 	void				UpdateWorldBounds			( const ZLBounds& bounds ); // update bounds in world space
 	void				WasRemovedFromPartition		();
 	
@@ -124,7 +123,6 @@ public:
 	};
 
 	enum {
-		//ATTR_INDEX,
 		ATTR_PARTITION,
 		TOTAL_ATTR,
 	};

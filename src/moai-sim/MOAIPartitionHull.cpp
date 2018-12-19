@@ -602,18 +602,6 @@ void MOAIPartitionHull::SetPartition ( MOAIPartition* partition ) {
 }
 
 //----------------------------------------------------------------//
-//void MOAIPartitionHull::UpdateWorldBounds ( u32 status ) {
-//
-//	ZLBox bounds;
-//	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
-//
-//	if ( status == ZLBounds::ZL_BOUNDS_OK ) {
-//		status = ZLBounds::ZL_BOUNDS_EMPTY;
-//	}
-//	this->UpdateWorldBounds ( bounds, status );
-//}
-
-//----------------------------------------------------------------//
 void MOAIPartitionHull::UpdateWorldBounds ( const ZLBounds& bounds ) {
 
 	MOAIPartitionCell* prevCell = this->mCell;

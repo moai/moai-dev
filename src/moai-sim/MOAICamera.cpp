@@ -555,7 +555,7 @@ bool MOAICamera::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, 
 
 	if ( AttrID::Check ( attrID )) {
 
-		switch (  attrID.Unpack ()) {
+		switch ( attrID.Unpack ()) {
 			case ATTR_FOV:
 				this->mFieldOfView = attr.Apply ( this->mFieldOfView, op, MOAIAttribute::ATTR_READ_WRITE );
 				return true;

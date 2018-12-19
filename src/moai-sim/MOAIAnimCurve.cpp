@@ -340,7 +340,7 @@ bool MOAIAnimCurve::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& att
 
 	if ( AttrID::Check ( attrID )) {
 
-		switch (  attrID.Unpack ()) {
+		switch ( attrID.Unpack ()) {
 			case ATTR_TIME:
 				this->mTime = attr.Apply ( this->mTime, op, MOAIAttribute::ATTR_READ_WRITE );
 				return true;

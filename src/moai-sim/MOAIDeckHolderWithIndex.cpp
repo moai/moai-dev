@@ -103,7 +103,7 @@ bool MOAIDeckHolderWithIndex::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttr
 
 	if ( AttrID::Check ( attrID )) {
 		
-		switch (  attrID.Unpack ()) {
+		switch ( attrID.Unpack ()) {
 			case ATTR_INDEX:
 				this->mIndex = attr.Apply ( this->mIndex, op, MOAIAttribute::ATTR_READ_WRITE );
 				return true;

@@ -119,7 +119,7 @@ bool MOAIMatrix::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, 
 	// TODO: these values may need to be cached for performance reasons
 	if ( AttrID::Check ( attrID )) {
 
-		switch (  attrID.Unpack ()) {
+		switch ( attrID.Unpack ()) {
 			
 			case ATTR_MATRIX:
 			

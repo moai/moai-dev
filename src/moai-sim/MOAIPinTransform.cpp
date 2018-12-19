@@ -83,7 +83,7 @@ void MOAIPinTransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 bool MOAIPinTransform::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( AttrID::Check ( attrID )) {
-		switch (  attrID.Unpack ()) {
+		switch ( attrID.Unpack ()) {
 			case ATTR_FRONT:
 				attr.Apply ( this->mFront, op, MOAIAttribute::ATTR_READ );
 				return true;

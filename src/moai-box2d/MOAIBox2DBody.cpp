@@ -1133,7 +1133,7 @@ bool MOAIBox2DBody::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& att
 	
 		const b2Transform & xform = mBody->GetTransform();
 		
-		switch (  attrID.Unpack ()) {
+		switch ( attrID.Unpack ()) {
 		
 			case MOAITransform::ATTR_X_LOC: {
 				float x = attr.Apply ( xform.p.x, op, MOAIAttribute::ATTR_READ_WRITE ) * this->GetUnitsToMeters ();
