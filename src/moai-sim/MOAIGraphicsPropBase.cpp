@@ -127,7 +127,7 @@ int MOAIGraphicsPropBase::_setParent ( lua_State* L ) {
 	MOAINode* parent = state.GetLuaObject < MOAINode >( 2, true );
 	
 	self->SetAttrLink ( MOAIColor::AttrID_INHERIT_COLOR (), parent, MOAIColor::AttrID_COLOR_TRAIT ());
-	self->SetAttrLink ( MOAIAbstractChildTransform::AttrID::Pack ( MOAIAbstractChildTransform::INHERIT_TRANSFORM ), parent, MOAIAbstractParentTransform::AttrID::Pack ( MOAIAbstractParentTransform::TRANSFORM_TRAIT ));
+	self->SetAttrLink ( MOAIAbstractTransform::AttrID::Pack ( MOAIAbstractTransform::INHERIT_TRANSFORM ), parent, MOAIAbstractTransform::AttrID::Pack ( MOAIAbstractTransform::TRANSFORM_TRAIT ));
 	self->SetAttrLink ( AttrID::Pack ( INHERIT_VISIBLE ), parent, AttrID::Pack ( ATTR_VISIBLE ));
 	
 	//MOAILogF ( state, MOAISTRING_FunctionDeprecated_S, "setParent" );
@@ -157,14 +157,14 @@ int MOAIGraphicsPropBase::_setScissorRect ( lua_State* L ) {
 	@text	Sets or clears the prop's UV transform.
 	
 	@in		MOAIGraphicsPropBase self
-	@opt	MOAIAbstractParentTransform transform	Default value is nil.
+	@opt	MOAIAbstractTransform transform	Default value is nil.
 	@out	nil
 */
 int MOAIGraphicsPropBase::_setUVTransform ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
 
-	MOAIAbstractParentTransform* transform = state.GetLuaObject < MOAIAbstractParentTransform >( 2, true );
-	self->SetDependentMember < MOAIAbstractParentTransform >( self->mUVTransform, transform );
+	MOAIAbstractTransform* transform = state.GetLuaObject < MOAIAbstractTransform >( 2, true );
+	self->SetDependentMember < MOAIAbstractTransform >( self->mUVTransform, transform );
 
 	return 0;
 }

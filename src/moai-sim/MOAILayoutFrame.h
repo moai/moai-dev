@@ -87,7 +87,7 @@ public:
 					~MOAILayoutFrame		();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			SetParent				( MOAIAbstractParentTransform* parent );
+	void			SetParent				( MOAIAbstractTransform* parent );
 };
 
 #endif

@@ -82,7 +82,7 @@ protected:
 	u32										mDisplayFlags;
 	
 	// TODO: should be attributes?
-	MOAILuaSharedPtr < MOAIAbstractParentTransform >		mUVTransform;
+	MOAILuaSharedPtr < MOAIAbstractTransform >		mUVTransform;
 	MOAILuaSharedPtr < MOAIScissorRect >			mScissorRect;
 
 	//----------------------------------------------------------------//

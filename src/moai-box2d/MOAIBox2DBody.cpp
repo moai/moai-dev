@@ -1047,7 +1047,7 @@ MOAIBox2DBody::MOAIBox2DBody () :
 	mBody ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIAbstractParentTransform )
+		RTTI_EXTEND ( MOAIAbstractTransform )
 	RTTI_END
 }
 
@@ -1058,7 +1058,7 @@ MOAIBox2DBody::~MOAIBox2DBody () {
 //----------------------------------------------------------------//
 void MOAIBox2DBody::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIAbstractParentTransform::RegisterLuaClass ( state );
+	MOAIAbstractTransform::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "DYNAMIC",		( u32 )b2_dynamicBody );
 	state.SetField ( -1, "KINEMATIC",	( u32 )b2_kinematicBody );
@@ -1068,7 +1068,7 @@ void MOAIBox2DBody::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIBox2DBody::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIAbstractParentTransform::RegisterLuaFuncs ( state );
+	MOAIAbstractTransform::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "addChain",				_addChain },
@@ -1126,7 +1126,7 @@ void MOAIBox2DBody::SetBody ( b2Body* body ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIBox2DBody::MOAIAbstractParentTransform_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
+void MOAIBox2DBody::MOAIAbstractTransform_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
 	UNUSED ( localToWorldMtx );
 }
 
@@ -1159,7 +1159,7 @@ bool MOAIBox2DBody::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& att
 			}
 		}
 	}
-	return MOAIAbstractParentTransform::MOAINode_ApplyAttrOp (attrID, attr, op );
+	return MOAIAbstractTransform::MOAINode_ApplyAttrOp (attrID, attr, op );
 }
 
 //----------------------------------------------------------------//
