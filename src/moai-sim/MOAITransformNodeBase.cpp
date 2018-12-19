@@ -2,10 +2,10 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAITransformBase.h>
+#include <moai-sim/MOAITransformNodeBase.h>
 
 //================================================================//
-// MOAITransformBase
+// MOAITransformNodeBase
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -14,13 +14,13 @@
 			This value is returned in world space so includes parent
 			transforms (if any).
 	
-	@in		MOAITransformBase self
+	@in		MOAITransformNodeBase self
 	@out	number xDirection
 	@out	number yDirection
 	@out	number zDirection
 */
-int MOAITransformBase::_getWorldDir ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
+int MOAITransformNodeBase::_getWorldDir ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransformNodeBase, "U" )
 
 	self->ForceUpdate ();
 
@@ -33,13 +33,13 @@ int MOAITransformBase::_getWorldDir ( lua_State* L ) {
 /**	@lua	getWorldLoc
 	@text	Get the transform's location in world space.
 	
-	@in		MOAITransformBase self
+	@in		MOAITransformNodeBase self
 	@out	number xLoc
 	@out	number yLoc
 	@out	number zLoc
 */
-int MOAITransformBase::_getWorldLoc ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
+int MOAITransformNodeBase::_getWorldLoc ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransformNodeBase, "U" )
 
 	self->ForceUpdate ();
 	
@@ -52,11 +52,11 @@ int MOAITransformBase::_getWorldLoc ( lua_State* L ) {
 /**	@lua	getWorldRot
 	@text	Get the transform's rotation in world space.
 	
-	@in		MOAITransformBase self
+	@in		MOAITransformNodeBase self
 	@out	number degrees
 */
-int MOAITransformBase::_getWorldRot ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
+int MOAITransformNodeBase::_getWorldRot ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransformNodeBase, "U" )
 
 	self->ForceUpdate ();
 
@@ -69,13 +69,13 @@ int MOAITransformBase::_getWorldRot ( lua_State* L ) {
 /**	@lua	getWorldScl
 	@text	Get the transform's scale in world space.
 	
-	@in		MOAITransformBase self
+	@in		MOAITransformNodeBase self
 	@out	number xScale
 	@out	number yScale
 	@out	number zScale
 */
-int MOAITransformBase::_getWorldScl ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
+int MOAITransformNodeBase::_getWorldScl ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransformNodeBase, "U" )
 
 	self->ForceUpdate ();
 
@@ -93,8 +93,8 @@ int MOAITransformBase::_getWorldScl ( lua_State* L ) {
 	@out	number y
 	@out	number z
 */
-int	MOAITransformBase::_getWorldXAxis ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
+int	MOAITransformNodeBase::_getWorldXAxis ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransformNodeBase, "U" )
 
 	self->ForceUpdate ();
 
@@ -112,8 +112,8 @@ int	MOAITransformBase::_getWorldXAxis ( lua_State* L ) {
 	@out	number y
 	@out	number z
 */
-int	MOAITransformBase::_getWorldYAxis ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
+int	MOAITransformNodeBase::_getWorldYAxis ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransformNodeBase, "U" )
 
 	self->ForceUpdate ();
 
@@ -131,8 +131,8 @@ int	MOAITransformBase::_getWorldYAxis ( lua_State* L ) {
 	@out	number y
 	@out	number z
 */
-int	MOAITransformBase::_getWorldZAxis ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
+int	MOAITransformNodeBase::_getWorldZAxis ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransformNodeBase, "U" )
 
 	self->ForceUpdate ();
 
@@ -151,8 +151,8 @@ int	MOAITransformBase::_getWorldZAxis ( lua_State* L ) {
 	@out	number z
 	@opt	number length
 */
-int	MOAITransformBase::_getWorldXNormal ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
+int	MOAITransformNodeBase::_getWorldXNormal ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransformNodeBase, "U" )
 
 	self->ForceUpdate ();
 
@@ -175,8 +175,8 @@ int	MOAITransformBase::_getWorldXNormal ( lua_State* L ) {
 	@out	number z
 	@opt	number length
 */
-int	MOAITransformBase::_getWorldYNormal ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
+int	MOAITransformNodeBase::_getWorldYNormal ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransformNodeBase, "U" )
 
 	self->ForceUpdate ();
 
@@ -199,8 +199,8 @@ int	MOAITransformBase::_getWorldYNormal ( lua_State* L ) {
 	@out	number z
 	@opt	number length
 */
-int	MOAITransformBase::_getWorldZNormal ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
+int	MOAITransformNodeBase::_getWorldZNormal ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransformNodeBase, "U" )
 
 	self->ForceUpdate ();
 
@@ -227,8 +227,8 @@ int	MOAITransformBase::_getWorldZNormal ( lua_State* L ) {
 	@out	number z
 	@out	number w
 */
-int MOAITransformBase::_modelToWorld ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
+int MOAITransformNodeBase::_modelToWorld ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransformNodeBase, "U" )
 
 	self->ForceUpdate ();
 
@@ -247,26 +247,6 @@ int MOAITransformBase::_modelToWorld ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	setParent
-	@text	This method has been deprecated. Use MOAINode setAttrLink instead.
-	
-	@in		MOAITransformBase self
-	@opt	MOAINode parent		Default value is nil.
-	@out	nil
-*/
-int MOAITransformBase::_setParent ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
-
-	MOAINode* parent = state.GetLuaObject < MOAINode >( 2, true );
-	
-	self->SetAttrLink ( AttrID::Pack ( INHERIT_TRANSFORM ), parent, AttrID::Pack ( TRANSFORM_TRAIT ));
-	
-	//MOAILogF ( state, MOAISTRING_FunctionDeprecated_S, "setParent" );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@lua	worldToModel
 	@text	Transform a point in world space to model space.
 	
@@ -280,8 +260,8 @@ int MOAITransformBase::_setParent ( lua_State* L ) {
 	@out	number z
 	@out	number w
 */
-int MOAITransformBase::_worldToModel ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
+int MOAITransformNodeBase::_worldToModel ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransformNodeBase, "U" )
 
 	self->ForceUpdate ();
 
@@ -300,35 +280,35 @@ int MOAITransformBase::_worldToModel ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAITransformBase
+// MOAITransformNodeBase
 //================================================================//
 
 //----------------------------------------------------------------//
-const ZLAffine3D& MOAITransformBase::GetLocalToWorldMtx () const {
+const ZLAffine3D& MOAITransformNodeBase::GetLocalToWorldMtx () const {
 
 	return this->mLocalToWorldMtx;
 }
 
 //----------------------------------------------------------------//
-const ZLAffine3D* MOAITransformBase::GetLocTrait () const {
+const ZLAffine3D* MOAITransformNodeBase::GetLocTrait () const {
 
 	return &this->mLocalToWorldMtx;
 }
 
 //----------------------------------------------------------------//
-const ZLAffine3D* MOAITransformBase::GetTransformTrait () const {
+const ZLAffine3D* MOAITransformNodeBase::GetTransformTrait () const {
 
 	return &this->mLocalToWorldMtx;
 }
 
 //----------------------------------------------------------------//
-const ZLAffine3D& MOAITransformBase::GetWorldToLocalMtx () const {
+const ZLAffine3D& MOAITransformNodeBase::GetWorldToLocalMtx () const {
 
 	return this->mWorldToLocalMtx;
 }
 
 //----------------------------------------------------------------//
-MOAITransformBase::MOAITransformBase () {
+MOAITransformNodeBase::MOAITransformNodeBase () {
 	
 	RTTI_SINGLE ( MOAINode )
 	
@@ -337,11 +317,11 @@ MOAITransformBase::MOAITransformBase () {
 }
 
 //----------------------------------------------------------------//
-MOAITransformBase::~MOAITransformBase () {
+MOAITransformNodeBase::~MOAITransformNodeBase () {
 }
 
 //----------------------------------------------------------------//
-void MOAITransformBase::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAITransformNodeBase::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAINode::RegisterLuaClass ( state );
 	
@@ -353,13 +333,10 @@ void MOAITransformBase::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "ATTR_WORLD_Y_SCL",	AttrID::Pack ( ATTR_WORLD_Y_SCL ).ToRaw ());
 	state.SetField ( -1, "ATTR_WORLD_Z_SCL",	AttrID::Pack ( ATTR_WORLD_Z_SCL ).ToRaw ());
 	state.SetField ( -1, "TRANSFORM_TRAIT",		AttrID::Pack ( TRANSFORM_TRAIT ).ToRaw ());
-	
-	state.SetField ( -1, "INHERIT_LOC",			AttrID::Pack ( INHERIT_LOC ).ToRaw ());
-	state.SetField ( -1, "INHERIT_TRANSFORM",	AttrID::Pack ( INHERIT_TRANSFORM ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
-void MOAITransformBase::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAITransformNodeBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAINode::RegisterLuaFuncs ( state );
 	
@@ -378,7 +355,6 @@ void MOAITransformBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getWorldZNormal",	_getWorldZNormal },
 		
 		{ "modelToWorld",		_modelToWorld },
-		{ "setParent",			_setParent },
 		{ "worldToModel",		_worldToModel },
 		{ NULL, NULL }
 	};
@@ -391,7 +367,7 @@ void MOAITransformBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAITransformBase::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAITransformNodeBase::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
 	// TODO: these values may need to be cached for performance reasons
 	if ( AttrID::Check ( attrID )) {
@@ -418,7 +394,7 @@ bool MOAITransformBase::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute&
 			case ATTR_WORLD_X_SCL: {
 				
 				ZLVec3D axis;
-			
+				
 				axis.mX =	this->mLocalToWorldMtx.m [ ZLAffine3D::C0_R0 ];
 				axis.mY =	this->mLocalToWorldMtx.m [ ZLAffine3D::C0_R1 ];
 				axis.mZ =	this->mLocalToWorldMtx.m [ ZLAffine3D::C0_R2 ];
@@ -458,30 +434,8 @@ bool MOAITransformBase::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute&
 }
 
 //----------------------------------------------------------------//
-void MOAITransformBase::MOAINode_Update () {
+void MOAITransformNodeBase::MOAINode_Update () {
 	
-	this->MOAITransformBase_BuildLocalToWorldMtx ( this->mLocalToWorldMtx );
-	
-	MOAIAttribute attr;
-	if ( this->PullLinkedAttr ( AttrID::Pack ( INHERIT_TRANSFORM ), attr )) {
-		const ZLAffine3D inherit = attr.GetValue ( ZLAffine3D::IDENT );
-		this->mLocalToWorldMtx.Append ( inherit );
-	}
-	else {
-	
-		if ( this->PullLinkedAttr ( AttrID::Pack ( INHERIT_LOC ), attr )) {
-			
-			const ZLAffine3D inherit = attr.GetValue ( ZLAffine3D::IDENT );
-			
-			ZLVec3D loc = this->mLocalToWorldMtx.GetTranslation ();
-			
-			inherit.Transform ( loc );
-			
-			this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R0 ] = loc.mX;
-			this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R1 ] = loc.mY;
-			this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R2 ] = loc.mZ;
-		}
-	}
-	
+	this->MOAITransformNodeBase_BuildLocalToWorldMtx ( this->mLocalToWorldMtx );
 	this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
 }

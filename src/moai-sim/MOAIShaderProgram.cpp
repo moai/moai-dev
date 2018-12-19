@@ -8,7 +8,6 @@
 #include <moai-sim/MOAIGfxResourceClerk.h>
 #include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIShaderProgram.h>
-#include <moai-sim/MOAITransformBase.h>
 
 //================================================================//
 // MOAIShaderProgramGlobal

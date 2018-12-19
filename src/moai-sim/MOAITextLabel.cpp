@@ -1321,9 +1321,9 @@ ZLBounds MOAITextLabel::MOAIPartitionHull_GetModelBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLabel::MOAITransformBase_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
+void MOAITextLabel::MOAITransformNodeBase_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
 
-	this->MOAITransform::MOAITransformBase_BuildLocalToWorldMtx ( localToWorldMtx );
+	this->MOAITransform::MOAITransformNodeBase_BuildLocalToWorldMtx ( localToWorldMtx );
 
 	// do yFlip here so hit test on glyphs will work
 	float yScale = this->mLayoutRules.GetYFlip () ? -1.0f : 1.0f;

@@ -8,7 +8,6 @@
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIStretchPatch2D.h>
 #include <moai-sim/MOAITextureBase.h>
-#include <moai-sim/MOAITransformBase.h>
 
 //================================================================//
 // local

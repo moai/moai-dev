@@ -510,7 +510,7 @@ void MOAILayoutFrame::SetLocByAxis ( u32 axis, float loc ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILayoutFrame::SetParent ( MOAITransformBase* parent ) {
+void MOAILayoutFrame::SetParent ( MOAITransformNodeBase* parent ) {
 	UNUSED ( parent );
 
 	// TODO

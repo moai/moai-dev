@@ -6,7 +6,6 @@
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAISurfaceDeck2D.h>
 #include <moai-sim/MOAISurfaceSampler2D.h>
-#include <moai-sim/MOAITransformBase.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 

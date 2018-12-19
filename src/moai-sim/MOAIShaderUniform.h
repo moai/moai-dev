@@ -4,12 +4,6 @@
 #ifndef	MOAISHADERUNIFORM_H
 #define	MOAISHADERUNIFORM_H
 
-#include <moai-sim/MOAIGfxResource.h>
-#include <moai-sim/MOAINode.h>
-
-class MOAIColor;
-class MOAITransformBase;
-
 //================================================================//
 // MOAIShaderUniformBase
 //================================================================//

@@ -9,7 +9,6 @@
 #include <moai-sim/MOAIMoveConstraint2D.h>
 #include <moai-sim/MOAIOverlap.h>
 #include <moai-sim/MOAIOverlapResolver.h>
-#include <moai-sim/MOAITransformBase.h>
 
 //================================================================//
 // MOAICollisionShape

@@ -12,7 +12,7 @@
 #include <moai-sim/MOAIVertexFormatMgr.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAITexture.h>
-#include <moai-sim/MOAITransformBase.h>
+#include <moai-sim/MOAITransformNodeBase.h>
 #include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
@@ -1067,7 +1067,7 @@ int MOAIDraw::_setMatrix ( lua_State* L ) {
 	
 		if ( state.IsType ( 2, LUA_TUSERDATA )) {
 		
-			MOAITransformBase* transform = state.GetLuaObject < MOAITransformBase >( 2, true );
+			MOAITransformNodeBase* transform = state.GetLuaObject < MOAITransformNodeBase >( 2, true );
 			if ( transform ) {
 				gfxState.SetMtx ( matrixID, transform->GetLocalToWorldMtx ());
 			}

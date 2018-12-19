@@ -16,7 +16,6 @@
 			space coordinates - map pins, for example).
 	
 	@in		MOAIPinTransform self
-	@in		MOAITransformBase sourceTransform
 	@in		MOAIViewLayer sourceLayer
 	@in		MOAIViewLayer destLayer
 	@out	nil

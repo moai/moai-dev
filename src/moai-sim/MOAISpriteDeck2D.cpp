@@ -7,7 +7,7 @@
 #include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAITexture.h>
-#include <moai-sim/MOAITransformBase.h>
+#include <moai-sim/MOAITransformNodeBase.h>
 
 //================================================================//
 // local
@@ -371,7 +371,7 @@ int MOAISpriteDeck2D::_setUVRect ( lua_State* L ) {
 int MOAISpriteDeck2D::_transform ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "UU" )
 	
-	MOAITransformBase* transform = state.GetLuaObject < MOAITransformBase >( 2, true );
+	MOAITransformNodeBase* transform = state.GetLuaObject < MOAITransformNodeBase >( 2, true );
 	if ( transform ) {
 		transform->ForceUpdate ();
 		self->Transform ( transform->GetLocalToWorldMtx ());
@@ -391,7 +391,7 @@ int MOAISpriteDeck2D::_transform ( lua_State* L ) {
 int MOAISpriteDeck2D::_transformUV ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "UU" )
 	
-	MOAITransformBase* transform = state.GetLuaObject < MOAITransformBase >( 2, true );
+	MOAITransformNodeBase* transform = state.GetLuaObject < MOAITransformNodeBase >( 2, true );
 	if ( transform ) {
 		transform->ForceUpdate ();
 		self->TransformUV ( transform->GetLocalToWorldMtx ());

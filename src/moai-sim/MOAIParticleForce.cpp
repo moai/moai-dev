@@ -237,7 +237,7 @@ void MOAIParticleForce::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIParticleForce::MOAINode_Update () {
 
-	this->MOAITransformBase::MOAINode_Update ();
+	this->MOAITransform::MOAINode_Update ();
 	
 	const ZLAffine3D& localToWorldMtx = this->GetLocalToWorldMtx ();
 	

@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAICameraAnchor2D.h>
-#include <moai-sim/MOAITransformBase.h>
+#include <moai-sim/MOAITransformNodeBase.h>
 
 //================================================================//
 // local
@@ -20,8 +20,8 @@
 int MOAICameraAnchor2D::_setParent ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICameraAnchor2D, "U" )
 	
-	MOAINode* parent = state.GetLuaObject < MOAINode >( 2, true );
-	self->SetAttrLink ( AttrID::Pack ( INHERIT_LOC ), parent, MOAITransformBase::AttrID::Pack ( MOAITransformBase::TRANSFORM_TRAIT ));
+	MOAITransformNodeBase* parent = state.GetLuaObject < MOAITransformNodeBase >( 2, true );
+	self->SetAttrLink ( AttrID::Pack ( INHERIT_LOC ), parent, MOAITransformNodeBase::AttrID::Pack ( MOAITransformNodeBase::TRANSFORM_TRAIT ));
 	
 	return 0;
 }

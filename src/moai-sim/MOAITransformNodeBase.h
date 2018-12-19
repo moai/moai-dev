@@ -1,15 +1,15 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAITRANSFORMBASE_H
-#define	MOAITRANSFORMBASE_H
+#ifndef	MOAITRANSFORMNODEBASE_H
+#define	MOAITRANSFORMNODEBASE_H
 
 #include <moai-sim/MOAINode.h>
 
 //================================================================//
-// MOAITransformBase
+// MOAITransformNodeBase
 //================================================================//
-/**	@lua	MOAITransformBase
+/**	@lua	MOAITransformNodeBase
 	@text	Base class for 2D affine transforms.
 	
 	@attr	ATTR_WORLD_X_LOC
@@ -21,7 +21,7 @@
 	@attr	ATTR_WORLD_Z_SCL
 	@attr	TRANSFORM_TRAIT
 */
-class MOAITransformBase :
+class MOAITransformNodeBase :
 	public virtual MOAINode {
 protected:
 	
@@ -40,17 +40,16 @@ protected:
 	static int	_getWorldYNormal	( lua_State* L );
 	static int	_getWorldZNormal	( lua_State* L );
 	static int	_modelToWorld		( lua_State* L );
-	static int	_setParent			( lua_State* L );
 	static int	_worldToModel		( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool				MOAINode_ApplyAttrOp						( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
-	void				MOAINode_Update								();
-	virtual void		MOAITransformBase_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx ) = 0;
+	bool				MOAINode_ApplyAttrOp							( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
+	void				MOAINode_Update									();
+	virtual void		MOAITransformNodeBase_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx ) = 0;
 
 public:
 	
-	DECL_ATTR_HELPER ( MOAITransformBase )
+	DECL_ATTR_HELPER ( MOAITransformNodeBase )
 	
 	enum {
 		ATTR_WORLD_X_LOC,
@@ -65,9 +64,6 @@ public:
 		
 		TRANSFORM_TRAIT,
 		
-		INHERIT_LOC,
-		INHERIT_TRANSFORM,
-		
 		TOTAL_ATTR,
 	};
 	
@@ -78,8 +74,8 @@ public:
 	const ZLAffine3D*		GetLocTrait					() const;
 	const ZLAffine3D*		GetTransformTrait			() const;
 	const ZLAffine3D&		GetWorldToLocalMtx			() const;
-							MOAITransformBase			();
-							~MOAITransformBase			();
+							MOAITransformNodeBase		();
+							~MOAITransformNodeBase		();
 	void					RegisterLuaClass			( MOAILuaState& state );
 	void					RegisterLuaFuncs			( MOAILuaState& state );
 };

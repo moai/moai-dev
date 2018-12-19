@@ -6,7 +6,6 @@
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIMetaTileDeck2D.h>
 #include <moai-sim/MOAITextureBase.h>
-#include <moai-sim/MOAITransformBase.h>
 
 //================================================================//
 // MOAIMetaTile

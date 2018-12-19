@@ -64,7 +64,7 @@ int MOAIMatrix::_setMatrix ( lua_State* L ) {
 MOAIMatrix::MOAIMatrix () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAITransformBase )
+		RTTI_EXTEND ( MOAITransformNode )
 	RTTI_END
 	
 	this->Ident ();
@@ -77,7 +77,7 @@ MOAIMatrix::~MOAIMatrix () {
 //----------------------------------------------------------------//
 void MOAIMatrix::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	MOAITransformBase::RegisterLuaClass ( state );
+	MOAITransformNode::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "ATTR_MATRIX",	AttrID::Pack ( ATTR_MATRIX ).ToRaw ());
 }
@@ -85,7 +85,7 @@ void MOAIMatrix::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIMatrix::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAITransformBase::RegisterLuaFuncs ( state );
+	MOAITransformNode::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "getMatrix",			_getMatrix },
@@ -127,11 +127,11 @@ bool MOAIMatrix::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, 
 				return true;
 		}
 	}
-	return MOAITransformBase::MOAINode_ApplyAttrOp ( attrID, attr, op );
+	return MOAITransformNode::MOAINode_ApplyAttrOp ( attrID, attr, op );
 }
 
 //----------------------------------------------------------------//
-void MOAIMatrix::MOAITransformBase_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
+void MOAIMatrix::MOAITransformNodeBase_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
 
 	localToWorldMtx = *this;
 }
