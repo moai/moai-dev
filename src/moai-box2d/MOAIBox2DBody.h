@@ -21,7 +21,7 @@ class b2Body;
 */
 class MOAIBox2DBody :
 	public MOAIBox2DPrim,
-	public MOAIAbstractChildTransform {
+	public MOAIAbstractBaseTransform {
 private:
 
 	b2Body*			mBody;

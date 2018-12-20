@@ -4,7 +4,7 @@
 #ifndef	MOAIHEADTRANSFORM_H
 #define	MOAIHEADTRANSFORM_H
 
-#include <moai-sim/MOAIAbstractChildTransform.h>
+#include <moai-sim/MOAIAbstractBaseTransform.h>
 
 #if MOAI_WITH_LIBGVR
 
@@ -14,7 +14,7 @@
 // TODO: doxygen
 class MOAIHeadTransform :
 	public virtual MOAIAction,
-	public virtual MOAIAbstractChildTransform,
+	public virtual MOAIAbstractBaseTransform,
 	public ZLAffine3D {
 protected:
 

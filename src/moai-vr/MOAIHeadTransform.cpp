@@ -37,7 +37,7 @@ MOAIHeadTransform::MOAIHeadTransform () {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIAction )
-		RTTI_EXTEND ( MOAIAbstractChildTransform )
+		RTTI_EXTEND ( MOAIAbstractBaseTransform )
 	RTTI_END
 	
 	this->Ident ();
@@ -51,14 +51,14 @@ MOAIHeadTransform::~MOAIHeadTransform () {
 void MOAIHeadTransform::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAIAction::RegisterLuaClass ( state );
-	MOAIAbstractChildTransform::RegisterLuaClass ( state );
+	MOAIAbstractBaseTransform::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIHeadTransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIAction::RegisterLuaFuncs ( state );
-	MOAIAbstractChildTransform::RegisterLuaFuncs ( state );
+	MOAIAbstractBaseTransform::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "pauseTracking",				_pauseTracking },
