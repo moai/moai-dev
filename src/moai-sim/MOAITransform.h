@@ -4,8 +4,8 @@
 #ifndef	MOAITRANSFORM_H
 #define	MOAITRANSFORM_H
 
+#include <moai-sim/MOAIAbstractChildTransform.h>
 #include <moai-sim/MOAIEaseDriver.h>
-#include <moai-sim/MOAIAbstractTransform.h>
 
 //================================================================//
 // MOAITransform
@@ -36,7 +36,7 @@
 	@attr	INHERIT_TRANSFORM
 */
 class MOAITransform :
-	public virtual MOAIAbstractTransform {
+	public virtual MOAIAbstractChildTransform {
 protected:
 
 	float			mShearYX;
@@ -86,7 +86,7 @@ protected:
 	static float	ClampEuler									( float r );
 
 	//----------------------------------------------------------------//
-	void			MOAIAbstractTransform_BuildLocalToWorldMtx	( ZLAffine3D& localToWorldMtx );
+	void			MOAIAbstractBaseTransform_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );
 	bool			MOAINode_ApplyAttrOp								( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
 
 public:

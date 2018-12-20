@@ -1090,6 +1090,19 @@ void MOAITextLabel::SetText ( cc8* text ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAITextLabel::MOAIAbstractBaseTransform_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
+
+	this->MOAITransform::MOAIAbstractBaseTransform_BuildLocalToWorldMtx ( localToWorldMtx );
+
+	// do yFlip here so hit test on glyphs will work
+	float yScale = this->mLayoutRules.GetYFlip () ? -1.0f : 1.0f;
+
+	ZLAffine3D mtx;
+	mtx.ScRoTr ( 1.0f, yScale, 1.0f, 0.0f, 0.0f, 0.0f, this->mLayout.mXOffset, this->mLayout.mYOffset, 0.0f );
+	localToWorldMtx.Prepend ( mtx );
+}
+
+//----------------------------------------------------------------//
 void MOAITextLabel::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 	
@@ -1257,19 +1270,6 @@ ZLBounds MOAITextLabel::MOAIAbstractProp_GetModelBounds () {
 	}
 	
 	return bounds;
-}
-
-//----------------------------------------------------------------//
-void MOAITextLabel::MOAIAbstractTransform_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
-
-	this->MOAITransform::MOAIAbstractTransform_BuildLocalToWorldMtx ( localToWorldMtx );
-
-	// do yFlip here so hit test on glyphs will work
-	float yScale = this->mLayoutRules.GetYFlip () ? -1.0f : 1.0f;
-
-	ZLAffine3D mtx;
-	mtx.ScRoTr ( 1.0f, yScale, 1.0f, 0.0f, 0.0f, 0.0f, this->mLayout.mXOffset, this->mLayout.mYOffset, 0.0f );
-	localToWorldMtx.Prepend ( mtx );
 }
 
 //----------------------------------------------------------------//

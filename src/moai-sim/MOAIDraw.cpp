@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-sim/MOAIAbstractChildTransform.h>
 #include <moai-sim/MOAIAnimCurveFloat.h>
 #include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIFont.h>
@@ -12,7 +13,6 @@
 #include <moai-sim/MOAIVertexFormatMgr.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAITexture.h>
-#include <moai-sim/MOAIAbstractTransform.h>
 #include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
@@ -1067,7 +1067,7 @@ int MOAIDraw::_setMatrix ( lua_State* L ) {
 	
 		if ( state.IsType ( 2, LUA_TUSERDATA )) {
 		
-			MOAIAbstractTransform* transform = state.GetLuaObject < MOAIAbstractTransform >( 2, true );
+			MOAIAbstractChildTransform* transform = state.GetLuaObject < MOAIAbstractChildTransform >( 2, true );
 			if ( transform ) {
 				gfxState.SetMtx ( matrixID, transform->GetLocalToWorldMtx ());
 			}

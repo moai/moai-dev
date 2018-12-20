@@ -1,15 +1,15 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIABSTRACTTRANSFORM_H
-#define	MOAIABSTRACTTRANSFORM_H
+#ifndef	MOAIABSTRACTPARENTTRANSFORM_H
+#define	MOAIABSTRACTPARENTTRANSFORM_H
 
 #include <moai-sim/MOAINode.h>
 
 //================================================================//
-// MOAIAbstractTransform
+// MOAIAbstractBaseTransform
 //================================================================//
-/**	@lua	MOAIAbstractTransform
+/**	@lua	MOAIAbstractBaseTransform
 	@text	Base class for 2D affine transforms.
 	
 	@attr	ATTR_WORLD_X_LOC
@@ -19,11 +19,9 @@
 	@attr	ATTR_WORLD_X_SCL
 	@attr	ATTR_WORLD_Y_SCL
 	@attr	ATTR_WORLD_Z_SCL
- 	@attr	INHERIT_LOC
- 	@attr	INHERIT_TRANSFORM
 	@attr	TRANSFORM_TRAIT
 */
-class MOAIAbstractTransform :
+class MOAIAbstractBaseTransform :
 	public virtual MOAINode {
 protected:
 	
@@ -42,19 +40,18 @@ protected:
 	static int	_getWorldYNormal	( lua_State* L );
 	static int	_getWorldZNormal	( lua_State* L );
 	static int	_modelToWorld		( lua_State* L );
-	static int	_setParent			( lua_State* L );
 	static int	_worldToModel		( lua_State* L );
 
 	//----------------------------------------------------------------//
-	virtual void		MOAIAbstractTransform_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx ) = 0;
+	virtual void		MOAIAbstractBaseTransform_BuildLocalToWorldMtx	( ZLAffine3D& localToWorldMtx ) = 0;
 
 	//----------------------------------------------------------------//
-	bool				MOAINode_ApplyAttrOp							( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
-	void				MOAINode_Update									();
+	bool				MOAINode_ApplyAttrOp								( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
+	void				MOAINode_Update										();
 
 public:
 	
-	DECL_ATTR_HELPER ( MOAIAbstractTransform )
+	DECL_ATTR_HELPER ( MOAIAbstractBaseTransform )
 	
 	enum {
 		ATTR_WORLD_X_LOC,
@@ -67,9 +64,6 @@ public:
 		ATTR_WORLD_Y_SCL,
 		ATTR_WORLD_Z_SCL,
 		
-		INHERIT_LOC,
-		INHERIT_TRANSFORM,
-		
 		TRANSFORM_TRAIT,
 		
 		TOTAL_ATTR,
@@ -78,14 +72,14 @@ public:
 	GET ( ZLVec3D, WorldLoc, mLocalToWorldMtx.GetTranslation ())
 	
 	//----------------------------------------------------------------//
-	const ZLAffine3D&		GetLocalToWorldMtx				() const;
-	const ZLAffine3D*		GetLocTrait						() const;
-	const ZLAffine3D*		GetTransformTrait				() const;
-	const ZLAffine3D&		GetWorldToLocalMtx				() const;
-							MOAIAbstractTransform		();
-							~MOAIAbstractTransform	();
-	void					RegisterLuaClass				( MOAILuaState& state );
-	void					RegisterLuaFuncs				( MOAILuaState& state );
+	const ZLAffine3D&		GetLocalToWorldMtx			() const;
+	const ZLAffine3D*		GetLocTrait					() const;
+	const ZLAffine3D*		GetTransformTrait			() const;
+	const ZLAffine3D&		GetWorldToLocalMtx			() const;
+							MOAIAbstractBaseTransform		();
+							~MOAIAbstractBaseTransform		();
+	void					RegisterLuaClass			( MOAILuaState& state );
+	void					RegisterLuaFuncs			( MOAILuaState& state );
 };
 
 #endif

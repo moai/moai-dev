@@ -37,7 +37,7 @@ MOAIHeadTransform::MOAIHeadTransform () {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIAction )
-		RTTI_EXTEND ( MOAIAbstractTransform )
+		RTTI_EXTEND ( MOAIAbstractChildTransform )
 	RTTI_END
 	
 	this->Ident ();
@@ -51,14 +51,14 @@ MOAIHeadTransform::~MOAIHeadTransform () {
 void MOAIHeadTransform::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAIAction::RegisterLuaClass ( state );
-	MOAIAbstractTransform::RegisterLuaClass ( state );
+	MOAIAbstractChildTransform::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIHeadTransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIAction::RegisterLuaFuncs ( state );
-	MOAIAbstractTransform::RegisterLuaFuncs ( state );
+	MOAIAbstractChildTransform::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "pauseTracking",				_pauseTracking },
@@ -74,7 +74,7 @@ void MOAIHeadTransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIHeadTransform::MOAIAbstractTransform_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
+void MOAIHeadTransform::MOAIAbstractBaseTransform_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
 
 	localToWorldMtx = *this;
 }

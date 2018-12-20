@@ -942,7 +942,7 @@ MOAITransform::MOAITransform () :
 	mEulerOrder ( EULER_XYZ ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIAbstractTransform )
+		RTTI_EXTEND ( MOAIAbstractChildTransform )
 	RTTI_END
 }
 
@@ -953,7 +953,7 @@ MOAITransform::~MOAITransform () {
 //----------------------------------------------------------------//
 void MOAITransform::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	MOAIAbstractTransform::RegisterLuaClass ( state );
+	MOAIAbstractChildTransform::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "ATTR_X_PIV",			AttrID::Pack ( ATTR_X_PIV ).ToRaw ());
 	state.SetField ( -1, "ATTR_Y_PIV",			AttrID::Pack ( ATTR_Y_PIV ).ToRaw ());
@@ -974,7 +974,7 @@ void MOAITransform::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIAbstractTransform::RegisterLuaFuncs ( state );
+	MOAIAbstractChildTransform::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "addLoc",				_addLoc },
@@ -1077,7 +1077,7 @@ void MOAITransform::SetScl ( float x, float y, float z ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITransform::MOAIAbstractTransform_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
+void MOAITransform::MOAIAbstractBaseTransform_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
 
 	float xRot = ClampEuler ( this->mRot.mX ) * ( float )D2R;
 	float yRot = ClampEuler ( this->mRot.mY ) * ( float )D2R;
@@ -1213,5 +1213,5 @@ bool MOAITransform::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& att
 				return true;
 		}
 	}
-	return MOAIAbstractTransform::MOAINode_ApplyAttrOp ( attrID, attr, op );
+	return MOAIAbstractChildTransform::MOAINode_ApplyAttrOp ( attrID, attr, op );
 }

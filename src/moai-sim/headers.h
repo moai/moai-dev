@@ -7,10 +7,11 @@
 #include <moai-sim/pch.h>
 #include <moai-sim/strings.h>
 
+#include <moai-sim/MOAIAbstractBaseTransform.h>
+#include <moai-sim/MOAIAbstractChildTransform.h>
 #include <moai-sim/MOAIAbstractDrawable.h>
 #include <moai-sim/MOAIAbstractDrawShape.h>
 #include <moai-sim/MOAIAbstractProp.h>
-#include <moai-sim/MOAIAbstractTransform.h>
 #include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAIActionTree.h>
 #include <moai-sim/MOAIAnim.h>

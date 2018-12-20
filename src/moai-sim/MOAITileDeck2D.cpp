@@ -2,13 +2,13 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-sim/MOAIAbstractChildTransform.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAITileDeck2D.h>
 #include <moai-sim/MOAITextureBase.h>
-#include <moai-sim/MOAIAbstractTransform.h>
 
 //================================================================//
 // local
@@ -199,7 +199,7 @@ int	MOAITileDeck2D::_setSize ( lua_State* L ) {
 int MOAITileDeck2D::_transform ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITileDeck2D, "UU" )
 	
-	MOAIAbstractTransform* transform = state.GetLuaObject < MOAIAbstractTransform >( 2, true );
+	MOAIAbstractChildTransform* transform = state.GetLuaObject < MOAIAbstractChildTransform >( 2, true );
 	if ( transform ) {
 		transform->ForceUpdate ();
 		self->Transform ( transform->GetLocalToWorldMtx ());
@@ -219,7 +219,7 @@ int MOAITileDeck2D::_transform ( lua_State* L ) {
 int MOAITileDeck2D::_transformUV ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITileDeck2D, "UU" )
 	
-	MOAIAbstractTransform* transform = state.GetLuaObject < MOAIAbstractTransform >( 2, true );
+	MOAIAbstractChildTransform* transform = state.GetLuaObject < MOAIAbstractChildTransform >( 2, true );
 	if ( transform ) {
 		transform->ForceUpdate ();
 		self->TransformUV ( transform->GetLocalToWorldMtx ());

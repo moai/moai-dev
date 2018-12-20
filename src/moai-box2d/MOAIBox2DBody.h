@@ -21,7 +21,7 @@ class b2Body;
 */
 class MOAIBox2DBody :
 	public MOAIBox2DPrim,
-	public MOAIAbstractTransform {
+	public MOAIAbstractChildTransform {
 private:
 
 	b2Body*			mBody;
@@ -70,9 +70,9 @@ private:
 	void			SetBody					( b2Body* body );
 	
 	//----------------------------------------------------------------//
-	void			MOAIAbstractTransform_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );
-	bool			MOAINode_ApplyAttrOp							( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
-	void			MOAINode_Update									();
+	void			MOAIAbstractBaseTransform_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );
+	bool			MOAINode_ApplyAttrOp								( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
+	void			MOAINode_Update										();
 
 public:
 	

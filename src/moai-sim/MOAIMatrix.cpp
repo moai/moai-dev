@@ -64,7 +64,7 @@ int MOAIMatrix::_setMatrix ( lua_State* L ) {
 MOAIMatrix::MOAIMatrix () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIAbstractTransform )
+		RTTI_EXTEND ( MOAIAbstractChildTransform )
 	RTTI_END
 	
 	this->Ident ();
@@ -77,7 +77,7 @@ MOAIMatrix::~MOAIMatrix () {
 //----------------------------------------------------------------//
 void MOAIMatrix::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	MOAIAbstractTransform::RegisterLuaClass ( state );
+	MOAIAbstractChildTransform::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "ATTR_MATRIX",	AttrID::Pack ( ATTR_MATRIX ).ToRaw ());
 }
@@ -85,7 +85,7 @@ void MOAIMatrix::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIMatrix::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIAbstractTransform::RegisterLuaFuncs ( state );
+	MOAIAbstractChildTransform::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "getMatrix",			_getMatrix },
@@ -114,7 +114,7 @@ void MOAIMatrix::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer 
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMatrix::MOAIAbstractTransform_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
+void MOAIMatrix::MOAIAbstractBaseTransform_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
 
 	localToWorldMtx = *this;
 }
@@ -133,5 +133,5 @@ bool MOAIMatrix::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, 
 				return true;
 		}
 	}
-	return MOAIAbstractTransform::MOAINode_ApplyAttrOp ( attrID, attr, op );
+	return MOAIAbstractChildTransform::MOAINode_ApplyAttrOp ( attrID, attr, op );
 }

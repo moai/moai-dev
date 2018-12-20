@@ -4,7 +4,7 @@
 #ifndef	MOAIHEADTRANSFORM_H
 #define	MOAIHEADTRANSFORM_H
 
-#include <moai-sim/MOAIAbstractTransform.h>
+#include <moai-sim/MOAIAbstractChildTransform.h>
 
 #if MOAI_WITH_LIBGVR
 
@@ -14,7 +14,7 @@
 // TODO: doxygen
 class MOAIHeadTransform :
 	public virtual MOAIAction,
-	public virtual MOAIAbstractTransform,
+	public virtual MOAIAbstractChildTransform,
 	public ZLAffine3D {
 protected:
 
@@ -23,7 +23,7 @@ protected:
 	static int		_recenterTracking			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			MOAIAbstractTransform_BuildLocalToWorldMtx	( ZLAffine3D& localToWorldMtx );
+	void			MOAIAbstractBaseTransform_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );
 	bool			MOAIAction_IsDone									();
 	void			MOAIAction_Update									( double step );
 

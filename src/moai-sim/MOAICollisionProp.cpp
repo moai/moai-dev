@@ -361,7 +361,7 @@ void MOAICollisionProp::Move ( ZLVec3D move, u32 detach, u32 maxSteps ) {
 			// TODO: this needs to be *way* more efficient!
 			this->mLoc.mX += stepMoveNorm.mX * stepMoveLength;
 			this->mLoc.mY += stepMoveNorm.mY * stepMoveLength;
-			this->MOAIAbstractTransform::MOAINode_Update (); // TODO: need this?
+			this->MOAIAbstractChildTransform::MOAINode_Update (); // TODO: need this?
 			this->MOAIAbstractProp::MOAINode_Update ();
 
 			// prepare the next step or break
