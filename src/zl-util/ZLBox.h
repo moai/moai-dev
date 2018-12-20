@@ -51,6 +51,7 @@ public:
 	bool		Overlap			( const ZLBox& box, u32 plane ) const;
 	void		Pad				( ZLReal pad ); // Add padding to all sides; so dim += pad * 2 for all axes
 	void		Pad				( ZLReal xPad, ZLReal yPad, ZLReal zPad );
+	void		Project			( const ZLMatrix4x4& mtx ); // Gets AABB of projected box
 	void		Scale			( ZLReal scale );
 	void		Scale			( const ZLVec3D& scale );
 	void		Transform		( const ZLAffine3D& mtx ); // Gets AABB of transformed box

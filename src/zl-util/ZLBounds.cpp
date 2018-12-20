@@ -31,6 +31,12 @@ void ZLBounds::Init ( float left, float top, float right, float bottom, float ba
 }
 
 //----------------------------------------------------------------//
+bool ZLBounds::IsOK () const {
+
+	return ( this->mStatus == ZL_BOUNDS_OK );
+}
+
+//----------------------------------------------------------------//
 void ZLBounds::UpdateStatus () {
 
 	this->mStatus = this->IsPoint () ? ZLBounds::ZL_BOUNDS_EMPTY : ZLBounds::ZL_BOUNDS_OK;

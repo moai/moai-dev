@@ -26,6 +26,7 @@ class ZLPrism {
 	void	GetAABB		( ZLBox& box ) const;
 	void	GetCenter	( ZLVec3D& center ) const;
 	void	Init		( const ZLBox& box );
+	void	Project		( const ZLMatrix4x4& mtx );
 	void	Transform	( const ZLAffine3D& mtx );
 	void	Transform	( const ZLMatrix4x4& mtx );
 };

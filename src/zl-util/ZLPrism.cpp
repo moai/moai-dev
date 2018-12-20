@@ -66,6 +66,15 @@ void ZLPrism::Init ( const ZLBox& box ) {
 }
 
 //----------------------------------------------------------------//
+void ZLPrism::Project ( const ZLMatrix4x4& mtx ) {
+
+	mtx.Project ( mLoc );
+	mtx.TransformVec ( mXAxis );
+	mtx.TransformVec ( mYAxis );
+	mtx.TransformVec ( mZAxis );
+}
+
+//----------------------------------------------------------------//
 void ZLPrism::Transform ( const ZLAffine3D& mtx ) {
 
 	mtx.Transform ( mLoc );

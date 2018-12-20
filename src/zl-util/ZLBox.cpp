@@ -442,6 +442,16 @@ void ZLBox::Pad ( float xPad, float yPad, float zPad ) {
 }
 
 //----------------------------------------------------------------//
+void ZLBox::Project ( const ZLMatrix4x4& mtx ) {
+
+	ZLPrism prism;
+	prism.Init ( *this );
+	prism.Project ( mtx );
+	
+	this->Init ( prism );
+}
+
+//----------------------------------------------------------------//
 void ZLBox::Scale ( float scale ) {
 
 	mMin.mX *= scale;

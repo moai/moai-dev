@@ -28,12 +28,9 @@ protected:
 	//----------------------------------------------------------------//
 	void					MOAIAbstractDrawable_Draw				( int subPrimID );
 	void					MOAIAbstractDrawable_DrawDebug			( int subPrimID );
-	bool					MOAINode_ApplyAttrOp					( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
 	void					MOAINode_Update							();
-	void					MOAIPartitionHull_AddToSortBuffer		( MOAIPartitionResultBuffer& buffer, u32 key );
 	u32						MOAIPartitionHull_AffirmInterfaceMask	( MOAIPartition& partition );
-	ZLBounds				MOAIPartitionHull_GetModelBounds		(); // get the prop bounds in model space
-	bool					MOAIPartitionHull_Inside				( ZLVec3D vec, float pad );
+	ZLBounds				MOAIPartitionHull_GetModelBounds		();
 
 public:
 

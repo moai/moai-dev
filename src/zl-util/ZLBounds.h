@@ -31,6 +31,7 @@ public:
 	void		Init					( const ZLBox& box );
 	void		Init					( const ZLRect& rect );
 	void		Init					( float left, float top, float right, float bottom, float back = 0.0f, float front = 0.0f );
+	bool		IsOK					() const;
 	void		UpdateStatus			();
 				ZLBounds				();
 				ZLBounds				( u32 status );

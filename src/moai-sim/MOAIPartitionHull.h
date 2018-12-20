@@ -78,7 +78,7 @@ protected:
 	static int			_setRemapper				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	virtual void		MOAIPartitionHull_AddToSortBuffer			( MOAIPartitionResultBuffer& buffer, u32 key = 0 ) = 0;
+	virtual void		MOAIPartitionHull_AddToSortBuffer			( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
 	virtual u32			MOAIPartitionHull_AffirmInterfaceMask		( MOAIPartition& partition ) = 0;
 	virtual void		MOAIPartitionHull_BoundsDidChange			();
 	virtual ZLBounds	MOAIPartitionHull_GetModelBounds			() = 0; // get the prop bounds in model space
@@ -124,6 +124,7 @@ public:
 
 	enum {
 		ATTR_PARTITION,
+		ATTR_WORLD_BOUNDS_TRAIT,
 		TOTAL_ATTR,
 	};
 

@@ -10,6 +10,44 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@lua	getWorldBounds
+	@text	Return the prop's world bounds or 'nil' if prop bounds is
+			global or missing.
+ 
+	@in		MOAIPartitionHull self
+	@out	number xMin
+	@out	number yMin
+	@out	number zMin
+	@out	number xMax
+	@out	number yMax
+	@out	number zMax
+*/
+int MOAIPinTransform::_getWorldBounds ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPinTransform, "U" )
+	
+	self->ForceUpdate ();
+	if ( self->mWorldBounds.IsOK ()) return 0;
+	state.Push (( ZLBox )self->mWorldBounds );
+
+	return 6;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIPinTransform::_getWorldBoundsCenter ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPinTransform, "U" )
+	
+	self->ForceUpdate ();
+	if ( self->mWorldBounds.IsOK ()) return 0;
+	
+	ZLVec3D center;
+	self->mWorldBounds.GetCenter ( center );
+	state.Push ( center );
+
+	return 3;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	init
 	@text	Initialize the bridge transform (map coordinates in one layer onto
 			another; useful for rendering screen space objects tied to world
@@ -42,7 +80,8 @@ int MOAIPinTransform::_init ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAIPinTransform::MOAIPinTransform () :
-	mFront ( 1.0f ) {
+	mFront ( 1.0 ),
+	mWorldBounds ( ZLBounds::EMPTY ) {
 	
 	RTTI_SINGLE ( MOAITransform )
 }
@@ -58,7 +97,8 @@ MOAIPinTransform::~MOAIPinTransform () {
 void MOAIPinTransform::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAITransform::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "ATTR_FRONT", AttrID::Pack ( ATTR_FRONT ).ToRaw ());
+	state.SetField ( -1, "ATTR_FRONT", 					AttrID::Pack ( ATTR_FRONT ).ToRaw ());
+	state.SetField ( -1, "ATTR_INHERIT_WORLD_BOUNDS", 	AttrID::Pack ( ATTR_INHERIT_WORLD_BOUNDS ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
@@ -101,11 +141,22 @@ void MOAIPinTransform::MOAINode_Update () {
 	
 	ZLVec3D loc = this->mLocalToWorldMtx.GetTranslation ();
 	
-	ZLMatrix4x4 mtx;
+	const ZLMatrix4x4& worldToWndMtx = this->mSourceLayer->GetWorldToWndMtx ();
+	const ZLMatrix4x4& wndToWorldMtx = this->mDestLayer->GetWndToWorldMtx ();
 	
-	this->mSourceLayer->GetWorldToWndMtx ().Project ( loc );
-	this->mDestLayer->GetWndToWorldMtx ().Transform ( loc );
+	worldToWndMtx.Project ( loc );
+	wndToWorldMtx.Transform ( loc );
 	
+	MOAIAttribute attr;
+	if ( this->PullLinkedAttr ( AttrID::Pack ( ATTR_INHERIT_WORLD_BOUNDS ), attr )) {
+		this->mWorldBounds = attr.GetVariant < ZLBounds >( ZLBounds::EMPTY );
+		if ( this->mWorldBounds.IsOK ()) {
+			this->mWorldBounds.Project ( worldToWndMtx );
+			this->mWorldBounds.Transform ( wndToWorldMtx );
+		}
+	}
+	
+	// update the transforms
 	this->mLocalToWorldMtx.Translate ( loc.mX, loc.mY, loc.mZ );
 	this->mWorldToLocalMtx.Translate ( -loc.mX, -loc.mY, -loc.mZ );
 	

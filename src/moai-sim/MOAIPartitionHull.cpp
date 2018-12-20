@@ -507,6 +507,7 @@ MOAIPartitionHull::MOAIPartitionHull () :
 	mInterfaceMask ( 0 ),
 	mQueryMask ( 0xffffffff ),
 	mPriority ( UNKNOWN_PRIORITY ),
+	mWorldBounds ( ZLBounds::EMPTY ),
 	mFlags ( 0 ),
 	mBoundsPad ( 0.0f, 0.0f, 0.0f ),
 	mHitGranularity ( HIT_TEST_COARSE ) {
@@ -516,7 +517,6 @@ MOAIPartitionHull::MOAIPartitionHull () :
 	RTTI_END
 	
 	this->mLinkInCell.Data ( this );
-	this->mWorldBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//
@@ -540,13 +540,14 @@ void MOAIPartitionHull::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAITransform::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "ATTR_PARTITION",				AttrID::Pack ( ATTR_PARTITION ).ToRaw ());
+	state.SetField ( -1, "ATTR_WORLD_BOUNDS_TRAIT",		AttrID::Pack ( ATTR_WORLD_BOUNDS_TRAIT ).ToRaw ());
 	
 	state.SetField ( -1, "FLAGS_EXPAND_FOR_SORT",		( u32 )FLAGS_EXPAND_FOR_SORT );
 	state.SetField ( -1, "FLAGS_PARTITION_GLOBAL",		( u32 )FLAGS_PARTITION_GLOBAL );
 	
-	state.SetField ( -1, "HIT_TEST_COARSE",			( u32 )HIT_TEST_COARSE );
-	state.SetField ( -1, "HIT_TEST_MEDIUM",			( u32 )HIT_TEST_MEDIUM );
-	state.SetField ( -1, "HIT_TEST_FINE",			( u32 )HIT_TEST_FINE );
+	state.SetField ( -1, "HIT_TEST_COARSE",				( u32 )HIT_TEST_COARSE );
+	state.SetField ( -1, "HIT_TEST_MEDIUM",				( u32 )HIT_TEST_MEDIUM );
+	state.SetField ( -1, "HIT_TEST_FINE",				( u32 )HIT_TEST_FINE );
 }
 
 //----------------------------------------------------------------//
@@ -639,8 +640,13 @@ bool MOAIPartitionHull::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute&
 	if ( AttrID::Check ( attrID )) {
 		
 		switch ( attrID.Unpack ()) {;
+		
 			case ATTR_PARTITION:
 				this->SetPartition ( attr.ApplyVariantNoAdd < MOAIPartition* >( this->GetPartition (), op, MOAIAttribute::ATTR_READ_WRITE ));
+				return true;
+			
+			case ATTR_WORLD_BOUNDS_TRAIT:
+				attr.ApplyVariantNoAdd < ZLBounds >( this->mWorldBounds, op, MOAIAttribute::ATTR_READ );
 				return true;
 		}
 	}
@@ -660,6 +666,12 @@ void MOAIPartitionHull::MOAINode_Update () {
 		bounds.Transform ( this->mLocalToWorldMtx );
 	}
 	this->UpdateWorldBounds ( bounds );
+}
+
+//----------------------------------------------------------------//
+void MOAIPartitionHull::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionResultBuffer& buffer, u32 key ) {
+
+	buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->GetPriority (), this->GetWorldLoc (), this->GetWorldBounds ());
 }
 
 //----------------------------------------------------------------//

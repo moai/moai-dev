@@ -23,9 +23,12 @@ private:
 	MOAILuaSharedPtr < MOAIViewLayer > mSourceLayer;
 	MOAILuaSharedPtr < MOAIViewLayer > mDestLayer;
 		
-	float			mFront;
+	ZLReal			mFront;
+	ZLBounds		mWorldBounds;
 	
 	//----------------------------------------------------------------//
+	static int		_getWorldBounds				( lua_State* L );
+	static int		_getWorldBoundsCenter		( lua_State* L );
 	static int		_init						( lua_State* L );
 
 	//----------------------------------------------------------------//
@@ -39,6 +42,8 @@ public:
 		
 	enum {
 		ATTR_FRONT,
+		ATTR_INHERIT_WORLD_BOUNDS,
+		TOTAL_ATTR,
 	};
 		
 	//----------------------------------------------------------------//
