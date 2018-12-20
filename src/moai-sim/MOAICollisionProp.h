@@ -4,9 +4,9 @@
 #ifndef	MOAICOLLISIONFACET_H
 #define	MOAICOLLISIONFACET_H
 
+#include <moai-sim/MOAIAbstractProp.h>
 #include <moai-sim/MOAICollisionPrim.h>
 #include <moai-sim/MOAIDeckHolderWithIndex.h>
-#include <moai-sim/MOAIPartitionHull.h>
 
 class MOAICollisionShape;
 class MOAICollisionProp;
@@ -59,7 +59,7 @@ private:
 //================================================================//
 // TODO: doxygen
 class MOAICollisionProp :
-	public virtual MOAIPartitionHull,
+	public virtual MOAIAbstractProp,
 	public virtual MOAIAbstractDrawable,
 	public virtual MOAIDeckHolderWithIndex {
 private:
@@ -99,11 +99,10 @@ private:
 	//----------------------------------------------------------------//
 	void					MOAIAbstractDrawable_Draw						( int subPrimID );
 	void					MOAIAbstractDrawable_DrawDebug					( int subPrimID );
+	ZLBounds				MOAIAbstractProp_GetModelBounds					();
 	bool					MOAINode_ApplyAttrOp							( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
 	void					MOAINode_Update									();
-	void					MOAIPartitionHull_AddToSortBuffer				( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
 	u32						MOAIPartitionHull_AffirmInterfaceMask			( MOAIPartition& partition );
-	ZLBounds				MOAIPartitionHull_GetModelBounds				();
 	bool					MOAIPartitionHull_PrepareForInsertion			( const MOAIPartition& partition );
 	void					MOAIPartitionHull_WasRemovedFromPartition		();
 	

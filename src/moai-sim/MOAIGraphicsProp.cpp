@@ -52,7 +52,6 @@ void MOAIGraphicsProp::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGraphicsProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	
 	MOAIDeckHolderWithIndex::RegisterLuaFuncs ( state );
 	MOAIGraphicsPropBase::RegisterLuaFuncs ( state );
 }
@@ -93,6 +92,12 @@ void MOAIGraphicsProp::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
+ZLBounds MOAIGraphicsProp::MOAIAbstractProp_GetModelBounds () {
+	
+	return this->mDeck ? this->mDeck->GetBounds ( this->mIndex ) : ZLBounds::EMPTY;
+}
+
+//----------------------------------------------------------------//
 bool MOAIGraphicsProp::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 	
 	if ( MOAIDeckHolderWithIndex::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
@@ -104,12 +109,6 @@ bool MOAIGraphicsProp::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& 
 void MOAIGraphicsProp::MOAINode_Update () {
 	
 	MOAIGraphicsPropBase::MOAINode_Update ();
-}
-
-//----------------------------------------------------------------//
-ZLBounds MOAIGraphicsProp::MOAIPartitionHull_GetModelBounds () {
-	
-	return this->mDeck ? this->mDeck->GetBounds ( this->mIndex ) : ZLBounds::EMPTY;
 }
 
 //----------------------------------------------------------------//

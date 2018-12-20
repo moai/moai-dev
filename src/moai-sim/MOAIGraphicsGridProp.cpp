@@ -251,10 +251,24 @@ void MOAIGraphicsGridProp::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
+ZLBounds MOAIGraphicsGridProp::MOAIAbstractProp_GetModelBounds () {
+	
+	if ( this->mGrid ) {
+		
+		if ( this->mGrid->GetRepeat ()) {
+			return ZLBounds::GLOBAL;
+		}
+		ZLBounds bounds;
+		bounds.Init ( this->mGrid->GetBounds ());
+		return bounds;
+	}
+	return ZLBounds::EMPTY;
+}
+
+//----------------------------------------------------------------//
 bool MOAIGraphicsGridProp::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 	
 	if ( MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
-	if ( MOAIPartitionHull::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
 	return false;
 }
 
@@ -302,26 +316,11 @@ void MOAIGraphicsGridProp::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionResu
 				mtx.Transform ( loc );
 				bounds.Transform ( mtx );
 				
-				buffer.PushResult ( *this, key, subPrimID, this->GetPriority (), loc, this->GetWorldBounds ()); // TODO: should use tile bounds for expand mode
+				buffer.PushResult ( *this, key, subPrimID, this->GetPriority (), loc, this->GetWorldBounds (), this->GetPiv ()); // TODO: should use tile bounds for expand mode
 			}
 		}
 	}
 	else {
-		buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->GetPriority (), this->GetWorldLoc (), this->GetWorldBounds ());
+		buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->GetPriority (), this->GetWorldLoc (), this->GetWorldBounds (), this->GetPiv ());
 	}
-}
-
-//----------------------------------------------------------------//
-ZLBounds MOAIGraphicsGridProp::MOAIPartitionHull_GetModelBounds () {
-	
-	if ( this->mGrid ) {
-		
-		if ( this->mGrid->GetRepeat ()) {
-			return ZLBounds::GLOBAL;
-		}
-		ZLBounds bounds;
-		bounds.Init ( this->mGrid->GetBounds ());
-		return bounds;
-	}
-	return ZLBounds::EMPTY;
 }

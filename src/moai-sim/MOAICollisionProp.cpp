@@ -219,7 +219,7 @@ MOAICollisionProp::MOAICollisionProp () :
 	mCollisionWorld ( 0 ) {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIPartitionHull )
+		RTTI_EXTEND ( MOAIAbstractProp )
 		RTTI_EXTEND ( MOAIAbstractDrawable )
 		RTTI_EXTEND ( MOAIDeckHolderWithIndex )
 	RTTI_END
@@ -361,8 +361,8 @@ void MOAICollisionProp::Move ( ZLVec3D move, u32 detach, u32 maxSteps ) {
 			// TODO: this needs to be *way* more efficient!
 			this->mLoc.mX += stepMoveNorm.mX * stepMoveLength;
 			this->mLoc.mY += stepMoveNorm.mY * stepMoveLength;
-			this->MOAIAbstractTransform::MOAINode_Update ();
-			this->MOAIPartitionHull::MOAINode_Update ();
+			this->MOAIAbstractTransform::MOAINode_Update (); // TODO: need this?
+			this->MOAIAbstractProp::MOAINode_Update ();
 
 			// prepare the next step or break
 
@@ -406,7 +406,7 @@ void MOAICollisionProp::Move ( ZLVec3D move, u32 detach, u32 maxSteps ) {
 //----------------------------------------------------------------//
 void MOAICollisionProp::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	MOAIPartitionHull::RegisterLuaClass ( state );
+	MOAIAbstractProp::RegisterLuaClass ( state );
 	MOAIDeckHolderWithIndex::RegisterLuaClass ( state );
 	
 	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAICollisionProp >( TOTAL_DEBUG_LINE_STYLES );
@@ -446,7 +446,7 @@ void MOAICollisionProp::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAICollisionProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIPartitionHull::RegisterLuaFuncs ( state );
+	MOAIAbstractProp::RegisterLuaFuncs ( state );
 	MOAIDeckHolderWithIndex::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
@@ -464,14 +464,14 @@ void MOAICollisionProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAICollisionProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
-	MOAIPartitionHull::SerializeIn ( state, serializer );
+	MOAIAbstractProp::SerializeIn ( state, serializer );
 	MOAIDeckHolderWithIndex::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAICollisionProp::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	
-	MOAIPartitionHull::SerializeOut ( state, serializer );
+	MOAIAbstractProp::SerializeOut ( state, serializer );
 	MOAIDeckHolderWithIndex::SerializeOut ( state, serializer );
 }
 
@@ -562,27 +562,33 @@ void MOAICollisionProp::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
+ZLBounds MOAICollisionProp::MOAIAbstractProp_GetModelBounds () {
+
+	MOAICollisionShape* shape = this->GetCollisionShape ();
+	if ( shape ) {
+		ZLBounds bounds;
+		bounds.Init ( shape->GetBounds ());
+		return bounds;
+	}
+	return ZLBounds::EMPTY;
+}
+
+//----------------------------------------------------------------//
 bool MOAICollisionProp::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
 
 	if ( MOAIDeckHolderWithIndex::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
-	if ( MOAIPartitionHull::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+	if ( MOAIAbstractProp::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
 	return false;
 }
 
 //----------------------------------------------------------------//
 void MOAICollisionProp::MOAINode_Update () {
 	
-	MOAIPartitionHull::MOAINode_Update ();
+	MOAIAbstractProp::MOAINode_Update ();
 	
 	if ( this->mCollisionWorld && this->mOverlapFlags ) {
 		this->mCollisionWorld->MakeActive ( *this );
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionProp::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionResultBuffer& buffer, u32 key ) {
-
-	buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->GetPriority (), this->GetWorldLoc (), this->GetWorldBounds ());
 }
 
 //----------------------------------------------------------------//
@@ -592,18 +598,6 @@ u32 MOAICollisionProp::MOAIPartitionHull_AffirmInterfaceMask ( MOAIPartition& pa
 		partition.AffirmInterfaceMask < MOAICollisionProp >() |
 		partition.AffirmInterfaceMask < MOAIAbstractDrawable >()
 	);
-}
-
-//----------------------------------------------------------------//
-ZLBounds MOAICollisionProp::MOAIPartitionHull_GetModelBounds () {
-
-	MOAICollisionShape* shape = this->GetCollisionShape ();
-	if ( shape ) {
-		ZLBounds bounds;
-		bounds.Init ( shape->GetBounds ());
-		return bounds;
-	}
-	return ZLBounds::EMPTY;
 }
 
 //----------------------------------------------------------------//

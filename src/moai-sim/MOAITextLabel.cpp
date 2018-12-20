@@ -1221,6 +1221,45 @@ void MOAITextLabel::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
+ZLBounds MOAITextLabel::MOAIAbstractProp_GetModelBounds () {
+	
+	this->Refresh ();
+
+	ZLBounds bounds = ZLBounds::EMPTY;
+
+	ZLRect textBounds; // the tight fitting bounds of the text (if any: may be empty)
+	bool hasBounds = this->mLayout.GetBounds ( textBounds );
+	
+	ZLRect textFrame = this->mLayoutRules.GetFrame ();
+	bool limitWidth = this->mLayoutRules.GetLimitWidth ();
+	bool limitHeight = this->mLayoutRules.GetLimitHeight ();
+	
+	if ( hasBounds ) {
+	
+		if ( limitWidth ) {
+			textBounds.mXMin = textFrame.mXMin;
+			textBounds.mXMax = textFrame.mXMax;
+		}
+		
+		if ( limitHeight ) {
+			textBounds.mYMin = textFrame.mYMin;
+			textBounds.mYMax = textFrame.mYMax;
+		}
+		
+		bounds.Init ( textBounds );
+	}
+	else {
+	
+		// if the text bounds are empty, then *both* frame axis must be in use for the rect to be valid
+		if ( limitWidth && limitHeight ) {
+			bounds.Init ( textFrame );
+		}
+	}
+	
+	return bounds;
+}
+
+//----------------------------------------------------------------//
 void MOAITextLabel::MOAIAbstractTransform_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
 
 	this->MOAITransform::MOAIAbstractTransform_BuildLocalToWorldMtx ( localToWorldMtx );
@@ -1292,43 +1331,4 @@ void MOAITextLabel::MOAINode_Update () {
 
 	this->Refresh ();
 	MOAIGraphicsProp::MOAINode_Update ();
-}
-
-//----------------------------------------------------------------//
-ZLBounds MOAITextLabel::MOAIPartitionHull_GetModelBounds () {
-	
-	this->Refresh ();
-
-	ZLBounds bounds = ZLBounds::EMPTY;
-
-	ZLRect textBounds; // the tight fitting bounds of the text (if any: may be empty)
-	bool hasBounds = this->mLayout.GetBounds ( textBounds );
-	
-	ZLRect textFrame = this->mLayoutRules.GetFrame ();
-	bool limitWidth = this->mLayoutRules.GetLimitWidth ();
-	bool limitHeight = this->mLayoutRules.GetLimitHeight ();
-	
-	if ( hasBounds ) {
-	
-		if ( limitWidth ) {
-			textBounds.mXMin = textFrame.mXMin;
-			textBounds.mXMax = textFrame.mXMax;
-		}
-		
-		if ( limitHeight ) {
-			textBounds.mYMin = textFrame.mYMin;
-			textBounds.mYMax = textFrame.mYMax;
-		}
-		
-		bounds.Init ( textBounds );
-	}
-	else {
-	
-		// if the text bounds are empty, then *both* frame axis must be in use for the rect to be valid
-		if ( limitWidth && limitHeight ) {
-			bounds.Init ( textFrame );
-		}
-	}
-	
-	return bounds;
 }

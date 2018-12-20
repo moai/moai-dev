@@ -40,7 +40,7 @@ int MOAIProjectionProp::_init ( lua_State* L ) {
 MOAIProjectionProp::MOAIProjectionProp () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIPartitionHull )
+		RTTI_EXTEND ( MOAIAbstractProp )
 	RTTI_END
 }
 
@@ -51,13 +51,13 @@ MOAIProjectionProp::~MOAIProjectionProp () {
 //----------------------------------------------------------------//
 void MOAIProjectionProp::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	MOAIPartitionHull::RegisterLuaClass ( state );
+	MOAIAbstractProp::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIProjectionProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIPartitionHull::RegisterLuaFuncs ( state );
+	MOAIAbstractProp::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "init",					_init },
@@ -70,13 +70,13 @@ void MOAIProjectionProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIProjectionProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
-	MOAIPartitionHull::SerializeIn ( state, serializer );
+	MOAIAbstractProp::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAIProjectionProp::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	
-	MOAIPartitionHull::SerializeOut ( state, serializer );
+	MOAIAbstractProp::SerializeOut ( state, serializer );
 }
 
 //================================================================//
@@ -94,20 +94,20 @@ void MOAIProjectionProp::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
+ZLBounds MOAIProjectionProp::MOAIAbstractProp_GetModelBounds () {
+
+//	return this->mDeck ? this->mDeck->GetBounds ( this->mIndex ) : ZLBounds::EMPTY;
+	return ZLBounds::EMPTY;
+}
+
+//----------------------------------------------------------------//
 void MOAIProjectionProp::MOAINode_Update () {
 
-	MOAIPartitionHull::MOAINode_Update ();
+	MOAIAbstractProp::MOAINode_Update ();
 }
 
 //----------------------------------------------------------------//
 u32 MOAIProjectionProp::MOAIPartitionHull_AffirmInterfaceMask ( MOAIPartition& partition ) {
 
 	return partition.AffirmInterfaceMask < MOAIAbstractDrawable >();
-}
-
-//----------------------------------------------------------------//
-ZLBounds MOAIProjectionProp::MOAIPartitionHull_GetModelBounds () {
-
-//	return this->mDeck ? this->mDeck->GetBounds ( this->mIndex ) : ZLBounds::EMPTY;
-	return ZLBounds::EMPTY;
 }

@@ -71,9 +71,9 @@ private:
 	
 	//----------------------------------------------------------------//
 	void					MOAIAbstractDrawable_Draw				( int subPrimID );
+	ZLBounds				MOAIAbstractProp_GetModelBounds			();
 	bool					MOAIAction_IsDone						();
 	void					MOAIAction_Update						( double step );
-	ZLBounds				MOAIPartitionHull_GetModelBounds		();
 
 public:
 

@@ -221,7 +221,7 @@ MOAIGraphicsPropBase::MOAIGraphicsPropBase () :
 	mBillboard ( BILLBOARD_NONE ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIPartitionHull )
+		RTTI_EXTEND ( MOAIAbstractProp )
 		RTTI_EXTEND ( MOAIColor )
 		RTTI_EXTEND ( MOAIAbstractDrawable )
 		RTTI_EXTEND ( MOAIAbstractDrawable )
@@ -265,7 +265,7 @@ void MOAIGraphicsPropBase::PushGfxState () {
 //----------------------------------------------------------------//
 void MOAIGraphicsPropBase::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	MOAIPartitionHull::RegisterLuaClass ( state );
+	MOAIAbstractProp::RegisterLuaClass ( state );
 	MOAIColor::RegisterLuaClass ( state );
 	MOAIMaterialBatchHolder::RegisterLuaClass ( state );
 	
@@ -330,7 +330,7 @@ void MOAIGraphicsPropBase::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGraphicsPropBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIPartitionHull::RegisterLuaFuncs ( state );
+	MOAIAbstractProp::RegisterLuaFuncs ( state );
 	MOAIColor::RegisterLuaFuncs ( state );
 	MOAIMaterialBatchHolder::RegisterLuaFuncs ( state );
 
@@ -360,7 +360,7 @@ void MOAIGraphicsPropBase::Render () {
 void MOAIGraphicsPropBase::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
 	MOAIColor::SerializeIn ( state, serializer );
-	MOAIPartitionHull::SerializeIn ( state, serializer );
+	MOAIAbstractProp::SerializeIn ( state, serializer );
 	MOAIMaterialBatchHolder::SerializeIn ( state, serializer );
 }
 
@@ -368,7 +368,7 @@ void MOAIGraphicsPropBase::SerializeIn ( MOAILuaState& state, MOAIDeserializer& 
 void MOAIGraphicsPropBase::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	
 	MOAIColor::SerializeOut ( state, serializer );
-	MOAIPartitionHull::SerializeOut ( state, serializer );
+	MOAIAbstractProp::SerializeOut ( state, serializer );
 	MOAIMaterialBatchHolder::SerializeOut ( state, serializer );
 }
 
@@ -681,7 +681,7 @@ bool MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribu
 	}
 	
 	if ( MOAIColor::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
-	if ( MOAIPartitionHull::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+	if ( MOAIAbstractProp::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
 	return false;
 }
 
@@ -689,16 +689,10 @@ bool MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribu
 void MOAIGraphicsPropBase::MOAINode_Update () {
 	
 	MOAIColor::MOAINode_Update ();
-	MOAIPartitionHull::MOAINode_Update ();
+	MOAIAbstractProp::MOAINode_Update ();
 	
 	bool visible = ZLFloat::ToBoolean ( this->GetLinkedValue ( AttrID::Pack ( INHERIT_VISIBLE ), 1.0f ));
 	this->mDisplayFlags = visible && ( this->mDisplayFlags & FLAGS_LOCAL_VISIBLE ) ? this->mDisplayFlags | FLAGS_VISIBLE : this->mDisplayFlags & ~FLAGS_VISIBLE ;
-}
-
-//----------------------------------------------------------------//
-void MOAIGraphicsPropBase::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionResultBuffer& buffer, u32 key ) {
-
-	buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->GetPriority (), this->GetWorldLoc (), this->GetWorldBounds ());
 }
 
 //----------------------------------------------------------------//

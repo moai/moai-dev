@@ -244,7 +244,7 @@ void MOAIPartitionResultBuffer::PushHulls ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionResultBuffer::PushResult ( MOAIPartitionHull& hull, u32 key, int subPrimID, s32 priority, const ZLVec3D& loc, const ZLBox& bounds ) {
+void MOAIPartitionResultBuffer::PushResult ( MOAIPartitionHull& hull, u32 key, int subPrimID, s32 priority, const ZLVec3D& loc, const ZLBox& bounds, const ZLVec3D& piv ) {
 
 	u32 idx = this->mTotalResults++;
 	
@@ -264,7 +264,7 @@ void MOAIPartitionResultBuffer::PushResult ( MOAIPartitionHull& hull, u32 key, i
 	result.mLoc = loc;
 	result.mBounds = bounds;
 	
-	ZLVec3D piv = hull.GetPiv ();
+	// TODO: do we need this?
 	result.mLoc.Add ( piv );
 	result.mBounds.Offset ( piv );
 }

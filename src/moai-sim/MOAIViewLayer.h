@@ -45,7 +45,7 @@ protected:
 	//----------------------------------------------------------------//
 	void					MOAIAbstractDrawable_Draw			( int subPrimID );
 	void					MOAIAbstractDrawable_DrawDebug		( int subPrimID );
-	ZLBounds				MOAIPartitionHull_GetModelBounds	();
+	ZLBounds				MOAIAbstractProp_GetModelBounds		();
 	virtual void			MOAIViewLayer_Draw					() = 0;
 
 public:

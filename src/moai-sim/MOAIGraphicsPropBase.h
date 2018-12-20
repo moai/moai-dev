@@ -5,8 +5,8 @@
 #define	MOAIGRAPHICSPROPBASE_H
 
 #include <moai-sim/MOAIAbstractDrawable.h>
+#include <moai-sim/MOAIAbstractProp.h>
 #include <moai-sim/MOAIColor.h>
-#include <moai-sim/MOAIPartitionHull.h>
 #include <moai-sim/MOAIMaterialBatchHolder.h>
 #include <moai-sim/MOAITransform.h>
 
@@ -54,7 +54,7 @@ class MOAIScissorRect;
 	@const	CULL_FRONT
 */
 class MOAIGraphicsPropBase :
-	public virtual MOAIPartitionHull,
+	public virtual MOAIAbstractProp,
 	public virtual MOAIColor,
 	public virtual MOAIAbstractDrawable,
 	public virtual MOAIMaterialBatchHolder {
@@ -73,7 +73,6 @@ protected:
 
 	//----------------------------------------------------------------//
 	void			MOAIAbstractDrawable_DrawDebug				( int subPrimID );
-	void			MOAIPartitionHull_AddToSortBuffer			( MOAIPartitionResultBuffer& buffer, u32 key );
 	u32				MOAIPartitionHull_AffirmInterfaceMask		( MOAIPartition& partition );
 
 protected:

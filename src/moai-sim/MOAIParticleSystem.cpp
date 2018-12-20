@@ -623,6 +623,17 @@ void MOAIParticleSystem::SerializeOut ( MOAILuaState& state, MOAISerializer& ser
 //================================================================//
 
 //----------------------------------------------------------------//
+ZLBounds MOAIParticleSystem::MOAIAbstractProp_GetModelBounds () {
+
+	if ( this->mSpriteTop ) {
+		ZLBounds bounds;
+		bounds.Init ( this->mParticleBounds );
+		return bounds;
+	}
+	return ZLBounds::EMPTY;
+}
+
+//----------------------------------------------------------------//
 bool MOAIParticleSystem::MOAIAction_IsDone () {
 
 	return false;
@@ -720,15 +731,4 @@ void MOAIParticleSystem::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 	}
 	
 	this->PopGfxState ();
-}
-
-//----------------------------------------------------------------//
-ZLBounds MOAIParticleSystem::MOAIPartitionHull_GetModelBounds () {
-
-	if ( this->mSpriteTop ) {
-		ZLBounds bounds;
-		bounds.Init ( this->mParticleBounds );
-		return bounds;
-	}
-	return ZLBounds::EMPTY;
 }

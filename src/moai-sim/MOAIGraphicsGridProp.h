@@ -23,10 +23,10 @@ private:
 
 	//----------------------------------------------------------------//
 	void			MOAIAbstractDrawable_Draw				( int subPrimID );
+	ZLBounds		MOAIAbstractProp_GetModelBounds			(); // get the prop bounds in model space
 	bool			MOAINode_ApplyAttrOp					( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
 	void			MOAINode_Update							();
 	void			MOAIPartitionHull_AddToSortBuffer		( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
-	ZLBounds		MOAIPartitionHull_GetModelBounds		(); // get the prop bounds in model space
 
 public:
 

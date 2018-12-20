@@ -24,60 +24,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@lua	getBounds
-	@text	Return the prop's local bounds or 'nil' if prop bounds is
-			global or missing. The bounds are in model space and will
-			be overridden by the prop's bounds if it's been set (using
-			setBounds ())
-	
-	@in		MOAIPartitionHull self
-	@out	number xMin
-	@out	number yMin
-	@out	number zMin
-	@out	number xMax
-	@out	number yMax
-	@out	number zMax
-*/
-int MOAIPartitionHull::_getBounds ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartitionHull, "U" )
-	
-	ZLBounds bounds = self->GetModelBounds ();
-	if ( bounds.mStatus != ZLBounds::ZL_BOUNDS_OK ) return 0;
-
-	state.Push ( bounds.mMin.mX );
-	state.Push ( bounds.mMin.mY );
-	state.Push ( bounds.mMin.mZ );
-	
-	state.Push ( bounds.mMax.mX );
-	state.Push ( bounds.mMax.mY );
-	state.Push ( bounds.mMax.mZ );
-
-	return 6;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	getDims
-	@text	Return the prop's width and height or 'nil' if prop rect is global.
-               
-	@in		MOAIPartitionHull self
-	@out	number width		X max - X min
-	@out	number height		Y max - Y min
-	@out	number depth		Z max - Z min
-*/
-int MOAIPartitionHull::_getDims ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartitionHull, "U" )
-
-	ZLBounds bounds = self->GetModelBounds ();
-	if ( bounds.mStatus != ZLBounds::ZL_BOUNDS_OK ) return 0;
- 
-	state.Push ( bounds.mMax.mX - bounds.mMin.mX );
-	state.Push ( bounds.mMax.mY - bounds.mMin.mY );
-	state.Push ( bounds.mMax.mZ - bounds.mMin.mZ );
- 
-	return 3;
-}
-
-//----------------------------------------------------------------//
 /**	@lua	getPartition
 	@text	Returns the partition prop is currently held in.
 	
@@ -156,15 +102,10 @@ int MOAIPartitionHull::_getWorldBoundsCenter ( lua_State* L ) {
 	if ( self->mPartition->IsGlobal ( *self )) return 0;
 	if ( self->mPartition->IsEmpty ( *self )) return 0;
 	
-	ZLBox bounds = self->mWorldBounds;
-	
 	ZLVec3D center;
-	bounds.GetCenter ( center );
+	self->mWorldBounds.GetCenter ( center );
 
-	state.Push ( center.mX );
-	state.Push ( center.mY );
-	state.Push ( center.mZ );
-
+	state.Push ( center );
 	return 3;
 }
 
@@ -194,102 +135,6 @@ int	MOAIPartitionHull::_inside ( lua_State* L ) {
 	lua_pushboolean ( state, result );
 	
 	return 1;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setBounds
-	@text	Sets or clears the partition bounds override.
-	
-	@overload	Clear the bounds override.
-	
-		@in		MOAIPartitionHull self
-		@out	nil
-	
-	@overload	Set the bounds override.
-	
-		@in		MOAIPartitionHull self
-		@in		number xMin
-		@in		number yMin
-		@in		number zMin
-		@in		number xMax
-		@in		number yMax
-		@in		number zMax
-		@out	nil
-*/
-int MOAIPartitionHull::_setBounds ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartitionHull, "U" )
-
-	if ( state.CheckParams ( 2, "NNNNNN", false )) {
-
-		self->mBoundsOverride = state.GetBox ( 2 );
-		self->mFlags |= FLAGS_OVERRIDE_BOUNDS;
-	}
-	else {
-		self->mFlags &= ~FLAGS_OVERRIDE_BOUNDS;
-	}
-	
-	self->ScheduleUpdate ();
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIPartitionHull::_setBoundsPad ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartitionHull, "U" )
-
-	self->mBoundsPad.mX	= state.GetValue < float >( 2, 0.0f );
-	self->mBoundsPad.mY	= state.GetValue < float >( 3, 0.0f );
-	self->mBoundsPad.mZ	= state.GetValue < float >( 4, 0.0f );
-
-	bool pad = (( self->mBoundsPad.mX != 0.0f ) || ( self->mBoundsPad.mY != 0.0f ) || ( self->mBoundsPad.mZ != 0.0f ));
-	self->mFlags = pad ? ( self->mFlags | FLAGS_PAD_BOUNDS ) : ( self->mFlags & ~FLAGS_PAD_BOUNDS );
-
-	self->ScheduleUpdate ();
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setExpandForSort
-	@text	Used when drawing with a layout scheme (i.e. MOAIGrid).
-			Expanding for sort causes the prop to emit a sub-prim
-			for each component of the layout. For example, when
-			attaching a MOAIGrid to a prop, each cell of the grid
-			will be added to the render queue for sorting against
-			all other props and sub-prims. This is obviously less
-			efficient, but still more efficient then using an
-			separate prop for each cell or object.
-	
-	@in		MOAIPartitionHull self
-	@in		boolean expandForSort	Default value is false.
-	@out	nil
-*/
-int MOAIPartitionHull::_setExpandForSort ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartitionHull, "U" )
-
-	bool expandForSort = state.GetValue < bool >( 2, false );
-
-	if ( expandForSort ) {
-		self->mFlags |= FLAGS_EXPAND_FOR_SORT;
-	}
-	else {
-		self->mFlags &= ~FLAGS_EXPAND_FOR_SORT;
-	}
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: macro
-int MOAIPartitionHull::_setFlag ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartitionHull, "U" )
-
-	u32 flag		= state.GetValue < u32 >( 2, 0 );
-	bool set		= state.GetValue < bool >( 3, true );
-
-	self->mFlags = set ? self->mFlags |= flag : self->mFlags &= flag;
-
-	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -443,29 +288,6 @@ bool MOAIPartitionHull::GetCellRect ( ZLRect* cellRect, ZLRect* paddedRect ) {
 }
 
 //----------------------------------------------------------------//
-ZLBounds MOAIPartitionHull::GetModelBounds () {
-
-	if ( this->mFlags & FLAGS_PARTITION_GLOBAL ) {
-		return ZLBounds::GLOBAL;
-	}
-
-	ZLBounds bounds = ZLBounds::EMPTY;
-
-	if ( this->mFlags & FLAGS_OVERRIDE_BOUNDS ) {
-		bounds.Init ( this->mBoundsOverride );
-	}
-	else {
-		bounds = this->MOAIPartitionHull_GetModelBounds ();
-	}
-	
-	if (( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) && ( this->mFlags & FLAGS_PAD_BOUNDS )) {
-		bounds.Pad ( this->mBoundsPad.mX, this->mBoundsPad.mY, this->mBoundsPad.mZ );
-	}
-
-	return bounds;
-}
-
-//----------------------------------------------------------------//
 MOAIPartition* MOAIPartitionHull::GetPartitionTrait () {
 
 	return this->mPartition;
@@ -478,27 +300,6 @@ bool MOAIPartitionHull::Inside ( ZLVec3D vec, float pad ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIPartitionHull::InsideModelBounds ( const ZLVec3D& vec, float pad ) {
-
-	ZLBounds bounds = this->GetModelBounds ();
-	
-	if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_EMPTY ) return false;
-	
-	bool passTrivial = false;
-	
-	if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_GLOBAL ) {
-		passTrivial = true;
-	}
-	else {
-		bounds.Bless ();
-		bounds.Inflate ( pad );
-		if ( pad != 0 ) bounds.Bless ();
-		passTrivial = bounds.Contains ( vec );
-	}
-	return passTrivial;
-}
-
-//----------------------------------------------------------------//
 MOAIPartitionHull::MOAIPartitionHull () :
 	mPartition ( 0 ),
 	mCell ( 0 ),
@@ -508,12 +309,10 @@ MOAIPartitionHull::MOAIPartitionHull () :
 	mQueryMask ( 0xffffffff ),
 	mPriority ( UNKNOWN_PRIORITY ),
 	mWorldBounds ( ZLBounds::EMPTY ),
-	mFlags ( 0 ),
-	mBoundsPad ( 0.0f, 0.0f, 0.0f ),
 	mHitGranularity ( HIT_TEST_COARSE ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAITransform )
+		RTTI_EXTEND ( MOAINode )
 	RTTI_END
 	
 	this->mLinkInCell.Data ( this );
@@ -536,14 +335,9 @@ bool MOAIPartitionHull::PrepareForInsertion ( const MOAIPartition& partition ) {
 
 //----------------------------------------------------------------//
 void MOAIPartitionHull::RegisterLuaClass ( MOAILuaState& state ) {
-	
-	MOAITransform::RegisterLuaClass ( state );
-	
+		
 	state.SetField ( -1, "ATTR_PARTITION",				AttrID::Pack ( ATTR_PARTITION ).ToRaw ());
 	state.SetField ( -1, "ATTR_WORLD_BOUNDS_TRAIT",		AttrID::Pack ( ATTR_WORLD_BOUNDS_TRAIT ).ToRaw ());
-	
-	state.SetField ( -1, "FLAGS_EXPAND_FOR_SORT",		( u32 )FLAGS_EXPAND_FOR_SORT );
-	state.SetField ( -1, "FLAGS_PARTITION_GLOBAL",		( u32 )FLAGS_PARTITION_GLOBAL );
 	
 	state.SetField ( -1, "HIT_TEST_COARSE",				( u32 )HIT_TEST_COARSE );
 	state.SetField ( -1, "HIT_TEST_MEDIUM",				( u32 )HIT_TEST_MEDIUM );
@@ -553,20 +347,12 @@ void MOAIPartitionHull::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIPartitionHull::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAITransform::RegisterLuaFuncs ( state );
-
 	luaL_Reg regTable [] = {
-		{ "getBounds",				_getBounds },
-		{ "getDims",				_getDims },
 		{ "getPartition",			_getPartition },
 		{ "getPriority",			_getPriority },
 		{ "getWorldBounds",			_getWorldBounds },
 		{ "getWorldBoundsCenter",	_getWorldBoundsCenter },
 		{ "inside",					_inside },
-		{ "setBounds",				_setBounds },
-		{ "setBoundsPad",			_setBoundsPad },
-		{ "setExpandForSort",		_setExpandForSort },
-		{ "setFlag",				_setFlag },
 		{ "setHitGranularity",		_setHitGranularity },
 		{ "setPartition",			_setPartition },
 		{ "setPriority",			_setPriority },
@@ -575,18 +361,6 @@ void MOAIPartitionHull::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIPartitionHull::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	
-	MOAITransform::SerializeIn ( state, serializer );
-}
-
-//----------------------------------------------------------------//
-void MOAIPartitionHull::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	
-	MOAITransform::SerializeOut ( state, serializer );
 }
 
 //----------------------------------------------------------------//
@@ -650,28 +424,16 @@ bool MOAIPartitionHull::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute&
 				return true;
 		}
 	}
-	
-	return MOAITransform::MOAINode_ApplyAttrOp ( attrID, attr, op );
-}
-
-//----------------------------------------------------------------//
-void MOAIPartitionHull::MOAINode_Update () {
-	
-	MOAITransform::MOAINode_Update ();
-	
-	ZLBounds bounds = this->GetModelBounds ();
-	
-	// update the prop location in the partition
-	if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) {
-		bounds.Transform ( this->mLocalToWorldMtx );
-	}
-	this->UpdateWorldBounds ( bounds );
+	return false;
 }
 
 //----------------------------------------------------------------//
 void MOAIPartitionHull::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionResultBuffer& buffer, u32 key ) {
 
-	buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->GetPriority (), this->GetWorldLoc (), this->GetWorldBounds ());
+	ZLVec3D center;
+	this->mWorldBounds.GetCenter ( center );
+
+	buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->GetPriority (), center, this->GetWorldBounds (), ZLVec3D::ORIGIN );
 }
 
 //----------------------------------------------------------------//
@@ -680,11 +442,15 @@ void MOAIPartitionHull::MOAIPartitionHull_BoundsDidChange () {
 
 //----------------------------------------------------------------//
 bool MOAIPartitionHull::MOAIPartitionHull_Inside ( ZLVec3D vec, float pad ) {
-
-	ZLAffine3D worldToLocal = this->GetWorldToLocalMtx ();
-	worldToLocal.Transform ( vec );
 	
-	return this->InsideModelBounds ( vec, pad );
+	ZLBounds bounds = this->mWorldBounds;
+	
+	if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_EMPTY ) return false;
+	if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_GLOBAL ) return true;
+	
+	bounds.Inflate ( pad );
+	bounds.Bless ();
+	return bounds.Contains ( vec );
 }
 
 //----------------------------------------------------------------//

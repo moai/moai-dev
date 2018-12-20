@@ -4,8 +4,8 @@
 #ifndef	MOAIPROJECTIONPROP_H
 #define	MOAIPROJECTIONPROP_H
 
+#include <moai-sim/MOAIAbstractProp.h>
 #include <moai-sim/MOAIAbstractDrawable.h>
-#include <moai-sim/MOAIPartitionHull.h>
 
 class MOAIGraphicsPropBase;
 
@@ -15,7 +15,7 @@ class MOAIGraphicsPropBase;
 // TODO: doxygen
 class MOAIProjectionProp :
 	public virtual MOAIAbstractDrawable,
-	public virtual MOAIPartitionHull {
+	public virtual MOAIAbstractProp {
 protected:
 
 	MOAILuaSharedPtr < MOAIGraphicsPropBase >	mSourceProp;
@@ -28,9 +28,9 @@ protected:
 	//----------------------------------------------------------------//
 	void					MOAIAbstractDrawable_Draw				( int subPrimID );
 	void					MOAIAbstractDrawable_DrawDebug			( int subPrimID );
+	ZLBounds				MOAIAbstractProp_GetModelBounds			();
 	void					MOAINode_Update							();
 	u32						MOAIPartitionHull_AffirmInterfaceMask	( MOAIPartition& partition );
-	ZLBounds				MOAIPartitionHull_GetModelBounds		();
 
 public:
 

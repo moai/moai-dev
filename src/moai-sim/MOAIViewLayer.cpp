@@ -550,7 +550,7 @@ void MOAIViewLayer::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-ZLBounds MOAIViewLayer::MOAIPartitionHull_GetModelBounds () {
+ZLBounds MOAIViewLayer::MOAIAbstractProp_GetModelBounds () {
 	
 	if ( this->mViewport ) {
 		ZLBounds bounds;

@@ -9,6 +9,7 @@
 
 #include <moai-sim/MOAIAbstractDrawable.h>
 #include <moai-sim/MOAIAbstractDrawShape.h>
+#include <moai-sim/MOAIAbstractProp.h>
 #include <moai-sim/MOAIAbstractTransform.h>
 #include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAIActionTree.h>
