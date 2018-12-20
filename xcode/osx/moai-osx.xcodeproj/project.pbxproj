@@ -32,6 +32,7 @@
 		CD6600661831CB5400D9862B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6600651831CB5400D9862B /* OpenGL.framework */; };
 		CD6E274D1D19157000792933 /* libmoai-osx-3rdparty-assimp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD8325971D18D2CC002CE2A1 /* libmoai-osx-3rdparty-assimp.a */; };
 		CD6E274E1D19157000792933 /* libmoai-osx-assimp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD8325991D18D2CC002CE2A1 /* libmoai-osx-assimp.a */; };
+		CD7038CD21CB145D00DB4A9D /* moai_gtest_composition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7038CC21CB145D00DB4A9D /* moai_gtest_composition.cpp */; };
 		CD795EF217F08E4B006AEB47 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795EF117F08E4B006AEB47 /* Cocoa.framework */; };
 		CD795EF417F08F4E006AEB47 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795EF317F08F4E006AEB47 /* CoreAudio.framework */; };
 		CD795EF617F08F86006AEB47 /* ForceFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795EF517F08F86006AEB47 /* ForceFeedback.framework */; };
@@ -887,6 +888,7 @@
 		CD5C9FC921C894630092C949 /* moai_gtest_virtual_inheritance.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moai_gtest_virtual_inheritance.cpp; path = "../../src/host-google-test/moai_gtest_virtual_inheritance.cpp"; sourceTree = "<group>"; };
 		CD5C9FCF21C8EA400092C949 /* moai_gtest_libtess2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moai_gtest_libtess2.cpp; path = "../../src/host-google-test/moai_gtest_libtess2.cpp"; sourceTree = "<group>"; };
 		CD6600651831CB5400D9862B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		CD7038CC21CB145D00DB4A9D /* moai_gtest_composition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moai_gtest_composition.cpp; path = "../../src/host-google-test/moai_gtest_composition.cpp"; sourceTree = "<group>"; };
 		CD74EA2B137807E40093EE68 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
 		CD74EA311378080E0093EE68 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = /usr/lib/libssl.dylib; sourceTree = "<absolute>"; };
 		CD795EF117F08E4B006AEB47 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -1116,6 +1118,7 @@
 			isa = PBXGroup;
 			children = (
 				CDD813FB1E1732D300996311 /* moai_gtest.h */,
+				CD7038CC21CB145D00DB4A9D /* moai_gtest_composition.cpp */,
 				CD5C9FCF21C8EA400092C949 /* moai_gtest_libtess2.cpp */,
 				CDD813FC1E17333700996311 /* moai_gtest_lua_lifecycle.cpp */,
 				CDD813F91E1700D900996311 /* moai_gtest_main.cpp */,
@@ -1782,6 +1785,7 @@
 				CDD813FF1E190DDD00996311 /* moai_gtest_ZLQuaternion.cpp in Sources */,
 				CD5C9FCA21C894630092C949 /* moai_gtest_virtual_inheritance.cpp in Sources */,
 				CD5C9FD021C8EA400092C949 /* moai_gtest_libtess2.cpp in Sources */,
+				CD7038CD21CB145D00DB4A9D /* moai_gtest_composition.cpp in Sources */,
 				CDD813FA1E1700D900996311 /* moai_gtest_main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
