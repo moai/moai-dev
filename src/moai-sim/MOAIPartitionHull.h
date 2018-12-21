@@ -51,6 +51,7 @@ protected:
 	s32					mPriority;
 	
 	ZLBounds			mWorldBounds;
+	ZLPrism				mWorldPrism;
 
 	//----------------------------------------------------------------//
 	static int			_getPartition				( lua_State* L );
@@ -108,9 +109,6 @@ public:
 	GET ( s32,				Priority,				mPriority )
 	GET ( MOAIPartition*,	Partition,				mPartition )
 	GET ( ZLBounds,			WorldBounds,			mWorldBounds )
-	GET ( ZLVec3D,			WorldBoundsMax,			mWorldBounds.mMax )
-	GET ( ZLVec3D,			WorldBoundsMin,			mWorldBounds.mMin )
-	GET ( u32,				WorldBoundsStatus,		mWorldBounds.mStatus )
 
 	//----------------------------------------------------------------//
 	MOAIPartition*		GetPartitionTrait		();
@@ -121,7 +119,8 @@ public:
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				SetPartition			( MOAIPartition* partition );
-	void				UpdateWorldBounds		( const ZLBounds& bounds ); // update bounds in world space
+	void				UpdateWorldBounds		( const ZLBounds& bounds );
+	void				UpdateWorldBounds		( const ZLPrism& prism );
 };
 
 #endif

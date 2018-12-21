@@ -17,10 +17,11 @@
 //----------------------------------------------------------------//
 void MOAICollisionShape::Bless () {
 
+	ZLBox aabb;
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mShapes.Size (); ++i ) {
-
-		this->mBounds.Grow ( this->mShapes [ i ]->mBounds, i == ZLIndexOp::ZERO );
+		aabb.Grow ( this->mShapes [ i ]->mBounds, i == ZLIndexOp::ZERO );
 	}
+	this->mBounds.Init ( aabb );
 }
 
 //----------------------------------------------------------------//

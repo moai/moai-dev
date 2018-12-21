@@ -34,6 +34,7 @@ public:
 	void			Transform			( const ZLMatrix4x4& mtx );
 					ZLBoxCorners		();
 					ZLBoxCorners		( const ZLBox& box );
+					ZLBoxCorners		( const ZLPrism& prism );
 };
 
 #endif

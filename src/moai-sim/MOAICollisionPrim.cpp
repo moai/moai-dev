@@ -46,22 +46,22 @@ void MOAICollisionPrimVisitor::Process ( MOAICollisionProp& prop0, MOAICollision
 		else if ( shape0 ){
 		
 			ZLBounds bounds = prop1.GetModelBounds ();
-			this->Process ( *shape0, bounds, t0, t1 );
+			this->Process ( *shape0, bounds.mAABB, t0, t1 );
 		}
 		else if ( shape1 ) {
 		
 			ZLBounds bounds = prop0.GetModelBounds ();
-			this->Process ( *shape1, bounds, t0, t1 );
+			this->Process ( *shape1, bounds.mAABB, t0, t1 );
 		}
 	}
 	else {
 	
 		MOAIOverlapBox oshape0;
-		oshape0.mShape = prop0.GetModelBounds ();
+		oshape0.mShape = prop0.GetModelBounds ().mAABB;
 		oshape0.mBounds = oshape0.mShape;
 		
 		MOAIOverlapBox oshape1;
-		oshape1.mShape = prop1.GetModelBounds ();
+		oshape1.mShape = prop1.GetModelBounds ().mAABB;
 		oshape1.mBounds = oshape1.mShape;
 		
 		this->Process ( oshape0, oshape1, t0, t1 );

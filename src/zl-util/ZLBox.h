@@ -17,6 +17,8 @@ class ZLPrism;
 class ZLBox {
 public:
 
+	static const ZLBox EMPTY;
+
 	enum {
 		PLANE_XY,
 		PLANE_XZ,

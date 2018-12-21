@@ -1117,8 +1117,8 @@ void MOAITextLabel::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 		
 		if ( fitBounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) {
 	
-			float width = fitBounds.Width ();
-			float height = fitBounds.Height ();
+			float width = fitBounds.mAABB.Width ();
+			float height = fitBounds.mAABB.Height ();
 	
 			if (( width > 0.0f ) && ( height > 0.0f )) {
 	

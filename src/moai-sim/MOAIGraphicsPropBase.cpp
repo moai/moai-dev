@@ -387,7 +387,7 @@ void MOAIGraphicsPropBase::SetVisible ( bool visible ) {
 void MOAIGraphicsPropBase::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
-	if ( this->GetWorldBoundsStatus () == ZLBounds::ZL_BOUNDS_EMPTY ) return;
+	if ( this->GetWorldBounds ().mStatus == ZLBounds::ZL_BOUNDS_EMPTY ) return;
 
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAIGraphicsPropBase >())) return;
@@ -408,22 +408,22 @@ void MOAIGraphicsPropBase::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	// TODO: check bounds status
 	
 	if ( debugLines.Bind ( DEBUG_DRAW_AXIS )) {
-		draw.DrawBoxAxis ( modelBounds );
+		draw.DrawBoxAxis ( modelBounds.mAABB );
 	}
 	
 	if ( debugLines.Bind ( DEBUG_DRAW_DIAGONALS )) {
-		draw.DrawBoxDiagonals ( modelBounds );
+		draw.DrawBoxDiagonals ( modelBounds.mAABB );
 	}
 	
 	if ( debugLines.Bind ( DEBUG_DRAW_MODEL_BOUNDS )) {
-		draw.DrawBoxOutline ( modelBounds );
+		draw.DrawBoxOutline ( modelBounds.mAABB );
 	}
 	
 	// clear out the world transform (draw in world space)
 	gfxState.SetVertexTransform ( MOAIGfxState::WORLD_TO_DISPLAY_MTX );
 	
 	if ( debugLines.Bind ( DEBUG_DRAW_WORLD_BOUNDS )) {
-		draw.DrawBoxOutline ( this->GetWorldBounds ());
+		draw.DrawBoxOutline ( this->GetWorldBounds ().mAABB );
 	}
 	
 	if ( debugLines.IsVisible ( DEBUG_DRAW_PARTITION_CELLS ) || debugLines.IsVisible ( DEBUG_DRAW_PARTITION_CELLS )) {

@@ -498,7 +498,7 @@ bool MOAIParticleSystem::PushSprite ( const AKUParticleSprite& sprite ) {
 		this->mSprites [ idx ] = sprite;
 		
 		// TODO: need to take rotation into account
-		ZLBox bounds = this->mDeck->GetBounds ( sprite.mGfxID );
+		ZLBox bounds = this->mDeck->GetBounds ( sprite.mGfxID ).mAABB;
 		
 		ZLVec3D offset ( sprite.mXLoc, sprite.mYLoc, 0.0 );
 		ZLVec3D scale ( sprite.mXScl, sprite.mYScl, 0.0 );

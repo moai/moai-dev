@@ -176,12 +176,11 @@ ZLBounds MOAIMetaTileDeck2D::MOAIDeck_ComputeMaxBounds () {
 		return ZLBounds::EMPTY;
 	}
 
-	ZLBounds bounds = this->GetBounds ( ZLIndexOp::ZERO );
-	for ( ZLIndex i = ZLIndexOp::ONE; i < this->mBrushes.Size (); ++i ) {
-		bounds.Grow ( this->GetBounds ( i ));
+	ZLBox aabb;
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mBrushes.Size (); ++i ) {
+		aabb.Grow ( this->GetBounds ( i ).mAABB, i == ZLIndexOp::ZERO );
 	}
-	bounds.UpdateStatus ();
-	return bounds;
+	return ZLBounds ( aabb );
 }
 
 //----------------------------------------------------------------//

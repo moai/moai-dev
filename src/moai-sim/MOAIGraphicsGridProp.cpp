@@ -174,7 +174,7 @@ void MOAIGraphicsGridProp::GetGridBoundsInView ( const ZLAffine3D& worldToLocalM
 		// TODO: need to take into account perspective and truncate rect based on horizon
 		// TODO: consider bringing back poly to tile scanline converter...
 
-		ZLRect deckBounds = this->mDeck->GetBounds ().GetRect ( ZLBox::PLANE_XY );
+		ZLRect deckBounds = this->mDeck->GetBounds ().mAABB.GetRect ( ZLBox::PLANE_XY );
 
 		this->mGrid->GetBoundsInRect ( viewRect, c0, c1, deckBounds );
 	}
@@ -310,17 +310,17 @@ void MOAIGraphicsGridProp::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionResu
 				ZLVec3D loc;
 				loc.Init ( grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER ));
 				
-				ZLBox bounds = this->mDeck->GetBounds ( ZLIndexCast ( idx ));
+				ZLBox bounds = this->mDeck->GetBounds ( ZLIndexCast ( idx )).mAABB;
 				bounds.Offset ( loc );
 				
 				mtx.Transform ( loc );
 				bounds.Transform ( mtx );
 				
-				buffer.PushResult ( *this, key, subPrimID, this->GetPriority (), loc, this->GetWorldBounds (), this->GetPiv ()); // TODO: should use tile bounds for expand mode
+				buffer.PushResult ( *this, key, subPrimID, this->GetPriority (), loc, bounds, this->GetPiv ());
 			}
 		}
 	}
 	else {
-		buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->GetPriority (), this->GetWorldLoc (), this->GetWorldBounds (), this->GetPiv ());
+		buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->GetPriority (), this->GetWorldLoc (), this->GetWorldBounds ().mAABB, this->GetPiv ());
 	}
 }

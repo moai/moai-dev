@@ -252,7 +252,7 @@ int MOAIMesh::_getPrimsForPoint ( lua_State* L ) {
 
 	u32 totalPrims = 0;
 
-	ZLBox meshBounds = self->GetBounds ();
+	ZLBox meshBounds = self->GetBounds ().mAABB;
 	if ((( is3D ) && meshBounds.Contains ( point )) || meshBounds.Contains ( point, ZLBox::PLANE_XY )) {
 		
 		if ( primReader.Init ( *self, ZLIndexOp::ZERO )) {
@@ -442,7 +442,7 @@ int MOAIMesh::_setBounds ( lua_State* L ) {
 	self->ClearBounds ();
 	
 	if ( state.CheckParams ( 2, "NNNNNN-" )) {
-		self->SetBounds ( state.GetValue < ZLBox >( 2, self->mBounds ));
+		self->SetBounds ( state.GetValue < ZLBox >( 2, ZLBox::EMPTY ));
 	}
 	return 0;
 }
@@ -681,13 +681,17 @@ void MOAIMesh::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer )
 	
 	if ( state.PushFieldWithType ( -1, "mBounds", LUA_TTABLE )) {
 		
-		this->mBounds.mMin.mX	= state.GetFieldValue < cc8*, float >( -1, "mMinX", 0 );
-		this->mBounds.mMin.mY	= state.GetFieldValue < cc8*, float >( -1, "mMinY", 0 );
-		this->mBounds.mMin.mZ	= state.GetFieldValue < cc8*, float >( -1, "mMinZ", 0 );
+		ZLBox aabb;
 		
-		this->mBounds.mMax.mX	= state.GetFieldValue < cc8*, float >( -1, "mMaxX", 0 );
-		this->mBounds.mMax.mY	= state.GetFieldValue < cc8*, float >( -1, "mMaxY", 0 );
-		this->mBounds.mMax.mZ	= state.GetFieldValue < cc8*, float >( -1, "mMaxZ", 0 );
+		aabb.mMin.mX	= state.GetFieldValue < cc8*, float >( -1, "mMinX", 0 );
+		aabb.mMin.mY	= state.GetFieldValue < cc8*, float >( -1, "mMinY", 0 );
+		aabb.mMin.mZ	= state.GetFieldValue < cc8*, float >( -1, "mMinZ", 0 );
+		
+		aabb.mMax.mX	= state.GetFieldValue < cc8*, float >( -1, "mMaxX", 0 );
+		aabb.mMax.mY	= state.GetFieldValue < cc8*, float >( -1, "mMaxY", 0 );
+		aabb.mMax.mZ	= state.GetFieldValue < cc8*, float >( -1, "mMaxZ", 0 );
+		
+		this->mBounds.Init ( aabb );
 		
 		this->mBounds.UpdateStatus ();
 		
@@ -710,13 +714,13 @@ void MOAIMesh::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) 
 	
 	lua_newtable ( state );
 	
-		state.SetField < cc8*, float >( -1, "mMinX", this->mBounds.mMin.mX );
-		state.SetField < cc8*, float >( -1, "mMinY", this->mBounds.mMin.mY );
-		state.SetField < cc8*, float >( -1, "mMinZ", this->mBounds.mMin.mZ );
+		state.SetField < cc8*, float >( -1, "mMinX", this->mBounds.mAABB.mMin.mX );
+		state.SetField < cc8*, float >( -1, "mMinY", this->mBounds.mAABB.mMin.mY );
+		state.SetField < cc8*, float >( -1, "mMinZ", this->mBounds.mAABB.mMin.mZ );
 	
-		state.SetField < cc8*, float >( -1, "mMaxX", this->mBounds.mMax.mX );
-		state.SetField < cc8*, float >( -1, "mMaxY", this->mBounds.mMax.mY );
-		state.SetField < cc8*, float >( -1, "mMaxZ", this->mBounds.mMax.mZ );
+		state.SetField < cc8*, float >( -1, "mMaxX", this->mBounds.mAABB.mMax.mX );
+		state.SetField < cc8*, float >( -1, "mMaxY", this->mBounds.mAABB.mMax.mY );
+		state.SetField < cc8*, float >( -1, "mMaxZ", this->mBounds.mAABB.mMax.mZ );
 	
 	lua_setfield ( state, -2, "mBounds" );
 	

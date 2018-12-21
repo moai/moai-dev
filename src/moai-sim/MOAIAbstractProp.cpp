@@ -43,15 +43,7 @@ int MOAIAbstractProp::_getModelBounds ( lua_State* L ) {
 	
 	ZLBounds bounds = self->GetModelBounds ();
 	if ( bounds.mStatus != ZLBounds::ZL_BOUNDS_OK ) return 0;
-
-	state.Push ( bounds.mMin.mX );
-	state.Push ( bounds.mMin.mY );
-	state.Push ( bounds.mMin.mZ );
-	
-	state.Push ( bounds.mMax.mX );
-	state.Push ( bounds.mMax.mY );
-	state.Push ( bounds.mMax.mZ );
-
+	state.Push ( bounds.mAABB );
 	return 6;
 }
 
@@ -70,9 +62,9 @@ int MOAIAbstractProp::_getModelBoundsSize ( lua_State* L ) {
 	ZLBounds bounds = self->GetModelBounds ();
 	if ( bounds.mStatus != ZLBounds::ZL_BOUNDS_OK ) return 0;
 	
-	state.Push ( bounds.mMax.mX - bounds.mMin.mX );
-	state.Push ( bounds.mMax.mY - bounds.mMin.mY );
-	state.Push ( bounds.mMax.mZ - bounds.mMin.mZ );
+	state.Push ( bounds.mAABB.mMax.mX - bounds.mAABB.mMin.mX );
+	state.Push ( bounds.mAABB.mMax.mY - bounds.mAABB.mMin.mY );
+	state.Push ( bounds.mAABB.mMax.mZ - bounds.mAABB.mMin.mZ );
 	
 	return 3;
 }
@@ -191,7 +183,7 @@ ZLBounds MOAIAbstractProp::GetModelBounds () {
 	}
 	
 	if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) {
-		bounds.Pad ( this->mModelBoundsPad.mX, this->mModelBoundsPad.mY, this->mModelBoundsPad.mZ );
+		bounds.mAABB.Pad ( this->mModelBoundsPad.mX, this->mModelBoundsPad.mY, this->mModelBoundsPad.mZ );
 	}
 
 	return bounds;
@@ -205,15 +197,15 @@ bool MOAIAbstractProp::InsideModelBounds ( const ZLVec3D& vec, float pad ) {
 	if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_EMPTY ) return false;
 	if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_GLOBAL ) return true;
 	
-	bounds.Inflate ( pad );
-	bounds.Bless ();
-	return bounds.Contains ( vec );
+	bounds.mAABB.Inflate ( pad );
+	bounds.mAABB.Bless ();
+	return bounds.mAABB.Contains ( vec );
 }
 
 //----------------------------------------------------------------//
 MOAIAbstractProp::MOAIAbstractProp () :
 		mFlags ( 0 ),
-		mModelBoundsOverride ( ZLBounds::EMPTY ),
+		mModelBoundsOverride ( ZLBox::EMPTY ),
 		mModelBoundsPad ( ZLVec3D::ORIGIN ) {
 	
 	RTTI_BEGIN
@@ -290,15 +282,22 @@ void MOAIAbstractProp::MOAINode_Update () {
 	
 	// update the prop location in the partition
 	if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) {
-		bounds.Transform ( this->mLocalToWorldMtx );
+	
+		ZLPrism obb = bounds.mOBB;
+		obb.Transform ( this->mLocalToWorldMtx );
+	
+		bounds.Init ( obb );
+		this->UpdateWorldBounds ( bounds );
 	}
-	this->UpdateWorldBounds ( bounds );
+	else {
+		this->UpdateWorldBounds ( ZLBounds::EMPTY );
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractProp::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionResultBuffer& buffer, u32 key ) {
 
-	buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->GetPriority (), this->GetWorldLoc (), this->GetWorldBounds (), this->GetPiv ());
+	buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->GetPriority (), this->GetWorldLoc (), this->GetWorldBounds ().mAABB, this->GetPiv ());
 }
 
 //----------------------------------------------------------------//

@@ -79,16 +79,7 @@ int MOAIPartitionHull::_getWorldBounds ( lua_State* L ) {
 	if ( self->mPartition->IsGlobal ( *self )) return 0;
 	if ( self->mPartition->IsEmpty ( *self )) return 0;
 	
-	ZLBox bounds = self->mWorldBounds;
-
-	state.Push ( bounds.mMin.mX );
-	state.Push ( bounds.mMin.mY );
-	state.Push ( bounds.mMin.mZ );
-	
-	state.Push ( bounds.mMax.mX );
-	state.Push ( bounds.mMax.mY );
-	state.Push ( bounds.mMax.mZ );
-
+	state.Push ( self->mWorldBounds.mAABB );
 	return 6;
 }
 
@@ -103,7 +94,7 @@ int MOAIPartitionHull::_getWorldBoundsCenter ( lua_State* L ) {
 	if ( self->mPartition->IsEmpty ( *self )) return 0;
 	
 	ZLVec3D center;
-	self->mWorldBounds.GetCenter ( center );
+	self->mWorldBounds.mAABB.GetCenter ( center );
 
 	state.Push ( center );
 	return 3;
@@ -260,7 +251,7 @@ bool MOAIPartitionHull::GetCellRect ( ZLRect* cellRect, ZLRect* paddedRect ) {
 	if ( this->mLevel ) {
 	
 		ZLVec3D center;
-		this->mWorldBounds.GetCenter ( center );
+		this->mWorldBounds.mAABB.GetCenter ( center );
 		
 		MOAICellCoord coord = this->mLevel->mGridSpace.GetCellCoord ( center.mX, center.mY );
 		ZLRect rect = this->mLevel->mGridSpace.GetCellRect ( coord );
@@ -380,7 +371,7 @@ void MOAIPartitionHull::SetPartition ( MOAIPartition* partition ) {
 void MOAIPartitionHull::UpdateWorldBounds ( const ZLBounds& bounds ) {
 
 	MOAIPartitionCell* prevCell = this->mCell;
-	ZLBox prevBounds = this->mWorldBounds;
+	ZLBox prevBounds = this->mWorldBounds.mAABB;
 
 	this->mWorldBounds = bounds;
 
@@ -392,7 +383,7 @@ void MOAIPartitionHull::UpdateWorldBounds ( const ZLBounds& bounds ) {
 		
 		this->mPartition->UpdateHull ( *this );
 		
-		if (( prevCell != this->mCell ) || ( !prevBounds.IsSame ( this->mWorldBounds ))) {
+		if (( prevCell != this->mCell ) || ( !prevBounds.IsSame ( this->mWorldBounds.mAABB ))) {
 			this->BoundsDidChange ();
 		}
 	}
@@ -420,7 +411,7 @@ bool MOAIPartitionHull::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute&
 				return true;
 			
 			case ATTR_WORLD_BOUNDS_TRAIT:
-				attr.ApplyVariantNoAdd < ZLBounds >( this->mWorldBounds, op, MOAIAttribute::ATTR_READ );
+				attr.ApplyVariantNoAdd < const ZLBounds* >( &this->mWorldBounds, op, MOAIAttribute::ATTR_READ );
 				return true;
 		}
 	}
@@ -431,9 +422,9 @@ bool MOAIPartitionHull::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute&
 void MOAIPartitionHull::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionResultBuffer& buffer, u32 key ) {
 
 	ZLVec3D center;
-	this->mWorldBounds.GetCenter ( center );
+	this->mWorldBounds.mAABB.GetCenter ( center );
 
-	buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->GetPriority (), center, this->GetWorldBounds (), ZLVec3D::ORIGIN );
+	buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->GetPriority (), center, this->mWorldBounds.mAABB, ZLVec3D::ORIGIN );
 }
 
 //----------------------------------------------------------------//
@@ -448,9 +439,9 @@ bool MOAIPartitionHull::MOAIPartitionHull_Inside ( ZLVec3D vec, float pad ) {
 	if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_EMPTY ) return false;
 	if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_GLOBAL ) return true;
 	
-	bounds.Inflate ( pad );
-	bounds.Bless ();
-	return bounds.Contains ( vec );
+	bounds.mAABB.Inflate ( pad );
+	bounds.mAABB.Bless ();
+	return bounds.mAABB.Contains ( vec );
 }
 
 //----------------------------------------------------------------//

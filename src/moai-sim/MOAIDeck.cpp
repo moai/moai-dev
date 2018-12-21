@@ -65,11 +65,10 @@ int MOAIDeck::_getBounds ( lua_State* L ) {
 	if ( state.IsType ( 2, LUA_TNUMBER )) {
 	
 		ZLIndex idx = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-		box = self->GetBounds ( idx );
+		box = self->GetBounds ( idx ).mAABB;
 	}
 	else {
-	
-		box = self->GetBounds ();
+		box = self->GetBounds ().mAABB;
 	}
 	
 	state.Push ( box );
@@ -196,7 +195,7 @@ bool MOAIDeck::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec2D& vec, u32 granulari
 	UNUSED ( granularity );
 	
 	ZLBounds bounds = this->GetBounds ( idx );
-	return (( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) && bounds.Contains ( ZLVec3D ( vec.mY, vec.mY, 0.0f ), ZLBox::PLANE_XY ));
+	return (( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) && bounds.mAABB.Contains ( ZLVec3D ( vec.mY, vec.mY, 0.0f ), ZLBox::PLANE_XY ));
 }
 
 //----------------------------------------------------------------//
@@ -205,5 +204,5 @@ bool MOAIDeck::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 granulari
 	UNUSED ( granularity );
 	
 	ZLBounds bounds = this->GetBounds ( idx );
-	return (( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) && bounds.Contains ( vec ));
+	return (( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) && bounds.mAABB.Contains ( vec ));
 }

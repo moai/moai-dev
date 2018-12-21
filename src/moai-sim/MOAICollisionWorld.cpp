@@ -196,12 +196,12 @@ void MOAICollisionWorld::DoCallback ( u32 eventID, MOAICollisionProp& prop0, MOA
 		
 		if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) {
 		
-			state.Push ( bounds.mMin.mX );
-			state.Push ( bounds.mMin.mY );
-			state.Push ( bounds.mMin.mZ );
-			state.Push ( bounds.mMax.mX );
-			state.Push ( bounds.mMax.mY );
-			state.Push ( bounds.mMax.mZ );
+			state.Push ( bounds.mAABB.mMin.mX );
+			state.Push ( bounds.mAABB.mMin.mY );
+			state.Push ( bounds.mAABB.mMin.mZ );
+			state.Push ( bounds.mAABB.mMax.mX );
+			state.Push ( bounds.mAABB.mMax.mY );
+			state.Push ( bounds.mAABB.mMax.mZ );
 			
 			state.DebugCall ( 9, 0 );
 		}
@@ -314,7 +314,7 @@ void MOAICollisionWorld::ProcessOverlaps () {
 		MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
 		MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
 
-		u32 totalResults = this->GatherHulls ( buffer, &prop, prop.GetWorldBounds (), interfaceMask );
+		u32 totalResults = this->GatherHulls ( buffer, &prop, prop.GetWorldBounds ().mAABB, interfaceMask );
 		
 		for ( u32 i = 0; i < totalResults; ++i ) {
 		

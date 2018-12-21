@@ -15,7 +15,9 @@ class ZLBox;
 // ZLPrism
 //================================================================//
 class ZLPrism {
-	public:
+public:
+
+	static const ZLPrism EMPTY;
 
 	ZLVec3D		mLoc;
 	ZLVec3D		mXAxis;
@@ -28,6 +30,8 @@ class ZLPrism {
 	void	Init		( const ZLBox& box );
 	void	Transform	( const ZLAffine3D& mtx );
 	void	Transform	( const ZLMatrix4x4& mtx );
+			ZLPrism		();
+			ZLPrism		( const ZLBox& box );
 };
 
 #endif

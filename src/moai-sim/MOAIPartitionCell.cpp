@@ -60,7 +60,7 @@ void MOAIPartitionCell::GatherHulls ( MOAIPartitionResultBuffer& results, const 
 		MOAIPartitionHull* hull = propIt->Data ();
 		
 		if (( hull != ignore ) && ( hull->mInterfaceMask & interfaceMask ) && ( hull->mQueryMask & queryMask )) {
-			if ( hull->mWorldBounds.Contains ( point )) {
+			if ( hull->mWorldBounds.mAABB.Contains ( point )) {
 				if ( hull->Inside ( point, 0.0f )) {
 					hull->AddToSortBuffer ( results );
 				}
@@ -77,7 +77,7 @@ void MOAIPartitionCell::GatherHulls ( MOAIPartitionResultBuffer& results, const 
 		
 		float t;
 		if (( hull != ignore ) && ( hull->mInterfaceMask & interfaceMask ) && ( hull->mQueryMask & queryMask )) {
-			if ( !ZLSect::RayToBox( hull->mWorldBounds, point, orientation, t )) {
+			if ( !ZLSect::RayToBox( hull->mWorldBounds.mAABB, point, orientation, t )) {
 				hull->AddToSortBuffer ( results, ZLFloat::FloatToIntKey ( t ));
 			}
 		}
@@ -92,7 +92,7 @@ void MOAIPartitionCell::GatherHulls ( MOAIPartitionResultBuffer& results, const 
 		MOAIPartitionHull* hull = propIt->Data ();
 		
 		if (( hull != ignore ) && ( hull->mInterfaceMask & interfaceMask ) && ( hull->mQueryMask & queryMask )) {
-			ZLRect bounds = hull->mWorldBounds.GetRect ( ZLBox::PLANE_XY );
+			ZLRect bounds = hull->mWorldBounds.mAABB.GetRect ( ZLBox::PLANE_XY );
 			if ( bounds.Overlap ( rect )) {
 				hull->AddToSortBuffer ( results );
 			}
@@ -108,7 +108,7 @@ void MOAIPartitionCell::GatherHulls ( MOAIPartitionResultBuffer& results, const 
 		MOAIPartitionHull* hull = propIt->Data ();
 		
 		if (( hull != ignore ) && ( hull->mInterfaceMask & interfaceMask ) && ( hull->mQueryMask & queryMask )) {
-			if ( hull->mWorldBounds.Overlap ( box )) {
+			if ( hull->mWorldBounds.mAABB.Overlap ( box )) {
 				hull->AddToSortBuffer ( results );
 			}
 		}
@@ -123,7 +123,7 @@ void MOAIPartitionCell::GatherHulls ( MOAIPartitionResultBuffer& results, const 
 		MOAIPartitionHull* hull = propIt->Data ();
 		
 		if (( hull != ignore ) && ( hull->mInterfaceMask & interfaceMask ) && ( hull->mQueryMask & queryMask )) {
-			if ( !frustum.Cull ( hull->mWorldBounds )) {
+			if ( !frustum.Cull ( hull->mWorldBounds.mAABB )) {
 				hull->AddToSortBuffer ( results );
 			}
 		}

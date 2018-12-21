@@ -264,7 +264,7 @@ void MOAICollisionProp::Move ( ZLVec3D move, u32 detach, u32 maxSteps ) {
 			const MOAIMoveConstraint2D* bestPullContact = 0;
 		
 			// find contacts
-			ZLBox worldBounds = this->GetWorldBounds ();
+			ZLBox worldBounds = this->GetWorldBounds ().mAABB;
 			worldBounds.Inflate ( moveLength * 1.5f ); // TODO: epsilon
 		
 			contactAccumulator.Reset ();
@@ -375,7 +375,7 @@ void MOAICollisionProp::Move ( ZLVec3D move, u32 detach, u32 maxSteps ) {
 	
 	// resolve overlaps
 	MOAIOverlapResolver overlapResolver;
-	this->GatherAndProcess ( overlapResolver, this->GetWorldBounds ());
+	this->GatherAndProcess ( overlapResolver, this->GetWorldBounds ().mAABB );
 	
 	ZLVec3D resolveOverlaps = overlapResolver.GetResult ();
 	
@@ -388,7 +388,7 @@ void MOAICollisionProp::Move ( ZLVec3D move, u32 detach, u32 maxSteps ) {
 
 		if ( move.LengthSqrd () && this->mCollisionWorld ) {
 			
-			ZLRect worldRect = this->GetWorldBounds ().GetRect ();
+			ZLRect worldRect = this->GetWorldBounds ().mAABB.GetRect ();
 			float width = worldRect.Width ();
 			float height = worldRect.Height ();
 			
@@ -500,7 +500,7 @@ void MOAICollisionProp::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 
 	if ( debugLines.Bind ( MOAICollisionProp::DEBUG_DRAW_COLLISION_WORLD_BOUNDS )) {
 		gfxState.SetVertexTransform ( MOAIGfxState::WORLD_TO_CLIP_MTX );
-		draw.DrawBoxOutline ( this->GetWorldBounds ());
+		draw.DrawBoxOutline ( this->GetWorldBounds ().mAABB );
 	}
 	
 	MOAICollisionShape* shape = this->GetCollisionShape ();
@@ -543,7 +543,7 @@ void MOAICollisionProp::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 		}
 		else {
 			gfxState.SetVertexTransform ( MOAIGfxState::WORLD_TO_CLIP_MTX );
-			draw.DrawBoxOutline ( this->GetWorldBounds ());
+			draw.DrawBoxOutline ( this->GetWorldBounds ().mAABB );
 		}
 	}
 	
@@ -555,7 +555,7 @@ void MOAICollisionProp::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 		for ( ; overlapLinkIt; overlapLinkIt = overlapLinkIt->mNext ) {
 			const ZLBounds& bounds = overlapLinkIt->mOverlap->mBounds;
 			if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) {
-				draw.DrawBoxOutline ( bounds );
+				draw.DrawBoxOutline ( bounds.mAABB );
 			}
 		}
 	}
@@ -566,9 +566,7 @@ ZLBounds MOAICollisionProp::MOAIAbstractProp_GetModelBounds () {
 
 	MOAICollisionShape* shape = this->GetCollisionShape ();
 	if ( shape ) {
-		ZLBounds bounds;
-		bounds.Init ( shape->GetBounds ());
-		return bounds;
+		return shape->GetBounds ();
 	}
 	return ZLBounds::EMPTY;
 }

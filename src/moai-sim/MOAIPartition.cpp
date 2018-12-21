@@ -772,7 +772,7 @@ void MOAIPartition::UpdateHull ( MOAIPartitionHull& hull ) {
 		return;
 	}
 
-	ZLRect rect = hull.mWorldBounds.GetRect ( this->mPlaneID );
+	ZLRect rect = hull.mWorldBounds.mAABB.GetRect ( this->mPlaneID );
 
 	float width = rect.Width ();
 	float height = rect.Height ();

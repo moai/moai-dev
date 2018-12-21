@@ -9,6 +9,8 @@
 // ZLPrism
 //================================================================//
 
+const ZLPrism ZLPrism::EMPTY ( ZLBox::EMPTY );
+
 //----------------------------------------------------------------//
 void ZLPrism::GetAABB ( ZLBox& box ) const {
 
@@ -81,4 +83,13 @@ void ZLPrism::Transform ( const ZLMatrix4x4& mtx ) {
 	mtx.TransformVec ( mXAxis );
 	mtx.TransformVec ( mYAxis );
 	mtx.TransformVec ( mZAxis );
+}
+
+//----------------------------------------------------------------//
+ZLPrism::ZLPrism () {
+}
+
+//----------------------------------------------------------------//
+ZLPrism::ZLPrism ( const ZLBox& box ) {
+	this->Init ( box );
 }
