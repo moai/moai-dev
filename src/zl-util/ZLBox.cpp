@@ -3,7 +3,9 @@
 
 #include "pch.h"
 #include <float.h>
+
 #include <zl-util/ZLBox.h>
+#include <zl-util/ZLBoxCorners.h>
 #include <zl-util/ZLPrism.h>
 
 //================================================================//
@@ -267,6 +269,19 @@ void ZLBox::Init ( const ZLBox& box ) {
 }
 
 //----------------------------------------------------------------//
+void ZLBox::Init ( const ZLBoxCorners& corners ) {
+
+	this->Init ( corners.mPoints [ ZLBoxCorners::MIN_LT_POINT ]);
+	this->Grow ( corners.mPoints [ ZLBoxCorners::MIN_RT_POINT ]);
+	this->Grow ( corners.mPoints [ ZLBoxCorners::MIN_RB_POINT ]);
+	this->Grow ( corners.mPoints [ ZLBoxCorners::MIN_LB_POINT ]);
+	this->Grow ( corners.mPoints [ ZLBoxCorners::MAX_LT_POINT ]);
+	this->Grow ( corners.mPoints [ ZLBoxCorners::MAX_RT_POINT ]);
+	this->Grow ( corners.mPoints [ ZLBoxCorners::MAX_RB_POINT ]);
+	this->Grow ( corners.mPoints [ ZLBoxCorners::MAX_LB_POINT ]);
+}
+
+//----------------------------------------------------------------//
 void ZLBox::Init ( const ZLPrism& prism ) {
 	
 	this->mMin = prism.mLoc;
@@ -306,9 +321,7 @@ void ZLBox::Init ( const ZLPrism& prism ) {
 //----------------------------------------------------------------//
 void ZLBox::Init ( const ZLVec3D& vec ) {
 
-	mMin.mX = mMax.mX = vec.mX;
-	mMin.mY = mMax.mY = vec.mY;
-	mMin.mZ = mMax.mZ = vec.mZ;
+	mMin = mMax = vec;
 }
 
 //----------------------------------------------------------------//
@@ -442,16 +455,6 @@ void ZLBox::Pad ( float xPad, float yPad, float zPad ) {
 }
 
 //----------------------------------------------------------------//
-void ZLBox::Project ( const ZLMatrix4x4& mtx ) {
-
-	ZLPrism prism;
-	prism.Init ( *this );
-	prism.Project ( mtx );
-	
-	this->Init ( prism );
-}
-
-//----------------------------------------------------------------//
 void ZLBox::Scale ( float scale ) {
 
 	mMin.mX *= scale;
@@ -495,4 +498,38 @@ void ZLBox::Transform ( const ZLMatrix4x4& mtx ) {
 	prism.Transform ( mtx );
 	
 	this->Init ( prism );
+}
+
+//----------------------------------------------------------------//
+ZLBox::ZLBox () {
+}
+
+//----------------------------------------------------------------//
+ZLBox::ZLBox ( const ZLBox& box ) {
+	this->Init ( box );
+}
+
+//----------------------------------------------------------------//
+ZLBox::ZLBox ( const ZLBoxCorners& corners ) {
+	this->Init ( corners );
+}
+
+//----------------------------------------------------------------//
+ZLBox::ZLBox ( const ZLPrism& prism ) {
+	this->Init ( prism );
+}
+
+//----------------------------------------------------------------//
+ZLBox::ZLBox ( const ZLVec3D& vec ) {
+	this->Init ( vec );
+}
+
+//----------------------------------------------------------------//
+ZLBox::ZLBox ( const ZLRect& rect, u32 plane, ZLReal back, ZLReal front ) {
+	this->Init ( rect, plane, back, front );
+}
+
+//----------------------------------------------------------------//
+ZLBox::ZLBox ( ZLReal left, ZLReal top, ZLReal right, ZLReal bottom, ZLReal back, ZLReal front ) {
+	this->Init ( left, top, right, bottom, back, front );
 }

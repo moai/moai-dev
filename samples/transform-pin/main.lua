@@ -53,4 +53,3 @@ pin = MOAIProp.new ()
 pin:setDeck ( gfxQuad )
 pin:setAttrLink ( MOAIProp.INHERIT_LOC, pinTransform, MOAIProp.TRANSFORM_TRAIT )
 pin:setPartition ( hudLayer )
-

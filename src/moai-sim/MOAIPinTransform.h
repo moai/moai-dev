@@ -45,7 +45,7 @@ public:
 		ATTR_INHERIT_WORLD_BOUNDS,
 		TOTAL_ATTR,
 	};
-		
+	
 	//----------------------------------------------------------------//
 					MOAIPinTransform			();
 					~MOAIPinTransform			();

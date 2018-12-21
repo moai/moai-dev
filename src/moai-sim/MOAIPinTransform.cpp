@@ -26,7 +26,7 @@ int MOAIPinTransform::_getWorldBounds ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPinTransform, "U" )
 	
 	self->ForceUpdate ();
-	if ( self->mWorldBounds.IsOK ()) return 0;
+	if ( !self->mWorldBounds.IsOK ()) return 0;
 	state.Push (( ZLBox )self->mWorldBounds );
 
 	return 6;
@@ -38,7 +38,7 @@ int MOAIPinTransform::_getWorldBoundsCenter ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPinTransform, "U" )
 	
 	self->ForceUpdate ();
-	if ( self->mWorldBounds.IsOK ()) return 0;
+	if ( !self->mWorldBounds.IsOK ()) return 0;
 	
 	ZLVec3D center;
 	self->mWorldBounds.GetCenter ( center );
@@ -107,7 +107,9 @@ void MOAIPinTransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAITransform::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
-		{ "init",				_init },
+		{ "getWorldBounds",				_getWorldBounds },
+		{ "getWorldBoundsCenter",		_getWorldBoundsCenter },
+		{ "init",						_init },
 		{ NULL, NULL }
 	};
 	
@@ -149,10 +151,15 @@ void MOAIPinTransform::MOAINode_Update () {
 	
 	MOAIAttribute attr;
 	if ( this->PullLinkedAttr ( AttrID::Pack ( ATTR_INHERIT_WORLD_BOUNDS ), attr )) {
-		this->mWorldBounds = attr.GetVariant < ZLBounds >( ZLBounds::EMPTY );
-		if ( this->mWorldBounds.IsOK ()) {
-			this->mWorldBounds.Project ( worldToWndMtx );
-			this->mWorldBounds.Transform ( wndToWorldMtx );
+	
+		this->mWorldBounds = ZLBounds::EMPTY;
+	
+		ZLBounds bounds = attr.GetVariant < ZLBounds >( ZLBounds::EMPTY );
+		if ( bounds.IsOK ()) {
+			ZLBoxCorners corners ( bounds );
+			corners.Project ( worldToWndMtx );
+			corners.Transform ( wndToWorldMtx );
+			this->mWorldBounds.Init ( ZLBox ( corners ));
 		}
 	}
 	

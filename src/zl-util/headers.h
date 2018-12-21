@@ -25,6 +25,7 @@
 #include <zl-util/ZLBitBuffer.h>
 #include <zl-util/ZLBounds.h>
 #include <zl-util/ZLBox.h>
+#include <zl-util/ZLBoxCorners.h>
 #include <zl-util/ZLByteStream.h>
 #include <zl-util/ZLCgt.h>
 #include <zl-util/ZLCircle.h>

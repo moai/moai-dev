@@ -3746,6 +3746,10 @@
 		CDCE61561DFB78B50088B2AB /* ZLThreadLocalPtr_pthreads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCE61541DFB78B50088B2AB /* ZLThreadLocalPtr_pthreads.cpp */; };
 		CDCE61581DFB79C30088B2AB /* ZLThreadLocalPtr_windows.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCE61571DFB79C30088B2AB /* ZLThreadLocalPtr_windows.cpp */; };
 		CDCE61591DFB79C30088B2AB /* ZLThreadLocalPtr_windows.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCE61571DFB79C30088B2AB /* ZLThreadLocalPtr_windows.cpp */; };
+		CDCEFAEF21CCDE5D00A16B7F /* ZLBoxCorners.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCEFAED21CCDE5D00A16B7F /* ZLBoxCorners.cpp */; };
+		CDCEFAF021CCDE5D00A16B7F /* ZLBoxCorners.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCEFAED21CCDE5D00A16B7F /* ZLBoxCorners.cpp */; };
+		CDCEFAF121CCDE5D00A16B7F /* ZLBoxCorners.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCEFAEE21CCDE5D00A16B7F /* ZLBoxCorners.h */; };
+		CDCEFAF221CCDE5D00A16B7F /* ZLBoxCorners.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCEFAEE21CCDE5D00A16B7F /* ZLBoxCorners.h */; };
 		CDD06DB01398838D00AB0420 /* auxiliar.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D8E1398838D00AB0420 /* auxiliar.c */; };
 		CDD06DB11398838D00AB0420 /* auxiliar.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D8F1398838D00AB0420 /* auxiliar.h */; };
 		CDD06DB21398838D00AB0420 /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D901398838D00AB0420 /* buffer.c */; };
@@ -7184,6 +7188,8 @@
 		CDCDE224204F66C4005CD590 /* MOAICanary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICanary.cpp; sourceTree = "<group>"; };
 		CDCE61541DFB78B50088B2AB /* ZLThreadLocalPtr_pthreads.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLThreadLocalPtr_pthreads.cpp; sourceTree = "<group>"; };
 		CDCE61571DFB79C30088B2AB /* ZLThreadLocalPtr_windows.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLThreadLocalPtr_windows.cpp; sourceTree = "<group>"; };
+		CDCEFAED21CCDE5D00A16B7F /* ZLBoxCorners.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLBoxCorners.cpp; sourceTree = "<group>"; };
+		CDCEFAEE21CCDE5D00A16B7F /* ZLBoxCorners.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLBoxCorners.h; sourceTree = "<group>"; };
 		CDD06BD01398822500AB0420 /* libmoai-ios-luaext.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-luaext.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD06D87139882D900AB0420 /* libmoai-osx-luaext.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-luaext.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD06D8E1398838D00AB0420 /* auxiliar.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = auxiliar.c; path = "../../3rdparty/luasocket-2.0.2/src/auxiliar.c"; sourceTree = SOURCE_ROOT; };
@@ -9265,6 +9271,8 @@
 				CD1D85DC1E1F06CA0089FFAD /* ZLBounds.h */,
 				89BE68AA173974FC00DFE837 /* ZLBox.cpp */,
 				89BE68AB173974FC00DFE837 /* ZLBox.h */,
+				CDCEFAED21CCDE5D00A16B7F /* ZLBoxCorners.cpp */,
+				CDCEFAEE21CCDE5D00A16B7F /* ZLBoxCorners.h */,
 				CD1D85D21E1CCCF30089FFAD /* ZLCircle.h */,
 				CDD5D6991C260DFD0070237E /* ZLCubicBezier2D.cpp */,
 				CDD5D69A1C260DFD0070237E /* ZLCubicBezier2D.h */,
@@ -13707,6 +13715,7 @@
 				CD2FB1E71C473B72005F8D8D /* ZLGfxRetained.h in Headers */,
 				CDE440141AC0D27600C745DB /* ZLFrustum.h in Headers */,
 				89BE696D173974FD00DFE837 /* ZLAccessors.h in Headers */,
+				CDCEFAF121CCDE5D00A16B7F /* ZLBoxCorners.h in Headers */,
 				89BE696F173974FD00DFE837 /* ZLAdapterInfo.h in Headers */,
 				CD6891CB1DC93D510086B16B /* ZLRtti.h in Headers */,
 				CDEEC77D1C7BCEDC0014CC3F /* ZLResult.h in Headers */,
@@ -13919,6 +13928,7 @@
 				CD2FB1AC1C473AC4005F8D8D /* ZLRefCountedObject.h in Headers */,
 				89BE6A4E173974FD00DFE837 /* ZLRect.h in Headers */,
 				89BE6A52173974FD00DFE837 /* ZLRhombus.h in Headers */,
+				CDCEFAF221CCDE5D00A16B7F /* ZLBoxCorners.h in Headers */,
 				89BE6A56173974FD00DFE837 /* ZLStream.h in Headers */,
 				89BE6A5A173974FD00DFE837 /* ZLStreamAdapter.h in Headers */,
 				89BE6A62173974FD00DFE837 /* ZLSurface2D.h in Headers */,
@@ -17192,6 +17202,7 @@
 			files = (
 				89BE694F173974FD00DFE837 /* pch.cpp in Sources */,
 				89BE695B173974FD00DFE837 /* pch.cpp in Sources */,
+				CDCEFAEF21CCDE5D00A16B7F /* ZLBoxCorners.cpp in Sources */,
 				89BE6969173974FD00DFE837 /* STLString.cpp in Sources */,
 				89BE6971173974FD00DFE837 /* ZLAdapterInfo_posix.cpp in Sources */,
 				89BE6973173974FD00DFE837 /* ZLAdapterInfo_win32.cpp in Sources */,
@@ -17276,6 +17287,7 @@
 			files = (
 				89BE6950173974FD00DFE837 /* pch.cpp in Sources */,
 				89BE695C173974FD00DFE837 /* pch.cpp in Sources */,
+				CDCEFAF021CCDE5D00A16B7F /* ZLBoxCorners.cpp in Sources */,
 				89BE696A173974FD00DFE837 /* STLString.cpp in Sources */,
 				89BE6972173974FD00DFE837 /* ZLAdapterInfo_posix.cpp in Sources */,
 				89BE6974173974FD00DFE837 /* ZLAdapterInfo_win32.cpp in Sources */,
