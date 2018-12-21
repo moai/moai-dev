@@ -25,7 +25,7 @@ public:
 
 	//----------------------------------------------------------------//
 	bool			Contains			( ZLReal x, ZLReal y ) const;
-	ZLRect			GetBounds			() const;
+	ZLRect			GetFrame			() const;
 	ZLPlane2D		GetPlane			( u32 id );
 	ZLVec2D			GetVert				( u32 id );
 	void			Init				( const ZLRect& rect );

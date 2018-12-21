@@ -211,8 +211,8 @@ int MOAITextLabel::_getText ( lua_State* L ) {
 int MOAITextLabel::_getTextBounds ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 	
-	ZLRect rect;
-	bool hasRect = false;
+	ZLRect frame;
+	bool hasFrame = false;
 	
 	self->Refresh ();
 	
@@ -221,22 +221,16 @@ int MOAITextLabel::_getTextBounds ( lua_State* L ) {
 		u32 index	= state.GetValue < u32 >( 2, 1 ) - 1;
 		u32 size	= state.GetValue < u32 >( 3, 0 );
 		
-		hasRect = self->mLayout.GetBoundsForRange ( index, size, rect );
+		hasFrame = self->mLayout.GetFrameForRange ( index, size, frame );
 	}
 	else {
-		rect = self->mLayout.GetLayoutBounds ();
-		hasRect = true;
+		frame = self->mLayout.GetLayoutFrame ();
+		hasFrame = true;
 	}
 	
-	if ( hasRect ) {
-	
-		rect.Bless ();
-			
-		lua_pushnumber ( state, rect.mXMin );
-		lua_pushnumber ( state, rect.mYMin );
-		lua_pushnumber ( state, rect.mXMax );
-		lua_pushnumber ( state, rect.mYMax );
-		
+	if ( hasFrame ) {
+		frame.Bless ();
+		state.Push ( frame );
 		return 4;
 	}
 	return 0;
@@ -386,11 +380,11 @@ int MOAITextLabel::_setBounds ( lua_State* L ) {
 
 	if ( state.CheckParams ( 2, "NNNNNN", false )) {
 
-		ZLBox bounds = state.GetBox ( 2 );
-		bounds.Bless ();
+		ZLBox aabb = state.GetBox ( 2 );
+		aabb.Bless ();
 		
 		ZLRect frame;
-		frame = bounds.GetRect ( ZLBox::PLANE_XY );
+		frame = aabb.GetRect ( ZLBox::PLANE_XY );
 		
 		self->mLayoutRules.SetFrame ( frame );
 		self->mLayoutRules.SetLimitWidth ( true );
@@ -1186,14 +1180,14 @@ void MOAITextLabel::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( draw ); // mystery warning in vs2008
 	draw.Bind ();
 	
-	if (( this->mLayout.mLayoutBounds.Area () > 0.0f ) && debugLines.Bind ( DEBUG_DRAW_TEXT_LABEL_LAYOUT_BOUNDS )) {
+	if (( this->mLayout.mLayoutFrame.Area () > 0.0f ) && debugLines.Bind ( DEBUG_DRAW_TEXT_LABEL_LAYOUT_BOUNDS )) {
 		
-		draw.DrawRectOutline ( this->mLayout.mLayoutBounds );
+		draw.DrawRectOutline ( this->mLayout.mLayoutFrame );
 	}
 	
-	if (( this->mLayout.mGlyphBounds.Area () > 0.0f ) && debugLines.Bind ( DEBUG_DRAW_TEXT_LABEL_GLYPH_BOUNDS )) {
+	if (( this->mLayout.mGlyphFrame.Area () > 0.0f ) && debugLines.Bind ( DEBUG_DRAW_TEXT_LABEL_GLYPH_BOUNDS )) {
 		
-		draw.DrawRectOutline ( this->mLayout.mGlyphBounds );
+		draw.DrawRectOutline ( this->mLayout.mGlyphFrame );
 	}
 	
 	ZLRect frame = this->mLayoutRules.GetFrame ();
@@ -1241,7 +1235,7 @@ ZLBounds MOAITextLabel::MOAIAbstractProp_GetModelBounds () {
 	ZLBounds bounds = ZLBounds::EMPTY;
 
 	ZLRect textBounds; // the tight fitting bounds of the text (if any: may be empty)
-	bool hasBounds = this->mLayout.GetBounds ( textBounds );
+	bool hasBounds = this->mLayout.GetFrame ( textBounds );
 	
 	ZLRect textFrame = this->mLayoutRules.GetFrame ();
 	bool limitWidth = this->mLayoutRules.GetLimitWidth ();
@@ -1310,13 +1304,13 @@ ZLMatrix4x4 MOAITextLabel::MOAIGraphicsPropBase_GetWorldDrawingMtx () {
 			
 			// if there's no x-axis constraint, flip inside the glyph rect
 			if ( !this->mLayoutRules.GetLimitWidth ()) {
-				float xOffset = this->mLayout.mGlyphBounds.mXMin + this->mLayout.mGlyphBounds.mXMax;
+				float xOffset = this->mLayout.mGlyphFrame.mXMin + this->mLayout.mGlyphFrame.mXMax;
 				flip.m [ ZLMatrix4x4::C3_R0 ] = xOffset;
 			}
 			
 			// if there's no y-axis constraint, flip inside the glyph rect
 			if ( !this->mLayoutRules.GetLimitHeight ()) {
-				float yOffset = this->mLayout.mGlyphBounds.mYMin + this->mLayout.mGlyphBounds.mYMax;
+				float yOffset = this->mLayout.mGlyphFrame.mYMin + this->mLayout.mGlyphFrame.mYMax;
 				flip.m [ ZLMatrix4x4::C3_R1 ] = yOffset;
 			}
 			worldDrawingMtx.Prepend ( flip );

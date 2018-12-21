@@ -605,9 +605,9 @@ void MOAIProfilerReportBox::Draw ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIProfilerReportBox::OnGetModelBounds ( ZLBox& bounds ) {
+u32 MOAIProfilerReportBox::OnGetModelBounds ( ZLBox& aabb ) {
 
-	bounds.Init ( this->mFrame.mXMin, this->mFrame.mYMax, this->mFrame.mXMax, this->mFrame.mYMin, 0.0f, 0.0f );
+	aabb.Init ( this->mFrame.mXMin, this->mFrame.mYMax, this->mFrame.mXMax, this->mFrame.mYMin, 0.0f, 0.0f );
 	return MOAIProp::BOUNDS_OK;
 }
 

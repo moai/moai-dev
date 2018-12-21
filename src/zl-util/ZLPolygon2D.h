@@ -77,7 +77,7 @@ private:
 	
 	u32										mInfo;
 	ZLReal									mArea;
-	ZLRect									mBounds;
+	ZLRect									mFrame;
 	ZLLeanArray < ZLVec2D >					mVertices;
 	
 	//----------------------------------------------------------------//
@@ -87,7 +87,7 @@ private:
 	
 public:
 	
-	GET_CONST ( ZLRect&, Bounds, mBounds )
+	GET_CONST ( ZLRect&, Frame, mFrame )
 	GET_CONST ( u32, Info, mInfo )
 	GET_CONST ( ZLReal, Area, mArea )
 

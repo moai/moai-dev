@@ -199,7 +199,7 @@ int MOAICameraFitter2D::_setBounds ( lua_State* L ) {
 		float x1	= state.GetValue < float >( 4, 0.0f );
 		float y1	= state.GetValue < float >( 5, 0.0f );
 
-		self->mBounds.Init ( x0, y0, x1, y1 );
+		self->mFrame.Init ( x0, y0, x1, y1 );
 		self->mFittingMode |= FITTING_MODE_APPLY_BOUNDS;
 	}
 	else {
@@ -455,7 +455,7 @@ ZLRect MOAICameraFitter2D::GetAnchorRect () {
 
 	// clip the world rect to the bounds
 	if ( this->mFittingMode & FITTING_MODE_APPLY_BOUNDS ) {
-		this->mBounds.Clip ( worldRect );
+		this->mFrame.Clip ( worldRect );
 	}
 
 	// enforce the minimum
@@ -519,6 +519,10 @@ float MOAICameraFitter2D::GetFitDistance () {
 
 //----------------------------------------------------------------//
 MOAICameraFitter2D::MOAICameraFitter2D () :
+	mFitLoc ( ZLVec3D::ORIGIN ),
+	mFitScale ( 1.0 ),
+	mTargetLoc ( ZLVec3D::ORIGIN ),
+	mTargetScale ( 1.0 ),
 	mMin ( 0.0f ),
 	mDamper ( 0.0f ),
 	mFittingMode ( FITTING_MODE_DEFAULT ) {
@@ -527,12 +531,6 @@ MOAICameraFitter2D::MOAICameraFitter2D () :
 		RTTI_EXTEND ( MOAIAction )
 		RTTI_EXTEND ( MOAINode )
 	RTTI_END
-
-	this->mFitLoc.Init ( 0.0f, 0.0f, 0.0f );
-	this->mFitScale = 1.0f;
-
-	this->mTargetLoc.Init ( 0.0f, 0.0f, 0.0f );
-	this->mTargetScale = 1.0f;
 }
 
 //----------------------------------------------------------------//
@@ -625,8 +623,8 @@ void MOAICameraFitter2D::UpdateFit () {
 	if ( !this->mViewport ) return;
 
 	// reset the fitter
-	this->mFitLoc.Init ( 0.0f, 0.0f, 0.0f );
-	this->mFitScale = 1.0f;
+	this->mFitLoc = ZLVec3D::ORIGIN;
+	this->mFitScale = 1.0;
 
 	// grab the view transform
 	ZLMatrix4x4 wndToWorld = this->mViewport->GetWndToNormMtx ();
@@ -682,7 +680,7 @@ void MOAICameraFitter2D::UpdateTarget () {
 		cameraMtx.Transform ( cameraRect );
 		cameraRect.Bless ();
 
-		this->mBounds.ConstrainWithAspect ( cameraRect );
+		this->mFrame.ConstrainWithAspect ( cameraRect );
 
 		// get the fitting
 		this->mTargetScale = cameraRect.Width () / worldViewRect.Width ();
@@ -739,8 +737,7 @@ void MOAICameraFitter2D::MOAINode_Update () {
 		loc.mY += ( this->mTargetLoc.mY - loc.mY ) * d;
 		scale += ( this->mTargetScale - scale ) * d;
 		
-		ZLVec3D scaleVec;
-		scaleVec.Init ( scale, scale, 1.0f );
+		ZLVec3D scaleVec ( scale, scale, 1.0f );
 		this->mCamera->SetScl ( scaleVec );
 		this->mCamera->SetLoc ( loc );
 		this->mCamera->ScheduleUpdate ();

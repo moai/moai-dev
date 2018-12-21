@@ -126,8 +126,8 @@ public:
 	void							Clear							();
 	int								Compare							( const void* v0, const void* v1, float componentEpsilon, float normEpsilon ) const;
 	
-	bool							ComputeBounds					( ZLBox& bounds, const void* buffer, size_t size ) const;
-	bool							ComputeBounds					( ZLBox& bounds, ZLStream& stream, size_t size ) const;
+	bool							ComputeAABB						( ZLBox& aabb, const void* buffer, size_t size ) const;
+	bool							ComputeAABB						( ZLBox& aabb, ZLStream& stream, size_t size ) const;
 	
 	u32								CountAttributesByUse			( u32 useID ) const;
 	u32								CountAttributeComponents		( ZLIndex attrIdx ) const;

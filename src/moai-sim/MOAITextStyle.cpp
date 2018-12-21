@@ -35,9 +35,8 @@ MOAITextStyleState::MOAITextStyleState () :
 	mShader ( 0 ),
 	mSize ( 0.0f ),
 	mScale ( 1.0f, 1.0f ),
-	mColor ( 0xffffffff ) {
-	
-	this->mPadding.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	mColor ( 0xffffffff ),
+	mPadding ( ZLRect::EMPTY ) {
 }
 
 //----------------------------------------------------------------//

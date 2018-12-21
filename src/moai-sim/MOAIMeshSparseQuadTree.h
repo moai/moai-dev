@@ -19,7 +19,7 @@ private:
 	friend class MOAIMeshSparseQuadTreeBuilder;
 	
 	u32			mIndex;
-	ZLBox		mBounds;
+	ZLBox		mAABB;
 };
 
 //================================================================//

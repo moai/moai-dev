@@ -367,17 +367,17 @@ void MOAITextLayout::FindSpriteSpan ( u32 idx, u32 size, ZLIndex& spanIdx, ZLSiz
 }
 
 //----------------------------------------------------------------//
-bool MOAITextLayout::GetBounds ( ZLRect& rect ) {
+bool MOAITextLayout::GetFrame ( ZLRect& frame ) {
 
 	if ( this->mSprites.GetTop () > 0 ) {
-		rect = this->mLayoutBounds;
+		frame = this->mLayoutFrame;
 		return true;
 	}
 	return false;
 }
 
 //----------------------------------------------------------------//
-bool MOAITextLayout::GetBoundsForRange ( u32 idx, u32 size, ZLRect& rect ) {
+bool MOAITextLayout::GetFrameForRange ( u32 idx, u32 size, ZLRect& frame ) {
 
 	if ( !size ) return false;
 
@@ -408,10 +408,10 @@ bool MOAITextLayout::GetBoundsForRange ( u32 idx, u32 size, ZLRect& rect ) {
 			glyphRect.mYMin = glyphRect.mYMax - deckHeight;
 
 			if ( result ) {
-				rect.Grow ( glyphRect );
+				frame.Grow ( glyphRect );
 			}
 			else {
-				rect = glyphRect;
+				frame = glyphRect;
 				result = true;
 			}
 		}

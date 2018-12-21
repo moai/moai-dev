@@ -163,7 +163,7 @@ void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoo
 }
 
 //----------------------------------------------------------------//
-void MOAIGraphicsGridProp::GetGridBoundsInView ( const ZLAffine3D& worldToLocalMtx, MOAICellCoord& c0, MOAICellCoord& c1 ) {
+void MOAIGraphicsGridProp::GetGridFrameInView ( const ZLAffine3D& worldToLocalMtx, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 
 	const ZLFrustum& frustum = MOAIGfxMgr::Get ().mGfxState.GetViewVolume ();
 	
@@ -174,9 +174,9 @@ void MOAIGraphicsGridProp::GetGridBoundsInView ( const ZLAffine3D& worldToLocalM
 		// TODO: need to take into account perspective and truncate rect based on horizon
 		// TODO: consider bringing back poly to tile scanline converter...
 
-		ZLRect deckBounds = this->mDeck->GetBounds ().mAABB.GetRect ( ZLBox::PLANE_XY );
+		ZLRect deckFrame = this->mDeck->GetBounds ().mAABB.GetRect ( ZLBox::PLANE_XY );
 
-		this->mGrid->GetBoundsInRect ( viewRect, c0, c1, deckBounds );
+		this->mGrid->GetFrameInRect ( viewRect, c0, c1, deckFrame );
 	}
 }
 
@@ -239,7 +239,7 @@ void MOAIGraphicsGridProp::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 	MOAICellCoord c0, c1;
 
 	if ( subPrimID == MOAIPartitionHull::NO_SUBPRIM_ID ) {
-		this->GetGridBoundsInView ( this->GetWorldToLocalMtx (), c0, c1 );
+		this->GetGridFrameInView ( this->GetWorldToLocalMtx (), c0, c1 );
 	}
 	else {
 		c0 = c1 = this->mGrid->GetCellCoord ( ZLIndexCast ( subPrimID ));
@@ -254,13 +254,11 @@ void MOAIGraphicsGridProp::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 ZLBounds MOAIGraphicsGridProp::MOAIAbstractProp_GetModelBounds () {
 	
 	if ( this->mGrid ) {
-		
+	
 		if ( this->mGrid->GetRepeat ()) {
 			return ZLBounds::GLOBAL;
 		}
-		ZLBounds bounds;
-		bounds.Init ( this->mGrid->GetBounds ());
-		return bounds;
+		return ZLBounds ( this->mGrid->GetFrame ());
 	}
 	return ZLBounds::EMPTY;
 }
@@ -295,7 +293,7 @@ void MOAIGraphicsGridProp::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionResu
 		// should not assume anything about the view or rendering
 		// only need to do this if we have a frustum - will break
 		// expected results for other queries
-		this->GetGridBoundsInView ( this->GetWorldToLocalMtx (), c0, c1 );
+		this->GetGridFrameInView ( this->GetWorldToLocalMtx (), c0, c1 );
 
 		for ( int y = c0.mY; y <= c1.mY; ++y ) {
 			for ( int x = c0.mX; x <= c1.mX; ++x ) {
@@ -310,13 +308,13 @@ void MOAIGraphicsGridProp::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionResu
 				ZLVec3D loc;
 				loc.Init ( grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER ));
 				
-				ZLBox bounds = this->mDeck->GetBounds ( ZLIndexCast ( idx )).mAABB;
-				bounds.Offset ( loc );
+				ZLBox aabb = this->mDeck->GetBounds ( ZLIndexCast ( idx )).mAABB;
+				aabb.Offset ( loc );
 				
 				mtx.Transform ( loc );
-				bounds.Transform ( mtx );
+				aabb.Transform ( mtx );
 				
-				buffer.PushResult ( *this, key, subPrimID, this->GetPriority (), loc, bounds, this->GetPiv ());
+				buffer.PushResult ( *this, key, subPrimID, this->GetPriority (), loc, aabb, this->GetPiv ());
 			}
 		}
 	}

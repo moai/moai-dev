@@ -929,16 +929,16 @@ ZLAffine3D MOAITransform::GetBillboardMtx ( const ZLAffine3D& faceCameraMtx ) co
 
 //----------------------------------------------------------------//
 MOAITransform::MOAITransform () :
-	mShearYX ( 0.0f ),
-	mShearZX ( 0.0f ),
-	mShearXY ( 0.0f ),
-	mShearZY ( 0.0f ),
-	mShearXZ ( 0.0f ),
-	mShearYZ ( 0.0f ),
-	mPiv ( 0.0f, 0.0f, 0.0f ),
-	mLoc ( 0.0f, 0.0f, 0.0f ),
-	mScale ( 1.0f, 1.0f, 1.0f ),
-	mRot ( 0.0f, 0.0f, 0.0f ),
+	mShearYX ( 0.0 ),
+	mShearZX ( 0.0 ),
+	mShearXY ( 0.0 ),
+	mShearZY ( 0.0 ),
+	mShearXZ ( 0.0 ),
+	mShearYZ ( 0.0 ),
+	mPiv ( ZLVec3D::ORIGIN ),
+	mLoc ( ZLVec3D::ORIGIN ),
+	mScale ( ZLVec3D::AXIS ),
+	mRot ( ZLVec3D::ORIGIN ),
 	mEulerOrder ( EULER_XYZ ) {
 	
 	RTTI_BEGIN
@@ -1202,7 +1202,7 @@ bool MOAITransform::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& att
 				}
 				else if ( op != MOAIAttribute::CHECK ) {
 
-					ZLQuaternion quat ( 0.0f, 0.0f, 0.0f, 0.0f );
+					ZLQuaternion quat ( 0.0, 0.0, 0.0, 0.0 );
 					quat = attr.Apply ( quat, op, MOAIAttribute::ATTR_WRITE );
 					quat.Get ( this->mRot.mX, this->mRot.mY, this->mRot.mZ );
 				}

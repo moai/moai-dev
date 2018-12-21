@@ -47,7 +47,7 @@ protected:
 	void					SetBoundsDirty					();
 
 	//----------------------------------------------------------------//
-	virtual ZLBounds				MOAIDeck_ComputeMaxBounds		();
+	virtual ZLBounds				MOAIDeck_ComputeMaxAABB			();
 	virtual void					MOAIDeck_Draw					( ZLIndex idx );
 	virtual ZLBounds				MOAIDeck_GetBounds				( ZLIndex idx );
 	virtual MOAICollisionShape*		MOAIDeck_GetCollisionShape		( ZLIndex idx );

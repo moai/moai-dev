@@ -20,7 +20,7 @@ protected:
 	static int				_setDeck						( lua_State* L );
 
 	//----------------------------------------------------------------//
-	ZLBounds				MOAIDeck_ComputeMaxBounds		();
+	ZLBounds				MOAIDeck_ComputeMaxAABB			();
 	void					MOAIDeck_Draw					( ZLIndex idx );
 	ZLBounds				MOAIDeck_GetBounds				( ZLIndex idx );
 	MOAICollisionShape*		MOAIDeck_GetCollisionShape		( ZLIndex idx );

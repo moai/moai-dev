@@ -45,7 +45,7 @@ private:
 	ZLVec3D		mTargetLoc;
 	float		mTargetScale;
 
-	ZLRect		mBounds;
+	ZLRect		mFrame;
 	float		mMin;
 	float		mDamper;
 

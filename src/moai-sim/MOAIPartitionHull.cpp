@@ -268,11 +268,11 @@ bool MOAIPartitionHull::GetCellRect ( ZLRect* cellRect, ZLRect* paddedRect ) {
 	}
 	
 	if ( cellRect ) {
-		cellRect->Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+		*cellRect = ZLRect::EMPTY;
 	}
 	
 	if ( paddedRect ) {
-		paddedRect->Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+		*paddedRect = ZLRect::EMPTY;
 	}
 	
 	return false;

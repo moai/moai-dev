@@ -31,8 +31,7 @@ int MOAIVertexBuffer::_computeBounds ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
 	bool hasBounds = false;
-	ZLBox bounds;
-	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+	ZLBox aabb = ZLBox::EMPTY;
 	
 	// vertex format
 	if ( state.CheckParams ( 2, "U", false )) {
@@ -41,12 +40,12 @@ int MOAIVertexBuffer::_computeBounds ( lua_State* L ) {
 		if ( format ) {
 			u32 length = state.GetValue < u32 >( 3, ( u32 )self->GetCursor ());
 			self->Seek ( 0, SEEK_SET );
-			hasBounds = format->ComputeBounds ( bounds, *self, length );
+			hasBounds = format->ComputeAABB ( aabb, *self, length );
 		}
 	}
 	
 	if ( hasBounds ) {
-		state.Push ( bounds );
+		state.Push ( aabb );
 		return 6;
 	}
 	return 0;

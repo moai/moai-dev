@@ -103,11 +103,11 @@ size_t ZLPolygon2D::Bless () {
 		return this->mInfo;
 	}
 	
-	this->mBounds.Init (this->mVertices [ ZLIndexOp::ZERO ]);
+	this->mFrame.Init (this->mVertices [ ZLIndexOp::ZERO ]);
 	
 	for ( ZLIndex i = ZLIndexOp::ONE; i < totalVerts; ++i ) {
 		ZLVec2D& point = this->mVertices [ i ];
-		this->mBounds.Grow ( point );
+		this->mFrame.Grow ( point );
 	}
 	
 	this->mInfo = this->Analyze ();
@@ -223,7 +223,7 @@ void ZLPolygon2D::Copy ( const ZLPolygon2D& src ) {
 	this->Clear ();
 
 	this->mInfo = src.mInfo;
-	this->mBounds = src.mBounds;
+	this->mFrame = src.mFrame;
 	
 	this->mVertices.Init ( src.mVertices.Size ());
 	this->mVertices.CopyFrom ( src.mVertices );
@@ -461,7 +461,7 @@ u32 ZLPolygon2D::PointInside ( const ZLVec2D& p, ZLReal pad ) const {
 
 	bool inPoly = false; // start off assuming it _isn't_ in the polygon
 
-	if ( this->mBounds.Contains ( p )) {
+	if ( this->mFrame.Contains ( p )) {
 
 		ZLReal x = p.mX;
 		ZLReal y = p.mY;

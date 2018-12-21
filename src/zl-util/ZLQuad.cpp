@@ -106,16 +106,16 @@ bool ZLQuad::Contains ( ZLReal x, ZLReal y ) const {
 }
 
 //----------------------------------------------------------------//
-ZLRect ZLQuad::GetBounds () const {
+ZLRect ZLQuad::GetFrame () const {
 
-	ZLRect rect;
+	ZLRect frame;
 
-	rect.Init ( this->mV [ 0 ]);
-	rect.Grow ( this->mV [ 1 ]);
-	rect.Grow ( this->mV [ 2 ]);
-	rect.Grow ( this->mV [ 3 ]);
+	frame.Init ( this->mV [ 0 ]);
+	frame.Grow ( this->mV [ 1 ]);
+	frame.Grow ( this->mV [ 2 ]);
+	frame.Grow ( this->mV [ 3 ]);
 	
-	return rect;
+	return frame;
 }
 
 //----------------------------------------------------------------//

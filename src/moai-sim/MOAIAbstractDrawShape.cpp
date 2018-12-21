@@ -322,8 +322,7 @@ void MOAIAbstractDrawShape::DrawRectOutline ( float left, float top, float right
 //----------------------------------------------------------------//
 void MOAIAbstractDrawShape::DrawRoundedRectFill ( float left, float top, float right, float bottom, float xRad, float yRad, u32 steps ) {
 
-	ZLRect rect;
-	rect.Init ( left, top, right, bottom );
+	ZLRect rect ( left, top, right, bottom );
 	rect.Bless ();
 
 	float hWidth	= rect.Width () * 0.5;
@@ -356,8 +355,7 @@ void MOAIAbstractDrawShape::DrawRoundedRectStroke ( float left, float top, float
 
 	if ( stroke <= 0.0 ) return;
 
-	ZLRect rect;
-	rect.Init ( left, top, right, bottom );
+	ZLRect rect ( left, top, right, bottom );
 	rect.Bless ();
 
 	float hWidth	= rect.Width () * 0.5;

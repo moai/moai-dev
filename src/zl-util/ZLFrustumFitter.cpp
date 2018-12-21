@@ -115,7 +115,7 @@ void ZLFrustumFitter::Init ( const ZLRect& viewRect, const ZLRect& fitRect, floa
 	this->mIsDirty = false;
 	this->mNeedsInit = true;
 
-	this->mPosition.Init ( 0.0f, 0.0f, 0.0f );
+	this->mPosition = ZLVec3D::ORIGIN;
 
     float t;
 	

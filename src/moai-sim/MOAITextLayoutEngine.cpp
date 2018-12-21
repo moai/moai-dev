@@ -41,11 +41,8 @@ void MOAITextLayoutEngine::Align () {
 
 	if ( totalLines == 0 ) return;
 
-	ZLRect glyphBounds;
-	ZLRect layoutBounds;
-	
-	glyphBounds.Init ( 0.0, 0.0, 0.0, 0.0 );
-	layoutBounds.Init ( 0.0, 0.0, 0.0, 0.0 );
+	ZLRect glyphFrame = ZLRect::EMPTY;
+	ZLRect layoutFrame = ZLRect::EMPTY;
 	
 	ZLIndex baseLine = this->mBaseLine;
 	
@@ -147,8 +144,8 @@ void MOAITextLayoutEngine::Align () {
 			line.mGlyphBounds.Grow ( glyphRect, j > 0 );
 		}
 		
-		glyphBounds.Grow ( line.mGlyphBounds, i > 0 );
-		layoutBounds.Grow ( line.mLayoutBounds, i > 0 );
+		glyphFrame.Grow ( line.mGlyphBounds, i > 0 );
+		layoutFrame.Grow ( line.mLayoutBounds, i > 0 );
 	}
 	
 	// center texbox in model space to make autoflip easier to implement
@@ -208,8 +205,8 @@ void MOAITextLayoutEngine::Align () {
 
 //	printf ( "OFFSET: %f %f\n", this->mLayout->mXOffset, this->mLayout->mYOffset );
 
-	this->mLayout->mGlyphBounds		= glyphBounds;
-	this->mLayout->mLayoutBounds	= layoutBounds;
+	this->mLayout->mGlyphFrame		= glyphFrame;
+	this->mLayout->mLayoutFrame		= layoutFrame;
 	
 //	printf ( "GLYPH BOUNDS: %f %f %f %f\n",
 //		this->mLayout->mGlyphBounds.mXMin,
@@ -312,10 +309,10 @@ void MOAITextLayoutEngine::BuildLayout ( MOAITextLayout& layout, MOAITextStyleCa
 	
 	this->mLayoutFrameWithMargins = layoutRules.GetFrameWithMargins ();
 	
-	this->mLayoutBounds.Init ( 0.0, 0.0, 0.0, 0.0 );
-	this->mLineLayoutBounds.Init ( 0.0, 0.0, 0.0, 0.0 );
+	this->mLayoutBounds = ZLRect::EMPTY;
+	this->mLineLayoutBounds = ZLRect::EMPTY;
 	
-	this->mLineSpacingBounds.Init ( 0.0, 0.0, 0.0, 0.0 );
+	this->mLineSpacingBounds = ZLRect::EMPTY;
 	this->mLineSpacingCursor = 0.0;
 	
 	this->mBaseLine = ZLIndexCast ( layout.mLines.GetTop ());

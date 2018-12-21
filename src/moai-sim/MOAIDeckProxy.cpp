@@ -83,9 +83,9 @@ void MOAIDeckProxy::SerializeOut ( MOAILuaState& state, MOAISerializer& serializ
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLBounds MOAIDeckProxy::MOAIDeck_ComputeMaxBounds () {
+ZLBounds MOAIDeckProxy::MOAIDeck_ComputeMaxAABB () {
 
-	return this->mDeck ? this->mDeck->MOAIDeck_ComputeMaxBounds () : ZLBounds::ZL_BOUNDS_EMPTY;
+	return this->mDeck ? this->mDeck->MOAIDeck_ComputeMaxAABB () : ZLBounds::ZL_BOUNDS_EMPTY;
 }
 
 //----------------------------------------------------------------//

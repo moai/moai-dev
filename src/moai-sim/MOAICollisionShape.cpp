@@ -19,7 +19,7 @@ void MOAICollisionShape::Bless () {
 
 	ZLBox aabb;
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mShapes.Size (); ++i ) {
-		aabb.Grow ( this->mShapes [ i ]->mBounds, i == ZLIndexOp::ZERO );
+		aabb.Grow ( this->mShapes [ i ]->mAABB, i > ZLIndexOp::ZERO );
 	}
 	this->mBounds.Init ( aabb );
 }
@@ -124,7 +124,7 @@ void MOAICollisionShape::Set ( ZLIndex idx, const ZLBox& box ) {
 	}
 	MOAIOverlapBox* overlap = new MOAIOverlapBox ();
 	overlap->mShape = box;
-	overlap->mBounds.Init ( box );
+	overlap->mAABB.Init ( box );
 	this->mShapes [ idx ] = overlap;
 	
 	this->Bless ();
@@ -139,7 +139,7 @@ void MOAICollisionShape::Set ( ZLIndex idx, const ZLQuad& quad ) {
 	}
 	MOAIOverlapQuad* overlap = new MOAIOverlapQuad ();
 	overlap->mShape = quad;
-	overlap->mBounds.Init ( quad.GetBounds ());
+	overlap->mAABB.Init ( quad.GetFrame ());
 	this->mShapes [ idx ] = overlap;
 	
 	this->Bless ();
@@ -154,7 +154,7 @@ void MOAICollisionShape::Set ( ZLIndex idx, const ZLRect& rect ) {
 	}
 	MOAIOverlapRect* overlap = new MOAIOverlapRect ();
 	overlap->mShape = rect;
-	overlap->mBounds.Init ( rect );
+	overlap->mAABB.Init ( rect );
 	this->mShapes [ idx ] = overlap;
 	
 	this->Bless ();

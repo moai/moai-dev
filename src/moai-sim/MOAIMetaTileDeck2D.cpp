@@ -119,8 +119,6 @@ MOAIMetaTileDeck2D::MOAIMetaTileDeck2D () {
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIDeck )
 	RTTI_END
-	
-	this->mMaxBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//
@@ -169,7 +167,7 @@ void MOAIMetaTileDeck2D::SerializeOut ( MOAILuaState& state, MOAISerializer& ser
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLBounds MOAIMetaTileDeck2D::MOAIDeck_ComputeMaxBounds () {
+ZLBounds MOAIMetaTileDeck2D::MOAIDeck_ComputeMaxAABB () {
 
 	ZLSize size = this->mBrushes.Size ();
 	if ( size == 0 ) {
@@ -178,7 +176,7 @@ ZLBounds MOAIMetaTileDeck2D::MOAIDeck_ComputeMaxBounds () {
 
 	ZLBox aabb;
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mBrushes.Size (); ++i ) {
-		aabb.Grow ( this->GetBounds ( i ).mAABB, i == ZLIndexOp::ZERO );
+		aabb.Grow ( this->GetBounds ( i ).mAABB, i > ZLIndexOp::ZERO );
 	}
 	return ZLBounds ( aabb );
 }
@@ -241,12 +239,12 @@ ZLBounds MOAIMetaTileDeck2D::MOAIDeck_GetBounds ( ZLIndex idx ) {
 	if ( this->mGrid && size ) {
 		
 		// TODO: handle oversized decks (don't assume unit sized deck items)
-		idx =  ZLIndexOp::Wrap ( idx, size );
+		idx = ZLIndexOp::Wrap ( idx, size );
 		
 		MOAIMetaTile& brush = this->mBrushes [ idx ];
-		ZLRect rect = this->mGrid->GetBounds ( brush.mMin, brush.mMax );
-		rect.Offset ( brush.mOffset.mX - rect.mXMin, brush.mOffset.mY - rect.mYMin );
-		return ZLBounds ( rect );
+		ZLRect frame = this->mGrid->GetFrame ( brush.mMin, brush.mMax );
+		frame.Offset ( brush.mOffset.mX - frame.mXMin, brush.mOffset.mY - frame.mYMin );
+		return ZLBounds ( frame );
 	}
 	return ZLBounds::EMPTY;
 }

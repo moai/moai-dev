@@ -138,12 +138,10 @@ int MOAIViewLayer::_getFitting3D ( lua_State* L ) {
 			
 				MOAIPartitionHull* hull = state.GetLuaObject < MOAIPartitionHull >( -1, true );
 		
-				if ( hull ) {
-					ZLBox bounds = hull->GetWorldBounds ().mAABB;
-					
+				if ( hull ) {					
 					ZLVec3D center;
-					bounds.GetCenter ( center );
-					fitter.FitBox ( bounds, 0.0f );
+					hull->GetWorldBounds ().mAABB.GetCenter ( center );
+					fitter.FitBox ( center, 0.0f );
 				}
 				break;
 			}
@@ -553,8 +551,7 @@ void MOAIViewLayer::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 ZLBounds MOAIViewLayer::MOAIAbstractProp_GetModelBounds () {
 	
 	if ( this->mViewport ) {
-		ZLBounds bounds;
-		bounds.Init ( this->mViewport->GetRect ());
+		ZLBounds bounds ( this->mViewport->GetRect ());
 		return bounds;
 	}
 	return ZLBounds::EMPTY;

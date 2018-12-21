@@ -204,8 +204,8 @@ void MOAIParticleState::GatherForces ( ZLVec3D& loc, ZLVec3D& velocity, float ma
 
 	ZLVec3D result;
 
-	ZLVec3D acceleration ( 0.0f, 0.0f, 0.0f );
-	ZLVec3D offset ( 0.0f, 0.0f, 0.0f );
+	ZLVec3D acceleration = ZLVec3D::ORIGIN;
+	ZLVec3D offset = ZLVec3D::ORIGIN;
 		
 	ForceNode* forceNode = this->mForces.Head ();
 	for ( ; forceNode; forceNode = forceNode->Next ()) {

@@ -289,15 +289,15 @@ int MOAIVertexFormat::Compare ( const void* v0, const void* v1, float componentE
 }
 
 //----------------------------------------------------------------//
-bool MOAIVertexFormat::ComputeBounds ( ZLBox& bounds, const void* buffer, size_t size ) const {
+bool MOAIVertexFormat::ComputeAABB ( ZLBox& aabb, const void* buffer, size_t size ) const {
 
 	ZLByteStream stream;
 	stream.SetBuffer ( buffer, size, size );
-	return this->ComputeBounds ( bounds, stream, size );
+	return this->ComputeAABB ( aabb, stream, size );
 }
 
 //----------------------------------------------------------------//
-bool MOAIVertexFormat::ComputeBounds ( ZLBox& bounds, ZLStream& stream, size_t size ) const {
+bool MOAIVertexFormat::ComputeAABB ( ZLBox& aabb, ZLStream& stream, size_t size ) const {
 
 	u32 total = this->mVertexSize ? ( u32 )( size / this->mVertexSize ) : 0; // TODO: cast
 	if ( !total ) return false;
@@ -309,8 +309,8 @@ bool MOAIVertexFormat::ComputeBounds ( ZLBox& bounds, ZLStream& stream, size_t s
 	
 	ZLVec4D coord = this->ReadCoord ( stream, ZLIndexCast ( 0 ));
 	
-	bounds.Init ( coord );
-	bounds.Inflate ( 0.0000001f ); // prevent 'empty' bounds on cardinal direction lines or single vertex objects
+	aabb.Init ( coord );
+	aabb.Inflate ( 0.0000001f ); // prevent 'empty' bounds on cardinal direction lines or single vertex objects
 	
 	if ( nCoordsPerVert > 0 ) {
 	
@@ -320,7 +320,7 @@ bool MOAIVertexFormat::ComputeBounds ( ZLBox& bounds, ZLStream& stream, size_t s
 		
 			for ( ZLIndex j = ZLIndexOp::ZERO; j < nCoordsPerVert; ++j ) {
 				coord = this->ReadCoord ( stream, j );
-				bounds.Grow ( coord );
+				aabb.Grow ( coord );
 			}
 		}
 	}
@@ -329,7 +329,7 @@ bool MOAIVertexFormat::ComputeBounds ( ZLBox& bounds, ZLStream& stream, size_t s
 		for ( ZLIndex i = ZLIndexOp::ZERO; i < total; ++i ) {
 			this->SeekVertex ( stream, base, i );
 			coord = this->ReadCoord ( stream, ZLIndexCast ( 0 ));
-			bounds.Grow ( coord );
+			aabb.Grow ( coord );
 		}
 	}
 	this->SeekVertex ( stream, base, total );

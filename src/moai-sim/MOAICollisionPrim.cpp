@@ -58,22 +58,22 @@ void MOAICollisionPrimVisitor::Process ( MOAICollisionProp& prop0, MOAICollision
 	
 		MOAIOverlapBox oshape0;
 		oshape0.mShape = prop0.GetModelBounds ().mAABB;
-		oshape0.mBounds = oshape0.mShape;
+		oshape0.mAABB = oshape0.mShape;
 		
 		MOAIOverlapBox oshape1;
 		oshape1.mShape = prop1.GetModelBounds ().mAABB;
-		oshape1.mBounds = oshape1.mShape;
+		oshape1.mAABB = oshape1.mShape;
 		
 		this->Process ( oshape0, oshape1, t0, t1 );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionPrimVisitor::Process ( const MOAICollisionShape& shape0, const ZLBox& bounds1, const ZLAffine3D& t0, const ZLAffine3D& t1 ) {
+void MOAICollisionPrimVisitor::Process ( const MOAICollisionShape& shape0, const ZLBox& aabb1, const ZLAffine3D& t0, const ZLAffine3D& t1 ) {
 
 	MOAIOverlapBox shape1;
-	shape1.mShape = bounds1;
-	shape1.mBounds = bounds1;
+	shape1.mShape = aabb1;
+	shape1.mAABB = aabb1;
 
 	ZLSize shapeCount0 = shape0.mShapes.Size ();
 

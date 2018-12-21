@@ -136,6 +136,8 @@ void MOAITextLayoutRules::Layout ( MOAITextLayout& layout, MOAITextStyleCache& s
 //----------------------------------------------------------------//
 MOAITextLayoutRules::MOAITextLayoutRules () :
 	mOwner ( 0 ),
+	mFrame ( ZLRect::EMPTY ),
+	mMargins ( ZLRect::EMPTY ),
 	mLimitWidth ( false ),
 	mLimitHeight ( false ),
 	mHAlign ( MOAITextLayoutRules::LEFT_JUSTIFY ),
@@ -150,9 +152,6 @@ MOAITextLayoutRules::MOAITextLayoutRules () :
 	mLineSpacing ( 0.0f ),
 	mHLineSnap ( 0.0f ),
 	mVLineSnap ( 0.0f ) {
-	
-	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-	this->mMargins.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//

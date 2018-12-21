@@ -32,8 +32,7 @@ void MOAIDynamicGlyphCachePage::AffirmCanvas ( MOAIDynamicGlyphCache& owner, MOA
 	}
 	else if ( this->mImageTexture->MOAIImage::GetHeight () < this->mRows.mSize ) {
 		
-		ZLIntRect rect;
-		rect.Init ( 0, 0, MAX_TEXTURE_SIZE, ( int )this->mRows.mSize );
+		ZLIntRect rect ( 0, 0, MAX_TEXTURE_SIZE, ( int )this->mRows.mSize );
 		this->mImageTexture->ResizeCanvas ( *this->mImageTexture, rect );
 		this->mImageTexture->UpdateRegion ();
 	}

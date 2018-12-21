@@ -25,20 +25,20 @@
 //================================================================//
 	
 //----------------------------------------------------------------//
-ZLBox MOAIMeshPrimCoords::GetBounds () {
+ZLBox MOAIMeshPrimCoords::GetAABB () {
 
-	ZLBox bounds;
-	bounds.Init ( this->mCoords [ 0 ]);
+	ZLBox aabb;
+	aabb.Init ( this->mCoords [ 0 ]);
 	
 	if ( this->mPrimSize > 1 ) {
 	
-		bounds.Grow ( this->mCoords [ 1 ]);
+		aabb.Grow ( this->mCoords [ 1 ]);
 	
 		if ( this->mPrimSize > 2 ) {
-			bounds.Grow ( this->mCoords [ 2 ]);
+			aabb.Grow ( this->mCoords [ 2 ]);
 		}
 	}
-	return bounds;
+	return aabb;
 }
 
 //================================================================//
@@ -728,9 +728,9 @@ void MOAIMesh::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) 
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::SetBounds ( const ZLBox& bounds ) {
+void MOAIMesh::SetBounds ( const ZLBox& aabb ) {
 
-	this->mBounds.Init ( bounds );
+	this->mBounds.Init ( aabb );
 }
 
 //----------------------------------------------------------------//
@@ -744,7 +744,7 @@ void MOAIMesh::SetIndexBuffer ( MOAIIndexBuffer* indexBuffer ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLBounds MOAIMesh::MOAIDeck_ComputeMaxBounds () {
+ZLBounds MOAIMesh::MOAIDeck_ComputeMaxAABB () {
 
 	return this->mBounds;
 }

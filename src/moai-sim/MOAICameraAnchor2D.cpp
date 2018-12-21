@@ -65,14 +65,13 @@ ZLRect MOAICameraAnchor2D::GetRect () {
 }
 
 //----------------------------------------------------------------//
-MOAICameraAnchor2D::MOAICameraAnchor2D () {
+MOAICameraAnchor2D::MOAICameraAnchor2D () :
+	mRect ( ZLRect::EMPTY ),
+	mLoc ( ZLVec3D::ORIGIN ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAINode )
 	RTTI_END
-	
-	this->mRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-	this->mLoc.Init ( 0.0f, 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//

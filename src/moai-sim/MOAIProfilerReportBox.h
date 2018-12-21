@@ -123,7 +123,7 @@ public:
 	//----------------------------------------------------------------//
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				Draw					( int subPrimID );
-	u32					OnGetModelBounds		( ZLBox& bounds );
+	u32					OnGetModelBounds		( ZLBox& aabb );
 	//----------------------------------------------------------------//
 	void				SetRect					( float left, float top, float right, float bottom );
 };

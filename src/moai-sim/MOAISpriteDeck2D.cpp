@@ -63,7 +63,7 @@ int MOAISpriteDeck2D::_getRect ( lua_State* L ) {
 		rectID = state.GetValue < MOAILuaIndex >( idx++, ZLIndexOp::ZERO );
 	}
 	
-	return rectID < self->mQuads.Size () ? state.Push ( self->mQuads [ rectID ].GetBounds ()) : 0;
+	return rectID < self->mQuads.Size () ? state.Push ( self->mQuads [ rectID ].GetFrame ()) : 0;
 }
 
 //----------------------------------------------------------------//
@@ -116,7 +116,7 @@ int MOAISpriteDeck2D::_getUVRect ( lua_State* L ) {
 		rectID = state.GetValue < MOAILuaIndex >( idx++, ZLIndexOp::ZERO );
 	}
 	
-	return rectID < self->mUVQuads.Size () ? state.Push ( self->mUVQuads [ rectID ].GetBounds ()) : 0;
+	return rectID < self->mUVQuads.Size () ? state.Push ( self->mUVQuads [ rectID ].GetFrame ()) : 0;
 }
 
 //----------------------------------------------------------------//
@@ -636,20 +636,19 @@ void MOAISpriteDeck2D::TransformUV ( const ZLAffine3D& mtx ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLBounds MOAISpriteDeck2D::MOAIDeck_ComputeMaxBounds () {
+ZLBounds MOAISpriteDeck2D::MOAIDeck_ComputeMaxAABB () {
 
 	ZLSize size = this->mQuads.Size ();
 	
 	if ( size ) {
 	
-		ZLRect rect = this->mQuads [ ZLIndexOp::ZERO ].GetBounds ();
-		
-		for ( ZLIndex i = ZLIndexCast ( 1 ); i < size; ++i ) {
-			rect.Grow ( this->mQuads [ i ].GetBounds ());
+		ZLRect frame;
+		for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
+			frame.Grow ( this->mQuads [ i ].GetFrame (), i > ZLIndexOp::ZERO );
 		}
 		
 		ZLBounds bounds;
-		bounds.Init ( rect );
+		bounds.Init ( frame );
 		bounds.mStatus = ZLBounds::ZL_BOUNDS_OK;
 		return bounds;
 	}
@@ -787,13 +786,13 @@ ZLBounds MOAISpriteDeck2D::MOAIDeck_GetBounds ( ZLIndex idx ) {
 			for ( ZLIndex i = base ; i < top; ++i ) {
 				
 				MOAISprite sprite = this->mSprites [  ZLIndexOp::Wrap ( i, totalSprites )];
-				rect.Grow ( this->mQuads [ sprite.mQuadID ].GetBounds (), i > base );
+				rect.Grow ( this->mQuads [ sprite.mQuadID ].GetFrame (), i > base );
 			}
 			bounds.Init ( rect );
 		}
 		else {
 		
-			ZLRect rect = this->mQuads [  ZLIndexOp::Wrap ( idx, totalQuads )].GetBounds ();
+			ZLRect rect = this->mQuads [  ZLIndexOp::Wrap ( idx, totalQuads )].GetFrame ();
 			bounds.Init ( rect );
 		}
 	}

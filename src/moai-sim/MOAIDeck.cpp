@@ -92,14 +92,14 @@ ZLBounds MOAIDeck::GetBounds () {
 	/*
 	if ( this->mBoundsDirty ) {
 	
-		this->mMaxBounds = this->MOAIDeck_ComputeMaxBounds ();
+		this->mMaxBounds = this->MOAIDeck_ComputeMaxAABB ();
 		
 		// flip and expand to account for flip flags
-		//ZLBox bounds = this->mMaxBounds;
-		//bounds.Scale ( -1.0f );
-		//bounds.Bless ();
+		//ZLBox aabb = this->mMaxBounds;
+		//aabb.Scale ( -1.0f );
+		//aabb.Bless ();
 		
-		//this->mMaxBounds.Grow ( bounds );
+		//this->mMaxBounds.Grow ( aabb );
 		this->mBoundsDirty = false;
 	}
 	return this->mMaxBounds;*/
@@ -119,6 +119,7 @@ MOAICollisionShape* MOAIDeck::GetCollisionShape ( ZLIndex idx ) {
 
 //----------------------------------------------------------------//
 MOAIDeck::MOAIDeck () :
+	mMaxBounds ( ZLBounds::EMPTY ),
 	mBoundsDirty ( true ) {
 	
 	RTTI_BEGIN
@@ -165,7 +166,7 @@ void MOAIDeck::SetBoundsDirty () {
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLBounds MOAIDeck::MOAIDeck_ComputeMaxBounds () {
+ZLBounds MOAIDeck::MOAIDeck_ComputeMaxAABB () {
 
 	return ZLBounds::EMPTY;
 }

@@ -1131,8 +1131,7 @@ int MOAIDraw::_setScissorRect ( lua_State* L ) {
 		}
 	}
 	else {
-		ZLRect rect;
-		rect.Init ( 0.0, 0.0, (float) gfxState.GetBufferWidth (), (float) gfxState.GetBufferHeight ());
+		ZLRect rect ( 0.0, 0.0, (float) gfxState.GetBufferWidth (), (float) gfxState.GetBufferHeight ());
 		rect = state.GetValue < ZLRect >( 1, rect );
 		gfxState.SetScissorRect ( rect );
 	}
@@ -1166,8 +1165,7 @@ int MOAIDraw::_setViewRect ( lua_State* L ) {
 		}
 	}
 	else {
-		ZLRect rect;
-		rect.Init ( 0.0, 0.0, (float) gfxState.GetBufferWidth (), (float) gfxState.GetBufferHeight ());
+		ZLRect rect ( 0.0, 0.0, (float) gfxState.GetBufferWidth (), (float) gfxState.GetBufferHeight ());
 		rect = state.GetValue < ZLRect >( 1, rect );
 		gfxState.SetViewRect ( rect );
 	}

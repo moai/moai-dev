@@ -616,10 +616,9 @@ MOAIMesh* MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream
 	mesh->SetPrimType ( ZGL_PRIM_TRIANGLES );
 	mesh->SetTotalElements ( totalElements );
 	
-	ZLBox bounds;
-	format.ComputeBounds ( bounds, vtxBuffer->GetSharedConstBuffer ()->GetConstData (), vtxBuffer->GetSize ());
-	
-	mesh->SetBounds ( bounds );
+	ZLBox aabb;
+	format.ComputeAABB ( aabb, vtxBuffer->GetSharedConstBuffer ()->GetConstData (), vtxBuffer->GetSize ());
+	mesh->SetBounds ( aabb );
 	
 	return mesh;
 }

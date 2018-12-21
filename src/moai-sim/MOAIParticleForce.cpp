@@ -117,7 +117,7 @@ int MOAIParticleForce::_setType ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIParticleForce::Eval ( const ZLVec3D& loc, float mass, ZLVec3D& acceleration, ZLVec3D& offset ) {
 
-	ZLVec3D force ( 0.0f, 0.0f, 0.0f );
+	ZLVec3D force = ZLVec3D::ORIGIN;
 	ZLVec3D origin = this->mLocalToWorldMtx.GetTranslation ();
 
 	switch ( this->mShape ) {
@@ -193,10 +193,10 @@ MOAIParticleForce::MOAIParticleForce () :
 		RTTI_EXTEND ( MOAITransform )
 	RTTI_END
 	
-	this->mVec.Init ( 0.0f, 0.0f, 0.0f );
+	this->mVec = ZLVec3D::ORIGIN;
 	
-	this->mWorldLoc.Init ( 0.0f, 0.0f, 0.0f );
-	this->mWorldVec.Init ( 0.0f, 0.0f, 0.0f );
+	this->mWorldLoc = ZLVec3D::ORIGIN;
+	this->mWorldVec = ZLVec3D::ORIGIN;
 }
 
 //----------------------------------------------------------------//

@@ -128,23 +128,6 @@ int MOAISurfaceDeck2D::_setSurface ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLBox MOAISurfaceDeck2D::ComputeMaxBounds () {
-	
-	size_t size = this->mBrushes.Size ();
-
-	ZLRect rect;
-	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-
-	for ( size_t i = 0; i < size; ++i ) {
-		rect.Grow ( this->mBrushes [ i ].mBounds );
-	}
-
-	ZLBox bounds;
-	bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );	
-	return bounds;
-}
-
-//----------------------------------------------------------------//
 //void MOAISurfaceDeck2D::DrawDebug ( const ZLAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
 //	
 //	idx = remapper ? remapper->Remap ( idx ) : idx;
@@ -305,18 +288,13 @@ ZLBox MOAISurfaceDeck2D::ComputeMaxBounds () {
 //}
 
 //----------------------------------------------------------------//
-ZLBox MOAISurfaceDeck2D::GetItemBounds ( u32 idx ) {
-	
-	ZLBox bounds;
-	
+ZLBox MOAISurfaceDeck2D::GetItemAABB ( u32 idx ) {
+
 	if ( idx < this->mBrushes.Size ()) {
-		ZLRect rect = this->mBrushes [ idx ].mBounds;
-		bounds.Init ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0f, 0.0f );	
-		return bounds;
+		const ZLRect& rect = this->mBrushes [ idx ].mBounds;
+		return ZLBox ( rect.mXMin, rect.mYMax, rect.mXMax, rect.mYMin, 0.0, 0.0 );
 	}
-	
-	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );	
-	return bounds;
+	return ZLBox::EMPTY;
 }
 
 //----------------------------------------------------------------//
@@ -355,9 +333,17 @@ void MOAISurfaceDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLBounds MOAISurfaceDeck2D::MOAIDeck_ComputeMaxBounds () {
+ZLBounds MOAISurfaceDeck2D::MOAIDeck_ComputeMaxAABB () {
 
-	return ZLBounds::EMPTY;
+	size_t size = this->mBrushes.Size ();
+
+	ZLRect frame;
+	for ( size_t i = 0; i < size; ++i ) {
+		frame.Grow ( this->mBrushes [ i ].mBounds, i > 0 );
+	}
+
+	ZLBox aabb ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
+	return aabb;
 }
 
 //----------------------------------------------------------------//

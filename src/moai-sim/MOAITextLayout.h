@@ -96,8 +96,8 @@ private:
 	ZLLeanStack < MOAITextSprite, 64 >	mSprites;
 	ZLLeanStack < MOAITextLine, 8 >		mLines;
 	
-	ZLRect								mGlyphBounds;
-	ZLRect								mLayoutBounds; // bounds used for sizing and alignment
+	ZLRect								mGlyphFrame;
+	ZLRect								mLayoutFrame; // bounds used for sizing and alignment
 	
 	// calculated during alignment
 	// - the text is laid out in model space with the origin at the *center* of the text frame
@@ -117,7 +117,7 @@ private:
 	
 public:
 
-	GET ( const ZLRect&, LayoutBounds, mLayoutBounds )
+	GET ( const ZLRect&, LayoutFrame, mLayoutFrame )
 
 	//----------------------------------------------------------------//
 	void				AddHighlight			( u32 base, u32 top, u32 color );
@@ -127,8 +127,8 @@ public:
 	size_t				CountSprites			();
 	void				Draw					( u32 reveal );
 	void				DrawDebug				();
-	bool				GetBounds				( ZLRect& rect );
-	bool				GetBoundsForRange		( u32 idx, u32 size, ZLRect& rect );
+	bool				GetFrame				( ZLRect& frame );
+	bool				GetFrameForRange		( u32 idx, u32 size, ZLRect& frame );
 						MOAITextLayout			();
 						~MOAITextLayout			();
 	void				RemoveHighlight			( MOAITextHighlight& highlight );

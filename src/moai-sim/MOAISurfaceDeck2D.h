@@ -38,13 +38,12 @@ private:
 	static int		_setSurface				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	ZLBox			ComputeMaxBounds		();
 	//void			DrawDebug				( u32 idx, float xOff, float yOff, bool xFlip, bool yFlip );
 	void			GatherSurfaces			( u32 idx, float xOff, float yOff, bool xFlip, bool yFlip, MOAISurfaceSampler2D& sampler );
-	ZLBox			GetItemBounds			( u32 idx );
+	ZLBox			GetItemAABB				( u32 idx );
 
 	//----------------------------------------------------------------//
-	ZLBounds				MOAIDeck_ComputeMaxBounds		();
+	ZLBounds				MOAIDeck_ComputeMaxAABB			();
 	void					MOAIDeck_Draw					( ZLIndex idx );
 	ZLBounds				MOAIDeck_GetBounds				( ZLIndex idx );
 	MOAICollisionShape*		MOAIDeck_GetCollisionShape		( ZLIndex idx );

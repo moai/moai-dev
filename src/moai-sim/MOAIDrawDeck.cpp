@@ -118,7 +118,7 @@ void MOAIDrawDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLBounds MOAIDrawDeck::MOAIDeck_ComputeMaxBounds () {
+ZLBounds MOAIDrawDeck::MOAIDeck_ComputeMaxAABB () {
 
 	return this->mBounds;
 }

@@ -110,13 +110,12 @@ ZLRect MOAIScissorRect::GetScissorRect ( const ZLMatrix4x4& worldToWndMtx ) cons
 }
 
 //----------------------------------------------------------------//
-MOAIScissorRect::MOAIScissorRect () {
+MOAIScissorRect::MOAIScissorRect () :
+ 	mRect ( ZLRect::EMPTY ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITransform )
 	RTTI_END
-	
-	this->mRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//

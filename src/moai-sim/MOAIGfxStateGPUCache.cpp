@@ -60,10 +60,9 @@ MOAIGfxStateGPUCacheFrame::MOAIGfxStateGPUCacheFrame () :
 	mDepthMask ( true ),
 	mBlendEnabled ( 0 ),
 	mPenWidth ( 1.0f ),
-	mScissorEnabled ( false ) {
-		
-	this->mScissorRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-	this->mViewRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	mScissorEnabled ( false ),
+	mScissorRect ( ZLRect::EMPTY ),
+	mViewRect ( ZLRect::EMPTY ) {
 }
 
 //----------------------------------------------------------------//

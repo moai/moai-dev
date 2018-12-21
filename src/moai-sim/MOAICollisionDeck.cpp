@@ -158,7 +158,7 @@ void MOAICollisionDeck::SetQuad ( ZLIndex idx, const ZLQuad& quad ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLBounds MOAICollisionDeck::MOAIDeck_ComputeMaxBounds () {
+ZLBounds MOAICollisionDeck::MOAIDeck_ComputeMaxAABB () {
 
 	return this->MOAIDeck::GetBounds ( ZLIndexOp::ZERO );
 }

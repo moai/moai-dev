@@ -44,7 +44,7 @@ public:
 	ZLVec3D		mCoords [ MAX_COORDS ];
 	
 	//----------------------------------------------------------------//
-	ZLBox		GetBounds		();
+	ZLBox		GetAABB		();
 };
 
 //================================================================//
@@ -124,7 +124,7 @@ protected:
 	static int			_setTotalElements			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	ZLBounds			MOAIDeck_ComputeMaxBounds		();
+	ZLBounds			MOAIDeck_ComputeMaxAABB			();
 	void				MOAIDeck_Draw					( ZLIndex idx );
 	ZLBounds			MOAIDeck_GetBounds				( ZLIndex idx );
 
@@ -147,7 +147,7 @@ public:
 	void				ReserveVertexBuffers		( u32 total );
 	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
-	void				SetBounds					( const ZLBox& bounds );
+	void				SetBounds					( const ZLBox& aabb );
 	void				SetIndexBuffer				( MOAIIndexBuffer* indexBuffer );
 };
 

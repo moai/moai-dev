@@ -244,7 +244,7 @@ void MOAIPartitionResultBuffer::PushHulls ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionResultBuffer::PushResult ( MOAIPartitionHull& hull, u32 key, int subPrimID, s32 priority, const ZLVec3D& loc, const ZLBox& bounds, const ZLVec3D& piv ) {
+void MOAIPartitionResultBuffer::PushResult ( MOAIPartitionHull& hull, u32 key, int subPrimID, s32 priority, const ZLVec3D& loc, const ZLBox& aabb, const ZLVec3D& piv ) {
 
 	u32 idx = this->mTotalResults++;
 	
@@ -262,11 +262,11 @@ void MOAIPartitionResultBuffer::PushResult ( MOAIPartitionHull& hull, u32 key, i
 	result.mPriority = priority;
 	
 	result.mLoc = loc;
-	result.mBounds = bounds;
+	result.mAABB = aabb;
 	
 	// TODO: do we need this?
 	result.mLoc.Add ( piv );
-	result.mBounds.Offset ( piv );
+	result.mAABB.Offset ( piv );
 }
 
 //----------------------------------------------------------------//
@@ -326,7 +326,7 @@ u32 MOAIPartitionResultBuffer::SortResultsIso () {
 		
 		// get the next hull to add
 		MOAIPartitionResult* result0 = &mainBuffer [ i ];
-		const ZLBox& bounds0 = result0->mBounds;
+		const ZLBox& aabb0 = result0->mAABB;
 		
 		// check incoming hull against all others
 		IsoSortItem* cursor = list.PopFront ();
@@ -335,11 +335,11 @@ u32 MOAIPartitionResultBuffer::SortResultsIso () {
 			cursor = list.PopFront ();
 			
 			MOAIPartitionResult* result1 = item->mResult;
-			const ZLBox& bounds1 = result1->mBounds;
+			const ZLBox& aabb1 = result1->mAABB;
 			
 			// front flags
-			bool f0 =(( bounds1.mMax.mX < bounds0.mMin.mX ) || ( bounds1.mMax.mY < bounds0.mMin.mY ) || ( bounds1.mMax.mZ < bounds0.mMin.mZ ));
-			bool f1 =(( bounds0.mMax.mX < bounds1.mMin.mX ) || ( bounds0.mMax.mY < bounds1.mMin.mY ) || ( bounds0.mMax.mZ < bounds1.mMin.mZ ));
+			bool f0 =(( aabb1.mMax.mX < aabb0.mMin.mX ) || ( aabb1.mMax.mY < aabb0.mMin.mY ) || ( aabb1.mMax.mZ < aabb0.mMin.mZ ));
+			bool f1 =(( aabb0.mMax.mX < aabb1.mMin.mX ) || ( aabb0.mMax.mY < aabb1.mMin.mY ) || ( aabb0.mMax.mZ < aabb1.mMin.mZ ));
 			
 			if ( f1 == f0 ) {
 				// if ambiguous, add to the don't care list
@@ -397,7 +397,7 @@ void MOAIPartitionResultBuffer::Transform ( const ZLMatrix4x4& mtx, bool transfo
 		for ( u32 i = 0; i < this->mTotalResults; ++i ) {
 			MOAIPartitionResult& result = this->mResults [ i ];
 			mtx.Transform ( result.mLoc );
-			result.mBounds.Transform ( mtx );
+			result.mAABB.Transform ( mtx );
 		}
 	}
 	else {

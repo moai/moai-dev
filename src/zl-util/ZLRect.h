@@ -15,6 +15,8 @@ template < typename TYPE = float >
 class ZLMetaRect {
 public:
 
+	static const ZLMetaRect < TYPE > EMPTY;
+
 	enum {
 		kLeft		= 1 << 0,
 		kTop		= 1 << 1,
@@ -759,9 +761,38 @@ public:
 		TYPE width = this->mXMax - this->mXMin;
 		return ( width < ( TYPE )0 ) ? -width : width;
 	}
+	
+	//----------------------------------------------------------------//
+	ZLMetaRect () {
+	}
+
+	//----------------------------------------------------------------//
+	template < typename PARAM_TYPE >
+	ZLMetaRect ( const ZLMetaVec2D < PARAM_TYPE >& point ) {
+		this->Init < PARAM_TYPE >( point );
+	}
+
+	//----------------------------------------------------------------//
+	template < typename PARAM_TYPE >
+	ZLMetaRect ( const ZLMetaRect < PARAM_TYPE >& rect ) {
+		this->Init < PARAM_TYPE >( rect );
+	}
+
+	//----------------------------------------------------------------//
+	ZLMetaRect ( ZLMetaVec3D < TYPE >& vec ) {
+		this->Init ( vec );
+	}
+
+	//----------------------------------------------------------------//
+	ZLMetaRect ( TYPE xMin, TYPE yMin, TYPE xMax, TYPE yMax ) {
+		this->Init ( xMin, yMin, xMax, yMax );
+	}
 };
+
+template < typename TYPE > const ZLMetaRect < TYPE > ZLMetaRect < TYPE >::EMPTY ( 0, 0, 0, 0 );
 
 typedef ZLMetaRect < ZLReal >	ZLRect;
 typedef ZLMetaRect < int >		ZLIntRect;
 
 #endif
+

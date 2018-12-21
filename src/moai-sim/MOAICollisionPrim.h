@@ -29,7 +29,7 @@ public:
 
 	u32			mType;
 	void*		mPtr;
-	ZLBox		mBounds;
+	ZLBox		mAABB;
 };
 
 //================================================================//
@@ -52,7 +52,7 @@ public:
 	void			Process								( MOAICollisionProp& prop0, MOAICollisionProp& prop1 );
 	void			Process								( const MOAICollisionPrim& shape0, const MOAICollisionPrim& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 );
 
-	void			Process								( const MOAICollisionShape& shape0, const ZLBox& bounds1, const ZLAffine3D& t0, const ZLAffine3D& t1 );
+	void			Process								( const MOAICollisionShape& shape0, const ZLBox& aabb1, const ZLAffine3D& t0, const ZLAffine3D& t1 );
 	void			Process								( const MOAICollisionShape& shape0, const MOAICollisionShape& shape1, const ZLAffine3D& t0, const ZLAffine3D& t1 );
 
 	void			SetProps							( MOAICollisionProp* prop0, MOAICollisionProp* prop1 );

@@ -1034,11 +1034,8 @@ int MOAIImage::_resize ( lua_State* L ) {
 	u32 height	= state.GetValue < u32 >( 3, width );
 	u32 filter	= state.GetValue < u32 >( 4, MOAIImage::FILTER_LINEAR );
 	
-	ZLIntRect srcRect;
-	ZLIntRect destRect;
-	
-	srcRect.Init ( 0, 0, self->mWidth, self->mHeight );
-	destRect.Init ( 0, 0, width, height );
+	ZLIntRect srcRect ( 0, 0, self->mWidth, self->mHeight );
+	ZLIntRect destRect ( 0, 0, width, height );
 	
 	MOAIImage* image = new MOAIImage ();
 	image->Init ( width, height, self->mColorFormat, self->mPixelFormat );
@@ -1568,8 +1565,7 @@ void MOAIImage::ClearRect ( ZLIntRect rect ) {
 
 	rect.Bless ();
 	
-	ZLIntRect bounds = this->GetBounds ();
-	bounds.Clip ( rect );
+	this->GetFrame ().Clip ( rect );
 	
 	int width = rect.Width ();
 	
@@ -1870,11 +1866,9 @@ void MOAIImage::CopyRect ( const MOAIImage& image, ZLIntRect srcRect, ZLIntRect 
 	}
 
 	// prepare the rectangles
-	ZLIntRect srcBounds;
-	srcBounds.Init ( 0, 0, image.mWidth, image.mHeight );
+	ZLIntRect srcBounds ( 0, 0, image.mWidth, image.mHeight );
 	
-	ZLIntRect destBounds;
-	destBounds.Init ( 0, 0, this->mWidth, this->mHeight );
+	ZLIntRect destBounds ( 0, 0, this->mWidth, this->mHeight );
 
 	if ( !srcRect.Overlap ( srcBounds )) return;
 	if ( !destRect.Overlap ( destBounds )) return;
@@ -2334,8 +2328,7 @@ void MOAIImage::FillRect ( ZLIntRect rect, u32 color ) {
 
 	rect.Bless ();
 	
-	ZLIntRect bounds = this->GetBounds ();
-	bounds.Clip ( rect );
+	this->GetFrame ().Clip ( rect );
 	
 	if ( !rect.Width ()) return;
 	if ( !rect.Height ()) return;
@@ -2711,14 +2704,6 @@ size_t MOAIImage::GetBitmapSize () const {
 }
 
 //----------------------------------------------------------------//
-ZLIntRect MOAIImage::GetBounds () {
-
-	ZLIntRect bounds;
-	bounds.Init ( 0, 0, this->mWidth, this->mHeight );
-	return bounds;
-}
-
-//----------------------------------------------------------------//
 u32 MOAIImage::GetColor ( u32 x, u32 y ) const {
 
 	if ( !this->mBitmap.GetSize ()) return 0;
@@ -2753,9 +2738,7 @@ ZLIntRect MOAIImage::GetContentRect () {
 	
 	if ( cropLeft == NO_CROP ) {
 		// completely empty image!
-		ZLIntRect rect;
-		rect.Init ( 0, 0, 0, 0 );
-		return rect;
+		return ZLIntRect::EMPTY;
 	}
 
 	u32 cropRight = NO_CROP;
@@ -2800,15 +2783,19 @@ ZLIntRect MOAIImage::GetContentRect () {
 			break;
 	}
 
-	ZLIntRect rect;
-	rect.Init ( cropLeft, cropTop, cropRight, cropBottom );
-	return rect;
+	return ZLIntRect ( cropLeft, cropTop, cropRight, cropBottom );
 }
 
 //----------------------------------------------------------------//
 size_t MOAIImage::GetDataSize () const {
 
 	return this->GetPaletteSize () + this->GetBitmapSize ();
+}
+
+//----------------------------------------------------------------//
+ZLIntRect MOAIImage::GetFrame () {
+
+	return ZLIntRect ( 0, 0, this->mWidth, this->mHeight );
 }
 
 //----------------------------------------------------------------//
@@ -2873,9 +2860,7 @@ u32 MOAIImage::GetPixelDepthInBits () const {
 //----------------------------------------------------------------//
 ZLIntRect MOAIImage::GetRect () {
 
-	ZLIntRect rect;
-	rect.Init ( 0, 0, this->mWidth, this->mHeight );
-	return rect;
+	return ZLIntRect ( 0, 0, this->mWidth, this->mHeight );
 }
 
 //----------------------------------------------------------------//

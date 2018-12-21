@@ -162,9 +162,8 @@ bool MOAIDynamicGlyphCache::IsDynamic () {
 
 //----------------------------------------------------------------//
 MOAIDynamicGlyphCache::MOAIDynamicGlyphCache () :
-	mColorFormat ( ZLColor::A_8 ) {
-	
-	this->mPadding.Init ( -1.0f, -1.0f, 1.0f, 1.0f );
+	mColorFormat ( ZLColor::A_8 ),
+	mPadding ( -1.0f, -1.0f, 1.0f, 1.0f ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIGlyphCache )

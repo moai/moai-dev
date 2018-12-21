@@ -17,23 +17,23 @@ void MOAIVectorStyle::Default () {
 	
 	this->SetLineStyle ( MOAIVectorStyle::LINE_NONE );
 	this->mLineColor.SetWhite ();
-	this->SetLineWidth ( 1.0f );
+	this->SetLineWidth ( 1.0 );
 	
 	this->SetStrokeStyle ( MOAIVectorStyle::STROKE_NONE );
 	this->mStrokeColor.SetWhite ();
-	this->SetStrokeWidth ( 1.0f );
-	this->SetStrokeDepthBias ( 0.0f );
+	this->SetStrokeWidth ( 1.0 );
+	this->SetStrokeDepthBias ( 0.0 );
 	this->SetJoinStyle ( MOAIVectorStyle::JOIN_MITER );
 	this->SetCapStyle ( MOAIVectorStyle::CAP_BUTT );
-	this->SetMiterLimit ( 5.0f );
+	this->SetMiterLimit ( 5.0 );
 	
 	this->SetWindingRule (( u32 )TESS_WINDING_ODD );
 	this->SetCircleResolution ( MOAIVectorStyle::DEFAULT_CIRCLE_RESOLUTION );
 	
-	this->mExtrude = 0.0f;
-	this->mZOffset = 0.0f;
+	this->mExtrude = 0.0;
+	this->mZOffset = 0.0;
 	
-	this->mLightVec.Init ( 0.0f, 0.0f, 0.0f );
+	this->mLightVec = ZLVec3D::ORIGIN;
 	
 	this->mLightColor.SetWhite ();
 	this->mLightCurve = ZLInterpolate::kLinear;
@@ -47,7 +47,7 @@ void MOAIVectorStyle::Default () {
 	this->mFillExtraID = 0;
 	this->mStrokeExtraID = 0;
 	
-	this->mMergeNormals = 0.0f;
+	this->mMergeNormals = 0.0;
 	
 	this->mPrecision = 100;
 }

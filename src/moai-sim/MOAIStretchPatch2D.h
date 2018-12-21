@@ -61,12 +61,12 @@ private:
 	void			UpdateParams			();
 
 	//----------------------------------------------------------------//
-	ZLBounds				MOAIDeck_ComputeMaxBounds				();
-	void					MOAIDeck_Draw							( ZLIndex idx );
-	ZLBounds				MOAIDeck_GetBounds						( ZLIndex idx );
-	MOAICollisionShape*		MOAIDeck_GetCollisionShape				( ZLIndex idx );
-	bool					MOAIDeck_Overlap						( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
-	bool					MOAIDeck_Overlap						( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
+	ZLBounds				MOAIDeck_ComputeMaxAABB				();
+	void					MOAIDeck_Draw						( ZLIndex idx );
+	ZLBounds				MOAIDeck_GetBounds					( ZLIndex idx );
+	MOAICollisionShape*		MOAIDeck_GetCollisionShape			( ZLIndex idx );
+	bool					MOAIDeck_Overlap					( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
+	bool					MOAIDeck_Overlap					( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
 
 public:
 	

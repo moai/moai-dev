@@ -165,10 +165,6 @@ public:
 	MOAICellCoord		ClampX					( MOAICellCoord cellCoord ) const;
 	MOAICellCoord		ClampY					( MOAICellCoord cellCoord ) const;
 	
-	ZLRect				GetBounds				() const;
-	ZLRect				GetBounds				( MOAICellCoord c0, MOAICellCoord c1 ) const;
-	void				GetBoundsInRect			( ZLRect rect, MOAICellCoord& c0, MOAICellCoord& c1, ZLRect maxSize ) const;
-	
 	ZLIndex				GetCellAddr				( MOAICellCoord cellCoord ) const;
 	ZLIndex				GetCellAddr				( int xCell, int yCell ) const;
 	MOAICellCoord		GetCellCoord			( ZLIndex cellAddr ) const;
@@ -178,6 +174,10 @@ public:
 	
 	ZLVec2D				GetCellPoint			( MOAICellCoord cellCoord, u32 position ) const;
 	ZLRect				GetCellRect				( MOAICellCoord cellCoord ) const;
+	
+	ZLRect				GetFrame				() const;
+	ZLRect				GetFrame				( MOAICellCoord c0, MOAICellCoord c1 ) const;
+	void				GetFrameInRect			( ZLRect rect, MOAICellCoord& c0, MOAICellCoord& c1, ZLRect maxSize ) const;
 	
 	ZLVec2D				GetTilePoint			( MOAICellCoord cellCoord, u32 position ) const;
 	ZLVec3D				GetTilePoint			( MOAICellCoord cellCoord, u32 position, float z ) const;

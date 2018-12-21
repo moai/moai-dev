@@ -498,26 +498,22 @@ bool MOAIParticleSystem::PushSprite ( const AKUParticleSprite& sprite ) {
 		this->mSprites [ idx ] = sprite;
 		
 		// TODO: need to take rotation into account
-		ZLBox bounds = this->mDeck->GetBounds ( sprite.mGfxID ).mAABB;
+		ZLBox aabb = this->mDeck->GetBounds ( sprite.mGfxID ).mAABB;
 		
 		ZLVec3D offset ( sprite.mXLoc, sprite.mYLoc, 0.0 );
 		ZLVec3D scale ( sprite.mXScl, sprite.mYScl, 0.0 );
 		
-		bounds.Scale ( scale );
+		aabb.Scale ( scale );
 		
-		float radius = bounds.GetMaxExtent () * 1.4; // handles case when bounds are rotated
+		float radius = aabb.GetMaxExtent () * 1.4; // handles case when bounds are rotated
 		
-		bounds.mMin.Init ( -radius, -radius, 0.0 );
-		bounds.mMax.Init ( radius, radius, 0.0 );
+		aabb.mMin.Init ( -radius, -radius, 0.0 );
+		aabb.mMax.Init ( radius, radius, 0.0 );
 		
-		bounds.Offset ( offset );
+		aabb.Offset ( offset );
 		
-		if ( this->mSpriteTop == 1 ) {
-			this->mParticleBounds = bounds;
-		}
-		else {
-			this->mParticleBounds.Grow ( bounds );
-		}
+		this->mParticleBounds.Grow ( aabb, this->mSpriteTop == 1 );
+
 		return true;
 	}
 	return false;
@@ -647,7 +643,7 @@ void MOAIParticleSystem::MOAIAction_Update ( double step ) {
 	// clear out the sprites
 	this->mSpriteTop = 0;
 
-	this->mParticleBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+	this->mParticleBounds = ZLBox::EMPTY;
 
 	// if particles
 	if ( this->mHead ) {

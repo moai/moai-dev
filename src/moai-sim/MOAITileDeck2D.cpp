@@ -310,7 +310,7 @@ void MOAITileDeck2D::TransformUV ( const ZLAffine3D& mtx ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLBounds MOAITileDeck2D::MOAIDeck_ComputeMaxBounds () {
+ZLBounds MOAITileDeck2D::MOAIDeck_ComputeMaxAABB () {
 
 	return this->MOAIDeck::GetBounds ( ZLIndexOp::ZERO );
 }

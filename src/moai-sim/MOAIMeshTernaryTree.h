@@ -24,7 +24,7 @@ private:
 	friend class MOAIMeshTernaryTreeBuilder;
 
 	u32				mIndex;			// the mesh component index (into either the vertex buffer, or the index buffer if the mesh has one)
-	ZLBox			mBounds;		// bounds of the prim
+	ZLBox			mAABB;			// bounds of the prim
 	u32				mPosition;		// front, back or overlap
 	
 	// cache the component bounds during each eval pass

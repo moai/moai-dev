@@ -33,7 +33,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIGraphicsGridProp )
 
 	//----------------------------------------------------------------//
-	void			GetGridBoundsInView			( const ZLAffine3D& worldToLocalMtx, MOAICellCoord& c0, MOAICellCoord& c1 ); // TODO: this shoudln't be here
+	void			GetGridFrameInView			( const ZLAffine3D& worldToLocalMtx, MOAICellCoord& c0, MOAICellCoord& c1 ); // TODO: this shoudln't be here
 					MOAIGraphicsGridProp		();
 	virtual			~MOAIGraphicsGridProp		();
 	void			RegisterLuaClass			( MOAILuaState& state );

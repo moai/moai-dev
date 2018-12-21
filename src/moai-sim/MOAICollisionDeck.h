@@ -28,7 +28,7 @@ private:
 	MOAICollisionShape&		AffirmShape						( ZLIndex idx );
 	
 	//----------------------------------------------------------------//
-	ZLBounds				MOAIDeck_ComputeMaxBounds		();
+	ZLBounds				MOAIDeck_ComputeMaxAABB			();
 	void					MOAIDeck_Draw					( ZLIndex idx );
 	ZLBounds				MOAIDeck_GetBounds				( ZLIndex idx );
 	MOAICollisionShape*		MOAIDeck_GetCollisionShape		( ZLIndex idx );

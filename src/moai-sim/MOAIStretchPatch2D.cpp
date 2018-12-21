@@ -291,14 +291,13 @@ void MOAIStretchPatch2D::DrawStretch ( ZLIndex idx, float xStretch, float yStret
 
 //----------------------------------------------------------------//
 MOAIStretchPatch2D::MOAIStretchPatch2D () :
+	mRect ( ZLRect::EMPTY ),
 	mNeedsUpdate ( true ) {
 
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIStretchDeck )
 		RTTI_EXTEND ( MOAIMaterialBatchHolder )
 	RTTI_END
-	
-	this->mRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//
@@ -406,7 +405,7 @@ void MOAIStretchPatch2D::SetRow ( ZLIndex idx, float percent, bool canStretch ) 
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLBounds MOAIStretchPatch2D::MOAIDeck_ComputeMaxBounds () {
+ZLBounds MOAIStretchPatch2D::MOAIDeck_ComputeMaxAABB () {
 
 	return this->GetBounds ( ZLIndexOp::ZERO );
 }

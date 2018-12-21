@@ -49,8 +49,7 @@ void MOAIBitmapFontPage::GetGlyphBounds ( MOAIBitmapGlyph& bitmapGlyph, ZLIntRec
 //----------------------------------------------------------------//
 ZLIntRect MOAIBitmapFontPage::GetGlyphFrame ( u32 x, u32 y, u32 maskColor ) {
 
-	ZLIntRect rect;
-	rect.Init ( 0, 0, 0, 0 );
+	ZLIntRect rect = ZLRect::EMPTY;
 
 	int width = this->mImage.GetWidth ();
 	int height = this->mImage.GetHeight ();

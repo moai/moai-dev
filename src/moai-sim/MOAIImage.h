@@ -192,10 +192,10 @@ public:
 	void					GenerateSDFAA					( ZLIntRect rect, float sizeInPixels );
 	void					GenerateSDFDeadReckoning		( ZLIntRect rect, int threshold );
 	size_t					GetBitmapSize					() const;
-	ZLIntRect				GetBounds						();
 	u32						GetColor						( u32 x, u32 y ) const;
 	ZLIntRect				GetContentRect					();
 	size_t					GetDataSize						() const;
+	ZLIntRect				GetFrame						();
 	static u32				GetMinPowerOfTwo				( u32 size ); // gets the smallest power of two greater than size
 	u32						GetPaletteColor					( u32 idx ) const;
 	u32						GetPaletteCount					() const;

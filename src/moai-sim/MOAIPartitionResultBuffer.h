@@ -18,7 +18,7 @@ public:
 	s32			mPriority;
 	
 	ZLVec3D		mLoc;
-	ZLBox		mBounds;
+	ZLBox		mAABB;
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
@@ -96,7 +96,7 @@ public:
 	MOAIPartitionResult*	PopResult						();
 	void					Project							( const ZLMatrix4x4& mtx );
 	void					PushHulls						( lua_State* L );
-	void					PushResult						( MOAIPartitionHull& hull, u32 key, int subPrimID, s32 priority, const ZLVec3D& loc, const ZLBox& bounds, const ZLVec3D& piv );
+	void					PushResult						( MOAIPartitionHull& hull, u32 key, int subPrimID, s32 priority, const ZLVec3D& loc, const ZLBox& aabb, const ZLVec3D& piv );
 	void					Reset							();
 	u32						Sort							( u32 mode );
 	void					Transform						( const ZLMatrix4x4& mtx, bool transformBounds );

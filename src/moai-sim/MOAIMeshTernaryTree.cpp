@@ -30,8 +30,8 @@ void MOAIMeshTernaryTreeBuilder::Build ( MOAIMeshTernaryTree& meshPartition, con
 			MOAIMeshTernaryTreeBuilderPrim& partitionPrim = this->mPrims [ ZLIndexCast ( totalPrims++ )];
 			
 			partitionPrim.mIndex = prim.mIndex;
-			partitionPrim.mBounds = prim.GetBounds ();
-			partitionPrim.mBounds.Bless ();
+			partitionPrim.mAABB = prim.GetAABB ();
+			partitionPrim.mAABB.Bless ();
 		}
 	}
 	
@@ -58,7 +58,7 @@ void MOAIMeshTernaryTreeBuilder::Build ( MOAIMeshTernaryTree& meshPartition, con
 			const MOAIMeshTernaryTreeBuilderPrim& prim = this->mPrims [ j ];
 		
 			sortBuffer [ j ].mData = j;
-			sortBuffer [ j ].mKey = ZLFloat::FloatToIntKey ( prim.mBounds.mMin.GetComponent ( i ));
+			sortBuffer [ j ].mKey = ZLFloat::FloatToIntKey ( prim.mAABB.mMin.GetComponent ( i ));
 		}
 		
 		PrimSortKey* sortedKeys = RadixSort32 < PrimSortKey >( sortBuffer.GetBuffer (), &sortBuffer [ ZLIndexCast ( totalPrims )], totalPrims );
@@ -139,8 +139,8 @@ MOAIMeshTernaryTreeNode* MOAIMeshTernaryTreeBuilder::BuildRecurse ( PrimPtrArray
 	
 		MOAIMeshTernaryTreeBuilderPrim* prim = sortedPrims [ bestAxis ][ i ];
 		
-		float lower = prim->mBounds.mMin.GetComponent ( bestAxis );
-		float upper = prim->mBounds.mMax.GetComponent ( bestAxis );
+		float lower = prim->mAABB.mMin.GetComponent ( bestAxis );
+		float upper = prim->mAABB.mMax.GetComponent ( bestAxis );
 		
 		if ((( lower == plane ) && ( upper == plane )) || (( lower < plane ) && ( upper > plane ))) {
 			prim->mPosition = PRIM_OVERLAP;
@@ -243,15 +243,15 @@ void MOAIMeshTernaryTreeBuilder::Eval ( PrimPtrArray& sortedPrims, u32 totalPrim
 	this->mOverlapTop = 0;
 	this->mOverlapMin = 0.0f;
 
-	float lowerBound = sortedPrims [ ZLIndexOp::ZERO ]->mBounds.mMin.GetComponent ( axis );
+	float lowerBound = sortedPrims [ ZLIndexOp::ZERO ]->mAABB.mMin.GetComponent ( axis );
 	float upperBound = lowerBound;
 	
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalPrims; ++i ) {
 	
 		MOAIMeshTernaryTreeBuilderPrim* prim = sortedPrims [ i ];
 		
-		prim->mLower = prim->mBounds.mMin.GetComponent ( axis );
-		prim->mUpper = prim->mBounds.mMax.GetComponent ( axis );
+		prim->mLower = prim->mAABB.mMin.GetComponent ( axis );
+		prim->mUpper = prim->mAABB.mMax.GetComponent ( axis );
 		
 		if ( upperBound < prim->mUpper ) {
 			upperBound = prim->mUpper;

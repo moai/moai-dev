@@ -648,97 +648,6 @@ MOAICellCoord MOAIGridSpace::GetAxialHexCellCoord ( float x, float y ) const {
 }
 
 //----------------------------------------------------------------//
-ZLRect MOAIGridSpace::GetBounds () const {
-
-	ZLRect rect;
-
-	rect.mXMin = 0.0f;
-	rect.mYMin = 0.0f;
-	
-	rect.mXMax = this->mWidth * this->mCellWidth;
-	rect.mYMax = this->mHeight * this->mCellHeight;
-	
-	if ( this->mShape & STAGGER_FLAG ) {
-		rect.mXMax += this->mCellWidth * 0.5f;
-		rect.mYMin -= this->mCellHeight * 0.5f;
-		rect.mYMax += this->mCellHeight * 0.5f;
-	}
-	if ( this->mShape == AXIAL_HEX_SHAPE ) {
-		rect.mXMin -= this->mCellWidth * 0.5f * (this->mHeight - 1);
-		rect.mYMax -= this->mCellHeight * 0.25f * (this->mHeight - 1);
-	}
-	
-	return rect;
-}
-
-//----------------------------------------------------------------//
-ZLRect MOAIGridSpace::GetBounds ( MOAICellCoord c0, MOAICellCoord c1 ) const {
-
-	ZLRect rect0 = this->GetCellRect ( c0 );
-	ZLRect rect1 = this->GetCellRect ( c1 );
-	
-	rect0.Grow ( rect1 );
-	
-	if ( this->mShape & STAGGER_FLAG ) {
-		rect0.mXMax += this->mCellWidth * 0.5f;
-		rect0.mYMin -= this->mCellHeight * 0.5f;
-		rect0.mYMax += this->mCellHeight * 0.5f;
-	}
-	if ( this->mShape == AXIAL_HEX_SHAPE ) {
-		float rectHeight = rect0.mYMax - rect0.mYMin;
-		rect0.mXMin -= this->mCellWidth * 0.5f * rectHeight;
-		rect0.mYMax -= this->mCellHeight * 0.25f * rectHeight;
-	}
-	
-	return rect0;
-}
-
-//----------------------------------------------------------------//
-void MOAIGridSpace::GetBoundsInRect ( ZLRect rect, MOAICellCoord& c0, MOAICellCoord& c1, ZLRect maxSize ) const {
-
-	rect.Bless ();
-	maxSize.Bless ();
-
-	if ( this->mShape == AXIAL_HEX_SHAPE ) {
-
-		c0 = this->GetAxialHexCellCoord ( rect.mXMin, rect.mYMin );
-		c1 = this->GetAxialHexCellCoord ( rect.mXMax, rect.mYMax );
-
-		int rectHeight = c1.mY - c0.mY;
-
-		// you need an extra column per two rows
-		c1.mX = c1.mX +  ( rectHeight >> 1 );
-	} else {
-		c0.mX = ( int )floorf ( ( rect.mXMin / this->mCellWidth )  - ( maxSize.mXMax / 0.5f - 1.0f ) );
-		c0.mY = ( int )floorf ( ( rect.mYMin / this->mCellHeight ) - ( maxSize.mYMax / 0.5f - 1.0f ) );
-
-		c1.mX = ( int )floorf ( ( rect.mXMax / this->mCellWidth )  + ( maxSize.mXMin / -0.5f - 1.0f ) );
-		c1.mY = ( int )floorf ( ( rect.mYMax / this->mCellHeight ) + ( maxSize.mYMin / -0.5f - 1.0f ) );
-	}
-	
-	if ( this->mShape & STAGGER_FLAG ) {
-		c0.mX--;
-		c0.mY--;
-		c1.mY++;
-	}
-
-	
-	if ( this->mShape == OBLIQUE_SHAPE ) {
-		c0.mX--;
-	}
-	
-	if ( !( this->mRepeat & REPEAT_X )) {
-		c0 = this->ClampX ( c0 );
-		c1 = this->ClampX ( c1 );
-	}
-	
-	if ( !( this->mRepeat & REPEAT_Y )) {
-		c0 = this->ClampY ( c0 );
-		c1 = this->ClampY ( c1 );
-	}
-}
-
-//----------------------------------------------------------------//
 ZLIndex MOAIGridSpace::GetCellAddr ( MOAICellCoord cellCoord ) const {
 
 	return this->GetCellAddr ( cellCoord.mX, cellCoord.mY );
@@ -864,6 +773,96 @@ ZLRect MOAIGridSpace::GetCellRect ( MOAICellCoord cellCoord ) const {
 	rect.mYMax = rect.mYMin + this->mCellHeight;
 	
 	return rect;
+}
+
+//----------------------------------------------------------------//
+ZLRect MOAIGridSpace::GetFrame () const {
+
+	ZLRect rect;
+
+	rect.mXMin = 0.0f;
+	rect.mYMin = 0.0f;
+	
+	rect.mXMax = this->mWidth * this->mCellWidth;
+	rect.mYMax = this->mHeight * this->mCellHeight;
+	
+	if ( this->mShape & STAGGER_FLAG ) {
+		rect.mXMax += this->mCellWidth * 0.5f;
+		rect.mYMin -= this->mCellHeight * 0.5f;
+		rect.mYMax += this->mCellHeight * 0.5f;
+	}
+	if ( this->mShape == AXIAL_HEX_SHAPE ) {
+		rect.mXMin -= this->mCellWidth * 0.5f * (this->mHeight - 1);
+		rect.mYMax -= this->mCellHeight * 0.25f * (this->mHeight - 1);
+	}
+	
+	return rect;
+}
+
+//----------------------------------------------------------------//
+ZLRect MOAIGridSpace::GetFrame ( MOAICellCoord c0, MOAICellCoord c1 ) const {
+
+	ZLRect rect0 = this->GetCellRect ( c0 );
+	ZLRect rect1 = this->GetCellRect ( c1 );
+	
+	rect0.Grow ( rect1 );
+	
+	if ( this->mShape & STAGGER_FLAG ) {
+		rect0.mXMax += this->mCellWidth * 0.5f;
+		rect0.mYMin -= this->mCellHeight * 0.5f;
+		rect0.mYMax += this->mCellHeight * 0.5f;
+	}
+	if ( this->mShape == AXIAL_HEX_SHAPE ) {
+		float rectHeight = rect0.mYMax - rect0.mYMin;
+		rect0.mXMin -= this->mCellWidth * 0.5f * rectHeight;
+		rect0.mYMax -= this->mCellHeight * 0.25f * rectHeight;
+	}
+	
+	return rect0;
+}
+
+//----------------------------------------------------------------//
+void MOAIGridSpace::GetFrameInRect ( ZLRect rect, MOAICellCoord& c0, MOAICellCoord& c1, ZLRect maxSize ) const {
+
+	rect.Bless ();
+	maxSize.Bless ();
+
+	if ( this->mShape == AXIAL_HEX_SHAPE ) {
+
+		c0 = this->GetAxialHexCellCoord ( rect.mXMin, rect.mYMin );
+		c1 = this->GetAxialHexCellCoord ( rect.mXMax, rect.mYMax );
+
+		int rectHeight = c1.mY - c0.mY;
+
+		// you need an extra column per two rows
+		c1.mX = c1.mX +  ( rectHeight >> 1 );
+	} else {
+		c0.mX = ( int )floorf ( ( rect.mXMin / this->mCellWidth )  - ( maxSize.mXMax / 0.5f - 1.0f ) );
+		c0.mY = ( int )floorf ( ( rect.mYMin / this->mCellHeight ) - ( maxSize.mYMax / 0.5f - 1.0f ) );
+
+		c1.mX = ( int )floorf ( ( rect.mXMax / this->mCellWidth )  + ( maxSize.mXMin / -0.5f - 1.0f ) );
+		c1.mY = ( int )floorf ( ( rect.mYMax / this->mCellHeight ) + ( maxSize.mYMin / -0.5f - 1.0f ) );
+	}
+	
+	if ( this->mShape & STAGGER_FLAG ) {
+		c0.mX--;
+		c0.mY--;
+		c1.mY++;
+	}
+	
+	if ( this->mShape == OBLIQUE_SHAPE ) {
+		c0.mX--;
+	}
+	
+	if ( !( this->mRepeat & REPEAT_X )) {
+		c0 = this->ClampX ( c0 );
+		c1 = this->ClampX ( c1 );
+	}
+	
+	if ( !( this->mRepeat & REPEAT_Y )) {
+		c0 = this->ClampY ( c0 );
+		c1 = this->ClampY ( c1 );
+	}
 }
 
 //----------------------------------------------------------------//

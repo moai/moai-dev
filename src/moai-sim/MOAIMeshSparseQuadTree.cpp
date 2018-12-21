@@ -34,11 +34,11 @@ void MOAIMeshSparseQuadTreeBuilder::Build ( MOAIMeshSparseQuadTree& meshPartitio
 		MOAIMeshSparseQuadBuilderPrim& partitionPrim = this->mPrims [ i ];
 		
 		partitionPrim.mIndex = prim.mIndex;
-		partitionPrim.mBounds = prim.GetBounds ();
-		partitionPrim.mBounds.Bless ();
+		partitionPrim.mAABB = prim.GetAABB ();
+		partitionPrim.mAABB.Bless ();
 		partitionPrim.mNext = 0;
 		
-		ZLRect frame = partitionPrim.mBounds.GetRect ( ZLBox::PLANE_XY );
+		ZLRect frame = partitionPrim.mAABB.GetRect ( ZLBox::PLANE_XY );
 		
 		if ( i == 0 ) {
 			bounds = frame;
@@ -118,7 +118,7 @@ MOAIMeshSparseQuadTreeNode* MOAIMeshSparseQuadTreeBuilder::InsertPrim ( ZLQuadCo
 	origin.Set ( 0, 0 );
 
 	ZLRect cellBounds = origin.GetRect ( this->mWidth, this->mWidth );
-	ZLRect primBounds = prim.mBounds.GetRect ( ZLBox::PLANE_XY );
+	ZLRect primBounds = prim.mAABB.GetRect ( ZLBox::PLANE_XY );
 
 	float tileSize = cellBounds.Width ();
 
