@@ -280,7 +280,7 @@ MOAIPartitionViewLayer::MOAIPartitionViewLayer () :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIPartitionHolder )
-		RTTI_EXTEND ( MOAIViewLayer )
+		RTTI_EXTEND ( MOAIAbstractViewLayer )
 	RTTI_END
 	
 	this->mSortScale [ 0 ] = 0.0f;
@@ -297,7 +297,7 @@ MOAIPartitionViewLayer::~MOAIPartitionViewLayer () {
 void MOAIPartitionViewLayer::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIPartitionHolder::RegisterLuaClass ( state );
-	MOAIViewLayer::RegisterLuaClass ( state );
+	MOAIAbstractViewLayer::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "SORT_NONE",						( u32 )MOAIPartitionResultBuffer::SORT_NONE );
 	state.SetField ( -1, "SORT_ISO",						( u32 )MOAIPartitionResultBuffer::SORT_ISO );
@@ -319,16 +319,16 @@ void MOAIPartitionViewLayer::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIPartitionViewLayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIPartitionHolder::RegisterLuaFuncs ( state );
-	MOAIViewLayer::RegisterLuaFuncs ( state );
+	MOAIAbstractViewLayer::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "getLayerPartition",		MOAIPartitionHolder::_getPartition },
-		{ "getPartition",			MOAIViewLayer::_getPartition },
+		{ "getPartition",			MOAIAbstractViewLayer::_getPartition },
 		{ "getPropViewList",		_getPropViewList },
 		{ "getSortMode",			_getSortMode },
 		{ "getSortScale",			_getSortScale },
 		{ "setLayerPartition",		MOAIPartitionHolder::_setPartition },
-		{ "setPartition",			MOAIViewLayer::_setPartition },
+		{ "setPartition",			MOAIAbstractViewLayer::_setPartition },
 		{ "setPartitionCull2D",		_setPartitionCull2D },
 		{ "setSortMode",			_setSortMode },
 		{ "setSortScale",			_setSortScale },
@@ -353,7 +353,7 @@ void MOAIPartitionViewLayer::SerializeOut ( MOAILuaState& state, MOAISerializer&
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPartitionViewLayer::MOAIViewLayer_Draw () {
+void MOAIPartitionViewLayer::MOAIAbstractViewLayer_Draw () {
 	
 	if ( this->MOAIPartitionHolder::mPartition ) {
 		this->DrawPartition ( *this->MOAIPartitionHolder::mPartition );

@@ -19,8 +19,8 @@ class MOAIProjectionProp :
 protected:
 
 	MOAILuaSharedPtr < MOAIGraphicsPropBase >	mSourceProp;
-	MOAILuaSharedPtr < MOAIViewLayer > 			mSourceLayer;
-	MOAILuaSharedPtr < MOAIViewLayer > 			mDestLayer;
+	MOAILuaSharedPtr < MOAIAbstractViewLayer > 			mSourceLayer;
+	MOAILuaSharedPtr < MOAIAbstractViewLayer > 			mDestLayer;
 
 	//----------------------------------------------------------------//
 	static int				_init						( lua_State* L );

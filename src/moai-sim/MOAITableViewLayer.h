@@ -4,8 +4,8 @@
 #ifndef	MOAITABLEVIEWLAYER_H
 #define	MOAITABLEVIEWLAYER_H
 
+#include <moai-sim/MOAIAbstractViewLayer.h>
 #include <moai-sim/MOAITableLayer.h>
-#include <moai-sim/MOAIViewLayer.h>
 
 //================================================================//
 // MOAITableViewLayer
@@ -13,12 +13,12 @@
 // TODO: doxygen
 class MOAITableViewLayer :
 	public virtual MOAITableLayer,
-	public virtual MOAIViewLayer {
+	public virtual MOAIAbstractViewLayer {
 private:
 
 	//----------------------------------------------------------------//
-	void				MOAIAbstractDrawable_Draw	( int subPrimID );
-	void				MOAIViewLayer_Draw			();
+	void				MOAIAbstractDrawable_Draw			( int subPrimID );
+	void				MOAIAbstractViewLayer_Draw			();
 
 public:
 	

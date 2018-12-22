@@ -19,10 +19,10 @@ int MOAIProjectionProp::_init ( lua_State* L ) {
 	MOAIGraphicsPropBase* sourceProp = state.GetLuaObject < MOAIGraphicsPropBase >( 2, true );
 	if ( !sourceProp ) return 0;
 	
-	MOAIViewLayer* sourceLayer = state.GetLuaObject < MOAIViewLayer >( 3, true );
+	MOAIAbstractViewLayer* sourceLayer = state.GetLuaObject < MOAIAbstractViewLayer >( 3, true );
 	if ( !sourceLayer ) return 0;
 	
-	MOAIViewLayer* destLayer = state.GetLuaObject < MOAIViewLayer >( 4, true );
+	MOAIAbstractViewLayer* destLayer = state.GetLuaObject < MOAIAbstractViewLayer >( 4, true );
 	if ( !destLayer ) return 0;
 	
 	self->SetDependentMember ( self->mSourceProp, sourceProp );

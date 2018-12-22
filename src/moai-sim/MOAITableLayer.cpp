@@ -50,7 +50,7 @@ int MOAITableLayer::_setRenderTable ( lua_State* L ) {
 MOAITableLayer::MOAITableLayer () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAILayer )
+		RTTI_EXTEND ( MOAIAbstractLayer )
 	RTTI_END
 }
 
@@ -61,13 +61,13 @@ MOAITableLayer::~MOAITableLayer () {
 //----------------------------------------------------------------//
 void MOAITableLayer::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAILayer::RegisterLuaClass ( state );
+	MOAIAbstractLayer::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAITableLayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAILayer::RegisterLuaFuncs ( state );
+	MOAIAbstractLayer::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "getRenderTable",				_getRenderTable },

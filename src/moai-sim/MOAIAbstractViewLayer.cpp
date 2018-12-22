@@ -2,12 +2,12 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-sim/MOAIAbstractViewLayer.h>
 #include <moai-sim/MOAICamera.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIFrameBufferTexture.h>
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIViewLayer.h>
 #include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
@@ -27,11 +27,11 @@
 /**	@lua	getCamera
 	@text	Get the camera associated with the layer.
 	
-	@in		MOAIViewLayer self
+	@in		MOAIAbstractViewLayer self
 	@out	MOAICamera camera
 */
-int MOAIViewLayer::_getCamera ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIViewLayer, "U" )
+int MOAIAbstractViewLayer::_getCamera ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractViewLayer, "U" )
 	state.Push (( MOAILuaObject* )self->mCamera );
 	return 1;
 }
@@ -44,7 +44,7 @@ int MOAIViewLayer::_getCamera ( lua_State* L ) {
 			this method to get the fitting, then animate the camera
 			to match.
 	
-	@in		MOAIViewLayer self
+	@in		MOAIAbstractViewLayer self
 	@in		number xMin
 	@in		number yMin
 	@in		number xMax
@@ -55,8 +55,8 @@ int MOAIViewLayer::_getCamera ( lua_State* L ) {
 	@out	number y		Y center of fitting (use for camera location).
 	@out	number s		Scale of fitting (use for camera scale).
 */
-int MOAIViewLayer::_getFitting ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIViewLayer, "UNNNN" )
+int MOAIAbstractViewLayer::_getFitting ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractViewLayer, "UNNNN" )
 
 	ZLRect worldRect;
 	worldRect.mXMin = state.GetValue < float >( 2, 0.0f );
@@ -88,14 +88,14 @@ int MOAIViewLayer::_getFitting ( lua_State* L ) {
 			(i.e. orient the camera first, then call this to derive the
 			correct position).
 	
-	@in		MOAIViewLayer self
+	@in		MOAIAbstractViewLayer self
 	@in		table targets		A table of either props or locations. Locations are tables containing {x, y, z, r}.
 	@out	number x
 	@out	number y
 	@out	number z
 */
-int MOAIViewLayer::_getFitting3D ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIViewLayer, "UT" )
+int MOAIAbstractViewLayer::_getFitting3D ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractViewLayer, "UT" )
 
 	if (( !self->mViewport ) || ( !self->mCamera ) || ( self->mCamera->GetType () != MOAICamera::CAMERA_TYPE_3D )) return 0;
 	
@@ -161,11 +161,11 @@ int MOAIViewLayer::_getFitting3D ( lua_State* L ) {
 /**	@lua	getViewport
 	@text	Return the viewport currently associated with the layer.
 	
-	@in		MOAIViewLayer self
+	@in		MOAIAbstractViewLayer self
 	@out	MOAILuaObject viewport
 */
-int MOAIViewLayer::_getViewport ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIViewLayer, "U" )
+int MOAIAbstractViewLayer::_getViewport ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractViewLayer, "U" )
 	state.Push (( MOAILuaObject* )self->mViewport );
 	return 1;
 }
@@ -177,18 +177,18 @@ int MOAIViewLayer::_getViewport ( lua_State* L ) {
 	
 	@overload
 	
-		@in		MOAIViewLayer self
+		@in		MOAIAbstractViewLayer self
 		@opt	MOAICamera camera		Default value is nil.
 		@out	nil
 	
 	@overload
 	
-		@in		MOAIViewLayer self
+		@in		MOAIAbstractViewLayer self
 		@opt	MOAICamera2D camera		Default value is nil.
 		@out	nil
 */
-int MOAIViewLayer::_setCamera ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIViewLayer, "U" )
+int MOAIAbstractViewLayer::_setCamera ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractViewLayer, "U" )
 
 	self->mCamera.Set ( *self, state.GetLuaObject < MOAICamera >( 2, true ));
 
@@ -197,8 +197,8 @@ int MOAIViewLayer::_setCamera ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIViewLayer::_setDebugCamera ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIViewLayer, "U" )
+int MOAIAbstractViewLayer::_setDebugCamera ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractViewLayer, "U" )
 
 	self->mDebugCamera.Set ( *self, state.GetLuaObject < MOAICamera >( 2, true ));
 
@@ -210,14 +210,14 @@ int MOAIViewLayer::_setDebugCamera ( lua_State* L ) {
 	@text	Sets the parallax scale for this layer. This is simply a
 			scalar applied to the view transform before rendering.
 	
-	@in		MOAIViewLayer self
+	@in		MOAIAbstractViewLayer self
 	@opt	number xParallax	Default value is 1.
 	@opt	number yParallax	Default value is 1.
 	@opt	number zParallax	Default value is 1.
 	@out	nil
 */
-int MOAIViewLayer::_setParallax ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIViewLayer, "U" )
+int MOAIAbstractViewLayer::_setParallax ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractViewLayer, "U" )
 
 	self->mParallax.mX = state.GetValue < float >( 2, 1.0f );
 	self->mParallax.mY = state.GetValue < float >( 3, 1.0f );
@@ -230,12 +230,12 @@ int MOAIViewLayer::_setParallax ( lua_State* L ) {
 /**	@lua	setViewport
 	@text	Set the layer's viewport.
 	
-	@in		MOAIViewLayer self
+	@in		MOAIAbstractViewLayer self
 	@in		MOAIViewport viewport
 	@out	nil
 */
-int MOAIViewLayer::_setViewport ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIViewLayer, "UU" )
+int MOAIAbstractViewLayer::_setViewport ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractViewLayer, "UU" )
 
 	self->mViewport.Set ( *self, state.GetLuaObject < MOAIViewport >( 2, true ));
 
@@ -246,12 +246,12 @@ int MOAIViewLayer::_setViewport ( lua_State* L ) {
 /**	@lua	showDebugLines
 	@text	Display debug lines for props in this layer.
 	
-	@in		MOAIViewLayer self
+	@in		MOAIAbstractViewLayer self
 	@opt	boolean showDebugLines		Default value is 'true'.
 	@out	nil
 */
-int	MOAIViewLayer::_showDebugLines ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIViewLayer, "U" )
+int	MOAIAbstractViewLayer::_showDebugLines ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractViewLayer, "U" )
 	
 	self->mShowDebugLines = state.GetValue < bool >( 2, true );
 	
@@ -262,15 +262,15 @@ int	MOAIViewLayer::_showDebugLines ( lua_State* L ) {
 /**	@lua	wndToWorld
 	@text	Project a point from window space into world space.
 	
-	@in		MOAIViewLayer self
+	@in		MOAIAbstractViewLayer self
 	@in		number x
 	@in		number y
 	@out	number x
 	@out	number y
 	@out	number z
 */
-int MOAIViewLayer::_wndToWorld ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIViewLayer, "UNN" )
+int MOAIAbstractViewLayer::_wndToWorld ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractViewLayer, "UNN" )
 
 	ZLMatrix4x4 worldToWnd = self->GetWorldToWndMtx ();
 
@@ -303,7 +303,7 @@ int MOAIViewLayer::_wndToWorld ( lua_State* L ) {
 			a normal vector representing a ray cast from the point into
 			the world away from the camera (suitable for 3D picking).
 	
-	@in		MOAIViewLayer self
+	@in		MOAIAbstractViewLayer self
 	@in		number x
 	@in		number y
 	@in		number d	If non-zero, scale normal by dist to plane d units away from camera. Default is zero.
@@ -314,8 +314,8 @@ int MOAIViewLayer::_wndToWorld ( lua_State* L ) {
 	@out	number yn
 	@out	number zn
 */
-int MOAIViewLayer::_wndToWorldRay ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIViewLayer, "UNN" )
+int MOAIAbstractViewLayer::_wndToWorldRay ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractViewLayer, "UNN" )
 
 	if ( self->mCamera ) {
 		self->mCamera->ForceUpdate ();
@@ -392,7 +392,7 @@ int MOAIViewLayer::_wndToWorldRay ( lua_State* L ) {
 /**	@lua	worldToWnd
 	@text	Transform a point from world space to window space.
 	
-	@in		MOAIViewLayer self
+	@in		MOAIAbstractViewLayer self
 	@in		number x
 	@in		number y
 	@in		number Z
@@ -400,8 +400,8 @@ int MOAIViewLayer::_wndToWorldRay ( lua_State* L ) {
 	@out	number y
 	@out	number z
 */
-int MOAIViewLayer::_worldToWnd ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIViewLayer, "UNN" )
+int MOAIAbstractViewLayer::_worldToWnd ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractViewLayer, "UNN" )
 
 	ZLVec4D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );
@@ -420,11 +420,11 @@ int MOAIViewLayer::_worldToWnd ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAIViewLayer
+// MOAIAbstractViewLayer
 //================================================================//
 
 //----------------------------------------------------------------//
-float MOAIViewLayer::GetFitting ( ZLRect& worldRect, float hPad, float vPad ) {
+float MOAIAbstractViewLayer::GetFitting ( ZLRect& worldRect, float hPad, float vPad ) {
 
 	if ( !( this->mCamera && this->mViewport )) return 1.0f;
 
@@ -437,30 +437,30 @@ float MOAIViewLayer::GetFitting ( ZLRect& worldRect, float hPad, float vPad ) {
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIViewLayer::GetWndToWorldMtx () const {
+ZLMatrix4x4 MOAIAbstractViewLayer::GetWndToWorldMtx () const {
 
 	return MOAIViewProj::GetWndToWorldMtx ( this->mViewport, this->mCamera, this->mLocalToWorldMtx, this->mParallax );
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIViewLayer::GetWorldToWndMtx () const {
+ZLMatrix4x4 MOAIAbstractViewLayer::GetWorldToWndMtx () const {
 
 	return MOAIViewProj::GetWorldToWndMtx ( this->mViewport, this->mCamera, this->mLocalToWorldMtx, this->mParallax );
 }
 
 //----------------------------------------------------------------//
-MOAIViewLayer::MOAIViewLayer () :
+MOAIAbstractViewLayer::MOAIAbstractViewLayer () :
 	mParallax ( 1.0f, 1.0f, 1.0f ),
 	mShowDebugLines ( true ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIGraphicsProp )
-		RTTI_EXTEND ( MOAILayer )
+		RTTI_EXTEND ( MOAIAbstractLayer )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
-MOAIViewLayer::~MOAIViewLayer () {
+MOAIAbstractViewLayer::~MOAIAbstractViewLayer () {
 
 	this->mCamera.Set ( *this, 0 );
 	this->mDebugCamera.Set ( *this, 0 );
@@ -468,17 +468,17 @@ MOAIViewLayer::~MOAIViewLayer () {
 }
 
 //----------------------------------------------------------------//
-void MOAIViewLayer::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIAbstractViewLayer::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIGraphicsProp::RegisterLuaClass ( state );
-	MOAILayer::RegisterLuaClass ( state );
+	MOAIAbstractLayer::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIViewLayer::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIAbstractViewLayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIGraphicsProp::RegisterLuaFuncs ( state );
-	MOAILayer::RegisterLuaFuncs ( state );
+	MOAIAbstractLayer::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "getCamera",				_getCamera },
@@ -504,7 +504,7 @@ void MOAIViewLayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIViewLayer::MOAIAbstractDrawable_Draw ( int subPrimID ) {
+void MOAIAbstractViewLayer::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
     
    	if ( !this->IsVisible ()) return;
@@ -532,7 +532,7 @@ void MOAIViewLayer::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 	// set up the ambient color
 	gfxState.SetAmbientColor ( this->mColor );
 	
-	this->MOAIViewLayer_Draw ();
+	this->MOAIAbstractViewLayer_Draw ();
 	
 	if ( MOAIDebugLinesMgr::Get ().IsVisible () && this->mShowDebugLines ) {
 		if ( this->mCamera ) {
@@ -543,12 +543,12 @@ void MOAIViewLayer::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIViewLayer::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
+void MOAIAbstractViewLayer::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
 }
 
 //----------------------------------------------------------------//
-ZLBounds MOAIViewLayer::MOAIAbstractProp_GetModelBounds () {
+ZLBounds MOAIAbstractViewLayer::MOAIAbstractProp_GetModelBounds () {
 	
 	if ( this->mViewport ) {
 		ZLBounds bounds ( this->mViewport->GetRect ());

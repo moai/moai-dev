@@ -4,11 +4,10 @@
 #ifndef	MOAIPARTITIONVIEWLAYER_H
 #define	MOAIPARTITIONVIEWLAYER_H
 
+#include <moai-sim/MOAIAbstractViewLayer.h>
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIGraphicsProp.h>
-#include <moai-sim/MOAIViewLayer.h>
 #include <moai-sim/MOAIPartitionHolder.h>
-#include <moai-sim/MOAILayer.h>
 #include <moai-sim/MOAIViewport.h>
 
 //================================================================//
@@ -32,7 +31,7 @@
 */
 class MOAIPartitionViewLayer :
 	public virtual MOAIPartitionHolder,
-	public virtual MOAIViewLayer {
+	public virtual MOAIAbstractViewLayer {
 private:
 
 	u32			mSortMode;
@@ -56,7 +55,7 @@ private:
 	void			DrawPropsDebug			( MOAIPartitionResultBuffer& buffer);
 
 	//----------------------------------------------------------------//
-	void			MOAIViewLayer_Draw		();
+	void			MOAIAbstractViewLayer_Draw		();
 
 public:
 		

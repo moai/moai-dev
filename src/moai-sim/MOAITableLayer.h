@@ -4,7 +4,7 @@
 #ifndef	MOAITABLELAYER_H
 #define	MOAITABLELAYER_H
 
-#include <moai-sim/MOAILayer.h>
+#include <moai-sim/MOAIAbstractLayer.h>
 
 class MOAIColor;
 class MOAIFrameBuffer;
@@ -14,7 +14,7 @@ class MOAIPartition;
 // MOAITableLayer
 //================================================================//
 class MOAITableLayer :
-	public virtual MOAILayer {
+	public virtual MOAIAbstractLayer {
 protected:
 
 	MOAILuaMemberRef	mRenderTable;

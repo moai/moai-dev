@@ -32,7 +32,7 @@ MOAITableViewLayer::MOAITableViewLayer () {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITableLayer )
-		RTTI_EXTEND ( MOAIViewLayer )
+		RTTI_EXTEND ( MOAIAbstractViewLayer )
 	RTTI_END
 }
 
@@ -44,28 +44,28 @@ MOAITableViewLayer::~MOAITableViewLayer () {
 void MOAITableViewLayer::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAITableLayer::RegisterLuaClass ( state );
-	MOAIViewLayer::RegisterLuaClass ( state );
+	MOAIAbstractViewLayer::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAITableViewLayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAITableLayer::RegisterLuaFuncs ( state );
-	MOAIViewLayer::RegisterLuaFuncs ( state );
+	MOAIAbstractViewLayer::RegisterLuaFuncs ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAITableViewLayer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
 	MOAITableLayer::SerializeIn ( state, serializer );
-	MOAIViewLayer::SerializeIn ( state, serializer );
+	MOAIAbstractViewLayer::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAITableViewLayer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
 	MOAITableLayer::SerializeOut ( state, serializer );
-	MOAIViewLayer::SerializeOut ( state, serializer );
+	MOAIAbstractViewLayer::SerializeOut ( state, serializer );
 }
 
 //================================================================//
@@ -75,11 +75,11 @@ void MOAITableViewLayer::SerializeOut ( MOAILuaState& state, MOAISerializer& ser
 //----------------------------------------------------------------//
 void MOAITableViewLayer::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 
-	this->MOAIViewLayer::MOAIAbstractDrawable_Draw ( subPrimID );
+	this->MOAIAbstractViewLayer::MOAIAbstractDrawable_Draw ( subPrimID );
 }
 
 //----------------------------------------------------------------//
-void MOAITableViewLayer::MOAIViewLayer_Draw () {
+void MOAITableViewLayer::MOAIAbstractViewLayer_Draw () {
 	
 	MOAIAbstractDrawable::Draw ( this->mRenderTable );
 	

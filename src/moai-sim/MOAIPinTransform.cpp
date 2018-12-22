@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIViewLayer.h>
+#include <moai-sim/MOAIAbstractViewLayer.h>
 #include <moai-sim/MOAIPinTransform.h>
 
 //================================================================//
@@ -53,18 +53,18 @@ int MOAIPinTransform::_getWorldBoundsCenter ( lua_State* L ) {
 			space coordinates - map pins, for example).
 	
 	@in		MOAIPinTransform self
-	@in		MOAIViewLayer sourceLayer
-	@in		MOAIViewLayer destLayer
+	@in		MOAIAbstractViewLayer sourceLayer
+	@in		MOAIAbstractViewLayer destLayer
 	@out	nil
 */
 int MOAIPinTransform::_init ( lua_State* L ) {
 	
 	MOAI_LUA_SETUP ( MOAIPinTransform, "UUU" );
 	
-	MOAIViewLayer* sourceLayer = state.GetLuaObject < MOAIViewLayer >( 2, true );
+	MOAIAbstractViewLayer* sourceLayer = state.GetLuaObject < MOAIAbstractViewLayer >( 2, true );
 	if ( !sourceLayer ) return 0;
 	
-	MOAIViewLayer* destLayer = state.GetLuaObject < MOAIViewLayer >( 3, true );
+	MOAIAbstractViewLayer* destLayer = state.GetLuaObject < MOAIAbstractViewLayer >( 3, true );
 	if ( !destLayer ) return 0;
 	
 	self->SetDependentMember ( self->mSourceLayer, sourceLayer );

@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAILAYER_H
-#define	MOAILAYER_H
+#ifndef	MOAIABSTRACTLAYER_H
+#define	MOAIABSTRACTLAYER_H
 
 #include <moai-sim/MOAIAbstractDrawable.h>
 
@@ -11,9 +11,9 @@ class MOAIFrameBuffer;
 class MOAIPartition;
 
 //================================================================//
-// MOAILayer
+// MOAIAbstractLayer
 //================================================================//
-class MOAILayer :
+class MOAIAbstractLayer :
 	public virtual MOAILuaObject,
 	public virtual MOAIAbstractDrawable {
 private:
@@ -41,7 +41,6 @@ protected:
 	void			ClearSurface			();
 
 	//----------------------------------------------------------------//
-	void			MOAIAbstractDrawable_Draw			( int subPrimID );
 	void			MOAIAbstractDrawable_DrawDebug		( int subPrimID );
 
 public:
@@ -55,12 +54,10 @@ public:
 		CLEAR_ON_BUFFER_FLAG,
 	};
 	
-	DECL_LUA_FACTORY ( MOAILayer )
-
 	//----------------------------------------------------------------//
 	MOAIFrameBuffer*	GetFrameBuffer			();
-						MOAILayer				();
-						~MOAILayer				();
+						MOAIAbstractLayer				();
+						~MOAIAbstractLayer				();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				SetClearColor			( MOAIColor* color );

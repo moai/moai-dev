@@ -447,7 +447,6 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIJoystickSensor )
 	REGISTER_LUA_CLASS ( MOAIKeyCode )
 	REGISTER_LUA_CLASS ( MOAIKeyboardSensor )
-	REGISTER_LUA_CLASS ( MOAILayer )
 	//REGISTER_LUA_CLASS ( MOAILayoutFrame )
 	REGISTER_LUA_CLASS ( MOAILight )
 	REGISTER_LUA_CLASS ( MOAILightFormat )

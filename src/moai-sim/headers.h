@@ -11,7 +11,9 @@
 #include <moai-sim/MOAIAbstractChildTransform.h>
 #include <moai-sim/MOAIAbstractDrawable.h>
 #include <moai-sim/MOAIAbstractDrawShape.h>
+#include <moai-sim/MOAIAbstractLayer.h>
 #include <moai-sim/MOAIAbstractProp.h>
+#include <moai-sim/MOAIAbstractViewLayer.h>
 #include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAIActionTree.h>
 #include <moai-sim/MOAIAnim.h>
@@ -82,7 +84,6 @@
 #include <moai-sim/MOAIKeyCodeEnum.h>
 #include <moai-sim/MOAIKeyboardSensor.h>
 #include <moai-sim/MOAILayoutFrame.h>
-#include <moai-sim/MOAILayer.h>
 #include <moai-sim/MOAILight.h>
 #include <moai-sim/MOAILightFormat.h>
 #include <moai-sim/MOAILocationSensor.h>
@@ -179,7 +180,6 @@
 #include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
-#include <moai-sim/MOAIViewLayer.h>
 #include <moai-sim/MOAIViewport.h>
 #include <moai-sim/MOAIViewProj.h>
 #include <moai-sim/MOAIWheelSensor.h>
