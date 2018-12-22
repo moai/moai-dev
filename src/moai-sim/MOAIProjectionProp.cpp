@@ -105,9 +105,3 @@ void MOAIProjectionProp::MOAINode_Update () {
 
 	MOAIAbstractProp::MOAINode_Update ();
 }
-
-//----------------------------------------------------------------//
-u32 MOAIProjectionProp::MOAIPartitionHull_AffirmInterfaceMask ( MOAIPartition& partition ) {
-
-	return partition.AffirmInterfaceMask < MOAIAbstractDrawable >();
-}

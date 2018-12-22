@@ -97,8 +97,8 @@
 #include <zl-util/ZLSyntaxNode.h>
 #include <zl-util/ZLSyntaxScanner.h>
 #include <zl-util/ZLTrig.h>
+#include <zl-util/ZLType.h>
 #include <zl-util/ZLTypedPtr.h>
-#include <zl-util/ZLTypeID.h>
 #include <zl-util/ZLUnion.h>
 #include <zl-util/ZLUnique.h>
 #include <zl-util/ZLVec2D.h>

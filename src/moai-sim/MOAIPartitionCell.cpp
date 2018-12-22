@@ -40,26 +40,26 @@ void MOAIPartitionCell::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLev
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::GatherHulls ( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, u32 interfaceMask, u32 queryMask ) {
+void MOAIPartitionCell::GatherHulls ( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, ZLTypeID typeID, u32 queryMask ) {
 	
 	HullIt propIt = this->mHulls.Head ();
 	for ( ; propIt; propIt = propIt->Next ()) {
 		MOAIPartitionHull* hull = propIt->Data ();
 		
-		if (( hull != ignore ) && ( hull->mInterfaceMask & interfaceMask ) && ( hull->mQueryMask & queryMask )) {
+		if ( hull->AcceptQuery ( ignore, typeID, queryMask )) {
 			hull->AddToSortBuffer ( results );
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::GatherHulls ( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLVec3D& point, u32 interfaceMask, u32 queryMask ) {
+void MOAIPartitionCell::GatherHulls ( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLVec3D& point, ZLTypeID typeID, u32 queryMask ) {
 
 	HullIt propIt = this->mHulls.Head ();
 	for ( ; propIt; propIt = propIt->Next ()) {
 		MOAIPartitionHull* hull = propIt->Data ();
 		
-		if (( hull != ignore ) && ( hull->mInterfaceMask & interfaceMask ) && ( hull->mQueryMask & queryMask )) {
+		if ( hull->AcceptQuery ( ignore, typeID, queryMask )) {
 			if ( hull->mWorldBounds.mAABB.Contains ( point )) {
 				if ( hull->Inside ( point, 0.0f )) {
 					hull->AddToSortBuffer ( results );
@@ -70,14 +70,14 @@ void MOAIPartitionCell::GatherHulls ( MOAIPartitionResultBuffer& results, const 
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::GatherHulls ( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask, u32 queryMask ) {
+void MOAIPartitionCell::GatherHulls ( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLVec3D& point, const ZLVec3D& orientation, ZLTypeID typeID, u32 queryMask ) {
 	HullIt propIt = this->mHulls.Head ();
 	for ( ; propIt; propIt = propIt->Next ()) {
 		MOAIPartitionHull* hull = propIt->Data ();
 		
-		float t;
-		if (( hull != ignore ) && ( hull->mInterfaceMask & interfaceMask ) && ( hull->mQueryMask & queryMask )) {
-			if ( !ZLSect::RayToBox( hull->mWorldBounds.mAABB, point, orientation, t )) {
+		if ( hull->AcceptQuery ( ignore, typeID, queryMask )) {
+			float t;
+			if ( !ZLSect::RayToBox ( hull->mWorldBounds.mAABB, point, orientation, t )) {
 				hull->AddToSortBuffer ( results, ZLFloat::FloatToIntKey ( t ));
 			}
 		}
@@ -85,13 +85,13 @@ void MOAIPartitionCell::GatherHulls ( MOAIPartitionResultBuffer& results, const 
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::GatherHulls ( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLRect& rect, u32 interfaceMask, u32 queryMask ) {
+void MOAIPartitionCell::GatherHulls ( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLRect& rect, ZLTypeID typeID, u32 queryMask ) {
 
 	HullIt propIt = this->mHulls.Head ();
 	for ( ; propIt; propIt = propIt->Next ()) {
 		MOAIPartitionHull* hull = propIt->Data ();
 		
-		if (( hull != ignore ) && ( hull->mInterfaceMask & interfaceMask ) && ( hull->mQueryMask & queryMask )) {
+		if ( hull->AcceptQuery ( ignore, typeID, queryMask )) {
 			ZLRect bounds = hull->mWorldBounds.mAABB.GetRect ( ZLBox::PLANE_XY );
 			if ( bounds.Overlap ( rect )) {
 				hull->AddToSortBuffer ( results );
@@ -101,13 +101,13 @@ void MOAIPartitionCell::GatherHulls ( MOAIPartitionResultBuffer& results, const 
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::GatherHulls ( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLBox& box, u32 interfaceMask, u32 queryMask ) {
+void MOAIPartitionCell::GatherHulls ( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLBox& box, ZLTypeID typeID, u32 queryMask ) {
 
 	HullIt propIt = this->mHulls.Head ();
 	for ( ; propIt; propIt = propIt->Next ()) {
 		MOAIPartitionHull* hull = propIt->Data ();
 		
-		if (( hull != ignore ) && ( hull->mInterfaceMask & interfaceMask ) && ( hull->mQueryMask & queryMask )) {
+		if ( hull->AcceptQuery ( ignore, typeID, queryMask )) {
 			if ( hull->mWorldBounds.mAABB.Overlap ( box )) {
 				hull->AddToSortBuffer ( results );
 			}
@@ -116,13 +116,13 @@ void MOAIPartitionCell::GatherHulls ( MOAIPartitionResultBuffer& results, const 
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::GatherHulls ( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLFrustum& frustum, u32 interfaceMask, u32 queryMask ) {
+void MOAIPartitionCell::GatherHulls ( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLFrustum& frustum, ZLTypeID typeID, u32 queryMask ) {
 
 	HullIt propIt = this->mHulls.Head ();
 	for ( ; propIt; propIt = propIt->Next ()) {
 		MOAIPartitionHull* hull = propIt->Data ();
 		
-		if (( hull != ignore ) && ( hull->mInterfaceMask & interfaceMask ) && ( hull->mQueryMask & queryMask )) {
+		if ( hull->AcceptQuery ( ignore, typeID, queryMask )) {
 			if ( !frustum.Cull ( hull->mWorldBounds.mAABB )) {
 				hull->AddToSortBuffer ( results );
 			}

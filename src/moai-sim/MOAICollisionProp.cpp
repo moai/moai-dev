@@ -183,8 +183,7 @@ void MOAICollisionProp::GatherAndProcess ( MOAICollisionPrimVisitor& visitor, co
 	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
 	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
 	
-	u32 interfaceMask = world.GetInterfaceMask < MOAICollisionProp >();
-	u32 totalResults = world.GatherHulls ( buffer, this, worldBounds, interfaceMask );
+	u32 totalResults = world.GatherHulls ( buffer, this, worldBounds, ZLType::GetID < MOAICollisionProp >());
 	
 	for ( u32 i = 0; i < totalResults; ++i ) {
 		MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
@@ -587,15 +586,6 @@ void MOAICollisionProp::MOAINode_Update () {
 	if ( this->mCollisionWorld && this->mOverlapFlags ) {
 		this->mCollisionWorld->MakeActive ( *this );
 	}
-}
-
-//----------------------------------------------------------------//
-u32 MOAICollisionProp::MOAIPartitionHull_AffirmInterfaceMask ( MOAIPartition& partition ) {
-
-	return (
-		partition.AffirmInterfaceMask < MOAICollisionProp >() |
-		partition.AffirmInterfaceMask < MOAIAbstractDrawable >()
-	);
 }
 
 //----------------------------------------------------------------//

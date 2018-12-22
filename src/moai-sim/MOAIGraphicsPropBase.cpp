@@ -695,8 +695,3 @@ void MOAIGraphicsPropBase::MOAINode_Update () {
 	this->mDisplayFlags = visible && ( this->mDisplayFlags & FLAGS_LOCAL_VISIBLE ) ? this->mDisplayFlags | FLAGS_VISIBLE : this->mDisplayFlags & ~FLAGS_VISIBLE ;
 }
 
-//----------------------------------------------------------------//
-u32 MOAIGraphicsPropBase::MOAIPartitionHull_AffirmInterfaceMask ( MOAIPartition& partition ) {
-
-	return partition.AffirmInterfaceMask < MOAIAbstractDrawable >();
-}

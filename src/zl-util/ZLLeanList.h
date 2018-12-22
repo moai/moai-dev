@@ -4,7 +4,7 @@
 #ifndef	ZLLEANLIST_H
 #define	ZLLEANLIST_H
 
-#include <zl-util/ZLTypeID.h>
+#include <zl-util/ZLType.h>
 
 template < typename TYPE > class ZLLeanList;
 template < typename TYPE > class ZLList;
@@ -117,7 +117,7 @@ public:
 			return this->mTail->Data ();
 		}
 		result = ZL_ERROR;
-		return ZLTypeID < TYPE >::DummyRef ();
+		return ZLType::DummyRef < TYPE >();
 	}
 
 	//----------------------------------------------------------------//
@@ -178,7 +178,7 @@ public:
 			return this->mHead->Data ();
 		}
 		result = ZL_ERROR;
-		return ZLTypeID < TYPE >::DummyRef ();
+		return ZLType::DummyRef < TYPE >();
 	}
 
 	//----------------------------------------------------------------//

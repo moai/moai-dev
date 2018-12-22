@@ -46,7 +46,6 @@ protected:
 	ZLLeanLink < MOAIPartitionHull* >	mLinkInCell;
 	MOAIPartitionHull*					mNextResult;
 
-	u32					mInterfaceMask;
 	u32					mQueryMask;
 	s32					mPriority;
 	
@@ -66,7 +65,6 @@ protected:
 
 	//----------------------------------------------------------------//
 	virtual void		MOAIPartitionHull_AddToSortBuffer			( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
-	virtual u32			MOAIPartitionHull_AffirmInterfaceMask		( MOAIPartition& partition ) = 0;
 	virtual void		MOAIPartitionHull_BoundsDidChange			();
 	virtual bool		MOAIPartitionHull_Inside					( ZLVec3D vec, float pad );
 	virtual bool		MOAIPartitionHull_PrepareForInsertion		( const MOAIPartition& partition );
@@ -85,6 +83,11 @@ protected:
 	
 	//----------------------------------------------------------------//
 	bool				MOAINode_ApplyAttrOp		( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
+	
+	//----------------------------------------------------------------//
+	inline bool AcceptQuery ( const MOAIPartitionHull* ignore, ZLTypeID typeID, u32 queryMask ) {
+		return (( this != ignore ) && ( this->mQueryMask & queryMask ) && this->IsType ( typeID ));
+	}
 	
 public:
 

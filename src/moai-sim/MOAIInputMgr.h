@@ -107,7 +107,7 @@ public:
 		if ( device ) {
 			if ( sensorID < device->mSensors.Size ()) {
 				MOAISensor* sensor = new TYPE;
-				sensor->SetType ( ZLTypeID < TYPE >::GetID ());
+				sensor->SetType (( u32 )ZLType::RawID < TYPE >());
 				device->SetSensor ( sensorID, name, sensor );
 			}
 		}
@@ -116,7 +116,7 @@ public:
 	//----------------------------------------------------------------//
 	template < typename TYPE >
 	bool WriteEventHeader ( ZLIndex deviceID, ZLIndex sensorID ) {
-		return this->WriteEventHeader ( deviceID, sensorID, ZLTypeID < TYPE >::GetID ());
+		return this->WriteEventHeader ( deviceID, sensorID, ( u32 )ZLType::RawID < TYPE >()); // TODO: overflow
 	}
 };
 

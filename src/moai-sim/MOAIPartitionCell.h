@@ -25,12 +25,12 @@ private:
 	//----------------------------------------------------------------//
 	void			Clear					();
 	void			ExtractProps			( MOAIPartitionCell& cell, MOAIPartitionLevel* level );
-	void			GatherHulls				( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, u32 interfaceMask, u32 queryMask );
-	void			GatherHulls				( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLVec3D& point, u32 interfaceMask, u32 queryMask );
-	void			GatherHulls				( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask, u32 queryMask );
-	void			GatherHulls				( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLRect& rect, u32 interfaceMask, u32 queryMask );
-	void			GatherHulls				( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLBox& box, u32 interfaceMask, u32 queryMask );
-	void			GatherHulls				( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLFrustum& frustum, u32 interfaceMask, u32 queryMask );
+	void			GatherHulls				( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, ZLTypeID typeID, u32 queryMask );
+	void			GatherHulls				( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLVec3D& point, ZLTypeID typeID, u32 queryMask );
+	void			GatherHulls				( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLVec3D& point, const ZLVec3D& orientation, ZLTypeID typeID, u32 queryMask );
+	void			GatherHulls				( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLRect& rect, ZLTypeID typeID, u32 queryMask );
+	void			GatherHulls				( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLBox& box, ZLTypeID typeID, u32 queryMask );
+	void			GatherHulls				( MOAIPartitionResultBuffer& results, const MOAIPartitionHull* ignore, const ZLFrustum& frustum, ZLTypeID typeID, u32 queryMask );
 	void			InsertHull				( MOAIPartitionHull& hull );
 	void			RemoveHull				( MOAIPartitionHull& hull );
 	void			ScheduleProps			(); // schedule all props in cell for update

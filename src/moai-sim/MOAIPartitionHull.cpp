@@ -207,12 +207,6 @@ void MOAIPartitionHull::AddToSortBuffer ( MOAIPartitionResultBuffer& buffer, u32
 }
 
 //----------------------------------------------------------------//
-u32 MOAIPartitionHull::AffirmInterfaceMask ( MOAIPartition& partition ) {
-
-	return this->MOAIPartitionHull_AffirmInterfaceMask ( partition );
-}
-
-//----------------------------------------------------------------//
 void MOAIPartitionHull::BoundsDidChange () {
 
 	this->MOAIPartitionHull_BoundsDidChange ();
@@ -296,7 +290,6 @@ MOAIPartitionHull::MOAIPartitionHull () :
 	mCell ( 0 ),
 	mLevel ( 0 ),
 	mNextResult ( 0 ),
-	mInterfaceMask ( 0 ),
 	mQueryMask ( 0xffffffff ),
 	mPriority ( UNKNOWN_PRIORITY ),
 	mWorldBounds ( ZLBounds::EMPTY ),

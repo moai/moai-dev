@@ -100,21 +100,21 @@ public:
 	template < typename TYPE >
 	static u32 Pack ( u32 styleID ) {
 	
-		return (( ZLTypeID < TYPE >::GetID () << STYLE_SET_ID_SHIFT ) & STYLE_SET_ID_MASK ) | ( styleID & STYLE_ID_MASK );
+		return ((( u32 )ZLType::RawID < TYPE >() << STYLE_SET_ID_SHIFT ) & STYLE_SET_ID_MASK ) | ( styleID & STYLE_ID_MASK );
 	}
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
 	void ReserveStyleSet ( u32 size ) {
 	
-		this->ReserveStyleSet ( ZLTypeID < TYPE >::GetID (), size );
+		this->ReserveStyleSet (( u32 )ZLType::RawID < TYPE >(), size );
 	}
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
 	bool SelectStyleSet () {
 	
-		return this->SelectStyleSet ( ZLTypeID < TYPE >::GetID ());
+		return this->SelectStyleSet (( u32 )ZLType::RawID < TYPE >());
 	}
 };
 

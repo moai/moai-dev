@@ -18,11 +18,11 @@ protected:
 
 	static const size_t MAX_SIZE = sizeof ( ZLMatrix4x4 );
 
-	u32 mAttrTypeID;
-	u32 mVariantTypeID;
-	u32 mFlags;
+	u32			mAttrTypeID;
+	ZLTypeID	mVariantTypeID;
+	u32			mFlags;
 	
-	u8 mBuffer [ MAX_SIZE ];
+	u8			mBuffer [ MAX_SIZE ];
 
 public:
 	
@@ -164,7 +164,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	inline void Clear () {
-		this->mVariantTypeID = 0;
+		this->mVariantTypeID = ZLType::NONE;
 		this->mFlags = 0;
 	}
 	
@@ -353,7 +353,7 @@ public:
 	template < typename TYPE >
 	inline TYPE GetVariant ( const TYPE& value ) const {
 
-		if ( this->mVariantTypeID == ZLTypeID < TYPE >::GetID ()) {
+		if ( this->mVariantTypeID == ZLType::GetID < TYPE >()) {
 			return *( TYPE* )this->mBuffer;
 		}
 		return value;
@@ -367,7 +367,7 @@ public:
 	//----------------------------------------------------------------//
 	MOAIAttribute () :
 		mAttrTypeID ( 0 ),
-		mVariantTypeID ( 0 ),
+		mVariantTypeID ( ZLType::NONE ),
 		mFlags ( 0 ) {
 	}
 	
@@ -382,7 +382,7 @@ public:
 		assert ( sizeof ( TYPE ) <= MAX_SIZE );
 		
 		this->mAttrTypeID = ATTR_TYPE_VARIANT;
-		this->mVariantTypeID = ZLTypeID < TYPE >::GetID ();
+		this->mVariantTypeID = ZLType::GetID < TYPE >();
 		*( TYPE* )this->mBuffer = value;
 	}
 };

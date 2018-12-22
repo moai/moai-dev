@@ -5,7 +5,7 @@
 #define	ZLLEANSTACK_H
 
 #include <zl-util/ZLLeanArray.h>
-#include <zl-util/ZLTypeID.h>
+#include <zl-util/ZLType.h>
 
 //================================================================//
 // ZLLeanStack
@@ -34,7 +34,7 @@ public:
 			return value;
 		}
 		assert ( false );
-		return ZLTypeID < TYPE >::Dummy ();
+		return ZLType::Dummy < TYPE >();
 	}
 	
 	//----------------------------------------------------------------//
@@ -48,7 +48,7 @@ public:
 			return value;
 		}
 		result = ZL_ERROR;
-		return ZLTypeID < TYPE >::Dummy ();
+		return ZLType::Dummy < TYPE >();
 	}
 	
 	//----------------------------------------------------------------//
@@ -70,7 +70,7 @@ public:
 
 		if (( this->GrowChunked ( this->mTop + 1, CHUNKSIZE ) != ZL_OK ) || ( !this->mData )) {
 			assert ( false );
-			return ZLTypeID < TYPE >::DummyRef ();
+			return ZLType::DummyRef < TYPE >();
 		}
 		
 		new ( &this->mData [ this->mTop ]) TYPE (); // placement new
@@ -82,7 +82,7 @@ public:
 	
 		if (( this->GrowChunked ( this->mTop + 1, CHUNKSIZE ) != ZL_OK ) || ( !this->mData )) {
 			result = ZL_ALLOCATION_ERROR;
-			return ZLTypeID < TYPE >::DummyRef ();
+			return ZLType::DummyRef < TYPE >();
 		}
 		result = ZL_OK;
 		
@@ -95,7 +95,7 @@ public:
 		
 		if (( this->GrowChunked ( this->mTop + 1, CHUNKSIZE ) != ZL_OK ) || ( !this->mData )) {
 			assert ( false );
-			return ZLTypeID < TYPE >::DummyRef ();
+			return ZLType::DummyRef < TYPE >();
 		}
 		
 		new ( &this->mData [ this->mTop ]) TYPE ( type ); // placement copy constructor
@@ -107,7 +107,7 @@ public:
 		
 		if (( this->GrowChunked ( this->mTop + 1, CHUNKSIZE ) != ZL_OK ) || ( !this->mData )) {
 			result = ZL_ALLOCATION_ERROR;
-			return ZLTypeID < TYPE >::DummyRef ();
+			return ZLType::DummyRef < TYPE >();
 		}
 		result = ZL_OK;
 		
@@ -184,7 +184,7 @@ public:
 	TYPE& Top ( ZLResultCode& result ) {
 		if ( this->mTop == 0 ) {
 			result = ZL_ERROR;
-			return ZLTypeID < TYPE >::DummyRef ();
+			return ZLType::DummyRef < TYPE >();
 		}
 		return this->mData [ this->mTop - 1 ];
 	}

@@ -102,7 +102,6 @@ private:
 	ZLBounds				MOAIAbstractProp_GetModelBounds					();
 	bool					MOAINode_ApplyAttrOp							( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
 	void					MOAINode_Update									();
-	u32						MOAIPartitionHull_AffirmInterfaceMask			( MOAIPartition& partition );
 	bool					MOAIPartitionHull_PrepareForInsertion			( const MOAIPartition& partition );
 	void					MOAIPartitionHull_WasRemovedFromPartition		();
 	

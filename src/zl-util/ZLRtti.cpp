@@ -19,6 +19,24 @@ void RTTIRecord::AffirmCasts ( void* ptr ) {
 }
 
 //----------------------------------------------------------------//
+void* RTTIRecord::AsType ( ZLTypeID typeID, void* ptr ) {
+
+	if ( this->mTypeID == typeID ) return ptr;
+	
+	if ( this->mIsComplete == false ) {
+		this->AffirmCasts ( ptr );
+	}
+	
+	// TODO: binary search?
+	for ( u32 i = 0; i < this->mTypeCount; ++i ) {
+		if ( this->mTypeSet [ i ]->mTypeID == typeID ) {
+			return ( void* )(( ptrdiff_t )ptr + this->mJumpTable [ i ]);
+		}
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 void* RTTIRecord::AsType ( RTTIRecord& record, void* ptr ) {
 	
 	if ( this == &record ) return ptr;
@@ -74,6 +92,20 @@ void RTTIRecord::Inherit ( RTTIRecord& record, void* ptr, ptrdiff_t offset ) {
 }
 
 //----------------------------------------------------------------//
+bool RTTIRecord::IsType ( ZLTypeID typeID, void* ptr ) {
+
+	if ( this->mTypeID == typeID ) return true;
+	
+	this->AffirmCasts ( ptr );
+
+	// TODO: binary search?
+	for ( u32 i = 0; i < this->mTypeCount; ++i ) {
+		if ( this->mTypeSet [ i ]->mTypeID == typeID ) return true;
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
 bool RTTIRecord::IsType ( RTTIRecord& record, void* ptr ) {
 	
 	if ( this == &record ) return true;
@@ -88,11 +120,12 @@ bool RTTIRecord::IsType ( RTTIRecord& record, void* ptr ) {
 }
 
 //----------------------------------------------------------------//
-RTTIRecord::RTTIRecord () :
+RTTIRecord::RTTIRecord ( ZLTypeID typeID ) :
 	mLinkCount ( 0 ),
 	mIsConstructed ( false ),
 	mTypeCount ( 0 ),
-	mIsComplete ( false ) {
+	mIsComplete ( false ),
+	mTypeID ( typeID ) {
 }
 
 //----------------------------------------------------------------//
@@ -102,7 +135,19 @@ RTTIRecord::~RTTIRecord () {
 //================================================================//
 // RTTIBase
 //================================================================//
-	
+
+//----------------------------------------------------------------//
+void* RTTIBase::AsType ( ZLTypeID typeID ) {
+
+	return this->mRTTI->AsType ( typeID, this->mThis );
+}
+
+//----------------------------------------------------------------//
+bool RTTIBase::IsType ( ZLTypeID typeID ) {
+
+	return this->mRTTI->IsType ( typeID, this->mThis );
+}
+
 //----------------------------------------------------------------//
 RTTIBase::RTTIBase () {
 	this->BeginRTTI < RTTIBase >(this);

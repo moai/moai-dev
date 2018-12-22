@@ -58,7 +58,6 @@ public:
 	}
 };
 
-
 //================================================================//
 // MOAILuaState
 //================================================================//
@@ -162,6 +161,7 @@ public:
 	int				Push						( const ZLMatrix4x4& value );
 	int				Push						( const ZLQuad& value );
 	int				Push						( const ZLRect& value );
+	int				Push						( const ZLTypeID& value );
 	int				Push						( const ZLVec2D& value );
 	int				Push						( const ZLVec3D& value );
 	int				Push						( const ZLVec4D& value );
@@ -255,6 +255,7 @@ template <> ZLMatrix3x3		MOAILuaState::GetValue < ZLMatrix3x3 >			( int idx, con
 template <> ZLMatrix4x4		MOAILuaState::GetValue < ZLMatrix4x4 >			( int idx, const ZLMatrix4x4 value );
 template <> ZLQuaternion	MOAILuaState::GetValue < ZLQuaternion >			( int idx, const ZLQuaternion value );
 template <> ZLRect			MOAILuaState::GetValue < ZLRect >				( int idx, const ZLRect value );
+template <> ZLTypeID		MOAILuaState::GetValue < ZLTypeID >				( int idx, const ZLTypeID value );
 template <> ZLVec2D			MOAILuaState::GetValue < ZLVec2D >				( int idx, const ZLVec2D value );
 template <> ZLVec3D			MOAILuaState::GetValue < ZLVec3D >				( int idx, const ZLVec3D value );
 template <> ZLVec4D			MOAILuaState::GetValue < ZLVec4D >				( int idx, const ZLVec4D value );

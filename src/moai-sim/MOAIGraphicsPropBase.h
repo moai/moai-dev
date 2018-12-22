@@ -73,7 +73,6 @@ protected:
 
 	//----------------------------------------------------------------//
 	void			MOAIAbstractDrawable_DrawDebug				( int subPrimID );
-	u32				MOAIPartitionHull_AffirmInterfaceMask		( MOAIPartition& partition );
 
 protected:
 

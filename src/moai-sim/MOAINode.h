@@ -169,7 +169,7 @@ public:
 	template < typename TYPE >
 	static inline bool CheckAttrID ( MOAIAttrID attrID ) {
 	
-		return (( ZLTypeID < TYPE >::GetID ()) == (( attrID.mPackedID & MOAIAttribute::CLASS_ID_MASK ) >> 16 ));
+		return (( ZLType::RawID < TYPE >()) == (( attrID.mPackedID & MOAIAttribute::CLASS_ID_MASK ) >> 16 ));
 	}
 	
 	//----------------------------------------------------------------//
@@ -188,7 +188,10 @@ public:
 	template < typename TYPE >
 	static inline MOAIAttrID PackAttrID ( u32 rawID ) {
 	
-		return MOAIAttrID::FromRaw ((( ZLTypeID < TYPE >::GetID () << 16 ) & MOAIAttribute::CLASS_ID_MASK ) | ( rawID & MOAIAttribute::ATTR_ID_MASK ));
+		ZLType::RAW_ID rawTypeID = ZLType::RawID < TYPE >();
+		assert ( rawTypeID < 0xffff );
+	
+		return MOAIAttrID::FromRaw ((( rawTypeID << 16 ) & MOAIAttribute::CLASS_ID_MASK ) | ( rawID & MOAIAttribute::ATTR_ID_MASK ));
 	}
 	
 	//----------------------------------------------------------------//

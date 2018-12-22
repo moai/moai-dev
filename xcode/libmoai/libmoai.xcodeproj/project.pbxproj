@@ -467,8 +467,8 @@
 		89BE6A70173974FD00DFE837 /* ZLTypedPtr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE691E173974FD00DFE837 /* ZLTypedPtr.cpp */; };
 		89BE6A71173974FD00DFE837 /* ZLTypedPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE691F173974FD00DFE837 /* ZLTypedPtr.h */; };
 		89BE6A72173974FD00DFE837 /* ZLTypedPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE691F173974FD00DFE837 /* ZLTypedPtr.h */; };
-		89BE6A73173974FD00DFE837 /* ZLTypeID.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6920173974FD00DFE837 /* ZLTypeID.h */; };
-		89BE6A74173974FD00DFE837 /* ZLTypeID.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6920173974FD00DFE837 /* ZLTypeID.h */; };
+		89BE6A73173974FD00DFE837 /* ZLType.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6920173974FD00DFE837 /* ZLType.h */; };
+		89BE6A74173974FD00DFE837 /* ZLType.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6920173974FD00DFE837 /* ZLType.h */; };
 		89BE6A75173974FD00DFE837 /* ZLUnion.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6921173974FD00DFE837 /* ZLUnion.h */; };
 		89BE6A76173974FD00DFE837 /* ZLUnion.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6921173974FD00DFE837 /* ZLUnion.h */; };
 		89BE6A77173974FD00DFE837 /* ZLUnique.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6922173974FD00DFE837 /* ZLUnique.h */; };
@@ -3750,6 +3750,8 @@
 		CDCEFAF021CCDE5D00A16B7F /* ZLBoxCorners.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCEFAED21CCDE5D00A16B7F /* ZLBoxCorners.cpp */; };
 		CDCEFAF121CCDE5D00A16B7F /* ZLBoxCorners.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCEFAEE21CCDE5D00A16B7F /* ZLBoxCorners.h */; };
 		CDCEFAF221CCDE5D00A16B7F /* ZLBoxCorners.h in Headers */ = {isa = PBXBuildFile; fileRef = CDCEFAEE21CCDE5D00A16B7F /* ZLBoxCorners.h */; };
+		CDCEFAF421CDD6F100A16B7F /* ZLType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCEFAF321CDD6F100A16B7F /* ZLType.cpp */; };
+		CDCEFAF521CDD6F100A16B7F /* ZLType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCEFAF321CDD6F100A16B7F /* ZLType.cpp */; };
 		CDD06DB01398838D00AB0420 /* auxiliar.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D8E1398838D00AB0420 /* auxiliar.c */; };
 		CDD06DB11398838D00AB0420 /* auxiliar.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D8F1398838D00AB0420 /* auxiliar.h */; };
 		CDD06DB21398838D00AB0420 /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D901398838D00AB0420 /* buffer.c */; };
@@ -5110,7 +5112,7 @@
 		89BE691D173974FD00DFE837 /* ZLTrig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLTrig.h; sourceTree = "<group>"; };
 		89BE691E173974FD00DFE837 /* ZLTypedPtr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLTypedPtr.cpp; sourceTree = "<group>"; };
 		89BE691F173974FD00DFE837 /* ZLTypedPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLTypedPtr.h; sourceTree = "<group>"; };
-		89BE6920173974FD00DFE837 /* ZLTypeID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLTypeID.h; sourceTree = "<group>"; };
+		89BE6920173974FD00DFE837 /* ZLType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLType.h; sourceTree = "<group>"; };
 		89BE6921173974FD00DFE837 /* ZLUnion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLUnion.h; sourceTree = "<group>"; };
 		89BE6922173974FD00DFE837 /* ZLUnique.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLUnique.h; sourceTree = "<group>"; };
 		89BE6923173974FD00DFE837 /* ZLUnique_linux.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLUnique_linux.cpp; sourceTree = "<group>"; };
@@ -7190,6 +7192,7 @@
 		CDCE61571DFB79C30088B2AB /* ZLThreadLocalPtr_windows.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLThreadLocalPtr_windows.cpp; sourceTree = "<group>"; };
 		CDCEFAED21CCDE5D00A16B7F /* ZLBoxCorners.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLBoxCorners.cpp; sourceTree = "<group>"; };
 		CDCEFAEE21CCDE5D00A16B7F /* ZLBoxCorners.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLBoxCorners.h; sourceTree = "<group>"; };
+		CDCEFAF321CDD6F100A16B7F /* ZLType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLType.cpp; sourceTree = "<group>"; };
 		CDD06BD01398822500AB0420 /* libmoai-ios-luaext.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-luaext.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD06D87139882D900AB0420 /* libmoai-osx-luaext.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-luaext.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD06D8E1398838D00AB0420 /* auxiliar.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = auxiliar.c; path = "../../3rdparty/luasocket-2.0.2/src/auxiliar.c"; sourceTree = SOURCE_ROOT; };
@@ -8645,9 +8648,10 @@
 				CDEEC77C1C7BCEDC0014CC3F /* ZLResult.h */,
 				CD6891C71DC93D510086B16B /* ZLRtti.cpp */,
 				CD6891C81DC93D510086B16B /* ZLRtti.h */,
+				CDCEFAF321CDD6F100A16B7F /* ZLType.cpp */,
+				89BE6920173974FD00DFE837 /* ZLType.h */,
 				89BE691E173974FD00DFE837 /* ZLTypedPtr.cpp */,
 				89BE691F173974FD00DFE837 /* ZLTypedPtr.h */,
-				89BE6920173974FD00DFE837 /* ZLTypeID.h */,
 				89BE6921173974FD00DFE837 /* ZLUnion.h */,
 				89BE6922173974FD00DFE837 /* ZLUnique.h */,
 				89BE6923173974FD00DFE837 /* ZLUnique_linux.cpp */,
@@ -13807,7 +13811,7 @@
 				CD1D85941E1922BD0089FFAD /* ZLWeakPtr.h in Headers */,
 				89BE6A71173974FD00DFE837 /* ZLTypedPtr.h in Headers */,
 				CD1D85D31E1CCCF30089FFAD /* ZLCircle.h in Headers */,
-				89BE6A73173974FD00DFE837 /* ZLTypeID.h in Headers */,
+				89BE6A73173974FD00DFE837 /* ZLType.h in Headers */,
 				CD2FB1A71C473ABE005F8D8D /* ZLRefCountedObject.h in Headers */,
 				89BE6A75173974FD00DFE837 /* ZLUnion.h in Headers */,
 				89BE6A77173974FD00DFE837 /* ZLUnique.h in Headers */,
@@ -13937,7 +13941,7 @@
 				89BE6A6E173974FD00DFE837 /* ZLTrig.h in Headers */,
 				CD2FB1ED1C473B76005F8D8D /* ZLGfxDevice.h in Headers */,
 				89BE6A72173974FD00DFE837 /* ZLTypedPtr.h in Headers */,
-				89BE6A74173974FD00DFE837 /* ZLTypeID.h in Headers */,
+				89BE6A74173974FD00DFE837 /* ZLType.h in Headers */,
 				89BE6A76173974FD00DFE837 /* ZLUnion.h in Headers */,
 				89BE6A78173974FD00DFE837 /* ZLUnique.h in Headers */,
 				89BE6A7E173974FD00DFE837 /* ZLVec2D.h in Headers */,
@@ -17256,6 +17260,7 @@
 				89BE6A29173974FD00DFE837 /* ZLParser.cpp in Sources */,
 				89BE6A2D173974FD00DFE837 /* ZLPlane.cpp in Sources */,
 				CD41F2FF1A20115E008E3420 /* ZLBitBuffer.cpp in Sources */,
+				CDCEFAF421CDD6F100A16B7F /* ZLType.cpp in Sources */,
 				CD2FB1DC1C473B72005F8D8D /* ZLGfx.cpp in Sources */,
 				89BE6A31173974FD00DFE837 /* ZLPolar.cpp in Sources */,
 				CD6891CF1DC93D690086B16B /* ZLContext.cpp in Sources */,
@@ -17341,6 +17346,7 @@
 				89BE6A2A173974FD00DFE837 /* ZLParser.cpp in Sources */,
 				89BE6A2E173974FD00DFE837 /* ZLPlane.cpp in Sources */,
 				CD41F3001A20115E008E3420 /* ZLBitBuffer.cpp in Sources */,
+				CDCEFAF521CDD6F100A16B7F /* ZLType.cpp in Sources */,
 				CD2FB1EA1C473B76005F8D8D /* ZLGfx.cpp in Sources */,
 				89BE6A32173974FD00DFE837 /* ZLPolar.cpp in Sources */,
 				CD6891D01DC93D690086B16B /* ZLContext.cpp in Sources */,

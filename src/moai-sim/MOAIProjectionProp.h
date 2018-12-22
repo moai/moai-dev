@@ -30,7 +30,6 @@ protected:
 	void					MOAIAbstractDrawable_DrawDebug			( int subPrimID );
 	ZLBounds				MOAIAbstractProp_GetModelBounds			();
 	void					MOAINode_Update							();
-	u32						MOAIPartitionHull_AffirmInterfaceMask	( MOAIPartition& partition );
 
 public:
 

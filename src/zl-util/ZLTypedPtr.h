@@ -4,7 +4,7 @@
 #ifndef	ZLTYPEDPTR_H
 #define	ZLTYPEDPTR_H
 
-#include <zl-util/ZLTypeID.h>
+#include <zl-util/ZLType.h>
 
 //================================================================//
 // ZLTypedPtr
@@ -37,7 +37,7 @@ public:
 	template < typename	TYPE >
 	TYPE* Get () {
 		if ( this->mData )
-			if ( this->mTypeID == ZLTypeID < TYPE >::GetID ())
+			if ( this->mTypeID == ZLType::GetID < TYPE >())
 				return ( TYPE* )this->mData;
 		return 0;
 	}
@@ -45,13 +45,13 @@ public:
 	//----------------------------------------------------------------//
 	template < typename	TYPE >
 	bool IsType () {
-		return ( this->mTypeID == ZLTypeID < TYPE >::GetID ());
+		return ( this->mTypeID == ZLType::GetID < TYPE >());
 	}
 
 	//----------------------------------------------------------------//
 	template < typename	TYPE >
 	void Set ( TYPE* data ) {
-		mTypeID = ZLTypeID < TYPE >::GetID ();
+		mTypeID = ZLType::GetID < TYPE >();
 		mData = data;
 	}
 };

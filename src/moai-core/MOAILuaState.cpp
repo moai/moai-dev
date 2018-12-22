@@ -921,6 +921,13 @@ ZLRect MOAILuaState::GetValue < ZLRect >( int idx, const ZLRect value ) {
 
 //----------------------------------------------------------------//
 template <>
+ZLTypeID MOAILuaState::GetValue < ZLTypeID >( int idx, const ZLTypeID value ) {
+
+	return ZLType::FromRaw ( this->GetValue < u32 >( idx, ( u32 )ZLType::ToRaw ( value )));
+}
+
+//----------------------------------------------------------------//
+template <>
 ZLVec2D MOAILuaState::GetValue < ZLVec2D >( int idx, const ZLVec2D value ) {
 
 	ZLVec2D vec;
@@ -1312,6 +1319,17 @@ int MOAILuaState::Push ( const ZLRect& value ) {
 	lua_pushnumber ( this->mState, value.mYMax );
 	
 	return 4;
+}
+
+//----------------------------------------------------------------//
+int MOAILuaState::Push ( const ZLTypeID& value ) {
+
+	ZLType::RAW_ID rawID = ZLType::ToRaw ( value );
+	assert ( rawID < 0xffffffff );
+
+	lua_pushnumber ( this->mState, ( u32 )rawID );
+	
+	return 1;
 }
 
 //----------------------------------------------------------------//

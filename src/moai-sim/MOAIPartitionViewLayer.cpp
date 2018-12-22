@@ -42,8 +42,7 @@ int	MOAIPartitionViewLayer::_getPropViewList ( lua_State* L ) {
 	
 	if ( partition && self->mViewport ) {
 		
-		u32 interfaceMask = partition->GetInterfaceMask < MOAIAbstractDrawable >();
-		if ( !interfaceMask ) return 0;
+		ZLTypeID typeID = ZLType::GetID < MOAIAbstractDrawable >();
 		
 		float sortScale [ 4 ];
 		
@@ -69,10 +68,10 @@ int	MOAIPartitionViewLayer::_getPropViewList ( lua_State* L ) {
 		u32 totalResults = 0;
 		
 		if ( self->mPartitionCull2D ) {
-			totalResults = partition->GatherHulls ( buffer, 0, viewVolume.mAABB, interfaceMask );
+			totalResults = partition->GatherHulls ( buffer, 0, viewVolume.mAABB, typeID );
 		}
 		else {
-			totalResults = partition->GatherHulls ( buffer, 0, viewVolume, interfaceMask );
+			totalResults = partition->GatherHulls ( buffer, 0, viewVolume, typeID );
 		}
 		
 		if ( !totalResults ) return 0;
@@ -200,8 +199,7 @@ void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition ) {
 
 	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
-	u32 interfaceMask = partition.GetInterfaceMask < MOAIAbstractDrawable >();
-	if ( !interfaceMask ) return;
+	ZLTypeID typeID = ZLType::GetID < MOAIAbstractDrawable >();
 	
 	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
 	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
@@ -211,10 +209,10 @@ void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition ) {
 	u32 totalResults = 0;
 		
 	if ( this->mPartitionCull2D ) {
-		totalResults = partition.GatherHulls ( buffer, 0, viewVolume.mAABB, interfaceMask );
+		totalResults = partition.GatherHulls ( buffer, 0, viewVolume.mAABB, typeID );
 	}
 	else {
-		totalResults = partition.GatherHulls ( buffer, 0, viewVolume, interfaceMask );
+		totalResults = partition.GatherHulls ( buffer, 0, viewVolume, typeID );
 	}
 	
 	if ( !totalResults ) return;

@@ -5,6 +5,7 @@
 #define	ZLRTTI_H
 
 #include <zl-common/zl_types.h>
+#include <zl-util/ZLType.h>
 
 class RTTILinkBase;
 class RTTIRecord;
@@ -76,11 +77,15 @@ private:
 	ptrdiff_t		mJumpTable [ MAX ];
 	bool			mIsComplete;
 
+	ZLTypeID		mTypeID;
+
 	//----------------------------------------------------------------//
 	void		AffirmCasts		( void* ptr );
+	void*		AsType			( ZLTypeID typeID, void* ptr );
 	void*		AsType			( RTTIRecord& record, void* ptr );
 	void		Complete		();
 	void		Inherit			( RTTIRecord& record, void* ptr, ptrdiff_t offset );
+	bool		IsType			( ZLTypeID typeID, void* ptr );
 	bool		IsType			( RTTIRecord& record, void* ptr );
 
 	//----------------------------------------------------------------//
@@ -97,16 +102,18 @@ private:
 	//----------------------------------------------------------------//
 	template < typename TYPE >
 	static RTTIRecord& Get () {
-		static RTTIRecord single;
+		static RTTIRecord single ( ZLType::GetID < TYPE >());
 		return single;
 	}
+
+	//----------------------------------------------------------------//
+		RTTIRecord		( ZLTypeID typeID );
 
 public:
 
 	friend class RTTIBase;
 
 	//----------------------------------------------------------------//
-		RTTIRecord		();
 		~RTTIRecord		();
 };
 
@@ -167,6 +174,8 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
+	void*			AsType			( ZLTypeID typeID );
+	bool			IsType			( ZLTypeID typeID );
 					RTTIBase		();
 	virtual			~RTTIBase		();
 	virtual cc8*	TypeName		() const;

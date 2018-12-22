@@ -306,15 +306,13 @@ void MOAICollisionWorld::ProcessOverlaps () {
 		
 		MOAICollisionProp& prop = *activeIt->Data ();
 		this->InvalidateOverlaps ( prop, nextPass );
-		
-		u32 interfaceMask = this->GetInterfaceMask < MOAICollisionProp >();
-		
+				
 		// this gives us the coarse filter based on world space bounds
 		// TODO: find a way to utilize overlap flags?
 		MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
 		MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
 
-		u32 totalResults = this->GatherHulls ( buffer, &prop, prop.GetWorldBounds ().mAABB, interfaceMask );
+		u32 totalResults = this->GatherHulls ( buffer, &prop, prop.GetWorldBounds ().mAABB, ZLType::GetID < MOAICollisionProp >());
 		
 		for ( u32 i = 0; i < totalResults; ++i ) {
 		

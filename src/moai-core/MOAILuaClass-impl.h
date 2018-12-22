@@ -24,7 +24,8 @@ int MOAILuaFactoryClass < TYPE >::_getClassName ( lua_State* L ) {
 template < typename TYPE >
 int MOAILuaFactoryClass < TYPE >::_getTypeID ( lua_State* L ) {
 	
-	lua_pushnumber ( L, ZLTypeID < TYPE >::GetID ());
+	MOAILuaState state ( L );
+	state.Push ( ZLType::GetID < TYPE >());
 	return 1;
 }
 
@@ -104,7 +105,8 @@ int MOAILuaSingletonClass < TYPE >::_getClassName ( lua_State* L ) {
 template < typename TYPE >
 int MOAILuaSingletonClass < TYPE >::_getTypeID ( lua_State* L ) {
 	
-	lua_pushnumber ( L, ZLTypeID < TYPE >::GetID ());
+	MOAILuaState state ( L );
+	state.Push ( ZLType::GetID < TYPE >());
 	return 1;
 }
 

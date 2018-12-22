@@ -29,16 +29,16 @@ void MOAIPartitionLevel::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLe
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, u32 interfaceMask, u32 queryMask ) {
+void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, ZLTypeID typeID, u32 queryMask ) {
 
 	ZLSize totalCells = this->mCells.Size ();
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalCells; ++i ) {
-		this->mCells [ i ].GatherHulls ( results, ignore, interfaceMask, queryMask );
+		this->mCells [ i ].GatherHulls ( results, ignore, typeID, queryMask );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, const ZLVec3D& point, u32 planeID, u32 interfaceMask, u32 queryMask ) {
+void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, const ZLVec3D& point, u32 planeID, ZLTypeID typeID, u32 queryMask ) {
 
 	ZLVec2D cellPoint ( 0.0f, 0.0f );
 	
@@ -71,23 +71,23 @@ void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIP
 			
 			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord.mX + x, coord.mY - y );
 			ZLIndex addr = this->mGridSpace.GetCellAddr ( offset );
-			this->mCells [ addr ].GatherHulls ( results, ignore, point, interfaceMask, queryMask );
+			this->mCells [ addr ].GatherHulls ( results, ignore, point, typeID, queryMask );
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask, u32 queryMask ) {
+void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, const ZLVec3D& point, const ZLVec3D& orientation, ZLTypeID typeID, u32 queryMask ) {
 	
 	// TODO: this is so lazy; fix it to use the plane and step through the proper cells
 	ZLSize totalCells = this->mCells.Size ();
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalCells; ++i ) {
-		this->mCells [ i ].GatherHulls ( results, ignore, point, orientation, interfaceMask, queryMask );
+		this->mCells [ i ].GatherHulls ( results, ignore, point, orientation, typeID, queryMask );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, const ZLRect& rect, u32 interfaceMask, u32 queryMask ) {
+void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, const ZLRect& rect, ZLTypeID typeID, u32 queryMask ) {
 
 	float halfSize = this->mCellSize * 0.5f;
 
@@ -108,13 +108,13 @@ void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIP
 			
 			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord0.mX + x, coord0.mY + y );
 			ZLIndex addr = this->mGridSpace.GetCellAddr ( offset );
-			this->mCells [ addr ].GatherHulls ( results, ignore, rect, interfaceMask, queryMask );
+			this->mCells [ addr ].GatherHulls ( results, ignore, rect, typeID, queryMask );
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, const ZLBox& box, u32 planeID, u32 interfaceMask, u32 queryMask ) {
+void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, const ZLBox& box, u32 planeID, ZLTypeID typeID, u32 queryMask ) {
 
 	float halfSize = this->mCellSize * 0.5f;
 
@@ -136,13 +136,13 @@ void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIP
 			
 			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord0.mX + x, coord0.mY + y );
 			ZLIndex addr = this->mGridSpace.GetCellAddr ( offset );
-			this->mCells [ addr ].GatherHulls ( results, ignore, box, interfaceMask, queryMask );
+			this->mCells [ addr ].GatherHulls ( results, ignore, box, typeID, queryMask );
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, const ZLFrustum& frustum, u32 planeID, u32 interfaceMask, u32 queryMask ) {
+void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignore, const ZLFrustum& frustum, u32 planeID, ZLTypeID typeID, u32 queryMask ) {
 
 	float halfSize = this->mCellSize * 0.5f;
 
@@ -164,7 +164,7 @@ void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIP
 			
 			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord0.mX + x, coord0.mY + y );
 			ZLIndex addr = this->mGridSpace.GetCellAddr ( offset );
-			this->mCells [ addr ].GatherHulls ( results, ignore, frustum, interfaceMask, queryMask );
+			this->mCells [ addr ].GatherHulls ( results, ignore, frustum, typeID, queryMask );
 		}
 	}
 }

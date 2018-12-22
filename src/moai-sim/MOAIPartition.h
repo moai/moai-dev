@@ -22,7 +22,6 @@ class MOAIPartition :
 	public virtual MOAILuaObject {
 private:
 
-	static const u32 INTERFACE_MASK_BITS = 32;
 	static const u32 MASK_ANY = 0xffffffff;
 
 	friend class MOAIPartitionCell;
@@ -34,8 +33,6 @@ private:
 	MOAIPartitionCell					mGlobals;
 	MOAIPartitionCell					mBiggies;
 
-	ZLLeanArray < u32 >					mInterfaceIDs; // array if ZLTypeIDs for supported interfaces
-
 	s32					mPriorityCounter;
 	static const s32	PRIORITY_MASK = 0x7fffffff;
 
@@ -43,23 +40,18 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_clear					( lua_State* L );
-	static int		_getInterfaceMask		( lua_State* L );
 	static int		_hullForPoint			( lua_State* L );
 	static int		_hullForRay				( lua_State* L );
 	static int		_hullList				( lua_State* L );
 	static int		_hullListForPoint		( lua_State* L );
 	static int		_hullListForRay			( lua_State* L );
 	static int		_hullListForRect		( lua_State* L );
-	//static int		_insertHull				( lua_State* L );
-	//static int		_removeHull				( lua_State* L );
 	static int		_reserveLevels			( lua_State* L );
 	static int		_setLevel				( lua_State* L );
 	static int		_setPlane				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	u32				AffirmInterfaceMask		( u32 typeID );
 	void			AffirmPriority			( MOAIPartitionHull& hull );
-	u32				GetInterfaceMask		( u32 typeID ) const;
 	void			PrepareRebuild			();
 	void			Rebuild					();
 	void			UpdateHull				( MOAIPartitionHull& hull );
@@ -79,12 +71,12 @@ public:
 	void			Clear					();
 	void			DrawDebugBack			();
 	void			DrawDebugFront			();
-	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
-	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, const ZLVec3D& point, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
-	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, const ZLVec3D& point, const ZLVec3D& orientation, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
-	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, ZLRect rect, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
-	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, ZLBox box, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
-	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, const ZLFrustum& frustum, u32 interfaceMask = MASK_ANY, u32 mask = MASK_ANY );
+	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, ZLTypeID typeID, u32 mask = MASK_ANY );
+	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, const ZLVec3D& point, ZLTypeID typeID, u32 mask = MASK_ANY );
+	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, const ZLVec3D& point, const ZLVec3D& orientation, ZLTypeID typeID, u32 mask = MASK_ANY );
+	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, ZLRect rect, ZLTypeID typeID, u32 mask = MASK_ANY );
+	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, ZLBox box, ZLTypeID typeID, u32 mask = MASK_ANY );
+	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, const ZLFrustum& frustum, ZLTypeID typeID, u32 mask = MASK_ANY );
 	void			InsertHull				( MOAIPartitionHull& hull );
 	bool			IsEmpty					( MOAIPartitionHull& hull );
 	bool			IsGlobal				( MOAIPartitionHull& hull );
@@ -100,13 +92,13 @@ public:
 	//----------------------------------------------------------------//
 	template < typename TYPE >
 	u32 AffirmInterfaceMask () {
-		return this->AffirmInterfaceMask ( ZLTypeID < TYPE >::GetID ());
+		return this->AffirmInterfaceMask ( ZLType::GetID < TYPE >());
 	}
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
 	u32 GetInterfaceMask () const {
-		return this->GetInterfaceMask ( ZLTypeID < TYPE >::GetID ());
+		return this->GetInterfaceMask ( ZLType::GetID < TYPE >());
 	}
 };
 
