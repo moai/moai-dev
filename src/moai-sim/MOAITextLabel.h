@@ -210,7 +210,7 @@ private:
 	ZLBounds			MOAIAbstractProp_GetModelBounds						();
 	bool				MOAIAction_IsDone									();
 	void				MOAIAction_Update									( double step );
-	ZLMatrix4x4			MOAIGraphicsPropBase_GetWorldDrawingMtx				();
+	ZLMatrix4x4			MOAIGraphicsPropBase_GetWorldDrawingMtx				() const;
 	void				MOAINode_Update										();
 
 public:

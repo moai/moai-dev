@@ -125,7 +125,7 @@ void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoo
 	// is this grid fancy?
 	MOAIFancyGrid* fancyGrid = this->mGrid->AsType < MOAIFancyGrid >();
 	
-	const ZLAffine3D& modelToWorldMtx = this->MOAIGraphicsPropBase_GetWorldDrawingMtx ();
+	const ZLAffine3D& modelToWorldMtx = this->GetWorldDrawingMtx ();
 	ZLColorVec penColor = gfxState.GetPenColor ();
 	
 	for ( int y = c0.mY; y <= c1.mY; ++y ) {

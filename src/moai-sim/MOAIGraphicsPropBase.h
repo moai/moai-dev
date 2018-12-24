@@ -81,7 +81,7 @@ protected:
 	
 	// TODO: should be attributes?
 	MOAILuaSharedPtr < MOAIAbstractChildTransform >		mUVTransform;
-	MOAILuaSharedPtr < MOAIScissorRect >			mScissorRect;
+	MOAILuaSharedPtr < MOAIScissorRect >				mScissorRect;
 
 	//----------------------------------------------------------------//
 	void					LoadUVTransform				();
@@ -90,7 +90,7 @@ protected:
 	void					PushGfxState				();
 
 	//----------------------------------------------------------------//
-	virtual ZLMatrix4x4		MOAIGraphicsPropBase_GetWorldDrawingMtx		(); // factors in billboard flags
+	virtual ZLMatrix4x4		MOAIGraphicsPropBase_GetWorldDrawingMtx		() const; // factors in billboard flags
 	bool					MOAINode_ApplyAttrOp						( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
 	void					MOAINode_Update								();
 
@@ -139,6 +139,7 @@ public:
 	static const u32 DEFAULT_FLAGS = FLAGS_LOCAL_VISIBLE | FLAGS_VISIBLE;;
 
 	//----------------------------------------------------------------//
+	ZLMatrix4x4				GetWorldDrawingMtx			() const;
 	bool					IsVisible					();
 							MOAIGraphicsPropBase		();
 	virtual					~MOAIGraphicsPropBase		();

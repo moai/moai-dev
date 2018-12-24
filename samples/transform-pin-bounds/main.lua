@@ -6,7 +6,6 @@
 
 --MOAIDebugLinesMgr.setStyle ( MOAIProp.DEBUG_DRAW_MODEL_BOUNDS, 2, 1, 1, 1 )
 MOAIDebugLinesMgr.setStyle ( MOAIProp.DEBUG_DRAW_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
-MOAIDebugLinesMgr.setStyle ( MOAIProjectionProp.DEBUG_DRAW_WORLD_BOUNDS, 2, 0, 1, 1 )
 
 MOAISim.openWindow ( "test", 320, 480 )
 
@@ -141,10 +140,28 @@ prop:setPartition ( worldLayer )
 
 -- set up the projection layer. no camera - this represents the prop bounds
 -- projected into clip space, then back into view space.
-hudLayer = MOAIPartitionViewLayer.new ()
+hudLayer = MOAITableViewLayer.new ()
 hudLayer:setViewport ( viewport )
 hudLayer:pushRenderPass ()
 
-projectionProp = MOAIProjectionProp.new ()
-projectionProp:init ( prop, worldLayer, hudLayer )
-projectionProp:setPartition ( hudLayer )
+-- create the bridge
+pinTransform = MOAIPinTransform.new ()
+pinTransform:init ( worldLayer, hudLayer )
+pinTransform:setParent ( prop )
+pinTransform:setAttrLink ( MOAIPinTransform.ATTR_INHERIT_WORLD_BOUNDS, prop, MOAIProp.ATTR_WORLD_BOUNDS_TRAIT )
+
+function drawOverlay ()
+
+    MOAIDraw.bind ()
+
+    local x, y = pinTransform:getWorldLoc ()
+    MOAIDraw.setPenColor ( 0, 1, 1, 1 )
+    MOAIDraw.fillCircle ( x, y, 8 )
+
+    local xMin, yMin, _, xMax, yMax, _ = pinTransform:getWorldBounds ()
+
+    MOAIDraw.setPenWidth ( 2 )
+    MOAIDraw.drawRect ( xMin, yMin, xMax, yMax )
+end
+
+hudLayer:setRenderTable ({ drawOverlay })

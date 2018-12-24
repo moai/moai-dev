@@ -1126,7 +1126,7 @@ void MOAITextLabel::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 				ZLMatrix4x4 fit;
 				fit.Scale ( xFit, -1.0f * yFit, 1.0f );
 				
-				ZLMatrix4x4 worldDrawingMtx = MOAIGraphicsProp::MOAIGraphicsPropBase_GetWorldDrawingMtx ();
+				ZLMatrix4x4 worldDrawingMtx = this->MOAIGraphicsProp::MOAIGraphicsPropBase_GetWorldDrawingMtx ();
 				worldDrawingMtx.Prepend ( fit );
 			
 				gfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX, worldDrawingMtx );
@@ -1169,7 +1169,7 @@ void MOAITextLabel::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 
 	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	
-	ZLMatrix4x4 worldDrawingMtx = this->MOAIGraphicsPropBase_GetWorldDrawingMtx ();
+	ZLMatrix4x4 worldDrawingMtx = this->GetWorldDrawingMtx ();
 	
 	gfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX, worldDrawingMtx );
 	gfxState.SetVertexTransform ( MOAIGfxState::MODEL_TO_CLIP_MTX );
@@ -1284,7 +1284,7 @@ void MOAITextLabel::MOAIAction_Update ( double step ) {
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAITextLabel::MOAIGraphicsPropBase_GetWorldDrawingMtx () {
+ZLMatrix4x4 MOAITextLabel::MOAIGraphicsPropBase_GetWorldDrawingMtx () const {
 
 	ZLMatrix4x4 worldDrawingMtx = MOAIGraphicsProp::MOAIGraphicsPropBase_GetWorldDrawingMtx ();
 	

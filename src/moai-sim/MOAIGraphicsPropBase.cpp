@@ -191,6 +191,12 @@ int MOAIGraphicsPropBase::_setVisible ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+ZLMatrix4x4 MOAIGraphicsPropBase::GetWorldDrawingMtx () const {
+
+	return this->MOAIGraphicsPropBase_GetWorldDrawingMtx ();
+}
+
+//----------------------------------------------------------------//
 bool MOAIGraphicsPropBase::IsVisible () {
 	return (( this->mDisplayFlags & FLAGS_LOCAL_VISIBLE ) && ( this->mDisplayFlags & FLAGS_VISIBLE ));
 }
@@ -213,7 +219,7 @@ void MOAIGraphicsPropBase::LoadUVTransform () {
 void MOAIGraphicsPropBase::LoadVertexTransform () {
 
 	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
-	gfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX, this->MOAIGraphicsPropBase_GetWorldDrawingMtx ());
+	gfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX, this->GetWorldDrawingMtx ());
 }
 
 //----------------------------------------------------------------//
@@ -449,7 +455,7 @@ void MOAIGraphicsPropBase::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () {
+ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () const {
 
 	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
