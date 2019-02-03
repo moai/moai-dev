@@ -74,6 +74,10 @@ private:
 	MOAINode*			mPrev;
 	MOAINode*			mNext;
 
+	#ifdef _DEBUG
+		STLString		mDebugMessage;
+	#endif
+
 	//----------------------------------------------------------------//
 	static int		_clearAttrLink		( lua_State* L );
 	static int		_clearNodeLink		( lua_State* L );
@@ -86,6 +90,7 @@ private:
 	static int		_seekAttr			( lua_State* L );
 	static int		_setAttrLink		( lua_State* L );
 	static int		_setAttr			( lua_State* L );
+	static int		_setDebugMessage	( lua_State* L );
 	static int		_setNodeLink		( lua_State* L );
 	
 	//----------------------------------------------------------------//
@@ -121,18 +126,16 @@ protected:
 	template < typename TYPE >
 	void SetDependentMember ( MOAILuaSharedPtr < TYPE >& member, TYPE* ref ) {
 		
-		if ( member == ref ) return;
-	
-		if ( member ) {
-			this->ClearNodeLink ( *member );
+		if ( member != ref ) {
+			if ( member ) {
+				this->ClearNodeLink ( *member );
+			}
+			member.Set ( *this, ref );
 		}
-		
-		member.Set ( *this, ref );
 		
 		if ( ref ) {
 			this->SetNodeLink ( *ref );
 		}
-		
 		this->ScheduleUpdate ();
 	}
 

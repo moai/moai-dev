@@ -190,7 +190,9 @@ int MOAIAbstractViewLayer::_getViewport ( lua_State* L ) {
 int MOAIAbstractViewLayer::_setCamera ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractViewLayer, "U" )
 
-	self->mCamera.Set ( *self, state.GetLuaObject < MOAICamera >( 2, true ));
+	MOAICamera* camera = state.GetLuaObject < MOAICamera >( 2, true );
+
+	self->SetDependentMember ( self->mCamera, camera );
 
 	return 0;
 }

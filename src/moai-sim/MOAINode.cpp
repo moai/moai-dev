@@ -342,6 +342,20 @@ int MOAINode::_setAttrLink ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAINode::_setDebugMessage ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAINode, "U" );
+	
+	#ifdef _DEBUG
+		self->mDebugMessage = state.GetValue < cc8* >( 2, "" );
+	#else
+		assert ( false );
+	#endif
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setNodeLink
 	@text	Creates a dependency between the node and a foreign node
 			without the use of attributes; if the foreign node is updated,
@@ -472,6 +486,13 @@ void MOAINode::DepNodeUpdate () {
 		this->PullAttributes ();
 
 		InvokeListenerWithSelf ( EVENT_NODE_PRE_UPDATE );
+		
+		#ifdef _DEBUG
+			if ( this->mDebugMessage.size ()) {
+				printf ( "%s\n", this->mDebugMessage.c_str ());
+			}
+		#endif
+		
 		this->MOAINode_Update ();
 		InvokeListenerWithSelf ( EVENT_NODE_POST_UPDATE );
 		
@@ -631,6 +652,7 @@ void MOAINode::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "seekAttr",				_seekAttr },
 		{ "setAttr",				_setAttr },
 		{ "setAttrLink",			_setAttrLink },
+		{ "setDebugMessage",		_setDebugMessage },
 		{ "setNodeLink",			_setNodeLink },
 		{ NULL, NULL }
 	};

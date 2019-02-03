@@ -19,5 +19,20 @@ e = makeNode ( 'E' )
 b:setNodeLink ( a )
 c:setNodeLink ( b )
 
+d:setNodeLink ( c )
+e:setNodeLink ( d )
+
+print ( 'E->D->C->B->A' )
+print ( 'SCHEDULED NODE A' )
 a:scheduleUpdate ()
+
+print ( 'FORCE UPDATE NODE C' )
 c:forceUpdate ()
+
+print ( 'FORCE UPDATE NODE C' )
+c:forceUpdate ()
+c:forceUpdate ()
+b:forceUpdate ()
+
+print ( 'NODEMGR UPDATE' )
+MOAINodeMgr.update ()

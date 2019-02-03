@@ -319,7 +319,8 @@ bool MOAIPartitionHull::PrepareForInsertion ( const MOAIPartition& partition ) {
 
 //----------------------------------------------------------------//
 void MOAIPartitionHull::RegisterLuaClass ( MOAILuaState& state ) {
-		
+	MOAINode::RegisterLuaClass ( state );
+	
 	state.SetField ( -1, "ATTR_PARTITION",				AttrID::Pack ( ATTR_PARTITION ).ToRaw ());
 	state.SetField ( -1, "ATTR_WORLD_BOUNDS_TRAIT",		AttrID::Pack ( ATTR_WORLD_BOUNDS_TRAIT ).ToRaw ());
 	
@@ -330,6 +331,7 @@ void MOAIPartitionHull::RegisterLuaClass ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIPartitionHull::RegisterLuaFuncs ( MOAILuaState& state ) {
+	MOAINode::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "getPartition",			_getPartition },
