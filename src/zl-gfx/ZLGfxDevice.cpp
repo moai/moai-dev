@@ -124,7 +124,7 @@ void ZLGfxDevice::Initialize () {
 
 		// if framebuffer object is not in code, check to see if it's available as
 		// an extension and remap to core function pointers if so
-		if (( isOpenGLES == false ) && ( majorVersion < 3 )) {
+		if (( isOpenGLES == false ) && ( sMajorVersion < 3 )) {
 
 			if ( glewIsSupported ( "GL_EXT_framebuffer_object" )) {
 
