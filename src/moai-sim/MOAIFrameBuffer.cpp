@@ -19,18 +19,18 @@
 	@in		MOAIFrameBuffer self
 	@opt	boolean discard			If true, image will be discarded from the frame buffer.
 	@out	MOAIImage image			The frame grab image, or nil if none exists.
-*/	
+*/
 int MOAIFrameBuffer::_getGrabbedImage ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFrameBuffer, "U" )
-	
+
 	bool discard = state.GetValue < bool >( 2, false );
-	
+
 	self->mFrameImage.PushRef ( state );
-	
+
 	if ( discard ) {
 		self->mFrameImage.Set ( *self, 0 );
 	}
-	
+
 	return 1;
 }
 
@@ -49,19 +49,19 @@ int MOAIFrameBuffer::_grabNextFrame ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFrameBuffer, "U" )
 
 	MOAIImage* image = state.GetLuaObject < MOAIImage >( 2, false );
-	
+
 	if ( image ) {
 		self->mFrameImage.Set ( *self, image );
 	}
 	else if ( !self->mFrameImage ) {
-	
+
 		image = new MOAIImage ();
 		image->Init ( self->mBufferWidth, self->mBufferHeight, ZLColor::RGBA_8888, MOAIImage::TRUECOLOR );
 		self->mFrameImage.Set ( *self, image );
 	}
-	
-	self->mGrabNextFrame = self->mFrameImage != 0;
-	
+
+	self->mGrabNextFrame = static_cast<bool>(self->mFrameImage) != 0;
+
 	if ( self->mGrabNextFrame ) {
 		self->mOnFrameFinish.SetRef ( *self, state, 3 );
 	}
@@ -75,7 +75,7 @@ int MOAIFrameBuffer::_grabNextFrame ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@lua	isPendingGrab
 	@text	True if a frame grab has been requested but not yet grabbed.
-	
+
 	@in		MOAIFrameBuffer self
 	@out	table renderTable
 */
@@ -109,7 +109,7 @@ ZLRect MOAIFrameBuffer::GetBufferRect () const {
 	rect.mYMin = 0;
 	rect.mXMax = ( float )this->mBufferWidth;
 	rect.mYMax = ( float )this->mBufferHeight;
-	
+
 	return rect;
 }
 
@@ -155,7 +155,7 @@ MOAIFrameBuffer::MOAIFrameBuffer () :
 	mLandscape ( false ),
 	mNeedsClear ( true ),
 	mGrabNextFrame ( false ) {
-	
+
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
@@ -185,7 +185,7 @@ void MOAIFrameBuffer::OnReadPixels ( const ZLCopyOnWrite& buffer, void * userdat
 
 	this->mGrabNextFrame = false;
 	MOAIImage* image = this->mFrameImage;
-	
+
 	if ( image ) {
 
 		image->Init ( buffer.GetBuffer (), this->mBufferWidth, this->mBufferHeight, ZLColor::RGBA_8888 );
@@ -228,11 +228,11 @@ void MOAIFrameBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 //	//this->mLastDrawCount = gfxMgr.GetDrawCount ();
 //
 //	gfxState.SetFrameBuffer ( this );
-//	
+//
 //	//disable scissor rect for clear
 //	gfxState.SetScissorRect ();
 //	this->ClearSurface ();
-//	
+//
 //	if ( this->mRenderTable ) {
 //		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 //		state.Push ( this->mRenderTable );
@@ -249,7 +249,7 @@ void MOAIFrameBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 //		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 //		gfx.ReadPixels ( 0, 0, this->mBufferWidth, this->mBufferHeight, ZGL_PIXEL_FORMAT_RGBA, ZGL_PIXEL_TYPE_UNSIGNED_BYTE, 4, this, 0 );
 //	}
-//	
+//
 //	this->mRenderCounter++;
 //	//this->mLastDrawCount = gfxMgr.GetDrawCount () - this->mLastDrawCount;
 //}
@@ -274,28 +274,28 @@ ZLRect MOAIFrameBuffer::WndRectToDevice ( ZLRect rect ) const {
 	rect.Bless ();
 
 	if ( this->mLandscape ) {
-	
+
 		float width = ( float )this->mBufferWidth;
-		
+
 		float xMin = rect.mYMin;
 		float yMin = width - rect.mXMax;
 		float xMax = rect.mYMax;
 		float yMax = width - rect.mXMin;
-		
+
 		rect.mXMin = xMin;
 		rect.mYMin = yMin;
 		rect.mXMax = xMax;
 		rect.mYMax = yMax;
 	}
 	else {
-	
+
 		float height = ( float )this->mBufferHeight;
-		
+
 		float xMin = rect.mXMin;
 		float yMin = height - rect.mYMax;
 		float xMax = rect.mXMax;
 		float yMax = height - rect.mYMin;
-		
+
 		rect.mXMin = xMin;
 		rect.mYMin = yMin;
 		rect.mXMax = xMax;
