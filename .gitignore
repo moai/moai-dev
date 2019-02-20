@@ -2,6 +2,9 @@
 /build/
 /lib/
 
+/3rdparty/glm
+/xcode/frameworks
+
 libs/
 obj/
 util/libmoai
