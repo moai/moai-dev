@@ -18,10 +18,7 @@
 
 #include <vulkan/vulkan.h>
 #include "VulkanTools.h"
-
-#ifdef __ANDROID__
-#include "VulkanAndroid.h"
-#endif
+#include "VulkanHost.h"
 
 // Macro to get a procedure address based on a vulkan instance
 #define GET_INSTANCE_PROC_ADDR(inst, entrypoint)                        \
@@ -292,29 +289,10 @@ public:
 	}
     
     //----------------------------------------------------------------//
-    void initSurface(void* view) {
-        VkResult err = VK_SUCCESS;
+    void initSurface ( VulkanHost& host ) {
 
-        // Create the os-specific surface
-        #if defined(VK_USE_PLATFORM_IOS_MVK)
-            VkIOSSurfaceCreateInfoMVK surfaceCreateInfo = {};
-            surfaceCreateInfo.sType = VK_STRUCTURE_TYPE_IOS_SURFACE_CREATE_INFO_MVK;
-            surfaceCreateInfo.pNext = NULL;
-            surfaceCreateInfo.flags = 0;
-            surfaceCreateInfo.pView = view;
-            err = vkCreateIOSSurfaceMVK(instance, &surfaceCreateInfo, nullptr, &surface);
-        #elif defined(VK_USE_PLATFORM_MACOS_MVK)
-            VkMacOSSurfaceCreateInfoMVK surfaceCreateInfo = {};
-            surfaceCreateInfo.sType = VK_STRUCTURE_TYPE_MACOS_SURFACE_CREATE_INFO_MVK;
-            surfaceCreateInfo.pNext = NULL;
-            surfaceCreateInfo.flags = 0;
-            surfaceCreateInfo.pView = view;
-            err = vkCreateMacOSSurfaceMVK(instance, &surfaceCreateInfo, NULL, &surface);
-        #endif
-
-        if (err != VK_SUCCESS) {
-            vks::tools::exitFatal("Could not create surface!", err);
-        }
+		bool result = host.createSurface ( instance, &surface );
+		assert ( result );
 
         // Get available queue family properties
         uint32_t queueCount;

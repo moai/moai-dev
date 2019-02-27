@@ -14,12 +14,6 @@
 #include <fcntl.h>
 #include <io.h>
 #include <ShellScalingAPI.h>
-#elif defined(VK_USE_PLATFORM_ANDROID_KHR)
-#include <android/native_activity.h>
-#include <android/asset_manager.h>
-#include <android_native_app_glue.h>
-#include <sys/system_properties.h>
-#include "VulkanAndroid.h"
 #elif defined(VK_USE_PLATFORM_WAYLAND_KHR)
 #include <wayland-client.h>
 #include "xdg-shell-client-protocol.h"
@@ -41,15 +35,15 @@
 #include <array>
 #include <numeric>
 
-#include "vulkan/vulkan.h"
+#include <vulkan/vulkan.h>
 
+#include "camera.hpp"
 //#include "keycodes.hpp"
 #include "VulkanTools.h"
 #include "VulkanDebug.h"
-
 #include "VkStruct.h"
 #include "VulkanSwapChain.hpp"
-#include "camera.hpp"
+#include "VulkanHost.h"
 
 //================================================================//
 // VulkanExampleBase
@@ -112,7 +106,7 @@ public:
         VkImage                         mImage;
         VkDeviceMemory                  mMem;
         VkImageView                     mView;
-    } depthStencil;
+    } mDepthStencil;
 
 	uint32_t                            mWidth              = 1280;
 	uint32_t                            mHeight             = 720;
@@ -134,7 +128,7 @@ public:
 	glm::vec3                           mRotation           = glm::vec3();
 	glm::vec3                           mCameraPos          = glm::vec3();
 
-	void*                               mView;
+	VulkanHost&                     	mHost;
 
     //----------------------------------------------------------------//
     virtual void                        buildCommandBuffers                 () = 0;
@@ -145,7 +139,7 @@ public:
     void                                createSynchronizationPrimitives     ();
     void                                destroyCommandBuffers               ();
     void                                flushCommandBuffer                  ( VkCommandBuffer commandBuffer, VkQueue queue, bool free );
-    const std::string                   getAssetPath                        (); /** @brief Returns os specific base asset path (for shaders, models, textures) */
+//    const std::string                   getAssetPath                        (); /** @brief Returns os specific base asset path (for shaders, models, textures) */
     //virtual void                        getEnabledFeatures                  () {}; /** @brief (Virtual) Called after the physical device features have been read, can be used to set features to enable on the device */
     VkPipelineShaderStageCreateInfo     loadShader                          ( std::string fileName, VkShaderStageFlagBits stage ); // Load a SPIR-V shader
     void                                prepareFrame                        ();
@@ -157,7 +151,7 @@ public:
     virtual void                        setupRenderPass                     ();
     void                                submitFrame                         (); // Submit the frames' workload
     virtual void                        viewChanged                         () = 0;
-                                        VulkanExampleBase                   ( void* view, std::string name, bool enableValidation, bool useVsync, uint32_t apiVersion );
+                                        VulkanExampleBase                   ( VulkanHost& host, std::string name, bool enableValidation, bool useVsync, uint32_t apiVersion );
     virtual                             ~VulkanExampleBase                  ();
 };
 

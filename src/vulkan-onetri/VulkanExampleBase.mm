@@ -13,7 +13,7 @@
 // VulkanExampleBase
 //================================================================//
 
-//----------------------------------------------------------------//
-const std::string VulkanExampleBase::getAssetPath () {
-    return [ NSBundle.mainBundle.resourcePath stringByAppendingString: @"/data/" ].UTF8String;
-}
+////----------------------------------------------------------------//
+//const std::string VulkanExampleBase::getAssetPath () {
+//    return [ NSBundle.mainBundle.resourcePath stringByAppendingString: @"/data/" ].UTF8String;
+//}

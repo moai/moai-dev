@@ -46,14 +46,16 @@ VkResult VulkanExampleBase::createInstance ( std::string name, uint32_t apiVersi
     // need to build an array of c strings for VkInstanceCreateInfo. can't be an array of stl strings.
     std::vector < const char* > instanceExtensions;
     std::vector < const char* > validationLayers;
-    
-    instanceExtensions.push_back ( VK_KHR_SURFACE_EXTENSION_NAME );
+	
+	this->mHost.pushInstanceExtensions ( instanceExtensions );
+	
+//    instanceExtensions.push_back ( VK_KHR_SURFACE_EXTENSION_NAME );
 
-    #if defined ( VK_USE_PLATFORM_IOS_MVK )
-        instanceExtensions.push_back ( VK_MVK_IOS_SURFACE_EXTENSION_NAME );
-    #elif defined ( VK_USE_PLATFORM_MACOS_MVK )
-        instanceExtensions.push_back ( VK_MVK_MACOS_SURFACE_EXTENSION_NAME );
-    #endif
+//    #if defined ( VK_USE_PLATFORM_IOS_MVK )
+//        instanceExtensions.push_back ( VK_MVK_IOS_SURFACE_EXTENSION_NAME );
+//    #elif defined ( VK_USE_PLATFORM_MACOS_MVK )
+//        instanceExtensions.push_back ( VK_MVK_MACOS_SURFACE_EXTENSION_NAME );
+//    #endif
 
     for ( size_t i = 0; i < this->mEnabledInstanceExtensions.size (); ++i ) {
         instanceExtensions.push_back ( this->mEnabledInstanceExtensions [ i ]);
@@ -89,17 +91,18 @@ VkResult VulkanExampleBase::createLogicalDevice ( bool useSwapChain, VkQueueFlag
 
     std::set < std::string > supportedExtensions;
 
-    // Get list of supported extensions
-    uint32_t extCount = 0;
-    vkEnumerateDeviceExtensionProperties ( mPhysicalDevice, nullptr, &extCount, nullptr );
-    if ( extCount > 0 ) {
-        std::vector < VkExtensionProperties > extensions ( extCount );
-        if ( vkEnumerateDeviceExtensionProperties ( mPhysicalDevice, nullptr, &extCount, &extensions.front ()) == VK_SUCCESS ) {
-            for (auto ext : extensions) {
-                supportedExtensions.insert ( ext.extensionName );
-            }
-        }
-    }
+//    // Get list of supported extensions
+//    uint32_t extCount = 0;
+//    vkEnumerateDeviceExtensionProperties ( mPhysicalDevice, nullptr, &extCount, nullptr );
+//    if ( extCount > 0 ) {
+//        std::vector < VkExtensionProperties > extensions ( extCount );
+//        if ( vkEnumerateDeviceExtensionProperties ( mPhysicalDevice, nullptr, &extCount, &extensions.front ()) == VK_SUCCESS ) {
+//            for (auto ext : extensions) {
+//                supportedExtensions.insert ( ext.extensionName );
+//                printf ( "%s\n", ext.extensionName );
+//            }
+//        }
+//    }
 
     // Desired queues need to be requested upon logical device creation
     // Due to differing queue family configurations of Vulkan implementations this can be a bit tricky, especially if the application
@@ -146,11 +149,12 @@ VkResult VulkanExampleBase::createLogicalDevice ( bool useSwapChain, VkQueueFlag
     }
 
     // Create the logical device representation
-    std::vector<const char*> deviceExtensions ( mEnabledDeviceExtensions );
-    if ( useSwapChain ) {
-        // If the device will be used for presenting to a display via a swapchain we need to request the swapchain extension
-        deviceExtensions.push_back ( VK_KHR_SWAPCHAIN_EXTENSION_NAME );
-    }
+	
+//    std::vector<const char*> deviceExtensions ( mEnabledDeviceExtensions );
+//    if ( useSwapChain ) {
+//        // If the device will be used for presenting to a display via a swapchain we need to request the swapchain extension
+//        deviceExtensions.push_back ( VK_KHR_SWAPCHAIN_EXTENSION_NAME );
+//    }
 
     VkDeviceCreateInfo deviceCreateInfo = {};
     deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
@@ -158,13 +162,16 @@ VkResult VulkanExampleBase::createLogicalDevice ( bool useSwapChain, VkQueueFlag
     deviceCreateInfo.pQueueCreateInfos = queueCreateInfos.data ();
     deviceCreateInfo.pEnabledFeatures = &mEnabledFeatures;
 
-    // Enable the debug marker extension if it is present (likely meaning a debugging tool is present)
-    if ( supportedExtensions.find ( VK_EXT_DEBUG_MARKER_EXTENSION_NAME ) != supportedExtensions.end ()) {
-        deviceExtensions.push_back ( VK_EXT_DEBUG_MARKER_EXTENSION_NAME );
-        vks::debugmarker::setup ( mDevice );
-    }
+	std::vector < const char* > deviceExtensions;
+	this->mHost.pushDeviceExtensions ( deviceExtensions );
 
-    if (deviceExtensions.size() > 0) {
+//    // Enable the debug marker extension if it is present (likely meaning a debugging tool is present)
+//    if ( supportedExtensions.find ( VK_EXT_DEBUG_MARKER_EXTENSION_NAME ) != supportedExtensions.end ()) {
+//        deviceExtensions.push_back ( VK_EXT_DEBUG_MARKER_EXTENSION_NAME );
+//        vks::debugmarker::setup ( mDevice );
+//    }
+
+    if (deviceExtensions.size () > 0) {
         deviceCreateInfo.enabledExtensionCount = (uint32_t)deviceExtensions.size();
         deviceCreateInfo.ppEnabledExtensionNames = deviceExtensions.data();
     }
@@ -296,17 +303,17 @@ void VulkanExampleBase::setupDepthStencil()
         VkStruct::componentMapping (),
         VkStruct::imageSubresourceRange ( VK_IMAGE_ASPECT_DEPTH_BIT | VK_IMAGE_ASPECT_STENCIL_BIT )
     );
-    VK_CHECK_RESULT ( vkCreateImage ( mDevice, &image, nullptr, &depthStencil.mImage ));
+    VK_CHECK_RESULT ( vkCreateImage ( mDevice, &image, nullptr, &mDepthStencil.mImage ));
     
     VkMemoryRequirements memReqs;
-    vkGetImageMemoryRequirements ( mDevice, depthStencil.mImage, &memReqs );
+    vkGetImageMemoryRequirements ( mDevice, mDepthStencil.mImage, &memReqs );
     
     VkMemoryAllocateInfo mem_alloc = VkStruct::memoryAllocateInfo ( memReqs.size, vks::tools::getMemoryTypeIndex ( memReqs.memoryTypeBits, this->mPhysicalDeviceMemoryProperties, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT ));
-    VK_CHECK_RESULT ( vkAllocateMemory ( mDevice, &mem_alloc, nullptr, &depthStencil.mMem ));
-    VK_CHECK_RESULT ( vkBindImageMemory ( mDevice, depthStencil.mImage, depthStencil.mMem, 0 ));
+    VK_CHECK_RESULT ( vkAllocateMemory ( mDevice, &mem_alloc, nullptr, &mDepthStencil.mMem ));
+    VK_CHECK_RESULT ( vkBindImageMemory ( mDevice, mDepthStencil.mImage, mDepthStencil.mMem, 0 ));
 
-    depthStencilView.image = depthStencil.mImage;
-    VK_CHECK_RESULT ( vkCreateImageView ( mDevice, &depthStencilView, nullptr, &depthStencil.mView ));
+    depthStencilView.image = mDepthStencil.mImage;
+    VK_CHECK_RESULT ( vkCreateImageView ( mDevice, &depthStencilView, nullptr, &mDepthStencil.mView ));
 }
 
 //----------------------------------------------------------------//
@@ -317,7 +324,7 @@ void VulkanExampleBase::setupFrameBuffer()
     VkImageView attachments [ 2 ];
 
     // Depth/Stencil attachment is the same for all frame buffers
-    attachments [ 1 ] = depthStencil.mView;
+    attachments [ 1 ] = mDepthStencil.mView;
 
     VkFramebufferCreateInfo framebufferCreateInfo = VkStruct::framebufferCreateInfo ( mRenderPass, attachments, 2, mWidth, mHeight );
 
@@ -417,15 +424,15 @@ void VulkanExampleBase::submitFrame () {
 }
 
 //----------------------------------------------------------------//
-VulkanExampleBase::VulkanExampleBase ( void* view, std::string name, bool enableValidation, bool useVsync, uint32_t apiVersion ) :
-    mView ( view ),
+VulkanExampleBase::VulkanExampleBase ( VulkanHost& host, std::string name, bool enableValidation, bool useVsync, uint32_t apiVersion ) :
+    mHost ( host ),
     mEnableValidation ( enableValidation ),
     mUseVsync ( useVsync ) {
 
     // Check for a valid asset path
     struct stat info;
-    if ( stat ( getAssetPath ().c_str (), &info ) != 0 ) {
-        std::cerr << "Error: Could not find asset path in " << getAssetPath () << std::endl;
+    if ( stat ( this->mHost.getAssetPath ().c_str (), &info ) != 0 ) {
+        std::cerr << "Error: Could not find asset path in " << this->mHost.getAssetPath () << std::endl;
         exit ( -1 );
     }
     
@@ -458,7 +465,7 @@ VulkanExampleBase::VulkanExampleBase ( void* view, std::string name, bool enable
 
     // init swapchain
     mSwapChain.connect ( mInstance, mPhysicalDevice, mDevice ) ;
-    mSwapChain.initSurface ( view );
+    mSwapChain.initSurface ( this->mHost );
     mSwapChainQueueCommandPool = vks::tools::createCommandPool ( mDevice, mSwapChain.queueNodeIndex );
     mSwapChain.create ( &mWidth, &mHeight, this->mUseVsync );
 
@@ -468,7 +475,6 @@ VulkanExampleBase::VulkanExampleBase ( void* view, std::string name, bool enable
     createCommandBuffers ();
     setupDepthStencil ();
     setupFrameBuffer ();
-
 
     // create synchronization primitives
     // Wait fences to sync command buffer access
@@ -503,9 +509,9 @@ VulkanExampleBase::~VulkanExampleBase () {
     for (auto& shaderModule : mShaderModules) {
         vkDestroyShaderModule(mDevice, shaderModule, nullptr);
     }
-    vkDestroyImageView(mDevice, depthStencil.mView, nullptr);
-    vkDestroyImage(mDevice, depthStencil.mImage, nullptr);
-    vkFreeMemory(mDevice, depthStencil.mMem, nullptr);
+    vkDestroyImageView(mDevice, mDepthStencil.mView, nullptr);
+    vkDestroyImage(mDevice, mDepthStencil.mImage, nullptr);
+    vkFreeMemory(mDevice, mDepthStencil.mMem, nullptr);
 
     vkDestroyPipelineCache(mDevice, mPipelineCache, nullptr);
 
@@ -540,9 +546,9 @@ void VulkanExampleBase::windowResize () {
     mSwapChain.create ( &mWidth, &mHeight, this->mUseVsync );
 
     // Recreate the frame buffers
-    vkDestroyImageView(mDevice, depthStencil.mView, nullptr);
-    vkDestroyImage(mDevice, depthStencil.mImage, nullptr);
-    vkFreeMemory(mDevice, depthStencil.mMem, nullptr);
+    vkDestroyImageView(mDevice, mDepthStencil.mView, nullptr);
+    vkDestroyImage(mDevice, mDepthStencil.mImage, nullptr);
+    vkFreeMemory(mDevice, mDepthStencil.mMem, nullptr);
     setupDepthStencil();
     for (uint32_t i = 0; i < mFrameBuffers.size(); i++) {
         vkDestroyFramebuffer(mDevice, mFrameBuffers[i], nullptr);

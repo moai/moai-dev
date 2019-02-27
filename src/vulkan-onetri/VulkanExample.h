@@ -11,6 +11,8 @@
 * This code is licensed under the MIT license (MIT) (http://opensource.org/licenses/MIT)
 */
 
+#pragma once
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -224,13 +226,13 @@ public:
 
         shaderStages [ 0 ] = VkStruct::pipelineShaderStageCreateInfo (
             VK_SHADER_STAGE_VERTEX_BIT,                                                     // Set pipeline stage for this shader
-            vks::tools::loadShaderSPIRV ( getAssetPath() + "shaders/triangle/triangle.vert.spv", mDevice ),      // Load binary SPIR-V shader
+            vks::tools::loadShaderSPIRV ( this->mHost.getAssetPath() + "shaders/triangle/triangle.vert.spv", mDevice ),      // Load binary SPIR-V shader
             "main"                                                                          // Main entry point for the shader
         );
 
         shaderStages [ 1 ] = VkStruct::pipelineShaderStageCreateInfo (
             VK_SHADER_STAGE_FRAGMENT_BIT,                                                   // Set pipeline stage for this shader
-            vks::tools::loadShaderSPIRV ( getAssetPath() + "shaders/triangle/triangle.frag.spv", mDevice ),      // Load binary SPIR-V shader
+            vks::tools::loadShaderSPIRV ( this->mHost.getAssetPath() + "shaders/triangle/triangle.frag.spv", mDevice ),      // Load binary SPIR-V shader
             "main"                                                                          // Main entry point for the shader
         );
 		
@@ -643,8 +645,8 @@ public:
 	}
  
  //----------------------------------------------------------------//
-    VulkanExample ( void* view = NULL, bool enableValidation = false, bool useVsync = false, uint32_t apiVersion = VK_API_VERSION_1_0 ) :
-        VulkanExampleBase ( view,  "Vulkan Onetri", enableValidation, useVsync, apiVersion ) {
+    VulkanExample ( VulkanHost& host, bool enableValidation = false, bool useVsync = false, uint32_t apiVersion = VK_API_VERSION_1_0 ) :
+        VulkanExampleBase ( host,  "Vulkan Onetri", enableValidation, useVsync, apiVersion ) {
 			
         mZoom = -2.5f;
         // Values not set here are initialized in the base class constructor
