@@ -111,7 +111,6 @@
 		CDDEA8AB2220C1AA005F7B52 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDDEA8AA2220C1AA005F7B52 /* AudioToolbox.framework */; };
 		CDDEA8AD2220C1B2005F7B52 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDDEA8AC2220C1B2005F7B52 /* AudioUnit.framework */; };
 		CDDEA8AF2220C270005F7B52 /* vulkan.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CD7E3757221D0A070065E863 /* vulkan.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		CDDEA8B52224CAAA005F7B52 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7E376A221D14560065E863 /* main.cpp */; };
 		CDDEA8DC22289B70005F7B52 /* libmoai-osx-3rdparty-assimp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD8325971D18D2CC002CE2A1 /* libmoai-osx-3rdparty-assimp.a */; };
 		CDDEA8DD22289B70005F7B52 /* libmoai-osx-apple.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C7FF1AD8682200D6B83A /* libmoai-osx-apple.a */; };
 		CDDEA8DE22289B70005F7B52 /* libmoai-osx-assimp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD8325991D18D2CC002CE2A1 /* libmoai-osx-assimp.a */; };
@@ -131,6 +130,60 @@
 		CDDEA8EC22289B70005F7B52 /* libmoai-osx-untz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C81B1AD8682200D6B83A /* libmoai-osx-untz.a */; };
 		CDDEA8ED22289B70005F7B52 /* libmoai-osx-zl-crypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C81F1AD8682200D6B83A /* libmoai-osx-zl-crypto.a */; };
 		CDDEA8EE22289B70005F7B52 /* libmoai-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C7FD1AD8682200D6B83A /* libmoai-osx.a */; };
+		CDDEA8EF22289EC5005F7B52 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7E376A221D14560065E863 /* main.cpp */; };
+		CDDEA92022289EDD005F7B52 /* VulkanDebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7E375D221D0ABE0065E863 /* VulkanDebug.cpp */; };
+		CDDEA92122289EDD005F7B52 /* VulkanTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7E3762221D0ABE0065E863 /* VulkanTools.cpp */; };
+		CDDEA92222289EDD005F7B52 /* VulkanExampleBase.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDDEA89D221D15A7005F7B52 /* VulkanExampleBase.mm */; };
+		CDDEA92322289EDD005F7B52 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7E376A221D14560065E863 /* main.cpp */; };
+		CDDEA92422289EDD005F7B52 /* VulkanExampleBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7E3767221D0FE50065E863 /* VulkanExampleBase.cpp */; };
+		CDDEA92622289EDD005F7B52 /* libmoai-osx-3rdparty-assimp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD8325971D18D2CC002CE2A1 /* libmoai-osx-3rdparty-assimp.a */; };
+		CDDEA92722289EDD005F7B52 /* libmoai-osx-apple.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C7FF1AD8682200D6B83A /* libmoai-osx-apple.a */; };
+		CDDEA92822289EDD005F7B52 /* libmoai-osx-assimp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD8325991D18D2CC002CE2A1 /* libmoai-osx-assimp.a */; };
+		CDDEA92922289EDD005F7B52 /* libmoai-osx-audio-sampler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C8071AD8682200D6B83A /* libmoai-osx-audio-sampler.a */; };
+		CDDEA92A22289EDD005F7B52 /* libmoai-osx-box2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C8091AD8682200D6B83A /* libmoai-osx-box2d.a */; };
+		CDDEA92B22289EDD005F7B52 /* libmoai-osx-crypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C80B1AD8682200D6B83A /* libmoai-osx-crypto.a */; };
+		CDDEA92C22289EDD005F7B52 /* libmoai-osx-expat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 095A1747218DE7BC003543B8 /* libmoai-osx-expat.a */; };
+		CDDEA92D22289EDD005F7B52 /* libmoai-osx-http-client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C8111AD8682200D6B83A /* libmoai-osx-http-client.a */; };
+		CDDEA92E22289EDD005F7B52 /* libmoai-osx-http-server.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C8131AD8682200D6B83A /* libmoai-osx-http-server.a */; };
+		CDDEA92F22289EDD005F7B52 /* libmoai-osx-image-jpg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD5161C01BCDC403000718FB /* libmoai-osx-image-jpg.a */; };
+		CDDEA93022289EDD005F7B52 /* libmoai-osx-image-png.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD5161C21BCDC403000718FB /* libmoai-osx-image-png.a */; };
+		CDDEA93122289EDD005F7B52 /* libmoai-osx-image-pvr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD5161C41BCDC403000718FB /* libmoai-osx-image-pvr.a */; };
+		CDDEA93222289EDD005F7B52 /* libmoai-osx-image-tga.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDA1D0C91D1BE09C0006C5E5 /* libmoai-osx-image-tga.a */; };
+		CDDEA93322289EDD005F7B52 /* libmoai-osx-image-webp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD5161C61BCDC403000718FB /* libmoai-osx-image-webp.a */; };
+		CDDEA93422289EDD005F7B52 /* libmoai-osx-sdl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C8171AD8682200D6B83A /* libmoai-osx-sdl.a */; };
+		CDDEA93522289EDD005F7B52 /* libmoai-osx-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C8191AD8682200D6B83A /* libmoai-osx-sim.a */; };
+		CDDEA93622289EDD005F7B52 /* libmoai-osx-untz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C81B1AD8682200D6B83A /* libmoai-osx-untz.a */; };
+		CDDEA93722289EDD005F7B52 /* libmoai-osx-zl-crypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C81F1AD8682200D6B83A /* libmoai-osx-zl-crypto.a */; };
+		CDDEA93822289EDD005F7B52 /* libmoai-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C7FD1AD8682200D6B83A /* libmoai-osx.a */; };
+		CDDEA93922289EDD005F7B52 /* libmoai-osx-3rdparty-core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C8011AD8682200D6B83A /* libmoai-osx-3rdparty-core.a */; };
+		CDDEA93A22289EDD005F7B52 /* libmoai-osx-3rdparty-sdl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFD8FA31AD8653C0003F415 /* libmoai-osx-3rdparty-sdl.a */; };
+		CDDEA93B22289EDD005F7B52 /* libmoai-osx-zl-core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C81D1AD8682200D6B83A /* libmoai-osx-zl-core.a */; };
+		CDDEA93C22289EDD005F7B52 /* libmoai-osx-zl-vfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C8211AD8682200D6B83A /* libmoai-osx-zl-vfs.a */; };
+		CDDEA93D22289EDD005F7B52 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD096FD118E0FFE300A36EDD /* libstdc++.dylib */; };
+		CDDEA93E22289EDD005F7B52 /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC63135643FD000ADC60 /* libSystem.dylib */; };
+		CDDEA93F22289EDD005F7B52 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDDEA8AA2220C1AA005F7B52 /* AudioToolbox.framework */; };
+		CDDEA94022289EDD005F7B52 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDDEA8AC2220C1B2005F7B52 /* AudioUnit.framework */; };
+		CDDEA94122289EDD005F7B52 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7AFF13DF7EF200F2DEDE /* Carbon.framework */; };
+		CDDEA94222289EDD005F7B52 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795EF117F08E4B006AEB47 /* Cocoa.framework */; };
+		CDDEA94322289EDD005F7B52 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795EF317F08F4E006AEB47 /* CoreAudio.framework */; };
+		CDDEA94422289EDD005F7B52 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7AF913DF7E9B00F2DEDE /* CoreFoundation.framework */; };
+		CDDEA94522289EDD005F7B52 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6515246B25008E4436 /* CoreServices.framework */; };
+		CDDEA94622289EDD005F7B52 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDF2380E1CAA731C00A45E31 /* CoreVideo.framework */; };
+		CDDEA94722289EDD005F7B52 /* ForceFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD795EF517F08F86006AEB47 /* ForceFeedback.framework */; };
+		CDDEA94822289EDD005F7B52 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C623B6315246B10008E4436 /* Foundation.framework */; };
+		CDDEA94922289EDD005F7B52 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */; };
+		CDDEA94A22289EDD005F7B52 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B319C9901DBFF96600A6C621 /* JavaScriptCore.framework */; };
+		CDDEA94B22289EDD005F7B52 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD273EF721B1F209006C4D84 /* Metal.framework */; };
+		CDDEA94C22289EDD005F7B52 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1845BC1A626F0300FCCCE0 /* SystemConfiguration.framework */; };
+		CDDEA94D22289EDD005F7B52 /* vulkan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD7E3757221D0A070065E863 /* vulkan.framework */; };
+		CDDEA95022289EDD005F7B52 /* vulkan.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CD7E3757221D0A070065E863 /* vulkan.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CDDEA95522289F5E005F7B52 /* aku_modules_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA633181A390CFB00F3995F /* aku_modules_util.cpp */; };
+		CDDEA95622289F5E005F7B52 /* aku_modules.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA6331A1A390CFB00F3995F /* aku_modules.cpp */; };
+		CDDEA95722289F5E005F7B52 /* SDLHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA633101A390CE000F3995F /* SDLHost.cpp */; };
+		CDDEA95822289F5E005F7B52 /* SDLHost-osx.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDF238101CAA7DAC00A45E31 /* SDLHost-osx.mm */; };
+		CDDEA95922289F5E005F7B52 /* SDLHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA633121A390CE000F3995F /* SDLHostMain.cpp */; };
+		CDDEA95A22289F5E005F7B52 /* SDLJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD323B031A8040CB00E2FEBB /* SDLJoystick.cpp */; };
+		CDDEA95B22289F5E005F7B52 /* SDLKeyCodeMapping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD323B051A8040CB00E2FEBB /* SDLKeyCodeMapping.cpp */; };
 		CDF2380F1CAA731C00A45E31 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDF2380E1CAA731C00A45E31 /* CoreVideo.framework */; };
 		CDF238111CAA7DAC00A45E31 /* SDLHost-osx.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDF238101CAA7DAC00A45E31 /* SDLHost-osx.mm */; };
 		CDFD8FB11AD8653C0003F415 /* libmoai-osx-3rdparty-core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFD8FA11AD8653C0003F415 /* libmoai-osx-3rdparty-core.a */; };
@@ -761,6 +814,167 @@
 			remoteGlobalIDString = CD807DF81831C42100E658D9;
 			remoteInfo = "libmoai-osx-zl-crypto";
 		};
+		CDDEA8F222289EDD005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0324E2B11356485F000ADC60;
+			remoteInfo = "libmoai-osx";
+		};
+		CDDEA8F422289EDD005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD78512A1D18C648003F15D0;
+			remoteInfo = "libmoai-osx-3rdparty-assimp";
+		};
+		CDDEA8F622289EDD005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD1845231A626BD500FCCCE0;
+			remoteInfo = "libmoai-osx-apple";
+		};
+		CDDEA8F822289EDD005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CDA0DC161A01B184002B71B6;
+			remoteInfo = "libmoai-osx-audio-sampler";
+		};
+		CDDEA8FA22289EDD005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD7852BF1D18C669003F15D0;
+			remoteInfo = "libmoai-osx-assimp";
+		};
+		CDDEA8FC22289EDD005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE725E173AD29200DFE837;
+			remoteInfo = "libmoai-osx-box2d";
+		};
+		CDDEA8FE22289EDD005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD95D48D1831D4E20080C34E;
+			remoteInfo = "libmoai-osx-crypto";
+		};
+		CDDEA90022289EDD005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 095A1705218DE699003543B8;
+			remoteInfo = "libmoai-osx-3rdparty-expat";
+		};
+		CDDEA90222289EDD005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE75BE173C121800DFE837;
+			remoteInfo = "libmoai-osx-http-client";
+		};
+		CDDEA90422289EDD005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE7687173C160E00DFE837;
+			remoteInfo = "libmoai-osx-http-server";
+		};
+		CDDEA90622289EDD005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD515F101BCDB440000718FB;
+			remoteInfo = "libmoai-osx-image-jpg";
+		};
+		CDDEA90822289EDD005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD515F1F1BCDB45B000718FB;
+			remoteInfo = "libmoai-osx-image-png";
+		};
+		CDDEA90A22289EDD005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD515F2E1BCDB467000718FB;
+			remoteInfo = "libmoai-osx-image-pvr";
+		};
+		CDDEA90C22289EDD005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CDA1D0691D1B75B20006C5E5;
+			remoteInfo = "libmoai-osx-image-tga";
+		};
+		CDDEA90E22289EDD005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD515F3D1BCDB473000718FB;
+			remoteInfo = "libmoai-osx-image-webp";
+		};
+		CDDEA91022289EDD005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD42F2D61A60A7CC001B6D72;
+			remoteInfo = "libmoai-osx-sdl";
+		};
+		CDDEA91222289EDD005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE6F07173AD07100DFE837;
+			remoteInfo = "libmoai-osx-sim";
+		};
+		CDDEA91422289EDD005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD07C4B913A1918600C9386C;
+			remoteInfo = "libmoai-osx-untz";
+		};
+		CDDEA91622289EDD005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD807DF81831C42100E658D9;
+			remoteInfo = "libmoai-osx-zl-crypto";
+		};
+		CDDEA91822289EDD005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0324E2A81356485F000ADC60;
+			remoteInfo = "libmoai-osx-3rdparty-core";
+		};
+		CDDEA91A22289EDD005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD32B3C119F9EDD10059D019;
+			remoteInfo = "libmoai-osx-3rdparty-sdl";
+		};
+		CDDEA91C22289EDD005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD04ACB51472557F009C20E5;
+			remoteInfo = "libmoai-osx-zl-core";
+		};
+		CDDEA91E22289EDD005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD6D745F17EE415D00964415;
+			remoteInfo = "libmoai-osx-zl-vfs";
+		};
 		CDE6556A1C0AAB75004493DD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
@@ -1082,6 +1296,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CDDEA94F22289EDD005F7B52 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				CDDEA95022289EDD005F7B52 /* vulkan.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -1114,7 +1338,7 @@
 		CD795EF117F08E4B006AEB47 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		CD795EF317F08F4E006AEB47 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		CD795EF517F08F86006AEB47 /* ForceFeedback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ForceFeedback.framework; path = /System/Library/Frameworks/ForceFeedback.framework; sourceTree = "<absolute>"; };
-		CD7E3732221D09700065E863 /* moa-vk */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moa-vk"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD7E3732221D09700065E863 /* moa-vk-onetri */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moa-vk-onetri"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD7E3757221D0A070065E863 /* vulkan.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vulkan.framework; path = "../../../../../../../../../vulkan/vulkansdk-macos-1.1.92.1/macOS/Frameworks/vulkan.framework"; sourceTree = "<group>"; };
 		CD7E375A221D0ABE0065E863 /* camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = camera.hpp; path = "../../src/vulkan-onetri/camera.hpp"; sourceTree = "<group>"; };
 		CD7E375B221D0ABE0065E863 /* VulkanExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VulkanExample.h; path = "../../src/vulkan-onetri/VulkanExample.h"; sourceTree = "<group>"; };
@@ -1145,8 +1369,8 @@
 		CDDEA89D221D15A7005F7B52 /* VulkanExampleBase.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VulkanExampleBase.mm; path = "../../src/vulkan-onetri/VulkanExampleBase.mm"; sourceTree = "<group>"; };
 		CDDEA8AA2220C1AA005F7B52 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		CDDEA8AC2220C1B2005F7B52 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
-		CDDEA8B02220DA69005F7B52 /* main-alt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "main-alt.cpp"; path = "../../src/vulkan-onetri/main-alt.cpp"; sourceTree = "<group>"; };
 		CDDEA8B22224B892005F7B52 /* VulkanHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VulkanHost.h; path = "../../src/vulkan-onetri/VulkanHost.h"; sourceTree = "<group>"; };
+		CDDEA95422289EDD005F7B52 /* moa-vk */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moa-vk"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDF2380E1CAA731C00A45E31 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		CDF238101CAA7DAC00A45E31 /* SDLHost-osx.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "SDLHost-osx.mm"; path = "../../src/host-sdl/SDLHost-osx.mm"; sourceTree = "<group>"; };
 		CDFD8FA11AD8653C0003F415 /* libmoai-osx-3rdparty-core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-3rdparty-core.a"; path = "../../../../Library/Developer/Xcode/DerivedData/MoaiSample-cqdbxugpyrgpwegimkiivzlhrioj/Build/Products/Debug/libmoai-osx-3rdparty-core.a"; sourceTree = "<group>"; };
@@ -1312,6 +1536,53 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CDDEA92522289EDD005F7B52 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDDEA92622289EDD005F7B52 /* libmoai-osx-3rdparty-assimp.a in Frameworks */,
+				CDDEA92722289EDD005F7B52 /* libmoai-osx-apple.a in Frameworks */,
+				CDDEA92822289EDD005F7B52 /* libmoai-osx-assimp.a in Frameworks */,
+				CDDEA92922289EDD005F7B52 /* libmoai-osx-audio-sampler.a in Frameworks */,
+				CDDEA92A22289EDD005F7B52 /* libmoai-osx-box2d.a in Frameworks */,
+				CDDEA92B22289EDD005F7B52 /* libmoai-osx-crypto.a in Frameworks */,
+				CDDEA92C22289EDD005F7B52 /* libmoai-osx-expat.a in Frameworks */,
+				CDDEA92D22289EDD005F7B52 /* libmoai-osx-http-client.a in Frameworks */,
+				CDDEA92E22289EDD005F7B52 /* libmoai-osx-http-server.a in Frameworks */,
+				CDDEA92F22289EDD005F7B52 /* libmoai-osx-image-jpg.a in Frameworks */,
+				CDDEA93022289EDD005F7B52 /* libmoai-osx-image-png.a in Frameworks */,
+				CDDEA93122289EDD005F7B52 /* libmoai-osx-image-pvr.a in Frameworks */,
+				CDDEA93222289EDD005F7B52 /* libmoai-osx-image-tga.a in Frameworks */,
+				CDDEA93322289EDD005F7B52 /* libmoai-osx-image-webp.a in Frameworks */,
+				CDDEA93422289EDD005F7B52 /* libmoai-osx-sdl.a in Frameworks */,
+				CDDEA93522289EDD005F7B52 /* libmoai-osx-sim.a in Frameworks */,
+				CDDEA93622289EDD005F7B52 /* libmoai-osx-untz.a in Frameworks */,
+				CDDEA93722289EDD005F7B52 /* libmoai-osx-zl-crypto.a in Frameworks */,
+				CDDEA93822289EDD005F7B52 /* libmoai-osx.a in Frameworks */,
+				CDDEA93922289EDD005F7B52 /* libmoai-osx-3rdparty-core.a in Frameworks */,
+				CDDEA93A22289EDD005F7B52 /* libmoai-osx-3rdparty-sdl.a in Frameworks */,
+				CDDEA93B22289EDD005F7B52 /* libmoai-osx-zl-core.a in Frameworks */,
+				CDDEA93C22289EDD005F7B52 /* libmoai-osx-zl-vfs.a in Frameworks */,
+				CDDEA93D22289EDD005F7B52 /* libstdc++.dylib in Frameworks */,
+				CDDEA93E22289EDD005F7B52 /* libSystem.dylib in Frameworks */,
+				CDDEA93F22289EDD005F7B52 /* AudioToolbox.framework in Frameworks */,
+				CDDEA94022289EDD005F7B52 /* AudioUnit.framework in Frameworks */,
+				CDDEA94122289EDD005F7B52 /* Carbon.framework in Frameworks */,
+				CDDEA94222289EDD005F7B52 /* Cocoa.framework in Frameworks */,
+				CDDEA94322289EDD005F7B52 /* CoreAudio.framework in Frameworks */,
+				CDDEA94422289EDD005F7B52 /* CoreFoundation.framework in Frameworks */,
+				CDDEA94522289EDD005F7B52 /* CoreServices.framework in Frameworks */,
+				CDDEA94622289EDD005F7B52 /* CoreVideo.framework in Frameworks */,
+				CDDEA94722289EDD005F7B52 /* ForceFeedback.framework in Frameworks */,
+				CDDEA94822289EDD005F7B52 /* Foundation.framework in Frameworks */,
+				CDDEA94922289EDD005F7B52 /* IOKit.framework in Frameworks */,
+				CDDEA94A22289EDD005F7B52 /* JavaScriptCore.framework in Frameworks */,
+				CDDEA94B22289EDD005F7B52 /* Metal.framework in Frameworks */,
+				CDDEA94C22289EDD005F7B52 /* SystemConfiguration.framework in Frameworks */,
+				CDDEA94D22289EDD005F7B52 /* vulkan.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -1320,7 +1591,8 @@
 			children = (
 				0300CF70140DC56200ABCC5B /* moai */,
 				CDD813D01E16FFA900996311 /* moai-test */,
-				CD7E3732221D09700065E863 /* moa-vk */,
+				CD7E3732221D09700065E863 /* moa-vk-onetri */,
+				CDDEA95422289EDD005F7B52 /* moa-vk */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1390,7 +1662,6 @@
 			isa = PBXGroup;
 			children = (
 				CD7E375A221D0ABE0065E863 /* camera.hpp */,
-				CDDEA8B02220DA69005F7B52 /* main-alt.cpp */,
 				CD7E376A221D14560065E863 /* main.cpp */,
 				CD7E375C221D0ABE0065E863 /* VkStruct.h */,
 				CD7E375D221D0ABE0065E863 /* VulkanDebug.cpp */,
@@ -1553,9 +1824,9 @@
 			productReference = 0300CF70140DC56200ABCC5B /* moai */;
 			productType = "com.apple.product-type.tool";
 		};
-		CD7E36CA221D09700065E863 /* moa-vk */ = {
+		CD7E36CA221D09700065E863 /* moa-vk-onetri */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CD7E372F221D09700065E863 /* Build configuration list for PBXNativeTarget "moa-vk" */;
+			buildConfigurationList = CD7E372F221D09700065E863 /* Build configuration list for PBXNativeTarget "moa-vk-onetri" */;
 			buildPhases = (
 				CD7E36FB221D09700065E863 /* Sources */,
 				CD7E3703221D09700065E863 /* Frameworks */,
@@ -1589,9 +1860,9 @@
 				CDDEA8A22220B587005F7B52 /* PBXTargetDependency */,
 				CDDEA8A42220B587005F7B52 /* PBXTargetDependency */,
 			);
-			name = "moa-vk";
+			name = "moa-vk-onetri";
 			productName = moai;
-			productReference = CD7E3732221D09700065E863 /* moa-vk */;
+			productReference = CD7E3732221D09700065E863 /* moa-vk-onetri */;
 			productType = "com.apple.product-type.tool";
 		};
 		CDD813671E16FFA900996311 /* moai-test */ = {
@@ -1636,6 +1907,47 @@
 			productReference = CDD813D01E16FFA900996311 /* moai-test */;
 			productType = "com.apple.product-type.tool";
 		};
+		CDDEA8F022289EDD005F7B52 /* moa-vk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CDDEA95122289EDD005F7B52 /* Build configuration list for PBXNativeTarget "moa-vk" */;
+			buildPhases = (
+				CDDEA91F22289EDD005F7B52 /* Sources */,
+				CDDEA92522289EDD005F7B52 /* Frameworks */,
+				CDDEA94E22289EDD005F7B52 /* Copy Binaries */,
+				CDDEA94F22289EDD005F7B52 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CDDEA8F122289EDD005F7B52 /* PBXTargetDependency */,
+				CDDEA8F322289EDD005F7B52 /* PBXTargetDependency */,
+				CDDEA8F522289EDD005F7B52 /* PBXTargetDependency */,
+				CDDEA8F722289EDD005F7B52 /* PBXTargetDependency */,
+				CDDEA8F922289EDD005F7B52 /* PBXTargetDependency */,
+				CDDEA8FB22289EDD005F7B52 /* PBXTargetDependency */,
+				CDDEA8FD22289EDD005F7B52 /* PBXTargetDependency */,
+				CDDEA8FF22289EDD005F7B52 /* PBXTargetDependency */,
+				CDDEA90122289EDD005F7B52 /* PBXTargetDependency */,
+				CDDEA90322289EDD005F7B52 /* PBXTargetDependency */,
+				CDDEA90522289EDD005F7B52 /* PBXTargetDependency */,
+				CDDEA90722289EDD005F7B52 /* PBXTargetDependency */,
+				CDDEA90922289EDD005F7B52 /* PBXTargetDependency */,
+				CDDEA90B22289EDD005F7B52 /* PBXTargetDependency */,
+				CDDEA90D22289EDD005F7B52 /* PBXTargetDependency */,
+				CDDEA90F22289EDD005F7B52 /* PBXTargetDependency */,
+				CDDEA91122289EDD005F7B52 /* PBXTargetDependency */,
+				CDDEA91322289EDD005F7B52 /* PBXTargetDependency */,
+				CDDEA91522289EDD005F7B52 /* PBXTargetDependency */,
+				CDDEA91722289EDD005F7B52 /* PBXTargetDependency */,
+				CDDEA91922289EDD005F7B52 /* PBXTargetDependency */,
+				CDDEA91B22289EDD005F7B52 /* PBXTargetDependency */,
+				CDDEA91D22289EDD005F7B52 /* PBXTargetDependency */,
+			);
+			name = "moa-vk";
+			productName = moai;
+			productReference = CDDEA95422289EDD005F7B52 /* moa-vk */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1667,7 +1979,8 @@
 			targets = (
 				0300CF4F140DC53C00ABCC5B /* moai */,
 				CDD813671E16FFA900996311 /* moai-test */,
-				CD7E36CA221D09700065E863 /* moa-vk */,
+				CD7E36CA221D09700065E863 /* moa-vk-onetri */,
+				CDDEA8F022289EDD005F7B52 /* moa-vk */,
 			);
 		};
 /* End PBXProject section */
@@ -2131,6 +2444,20 @@
 			shellPath = /bin/sh;
 			shellScript = "OSX_BIN=../../bin/osx\nmkdir -p $OSX_BIN\ncp -a \"${TARGET_BUILD_DIR}/${TARGET_NAME}\" $OSX_BIN";
 		};
+		CDDEA94E22289EDD005F7B52 /* Copy Binaries */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Binaries";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "OSX_BIN=../../bin/osx\nmkdir -p $OSX_BIN\ncp -a \"${TARGET_BUILD_DIR}/${TARGET_NAME}\" $OSX_BIN\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -2155,7 +2482,7 @@
 				CD7E3765221D0ABE0065E863 /* VulkanDebug.cpp in Sources */,
 				CD7E3766221D0ABE0065E863 /* VulkanTools.cpp in Sources */,
 				CDDEA89E221D15A7005F7B52 /* VulkanExampleBase.mm in Sources */,
-				CDDEA8B52224CAAA005F7B52 /* main.cpp in Sources */,
+				CDDEA8EF22289EC5005F7B52 /* main.cpp in Sources */,
 				CD7E3769221D0FE50065E863 /* VulkanExampleBase.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2170,6 +2497,25 @@
 				CD5C9FD021C8EA400092C949 /* moai_gtest_libtess2.cpp in Sources */,
 				CD7038CD21CB145D00DB4A9D /* moai_gtest_composition.cpp in Sources */,
 				CDD813FA1E1700D900996311 /* moai_gtest_main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDDEA91F22289EDD005F7B52 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDDEA95922289F5E005F7B52 /* SDLHostMain.cpp in Sources */,
+				CDDEA95B22289F5E005F7B52 /* SDLKeyCodeMapping.cpp in Sources */,
+				CDDEA92022289EDD005F7B52 /* VulkanDebug.cpp in Sources */,
+				CDDEA92122289EDD005F7B52 /* VulkanTools.cpp in Sources */,
+				CDDEA95822289F5E005F7B52 /* SDLHost-osx.mm in Sources */,
+				CDDEA95A22289F5E005F7B52 /* SDLJoystick.cpp in Sources */,
+				CDDEA92222289EDD005F7B52 /* VulkanExampleBase.mm in Sources */,
+				CDDEA95522289F5E005F7B52 /* aku_modules_util.cpp in Sources */,
+				CDDEA92322289EDD005F7B52 /* main.cpp in Sources */,
+				CDDEA95722289F5E005F7B52 /* SDLHost.cpp in Sources */,
+				CDDEA95622289F5E005F7B52 /* aku_modules.cpp in Sources */,
+				CDDEA92422289EDD005F7B52 /* VulkanExampleBase.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2530,6 +2876,121 @@
 			isa = PBXTargetDependency;
 			name = "libmoai-osx-zl-crypto";
 			targetProxy = CDDEA8DA22289B44005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA8F122289EDD005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx";
+			targetProxy = CDDEA8F222289EDD005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA8F322289EDD005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-3rdparty-assimp";
+			targetProxy = CDDEA8F422289EDD005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA8F522289EDD005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-apple";
+			targetProxy = CDDEA8F622289EDD005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA8F722289EDD005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-audio-sampler";
+			targetProxy = CDDEA8F822289EDD005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA8F922289EDD005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-assimp";
+			targetProxy = CDDEA8FA22289EDD005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA8FB22289EDD005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-box2d";
+			targetProxy = CDDEA8FC22289EDD005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA8FD22289EDD005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-crypto";
+			targetProxy = CDDEA8FE22289EDD005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA8FF22289EDD005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-3rdparty-expat";
+			targetProxy = CDDEA90022289EDD005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA90122289EDD005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-http-client";
+			targetProxy = CDDEA90222289EDD005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA90322289EDD005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-http-server";
+			targetProxy = CDDEA90422289EDD005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA90522289EDD005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-image-jpg";
+			targetProxy = CDDEA90622289EDD005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA90722289EDD005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-image-png";
+			targetProxy = CDDEA90822289EDD005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA90922289EDD005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-image-pvr";
+			targetProxy = CDDEA90A22289EDD005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA90B22289EDD005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-image-tga";
+			targetProxy = CDDEA90C22289EDD005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA90D22289EDD005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-image-webp";
+			targetProxy = CDDEA90E22289EDD005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA90F22289EDD005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-sdl";
+			targetProxy = CDDEA91022289EDD005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA91122289EDD005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-sim";
+			targetProxy = CDDEA91222289EDD005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA91322289EDD005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-untz";
+			targetProxy = CDDEA91422289EDD005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA91522289EDD005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-zl-crypto";
+			targetProxy = CDDEA91622289EDD005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA91722289EDD005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-3rdparty-core";
+			targetProxy = CDDEA91822289EDD005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA91922289EDD005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-3rdparty-sdl";
+			targetProxy = CDDEA91A22289EDD005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA91B22289EDD005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-zl-core";
+			targetProxy = CDDEA91C22289EDD005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA91D22289EDD005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-zl-vfs";
+			targetProxy = CDDEA91E22289EDD005F7B52 /* PBXContainerItemProxy */;
 		};
 		CDFF5AE01C29233B00969B44 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2896,6 +3357,53 @@
 			};
 			name = Release;
 		};
+		CDDEA95222289EDD005F7B52 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					VK_USE_PLATFORM_MACOS_MVK,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					../frameworks/vulkan/macOS/include,
+				);
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = ../frameworks/vulkan/macOS/Frameworks;
+			};
+			name = Debug;
+		};
+		CDDEA95322289EDD005F7B52 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					VK_USE_PLATFORM_MACOS_MVK,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					../frameworks/vulkan/macOS/include,
+				);
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/system",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = ../frameworks/vulkan/macOS/Frameworks;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2917,7 +3425,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		CD7E372F221D09700065E863 /* Build configuration list for PBXNativeTarget "moa-vk" */ = {
+		CD7E372F221D09700065E863 /* Build configuration list for PBXNativeTarget "moa-vk-onetri" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CD7E3730221D09700065E863 /* Debug */,
@@ -2931,6 +3439,15 @@
 			buildConfigurations = (
 				CDD813CE1E16FFA900996311 /* Debug */,
 				CDD813CF1E16FFA900996311 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CDDEA95122289EDD005F7B52 /* Build configuration list for PBXNativeTarget "moa-vk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CDDEA95222289EDD005F7B52 /* Debug */,
+				CDDEA95322289EDD005F7B52 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
