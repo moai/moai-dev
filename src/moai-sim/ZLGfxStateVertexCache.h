@@ -1,11 +1,11 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXSTATEVERTEXCACHE_H
-#define	MOAIGFXSTATEVERTEXCACHE_H
+#ifndef	ZLGFXSTATEVERTEXCACHE_H
+#define	ZLGFXSTATEVERTEXCACHE_H
 
-#include <moai-sim/MOAIAbstractGfxStateCache.h>
-#include <moai-sim/MOAIGfxStateCPUCache.h>
+#include <moai-sim/ZLAbstractGfxStateCache.h>
+#include <moai-sim/ZLGfxStateCPUCache.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIVertexBuffer.h>
 
@@ -18,17 +18,17 @@ class MOAITextureBase;
 class MOAIVertexFormat;
 
 //================================================================//
-// MOAIGfxStateVertexCache
+// ZLGfxStateVertexCache
 //================================================================//
-class MOAIGfxStateVertexCache :
-	virtual public MOAIAbstractGfxStateCache,
-	public MOAIGfxStateCPUCache {
+class ZLGfxStateVertexCache :
+	virtual public ZLAbstractGfxStateCache,
+	public ZLGfxStateCPUCache {
 protected:
 
 	friend class MOAIGfxMgr; // for now
-	friend class MOAIGfxState;
-	friend class MOAIGfxStateCPUCache;
-	friend class MOAIGfxStateGPUCache;
+	friend class ZLGfxStateCache;
+	friend class ZLGfxStateCPUCache;
+	friend class ZLGfxStateGPUCache;
 	
 	// Stock OpenGL ES 2.0 has no support for u32 index size in glDrawElements.
 	// iOS and many Androids (PowerVR, adreno) support it with GL_OES_element_index_uint extension.
@@ -81,8 +81,8 @@ public:
 	
 	void			InitBuffers						();
 	
-					MOAIGfxStateVertexCache			();
-					~MOAIGfxStateVertexCache		();
+					ZLGfxStateVertexCache			();
+					~ZLGfxStateVertexCache			();
 
 	void			Reset							();
 

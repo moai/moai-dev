@@ -6,7 +6,7 @@
 
 class MOAIVertexArray;
 class MOAIVertexBuffer;
-class MOAIVertexBufferWithFormat;
+class ZLVertexBufferWithFormat;
 class MOAIVertexFormat;
 
 //================================================================//
@@ -20,7 +20,7 @@ protected:
 	ZLLeanArray < ZLGfxHandle >						mVAOs; // vertex array objects to bind all the vertex and buffer state
 	ZLIndex											mCurrentVAO;
 
-	ZLLeanArray < MOAIVertexBufferWithFormat >		mVertexBuffers;
+	ZLLeanArray < ZLVertexBufferWithFormat >		mVertexBuffers;
 
 	bool				mUseVAOs;
 

@@ -8,9 +8,9 @@
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIGfxResourceClerk.h>
-#include <moai-sim/MOAIGfxStateCPUCache.h>
-#include <moai-sim/MOAIGfxStateGPUCache.h>
-#include <moai-sim/MOAIGfxStateVertexCache.h>
+#include <moai-sim/ZLGfxStateCPUCache.h>
+#include <moai-sim/ZLGfxStateGPUCache.h>
+#include <moai-sim/ZLGfxStateVertexCache.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIShaderProgram.h>
@@ -29,15 +29,15 @@
 #endif
 
 //================================================================//
-// MOAIGfxStateVertexCache
+// ZLGfxStateVertexCache
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIGfxStateVertexCache::BeginPrim ( u32 primType, u32 vtxCount, u32 idxCount ) {
+bool ZLGfxStateVertexCache::BeginPrim ( u32 primType, u32 vtxCount, u32 idxCount ) {
 	
 	DEBUG_LOG ( "BEGIN INDEXED PRIM: %d %d %d\n", primType, vtxCount, idxCount );
 	
-	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	MOAIVertexFormat* format = gfxState.GetCurrentVtxFormat ();
 	
 	u32 vtxSize = format ? format->GetVertexSize () : 0;
@@ -75,7 +75,7 @@ bool MOAIGfxStateVertexCache::BeginPrim ( u32 primType, u32 vtxCount, u32 idxCou
 }
 
 //----------------------------------------------------------------//
-u32 MOAIGfxStateVertexCache::ContinuePrim ( u32 vtxCount, u32 idxCount ) {
+u32 ZLGfxStateVertexCache::ContinuePrim ( u32 vtxCount, u32 idxCount ) {
 
 	u32 idxCursor = ( u32 )this->mIdxBuffer->GetCursor ();
 	u32 vtxCursor = ( u32 )this->mVtxBuffer->GetCursor ();
@@ -102,13 +102,13 @@ u32 MOAIGfxStateVertexCache::ContinuePrim ( u32 vtxCount, u32 idxCount ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIGfxStateVertexCache::CountPrims () {
+u32 ZLGfxStateVertexCache::CountPrims () {
 
 	return this->mPrimCount;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateVertexCache::EndPrim () {
+void ZLGfxStateVertexCache::EndPrim () {
 	
 	this->mPrimCount++;
 	
@@ -118,11 +118,11 @@ void MOAIGfxStateVertexCache::EndPrim () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateVertexCache::FlushVertexCache () {
+void ZLGfxStateVertexCache::FlushVertexCache () {
 
 	if ( this->mPrimCount == 0 ) return;
 	
-	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	gfxState.SuspendChanges (); // don't apply any pending state changes;
 
 	if ( !this->mIsDrawing ) {
@@ -168,7 +168,7 @@ void MOAIGfxStateVertexCache::FlushVertexCache () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateVertexCache::InitBuffers () {
+void ZLGfxStateVertexCache::InitBuffers () {
 
 	if ( !this->mVtxBuffer ) {
 
@@ -183,7 +183,7 @@ void MOAIGfxStateVertexCache::InitBuffers () {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxStateVertexCache::MOAIGfxStateVertexCache () :
+ZLGfxStateVertexCache::ZLGfxStateVertexCache () :
 	mIsDrawing ( false ),
 	mVtxBuffer ( 0 ),
 	mIdxBuffer ( 0 ),
@@ -202,11 +202,11 @@ MOAIGfxStateVertexCache::MOAIGfxStateVertexCache () :
 }
 
 //----------------------------------------------------------------//
-MOAIGfxStateVertexCache::~MOAIGfxStateVertexCache () {
+ZLGfxStateVertexCache::~ZLGfxStateVertexCache () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateVertexCache::Reset () {
+void ZLGfxStateVertexCache::Reset () {
 
 	this->mVtxBuffer->Seek ( 0 );
 	this->mIdxBuffer->Seek ( 0 );
@@ -216,47 +216,47 @@ void MOAIGfxStateVertexCache::Reset () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateVertexCache::SetUVTransform () {
+void ZLGfxStateVertexCache::SetUVTransform () {
 
 	this->mApplyUVTransform = false;
 	this->mUVTransform.Ident ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateVertexCache::SetUVTransform ( u32 mtxID ) {
+void ZLGfxStateVertexCache::SetUVTransform ( u32 mtxID ) {
 
 	this->SetUVTransform ( this->GetMtx ( mtxID ));
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateVertexCache::SetUVTransform ( const ZLMatrix4x4& uvTransform ) {
+void ZLGfxStateVertexCache::SetUVTransform ( const ZLMatrix4x4& uvTransform ) {
 
 	this->mApplyUVTransform = !uvTransform.IsIdent ();
 	this->mUVTransform = uvTransform;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateVertexCache::SetVertexTransform () {
+void ZLGfxStateVertexCache::SetVertexTransform () {
 
 	this->mApplyVertexTransform = false;
 	this->mVertexTransform.Ident ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateVertexCache::SetVertexTransform ( u32 mtxID ) {
+void ZLGfxStateVertexCache::SetVertexTransform ( u32 mtxID ) {
 
 	this->SetVertexTransform ( this->GetMtx ( mtxID ));
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateVertexCache::SetVertexTransform ( const ZLMatrix4x4& vertexTransform ) {
+void ZLGfxStateVertexCache::SetVertexTransform ( const ZLMatrix4x4& vertexTransform ) {
 
 	this->mApplyVertexTransform = !vertexTransform.IsIdent ();
 	this->mVertexTransform = vertexTransform;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateVertexCache::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* uv ) {
+void ZLGfxStateVertexCache::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* uv ) {
 
 	if ( this->mApplyVertexTransform ) {
 		this->mVertexTransform.TransformQuad ( vtx );
@@ -303,7 +303,7 @@ void MOAIGfxStateVertexCache::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* uv 
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateVertexCache::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv ) {
+void ZLGfxStateVertexCache::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv ) {
 
 	ZLVec4D vtxBuffer [ 4 ];
 	
@@ -334,7 +334,7 @@ void MOAIGfxStateVertexCache::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv 
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateVertexCache::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff ) {
+void ZLGfxStateVertexCache::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff ) {
 
 	ZLVec4D vtxBuffer [ 4 ];
 	
@@ -365,7 +365,7 @@ void MOAIGfxStateVertexCache::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv,
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateVertexCache::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale ) {
+void ZLGfxStateVertexCache::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale ) {
 
 	ZLVec4D vtxBuffer [ 4 ];
 	
@@ -396,7 +396,7 @@ void MOAIGfxStateVertexCache::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv,
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateVertexCache::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale ) {
+void ZLGfxStateVertexCache::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale ) {
 
 	ZLVec4D vtxBuffer [ 4 ];
 	

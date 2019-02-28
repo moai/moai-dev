@@ -121,7 +121,7 @@ int MOAIShaderProgram::_setGlobal ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShaderProgram, "UNNN" )
 
 	ZLIndex globalIdx	= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	u32 globalID		= state.GetValue < u32 >( 3, MOAIGfxState::NULL_GLOBAL );
+	u32 globalID		= state.GetValue < u32 >( 3, ZLGfxStateCache::NULL_GLOBAL );
 	ZLIndex uniformID	= state.GetValue < MOAILuaIndex >( 4, ZLIndexOp::ZERO );
 	ZLIndex index		= state.GetValue < MOAILuaIndex >( 5, ZLIndexOp::ZERO );
 	
@@ -209,7 +209,7 @@ void MOAIShaderProgram::ApplyUniforms ( ZLLeanArray < u8 >& buffer ) {
 //----------------------------------------------------------------//
 void MOAIShaderProgram::BindUniforms () {
 	
-	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	
 	size_t nUniforms = this->mUniforms.Size ();
 	
@@ -431,75 +431,75 @@ void MOAIShaderProgram::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "UNIFORM_WIDTH_MATRIX_3X3",				( u32 )MOAIShaderUniform::UNIFORM_WIDTH_MATRIX_3X3 );
 	state.SetField ( -1, "UNIFORM_WIDTH_MATRIX_4X4",				( u32 )MOAIShaderUniform::UNIFORM_WIDTH_MATRIX_4X4 );
 	
-	state.SetField ( -1, "GLOBAL_CLIP_TO_DISPLAY_MTX",				( u32 )MOAIGfxState::CLIP_TO_DISPLAY_MTX );
-	state.SetField ( -1, "GLOBAL_CLIP_TO_MODEL_MTX",				( u32 )MOAIGfxState::CLIP_TO_MODEL_MTX );
-	state.SetField ( -1, "GLOBAL_CLIP_TO_VIEW_MTX",					( u32 )MOAIGfxState::CLIP_TO_VIEW_MTX );
-	state.SetField ( -1, "GLOBAL_CLIP_TO_WINDOW_MTX",				( u32 )MOAIGfxState::CLIP_TO_WINDOW_MTX );
-	state.SetField ( -1, "GLOBAL_CLIP_TO_WORLD_MTX",				( u32 )MOAIGfxState::CLIP_TO_WORLD_MTX );
+	state.SetField ( -1, "GLOBAL_CLIP_TO_DISPLAY_MTX",				( u32 )ZLGfxStateCache::CLIP_TO_DISPLAY_MTX );
+	state.SetField ( -1, "GLOBAL_CLIP_TO_MODEL_MTX",				( u32 )ZLGfxStateCache::CLIP_TO_MODEL_MTX );
+	state.SetField ( -1, "GLOBAL_CLIP_TO_VIEW_MTX",					( u32 )ZLGfxStateCache::CLIP_TO_VIEW_MTX );
+	state.SetField ( -1, "GLOBAL_CLIP_TO_WINDOW_MTX",				( u32 )ZLGfxStateCache::CLIP_TO_WINDOW_MTX );
+	state.SetField ( -1, "GLOBAL_CLIP_TO_WORLD_MTX",				( u32 )ZLGfxStateCache::CLIP_TO_WORLD_MTX );
 
-	state.SetField ( -1, "GLOBAL_DISPLAY_TO_CLIP_MTX",				( u32 )MOAIGfxState::DISPLAY_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_DISPLAY_TO_MODEL_MTX",				( u32 )MOAIGfxState::DISPLAY_TO_MODEL_MTX );
-	state.SetField ( -1, "GLOBAL_DISPLAY_TO_VIEW_MTX",				( u32 )MOAIGfxState::DISPLAY_TO_VIEW_MTX );
-	state.SetField ( -1, "GLOBAL_DISPLAY_TO_WORLD_MTX",				( u32 )MOAIGfxState::DISPLAY_TO_WORLD_MTX );
+	state.SetField ( -1, "GLOBAL_DISPLAY_TO_CLIP_MTX",				( u32 )ZLGfxStateCache::DISPLAY_TO_CLIP_MTX );
+	state.SetField ( -1, "GLOBAL_DISPLAY_TO_MODEL_MTX",				( u32 )ZLGfxStateCache::DISPLAY_TO_MODEL_MTX );
+	state.SetField ( -1, "GLOBAL_DISPLAY_TO_VIEW_MTX",				( u32 )ZLGfxStateCache::DISPLAY_TO_VIEW_MTX );
+	state.SetField ( -1, "GLOBAL_DISPLAY_TO_WORLD_MTX",				( u32 )ZLGfxStateCache::DISPLAY_TO_WORLD_MTX );
 
-	state.SetField ( -1, "GLOBAL_MODEL_TO_CLIP_MTX",				( u32 )MOAIGfxState::MODEL_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_MODEL_TO_DISPLAY_MTX",				( u32 )MOAIGfxState::MODEL_TO_DISPLAY_MTX );
-	state.SetField ( -1, "GLOBAL_MODEL_TO_UV_MTX",					( u32 )MOAIGfxState::MODEL_TO_UV_MTX );
-	state.SetField ( -1, "GLOBAL_MODEL_TO_VIEW_MTX",				( u32 )MOAIGfxState::MODEL_TO_VIEW_MTX );
-	state.SetField ( -1, "GLOBAL_MODEL_TO_WORLD_MTX",				( u32 )MOAIGfxState::MODEL_TO_WORLD_MTX );
+	state.SetField ( -1, "GLOBAL_MODEL_TO_CLIP_MTX",				( u32 )ZLGfxStateCache::MODEL_TO_CLIP_MTX );
+	state.SetField ( -1, "GLOBAL_MODEL_TO_DISPLAY_MTX",				( u32 )ZLGfxStateCache::MODEL_TO_DISPLAY_MTX );
+	state.SetField ( -1, "GLOBAL_MODEL_TO_UV_MTX",					( u32 )ZLGfxStateCache::MODEL_TO_UV_MTX );
+	state.SetField ( -1, "GLOBAL_MODEL_TO_VIEW_MTX",				( u32 )ZLGfxStateCache::MODEL_TO_VIEW_MTX );
+	state.SetField ( -1, "GLOBAL_MODEL_TO_WORLD_MTX",				( u32 )ZLGfxStateCache::MODEL_TO_WORLD_MTX );
 
-	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_DISPLAY_MTX",		( u32 )MOAIGfxState::NORMAL_CLIP_TO_DISPLAY_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_MODEL_MTX",			( u32 )MOAIGfxState::NORMAL_CLIP_TO_MODEL_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_VIEW_MTX",			( u32 )MOAIGfxState::NORMAL_CLIP_TO_VIEW_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_WINDOW_MTX",		( u32 )MOAIGfxState::NORMAL_CLIP_TO_WINDOW_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_WORLD_MTX",			( u32 )MOAIGfxState::NORMAL_CLIP_TO_WORLD_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_DISPLAY_MTX",		( u32 )ZLGfxStateCache::NORMAL_CLIP_TO_DISPLAY_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_MODEL_MTX",			( u32 )ZLGfxStateCache::NORMAL_CLIP_TO_MODEL_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_VIEW_MTX",			( u32 )ZLGfxStateCache::NORMAL_CLIP_TO_VIEW_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_WINDOW_MTX",		( u32 )ZLGfxStateCache::NORMAL_CLIP_TO_WINDOW_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_WORLD_MTX",			( u32 )ZLGfxStateCache::NORMAL_CLIP_TO_WORLD_MTX );
 
-	state.SetField ( -1, "GLOBAL_NORMAL_DISPLAY_TO_CLIP_MTX",		( u32 )MOAIGfxState::NORMAL_DISPLAY_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_DISPLAY_TO_MODEL_MTX",		( u32 )MOAIGfxState::NORMAL_DISPLAY_TO_MODEL_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_DISPLAY_TO_VIEW_MTX",		( u32 )MOAIGfxState::NORMAL_DISPLAY_TO_VIEW_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_DISPLAY_TO_WORLD_MTX",		( u32 )MOAIGfxState::NORMAL_DISPLAY_TO_WORLD_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_DISPLAY_TO_CLIP_MTX",		( u32 )ZLGfxStateCache::NORMAL_DISPLAY_TO_CLIP_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_DISPLAY_TO_MODEL_MTX",		( u32 )ZLGfxStateCache::NORMAL_DISPLAY_TO_MODEL_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_DISPLAY_TO_VIEW_MTX",		( u32 )ZLGfxStateCache::NORMAL_DISPLAY_TO_VIEW_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_DISPLAY_TO_WORLD_MTX",		( u32 )ZLGfxStateCache::NORMAL_DISPLAY_TO_WORLD_MTX );
 
-	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_CLIP_MTX",			( u32 )MOAIGfxState::NORMAL_MODEL_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_DISPLAY_MTX",		( u32 )MOAIGfxState::NORMAL_MODEL_TO_DISPLAY_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_UV_MTX",			( u32 )MOAIGfxState::NORMAL_MODEL_TO_UV_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_VIEW_MTX",			( u32 )MOAIGfxState::NORMAL_MODEL_TO_VIEW_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_WORLD_MTX",		( u32 )MOAIGfxState::NORMAL_MODEL_TO_WORLD_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_CLIP_MTX",			( u32 )ZLGfxStateCache::NORMAL_MODEL_TO_CLIP_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_DISPLAY_MTX",		( u32 )ZLGfxStateCache::NORMAL_MODEL_TO_DISPLAY_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_UV_MTX",			( u32 )ZLGfxStateCache::NORMAL_MODEL_TO_UV_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_VIEW_MTX",			( u32 )ZLGfxStateCache::NORMAL_MODEL_TO_VIEW_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_WORLD_MTX",		( u32 )ZLGfxStateCache::NORMAL_MODEL_TO_WORLD_MTX );
 
-	state.SetField ( -1, "GLOBAL_NORMAL_WORLD_TO_DISPLAY_MTX",		( u32 )MOAIGfxState::NORMAL_WORLD_TO_DISPLAY_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_WORLD_TO_VIEW_MTX",			( u32 )MOAIGfxState::NORMAL_WORLD_TO_VIEW_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_WORLD_TO_DISPLAY_MTX",		( u32 )ZLGfxStateCache::NORMAL_WORLD_TO_DISPLAY_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_WORLD_TO_VIEW_MTX",			( u32 )ZLGfxStateCache::NORMAL_WORLD_TO_VIEW_MTX );
 
-	state.SetField ( -1, "GLOBAL_NORMAL_UV_TO_MODEL_MTX",			( u32 )MOAIGfxState::NORMAL_UV_TO_MODEL_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_UV_TO_MODEL_MTX",			( u32 )ZLGfxStateCache::NORMAL_UV_TO_MODEL_MTX );
 
-	state.SetField ( -1, "GLOBAL_NORMAL_VIEW_TO_CLIP_MTX",			( u32 )MOAIGfxState::NORMAL_VIEW_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_VIEW_TO_DISPLAY_MTX",		( u32 )MOAIGfxState::NORMAL_VIEW_TO_DISPLAY_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_VIEW_TO_MODEL_MTX",			( u32 )MOAIGfxState::NORMAL_VIEW_TO_MODEL_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_VIEW_TO_WORLD_MTX",			( u32 )MOAIGfxState::NORMAL_VIEW_TO_WORLD_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_VIEW_TO_CLIP_MTX",			( u32 )ZLGfxStateCache::NORMAL_VIEW_TO_CLIP_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_VIEW_TO_DISPLAY_MTX",		( u32 )ZLGfxStateCache::NORMAL_VIEW_TO_DISPLAY_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_VIEW_TO_MODEL_MTX",			( u32 )ZLGfxStateCache::NORMAL_VIEW_TO_MODEL_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_VIEW_TO_WORLD_MTX",			( u32 )ZLGfxStateCache::NORMAL_VIEW_TO_WORLD_MTX );
 
-	state.SetField ( -1, "GLOBAL_NORMAL_WINDOW_TO_CLIP_MTX",		( u32 )MOAIGfxState::NORMAL_WINDOW_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_WORLD_TO_CLIP_MTX",			( u32 )MOAIGfxState::NORMAL_WORLD_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_WORLD_TO_MODEL_MTX",		( u32 )MOAIGfxState::NORMAL_WORLD_TO_MODEL_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_WINDOW_TO_CLIP_MTX",		( u32 )ZLGfxStateCache::NORMAL_WINDOW_TO_CLIP_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_WORLD_TO_CLIP_MTX",			( u32 )ZLGfxStateCache::NORMAL_WORLD_TO_CLIP_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_WORLD_TO_MODEL_MTX",		( u32 )ZLGfxStateCache::NORMAL_WORLD_TO_MODEL_MTX );
 
-	state.SetField ( -1, "GLOBAL_PEN_COLOR",						( u32 )MOAIGfxState::PEN_COLOR );
+	state.SetField ( -1, "GLOBAL_PEN_COLOR",						( u32 )ZLGfxStateCache::PEN_COLOR );
 
-	state.SetField ( -1, "GLOBAL_UV_TO_MODEL_MTX",					( u32 )MOAIGfxState::UV_TO_MODEL_MTX );
+	state.SetField ( -1, "GLOBAL_UV_TO_MODEL_MTX",					( u32 )ZLGfxStateCache::UV_TO_MODEL_MTX );
 
-	state.SetField ( -1, "GLOBAL_VIEW_TO_CLIP_MTX",					( u32 )MOAIGfxState::VIEW_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_VIEW_TO_DISPLAY_MTX",				( u32 )MOAIGfxState::VIEW_TO_DISPLAY_MTX );
-	state.SetField ( -1, "GLOBAL_VIEW_TO_MODEL_MTX",				( u32 )MOAIGfxState::VIEW_TO_MODEL_MTX );
-	state.SetField ( -1, "GLOBAL_VIEW_TO_WORLD_MTX",				( u32 )MOAIGfxState::VIEW_TO_WORLD_MTX );
+	state.SetField ( -1, "GLOBAL_VIEW_TO_CLIP_MTX",					( u32 )ZLGfxStateCache::VIEW_TO_CLIP_MTX );
+	state.SetField ( -1, "GLOBAL_VIEW_TO_DISPLAY_MTX",				( u32 )ZLGfxStateCache::VIEW_TO_DISPLAY_MTX );
+	state.SetField ( -1, "GLOBAL_VIEW_TO_MODEL_MTX",				( u32 )ZLGfxStateCache::VIEW_TO_MODEL_MTX );
+	state.SetField ( -1, "GLOBAL_VIEW_TO_WORLD_MTX",				( u32 )ZLGfxStateCache::VIEW_TO_WORLD_MTX );
 
-	state.SetField ( -1, "GLOBAL_WINDOW_TO_CLIP_MTX",				( u32 )MOAIGfxState::WINDOW_TO_CLIP_MTX );
+	state.SetField ( -1, "GLOBAL_WINDOW_TO_CLIP_MTX",				( u32 )ZLGfxStateCache::WINDOW_TO_CLIP_MTX );
 
-	state.SetField ( -1, "GLOBAL_WORLD_TO_CLIP_MTX",				( u32 )MOAIGfxState::WORLD_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_WORLD_TO_DISPLAY_MTX",				( u32 )MOAIGfxState::WORLD_TO_DISPLAY_MTX );
-	state.SetField ( -1, "GLOBAL_WORLD_TO_MODEL_MTX",				( u32 )MOAIGfxState::WORLD_TO_MODEL_MTX );
-	state.SetField ( -1, "GLOBAL_WORLD_TO_VIEW_MTX",				( u32 )MOAIGfxState::WORLD_TO_VIEW_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_TO_CLIP_MTX",				( u32 )ZLGfxStateCache::WORLD_TO_CLIP_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_TO_DISPLAY_MTX",				( u32 )ZLGfxStateCache::WORLD_TO_DISPLAY_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_TO_MODEL_MTX",				( u32 )ZLGfxStateCache::WORLD_TO_MODEL_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_TO_VIEW_MTX",				( u32 )ZLGfxStateCache::WORLD_TO_VIEW_MTX );
 
-	state.SetField ( -1, "GLOBAL_VIEW_HEIGHT",						( u32 )MOAIGfxState::VIEW_HEIGHT );
-	state.SetField ( -1, "GLOBAL_VIEW_WIDTH",						( u32 )MOAIGfxState::VIEW_WIDTH );
+	state.SetField ( -1, "GLOBAL_VIEW_HEIGHT",						( u32 )ZLGfxStateCache::VIEW_HEIGHT );
+	state.SetField ( -1, "GLOBAL_VIEW_WIDTH",						( u32 )ZLGfxStateCache::VIEW_WIDTH );
 	
-	state.SetField ( -1, "GLOBAL_VIEW_HALF_HEIGHT",					( u32 )MOAIGfxState::VIEW_HALF_HEIGHT );
-	state.SetField ( -1, "GLOBAL_VIEW_HALF_WIDTH",					( u32 )MOAIGfxState::VIEW_HALF_WIDTH );
+	state.SetField ( -1, "GLOBAL_VIEW_HALF_HEIGHT",					( u32 )ZLGfxStateCache::VIEW_HALF_HEIGHT );
+	state.SetField ( -1, "GLOBAL_VIEW_HALF_WIDTH",					( u32 )ZLGfxStateCache::VIEW_HALF_WIDTH );
 }
 
 //----------------------------------------------------------------//
@@ -588,7 +588,7 @@ void MOAIShaderProgram::SetGlobal ( ZLIndex idx, u32 globalID, ZLIndex uniformID
 //	MOAILuaState state ( L );
 //
 //	ZLIndex globalIdx	= state.GetValue < MOAILuaIndex >( idx, ZLIndexOp::ZERO );
-//	u32 globalID		= state.GetValue < u32 >( idx + 1, MOAIGfxState::NULL_GLOBAL );
+//	u32 globalID		= state.GetValue < u32 >( idx + 1, ZLGfxStateCache::NULL_GLOBAL );
 //	ZLIndex uniformID	= state.GetValue < MOAILuaIndex >( idx + 2, ZLIndexOp::ZERO );
 //	ZLIndex index		= state.GetValue < MOAILuaIndex >( idx + 3, ZLIndexOp::ZERO );
 //
@@ -632,7 +632,7 @@ void MOAIShaderProgram::SetVertexAttribute ( u32 idx, cc8* attribute ) {
 //----------------------------------------------------------------//
 void MOAIShaderProgram::UpdateUniforms ( ZLLeanArray < u8 >& buffer ) {
 
-	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	
 	ZLRect viewRect = gfxState.GetViewRect ();
 
@@ -650,7 +650,7 @@ void MOAIShaderProgram::UpdateUniforms ( ZLLeanArray < u8 >& buffer ) {
 		MOAIShaderUniformHandle uniform = this->GetUniformHandle ( buffer.GetBuffer (), global.mUniformID, global.mIndex );
 		if ( !uniform.IsValid ()) continue;
 		
-		if ( global.mGlobalID < MOAIGfxState::TOTAL_MATRICES ) {
+		if ( global.mGlobalID < ZLGfxStateCache::TOTAL_MATRICES ) {
 		
 			uniform.SetValue ( gfxState.GetMtx ( global.mGlobalID ));
 		}
@@ -658,27 +658,27 @@ void MOAIShaderProgram::UpdateUniforms ( ZLLeanArray < u8 >& buffer ) {
 		
 			switch (( ZLSize )global.mGlobalID ) {
 				
-				case MOAIGfxState::PEN_COLOR:
+				case ZLGfxStateCache::PEN_COLOR:
 				
 					uniform.SetValue ( gfxState.GetFinalColor ());
 					break;
 				
-				case MOAIGfxState::VIEW_HALF_HEIGHT:
+				case ZLGfxStateCache::VIEW_HALF_HEIGHT:
 				
 					uniform.SetValue ( viewRect.Height () * 0.5f );
 					break;
 					
-				case MOAIGfxState::VIEW_HALF_WIDTH: {
+				case ZLGfxStateCache::VIEW_HALF_WIDTH: {
 				
 					uniform.SetValue ( viewRect.Width () * 0.5f );
 					break;
 				}
-				case MOAIGfxState::VIEW_HEIGHT:
+				case ZLGfxStateCache::VIEW_HEIGHT:
 				
 					uniform.SetValue ( viewRect.Height ());
 					break;
 					
-				case MOAIGfxState::VIEW_WIDTH:
+				case ZLGfxStateCache::VIEW_WIDTH:
 				
 					uniform.SetValue ( viewRect.Width ());
 					break;

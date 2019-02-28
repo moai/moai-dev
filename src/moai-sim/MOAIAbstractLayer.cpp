@@ -149,7 +149,7 @@ void MOAIAbstractLayer::ClearSurface () {
 
 	if (( this->mClearMode == CLEAR_NEVER ) || (( this->mClearMode == CLEAR_ON_BUFFER_FLAG ) && ( !frameBuffer->NeedsClear ()))) return;
 
-	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
 	if ( this->mClearFlags & ZGL_CLEAR_COLOR_BUFFER_BIT ) {
 	

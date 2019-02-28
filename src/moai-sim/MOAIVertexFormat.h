@@ -48,7 +48,7 @@ private:
 
 	friend class MOAIGfxMgr;
 	friend class MOAIGfxPipelineClerk;
-	friend class MOAIGfxStateGPUCache;
+	friend class ZLGfxStateGPUCache;
 	
 	static const u32 COLOR_SIZE				= 4;
 	static const u32 NORMAL_SIZE			= 3;

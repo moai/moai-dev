@@ -511,7 +511,7 @@ void MOAIAbstractViewLayer::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 	if ( !this->mViewport ) return;
 	if ( this->IsClear ()) return;
 	
-	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	
 	gfxState.SetFrameBuffer ( this->GetFrameBuffer ());
 	
@@ -527,7 +527,7 @@ void MOAIAbstractViewLayer::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 	this->ClearSurface ();
 	
 	gfxState.SetViewProj ( this->mViewport, this->mCamera, this->mDebugCamera, this->mParallax );
-	gfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX );
+	gfxState.SetMtx ( ZLGfxStateCache::MODEL_TO_WORLD_MTX );
 	
 	// set up the ambient color
 	gfxState.SetAmbientColor ( this->mColor );

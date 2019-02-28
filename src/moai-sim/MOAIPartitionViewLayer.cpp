@@ -197,7 +197,7 @@ int	MOAIPartitionViewLayer::_setSortScale ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition ) {
 
-	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
 	ZLTypeID typeID = ZLType::GetID < MOAIAbstractDrawable >();
 	
@@ -218,7 +218,7 @@ void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition ) {
 	if ( !totalResults ) return;
 	
 	if ( this->mSortInViewSpace ) {
-		buffer.Transform ( gfxState.GetMtx ( MOAIGfxState::WORLD_TO_VIEW_MTX ), false );
+		buffer.Transform ( gfxState.GetMtx ( ZLGfxStateCache::WORLD_TO_VIEW_MTX ), false );
 	}
 	
 	buffer.GenerateKeys (

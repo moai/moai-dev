@@ -1,10 +1,10 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXSTATECPUCACHE_H
-#define	MOAIGFXSTATECPUCACHE_H
+#ifndef	ZLGFXSTATECPUCACHE_H
+#define	ZLGFXSTATECPUCACHE_H
 
-#include <moai-sim/MOAIAbstractGfxStateCache.h>
+#include <moai-sim/ZLAbstractGfxStateCache.h>
 
 class MOAICamera;
 class MOAIShaderUniformSchema;
@@ -15,9 +15,9 @@ class MOAIViewport;
 #define PRIMARY_TO_FULL_MASK(mask) (( mask ) | (( mask ) << MATRIX_SET_SIZE ) | (( mask ) << ( MATRIX_SET_SIZE * 2 )) | (( mask ) << ( MATRIX_SET_SIZE * 3 )))
 
 //================================================================//
-// MOAIGfxStateConstsCPU
+// ZLGfxStateConstsCPU
 //================================================================//
-class MOAIGfxStateConstsCPU {
+class ZLGfxStateConstsCPU {
 public:
 
 	// MUST NOT EXCEED 64 GLOBALS FOR NOW
@@ -176,17 +176,17 @@ public:
 };
 
 //================================================================//
-// MOAIGfxStateCPUCacheFrame
+// ZLGfxStateCPUCacheFrame
 //================================================================//
-class MOAIGfxStateCPUCacheFrame {
+class ZLGfxStateCPUCacheFrame {
 protected:
 
-	friend class MOAIGfxStateCPUCache;
-	friend class MOAIGfxStateVertexCache;
+	friend class ZLGfxStateCPUCache;
+	friend class ZLGfxStateVertexCache;
 	
 	u64						mDirtyFlags;
 	
-	ZLMatrix4x4				mMatrices [ MOAIGfxStateConstsCPU::TOTAL_MATRICES ];
+	ZLMatrix4x4				mMatrices [ ZLGfxStateConstsCPU::TOTAL_MATRICES ];
 	
 	ZLFrustum				mViewVolume;
 	
@@ -201,20 +201,20 @@ protected:
 };
 
 //================================================================//
-// MOAIGfxStateCPUCache
+// ZLGfxStateCPUCache
 //================================================================//
-class MOAIGfxStateCPUCache :
- 	public MOAIGfxStateConstsCPU,
- 	virtual public MOAIAbstractGfxStateCache {
+class ZLGfxStateCPUCache :
+ 	public ZLGfxStateConstsCPU,
+ 	virtual public ZLAbstractGfxStateCache {
 protected:
 	
-	MOAIGfxStateCPUCacheFrame	mStateFrameCPU;
+	ZLGfxStateCPUCacheFrame	mStateFrameCPU;
 	
 	//----------------------------------------------------------------//
 	const ZLMatrix4x4&		GetPrimaryMtx				( u32 mtxID, u64 mtxFlag );
-	void					RestoreCPUState				( const MOAIGfxStateCPUCacheFrame& frame );
+	void					RestoreCPUState				( const ZLGfxStateCPUCacheFrame& frame );
 	void					SetDirtyFlags				( u64 dirtyFlags );
-	void					StoreCPUState				( MOAIGfxStateCPUCacheFrame& frame ) const;
+	void					StoreCPUState				( ZLGfxStateCPUCacheFrame& frame ) const;
 	void					UpdateFinalColor			();
 	
 public:
@@ -236,8 +236,8 @@ public:
 	
 	bool					IsInputMtx					( u32 mtxID );
 	
-							MOAIGfxStateCPUCache		();
-	virtual					~MOAIGfxStateCPUCache		();
+							ZLGfxStateCPUCache			();
+	virtual					~ZLGfxStateCPUCache			();
 
 	void					SetAmbientColor				( u32 color );
 	void					SetAmbientColor				( const ZLColorVec& colorVec );

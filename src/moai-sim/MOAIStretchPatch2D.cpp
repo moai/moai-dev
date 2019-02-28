@@ -415,10 +415,10 @@ void MOAIStretchPatch2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	
 	this->UpdateParams ();
 	
-	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	
 	ZLVec3D stretch = this->BindStretchVertexTransform ();
-	gfxState.SetUVTransform ( MOAIGfxState::UV_TO_MODEL_MTX );
+	gfxState.SetUVTransform ( ZLGfxStateCache::UV_TO_MODEL_MTX );
 	
 	MOAIQuadBrush::BindVertexFormat ();
 	

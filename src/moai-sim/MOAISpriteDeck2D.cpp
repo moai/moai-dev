@@ -660,11 +660,11 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 
 	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
 
-	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	MOAIQuadBrush::BindVertexFormat ();
 	
-	gfxState.SetVertexTransform ( MOAIGfxState::MODEL_TO_DISPLAY_MTX );
-	gfxState.SetUVTransform ( MOAIGfxState::UV_TO_MODEL_MTX );
+	gfxState.SetVertexTransform ( ZLGfxStateCache::MODEL_TO_DISPLAY_MTX );
+	gfxState.SetUVTransform ( ZLGfxStateCache::UV_TO_MODEL_MTX );
 
 	ZLSize totalSprites			= this->mSprites.Size ();
 	ZLSize totalSpriteLists		= this->mSpriteLists.Size ();

@@ -124,7 +124,7 @@ MOAITextureBase* MOAIMaterialMgr::GetTexture ( u32 textureID ) {
 //----------------------------------------------------------------//
 void MOAIMaterialMgr::LoadGfxState () {
 
-	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
 	gfxState.SetBlendMode ( this->mBlendMode );
 	gfxState.SetCullFunc ( this->mCullMode );

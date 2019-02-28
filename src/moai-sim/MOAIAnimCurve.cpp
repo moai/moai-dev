@@ -304,7 +304,7 @@ void MOAIAnimCurve::MOAIAnimCurve_Draw ( u32 resolution ) const {
 	// and then the spans between keys should be filled in with an approximation of
 	// the resolution.
 	
-	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	
 	ZLReal length = this->GetLength ();
 	ZLReal step = length / ( ZLReal )resolution;

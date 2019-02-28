@@ -7,10 +7,10 @@
 #include <moai-sim/MOAIBlendMode.h>
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIFrameBuffer.h>
-#include <moai-sim/MOAIGfxState.h>
+#include <moai-sim/ZLGfxStateCache.h>
 #include <moai-sim/MOAIGfxPipelineClerk.h>
 #include <moai-sim/MOAIGfxResourceClerk.h>
-#include <moai-sim/MOAIGfxStateVertexCache.h>
+#include <moai-sim/ZLGfxStateVertexCache.h>
 #include <moai-sim/MOAIImage.h>
 
 class MOAIFrameBuffer;
@@ -80,7 +80,7 @@ public:
 	GET_BOOL ( IsFramebufferSupported, mIsFramebufferSupported )
 	
 	MOAIGfxResourceClerk		mResourceMgr;
-	MOAIGfxState				mGfxState;
+	ZLGfxStateCache				mGfxState;
 	MOAIGfxPipelineClerk		mPipelineMgr;
 	
 	//----------------------------------------------------------------//

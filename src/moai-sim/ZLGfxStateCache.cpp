@@ -3,14 +3,14 @@
 
 #include "pch.h"
 
-#include <moai-sim/MOAIGfxState.h>
+#include <moai-sim/ZLGfxStateCache.h>
 
 //================================================================//
-// MOAIGfxState
+// ZLGfxStateCache
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxState::FinishFrame () {
+void ZLGfxStateCache::FinishFrame () {
 
 	this->FlushVertexCache (); // TODO: need to do this here?
 	this->UnbindAll ();
@@ -18,13 +18,13 @@ void MOAIGfxState::FinishFrame () {
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxState::GetNormToWndMtx () {
+ZLMatrix4x4 ZLGfxStateCache::GetNormToWndMtx () {
 
 	return this->GetNormToWndMtx ( this->GetViewRect ());
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxState::GetNormToWndMtx ( const ZLRect& wndRect ) {
+ZLMatrix4x4 ZLGfxStateCache::GetNormToWndMtx ( const ZLRect& wndRect ) {
 
 	float hWidth = wndRect.Width () * 0.5f;
 	float hHeight = wndRect.Height () * 0.5f;
@@ -41,13 +41,13 @@ ZLMatrix4x4 MOAIGfxState::GetNormToWndMtx ( const ZLRect& wndRect ) {
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxState::GetWorldToWndMtx () {
+ZLMatrix4x4 ZLGfxStateCache::GetWorldToWndMtx () {
 
 	return this->GetWorldToWndMtx ( this->GetViewRect ());
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxState::GetWorldToWndMtx ( const ZLRect& wndRect ) {
+ZLMatrix4x4 ZLGfxStateCache::GetWorldToWndMtx ( const ZLRect& wndRect ) {
 
 	ZLMatrix4x4 worldToWnd = this->GetMtx ( WORLD_TO_CLIP_MTX );
 	worldToWnd.Append ( this->GetNormToWndMtx ( wndRect ));
@@ -56,13 +56,13 @@ ZLMatrix4x4 MOAIGfxState::GetWorldToWndMtx ( const ZLRect& wndRect ) {
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxState::GetWndToNormMtx () {
+ZLMatrix4x4 ZLGfxStateCache::GetWndToNormMtx () {
 
 	return this->GetWndToNormMtx ( this->GetViewRect ());
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxState::GetWndToNormMtx ( const ZLRect& wndRect ) {
+ZLMatrix4x4 ZLGfxStateCache::GetWndToNormMtx ( const ZLRect& wndRect ) {
 
 	float hWidth = wndRect.Width () * 0.5f;
 	float hHeight = wndRect.Height () * 0.5f;
@@ -79,13 +79,13 @@ ZLMatrix4x4 MOAIGfxState::GetWndToNormMtx ( const ZLRect& wndRect ) {
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxState::GetWndToWorldMtx () {
+ZLMatrix4x4 ZLGfxStateCache::GetWndToWorldMtx () {
 
 	return this->GetWndToWorldMtx ( this->GetViewRect ());
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxState::GetWndToWorldMtx ( const ZLRect& wndRect ) {
+ZLMatrix4x4 ZLGfxStateCache::GetWndToWorldMtx ( const ZLRect& wndRect ) {
 
 	ZLMatrix4x4 wndToWorld = this->GetWndToNormMtx ( wndRect );
 	
@@ -98,12 +98,12 @@ ZLMatrix4x4 MOAIGfxState::GetWndToWorldMtx ( const ZLRect& wndRect ) {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxState::MOAIGfxState () :
+ZLGfxStateCache::ZLGfxStateCache () :
 	mStateStackTop ( ZLIndexOp::ZERO ) {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxState::~MOAIGfxState () {
+ZLGfxStateCache::~ZLGfxStateCache () {
 
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mStateStack.Size (); ++i ) {
 		delete this->mStateStack [ i ];
@@ -111,29 +111,29 @@ MOAIGfxState::~MOAIGfxState () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxState::PopState () {
+void ZLGfxStateCache::PopState () {
 
 	assert ( this->mStateStackTop > 0 );
 	
 	this->FlushVertexCache ();
 	
-	MOAIGfxStateFrame* frame = this->mStateStack [ --this->mStateStackTop ];
+	ZLGfxStateFrame* frame = this->mStateStack [ --this->mStateStackTop ];
 	
 	this->RestoreCPUState ( *frame );
 	this->RestoreGPUState ( *frame );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxState::PushState () {
+void ZLGfxStateCache::PushState () {
 
 	this->FlushVertexCache ();
 
 	this->mStateStack.Grow (( ZLSize )this->mStateStackTop + 1, 0 );
 	if ( !this->mStateStack [ this->mStateStackTop ]) {
-		this->mStateStack [ this->mStateStackTop ] = new MOAIGfxStateFrame ();
+		this->mStateStack [ this->mStateStackTop ] = new ZLGfxStateFrame ();
 	}
 	
-	MOAIGfxStateFrame* frame = this->mStateStack [ this->mStateStackTop++ ];
+	ZLGfxStateFrame* frame = this->mStateStack [ this->mStateStackTop++ ];
 	
 	this->StoreCPUState ( *frame );
 	this->StoreGPUState ( *frame );
@@ -144,16 +144,16 @@ void MOAIGfxState::PushState () {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIGfxStateCPUCache& MOAIGfxState::MOAIAbstractGfxStateCache_GetGfxStateCacheCPU () {
+ZLGfxStateCPUCache& ZLGfxStateCache::ZLAbstractGfxStateCache_GetGfxStateCacheCPU () {
 	return *this;
 }
 
 //----------------------------------------------------------------//
-MOAIGfxStateGPUCache& MOAIGfxState::MOAIAbstractGfxStateCache_GetGfxStateCacheGPU () {
+ZLGfxStateGPUCache& ZLGfxStateCache::ZLAbstractGfxStateCache_GetGfxStateCacheGPU () {
 	return *this;
 }
 
 //----------------------------------------------------------------//
-MOAIGfxStateVertexCache& MOAIGfxState::MOAIAbstractGfxStateCache_GetGfxVertexCache () {
+ZLGfxStateVertexCache& ZLGfxStateCache::ZLAbstractGfxStateCache_GetGfxVertexCache () {
 	return *this;
 }

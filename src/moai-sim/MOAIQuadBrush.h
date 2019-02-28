@@ -12,7 +12,7 @@ class MOAIQuadBrush {
 private:
 	
 	//----------------------------------------------------------------//
-	static inline void WriteVertex ( MOAIGfxState& gfxState, const ZLVec2D& vtx, const ZLVec2D& uv ) {
+	static inline void WriteVertex ( ZLGfxStateCache& gfxState, const ZLVec2D& vtx, const ZLVec2D& uv ) {
 		
 		gfxState.WriteVtx ( vtx );
 		gfxState.WriteUV ( uv );

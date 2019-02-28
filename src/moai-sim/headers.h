@@ -62,10 +62,10 @@
 #include <moai-sim/MOAIGfxPipelineClerk.h>
 #include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIGfxResourceClerk.h>
-#include <moai-sim/MOAIGfxState.h>
-#include <moai-sim/MOAIGfxStateCPUCache.h>
-#include <moai-sim/MOAIGfxStateGPUCache.h>
-#include <moai-sim/MOAIGfxStateVertexCache.h>
+#include <moai-sim/ZLGfxStateCache.h>
+#include <moai-sim/ZLGfxStateCPUCache.h>
+#include <moai-sim/ZLGfxStateGPUCache.h>
+#include <moai-sim/ZLGfxStateVertexCache.h>
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIGraphicsGridProp.h>
 #include <moai-sim/MOAIGrid.h>

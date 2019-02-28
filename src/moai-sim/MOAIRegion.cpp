@@ -801,7 +801,7 @@ void MOAIRegion::DrawDebug () const {
 	
 	static u32 POLY_CORRUPT_COLOR					= ZLColor::PackRGBA ( 1.0f, 0.0f, 0.0f, 1.0f );
 
-	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
 	MOAIDraw& draw = MOAIDraw::Get ();
 	draw.Bind ();

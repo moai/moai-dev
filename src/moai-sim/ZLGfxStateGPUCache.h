@@ -1,10 +1,10 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXSTATEGPUCACHE_H
-#define	MOAIGFXSTATEGPUCACHE_H
+#ifndef	ZLGFXSTATEGPUCACHE_H
+#define	ZLGFXSTATEGPUCACHE_H
 
-#include <moai-sim/MOAIAbstractGfxStateCache.h>
+#include <moai-sim/ZLAbstractGfxStateCache.h>
 #include <moai-sim/MOAIBlendMode.h>
 #include <moai-sim/MOAIGfxPipelineClerk.h>
 #include <moai-sim/MOAIShaderMgr.h>
@@ -18,19 +18,19 @@ class MOAIShaderProgram;
 class MOAITextureBase;
 class MOAIVertexArray;
 class MOAIVertexBuffer;
-class MOAIVertexBufferWithFormat;
+class ZLVertexBufferWithFormat;
 class MOAIVertexFormat;
 
 //================================================================//
-// MOAIVertexBufferWithFormat
+// ZLVertexBufferWithFormat
 //================================================================//
-class MOAIVertexBufferWithFormat {
+class ZLVertexBufferWithFormat {
 private:
 	
 	ZLSharedConstBuffer*						mBoundVtxBuffer;
 	bool										mIsBound;
 
-	friend class MOAIGfxStateGPUCache;
+	friend class ZLGfxStateGPUCache;
 
 public:
 
@@ -38,21 +38,21 @@ public:
 	MOAILuaSharedPtr < MOAIVertexFormat >		mFormat;
 	
 	//----------------------------------------------------------------//
-				MOAIVertexBufferWithFormat		();
-				~MOAIVertexBufferWithFormat		();
+				ZLVertexBufferWithFormat		();
+				~ZLVertexBufferWithFormat		();
 	void		SetBufferAndFormat				( MOAILuaObject& owner, MOAIVertexBuffer* buffer, MOAIVertexFormat* format );
 	
 };
 
 //================================================================//
-// MOAIGfxStateGPUCacheFrame
+// ZLGfxStateGPUCacheFrame
 //================================================================//
-class MOAIGfxStateGPUCacheFrame {
+class ZLGfxStateGPUCacheFrame {
 protected:
 
 	// TODO: multithread will impact caching of buffer behavior as gfx.Copy () may produce a different result each time it is called
 
-	friend class MOAIGfxStateGPUCache;
+	friend class ZLGfxStateGPUCache;
 
 	int										mCullFunc;
 	
@@ -80,20 +80,20 @@ protected:
 	ZLLeanArray < ZLStrongPtr < MOAITextureBase > >		mTextureUnits;
 	
 	//----------------------------------------------------------------//
-					MOAIGfxStateGPUCacheFrame			();
-					~MOAIGfxStateGPUCacheFrame			();
+					ZLGfxStateGPUCacheFrame			();
+					~ZLGfxStateGPUCacheFrame		();
 };
 
 //================================================================//
-// MOAIGfxStateGPUCache
+// ZLGfxStateGPUCache
 //================================================================//
-class MOAIGfxStateGPUCache :
-	virtual public MOAIAbstractGfxStateCache {
+class ZLGfxStateGPUCache :
+	virtual public ZLAbstractGfxStateCache {
 protected:
 
 	static const u32 MAX_TEXTURE_UNITS = 32; // enough? will need more flags below if not.
 
-	friend class MOAIGfxStateVertexCache;
+	friend class ZLGfxStateVertexCache;
 	friend class MOAIVertexArray;
 
 	friend class MOAIGfxMgr;
@@ -125,9 +125,9 @@ protected:
 	u32										mTextureDirtyFlags;
 	u32										mApplyingStateChanges;
 
-	MOAIGfxStateGPUCacheFrame*				mCurrentState;
-	MOAIGfxStateGPUCacheFrame				mActiveState;
-	MOAIGfxStateGPUCacheFrame				mPendingState;
+	ZLGfxStateGPUCacheFrame*				mCurrentState;
+	ZLGfxStateGPUCacheFrame					mActiveState;
+	ZLGfxStateGPUCacheFrame					mPendingState;
 
 	// don't think these need to be lua shared pointers...
 	ZLStrongPtr < MOAIFrameBuffer >			mDefaultFrameBuffer;
@@ -139,7 +139,7 @@ protected:
 	//----------------------------------------------------------------//
 	void			ApplyStateChange				( u32 stateID );
 	void			ApplyStateChanges				();
-	void			BindVertexBufferWithFormat		( MOAIVertexBufferWithFormat& buffer, bool useVAOs );
+	void			BindVertexBufferWithFormat		( ZLVertexBufferWithFormat& buffer, bool useVAOs );
 	void			FlushBlendMode					( bool blendEnabled, const MOAIBlendMode& blendMode );
 	void			FlushCullFunc					( int cullFunc );
 	void			FlushDepthFunc					( int depthFunc );
@@ -159,11 +159,11 @@ protected:
 	void			GfxStateWillChange				();
 	void			InitTextureUnits				( size_t nTextureUnits );
 	void			RecalculateDirtyFlags			();
-	void			RestoreGPUState					( const MOAIGfxStateGPUCacheFrame& frame );
+	void			RestoreGPUState					( const ZLGfxStateGPUCacheFrame& frame );
 	void			ResumeChanges					();
-	void			StoreGPUState					( MOAIGfxStateGPUCacheFrame& frame ) const;
+	void			StoreGPUState					( ZLGfxStateGPUCacheFrame& frame ) const;
 	void			SuspendChanges					();
-	void			UnbindVertexBufferWithFormat	( MOAIVertexBufferWithFormat& buffer );
+	void			UnbindVertexBufferWithFormat	( ZLVertexBufferWithFormat& buffer );
 
 public:
 	
@@ -189,8 +189,8 @@ public:
 	float			GetViewHeight				() const;
 	float			GetViewWidth				() const;
 	
-					MOAIGfxStateGPUCache		();
-	virtual			~MOAIGfxStateGPUCache		();
+					ZLGfxStateGPUCache			();
+	virtual			~ZLGfxStateGPUCache			();
 
 	void			ResetState					();
 

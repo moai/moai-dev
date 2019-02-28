@@ -319,11 +319,11 @@ ZLBounds MOAITileDeck2D::MOAIDeck_ComputeMaxAABB () {
 void MOAITileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	UNUSED ( idx );
 	
-	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	MOAIQuadBrush::BindVertexFormat ();
 	
-	gfxState.SetVertexTransform ( MOAIGfxState::MODEL_TO_CLIP_MTX );
-	gfxState.SetUVTransform ( MOAIGfxState::UV_TO_MODEL_MTX );
+	gfxState.SetVertexTransform ( ZLGfxStateCache::MODEL_TO_CLIP_MTX );
+	gfxState.SetUVTransform ( ZLGfxStateCache::UV_TO_MODEL_MTX );
 	
 	MOAICellCoord coord = this->GetCellCoord ( idx );
 	ZLRect uvRect = this->GetTileRect ( coord );

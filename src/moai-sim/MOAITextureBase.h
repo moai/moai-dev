@@ -26,7 +26,7 @@ class MOAITextureBase :
 protected:
 
 	friend class MOAIGfxMgr;
-	friend class MOAIGfxStateGPUCache;
+	friend class ZLGfxStateGPUCache;
 	friend class MOAIImageFormat;
 
 	// debug name for memory use reporting

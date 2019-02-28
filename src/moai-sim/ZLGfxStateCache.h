@@ -1,39 +1,39 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXSTATE_H
-#define	MOAIGFXSTATE_H
+#ifndef	ZLGFXSTATECACHE_H
+#define	ZLGFXSTATECACHE_H
 
-#include <moai-sim/MOAIAbstractGfxStateCache.h>
-#include <moai-sim/MOAIGfxStateCPUCache.h>
-#include <moai-sim/MOAIGfxStateGPUCache.h>
-#include <moai-sim/MOAIGfxStateVertexCache.h>
+#include <moai-sim/ZLAbstractGfxStateCache.h>
+#include <moai-sim/ZLGfxStateCPUCache.h>
+#include <moai-sim/ZLGfxStateGPUCache.h>
+#include <moai-sim/ZLGfxStateVertexCache.h>
 
 //================================================================//
-// MOAIGfxStateFrame
+// ZLGfxStateFrame
 //================================================================//
-class MOAIGfxStateFrame :
-	public MOAIGfxStateCPUCacheFrame,
-	public MOAIGfxStateGPUCacheFrame {
+class ZLGfxStateFrame :
+	public ZLGfxStateCPUCacheFrame,
+	public ZLGfxStateGPUCacheFrame {
 protected:
 };
 
 //================================================================//
-// MOAIGfxState
+// ZLGfxStateCache
 //================================================================//
-class MOAIGfxState :
-	virtual public MOAIAbstractGfxStateCache,
-	public MOAIGfxStateGPUCache,
-	public MOAIGfxStateVertexCache {
+class ZLGfxStateCache :
+	virtual public ZLAbstractGfxStateCache,
+	public ZLGfxStateGPUCache,
+	public ZLGfxStateVertexCache {
 protected:
 
-	ZLLeanArray < MOAIGfxStateFrame* >	mStateStack;
+	ZLLeanArray < ZLGfxStateFrame* >	mStateStack;
 	ZLIndex								mStateStackTop;
 
 	//----------------------------------------------------------------//
-	MOAIGfxStateCPUCache&			MOAIAbstractGfxStateCache_GetGfxStateCacheCPU			();
-	MOAIGfxStateGPUCache&			MOAIAbstractGfxStateCache_GetGfxStateCacheGPU			();
-	MOAIGfxStateVertexCache&		MOAIAbstractGfxStateCache_GetGfxVertexCache				();
+	ZLGfxStateCPUCache&			ZLAbstractGfxStateCache_GetGfxStateCacheCPU			();
+	ZLGfxStateGPUCache&			ZLAbstractGfxStateCache_GetGfxStateCacheGPU			();
+	ZLGfxStateVertexCache&		ZLAbstractGfxStateCache_GetGfxVertexCache			();
 
 public:
 
@@ -52,8 +52,8 @@ public:
 	ZLMatrix4x4				GetWndToWorldMtx			();
 	ZLMatrix4x4				GetWndToWorldMtx			( const ZLRect& wndRect );
 	
-							MOAIGfxState				();
-							~MOAIGfxState				();
+							ZLGfxStateCache				();
+							~ZLGfxStateCache			();
 	
 	void					PopState					();
 	void					PushState					();

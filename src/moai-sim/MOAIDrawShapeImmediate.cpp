@@ -27,7 +27,7 @@ MOAIDrawShapeImmediate::~MOAIDrawShapeImmediate () {
 //----------------------------------------------------------------//
 void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_DrawLine ( float x0, float y0, float z0, float x1, float y1, float z1 ) {
 	
-	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
 	gfxState.BeginPrim ( ZGL_PRIM_LINES, 2 );
 	
@@ -43,7 +43,7 @@ void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_DrawLine ( float x0, float y0
 //----------------------------------------------------------------//
 void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_DrawPoint ( float x, float y, float z ) {
 
-	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	UNUSED(z);
 	gfxState.BeginPrim ( ZGL_PRIM_POINTS, 1 );
 		gfxState.WriteVtx ( x, y, 0.0f );
@@ -54,7 +54,7 @@ void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_DrawPoint ( float x, float y,
 //----------------------------------------------------------------//
 void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_DrawTriangleFill ( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2 ) {
 
-	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
 	gfxState.BeginPrim ( ZGL_PRIM_TRIANGLES, 3 );
 	

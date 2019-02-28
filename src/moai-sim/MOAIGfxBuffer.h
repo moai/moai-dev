@@ -34,7 +34,7 @@ class MOAIGfxBuffer :
 protected:
 	
 	friend class MOAIGfxPipelineClerk;
-	friend class MOAIGfxStateGPUCache;
+	friend class ZLGfxStateGPUCache;
 	friend class MOAIVertexArrayItem;
 	
 	enum {

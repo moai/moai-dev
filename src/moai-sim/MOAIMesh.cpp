@@ -532,7 +532,7 @@ void MOAIMesh::DrawIndex ( ZLIndex idx, MOAIMeshSpan* span ) {
 
 	// TODO: make use of offset and scale
 
-	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	if ( gfxState.SetVertexArray ( this )) {
 
 		// I am super lazy, so set this up here instead of adding if's below

@@ -490,7 +490,7 @@ void MOAICollisionProp::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAICollisionProp >())) return;
 
-	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
@@ -498,7 +498,7 @@ void MOAICollisionProp::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	draw.Bind ();
 
 	if ( debugLines.Bind ( MOAICollisionProp::DEBUG_DRAW_COLLISION_WORLD_BOUNDS )) {
-		gfxState.SetVertexTransform ( MOAIGfxState::WORLD_TO_CLIP_MTX );
+		gfxState.SetVertexTransform ( ZLGfxStateCache::WORLD_TO_CLIP_MTX );
 		draw.DrawBoxOutline ( this->GetWorldBounds ().mAABB );
 	}
 	
@@ -506,7 +506,7 @@ void MOAICollisionProp::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 		
 	if ( shape ) {
 		const ZLAffine3D& localToWorldMtx = this->GetLocalToWorldMtx ();
-		gfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX, localToWorldMtx );
+		gfxState.SetMtx ( ZLGfxStateCache::MODEL_TO_WORLD_MTX, localToWorldMtx );
 		shape->Draw ( localToWorldMtx );
 	}
 
@@ -537,18 +537,18 @@ void MOAICollisionProp::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 		
 		if ( shape ) {
 			const ZLAffine3D& localToWorldMtx = this->GetLocalToWorldMtx ();
-			gfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX, localToWorldMtx );
+			gfxState.SetMtx ( ZLGfxStateCache::MODEL_TO_WORLD_MTX, localToWorldMtx );
 			shape->Draw ( localToWorldMtx );
 		}
 		else {
-			gfxState.SetVertexTransform ( MOAIGfxState::WORLD_TO_CLIP_MTX );
+			gfxState.SetVertexTransform ( ZLGfxStateCache::WORLD_TO_CLIP_MTX );
 			draw.DrawBoxOutline ( this->GetWorldBounds ().mAABB );
 		}
 	}
 	
 	if ( debugLines.Bind ( MOAICollisionProp::DEBUG_DRAW_COLLISION_OVERLAPS )) {
 	
-		gfxState.SetVertexTransform ( MOAIGfxState::WORLD_TO_CLIP_MTX );
+		gfxState.SetVertexTransform ( ZLGfxStateCache::WORLD_TO_CLIP_MTX );
 
 		MOAIPropOverlapLink* overlapLinkIt = this->mOverlapLinks;
 		for ( ; overlapLinkIt; overlapLinkIt = overlapLinkIt->mNext ) {

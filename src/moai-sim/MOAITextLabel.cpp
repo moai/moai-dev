@@ -1103,7 +1103,7 @@ void MOAITextLabel::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 	if ( !this->IsVisible ()) return;
 	if ( this->IsClear ()) return;
 	
-	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	
 	if ( this->mDeck ) {
 	
@@ -1129,7 +1129,7 @@ void MOAITextLabel::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 				ZLMatrix4x4 worldDrawingMtx = this->MOAIGraphicsProp::MOAIGraphicsPropBase_GetWorldDrawingMtx ();
 				worldDrawingMtx.Prepend ( fit );
 			
-				gfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX, worldDrawingMtx );
+				gfxState.SetMtx ( ZLGfxStateCache::MODEL_TO_WORLD_MTX, worldDrawingMtx );
 			
 				this->LoadUVTransform ();
 				this->mDeck->Draw ( this->mIndex );
@@ -1147,8 +1147,8 @@ void MOAITextLabel::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 		MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
 		materialStack.LoadGfxState ();
 	
-		gfxState.SetVertexTransform ( MOAIGfxState::MODEL_TO_CLIP_MTX );
-		gfxState.SetUVTransform ( MOAIGfxState::UV_TO_MODEL_MTX );
+		gfxState.SetVertexTransform ( ZLGfxStateCache::MODEL_TO_CLIP_MTX );
+		gfxState.SetUVTransform ( ZLGfxStateCache::UV_TO_MODEL_MTX );
 
 		this->mLayout.Draw ( this->mReveal );
 
@@ -1167,12 +1167,12 @@ void MOAITextLabel::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAITextLabel >())) return;
 
-	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	
 	ZLMatrix4x4 worldDrawingMtx = this->GetWorldDrawingMtx ();
 	
-	gfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX, worldDrawingMtx );
-	gfxState.SetVertexTransform ( MOAIGfxState::MODEL_TO_CLIP_MTX );
+	gfxState.SetMtx ( ZLGfxStateCache::MODEL_TO_WORLD_MTX, worldDrawingMtx );
+	gfxState.SetVertexTransform ( ZLGfxStateCache::MODEL_TO_CLIP_MTX );
 	
 	this->mLayout.DrawDebug ();
 	
@@ -1290,7 +1290,7 @@ ZLMatrix4x4 MOAITextLabel::MOAIGraphicsPropBase_GetWorldDrawingMtx () const {
 	
 	if ( this->mAutoFlip ) {
 		
-		ZLMatrix4x4 viewProj = MOAIGfxMgr::Get ().mGfxState.GetMtx ( MOAIGfxState::WORLD_TO_CLIP_MTX );
+		ZLMatrix4x4 viewProj = MOAIGfxMgr::Get ().mGfxState.GetMtx ( ZLGfxStateCache::WORLD_TO_CLIP_MTX );
 
 		ZLVec3D upVec = worldDrawingMtx.GetYAxis ();
 

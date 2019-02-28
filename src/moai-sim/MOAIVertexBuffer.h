@@ -19,7 +19,7 @@ class MOAIVertexBuffer :
 private:
 	
 	friend class MOAIGfxPipelineClerk;
-	friend class MOAIVertexBufferWithFormat;
+	friend class ZLVertexBufferWithFormat;
 
 	//----------------------------------------------------------------//
 	static int		_computeBounds			( lua_State* L );

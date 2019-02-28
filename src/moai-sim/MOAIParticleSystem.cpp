@@ -687,7 +687,7 @@ void MOAIParticleSystem::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 	if ( !this->mDeck ) return;
 	if ( this->IsClear ()) return;
 
-	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
 	
 	this->PushGfxState ();
 	this->LoadUVTransform ();
@@ -721,7 +721,7 @@ void MOAIParticleSystem::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 		drawingMtx = this->GetLocalToWorldMtx ();
 		drawingMtx.Prepend ( spriteMtx );
 		
-		gfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX, drawingMtx );
+		gfxState.SetMtx ( ZLGfxStateCache::MODEL_TO_WORLD_MTX, drawingMtx );
 		
 		this->mDeck->Draw ( this->mIndex + ( ZLSize )sprite.mGfxID );
 	}

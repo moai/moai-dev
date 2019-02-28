@@ -111,7 +111,7 @@
 //----------------------------------------------------------------//
 void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
 
-	MOAIGfxState& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
 
 	ZLVec3D offset	= ZLVec3D::ORIGIN;
 	ZLVec3D scale	= ZLVec3D::AXIS;
@@ -151,7 +151,7 @@ void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoo
 				mtx.PrependSclTr2D ( xScale, yScale, loc.mX, loc.mY );
 			}
 
-			gfxState.SetMtx ( MOAIGfxState::MODEL_TO_WORLD_MTX, mtx );
+			gfxState.SetMtx ( ZLGfxStateCache::MODEL_TO_WORLD_MTX, mtx );
 			
 			if ( fancyGrid ) {
 				gfxState.SetPenColor ( penColor * fancyGrid->GetTileColor ( addr ));
