@@ -184,6 +184,8 @@
 		CDDEA95922289F5E005F7B52 /* SDLHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA633121A390CE000F3995F /* SDLHostMain.cpp */; };
 		CDDEA95A22289F5E005F7B52 /* SDLJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD323B031A8040CB00E2FEBB /* SDLJoystick.cpp */; };
 		CDDEA95B22289F5E005F7B52 /* SDLKeyCodeMapping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD323B051A8040CB00E2FEBB /* SDLKeyCodeMapping.cpp */; };
+		CDDEA95E22289FE0005F7B52 /* libmoai-osx-luaext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C8151AD8682200D6B83A /* libmoai-osx-luaext.a */; };
+		CDDEA9612228A008005F7B52 /* libmoai-osx-harfbuzz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1F44E81BDEBB7800F5CF59 /* libmoai-osx-harfbuzz.a */; };
 		CDF2380F1CAA731C00A45E31 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDF2380E1CAA731C00A45E31 /* CoreVideo.framework */; };
 		CDF238111CAA7DAC00A45E31 /* SDLHost-osx.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDF238101CAA7DAC00A45E31 /* SDLHost-osx.mm */; };
 		CDFD8FB11AD8653C0003F415 /* libmoai-osx-3rdparty-core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFD8FA11AD8653C0003F415 /* libmoai-osx-3rdparty-core.a */; };
@@ -975,6 +977,20 @@
 			remoteGlobalIDString = CD6D745F17EE415D00964415;
 			remoteInfo = "libmoai-osx-zl-vfs";
 		};
+		CDDEA95C22289FCF005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CDD06BD5139882D900AB0420;
+			remoteInfo = "libmoai-osx-luaext";
+		};
+		CDDEA95F22289FF8005F7B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD320DDB1C517A0E00AD5E5C;
+			remoteInfo = "libmoai-osx-harfbuzz";
+		};
 		CDE6556A1C0AAB75004493DD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
@@ -1540,6 +1556,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDDEA9612228A008005F7B52 /* libmoai-osx-harfbuzz.a in Frameworks */,
+				CDDEA95E22289FE0005F7B52 /* libmoai-osx-luaext.a in Frameworks */,
 				CDDEA92622289EDD005F7B52 /* libmoai-osx-3rdparty-assimp.a in Frameworks */,
 				CDDEA92722289EDD005F7B52 /* libmoai-osx-apple.a in Frameworks */,
 				CDDEA92822289EDD005F7B52 /* libmoai-osx-assimp.a in Frameworks */,
@@ -1919,6 +1937,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				CDDEA96022289FF8005F7B52 /* PBXTargetDependency */,
+				CDDEA95D22289FCF005F7B52 /* PBXTargetDependency */,
 				CDDEA8F122289EDD005F7B52 /* PBXTargetDependency */,
 				CDDEA8F322289EDD005F7B52 /* PBXTargetDependency */,
 				CDDEA8F522289EDD005F7B52 /* PBXTargetDependency */,
@@ -2991,6 +3011,16 @@
 			isa = PBXTargetDependency;
 			name = "libmoai-osx-zl-vfs";
 			targetProxy = CDDEA91E22289EDD005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA95D22289FCF005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-luaext";
+			targetProxy = CDDEA95C22289FCF005F7B52 /* PBXContainerItemProxy */;
+		};
+		CDDEA96022289FF8005F7B52 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-harfbuzz";
+			targetProxy = CDDEA95F22289FF8005F7B52 /* PBXContainerItemProxy */;
 		};
 		CDFF5AE01C29233B00969B44 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
