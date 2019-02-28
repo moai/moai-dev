@@ -36,7 +36,7 @@ VkResult VulkanExampleBase::createInstance ( std::string name, uint32_t apiVersi
     if ( instance_layer_count > 0 ) {
         std::unique_ptr<VkLayerProperties []> instance_layers ( new VkLayerProperties [ instance_layer_count ]);
         VK_CHECK_RESULT ( vkEnumerateInstanceLayerProperties ( &instance_layer_count, instance_layers.get ()));
-        for ( int i = 0; i < instance_layer_count; ++i ) {
+        for ( uint32_t i = 0; i < instance_layer_count; ++i ) {
             std::cout << instance_layers [ i ].layerName << "\n";
         }
     }
@@ -493,6 +493,8 @@ VulkanExampleBase::VulkanExampleBase ( VulkanHost& host, std::string name, bool 
 
 //----------------------------------------------------------------//
 VulkanExampleBase::~VulkanExampleBase () {
+
+	vkDeviceWaitIdle(mDevice);
 
     // Clean up Vulkan resources
     mSwapChain.cleanup();

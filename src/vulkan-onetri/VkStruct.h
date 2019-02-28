@@ -123,6 +123,14 @@ public:
 		clearDepthStencilValue.stencil		= stencil;
 		return clearDepthStencilValue;
 	}
+	
+	//----------------------------------------------------------------//
+	static VkClearValue clearValue ( VkClearColorValue color, VkClearDepthStencilValue depthStencil ) {
+		VkClearValue clearValue;
+		clearValue.color			= color;
+		clearValue.depthStencil		= depthStencil;
+		return clearValue;
+	}
 
     //----------------------------------------------------------------//
     static VkCommandBufferAllocateInfo commandBufferAllocateInfo ( VkCommandPool commandPool, VkCommandBufferLevel level, uint32_t bufferCount ) {
@@ -368,26 +376,57 @@ public:
         return fenceCreateInfo;
     }
 
-    //----------------------------------------------------------------//
-    static VkGraphicsPipelineCreateInfo graphicsPipelineCreateInfo () {
-        DECL_VK_STRUCT ( VkGraphicsPipelineCreateInfo, graphicsPipelineCreateInfo );
-        graphicsPipelineCreateInfo.sType                = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
-        graphicsPipelineCreateInfo.pNext                = NULL;
-        graphicsPipelineCreateInfo.basePipelineIndex    = -1;
-        graphicsPipelineCreateInfo.basePipelineHandle   = VK_NULL_HANDLE;
-        return graphicsPipelineCreateInfo;
-    }
+//    //----------------------------------------------------------------//
+//    static VkGraphicsPipelineCreateInfo graphicsPipelineCreateInfo () {
+//        DECL_VK_STRUCT ( VkGraphicsPipelineCreateInfo, graphicsPipelineCreateInfo );
+//        graphicsPipelineCreateInfo.sType                = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
+//        graphicsPipelineCreateInfo.pNext                = NULL;
+//        graphicsPipelineCreateInfo.basePipelineIndex    = -1;
+//        graphicsPipelineCreateInfo.basePipelineHandle   = VK_NULL_HANDLE;
+//        return graphicsPipelineCreateInfo;
+//    }
 
     //----------------------------------------------------------------//
-    static VkGraphicsPipelineCreateInfo graphicsPipelineCreateInfo ( VkPipelineLayout layout, VkRenderPass renderPass, VkPipelineCreateFlags flags = 0 ) {
+    static VkGraphicsPipelineCreateInfo graphicsPipelineCreateInfo (
+		const VkPipelineShaderStageCreateInfo* stages,
+		uint32_t stageCount,
+		const VkPipelineVertexInputStateCreateInfo* vertexInputState,
+		const VkPipelineInputAssemblyStateCreateInfo* inputAssemblyState,
+		const VkPipelineTessellationStateCreateInfo* tessellationState,
+		const VkPipelineViewportStateCreateInfo* viewportState,
+		const VkPipelineRasterizationStateCreateInfo* rasterizationState,
+		const VkPipelineMultisampleStateCreateInfo* multisampleState,
+		const VkPipelineDepthStencilStateCreateInfo* depthStencilState,
+		const VkPipelineColorBlendStateCreateInfo* colorBlendState,
+		const VkPipelineDynamicStateCreateInfo* dynamicState,
+		VkPipelineLayout layout,
+		VkRenderPass renderPass,
+		uint32_t subpass				= 0,
+		VkPipeline basePipelineHandle	= VK_NULL_HANDLE,
+		int32_t basePipelineIndex		= -1,
+		VkPipelineCreateFlags flags		= 0
+     ) {
         DECL_VK_STRUCT ( VkGraphicsPipelineCreateInfo, graphicsPipelineCreateInfo );
-        graphicsPipelineCreateInfo.sType                = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
-        graphicsPipelineCreateInfo.pNext                = NULL;
-        graphicsPipelineCreateInfo.layout               = layout;
-        graphicsPipelineCreateInfo.renderPass           = renderPass;
-        graphicsPipelineCreateInfo.flags                = flags;
-        graphicsPipelineCreateInfo.basePipelineIndex    = -1;
-        graphicsPipelineCreateInfo.basePipelineHandle   = VK_NULL_HANDLE;
+		graphicsPipelineCreateInfo.sType				= VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
+		graphicsPipelineCreateInfo.pNext				= NULL;
+		graphicsPipelineCreateInfo.pStages				= stages;
+		graphicsPipelineCreateInfo.stageCount			= stageCount;
+		graphicsPipelineCreateInfo.pVertexInputState	= vertexInputState;
+		graphicsPipelineCreateInfo.pInputAssemblyState	= inputAssemblyState;
+		graphicsPipelineCreateInfo.pTessellationState	= tessellationState;
+		graphicsPipelineCreateInfo.pViewportState		= viewportState;
+		graphicsPipelineCreateInfo.pRasterizationState	= rasterizationState;
+		graphicsPipelineCreateInfo.pMultisampleState	= multisampleState;
+		graphicsPipelineCreateInfo.pDepthStencilState	= depthStencilState;
+		graphicsPipelineCreateInfo.pColorBlendState		= colorBlendState;
+		graphicsPipelineCreateInfo.pDynamicState		= dynamicState;
+		graphicsPipelineCreateInfo.layout				= layout;
+		graphicsPipelineCreateInfo.renderPass			= renderPass;
+		graphicsPipelineCreateInfo.subpass				= subpass;
+		graphicsPipelineCreateInfo.basePipelineHandle	= basePipelineHandle;
+		graphicsPipelineCreateInfo.basePipelineIndex	= basePipelineIndex;
+		graphicsPipelineCreateInfo.flags				= flags;
+		
         return graphicsPipelineCreateInfo;
     }
 
@@ -687,14 +726,14 @@ public:
         return pipelineDynamicStateCreateInfo;
     }
 
-    //----------------------------------------------------------------//
-    static VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo ( uint32_t setLayoutCount = 1 ) {
-        DECL_VK_STRUCT ( VkPipelineLayoutCreateInfo, pipelineLayoutCreateInfo );
-        pipelineLayoutCreateInfo.sType                      = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-        pipelineLayoutCreateInfo.pNext                      = NULL;
-        pipelineLayoutCreateInfo.setLayoutCount             = setLayoutCount;
-        return pipelineLayoutCreateInfo;
-    }
+//    //----------------------------------------------------------------//
+//    static VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo ( uint32_t setLayoutCount = 1 ) {
+//        DECL_VK_STRUCT ( VkPipelineLayoutCreateInfo, pipelineLayoutCreateInfo );
+//        pipelineLayoutCreateInfo.sType                      = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
+//        pipelineLayoutCreateInfo.pNext                      = NULL;
+//        pipelineLayoutCreateInfo.setLayoutCount             = setLayoutCount;
+//        return pipelineLayoutCreateInfo;
+//    }
 
     //----------------------------------------------------------------//
     static VkPipelineLayoutCreateInfo pipelineLayoutCreateInfo ( const VkDescriptorSetLayout* pSetLayouts, uint32_t setLayoutCount = 1 ) {
