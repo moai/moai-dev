@@ -10,11 +10,11 @@
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 
-class MOAIFrameBuffer;
+class ZLFrameBuffer;
 class MOAIIndexBuffer;
 class MOAIShader;
 class MOAIShaderProgram;
-class MOAIVertexArray;
+class ZLVertexArray;
 class MOAIVertexBuffer;
 class MOAIVertexFormat;
 class ZLAbstractGfxResource;
@@ -69,9 +69,9 @@ protected:
 	
 	ZLStrongPtr < MOAIShader >				mShader;
 
-	ZLStrongPtr < MOAIFrameBuffer >			mFrameBuffer;
+	ZLStrongPtr < ZLFrameBuffer >			mFrameBuffer;
 	ZLStrongPtr < MOAIIndexBuffer >			mIdxBuffer;
-	ZLStrongPtr < MOAIVertexArray >			mVtxArray;
+	ZLStrongPtr < ZLVertexArray >			mVtxArray;
 	ZLStrongPtr < MOAIVertexBuffer >		mVtxBuffer;
 	ZLStrongPtr < MOAIVertexFormat >		mVtxFormat;
 
@@ -130,7 +130,7 @@ protected:
 	ZLGfxStateGPUCacheFrame					mPendingState;
 
 	// don't think these need to be lua shared pointers...
-	ZLStrongPtr < MOAIFrameBuffer >			mDefaultFrameBuffer;
+	ZLStrongPtr < ZLFrameBuffer >			mDefaultFrameBuffer;
 	ZLStrongPtr < ZLTexture >				mDefaultTexture;
 
 	ZLSharedConstBuffer*					mBoundIdxBuffer;
@@ -144,13 +144,13 @@ protected:
 	void			FlushCullFunc					( int cullFunc );
 	void			FlushDepthFunc					( int depthFunc );
 	void			FlushDepthMask					( bool depthMask );
-	void			FlushFrameBuffer				( MOAIFrameBuffer* frameBuffer );
+	void			FlushFrameBuffer				( ZLFrameBuffer* frameBuffer );
 	void			FlushIndexBuffer				( MOAIIndexBuffer* buffer );
 	void			FlushPenWidth					( float penWidth );
 	void			FlushScissorRect				( bool scissorEnabled, ZLRect rect );
 	void			FlushShader						( MOAIShader* shader );
 	void			FlushTexture					( ZLIndex textureUnit, ZLTexture* texture );
-	void			FlushVertexArray				( MOAIVertexArray* vtxArray );
+	void			FlushVertexArray				( ZLVertexArray* vtxArray );
 	void			FlushVertexBuffer				( MOAIVertexBuffer* buffer );
 	void			FlushVertexFormat				( MOAIVertexFormat* vtxFormat );
 	void			FlushViewRect					( ZLRect rect );
@@ -169,11 +169,11 @@ public:
 	
 	GET ( MOAIBlendMode, BlendMode, mCurrentState->mBlendMode )
 	GET ( bool, DepthMask, mCurrentState->mDepthMask )
-	GET ( MOAIFrameBuffer*, CurrentFrameBuffer, mCurrentState->mFrameBuffer )
+	GET ( ZLFrameBuffer*, CurrentFrameBuffer, mCurrentState->mFrameBuffer )
 	GET ( MOAIShader*, CurrentShader, mCurrentState->mShader )
 	GET ( MOAIVertexFormat*, CurrentVtxFormat, mCurrentState->mVtxFormat )
 	GET ( const ZLRect&, ViewRect, mCurrentState->mViewRect )
-	GET ( MOAIFrameBuffer*, DefaultFrameBuffer, mDefaultFrameBuffer )
+	GET ( ZLFrameBuffer*, DefaultFrameBuffer, mDefaultFrameBuffer )
 	GET ( ZLTexture*, DefaultTexture, mDefaultTexture )
 	
 	//----------------------------------------------------------------//
@@ -201,14 +201,14 @@ public:
 	void			SetCullFunc					();
 	void			SetCullFunc					( int cullFunc );
 	
-	void			SetDefaultFrameBuffer		( MOAIFrameBuffer* frameBuffer );
+	void			SetDefaultFrameBuffer		( ZLFrameBuffer* frameBuffer );
 	void			SetDefaultTexture			( ZLTexture* texture );
 	
 	void			SetDepthFunc				();
 	void			SetDepthFunc				( int depthFunc );
 	void			SetDepthMask				( bool depthMask );
 	
-	bool			SetFrameBuffer				( MOAIFrameBuffer* frameBuffer = 0 );
+	bool			SetFrameBuffer				( ZLFrameBuffer* frameBuffer = 0 );
 	bool			SetIndexBuffer				( MOAIIndexBuffer* buffer = 0 );
 		
 	void			SetPenWidth					( float penWidth );
@@ -220,7 +220,7 @@ public:
 	bool			SetShader					( MOAIShader* shader = 0 );
 	bool			SetTexture					( ZLTexture* texture = 0, ZLIndex textureUnit = ZLIndexOp::ZERO );
 	
-	bool			SetVertexArray				( MOAIVertexArray* vtxArray = 0 );
+	bool			SetVertexArray				( ZLVertexArray* vtxArray = 0 );
 	bool			SetVertexBuffer				( MOAIVertexBuffer* buffer = 0 );
 	void			SetVertexFormat				( MOAIVertexFormatMgr::Preset preset );
 	void			SetVertexFormat				( MOAIVertexFormat* format = 0 );

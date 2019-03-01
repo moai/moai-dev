@@ -144,7 +144,7 @@ int MOAIAbstractLayer::_setFrameBuffer ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIAbstractLayer::ClearSurface () {
 
-	MOAIFrameBuffer* frameBuffer = this->GetFrameBuffer ();
+	ZLFrameBuffer* frameBuffer = this->GetFrameBuffer ();
 	assert ( frameBuffer );
 
 	if (( this->mClearMode == CLEAR_NEVER ) || (( this->mClearMode == CLEAR_ON_BUFFER_FLAG ) && ( !frameBuffer->NeedsClear ()))) return;
@@ -172,7 +172,7 @@ void MOAIAbstractLayer::ClearSurface () {
 }
 
 //----------------------------------------------------------------//
-MOAIFrameBuffer* MOAIAbstractLayer::GetFrameBuffer () {
+ZLFrameBuffer* MOAIAbstractLayer::GetFrameBuffer () {
 
 	return this->mFrameBuffer ? this->mFrameBuffer : MOAIGfxMgr::Get ().mGfxState.GetDefaultFrameBuffer ();
 }

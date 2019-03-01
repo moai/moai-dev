@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include <moai-sim/MOAIFrameBuffer.h>
+#include <moai-sim/ZLFrameBuffer.h>
 #include <moai-sim/MOAIFrameBufferTexture.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/ZLGfxStateCPUCache.h>
@@ -13,7 +13,7 @@
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIShaderProgram.h>
-#include <moai-sim/MOAIVertexArray.h>
+#include <moai-sim/ZLVertexArray.h>
 #include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
@@ -406,7 +406,7 @@ void ZLGfxStateGPUCache::FlushDepthMask ( bool depthMask ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::FlushFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
+void ZLGfxStateGPUCache::FlushFrameBuffer ( ZLFrameBuffer* frameBuffer ) {
 
 	assert ( this->mApplyingStateChanges );
 	
@@ -615,7 +615,7 @@ void ZLGfxStateGPUCache::FlushTexture ( ZLIndex textureUnit, ZLTexture* texture 
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::FlushVertexArray ( MOAIVertexArray* vtxArray ) {
+void ZLGfxStateGPUCache::FlushVertexArray ( ZLVertexArray* vtxArray ) {
 
 	assert ( this->mApplyingStateChanges );
 	
@@ -737,7 +737,7 @@ void ZLGfxStateGPUCache::FlushViewRect ( ZLRect rect ) {
 u32 ZLGfxStateGPUCache::GetBufferHeight () const {
 
 	assert ( this->mCurrentState );
-	const MOAIFrameBuffer* frameBuffer = this->mCurrentState->mFrameBuffer;
+	const ZLFrameBuffer* frameBuffer = this->mCurrentState->mFrameBuffer;
 	return frameBuffer ? frameBuffer->mBufferHeight : 0;
 }
 
@@ -745,7 +745,7 @@ u32 ZLGfxStateGPUCache::GetBufferHeight () const {
 u32 ZLGfxStateGPUCache::GetBufferWidth () const {
 
 	assert ( this->mCurrentState );
-	const MOAIFrameBuffer* frameBuffer = this->mCurrentState->mFrameBuffer;
+	const ZLFrameBuffer* frameBuffer = this->mCurrentState->mFrameBuffer;
 	return frameBuffer ? frameBuffer->mBufferWidth : 0;
 }
 
@@ -999,7 +999,7 @@ void ZLGfxStateGPUCache::SetCullFunc ( int cullFunc ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::SetDefaultFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
+void ZLGfxStateGPUCache::SetDefaultFrameBuffer ( ZLFrameBuffer* frameBuffer ) {
 
 	this->mDefaultFrameBuffer = frameBuffer;
 }
@@ -1035,11 +1035,11 @@ void ZLGfxStateGPUCache::SetDepthMask ( bool depthMask ) {
 }
 
 //----------------------------------------------------------------//
-bool ZLGfxStateGPUCache::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
+bool ZLGfxStateGPUCache::SetFrameBuffer ( ZLFrameBuffer* frameBuffer ) {
 
 	assert ( !this->mApplyingStateChanges );
 
-	frameBuffer = frameBuffer ? frameBuffer : ( MOAIFrameBuffer* )this->mDefaultFrameBuffer;
+	frameBuffer = frameBuffer ? frameBuffer : ( ZLFrameBuffer* )this->mDefaultFrameBuffer;
 	this->mPendingState.mFrameBuffer = frameBuffer;
 	this->mDirtyFlags = ( this->mActiveState.mFrameBuffer == frameBuffer ) ? ( this->mDirtyFlags & ~FRAME_BUFFER ) : ( this->mDirtyFlags | FRAME_BUFFER );
 	
@@ -1127,7 +1127,7 @@ bool ZLGfxStateGPUCache::SetTexture ( ZLTexture* texture, ZLIndex textureUnit ) 
 }
 
 //----------------------------------------------------------------//
-bool ZLGfxStateGPUCache::SetVertexArray ( MOAIVertexArray* vtxArray ) {
+bool ZLGfxStateGPUCache::SetVertexArray ( ZLVertexArray* vtxArray ) {
 
 	assert ( !this->mApplyingStateChanges );
 

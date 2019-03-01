@@ -9,6 +9,7 @@
 class MOAIColor;
 class MOAIFrameBuffer;
 class MOAIPartition;
+class ZLFrameBuffer;
 
 //================================================================//
 // MOAIAbstractLayer
@@ -55,9 +56,9 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	MOAIFrameBuffer*	GetFrameBuffer			();
-						MOAIAbstractLayer				();
-						~MOAIAbstractLayer				();
+	ZLFrameBuffer*		GetFrameBuffer			();
+						MOAIAbstractLayer		();
+						~MOAIAbstractLayer		();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				SetClearColor			( MOAIColor* color );

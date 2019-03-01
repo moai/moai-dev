@@ -85,7 +85,7 @@ int MOAIGfxMgr::_getMaxTextureUnits ( lua_State* L ) {
 */
 int MOAIGfxMgr::_getViewSize ( lua_State* L  ) {
 
-	MOAIFrameBuffer* frameBuffer = MOAIGfxMgr::Get ().mGfxState.GetCurrentFrameBuffer ();
+	ZLFrameBuffer* frameBuffer = MOAIGfxMgr::Get ().mGfxState.GetCurrentFrameBuffer ();
 	
 	lua_pushnumber ( L, frameBuffer->GetBufferWidth ());
 	lua_pushnumber ( L, frameBuffer->GetBufferHeight ());

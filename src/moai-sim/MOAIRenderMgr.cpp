@@ -97,7 +97,7 @@ void MOAIRenderMgr::Render () {
 	gfxMgr.mPipelineMgr.ResetDrawingAPIs ();
 	gfxMgr.mResourceMgr.Update ();
 
-	MOAIFrameBuffer* frameBuffer = gfxMgr.mGfxState.GetDefaultFrameBuffer ();
+	ZLFrameBuffer* frameBuffer = gfxMgr.mGfxState.GetDefaultFrameBuffer ();
 	assert ( frameBuffer );
 	frameBuffer->NeedsClear ( true );
 
