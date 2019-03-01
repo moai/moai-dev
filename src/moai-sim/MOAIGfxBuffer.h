@@ -28,7 +28,7 @@ public:
 	@text	Base class for MOAIVertexBuffer and MOAIIndexBuffer.
 */
 class MOAIGfxBuffer :
-	public MOAIGfxResource,
+	public MOAIGfxResource < ZLAbstractGfxResource >,
 	public virtual MOAIStream,
 	public ZLCopyOnWrite {
 protected:
@@ -61,12 +61,15 @@ protected:
 	
 	//----------------------------------------------------------------//
 	ZLSharedConstBuffer*	GetBufferForBind		( ZLGfx& gfx );
-	bool					OnCPUCreate				();
-	void					OnCPUDestroy			();
-	void					OnGPUBind				();
-	bool					OnGPUCreate				();
-	void					OnGPUDeleteOrDiscard	( bool shouldDelete );
-	void					OnGPUUnbind				();
+	
+	//----------------------------------------------------------------//
+	bool					ZLAbstractGfxResource_OnCPUCreate				();
+	void					ZLAbstractGfxResource_OnCPUDestroy				();
+	void					ZLAbstractGfxResource_OnGPUBind					();
+	bool					ZLAbstractGfxResource_OnGPUCreate				();
+	void					ZLAbstractGfxResource_OnGPUDeleteOrDiscard		( bool shouldDelete );
+	void					ZLAbstractGfxResource_OnGPUUnbind				();
+	bool					ZLAbstractGfxResource_OnGPUUpdate				();
 
 public:
 	
@@ -82,7 +85,6 @@ public:
 	ZLSharedConstBuffer*		GetBuffer				();
 								MOAIGfxBuffer			();
 								~MOAIGfxBuffer			();
-	bool						OnGPUUpdate				();
 	void						RegisterLuaClass		( MOAILuaState& state );
 	void						RegisterLuaFuncs		( MOAILuaState& state );
 	void						Reserve					( ZLSize size );

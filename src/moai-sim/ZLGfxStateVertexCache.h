@@ -10,12 +10,12 @@
 #include <moai-sim/MOAIVertexBuffer.h>
 
 class MOAIFrameBuffer;
-class MOAIGfxResource;
 class MOAIShader;
 class MOAIShaderProgram;
 class MOAITexture;
 class MOAITextureBase;
 class MOAIVertexFormat;
+class ZLAbstractGfxResource;
 
 //================================================================//
 // ZLGfxStateVertexCache

@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <moai-sim/MOAIGfxBuffer.h>
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIGfxResourceClerk.h>
+#include <moai-sim/ZLGfxResourceClerk.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIShader.h>
@@ -110,100 +110,15 @@ MOAIVertexArray::~MOAIVertexArray () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIVertexArray::OnCPUCreate () {
-
-	return true;
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexArray::OnCPUDestroy () {
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexArray::OnGPUBind () {
-
-	if ( this->mUseVAOs && this->mVAOs.Size ()) {
-		MOAIGfxMgr::GetDrawingAPI ().BindVertexArray ( this->mVAOs [ this->mCurrentVAO ]);
-	}
-	else {
-		this->BindVertexArrayItems ();
-	}
-}
-
-//----------------------------------------------------------------//
-bool MOAIVertexArray::OnGPUCreate () {
-
-	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-
-	this->mUseVAOs = false;
-	
-	size_t totalVAOs = this->mVAOs.Size ();
-
-	if ( totalVAOs ) {
-		
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < totalVAOs; ++i ) {
-			ZLGfxHandle vao = gfx.CreateVertexArray (); // OK for this to return 0
-			if ( vao.GetType () != ZLGfxResource::NONE ) {
-				this->mVAOs [ i ] = vao;
-				this->mUseVAOs = true;
-			}
-		}
-	}
-	
-	this->mCurrentVAO = ZLIndexCast ( 0 );
-	this->OnGPUUpdate ();
-	
-	return true;
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexArray::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
-
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVAOs.Size (); ++i ) {
-		MOAIGfxResourceClerk::DeleteOrDiscard ( this->mVAOs [ i ], shouldDelete );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexArray::OnGPUUnbind () {
-
-	if ( this->mUseVAOs ) {
-		MOAIGfxMgr::GetDrawingAPI ().BindVertexArray ( ZLGfxResource::UNBIND );
-	}
-	else {
-		this->UnbindVertexArrayItems ();
-	}
-}
-
-//----------------------------------------------------------------//
-bool MOAIVertexArray::OnGPUUpdate () {
-
-	if ( !this->mUseVAOs ) return true;
-	if ( !this->mVAOs.Size ()) return false;
-
-	this->mCurrentVAO =  ZLIndexOp::AddAndWrap ( this->mCurrentVAO, 1, this->mVAOs.Size ());
-	const ZLGfxHandle& vao = this->mVAOs [ this->mCurrentVAO ];
-	
-	if ( vao.CanBind ()) {
-		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-		gfx.BindVertexArray ( vao );
-		this->BindVertexArrayItems ();
-		gfx.BindVertexArray ( ZLGfxResource::UNBIND );
-		return true;
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
 void MOAIVertexArray::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIGfxResource::RegisterLuaClass ( state );
+	MOAIGfxResource < ZLAbstractGfxResource >::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIVertexArray::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIGfxResource::RegisterLuaFuncs ( state );
+	MOAIGfxResource < ZLAbstractGfxResource >::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "reserveVAOs",				_reserveVAOs },
@@ -220,7 +135,7 @@ void MOAIVertexArray::ReserveVAOs ( u32 total ) {
 
 	if ( MOAIGfxMgr::IsValid ()) {
 		for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVAOs.Size (); ++i ) {
-			MOAIGfxResourceClerk::DeleteOrDiscard ( this->mVAOs [ i ], false );
+			ZLGfxResourceClerk::DeleteOrDiscard ( this->mVAOs [ i ], false );
 		}
 	}
 	this->mVAOs.Init ( total );
@@ -297,4 +212,93 @@ void MOAIVertexArray::UnbindVertexArrayItems () {
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalVBOs; ++i ) {
 		gfxState.UnbindVertexBufferWithFormat ( this->mVertexBuffers [ i ]);
 	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIVertexArray::ZLAbstractGfxResource_OnCPUCreate () {
+
+	return true;
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexArray::ZLAbstractGfxResource_OnCPUDestroy () {
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexArray::ZLAbstractGfxResource_OnGPUBind () {
+
+	if ( this->mUseVAOs && this->mVAOs.Size ()) {
+		MOAIGfxMgr::GetDrawingAPI ().BindVertexArray ( this->mVAOs [ this->mCurrentVAO ]);
+	}
+	else {
+		this->BindVertexArrayItems ();
+	}
+}
+
+//----------------------------------------------------------------//
+bool MOAIVertexArray::ZLAbstractGfxResource_OnGPUCreate () {
+
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+
+	this->mUseVAOs = false;
+	
+	size_t totalVAOs = this->mVAOs.Size ();
+
+	if ( totalVAOs ) {
+		
+		for ( ZLIndex i = ZLIndexOp::ZERO; i < totalVAOs; ++i ) {
+			ZLGfxHandle vao = gfx.CreateVertexArray (); // OK for this to return 0
+			if ( vao.GetType () != ZLGfxResource::NONE ) {
+				this->mVAOs [ i ] = vao;
+				this->mUseVAOs = true;
+			}
+		}
+	}
+	
+	this->mCurrentVAO = ZLIndexCast ( 0 );
+	this->ZLAbstractGfxResource_OnGPUUpdate ();
+	
+	return true;
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexArray::ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( bool shouldDelete ) {
+
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVAOs.Size (); ++i ) {
+		ZLGfxResourceClerk::DeleteOrDiscard ( this->mVAOs [ i ], shouldDelete );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexArray::ZLAbstractGfxResource_OnGPUUnbind () {
+
+	if ( this->mUseVAOs ) {
+		MOAIGfxMgr::GetDrawingAPI ().BindVertexArray ( ZLGfxResource::UNBIND );
+	}
+	else {
+		this->UnbindVertexArrayItems ();
+	}
+}
+
+//----------------------------------------------------------------//
+bool MOAIVertexArray::ZLAbstractGfxResource_OnGPUUpdate () {
+
+	if ( !this->mUseVAOs ) return true;
+	if ( !this->mVAOs.Size ()) return false;
+
+	this->mCurrentVAO =  ZLIndexOp::AddAndWrap ( this->mCurrentVAO, 1, this->mVAOs.Size ());
+	const ZLGfxHandle& vao = this->mVAOs [ this->mCurrentVAO ];
+	
+	if ( vao.CanBind ()) {
+		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+		gfx.BindVertexArray ( vao );
+		this->BindVertexArrayItems ();
+		gfx.BindVertexArray ( ZLGfxResource::UNBIND );
+		return true;
+	}
+	return false;
 }

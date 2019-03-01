@@ -36,9 +36,11 @@ private:
 
 	//----------------------------------------------------------------//
 	void			Init					( u32 videoPlane, AR_PIXEL_FORMAT format );
-	bool			OnGPUCreate				();
-	bool			OnGPUUpdate				();
 	void			UpdateBuffer			( void* buffer );
+
+	//----------------------------------------------------------------//
+	bool			ZLAbstractGfxResource_OnGPUCreate				();
+	bool			ZLAbstractGfxResource_OnGPUUpdate				();
 
 public:
 

@@ -36,11 +36,11 @@ private:
 public:
 
 	//----------------------------------------------------------------//
-	virtual	void			OnGfxEvent				( u32 event, void* userdata );
-	virtual void			OnReadPixels			( const ZLCopyOnWrite& copyOnWrite, void* userdata );
-	virtual void			OnUniformLocation		( u32 addr, void* userdata );
-							ZLGfxListener			();
-	virtual					~ZLGfxListener			();
+	virtual	void			ZLGfxListener_OnGfxEvent			( u32 event, void* userdata );
+	virtual void			ZLGfxListener_OnReadPixels			( const ZLCopyOnWrite& copyOnWrite, void* userdata );
+	virtual void			ZLGfxListener_OnUniformLocation		( u32 addr, void* userdata );
+							ZLGfxListener						();
+	virtual					~ZLGfxListener						();
 };
 
 typedef ZLWeakPtr < ZLGfxListener > ZLGfxListenerHandle;

@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIGfxResourceClerk.h>
+#include <moai-sim/ZLGfxResourceClerk.h>
 #include <moai-sim/MOAIFrameBufferTexture.h>
 
 //================================================================//
@@ -78,18 +78,53 @@ MOAIFrameBufferTexture::MOAIFrameBufferTexture () :
 //----------------------------------------------------------------//
 MOAIFrameBufferTexture::~MOAIFrameBufferTexture () {
 
-	this->OnGPUDeleteOrDiscard ( true );
+	this->ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( true );
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferTexture::OnGPUBind () {
+void MOAIFrameBufferTexture::RegisterLuaClass ( MOAILuaState& state ) {
+	
+	MOAIFrameBuffer::RegisterLuaClass ( state );
+	MOAITextureBase::RegisterLuaClass ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
+
+	MOAIFrameBuffer::RegisterLuaFuncs ( state );
+	MOAITextureBase::RegisterLuaFuncs ( state );	
+
+	luaL_Reg regTable [] = {
+		{ "init",						_init },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferTexture::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+	MOAITextureBase::SerializeIn ( state, serializer );
+}
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferTexture::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+	MOAITextureBase::SerializeOut ( state, serializer );
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferTexture::ZLAbstractGfxResource_OnGPUBind () {
 
 	this->NeedsClear ( true );
-	MOAITextureBase::OnGPUBind ();
+	MOAITextureBase::ZLAbstractGfxResource_OnGPUBind ();
 }
 
 //----------------------------------------------------------------//
-bool MOAIFrameBufferTexture::OnGPUCreate () {
+bool MOAIFrameBufferTexture::ZLAbstractGfxResource_OnGPUCreate () {
 	
 	if ( !( this->mWidth && this->mHeight && ( this->mColorFormat || this->mDepthFormat || this->mStencilFormat ))) {
 		return false;
@@ -148,7 +183,7 @@ bool MOAIFrameBufferTexture::OnGPUCreate () {
         gfx.ClearColor ( 0, 0, 0, 0 );
         gfx.Clear ( ZGL_CLEAR_COLOR_BUFFER_BIT | ZGL_CLEAR_STENCIL_BUFFER_BIT | ZGL_CLEAR_DEPTH_BUFFER_BIT );
 		
-		this->OnGPUUpdate ();
+		this->ZLAbstractGfxResource_OnGPUUpdate ();
 		
 		status = true;
 	}
@@ -167,53 +202,18 @@ bool MOAIFrameBufferTexture::OnGPUCreate () {
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferTexture::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
+void MOAIFrameBufferTexture::ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 
-	MOAIGfxResourceClerk::DeleteOrDiscard ( this->mGLFrameBuffer, shouldDelete );
-	MOAIGfxResourceClerk::DeleteOrDiscard ( this->mGLColorBuffer, shouldDelete );
-	MOAIGfxResourceClerk::DeleteOrDiscard ( this->mGLDepthBuffer, shouldDelete );
-	MOAIGfxResourceClerk::DeleteOrDiscard ( this->mGLStencilBuffer, shouldDelete );
+	ZLGfxResourceClerk::DeleteOrDiscard ( this->mGLFrameBuffer, shouldDelete );
+	ZLGfxResourceClerk::DeleteOrDiscard ( this->mGLColorBuffer, shouldDelete );
+	ZLGfxResourceClerk::DeleteOrDiscard ( this->mGLDepthBuffer, shouldDelete );
+	ZLGfxResourceClerk::DeleteOrDiscard ( this->mGLStencilBuffer, shouldDelete );
 
-	this->MOAITextureBase::OnGPUDeleteOrDiscard ( shouldDelete );
+	this->MOAITextureBase::ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( shouldDelete );
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferTexture::RegisterLuaClass ( MOAILuaState& state ) {
-	
-	MOAIFrameBuffer::RegisterLuaClass ( state );
-	MOAITextureBase::RegisterLuaClass ( state );
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
-
-	MOAIFrameBuffer::RegisterLuaFuncs ( state );
-	MOAITextureBase::RegisterLuaFuncs ( state );	
-
-	luaL_Reg regTable [] = {
-		{ "init",						_init },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferTexture::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAITextureBase::SerializeIn ( state, serializer );
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferTexture::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAITextureBase::SerializeOut ( state, serializer );
-}
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferTexture::MOAIFrameBuffer_AffirmBuffers () {
+void MOAIFrameBufferTexture::ZLFrameBuffer_AffirmBuffers () {
 
 	this->Affirm ();
 }

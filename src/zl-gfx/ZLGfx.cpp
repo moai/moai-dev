@@ -12,19 +12,19 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void ZLGfxListener::OnGfxEvent ( u32 event, void* userdata ) {
+void ZLGfxListener::ZLGfxListener_OnGfxEvent ( u32 event, void* userdata ) {
 	UNUSED ( event );
 	UNUSED ( userdata );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxListener::OnReadPixels ( const ZLCopyOnWrite& copyOnWrite, void* userdata ) {
+void ZLGfxListener::ZLGfxListener_OnReadPixels ( const ZLCopyOnWrite& copyOnWrite, void* userdata ) {
 	UNUSED ( copyOnWrite );
 	UNUSED ( userdata );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxListener::OnUniformLocation ( u32 addr, void* userdata ) {
+void ZLGfxListener::ZLGfxListener_OnUniformLocation ( u32 addr, void* userdata ) {
 	UNUSED ( addr );
 	UNUSED ( userdata );
 }

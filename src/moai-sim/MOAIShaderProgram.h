@@ -65,16 +65,12 @@ public:
 			uniform values.
 */
 class MOAIShaderProgram :
-	public MOAIGfxResource,
+	public MOAIGfxResource < ZLAbstractGfxResource >,
 	public MOAIShaderUniformSchema {
 protected:
 
 	friend class MOAIShader;
 	friend class MOAIGfxMgr;
-
-	enum {
-		GFX_EVENT_UPDATED_UNIFORMS = GFX_EVENT_TOTAL,
-	};
 
 	STLString		mVertexShaderSource;
 	STLString		mFragmentShaderSource;
@@ -112,21 +108,21 @@ protected:
 	ZLGfxHandle			CompileShader				( u32 type, cc8* source );
 	MOAIShaderUniform*	GetUniform					( ZLIndex uniformID );
 	void				InitUniformBuffer			( ZLLeanArray < u8 >& buffer );
-	bool				OnCPUCreate					();
-	void				OnCPUDestroy				();
-	void				OnGPUBind					();
-	bool				OnGPUCreate					();
-	void				OnGPUDeleteOrDiscard		( bool shouldDelete );
-	void				OnGPUUnbind					();
-	bool				OnGPUUpdate					();
-	void				OnUniformLocation			( u32 addr, void* userdata );
 	int					ReserveGlobals				( lua_State* L, int idx );
 	void				ScheduleTextures			();
 	//int					SetGlobal					( lua_State* L, int idx );
 	void				UpdateUniforms				( ZLLeanArray < u8 >& buffer );
 	
 	//----------------------------------------------------------------//
-	MOAIShaderUniformHandle				MOAIShaderUniformSchema_GetUniformHandle	( void* buffer, ZLIndex uniformID ) const;
+	MOAIShaderUniformHandle		MOAIShaderUniformSchema_GetUniformHandle		( void* buffer, ZLIndex uniformID ) const;
+	bool						ZLAbstractGfxResource_OnCPUCreate				();
+	void						ZLAbstractGfxResource_OnCPUDestroy				();
+	void						ZLAbstractGfxResource_OnGPUBind					();
+	bool						ZLAbstractGfxResource_OnGPUCreate				();
+	void						ZLAbstractGfxResource_OnGPUDeleteOrDiscard		( bool shouldDelete );
+	void						ZLAbstractGfxResource_OnGPUUnbind				();
+	bool						ZLAbstractGfxResource_OnGPUUpdate				();
+	void						ZLGfxListener_OnUniformLocation					( u32 addr, void* userdata );
 	
 public:
 

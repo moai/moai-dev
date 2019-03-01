@@ -40,12 +40,6 @@ int MOAIImageTexture::_updateRegion ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIImageTexture::OnClearDirty () {
-
-	this->mRegion.Clear ();
-}
-
-//----------------------------------------------------------------//
 MOAIImageTexture::MOAIImageTexture () {
 	
 	RTTI_BEGIN
@@ -58,38 +52,6 @@ MOAIImageTexture::MOAIImageTexture () {
 
 //----------------------------------------------------------------//
 MOAIImageTexture::~MOAIImageTexture () {
-}
-
-//----------------------------------------------------------------//
-bool MOAIImageTexture::OnGPUCreate () {
-
-	if ( !this->IsOK ()) return false;
-	
-	this->mRegion.Clear ();
-	if ( this->CreateTextureFromImage ( *this )) {
-		return this->OnGPUUpdate ();
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
-bool MOAIImageTexture::OnGPUUpdate () {
-
-	bool result = true;
-
-	if ( this->mRegion.Area () > 0 ) {
-		result = this->UpdateTextureFromImage ( *this, this->mRegion );
-		this->mRegion.Clear ();
-	}
-	return result && MOAITextureBase::OnGPUUpdate ();
-}
-
-//----------------------------------------------------------------//
-void MOAIImageTexture::OnImageStatusChanged	( bool isOK ) {
-
-	if ( isOK ) {
-		this->FinishInit ();
-	}
 }
 
 //----------------------------------------------------------------//
@@ -145,4 +107,46 @@ void MOAIImageTexture::UpdateRegion ( ZLIntRect rect ) {
 	}
 	
 	this->ScheduleForGPUUpdate ();
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIImageTexture::MOAIImage_OnImageStatusChanged	( bool isOK ) {
+
+	if ( isOK ) {
+		this->FinishInit ();
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIImageTexture::ZLAbstractGfxResource_OnClearDirty () {
+
+	this->mRegion.Clear ();
+}
+
+//----------------------------------------------------------------//
+bool MOAIImageTexture::ZLAbstractGfxResource_OnGPUCreate () {
+
+	if ( !this->IsOK ()) return false;
+	
+	this->mRegion.Clear ();
+	if ( this->CreateTextureFromImage ( *this )) {
+		return this->ZLAbstractGfxResource_OnGPUUpdate ();
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
+bool MOAIImageTexture::ZLAbstractGfxResource_OnGPUUpdate () {
+
+	bool result = true;
+
+	if ( this->mRegion.Area () > 0 ) {
+		result = this->UpdateTextureFromImage ( *this, this->mRegion );
+		this->mRegion.Clear ();
+	}
+	return result && MOAITextureBase::ZLAbstractGfxResource_OnGPUUpdate ();
 }

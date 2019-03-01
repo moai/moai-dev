@@ -14,7 +14,7 @@ class MOAIVertexFormat;
 //================================================================//
 // TODO: doxygen
 class MOAIVertexArray :
-	public MOAIGfxResource {
+	public MOAIGfxResource < ZLAbstractGfxResource > {
 protected:
 
 	ZLLeanArray < ZLGfxHandle >						mVAOs; // vertex array objects to bind all the vertex and buffer state
@@ -32,14 +32,16 @@ protected:
 	//----------------------------------------------------------------//
 	bool				AffirmVertexBuffers			( u32 idx );
 	void				BindVertexArrayItems		();
-	bool				OnCPUCreate					(); // load or initialize any CPU-side resources required to create the GPU-side resource
-	void				OnCPUDestroy				(); // clear any CPU-side memory used by class
-	void				OnGPUBind					(); // select GPU-side resource on device for use
-	bool				OnGPUCreate					(); // create GPU-side resource
-	void				OnGPUDeleteOrDiscard		( bool shouldDelete ); // delete or discard GPU resource
-	void				OnGPUUnbind					(); // unbind GPU-side resource
-	bool				OnGPUUpdate					();
 	void				UnbindVertexArrayItems		();
+	
+	//----------------------------------------------------------------//
+	bool				ZLAbstractGfxResource_OnCPUCreate				(); // load or initialize any CPU-side resources required to create the GPU-side resource
+	void				ZLAbstractGfxResource_OnCPUDestroy				(); // clear any CPU-side memory used by class
+	void				ZLAbstractGfxResource_OnGPUBind					(); // select GPU-side resource on device for use
+	bool				ZLAbstractGfxResource_OnGPUCreate				(); // create GPU-side resource
+	void				ZLAbstractGfxResource_OnGPUDeleteOrDiscard		( bool shouldDelete ); // delete or discard GPU resource
+	void				ZLAbstractGfxResource_OnGPUUnbind				(); // unbind GPU-side resource
+	bool				ZLAbstractGfxResource_OnGPUUpdate				();
 
 public:
 	

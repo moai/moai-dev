@@ -127,12 +127,14 @@ private:
 
 	//----------------------------------------------------------------//
 	void					AllocateResource			( ZLGfxResource& resource, u32 param );
-	void					OnGfxEvent					( u32 event, void* userdata );
-	void					OnReadPixels				( const ZLCopyOnWrite& copyOnWrite, void* userdata );
-	void					OnUniformLocation			( u32 addr, void* userdata );
 	void					Retain						( ZLRefCountedObject* object );
 	ZLGfxListenerRecord&	WriteListenerRecord			( ZLGfxListener* listener, void* userdata );
 
+	//----------------------------------------------------------------//
+	void					ZLGfxListener_OnGfxEvent			( u32 event, void* userdata );
+	void					ZLGfxListener_OnReadPixels			( const ZLCopyOnWrite& copyOnWrite, void* userdata );
+	void					ZLGfxListener_OnUniformLocation		( u32 addr, void* userdata );
+	
 public:
 
 	GET ( size_t, Length, this->mStream->GetCursor ())

@@ -38,9 +38,9 @@ private:
 
 	//----------------------------------------------------------------//
 	bool				LoadFromStream				( ZLStream& stream, u32 transform );
-	bool				OnCPUCreate					();
-	void				OnCPUDestroy				();
-	bool				OnGPUCreate					();
+	bool				ZLAbstractGfxResource_OnCPUCreate					();
+	void				ZLAbstractGfxResource_OnCPUDestroy				();
+	bool				ZLAbstractGfxResource_OnGPUCreate					();
 
 public:
 	

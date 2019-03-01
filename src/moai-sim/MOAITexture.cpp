@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIGfxResourceClerk.h>
+#include <moai-sim/ZLGfxResourceClerk.h>
 #include <moai-sim/MOAIImageFormatMgr.h>
 #include <moai-sim/MOAITexture.h>
 
@@ -303,65 +303,6 @@ MOAITexture::~MOAITexture () {
 }
 
 //----------------------------------------------------------------//
-bool MOAITexture::OnCPUCreate () {
-
-	if ( this->mFilename.size ()) {
-		ZLFileStream stream;
-		stream.OpenRead ( this->mFilename );
-		this->LoadFromStream ( stream, this->mTransform );
-		stream.Close ();
-	}
-	return (( this->mImage && this->mImage->IsOK ()) || this->mTextureData );
-}
-
-//----------------------------------------------------------------//
-void MOAITexture::OnCPUDestroy () {
-
-	// if we know the filename it is safe to clear out
-	// the image and/or buffer
-	if ( this->HasReloader () || this->mFilename.size ()) {
-		
-		// force cleanup right away - the image is now in OpenGL, why keep it around until the next GC?
-		if ( this->mImage && this->mAutoClearImage ) {
-			this->mImage->Clear ();
-		}
-		
-		this->mImage.Set ( *this, 0 );
-		
-		if ( this->mTextureData ) {
-			free ( this->mTextureData );
-			this->mTextureData = 0;
-		}
-		this->mTextureDataSize = 0;
-		this->mTextureDataFormat = 0;
-	}
-	
-	if ( this->HasReloader ()) {
-		this->mFilename.clear ();
-	}
-}
-
-//----------------------------------------------------------------//
-bool MOAITexture::OnGPUCreate () {
-	
-	bool success = false;
-	
-	if ( this->mImage && this->mImage->IsOK ()) {
-		success =  this->CreateTextureFromImage ( *this->mImage );
-	}
-	else if ( this->mTextureDataFormat && this->mTextureData ) {
-		success = this->mTextureDataFormat->CreateTexture ( *this, this->mTextureData, this->mTextureDataSize );
-	}
-	
-	if ( !success ) {
-		this->Clear ();
-		return false;
-	}
-	
-	return this->OnGPUUpdate ();
-}
-
-//----------------------------------------------------------------//
 void MOAITexture::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAITextureBase::RegisterLuaClass ( state );
@@ -397,4 +338,67 @@ void MOAITexture::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer
 	
 	STLString path = ZLFileSys::GetRelativePath ( this->mFilename );
 	state.SetField ( -1, "mPath", path.str ());
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAITexture::ZLAbstractGfxResource_OnCPUCreate () {
+
+	if ( this->mFilename.size ()) {
+		ZLFileStream stream;
+		stream.OpenRead ( this->mFilename );
+		this->LoadFromStream ( stream, this->mTransform );
+		stream.Close ();
+	}
+	return (( this->mImage && this->mImage->IsOK ()) || this->mTextureData );
+}
+
+//----------------------------------------------------------------//
+void MOAITexture::ZLAbstractGfxResource_OnCPUDestroy () {
+
+	// if we know the filename it is safe to clear out
+	// the image and/or buffer
+	if ( this->HasLoader () || this->mFilename.size ()) {
+		
+		// force cleanup right away - the image is now in OpenGL, why keep it around until the next GC?
+		if ( this->mImage && this->mAutoClearImage ) {
+			this->mImage->Clear ();
+		}
+		
+		this->mImage.Set ( *this, 0 );
+		
+		if ( this->mTextureData ) {
+			free ( this->mTextureData );
+			this->mTextureData = 0;
+		}
+		this->mTextureDataSize = 0;
+		this->mTextureDataFormat = 0;
+	}
+	
+	if ( this->HasLoader ()) {
+		this->mFilename.clear ();
+	}
+}
+
+//----------------------------------------------------------------//
+bool MOAITexture::ZLAbstractGfxResource_OnGPUCreate () {
+	
+	bool success = false;
+	
+	if ( this->mImage && this->mImage->IsOK ()) {
+		success =  this->CreateTextureFromImage ( *this->mImage );
+	}
+	else if ( this->mTextureDataFormat && this->mTextureData ) {
+		success = this->mTextureDataFormat->CreateTexture ( *this, this->mTextureData, this->mTextureDataSize );
+	}
+	
+	if ( !success ) {
+		this->Clear ();
+		return false;
+	}
+	
+	return this->ZLAbstractGfxResource_OnGPUUpdate ();
 }

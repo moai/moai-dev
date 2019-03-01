@@ -1,10 +1,8 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIFRAMEBUFFER_H
-#define	MOAIFRAMEBUFFER_H
-
-#include <moai-sim/ZLFrameBuffer.h>
+#ifndef	ZLFRAMEBUFFER_H
+#define	ZLFRAMEBUFFER_H
 
 class MOAIColor;
 class MOAIImage;
@@ -24,35 +22,47 @@ class MOAIImage;
 			table may include other tables as entries. These must also be arrays
 			indexed from 1.
 */
-class MOAIFrameBuffer :
-	public virtual MOAILuaObject,
-	public virtual ZLFrameBuffer {
+class ZLFrameBuffer :
+	public virtual ZLGfxListener {
 protected:
 	
 	friend class MOAIGfxMgr;
-
-	bool								mGrabNextFrame;
-	MOAILuaMemberRef					mOnFrameFinish;
-	MOAILuaSharedPtr < MOAIImage >		mFrameImage;
+	friend class ZLGfxStateGPUCache;
+	
+	u32					mBufferWidth;
+	u32					mBufferHeight;
+	float				mBufferScale;
+	bool				mLandscape;
+	
+	bool				mNeedsClear;
+	
+	ZLGfxHandle			mGLFrameBuffer;
 
 	//----------------------------------------------------------------//
-	static int			_getGrabbedImage			( lua_State* L );
-	static int			_grabNextFrame				( lua_State* L );
-	static int			_isPendingGrab				( lua_State* L );
+	void				AffirmBuffers				();
 
 	//----------------------------------------------------------------//
-	void				ZLGfxListener_OnReadPixels				( const ZLCopyOnWrite& buffer, void* userdata );
+	virtual void		ZLFrameBuffer_AffirmBuffers		();
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIFrameBuffer )
 	
+	GET_CONST	( u32, BufferWidth, mBufferWidth )
+	GET_CONST	( u32, BufferHeight, mBufferHeight )
+	GET_SET		( float, BufferScale, mBufferScale )
+	GET_SET		( bool, Landscape, mLandscape )
+	
 	//----------------------------------------------------------------//
-	void				GrabImage					( MOAIImage* image );
-						MOAIFrameBuffer				();
-						~MOAIFrameBuffer			();
-	void				RegisterLuaClass			( MOAILuaState& state );
-	void				RegisterLuaFuncs			( MOAILuaState& state );
+	void				DetectGLFrameBufferID		();
+	ZLRect				GetBufferRect				() const;
+	bool				NeedsClear					() const;
+	void				NeedsClear					( bool needsClear );
+	void				SetBufferSize				( u32 width, u32 height );
+	void				SetGLFrameBuffer			( const ZLGfxHandle& frameBuffer );
+	ZLRect				WndRectToDevice				( ZLRect rect ) const;
+						ZLFrameBuffer				();
+						~ZLFrameBuffer				();
 };
 
 #endif

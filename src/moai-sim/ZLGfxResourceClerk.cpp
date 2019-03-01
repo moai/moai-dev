@@ -5,14 +5,14 @@
 
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxResource.h>
-#include <moai-sim/MOAIGfxResourceClerk.h>
+#include <moai-sim/ZLGfxResourceClerk.h>
 
 //================================================================//
-// MOAIGfxResourceClerk
+// ZLGfxResourceClerk
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceClerk::DeleteOrDiscard ( const ZLGfxHandle& handle, bool shouldDelete ) {
+void ZLGfxResourceClerk::DeleteOrDiscard ( const ZLGfxHandle& handle, bool shouldDelete ) {
 
 	if ( handle ) {
 	
@@ -26,11 +26,11 @@ void MOAIGfxResourceClerk::DeleteOrDiscard ( const ZLGfxHandle& handle, bool sho
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceClerk::DiscardResources () {
+void ZLGfxResourceClerk::DiscardResources () {
 
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
-		resourceIt->Data ()->OnGPUDeleteOrDiscard ( false );
+		resourceIt->Data ()->ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( false );
 	}
 	
 	ZLSize top = this->mDeleterStack.GetTop ();
@@ -42,21 +42,13 @@ void MOAIGfxResourceClerk::DiscardResources () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceClerk::InsertGfxResource ( MOAIGfxResource& resource ) {
+void ZLGfxResourceClerk::InsertGfxResource ( ZLAbstractGfxResource& resource ) {
 
 	this->mResources.PushBack ( resource.mMasterLink );
 }
 
 //----------------------------------------------------------------//
-MOAIGfxResourceClerk::MOAIGfxResourceClerk () {
-}
-
-//----------------------------------------------------------------//
-MOAIGfxResourceClerk::~MOAIGfxResourceClerk () {
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxResourceClerk::ProcessDeleters () {
+void ZLGfxResourceClerk::ProcessDeleters () {
 
 	ZLSize top = this->mDeleterStack.GetTop ();
 
@@ -76,13 +68,13 @@ void MOAIGfxResourceClerk::ProcessDeleters () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceClerk::ProcessPending ( ZLLeanList < MOAIGfxResource* > &list ) {
+void ZLGfxResourceClerk::ProcessPending ( ZLLeanList < ZLAbstractGfxResource* > &list ) {
 	
 	this->ProcessDeleters ();
 	
 	ResourceIt resourceIt = list.Head ();
 	while ( resourceIt ) {
-		MOAIGfxResource* resource = resourceIt->Data ();
+		ZLAbstractGfxResource* resource = resourceIt->Data ();
 		resourceIt = resourceIt->Next ();
 	
 		resource->Affirm ();
@@ -91,7 +83,7 @@ void MOAIGfxResourceClerk::ProcessPending ( ZLLeanList < MOAIGfxResource* > &lis
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceClerk::PurgeResources ( u32 age ) {
+void ZLGfxResourceClerk::PurgeResources ( u32 age ) {
 	
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
@@ -100,7 +92,7 @@ void MOAIGfxResourceClerk::PurgeResources ( u32 age ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceClerk::RemoveGfxResource ( MOAIGfxResource& resource ) {
+void ZLGfxResourceClerk::RemoveGfxResource ( ZLAbstractGfxResource& resource ) {
 
 	this->mResources.Remove ( resource.mMasterLink );
 	this->mPendingForLoadList.Remove ( resource.mPendingLink );
@@ -109,7 +101,7 @@ void MOAIGfxResourceClerk::RemoveGfxResource ( MOAIGfxResource& resource ) {
 
 //----------------------------------------------------------------//
 // this gets called when the graphics context is renewed
-void MOAIGfxResourceClerk::RenewResources () {
+void ZLGfxResourceClerk::RenewResources () {
 
 	this->mDeleterStack.Reset ();
 
@@ -120,7 +112,7 @@ void MOAIGfxResourceClerk::RenewResources () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceClerk::ScheduleGPUAffirm ( MOAIGfxResource& resource, u32 listID ) {
+void ZLGfxResourceClerk::ScheduleGPUAffirm ( ZLAbstractGfxResource& resource, u32 listID ) {
 
 	switch ( listID ) {
 
@@ -135,7 +127,7 @@ void MOAIGfxResourceClerk::ScheduleGPUAffirm ( MOAIGfxResource& resource, u32 li
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceClerk::Update () {
+void ZLGfxResourceClerk::Update () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
@@ -167,4 +159,12 @@ void MOAIGfxResourceClerk::Update () {
 	// TODO: think about cases where we can get async results back on the
 	// same display list so we can remove the one-frame lag when creating resources
 	// in retained mode.
+}
+
+//----------------------------------------------------------------//
+ZLGfxResourceClerk::ZLGfxResourceClerk () {
+}
+
+//----------------------------------------------------------------//
+ZLGfxResourceClerk::~ZLGfxResourceClerk () {
 }

@@ -7,14 +7,14 @@
 #include <moai-sim/MOAIBlendMode.h>
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIFrameBuffer.h>
-#include <moai-sim/ZLGfxStateCache.h>
 #include <moai-sim/MOAIGfxPipelineClerk.h>
-#include <moai-sim/MOAIGfxResourceClerk.h>
-#include <moai-sim/ZLGfxStateVertexCache.h>
+#include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIImage.h>
+#include <moai-sim/ZLGfxResourceClerk.h>
+#include <moai-sim/ZLGfxStateCache.h>
+#include <moai-sim/ZLGfxStateVertexCache.h>
 
 class MOAIFrameBuffer;
-class MOAIGfxResource;
 class MOAIShader;
 class MOAIShaderProgram;
 class MOAITexture;
@@ -66,9 +66,9 @@ private:
 	
 public:
 	
-	friend class MOAIGfxResource;
 	friend class MOAIShaderProgram;
-	friend class MOAITextureBase;
+	friend class ZLAbstractGfxResource;
+	friend class ZLTexture;
 	
 	DECL_LUA_SINGLETON ( MOAIGfxMgr )
 	
@@ -79,7 +79,7 @@ public:
 	GET_BOOL ( IsOpenGLES, mIsOpenGLES )
 	GET_BOOL ( IsFramebufferSupported, mIsFramebufferSupported )
 	
-	MOAIGfxResourceClerk		mResourceMgr;
+	ZLGfxResourceClerk		mResourceMgr;
 	ZLGfxStateCache				mGfxState;
 	MOAIGfxPipelineClerk		mPipelineMgr;
 	

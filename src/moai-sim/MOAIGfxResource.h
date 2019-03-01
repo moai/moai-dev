@@ -4,29 +4,24 @@
 #ifndef	MOAIGFXRESOURCE_H
 #define	MOAIGFXRESOURCE_H
 
+#include <moai-sim/ZLAbstractGfxResource.h>
+
 //================================================================//
-// MOAIGfxResource
+// MOAIAbstractGfxResource
 //================================================================//
-/**	@lua	MOAIGfxResource
+/**	@lua	MOAIAbstractGfxResource
 	@text	Base class for graphics resources owned by OpenGL. Implements
 			resource lifecycle including restoration from a lost graphics
 			context (if possible).
 */
-class MOAIGfxResource :
-	public virtual MOAIInstanceEventSource,
-	public virtual ZLGfxListener {
-private:
+class MOAIAbstractGfxResource :
+	public virtual MOAIInstanceEventSource {
+protected:
 
 	friend class MOAIGfxMgr;
 	friend class MOAIGfxPipelineClerk;
 	friend class ZLGfxStateGPUCache;
-	friend class MOAIGfxResourceClerk;
-	
-	u32					mState;
-	u32					mLastRenderCount;
-
-	ZLLeanLink < MOAIGfxResource* > mMasterLink;
-	ZLLeanLink < MOAIGfxResource* > mPendingLink;
+	friend class ZLGfxResourceClerk;
 
 	// for custom loading function
 	MOAILuaMemberRef	mReloader;
@@ -39,60 +34,66 @@ private:
 	static int		_setReloader				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	u32				Bind						(); // bind OR create
-	bool			DoGPUCreate					(); // gets ready to bind
-	bool			DoGPUUpdate					();
-	bool			InvokeLoader				();
-	void			Renew						(); // lose (but not *delete*) the GPU resource
-	void			Unbind						();
-
-protected:
-
-	enum {
-		GFX_EVENT_CREATED,
-		GFX_EVENT_TOTAL,
-	};
-
-	//----------------------------------------------------------------//
-	bool			Affirm						();
-	void			FinishInit					(); // ready to CPU/GPU affirm; recover from STATE_NEW or STATE_ERROR
-	bool			HasReloader					();
-	virtual void	OnClearDirty				();
-	virtual bool	OnCPUCreate					() = 0; // load or initialize any CPU-side resources required to create the GPU-side resource
-	virtual void	OnCPUDestroy				() = 0; // clear any CPU-side memory used by class
-	void			OnGfxEvent					( u32 event, void* userdata );
-	virtual void	OnGPUBind					() = 0; // select GPU-side resource on device for use
-	virtual bool	OnGPUCreate					() = 0; // create GPU-side resource
-	virtual void	OnGPUDeleteOrDiscard		( bool shouldDelete ) = 0; // delete or discard GPU resource handles
-	virtual void	OnGPUUnbind					() = 0; // unbind GPU-side resource
-	virtual bool	OnGPUUpdate					() = 0;
+	virtual ZLAbstractGfxResource&		MOAIAbstractGfxResource_ZLAbstractGfxResource		() = 0;
 
 public:
 
-	enum {
-		STATE_UNINITIALIZED,			// we use this state to ensure we call DoCPUAffirm after init
-		STATE_READY_FOR_CPU_CREATE,
-		STATE_READY_FOR_GPU_CREATE,
-		STATE_PENDING,					// waiting for GPU
-		STATE_READY_TO_BIND,
-		STATE_NEEDS_GPU_UPDATE,
-		STATE_ERROR,
-	};
+	//----------------------------------------------------------------//
+								MOAIAbstractGfxResource		();
+	virtual						~MOAIAbstractGfxResource	();
+	void						RegisterLuaClass			( MOAILuaState& state );
+	void						RegisterLuaFuncs			( MOAILuaState& state );
+	ZLAbstractGfxResource&		ZLGfxResource				();
+};
 
-	GET ( u32, State, mState )
-	IS ( Pending, mState, STATE_PENDING )
-	IS ( Ready, mState, STATE_READY_TO_BIND )
+//================================================================//
+// MOAIGfxResource
+//================================================================//
+template < typename ZL_RESOURCE_TYPE >
+class MOAIGfxResource :
+	public virtual MOAIAbstractGfxResource,
+	public virtual ZL_RESOURCE_TYPE {
+protected:
 
 	//----------------------------------------------------------------//
-	void			Destroy						(); // delete CPU and GPU data; go back to STATE_NEW
-	bool			DoCPUCreate					(); // preload CPU portion
-					MOAIGfxResource				();
-	virtual			~MOAIGfxResource			();
-	void			RegisterLuaClass			( MOAILuaState& state );
-	void			RegisterLuaFuncs			( MOAILuaState& state );
-	bool			ScheduleForGPUCreate		( u32 pipelineID );
-	bool			ScheduleForGPUUpdate		();
-	bool			Purge						( u32 age );
+	ZLAbstractGfxResource& MOAIAbstractGfxResource_ZLAbstractGfxResource () {
+		return *this;
+	}
+	
+	//----------------------------------------------------------------//
+	void RegisterLuaClass ( MOAILuaState& state ) {
+		MOAIAbstractGfxResource::RegisterLuaClass ( state );
+	}
+	
+	//----------------------------------------------------------------//
+	void RegisterLuaFuncs ( MOAILuaState& state ) {
+		MOAIAbstractGfxResource::RegisterLuaFuncs ( state );
+	}
+
+	//----------------------------------------------------------------//
+	bool ZLAbstractGfxResource_HasLoader () {
+		return ( bool )this->mReloader;
+	}
+	
+	//----------------------------------------------------------------//
+	bool ZLAbstractGfxResource_InvokeLoader () {
+		if ( this->mReloader ) {
+			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+			if ( this->mReloader.PushRef ( state )) {
+				state.DebugCall ( 0, 0 );
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	//----------------------------------------------------------------//
+	void OnGfxEvent ( u32 event, void* userdata ) {
+	
+		// let Lua know the resource is ready for use
+		this->InvokeListener ( ZLAbstractGfxResource::GFX_EVENT_CREATED );
+		ZL_RESOURCE_TYPE::OnGfxEvent ( event, userdata );
+	}
 };
 
 #endif

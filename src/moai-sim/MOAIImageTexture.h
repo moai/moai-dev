@@ -27,10 +27,10 @@ private:
 	static int		_updateRegion			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			OnClearDirty			();
-	bool			OnGPUCreate				();
-	bool			OnGPUUpdate				();
-	void			OnImageStatusChanged	( bool isOK );
+	void			ZLAbstractGfxResource_OnClearDirty		();
+	bool			ZLAbstractGfxResource_OnGPUCreate		();
+	bool			ZLAbstractGfxResource_OnGPUUpdate		();
+	void			MOAIImage_OnImageStatusChanged			( bool isOK );
 
 public:
 	

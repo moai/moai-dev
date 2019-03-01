@@ -139,7 +139,19 @@ MOAIVideoTexture::~MOAIVideoTexture () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIVideoTexture::OnGPUCreate () {
+void MOAIVideoTexture::UpdateBuffer ( void* buffer ) {
+
+	this->mBuffer.SetCursor ( 0 );
+	this->mBuffer.WriteBytes ( buffer, this->mBuffer.GetSize ());
+	this->FinishInit ();
+}
+
+//================================================================//
+// MOAIVideoTexture
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIVideoTexture::ZLAbstractGfxResource_OnGPUCreate () {
 
 	if ( !MOAIGfxMgr::Get ().GetHasContext ()) return false;
 	if ( !this->mUsePlane ) return false;
@@ -167,7 +179,7 @@ bool MOAIVideoTexture::OnGPUCreate () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIVideoTexture::OnGPUUpdate () {
+bool MOAIVideoTexture::ZLAbstractGfxResource_OnGPUUpdate () {
 
 	if ( !MOAIGfxMgr::Get ().GetHasContext ()) return false;
 	if ( !this->mUsePlane ) return false;
@@ -194,15 +206,7 @@ bool MOAIVideoTexture::OnGPUUpdate () {
 
 	MOAIGfxMgr::Get ().LogErrors ();
 
-	return MOAITextureBase::OnGPUUpdate ();
-}
-
-//----------------------------------------------------------------//
-void MOAIVideoTexture::UpdateBuffer ( void* buffer ) {
-
-	this->mBuffer.SetCursor ( 0 );
-	this->mBuffer.WriteBytes ( buffer, this->mBuffer.GetSize ());
-	this->FinishInit ();
+	return MOAITextureBase::ZLAbstractGfxResource_OnGPUUpdate ();
 }
 
 #endif

@@ -6,7 +6,7 @@
 #include <tesselator.h>
 
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIGfxResourceClerk.h>
+#include <moai-sim/ZLGfxResourceClerk.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIMaterialMgr.h>
@@ -652,7 +652,7 @@ void MOAIMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIMesh::ReserveVAOs ( u32 total ) {
 
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVAOs.Size (); ++i ) {
-		MOAIGfxResourceClerk::DeleteOrDiscard ( this->mVAOs [ i ], false );
+		ZLGfxResourceClerk::DeleteOrDiscard ( this->mVAOs [ i ], false );
 	}
 	this->mVAOs.Init ( total );
 }

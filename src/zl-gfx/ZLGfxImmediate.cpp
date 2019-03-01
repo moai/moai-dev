@@ -420,7 +420,7 @@ void ZLGfxImmediate::EnableVertexAttribArray ( u32 index ) {
 void ZLGfxImmediate::Event ( ZLGfxListener* listener, u32 event, void* userdata ) {
 
 	if ( listener ) {
-		listener->OnGfxEvent ( event, userdata );
+		listener->ZLGfxListener_OnGfxEvent ( event, userdata );
 	}
 }
 
@@ -477,7 +477,7 @@ void ZLGfxImmediate::GetUniformLocation ( ZLGfxResource& program, cc8* uniformNa
 	if ( listener) {
 		u32 addr = ( u32 )glGetUniformLocation (( GLuint )program.GLID (), ( const GLchar* )uniformName );
 		GL_LOG_ERRORS ( "glGetUniformLocation" )
-		listener->OnUniformLocation ( addr, userdata );
+		listener->ZLGfxListener_OnUniformLocation ( addr, userdata );
 	}
 }
 
@@ -599,7 +599,7 @@ void ZLGfxImmediate::ReadPixels ( s32 x, s32 y, u32 width, u32 height, u32 forma
 			}
 		}
 		
-		listener->OnReadPixels ( copyOnWrite, userdata );
+		listener->ZLGfxListener_OnReadPixels ( copyOnWrite, userdata );
 	}
 }
 

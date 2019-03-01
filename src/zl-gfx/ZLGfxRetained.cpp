@@ -1031,42 +1031,6 @@ void ZLGfxRetained::LinkProgram ( ZLGfxResource& program, bool log ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::OnGfxEvent ( u32 event, void* userdata ) {
-
-	ZLIndex idx = ZLIndexCast (( ZLSize )userdata );
-	if ( idx < this->mListenerRecords.GetTop ()) {
-		ZLGfxListenerRecord& listenerRecord = this->mListenerRecords [ idx ];
-		
-		listenerRecord.mCallbackID = ZLGfxListenerRecord::ON_EVENT;
-		listenerRecord.mEvent = event;
-	}
-}
-
-//----------------------------------------------------------------//
-void ZLGfxRetained::OnReadPixels ( const ZLCopyOnWrite& copyOnWrite, void* userdata ) {
-
-	ZLIndex idx = ZLIndexCast (( ZLSize )userdata );
-	if ( idx < this->mListenerRecords.GetTop ()) {
-		ZLGfxListenerRecord& listenerRecord = this->mListenerRecords [ idx ];
-		
-		listenerRecord.mCallbackID = ZLGfxListenerRecord::ON_READ_PIXELS;
-		listenerRecord.mCopyOnWrite = copyOnWrite;
-	}
-}
-
-//----------------------------------------------------------------//
-void ZLGfxRetained::OnUniformLocation ( u32 addr, void* userdata ) {
-	
-	ZLIndex idx = ZLIndexCast (( ZLSize )userdata );
-	if ( idx < this->mListenerRecords.GetTop ()) {
-		ZLGfxListenerRecord& listenerRecord = this->mListenerRecords [ idx ];
-		
-		listenerRecord.mCallbackID = ZLGfxListenerRecord::ON_UNIFORM_LOCATION;
-		listenerRecord.mUniformAddr = addr;
-	}
-}
-
-//----------------------------------------------------------------//
 void ZLGfxRetained::PopSection () {
 }
 
@@ -1084,15 +1048,15 @@ void ZLGfxRetained::PublishEvents () {
 			switch ( record.mCallbackID ) {
 			
 				case ZLGfxListenerRecord::ON_EVENT:
-					listener->OnGfxEvent ( record.mEvent, record.mUserdata );
+					listener->ZLGfxListener_OnGfxEvent ( record.mEvent, record.mUserdata );
 					break;
 				
 				case ZLGfxListenerRecord::ON_READ_PIXELS:
-					listener->OnReadPixels ( record.mCopyOnWrite, record.mUserdata );
+					listener->ZLGfxListener_OnReadPixels ( record.mCopyOnWrite, record.mUserdata );
 					break;
 			
 				case ZLGfxListenerRecord::ON_UNIFORM_LOCATION:
-					listener->OnUniformLocation ( record.mUniformAddr, record.mUserdata );
+					listener->ZLGfxListener_OnUniformLocation ( record.mUniformAddr, record.mUserdata );
 					break;
 			}
 		}
@@ -1357,4 +1321,44 @@ ZLGfxRetained::ZLGfxRetained () :
 
 //----------------------------------------------------------------//
 ZLGfxRetained::~ZLGfxRetained () {
+}
+
+//================================================================//
+// ZLGfxRetained
+//================================================================//
+
+//----------------------------------------------------------------//
+void ZLGfxRetained::ZLGfxListener_OnGfxEvent ( u32 event, void* userdata ) {
+
+	ZLIndex idx = ZLIndexCast (( ZLSize )userdata );
+	if ( idx < this->mListenerRecords.GetTop ()) {
+		ZLGfxListenerRecord& listenerRecord = this->mListenerRecords [ idx ];
+		
+		listenerRecord.mCallbackID = ZLGfxListenerRecord::ON_EVENT;
+		listenerRecord.mEvent = event;
+	}
+}
+
+//----------------------------------------------------------------//
+void ZLGfxRetained::ZLGfxListener_OnReadPixels ( const ZLCopyOnWrite& copyOnWrite, void* userdata ) {
+
+	ZLIndex idx = ZLIndexCast (( ZLSize )userdata );
+	if ( idx < this->mListenerRecords.GetTop ()) {
+		ZLGfxListenerRecord& listenerRecord = this->mListenerRecords [ idx ];
+		
+		listenerRecord.mCallbackID = ZLGfxListenerRecord::ON_READ_PIXELS;
+		listenerRecord.mCopyOnWrite = copyOnWrite;
+	}
+}
+
+//----------------------------------------------------------------//
+void ZLGfxRetained::ZLGfxListener_OnUniformLocation ( u32 addr, void* userdata ) {
+	
+	ZLIndex idx = ZLIndexCast (( ZLSize )userdata );
+	if ( idx < this->mListenerRecords.GetTop ()) {
+		ZLGfxListenerRecord& listenerRecord = this->mListenerRecords [ idx ];
+		
+		listenerRecord.mCallbackID = ZLGfxListenerRecord::ON_UNIFORM_LOCATION;
+		listenerRecord.mUniformAddr = addr;
+	}
 }

@@ -32,12 +32,10 @@ private:
 	static int			_init					( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void				OnGPUBind					();
-	bool				OnGPUCreate					();
-	void				OnGPUDeleteOrDiscard		( bool shouldDelete );
-
-	//----------------------------------------------------------------//
-	void				MOAIFrameBuffer_AffirmBuffers		();
+	void				ZLAbstractGfxResource_OnGPUBind					();
+	bool				ZLAbstractGfxResource_OnGPUCreate				();
+	void				ZLAbstractGfxResource_OnGPUDeleteOrDiscard		( bool shouldDelete );
+	void				ZLFrameBuffer_AffirmBuffers						();
 
 public:
 	

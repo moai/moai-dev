@@ -11,15 +11,15 @@
 #include <moai-sim/MOAIVertexFormatMgr.h>
 
 class MOAIFrameBuffer;
-class MOAIGfxResource;
 class MOAIIndexBuffer;
 class MOAIShader;
 class MOAIShaderProgram;
 class MOAITextureBase;
 class MOAIVertexArray;
 class MOAIVertexBuffer;
-class ZLVertexBufferWithFormat;
 class MOAIVertexFormat;
+class ZLAbstractGfxResource;
+class ZLVertexBufferWithFormat;
 
 //================================================================//
 // ZLVertexBufferWithFormat

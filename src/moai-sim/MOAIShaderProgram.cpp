@@ -5,7 +5,7 @@
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIEaseDriver.h>
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIGfxResourceClerk.h>
+#include <moai-sim/ZLGfxResourceClerk.h>
 #include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIShaderProgram.h>
 
@@ -329,98 +329,9 @@ MOAIShaderProgram::~MOAIShaderProgram () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderProgram::OnCPUCreate () {
-
-	return true;
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgram::OnCPUDestroy () {
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgram::OnGPUBind () {
-
-	// use shader program.
-	MOAIGfxMgr::GetDrawingAPI ().UseProgram ( this->mProgram );
-}
-
-//----------------------------------------------------------------//
-bool MOAIShaderProgram::OnGPUCreate () {
-
-	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-
-	this->mVertexShader = this->CompileShader ( ZGL_SHADER_TYPE_VERTEX, this->mVertexShaderSource );
-	this->mFragmentShader = this->CompileShader ( ZGL_SHADER_TYPE_FRAGMENT, this->mFragmentShaderSource );
-	this->mProgram = gfx.CreateProgram ();
-
-	// TODO: error handling
-//	if ( !( this->mVertexShader && this->mFragmentShader && this->mProgram )) {
-//		this->Clear ();
-//		return false;
-//	}
-
-	gfx.AttachShader ( this->mProgram, this->mVertexShader );
-	gfx.AttachShader ( this->mProgram, this->mFragmentShader );
-
-	// bind attribute locations.
-	// this needs to be done prior to linking.
-	AttributeMapIt attrMapIt = this->mAttributeMap.begin ();
-	for ( ; attrMapIt != this->mAttributeMap.end (); ++attrMapIt ) {
-		gfx.BindAttribLocation ( this->mProgram, attrMapIt->first, attrMapIt->second.str ());
-	}
-
-	gfx.LinkProgram ( this->mProgram, true );
-
-	// get the uniform locations
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mUniforms.Size (); ++i ) {
-		MOAIShaderUniform& uniform = this->mUniforms [ i ];
-		gfx.GetUniformLocation ( this->mProgram, uniform.mName, this, ( void* )(( size_t )i )); // TODO: cast?
-	}
-
-	gfx.DeleteResource ( this->mVertexShader );
-	gfx.DeleteResource ( this->mFragmentShader );
-
-	//AJV TODO - does the attribute map ever need to be cleared?
-	//this->mAttributeMap.clear ();
-	
-	return true;
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgram::OnGPUDeleteOrDiscard ( bool shouldDelete ) {
-
-	MOAIGfxResourceClerk::DeleteOrDiscard ( this->mVertexShader, shouldDelete );
-	MOAIGfxResourceClerk::DeleteOrDiscard ( this->mFragmentShader, shouldDelete );
-	MOAIGfxResourceClerk::DeleteOrDiscard ( this->mProgram, shouldDelete );
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgram::OnGPUUnbind () {
-
-	MOAIGfxMgr::GetDrawingAPI ().UseProgram ( ZLGfxResource::UNBIND );
-}
-
-//----------------------------------------------------------------//
-bool MOAIShaderProgram::OnGPUUpdate () {
-
-	return true;
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgram::OnUniformLocation ( u32 addr, void* userdata ) {
-
-	ZLSize i = ( size_t )userdata;
-	
-	if ( i < this->mUniforms.Size ()) {
-		this->mUniforms [ ZLIndexCast ( i )].mGPUBase = addr;
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIShaderProgram::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIGfxResource::RegisterLuaClass ( state );
+	MOAIAbstractGfxResource::RegisterLuaClass ( state );
 
 	state.SetField ( -1, "UNIFORM_TYPE_FLOAT",						( u32 )MOAIShaderUniform::UNIFORM_TYPE_FLOAT );
 	state.SetField ( -1, "UNIFORM_TYPE_INT",						( u32 )MOAIShaderUniform::UNIFORM_TYPE_INT );
@@ -505,7 +416,7 @@ void MOAIShaderProgram::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIShaderProgram::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIGfxResource::RegisterLuaFuncs ( state );
+	MOAIAbstractGfxResource::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "declareUniform",				_declareUniform },
@@ -688,7 +599,7 @@ void MOAIShaderProgram::UpdateUniforms ( ZLLeanArray < u8 >& buffer ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -704,4 +615,93 @@ MOAIShaderUniformHandle MOAIShaderProgram::MOAIShaderUniformSchema_GetUniformHan
 		uniform.mBuffer		= ( void* )(( size_t )buffer + this->mUniforms [ uniformID ].mCPUOffset );
 	}
 	return uniform;
+}
+
+//----------------------------------------------------------------//
+bool MOAIShaderProgram::ZLAbstractGfxResource_OnCPUCreate () {
+
+	return true;
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderProgram::ZLAbstractGfxResource_OnCPUDestroy () {
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderProgram::ZLAbstractGfxResource_OnGPUBind () {
+
+	// use shader program.
+	MOAIGfxMgr::GetDrawingAPI ().UseProgram ( this->mProgram );
+}
+
+//----------------------------------------------------------------//
+bool MOAIShaderProgram::ZLAbstractGfxResource_OnGPUCreate () {
+
+	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+
+	this->mVertexShader = this->CompileShader ( ZGL_SHADER_TYPE_VERTEX, this->mVertexShaderSource );
+	this->mFragmentShader = this->CompileShader ( ZGL_SHADER_TYPE_FRAGMENT, this->mFragmentShaderSource );
+	this->mProgram = gfx.CreateProgram ();
+
+	// TODO: error handling
+//	if ( !( this->mVertexShader && this->mFragmentShader && this->mProgram )) {
+//		this->Clear ();
+//		return false;
+//	}
+
+	gfx.AttachShader ( this->mProgram, this->mVertexShader );
+	gfx.AttachShader ( this->mProgram, this->mFragmentShader );
+
+	// bind attribute locations.
+	// this needs to be done prior to linking.
+	AttributeMapIt attrMapIt = this->mAttributeMap.begin ();
+	for ( ; attrMapIt != this->mAttributeMap.end (); ++attrMapIt ) {
+		gfx.BindAttribLocation ( this->mProgram, attrMapIt->first, attrMapIt->second.str ());
+	}
+
+	gfx.LinkProgram ( this->mProgram, true );
+
+	// get the uniform locations
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mUniforms.Size (); ++i ) {
+		MOAIShaderUniform& uniform = this->mUniforms [ i ];
+		gfx.GetUniformLocation ( this->mProgram, uniform.mName, this, ( void* )(( size_t )i )); // TODO: cast?
+	}
+
+	gfx.DeleteResource ( this->mVertexShader );
+	gfx.DeleteResource ( this->mFragmentShader );
+
+	//AJV TODO - does the attribute map ever need to be cleared?
+	//this->mAttributeMap.clear ();
+	
+	return true;
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderProgram::ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( bool shouldDelete ) {
+
+	ZLGfxResourceClerk::DeleteOrDiscard ( this->mVertexShader, shouldDelete );
+	ZLGfxResourceClerk::DeleteOrDiscard ( this->mFragmentShader, shouldDelete );
+	ZLGfxResourceClerk::DeleteOrDiscard ( this->mProgram, shouldDelete );
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderProgram::ZLAbstractGfxResource_OnGPUUnbind () {
+
+	MOAIGfxMgr::GetDrawingAPI ().UseProgram ( ZLGfxResource::UNBIND );
+}
+
+//----------------------------------------------------------------//
+bool MOAIShaderProgram::ZLAbstractGfxResource_OnGPUUpdate () {
+
+	return true;
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderProgram::ZLGfxListener_OnUniformLocation ( u32 addr, void* userdata ) {
+
+	ZLSize i = ( size_t )userdata;
+	
+	if ( i < this->mUniforms.Size ()) {
+		this->mUniforms [ ZLIndexCast ( i )].mGPUBase = addr;
+	}
 }

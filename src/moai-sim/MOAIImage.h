@@ -135,7 +135,9 @@ private:
 	void			CalculateSDF			( ZLIntVec2D** grid, int width, int height );
 	const void*		GetRowAddr				( u32 y ) const;
 	void*			GetRowAddrMutable		( u32 y );
-	virtual void	OnImageStatusChanged	( bool isOK );
+	
+	//----------------------------------------------------------------//
+	virtual void	MOAIImage_OnImageStatusChanged		( bool isOK );
 
 public:
 	

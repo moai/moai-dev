@@ -5,7 +5,7 @@
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIGfxResourceClerk.h>
+#include <moai-sim/ZLGfxResourceClerk.h>
 #include <moai-sim/MOAIImage.h>
 
 //================================================================//
@@ -90,30 +90,6 @@ int MOAIFrameBuffer::_isPendingGrab ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFrameBuffer::AffirmBuffers () {
-
-	this->MOAIFrameBuffer_AffirmBuffers ();
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBuffer::DetectGLFrameBufferID () {
-
-	this->SetGLFrameBuffer ( MOAIGfxMgr::GetDrawingAPI ().GetCurrentFramebuffer ());
-}
-
-//----------------------------------------------------------------//
-ZLRect MOAIFrameBuffer::GetBufferRect () const {
-
-	ZLRect rect;
-	rect.mXMin = 0;
-	rect.mYMin = 0;
-	rect.mXMax = ( float )this->mBufferWidth;
-	rect.mYMax = ( float )this->mBufferHeight;
-	
-	return rect;
-}
-
-//----------------------------------------------------------------//
 void MOAIFrameBuffer::GrabImage ( MOAIImage* image ) {
 	UNUSED ( image ); // TODO: doesn't work now?
 
@@ -149,11 +125,6 @@ void MOAIFrameBuffer::GrabImage ( MOAIImage* image ) {
 
 //----------------------------------------------------------------//
 MOAIFrameBuffer::MOAIFrameBuffer () :
-	mBufferWidth ( 0 ),
-	mBufferHeight ( 0 ),
-	mBufferScale ( 1.0f ),
-	mLandscape ( false ),
-	mNeedsClear ( true ),
 	mGrabNextFrame ( false ) {
 	
 	RTTI_BEGIN
@@ -168,19 +139,7 @@ MOAIFrameBuffer::~MOAIFrameBuffer () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIFrameBuffer::NeedsClear () const {
-
-	return this->mNeedsClear;
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBuffer::NeedsClear ( bool needsClear ) {
-
-	this->mNeedsClear = needsClear;
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBuffer::OnReadPixels ( const ZLCopyOnWrite& buffer, void * userdata ) {
+void MOAIFrameBuffer::ZLGfxListener_OnReadPixels ( const ZLCopyOnWrite& buffer, void * userdata ) {
 	UNUSED ( userdata );
 
 	this->mGrabNextFrame = false;
@@ -219,97 +178,4 @@ void MOAIFrameBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-//void MOAIFrameBuffer::Render () {
-//
-//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-//	//this->mLastDrawCount = gfxMgr.GetDrawCount ();
-//
-//	gfxState.SetFrameBuffer ( this );
-//	
-//	//disable scissor rect for clear
-//	gfxState.SetScissorRect ();
-//	this->ClearSurface ();
-//	
-//	if ( this->mRenderTable ) {
-//		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-//		state.Push ( this->mRenderTable );
-//		this->RenderTable ( state, -1 );
-//		state.Pop ( 1 );
-//	}
-//
-//	gfxState.FlushVertexCache (); // do we need to do this if we aren't reading pixels?
-//
-//	// since we're doing this on the render thread, set it every time until we get a callback
-//	if ( this->mGrabNextFrame ) {
-//
-//		// remember, if we're not in immediate mode, this schedules a pixel read for later
-//		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-//		gfx.ReadPixels ( 0, 0, this->mBufferWidth, this->mBufferHeight, ZGL_PIXEL_FORMAT_RGBA, ZGL_PIXEL_TYPE_UNSIGNED_BYTE, 4, this, 0 );
-//	}
-//	
-//	this->mRenderCounter++;
-//	//this->mLastDrawCount = gfxMgr.GetDrawCount () - this->mLastDrawCount;
-//}
-
-//----------------------------------------------------------------//
-void MOAIFrameBuffer::SetBufferSize ( u32 width, u32 height ) {
-
-	this->mBufferWidth = width;
-	this->mBufferHeight = height;
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBuffer::SetGLFrameBuffer ( const ZLGfxHandle& frameBuffer ){
-
-	MOAIGfxResourceClerk::DeleteOrDiscard ( this->mGLFrameBuffer, true );
-	this->mGLFrameBuffer = frameBuffer;
-}
-
-//----------------------------------------------------------------//
-ZLRect MOAIFrameBuffer::WndRectToDevice ( ZLRect rect ) const {
-
-	rect.Bless ();
-
-	if ( this->mLandscape ) {
-	
-		float width = ( float )this->mBufferWidth;
-		
-		float xMin = rect.mYMin;
-		float yMin = width - rect.mXMax;
-		float xMax = rect.mYMax;
-		float yMax = width - rect.mXMin;
-		
-		rect.mXMin = xMin;
-		rect.mYMin = yMin;
-		rect.mXMax = xMax;
-		rect.mYMax = yMax;
-	}
-	else {
-	
-		float height = ( float )this->mBufferHeight;
-		
-		float xMin = rect.mXMin;
-		float yMin = height - rect.mYMax;
-		float xMax = rect.mXMax;
-		float yMax = height - rect.mYMin;
-		
-		rect.mXMin = xMin;
-		rect.mYMin = yMin;
-		rect.mXMax = xMax;
-		rect.mYMax = yMax;
-	}
-
-	rect.Scale ( this->mBufferScale, this->mBufferScale );
-	return rect;
-}
-
-//================================================================//
-// overrides
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAIFrameBuffer::MOAIFrameBuffer_AffirmBuffers () {
 }

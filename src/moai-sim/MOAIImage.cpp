@@ -1835,7 +1835,7 @@ void MOAIImage::Copy ( const MOAIImage& image ) {
 	this->mBitmap		= image.mBitmap;
 	this->mPalette		= image.mPalette;
 	
-	this->OnImageStatusChanged ( true );
+	this->MOAIImage_OnImageStatusChanged ( true );
 }
 
 //----------------------------------------------------------------//
@@ -2911,7 +2911,7 @@ void MOAIImage::Init ( u32 width, u32 height, ZLColor::ColorFormat colorFmt, Pix
 	this->Alloc ();
 	this->ClearBitmap ();
 	
-	this->OnImageStatusChanged ( this->IsOK ());
+	this->MOAIImage_OnImageStatusChanged ( this->IsOK ());
 }
 
 //----------------------------------------------------------------//
@@ -2931,7 +2931,7 @@ void MOAIImage::Init ( const void* bitmap, u32 width, u32 height, ZLColor::Color
 	size_t size = this->GetBitmapSize ();
 	memcpy ( this->mBitmap.Invalidate (), bitmap, size );
 	
-	this->OnImageStatusChanged ( this->IsOK ());
+	this->MOAIImage_OnImageStatusChanged ( this->IsOK ());
 }
 
 //----------------------------------------------------------------//
@@ -2955,7 +2955,7 @@ bool MOAIImage::Load ( cc8* filename, u32 transform ) {
 	if ( stream.OpenRead ( filename )) {
 		this->Load ( stream, transform ); // TODO: use file extension as name
 		stream.Close ();
-		this->OnImageStatusChanged ( this->IsOK ());
+		this->MOAIImage_OnImageStatusChanged ( this->IsOK ());
 	}
 	else {
 		MOAILogF ( NULL, ZLLog::LOG_ERROR, MOAISTRING_FileOpenError_S, filename );
@@ -2973,7 +2973,7 @@ bool MOAIImage::Load ( ZLStream& stream, u32 transform ) {
 	MOAIImageFormat* format = MOAIImageFormatMgr::Get ().FindFormat ( stream ); // TODO: make use of name
 	if ( format ) {
 		format->ReadImage ( *this, stream, transform );
-		this->OnImageStatusChanged ( this->IsOK ());
+		this->MOAIImage_OnImageStatusChanged ( this->IsOK ());
 		return this->IsOK ();
 	}
 	
@@ -3081,7 +3081,7 @@ MOAIImage::~MOAIImage () {
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::OnImageStatusChanged ( bool isOK ) {
+void MOAIImage::MOAIImage_OnImageStatusChanged ( bool isOK ) {
 	UNUSED ( isOK );
 }
 
@@ -3431,7 +3431,7 @@ void MOAIImage::Take ( MOAIImage& image ) {
 	this->mBitmap		= image.mBitmap;
 	this->mPalette		= image.mPalette;
 
-	this->OnImageStatusChanged ( true );
+	this->MOAIImage_OnImageStatusChanged ( true );
 
 	// kill the data before clear
 	image.mBitmap = 0;
