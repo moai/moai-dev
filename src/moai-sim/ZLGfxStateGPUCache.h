@@ -34,13 +34,13 @@ private:
 
 public:
 
-	MOAILuaSharedPtr < MOAIVertexBuffer >		mBuffer;
-	MOAILuaSharedPtr < MOAIVertexFormat >		mFormat;
+	ZLStrongPtr < MOAIVertexBuffer >		mBuffer;
+	ZLStrongPtr < MOAIVertexFormat >		mFormat;
 	
 	//----------------------------------------------------------------//
 				ZLVertexBufferWithFormat		();
 				~ZLVertexBufferWithFormat		();
-	void		SetBufferAndFormat				( MOAILuaObject& owner, MOAIVertexBuffer* buffer, MOAIVertexFormat* format );
+	void		SetBufferAndFormat				( MOAIVertexBuffer* buffer, MOAIVertexFormat* format );
 	
 };
 
@@ -94,7 +94,7 @@ protected:
 	static const u32 MAX_TEXTURE_UNITS = 32; // enough? will need more flags below if not.
 
 	friend class ZLGfxStateVertexCache;
-	friend class MOAIVertexArray;
+	friend class ZLVertexArray;
 
 	friend class MOAIGfxMgr;
 

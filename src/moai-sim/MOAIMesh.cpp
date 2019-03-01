@@ -661,7 +661,7 @@ void MOAIMesh::ReserveVAOs ( u32 total ) {
 void MOAIMesh::ReserveVertexBuffers ( u32 total ) {
 
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVertexBuffers.Size (); ++i ) {
-		this->mVertexBuffers [ i ].SetBufferAndFormat ( *this, 0, 0 );
+		this->mVertexBuffers [ i ].SetBufferAndFormat ( 0, 0 );
 	}
 	this->mVertexBuffers.Init ( total );
 }

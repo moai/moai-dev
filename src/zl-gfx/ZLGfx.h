@@ -28,7 +28,7 @@ class ZLCopyOnWrite;
 // ZLGfxListener
 //================================================================//
 class ZLGfxListener :
-	public ZLRefCountedObject {
+	public virtual ZLRefCountedObject {
 private:
 
 	GET ( ZLGfxListener*, HandleTarget, this )

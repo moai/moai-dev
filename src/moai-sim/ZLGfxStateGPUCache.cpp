@@ -43,10 +43,10 @@ ZLVertexBufferWithFormat::~ZLVertexBufferWithFormat () {
 }
 
 //----------------------------------------------------------------//
-void ZLVertexBufferWithFormat::SetBufferAndFormat ( MOAILuaObject& owner, MOAIVertexBuffer* buffer, MOAIVertexFormat* format ) {
+void ZLVertexBufferWithFormat::SetBufferAndFormat ( MOAIVertexBuffer* buffer, MOAIVertexFormat* format ) {
 
-	this->mBuffer.Set ( owner, buffer );
-	this->mFormat.Set ( owner, format );
+	this->mBuffer = buffer;
+	this->mFormat = format;
 }
 
 //================================================================//

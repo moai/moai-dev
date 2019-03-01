@@ -318,7 +318,7 @@ MOAIShaderProgram::MOAIShaderProgram () :
 	mUniformBufferSize ( 0 ) {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIGfxResource )
+		RTTI_EXTEND ( MOAIAbstractGfxResource )
 	RTTI_END
 }
 
