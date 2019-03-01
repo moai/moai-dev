@@ -60,7 +60,8 @@ public:
 	//----------------------------------------------------------------//
 	void						Clear					();
 	void						CopyFromStream			( ZLStream& stream, size_t size );
-	ZLSharedConstBuffer*		GetBuffer				();
+	size_t						CountVBOs				();
+//	ZLSharedConstBuffer*		GetBuffer				();
 	void						Reserve					( ZLSize size );
 	void						ReserveVBOs				( ZLSize gpuBuffers );
 								ZLGfxBuffer				();

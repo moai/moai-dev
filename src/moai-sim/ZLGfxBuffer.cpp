@@ -33,6 +33,12 @@ void ZLGfxBuffer::CopyFromStream ( ZLStream& stream, size_t size ) {
 }
 
 //----------------------------------------------------------------//
+size_t ZLGfxBuffer::CountVBOs () {
+
+	return this->mVBOs.Size ();
+}
+
+//----------------------------------------------------------------//
 ZLSharedConstBuffer* ZLGfxBuffer::GetBufferForBind ( ZLGfx& gfx ) {
 	UNUSED(gfx);
 	return this->mUseVBOs ? 0 : this->ZLCopyOnWrite::GetSharedConstBuffer ();

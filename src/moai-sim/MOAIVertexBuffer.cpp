@@ -122,6 +122,7 @@ MOAIVertexBuffer::MOAIVertexBuffer () {
 	this->mTarget = ZGL_BUFFER_TARGET_ARRAY;
 	
 	RTTI_BEGIN
+		RTTI_EXTEND ( MOAIAbstractGfxResource )
 		RTTI_EXTEND ( MOAIGfxBuffer )
 	RTTI_END
 }
@@ -143,11 +144,13 @@ void MOAIVertexBuffer::PrintVertices ( MOAIVertexFormat& vertexFormat ) {
 
 //----------------------------------------------------------------//
 void MOAIVertexBuffer::RegisterLuaClass ( MOAILuaState& state ) {
+	MOAIGfxResource < ZLVertexBuffer >::RegisterLuaClass ( state );
 	MOAIGfxBuffer::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIVertexBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
+	MOAIGfxResource < ZLVertexBuffer >::RegisterLuaFuncs ( state );
 	MOAIGfxBuffer::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
@@ -168,4 +171,14 @@ void MOAIVertexBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seri
 //----------------------------------------------------------------//
 void MOAIVertexBuffer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	MOAIGfxBuffer::SerializeOut ( state, serializer );
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+ZLGfxBuffer& MOAIVertexBuffer::MOAIGfxBuffer_ZLGfxBuffer () {
+
+	return *this;
 }

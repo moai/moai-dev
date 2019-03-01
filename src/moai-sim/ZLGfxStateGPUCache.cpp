@@ -3,22 +3,22 @@
 
 #include "pch.h"
 
-#include <moai-sim/ZLFrameBuffer.h>
 #include <moai-sim/MOAIFrameBufferTexture.h>
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/ZLGfxStateCPUCache.h>
-#include <moai-sim/ZLGfxStateGPUCache.h>
-#include <moai-sim/ZLGfxStateVertexCache.h>
-#include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIShaderProgram.h>
-#include <moai-sim/ZLVertexArray.h>
-#include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 #include <moai-sim/MOAIViewport.h>
+#include <moai-sim/ZLFrameBuffer.h>
+#include <moai-sim/ZLGfxStateCPUCache.h>
+#include <moai-sim/ZLGfxStateGPUCache.h>
+#include <moai-sim/ZLGfxStateVertexCache.h>
+#include <moai-sim/ZLIndexBuffer.h>
 #include <moai-sim/ZLTexture.h>
+#include <moai-sim/ZLVertexArray.h>
+#include <moai-sim/ZLVertexBuffer.h>
 
 //#define MOAIGFXSTATECACHE_DEBUG_LOG
 
@@ -190,7 +190,7 @@ void ZLGfxStateGPUCache::ApplyStateChanges () {
 void ZLGfxStateGPUCache::BindVertexBufferWithFormat ( ZLVertexBufferWithFormat& bufferWithFormat, bool useVAOs ) {
 	UNUSED ( useVAOs );
 
-	MOAIVertexBuffer* buffer = bufferWithFormat.mBuffer;
+	ZLVertexBuffer* buffer = bufferWithFormat.mBuffer;
 	MOAIVertexFormat* format = bufferWithFormat.mFormat;
 	
 	if ( buffer && format ) {
@@ -273,7 +273,7 @@ void ZLGfxStateGPUCache::DrawPrims ( u32 primType, u32 base, u32 count ) {
 		
 		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 		
-		MOAIIndexBuffer* idxBuffer = this->mActiveState.mIdxBuffer;
+		ZLIndexBuffer* idxBuffer = this->mActiveState.mIdxBuffer;
 		
 		if ( idxBuffer ) {
 		
@@ -429,7 +429,7 @@ void ZLGfxStateGPUCache::FlushFrameBuffer ( ZLFrameBuffer* frameBuffer ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::FlushIndexBuffer ( MOAIIndexBuffer* buffer ) {
+void ZLGfxStateGPUCache::FlushIndexBuffer ( ZLIndexBuffer* buffer ) {
 
 	assert ( this->mApplyingStateChanges );
 	
@@ -643,7 +643,7 @@ void ZLGfxStateGPUCache::FlushVertexArray ( ZLVertexArray* vtxArray ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::FlushVertexBuffer ( MOAIVertexBuffer* buffer ) {
+void ZLGfxStateGPUCache::FlushVertexBuffer ( ZLVertexBuffer* buffer ) {
 
 	assert ( this->mApplyingStateChanges );
 
@@ -1047,7 +1047,7 @@ bool ZLGfxStateGPUCache::SetFrameBuffer ( ZLFrameBuffer* frameBuffer ) {
 }
 
 //----------------------------------------------------------------//
-bool ZLGfxStateGPUCache::SetIndexBuffer ( MOAIIndexBuffer* buffer ) {
+bool ZLGfxStateGPUCache::SetIndexBuffer ( ZLIndexBuffer* buffer ) {
 	
 	assert ( !this->mApplyingStateChanges );
 	
@@ -1144,7 +1144,7 @@ bool ZLGfxStateGPUCache::SetVertexArray ( ZLVertexArray* vtxArray ) {
 }
 
 //----------------------------------------------------------------//
-bool ZLGfxStateGPUCache::SetVertexBuffer ( MOAIVertexBuffer* buffer ) {
+bool ZLGfxStateGPUCache::SetVertexBuffer ( ZLVertexBuffer* buffer ) {
 
 	assert ( !this->mApplyingStateChanges );
 	

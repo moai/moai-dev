@@ -32,7 +32,6 @@ protected:
 	u32				Bind						(); // bind OR create
 	bool			DoGPUCreate					(); // gets ready to bind
 	bool			DoGPUUpdate					();
-	void			FinishInit					(); // ready to CPU/GPU affirm; recover from STATE_NEW or STATE_ERROR
 	bool			HasLoader					();
 	void			Renew						(); // lose (but not *delete*) the GPU resource
 	void			Unbind						();
@@ -75,6 +74,7 @@ public:
 	//----------------------------------------------------------------//
 	void			Destroy						(); // delete CPU and GPU data; go back to STATE_NEW
 	bool			DoCPUCreate					(); // preload CPU portion
+	void			FinishInit					(); // ready to CPU/GPU affirm; recover from STATE_NEW or STATE_ERROR
 	bool			InvokeLoader				();
 	bool			ScheduleForGPUCreate		( u32 pipelineID );
 	bool			ScheduleForGPUUpdate		();

@@ -175,6 +175,7 @@ MOAIIndexBuffer::MOAIIndexBuffer () :
 	this->mTarget = ZGL_BUFFER_TARGET_ELEMENT_ARRAY;
 	
 	RTTI_BEGIN
+		RTTI_EXTEND ( MOAIAbstractGfxResource )
 		RTTI_EXTEND ( MOAIGfxBuffer )
 	RTTI_END
 }
@@ -202,11 +203,13 @@ void MOAIIndexBuffer::PrintIndices () {
 
 //----------------------------------------------------------------//
 void MOAIIndexBuffer::RegisterLuaClass ( MOAILuaState& state ) {
+	MOAIGfxResource < ZLIndexBuffer >::RegisterLuaClass ( state );
 	MOAIGfxBuffer::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIIndexBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
+	MOAIGfxResource < ZLIndexBuffer >::RegisterLuaFuncs ( state );
 	MOAIGfxBuffer::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
@@ -250,4 +253,14 @@ void MOAIIndexBuffer::WriteIndex ( u32 index ) {
 	else {
 		this->Write < u16 >(( u16 )index );
 	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+ZLGfxBuffer& MOAIIndexBuffer::MOAIGfxBuffer_ZLGfxBuffer () {
+
+	return *this;
 }

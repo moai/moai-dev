@@ -11,11 +11,11 @@
 #include <moai-sim/MOAIVertexFormatMgr.h>
 
 class ZLFrameBuffer;
-class MOAIIndexBuffer;
+class ZLIndexBuffer;
 class MOAIShader;
 class MOAIShaderProgram;
 class ZLVertexArray;
-class MOAIVertexBuffer;
+class ZLVertexBuffer;
 class MOAIVertexFormat;
 class ZLAbstractGfxResource;
 class ZLVertexBufferWithFormat;
@@ -34,8 +34,8 @@ private:
 
 public:
 
-	ZLStrongPtr < MOAIVertexBuffer >		mBuffer;
-	ZLStrongPtr < MOAIVertexFormat >		mFormat;
+	ZLStrongPtr < MOAIVertexBuffer >			mBuffer;
+	ZLStrongPtr < MOAIVertexFormat >			mFormat;
 	
 	//----------------------------------------------------------------//
 				ZLVertexBufferWithFormat		();
@@ -70,9 +70,9 @@ protected:
 	ZLStrongPtr < MOAIShader >				mShader;
 
 	ZLStrongPtr < ZLFrameBuffer >			mFrameBuffer;
-	ZLStrongPtr < MOAIIndexBuffer >			mIdxBuffer;
+	ZLStrongPtr < ZLIndexBuffer >			mIdxBuffer;
 	ZLStrongPtr < ZLVertexArray >			mVtxArray;
-	ZLStrongPtr < MOAIVertexBuffer >		mVtxBuffer;
+	ZLStrongPtr < ZLVertexBuffer >		mVtxBuffer;
 	ZLStrongPtr < MOAIVertexFormat >		mVtxFormat;
 
 	ZLRect									mViewRect;
@@ -145,17 +145,17 @@ protected:
 	void			FlushDepthFunc					( int depthFunc );
 	void			FlushDepthMask					( bool depthMask );
 	void			FlushFrameBuffer				( ZLFrameBuffer* frameBuffer );
-	void			FlushIndexBuffer				( MOAIIndexBuffer* buffer );
+	void			FlushIndexBuffer				( ZLIndexBuffer* buffer );
 	void			FlushPenWidth					( float penWidth );
 	void			FlushScissorRect				( bool scissorEnabled, ZLRect rect );
 	void			FlushShader						( MOAIShader* shader );
 	void			FlushTexture					( ZLIndex textureUnit, ZLTexture* texture );
 	void			FlushVertexArray				( ZLVertexArray* vtxArray );
-	void			FlushVertexBuffer				( MOAIVertexBuffer* buffer );
+	void			FlushVertexBuffer				( ZLVertexBuffer* buffer );
 	void			FlushVertexFormat				( MOAIVertexFormat* vtxFormat );
 	void			FlushViewRect					( ZLRect rect );
-	void			ForceIndexBuffer				( MOAIIndexBuffer* buffer );
-	void			ForceVertexBuffer				( MOAIVertexBuffer* buffer );
+	void			ForceIndexBuffer				( ZLIndexBuffer* buffer );
+	void			ForceVertexBuffer				( ZLVertexBuffer* buffer );
 	void			GfxStateWillChange				();
 	void			InitTextureUnits				( size_t nTextureUnits );
 	void			RecalculateDirtyFlags			();
@@ -209,7 +209,7 @@ public:
 	void			SetDepthMask				( bool depthMask );
 	
 	bool			SetFrameBuffer				( ZLFrameBuffer* frameBuffer = 0 );
-	bool			SetIndexBuffer				( MOAIIndexBuffer* buffer = 0 );
+	bool			SetIndexBuffer				( ZLIndexBuffer* buffer = 0 );
 		
 	void			SetPenWidth					( float penWidth );
 	
@@ -221,7 +221,7 @@ public:
 	bool			SetTexture					( ZLTexture* texture = 0, ZLIndex textureUnit = ZLIndexOp::ZERO );
 	
 	bool			SetVertexArray				( ZLVertexArray* vtxArray = 0 );
-	bool			SetVertexBuffer				( MOAIVertexBuffer* buffer = 0 );
+	bool			SetVertexBuffer				( ZLVertexBuffer* buffer = 0 );
 	void			SetVertexFormat				( MOAIVertexFormatMgr::Preset preset );
 	void			SetVertexFormat				( MOAIVertexFormat* format = 0 );
 	

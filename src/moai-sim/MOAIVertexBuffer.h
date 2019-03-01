@@ -4,7 +4,9 @@
 #ifndef	MOAIVERTEXBUFFER_H
 #define	MOAIVERTEXBUFFER_H
 
+#include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIGfxBuffer.h>
+#include <moai-sim/ZLVertexBuffer.h>
 
 class MOAIVertexFormat;
 
@@ -15,7 +17,8 @@ class MOAIVertexFormat;
 	@text	Buffer for vertices.
 */
 class MOAIVertexBuffer :
-	public MOAIGfxBuffer {
+	public virtual MOAIGfxResource < ZLVertexBuffer >,
+	public virtual MOAIGfxBuffer {
 private:
 	
 	friend class MOAIGfxPipelineClerk;
@@ -25,6 +28,9 @@ private:
 	static int		_computeBounds			( lua_State* L );
 	static int		_countElements			( lua_State* L );
 	static int		_printVertices			( lua_State* L );
+	
+	//----------------------------------------------------------------//
+	ZLGfxBuffer&		MOAIGfxBuffer_ZLGfxBuffer		();
 	
 public:
 	

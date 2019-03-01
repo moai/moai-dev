@@ -16,7 +16,6 @@ class MOAIVertexFormat;
 	@text	Base class for MOAIVertexBuffer and MOAIIndexBuffer.
 */
 class MOAIGfxBuffer :
-	public MOAIGfxResource < ZLGfxBuffer >,
 	public virtual MOAIStream {
 protected:
 	
@@ -30,6 +29,9 @@ protected:
 	static int			_reserve				( lua_State* L );
 	static int			_reserveVBOs			( lua_State* L );
 	static int			_scheduleFlush			( lua_State* L );
+
+	//----------------------------------------------------------------//
+	virtual ZLGfxBuffer&		MOAIGfxBuffer_ZLGfxBuffer		() = 0;
 
 public:
 	
