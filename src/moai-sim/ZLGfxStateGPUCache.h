@@ -14,12 +14,12 @@ class MOAIFrameBuffer;
 class MOAIIndexBuffer;
 class MOAIShader;
 class MOAIShaderProgram;
-class MOAITextureBase;
 class MOAIVertexArray;
 class MOAIVertexBuffer;
 class MOAIVertexFormat;
 class ZLAbstractGfxResource;
 class ZLVertexBufferWithFormat;
+class ZLTexture;
 
 //================================================================//
 // ZLVertexBufferWithFormat
@@ -77,7 +77,7 @@ protected:
 
 	ZLRect									mViewRect;
 	
-	ZLLeanArray < ZLStrongPtr < MOAITextureBase > >		mTextureUnits;
+	ZLLeanArray < ZLStrongPtr < ZLTexture > >		mTextureUnits;
 	
 	//----------------------------------------------------------------//
 					ZLGfxStateGPUCacheFrame			();
@@ -131,7 +131,7 @@ protected:
 
 	// don't think these need to be lua shared pointers...
 	ZLStrongPtr < MOAIFrameBuffer >			mDefaultFrameBuffer;
-	ZLStrongPtr < MOAITextureBase >			mDefaultTexture;
+	ZLStrongPtr < ZLTexture >				mDefaultTexture;
 
 	ZLSharedConstBuffer*					mBoundIdxBuffer;
 	ZLSharedConstBuffer*					mBoundVtxBuffer;
@@ -149,7 +149,7 @@ protected:
 	void			FlushPenWidth					( float penWidth );
 	void			FlushScissorRect				( bool scissorEnabled, ZLRect rect );
 	void			FlushShader						( MOAIShader* shader );
-	void			FlushTexture					( ZLIndex textureUnit, MOAITextureBase* texture );
+	void			FlushTexture					( ZLIndex textureUnit, ZLTexture* texture );
 	void			FlushVertexArray				( MOAIVertexArray* vtxArray );
 	void			FlushVertexBuffer				( MOAIVertexBuffer* buffer );
 	void			FlushVertexFormat				( MOAIVertexFormat* vtxFormat );
@@ -174,7 +174,7 @@ public:
 	GET ( MOAIVertexFormat*, CurrentVtxFormat, mCurrentState->mVtxFormat )
 	GET ( const ZLRect&, ViewRect, mCurrentState->mViewRect )
 	GET ( MOAIFrameBuffer*, DefaultFrameBuffer, mDefaultFrameBuffer )
-	GET ( MOAITextureBase*, DefaultTexture, mDefaultTexture )
+	GET ( ZLTexture*, DefaultTexture, mDefaultTexture )
 	
 	//----------------------------------------------------------------//
 	void			ClearSurface				(); // takes zgl clear flags
@@ -202,7 +202,7 @@ public:
 	void			SetCullFunc					( int cullFunc );
 	
 	void			SetDefaultFrameBuffer		( MOAIFrameBuffer* frameBuffer );
-	void			SetDefaultTexture			( MOAITextureBase* texture );
+	void			SetDefaultTexture			( ZLTexture* texture );
 	
 	void			SetDepthFunc				();
 	void			SetDepthFunc				( int depthFunc );
@@ -218,7 +218,7 @@ public:
 	
 	bool			SetShader					( MOAIShaderMgr::Preset preset );
 	bool			SetShader					( MOAIShader* shader = 0 );
-	bool			SetTexture					( MOAITextureBase* texture = 0, ZLIndex textureUnit = ZLIndexOp::ZERO );
+	bool			SetTexture					( ZLTexture* texture = 0, ZLIndex textureUnit = ZLIndexOp::ZERO );
 	
 	bool			SetVertexArray				( MOAIVertexArray* vtxArray = 0 );
 	bool			SetVertexBuffer				( MOAIVertexBuffer* buffer = 0 );

@@ -13,12 +13,12 @@
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIShaderProgram.h>
-#include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAIVertexArray.h>
 #include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 #include <moai-sim/MOAIViewport.h>
+#include <moai-sim/ZLTexture.h>
 
 //#define MOAIGFXSTATECACHE_DEBUG_LOG
 
@@ -580,15 +580,15 @@ void ZLGfxStateGPUCache::FlushShader ( MOAIShader* shader ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::FlushTexture ( ZLIndex textureUnit, MOAITextureBase* texture ) {
+void ZLGfxStateGPUCache::FlushTexture ( ZLIndex textureUnit, ZLTexture* texture ) {
 
 	assert ( this->mApplyingStateChanges );
 	
 	ZLGfxStateGPUCacheFrame& active = this->mActiveState;
 	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
 	
-	texture = texture && texture->Affirm () ? texture : ( MOAITextureBase* )this->mDefaultTexture;
-	MOAITextureBase* prevTexture = active.mTextureUnits [ textureUnit ];
+	texture = texture && texture->Affirm () ? texture : ( ZLTexture* )this->mDefaultTexture;
+	ZLTexture* prevTexture = active.mTextureUnits [ textureUnit ];
 
 	if ( prevTexture != texture ) {
 
@@ -1005,7 +1005,7 @@ void ZLGfxStateGPUCache::SetDefaultFrameBuffer ( MOAIFrameBuffer* frameBuffer ) 
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::SetDefaultTexture ( MOAITextureBase* texture ) {
+void ZLGfxStateGPUCache::SetDefaultTexture ( ZLTexture* texture ) {
 
 	this->mDefaultTexture = texture;
 }
@@ -1110,7 +1110,7 @@ bool ZLGfxStateGPUCache::SetShader ( MOAIShader* shader ) {
 }
 
 //----------------------------------------------------------------//
-bool ZLGfxStateGPUCache::SetTexture ( MOAITextureBase* texture, ZLIndex textureUnit ) {
+bool ZLGfxStateGPUCache::SetTexture ( ZLTexture* texture, ZLIndex textureUnit ) {
 
 	assert ( !this->mApplyingStateChanges );
 

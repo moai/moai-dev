@@ -3,16 +3,16 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIAttribute.h>
-#include <moai-sim/MOAIShaderUniformSchema.h>
+#include <moai-sim/ZLAbstractShaderUniformSchema.h>
 
 //================================================================//
-// MOAIShaderUniformSchema
+// ZLAbstractShaderUniformSchema
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIShaderUniformSchema::ApplyAttrOp ( void* buffer, MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) const {
+bool ZLAbstractShaderUniformSchema::ApplyAttrOp ( void* buffer, MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) const {
 			
-	MOAIShaderUniformHandle uniform = this->GetUniformHandleForAttributeID ( buffer, attrID );
+	ZLShaderUniformHandle uniform = this->GetUniformHandleForAttributeID ( buffer, attrID );
 	
 	if ( uniform.IsValid ()) {
 	
@@ -35,26 +35,26 @@ bool MOAIShaderUniformSchema::ApplyAttrOp ( void* buffer, MOAIAttrID attrID, MOA
 }
 
 //----------------------------------------------------------------//
-u32 MOAIShaderUniformSchema::GetAttributeID ( u32 uniformID, u32 index ) const {
+u32 ZLAbstractShaderUniformSchema::GetAttributeID ( u32 uniformID, u32 index ) const {
 
 	return ( uniformID * MAX_UNIFORM_ARRAY_SIZE ) + index;
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformHandle MOAIShaderUniformSchema::GetUniformHandle ( void* buffer, ZLIndex uniformID ) const {
+ZLShaderUniformHandle ZLAbstractShaderUniformSchema::GetUniformHandle ( void* buffer, ZLIndex uniformID ) const {
 
-	return this->MOAIShaderUniformSchema_GetUniformHandle ( buffer, uniformID );
+	return this->ZLAbstractShaderUniformSchema_GetUniformHandle ( buffer, uniformID );
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformHandle MOAIShaderUniformSchema::GetUniformHandle ( void* buffer, ZLIndex uniformID, ZLIndex index ) const {
+ZLShaderUniformHandle ZLAbstractShaderUniformSchema::GetUniformHandle ( void* buffer, ZLIndex uniformID, ZLIndex index ) const {
 
-	MOAIShaderUniformHandle uniform = this->GetUniformHandle ( buffer, uniformID );
+	ZLShaderUniformHandle uniform = this->GetUniformHandle ( buffer, uniformID );
 	return uniform.IsValid () ? uniform.Offset ( index ) : uniform;
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformHandle MOAIShaderUniformSchema::GetUniformHandleForAttributeID ( void* buffer, MOAIAttrID attrID ) const {
+ZLShaderUniformHandle ZLAbstractShaderUniformSchema::GetUniformHandleForAttributeID ( void* buffer, MOAIAttrID attrID ) const {
 
 	// TODO: check for overflow
 
@@ -67,19 +67,19 @@ MOAIShaderUniformHandle MOAIShaderUniformSchema::GetUniformHandleForAttributeID 
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformSchema::MOAIShaderUniformSchema () {
+ZLAbstractShaderUniformSchema::ZLAbstractShaderUniformSchema () {
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformSchema::~MOAIShaderUniformSchema () {
+ZLAbstractShaderUniformSchema::~ZLAbstractShaderUniformSchema () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniformSchema::SetUniform ( lua_State* L, int idx, void* buffer, ZLIndex uniformID, ZLIndex index ) const {
+void ZLAbstractShaderUniformSchema::SetUniform ( lua_State* L, int idx, void* buffer, ZLIndex uniformID, ZLIndex index ) const {
 
 	MOAILuaState state ( L );
 
-	MOAIShaderUniformHandle uniform = this->GetUniformHandle ( buffer, uniformID, index );
+	ZLShaderUniformHandle uniform = this->GetUniformHandle ( buffer, uniformID, index );
 	
 	if ( uniform.IsValid ()) {
 		
@@ -119,10 +119,3 @@ void MOAIShaderUniformSchema::SetUniform ( lua_State* L, int idx, void* buffer, 
 		}
 	}
 }
-
-//================================================================//
-// ::implementation::
-//================================================================//
-
-//----------------------------------------------------------------//
-

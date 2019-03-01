@@ -111,8 +111,8 @@ MOAIShaderProgram* MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 					
 					program->ReserveUniforms ( 2 );
-					program->DeclareUniform ( ZLIndexCast ( 0 ), "xSnap", MOAIShaderUniform::UNIFORM_TYPE_FLOAT );
-					program->DeclareUniform ( ZLIndexCast ( 1 ), "ySnap", MOAIShaderUniform::UNIFORM_TYPE_FLOAT );
+					program->DeclareUniform ( ZLIndexCast ( 0 ), "xSnap", ZLShaderUniform::UNIFORM_TYPE_FLOAT );
+					program->DeclareUniform ( ZLIndexCast ( 1 ), "ySnap", ZLShaderUniform::UNIFORM_TYPE_FLOAT );
 					
 					program->ReserveGlobals ( 2 );
 					program->SetGlobal ( ZLIndexCast ( 0 ), ZLGfxStateCache::VIEW_HALF_WIDTH, ZLIndexCast ( 0 ), ZLIndexCast ( 0 ));
@@ -146,8 +146,8 @@ MOAIShaderProgram* MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 					
 					program->ReserveUniforms ( 2 );
-					program->DeclareUniform ( ZLIndexCast ( 0 ), "xSnap", MOAIShaderUniform::UNIFORM_TYPE_FLOAT );
-					program->DeclareUniform ( ZLIndexCast ( 1 ), "ySnap", MOAIShaderUniform::UNIFORM_TYPE_FLOAT );
+					program->DeclareUniform ( ZLIndexCast ( 0 ), "xSnap", ZLShaderUniform::UNIFORM_TYPE_FLOAT );
+					program->DeclareUniform ( ZLIndexCast ( 1 ), "ySnap", ZLShaderUniform::UNIFORM_TYPE_FLOAT );
 					
 					program->ReserveGlobals ( 2 );
 					program->SetGlobal ( ZLIndexCast ( 0 ), ZLGfxStateCache::VIEW_HALF_WIDTH, ZLIndexCast ( 0 ), ZLIndexCast ( 0 ));
@@ -169,8 +169,8 @@ MOAIShaderProgram* MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 					program->SetVertexAttribute ( 1, "color" );
 					
 					program->ReserveUniforms ( 2 );
-					program->DeclareUniform ( ZLIndexCast ( 0 ), "transform", MOAIShaderUniform::UNIFORM_TYPE_FLOAT, MOAIShaderUniform::UNIFORM_WIDTH_MATRIX_4X4 );
-					program->DeclareUniform ( ZLIndexCast ( 1 ), "ucolor", MOAIShaderUniform::UNIFORM_TYPE_FLOAT, MOAIShaderUniform::UNIFORM_WIDTH_VEC_4 );
+					program->DeclareUniform ( ZLIndexCast ( 0 ), "transform", ZLShaderUniform::UNIFORM_TYPE_FLOAT, ZLShaderUniform::UNIFORM_WIDTH_MATRIX_4X4 );
+					program->DeclareUniform ( ZLIndexCast ( 1 ), "ucolor", ZLShaderUniform::UNIFORM_TYPE_FLOAT, ZLShaderUniform::UNIFORM_WIDTH_VEC_4 );
 					
 					program->ReserveGlobals ( 2 );
 					program->SetGlobal ( ZLIndexCast ( 0 ), ZLGfxStateCache::MODEL_TO_CLIP_MTX, ZLIndexCast ( 0 ), ZLIndexCast ( 0 ));
@@ -187,8 +187,8 @@ MOAIShaderProgram* MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 
 					program->ReserveUniforms ( 2 );
-					program->DeclareUniform ( ZLIndexCast ( 0 ), "transform", MOAIShaderUniform::UNIFORM_TYPE_FLOAT, MOAIShaderUniform::UNIFORM_WIDTH_MATRIX_4X4 );
-					program->DeclareUniform ( ZLIndexCast ( 1 ), "ucolor", MOAIShaderUniform::UNIFORM_TYPE_FLOAT, MOAIShaderUniform::UNIFORM_WIDTH_VEC_4 );
+					program->DeclareUniform ( ZLIndexCast ( 0 ), "transform", ZLShaderUniform::UNIFORM_TYPE_FLOAT, ZLShaderUniform::UNIFORM_WIDTH_MATRIX_4X4 );
+					program->DeclareUniform ( ZLIndexCast ( 1 ), "ucolor", ZLShaderUniform::UNIFORM_TYPE_FLOAT, ZLShaderUniform::UNIFORM_WIDTH_VEC_4 );
 					
 					program->ReserveGlobals ( 2 );
 					program->SetGlobal ( ZLIndexCast ( 0 ), ZLGfxStateCache::MODEL_TO_CLIP_MTX, ZLIndexCast ( 0 ), ZLIndexCast ( 0 ));

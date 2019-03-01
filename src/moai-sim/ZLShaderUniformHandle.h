@@ -4,34 +4,32 @@
 #ifndef	MOAISHADERUNIFORMHANDLE_H
 #define	MOAISHADERUNIFORMHANDLE_H
 
-#include <moai-sim/MOAIShaderUniform.h>
+#include <moai-sim/ZLShaderUniform.h>
 
 class MOAIAttribute;
 
 //================================================================//
-// MOAIShaderUniformHandle
+// ZLShaderUniformHandle
 //================================================================//
-class MOAIShaderUniformHandle :
-	public MOAIShaderUniformBase {
+class ZLShaderUniformHandle :
+	public ZLShaderUniformBase {
 private:
 
 	//----------------------------------------------------------------//
-	void			SetRawValue									( const void* srcBuffer );
-	void			SetValue									( const s32* srcBuffer );
-	void			SetValue									( const float* srcBuffer );
+	void						SetRawValue						( const void* srcBuffer );
+	void						SetValue						( const s32* srcBuffer );
+	void						SetValue						( const float* srcBuffer );
 
 public:
 
-	void*			mBuffer;
+	void*						mBuffer;
 
 	//----------------------------------------------------------------//
 	void						AddValue						( const MOAIAttribute& attr );
 	void						Default							( u32 count = 1 );
 	bool						IsValid							();
-								MOAIShaderUniformHandle			();
-								~MOAIShaderUniformHandle		();
 	void						Next							();
-	MOAIShaderUniformHandle		Offset							( ZLIndex index );
+	ZLShaderUniformHandle		Offset							( ZLIndex index );
 	void						SetValue						( float value );
 	void						SetValue						( s32 value );
 	void						SetValue						( const MOAIAttribute& attr );
@@ -42,6 +40,8 @@ public:
 	void						SetValue						( const ZLMatrix3x3& value );
 	void						SetValue						( const ZLMatrix4x4& value );
 	void						SetValue						( const ZLVec4D& value );
+								ZLShaderUniformHandle			();
+								~ZLShaderUniformHandle			();
 };
 
 #endif

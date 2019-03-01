@@ -44,8 +44,8 @@ public:
 
 private:
 	
-	MOAIShaderProgram*	mPrograms [ TOTAL_SHADERS ];
-	MOAIShader*			mShaders [ TOTAL_SHADERS ];
+	MOAIShaderProgram*		mPrograms [ TOTAL_SHADERS ];
+	MOAIShader*				mShaders [ TOTAL_SHADERS ];
 	
 	//----------------------------------------------------------------//
 	static int				_getProgram				( lua_State* L );

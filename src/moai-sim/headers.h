@@ -148,9 +148,9 @@
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIShaderProgram.h>
-#include <moai-sim/MOAIShaderUniform.h>
-#include <moai-sim/MOAIShaderUniformHandle.h>
-#include <moai-sim/MOAIShaderUniformSchema.h>
+#include <moai-sim/ZLShaderUniform.h>
+#include <moai-sim/ZLShaderUniformHandle.h>
+#include <moai-sim/ZLAbstractShaderUniformSchema.h>
 #include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAISpanList.h>

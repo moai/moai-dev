@@ -9,7 +9,7 @@
 #include <moai-sim/ZLGfxStateCPUCache.h>
 #include <moai-sim/ZLGfxStateGPUCache.h>
 #include <moai-sim/ZLGfxStateVertexCache.h>
-#include <moai-sim/MOAIShaderUniform.h>
+#include <moai-sim/ZLShaderUniform.h>
 #include <moai-sim/MOAIViewport.h>
 #include <moai-sim/MOAIViewProj.h>
 

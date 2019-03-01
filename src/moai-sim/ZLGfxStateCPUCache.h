@@ -7,7 +7,7 @@
 #include <moai-sim/ZLAbstractGfxStateCache.h>
 
 class MOAICamera;
-class MOAIShaderUniformSchema;
+class ZLAbstractShaderUniformSchema;
 class MOAIViewport;
 
 #define ID_TO_FLAG(id) (( u64 )1 << id )

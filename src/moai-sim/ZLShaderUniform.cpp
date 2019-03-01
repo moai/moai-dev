@@ -4,20 +4,20 @@
 #include "pch.h"
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIShaderUniform.h>
+#include <moai-sim/ZLShaderUniform.h>
 
 //================================================================//
-// MOAIShaderUniformBase
+// ZLShaderUniformBase
 //================================================================//
 
 //----------------------------------------------------------------//
-size_t MOAIShaderUniformBase::GetSize () const {
+size_t ZLShaderUniformBase::GetSize () const {
 
 	return this->mWidth * ELEMENT_SIZE;
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderUniformBase::Init ( u32 type, u32 width ) {
+bool ZLShaderUniformBase::Init ( u32 type, u32 width ) {
 	
 	this->mType		= type;
 	this->mWidth	= width;
@@ -26,21 +26,21 @@ bool MOAIShaderUniformBase::Init ( u32 type, u32 width ) {
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformBase::MOAIShaderUniformBase () :
+ZLShaderUniformBase::ZLShaderUniformBase () :
 	mType ( UNIFORM_TYPE_FLOAT ),
 	mWidth ( 1 ) {
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformBase::~MOAIShaderUniformBase () {
+ZLShaderUniformBase::~ZLShaderUniformBase () {
 }
 
 //================================================================//
-// MOAIShaderUniform
+// ZLShaderUniform
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIShaderUniform::Bind ( const void* buffer ) const {
+void ZLShaderUniform::Bind ( const void* buffer ) const {
 
 	if ( this->mGPUBase == ZGL_INVALID_UNIFORM_ADDR ) return;
 
@@ -57,25 +57,25 @@ void MOAIShaderUniform::Bind ( const void* buffer ) const {
 }
 
 //----------------------------------------------------------------//
-size_t MOAIShaderUniform::GetSize () const {
+size_t ZLShaderUniform::GetSize () const {
 
-	return this->MOAIShaderUniformBase::GetSize () * this->mCount;
+	return this->ZLShaderUniformBase::GetSize () * this->mCount;
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniform::Init ( u32 type, u32 width, u32 count ) {
+void ZLShaderUniform::Init ( u32 type, u32 width, u32 count ) {
 	
-	this->MOAIShaderUniformBase::Init ( type, width );
+	this->ZLShaderUniformBase::Init ( type, width );
 	this->mCount = count;
 	this->mCPUOffset = 0;
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniform::MOAIShaderUniform () :
+ZLShaderUniform::ZLShaderUniform () :
 	mCount ( 0 ),
 	mGPUBase (( u32 )-1 ) {
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniform::~MOAIShaderUniform () {
+ZLShaderUniform::~ZLShaderUniform () {
 }

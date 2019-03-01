@@ -1,13 +1,13 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAISHADERUNIFORM_H
-#define	MOAISHADERUNIFORM_H
+#ifndef	ZLSHADERUNIFORM_H
+#define	ZLSHADERUNIFORM_H
 
 //================================================================//
-// MOAIShaderUniformBase
+// ZLShaderUniformBase
 //================================================================//
-class MOAIShaderUniformBase {
+class ZLShaderUniformBase {
 protected:
 
 	static const size_t MAX_BUFFER_WIDTH = 16; // 4x4 matrix
@@ -32,21 +32,23 @@ public:
 	u32				mWidth;				// number of elements (ELEMENT_SIZE bytes each)
 
 	//----------------------------------------------------------------//
-	size_t			GetSize							() const;
-	bool			Init							( u32 type, u32 width = 1 );
-					MOAIShaderUniformBase			();
-					~MOAIShaderUniformBase			();
+	size_t			GetSize						() const;
+	bool			Init						( u32 type, u32 width = 1 );
+					ZLShaderUniformBase			();
+					~ZLShaderUniformBase		();
 };
 
 //================================================================//
-// MOAIShaderUniform
+// ZLShaderUniform
 //================================================================//
-class MOAIShaderUniform :
-	public MOAIShaderUniformBase {
+class ZLShaderUniform :
+	public ZLShaderUniformBase {
 protected:
 
 	friend class MOAIShader;
 	friend class MOAIShaderProgram;
+	friend class ZLShader;
+	friend class ZLShaderProgram;
 
 	STLString		mName;
 	u32				mCount;				// (default) size of array
@@ -56,11 +58,11 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-	void			Bind					( const void* buffer ) const;
-	size_t			GetSize					() const;
-	void			Init					( u32 type, u32 width = 1, u32 count = 1 );
-					MOAIShaderUniform		();
-					~MOAIShaderUniform		();
+	void			Bind						( const void* buffer ) const;
+	size_t			GetSize						() const;
+	void			Init						( u32 type, u32 width = 1, u32 count = 1 );
+					ZLShaderUniform				();
+					~ZLShaderUniform			();
 	
 	//----------------------------------------------------------------//
 	inline bool IsValid () {

@@ -4,8 +4,8 @@
 #ifndef	MOAISHADER_H
 #define	MOAISHADER_H
 
-#include <moai-sim/MOAIShaderUniformSchema.h>
 #include <moai-sim/MOAIShaderProgram.h>
+#include <moai-sim/ZLAbstractShaderUniformSchema.h>
 
 //================================================================//
 // MOAIShader
