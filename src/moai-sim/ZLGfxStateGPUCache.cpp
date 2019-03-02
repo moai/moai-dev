@@ -29,27 +29,6 @@
 #endif
 
 //================================================================//
-// ZLVertexBufferWithFormat
-//================================================================//
-
-//----------------------------------------------------------------//
-ZLVertexBufferWithFormat::ZLVertexBufferWithFormat () :
-	mBoundVtxBuffer ( 0 ),
-	mIsBound ( false ) {
-}
-
-//----------------------------------------------------------------//
-ZLVertexBufferWithFormat::~ZLVertexBufferWithFormat () {
-}
-
-//----------------------------------------------------------------//
-void ZLVertexBufferWithFormat::SetBufferAndFormat ( MOAIVertexBuffer* buffer, MOAIVertexFormat* format ) {
-
-	this->mBuffer = buffer;
-	this->mFormat = format;
-}
-
-//================================================================//
 // ZLGfxStateGPUCacheFrame
 //================================================================//
 
@@ -183,34 +162,6 @@ void ZLGfxStateGPUCache::ApplyStateChanges () {
 			this->mCurrentState = &this->mPendingState;
 			this->ResumeChanges ();
 		}
-	}
-}
-
-//----------------------------------------------------------------//
-void ZLGfxStateGPUCache::BindVertexBufferWithFormat ( ZLVertexBufferWithFormat& bufferWithFormat, bool useVAOs ) {
-	UNUSED ( useVAOs );
-
-	ZLVertexBuffer* buffer = bufferWithFormat.mBuffer;
-	MOAIVertexFormat* format = bufferWithFormat.mFormat;
-	
-	if ( buffer && format ) {
-	
-		assert ( !bufferWithFormat.mIsBound );
-		assert (( useVAOs && buffer->IsUsingVBOs ()) || ( !useVAOs )); // buffer objects must use VBOs to work with VAOs
-		
-		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-		
-		ZLSharedConstBuffer* bufferForBind = buffer->GetBufferForBind ( gfx );
-		
-		buffer->Bind ();
-		format->Bind ( bufferForBind );
-		buffer->Unbind ();
-		
-		bufferWithFormat.mBoundVtxBuffer = bufferForBind;
-		bufferWithFormat.mIsBound = true;
-	}
-	else {
-		assert ( false );
 	}
 }
 
@@ -1228,16 +1179,4 @@ void ZLGfxStateGPUCache::UnbindAll () {
 	this->SetVertexFormat ();
 	
 	ZGL_COMMENT ( gfx, "" );
-}
-
-//----------------------------------------------------------------//
-void ZLGfxStateGPUCache::UnbindVertexBufferWithFormat ( ZLVertexBufferWithFormat& bufferWithFormat ) {
-
-	assert ( bufferWithFormat.mIsBound );
-	assert ( bufferWithFormat.mBuffer && bufferWithFormat.mFormat );
-		
-	bufferWithFormat.mFormat->Unbind ();
-	bufferWithFormat.mBoundVtxBuffer = 0;
-		
-	bufferWithFormat.mIsBound = false;
 }

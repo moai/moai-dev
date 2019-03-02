@@ -10,6 +10,22 @@ class ZLVertexBufferWithFormat;
 class MOAIVertexFormat;
 
 //================================================================//
+// ZLVertexBufferWithFormat
+//================================================================//
+class ZLVertexBufferWithFormat {
+public:
+
+	ZLStrongPtr < ZLVertexBuffer >				mBuffer;
+	ZLStrongPtr < MOAIVertexFormat >			mFormat;
+
+	//----------------------------------------------------------------//
+				ZLVertexBufferWithFormat		();
+				~ZLVertexBufferWithFormat		();
+	void		SetBufferAndFormat				( ZLVertexBuffer* buffer, MOAIVertexFormat* format );
+	
+};
+
+//================================================================//
 // MOAIVertexArray
 //================================================================//
 // TODO: doxygen
@@ -43,11 +59,11 @@ public:
 	IS ( UsingVAOs, mUseVAOs, true )
 	
 	//----------------------------------------------------------------//
-	MOAIVertexBuffer*	GetVertexBuffer				( ZLIndex idx );
+	ZLVertexBuffer*		GetVertexBuffer				( ZLIndex idx );
 	MOAIVertexFormat*	GetVertexFormat				( ZLIndex idx );
 	void				ReserveVAOs					( u32 total );
 	void				ReserveVertexBuffers		( u32 total );
-	void				SetVertexBuffer				( ZLIndex idx, MOAIVertexBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat );
+	void				SetVertexBuffer				( ZLIndex idx, ZLVertexBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat );
 						ZLVertexArray				();
 						~ZLVertexArray				();
 };

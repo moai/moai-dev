@@ -21,8 +21,6 @@ private:
 
 	friend class MOAIGfxPipelineClerk;
 
-	u32				mIndexSize;
-
 	//----------------------------------------------------------------//
 	static int		_copyFromStream			( lua_State* L );
 	static int		_countElements			( lua_State* L );

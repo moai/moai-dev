@@ -16,6 +16,8 @@
 //----------------------------------------------------------------//
 ZLVertexBuffer::ZLVertexBuffer () {
 	
+	RTTI_SINGLE ( ZLGfxBuffer )
+	
 	this->mTarget = ZGL_BUFFER_TARGET_ARRAY;
 }
 

@@ -13,11 +13,10 @@ class MOAIVertexFormat;
 //================================================================//
 class ZLVertexBuffer :
 	public ZLGfxBuffer {
-private:
+public:
 	
 	friend class ZLVertexBufferWithFormat;
-	
-public:
+	friend class ZLVertexArray;
 		
 	//----------------------------------------------------------------//
 	void			PrintVertices			( MOAIVertexFormat& vertexFormat );

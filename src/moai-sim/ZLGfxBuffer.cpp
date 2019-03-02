@@ -81,6 +81,8 @@ ZLGfxBuffer::ZLGfxBuffer () :
 	mTarget ( ZGL_BUFFER_TARGET_ARRAY ),
 	mUseVBOs ( false ),
 	mCopyOnUpdate ( false ) {
+	
+	RTTI_SINGLE ( ZLAbstractGfxResource )
 }
 
 //----------------------------------------------------------------//

@@ -22,29 +22,6 @@ class ZLVertexBufferWithFormat;
 class ZLTexture;
 
 //================================================================//
-// ZLVertexBufferWithFormat
-//================================================================//
-class ZLVertexBufferWithFormat {
-private:
-	
-	ZLSharedConstBuffer*						mBoundVtxBuffer;
-	bool										mIsBound;
-
-	friend class ZLGfxStateGPUCache;
-
-public:
-
-	ZLStrongPtr < MOAIVertexBuffer >			mBuffer;
-	ZLStrongPtr < MOAIVertexFormat >			mFormat;
-	
-	//----------------------------------------------------------------//
-				ZLVertexBufferWithFormat		();
-				~ZLVertexBufferWithFormat		();
-	void		SetBufferAndFormat				( MOAIVertexBuffer* buffer, MOAIVertexFormat* format );
-	
-};
-
-//================================================================//
 // ZLGfxStateGPUCacheFrame
 //================================================================//
 class ZLGfxStateGPUCacheFrame {
@@ -72,7 +49,7 @@ protected:
 	ZLStrongPtr < ZLFrameBuffer >			mFrameBuffer;
 	ZLStrongPtr < ZLIndexBuffer >			mIdxBuffer;
 	ZLStrongPtr < ZLVertexArray >			mVtxArray;
-	ZLStrongPtr < ZLVertexBuffer >		mVtxBuffer;
+	ZLStrongPtr < ZLVertexBuffer >			mVtxBuffer;
 	ZLStrongPtr < MOAIVertexFormat >		mVtxFormat;
 
 	ZLRect									mViewRect;
@@ -139,7 +116,6 @@ protected:
 	//----------------------------------------------------------------//
 	void			ApplyStateChange				( u32 stateID );
 	void			ApplyStateChanges				();
-	void			BindVertexBufferWithFormat		( ZLVertexBufferWithFormat& buffer, bool useVAOs );
 	void			FlushBlendMode					( bool blendEnabled, const MOAIBlendMode& blendMode );
 	void			FlushCullFunc					( int cullFunc );
 	void			FlushDepthFunc					( int depthFunc );
@@ -163,7 +139,6 @@ protected:
 	void			ResumeChanges					();
 	void			StoreGPUState					( ZLGfxStateGPUCacheFrame& frame ) const;
 	void			SuspendChanges					();
-	void			UnbindVertexBufferWithFormat	( ZLVertexBufferWithFormat& buffer );
 
 public:
 	

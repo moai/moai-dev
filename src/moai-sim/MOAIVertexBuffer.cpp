@@ -118,10 +118,9 @@ int MOAIVertexBuffer::_printVertices ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAIVertexBuffer::MOAIVertexBuffer () {
-	
-	this->mTarget = ZGL_BUFFER_TARGET_ARRAY;
-	
+		
 	RTTI_BEGIN
+		RTTI_EXTEND ( ZLVertexBuffer )
 		RTTI_EXTEND ( MOAIAbstractGfxResource )
 		RTTI_EXTEND ( MOAIGfxBuffer )
 	RTTI_END

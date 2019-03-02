@@ -134,7 +134,7 @@ bool MOAIMeshPrimReader::GetPrimCoords ( u32 idx, MOAIMeshPrimCoords& prim ) con
 bool MOAIMeshPrimReader::Init ( MOAIMesh& mesh, ZLIndex vertexBufferIndex ) {
 
 	MOAIVertexFormat* vertexFormat = mesh.GetVertexFormat ( vertexBufferIndex );
-	MOAIVertexBuffer* vertexBuffer = mesh.GetVertexBuffer ( vertexBufferIndex );
+	ZLVertexBuffer* vertexBuffer = mesh.GetVertexBuffer ( vertexBufferIndex );
 
 	if ( !( vertexFormat && vertexBuffer )) return false;
 

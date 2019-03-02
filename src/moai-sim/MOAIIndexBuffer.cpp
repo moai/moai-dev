@@ -169,12 +169,10 @@ u32 MOAIIndexBuffer::GetIndex ( u32 element ) {
 }
 
 //----------------------------------------------------------------//
-MOAIIndexBuffer::MOAIIndexBuffer () :
-	mIndexSize ( 2 ) {
-	
-	this->mTarget = ZGL_BUFFER_TARGET_ELEMENT_ARRAY;
+MOAIIndexBuffer::MOAIIndexBuffer () {
 	
 	RTTI_BEGIN
+		RTTI_EXTEND ( ZLIndexBuffer )
 		RTTI_EXTEND ( MOAIAbstractGfxResource )
 		RTTI_EXTEND ( MOAIGfxBuffer )
 	RTTI_END

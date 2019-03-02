@@ -13,6 +13,7 @@
 			context (if possible).
 */
 class ZLAbstractGfxResource :
+	public virtual RTTIBase,
 	public ZLGfxListener {
 protected:
 

@@ -14,7 +14,7 @@
 */
 class ZLIndexBuffer :
 	public ZLGfxBuffer {
-private:
+protected:
 
 	u32				mIndexSize;
 

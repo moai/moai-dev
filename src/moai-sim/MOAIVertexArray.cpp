@@ -61,11 +61,10 @@ int MOAIVertexArray::_setVertexBuffer ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIVertexArray::MOAIVertexArray () :
-	mCurrentVAO ( ZLIndexOp::INVALID ),
-	mUseVAOs ( false ) {
+MOAIVertexArray::MOAIVertexArray () {
 
 	RTTI_BEGIN
+		RTTI_EXTEND ( ZLVertexArray )
 		RTTI_EXTEND ( MOAIAbstractGfxResource )
 	RTTI_END
 }
@@ -131,7 +130,14 @@ void MOAIVertexArray::SerializeOut ( MOAILuaState& state, MOAISerializer& serial
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVertexBuffers.Size (); ++i ) {
 		state.Push ( MOAILuaIndex ( i ));
 		lua_newtable ( state );
-		state.SetField < cc8*, MOAISerializer::ObjID >( -1, "mBuffer", serializer.AffirmMemberID ( this->mVertexBuffers [ i ].mBuffer ));
+		
+		MOAIVertexBuffer* buffer = this->mVertexBuffers [ i ].mBuffer->AsType < MOAIVertexBuffer >();
+//		MOAIVertexFormat* format = this->mVertexBuffers [ i ].mFormat->AsType < MOAIVertexFormat >();
+		
+//		assert ( buffer && format );
+		assert ( buffer );
+		
+		state.SetField < cc8*, MOAISerializer::ObjID >( -1, "mBuffer", serializer.AffirmMemberID ( buffer ));
 		state.SetField < cc8*, MOAISerializer::ObjID >( -1, "mFormat", serializer.AffirmMemberID ( this->mVertexBuffers [ i ].mFormat ));
 		lua_settable ( state, -3 );
 	}

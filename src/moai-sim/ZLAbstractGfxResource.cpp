@@ -199,6 +199,8 @@ ZLAbstractGfxResource::ZLAbstractGfxResource () :
 	mState ( STATE_UNINITIALIZED ),
 	mLastRenderCount ( 0 ) {
 
+	RTTI_SINGLE ( RTTIBase )
+
 	this->mMasterLink.Data ( this );
 	this->mPendingLink.Data ( this );
 	

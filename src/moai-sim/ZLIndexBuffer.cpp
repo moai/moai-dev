@@ -94,6 +94,8 @@ void ZLIndexBuffer::WriteIndex ( u32 index ) {
 ZLIndexBuffer::ZLIndexBuffer () :
 	mIndexSize ( 2 ) {
 	
+	RTTI_SINGLE ( ZLGfxBuffer )
+	
 	this->mTarget = ZGL_BUFFER_TARGET_ELEMENT_ARRAY;
 }
 

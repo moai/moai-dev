@@ -13,7 +13,7 @@ class MOAIMesh;
 class MOAIMeshPartition;
 class MOAISelectionSpan;
 class MOAITextureBase;
-class MOAIVertexAttribute;
+class ZLVertexAttribute;
 
 //================================================================//
 // MOAIMeshSpan
@@ -59,7 +59,7 @@ private:
 	MOAIVertexFormat*		mVertexFormat;
 	ZLSize					mTotalPrims;
 	
-	const MOAIVertexAttribute*	mAttribute;
+	const ZLVertexAttribute*	mAttribute;
 	const void*					mVertexBuffer;
 	MOAIIndexBuffer*			mIndexBuffer;
 

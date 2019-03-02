@@ -15,6 +15,26 @@
 #include <moai-sim/ZLVertexArray.h>
 
 //================================================================//
+// ZLVertexBufferWithFormat
+//================================================================//
+
+//----------------------------------------------------------------//
+ZLVertexBufferWithFormat::ZLVertexBufferWithFormat () {
+}
+
+
+//----------------------------------------------------------------//
+ZLVertexBufferWithFormat::~ZLVertexBufferWithFormat () {
+}
+
+//----------------------------------------------------------------//
+void ZLVertexBufferWithFormat::SetBufferAndFormat ( ZLVertexBuffer* buffer, MOAIVertexFormat* format ) {
+
+	this->mBuffer = buffer;
+	this->mFormat = format;
+}
+
+//================================================================//
 // ZLVertexArray
 //================================================================//
 
@@ -34,14 +54,28 @@ void ZLVertexArray::BindVertexArrayItems () {
 
 	ZLSize totalVBOs = this->mVertexBuffers.Size ();
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalVBOs; ++i ) {
-		gfxState.BindVertexBufferWithFormat ( this->mVertexBuffers [ i ], this->mUseVAOs );
+	
+		ZLVertexBuffer* buffer = this->mVertexBuffers [ i ].mBuffer;
+		MOAIVertexFormat* format = this->mVertexBuffers [ i ].mFormat;
+	
+		assert ( buffer && format );
+		
+		assert (( this->mUseVAOs && buffer->IsUsingVBOs ()) || ( !this->mUseVAOs )); // buffer objects must use VBOs to work with VAOs
+	
+		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+		
+		ZLSharedConstBuffer* bufferForBind = buffer->GetBufferForBind ( gfx );
+		
+		buffer->Bind ();
+		format->Bind ( bufferForBind );
+		buffer->Unbind ();
 	}
 }
 
 //----------------------------------------------------------------//
-MOAIVertexBuffer* ZLVertexArray::GetVertexBuffer ( ZLIndex idx ) {
+ZLVertexBuffer* ZLVertexArray::GetVertexBuffer ( ZLIndex idx ) {
 
-	return idx < this->mVertexBuffers.Size () ? ( MOAIVertexBuffer* )this->mVertexBuffers [ idx ].mBuffer : ( MOAIVertexBuffer* )0;
+	return idx < this->mVertexBuffers.Size () ? ( ZLVertexBuffer* )this->mVertexBuffers [ idx ].mBuffer : ( ZLVertexBuffer* )0;
 }
 
 //----------------------------------------------------------------//
@@ -75,7 +109,7 @@ void ZLVertexArray::ReserveVertexBuffers ( u32 total ) {
 }
 
 //----------------------------------------------------------------//
-void ZLVertexArray::SetVertexBuffer ( ZLIndex idx, MOAIVertexBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat ) {
+void ZLVertexArray::SetVertexBuffer ( ZLIndex idx, ZLVertexBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat ) {
 
 	if ( this->AffirmVertexBuffers ( idx )) {
 		this->mVertexBuffers [ idx ].SetBufferAndFormat ( vtxBuffer, vtxFormat );
@@ -90,7 +124,10 @@ void ZLVertexArray::UnbindVertexArrayItems () {
 
 	size_t totalVBOs = this->mVertexBuffers.Size ();
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalVBOs; ++i ) {
-		gfxState.UnbindVertexBufferWithFormat ( this->mVertexBuffers [ i ]);
+	
+		MOAIVertexFormat* format = this->mVertexBuffers [ i ].mFormat;
+		assert ( format );
+		format->Unbind ();
 	}
 }
 

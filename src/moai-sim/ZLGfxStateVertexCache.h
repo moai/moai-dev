@@ -58,8 +58,8 @@ protected:
 	bool						mApplyUVTransform;
 	ZLMatrix4x4					mUVTransform;
 	
-	ZLStrongPtr < MOAIVertexBuffer >	mVtxBuffer;
-	ZLStrongPtr < MOAIIndexBuffer >		mIdxBuffer;
+	ZLStrongPtr < ZLVertexBuffer >		mVtxBuffer;
+	ZLStrongPtr < ZLIndexBuffer >		mIdxBuffer;
 	
 	//----------------------------------------------------------------//
 	u32				CountPrims						();

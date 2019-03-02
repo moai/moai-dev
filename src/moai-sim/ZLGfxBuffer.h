@@ -23,6 +23,7 @@ protected:
 	friend class MOAIGfxPipelineClerk;
 	friend class ZLGfxStateGPUCache;
 	friend class MOAIVertexArrayItem;
+	friend class ZLVertexArray;
 	
 	enum {
 		UPDATE_MODE_MAPBUFFER,
