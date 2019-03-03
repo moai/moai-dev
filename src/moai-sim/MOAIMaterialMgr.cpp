@@ -195,7 +195,7 @@ void MOAIMaterialMgr::Push ( const MOAIMaterial* material ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialMgr::SetBlendMode ( const MOAIBlendMode& blendMode ) {
+void MOAIMaterialMgr::SetBlendMode ( const ZLBlendMode& blendMode ) {
 
 	if ( !( this->mFlags & BLEND_MODE_FLAG )) {
 		this->mBlendMode = blendMode;

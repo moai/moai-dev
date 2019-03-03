@@ -12,12 +12,12 @@ class MOAIVertexFormat;
 #define GFX_PIPELINE_LOGGING_FOLDER "renderlogs"
 
 //================================================================//
-// MOAIGfxPipeline
+// ZLGfxPipeline
 //================================================================//
-class MOAIGfxPipeline {
+class ZLGfxPipeline {
 private:
 
-	friend class MOAIGfxPipelineClerk;
+	friend class ZLGfxPipelineClerk;
 
 	ZLLeanArray < ZLGfxRetained* > mDisplayLists;
 	ZLLeanStack < ZLGfxRetained* > mFreeDisplayLists;
@@ -43,18 +43,18 @@ private:
 	//----------------------------------------------------------------//
 	ZLGfxRetained*			GetDisplayList				();
 	bool					HasContent					();
-							MOAIGfxPipeline				();
-							~MOAIGfxPipeline			();
 	void					PhaseBegin					( u32 phase );
 	void					PhaseEnd					( u32 phase );
 	void					PublishAndReset				();
 	void					ReleaseDisplayList			( ZLGfxRetained* list );
+							ZLGfxPipeline				();
+							~ZLGfxPipeline				();
 };
 
 //================================================================//
-// MOAIGfxPipelineClerk
+// ZLGfxPipelineClerk
 //================================================================//
-class MOAIGfxPipelineClerk {
+class ZLGfxPipelineClerk {
 public:
 
 	enum {
@@ -67,7 +67,7 @@ protected:
 
 	ZLGfxImmediate				mGfxImmediate;
 
-	MOAIGfxPipeline*			mPipelines [ TOTAL_PIPELINES ];
+	ZLGfxPipeline*			mPipelines [ TOTAL_PIPELINES ];
 	
 	ZLGfx*						mDrawingAPI;
 	
@@ -99,13 +99,13 @@ public:
 	void				EndPhase					( u32 phase );
 	bool				HasContent					( u32 pipelineID );
 	bool				IsPipelineEnabled			( u32 pipelineID );
-						MOAIGfxPipelineClerk		();
-	virtual				~MOAIGfxPipelineClerk		();
 	void				ProcessPipeline				( u32 pipelineID );
 	void				PublishAndReset				( u32 pipelineID );
 	void				ResetDrawingAPIs			();
 	ZLGfx*				SelectDrawingAPI			();
 	ZLGfx*				SelectDrawingAPI			( u32 pipelineID );
+						ZLGfxPipelineClerk			();
+	virtual				~ZLGfxPipelineClerk			();
 };
 
 #endif

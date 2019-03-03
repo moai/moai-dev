@@ -1,25 +1,22 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXBUFFER_H
-#define	MOAIGFXBUFFER_H
+#ifndef	MOAIABSTRACTGFXBUFFER_H
+#define	MOAIABSTRACTGFXBUFFER_H
 
-#include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/ZLGfxBuffer.h>
 
-class MOAIVertexFormat;
-
 //================================================================//
-// MOAIGfxBuffer
+// MOAIAbstractGfxBuffer
 //================================================================//
-/**	@lua	MOAIGfxBuffer
+/**	@lua	MOAIAbstractGfxBuffer
 	@text	Base class for MOAIVertexBuffer and MOAIIndexBuffer.
 */
-class MOAIGfxBuffer :
+class MOAIAbstractGfxBuffer :
 	public virtual MOAIStream {
 protected:
 	
-	friend class MOAIGfxPipelineClerk;
+	friend class ZLGfxPipelineClerk;
 	friend class ZLGfxStateGPUCache;
 	friend class MOAIVertexArrayItem;
 
@@ -36,12 +33,12 @@ protected:
 public:
 	
 	//----------------------------------------------------------------//
-						MOAIGfxBuffer			();
-						~MOAIGfxBuffer			();
-	void				RegisterLuaClass		( MOAILuaState& state );
-	void				RegisterLuaFuncs		( MOAILuaState& state );
-	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
-	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
+						MOAIAbstractGfxBuffer		();
+						~MOAIAbstractGfxBuffer		();
+	void				RegisterLuaClass			( MOAILuaState& state );
+	void				RegisterLuaFuncs			( MOAILuaState& state );
+	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
+	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

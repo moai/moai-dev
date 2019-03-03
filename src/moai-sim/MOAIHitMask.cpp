@@ -232,7 +232,7 @@ int MOAIGraphicsPropBase::_setBlendMode ( lua_State* L ) {
 		}
 	}
 	else {
-		self->mBlendMode = MOAIBlendMode ();
+		self->mBlendMode = ZLBlendMode ();
 	}
 	
 	self->ScheduleUpdate ();

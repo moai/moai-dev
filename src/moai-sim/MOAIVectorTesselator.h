@@ -7,7 +7,7 @@
 #include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAIVectorUtil.h>
 
-class MOAIGfxBuffer;
+class MOAIAbstractGfxBuffer;
 class MOAIVectorShape;
 class MOAIVertexFormat;
 

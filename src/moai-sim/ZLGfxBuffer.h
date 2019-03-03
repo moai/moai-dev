@@ -20,7 +20,7 @@ class ZLGfxBuffer :
 	public ZLCopyOnWrite {
 protected:
 	
-	friend class MOAIGfxPipelineClerk;
+	friend class ZLGfxPipelineClerk;
 	friend class ZLGfxStateGPUCache;
 	friend class MOAIVertexArrayItem;
 	friend class ZLVertexArray;

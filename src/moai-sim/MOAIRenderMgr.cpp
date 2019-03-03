@@ -104,7 +104,7 @@ void MOAIRenderMgr::Render () {
 	// Measure performance
 	double startTime = ZLDeviceTime::GetTimeInSeconds ();
 	
-	ZLGfx* gfx = gfxMgr.mPipelineMgr.SelectDrawingAPI ( MOAIGfxPipelineClerk::DRAWING_PIPELINE );
+	ZLGfx* gfx = gfxMgr.mPipelineMgr.SelectDrawingAPI ( ZLGfxPipelineClerk::DRAWING_PIPELINE );
 	if ( !gfx ) return;
 
 	ZGL_COMMENT ( *gfx, "RENDER MGR RENDER" );

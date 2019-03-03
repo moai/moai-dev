@@ -5,8 +5,8 @@
 #define	ZLGFXSTATEGPUCACHE_H
 
 #include <moai-sim/ZLAbstractGfxStateCache.h>
-#include <moai-sim/MOAIBlendMode.h>
-#include <moai-sim/MOAIGfxPipelineClerk.h>
+#include <moai-sim/ZLBlendMode.h>
+#include <moai-sim/ZLGfxPipelineClerk.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 
@@ -36,7 +36,7 @@ protected:
 	int										mDepthFunc;
 	bool									mDepthMask;
 
-	MOAIBlendMode							mBlendMode;
+	ZLBlendMode							mBlendMode;
 	bool									mBlendEnabled;
 
 	float									mPenWidth;
@@ -116,7 +116,7 @@ protected:
 	//----------------------------------------------------------------//
 	void			ApplyStateChange				( u32 stateID );
 	void			ApplyStateChanges				();
-	void			FlushBlendMode					( bool blendEnabled, const MOAIBlendMode& blendMode );
+	void			FlushBlendMode					( bool blendEnabled, const ZLBlendMode& blendMode );
 	void			FlushCullFunc					( int cullFunc );
 	void			FlushDepthFunc					( int depthFunc );
 	void			FlushDepthMask					( bool depthMask );
@@ -142,7 +142,7 @@ protected:
 
 public:
 	
-	GET ( MOAIBlendMode, BlendMode, mCurrentState->mBlendMode )
+	GET ( ZLBlendMode, BlendMode, mCurrentState->mBlendMode )
 	GET ( bool, DepthMask, mCurrentState->mDepthMask )
 	GET ( ZLFrameBuffer*, CurrentFrameBuffer, mCurrentState->mFrameBuffer )
 	GET ( MOAIShader*, CurrentShader, mCurrentState->mShader )
@@ -170,7 +170,7 @@ public:
 	void			ResetState					();
 
 	void			SetBlendMode				();
-	void			SetBlendMode				( const MOAIBlendMode& blendMode );
+	void			SetBlendMode				( const ZLBlendMode& blendMode );
 	void			SetBlendMode				( int srcFactor, int dstFactor, int equation = ZGL_BLEND_MODE_ADD );
 
 	void			SetCullFunc					();

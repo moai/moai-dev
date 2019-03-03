@@ -88,7 +88,7 @@ void MOAIMaterialBase::SetBlendMode () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBase::SetBlendMode ( const MOAIBlendMode& blendMode ) {
+void MOAIMaterialBase::SetBlendMode ( const ZLBlendMode& blendMode ) {
 
 	this->mBlendMode = blendMode;
 	this->mFlags |= BLEND_MODE_FLAG;

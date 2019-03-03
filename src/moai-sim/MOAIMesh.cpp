@@ -452,7 +452,7 @@ int MOAIMesh::_setBounds ( lua_State* L ) {
 	@text	Set the index buffer to render.
 	
 	@in		MOAIMesh self
-	@in		MOAIGfxBuffer indexBuffer
+	@in		MOAIAbstractGfxBuffer indexBuffer
 	@out	nil
 */
 int MOAIMesh::_setIndexBuffer ( lua_State* L ) {

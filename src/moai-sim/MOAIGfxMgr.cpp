@@ -231,8 +231,8 @@ void MOAIGfxMgr::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "EVENT_RESIZE",	( u32 )EVENT_RESIZE );
 	
-	state.SetField ( -1, "DRAWING_PIPELINE",	( u32 )MOAIGfxPipelineClerk::DRAWING_PIPELINE );
-	state.SetField ( -1, "LOADING_PIPELINE",	( u32 )MOAIGfxPipelineClerk::LOADING_PIPELINE );
+	state.SetField ( -1, "DRAWING_PIPELINE",	( u32 )ZLGfxPipelineClerk::DRAWING_PIPELINE );
+	state.SetField ( -1, "LOADING_PIPELINE",	( u32 )ZLGfxPipelineClerk::LOADING_PIPELINE );
 
 	luaL_Reg regTable [] = {
 		{ "enablePipelineLogging",		_enablePipelineLogging },

@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIGfxBuffer.h>
+#include <moai-sim/MOAIAbstractGfxBuffer.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/ZLGfxResourceClerk.h>
 #include <moai-sim/MOAIVertexFormat.h>
@@ -20,13 +20,13 @@
 /**	@lua	copyFromStream
 	@text	Copies buffer contents from a stream.
 	
-	@in		MOAIGfxBuffer self
+	@in		MOAIAbstractGfxBuffer self
 	@in		MOAIStream stream
 	@opt	number length
 	@out	nil
 */
-int MOAIGfxBuffer::_copyFromStream ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxBuffer, "U" )
+int MOAIAbstractGfxBuffer::_copyFromStream ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractGfxBuffer, "U" )
 	
 	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
 	if ( stream ) {
@@ -41,11 +41,11 @@ int MOAIGfxBuffer::_copyFromStream ( lua_State* L ) {
 /**	@lua	release
 	@text	Releases any memory associated with buffer.
 	
-	@in		MOAIGfxBuffer self
+	@in		MOAIAbstractGfxBuffer self
 	@out	nil
 */
-int	MOAIGfxBuffer::_release ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxBuffer, "U" )
+int	MOAIAbstractGfxBuffer::_release ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractGfxBuffer, "U" )
 	
 	self->MOAIGfxBuffer_ZLGfxBuffer ().Clear ();
 	return 0;
@@ -55,12 +55,12 @@ int	MOAIGfxBuffer::_release ( lua_State* L ) {
 /**	@lua	reserve
 	@text	Sets capacity of buffer in bytes.
 	
-	@in		MOAIGfxBuffer self
+	@in		MOAIAbstractGfxBuffer self
 	@in		number size
 	@out	nil
 */
-int	MOAIGfxBuffer::_reserve ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxBuffer, "UN" )
+int	MOAIAbstractGfxBuffer::_reserve ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractGfxBuffer, "UN" )
 	
 	u32 size = state.GetValue < u32 >( 2, 0 );
 	self->MOAIGfxBuffer_ZLGfxBuffer ().Reserve ( size );
@@ -72,12 +72,12 @@ int	MOAIGfxBuffer::_reserve ( lua_State* L ) {
 	@text	Reserves one or more VBO objects. Multi-buffering is
 			supported via multiple VBOs.
 	
-	@in		MOAIGfxBuffer self
+	@in		MOAIAbstractGfxBuffer self
 	@in		number count
 	@out	nil
 */
-int	MOAIGfxBuffer::_reserveVBOs ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxBuffer, "UN" )
+int	MOAIAbstractGfxBuffer::_reserveVBOs ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractGfxBuffer, "UN" )
 
 	u32 vbos = state.GetValue < u32 >( 2, 0 );
 	self->MOAIGfxBuffer_ZLGfxBuffer ().ReserveVBOs ( vbos );
@@ -89,22 +89,22 @@ int	MOAIGfxBuffer::_reserveVBOs ( lua_State* L ) {
 	@text	Trigger an update of the GPU-side buffer. Call this when
 			the backing buffer has been altered.
 	
-	@in		MOAIGfxBuffer self
+	@in		MOAIAbstractGfxBuffer self
 	@out	nil
 */
-int MOAIGfxBuffer::_scheduleFlush ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxBuffer, "U" )
+int MOAIAbstractGfxBuffer::_scheduleFlush ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractGfxBuffer, "U" )
 	
 	self->MOAIGfxBuffer_ZLGfxBuffer ().ScheduleForGPUUpdate ();
 	return 0;
 }
 
 //================================================================//
-// MOAIGfxBuffer
+// MOAIAbstractGfxBuffer
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIGfxBuffer::MOAIGfxBuffer () {
+MOAIAbstractGfxBuffer::MOAIAbstractGfxBuffer () {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIStream )
@@ -112,11 +112,11 @@ MOAIGfxBuffer::MOAIGfxBuffer () {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxBuffer::~MOAIGfxBuffer () {
+MOAIAbstractGfxBuffer::~MOAIAbstractGfxBuffer () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIAbstractGfxBuffer::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIStream::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "INDEX_BUFFER",			( u32 )ZGL_BUFFER_TARGET_ELEMENT_ARRAY );
@@ -124,7 +124,7 @@ void MOAIGfxBuffer::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIAbstractGfxBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIStream::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
@@ -140,7 +140,7 @@ void MOAIGfxBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIAbstractGfxBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 
 	ZLGfxBuffer& buffer = this->MOAIGfxBuffer_ZLGfxBuffer ();
@@ -168,7 +168,7 @@ void MOAIGfxBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seriali
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIAbstractGfxBuffer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 
 	ZLGfxBuffer& buffer = this->MOAIGfxBuffer_ZLGfxBuffer ();

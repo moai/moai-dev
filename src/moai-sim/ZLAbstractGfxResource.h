@@ -18,7 +18,7 @@ class ZLAbstractGfxResource :
 protected:
 
 	friend class MOAIGfxMgr;
-	friend class MOAIGfxPipelineClerk;
+	friend class ZLGfxPipelineClerk;
 	friend class ZLGfxStateGPUCache;
 	friend class ZLGfxResourceClerk;
 	

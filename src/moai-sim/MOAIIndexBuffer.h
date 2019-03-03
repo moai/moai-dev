@@ -5,7 +5,7 @@
 #define	MOAIINDEXBUFFER_H
 
 #include <moai-sim/MOAIGfxResource.h>
-#include <moai-sim/MOAIGfxBuffer.h>
+#include <moai-sim/MOAIAbstractGfxBuffer.h>
 #include <moai-sim/ZLIndexBuffer.h>
 
 //================================================================//
@@ -16,10 +16,10 @@
 */
 class MOAIIndexBuffer :
 	public virtual MOAIGfxResource < ZLIndexBuffer >,
-	public virtual MOAIGfxBuffer {
+	public virtual MOAIAbstractGfxBuffer {
 private:
 
-	friend class MOAIGfxPipelineClerk;
+	friend class ZLGfxPipelineClerk;
 
 	//----------------------------------------------------------------//
 	static int		_copyFromStream			( lua_State* L );

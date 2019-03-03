@@ -2,15 +2,15 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIBlendMode.h>
+#include <moai-sim/ZLBlendMode.h>
 #include <moai-sim/MOAIGfxMgr.h>
 
 //================================================================//
-// MOAIBlendMode
+// ZLBlendMode
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIBlendMode::Init ( MOAILuaState& state, int idx ) {
+void ZLBlendMode::Init ( MOAILuaState& state, int idx ) {
 
 	u32 equation	= state.GetValue < u32 >( idx++, ZGL_BLEND_MODE_ADD );
 	u32 srcFactor	= state.GetValue < u32 >( idx++, ZGL_BLEND_FACTOR_ONE );
@@ -20,7 +20,7 @@ void MOAIBlendMode::Init ( MOAILuaState& state, int idx ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIBlendMode::Push ( MOAILuaState& state ) const {
+int ZLBlendMode::Push ( MOAILuaState& state ) const {
 
 	state.Push ( this->mEquation );
 	state.Push ( this->mSourceFactor );
@@ -30,7 +30,7 @@ int MOAIBlendMode::Push ( MOAILuaState& state ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIBlendMode::SetBlend ( int equation, int srcFactor, int dstFactor ) {
+void ZLBlendMode::SetBlend ( int equation, int srcFactor, int dstFactor ) {
 
 	// ZGL_BLEND_MODE_ADD
 	// ZGL_BLEND_MODE_SUBTRACT
@@ -61,19 +61,19 @@ void MOAIBlendMode::SetBlend ( int equation, int srcFactor, int dstFactor ) {
 }
 
 //----------------------------------------------------------------//
-MOAIBlendMode::MOAIBlendMode () :
+ZLBlendMode::ZLBlendMode () :
 	mEquation ( ZGL_BLEND_MODE_ADD ),
 	mSourceFactor ( ZGL_BLEND_FACTOR_ONE ),
 	mDestFactor ( ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA ) {
 }
 
 //----------------------------------------------------------------//
-MOAIBlendMode::MOAIBlendMode ( int equation, int srcFactor, int dstFactor ) :
+ZLBlendMode::ZLBlendMode ( int equation, int srcFactor, int dstFactor ) :
 	mEquation ( equation ),
 	mSourceFactor ( srcFactor ),
 	mDestFactor ( dstFactor ) {
 }
 
 //----------------------------------------------------------------//
-MOAIBlendMode::~MOAIBlendMode () {
+ZLBlendMode::~ZLBlendMode () {
 }

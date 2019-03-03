@@ -4,10 +4,10 @@
 #ifndef	MOAIGFXMGR_H
 #define	MOAIGFXMGR_H
 
-#include <moai-sim/MOAIBlendMode.h>
+#include <moai-sim/ZLBlendMode.h>
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIFrameBuffer.h>
-#include <moai-sim/MOAIGfxPipelineClerk.h>
+#include <moai-sim/ZLGfxPipelineClerk.h>
 #include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/ZLGfxResourceClerk.h>
@@ -80,8 +80,8 @@ public:
 	GET_BOOL ( IsFramebufferSupported, mIsFramebufferSupported )
 	
 	ZLGfxResourceClerk		mResourceMgr;
-	ZLGfxStateCache				mGfxState;
-	MOAIGfxPipelineClerk		mPipelineMgr;
+	ZLGfxStateCache			mGfxState;
+	ZLGfxPipelineClerk		mPipelineMgr;
 	
 	//----------------------------------------------------------------//
 	

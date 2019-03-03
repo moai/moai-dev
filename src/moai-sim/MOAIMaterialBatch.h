@@ -88,7 +88,7 @@ public:
 	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
 	
 	void				SetBlendMode				( ZLIndex idx );
-	void				SetBlendMode				( ZLIndex idx, const MOAIBlendMode& blendMode );
+	void				SetBlendMode				( ZLIndex idx, const ZLBlendMode& blendMode );
 	void				SetBlendMode				( MOAILuaState& state, int idx );
 	
 	void				SetCullMode					( ZLIndex idx );

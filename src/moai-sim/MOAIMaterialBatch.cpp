@@ -411,7 +411,7 @@ void MOAIMaterialBatch::SetBlendMode ( ZLIndex idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::SetBlendMode ( ZLIndex idx, const MOAIBlendMode& blendMode ) {
+void MOAIMaterialBatch::SetBlendMode ( ZLIndex idx, const ZLBlendMode& blendMode ) {
 
 	this->AffirmMaterial ( idx ).SetBlendMode ( blendMode );
 }
@@ -423,7 +423,7 @@ void MOAIMaterialBatch::SetBlendMode ( MOAILuaState& state, int idx ) {
 	ZLIndex materialID = MOAIMaterialBatch::GetMaterialID ( state, idx, set );
 
 	if ( set ) {
-		MOAIBlendMode blendMode;
+		ZLBlendMode blendMode;
 		blendMode.Init ( state, idx );
 		this->SetBlendMode ( materialID, blendMode );
 	}

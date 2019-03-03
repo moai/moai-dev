@@ -374,7 +374,7 @@ void MOAIProfilerReportBox::Draw ( int subPrimID ) {
 //	const ZLMatrix4x4& orgViewTransform = gfxMgr.GetVertexTransform ( MOAIGfxMgr::VTX_VIEW_TRANSFORM );
 //	const ZLMatrix4x4& orgProjTransform = gfxMgr.GetVertexTransform ( MOAIGfxMgr::VTX_PROJ_TRANSFORM );
 //
-//	MOAIBlendMode origBlendMode = gfxMgr.GetBlendMode ();
+//	ZLBlendMode origBlendMode = gfxMgr.GetBlendMode ();
 //
 //	// Set state
 //	gfxMgr.SetVertexMtxMode ( MOAIGfxMgr::VTX_STAGE_WORLD, MOAIGfxMgr::VTX_STAGE_PROJ );

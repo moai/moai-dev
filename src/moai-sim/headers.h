@@ -24,7 +24,7 @@
 #include <moai-sim/MOAIAnimCurveQuat.h>
 #include <moai-sim/MOAIAnimCurveVec.h>
 #include <moai-sim/MOAIAttribute.h>
-#include <moai-sim/MOAIBlendMode.h>
+#include <moai-sim/ZLBlendMode.h>
 //#include <moai-sim/MOAIBoundsDeck.h>
 //#include <moai-sim/MOAIBspBuilder2D.h>
 #include <moai-sim/MOAIButtonSensor.h>
@@ -57,9 +57,9 @@
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIFrameBufferTexture.h>
 #include <moai-sim/MOAIGeometryWriter.h>
-#include <moai-sim/MOAIGfxBuffer.h>
+#include <moai-sim/MOAIAbstractGfxBuffer.h>
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIGfxPipelineClerk.h>
+#include <moai-sim/ZLGfxPipelineClerk.h>
 #include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/ZLGfxResourceClerk.h>
 #include <moai-sim/ZLGfxStateCache.h>

@@ -79,7 +79,7 @@ int MOAIMaterialHolder::_setBlendMode ( lua_State* L ) {
 		self->mMaterial.SetBlendMode ();
 	}
 	else {
-		MOAIBlendMode blendMode;
+		ZLBlendMode blendMode;
 		blendMode.Init ( state, 2 );
 		self->mMaterial.SetBlendMode ( blendMode );
 	}

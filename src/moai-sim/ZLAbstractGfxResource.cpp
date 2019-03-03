@@ -112,7 +112,7 @@ void ZLAbstractGfxResource::FinishInit () {
 
 	if (( this->mState == STATE_UNINITIALIZED ) || ( this->mState == STATE_ERROR )) {
 		this->mState = STATE_READY_FOR_CPU_CREATE;
-		this->ScheduleForGPUCreate ( MOAIGfxPipelineClerk::DRAWING_PIPELINE );
+		this->ScheduleForGPUCreate ( ZLGfxPipelineClerk::DRAWING_PIPELINE );
 	}
 	else {
 		this->ScheduleForGPUUpdate ();
@@ -143,7 +143,7 @@ bool ZLAbstractGfxResource::Purge ( u32 age ) {
 		this->ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( true );
 		this->mState = STATE_READY_FOR_CPU_CREATE;
 		
-		this->ScheduleForGPUCreate ( MOAIGfxPipelineClerk::DRAWING_PIPELINE );
+		this->ScheduleForGPUCreate ( ZLGfxPipelineClerk::DRAWING_PIPELINE );
 		
 		return true;
 	}
@@ -183,7 +183,7 @@ bool ZLAbstractGfxResource::ScheduleForGPUUpdate () {
 	this->mState = STATE_NEEDS_GPU_UPDATE;
 
 	if ( MOAIGfxMgr::IsValid ()) {
-		MOAIGfxMgr::Get ().mResourceMgr.ScheduleGPUAffirm ( *this, MOAIGfxPipelineClerk::DRAWING_PIPELINE ); // always update in the drawing pipeline
+		MOAIGfxMgr::Get ().mResourceMgr.ScheduleGPUAffirm ( *this, ZLGfxPipelineClerk::DRAWING_PIPELINE ); // always update in the drawing pipeline
 	}
 	return true;
 }

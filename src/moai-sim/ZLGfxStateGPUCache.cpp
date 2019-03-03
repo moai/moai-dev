@@ -242,7 +242,7 @@ void ZLGfxStateGPUCache::DrawPrims ( u32 primType, u32 base, u32 count ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::FlushBlendMode ( bool blendEnabled, const MOAIBlendMode& blendMode ) {
+void ZLGfxStateGPUCache::FlushBlendMode ( bool blendEnabled, const ZLBlendMode& blendMode ) {
 
 	assert ( this->mApplyingStateChanges );
 	
@@ -916,7 +916,7 @@ void ZLGfxStateGPUCache::SetBlendMode () {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::SetBlendMode ( const MOAIBlendMode& blendMode ) {
+void ZLGfxStateGPUCache::SetBlendMode ( const ZLBlendMode& blendMode ) {
 
 	assert ( !this->mApplyingStateChanges );
 	
@@ -928,7 +928,7 @@ void ZLGfxStateGPUCache::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 //----------------------------------------------------------------//
 void ZLGfxStateGPUCache::SetBlendMode ( int srcFactor, int dstFactor, int equation ) {
 
-	MOAIBlendMode blendMode;
+	ZLBlendMode blendMode;
 	blendMode.SetBlend ( equation, srcFactor, dstFactor );
 	
 	this->SetBlendMode ( blendMode );

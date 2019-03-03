@@ -4,7 +4,7 @@
 #ifndef	MOAIMATERIALBASE_H
 #define	MOAIMATERIALBASE_H
 
-#include <moai-sim/MOAIBlendMode.h>
+#include <moai-sim/ZLBlendMode.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAITextureBase.h>
@@ -38,7 +38,7 @@ protected:
 	ZLStrongPtr < MOAIShader >			mShader;
 	ZLStrongPtr < MOAITextureBase >		mTexture;
 	
-	MOAIBlendMode		mBlendMode;
+	ZLBlendMode		mBlendMode;
 	int					mCullMode;
 	int					mDepthTest;
 	bool				mDepthMask;
@@ -50,7 +50,7 @@ protected:
 
 public:
 
-	GET_CONST ( MOAIBlendMode&, BlendMode, mBlendMode );
+	GET_CONST ( ZLBlendMode&, BlendMode, mBlendMode );
 	GET ( int, CullMode, mCullMode );
 	GET ( int, DepthTest, mDepthTest );
 	GET ( bool, DepthMask, mDepthMask );
@@ -62,7 +62,7 @@ public:
 					MOAIMaterialBase			();
 					~MOAIMaterialBase			();
 	void			SetBlendMode				();
-	void			SetBlendMode				( const MOAIBlendMode& blendMode );
+	void			SetBlendMode				( const ZLBlendMode& blendMode );
 	void			SetCullMode					();
 	void			SetCullMode					( int cullMode );
 	void			SetDepthMask				();

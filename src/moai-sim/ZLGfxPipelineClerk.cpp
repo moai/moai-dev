@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIGfxPipelineClerk.h>
+#include <moai-sim/ZLGfxPipelineClerk.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIVertexArray.h>
 #include <moai-sim/MOAIVertexBuffer.h>
@@ -15,11 +15,11 @@
 #endif
 
 //================================================================//
-// MOAIGfxPipeline
+// ZLGfxPipeline
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLGfxRetained* MOAIGfxPipeline::GetDisplayList () {
+ZLGfxRetained* ZLGfxPipeline::GetDisplayList () {
 
 	if ( this->mFreeDisplayLists.GetTop () > 0 ) {
 		return this->mFreeDisplayLists.Pop ();
@@ -32,13 +32,13 @@ ZLGfxRetained* MOAIGfxPipeline::GetDisplayList () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxPipeline::HasContent () {
+bool ZLGfxPipeline::HasContent () {
 
 	return ( this->mPipeline [ PIPELINE_PENDING ] != 0 );
 }
 
 //----------------------------------------------------------------//
-MOAIGfxPipeline::MOAIGfxPipeline () :
+ZLGfxPipeline::ZLGfxPipeline () :
 	mRenderCount ( 0 ),
 	mEnableLogging ( false ) {
 
@@ -46,7 +46,7 @@ MOAIGfxPipeline::MOAIGfxPipeline () :
 }
 
 //----------------------------------------------------------------//
-MOAIGfxPipeline::~MOAIGfxPipeline () {
+ZLGfxPipeline::~ZLGfxPipeline () {
 
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mDisplayLists.Size (); ++i ) {
 		delete ( this->mDisplayLists [ i ]);
@@ -54,7 +54,7 @@ MOAIGfxPipeline::~MOAIGfxPipeline () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipeline::PhaseBegin ( u32 phase ) {
+void ZLGfxPipeline::PhaseBegin ( u32 phase ) {
 
 	switch ( phase ) {
 	
@@ -91,7 +91,7 @@ void MOAIGfxPipeline::PhaseBegin ( u32 phase ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipeline::PhaseEnd ( u32 phase ) {
+void ZLGfxPipeline::PhaseEnd ( u32 phase ) {
 
 	switch ( phase ) {
 	
@@ -127,7 +127,7 @@ void MOAIGfxPipeline::PhaseEnd ( u32 phase ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipeline::PublishAndReset () {
+void ZLGfxPipeline::PublishAndReset () {
 
 	ZLSize top = this->mFinishedDisplayLists.GetTop ();
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < top; ++i ) {
@@ -139,7 +139,7 @@ void MOAIGfxPipeline::PublishAndReset () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipeline::ReleaseDisplayList ( ZLGfxRetained* list ) {
+void ZLGfxPipeline::ReleaseDisplayList ( ZLGfxRetained* list ) {
 
 	list->Reset ();
 
@@ -147,11 +147,11 @@ void MOAIGfxPipeline::ReleaseDisplayList ( ZLGfxRetained* list ) {
 }
 
 //================================================================//
-// MOAIGfxPipelineClerk
+// ZLGfxPipelineClerk
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxPipelineClerk::BeginPhase ( u32 phase ) {
+void ZLGfxPipelineClerk::BeginPhase ( u32 phase ) {
 
 	switch ( phase ) {
 	
@@ -160,29 +160,29 @@ void MOAIGfxPipelineClerk::BeginPhase ( u32 phase ) {
 			this->PublishAndReset ( LOADING_PIPELINE );
 			this->PublishAndReset ( DRAWING_PIPELINE );
 		
-			this->BeginPhase ( LOADING_PIPELINE, MOAIGfxPipeline::CPU_PHASE );
-			this->BeginPhase ( DRAWING_PIPELINE, MOAIGfxPipeline::CPU_PHASE );
+			this->BeginPhase ( LOADING_PIPELINE, ZLGfxPipeline::CPU_PHASE );
+			this->BeginPhase ( DRAWING_PIPELINE, ZLGfxPipeline::CPU_PHASE );
 			
 			break;
 			
 		case LOADING_PHASE:
 		
-			this->BeginPhase ( LOADING_PIPELINE, MOAIGfxPipeline::GPU_PHASE );
+			this->BeginPhase ( LOADING_PIPELINE, ZLGfxPipeline::GPU_PHASE );
 			break;
 			
 		case RENDER_PHASE:
 		
-			this->BeginPhase ( DRAWING_PIPELINE, MOAIGfxPipeline::GPU_PHASE );
+			this->BeginPhase ( DRAWING_PIPELINE, ZLGfxPipeline::GPU_PHASE );
 			break;
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipelineClerk::BeginPhase ( u32 pipelineID, u32 phase ) {
+void ZLGfxPipelineClerk::BeginPhase ( u32 pipelineID, u32 phase ) {
 
 	if ( pipelineID < TOTAL_PIPELINES ) {
 	
-		MOAIGfxPipeline* pipeline = this->mPipelines [ pipelineID ];
+		ZLGfxPipeline* pipeline = this->mPipelines [ pipelineID ];
 		
 		if ( pipeline ) {
 		
@@ -190,7 +190,7 @@ void MOAIGfxPipelineClerk::BeginPhase ( u32 pipelineID, u32 phase ) {
 			
 			pipeline->PhaseBegin ( phase );
 			
-			if (( phase == MOAIGfxPipeline::GPU_PHASE ) && ( pipeline->mPipeline [ MOAIGfxPipeline::PIPELINE_GPU ])) {
+			if (( phase == ZLGfxPipeline::GPU_PHASE ) && ( pipeline->mPipeline [ ZLGfxPipeline::PIPELINE_GPU ])) {
 				pipeline->mRenderCount = this->mPipelineRenderCount++;
 			}
 		}
@@ -198,46 +198,46 @@ void MOAIGfxPipelineClerk::BeginPhase ( u32 pipelineID, u32 phase ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipelineClerk::EnablePipeline ( u32 pipelineID ) {
+void ZLGfxPipelineClerk::EnablePipeline ( u32 pipelineID ) {
 	
 	assert ( pipelineID < TOTAL_PIPELINES );
-	this->mPipelines [ pipelineID ] = new MOAIGfxPipeline ();
+	this->mPipelines [ pipelineID ] = new ZLGfxPipeline ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipelineClerk::EnablePipelineLogging ( bool enable ) {
+void ZLGfxPipelineClerk::EnablePipelineLogging ( bool enable ) {
 
 	this->mEnablePipelineLogging = enable;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipelineClerk::EndPhase ( u32 phase ) {
+void ZLGfxPipelineClerk::EndPhase ( u32 phase ) {
 
 	switch ( phase ) {
 	
 		case LOGIC_PHASE:
 		
-			this->EndPhase ( LOADING_PIPELINE, MOAIGfxPipeline::CPU_PHASE );
-			this->EndPhase ( DRAWING_PIPELINE, MOAIGfxPipeline::CPU_PHASE );
+			this->EndPhase ( LOADING_PIPELINE, ZLGfxPipeline::CPU_PHASE );
+			this->EndPhase ( DRAWING_PIPELINE, ZLGfxPipeline::CPU_PHASE );
 			break;
 			
 		case LOADING_PHASE:
 		
-			this->EndPhase ( LOADING_PIPELINE, MOAIGfxPipeline::GPU_PHASE );
+			this->EndPhase ( LOADING_PIPELINE, ZLGfxPipeline::GPU_PHASE );
 			break;
 			
 		case RENDER_PHASE:
 		
-			this->EndPhase ( DRAWING_PIPELINE, MOAIGfxPipeline::GPU_PHASE );
+			this->EndPhase ( DRAWING_PIPELINE, ZLGfxPipeline::GPU_PHASE );
 			break;
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipelineClerk::EndPhase ( u32 pipelineID, u32 phase ) {
+void ZLGfxPipelineClerk::EndPhase ( u32 pipelineID, u32 phase ) {
 
 	if ( pipelineID < TOTAL_PIPELINES ) {
-		MOAIGfxPipeline* pipeline = this->mPipelines [ pipelineID ];
+		ZLGfxPipeline* pipeline = this->mPipelines [ pipelineID ];
 		
 		if ( pipeline ) {
 			pipeline->PhaseEnd ( phase );
@@ -246,20 +246,20 @@ void MOAIGfxPipelineClerk::EndPhase ( u32 pipelineID, u32 phase ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxPipelineClerk::HasContent ( u32 pipelineID ) {
+bool ZLGfxPipelineClerk::HasContent ( u32 pipelineID ) {
 
 	assert ( pipelineID < TOTAL_PIPELINES );
 	return this->mPipelines [ pipelineID ] ? this->mPipelines [ pipelineID ]->HasContent () : false;
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxPipelineClerk::IsPipelineEnabled ( u32 pipelineID ) {
+bool ZLGfxPipelineClerk::IsPipelineEnabled ( u32 pipelineID ) {
 
 	return ( pipelineID < TOTAL_PIPELINES ) && ( this->mPipelines [ pipelineID ] != NULL );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipelineClerk::LogPipelineRender ( ZLGfxRetained& gfx, size_t renderCount, cc8* name ) {
+void ZLGfxPipelineClerk::LogPipelineRender ( ZLGfxRetained& gfx, size_t renderCount, cc8* name ) {
 
 	STLString temp;
 	temp.write ( "%s/%p.tmp", GFX_PIPELINE_LOGGING_FOLDER, &gfx );
@@ -280,7 +280,7 @@ void MOAIGfxPipelineClerk::LogPipelineRender ( ZLGfxRetained& gfx, size_t render
 }
 
 //----------------------------------------------------------------//
-MOAIGfxPipelineClerk::MOAIGfxPipelineClerk () :
+ZLGfxPipelineClerk::ZLGfxPipelineClerk () :
 	mDrawingAPI ( &mGfxImmediate ),
 	mDrawCount ( 0 ),
 	mPipelineRenderCount ( 0 ),
@@ -290,7 +290,7 @@ MOAIGfxPipelineClerk::MOAIGfxPipelineClerk () :
 }
 
 //----------------------------------------------------------------//
-MOAIGfxPipelineClerk::~MOAIGfxPipelineClerk () {
+ZLGfxPipelineClerk::~ZLGfxPipelineClerk () {
 
 	for ( u32 i = 0; i < TOTAL_PIPELINES; ++i ) {
 		if ( this->mPipelines [ i ]) {
@@ -300,14 +300,14 @@ MOAIGfxPipelineClerk::~MOAIGfxPipelineClerk () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipelineClerk::ProcessPipeline ( u32 pipelineID ) {
+void ZLGfxPipelineClerk::ProcessPipeline ( u32 pipelineID ) {
 
 	assert ( pipelineID < TOTAL_PIPELINES );
-	MOAIGfxPipeline* pipeline = this->mPipelines [ pipelineID ];
+	ZLGfxPipeline* pipeline = this->mPipelines [ pipelineID ];
 	
-	if ( pipeline && pipeline->mPipeline [ MOAIGfxPipeline::PIPELINE_GPU ]) {
+	if ( pipeline && pipeline->mPipeline [ ZLGfxPipeline::PIPELINE_GPU ]) {
 
-		ZLGfxRetained* list = pipeline->mPipeline [ MOAIGfxPipeline::PIPELINE_GPU ];
+		ZLGfxRetained* list = pipeline->mPipeline [ ZLGfxPipeline::PIPELINE_GPU ];
 
 		if ( list->HasContent ()) {
 
@@ -328,10 +328,10 @@ void MOAIGfxPipelineClerk::ProcessPipeline ( u32 pipelineID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipelineClerk::PublishAndReset ( u32 pipelineID ) {
+void ZLGfxPipelineClerk::PublishAndReset ( u32 pipelineID ) {
 
 	assert ( pipelineID < TOTAL_PIPELINES );
-	MOAIGfxPipeline* pipeline = this->mPipelines [ pipelineID ];
+	ZLGfxPipeline* pipeline = this->mPipelines [ pipelineID ];
 	
 	if ( pipeline ) {
 		pipeline->PublishAndReset ();
@@ -339,7 +339,7 @@ void MOAIGfxPipelineClerk::PublishAndReset ( u32 pipelineID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipelineClerk::ResetDrawingAPIs () {
+void ZLGfxPipelineClerk::ResetDrawingAPIs () {
 
 	ZLGfx* loadingAPI = this->SelectDrawingAPI ( LOADING_PIPELINE );
 	if ( loadingAPI ) {
@@ -353,24 +353,24 @@ void MOAIGfxPipelineClerk::ResetDrawingAPIs () {
 }
 
 //----------------------------------------------------------------//
-ZLGfx* MOAIGfxPipelineClerk::SelectDrawingAPI () {
+ZLGfx* ZLGfxPipelineClerk::SelectDrawingAPI () {
 
 	this->mDrawingAPI = &this->mGfxImmediate;
 	return this->mDrawingAPI;
 }
 
 //----------------------------------------------------------------//
-ZLGfx* MOAIGfxPipelineClerk::SelectDrawingAPI ( u32 pipelineID ) {
+ZLGfx* ZLGfxPipelineClerk::SelectDrawingAPI ( u32 pipelineID ) {
 
 	this->mDrawingAPI = &this->mGfxImmediate;
 
 	if ( pipelineID < TOTAL_PIPELINES ) {
 	
-		MOAIGfxPipeline* pipeline = this->mPipelines [ pipelineID ];
+		ZLGfxPipeline* pipeline = this->mPipelines [ pipelineID ];
 		
 		if ( pipeline ) {
 			
-			this->mDrawingAPI = pipeline->mPipeline [ MOAIGfxPipeline::PIPELINE_CPU ];
+			this->mDrawingAPI = pipeline->mPipeline [ ZLGfxPipeline::PIPELINE_CPU ];
 		}
 		else if ( pipelineID == LOADING_PIPELINE ) {
 		

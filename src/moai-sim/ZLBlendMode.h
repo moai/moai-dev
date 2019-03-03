@@ -1,13 +1,13 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIBLENDMODE_H
-#define MOAIBLENDMODE_H
+#ifndef ZLBLENDMODE_H
+#define ZLBLENDMODE_H
 
 //================================================================//
-// MOAIBlendMode
+// ZLBlendMode
 //================================================================//
-class MOAIBlendMode {
+class ZLBlendMode {
 public:
 	
 	int				mEquation;
@@ -17,13 +17,13 @@ public:
 	//----------------------------------------------------------------//
 	void			Init				( MOAILuaState& state, int idx );
 	void			SetBlend			( int equation, int srcFactor, int dstFactor );
-					MOAIBlendMode		();
-					MOAIBlendMode		( int equation, int srcFactor, int dstFactor );
-					~MOAIBlendMode		();
 	int				Push				( MOAILuaState& state ) const;
+					ZLBlendMode			();
+					ZLBlendMode			( int equation, int srcFactor, int dstFactor );
+					~ZLBlendMode		();
 	
 	//----------------------------------------------------------------//
-	inline bool IsSame ( const MOAIBlendMode& blendMode ) {
+	inline bool IsSame ( const ZLBlendMode& blendMode ) {
 		return (
 			( this->mSourceFactor == blendMode.mSourceFactor ) &&
 			( this->mDestFactor == blendMode.mDestFactor ) &&

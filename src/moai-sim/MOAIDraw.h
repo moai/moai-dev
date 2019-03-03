@@ -11,7 +11,7 @@ class MOAITextureBase;
 class MOAITexture;
 class MOAIFont;
 class MOAIGlyph;
-class MOAIGfxBuffer;
+class MOAIAbstractGfxBuffer;
 class MOAIVertexFormat;
 
 //================================================================//
@@ -88,7 +88,7 @@ public:
 	void			DrawAnimCurve			( const MOAIAnimCurveFloat& curve, u32 resolution );
 	void			DrawAxisGrid			( ZLVec2D loc, ZLVec2D vec, float size );
 	void			DrawBezierCurve			( const ZLCubicBezier2D& bezier );
-	void			DrawElements			( MOAIGfxBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat, u32 count );
+	void			DrawElements			( MOAIAbstractGfxBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat, u32 count );
 	void			DrawGrid				( const ZLRect& rect, u32 xCells, u32 yCells );
 	void			DrawRay					( float x, float y, float dx, float dy );
 	void			DrawString				( cc8* text, float x, float y, float width, float height );

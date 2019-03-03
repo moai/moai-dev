@@ -113,7 +113,7 @@ public:
 						~MOAIMaterialMgr			();
 	void				Pop							();
 	void				Push						( const MOAIMaterial* material = 0 );
-	void				SetBlendMode				( const MOAIBlendMode& blendMode );
+	void				SetBlendMode				( const ZLBlendMode& blendMode );
 	void				SetCullMode					( int cullMode );
 	void				SetDepthMask				( bool depthMask );
 	void				SetDepthTest				( int depthTest );

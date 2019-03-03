@@ -71,7 +71,7 @@ int MOAIAbstractGfxResource::_purge ( lua_State* L ) {
 int MOAIAbstractGfxResource::_scheduleForGPUCreate ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractGfxResource, "U" )
 
-	u32 listID = state.GetValue < u32 >( 2, MOAIGfxPipelineClerk::DRAWING_PIPELINE );
+	u32 listID = state.GetValue < u32 >( 2, ZLGfxPipelineClerk::DRAWING_PIPELINE );
 	self->ZLGfxResource ().ScheduleForGPUCreate ( listID );
 	return 0;
 }
@@ -122,8 +122,8 @@ void MOAIAbstractGfxResource::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "GFX_EVENT_CREATED",					( u32 )ZLAbstractGfxResource::GFX_EVENT_CREATED );
 	
-	state.SetField ( -1, "DRAWING_PIPELINE",					( u32 )MOAIGfxPipelineClerk::DRAWING_PIPELINE );
-	state.SetField ( -1, "LOADING_PIPELINE",					( u32 )MOAIGfxPipelineClerk::LOADING_PIPELINE );
+	state.SetField ( -1, "DRAWING_PIPELINE",					( u32 )ZLGfxPipelineClerk::DRAWING_PIPELINE );
+	state.SetField ( -1, "LOADING_PIPELINE",					( u32 )ZLGfxPipelineClerk::LOADING_PIPELINE );
 }
 
 //----------------------------------------------------------------//

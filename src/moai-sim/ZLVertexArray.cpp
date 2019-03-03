@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIGfxBuffer.h>
+#include <moai-sim/MOAIAbstractGfxBuffer.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGrid.h>

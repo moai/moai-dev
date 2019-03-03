@@ -6,7 +6,7 @@
 #include <moai-sim/MOAIAnimCurveFloat.h>
 #include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIFont.h>
-#include <moai-sim/MOAIGfxBuffer.h>
+#include <moai-sim/MOAIAbstractGfxBuffer.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIShaderMgr.h>
@@ -539,7 +539,7 @@ int MOAIDraw::_drawCircleSpokes ( lua_State* L ) {
 int MOAIDraw::_drawElements ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
 	
-	MOAIGfxBuffer* vtxBuffer = state.GetLuaObject < MOAIGfxBuffer >( 1, false );
+	MOAIAbstractGfxBuffer* vtxBuffer = state.GetLuaObject < MOAIAbstractGfxBuffer >( 1, false );
 	MOAIVertexFormat* format = state.GetLuaObject < MOAIVertexFormat >( 2, false );
 	u32 count = state.GetValue < u32 >( 3, 0 );
 	
@@ -1321,7 +1321,7 @@ void MOAIDraw::DrawBezierCurve ( const ZLCubicBezier2D& bezier ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::DrawElements ( MOAIGfxBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat, u32 count ) {
+void MOAIDraw::DrawElements ( MOAIAbstractGfxBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat, u32 count ) {
 
 	// TODO: fix this?
 

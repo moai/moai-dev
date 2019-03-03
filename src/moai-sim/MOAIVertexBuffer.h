@@ -5,7 +5,7 @@
 #define	MOAIVERTEXBUFFER_H
 
 #include <moai-sim/MOAIGfxResource.h>
-#include <moai-sim/MOAIGfxBuffer.h>
+#include <moai-sim/MOAIAbstractGfxBuffer.h>
 #include <moai-sim/ZLVertexBuffer.h>
 
 class MOAIVertexFormat;
@@ -18,10 +18,10 @@ class MOAIVertexFormat;
 */
 class MOAIVertexBuffer :
 	public virtual MOAIGfxResource < ZLVertexBuffer >,
-	public virtual MOAIGfxBuffer {
+	public virtual MOAIAbstractGfxBuffer {
 private:
 	
-	friend class MOAIGfxPipelineClerk;
+	friend class ZLGfxPipelineClerk;
 	friend class ZLVertexBufferWithFormat;
 
 	//----------------------------------------------------------------//

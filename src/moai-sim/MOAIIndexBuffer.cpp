@@ -174,7 +174,7 @@ MOAIIndexBuffer::MOAIIndexBuffer () {
 	RTTI_BEGIN
 		RTTI_EXTEND ( ZLIndexBuffer )
 		RTTI_EXTEND ( MOAIAbstractGfxResource )
-		RTTI_EXTEND ( MOAIGfxBuffer )
+		RTTI_EXTEND ( MOAIAbstractGfxBuffer )
 	RTTI_END
 }
 
@@ -202,13 +202,13 @@ void MOAIIndexBuffer::PrintIndices () {
 //----------------------------------------------------------------//
 void MOAIIndexBuffer::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIGfxResource < ZLIndexBuffer >::RegisterLuaClass ( state );
-	MOAIGfxBuffer::RegisterLuaClass ( state );
+	MOAIAbstractGfxBuffer::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIIndexBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIGfxResource < ZLIndexBuffer >::RegisterLuaFuncs ( state );
-	MOAIGfxBuffer::RegisterLuaFuncs ( state );
+	MOAIAbstractGfxBuffer::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "copyFromStream",			_copyFromStream },
@@ -223,14 +223,14 @@ void MOAIIndexBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIIndexBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAIGfxBuffer::SerializeIn ( state, serializer );
+	MOAIAbstractGfxBuffer::SerializeIn ( state, serializer );
 	
 	this->mIndexSize = state.GetFieldValue < cc8*, u32 >( -1, "mIndexSize", 0 );
 }
 
 //----------------------------------------------------------------//
 void MOAIIndexBuffer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAIGfxBuffer::SerializeOut ( state, serializer );
+	MOAIAbstractGfxBuffer::SerializeOut ( state, serializer );
 	
 	state.SetField < cc8*, u32 >( -1, "mIndexSize", this->mIndexSize );
 }
