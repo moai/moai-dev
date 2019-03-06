@@ -5,7 +5,6 @@
 #include <moai-sim/MOAIAbstractLayer.h>
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/ZLGfxResourceClerk.h>
 #include <moai-sim/MOAIRenderMgr.h>
 
 //================================================================//
@@ -149,7 +148,7 @@ void MOAIAbstractLayer::ClearSurface () {
 
 	if (( this->mClearMode == CLEAR_NEVER ) || (( this->mClearMode == CLEAR_ON_BUFFER_FLAG ) && ( !frameBuffer->NeedsClear ()))) return;
 
-	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	if ( this->mClearFlags & ZGL_CLEAR_COLOR_BUFFER_BIT ) {
 	
@@ -162,11 +161,11 @@ void MOAIAbstractLayer::ClearSurface () {
 			clearColor.SetRGBA ( this->mClearColor );
 		}
 		
-		gfxState.SetClearColor ( clearColor );
+		gfxMgr.SetClearColor ( clearColor );
 	}
 	
-	gfxState.SetClearFlags ( this->mClearFlags );
-	MOAIGfxMgr::Get ().mGfxState.ClearSurface ();
+	gfxMgr.SetClearFlags ( this->mClearFlags );
+	gfxMgr.ClearSurface ();
 	
 	frameBuffer->NeedsClear ( false );
 }
@@ -174,7 +173,7 @@ void MOAIAbstractLayer::ClearSurface () {
 //----------------------------------------------------------------//
 ZLFrameBuffer* MOAIAbstractLayer::GetFrameBuffer () {
 
-	return this->mFrameBuffer ? this->mFrameBuffer : MOAIGfxMgr::Get ().mGfxState.GetDefaultFrameBuffer ();
+	return this->mFrameBuffer ? this->mFrameBuffer : MOAIGfxMgr::Get ().GetDefaultFrameBuffer ();
 }
 
 //----------------------------------------------------------------//

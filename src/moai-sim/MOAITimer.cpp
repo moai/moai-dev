@@ -658,11 +658,11 @@ void MOAITimer::MOAIAction_Update ( double step ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAITimer::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAITimer::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
 	if ( AttrID::Check ( attrID )) {
 		if ( attrID.Unpack () == ATTR_TIME ) {
-			attr.Apply ( this->GetTime (), op, MOAIAttribute::ATTR_READ );
+			attr.Apply ( this->GetTime (), op, ZLAttribute::ATTR_READ );
 			return true;
 		}
 	}

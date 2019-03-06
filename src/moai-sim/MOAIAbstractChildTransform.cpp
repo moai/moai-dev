@@ -67,7 +67,7 @@ void MOAIAbstractChildTransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIAbstractChildTransform::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIAbstractChildTransform::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
 	return MOAIAbstractBaseTransform::MOAINode_ApplyAttrOp ( attrID, attr, op );
 }
@@ -77,7 +77,7 @@ void MOAIAbstractChildTransform::MOAINode_Update () {
 	
 	this->MOAIAbstractBaseTransform_BuildLocalToWorldMtx ( this->mLocalToWorldMtx );
 	
-	MOAIAttribute attr;
+	ZLAttribute attr;
 	if ( this->PullLinkedAttr ( AttrID::Pack ( INHERIT_TRANSFORM ), attr )) {
 		const ZLAffine3D inherit = attr.GetValue ( ZLAffine3D::IDENT );
 		this->mLocalToWorldMtx.Append ( inherit );

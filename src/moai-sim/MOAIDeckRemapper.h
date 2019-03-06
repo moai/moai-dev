@@ -30,7 +30,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	ZLIndex				MOAIDeckProxy_Remap				( ZLIndex idx );
-	bool				MOAINode_ApplyAttrOp			( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
+	bool				MOAINode_ApplyAttrOp			( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 
 public:
 	

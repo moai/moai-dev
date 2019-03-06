@@ -5,11 +5,6 @@
 #define ZLGFXRETAINED_H
 
 #include <zl-gfx/ZLGfx.h>
-#include <zl-util/STLList.h>
-#include <zl-util/STLMap.h>
-#include <zl-util/ZLCopyOnWrite.h>
-#include <zl-util/ZLMemStream.h>
-#include <zl-util/ZLRefCountedObject.h>
 
 //================================================================//
 // ZLGfxListenerRecord

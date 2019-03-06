@@ -120,7 +120,7 @@ void MOAIMatrix::MOAIAbstractBaseTransform_BuildLocalToWorldMtx ( ZLAffine3D& lo
 }
 
 //----------------------------------------------------------------//
-bool MOAIMatrix::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIMatrix::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
 	// TODO: these values may need to be cached for performance reasons
 	if ( AttrID::Check ( attrID )) {
@@ -129,7 +129,7 @@ bool MOAIMatrix::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, 
 			
 			case ATTR_MATRIX:
 			
-				*( ZLAffine3D* )this = attr.ApplyNoAdd < ZLAffine3D >( *( ZLAffine3D* )this, op, MOAIAttribute::ATTR_READ_WRITE );
+				*( ZLAffine3D* )this = attr.ApplyNoAdd < ZLAffine3D >( *( ZLAffine3D* )this, op, ZLAttribute::ATTR_READ_WRITE );
 				return true;
 		}
 	}

@@ -4,6 +4,7 @@
 #ifndef	MOAITEXTURE_H
 #define	MOAITEXTURE_H
 
+#include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAITextureBase.h>
 
@@ -17,7 +18,8 @@ class MOAIImageFormat;
 	@text	Texture class.
 */
 class MOAITexture :
-	public MOAITextureBase {
+	public MOAIGfxResource < ZLTexture >,
+	public virtual MOAITextureBase {
 private:
 
 	// for loading from file
@@ -34,19 +36,21 @@ private:
 	MOAIImageFormat*	mTextureDataFormat;
 
 	//----------------------------------------------------------------//
-	static int			_load					( lua_State* L );
-
+	static int			_load						( lua_State* L );
+	
 	//----------------------------------------------------------------//
 	bool				LoadFromStream				( ZLStream& stream, u32 transform );
-	bool				ZLAbstractGfxResource_OnCPUCreate					();
+	
+	//----------------------------------------------------------------//
+	bool				ZLAbstractGfxResource_OnCPUCreate				();
 	void				ZLAbstractGfxResource_OnCPUDestroy				();
-	bool				ZLAbstractGfxResource_OnGPUCreate					();
+	bool				ZLAbstractGfxResource_OnGPUCreate				();
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAITexture )
 	
-	static const u32 DEFAULT_TRANSFORM = MOAIImageTransform::TRUECOLOR | MOAIImageTransform::PREMULTIPLY_ALPHA;
+	static const u32 DEFAULT_TRANSFORM = ZLImageTransform::TRUECOLOR | ZLImageTransform::PREMULTIPLY_ALPHA;
 	
 	//----------------------------------------------------------------//
 	static MOAITextureBase*	AffirmTexture			( MOAILuaState& state, int idx );

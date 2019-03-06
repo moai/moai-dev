@@ -5,7 +5,6 @@
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIEaseDriver.h>
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/ZLGfxResourceClerk.h>
 #include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIShaderProgram.h>
 
@@ -105,7 +104,7 @@ int MOAIShaderProgram::_setGlobal ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShaderProgram, "UNNN" )
 
 	ZLIndex globalIdx	= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	u32 globalID		= state.GetValue < u32 >( 3, ZLGfxStateCache::NULL_GLOBAL );
+	u32 globalID		= state.GetValue < u32 >( 3, ZLGfxMgr::NULL_GLOBAL );
 	ZLIndex uniformID	= state.GetValue < MOAILuaIndex >( 4, ZLIndexOp::ZERO );
 	ZLIndex index		= state.GetValue < MOAILuaIndex >( 5, ZLIndexOp::ZERO );
 	
@@ -167,6 +166,8 @@ MOAIShaderProgram::MOAIShaderProgram () {
 
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIAbstractGfxResource )
+		RTTI_EXTEND ( ZLShaderProgram )
+		RTTI_EXTEND ( MOAIShaderUniformSchemaBase )
 	RTTI_END
 }
 
@@ -190,75 +191,75 @@ void MOAIShaderProgram::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "UNIFORM_WIDTH_MATRIX_3X3",				( u32 )ZLShaderUniform::UNIFORM_WIDTH_MATRIX_3X3 );
 	state.SetField ( -1, "UNIFORM_WIDTH_MATRIX_4X4",				( u32 )ZLShaderUniform::UNIFORM_WIDTH_MATRIX_4X4 );
 	
-	state.SetField ( -1, "GLOBAL_CLIP_TO_DISPLAY_MTX",				( u32 )ZLGfxStateCache::CLIP_TO_DISPLAY_MTX );
-	state.SetField ( -1, "GLOBAL_CLIP_TO_MODEL_MTX",				( u32 )ZLGfxStateCache::CLIP_TO_MODEL_MTX );
-	state.SetField ( -1, "GLOBAL_CLIP_TO_VIEW_MTX",					( u32 )ZLGfxStateCache::CLIP_TO_VIEW_MTX );
-	state.SetField ( -1, "GLOBAL_CLIP_TO_WINDOW_MTX",				( u32 )ZLGfxStateCache::CLIP_TO_WINDOW_MTX );
-	state.SetField ( -1, "GLOBAL_CLIP_TO_WORLD_MTX",				( u32 )ZLGfxStateCache::CLIP_TO_WORLD_MTX );
+	state.SetField ( -1, "GLOBAL_CLIP_TO_DISPLAY_MTX",				( u32 )ZLGfxMgr::CLIP_TO_DISPLAY_MTX );
+	state.SetField ( -1, "GLOBAL_CLIP_TO_MODEL_MTX",				( u32 )ZLGfxMgr::CLIP_TO_MODEL_MTX );
+	state.SetField ( -1, "GLOBAL_CLIP_TO_VIEW_MTX",					( u32 )ZLGfxMgr::CLIP_TO_VIEW_MTX );
+	state.SetField ( -1, "GLOBAL_CLIP_TO_WINDOW_MTX",				( u32 )ZLGfxMgr::CLIP_TO_WINDOW_MTX );
+	state.SetField ( -1, "GLOBAL_CLIP_TO_WORLD_MTX",				( u32 )ZLGfxMgr::CLIP_TO_WORLD_MTX );
 
-	state.SetField ( -1, "GLOBAL_DISPLAY_TO_CLIP_MTX",				( u32 )ZLGfxStateCache::DISPLAY_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_DISPLAY_TO_MODEL_MTX",				( u32 )ZLGfxStateCache::DISPLAY_TO_MODEL_MTX );
-	state.SetField ( -1, "GLOBAL_DISPLAY_TO_VIEW_MTX",				( u32 )ZLGfxStateCache::DISPLAY_TO_VIEW_MTX );
-	state.SetField ( -1, "GLOBAL_DISPLAY_TO_WORLD_MTX",				( u32 )ZLGfxStateCache::DISPLAY_TO_WORLD_MTX );
+	state.SetField ( -1, "GLOBAL_DISPLAY_TO_CLIP_MTX",				( u32 )ZLGfxMgr::DISPLAY_TO_CLIP_MTX );
+	state.SetField ( -1, "GLOBAL_DISPLAY_TO_MODEL_MTX",				( u32 )ZLGfxMgr::DISPLAY_TO_MODEL_MTX );
+	state.SetField ( -1, "GLOBAL_DISPLAY_TO_VIEW_MTX",				( u32 )ZLGfxMgr::DISPLAY_TO_VIEW_MTX );
+	state.SetField ( -1, "GLOBAL_DISPLAY_TO_WORLD_MTX",				( u32 )ZLGfxMgr::DISPLAY_TO_WORLD_MTX );
 
-	state.SetField ( -1, "GLOBAL_MODEL_TO_CLIP_MTX",				( u32 )ZLGfxStateCache::MODEL_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_MODEL_TO_DISPLAY_MTX",				( u32 )ZLGfxStateCache::MODEL_TO_DISPLAY_MTX );
-	state.SetField ( -1, "GLOBAL_MODEL_TO_UV_MTX",					( u32 )ZLGfxStateCache::MODEL_TO_UV_MTX );
-	state.SetField ( -1, "GLOBAL_MODEL_TO_VIEW_MTX",				( u32 )ZLGfxStateCache::MODEL_TO_VIEW_MTX );
-	state.SetField ( -1, "GLOBAL_MODEL_TO_WORLD_MTX",				( u32 )ZLGfxStateCache::MODEL_TO_WORLD_MTX );
+	state.SetField ( -1, "GLOBAL_MODEL_TO_CLIP_MTX",				( u32 )ZLGfxMgr::MODEL_TO_CLIP_MTX );
+	state.SetField ( -1, "GLOBAL_MODEL_TO_DISPLAY_MTX",				( u32 )ZLGfxMgr::MODEL_TO_DISPLAY_MTX );
+	state.SetField ( -1, "GLOBAL_MODEL_TO_UV_MTX",					( u32 )ZLGfxMgr::MODEL_TO_UV_MTX );
+	state.SetField ( -1, "GLOBAL_MODEL_TO_VIEW_MTX",				( u32 )ZLGfxMgr::MODEL_TO_VIEW_MTX );
+	state.SetField ( -1, "GLOBAL_MODEL_TO_WORLD_MTX",				( u32 )ZLGfxMgr::MODEL_TO_WORLD_MTX );
 
-	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_DISPLAY_MTX",		( u32 )ZLGfxStateCache::NORMAL_CLIP_TO_DISPLAY_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_MODEL_MTX",			( u32 )ZLGfxStateCache::NORMAL_CLIP_TO_MODEL_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_VIEW_MTX",			( u32 )ZLGfxStateCache::NORMAL_CLIP_TO_VIEW_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_WINDOW_MTX",		( u32 )ZLGfxStateCache::NORMAL_CLIP_TO_WINDOW_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_WORLD_MTX",			( u32 )ZLGfxStateCache::NORMAL_CLIP_TO_WORLD_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_DISPLAY_MTX",		( u32 )ZLGfxMgr::NORMAL_CLIP_TO_DISPLAY_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_MODEL_MTX",			( u32 )ZLGfxMgr::NORMAL_CLIP_TO_MODEL_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_VIEW_MTX",			( u32 )ZLGfxMgr::NORMAL_CLIP_TO_VIEW_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_WINDOW_MTX",		( u32 )ZLGfxMgr::NORMAL_CLIP_TO_WINDOW_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_WORLD_MTX",			( u32 )ZLGfxMgr::NORMAL_CLIP_TO_WORLD_MTX );
 
-	state.SetField ( -1, "GLOBAL_NORMAL_DISPLAY_TO_CLIP_MTX",		( u32 )ZLGfxStateCache::NORMAL_DISPLAY_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_DISPLAY_TO_MODEL_MTX",		( u32 )ZLGfxStateCache::NORMAL_DISPLAY_TO_MODEL_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_DISPLAY_TO_VIEW_MTX",		( u32 )ZLGfxStateCache::NORMAL_DISPLAY_TO_VIEW_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_DISPLAY_TO_WORLD_MTX",		( u32 )ZLGfxStateCache::NORMAL_DISPLAY_TO_WORLD_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_DISPLAY_TO_CLIP_MTX",		( u32 )ZLGfxMgr::NORMAL_DISPLAY_TO_CLIP_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_DISPLAY_TO_MODEL_MTX",		( u32 )ZLGfxMgr::NORMAL_DISPLAY_TO_MODEL_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_DISPLAY_TO_VIEW_MTX",		( u32 )ZLGfxMgr::NORMAL_DISPLAY_TO_VIEW_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_DISPLAY_TO_WORLD_MTX",		( u32 )ZLGfxMgr::NORMAL_DISPLAY_TO_WORLD_MTX );
 
-	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_CLIP_MTX",			( u32 )ZLGfxStateCache::NORMAL_MODEL_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_DISPLAY_MTX",		( u32 )ZLGfxStateCache::NORMAL_MODEL_TO_DISPLAY_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_UV_MTX",			( u32 )ZLGfxStateCache::NORMAL_MODEL_TO_UV_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_VIEW_MTX",			( u32 )ZLGfxStateCache::NORMAL_MODEL_TO_VIEW_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_WORLD_MTX",		( u32 )ZLGfxStateCache::NORMAL_MODEL_TO_WORLD_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_CLIP_MTX",			( u32 )ZLGfxMgr::NORMAL_MODEL_TO_CLIP_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_DISPLAY_MTX",		( u32 )ZLGfxMgr::NORMAL_MODEL_TO_DISPLAY_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_UV_MTX",			( u32 )ZLGfxMgr::NORMAL_MODEL_TO_UV_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_VIEW_MTX",			( u32 )ZLGfxMgr::NORMAL_MODEL_TO_VIEW_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_WORLD_MTX",		( u32 )ZLGfxMgr::NORMAL_MODEL_TO_WORLD_MTX );
 
-	state.SetField ( -1, "GLOBAL_NORMAL_WORLD_TO_DISPLAY_MTX",		( u32 )ZLGfxStateCache::NORMAL_WORLD_TO_DISPLAY_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_WORLD_TO_VIEW_MTX",			( u32 )ZLGfxStateCache::NORMAL_WORLD_TO_VIEW_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_WORLD_TO_DISPLAY_MTX",		( u32 )ZLGfxMgr::NORMAL_WORLD_TO_DISPLAY_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_WORLD_TO_VIEW_MTX",			( u32 )ZLGfxMgr::NORMAL_WORLD_TO_VIEW_MTX );
 
-	state.SetField ( -1, "GLOBAL_NORMAL_UV_TO_MODEL_MTX",			( u32 )ZLGfxStateCache::NORMAL_UV_TO_MODEL_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_UV_TO_MODEL_MTX",			( u32 )ZLGfxMgr::NORMAL_UV_TO_MODEL_MTX );
 
-	state.SetField ( -1, "GLOBAL_NORMAL_VIEW_TO_CLIP_MTX",			( u32 )ZLGfxStateCache::NORMAL_VIEW_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_VIEW_TO_DISPLAY_MTX",		( u32 )ZLGfxStateCache::NORMAL_VIEW_TO_DISPLAY_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_VIEW_TO_MODEL_MTX",			( u32 )ZLGfxStateCache::NORMAL_VIEW_TO_MODEL_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_VIEW_TO_WORLD_MTX",			( u32 )ZLGfxStateCache::NORMAL_VIEW_TO_WORLD_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_VIEW_TO_CLIP_MTX",			( u32 )ZLGfxMgr::NORMAL_VIEW_TO_CLIP_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_VIEW_TO_DISPLAY_MTX",		( u32 )ZLGfxMgr::NORMAL_VIEW_TO_DISPLAY_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_VIEW_TO_MODEL_MTX",			( u32 )ZLGfxMgr::NORMAL_VIEW_TO_MODEL_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_VIEW_TO_WORLD_MTX",			( u32 )ZLGfxMgr::NORMAL_VIEW_TO_WORLD_MTX );
 
-	state.SetField ( -1, "GLOBAL_NORMAL_WINDOW_TO_CLIP_MTX",		( u32 )ZLGfxStateCache::NORMAL_WINDOW_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_WORLD_TO_CLIP_MTX",			( u32 )ZLGfxStateCache::NORMAL_WORLD_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_WORLD_TO_MODEL_MTX",		( u32 )ZLGfxStateCache::NORMAL_WORLD_TO_MODEL_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_WINDOW_TO_CLIP_MTX",		( u32 )ZLGfxMgr::NORMAL_WINDOW_TO_CLIP_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_WORLD_TO_CLIP_MTX",			( u32 )ZLGfxMgr::NORMAL_WORLD_TO_CLIP_MTX );
+	state.SetField ( -1, "GLOBAL_NORMAL_WORLD_TO_MODEL_MTX",		( u32 )ZLGfxMgr::NORMAL_WORLD_TO_MODEL_MTX );
 
-	state.SetField ( -1, "GLOBAL_PEN_COLOR",						( u32 )ZLGfxStateCache::PEN_COLOR );
+	state.SetField ( -1, "GLOBAL_PEN_COLOR",						( u32 )ZLGfxMgr::PEN_COLOR );
 
-	state.SetField ( -1, "GLOBAL_UV_TO_MODEL_MTX",					( u32 )ZLGfxStateCache::UV_TO_MODEL_MTX );
+	state.SetField ( -1, "GLOBAL_UV_TO_MODEL_MTX",					( u32 )ZLGfxMgr::UV_TO_MODEL_MTX );
 
-	state.SetField ( -1, "GLOBAL_VIEW_TO_CLIP_MTX",					( u32 )ZLGfxStateCache::VIEW_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_VIEW_TO_DISPLAY_MTX",				( u32 )ZLGfxStateCache::VIEW_TO_DISPLAY_MTX );
-	state.SetField ( -1, "GLOBAL_VIEW_TO_MODEL_MTX",				( u32 )ZLGfxStateCache::VIEW_TO_MODEL_MTX );
-	state.SetField ( -1, "GLOBAL_VIEW_TO_WORLD_MTX",				( u32 )ZLGfxStateCache::VIEW_TO_WORLD_MTX );
+	state.SetField ( -1, "GLOBAL_VIEW_TO_CLIP_MTX",					( u32 )ZLGfxMgr::VIEW_TO_CLIP_MTX );
+	state.SetField ( -1, "GLOBAL_VIEW_TO_DISPLAY_MTX",				( u32 )ZLGfxMgr::VIEW_TO_DISPLAY_MTX );
+	state.SetField ( -1, "GLOBAL_VIEW_TO_MODEL_MTX",				( u32 )ZLGfxMgr::VIEW_TO_MODEL_MTX );
+	state.SetField ( -1, "GLOBAL_VIEW_TO_WORLD_MTX",				( u32 )ZLGfxMgr::VIEW_TO_WORLD_MTX );
 
-	state.SetField ( -1, "GLOBAL_WINDOW_TO_CLIP_MTX",				( u32 )ZLGfxStateCache::WINDOW_TO_CLIP_MTX );
+	state.SetField ( -1, "GLOBAL_WINDOW_TO_CLIP_MTX",				( u32 )ZLGfxMgr::WINDOW_TO_CLIP_MTX );
 
-	state.SetField ( -1, "GLOBAL_WORLD_TO_CLIP_MTX",				( u32 )ZLGfxStateCache::WORLD_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_WORLD_TO_DISPLAY_MTX",				( u32 )ZLGfxStateCache::WORLD_TO_DISPLAY_MTX );
-	state.SetField ( -1, "GLOBAL_WORLD_TO_MODEL_MTX",				( u32 )ZLGfxStateCache::WORLD_TO_MODEL_MTX );
-	state.SetField ( -1, "GLOBAL_WORLD_TO_VIEW_MTX",				( u32 )ZLGfxStateCache::WORLD_TO_VIEW_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_TO_CLIP_MTX",				( u32 )ZLGfxMgr::WORLD_TO_CLIP_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_TO_DISPLAY_MTX",				( u32 )ZLGfxMgr::WORLD_TO_DISPLAY_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_TO_MODEL_MTX",				( u32 )ZLGfxMgr::WORLD_TO_MODEL_MTX );
+	state.SetField ( -1, "GLOBAL_WORLD_TO_VIEW_MTX",				( u32 )ZLGfxMgr::WORLD_TO_VIEW_MTX );
 
-	state.SetField ( -1, "GLOBAL_VIEW_HEIGHT",						( u32 )ZLGfxStateCache::VIEW_HEIGHT );
-	state.SetField ( -1, "GLOBAL_VIEW_WIDTH",						( u32 )ZLGfxStateCache::VIEW_WIDTH );
+	state.SetField ( -1, "GLOBAL_VIEW_HEIGHT",						( u32 )ZLGfxMgr::VIEW_HEIGHT );
+	state.SetField ( -1, "GLOBAL_VIEW_WIDTH",						( u32 )ZLGfxMgr::VIEW_WIDTH );
 	
-	state.SetField ( -1, "GLOBAL_VIEW_HALF_HEIGHT",					( u32 )ZLGfxStateCache::VIEW_HALF_HEIGHT );
-	state.SetField ( -1, "GLOBAL_VIEW_HALF_WIDTH",					( u32 )ZLGfxStateCache::VIEW_HALF_WIDTH );
+	state.SetField ( -1, "GLOBAL_VIEW_HALF_HEIGHT",					( u32 )ZLGfxMgr::VIEW_HALF_HEIGHT );
+	state.SetField ( -1, "GLOBAL_VIEW_HALF_WIDTH",					( u32 )ZLGfxMgr::VIEW_HALF_WIDTH );
 }
 
 //----------------------------------------------------------------//

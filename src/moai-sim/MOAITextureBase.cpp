@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/ZLGfxResourceClerk.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/strings.h>
@@ -109,11 +108,17 @@ int MOAITextureBase::_setWrap ( lua_State* L ) {
 // MOAITextureBase
 //================================================================//
 
+////----------------------------------------------------------------//
+//MOAILuaObject& MOAITextureBase::AsLuaObject () {
+//	return *this;
+//}
+
 //----------------------------------------------------------------//
 MOAITextureBase::MOAITextureBase () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIAbstractGfxResource )
+		RTTI_EXTEND ( MOAILuaObject )
+		RTTI_EXTEND ( ZLTexture )
 	RTTI_END
 }
 
@@ -125,8 +130,6 @@ MOAITextureBase::~MOAITextureBase () {
 
 //----------------------------------------------------------------//
 void MOAITextureBase::RegisterLuaClass ( MOAILuaState& state ) {
-	
-	MOAIGfxResource < ZLTexture >::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "GL_LINEAR",					( u32 )ZGL_SAMPLE_LINEAR );
 	state.SetField ( -1, "GL_LINEAR_MIPMAP_LINEAR",		( u32 )ZGL_SAMPLE_LINEAR_MIPMAP_LINEAR );
@@ -156,8 +159,6 @@ void MOAITextureBase::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITextureBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIGfxResource < ZLTexture >::RegisterLuaFuncs ( state );
-
 	luaL_Reg regTable [] = {
 		{ "getSize",				_getSize },
 		{ "release",				_release },
@@ -168,16 +169,4 @@ void MOAITextureBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAITextureBase::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-}
-
-//----------------------------------------------------------------//
-void MOAITextureBase::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
 }

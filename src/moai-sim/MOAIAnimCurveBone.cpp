@@ -214,13 +214,13 @@ void MOAIAnimCurveBone::SetSampleScale ( ZLIndex idx, float x, float y, float z 
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveBone::MOAIAnimCurve_ApplyValueAttrOp ( MOAIAttribute& attr, u32 op ) {
+void MOAIAnimCurveBone::MOAIAnimCurve_ApplyValueAttrOp ( ZLAttribute& attr, u32 op ) {
 
-	this->mValue = attr.ApplyNoAdd ( this->mValue, op, MOAIAttribute::ATTR_READ_WRITE );
+	this->mValue = attr.ApplyNoAdd ( this->mValue, op, ZLAttribute::ATTR_READ_WRITE );
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveBone::MOAIAnimCurve_GetDelta ( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const {
+void MOAIAnimCurveBone::MOAIAnimCurve_GetDelta ( ZLAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const {
 
 	ZLVec3D p0;
 	ZLQuaternion q0;
@@ -242,13 +242,13 @@ void MOAIAnimCurveBone::MOAIAnimCurve_GetDelta ( MOAIAttribute& attr, const MOAI
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveBone::MOAIAnimCurve_GetValue ( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const {
+void MOAIAnimCurveBone::MOAIAnimCurve_GetValue ( ZLAttribute& attr, const MOAIAnimKeySpan& span ) const {
 
 	attr.SetValue ( this->GetValue ( span ));
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveBone::MOAIAnimCurve_GetZero ( MOAIAttribute& attr ) const {
+void MOAIAnimCurveBone::MOAIAnimCurve_GetZero ( ZLAttribute& attr ) const {
 
 	attr.SetValue ( ZLQuaternion ( 0.0f, 0.0f, 0.0f, 0.0f ));
 }

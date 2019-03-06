@@ -17,7 +17,6 @@
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITransform.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
-#include <moai-sim/MOAIViewProj.h>
 
 //================================================================//
 // local
@@ -439,13 +438,13 @@ float MOAIAbstractViewLayer::GetFitting ( ZLRect& worldRect, float hPad, float v
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAIAbstractViewLayer::GetWndToWorldMtx () const {
 
-	return MOAIViewProj::GetWndToWorldMtx ( this->mViewport, this->mCamera, this->mLocalToWorldMtx, this->mParallax );
+	return ZLViewProj::GetWndToWorldMtx ( this->mViewport, this->mCamera, this->mLocalToWorldMtx, this->mParallax );
 }
 
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAIAbstractViewLayer::GetWorldToWndMtx () const {
 
-	return MOAIViewProj::GetWorldToWndMtx ( this->mViewport, this->mCamera, this->mLocalToWorldMtx, this->mParallax );
+	return ZLViewProj::GetWorldToWndMtx ( this->mViewport, this->mCamera, this->mLocalToWorldMtx, this->mParallax );
 }
 
 //----------------------------------------------------------------//
@@ -511,9 +510,9 @@ void MOAIAbstractViewLayer::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 	if ( !this->mViewport ) return;
 	if ( this->IsClear ()) return;
 	
-	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
-	gfxState.SetFrameBuffer ( this->GetFrameBuffer ());
+	gfxMgr.SetFrameBuffer ( this->GetFrameBuffer ());
 	
 	MOAIViewport& viewport = *this->mViewport;
 	ZLRect viewportRect = viewport;
@@ -521,16 +520,16 @@ void MOAIAbstractViewLayer::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 	ZLMatrix4x4 mtx ( this->mLocalToWorldMtx );
 	mtx.Transform ( viewportRect );
 
-	gfxState.SetViewRect ( viewportRect );
-	gfxState.SetScissorRect ( viewportRect );
+	gfxMgr.SetViewRect ( viewportRect );
+	gfxMgr.SetScissorRect ( viewportRect );
 	
 	this->ClearSurface ();
 	
-	gfxState.SetViewProj ( this->mViewport, this->mCamera, this->mDebugCamera, this->mParallax );
-	gfxState.SetMtx ( ZLGfxStateCache::MODEL_TO_WORLD_MTX );
+	gfxMgr.SetViewProj ( this->mViewport, this->mCamera, this->mDebugCamera, this->mParallax );
+	gfxMgr.SetMtx ( ZLGfxMgr::MODEL_TO_WORLD_MTX );
 	
 	// set up the ambient color
-	gfxState.SetAmbientColor ( this->mColor );
+	gfxMgr.SetAmbientColor ( this->mColor );
 	
 	this->MOAIAbstractViewLayer_Draw ();
 	
@@ -539,7 +538,7 @@ void MOAIAbstractViewLayer::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 			this->mCamera->DrawDebug ();
 		}
 	}
-	gfxState.SetFrameBuffer ( this->GetFrameBuffer ());
+	gfxMgr.SetFrameBuffer ( this->GetFrameBuffer ());
 }
 
 //----------------------------------------------------------------//

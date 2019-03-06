@@ -4,8 +4,6 @@
 #ifndef	MOAIVERTEXFORMAT_H
 #define	MOAIVERTEXFORMAT_H
 
-#include <moai-sim/ZLVertexFormat.h>
-
 //================================================================//
 // MOAIVertexFormat
 //================================================================//

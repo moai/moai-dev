@@ -4,8 +4,6 @@
 #ifndef	MOAIFRAMEBUFFER_H
 #define	MOAIFRAMEBUFFER_H
 
-#include <moai-sim/ZLFrameBuffer.h>
-
 class MOAIColor;
 class MOAIImage;
 

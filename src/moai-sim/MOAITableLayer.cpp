@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/ZLGfxResourceClerk.h>
 #include <moai-sim/MOAITableLayer.h>
 #include <moai-sim/MOAIRenderMgr.h>
 
@@ -86,17 +85,17 @@ void MOAITableLayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAITableLayer::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
-	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	gfxState.SetFrameBuffer ( this->GetFrameBuffer ());
+	gfxMgr.SetFrameBuffer ( this->GetFrameBuffer ());
 	
 	//disable scissor rect for clear
-	gfxState.SetScissorRect ();
+	gfxMgr.SetScissorRect ();
 	this->ClearSurface ();
 	
 	MOAIAbstractDrawable::Draw ( this->mRenderTable );
 		
 	// restore the frame buffer
-	gfxState.SetFrameBuffer ( this->GetFrameBuffer ());
+	gfxMgr.SetFrameBuffer ( this->GetFrameBuffer ());
 }
 

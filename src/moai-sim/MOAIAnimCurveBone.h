@@ -33,10 +33,10 @@ private:
 	void					ReserveSamples		( u32 total );
 
 	//----------------------------------------------------------------//
-	void				MOAIAnimCurve_ApplyValueAttrOp		( MOAIAttribute& attr, u32 op );
-	void				MOAIAnimCurve_GetDelta				( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const;
-	void				MOAIAnimCurve_GetValue				( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const;
-	void				MOAIAnimCurve_GetZero				( MOAIAttribute& attr ) const;
+	void				MOAIAnimCurve_ApplyValueAttrOp		( ZLAttribute& attr, u32 op );
+	void				MOAIAnimCurve_GetDelta				( ZLAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const;
+	void				MOAIAnimCurve_GetValue				( ZLAttribute& attr, const MOAIAnimKeySpan& span ) const;
+	void				MOAIAnimCurve_GetZero				( ZLAttribute& attr ) const;
 	void				MOAIAnimCurve_ReserveSamples		( u32 total );
 	void				MOAINode_Update						();
 

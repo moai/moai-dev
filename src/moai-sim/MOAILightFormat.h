@@ -4,8 +4,6 @@
 #ifndef	MOAILIGHTFORMAT_H
 #define	MOAILIGHTFORMAT_H
 
-#include <moai-sim/ZLShaderUniformHandle.h>
-
 //================================================================//
 // MOAILightFormatUniform
 //================================================================//

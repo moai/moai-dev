@@ -99,13 +99,13 @@ void MOAIDeckHolderWithIndex::SerializeOut ( MOAILuaState& state, MOAISerializer
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIDeckHolderWithIndex::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIDeckHolderWithIndex::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
 	if ( AttrID::Check ( attrID )) {
 		
 		switch ( attrID.Unpack ()) {
 			case ATTR_INDEX:
-				this->mIndex = attr.Apply ( this->mIndex, op, MOAIAttribute::ATTR_READ_WRITE );
+				this->mIndex = attr.Apply ( this->mIndex, op, ZLAttribute::ATTR_READ_WRITE );
 				return true;
 		}
 	}

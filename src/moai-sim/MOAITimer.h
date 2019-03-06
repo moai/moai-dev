@@ -63,7 +63,7 @@ protected:
 	bool			MOAIAction_IsDone			();
 	void			MOAIAction_Start			();
 	void			MOAIAction_Update			( double step );
-	bool			MOAINode_ApplyAttrOp		( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
+	bool			MOAINode_ApplyAttrOp		( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 
 protected:
 

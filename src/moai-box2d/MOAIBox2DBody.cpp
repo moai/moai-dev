@@ -1131,7 +1131,7 @@ void MOAIBox2DBody::MOAIAbstractBaseTransform_BuildLocalToWorldMtx ( ZLAffine3D&
 }
 
 //----------------------------------------------------------------//
-bool MOAIBox2DBody::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIBox2DBody::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
 	// TODO: these values may need to be cached for performance reasons
 	if ( MOAITransform::AttrID::Check ( attrID )) {
@@ -1141,19 +1141,19 @@ bool MOAIBox2DBody::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& att
 		switch ( attrID.Unpack ()) {
 		
 			case MOAITransform::ATTR_X_LOC: {
-				float x = attr.Apply ( xform.p.x, op, MOAIAttribute::ATTR_READ_WRITE ) * this->GetUnitsToMeters ();
+				float x = attr.Apply ( xform.p.x, op, ZLAttribute::ATTR_READ_WRITE ) * this->GetUnitsToMeters ();
 				mBody->SetTransform ( b2Vec2( x, xform.p.y), xform.q.GetAngle() );
 				return true;
 			}
 				
 			case MOAITransform::ATTR_Y_LOC: {
-				float y = attr.Apply ( xform.p.y, op, MOAIAttribute::ATTR_READ_WRITE ) * this->GetUnitsToMeters ();
+				float y = attr.Apply ( xform.p.y, op, ZLAttribute::ATTR_READ_WRITE ) * this->GetUnitsToMeters ();
 				mBody->SetTransform ( b2Vec2( xform.p.x, y ), xform.q.GetAngle() );
 				return true;
 			}
 				
 			case MOAITransform::ATTR_Z_ROT: {
-				float angle = attr.Apply ( xform.q.GetAngle(), op, MOAIAttribute::ATTR_READ_WRITE );
+				float angle = attr.Apply ( xform.q.GetAngle(), op, ZLAttribute::ATTR_READ_WRITE );
 				mBody->SetTransform ( xform.p,  ( float )((angle * D2R) + M_PI_4 ));
 				return true;
 			}

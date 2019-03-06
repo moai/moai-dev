@@ -62,13 +62,13 @@ int MOAIEaseDriver::_setLink ( lua_State* L ) {
 	if ( !dest ) return 0;
 	
 	ZLIndex idx				= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	MOAIAttrID destAttrID	= MOAIAttrID::FromRaw ( state.GetValue < u32 >( 4, 0 ));
+	ZLAttrID destAttrID	= ZLAttrID::FromRaw ( state.GetValue < u32 >( 4, 0 ));
 	
 	MOAINode* source = state.GetLuaObject < MOAINode >( 5, true );
 	
 	if ( source ) {
 	
-		MOAIAttrID sourceAttrID = MOAIAttrID::FromRaw ( state.GetValue < u32 >( 6, MOAIAttribute::NULL_ATTR ));
+		ZLAttrID sourceAttrID = ZLAttrID::FromRaw ( state.GetValue < u32 >( 6, ZLAttribute::NULL_ATTR ));
 		u32 mode = state.GetValue < u32 >( 7, ZLInterpolate::kSmooth );
 		
 		self->SetLink ( idx, dest, destAttrID, source, sourceAttrID, mode );
@@ -137,7 +137,7 @@ u32 MOAIEaseDriver::ParseForMove ( MOAILuaState& state, int idx, MOAINode* dest,
 			float v1 = params [ i ];
 			
 			if ( v1 != 0.0 ) {
-				this->SetLink ( linkID++, dest, MOAIAttrID::FromRaw ( destAttrID ), v1, ( u32 )mode );
+				this->SetLink ( linkID++, dest, ZLAttrID::FromRaw ( destAttrID ), v1, ( u32 )mode );
 			}
 		}
 	}
@@ -178,7 +178,7 @@ u32 MOAIEaseDriver::ParseForSeek ( MOAILuaState& state, int idx, MOAINode* dest,
 			float v1 = params [ i ];
 			
 			if ( v1 != 0.0 ) {
-				this->SetLink ( linkID++, dest, MOAIAttrID::FromRaw ( destAttrID ), v1, ( u32 )mode );
+				this->SetLink ( linkID++, dest, ZLAttrID::FromRaw ( destAttrID ), v1, ( u32 )mode );
 			}
 		}
 	}
@@ -212,14 +212,14 @@ void MOAIEaseDriver::ReserveLinks ( u32 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIEaseDriver::SetLink ( ZLIndex idx, MOAINode* dest, MOAIAttrID destAttrID, float v1, u32 mode  ) {
+void MOAIEaseDriver::SetLink ( ZLIndex idx, MOAINode* dest, ZLAttrID destAttrID, float v1, u32 mode  ) {
 
 	if ( this->mLinks.CheckIndex ( idx )) {
 		
 		MOAIEaseDriverLink& link = this->mLinks [ idx ];
 
 		link.mSource.Set ( *this, 0 );
-		link.mSourceAttrID	= MOAIAttrID::FromRaw ( MOAIAttribute::NULL_ATTR );
+		link.mSourceAttrID	= ZLAttrID::FromRaw ( ZLAttribute::NULL_ATTR );
 
 		link.mDest.Set ( *this, dest );
 		link.mDestAttrID	= destAttrID;
@@ -231,7 +231,7 @@ void MOAIEaseDriver::SetLink ( ZLIndex idx, MOAINode* dest, MOAIAttrID destAttrI
 }
 
 //----------------------------------------------------------------//
-void MOAIEaseDriver::SetLink ( ZLIndex idx, MOAINode* dest, MOAIAttrID destAttrID, MOAINode* source, MOAIAttrID sourceAttrID, u32 mode ) {
+void MOAIEaseDriver::SetLink ( ZLIndex idx, MOAINode* dest, ZLAttrID destAttrID, MOAINode* source, ZLAttrID sourceAttrID, u32 mode ) {
 
 	if ( this->mLinks.CheckIndex ( idx )) {
 		
@@ -265,7 +265,7 @@ void MOAIEaseDriver::MOAIAction_Update ( double step ) {
 	float c1 = this->GetCycle ();
 	float t1 = ZLFloat::Clamp ( this->GetNormalizedTime () - c1, 0.0f, 1.0f );
 
-	MOAIAttribute adder;
+	ZLAttribute adder;
 
 	ZLSize total = this->mLinks.Size ();
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < total; ++i ) {
@@ -303,7 +303,7 @@ void MOAIEaseDriver::MOAIAction_Update ( double step ) {
 			
 			if ( delta != 0.0f ) {
 				adder.SetValue ( delta );
-				link.mDest->ApplyAttrOp ( link.mDestAttrID, adder, MOAIAttribute::ADD );
+				link.mDest->ApplyAttrOp ( link.mDestAttrID, adder, ZLAttribute::ADD );
 				link.mDest->ScheduleUpdate ();
 			}
 		}

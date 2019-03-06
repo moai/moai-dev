@@ -103,8 +103,8 @@ void MOAIProjectionProp::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAIProjectionProp >())) return;
 	if ( !debugLines.Bind ( DEBUG_DRAW_WORLD_BOUNDS )) return;
 	
-	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
-	gfxState.SetVertexTransform ( ZLGfxStateCache::WORLD_TO_DISPLAY_MTX );
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	gfxMgr.SetVertexTransform ( ZLGfxMgr::WORLD_TO_DISPLAY_MTX );
 	
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
@@ -114,12 +114,12 @@ void MOAIProjectionProp::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIProjectionProp::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIProjectionProp::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
 	if ( AttrID::Check ( attrID )) {
 		switch ( attrID.Unpack ()) {
 			case ATTR_FRONT:
-				attr.Apply ( this->mFront, op, MOAIAttribute::ATTR_READ );
+				attr.Apply ( this->mFront, op, ZLAttribute::ATTR_READ );
 				return true;
 		}
 	}

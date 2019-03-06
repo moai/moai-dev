@@ -120,12 +120,12 @@ void MOAIPinTransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIPinTransform::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIPinTransform::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
 	if ( AttrID::Check ( attrID )) {
 		switch ( attrID.Unpack ()) {
 			case ATTR_FRONT:
-				attr.Apply ( this->mFront, op, MOAIAttribute::ATTR_READ );
+				attr.Apply ( this->mFront, op, ZLAttribute::ATTR_READ );
 				return true;
 		}
 	}
@@ -148,7 +148,7 @@ void MOAIPinTransform::MOAINode_Update () {
 	worldToWndMtx.Project ( loc );
 	wndToWorldMtx.Transform ( loc );
 	
-	MOAIAttribute attr;
+	ZLAttribute attr;
 	if ( this->PullLinkedAttr ( AttrID::Pack ( ATTR_INHERIT_WORLD_BOUNDS ), attr )) {
 	
 		this->mWorldBounds = ZLBounds::EMPTY;

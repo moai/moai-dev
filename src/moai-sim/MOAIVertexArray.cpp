@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <moai-sim/MOAIAbstractGfxBuffer.h>
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/ZLGfxResourceClerk.h>
 #include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIShader.h>
@@ -132,13 +131,12 @@ void MOAIVertexArray::SerializeOut ( MOAILuaState& state, MOAISerializer& serial
 		lua_newtable ( state );
 		
 		MOAIVertexBuffer* buffer = this->mVertexBuffers [ i ].mBuffer->AsType < MOAIVertexBuffer >();
-//		MOAIVertexFormat* format = this->mVertexBuffers [ i ].mFormat->AsType < MOAIVertexFormat >();
+		MOAIVertexFormat* format = this->mVertexBuffers [ i ].mFormat->AsType < MOAIVertexFormat >();
 		
-//		assert ( buffer && format );
-		assert ( buffer );
+		assert ( buffer && format );
 		
 		state.SetField < cc8*, MOAISerializer::ObjID >( -1, "mBuffer", serializer.AffirmMemberID ( buffer ));
-		state.SetField < cc8*, MOAISerializer::ObjID >( -1, "mFormat", serializer.AffirmMemberID ( this->mVertexBuffers [ i ].mFormat ));
+		state.SetField < cc8*, MOAISerializer::ObjID >( -1, "mFormat", serializer.AffirmMemberID ( format ));
 		lua_settable ( state, -3 );
 	}
 	lua_setfield ( state, -2, "mVertexBuffers" );

@@ -266,7 +266,7 @@ void MOAIAbstractProp::SerializeOut ( MOAILuaState& state, MOAISerializer& seria
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIAbstractProp::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIAbstractProp::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 	
 	if ( MOAITransform::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
 	if ( MOAIPartitionHull::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;

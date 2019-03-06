@@ -4,50 +4,18 @@
 #ifndef	MOAINODE_H
 #define	MOAINODE_H
 
-#include <moai-sim/MOAIAttribute.h>
-
 #define DECL_ATTR_HELPER(type)																									\
 	class AttrID {																												\
 	public:																														\
-		static inline bool			Check		( MOAIAttrID attrID ) { return MOAINode::CheckAttrID < type >( attrID ); }		\
-		static inline MOAIAttrID	Pack		( u32 rawID ) { return MOAINode::PackAttrID < type >( rawID ); }				\
+		static inline bool			Check		( ZLAttrID attrID ) { return MOAINode::CheckAttrID < type >( attrID ); }		\
+		static inline ZLAttrID	Pack		( u32 rawID ) { return MOAINode::PackAttrID < type >( rawID ); }				\
 	};
 
 #define DECL_ATTR_ID(name)																										\
-	static inline MOAIAttrID	AttrID_##name		() { return AttrID::Pack ( name ); }
+	static inline ZLAttrID	AttrID_##name		() { return AttrID::Pack ( name ); }
 
 class MOAINode;
 class MOAIDepLink;
-
-//================================================================//
-// MOAIAttrID
-//================================================================//
-class MOAIAttrID {
-private:
-	friend class MOAINode;
-	friend class MOAIDepLink;
-	
-	u32		mPackedID;
-
-public:
-
-	//----------------------------------------------------------------//
-	static MOAIAttrID FromRaw ( u32 packedID ) {
-		MOAIAttrID attrID;
-		attrID.mPackedID = packedID;
-		return attrID;
-	}
-	
-	//----------------------------------------------------------------//
-	u32 ToRaw () const {
-		return this->mPackedID;
-	}
-
-	//----------------------------------------------------------------//
-	u32 Unpack () const {
-		return this->mPackedID & MOAIAttribute::ATTR_ID_MASK;
-	}
-};
 
 //================================================================//
 // MOAINode
@@ -91,26 +59,26 @@ private:
 	//----------------------------------------------------------------//
 	void			ActivateOnLink		( MOAINode& srcNode );
 	void			ExtendUpdate		();
-	MOAIDepLink*	FindAttrLink		( MOAIAttrID attrID );
+	MOAIDepLink*	FindAttrLink		( ZLAttrID attrID );
 	MOAIDepLink*	FindNodeLink		( MOAINode& srcNode );
 	bool			IsNodeUpstream		( MOAINode* node );
 	void			PullAttributes		();
 	void			RemoveDepLink		( MOAIDepLink& link );
 
 	//----------------------------------------------------------------//
-	virtual bool	MOAINode_ApplyAttrOp				( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
+	virtual bool	MOAINode_ApplyAttrOp				( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	virtual void	MOAINode_Update						();
 
 protected:
 
 	//----------------------------------------------------------------//
-	bool			PullLinkedAttr		( MOAIAttrID attrID, MOAIAttribute& attr );
+	bool			PullLinkedAttr		( ZLAttrID attrID, ZLAttribute& attr );
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	TYPE GetLinkedValue ( MOAIAttrID attrID, const TYPE& value ) {
+	TYPE GetLinkedValue ( ZLAttrID attrID, const TYPE& value ) {
 		
-		MOAIAttribute attr;
+		ZLAttribute attr;
 		if ( this->PullLinkedAttr ( attrID, attr )) {
 			return attr.GetValue ( value );
 		}
@@ -150,35 +118,35 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Activate				( MOAINode& activator );
-	bool			ApplyAttrOp				( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
-	bool			CheckAttrExists			( MOAIAttrID attrID );
-	void			ClearAttrLink			( MOAIAttrID attrID );
+	bool			ApplyAttrOp				( ZLAttrID attrID, ZLAttribute& attr, u32 op );
+	bool			CheckAttrExists			( ZLAttrID attrID );
+	void			ClearAttrLink			( ZLAttrID attrID );
 	void			ClearNodeLink			( MOAINode& srcNode );
 	void			DepNodeUpdate			();
 	void			ForceUpdate				();
-	u32				GetAttrFlags			( MOAIAttrID attrID );
+	u32				GetAttrFlags			( ZLAttrID attrID );
 					MOAINode				();
 					~MOAINode				();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			ScheduleUpdate			();
-	void			SetAttrLink				( MOAIAttrID attrID, MOAINode* srcNode, MOAIAttrID srcAttrID );
+	void			SetAttrLink				( ZLAttrID attrID, MOAINode* srcNode, ZLAttrID srcAttrID );
 	void			SetNodeLink				( MOAINode& srcNode );
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	static inline bool CheckAttrID ( MOAIAttrID attrID ) {
+	static inline bool CheckAttrID ( ZLAttrID attrID ) {
 	
-		return (( ZLType::RawID < TYPE >()) == (( attrID.mPackedID & MOAIAttribute::CLASS_ID_MASK ) >> 16 ));
+		return (( ZLType::RawID < TYPE >()) == (( attrID.mPackedID & ZLAttribute::CLASS_ID_MASK ) >> 16 ));
 	}
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	TYPE GetAttributeValue ( MOAIAttrID attrID, TYPE value ) {
+	TYPE GetAttributeValue ( ZLAttrID attrID, TYPE value ) {
 		
-		if ( attrID.mPackedID != MOAIAttribute::NULL_ATTR ) {
-			MOAIAttribute getter;
-			this->ApplyAttrOp ( attrID, getter, MOAIAttribute::GET );
+		if ( attrID.mPackedID != ZLAttribute::NULL_ATTR ) {
+			ZLAttribute getter;
+			this->ApplyAttrOp ( attrID, getter, ZLAttribute::GET );
 			value = getter.GetValue ( value );
 		}
 		return value;
@@ -186,22 +154,22 @@ public:
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	static inline MOAIAttrID PackAttrID ( u32 rawID ) {
+	static inline ZLAttrID PackAttrID ( u32 rawID ) {
 	
 		ZLType::RAW_ID rawTypeID = ZLType::RawID < TYPE >();
 		assert ( rawTypeID < 0xffff );
 	
-		return MOAIAttrID::FromRaw ((( rawTypeID << 16 ) & MOAIAttribute::CLASS_ID_MASK ) | ( rawID & MOAIAttribute::ATTR_ID_MASK ));
+		return ZLAttrID::FromRaw ((( rawTypeID << 16 ) & ZLAttribute::CLASS_ID_MASK ) | ( rawID & ZLAttribute::ATTR_ID_MASK ));
 	}
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	void SetAttributeValue ( MOAIAttrID attrID, TYPE value ) {
+	void SetAttributeValue ( ZLAttrID attrID, TYPE value ) {
 	
-		if ( attrID.mPackedID != MOAIAttribute::NULL_ATTR ) {
-			MOAIAttribute setter;
+		if ( attrID.mPackedID != ZLAttribute::NULL_ATTR ) {
+			ZLAttribute setter;
 			setter.SetValue ( value );
-			this->ApplyAttrOp ( attrID, setter, MOAIAttribute::SET );
+			this->ApplyAttrOp ( attrID, setter, ZLAttribute::SET );
 		}
 	}
 };

@@ -71,7 +71,7 @@ protected:
 
 	static const u32 GLYPH_CODE_NULL = 0xffffffff;
 
-	MOAIImageBlendMode	mBlendMode;
+	ZLColorBlendFunc	mBlendMode;
 
 	//----------------------------------------------------------------//
 	static int		_close					( lua_State* L );

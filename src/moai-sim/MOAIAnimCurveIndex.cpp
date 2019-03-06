@@ -124,13 +124,13 @@ void MOAIAnimCurveIndex::SetSample ( ZLIndex idx, ZLIndex value ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveIndex::MOAIAnimCurve_ApplyValueAttrOp ( MOAIAttribute& attr, u32 op ) {
+void MOAIAnimCurveIndex::MOAIAnimCurve_ApplyValueAttrOp ( ZLAttribute& attr, u32 op ) {
 
-	this->mValue = attr.Apply ( this->mValue, op, MOAIAttribute::ATTR_READ_WRITE );
+	this->mValue = attr.Apply ( this->mValue, op, ZLAttribute::ATTR_READ_WRITE );
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveIndex::MOAIAnimCurve_GetDelta ( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const {
+void MOAIAnimCurveIndex::MOAIAnimCurve_GetDelta ( ZLAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const {
 
 	ZLIndex v0 = this->GetValue ( span0 );
 	ZLIndex v1 = this->GetValue ( span1 );
@@ -145,13 +145,13 @@ float MOAIAnimCurveIndex::MOAIAnimCurve_GetFloatForTime ( float t ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveIndex::MOAIAnimCurve_GetValue ( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const {
+void MOAIAnimCurveIndex::MOAIAnimCurve_GetValue ( ZLAttribute& attr, const MOAIAnimKeySpan& span ) const {
 
 	attr.SetValue ( this->GetValue ( span ));
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveIndex::MOAIAnimCurve_GetZero ( MOAIAttribute& attr ) const {
+void MOAIAnimCurveIndex::MOAIAnimCurve_GetZero ( ZLAttribute& attr ) const {
 
 	attr.SetValue ( ZLIndexOp::ZERO );
 }

@@ -66,6 +66,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	MOAIVertexFormat*			GetFormat					( u32 formatID );
+	MOAIVertexFormat* 			GetFormat 					( lua_State* L, int idx );
 	u32							GetVertexSize				( u32 formatID );
 								MOAIVertexFormatMgr			();
 								~MOAIVertexFormatMgr		();

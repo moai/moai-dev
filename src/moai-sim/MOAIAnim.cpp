@@ -89,7 +89,7 @@ int	MOAIAnim::_setLink ( lua_State* L ) {
 	
 	ZLIndex linkID				= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	MOAIAnimCurve* curve		= state.GetLuaObject < MOAIAnimCurve >( 3, true );
-	MOAIAttrID attrID			= MOAIAttrID::FromRaw ( state.GetValue < u32 >( 5, 0 ));
+	ZLAttrID attrID			= ZLAttrID::FromRaw ( state.GetValue < u32 >( 5, 0 ));
 	bool relative				= state.GetValue < bool >( 6, false );
 	
 	self->SetLink ( linkID, curve, target, attrID, relative );
@@ -104,7 +104,7 @@ int	MOAIAnim::_setLink ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIAnim::Apply ( float t ) {
 	
-	MOAIAttribute attr;
+	ZLAttribute attr;
 	
 	ZLSize total = this->mLinks.Size ();
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < total; ++i ) {
@@ -117,7 +117,7 @@ void MOAIAnim::Apply ( float t ) {
 			
 			if ( !link.mRelative ) {
 				curve->GetValue ( attr, t );
-				target->ApplyAttrOp ( link.mAttrID, attr, MOAIAttribute::SET );
+				target->ApplyAttrOp ( link.mAttrID, attr, ZLAttribute::SET );
 			}
 			target->ScheduleUpdate ();
 		}
@@ -132,7 +132,7 @@ void MOAIAnim::Apply ( float t0, float t1 ) {
 		return;
 	}
 	
-	MOAIAttribute attr;
+	ZLAttribute attr;
 	
 	u32 total = ( u32 )this->mLinks.Size ();
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < total; ++i ) {
@@ -145,11 +145,11 @@ void MOAIAnim::Apply ( float t0, float t1 ) {
 			
 			if ( link.mRelative ) {
 				curve->GetDelta ( attr, t0, t1 );
-				target->ApplyAttrOp ( link.mAttrID, attr, MOAIAttribute::ADD );
+				target->ApplyAttrOp ( link.mAttrID, attr, ZLAttribute::ADD );
 			}
 			else {
 				curve->GetValue ( attr, t1 );
-				target->ApplyAttrOp ( link.mAttrID, attr, MOAIAttribute::SET );
+				target->ApplyAttrOp ( link.mAttrID, attr, ZLAttribute::SET );
 			}
 			target->ScheduleUpdate ();
 		}
@@ -217,7 +217,7 @@ void MOAIAnim::ReserveLinks ( u32 totalLinks ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnim::SetLink ( ZLIndex linkID, MOAIAnimCurve* curve, MOAINode* target, MOAIAttrID attrID, bool relative ) {
+void MOAIAnim::SetLink ( ZLIndex linkID, MOAIAnimCurve* curve, MOAINode* target, ZLAttrID attrID, bool relative ) {
 
 	if ( linkID >= this->mLinks.Size ()) return;
 	if ( !target ) return;

@@ -15,17 +15,9 @@ class MOAIViewport;
 	@text	Perspective or orthographic camera.
 */
 class MOAICamera :
+	public virtual ZLCamera,
 	public virtual MOAITransform {
 private:
-
-	ZLMatrix4x4		mProjectionMtx;
-	bool			mUseProjectionMtx;
-
-	float			mFieldOfView;
-	float			mNearPlane;
-	float			mFarPlane;
-
-	u32				mType;
 
 	//----------------------------------------------------------------//
 	static int		_getFarPlane			( lua_State* L );
@@ -47,7 +39,8 @@ private:
 	void			LookAt					( float x, float y, float z );
 	
 	//----------------------------------------------------------------//
-	bool			MOAINode_ApplyAttrOp	( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
+	bool			MOAINode_ApplyAttrOp	( ZLAttrID attrID, ZLAttribute& attr, u32 op );
+	void			MOAINode_Update			();
 	
 public:
 	
@@ -55,12 +48,6 @@ public:
 		DEBUG_DRAW_FRAME,
 		DEBUG_DRAW_RETICLE,
 		TOTAL_DEBUG_LINE_STYLES,
-	};
-	
-	enum {
-		CAMERA_TYPE_3D,
-		CAMERA_TYPE_ORTHO,
-		CAMERA_TYPE_WINDOW,
 	};
 	
 	DECL_LUA_FACTORY ( MOAICamera )
@@ -71,25 +58,12 @@ public:
 		TOTAL_ATTR,
 	};
 	
-	GET_SET ( float, FieldOfView, mFieldOfView )
-	GET_SET ( float, NearPlane, mNearPlane )
-	GET_SET ( float, FarPlane, mFarPlane )
-	
-	GET_SET ( u32, Type, mType )
-	
 	//----------------------------------------------------------------//
-	void			DrawDebug				();
-	ZLMatrix4x4		GetBillboardMtx			() const;
-	float			GetFocalLength			( float width ) const;
-	ZLMatrix4x4		GetProjMtx				( const MOAIViewport& viewport ) const;
-	ZLMatrix4x4		GetViewMtx				() const;
-	ZLVec3D			GetViewVector			() const;
+	void			DrawDebug 				();
 					MOAICamera				();
 					~MOAICamera				();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			SetProjMtx				();
-	void			SetProjMtx				( const ZLMatrix4x4& mtx );
 };
 
 #endif

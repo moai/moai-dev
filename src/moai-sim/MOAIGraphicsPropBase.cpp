@@ -204,22 +204,22 @@ bool MOAIGraphicsPropBase::IsVisible () {
 //----------------------------------------------------------------//
 void MOAIGraphicsPropBase::LoadUVTransform () {
 
-	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
 	if ( this->mUVTransform ) {
 		ZLAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
-		gfxState.SetMtx ( ZLGfxStateCache::MODEL_TO_UV_MTX, uvMtx );
+		gfxMgr.SetMtx ( ZLGfxMgr::MODEL_TO_UV_MTX, uvMtx );
 	}
 	else {
-		gfxState.SetMtx ( ZLGfxStateCache::MODEL_TO_UV_MTX );
+		gfxMgr.SetMtx ( ZLGfxMgr::MODEL_TO_UV_MTX );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIGraphicsPropBase::LoadVertexTransform () {
 
-	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
-	gfxState.SetMtx ( ZLGfxStateCache::MODEL_TO_WORLD_MTX, this->GetWorldDrawingMtx ());
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	gfxMgr.SetMtx ( ZLGfxMgr::MODEL_TO_WORLD_MTX, this->GetWorldDrawingMtx ());
 }
 
 //----------------------------------------------------------------//
@@ -253,18 +253,18 @@ void MOAIGraphicsPropBase::PopGfxState () {
 //----------------------------------------------------------------//
 void MOAIGraphicsPropBase::PushGfxState () {
 
-	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	gfxState.SetPenColor ( this->mColor );
+	gfxMgr.SetPenColor ( this->mColor );
 
 	MOAIMaterialMgr::Get ().Push ( this->GetMaterial ());
 	
 	if ( this->mScissorRect ) {
-		ZLRect scissorRect = this->mScissorRect->GetScissorRect ( gfxState.GetWorldToWndMtx ());
-		gfxState.SetScissorRect ( scissorRect );
+		ZLRect scissorRect = this->mScissorRect->GetScissorRect ( gfxMgr.GetWorldToWndMtx ());
+		gfxMgr.SetScissorRect ( scissorRect );
 	}
 	else {
-		gfxState.SetScissorRect ();
+		gfxMgr.SetScissorRect ();
 	}
 }
 
@@ -398,7 +398,7 @@ void MOAIGraphicsPropBase::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAIGraphicsPropBase >())) return;
 	
-	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
@@ -407,7 +407,7 @@ void MOAIGraphicsPropBase::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	
 	this->LoadVertexTransform ();
 	
-	gfxState.SetVertexTransform ( ZLGfxStateCache::MODEL_TO_DISPLAY_MTX );
+	gfxMgr.SetVertexTransform ( ZLGfxMgr::MODEL_TO_DISPLAY_MTX );
 	
 	ZLBounds modelBounds = this->GetModelBounds ();
 	
@@ -426,7 +426,7 @@ void MOAIGraphicsPropBase::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	}
 	
 	// clear out the world transform (draw in world space)
-	gfxState.SetVertexTransform ( ZLGfxStateCache::WORLD_TO_DISPLAY_MTX );
+	gfxMgr.SetVertexTransform ( ZLGfxMgr::WORLD_TO_DISPLAY_MTX );
 	
 	if ( debugLines.Bind ( DEBUG_DRAW_WORLD_BOUNDS )) {
 		draw.DrawBoxOutline ( this->GetWorldBounds ().mAABB );
@@ -457,7 +457,7 @@ void MOAIGraphicsPropBase::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () const {
 
-	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	ZLMatrix4x4 worldDrawingMtx;
 
@@ -465,7 +465,7 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () con
 	
 		case BILLBOARD_NORMAL: {
 			
-			ZLAffine3D billboardMtx ( gfxState.GetMtx ( ZLGfxStateCache::VIEW_TO_WORLD_MTX )); // inv view mtx sans translation
+			ZLAffine3D billboardMtx ( gfxMgr.GetMtx ( ZLGfxMgr::VIEW_TO_WORLD_MTX )); // inv view mtx sans translation
 			
 			billboardMtx.m [ ZLAffine3D::C3_R0 ] = 0.0f;
 			billboardMtx.m [ ZLAffine3D::C3_R1 ] = 0.0f;
@@ -477,12 +477,12 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () con
 		
 		case BILLBOARD_ORTHO: {
 			
-			const ZLMatrix4x4& proj				= gfxState.GetMtx ( ZLGfxStateCache::VIEW_TO_CLIP_MTX );
-			const ZLMatrix4x4& invViewProj		= gfxState.GetMtx ( ZLGfxStateCache::CLIP_TO_WORLD_MTX );
-			const ZLMatrix4x4& invWindowMtx		= gfxState.GetMtx ( ZLGfxStateCache::WINDOW_TO_CLIP_MTX );
+			const ZLMatrix4x4& proj				= gfxMgr.GetMtx ( ZLGfxMgr::VIEW_TO_CLIP_MTX );
+			const ZLMatrix4x4& invViewProj		= gfxMgr.GetMtx ( ZLGfxMgr::CLIP_TO_WORLD_MTX );
+			const ZLMatrix4x4& invWindowMtx		= gfxMgr.GetMtx ( ZLGfxMgr::WINDOW_TO_CLIP_MTX );
 			
-			ZLMatrix4x4 view					= gfxState.GetMtx ( ZLGfxStateCache::WORLD_TO_VIEW_MTX );
-			ZLMatrix4x4 windowMtx				= gfxState.GetMtx ( ZLGfxStateCache::CLIP_TO_WINDOW_MTX );
+			ZLMatrix4x4 view					= gfxMgr.GetMtx ( ZLGfxMgr::WORLD_TO_VIEW_MTX );
+			ZLMatrix4x4 windowMtx				= gfxMgr.GetMtx ( ZLGfxMgr::CLIP_TO_WINDOW_MTX );
 			
 			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
 			
@@ -526,7 +526,7 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () con
 		
 		case BILLBOARD_COMPASS: {
 		
-			ZLAffine3D cameraMtx ( gfxState.GetMtx ( ZLGfxStateCache::VIEW_TO_WORLD_MTX ));
+			ZLAffine3D cameraMtx ( gfxMgr.GetMtx ( ZLGfxMgr::VIEW_TO_WORLD_MTX ));
 			ZLVec3D	cameraY = cameraMtx.GetYAxis ();
 			
 			cameraY.mZ = 0.0f;
@@ -569,11 +569,11 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () con
 
 		case BILLBOARD_COMPASS_SCALE: {
 		
-			ZLMatrix4x4 viewToClip = gfxState.GetMtx ( ZLGfxStateCache::VIEW_TO_CLIP_MTX );
-			ZLMatrix4x4 worldToClip = gfxState.GetMtx ( ZLGfxStateCache::WORLD_TO_CLIP_MTX );
-			ZLMatrix4x4 clipToWindow = gfxState.GetMtx ( ZLGfxStateCache::CLIP_TO_WINDOW_MTX );
+			ZLMatrix4x4 viewToClip = gfxMgr.GetMtx ( ZLGfxMgr::VIEW_TO_CLIP_MTX );
+			ZLMatrix4x4 worldToClip = gfxMgr.GetMtx ( ZLGfxMgr::WORLD_TO_CLIP_MTX );
+			ZLMatrix4x4 clipToWindow = gfxMgr.GetMtx ( ZLGfxMgr::CLIP_TO_WINDOW_MTX );
 			// TODO: The cache for VIEW_TO_WORLD matrix is not working, so manually inverting here, which not efficient
-			ZLMatrix4x4 worldToView = gfxState.GetMtx ( ZLGfxStateCache::WORLD_TO_VIEW_MTX );
+			ZLMatrix4x4 worldToView = gfxMgr.GetMtx ( ZLGfxMgr::WORLD_TO_VIEW_MTX );
 			ZLMatrix4x4 worldToViewInv;
 			
 			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
@@ -632,8 +632,8 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () con
 			//MOAIGfxMgr::Get ().GetWorldToWndMtx ();
 			
 			//ZLMatrix4x4 viewProjMtx = camera->GetWorldToWndMtx ( *viewport );
-			ZLMatrix4x4 viewProjMtx = gfxState.GetMtx ( ZLGfxStateCache::WORLD_TO_CLIP_MTX );
-			viewProjMtx.Append ( gfxState.GetMtx ( ZLGfxStateCache::CLIP_TO_WINDOW_MTX ));
+			ZLMatrix4x4 viewProjMtx = gfxMgr.GetMtx ( ZLGfxMgr::WORLD_TO_CLIP_MTX );
+			viewProjMtx.Append ( gfxMgr.GetMtx ( ZLGfxMgr::CLIP_TO_WINDOW_MTX ));
 			
 			ZLMatrix4x4 localToWorldMtx ( this->GetLocalToWorldMtx ());
 			
@@ -662,26 +662,26 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () con
 }
 
 //----------------------------------------------------------------//
-bool MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
 	if ( AttrID::Check ( attrID )) {
 		
 		switch ( attrID.Unpack ()) {
 				
 			case ATTR_SCISSOR_RECT:
-				this->mScissorRect.Set ( *this, attr.ApplyVariantNoAdd < MOAIScissorRect* >( this->mScissorRect, op, MOAIAttribute::ATTR_READ_WRITE ));
+				this->mScissorRect.Set ( *this, attr.ApplyVariantNoAdd < MOAIScissorRect* >( this->mScissorRect, op, ZLAttribute::ATTR_READ_WRITE ));
 				return true;
 				
 			case ATTR_LOCAL_VISIBLE:
-				this->SetVisible ( ZLFloat::ToBoolean ( attr.ApplyNoAdd ( ZLFloat::FromBoolean (( this->mDisplayFlags & FLAGS_LOCAL_VISIBLE ) != 0 ), op, MOAIAttribute::ATTR_READ_WRITE )));
+				this->SetVisible ( ZLFloat::ToBoolean ( attr.ApplyNoAdd ( ZLFloat::FromBoolean (( this->mDisplayFlags & FLAGS_LOCAL_VISIBLE ) != 0 ), op, ZLAttribute::ATTR_READ_WRITE )));
 				return true;
 				
 			case ATTR_VISIBLE:
-				attr.ApplyNoAdd ( ZLFloat::FromBoolean ( this->IsVisible ()), op , MOAIAttribute::ATTR_READ );
+				attr.ApplyNoAdd ( ZLFloat::FromBoolean ( this->IsVisible ()), op , ZLAttribute::ATTR_READ );
 				return true;
 			
 			//case FRAME_TRAIT:
-			//	attr.Apply < ZLBox >( &this->mFrame, op, MOAIAttribute::ATTR_READ );
+			//	attr.Apply < ZLBox >( &this->mFrame, op, ZLAttribute::ATTR_READ );
 			//	return true;
 		}
 	}

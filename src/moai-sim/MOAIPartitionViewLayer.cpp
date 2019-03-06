@@ -16,7 +16,6 @@
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITransform.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
-#include <moai-sim/MOAIViewProj.h>
 
 //================================================================//
 // local
@@ -54,9 +53,9 @@ int	MOAIPartitionViewLayer::_getPropViewList ( lua_State* L ) {
 		sortScale [ 2 ]			= state.GetValue < float >( 6, self->mSortScale [ 2 ]);
 		sortScale [ 3 ]			= state.GetValue < float >( 7, self->mSortScale [ 3 ]);
 		
-		ZLMatrix4x4 viewMtx = MOAIViewProj::GetViewMtx ( self->mCamera, self->mParallax );
+		ZLMatrix4x4 viewMtx = ZLViewProj::GetViewMtx ( self->mCamera, self->mParallax );
 		ZLMatrix4x4 invViewProjMtx = viewMtx;
-		invViewProjMtx.Append ( MOAIViewProj::GetProjectionMtx ( self->mViewport, self->mCamera ));
+		invViewProjMtx.Append ( ZLViewProj::GetProjectionMtx ( self->mViewport, self->mCamera ));
 		invViewProjMtx.Inverse ();
 	
 		ZLFrustum viewVolume;
@@ -197,14 +196,14 @@ int	MOAIPartitionViewLayer::_setSortScale ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition ) {
 
-	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	ZLTypeID typeID = ZLType::GetID < MOAIAbstractDrawable >();
 	
 	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
 	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
 	
-	const ZLFrustum& viewVolume = gfxState.GetViewVolume ();
+	const ZLFrustum& viewVolume = gfxMgr.GetViewVolume ();
 	
 	u32 totalResults = 0;
 		
@@ -218,7 +217,7 @@ void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition ) {
 	if ( !totalResults ) return;
 	
 	if ( this->mSortInViewSpace ) {
-		buffer.Transform ( gfxState.GetMtx ( ZLGfxStateCache::WORLD_TO_VIEW_MTX ), false );
+		buffer.Transform ( gfxMgr.GetMtx ( ZLGfxMgr::WORLD_TO_VIEW_MTX ), false );
 	}
 	
 	buffer.GenerateKeys (

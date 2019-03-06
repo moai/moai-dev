@@ -29,7 +29,7 @@ private:
 	static int		_setAttrName			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool			MOAINode_ApplyAttrOp	( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
+	bool			MOAINode_ApplyAttrOp	( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void			MOAINode_Update			();
 
 public:
@@ -39,9 +39,9 @@ public:
 	//----------------------------------------------------------------//
 					MOAIScriptNode			();
 					~MOAIScriptNode			();
-	void			NamedAttrAdd			( ZLIndex attrID, MOAIAttribute& attr );
-	void			NamedAttrGet			( ZLIndex attrID, MOAIAttribute& attr );
-	void			NamedAttrSet			( ZLIndex attrID, MOAIAttribute& attr );
+	void			NamedAttrAdd			( ZLIndex attrID, ZLAttribute& attr );
+	void			NamedAttrGet			( ZLIndex attrID, ZLAttribute& attr );
+	void			NamedAttrSet			( ZLIndex attrID, ZLAttribute& attr );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };

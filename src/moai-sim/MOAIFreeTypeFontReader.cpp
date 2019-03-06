@@ -25,7 +25,7 @@ public:
 
 	MOAIImage*	mImage;
 	
-	MOAIImageBlendMode	mBlendMode;
+	ZLColorBlendFunc	mBlendMode;
 	ZLColorVec			mPenColor;
 	int					mPenX;
 	int					mPenY;
@@ -43,7 +43,7 @@ static void _renderSpan ( const int y, const int count, const FT_Span* const spa
 
 	MOAIImage* image = render->mImage;
 	ZLColor::ColorFormat colorFormat = image->GetColorFormat ();
-	MOAIImageBlendMode blendMode = render->mBlendMode;
+	ZLColorBlendFunc blendMode = render->mBlendMode;
 
 	u32 penColor = render->mPenColor.PackRGBA ();
 

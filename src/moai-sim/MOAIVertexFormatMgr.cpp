@@ -78,6 +78,21 @@ MOAIVertexFormat* MOAIVertexFormatMgr::GetFormat ( u32 formatID ) {
 }
 
 //----------------------------------------------------------------//
+MOAIVertexFormat* MOAIVertexFormatMgr::GetFormat ( lua_State* L, int idx ) {
+
+	MOAILuaState state ( L );
+	MOAIVertexFormat* format = NULL;
+
+	if ( state.IsType ( idx, LUA_TNUMBER )) {
+		format = this->GetFormat ( state.GetValue < u32 >( idx, MOAIVertexFormatMgr::UNKNOWN_FORMAT ));
+	}
+	else {
+		format = state.GetLuaObject < MOAIVertexFormat >( idx, true );
+	}
+	return format;
+}
+
+//----------------------------------------------------------------//
 u32 MOAIVertexFormatMgr::GetVertexSize ( u32 formatID ) {
 
 	const MOAIVertexFormat* format = this->GetFormat ( formatID );

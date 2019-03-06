@@ -46,7 +46,7 @@ protected:
 	virtual void		MOAIAbstractBaseTransform_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx ) = 0;
 
 	//----------------------------------------------------------------//
-	bool				MOAINode_ApplyAttrOp								( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
+	bool				MOAINode_ApplyAttrOp								( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void				MOAINode_Update										();
 
 public:

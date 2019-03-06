@@ -76,7 +76,7 @@ void MOAIImageFormatWebP::ReadImageWebP ( MOAIImage& image, u8 const* data, size
 
 	// Set pixel and color format
 	this->SetPixelFormat ( image, MOAIImage::TRUECOLOR );
-	bool quantize = ( transform & MOAIImageTransform::QUANTIZE ) != 0;
+	bool quantize = ( transform & ZLImageTransform::QUANTIZE ) != 0;
 	if ( hasAlpha ) {
 		this->SetColorFormat ( image, quantize ? ZLColor::RGBA_4444 : ZLColor::RGBA_8888 );
 	}
@@ -94,7 +94,7 @@ void MOAIImageFormatWebP::ReadImageWebP ( MOAIImage& image, u8 const* data, size
 	// Create decoder configuration
 	WebPDecoderConfig config;
 	if ( !WebPInitDecoderConfig ( &config ) ) return;
-	bool premultiply = (transform & MOAIImageTransform::PREMULTIPLY_ALPHA) != 0;
+	bool premultiply = (transform & ZLImageTransform::PREMULTIPLY_ALPHA) != 0;
 	switch ( image.GetColorFormat ()) {
 		case ZLColor::RGBA_8888:
 			config.output.colorspace = premultiply ? MODE_rgbA : MODE_RGBA;

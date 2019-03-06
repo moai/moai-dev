@@ -4,7 +4,7 @@
 #ifndef	MOAILIGHT_H
 #define	MOAILIGHT_H
 
-#include <moai-sim/ZLAbstractShaderUniformSchema.h>
+#include <moai-sim/MOAIShaderUniformSchemaBase.h>
 
 class MOAILightFormat;
 class MOAIShader;
@@ -15,7 +15,7 @@ class MOAITexture;
 //================================================================//
 class MOAILight :
 	public virtual MOAINode,
-	public ZLAbstractShaderUniformSchema {
+	public virtual MOAIShaderUniformSchemaBase {
 private:
 
 	MOAILuaSharedPtr < MOAILightFormat >	mFormat;
@@ -30,7 +30,7 @@ private:
 	static int			_setUniform					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool								MOAINode_ApplyAttrOp								( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
+	bool								MOAINode_ApplyAttrOp								( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	ZLShaderUniformHandle				ZLAbstractShaderUniformSchema_GetUniformHandle		( void* buffer, ZLIndex uniformID ) const;
 
 public:

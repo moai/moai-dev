@@ -106,9 +106,26 @@ namespace ZLColor {
 class ZLColorBlendFunc {
 public:
 
-	ZLColor::BlendFactor		mSrcFactor;
-	ZLColor::BlendFactor		mDstFactor;
+	ZLColor::BlendFactor		mSourceFactor;
+	ZLColor::BlendFactor		mDestFactor;
 	ZLColor::BlendEquation		mEquation;
+	
+	//----------------------------------------------------------------//
+	void Clear () {
+
+		this->mEquation		= ZLColor::BLEND_EQ_NONE;
+		this->mSourceFactor	= ZLColor::BLEND_FACTOR_ZERO;
+		this->mDestFactor	= ZLColor::BLEND_FACTOR_ZERO;
+	}
+	
+	//----------------------------------------------------------------//
+	ZLColorBlendFunc () {
+		this->Clear ();
+	}
+	
+	//----------------------------------------------------------------//
+	~ZLColorBlendFunc () {
+	}
 };
 
 //================================================================//

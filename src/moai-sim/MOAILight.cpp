@@ -71,7 +71,7 @@ void MOAILight::BindTextures ( u32 textureOffset ) {
 
 	size_t nTextures = this->mTextures.Size ();
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < nTextures; ++i ) {
-		gfx.mGfxState.SetTexture ( this->mTextures [ i ], i + ( ZLSize )textureOffset );
+		gfx.SetTexture ( this->mTextures [ i ], i + ( ZLSize )textureOffset );
 	}
 }
 
@@ -127,9 +127,9 @@ void MOAILight::SetFormat ( MOAILightFormat* format ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAILight::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAILight::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
-	return this->mFormat ? this->ZLAbstractShaderUniformSchema::ApplyAttrOp ( this->mBuffer.GetBuffer (), attrID, attr, op ) : false;
+	return this->mFormat ? this->MOAIShaderUniformSchemaBase::ApplyAttrOp ( this->mBuffer.GetBuffer (), attrID, attr, op ) : false;
 }
 
 //----------------------------------------------------------------//

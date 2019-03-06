@@ -297,7 +297,7 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAITextureBase& texture, const void* d
 			return false;
 	}
 	
-	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+	ZLGfx& gfx = MOAIGfxMgr::Get ().GetDrawingAPI ();
 
 	ZLGfxHandle glTexID = gfx.CreateTexture ();
 	//if ( glTexID ) { // TODO: error checking

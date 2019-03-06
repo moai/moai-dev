@@ -155,10 +155,10 @@ void MOAIImageFormatPng::ReadImagePng ( MOAIImage& image, void* pngParam, void* 
 	}
 	
 	// override the image settings
-	this->SetPixelFormat ( image, ( transform & MOAIImageTransform::TRUECOLOR ) ? MOAIImage::TRUECOLOR : pngPixelFormat );
+	this->SetPixelFormat ( image, ( transform & ZLImageTransform::TRUECOLOR ) ? MOAIImage::TRUECOLOR : pngPixelFormat );
 	this->SetColorFormat ( image, pngColorFormat );
 	
-	if (( transform & MOAIImageTransform::QUANTIZE ) && ( ZLColor::GetDepthInBits ( pngColorFormat ) > 16 )) {
+	if (( transform & ZLImageTransform::QUANTIZE ) && ( ZLColor::GetDepthInBits ( pngColorFormat ) > 16 )) {
 		
 		switch ( pngColorFormat ) {
 			case ZLColor::RGB_888:
@@ -208,7 +208,7 @@ void MOAIImageFormatPng::ReadImagePng ( MOAIImage& image, void* pngParam, void* 
 				}
 			}
 			
-			if ( transform & MOAIImageTransform::PREMULTIPLY_ALPHA ) {
+			if ( transform & ZLImageTransform::PREMULTIPLY_ALPHA ) {
 				for ( u32 y = 0; y < height; ++y ) {
 					void* row = this->GetRowAddrMutable ( image, y );
 					ZLColor::PremultiplyAlpha ( row, image.GetColorFormat (), width );
@@ -236,7 +236,7 @@ void MOAIImageFormatPng::ReadImagePng ( MOAIImage& image, void* pngParam, void* 
 					void* destRow = this->GetRowAddrMutable ( image, y );
 					ZLColor::Convert ( destRow, image.GetColorFormat (), srcRow, pngColorFormat, width );
 					
-					if ( transform & MOAIImageTransform::PREMULTIPLY_ALPHA ) {
+					if ( transform & ZLImageTransform::PREMULTIPLY_ALPHA ) {
 						ZLColor::PremultiplyAlpha ( destRow, image.GetColorFormat (), width );
 					}
 				}
@@ -251,7 +251,7 @@ void MOAIImageFormatPng::ReadImagePng ( MOAIImage& image, void* pngParam, void* 
 					void* destRow = this->GetRowAddrMutable ( image, y );
 					ZLColor::Convert ( destRow, image.GetColorFormat (), srcRow, pngColorFormat, width );
 					
-					if ( transform & MOAIImageTransform::PREMULTIPLY_ALPHA ) {
+					if ( transform & ZLImageTransform::PREMULTIPLY_ALPHA ) {
 						ZLColor::PremultiplyAlpha ( destRow, image.GetColorFormat (), width );
 					}
 				}
@@ -277,7 +277,7 @@ void MOAIImageFormatPng::ReadImagePng ( MOAIImage& image, void* pngParam, void* 
 			int b = palette [ i ].blue;
 			int a = i < transSize ? trans [ i ] : 0xff;
 			
-			if ( transform & MOAIImageTransform::PREMULTIPLY_ALPHA ) {
+			if ( transform & ZLImageTransform::PREMULTIPLY_ALPHA ) {
 				r = ( r * a ) >> 8;
 				g = ( g * a ) >> 8;
 				b = ( b * a ) >> 8;

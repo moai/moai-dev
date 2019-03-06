@@ -109,7 +109,7 @@ bool MOAIImageFormat::SetDimensions ( MOAIImage& image, u32 width, u32 height, u
 	// set the dimensions, and padding (if any )
 	bool isPadded = false;
 	
-	if ( transform & MOAIImageTransform::POW_TWO ) {
+	if ( transform & ZLImageTransform::POW_TWO ) {
 	
 		image.SetWidth ( MOAIImage::GetMinPowerOfTwo ( width ));
 		image.SetHeight ( MOAIImage::GetMinPowerOfTwo ( height ));

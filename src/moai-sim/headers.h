@@ -23,8 +23,6 @@
 #include <moai-sim/MOAIAnimCurveIndex.h>
 #include <moai-sim/MOAIAnimCurveQuat.h>
 #include <moai-sim/MOAIAnimCurveVec.h>
-#include <moai-sim/MOAIAttribute.h>
-#include <moai-sim/ZLBlendMode.h>
 //#include <moai-sim/MOAIBoundsDeck.h>
 //#include <moai-sim/MOAIBspBuilder2D.h>
 #include <moai-sim/MOAIButtonSensor.h>
@@ -59,13 +57,7 @@
 #include <moai-sim/MOAIGeometryWriter.h>
 #include <moai-sim/MOAIAbstractGfxBuffer.h>
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/ZLGfxPipelineClerk.h>
 #include <moai-sim/MOAIGfxResource.h>
-#include <moai-sim/ZLGfxResourceClerk.h>
-#include <moai-sim/ZLGfxStateCache.h>
-#include <moai-sim/ZLGfxStateCPUCache.h>
-#include <moai-sim/ZLGfxStateGPUCache.h>
-#include <moai-sim/ZLGfxStateVertexCache.h>
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIGraphicsGridProp.h>
 #include <moai-sim/MOAIGrid.h>
@@ -148,9 +140,6 @@
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIShaderProgram.h>
-#include <moai-sim/ZLShaderUniform.h>
-#include <moai-sim/ZLShaderUniformHandle.h>
-#include <moai-sim/ZLAbstractShaderUniformSchema.h>
 #include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAISpanList.h>
@@ -181,7 +170,6 @@
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 #include <moai-sim/MOAIViewport.h>
-#include <moai-sim/MOAIViewProj.h>
 #include <moai-sim/MOAIWheelSensor.h>
 
 // text stuff here for now

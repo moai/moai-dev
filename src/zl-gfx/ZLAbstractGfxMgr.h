@@ -1,0 +1,69 @@
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
+// http://getmoai.com
+
+#ifndef	ZLABSTRACTGFXMGR_H
+#define	ZLABSTRACTGFXMGR_H
+
+class ZLGfxMgr;
+class ZLGfxPipelineClerk;
+class ZLGfxResourceClerk;
+class ZLGfxStateCPUCache;
+class ZLGfxStateGPUCache;
+class ZLGfxStateVertexCache;
+
+//================================================================//
+// ZLAbstractGfxMgr
+//================================================================//
+class ZLAbstractGfxMgr {
+protected:
+
+	//----------------------------------------------------------------//
+	inline ZLGfxMgr& GetGfxMgr () {
+		return ZLAbstractGfxStateCache_GetGfxMgr ();
+	}
+
+	//----------------------------------------------------------------//
+	virtual ZLGfxMgr&					ZLAbstractGfxStateCache_GetGfxMgr					() = 0;
+	virtual ZLGfxPipelineClerk&			ZLAbstractGfxStateCache_GetGfxPipelineClerk			() = 0;
+	virtual ZLGfxResourceClerk&			ZLAbstractGfxStateCache_GetGfxResourceClerk			() = 0;
+	virtual ZLGfxStateCPUCache&			ZLAbstractGfxStateCache_GetGfxStateCacheCPU			() = 0;
+	virtual ZLGfxStateGPUCache&			ZLAbstractGfxStateCache_GetGfxStateCacheGPU			() = 0;
+	virtual ZLGfxStateVertexCache&		ZLAbstractGfxStateCache_GetGfxVertexCache			() = 0;
+
+public:
+
+	//----------------------------------------------------------------//
+	inline ZLGfxPipelineClerk& GetGfxPipelineClerk () {
+		return ZLAbstractGfxStateCache_GetGfxPipelineClerk ();
+	}
+	
+	//----------------------------------------------------------------//
+	inline ZLGfxResourceClerk& GetGfxResourceClerk () {
+		return ZLAbstractGfxStateCache_GetGfxResourceClerk ();
+	}
+
+	//----------------------------------------------------------------//
+	inline ZLGfxStateCPUCache& GetGfxStateCacheCPU () {
+		return ZLAbstractGfxStateCache_GetGfxStateCacheCPU ();
+	}
+	
+	//----------------------------------------------------------------//
+	inline ZLGfxStateGPUCache& GetGfxStateCacheGPU () {
+		return ZLAbstractGfxStateCache_GetGfxStateCacheGPU ();
+	}
+	
+	//----------------------------------------------------------------//
+	inline ZLGfxStateVertexCache& GetGfxVertexCache () {
+		return ZLAbstractGfxStateCache_GetGfxVertexCache ();
+	}
+	
+	//----------------------------------------------------------------//
+	ZLAbstractGfxMgr () {
+	}
+	
+	//----------------------------------------------------------------//
+	virtual ~ZLAbstractGfxMgr () {
+	}
+};
+
+#endif

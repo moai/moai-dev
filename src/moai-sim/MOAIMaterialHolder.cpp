@@ -15,7 +15,14 @@
 // TODO: doxygen
 int MOAIMaterialHolder::_getBlendMode ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialHolder, "U" )
-	return self->mMaterial.GetBlendMode ().Push ( state );
+	
+	const ZLBlendMode& blendMode = self->mMaterial.GetBlendMode ();
+	
+	state.Push ( blendMode.mEquation );
+	state.Push ( blendMode.mSourceFactor );
+	state.Push ( blendMode.mDestFactor );
+	
+	return 3;
 }
 
 //----------------------------------------------------------------//
@@ -80,7 +87,9 @@ int MOAIMaterialHolder::_setBlendMode ( lua_State* L ) {
 	}
 	else {
 		ZLBlendMode blendMode;
-		blendMode.Init ( state, 2 );
+		blendMode.mEquation			= ( ZLColor::BlendEquation )state.GetValue < u32 >( 2, ( u32 )ZLColor::BLEND_EQ_NONE );
+		blendMode.mSourceFactor		= ( ZLColor::BlendFactor )state.GetValue < u32 >( 3, ( u32 )ZLColor::BLEND_FACTOR_ZERO );
+		blendMode.mDestFactor		= ( ZLColor::BlendFactor )state.GetValue < u32 >( 4, ( u32 )ZLColor::BLEND_FACTOR_ZERO );
 		self->mMaterial.SetBlendMode ( blendMode );
 	}
 	return 0;

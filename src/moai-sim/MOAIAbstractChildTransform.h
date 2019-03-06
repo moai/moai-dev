@@ -29,7 +29,7 @@ protected:
 	static int	_setParent			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool		MOAINode_ApplyAttrOp		( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
+	bool		MOAINode_ApplyAttrOp		( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void		MOAINode_Update				();
 
 public:
@@ -49,8 +49,8 @@ public:
 	//----------------------------------------------------------------//
 				MOAIAbstractChildTransform			();
 				~MOAIAbstractChildTransform			();
-	void		RegisterLuaClass			( MOAILuaState& state );
-	void		RegisterLuaFuncs			( MOAILuaState& state );
+	void		RegisterLuaClass					( MOAILuaState& state );
+	void		RegisterLuaFuncs					( MOAILuaState& state );
 };
 
 #endif

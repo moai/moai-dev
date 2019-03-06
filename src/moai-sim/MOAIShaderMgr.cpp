@@ -115,8 +115,8 @@ MOAIShaderProgram* MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 					program->DeclareUniform ( ZLIndexCast ( 1 ), "ySnap", ZLShaderUniform::UNIFORM_TYPE_FLOAT );
 					
 					program->ReserveGlobals ( 2 );
-					program->SetGlobal ( ZLIndexCast ( 0 ), ZLGfxStateCache::VIEW_HALF_WIDTH, ZLIndexCast ( 0 ), ZLIndexCast ( 0 ));
-					program->SetGlobal ( ZLIndexCast ( 1 ), ZLGfxStateCache::VIEW_HALF_HEIGHT, ZLIndexCast ( 1 ), ZLIndexCast ( 0 ));
+					program->SetGlobal ( ZLIndexCast ( 0 ), ZLGfxMgr::VIEW_HALF_WIDTH, ZLIndexCast ( 0 ), ZLIndexCast ( 0 ));
+					program->SetGlobal ( ZLIndexCast ( 1 ), ZLGfxMgr::VIEW_HALF_HEIGHT, ZLIndexCast ( 1 ), ZLIndexCast ( 0 ));
 					
 					program->Load ( _deck2DSnappingShaderVSH, _deck2DSnappingShaderFSH );
 					break;
@@ -150,8 +150,8 @@ MOAIShaderProgram* MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 					program->DeclareUniform ( ZLIndexCast ( 1 ), "ySnap", ZLShaderUniform::UNIFORM_TYPE_FLOAT );
 					
 					program->ReserveGlobals ( 2 );
-					program->SetGlobal ( ZLIndexCast ( 0 ), ZLGfxStateCache::VIEW_HALF_WIDTH, ZLIndexCast ( 0 ), ZLIndexCast ( 0 ));
-					program->SetGlobal ( ZLIndexCast ( 1 ), ZLGfxStateCache::VIEW_HALF_HEIGHT, ZLIndexCast ( 1 ), ZLIndexCast ( 0 ));
+					program->SetGlobal ( ZLIndexCast ( 0 ), ZLGfxMgr::VIEW_HALF_WIDTH, ZLIndexCast ( 0 ), ZLIndexCast ( 0 ));
+					program->SetGlobal ( ZLIndexCast ( 1 ), ZLGfxMgr::VIEW_HALF_HEIGHT, ZLIndexCast ( 1 ), ZLIndexCast ( 0 ));
 					
 					program->Load ( _fontSnappingShaderVSH, _fontSnappingShaderFSH );
 					break;
@@ -173,8 +173,8 @@ MOAIShaderProgram* MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 					program->DeclareUniform ( ZLIndexCast ( 1 ), "ucolor", ZLShaderUniform::UNIFORM_TYPE_FLOAT, ZLShaderUniform::UNIFORM_WIDTH_VEC_4 );
 					
 					program->ReserveGlobals ( 2 );
-					program->SetGlobal ( ZLIndexCast ( 0 ), ZLGfxStateCache::MODEL_TO_CLIP_MTX, ZLIndexCast ( 0 ), ZLIndexCast ( 0 ));
-					program->SetGlobal ( ZLIndexCast ( 1 ), ZLGfxStateCache::PEN_COLOR, ZLIndexCast ( 1 ), ZLIndexCast ( 0 ));
+					program->SetGlobal ( ZLIndexCast ( 0 ), ZLGfxMgr::MODEL_TO_CLIP_MTX, ZLIndexCast ( 0 ), ZLIndexCast ( 0 ));
+					program->SetGlobal ( ZLIndexCast ( 1 ), ZLGfxMgr::PEN_COLOR, ZLIndexCast ( 1 ), ZLIndexCast ( 0 ));
 					
 					program->Load ( _lineShader3DVSH, _lineShader3DFSH );
 					
@@ -191,8 +191,8 @@ MOAIShaderProgram* MOAIShaderMgr::GetProgram ( u32 shaderID ) {
 					program->DeclareUniform ( ZLIndexCast ( 1 ), "ucolor", ZLShaderUniform::UNIFORM_TYPE_FLOAT, ZLShaderUniform::UNIFORM_WIDTH_VEC_4 );
 					
 					program->ReserveGlobals ( 2 );
-					program->SetGlobal ( ZLIndexCast ( 0 ), ZLGfxStateCache::MODEL_TO_CLIP_MTX, ZLIndexCast ( 0 ), ZLIndexCast ( 0 ));
-					program->SetGlobal ( ZLIndexCast ( 1 ), ZLGfxStateCache::PEN_COLOR, ZLIndexCast ( 1 ), ZLIndexCast ( 0 ));
+					program->SetGlobal ( ZLIndexCast ( 0 ), ZLGfxMgr::MODEL_TO_CLIP_MTX, ZLIndexCast ( 0 ), ZLIndexCast ( 0 ));
+					program->SetGlobal ( ZLIndexCast ( 1 ), ZLGfxMgr::PEN_COLOR, ZLIndexCast ( 1 ), ZLIndexCast ( 0 ));
 					
 					program->Load ( _meshShaderVSH, _meshShaderFSH );
 					
@@ -225,6 +225,21 @@ MOAIShader* MOAIShaderMgr::GetShader ( u32 shaderID ) {
 				this->mShaders [ shaderID ] = shader;
 			}
 		}
+	}
+	return shader;
+}
+
+//----------------------------------------------------------------//
+MOAIShader* MOAIShaderMgr::GetShader ( lua_State* L, int idx ) {
+
+	MOAILuaState state ( L );
+	MOAIShader* shader = NULL;
+
+	if ( state.IsType ( idx, LUA_TNUMBER )) {
+		shader = this->GetShader ( state.GetValue < u32 >( idx, MOAIShaderMgr::UNKNOWN_SHADER ));
+	}
+	else {
+		shader = state.GetLuaObject < MOAIShader >( idx, true );
 	}
 	return shader;
 }

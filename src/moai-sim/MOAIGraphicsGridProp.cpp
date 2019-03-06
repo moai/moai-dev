@@ -111,7 +111,7 @@
 //----------------------------------------------------------------//
 void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
 
-	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	ZLVec3D offset	= ZLVec3D::ORIGIN;
 	ZLVec3D scale	= ZLVec3D::AXIS;
@@ -126,7 +126,7 @@ void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoo
 	MOAIFancyGrid* fancyGrid = this->mGrid->AsType < MOAIFancyGrid >();
 	
 	const ZLAffine3D& modelToWorldMtx = this->GetWorldDrawingMtx ();
-	ZLColorVec penColor = gfxState.GetPenColor ();
+	ZLColorVec penColor = gfxMgr.GetPenColor ();
 	
 	for ( int y = c0.mY; y <= c1.mY; ++y ) {
 		for ( int x = c0.mX; x <= c1.mX; ++x ) {
@@ -151,10 +151,10 @@ void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoo
 				mtx.PrependSclTr2D ( xScale, yScale, loc.mX, loc.mY );
 			}
 
-			gfxState.SetMtx ( ZLGfxStateCache::MODEL_TO_WORLD_MTX, mtx );
+			gfxMgr.SetMtx ( ZLGfxMgr::MODEL_TO_WORLD_MTX, mtx );
 			
 			if ( fancyGrid ) {
-				gfxState.SetPenColor ( penColor * fancyGrid->GetTileColor ( addr ));
+				gfxMgr.SetPenColor ( penColor * fancyGrid->GetTileColor ( addr ));
 			}
 			
 			this->mDeck->Draw ( ZLIndexCast (( idx & MOAITileFlags::CODE_MASK ) - 1 ));
@@ -165,7 +165,7 @@ void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoo
 //----------------------------------------------------------------//
 void MOAIGraphicsGridProp::GetGridFrameInView ( const ZLAffine3D& worldToLocalMtx, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 
-	const ZLFrustum& frustum = MOAIGfxMgr::Get ().mGfxState.GetViewVolume ();
+	const ZLFrustum& frustum = MOAIGfxMgr::Get ().GetViewVolume ();
 	
 	ZLRect viewRect;
 	//if ( frustum.GetXYSectRect ( this->GetWorldToLocalMtx (), viewRect )) {
@@ -264,7 +264,7 @@ ZLBounds MOAIGraphicsGridProp::MOAIAbstractProp_GetModelBounds () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGraphicsGridProp::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIGraphicsGridProp::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 	
 	if ( MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
 	return false;

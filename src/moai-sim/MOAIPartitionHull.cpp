@@ -393,18 +393,18 @@ void MOAIPartitionHull::WasRemovedFromPartition () {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIPartitionHull::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIPartitionHull::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
 	if ( AttrID::Check ( attrID )) {
 		
 		switch ( attrID.Unpack ()) {;
 		
 			case ATTR_PARTITION:
-				this->SetPartition ( attr.ApplyVariantNoAdd < MOAIPartition* >( this->GetPartition (), op, MOAIAttribute::ATTR_READ_WRITE ));
+				this->SetPartition ( attr.ApplyVariantNoAdd < MOAIPartition* >( this->GetPartition (), op, ZLAttribute::ATTR_READ_WRITE ));
 				return true;
 			
 			case ATTR_WORLD_BOUNDS_TRAIT:
-				attr.ApplyVariantNoAdd < const ZLBounds* >( &this->mWorldBounds, op, MOAIAttribute::ATTR_READ );
+				attr.ApplyVariantNoAdd < const ZLBounds* >( &this->mWorldBounds, op, ZLAttribute::ATTR_READ );
 				return true;
 		}
 	}

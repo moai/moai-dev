@@ -16,7 +16,7 @@
 //----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::DrawAABB ( b2AABB* aabb, const b2Color& c ) {
 
-	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxMgr& gfxState = MOAIGfxMgr::Get ();
 
 	gfxState.SetPenColor ( c.r, c.g, c.b, 1.0f );
 	gfxState.BeginPrim ( ZGL_PRIM_LINE_LOOP, 4 );
@@ -30,7 +30,7 @@ void MOAIBox2DDebugDraw::DrawAABB ( b2AABB* aabb, const b2Color& c ) {
 //----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::DrawCircle ( const b2Vec2& center, float32 radius, const b2Color& color ) {
 
-	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxMgr& gfxState = MOAIGfxMgr::Get ();
 	
 	gfxState.SetPenColor ( color.r, color.g, color.b, 1.0f );
 
@@ -51,7 +51,7 @@ void MOAIBox2DDebugDraw::DrawCircle ( const b2Vec2& center, float32 radius, cons
 void MOAIBox2DDebugDraw::DrawPoint ( const b2Vec2& p, float32 size, const b2Color& color ) {
 	UNUSED ( size );
 
-	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxMgr& gfxState = MOAIGfxMgr::Get ();
 
 	gfxState.SetPenColor ( color.r, color.g, color.b, 1.0f );
 	gfxState.BeginPrim ( ZGL_PRIM_POINTS, 1 );
@@ -62,7 +62,7 @@ void MOAIBox2DDebugDraw::DrawPoint ( const b2Vec2& p, float32 size, const b2Colo
 //----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::DrawPolygon ( const b2Vec2* vertices, int32 vertexCount, const b2Color& color ) {
 
-	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxMgr& gfxState = MOAIGfxMgr::Get ();
 	
 	gfxState.SetPenColor ( color.r, color.g, color.b, 1.0f );
 
@@ -76,7 +76,7 @@ void MOAIBox2DDebugDraw::DrawPolygon ( const b2Vec2* vertices, int32 vertexCount
 //----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::DrawSegment ( const b2Vec2& p1, const b2Vec2& p2, const b2Color& color ) {
 
-	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxMgr& gfxState = MOAIGfxMgr::Get ();
 	
 	gfxState.SetPenColor ( color.r, color.g, color.b, 1.0f );
 
@@ -89,7 +89,7 @@ void MOAIBox2DDebugDraw::DrawSegment ( const b2Vec2& p1, const b2Vec2& p2, const
 //----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::DrawSolidCircle ( const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color ) {
 
-	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxMgr& gfxState = MOAIGfxMgr::Get ();
 	
 	gfxState.SetBlendMode ( ZGL_BLEND_FACTOR_SRC_ALPHA, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
 	gfxState.SetPenColor ( 0.5f * color.r, 0.5f * color.g, 0.5f * color.b, 0.5f );
@@ -129,7 +129,7 @@ void MOAIBox2DDebugDraw::DrawSolidCircle ( const b2Vec2& center, float32 radius,
 //----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::DrawSolidPolygon ( const b2Vec2* vertices, int32 vertexCount, const b2Color& color ) {
 	
-	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxMgr& gfxState = MOAIGfxMgr::Get ();
 	
 	gfxState.SetBlendMode ( ZGL_BLEND_FACTOR_SRC_ALPHA, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
 	
@@ -154,7 +154,7 @@ void MOAIBox2DDebugDraw::DrawSolidPolygon ( const b2Vec2* vertices, int32 vertex
 //----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::DrawTransform ( const b2Transform& xf ) {
 
-	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	ZLGfxMgr& gfxState = MOAIGfxMgr::Get ();
 
 	b2Vec2 p1 = xf.p, p2;
 	const float32 k_axisScale = 0.4f;
@@ -181,7 +181,7 @@ void MOAIBox2DDebugDraw::DrawTransform ( const b2Transform& xf ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DDebugDraw::WriteVtx ( ZLGfxStateCache& gfxState, float x, float y ) {
+void MOAIBox2DDebugDraw::WriteVtx ( ZLGfxMgr& gfxState, float x, float y ) {
 
 	ZLVec3D vtx;
 	vtx.mX = x * this->mScale;

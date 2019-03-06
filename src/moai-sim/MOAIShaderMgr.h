@@ -59,6 +59,7 @@ public:
 	void					AffirmAll				();
 	MOAIShaderProgram*		GetProgram				( u32 shaderID );
 	MOAIShader*				GetShader				( u32 shaderID );
+	MOAIShader*				GetShader				( lua_State* L, int idx );
 							MOAIShaderMgr			();
 							~MOAIShaderMgr			();
 	void					RegisterLuaClass		( MOAILuaState& state );

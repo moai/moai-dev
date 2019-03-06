@@ -5,9 +5,6 @@
 #define	MOAITEXTUREBASE_H
 
 #include <moai-sim/MOAIGfxResource.h>
-#include <moai-sim/ZLTexture.h>
-
-class MOAIImage;
 
 //================================================================//
 // MOAITextureBase
@@ -23,7 +20,8 @@ class MOAIImage;
 	@const	GL_NEAREST_MIPMAP_NEAREST
 */
 class MOAITextureBase :
-	public MOAIGfxResource < ZLTexture > {
+	public virtual MOAILuaObject,
+	public virtual ZLTexture {
 protected:
 
 	friend class MOAIGfxMgr;
@@ -37,6 +35,9 @@ protected:
 	static int			_setFilter				( lua_State* L );
 	static int			_setWrap				( lua_State* L );
 	
+	//----------------------------------------------------------------//
+//	virtual ZLTexture&		MOAITextureBase_AsZLTexture		() = 0;
+	
 public:
 
 	//----------------------------------------------------------------//
@@ -44,8 +45,7 @@ public:
 						~MOAITextureBase			();
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
-	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
-	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
+//	ZLTexture&			AsZLTexture					();
 };
 
 #endif

@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/ZLGfxResourceClerk.h>
 #include <moai-sim/MOAIFrameBufferTexture.h>
 
 //================================================================//
@@ -68,6 +67,7 @@ MOAIFrameBufferTexture::MOAIFrameBufferTexture () :
 	mStencilFormat ( 0 ) {
 	
 	RTTI_BEGIN
+		RTTI_EXTEND ( MOAIAbstractGfxResource )
 		RTTI_EXTEND ( MOAIFrameBuffer )
 		RTTI_EXTEND ( MOAITextureBase )
 	RTTI_END
@@ -84,6 +84,7 @@ MOAIFrameBufferTexture::~MOAIFrameBufferTexture () {
 //----------------------------------------------------------------//
 void MOAIFrameBufferTexture::RegisterLuaClass ( MOAILuaState& state ) {
 	
+	MOAIGfxResource < ZLFrameBufferTexture >::RegisterLuaClass ( state );
 	MOAIFrameBuffer::RegisterLuaClass ( state );
 	MOAITextureBase::RegisterLuaClass ( state );
 }
@@ -91,6 +92,7 @@ void MOAIFrameBufferTexture::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIFrameBufferTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 
+	MOAIGfxResource < ZLFrameBufferTexture >::RegisterLuaFuncs ( state );
 	MOAIFrameBuffer::RegisterLuaFuncs ( state );
 	MOAITextureBase::RegisterLuaFuncs ( state );	
 
@@ -133,7 +135,7 @@ bool MOAIFrameBufferTexture::ZLAbstractGfxResource_OnGPUCreate () {
 	this->mBufferWidth = this->mWidth;
 	this->mBufferHeight = this->mHeight;
 	
-	ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
+	ZLGfx& gfx = MOAIGfxMgr::Get ().GetDrawingAPI ();
 	
 	// bail and retry (no error) if GL cannot generate buffer ID
 	this->mGLFrameBuffer = gfx.CreateFramebuffer ();
@@ -204,10 +206,10 @@ bool MOAIFrameBufferTexture::ZLAbstractGfxResource_OnGPUCreate () {
 //----------------------------------------------------------------//
 void MOAIFrameBufferTexture::ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 
-	ZLGfxResourceClerk::DeleteOrDiscard ( this->mGLFrameBuffer, shouldDelete );
-	ZLGfxResourceClerk::DeleteOrDiscard ( this->mGLColorBuffer, shouldDelete );
-	ZLGfxResourceClerk::DeleteOrDiscard ( this->mGLDepthBuffer, shouldDelete );
-	ZLGfxResourceClerk::DeleteOrDiscard ( this->mGLStencilBuffer, shouldDelete );
+	this->mGfxMgr->DeleteOrDiscard ( this->mGLFrameBuffer, shouldDelete );
+	this->mGfxMgr->DeleteOrDiscard ( this->mGLColorBuffer, shouldDelete );
+	this->mGfxMgr->DeleteOrDiscard ( this->mGLDepthBuffer, shouldDelete );
+	this->mGfxMgr->DeleteOrDiscard ( this->mGLStencilBuffer, shouldDelete );
 
 	this->MOAITextureBase::ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( shouldDelete );
 }

@@ -98,7 +98,7 @@ ZLBounds MOAIGraphicsProp::MOAIAbstractProp_GetModelBounds () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGraphicsProp::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIGraphicsProp::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 	
 	if ( MOAIDeckHolderWithIndex::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
 	if ( MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;

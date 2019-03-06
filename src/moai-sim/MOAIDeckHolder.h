@@ -5,7 +5,6 @@
 #define	MOAIDECKHOLDER_H
 
 #include <moai-sim/MOAIAbstractDrawable.h>
-#include <moai-sim/ZLBlendMode.h>
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIPartitionHull.h>
 #include <moai-sim/MOAITransform.h>

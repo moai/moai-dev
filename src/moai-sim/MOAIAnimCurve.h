@@ -74,16 +74,16 @@ protected:
 	static int			_setWrapMode		( lua_State* L );
 
 	//----------------------------------------------------------------//
-	virtual void		MOAIAnimCurve_ApplyValueAttrOp		( MOAIAttribute& attr, u32 op ) = 0;
+	virtual void		MOAIAnimCurve_ApplyValueAttrOp		( ZLAttribute& attr, u32 op ) = 0;
 	virtual void		MOAIAnimCurve_Draw					( u32 resolution ) const;
-	virtual void		MOAIAnimCurve_GetDelta				( MOAIAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const = 0;
+	virtual void		MOAIAnimCurve_GetDelta				( ZLAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const = 0;
 	virtual ZLReal		MOAIAnimCurve_GetFloatForTime		( ZLReal t ) const;
-	virtual void		MOAIAnimCurve_GetValue				( MOAIAttribute& attr, const MOAIAnimKeySpan& span ) const = 0;
-	virtual void		MOAIAnimCurve_GetZero				( MOAIAttribute& attr ) const = 0;
+	virtual void		MOAIAnimCurve_GetValue				( ZLAttribute& attr, const MOAIAnimKeySpan& span ) const = 0;
+	virtual void		MOAIAnimCurve_GetZero				( ZLAttribute& attr ) const = 0;
 	virtual void		MOAIAnimCurve_ReserveSamples		( u32 total ) = 0;
 
 	//----------------------------------------------------------------//
-	bool				MOAINode_ApplyAttrOp	( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
+	bool				MOAINode_ApplyAttrOp	( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 
 public:
 	
@@ -106,11 +106,11 @@ public:
 	void				Clear					();
 	void				Draw					( u32 resolution ) const;
 	ZLIndex				FindKeyID				( ZLReal time ) const;
-	void				GetDelta				( MOAIAttribute& attr, ZLReal t0, ZLReal t1 );
+	void				GetDelta				( ZLAttribute& attr, ZLReal t0, ZLReal t1 );
 	const MOAIAnimKey&	GetKey					( ZLIndex idx ) const;
 	ZLReal				GetLength				() const;
 	MOAIAnimKeySpan		GetSpan					( ZLReal time ) const;
-	void				GetValue				( MOAIAttribute& attr, ZLReal time );
+	void				GetValue				( ZLAttribute& attr, ZLReal time );
 						MOAIAnimCurve			();
 						~MOAIAnimCurve			();
 	void				RegisterLuaClass		( MOAILuaState& state );

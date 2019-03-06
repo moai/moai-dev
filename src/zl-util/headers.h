@@ -17,6 +17,8 @@
 #include <zl-util/ZLAccessors.h>
 #include <zl-util/ZLAdapterInfo.h>
 #include <zl-util/ZLAffine2D.h>
+#include <zl-util/ZLAttribute.h>
+#include <zl-util/ZLAttrID.h>
 #include <zl-util/ZLBarycentric.h>
 #include <zl-util/ZLBase64Encoder.h>
 #include <zl-util/ZLBase64Reader.h>
@@ -53,6 +55,7 @@
 #include <zl-util/ZLHashWriterWhirlpool.h>
 #include <zl-util/ZLHexAdapter.h>
 #include <zl-util/ZLHexDump.h>
+#include <zl-util/ZLImage.h>
 #include <zl-util/ZLIndex.h>
 #include <zl-util/ZLInterpolate.h>
 #include <zl-util/ZLIntersect.h>

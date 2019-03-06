@@ -6,7 +6,6 @@
 #include <tesselator.h>
 
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/ZLGfxResourceClerk.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIMaterialMgr.h>
@@ -133,7 +132,7 @@ bool MOAIMeshPrimReader::GetPrimCoords ( u32 idx, MOAIMeshPrimCoords& prim ) con
 //----------------------------------------------------------------//
 bool MOAIMeshPrimReader::Init ( MOAIMesh& mesh, ZLIndex vertexBufferIndex ) {
 
-	MOAIVertexFormat* vertexFormat = mesh.GetVertexFormat ( vertexBufferIndex );
+	ZLVertexFormat* vertexFormat = mesh.GetVertexFormat ( vertexBufferIndex );
 	ZLVertexBuffer* vertexBuffer = mesh.GetVertexBuffer ( vertexBufferIndex );
 
 	if ( !( vertexFormat && vertexBuffer )) return false;
@@ -532,8 +531,8 @@ void MOAIMesh::DrawIndex ( ZLIndex idx, MOAIMeshSpan* span ) {
 
 	// TODO: make use of offset and scale
 
-	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
-	if ( gfxState.SetVertexArray ( this )) {
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	if ( gfxMgr.SetVertexArray ( this )) {
 
 		// I am super lazy, so set this up here instead of adding if's below
 		MOAIMeshSpan defaultSpan;
@@ -544,22 +543,22 @@ void MOAIMesh::DrawIndex ( ZLIndex idx, MOAIMeshSpan* span ) {
 			span = &defaultSpan;
 		}
 		
-		gfxState.SetPenWidth ( this->mPenWidth );
+		gfxMgr.SetPenWidth ( this->mPenWidth );
 		
 		if ( this->mIndexBuffer ) {
 			
 			// TODO: turns out we can bind this inside the VAO as well. so there.
-			if ( gfxState.SetIndexBuffer ( this->mIndexBuffer )) {
+			if ( gfxMgr.SetIndexBuffer ( this->mIndexBuffer )) {
 			
 				for ( ; span; span = span->mNext ) {
 				
 					if ( span->mBase == span->mTop ) continue;
 					assert (( span->mBase < span->mTop ) && ( span->mTop <= this->mTotalElements ));
 				
-					gfxState.DrawPrims ( this->mPrimType, span->mBase, ( u32 )( span->mTop - span->mBase ));
+					gfxMgr.DrawPrims ( this->mPrimType, span->mBase, ( u32 )( span->mTop - span->mBase ));
 				}
 
-				gfxState.SetIndexBuffer ();
+				gfxMgr.SetIndexBuffer ();
 			}
 		}
 		else {
@@ -569,10 +568,10 @@ void MOAIMesh::DrawIndex ( ZLIndex idx, MOAIMeshSpan* span ) {
 				if ( span->mBase == span->mTop ) continue;
 				assert (( span->mBase < span->mTop ) && ( span->mTop <= this->mTotalElements ));
 			
-				gfxState.DrawPrims ( this->mPrimType, span->mBase, ( u32 )( span->mTop - span->mBase ));
+				gfxMgr.DrawPrims ( this->mPrimType, span->mBase, ( u32 )( span->mTop - span->mBase ));
 			}
 		}
-		gfxState.SetVertexArray ();
+		gfxMgr.SetVertexArray ();
 	}
 }
 
@@ -652,7 +651,7 @@ void MOAIMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIMesh::ReserveVAOs ( u32 total ) {
 
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVAOs.Size (); ++i ) {
-		ZLGfxResourceClerk::DeleteOrDiscard ( this->mVAOs [ i ], false );
+		MOAIGfxMgr::Get ().DeleteOrDiscard ( this->mVAOs [ i ], false );
 	}
 	this->mVAOs.Init ( total );
 }

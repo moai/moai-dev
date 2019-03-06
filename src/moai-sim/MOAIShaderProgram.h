@@ -5,9 +5,7 @@
 #define	MOAISHADERPROGRAM_H
 
 #include <moai-sim/MOAIGfxResource.h>
-#include <moai-sim/MOAINode.h>
-#include <moai-sim/ZLShaderProgram.h>
-#include <moai-sim/ZLShaderUniform.h>
+#include <moai-sim/MOAIShaderUniformSchemaBase.h>
 
 //================================================================//
 // MOAIShaderProgram
@@ -20,7 +18,8 @@
 			uniform values.
 */
 class MOAIShaderProgram :
-	public MOAIGfxResource < ZLShaderProgram > {
+	public MOAIGfxResource < ZLShaderProgram >,
+	public virtual MOAIShaderUniformSchemaBase {
 protected:
 
 	//----------------------------------------------------------------//

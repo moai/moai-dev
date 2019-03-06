@@ -43,8 +43,9 @@ int MOAIImageTexture::_updateRegion ( lua_State* L ) {
 MOAIImageTexture::MOAIImageTexture () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAITextureBase )
+		RTTI_EXTEND ( MOAIAbstractGfxResource )
 		RTTI_EXTEND ( MOAIImage )
+		RTTI_EXTEND ( MOAITextureBase )
 	RTTI_END
 	
 	this->mDebugName = "(stacktrace from MOAIImageTexture)";
@@ -57,15 +58,17 @@ MOAIImageTexture::~MOAIImageTexture () {
 //----------------------------------------------------------------//
 void MOAIImageTexture::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	MOAITextureBase::RegisterLuaClass ( state );
+	MOAIGfxResource < ZLTexture >::RegisterLuaClass ( state );
 	MOAIImage::RegisterLuaClass ( state );
+	MOAITextureBase::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAITextureBase::RegisterLuaFuncs ( state );
+	MOAIGfxResource < ZLTexture >::RegisterLuaFuncs ( state );
 	MOAIImage::RegisterLuaFuncs ( state );
+	MOAITextureBase::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "invalidate",					_updateRegion }, // TODO: deprecate
@@ -78,12 +81,12 @@ void MOAIImageTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAITextureBase::SerializeIn ( state, serializer );
+	MOAIImage::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAITextureBase::SerializeOut ( state, serializer );
+	MOAIImage::SerializeOut ( state, serializer );
 }
 
 //----------------------------------------------------------------//

@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <moai-sim/MOAIAbstractDrawable.h>
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/ZLGfxResourceClerk.h>
 #include <moai-sim/MOAIRenderMgr.h>
 
 //================================================================//
@@ -94,17 +93,17 @@ void MOAIRenderMgr::Render () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	gfxMgr.mPipelineMgr.ResetDrawingAPIs ();
-	gfxMgr.mResourceMgr.Update ();
+	gfxMgr.ResetDrawingAPIs ();
+	gfxMgr.Update ();
 
-	ZLFrameBuffer* frameBuffer = gfxMgr.mGfxState.GetDefaultFrameBuffer ();
+	ZLFrameBuffer* frameBuffer = gfxMgr.GetDefaultFrameBuffer ();
 	assert ( frameBuffer );
 	frameBuffer->NeedsClear ( true );
 
 	// Measure performance
 	double startTime = ZLDeviceTime::GetTimeInSeconds ();
 	
-	ZLGfx* gfx = gfxMgr.mPipelineMgr.SelectDrawingAPI ( ZLGfxPipelineClerk::DRAWING_PIPELINE );
+	ZLGfx* gfx = gfxMgr.SelectDrawingAPI ( ZLGfxPipelineClerk::DRAWING_PIPELINE );
 	if ( !gfx ) return;
 
 	ZGL_COMMENT ( *gfx, "RENDER MGR RENDER" );
@@ -124,5 +123,5 @@ void MOAIRenderMgr::Render () {
 	this->mRenderDuration = endTime - startTime;
 	this->mRenderTime += this->mRenderDuration;
 	
-	 gfxMgr.mGfxState.FinishFrame ();
+	 gfxMgr.FinishFrame ();
 }

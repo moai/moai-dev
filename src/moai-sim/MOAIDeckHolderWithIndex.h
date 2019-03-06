@@ -5,12 +5,10 @@
 #define	MOAIDECKHOLDERWITHINDEX_H
 
 #include <moai-sim/MOAIAbstractDrawable.h>
-#include <moai-sim/ZLBlendMode.h>
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIDeckHolder.h>
 #include <moai-sim/MOAIPartitionHull.h>
 #include <moai-sim/MOAITransform.h>
-#include <moai-core/MOAILuaSharedPtr.h>
 
 //================================================================//
 // MOAIDeckHolderWithIndex
@@ -27,7 +25,7 @@ protected:
 	static int		_setIndex					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool			MOAINode_ApplyAttrOp		( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
+	bool			MOAINode_ApplyAttrOp		( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 
 public:
 

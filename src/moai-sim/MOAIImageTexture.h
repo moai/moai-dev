@@ -17,8 +17,9 @@
 			into GPU memory the next time the texture is bound.
 */
 class MOAIImageTexture :
-	public MOAITextureBase,
-	public MOAIImage {
+	public MOAIGfxResource < ZLTexture >,
+	public MOAIImage,
+	public MOAITextureBase {
 private:
 
 	ZLIntRect	mRegion;
@@ -27,16 +28,16 @@ private:
 	static int		_updateRegion			( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void			MOAIImage_OnImageStatusChanged			( bool isOK );
 	void			ZLAbstractGfxResource_OnClearDirty		();
 	bool			ZLAbstractGfxResource_OnGPUCreate		();
 	bool			ZLAbstractGfxResource_OnGPUUpdate		();
-	void			MOAIImage_OnImageStatusChanged			( bool isOK );
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIImageTexture )
 	
-	static const u32 DEFAULT_TRANSFORM = MOAIImageTransform::TRUECOLOR | MOAIImageTransform::PREMULTIPLY_ALPHA;
+	static const u32 DEFAULT_TRANSFORM = ZLImageTransform::TRUECOLOR | ZLImageTransform::PREMULTIPLY_ALPHA;
 	
 	//----------------------------------------------------------------//
 					MOAIImageTexture		();

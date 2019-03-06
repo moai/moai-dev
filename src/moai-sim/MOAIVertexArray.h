@@ -4,8 +4,6 @@
 #ifndef	MOAIVERTEXARRAY_H
 #define	MOAIVERTEXARRAY_H
 
-#include <moai-sim/ZLVertexArray.h>
-
 class MOAIVertexArray;
 class MOAIVertexBuffer;
 class ZLVertexBufferWithFormat;

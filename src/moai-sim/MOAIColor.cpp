@@ -304,30 +304,30 @@ void MOAIColor::RegisterLuaFuncs ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIColor::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIColor::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
 	if ( AttrID::Check ( attrID )) {
 
 		switch ( attrID.Unpack ()) {
 		
 			case ATTR_R_COL:
-				this->mR = ZLFloat::Clamp ( attr.Apply ( this->mR, op, MOAIAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				this->mR = ZLFloat::Clamp ( attr.Apply ( this->mR, op, ZLAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );
 				return true;
 				
 			case ATTR_G_COL:
-				this->mG = ZLFloat::Clamp ( attr.Apply ( this->mG, op, MOAIAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				this->mG = ZLFloat::Clamp ( attr.Apply ( this->mG, op, ZLAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );
 				return true;
 				
 			case ATTR_B_COL:
-				this->mB = ZLFloat::Clamp ( attr.Apply ( this->mB, op, MOAIAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				this->mB = ZLFloat::Clamp ( attr.Apply ( this->mB, op, ZLAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );
 				return true;
 				
 			case ATTR_A_COL:
-				this->mA = ZLFloat::Clamp ( attr.Apply ( this->mA, op, MOAIAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				this->mA = ZLFloat::Clamp ( attr.Apply ( this->mA, op, ZLAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );
 				return true;
 				
 			case COLOR_TRAIT:
-				attr.ApplyNoAdd ( this->mColor, op, MOAIAttribute::ATTR_READ );
+				attr.ApplyNoAdd ( this->mColor, op, ZLAttribute::ATTR_READ );
 				return true;
 		}
 	}
@@ -339,7 +339,7 @@ void MOAIColor::MOAINode_Update () {
 
 	this->mColor = *this;
 	
-	MOAIAttribute attr;
+	ZLAttribute attr;
 	if ( this->PullLinkedAttr ( AttrID::Pack ( INHERIT_COLOR ), attr )) {
 		this->mColor.Modulate ( attr.GetValue ( ZLColorVec::WHITE ));
 	}

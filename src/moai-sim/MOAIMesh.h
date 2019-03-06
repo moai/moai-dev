@@ -56,7 +56,7 @@ private:
 	friend class MOAIMesh;
 
 	MOAIMesh*				mMesh;
-	MOAIVertexFormat*		mVertexFormat;
+	ZLVertexFormat*			mVertexFormat;
 	ZLSize					mTotalPrims;
 	
 	const ZLVertexAttribute*	mAttribute;

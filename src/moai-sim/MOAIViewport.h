@@ -12,15 +12,8 @@
 */
 class MOAIViewport :
 	public virtual MOAILuaObject,
-	public ZLRect {
+	public virtual ZLViewport {
 private:
-
-	bool		mXScale;
-	bool		mYScale;
-	
-	ZLVec2D		mScale;
-	ZLVec2D		mOffset;
-	float		mRotation;
 
 	//----------------------------------------------------------------//
 	static int		_getFrame		( lua_State* L );
@@ -37,22 +30,10 @@ public:
 	friend class MOAICamera;
 	
 	//----------------------------------------------------------------//
-	float			GetAspect				() const;
-	float			GetInvAspect			() const;
-	ZLMatrix4x4		GetNormToWndMtx			() const;
-	ZLMatrix4x4		GetProjMtx				() const;
-	ZLMatrix4x4		GetProjMtxInv			() const;
-	ZLRect			GetRect					() const;
-	ZLVec2D			GetScale				() const;
-	ZLVec2D			GetUnits				() const;
-	ZLMatrix4x4		GetWndToNormMtx			() const;
 					MOAIViewport			();
 					~MOAIViewport			();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			SetOffset				( float xOffset, float yOffset );
-	void			SetRotation				( float degrees );
-	void			SetScale				( float xScale, float yScale );
 };
 
 #endif

@@ -1103,7 +1103,7 @@ void MOAITextLabel::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 	if ( !this->IsVisible ()) return;
 	if ( this->IsClear ()) return;
 	
-	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
 	if ( this->mDeck ) {
 	
@@ -1129,7 +1129,7 @@ void MOAITextLabel::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 				ZLMatrix4x4 worldDrawingMtx = this->MOAIGraphicsProp::MOAIGraphicsPropBase_GetWorldDrawingMtx ();
 				worldDrawingMtx.Prepend ( fit );
 			
-				gfxState.SetMtx ( ZLGfxStateCache::MODEL_TO_WORLD_MTX, worldDrawingMtx );
+				gfxMgr.SetMtx ( ZLGfxMgr::MODEL_TO_WORLD_MTX, worldDrawingMtx );
 			
 				this->LoadUVTransform ();
 				this->mDeck->Draw ( this->mIndex );
@@ -1147,8 +1147,8 @@ void MOAITextLabel::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 		MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
 		materialStack.LoadGfxState ();
 	
-		gfxState.SetVertexTransform ( ZLGfxStateCache::MODEL_TO_CLIP_MTX );
-		gfxState.SetUVTransform ( ZLGfxStateCache::UV_TO_MODEL_MTX );
+		gfxMgr.SetVertexTransform ( ZLGfxMgr::MODEL_TO_CLIP_MTX );
+		gfxMgr.SetUVTransform ( ZLGfxMgr::UV_TO_MODEL_MTX );
 
 		this->mLayout.Draw ( this->mReveal );
 
@@ -1167,12 +1167,12 @@ void MOAITextLabel::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAITextLabel >())) return;
 
-	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
 	ZLMatrix4x4 worldDrawingMtx = this->GetWorldDrawingMtx ();
 	
-	gfxState.SetMtx ( ZLGfxStateCache::MODEL_TO_WORLD_MTX, worldDrawingMtx );
-	gfxState.SetVertexTransform ( ZLGfxStateCache::MODEL_TO_CLIP_MTX );
+	gfxMgr.SetMtx ( ZLGfxMgr::MODEL_TO_WORLD_MTX, worldDrawingMtx );
+	gfxMgr.SetVertexTransform ( ZLGfxMgr::MODEL_TO_CLIP_MTX );
 	
 	this->mLayout.DrawDebug ();
 	
@@ -1290,7 +1290,7 @@ ZLMatrix4x4 MOAITextLabel::MOAIGraphicsPropBase_GetWorldDrawingMtx () const {
 	
 	if ( this->mAutoFlip ) {
 		
-		ZLMatrix4x4 viewProj = MOAIGfxMgr::Get ().mGfxState.GetMtx ( ZLGfxStateCache::WORLD_TO_CLIP_MTX );
+		ZLMatrix4x4 viewProj = MOAIGfxMgr::Get ().GetMtx ( ZLGfxMgr::WORLD_TO_CLIP_MTX );
 
 		ZLVec3D upVec = worldDrawingMtx.GetYAxis ();
 

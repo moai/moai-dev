@@ -367,7 +367,7 @@ void MOAIAbstractBaseTransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIAbstractBaseTransform::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIAbstractBaseTransform::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
 	// TODO: these values may need to be cached for performance reasons
 	if ( AttrID::Check ( attrID )) {
@@ -375,20 +375,20 @@ bool MOAIAbstractBaseTransform::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAt
 		switch ( attrID.Unpack ()) {
 			
 			case ATTR_WORLD_X_LOC:
-				attr.Apply ( this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R0 ], op, MOAIAttribute::ATTR_READ );
+				attr.Apply ( this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R0 ], op, ZLAttribute::ATTR_READ );
 				return true;
 			
 			case ATTR_WORLD_Y_LOC:
-				attr.Apply ( this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R1 ], op, MOAIAttribute::ATTR_READ );
+				attr.Apply ( this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R1 ], op, ZLAttribute::ATTR_READ );
 				return true;
 			
 			case ATTR_WORLD_Z_LOC:
-				attr.Apply ( this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R2 ], op, MOAIAttribute::ATTR_READ );
+				attr.Apply ( this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R2 ], op, ZLAttribute::ATTR_READ );
 				return true;
 			
 			case ATTR_WORLD_Z_ROT: {
 				float rot = ( float )( atan2 ( this->mLocalToWorldMtx.m [ ZLAffine3D::C0_R0 ], this->mLocalToWorldMtx.m [ ZLAffine3D::C0_R1 ]) * R2D );
-				attr.Apply ( rot, op, MOAIAttribute::ATTR_READ );
+				attr.Apply ( rot, op, ZLAttribute::ATTR_READ );
 				return true;
 			}
 			case ATTR_WORLD_X_SCL: {
@@ -399,7 +399,7 @@ bool MOAIAbstractBaseTransform::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAt
 				axis.mY =	this->mLocalToWorldMtx.m [ ZLAffine3D::C0_R1 ];
 				axis.mZ =	this->mLocalToWorldMtx.m [ ZLAffine3D::C0_R2 ];
 			
-				attr.Apply ( axis.Length (), op, MOAIAttribute::ATTR_READ );
+				attr.Apply ( axis.Length (), op, ZLAttribute::ATTR_READ );
 				return true;
 			}
 			case ATTR_WORLD_Y_SCL: {
@@ -410,7 +410,7 @@ bool MOAIAbstractBaseTransform::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAt
 				axis.mY =	this->mLocalToWorldMtx.m [ ZLAffine3D::C1_R1 ];
 				axis.mZ =	this->mLocalToWorldMtx.m [ ZLAffine3D::C1_R2 ];
 				
-				attr.Apply ( axis.Length (), op, MOAIAttribute::ATTR_READ );
+				attr.Apply ( axis.Length (), op, ZLAttribute::ATTR_READ );
 				return true;
 			}
 			case ATTR_WORLD_Z_SCL: {
@@ -421,12 +421,12 @@ bool MOAIAbstractBaseTransform::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAt
 				axis.mY =	this->mLocalToWorldMtx.m [ ZLAffine3D::C2_R1 ];
 				axis.mZ =	this->mLocalToWorldMtx.m [ ZLAffine3D::C2_R2 ];
 				
-				attr.Apply ( axis.Length (), op, MOAIAttribute::ATTR_READ );
+				attr.Apply ( axis.Length (), op, ZLAttribute::ATTR_READ );
 				return true;
 			}
 			case TRANSFORM_TRAIT:
 			
-				attr.ApplyNoAdd ( this->mLocalToWorldMtx, op, MOAIAttribute::ATTR_READ );
+				attr.ApplyNoAdd ( this->mLocalToWorldMtx, op, ZLAttribute::ATTR_READ );
 				return true;
 		}
 	}

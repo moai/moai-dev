@@ -4,7 +4,7 @@
 #ifndef	MOAIGFXRESOURCE_H
 #define	MOAIGFXRESOURCE_H
 
-#include <moai-sim/ZLAbstractGfxResource.h>
+#include <moai-sim/MOAIGfxMgr.h>
 
 //================================================================//
 // MOAIAbstractGfxResource
@@ -56,10 +56,15 @@ class MOAIGfxResource :
 protected:
 
 	//----------------------------------------------------------------//
-	ZLAbstractGfxResource& MOAIAbstractGfxResource_ZLAbstractGfxResource () {
-		return *this;
+	MOAIGfxResource () {
+		
+		this->SetGfxMgr ( MOAIGfxMgr::Get ());
 	}
-	
+
+	//----------------------------------------------------------------//
+	~MOAIGfxResource () {
+	}
+
 	//----------------------------------------------------------------//
 	void RegisterLuaClass ( MOAILuaState& state ) {
 		MOAIAbstractGfxResource::RegisterLuaClass ( state );
@@ -68,6 +73,22 @@ protected:
 	//----------------------------------------------------------------//
 	void RegisterLuaFuncs ( MOAILuaState& state ) {
 		MOAIAbstractGfxResource::RegisterLuaFuncs ( state );
+	}
+
+	//----------------------------------------------------------------//
+	// virtual
+
+	//----------------------------------------------------------------//
+	ZLAbstractGfxResource& MOAIAbstractGfxResource_ZLAbstractGfxResource () {
+		return *this;
+	}
+	
+	//----------------------------------------------------------------//
+	void OnGfxEvent ( u32 event, void* userdata ) {
+	
+		// let Lua know the resource is ready for use
+		this->InvokeListener ( ZLAbstractGfxResource::GFX_EVENT_CREATED );
+		ZL_RESOURCE_TYPE::OnGfxEvent ( event, userdata );
 	}
 
 	//----------------------------------------------------------------//
@@ -85,14 +106,6 @@ protected:
 			}
 		}
 		return false;
-	}
-	
-	//----------------------------------------------------------------//
-	void OnGfxEvent ( u32 event, void* userdata ) {
-	
-		// let Lua know the resource is ready for use
-		this->InvokeListener ( ZLAbstractGfxResource::GFX_EVENT_CREATED );
-		ZL_RESOURCE_TYPE::OnGfxEvent ( event, userdata );
 	}
 };
 

@@ -6,7 +6,6 @@
 
 #include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIAbstractGfxBuffer.h>
-#include <moai-sim/ZLIndexBuffer.h>
 
 //================================================================//
 // MOAIIndexBuffer

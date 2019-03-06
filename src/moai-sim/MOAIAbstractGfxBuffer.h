@@ -4,8 +4,6 @@
 #ifndef	MOAIABSTRACTGFXBUFFER_H
 #define	MOAIABSTRACTGFXBUFFER_H
 
-#include <moai-sim/ZLGfxBuffer.h>
-
 //================================================================//
 // MOAIAbstractGfxBuffer
 //================================================================//

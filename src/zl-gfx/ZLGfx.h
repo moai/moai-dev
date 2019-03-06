@@ -5,6 +5,7 @@
 #define ZLGFX_H
 
 #include <zl-gfx/ZLGfxHandle.h>
+#include <zl-gfx/ZLGfxListener.h>
 #include <zl-util/ZLLeanArray.h>
 #include <zl-util/ZLLeanStack.h>
 #include <zl-util/ZLMatrix3x3.h>
@@ -23,27 +24,6 @@ class ZLCopyOnWrite;
 #endif
 
 #define ZGL_COMMENT(gfx,comment) ( gfx ).Comment ( comment )
-
-//================================================================//
-// ZLGfxListener
-//================================================================//
-class ZLGfxListener :
-	public virtual ZLRefCountedObject {
-private:
-
-	GET ( ZLGfxListener*, HandleTarget, this )
-
-public:
-
-	//----------------------------------------------------------------//
-	virtual	void			ZLGfxListener_OnGfxEvent			( u32 event, void* userdata );
-	virtual void			ZLGfxListener_OnReadPixels			( const ZLCopyOnWrite& copyOnWrite, void* userdata );
-	virtual void			ZLGfxListener_OnUniformLocation		( u32 addr, void* userdata );
-							ZLGfxListener						();
-	virtual					~ZLGfxListener						();
-};
-
-typedef ZLWeakPtr < ZLGfxListener > ZLGfxListenerHandle;
 
 //================================================================//
 // ZLGfx

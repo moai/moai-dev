@@ -4,7 +4,6 @@
 #ifndef	MOAIMATERIALBASE_H
 #define	MOAIMATERIALBASE_H
 
-#include <moai-sim/ZLBlendMode.h>
 #include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAITextureBase.h>

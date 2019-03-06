@@ -85,11 +85,11 @@ MOAIScriptNode::~MOAIScriptNode () {
 }
 
 //----------------------------------------------------------------//
-void MOAIScriptNode::NamedAttrAdd ( ZLIndex attrID, MOAIAttribute &attr ) {
+void MOAIScriptNode::NamedAttrAdd ( ZLIndex attrID, ZLAttribute &attr ) {
 	
 	cc8* attrName = this->mAttrNames [ attrID ];
 	switch ( attr.GetTypeID ()) {
-		case MOAIAttribute::ATTR_TYPE_FLOAT_32: {
+		case ZLAttribute::ATTR_TYPE_FLOAT_32: {
 			float value = attr.GetValue ( 0.0f );
 			
 			if ( value != 0.0f ) {
@@ -101,7 +101,7 @@ void MOAIScriptNode::NamedAttrAdd ( ZLIndex attrID, MOAIAttribute &attr ) {
 			}
 			break;
 		}
-		case MOAIAttribute::ATTR_TYPE_INT_32: {
+		case ZLAttribute::ATTR_TYPE_INT_32: {
 			int value = ( int )attr.GetValue ( 0 );
 			
 			if ( value != 0 ) {
@@ -116,7 +116,7 @@ void MOAIScriptNode::NamedAttrAdd ( ZLIndex attrID, MOAIAttribute &attr ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIScriptNode::NamedAttrGet ( ZLIndex attrID, MOAIAttribute &attr ) {
+void MOAIScriptNode::NamedAttrGet ( ZLIndex attrID, ZLAttribute &attr ) {
 	
 	cc8* attrName = this->mAttrNames [ attrID ];
 	
@@ -127,23 +127,23 @@ void MOAIScriptNode::NamedAttrGet ( ZLIndex attrID, MOAIAttribute &attr ) {
 	if ( state.IsType ( -1, LUA_TNUMBER )) {
 		
 		float value = state.GetValue < float >( -1, 0.0f );
-		attr.Apply ( value, MOAIAttribute::GET, MOAIAttribute::ATTR_WRITE );
+		attr.Apply ( value, ZLAttribute::GET, ZLAttribute::ATTR_WRITE );
 	}
 	else {
 		
 		MOAIMemberTableAttr value;
 		value.mSource = this;
 		value.mFieldName = attrName;
-		attr.ApplyVariantNoAdd ( value, MOAIAttribute::GET, MOAIAttribute::ATTR_WRITE );
+		attr.ApplyVariantNoAdd ( value, ZLAttribute::GET, ZLAttribute::ATTR_WRITE );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIScriptNode::NamedAttrSet ( ZLIndex attrID, MOAIAttribute &attr ) {
+void MOAIScriptNode::NamedAttrSet ( ZLIndex attrID, ZLAttribute &attr ) {
 	
 	cc8* attrName = this->mAttrNames [ attrID ];
 	switch ( attr.GetTypeID ()) {
-		case MOAIAttribute::ATTR_TYPE_FLOAT_32: {
+		case ZLAttribute::ATTR_TYPE_FLOAT_32: {
 
 			float value = attr.GetValue ( 0.0f );
 			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
@@ -152,7 +152,7 @@ void MOAIScriptNode::NamedAttrSet ( ZLIndex attrID, MOAIAttribute &attr ) {
 			
 			break;
 		}
-		case MOAIAttribute::ATTR_TYPE_INT_32: {
+		case ZLAttribute::ATTR_TYPE_INT_32: {
 			
 			int value = attr.GetValue ( 0 );
 			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
@@ -161,7 +161,7 @@ void MOAIScriptNode::NamedAttrSet ( ZLIndex attrID, MOAIAttribute &attr ) {
 			
 			break;
 		}
-		case MOAIAttribute::ATTR_TYPE_VARIANT: {
+		case ZLAttribute::ATTR_TYPE_VARIANT: {
 			
 			MOAIMemberTableAttr value;
 			value = attr.GetVariant < MOAIMemberTableAttr >( value );
@@ -208,7 +208,7 @@ void MOAIScriptNode::RegisterLuaFuncs ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIScriptNode::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIScriptNode::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 	
 	ZLIndex attrIndex = ZLIndexCast ( attrID.Unpack () - 1 );
 	
@@ -218,24 +218,24 @@ bool MOAIScriptNode::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& at
 	}
 	
 	if ( this->mAttrNames [ attrIndex ] == 0 ) {
-		this->mAttributes [ attrIndex ] = attr.Apply ( this->mAttributes [ attrIndex ], op, MOAIAttribute::ATTR_READ_WRITE );
+		this->mAttributes [ attrIndex ] = attr.Apply ( this->mAttributes [ attrIndex ], op, ZLAttribute::ATTR_READ_WRITE );
 		return true;
 	}
 	else {
 		switch ( op ) {
-			case MOAIAttribute::CHECK:
-				attr.SetFlags ( MOAIAttribute::ATTR_READ_WRITE );
+			case ZLAttribute::CHECK:
+				attr.SetFlags ( ZLAttribute::ATTR_READ_WRITE );
 				break;
 				
-			case MOAIAttribute::ADD:
+			case ZLAttribute::ADD:
 				this->NamedAttrAdd ( attrIndex, attr );
 				break;
 				
-			case MOAIAttribute::SET:
+			case ZLAttribute::SET:
 				this->NamedAttrSet ( attrIndex, attr );
 				break;
 				
-			case MOAIAttribute::GET:
+			case ZLAttribute::GET:
 				this->NamedAttrGet ( attrIndex, attr );
 				break;
 		}

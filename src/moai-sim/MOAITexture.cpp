@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/ZLGfxResourceClerk.h>
 #include <moai-sim/MOAIImageFormatMgr.h>
 #include <moai-sim/MOAITexture.h>
 
@@ -292,6 +291,7 @@ MOAITexture::MOAITexture () :
 	mAutoClearImage ( false ) {
 	
 	RTTI_BEGIN
+		RTTI_EXTEND ( MOAIAbstractGfxResource )
 		RTTI_EXTEND ( MOAITextureBase )
 	RTTI_END
 }
@@ -305,12 +305,14 @@ MOAITexture::~MOAITexture () {
 //----------------------------------------------------------------//
 void MOAITexture::RegisterLuaClass ( MOAILuaState& state ) {
 	
+	MOAIGfxResource < ZLTexture >::RegisterLuaClass ( state );
 	MOAITextureBase::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAITexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 
+	MOAIGfxResource < ZLTexture >::RegisterLuaFuncs ( state );
 	MOAITextureBase::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
@@ -323,7 +325,6 @@ void MOAITexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAITexture::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAITextureBase::SerializeIn ( state, serializer );
 	
 	STLString path = state.GetFieldValue ( -1, "mPath", "" );
 	
@@ -334,7 +335,6 @@ void MOAITexture::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serialize
 
 //----------------------------------------------------------------//
 void MOAITexture::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAITextureBase::SerializeOut ( state, serializer );
 	
 	STLString path = ZLFileSys::GetRelativePath ( this->mFilename );
 	state.SetField ( -1, "mPath", path.str ());

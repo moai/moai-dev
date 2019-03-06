@@ -15,10 +15,10 @@ class MOAIEaseDriverLink {
 public:
 	
 	MOAILuaSharedPtr < MOAINode >	mSource;
-	MOAIAttrID						mSourceAttrID;
+	ZLAttrID						mSourceAttrID;
 	
 	MOAILuaSharedPtr < MOAINode >	mDest;
-	MOAIAttrID						mDestAttrID;
+	ZLAttrID						mDestAttrID;
 	
 	float							mV0;
 	float							mV1;
@@ -56,8 +56,8 @@ public:
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			ReserveLinks			( u32 total );
-	void			SetLink					( ZLIndex idx, MOAINode* dest, MOAIAttrID destAttrID, float v1, u32 mode );
-	void			SetLink					( ZLIndex idx, MOAINode* dest, MOAIAttrID destAttrID, MOAINode* source, MOAIAttrID sourceAttrID, u32 mode );
+	void			SetLink					( ZLIndex idx, MOAINode* dest, ZLAttrID destAttrID, float v1, u32 mode );
+	void			SetLink					( ZLIndex idx, MOAINode* dest, ZLAttrID destAttrID, MOAINode* source, ZLAttrID sourceAttrID, u32 mode );
 };
 
 #endif

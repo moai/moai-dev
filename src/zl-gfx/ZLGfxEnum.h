@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef ZL_GFX_ENUM_H
-#define ZL_GFX_ENUM_H
+#ifndef ZLGFXENUM_H
+#define ZLGFXENUM_H
 
 // hardware PVR support is based on device
 #ifdef MOAI_OS_IPHONE

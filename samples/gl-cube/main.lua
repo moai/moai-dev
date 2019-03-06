@@ -19,7 +19,10 @@ layer:pushRenderPass ()
 
 camera = MOAICamera.new ()
 camera:setType ( MOAICamera.CAMERA_TYPE_3D )
+print ( camera:getFocalLength ( 320 ))
+--camera:moveLoc ( 0, 0, camera:getFocalLength ( 320 ), 6 )
 camera:setLoc ( 0, 0, camera:getFocalLength ( 320 ))
+--camera:moveLoc ( 0, 0, -500, 6 )
 layer:setCamera ( camera )
 
 function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
@@ -112,6 +115,7 @@ local mesh = makeCube ( 128, '../resources/moai.png' )
 
 prop = MOAIProp.new ()
 prop:setDeck ( mesh )
+prop:setLoc ( 0, 0, 0 )
 prop:moveRot ( 360, 360, 0, 6 )
 prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
 prop:setPartition ( layer )

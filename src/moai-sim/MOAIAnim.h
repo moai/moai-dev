@@ -16,7 +16,7 @@ public:
 
 	MOAILuaSharedPtr < MOAIAnimCurve >	mCurve;
 	MOAILuaSharedPtr < MOAINode > 		mTarget;
-	MOAIAttrID							mAttrID;
+	ZLAttrID							mAttrID;
 	bool								mRelative;
 };
 
@@ -59,7 +59,7 @@ public:
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			ReserveLinks		( u32 totalLinks );
-	void			SetLink				( ZLIndex linkID, MOAIAnimCurve* curve, MOAINode* target, MOAIAttrID attrID, bool relative );
+	void			SetLink				( ZLIndex linkID, MOAIAnimCurve* curve, MOAINode* target, ZLAttrID attrID, bool relative );
 };
 
 #endif

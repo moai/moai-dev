@@ -200,7 +200,12 @@ int MOAIMaterialBatch::GetBlendMode ( MOAILuaState& state, int idx ) {
 
 	MOAIMaterial* material = this->RawGetMaterial ( state.GetValue < MOAILuaIndex >( idx, ZLIndexOp::ZERO ));
 	if ( material ) {
-		return material->mBlendMode.Push ( state );
+		ZLBlendMode& blendMode = material->mBlendMode;
+		state.Push ( blendMode.mEquation );
+		state.Push ( blendMode.mSourceFactor );
+		state.Push ( blendMode.mDestFactor );
+	
+		return 3;
 	}
 	return 0;
 }
@@ -324,7 +329,7 @@ int MOAIMaterialBatch::GetTexture ( MOAILuaState& state, int idx ) {
 	ZLIndex materialID = MOAIMaterialBatch::GetNamedGlobalID ( state, idx, name );
 
 	MOAIMaterial* material = this->RawGetMaterial ( materialID );
-	state.Push (( MOAITexture* )material->GetTexture ( name ));
+	state.Push ( material->GetTexture ( name ));
 	return 1;
 }
 
@@ -423,8 +428,13 @@ void MOAIMaterialBatch::SetBlendMode ( MOAILuaState& state, int idx ) {
 	ZLIndex materialID = MOAIMaterialBatch::GetMaterialID ( state, idx, set );
 
 	if ( set ) {
+	
+		u32 equation	= state.GetValue < u32 >( idx++, ZGL_BLEND_MODE_ADD );
+		u32 srcFactor	= state.GetValue < u32 >( idx++, ZGL_BLEND_FACTOR_ONE );
+		u32 dstFactor	= state.GetValue < u32 >( idx, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
+	
 		ZLBlendMode blendMode;
-		blendMode.Init ( state, idx );
+		blendMode.SetBlend ( equation, srcFactor, dstFactor );
 		this->SetBlendMode ( materialID, blendMode );
 	}
 	else {

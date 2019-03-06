@@ -170,7 +170,7 @@ void MOAIImageFormatJpg::ReadImageJpg ( MOAIImage& image, void* jpgInfoParam, u3
 	this->SetPixelFormat ( image, MOAIImage::TRUECOLOR );
 	this->SetColorFormat ( image, jpgColorFormat );
 	
-	if (( transform & MOAIImageTransform::QUANTIZE ) && ( ZLColor::GetDepthInBits ( jpgColorFormat ) > 16 )) {
+	if (( transform & ZLImageTransform::QUANTIZE ) && ( ZLColor::GetDepthInBits ( jpgColorFormat ) > 16 )) {
 		this->SetColorFormat ( image, ZLColor::RGB_565 );
 	}
 		
@@ -190,7 +190,7 @@ void MOAIImageFormatJpg::ReadImageJpg ( MOAIImage& image, void* jpgInfoParam, u3
 			jpeg_read_scanlines ( cinfo, &row, 1 );
 		}
 		
-		if ( transform & MOAIImageTransform::PREMULTIPLY_ALPHA ) {
+		if ( transform & ZLImageTransform::PREMULTIPLY_ALPHA ) {
 			for ( u32 y = 0; y < height; ++y ) {
 				void* row = this->GetRowAddrMutable ( image, y );
 				ZLColor::PremultiplyAlpha ( row, image.GetColorFormat (), width );
@@ -207,7 +207,7 @@ void MOAIImageFormatJpg::ReadImageJpg ( MOAIImage& image, void* jpgInfoParam, u3
 			void* destRow = this->GetRowAddrMutable ( image, y );
 			ZLColor::Convert ( destRow, image.GetColorFormat (), rowBuffer, jpgColorFormat, width );
 			
-			if ( transform & MOAIImageTransform::PREMULTIPLY_ALPHA ) {
+			if ( transform & ZLImageTransform::PREMULTIPLY_ALPHA ) {
 				ZLColor::PremultiplyAlpha ( destRow, image.GetColorFormat (), width );
 			}
 		}

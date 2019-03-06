@@ -93,7 +93,7 @@ public:
 	void			DrawRay					( float x, float y, float dx, float dy );
 	void			DrawString				( cc8* text, float x, float y, float width, float height );
 	void			DrawString				( cc8* text, float x, float y, float scale, MOAIFont& font, float fontSize, float shadowOffsetX, float shadowOffsetY, float width, float height );
-	void			DrawTexture				( float left, float top, float right, float bottom, MOAITexture* texture );
+	void			DrawTexture				( float left, float top, float right, float bottom, MOAITextureBase* texture );
 	void			DrawVertexArray			( const ZLVec3D* verts, u32 count, u32 color, u32 primType );
 	void			DrawVertexArray2D		( const float* verts, u32 count, u32 color, u32 primType );
 	void			EndDrawString			();

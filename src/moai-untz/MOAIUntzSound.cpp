@@ -435,11 +435,11 @@ void MOAIUntzSound::RegisterLuaFuncs ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIUntzSound::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIUntzSound::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
 	if ( AttrID::Check ( attrID )) {
 		if ( attrID.Unpack () == ATTR_VOLUME ) {
-			this->mSound->setVolume ( attr.Apply ( this->mSound->getVolume (), op, MOAIAttribute::ATTR_READ_WRITE ));
+			this->mSound->setVolume ( attr.Apply ( this->mSound->getVolume (), op, ZLAttribute::ATTR_READ_WRITE ));
 			return true;
 		}
 	}

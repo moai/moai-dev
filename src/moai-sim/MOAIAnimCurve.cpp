@@ -101,7 +101,7 @@ ZLIndex MOAIAnimCurve::FindKeyID ( float time ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurve::GetDelta ( MOAIAttribute& attr, float t0, float t1 ) {
+void MOAIAnimCurve::GetDelta ( ZLAttribute& attr, float t0, float t1 ) {
 	
 	if (( t0 == t1 ) || ( this->mKeys.Size () < 2 )) {
 		this->MOAIAnimCurve_GetZero ( attr );
@@ -168,7 +168,7 @@ MOAIAnimKeySpan MOAIAnimCurve::GetSpan ( float time ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurve::GetValue ( MOAIAttribute& attr, float time ) {
+void MOAIAnimCurve::GetValue ( ZLAttribute& attr, float time ) {
 	
 	MOAIAnimKeySpan span = this->GetSpan ( time );
 	this->MOAIAnimCurve_GetValue ( attr, span );
@@ -304,29 +304,29 @@ void MOAIAnimCurve::MOAIAnimCurve_Draw ( u32 resolution ) const {
 	// and then the spans between keys should be filled in with an approximation of
 	// the resolution.
 	
-	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
 	ZLReal length = this->GetLength ();
 	ZLReal step = length / ( ZLReal )resolution;
 	
-	gfxState.BeginPrim ( ZGL_PRIM_LINE_STRIP, resolution );
+	gfxMgr.BeginPrim ( ZGL_PRIM_LINE_STRIP, resolution );
 	
 	for ( ZLSize i = 0; i < resolution; ++i ) {
 		
 		ZLReal t = step * ( ZLReal )i;
 		ZLReal v = this->MOAIAnimCurve_GetFloatForTime ( t );
 		
-		gfxState.WriteVtx ( t, v, 0.0 );
-		gfxState.WritePenColor4b ();
+		gfxMgr.WriteVtx ( t, v, 0.0 );
+		gfxMgr.WritePenColor4b ();
 	}
 	
 	ZLReal t = length;
 	ZLReal v = this->MOAIAnimCurve_GetFloatForTime ( t );
 	
-	gfxState.WriteVtx ( t, v, 0.0 );
-	gfxState.WritePenColor4b ();
+	gfxMgr.WriteVtx ( t, v, 0.0 );
+	gfxMgr.WritePenColor4b ();
 	
-	gfxState.EndPrim ();
+	gfxMgr.EndPrim ();
 }
 
 //----------------------------------------------------------------//
@@ -336,13 +336,13 @@ ZLReal MOAIAnimCurve::MOAIAnimCurve_GetFloatForTime ( ZLReal t ) const {
 }
 
 //----------------------------------------------------------------//
-bool MOAIAnimCurve::MOAINode_ApplyAttrOp ( MOAIAttrID attrID, MOAIAttribute& attr, u32 op ) {
+bool MOAIAnimCurve::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
 	if ( AttrID::Check ( attrID )) {
 
 		switch ( attrID.Unpack ()) {
 			case ATTR_TIME:
-				this->mTime = attr.Apply ( this->mTime, op, MOAIAttribute::ATTR_READ_WRITE );
+				this->mTime = attr.Apply ( this->mTime, op, ZLAttribute::ATTR_READ_WRITE );
 				return true;
 			case ATTR_VALUE:
 				this->MOAIAnimCurve_ApplyValueAttrOp ( attr, op );

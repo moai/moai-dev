@@ -801,7 +801,7 @@ void MOAIRegion::DrawDebug () const {
 	
 	static u32 POLY_CORRUPT_COLOR					= ZLColor::PackRGBA ( 1.0f, 0.0f, 0.0f, 1.0f );
 
-	ZLGfxStateCache& gfxState = MOAIGfxMgr::Get ().mGfxState;
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	MOAIDraw& draw = MOAIDraw::Get ();
 	draw.Bind ();
@@ -813,38 +813,38 @@ void MOAIRegion::DrawDebug () const {
 		switch ( poly.GetInfo ()) {
 		
 			case ZLPolygon2D::POLY_UNKNOWN: {
-				gfxState.SetPenColor ( POLY_UNKNOWN_COLOR );
-				gfxState.SetPenWidth ( 1.0f );
+				gfxMgr.SetPenColor ( POLY_UNKNOWN_COLOR );
+				gfxMgr.SetPenWidth ( 1.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_COMPLEX: {
-				gfxState.SetPenColor ( POLY_COMPLEX_COLOR );
-				gfxState.SetPenWidth ( 1.0f );
+				gfxMgr.SetPenColor ( POLY_COMPLEX_COLOR );
+				gfxMgr.SetPenWidth ( 1.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_ANTICLOCKWISE_CONVEX: {
-				gfxState.SetPenColor ( POLY_ANTICLOCKWISE_CONVEX_COLOR );
-				gfxState.SetPenWidth ( 2.0f );
+				gfxMgr.SetPenColor ( POLY_ANTICLOCKWISE_CONVEX_COLOR );
+				gfxMgr.SetPenWidth ( 2.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_ANTICLOCKWISE_CONCAVE: {
-				gfxState.SetPenColor ( POLY_ANTICLOCKWISE_CONCAVE_COLOR );
-				gfxState.SetPenWidth ( 2.0f );
+				gfxMgr.SetPenColor ( POLY_ANTICLOCKWISE_CONCAVE_COLOR );
+				gfxMgr.SetPenWidth ( 2.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_CLOCKWISE_CONVEX: {
-				gfxState.SetPenColor ( POLY_CLOCKWISE_CONVEX_COLOR );
-				gfxState.SetPenWidth ( 1.0f );
+				gfxMgr.SetPenColor ( POLY_CLOCKWISE_CONVEX_COLOR );
+				gfxMgr.SetPenWidth ( 1.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_CLOCKWISE_CONCAVE: {
-				gfxState.SetPenColor ( POLY_CLOCKWISE_CONCAVE_COLOR );
-				gfxState.SetPenWidth ( 1.0f );
+				gfxMgr.SetPenColor ( POLY_CLOCKWISE_CONCAVE_COLOR );
+				gfxMgr.SetPenWidth ( 1.0f );
 				break;
 			}
 			case ZLPolygon2D::POLY_CORRUPT: {
-				gfxState.SetPenColor ( POLY_CORRUPT_COLOR );
-				gfxState.SetPenWidth ( 1.0f );
+				gfxMgr.SetPenColor ( POLY_CORRUPT_COLOR );
+				gfxMgr.SetPenWidth ( 1.0f );
 				break;
 			}
 		}

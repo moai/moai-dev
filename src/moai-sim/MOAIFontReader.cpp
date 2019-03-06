@@ -183,7 +183,10 @@ int MOAIFontReader::_selectGlyph ( lua_State* L ) {
 int MOAIFontReader::_setBlendMode ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFontReader, "U" )
 	
-	self->mBlendMode.Init ( state, 2 );
+	self->mBlendMode.mEquation			= ( ZLColor::BlendEquation )state.GetValue < u32 >( 2, ( u32 )ZLColor::BLEND_EQ_NONE );
+	self->mBlendMode.mSourceFactor		= ( ZLColor::BlendFactor )state.GetValue < u32 >( 3, ( u32 )ZLColor::BLEND_FACTOR_ZERO );
+	self->mBlendMode.mDestFactor		= ( ZLColor::BlendFactor )state.GetValue < u32 >( 4, ( u32 )ZLColor::BLEND_FACTOR_ZERO );
+	
 	return 0;
 }
 

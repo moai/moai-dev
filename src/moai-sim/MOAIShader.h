@@ -5,7 +5,6 @@
 #define	MOAISHADER_H
 
 #include <moai-sim/MOAIShaderProgram.h>
-#include <moai-sim/ZLAbstractShaderUniformSchema.h>
 
 //================================================================//
 // MOAIShader
@@ -16,14 +15,9 @@
 			uniform values and to expose uniform values as MOAINode attributes.
 */
 class MOAIShader :
-	public virtual MOAINode {
+	public virtual MOAINode,
+	public virtual ZLShader {
 protected:
-
-	friend class ZLGfxStateGPUCache;
-	friend class MOAIShaderProgram;
-
-	MOAILuaSharedPtr < MOAIShaderProgram >		mProgram;
-	ZLLeanArray < u8 >							mPendingUniformBuffer;
 
 	//----------------------------------------------------------------//
 	static int				_getAttributeID				( lua_State* L );
@@ -32,31 +26,18 @@ protected:
 	static int				_setUniformArrayItem		( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool					IsDirty					();
-
-	//----------------------------------------------------------------//
-	bool					MOAINode_ApplyAttrOp		( MOAIAttrID attrID, MOAIAttribute& attr, u32 op );
+	bool					MOAINode_ApplyAttrOp		( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 
 public:
 
 	DECL_LUA_FACTORY ( MOAIShader )
 
-	GET ( MOAIShaderProgram*, Program, mProgram )
-
 	//----------------------------------------------------------------//
-	void					ApplyUniforms			();
 	static MOAIShader*		AffirmShader			( MOAILuaState& state, int idx );
-	void					BindUniforms			();
-	void					Bless					();
-	bool					HasDirtyUniforms		();
 							MOAIShader				();
 							~MOAIShader				();
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
-	void					ResizeUniformArray		( u32 uniformID, u32 count );
-	void					ScheduleTextures		();
-	void					SetProgram				( MOAIShaderProgram* program );
-	void					UpdateUniforms			();
 };
 
 #endif

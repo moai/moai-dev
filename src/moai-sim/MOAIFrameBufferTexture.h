@@ -16,6 +16,7 @@
 			also a texture that may be bound and used like any other.
 */
 class MOAIFrameBufferTexture :
+	public MOAIGfxResource < ZLFrameBufferTexture >,
 	public MOAIFrameBuffer,
 	public MOAITextureBase {
 private:
