@@ -8682,6 +8682,8 @@
 		89BE688A173974FC00DFE837 /* zl-gfx */ = {
 			isa = PBXGroup;
 			children = (
+				CD582964226ECD75009CD0B6 /* GL */,
+				CD582965226ECD7F009CD0B6 /* Vulkan */,
 				89BE688B173974FC00DFE837 /* headers.h */,
 				89BE688C173974FC00DFE837 /* pch.cpp */,
 				89BE688D173974FC00DFE837 /* pch.h */,
@@ -10295,6 +10297,20 @@
 				CD5161581BCDC0BD000718FB /* MOAIImageFormatPng.h */,
 			);
 			name = "moai-image-png";
+			sourceTree = "<group>";
+		};
+		CD582964226ECD75009CD0B6 /* GL */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = GL;
+			sourceTree = "<group>";
+		};
+		CD582965226ECD7F009CD0B6 /* Vulkan */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Vulkan;
 			sourceTree = "<group>";
 		};
 		CD5C6ACF1E7CFDBA00E93612 /* artoolkit5 */ = {

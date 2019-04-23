@@ -31,16 +31,6 @@ bool ZLShader::HasDirtyUniforms () {
 }
 
 //----------------------------------------------------------------//
-ZLShader::ZLShader () {
-
-	RTTI_SINGLE ( RTTIBase )
-}
-
-//----------------------------------------------------------------//
-ZLShader::~ZLShader () {
-}
-
-//----------------------------------------------------------------//
 void ZLShader::ScheduleTextures () {
 
 	if ( this->mProgram ) {
@@ -65,3 +55,14 @@ void ZLShader::UpdateUniforms () {
 		this->mProgram->UpdateUniforms ( this->mPendingUniformBuffer );
 	}
 }
+
+//----------------------------------------------------------------//
+ZLShader::ZLShader () {
+
+	RTTI_SINGLE ( RTTIBase )
+}
+
+//----------------------------------------------------------------//
+ZLShader::~ZLShader () {
+}
+
