@@ -117,13 +117,13 @@ int MOAILuaSingletonClass < TYPE >::_getTypeID ( lua_State* L ) {
 //----------------------------------------------------------------//
 template < typename TYPE >
 MOAILuaSingletonClass < TYPE >& MOAILuaSingletonClass < TYPE >::Get () {
-	return *ZLContextMgr::Get ()->AffirmGlobal < MOAILuaSingletonClass >();
+	return *ZLContextMgr::Get ()->AffirmGlobal < MOAILuaSingletonClass < TYPE > >();
 }
 
 //----------------------------------------------------------------//
 template < typename TYPE >
 MOAILuaObject* MOAILuaSingletonClass < TYPE >::GetSingleton () {
-	return ZLContextMgr::Get ()->AffirmGlobal < TYPE >();
+	return ZLContextMgr::Get ()->GetGlobal < TYPE >();
 }
 
 //----------------------------------------------------------------//
@@ -138,6 +138,7 @@ void MOAILuaSingletonClass < TYPE >::Register () {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	MOAILuaObject* type = this->GetSingleton ();
+	assert ( type );
 	this->InitLuaSingletonClass ( *type, state );
 }
 

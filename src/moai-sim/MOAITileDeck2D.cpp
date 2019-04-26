@@ -6,9 +6,7 @@
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIQuadBrush.h>
-#include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAITileDeck2D.h>
-#include <moai-sim/MOAITextureBase.h>
 
 //================================================================//
 // local
@@ -322,8 +320,8 @@ void MOAITileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIQuadBrush::BindVertexFormat ();
 	
-	gfxMgr.SetVertexTransform ( ZLGfxMgr::MODEL_TO_CLIP_MTX );
-	gfxMgr.SetUVTransform ( ZLGfxMgr::UV_TO_MODEL_MTX );
+	gfxMgr.SetVertexTransform ( ZLGfxMgrGL::MODEL_TO_CLIP_MTX );
+	gfxMgr.SetUVTransform ( ZLGfxMgrGL::UV_TO_MODEL_MTX );
 	
 	MOAICellCoord coord = this->GetCellCoord ( idx );
 	ZLRect uvRect = this->GetTileRect ( coord );

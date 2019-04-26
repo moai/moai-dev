@@ -9,7 +9,6 @@ SUPPRESS_EMPTY_FILE_WARNING
 
 #include <tinyxml.h>
 
-#include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIParticlePexPlugin.h>
 #include <moai-sim/MOAIParticleSystem.h>
 #include <moai-sim/MOAIParticleState.h>

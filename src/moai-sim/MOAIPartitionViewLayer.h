@@ -5,7 +5,6 @@
 #define	MOAIPARTITIONVIEWLAYER_H
 
 #include <moai-sim/MOAIAbstractViewLayer.h>
-#include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIPartitionHolder.h>
 #include <moai-sim/MOAIViewport.h>

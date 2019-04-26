@@ -19,6 +19,8 @@ void AKUSdlAppInitialize () {
 //----------------------------------------------------------------//
 void AKUSdlContextInitialize () {
 
+	MOAIDialogSDL::Affirm ();
+
 	REGISTER_LUA_CLASS ( MOAIDialogSDL )
 }
 

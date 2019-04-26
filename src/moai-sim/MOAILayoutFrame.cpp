@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIDebugLines.h>
-#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAILayoutFrame.h>
 
 //================================================================//

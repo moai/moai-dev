@@ -31,9 +31,10 @@ private:
 	void				SetRoot						( MOAIAction* root );
 
 	//----------------------------------------------------------------//
-	void				MOAIAction_DidLoseChild		( MOAIAction* child );
-	bool				MOAIAction_IsDone			();
-	void				MOAIAction_Update			( double step );
+	void				MOAIAction_DidLoseChild			( MOAIAction* child );
+	MOAIAction*			MOAIAction_GetDefaultParent		();
+	bool				MOAIAction_IsDone				();
+	void				MOAIAction_Update				( double step );
 
 protected:
 
@@ -53,7 +54,6 @@ public:
 	GET_SET ( bool, ThreadInfoEnabled, mThreadInfoEnabled )
 
 	//----------------------------------------------------------------//
-	MOAIAction*			GetDefaultParent		();
 						MOAIActionTree			();
 						~MOAIActionTree			();
 	void				RegisterLuaClass		( MOAILuaState& state );

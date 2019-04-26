@@ -6,8 +6,6 @@
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAISpriteDeck2D.h>
 #include <moai-sim/MOAIMaterialMgr.h>
-#include <moai-sim/MOAIShaderMgr.h>
-#include <moai-sim/MOAITexture.h>
 
 //================================================================//
 // local
@@ -663,8 +661,8 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIQuadBrush::BindVertexFormat ();
 	
-	gfxMgr.SetVertexTransform ( ZLGfxMgr::MODEL_TO_DISPLAY_MTX );
-	gfxMgr.SetUVTransform ( ZLGfxMgr::UV_TO_MODEL_MTX );
+	gfxMgr.SetVertexTransform ( ZLGfxMgrGL::MODEL_TO_DISPLAY_MTX );
+	gfxMgr.SetUVTransform ( ZLGfxMgrGL::UV_TO_MODEL_MTX );
 
 	ZLSize totalSprites			= this->mSprites.Size ();
 	ZLSize totalSpriteLists		= this->mSpriteLists.Size ();

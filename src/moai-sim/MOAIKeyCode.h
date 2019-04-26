@@ -1,4 +1,4 @@
-﻿#ifndef MOAIKEYCODE_H
+#ifndef MOAIKEYCODE_H
 #define MOAIKEYCODE_H
 
 //================================================================//
@@ -110,7 +110,8 @@
 	@const	OEM_102				This is either the [<] key or the [\] key on the RT 102-key keyboard.
 */
 class MOAIKeyCode :
-	public ZLContextClass < MOAIKeyCode, MOAILuaObject > {
+	public ZLContextClass < MOAIKeyCode >,
+	public virtual MOAILuaObject {
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIKeyCode )

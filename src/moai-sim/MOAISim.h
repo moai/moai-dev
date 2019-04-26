@@ -41,7 +41,8 @@ class MOAIProp;
 	@const DEFAULT_STEP_MULTIPLIER			Value is 1
 */
 class MOAISim :
-	public ZLContextClass < MOAISim, MOAIGlobalEventSource > {
+	public ZLContextClass < MOAISim >,
+	public virtual MOAIGlobalEventSource {
 public:
 
 	typedef void ( *EnterFullscreenModeFunc )		();

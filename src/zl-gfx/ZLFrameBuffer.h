@@ -7,7 +7,7 @@
 #include <zl-gfx/ZLGfxHandle.h>
 #include <zl-gfx/ZLGfxListener.h>
 
-class ZLGfxMgr;
+class ZLGfxMgrGL;
 
 //================================================================//
 // MOAIFrameBuffer
@@ -53,12 +53,12 @@ public:
 	GET_SET		( bool, Landscape, mLandscape )
 	
 	//----------------------------------------------------------------//
-	void				DetectGLFrameBufferID		( ZLGfxMgr& gfxMgr );
+	void				DetectGLFrameBufferID		( ZLGfxMgrGL& gfxMgr );
 	ZLRect				GetBufferRect				() const;
 	bool				NeedsClear					() const;
 	void				NeedsClear					( bool needsClear );
 	void				SetBufferSize				( u32 width, u32 height );
-	void				SetGLFrameBuffer			( ZLGfxMgr& gfxMgr, const ZLGfxHandle& frameBuffer );
+	void				SetGLFrameBuffer			( ZLGfxMgrGL& gfxMgr, const ZLGfxHandle& frameBuffer );
 	ZLRect				WndRectToDevice				( ZLRect rect ) const;
 						ZLFrameBuffer				();
 						~ZLFrameBuffer				();

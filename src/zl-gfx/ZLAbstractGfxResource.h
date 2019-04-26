@@ -7,7 +7,7 @@
 #include <zl-gfx/ZLGfxListener.h>
 
 class ZLGfx;
-class ZLGfxMgr;
+class ZLGfxMgrGL;
 
 //================================================================//
 // ZLAbstractGfxResource
@@ -27,7 +27,7 @@ protected:
 	friend class ZLGfxStateGPUCache;
 	friend class ZLGfxResourceClerk;
 	
-	ZLGfxMgr*			mGfxMgr;
+	ZLGfxMgrGL*			mGfxMgr;
 	
 	u32					mState;
 	u32					mLastRenderCount;
@@ -87,7 +87,7 @@ public:
 	bool			Purge						( u32 age );
 	bool			ScheduleForGPUCreate		( u32 pipelineID );
 	bool			ScheduleForGPUUpdate		();
-	void			SetGfxMgr					( ZLGfxMgr& gfxMgr );
+	void			SetGfxMgr					( ZLGfxMgrGL& gfxMgr );
 					ZLAbstractGfxResource		();
 	virtual			~ZLAbstractGfxResource		();
 };

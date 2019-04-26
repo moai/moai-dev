@@ -4,8 +4,6 @@
 #ifndef	MOAIABSTRACTLAYER_H
 #define	MOAIABSTRACTLAYER_H
 
-#include <moai-sim/MOAIAbstractDrawable.h>
-
 class MOAIColor;
 class MOAIFrameBuffer;
 class MOAIPartition;

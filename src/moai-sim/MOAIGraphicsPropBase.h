@@ -4,7 +4,6 @@
 #ifndef	MOAIGRAPHICSPROPBASE_H
 #define	MOAIGRAPHICSPROPBASE_H
 
-#include <moai-sim/MOAIAbstractDrawable.h>
 #include <moai-sim/MOAIAbstractProp.h>
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIMaterialBatchHolder.h>

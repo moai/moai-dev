@@ -6,7 +6,6 @@
 #include <moai-sim/MOAIDynamicGlyphCache.h>
 #include <moai-sim/MOAIDynamicGlyphCachePage.h>
 #include <moai-sim/MOAIGlyph.h>
-#include <moai-sim/MOAIImageTexture.h>
 
 #define MAX_TEXTURE_SIZE 1024
 

@@ -3,10 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGeometryWriter.h>
-#include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIVectorUtil.h>
-#include <moai-sim/MOAIVertexBuffer.h>
-#include <moai-sim/MOAIVertexFormatMgr.h>
 #include <signal.h>
 #include <setjmp.h>
 #include <tesselator.h>

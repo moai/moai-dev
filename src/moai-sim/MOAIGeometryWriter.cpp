@@ -4,11 +4,8 @@
 #include "pch.h"
 
 #include <moai-sim/MOAIGeometryWriter.h>
-#include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIMesh.h>
 #include <moai-sim/MOAIRegion.h>
-#include <moai-sim/MOAIVertexBuffer.h>
-#include <moai-sim/MOAIVertexFormat.h>
 
 //================================================================//
 // VertexComparator

@@ -4,14 +4,10 @@
 #include "pch.h"
 #include <moai-sim/MOAIDrawDeck.h>
 #include <moai-sim/MOAIDraw.h>
-#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIMaterialMgr.h>
-#include <moai-sim/MOAIShader.h>
-#include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAISurfaceSampler2D.h>
 #include <moai-sim/MOAITransform.h>
-#include <moai-sim/MOAIVertexFormatMgr.h>
 
 //================================================================//
 // local

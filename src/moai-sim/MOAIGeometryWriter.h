@@ -4,9 +4,6 @@
 #ifndef	MOAIGEOMETRYWRITER_H
 #define	MOAIGEOMETRYWRITER_H
 
-#include <moai-sim/MOAIImage.h>
-#include <moai-sim/MOAIVertexFormat.h>
-
 class MOAIIndexBuffer;
 class MOAIMesh;
 class MOAIRegion;
@@ -31,7 +28,8 @@ class MOAIVertexFormat;
 			by finding redundant vertices.
 */
 class MOAIGeometryWriter :
-	public ZLContextClass < MOAIGeometryWriter, MOAILuaObject > {
+	public ZLContextClass < MOAIGeometryWriter >,
+	public virtual MOAILuaObject {
 private:
 	
 	//----------------------------------------------------------------//

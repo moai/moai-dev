@@ -22,8 +22,9 @@ class MOAIVertexFormat;
 			See MOAIDrawDeck.
 */
 class MOAIDraw :
-	public ZLContextClass < MOAIDraw, MOAILuaObject >,
-	public MOAIDrawShapeImmediate {
+	public ZLContextClass < MOAIDraw >,
+	public virtual MOAILuaObject,
+	public virtual MOAIDrawShapeImmediate {
 private:
 
 	//----------------------------------------------------------------//

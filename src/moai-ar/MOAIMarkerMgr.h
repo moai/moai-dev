@@ -48,7 +48,8 @@ private:
 // MOAIMarkerMgr
 //================================================================//
 class MOAIMarkerMgr :
-	public ZLContextClass < MOAIMarkerMgr, MOAIGlobalEventSource > {
+	public ZLContextClass < MOAIMarkerMgr >,
+	public virtual MOAIGlobalEventSource {
 private:
 
 	friend class MOAIVideoTexture;

@@ -80,7 +80,6 @@ public:
 
 	//----------------------------------------------------------------//
 	static void			CheckFilterModes			( int min, int mag );
-	void				DeleteTexture				();
 	u32					GetHeight					();
 	u32					GetWidth					();
 	bool				IsValid						();

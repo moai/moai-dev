@@ -6,16 +6,6 @@
 #include <moai-sim/MOAIAnimCurveFloat.h>
 #include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIFont.h>
-#include <moai-sim/MOAIAbstractGfxBuffer.h>
-#include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIIndexBuffer.h>
-#include <moai-sim/MOAIShaderMgr.h>
-#include <moai-sim/MOAIVertexFormatMgr.h>
-#include <moai-sim/MOAIShader.h>
-#include <moai-sim/MOAITexture.h>
-#include <moai-sim/MOAIVertexBuffer.h>
-#include <moai-sim/MOAIVertexFormat.h>
-#include <moai-sim/MOAIVertexFormatMgr.h>
 #include <moai-sim/MOAIViewport.h>
 #include <moai-sim/MOAIQuadBrush.h>
 
@@ -49,7 +39,7 @@ public:
 	//----------------------------------------------------------------//
 	void WriteVertex ( const ZLVec2D& v ) {
 		
-		if (( this->mVertexCount > 0 ) && ( this->mGfxMgr.ContinuePrim ( 1 ) == ZLGfxMgr::CONTINUE_ROLLOVER )) {
+		if (( this->mVertexCount > 0 ) && ( this->mGfxMgr.ContinuePrim ( 1 ) == ZLGfxMgrGL::CONTINUE_ROLLOVER )) {
 
 			// if we roll over, repeat the last vertex to start a new line strip
 			this->mGfxMgr.WriteVtx ( this->mLastVertex.mX, this->mLastVertex.mY );
@@ -127,7 +117,7 @@ void MOAIDraw::DrawString ( cc8* text, float x, float y, float width, float heig
 	// Transform the center into 'world' space
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
-	const ZLMatrix4x4& orgWorldTransform = gfxMgr.GetMtx ( ZLGfxMgr::MODEL_TO_WORLD_MTX );
+	const ZLMatrix4x4& orgWorldTransform = gfxMgr.GetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX );
 	ZLVec2D pos ( x, y );
 	orgWorldTransform.Transform ( pos );
 	x = pos.mX;
@@ -223,7 +213,7 @@ void MOAIDraw::EndDrawString () {
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	// Get current state
-	//const ZLMatrix4x4& orgWorldTransform = gfxState.GetMtx ( ZLGfxMgr::MODEL_TO_WORLD_MTX );
+	//const ZLMatrix4x4& orgWorldTransform = gfxState.GetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX );
 
 	// TODO
 	//GLint orgSrcBlend, orgDestBlend;
@@ -234,7 +224,7 @@ void MOAIDraw::EndDrawString () {
 	if ( !gfxMgr.SetShader ( MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::FONT_SHADER ))) return;
 	
 	gfxMgr.SetBlendMode ( ZGL_BLEND_FACTOR_ONE, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
-	gfxMgr.SetVertexTransform ( ZLGfxMgr::MODEL_TO_WORLD_MTX );
+	gfxMgr.SetVertexTransform ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX );
 	MOAIQuadBrush::BindVertexFormat ();
 
 	// Get the context data
@@ -1051,7 +1041,7 @@ int MOAIDraw::_setMatrix ( lua_State* L ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
-	u32 matrixID = state.GetValue < u32 >( 1, ZLGfxMgr::MODEL_TO_WORLD_MTX );
+	u32 matrixID = state.GetValue < u32 >( 1, ZLGfxMgrGL::MODEL_TO_WORLD_MTX );
 
 	if ( gfxMgr.IsInputMtx( matrixID )) {
 	
@@ -1196,8 +1186,8 @@ bool MOAIDraw::Bind () {
 	if ( !gfxMgr.SetShader ( MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::LINE_SHADER ))) return false;
 	gfxMgr.SetVertexFormat ( MOAIVertexFormatMgr::Get ().GetFormat ( MOAIVertexFormatMgr::XYZWC ));
 	
-	gfxMgr.SetVertexTransform ( ZLGfxMgr::MODEL_TO_CLIP_MTX );
-	gfxMgr.SetUVTransform ( ZLGfxMgr::UV_TO_MODEL_MTX );
+	gfxMgr.SetVertexTransform ( ZLGfxMgrGL::MODEL_TO_CLIP_MTX );
+	gfxMgr.SetUVTransform ( ZLGfxMgrGL::UV_TO_MODEL_MTX );
 
 	gfxMgr.SetCullFunc (); // no culling in immediate mode drawing
 
@@ -1213,7 +1203,7 @@ void MOAIDraw::DrawAnimCurve ( const MOAIAnimCurveFloat& curve, u32 resolution )
 //----------------------------------------------------------------//
 void MOAIDraw::DrawAxisGrid ( ZLVec2D loc, ZLVec2D vec, float size ) {
 
-	ZLMatrix4x4 mtx = MOAIGfxMgr::Get ().GetMtx ( ZLGfxMgr::WORLD_TO_CLIP_MTX );
+	ZLMatrix4x4 mtx = MOAIGfxMgr::Get ().GetMtx ( ZLGfxMgrGL::WORLD_TO_CLIP_MTX );
 	
 	ZLMatrix4x4 invMtx;
 	invMtx.Inverse ( mtx );
@@ -1428,7 +1418,7 @@ void MOAIDraw::DrawRay ( float x, float y, float dx, float dy ) {
 	ZLVec2D loc ( x, y );
 	ZLVec2D vec ( dx, dy );
 	
-	ZLMatrix4x4 mtx = MOAIGfxMgr::Get ().GetMtx ( ZLGfxMgr::WORLD_TO_CLIP_MTX );
+	ZLMatrix4x4 mtx = MOAIGfxMgr::Get ().GetMtx ( ZLGfxMgrGL::WORLD_TO_CLIP_MTX );
 	
 	ZLMatrix4x4 invMtx;
 	invMtx.Inverse ( mtx );
@@ -1537,10 +1527,10 @@ MOAIDraw::~MOAIDraw () {
 void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 
-	state.SetField ( -1, "PROJ_MATRIX",					( u32 )ZLGfxMgr::VIEW_TO_CLIP_MTX );
-	state.SetField ( -1, "UV_MATRIX",					( u32 )ZLGfxMgr::UV_TO_MODEL_MTX );
-	state.SetField ( -1, "VIEW_MATRIX",					( u32 )ZLGfxMgr::WORLD_TO_VIEW_MTX );
-	state.SetField ( -1, "WORLD_MATRIX",				( u32 )ZLGfxMgr::MODEL_TO_WORLD_MTX );
+	state.SetField ( -1, "PROJ_MATRIX",					( u32 )ZLGfxMgrGL::VIEW_TO_CLIP_MTX );
+	state.SetField ( -1, "UV_MATRIX",					( u32 )ZLGfxMgrGL::UV_TO_MODEL_MTX );
+	state.SetField ( -1, "VIEW_MATRIX",					( u32 )ZLGfxMgrGL::WORLD_TO_VIEW_MTX );
+	state.SetField ( -1, "WORLD_MATRIX",				( u32 )ZLGfxMgrGL::MODEL_TO_WORLD_MTX );
 
 	luaL_Reg regTable [] = {
 		{ "bind",					_bind },

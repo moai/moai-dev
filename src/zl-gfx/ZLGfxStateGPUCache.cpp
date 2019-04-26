@@ -27,6 +27,19 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+void ZLGfxStateGPUCacheFrame::Clear () {
+
+	this->mShader			= NULL;
+	this->mFrameBuffer		= NULL;
+	this->mIdxBuffer		= NULL;
+	this->mVtxArray			= NULL;
+	this->mVtxBuffer		= NULL;
+	this->mVtxFormat		= NULL;
+	
+	this->mTextureUnits.Clear ();
+}
+
+//----------------------------------------------------------------//
 ZLGfxStateGPUCacheFrame::ZLGfxStateGPUCacheFrame () :
 	mCullFunc ( 0 ),
 	mDepthFunc ( 0 ),
@@ -157,6 +170,17 @@ void ZLGfxStateGPUCache::ApplyStateChanges () {
 			this->ResumeChanges ();
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+void ZLGfxStateGPUCache::Clear () {
+
+	this->mCurrentState = NULL;
+	this->mActiveState.Clear ();
+	this->mPendingState.Clear ();
+	
+	this->mDefaultFrameBuffer = NULL;
+	this->mDefaultTexture = NULL;
 }
 
 //----------------------------------------------------------------//
@@ -757,23 +781,6 @@ void ZLGfxStateGPUCache::InitTextureUnits ( size_t nTextureUnits ) {
 }
 
 //----------------------------------------------------------------//
-ZLGfxStateGPUCache::ZLGfxStateGPUCache () :
-	mCurrentState ( 0 ),
-	mDirtyFlags ( 0 ),
-	mTextureDirtyFlags ( 0 ),
-	mMaxTextureUnits ( 0 ),
-	mApplyingStateChanges ( 0 ),
-	mBoundIdxBuffer ( 0 ),
-	mBoundVtxBuffer ( 0 ) {
-	
-	this->mCurrentState = &this->mPendingState;
-}
-
-//----------------------------------------------------------------//
-ZLGfxStateGPUCache::~ZLGfxStateGPUCache () {
-}
-
-//----------------------------------------------------------------//
 void ZLGfxStateGPUCache::RecalculateDirtyFlags () {
 
 	if ( this->mPendingState.mBlendEnabled ) {
@@ -1171,4 +1178,21 @@ void ZLGfxStateGPUCache::UnbindAll () {
 	this->SetVertexFormat ();
 	
 	ZGL_COMMENT ( gfx, "" );
+}
+
+//----------------------------------------------------------------//
+ZLGfxStateGPUCache::ZLGfxStateGPUCache () :
+	mCurrentState ( 0 ),
+	mDirtyFlags ( 0 ),
+	mTextureDirtyFlags ( 0 ),
+	mMaxTextureUnits ( 0 ),
+	mApplyingStateChanges ( 0 ),
+	mBoundIdxBuffer ( 0 ),
+	mBoundVtxBuffer ( 0 ) {
+	
+	this->mCurrentState = &this->mPendingState;
+}
+
+//----------------------------------------------------------------//
+ZLGfxStateGPUCache::~ZLGfxStateGPUCache () {
 }

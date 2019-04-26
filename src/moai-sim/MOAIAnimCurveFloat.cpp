@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIAnimCurveFloat.h>
-#include <moai-sim/MOAIGfxMgr.h>
 
 //================================================================//
 // local

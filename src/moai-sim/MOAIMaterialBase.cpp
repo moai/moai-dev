@@ -3,11 +3,8 @@
 
 #include "pch.h"
 
-#include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIImage.h>
 #include <moai-sim/MOAIMaterialBase.h>
 #include <moai-sim/MOAIPartitionHull.h>
-#include <moai-sim/MOAIShaderMgr.h>
 
 //================================================================//
 // MOAIMaterialBase

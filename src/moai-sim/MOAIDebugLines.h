@@ -57,7 +57,8 @@ public:
 //================================================================//
 // TODO: doxygen
 class MOAIDebugLinesMgr :
-	public ZLContextClass < MOAIDebugLinesMgr, MOAILuaObject > {
+	public ZLContextClass < MOAIDebugLinesMgr >,
+	public virtual MOAILuaObject {
 private:
 
 	static const u32	STYLE_SET_ID_SHIFT	= 16;

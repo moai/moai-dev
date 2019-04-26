@@ -3,11 +3,8 @@
 
 #include "pch.h"
 
-#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAILight.h>
 #include <moai-sim/MOAIMaterialMgr.h>
-#include <moai-sim/MOAITextureBase.h>
-#include <moai-sim/MOAIShaderMgr.h>
 
 //================================================================//
 // MOAIMaterialStackScope

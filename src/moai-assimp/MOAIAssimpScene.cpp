@@ -12,9 +12,10 @@
 #include <moai-assimp/MOAIAssimpScene.h>
 #include <moai-assimp/MOAIAssimpUtil.h>
 
-#include <moai-sim/MOAIVertexBuffer.h>
-#include <moai-sim/MOAIIndexBuffer.h>
-#include <moai-sim/MOAITexture.h>
+#include <moai-gfx/MOAIVertexBuffer.h>
+#include <moai-gfx/MOAIIndexBuffer.h>
+#include <moai-gfx/MOAITexture.h>
+
 #include <moai-sim/MOAIMesh.h>
 #include <moai-sim/MOAICamera.h>
 #include <moai-sim/MOAIAnim.h>

@@ -10,7 +10,7 @@
 class ZLAbstractGfxResource;
 class ZLGfx;
 class ZLGfxPipelineClerk;
-class ZLGfxMgr;
+class ZLGfxMgrGL;
 
 //================================================================//
 // ZLGfxResourceClerk

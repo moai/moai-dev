@@ -11,32 +11,6 @@ class MOAIAction;
 class MOAIActionTree;
 
 //================================================================//
-// MOAIActionStackMgr
-//================================================================//
-class MOAIActionStackMgr :
-	public ZLContextClass < MOAIActionStackMgr > {
-private:
-	
-	ZLLeanStack < MOAIAction* > mStack;
-	
-	//----------------------------------------------------------------//
-	MOAIAction*			GetCurrent				();
-	MOAIAction*			GetDefaultParent		();
-	void				Pop						();
-	void				Push					( MOAIAction& action );
-	
-public:
-	
-	friend class MOAIAction;
-	friend class MOAIActionTree;
-	friend class MOAICoroutine;
-	
-	//----------------------------------------------------------------//
-						MOAIActionStackMgr		();
-						~MOAIActionStackMgr		();
-};
-
-//================================================================//
 // MOAIAction
 //================================================================//
 /**	@lua MOAIAction
@@ -126,7 +100,7 @@ public:
 	void					ClearChildren			();
 	void					Defer					( bool defer );
 	void					Detach					();
-	virtual MOAIAction*		GetDefaultParent		();
+	MOAIAction*				GetDefaultParent		();
 	bool					IsActive				();
 	bool					IsBusy					();
 	bool					IsDone					();

@@ -5,15 +5,8 @@
 #include <moai-sim/MOAICollisionShape.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDeckProxy.h>
-#include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIGfxResource.h>
 #include <moai-sim/MOAIGrid.h>
-#include <moai-sim/MOAIImage.h>
-#include <moai-sim/MOAIShader.h>
-#include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAISurfaceSampler2D.h>
-#include <moai-sim/MOAITexture.h>
-#include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITransform.h>
 
 //================================================================//

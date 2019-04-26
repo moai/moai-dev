@@ -58,13 +58,23 @@ protected:
 // ZLContextPair
 //================================================================//
 class ZLContextPair {
-protected:
-	friend class ZLContext;
+public:
 
 	ZLContextClassBase*			mGlobalBase;
 	void*						mGlobal;
-	void*						mProxy;
 	bool						mIsValid;
+
+	ZLContextPair*				mAliasOf;
+	ZLIndex						mAliasID;
+
+	//----------------------------------------------------------------//
+	ZLContextPair () :
+		mGlobalBase ( NULL ),
+		mGlobal ( NULL ),
+		mIsValid ( false ),
+		mAliasOf ( NULL ),
+		mAliasID ( ZLIndexCast ( 0 )) {
+	}
 };
 
 //================================================================//
@@ -82,6 +92,7 @@ private:
 	ZLLeanArray < ZLContextPair >	mGlobals;
 
 	//----------------------------------------------------------------//
+	void		AffirmSize			( ZLSize size );
 				ZLContext			();
 				~ZLContext			();
 
@@ -91,54 +102,39 @@ public:
 	template < typename TYPE >
 	TYPE* AffirmGlobal () {
 		
-		ZLIndex id = ZLContextClassID < TYPE >::GetID ();
+		ZLIndex globalID = ZLContextClassID < TYPE >::GetID ();
+		this->AffirmSize (( ZLSize )globalID + 1 );
 		
-		if ( this->mGlobals.Size () <= id ) {
-		
-			ZLContextPair pair;
-			pair.mGlobalBase	= 0;
-			pair.mGlobal		= 0;
-			pair.mProxy			= 0;
-			pair.mIsValid		= false;
-			
-			this->mGlobals.GrowChunked (( ZLSize )id + 1, CHUNK_SIZE, pair );
-		}
-		
-		if ( !this->mGlobals [ id ].mGlobal ) {
-			
-			// NOTE: other (new) globals may be accessed in the constructor, particularly
-			// if a Lua binding is created via LuaRetain. this may trigger a reallocation
-			// of the globals array, which will invalidate pointers and references. for this
-			// reason, we need to get 'pair' *after* the constructor.
+		if ( !this->mGlobals [ globalID ].mGlobal ) {
 			
 			TYPE* global = new TYPE;
 			
-			ZLContextPair& pair = this->mGlobals [ id ];
+			ZLContextPair& pair = this->mGlobals [ globalID ];
 			
 			pair.mGlobalBase	= global;
 			pair.mGlobal		= global;
-			pair.mProxy			= 0;
+			pair.mAliasOf		= NULL;
 			pair.mIsValid		= true;
 			
 			pair.mGlobalBase->OnGlobalsInitialize ();
 		}
 		
-		if ( !this->mGlobals [ id ].mIsValid ) {
+		if ( !this->mGlobals [ globalID ].mIsValid ) {
 			return 0;
 		}
 		
-		return ( TYPE* )this->mGlobals [ id ].mGlobal;
+		return ( TYPE* )this->mGlobals [ globalID ].mGlobal;
 	}
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
 	TYPE* GetGlobal () {
 		
-		ZLIndex id = ZLContextClassID < TYPE >::GetID ();
-		if ( id < this->mGlobals.Size ()) {
-			ZLContextPair& pair = this->mGlobals [ id ];
-			if ( pair.mIsValid ) {
-				return ( TYPE* )( pair.mProxy ? pair.mProxy : pair.mGlobal );
+		ZLIndex globalID = ZLContextClassID < TYPE >::GetID ();
+		if ( globalID < this->mGlobals.Size ()) {
+			ZLContextPair& pair = this->mGlobals [ globalID ];
+			if ((( pair.mAliasOf == NULL ) && pair.mIsValid ) || ( pair.mAliasOf && pair.mAliasOf->mIsValid )) {
+				return ( TYPE* )pair.mGlobal;
 			}
 		}
 		return 0;
@@ -159,22 +155,37 @@ public:
 	template < typename TYPE >
 	bool IsValid () {
 		
-		ZLIndex id = ZLContextClassID < TYPE >::GetID ();
+		ZLIndex globalID = ZLContextClassID < TYPE >::GetID ();
 		
-		if ( id < this->mGlobals.Size ()) {
-			return this->mGlobals [ id ].mIsValid;
+		if ( globalID < this->mGlobals.Size ()) {
+			ZLContextPair& pair = this->mGlobals [ globalID ];
+			return ((( pair.mAliasOf == NULL ) && pair.mIsValid ) || ( pair.mAliasOf && pair.mAliasOf->mIsValid ));
 		}
 		return false;
 	}
 	
 	//----------------------------------------------------------------//
-	template < typename TYPE >
-	void ProxyGlobal ( TYPE& proxy ) {
+	template < typename TYPE, typename ALIAS_TYPE >
+	ALIAS_TYPE* RegisterGlobalAlias () {
 		
-		ZLIndex id = ZLContextClassID < TYPE >::GetID ();
-		if ( id < this->mGlobals.Size ()) {
-			this->mGlobals [ id ].mProxy = &proxy;
-		}
+		ZLIndex globalID = ZLContextClassID < TYPE >::GetID ();
+		assert ( globalID < this->mGlobals.Size ());
+		ZLContextPair& globalPair = this->mGlobals [ globalID ];
+		TYPE* global = ( TYPE* )globalPair.mGlobal;
+		assert ( global );
+
+		ZLIndex aliasID = ZLContextClassID < ALIAS_TYPE >::GetID ();
+		this->AffirmSize (( ZLSize )aliasID + 1 );
+
+		ALIAS_TYPE* alias = global;
+
+		ZLContextPair& aliasPair = this->mGlobals [ aliasID ];
+		aliasPair.mGlobalBase	= NULL;
+		aliasPair.mGlobal		= alias;
+		aliasPair.mAliasOf		= &globalPair;
+		aliasPair.mIsValid		= true;
+
+		return ( ALIAS_TYPE* )this->mGlobals [ aliasID ].mGlobal;
 	}
 };
 
@@ -217,14 +228,13 @@ public:
 /**	@lua	ZLContextClass
 	@text	Base class for Moai singletons.
 */
-template < typename TYPE, typename SUPER = RTTIBase >
+template < typename TYPE >
 class ZLContextClass :
-	public virtual ZLContextClassBase,
-	public virtual SUPER {
+	public virtual ZLContextClassBase {
 public:
 	
 	//----------------------------------------------------------------//
-	inline static TYPE& Affirm () {
+	static TYPE& Affirm () {
 		assert ( ZLContextMgr::Get ());
 		TYPE* global = ZLContextMgr::Get ()->AffirmGlobal < TYPE >();
 		assert ( global );
@@ -250,11 +260,39 @@ public:
 		assert ( ZLContextMgr::Get ());
 		return ZLContextMgr::Get ()->IsValid < TYPE >();
 	}
+
+	//----------------------------------------------------------------//
+	template < typename ALIAS_TYPE >
+	static ALIAS_TYPE& RegisterAlias () {
+		assert ( ZLContextMgr::Get ());
+		ALIAS_TYPE* alias = ZLContextMgr::Get ()->RegisterGlobalAlias < TYPE, ALIAS_TYPE >();
+		assert ( alias );
+		return *alias;
+	}
+};
+
+//================================================================//
+// ZLContextClassAlias
+//================================================================//
+/**	@lua	ZLContextClassAlias
+	@text	Base class for Moai singleton aliases.
+*/
+template < typename TYPE >
+class ZLContextClassAlias {
+public:
 	
 	//----------------------------------------------------------------//
-	inline static void Proxy ( TYPE& proxy ) {
+	inline static TYPE& Get () {
 		assert ( ZLContextMgr::Get ());
-		ZLContextMgr::Get ()->ProxyGlobal < TYPE >( proxy );
+		TYPE* global = ZLContextMgr::Get ()->GetGlobal < TYPE >();
+		assert ( global );
+		return *global;
+	}
+
+	//----------------------------------------------------------------//
+	inline static bool IsValid () {
+		assert ( ZLContextMgr::Get ());
+		return ZLContextMgr::Get ()->IsValid < TYPE >();
 	}
 };
 

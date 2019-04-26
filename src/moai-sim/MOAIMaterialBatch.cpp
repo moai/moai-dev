@@ -3,15 +3,10 @@
 
 #include "pch.h"
 
-#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAILight.h>
 #include <moai-sim/MOAIMaterial.h>
 #include <moai-sim/MOAIMaterialBatch.h>
 #include <moai-sim/MOAIPartitionHull.h>
-#include <moai-sim/MOAIShader.h>
-#include <moai-sim/MOAIShaderMgr.h>
-#include <moai-sim/MOAITexture.h>
-#include <moai-sim/MOAITextureBase.h>
 
 //================================================================//
 // lua

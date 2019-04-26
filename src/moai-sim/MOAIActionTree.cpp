@@ -86,12 +86,6 @@ MOAIAction* MOAIActionTree::AffirmRoot () {
 }
 
 //----------------------------------------------------------------//
-MOAIAction* MOAIActionTree::GetDefaultParent () {
-
-	return this->AffirmRoot ();
-}
-
-//----------------------------------------------------------------//
 MOAIActionTree::MOAIActionTree () :
 	mRoot ( 0 ),
 	mProfilingEnabled ( false ),
@@ -152,6 +146,12 @@ void MOAIActionTree::MOAIAction_DidLoseChild ( MOAIAction* child ) {
 	if ( this->mRoot == child ) {
 		this->mRoot = 0;
 	}
+}
+
+//----------------------------------------------------------------//
+MOAIAction* MOAIActionTree::MOAIAction_GetDefaultParent () {
+
+	return this->AffirmRoot ();
 }
 
 //----------------------------------------------------------------//

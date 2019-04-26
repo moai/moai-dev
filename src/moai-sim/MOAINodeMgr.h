@@ -10,7 +10,8 @@ class MOAINode;
 // MOAINodeMgr
 //================================================================//
 class MOAINodeMgr :
-	public ZLContextClass < MOAINodeMgr, MOAILuaObject > {
+	public ZLContextClass < MOAINodeMgr >,
+	public virtual MOAILuaObject {
 private:
 
 	static const u32 DEFAULT_MAX_ITERATIONS = 3; // arbitrary number

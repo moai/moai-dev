@@ -4,8 +4,6 @@
 #include "pch.h"
 
 #include <moai-sim/MOAIMaterialHolder.h>
-#include <moai-sim/MOAIShader.h>
-#include <moai-sim/MOAITexture.h>
 
 //================================================================//
 // lua

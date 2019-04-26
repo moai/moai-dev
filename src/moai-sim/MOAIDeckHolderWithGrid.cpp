@@ -2,7 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>

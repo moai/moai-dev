@@ -25,7 +25,7 @@
 #include <zl-gfx/ZLGfxPipelineClerk.h>
 #include <zl-gfx/ZLGfxResourceClerk.h>
 #include <zl-gfx/ZLGfxRetained.h>
-#include <zl-gfx/ZLGfxMgr.h>
+#include <zl-gfx/ZLGfxMgrGL.h>
 #include <zl-gfx/ZLGfxStateCPUCache.h>
 #include <zl-gfx/ZLGfxStateGPUCache.h>
 #include <zl-gfx/ZLGfxStateVertexCache.h>

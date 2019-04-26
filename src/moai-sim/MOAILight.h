@@ -4,8 +4,6 @@
 #ifndef	MOAILIGHT_H
 #define	MOAILIGHT_H
 
-#include <moai-sim/MOAIShaderUniformSchemaBase.h>
-
 class MOAILightFormat;
 class MOAIShader;
 class MOAITexture;

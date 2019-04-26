@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #include <zl-gfx/ZLAbstractGfxResource.h>
-#include <zl-gfx/ZLGfxMgr.h>
+#include <zl-gfx/ZLGfxMgrGL.h>
 #include <zl-gfx/ZLGfxResourceClerk.h>
 
 //================================================================//
@@ -186,7 +186,7 @@ bool ZLAbstractGfxResource::ScheduleForGPUUpdate () {
 }
 
 //----------------------------------------------------------------//
-void ZLAbstractGfxResource::SetGfxMgr ( ZLGfxMgr& gfxMgr ) {
+void ZLAbstractGfxResource::SetGfxMgr ( ZLGfxMgrGL& gfxMgr ) {
 
 	this->mGfxMgr = &gfxMgr;
 	this->mGfxMgr->InsertGfxResource ( *this );

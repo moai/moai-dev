@@ -23,6 +23,10 @@ void AKUUtilContextInitialize () {
 	MOAIMainThreadTaskSubscriber::Affirm ();
 	
 	MOAIMath::Affirm ();
+	MOAIFileSystem::Affirm ();
+	MOAILuaUtil::Affirm ();
+	MOAIJsonParser::Affirm ();
+	MOAIImageFormatMgr::Affirm ();
 	
 	// MOAI
 	REGISTER_LUA_CLASS ( MOAIByteStream )

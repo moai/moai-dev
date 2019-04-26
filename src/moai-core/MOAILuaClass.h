@@ -74,7 +74,7 @@ public:
 //================================================================//
 template < typename TYPE >
 class MOAILuaFactoryClass :
-public MOAILuaClass {
+	public MOAILuaClass {
 private:
 	
 	//----------------------------------------------------------------//
@@ -98,7 +98,7 @@ public:
 //================================================================//
 template < typename TYPE >
 class MOAILuaSingletonClass :
-public MOAILuaClass {
+	public MOAILuaClass {
 private:
 	
 	//----------------------------------------------------------------//

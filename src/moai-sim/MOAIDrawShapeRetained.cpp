@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIDrawShapeRetained.h>
-#include <moai-sim/MOAIGfxMgr.h>
 
 //================================================================//
 // MOAIDrawShapeRetained

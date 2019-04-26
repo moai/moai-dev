@@ -27,6 +27,7 @@
 		CD5161D41BCDC52E000718FB /* libmoai-osx-image-png.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD5161C21BCDC403000718FB /* libmoai-osx-image-png.a */; };
 		CD5161D51BCDC52E000718FB /* libmoai-osx-image-pvr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD5161C41BCDC403000718FB /* libmoai-osx-image-pvr.a */; };
 		CD5161D61BCDC52E000718FB /* libmoai-osx-image-webp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD5161C61BCDC403000718FB /* libmoai-osx-image-webp.a */; };
+		CD582B1522718DBC009CD0B6 /* libmoai-osx-gfx-gl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD582B1422718DA8009CD0B6 /* libmoai-osx-gfx-gl.a */; };
 		CD5C9FCA21C894630092C949 /* moai_gtest_virtual_inheritance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5C9FC921C894630092C949 /* moai_gtest_virtual_inheritance.cpp */; };
 		CD5C9FD021C8EA400092C949 /* moai_gtest_libtess2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5C9FCF21C8EA400092C949 /* moai_gtest_libtess2.cpp */; };
 		CD6600661831CB5400D9862B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6600651831CB5400D9862B /* OpenGL.framework */; };
@@ -423,6 +424,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = CD515F3D1BCDB473000718FB;
 			remoteInfo = "libmoai-osx-image-webp";
+		};
+		CD582AED22718DA8009CD0B6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD58296B22717F85009CD0B6;
+			remoteInfo = "libmoai-osx-gfx-gl";
+		};
+		CD582B1322718DA8009CD0B6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD582AD622717F85009CD0B6;
+			remoteInfo = "libmoai-osx-gfx-gl";
 		};
 		CD6E27491D19155F00792933 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1422,6 +1437,7 @@
 				CDFD8FB51AD8653C0003F415 /* libmoai-osx-box2d.a in Frameworks */,
 				CDFD8FB61AD8653C0003F415 /* libmoai-osx-crypto.a in Frameworks */,
 				095A1748218DE7BC003543B8 /* libmoai-osx-expat.a in Frameworks */,
+				CD582B1522718DBC009CD0B6 /* libmoai-osx-gfx-gl.a in Frameworks */,
 				CD2E46C51C5181A3008E22A1 /* libmoai-osx-harfbuzz.a in Frameworks */,
 				CDFD8FB71AD8653C0003F415 /* libmoai-osx-http-client.a in Frameworks */,
 				CDFD8FB81AD8653C0003F415 /* libmoai-osx-http-server.a in Frameworks */,
@@ -1778,6 +1794,7 @@
 				CDE6C8091AD8682200D6B83A /* libmoai-osx-box2d.a */,
 				CDE6C80B1AD8682200D6B83A /* libmoai-osx-crypto.a */,
 				095A1747218DE7BC003543B8 /* libmoai-osx-expat.a */,
+				CD582B1422718DA8009CD0B6 /* libmoai-osx-gfx-gl.a */,
 				CDD813F41E16FFA900996311 /* libmoai-osx-google-test.a */,
 				CD1F44E81BDEBB7800F5CF59 /* libmoai-osx-harfbuzz.a */,
 				CDE6C8111AD8682200D6B83A /* libmoai-osx-http-client.a */,
@@ -1821,6 +1838,7 @@
 				CDFF5AE01C29233B00969B44 /* PBXTargetDependency */,
 				CD18307E1AECC0AC00D92E9E /* PBXTargetDependency */,
 				CD1830801AECC0AC00D92E9E /* PBXTargetDependency */,
+				CD582AEE22718DA8009CD0B6 /* PBXTargetDependency */,
 				CD2E46C41C51818E008E22A1 /* PBXTargetDependency */,
 				CD1830821AECC0AC00D92E9E /* PBXTargetDependency */,
 				CD1830841AECC0AC00D92E9E /* PBXTargetDependency */,
@@ -2081,6 +2099,13 @@
 			fileType = archive.ar;
 			path = "libmoai-osx-image-webp.a";
 			remoteRef = CD5161C51BCDC403000718FB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CD582B1422718DA8009CD0B6 /* libmoai-osx-gfx-gl.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-osx-gfx-gl.a";
+			remoteRef = CD582B1322718DA8009CD0B6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CD7548CE1AEDA9A300AD7FD8 /* libmoai-ios-movie.a */ = {
@@ -2641,6 +2666,11 @@
 			isa = PBXTargetDependency;
 			name = "libmoai-osx-image-webp";
 			targetProxy = CD5161E51BCDC55C000718FB /* PBXContainerItemProxy */;
+		};
+		CD582AEE22718DA8009CD0B6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-osx-gfx-gl";
+			targetProxy = CD582AED22718DA8009CD0B6 /* PBXContainerItemProxy */;
 		};
 		CD6E274A1D19155F00792933 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

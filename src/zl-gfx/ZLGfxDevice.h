@@ -13,7 +13,6 @@ public:
 
 	//----------------------------------------------------------------//
 	static u32				GetCap					( u32 cap );
-	ZLGfxHandle*			GetCurrentFramebuffer	();
 	static u32				GetError				();
 	static cc8*				GetErrorString			( u32 error );
 	static cc8*				GetString				( u32 stringID );

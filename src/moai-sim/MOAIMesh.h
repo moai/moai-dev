@@ -6,7 +6,6 @@
 
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIMaterialBatchHolder.h>
-#include <moai-sim/MOAIVertexArray.h>
 
 class MOAIIndexBuffer;
 class MOAIMesh;

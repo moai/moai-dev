@@ -36,7 +36,8 @@
 	@const LOG_DEBUG	Debug level
 */
 class MOAILogMgr :
-	public ZLContextClass < MOAILogMgr, MOAILuaObject > {
+	public ZLContextClass < MOAILogMgr >,
+	public virtual MOAILuaObject {
 private:
 
 	FILE*			mFile;

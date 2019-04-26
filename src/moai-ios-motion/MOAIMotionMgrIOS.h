@@ -14,7 +14,8 @@
 // MOAIMotionMgrIOS
 //================================================================//
 class MOAIMotionMgrIOS :
-	public ZLContextClass < MOAIMotionMgrIOS, MOAIAction > {
+	public ZLContextClass < MOAIMotionMgrIOS >,
+	public virtual MOAIAction {
 private:
 
 	bool				mIsHeadingActive;

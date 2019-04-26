@@ -5,9 +5,7 @@
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIQuadBrush.h>
-#include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIStretchPatch2D.h>
-#include <moai-sim/MOAITextureBase.h>
 
 //================================================================//
 // local
@@ -415,10 +413,10 @@ void MOAIStretchPatch2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	
 	this->UpdateParams ();
 	
-	ZLGfxMgr& gfxState = MOAIGfxMgr::Get ();
+	ZLGfxMgrGL& gfxState = MOAIGfxMgr::Get ();
 	
 	ZLVec3D stretch = this->BindStretchVertexTransform ();
-	gfxState.SetUVTransform ( ZLGfxMgr::UV_TO_MODEL_MTX );
+	gfxState.SetUVTransform ( ZLGfxMgrGL::UV_TO_MODEL_MTX );
 	
 	MOAIQuadBrush::BindVertexFormat ();
 	

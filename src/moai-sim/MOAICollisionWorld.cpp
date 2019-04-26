@@ -9,7 +9,6 @@
 #include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIGraphicsProp.h>
-#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIPartitionResultMgr.h>
 
@@ -434,7 +433,7 @@ void MOAICollisionWorld::MOAIPartition_DrawDebugFront () {
 	
 	if ( this->GetShapeStreamSize ()) {
 	
-		MOAIGfxMgr::Get ().SetMtx ( ZLGfxMgr::MODEL_TO_WORLD_MTX );
+		MOAIGfxMgr::Get ().SetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX );
 		this->DrawShapeStream ();
 	}
 }

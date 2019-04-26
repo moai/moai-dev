@@ -20,7 +20,7 @@ class ZLGfxStateVertexCache :
 protected:
 
 	friend class MOAIGfxMgr; // for now
-	friend class ZLGfxMgr;
+	friend class ZLGfxMgrGL;
 	friend class ZLGfxStateCPUCache;
 	friend class ZLGfxStateGPUCache;
 	
@@ -70,6 +70,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool			BeginPrim						( u32 primType, u32 vtxCount, u32 idxCount = 0 );
+	void			Clear							();
 	u32				ContinuePrim					( u32 vtxCount, u32 idxCount = 0 );
 	void			EndPrim							();
 	

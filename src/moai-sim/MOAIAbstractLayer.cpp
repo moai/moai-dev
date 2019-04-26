@@ -4,8 +4,6 @@
 #include "pch.h"
 #include <moai-sim/MOAIAbstractLayer.h>
 #include <moai-sim/MOAIColor.h>
-#include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIRenderMgr.h>
 
 //================================================================//
 // local

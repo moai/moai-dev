@@ -88,7 +88,8 @@ public:
 	@text	Internal debugging and hooking class.
 */
 class MOAITrace :
-	public ZLContextClass < MOAITrace, MOAILuaObject > {
+	public ZLContextClass < MOAITrace >,
+	public virtual MOAILuaObject {
 protected:
 
 	typedef STLMap < const void*, MOAIFuncTrace >::iterator FuncTraceIt;

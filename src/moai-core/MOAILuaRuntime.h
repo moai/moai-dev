@@ -53,7 +53,8 @@ private:
 // MOAILuaRuntime
 //================================================================//
 class MOAILuaRuntime :
-	public ZLContextClass < MOAILuaRuntime, MOAILuaObject > {
+	public ZLContextClass < MOAILuaRuntime >,
+	public virtual MOAILuaObject {
 public:
 
 	typedef void ( *TracebackFunc ) ( const char* message, struct lua_State* L, int level );
@@ -159,6 +160,7 @@ public:
 	GET_SET ( TracebackFunc, TracebackFunc, mTracebackFunc )
 
 	//----------------------------------------------------------------//
+	void					AliasGlobal					( cc8* globalName, cc8* alias );
 	void					CacheUserdata				( MOAILuaState& state, int idx );
 	void					ClearRef					( int refID );
 	void					Close						();

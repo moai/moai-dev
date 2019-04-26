@@ -4,18 +4,12 @@
 #include "pch.h"
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIDeck.h>
-#include <moai-sim/MOAIFrameBufferTexture.h>
-#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIPartitionViewLayer.h>
 #include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIPartitionResultMgr.h>
-#include <moai-sim/MOAIRenderMgr.h>
-#include <moai-sim/MOAIShaderMgr.h>
-#include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITransform.h>
-#include <moai-sim/MOAIVertexFormatMgr.h>
 
 //================================================================//
 // local
@@ -217,7 +211,7 @@ void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition ) {
 	if ( !totalResults ) return;
 	
 	if ( this->mSortInViewSpace ) {
-		buffer.Transform ( gfxMgr.GetMtx ( ZLGfxMgr::WORLD_TO_VIEW_MTX ), false );
+		buffer.Transform ( gfxMgr.GetMtx ( ZLGfxMgrGL::WORLD_TO_VIEW_MTX ), false );
 	}
 	
 	buffer.GenerateKeys (

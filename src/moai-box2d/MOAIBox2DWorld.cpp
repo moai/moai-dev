@@ -1271,9 +1271,9 @@ void MOAIBox2DWorld::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 
 	if ( this->mDebugDraw && MOAIDraw::Get ().Bind ()) {
 		
-		ZLGfxMgr& gfxState = MOAIGfxMgr::Get ();
+		ZLGfxMgrGL& gfxState = MOAIGfxMgr::Get ();
 		
-		gfxState.SetMtx ( ZLGfxMgr::MODEL_TO_WORLD_MTX );
+		gfxState.SetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX );
 		
 		this->mDebugDraw->mScale = 1.0f / this->mUnitsToMeters;
 		this->mWorld->DrawDebugData ();

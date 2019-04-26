@@ -443,6 +443,14 @@ void* MOAILuaRuntime::_trackingAlloc ( void *ud, void *ptr, size_t osize, size_t
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAILuaRuntime::AliasGlobal ( cc8* globalName, cc8* alias ) {
+
+	lua_getglobal ( this->mState, globalName );
+	assert ( !this->mState.IsNil ( -1 ));
+	lua_setglobal ( this->mState, alias );
+}
+
+//----------------------------------------------------------------//
 void MOAILuaRuntime::BuildHistogram ( HistMap& histogram, cc8* trackingGroup ) {
 
 	TrackingMapIt trackingMapIt = this->mTrackingMap.begin ();

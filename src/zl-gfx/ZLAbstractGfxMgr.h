@@ -4,7 +4,7 @@
 #ifndef	ZLABSTRACTGFXMGR_H
 #define	ZLABSTRACTGFXMGR_H
 
-class ZLGfxMgr;
+class ZLGfxMgrGL;
 class ZLGfxPipelineClerk;
 class ZLGfxResourceClerk;
 class ZLGfxStateCPUCache;
@@ -18,12 +18,12 @@ class ZLAbstractGfxMgr {
 protected:
 
 	//----------------------------------------------------------------//
-	inline ZLGfxMgr& GetGfxMgr () {
+	inline ZLGfxMgrGL& GetGfxMgr () {
 		return ZLAbstractGfxStateCache_GetGfxMgr ();
 	}
 
 	//----------------------------------------------------------------//
-	virtual ZLGfxMgr&					ZLAbstractGfxStateCache_GetGfxMgr					() = 0;
+	virtual ZLGfxMgrGL&					ZLAbstractGfxStateCache_GetGfxMgr					() = 0;
 	virtual ZLGfxPipelineClerk&			ZLAbstractGfxStateCache_GetGfxPipelineClerk			() = 0;
 	virtual ZLGfxResourceClerk&			ZLAbstractGfxStateCache_GetGfxResourceClerk			() = 0;
 	virtual ZLGfxStateCPUCache&			ZLAbstractGfxStateCache_GetGfxStateCacheCPU			() = 0;

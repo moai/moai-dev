@@ -5,7 +5,6 @@
 #include <moai-sim/MOAICamera.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIDraw.h>
-#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIViewport.h>
 
 #define DEFAULT_HFOV			60.0f
@@ -330,7 +329,7 @@ void MOAICamera::DrawDebug () {
 	ZLRect viewRect = gfxMgr.GetViewRect ();
 	//float aspect = viewRect.Width () / viewRect.Height ();
 	
-	ZLMatrix4x4 mtx = gfxMgr.GetMtx ( ZLGfxMgr::CLIP_TO_DISPLAY_MTX );
+	ZLMatrix4x4 mtx = gfxMgr.GetMtx ( ZLGfxMgrGL::CLIP_TO_DISPLAY_MTX );
 	
 	gfxMgr.SetVertexTransform ( mtx ); // draw in device space
 	

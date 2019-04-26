@@ -12,7 +12,8 @@
 	@text	Converts between Lua and JSON.
 */
 class MOAIJsonParser :
-	public ZLContextClass < MOAIJsonParser, MOAILuaObject > {
+	public ZLContextClass < MOAIJsonParser >,
+	public virtual MOAILuaObject {
 private:
 
 	//----------------------------------------------------------------//

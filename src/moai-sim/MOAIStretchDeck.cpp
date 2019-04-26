@@ -5,9 +5,7 @@
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIQuadBrush.h>
-#include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIStretchDeck.h>
-#include <moai-sim/MOAITextureBase.h>
 
 //================================================================//
 // local
@@ -37,19 +35,19 @@ ZLVec3D MOAIStretchDeck::BindStretchVertexTransform () const {
 	
 		// TODO: propery implement stretch factor
 	
-		ZLMatrix4x4 worldTransform = gfxMgr.GetMtx ( ZLGfxMgr::MODEL_TO_WORLD_MTX );
+		ZLMatrix4x4 worldTransform = gfxMgr.GetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX );
 		stretch = worldTransform.GetStretch ();
 		
 		ZLMatrix4x4 noStretchMtx;
 		noStretchMtx.Scale ( 1.0f / stretch.mX, 1.0f / stretch.mY, 1.0f / stretch.mZ );
 		noStretchMtx.Append ( worldTransform );
-		noStretchMtx.Append ( gfxMgr.GetMtx ( ZLGfxMgr::WORLD_TO_CLIP_MTX ));
+		noStretchMtx.Append ( gfxMgr.GetMtx ( ZLGfxMgrGL::WORLD_TO_CLIP_MTX ));
 		
 		gfxMgr.SetVertexTransform ( noStretchMtx );
 	}
 	else {
 	
-		gfxMgr.SetVertexTransform ( ZLGfxMgr::MODEL_TO_CLIP_MTX );
+		gfxMgr.SetVertexTransform ( ZLGfxMgrGL::MODEL_TO_CLIP_MTX );
 	}
 	
 	return stretch;

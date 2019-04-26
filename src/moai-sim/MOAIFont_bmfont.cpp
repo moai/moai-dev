@@ -7,7 +7,6 @@
 #include <moai-sim/MOAIFontReader.h>
 #include <moai-sim/MOAIGlyphSet.h>
 #include <moai-sim/MOAIStaticGlyphCache.h>
-#include <moai-sim/MOAITexture.h>
 
 #if defined( _WIN32 ) 
 	#define strcasecmp(str1, str2) ( stricmp ( str1,str2 ))

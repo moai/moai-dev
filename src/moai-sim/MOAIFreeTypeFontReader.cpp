@@ -10,7 +10,6 @@ SUPPRESS_EMPTY_FILE_WARNING
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIFreeTypeFontReader.h>
 #include <moai-sim/MOAIGlyphCache.h>
-#include <moai-sim/MOAIImageTexture.h>
 
 #include <ft2build.h>
 

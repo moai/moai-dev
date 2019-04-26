@@ -5,7 +5,7 @@
 #include <zl-gfx/ZLGfx.h>
 #include <zl-gfx/ZLGfxBuffer.h>
 #include <zl-gfx/ZLGfxEnum.h>
-#include <zl-gfx/ZLGfxMgr.h>
+#include <zl-gfx/ZLGfxMgrGL.h>
 #include <zl-gfx/ZLGfxResourceClerk.h>
 
 //================================================================//

@@ -3,12 +3,9 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIDraw.h>
-#include <moai-sim/MOAIGfxMgr.h>
-#include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAITransform.h>
 #include <moai-sim/MOAIVectorUtil.h>
-#include <moai-sim/MOAIVertexBuffer.h>
 #include <tesselator.h>
 
 //================================================================//

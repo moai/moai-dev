@@ -5,13 +5,8 @@
 #include <contrib/moai_utf8.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIFontReader.h>
-#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGlyphCache.h>
-#include <moai-sim/MOAIImage.h>
-#include <moai-sim/MOAIImageTexture.h>
-#include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIStaticGlyphCache.h>
-#include <moai-sim/MOAITextureBase.h>
 
 //================================================================//
 // local

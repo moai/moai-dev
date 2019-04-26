@@ -4,7 +4,6 @@
 #include "pch.h"
 
 #include <zl-gfx/headers.h>
-#include <zl-gfx/zl_gfx.h>
 #include <zl-gfx/ZLGfx-gles.h>
 #include <zl-gfx/ZLGfxDevice.h>
 #include <zl-gfx/ZLGfxEnum.h>

@@ -9,7 +9,6 @@
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIDraw.h>
-#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAILayoutFrame.h>
 #include <moai-sim/MOAIMoveConstraint2D.h>
@@ -18,13 +17,8 @@
 #include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionResultMgr.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
-#include <moai-sim/MOAIRenderMgr.h>
 #include <moai-sim/MOAIScissorRect.h>
-#include <moai-sim/MOAIShader.h>
-#include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAISurfaceSampler2D.h>
-#include <moai-sim/MOAITexture.h>
-#include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAIViewport.h>
 
 // uncomment me to debug log
@@ -498,7 +492,7 @@ void MOAICollisionProp::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	draw.Bind ();
 
 	if ( debugLines.Bind ( MOAICollisionProp::DEBUG_DRAW_COLLISION_WORLD_BOUNDS )) {
-		gfxMgr.SetVertexTransform ( ZLGfxMgr::WORLD_TO_CLIP_MTX );
+		gfxMgr.SetVertexTransform ( ZLGfxMgrGL::WORLD_TO_CLIP_MTX );
 		draw.DrawBoxOutline ( this->GetWorldBounds ().mAABB );
 	}
 	
@@ -506,7 +500,7 @@ void MOAICollisionProp::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 		
 	if ( shape ) {
 		const ZLAffine3D& localToWorldMtx = this->GetLocalToWorldMtx ();
-		gfxMgr.SetMtx ( ZLGfxMgr::MODEL_TO_WORLD_MTX, localToWorldMtx );
+		gfxMgr.SetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX, localToWorldMtx );
 		shape->Draw ( localToWorldMtx );
 	}
 
@@ -537,18 +531,18 @@ void MOAICollisionProp::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 		
 		if ( shape ) {
 			const ZLAffine3D& localToWorldMtx = this->GetLocalToWorldMtx ();
-			gfxMgr.SetMtx ( ZLGfxMgr::MODEL_TO_WORLD_MTX, localToWorldMtx );
+			gfxMgr.SetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX, localToWorldMtx );
 			shape->Draw ( localToWorldMtx );
 		}
 		else {
-			gfxMgr.SetVertexTransform ( ZLGfxMgr::WORLD_TO_CLIP_MTX );
+			gfxMgr.SetVertexTransform ( ZLGfxMgrGL::WORLD_TO_CLIP_MTX );
 			draw.DrawBoxOutline ( this->GetWorldBounds ().mAABB );
 		}
 	}
 	
 	if ( debugLines.Bind ( MOAICollisionProp::DEBUG_DRAW_COLLISION_OVERLAPS )) {
 	
-		gfxMgr.SetVertexTransform ( ZLGfxMgr::WORLD_TO_CLIP_MTX );
+		gfxMgr.SetVertexTransform ( ZLGfxMgrGL::WORLD_TO_CLIP_MTX );
 
 		MOAIPropOverlapLink* overlapLinkIt = this->mOverlapLinks;
 		for ( ; overlapLinkIt; overlapLinkIt = overlapLinkIt->mNext ) {

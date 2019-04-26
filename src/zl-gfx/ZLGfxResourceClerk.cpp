@@ -6,7 +6,7 @@
 #include <zl-gfx/ZLAbstractGfxResource.h>
 #include <zl-gfx/ZLGfxPipelineClerk.h>
 #include <zl-gfx/ZLGfxResourceClerk.h>
-#include <zl-gfx/ZLGfxMgr.h>
+#include <zl-gfx/ZLGfxMgrGL.h>
 
 //================================================================//
 // ZLGfxResourceClerk
@@ -165,4 +165,6 @@ ZLGfxResourceClerk::ZLGfxResourceClerk () {
 
 //----------------------------------------------------------------//
 ZLGfxResourceClerk::~ZLGfxResourceClerk () {
+
+	this->DiscardResources ();
 }

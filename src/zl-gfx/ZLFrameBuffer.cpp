@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <zl-gfx/ZLFrameBuffer.h>
-#include <zl-gfx/ZLGfxMgr.h>
+#include <zl-gfx/ZLGfxMgrGL.h>
 #include <zl-gfx/ZLGfxResourceClerk.h>
 
 //================================================================//
@@ -17,7 +17,7 @@ void ZLFrameBuffer::AffirmBuffers () {
 }
 
 //----------------------------------------------------------------//
-void ZLFrameBuffer::DetectGLFrameBufferID ( ZLGfxMgr& gfxMgr ) {
+void ZLFrameBuffer::DetectGLFrameBufferID ( ZLGfxMgrGL& gfxMgr ) {
 
 	this->SetGLFrameBuffer ( gfxMgr, gfxMgr.GetDrawingAPI ().GetCurrentFramebuffer ());
 }
@@ -87,7 +87,7 @@ void ZLFrameBuffer::SetBufferSize ( u32 width, u32 height ) {
 }
 
 //----------------------------------------------------------------//
-void ZLFrameBuffer::SetGLFrameBuffer ( ZLGfxMgr& gfxMgr, const ZLGfxHandle& frameBuffer ){
+void ZLFrameBuffer::SetGLFrameBuffer ( ZLGfxMgrGL& gfxMgr, const ZLGfxHandle& frameBuffer ){
 
 	gfxMgr.DeleteOrDiscard ( this->mGLFrameBuffer, true );
 	this->mGLFrameBuffer = frameBuffer;

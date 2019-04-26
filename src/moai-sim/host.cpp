@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-gfx/host-gl.h>
 #include <moai-sim/host.h>
 #include <moai-sim/headers.h>
 
@@ -345,7 +346,7 @@ void AKUSetScreenSize ( int width, int height) {
 //----------------------------------------------------------------//
 void AKUSetViewSize ( int width, int height ) {
 	
-	MOAIGfxMgr& gfxMgr= MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
 	u32 currentWidth = gfxMgr.GetBufferWidth ();
 	u32 currentHeight = gfxMgr.GetBufferHeight ();
@@ -386,24 +387,21 @@ void AKUSimAppInitialize () {
 //----------------------------------------------------------------//
 void AKUSimContextInitialize () {
 
-	ZLBitBuffer::Test ();
-
 	MOAINodeMgr::Affirm ();
 	MOAIActionStackMgr::Affirm ();
 
-	//MOAIProfiler::Affirm ();
-	MOAIGfxMgr::Affirm ();
 	MOAIMaterialMgr::Affirm ();
-	MOAIImageFormatMgr::Affirm ();
-	MOAIVertexFormatMgr::Affirm ();
-	MOAIShaderMgr::Affirm ();
+	
 	MOAIDraw::Affirm ();
 	MOAIDebugLinesMgr::Affirm ();
 	MOAIPartitionResultMgr::Affirm ();
-	MOAINodeMgr::Affirm ();
 	MOAIInputMgr::Affirm ();
 	MOAISim::Affirm ();
 	MOAIRenderMgr::Affirm ();
+	
+	MOAIEaseType::Affirm ();
+	MOAIGeometryWriter::Affirm ();
+	MOAIKeyCode::Affirm ();
 	
 	// MOAI
 	REGISTER_LUA_CLASS ( MOAIAction )
@@ -414,7 +412,6 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIAnimCurveIndex )
 	REGISTER_LUA_CLASS ( MOAIAnimCurveQuat )
 	REGISTER_LUA_CLASS ( MOAIAnimCurveVec )
-	//REGISTER_LUA_CLASS ( MOAIBspBuilder2D )
 	REGISTER_LUA_CLASS ( MOAIButtonSensor )
 	REGISTER_LUA_CLASS ( MOAICamera )
 	REGISTER_LUA_CLASS ( MOAICameraAnchor2D )
@@ -432,24 +429,18 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIEaseDriver )
 	REGISTER_LUA_CLASS ( MOAIEaseType )
 	REGISTER_LUA_CLASS ( MOAIFancyGrid )
-	REGISTER_LUA_CLASS ( MOAIFrameBuffer )
-	REGISTER_LUA_CLASS ( MOAIFrameBufferTexture )
 	REGISTER_LUA_CLASS ( MOAIGeometryWriter )
-	REGISTER_LUA_CLASS ( MOAIGfxMgr )
 	REGISTER_LUA_CLASS ( MOAIGraphicsProp )
 	REGISTER_LUA_CLASS ( MOAIGraphicsGridProp )
 	REGISTER_LUA_CLASS ( MOAIGrid )
 	REGISTER_LUA_CLASS ( MOAIGridSpace )
 	REGISTER_LUA_CLASS ( MOAIGridPathGraph )
 	REGISTER_LUA_CLASS ( MOAIImage )
-	REGISTER_LUA_CLASS ( MOAIImageTexture )
-	REGISTER_LUA_CLASS ( MOAIIndexBuffer )
 	REGISTER_LUA_CLASS ( MOAIInputDevice )
 	REGISTER_LUA_CLASS ( MOAIInputMgr )
 	REGISTER_LUA_CLASS ( MOAIJoystickSensor )
 	REGISTER_LUA_CLASS ( MOAIKeyCode )
 	REGISTER_LUA_CLASS ( MOAIKeyboardSensor )
-	//REGISTER_LUA_CLASS ( MOAILayoutFrame )
 	REGISTER_LUA_CLASS ( MOAILight )
 	REGISTER_LUA_CLASS ( MOAILightFormat )
 	REGISTER_LUA_CLASS ( MOAILocationSensor )
@@ -475,33 +466,24 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIPathTerrainDeck )
 	REGISTER_LUA_CLASS ( MOAIPinTransform )
 	REGISTER_LUA_CLASS ( MOAIPointerSensor )
-	//REGISTER_LUA_CLASS ( MOAIProfilerReportBox )
 	REGISTER_LUA_CLASS ( MOAIProjectionProp )
 	REGISTER_LUA_CLASS ( MOAIRegion )
 	REGISTER_LUA_CLASS ( MOAIRenderMgr )
 	REGISTER_LUA_CLASS ( MOAIScissorRect )
 	REGISTER_LUA_CLASS ( MOAIScriptNode )
 	REGISTER_LUA_CLASS ( MOAISelectionMesh )
-	REGISTER_LUA_CLASS ( MOAIShader )
-	REGISTER_LUA_CLASS ( MOAIShaderMgr )
-	REGISTER_LUA_CLASS ( MOAIShaderProgram )
+	REGISTER_LUA_CLASS ( MOAIShaderNode )
 	REGISTER_LUA_CLASS ( MOAISim )
 	REGISTER_LUA_CLASS ( MOAISpriteDeck2D )
 	REGISTER_LUA_CLASS ( MOAIStretchPatch2D )
-	//REGISTER_LUA_CLASS ( MOAISurfaceDeck2D )
 	REGISTER_LUA_CLASS ( MOAITableLayer )
 	REGISTER_LUA_CLASS ( MOAITableViewLayer )
-	REGISTER_LUA_CLASS ( MOAITexture )
 	REGISTER_LUA_CLASS ( MOAITileDeck2D )
 	REGISTER_LUA_CLASS ( MOAITimer )
 	REGISTER_LUA_CLASS ( MOAITouchSensor )
 	REGISTER_LUA_CLASS ( MOAITransform )
 	REGISTER_LUA_CLASS ( MOAIVecPathGraph )
 	REGISTER_LUA_CLASS ( MOAIVectorTesselator )
-	REGISTER_LUA_CLASS ( MOAIVertexArray )
-	REGISTER_LUA_CLASS ( MOAIVertexBuffer )
-	REGISTER_LUA_CLASS ( MOAIVertexFormat )
-	REGISTER_LUA_CLASS ( MOAIVertexFormatMgr )
 	REGISTER_LUA_CLASS ( MOAIViewport )
 	REGISTER_LUA_CLASS ( MOAIWheelSensor )
 	
@@ -521,6 +503,8 @@ void AKUSimContextInitialize () {
 	#if MOAI_WITH_FREETYPE
 		REGISTER_LUA_CLASS ( MOAIFreeTypeFontReader )
 	#endif
+	
+	MOAILuaRuntime::Get ().AliasGlobal ( "MOAIShaderNode", "MOAIShader" );
 }
 
 //----------------------------------------------------------------//

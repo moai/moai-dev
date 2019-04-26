@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <zl-gfx/ZLGfxMgr.h>
+#include <zl-gfx/ZLGfxMgrGL.h>
 #include <zl-gfx/ZLVertexFormat.h>
 
 //#define MOAIGFXVERTEXCACHE_DEBUG_LOG
@@ -57,6 +57,13 @@ bool ZLGfxStateVertexCache::BeginPrim ( u32 primType, u32 vtxCount, u32 idxCount
 		}
 	}
 	return this->ContinuePrim ( vtxCount, idxCount ) != CONTINUE_FAIL;
+}
+
+//----------------------------------------------------------------//
+void ZLGfxStateVertexCache::Clear () {
+
+	this->mVtxBuffer = NULL;
+	this->mIdxBuffer = NULL;
 }
 
 //----------------------------------------------------------------//

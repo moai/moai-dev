@@ -4,7 +4,6 @@
 #ifndef	MOAIDECKHOLDERWITHINDEX_H
 #define	MOAIDECKHOLDERWITHINDEX_H
 
-#include <moai-sim/MOAIAbstractDrawable.h>
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIDeckHolder.h>
 #include <moai-sim/MOAIPartitionHull.h>

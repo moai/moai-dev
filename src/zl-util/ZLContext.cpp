@@ -33,6 +33,23 @@ ZLContextClassBase::~ZLContextClassBase () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void ZLContext::AffirmSize ( ZLSize size ) {
+
+	if ( size < this->mGlobals.Size ()) return;
+	this->mGlobals.GrowChunked ( size, CHUNK_SIZE );
+	
+	size = this->mGlobals.Size ();
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
+	
+		ZLContextPair& pair = this->mGlobals [ i ];
+		if ( pair.mAliasOf ) {
+			assert ( pair.mAliasID < this->mGlobals.Size ());
+			pair.mAliasOf = &this->mGlobals [ pair.mAliasID ];
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 ZLContext::ZLContext () {
 }
 
@@ -60,7 +77,7 @@ ZLContext::~ZLContext () {
 		ZLContextPair& pair = this->mGlobals [ ZLIndexCast ( total - i )];
 		ZLContextClassBase* global = pair.mGlobalBase;
 
-		if ( global ) {
+		if ( global && ( pair.mAliasOf == NULL )) {
 		
 			#ifdef ZL_ENABLE_CONTEXT_DEBUG_LOG
 				log.LogF ( ZLLog::LOG_DEBUG, ZLLog::CONSOLE, "ZLContext: finalizing global %p\n", global );
@@ -87,7 +104,7 @@ ZLContext::~ZLContext () {
 		ZLContextPair& pair = this->mGlobals [ ZLIndexCast ( total - i )];
 		ZLContextClassBase* global = pair.mGlobalBase;
 
-		if ( global ) {
+		if ( global && ( pair.mAliasOf == NULL )) {
 		
 			#ifdef ZL_ENABLE_CONTEXT_DEBUG_LOG
 				log.LogF ( ZLLog::LOG_DEBUG, ZLLog::CONSOLE, "ZLContext: deleting global %p\n", global );

@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <zl-gfx/ZLGfx.h>
-#include <zl-gfx/ZLGfxMgr.h>
+#include <zl-gfx/ZLGfxMgrGL.h>
 #include <zl-gfx/ZLVertexArray.h>
 #include <zl-gfx/ZLVertexBuffer.h>
 #include <zl-gfx/ZLVertexFormat.h>

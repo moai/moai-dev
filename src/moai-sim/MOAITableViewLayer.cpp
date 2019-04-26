@@ -4,18 +4,12 @@
 #include "pch.h"
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIDeck.h>
-#include <moai-sim/MOAIFrameBufferTexture.h>
-#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAITableViewLayer.h>
 #include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIPartitionHolder.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIPartitionResultMgr.h>
-#include <moai-sim/MOAIRenderMgr.h>
-#include <moai-sim/MOAIShaderMgr.h>
-#include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAITransform.h>
-#include <moai-sim/MOAIVertexFormatMgr.h>
 
 //================================================================//
 // local

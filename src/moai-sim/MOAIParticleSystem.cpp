@@ -4,10 +4,8 @@
 #include "pch.h"
 #include <float.h>
 #include <moai-sim/MOAIDeck.h>
-#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIParticleState.h>
 #include <moai-sim/MOAIParticleSystem.h>
-#include <moai-sim/MOAITextureBase.h>
 
 class MOAIDataBuffer;
 
@@ -721,7 +719,7 @@ void MOAIParticleSystem::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 		drawingMtx = this->GetLocalToWorldMtx ();
 		drawingMtx.Prepend ( spriteMtx );
 		
-		gfxMgr.SetMtx ( ZLGfxMgr::MODEL_TO_WORLD_MTX, drawingMtx );
+		gfxMgr.SetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX, drawingMtx );
 		
 		this->mDeck->Draw ( this->mIndex + ( ZLSize )sprite.mGfxID );
 	}

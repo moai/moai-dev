@@ -34,7 +34,8 @@ public:
 //================================================================//
 // TODO: doxygen
 class MOAITestMgr :
-	public ZLContextClass < MOAITestMgr, MOAILuaObject > {
+	public ZLContextClass < MOAITestMgr >,
+	public virtual MOAILuaObject {
 private:
 
 	MOAILuaStrongRef	mStepFunc;

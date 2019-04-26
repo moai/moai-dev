@@ -5,7 +5,6 @@
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIMetaTileDeck2D.h>
-#include <moai-sim/MOAITextureBase.h>
 
 //================================================================//
 // MOAIMetaTile
@@ -211,7 +210,7 @@ void MOAIMetaTileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	float yOff = brush.mOffset.mY - ( c0.mY * tileHeight );
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	const ZLAffine3D& modelToWorldMtx = gfxMgr.GetMtx ( ZLGfxMgr::MODEL_TO_WORLD_MTX );
+	const ZLAffine3D& modelToWorldMtx = gfxMgr.GetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX );
 	
 	for ( int y = c0.mY; y <= c1.mY; ++y ) {
 		for ( int x = c0.mX; x <= c1.mX; ++x ) {
@@ -224,7 +223,7 @@ void MOAIMetaTileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 			
 			ZLAffine3D mtx = modelToWorldMtx;
 			mtx.PrependSclTr2D ( tileWidth, tileHeight, xOff + loc.mX, yOff + loc.mY );
-			gfxMgr.SetMtx ( ZLGfxMgr::MODEL_TO_WORLD_MTX, mtx );
+			gfxMgr.SetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX, mtx );
 
 			//this->mDeck->Draw ( MOAIDeckRemapper::Remap ( this->mRemapper, idx ), materials, loc, scale );
 			this->mDeck->Draw ( idx );

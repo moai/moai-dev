@@ -4,7 +4,6 @@
 #ifndef	MOAIPROJECTIONPROP_H
 #define	MOAIPROJECTIONPROP_H
 
-#include <moai-sim/MOAIAbstractDrawable.h>
 #include <moai-sim/MOAIPartitionHull.h>
 
 class MOAIAbstractViewLayer;

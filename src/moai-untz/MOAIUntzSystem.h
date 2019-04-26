@@ -14,7 +14,8 @@
 	@text	Untz system singleton.
 */
 class MOAIUntzSystem :
-	public ZLContextClass < MOAIUntzSystem, MOAILuaObject > {
+	public ZLContextClass < MOAIUntzSystem >,
+	public virtual MOAILuaObject {
 private:
 
 	static const u32 DEFAULT_SAMPLE_RATE		= 44100;

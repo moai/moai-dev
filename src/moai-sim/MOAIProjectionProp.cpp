@@ -104,7 +104,7 @@ void MOAIProjectionProp::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	if ( !debugLines.Bind ( DEBUG_DRAW_WORLD_BOUNDS )) return;
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	gfxMgr.SetVertexTransform ( ZLGfxMgr::WORLD_TO_DISPLAY_MTX );
+	gfxMgr.SetVertexTransform ( ZLGfxMgrGL::WORLD_TO_DISPLAY_MTX );
 	
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008

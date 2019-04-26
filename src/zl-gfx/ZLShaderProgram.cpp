@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <zl-gfx/ZLGfx.h>
-#include <zl-gfx/ZLGfxMgr.h>
+#include <zl-gfx/ZLGfxMgrGL.h>
 #include <zl-gfx/ZLShaderProgram.h>
 #include <zl-gfx/ZLTexture.h>
 
@@ -93,7 +93,7 @@ void ZLShaderProgram::Clear () {
 //----------------------------------------------------------------//
 ZLGfxHandle ZLShaderProgram::CompileShader ( u32 type, cc8* source ) {
 
-	ZLGfxMgr& gfxMgr = *this->mGfxMgr;
+	ZLGfxMgrGL& gfxMgr = *this->mGfxMgr;
 	ZLGfx& gfx = this->mGfxMgr->GetDrawingAPI ();
 
 	ZLGfxHandle shader = gfx.CreateShader ( type );
@@ -189,7 +189,7 @@ void ZLShaderProgram::ScheduleTextures () {
 
 	// TODO: ZLGfx
 
-//	ZLGfxMgr& gfxMgr = this->mGfxMgr;
+//	ZLGfxMgrGL& gfxMgr = this->mGfxMgr;
 //	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
 //
 //	size_t nTextures = this->mTextures.Size ();
@@ -224,7 +224,7 @@ void ZLShaderProgram::SetGlobal ( ZLIndex idx, u32 globalID, ZLIndex uniformID, 
 //	MOAILuaState state ( L );
 //
 //	ZLIndex globalIdx	= state.GetValue < MOAILuaIndex >( idx, ZLIndexOp::ZERO );
-//	u32 globalID		= state.GetValue < u32 >( idx + 1, ZLGfxMgr::NULL_GLOBAL );
+//	u32 globalID		= state.GetValue < u32 >( idx + 1, ZLGfxMgrGL::NULL_GLOBAL );
 //	ZLIndex uniformID	= state.GetValue < MOAILuaIndex >( idx + 2, ZLIndexOp::ZERO );
 //	ZLIndex index		= state.GetValue < MOAILuaIndex >( idx + 3, ZLIndexOp::ZERO );
 //
@@ -268,7 +268,7 @@ void ZLShaderProgram::SetVertexAttribute ( u32 idx, cc8* attribute ) {
 //----------------------------------------------------------------//
 void ZLShaderProgram::UpdateUniforms ( ZLLeanArray < u8 >& buffer ) {
 
-	ZLGfxMgr& gfxMgr = *this->mGfxMgr;
+	ZLGfxMgrGL& gfxMgr = *this->mGfxMgr;
 	
 	ZLRect viewRect = gfxMgr.GetViewRect ();
 
@@ -286,7 +286,7 @@ void ZLShaderProgram::UpdateUniforms ( ZLLeanArray < u8 >& buffer ) {
 		ZLShaderUniformHandle uniform = this->GetUniformHandle ( buffer.GetBuffer (), global.mUniformID, global.mIndex );
 		if ( !uniform.IsValid ()) continue;
 		
-		if ( global.mGlobalID < ZLGfxMgr::TOTAL_MATRICES ) {
+		if ( global.mGlobalID < ZLGfxMgrGL::TOTAL_MATRICES ) {
 		
 			uniform.SetValue ( gfxMgr.GetMtx ( global.mGlobalID ));
 		}
@@ -294,27 +294,27 @@ void ZLShaderProgram::UpdateUniforms ( ZLLeanArray < u8 >& buffer ) {
 		
 			switch (( ZLSize )global.mGlobalID ) {
 				
-				case ZLGfxMgr::PEN_COLOR:
+				case ZLGfxMgrGL::PEN_COLOR:
 				
 					uniform.SetValue ( gfxMgr.GetFinalColor ());
 					break;
 				
-				case ZLGfxMgr::VIEW_HALF_HEIGHT:
+				case ZLGfxMgrGL::VIEW_HALF_HEIGHT:
 				
 					uniform.SetValue ( viewRect.Height () * 0.5f );
 					break;
 					
-				case ZLGfxMgr::VIEW_HALF_WIDTH: {
+				case ZLGfxMgrGL::VIEW_HALF_WIDTH: {
 				
 					uniform.SetValue ( viewRect.Width () * 0.5f );
 					break;
 				}
-				case ZLGfxMgr::VIEW_HEIGHT:
+				case ZLGfxMgrGL::VIEW_HEIGHT:
 				
 					uniform.SetValue ( viewRect.Height ());
 					break;
 					
-				case ZLGfxMgr::VIEW_WIDTH:
+				case ZLGfxMgrGL::VIEW_WIDTH:
 				
 					uniform.SetValue ( viewRect.Width ());
 					break;

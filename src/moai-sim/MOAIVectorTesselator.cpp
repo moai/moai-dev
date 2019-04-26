@@ -3,12 +3,8 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGeometryWriter.h>
-#include <moai-sim/MOAIAbstractGfxBuffer.h>
-#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGrid.h>
-#include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIRegion.h>
-#include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAIVectorCombo.h>
 #include <moai-sim/MOAIVectorEllipse.h>
 #include <moai-sim/MOAIVectorTesselator.h>
@@ -16,8 +12,6 @@
 #include <moai-sim/MOAIVectorPoly.h>
 #include <moai-sim/MOAIVectorRect.h>
 #include <moai-sim/MOAIVectorUtil.h>
-#include <moai-sim/MOAIVertexFormat.h>
-#include <moai-sim/MOAIVertexFormatMgr.h>
 #include <tesselator.h>
 
 //================================================================//

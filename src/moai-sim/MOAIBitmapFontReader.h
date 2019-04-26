@@ -5,7 +5,6 @@
 #define	MOAIBITMAPFONTREADER_H
 
 #include <moai-sim/MOAIFontReader.h>
-#include <moai-sim/MOAIImage.h>
 
 //================================================================//
 // MOAIBitmapGlyph

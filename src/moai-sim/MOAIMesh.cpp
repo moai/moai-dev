@@ -5,19 +5,13 @@
 
 #include <tesselator.h>
 
-#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGrid.h>
-#include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIMesh.h>
 #include <moai-sim/MOAIMeshSparseQuadTree.h>
 #include <moai-sim/MOAIMeshTernaryTree.h>
 #include <moai-sim/MOAIRegion.h>
-#include <moai-sim/MOAIShader.h>
-#include <moai-sim/MOAIShaderMgr.h>
-#include <moai-sim/MOAITextureBase.h>
 #include <moai-sim/MOAIVectorUtil.h>
-#include <moai-sim/MOAIVertexFormat.h>
 
 //================================================================//
 // MOAIMeshPrim

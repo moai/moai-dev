@@ -6,7 +6,6 @@
 #include <moai-sim/MOAIBitmapFontReader.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIGlyphCache.h>
-#include <moai-sim/MOAIImageTexture.h>
 
 //================================================================//
 // MOAIBitmapFontPage

@@ -56,6 +56,7 @@ protected:
 	ZLLeanArray < ZLStrongPtr < ZLTexture > >		mTextureUnits;
 	
 	//----------------------------------------------------------------//
+	void			Clear							();
 					ZLGfxStateGPUCacheFrame			();
 					~ZLGfxStateGPUCacheFrame		();
 };
@@ -113,6 +114,7 @@ protected:
 	ZLSharedConstBuffer*					mBoundVtxBuffer;
 
 	//----------------------------------------------------------------//
+	void			Clear							();
 	void			ApplyStateChange				( u32 stateID );
 	void			ApplyStateChanges				();
 	void			FlushBlendMode					( bool blendEnabled, const ZLBlendMode& blendMode );
@@ -162,9 +164,6 @@ public:
 		
 	float			GetViewHeight				() const;
 	float			GetViewWidth				() const;
-	
-					ZLGfxStateGPUCache			();
-	virtual			~ZLGfxStateGPUCache			();
 
 	void			ResetGPUState				();
 
@@ -201,6 +200,9 @@ public:
 	void			SetViewRect					( ZLRect rect );
 	
 	void			UnbindAll					();
+	
+					ZLGfxStateGPUCache			();
+	virtual			~ZLGfxStateGPUCache			();
 };
 
 #endif

@@ -5,20 +5,14 @@
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIFancyGrid.h>
-#include <moai-sim/MOAIGfxMgr.h>
 #include <moai-sim/MOAIGraphicsGridProp.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAILayoutFrame.h>
 #include <moai-sim/MOAIMaterialBatch.h>
 #include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
-#include <moai-sim/MOAIRenderMgr.h>
 #include <moai-sim/MOAIScissorRect.h>
-#include <moai-sim/MOAIShader.h>
-#include <moai-sim/MOAIShaderMgr.h>
 #include <moai-sim/MOAISurfaceSampler2D.h>
-#include <moai-sim/MOAITexture.h>
-#include <moai-sim/MOAITextureBase.h>
 
 //================================================================//
 // local
@@ -151,7 +145,7 @@ void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoo
 				mtx.PrependSclTr2D ( xScale, yScale, loc.mX, loc.mY );
 			}
 
-			gfxMgr.SetMtx ( ZLGfxMgr::MODEL_TO_WORLD_MTX, mtx );
+			gfxMgr.SetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX, mtx );
 			
 			if ( fancyGrid ) {
 				gfxMgr.SetPenColor ( penColor * fancyGrid->GetTileColor ( addr ));
