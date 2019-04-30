@@ -146,7 +146,7 @@ void MOAIAbstractLayer::ClearSurface () {
 
 	if (( this->mClearMode == CLEAR_NEVER ) || (( this->mClearMode == CLEAR_ON_BUFFER_FLAG ) && ( !frameBuffer->NeedsClear ()))) return;
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 
 	if ( this->mClearFlags & ZGL_CLEAR_COLOR_BUFFER_BIT ) {
 	
@@ -171,7 +171,7 @@ void MOAIAbstractLayer::ClearSurface () {
 //----------------------------------------------------------------//
 ZLFrameBuffer* MOAIAbstractLayer::GetFrameBuffer () {
 
-	return this->mFrameBuffer ? this->mFrameBuffer : MOAIGfxMgr::Get ().GetDefaultFrameBuffer ();
+	return this->mFrameBuffer ? this->mFrameBuffer : MOAIGfxMgrGL::Get ().GetDefaultFrameBuffer ();
 }
 
 //----------------------------------------------------------------//
@@ -230,7 +230,7 @@ void MOAIAbstractLayer::SetClearColor ( MOAIColor* color ) {
 //----------------------------------------------------------------//
 void MOAIAbstractLayer::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 
-	//this->mFrameBuffer.Set ( *this, frameBuffer ? frameBuffer : MOAIGfxMgr::Get ().mGfxState.GetDefaultFrameBuffer ());
+	//this->mFrameBuffer.Set ( *this, frameBuffer ? frameBuffer : MOAIGfxMgrGL::Get ().mGfxState.GetDefaultFrameBuffer ());
 	this->mFrameBuffer.Set ( *this, frameBuffer );
 }
 

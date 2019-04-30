@@ -5,6 +5,7 @@
 #define	ZLIMAGE_H
 
 #include <zl-util/ZLAccessors.h>
+#include <zl-util/ZLColor.h>
 #include <zl-util/ZLCopyOnWrite.h>
 
 //================================================================//
@@ -34,7 +35,7 @@ public:
 
 protected:
 
-	friend class MOAIImageFormat; // TODO: ZLGfx
+	friend class ZLImageFormat;
 
 	PixelFormat				mPixelFormat;
 	ZLColor::ColorFormat	mColorFormat;
@@ -133,7 +134,9 @@ public:
 	void					Init							( const void* bitmap, u32 width, u32 height, ZLColor::ColorFormat colorFmt );
 	bool					IsPow2							();
 	static bool				IsPow2							( u32 n );
-	bool					IsOK							();
+	bool					IsOK							() const;
+	bool					Load							( cc8* filename, u32 transform = 0 );
+	bool					Load							( ZLStream& stream, u32 transform );
 	bool					MipReduce						();
 	void					Mix								( const ZLImage& image, const ZLMatrix4x4& mtx, float K );
 	void					PadToPow2						( const ZLImage& image );
@@ -148,6 +151,7 @@ public:
 	void					SimpleThreshold					( const ZLImage& image, float rT, float gT, float bT, float aT );
 	void					Take							( ZLImage& image );
 	void					Transform						( u32 transform );
+	bool					Write							( ZLStream& stream, cc8* formatName ) const;
 							ZLImage							();
 	virtual					~ZLImage						();
 	

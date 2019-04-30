@@ -7,7 +7,9 @@
 #include <float.h>
 #include <zl-util/ZLBitBuffer.h>
 #include <zl-util/ZLColor.h>
+#include <zl-util/ZLFileStream.h>
 #include <zl-util/ZLImage.h>
+#include <zl-util/ZLImageFormatMgr.h>
 
 //================================================================//
 // ZLImage
@@ -1656,9 +1658,40 @@ bool ZLImage::IsPow2 ( u32 n ) {
 }
 
 //----------------------------------------------------------------//
-bool ZLImage::IsOK () {
+bool ZLImage::IsOK () const {
 
 	return ( this->mBitmap.GetSize () != 0 );
+}
+
+//----------------------------------------------------------------//
+bool ZLImage::Load ( cc8* filename, u32 transform ) {
+
+	this->Clear ();
+	
+	ZLFileStream stream;
+	if ( stream.OpenRead ( filename )) {
+		this->ZLImage::Load ( stream, transform ); // TODO: use file extension as name
+		stream.Close ();
+		this->NotifyStatusChanged ();
+	}
+	return this->IsOK ();
+}
+
+//----------------------------------------------------------------//
+bool ZLImage::Load ( ZLStream& stream, u32 transform ) {
+	UNUSED ( stream );
+	UNUSED ( transform );
+
+	this->Clear ();
+	
+	ZLImageFormat* format = ZLImageFormatMgr::Get ().FindFormat ( stream ); // TODO: make use of name
+	if ( format ) {
+		format->ReadImage ( *this, stream, transform );
+		this->NotifyStatusChanged ();
+		return this->IsOK ();
+	}
+	
+	return false;
 }
 
 //----------------------------------------------------------------//
@@ -2016,6 +2049,14 @@ void ZLImage::Transform ( u32 transform ) {
 		this->PadToPow2 ( *this );
 	}
 }
+
+//----------------------------------------------------------------//
+bool ZLImage::Write ( ZLStream& stream, cc8* formatName ) const {
+
+	ZLImageFormat* format = ZLImageFormatMgr::Get ().FindFormat ( formatName );
+	return format && format->WriteImage ( *this, stream );
+}
+
 
 //----------------------------------------------------------------//
 ZLImage::ZLImage () :

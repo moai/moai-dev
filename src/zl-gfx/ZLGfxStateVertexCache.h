@@ -4,7 +4,7 @@
 #ifndef	ZLGFXSTATEVERTEXCACHE_H
 #define	ZLGFXSTATEVERTEXCACHE_H
 
-#include <zl-gfx/ZLAbstractGfxMgr.h>
+#include <zl-gfx/ZLAbstractGfxMgrGL.h>
 #include <zl-gfx/ZLGfxStateCPUCache.h>
 #include <zl-gfx/ZLIndexBuffer.h>
 #include <zl-gfx/ZLVertexBuffer.h>
@@ -15,8 +15,7 @@ class ZLAbstractGfxResource;
 // ZLGfxStateVertexCache
 //================================================================//
 class ZLGfxStateVertexCache :
-	virtual public ZLAbstractGfxMgr,
-	public ZLGfxStateCPUCache {
+	virtual public ZLAbstractGfxMgrGL {
 protected:
 
 	friend class MOAIGfxMgr; // for now
@@ -98,14 +97,14 @@ public:
 	inline void WritePenColor4b () {
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		this->mVtxBuffer->Write < u32 >( this->mStateFrameCPU.mFinalColor32 );
+		this->mVtxBuffer->Write < u32 >( this->GetGfxStateCacheCPU ().GetFinalColor32 ());
 	}
 	
 	//----------------------------------------------------------------//
 	inline void WritePenColor4f () {
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		this->mVtxBuffer->Write < ZLColorVec >( this->mStateFrameCPU.mFinalColor );
+		this->mVtxBuffer->Write < ZLColorVec >( this->GetGfxStateCacheCPU ().GetFinalColor ());
 	}
 		
 	//----------------------------------------------------------------//

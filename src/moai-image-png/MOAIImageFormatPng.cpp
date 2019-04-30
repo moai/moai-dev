@@ -48,15 +48,6 @@ bool MOAIImageFormatPng::CheckHeader ( const void* buffer ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatPng::CreateTexture ( MOAITextureBase& texture, const void* data, size_t size ) {
-	UNUSED ( texture );
-	UNUSED ( data );
-	UNUSED ( size );
-	
-	return false;
-}
-
-//----------------------------------------------------------------//
 size_t MOAIImageFormatPng::GetHeaderSize () {
 
 	return HEADER_SIZE;
@@ -71,7 +62,7 @@ MOAIImageFormatPng::~MOAIImageFormatPng () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatPng::ReadImage ( MOAIImage& image, ZLStream& stream, u32 transform ) {
+bool MOAIImageFormatPng::ReadImage ( ZLImage& image, ZLStream& stream, u32 transform ) {
 
 	png_structp png = png_create_read_struct ( PNG_LIBPNG_VER_STRING, 0, _pngError, 0 );
 	if ( !png ) return false;
@@ -87,7 +78,7 @@ bool MOAIImageFormatPng::ReadImage ( MOAIImage& image, ZLStream& stream, u32 tra
 }
 
 //----------------------------------------------------------------//
-void MOAIImageFormatPng::ReadImagePng ( MOAIImage& image, void* pngParam, void* pngInfoParam, u32 transform ) {
+void MOAIImageFormatPng::ReadImagePng ( ZLImage& image, void* pngParam, void* pngInfoParam, u32 transform ) {
 	
 	png_structp png = ( png_structp )pngParam;
 	png_infop pngInfo = ( png_infop )pngInfoParam;
@@ -121,33 +112,33 @@ void MOAIImageFormatPng::ReadImagePng ( MOAIImage& image, void* pngParam, void* 
 	bool isPadded = this->SetDimensions ( image, width, height, transform );
 	
 	// now guess the format and color type, according to the png
-	MOAIImage::PixelFormat pngPixelFormat;
+	ZLImage::PixelFormat pngPixelFormat;
 	ZLColor::ColorFormat pngColorFormat;
 	
 	switch ( pngColorType ) {
 		
 		case PNG_COLOR_TYPE_GRAY:
-			pngPixelFormat = MOAIImage::TRUECOLOR;
+			pngPixelFormat = ZLImage::TRUECOLOR;
 			pngColorFormat = ZLColor::A_8;
 			break;
 		
 		case PNG_COLOR_TYPE_GRAY_ALPHA:
-			pngPixelFormat = MOAIImage::TRUECOLOR;
+			pngPixelFormat = ZLImage::TRUECOLOR;
 			pngColorFormat = ZLColor::LA_8;
 			break;
 		
 		case PNG_COLOR_TYPE_PALETTE:
-			pngPixelFormat = ( paletteSize > 16 ) ? MOAIImage::INDEX_8 : MOAIImage::INDEX_4;
+			pngPixelFormat = ( paletteSize > 16 ) ? ZLImage::INDEX_8 : ZLImage::INDEX_4;
 			pngColorFormat = ( transSize ) ? ZLColor::RGBA_8888 : ZLColor::RGB_888;
 			break;
 		
 		case PNG_COLOR_TYPE_RGB:
-			pngPixelFormat = MOAIImage::TRUECOLOR;
+			pngPixelFormat = ZLImage::TRUECOLOR;
 			pngColorFormat = ZLColor::RGB_888;
 			break;
 		
 		case PNG_COLOR_TYPE_RGB_ALPHA:
-			pngPixelFormat = MOAIImage::TRUECOLOR;
+			pngPixelFormat = ZLImage::TRUECOLOR;
 			pngColorFormat = ZLColor::RGBA_8888;
 			break;
 		
@@ -155,7 +146,7 @@ void MOAIImageFormatPng::ReadImagePng ( MOAIImage& image, void* pngParam, void* 
 	}
 	
 	// override the image settings
-	this->SetPixelFormat ( image, ( transform & ZLImageTransform::TRUECOLOR ) ? MOAIImage::TRUECOLOR : pngPixelFormat );
+	this->SetPixelFormat ( image, ( transform & ZLImageTransform::TRUECOLOR ) ? ZLImage::TRUECOLOR : pngPixelFormat );
 	this->SetColorFormat ( image, pngColorFormat );
 	
 	if (( transform & ZLImageTransform::QUANTIZE ) && ( ZLColor::GetDepthInBits ( pngColorFormat ) > 16 )) {
@@ -172,7 +163,7 @@ void MOAIImageFormatPng::ReadImagePng ( MOAIImage& image, void* pngParam, void* 
 		}
 	}
 	
-	if ( image.GetPixelFormat () == MOAIImage::TRUECOLOR ) {
+	if ( image.GetPixelFormat () == ZLImage::TRUECOLOR ) {
 		
 		// expand lower bit depths to 8 bits per pixel
 		if ( bitDepth < 8 ) {
@@ -297,7 +288,7 @@ void MOAIImageFormatPng::ReadImagePng ( MOAIImage& image, void* pngParam, void* 
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatPng::WriteImage ( const MOAIImage& image, ZLStream& stream ) {
+bool MOAIImageFormatPng::WriteImage ( const ZLImage& image, ZLStream& stream ) {
 
 	png_structp png_ptr;
 	png_infop info_ptr;

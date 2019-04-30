@@ -58,7 +58,7 @@ MOAIImageTexture::~MOAIImageTexture () {
 //----------------------------------------------------------------//
 void MOAIImageTexture::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	MOAIGfxResource < ZLTexture >::RegisterLuaClass ( state );
+	MOAIGfxResource < ZLTextureBase >::RegisterLuaClass ( state );
 	MOAIImage::RegisterLuaClass ( state );
 	MOAITextureBase::RegisterLuaClass ( state );
 }
@@ -66,7 +66,7 @@ void MOAIImageTexture::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIImageTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIGfxResource < ZLTexture >::RegisterLuaFuncs ( state );
+	MOAIGfxResource < ZLTextureBase >::RegisterLuaFuncs ( state );
 	MOAIImage::RegisterLuaFuncs ( state );
 	MOAITextureBase::RegisterLuaFuncs ( state );
 	

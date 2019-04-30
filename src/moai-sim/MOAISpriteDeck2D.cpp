@@ -658,7 +658,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 
 	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	MOAIQuadBrush::BindVertexFormat ();
 	
 	gfxMgr.SetVertexTransform ( ZLGfxMgrGL::MODEL_TO_DISPLAY_MTX );

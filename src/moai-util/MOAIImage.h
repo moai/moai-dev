@@ -85,15 +85,12 @@ public:
 	
 	//----------------------------------------------------------------//
 	static MOAIImage*	AffirmImage					( MOAILuaState& state, int idx );
-	bool				Load						( cc8* filename, u32 transform = 0 );
-	bool				Load						( ZLStream& stream, u32 transform = 0 );
 						MOAIImage					();
 						~MOAIImage					();
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
 	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
-	bool				Write						( ZLStream& stream, cc8* formatName );
 };
 
 #endif

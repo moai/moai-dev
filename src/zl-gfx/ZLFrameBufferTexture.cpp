@@ -52,7 +52,7 @@ ZLFrameBufferTexture::~ZLFrameBufferTexture () {
 void ZLFrameBufferTexture::ZLAbstractGfxResource_OnGPUBind () {
 
 	this->NeedsClear ( true );
-	ZLTexture::ZLAbstractGfxResource_OnGPUBind ();
+	ZLTextureBase::ZLAbstractGfxResource_OnGPUBind ();
 }
 
 //----------------------------------------------------------------//

@@ -209,7 +209,7 @@ void MOAIMetaTileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	float xOff = brush.mOffset.mX - ( c0.mX * tileWidth );
 	float yOff = brush.mOffset.mY - ( c0.mY * tileHeight );
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	const ZLAffine3D& modelToWorldMtx = gfxMgr.GetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX );
 	
 	for ( int y = c0.mY; y <= c1.mY; ++y ) {

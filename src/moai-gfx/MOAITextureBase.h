@@ -21,7 +21,7 @@
 */
 class MOAITextureBase :
 	public virtual MOAILuaObject,
-	public virtual ZLTexture {
+	public virtual ZLTextureBase {
 protected:
 
 	friend class MOAITextureFormat;

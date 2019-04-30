@@ -83,7 +83,7 @@ void MOAITableLayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAITableLayer::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 
 	gfxMgr.SetFrameBuffer ( this->GetFrameBuffer ());
 	

@@ -5,6 +5,7 @@
 #define	ZLGFXMGRGL_H
 
 #include <zl-gfx/ZLAbstractGfxMgr.h>
+#include <zl-gfx/ZLAbstractGfxMgrGL.h>
 #include <zl-gfx/ZLGfxPipelineClerk.h>
 #include <zl-gfx/ZLGfxResourceClerk.h>
 #include <zl-gfx/ZLGfxStateCPUCache.h>
@@ -25,10 +26,10 @@ protected:
 //================================================================//
 class ZLGfxMgrGL :
 	virtual public ZLAbstractGfxMgr,
+	virtual public ZLAbstractGfxMgrGL,
 	virtual public ZLGfxPipelineClerk,
 	virtual public ZLGfxResourceClerk,
-	virtual public ZLGfxStateGPUCache,
-	virtual public ZLGfxStateVertexCache {
+	virtual public ZLGfxStateGPUCache {
 protected:
 
 	bool								mHasContext;

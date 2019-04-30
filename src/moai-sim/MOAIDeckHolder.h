@@ -14,12 +14,7 @@ class MOAIDeck;
 //================================================================//
 // MOAIDeckHolder
 //================================================================//
-/**	@lua	MOAIDeckHolder
-	@text	Base class for props.
-	
-	@attr	ATTR_INDEX
-	@attr	ATTR_PARTITION
-*/
+// TODO: doxygen
 class MOAIDeckHolder :
 	public virtual MOAINode {
 private:

@@ -685,7 +685,7 @@ void MOAIParticleSystem::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 	if ( !this->mDeck ) return;
 	if ( this->IsClear ()) return;
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	
 	this->PushGfxState ();
 	this->LoadUVTransform ();

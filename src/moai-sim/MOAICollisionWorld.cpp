@@ -433,7 +433,7 @@ void MOAICollisionWorld::MOAIPartition_DrawDebugFront () {
 	
 	if ( this->GetShapeStreamSize ()) {
 	
-		MOAIGfxMgr::Get ().SetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX );
+		MOAIGfxMgrGL::Get ().SetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX );
 		this->DrawShapeStream ();
 	}
 }

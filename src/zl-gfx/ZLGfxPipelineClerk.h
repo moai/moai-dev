@@ -4,7 +4,7 @@
 #ifndef	ZLGFXPIPELINECLERK_H
 #define	ZLGFXPIPELINECLERK_H
 
-#include <zl-gfx/ZLAbstractGfxMgr.h>
+#include <zl-gfx/ZLAbstractGfxMgrGL.h>
 #include <zl-gfx/ZLGfxImmediate.h>
 #include <zl-gfx/ZLGfxRetained.h>
 
@@ -54,7 +54,7 @@ private:
 // ZLGfxPipelineClerk
 //================================================================//
 class ZLGfxPipelineClerk :
-	virtual public ZLAbstractGfxMgr {
+	virtual public ZLAbstractGfxMgrGL {
 public:
 
 	enum {

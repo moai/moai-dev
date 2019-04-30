@@ -9,7 +9,7 @@
 #include <zl-gfx/ZLGfxStateVertexCache.h>
 #include <zl-gfx/ZLIndexBuffer.h>
 #include <zl-gfx/ZLShader.h>
-#include <zl-gfx/ZLTexture.h>
+#include <zl-gfx/ZLTextureBase.h>
 #include <zl-gfx/ZLVertexArray.h>
 #include <zl-gfx/ZLVertexBuffer.h>
 #include <zl-gfx/ZLVertexFormat.h>
@@ -181,82 +181,6 @@ void ZLGfxStateGPUCache::Clear () {
 	
 	this->mDefaultFrameBuffer = NULL;
 	this->mDefaultTexture = NULL;
-}
-
-//----------------------------------------------------------------//
-void ZLGfxStateGPUCache::ClearSurface () {
-	
-	ZLGfxStateCPUCache& cpuCache = this->ZLAbstractGfxStateCache_GetGfxStateCacheCPU ();
-	
-	u32 clearFlags = cpuCache.GetClearFlags ();
-
-	if ( clearFlags ) {
-	
-		ZLGfx& gfx = this->GetGfxPipelineClerk ().GetDrawingAPI ();
-	
-		// discard this if all buffers are to be cleared?
-		// (may still need to draw if depth or color only)
-		this->ZLAbstractGfxStateCache_GetGfxVertexCache ().FlushVertexCache ();
-		
-		this->ApplyStateChanges ();
-	
-		if ( clearFlags & ZGL_CLEAR_COLOR_BUFFER_BIT ) {
-		
-			const ZLColorVec& clearColor = cpuCache.GetClearColor ();
-		
-			gfx.ClearColor (
-				clearColor.mR,
-				clearColor.mG,
-				clearColor.mB,
-				clearColor.mA
-			);
-		}
-	
-		if (( clearFlags & ZGL_CLEAR_DEPTH_BUFFER_BIT ) && !this->GetDepthMask ()) {
-			gfx.DepthMask ( true );
-			gfx.Clear ( clearFlags );
-			gfx.DepthMask ( false );
-		}
-		else {
-			gfx.Clear ( clearFlags );
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-size_t ZLGfxStateGPUCache::CountTextureUnits () {
-
-	return this->mActiveState.mTextureUnits.Size ();
-}
-
-//----------------------------------------------------------------//
-void ZLGfxStateGPUCache::DrawPrims ( u32 primType, u32 base, u32 count ) {
-
-	DEBUG_LOG ( "DRAW PRIMS: %d %d %d\n", primType, base, count );
-	
-	this->ApplyStateChanges ();
-
-	ZLShader* shader = this->mActiveState.mShader;
-
-	if ( shader && ( this->mActiveState.mVtxBuffer || this->mActiveState.mVtxArray )) {
-		
-		ZLGfx& gfx = this->GetGfxPipelineClerk ().GetDrawingAPI ();
-		
-		ZLIndexBuffer* idxBuffer = this->mActiveState.mIdxBuffer;
-		
-		if ( idxBuffer ) {
-		
-			DEBUG_LOG ( "drawing prims with index and vertex buffer\n" );
-			
-			size_t indexSize = idxBuffer->GetIndexSize ();
-			u32 indexType = indexSize == 2 ? ZGL_TYPE_UNSIGNED_SHORT : ZGL_TYPE_UNSIGNED_INT;
-			gfx.DrawElements ( primType, count, indexType, this->mBoundIdxBuffer, base * indexSize );
-		}
-		else {
-			DEBUG_LOG ( "drawing prims with vertex buffer\n" );
-			gfx.DrawArrays ( primType, base, count );
-		}
-	}
 }
 
 //----------------------------------------------------------------//
@@ -549,15 +473,15 @@ void ZLGfxStateGPUCache::FlushShader ( ZLShader* shader ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::FlushTexture ( ZLIndex textureUnit, ZLTexture* texture ) {
+void ZLGfxStateGPUCache::FlushTexture ( ZLIndex textureUnit, ZLTextureBase* texture ) {
 
 	assert ( this->mApplyingStateChanges );
 	
 	ZLGfxStateGPUCacheFrame& active = this->mActiveState;
 	ZLGfx& gfx = this->GetGfxPipelineClerk ().GetDrawingAPI ();
 	
-	texture = texture && texture->Affirm () ? texture : ( ZLTexture* )this->mDefaultTexture;
-	ZLTexture* prevTexture = active.mTextureUnits [ textureUnit ];
+	texture = texture && texture->Affirm () ? texture : ( ZLTextureBase* )this->mDefaultTexture;
+	ZLTextureBase* prevTexture = active.mTextureUnits [ textureUnit ];
 
 	if ( prevTexture != texture ) {
 
@@ -701,66 +625,6 @@ void ZLGfxStateGPUCache::FlushViewRect ( ZLRect rect ) {
 }
 
 //----------------------------------------------------------------//
-u32 ZLGfxStateGPUCache::GetBufferHeight () const {
-
-	assert ( this->mCurrentState );
-	const ZLFrameBuffer* frameBuffer = this->mCurrentState->mFrameBuffer;
-	return frameBuffer ? frameBuffer->mBufferHeight : 0;
-}
-
-//----------------------------------------------------------------//
-u32 ZLGfxStateGPUCache::GetBufferWidth () const {
-
-	assert ( this->mCurrentState );
-	const ZLFrameBuffer* frameBuffer = this->mCurrentState->mFrameBuffer;
-	return frameBuffer ? frameBuffer->mBufferWidth : 0;
-}
-
-//----------------------------------------------------------------//
-//float ZLGfxStateGPUCache::GetDeviceScale () {
-//
-//	assert ( this->mFrameBuffer );
-//	return this->mFrameBuffer->mBufferScale;
-//}
-
-//----------------------------------------------------------------//
-float ZLGfxStateGPUCache::GetViewHeight () const {
-
-	assert ( this->mCurrentState );
-	return this->mCurrentState->mViewRect.Height ();
-}
-
-//----------------------------------------------------------------//
-//ZLQuad ZLGfxStateGPUCache::GetViewQuad () const {
-//
-//	ZLQuad quad;
-//
-//	ZLMatrix4x4 invMtx;
-//	invMtx.Inverse ( this->GetViewProjMtx ());
-//	
-//	quad.mV [ 0 ].Init ( -1.0f, 1.0f );
-//	quad.mV [ 1 ].Init ( 1.0f, 1.0f );
-//	quad.mV [ 2 ].Init ( 1.0f, -1.0f );
-//	quad.mV [ 3 ].Init ( -1.0f, -1.0f );
-//	
-//	invMtx.TransformQuad ( quad.mV );
-//	return quad;
-//}
-
-//----------------------------------------------------------------//
-//ZLRect ZLGfxStateGPUCache::GetViewRect () const {
-//
-//	return this->mViewRect;
-//}
-
-//----------------------------------------------------------------//
-float ZLGfxStateGPUCache::GetViewWidth () const {
-
-	assert ( this->mCurrentState );
-	return this->mCurrentState->mViewRect.Width ();
-}
-
-//----------------------------------------------------------------//
 void ZLGfxStateGPUCache::GfxStateWillChange () {
 		
 	this->GetGfxVertexCache ().FlushVertexCache ();
@@ -816,7 +680,202 @@ void ZLGfxStateGPUCache::RecalculateDirtyFlags () {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::ResetGPUState () {
+void ZLGfxStateGPUCache::RestoreGPUState ( const ZLGfxStateGPUCacheFrame& frame ) {
+
+	this->mPendingState = frame;
+	this->RecalculateDirtyFlags ();
+}
+
+//----------------------------------------------------------------//
+void ZLGfxStateGPUCache::ResumeChanges () {
+
+	this->mApplyingStateChanges--;
+}
+
+//----------------------------------------------------------------//
+void ZLGfxStateGPUCache::StoreGPUState ( ZLGfxStateGPUCacheFrame& frame ) const {
+
+	if ( frame.mTextureUnits.Size () < this->mMaxTextureUnits ) {
+		frame.mTextureUnits.Grow ( this->mMaxTextureUnits, 0 );
+	}
+	frame = this->mPendingState;
+}
+
+//----------------------------------------------------------------//
+void ZLGfxStateGPUCache::SuspendChanges () {
+
+	this->mApplyingStateChanges++;
+}
+
+//----------------------------------------------------------------//
+ZLGfxStateGPUCache::ZLGfxStateGPUCache () :
+	mCurrentState ( 0 ),
+	mDirtyFlags ( 0 ),
+	mTextureDirtyFlags ( 0 ),
+	mMaxTextureUnits ( 0 ),
+	mApplyingStateChanges ( 0 ),
+	mBoundIdxBuffer ( 0 ),
+	mBoundVtxBuffer ( 0 ) {
+	
+	this->mCurrentState = &this->mPendingState;
+}
+
+//----------------------------------------------------------------//
+ZLGfxStateGPUCache::~ZLGfxStateGPUCache () {
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void ZLGfxStateGPUCache::ZLAbstractGPU_ClearSurface () {
+	
+	ZLGfxStateCPUCache& cpuCache = this->ZLAbstractGfxStateCache_GetGfxStateCacheCPU ();
+	
+	u32 clearFlags = cpuCache.GetClearFlags ();
+
+	if ( clearFlags ) {
+	
+		ZLGfx& gfx = this->GetGfxPipelineClerk ().GetDrawingAPI ();
+	
+		// discard this if all buffers are to be cleared?
+		// (may still need to draw if depth or color only)
+		this->ZLAbstractGfxStateCache_GetGfxVertexCache ().FlushVertexCache ();
+		
+		this->ApplyStateChanges ();
+	
+		if ( clearFlags & ZGL_CLEAR_COLOR_BUFFER_BIT ) {
+		
+			const ZLColorVec& clearColor = cpuCache.GetClearColor ();
+		
+			gfx.ClearColor (
+				clearColor.mR,
+				clearColor.mG,
+				clearColor.mB,
+				clearColor.mA
+			);
+		}
+	
+		if (( clearFlags & ZGL_CLEAR_DEPTH_BUFFER_BIT ) && !this->GetDepthMask ()) {
+			gfx.DepthMask ( true );
+			gfx.Clear ( clearFlags );
+			gfx.DepthMask ( false );
+		}
+		else {
+			gfx.Clear ( clearFlags );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+size_t ZLGfxStateGPUCache::ZLAbstractGPU_CountTextureUnits () {
+
+	return this->mActiveState.mTextureUnits.Size ();
+}
+
+//----------------------------------------------------------------//
+void ZLGfxStateGPUCache::ZLAbstractGPU_DrawPrims ( u32 primType, u32 base, u32 count ) {
+
+	DEBUG_LOG ( "DRAW PRIMS: %d %d %d\n", primType, base, count );
+	
+	this->ApplyStateChanges ();
+
+	ZLShader* shader = this->mActiveState.mShader;
+
+	if ( shader && ( this->mActiveState.mVtxBuffer || this->mActiveState.mVtxArray )) {
+		
+		ZLGfx& gfx = this->GetGfxPipelineClerk ().GetDrawingAPI ();
+		
+		ZLIndexBuffer* idxBuffer = this->mActiveState.mIdxBuffer;
+		
+		if ( idxBuffer ) {
+		
+			DEBUG_LOG ( "drawing prims with index and vertex buffer\n" );
+			
+			size_t indexSize = idxBuffer->GetIndexSize ();
+			u32 indexType = indexSize == 2 ? ZGL_TYPE_UNSIGNED_SHORT : ZGL_TYPE_UNSIGNED_INT;
+			gfx.DrawElements ( primType, count, indexType, this->mBoundIdxBuffer, base * indexSize );
+		}
+		else {
+			DEBUG_LOG ( "drawing prims with vertex buffer\n" );
+			gfx.DrawArrays ( primType, base, count );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+ZLBlendMode ZLGfxStateGPUCache::ZLAbstractGPU_GetBlendMode () const {
+	this->mCurrentState->mBlendMode;
+}
+
+//----------------------------------------------------------------//
+u32 ZLGfxStateGPUCache::ZLAbstractGPU_GetBufferHeight () const {
+
+	assert ( this->mCurrentState );
+	const ZLFrameBuffer* frameBuffer = this->mCurrentState->mFrameBuffer;
+	return frameBuffer ? frameBuffer->mBufferHeight : 0;
+}
+
+//----------------------------------------------------------------//
+u32 ZLGfxStateGPUCache::ZLAbstractGPU_GetBufferWidth () const {
+
+	assert ( this->mCurrentState );
+	const ZLFrameBuffer* frameBuffer = this->mCurrentState->mFrameBuffer;
+	return frameBuffer ? frameBuffer->mBufferWidth : 0;
+}
+
+//----------------------------------------------------------------//
+ZLFrameBuffer* ZLGfxStateGPUCache::ZLAbstractGPU_GetCurrentFrameBuffer () {
+	return this->mCurrentState->mFrameBuffer;
+}
+
+//----------------------------------------------------------------//
+ZLShader* ZLGfxStateGPUCache::ZLAbstractGPU_GetCurrentShader () {
+	return this->mCurrentState->mShader;
+}
+
+//----------------------------------------------------------------//
+ZLVertexFormat* ZLGfxStateGPUCache::ZLAbstractGPU_GetCurrentVtxFormat () {
+	return this->mCurrentState->mVtxFormat;
+}
+
+//----------------------------------------------------------------//
+ZLFrameBuffer* ZLGfxStateGPUCache::ZLAbstractGPU_GetDefaultFrameBuffer () {
+	return this->mDefaultFrameBuffer;
+}
+
+//----------------------------------------------------------------//
+ZLTextureBase* ZLGfxStateGPUCache::ZLAbstractGPU_GetDefaultTexture () {
+	return this->mDefaultTexture;
+}
+
+//----------------------------------------------------------------//
+bool ZLGfxStateGPUCache::ZLAbstractGPU_GetDepthMask () const {
+	return this->mCurrentState->mDepthMask;
+}
+
+//----------------------------------------------------------------//
+float ZLGfxStateGPUCache::ZLAbstractGPU_GetViewHeight () const {
+
+	assert ( this->mCurrentState );
+	return this->mCurrentState->mViewRect.Height ();
+}
+
+//----------------------------------------------------------------//
+ZLRect ZLGfxStateGPUCache::ZLAbstractGPU_GetViewRect () const {
+	return this->mCurrentState->mViewRect;
+}
+
+//----------------------------------------------------------------//
+float ZLGfxStateGPUCache::ZLAbstractGPU_GetViewWidth () const {
+
+	assert ( this->mCurrentState );
+	return this->mCurrentState->mViewRect.Width ();
+}
+
+//----------------------------------------------------------------//
+void ZLGfxStateGPUCache::ZLAbstractGPU_ResetGPUState () {
 
 	ZLGfx& gfx = this->GetGfxPipelineClerk ().GetDrawingAPI ();
 	ZLGfxStateGPUCacheFrame& pending = this->mPendingState;
@@ -893,20 +952,7 @@ void ZLGfxStateGPUCache::ResetGPUState () {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::RestoreGPUState ( const ZLGfxStateGPUCacheFrame& frame ) {
-
-	this->mPendingState = frame;
-	this->RecalculateDirtyFlags ();
-}
-
-//----------------------------------------------------------------//
-void ZLGfxStateGPUCache::ResumeChanges () {
-
-	this->mApplyingStateChanges--;
-}
-
-//----------------------------------------------------------------//
-void ZLGfxStateGPUCache::SetBlendMode () {
+void ZLGfxStateGPUCache::ZLAbstractGPU_SetBlendMode () {
 
 	assert ( !this->mApplyingStateChanges );
 	
@@ -915,7 +961,7 @@ void ZLGfxStateGPUCache::SetBlendMode () {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::SetBlendMode ( const ZLBlendMode& blendMode ) {
+void ZLGfxStateGPUCache::ZLAbstractGPU_SetBlendMode ( const ZLBlendMode& blendMode ) {
 
 	assert ( !this->mApplyingStateChanges );
 	
@@ -925,7 +971,7 @@ void ZLGfxStateGPUCache::SetBlendMode ( const ZLBlendMode& blendMode ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::SetBlendMode ( int srcFactor, int dstFactor, int equation ) {
+void ZLGfxStateGPUCache::ZLAbstractGPU_SetBlendMode ( int srcFactor, int dstFactor, int equation ) {
 
 	ZLBlendMode blendMode;
 	blendMode.SetBlend ( equation, srcFactor, dstFactor );
@@ -934,13 +980,13 @@ void ZLGfxStateGPUCache::SetBlendMode ( int srcFactor, int dstFactor, int equati
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::SetCullFunc () {
+void ZLGfxStateGPUCache::ZLAbstractGPU_SetCullFunc () {
 
 	this->SetCullFunc ( 0 );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::SetCullFunc ( int cullFunc ) {
+void ZLGfxStateGPUCache::ZLAbstractGPU_SetCullFunc ( int cullFunc ) {
 
 	assert ( !this->mApplyingStateChanges );
 	
@@ -949,25 +995,25 @@ void ZLGfxStateGPUCache::SetCullFunc ( int cullFunc ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::SetDefaultFrameBuffer ( ZLFrameBuffer* frameBuffer ) {
+void ZLGfxStateGPUCache::ZLAbstractGPU_SetDefaultFrameBuffer ( ZLFrameBuffer* frameBuffer ) {
 
 	this->mDefaultFrameBuffer = frameBuffer;
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::SetDefaultTexture ( ZLTexture* texture ) {
+void ZLGfxStateGPUCache::ZLAbstractGPU_SetDefaultTexture ( ZLTextureBase* texture ) {
 
 	this->mDefaultTexture = texture;
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::SetDepthFunc () {
+void ZLGfxStateGPUCache::ZLAbstractGPU_SetDepthFunc () {
 
 	this->SetDepthFunc ( 0 );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::SetDepthFunc ( int depthFunc ) {
+void ZLGfxStateGPUCache::ZLAbstractGPU_SetDepthFunc ( int depthFunc ) {
 
 	assert ( !this->mApplyingStateChanges );
 	
@@ -976,7 +1022,7 @@ void ZLGfxStateGPUCache::SetDepthFunc ( int depthFunc ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::SetDepthMask ( bool depthMask ) {
+void ZLGfxStateGPUCache::ZLAbstractGPU_SetDepthMask ( bool depthMask ) {
 
 	assert ( !this->mApplyingStateChanges );
 
@@ -985,7 +1031,7 @@ void ZLGfxStateGPUCache::SetDepthMask ( bool depthMask ) {
 }
 
 //----------------------------------------------------------------//
-bool ZLGfxStateGPUCache::SetFrameBuffer ( ZLFrameBuffer* frameBuffer ) {
+bool ZLGfxStateGPUCache::ZLAbstractGPU_SetFrameBuffer ( ZLFrameBuffer* frameBuffer ) {
 
 	assert ( !this->mApplyingStateChanges );
 
@@ -997,7 +1043,7 @@ bool ZLGfxStateGPUCache::SetFrameBuffer ( ZLFrameBuffer* frameBuffer ) {
 }
 
 //----------------------------------------------------------------//
-bool ZLGfxStateGPUCache::SetIndexBuffer ( ZLIndexBuffer* buffer ) {
+bool ZLGfxStateGPUCache::ZLAbstractGPU_SetIndexBuffer ( ZLIndexBuffer* buffer ) {
 	
 	assert ( !this->mApplyingStateChanges );
 	
@@ -1008,7 +1054,7 @@ bool ZLGfxStateGPUCache::SetIndexBuffer ( ZLIndexBuffer* buffer ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::SetPenWidth ( float penWidth ) {
+void ZLGfxStateGPUCache::ZLAbstractGPU_SetPenWidth ( float penWidth ) {
 
 	assert ( !this->mApplyingStateChanges );
 
@@ -1017,7 +1063,7 @@ void ZLGfxStateGPUCache::SetPenWidth ( float penWidth ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::SetScissorRect () {
+void ZLGfxStateGPUCache::ZLAbstractGPU_SetScissorRect () {
 
 	assert ( !this->mApplyingStateChanges );
 
@@ -1026,7 +1072,7 @@ void ZLGfxStateGPUCache::SetScissorRect () {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::SetScissorRect ( ZLRect rect ) {
+void ZLGfxStateGPUCache::ZLAbstractGPU_SetScissorRect ( ZLRect rect ) {
 	
 	rect.Bless ();
 	
@@ -1037,14 +1083,8 @@ void ZLGfxStateGPUCache::SetScissorRect ( ZLRect rect ) {
 	this->mDirtyFlags = ( this->mActiveState.mScissorEnabled && ( this->mActiveState.mScissorRect.IsEqual ( rect ))) ? ( this->mDirtyFlags & ~SCISSOR_RECT ) : ( this->mDirtyFlags | SCISSOR_RECT );
 }
 
-////----------------------------------------------------------------//
-//bool ZLGfxStateGPUCache::SetShader ( MOAIShaderMgr::Preset preset ) {
-//
-//	return this->SetShader ( MOAIShaderMgr::Get ().GetShader ( preset ));
-//}
-
 //----------------------------------------------------------------//
-bool ZLGfxStateGPUCache::SetShader ( ZLShader* shader ) {
+bool ZLGfxStateGPUCache::ZLAbstractGPU_SetShader ( ZLShader* shader ) {
 
 	assert ( !this->mApplyingStateChanges );
 	
@@ -1060,7 +1100,7 @@ bool ZLGfxStateGPUCache::SetShader ( ZLShader* shader ) {
 }
 
 //----------------------------------------------------------------//
-bool ZLGfxStateGPUCache::SetTexture ( ZLTexture* texture, ZLIndex textureUnit ) {
+bool ZLGfxStateGPUCache::ZLAbstractGPU_SetTexture ( ZLTextureBase* texture, ZLIndex textureUnit ) {
 
 	assert ( !this->mApplyingStateChanges );
 
@@ -1077,7 +1117,7 @@ bool ZLGfxStateGPUCache::SetTexture ( ZLTexture* texture, ZLIndex textureUnit ) 
 }
 
 //----------------------------------------------------------------//
-bool ZLGfxStateGPUCache::SetVertexArray ( ZLVertexArray* vtxArray ) {
+bool ZLGfxStateGPUCache::ZLAbstractGPU_SetVertexArray ( ZLVertexArray* vtxArray ) {
 
 	assert ( !this->mApplyingStateChanges );
 
@@ -1094,7 +1134,7 @@ bool ZLGfxStateGPUCache::SetVertexArray ( ZLVertexArray* vtxArray ) {
 }
 
 //----------------------------------------------------------------//
-bool ZLGfxStateGPUCache::SetVertexBuffer ( ZLVertexBuffer* buffer ) {
+bool ZLGfxStateGPUCache::ZLAbstractGPU_SetVertexBuffer ( ZLVertexBuffer* buffer ) {
 
 	assert ( !this->mApplyingStateChanges );
 	
@@ -1109,14 +1149,8 @@ bool ZLGfxStateGPUCache::SetVertexBuffer ( ZLVertexBuffer* buffer ) {
 	return buffer ? buffer->IsReady () : true;
 }
 
-////----------------------------------------------------------------//
-//void ZLGfxStateGPUCache::SetVertexFormat ( MOAIVertexFormatMgr::Preset preset ) {
-//
-//	this->SetVertexFormat ( MOAIVertexFormatMgr::Get ().GetFormat ( preset ));
-//}
-
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::SetVertexFormat ( ZLVertexFormat* format ) {
+void ZLGfxStateGPUCache::ZLAbstractGPU_SetVertexFormat ( ZLVertexFormat* format ) {
 
 	assert ( !this->mApplyingStateChanges );
 
@@ -1125,7 +1159,7 @@ void ZLGfxStateGPUCache::SetVertexFormat ( ZLVertexFormat* format ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::SetViewRect () {
+void ZLGfxStateGPUCache::ZLAbstractGPU_SetViewRect () {
 
 	float width = ( float )this->GetBufferWidth ();
 	float height = ( float )this->GetBufferHeight ();
@@ -1137,7 +1171,7 @@ void ZLGfxStateGPUCache::SetViewRect () {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::SetViewRect ( ZLRect rect ) {
+void ZLGfxStateGPUCache::ZLAbstractGPU_SetViewRect ( ZLRect rect ) {
 	
 	rect.Bless ();
 	
@@ -1148,22 +1182,7 @@ void ZLGfxStateGPUCache::SetViewRect ( ZLRect rect ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxStateGPUCache::StoreGPUState ( ZLGfxStateGPUCacheFrame& frame ) const {
-
-	if ( frame.mTextureUnits.Size () < this->mMaxTextureUnits ) {
-		frame.mTextureUnits.Grow ( this->mMaxTextureUnits, 0 );
-	}
-	frame = this->mPendingState;
-}
-
-//----------------------------------------------------------------//
-void ZLGfxStateGPUCache::SuspendChanges () {
-
-	this->mApplyingStateChanges++;
-}
-
-//----------------------------------------------------------------//
-void ZLGfxStateGPUCache::UnbindAll () {
+void ZLGfxStateGPUCache::ZLAbstractGPU_UnbindAll () {
 
 	ZLGfx& gfx = this->GetGfxPipelineClerk ().GetDrawingAPI ();
 
@@ -1180,19 +1199,3 @@ void ZLGfxStateGPUCache::UnbindAll () {
 	ZGL_COMMENT ( gfx, "" );
 }
 
-//----------------------------------------------------------------//
-ZLGfxStateGPUCache::ZLGfxStateGPUCache () :
-	mCurrentState ( 0 ),
-	mDirtyFlags ( 0 ),
-	mTextureDirtyFlags ( 0 ),
-	mMaxTextureUnits ( 0 ),
-	mApplyingStateChanges ( 0 ),
-	mBoundIdxBuffer ( 0 ),
-	mBoundVtxBuffer ( 0 ) {
-	
-	this->mCurrentState = &this->mPendingState;
-}
-
-//----------------------------------------------------------------//
-ZLGfxStateGPUCache::~ZLGfxStateGPUCache () {
-}

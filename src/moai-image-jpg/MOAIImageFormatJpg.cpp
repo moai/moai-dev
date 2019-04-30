@@ -95,16 +95,6 @@ bool MOAIImageFormatJpg::CheckHeader ( const void* buffer ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatJpg::CreateTexture ( MOAITextureBase& texture, const void* data, size_t size ) {
-
-	UNUSED ( texture );
-	UNUSED ( data );
-	UNUSED ( size );
-	
-	return false;
-}
-
-//----------------------------------------------------------------//
 size_t MOAIImageFormatJpg::GetHeaderSize () {
 
 	return HEADER_SIZE;
@@ -119,7 +109,7 @@ MOAIImageFormatJpg::~MOAIImageFormatJpg () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatJpg::ReadImage ( MOAIImage& image, ZLStream& stream, u32 transform ) {
+bool MOAIImageFormatJpg::ReadImage ( ZLImage& image, ZLStream& stream, u32 transform ) {
 
 	struct jpeg_decompress_struct cinfo;
 	struct jpeg_error_mgr jerr;
@@ -141,7 +131,7 @@ bool MOAIImageFormatJpg::ReadImage ( MOAIImage& image, ZLStream& stream, u32 tra
 }
 
 //----------------------------------------------------------------//
-void MOAIImageFormatJpg::ReadImageJpg ( MOAIImage& image, void* jpgInfoParam, u32 transform ) {
+void MOAIImageFormatJpg::ReadImageJpg ( ZLImage& image, void* jpgInfoParam, u32 transform ) {
 	
 	jpeg_decompress_struct* cinfo = ( jpeg_decompress_struct* )jpgInfoParam;
 	
@@ -167,7 +157,7 @@ void MOAIImageFormatJpg::ReadImageJpg ( MOAIImage& image, void* jpgInfoParam, u3
 	}
 	
 	// override the image settings
-	this->SetPixelFormat ( image, MOAIImage::TRUECOLOR );
+	this->SetPixelFormat ( image, ZLImage::TRUECOLOR );
 	this->SetColorFormat ( image, jpgColorFormat );
 	
 	if (( transform & ZLImageTransform::QUANTIZE ) && ( ZLColor::GetDepthInBits ( jpgColorFormat ) > 16 )) {
@@ -215,7 +205,7 @@ void MOAIImageFormatJpg::ReadImageJpg ( MOAIImage& image, void* jpgInfoParam, u3
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatJpg::WriteImage ( const MOAIImage& image, ZLStream& stream ) {
+bool MOAIImageFormatJpg::WriteImage ( const ZLImage& image, ZLStream& stream ) {
 	UNUSED ( image );
 	UNUSED ( stream );
 	return false;

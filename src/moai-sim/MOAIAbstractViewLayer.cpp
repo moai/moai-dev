@@ -504,7 +504,7 @@ void MOAIAbstractViewLayer::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 	if ( !this->mViewport ) return;
 	if ( this->IsClear ()) return;
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	
 	gfxMgr.SetFrameBuffer ( this->GetFrameBuffer ());
 	

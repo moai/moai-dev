@@ -12,7 +12,7 @@
 //================================================================//
 class ZLFrameBufferTexture :
 	public virtual ZLFrameBuffer,
-	public virtual ZLTexture {
+	public virtual ZLTextureBase {
 private:
 	
 	ZLGfxHandle			mGLColorBuffer;

@@ -7,7 +7,7 @@
 #include <zl-gfx/pch.h>
 
 #include <zl-gfx/ZLAbstractGfxResource.h>
-#include <zl-gfx/ZLAbstractGfxMgr.h>
+#include <zl-gfx/ZLAbstractGfxMgrGL.h>
 #include <zl-gfx/ZLAbstractShaderUniformSchema.h>
 #include <zl-gfx/ZLBlendMode.h>
 #include <zl-gfx/ZLCamera.h>
@@ -35,6 +35,8 @@
 #include <zl-gfx/ZLShaderUniform.h>
 #include <zl-gfx/ZLShaderUniformHandle.h>
 #include <zl-gfx/ZLTexture.h>
+#include <zl-gfx/ZLTextureBase.h>
+#include <zl-gfx/ZLTextureFormat.h>
 #include <zl-gfx/ZLVertexArray.h>
 #include <zl-gfx/ZLVertexBuffer.h>
 #include <zl-gfx/ZLVertexFormat.h>

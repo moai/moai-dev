@@ -10,15 +10,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatTga::CreateTexture ( MOAITextureBase& texture, const void* data, size_t size ) {
-	UNUSED ( texture );
-	UNUSED ( data );
-	UNUSED ( size );
-	
-	return false;
-}
-
-//----------------------------------------------------------------//
 size_t MOAIImageFormatTga::GetHeaderGuessSize () {
 
 	return 18;
@@ -117,7 +108,7 @@ MOAIImageFormatTga::~MOAIImageFormatTga () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatTga::ReadImage ( MOAIImage& image, ZLStream& stream, u32 transform ) {
+bool MOAIImageFormatTga::ReadImage ( ZLImage& image, ZLStream& stream, u32 transform ) {
 
 	size_t bufferSize = stream.GetLength () - stream.GetCursor ();
 	void* buffer = malloc ( bufferSize );
@@ -141,7 +132,7 @@ bool MOAIImageFormatTga::ReadImage ( MOAIImage& image, ZLStream& stream, u32 tra
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatTga::WriteImage ( const MOAIImage& image, ZLStream& stream ) {
+bool MOAIImageFormatTga::WriteImage ( const ZLImage& image, ZLStream& stream ) {
 	UNUSED ( image );
 	UNUSED ( stream );
 

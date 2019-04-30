@@ -11,5 +11,5 @@
 //----------------------------------------------------------------//
 void AKUImageTgaContextInitialize () {
 
-	MOAIImageFormatMgr::Get().RegisterFormat < MOAIImageFormatTga >( "tga" );
+	ZLImageFormatMgr::Get().RegisterFormat < MOAIImageFormatTga >( "tga" );
 }

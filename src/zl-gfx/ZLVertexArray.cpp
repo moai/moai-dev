@@ -206,7 +206,7 @@ bool ZLVertexArray::ZLAbstractGfxResource_OnGPUUpdate () {
 	if ( !this->mUseVAOs ) return true;
 	if ( !this->mVAOs.Size ()) return false;
 
-	this->mCurrentVAO =  ZLIndexOp::AddAndWrap ( this->mCurrentVAO, 1, this->mVAOs.Size ());
+	this->mCurrentVAO = ZLIndexOp::AddAndWrap ( this->mCurrentVAO, 1, this->mVAOs.Size ());
 	const ZLGfxHandle& vao = this->mVAOs [ this->mCurrentVAO ];
 	
 	if ( vao.CanBind ()) {

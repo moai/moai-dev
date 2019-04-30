@@ -4,7 +4,7 @@
 #ifndef	ZLGFXSTATECPUCACHE_H
 #define	ZLGFXSTATECPUCACHE_H
 
-#include <zl-gfx/ZLAbstractGfxMgr.h>
+#include <zl-gfx/ZLAbstractGfxMgrGL.h>
 
 class ZLAbstractShaderUniformSchema;
 class ZLCamera;
@@ -205,7 +205,7 @@ protected:
 //================================================================//
 class ZLGfxStateCPUCache :
  	public ZLGfxStateConstsCPU,
- 	virtual public ZLAbstractGfxMgr {
+ 	virtual public ZLAbstractGfxMgrGL {
 protected:
 	
 	ZLGfxStateCPUCacheFrame	mStateFrameCPU;

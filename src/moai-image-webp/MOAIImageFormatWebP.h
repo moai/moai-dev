@@ -10,24 +10,23 @@
 // MOAIImageFormatWebP
 //================================================================//
 class MOAIImageFormatWebP :
-	public MOAIImageFormat {
+	public ZLImageFormat {
 private:
 
 	static const u32 HEADER_SIZE = 12;
 
 	//----------------------------------------------------------------//
-	void			ReadImageWebP				( MOAIImage& image, u8 const* data, size_t dataSize, int width, int height, bool hasAlpha, u32 transform );
+	void			ReadImageWebP				( ZLImage& image, u8 const* data, size_t dataSize, int width, int height, bool hasAlpha, u32 transform );
 
 public:
 
 	//----------------------------------------------------------------//
 	bool			CheckHeader					( const void* buffer );
-	bool			CreateTexture				( MOAITextureBase& texture, const void* data, size_t size );
 	size_t			GetHeaderSize				();
 					MOAIImageFormatWebP			();
 					~MOAIImageFormatWebP		();
-	bool			ReadImage					( MOAIImage& image, ZLStream& stream, u32 transform );
-	bool			WriteImage					( const MOAIImage& image, ZLStream& stream );
+	bool			ReadImage					( ZLImage& image, ZLStream& stream, u32 transform );
+	bool			WriteImage					( const ZLImage& image, ZLStream& stream );
 };
 
 #endif

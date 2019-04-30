@@ -14,7 +14,7 @@
 #define		WEBGL_PREPROC		"precision mediump int;\n precision mediump float;\n"
 
 class ZLShader;
-class ZLTexture;
+class ZLTextureBase;
 
 //================================================================//
 // ZLShaderProgramGlobal
@@ -46,7 +46,7 @@ private:
 
 	u32							mName;
 	ZLIndex						mUnit;
-	ZLStrongPtr < ZLTexture >	mTexture;
+	ZLStrongPtr < ZLTextureBase >	mTexture;
 
 public:
 
@@ -126,8 +126,8 @@ public:
 	void				ReserveTextures				( ZLSize nTextures );
 	void				ReserveUniforms				( ZLSize nUniforms );
 	void				SetGlobal					( ZLIndex idx, u32 globalID, ZLIndex uniformID, ZLIndex index );
-	void				SetTexture					( ZLIndex idx, u32 name, ZLIndex unit, ZLTexture* fallback );
-	void				SetTexture					( ZLIndex idx, ZLTexture* texture, ZLIndex unit );
+	void				SetTexture					( ZLIndex idx, u32 name, ZLIndex unit, ZLTextureBase* fallback );
+	void				SetTexture					( ZLIndex idx, ZLTextureBase* texture, ZLIndex unit );
 	void				SetVertexAttribute			( u32 idx, cc8* attribute );
 						ZLShaderProgram				();
 						~ZLShaderProgram			();

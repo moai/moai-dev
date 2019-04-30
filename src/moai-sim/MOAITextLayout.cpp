@@ -237,7 +237,7 @@ void MOAITextLayout::Draw ( u32 reveal ) {
 		bool useSpriteShaders = ( currentShader == 0 );
 		MOAIShader* defaultShader = MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::FONT_SNAPPING_SHADER );
 		
-		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+		MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 		MOAIQuadBrush::BindVertexFormat ();
 
 		ZLColorVec baseColor = gfxMgr.GetPenColor ();

@@ -64,7 +64,7 @@ void MOAILight::ApplyUniforms ( void* buffer, size_t bufferSize ) {
 //----------------------------------------------------------------//
 void MOAILight::BindTextures ( u32 textureOffset ) {
 
-	MOAIGfxMgr& gfx = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfx = MOAIGfxMgrGL::Get ();
 
 	size_t nTextures = this->mTextures.Size ();
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < nTextures; ++i ) {

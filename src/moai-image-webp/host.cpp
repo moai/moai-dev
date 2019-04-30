@@ -11,5 +11,5 @@
 //----------------------------------------------------------------//
 void AKUImageWebPContextInitialize () {
 
-	MOAIImageFormatMgr::Get ().RegisterFormat < MOAIImageFormatWebP >( "webp" );
+	ZLImageFormatMgr::Get ().RegisterFormat < MOAIImageFormatWebP >( "webp" );
 }

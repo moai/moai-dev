@@ -227,7 +227,9 @@ void ZLGfxMgrGL::SetBufferScale ( float scale ) {
 //----------------------------------------------------------------//
 void ZLGfxMgrGL::SetBufferSize ( u32 width, u32 height ) {
 
-	this->GetDefaultFrameBuffer ()->SetBufferSize ( width, height );
+	ZLFrameBuffer* defaultFrameBuffer = this->GetDefaultFrameBuffer ();
+	assert ( defaultFrameBuffer );
+	defaultFrameBuffer->SetBufferSize ( width, height );
 }
 
 //----------------------------------------------------------------//

@@ -17,7 +17,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 //----------------------------------------------------------------//
 bool MOAIMaterial::LoadGfxState ( MOAIMaterial* fallback, u32 defaultShader ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	
 	MOAIShader* shader = this->mShader ? this->mShader : (( fallback && fallback->mShader ) ? fallback->mShader : MOAIShaderMgr::Get ().GetShader ( defaultShader ));
 	MOAITextureBase* texture = this->mTexture ? this->mTexture : (( fallback && fallback->mTexture ) ? fallback->mTexture : 0 );
@@ -489,7 +489,7 @@ bool MOAIMaterialBatch::LoadGfxState ( MOAIMaterialBatch* override, u32 material
 		return secondary->LoadGfxState ( 0, defaultShader );
 	}
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	
 	gfxState.SetTexture ();
 	return gfxState.SetShader ( MOAIShaderMgr::Get ().GetShader ( defaultShader ));
@@ -638,7 +638,7 @@ void MOAIMaterialBatch::SetHitMaskThreshold ( MOAILuaState& state, u32 idx ) {
 //----------------------------------------------------------------//
 //void MOAIMaterialBatch::RawLoadGfxState ( u32 idx, u32 defaultShader ) {
 //
-//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+//	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 //	
 //	MOAIShader* shader = 0;
 //	MOAITextureBase* texture = 0;

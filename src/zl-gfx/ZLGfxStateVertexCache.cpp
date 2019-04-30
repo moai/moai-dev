@@ -220,7 +220,7 @@ void ZLGfxStateVertexCache::SetUVTransform () {
 //----------------------------------------------------------------//
 void ZLGfxStateVertexCache::SetUVTransform ( u32 mtxID ) {
 
-	this->SetUVTransform ( this->GetMtx ( mtxID ));
+	this->SetUVTransform ( this->GetGfxStateCacheCPU ().GetMtx ( mtxID ));
 }
 
 //----------------------------------------------------------------//
@@ -240,7 +240,7 @@ void ZLGfxStateVertexCache::SetVertexTransform () {
 //----------------------------------------------------------------//
 void ZLGfxStateVertexCache::SetVertexTransform ( u32 mtxID ) {
 
-	this->SetVertexTransform ( this->GetMtx ( mtxID ));
+	this->SetVertexTransform ( this->GetGfxStateCacheCPU ().GetMtx ( mtxID ));
 }
 
 //----------------------------------------------------------------//
@@ -265,25 +265,27 @@ void ZLGfxStateVertexCache::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* uv ) 
 	
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
 	
+		u32 finalColor32 = this->GetGfxStateCacheCPU ().GetFinalColor32 ();
+	
 		// left top
 		this->mVtxBuffer->Write ( vtx [ 0 ]);
 		this->mVtxBuffer->Write ( uv [ 0 ]);
-		this->mVtxBuffer->Write < u32 >( this->mStateFrameCPU.mFinalColor32 );
+		this->mVtxBuffer->Write < u32 >( finalColor32 );
 	
 		// right top
 		this->mVtxBuffer->Write ( vtx [ 1 ]);
 		this->mVtxBuffer->Write ( uv [ 1 ]);
-		this->mVtxBuffer->Write < u32 >( this->mStateFrameCPU.mFinalColor32 );
+		this->mVtxBuffer->Write < u32 >( finalColor32 );
 	
 		// right bottom
 		this->mVtxBuffer->Write ( vtx[ 2 ]);
 		this->mVtxBuffer->Write ( uv [ 2 ]);
-		this->mVtxBuffer->Write < u32 >( this->mStateFrameCPU.mFinalColor32 );
+		this->mVtxBuffer->Write < u32 >( finalColor32 );
 	
 		// left bottom
 		this->mVtxBuffer->Write ( vtx [ 3 ]);
 		this->mVtxBuffer->Write ( uv [ 3 ]);
-		this->mVtxBuffer->Write < u32 >( this->mStateFrameCPU.mFinalColor32 );
+		this->mVtxBuffer->Write < u32 >( finalColor32 );
 
 		// indices
 		this->WriteIndex ( 0 ); // left top

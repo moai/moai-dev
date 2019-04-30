@@ -19,15 +19,6 @@ bool MOAIImageFormatWebP::CheckHeader ( const void* buffer ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatWebP::CreateTexture ( MOAITextureBase& texture, const void* data, size_t size ) {
-	UNUSED ( texture );
-	UNUSED ( data );
-	UNUSED ( size );
-	
-	return false;
-}
-
-//----------------------------------------------------------------//
 size_t MOAIImageFormatWebP::GetHeaderSize () {
 
 	return HEADER_SIZE;
@@ -42,7 +33,7 @@ MOAIImageFormatWebP::~MOAIImageFormatWebP () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatWebP::ReadImage ( MOAIImage& image, ZLStream& stream, u32 transform ) {
+bool MOAIImageFormatWebP::ReadImage ( ZLImage& image, ZLStream& stream, u32 transform ) {
 
 	// Copy data from stream to WebPData object
 	WebPData data;
@@ -69,13 +60,13 @@ bool MOAIImageFormatWebP::ReadImage ( MOAIImage& image, ZLStream& stream, u32 tr
 }
 
 //----------------------------------------------------------------//
-void MOAIImageFormatWebP::ReadImageWebP ( MOAIImage& image, u8 const* data, size_t dataSize, int width, int height, bool hasAlpha, u32 transform ) {
+void MOAIImageFormatWebP::ReadImageWebP ( ZLImage& image, u8 const* data, size_t dataSize, int width, int height, bool hasAlpha, u32 transform ) {
 
 	// Pad to POT dimensions, if requested
 	bool isPadded = this->SetDimensions ( image, width, height, transform );
 
 	// Set pixel and color format
-	this->SetPixelFormat ( image, MOAIImage::TRUECOLOR );
+	this->SetPixelFormat ( image, ZLImage::TRUECOLOR );
 	bool quantize = ( transform & ZLImageTransform::QUANTIZE ) != 0;
 	if ( hasAlpha ) {
 		this->SetColorFormat ( image, quantize ? ZLColor::RGBA_4444 : ZLColor::RGBA_8888 );
@@ -122,7 +113,7 @@ void MOAIImageFormatWebP::ReadImageWebP ( MOAIImage& image, u8 const* data, size
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatWebP::WriteImage ( const MOAIImage& image, ZLStream& stream ) {
+bool MOAIImageFormatWebP::WriteImage ( const ZLImage& image, ZLStream& stream ) {
 	UNUSED ( image );
 	UNUSED ( stream );
 	return false;

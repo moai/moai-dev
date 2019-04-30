@@ -29,7 +29,7 @@ ZLVec3D MOAIStretchDeck::BindStretchVertexTransform () const {
 
 	ZLVec3D stretch ( 1.0f, 1.0f, 1.0f );
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 
 	if ( this->mStretchFactor > 0.0f ) {
 	

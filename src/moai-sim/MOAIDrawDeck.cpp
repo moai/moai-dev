@@ -126,7 +126,7 @@ void MOAIDrawDeck::MOAIDeck_Draw ( ZLIndex idx ) {
 	
 		MOAIDraw::Get ().Bind ();
 	
-		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+		MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 		ZLVec3D stretch = this->BindStretchVertexTransform ();
 	
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();

@@ -1271,7 +1271,7 @@ void MOAIBox2DWorld::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 
 	if ( this->mDebugDraw && MOAIDraw::Get ().Bind ()) {
 		
-		ZLGfxMgrGL& gfxState = MOAIGfxMgr::Get ();
+		ZLGfxMgrGL& gfxState = MOAIGfxMgrGL::Get ();
 		
 		gfxState.SetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX );
 		

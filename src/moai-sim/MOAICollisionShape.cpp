@@ -37,7 +37,7 @@ void MOAICollisionShape::Clear () {
 //----------------------------------------------------------------//
 void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 
 	gfxMgr.SetUVTransform ( gfxMgr.GetMtx ( ZLGfxMgrGL::UV_TO_MODEL_MTX ));
 

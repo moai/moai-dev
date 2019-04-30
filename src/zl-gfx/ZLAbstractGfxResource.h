@@ -22,7 +22,6 @@ class ZLAbstractGfxResource :
 	public ZLGfxListener {
 protected:
 
-	friend class MOAIGfxMgr;
 	friend class ZLGfxPipelineClerk;
 	friend class ZLGfxStateGPUCache;
 	friend class ZLGfxResourceClerk;

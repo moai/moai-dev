@@ -13,64 +13,64 @@
 //----------------------------------------------------------------//
 void AKUDetectFramebuffer () {
 
-	MOAIGfxMgr::Get ().DetectFramebuffer ();
+	MOAIGfxMgrGL::Get ().DetectFramebuffer ();
 }
 
 //----------------------------------------------------------------//
 void AKUDetectGfxContext () {
 
-	MOAIGfxMgr::Get ().DetectContext ();
+	MOAIGfxMgrGL::Get ().DetectContext ();
 	MOAIShaderMgr::Get ().AffirmAll ();
-//	MOAIGfxMgr::Get ().RenewResources (); // TODO: ZLGfx
+//	MOAIGfxMgrGL::Get ().RenewResources (); // TODO: ZLGfx
 }
 
 //----------------------------------------------------------------//
 void AKUDiscardGfxResources () {
 
-	MOAIGfxMgr::Get ().DiscardResources ();
+	MOAIGfxMgrGL::Get ().DiscardResources ();
 }
 
 //----------------------------------------------------------------//
 void AKUDisplayListBeginPhase ( int phase ) {
 
-	MOAIGfxMgr::Get ().BeginPhase ( phase );
+	MOAIGfxMgrGL::Get ().BeginPhase ( phase );
 }
 
 //----------------------------------------------------------------//
 void AKUDisplayListEnable ( int list ) {
 
-	MOAIGfxMgr::Get ().EnablePipeline ( list );
+	MOAIGfxMgrGL::Get ().EnablePipeline ( list );
 }
 
 //----------------------------------------------------------------//
 void AKUDisplayListEndPhase ( int phase ) {
 
-	MOAIGfxMgr::Get ().EndPhase ( phase );
+	MOAIGfxMgrGL::Get ().EndPhase ( phase );
 }
 
 //----------------------------------------------------------------//
 bool AKUDisplayListHasContent ( int list ) {
 
-	return MOAIGfxMgr::Get ().HasContent ( list );
+	return MOAIGfxMgrGL::Get ().HasContent ( list );
 }
 
 //----------------------------------------------------------------//
 bool AKUDisplayListIsEnabled ( int list ) {
 
-	return MOAIGfxMgr::Get ().IsPipelineEnabled ( list );
+	return MOAIGfxMgrGL::Get ().IsPipelineEnabled ( list );
 }
 
 //----------------------------------------------------------------//
 void AKUDisplayListProcess ( int list ) {
 
-	MOAIGfxMgr::Get ().ProcessPipeline ( list );
+	MOAIGfxMgrGL::Get ().ProcessPipeline ( list );
 }
 
 //----------------------------------------------------------------//
 void AKUDisplayListPublishAndReset () {
 
-	MOAIGfxMgr::Get ().PublishAndReset ( ZLGfxPipelineClerk::LOADING_PIPELINE );
-	MOAIGfxMgr::Get ().PublishAndReset ( ZLGfxPipelineClerk::DRAWING_PIPELINE );
+	MOAIGfxMgrGL::Get ().PublishAndReset ( ZLGfxPipelineClerk::LOADING_PIPELINE );
+	MOAIGfxMgrGL::Get ().PublishAndReset ( ZLGfxPipelineClerk::DRAWING_PIPELINE );
 }
 
 //----------------------------------------------------------------//
@@ -327,7 +327,7 @@ void AKUSetInputTimestamp ( double timestamp ) {
 //----------------------------------------------------------------//
 void AKUSetOrientation ( int orientation ) {
 
-	MOAIGfxMgr::Get ().GetDefaultFrameBuffer ()->SetLandscape ( orientation == AKU_ORIENTATION_LANDSCAPE );
+	MOAIGfxMgrGL::Get ().GetDefaultFrameBuffer ()->SetLandscape ( orientation == AKU_ORIENTATION_LANDSCAPE );
 }
 
 //----------------------------------------------------------------//	
@@ -346,17 +346,17 @@ void AKUSetScreenSize ( int width, int height) {
 //----------------------------------------------------------------//
 void AKUSetViewSize ( int width, int height ) {
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	
 	u32 currentWidth = gfxMgr.GetBufferWidth ();
 	u32 currentHeight = gfxMgr.GetBufferHeight ();
 	
 	if (( currentWidth != ( u32 )width ) || ( currentHeight != ( u32 )height )) {
 	
-		MOAIGfxMgr::Get ().SetBufferSize ( width, height );
+		gfxMgr.SetBufferSize ( width, height );
 		
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		if ( gfxMgr.PushListener ( MOAIGfxMgr::EVENT_RESIZE, state )) {
+		if ( gfxMgr.PushListener ( MOAIGfxMgrGL::EVENT_RESIZE, state )) {
 			lua_pushnumber ( state, width );
 			lua_pushnumber ( state, height );
 			state.DebugCall ( 2, 0 );

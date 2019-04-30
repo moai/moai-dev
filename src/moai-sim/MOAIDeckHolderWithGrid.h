@@ -25,12 +25,7 @@ class MOAISurfaceSampler2D;
 //================================================================//
 // MOAIDeckHolderWithGrid
 //================================================================//
-/**	@lua	MOAIDeckHolderWithGrid
-	@text	Base class for props.
-	
-	@attr	ATTR_INDEX
-	@attr	ATTR_PARTITION
-*/
+// TODO: doxygen
 class MOAIDeckHolderWithGrid :
 	public virtual MOAIDeckHolder {
 private:

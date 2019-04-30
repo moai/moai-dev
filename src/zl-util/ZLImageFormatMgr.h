@@ -1,20 +1,21 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIIMAGEFORMATMGR_H
-#define	MOAIIMAGEFORMATMGR_H
+#ifndef	ZLIMAGEFORMATMGR_H
+#define	ZLIMAGEFORMATMGR_H
 
-#include <moai-util/MOAIImageFormat.h>
+#include <zl-util/ZLImageFormat.h>
+#include <zl-util/STLMap.h>
 
 //================================================================//
-// MOAIImageFormatMgr
+// ZLImageFormatMgr
 //================================================================//
-class MOAIImageFormatMgr :
-	public ZLContextClass < MOAIImageFormatMgr > {
+class ZLImageFormatMgr :
+	public ZLContextClass < ZLImageFormatMgr > {
 public:
 
-	typedef STLMap < u32, MOAIImageFormat* >::iterator FormatIt;
-	STLMap < u32, MOAIImageFormat* > mFormats;
+	typedef STLMap < u32, ZLImageFormat* >::iterator FormatIt;
+	STLMap < u32, ZLImageFormat* > mFormats;
 
 	//----------------------------------------------------------------//
 	u32						HashName					( cc8* name );
@@ -22,10 +23,10 @@ public:
 public:
 	
 	//----------------------------------------------------------------//
-	MOAIImageFormat*		FindFormat					( cc8* name );
-	MOAIImageFormat*		FindFormat					( ZLStream& stream, cc8* name = 0 );
-							MOAIImageFormatMgr			();
-							~MOAIImageFormatMgr			();
+	ZLImageFormat*			FindFormat					( cc8* name );
+	ZLImageFormat*			FindFormat					( ZLStream& stream, cc8* name = 0 );
+							ZLImageFormatMgr			();
+							~ZLImageFormatMgr			();
 	
 	//----------------------------------------------------------------//
 	// name must be be no more than 6 characters and alphanumeric

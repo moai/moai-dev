@@ -20,7 +20,7 @@ private:
 
 	u32				mVertexCount;
 	ZLVec2D			mLastVertex;
-	MOAIGfxMgr&		mGfxMgr;
+	MOAIGfxMgrGL&	mGfxMgr;
 
 public:
 
@@ -33,7 +33,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	MOAIDrawVertexLineStripWriter2D () :
-		mGfxMgr ( MOAIGfxMgr::Get ()) {
+		mGfxMgr ( MOAIGfxMgrGL::Get ()) {
 	}
 
 	//----------------------------------------------------------------//
@@ -115,7 +115,7 @@ void MOAIDraw::DrawString ( cc8* text, float x, float y, float width, float heig
 	assert ( g_CurrentTextDrawContext );
 
 	// Transform the center into 'world' space
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	
 	const ZLMatrix4x4& orgWorldTransform = gfxMgr.GetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX );
 	ZLVec2D pos ( x, y );
@@ -210,7 +210,7 @@ void MOAIDraw::DrawString	( cc8* text, float x, float y, float scale, MOAIFont& 
 void MOAIDraw::EndDrawString () {
 
 	// Setup for drawing
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 
 	// Get current state
 	//const ZLMatrix4x4& orgWorldTransform = gfxState.GetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX );
@@ -270,7 +270,7 @@ void MOAIDraw::EndDrawString () {
 	// Restore render state
 	MOAIDraw::Bind ();
 
-	//gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_WORLD_TRANSFORM, orgWorldTransform );
+	//gfxMgr.SetVertexTransform ( MOAIGfxMgrGL::VTX_WORLD_TRANSFORM, orgWorldTransform );
 	//gfxMgr.SetBlendMode ( orgSrcBlend, orgDestBlend ); // TODO
 
 	// Clear context
@@ -297,7 +297,7 @@ int MOAIDraw::_bind ( lua_State* L ) {
 int MOAIDraw::_bindFrameBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
 	
-	MOAIGfxMgr::Get ().SetFrameBuffer ( state.GetLuaObject < MOAIFrameBuffer >( 1, false ));
+	MOAIGfxMgrGL::Get ().SetFrameBuffer ( state.GetLuaObject < MOAIFrameBuffer >( 1, false ));
 	return 0;
 }
 
@@ -306,7 +306,7 @@ int MOAIDraw::_bindFrameBuffer ( lua_State* L ) {
 int MOAIDraw::_bindIndexBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
 	
-	MOAIGfxMgr::Get ().SetIndexBuffer ( state.GetLuaObject < MOAIIndexBuffer >( 1, false ));
+	MOAIGfxMgrGL::Get ().SetIndexBuffer ( state.GetLuaObject < MOAIIndexBuffer >( 1, false ));
 	return 0;
 }
 
@@ -324,7 +324,7 @@ int MOAIDraw::_bindShader ( lua_State* L ) {
 int MOAIDraw::_bindTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
 	
-	MOAIGfxMgr::Get ().SetTexture ( state.GetLuaObject < MOAITexture >( 1, false ));
+	MOAIGfxMgrGL::Get ().SetTexture ( state.GetLuaObject < MOAITexture >( 1, false ));
 	return 0;
 }
 
@@ -333,7 +333,7 @@ int MOAIDraw::_bindTexture ( lua_State* L ) {
 int MOAIDraw::_bindVertexArray ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
 	
-	MOAIGfxMgr::Get ().SetVertexArray ( state.GetLuaObject < MOAIVertexArray >( 1, false ));
+	MOAIGfxMgrGL::Get ().SetVertexArray ( state.GetLuaObject < MOAIVertexArray >( 1, false ));
 	return 0;
 }
 
@@ -342,7 +342,7 @@ int MOAIDraw::_bindVertexArray ( lua_State* L ) {
 int MOAIDraw::_bindVertexBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
 	
-	MOAIGfxMgr::Get ().SetVertexBuffer ( state.GetLuaObject < MOAIVertexBuffer >( 1, false ));
+	MOAIGfxMgrGL::Get ().SetVertexBuffer ( state.GetLuaObject < MOAIVertexBuffer >( 1, false ));
 	return 0;
 }
 
@@ -354,16 +354,16 @@ int MOAIDraw::_bindVertexFormat ( lua_State* L ) {
 	switch ( lua_type ( state, 1 )) {
 	
 		case LUA_TUSERDATA:
-			MOAIGfxMgr::Get ().SetVertexFormat ( state.GetLuaObject < MOAIVertexFormat >( 1, true ));
+			MOAIGfxMgrGL::Get ().SetVertexFormat ( state.GetLuaObject < MOAIVertexFormat >( 1, true ));
 			break;
 		
 		case LUA_TNUMBER: {
 			ZLVertexFormat* vertexFormat = MOAIVertexFormatMgr::Get ().GetFormat (( MOAIVertexFormatMgr::Preset )state.GetValue < u32 >( 1, MOAIVertexFormatMgr::XYZWC ));
-			MOAIGfxMgr::Get ().SetVertexFormat ( vertexFormat );
+			MOAIGfxMgrGL::Get ().SetVertexFormat ( vertexFormat );
 			break;
 		}
 		default:
-			MOAIGfxMgr::Get ().SetVertexFormat ();
+			MOAIGfxMgrGL::Get ().SetVertexFormat ();
 			break;
 	}
 	return 0;
@@ -374,7 +374,7 @@ int MOAIDraw::_bindVertexFormat ( lua_State* L ) {
 int MOAIDraw::_clear ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
 
-	MOAIGfxMgr::Get ().ClearSurface ();
+	MOAIGfxMgrGL::Get ().ClearSurface ();
 	return 0;
 }
 
@@ -843,7 +843,7 @@ int MOAIDraw::_fillRoundedRect ( lua_State* L ) {
 int MOAIDraw::_getPenColor ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
 
-	ZLColorVec color = MOAIGfxMgr::Get ().GetPenColor ();
+	ZLColorVec color = MOAIGfxMgrGL::Get ().GetPenColor ();
 	
 	state.Push ( color.mR );
 	state.Push ( color.mG );
@@ -857,7 +857,7 @@ int MOAIDraw::_getPenColor ( lua_State* L ) {
 // TODO: doxygen
 int MOAIDraw::_popGfxState ( lua_State* L ) {
 
-	MOAIGfxMgr::Get ().PopState ();
+	MOAIGfxMgrGL::Get ().PopState ();
 	return 0;
 }
 
@@ -865,7 +865,7 @@ int MOAIDraw::_popGfxState ( lua_State* L ) {
 // TODO: doxygen
 int MOAIDraw::_pushGfxState ( lua_State* L ) {
 
-	MOAIGfxMgr::Get ().PushState ();
+	MOAIGfxMgrGL::Get ().PushState ();
 	return 0;
 }
 
@@ -882,7 +882,7 @@ int MOAIDraw::_pushGfxState ( lua_State* L ) {
 int MOAIDraw::_setBlendMode ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 
 	if ( state.IsType ( 1, LUA_TNUMBER )) {
 		if ( state.IsType ( 2, LUA_TNUMBER )) {
@@ -904,7 +904,7 @@ int MOAIDraw::_setBlendMode ( lua_State* L ) {
 int MOAIDraw::_setClearColor ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 
 	u32 clearFlags = gfxMgr.GetClearFlags () & ~ZGL_CLEAR_COLOR_BUFFER_BIT;
 	ZLColorVec clearColor ( 0.0f, 0.0f, 0.0f, 1.0f );
@@ -937,7 +937,7 @@ int MOAIDraw::_setClearColor ( lua_State* L ) {
 int MOAIDraw::_setClearDepth ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 
 	u32 clearFlags = gfxMgr.GetClearFlags () & ~ZGL_CLEAR_DEPTH_BUFFER_BIT;
 	double clearDepth = 0.0f;
@@ -965,7 +965,7 @@ int MOAIDraw::_setClearDepth ( lua_State* L ) {
 int MOAIDraw::_setCullMode ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	
 	if ( state.IsType ( 1, LUA_TNUMBER )) {
 			
@@ -989,7 +989,7 @@ int MOAIDraw::_setCullMode ( lua_State* L ) {
 int MOAIDraw::_setDefaultTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 
 	MOAITexture* texture = state.GetLuaObject < MOAITexture >( 1, false );
 	
@@ -1021,7 +1021,7 @@ int MOAIDraw::_setDefaultTexture ( lua_State* L ) {
 int MOAIDraw::_setDepthFunc ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	
 	if ( state.IsType ( 1, LUA_TNUMBER )) {
 		
@@ -1039,7 +1039,7 @@ int MOAIDraw::_setDepthFunc ( lua_State* L ) {
 int MOAIDraw::_setMatrix ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	
 	u32 matrixID = state.GetValue < u32 >( 1, ZLGfxMgrGL::MODEL_TO_WORLD_MTX );
 
@@ -1078,7 +1078,7 @@ int MOAIDraw::_setPenColor ( lua_State* L ) {
 	float b = state.GetValue < float >( 3, 1.0f );
 	float a = state.GetValue < float >( 4, 1.0f );
 
-	MOAIGfxMgr::Get ().SetPenColor ( r, g, b, a );
+	MOAIGfxMgrGL::Get ().SetPenColor ( r, g, b, a );
 	return 0;
 }
 
@@ -1092,7 +1092,7 @@ int MOAIDraw::_setPenWidth ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
 
 	float width = state.GetValue < float >( 1, 1.0f );
-	MOAIGfxMgr::Get ().SetPenWidth ( width );
+	MOAIGfxMgrGL::Get ().SetPenWidth ( width );
 	return 0;
 }
 
@@ -1102,7 +1102,7 @@ int MOAIDraw::_setScissorRect ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
 
 	// TODO: fix this code duplication from _setViewRect
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	
 	if ( state.IsType ( 1, LUA_TUSERDATA )) {
 		MOAIViewport* viewport = state.GetLuaObject < MOAIViewport >( 1, true );
@@ -1126,7 +1126,7 @@ int MOAIDraw::_setViewProj ( lua_State* L ) {
 	MOAIViewport* viewport = state.GetLuaObject < MOAIViewport >( 1, false );
 	MOAICamera* camera = state.GetLuaObject < MOAICamera >( 2, false );
 	
-	MOAIGfxMgr::Get ().SetViewProj ( viewport, camera );
+	MOAIGfxMgrGL::Get ().SetViewProj ( viewport, camera );
 	return 0;
 }
 
@@ -1136,7 +1136,7 @@ int MOAIDraw::_setViewRect ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
 
 	// TODO: fix this code duplication from _setScissorRect
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	
 	if ( state.IsType ( 1, LUA_TUSERDATA )) {
 		MOAIViewport* viewport = state.GetLuaObject < MOAIViewport >( 1, true );
@@ -1180,7 +1180,7 @@ int MOAIDraw::_strokeRoundedRect ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAIDraw::Bind () {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	
 	if ( !gfxMgr.SetTexture ()) return false;
 	if ( !gfxMgr.SetShader ( MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::LINE_SHADER ))) return false;
@@ -1203,7 +1203,7 @@ void MOAIDraw::DrawAnimCurve ( const MOAIAnimCurveFloat& curve, u32 resolution )
 //----------------------------------------------------------------//
 void MOAIDraw::DrawAxisGrid ( ZLVec2D loc, ZLVec2D vec, float size ) {
 
-	ZLMatrix4x4 mtx = MOAIGfxMgr::Get ().GetMtx ( ZLGfxMgrGL::WORLD_TO_CLIP_MTX );
+	ZLMatrix4x4 mtx = MOAIGfxMgrGL::Get ().GetMtx ( ZLGfxMgrGL::WORLD_TO_CLIP_MTX );
 	
 	ZLMatrix4x4 invMtx;
 	invMtx.Inverse ( mtx );
@@ -1309,14 +1309,14 @@ void MOAIDraw::DrawElements ( MOAIAbstractGfxBuffer* vtxBuffer, MOAIVertexFormat
 	UNUSED ( vtxFormat );
 	UNUSED ( count );
 	
-//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+//	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 //	
-//	MOAIGfxMgr::Get ().UnbindBufferedDrawing ();
+//	MOAIGfxMgrGL::Get ().UnbindBufferedDrawing ();
 //	
 //	vtxBuffer->Bind ();
 //	vtxFormat->Bind ( 0 );
 //	
-//	gfxMgr.SetVertexMtxMode ( MOAIGfxMgr::VTX_STAGE_MODEL, MOAIGfxMgr::VTX_STAGE_MODEL );
+//	gfxMgr.SetVertexMtxMode ( MOAIGfxMgrGL::VTX_STAGE_MODEL, MOAIGfxMgrGL::VTX_STAGE_MODEL );
 //	
 //	gfxMgr.UpdateShaderGlobals ();
 //		
@@ -1358,7 +1358,7 @@ void MOAIDraw::DrawGrid ( const ZLRect& rect, u32 xCells, u32 yCells ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawLuaParams ( lua_State* L, u32 primType ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	MOAILuaState state ( L );
 
 	u32 total = state.GetTop () >> 1;
@@ -1383,7 +1383,7 @@ void MOAIDraw::DrawLuaParams ( lua_State* L, u32 primType ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawLuaArray ( lua_State* L, u32 primType ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	MOAILuaState state ( L );
 
 	float x = 0.0f;
@@ -1418,7 +1418,7 @@ void MOAIDraw::DrawRay ( float x, float y, float dx, float dy ) {
 	ZLVec2D loc ( x, y );
 	ZLVec2D vec ( dx, dy );
 	
-	ZLMatrix4x4 mtx = MOAIGfxMgr::Get ().GetMtx ( ZLGfxMgrGL::WORLD_TO_CLIP_MTX );
+	ZLMatrix4x4 mtx = MOAIGfxMgrGL::Get ().GetMtx ( ZLGfxMgrGL::WORLD_TO_CLIP_MTX );
 	
 	ZLMatrix4x4 invMtx;
 	invMtx.Inverse ( mtx );
@@ -1437,7 +1437,7 @@ void MOAIDraw::DrawRay ( float x, float y, float dx, float dy ) {
 		invMtx.Transform ( p0 );
 		invMtx.Transform ( p1 );
 		
-		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+		MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 		
 		gfxMgr.BeginPrim ( ZGL_PRIM_LINES, 2 );
 		
@@ -1454,7 +1454,7 @@ void MOAIDraw::DrawRay ( float x, float y, float dx, float dy ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawTexture ( float left, float top, float right, float bottom, MOAITextureBase* texture ) {
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	
 	if ( texture ) {
 
@@ -1482,7 +1482,7 @@ void MOAIDraw::DrawTexture ( float left, float top, float right, float bottom, M
 //----------------------------------------------------------------//
 void MOAIDraw::DrawVertexArray ( const ZLVec3D* verts, u32 count, u32 color, u32 primType ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 
 	gfxMgr.SetPenColor ( color );
 	gfxMgr.BeginPrim ( primType, count );
@@ -1499,7 +1499,7 @@ void MOAIDraw::DrawVertexArray ( const ZLVec3D* verts, u32 count, u32 color, u32
 //----------------------------------------------------------------//
 void MOAIDraw::DrawVertexArray2D ( const float* verts, u32 count, u32 color, u32 primType ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 
 	gfxMgr.SetPenColor ( color );
 	gfxMgr.BeginPrim ( primType, count );

@@ -33,7 +33,7 @@ protected:
 	ZLStrongPtr < MOAIShader >			mShader;
 	ZLStrongPtr < MOAITextureBase >		mTexture;
 	
-	ZLBlendMode		mBlendMode;
+	ZLBlendMode			mBlendMode;
 	int					mCullMode;
 	int					mDepthTest;
 	bool				mDepthMask;

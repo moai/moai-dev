@@ -22,7 +22,6 @@
 #include <moai-gfx/MOAIShaderUniformSchemaBase.h>
 #include <moai-gfx/MOAITexture.h>
 #include <moai-gfx/MOAITextureBase.h>
-#include <moai-gfx/MOAITextureFormat.h>
 #include <moai-gfx/MOAIVertexArray.h>
 #include <moai-gfx/MOAIVertexBuffer.h>
 #include <moai-gfx/MOAIVertexFormat.h>

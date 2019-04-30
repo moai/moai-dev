@@ -317,7 +317,7 @@ ZLBounds MOAITileDeck2D::MOAIDeck_ComputeMaxAABB () {
 void MOAITileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	UNUSED ( idx );
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	MOAIQuadBrush::BindVertexFormat ();
 	
 	gfxMgr.SetVertexTransform ( ZLGfxMgrGL::MODEL_TO_CLIP_MTX );

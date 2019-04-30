@@ -525,7 +525,7 @@ void MOAIMesh::DrawIndex ( ZLIndex idx, MOAIMeshSpan* span ) {
 
 	// TODO: make use of offset and scale
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	if ( gfxMgr.SetVertexArray ( this )) {
 
 		// I am super lazy, so set this up here instead of adding if's below
@@ -645,7 +645,7 @@ void MOAIMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIMesh::ReserveVAOs ( u32 total ) {
 
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVAOs.Size (); ++i ) {
-		MOAIGfxMgr::Get ().DeleteOrDiscard ( this->mVAOs [ i ], false );
+		MOAIGfxMgrGL::Get ().DeleteOrDiscard ( this->mVAOs [ i ], false );
 	}
 	this->mVAOs.Init ( total );
 }

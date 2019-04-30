@@ -4,7 +4,7 @@
 #ifndef	MOAIGFXRESOURCE_H
 #define	MOAIGFXRESOURCE_H
 
-#include <moai-gfx/MOAIGfxMgr.h>
+#include <moai-gfx/MOAIGfxMgrGL.h>
 
 //================================================================//
 // MOAIAbstractGfxResource
@@ -58,7 +58,7 @@ protected:
 	//----------------------------------------------------------------//
 	MOAIGfxResource () {
 		
-		this->SetGfxMgr ( MOAIGfxMgr::Get ());
+		this->SetGfxMgr ( MOAIGfxMgrGL::Get ());
 	}
 
 	//----------------------------------------------------------------//

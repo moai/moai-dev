@@ -16,7 +16,7 @@
 			into GPU memory the next time the texture is bound.
 */
 class MOAIImageTexture :
-	public MOAIGfxResource < ZLTexture >,
+	public MOAIGfxResource < ZLTextureBase >,
 	public MOAIImage,
 	public MOAITextureBase {
 private:

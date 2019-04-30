@@ -3,14 +3,14 @@
 
 #include "pch.h"
 
-#include <moai-util/MOAIImageFormatMgr.h>
+#include <zl-util/ZLImageFormatMgr.h>
 
 //================================================================//
-// MOAIImageFormatMgr
+// ZLImageFormatMgr
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIImageFormat* MOAIImageFormatMgr::FindFormat ( cc8* name ) {
+ZLImageFormat* ZLImageFormatMgr::FindFormat ( cc8* name ) {
 
 	if ( name ) {
 		u32 hash = this->HashName ( name );
@@ -20,13 +20,13 @@ MOAIImageFormat* MOAIImageFormatMgr::FindFormat ( cc8* name ) {
 }
 
 //----------------------------------------------------------------//
-MOAIImageFormat* MOAIImageFormatMgr::FindFormat ( ZLStream& stream, cc8* name ) {
+ZLImageFormat* ZLImageFormatMgr::FindFormat ( ZLStream& stream, cc8* name ) {
 
 	size_t cursor = stream.GetCursor ();
 
 	FormatIt formatIt = this->mFormats.begin ();
 	for ( ; formatIt != this->mFormats.end (); formatIt++ ) {
-		MOAIImageFormat& format = *formatIt->second;
+		ZLImageFormat& format = *formatIt->second;
 		
 		size_t headerSize = format.GetHeaderSize ();
 		if ( headerSize > 0 ) {
@@ -41,7 +41,7 @@ MOAIImageFormat* MOAIImageFormatMgr::FindFormat ( ZLStream& stream, cc8* name ) 
 	
 	formatIt = this->mFormats.begin ();
 	for ( ; formatIt != this->mFormats.end (); formatIt++ ) {
-		MOAIImageFormat& format = *formatIt->second;
+		ZLImageFormat& format = *formatIt->second;
 		
 		size_t headerSize = format.GetHeaderGuessSize ();
 		if ( headerSize > 0 ) {
@@ -58,7 +58,7 @@ MOAIImageFormat* MOAIImageFormatMgr::FindFormat ( ZLStream& stream, cc8* name ) 
 }
 
 //----------------------------------------------------------------//
-u32 MOAIImageFormatMgr::HashName ( cc8* name ) {
+u32 ZLImageFormatMgr::HashName ( cc8* name ) {
 
 	u32 hash = 0;
 	int shift = 0;
@@ -87,11 +87,11 @@ u32 MOAIImageFormatMgr::HashName ( cc8* name ) {
 }
 
 //----------------------------------------------------------------//
-MOAIImageFormatMgr::MOAIImageFormatMgr () {
+ZLImageFormatMgr::ZLImageFormatMgr () {
 }
 
 //----------------------------------------------------------------//
-MOAIImageFormatMgr::~MOAIImageFormatMgr () {
+ZLImageFormatMgr::~ZLImageFormatMgr () {
 
 	FormatIt formatIt = this->mFormats.begin ();
 	for ( ; formatIt != this->mFormats.end (); formatIt++ ) {

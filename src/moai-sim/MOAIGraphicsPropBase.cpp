@@ -198,7 +198,7 @@ bool MOAIGraphicsPropBase::IsVisible () {
 //----------------------------------------------------------------//
 void MOAIGraphicsPropBase::LoadUVTransform () {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	
 	if ( this->mUVTransform ) {
 		ZLAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
@@ -212,7 +212,7 @@ void MOAIGraphicsPropBase::LoadUVTransform () {
 //----------------------------------------------------------------//
 void MOAIGraphicsPropBase::LoadVertexTransform () {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	gfxMgr.SetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX, this->GetWorldDrawingMtx ());
 }
 
@@ -247,7 +247,7 @@ void MOAIGraphicsPropBase::PopGfxState () {
 //----------------------------------------------------------------//
 void MOAIGraphicsPropBase::PushGfxState () {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 
 	gfxMgr.SetPenColor ( this->mColor );
 
@@ -392,7 +392,7 @@ void MOAIGraphicsPropBase::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAIGraphicsPropBase >())) return;
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
@@ -451,7 +451,7 @@ void MOAIGraphicsPropBase::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () const {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 
 	ZLMatrix4x4 worldDrawingMtx;
 
@@ -623,7 +623,7 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () con
 		
 		case BILLBOARD_SCREEN: {
 			
-			//MOAIGfxMgr::Get ().GetWorldToWndMtx ();
+			//MOAIGfxMgrGL::Get ().GetWorldToWndMtx ();
 			
 			//ZLMatrix4x4 viewProjMtx = camera->GetWorldToWndMtx ( *viewport );
 			ZLMatrix4x4 viewProjMtx = gfxMgr.GetMtx ( ZLGfxMgrGL::WORLD_TO_CLIP_MTX );

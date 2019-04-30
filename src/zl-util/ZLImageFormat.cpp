@@ -3,94 +3,94 @@
 
 #include "pch.h"
 
-#include <moai-util/MOAIImageFormat.h>
+#include <zl-util/ZLImageFormat.h>
 
 //================================================================//
-// MOAIImageFormat
+// ZLImageFormat
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIImageFormat::Alloc ( MOAIImage& image ) const {
+void ZLImageFormat::Alloc ( ZLImage& image ) const {
 
 	image.Alloc ();
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormat::CheckHeader ( const void* buffer ) {
+bool ZLImageFormat::CheckHeader ( const void* buffer ) {
 	UNUSED ( buffer );
 
 	return false;
 }
 
 //----------------------------------------------------------------//
-const void* MOAIImageFormat::GetBitmap ( MOAIImage& image ) const {
+const void* ZLImageFormat::GetBitmap ( ZLImage& image ) const {
 
 	return image.mBitmap.GetBuffer ();
 }
 
 //----------------------------------------------------------------//
-void* MOAIImageFormat::GetBitmapMutable ( MOAIImage& image ) const {
+void* ZLImageFormat::GetBitmapMutable ( ZLImage& image ) const {
 
 	return image.mBitmap.Invalidate ();
 }
 
 //----------------------------------------------------------------//
-size_t MOAIImageFormat::GetHeaderSize () {
+size_t ZLImageFormat::GetHeaderSize () {
 
 	return 0;
 }
 
 //----------------------------------------------------------------//
-size_t MOAIImageFormat::GetHeaderGuessSize () {
+size_t ZLImageFormat::GetHeaderGuessSize () {
 
 	return 0;
 }
 
 //----------------------------------------------------------------//
-const void* MOAIImageFormat::GetRowAddr ( const MOAIImage& image, u32 y ) const {
+const void* ZLImageFormat::GetRowAddr ( const ZLImage& image, u32 y ) const {
 
 	return image.GetRowAddr ( y );
 }
 
 //----------------------------------------------------------------//
-void* MOAIImageFormat::GetRowAddrMutable ( MOAIImage& image, u32 y ) const {
+void* ZLImageFormat::GetRowAddrMutable ( ZLImage& image, u32 y ) const {
 
 	return image.GetRowAddrMutable ( y );
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormat::GuessHeader ( const void* buffer ) {
+bool ZLImageFormat::GuessHeader ( const void* buffer ) {
 	UNUSED ( buffer );
 
 	return false;
 }
 
 //----------------------------------------------------------------//
-MOAIImageFormat::MOAIImageFormat () {
+ZLImageFormat::ZLImageFormat () {
 
 	RTTI_SINGLE ( RTTIBase )
 }
 
 //----------------------------------------------------------------//
-MOAIImageFormat::~MOAIImageFormat () {
+ZLImageFormat::~ZLImageFormat () {
 }
 
 //----------------------------------------------------------------//
-void MOAIImageFormat::SetColorFormat ( MOAIImage& image, ZLColor::ColorFormat colorFormat ) const {
+void ZLImageFormat::SetColorFormat ( ZLImage& image, ZLColor::ColorFormat colorFormat ) const {
 
 	image.SetColorFormat ( colorFormat );
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormat::SetDimensions ( MOAIImage& image, u32 width, u32 height, u32 transform ) const {
+bool ZLImageFormat::SetDimensions ( ZLImage& image, u32 width, u32 height, u32 transform ) const {
 
 	// set the dimensions, and padding (if any )
 	bool isPadded = false;
 	
 	if ( transform & ZLImageTransform::POW_TWO ) {
 	
-		image.SetWidth ( MOAIImage::GetMinPowerOfTwo ( width ));
-		image.SetHeight ( MOAIImage::GetMinPowerOfTwo ( height ));
+		image.SetWidth ( ZLImage::GetMinPowerOfTwo ( width ));
+		image.SetHeight ( ZLImage::GetMinPowerOfTwo ( height ));
 		isPadded = true;
 	}
 	else {
@@ -101,13 +101,13 @@ bool MOAIImageFormat::SetDimensions ( MOAIImage& image, u32 width, u32 height, u
 }
 
 //----------------------------------------------------------------//
-void MOAIImageFormat::SetPixelFormat ( MOAIImage& image, MOAIImage::PixelFormat pixelFormat ) const {
+void ZLImageFormat::SetPixelFormat ( ZLImage& image, ZLImage::PixelFormat pixelFormat ) const {
 
 	image.SetPixelFormat ( pixelFormat );
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormat::ReadImage ( MOAIImage& image, ZLStream& stream, u32 transform ) {
+bool ZLImageFormat::ReadImage ( ZLImage& image, ZLStream& stream, u32 transform ) {
 	UNUSED ( image );
 	UNUSED ( stream );
 	UNUSED ( transform );
@@ -115,7 +115,7 @@ bool MOAIImageFormat::ReadImage ( MOAIImage& image, ZLStream& stream, u32 transf
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormat::WriteImage ( const MOAIImage& image, ZLStream& stream ) {
+bool ZLImageFormat::WriteImage ( const ZLImage& image, ZLStream& stream ) {
 	UNUSED ( image );
 	UNUSED ( stream );
 	return false;

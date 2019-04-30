@@ -15,8 +15,6 @@
 #include <moai-util/MOAIFourier.h>
 #include <moai-util/MOAIHashWriter.h>
 #include <moai-util/MOAIImage.h>
-#include <moai-util/MOAIImageFormat.h>
-#include <moai-util/MOAIImageFormatMgr.h>
 #include <moai-util/MOAIImageLoadTask.h>
 #include <moai-util/MOAIJsonParser.h>
 #include <moai-util/MOAILuaUtil.h>

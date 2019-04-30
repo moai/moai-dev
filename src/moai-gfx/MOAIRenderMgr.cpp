@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-gfx/MOAIAbstractDrawable.h>
-#include <moai-gfx/MOAIGfxMgr.h>
+#include <moai-gfx/MOAIGfxMgrGL.h>
 #include <moai-gfx/MOAIRenderMgr.h>
 
 //================================================================//
@@ -91,7 +91,7 @@ void MOAIRenderMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIRenderMgr::Render () {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 
 	gfxMgr.ResetDrawingAPIs ();
 	gfxMgr.Update ();

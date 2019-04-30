@@ -4,7 +4,8 @@
 #ifndef	ZLGFXSTATEGPUCACHE_H
 #define	ZLGFXSTATEGPUCACHE_H
 
-#include <zl-gfx/ZLAbstractGfxMgr.h>
+#include <zl-gfx/ZLAbstractGfxMgrGL.h>
+#include <zl-gfx/ZLAbstractGPU.h>
 #include <zl-gfx/ZLBlendMode.h>
 #include <zl-gfx/ZLGfxEnum.h>
 #include <zl-gfx/ZLGfxPipelineClerk.h>
@@ -18,7 +19,7 @@ class ZLVertexBuffer;
 class ZLVertexFormat;
 class ZLAbstractGfxResource;
 class ZLVertexBufferWithFormat;
-class ZLTexture;
+class ZLTextureBase;
 
 //================================================================//
 // ZLGfxStateGPUCacheFrame
@@ -53,7 +54,7 @@ protected:
 
 	ZLRect									mViewRect;
 	
-	ZLLeanArray < ZLStrongPtr < ZLTexture > >		mTextureUnits;
+	ZLLeanArray < ZLStrongPtr < ZLTextureBase > >		mTextureUnits;
 	
 	//----------------------------------------------------------------//
 	void			Clear							();
@@ -65,7 +66,8 @@ protected:
 // ZLGfxStateGPUCache
 //================================================================//
 class ZLGfxStateGPUCache :
-	virtual public ZLAbstractGfxMgr {
+	virtual public ZLAbstractGfxMgrGL,
+	virtual public ZLAbstractGPU {
 protected:
 
 	static const u32 MAX_TEXTURE_UNITS = 32; // enough? will need more flags below if not.
@@ -108,7 +110,7 @@ protected:
 
 	// don't think these need to be lua shared pointers...
 	ZLStrongPtr < ZLFrameBuffer >			mDefaultFrameBuffer;
-	ZLStrongPtr < ZLTexture >				mDefaultTexture;
+	ZLStrongPtr < ZLTextureBase >				mDefaultTexture;
 
 	ZLSharedConstBuffer*					mBoundIdxBuffer;
 	ZLSharedConstBuffer*					mBoundVtxBuffer;
@@ -126,7 +128,7 @@ protected:
 	void			FlushPenWidth					( float penWidth );
 	void			FlushScissorRect				( bool scissorEnabled, ZLRect rect );
 	void			FlushShader						( ZLShader* shader );
-	void			FlushTexture					( ZLIndex textureUnit, ZLTexture* texture );
+	void			FlushTexture					( ZLIndex textureUnit, ZLTextureBase* texture );
 	void			FlushVertexArray				( ZLVertexArray* vtxArray );
 	void			FlushVertexBuffer				( ZLVertexBuffer* buffer );
 	void			FlushVertexFormat				( ZLVertexFormat* vtxFormat );
@@ -141,68 +143,52 @@ protected:
 	void			StoreGPUState					( ZLGfxStateGPUCacheFrame& frame ) const;
 	void			SuspendChanges					();
 
+	//----------------------------------------------------------------//
+	void				ZLAbstractGPU_ClearSurface				(); // takes zgl clear flags
+	size_t				ZLAbstractGPU_CountTextureUnits			();
+	void				ZLAbstractGPU_DrawPrims					( u32 primType, u32 base, u32 count );
+	ZLBlendMode			ZLAbstractGPU_GetBlendMode				() const;
+	u32					ZLAbstractGPU_GetBufferHeight			() const;
+	u32					ZLAbstractGPU_GetBufferWidth			() const;
+	ZLFrameBuffer*		ZLAbstractGPU_GetCurrentFrameBuffer		();
+	ZLShader*			ZLAbstractGPU_GetCurrentShader			();
+	ZLVertexFormat*		ZLAbstractGPU_GetCurrentVtxFormat		();
+	ZLFrameBuffer*		ZLAbstractGPU_GetDefaultFrameBuffer		();
+	ZLTextureBase*			ZLAbstractGPU_GetDefaultTexture			();
+	bool				ZLAbstractGPU_GetDepthMask				() const;
+	float				ZLAbstractGPU_GetViewHeight				() const;
+	ZLRect				ZLAbstractGPU_GetViewRect				() const;
+	float				ZLAbstractGPU_GetViewWidth				() const;
+	void				ZLAbstractGPU_ResetGPUState				();
+	void				ZLAbstractGPU_SetBlendMode				();
+	void				ZLAbstractGPU_SetBlendMode				( const ZLBlendMode& blendMode );
+	void				ZLAbstractGPU_SetBlendMode				( int srcFactor, int dstFactor, int equation );
+	void				ZLAbstractGPU_SetCullFunc				();
+	void				ZLAbstractGPU_SetCullFunc				( int cullFunc );
+	void				ZLAbstractGPU_SetDefaultFrameBuffer		( ZLFrameBuffer* frameBuffer );
+	void				ZLAbstractGPU_SetDefaultTexture			( ZLTextureBase* texture );
+	void				ZLAbstractGPU_SetDepthFunc				();
+	void				ZLAbstractGPU_SetDepthFunc				( int depthFunc );
+	void				ZLAbstractGPU_SetDepthMask				( bool depthMask );
+	bool				ZLAbstractGPU_SetFrameBuffer			( ZLFrameBuffer* frameBuffer );
+	bool				ZLAbstractGPU_SetIndexBuffer			( ZLIndexBuffer* buffer );
+	void				ZLAbstractGPU_SetPenWidth				( float penWidth );
+	void				ZLAbstractGPU_SetScissorRect			();
+	void				ZLAbstractGPU_SetScissorRect			( ZLRect rect );
+	bool				ZLAbstractGPU_SetShader					( ZLShader* shader );
+	bool				ZLAbstractGPU_SetTexture				( ZLTextureBase* texture, ZLIndex textureUnit );
+	bool				ZLAbstractGPU_SetVertexArray			( ZLVertexArray* vtxArray );
+	bool				ZLAbstractGPU_SetVertexBuffer			( ZLVertexBuffer* buffer );
+	void				ZLAbstractGPU_SetVertexFormat			( ZLVertexFormat* format );
+	void				ZLAbstractGPU_SetViewRect				();
+	void				ZLAbstractGPU_SetViewRect				( ZLRect rect );
+	void				ZLAbstractGPU_UnbindAll					();
+
 public:
 	
-	GET ( ZLBlendMode, BlendMode, mCurrentState->mBlendMode )
-	GET ( bool, DepthMask, mCurrentState->mDepthMask )
-	GET ( ZLFrameBuffer*, CurrentFrameBuffer, mCurrentState->mFrameBuffer )
-	GET ( ZLShader*, CurrentShader, mCurrentState->mShader )
-	GET ( ZLVertexFormat*, CurrentVtxFormat, mCurrentState->mVtxFormat )
-	GET ( const ZLRect&, ViewRect, mCurrentState->mViewRect )
-	GET ( ZLFrameBuffer*, DefaultFrameBuffer, mDefaultFrameBuffer )
-	GET ( ZLTexture*, DefaultTexture, mDefaultTexture )
-	
 	//----------------------------------------------------------------//
-	void			ClearSurface				(); // takes zgl clear flags
-	
-	size_t			CountTextureUnits			();
-	
-	void			DrawPrims					( u32 primType, u32 base, u32 count );
-	
-	u32				GetBufferHeight				() const;
-	u32				GetBufferWidth				() const;
-		
-	float			GetViewHeight				() const;
-	float			GetViewWidth				() const;
-
-	void			ResetGPUState				();
-
-	void			SetBlendMode				();
-	void			SetBlendMode				( const ZLBlendMode& blendMode );
-	void			SetBlendMode				( int srcFactor, int dstFactor, int equation = ZGL_BLEND_MODE_ADD );
-
-	void			SetCullFunc					();
-	void			SetCullFunc					( int cullFunc );
-	
-	void			SetDefaultFrameBuffer		( ZLFrameBuffer* frameBuffer );
-	void			SetDefaultTexture			( ZLTexture* texture );
-	
-	void			SetDepthFunc				();
-	void			SetDepthFunc				( int depthFunc );
-	void			SetDepthMask				( bool depthMask );
-	
-	bool			SetFrameBuffer				( ZLFrameBuffer* frameBuffer = 0 );
-	bool			SetIndexBuffer				( ZLIndexBuffer* buffer = 0 );
-		
-	void			SetPenWidth					( float penWidth );
-	
-	void			SetScissorRect				();
-	void			SetScissorRect				( ZLRect rect );
-	
-	bool			SetShader					( ZLShader* shader = 0 );
-	bool			SetTexture					( ZLTexture* texture = 0, ZLIndex textureUnit = ZLIndexOp::ZERO );
-	
-	bool			SetVertexArray				( ZLVertexArray* vtxArray = 0 );
-	bool			SetVertexBuffer				( ZLVertexBuffer* buffer = 0 );
-	void			SetVertexFormat				( ZLVertexFormat* format = 0 );
-	
-	void			SetViewRect					();
-	void			SetViewRect					( ZLRect rect );
-	
-	void			UnbindAll					();
-	
-					ZLGfxStateGPUCache			();
-	virtual			~ZLGfxStateGPUCache			();
+						ZLGfxStateGPUCache						();
+	virtual				~ZLGfxStateGPUCache						();
 };
 
 #endif

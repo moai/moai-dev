@@ -11,5 +11,5 @@
 //----------------------------------------------------------------//
 void AKUImagePvrContextInitialize () {
 
-	MOAIImageFormatMgr::Get ().RegisterFormat < MOAIImageFormatPvr >( "pvr" );
+	ZLImageFormatMgr::Get ().RegisterFormat < MOAIImageFormatPvr >( "pvr" );
 }

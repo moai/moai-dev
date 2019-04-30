@@ -5,7 +5,6 @@
 
 #include <moai-util/MOAIDataBuffer.h>
 #include <moai-util/MOAIImage.h>
-#include <moai-util/MOAIImageFormatMgr.h>
 #include <moai-util/MOAIImageLoadTask.h>
 #include <moai-util/MOAITaskQueue.h>
 #include <moai-util/MOAITaskSubscriber.h>
@@ -882,7 +881,7 @@ int MOAIImage::_loadFromBuffer ( lua_State* L ) {
 		stream.SetBuffer ( bytes, size );
 		stream.SetLength ( size );
 
-		self->Load ( stream, transform );
+		self->ZLImage::Load ( stream, transform );
 
 		buffer->Unlock();
 	}
@@ -1285,40 +1284,6 @@ MOAIImage* MOAIImage::AffirmImage ( MOAILuaState& state, int idx ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIImage::Load ( cc8* filename, u32 transform ) {
-
-	this->Clear ();
-	
-	ZLFileStream stream;
-	if ( stream.OpenRead ( filename )) {
-		this->Load ( stream, transform ); // TODO: use file extension as name
-		stream.Close ();
-		this->NotifyStatusChanged ();
-	}
-	else {
-		MOAILogF ( NULL, ZLLog::LOG_ERROR, MOAISTRING_FileOpenError_S, filename );
-	}
-	return this->IsOK ();
-}
-
-//----------------------------------------------------------------//
-bool MOAIImage::Load ( ZLStream& stream, u32 transform ) {
-	UNUSED ( stream );
-	UNUSED ( transform );
-
-	this->Clear ();
-	
-	MOAIImageFormat* format = MOAIImageFormatMgr::Get ().FindFormat ( stream ); // TODO: make use of name
-	if ( format ) {
-		format->ReadImage ( *this, stream, transform );
-		this->NotifyStatusChanged ();
-		return this->IsOK ();
-	}
-	
-	return false;
-}
-
-//----------------------------------------------------------------//
 MOAIImage::MOAIImage () {
 	
 	RTTI_SINGLE ( MOAILuaObject )
@@ -1442,11 +1407,4 @@ void MOAIImage::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer 
 void MOAIImage::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
-}
-
-//----------------------------------------------------------------//
-bool MOAIImage::Write ( ZLStream& stream, cc8* formatName ) {
-
-	MOAIImageFormat* format = MOAIImageFormatMgr::Get ().FindFormat ( formatName );
-	return format && format->WriteImage ( *this, stream );
 }

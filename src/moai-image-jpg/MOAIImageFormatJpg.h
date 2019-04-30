@@ -10,24 +10,23 @@
 // MOAIImageFormatJpg
 //================================================================//
 class MOAIImageFormatJpg :
-	public MOAIImageFormat {
+	public ZLImageFormat {
 private:
 
 	static const u32 HEADER_SIZE = 8;
 
 	//----------------------------------------------------------------//
-	void			ReadImageJpg				( MOAIImage& image, void* jpgInfoParam, u32 transform );
+	void			ReadImageJpg				( ZLImage& image, void* jpgInfoParam, u32 transform );
 
 public:
 
 	//----------------------------------------------------------------//
 	bool			CheckHeader					( const void* buffer );
-	bool			CreateTexture				( MOAITextureBase& texture, const void* data, size_t size );
 	size_t			GetHeaderSize				();
 					MOAIImageFormatJpg			();
 					~MOAIImageFormatJpg			();
-	bool			ReadImage					( MOAIImage& image, ZLStream& stream, u32 transform );
-	bool			WriteImage					( const MOAIImage& image, ZLStream& stream );
+	bool			ReadImage					( ZLImage& image, ZLStream& stream, u32 transform );
+	bool			WriteImage					( const ZLImage& image, ZLStream& stream );
 };
 
 #endif

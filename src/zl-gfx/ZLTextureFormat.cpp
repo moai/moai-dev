@@ -3,31 +3,31 @@
 
 #include "pch.h"
 
-#include <moai-gfx/MOAITextureBase.h>
-#include <moai-gfx/MOAITextureFormat.h>
+#include <zl-gfx/ZLTextureBase.h>
+#include <zl-gfx/ZLTextureFormat.h>
 
 //================================================================//
-// MOAITextureFormat
+// ZLTextureFormat
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITextureFormat::CleanupTexture ( MOAITextureBase& texture ) {
+void ZLTextureFormat::CleanupTexture ( ZLTextureBase& texture ) {
 
 	texture.CleanupOnError ();
 }
 
 //----------------------------------------------------------------//
-MOAITextureFormat::MOAITextureFormat () {
+ZLTextureFormat::ZLTextureFormat () {
 
-	RTTI_SINGLE ( MOAIImageFormat )
+	RTTI_SINGLE ( ZLImageFormat )
 }
 
 //----------------------------------------------------------------//
-MOAITextureFormat::~MOAITextureFormat () {
+ZLTextureFormat::~ZLTextureFormat () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextureFormat::SetGLTexture ( MOAITextureBase& texture, const ZLGfxHandle& glTexture, int internalFormat, int pixelType, size_t textureSize ) {
+void ZLTextureFormat::SetGLTexture ( ZLTextureBase& texture, const ZLGfxHandle& glTexture, int internalFormat, int pixelType, size_t textureSize ) {
 
 	texture.SetGLTexture ( glTexture, internalFormat, pixelType, textureSize );
 }

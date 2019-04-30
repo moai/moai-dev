@@ -348,7 +348,7 @@ void MOAIProfilerReportBox::Draw ( int subPrimID ) {
 	
 //	if ( !mFont ) return;
 //	
-//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+//	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 //	
 //	// Get memory stats
 //	u32 availableMainMem, usedMainMem;
@@ -368,15 +368,15 @@ void MOAIProfilerReportBox::Draw ( int subPrimID ) {
 //
 //	// Get current state
 //	const ZLMatrix4x4& orgUvMatrix = gfxMgr.GetUVTransform ();
-//	const ZLMatrix4x4& orgWorldTransform = gfxMgr.GetVertexTransform ( MOAIGfxMgr::VTX_WORLD_TRANSFORM );
-//	const ZLMatrix4x4& orgViewTransform = gfxMgr.GetVertexTransform ( MOAIGfxMgr::VTX_VIEW_TRANSFORM );
-//	const ZLMatrix4x4& orgProjTransform = gfxMgr.GetVertexTransform ( MOAIGfxMgr::VTX_PROJ_TRANSFORM );
+//	const ZLMatrix4x4& orgWorldTransform = gfxMgr.GetVertexTransform ( MOAIGfxMgrGL::VTX_WORLD_TRANSFORM );
+//	const ZLMatrix4x4& orgViewTransform = gfxMgr.GetVertexTransform ( MOAIGfxMgrGL::VTX_VIEW_TRANSFORM );
+//	const ZLMatrix4x4& orgProjTransform = gfxMgr.GetVertexTransform ( MOAIGfxMgrGL::VTX_PROJ_TRANSFORM );
 //
 //	ZLBlendMode origBlendMode = gfxMgr.GetBlendMode ();
 //
 //	// Set state
-//	gfxMgr.SetVertexMtxMode ( MOAIGfxMgr::VTX_STAGE_WORLD, MOAIGfxMgr::VTX_STAGE_PROJ );
-//	gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_VIEW_TRANSFORM );
+//	gfxMgr.SetVertexMtxMode ( MOAIGfxMgrGL::VTX_STAGE_WORLD, MOAIGfxMgrGL::VTX_STAGE_PROJ );
+//	gfxMgr.SetVertexTransform ( MOAIGfxMgrGL::VTX_VIEW_TRANSFORM );
 //
 //	float rotation = 0;
 //	if ( mOrientation == 1 ) {
@@ -407,7 +407,7 @@ void MOAIProfilerReportBox::Draw ( int subPrimID ) {
 //		proj.Multiply ( orgProjTransform, rot );
 //	}
 //		
-//	gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_PROJ_TRANSFORM, proj );
+//	gfxMgr.SetVertexTransform ( MOAIGfxMgrGL::VTX_PROJ_TRANSFORM, proj );
 //
 //	MOAIDraw::Bind ();
 //
@@ -459,7 +459,7 @@ void MOAIProfilerReportBox::Draw ( int subPrimID ) {
 //	MOAIDraw::Bind ();
 //
 //	gfxMgr.SetUVTransform ();
-//	gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_WORLD_TRANSFORM );
+//	gfxMgr.SetVertexTransform ( MOAIGfxMgrGL::VTX_WORLD_TRANSFORM );
 //
 //	gfxMgr.SetBlendMode ( ZGL_BLEND_FACTOR_SRC_ALPHA, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
 //
@@ -592,13 +592,13 @@ void MOAIProfilerReportBox::Draw ( int subPrimID ) {
 //
 //	// Restore render state
 //	gfxMgr.SetUVTransform ( orgUvMatrix );
-//	gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_WORLD_TRANSFORM, orgWorldTransform );
-//	gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_VIEW_TRANSFORM, orgViewTransform );
+//	gfxMgr.SetVertexTransform ( MOAIGfxMgrGL::VTX_WORLD_TRANSFORM, orgWorldTransform );
+//	gfxMgr.SetVertexTransform ( MOAIGfxMgrGL::VTX_VIEW_TRANSFORM, orgViewTransform );
 //	gfxMgr.SetBlendMode ( origBlendMode );
 //	
 //	if ( rotation != 0 ) {
 //
-//		gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_PROJ_TRANSFORM, orgProjTransform );
+//		gfxMgr.SetVertexTransform ( MOAIGfxMgrGL::VTX_PROJ_TRANSFORM, orgProjTransform );
 //	}
 }
 
@@ -762,7 +762,7 @@ bool MOAIProfilerReportBox::_DrawEntryVisuals ( MOAIProfilerEntry* entry ) {
 //		}
 //		
 //		// ...and draw it
-//		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+//		MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 //		const ZLColorVec& penColor = gfxMgr.GetPenColor ();
 //
 //		MOAIDraw::DrawVertexArray2D ( mSampleVerts, MOAIProfilerEntry::NUM_SAMPLES, 0xff0000ff, ZGL_PRIM_LINE_STRIP );

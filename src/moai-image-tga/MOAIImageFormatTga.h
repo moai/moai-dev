@@ -10,19 +10,18 @@
 // MOAIImageFormatPng
 //================================================================//
 class MOAIImageFormatTga :
-	public MOAIImageFormat {
+	public ZLImageFormat {
 private:
 
 public:
 
 	//----------------------------------------------------------------//
-	bool			CreateTexture				( MOAITextureBase& texture, const void* data, size_t size );
 	size_t			GetHeaderGuessSize			();
 	bool			GuessHeader					( const void* buffer );
 					MOAIImageFormatTga			();
 					~MOAIImageFormatTga			();
-	bool			ReadImage					( MOAIImage& image, ZLStream& stream, u32 transform );
-	bool			WriteImage					( const MOAIImage& image, ZLStream& stream );
+	bool			ReadImage					( ZLImage& image, ZLStream& stream, u32 transform );
+	bool			WriteImage					( const ZLImage& image, ZLStream& stream );
 };
 
 #endif

@@ -5,7 +5,7 @@
 #include <zl-gfx/ZLGfx.h>
 #include <zl-gfx/ZLGfxMgrGL.h>
 #include <zl-gfx/ZLShaderProgram.h>
-#include <zl-gfx/ZLTexture.h>
+#include <zl-gfx/ZLTextureBase.h>
 
 //================================================================//
 // ZLShaderProgramGlobal
@@ -197,7 +197,7 @@ void ZLShaderProgram::ScheduleTextures () {
 //
 //		ZLShaderProgramTexture& shaderTexture = this->mTextures [ i ];
 //
-//		ZLTexture* texture = shaderTexture.mTexture;
+//		ZLTextureBase* texture = shaderTexture.mTexture;
 //
 //		// load texture by name
 //		if ( !texture ) {
@@ -234,7 +234,7 @@ void ZLShaderProgram::SetGlobal ( ZLIndex idx, u32 globalID, ZLIndex uniformID, 
 //}
 
 //----------------------------------------------------------------//
-void ZLShaderProgram::SetTexture ( ZLIndex idx, u32 name, ZLIndex unit, ZLTexture* fallback ) {
+void ZLShaderProgram::SetTexture ( ZLIndex idx, u32 name, ZLIndex unit, ZLTextureBase* fallback ) {
 
 	if ( idx < this->mTextures.Size ()) {
 	
@@ -246,7 +246,7 @@ void ZLShaderProgram::SetTexture ( ZLIndex idx, u32 name, ZLIndex unit, ZLTextur
 }
 
 //----------------------------------------------------------------//
-void ZLShaderProgram::SetTexture ( ZLIndex idx, ZLTexture* texture, ZLIndex unit ) {
+void ZLShaderProgram::SetTexture ( ZLIndex idx, ZLTextureBase* texture, ZLIndex unit ) {
 
 	if ( idx < this->mTextures.Size ()) {
 	

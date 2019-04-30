@@ -56,6 +56,8 @@
 #include <zl-util/ZLHexAdapter.h>
 #include <zl-util/ZLHexDump.h>
 #include <zl-util/ZLImage.h>
+#include <zl-util/ZLImageFormat.h>
+#include <zl-util/ZLImageFormatMgr.h>
 #include <zl-util/ZLIndex.h>
 #include <zl-util/ZLInterpolate.h>
 #include <zl-util/ZLIntersect.h>

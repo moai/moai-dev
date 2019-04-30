@@ -27,7 +27,7 @@ MOAIDrawShapeImmediate::~MOAIDrawShapeImmediate () {
 //----------------------------------------------------------------//
 void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_DrawLine ( float x0, float y0, float z0, float x1, float y1, float z1 ) {
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 
 	gfxMgr.BeginPrim ( ZGL_PRIM_LINES, 2 );
 	
@@ -43,7 +43,7 @@ void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_DrawLine ( float x0, float y0
 //----------------------------------------------------------------//
 void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_DrawPoint ( float x, float y, float z ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	UNUSED(z);
 	gfxMgr.BeginPrim ( ZGL_PRIM_POINTS, 1 );
 		gfxMgr.WriteVtx ( x, y, 0.0f );
@@ -54,7 +54,7 @@ void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_DrawPoint ( float x, float y,
 //----------------------------------------------------------------//
 void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_DrawTriangleFill ( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2 ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 
 	gfxMgr.BeginPrim ( ZGL_PRIM_TRIANGLES, 3 );
 	
@@ -73,11 +73,11 @@ void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_DrawTriangleFill ( const ZLVe
 //----------------------------------------------------------------//
 void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_SetPenColor ( u32 color ) {
 
-	MOAIGfxMgr::Get ().SetPenColor ( color );
+	MOAIGfxMgrGL::Get ().SetPenColor ( color );
 }
 
 //----------------------------------------------------------------//
 void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_SetPenWidth ( float width ) {
 
-	MOAIGfxMgr::Get ().SetPenWidth ( width );
+	MOAIGfxMgrGL::Get ().SetPenWidth ( width );
 }

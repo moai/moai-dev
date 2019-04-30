@@ -175,7 +175,7 @@ void MOAICollisionDeck::MOAIDeck_Draw ( ZLIndex idx ) {
 //
 //		if ( !this->LoadGfxState ( materials, this->mMaterialIDs [ itemIdx ], idx, MOAIShaderMgr::DECK2D_SHADER )) return;
 //
-//		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+//		MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 //		MOAIQuadBrush::BindVertexFormat ();
 //		
 //		gfxState.SetVertexTransform ( ZLGfxMgrGL::MODEL_TO_CLIP_MTX );

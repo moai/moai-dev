@@ -13,11 +13,11 @@ class MOAIPvrMipLevelInfo;
 // MOAIImageFormatPvr
 //================================================================//
 class MOAIImageFormatPvr :
-	public MOAITextureFormat {
+	public ZLTextureFormat {
 private:
 
 	//----------------------------------------------------------------//
-	bool			Decompress					( MOAIPvrHeader& header, const MOAIPvrMipLevelInfo& info, MOAIImage& image, ZLStream& stream );
+	bool			Decompress					( MOAIPvrHeader& header, const MOAIPvrMipLevelInfo& info, ZLImage& image, ZLStream& stream );
 	static bool		Decompress					( MOAIPvrHeader& header, const MOAIPvrMipLevelInfo& info, void* buffer, size_t bufferSize, ZLStream& stream );
 	static bool		Decompress					( MOAIPvrHeader& header, const MOAIPvrMipLevelInfo& info, void* buffer, size_t bufferSize, const void* srcBuffer, size_t srcBufferSize );
 
@@ -25,13 +25,13 @@ public:
 
 	//----------------------------------------------------------------//
 	bool			CheckHeader					( const void* buffer );
-	bool			CreateTexture				( MOAITextureBase& texture, const void* data, size_t size );
+	bool			CreateTexture				( ZLTextureBase& texture, const void* data, size_t size );
 	size_t			GetHeaderSize				();
-	bool			GetTextureInfo				( ZLStream& stream, MOAITextureInfo& info );
+	bool			GetTextureInfo				( ZLStream& stream, ZLTextureInfo& info );
 					MOAIImageFormatPvr			();
 					~MOAIImageFormatPvr			();
-	bool			ReadImage					( MOAIImage& image, ZLStream& stream, u32 transform );
-	bool			WriteImage					( const MOAIImage& image, ZLStream& stream );
+	bool			ReadImage					( ZLImage& image, ZLStream& stream, u32 transform );
+	bool			WriteImage					( const ZLImage& image, ZLStream& stream );
 };
 
 #endif

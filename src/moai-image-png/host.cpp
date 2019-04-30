@@ -11,5 +11,5 @@
 //----------------------------------------------------------------//
 void AKUImagePngContextInitialize () {
 
-	MOAIImageFormatMgr::Get().RegisterFormat < MOAIImageFormatPng >( "png" );
+	ZLImageFormatMgr::Get().RegisterFormat < MOAIImageFormatPng >( "png" );
 }

@@ -105,7 +105,7 @@
 //----------------------------------------------------------------//
 void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 
 	ZLVec3D offset	= ZLVec3D::ORIGIN;
 	ZLVec3D scale	= ZLVec3D::AXIS;
@@ -159,7 +159,7 @@ void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoo
 //----------------------------------------------------------------//
 void MOAIGraphicsGridProp::GetGridFrameInView ( const ZLAffine3D& worldToLocalMtx, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 
-	const ZLFrustum& frustum = MOAIGfxMgr::Get ().GetViewVolume ();
+	const ZLFrustum& frustum = MOAIGfxMgrGL::Get ().GetViewVolume ();
 	
 	ZLRect viewRect;
 	//if ( frustum.GetXYSectRect ( this->GetWorldToLocalMtx (), viewRect )) {

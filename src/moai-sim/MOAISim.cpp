@@ -229,7 +229,7 @@ int MOAISim::_getMemoryUsage ( lua_State* L ) {
 	lua_pushnumber ( L, luabytes / divisor  );
 	lua_setfield ( L, -2, "_luagc_count" );
 	
-	count = MOAIGfxMgr::Get ().GetTextureMemoryUsage ();
+	count = MOAIGfxMgrGL::Get ().GetTextureMemoryUsage ();
 	lua_pushnumber ( L, count / divisor );
 	lua_setfield ( L, -2, "texture" );
 	total += count;
@@ -286,7 +286,7 @@ int MOAISim::_getMemoryUsage ( lua_State* L ) {
 int MOAISim::_getMemoryUsagePlain ( lua_State *L ) {
 	
 	size_t lua = MOAILuaRuntime::Get().GetMemoryUsage ();
-	size_t tex = MOAIGfxMgr::Get ().GetTextureMemoryUsage ();
+	size_t tex = MOAIGfxMgrGL::Get ().GetTextureMemoryUsage ();
 	
 	lua_pushnumber ( L, ( lua_Number )lua );
 	lua_pushnumber ( L, ( lua_Number )tex );
@@ -372,6 +372,8 @@ int MOAISim::_hideCursor ( lua_State* L ) {
 */
 int MOAISim::_openWindow ( lua_State* L ) {
 	
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
+	
 	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "SNN" )) return 0;
 	
@@ -381,7 +383,7 @@ int MOAISim::_openWindow ( lua_State* L ) {
 
 	OpenWindowFunc openWindow = MOAISim::Get ().GetOpenWindowFunc ();
 	if ( openWindow ) {
-		MOAIGfxMgr::Get ().SetBufferSize ( width, height );
+		MOAIGfxMgrGL::Get ().SetBufferSize ( width, height );
 		openWindow ( title, width, height );
 	}
 

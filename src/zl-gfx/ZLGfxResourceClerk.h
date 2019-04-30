@@ -4,7 +4,7 @@
 #ifndef ZLGFXRESOURCECLERK_H
 #define	ZLGFXRESOURCECLERK_H
 
-#include <zl-gfx/ZLAbstractGfxMgr.h>
+#include <zl-gfx/ZLAbstractGfxMgrGL.h>
 #include <zl-gfx/ZLGfxHandle.h>
 
 class ZLAbstractGfxResource;
@@ -16,7 +16,7 @@ class ZLGfxMgrGL;
 // ZLGfxResourceClerk
 //================================================================//
 class ZLGfxResourceClerk :
-	virtual public ZLAbstractGfxMgr {
+	virtual public ZLAbstractGfxMgrGL {
 protected:
 	
 	typedef ZLLeanList < ZLAbstractGfxResource* >::Iterator ResourceIt;

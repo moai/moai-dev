@@ -210,10 +210,10 @@ bool MOAIImageFormatPvr::CheckHeader ( const void* buffer ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatPvr::CreateTexture ( MOAITextureBase& texture, const void* data, size_t size ) {
+bool MOAIImageFormatPvr::CreateTexture ( ZLTextureBase& texture, const void* data, size_t size ) {
 
-	if ( !MOAIGfxMgr::Get ().GetHasContext ()) return false;
-	MOAIGfxMgr::Get ().ClearErrors ();
+	if ( !MOAIGfxMgrGL::Get ().GetHasContext ()) return false;
+	MOAIGfxMgrGL::Get ().ClearErrors ();
 
 	MOAIPvrHeader* header = MOAIPvrHeader::GetHeader ( data, size );
 	if ( !header ) return false;
@@ -297,7 +297,7 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAITextureBase& texture, const void* d
 			return false;
 	}
 	
-	ZLGfx& gfx = MOAIGfxMgr::Get ().GetDrawingAPI ();
+	ZLGfx& gfx = MOAIGfxMgrGL::Get ().GetDrawingAPI ();
 
 	ZLGfxHandle glTexID = gfx.CreateTexture ();
 	//if ( glTexID ) { // TODO: error checking
@@ -343,7 +343,7 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAITextureBase& texture, const void* d
 				gfx.TexImage2D ( level, internalFormat, width, height, internalFormat, pixelType, buffer.GetSharedConstBuffer ());
 			}
 			
-			if ( MOAIGfxMgr::Get ().LogErrors ()) {
+			if ( MOAIGfxMgrGL::Get ().LogErrors ()) {
 				this->CleanupTexture ( texture );
 				return false;
 			}
@@ -360,7 +360,7 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAITextureBase& texture, const void* d
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatPvr::Decompress ( MOAIPvrHeader& header, const MOAIPvrMipLevelInfo& info, MOAIImage& image, ZLStream& stream ) {
+bool MOAIImageFormatPvr::Decompress ( MOAIPvrHeader& header, const MOAIPvrMipLevelInfo& info, ZLImage& image, ZLStream& stream ) {
 	
 	this->SetDimensions ( image, info.mWidth, info.mHeight, 0 );
 
@@ -403,7 +403,7 @@ bool MOAIImageFormatPvr::Decompress ( MOAIPvrHeader& header, const MOAIPvrMipLev
 			return false;
 	}
 
-	this->SetPixelFormat ( image, MOAIImage::TRUECOLOR );
+	this->SetPixelFormat ( image, ZLImage::TRUECOLOR );
 	this->Alloc ( image );
 	
 	if ( !MOAIImageFormatPvr::Decompress ( header, info, this->GetBitmapMutable ( image ), image.GetBitmapSize (), stream )) {
@@ -472,7 +472,7 @@ size_t MOAIImageFormatPvr::GetHeaderSize () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatPvr::GetTextureInfo ( ZLStream& stream, MOAITextureInfo& info ) {
+bool MOAIImageFormatPvr::GetTextureInfo ( ZLStream& stream, ZLTextureInfo& info ) {
 	
 	MOAIPvrHeader header;
 	if ( header.Load ( stream )) {
@@ -489,7 +489,7 @@ bool MOAIImageFormatPvr::GetTextureInfo ( ZLStream& stream, MOAITextureInfo& inf
 //----------------------------------------------------------------//
 MOAIImageFormatPvr::MOAIImageFormatPvr () {
 
-	RTTI_SINGLE ( MOAITextureFormat );
+	RTTI_SINGLE ( ZLTextureFormat );
 }
 
 //----------------------------------------------------------------//
@@ -497,7 +497,7 @@ MOAIImageFormatPvr::~MOAIImageFormatPvr () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatPvr::ReadImage ( MOAIImage& image, ZLStream& stream, u32 transform ) {
+bool MOAIImageFormatPvr::ReadImage ( ZLImage& image, ZLStream& stream, u32 transform ) {
 
 	// Read the file header
 	MOAIPvrHeader header;
@@ -519,7 +519,7 @@ bool MOAIImageFormatPvr::ReadImage ( MOAIImage& image, ZLStream& stream, u32 tra
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatPvr::WriteImage ( const MOAIImage& image, ZLStream& stream ) {
+bool MOAIImageFormatPvr::WriteImage ( const ZLImage& image, ZLStream& stream ) {
 	UNUSED ( image );
 	UNUSED ( stream );
 	
