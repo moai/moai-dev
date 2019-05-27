@@ -4,7 +4,7 @@
 #ifndef	MOAIMATERIALBATCHHOLDER_H
 #define	MOAIMATERIALBATCHHOLDER_H
 
-#include <moai-sim/MOAIMaterialBatch.h>
+#include <moai-gfx/MOAIMaterialBatch.h>
 
 class MOAIImage;
 class MOAIMaterial;

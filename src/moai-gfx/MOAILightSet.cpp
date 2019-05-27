@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAILightSet.h>
+#include <moai-gfx/MOAILightSet.h>
 
 //================================================================//
 // MOAILightSet

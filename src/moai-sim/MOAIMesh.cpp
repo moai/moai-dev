@@ -6,7 +6,6 @@
 #include <tesselator.h>
 
 #include <moai-sim/MOAIGrid.h>
-#include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIMesh.h>
 #include <moai-sim/MOAIMeshSparseQuadTree.h>
 #include <moai-sim/MOAIMeshTernaryTree.h>

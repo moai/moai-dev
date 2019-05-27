@@ -65,15 +65,7 @@
 #include <moai-sim/MOAIKeyCodeEnum.h>
 #include <moai-sim/MOAIKeyboardSensor.h>
 #include <moai-sim/MOAILayoutFrame.h>
-#include <moai-sim/MOAILight.h>
-#include <moai-sim/MOAILightFormat.h>
 #include <moai-sim/MOAILocationSensor.h>
-#include <moai-sim/MOAIMaterial.h>
-#include <moai-sim/MOAIMaterialBase.h>
-#include <moai-sim/MOAIMaterialBatch.h>
-#include <moai-sim/MOAIMaterialBatchHolder.h>
-#include <moai-sim/MOAIMaterialHolder.h>
-#include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIMatrix.h>
 #include <moai-sim/MOAIMesh.h>
 #include <moai-sim/MOAIMeshPartition.h>

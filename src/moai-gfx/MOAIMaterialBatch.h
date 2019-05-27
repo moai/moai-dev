@@ -4,7 +4,7 @@
 #ifndef	MOAIMATERIALBATCH_H
 #define	MOAIMATERIALBATCH_H
 
-#include <moai-sim/MOAIMaterial.h>
+#include <moai-gfx/MOAIMaterial.h>
 
 class MOAIImage;
 class MOAIShader;

@@ -15,6 +15,15 @@
 #include <moai-gfx/MOAIGfxResource.h>
 #include <moai-gfx/MOAIImageTexture.h>
 #include <moai-gfx/MOAIIndexBuffer.h>
+#include <moai-gfx/MOAILight.h>
+#include <moai-gfx/MOAILightFormat.h>
+#include <moai-gfx/MOAILightSet.h>
+#include <moai-gfx/MOAIMaterial.h>
+#include <moai-gfx/MOAIMaterialBase.h>
+#include <moai-gfx/MOAIMaterialBatch.h>
+#include <moai-gfx/MOAIMaterialBatchHolder.h>
+#include <moai-gfx/MOAIMaterialHolder.h>
+#include <moai-gfx/MOAIMaterialMgr.h>
 #include <moai-gfx/MOAIRenderMgr.h>
 #include <moai-gfx/MOAIShader.h>
 #include <moai-gfx/MOAIShaderMgr.h>

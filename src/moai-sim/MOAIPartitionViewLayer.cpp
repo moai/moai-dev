@@ -5,7 +5,6 @@
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIPartitionViewLayer.h>
-#include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIPartitionResultMgr.h>

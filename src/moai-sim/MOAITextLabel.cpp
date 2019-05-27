@@ -9,7 +9,6 @@
 #include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIFont.h>
-#include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAITextLayoutRules.h>

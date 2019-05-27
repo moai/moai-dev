@@ -4,7 +4,7 @@
 #ifndef	MOAIMATERIAL_H
 #define	MOAIMATERIAL_H
 
-#include <moai-sim/MOAIMaterialBase.h>
+#include <moai-gfx/MOAIMaterialBase.h>
 
 class MOAILight;
 class MOAITextureBase;

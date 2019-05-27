@@ -5,7 +5,6 @@
 #define	MOAISTRETCHDECK_H
 
 #include <moai-sim/MOAIDeck.h>
-#include <moai-sim/MOAIMaterialBatchHolder.h>
 
 //================================================================//
 // MOAIStretchDeck

@@ -4,9 +4,11 @@
 #ifndef	MOAILIGHT_H
 #define	MOAILIGHT_H
 
+#include <moai-gfx/MOAIShaderUniformSchemaBase.h>
+
 class MOAILightFormat;
 class MOAIShader;
-class MOAITexture;
+class MOAITextureBase;
 
 //================================================================//
 // MOAILight
@@ -18,7 +20,7 @@ private:
 
 	MOAILuaSharedPtr < MOAILightFormat >	mFormat;
 	ZLLeanArray < u8 >						mBuffer;
-	ZLLeanArray < MOAITexture* >			mTextures;
+	ZLLeanArray < MOAITextureBase* >		mTextures;
 
 	//----------------------------------------------------------------//
 	static int			_getFormat					( lua_State* L );

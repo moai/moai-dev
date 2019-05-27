@@ -3,7 +3,6 @@
 
 #include "pch.h"
 
-#include <moai-sim/MOAIMaterialBatch.h>
 #include <moai-sim/MOAIPartitionHull.h>
 
 SUPPRESS_EMPTY_FILE_WARNING

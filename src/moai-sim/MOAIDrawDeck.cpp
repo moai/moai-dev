@@ -5,7 +5,6 @@
 #include <moai-sim/MOAIDrawDeck.h>
 #include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIGrid.h>
-#include <moai-sim/MOAIMaterialMgr.h>
 #include <moai-sim/MOAISurfaceSampler2D.h>
 #include <moai-sim/MOAITransform.h>
 

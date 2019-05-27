@@ -5,7 +5,6 @@
 #define	MOAISPRITEDECK2D_H
 
 #include <moai-sim/MOAIDeck.h>
-#include <moai-sim/MOAIMaterialBatchHolder.h>
 #include <moai-sim/MOAIQuadBrush.h>
 
 //================================================================//

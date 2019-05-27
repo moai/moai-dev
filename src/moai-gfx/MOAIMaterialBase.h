@@ -4,6 +4,9 @@
 #ifndef	MOAIMATERIALBASE_H
 #define	MOAIMATERIALBASE_H
 
+class MOAIShader;
+class MOAITextureBase;
+
 //================================================================//
 // MOAIMaterialBase
 //================================================================//

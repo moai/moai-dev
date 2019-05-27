@@ -5,7 +5,6 @@
 #define	MOAISTRETCHPATCH2D_H
 
 #include <moai-sim/MOAIStretchDeck.h>
-#include <moai-sim/MOAIMaterialBatchHolder.h>
 
 //================================================================//
 // MOAIStretchPatchSpan

@@ -4,7 +4,7 @@
 #ifndef	MOAIMATERIALHOLDER_H
 #define	MOAIMATERIALHOLDER_H
 
-#include <moai-sim/MOAIMaterial.h>
+#include <moai-gfx/MOAIMaterial.h>
 
 //================================================================//
 // MOAIMaterialHolder

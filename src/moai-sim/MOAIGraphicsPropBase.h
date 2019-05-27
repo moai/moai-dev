@@ -6,7 +6,6 @@
 
 #include <moai-sim/MOAIAbstractProp.h>
 #include <moai-sim/MOAIColor.h>
-#include <moai-sim/MOAIMaterialBatchHolder.h>
 #include <moai-sim/MOAITransform.h>
 
 class MOAIScissorRect;

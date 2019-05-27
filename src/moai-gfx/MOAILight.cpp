@@ -2,8 +2,10 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAILight.h>
-#include <moai-sim/MOAILightFormat.h>
+#include <moai-gfx/MOAIGfxMgrGL.h>
+#include <moai-gfx/MOAILight.h>
+#include <moai-gfx/MOAILightFormat.h>
+#include <moai-gfx/MOAITextureBase.h>
 
 //================================================================//
 // local

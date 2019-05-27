@@ -5,7 +5,6 @@
 #define	MOAIMESH_H
 
 #include <moai-sim/MOAIDeck.h>
-#include <moai-sim/MOAIMaterialBatchHolder.h>
 
 class MOAIIndexBuffer;
 class MOAIMesh;

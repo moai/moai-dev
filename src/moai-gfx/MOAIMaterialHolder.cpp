@@ -3,7 +3,10 @@
 
 #include "pch.h"
 
-#include <moai-sim/MOAIMaterialHolder.h>
+#include <moai-gfx/MOAIMaterialHolder.h>
+#include <moai-gfx/MOAIShader.h>
+#include <moai-gfx/MOAITexture.h>
+#include <moai-gfx/MOAITextureBase.h>
 
 //================================================================//
 // lua

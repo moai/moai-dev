@@ -3,8 +3,8 @@
 
 #include "pch.h"
 
-#include <moai-sim/MOAIMaterialBatch.h>
-#include <moai-sim/MOAIMaterialBatchHolder.h>
+#include <moai-gfx/MOAIMaterialBatch.h>
+#include <moai-gfx/MOAIMaterialBatchHolder.h>
 
 
 //================================================================//
