@@ -4,6 +4,8 @@
 #ifndef MOAINODEMGR_H
 #define MOAINODEMGR_H
 
+#include <moai-core/MOAILua.h>
+
 class MOAINode;
 
 //================================================================//

@@ -4,8 +4,6 @@
 #ifndef	MOAICOLOR_H
 #define	MOAICOLOR_H
 
-#include <moai-sim/MOAINode.h>
-
 class MOAIDeck;
 class MOAIPartitionViewLayer;
 

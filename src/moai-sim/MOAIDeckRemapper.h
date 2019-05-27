@@ -5,7 +5,6 @@
 #define	MOAIDECKREMAPPER_H
 
 #include <moai-sim/MOAIDeckProxy.h>
-#include <moai-sim/MOAINode.h>
 
 //================================================================//
 // MOAIDeckRemapper

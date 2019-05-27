@@ -12,7 +12,6 @@
 #define MOAISTRING_MOAIBox2DWorld_IsLocked				"BOX2D ERROR: Attempt to perform illegal operation during collision update\n"
 #define MOAISTRING_MOAIGfxDevice_OpenGLError_S			"OPENGL ERROR: %s\n"
 #define MOAISTRING_MOAIGfxResource_MissingDevice		"Unable to bind graphics resource - missing graphics device\n"
-#define MOAISTRING_MOAINode_AttributeNotFound			"No such attribute\n"
 #define MOAISTRING_MOAIShader_ShaderInfoLog_S			"%s\n"
 #define MOAISTRING_MOAITexture_MemoryUse_SDFS			"TEXTURE: '%s' %10luk = %6.2fMB < %s\n"
 #define MOAISTRING_MOAITexture_NoFramebuffer			"TEXTURE: OpenGL framebuffer object is unsupported on this device\n"

@@ -3,8 +3,8 @@
 
 #include "pch.h"
 
-#include <moai-sim/MOAINode.h>
-#include <moai-sim/MOAINodeMgr.h>
+#include <moai-core/MOAINode.h>
+#include <moai-core/MOAINodeMgr.h>
 
 //================================================================//
 // local

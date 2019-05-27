@@ -4,8 +4,6 @@
 #ifndef	MOAICAMERAANCHOR2D_H
 #define	MOAICAMERAANCHOR2D_H
 
-#include <moai-sim/MOAINode.h>
-
 //================================================================//
 // MOAICameraAnchor2D
 //================================================================//

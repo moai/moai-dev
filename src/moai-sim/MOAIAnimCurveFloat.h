@@ -5,7 +5,6 @@
 #define	MOAIANIMCURVE_H
 
 #include <moai-sim/MOAIAnimCurve.h>
-#include <moai-sim/MOAINode.h>
 
 //================================================================//
 // MOAIAnimCurveFloat

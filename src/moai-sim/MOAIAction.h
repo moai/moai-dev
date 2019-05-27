@@ -5,7 +5,6 @@
 #define	MOAIACTION_H
 
 #include <moai-sim/MOAIBlocker.h>
-#include <moai-sim/MOAINode.h>
 
 class MOAIAction;
 class MOAIActionTree;

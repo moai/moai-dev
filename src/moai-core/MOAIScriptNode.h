@@ -4,8 +4,7 @@
 #ifndef	MOAISCRIPTNODE_H
 #define	MOAISCRIPTNODE_H
 
-#include <moai-sim/MOAINode.h>
-
+#include <moai-core/MOAINode.h>
 
 //================================================================//
 // MOAIScriptNode

@@ -4,8 +4,6 @@
 #ifndef	MOAITEXTSTYLE_H
 #define	MOAITEXTSTYLE_H
 
-#include <moai-sim/MOAINode.h>
-
 class MOAIFont;
 class MOAIShader;
 

@@ -5,7 +5,6 @@
 #define	MOAITIMER_H
 
 #include <moai-sim/MOAIAction.h>
-#include <moai-sim/MOAINode.h>
 
 class MOAIAnimCurveFloat;
 

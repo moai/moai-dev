@@ -4,8 +4,6 @@
 #ifndef	MOAIABSTRACTPARENTTRANSFORM_H
 #define	MOAIABSTRACTPARENTTRANSFORM_H
 
-#include <moai-sim/MOAINode.h>
-
 //================================================================//
 // MOAIAbstractBaseTransform
 //================================================================//

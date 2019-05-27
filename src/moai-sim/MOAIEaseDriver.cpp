@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIEaseDriver.h>
-#include <moai-sim/MOAINode.h>
 
 //================================================================//
 // local

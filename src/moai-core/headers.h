@@ -17,6 +17,10 @@
 #include <moai-core/MOAIDeserializer.h>
 #include <moai-core/MOAISerializer.h>
 
+#include <moai-core/MOAINode.h>
+#include <moai-core/MOAINodeMgr.h>
+#include <moai-core/MOAIScriptNode.h>
+
 #include <moai-core/MOAIEnvironment.h>
 #include <moai-core/MOAIEventSource.h>
 #include <moai-core/MOAITestMgr.h>

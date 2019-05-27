@@ -82,8 +82,6 @@
 #include <moai-sim/MOAIMetaTileDeck2D.h>
 #include <moai-sim/MOAIMotionSensor.h>
 #include <moai-sim/MOAIMoveConstraint2D.h>
-#include <moai-sim/MOAINode.h>
-#include <moai-sim/MOAINodeMgr.h>
 #include <moai-sim/MOAIOverlap.h>
 #include <moai-sim/MOAIOverlapResolver.h>
 #include <moai-sim/MOAIParticle.h>
@@ -115,7 +113,6 @@
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAIScissorRect.h>
-#include <moai-sim/MOAIScriptNode.h>
 #include <moai-sim/MOAISelectionMesh.h>
 #include <moai-sim/MOAISensor.h>
 #include <moai-sim/MOAIShaderNode.h>

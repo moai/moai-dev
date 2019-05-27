@@ -6,7 +6,6 @@
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIFont.h>
-#include <moai-sim/MOAINodeMgr.h>
 #include <moai-sim/MOAITextStyle.h>
 
 //================================================================//

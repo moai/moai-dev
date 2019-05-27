@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIDebugLines.h>
-#include <moai-sim/MOAINodeMgr.h>
 #include <moai-sim/MOAISim.h>
 
 #if defined(_WIN32)

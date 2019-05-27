@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIScriptNode.h>
+#include <moai-core/MOAIScriptNode.h>
 
 //================================================================//
 // MOAIMemberTableAttr
@@ -17,7 +17,7 @@ protected:
 	MOAIMemberTableAttr () :
 		mSource ( 0 ),
 		mFieldName ( 0 ) {
-		}
+	}
 };
 
 //================================================================//

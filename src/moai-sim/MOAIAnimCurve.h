@@ -4,8 +4,6 @@
 #ifndef	MOAIAnimCurve_H
 #define	MOAIAnimCurve_H
 
-#include <moai-sim/MOAINode.h>
-
 //================================================================//
 // MOAIAnimKey
 //================================================================//

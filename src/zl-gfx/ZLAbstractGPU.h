@@ -32,7 +32,7 @@ protected:
 	virtual ZLShader*			ZLAbstractGPU_GetCurrentShader			() = 0;
 	virtual ZLVertexFormat*		ZLAbstractGPU_GetCurrentVtxFormat		() = 0;
 	virtual ZLFrameBuffer*		ZLAbstractGPU_GetDefaultFrameBuffer		() = 0;
-	virtual ZLTextureBase*			ZLAbstractGPU_GetDefaultTexture			() = 0;
+	virtual ZLTextureBase*		ZLAbstractGPU_GetDefaultTexture			() = 0;
 	virtual bool				ZLAbstractGPU_GetDepthMask				() const = 0;
 	virtual float				ZLAbstractGPU_GetViewHeight				() const = 0;
 	virtual ZLRect				ZLAbstractGPU_GetViewRect				() const = 0;
@@ -75,7 +75,7 @@ public:
 	ZLShader*			GetCurrentShader			();
 	ZLVertexFormat*		GetCurrentVtxFormat			();
 	ZLFrameBuffer*		GetDefaultFrameBuffer		();
-	ZLTextureBase*			GetDefaultTexture			();
+	ZLTextureBase*		GetDefaultTexture			();
 	bool				GetDepthMask				() const;
 	float				GetViewHeight				() const;
 	ZLRect				GetViewRect					() const;

@@ -5,7 +5,6 @@
 #define	MOAIANIMCURVEINDEX_H
 
 #include <moai-sim/MOAIAnimCurve.h>
-#include <moai-sim/MOAINode.h>
 
 //================================================================//
 // MOAIAnimCurveIndex

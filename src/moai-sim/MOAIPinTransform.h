@@ -5,7 +5,6 @@
 #define	MOAIPINTRANSFORM_H
 
 #include <moai-sim/MOAITransform.h>
-#include <moai-sim/MOAINode.h>
 
 class MOAIAbstractViewLayer;
 
