@@ -7,8 +7,8 @@
 #include <moai-gfx/MOAIMaterial.h>
 
 class MOAIImage;
-class MOAIShader;
-class MOAITextureBase;
+class MOAIShaderGL;
+class MOAITextureBaseGL;
 
 //================================================================//
 // MOAIMaterialBatch
@@ -109,14 +109,14 @@ public:
 
 	void				SetShader					( ZLIndex idx );
 	void				SetShader					( ZLIndex idx, u32 shaderID );
-	void				SetShader					( ZLIndex idx, MOAIShader* shader );
-	MOAIShader*			SetShader					( MOAILuaState& state, int idx );
+	void				SetShader					( ZLIndex idx, ZLAbstractShader* shader );
+	ZLAbstractShader*	SetShader					( MOAILuaState& state, int idx );
 
 	void				SetTexture					( ZLIndex idx );
-	void				SetTexture					( ZLIndex idx, MOAITextureBase* texture );
+	void				SetTexture					( ZLIndex idx, ZLAbstractTexture* texture );
 	void				SetTexture					( ZLIndex idx, u32 name );
-	void				SetTexture					( ZLIndex idx, u32 name, MOAITextureBase* texture );
-	MOAITextureBase*	SetTexture					( MOAILuaState& state, int idx );
+	void				SetTexture					( ZLIndex idx, u32 name, ZLAbstractTexture* texture );
+	ZLAbstractTexture*	SetTexture					( MOAILuaState& state, int idx );
 
 	size_t				Size						();
 

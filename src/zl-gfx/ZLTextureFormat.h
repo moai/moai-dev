@@ -4,10 +4,10 @@
 #ifndef	ZLTEXTUREFORMAT_H
 #define	ZLTEXTUREFORMAT_H
 
-#include <zl-gfx/ZLGfxHandle.h>
-#include <zl-gfx/ZLTextureBase.h>
+#include <zl-gfx/ZLGfxHandleGL.h>
+#include <zl-gfx/ZLTextureBaseGL.h>
 
-class ZLTexture;
+class ZLTextureGL;
 
 //================================================================//
 // ZLTextureInfo
@@ -27,13 +27,13 @@ class ZLTextureFormat :
 protected:
 
 	//----------------------------------------------------------------//
-	void				CleanupTexture				( ZLTextureBase& texture );
-	void				SetGLTexture				( ZLTextureBase& texture, const ZLGfxHandle& glTexture, int internalFormat, int pixelType, size_t textureSize );
+	void				CleanupTexture				( ZLTextureBaseGL& texture );
+	void				SetGLTexture				( ZLTextureBaseGL& texture, const ZLGfxHandleGL& glTexture, int internalFormat, int pixelType, size_t textureSize );
 
 public:
 
 	//----------------------------------------------------------------//
-	virtual bool		CreateTexture				( ZLTextureBase& texture, const void* data, size_t size ) = 0;
+	virtual bool		CreateTexture				( ZLTextureBaseGL& texture, const void* data, size_t size ) = 0;
 	virtual bool		GetTextureInfo				( ZLStream& stream, ZLTextureInfo& info ) = 0;
 						ZLTextureFormat				();
 	virtual				~ZLTextureFormat			();

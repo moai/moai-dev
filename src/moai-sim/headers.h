@@ -107,7 +107,6 @@
 #include <moai-sim/MOAIScissorRect.h>
 #include <moai-sim/MOAISelectionMesh.h>
 #include <moai-sim/MOAISensor.h>
-#include <moai-sim/MOAIShaderNode.h>
 #include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAISpanList.h>
 #include <moai-sim/MOAISpriteDeck2D.h>

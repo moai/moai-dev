@@ -61,7 +61,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	MOAIImage*			GetGlyphImage				( MOAIGlyph& glyph );
-	MOAITextureBase*	GetGlyphTexture				( MOAIGlyph& glyph );
+	MOAITextureBaseGL*	GetGlyphTexture				( MOAIGlyph& glyph );
 	MOAIImage*			GetImage					();
 	bool				IsDynamic					();
 						MOAIDynamicGlyphCache		();

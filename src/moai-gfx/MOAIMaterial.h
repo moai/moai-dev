@@ -7,7 +7,7 @@
 #include <moai-gfx/MOAIMaterialBase.h>
 
 class MOAILight;
-class MOAITextureBase;
+class MOAITextureBaseGL;
 
 #define MOAI_UNKNOWN_MATERIAL_GLOBAL 0x80000000
 
@@ -35,7 +35,7 @@ public:
 };
 
 //================================================================//
-// MOAILightSet
+// MOAIMaterial
 //================================================================//
 // TODO: doxygen
 class MOAIMaterial :
@@ -45,7 +45,7 @@ private:
 	friend class MOAIMaterialMgr;
 
 	MOAIMaterialNamedGlobal < MOAILight >*			mLights;
-	MOAIMaterialNamedGlobal < MOAITextureBase >*	mTextures;
+	MOAIMaterialNamedGlobal < ZLAbstractTexture >*	mTextures;
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
@@ -113,18 +113,18 @@ private:
 public:
 
 	//----------------------------------------------------------------//
-	void				Clear					();
-	MOAILight*			GetLight				( u32 name );
-	MOAITextureBase*	GetTexture				();
-	MOAITextureBase*	GetTexture				( u32 name );
-						MOAIMaterial			();
-	virtual				~MOAIMaterial			();
-	void				SetLight				( u32 name );
-	void				SetLight				( u32 name, MOAILight* light );
-	void				SetTexture				();
-	void				SetTexture				( MOAITextureBase* texture );
-	void				SetTexture				( u32 name );
-	void				SetTexture				( u32 name, MOAITextureBase* texture );
+	void					Clear					();
+	MOAILight*				GetLight				( u32 name );
+	ZLAbstractTexture*		GetTexture				();
+	ZLAbstractTexture*		GetTexture				( u32 name );
+							MOAIMaterial			();
+	virtual					~MOAIMaterial			();
+	void					SetLight				( u32 name );
+	void					SetLight				( u32 name, MOAILight* light );
+	void					SetTexture				();
+	void					SetTexture				( ZLAbstractTexture* texture );
+	void					SetTexture				( u32 name );
+	void					SetTexture				( u32 name, ZLAbstractTexture* texture );
 };
 
 #endif

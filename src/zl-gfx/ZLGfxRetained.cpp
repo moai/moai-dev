@@ -37,32 +37,32 @@ void ZLGfxRetained::ActiveTexture ( u32 textureUnit ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::AllocateResource ( ZLGfxResource& resource, u32 param ) {
+void ZLGfxRetained::AllocateResource ( ZLGfxResourceGL& resource, u32 param ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( ZLGFX_ALLOCATE_RESOURCE );
-	this->mStream->Write < ZLGfxResource* >( resource.RetainForWrite ());
+	this->mStream->Write < ZLGfxResourceGL* >( resource.RetainForWrite ());
 	this->mStream->Write < u32 >( param );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::AttachShader ( ZLGfxResource& program, ZLGfxResource& shader ) {
+void ZLGfxRetained::AttachShader ( ZLGfxResourceGL& program, ZLGfxResourceGL& shader ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( ZLGFX_ATTACH_SHADER );
-	this->mStream->Write < ZLGfxResource* >( program.RetainForWrite ());
-	this->mStream->Write < ZLGfxResource* >( shader.RetainForWrite ());
+	this->mStream->Write < ZLGfxResourceGL* >( program.RetainForWrite ());
+	this->mStream->Write < ZLGfxResourceGL* >( shader.RetainForWrite ());
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::BindAttribLocation ( ZLGfxResource& program, u32 index, cc8* name ) {
+void ZLGfxRetained::BindAttribLocation ( ZLGfxResourceGL& program, u32 index, cc8* name ) {
 	
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( ZLGFX_BIND_ATTRIB_LOCATION );
-	this->mStream->Write < ZLGfxResource* >( program.RetainForWrite ());
+	this->mStream->Write < ZLGfxResourceGL* >( program.RetainForWrite ());
 	this->mStream->Write < u32 >( index );
 	
 	size_t size = strlen ( name );
@@ -71,50 +71,50 @@ void ZLGfxRetained::BindAttribLocation ( ZLGfxResource& program, u32 index, cc8*
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::BindBuffer ( u32 target, ZLGfxResource& handle ) {
+void ZLGfxRetained::BindBuffer ( u32 target, ZLGfxResourceGL& handle ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( ZLGFX_BIND_BUFFER );
 	this->mStream->Write < u32 >( target );
-	this->mStream->Write < ZLGfxResource* >( handle.RetainForWrite ());
+	this->mStream->Write < ZLGfxResourceGL* >( handle.RetainForWrite ());
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::BindFramebuffer ( u32 target, ZLGfxResource& handle ) {
+void ZLGfxRetained::BindFramebuffer ( u32 target, ZLGfxResourceGL& handle ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( ZLGFX_BIND_FRAMEBUFFER );
 	this->mStream->Write < u32 >( target );
-	this->mStream->Write < ZLGfxResource* >( handle.RetainForWrite ());
+	this->mStream->Write < ZLGfxResourceGL* >( handle.RetainForWrite ());
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::BindRenderbuffer ( ZLGfxResource& handle ) {
+void ZLGfxRetained::BindRenderbuffer ( ZLGfxResourceGL& handle ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( ZLGFX_BIND_RENDERBUFFER );
-	this->mStream->Write < ZLGfxResource* >( handle.RetainForWrite ());
+	this->mStream->Write < ZLGfxResourceGL* >( handle.RetainForWrite ());
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::BindTexture ( ZLGfxResource& handle ) {
+void ZLGfxRetained::BindTexture ( ZLGfxResourceGL& handle ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( ZLGFX_BIND_TEXTURE );
-	this->mStream->Write < ZLGfxResource* >( handle.RetainForWrite ());
+	this->mStream->Write < ZLGfxResourceGL* >( handle.RetainForWrite ());
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::BindVertexArray ( ZLGfxResource& handle ) {
+void ZLGfxRetained::BindVertexArray ( ZLGfxResourceGL& handle ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( ZLGFX_BIND_VERTEX_ARRAY );
-	this->mStream->Write < ZLGfxResource* >( handle.RetainForWrite ());
+	this->mStream->Write < ZLGfxResourceGL* >( handle.RetainForWrite ());
 }
 
 //----------------------------------------------------------------//
@@ -221,12 +221,12 @@ void ZLGfxRetained::Comment ( cc8* comment ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::CompileShader ( ZLGfxResource& shader, bool log ) {
+void ZLGfxRetained::CompileShader ( ZLGfxResourceGL& shader, bool log ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( ZLGFX_COMPILE_SHADER );
-	this->mStream->Write < ZLGfxResource* >( shader.RetainForWrite ());
+	this->mStream->Write < ZLGfxResourceGL* >( shader.RetainForWrite ());
 	this->mStream->Write < bool >( log );
 }
 
@@ -256,12 +256,12 @@ void ZLGfxRetained::CullFace ( u32 mode ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::DeleteResource ( ZLGfxResource& resource ) {
+void ZLGfxRetained::DeleteResource ( ZLGfxResourceGL& resource ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( ZLGFX_DELETE_RESOURCE );
-	this->mStream->Write < ZLGfxResource* >( resource.RetainForWrite ());
+	this->mStream->Write < ZLGfxResourceGL* >( resource.RetainForWrite ());
 }
 
 //----------------------------------------------------------------//
@@ -341,7 +341,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			}
 			case ZLGFX_ALLOCATE_RESOURCE: {
 			
-				ZLGfxResource* resource		= this->mStream->Read < ZLGfxResource* >( 0 );
+				ZLGfxResourceGL* resource		= this->mStream->Read < ZLGfxResourceGL* >( 0 );
 				u32 param					= this->mStream->Read < u32 >( 0 );
 				
 				draw.AllocateResource ( *resource, param );
@@ -351,8 +351,8 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			}
 			case ZLGFX_ATTACH_SHADER: {
 			
-				ZLGfxResource* program = this->mStream->Read < ZLGfxResource* >( 0 );
-				ZLGfxResource* shader = this->mStream->Read < ZLGfxResource* >( 0 );
+				ZLGfxResourceGL* program = this->mStream->Read < ZLGfxResourceGL* >( 0 );
+				ZLGfxResourceGL* shader = this->mStream->Read < ZLGfxResourceGL* >( 0 );
 				
 				draw.AttachShader ( *program, *shader );
 				
@@ -362,7 +362,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			}
 			case ZLGFX_BIND_ATTRIB_LOCATION: {
 			
-				ZLGfxResource* program	= this->mStream->Read < ZLGfxResource* >( 0 );
+				ZLGfxResourceGL* program	= this->mStream->Read < ZLGfxResourceGL* >( 0 );
 				u32 index				= this->mStream->Read < u32 >( 0 );
 	
 				size_t size				= this->mStream->Read < size_t >( 0 );
@@ -379,7 +379,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			case ZLGFX_BIND_BUFFER: {
 			
 				u32 target				= this->mStream->Read < u32 >( 0 );
-				ZLGfxResource* buffer	= this->mStream->Read < ZLGfxResource* >( 0 );
+				ZLGfxResourceGL* buffer	= this->mStream->Read < ZLGfxResourceGL* >( 0 );
 			
 				draw.BindBuffer ( target, *buffer );
 				
@@ -389,7 +389,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			case ZLGFX_BIND_FRAMEBUFFER: {
 			
 				u32 target				= this->mStream->Read < u32 >( 0 );
-				ZLGfxResource* buffer	= this->mStream->Read < ZLGfxResource* >( 0 );
+				ZLGfxResourceGL* buffer	= this->mStream->Read < ZLGfxResourceGL* >( 0 );
 				
 				draw.BindFramebuffer ( target, *buffer );
 				
@@ -398,21 +398,21 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			}
 			case ZLGFX_BIND_RENDERBUFFER: {
 			
-				ZLGfxResource* buffer = this->mStream->Read < ZLGfxResource* >( 0 );
+				ZLGfxResourceGL* buffer = this->mStream->Read < ZLGfxResourceGL* >( 0 );
 				draw.BindRenderbuffer ( *buffer );
 				buffer->Release ();
 				break;
 			}
 			case ZLGFX_BIND_TEXTURE: {
 			
-				ZLGfxResource* texture = this->mStream->Read < ZLGfxResource* >( 0 );
+				ZLGfxResourceGL* texture = this->mStream->Read < ZLGfxResourceGL* >( 0 );
 				draw.BindTexture ( *texture );
 				texture->Release ();
 				break;
 			}
 			case ZLGFX_BIND_VERTEX_ARRAY: {
 			
-				ZLGfxResource* array = this->mStream->Read < ZLGfxResource* >( 0 );
+				ZLGfxResourceGL* array = this->mStream->Read < ZLGfxResourceGL* >( 0 );
 				draw.BindVertexArray ( *array );
 				array->Release ();
 				break;
@@ -508,7 +508,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			}
 			case ZLGFX_COMPILE_SHADER: {
 			
-				ZLGfxResource* shader	= this->mStream->Read < ZLGfxResource* >( 0 );
+				ZLGfxResourceGL* shader	= this->mStream->Read < ZLGfxResourceGL* >( 0 );
 				bool log				= this->mStream->Read < bool >( true );
 			
 				draw.CompileShader ( *shader, log );
@@ -538,7 +538,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			}
 			case ZLGFX_DELETE_RESOURCE: {
 				
-				ZLGfxResource* resource = this->mStream->Read < ZLGfxResource* >( 0 );
+				ZLGfxResourceGL* resource = this->mStream->Read < ZLGfxResourceGL* >( 0 );
 				draw.DeleteResource ( *resource );
 				resource->Release ();
 				break;
@@ -640,7 +640,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			
 				u32 target						= this->mStream->Read < u32 >( 0 );
 				u32 attachment					= this->mStream->Read < u32 >( 0 );
-				ZLGfxResource* renderbuffer		= this->mStream->Read < ZLGfxResource* >( 0 );
+				ZLGfxResourceGL* renderbuffer		= this->mStream->Read < ZLGfxResourceGL* >( 0 );
 				
 				draw.FramebufferRenderbuffer ( target, attachment, *renderbuffer );
 				
@@ -651,7 +651,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			
 				u32 target						= this->mStream->Read < u32 >( 0 );
 				u32 attachment					= this->mStream->Read < u32 >( 0 );
-				ZLGfxResource* texture			= this->mStream->Read < ZLGfxResource* >( 0 );
+				ZLGfxResourceGL* texture			= this->mStream->Read < ZLGfxResourceGL* >( 0 );
 				s32 level						= this->mStream->Read < s32 >( 0 );
 				
 				draw.FramebufferTexture2D ( target, attachment, *texture, level );
@@ -661,14 +661,14 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			}
 			case ZLGFX_GET_CURRENT_FRAMEBUFFER: {
 			
-				ZLGfxResource* framebuffer = this->mStream->Read < ZLGfxResource* >( 0 );
+				ZLGfxResourceGL* framebuffer = this->mStream->Read < ZLGfxResourceGL* >( 0 );
 				draw.GetCurrentFramebuffer ( *framebuffer );
 				framebuffer->Release ();
 				break;
 			}
 			case ZLGFX_GET_UNIFORM_LOCATION: {
 			
-				ZLGfxResource* program = this->mStream->Read < ZLGfxResource* >( 0 );
+				ZLGfxResourceGL* program = this->mStream->Read < ZLGfxResourceGL* >( 0 );
 				size_t size = this->mStream->Read < size_t >( 0 );
 				
 				char* name = ( char* )alloca ( size + 1 );
@@ -691,7 +691,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			}
 			case ZLGFX_LINK_PROGRAM: {
 			
-				ZLGfxResource* program	= this->mStream->Read < ZLGfxResource* >( 0 );
+				ZLGfxResourceGL* program	= this->mStream->Read < ZLGfxResourceGL* >( 0 );
 				bool log				= this->mStream->Read < bool >( true );
 			
 				draw.LinkProgram ( *program, log );
@@ -739,7 +739,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			}
 			case ZLGFX_SHADER_SOURCE: {
 			
-				ZLGfxResource* shader	= this->mStream->Read < ZLGfxResource* >( 0 );
+				ZLGfxResourceGL* shader	= this->mStream->Read < ZLGfxResourceGL* >( 0 );
 				size_t length			= this->mStream->Read < size_t >( 0 );
 				
 				char* source = ( char* )alloca ( length + 1 );
@@ -828,7 +828,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			}
 			case ZLGFX_USE_PROGRAM: {
 			
-				ZLGfxResource* program = this->mStream->Read < ZLGfxResource* >( 0 );
+				ZLGfxResourceGL* program = this->mStream->Read < ZLGfxResourceGL* >( 0 );
 				draw.UseProgram ( *program );
 				program->Release ();
 				break;
@@ -949,46 +949,46 @@ void ZLGfxRetained::Flush ( bool finish ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::FramebufferRenderbuffer ( u32 target, u32 attachment, ZLGfxResource& renderbuffer ) {
+void ZLGfxRetained::FramebufferRenderbuffer ( u32 target, u32 attachment, ZLGfxResourceGL& renderbuffer ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( ZLGFX_FRAMEBUFFER_RENDERBUFFER );
 	this->mStream->Write < u32 >( target );
 	this->mStream->Write < u32 >( attachment );
-	this->mStream->Write < ZLGfxResource* >( renderbuffer.RetainForWrite ());
+	this->mStream->Write < ZLGfxResourceGL* >( renderbuffer.RetainForWrite ());
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::FramebufferTexture2D ( u32 target, u32 attachment, ZLGfxResource& texture, s32 level ) {
+void ZLGfxRetained::FramebufferTexture2D ( u32 target, u32 attachment, ZLGfxResourceGL& texture, s32 level ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( ZLGFX_FRAMEBUFFER_TEXTURE_2D );
 	this->mStream->Write < u32 >( target );
 	this->mStream->Write < u32 >( attachment );
-	this->mStream->Write < ZLGfxResource* >( texture.RetainForWrite ());
+	this->mStream->Write < ZLGfxResourceGL* >( texture.RetainForWrite ());
 	this->mStream->Write < s32 >( level );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::GetCurrentFramebuffer ( ZLGfxResource& framebuffer ) {
+void ZLGfxRetained::GetCurrentFramebuffer ( ZLGfxResourceGL& framebuffer ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( ZLGFX_GET_CURRENT_FRAMEBUFFER );
-	this->mStream->Write < ZLGfxResource* >( framebuffer.RetainForWrite ());
+	this->mStream->Write < ZLGfxResourceGL* >( framebuffer.RetainForWrite ());
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::GetUniformLocation ( ZLGfxResource& program, cc8* uniformName, ZLGfxListener* listener, void* userdata ) {
+void ZLGfxRetained::GetUniformLocation ( ZLGfxResourceGL& program, cc8* uniformName, ZLGfxListener* listener, void* userdata ) {
 
 	assert ( this->mStream );
 
 	if ( listener ) {
 
 		this->mStream->Write < u32 >( ZLGFX_GET_UNIFORM_LOCATION );
-		this->mStream->Write < ZLGfxResource* >( program.RetainForWrite ());
+		this->mStream->Write < ZLGfxResourceGL* >( program.RetainForWrite ());
 		
 		size_t size = strlen ( uniformName );
 		this->mStream->Write < size_t >( size );
@@ -1020,12 +1020,12 @@ void ZLGfxRetained::LineWidth ( float width ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::LinkProgram ( ZLGfxResource& program, bool log ) {
+void ZLGfxRetained::LinkProgram ( ZLGfxResourceGL& program, bool log ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( ZLGFX_LINK_PROGRAM );
-	this->mStream->Write < ZLGfxResource* >( program.RetainForWrite ());
+	this->mStream->Write < ZLGfxResourceGL* >( program.RetainForWrite ());
 	this->mStream->Write < bool >( log );
 }
 
@@ -1167,12 +1167,12 @@ void ZLGfxRetained::Scissor ( s32 x, s32 y, u32 w, u32 h ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::ShaderSource ( ZLGfxResource& shader, cc8* source, size_t length ) {
+void ZLGfxRetained::ShaderSource ( ZLGfxResourceGL& shader, cc8* source, size_t length ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( ZLGFX_SHADER_SOURCE );
-	this->mStream->Write < ZLGfxResource* >( shader.RetainForWrite ());
+	this->mStream->Write < ZLGfxResourceGL* >( shader.RetainForWrite ());
 	this->mStream->Write < size_t >( length );
 	this->mStream->WriteBytes ( source, length );
 }
@@ -1259,12 +1259,12 @@ void ZLGfxRetained::UniformInt ( u32 location, u32 index, u32 width, u32 count, 
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::UseProgram ( ZLGfxResource& program ) {
+void ZLGfxRetained::UseProgram ( ZLGfxResourceGL& program ) {
 
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( ZLGFX_USE_PROGRAM );
-	this->mStream->Write < ZLGfxResource* >( program.RetainForWrite ());
+	this->mStream->Write < ZLGfxResourceGL* >( program.RetainForWrite ());
 }
 
 //----------------------------------------------------------------//

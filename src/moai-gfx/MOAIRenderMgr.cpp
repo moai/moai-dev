@@ -96,14 +96,14 @@ void MOAIRenderMgr::Render () {
 	gfxMgr.ResetDrawingAPIs ();
 	gfxMgr.Update ();
 
-	ZLFrameBuffer* frameBuffer = gfxMgr.GetDefaultFrameBuffer ();
+	ZLFrameBufferGL* frameBuffer = gfxMgr.GetDefaultFrameBuffer ();
 	assert ( frameBuffer );
 	frameBuffer->NeedsClear ( true );
 
 	// Measure performance
 	double startTime = ZLDeviceTime::GetTimeInSeconds ();
 	
-	ZLGfx* gfx = gfxMgr.SelectDrawingAPI ( ZLGfxPipelineClerk::DRAWING_PIPELINE );
+	ZLGfx* gfx = gfxMgr.SelectDrawingAPI ( ZLGfxPipelineClerkGL::DRAWING_PIPELINE );
 	if ( !gfx ) return;
 
 	ZGL_COMMENT ( *gfx, "RENDER MGR RENDER" );

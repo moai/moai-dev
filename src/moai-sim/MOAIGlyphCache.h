@@ -6,7 +6,7 @@
 
 class MOAIGlyph;
 class MOAIImage;
-class MOAITextureBase;
+class MOAITextureBaseGL;
 class MOAIFont;
 
 //================================================================//
@@ -41,7 +41,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	virtual MOAIImage*			GetGlyphImage			( MOAIGlyph& glyph ) = 0;
-	virtual MOAITextureBase*	GetGlyphTexture			( MOAIGlyph& glyph ) = 0;
+	virtual MOAITextureBaseGL*	GetGlyphTexture			( MOAIGlyph& glyph ) = 0;
 	virtual MOAIImage*			GetImage				() = 0;
 	virtual bool				IsDynamic				() = 0;
 								MOAIGlyphCache			();

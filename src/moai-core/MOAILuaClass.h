@@ -29,6 +29,10 @@ cc8* TypeName () const { return #type; }
 #define REGISTER_LUA_CLASS(type)	\
 type::RegisterLuaType ();
 
+#define REGISTER_LUA_CLASS_WITH_ALIAS(type, alias)	\
+type::RegisterLuaType ();							\
+MOAILuaRuntime::Get ().AliasGlobal ( #type, alias );
+
 //================================================================//
 // MOAILuaClass
 //================================================================//

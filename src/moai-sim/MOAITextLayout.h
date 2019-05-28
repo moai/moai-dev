@@ -9,7 +9,7 @@
 #include <moai-sim/MOAITextStyle.h>
 #include <moai-sim/MOAITextStyleParser.h>
 
-class MOAIShader;
+class MOAIShaderGL;
 class MOAITextStyledChar;
 
 //================================================================//
@@ -24,8 +24,8 @@ private:
 	
 	MOAIGlyph*				mGlyph;
 	MOAITextStyleState*		mStyle;
-	MOAITextureBase*		mTexture; // caching this here to avoid add'l virtual calls when drawing
-	MOAIShader*				mShader;
+	MOAITextureBaseGL*		mTexture; // caching this here to avoid add'l virtual calls when drawing
+	ZLAbstractShader*		mShader;
 	
 	u32			mIdx;		// index in original string
 	ZLVec2D		mPen;		// The pen x and y coordinates

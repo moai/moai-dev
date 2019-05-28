@@ -58,7 +58,7 @@ void SafeTesselator::CopyBoundaries ( const SafeTesselator& src ) {
 }
 
 //----------------------------------------------------------------//
-u32 SafeTesselator::GetTriangles ( MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream ) {
+u32 SafeTesselator::GetTriangles ( MOAIVertexFormatGL& format, ZLStream& vtxStream, ZLStream& idxStream ) {
 
 	size_t idxCursor = idxStream.GetCursor ();
 	size_t vtxCursor = vtxStream.GetCursor ();
@@ -94,7 +94,7 @@ u32 SafeTesselator::GetTriangles ( MOAIVertexFormat& format, ZLStream& vtxStream
 }
 
 //----------------------------------------------------------------//
-u32 SafeTesselator::GetTriangles ( MOAIVertexFormat& format, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes ) {
+u32 SafeTesselator::GetTriangles ( MOAIVertexFormatGL& format, MOAIVertexBufferGL& vtxBuffer, MOAIIndexBufferGL& idxBuffer, u32 idxSizeInBytes ) {
 
 	ZLMemStream idxStream;
 	ZLMemStream vtxStream;

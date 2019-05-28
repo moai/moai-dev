@@ -231,9 +231,9 @@ void MOAITextLayout::Draw ( u32 reveal ) {
 	if ( reveal ) {
 		
 		MOAIMaterialMgr& materialMgr = MOAIMaterialMgr::Get ();
-		MOAIShader* currentShader = materialMgr.GetShader ();
+		ZLAbstractShader* currentShader = materialMgr.GetShader ();
 		bool useSpriteShaders = ( currentShader == 0 );
-		MOAIShader* defaultShader = MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::FONT_SNAPPING_SHADER );
+		MOAIShaderGL* defaultShader = MOAIShaderMgrGL::Get ().GetShader ( MOAIShaderMgrGL::FONT_SNAPPING_SHADER );
 		
 		MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 		MOAIQuadBrush::BindVertexFormat ();
@@ -260,7 +260,7 @@ void MOAITextLayout::Draw ( u32 reveal ) {
 			
 			if ( useSpriteShaders ) {
 			
-				MOAIShader* spriteShader = sprite.mShader ? sprite.mShader : defaultShader;
+				ZLAbstractShader* spriteShader = sprite.mShader ? sprite.mShader : defaultShader;
 				if ( spriteShader != currentShader ) {
 					if ( !gfxMgr.SetShader ( spriteShader )) continue;
 					currentShader = spriteShader;
@@ -465,7 +465,7 @@ void MOAITextLayout::PushSprite ( const MOAITextStyledChar& styledChar, float x,
 	
 	textSprite.mRGBA		= style->mColor;
 	textSprite.mTexture		= style->mFont->GetGlyphTexture ( *glyph );
-	textSprite.mShader		= style->mShader ? style->mShader : style->mFont->GetShader ();
+	textSprite.mShader		= style->mShader ? ( ZLAbstractShader* )style->mShader : style->mFont->GetShader ();
 	textSprite.mMask		= 0;
 
 	this->mSprites.Push ( textSprite );

@@ -6,7 +6,7 @@
 
 #include <zl-gfx/ZLAbstractGfxMgrGL.h>
 
-class ZLAbstractShaderUniformSchema;
+class ZLAbstractShaderUniformSchemaGL;
 class ZLCamera;
 class ZLViewport;
 

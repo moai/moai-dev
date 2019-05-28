@@ -20,7 +20,7 @@ void AKUDetectFramebuffer () {
 void AKUDetectGfxContext () {
 
 	MOAIGfxMgrGL::Get ().DetectContext ();
-	MOAIShaderMgr::Get ().AffirmAll ();
+	MOAIShaderMgrGL::Get ().AffirmAll ();
 //	MOAIGfxMgrGL::Get ().RenewResources (); // TODO: ZLGfx
 }
 
@@ -69,8 +69,8 @@ void AKUDisplayListProcess ( int list ) {
 //----------------------------------------------------------------//
 void AKUDisplayListPublishAndReset () {
 
-	MOAIGfxMgrGL::Get ().PublishAndReset ( ZLGfxPipelineClerk::LOADING_PIPELINE );
-	MOAIGfxMgrGL::Get ().PublishAndReset ( ZLGfxPipelineClerk::DRAWING_PIPELINE );
+	MOAIGfxMgrGL::Get ().PublishAndReset ( ZLGfxPipelineClerkGL::LOADING_PIPELINE );
+	MOAIGfxMgrGL::Get ().PublishAndReset ( ZLGfxPipelineClerkGL::DRAWING_PIPELINE );
 }
 
 //----------------------------------------------------------------//
@@ -472,7 +472,6 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIScissorRect )
 	REGISTER_LUA_CLASS ( MOAIScriptNode )
 	REGISTER_LUA_CLASS ( MOAISelectionMesh )
-	REGISTER_LUA_CLASS ( MOAIShaderNode )
 	REGISTER_LUA_CLASS ( MOAISim )
 	REGISTER_LUA_CLASS ( MOAISpriteDeck2D )
 	REGISTER_LUA_CLASS ( MOAIStretchPatch2D )
@@ -503,8 +502,6 @@ void AKUSimContextInitialize () {
 	#if MOAI_WITH_FREETYPE
 		REGISTER_LUA_CLASS ( MOAIFreeTypeFontReader )
 	#endif
-	
-	MOAILuaRuntime::Get ().AliasGlobal ( "MOAIShaderNode", "MOAIShader" );
 }
 
 //----------------------------------------------------------------//

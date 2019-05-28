@@ -49,7 +49,7 @@ public:
 					MOAIAssimpMesh				();
 					~MOAIAssimpMesh				();
 	u32				ReadIndices					( ZLStream& stream, u32 indexSize );
-	u32				ReadVertices				( const MOAIVertexFormat& format, ZLStream& stream, bool renormalizeBones );
+	u32				ReadVertices				( const MOAIVertexFormatGL& format, ZLStream& stream, bool renormalizeBones );
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
 };

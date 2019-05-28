@@ -5,9 +5,9 @@
 #define	MOAIABSTRACTLAYER_H
 
 class MOAIColor;
-class MOAIFrameBuffer;
+class MOAIFrameBufferGL;
 class MOAIPartition;
-class ZLFrameBuffer;
+class ZLFrameBufferGL;
 
 //================================================================//
 // MOAIAbstractLayer
@@ -22,7 +22,7 @@ private:
 	u32				mClearMode;
 
 	MOAILuaSharedPtr < MOAIColor >			mClearColorNode;
-	MOAILuaSharedPtr < MOAIFrameBuffer >	mFrameBuffer;
+	MOAILuaSharedPtr < MOAIFrameBufferGL >	mFrameBuffer;
 
 	//----------------------------------------------------------------//
 	static int		_draw					( lua_State* L );
@@ -54,13 +54,13 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	ZLFrameBuffer*		GetFrameBuffer			();
+	ZLFrameBufferGL*		GetFrameBuffer			();
 						MOAIAbstractLayer		();
 						~MOAIAbstractLayer		();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				SetClearColor			( MOAIColor* color );
-	void				SetFrameBuffer			( MOAIFrameBuffer* frameBuffer = 0 );
+	void				SetFrameBuffer			( MOAIFrameBufferGL* frameBuffer = 0 );
 };
 
 #endif

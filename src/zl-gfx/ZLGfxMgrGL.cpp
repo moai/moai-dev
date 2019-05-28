@@ -3,8 +3,8 @@
 
 #include "pch.h"
 
-#include <zl-gfx/ZLFrameBuffer.h>
-#include <zl-gfx/ZLGfxDevice.h>
+#include <zl-gfx/ZLFrameBufferGL.h>
+#include <zl-gfx/ZLGfxDeviceGL.h>
 #include <zl-gfx/ZLGfxMgrGL.h>
 
 //================================================================//
@@ -14,7 +14,7 @@
 //----------------------------------------------------------------//
 void ZLGfxMgrGL::Clear () {
 
-	this->ZLGfxStateGPUCache::Clear ();
+	this->ZLGfxStateGPUCacheGL::Clear ();
 	this->ZLGfxStateVertexCache::Clear ();
 }
 
@@ -23,7 +23,7 @@ void ZLGfxMgrGL::ClearErrors () {
 
 	#ifndef MOAI_OS_NACL
 		if ( this->mHasContext ) {
-			while ( ZLGfxDevice::GetError () != ZGL_ERROR_NONE );
+			while ( ZLGfxDeviceGL::GetError () != ZGL_ERROR_NONE );
 		}
 	#endif
 }
@@ -33,12 +33,12 @@ void ZLGfxMgrGL::DetectContext () {
 
 	this->mHasContext = true;
 	
-	ZLGfxDevice::Initialize ();
+	ZLGfxDeviceGL::Initialize ();
 	
-	u32 maxTextureUnits = ZLGfxDevice::GetCap ( ZGL_CAPS_MAX_TEXTURE_UNITS );
+	u32 maxTextureUnits = ZLGfxDeviceGL::GetCap ( ZGL_CAPS_MAX_TEXTURE_UNITS );
 	this->InitTextureUnits ( maxTextureUnits );
 	
-	this->mMaxTextureSize = ZLGfxDevice::GetCap ( ZGL_CAPS_MAX_TEXTURE_SIZE );
+	this->mMaxTextureSize = ZLGfxDeviceGL::GetCap ( ZGL_CAPS_MAX_TEXTURE_SIZE );
 
 	// renew resources in immediate mode
 	this->SelectDrawingAPI ();
@@ -152,8 +152,8 @@ u32 ZLGfxMgrGL::LogErrors () {
 	u32 count = 0;
 	#ifndef MOAI_OS_NACL
 		if ( this->mHasContext ) {
-			for ( u32 error = ZLGfxDevice::GetError (); error != ZGL_ERROR_NONE; error = ZLGfxDevice::GetError (), ++count ) {
-//				MOAILogF ( 0, ZLLog::LOG_ERROR, MOAISTRING_MOAIGfxDevice_OpenGLError_S, ZLGfxDevice::GetErrorString ( error ));
+			for ( u32 error = ZLGfxDeviceGL::GetError (); error != ZGL_ERROR_NONE; error = ZLGfxDeviceGL::GetError (), ++count ) {
+//				MOAILogF ( 0, ZLLog::LOG_ERROR, MOAISTRING_MOAIGfxDevice_OpenGLError_S, ZLGfxDeviceGL::GetErrorString ( error ));
 			}
 		}
 	#endif
@@ -167,7 +167,7 @@ void ZLGfxMgrGL::PopState () {
 	
 	this->FlushVertexCache ();
 	
-	ZLGfxStateFrame* frame = this->mStateStack [ --this->mStateStackTop ];
+	ZLGfxStateFrameGL* frame = this->mStateStack [ --this->mStateStackTop ];
 	
 	this->RestoreCPUState ( *frame );
 	this->RestoreGPUState ( *frame );
@@ -180,10 +180,10 @@ void ZLGfxMgrGL::PushState () {
 
 	this->mStateStack.Grow (( ZLSize )this->mStateStackTop + 1, 0 );
 	if ( !this->mStateStack [ this->mStateStackTop ]) {
-		this->mStateStack [ this->mStateStackTop ] = new ZLGfxStateFrame ();
+		this->mStateStack [ this->mStateStackTop ] = new ZLGfxStateFrameGL ();
 	}
 	
-	ZLGfxStateFrame* frame = this->mStateStack [ this->mStateStackTop++ ];
+	ZLGfxStateFrameGL* frame = this->mStateStack [ this->mStateStackTop++ ];
 	
 	this->StoreCPUState ( *frame );
 	this->StoreGPUState ( *frame );
@@ -227,7 +227,7 @@ void ZLGfxMgrGL::SetBufferScale ( float scale ) {
 //----------------------------------------------------------------//
 void ZLGfxMgrGL::SetBufferSize ( u32 width, u32 height ) {
 
-	ZLFrameBuffer* defaultFrameBuffer = this->GetDefaultFrameBuffer ();
+	ZLFrameBufferGL* defaultFrameBuffer = this->GetDefaultFrameBuffer ();
 	assert ( defaultFrameBuffer );
 	defaultFrameBuffer->SetBufferSize ( width, height );
 }
@@ -272,12 +272,12 @@ ZLGfxMgrGL& ZLGfxMgrGL::ZLAbstractGfxStateCache_GetGfxMgr () {
 }
 
 //----------------------------------------------------------------//
-ZLGfxPipelineClerk& ZLGfxMgrGL::ZLAbstractGfxStateCache_GetGfxPipelineClerk () {
+ZLGfxPipelineClerkGL& ZLGfxMgrGL::ZLAbstractGfxStateCache_GetGfxPipelineClerk () {
 	return *this;
 }
 
 //----------------------------------------------------------------//
-ZLGfxResourceClerk& ZLGfxMgrGL::ZLAbstractGfxStateCache_GetGfxResourceClerk () {
+ZLGfxResourceClerkGL& ZLGfxMgrGL::ZLAbstractGfxStateCache_GetGfxResourceClerk () {
 	return *this;
 }
 
@@ -287,7 +287,7 @@ ZLGfxStateCPUCache& ZLGfxMgrGL::ZLAbstractGfxStateCache_GetGfxStateCacheCPU () {
 }
 
 //----------------------------------------------------------------//
-ZLGfxStateGPUCache& ZLGfxMgrGL::ZLAbstractGfxStateCache_GetGfxStateCacheGPU () {
+ZLGfxStateGPUCacheGL& ZLGfxMgrGL::ZLAbstractGfxStateCache_GetGfxStateCacheGPU () {
 	return *this;
 }
 

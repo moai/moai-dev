@@ -7,17 +7,16 @@
 #include <moai-gfx/pch.h>
 
 #include <moai-gfx/MOAIAbstractDrawable.h>
-#include <moai-gfx/MOAIAbstractGfxBuffer.h>
-#include <moai-gfx/MOAIFrameBuffer.h>
-#include <moai-gfx/MOAIFrameBufferTexture.h>
-#include <moai-gfx/MOAIGfxMgr.h>
+#include <moai-gfx/MOAIAbstractGfxBufferGL.h>
+#include <moai-gfx/MOAIAbstractGfxMgr.h>
+#include <moai-gfx/MOAIFrameBufferGL.h>
+#include <moai-gfx/MOAIFrameBufferTextureGL.h>
 #include <moai-gfx/MOAIGfxMgrGL.h>
-#include <moai-gfx/MOAIGfxResource.h>
-#include <moai-gfx/MOAIImageTexture.h>
-#include <moai-gfx/MOAIIndexBuffer.h>
+#include <moai-gfx/MOAIGfxResourceGL.h>
+#include <moai-gfx/MOAIImageTextureGL.h>
+#include <moai-gfx/MOAIIndexBufferGL.h>
 #include <moai-gfx/MOAILight.h>
 #include <moai-gfx/MOAILightFormat.h>
-#include <moai-gfx/MOAILightSet.h>
 #include <moai-gfx/MOAIMaterial.h>
 #include <moai-gfx/MOAIMaterialBase.h>
 #include <moai-gfx/MOAIMaterialBatch.h>
@@ -25,15 +24,15 @@
 #include <moai-gfx/MOAIMaterialHolder.h>
 #include <moai-gfx/MOAIMaterialMgr.h>
 #include <moai-gfx/MOAIRenderMgr.h>
-#include <moai-gfx/MOAIShader.h>
-#include <moai-gfx/MOAIShaderMgr.h>
-#include <moai-gfx/MOAIShaderProgram.h>
-#include <moai-gfx/MOAIShaderUniformSchemaBase.h>
-#include <moai-gfx/MOAITexture.h>
-#include <moai-gfx/MOAITextureBase.h>
-#include <moai-gfx/MOAIVertexArray.h>
-#include <moai-gfx/MOAIVertexBuffer.h>
-#include <moai-gfx/MOAIVertexFormat.h>
-#include <moai-gfx/MOAIVertexFormatMgr.h>
+#include <moai-gfx/MOAIShaderGL.h>
+#include <moai-gfx/MOAIShaderMgrGL.h>
+#include <moai-gfx/MOAIShaderProgramGL.h>
+#include <moai-gfx/MOAIShaderUniformSchemaBaseGL.h>
+#include <moai-gfx/MOAITextureGL.h>
+#include <moai-gfx/MOAITextureBaseGL.h>
+#include <moai-gfx/MOAIVertexArrayGL.h>
+#include <moai-gfx/MOAIVertexBufferGL.h>
+#include <moai-gfx/MOAIVertexFormatGL.h>
+#include <moai-gfx/MOAIVertexFormatMgrGL.h>
 
 #endif

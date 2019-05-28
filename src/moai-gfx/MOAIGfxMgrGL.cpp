@@ -3,8 +3,12 @@
 
 #include "pch.h"
 
-#include <moai-gfx/MOAIFrameBuffer.h>
+#include <moai-gfx/MOAIFrameBufferGL.h>
 #include <moai-gfx/MOAIGfxMgrGL.h>
+#include <moai-gfx/MOAIShaderGL.h>
+#include <moai-gfx/MOAIShaderMgrGL.h>
+#include <moai-gfx/MOAITextureGL.h>
+#include <moai-gfx/MOAITextureBaseGL.h>
 
 //================================================================//
 // local
@@ -27,7 +31,7 @@ int MOAIGfxMgrGL::_enablePipelineLogging ( lua_State* L ) {
 /**	@lua	getFrameBuffer
 	@text	Returns the frame buffer associated with the device.
 
-	@out	MOAIFrameBuffer frameBuffer
+	@out	MOAIFrameBufferGL frameBuffer
 */
 int MOAIGfxMgrGL::_getFrameBuffer ( lua_State* L ) {
 
@@ -73,7 +77,7 @@ int MOAIGfxMgrGL::_getMaxTextureUnits ( lua_State* L ) {
 */
 int MOAIGfxMgrGL::_getViewSize ( lua_State* L  ) {
 
-	ZLFrameBuffer* frameBuffer = MOAIGfxMgrGL::Get ().GetCurrentFrameBuffer ();
+	ZLFrameBufferGL* frameBuffer = MOAIGfxMgrGL::Get ().GetCurrentFrameBuffer ();
 	
 	lua_pushnumber ( L, frameBuffer->GetBufferWidth ());
 	lua_pushnumber ( L, frameBuffer->GetBufferHeight ());
@@ -124,7 +128,7 @@ MOAIGfxMgrGL::MOAIGfxMgrGL () {
 		RTTI_SINGLE ( MOAIGfxMgrGL )
 	RTTI_END
 	
-	this->SetDefaultFrameBuffer ( new MOAIFrameBuffer ());
+	this->SetDefaultFrameBuffer ( new MOAIFrameBufferGL ());
 }
 
 //----------------------------------------------------------------//
@@ -146,8 +150,8 @@ void MOAIGfxMgrGL::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "EVENT_RESIZE",	( u32 )EVENT_RESIZE );
 	
-	state.SetField ( -1, "DRAWING_PIPELINE",	( u32 )ZLGfxPipelineClerk::DRAWING_PIPELINE );
-	state.SetField ( -1, "LOADING_PIPELINE",	( u32 )ZLGfxPipelineClerk::LOADING_PIPELINE );
+	state.SetField ( -1, "DRAWING_PIPELINE",	( u32 )ZLGfxPipelineClerkGL::DRAWING_PIPELINE );
+	state.SetField ( -1, "LOADING_PIPELINE",	( u32 )ZLGfxPipelineClerkGL::LOADING_PIPELINE );
 
 	luaL_Reg regTable [] = {
 		{ "enablePipelineLogging",		_enablePipelineLogging },
@@ -163,4 +167,39 @@ void MOAIGfxMgrGL::RegisterLuaClass ( MOAILuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//================================================================//
+// virtuals
+//================================================================//
+
+//----------------------------------------------------------------//
+ZLAbstractShader* MOAIGfxMgrGL::MOAIAbstractGfxMgr_AffirmShader ( MOAILuaState& state, int idx ) const {
+
+	MOAIShaderGL* shader = 0;
+
+	if ( state.IsType ( idx, LUA_TNUMBER )) {
+		shader = MOAIShaderMgrGL::Get ().GetShader ( state.GetValue < u32 >( idx, MOAIShaderMgrGL::UNKNOWN_SHADER ));
+	}
+	else {
+		shader = state.GetLuaObject < MOAIShaderGL >( idx, true );
+	}
+	return shader;
+}
+
+//----------------------------------------------------------------//
+ZLAbstractTexture* MOAIGfxMgrGL::MOAIAbstractGfxMgr_AffirmTexture ( MOAILuaState& state, int idx ) const {
+
+	MOAITextureBaseGL* textureBase = 0;
+	
+	textureBase = state.GetLuaObject < MOAITextureBaseGL >( idx, false );
+	if ( textureBase ) return textureBase;
+	
+	MOAITextureGL* texture = new MOAITextureGL ();
+	if ( !texture->Init ( state, idx )) {
+		// TODO: report error
+		delete texture;
+		texture = 0;
+	}
+	return texture;
 }

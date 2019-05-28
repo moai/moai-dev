@@ -12,7 +12,7 @@ class MOAIGrid;
 class MOAIImage;
 class MOAIMaterialBatch;
 class MOAIQuadBrush;
-class MOAIShader;
+class MOAIShaderGL;
 class MOAISurfaceSampler2D;
 
 // right now, MOAIDeck is going to be an everything sandwich that ties all the moai-sim

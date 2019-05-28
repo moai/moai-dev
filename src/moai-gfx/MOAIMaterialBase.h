@@ -4,8 +4,8 @@
 #ifndef	MOAIMATERIALBASE_H
 #define	MOAIMATERIALBASE_H
 
-class MOAIShader;
-class MOAITextureBase;
+class MOAIShaderGL;
+class MOAITextureBaseGL;
 
 //================================================================//
 // MOAIMaterialBase
@@ -33,8 +33,8 @@ protected:
 	static const u32	DRAW_FLAGS	= BLEND_MODE_FLAG | CULL_MODE_FLAG | DEPTH_MASK_FLAG | DEPTH_TEST_FLAG;
 	static const u32	ALL_FLAGS	= MAX_FLAG - 1;
 	
-	ZLStrongPtr < MOAIShader >			mShader;
-	ZLStrongPtr < MOAITextureBase >		mTexture;
+	ZLStrongPtr < ZLAbstractShader >	mShader;
+	ZLStrongPtr < ZLAbstractTexture >	mTexture;
 	
 	ZLBlendMode			mBlendMode;
 	int					mCullMode;
@@ -52,8 +52,8 @@ public:
 	GET ( int, CullMode, mCullMode );
 	GET ( int, DepthTest, mDepthTest );
 	GET ( bool, DepthMask, mDepthMask );
-	GET ( MOAIShader*, Shader, mShader );
-	GET ( MOAITextureBase*, Texture, mTexture );
+	GET ( ZLAbstractShader*, Shader, mShader );
+	GET ( ZLAbstractTexture*, Texture, mTexture );
 
 	//----------------------------------------------------------------//
 	void			Clear						();
@@ -68,9 +68,9 @@ public:
 	void			SetDepthTest				();
 	void			SetDepthTest				( int depthTest );
 	void			SetShader					();
-	void			SetShader					( MOAIShader* shader );
+	void			SetShader					( ZLAbstractShader* shader );
 	void			SetTexture					();
-	void			SetTexture					( MOAITextureBase* texture );
+	void			SetTexture					( ZLAbstractTexture* texture );
 };
 
 #endif

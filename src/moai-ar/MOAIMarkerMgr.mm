@@ -214,21 +214,21 @@ void MOAIMarkerMgr::AffirmDeck () {
 		texture0->Init ( MOAIVideoTexture::VIDEO_TEXTURE_PLANE_0, this->mVideoPixelFormat );
 		texture1->Init ( MOAIVideoTexture::VIDEO_TEXTURE_PLANE_1, this->mVideoPixelFormat );
 
-		MOAIShaderProgram* program = new MOAIShaderProgram ();
-		program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
-		program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
-		program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
+		MOAIShaderProgramGL* program = new MOAIShaderProgramGL ();
+		program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_POSITION, "position" );
+		program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_TEXCOORD, "uv" );
+		program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_COLOR, "color" );
 		program->Load ( vsh, fsh );
 
 		program->ReserveUniforms ( 2 );
-		program->DeclareUniform ( 0, "texture0", ZLShaderUniformHandle::UNIFORM_TYPE_INT, 1, 1 );
-		program->DeclareUniform ( 1, "texture1", ZLShaderUniformHandle::UNIFORM_TYPE_INT, 1, 1 );
+		program->DeclareUniform ( 0, "texture0", ZLShaderUniformHandleGL::UNIFORM_TYPE_INT, 1, 1 );
+		program->DeclareUniform ( 1, "texture1", ZLShaderUniformHandleGL::UNIFORM_TYPE_INT, 1, 1 );
 
 		program->ReserveTextures ( 2 );
 		program->SetTexture ( 0, texture0, 0 );
 		program->SetTexture ( 1, texture1, 1 );
 
-		MOAIShader* shader = new MOAIShader ();
+		MOAIShaderGL* shader = new MOAIShaderGL ();
 		shader->SetProgram ( program );
 		
 		shader->Bless ();

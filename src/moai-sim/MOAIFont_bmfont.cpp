@@ -92,7 +92,7 @@ static char* parseKeyVal ( char *p, char **key, char **val, bool *endl ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFont::InitWithBMFont ( cc8* filename, const u32 numPreloadedTextures, MOAITexture** preloadedTextures ) {
+void MOAIFont::InitWithBMFont ( cc8* filename, const u32 numPreloadedTextures, MOAITextureGL** preloadedTextures ) {
 
 	ZLFileStream stream;
 	if ( !stream.OpenRead ( filename )) return;
@@ -176,7 +176,7 @@ void MOAIFont::InitWithBMFont ( cc8* filename, const u32 numPreloadedTextures, M
 			} while ( !endl );
 			
 			// Use the preloaded textures if possible
-			MOAITexture* texture = 0;
+			MOAITextureGL* texture = 0;
 			if ( numPreloadedTextures > 0 ) {
 				if ( id < numPreloadedTextures ) {
 					texture = preloadedTextures [ id ];
@@ -187,8 +187,8 @@ void MOAIFont::InitWithBMFont ( cc8* filename, const u32 numPreloadedTextures, M
 			}
 			
 			if ( texture == 0 ) {
-				texture = new MOAITexture ();
-				texture->Init ( texturename, MOAITexture::DEFAULT_TRANSFORM );
+				texture = new MOAITextureGL ();
+				texture->Init ( texturename, MOAITextureGL::DEFAULT_TRANSFORM );
 			}
 				
 			glyphCache->SetTexture ( ZLIndexCast ( id ), texture );

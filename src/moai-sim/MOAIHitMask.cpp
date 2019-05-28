@@ -18,8 +18,8 @@ bool MOAIMaterial::LoadGfxState ( MOAIMaterial* fallback, u32 defaultShader ) {
 
 	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	
-	MOAIShader* shader = this->mShader ? this->mShader : (( fallback && fallback->mShader ) ? fallback->mShader : MOAIShaderMgr::Get ().GetShader ( defaultShader ));
-	MOAITextureBase* texture = this->mTexture ? this->mTexture : (( fallback && fallback->mTexture ) ? fallback->mTexture : 0 );
+	MOAIShaderGL* shader = this->mShader ? this->mShader : (( fallback && fallback->mShader ) ? fallback->mShader : MOAIShaderMgrGL::Get ().GetShader ( defaultShader ));
+	MOAITextureBaseGL* texture = this->mTexture ? this->mTexture : (( fallback && fallback->mTexture ) ? fallback->mTexture : 0 );
 	
 	return ( gfxState.SetShader ( shader ) && gfxState.SetTexture ( texture ));
 }
@@ -134,7 +134,7 @@ int MOAIMaterialBatch::_getIndexBatchSize ( lua_State* L ) {
 	
 	@in		MOAIMaterialBatch self
 	@opt	number idx					Default value is 1.
-	@out	MOAIShader shader
+	@out	MOAIShaderGL shader
 */
 int MOAIMaterialBatch::_getShader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
@@ -149,7 +149,7 @@ int MOAIMaterialBatch::_getShader ( lua_State* L ) {
 	
 	@in		MOAIMaterialBatch self
 	@opt	number idx					Default value is 1.
-	@out	MOAITexture shader
+	@out	MOAITextureGL shader
 */
 int MOAIMaterialBatch::_getTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
@@ -389,14 +389,14 @@ int MOAIMaterialBatch::_setIndexBatchSize ( lua_State* L ) {
 	
 		@in		MOAIMaterialBatch self
 		@in		number idx
-		@in		variant shader			Overloaded to accept a MOAIShader or a shader preset.
-		@out	MOAIShader shader		The shader that was set or created.
+		@in		variant shader			Overloaded to accept a MOAIShaderGL or a shader preset.
+		@out	MOAIShaderGL shader		The shader that was set or created.
 	
 	@overload
 	
 		@in		MOAIMaterialBatch self
-		@in		variant shader			Overloaded to accept a MOAIShader or a shader preset.
-		@out	MOAIShader shader		The shader that was set or created.
+		@in		variant shader			Overloaded to accept a MOAIShaderGL or a shader preset.
+		@out	MOAIShaderGL shader		The shader that was set or created.
 */
 int MOAIMaterialBatch::_setShader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
@@ -415,14 +415,14 @@ int MOAIMaterialBatch::_setShader ( lua_State* L ) {
 	
 		@in		MOAIMaterialBatch self
 		@in		number idx
-		@in		variant texture			Overloaded to accept a filename, MOAITexture, MOAIImage, MOAIStream or MOAIDataBuffer.
-		@out	MOAITexture texture		The texture that was set or created.
+		@in		variant texture			Overloaded to accept a filename, MOAITextureGL, MOAIImage, MOAIStream or MOAIDataBuffer.
+		@out	MOAITextureGL texture		The texture that was set or created.
 	
 	@overload
 	
 		@in		MOAIMaterialBatch self
-		@in		variant texture			Overloaded to accept a filename, MOAITexture, MOAIImage, MOAIStream or MOAIDataBuffer.
-		@out	MOAITexture texture		The texture that was set or created.
+		@in		variant texture			Overloaded to accept a filename, MOAITextureGL, MOAIImage, MOAIStream or MOAIDataBuffer.
+		@out	MOAITextureGL texture		The texture that was set or created.
 */
 int MOAIMaterialBatch::_setTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
@@ -491,7 +491,7 @@ bool MOAIMaterialBatch::LoadGfxState ( MOAIMaterialBatch* override, u32 material
 	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	
 	gfxState.SetTexture ();
-	return gfxState.SetShader ( MOAIShaderMgr::Get ().GetShader ( defaultShader ));
+	return gfxState.SetShader ( MOAIShaderMgrGL::Get ().GetShader ( defaultShader ));
 }
 
 //----------------------------------------------------------------//
@@ -518,7 +518,7 @@ MOAIMaterial* MOAIMaterialBatch::RawGetMaterial ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-MOAIShader* MOAIMaterialBatch::RawGetShader ( u32 idx ) {
+MOAIShaderGL* MOAIMaterialBatch::RawGetShader ( u32 idx ) {
 
 	if ( idx < this->mMaterials.Size ()) {
 		return this->mMaterials [ idx ].mShader;
@@ -527,7 +527,7 @@ MOAIShader* MOAIMaterialBatch::RawGetShader ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-MOAITextureBase* MOAIMaterialBatch::RawGetTexture ( u32 idx ) {
+MOAITextureBaseGL* MOAIMaterialBatch::RawGetTexture ( u32 idx ) {
 
 	if ( idx < this->mMaterials.Size ()) {
 		return this->mMaterials [ idx ].mTexture;
@@ -639,15 +639,15 @@ void MOAIMaterialBatch::SetHitMaskThreshold ( MOAILuaState& state, u32 idx ) {
 //
 //	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 //	
-//	MOAIShader* shader = 0;
-//	MOAITextureBase* texture = 0;
+//	MOAIShaderGL* shader = 0;
+//	MOAITextureBaseGL* texture = 0;
 //	
 //	if ( idx < this->mMaterials.Size ()) {
 //		shader = this->mMaterials [ idx ].mShader;
 //		texture = this->mMaterials [ idx ].mTexture;
 //	}
 //	
-//	shader = shader ? shader : MOAIShaderMgr::Get ().GetShader ( defaultShader );
+//	shader = shader ? shader : MOAIShaderMgrGL::Get ().GetShader ( defaultShader );
 //	
 //	gfxMgr.SetShader ( shader );
 //	gfxMgr.SetTexture ( texture );
@@ -663,11 +663,11 @@ void MOAIMaterialBatch::Reserve ( u32 n ) {
 //----------------------------------------------------------------//
 void MOAIMaterialBatch::SetShader ( u32 idx, u32 shaderID ) {
 
-	this->SetShader ( idx, MOAIShaderMgr::Get ().GetShader ( shaderID ));
+	this->SetShader ( idx, MOAIShaderMgrGL::Get ().GetShader ( shaderID ));
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::SetShader ( u32 idx, MOAIShader* shader ) {
+void MOAIMaterialBatch::SetShader ( u32 idx, MOAIShaderGL* shader ) {
 
 	MOAIMaterial& material = this->AffirmMaterial ( idx );
 	if ( material.mShader != shader ) {
@@ -679,20 +679,20 @@ void MOAIMaterialBatch::SetShader ( u32 idx, MOAIShader* shader ) {
 }
 
 //----------------------------------------------------------------//
-MOAIShader* MOAIMaterialBatch::SetShader ( MOAILuaState& state, u32 idx ) {
+MOAIShaderGL* MOAIMaterialBatch::SetShader ( MOAILuaState& state, u32 idx ) {
 	
 	u32 materialIdx = 0;
 	if ( state.IsType ( idx, LUA_TNUMBER ) && ( state.AbsIndex ( idx ) < state.GetTop ())) {
 		materialIdx = state.GetValue < u32 >( idx++, 1 ) - 1;
 	}
 
-	MOAIShader* shader = MOAIShader::AffirmShader ( state, idx );
+	MOAIShaderGL* shader = MOAIShaderGL::AffirmShader ( state, idx );
 	this->SetShader ( materialIdx, shader );
 	return shader;
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::SetTexture ( u32 idx, MOAITextureBase* texture ) {
+void MOAIMaterialBatch::SetTexture ( u32 idx, MOAITextureBaseGL* texture ) {
 
 	MOAIMaterial& material = this->AffirmMaterial ( idx );
 	if ( material.mTexture != texture ) {
@@ -704,14 +704,14 @@ void MOAIMaterialBatch::SetTexture ( u32 idx, MOAITextureBase* texture ) {
 }
 
 //----------------------------------------------------------------//
-MOAITextureBase* MOAIMaterialBatch::SetTexture ( MOAILuaState& state, u32 idx ) {
+MOAITextureBaseGL* MOAIMaterialBatch::SetTexture ( MOAILuaState& state, u32 idx ) {
 	
 	u32 materialIdx = 0;
 	if ( state.IsType ( idx, LUA_TNUMBER )) {
 		materialIdx = state.GetValue < u32 >( idx++, 1 ) - 1;
 	}
 	
-	MOAITextureBase* texture = MOAITexture::AffirmTexture ( state, idx );
+	MOAITextureBaseGL* texture = MOAITextureGL::AffirmTexture ( state, idx );
 	this->SetTexture ( materialIdx, texture );
 	return texture;
 }

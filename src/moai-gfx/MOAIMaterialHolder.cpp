@@ -4,9 +4,9 @@
 #include "pch.h"
 
 #include <moai-gfx/MOAIMaterialHolder.h>
-#include <moai-gfx/MOAIShader.h>
-#include <moai-gfx/MOAITexture.h>
-#include <moai-gfx/MOAITextureBase.h>
+#include <moai-gfx/MOAIShaderGL.h>
+#include <moai-gfx/MOAITextureGL.h>
+#include <moai-gfx/MOAITextureBaseGL.h>
 
 //================================================================//
 // lua
@@ -156,9 +156,9 @@ int MOAIMaterialHolder::_setLight ( lua_State* L ) {
 int MOAIMaterialHolder::_setShader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialHolder, "U" )
 	
-	MOAIShader* shader = MOAIShader::AffirmShader ( state, 2 );
+	ZLAbstractShader* shader = MOAIAbstractGfxMgr::Get ().AffirmShader ( state, 2 );
 	self->mMaterial.SetShader ( shader );
-	state.Push ( shader );
+	state.Push ( shader->AsType < MOAILuaObject >());
 	
 	return 1;
 }
@@ -175,14 +175,14 @@ int MOAIMaterialHolder::_setTexture ( lua_State* L ) {
 		name = state.GetValue < u32 >( idx++, name );
 	}
 	
-	MOAITextureBase* texture = MOAITexture::AffirmTexture ( state, idx );
+	ZLAbstractTexture* texture = MOAIAbstractGfxMgr::Get ().AffirmTexture ( state, idx );
 	if ( name != MOAI_UNKNOWN_MATERIAL_GLOBAL ) {
 		self->mMaterial.SetTexture ( name, texture );
 	}
 	else {
 		self->mMaterial.SetTexture ( texture );
 	}
-	state.Push ( texture );
+	state.Push ( texture->AsType < MOAILuaObject >());
 	return 1;
 }
 

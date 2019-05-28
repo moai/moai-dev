@@ -6,9 +6,9 @@
 #include <zl-gfx/ZLCamera.h>
 #include <zl-gfx/ZLGfxStateCPUCache.h>
 #include <zl-gfx/ZLGfxStateCPUCache.h>
-#include <zl-gfx/ZLGfxStateGPUCache.h>
+#include <zl-gfx/ZLGfxStateGPUCacheGL.h>
 #include <zl-gfx/ZLGfxStateVertexCache.h>
-#include <zl-gfx/ZLShaderUniform.h>
+#include <zl-gfx/ZLShaderUniformGL.h>
 #include <zl-gfx/ZLViewport.h>
 #include <zl-gfx/ZLViewProj.h>
 

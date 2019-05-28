@@ -5,10 +5,10 @@
 #define	ZLABSTRACTGFXMGRGL_H
 
 class ZLGfxMgrGL;
-class ZLGfxPipelineClerk;
-class ZLGfxResourceClerk;
+class ZLGfxPipelineClerkGL;
+class ZLGfxResourceClerkGL;
 class ZLGfxStateCPUCache;
-class ZLGfxStateGPUCache;
+class ZLGfxStateGPUCacheGL;
 class ZLGfxStateVertexCache;
 
 //================================================================//
@@ -24,21 +24,21 @@ protected:
 
 	//----------------------------------------------------------------//
 	virtual ZLGfxMgrGL&					ZLAbstractGfxStateCache_GetGfxMgr					() = 0;
-	virtual ZLGfxPipelineClerk&			ZLAbstractGfxStateCache_GetGfxPipelineClerk			() = 0;
-	virtual ZLGfxResourceClerk&			ZLAbstractGfxStateCache_GetGfxResourceClerk			() = 0;
+	virtual ZLGfxPipelineClerkGL&			ZLAbstractGfxStateCache_GetGfxPipelineClerk			() = 0;
+	virtual ZLGfxResourceClerkGL&			ZLAbstractGfxStateCache_GetGfxResourceClerk			() = 0;
 	virtual ZLGfxStateCPUCache&			ZLAbstractGfxStateCache_GetGfxStateCacheCPU			() = 0;
-	virtual ZLGfxStateGPUCache&			ZLAbstractGfxStateCache_GetGfxStateCacheGPU			() = 0;
+	virtual ZLGfxStateGPUCacheGL&			ZLAbstractGfxStateCache_GetGfxStateCacheGPU			() = 0;
 	virtual ZLGfxStateVertexCache&		ZLAbstractGfxStateCache_GetGfxVertexCache			() = 0;
 
 public:
 
 	//----------------------------------------------------------------//
-	inline ZLGfxPipelineClerk& GetGfxPipelineClerk () {
+	inline ZLGfxPipelineClerkGL& GetGfxPipelineClerk () {
 		return ZLAbstractGfxStateCache_GetGfxPipelineClerk ();
 	}
 	
 	//----------------------------------------------------------------//
-	inline ZLGfxResourceClerk& GetGfxResourceClerk () {
+	inline ZLGfxResourceClerkGL& GetGfxResourceClerk () {
 		return ZLAbstractGfxStateCache_GetGfxResourceClerk ();
 	}
 
@@ -48,7 +48,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	inline ZLGfxStateGPUCache& GetGfxStateCacheGPU () {
+	inline ZLGfxStateGPUCacheGL& GetGfxStateCacheGPU () {
 		return ZLAbstractGfxStateCache_GetGfxStateCacheGPU ();
 	}
 	

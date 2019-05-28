@@ -5,7 +5,7 @@
 #include <moai-gfx/MOAIGfxMgrGL.h>
 #include <moai-gfx/MOAILight.h>
 #include <moai-gfx/MOAILightFormat.h>
-#include <moai-gfx/MOAITextureBase.h>
+#include <moai-gfx/MOAITextureBaseGL.h>
 
 //================================================================//
 // local
@@ -128,13 +128,13 @@ void MOAILight::SetFormat ( MOAILightFormat* format ) {
 //----------------------------------------------------------------//
 bool MOAILight::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
-	return this->mFormat ? this->MOAIShaderUniformSchemaBase::ApplyAttrOp ( this->mBuffer.GetBuffer (), attrID, attr, op ) : false;
+	return this->mFormat ? this->MOAIShaderUniformSchemaBaseGL::ApplyAttrOp ( this->mBuffer.GetBuffer (), attrID, attr, op ) : false;
 }
 
 //----------------------------------------------------------------//
-ZLShaderUniformHandle MOAILight::ZLAbstractShaderUniformSchema_GetUniformHandle ( void* buffer, ZLIndex uniformID ) const {
+ZLShaderUniformHandleGL MOAILight::ZLAbstractShaderUniformSchema_GetUniformHandle ( void* buffer, ZLIndex uniformID ) const {
 
-	ZLShaderUniformHandle uniform;
+	ZLShaderUniformHandleGL uniform;
 	uniform.mBuffer = 0;
 
 	if ( this->mFormat ) {

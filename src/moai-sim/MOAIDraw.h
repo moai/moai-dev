@@ -7,12 +7,12 @@
 #include <moai-sim/MOAIDrawShapeImmediate.h>
 
 class MOAIAnimCurveFloat;
-class MOAITextureBase;
-class MOAITexture;
+class MOAITextureBaseGL;
+class MOAITextureGL;
 class MOAIFont;
 class MOAIGlyph;
-class MOAIAbstractGfxBuffer;
-class MOAIVertexFormat;
+class MOAIAbstractGfxBufferGL;
+class MOAIVertexFormatGL;
 
 //================================================================//
 // MOAIDraw
@@ -89,12 +89,12 @@ public:
 	void			DrawAnimCurve			( const MOAIAnimCurveFloat& curve, u32 resolution );
 	void			DrawAxisGrid			( ZLVec2D loc, ZLVec2D vec, float size );
 	void			DrawBezierCurve			( const ZLCubicBezier2D& bezier );
-	void			DrawElements			( MOAIAbstractGfxBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat, u32 count );
+	void			DrawElements			( MOAIAbstractGfxBufferGL* vtxBuffer, MOAIVertexFormatGL* vtxFormat, u32 count );
 	void			DrawGrid				( const ZLRect& rect, u32 xCells, u32 yCells );
 	void			DrawRay					( float x, float y, float dx, float dy );
 	void			DrawString				( cc8* text, float x, float y, float width, float height );
 	void			DrawString				( cc8* text, float x, float y, float scale, MOAIFont& font, float fontSize, float shadowOffsetX, float shadowOffsetY, float width, float height );
-	void			DrawTexture				( float left, float top, float right, float bottom, MOAITextureBase* texture );
+	void			DrawTexture				( float left, float top, float right, float bottom, ZLAbstractTexture* texture );
 	void			DrawVertexArray			( const ZLVec3D* verts, u32 count, u32 color, u32 primType );
 	void			DrawVertexArray2D		( const float* verts, u32 count, u32 color, u32 primType );
 	void			EndDrawString			();

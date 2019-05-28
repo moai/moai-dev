@@ -4,7 +4,7 @@
 #ifndef ZLGFX_H
 #define ZLGFX_H
 
-#include <zl-gfx/ZLGfxHandle.h>
+#include <zl-gfx/ZLGfxHandleGL.h>
 #include <zl-gfx/ZLGfxListener.h>
 #include <zl-util/ZLLeanArray.h>
 #include <zl-util/ZLLeanStack.h>
@@ -35,8 +35,8 @@ private:
 	friend class ZLGfxRetained;
 
 	//----------------------------------------------------------------//
-	virtual void					AllocateResource			( ZLGfxResource& resource, u32 param ) = 0;
-	virtual void					GetCurrentFramebuffer		( ZLGfxResource& resource ) = 0;
+	virtual void					AllocateResource			( ZLGfxResourceGL& resource, u32 param ) = 0;
+	virtual void					GetCurrentFramebuffer		( ZLGfxResourceGL& resource ) = 0;
 
 public:
 
@@ -44,15 +44,15 @@ public:
 
 	//----------------------------------------------------------------//
 	virtual void					ActiveTexture				( u32 textureUnit ) = 0;
-	virtual void					AttachShader				( ZLGfxResource& program, ZLGfxResource& shader ) = 0;
+	virtual void					AttachShader				( ZLGfxResourceGL& program, ZLGfxResourceGL& shader ) = 0;
 	
-	virtual void					BindAttribLocation			( ZLGfxResource& program, u32 index, cc8* name ) = 0;
+	virtual void					BindAttribLocation			( ZLGfxResourceGL& program, u32 index, cc8* name ) = 0;
 	
-	virtual void					BindBuffer					( u32 target, ZLGfxResource& buffer ) = 0;
-	virtual void					BindFramebuffer				( u32 target, ZLGfxResource& frameBuffer ) = 0;
-	virtual void					BindRenderbuffer			( ZLGfxResource& renderbuffer ) = 0;
-	virtual void					BindTexture					( ZLGfxResource& texture ) = 0;
-	virtual void					BindVertexArray				( ZLGfxResource& vertexArray ) = 0;
+	virtual void					BindBuffer					( u32 target, ZLGfxResourceGL& buffer ) = 0;
+	virtual void					BindFramebuffer				( u32 target, ZLGfxResourceGL& frameBuffer ) = 0;
+	virtual void					BindRenderbuffer			( ZLGfxResourceGL& renderbuffer ) = 0;
+	virtual void					BindTexture					( ZLGfxResourceGL& texture ) = 0;
+	virtual void					BindVertexArray				( ZLGfxResourceGL& vertexArray ) = 0;
 	
 	virtual void					BlendFunc					( u32 sourceFactor, u32 destFactor ) = 0;
 	virtual void					BlendMode					( u32 mode ) = 0;
@@ -68,20 +68,20 @@ public:
 	
 	virtual void					Comment						( cc8* comment = 0 ) = 0;
 	
-	virtual void					CompileShader				( ZLGfxResource& shader, bool log ) = 0;
+	virtual void					CompileShader				( ZLGfxResourceGL& shader, bool log ) = 0;
 	virtual void					CompressedTexImage2D		( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, ZLSharedConstBuffer* buffer ) = 0;
 		
-	ZLGfxHandle						CreateBuffer				();
-	ZLGfxHandle						CreateFramebuffer			();
-	ZLGfxHandle						CreateProgram				();
-	ZLGfxHandle						CreateRenderbuffer			();
-	ZLGfxHandle						CreateShader				( u32 shaderType );
-	ZLGfxHandle						CreateTexture				();
-	ZLGfxHandle						CreateVertexArray			();
+	ZLGfxHandleGL						CreateBuffer				();
+	ZLGfxHandleGL						CreateFramebuffer			();
+	ZLGfxHandleGL						CreateProgram				();
+	ZLGfxHandleGL						CreateRenderbuffer			();
+	ZLGfxHandleGL						CreateShader				( u32 shaderType );
+	ZLGfxHandleGL						CreateTexture				();
+	ZLGfxHandleGL						CreateVertexArray			();
 	
 	virtual void					CullFace					( u32 mode ) = 0;
 	
-	virtual void					DeleteResource				( ZLGfxResource& resource ) = 0;
+	virtual void					DeleteResource				( ZLGfxResourceGL& resource ) = 0;
 	
 	virtual void					DepthFunc					( u32 depthFunc ) = 0;
 	virtual void					DepthMask					( bool flag ) = 0;
@@ -89,7 +89,7 @@ public:
 	virtual void					DisableClientState			( u32 cap ) = 0;
 	virtual void					DisableVertexAttribArray	( u32 index ) = 0;
 	
-	static void						DiscardResource				( ZLGfxResource& resource );
+	static void						DiscardResource				( ZLGfxResourceGL& resource );
 	
 	virtual void					DrawArrays					( u32 primType, u32 first, u32 count ) = 0;
 	virtual void					DrawElements				( u32 primType, u32 count, u32 indexType, ZLSharedConstBuffer* buffer, size_t offset ) = 0;
@@ -100,11 +100,11 @@ public:
 	virtual void					Event						( ZLGfxListener* listener, u32 event, void* userdata ) = 0;
 	
 	virtual void					Flush						( bool finish = false ) = 0;
-	virtual void					FramebufferRenderbuffer		( u32 target, u32 attachment, ZLGfxResource& renderbuffer ) = 0;
-	virtual void					FramebufferTexture2D		( u32 target, u32 attachment, ZLGfxResource& texture, s32 level ) = 0;
+	virtual void					FramebufferRenderbuffer		( u32 target, u32 attachment, ZLGfxResourceGL& renderbuffer ) = 0;
+	virtual void					FramebufferTexture2D		( u32 target, u32 attachment, ZLGfxResourceGL& texture, s32 level ) = 0;
 	
-	virtual ZLGfxHandle				GetCurrentFramebuffer		();
-	virtual void					GetUniformLocation			( ZLGfxResource& program, cc8* uniformName, ZLGfxListener* listener, void* userdata ) = 0;
+	virtual ZLGfxHandleGL				GetCurrentFramebuffer		();
+	virtual void					GetUniformLocation			( ZLGfxResourceGL& program, cc8* uniformName, ZLGfxListener* listener, void* userdata ) = 0;
 	
 	static bool						IsFlag						( u32 flag );
 	
@@ -112,7 +112,7 @@ public:
 	
 	virtual void					LineWidth					( float width ) = 0;
 	
-	virtual void					LinkProgram					( ZLGfxResource& program, bool log ) = 0;
+	virtual void					LinkProgram					( ZLGfxResourceGL& program, bool log ) = 0;
 	
 	virtual void					PopSection					() = 0;
 	virtual bool					PushErrorHandler			() = 0;
@@ -124,7 +124,7 @@ public:
 	
 	virtual void					Scissor						( s32 x, s32 y, u32 w, u32 h ) = 0;
 	
-	virtual void					ShaderSource				( ZLGfxResource& shader, cc8* source, size_t length ) = 0;
+	virtual void					ShaderSource				( ZLGfxResourceGL& shader, cc8* source, size_t length ) = 0;
 	
 	virtual void					TexEnvi						( u32 pname, s32 param ) = 0;
 	virtual void					TexImage2D					( u32 level, u32 internalFormat, u32 width, u32 height, u32 format, u32 type, ZLSharedConstBuffer* buffer ) = 0;
@@ -132,7 +132,7 @@ public:
 	virtual void					TexSubImage2D				( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, u32 format, u32 type, ZLSharedConstBuffer* buffer ) = 0;
 	virtual void					UniformFloat				( u32 location, u32 index, u32 width, u32 count, const float* value ) = 0;
 	virtual void					UniformInt					( u32 location, u32 index, u32 width, u32 count, const s32* value ) = 0;
-	virtual void					UseProgram					( ZLGfxResource& program ) = 0;
+	virtual void					UseProgram					( ZLGfxResourceGL& program ) = 0;
 	virtual void					VertexAttribPointer			( u32 index, u32 size, u32 type, bool normalized, u32 stride, ZLSharedConstBuffer* buffer, size_t offset ) = 0;
 	virtual void					Viewport					( s32 x, s32 y, u32 w, u32 h ) = 0;
 									ZLGfx						() {}

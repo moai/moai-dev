@@ -11,7 +11,7 @@
 //----------------------------------------------------------------//
 void MOAIQuadBrush::BindVertexFormat () {
 	
-	MOAIGfxMgrGL::Get ().SetVertexFormat ( MOAIVertexFormatMgr::Get ().GetFormat ( MOAIVertexFormatMgr::XYZWUVC ));
+	MOAIGfxMgrGL::Get ().SetVertexFormat ( MOAIVertexFormatMgrGL::Get ().GetFormat ( MOAIVertexFormatMgrGL::XYZWUVC ));
 }
 
 //----------------------------------------------------------------//

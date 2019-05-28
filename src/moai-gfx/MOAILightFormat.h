@@ -8,7 +8,7 @@
 // MOAILightFormatUniform
 //================================================================//
 class MOAILightFormatUniform :
-	public ZLShaderUniformBase {
+	public ZLShaderUniformBaseGL {
 public:
 
 	size_t				mBase;		// base in uniform buffer

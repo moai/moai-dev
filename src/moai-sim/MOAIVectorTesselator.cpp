@@ -711,13 +711,13 @@ int MOAIVectorTesselator::_tesselate ( lua_State* L ) {
 	u32 base = 0;
 	int totalElements = 0;
 	
-	MOAIVertexBuffer* vtxBuffer		= state.GetLuaObject < MOAIVertexBuffer >( 2, false );
-	MOAIIndexBuffer* idxBuffer		= state.GetLuaObject < MOAIIndexBuffer >( 3, false );
+	MOAIVertexBufferGL* vtxBuffer		= state.GetLuaObject < MOAIVertexBufferGL >( 2, false );
+	MOAIIndexBufferGL* idxBuffer		= state.GetLuaObject < MOAIIndexBufferGL >( 3, false );
 
 	if ( vtxBuffer && idxBuffer ) {
 	
 		u32 idxSizeInBytes			= state.GetValue < u32 >( 4, 4 );
-		MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 5, false );
+		MOAIVertexFormatGL* format	= state.GetLuaObject < MOAIVertexFormatGL >( 5, false );
 		u32 flags					= state.GetValue < u32 >( 6, MOAIVectorTesselator::TESSELATE_ALL );
 		
 		base = ( u32 )( idxBuffer->GetCursor () / idxSizeInBytes ); // TODO: cast
@@ -727,7 +727,7 @@ int MOAIVectorTesselator::_tesselate ( lua_State* L ) {
 		
 		MOAIStream* vtxStream		= state.GetLuaObject < MOAIStream >( 2, false );
 		MOAIStream* idxStream		= state.GetLuaObject < MOAIStream >( 3, false );
-		MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 4, false );
+		MOAIVertexFormatGL* format	= state.GetLuaObject < MOAIVertexFormatGL >( 4, false );
 		u32 flags					= state.GetValue < u32 >( 5, MOAIVectorTesselator::TESSELATE_ALL );
 		
 		if ( vtxStream && idxStream && format ) {
@@ -832,7 +832,7 @@ void MOAIVectorTesselator::ClearTransforms () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIVectorTesselator::CountVertices ( const MOAIVertexFormat& format, ZLStream& vtxStream ) {
+u32 MOAIVectorTesselator::CountVertices ( const MOAIVertexFormatGL& format, ZLStream& vtxStream ) {
 
 	return ( u32 )( vtxStream.GetCursor () / format.GetVertexSize ()); // TODO: cast
 }
@@ -1244,7 +1244,7 @@ int MOAIVectorTesselator::Tesselate ( MOAIRegion& region, u32 flags ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorTesselator::Tesselate ( ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, u32 flags ) {
+int MOAIVectorTesselator::Tesselate ( ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormatGL& format, u32 flags ) {
 
 	int error = this->Finish ();
 	if ( error ) return -1;
@@ -1265,7 +1265,7 @@ int MOAIVectorTesselator::Tesselate ( ZLStream& vtxStream, ZLStream& idxStream, 
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorTesselator::Tesselate ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, MOAIVertexFormat& format, u32 idxSizeInBytes, u32 flags ) {
+int MOAIVectorTesselator::Tesselate ( MOAIVertexBufferGL& vtxBuffer, MOAIIndexBufferGL& idxBuffer, MOAIVertexFormatGL& format, u32 idxSizeInBytes, u32 flags ) {
 	
 	ZLMemStream vtxStream;
 	ZLMemStream idxStream;
@@ -1300,7 +1300,7 @@ void MOAIVectorTesselator::WriteShapes ( ZLStream& stream, MOAIVectorTesselatorW
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::WriteSkirt ( SafeTesselator& tess, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, const MOAIVectorStyle& style, const ZLColorVec& fillColor, ZLIndex vertexExtraID ) {
+void MOAIVectorTesselator::WriteSkirt ( SafeTesselator& tess, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormatGL& format, const MOAIVectorStyle& style, const ZLColorVec& fillColor, ZLIndex vertexExtraID ) {
 
 	u32 base = this->CountVertices ( format, vtxStream );
 	float z = style.GetExtrude ();
@@ -1428,7 +1428,7 @@ void MOAIVectorTesselator::WriteSkirt ( SafeTesselator& tess, ZLStream& vtxStrea
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::WriteTriangles ( SafeTesselator& tess, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, const MOAIVectorStyle& style, float z, u32 color, ZLIndex vertexExtraID ) {
+void MOAIVectorTesselator::WriteTriangles ( SafeTesselator& tess, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormatGL& format, const MOAIVectorStyle& style, float z, u32 color, ZLIndex vertexExtraID ) {
 
 	u32 base = this->CountVertices ( format, vtxStream );
 
@@ -1488,7 +1488,7 @@ void MOAIVectorTesselator::WriteTriangles ( SafeTesselator& tess, ZLStream& vtxS
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::WriteVertex ( ZLStream& stream, MOAIVertexFormat& format, float x, float y, float z, float xn, float yn, float zn, u32 color, ZLIndex vertexExtraID ) {
+void MOAIVectorTesselator::WriteVertex ( ZLStream& stream, MOAIVertexFormatGL& format, float x, float y, float z, float xn, float yn, float zn, u32 color, ZLIndex vertexExtraID ) {
 
 	size_t base = stream.GetCursor ();
 	format.WriteAhead ( stream );

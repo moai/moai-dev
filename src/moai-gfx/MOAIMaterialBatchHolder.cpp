@@ -68,7 +68,7 @@ int MOAIMaterialBatchHolder::_getMaterialBatch ( lua_State* L ) {
 	
 	@in		MOAIMaterialBatchHolder self
 	@opt	number idx				Default value is 1.
-	@out	MOAIShader shader		Or nil if none exists.
+	@out	MOAIShaderGL shader		Or nil if none exists.
 */
 int MOAIMaterialBatchHolder::_getShader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatchHolder, "U" )
@@ -84,7 +84,7 @@ int MOAIMaterialBatchHolder::_getShader ( lua_State* L ) {
 	
 	@in		MOAIMaterialBatchHolder self
 	@opt	number idx				Default value is 1.
-	@out	MOAITexture texture		Or nil if none exists.
+	@out	MOAITextureGL texture		Or nil if none exists.
 */
 int MOAIMaterialBatchHolder::_getTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatchHolder, "U" )
@@ -225,14 +225,14 @@ int MOAIMaterialBatchHolder::_setMaterialBatch ( lua_State* L ) {
 	
 		@in		MOAIMaterialBatchHolder self
 		@in		number idx
-		@in		variant shader			Overloaded to accept a MOAIShader or a shader preset.
-		@out	MOAIShader shader		The shader that was set or created.
+		@in		variant shader			Overloaded to accept a MOAIShaderGL or a shader preset.
+		@out	MOAIShaderGL shader		The shader that was set or created.
 	
 	@overload
 	
 		@in		MOAIMaterialBatchHolder self
-		@in		variant shader			Overloaded to accept a MOAIShader or a shader preset.
-		@out	MOAIShader shader		The shader that was set or created.
+		@in		variant shader			Overloaded to accept a MOAIShaderGL or a shader preset.
+		@out	MOAIShaderGL shader		The shader that was set or created.
 */
 int MOAIMaterialBatchHolder::_setShader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatchHolder, "U" )
@@ -254,14 +254,14 @@ int MOAIMaterialBatchHolder::_setShader ( lua_State* L ) {
 	
 		@in		MOAIMaterialBatchHolder self
 		@in		number idx
-		@in		variant texture			Overloaded to accept a filename, MOAITexture, MOAIImage, MOAIStream or MOAIDataBuffer.
-		@out	MOAITexture texture		The texture that was set or created.
+		@in		variant texture			Overloaded to accept a filename, MOAITextureGL, MOAIImage, MOAIStream or MOAIDataBuffer.
+		@out	MOAITextureGL texture		The texture that was set or created.
 	
 	@overload
 	
 		@in		MOAIMaterialBatchHolder self
-		@in		variant texture			Overloaded to accept a filename, MOAITexture, MOAIImage, MOAIStream or MOAIDataBuffer.
-		@out	MOAITexture texture		The texture that was set or created.
+		@in		variant texture			Overloaded to accept a filename, MOAITextureGL, MOAIImage, MOAIStream or MOAIDataBuffer.
+		@out	MOAITextureGL texture		The texture that was set or created.
 */
 int MOAIMaterialBatchHolder::_setTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialBatchHolder, "U" )

@@ -7,7 +7,7 @@
 #include <moai-sim/MOAIAbstractLayer.h>
 
 class MOAIColor;
-class MOAIFrameBuffer;
+class MOAIFrameBufferGL;
 class MOAIPartition;
 
 //================================================================//

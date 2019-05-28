@@ -11,75 +11,75 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLGfxHandle ZLGfx::CreateBuffer () {
+ZLGfxHandleGL ZLGfx::CreateBuffer () {
 
 	#if defined( MOAI_OS_ANDROID ) || defined( MOAI_OS_HTML )
-		return ZLGfxHandle ( ZLGfxResource::NONE, 0, ZLGfxResource::NOT_ALLOCATED );
+		return ZLGfxHandleGL ( ZLGfxResourceGL::NONE, 0, ZLGfxResourceGL::NOT_ALLOCATED );
 	#else
-		ZLGfxHandle handle ( ZLGfxResource::BUFFER, 0, ZLGfxResource::PENDING_ALLOCATION );
+		ZLGfxHandleGL handle ( ZLGfxResourceGL::BUFFER, 0, ZLGfxResourceGL::PENDING_ALLOCATION );
 		this->AllocateResource ( *handle.mResource, 0 );
 		return handle;
 	#endif
 }
 
 //----------------------------------------------------------------//
-ZLGfxHandle ZLGfx::CreateFramebuffer () {
+ZLGfxHandleGL ZLGfx::CreateFramebuffer () {
 
-	ZLGfxHandle handle ( ZLGfxResource::FRAMEBUFFER, 0, ZLGfxResource::PENDING_ALLOCATION );
+	ZLGfxHandleGL handle ( ZLGfxResourceGL::FRAMEBUFFER, 0, ZLGfxResourceGL::PENDING_ALLOCATION );
 	this->AllocateResource ( *handle.mResource, 0 );
 	return handle;
 }
 
 //----------------------------------------------------------------//
-ZLGfxHandle ZLGfx::CreateProgram () {
+ZLGfxHandleGL ZLGfx::CreateProgram () {
 
-	ZLGfxHandle handle ( ZLGfxResource::PROGRAM, 0, ZLGfxResource::PENDING_ALLOCATION );
+	ZLGfxHandleGL handle ( ZLGfxResourceGL::PROGRAM, 0, ZLGfxResourceGL::PENDING_ALLOCATION );
 	this->AllocateResource ( *handle.mResource, 0 );
 	return handle;
 }
 
 //----------------------------------------------------------------//
-ZLGfxHandle ZLGfx::CreateRenderbuffer () {
+ZLGfxHandleGL ZLGfx::CreateRenderbuffer () {
 
-	ZLGfxHandle handle ( ZLGfxResource::RENDERBUFFER, 0, ZLGfxResource::PENDING_ALLOCATION );
+	ZLGfxHandleGL handle ( ZLGfxResourceGL::RENDERBUFFER, 0, ZLGfxResourceGL::PENDING_ALLOCATION );
 	this->AllocateResource ( *handle.mResource, 0 );
 	return handle;
 }
 
 //----------------------------------------------------------------//
-ZLGfxHandle ZLGfx::CreateShader ( u32 shaderType ) {
+ZLGfxHandleGL ZLGfx::CreateShader ( u32 shaderType ) {
 
-	ZLGfxHandle handle ( ZLGfxResource::SHADER, 0, ZLGfxResource::PENDING_ALLOCATION );
+	ZLGfxHandleGL handle ( ZLGfxResourceGL::SHADER, 0, ZLGfxResourceGL::PENDING_ALLOCATION );
 	this->AllocateResource ( *handle.mResource, shaderType );
 	return handle;
 }
 
 //----------------------------------------------------------------//
-ZLGfxHandle ZLGfx::CreateTexture () {
+ZLGfxHandleGL ZLGfx::CreateTexture () {
 
-	ZLGfxHandle handle ( ZLGfxResource::TEXTURE, 0, ZLGfxResource::PENDING_ALLOCATION );
+	ZLGfxHandleGL handle ( ZLGfxResourceGL::TEXTURE, 0, ZLGfxResourceGL::PENDING_ALLOCATION );
 	this->AllocateResource ( *handle.mResource, 0 );
 	return handle;
 }
 
 //----------------------------------------------------------------//
-ZLGfxHandle ZLGfx::CreateVertexArray () {
+ZLGfxHandleGL ZLGfx::CreateVertexArray () {
 
-	ZLGfxHandle handle ( ZLGfxResource::VERTEXARRAY, 0, ZLGfxResource::PENDING_ALLOCATION );
+	ZLGfxHandleGL handle ( ZLGfxResourceGL::VERTEXARRAY, 0, ZLGfxResourceGL::PENDING_ALLOCATION );
 	this->AllocateResource ( *handle.mResource, 0 );
 	return handle;
 }
 
 //----------------------------------------------------------------//
-void ZLGfx::DiscardResource ( ZLGfxResource& resource ) {
+void ZLGfx::DiscardResource ( ZLGfxResourceGL& resource ) {
 
 	resource.Discard ();
 }
 
 //----------------------------------------------------------------//
-ZLGfxHandle ZLGfx::GetCurrentFramebuffer () {
+ZLGfxHandleGL ZLGfx::GetCurrentFramebuffer () {
 
-	ZLGfxHandle handle ( ZLGfxResource::FRAMEBUFFER, 0, ZLGfxResource::PENDING_ALLOCATION );
+	ZLGfxHandleGL handle ( ZLGfxResourceGL::FRAMEBUFFER, 0, ZLGfxResourceGL::PENDING_ALLOCATION );
 	this->GetCurrentFramebuffer ( *handle.mResource );
 	return handle;
 }

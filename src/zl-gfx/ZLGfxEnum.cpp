@@ -374,7 +374,7 @@ void zglInitialize () {
 		}
 	#endif
 
-	string version = ZLGfxDevice::GetString ( ZGL_STRING_VERSION );
+	string version = ZLGfxDeviceGL::GetString ( ZGL_STRING_VERSION );
 	std::transform ( version.begin (), version.end(), version.begin(), ::tolower );
 	
 	string gles = "opengl es";

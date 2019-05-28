@@ -112,7 +112,7 @@ int MOAIVectorRect::Tesselate ( MOAIVectorTesselator& drawing, MOAIRegion& regio
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorRect::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vertexStream, ZLStream& indexStream, MOAIVertexFormat& format, u32 flags ) {
+int MOAIVectorRect::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vertexStream, ZLStream& indexStream, MOAIVertexFormatGL& format, u32 flags ) {
 
 	int fastTrack = this->CheckFastTrack ( drawing, flags );
 	

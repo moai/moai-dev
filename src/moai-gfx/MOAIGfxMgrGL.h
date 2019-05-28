@@ -4,7 +4,7 @@
 #ifndef	MOAIGFXMGRGL_H
 #define	MOAIGFXMGRGL_H
 
-#include <moai-gfx/MOAIGfxMgr.h>
+#include <moai-gfx/MOAIAbstractGfxMgr.h>
 
 //================================================================//
 // MOAIGfxMgrGL
@@ -12,7 +12,7 @@
 // TODO: doxygen
 class MOAIGfxMgrGL :
 	public ZLContextClass < MOAIGfxMgrGL >,
-	public virtual MOAIGfxMgr,
+	public virtual MOAIAbstractGfxMgr,
 	public virtual ZLGfxMgrGL {
 private:
 	
@@ -29,14 +29,18 @@ private:
 	void				OnGlobalsFinalize			();
 	void				OnGlobalsInitialize			();
 	
+	//----------------------------------------------------------------//
+	ZLAbstractShader*		MOAIAbstractGfxMgr_AffirmShader		( MOAILuaState& state, int idx ) const;
+	ZLAbstractTexture*		MOAIAbstractGfxMgr_AffirmTexture	( MOAILuaState& state, int idx ) const;
+	
 public:
 
 	DECL_LUA_SINGLETON ( MOAIGfxMgrGL )
 
 	//----------------------------------------------------------------//
-						MOAIGfxMgrGL				();
-						~MOAIGfxMgrGL				();
-	void				RegisterLuaClass			( MOAILuaState& state );
+							MOAIGfxMgrGL			();
+							~MOAIGfxMgrGL			();
+	void					RegisterLuaClass		( MOAILuaState& state );
 	
 	//----------------------------------------------------------------//
 	static MOAIGfxMgrGL& Get () {

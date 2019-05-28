@@ -6,10 +6,10 @@
 
 #include <zl-gfx/ZLAbstractGfxMgrGL.h>
 #include <zl-gfx/ZLGfxStateCPUCache.h>
-#include <zl-gfx/ZLIndexBuffer.h>
-#include <zl-gfx/ZLVertexBuffer.h>
+#include <zl-gfx/ZLIndexBufferGL.h>
+#include <zl-gfx/ZLVertexBufferGL.h>
 
-class ZLAbstractGfxResource;
+class ZLAbstractGfxResourceGL;
 
 //================================================================//
 // ZLGfxStateVertexCache
@@ -21,7 +21,7 @@ protected:
 	friend class MOAIGfxMgr; // for now
 	friend class ZLGfxMgrGL;
 	friend class ZLGfxStateCPUCache;
-	friend class ZLGfxStateGPUCache;
+	friend class ZLGfxStateGPUCacheGL;
 	
 	// Stock OpenGL ES 2.0 has no support for u32 index size in glDrawElements.
 	// iOS and many Androids (PowerVR, adreno) support it with GL_OES_element_index_uint extension.
@@ -51,8 +51,8 @@ protected:
 	bool						mApplyUVTransform;
 	ZLMatrix4x4					mUVTransform;
 	
-	ZLStrongPtr < ZLVertexBuffer >		mVtxBuffer;
-	ZLStrongPtr < ZLIndexBuffer >		mIdxBuffer;
+	ZLStrongPtr < ZLVertexBufferGL >		mVtxBuffer;
+	ZLStrongPtr < ZLIndexBufferGL >		mIdxBuffer;
 	
 	//----------------------------------------------------------------//
 	u32				CountPrims						();

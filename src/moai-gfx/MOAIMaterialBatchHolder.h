@@ -8,8 +8,8 @@
 
 class MOAIImage;
 class MOAIMaterial;
-class MOAIShader;
-class MOAITextureBase;
+class MOAIShaderGL;
+class MOAITextureBaseGL;
 
 //================================================================//
 // MOAIMaterialBatchHolder

@@ -5,7 +5,7 @@
 #define	MOAITEXTSTYLE_H
 
 class MOAIFont;
-class MOAIShader;
+class MOAIShaderGL;
 
 //================================================================//
 // MOAITextStyleState
@@ -21,8 +21,9 @@ protected:
 	friend class MOAITextStyleCache;
 	friend class MOAITextStyleMap;
 
+	ZLStrongPtr < ZLAbstractShader > mShader;
+	
 	MOAIFont*		mFont;
-	MOAIShader*		mShader;
 	float			mSize;
 	ZLVec2D			mScale;
 	u32				mColor;
@@ -41,7 +42,7 @@ public:
 	virtual				~MOAITextStyleState		();
 	bool				NeedsLayout				( const MOAITextStyleState& compare ) const;
 	virtual void		SetFont					( MOAIFont* font );
-	virtual void		SetShader				( MOAIShader* shader );
+	virtual void		SetShader				( ZLAbstractShader* shader );
 };
 
 //================================================================//
@@ -88,7 +89,7 @@ public:
 	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void			SetFont					( MOAIFont* font );
-	void			SetShader				( MOAIShader* shader );
+	void			SetShader				( ZLAbstractShader* shader );
 };
 
 #endif

@@ -39,12 +39,12 @@ u32 ZLAbstractGPU::GetBufferWidth () const {
 }
 
 //----------------------------------------------------------------//
-ZLFrameBuffer* ZLAbstractGPU::GetDefaultFrameBuffer () {
+ZLFrameBufferGL* ZLAbstractGPU::GetDefaultFrameBuffer () {
 	return this->ZLAbstractGPU_GetDefaultFrameBuffer ();
 }
 
 //----------------------------------------------------------------//
-ZLTextureBase* ZLAbstractGPU::GetDefaultTexture () {
+ZLAbstractTexture* ZLAbstractGPU::GetDefaultTexture () {
 	return this->ZLAbstractGPU_GetDefaultTexture ();
 }
 
@@ -54,17 +54,17 @@ bool ZLAbstractGPU::GetDepthMask () const {
 }
 
 //----------------------------------------------------------------//
-ZLFrameBuffer* ZLAbstractGPU::GetCurrentFrameBuffer () {
+ZLFrameBufferGL* ZLAbstractGPU::GetCurrentFrameBuffer () {
 	return this->ZLAbstractGPU_GetCurrentFrameBuffer ();
 }
 
 //----------------------------------------------------------------//
-ZLShader* ZLAbstractGPU::GetCurrentShader () {
+ZLAbstractShader* ZLAbstractGPU::GetCurrentShader () {
 	return this->ZLAbstractGPU_GetCurrentShader ();
 }
 
 //----------------------------------------------------------------//
-ZLVertexFormat* ZLAbstractGPU::GetCurrentVtxFormat () {
+ZLVertexFormatGL* ZLAbstractGPU::GetCurrentVtxFormat () {
 	return this->ZLAbstractGPU_GetCurrentVtxFormat ();
 }
 
@@ -114,12 +114,12 @@ void ZLAbstractGPU::SetCullFunc ( int cullFunc ) {
 }
 
 //----------------------------------------------------------------//
-void ZLAbstractGPU::SetDefaultFrameBuffer ( ZLFrameBuffer* frameBuffer ) {
+void ZLAbstractGPU::SetDefaultFrameBuffer ( ZLFrameBufferGL* frameBuffer ) {
 	return this->ZLAbstractGPU_SetDefaultFrameBuffer ( frameBuffer );
 }
 
 //----------------------------------------------------------------//
-void ZLAbstractGPU::SetDefaultTexture ( ZLTextureBase* texture ) {
+void ZLAbstractGPU::SetDefaultTexture ( ZLAbstractTexture* texture ) {
 	return this->ZLAbstractGPU_SetDefaultTexture ( texture );
 }
 
@@ -139,12 +139,12 @@ void ZLAbstractGPU::SetDepthMask ( bool depthMask ) {
 }
 
 //----------------------------------------------------------------//
-bool ZLAbstractGPU::SetFrameBuffer ( ZLFrameBuffer* frameBuffer ) {
+bool ZLAbstractGPU::SetFrameBuffer ( ZLFrameBufferGL* frameBuffer ) {
 	return this->ZLAbstractGPU_SetFrameBuffer ( frameBuffer );
 }
 
 //----------------------------------------------------------------//
-bool ZLAbstractGPU::SetIndexBuffer ( ZLIndexBuffer* buffer ) {
+bool ZLAbstractGPU::SetIndexBuffer ( ZLIndexBufferGL* buffer ) {
 	return this->ZLAbstractGPU_SetIndexBuffer ( buffer );
 }
 
@@ -164,27 +164,27 @@ void ZLAbstractGPU::SetScissorRect ( ZLRect rect ) {
 }
 
 //----------------------------------------------------------------//
-bool ZLAbstractGPU::SetShader ( ZLShader* shader ) {
+bool ZLAbstractGPU::SetShader ( ZLAbstractShader* shader ) {
 	return this->ZLAbstractGPU_SetShader ( shader );
 }
 
 //----------------------------------------------------------------//
-bool ZLAbstractGPU::SetTexture ( ZLTextureBase* texture, ZLIndex textureUnit ) {
+bool ZLAbstractGPU::SetTexture ( ZLAbstractTexture* texture, ZLIndex textureUnit ) {
 	return this->ZLAbstractGPU_SetTexture ( texture, textureUnit );
 }
 
 //----------------------------------------------------------------//
-bool ZLAbstractGPU::SetVertexArray ( ZLVertexArray* vtxArray ) {
+bool ZLAbstractGPU::SetVertexArray ( ZLVertexArrayGL* vtxArray ) {
 	return this->ZLAbstractGPU_SetVertexArray ( vtxArray );
 }
 
 //----------------------------------------------------------------//
-bool ZLAbstractGPU::SetVertexBuffer ( ZLVertexBuffer* buffer ) {
+bool ZLAbstractGPU::SetVertexBuffer ( ZLVertexBufferGL* buffer ) {
 	return this->ZLAbstractGPU_SetVertexBuffer ( buffer );
 }
 
 //----------------------------------------------------------------//
-void ZLAbstractGPU::SetVertexFormat ( ZLVertexFormat* format ) {
+void ZLAbstractGPU::SetVertexFormat ( ZLVertexFormatGL* format ) {
 	return this->ZLAbstractGPU_SetVertexFormat ( format );
 }
 

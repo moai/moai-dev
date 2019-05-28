@@ -75,8 +75,8 @@ private:
 	AR2VideoBufferT*						mVideoBuffer;
 	
 	MOAILuaSharedPtr < MOAISpriteDeck2D >	mVideoDeck;
-	MOAILuaSharedPtr < MOAIShader >			mVideoShader;
-	MOAILuaSharedPtr < MOAIShaderProgram >	mVideoShaderProgram;
+	MOAILuaSharedPtr < MOAIShaderGL >			mVideoShader;
+	MOAILuaSharedPtr < MOAIShaderProgramGL >	mVideoShaderProgram;
 	MOAILuaSharedPtr < MOAIVideoTexture >	mVideoPlane0;
 	MOAILuaSharedPtr < MOAIVideoTexture >	mVideoPlane1;
 	MOAILuaSharedPtr < MOAICamera >			mVideoCamera;

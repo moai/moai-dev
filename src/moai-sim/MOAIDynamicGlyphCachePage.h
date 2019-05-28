@@ -8,7 +8,7 @@
 
 class MOAIDynamicGlyphCache;
 class MOAIGlyph;
-class MOAIImageTexture;
+class MOAIImageTextureGL;
 class MOAIFont;
 
 //================================================================//
@@ -32,7 +32,7 @@ private:
 	ZLIndex		mPageID;
 	RowList 	mRows;
 
-	MOAIImageTexture* mImageTexture;
+	MOAIImageTextureGL* mImageTexture;
 	
 	//ZLColor::ColorFormat mColorFormat;
 

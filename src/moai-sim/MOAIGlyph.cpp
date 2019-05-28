@@ -12,7 +12,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGlyph::Draw ( MOAITextureBase& texture, float x, float y, float xScale, float yScale, const ZLRect& padding ) const {
+void MOAIGlyph::Draw ( MOAITextureBaseGL& texture, float x, float y, float xScale, float yScale, const ZLRect& padding ) const {
 	
 	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 	if ( !gfxMgr.SetTexture ( &texture )) return;

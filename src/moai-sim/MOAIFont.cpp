@@ -134,20 +134,20 @@ int	MOAIFont::_loadFromBMFont ( lua_State* L ) {
 	self->Init ( filename );
 
 	// Check if there are preloaded textures
-	MOAITexture** preloadedTextures = 0;
+	MOAITextureGL** preloadedTextures = 0;
 	u16 numPreloadedTextures = ( u16 )lua_objlen ( state, 3 );
 
 	if ( numPreloadedTextures > 0 ) {
 
-		preloadedTextures = new MOAITexture* [ numPreloadedTextures ];
-		memset ( preloadedTextures, 0, sizeof ( MOAITexture* ) * numPreloadedTextures );
+		preloadedTextures = new MOAITextureGL* [ numPreloadedTextures ];
+		memset ( preloadedTextures, 0, sizeof ( MOAITextureGL* ) * numPreloadedTextures );
 		
 		// Get all the preloaded textures
 		for ( u16 i=0; i<numPreloadedTextures; i++ ) {
 			lua_pushinteger ( state, i + 1 );
 			lua_gettable ( state, -2 );
 			
-			MOAITexture* texture = state.GetLuaObject < MOAITexture >( -1, true );
+			MOAITextureGL* texture = state.GetLuaObject < MOAITextureGL >( -1, true );
 			preloadedTextures [i] = texture;
 
 			lua_pop ( state, 1 );
@@ -287,7 +287,7 @@ int MOAIFont::_setFilter ( lua_State* L ) {
 	int min = state.GetValue < int >( 2, ZGL_SAMPLE_LINEAR );
 	int mag = state.GetValue < int >( 3, min );
 	
-	MOAITextureBase::CheckFilterModes ( min, mag );
+	MOAITextureBaseGL::CheckFilterModes ( min, mag );
 	
 	self->mMinFilter = min;
 	self->mMagFilter = mag;
@@ -368,16 +368,16 @@ int MOAIFont::_setReader ( lua_State* L ) {
 			a prop.)
 
 	@in		MOAIFont self
-	@in		MOAIShader shader
-	@out	MOAIShader shader
+	@in		MOAIShaderGL shader
+	@out	MOAIShaderGL shader
 */
 int MOAIFont::_setShader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
 
-	MOAIShader* shader = MOAIShader::AffirmShader ( state, 2 );
-	self->mShader.Set ( *self, shader );
+	ZLAbstractShader* shader = MOAIAbstractGfxMgr::Get ().AffirmShader ( state, 2 );
+	self->mShader = shader;
 
-	state.Push ( shader );
+	state.Push ( shader->AsType < MOAILuaObject >());
 	return 1;
 }
 
@@ -550,7 +550,7 @@ MOAIGlyphSet* MOAIFont::GetGlyphSet ( float size ) {
 }
 
 //----------------------------------------------------------------//
-MOAITextureBase* MOAIFont::GetGlyphTexture ( MOAIGlyph& glyph ) {
+MOAITextureBaseGL* MOAIFont::GetGlyphTexture ( MOAIGlyph& glyph ) {
 
 	assert ( this->mCache );
 	return this->mCache->GetGlyphTexture ( glyph );
@@ -603,7 +603,6 @@ MOAIFont::~MOAIFont () {
 
 	this->mReader.Set ( *this, 0 );
 	this->mCache.Set ( *this, 0 );
-	this->mShader.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//

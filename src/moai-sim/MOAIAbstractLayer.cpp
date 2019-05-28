@@ -129,7 +129,7 @@ int MOAIAbstractLayer::_setClearMode ( lua_State* L ) {
 int MOAIAbstractLayer::_setFrameBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractLayer, "U" )
 	
-	MOAIFrameBuffer* frameBuffer = state.GetLuaObject < MOAIFrameBuffer >( 2, true );
+	MOAIFrameBufferGL* frameBuffer = state.GetLuaObject < MOAIFrameBufferGL >( 2, true );
 	self->SetFrameBuffer ( frameBuffer );
 	return 0;
 }
@@ -141,7 +141,7 @@ int MOAIAbstractLayer::_setFrameBuffer ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIAbstractLayer::ClearSurface () {
 
-	ZLFrameBuffer* frameBuffer = this->GetFrameBuffer ();
+	ZLFrameBufferGL* frameBuffer = this->GetFrameBuffer ();
 	assert ( frameBuffer );
 
 	if (( this->mClearMode == CLEAR_NEVER ) || (( this->mClearMode == CLEAR_ON_BUFFER_FLAG ) && ( !frameBuffer->NeedsClear ()))) return;
@@ -169,7 +169,7 @@ void MOAIAbstractLayer::ClearSurface () {
 }
 
 //----------------------------------------------------------------//
-ZLFrameBuffer* MOAIAbstractLayer::GetFrameBuffer () {
+ZLFrameBufferGL* MOAIAbstractLayer::GetFrameBuffer () {
 
 	return this->mFrameBuffer ? this->mFrameBuffer : MOAIGfxMgrGL::Get ().GetDefaultFrameBuffer ();
 }
@@ -228,7 +228,7 @@ void MOAIAbstractLayer::SetClearColor ( MOAIColor* color ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractLayer::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
+void MOAIAbstractLayer::SetFrameBuffer ( MOAIFrameBufferGL* frameBuffer ) {
 
 	//this->mFrameBuffer.Set ( *this, frameBuffer ? frameBuffer : MOAIGfxMgrGL::Get ().mGfxState.GetDefaultFrameBuffer ());
 	this->mFrameBuffer.Set ( *this, frameBuffer );

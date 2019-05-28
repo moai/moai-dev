@@ -27,7 +27,7 @@ MOAIImage* MOAIStaticGlyphCache::GetGlyphImage ( MOAIGlyph& glyph ) {
 }
 
 //----------------------------------------------------------------//
-MOAITextureBase* MOAIStaticGlyphCache::GetGlyphTexture ( MOAIGlyph& glyph ) {
+MOAITextureBaseGL* MOAIStaticGlyphCache::GetGlyphTexture ( MOAIGlyph& glyph ) {
 
 	assert ( glyph.GetPageID () < this->mTextures.Size ());
 	return this->mTextures [ glyph.GetPageID ()];
@@ -40,7 +40,7 @@ MOAIImage* MOAIStaticGlyphCache::GetImage () {
 }
 
 //----------------------------------------------------------------//
-MOAITexture* MOAIStaticGlyphCache::GetTexture ( ZLIndex id ) {
+MOAITextureGL* MOAIStaticGlyphCache::GetTexture ( ZLIndex id ) {
 
 	return this->mTextures [ id ];
 }
@@ -111,7 +111,7 @@ int MOAIStaticGlyphCache::SetImage ( MOAIFont& font, MOAIImage& image ) {
 	u32 y = 0;
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalTextures; ++i ) {
 		
-		MOAITexture* texture = new MOAITexture ();
+		MOAITextureGL* texture = new MOAITextureGL ();
 		
 		u32 textureHeight = height - y;
 		textureHeight = textureHeight > width ? width : textureHeight;
@@ -127,7 +127,7 @@ int MOAIStaticGlyphCache::SetImage ( MOAIFont& font, MOAIImage& image ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIStaticGlyphCache::SetTexture ( ZLIndex id, MOAITexture* texture ) {
+void MOAIStaticGlyphCache::SetTexture ( ZLIndex id, MOAITextureGL* texture ) {
 	this->LuaRetain ( texture ); // TODO: ref counting?
 	this->mTextures [ id ] = texture;
 }

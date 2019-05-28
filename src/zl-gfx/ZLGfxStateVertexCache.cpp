@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <zl-gfx/ZLGfxMgrGL.h>
-#include <zl-gfx/ZLVertexFormat.h>
+#include <zl-gfx/ZLVertexFormatGL.h>
 
 //#define MOAIGFXVERTEXCACHE_DEBUG_LOG
 
@@ -22,8 +22,8 @@ bool ZLGfxStateVertexCache::BeginPrim ( u32 primType, u32 vtxCount, u32 idxCount
 	
 	DEBUG_LOG ( "BEGIN INDEXED PRIM: %d %d %d\n", primType, vtxCount, idxCount );
 	
-	ZLGfxStateGPUCache& gpuCache = this->GetGfxStateCacheGPU ();
-	ZLVertexFormat* format = gpuCache.GetCurrentVtxFormat ();
+	ZLGfxStateGPUCacheGL& gpuCache = this->GetGfxStateCacheGPU ();
+	ZLVertexFormatGL* format = gpuCache.GetCurrentVtxFormat ();
 	
 	u32 vtxSize = format ? format->GetVertexSize () : 0;
 	if ( !vtxSize ) return false;
@@ -114,7 +114,7 @@ void ZLGfxStateVertexCache::FlushVertexCache () {
 
 	if ( this->mPrimCount == 0 ) return;
 	
-	ZLGfxStateGPUCache& gpuCache = this->GetGfxStateCacheGPU ();
+	ZLGfxStateGPUCacheGL& gpuCache = this->GetGfxStateCacheGPU ();
 	gpuCache.SuspendChanges (); // don't apply any pending state changes;
 
 	if ( !this->mIsDrawing ) {
@@ -164,10 +164,10 @@ void ZLGfxStateVertexCache::InitBuffers () {
 
 	if ( !this->mVtxBuffer ) {
 
-		this->mVtxBuffer = new ZLVertexBuffer ();
+		this->mVtxBuffer = new ZLVertexBufferGL ();
 		this->mVtxBuffer->SetGfxMgr ( this->GetGfxMgr ());
 		
-		this->mIdxBuffer = new ZLIndexBuffer ();
+		this->mIdxBuffer = new ZLIndexBufferGL ();
 		this->mIdxBuffer->SetGfxMgr ( this->GetGfxMgr ());
 		
 		this->mIdxBuffer->SetIndexSize ( INDEX_SIZE );

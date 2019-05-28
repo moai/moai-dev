@@ -130,7 +130,7 @@ MOAIVideoTexture::MOAIVideoTexture () :
 	mUsePlane ( false ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAITextureBase )
+		RTTI_EXTEND ( MOAITextureBaseGL )
 	RTTI_END
 }
 
@@ -206,7 +206,7 @@ bool MOAIVideoTexture::ZLAbstractGfxResource_OnGPUUpdate () {
 
 	MOAIGfxMgr::Get ().LogErrors ();
 
-	return MOAITextureBase::ZLAbstractGfxResource_OnGPUUpdate ();
+	return MOAITextureBaseGL::ZLAbstractGfxResource_OnGPUUpdate ();
 }
 
 #endif

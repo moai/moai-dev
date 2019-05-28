@@ -6,12 +6,12 @@
 
 #include <moai-sim/MOAIDeck.h>
 
-class MOAIIndexBuffer;
+class MOAIIndexBufferGL;
 class MOAIMesh;
 class MOAIMeshPartition;
 class MOAISelectionSpan;
-class MOAITextureBase;
-class ZLVertexAttribute;
+class MOAITextureBaseGL;
+class ZLVertexAttributeGL;
 
 //================================================================//
 // MOAIMeshSpan
@@ -54,12 +54,12 @@ private:
 	friend class MOAIMesh;
 
 	MOAIMesh*				mMesh;
-	ZLVertexFormat*			mVertexFormat;
+	ZLVertexFormatGL*			mVertexFormat;
 	ZLSize					mTotalPrims;
 	
-	const ZLVertexAttribute*	mAttribute;
+	const ZLVertexAttributeGL*	mAttribute;
 	const void*					mVertexBuffer;
-	MOAIIndexBuffer*			mIndexBuffer;
+	MOAIIndexBufferGL*			mIndexBuffer;
 
 	//----------------------------------------------------------------//
 	bool		Init			( MOAIMesh& mesh, ZLIndex vertexBufferIndex );
@@ -91,12 +91,12 @@ public:
 class MOAIMesh :
 	public MOAIDeck,
 	public MOAIMaterialBatchHolder,
-	public MOAIVertexArray {
+	public MOAIVertexArrayGL {
 protected:
 
 	friend class MOAIMeshPrimReader;
 
-	MOAILuaSharedPtr < MOAIIndexBuffer > mIndexBuffer;
+	MOAILuaSharedPtr < MOAIIndexBufferGL > mIndexBuffer;
 
 	u32			mTotalElements;
 	ZLBounds	mBounds;
@@ -146,7 +146,7 @@ public:
 	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
 	void				SetBounds					( const ZLBox& aabb );
-	void				SetIndexBuffer				( MOAIIndexBuffer* indexBuffer );
+	void				SetIndexBuffer				( MOAIIndexBufferGL* indexBuffer );
 };
 
 #endif

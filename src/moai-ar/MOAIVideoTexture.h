@@ -4,7 +4,7 @@
 #ifndef	MOAIVIDEOTEXTURE_H
 #define	MOAIVIDEOTEXTURE_H
 
-#include <moai-sim/MOAITextureBase.h>
+#include <moai-sim/MOAITextureBaseGL.h>
 
 #if MOAI_WITH_ARTOOLKIT
 
@@ -12,7 +12,7 @@
 // MOAIVideoTexture
 //================================================================//
 class MOAIVideoTexture :
-	public MOAITextureBase {
+	public MOAITextureBaseGL {
 private:
 
 	friend class MOAIMarkerMgr;

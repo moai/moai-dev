@@ -131,7 +131,7 @@ int MOAIAssimpMesh::_getIndices ( lua_State* L ) {
 
 		ZLStream* stream;
 
-		MOAIIndexBuffer* idxBuffer = state.GetLuaObject < MOAIIndexBuffer >( 2, false );
+		MOAIIndexBufferGL* idxBuffer = state.GetLuaObject < MOAIIndexBufferGL >( 2, false );
 
 		if ( idxBuffer ) {
 
@@ -303,7 +303,7 @@ int MOAIAssimpMesh::_getVertices ( lua_State* L ) {
 
 	if ( nVertices ) {
 	
-		MOAIVertexFormat* format = state.GetLuaObject < MOAIVertexFormat >( -1, true );
+		MOAIVertexFormatGL* format = state.GetLuaObject < MOAIVertexFormatGL >( -1, true );
 		if ( !format ) return 0;
 
 		u32 vertexSize = format->GetVertexSize ();
@@ -311,7 +311,7 @@ int MOAIAssimpMesh::_getVertices ( lua_State* L ) {
 
 		ZLStream* stream;
 
-		MOAIVertexBuffer* vtxBuffer = state.GetLuaObject < MOAIVertexBuffer >( 2, false );
+		MOAIVertexBufferGL* vtxBuffer = state.GetLuaObject < MOAIVertexBufferGL >( 2, false );
 
 		if ( vtxBuffer ) {
 		
@@ -384,7 +384,7 @@ u32 MOAIAssimpMesh::ReadIndices ( ZLStream& stream, u32 indexSize ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIAssimpMesh::ReadVertices ( const MOAIVertexFormat& format, ZLStream& stream, bool renormalizeBones ) {
+u32 MOAIAssimpMesh::ReadVertices ( const MOAIVertexFormatGL& format, ZLStream& stream, bool renormalizeBones ) {
 
 	const aiMesh* mesh = this->mMesh;
 	if ( !mesh ) return 0;

@@ -279,7 +279,7 @@ void MOAITileDeck2D::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serial
 
 	MOAIGridSpace::SerializeIn ( state, serializer );
 	
-	//this->mTexture.Set ( *this, serializer.MemberIDToObject < MOAITextureBase >( state.GetFieldValue < MOAISerializerBase::ObjID >( -1, "mTexture", 0 )));
+	//this->mTexture.Set ( *this, serializer.MemberIDToObject < MOAITextureBaseGL >( state.GetFieldValue < MOAISerializerBase::ObjID >( -1, "mTexture", 0 )));
 }
 
 //----------------------------------------------------------------//
@@ -333,7 +333,7 @@ void MOAITileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	
 	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
 	materialStack.Push ( this->GetMaterial ( idx ));
-	materialStack.SetShader ( MOAIShaderMgr::DECK2D_SHADER );
+	materialStack.SetShader ( MOAIShaderMgrGL::DECK2D_SHADER );
 	materialStack.LoadGfxState ();
 	
 	this->mQuad.Draw ( 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, uOff, vOff, uScale, vScale );

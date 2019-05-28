@@ -6,18 +6,18 @@
 
 #include <zl-gfx/ZLAbstractGfxMgr.h>
 #include <zl-gfx/ZLAbstractGfxMgrGL.h>
-#include <zl-gfx/ZLGfxPipelineClerk.h>
-#include <zl-gfx/ZLGfxResourceClerk.h>
+#include <zl-gfx/ZLGfxPipelineClerkGL.h>
+#include <zl-gfx/ZLGfxResourceClerkGL.h>
 #include <zl-gfx/ZLGfxStateCPUCache.h>
-#include <zl-gfx/ZLGfxStateGPUCache.h>
+#include <zl-gfx/ZLGfxStateGPUCacheGL.h>
 #include <zl-gfx/ZLGfxStateVertexCache.h>
 
 //================================================================//
-// ZLGfxStateFrame
+// ZLGfxStateFrameGL
 //================================================================//
-class ZLGfxStateFrame :
+class ZLGfxStateFrameGL :
 	public ZLGfxStateCPUCacheFrame,
-	public ZLGfxStateGPUCacheFrame {
+	public ZLGfxStateGPUCacheFrameGL {
 protected:
 };
 
@@ -27,9 +27,9 @@ protected:
 class ZLGfxMgrGL :
 	virtual public ZLAbstractGfxMgr,
 	virtual public ZLAbstractGfxMgrGL,
-	virtual public ZLGfxPipelineClerk,
-	virtual public ZLGfxResourceClerk,
-	virtual public ZLGfxStateGPUCache {
+	virtual public ZLGfxPipelineClerkGL,
+	virtual public ZLGfxResourceClerkGL,
+	virtual public ZLGfxStateGPUCacheGL {
 protected:
 
 	bool								mHasContext;
@@ -45,15 +45,15 @@ protected:
 
 	u32									mRenderCounter;
 
-	ZLLeanArray < ZLGfxStateFrame* >	mStateStack;
+	ZLLeanArray < ZLGfxStateFrameGL* >	mStateStack;
 	ZLIndex								mStateStackTop;
 
 	//----------------------------------------------------------------//
 	ZLGfxMgrGL&					ZLAbstractGfxStateCache_GetGfxMgr 					();
-	ZLGfxPipelineClerk&			ZLAbstractGfxStateCache_GetGfxPipelineClerk			();
-	ZLGfxResourceClerk&			ZLAbstractGfxStateCache_GetGfxResourceClerk			();
+	ZLGfxPipelineClerkGL&			ZLAbstractGfxStateCache_GetGfxPipelineClerk			();
+	ZLGfxResourceClerkGL&			ZLAbstractGfxStateCache_GetGfxResourceClerk			();
 	ZLGfxStateCPUCache&			ZLAbstractGfxStateCache_GetGfxStateCacheCPU			();
-	ZLGfxStateGPUCache&			ZLAbstractGfxStateCache_GetGfxStateCacheGPU			();
+	ZLGfxStateGPUCacheGL&		ZLAbstractGfxStateCache_GetGfxStateCacheGPU			();
 	ZLGfxStateVertexCache&		ZLAbstractGfxStateCache_GetGfxVertexCache			();
 
 public:

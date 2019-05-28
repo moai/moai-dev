@@ -21,25 +21,26 @@ void AKUGfxGLAppInitialize () {
 void AKUGfxGLContextInitialize () {
 
 	MOAIGfxMgrGL::Affirm ();
-	MOAIGfxMgrGL::RegisterAlias < MOAIGfxMgr >();
+	MOAIGfxMgrGL::RegisterAlias < MOAIAbstractGfxMgr >();
 
-	MOAIVertexFormatMgr::Affirm ();
-	MOAIShaderMgr::Affirm ();
+	MOAIVertexFormatMgrGL::Affirm ();
+	MOAIShaderMgrGL::Affirm ();
 	
 	MOAIRenderMgr::Affirm ();
 
-	REGISTER_LUA_CLASS ( MOAIFrameBuffer )
-	REGISTER_LUA_CLASS ( MOAIFrameBufferTexture )
-	REGISTER_LUA_CLASS ( MOAIGfxMgrGL )
-	REGISTER_LUA_CLASS ( MOAIImageTexture )
-	REGISTER_LUA_CLASS ( MOAIIndexBuffer )
 	REGISTER_LUA_CLASS ( MOAIRenderMgr )
-	REGISTER_LUA_CLASS ( MOAIShader )
-	REGISTER_LUA_CLASS ( MOAIShaderMgr )
-	REGISTER_LUA_CLASS ( MOAIShaderProgram )
-	REGISTER_LUA_CLASS ( MOAITexture )
-	REGISTER_LUA_CLASS ( MOAIVertexArray )
-	REGISTER_LUA_CLASS ( MOAIVertexBuffer )
-	REGISTER_LUA_CLASS ( MOAIVertexFormat )
-	REGISTER_LUA_CLASS ( MOAIVertexFormatMgr )
+
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIFrameBufferGL, 			"MOAIFrameBuffer" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIFrameBufferTextureGL, 	"MOAIFrameBufferTexture" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIGfxMgrGL, 				"MOAIGfxMgr" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIImageTextureGL, 		"MOAIImageTexture" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIIndexBufferGL, 			"MOAIIndexBuffer" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIShaderGL, 				"MOAIShaderGL" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIShaderMgrGL, 			"MOAIShaderMgr" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIShaderProgramGL, 		"MOAIShaderProgram" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAITextureGL, 				"MOAITexture" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexArrayGL, 			"MOAIVertexArray" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexBufferGL, 		"MOAIVertexBuffer" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexFormatGL, 		"MOAIVertexFormat" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexFormatMgrGL, 		"MOAIVertexFormatMgr" )
 }

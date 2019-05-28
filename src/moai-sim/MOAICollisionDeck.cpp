@@ -173,7 +173,7 @@ void MOAICollisionDeck::MOAIDeck_Draw ( ZLIndex idx ) {
 //		idx = idx - 1;
 //		u32 itemIdx = idx % size;
 //
-//		if ( !this->LoadGfxState ( materials, this->mMaterialIDs [ itemIdx ], idx, MOAIShaderMgr::DECK2D_SHADER )) return;
+//		if ( !this->LoadGfxState ( materials, this->mMaterialIDs [ itemIdx ], idx, MOAIShaderMgrGL::DECK2D_SHADER )) return;
 //
 //		MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 //		MOAIQuadBrush::BindVertexFormat ();
