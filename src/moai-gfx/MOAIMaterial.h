@@ -45,7 +45,7 @@ private:
 	friend class MOAIMaterialMgr;
 
 	MOAIMaterialNamedGlobal < MOAILight >*			mLights;
-	MOAIMaterialNamedGlobal < ZLAbstractTexture >*	mTextures;
+	MOAIMaterialNamedGlobal < MOAIAbstractTexture >*	mTextures;
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
@@ -115,16 +115,16 @@ public:
 	//----------------------------------------------------------------//
 	void					Clear					();
 	MOAILight*				GetLight				( u32 name );
-	ZLAbstractTexture*		GetTexture				();
-	ZLAbstractTexture*		GetTexture				( u32 name );
+	MOAIAbstractTexture*		GetTexture				();
+	MOAIAbstractTexture*		GetTexture				( u32 name );
 							MOAIMaterial			();
 	virtual					~MOAIMaterial			();
 	void					SetLight				( u32 name );
 	void					SetLight				( u32 name, MOAILight* light );
 	void					SetTexture				();
-	void					SetTexture				( ZLAbstractTexture* texture );
+	void					SetTexture				( MOAIAbstractTexture* texture );
 	void					SetTexture				( u32 name );
-	void					SetTexture				( u32 name, ZLAbstractTexture* texture );
+	void					SetTexture				( u32 name, MOAIAbstractTexture* texture );
 };
 
 #endif

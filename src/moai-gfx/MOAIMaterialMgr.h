@@ -42,7 +42,7 @@ private:
 	friend class MOAIMaterialMgr;
 	
 	union {
-		ZLAbstractTexture*	mTexture;
+		MOAIAbstractTexture*	mTexture;
 		MOAILight*			mLight;
 		void*				mPtr;
 	};
@@ -106,21 +106,21 @@ public:
 
 	//----------------------------------------------------------------//
 	MOAILight*			GetLight					( u32 lightID );
-	ZLAbstractTexture*	GetTexture					( u32 textureID );
+	MOAIAbstractTexture*	GetTexture					( u32 textureID );
 	void				LoadGfxState				();
 						MOAIMaterialMgr				();
 						~MOAIMaterialMgr			();
 	void				Pop							();
 	void				Push						( const MOAIMaterial* material = 0 );
-	void				SetBlendMode				( const ZLBlendMode& blendMode );
+	void				SetBlendMode				( const MOAIBlendMode& blendMode );
 	void				SetCullMode					( int cullMode );
 	void				SetDepthMask				( bool depthMask );
 	void				SetDepthTest				( int depthTest );
 	void				SetLight					( u32 lightID, MOAILight* light );
 	void				SetShader					( u32 shaderID );
-	void				SetShader					( ZLAbstractShader* shader );
-	void				SetTexture					( ZLAbstractTexture* texture );
-	void				SetTexture					( u32 textureID, ZLAbstractTexture* texture );
+	void				SetShader					( MOAIAbstractShader* shader );
+	void				SetTexture					( MOAIAbstractTexture* texture );
+	void				SetTexture					( u32 textureID, MOAIAbstractTexture* texture );
 };
 
 #endif

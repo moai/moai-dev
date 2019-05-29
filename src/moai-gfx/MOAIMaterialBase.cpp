@@ -3,9 +3,9 @@
 
 #include "pch.h"
 
+#include <moai-gfx/MOAIAbstractShader.h>
+#include <moai-gfx/MOAIAbstractTexture.h>
 #include <moai-gfx/MOAIMaterialBase.h>
-#include <moai-gfx/MOAIShaderGL.h>
-#include <moai-gfx/MOAITextureBaseGL.h>
 
 //================================================================//
 // MOAIMaterialBase
@@ -75,8 +75,8 @@ MOAIMaterialBase::MOAIMaterialBase () :
 //----------------------------------------------------------------//
 MOAIMaterialBase::~MOAIMaterialBase () {
 
-	ZLRelease ( this->mShader );
-	ZLRelease ( this->mTexture );
+//	ZLRelease ( this->mShader );
+//	ZLRelease ( this->mTexture );
 }
 
 //----------------------------------------------------------------//
@@ -86,7 +86,7 @@ void MOAIMaterialBase::SetBlendMode () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBase::SetBlendMode ( const ZLBlendMode& blendMode ) {
+void MOAIMaterialBase::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 
 	this->mBlendMode = blendMode;
 	this->mFlags |= BLEND_MODE_FLAG;
@@ -138,7 +138,7 @@ void MOAIMaterialBase::SetShader () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBase::SetShader ( ZLAbstractShader* shader ) {
+void MOAIMaterialBase::SetShader ( MOAIAbstractShader* shader ) {
 
 	this->mShader = shader;
 	
@@ -157,7 +157,7 @@ void MOAIMaterialBase::SetTexture () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBase::SetTexture ( ZLAbstractTexture* texture ) {
+void MOAIMaterialBase::SetTexture ( MOAIAbstractTexture* texture ) {
 
 	this->mTexture = texture;
 

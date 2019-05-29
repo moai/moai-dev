@@ -29,6 +29,7 @@
 #include <zl-util/ZLBox.h>
 #include <zl-util/ZLBoxCorners.h>
 #include <zl-util/ZLByteStream.h>
+#include <zl-util/ZLCamera.h>
 #include <zl-util/ZLCgt.h>
 #include <zl-util/ZLCircle.h>
 #include <zl-util/ZLCleanup.h>
@@ -109,6 +110,8 @@
 #include <zl-util/ZLVec2D.h>
 #include <zl-util/ZLVec3D.h>
 #include <zl-util/ZLVec4D.h>
+#include <zl-util/ZLViewport.h>
+#include <zl-util/ZLViewProj.h>
 #include <zl-util/ZLWeakPtr.h>
 #include <zl-util/ZLXmlReader.h>
 #include <zl-util/ZLZip.h>

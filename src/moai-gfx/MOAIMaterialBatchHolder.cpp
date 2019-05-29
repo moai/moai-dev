@@ -6,7 +6,6 @@
 #include <moai-gfx/MOAIMaterialBatch.h>
 #include <moai-gfx/MOAIMaterialBatchHolder.h>
 
-
 //================================================================//
 // lua
 //================================================================//

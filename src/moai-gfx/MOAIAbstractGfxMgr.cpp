@@ -10,13 +10,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLAbstractShader* MOAIAbstractGfxMgr::AffirmShader ( MOAILuaState& state, int idx ) const {
+MOAIAbstractShader* MOAIAbstractGfxMgr::AffirmShader ( MOAILuaState& state, int idx ) const {
 
 	return this->MOAIAbstractGfxMgr_AffirmShader ( state, idx );
 }
 
 //----------------------------------------------------------------//
-ZLAbstractTexture* MOAIAbstractGfxMgr::AffirmTexture ( MOAILuaState& state, int idx ) const {
+MOAIAbstractTexture* MOAIAbstractGfxMgr::AffirmTexture ( MOAILuaState& state, int idx ) const {
 
 	return this->MOAIAbstractGfxMgr_AffirmTexture ( state, idx );
 }
@@ -32,3 +32,28 @@ MOAIAbstractGfxMgr::MOAIAbstractGfxMgr () {
 //----------------------------------------------------------------//
 MOAIAbstractGfxMgr::~MOAIAbstractGfxMgr () {
 }
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAIAbstractGfxMgr& MOAIAbstractGfxMgr::MOAIAbstractGfxMgrComponents_GetAbstractGfxMgr () {
+	return *this;
+}
+
+//----------------------------------------------------------------//
+MOAIAbstractGfxStateGPUCache& MOAIAbstractGfxMgr::MOAIAbstractGfxMgrComponents_GetAbstractGfxStateGPUCache () {
+	return *this;
+}
+
+//----------------------------------------------------------------//
+MOAIAbstractVertexCache& MOAIAbstractGfxMgr::MOAIAbstractGfxMgrComponents_GetAbstractVertexCache () {
+	return *this;
+}
+
+//----------------------------------------------------------------//
+MOAIGfxStateCPUCache& MOAIAbstractGfxMgr::MOAIAbstractGfxMgrComponents_GetGfxStateCPUCache () {
+	return *this;
+}
+

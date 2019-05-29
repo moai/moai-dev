@@ -4,13 +4,11 @@
 #include "pch.h"
 
 #include <moai-gfx/MOAIAbstractGfxMgr.h>
+#include <moai-gfx/MOAIAbstractShader.h>
+#include <moai-gfx/MOAIAbstractTexture.h>
 #include <moai-gfx/MOAILight.h>
 #include <moai-gfx/MOAIMaterial.h>
 #include <moai-gfx/MOAIMaterialBatch.h>
-#include <moai-gfx/MOAIShaderGL.h>
-#include <moai-gfx/MOAIShaderMgrGL.h>
-#include <moai-gfx/MOAITextureGL.h>
-#include <moai-gfx/MOAITextureBaseGL.h>
 
 //================================================================//
 // lua
@@ -199,7 +197,7 @@ int MOAIMaterialBatch::GetBlendMode ( MOAILuaState& state, int idx ) {
 
 	MOAIMaterial* material = this->RawGetMaterial ( state.GetValue < MOAILuaIndex >( idx, ZLIndexOp::ZERO ));
 	if ( material ) {
-		ZLBlendMode& blendMode = material->mBlendMode;
+		MOAIBlendMode& blendMode = material->mBlendMode;
 		state.Push ( blendMode.mEquation );
 		state.Push ( blendMode.mSourceFactor );
 		state.Push ( blendMode.mDestFactor );
@@ -272,20 +270,22 @@ ZLIndex MOAIMaterialBatch::GetMaterialID ( MOAILuaState& state, int& idx ) {
 ZLIndex MOAIMaterialBatch::GetMaterialID ( MOAILuaState& state, int& idx, bool& set ) {
 
 	set = false;
-	
-	if ( state.IsType ( idx, LUA_TNUMBER )) {
-	
-		u32 value = state.GetValue < u32 >( idx, 0 );
-		
-		if (( value == 0 ) || ZLGfx::IsFlag ( value )) {
-			set = true;
-			return ZLIndexOp::ZERO;
-		}
-		idx++;
-		set = state.IsNil ( idx );
-		return ZLIndexCast ( value - 1 );
-	}
-	set = state.IsNil ( idx );
+
+	// TODO: rethink this
+
+//	if ( state.IsType ( idx, LUA_TNUMBER )) {
+//
+//		u32 value = state.GetValue < u32 >( idx, 0 );
+//
+//		if (( value == 0 ) || ZLGfx::IsFlag ( value )) {
+//			set = true;
+//			return ZLIndexOp::ZERO;
+//		}
+//		idx++;
+//		set = state.IsNil ( idx );
+//		return ZLIndexCast ( value - 1 );
+//	}
+//	set = state.IsNil ( idx );
 	return ZLIndexOp::ZERO;
 }
 
@@ -315,11 +315,8 @@ int MOAIMaterialBatch::GetShader ( MOAILuaState& state, int idx ) {
 
 	MOAIMaterial* material = this->RawGetMaterial ( state.GetValue < MOAILuaIndex >( idx, ZLIndexOp::ZERO ));
 	if ( material && material->mShader ) {
-		MOAILuaObject* luaObject = material->mShader->AsType < MOAILuaObject >();
-		if ( luaObject ) {
-			state.Push ( luaObject );
-			return 1;
-		}
+		state.Push (( MOAILuaObject* )material->mShader );
+		return 1;
 	}
 	return 0;
 }
@@ -418,7 +415,7 @@ void MOAIMaterialBatch::SetBlendMode ( ZLIndex idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::SetBlendMode ( ZLIndex idx, const ZLBlendMode& blendMode ) {
+void MOAIMaterialBatch::SetBlendMode ( ZLIndex idx, const MOAIBlendMode& blendMode ) {
 
 	this->AffirmMaterial ( idx ).SetBlendMode ( blendMode );
 }
@@ -435,7 +432,7 @@ void MOAIMaterialBatch::SetBlendMode ( MOAILuaState& state, int idx ) {
 		u32 srcFactor	= state.GetValue < u32 >( idx++, ZGL_BLEND_FACTOR_ONE );
 		u32 dstFactor	= state.GetValue < u32 >( idx, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
 	
-		ZLBlendMode blendMode;
+		MOAIBlendMode blendMode;
 		blendMode.SetBlend ( equation, srcFactor, dstFactor );
 		this->SetBlendMode ( materialID, blendMode );
 	}
@@ -565,20 +562,21 @@ void MOAIMaterialBatch::SetShader ( ZLIndex idx ) {
 //----------------------------------------------------------------//
 void MOAIMaterialBatch::SetShader ( ZLIndex idx, u32 shaderID ) {
 
-	this->SetShader ( idx, MOAIShaderMgrGL::Get ().GetShader ( shaderID ));
+	assert ( false );
+//	this->SetShader ( idx, MOAIShaderMgrGL::Get ().GetShader ( shaderID ));
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::SetShader ( ZLIndex idx, ZLAbstractShader* shader ) {
+void MOAIMaterialBatch::SetShader ( ZLIndex idx, MOAIAbstractShader* shader ) {
 
 	this->AffirmMaterial ( idx ).SetShader ( shader );
 }
 
 //----------------------------------------------------------------//
-ZLAbstractShader* MOAIMaterialBatch::SetShader ( MOAILuaState& state, int idx ) {
+MOAIAbstractShader* MOAIMaterialBatch::SetShader ( MOAILuaState& state, int idx ) {
 
 	ZLIndex materialID = MOAIMaterialBatch::GetMaterialID ( state, idx );
-	ZLAbstractShader* shader = MOAIAbstractGfxMgr::Get ().AffirmShader ( state, idx );
+	MOAIAbstractShader* shader = MOAIAbstractGfxMgr::Get ().AffirmShader ( state, idx );
 	this->SetShader ( materialID, shader );
 	return shader;
 }
@@ -592,7 +590,7 @@ void MOAIMaterialBatch::SetTexture ( ZLIndex idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::SetTexture ( ZLIndex idx, ZLAbstractTexture* texture ) {
+void MOAIMaterialBatch::SetTexture ( ZLIndex idx, MOAIAbstractTexture* texture ) {
 
 	this->AffirmMaterial ( idx ).SetTexture ( texture );
 }
@@ -606,18 +604,18 @@ void MOAIMaterialBatch::SetTexture ( ZLIndex idx, u32 name ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::SetTexture ( ZLIndex idx, u32 name, ZLAbstractTexture* texture ) {
+void MOAIMaterialBatch::SetTexture ( ZLIndex idx, u32 name, MOAIAbstractTexture* texture ) {
 
 	this->AffirmMaterial ( idx ).SetTexture ( name, texture );
 }
 
 //----------------------------------------------------------------//
-ZLAbstractTexture* MOAIMaterialBatch::SetTexture ( MOAILuaState& state, int idx ) {
+MOAIAbstractTexture* MOAIMaterialBatch::SetTexture ( MOAILuaState& state, int idx ) {
 	
 	u32 name;
 	ZLIndex materialID = MOAIMaterialBatch::GetNamedGlobalID ( state, idx, name );
 
-	ZLAbstractTexture* texture = MOAIAbstractGfxMgr::Get ().AffirmTexture ( state, idx );
+	MOAIAbstractTexture* texture = MOAIAbstractGfxMgr::Get ().AffirmTexture ( state, idx );
 	if ( name != MOAI_UNKNOWN_MATERIAL_GLOBAL ) {
 		this->SetTexture ( materialID, name, texture );
 	}

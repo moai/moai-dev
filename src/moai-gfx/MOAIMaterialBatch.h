@@ -88,7 +88,7 @@ public:
 	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
 	
 	void				SetBlendMode				( ZLIndex idx );
-	void				SetBlendMode				( ZLIndex idx, const ZLBlendMode& blendMode );
+	void				SetBlendMode				( ZLIndex idx, const MOAIBlendMode& blendMode );
 	void				SetBlendMode				( MOAILuaState& state, int idx );
 	
 	void				SetCullMode					( ZLIndex idx );
@@ -109,14 +109,14 @@ public:
 
 	void				SetShader					( ZLIndex idx );
 	void				SetShader					( ZLIndex idx, u32 shaderID );
-	void				SetShader					( ZLIndex idx, ZLAbstractShader* shader );
-	ZLAbstractShader*	SetShader					( MOAILuaState& state, int idx );
+	void				SetShader					( ZLIndex idx, MOAIAbstractShader* shader );
+	MOAIAbstractShader*	SetShader					( MOAILuaState& state, int idx );
 
 	void				SetTexture					( ZLIndex idx );
-	void				SetTexture					( ZLIndex idx, ZLAbstractTexture* texture );
+	void				SetTexture					( ZLIndex idx, MOAIAbstractTexture* texture );
 	void				SetTexture					( ZLIndex idx, u32 name );
-	void				SetTexture					( ZLIndex idx, u32 name, ZLAbstractTexture* texture );
-	ZLAbstractTexture*	SetTexture					( MOAILuaState& state, int idx );
+	void				SetTexture					( ZLIndex idx, u32 name, MOAIAbstractTexture* texture );
+	MOAIAbstractTexture*	SetTexture					( MOAILuaState& state, int idx );
 
 	size_t				Size						();
 

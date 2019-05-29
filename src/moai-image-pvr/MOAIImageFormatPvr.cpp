@@ -210,7 +210,7 @@ bool MOAIImageFormatPvr::CheckHeader ( const void* buffer ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIImageFormatPvr::CreateTexture ( ZLTextureBaseGL& texture, const void* data, size_t size ) {
+bool MOAIImageFormatPvr::CreateTexture ( MOAITextureBaseGL& texture, const void* data, size_t size ) {
 
 	if ( !MOAIGfxMgrGL::Get ().GetHasContext ()) return false;
 	MOAIGfxMgrGL::Get ().ClearErrors ();
@@ -299,7 +299,7 @@ bool MOAIImageFormatPvr::CreateTexture ( ZLTextureBaseGL& texture, const void* d
 	
 	ZLGfx& gfx = MOAIGfxMgrGL::Get ().GetDrawingAPI ();
 
-	ZLGfxHandleGL glTexID = gfx.CreateTexture ();
+	ZLGfxHandle glTexID = gfx.CreateTexture ();
 	//if ( glTexID ) { // TODO: error checking
 
 		gfx.BindTexture ( glTexID );

@@ -4,8 +4,10 @@
 #ifndef	MOAIMATERIALBASE_H
 #define	MOAIMATERIALBASE_H
 
-class MOAIShaderGL;
-class MOAITextureBaseGL;
+#include <moai-gfx/MOAIBlendMode.h>
+
+class MOAIAbstractShader;
+class MOAIAbstractTexture;
 
 //================================================================//
 // MOAIMaterialBase
@@ -33,10 +35,10 @@ protected:
 	static const u32	DRAW_FLAGS	= BLEND_MODE_FLAG | CULL_MODE_FLAG | DEPTH_MASK_FLAG | DEPTH_TEST_FLAG;
 	static const u32	ALL_FLAGS	= MAX_FLAG - 1;
 	
-	ZLStrongPtr < ZLAbstractShader >	mShader;
-	ZLStrongPtr < ZLAbstractTexture >	mTexture;
+	ZLStrongPtr < MOAIAbstractShader >	mShader;
+	ZLStrongPtr < MOAIAbstractTexture >	mTexture;
 	
-	ZLBlendMode			mBlendMode;
+	MOAIBlendMode		mBlendMode;
 	int					mCullMode;
 	int					mDepthTest;
 	bool				mDepthMask;
@@ -48,19 +50,19 @@ protected:
 
 public:
 
-	GET_CONST ( ZLBlendMode&, BlendMode, mBlendMode );
+	GET_CONST ( MOAIBlendMode&, BlendMode, mBlendMode );
 	GET ( int, CullMode, mCullMode );
 	GET ( int, DepthTest, mDepthTest );
 	GET ( bool, DepthMask, mDepthMask );
-	GET ( ZLAbstractShader*, Shader, mShader );
-	GET ( ZLAbstractTexture*, Texture, mTexture );
+	GET ( MOAIAbstractShader*, Shader, mShader );
+	GET ( MOAIAbstractTexture*, Texture, mTexture );
 
 	//----------------------------------------------------------------//
 	void			Clear						();
 					MOAIMaterialBase			();
 					~MOAIMaterialBase			();
 	void			SetBlendMode				();
-	void			SetBlendMode				( const ZLBlendMode& blendMode );
+	void			SetBlendMode				( const MOAIBlendMode& blendMode );
 	void			SetCullMode					();
 	void			SetCullMode					( int cullMode );
 	void			SetDepthMask				();
@@ -68,9 +70,9 @@ public:
 	void			SetDepthTest				();
 	void			SetDepthTest				( int depthTest );
 	void			SetShader					();
-	void			SetShader					( ZLAbstractShader* shader );
+	void			SetShader					( MOAIAbstractShader* shader );
 	void			SetTexture					();
-	void			SetTexture					( ZLAbstractTexture* texture );
+	void			SetTexture					( MOAIAbstractTexture* texture );
 };
 
 #endif

@@ -1,5 +1,6 @@
 #include <moai_config.h>
-#include <zl-gfx/headers.h>
-#include <zl-util/headers.h>
-#include <moai-core/headers.h>
 #include <moai-util/headers.h>
+
+// TODO: this is a hack; using GL enum aliases for now.
+// TODO: should be local to moai-gfx.
+#include <zl-gfx/ZLGfxEnum.h>

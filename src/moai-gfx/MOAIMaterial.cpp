@@ -3,11 +3,10 @@
 
 #include "pch.h"
 
+#include <moai-gfx/MOAIAbstractTexture.h>
 #include <moai-gfx/MOAILight.h>
 #include <moai-gfx/MOAIMaterial.h>
 #include <moai-gfx/MOAIMaterialMgr.h>
-#include <moai-gfx/MOAIShaderGL.h>
-#include <moai-gfx/MOAITextureBaseGL.h>
 
 //================================================================//
 // MOAIMaterial
@@ -17,7 +16,7 @@
 void MOAIMaterial::Clear () {
 
 	this->ClearNamedGlobalList < MOAILight >( this->mLights );
-	this->ClearNamedGlobalList < ZLAbstractTexture >( this->mTextures );
+	this->ClearNamedGlobalList < MOAIAbstractTexture >( this->mTextures );
 	
 	this->MOAIMaterialBase::Clear ();
 }
@@ -30,17 +29,17 @@ MOAILight* MOAIMaterial::GetLight ( u32 name ) {
 }
 
 //----------------------------------------------------------------//
-ZLAbstractTexture* MOAIMaterial::GetTexture () {
+MOAIAbstractTexture* MOAIMaterial::GetTexture () {
 
 	return this->MOAIMaterialBase::GetTexture ();
 }
 
 //----------------------------------------------------------------//
-ZLAbstractTexture* MOAIMaterial::GetTexture ( u32 name ) {
+MOAIAbstractTexture* MOAIMaterial::GetTexture ( u32 name ) {
 
 	if ( name < MOAIMaterialMgr::MAX_GLOBAL_TEXTURES ) {
-		MOAIMaterialNamedGlobal < ZLAbstractTexture >* global = this->FindNamedGlobal < ZLAbstractTexture >( this->mTextures, name );
-		return global ? ( ZLAbstractTexture* )global->mValue : 0;
+		MOAIMaterialNamedGlobal < MOAIAbstractTexture >* global = this->FindNamedGlobal < MOAIAbstractTexture >( this->mTextures, name );
+		return global ? ( MOAIAbstractTexture* )global->mValue : 0;
 	}
 	return this->MOAIMaterialBase::GetTexture ();
 }
@@ -78,7 +77,7 @@ void MOAIMaterial::SetTexture () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterial::SetTexture ( ZLAbstractTexture* texture ) {
+void MOAIMaterial::SetTexture ( MOAIAbstractTexture* texture ) {
 
 	this->MOAIMaterialBase::SetTexture ( texture );
 }
@@ -90,9 +89,9 @@ void MOAIMaterial::SetTexture ( u32 name ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterial::SetTexture ( u32 name, ZLAbstractTexture* texture ) {
+void MOAIMaterial::SetTexture ( u32 name, MOAIAbstractTexture* texture ) {
 
 	if ( name < MOAIMaterialMgr::MAX_GLOBAL_TEXTURES ) {
-		this->SetNamedGlobal < ZLAbstractTexture >( this->mTextures, name, texture );
+		this->SetNamedGlobal < MOAIAbstractTexture >( this->mTextures, name, texture );
 	}
 }

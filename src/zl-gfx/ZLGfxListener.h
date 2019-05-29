@@ -4,9 +4,6 @@
 #ifndef ZLGFXLISTENER_H
 #define ZLGFXLISTENER_H
 
-#include <zl-util/ZLRefCountedObject.h>
-#include <zl-util/ZLWeakPtr.h>
-
 class ZLCopyOnWrite;
 
 //================================================================//

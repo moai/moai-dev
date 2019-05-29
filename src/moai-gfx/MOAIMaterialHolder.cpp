@@ -3,10 +3,10 @@
 
 #include "pch.h"
 
+#include <moai-gfx/MOAIAbstractShader.h>
+#include <moai-gfx/MOAIAbstractTexture.h>
+#include <moai-gfx/MOAIAbstractGfxMgr.h>
 #include <moai-gfx/MOAIMaterialHolder.h>
-#include <moai-gfx/MOAIShaderGL.h>
-#include <moai-gfx/MOAITextureGL.h>
-#include <moai-gfx/MOAITextureBaseGL.h>
 
 //================================================================//
 // lua
@@ -17,7 +17,7 @@
 int MOAIMaterialHolder::_getBlendMode ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialHolder, "U" )
 	
-	const ZLBlendMode& blendMode = self->mMaterial.GetBlendMode ();
+	const MOAIBlendMode& blendMode = self->mMaterial.GetBlendMode ();
 	
 	state.Push ( blendMode.mEquation );
 	state.Push ( blendMode.mSourceFactor );
@@ -87,7 +87,7 @@ int MOAIMaterialHolder::_setBlendMode ( lua_State* L ) {
 		self->mMaterial.SetBlendMode ();
 	}
 	else {
-		ZLBlendMode blendMode;
+		MOAIBlendMode blendMode;
 		blendMode.mEquation			= ( ZLColor::BlendEquation )state.GetValue < u32 >( 2, ( u32 )ZLColor::BLEND_EQ_NONE );
 		blendMode.mSourceFactor		= ( ZLColor::BlendFactor )state.GetValue < u32 >( 3, ( u32 )ZLColor::BLEND_FACTOR_ZERO );
 		blendMode.mDestFactor		= ( ZLColor::BlendFactor )state.GetValue < u32 >( 4, ( u32 )ZLColor::BLEND_FACTOR_ZERO );
@@ -156,9 +156,9 @@ int MOAIMaterialHolder::_setLight ( lua_State* L ) {
 int MOAIMaterialHolder::_setShader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialHolder, "U" )
 	
-	ZLAbstractShader* shader = MOAIAbstractGfxMgr::Get ().AffirmShader ( state, 2 );
+	MOAIAbstractShader* shader = MOAIAbstractGfxMgr::Get ().AffirmShader ( state, 2 );
 	self->mMaterial.SetShader ( shader );
-	state.Push ( shader->AsType < MOAILuaObject >());
+	state.Push ( shader );
 	
 	return 1;
 }
@@ -175,14 +175,14 @@ int MOAIMaterialHolder::_setTexture ( lua_State* L ) {
 		name = state.GetValue < u32 >( idx++, name );
 	}
 	
-	ZLAbstractTexture* texture = MOAIAbstractGfxMgr::Get ().AffirmTexture ( state, idx );
+	MOAIAbstractTexture* texture = MOAIAbstractGfxMgr::Get ().AffirmTexture ( state, idx );
 	if ( name != MOAI_UNKNOWN_MATERIAL_GLOBAL ) {
 		self->mMaterial.SetTexture ( name, texture );
 	}
 	else {
 		self->mMaterial.SetTexture ( texture );
 	}
-	state.Push ( texture->AsType < MOAILuaObject >());
+	state.Push ( texture );
 	return 1;
 }
 

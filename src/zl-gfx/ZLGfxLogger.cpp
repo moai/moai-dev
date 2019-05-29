@@ -8,7 +8,6 @@
 #include <zl-gfx/ZLGfxEnum.h>
 #include <zl-gfx/ZLGfxLogger.h>
 #include <zl-gfx/ZLGfxRetained.h>
-#include <zl-util/ZLLog.h>
 
 //================================================================//
 // ZLGfxLogger
@@ -21,35 +20,35 @@ void ZLGfxLogger::ActiveTexture ( u32 textureUnit ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::AllocateResource ( ZLGfxResourceGL& resource, u32 param ) {
+void ZLGfxLogger::AllocateResource ( ZLGfxResource& resource, u32 param ) {
 	
 	switch ( resource.mType ) {
 	
-		case ZLGfxResourceGL::BUFFER:
+		case ZLGfxResource::BUFFER:
 			this->PrintLine ( "glGenBuffers\n" );
 			break;
 			
-		case ZLGfxResourceGL::FRAMEBUFFER:
+		case ZLGfxResource::FRAMEBUFFER:
 			this->PrintLine ( "glGenFramebuffers\n" );
 			break;
 			
-		case ZLGfxResourceGL::PROGRAM:
+		case ZLGfxResource::PROGRAM:
 			this->PrintLine ( "glCreateProgram\n" );
 			break;
 			
-		case ZLGfxResourceGL::SHADER:
+		case ZLGfxResource::SHADER:
 			this->PrintLine ( "glCreateShader - param: %d\n", param );
 			break;
 			
-		case ZLGfxResourceGL::TEXTURE:
+		case ZLGfxResource::TEXTURE:
 			this->PrintLine ( "glGenTextures\n" );
 			break;
 			
-		case ZLGfxResourceGL::RENDERBUFFER:
+		case ZLGfxResource::RENDERBUFFER:
 			this->PrintLine ( "glGenRenderbuffers\n" );
 			break;
 			
-		case ZLGfxResourceGL::VERTEXARRAY:
+		case ZLGfxResource::VERTEXARRAY:
 			#ifndef MOAI_OS_ANDROID
 				this->PrintLine ( "glGenVertexArrays\n" );
 			#endif
@@ -58,43 +57,43 @@ void ZLGfxLogger::AllocateResource ( ZLGfxResourceGL& resource, u32 param ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::AttachShader ( ZLGfxResourceGL& program, ZLGfxResourceGL& shader ) {
+void ZLGfxLogger::AttachShader ( ZLGfxResource& program, ZLGfxResource& shader ) {
 
 	this->PrintLine ( "glAttachShader - program: %d shader: %d\n", program.mGLID, shader.mGLID);
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::BindAttribLocation ( ZLGfxResourceGL& program, u32 index, cc8* name ) {
+void ZLGfxLogger::BindAttribLocation ( ZLGfxResource& program, u32 index, cc8* name ) {
 
 	this->PrintLine ( "glBindAttribLocation: program: %d index: %d name: %s\n", program.mGLID, index, name );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::BindBuffer ( u32 target, ZLGfxResourceGL& handle ) {
+void ZLGfxLogger::BindBuffer ( u32 target, ZLGfxResource& handle ) {
 
 	this->PrintLine ( "glBindBuffer - target: %d handle: %d\n", target, handle.mGLID );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::BindFramebuffer ( u32 target, ZLGfxResourceGL& handle ) {
+void ZLGfxLogger::BindFramebuffer ( u32 target, ZLGfxResource& handle ) {
 
 	this->PrintLine ( "glBindFramebuffer - target: %d handle: %d\n", target, handle.mGLID );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::BindRenderbuffer ( ZLGfxResourceGL& handle ) {
+void ZLGfxLogger::BindRenderbuffer ( ZLGfxResource& handle ) {
 
 	this->PrintLine ( "glBindRenderbuffer - handle: %d\n", handle.mGLID );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::BindTexture ( ZLGfxResourceGL& handle ) {
+void ZLGfxLogger::BindTexture ( ZLGfxResource& handle ) {
 
 	this->PrintLine ( "glBindTexture - handle: %d\n", handle.mGLID );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::BindVertexArray ( ZLGfxResourceGL& handle ) {
+void ZLGfxLogger::BindVertexArray ( ZLGfxResource& handle ) {
 
 	this->PrintLine ( "glBindVertexArray - handle: %d\n", handle.mGLID );
 }
@@ -157,7 +156,7 @@ void ZLGfxLogger::Comment ( cc8* comment ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::CompileShader ( ZLGfxResourceGL& shader, bool log ) {
+void ZLGfxLogger::CompileShader ( ZLGfxResource& shader, bool log ) {
 	UNUSED ( log );
 
 	this->PrintLine ( "glCompileShader - shader: %d\n", shader.mGLID );
@@ -185,35 +184,35 @@ void ZLGfxLogger::CullFace ( u32 mode ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::DeleteResource ( ZLGfxResourceGL& resource ) {
+void ZLGfxLogger::DeleteResource ( ZLGfxResource& resource ) {
 
 	switch ( resource.mType ) {
 	
-		case ZLGfxResourceGL::BUFFER:
+		case ZLGfxResource::BUFFER:
 			this->PrintLine ( "glDeleteBuffers - handle: %d\n", resource.mGLID );
 			break;
 		
-		case ZLGfxResourceGL::FRAMEBUFFER:
+		case ZLGfxResource::FRAMEBUFFER:
 			this->PrintLine ( "glDeleteFramebuffers - handle: %d\n", resource.mGLID );
 			break;
 		
-		case ZLGfxResourceGL::PROGRAM: {
+		case ZLGfxResource::PROGRAM: {
 			this->PrintLine ( "glDeleteProgram - handle: %d\n", resource.mGLID );
 			break;
 		}
-		case ZLGfxResourceGL::SHADER: {
+		case ZLGfxResource::SHADER: {
 			this->PrintLine ( "glDeleteShader - handle: %d\n", resource.mGLID );
 			break;
 		}
-		case ZLGfxResourceGL::TEXTURE:
+		case ZLGfxResource::TEXTURE:
 			this->PrintLine ( "glDeleteTextures - handle: %d\n", resource.mGLID );
 			break;
 		
-		case ZLGfxResourceGL::RENDERBUFFER:
+		case ZLGfxResource::RENDERBUFFER:
 			this->PrintLine ( "glDeleteRenderbuffers - handle: %d\n", resource.mGLID );
 			break;
 		
-		case ZLGfxResourceGL::VERTEXARRAY:
+		case ZLGfxResource::VERTEXARRAY:
 			#ifndef MOAI_OS_ANDROID
 				this->PrintLine ( "glDeleteVertexArrays - handle: %d\n", resource.mGLID );
 			#endif
@@ -303,26 +302,26 @@ void ZLGfxLogger::Flush ( bool finish ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::FramebufferRenderbuffer ( u32 target, u32 attachment, ZLGfxResourceGL& renderbuffer ) {
+void ZLGfxLogger::FramebufferRenderbuffer ( u32 target, u32 attachment, ZLGfxResource& renderbuffer ) {
 	
 	this->PrintLine ( "glFramebufferRenderbuffer - target: %d attachment: %d renderbuffer: %d\n", target, attachment, renderbuffer.mGLID );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::FramebufferTexture2D ( u32 target, u32 attachment, ZLGfxResourceGL& texture, s32 level ) {
+void ZLGfxLogger::FramebufferTexture2D ( u32 target, u32 attachment, ZLGfxResource& texture, s32 level ) {
 
 	this->PrintLine ( "glFramebufferTexture2D - target: %d attachment: %d texture: %d level: %d\n", target, attachment, texture.mGLID, level );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::GetCurrentFramebuffer ( ZLGfxResourceGL& framebuffer ) {
+void ZLGfxLogger::GetCurrentFramebuffer ( ZLGfxResource& framebuffer ) {
 	UNUSED ( framebuffer );
 
 	this->PrintLine ( "glGetIntegerv - GET CURRENT FRAMEBUFFER\n" );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::GetUniformLocation ( ZLGfxResourceGL& program, cc8* uniformName, ZLGfxListener* listener, void* userdata ) {
+void ZLGfxLogger::GetUniformLocation ( ZLGfxResource& program, cc8* uniformName, ZLGfxListener* listener, void* userdata ) {
 
 	this->PrintLine ( "glGetUniformLocation - program: %d uniformName: %s listener: %p userdata: %p\n", program.mGLID, uniformName, listener, userdata );
 }
@@ -340,7 +339,7 @@ void ZLGfxLogger::LineWidth ( float width ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::LinkProgram ( ZLGfxResourceGL& program, bool log ) {
+void ZLGfxLogger::LinkProgram ( ZLGfxResource& program, bool log ) {
 	UNUSED ( log );
 
 	this->PrintLine ( "glLinkProgram - program: %d\n", program.mGLID );
@@ -436,7 +435,7 @@ void ZLGfxLogger::Scissor ( s32 x, s32 y, u32 w, u32 h ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::ShaderSource ( ZLGfxResourceGL& shader, cc8* source, size_t length ) {
+void ZLGfxLogger::ShaderSource ( ZLGfxResource& shader, cc8* source, size_t length ) {
 	UNUSED ( source );
 	UNUSED ( shader );
 
@@ -535,7 +534,7 @@ void ZLGfxLogger::UniformInt ( u32 location, u32 index, u32 width, u32 count, co
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::UseProgram ( ZLGfxResourceGL& program ) {
+void ZLGfxLogger::UseProgram ( ZLGfxResource& program ) {
 
 	this->PrintLine ( "glUseProgram - program: %d\n", program.mGLID );
 }

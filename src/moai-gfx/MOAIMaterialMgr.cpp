@@ -3,12 +3,11 @@
 
 #include "pch.h"
 
-#include <moai-gfx/MOAIGfxMgrGL.h>
+#include <moai-gfx/MOAIAbstractGfxMgr.h>
+#include <moai-gfx/MOAIAbstractShader.h>
+#include <moai-gfx/MOAIAbstractTexture.h>
 #include <moai-gfx/MOAILight.h>
 #include <moai-gfx/MOAIMaterialMgr.h>
-#include <moai-gfx/MOAIShaderGL.h>
-#include <moai-gfx/MOAIShaderMgrGL.h>
-#include <moai-gfx/MOAITextureBaseGL.h>
 
 //================================================================//
 // MOAIMaterialStackScope
@@ -94,7 +93,7 @@ void MOAIMaterialMgr::Compose ( const MOAIMaterial& material ) {
 		this->SetLight ( namedLightIt->mName, namedLightIt->mValue );
 	}
 	
-	MOAIMaterialNamedGlobal < ZLAbstractTexture >* namedTexturelIt = material.mTextures;
+	MOAIMaterialNamedGlobal < MOAIAbstractTexture >* namedTexturelIt = material.mTextures;
 	for ( ; namedTexturelIt; namedTexturelIt = namedTexturelIt->mNext ) {
 		this->SetTexture ( namedTexturelIt->mName, namedTexturelIt->mValue );
 	}
@@ -108,17 +107,17 @@ MOAILight* MOAIMaterialMgr::GetLight ( u32 lightID ) {
 }
 
 //----------------------------------------------------------------//
-ZLAbstractTexture* MOAIMaterialMgr::GetTexture ( u32 textureID ) {
+MOAIAbstractTexture* MOAIMaterialMgr::GetTexture ( u32 textureID ) {
 
 	assert ( textureID < MAX_GLOBAL_TEXTURES );
-	ZLAbstractTexture* texture = this->mNamedTextures [ ZLIndexCast ( textureID )].mTexture;
-	return texture ? texture : ( ZLAbstractTexture* )this->mTexture;
+	MOAIAbstractTexture* texture = this->mNamedTextures [ ZLIndexCast ( textureID )].mTexture;
+	return texture ? texture : ( MOAIAbstractTexture* )this->mTexture;
 }
 
 //----------------------------------------------------------------//
 void MOAIMaterialMgr::LoadGfxState () {
 
-	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
+	MOAIAbstractGfxMgr& gfxMgr = MOAIAbstractGfxMgr::Get ();
 
 	gfxMgr.SetBlendMode ( this->mBlendMode );
 	gfxMgr.SetCullFunc ( this->mCullMode );
@@ -189,7 +188,7 @@ void MOAIMaterialMgr::Push ( const MOAIMaterial* material ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialMgr::SetBlendMode ( const ZLBlendMode& blendMode ) {
+void MOAIMaterialMgr::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 
 	if ( !( this->mFlags & BLEND_MODE_FLAG )) {
 		this->mBlendMode = blendMode;
@@ -258,11 +257,12 @@ void MOAIMaterialMgr::SetLight ( u32 lightID, MOAILight* light ) {
 //----------------------------------------------------------------//
 void MOAIMaterialMgr::SetShader ( u32 shaderID ) {
 
-	this->SetShader ( MOAIShaderMgrGL::Get ().GetShader ( shaderID ));
+	// TODO: gfx
+//	this->SetShader ( MOAIShaderMgrGL::Get ().GetShader ( shaderID ));
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialMgr::SetShader ( ZLAbstractShader* shader ) {
+void MOAIMaterialMgr::SetShader ( MOAIAbstractShader* shader ) {
 
 	if ( !( this->mFlags & SHADER_FLAG )) {
 		this->mShader = shader;
@@ -271,7 +271,7 @@ void MOAIMaterialMgr::SetShader ( ZLAbstractShader* shader ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialMgr::SetTexture ( ZLAbstractTexture* texture ) {
+void MOAIMaterialMgr::SetTexture ( MOAIAbstractTexture* texture ) {
 
 	if ( !( this->mFlags & TEXTURE_FLAG )) {
 		this->mTexture = texture;
@@ -280,7 +280,7 @@ void MOAIMaterialMgr::SetTexture ( ZLAbstractTexture* texture ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialMgr::SetTexture ( u32 textureID, ZLAbstractTexture* texture ) {
+void MOAIMaterialMgr::SetTexture ( u32 textureID, MOAIAbstractTexture* texture ) {
 	
 	assert ( textureID < MAX_GLOBAL_TEXTURES );
 	this->SetGlobal ( this->mNamedTextures [ ZLIndexCast ( textureID )], texture );

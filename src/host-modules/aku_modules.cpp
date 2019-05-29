@@ -94,6 +94,7 @@ void AKUModulesAppFinalize () {
 	#endif
 
 	#if AKU_WITH_SIM
+		AKUGfxAppFinalize ();
 		AKUGfxGLAppFinalize ();
 		AKUSimAppFinalize ();
 	#endif
@@ -171,6 +172,7 @@ int AKUModulesAppInitialize () {
 	#endif
 
 	#if AKU_WITH_SIM
+		AKUGfxAppInitialize ();
 		AKUGfxGLAppInitialize ();
 		AKUSimAppInitialize ();
 	#endif
@@ -264,6 +266,7 @@ int AKUModulesContextInitialize () {
 	#endif
 
 	#if AKU_WITH_SIM
+		AKUGfxContextInitialize ();
 		AKUGfxGLContextInitialize ();
 		AKUSimContextInitialize ();
 	#endif

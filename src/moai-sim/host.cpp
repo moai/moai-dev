@@ -69,8 +69,8 @@ void AKUDisplayListProcess ( int list ) {
 //----------------------------------------------------------------//
 void AKUDisplayListPublishAndReset () {
 
-	MOAIGfxMgrGL::Get ().PublishAndReset ( ZLGfxPipelineClerkGL::LOADING_PIPELINE );
-	MOAIGfxMgrGL::Get ().PublishAndReset ( ZLGfxPipelineClerkGL::DRAWING_PIPELINE );
+	MOAIGfxMgrGL::Get ().PublishAndReset ( MOAIGfxPipelineClerkGL::LOADING_PIPELINE );
+	MOAIGfxMgrGL::Get ().PublishAndReset ( MOAIGfxPipelineClerkGL::DRAWING_PIPELINE );
 }
 
 //----------------------------------------------------------------//

@@ -2,10 +2,9 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIGfxMgrGL.h>
+#include <moai-gfx/MOAIAbstractGfxMgr.h>
 #include <moai-gfx/MOAILight.h>
 #include <moai-gfx/MOAILightFormat.h>
-#include <moai-gfx/MOAITextureBaseGL.h>
 
 //================================================================//
 // local
@@ -66,7 +65,7 @@ void MOAILight::ApplyUniforms ( void* buffer, size_t bufferSize ) {
 //----------------------------------------------------------------//
 void MOAILight::BindTextures ( u32 textureOffset ) {
 
-	MOAIGfxMgrGL& gfx = MOAIGfxMgrGL::Get ();
+	MOAIAbstractGfxMgr& gfx = MOAIAbstractGfxMgr::Get ();
 
 	size_t nTextures = this->mTextures.Size ();
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < nTextures; ++i ) {
@@ -128,13 +127,13 @@ void MOAILight::SetFormat ( MOAILightFormat* format ) {
 //----------------------------------------------------------------//
 bool MOAILight::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
-	return this->mFormat ? this->MOAIShaderUniformSchemaBaseGL::ApplyAttrOp ( this->mBuffer.GetBuffer (), attrID, attr, op ) : false;
+	return this->mFormat ? this->MOAIShaderUniformSchemaBase::ApplyAttrOp ( this->mBuffer.GetBuffer (), attrID, attr, op ) : false;
 }
 
 //----------------------------------------------------------------//
-ZLShaderUniformHandleGL MOAILight::ZLAbstractShaderUniformSchema_GetUniformHandle ( void* buffer, ZLIndex uniformID ) const {
+MOAIShaderUniformHandle MOAILight::ZLAbstractShaderUniformSchema_GetUniformHandle ( void* buffer, ZLIndex uniformID ) const {
 
-	ZLShaderUniformHandleGL uniform;
+	MOAIShaderUniformHandle uniform;
 	uniform.mBuffer = 0;
 
 	if ( this->mFormat ) {
